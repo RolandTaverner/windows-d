@@ -3,14 +3,15 @@
 module windows.win32.system.winrt.shell;
 
 public import windows.core;
-public import windows.win32.foundation : HRESULT, PWSTR;
-public import windows.win32.system.com : IUnknown;
-public import windows.win32.ui.shell : IShellItem;
+public import windows.win32.foundation.foundation : HRESULT, PWSTR;
+public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.ui.shell.shell : IShellItem;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
+
 
 enum CreateProcessMethod : int
 {

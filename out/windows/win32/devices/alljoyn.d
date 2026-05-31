@@ -3,13 +3,14 @@
 module windows.win32.devices.alljoyn;
 
 public import windows.core;
-public import windows.win32.foundation : BOOL, HANDLE, PSTR, PWSTR;
-public import windows.win32.security : SECURITY_ATTRIBUTES;
+public import windows.win32.foundation.foundation : BOOL, HANDLE, PSTR, PWSTR;
+public import windows.win32.security.security : SECURITY_ATTRIBUTES;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
+
 
 alias alljoyn_about_announceflag = int;
 enum : int
@@ -17,6 +18,7 @@ enum : int
     UNANNOUNCED = 0x00000000,
     ANNOUNCED   = 0x00000001,
 }
+
 enum QStatus : int
 {
     ER_OK                                                               = 0x00000000,
@@ -415,6 +417,7 @@ enum QStatus : int
     ER_MANAGEMENT_NOT_STARTED                                           = 0x00009143,
     ER_BUS_DESCRIPTION_ALREADY_EXISTS                                   = 0x00009144,
 }
+
 alias alljoyn_typeid = int;
 enum : int
 {
@@ -451,6 +454,7 @@ enum : int
     ALLJOYN_BYTE_ARRAY       = 0x00007961,
     ALLJOYN_WILDCARD         = 0x0000002a,
 }
+
 alias alljoyn_applicationstate = int;
 enum : int
 {
@@ -459,6 +463,7 @@ enum : int
     CLAIMED       = 0x00000002,
     NEED_UPDATE   = 0x00000003,
 }
+
 alias alljoyn_claimcapability_masks = int;
 enum : int
 {
@@ -466,12 +471,14 @@ enum : int
     CAPABLE_ECDHE_ECDSA = 0x00000004,
     CAPABLE_ECDHE_SPEKE = 0x00000008,
 }
+
 alias alljoyn_claimcapabilityadditionalinfo_masks = int;
 enum : int
 {
     PASSWORD_GENERATED_BY_SECURITY_MANAGER = 0x00000001,
     PASSWORD_GENERATED_BY_APPLICATION      = 0x00000002,
 }
+
 alias alljoyn_messagetype = int;
 enum : int
 {
@@ -481,6 +488,7 @@ enum : int
     ALLJOYN_MESSAGE_ERROR       = 0x00000003,
     ALLJOYN_MESSAGE_SIGNAL      = 0x00000004,
 }
+
 alias alljoyn_interfacedescription_securitypolicy = int;
 enum : int
 {
@@ -488,6 +496,7 @@ enum : int
     AJ_IFC_SECURITY_REQUIRED = 0x00000001,
     AJ_IFC_SECURITY_OFF      = 0x00000002,
 }
+
 alias alljoyn_sessionlostreason = int;
 enum : int
 {
@@ -504,57 +513,57 @@ enum : int
 
 enum : uint
 {
-    QCC_TRUE  = 0x00000001,
-    QCC_FALSE = 0x00000000,
+    QCC_TRUE  = 0x00000001U,
+    QCC_FALSE = 0x00000000U,
 }
 
 enum : uint
 {
-    ALLJOYN_MESSAGE_FLAG_NO_REPLY_EXPECTED = 0x00000001,
-    ALLJOYN_MESSAGE_FLAG_AUTO_START        = 0x00000002,
-    ALLJOYN_MESSAGE_FLAG_ALLOW_REMOTE_MSG  = 0x00000004,
-    ALLJOYN_MESSAGE_FLAG_SESSIONLESS       = 0x00000010,
-    ALLJOYN_MESSAGE_FLAG_GLOBAL_BROADCAST  = 0x00000020,
-    ALLJOYN_MESSAGE_FLAG_ENCRYPTED         = 0x00000080,
+    ALLJOYN_MESSAGE_FLAG_NO_REPLY_EXPECTED = 0x00000001U,
+    ALLJOYN_MESSAGE_FLAG_AUTO_START        = 0x00000002U,
+    ALLJOYN_MESSAGE_FLAG_ALLOW_REMOTE_MSG  = 0x00000004U,
+    ALLJOYN_MESSAGE_FLAG_SESSIONLESS       = 0x00000010U,
+    ALLJOYN_MESSAGE_FLAG_GLOBAL_BROADCAST  = 0x00000020U,
+    ALLJOYN_MESSAGE_FLAG_ENCRYPTED         = 0x00000080U,
 }
 
 enum : uint
 {
-    ALLJOYN_TRAFFIC_TYPE_MESSAGES       = 0x00000001,
-    ALLJOYN_TRAFFIC_TYPE_RAW_UNRELIABLE = 0x00000002,
-    ALLJOYN_TRAFFIC_TYPE_RAW_RELIABLE   = 0x00000004,
+    ALLJOYN_TRAFFIC_TYPE_MESSAGES       = 0x00000001U,
+    ALLJOYN_TRAFFIC_TYPE_RAW_UNRELIABLE = 0x00000002U,
+    ALLJOYN_TRAFFIC_TYPE_RAW_RELIABLE   = 0x00000004U,
 }
 
 enum : uint
 {
-    ALLJOYN_PROXIMITY_ANY      = 0x000000ff,
-    ALLJOYN_PROXIMITY_PHYSICAL = 0x00000001,
-    ALLJOYN_PROXIMITY_NETWORK  = 0x00000002,
+    ALLJOYN_PROXIMITY_ANY      = 0x000000ffU,
+    ALLJOYN_PROXIMITY_PHYSICAL = 0x00000001U,
+    ALLJOYN_PROXIMITY_NETWORK  = 0x00000002U,
 }
 
 enum const(wchar)* ALLJOYN_NAMED_PIPE_CONNECT_SPEC = "npipe:";
 
 enum : uint
 {
-    ALLJOYN_READ_READY   = 0x00000001,
-    ALLJOYN_WRITE_READY  = 0x00000002,
-    ALLJOYN_DISCONNECTED = 0x00000004,
+    ALLJOYN_READ_READY   = 0x00000001U,
+    ALLJOYN_WRITE_READY  = 0x00000002U,
+    ALLJOYN_DISCONNECTED = 0x00000004U,
 }
 
 enum ubyte ALLJOYN_LITTLE_ENDIAN = 0x6c;
 enum ubyte ALLJOYN_BIG_ENDIAN = 0x42;
-enum uint ALLJOYN_MESSAGE_DEFAULT_TIMEOUT = 0x000061a8;
+enum uint ALLJOYN_MESSAGE_DEFAULT_TIMEOUT = 0x000061a8U;
 
 enum : ushort
 {
-    ALLJOYN_CRED_PASSWORD     = 0x0001,
-    ALLJOYN_CRED_USER_NAME    = 0x0002,
-    ALLJOYN_CRED_CERT_CHAIN   = 0x0004,
-    ALLJOYN_CRED_PRIVATE_KEY  = 0x0008,
-    ALLJOYN_CRED_LOGON_ENTRY  = 0x0010,
-    ALLJOYN_CRED_EXPIRATION   = 0x0020,
-    ALLJOYN_CRED_NEW_PASSWORD = 0x1001,
-    ALLJOYN_CRED_ONE_TIME_PWD = 0x2001,
+    ALLJOYN_CRED_PASSWORD     = cast(ushort) 0x0001,
+    ALLJOYN_CRED_USER_NAME    = cast(ushort) 0x0002,
+    ALLJOYN_CRED_CERT_CHAIN   = cast(ushort) 0x0004,
+    ALLJOYN_CRED_PRIVATE_KEY  = cast(ushort) 0x0008,
+    ALLJOYN_CRED_LOGON_ENTRY  = cast(ushort) 0x0010,
+    ALLJOYN_CRED_EXPIRATION   = cast(ushort) 0x0020,
+    ALLJOYN_CRED_NEW_PASSWORD = cast(ushort) 0x1001,
+    ALLJOYN_CRED_ONE_TIME_PWD = cast(ushort) 0x2001,
 }
 
 enum : ubyte

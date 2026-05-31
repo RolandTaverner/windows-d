@@ -3,27 +3,29 @@
 module windows.win32.networking.activedirectory;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BOOLEAN, BSTR, CHAR, FILETIME, HANDLE,
-                                         HINSTANCE, HRESULT, HWND, LPARAM, PSTR,
-                                         PWSTR, SYSTEMTIME, VARIANT_BOOL, WPARAM;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BOOLEAN, BSTR, CHAR, FILETIME,
+                                                    HANDLE, HINSTANCE, HRESULT, HWND,
+                                                    LPARAM, PSTR, PWSTR, SYSTEMTIME,
+                                                    VARIANT_BOOL, WPARAM;
 public import windows.win32.networking.winsock : SOCKET_ADDRESS;
-public import windows.win32.security.authentication.identity : LSA_FOREST_TRUST_INFORMATION;
-public import windows.win32.security : PSECURITY_DESCRIPTOR, PSID;
-public import windows.win32.system.com : DISPPARAMS, EXCEPINFO, IDataObject, IDispatch,
-                                         IPersist, ITypeInfo, IUnknown;
+public import windows.win32.security.authentication.identity.identity : LSA_FOREST_TRUST_INFORMATION;
+public import windows.win32.security.security : PSECURITY_DESCRIPTOR, PSID;
+public import windows.win32.system.com.com : DISPPARAMS, EXCEPINFO, IDataObject, IDispatch,
+                                             IPersist, ITypeInfo, IUnknown;
 public import windows.win32.system.com.structuredstorage : IPropertyBag;
 public import windows.win32.system.ole : IEnumVARIANT;
 public import windows.win32.system.registry : HKEY;
 public import windows.win32.system.variant : VARIANT;
-public import windows.win32.ui.controls : LPFNSVADDPROPSHEETPAGE;
-public import windows.win32.ui.shell : BFFCALLBACK;
+public import windows.win32.ui.controls.controls : LPFNSVADDPROPSHEETPAGE;
+public import windows.win32.ui.shell.shell : BFFCALLBACK;
 public import windows.win32.ui.windowsandmessaging : DLGPROC, HICON;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
+
 
 alias ADSTYPE = int;
 enum : int
@@ -58,25 +60,27 @@ enum : int
     ADSTYPE_DN_WITH_BINARY         = 0x0000001b,
     ADSTYPE_DN_WITH_STRING         = 0x0000001c,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_authentication_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_authentication_enum
 alias ADS_AUTHENTICATION_ENUM = uint;
 enum : uint
 {
-    ADS_SECURE_AUTHENTICATION = 0x00000001,
-    ADS_USE_ENCRYPTION        = 0x00000002,
-    ADS_USE_SSL               = 0x00000002,
-    ADS_READONLY_SERVER       = 0x00000004,
-    ADS_PROMPT_CREDENTIALS    = 0x00000008,
-    ADS_NO_AUTHENTICATION     = 0x00000010,
-    ADS_FAST_BIND             = 0x00000020,
-    ADS_USE_SIGNING           = 0x00000040,
-    ADS_USE_SEALING           = 0x00000080,
-    ADS_USE_DELEGATION        = 0x00000100,
-    ADS_SERVER_BIND           = 0x00000200,
-    ADS_NO_REFERRAL_CHASING   = 0x00000400,
-    ADS_AUTH_RESERVED         = 0x80000000,
+    ADS_SECURE_AUTHENTICATION = 0x00000001U,
+    ADS_USE_ENCRYPTION        = 0x00000002U,
+    ADS_USE_SSL               = 0x00000002U,
+    ADS_READONLY_SERVER       = 0x00000004U,
+    ADS_PROMPT_CREDENTIALS    = 0x00000008U,
+    ADS_NO_AUTHENTICATION     = 0x00000010U,
+    ADS_FAST_BIND             = 0x00000020U,
+    ADS_USE_SIGNING           = 0x00000040U,
+    ADS_USE_SEALING           = 0x00000080U,
+    ADS_USE_DELEGATION        = 0x00000100U,
+    ADS_SERVER_BIND           = 0x00000200U,
+    ADS_NO_REFERRAL_CHASING   = 0x00000400U,
+    ADS_AUTH_RESERVED         = 0x80000000U,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_statusenum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_statusenum
 alias ADS_STATUSENUM = int;
 enum : int
 {
@@ -84,7 +88,8 @@ enum : int
     ADS_STATUS_INVALID_SEARCHPREF      = 0x00000001,
     ADS_STATUS_INVALID_SEARCHPREFVALUE = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_derefenum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_derefenum
 alias ADS_DEREFENUM = int;
 enum : int
 {
@@ -93,7 +98,8 @@ enum : int
     ADS_DEREF_FINDING   = 0x00000002,
     ADS_DEREF_ALWAYS    = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_scopeenum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_scopeenum
 alias ADS_SCOPEENUM = int;
 enum : int
 {
@@ -101,7 +107,8 @@ enum : int
     ADS_SCOPE_ONELEVEL = 0x00000001,
     ADS_SCOPE_SUBTREE  = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_preferences_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_preferences_enum
 alias ADS_PREFERENCES_ENUM = int;
 enum : int
 {
@@ -119,14 +126,16 @@ enum : int
     ADSIPROP_CACHE_RESULTS    = 0x0000000b,
     ADSIPROP_ADSIFLAG         = 0x0000000c,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ne-iads-adsi_dialect_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ne-iads-adsi_dialect_enum
 alias ADSI_DIALECT_ENUM = int;
 enum : int
 {
     ADSI_DIALECT_LDAP = 0x00000000,
     ADSI_DIALECT_SQL  = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_chase_referrals_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_chase_referrals_enum
 alias ADS_CHASE_REFERRALS_ENUM = int;
 enum : int
 {
@@ -135,7 +144,8 @@ enum : int
     ADS_CHASE_REFERRALS_EXTERNAL    = 0x00000040,
     ADS_CHASE_REFERRALS_ALWAYS      = 0x00000060,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_searchpref_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_searchpref_enum
 alias ADS_SEARCHPREF_ENUM = int;
 enum : int
 {
@@ -159,14 +169,16 @@ enum : int
     ADS_SEARCHPREF_DIRSYNC_FLAG     = 0x00000011,
     ADS_SEARCHPREF_EXTENDED_DN      = 0x00000012,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_password_encoding_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_password_encoding_enum
 alias ADS_PASSWORD_ENCODING_ENUM = int;
 enum : int
 {
     ADS_PASSWORD_ENCODE_REQUIRE_SSL = 0x00000000,
     ADS_PASSWORD_ENCODE_CLEAR       = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_property_operation_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_property_operation_enum
 alias ADS_PROPERTY_OPERATION_ENUM = int;
 enum : int
 {
@@ -175,7 +187,8 @@ enum : int
     ADS_PROPERTY_APPEND = 0x00000003,
     ADS_PROPERTY_DELETE = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_systemflag_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_systemflag_enum
 alias ADS_SYSTEMFLAG_ENUM = int;
 enum : int
 {
@@ -190,7 +203,8 @@ enum : int
     ADS_SYSTEMFLAG_ATTR_NOT_REPLICATED       = 0x00000001,
     ADS_SYSTEMFLAG_ATTR_IS_CONSTRUCTED       = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_group_type_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_group_type_enum
 alias ADS_GROUP_TYPE_ENUM = int;
 enum : int
 {
@@ -200,7 +214,8 @@ enum : int
     ADS_GROUP_TYPE_UNIVERSAL_GROUP    = 0x00000008,
     ADS_GROUP_TYPE_SECURITY_ENABLED   = 0x80000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_user_flag_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_user_flag_enum
 alias ADS_USER_FLAG_ENUM = int;
 enum : int
 {
@@ -226,7 +241,8 @@ enum : int
     ADS_UF_PASSWORD_EXPIRED                       = 0x00800000,
     ADS_UF_TRUSTED_TO_AUTHENTICATE_FOR_DELEGATION = 0x01000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_rights_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_rights_enum
 alias ADS_RIGHTS_ENUM = int;
 enum : int
 {
@@ -250,7 +266,8 @@ enum : int
     ADS_RIGHT_DS_LIST_OBJECT         = 0x00000080,
     ADS_RIGHT_DS_CONTROL_ACCESS      = 0x00000100,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_acetype_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_acetype_enum
 alias ADS_ACETYPE_ENUM = int;
 enum : int
 {
@@ -270,7 +287,8 @@ enum : int
     ADS_ACETYPE_SYSTEM_AUDIT_CALLBACK_OBJECT   = 0x0000000f,
     ADS_ACETYPE_SYSTEM_ALARM_CALLBACK_OBJECT   = 0x00000010,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_aceflag_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_aceflag_enum
 alias ADS_ACEFLAG_ENUM = int;
 enum : int
 {
@@ -282,14 +300,16 @@ enum : int
     ADS_ACEFLAG_SUCCESSFUL_ACCESS        = 0x00000040,
     ADS_ACEFLAG_FAILED_ACCESS            = 0x00000080,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_flagtype_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_flagtype_enum
 alias ADS_FLAGTYPE_ENUM = int;
 enum : int
 {
     ADS_FLAG_OBJECT_TYPE_PRESENT           = 0x00000001,
     ADS_FLAG_INHERITED_OBJECT_TYPE_PRESENT = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_sd_control_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_sd_control_enum
 alias ADS_SD_CONTROL_ENUM = int;
 enum : int
 {
@@ -307,13 +327,15 @@ enum : int
     ADS_SD_CONTROL_SE_SACL_PROTECTED        = 0x00002000,
     ADS_SD_CONTROL_SE_SELF_RELATIVE         = 0x00008000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_sd_revision_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_sd_revision_enum
 alias ADS_SD_REVISION_ENUM = int;
 enum : int
 {
     ADS_SD_REVISION_DS = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_name_type_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_name_type_enum
 alias ADS_NAME_TYPE_ENUM = int;
 enum : int
 {
@@ -330,7 +352,8 @@ enum : int
     ADS_NAME_TYPE_SERVICE_PRINCIPAL_NAME  = 0x0000000b,
     ADS_NAME_TYPE_SID_OR_SID_HISTORY_NAME = 0x0000000c,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_name_inittype_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_name_inittype_enum
 alias ADS_NAME_INITTYPE_ENUM = int;
 enum : int
 {
@@ -338,7 +361,8 @@ enum : int
     ADS_NAME_INITTYPE_SERVER = 0x00000002,
     ADS_NAME_INITTYPE_GC     = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_option_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_option_enum
 alias ADS_OPTION_ENUM = int;
 enum : int
 {
@@ -353,7 +377,8 @@ enum : int
     ADS_OPTION_ACCUMULATIVE_MODIFICATION = 0x00000008,
     ADS_OPTION_SKIP_SID_LOOKUP           = 0x00000009,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_security_info_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_security_info_enum
 alias ADS_SECURITY_INFO_ENUM = int;
 enum : int
 {
@@ -362,7 +387,8 @@ enum : int
     ADS_SECURITY_INFO_DACL  = 0x00000004,
     ADS_SECURITY_INFO_SACL  = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_settype_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_settype_enum
 alias ADS_SETTYPE_ENUM = int;
 enum : int
 {
@@ -371,7 +397,8 @@ enum : int
     ADS_SETTYPE_SERVER   = 0x00000003,
     ADS_SETTYPE_DN       = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_format_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_format_enum
 alias ADS_FORMAT_ENUM = int;
 enum : int
 {
@@ -387,14 +414,16 @@ enum : int
     ADS_FORMAT_PROVIDER          = 0x0000000a,
     ADS_FORMAT_LEAF              = 0x0000000b,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_display_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_display_enum
 alias ADS_DISPLAY_ENUM = int;
 enum : int
 {
     ADS_DISPLAY_FULL       = 0x00000001,
     ADS_DISPLAY_VALUE_ONLY = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_escape_mode_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_escape_mode_enum
 alias ADS_ESCAPE_MODE_ENUM = int;
 enum : int
 {
@@ -403,7 +432,8 @@ enum : int
     ADS_ESCAPEDMODE_OFF     = 0x00000003,
     ADS_ESCAPEDMODE_OFF_EX  = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_pathtype_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_pathtype_enum
 alias ADS_PATHTYPE_ENUM = int;
 enum : int
 {
@@ -411,7 +441,8 @@ enum : int
     ADS_PATH_FILESHARE = 0x00000002,
     ADS_PATH_REGISTRY  = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_sd_format_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ne-iads-ads_sd_format_enum
 alias ADS_SD_FORMAT_ENUM = int;
 enum : int
 {
@@ -419,7 +450,8 @@ enum : int
     ADS_SD_FORMAT_RAW       = 0x00000002,
     ADS_SD_FORMAT_HEXSTRING = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsparse/ne-dsparse-ds_mangle_for))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsparse/ne-dsparse-ds_mangle_for
 alias DS_MANGLE_FOR = int;
 enum : int
 {
@@ -427,7 +459,8 @@ enum : int
     DS_MANGLE_OBJECT_RDN_FOR_DELETION      = 0x00000001,
     DS_MANGLE_OBJECT_RDN_FOR_NAME_CONFLICT = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ne-ntdsapi-ds_name_format))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ne-ntdsapi-ds_name_format
 alias DS_NAME_FORMAT = int;
 enum : int
 {
@@ -443,7 +476,8 @@ enum : int
     DS_SID_OR_SID_HISTORY_NAME = 0x0000000b,
     DS_DNS_DOMAIN_NAME         = 0x0000000c,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ne-ntdsapi-ds_name_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ne-ntdsapi-ds_name_flags
 alias DS_NAME_FLAGS = int;
 enum : int
 {
@@ -453,7 +487,8 @@ enum : int
     DS_NAME_FLAG_GCVERIFY         = 0x00000004,
     DS_NAME_FLAG_TRUST_REFERRAL   = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ne-ntdsapi-ds_name_error))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ne-ntdsapi-ds_name_error
 alias DS_NAME_ERROR = int;
 enum : int
 {
@@ -466,7 +501,8 @@ enum : int
     DS_NAME_ERROR_NO_SYNTACTICAL_MAPPING = 0x00000006,
     DS_NAME_ERROR_TRUST_REFERRAL         = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ne-ntdsapi-ds_spn_name_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ne-ntdsapi-ds_spn_name_type
 alias DS_SPN_NAME_TYPE = int;
 enum : int
 {
@@ -477,7 +513,8 @@ enum : int
     DS_SPN_NB_DOMAIN = 0x00000004,
     DS_SPN_SERVICE   = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ne-ntdsapi-ds_spn_write_op))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ne-ntdsapi-ds_spn_write_op
 alias DS_SPN_WRITE_OP = int;
 enum : int
 {
@@ -485,7 +522,8 @@ enum : int
     DS_SPN_REPLACE_SPN_OP = 0x00000001,
     DS_SPN_DELETE_SPN_OP  = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ne-ntdsapi-ds_repsyncall_error))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ne-ntdsapi-ds_repsyncall_error
 alias DS_REPSYNCALL_ERROR = int;
 enum : int
 {
@@ -493,7 +531,8 @@ enum : int
     DS_REPSYNCALL_WIN32_ERROR_REPLICATING       = 0x00000001,
     DS_REPSYNCALL_SERVER_UNREACHABLE            = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ne-ntdsapi-ds_repsyncall_event))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ne-ntdsapi-ds_repsyncall_event
 alias DS_REPSYNCALL_EVENT = int;
 enum : int
 {
@@ -502,13 +541,15 @@ enum : int
     DS_REPSYNCALL_EVENT_SYNC_COMPLETED = 0x00000002,
     DS_REPSYNCALL_EVENT_FINISHED       = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ne-ntdsapi-ds_kcc_taskid))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ne-ntdsapi-ds_kcc_taskid
 alias DS_KCC_TASKID = int;
 enum : int
 {
     DS_KCC_TASKID_UPDATE_TOPOLOGY = 0x00000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ne-ntdsapi-ds_repl_info_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ne-ntdsapi-ds_repl_info_type
 alias DS_REPL_INFO_TYPE = int;
 enum : int
 {
@@ -526,7 +567,8 @@ enum : int
     DS_REPL_INFO_METADATA_EXT_FOR_ATTR_VALUE = 0x0000000b,
     DS_REPL_INFO_TYPE_MAX                    = 0x0000000c,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ne-ntdsapi-ds_repl_op_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ne-ntdsapi-ds_repl_op_type
 alias DS_REPL_OP_TYPE = int;
 enum : int
 {
@@ -536,7 +578,8 @@ enum : int
     DS_REPL_OP_TYPE_MODIFY      = 0x00000003,
     DS_REPL_OP_TYPE_UPDATE_REFS = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsrole/ne-dsrole-dsrole_machine_role))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsrole/ne-dsrole-dsrole_machine_role
 alias DSROLE_MACHINE_ROLE = int;
 enum : int
 {
@@ -547,7 +590,8 @@ enum : int
     DsRole_RoleBackupDomainController  = 0x00000004,
     DsRole_RolePrimaryDomainController = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsrole/ne-dsrole-dsrole_server_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsrole/ne-dsrole-dsrole_server_state
 alias DSROLE_SERVER_STATE = int;
 enum : int
 {
@@ -555,7 +599,8 @@ enum : int
     DsRoleServerPrimary = 0x00000001,
     DsRoleServerBackup  = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsrole/ne-dsrole-dsrole_primary_domain_info_level))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsrole/ne-dsrole-dsrole_primary_domain_info_level
 alias DSROLE_PRIMARY_DOMAIN_INFO_LEVEL = int;
 enum : int
 {
@@ -563,7 +608,8 @@ enum : int
     DsRoleUpgradeStatus          = 0x00000002,
     DsRoleOperationState         = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsrole/ne-dsrole-dsrole_operation_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsrole/ne-dsrole-dsrole_operation_state
 alias DSROLE_OPERATION_STATE = int;
 enum : int
 {
@@ -577,85 +623,85 @@ enum : int
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/AD/wm-adsprop-notify-pageinit))], [])*/uint
 {
-    WM_ADSPROP_NOTIFY_PAGEINIT   = 0x0000084d,
-    WM_ADSPROP_NOTIFY_PAGEHWND   = 0x0000084e,
-    WM_ADSPROP_NOTIFY_CHANGE     = 0x0000084f,
-    WM_ADSPROP_NOTIFY_APPLY      = 0x00000850,
-    WM_ADSPROP_NOTIFY_SETFOCUS   = 0x00000851,
-    WM_ADSPROP_NOTIFY_FOREGROUND = 0x00000852,
-    WM_ADSPROP_NOTIFY_EXIT       = 0x00000853,
-    WM_ADSPROP_NOTIFY_ERROR      = 0x00000856,
+    WM_ADSPROP_NOTIFY_PAGEINIT   = 0x0000084dU,
+    WM_ADSPROP_NOTIFY_PAGEHWND   = 0x0000084eU,
+    WM_ADSPROP_NOTIFY_CHANGE     = 0x0000084fU,
+    WM_ADSPROP_NOTIFY_APPLY      = 0x00000850U,
+    WM_ADSPROP_NOTIFY_SETFOCUS   = 0x00000851U,
+    WM_ADSPROP_NOTIFY_FOREGROUND = 0x00000852U,
+    WM_ADSPROP_NOTIFY_EXIT       = 0x00000853U,
+    WM_ADSPROP_NOTIFY_ERROR      = 0x00000856U,
 }
 
 enum GUID CLSID_CommonQuery = GUID("83bc5ec0-6f2a-11d0-a1c4-00aa00c16e65");
 
 enum : ulong
 {
-    QUERYFORM_CHANGESFORMLIST    = 0x0000000000000001,
-    QUERYFORM_CHANGESOPTFORMLIST = 0x0000000000000002,
+    QUERYFORM_CHANGESFORMLIST    = 0x0000000000000001UL,
+    QUERYFORM_CHANGESOPTFORMLIST = 0x0000000000000002UL,
 }
 
-enum uint CQFF_NOGLOBALPAGES = 0x00000001;
-enum uint CQFF_ISOPTIONAL = 0x00000002;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/AD/cqpm-initialize))], [])*/uint CQPM_INITIALIZE = 0x00000001;
+enum uint CQFF_NOGLOBALPAGES = 0x00000001U;
+enum uint CQFF_ISOPTIONAL = 0x00000002U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/AD/cqpm-initialize))], [])*/uint CQPM_INITIALIZE = 0x00000001U;
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/AD/cqpm-release))], [])*/uint
 {
-    CQPM_RELEASE       = 0x00000002,
-    CQPM_ENABLE        = 0x00000003,
-    CQPM_GETPARAMETERS = 0x00000005,
+    CQPM_RELEASE       = 0x00000002U,
+    CQPM_ENABLE        = 0x00000003U,
+    CQPM_GETPARAMETERS = 0x00000005U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/AD/cqpm-clearform))], [])*/uint CQPM_CLEARFORM = 0x00000006;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/AD/cqpm-clearform))], [])*/uint CQPM_CLEARFORM = 0x00000006U;
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/AD/cqpm-persist))], [])*/uint
 {
-    CQPM_PERSIST              = 0x00000007,
-    CQPM_HELP                 = 0x00000008,
-    CQPM_SETDEFAULTPARAMETERS = 0x00000009,
+    CQPM_PERSIST              = 0x00000007U,
+    CQPM_HELP                 = 0x00000008U,
+    CQPM_SETDEFAULTPARAMETERS = 0x00000009U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/AD/cqpm-handlerspecific))], [])*/uint CQPM_HANDLERSPECIFIC = 0x10000000;
-enum uint OQWF_OKCANCEL = 0x00000001;
-enum uint OQWF_DEFAULTFORM = 0x00000002;
-enum uint OQWF_SINGLESELECT = 0x00000004;
-enum uint OQWF_LOADQUERY = 0x00000008;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/AD/cqpm-handlerspecific))], [])*/uint CQPM_HANDLERSPECIFIC = 0x10000000U;
+enum uint OQWF_OKCANCEL = 0x00000001U;
+enum uint OQWF_DEFAULTFORM = 0x00000002U;
+enum uint OQWF_SINGLESELECT = 0x00000004U;
+enum uint OQWF_LOADQUERY = 0x00000008U;
 
 enum : uint
 {
-    OQWF_REMOVESCOPES = 0x00000010,
-    OQWF_REMOVEFORMS  = 0x00000020,
+    OQWF_REMOVESCOPES = 0x00000010U,
+    OQWF_REMOVEFORMS  = 0x00000020U,
 }
 
-enum uint OQWF_ISSUEONOPEN = 0x00000040;
-enum uint OQWF_SHOWOPTIONAL = 0x00000080;
-enum uint OQWF_SAVEQUERYONOK = 0x00000200;
+enum uint OQWF_ISSUEONOPEN = 0x00000040U;
+enum uint OQWF_SHOWOPTIONAL = 0x00000080U;
+enum uint OQWF_SAVEQUERYONOK = 0x00000200U;
 
 enum : uint
 {
-    OQWF_HIDEMENUS    = 0x00000400,
-    OQWF_HIDESEARCHUI = 0x00000800,
+    OQWF_HIDEMENUS    = 0x00000400U,
+    OQWF_HIDESEARCHUI = 0x00000800U,
 }
 
-enum uint OQWF_PARAMISPROPERTYBAG = 0x80000000;
+enum uint OQWF_PARAMISPROPERTYBAG = 0x80000000U;
 enum GUID CLSID_DsAdminCreateObj = GUID("e301a009-f901-11d2-82b9-00c04f68928b");
 
 enum : uint
 {
-    DSA_NEWOBJ_CTX_PRECOMMIT  = 0x00000001,
-    DSA_NEWOBJ_CTX_COMMIT     = 0x00000002,
-    DSA_NEWOBJ_CTX_POSTCOMMIT = 0x00000003,
-    DSA_NEWOBJ_CTX_CLEANUP    = 0x00000004,
+    DSA_NEWOBJ_CTX_PRECOMMIT  = 0x00000001U,
+    DSA_NEWOBJ_CTX_COMMIT     = 0x00000002U,
+    DSA_NEWOBJ_CTX_POSTCOMMIT = 0x00000003U,
+    DSA_NEWOBJ_CTX_CLEANUP    = 0x00000004U,
 }
 
 enum : uint
 {
-    DSA_NOTIFY_DEL                        = 0x00000001,
-    DSA_NOTIFY_REN                        = 0x00000002,
-    DSA_NOTIFY_MOV                        = 0x00000004,
-    DSA_NOTIFY_PROP                       = 0x00000008,
-    DSA_NOTIFY_FLAG_ADDITIONAL_DATA       = 0x00000002,
-    DSA_NOTIFY_FLAG_FORCE_ADDITIONAL_DATA = 0x00000001,
+    DSA_NOTIFY_DEL                        = 0x00000001U,
+    DSA_NOTIFY_REN                        = 0x00000002U,
+    DSA_NOTIFY_MOV                        = 0x00000004U,
+    DSA_NOTIFY_PROP                       = 0x00000008U,
+    DSA_NOTIFY_FLAG_ADDITIONAL_DATA       = 0x00000002U,
+    DSA_NOTIFY_FLAG_FORCE_ADDITIONAL_DATA = 0x00000001U,
 }
 
 enum GUID CLSID_MicrosoftDS = GUID("fe1290f0-cfbd-11cf-a330-00aa00c16e65");
@@ -666,18 +712,18 @@ enum GUID CLSID_DsFolderProperties = GUID("9e51e0d0-6e0f-11d2-9601-00c04fa31a86"
 
 enum : uint
 {
-    DSOBJECT_ISCONTAINER   = 0x00000001,
-    DSOBJECT_READONLYPAGES = 0x80000000,
+    DSOBJECT_ISCONTAINER   = 0x00000001U,
+    DSOBJECT_READONLYPAGES = 0x80000000U,
 }
 
 enum : uint
 {
-    DSPROVIDER_UNUSED_0 = 0x00000001,
-    DSPROVIDER_UNUSED_1 = 0x00000002,
-    DSPROVIDER_UNUSED_2 = 0x00000004,
-    DSPROVIDER_UNUSED_3 = 0x00000008,
-    DSPROVIDER_ADVANCED = 0x00000010,
-    DSPROVIDER_AD_LDS   = 0x00000020,
+    DSPROVIDER_UNUSED_0 = 0x00000001U,
+    DSPROVIDER_UNUSED_1 = 0x00000002U,
+    DSPROVIDER_UNUSED_2 = 0x00000004U,
+    DSPROVIDER_UNUSED_3 = 0x00000008U,
+    DSPROVIDER_ADVANCED = 0x00000010U,
+    DSPROVIDER_AD_LDS   = 0x00000020U,
 }
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/AD/cfstr-dsobjectnames))], [])*/const(wchar)*
@@ -689,13 +735,13 @@ enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(El
 enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/AD/cfstr-ds-display-spec-options))], [])*/const(wchar)* CFSTR_DSDISPLAYSPECOPTIONS = "DsDisplaySpecOptions";
 enum const(wchar)* DS_PROP_SHELL_PREFIX = "shell";
 enum const(wchar)* DS_PROP_ADMIN_PREFIX = "admin";
-enum uint DSDSOF_HASUSERANDSERVERINFO = 0x00000001;
-enum uint DSDSOF_SIMPLEAUTHENTICATE = 0x00000002;
+enum uint DSDSOF_HASUSERANDSERVERINFO = 0x00000001U;
+enum uint DSDSOF_SIMPLEAUTHENTICATE = 0x00000002U;
 
 enum : uint
 {
-    DSDSOF_DONTSIGNSEAL = 0x00000004,
-    DSDSOF_DSAVAILABLE  = 0x40000000,
+    DSDSOF_DONTSIGNSEAL = 0x00000004U,
+    DSDSOF_DSAVAILABLE  = 0x40000000U,
 }
 
 enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/AD/cfstr-dspropertypageinfo))], [])*/const(wchar)* CFSTR_DSPROPERTYPAGEINFO = "DsPropPageInfo";
@@ -703,187 +749,187 @@ enum const(wchar)* DSPROP_ATTRCHANGED_MSG = "DsPropAttrChanged";
 
 enum : uint
 {
-    DBDTF_RETURNFQDN         = 0x00000001,
-    DBDTF_RETURNMIXEDDOMAINS = 0x00000002,
-    DBDTF_RETURNEXTERNAL     = 0x00000004,
-    DBDTF_RETURNINBOUND      = 0x00000008,
-    DBDTF_RETURNINOUTBOUND   = 0x00000010,
+    DBDTF_RETURNFQDN         = 0x00000001U,
+    DBDTF_RETURNMIXEDDOMAINS = 0x00000002U,
+    DBDTF_RETURNEXTERNAL     = 0x00000004U,
+    DBDTF_RETURNINBOUND      = 0x00000008U,
+    DBDTF_RETURNINOUTBOUND   = 0x00000010U,
 }
 
-enum uint DSSSF_SIMPLEAUTHENTICATE = 0x00000001;
-enum uint DSSSF_DONTSIGNSEAL = 0x00000002;
-enum uint DSSSF_DSAVAILABLE = 0x80000000;
+enum uint DSSSF_SIMPLEAUTHENTICATE = 0x00000001U;
+enum uint DSSSF_DONTSIGNSEAL = 0x00000002U;
+enum uint DSSSF_DSAVAILABLE = 0x80000000U;
 
 enum : uint
 {
-    DSGIF_ISNORMAL       = 0x00000000,
-    DSGIF_ISOPEN         = 0x00000001,
-    DSGIF_ISDISABLED     = 0x00000002,
-    DSGIF_ISMASK         = 0x0000000f,
-    DSGIF_GETDEFAULTICON = 0x00000010,
+    DSGIF_ISNORMAL       = 0x00000000U,
+    DSGIF_ISOPEN         = 0x00000001U,
+    DSGIF_ISDISABLED     = 0x00000002U,
+    DSGIF_ISMASK         = 0x0000000fU,
+    DSGIF_GETDEFAULTICON = 0x00000010U,
 }
 
-enum uint DSGIF_DEFAULTISCONTAINER = 0x00000020;
-enum uint DSICCF_IGNORETREATASLEAF = 0x00000001;
-enum uint DSECAF_NOTLISTED = 0x00000001;
+enum uint DSGIF_DEFAULTISCONTAINER = 0x00000020U;
+enum uint DSICCF_IGNORETREATASLEAF = 0x00000001U;
+enum uint DSECAF_NOTLISTED = 0x00000001U;
 
 enum : uint
 {
-    DSCCIF_HASWIZARDDIALOG      = 0x00000001,
-    DSCCIF_HASWIZARDPRIMARYPAGE = 0x00000002,
-}
-
-enum : uint
-{
-    DSBI_NOBUTTONS     = 0x00000001,
-    DSBI_NOLINES       = 0x00000002,
-    DSBI_NOLINESATROOT = 0x00000004,
-}
-
-enum uint DSBI_CHECKBOXES = 0x00000100;
-
-enum : uint
-{
-    DSBI_NOROOT        = 0x00010000,
-    DSBI_INCLUDEHIDDEN = 0x00020000,
-}
-
-enum uint DSBI_EXPANDONOPEN = 0x00040000;
-enum uint DSBI_ENTIREDIRECTORY = 0x00090000;
-enum uint DSBI_RETURN_FORMAT = 0x00100000;
-enum uint DSBI_HASCREDENTIALS = 0x00200000;
-enum uint DSBI_IGNORETREATASLEAF = 0x00400000;
-enum uint DSBI_SIMPLEAUTHENTICATE = 0x00800000;
-enum uint DSBI_RETURNOBJECTCLASS = 0x01000000;
-enum uint DSBI_DONTSIGNSEAL = 0x02000000;
-enum uint DSB_MAX_DISPLAYNAME_CHARS = 0x00000040;
-
-enum : uint
-{
-    DSBF_STATE        = 0x00000001,
-    DSBF_ICONLOCATION = 0x00000002,
-}
-
-enum uint DSBF_DISPLAYNAME = 0x00000004;
-
-enum : uint
-{
-    DSBS_CHECKED = 0x00000001,
-    DSBS_HIDDEN  = 0x00000002,
-    DSBS_ROOT    = 0x00000004,
+    DSCCIF_HASWIZARDDIALOG      = 0x00000001U,
+    DSCCIF_HASWIZARDPRIMARYPAGE = 0x00000002U,
 }
 
 enum : uint
 {
-    DSBM_QUERYINSERTW = 0x00000064,
-    DSBM_QUERYINSERTA = 0x00000065,
-    DSBM_QUERYINSERT  = 0x00000064,
+    DSBI_NOBUTTONS     = 0x00000001U,
+    DSBI_NOLINES       = 0x00000002U,
+    DSBI_NOLINESATROOT = 0x00000004U,
 }
 
-enum uint DSBM_CHANGEIMAGESTATE = 0x00000066;
+enum uint DSBI_CHECKBOXES = 0x00000100U;
 
 enum : uint
 {
-    DSBM_HELP        = 0x00000067,
-    DSBM_CONTEXTMENU = 0x00000068,
+    DSBI_NOROOT        = 0x00010000U,
+    DSBI_INCLUDEHIDDEN = 0x00020000U,
 }
+
+enum uint DSBI_EXPANDONOPEN = 0x00040000U;
+enum uint DSBI_ENTIREDIRECTORY = 0x00090000U;
+enum uint DSBI_RETURN_FORMAT = 0x00100000U;
+enum uint DSBI_HASCREDENTIALS = 0x00200000U;
+enum uint DSBI_IGNORETREATASLEAF = 0x00400000U;
+enum uint DSBI_SIMPLEAUTHENTICATE = 0x00800000U;
+enum uint DSBI_RETURNOBJECTCLASS = 0x01000000U;
+enum uint DSBI_DONTSIGNSEAL = 0x02000000U;
+enum uint DSB_MAX_DISPLAYNAME_CHARS = 0x00000040U;
 
 enum : uint
 {
-    DSBID_BANNER        = 0x00000100,
-    DSBID_CONTAINERLIST = 0x00000101,
+    DSBF_STATE        = 0x00000001U,
+    DSBF_ICONLOCATION = 0x00000002U,
 }
 
-enum uint DS_FORCE_REDISCOVERY = 0x00000001;
+enum uint DSBF_DISPLAYNAME = 0x00000004U;
 
 enum : uint
 {
-    DS_DIRECTORY_SERVICE_REQUIRED  = 0x00000010,
-    DS_DIRECTORY_SERVICE_PREFERRED = 0x00000020,
-}
-
-enum uint DS_GC_SERVER_REQUIRED = 0x00000040;
-enum uint DS_PDC_REQUIRED = 0x00000080;
-enum uint DS_BACKGROUND_ONLY = 0x00000100;
-enum uint DS_IP_REQUIRED = 0x00000200;
-enum uint DS_KDC_REQUIRED = 0x00000400;
-enum uint DS_TIMESERV_REQUIRED = 0x00000800;
-enum uint DS_WRITABLE_REQUIRED = 0x00001000;
-enum uint DS_GOOD_TIMESERV_PREFERRED = 0x00002000;
-enum uint DS_AVOID_SELF = 0x00004000;
-enum uint DS_ONLY_LDAP_NEEDED = 0x00008000;
-enum uint DS_IS_FLAT_NAME = 0x00010000;
-enum uint DS_IS_DNS_NAME = 0x00020000;
-enum uint DS_TRY_NEXTCLOSEST_SITE = 0x00040000;
-enum uint DS_DIRECTORY_SERVICE_6_REQUIRED = 0x00080000;
-enum uint DS_WEB_SERVICE_REQUIRED = 0x00100000;
-
-enum : uint
-{
-    DS_DIRECTORY_SERVICE_8_REQUIRED  = 0x00200000,
-    DS_DIRECTORY_SERVICE_9_REQUIRED  = 0x00400000,
-    DS_DIRECTORY_SERVICE_10_REQUIRED = 0x00800000,
-}
-
-enum uint DS_KEY_LIST_SUPPORT_REQUIRED = 0x01000000;
-enum uint DS_DIRECTORY_SERVICE_13_REQUIRED = 0x02000000;
-
-enum : uint
-{
-    DS_RETURN_DNS_NAME  = 0x40000000,
-    DS_RETURN_FLAT_NAME = 0x80000000,
-}
-
-enum uint DS_PDC_FLAG = 0x00000001;
-enum uint DS_GC_FLAG = 0x00000004;
-enum uint DS_LDAP_FLAG = 0x00000008;
-enum uint DS_DS_FLAG = 0x00000010;
-enum uint DS_KDC_FLAG = 0x00000020;
-enum uint DS_TIMESERV_FLAG = 0x00000040;
-enum uint DS_CLOSEST_FLAG = 0x00000080;
-enum uint DS_WRITABLE_FLAG = 0x00000100;
-enum uint DS_GOOD_TIMESERV_FLAG = 0x00000200;
-enum uint DS_NDNC_FLAG = 0x00000400;
-enum uint DS_SELECT_SECRET_DOMAIN_6_FLAG = 0x00000800;
-enum uint DS_FULL_SECRET_DOMAIN_6_FLAG = 0x00001000;
-enum uint DS_WS_FLAG = 0x00002000;
-
-enum : uint
-{
-    DS_DS_8_FLAG  = 0x00004000,
-    DS_DS_9_FLAG  = 0x00008000,
-    DS_DS_10_FLAG = 0x00010000,
-}
-
-enum uint DS_KEY_LIST_FLAG = 0x00020000;
-enum uint DS_DS_13_FLAG = 0x00040000;
-enum uint DS_PING_FLAGS = 0x000fffff;
-enum uint DS_DNS_CONTROLLER_FLAG = 0x20000000;
-enum uint DS_DNS_DOMAIN_FLAG = 0x40000000;
-enum uint DS_DNS_FOREST_FLAG = 0x80000000;
-
-enum : uint
-{
-    DS_DOMAIN_IN_FOREST       = 0x00000001,
-    DS_DOMAIN_DIRECT_OUTBOUND = 0x00000002,
+    DSBS_CHECKED = 0x00000001U,
+    DSBS_HIDDEN  = 0x00000002U,
+    DSBS_ROOT    = 0x00000004U,
 }
 
 enum : uint
 {
-    DS_DOMAIN_TREE_ROOT      = 0x00000004,
-    DS_DOMAIN_PRIMARY        = 0x00000008,
-    DS_DOMAIN_NATIVE_MODE    = 0x00000010,
-    DS_DOMAIN_DIRECT_INBOUND = 0x00000020,
+    DSBM_QUERYINSERTW = 0x00000064U,
+    DSBM_QUERYINSERTA = 0x00000065U,
+    DSBM_QUERYINSERT  = 0x00000064U,
+}
+
+enum uint DSBM_CHANGEIMAGESTATE = 0x00000066U;
+
+enum : uint
+{
+    DSBM_HELP        = 0x00000067U,
+    DSBM_CONTEXTMENU = 0x00000068U,
 }
 
 enum : uint
 {
-    DS_GFTI_UPDATE_TDO  = 0x00000001,
-    DS_GFTI_VALID_FLAGS = 0x00000001,
+    DSBID_BANNER        = 0x00000100U,
+    DSBID_CONTAINERLIST = 0x00000101U,
 }
 
-enum uint DS_ONLY_DO_SITE_NAME = 0x00000001;
-enum uint DS_NOTIFY_AFTER_SITE_RECORDS = 0x00000002;
+enum uint DS_FORCE_REDISCOVERY = 0x00000001U;
+
+enum : uint
+{
+    DS_DIRECTORY_SERVICE_REQUIRED  = 0x00000010U,
+    DS_DIRECTORY_SERVICE_PREFERRED = 0x00000020U,
+}
+
+enum uint DS_GC_SERVER_REQUIRED = 0x00000040U;
+enum uint DS_PDC_REQUIRED = 0x00000080U;
+enum uint DS_BACKGROUND_ONLY = 0x00000100U;
+enum uint DS_IP_REQUIRED = 0x00000200U;
+enum uint DS_KDC_REQUIRED = 0x00000400U;
+enum uint DS_TIMESERV_REQUIRED = 0x00000800U;
+enum uint DS_WRITABLE_REQUIRED = 0x00001000U;
+enum uint DS_GOOD_TIMESERV_PREFERRED = 0x00002000U;
+enum uint DS_AVOID_SELF = 0x00004000U;
+enum uint DS_ONLY_LDAP_NEEDED = 0x00008000U;
+enum uint DS_IS_FLAT_NAME = 0x00010000U;
+enum uint DS_IS_DNS_NAME = 0x00020000U;
+enum uint DS_TRY_NEXTCLOSEST_SITE = 0x00040000U;
+enum uint DS_DIRECTORY_SERVICE_6_REQUIRED = 0x00080000U;
+enum uint DS_WEB_SERVICE_REQUIRED = 0x00100000U;
+
+enum : uint
+{
+    DS_DIRECTORY_SERVICE_8_REQUIRED  = 0x00200000U,
+    DS_DIRECTORY_SERVICE_9_REQUIRED  = 0x00400000U,
+    DS_DIRECTORY_SERVICE_10_REQUIRED = 0x00800000U,
+}
+
+enum uint DS_KEY_LIST_SUPPORT_REQUIRED = 0x01000000U;
+enum uint DS_DIRECTORY_SERVICE_13_REQUIRED = 0x02000000U;
+
+enum : uint
+{
+    DS_RETURN_DNS_NAME  = 0x40000000U,
+    DS_RETURN_FLAT_NAME = 0x80000000U,
+}
+
+enum uint DS_PDC_FLAG = 0x00000001U;
+enum uint DS_GC_FLAG = 0x00000004U;
+enum uint DS_LDAP_FLAG = 0x00000008U;
+enum uint DS_DS_FLAG = 0x00000010U;
+enum uint DS_KDC_FLAG = 0x00000020U;
+enum uint DS_TIMESERV_FLAG = 0x00000040U;
+enum uint DS_CLOSEST_FLAG = 0x00000080U;
+enum uint DS_WRITABLE_FLAG = 0x00000100U;
+enum uint DS_GOOD_TIMESERV_FLAG = 0x00000200U;
+enum uint DS_NDNC_FLAG = 0x00000400U;
+enum uint DS_SELECT_SECRET_DOMAIN_6_FLAG = 0x00000800U;
+enum uint DS_FULL_SECRET_DOMAIN_6_FLAG = 0x00001000U;
+enum uint DS_WS_FLAG = 0x00002000U;
+
+enum : uint
+{
+    DS_DS_8_FLAG  = 0x00004000U,
+    DS_DS_9_FLAG  = 0x00008000U,
+    DS_DS_10_FLAG = 0x00010000U,
+}
+
+enum uint DS_KEY_LIST_FLAG = 0x00020000U;
+enum uint DS_DS_13_FLAG = 0x00040000U;
+enum uint DS_PING_FLAGS = 0x000fffffU;
+enum uint DS_DNS_CONTROLLER_FLAG = 0x20000000U;
+enum uint DS_DNS_DOMAIN_FLAG = 0x40000000U;
+enum uint DS_DNS_FOREST_FLAG = 0x80000000U;
+
+enum : uint
+{
+    DS_DOMAIN_IN_FOREST       = 0x00000001U,
+    DS_DOMAIN_DIRECT_OUTBOUND = 0x00000002U,
+}
+
+enum : uint
+{
+    DS_DOMAIN_TREE_ROOT      = 0x00000004U,
+    DS_DOMAIN_PRIMARY        = 0x00000008U,
+    DS_DOMAIN_NATIVE_MODE    = 0x00000010U,
+    DS_DOMAIN_DIRECT_INBOUND = 0x00000020U,
+}
+
+enum : uint
+{
+    DS_GFTI_UPDATE_TDO  = 0x00000001U,
+    DS_GFTI_VALID_FLAGS = 0x00000001U,
+}
+
+enum uint DS_ONLY_DO_SITE_NAME = 0x00000001U;
+enum uint DS_NOTIFY_AFTER_SITE_RECORDS = 0x00000002U;
 
 enum : GUID
 {
@@ -903,20 +949,20 @@ enum GUID CLSID_DsFindFrsMembers = GUID("94ce4b18-b3d3-11d1-b9b4-00c04fd8d5b0");
 
 enum : uint
 {
-    DSQPF_NOSAVE       = 0x00000001,
-    DSQPF_SAVELOCATION = 0x00000002,
+    DSQPF_NOSAVE       = 0x00000001U,
+    DSQPF_SAVELOCATION = 0x00000002U,
 }
 
-enum uint DSQPF_SHOWHIDDENOBJECTS = 0x00000004;
+enum uint DSQPF_SHOWHIDDENOBJECTS = 0x00000004U;
 
 enum : uint
 {
-    DSQPF_ENABLEADMINFEATURES    = 0x00000008,
-    DSQPF_ENABLEADVANCEDFEATURES = 0x00000010,
+    DSQPF_ENABLEADMINFEATURES    = 0x00000008U,
+    DSQPF_ENABLEADVANCEDFEATURES = 0x00000010U,
 }
 
-enum uint DSQPF_HASCREDENTIALS = 0x00000020;
-enum uint DSQPF_NOCHOOSECOLUMNS = 0x00000040;
+enum uint DSQPF_HASCREDENTIALS = 0x00000020U;
+enum uint DSQPF_NOCHOOSECOLUMNS = 0x00000040U;
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/AD/cfstr-dsqueryparams))], [])*/const(wchar)*
 {
@@ -924,59 +970,59 @@ enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(El
     CFSTR_DSQUERYSCOPE  = "DsQueryScope",
 }
 
-enum uint DSQPM_GETCLASSLIST = 0x10000000;
-enum uint DSQPM_HELPTOPICS = 0x10000001;
+enum uint DSQPM_GETCLASSLIST = 0x10000000U;
+enum uint DSQPM_HELPTOPICS = 0x10000001U;
 
 enum : uint
 {
-    DSROLE_PRIMARY_DS_RUNNING    = 0x00000001,
-    DSROLE_PRIMARY_DS_MIXED_MODE = 0x00000002,
+    DSROLE_PRIMARY_DS_RUNNING    = 0x00000001U,
+    DSROLE_PRIMARY_DS_MIXED_MODE = 0x00000002U,
 }
 
-enum uint DSROLE_UPGRADE_IN_PROGRESS = 0x00000004;
+enum uint DSROLE_UPGRADE_IN_PROGRESS = 0x00000004U;
 
 enum : uint
 {
-    DSROLE_PRIMARY_DS_READONLY         = 0x00000008,
-    DSROLE_PRIMARY_DOMAIN_GUID_PRESENT = 0x01000000,
-}
-
-enum : uint
-{
-    ADS_ATTR_CLEAR  = 0x00000001,
-    ADS_ATTR_UPDATE = 0x00000002,
-    ADS_ATTR_APPEND = 0x00000003,
-    ADS_ATTR_DELETE = 0x00000004,
+    DSROLE_PRIMARY_DS_READONLY         = 0x00000008U,
+    DSROLE_PRIMARY_DOMAIN_GUID_PRESENT = 0x01000000U,
 }
 
 enum : uint
 {
-    ADS_EXT_MINEXTDISPID = 0x00000001,
-    ADS_EXT_MAXEXTDISPID = 0x00ffffff,
+    ADS_ATTR_CLEAR  = 0x00000001U,
+    ADS_ATTR_UPDATE = 0x00000002U,
+    ADS_ATTR_APPEND = 0x00000003U,
+    ADS_ATTR_DELETE = 0x00000004U,
 }
 
 enum : uint
 {
-    ADS_EXT_INITCREDENTIALS     = 0x00000001,
-    ADS_EXT_INITIALIZE_COMPLETE = 0x00000002,
+    ADS_EXT_MINEXTDISPID = 0x00000001U,
+    ADS_EXT_MAXEXTDISPID = 0x00ffffffU,
 }
 
 enum : uint
 {
-    DS_BEHAVIOR_WIN2000                    = 0x00000000,
-    DS_BEHAVIOR_WIN2003_WITH_MIXED_DOMAINS = 0x00000001,
-    DS_BEHAVIOR_WIN2003                    = 0x00000002,
-    DS_BEHAVIOR_WIN2008                    = 0x00000003,
-    DS_BEHAVIOR_WIN2008R2                  = 0x00000004,
-    DS_BEHAVIOR_WIN2012                    = 0x00000005,
-    DS_BEHAVIOR_WIN2012R2                  = 0x00000006,
-    DS_BEHAVIOR_WIN2016                    = 0x00000007,
-    DS_BEHAVIOR_WIN2025                    = 0x0000000a,
-    DS_BEHAVIOR_LONGHORN                   = 0x00000003,
-    DS_BEHAVIOR_WIN7                       = 0x00000004,
-    DS_BEHAVIOR_WIN8                       = 0x00000005,
-    DS_BEHAVIOR_WINBLUE                    = 0x00000006,
-    DS_BEHAVIOR_WINTHRESHOLD               = 0x00000007,
+    ADS_EXT_INITCREDENTIALS     = 0x00000001U,
+    ADS_EXT_INITIALIZE_COMPLETE = 0x00000002U,
+}
+
+enum : uint
+{
+    DS_BEHAVIOR_WIN2000                    = 0x00000000U,
+    DS_BEHAVIOR_WIN2003_WITH_MIXED_DOMAINS = 0x00000001U,
+    DS_BEHAVIOR_WIN2003                    = 0x00000002U,
+    DS_BEHAVIOR_WIN2008                    = 0x00000003U,
+    DS_BEHAVIOR_WIN2008R2                  = 0x00000004U,
+    DS_BEHAVIOR_WIN2012                    = 0x00000005U,
+    DS_BEHAVIOR_WIN2012R2                  = 0x00000006U,
+    DS_BEHAVIOR_WIN2016                    = 0x00000007U,
+    DS_BEHAVIOR_WIN2025                    = 0x0000000aU,
+    DS_BEHAVIOR_LONGHORN                   = 0x00000003U,
+    DS_BEHAVIOR_WIN7                       = 0x00000004U,
+    DS_BEHAVIOR_WIN8                       = 0x00000005U,
+    DS_BEHAVIOR_WINBLUE                    = 0x00000006U,
+    DS_BEHAVIOR_WINTHRESHOLD               = 0x00000007U,
 }
 
 enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
@@ -987,248 +1033,248 @@ enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(E
 
 enum : uint
 {
-    ACTRL_DS_OPEN           = 0x00000000,
-    ACTRL_DS_CREATE_CHILD   = 0x00000001,
-    ACTRL_DS_DELETE_CHILD   = 0x00000002,
-    ACTRL_DS_LIST           = 0x00000004,
-    ACTRL_DS_SELF           = 0x00000008,
-    ACTRL_DS_READ_PROP      = 0x00000010,
-    ACTRL_DS_WRITE_PROP     = 0x00000020,
-    ACTRL_DS_DELETE_TREE    = 0x00000040,
-    ACTRL_DS_LIST_OBJECT    = 0x00000080,
-    ACTRL_DS_CONTROL_ACCESS = 0x00000100,
+    ACTRL_DS_OPEN           = 0x00000000U,
+    ACTRL_DS_CREATE_CHILD   = 0x00000001U,
+    ACTRL_DS_DELETE_CHILD   = 0x00000002U,
+    ACTRL_DS_LIST           = 0x00000004U,
+    ACTRL_DS_SELF           = 0x00000008U,
+    ACTRL_DS_READ_PROP      = 0x00000010U,
+    ACTRL_DS_WRITE_PROP     = 0x00000020U,
+    ACTRL_DS_DELETE_TREE    = 0x00000040U,
+    ACTRL_DS_LIST_OBJECT    = 0x00000080U,
+    ACTRL_DS_CONTROL_ACCESS = 0x00000100U,
 }
 
 enum : uint
 {
-    NTDSAPI_BIND_ALLOW_DELEGATION = 0x00000001,
-    NTDSAPI_BIND_FIND_BINDING     = 0x00000002,
-    NTDSAPI_BIND_FORCE_KERBEROS   = 0x00000004,
+    NTDSAPI_BIND_ALLOW_DELEGATION = 0x00000001U,
+    NTDSAPI_BIND_FIND_BINDING     = 0x00000002U,
+    NTDSAPI_BIND_FORCE_KERBEROS   = 0x00000004U,
 }
 
-enum uint DS_REPSYNC_ASYNCHRONOUS_OPERATION = 0x00000001;
+enum uint DS_REPSYNC_ASYNCHRONOUS_OPERATION = 0x00000001U;
 
 enum : uint
 {
-    DS_REPSYNC_WRITEABLE           = 0x00000002,
-    DS_REPSYNC_PERIODIC            = 0x00000004,
-    DS_REPSYNC_INTERSITE_MESSAGING = 0x00000008,
-}
-
-enum : uint
-{
-    DS_REPSYNC_FULL                = 0x00000020,
-    DS_REPSYNC_URGENT              = 0x00000040,
-    DS_REPSYNC_NO_DISCARD          = 0x00000080,
-    DS_REPSYNC_FORCE               = 0x00000100,
-    DS_REPSYNC_ADD_REFERENCE       = 0x00000200,
-    DS_REPSYNC_NEVER_COMPLETED     = 0x00000400,
-    DS_REPSYNC_TWO_WAY             = 0x00000800,
-    DS_REPSYNC_NEVER_NOTIFY        = 0x00001000,
-    DS_REPSYNC_INITIAL             = 0x00002000,
-    DS_REPSYNC_USE_COMPRESSION     = 0x00004000,
-    DS_REPSYNC_ABANDONED           = 0x00008000,
-    DS_REPSYNC_SELECT_SECRETS      = 0x00008000,
-    DS_REPSYNC_INITIAL_IN_PROGRESS = 0x00010000,
-}
-
-enum uint DS_REPSYNC_PARTIAL_ATTRIBUTE_SET = 0x00020000;
-
-enum : uint
-{
-    DS_REPSYNC_REQUEUE              = 0x00040000,
-    DS_REPSYNC_NOTIFICATION         = 0x00080000,
-    DS_REPSYNC_ASYNCHRONOUS_REPLICA = 0x00100000,
+    DS_REPSYNC_WRITEABLE           = 0x00000002U,
+    DS_REPSYNC_PERIODIC            = 0x00000004U,
+    DS_REPSYNC_INTERSITE_MESSAGING = 0x00000008U,
 }
 
 enum : uint
 {
-    DS_REPSYNC_CRITICAL         = 0x00200000,
-    DS_REPSYNC_FULL_IN_PROGRESS = 0x00400000,
-    DS_REPSYNC_PREEMPTED        = 0x00800000,
-    DS_REPSYNC_NONGC_RO_REPLICA = 0x01000000,
+    DS_REPSYNC_FULL                = 0x00000020U,
+    DS_REPSYNC_URGENT              = 0x00000040U,
+    DS_REPSYNC_NO_DISCARD          = 0x00000080U,
+    DS_REPSYNC_FORCE               = 0x00000100U,
+    DS_REPSYNC_ADD_REFERENCE       = 0x00000200U,
+    DS_REPSYNC_NEVER_COMPLETED     = 0x00000400U,
+    DS_REPSYNC_TWO_WAY             = 0x00000800U,
+    DS_REPSYNC_NEVER_NOTIFY        = 0x00001000U,
+    DS_REPSYNC_INITIAL             = 0x00002000U,
+    DS_REPSYNC_USE_COMPRESSION     = 0x00004000U,
+    DS_REPSYNC_ABANDONED           = 0x00008000U,
+    DS_REPSYNC_SELECT_SECRETS      = 0x00008000U,
+    DS_REPSYNC_INITIAL_IN_PROGRESS = 0x00010000U,
 }
 
-enum uint DS_REPADD_ASYNCHRONOUS_OPERATION = 0x00000001;
+enum uint DS_REPSYNC_PARTIAL_ATTRIBUTE_SET = 0x00020000U;
 
 enum : uint
 {
-    DS_REPADD_WRITEABLE           = 0x00000002,
-    DS_REPADD_INITIAL             = 0x00000004,
-    DS_REPADD_PERIODIC            = 0x00000008,
-    DS_REPADD_INTERSITE_MESSAGING = 0x00000010,
-}
-
-enum uint DS_REPADD_ASYNCHRONOUS_REPLICA = 0x00000020;
-
-enum : uint
-{
-    DS_REPADD_DISABLE_NOTIFICATION = 0x00000040,
-    DS_REPADD_DISABLE_PERIODIC     = 0x00000080,
-}
-
-enum uint DS_REPADD_USE_COMPRESSION = 0x00000100;
-
-enum : uint
-{
-    DS_REPADD_NEVER_NOTIFY     = 0x00000200,
-    DS_REPADD_TWO_WAY          = 0x00000400,
-    DS_REPADD_CRITICAL         = 0x00000800,
-    DS_REPADD_SELECT_SECRETS   = 0x00001000,
-    DS_REPADD_NONGC_RO_REPLICA = 0x01000000,
-}
-
-enum uint DS_REPDEL_ASYNCHRONOUS_OPERATION = 0x00000001;
-
-enum : uint
-{
-    DS_REPDEL_WRITEABLE           = 0x00000002,
-    DS_REPDEL_INTERSITE_MESSAGING = 0x00000004,
+    DS_REPSYNC_REQUEUE              = 0x00040000U,
+    DS_REPSYNC_NOTIFICATION         = 0x00080000U,
+    DS_REPSYNC_ASYNCHRONOUS_REPLICA = 0x00100000U,
 }
 
 enum : uint
 {
-    DS_REPDEL_IGNORE_ERRORS = 0x00000008,
-    DS_REPDEL_LOCAL_ONLY    = 0x00000010,
-    DS_REPDEL_NO_SOURCE     = 0x00000020,
-    DS_REPDEL_REF_OK        = 0x00000040,
+    DS_REPSYNC_CRITICAL         = 0x00200000U,
+    DS_REPSYNC_FULL_IN_PROGRESS = 0x00400000U,
+    DS_REPSYNC_PREEMPTED        = 0x00800000U,
+    DS_REPSYNC_NONGC_RO_REPLICA = 0x01000000U,
 }
 
-enum uint DS_REPMOD_ASYNCHRONOUS_OPERATION = 0x00000001;
+enum uint DS_REPADD_ASYNCHRONOUS_OPERATION = 0x00000001U;
 
 enum : uint
 {
-    DS_REPMOD_WRITEABLE        = 0x00000002,
-    DS_REPMOD_UPDATE_FLAGS     = 0x00000001,
-    DS_REPMOD_UPDATE_INSTANCE  = 0x00000002,
-    DS_REPMOD_UPDATE_ADDRESS   = 0x00000002,
-    DS_REPMOD_UPDATE_SCHEDULE  = 0x00000004,
-    DS_REPMOD_UPDATE_RESULT    = 0x00000008,
-    DS_REPMOD_UPDATE_TRANSPORT = 0x00000010,
+    DS_REPADD_WRITEABLE           = 0x00000002U,
+    DS_REPADD_INITIAL             = 0x00000004U,
+    DS_REPADD_PERIODIC            = 0x00000008U,
+    DS_REPADD_INTERSITE_MESSAGING = 0x00000010U,
 }
 
-enum uint DS_REPUPD_ASYNCHRONOUS_OPERATION = 0x00000001;
+enum uint DS_REPADD_ASYNCHRONOUS_REPLICA = 0x00000020U;
 
 enum : uint
 {
-    DS_REPUPD_WRITEABLE        = 0x00000002,
-    DS_REPUPD_ADD_REFERENCE    = 0x00000004,
-    DS_REPUPD_DELETE_REFERENCE = 0x00000008,
+    DS_REPADD_DISABLE_NOTIFICATION = 0x00000040U,
+    DS_REPADD_DISABLE_PERIODIC     = 0x00000080U,
 }
 
-enum uint DS_REPUPD_REFERENCE_GCSPN = 0x00000010;
+enum uint DS_REPADD_USE_COMPRESSION = 0x00000100U;
 
 enum : uint
 {
-    DS_INSTANCETYPE_IS_NC_HEAD      = 0x00000001,
-    DS_INSTANCETYPE_NC_IS_WRITEABLE = 0x00000004,
-    DS_INSTANCETYPE_NC_COMING       = 0x00000010,
-    DS_INSTANCETYPE_NC_GOING        = 0x00000020,
+    DS_REPADD_NEVER_NOTIFY     = 0x00000200U,
+    DS_REPADD_TWO_WAY          = 0x00000400U,
+    DS_REPADD_CRITICAL         = 0x00000800U,
+    DS_REPADD_SELECT_SECRETS   = 0x00001000U,
+    DS_REPADD_NONGC_RO_REPLICA = 0x01000000U,
 }
+
+enum uint DS_REPDEL_ASYNCHRONOUS_OPERATION = 0x00000001U;
 
 enum : uint
 {
-    NTDSDSA_OPT_IS_GC                    = 0x00000001,
-    NTDSDSA_OPT_DISABLE_INBOUND_REPL     = 0x00000002,
-    NTDSDSA_OPT_DISABLE_OUTBOUND_REPL    = 0x00000004,
-    NTDSDSA_OPT_DISABLE_NTDSCONN_XLATE   = 0x00000008,
-    NTDSDSA_OPT_DISABLE_SPN_REGISTRATION = 0x00000010,
+    DS_REPDEL_WRITEABLE           = 0x00000002U,
+    DS_REPDEL_INTERSITE_MESSAGING = 0x00000004U,
 }
 
 enum : uint
 {
-    NTDSDSA_OPT_GENERATE_OWN_TOPO = 0x00000020,
-    NTDSDSA_OPT_BLOCK_RPC         = 0x00000040,
+    DS_REPDEL_IGNORE_ERRORS = 0x00000008U,
+    DS_REPDEL_LOCAL_ONLY    = 0x00000010U,
+    DS_REPDEL_NO_SOURCE     = 0x00000020U,
+    DS_REPDEL_REF_OK        = 0x00000040U,
+}
+
+enum uint DS_REPMOD_ASYNCHRONOUS_OPERATION = 0x00000001U;
+
+enum : uint
+{
+    DS_REPMOD_WRITEABLE        = 0x00000002U,
+    DS_REPMOD_UPDATE_FLAGS     = 0x00000001U,
+    DS_REPMOD_UPDATE_INSTANCE  = 0x00000002U,
+    DS_REPMOD_UPDATE_ADDRESS   = 0x00000002U,
+    DS_REPMOD_UPDATE_SCHEDULE  = 0x00000004U,
+    DS_REPMOD_UPDATE_RESULT    = 0x00000008U,
+    DS_REPMOD_UPDATE_TRANSPORT = 0x00000010U,
+}
+
+enum uint DS_REPUPD_ASYNCHRONOUS_OPERATION = 0x00000001U;
+
+enum : uint
+{
+    DS_REPUPD_WRITEABLE        = 0x00000002U,
+    DS_REPUPD_ADD_REFERENCE    = 0x00000004U,
+    DS_REPUPD_DELETE_REFERENCE = 0x00000008U,
+}
+
+enum uint DS_REPUPD_REFERENCE_GCSPN = 0x00000010U;
+
+enum : uint
+{
+    DS_INSTANCETYPE_IS_NC_HEAD      = 0x00000001U,
+    DS_INSTANCETYPE_NC_IS_WRITEABLE = 0x00000004U,
+    DS_INSTANCETYPE_NC_COMING       = 0x00000010U,
+    DS_INSTANCETYPE_NC_GOING        = 0x00000020U,
 }
 
 enum : uint
 {
-    NTDSCONN_OPT_IS_GENERATED            = 0x00000001,
-    NTDSCONN_OPT_TWOWAY_SYNC             = 0x00000002,
-    NTDSCONN_OPT_OVERRIDE_NOTIFY_DEFAULT = 0x00000004,
+    NTDSDSA_OPT_IS_GC                    = 0x00000001U,
+    NTDSDSA_OPT_DISABLE_INBOUND_REPL     = 0x00000002U,
+    NTDSDSA_OPT_DISABLE_OUTBOUND_REPL    = 0x00000004U,
+    NTDSDSA_OPT_DISABLE_NTDSCONN_XLATE   = 0x00000008U,
+    NTDSDSA_OPT_DISABLE_SPN_REGISTRATION = 0x00000010U,
 }
 
 enum : uint
 {
-    NTDSCONN_OPT_USE_NOTIFY                    = 0x00000008,
-    NTDSCONN_OPT_DISABLE_INTERSITE_COMPRESSION = 0x00000010,
+    NTDSDSA_OPT_GENERATE_OWN_TOPO = 0x00000020U,
+    NTDSDSA_OPT_BLOCK_RPC         = 0x00000040U,
 }
 
 enum : uint
 {
-    NTDSCONN_OPT_USER_OWNED_SCHEDULE = 0x00000020,
-    NTDSCONN_OPT_RODC_TOPOLOGY       = 0x00000040,
+    NTDSCONN_OPT_IS_GENERATED            = 0x00000001U,
+    NTDSCONN_OPT_TWOWAY_SYNC             = 0x00000002U,
+    NTDSCONN_OPT_OVERRIDE_NOTIFY_DEFAULT = 0x00000004U,
 }
 
 enum : uint
 {
-    NTDSCONN_KCC_NO_REASON              = 0x00000000,
-    NTDSCONN_KCC_GC_TOPOLOGY            = 0x00000001,
-    NTDSCONN_KCC_RING_TOPOLOGY          = 0x00000002,
-    NTDSCONN_KCC_MINIMIZE_HOPS_TOPOLOGY = 0x00000004,
-}
-
-enum uint NTDSCONN_KCC_STALE_SERVERS_TOPOLOGY = 0x00000008;
-enum uint NTDSCONN_KCC_OSCILLATING_CONNECTION_TOPOLOGY = 0x00000010;
-
-enum : uint
-{
-    NTDSCONN_KCC_INTERSITE_GC_TOPOLOGY    = 0x00000020,
-    NTDSCONN_KCC_INTERSITE_TOPOLOGY       = 0x00000040,
-    NTDSCONN_KCC_SERVER_FAILOVER_TOPOLOGY = 0x00000080,
-}
-
-enum uint NTDSCONN_KCC_SITE_FAILOVER_TOPOLOGY = 0x00000100;
-enum uint NTDSCONN_KCC_REDUNDANT_SERVER_TOPOLOGY = 0x00000200;
-enum uint FRSCONN_PRIORITY_MASK = 0x70000000;
-enum uint FRSCONN_MAX_PRIORITY = 0x00000008;
-enum uint NTDSCONN_OPT_IGNORE_SCHEDULE_MASK = 0x80000000;
-
-enum : uint
-{
-    NTDSSETTINGS_OPT_IS_AUTO_TOPOLOGY_DISABLED            = 0x00000001,
-    NTDSSETTINGS_OPT_IS_TOPL_CLEANUP_DISABLED             = 0x00000002,
-    NTDSSETTINGS_OPT_IS_TOPL_MIN_HOPS_DISABLED            = 0x00000004,
-    NTDSSETTINGS_OPT_IS_TOPL_DETECT_STALE_DISABLED        = 0x00000008,
-    NTDSSETTINGS_OPT_IS_INTER_SITE_AUTO_TOPOLOGY_DISABLED = 0x00000010,
+    NTDSCONN_OPT_USE_NOTIFY                    = 0x00000008U,
+    NTDSCONN_OPT_DISABLE_INTERSITE_COMPRESSION = 0x00000010U,
 }
 
 enum : uint
 {
-    NTDSSETTINGS_OPT_IS_GROUP_CACHING_ENABLED             = 0x00000020,
-    NTDSSETTINGS_OPT_FORCE_KCC_WHISTLER_BEHAVIOR          = 0x00000040,
-    NTDSSETTINGS_OPT_FORCE_KCC_W2K_ELECTION               = 0x00000080,
-    NTDSSETTINGS_OPT_IS_RAND_BH_SELECTION_DISABLED        = 0x00000100,
-    NTDSSETTINGS_OPT_IS_SCHEDULE_HASHING_ENABLED          = 0x00000200,
-    NTDSSETTINGS_OPT_IS_REDUNDANT_SERVER_TOPOLOGY_ENABLED = 0x00000400,
+    NTDSCONN_OPT_USER_OWNED_SCHEDULE = 0x00000020U,
+    NTDSCONN_OPT_RODC_TOPOLOGY       = 0x00000040U,
 }
 
 enum : uint
 {
-    NTDSSETTINGS_OPT_W2K3_IGNORE_SCHEDULES = 0x00000800,
-    NTDSSETTINGS_OPT_W2K3_BRIDGES_REQUIRED = 0x00001000,
+    NTDSCONN_KCC_NO_REASON              = 0x00000000U,
+    NTDSCONN_KCC_GC_TOPOLOGY            = 0x00000001U,
+    NTDSCONN_KCC_RING_TOPOLOGY          = 0x00000002U,
+    NTDSCONN_KCC_MINIMIZE_HOPS_TOPOLOGY = 0x00000004U,
 }
 
-enum uint NTDSSETTINGS_DEFAULT_SERVER_REDUNDANCY = 0x00000002;
+enum uint NTDSCONN_KCC_STALE_SERVERS_TOPOLOGY = 0x00000008U;
+enum uint NTDSCONN_KCC_OSCILLATING_CONNECTION_TOPOLOGY = 0x00000010U;
 
 enum : uint
 {
-    NTDSTRANSPORT_OPT_IGNORE_SCHEDULES = 0x00000001,
-    NTDSTRANSPORT_OPT_BRIDGES_REQUIRED = 0x00000002,
+    NTDSCONN_KCC_INTERSITE_GC_TOPOLOGY    = 0x00000020U,
+    NTDSCONN_KCC_INTERSITE_TOPOLOGY       = 0x00000040U,
+    NTDSCONN_KCC_SERVER_FAILOVER_TOPOLOGY = 0x00000080U,
+}
+
+enum uint NTDSCONN_KCC_SITE_FAILOVER_TOPOLOGY = 0x00000100U;
+enum uint NTDSCONN_KCC_REDUNDANT_SERVER_TOPOLOGY = 0x00000200U;
+enum uint FRSCONN_PRIORITY_MASK = 0x70000000U;
+enum uint FRSCONN_MAX_PRIORITY = 0x00000008U;
+enum uint NTDSCONN_OPT_IGNORE_SCHEDULE_MASK = 0x80000000U;
+
+enum : uint
+{
+    NTDSSETTINGS_OPT_IS_AUTO_TOPOLOGY_DISABLED            = 0x00000001U,
+    NTDSSETTINGS_OPT_IS_TOPL_CLEANUP_DISABLED             = 0x00000002U,
+    NTDSSETTINGS_OPT_IS_TOPL_MIN_HOPS_DISABLED            = 0x00000004U,
+    NTDSSETTINGS_OPT_IS_TOPL_DETECT_STALE_DISABLED        = 0x00000008U,
+    NTDSSETTINGS_OPT_IS_INTER_SITE_AUTO_TOPOLOGY_DISABLED = 0x00000010U,
 }
 
 enum : uint
 {
-    NTDSSITECONN_OPT_USE_NOTIFY          = 0x00000001,
-    NTDSSITECONN_OPT_TWOWAY_SYNC         = 0x00000002,
-    NTDSSITECONN_OPT_DISABLE_COMPRESSION = 0x00000004,
+    NTDSSETTINGS_OPT_IS_GROUP_CACHING_ENABLED             = 0x00000020U,
+    NTDSSETTINGS_OPT_FORCE_KCC_WHISTLER_BEHAVIOR          = 0x00000040U,
+    NTDSSETTINGS_OPT_FORCE_KCC_W2K_ELECTION               = 0x00000080U,
+    NTDSSETTINGS_OPT_IS_RAND_BH_SELECTION_DISABLED        = 0x00000100U,
+    NTDSSETTINGS_OPT_IS_SCHEDULE_HASHING_ENABLED          = 0x00000200U,
+    NTDSSETTINGS_OPT_IS_REDUNDANT_SERVER_TOPOLOGY_ENABLED = 0x00000400U,
 }
 
 enum : uint
 {
-    NTDSSITELINK_OPT_USE_NOTIFY          = 0x00000001,
-    NTDSSITELINK_OPT_TWOWAY_SYNC         = 0x00000002,
-    NTDSSITELINK_OPT_DISABLE_COMPRESSION = 0x00000004,
+    NTDSSETTINGS_OPT_W2K3_IGNORE_SCHEDULES = 0x00000800U,
+    NTDSSETTINGS_OPT_W2K3_BRIDGES_REQUIRED = 0x00001000U,
+}
+
+enum uint NTDSSETTINGS_DEFAULT_SERVER_REDUNDANCY = 0x00000002U;
+
+enum : uint
+{
+    NTDSTRANSPORT_OPT_IGNORE_SCHEDULES = 0x00000001U,
+    NTDSTRANSPORT_OPT_BRIDGES_REQUIRED = 0x00000002U,
+}
+
+enum : uint
+{
+    NTDSSITECONN_OPT_USE_NOTIFY          = 0x00000001U,
+    NTDSSITECONN_OPT_TWOWAY_SYNC         = 0x00000002U,
+    NTDSSITECONN_OPT_DISABLE_COMPRESSION = 0x00000004U,
+}
+
+enum : uint
+{
+    NTDSSITELINK_OPT_USE_NOTIFY          = 0x00000001U,
+    NTDSSITELINK_OPT_TWOWAY_SYNC         = 0x00000002U,
+    NTDSSITELINK_OPT_DISABLE_COMPRESSION = 0x00000004U,
 }
 
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* GUID_USERS_CONTAINER_A = "a9d1ca15768811d1aded00c04fd8d5cd";
@@ -1258,92 +1304,92 @@ enum const(wchar)* GUID_KEYS_CONTAINER_W = "683A24E2E8164BD3AF86AC3C2CF3F981";
 
 enum : uint
 {
-    DS_REPSYNCALL_NO_OPTIONS                  = 0x00000000,
-    DS_REPSYNCALL_ABORT_IF_SERVER_UNAVAILABLE = 0x00000001,
+    DS_REPSYNCALL_NO_OPTIONS                  = 0x00000000U,
+    DS_REPSYNCALL_ABORT_IF_SERVER_UNAVAILABLE = 0x00000001U,
 }
 
-enum uint DS_REPSYNCALL_SYNC_ADJACENT_SERVERS_ONLY = 0x00000002;
+enum uint DS_REPSYNCALL_SYNC_ADJACENT_SERVERS_ONLY = 0x00000002U;
 
 enum : uint
 {
-    DS_REPSYNCALL_ID_SERVERS_BY_DN      = 0x00000004,
-    DS_REPSYNCALL_DO_NOT_SYNC           = 0x00000008,
-    DS_REPSYNCALL_SKIP_INITIAL_CHECK    = 0x00000010,
-    DS_REPSYNCALL_PUSH_CHANGES_OUTWARD  = 0x00000020,
-    DS_REPSYNCALL_CROSS_SITE_BOUNDARIES = 0x00000040,
+    DS_REPSYNCALL_ID_SERVERS_BY_DN      = 0x00000004U,
+    DS_REPSYNCALL_DO_NOT_SYNC           = 0x00000008U,
+    DS_REPSYNCALL_SKIP_INITIAL_CHECK    = 0x00000010U,
+    DS_REPSYNCALL_PUSH_CHANGES_OUTWARD  = 0x00000020U,
+    DS_REPSYNCALL_CROSS_SITE_BOUNDARIES = 0x00000040U,
 }
 
-enum uint DS_LIST_DSA_OBJECT_FOR_SERVER = 0x00000000;
-enum uint DS_LIST_DNS_HOST_NAME_FOR_SERVER = 0x00000001;
-enum uint DS_LIST_ACCOUNT_OBJECT_FOR_SERVER = 0x00000002;
-enum uint DS_ROLE_SCHEMA_OWNER = 0x00000000;
-enum uint DS_ROLE_DOMAIN_OWNER = 0x00000001;
+enum uint DS_LIST_DSA_OBJECT_FOR_SERVER = 0x00000000U;
+enum uint DS_LIST_DNS_HOST_NAME_FOR_SERVER = 0x00000001U;
+enum uint DS_LIST_ACCOUNT_OBJECT_FOR_SERVER = 0x00000002U;
+enum uint DS_ROLE_SCHEMA_OWNER = 0x00000000U;
+enum uint DS_ROLE_DOMAIN_OWNER = 0x00000001U;
 
 enum : uint
 {
-    DS_ROLE_PDC_OWNER            = 0x00000002,
-    DS_ROLE_RID_OWNER            = 0x00000003,
-    DS_ROLE_INFRASTRUCTURE_OWNER = 0x00000004,
-}
-
-enum : uint
-{
-    DS_SCHEMA_GUID_NOT_FOUND     = 0x00000000,
-    DS_SCHEMA_GUID_ATTR          = 0x00000001,
-    DS_SCHEMA_GUID_ATTR_SET      = 0x00000002,
-    DS_SCHEMA_GUID_CLASS         = 0x00000003,
-    DS_SCHEMA_GUID_CONTROL_RIGHT = 0x00000004,
+    DS_ROLE_PDC_OWNER            = 0x00000002U,
+    DS_ROLE_RID_OWNER            = 0x00000003U,
+    DS_ROLE_INFRASTRUCTURE_OWNER = 0x00000004U,
 }
 
 enum : uint
 {
-    DS_KCC_FLAG_ASYNC_OP = 0x00000001,
-    DS_KCC_FLAG_DAMPED   = 0x00000002,
-}
-
-enum uint DS_EXIST_ADVISORY_MODE = 0x00000001;
-enum uint DS_REPL_INFO_FLAG_IMPROVE_LINKED_ATTRS = 0x00000001;
-
-enum : uint
-{
-    DS_REPL_NBR_WRITEABLE          = 0x00000010,
-    DS_REPL_NBR_SYNC_ON_STARTUP    = 0x00000020,
-    DS_REPL_NBR_DO_SCHEDULED_SYNCS = 0x00000040,
-}
-
-enum uint DS_REPL_NBR_USE_ASYNC_INTERSITE_TRANSPORT = 0x00000080;
-
-enum : uint
-{
-    DS_REPL_NBR_TWO_WAY_SYNC          = 0x00000200,
-    DS_REPL_NBR_NONGC_RO_REPLICA      = 0x00000400,
-    DS_REPL_NBR_RETURN_OBJECT_PARENTS = 0x00000800,
+    DS_SCHEMA_GUID_NOT_FOUND     = 0x00000000U,
+    DS_SCHEMA_GUID_ATTR          = 0x00000001U,
+    DS_SCHEMA_GUID_ATTR_SET      = 0x00000002U,
+    DS_SCHEMA_GUID_CLASS         = 0x00000003U,
+    DS_SCHEMA_GUID_CONTROL_RIGHT = 0x00000004U,
 }
 
 enum : uint
 {
-    DS_REPL_NBR_SELECT_SECRETS        = 0x00001000,
-    DS_REPL_NBR_FULL_SYNC_IN_PROGRESS = 0x00010000,
-    DS_REPL_NBR_FULL_SYNC_NEXT_PACKET = 0x00020000,
+    DS_KCC_FLAG_ASYNC_OP = 0x00000001U,
+    DS_KCC_FLAG_DAMPED   = 0x00000002U,
+}
+
+enum uint DS_EXIST_ADVISORY_MODE = 0x00000001U;
+enum uint DS_REPL_INFO_FLAG_IMPROVE_LINKED_ATTRS = 0x00000001U;
+
+enum : uint
+{
+    DS_REPL_NBR_WRITEABLE          = 0x00000010U,
+    DS_REPL_NBR_SYNC_ON_STARTUP    = 0x00000020U,
+    DS_REPL_NBR_DO_SCHEDULED_SYNCS = 0x00000040U,
+}
+
+enum uint DS_REPL_NBR_USE_ASYNC_INTERSITE_TRANSPORT = 0x00000080U;
+
+enum : uint
+{
+    DS_REPL_NBR_TWO_WAY_SYNC          = 0x00000200U,
+    DS_REPL_NBR_NONGC_RO_REPLICA      = 0x00000400U,
+    DS_REPL_NBR_RETURN_OBJECT_PARENTS = 0x00000800U,
 }
 
 enum : uint
 {
-    DS_REPL_NBR_GCSPN                       = 0x00100000,
-    DS_REPL_NBR_NEVER_SYNCED                = 0x00200000,
-    DS_REPL_NBR_PREEMPTED                   = 0x01000000,
-    DS_REPL_NBR_IGNORE_CHANGE_NOTIFICATIONS = 0x04000000,
+    DS_REPL_NBR_SELECT_SECRETS        = 0x00001000U,
+    DS_REPL_NBR_FULL_SYNC_IN_PROGRESS = 0x00010000U,
+    DS_REPL_NBR_FULL_SYNC_NEXT_PACKET = 0x00020000U,
 }
-
-enum uint DS_REPL_NBR_DISABLE_SCHEDULED_SYNC = 0x08000000;
 
 enum : uint
 {
-    DS_REPL_NBR_COMPRESS_CHANGES        = 0x10000000,
-    DS_REPL_NBR_NO_CHANGE_NOTIFICATIONS = 0x20000000,
+    DS_REPL_NBR_GCSPN                       = 0x00100000U,
+    DS_REPL_NBR_NEVER_SYNCED                = 0x00200000U,
+    DS_REPL_NBR_PREEMPTED                   = 0x01000000U,
+    DS_REPL_NBR_IGNORE_CHANGE_NOTIFICATIONS = 0x04000000U,
 }
 
-enum uint DS_REPL_NBR_PARTIAL_ATTRIBUTE_SET = 0x40000000;
+enum uint DS_REPL_NBR_DISABLE_SCHEDULED_SYNC = 0x08000000U;
+
+enum : uint
+{
+    DS_REPL_NBR_COMPRESS_CHANGES        = 0x10000000U,
+    DS_REPL_NBR_NO_CHANGE_NOTIFICATIONS = 0x20000000U,
+}
+
+enum uint DS_REPL_NBR_PARTIAL_ATTRIBUTE_SET = 0x40000000U;
 
 enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
 {
@@ -1375,15 +1421,15 @@ enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(E
 
 enum : uint
 {
-    ADAM_REPL_AUTHENTICATION_MODE_NEGOTIATE_PASS_THROUGH = 0x00000000,
-    ADAM_REPL_AUTHENTICATION_MODE_NEGOTIATE              = 0x00000001,
-    ADAM_REPL_AUTHENTICATION_MODE_MUTUAL_AUTH_REQUIRED   = 0x00000002,
+    ADAM_REPL_AUTHENTICATION_MODE_NEGOTIATE_PASS_THROUGH = 0x00000000U,
+    ADAM_REPL_AUTHENTICATION_MODE_NEGOTIATE              = 0x00000001U,
+    ADAM_REPL_AUTHENTICATION_MODE_MUTUAL_AUTH_REQUIRED   = 0x00000002U,
 }
 
-enum uint FLAG_FOREST_OPTIONAL_FEATURE = 0x00000001;
-enum uint FLAG_DOMAIN_OPTIONAL_FEATURE = 0x00000002;
-enum uint FLAG_DISABLABLE_OPTIONAL_FEATURE = 0x00000004;
-enum uint FLAG_SERVER_OPTIONAL_FEATURE = 0x00000008;
+enum uint FLAG_FOREST_OPTIONAL_FEATURE = 0x00000001U;
+enum uint FLAG_DOMAIN_OPTIONAL_FEATURE = 0x00000002U;
+enum uint FLAG_DISABLABLE_OPTIONAL_FEATURE = 0x00000004U;
+enum uint FLAG_SERVER_OPTIONAL_FEATURE = 0x00000008U;
 
 enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
 {
@@ -1408,124 +1454,124 @@ enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(Elem
 
 enum : uint
 {
-    DSOP_SCOPE_TYPE_TARGET_COMPUTER           = 0x00000001,
-    DSOP_SCOPE_TYPE_UPLEVEL_JOINED_DOMAIN     = 0x00000002,
-    DSOP_SCOPE_TYPE_DOWNLEVEL_JOINED_DOMAIN   = 0x00000004,
-    DSOP_SCOPE_TYPE_ENTERPRISE_DOMAIN         = 0x00000008,
-    DSOP_SCOPE_TYPE_GLOBAL_CATALOG            = 0x00000010,
-    DSOP_SCOPE_TYPE_EXTERNAL_UPLEVEL_DOMAIN   = 0x00000020,
-    DSOP_SCOPE_TYPE_EXTERNAL_DOWNLEVEL_DOMAIN = 0x00000040,
+    DSOP_SCOPE_TYPE_TARGET_COMPUTER           = 0x00000001U,
+    DSOP_SCOPE_TYPE_UPLEVEL_JOINED_DOMAIN     = 0x00000002U,
+    DSOP_SCOPE_TYPE_DOWNLEVEL_JOINED_DOMAIN   = 0x00000004U,
+    DSOP_SCOPE_TYPE_ENTERPRISE_DOMAIN         = 0x00000008U,
+    DSOP_SCOPE_TYPE_GLOBAL_CATALOG            = 0x00000010U,
+    DSOP_SCOPE_TYPE_EXTERNAL_UPLEVEL_DOMAIN   = 0x00000020U,
+    DSOP_SCOPE_TYPE_EXTERNAL_DOWNLEVEL_DOMAIN = 0x00000040U,
 }
 
 enum : uint
 {
-    DSOP_SCOPE_TYPE_WORKGROUP                    = 0x00000080,
-    DSOP_SCOPE_TYPE_USER_ENTERED_UPLEVEL_SCOPE   = 0x00000100,
-    DSOP_SCOPE_TYPE_USER_ENTERED_DOWNLEVEL_SCOPE = 0x00000200,
+    DSOP_SCOPE_TYPE_WORKGROUP                    = 0x00000080U,
+    DSOP_SCOPE_TYPE_USER_ENTERED_UPLEVEL_SCOPE   = 0x00000100U,
+    DSOP_SCOPE_TYPE_USER_ENTERED_DOWNLEVEL_SCOPE = 0x00000200U,
 }
 
 enum : uint
 {
-    DSOP_SCOPE_FLAG_STARTING_SCOPE              = 0x00000001,
-    DSOP_SCOPE_FLAG_WANT_PROVIDER_WINNT         = 0x00000002,
-    DSOP_SCOPE_FLAG_WANT_PROVIDER_LDAP          = 0x00000004,
-    DSOP_SCOPE_FLAG_WANT_PROVIDER_GC            = 0x00000008,
-    DSOP_SCOPE_FLAG_WANT_SID_PATH               = 0x00000010,
-    DSOP_SCOPE_FLAG_WANT_DOWNLEVEL_BUILTIN_PATH = 0x00000020,
+    DSOP_SCOPE_FLAG_STARTING_SCOPE              = 0x00000001U,
+    DSOP_SCOPE_FLAG_WANT_PROVIDER_WINNT         = 0x00000002U,
+    DSOP_SCOPE_FLAG_WANT_PROVIDER_LDAP          = 0x00000004U,
+    DSOP_SCOPE_FLAG_WANT_PROVIDER_GC            = 0x00000008U,
+    DSOP_SCOPE_FLAG_WANT_SID_PATH               = 0x00000010U,
+    DSOP_SCOPE_FLAG_WANT_DOWNLEVEL_BUILTIN_PATH = 0x00000020U,
 }
 
 enum : uint
 {
-    DSOP_SCOPE_FLAG_DEFAULT_FILTER_USERS                    = 0x00000040,
-    DSOP_SCOPE_FLAG_DEFAULT_FILTER_GROUPS                   = 0x00000080,
-    DSOP_SCOPE_FLAG_DEFAULT_FILTER_COMPUTERS                = 0x00000100,
-    DSOP_SCOPE_FLAG_DEFAULT_FILTER_CONTACTS                 = 0x00000200,
-    DSOP_SCOPE_FLAG_DEFAULT_FILTER_SERVICE_ACCOUNTS         = 0x00000400,
-    DSOP_SCOPE_FLAG_DEFAULT_FILTER_PASSWORDSETTINGS_OBJECTS = 0x00000800,
+    DSOP_SCOPE_FLAG_DEFAULT_FILTER_USERS                    = 0x00000040U,
+    DSOP_SCOPE_FLAG_DEFAULT_FILTER_GROUPS                   = 0x00000080U,
+    DSOP_SCOPE_FLAG_DEFAULT_FILTER_COMPUTERS                = 0x00000100U,
+    DSOP_SCOPE_FLAG_DEFAULT_FILTER_CONTACTS                 = 0x00000200U,
+    DSOP_SCOPE_FLAG_DEFAULT_FILTER_SERVICE_ACCOUNTS         = 0x00000400U,
+    DSOP_SCOPE_FLAG_DEFAULT_FILTER_PASSWORDSETTINGS_OBJECTS = 0x00000800U,
 }
 
-enum uint DSOP_FILTER_INCLUDE_ADVANCED_VIEW = 0x00000001;
+enum uint DSOP_FILTER_INCLUDE_ADVANCED_VIEW = 0x00000001U;
 
 enum : uint
 {
-    DSOP_FILTER_USERS                 = 0x00000002,
-    DSOP_FILTER_BUILTIN_GROUPS        = 0x00000004,
-    DSOP_FILTER_WELL_KNOWN_PRINCIPALS = 0x00000008,
-}
-
-enum : uint
-{
-    DSOP_FILTER_UNIVERSAL_GROUPS_DL = 0x00000010,
-    DSOP_FILTER_UNIVERSAL_GROUPS_SE = 0x00000020,
+    DSOP_FILTER_USERS                 = 0x00000002U,
+    DSOP_FILTER_BUILTIN_GROUPS        = 0x00000004U,
+    DSOP_FILTER_WELL_KNOWN_PRINCIPALS = 0x00000008U,
 }
 
 enum : uint
 {
-    DSOP_FILTER_GLOBAL_GROUPS_DL       = 0x00000040,
-    DSOP_FILTER_GLOBAL_GROUPS_SE       = 0x00000080,
-    DSOP_FILTER_DOMAIN_LOCAL_GROUPS_DL = 0x00000100,
-    DSOP_FILTER_DOMAIN_LOCAL_GROUPS_SE = 0x00000200,
+    DSOP_FILTER_UNIVERSAL_GROUPS_DL = 0x00000010U,
+    DSOP_FILTER_UNIVERSAL_GROUPS_SE = 0x00000020U,
 }
 
 enum : uint
 {
-    DSOP_FILTER_CONTACTS                 = 0x00000400,
-    DSOP_FILTER_COMPUTERS                = 0x00000800,
-    DSOP_FILTER_SERVICE_ACCOUNTS         = 0x00001000,
-    DSOP_FILTER_PASSWORDSETTINGS_OBJECTS = 0x00002000,
+    DSOP_FILTER_GLOBAL_GROUPS_DL       = 0x00000040U,
+    DSOP_FILTER_GLOBAL_GROUPS_SE       = 0x00000080U,
+    DSOP_FILTER_DOMAIN_LOCAL_GROUPS_DL = 0x00000100U,
+    DSOP_FILTER_DOMAIN_LOCAL_GROUPS_SE = 0x00000200U,
 }
 
 enum : uint
 {
-    DSOP_DOWNLEVEL_FILTER_USERS                  = 0x80000001,
-    DSOP_DOWNLEVEL_FILTER_LOCAL_GROUPS           = 0x80000002,
-    DSOP_DOWNLEVEL_FILTER_GLOBAL_GROUPS          = 0x80000004,
-    DSOP_DOWNLEVEL_FILTER_COMPUTERS              = 0x80000008,
-    DSOP_DOWNLEVEL_FILTER_WORLD                  = 0x80000010,
-    DSOP_DOWNLEVEL_FILTER_AUTHENTICATED_USER     = 0x80000020,
-    DSOP_DOWNLEVEL_FILTER_ANONYMOUS              = 0x80000040,
-    DSOP_DOWNLEVEL_FILTER_BATCH                  = 0x80000080,
-    DSOP_DOWNLEVEL_FILTER_CREATOR_OWNER          = 0x80000100,
-    DSOP_DOWNLEVEL_FILTER_CREATOR_GROUP          = 0x80000200,
-    DSOP_DOWNLEVEL_FILTER_DIALUP                 = 0x80000400,
-    DSOP_DOWNLEVEL_FILTER_INTERACTIVE            = 0x80000800,
-    DSOP_DOWNLEVEL_FILTER_NETWORK                = 0x80001000,
-    DSOP_DOWNLEVEL_FILTER_SERVICE                = 0x80002000,
-    DSOP_DOWNLEVEL_FILTER_SYSTEM                 = 0x80004000,
-    DSOP_DOWNLEVEL_FILTER_EXCLUDE_BUILTIN_GROUPS = 0x80008000,
-    DSOP_DOWNLEVEL_FILTER_TERMINAL_SERVER        = 0x80010000,
-    DSOP_DOWNLEVEL_FILTER_ALL_WELLKNOWN_SIDS     = 0x80020000,
-    DSOP_DOWNLEVEL_FILTER_LOCAL_SERVICE          = 0x80040000,
-    DSOP_DOWNLEVEL_FILTER_NETWORK_SERVICE        = 0x80080000,
-    DSOP_DOWNLEVEL_FILTER_REMOTE_LOGON           = 0x80100000,
-    DSOP_DOWNLEVEL_FILTER_INTERNET_USER          = 0x80200000,
-    DSOP_DOWNLEVEL_FILTER_OWNER_RIGHTS           = 0x80400000,
-    DSOP_DOWNLEVEL_FILTER_SERVICES               = 0x80800000,
-    DSOP_DOWNLEVEL_FILTER_LOCAL_LOGON            = 0x81000000,
-    DSOP_DOWNLEVEL_FILTER_THIS_ORG_CERT          = 0x82000000,
-    DSOP_DOWNLEVEL_FILTER_IIS_APP_POOL           = 0x84000000,
-    DSOP_DOWNLEVEL_FILTER_ALL_APP_PACKAGES       = 0x88000000,
-    DSOP_DOWNLEVEL_FILTER_LOCAL_ACCOUNTS         = 0x90000000,
+    DSOP_FILTER_CONTACTS                 = 0x00000400U,
+    DSOP_FILTER_COMPUTERS                = 0x00000800U,
+    DSOP_FILTER_SERVICE_ACCOUNTS         = 0x00001000U,
+    DSOP_FILTER_PASSWORDSETTINGS_OBJECTS = 0x00002000U,
 }
 
 enum : uint
 {
-    DSOP_FLAG_MULTISELECT                   = 0x00000001,
-    DSOP_FLAG_SKIP_TARGET_COMPUTER_DC_CHECK = 0x00000002,
+    DSOP_DOWNLEVEL_FILTER_USERS                  = 0x80000001U,
+    DSOP_DOWNLEVEL_FILTER_LOCAL_GROUPS           = 0x80000002U,
+    DSOP_DOWNLEVEL_FILTER_GLOBAL_GROUPS          = 0x80000004U,
+    DSOP_DOWNLEVEL_FILTER_COMPUTERS              = 0x80000008U,
+    DSOP_DOWNLEVEL_FILTER_WORLD                  = 0x80000010U,
+    DSOP_DOWNLEVEL_FILTER_AUTHENTICATED_USER     = 0x80000020U,
+    DSOP_DOWNLEVEL_FILTER_ANONYMOUS              = 0x80000040U,
+    DSOP_DOWNLEVEL_FILTER_BATCH                  = 0x80000080U,
+    DSOP_DOWNLEVEL_FILTER_CREATOR_OWNER          = 0x80000100U,
+    DSOP_DOWNLEVEL_FILTER_CREATOR_GROUP          = 0x80000200U,
+    DSOP_DOWNLEVEL_FILTER_DIALUP                 = 0x80000400U,
+    DSOP_DOWNLEVEL_FILTER_INTERACTIVE            = 0x80000800U,
+    DSOP_DOWNLEVEL_FILTER_NETWORK                = 0x80001000U,
+    DSOP_DOWNLEVEL_FILTER_SERVICE                = 0x80002000U,
+    DSOP_DOWNLEVEL_FILTER_SYSTEM                 = 0x80004000U,
+    DSOP_DOWNLEVEL_FILTER_EXCLUDE_BUILTIN_GROUPS = 0x80008000U,
+    DSOP_DOWNLEVEL_FILTER_TERMINAL_SERVER        = 0x80010000U,
+    DSOP_DOWNLEVEL_FILTER_ALL_WELLKNOWN_SIDS     = 0x80020000U,
+    DSOP_DOWNLEVEL_FILTER_LOCAL_SERVICE          = 0x80040000U,
+    DSOP_DOWNLEVEL_FILTER_NETWORK_SERVICE        = 0x80080000U,
+    DSOP_DOWNLEVEL_FILTER_REMOTE_LOGON           = 0x80100000U,
+    DSOP_DOWNLEVEL_FILTER_INTERNET_USER          = 0x80200000U,
+    DSOP_DOWNLEVEL_FILTER_OWNER_RIGHTS           = 0x80400000U,
+    DSOP_DOWNLEVEL_FILTER_SERVICES               = 0x80800000U,
+    DSOP_DOWNLEVEL_FILTER_LOCAL_LOGON            = 0x81000000U,
+    DSOP_DOWNLEVEL_FILTER_THIS_ORG_CERT          = 0x82000000U,
+    DSOP_DOWNLEVEL_FILTER_IIS_APP_POOL           = 0x84000000U,
+    DSOP_DOWNLEVEL_FILTER_ALL_APP_PACKAGES       = 0x88000000U,
+    DSOP_DOWNLEVEL_FILTER_LOCAL_ACCOUNTS         = 0x90000000U,
 }
 
 enum : uint
 {
-    SCHEDULE_INTERVAL  = 0x00000000,
-    SCHEDULE_BANDWIDTH = 0x00000001,
-    SCHEDULE_PRIORITY  = 0x00000002,
+    DSOP_FLAG_MULTISELECT                   = 0x00000001U,
+    DSOP_FLAG_SKIP_TARGET_COMPUTER_DC_CHECK = 0x00000002U,
 }
 
 enum : uint
 {
-    FACILITY_NTDSB  = 0x00000800,
-    FACILITY_BACKUP = 0x000007ff,
-    FACILITY_SYSTEM = 0x00000000,
+    SCHEDULE_INTERVAL  = 0x00000000U,
+    SCHEDULE_BANDWIDTH = 0x00000001U,
+    SCHEDULE_PRIORITY  = 0x00000002U,
+}
+
+enum : uint
+{
+    FACILITY_NTDSB  = 0x00000800U,
+    FACILITY_BACKUP = 0x000007ffU,
+    FACILITY_SYSTEM = 0x00000000U,
 }
 
 enum : HRESULT
@@ -1802,7 +1848,7 @@ alias LPDSENUMATTRIBUTES = HRESULT function(LPARAM lParam, const(PWSTR) pszAttri
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cmnquery/ns-cmnquery-cqform))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cmnquery/ns-cmnquery-cqform
 struct CQFORM
 {
     uint         cbStruct;
@@ -1812,7 +1858,7 @@ struct CQFORM
     const(PWSTR) pszTitle;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cmnquery/ns-cmnquery-cqpage))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cmnquery/ns-cmnquery-cqpage
 struct CQPAGE
 {
     uint         cbStruct;
@@ -1825,47 +1871,51 @@ struct CQPAGE
     LPARAM       lParam;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cmnquery/ns-cmnquery-openquerywindow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cmnquery/ns-cmnquery-openquerywindow
 struct OPENQUERYWINDOW
 {
-    uint                cbStruct;
-    uint                dwFlags;
-    GUID                clsidHandler;
-    void*               pHandlerParameters;
-    GUID                clsidDefaultForm;
-    IPersistQuery       pPersistQuery;
-    _Anonymous_e__Union Anonymous;
+    uint          cbStruct;
+    uint          dwFlags;
+    GUID          clsidHandler;
+    void*         pHandlerParameters;
+    GUID          clsidDefaultForm;
+    IPersistQuery pPersistQuery;
+    union
+    {
+        void*        pFormParameters;
+        IPropertyBag ppbFormParameters;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_octet_string))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_octet_string
 struct ADS_OCTET_STRING
 {
     uint   dwLength;
     ubyte* lpValue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_nt_security_descriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_nt_security_descriptor
 struct ADS_NT_SECURITY_DESCRIPTOR
 {
     uint   dwLength;
     ubyte* lpValue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_prov_specific))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_prov_specific
 struct ADS_PROV_SPECIFIC
 {
     uint   dwLength;
     ubyte* lpValue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_caseignore_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_caseignore_list
 struct ADS_CASEIGNORE_LIST
 {
     ADS_CASEIGNORE_LIST* Next;
     PWSTR                String;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_octet_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_octet_list
 struct ADS_OCTET_LIST
 {
     ADS_OCTET_LIST* Next;
@@ -1873,7 +1923,7 @@ struct ADS_OCTET_LIST
     ubyte*          Data;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_path))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_path
 struct ADS_PATH
 {
     uint  Type;
@@ -1881,27 +1931,27 @@ struct ADS_PATH
     PWSTR Path;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_postaladdress))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_postaladdress
 struct ADS_POSTALADDRESS
 {
     PWSTR[6] PostalAddress;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_timestamp))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_timestamp
 struct ADS_TIMESTAMP
 {
     uint WholeSeconds;
     uint EventID;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_backlink))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_backlink
 struct ADS_BACKLINK
 {
     uint  RemoteID;
     PWSTR ObjectName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_typedname))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_typedname
 struct ADS_TYPEDNAME
 {
     PWSTR ObjectName;
@@ -1909,14 +1959,14 @@ struct ADS_TYPEDNAME
     uint  Interval;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_hold))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_hold
 struct ADS_HOLD
 {
     PWSTR ObjectName;
     uint  Amount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_netaddress))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_netaddress
 struct ADS_NETADDRESS
 {
     uint   AddressType;
@@ -1924,7 +1974,7 @@ struct ADS_NETADDRESS
     ubyte* Address;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_replicapointer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_replicapointer
 struct ADS_REPLICAPOINTER
 {
     PWSTR           ServerName;
@@ -1934,7 +1984,7 @@ struct ADS_REPLICAPOINTER
     ADS_NETADDRESS* ReplicaAddressHints;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_faxnumber))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_faxnumber
 struct ADS_FAXNUMBER
 {
     PWSTR  TelephoneNumber;
@@ -1942,14 +1992,14 @@ struct ADS_FAXNUMBER
     ubyte* Parameters;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_email))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_email
 struct ADS_EMAIL
 {
     PWSTR Address;
     uint  Type;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_dn_with_binary))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_dn_with_binary
 struct ADS_DN_WITH_BINARY
 {
     uint   dwLength;
@@ -1957,21 +2007,50 @@ struct ADS_DN_WITH_BINARY
     PWSTR  pszDNString;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_dn_with_string))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_dn_with_string
 struct ADS_DN_WITH_STRING
 {
     PWSTR pszStringValue;
     PWSTR pszDNString;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ns-iads-adsvalue))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ns-iads-adsvalue
 struct ADSVALUE
 {
-    ADSTYPE             dwType;
-    _Anonymous_e__Union Anonymous;
+    ADSTYPE dwType;
+    union
+    {
+        ushort*              DNString;
+        ushort*              CaseExactString;
+        ushort*              CaseIgnoreString;
+        ushort*              PrintableString;
+        ushort*              NumericString;
+        uint                 Boolean;
+        uint                 Integer;
+        ADS_OCTET_STRING     OctetString;
+        SYSTEMTIME           UTCTime;
+        long                 LargeInteger;
+        ushort*              ClassName;
+        ADS_PROV_SPECIFIC    ProviderSpecific;
+        ADS_CASEIGNORE_LIST* pCaseIgnoreList;
+        ADS_OCTET_LIST*      pOctetList;
+        ADS_PATH*            pPath;
+        ADS_POSTALADDRESS*   pPostalAddress;
+        ADS_TIMESTAMP        Timestamp;
+        ADS_BACKLINK         BackLink;
+        ADS_TYPEDNAME*       pTypedName;
+        ADS_HOLD             Hold;
+        ADS_NETADDRESS*      pNetAddress;
+        ADS_REPLICAPOINTER*  pReplicaPointer;
+        ADS_FAXNUMBER*       pFaxNumber;
+        ADS_EMAIL            Email;
+        ADS_NT_SECURITY_DESCRIPTOR SecurityDescriptor;
+        ADS_DN_WITH_BINARY*  pDNWithBinary;
+        ADS_DN_WITH_STRING*  pDNWithString;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_attr_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_attr_info
 struct ADS_ATTR_INFO
 {
     PWSTR     pszAttrName;
@@ -1981,7 +2060,7 @@ struct ADS_ATTR_INFO
     uint      dwNumValues;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_object_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_object_info
 struct ADS_OBJECT_INFO
 {
     PWSTR pszRDN;
@@ -1991,7 +2070,7 @@ struct ADS_OBJECT_INFO
     PWSTR pszClassName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_searchpref_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_searchpref_info
 struct ADS_SEARCHPREF_INFO
 {
     ADS_SEARCHPREF_ENUM dwSearchPref;
@@ -1999,7 +2078,7 @@ struct ADS_SEARCHPREF_INFO
     ADS_STATUSENUM      dwStatus;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_search_column))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_search_column
 struct ADS_SEARCH_COLUMN
 {
     PWSTR     pszAttrName;
@@ -2009,7 +2088,7 @@ struct ADS_SEARCH_COLUMN
     HANDLE    hReserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_attr_def))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_attr_def
 struct ADS_ATTR_DEF
 {
     PWSTR   pszAttrName;
@@ -2019,7 +2098,7 @@ struct ADS_ATTR_DEF
     BOOL    fMultiValued;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_class_def))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_class_def
 struct ADS_CLASS_DEF
 {
     PWSTR   pszClassName;
@@ -2034,7 +2113,7 @@ struct ADS_CLASS_DEF
     BOOL    fIsContainer;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_sortkey))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_sortkey
 struct ADS_SORTKEY
 {
     PWSTR   pszAttrType;
@@ -2042,7 +2121,7 @@ struct ADS_SORTKEY
     BOOLEAN fReverseorder;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_vlv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/ns-iads-ads_vlv
 struct ADS_VLV
 {
     uint   dwBeforeCount;
@@ -2054,7 +2133,7 @@ struct ADS_VLV
     ubyte* lpContextID;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsclient/ns-dsclient-dsobject))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/ns-dsclient-dsobject
 struct DSOBJECT
 {
     uint dwFlags;
@@ -2063,7 +2142,7 @@ struct DSOBJECT
     uint offsetClass;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsclient/ns-dsclient-dsobjectnames))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/ns-dsclient-dsobjectnames
 struct DSOBJECTNAMES
 {
     GUID clsidNamespace;
@@ -2071,7 +2150,7 @@ struct DSOBJECTNAMES
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DSOBJECT[1] aObjects;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsclient/ns-dsclient-dsdisplayspecoptions))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/ns-dsclient-dsdisplayspecoptions
 struct DSDISPLAYSPECOPTIONS
 {
     uint dwSize;
@@ -2083,13 +2162,13 @@ struct DSDISPLAYSPECOPTIONS
     uint offsetServerConfigPath;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsclient/ns-dsclient-dspropertypageinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/ns-dsclient-dspropertypageinfo
 struct DSPROPERTYPAGEINFO
 {
     uint offsetString;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsclient/ns-dsclient-domaindesc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/ns-dsclient-domaindesc
 struct DOMAINDESC
 {
     PWSTR       pszName;
@@ -2103,7 +2182,7 @@ struct DOMAINDESC
     DOMAINDESC* pdNextSibling;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsclient/ns-dsclient-domain_tree))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/ns-dsclient-domain_tree
 struct DOMAIN_TREE
 {
     uint dsSize;
@@ -2111,7 +2190,7 @@ struct DOMAIN_TREE
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DOMAINDESC[1] aDomains;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsclient/ns-dsclient-dsclasscreationinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/ns-dsclient-dsclasscreationinfo
 struct DSCLASSCREATIONINFO
 {
     uint dwFlags;
@@ -2122,7 +2201,7 @@ struct DSCLASSCREATIONINFO
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsclient/ns-dsclient-dsbrowseinfow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/ns-dsclient-dsbrowseinfow
 struct DSBROWSEINFOW
 {
     uint         cbStruct;
@@ -2143,7 +2222,7 @@ struct DSBROWSEINFOW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsclient/ns-dsclient-dsbrowseinfoa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/ns-dsclient-dsbrowseinfoa
 struct DSBROWSEINFOA
 {
     uint         cbStruct;
@@ -2164,7 +2243,7 @@ struct DSBROWSEINFOA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsclient/ns-dsclient-dsbitemw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/ns-dsclient-dsbitemw
 struct DSBITEMW
 {
     uint         cbStruct;
@@ -2179,7 +2258,7 @@ struct DSBITEMW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsclient/ns-dsclient-dsbitema))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/ns-dsclient-dsbitema
 struct DSBITEMA
 {
     uint         cbStruct;
@@ -2193,7 +2272,7 @@ struct DSBITEMA
     int          iIconResID;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objsel/ns-objsel-dsop_uplevel_filter_flags))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objsel/ns-objsel-dsop_uplevel_filter_flags
 struct DSOP_UPLEVEL_FILTER_FLAGS
 {
     uint flBothModes;
@@ -2201,7 +2280,7 @@ struct DSOP_UPLEVEL_FILTER_FLAGS
     uint flNativeModeOnly;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objsel/ns-objsel-dsop_filter_flags))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objsel/ns-objsel-dsop_filter_flags
 struct DSOP_FILTER_FLAGS
 {
     DSOP_UPLEVEL_FILTER_FLAGS Uplevel;
@@ -2209,7 +2288,7 @@ struct DSOP_FILTER_FLAGS
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objsel/ns-objsel-dsop_scope_init_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objsel/ns-objsel-dsop_scope_init_info
 struct DSOP_SCOPE_INIT_INFO
 {
     uint              cbSize;
@@ -2222,7 +2301,7 @@ struct DSOP_SCOPE_INIT_INFO
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objsel/ns-objsel-dsop_init_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objsel/ns-objsel-dsop_init_info
 struct DSOP_INIT_INFO
 {
     uint          cbSize;
@@ -2234,7 +2313,7 @@ struct DSOP_INIT_INFO
     const(PWSTR)* apwzAttributeNames;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objsel/ns-objsel-ds_selection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objsel/ns-objsel-ds_selection
 struct DS_SELECTION
 {
     PWSTR    pwzName;
@@ -2245,7 +2324,7 @@ struct DS_SELECTION
     uint     flScopeType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objsel/ns-objsel-ds_selection_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objsel/ns-objsel-ds_selection_list
 struct DS_SELECTION_LIST
 {
     uint cItems;
@@ -2253,7 +2332,7 @@ struct DS_SELECTION_LIST
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DS_SELECTION[1] aDsSelection;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsquery/ns-dsquery-dsqueryinitparams))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsquery/ns-dsquery-dsqueryinitparams
 struct DSQUERYINITPARAMS
 {
     uint  cbStruct;
@@ -2265,7 +2344,7 @@ struct DSQUERYINITPARAMS
     PWSTR pServer;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsquery/ns-dsquery-dscolumn))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsquery/ns-dsquery-dscolumn
 struct DSCOLUMN
 {
     uint dwFlags;
@@ -2276,7 +2355,7 @@ struct DSCOLUMN
     uint dwReserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsquery/ns-dsquery-dsqueryparams))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsquery/ns-dsquery-dsqueryparams
 struct DSQUERYPARAMS
 {
     uint      cbStruct;
@@ -2288,7 +2367,7 @@ struct DSQUERYPARAMS
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DSCOLUMN[1] aColumns;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsquery/ns-dsquery-dsqueryclasslist))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsquery/ns-dsquery-dsqueryclasslist
 struct DSQUERYCLASSLIST
 {
     uint cbStruct;
@@ -2296,7 +2375,7 @@ struct DSQUERYCLASSLIST
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] offsetClass;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsadmin/ns-dsadmin-dsa_newobj_dispinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsadmin/ns-dsadmin-dsa_newobj_dispinfo
 struct DSA_NEWOBJ_DISPINFO
 {
     uint  dwSize;
@@ -2305,7 +2384,7 @@ struct DSA_NEWOBJ_DISPINFO
     PWSTR lpszContDisplayName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adsprop/ns-adsprop-adspropinitparams))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adsprop/ns-adsprop-adspropinitparams
 struct ADSPROPINITPARAMS
 {
     uint             dwSize;
@@ -2316,7 +2395,7 @@ struct ADSPROPINITPARAMS
     ADS_ATTR_INFO*   pWritableAttrs;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adsprop/ns-adsprop-adsproperror))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adsprop/ns-adsprop-adsproperror
 struct ADSPROPERROR
 {
     HWND    hwndPage;
@@ -2327,14 +2406,14 @@ struct ADSPROPERROR
     PWSTR   pszError;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/schedule/ns-schedule-schedule_header))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/schedule/ns-schedule-schedule_header
 struct SCHEDULE_HEADER
 {
     uint Type;
     uint Offset;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/schedule/ns-schedule-schedule))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/schedule/ns-schedule-schedule
 struct SCHEDULE
 {
     uint Size;
@@ -2344,7 +2423,7 @@ struct SCHEDULE
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_name_result_itema))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_name_result_itema
 struct DS_NAME_RESULT_ITEMA
 {
     uint status;
@@ -2353,7 +2432,7 @@ struct DS_NAME_RESULT_ITEMA
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_name_resulta))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_name_resulta
 struct DS_NAME_RESULTA
 {
     uint cItems;
@@ -2361,7 +2440,7 @@ struct DS_NAME_RESULTA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_name_result_itemw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_name_result_itemw
 struct DS_NAME_RESULT_ITEMW
 {
     uint  status;
@@ -2370,7 +2449,7 @@ struct DS_NAME_RESULT_ITEMW
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_name_resultw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_name_resultw
 struct DS_NAME_RESULTW
 {
     uint cItems;
@@ -2378,7 +2457,7 @@ struct DS_NAME_RESULTW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repsyncall_synca))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repsyncall_synca
 struct DS_REPSYNCALL_SYNCA
 {
     PSTR  pszSrcId;
@@ -2389,7 +2468,7 @@ struct DS_REPSYNCALL_SYNCA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repsyncall_syncw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repsyncall_syncw
 struct DS_REPSYNCALL_SYNCW
 {
     PWSTR pszSrcId;
@@ -2400,7 +2479,7 @@ struct DS_REPSYNCALL_SYNCW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repsyncall_errinfoa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repsyncall_errinfoa
 struct DS_REPSYNCALL_ERRINFOA
 {
     PSTR                pszSvrId;
@@ -2410,7 +2489,7 @@ struct DS_REPSYNCALL_ERRINFOA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repsyncall_errinfow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repsyncall_errinfow
 struct DS_REPSYNCALL_ERRINFOW
 {
     PWSTR               pszSvrId;
@@ -2420,7 +2499,7 @@ struct DS_REPSYNCALL_ERRINFOW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repsyncall_updatea))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repsyncall_updatea
 struct DS_REPSYNCALL_UPDATEA
 {
     DS_REPSYNCALL_EVENT  event;
@@ -2429,7 +2508,7 @@ struct DS_REPSYNCALL_UPDATEA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repsyncall_updatew))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repsyncall_updatew
 struct DS_REPSYNCALL_UPDATEW
 {
     DS_REPSYNCALL_EVENT  event;
@@ -2437,7 +2516,7 @@ struct DS_REPSYNCALL_UPDATEW
     DS_REPSYNCALL_SYNCW* pSync;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_site_cost_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_site_cost_info
 struct DS_SITE_COST_INFO
 {
     uint errorCode;
@@ -2445,7 +2524,7 @@ struct DS_SITE_COST_INFO
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_schema_guid_mapa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_schema_guid_mapa
 struct DS_SCHEMA_GUID_MAPA
 {
     GUID guid;
@@ -2454,7 +2533,7 @@ struct DS_SCHEMA_GUID_MAPA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_schema_guid_mapw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_schema_guid_mapw
 struct DS_SCHEMA_GUID_MAPW
 {
     GUID  guid;
@@ -2463,7 +2542,7 @@ struct DS_SCHEMA_GUID_MAPW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_domain_controller_info_1a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_domain_controller_info_1a
 struct DS_DOMAIN_CONTROLLER_INFO_1A
 {
     PSTR NetbiosName;
@@ -2476,7 +2555,7 @@ struct DS_DOMAIN_CONTROLLER_INFO_1A
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_domain_controller_info_1w))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_domain_controller_info_1w
 struct DS_DOMAIN_CONTROLLER_INFO_1W
 {
     PWSTR NetbiosName;
@@ -2489,7 +2568,7 @@ struct DS_DOMAIN_CONTROLLER_INFO_1W
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_domain_controller_info_2a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_domain_controller_info_2a
 struct DS_DOMAIN_CONTROLLER_INFO_2A
 {
     PSTR NetbiosName;
@@ -2509,7 +2588,7 @@ struct DS_DOMAIN_CONTROLLER_INFO_2A
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_domain_controller_info_2w))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_domain_controller_info_2w
 struct DS_DOMAIN_CONTROLLER_INFO_2W
 {
     PWSTR NetbiosName;
@@ -2529,7 +2608,7 @@ struct DS_DOMAIN_CONTROLLER_INFO_2W
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_domain_controller_info_3a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_domain_controller_info_3a
 struct DS_DOMAIN_CONTROLLER_INFO_3A
 {
     PSTR NetbiosName;
@@ -2550,7 +2629,7 @@ struct DS_DOMAIN_CONTROLLER_INFO_3A
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_domain_controller_info_3w))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_domain_controller_info_3w
 struct DS_DOMAIN_CONTROLLER_INFO_3W
 {
     PWSTR NetbiosName;
@@ -2570,7 +2649,7 @@ struct DS_DOMAIN_CONTROLLER_INFO_3W
     GUID  NtdsDsaObjectGuid;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_neighborw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_neighborw
 struct DS_REPL_NEIGHBORW
 {
     PWSTR    pszNamingContext;
@@ -2591,7 +2670,7 @@ struct DS_REPL_NEIGHBORW
     uint     cNumConsecutiveSyncFailures;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_neighborw_blob))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_neighborw_blob
 struct DS_REPL_NEIGHBORW_BLOB
 {
     uint     oszNamingContext;
@@ -2612,7 +2691,7 @@ struct DS_REPL_NEIGHBORW_BLOB
     uint     cNumConsecutiveSyncFailures;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_neighborsw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_neighborsw
 struct DS_REPL_NEIGHBORSW
 {
     uint cNumNeighbors;
@@ -2620,14 +2699,14 @@ struct DS_REPL_NEIGHBORSW
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DS_REPL_NEIGHBORW[1] rgNeighbor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_cursor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_cursor
 struct DS_REPL_CURSOR
 {
     GUID uuidSourceDsaInvocationID;
     long usnAttributeFilter;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_cursor_2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_cursor_2
 struct DS_REPL_CURSOR_2
 {
     GUID     uuidSourceDsaInvocationID;
@@ -2635,7 +2714,7 @@ struct DS_REPL_CURSOR_2
     FILETIME ftimeLastSyncSuccess;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_cursor_3w))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_cursor_3w
 struct DS_REPL_CURSOR_3W
 {
     GUID     uuidSourceDsaInvocationID;
@@ -2644,7 +2723,7 @@ struct DS_REPL_CURSOR_3W
     PWSTR    pszSourceDsaDN;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_cursor_blob))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_cursor_blob
 struct DS_REPL_CURSOR_BLOB
 {
     GUID     uuidSourceDsaInvocationID;
@@ -2653,7 +2732,7 @@ struct DS_REPL_CURSOR_BLOB
     uint     oszSourceDsaDN;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_cursors))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_cursors
 struct DS_REPL_CURSORS
 {
     uint cNumCursors;
@@ -2661,7 +2740,7 @@ struct DS_REPL_CURSORS
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DS_REPL_CURSOR[1] rgCursor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_cursors_2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_cursors_2
 struct DS_REPL_CURSORS_2
 {
     uint cNumCursors;
@@ -2669,7 +2748,7 @@ struct DS_REPL_CURSORS_2
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DS_REPL_CURSOR_2[1] rgCursor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_cursors_3w))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_cursors_3w
 struct DS_REPL_CURSORS_3W
 {
     uint cNumCursors;
@@ -2677,7 +2756,7 @@ struct DS_REPL_CURSORS_3W
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DS_REPL_CURSOR_3W[1] rgCursor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_attr_meta_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_attr_meta_data
 struct DS_REPL_ATTR_META_DATA
 {
     PWSTR    pszAttributeName;
@@ -2688,7 +2767,7 @@ struct DS_REPL_ATTR_META_DATA
     long     usnLocalChange;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_attr_meta_data_2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_attr_meta_data_2
 struct DS_REPL_ATTR_META_DATA_2
 {
     PWSTR    pszAttributeName;
@@ -2700,7 +2779,7 @@ struct DS_REPL_ATTR_META_DATA_2
     PWSTR    pszLastOriginatingDsaDN;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_attr_meta_data_blob))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_attr_meta_data_blob
 struct DS_REPL_ATTR_META_DATA_BLOB
 {
     uint     oszAttributeName;
@@ -2712,7 +2791,7 @@ struct DS_REPL_ATTR_META_DATA_BLOB
     uint     oszLastOriginatingDsaDN;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_obj_meta_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_obj_meta_data
 struct DS_REPL_OBJ_META_DATA
 {
     uint cNumEntries;
@@ -2720,7 +2799,7 @@ struct DS_REPL_OBJ_META_DATA
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DS_REPL_ATTR_META_DATA[1] rgMetaData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_obj_meta_data_2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_obj_meta_data_2
 struct DS_REPL_OBJ_META_DATA_2
 {
     uint cNumEntries;
@@ -2728,7 +2807,7 @@ struct DS_REPL_OBJ_META_DATA_2
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DS_REPL_ATTR_META_DATA_2[1] rgMetaData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_kcc_dsa_failurew))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_kcc_dsa_failurew
 struct DS_REPL_KCC_DSA_FAILUREW
 {
     PWSTR    pszDsaDN;
@@ -2738,7 +2817,7 @@ struct DS_REPL_KCC_DSA_FAILUREW
     uint     dwLastResult;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_kcc_dsa_failurew_blob))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_kcc_dsa_failurew_blob
 struct DS_REPL_KCC_DSA_FAILUREW_BLOB
 {
     uint     oszDsaDN;
@@ -2748,7 +2827,7 @@ struct DS_REPL_KCC_DSA_FAILUREW_BLOB
     uint     dwLastResult;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_kcc_dsa_failuresw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_kcc_dsa_failuresw
 struct DS_REPL_KCC_DSA_FAILURESW
 {
     uint cNumEntries;
@@ -2756,7 +2835,7 @@ struct DS_REPL_KCC_DSA_FAILURESW
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DS_REPL_KCC_DSA_FAILUREW[1] rgDsaFailure;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_opw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_opw
 struct DS_REPL_OPW
 {
     FILETIME        ftimeEnqueued;
@@ -2771,7 +2850,7 @@ struct DS_REPL_OPW
     GUID            uuidDsaObjGuid;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_opw_blob))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_opw_blob
 struct DS_REPL_OPW_BLOB
 {
     FILETIME        ftimeEnqueued;
@@ -2786,7 +2865,7 @@ struct DS_REPL_OPW_BLOB
     GUID            uuidDsaObjGuid;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_pending_opsw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_pending_opsw
 struct DS_REPL_PENDING_OPSW
 {
     FILETIME ftimeCurrentOpStarted;
@@ -2794,7 +2873,7 @@ struct DS_REPL_PENDING_OPSW
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DS_REPL_OPW[1] rgPendingOp;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_value_meta_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_value_meta_data
 struct DS_REPL_VALUE_META_DATA
 {
     PWSTR    pszAttributeName;
@@ -2810,7 +2889,7 @@ struct DS_REPL_VALUE_META_DATA
     long     usnLocalChange;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_value_meta_data_2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_value_meta_data_2
 struct DS_REPL_VALUE_META_DATA_2
 {
     PWSTR    pszAttributeName;
@@ -2846,7 +2925,7 @@ struct DS_REPL_VALUE_META_DATA_EXT
     uint     dwCurrentLinkState;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_value_meta_data_blob))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_value_meta_data_blob
 struct DS_REPL_VALUE_META_DATA_BLOB
 {
     uint     oszAttributeName;
@@ -2882,7 +2961,7 @@ struct DS_REPL_VALUE_META_DATA_BLOB_EXT
     uint     dwCurrentLinkState;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_attr_value_meta_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_attr_value_meta_data
 struct DS_REPL_ATTR_VALUE_META_DATA
 {
     uint cNumEntries;
@@ -2890,7 +2969,7 @@ struct DS_REPL_ATTR_VALUE_META_DATA
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DS_REPL_VALUE_META_DATA[1] rgMetaData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_attr_value_meta_data_2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_attr_value_meta_data_2
 struct DS_REPL_ATTR_VALUE_META_DATA_2
 {
     uint cNumEntries;
@@ -2898,7 +2977,7 @@ struct DS_REPL_ATTR_VALUE_META_DATA_2
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DS_REPL_VALUE_META_DATA_2[1] rgMetaData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_attr_value_meta_data_ext))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_attr_value_meta_data_ext
 struct DS_REPL_ATTR_VALUE_META_DATA_EXT
 {
     uint cNumEntries;
@@ -2906,7 +2985,7 @@ struct DS_REPL_ATTR_VALUE_META_DATA_EXT
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DS_REPL_VALUE_META_DATA_EXT[1] rgMetaData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_queue_statisticsw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdsapi/ns-ntdsapi-ds_repl_queue_statisticsw
 struct DS_REPL_QUEUE_STATISTICSW
 {
     FILETIME ftimeCurrentOpStarted;
@@ -2918,7 +2997,7 @@ struct DS_REPL_QUEUE_STATISTICSW
     FILETIME ftimeOldestUpdRefs;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsrole/ns-dsrole-dsrole_primary_domain_info_basic))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsrole/ns-dsrole-dsrole_primary_domain_info_basic
 struct DSROLE_PRIMARY_DOMAIN_INFO_BASIC
 {
     DSROLE_MACHINE_ROLE MachineRole;
@@ -2929,21 +3008,21 @@ struct DSROLE_PRIMARY_DOMAIN_INFO_BASIC
     GUID                DomainGuid;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsrole/ns-dsrole-dsrole_upgrade_status_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsrole/ns-dsrole-dsrole_upgrade_status_info
 struct DSROLE_UPGRADE_STATUS_INFO
 {
     uint                OperationState;
     DSROLE_SERVER_STATE PreviousServerState;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsrole/ns-dsrole-dsrole_operation_state_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsrole/ns-dsrole-dsrole_operation_state_info
 struct DSROLE_OPERATION_STATE_INFO
 {
     DSROLE_OPERATION_STATE OperationState;
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsgetdc/ns-dsgetdc-domain_controller_infoa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsgetdc/ns-dsgetdc-domain_controller_infoa
 struct DOMAIN_CONTROLLER_INFOA
 {
     PSTR DomainControllerName;
@@ -2958,7 +3037,7 @@ struct DOMAIN_CONTROLLER_INFOA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsgetdc/ns-dsgetdc-domain_controller_infow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsgetdc/ns-dsgetdc-domain_controller_infow
 struct DOMAIN_CONTROLLER_INFOW
 {
     PWSTR DomainControllerName;
@@ -2973,7 +3052,7 @@ struct DOMAIN_CONTROLLER_INFOW
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsgetdc/ns-dsgetdc-ds_domain_trustsw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsgetdc/ns-dsgetdc-ds_domain_trustsw
 struct DS_DOMAIN_TRUSTSW
 {
     PWSTR NetbiosDomainName;
@@ -2987,7 +3066,7 @@ struct DS_DOMAIN_TRUSTSW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsgetdc/ns-dsgetdc-ds_domain_trustsa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsgetdc/ns-dsgetdc-ds_domain_trustsa
 struct DS_DOMAIN_TRUSTSA
 {
     PSTR NetbiosDomainName;
@@ -3804,50 +3883,50 @@ struct ADsSecurityUtility;
 
 @GUID("8cfcee30-39bd-11d0-b8d1-00a024ab2dbb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cmnquery/nn-cmnquery-iqueryform))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cmnquery/nn-cmnquery-iqueryform
 interface IQueryForm : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cmnquery/nf-cmnquery-iqueryform-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cmnquery/nf-cmnquery-iqueryform-initialize
     HRESULT Initialize(HKEY hkForm);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cmnquery/nf-cmnquery-iqueryform-addforms))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cmnquery/nf-cmnquery-iqueryform-addforms
     HRESULT AddForms(LPCQADDFORMSPROC pAddFormsProc, LPARAM lParam);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cmnquery/nf-cmnquery-iqueryform-addpages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cmnquery/nf-cmnquery-iqueryform-addpages
     HRESULT AddPages(LPCQADDPAGESPROC pAddPagesProc, LPARAM lParam);
 }
 
 @GUID("1a3114b8-a62e-11d0-a6c5-00a0c906af45")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cmnquery/nn-cmnquery-ipersistquery))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cmnquery/nn-cmnquery-ipersistquery
 interface IPersistQuery : IPersist
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cmnquery/nf-cmnquery-ipersistquery-writestring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cmnquery/nf-cmnquery-ipersistquery-writestring
     HRESULT WriteString(const(PWSTR) pSection, const(PWSTR) pValueName, const(PWSTR) pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cmnquery/nf-cmnquery-ipersistquery-readstring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cmnquery/nf-cmnquery-ipersistquery-readstring
     HRESULT ReadString(const(PWSTR) pSection, const(PWSTR) pValueName, PWSTR pBuffer, int cchBuffer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cmnquery/nf-cmnquery-ipersistquery-writeint))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cmnquery/nf-cmnquery-ipersistquery-writeint
     HRESULT WriteInt(const(PWSTR) pSection, const(PWSTR) pValueName, int value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cmnquery/nf-cmnquery-ipersistquery-readint))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cmnquery/nf-cmnquery-ipersistquery-readint
     HRESULT ReadInt(const(PWSTR) pSection, const(PWSTR) pValueName, int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cmnquery/nf-cmnquery-ipersistquery-writestruct))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cmnquery/nf-cmnquery-ipersistquery-writestruct
     HRESULT WriteStruct(const(PWSTR) pSection, const(PWSTR) pValueName, void* pStruct, uint cbStruct);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cmnquery/nf-cmnquery-ipersistquery-readstruct))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cmnquery/nf-cmnquery-ipersistquery-readstruct
     HRESULT ReadStruct(const(PWSTR) pSection, const(PWSTR) pValueName, void* pStruct, uint cbStruct);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cmnquery/nf-cmnquery-ipersistquery-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cmnquery/nf-cmnquery-ipersistquery-clear
     HRESULT Clear();
 }
 
 @GUID("ab50dec0-6f1d-11d0-a1c4-00aa00c16e65")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cmnquery/nn-cmnquery-icommonquery))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cmnquery/nn-cmnquery-icommonquery
 interface ICommonQuery : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cmnquery/nf-cmnquery-icommonquery-openquerywindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cmnquery/nf-cmnquery-icommonquery-openquerywindow
     HRESULT OpenQueryWindow(HWND hwndParent, OPENQUERYWINDOW* pQueryWnd, IDataObject* ppDataObject);
 }
 
 @GUID("fd8256d0-fd15-11ce-abc4-02608c9e7553")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iads))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iads
 interface IADs : IDispatch
 {
     HRESULT get_Name(BSTR* retval);
@@ -3856,68 +3935,68 @@ interface IADs : IDispatch
     HRESULT get_ADsPath(BSTR* retval);
     HRESULT get_Parent(BSTR* retval);
     HRESULT get_Schema(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iads-getinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iads-getinfo
     HRESULT GetInfo();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iads-setinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iads-setinfo
     HRESULT SetInfo();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iads-get))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iads-get
     HRESULT Get(BSTR bstrName, VARIANT* pvProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iads-put))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iads-put
     HRESULT Put(BSTR bstrName, VARIANT vProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iads-getex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iads-getex
     HRESULT GetEx(BSTR bstrName, VARIANT* pvProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iads-putex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iads-putex
     HRESULT PutEx(int lnControlCode, BSTR bstrName, VARIANT vProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iads-getinfoex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iads-getinfoex
     HRESULT GetInfoEx(VARIANT vProperties, int lnReserved);
 }
 
 @GUID("001677d0-fd16-11ce-abc4-02608c9e7553")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadscontainer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadscontainer
 interface IADsContainer : IDispatch
 {
     HRESULT get_Count(int* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadscontainer-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadscontainer-get__newenum
     HRESULT get__NewEnum(IUnknown* retval);
     HRESULT get_Filter(VARIANT* pVar);
     HRESULT put_Filter(VARIANT Var);
     HRESULT get_Hints(VARIANT* pvFilter);
     HRESULT put_Hints(VARIANT vHints);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadscontainer-getobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadscontainer-getobject
     HRESULT GetObject(BSTR ClassName, BSTR RelativeName, IDispatch* ppObject);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadscontainer-create))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadscontainer-create
     HRESULT Create(BSTR ClassName, BSTR RelativeName, IDispatch* ppObject);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadscontainer-delete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadscontainer-delete
     HRESULT Delete(BSTR bstrClassName, BSTR bstrRelativeName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadscontainer-copyhere))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadscontainer-copyhere
     HRESULT CopyHere(BSTR SourceName, BSTR NewName, IDispatch* ppObject);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadscontainer-movehere))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadscontainer-movehere
     HRESULT MoveHere(BSTR SourceName, BSTR NewName, IDispatch* ppObject);
 }
 
 @GUID("72b945e0-253b-11cf-a988-00aa006bc149")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadscollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadscollection
 interface IADsCollection : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadscollection-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadscollection-get__newenum
     HRESULT get__NewEnum(IUnknown* ppEnumerator);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadscollection-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadscollection-add
     HRESULT Add(BSTR bstrName, VARIANT vItem);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadscollection-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadscollection-remove
     HRESULT Remove(BSTR bstrItemToBeRemoved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadscollection-getobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadscollection-getobject
     HRESULT GetObject(BSTR bstrName, VARIANT* pvItem);
 }
 
 @GUID("451a0030-72ec-11cf-b03b-00aa006e0975")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsmembers))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsmembers
 interface IADsMembers : IDispatch
 {
     HRESULT get_Count(int* plCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsmembers-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsmembers-get__newenum
     HRESULT get__NewEnum(IUnknown* ppEnumerator);
     HRESULT get_Filter(VARIANT* pvFilter);
     HRESULT put_Filter(VARIANT pvFilter);
@@ -3925,7 +4004,7 @@ interface IADsMembers : IDispatch
 
 @GUID("c6f602b6-8f69-11d0-8528-00c04fd8d503")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadspropertylist))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadspropertylist
 interface IADsPropertyList : IDispatch
 {
     HRESULT get_PropertyCount(int* plCount);
@@ -3933,23 +4012,23 @@ interface IADsPropertyList : IDispatch
     HRESULT Next(VARIANT* pVariant);
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
     HRESULT Skip(int cElements);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspropertylist-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspropertylist-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspropertylist-item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspropertylist-item
     HRESULT Item(VARIANT varIndex, VARIANT* pVariant);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspropertylist-getpropertyitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspropertylist-getpropertyitem
     HRESULT GetPropertyItem(BSTR bstrName, int lnADsType, VARIANT* pVariant);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspropertylist-putpropertyitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspropertylist-putpropertyitem
     HRESULT PutPropertyItem(VARIANT varData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspropertylist-resetpropertyitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspropertylist-resetpropertyitem
     HRESULT ResetPropertyItem(VARIANT varEntry);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspropertylist-purgepropertylist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspropertylist-purgepropertylist
     HRESULT PurgePropertyList();
 }
 
 @GUID("05792c8e-941f-11d0-8529-00c04fd8d503")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadspropertyentry))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadspropertyentry
 interface IADsPropertyEntry : IDispatch
 {
     HRESULT Clear();
@@ -3965,10 +4044,10 @@ interface IADsPropertyEntry : IDispatch
 
 @GUID("79fa9ad0-a97c-11d0-8534-00c04fd8d503")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadspropertyvalue))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadspropertyvalue
 interface IADsPropertyValue : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspropertyvalue-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspropertyvalue-clear
     HRESULT Clear();
     HRESULT get_ADsType(int* retval);
     HRESULT put_ADsType(int lnADsType);
@@ -3998,12 +4077,12 @@ interface IADsPropertyValue : IDispatch
 
 @GUID("306e831c-5bc7-11d1-a3b8-00c04fb950dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadspropertyvalue2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadspropertyvalue2
 interface IADsPropertyValue2 : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspropertyvalue2-getobjectproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspropertyvalue2-getobjectproperty
     HRESULT GetObjectProperty(int* lnADsType, VARIANT* pvProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspropertyvalue2-putobjectproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspropertyvalue2-putobjectproperty
     HRESULT PutObjectProperty(int lnADsType, VARIANT vProp);
 }
 
@@ -4027,30 +4106,30 @@ interface IPrivateUnknown : IUnknown
 
 @GUID("3d35553c-d2b0-11d1-b17b-0000f87593a0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsextension))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsextension
 interface IADsExtension : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsextension-operate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsextension-operate
     HRESULT Operate(uint dwCode, VARIANT varData1, VARIANT varData2, VARIANT varData3);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsextension-privategetidsofnames))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsextension-privategetidsofnames
     HRESULT PrivateGetIDsOfNames(const(GUID)* riid, ushort** rgszNames, uint cNames, uint lcid, int* rgDispid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsextension-privateinvoke))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsextension-privateinvoke
     HRESULT PrivateInvoke(int dispidMember, const(GUID)* riid, uint lcid, ushort wFlags, DISPPARAMS* pdispparams, 
                           VARIANT* pvarResult, EXCEPINFO* pexcepinfo, uint* puArgErr);
 }
 
 @GUID("b2bd0902-8878-11d1-8c21-00c04fd8d503")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsdeleteops))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsdeleteops
 interface IADsDeleteOps : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsdeleteops-deleteobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsdeleteops-deleteobject
     HRESULT DeleteObject(int lnFlags);
 }
 
 @GUID("28b96ba0-b330-11cf-a9ad-00aa006bc149")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsnamespaces))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsnamespaces
 interface IADsNamespaces : IADs
 {
     HRESULT get_DefaultContainer(BSTR* retval);
@@ -4059,7 +4138,7 @@ interface IADsNamespaces : IADs
 
 @GUID("c8f93dd0-4ae0-11cf-9e73-00aa004a5691")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsclass))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsclass
 interface IADsClass : IADs
 {
     HRESULT get_PrimaryInterface(BSTR* retval);
@@ -4091,13 +4170,13 @@ interface IADsClass : IADs
     HRESULT put_HelpFileName(BSTR bstrHelpFileName);
     HRESULT get_HelpFileContext(int* retval);
     HRESULT put_HelpFileContext(int lnHelpFileContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsclass-qualifiers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsclass-qualifiers
     HRESULT Qualifiers(IADsCollection* ppQualifiers);
 }
 
 @GUID("c8f93dd3-4ae0-11cf-9e73-00aa004a5691")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsproperty))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsproperty
 interface IADsProperty : IADs
 {
     HRESULT get_OID(BSTR* retval);
@@ -4110,13 +4189,13 @@ interface IADsProperty : IADs
     HRESULT put_MinRange(int lnMinRange);
     HRESULT get_MultiValued(VARIANT_BOOL* retval);
     HRESULT put_MultiValued(VARIANT_BOOL fMultiValued);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsproperty-qualifiers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsproperty-qualifiers
     HRESULT Qualifiers(IADsCollection* ppQualifiers);
 }
 
 @GUID("c8f93dd2-4ae0-11cf-9e73-00aa004a5691")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadssyntax))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadssyntax
 interface IADsSyntax : IADs
 {
     HRESULT get_OleAutoDataType(int* retval);
@@ -4125,7 +4204,7 @@ interface IADsSyntax : IADs
 
 @GUID("a05e03a2-effe-11cf-8abc-00c04fd8d503")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadslocality))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadslocality
 interface IADsLocality : IADs
 {
     HRESULT get_Description(BSTR* retval);
@@ -4140,7 +4219,7 @@ interface IADsLocality : IADs
 
 @GUID("a1cd2dc6-effe-11cf-8abc-00c04fd8d503")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadso))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadso
 interface IADsO : IADs
 {
     HRESULT get_Description(BSTR* retval);
@@ -4159,7 +4238,7 @@ interface IADsO : IADs
 
 @GUID("a2f733b8-effe-11cf-8abc-00c04fd8d503")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsou))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsou
 interface IADsOU : IADs
 {
     HRESULT get_Description(BSTR* retval);
@@ -4180,7 +4259,7 @@ interface IADsOU : IADs
 
 @GUID("00e4c220-fd16-11ce-abc4-02608c9e7553")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsdomain))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsdomain
 interface IADsDomain : IADs
 {
     HRESULT get_IsWorkgroup(VARIANT_BOOL* retval);
@@ -4204,7 +4283,7 @@ interface IADsDomain : IADs
 
 @GUID("efe3cc70-1d9f-11cf-b1f3-02608c9e7553")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadscomputer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadscomputer
 interface IADsComputer : IADs
 {
     HRESULT get_ComputerID(BSTR* retval);
@@ -4243,35 +4322,35 @@ interface IADsComputer : IADs
 
 @GUID("ef497680-1d9f-11cf-b1f3-02608c9e7553")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadscomputeroperations))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadscomputeroperations
 interface IADsComputerOperations : IADs
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadscomputeroperations-status))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadscomputeroperations-status
     HRESULT Status(IDispatch* ppObject);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadscomputeroperations-shutdown))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadscomputeroperations-shutdown
     HRESULT Shutdown(VARIANT_BOOL bReboot);
 }
 
 @GUID("27636b00-410f-11cf-b1ff-02608c9e7553")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsgroup))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsgroup
 interface IADsGroup : IADs
 {
     HRESULT get_Description(BSTR* retval);
     HRESULT put_Description(BSTR bstrDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsgroup-members))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsgroup-members
     HRESULT Members(IADsMembers* ppMembers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsgroup-ismember))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsgroup-ismember
     HRESULT IsMember(BSTR bstrMember, VARIANT_BOOL* bMember);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsgroup-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsgroup-add
     HRESULT Add(BSTR bstrNewItem);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsgroup-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsgroup-remove
     HRESULT Remove(BSTR bstrItemToBeRemoved);
 }
 
 @GUID("3e37e320-17e2-11cf-abc4-02608c9e7553")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsuser))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsuser
 interface IADsUser : IADs
 {
     HRESULT get_BadLoginAddress(BSTR* retval);
@@ -4362,17 +4441,17 @@ interface IADsUser : IADs
     HRESULT put_Picture(VARIANT vPicture);
     HRESULT get_HomePage(BSTR* retval);
     HRESULT put_HomePage(BSTR bstrHomePage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsuser-groups))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsuser-groups
     HRESULT Groups(IADsMembers* ppGroups);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsuser-setpassword))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsuser-setpassword
     HRESULT SetPassword(BSTR NewPassword);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsuser-changepassword))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsuser-changepassword
     HRESULT ChangePassword(BSTR bstrOldPassword, BSTR bstrNewPassword);
 }
 
 @GUID("b15160d0-1226-11cf-a985-00aa006bc149")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsprintqueue))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsprintqueue
 interface IADsPrintQueue : IADs
 {
     HRESULT get_PrinterPath(BSTR* retval);
@@ -4405,23 +4484,23 @@ interface IADsPrintQueue : IADs
 
 @GUID("124be5c0-156e-11cf-a986-00aa006bc149")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsprintqueueoperations))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsprintqueueoperations
 interface IADsPrintQueueOperations : IADs
 {
     HRESULT get_Status(int* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsprintqueueoperations-printjobs))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsprintqueueoperations-printjobs
     HRESULT PrintJobs(IADsCollection* pObject);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsprintqueueoperations-pause))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsprintqueueoperations-pause
     HRESULT Pause();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsprintqueueoperations-resume))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsprintqueueoperations-resume
     HRESULT Resume();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsprintqueueoperations-purge))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsprintqueueoperations-purge
     HRESULT Purge();
 }
 
 @GUID("32fb6780-1ed0-11cf-a988-00aa006bc149")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsprintjob))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsprintjob
 interface IADsPrintJob : IADs
 {
     HRESULT get_HostPrintQueue(BSTR* retval);
@@ -4446,7 +4525,7 @@ interface IADsPrintJob : IADs
 
 @GUID("9a52db30-1ecf-11cf-a988-00aa006bc149")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsprintjoboperations))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsprintjoboperations
 interface IADsPrintJobOperations : IADs
 {
     HRESULT get_Status(int* retval);
@@ -4454,15 +4533,15 @@ interface IADsPrintJobOperations : IADs
     HRESULT get_PagesPrinted(int* retval);
     HRESULT get_Position(int* retval);
     HRESULT put_Position(int lnPosition);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsprintjoboperations-pause))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsprintjoboperations-pause
     HRESULT Pause();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsprintjoboperations-resume))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsprintjoboperations-resume
     HRESULT Resume();
 }
 
 @GUID("68af66e0-31ca-11cf-a98a-00aa006bc149")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsservice))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsservice
 interface IADsService : IADs
 {
     HRESULT get_HostComputer(BSTR* retval);
@@ -4493,25 +4572,25 @@ interface IADsService : IADs
 
 @GUID("5d7b33f0-31ca-11cf-a98a-00aa006bc149")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsserviceoperations))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsserviceoperations
 interface IADsServiceOperations : IADs
 {
     HRESULT get_Status(int* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsserviceoperations-start))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsserviceoperations-start
     HRESULT Start();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsserviceoperations-stop))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsserviceoperations-stop
     HRESULT Stop();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsserviceoperations-pause))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsserviceoperations-pause
     HRESULT Pause();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsserviceoperations-continue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsserviceoperations-continue
     HRESULT Continue();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsserviceoperations-setpassword))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsserviceoperations-setpassword
     HRESULT SetPassword(BSTR bstrNewPassword);
 }
 
 @GUID("a89d1900-31ca-11cf-a98a-00aa006bc149")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsfileservice))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsfileservice
 interface IADsFileService : IADsService
 {
     HRESULT get_Description(BSTR* retval);
@@ -4522,18 +4601,18 @@ interface IADsFileService : IADsService
 
 @GUID("a02ded10-31ca-11cf-a98a-00aa006bc149")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsfileserviceoperations))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsfileserviceoperations
 interface IADsFileServiceOperations : IADsServiceOperations
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsfileserviceoperations-sessions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsfileserviceoperations-sessions
     HRESULT Sessions(IADsCollection* ppSessions);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsfileserviceoperations-resources))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsfileserviceoperations-resources
     HRESULT Resources(IADsCollection* ppResources);
 }
 
 @GUID("eb6dcaf0-4b83-11cf-a995-00aa006bc149")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsfileshare))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsfileshare
 interface IADsFileShare : IADs
 {
     HRESULT get_CurrentUserCount(int* retval);
@@ -4549,7 +4628,7 @@ interface IADsFileShare : IADs
 
 @GUID("398b7da0-4aab-11cf-ae2c-00aa006ebfb9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadssession))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadssession
 interface IADsSession : IADs
 {
     HRESULT get_User(BSTR* retval);
@@ -4562,7 +4641,7 @@ interface IADsSession : IADs
 
 @GUID("34a05b20-4aab-11cf-ae2c-00aa006ebfb9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsresource))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsresource
 interface IADsResource : IADs
 {
     HRESULT get_User(BSTR* retval);
@@ -4573,45 +4652,45 @@ interface IADsResource : IADs
 
 @GUID("ddf2891e-0f9c-11d0-8ad4-00c04fd8d503")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsopendsobject))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsopendsobject
 interface IADsOpenDSObject : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsopendsobject-opendsobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsopendsobject-opendsobject
     HRESULT OpenDSObject(BSTR lpszDNName, BSTR lpszUserName, BSTR lpszPassword, int lnReserved, 
                          IDispatch* ppOleDsObj);
 }
 
 @GUID("e798de2c-22e4-11d0-84fe-00c04fd8d503")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-idirectoryobject))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-idirectoryobject
 interface IDirectoryObject : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-idirectoryobject-getobjectinformation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-idirectoryobject-getobjectinformation
     HRESULT GetObjectInformation(ADS_OBJECT_INFO** ppObjInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-idirectoryobject-getobjectattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-idirectoryobject-getobjectattributes
     HRESULT GetObjectAttributes(PWSTR* pAttributeNames, uint dwNumberAttributes, 
                                 ADS_ATTR_INFO** ppAttributeEntries, uint* pdwNumAttributesReturned);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-idirectoryobject-setobjectattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-idirectoryobject-setobjectattributes
     HRESULT SetObjectAttributes(ADS_ATTR_INFO* pAttributeEntries, uint dwNumAttributes, 
                                 uint* pdwNumAttributesModified);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-idirectoryobject-createdsobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-idirectoryobject-createdsobject
     HRESULT CreateDSObject(PWSTR pszRDNName, ADS_ATTR_INFO* pAttributeEntries, uint dwNumAttributes, 
                            IDispatch* ppObject);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-idirectoryobject-deletedsobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-idirectoryobject-deletedsobject
     HRESULT DeleteDSObject(PWSTR pszRDNName);
 }
 
 @GUID("109ba8ec-92f0-11d0-a790-00c04fd8d5a8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-idirectorysearch))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-idirectorysearch
 interface IDirectorySearch : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-idirectorysearch-setsearchpreference))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-idirectorysearch-setsearchpreference
     HRESULT SetSearchPreference(ADS_SEARCHPREF_INFO* pSearchPrefs, uint dwNumPrefs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-idirectorysearch-executesearch))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-idirectorysearch-executesearch
     HRESULT ExecuteSearch(PWSTR pszSearchFilter, PWSTR* pAttributeNames, uint dwNumberAttributes, 
                           ADS_SEARCH_HANDLE* phSearchResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-idirectorysearch-abandonsearch))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-idirectorysearch-abandonsearch
     HRESULT AbandonSearch(ADS_SEARCH_HANDLE phSearchResult);
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
     HRESULT GetFirstRow(ADS_SEARCH_HANDLE hSearchResult);
@@ -4621,36 +4700,36 @@ interface IDirectorySearch : IUnknown
     HRESULT GetPreviousRow(ADS_SEARCH_HANDLE hSearchResult);
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
     HRESULT GetNextColumnName(ADS_SEARCH_HANDLE hSearchHandle, PWSTR* ppszColumnName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-idirectorysearch-getcolumn))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-idirectorysearch-getcolumn
     HRESULT GetColumn(ADS_SEARCH_HANDLE hSearchResult, PWSTR szColumnName, ADS_SEARCH_COLUMN* pSearchColumn);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-idirectorysearch-freecolumn))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-idirectorysearch-freecolumn
     HRESULT FreeColumn(ADS_SEARCH_COLUMN* pSearchColumn);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-idirectorysearch-closesearchhandle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-idirectorysearch-closesearchhandle
     HRESULT CloseSearchHandle(ADS_SEARCH_HANDLE hSearchResult);
 }
 
 @GUID("75db3b9c-a4d8-11d0-a79c-00c04fd8d5a8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-idirectoryschemamgmt))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-idirectoryschemamgmt
 interface IDirectorySchemaMgmt : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-idirectoryschemamgmt))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-idirectoryschemamgmt
     HRESULT EnumAttributes(PWSTR* ppszAttrNames, uint dwNumAttributes, ADS_ATTR_DEF** ppAttrDefinition, 
                            uint* pdwNumAttributes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-idirectoryschemamgmt))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-idirectoryschemamgmt
     HRESULT CreateAttributeDefinition(PWSTR pszAttributeName, ADS_ATTR_DEF* pAttributeDefinition);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-idirectoryschemamgmt))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-idirectoryschemamgmt
     HRESULT WriteAttributeDefinition(PWSTR pszAttributeName, ADS_ATTR_DEF* pAttributeDefinition);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-idirectoryschemamgmt))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-idirectoryschemamgmt
     HRESULT DeleteAttributeDefinition(PWSTR pszAttributeName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-idirectoryschemamgmt))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-idirectoryschemamgmt
     HRESULT EnumClasses(PWSTR* ppszClassNames, uint dwNumClasses, ADS_CLASS_DEF** ppClassDefinition, 
                         uint* pdwNumClasses);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-idirectoryschemamgmt))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-idirectoryschemamgmt
     HRESULT WriteClassDefinition(PWSTR pszClassName, ADS_CLASS_DEF* pClassDefinition);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-idirectoryschemamgmt))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-idirectoryschemamgmt
     HRESULT CreateClassDefinition(PWSTR pszClassName, ADS_CLASS_DEF* pClassDefinition);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-idirectoryschemamgmt))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-idirectoryschemamgmt
     HRESULT DeleteClassDefinition(PWSTR pszClassName);
 }
 
@@ -4672,7 +4751,7 @@ interface IADsAggregator : IUnknown
 
 @GUID("b4f3a14c-9bdd-11d0-852c-00c04fd8d503")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsaccesscontrolentry))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsaccesscontrolentry
 interface IADsAccessControlEntry : IDispatch
 {
     HRESULT get_AccessMask(int* retval);
@@ -4693,26 +4772,26 @@ interface IADsAccessControlEntry : IDispatch
 
 @GUID("b7ee91cc-9bdd-11d0-852c-00c04fd8d503")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsaccesscontrollist))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsaccesscontrollist
 interface IADsAccessControlList : IDispatch
 {
     HRESULT get_AclRevision(int* retval);
     HRESULT put_AclRevision(int lnAclRevision);
     HRESULT get_AceCount(int* retval);
     HRESULT put_AceCount(int lnAceCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsaccesscontrollist-addace))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsaccesscontrollist-addace
     HRESULT AddAce(IDispatch pAccessControlEntry);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsaccesscontrollist-removeace))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsaccesscontrollist-removeace
     HRESULT RemoveAce(IDispatch pAccessControlEntry);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsaccesscontrollist-copyaccesslist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsaccesscontrollist-copyaccesslist
     HRESULT CopyAccessList(IDispatch* ppAccessControlList);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsaccesscontrollist-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsaccesscontrollist-get__newenum
     HRESULT get__NewEnum(IUnknown* retval);
 }
 
 @GUID("b8c787ca-9bdd-11d0-852c-00c04fd8d503")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadssecuritydescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadssecuritydescriptor
 interface IADsSecurityDescriptor : IDispatch
 {
     HRESULT get_Revision(int* retval);
@@ -4735,13 +4814,13 @@ interface IADsSecurityDescriptor : IDispatch
     HRESULT put_SystemAcl(IDispatch pSystemAcl);
     HRESULT get_SaclDefaulted(VARIANT_BOOL* retval);
     HRESULT put_SaclDefaulted(VARIANT_BOOL fSaclDefaulted);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadssecuritydescriptor-copysecuritydescriptor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadssecuritydescriptor-copysecuritydescriptor
     HRESULT CopySecurityDescriptor(IDispatch* ppSecurityDescriptor);
 }
 
 @GUID("9068270b-0939-11d1-8be1-00c04fd8d503")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadslargeinteger))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadslargeinteger
 interface IADsLargeInteger : IDispatch
 {
     HRESULT get_HighPart(int* retval);
@@ -4752,27 +4831,27 @@ interface IADsLargeInteger : IDispatch
 
 @GUID("b1b272a3-3625-11d1-a3a4-00c04fb950dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsnametranslate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsnametranslate
 interface IADsNameTranslate : IDispatch
 {
     HRESULT put_ChaseReferral(int lnChaseReferral);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsnametranslate-init))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsnametranslate-init
     HRESULT Init(int lnSetType, BSTR bstrADsPath);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsnametranslate-initex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsnametranslate-initex
     HRESULT InitEx(int lnSetType, BSTR bstrADsPath, BSTR bstrUserID, BSTR bstrDomain, BSTR bstrPassword);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsnametranslate-set))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsnametranslate-set
     HRESULT Set(int lnSetType, BSTR bstrADsPath);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsnametranslate-get))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsnametranslate-get
     HRESULT Get(int lnFormatType, BSTR* pbstrADsPath);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsnametranslate-setex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsnametranslate-setex
     HRESULT SetEx(int lnFormatType, VARIANT pvar);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsnametranslate-getex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsnametranslate-getex
     HRESULT GetEx(int lnFormatType, VARIANT* pvar);
 }
 
 @GUID("7b66b533-4680-11d1-a3b4-00c04fb950dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadscaseignorelist))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadscaseignorelist
 interface IADsCaseIgnoreList : IDispatch
 {
     HRESULT get_CaseIgnoreList(VARIANT* retval);
@@ -4781,7 +4860,7 @@ interface IADsCaseIgnoreList : IDispatch
 
 @GUID("a910dea9-4680-11d1-a3b4-00c04fb950dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsfaxnumber))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsfaxnumber
 interface IADsFaxNumber : IDispatch
 {
     HRESULT get_TelephoneNumber(BSTR* retval);
@@ -4792,7 +4871,7 @@ interface IADsFaxNumber : IDispatch
 
 @GUID("b21a50a9-4080-11d1-a3ac-00c04fb950dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsnetaddress))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsnetaddress
 interface IADsNetAddress : IDispatch
 {
     HRESULT get_AddressType(int* retval);
@@ -4803,7 +4882,7 @@ interface IADsNetAddress : IDispatch
 
 @GUID("7b28b80f-4680-11d1-a3b4-00c04fb950dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsoctetlist))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsoctetlist
 interface IADsOctetList : IDispatch
 {
     HRESULT get_OctetList(VARIANT* retval);
@@ -4812,7 +4891,7 @@ interface IADsOctetList : IDispatch
 
 @GUID("97af011a-478e-11d1-a3b4-00c04fb950dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsemail))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsemail
 interface IADsEmail : IDispatch
 {
     HRESULT get_Type(int* retval);
@@ -4823,7 +4902,7 @@ interface IADsEmail : IDispatch
 
 @GUID("b287fcd5-4080-11d1-a3ac-00c04fb950dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadspath))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadspath
 interface IADsPath : IDispatch
 {
     HRESULT get_Type(int* retval);
@@ -4836,7 +4915,7 @@ interface IADsPath : IDispatch
 
 @GUID("f60fb803-4080-11d1-a3ac-00c04fb950dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsreplicapointer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsreplicapointer
 interface IADsReplicaPointer : IDispatch
 {
     HRESULT get_ServerName(BSTR* retval);
@@ -4853,7 +4932,7 @@ interface IADsReplicaPointer : IDispatch
 
 @GUID("8452d3ab-0869-11d1-a377-00c04fb950dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsacl))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsacl
 interface IADsAcl : IDispatch
 {
     HRESULT get_ProtectedAttrName(BSTR* retval);
@@ -4862,13 +4941,13 @@ interface IADsAcl : IDispatch
     HRESULT put_SubjectName(BSTR bstrSubjectName);
     HRESULT get_Privileges(int* retval);
     HRESULT put_Privileges(int lnPrivileges);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsacl-copyacl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsacl-copyacl
     HRESULT CopyAcl(IDispatch* ppAcl);
 }
 
 @GUID("b2f5a901-4080-11d1-a3ac-00c04fb950dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadstimestamp))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadstimestamp
 interface IADsTimestamp : IDispatch
 {
     HRESULT get_WholeSeconds(int* retval);
@@ -4879,7 +4958,7 @@ interface IADsTimestamp : IDispatch
 
 @GUID("7adecf29-4680-11d1-a3b4-00c04fb950dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadspostaladdress))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadspostaladdress
 interface IADsPostalAddress : IDispatch
 {
     HRESULT get_PostalAddress(VARIANT* retval);
@@ -4888,7 +4967,7 @@ interface IADsPostalAddress : IDispatch
 
 @GUID("fd1302bd-4080-11d1-a3ac-00c04fb950dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsbacklink))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsbacklink
 interface IADsBackLink : IDispatch
 {
     HRESULT get_RemoteID(int* retval);
@@ -4899,7 +4978,7 @@ interface IADsBackLink : IDispatch
 
 @GUID("b371a349-4080-11d1-a3ac-00c04fb950dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadstypedname))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadstypedname
 interface IADsTypedName : IDispatch
 {
     HRESULT get_ObjectName(BSTR* retval);
@@ -4912,7 +4991,7 @@ interface IADsTypedName : IDispatch
 
 @GUID("b3eb3b37-4080-11d1-a3ac-00c04fb950dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadshold))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadshold
 interface IADsHold : IDispatch
 {
     HRESULT get_ObjectName(BSTR* retval);
@@ -4923,37 +5002,37 @@ interface IADsHold : IDispatch
 
 @GUID("46f14fda-232b-11d1-a808-00c04fd8d5a8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsobjectoptions))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsobjectoptions
 interface IADsObjectOptions : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsobjectoptions-getoption))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsobjectoptions-getoption
     HRESULT GetOption(int lnOption, VARIANT* pvValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsobjectoptions-setoption))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsobjectoptions-setoption
     HRESULT SetOption(int lnOption, VARIANT vValue);
 }
 
 @GUID("d592aed4-f420-11d0-a36e-00c04fb950dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadspathname))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadspathname
 interface IADsPathname : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspathname-set))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspathname-set
     HRESULT Set(BSTR bstrADsPath, int lnSetType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspathname-setdisplaytype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspathname-setdisplaytype
     HRESULT SetDisplayType(int lnDisplayType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspathname-retrieve))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspathname-retrieve
     HRESULT Retrieve(int lnFormatType, BSTR* pbstrADsPath);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspathname-getnumelements))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspathname-getnumelements
     HRESULT GetNumElements(int* plnNumPathElements);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspathname-getelement))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspathname-getelement
     HRESULT GetElement(int lnElementIndex, BSTR* pbstrElement);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspathname-addleafelement))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspathname-addleafelement
     HRESULT AddLeafElement(BSTR bstrLeafElement);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspathname-removeleafelement))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspathname-removeleafelement
     HRESULT RemoveLeafElement();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspathname-copypath))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspathname-copypath
     HRESULT CopyPath(IDispatch* ppAdsPath);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspathname-getescapedelement))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadspathname-getescapedelement
     HRESULT GetEscapedElement(int lnReserved, BSTR bstrInStr, BSTR* pbstrOutStr);
     HRESULT get_EscapedMode(int* retval);
     HRESULT put_EscapedMode(int lnEscapedMode);
@@ -4961,7 +5040,7 @@ interface IADsPathname : IDispatch
 
 @GUID("5bb11929-afd1-11d2-9cb9-0000f87a369e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsadsysteminfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsadsysteminfo
 interface IADsADSystemInfo : IDispatch
 {
     HRESULT get_UserName(BSTR* retval);
@@ -4973,19 +5052,19 @@ interface IADsADSystemInfo : IDispatch
     HRESULT get_PDCRoleOwner(BSTR* retval);
     HRESULT get_SchemaRoleOwner(BSTR* retval);
     HRESULT get_IsNativeMode(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsadsysteminfo-getanydcname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsadsysteminfo-getanydcname
     HRESULT GetAnyDCName(BSTR* pszDCName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsadsysteminfo-getdcsitename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsadsysteminfo-getdcsitename
     HRESULT GetDCSiteName(BSTR szServer, BSTR* pszSiteName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsadsysteminfo-refreshschemacache))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsadsysteminfo-refreshschemacache
     HRESULT RefreshSchemaCache();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsadsysteminfo-gettrees))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadsadsysteminfo-gettrees
     HRESULT GetTrees(VARIANT* pvTrees);
 }
 
 @GUID("6c6d65dc-afd1-11d2-9cb9-0000f87a369e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadswinntsysteminfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadswinntsysteminfo
 interface IADsWinNTSystemInfo : IDispatch
 {
     HRESULT get_UserName(BSTR* retval);
@@ -4996,7 +5075,7 @@ interface IADsWinNTSystemInfo : IDispatch
 
 @GUID("7e99c0a2-f935-11d2-ba96-00c04fb6d0d1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsdnwithbinary))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsdnwithbinary
 interface IADsDNWithBinary : IDispatch
 {
     HRESULT get_BinaryValue(VARIANT* retval);
@@ -5007,7 +5086,7 @@ interface IADsDNWithBinary : IDispatch
 
 @GUID("370df02e-f934-11d2-ba96-00c04fb6d0d1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsdnwithstring))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadsdnwithstring
 interface IADsDNWithString : IDispatch
 {
     HRESULT get_StringValue(BSTR* retval);
@@ -5018,153 +5097,153 @@ interface IADsDNWithString : IDispatch
 
 @GUID("a63251b2-5f21-474b-ab52-4a8efad10895")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadssecurityutility))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nn-iads-iadssecurityutility
 interface IADsSecurityUtility : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadssecurityutility-getsecuritydescriptor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadssecurityutility-getsecuritydescriptor
     HRESULT GetSecurityDescriptor(VARIANT varPath, int lPathFormat, int lFormat, VARIANT* pVariant);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadssecurityutility-setsecuritydescriptor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadssecurityutility-setsecuritydescriptor
     HRESULT SetSecurityDescriptor(VARIANT varPath, int lPathFormat, VARIANT varData, int lDataFormat);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadssecurityutility-convertsecuritydescriptor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadssecurityutility-convertsecuritydescriptor
     HRESULT ConvertSecurityDescriptor(VARIANT varSD, int lDataFormat, int lOutFormat, VARIANT* pResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadssecurityutility-get_securitymask))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadssecurityutility-get_securitymask
     HRESULT get_SecurityMask(int* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadssecurityutility-put_securitymask))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iads/nf-iads-iadssecurityutility-put_securitymask
     HRESULT put_SecurityMask(int lnSecurityMask);
 }
 
 @GUID("7cabcf1e-78f5-11d2-960c-00c04fa31a86")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsclient/nn-dsclient-idsbrowsedomaintree))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/nn-dsclient-idsbrowsedomaintree
 interface IDsBrowseDomainTree : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsclient/nf-dsclient-idsbrowsedomaintree-browseto))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/nf-dsclient-idsbrowsedomaintree-browseto
     HRESULT BrowseTo(HWND hwndParent, PWSTR* ppszTargetPath, uint dwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsclient/nf-dsclient-idsbrowsedomaintree-getdomains))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/nf-dsclient-idsbrowsedomaintree-getdomains
     HRESULT GetDomains(DOMAIN_TREE** ppDomainTree, uint dwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsclient/nf-dsclient-idsbrowsedomaintree-freedomains))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/nf-dsclient-idsbrowsedomaintree-freedomains
     HRESULT FreeDomains(DOMAIN_TREE** ppDomainTree);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsclient/nf-dsclient-idsbrowsedomaintree-flushcacheddomains))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/nf-dsclient-idsbrowsedomaintree-flushcacheddomains
     HRESULT FlushCachedDomains();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsclient/nf-dsclient-idsbrowsedomaintree-setcomputer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/nf-dsclient-idsbrowsedomaintree-setcomputer
     HRESULT SetComputer(const(PWSTR) pszComputerName, const(PWSTR) pszUserName, const(PWSTR) pszPassword);
 }
 
 @GUID("1ab4a8c0-6a0b-11d2-ad49-00c04fa31a86")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsclient/nn-dsclient-idsdisplayspecifier))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/nn-dsclient-idsdisplayspecifier
 interface IDsDisplaySpecifier : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsclient/nf-dsclient-idsdisplayspecifier-setserver))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/nf-dsclient-idsdisplayspecifier-setserver
     HRESULT SetServer(const(PWSTR) pszServer, const(PWSTR) pszUserName, const(PWSTR) pszPassword, uint dwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsclient/nf-dsclient-idsdisplayspecifier-setlanguageid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/nf-dsclient-idsdisplayspecifier-setlanguageid
     HRESULT SetLanguageID(ushort langid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsclient/nf-dsclient-idsdisplayspecifier-getdisplayspecifier))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/nf-dsclient-idsdisplayspecifier-getdisplayspecifier
     HRESULT GetDisplaySpecifier(const(PWSTR) pszObjectClass, const(GUID)* riid, void** ppv);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsclient/nf-dsclient-idsdisplayspecifier-geticonlocation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/nf-dsclient-idsdisplayspecifier-geticonlocation
     HRESULT GetIconLocation(const(PWSTR) pszObjectClass, uint dwFlags, PWSTR pszBuffer, int cchBuffer, int* presid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsclient/nf-dsclient-idsdisplayspecifier-geticon))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/nf-dsclient-idsdisplayspecifier-geticon
     HICON   GetIcon(const(PWSTR) pszObjectClass, uint dwFlags, int cxIcon, int cyIcon);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsclient/nf-dsclient-idsdisplayspecifier-getfriendlyclassname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/nf-dsclient-idsdisplayspecifier-getfriendlyclassname
     HRESULT GetFriendlyClassName(const(PWSTR) pszObjectClass, PWSTR pszBuffer, int cchBuffer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsclient/nf-dsclient-idsdisplayspecifier-getfriendlyattributename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/nf-dsclient-idsdisplayspecifier-getfriendlyattributename
     HRESULT GetFriendlyAttributeName(const(PWSTR) pszObjectClass, const(PWSTR) pszAttributeName, PWSTR pszBuffer, 
                                      uint cchBuffer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsclient/nf-dsclient-idsdisplayspecifier-isclasscontainer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/nf-dsclient-idsdisplayspecifier-isclasscontainer
     BOOL    IsClassContainer(const(PWSTR) pszObjectClass, const(PWSTR) pszADsPath, uint dwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsclient/nf-dsclient-idsdisplayspecifier-getclasscreationinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/nf-dsclient-idsdisplayspecifier-getclasscreationinfo
     HRESULT GetClassCreationInfo(const(PWSTR) pszObjectClass, DSCLASSCREATIONINFO** ppdscci);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsclient/nf-dsclient-idsdisplayspecifier-enumclassattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/nf-dsclient-idsdisplayspecifier-enumclassattributes
     HRESULT EnumClassAttributes(const(PWSTR) pszObjectClass, LPDSENUMATTRIBUTES pcbEnum, LPARAM lParam);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsclient/nf-dsclient-idsdisplayspecifier-getattributeadstype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsclient/nf-dsclient-idsdisplayspecifier-getattributeadstype
     ADSTYPE GetAttributeADsType(const(PWSTR) pszAttributeName);
 }
 
 @GUID("0c87e64e-3b7a-11d2-b9e0-00c04fd8dbf7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objsel/nn-objsel-idsobjectpicker))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objsel/nn-objsel-idsobjectpicker
 interface IDsObjectPicker : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objsel/nf-objsel-idsobjectpicker-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objsel/nf-objsel-idsobjectpicker-initialize
     HRESULT Initialize(DSOP_INIT_INFO* pInitInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objsel/nf-objsel-idsobjectpicker-invokedialog))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objsel/nf-objsel-idsobjectpicker-invokedialog
     HRESULT InvokeDialog(HWND hwndParent, IDataObject* ppdoSelections);
 }
 
 @GUID("e2d3ec9b-d041-445a-8f16-4748de8fb1cf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objsel/nn-objsel-idsobjectpickercredentials))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objsel/nn-objsel-idsobjectpickercredentials
 interface IDsObjectPickerCredentials : IDsObjectPicker
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objsel/nf-objsel-idsobjectpickercredentials-setcredentials))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objsel/nf-objsel-idsobjectpickercredentials-setcredentials
     HRESULT SetCredentials(const(PWSTR) szUserName, const(PWSTR) szPassword);
 }
 
 @GUID("53554a38-f902-11d2-82b9-00c04f68928b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsadmin/nn-dsadmin-idsadmincreateobj))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsadmin/nn-dsadmin-idsadmincreateobj
 interface IDsAdminCreateObj : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsadmin/nf-dsadmin-idsadmincreateobj-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsadmin/nf-dsadmin-idsadmincreateobj-initialize
     HRESULT Initialize(IADsContainer pADsContainerObj, IADs pADsCopySource, const(PWSTR) lpszClassName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsadmin/nf-dsadmin-idsadmincreateobj-createmodal))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsadmin/nf-dsadmin-idsadmincreateobj-createmodal
     HRESULT CreateModal(HWND hwndParent, IADs* ppADsObj);
 }
 
 @GUID("f2573587-e6fc-11d2-82af-00c04f68928b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsadmin/nn-dsadmin-idsadminnewobj))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsadmin/nn-dsadmin-idsadminnewobj
 interface IDsAdminNewObj : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsadmin/nf-dsadmin-idsadminnewobj-setbuttons))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsadmin/nf-dsadmin-idsadminnewobj-setbuttons
     HRESULT SetButtons(uint nCurrIndex, BOOL bValid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsadmin/nf-dsadmin-idsadminnewobj-getpagecounts))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsadmin/nf-dsadmin-idsadminnewobj-getpagecounts
     HRESULT GetPageCounts(int* pnTotal, int* pnStartIndex);
 }
 
 @GUID("be2b487e-f904-11d2-82b9-00c04f68928b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsadmin/nn-dsadmin-idsadminnewobjprimarysite))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsadmin/nn-dsadmin-idsadminnewobjprimarysite
 interface IDsAdminNewObjPrimarySite : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsadmin/nf-dsadmin-idsadminnewobjprimarysite-createnew))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsadmin/nf-dsadmin-idsadminnewobjprimarysite-createnew
     HRESULT CreateNew(const(PWSTR) pszName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsadmin/nf-dsadmin-idsadminnewobjprimarysite-commit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsadmin/nf-dsadmin-idsadminnewobjprimarysite-commit
     HRESULT Commit();
 }
 
 @GUID("6088eae2-e7bf-11d2-82af-00c04f68928b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsadmin/nn-dsadmin-idsadminnewobjext))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsadmin/nn-dsadmin-idsadminnewobjext
 interface IDsAdminNewObjExt : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsadmin/nf-dsadmin-idsadminnewobjext-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsadmin/nf-dsadmin-idsadminnewobjext-initialize
     HRESULT Initialize(IADsContainer pADsContainerObj, IADs pADsCopySource, const(PWSTR) lpszClassName, 
                        IDsAdminNewObj pDsAdminNewObj, DSA_NEWOBJ_DISPINFO* pDispInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsadmin/nf-dsadmin-idsadminnewobjext-addpages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsadmin/nf-dsadmin-idsadminnewobjext-addpages
     HRESULT AddPages(LPFNSVADDPROPSHEETPAGE lpfnAddPage, LPARAM lParam);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsadmin/nf-dsadmin-idsadminnewobjext-setobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsadmin/nf-dsadmin-idsadminnewobjext-setobject
     HRESULT SetObject(IADs pADsObj);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsadmin/nf-dsadmin-idsadminnewobjext-writedata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsadmin/nf-dsadmin-idsadminnewobjext-writedata
     HRESULT WriteData(HWND hWnd, uint uContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsadmin/nf-dsadmin-idsadminnewobjext-onerror))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsadmin/nf-dsadmin-idsadminnewobjext-onerror
     HRESULT OnError(HWND hWnd, HRESULT hr, uint uContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsadmin/nf-dsadmin-idsadminnewobjext-getsummaryinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsadmin/nf-dsadmin-idsadminnewobjext-getsummaryinfo
     HRESULT GetSummaryInfo(BSTR* pBstrText);
 }
 
 @GUID("e4a2b8b3-5a18-11d2-97c1-00a0c9a06d2d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsadmin/nn-dsadmin-idsadminnotifyhandler))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsadmin/nn-dsadmin-idsadminnotifyhandler
 interface IDsAdminNotifyHandler : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsadmin/nf-dsadmin-idsadminnotifyhandler-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsadmin/nf-dsadmin-idsadminnotifyhandler-initialize
     HRESULT Initialize(IDataObject pExtraInfo, uint* puEventFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsadmin/nf-dsadmin-idsadminnotifyhandler-begin))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsadmin/nf-dsadmin-idsadminnotifyhandler-begin
     HRESULT Begin(uint uEvent, IDataObject pArg1, IDataObject pArg2, uint* puFlags, BSTR* pBstr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsadmin/nf-dsadmin-idsadminnotifyhandler-notify))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsadmin/nf-dsadmin-idsadminnotifyhandler-notify
     HRESULT Notify(uint nItem, uint uFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsadmin/nf-dsadmin-idsadminnotifyhandler-end))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsadmin/nf-dsadmin-idsadminnotifyhandler-end
     HRESULT End();
 }
 

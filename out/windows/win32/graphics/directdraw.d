@@ -3,12 +3,13 @@
 module windows.win32.graphics.directdraw;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, CHAR, HANDLE, HINSTANCE, HRESULT, HWND,
-                                         PSTR, PWSTR, RECT, RECTL, SIZE;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, CHAR, HANDLE, HINSTANCE, HRESULT,
+                                                    HWND, PSTR, PWSTR, RECT, RECTL,
+                                                    SIZE;
 public import windows.win32.graphics.gdi : HDC, HMONITOR, HPALETTE, PALETTEENTRY,
                                            RGNDATA;
-public import windows.win32.system.com : IUnknown;
+public import windows.win32.system.com.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
@@ -16,8 +17,8 @@ extern(Windows) @nogc nothrow:
 // Constants
 
 
-enum uint DIRECTDRAW_VERSION = 0x00000700;
-enum uint _FACDD = 0x00000876;
+enum uint DIRECTDRAW_VERSION = 0x00000700U;
+enum uint _FACDD = 0x00000876U;
 
 enum : GUID
 {
@@ -44,7 +45,7 @@ enum : int
     DDCREATE_EMULATIONONLY = 0x00000002,
 }
 
-enum uint MAX_DDDEVICEID_STRING = 0x00000200;
+enum uint MAX_DDDEVICEID_STRING = 0x00000200U;
 enum int DDGDI_GETHOSTIDENTIFIER = 0x00000001;
 
 enum : int
@@ -226,7 +227,7 @@ enum : int
     DDSCAPS3_MULTISAMPLE_QUALITY_MASK = 0x000000e0,
 }
 
-enum uint DDSCAPS3_MULTISAMPLE_QUALITY_SHIFT = 0x00000005;
+enum uint DDSCAPS3_MULTISAMPLE_QUALITY_SHIFT = 0x00000005U;
 
 enum : int
 {
@@ -656,11 +657,11 @@ enum : int
 
 enum : uint
 {
-    DDBLTFAST_NOCOLORKEY   = 0x00000000,
-    DDBLTFAST_SRCCOLORKEY  = 0x00000001,
-    DDBLTFAST_DESTCOLORKEY = 0x00000002,
-    DDBLTFAST_WAIT         = 0x00000010,
-    DDBLTFAST_DONOTWAIT    = 0x00000020,
+    DDBLTFAST_NOCOLORKEY   = 0x00000000U,
+    DDBLTFAST_SRCCOLORKEY  = 0x00000001U,
+    DDBLTFAST_DESTCOLORKEY = 0x00000002U,
+    DDBLTFAST_WAIT         = 0x00000010U,
+    DDBLTFAST_DONOTWAIT    = 0x00000020U,
 }
 
 enum : int
@@ -827,13 +828,13 @@ enum : int
 
 enum : uint
 {
-    DDENUMRET_CANCEL = 0x00000000,
-    DDENUMRET_OK     = 0x00000001,
+    DDENUMRET_CANCEL = 0x00000000U,
+    DDENUMRET_OK     = 0x00000001U,
 }
 
 enum int DDERR_NOTINITIALIZED = 0x800401f0;
 enum int OBJECT_ISROOT = 0x80000000;
-enum uint DDUNSUPPORTEDMODE = 0xffffffff;
+enum uint DDUNSUPPORTEDMODE = 0xffffffffU;
 enum GUID GUID_MiscellaneousCallbacks = GUID("efd60cc0-49e7-11d0-889d-00aa00bbb76a");
 enum GUID GUID_VideoPortCallbacks = GUID("efd60cc1-49e7-11d0-889d-00aa00bbb76a");
 enum GUID GUID_ColorControlCallbacks = GUID("efd60cc2-49e7-11d0-889d-00aa00bbb76a");
@@ -919,25 +920,25 @@ enum : int
 
 enum : uint
 {
-    DELETED_OK       = 0x00000000,
-    DELETED_LASTONE  = 0x00000001,
-    DELETED_NOTFOUND = 0x00000002,
+    DELETED_OK       = 0x00000000U,
+    DELETED_LASTONE  = 0x00000001U,
+    DELETED_NOTFOUND = 0x00000002U,
 }
 
-enum uint DCICOMMAND = 0x00000c03;
+enum uint DCICOMMAND = 0x00000c03U;
 enum int DD_VERSION = 0x00000200;
 enum int DD_RUNTIME_VERSION = 0x00000902;
-enum uint DD_HAL_VERSION = 0x00000100;
-enum uint DDCREATEDRIVEROBJECT = 0x0000000a;
-enum uint DDGET32BITDRIVERNAME = 0x0000000b;
-enum uint DDNEWCALLBACKFNS = 0x0000000c;
-enum uint DDVERSIONINFO = 0x0000000d;
+enum uint DD_HAL_VERSION = 0x00000100U;
+enum uint DDCREATEDRIVEROBJECT = 0x0000000aU;
+enum uint DDGET32BITDRIVERNAME = 0x0000000bU;
+enum uint DDNEWCALLBACKFNS = 0x0000000cU;
+enum uint DDVERSIONINFO = 0x0000000dU;
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* DDHAL_DRIVER_DLLNAME = "DDRAW16.DLL";
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* DDHAL_APP_DLLNAME = "DDRAW.DLL";
-enum uint CCHDEVICENAME = 0x00000020;
-enum uint MAX_DRIVER_NAME = 0x00000020;
-enum uint MAX_PALETTE_SIZE = 0x00000100;
-enum uint MAX_AUTOFLIP_BUFFERS = 0x0000000a;
+enum uint CCHDEVICENAME = 0x00000020U;
+enum uint MAX_DRIVER_NAME = 0x00000020U;
+enum uint MAX_PALETTE_SIZE = 0x00000100U;
+enum uint MAX_AUTOFLIP_BUFFERS = 0x0000000aU;
 enum int DDSCAPS_EXECUTEBUFFER = 0x00800000;
 
 enum : int
@@ -951,13 +952,13 @@ enum int DDSCAPS3_VIDEO = 0x00000200;
 
 enum : uint
 {
-    D3DFMT_INTERNAL_D32   = 0x00000047,
-    D3DFMT_INTERNAL_S1D15 = 0x00000048,
-    D3DFMT_INTERNAL_D15S1 = 0x00000049,
-    D3DFMT_INTERNAL_S8D24 = 0x0000004a,
-    D3DFMT_INTERNAL_D24S8 = 0x0000004b,
-    D3DFMT_INTERNAL_X8D24 = 0x0000004c,
-    D3DFMT_INTERNAL_D24X8 = 0x0000004d,
+    D3DFMT_INTERNAL_D32   = 0x00000047U,
+    D3DFMT_INTERNAL_S1D15 = 0x00000048U,
+    D3DFMT_INTERNAL_D15S1 = 0x00000049U,
+    D3DFMT_INTERNAL_S8D24 = 0x0000004aU,
+    D3DFMT_INTERNAL_D24S8 = 0x0000004bU,
+    D3DFMT_INTERNAL_X8D24 = 0x0000004cU,
+    D3DFMT_INTERNAL_D24X8 = 0x0000004dU,
 }
 
 enum : int
@@ -1077,16 +1078,16 @@ enum : int
 
 enum : uint
 {
-    DDHAL_MOCOMP32_GETGUIDS        = 0x00000001,
-    DDHAL_MOCOMP32_GETFORMATS      = 0x00000002,
-    DDHAL_MOCOMP32_CREATE          = 0x00000004,
-    DDHAL_MOCOMP32_GETCOMPBUFFINFO = 0x00000008,
-    DDHAL_MOCOMP32_GETINTERNALINFO = 0x00000010,
-    DDHAL_MOCOMP32_BEGINFRAME      = 0x00000020,
-    DDHAL_MOCOMP32_ENDFRAME        = 0x00000040,
-    DDHAL_MOCOMP32_RENDER          = 0x00000080,
-    DDHAL_MOCOMP32_QUERYSTATUS     = 0x00000100,
-    DDHAL_MOCOMP32_DESTROY         = 0x00000200,
+    DDHAL_MOCOMP32_GETGUIDS        = 0x00000001U,
+    DDHAL_MOCOMP32_GETFORMATS      = 0x00000002U,
+    DDHAL_MOCOMP32_CREATE          = 0x00000004U,
+    DDHAL_MOCOMP32_GETCOMPBUFFINFO = 0x00000008U,
+    DDHAL_MOCOMP32_GETINTERNALINFO = 0x00000010U,
+    DDHAL_MOCOMP32_BEGINFRAME      = 0x00000020U,
+    DDHAL_MOCOMP32_ENDFRAME        = 0x00000040U,
+    DDHAL_MOCOMP32_RENDER          = 0x00000080U,
+    DDHAL_MOCOMP32_QUERYSTATUS     = 0x00000100U,
+    DDHAL_MOCOMP32_DESTROY         = 0x00000200U,
 }
 
 enum : int
@@ -1130,7 +1131,7 @@ enum : int
 }
 
 enum int ACCESSRECT_BROKEN = 0x00000004;
-enum uint PFINDEX_UNINITIALIZED = 0x00000000;
+enum uint PFINDEX_UNINITIALIZED = 0x00000000U;
 
 enum : int
 {
@@ -1215,12 +1216,12 @@ enum : int
 
 enum : uint
 {
-    DDMODEINFO_PALETTIZED  = 0x00000001,
-    DDMODEINFO_MODEX       = 0x00000002,
-    DDMODEINFO_UNSUPPORTED = 0x00000004,
-    DDMODEINFO_STANDARDVGA = 0x00000008,
-    DDMODEINFO_MAXREFRESH  = 0x00000010,
-    DDMODEINFO_STEREO      = 0x00000020,
+    DDMODEINFO_PALETTIZED  = 0x00000001U,
+    DDMODEINFO_MODEX       = 0x00000002U,
+    DDMODEINFO_UNSUPPORTED = 0x00000004U,
+    DDMODEINFO_STANDARDVGA = 0x00000008U,
+    DDMODEINFO_MAXREFRESH  = 0x00000010U,
+    DDMODEINFO_STEREO      = 0x00000020U,
 }
 
 enum int DDRAWILCL_HASEXCLUSIVEMODE = 0x00000001;
@@ -1321,13 +1322,13 @@ enum int DDRAWI_BADPDEV = 0x40000000;
 
 enum : uint
 {
-    DDRAWIVPORT_ON                = 0x00000001,
-    DDRAWIVPORT_SOFTWARE_AUTOFLIP = 0x00000002,
-    DDRAWIVPORT_COLORKEYANDINTERP = 0x00000004,
-    DDRAWIVPORT_NOKERNELHANDLES   = 0x00000008,
-    DDRAWIVPORT_SOFTWARE_BOB      = 0x00000010,
-    DDRAWIVPORT_VBION             = 0x00000020,
-    DDRAWIVPORT_VIDEOON           = 0x00000040,
+    DDRAWIVPORT_ON                = 0x00000001U,
+    DDRAWIVPORT_SOFTWARE_AUTOFLIP = 0x00000002U,
+    DDRAWIVPORT_COLORKEYANDINTERP = 0x00000004U,
+    DDRAWIVPORT_NOKERNELHANDLES   = 0x00000008U,
+    DDRAWIVPORT_SOFTWARE_BOB      = 0x00000010U,
+    DDRAWIVPORT_VBION             = 0x00000020U,
+    DDRAWIVPORT_VIDEOON           = 0x00000040U,
 }
 
 enum int DDHALINFO_ISPRIMARYDISPLAY = 0x00000001;
@@ -1343,20 +1344,20 @@ enum int DDWAITVB_I_TESTVB = 0x80000006;
 
 enum : uint
 {
-    DDRAWI_VPORTSTART    = 0x00000001,
-    DDRAWI_VPORTSTOP     = 0x00000002,
-    DDRAWI_VPORTUPDATE   = 0x00000003,
-    DDRAWI_VPORTGETCOLOR = 0x00000001,
-    DDRAWI_VPORTSETCOLOR = 0x00000002,
+    DDRAWI_VPORTSTART    = 0x00000001U,
+    DDRAWI_VPORTSTOP     = 0x00000002U,
+    DDRAWI_VPORTUPDATE   = 0x00000003U,
+    DDRAWI_VPORTGETCOLOR = 0x00000001U,
+    DDRAWI_VPORTSETCOLOR = 0x00000002U,
 }
 
 enum : uint
 {
-    DDRAWI_GETCOLOR = 0x00000001,
-    DDRAWI_SETCOLOR = 0x00000002,
+    DDRAWI_GETCOLOR = 0x00000001U,
+    DDRAWI_SETCOLOR = 0x00000002U,
 }
 
-enum uint DDMCQUERY_READ = 0x00000001;
+enum uint DDMCQUERY_READ = 0x00000001U;
 
 enum : GUID
 {
@@ -1641,60 +1642,60 @@ enum : int
 }
 
 enum GUID GUID_DxApi = GUID("8a79bef0-b915-11d0-9144-080036d2ef02");
-enum uint MDL_MAPPED_TO_SYSTEM_VA = 0x00000001;
-enum uint MDL_PAGES_LOCKED = 0x00000002;
-enum uint MDL_SOURCE_IS_NONPAGED_POOL = 0x00000004;
-enum uint MDL_ALLOCATED_FIXED_SIZE = 0x00000008;
+enum uint MDL_MAPPED_TO_SYSTEM_VA = 0x00000001U;
+enum uint MDL_PAGES_LOCKED = 0x00000002U;
+enum uint MDL_SOURCE_IS_NONPAGED_POOL = 0x00000004U;
+enum uint MDL_ALLOCATED_FIXED_SIZE = 0x00000008U;
 
 enum : uint
 {
-    MDL_PARTIAL                 = 0x00000010,
-    MDL_PARTIAL_HAS_BEEN_MAPPED = 0x00000020,
+    MDL_PARTIAL                 = 0x00000010U,
+    MDL_PARTIAL_HAS_BEEN_MAPPED = 0x00000020U,
 }
 
-enum uint MDL_IO_PAGE_READ = 0x00000040;
-enum uint MDL_WRITE_OPERATION = 0x00000080;
-enum uint MDL_PARENT_MAPPED_SYSTEM_VA = 0x00000100;
-enum uint MDL_LOCK_HELD = 0x00000200;
-enum uint MDL_SCATTER_GATHER_VA = 0x00000400;
-enum uint MDL_IO_SPACE = 0x00000800;
-enum uint MDL_NETWORK_HEADER = 0x00001000;
-enum uint MDL_MAPPING_CAN_FAIL = 0x00002000;
-enum uint MDL_ALLOCATED_MUST_SUCCEED = 0x00004000;
-enum uint MDL_64_BIT_VA = 0x00008000;
-enum uint DX_OK = 0x00000000;
-enum uint DXERR_UNSUPPORTED = 0x80004001;
+enum uint MDL_IO_PAGE_READ = 0x00000040U;
+enum uint MDL_WRITE_OPERATION = 0x00000080U;
+enum uint MDL_PARENT_MAPPED_SYSTEM_VA = 0x00000100U;
+enum uint MDL_LOCK_HELD = 0x00000200U;
+enum uint MDL_SCATTER_GATHER_VA = 0x00000400U;
+enum uint MDL_IO_SPACE = 0x00000800U;
+enum uint MDL_NETWORK_HEADER = 0x00001000U;
+enum uint MDL_MAPPING_CAN_FAIL = 0x00002000U;
+enum uint MDL_ALLOCATED_MUST_SUCCEED = 0x00004000U;
+enum uint MDL_64_BIT_VA = 0x00008000U;
+enum uint DX_OK = 0x00000000U;
+enum uint DXERR_UNSUPPORTED = 0x80004001U;
 
 enum : uint
 {
-    DXERR_GENERIC   = 0x80004005,
-    DXERR_OUTOFCAPS = 0x88760168,
+    DXERR_GENERIC   = 0x80004005U,
+    DXERR_OUTOFCAPS = 0x88760168U,
 }
 
 enum int DDIRQ_BUSMASTER = 0x00000002;
 
 enum : uint
 {
-    IRQINFO_HANDLED    = 0x00000001,
-    IRQINFO_NOTHANDLED = 0x00000002,
+    IRQINFO_HANDLED    = 0x00000001U,
+    IRQINFO_NOTHANDLED = 0x00000002U,
 }
 
 enum : uint
 {
-    DDSKIP_SKIPNEXT   = 0x00000001,
-    DDSKIP_ENABLENEXT = 0x00000002,
+    DDSKIP_SKIPNEXT   = 0x00000001U,
+    DDSKIP_ENABLENEXT = 0x00000002U,
 }
 
 enum : uint
 {
-    DDTRANSFER_SYSTEMMEMORY   = 0x00000001,
-    DDTRANSFER_NONLOCALVIDMEM = 0x00000002,
-    DDTRANSFER_INVERT         = 0x00000004,
-    DDTRANSFER_CANCEL         = 0x00000080,
-    DDTRANSFER_HALFLINES      = 0x00000100,
+    DDTRANSFER_SYSTEMMEMORY   = 0x00000001U,
+    DDTRANSFER_NONLOCALVIDMEM = 0x00000002U,
+    DDTRANSFER_INVERT         = 0x00000004U,
+    DDTRANSFER_CANCEL         = 0x00000080U,
+    DDTRANSFER_HALFLINES      = 0x00000100U,
 }
 
-enum uint DXAPI_HALVERSION = 0x00000001;
+enum uint DXAPI_HALVERSION = 0x00000001U;
 
 // Callbacks
 
@@ -1908,42 +1909,64 @@ struct DDRGBA
     ubyte alpha;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/ns-ddraw-ddcolorkey))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/ns-ddraw-ddcolorkey
 struct DDCOLORKEY
 {
     uint dwColorSpaceLowValue;
     uint dwColorSpaceHighValue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/ns-ddraw-ddbltfx))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/ns-ddraw-ddbltfx
 struct DDBLTFX
 {
-    uint                 dwSize;
-    uint                 dwDDFX;
-    uint                 dwROP;
-    uint                 dwDDROP;
-    uint                 dwRotationAngle;
-    uint                 dwZBufferOpCode;
-    uint                 dwZBufferLow;
-    uint                 dwZBufferHigh;
-    uint                 dwZBufferBaseDest;
-    uint                 dwZDestConstBitDepth;
-    _Anonymous1_e__Union Anonymous1;
-    uint                 dwZSrcConstBitDepth;
-    _Anonymous2_e__Union Anonymous2;
-    uint                 dwAlphaEdgeBlendBitDepth;
-    uint                 dwAlphaEdgeBlend;
-    uint                 dwReserved;
-    uint                 dwAlphaDestConstBitDepth;
-    _Anonymous3_e__Union Anonymous3;
-    uint                 dwAlphaSrcConstBitDepth;
-    _Anonymous4_e__Union Anonymous4;
-    _Anonymous5_e__Union Anonymous5;
-    DDCOLORKEY           ddckDestColorkey;
-    DDCOLORKEY           ddckSrcColorkey;
+    uint       dwSize;
+    uint       dwDDFX;
+    uint       dwROP;
+    uint       dwDDROP;
+    uint       dwRotationAngle;
+    uint       dwZBufferOpCode;
+    uint       dwZBufferLow;
+    uint       dwZBufferHigh;
+    uint       dwZBufferBaseDest;
+    uint       dwZDestConstBitDepth;
+    union
+    {
+        uint               dwZDestConst;
+        IDirectDrawSurface lpDDSZBufferDest;
+    }
+    uint       dwZSrcConstBitDepth;
+    union
+    {
+        uint               dwZSrcConst;
+        IDirectDrawSurface lpDDSZBufferSrc;
+    }
+    uint       dwAlphaEdgeBlendBitDepth;
+    uint       dwAlphaEdgeBlend;
+    uint       dwReserved;
+    uint       dwAlphaDestConstBitDepth;
+    union
+    {
+        uint               dwAlphaDestConst;
+        IDirectDrawSurface lpDDSAlphaDest;
+    }
+    uint       dwAlphaSrcConstBitDepth;
+    union
+    {
+        uint               dwAlphaSrcConst;
+        IDirectDrawSurface lpDDSAlphaSrc;
+    }
+    union
+    {
+        uint               dwFillColor;
+        uint               dwFillDepth;
+        uint               dwFillPixel;
+        IDirectDrawSurface lpDDSPattern;
+    }
+    DDCOLORKEY ddckDestColorkey;
+    DDCOLORKEY ddckSrcColorkey;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/ns-ddraw-ddscaps))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/ns-ddraw-ddscaps
 struct DDSCAPS
 {
     uint dwCaps;
@@ -1956,18 +1979,26 @@ struct DDOSCAPS
 
 struct DDSCAPSEX
 {
-    uint                dwCaps2;
-    uint                dwCaps3;
-    _Anonymous_e__Union Anonymous;
+    uint dwCaps2;
+    uint dwCaps3;
+    union
+    {
+        uint dwCaps4;
+        uint dwVolumeDepth;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/ns-ddraw-ddscaps2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/ns-ddraw-ddscaps2
 struct DDSCAPS2
 {
-    uint                dwCaps;
-    uint                dwCaps2;
-    uint                dwCaps3;
-    _Anonymous_e__Union Anonymous;
+    uint dwCaps;
+    uint dwCaps2;
+    uint dwCaps3;
+    union
+    {
+        uint dwCaps4;
+        uint dwVolumeDepth;
+    }
 }
 
 struct DDCAPS_DX1
@@ -2010,7 +2041,7 @@ struct DDCAPS_DX1
     uint    dwReserved3;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/ns-ddraw-ddcaps_dx3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/ns-ddraw-ddcaps_dx3
 struct DDCAPS_DX3
 {
     uint    dwSize;
@@ -2066,7 +2097,7 @@ struct DDCAPS_DX3
     uint    dwReserved6;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/ns-ddraw-ddcaps_dx5))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/ns-ddraw-ddcaps_dx5
 struct DDCAPS_DX5
 {
     uint    dwSize;
@@ -2127,7 +2158,7 @@ struct DDCAPS_DX5
     uint[8] dwNLVBRops;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/ns-ddraw-ddcaps_dx6))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/ns-ddraw-ddcaps_dx6
 struct DDCAPS_DX6
 {
     uint     dwSize;
@@ -2189,7 +2220,7 @@ struct DDCAPS_DX6
     DDSCAPS2 ddsCaps;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/ns-ddraw-ddcaps_dx7))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/ns-ddraw-ddcaps_dx7
 struct DDCAPS_DX7
 {
     uint     dwSize;
@@ -2251,37 +2282,86 @@ struct DDCAPS_DX7
     DDSCAPS2 ddsCaps;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/ns-ddraw-ddpixelformat))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/ns-ddraw-ddpixelformat
 struct DDPIXELFORMAT
 {
-    uint                 dwSize;
-    uint                 dwFlags;
-    uint                 dwFourCC;
-    _Anonymous1_e__Union Anonymous1;
-    _Anonymous2_e__Union Anonymous2;
-    _Anonymous3_e__Union Anonymous3;
-    _Anonymous4_e__Union Anonymous4;
-    _Anonymous5_e__Union Anonymous5;
+    uint dwSize;
+    uint dwFlags;
+    uint dwFourCC;
+    union
+    {
+        uint dwRGBBitCount;
+        uint dwYUVBitCount;
+        uint dwZBufferBitDepth;
+        uint dwAlphaBitDepth;
+        uint dwLuminanceBitCount;
+        uint dwBumpBitCount;
+        uint dwPrivateFormatBitCount;
+    }
+    union
+    {
+        uint dwRBitMask;
+        uint dwYBitMask;
+        uint dwStencilBitDepth;
+        uint dwLuminanceBitMask;
+        uint dwBumpDuBitMask;
+        uint dwOperations;
+    }
+    union
+    {
+        uint dwGBitMask;
+        uint dwUBitMask;
+        uint dwZBitMask;
+        uint dwBumpDvBitMask;
+        struct MultiSampleCaps
+        {
+            ushort wFlipMSTypes;
+            ushort wBltMSTypes;
+        }
+    }
+    union
+    {
+        uint dwBBitMask;
+        uint dwVBitMask;
+        uint dwStencilBitMask;
+        uint dwBumpLuminanceBitMask;
+    }
+    union
+    {
+        uint dwRGBAlphaBitMask;
+        uint dwYUVAlphaBitMask;
+        uint dwLuminanceAlphaBitMask;
+        uint dwRGBZBitMask;
+        uint dwYUVZBitMask;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/ns-ddraw-ddoverlayfx))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/ns-ddraw-ddoverlayfx
 struct DDOVERLAYFX
 {
-    uint                 dwSize;
-    uint                 dwAlphaEdgeBlendBitDepth;
-    uint                 dwAlphaEdgeBlend;
-    uint                 dwReserved;
-    uint                 dwAlphaDestConstBitDepth;
-    _Anonymous1_e__Union Anonymous1;
-    uint                 dwAlphaSrcConstBitDepth;
-    _Anonymous2_e__Union Anonymous2;
-    DDCOLORKEY           dckDestColorkey;
-    DDCOLORKEY           dckSrcColorkey;
-    uint                 dwDDFX;
-    uint                 dwFlags;
+    uint       dwSize;
+    uint       dwAlphaEdgeBlendBitDepth;
+    uint       dwAlphaEdgeBlend;
+    uint       dwReserved;
+    uint       dwAlphaDestConstBitDepth;
+    union
+    {
+        uint               dwAlphaDestConst;
+        IDirectDrawSurface lpDDSAlphaDest;
+    }
+    uint       dwAlphaSrcConstBitDepth;
+    union
+    {
+        uint               dwAlphaSrcConst;
+        IDirectDrawSurface lpDDSAlphaSrc;
+    }
+    DDCOLORKEY dckDestColorkey;
+    DDCOLORKEY dckSrcColorkey;
+    uint       dwDDFX;
+    uint       dwFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/ns-ddraw-ddbltbatch))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/ns-ddraw-ddbltbatch
 struct DDBLTBATCH
 {
     RECT*              lprDest;
@@ -2291,7 +2371,7 @@ struct DDBLTBATCH
     DDBLTFX*           lpDDBltFx;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/ns-ddraw-ddgammaramp))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/ns-ddraw-ddgammaramp
 struct DDGAMMARAMP
 {
     ushort[256] red;
@@ -2311,7 +2391,7 @@ struct DDDEVICEIDENTIFIER
     GUID      guidDeviceIdentifier;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/ns-ddraw-dddeviceidentifier2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/ns-ddraw-dddeviceidentifier2
 struct DDDEVICEIDENTIFIER2
 {
     CHAR[512] szDriver;
@@ -2325,47 +2405,77 @@ struct DDDEVICEIDENTIFIER2
     uint      dwWHQLLevel;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/ns-ddraw-ddsurfacedesc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/ns-ddraw-ddsurfacedesc
 struct DDSURFACEDESC
 {
-    uint                 dwSize;
-    uint                 dwFlags;
-    uint                 dwHeight;
-    uint                 dwWidth;
-    _Anonymous1_e__Union Anonymous1;
-    uint                 dwBackBufferCount;
-    _Anonymous2_e__Union Anonymous2;
-    uint                 dwAlphaBitDepth;
-    uint                 dwReserved;
-    void*                lpSurface;
-    DDCOLORKEY           ddckCKDestOverlay;
-    DDCOLORKEY           ddckCKDestBlt;
-    DDCOLORKEY           ddckCKSrcOverlay;
-    DDCOLORKEY           ddckCKSrcBlt;
-    DDPIXELFORMAT        ddpfPixelFormat;
-    DDSCAPS              ddsCaps;
+    uint          dwSize;
+    uint          dwFlags;
+    uint          dwHeight;
+    uint          dwWidth;
+    union
+    {
+        int  lPitch;
+        uint dwLinearSize;
+    }
+    uint          dwBackBufferCount;
+    union
+    {
+        uint dwMipMapCount;
+        uint dwZBufferBitDepth;
+        uint dwRefreshRate;
+    }
+    uint          dwAlphaBitDepth;
+    uint          dwReserved;
+    void*         lpSurface;
+    DDCOLORKEY    ddckCKDestOverlay;
+    DDCOLORKEY    ddckCKDestBlt;
+    DDCOLORKEY    ddckCKSrcOverlay;
+    DDCOLORKEY    ddckCKSrcBlt;
+    DDPIXELFORMAT ddpfPixelFormat;
+    DDSCAPS       ddsCaps;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/ns-ddraw-ddsurfacedesc2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/ns-ddraw-ddsurfacedesc2
 struct DDSURFACEDESC2
 {
-    uint                 dwSize;
-    uint                 dwFlags;
-    uint                 dwHeight;
-    uint                 dwWidth;
-    _Anonymous1_e__Union Anonymous1;
-    _Anonymous2_e__Union Anonymous2;
-    _Anonymous3_e__Union Anonymous3;
-    uint                 dwAlphaBitDepth;
-    uint                 dwReserved;
-    void*                lpSurface;
-    _Anonymous4_e__Union Anonymous4;
-    DDCOLORKEY           ddckCKDestBlt;
-    DDCOLORKEY           ddckCKSrcOverlay;
-    DDCOLORKEY           ddckCKSrcBlt;
-    _Anonymous5_e__Union Anonymous5;
-    DDSCAPS2             ddsCaps;
-    uint                 dwTextureStage;
+    uint       dwSize;
+    uint       dwFlags;
+    uint       dwHeight;
+    uint       dwWidth;
+    union
+    {
+        int  lPitch;
+        uint dwLinearSize;
+    }
+    union
+    {
+        uint dwBackBufferCount;
+        uint dwDepth;
+    }
+    union
+    {
+        uint dwMipMapCount;
+        uint dwRefreshRate;
+        uint dwSrcVBHandle;
+    }
+    uint       dwAlphaBitDepth;
+    uint       dwReserved;
+    void*      lpSurface;
+    union
+    {
+        DDCOLORKEY ddckCKDestOverlay;
+        uint       dwEmptyFaceColor;
+    }
+    DDCOLORKEY ddckCKDestBlt;
+    DDCOLORKEY ddckCKSrcOverlay;
+    DDCOLORKEY ddckCKSrcBlt;
+    union
+    {
+        DDPIXELFORMAT ddpfPixelFormat;
+        uint          dwFVF;
+    }
+    DDSCAPS2   ddsCaps;
+    uint       dwTextureStage;
 }
 
 struct DDOPTSURFACEDESC
@@ -2378,7 +2488,7 @@ struct DDOPTSURFACEDESC
     uint     dwCompressionRatio;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/ns-ddraw-ddcolorcontrol))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/ns-ddraw-ddcolorcontrol
 struct DDCOLORCONTROL
 {
     uint dwSize;
@@ -2402,7 +2512,7 @@ struct DDVIDEOPORTCONNECT
     size_t dwReserved1;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvp/ns-dvp-ddvideoportcaps))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvp/ns-dvp-ddvideoportcaps
 struct DDVIDEOPORTCAPS
 {
     uint   dwSize;
@@ -2426,7 +2536,7 @@ struct DDVIDEOPORTCAPS
     ushort wNumFilterTapsY;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvp/ns-dvp-ddvideoportdesc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvp/ns-dvp-ddvideoportdesc
 struct DDVIDEOPORTDESC
 {
     uint               dwSize;
@@ -2442,7 +2552,7 @@ struct DDVIDEOPORTDESC
     size_t             dwReserved3;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvp/ns-dvp-ddvideoportinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvp/ns-dvp-ddvideoportinfo
 struct DDVIDEOPORTINFO
 {
     uint           dwSize;
@@ -2460,7 +2570,7 @@ struct DDVIDEOPORTINFO
     size_t         dwReserved2;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvp/ns-dvp-ddvideoportbandwidth))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvp/ns-dvp-ddvideoportbandwidth
 struct DDVIDEOPORTBANDWIDTH
 {
     uint   dwSize;
@@ -2492,7 +2602,7 @@ struct DDVIDEOPORTNOTIFY
     int  lDone;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddkernel/ns-ddkernel-ddkernelcaps))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddkernel/ns-ddkernel-ddkernelcaps
 struct DDKERNELCAPS
 {
     uint dwSize;
@@ -2500,13 +2610,29 @@ struct DDKERNELCAPS
     uint dwIRQCaps;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmemmgr/ns-dmemmgr-surfacealignment))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmemmgr/ns-dmemmgr-surfacealignment
 struct SURFACEALIGNMENT
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct Linear
+        {
+            uint dwStartAlignment;
+            uint dwPitchAlignment;
+            uint dwFlags;
+            uint dwReserved2;
+        }
+        struct Rectangular
+        {
+            uint dwXAlignment;
+            uint dwYAlignment;
+            uint dwFlags;
+            uint dwReserved2;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmemmgr/ns-dmemmgr-heapalignment))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmemmgr/ns-dmemmgr-heapalignment
 struct HEAPALIGNMENT
 {
     uint             dwSize;
@@ -2521,7 +2647,7 @@ struct HEAPALIGNMENT
     SURFACEALIGNMENT FlipTarget;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmemmgr/ns-dmemmgr-dd_getheapalignmentdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmemmgr/ns-dmemmgr-dd_getheapalignmentdata
 struct DD_GETHEAPALIGNMENTDATA
 {
     size_t        dwInstance;
@@ -2558,7 +2684,7 @@ struct VMEMR
     BOOL   bDiscardable;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmemmgr/ns-dmemmgr-vmemheap))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmemmgr/ns-dmemmgr-vmemheap
 struct VMEMHEAP
 {
     uint          dwFlags;
@@ -2621,12 +2747,20 @@ struct DDVERSIONDATA
 
 struct VIDMEM
 {
-    uint                 dwFlags;
-    size_t               fpStart;
-    _Anonymous1_e__Union Anonymous1;
-    DDSCAPS              ddsCaps;
-    DDSCAPS              ddsCapsAlt;
-    _Anonymous2_e__Union Anonymous2;
+    uint    dwFlags;
+    size_t  fpStart;
+    union
+    {
+        size_t fpEnd;
+        uint   dwWidth;
+    }
+    DDSCAPS ddsCaps;
+    DDSCAPS ddsCapsAlt;
+    union
+    {
+        VMEMHEAP* lpHeap;
+        uint      dwHeight;
+    }
 }
 
 struct VIDMEMINFO
@@ -2810,7 +2944,11 @@ struct DDMORESURFACECAPS
 {
     uint      dwSize;
     DDSCAPSEX ddsCapsMore;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ExtendedHeapRestrictions[1] ddsExtendedHeapRestrictions;
+    struct ddsExtendedHeapRestrictions
+    {
+        DDSCAPSEX ddsCapsEx;
+        DDSCAPSEX ddsCapsExAlt;
+    }
 }
 
 struct DDSTEREOMODE
@@ -2833,16 +2971,20 @@ struct DDRAWI_DDRAWPALETTE_INT
 
 struct DDRAWI_DDRAWPALETTE_GBL
 {
-    uint                dwRefCnt;
-    uint                dwFlags;
+    uint          dwRefCnt;
+    uint          dwFlags;
     DDRAWI_DIRECTDRAW_LCL* lpDD_lcl;
-    uint                dwProcessId;
-    PALETTEENTRY*       lpColorTable;
-    _Anonymous_e__Union Anonymous;
-    uint                dwDriverReserved;
-    uint                dwContentsStamp;
-    uint                dwSaveStamp;
-    uint                dwHandle;
+    uint          dwProcessId;
+    PALETTEENTRY* lpColorTable;
+    union
+    {
+        size_t   dwReserved1;
+        HPALETTE hHELGDIPalette;
+    }
+    uint          dwDriverReserved;
+    uint          dwContentsStamp;
+    uint          dwSaveStamp;
+    uint          dwHandle;
 }
 
 struct DDRAWI_DDRAWPALETTE_LCL
@@ -2926,41 +3068,62 @@ struct DDRAWI_DDRAWSURFACE_INT
 
 struct DDRAWI_DDRAWSURFACE_GBL
 {
-    uint                 dwRefCnt;
-    uint                 dwGlobalFlags;
-    _Anonymous1_e__Union Anonymous1;
-    _Anonymous2_e__Union Anonymous2;
-    _Anonymous3_e__Union Anonymous3;
-    size_t               fpVidMem;
-    _Anonymous4_e__Union Anonymous4;
-    ushort               wHeight;
-    ushort               wWidth;
-    uint                 dwUsageCount;
-    size_t               dwReserved1;
-    DDPIXELFORMAT        ddpfSurface;
+    uint          dwRefCnt;
+    uint          dwGlobalFlags;
+    union
+    {
+        ACCESSRECTLIST* lpRectList;
+        uint            dwBlockSizeY;
+        int             lSlicePitch;
+    }
+    union
+    {
+        VMEMHEAP* lpVidMemHeap;
+        uint      dwBlockSizeX;
+    }
+    union
+    {
+        DDRAWI_DIRECTDRAW_GBL* lpDD;
+        void* lpDDHandle;
+    }
+    size_t        fpVidMem;
+    union
+    {
+        int  lPitch;
+        uint dwLinearSize;
+    }
+    ushort        wHeight;
+    ushort        wWidth;
+    uint          dwUsageCount;
+    size_t        dwReserved1;
+    DDPIXELFORMAT ddpfSurface;
 }
 
 struct DDRAWI_DDRAWSURFACE_GBL_MORE
 {
-    uint                dwSize;
-    _Anonymous_e__Union Anonymous;
-    uint*               pPageTable;
-    uint                cPages;
-    size_t              dwSavedDCContext;
-    size_t              fpAliasedVidMem;
-    size_t              dwDriverReserved;
-    size_t              dwHELReserved;
-    uint                cPageUnlocks;
-    size_t              hKernelSurface;
-    uint                dwKernelRefCnt;
-    DDCOLORCONTROL*     lpColorInfo;
-    size_t              fpNTAlias;
-    uint                dwContentsStamp;
-    void*               lpvUnswappedDriverReserved;
-    void*               lpDDRAWReserved2;
-    uint                dwDDRAWReserved1;
-    uint                dwDDRAWReserved2;
-    size_t              fpAliasOfVidMem;
+    uint            dwSize;
+    union
+    {
+        uint   dwPhysicalPageTable;
+        size_t fpPhysicalVidMem;
+    }
+    uint*           pPageTable;
+    uint            cPages;
+    size_t          dwSavedDCContext;
+    size_t          fpAliasedVidMem;
+    size_t          dwDriverReserved;
+    size_t          dwHELReserved;
+    uint            cPageUnlocks;
+    size_t          hKernelSurface;
+    uint            dwKernelRefCnt;
+    DDCOLORCONTROL* lpColorInfo;
+    size_t          fpNTAlias;
+    uint            dwContentsStamp;
+    void*           lpvUnswappedDriverReserved;
+    void*           lpDDRAWReserved2;
+    uint            dwDDRAWReserved1;
+    uint            dwDDRAWReserved2;
+    size_t          fpAliasOfVidMem;
 }
 
 struct DDRAWI_DDRAWSURFACE_MORE
@@ -3002,31 +3165,39 @@ struct DDRAWI_DDRAWSURFACE_LCL
 {
     DDRAWI_DDRAWSURFACE_MORE* lpSurfMore;
     DDRAWI_DDRAWSURFACE_GBL* lpGbl;
-    size_t               hDDSurface;
-    ATTACHLIST*          lpAttachList;
-    ATTACHLIST*          lpAttachListFrom;
-    uint                 dwLocalRefCnt;
-    uint                 dwProcessId;
-    uint                 dwFlags;
-    DDSCAPS              ddsCaps;
-    _Anonymous1_e__Union Anonymous1;
-    _Anonymous2_e__Union Anonymous2;
-    uint                 dwModeCreatedIn;
-    uint                 dwBackBufferCount;
-    DDCOLORKEY           ddckCKDestBlt;
-    DDCOLORKEY           ddckCKSrcBlt;
-    size_t               hDC;
-    size_t               dwReserved1;
-    DDCOLORKEY           ddckCKSrcOverlay;
-    DDCOLORKEY           ddckCKDestOverlay;
+    size_t      hDDSurface;
+    ATTACHLIST* lpAttachList;
+    ATTACHLIST* lpAttachListFrom;
+    uint        dwLocalRefCnt;
+    uint        dwProcessId;
+    uint        dwFlags;
+    DDSCAPS     ddsCaps;
+    union
+    {
+        DDRAWI_DDRAWPALETTE_INT* lpDDPalette;
+        DDRAWI_DDRAWPALETTE_INT* lp16DDPalette;
+    }
+    union
+    {
+        DDRAWI_DDRAWCLIPPER_LCL* lpDDClipper;
+        DDRAWI_DDRAWCLIPPER_INT* lp16DDClipper;
+    }
+    uint        dwModeCreatedIn;
+    uint        dwBackBufferCount;
+    DDCOLORKEY  ddckCKDestBlt;
+    DDCOLORKEY  ddckCKSrcBlt;
+    size_t      hDC;
+    size_t      dwReserved1;
+    DDCOLORKEY  ddckCKSrcOverlay;
+    DDCOLORKEY  ddckCKDestOverlay;
     DDRAWI_DDRAWSURFACE_INT* lpSurfaceOverlaying;
-    DBLNODE              dbnOverlayNode;
-    RECT                 rcOverlaySrc;
-    RECT                 rcOverlayDest;
-    uint                 dwClrXparent;
-    uint                 dwAlpha;
-    int                  lOverlayX;
-    int                  lOverlayY;
+    DBLNODE     dbnOverlayNode;
+    RECT        rcOverlaySrc;
+    RECT        rcOverlayDest;
+    uint        dwClrXparent;
+    uint        dwAlpha;
+    int         lOverlayX;
+    int         lOverlayY;
 }
 
 struct DDHALMODEINFO
@@ -3077,7 +3248,7 @@ struct DDHAL_CALLBACKS
     DDHAL_DDMOTIONCOMPCALLBACKS HALDDMotionComp;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawi/ns-ddrawi-ddcorecaps))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawi/ns-ddrawi-ddcorecaps
 struct DDCORECAPS
 {
     uint    dwSize;
@@ -3515,7 +3686,7 @@ struct DDHAL_CREATEPALETTEDATA
     BOOL          is_excl;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawi/ns-ddrawi-ddhal_waitforverticalblankdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawi/ns-ddrawi-ddhal_waitforverticalblankdata
 struct DDHAL_WAITFORVERTICALBLANKDATA
 {
     DDRAWI_DIRECTDRAW_GBL* lpDD;
@@ -3792,14 +3963,17 @@ struct DDHAL_CREATESURFACEEXDATA
 
 struct DDHAL_GETDRIVERSTATEDATA
 {
-    uint                dwFlags;
-    _Anonymous_e__Union Anonymous;
-    uint*               lpdwStates;
-    uint                dwLength;
-    HRESULT             ddRVal;
+    uint    dwFlags;
+    union
+    {
+        size_t dwhContext;
+    }
+    uint*   lpdwStates;
+    uint    dwLength;
+    HRESULT ddRVal;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawi/ns-ddrawi-ddhal_destroyddlocaldata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawi/ns-ddrawi-ddhal_destroyddlocaldata
 struct DDHAL_DESTROYDDLOCALDATA
 {
     uint    dwFlags;
@@ -3974,18 +4148,26 @@ struct DDHAL_DESTROYMOCOMPDATA
     LPDDHALMOCOMPCB_DESTROY DestroyMoComp;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-videomemory))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-videomemory
 struct VIDEOMEMORY
 {
-    uint                 dwFlags;
-    size_t               fpStart;
-    _Anonymous1_e__Union Anonymous1;
-    DDSCAPS              ddsCaps;
-    DDSCAPS              ddsCapsAlt;
-    _Anonymous2_e__Union Anonymous2;
+    uint    dwFlags;
+    size_t  fpStart;
+    union
+    {
+        size_t fpEnd;
+        uint   dwWidth;
+    }
+    DDSCAPS ddsCaps;
+    DDSCAPS ddsCapsAlt;
+    union
+    {
+        VMEMHEAP* lpHeap;
+        uint      dwHeight;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-videomemoryinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-videomemoryinfo
 struct VIDEOMEMORYINFO
 {
     size_t        fpPrimary;
@@ -4002,7 +4184,7 @@ struct VIDEOMEMORYINFO
     void*         pvPrimary;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_callbacks))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_callbacks
 struct DD_CALLBACKS
 {
     uint                 dwSize;
@@ -4018,7 +4200,7 @@ struct DD_CALLBACKS
     PDD_MAPMEMORY        MapMemory;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_miscellaneouscallbacks))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_miscellaneouscallbacks
 struct DD_MISCELLANEOUSCALLBACKS
 {
     uint dwSize;
@@ -4026,7 +4208,7 @@ struct DD_MISCELLANEOUSCALLBACKS
     PDD_GETAVAILDRIVERMEMORY GetAvailDriverMemory;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_miscellaneous2callbacks))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_miscellaneous2callbacks
 struct DD_MISCELLANEOUS2CALLBACKS
 {
     uint                dwSize;
@@ -4037,7 +4219,7 @@ struct DD_MISCELLANEOUS2CALLBACKS
     PDD_DESTROYDDLOCAL  DestroyDDLocal;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_ntcallbacks))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_ntcallbacks
 struct DD_NTCALLBACKS
 {
     uint                 dwSize;
@@ -4047,7 +4229,7 @@ struct DD_NTCALLBACKS
     PDD_FLIPTOGDISURFACE FlipToGDISurface;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_palettecallbacks))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_palettecallbacks
 struct DD_PALETTECALLBACKS
 {
     uint                 dwSize;
@@ -4056,7 +4238,7 @@ struct DD_PALETTECALLBACKS
     PDD_PALCB_SETENTRIES SetEntries;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_surfacecallbacks))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_surfacecallbacks
 struct DD_SURFACECALLBACKS
 {
     uint              dwSize;
@@ -4077,7 +4259,7 @@ struct DD_SURFACECALLBACKS
     PDD_SURFCB_SETPALETTE SetPalette;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_videoportcallbacks))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_videoportcallbacks
 struct DD_VIDEOPORTCALLBACKS
 {
     uint                 dwSize;
@@ -4100,7 +4282,7 @@ struct DD_VIDEOPORTCALLBACKS
     PDD_VPORTCB_COLORCONTROL ColorControl;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_colorcontrolcallbacks))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_colorcontrolcallbacks
 struct DD_COLORCONTROLCALLBACKS
 {
     uint dwSize;
@@ -4108,7 +4290,7 @@ struct DD_COLORCONTROLCALLBACKS
     PDD_COLORCB_COLORCONTROL ColorControl;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_kernelcallbacks))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_kernelcallbacks
 struct DD_KERNELCALLBACKS
 {
     uint dwSize;
@@ -4117,7 +4299,7 @@ struct DD_KERNELCALLBACKS
     PDD_KERNELCB_SYNCVIDEOPORT SyncVideoPortData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_motioncompcallbacks))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_motioncompcallbacks
 struct DD_MOTIONCOMPCALLBACKS
 {
     uint                 dwSize;
@@ -4134,7 +4316,7 @@ struct DD_MOTIONCOMPCALLBACKS
     PDD_MOCOMPCB_DESTROY DestroyMoComp;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_nonlocalvidmemcaps))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_nonlocalvidmemcaps
 struct DD_NONLOCALVIDMEMCAPS
 {
     uint    dwSize;
@@ -4145,62 +4327,75 @@ struct DD_NONLOCALVIDMEMCAPS
     uint[8] dwNLVBRops;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_palette_global))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_palette_global
 struct DD_PALETTE_GLOBAL
 {
     size_t dwReserved1;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_palette_local))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_palette_local
 struct DD_PALETTE_LOCAL
 {
     uint   dwReserved0;
     size_t dwReserved1;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_clipper_global))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_clipper_global
 struct DD_CLIPPER_GLOBAL
 {
     size_t dwReserved1;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_clipper_local))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_clipper_local
 struct DD_CLIPPER_LOCAL
 {
     size_t dwReserved1;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_attachlist))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_attachlist
 struct DD_ATTACHLIST
 {
     DD_ATTACHLIST*    lpLink;
     DD_SURFACE_LOCAL* lpAttached;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_surface_int))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_surface_int
 struct DD_SURFACE_INT
 {
     DD_SURFACE_LOCAL* lpLcl;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_surface_global))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_surface_global
 struct DD_SURFACE_GLOBAL
 {
-    _Anonymous1_e__Union Anonymous1;
-    _Anonymous2_e__Union Anonymous2;
-    size_t               fpVidMem;
-    _Anonymous3_e__Union Anonymous3;
-    int                  yHint;
-    int                  xHint;
-    uint                 wHeight;
-    uint                 wWidth;
-    size_t               dwReserved1;
-    DDPIXELFORMAT        ddpfSurface;
-    size_t               fpHeapOffset;
-    HANDLE               hCreatorProcess;
+    union
+    {
+        uint dwBlockSizeY;
+        int  lSlicePitch;
+    }
+    union
+    {
+        VIDEOMEMORY* lpVidMemHeap;
+        uint         dwBlockSizeX;
+        uint         dwUserMemSize;
+    }
+    size_t        fpVidMem;
+    union
+    {
+        int  lPitch;
+        uint dwLinearSize;
+    }
+    int           yHint;
+    int           xHint;
+    uint          wHeight;
+    uint          wWidth;
+    size_t        dwReserved1;
+    DDPIXELFORMAT ddpfSurface;
+    size_t        fpHeapOffset;
+    HANDLE        hCreatorProcess;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_surface_more))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_surface_more
 struct DD_SURFACE_MORE
 {
     uint                dwMipMapCount;
@@ -4210,19 +4405,27 @@ struct DD_SURFACE_MORE
     uint                dwSurfaceHandle;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_surface_local))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_surface_local
 struct DD_SURFACE_LOCAL
 {
-    DD_SURFACE_GLOBAL*   lpGbl;
-    uint                 dwFlags;
-    DDSCAPS              ddsCaps;
-    size_t               dwReserved1;
-    _Anonymous1_e__Union Anonymous1;
-    _Anonymous2_e__Union Anonymous2;
-    DD_SURFACE_MORE*     lpSurfMore;
-    DD_ATTACHLIST*       lpAttachList;
-    DD_ATTACHLIST*       lpAttachListFrom;
-    RECT                 rcOverlaySrc;
+    DD_SURFACE_GLOBAL* lpGbl;
+    uint               dwFlags;
+    DDSCAPS            ddsCaps;
+    size_t             dwReserved1;
+    union
+    {
+        DDCOLORKEY ddckCKSrcOverlay;
+        DDCOLORKEY ddckCKSrcBlt;
+    }
+    union
+    {
+        DDCOLORKEY ddckCKDestOverlay;
+        DDCOLORKEY ddckCKDestBlt;
+    }
+    DD_SURFACE_MORE*   lpSurfMore;
+    DD_ATTACHLIST*     lpAttachList;
+    DD_ATTACHLIST*     lpAttachListFrom;
+    RECT               rcOverlaySrc;
 }
 
 struct DD_MORECAPS
@@ -4293,7 +4496,7 @@ struct DDNTCORECAPS
     uint    dwSVBCaps2;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_d3dbufcallbacks))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_d3dbufcallbacks
 struct DD_D3DBUFCALLBACKS
 {
     uint                 dwSize;
@@ -4314,7 +4517,7 @@ struct DD_HALINFO_V4
     uint              dwFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_halinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_halinfo
 struct DD_HALINFO
 {
     uint                dwSize;
@@ -4327,7 +4530,7 @@ struct DD_HALINFO
     DD_D3DBUFCALLBACKS* lpD3DBufCallbacks;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_directdraw_global))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_directdraw_global
 struct DD_DIRECTDRAW_GLOBAL
 {
     void*            dhpdev;
@@ -4336,13 +4539,13 @@ struct DD_DIRECTDRAW_GLOBAL
     DDVIDEOPORTCAPS* lpDDVideoPortCaps;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_directdraw_local))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_directdraw_local
 struct DD_DIRECTDRAW_LOCAL
 {
     DD_DIRECTDRAW_GLOBAL* lpGbl;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_videoport_local))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_videoport_local
 struct DD_VIDEOPORT_LOCAL
 {
     DD_DIRECTDRAW_LOCAL* lpDD;
@@ -4357,7 +4560,7 @@ struct DD_VIDEOPORT_LOCAL
     size_t               dwReserved3;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_motioncomp_local))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_motioncomp_local
 struct DD_MOTIONCOMP_LOCAL
 {
     DD_DIRECTDRAW_LOCAL* lpDD;
@@ -4373,15 +4576,19 @@ struct DD_MOTIONCOMP_LOCAL
     void*                lpDriverReserved3;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_moresurfacecaps))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_moresurfacecaps
 struct DD_MORESURFACECAPS
 {
     uint      dwSize;
     DDSCAPSEX ddsCapsMore;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/NTExtendedHeapRestrictions[1] ddsExtendedHeapRestrictions;
+    struct ddsExtendedHeapRestrictions
+    {
+        DDSCAPSEX ddsCapsEx;
+        DDSCAPSEX ddsCapsExAlt;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_stereomode))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_stereomode
 struct DD_STEREOMODE
 {
     uint dwSize;
@@ -4392,7 +4599,7 @@ struct DD_STEREOMODE
     BOOL bSupported;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_updatenonlocalheapdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_updatenonlocalheapdata
 struct DD_UPDATENONLOCALHEAPDATA
 {
     DD_DIRECTDRAW_GLOBAL* lpDD;
@@ -4404,14 +4611,14 @@ struct DD_UPDATENONLOCALHEAPDATA
     void*   UpdateNonLocalHeap;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_ntprivatedrivercaps))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_ntprivatedrivercaps
 struct DD_NTPRIVATEDRIVERCAPS
 {
     uint dwSize;
     uint dwPrivateCaps;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_bltdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_bltdata
 struct DD_BLTDATA
 {
     DD_DIRECTDRAW_GLOBAL* lpDD;
@@ -4433,7 +4640,7 @@ struct DD_BLTDATA
     DDARGB            ddargbScaleFactors;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_lockdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_lockdata
 struct DD_LOCKDATA
 {
     DD_DIRECTDRAW_GLOBAL* lpDD;
@@ -4447,7 +4654,7 @@ struct DD_LOCKDATA
     size_t            fpProcess;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_unlockdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_unlockdata
 struct DD_UNLOCKDATA
 {
     DD_DIRECTDRAW_GLOBAL* lpDD;
@@ -4456,7 +4663,7 @@ struct DD_UNLOCKDATA
     void*             Unlock;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_updateoverlaydata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_updateoverlaydata
 struct DD_UPDATEOVERLAYDATA
 {
     DD_DIRECTDRAW_GLOBAL* lpDD;
@@ -4470,7 +4677,7 @@ struct DD_UPDATEOVERLAYDATA
     void*             UpdateOverlay;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_setoverlaypositiondata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_setoverlaypositiondata
 struct DD_SETOVERLAYPOSITIONDATA
 {
     DD_DIRECTDRAW_GLOBAL* lpDD;
@@ -4482,7 +4689,7 @@ struct DD_SETOVERLAYPOSITIONDATA
     void*             SetOverlayPosition;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_setpalettedata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_setpalettedata
 struct DD_SETPALETTEDATA
 {
     DD_DIRECTDRAW_GLOBAL* lpDD;
@@ -4493,7 +4700,7 @@ struct DD_SETPALETTEDATA
     BOOL               Attach;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_flipdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_flipdata
 struct DD_FLIPDATA
 {
     DD_DIRECTDRAW_GLOBAL* lpDD;
@@ -4506,7 +4713,7 @@ struct DD_FLIPDATA
     DD_SURFACE_LOCAL* lpSurfTargLeft;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_destroysurfacedata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_destroysurfacedata
 struct DD_DESTROYSURFACEDATA
 {
     DD_DIRECTDRAW_GLOBAL* lpDD;
@@ -4523,7 +4730,7 @@ struct DD_SETCLIPLISTDATA
     void*             SetClipList;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_addattachedsurfacedata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_addattachedsurfacedata
 struct DD_ADDATTACHEDSURFACEDATA
 {
     DD_DIRECTDRAW_GLOBAL* lpDD;
@@ -4533,7 +4740,7 @@ struct DD_ADDATTACHEDSURFACEDATA
     void*             AddAttachedSurface;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_setcolorkeydata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_setcolorkeydata
 struct DD_SETCOLORKEYDATA
 {
     DD_DIRECTDRAW_GLOBAL* lpDD;
@@ -4544,7 +4751,7 @@ struct DD_SETCOLORKEYDATA
     void*             SetColorKey;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_getbltstatusdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_getbltstatusdata
 struct DD_GETBLTSTATUSDATA
 {
     DD_DIRECTDRAW_GLOBAL* lpDD;
@@ -4554,7 +4761,7 @@ struct DD_GETBLTSTATUSDATA
     void*             GetBltStatus;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_getflipstatusdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_getflipstatusdata
 struct DD_GETFLIPSTATUSDATA
 {
     DD_DIRECTDRAW_GLOBAL* lpDD;
@@ -4564,7 +4771,7 @@ struct DD_GETFLIPSTATUSDATA
     void*             GetFlipStatus;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_destroypalettedata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_destroypalettedata
 struct DD_DESTROYPALETTEDATA
 {
     DD_DIRECTDRAW_GLOBAL* lpDD;
@@ -4573,7 +4780,7 @@ struct DD_DESTROYPALETTEDATA
     void*              DestroyPalette;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_setentriesdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_setentriesdata
 struct DD_SETENTRIESDATA
 {
     DD_DIRECTDRAW_GLOBAL* lpDD;
@@ -4585,7 +4792,7 @@ struct DD_SETENTRIESDATA
     void*              SetEntries;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_createsurfacedata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_createsurfacedata
 struct DD_CREATESURFACEDATA
 {
     DD_DIRECTDRAW_GLOBAL* lpDD;
@@ -4596,7 +4803,7 @@ struct DD_CREATESURFACEDATA
     void*              CreateSurface;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_cancreatesurfacedata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_cancreatesurfacedata
 struct DD_CANCREATESURFACEDATA
 {
     DD_DIRECTDRAW_GLOBAL* lpDD;
@@ -4606,7 +4813,7 @@ struct DD_CANCREATESURFACEDATA
     void*          CanCreateSurface;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_createpalettedata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_createpalettedata
 struct DD_CREATEPALETTEDATA
 {
     DD_DIRECTDRAW_GLOBAL* lpDD;
@@ -4617,7 +4824,7 @@ struct DD_CREATEPALETTEDATA
     BOOL               is_excl;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_waitforverticalblankdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_waitforverticalblankdata
 struct DD_WAITFORVERTICALBLANKDATA
 {
     DD_DIRECTDRAW_GLOBAL* lpDD;
@@ -4637,7 +4844,7 @@ struct DD_DRVSETCOLORKEYDATA
     void*             SetColorKey;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_getscanlinedata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_getscanlinedata
 struct DD_GETSCANLINEDATA
 {
     DD_DIRECTDRAW_GLOBAL* lpDD;
@@ -4646,7 +4853,7 @@ struct DD_GETSCANLINEDATA
     void*   GetScanLine;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_mapmemorydata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_mapmemorydata
 struct DD_MAPMEMORYDATA
 {
     DD_DIRECTDRAW_GLOBAL* lpDD;
@@ -4656,7 +4863,7 @@ struct DD_MAPMEMORYDATA
     HRESULT ddRVal;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_cancreatevportdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_cancreatevportdata
 struct DD_CANCREATEVPORTDATA
 {
     DD_DIRECTDRAW_LOCAL* lpDD;
@@ -4665,7 +4872,7 @@ struct DD_CANCREATEVPORTDATA
     void*                CanCreateVideoPort;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_createvportdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_createvportdata
 struct DD_CREATEVPORTDATA
 {
     DD_DIRECTDRAW_LOCAL* lpDD;
@@ -4675,7 +4882,7 @@ struct DD_CREATEVPORTDATA
     void*                CreateVideoPort;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_flipvportdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_flipvportdata
 struct DD_FLIPVPORTDATA
 {
     DD_DIRECTDRAW_LOCAL* lpDD;
@@ -4686,7 +4893,7 @@ struct DD_FLIPVPORTDATA
     void*                FlipVideoPort;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_getvportbandwidthdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_getvportbandwidthdata
 struct DD_GETVPORTBANDWIDTHDATA
 {
     DD_DIRECTDRAW_LOCAL* lpDD;
@@ -4700,7 +4907,7 @@ struct DD_GETVPORTBANDWIDTHDATA
     void*                GetVideoPortBandwidth;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_getvportinputformatdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_getvportinputformatdata
 struct DD_GETVPORTINPUTFORMATDATA
 {
     DD_DIRECTDRAW_LOCAL* lpDD;
@@ -4712,7 +4919,7 @@ struct DD_GETVPORTINPUTFORMATDATA
     void*                GetVideoPortInputFormats;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_getvportoutputformatdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_getvportoutputformatdata
 struct DD_GETVPORTOUTPUTFORMATDATA
 {
     DD_DIRECTDRAW_LOCAL* lpDD;
@@ -4725,7 +4932,7 @@ struct DD_GETVPORTOUTPUTFORMATDATA
     void*                GetVideoPortInputFormats;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_getvportfielddata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_getvportfielddata
 struct DD_GETVPORTFIELDDATA
 {
     DD_DIRECTDRAW_LOCAL* lpDD;
@@ -4735,7 +4942,7 @@ struct DD_GETVPORTFIELDDATA
     void*                GetVideoPortField;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_getvportlinedata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_getvportlinedata
 struct DD_GETVPORTLINEDATA
 {
     DD_DIRECTDRAW_LOCAL* lpDD;
@@ -4745,7 +4952,7 @@ struct DD_GETVPORTLINEDATA
     void*                GetVideoPortLine;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_getvportconnectdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_getvportconnectdata
 struct DD_GETVPORTCONNECTDATA
 {
     DD_DIRECTDRAW_LOCAL* lpDD;
@@ -4756,7 +4963,7 @@ struct DD_GETVPORTCONNECTDATA
     void*                GetVideoPortConnectInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_destroyvportdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_destroyvportdata
 struct DD_DESTROYVPORTDATA
 {
     DD_DIRECTDRAW_LOCAL* lpDD;
@@ -4765,7 +4972,7 @@ struct DD_DESTROYVPORTDATA
     void*                DestroyVideoPort;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_getvportflipstatusdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_getvportflipstatusdata
 struct DD_GETVPORTFLIPSTATUSDATA
 {
     DD_DIRECTDRAW_LOCAL* lpDD;
@@ -4774,7 +4981,7 @@ struct DD_GETVPORTFLIPSTATUSDATA
     void*                GetVideoPortFlipStatus;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_updatevportdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_updatevportdata
 struct DD_UPDATEVPORTDATA
 {
     DD_DIRECTDRAW_LOCAL* lpDD;
@@ -4789,7 +4996,7 @@ struct DD_UPDATEVPORTDATA
     void*                UpdateVideoPort;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_waitforvportsyncdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_waitforvportsyncdata
 struct DD_WAITFORVPORTSYNCDATA
 {
     DD_DIRECTDRAW_LOCAL* lpDD;
@@ -4801,7 +5008,7 @@ struct DD_WAITFORVPORTSYNCDATA
     void*                UpdateVideoPort;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_getvportsignaldata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_getvportsignaldata
 struct DD_GETVPORTSIGNALDATA
 {
     DD_DIRECTDRAW_LOCAL* lpDD;
@@ -4811,7 +5018,7 @@ struct DD_GETVPORTSIGNALDATA
     void*                GetVideoSignalStatus;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_vportcolordata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_vportcolordata
 struct DD_VPORTCOLORDATA
 {
     DD_DIRECTDRAW_LOCAL* lpDD;
@@ -4822,7 +5029,7 @@ struct DD_VPORTCOLORDATA
     void*                ColorControl;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_colorcontroldata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_colorcontroldata
 struct DD_COLORCONTROLDATA
 {
     DD_DIRECTDRAW_GLOBAL* lpDD;
@@ -4833,7 +5040,7 @@ struct DD_COLORCONTROLDATA
     void*             ColorControl;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_getdriverinfodata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_getdriverinfodata
 struct DD_GETDRIVERINFODATA
 {
     void*   dhpdev;
@@ -4846,7 +5053,7 @@ struct DD_GETDRIVERINFODATA
     HRESULT ddRVal;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_getavaildrivermemorydata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_getavaildrivermemorydata
 struct DD_GETAVAILDRIVERMEMORYDATA
 {
     DD_DIRECTDRAW_GLOBAL* lpDD;
@@ -4857,7 +5064,7 @@ struct DD_GETAVAILDRIVERMEMORYDATA
     void*   GetAvailDriverMemory;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_freedrivermemorydata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_freedrivermemorydata
 struct DD_FREEDRIVERMEMORYDATA
 {
     DD_DIRECTDRAW_GLOBAL* lpDD;
@@ -4866,7 +5073,7 @@ struct DD_FREEDRIVERMEMORYDATA
     void*             FreeDriverMemory;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_setexclusivemodedata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_setexclusivemodedata
 struct DD_SETEXCLUSIVEMODEDATA
 {
     DD_DIRECTDRAW_GLOBAL* lpDD;
@@ -4876,7 +5083,7 @@ struct DD_SETEXCLUSIVEMODEDATA
     void*   SetExclusiveMode;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_fliptogdisurfacedata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_fliptogdisurfacedata
 struct DD_FLIPTOGDISURFACEDATA
 {
     DD_DIRECTDRAW_GLOBAL* lpDD;
@@ -4886,7 +5093,7 @@ struct DD_FLIPTOGDISURFACEDATA
     void*   FlipToGDISurface;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_syncsurfacedata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_syncsurfacedata
 struct DD_SYNCSURFACEDATA
 {
     DD_DIRECTDRAW_LOCAL* lpDD;
@@ -4902,7 +5109,7 @@ struct DD_SYNCSURFACEDATA
     HRESULT              ddRVal;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_syncvideoportdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_syncvideoportdata
 struct DD_SYNCVIDEOPORTDATA
 {
     DD_DIRECTDRAW_LOCAL* lpDD;
@@ -4916,7 +5123,7 @@ struct DD_SYNCVIDEOPORTDATA
     HRESULT              ddRVal;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_getmocompguidsdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_getmocompguidsdata
 struct DD_GETMOCOMPGUIDSDATA
 {
     DD_DIRECTDRAW_LOCAL* lpDD;
@@ -4925,7 +5132,7 @@ struct DD_GETMOCOMPGUIDSDATA
     HRESULT              ddRVal;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_getmocompformatsdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_getmocompformatsdata
 struct DD_GETMOCOMPFORMATSDATA
 {
     DD_DIRECTDRAW_LOCAL* lpDD;
@@ -4935,7 +5142,7 @@ struct DD_GETMOCOMPFORMATSDATA
     HRESULT              ddRVal;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_createmocompdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_createmocompdata
 struct DD_CREATEMOCOMPDATA
 {
     DD_DIRECTDRAW_LOCAL* lpDD;
@@ -4949,7 +5156,7 @@ struct DD_CREATEMOCOMPDATA
     HRESULT              ddRVal;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-ddcompbufferinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-ddcompbufferinfo
 struct DDCOMPBUFFERINFO
 {
     uint          dwSize;
@@ -4961,7 +5168,7 @@ struct DDCOMPBUFFERINFO
     DDPIXELFORMAT ddPixelFormat;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_getmocompcompbuffdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_getmocompcompbuffdata
 struct DD_GETMOCOMPCOMPBUFFDATA
 {
     DD_DIRECTDRAW_LOCAL* lpDD;
@@ -4974,7 +5181,7 @@ struct DD_GETMOCOMPCOMPBUFFDATA
     HRESULT              ddRVal;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_getinternalmocompdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_getinternalmocompdata
 struct DD_GETINTERNALMOCOMPDATA
 {
     DD_DIRECTDRAW_LOCAL* lpDD;
@@ -4986,7 +5193,7 @@ struct DD_GETINTERNALMOCOMPDATA
     HRESULT              ddRVal;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_beginmocompframedata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_beginmocompframedata
 struct DD_BEGINMOCOMPFRAMEDATA
 {
     DD_DIRECTDRAW_LOCAL* lpDD;
@@ -4999,7 +5206,7 @@ struct DD_BEGINMOCOMPFRAMEDATA
     HRESULT              ddRVal;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_endmocompframedata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_endmocompframedata
 struct DD_ENDMOCOMPFRAMEDATA
 {
     DD_DIRECTDRAW_LOCAL* lpDD;
@@ -5009,7 +5216,7 @@ struct DD_ENDMOCOMPFRAMEDATA
     HRESULT              ddRVal;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-ddmocompbufferinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-ddmocompbufferinfo
 struct DDMOCOMPBUFFERINFO
 {
     uint              dwSize;
@@ -5019,7 +5226,7 @@ struct DDMOCOMPBUFFERINFO
     void*             lpPrivate;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_rendermocompdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_rendermocompdata
 struct DD_RENDERMOCOMPDATA
 {
     DD_DIRECTDRAW_LOCAL* lpDD;
@@ -5034,7 +5241,7 @@ struct DD_RENDERMOCOMPDATA
     HRESULT              ddRVal;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_querymocompstatusdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_querymocompstatusdata
 struct DD_QUERYMOCOMPSTATUSDATA
 {
     DD_DIRECTDRAW_LOCAL* lpDD;
@@ -5044,7 +5251,7 @@ struct DD_QUERYMOCOMPSTATUSDATA
     HRESULT              ddRVal;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_destroymocompdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_destroymocompdata
 struct DD_DESTROYMOCOMPDATA
 {
     DD_DIRECTDRAW_LOCAL* lpDD;
@@ -5052,7 +5259,7 @@ struct DD_DESTROYMOCOMPDATA
     HRESULT              ddRVal;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_createsurfaceexdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_createsurfaceexdata
 struct DD_CREATESURFACEEXDATA
 {
     uint                 dwFlags;
@@ -5061,14 +5268,18 @@ struct DD_CREATESURFACEEXDATA
     HRESULT              ddRVal;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_getdriverstatedata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddrawint/ns-ddrawint-dd_getdriverstatedata
 struct DD_GETDRIVERSTATEDATA
 {
-    uint                dwFlags;
-    _Anonymous_e__Union Anonymous;
-    uint*               lpdwStates;
-    uint                dwLength;
-    HRESULT             ddRVal;
+    uint    dwFlags;
+    union
+    {
+        DD_DIRECTDRAW_GLOBAL* lpDD;
+        size_t dwhContext;
+    }
+    uint*   lpdwStates;
+    uint    dwLength;
+    HRESULT ddRVal;
 }
 
 struct DD_DESTROYDDLOCALDATA
@@ -5090,7 +5301,7 @@ struct DDMDL
     uint      ByteOffset;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddsurfacedata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddsurfacedata
 struct DDSURFACEDATA
 {
     uint   ddsCaps;
@@ -5118,7 +5329,7 @@ struct DDSURFACEDATA
     uint   dwDriverReserved4;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddvideoportdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddvideoportdata
 struct DDVIDEOPORTDATA
 {
     uint dwVideoPortId;
@@ -5131,19 +5342,19 @@ struct DDVIDEOPORTDATA
     uint dwDriverReserved3;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-dx_irqdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-dx_irqdata
 struct DX_IRQDATA
 {
     uint dwIrqFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddgetirqinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddgetirqinfo
 struct DDGETIRQINFO
 {
     uint dwFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddenableirqinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddenableirqinfo
 struct DDENABLEIRQINFO
 {
     uint            dwIRQSources;
@@ -5152,27 +5363,27 @@ struct DDENABLEIRQINFO
     DX_IRQDATA*     lpIRQData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddskipnextfieldinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddskipnextfieldinfo
 struct DDSKIPNEXTFIELDINFO
 {
     DDVIDEOPORTDATA* lpVideoPortData;
     uint             dwSkipFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddbobnextfieldinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddbobnextfieldinfo
 struct DDBOBNEXTFIELDINFO
 {
     DDSURFACEDATA* lpSurface;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddsetstateininfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddsetstateininfo
 struct DDSETSTATEININFO
 {
     DDSURFACEDATA*   lpSurfaceData;
     DDVIDEOPORTDATA* lpVideoPortData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddsetstateoutinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddsetstateoutinfo
 struct DDSETSTATEOUTINFO
 {
     BOOL bSoftwareAutoflip;
@@ -5180,19 +5391,19 @@ struct DDSETSTATEOUTINFO
     uint dwVBISurfaceIndex;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddlockininfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddlockininfo
 struct DDLOCKININFO
 {
     DDSURFACEDATA* lpSurfaceData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddlockoutinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddlockoutinfo
 struct DDLOCKOUTINFO
 {
     size_t dwSurfacePtr;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddflipoverlayinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddflipoverlayinfo
 struct DDFLIPOVERLAYINFO
 {
     DDSURFACEDATA* lpCurrentSurface;
@@ -5200,7 +5411,7 @@ struct DDFLIPOVERLAYINFO
     uint           dwFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddflipvideoportinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddflipvideoportinfo
 struct DDFLIPVIDEOPORTINFO
 {
     DDVIDEOPORTDATA* lpVideoPortData;
@@ -5209,45 +5420,45 @@ struct DDFLIPVIDEOPORTINFO
     uint             dwFlipVPFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddgetpolarityininfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddgetpolarityininfo
 struct DDGETPOLARITYININFO
 {
     DDVIDEOPORTDATA* lpVideoPortData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddgetpolarityoutinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddgetpolarityoutinfo
 struct DDGETPOLARITYOUTINFO
 {
     uint bPolarity;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddgetcurrentautoflipininfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddgetcurrentautoflipininfo
 struct DDGETCURRENTAUTOFLIPININFO
 {
     DDVIDEOPORTDATA* lpVideoPortData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddgetcurrentautoflipoutinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddgetcurrentautoflipoutinfo
 struct DDGETCURRENTAUTOFLIPOUTINFO
 {
     uint dwSurfaceIndex;
     uint dwVBISurfaceIndex;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddgetpreviousautoflipininfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddgetpreviousautoflipininfo
 struct DDGETPREVIOUSAUTOFLIPININFO
 {
     DDVIDEOPORTDATA* lpVideoPortData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddgetpreviousautoflipoutinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddgetpreviousautoflipoutinfo
 struct DDGETPREVIOUSAUTOFLIPOUTINFO
 {
     uint dwSurfaceIndex;
     uint dwVBISurfaceIndex;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddtransferininfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddtransferininfo
 struct DDTRANSFERININFO
 {
     DDSURFACEDATA* lpSurfaceData;
@@ -5258,19 +5469,19 @@ struct DDTRANSFERININFO
     DDMDL*         lpDestMDL;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddtransferoutinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddtransferoutinfo
 struct DDTRANSFEROUTINFO
 {
     uint dwBufferPolarity;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddgettransferstatusoutinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-ddgettransferstatusoutinfo
 struct DDGETTRANSFERSTATUSOUTINFO
 {
     size_t dwTransferID;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-dxapi_interface))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxmini/ns-dxmini-dxapi_interface
 struct DXAPI_INTERFACE
 {
     ushort            Size;
@@ -5311,15 +5522,15 @@ HRESULT DirectDrawEnumerateExW(LPDDENUMCALLBACKEXW lpCallback, void* lpContext, 
 @DllImport("DDRAW.dll")
 HRESULT DirectDrawEnumerateExA(LPDDENUMCALLBACKEXA lpCallback, void* lpContext, uint dwFlags);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-directdrawcreate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-directdrawcreate
 @DllImport("DDRAW.dll")
 HRESULT DirectDrawCreate(GUID* lpGUID, IDirectDraw* lplpDD, IUnknown pUnkOuter);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-directdrawcreateex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-directdrawcreateex
 @DllImport("DDRAW.dll")
 HRESULT DirectDrawCreateEx(GUID* lpGuid, void** lplpDD, const(GUID)* iid, IUnknown pUnkOuter);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-directdrawcreateclipper))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-directdrawcreateclipper
 @DllImport("DDRAW.dll")
 HRESULT DirectDrawCreateClipper(uint dwFlags, IDirectDrawClipper* lplpDDClipper, IUnknown pUnkOuter);
 
@@ -5408,94 +5619,94 @@ interface IDirectDraw4 : IUnknown
 }
 
 @GUID("15e65ec0-3b9c-11d2-b92f-00609797ea5b")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nn-ddraw-idirectdraw7))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nn-ddraw-idirectdraw7
 interface IDirectDraw7 : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-compact))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-compact
     HRESULT Compact();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-createclipper))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-createclipper
     HRESULT CreateClipper(uint param0, IDirectDrawClipper* param1, IUnknown param2);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-createpalette))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-createpalette
     HRESULT CreatePalette(uint param0, PALETTEENTRY* param1, IDirectDrawPalette* param2, IUnknown param3);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-createsurface))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-createsurface
     HRESULT CreateSurface(DDSURFACEDESC2* param0, IDirectDrawSurface7* param1, IUnknown param2);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-duplicatesurface))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-duplicatesurface
     HRESULT DuplicateSurface(IDirectDrawSurface7 param0, IDirectDrawSurface7* param1);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-enumdisplaymodes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-enumdisplaymodes
     HRESULT EnumDisplayModes(uint param0, DDSURFACEDESC2* param1, void* param2, LPDDENUMMODESCALLBACK2 param3);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-enumsurfaces))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-enumsurfaces
     HRESULT EnumSurfaces(uint param0, DDSURFACEDESC2* param1, void* param2, LPDDENUMSURFACESCALLBACK7 param3);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-fliptogdisurface))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-fliptogdisurface
     HRESULT FlipToGDISurface();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-getcaps))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-getcaps
     HRESULT GetCaps(DDCAPS_DX7* param0, DDCAPS_DX7* param1);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-getdisplaymode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-getdisplaymode
     HRESULT GetDisplayMode(DDSURFACEDESC2* param0);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-getfourcccodes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-getfourcccodes
     HRESULT GetFourCCCodes(uint* param0, uint* param1);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-getgdisurface))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-getgdisurface
     HRESULT GetGDISurface(IDirectDrawSurface7* param0);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-getmonitorfrequency))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-getmonitorfrequency
     HRESULT GetMonitorFrequency(uint* param0);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-getscanline))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-getscanline
     HRESULT GetScanLine(uint* param0);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-getverticalblankstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-getverticalblankstatus
     HRESULT GetVerticalBlankStatus(BOOL* param0);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-initialize
     HRESULT Initialize(GUID* param0);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-restoredisplaymode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-restoredisplaymode
     HRESULT RestoreDisplayMode();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-setcooperativelevel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-setcooperativelevel
     HRESULT SetCooperativeLevel(HWND param0, uint param1);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-setdisplaymode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-setdisplaymode
     HRESULT SetDisplayMode(uint param0, uint param1, uint param2, uint param3, uint param4);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-waitforverticalblank))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-waitforverticalblank
     HRESULT WaitForVerticalBlank(uint param0, HANDLE param1);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-getavailablevidmem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-getavailablevidmem
     HRESULT GetAvailableVidMem(DDSCAPS2* param0, uint* param1, uint* param2);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-getsurfacefromdc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-getsurfacefromdc
     HRESULT GetSurfaceFromDC(HDC param0, IDirectDrawSurface7* param1);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-restoreallsurfaces))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-restoreallsurfaces
     HRESULT RestoreAllSurfaces();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-testcooperativelevel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-testcooperativelevel
     HRESULT TestCooperativeLevel();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-getdeviceidentifier))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-getdeviceidentifier
     HRESULT GetDeviceIdentifier(DDDEVICEIDENTIFIER2* param0, uint param1);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-startmodetest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-startmodetest
     HRESULT StartModeTest(SIZE* param0, uint param1, uint param2);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-evaluatemode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdraw7-evaluatemode
     HRESULT EvaluateMode(uint param0, uint* param1);
 }
 
 @GUID("6c14db84-a733-11ce-a521-0020af0be560")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nn-ddraw-idirectdrawpalette))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nn-ddraw-idirectdrawpalette
 interface IDirectDrawPalette : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawpalette-getcaps))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawpalette-getcaps
     HRESULT GetCaps(uint* param0);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawpalette-getentries))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawpalette-getentries
     HRESULT GetEntries(uint param0, uint param1, uint param2, PALETTEENTRY* param3);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawpalette-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawpalette-initialize
     HRESULT Initialize(IDirectDraw param0, uint param1, PALETTEENTRY* param2);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawpalette-setentries))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawpalette-setentries
     HRESULT SetEntries(uint param0, uint param1, uint param2, PALETTEENTRY* param3);
 }
 
 @GUID("6c14db85-a733-11ce-a521-0020af0be560")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nn-ddraw-idirectdrawclipper))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nn-ddraw-idirectdrawclipper
 interface IDirectDrawClipper : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawclipper-getcliplist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawclipper-getcliplist
     HRESULT GetClipList(RECT* param0, RGNDATA* param1, uint* param2);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawclipper-gethwnd))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawclipper-gethwnd
     HRESULT GetHWnd(HWND* param0);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawclipper-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawclipper-initialize
     HRESULT Initialize(IDirectDraw param0, uint param1);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawclipper-iscliplistchanged))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawclipper-iscliplistchanged
     HRESULT IsClipListChanged(BOOL* param0);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawclipper-setcliplist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawclipper-setcliplist
     HRESULT SetClipList(RGNDATA* param0, uint param1);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawclipper-sethwnd))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawclipper-sethwnd
     HRESULT SetHWnd(uint param0, HWND param1);
 }
 
@@ -5668,120 +5879,120 @@ interface IDirectDrawSurface4 : IUnknown
 }
 
 @GUID("06675a80-3b9b-11d2-b92f-00609797ea5b")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nn-ddraw-idirectdrawsurface7))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nn-ddraw-idirectdrawsurface7
 interface IDirectDrawSurface7 : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-addattachedsurface))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-addattachedsurface
     HRESULT AddAttachedSurface(IDirectDrawSurface7 param0);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-addoverlaydirtyrect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-addoverlaydirtyrect
     HRESULT AddOverlayDirtyRect(RECT* param0);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-blt))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-blt
     HRESULT Blt(RECT* param0, IDirectDrawSurface7 param1, RECT* param2, uint param3, DDBLTFX* param4);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-bltbatch))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-bltbatch
     HRESULT BltBatch(DDBLTBATCH* param0, uint param1, uint param2);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-bltfast))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-bltfast
     HRESULT BltFast(uint param0, uint param1, IDirectDrawSurface7 param2, RECT* param3, uint param4);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-deleteattachedsurface))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-deleteattachedsurface
     HRESULT DeleteAttachedSurface(uint param0, IDirectDrawSurface7 param1);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-enumattachedsurfaces))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-enumattachedsurfaces
     HRESULT EnumAttachedSurfaces(void* param0, LPDDENUMSURFACESCALLBACK7 param1);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-enumoverlayzorders))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-enumoverlayzorders
     HRESULT EnumOverlayZOrders(uint param0, void* param1, LPDDENUMSURFACESCALLBACK7 param2);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-flip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-flip
     HRESULT Flip(IDirectDrawSurface7 param0, uint param1);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-getattachedsurface))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-getattachedsurface
     HRESULT GetAttachedSurface(DDSCAPS2* param0, IDirectDrawSurface7* param1);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-getbltstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-getbltstatus
     HRESULT GetBltStatus(uint param0);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-getcaps))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-getcaps
     HRESULT GetCaps(DDSCAPS2* param0);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-getclipper))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-getclipper
     HRESULT GetClipper(IDirectDrawClipper* param0);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-getcolorkey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-getcolorkey
     HRESULT GetColorKey(uint param0, DDCOLORKEY* param1);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-getdc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-getdc
     HRESULT GetDC(HDC* param0);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-getflipstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-getflipstatus
     HRESULT GetFlipStatus(uint param0);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-getoverlayposition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-getoverlayposition
     HRESULT GetOverlayPosition(int* param0, int* param1);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-getpalette))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-getpalette
     HRESULT GetPalette(IDirectDrawPalette* param0);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-getpixelformat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-getpixelformat
     HRESULT GetPixelFormat(DDPIXELFORMAT* param0);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-getsurfacedesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-getsurfacedesc
     HRESULT GetSurfaceDesc(DDSURFACEDESC2* param0);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-initialize
     HRESULT Initialize(IDirectDraw param0, DDSURFACEDESC2* param1);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-islost))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-islost
     HRESULT IsLost();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-lock))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-lock
     HRESULT Lock(RECT* param0, DDSURFACEDESC2* param1, uint param2, HANDLE param3);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-releasedc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-releasedc
     HRESULT ReleaseDC(HDC param0);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-restore))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-restore
     HRESULT Restore();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-setclipper))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-setclipper
     HRESULT SetClipper(IDirectDrawClipper param0);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-setcolorkey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-setcolorkey
     HRESULT SetColorKey(uint param0, DDCOLORKEY* param1);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-setoverlayposition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-setoverlayposition
     HRESULT SetOverlayPosition(int param0, int param1);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-setpalette))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-setpalette
     HRESULT SetPalette(IDirectDrawPalette param0);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-unlock))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-unlock
     HRESULT Unlock(RECT* param0);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-updateoverlay))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-updateoverlay
     HRESULT UpdateOverlay(RECT* param0, IDirectDrawSurface7 param1, RECT* param2, uint param3, DDOVERLAYFX* param4);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-updateoverlaydisplay))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-updateoverlaydisplay
     HRESULT UpdateOverlayDisplay(uint param0);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-updateoverlayzorder))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-updateoverlayzorder
     HRESULT UpdateOverlayZOrder(uint param0, IDirectDrawSurface7 param1);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-getddinterface))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-getddinterface
     HRESULT GetDDInterface(void** param0);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-pagelock))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-pagelock
     HRESULT PageLock(uint param0);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-pageunlock))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-pageunlock
     HRESULT PageUnlock(uint param0);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-setsurfacedesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-setsurfacedesc
     HRESULT SetSurfaceDesc(DDSURFACEDESC2* param0, uint param1);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-setprivatedata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-setprivatedata
     HRESULT SetPrivateData(const(GUID)* param0, void* param1, uint param2, uint param3);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-getprivatedata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-getprivatedata
     HRESULT GetPrivateData(const(GUID)* param0, void* param1, uint* param2);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-freeprivatedata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-freeprivatedata
     HRESULT FreePrivateData(const(GUID)* param0);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-getuniquenessvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-getuniquenessvalue
     HRESULT GetUniquenessValue(uint* param0);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-changeuniquenessvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-changeuniquenessvalue
     HRESULT ChangeUniquenessValue();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-setpriority))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-setpriority
     HRESULT SetPriority(uint param0);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-getpriority))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-getpriority
     HRESULT GetPriority(uint* param0);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-setlod))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-setlod
     HRESULT SetLOD(uint param0);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-getlod))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawsurface7-getlod
     HRESULT GetLOD(uint* param0);
 }
 
 @GUID("4b9f0ee0-0d7e-11d0-9b06-00a0c903a3b8")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nn-ddraw-idirectdrawcolorcontrol))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nn-ddraw-idirectdrawcolorcontrol
 interface IDirectDrawColorControl : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawcolorcontrol-getcolorcontrols))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawcolorcontrol-getcolorcontrols
     HRESULT GetColorControls(DDCOLORCONTROL* param0);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawcolorcontrol-setcolorcontrols))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawcolorcontrol-setcolorcontrols
     HRESULT SetColorControls(DDCOLORCONTROL* param0);
 }
 
 @GUID("69c11c3e-b46b-11d1-ad7a-00c04fc29b4e")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nn-ddraw-idirectdrawgammacontrol))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nn-ddraw-idirectdrawgammacontrol
 interface IDirectDrawGammaControl : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawgammacontrol-getgammaramp))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawgammacontrol-getgammaramp
     HRESULT GetGammaRamp(uint param0, DDGAMMARAMP* param1);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawgammacontrol-setgammaramp))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddraw/nf-ddraw-idirectdrawgammacontrol-setgammaramp
     HRESULT SetGammaRamp(uint param0, DDGAMMARAMP* param1);
 }
 
@@ -5822,24 +6033,24 @@ interface IDirectDrawVideoPortNotify : IUnknown
 }
 
 @GUID("8d56c120-6a08-11d0-9b06-00a0c903a3b8")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddkernel/nn-ddkernel-idirectdrawkernel))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddkernel/nn-ddkernel-idirectdrawkernel
 interface IDirectDrawKernel : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddkernel/nf-ddkernel-idirectdrawkernel-getcaps))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddkernel/nf-ddkernel-idirectdrawkernel-getcaps
     HRESULT GetCaps(DDKERNELCAPS* param0);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddkernel/nf-ddkernel-idirectdrawkernel-getkernelhandle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddkernel/nf-ddkernel-idirectdrawkernel-getkernelhandle
     HRESULT GetKernelHandle(size_t* param0);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddkernel/nf-ddkernel-idirectdrawkernel-releasekernelhandle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddkernel/nf-ddkernel-idirectdrawkernel-releasekernelhandle
     HRESULT ReleaseKernelHandle();
 }
 
 @GUID("60755da0-6a40-11d0-9b06-00a0c903a3b8")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddkernel/nn-ddkernel-idirectdrawsurfacekernel))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddkernel/nn-ddkernel-idirectdrawsurfacekernel
 interface IDirectDrawSurfaceKernel : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddkernel/nf-ddkernel-idirectdrawsurfacekernel-getkernelhandle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddkernel/nf-ddkernel-idirectdrawsurfacekernel-getkernelhandle
     HRESULT GetKernelHandle(size_t* param0);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddkernel/nf-ddkernel-idirectdrawsurfacekernel-releasekernelhandle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddkernel/nf-ddkernel-idirectdrawsurfacekernel-releasekernelhandle
     HRESULT ReleaseKernelHandle();
 }
 

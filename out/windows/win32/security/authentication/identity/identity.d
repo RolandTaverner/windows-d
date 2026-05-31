@@ -1,25 +1,26 @@
 // Written in the D programming language.
 
-module windows.win32.security.authentication.identity;
+module windows.win32.security.authentication.identity.identity;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BOOLEAN, CHAR, FILETIME, HANDLE,
-                                         HRESULT, HWND, LUID, NTSTATUS, PSTR,
-                                         PWSTR;
-public import windows.win32.security : ACL;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BOOLEAN, CHAR, FILETIME, HANDLE,
+                                                    HRESULT, HWND, LUID, NTSTATUS,
+                                                    PSTR, PWSTR;
+public import windows.win32.security.security : ACL;
 public import windows.win32.security.credentials : CREDENTIALW, CREDENTIAL_TARGET_INFORMATIONW,
                                                    SecHandle;
-public import windows.win32.security.cryptography : ALG_ID, CERT_CONTEXT, CRYPT_INTEGER_BLOB,
-                                                    HCERTSTORE;
-public import windows.win32.security : OBJECT_SECURITY_INFORMATION, PSECURITY_DESCRIPTOR, PSID,
-                                       QUOTA_LIMITS, SECURITY_ATTRIBUTES,
-                                       SECURITY_IMPERSONATION_LEVEL, SID_NAME_USE,
-                                       TOKEN_DEFAULT_DACL, TOKEN_DEVICE_CLAIMS,
-                                       TOKEN_GROUPS, TOKEN_OWNER, TOKEN_PRIMARY_GROUP,
-                                       TOKEN_PRIVILEGES, TOKEN_SOURCE, TOKEN_USER,
-                                       TOKEN_USER_CLAIMS;
-public import windows.win32.system.com : IUnknown;
+public import windows.win32.security.cryptography.cryptography : ALG_ID, CERT_CONTEXT, CRYPT_INTEGER_BLOB,
+                                                                 HCERTSTORE;
+public import windows.win32.security.security : OBJECT_SECURITY_INFORMATION, PSECURITY_DESCRIPTOR,
+                                                PSID, QUOTA_LIMITS, SECURITY_ATTRIBUTES,
+                                                SECURITY_IMPERSONATION_LEVEL,
+                                                SID_NAME_USE, TOKEN_DEFAULT_DACL,
+                                                TOKEN_DEVICE_CLAIMS, TOKEN_GROUPS,
+                                                TOKEN_OWNER, TOKEN_PRIMARY_GROUP,
+                                                TOKEN_PRIVILEGES, TOKEN_SOURCE,
+                                                TOKEN_USER, TOKEN_USER_CLAIMS;
+public import windows.win32.system.com.com : IUnknown;
 public import windows.win32.system.kernel : LIST_ENTRY;
 public import windows.win32.system.passwordmanagement : CYPHER_BLOCK, LM_OWF_PASSWORD;
 public import windows.win32.system.rpc : SEC_WINNT_AUTH_IDENTITY_A, SEC_WINNT_AUTH_IDENTITY_W;
@@ -30,201 +31,219 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias SECPKG_ATTR = uint;
 enum : uint
 {
-    SECPKG_ATTR_C_ACCESS_TOKEN              = 0x80000012,
-    SECPKG_ATTR_C_FULL_ACCESS_TOKEN         = 0x80000082,
-    SECPKG_ATTR_CERT_TRUST_STATUS           = 0x80000084,
-    SECPKG_ATTR_CREDS                       = 0x80000080,
-    SECPKG_ATTR_CREDS_2                     = 0x80000086,
-    SECPKG_ATTR_NEGOTIATION_PACKAGE         = 0x80000081,
-    SECPKG_ATTR_PACKAGE_INFO                = 0x0000000a,
-    SECPKG_ATTR_SERVER_AUTH_FLAGS           = 0x80000083,
-    SECPKG_ATTR_SIZES                       = 0x00000000,
-    SECPKG_ATTR_SUBJECT_SECURITY_ATTRIBUTES = 0x0000007c,
-    SECPKG_ATTR_APP_DATA                    = 0x0000005e,
-    SECPKG_ATTR_EAP_PRF_INFO                = 0x00000065,
-    SECPKG_ATTR_EARLY_START                 = 0x00000069,
-    SECPKG_ATTR_DTLS_MTU                    = 0x00000022,
-    SECPKG_ATTR_KEYING_MATERIAL_INFO        = 0x0000006a,
-    SECPKG_ATTR_ACCESS_TOKEN                = 0x00000012,
-    SECPKG_ATTR_AUTHORITY                   = 0x00000006,
-    SECPKG_ATTR_CLIENT_SPECIFIED_TARGET     = 0x0000001b,
-    SECPKG_ATTR_CONNECTION_INFO             = 0x0000005a,
-    SECPKG_ATTR_DCE_INFO                    = 0x00000003,
-    SECPKG_ATTR_ENDPOINT_BINDINGS           = 0x0000001a,
-    SECPKG_ATTR_EAP_KEY_BLOCK               = 0x0000005b,
-    SECPKG_ATTR_FLAGS                       = 0x0000000e,
-    SECPKG_ATTR_ISSUER_LIST_EX              = 0x00000059,
-    SECPKG_ATTR_KEY_INFO                    = 0x00000005,
-    SECPKG_ATTR_LAST_CLIENT_TOKEN_STATUS    = 0x0000001e,
-    SECPKG_ATTR_LIFESPAN                    = 0x00000002,
-    SECPKG_ATTR_LOCAL_CERT_CONTEXT          = 0x00000054,
-    SECPKG_ATTR_LOCAL_CRED                  = 0x00000052,
-    SECPKG_ATTR_NAMES                       = 0x00000001,
-    SECPKG_ATTR_NATIVE_NAMES                = 0x0000000d,
-    SECPKG_ATTR_NEGOTIATION_INFO            = 0x0000000c,
-    SECPKG_ATTR_PASSWORD_EXPIRY             = 0x00000008,
-    SECPKG_ATTR_REMOTE_CERT_CONTEXT         = 0x00000053,
-    SECPKG_ATTR_ROOT_STORE                  = 0x00000055,
-    SECPKG_ATTR_SESSION_KEY                 = 0x00000009,
-    SECPKG_ATTR_SESSION_INFO                = 0x0000005d,
-    SECPKG_ATTR_STREAM_SIZES                = 0x00000004,
-    SECPKG_ATTR_SUPPORTED_SIGNATURES        = 0x00000066,
-    SECPKG_ATTR_TARGET_INFORMATION          = 0x00000011,
-    SECPKG_ATTR_UNIQUE_BINDINGS             = 0x00000019,
+    SECPKG_ATTR_C_ACCESS_TOKEN              = 0x80000012U,
+    SECPKG_ATTR_C_FULL_ACCESS_TOKEN         = 0x80000082U,
+    SECPKG_ATTR_CERT_TRUST_STATUS           = 0x80000084U,
+    SECPKG_ATTR_CREDS                       = 0x80000080U,
+    SECPKG_ATTR_CREDS_2                     = 0x80000086U,
+    SECPKG_ATTR_NEGOTIATION_PACKAGE         = 0x80000081U,
+    SECPKG_ATTR_PACKAGE_INFO                = 0x0000000aU,
+    SECPKG_ATTR_SERVER_AUTH_FLAGS           = 0x80000083U,
+    SECPKG_ATTR_SIZES                       = 0x00000000U,
+    SECPKG_ATTR_SUBJECT_SECURITY_ATTRIBUTES = 0x0000007cU,
+    SECPKG_ATTR_APP_DATA                    = 0x0000005eU,
+    SECPKG_ATTR_EAP_PRF_INFO                = 0x00000065U,
+    SECPKG_ATTR_EARLY_START                 = 0x00000069U,
+    SECPKG_ATTR_DTLS_MTU                    = 0x00000022U,
+    SECPKG_ATTR_KEYING_MATERIAL_INFO        = 0x0000006aU,
+    SECPKG_ATTR_ACCESS_TOKEN                = 0x00000012U,
+    SECPKG_ATTR_AUTHORITY                   = 0x00000006U,
+    SECPKG_ATTR_CLIENT_SPECIFIED_TARGET     = 0x0000001bU,
+    SECPKG_ATTR_CONNECTION_INFO             = 0x0000005aU,
+    SECPKG_ATTR_DCE_INFO                    = 0x00000003U,
+    SECPKG_ATTR_ENDPOINT_BINDINGS           = 0x0000001aU,
+    SECPKG_ATTR_EAP_KEY_BLOCK               = 0x0000005bU,
+    SECPKG_ATTR_FLAGS                       = 0x0000000eU,
+    SECPKG_ATTR_ISSUER_LIST_EX              = 0x00000059U,
+    SECPKG_ATTR_KEY_INFO                    = 0x00000005U,
+    SECPKG_ATTR_LAST_CLIENT_TOKEN_STATUS    = 0x0000001eU,
+    SECPKG_ATTR_LIFESPAN                    = 0x00000002U,
+    SECPKG_ATTR_LOCAL_CERT_CONTEXT          = 0x00000054U,
+    SECPKG_ATTR_LOCAL_CRED                  = 0x00000052U,
+    SECPKG_ATTR_NAMES                       = 0x00000001U,
+    SECPKG_ATTR_NATIVE_NAMES                = 0x0000000dU,
+    SECPKG_ATTR_NEGOTIATION_INFO            = 0x0000000cU,
+    SECPKG_ATTR_PASSWORD_EXPIRY             = 0x00000008U,
+    SECPKG_ATTR_REMOTE_CERT_CONTEXT         = 0x00000053U,
+    SECPKG_ATTR_ROOT_STORE                  = 0x00000055U,
+    SECPKG_ATTR_SESSION_KEY                 = 0x00000009U,
+    SECPKG_ATTR_SESSION_INFO                = 0x0000005dU,
+    SECPKG_ATTR_STREAM_SIZES                = 0x00000004U,
+    SECPKG_ATTR_SUPPORTED_SIGNATURES        = 0x00000066U,
+    SECPKG_ATTR_TARGET_INFORMATION          = 0x00000011U,
+    SECPKG_ATTR_UNIQUE_BINDINGS             = 0x00000019U,
 }
+
 alias MSV1_0 = uint;
 enum : uint
 {
-    MSV1_0_PASSTHRU    = 0x00000001,
-    MSV1_0_GUEST_LOGON = 0x00000002,
+    MSV1_0_PASSTHRU    = 0x00000001U,
+    MSV1_0_GUEST_LOGON = 0x00000002U,
 }
+
 alias SECPKG_CRED = uint;
 enum : uint
 {
-    SECPKG_CRED_INBOUND  = 0x00000001,
-    SECPKG_CRED_OUTBOUND = 0x00000002,
+    SECPKG_CRED_INBOUND  = 0x00000001U,
+    SECPKG_CRED_OUTBOUND = 0x00000002U,
 }
+
 alias MSV_SUB_AUTHENTICATION_FILTER = uint;
 enum : uint
 {
-    LOGON_GUEST                 = 0x00000001,
-    LOGON_NOENCRYPTION          = 0x00000002,
-    LOGON_CACHED_ACCOUNT        = 0x00000004,
-    LOGON_USED_LM_PASSWORD      = 0x00000008,
-    LOGON_EXTRA_SIDS            = 0x00000020,
-    LOGON_SUBAUTH_SESSION_KEY   = 0x00000040,
-    LOGON_SERVER_TRUST_ACCOUNT  = 0x00000080,
-    LOGON_PROFILE_PATH_RETURNED = 0x00000400,
-    LOGON_RESOURCE_GROUPS       = 0x00000200,
+    LOGON_GUEST                 = 0x00000001U,
+    LOGON_NOENCRYPTION          = 0x00000002U,
+    LOGON_CACHED_ACCOUNT        = 0x00000004U,
+    LOGON_USED_LM_PASSWORD      = 0x00000008U,
+    LOGON_EXTRA_SIDS            = 0x00000020U,
+    LOGON_SUBAUTH_SESSION_KEY   = 0x00000040U,
+    LOGON_SERVER_TRUST_ACCOUNT  = 0x00000080U,
+    LOGON_PROFILE_PATH_RETURNED = 0x00000400U,
+    LOGON_RESOURCE_GROUPS       = 0x00000200U,
 }
+
 alias EXPORT_SECURITY_CONTEXT_FLAGS = uint;
 enum : uint
 {
-    SECPKG_CONTEXT_EXPORT_RESET_NEW  = 0x00000001,
-    SECPKG_CONTEXT_EXPORT_DELETE_OLD = 0x00000002,
-    SECPKG_CONTEXT_EXPORT_TO_KERNEL  = 0x00000004,
+    SECPKG_CONTEXT_EXPORT_RESET_NEW  = 0x00000001U,
+    SECPKG_CONTEXT_EXPORT_DELETE_OLD = 0x00000002U,
+    SECPKG_CONTEXT_EXPORT_TO_KERNEL  = 0x00000004U,
 }
+
 alias KERB_TICKET_FLAGS = uint;
 enum : uint
 {
-    KERB_TICKET_FLAGS_forwardable    = 0x40000000,
-    KERB_TICKET_FLAGS_forwarded      = 0x20000000,
-    KERB_TICKET_FLAGS_hw_authent     = 0x00100000,
-    KERB_TICKET_FLAGS_initial        = 0x00400000,
-    KERB_TICKET_FLAGS_invalid        = 0x01000000,
-    KERB_TICKET_FLAGS_may_postdate   = 0x04000000,
-    KERB_TICKET_FLAGS_ok_as_delegate = 0x00040000,
-    KERB_TICKET_FLAGS_postdated      = 0x02000000,
-    KERB_TICKET_FLAGS_pre_authent    = 0x00200000,
-    KERB_TICKET_FLAGS_proxiable      = 0x10000000,
-    KERB_TICKET_FLAGS_proxy          = 0x08000000,
-    KERB_TICKET_FLAGS_renewable      = 0x00800000,
-    KERB_TICKET_FLAGS_reserved       = 0x80000000,
-    KERB_TICKET_FLAGS_reserved1      = 0x00000001,
+    KERB_TICKET_FLAGS_forwardable    = 0x40000000U,
+    KERB_TICKET_FLAGS_forwarded      = 0x20000000U,
+    KERB_TICKET_FLAGS_hw_authent     = 0x00100000U,
+    KERB_TICKET_FLAGS_initial        = 0x00400000U,
+    KERB_TICKET_FLAGS_invalid        = 0x01000000U,
+    KERB_TICKET_FLAGS_may_postdate   = 0x04000000U,
+    KERB_TICKET_FLAGS_ok_as_delegate = 0x00040000U,
+    KERB_TICKET_FLAGS_postdated      = 0x02000000U,
+    KERB_TICKET_FLAGS_pre_authent    = 0x00200000U,
+    KERB_TICKET_FLAGS_proxiable      = 0x10000000U,
+    KERB_TICKET_FLAGS_proxy          = 0x08000000U,
+    KERB_TICKET_FLAGS_renewable      = 0x00800000U,
+    KERB_TICKET_FLAGS_reserved       = 0x80000000U,
+    KERB_TICKET_FLAGS_reserved1      = 0x00000001U,
 }
+
 alias KERB_ADDRESS_TYPE = uint;
 enum : uint
 {
-    DS_INET_ADDRESS    = 0x00000001,
-    DS_NETBIOS_ADDRESS = 0x00000002,
+    DS_INET_ADDRESS    = 0x00000001U,
+    DS_NETBIOS_ADDRESS = 0x00000002U,
 }
+
 alias SCHANNEL_CRED_FLAGS = uint;
 enum : uint
 {
-    SCH_CRED_AUTO_CRED_VALIDATION                = 0x00000020,
-    SCH_CRED_CACHE_ONLY_URL_RETRIEVAL_ON_CREATE  = 0x00020000,
-    SCH_DISABLE_RECONNECTS                       = 0x00000080,
-    SCH_CRED_IGNORE_NO_REVOCATION_CHECK          = 0x00000800,
-    SCH_CRED_IGNORE_REVOCATION_OFFLINE           = 0x00001000,
-    SCH_CRED_MANUAL_CRED_VALIDATION              = 0x00000008,
-    SCH_CRED_NO_DEFAULT_CREDS                    = 0x00000010,
-    SCH_CRED_NO_SERVERNAME_CHECK                 = 0x00000004,
-    SCH_CRED_NO_SYSTEM_MAPPER                    = 0x00000002,
-    SCH_CRED_REVOCATION_CHECK_CHAIN              = 0x00000200,
-    SCH_CRED_REVOCATION_CHECK_CHAIN_EXCLUDE_ROOT = 0x00000400,
-    SCH_CRED_REVOCATION_CHECK_END_CERT           = 0x00000100,
-    SCH_CRED_USE_DEFAULT_CREDS                   = 0x00000040,
-    SCH_SEND_AUX_RECORD                          = 0x00200000,
-    SCH_SEND_ROOT_CERT                           = 0x00040000,
-    SCH_USE_STRONG_CRYPTO                        = 0x00400000,
-    SCH_USE_PRESHAREDKEY_ONLY                    = 0x00800000,
+    SCH_CRED_AUTO_CRED_VALIDATION                = 0x00000020U,
+    SCH_CRED_CACHE_ONLY_URL_RETRIEVAL_ON_CREATE  = 0x00020000U,
+    SCH_DISABLE_RECONNECTS                       = 0x00000080U,
+    SCH_CRED_IGNORE_NO_REVOCATION_CHECK          = 0x00000800U,
+    SCH_CRED_IGNORE_REVOCATION_OFFLINE           = 0x00001000U,
+    SCH_CRED_MANUAL_CRED_VALIDATION              = 0x00000008U,
+    SCH_CRED_NO_DEFAULT_CREDS                    = 0x00000010U,
+    SCH_CRED_NO_SERVERNAME_CHECK                 = 0x00000004U,
+    SCH_CRED_NO_SYSTEM_MAPPER                    = 0x00000002U,
+    SCH_CRED_REVOCATION_CHECK_CHAIN              = 0x00000200U,
+    SCH_CRED_REVOCATION_CHECK_CHAIN_EXCLUDE_ROOT = 0x00000400U,
+    SCH_CRED_REVOCATION_CHECK_END_CERT           = 0x00000100U,
+    SCH_CRED_USE_DEFAULT_CREDS                   = 0x00000040U,
+    SCH_SEND_AUX_RECORD                          = 0x00200000U,
+    SCH_SEND_ROOT_CERT                           = 0x00040000U,
+    SCH_USE_STRONG_CRYPTO                        = 0x00400000U,
+    SCH_USE_PRESHAREDKEY_ONLY                    = 0x00800000U,
 }
+
 alias DOMAIN_PASSWORD_PROPERTIES = uint;
 enum : uint
 {
-    DOMAIN_PASSWORD_COMPLEX         = 0x00000001,
-    DOMAIN_PASSWORD_NO_ANON_CHANGE  = 0x00000002,
-    DOMAIN_PASSWORD_NO_CLEAR_CHANGE = 0x00000004,
-    DOMAIN_LOCKOUT_ADMINS           = 0x00000008,
-    DOMAIN_PASSWORD_STORE_CLEARTEXT = 0x00000010,
-    DOMAIN_REFUSE_PASSWORD_CHANGE   = 0x00000020,
+    DOMAIN_PASSWORD_COMPLEX         = 0x00000001U,
+    DOMAIN_PASSWORD_NO_ANON_CHANGE  = 0x00000002U,
+    DOMAIN_PASSWORD_NO_CLEAR_CHANGE = 0x00000004U,
+    DOMAIN_LOCKOUT_ADMINS           = 0x00000008U,
+    DOMAIN_PASSWORD_STORE_CLEARTEXT = 0x00000010U,
+    DOMAIN_REFUSE_PASSWORD_CHANGE   = 0x00000020U,
 }
+
 alias SCHANNEL_ALERT_TOKEN_ALERT_TYPE = uint;
 enum : uint
 {
-    TLS1_ALERT_WARNING = 0x00000001,
-    TLS1_ALERT_FATAL   = 0x00000002,
+    TLS1_ALERT_WARNING = 0x00000001U,
+    TLS1_ALERT_FATAL   = 0x00000002U,
 }
+
 alias TRUSTED_DOMAIN_TRUST_TYPE = uint;
 enum : uint
 {
-    TRUST_TYPE_DOWNLEVEL = 0x00000001,
-    TRUST_TYPE_UPLEVEL   = 0x00000002,
-    TRUST_TYPE_MIT       = 0x00000003,
-    TRUST_TYPE_DCE       = 0x00000004,
+    TRUST_TYPE_DOWNLEVEL = 0x00000001U,
+    TRUST_TYPE_UPLEVEL   = 0x00000002U,
+    TRUST_TYPE_MIT       = 0x00000003U,
+    TRUST_TYPE_DCE       = 0x00000004U,
 }
+
 alias MSV_SUBAUTH_LOGON_PARAMETER_CONTROL = uint;
 enum : uint
 {
-    MSV1_0_CLEARTEXT_PASSWORD_ALLOWED      = 0x00000002,
-    MSV1_0_UPDATE_LOGON_STATISTICS         = 0x00000004,
-    MSV1_0_RETURN_USER_PARAMETERS          = 0x00000008,
-    MSV1_0_DONT_TRY_GUEST_ACCOUNT          = 0x00000010,
-    MSV1_0_ALLOW_SERVER_TRUST_ACCOUNT      = 0x00000020,
-    MSV1_0_RETURN_PASSWORD_EXPIRY          = 0x00000040,
-    MSV1_0_ALLOW_WORKSTATION_TRUST_ACCOUNT = 0x00000800,
-    MSV1_0_TRY_GUEST_ACCOUNT_ONLY          = 0x00000100,
-    MSV1_0_RETURN_PROFILE_PATH             = 0x00000200,
-    MSV1_0_TRY_SPECIFIED_DOMAIN_ONLY       = 0x00000400,
+    MSV1_0_CLEARTEXT_PASSWORD_ALLOWED      = 0x00000002U,
+    MSV1_0_UPDATE_LOGON_STATISTICS         = 0x00000004U,
+    MSV1_0_RETURN_USER_PARAMETERS          = 0x00000008U,
+    MSV1_0_DONT_TRY_GUEST_ACCOUNT          = 0x00000010U,
+    MSV1_0_ALLOW_SERVER_TRUST_ACCOUNT      = 0x00000020U,
+    MSV1_0_RETURN_PASSWORD_EXPIRY          = 0x00000040U,
+    MSV1_0_ALLOW_WORKSTATION_TRUST_ACCOUNT = 0x00000800U,
+    MSV1_0_TRY_GUEST_ACCOUNT_ONLY          = 0x00000100U,
+    MSV1_0_RETURN_PROFILE_PATH             = 0x00000200U,
+    MSV1_0_TRY_SPECIFIED_DOMAIN_ONLY       = 0x00000400U,
 }
+
 alias KERB_REQUEST_FLAGS = uint;
 enum : uint
 {
-    KERB_REQUEST_ADD_CREDENTIAL     = 0x00000001,
-    KERB_REQUEST_REPLACE_CREDENTIAL = 0x00000002,
-    KERB_REQUEST_REMOVE_CREDENTIAL  = 0x00000004,
+    KERB_REQUEST_ADD_CREDENTIAL     = 0x00000001U,
+    KERB_REQUEST_REPLACE_CREDENTIAL = 0x00000002U,
+    KERB_REQUEST_REMOVE_CREDENTIAL  = 0x00000004U,
 }
+
 alias TRUSTED_DOMAIN_TRUST_DIRECTION = uint;
 enum : uint
 {
-    TRUST_DIRECTION_DISABLED      = 0x00000000,
-    TRUST_DIRECTION_INBOUND       = 0x00000001,
-    TRUST_DIRECTION_OUTBOUND      = 0x00000002,
-    TRUST_DIRECTION_BIDIRECTIONAL = 0x00000003,
+    TRUST_DIRECTION_DISABLED      = 0x00000000U,
+    TRUST_DIRECTION_INBOUND       = 0x00000001U,
+    TRUST_DIRECTION_OUTBOUND      = 0x00000002U,
+    TRUST_DIRECTION_BIDIRECTIONAL = 0x00000003U,
 }
+
 alias MSV_SUPPLEMENTAL_CREDENTIAL_FLAGS = uint;
 enum : uint
 {
-    MSV1_0_CRED_LM_PRESENT = 0x00000001,
-    MSV1_0_CRED_NT_PRESENT = 0x00000002,
-    MSV1_0_CRED_VERSION    = 0x00000000,
+    MSV1_0_CRED_LM_PRESENT = 0x00000001U,
+    MSV1_0_CRED_NT_PRESENT = 0x00000002U,
+    MSV1_0_CRED_VERSION    = 0x00000000U,
 }
+
 alias SECURITY_PACKAGE_OPTIONS_TYPE = uint;
 enum : uint
 {
-    SECPKG_OPTIONS_TYPE_UNKNOWN = 0x00000000,
-    SECPKG_OPTIONS_TYPE_LSA     = 0x00000001,
-    SECPKG_OPTIONS_TYPE_SSPI    = 0x00000002,
+    SECPKG_OPTIONS_TYPE_UNKNOWN = 0x00000000U,
+    SECPKG_OPTIONS_TYPE_LSA     = 0x00000001U,
+    SECPKG_OPTIONS_TYPE_SSPI    = 0x00000002U,
 }
+
 alias SCHANNEL_SESSION_TOKEN_FLAGS = uint;
 enum : uint
 {
-    SSL_SESSION_ENABLE_RECONNECTS  = 0x00000001,
-    SSL_SESSION_DISABLE_RECONNECTS = 0x00000002,
+    SSL_SESSION_ENABLE_RECONNECTS  = 0x00000001U,
+    SSL_SESSION_DISABLE_RECONNECTS = 0x00000002U,
 }
+
 alias KERB_CRYPTO_KEY_TYPE = int;
 enum : int
 {
@@ -235,115 +254,124 @@ enum : int
     KERB_ETYPE_RC4_HMAC_NT = 0x00000017,
     KERB_ETYPE_RC4_MD4     = 0xffffff80,
 }
+
 alias LSA_AUTH_INFORMATION_AUTH_TYPE = uint;
 enum : uint
 {
-    TRUST_AUTH_TYPE_NONE    = 0x00000000,
-    TRUST_AUTH_TYPE_NT4OWF  = 0x00000001,
-    TRUST_AUTH_TYPE_CLEAR   = 0x00000002,
-    TRUST_AUTH_TYPE_VERSION = 0x00000003,
+    TRUST_AUTH_TYPE_NONE    = 0x00000000U,
+    TRUST_AUTH_TYPE_NT4OWF  = 0x00000001U,
+    TRUST_AUTH_TYPE_CLEAR   = 0x00000002U,
+    TRUST_AUTH_TYPE_VERSION = 0x00000003U,
 }
+
 alias SECPKG_PACKAGE_CHANGE_TYPE = uint;
 enum : uint
 {
-    SECPKG_PACKAGE_CHANGE_LOAD   = 0x00000000,
-    SECPKG_PACKAGE_CHANGE_UNLOAD = 0x00000001,
-    SECPKG_PACKAGE_CHANGE_SELECT = 0x00000002,
+    SECPKG_PACKAGE_CHANGE_LOAD   = 0x00000000U,
+    SECPKG_PACKAGE_CHANGE_UNLOAD = 0x00000001U,
+    SECPKG_PACKAGE_CHANGE_SELECT = 0x00000002U,
 }
+
 alias TRUSTED_DOMAIN_TRUST_ATTRIBUTES = uint;
 enum : uint
 {
-    TRUST_ATTRIBUTE_NON_TRANSITIVE     = 0x00000001,
-    TRUST_ATTRIBUTE_UPLEVEL_ONLY       = 0x00000002,
-    TRUST_ATTRIBUTE_FILTER_SIDS        = 0x00000004,
-    TRUST_ATTRIBUTE_FOREST_TRANSITIVE  = 0x00000008,
-    TRUST_ATTRIBUTE_CROSS_ORGANIZATION = 0x00000010,
-    TRUST_ATTRIBUTE_TREAT_AS_EXTERNAL  = 0x00000040,
-    TRUST_ATTRIBUTE_WITHIN_FOREST      = 0x00000020,
+    TRUST_ATTRIBUTE_NON_TRANSITIVE     = 0x00000001U,
+    TRUST_ATTRIBUTE_UPLEVEL_ONLY       = 0x00000002U,
+    TRUST_ATTRIBUTE_FILTER_SIDS        = 0x00000004U,
+    TRUST_ATTRIBUTE_FOREST_TRANSITIVE  = 0x00000008U,
+    TRUST_ATTRIBUTE_CROSS_ORGANIZATION = 0x00000010U,
+    TRUST_ATTRIBUTE_TREAT_AS_EXTERNAL  = 0x00000040U,
+    TRUST_ATTRIBUTE_WITHIN_FOREST      = 0x00000020U,
 }
+
 alias ISC_REQ_HIGH_FLAGS = ulong;
 enum : ulong
 {
-    ISC_REQ_MESSAGES                 = 0x0000000100000000,
-    ISC_REQ_DEFERRED_CRED_VALIDATION = 0x0000000200000000,
-    ISC_REQ_NO_POST_HANDSHAKE_AUTH   = 0x0000000400000000,
-    ISC_REQ_REUSE_SESSION_TICKETS    = 0x0000000800000000,
-    ISC_REQ_EXPLICIT_SESSION         = 0x0000001000000000,
+    ISC_REQ_MESSAGES                 = 0x0000000100000000UL,
+    ISC_REQ_DEFERRED_CRED_VALIDATION = 0x0000000200000000UL,
+    ISC_REQ_NO_POST_HANDSHAKE_AUTH   = 0x0000000400000000UL,
+    ISC_REQ_REUSE_SESSION_TICKETS    = 0x0000000800000000UL,
+    ISC_REQ_EXPLICIT_SESSION         = 0x0000001000000000UL,
 }
+
 alias ISC_REQ_FLAGS = uint;
 enum : uint
 {
-    ISC_REQ_DELEGATE               = 0x00000001,
-    ISC_REQ_MUTUAL_AUTH            = 0x00000002,
-    ISC_REQ_REPLAY_DETECT          = 0x00000004,
-    ISC_REQ_SEQUENCE_DETECT        = 0x00000008,
-    ISC_REQ_CONFIDENTIALITY        = 0x00000010,
-    ISC_REQ_USE_SESSION_KEY        = 0x00000020,
-    ISC_REQ_PROMPT_FOR_CREDS       = 0x00000040,
-    ISC_REQ_USE_SUPPLIED_CREDS     = 0x00000080,
-    ISC_REQ_ALLOCATE_MEMORY        = 0x00000100,
-    ISC_REQ_USE_DCE_STYLE          = 0x00000200,
-    ISC_REQ_DATAGRAM               = 0x00000400,
-    ISC_REQ_CONNECTION             = 0x00000800,
-    ISC_REQ_CALL_LEVEL             = 0x00001000,
-    ISC_REQ_FRAGMENT_SUPPLIED      = 0x00002000,
-    ISC_REQ_EXTENDED_ERROR         = 0x00004000,
-    ISC_REQ_STREAM                 = 0x00008000,
-    ISC_REQ_INTEGRITY              = 0x00010000,
-    ISC_REQ_IDENTIFY               = 0x00020000,
-    ISC_REQ_NULL_SESSION           = 0x00040000,
-    ISC_REQ_MANUAL_CRED_VALIDATION = 0x00080000,
-    ISC_REQ_RESERVED1              = 0x00100000,
-    ISC_REQ_FRAGMENT_TO_FIT        = 0x00200000,
-    ISC_REQ_FORWARD_CREDENTIALS    = 0x00400000,
-    ISC_REQ_NO_INTEGRITY           = 0x00800000,
-    ISC_REQ_USE_HTTP_STYLE         = 0x01000000,
-    ISC_REQ_UNVERIFIED_TARGET_NAME = 0x20000000,
-    ISC_REQ_CONFIDENTIALITY_ONLY   = 0x40000000,
+    ISC_REQ_DELEGATE               = 0x00000001U,
+    ISC_REQ_MUTUAL_AUTH            = 0x00000002U,
+    ISC_REQ_REPLAY_DETECT          = 0x00000004U,
+    ISC_REQ_SEQUENCE_DETECT        = 0x00000008U,
+    ISC_REQ_CONFIDENTIALITY        = 0x00000010U,
+    ISC_REQ_USE_SESSION_KEY        = 0x00000020U,
+    ISC_REQ_PROMPT_FOR_CREDS       = 0x00000040U,
+    ISC_REQ_USE_SUPPLIED_CREDS     = 0x00000080U,
+    ISC_REQ_ALLOCATE_MEMORY        = 0x00000100U,
+    ISC_REQ_USE_DCE_STYLE          = 0x00000200U,
+    ISC_REQ_DATAGRAM               = 0x00000400U,
+    ISC_REQ_CONNECTION             = 0x00000800U,
+    ISC_REQ_CALL_LEVEL             = 0x00001000U,
+    ISC_REQ_FRAGMENT_SUPPLIED      = 0x00002000U,
+    ISC_REQ_EXTENDED_ERROR         = 0x00004000U,
+    ISC_REQ_STREAM                 = 0x00008000U,
+    ISC_REQ_INTEGRITY              = 0x00010000U,
+    ISC_REQ_IDENTIFY               = 0x00020000U,
+    ISC_REQ_NULL_SESSION           = 0x00040000U,
+    ISC_REQ_MANUAL_CRED_VALIDATION = 0x00080000U,
+    ISC_REQ_RESERVED1              = 0x00100000U,
+    ISC_REQ_FRAGMENT_TO_FIT        = 0x00200000U,
+    ISC_REQ_FORWARD_CREDENTIALS    = 0x00400000U,
+    ISC_REQ_NO_INTEGRITY           = 0x00800000U,
+    ISC_REQ_USE_HTTP_STYLE         = 0x01000000U,
+    ISC_REQ_UNVERIFIED_TARGET_NAME = 0x20000000U,
+    ISC_REQ_CONFIDENTIALITY_ONLY   = 0x40000000U,
 }
+
 alias ASC_REQ_HIGH_FLAGS = ulong;
 enum : ulong
 {
-    ASC_REQ_MESSAGES         = 0x0000000100000000,
-    ASC_REQ_EXPLICIT_SESSION = 0x0000001000000000,
+    ASC_REQ_MESSAGES         = 0x0000000100000000UL,
+    ASC_REQ_EXPLICIT_SESSION = 0x0000001000000000UL,
 }
+
 alias ASC_REQ_FLAGS = uint;
 enum : uint
 {
-    ASC_REQ_DELEGATE               = 0x00000001,
-    ASC_REQ_MUTUAL_AUTH            = 0x00000002,
-    ASC_REQ_REPLAY_DETECT          = 0x00000004,
-    ASC_REQ_SEQUENCE_DETECT        = 0x00000008,
-    ASC_REQ_CONFIDENTIALITY        = 0x00000010,
-    ASC_REQ_USE_SESSION_KEY        = 0x00000020,
-    ASC_REQ_SESSION_TICKET         = 0x00000040,
-    ASC_REQ_ALLOCATE_MEMORY        = 0x00000100,
-    ASC_REQ_USE_DCE_STYLE          = 0x00000200,
-    ASC_REQ_DATAGRAM               = 0x00000400,
-    ASC_REQ_CONNECTION             = 0x00000800,
-    ASC_REQ_CALL_LEVEL             = 0x00001000,
-    ASC_REQ_FRAGMENT_SUPPLIED      = 0x00002000,
-    ASC_REQ_EXTENDED_ERROR         = 0x00008000,
-    ASC_REQ_STREAM                 = 0x00010000,
-    ASC_REQ_INTEGRITY              = 0x00020000,
-    ASC_REQ_LICENSING              = 0x00040000,
-    ASC_REQ_IDENTIFY               = 0x00080000,
-    ASC_REQ_ALLOW_NULL_SESSION     = 0x00100000,
-    ASC_REQ_ALLOW_NON_USER_LOGONS  = 0x00200000,
-    ASC_REQ_ALLOW_CONTEXT_REPLAY   = 0x00400000,
-    ASC_REQ_FRAGMENT_TO_FIT        = 0x00800000,
-    ASC_REQ_NO_TOKEN               = 0x01000000,
-    ASC_REQ_PROXY_BINDINGS         = 0x04000000,
-    ASC_REQ_ALLOW_MISSING_BINDINGS = 0x10000000,
+    ASC_REQ_DELEGATE               = 0x00000001U,
+    ASC_REQ_MUTUAL_AUTH            = 0x00000002U,
+    ASC_REQ_REPLAY_DETECT          = 0x00000004U,
+    ASC_REQ_SEQUENCE_DETECT        = 0x00000008U,
+    ASC_REQ_CONFIDENTIALITY        = 0x00000010U,
+    ASC_REQ_USE_SESSION_KEY        = 0x00000020U,
+    ASC_REQ_SESSION_TICKET         = 0x00000040U,
+    ASC_REQ_ALLOCATE_MEMORY        = 0x00000100U,
+    ASC_REQ_USE_DCE_STYLE          = 0x00000200U,
+    ASC_REQ_DATAGRAM               = 0x00000400U,
+    ASC_REQ_CONNECTION             = 0x00000800U,
+    ASC_REQ_CALL_LEVEL             = 0x00001000U,
+    ASC_REQ_FRAGMENT_SUPPLIED      = 0x00002000U,
+    ASC_REQ_EXTENDED_ERROR         = 0x00008000U,
+    ASC_REQ_STREAM                 = 0x00010000U,
+    ASC_REQ_INTEGRITY              = 0x00020000U,
+    ASC_REQ_LICENSING              = 0x00040000U,
+    ASC_REQ_IDENTIFY               = 0x00080000U,
+    ASC_REQ_ALLOW_NULL_SESSION     = 0x00100000U,
+    ASC_REQ_ALLOW_NON_USER_LOGONS  = 0x00200000U,
+    ASC_REQ_ALLOW_CONTEXT_REPLAY   = 0x00400000U,
+    ASC_REQ_FRAGMENT_TO_FIT        = 0x00800000U,
+    ASC_REQ_NO_TOKEN               = 0x01000000U,
+    ASC_REQ_PROXY_BINDINGS         = 0x04000000U,
+    ASC_REQ_ALLOW_MISSING_BINDINGS = 0x10000000U,
 }
+
 alias LSA_LOOKUP_DOMAIN_INFO_CLASS = int;
 enum : int
 {
     AccountDomainInformation = 0x00000005,
     DnsDomainInformation     = 0x0000000c,
 }
+
 //ENUM ATTR: ScopedEnumAttribute : CustomAttributeSig([], [])
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ne-ntsecapi-security_logon_type))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ne-ntsecapi-security_logon_type
 alias SECURITY_LOGON_TYPE = int;
 enum : int
 {
@@ -361,6 +389,7 @@ enum : int
     CachedRemoteInteractive = 0x0000000c,
     CachedUnlock            = 0x0000000d,
 }
+
 alias SE_ADT_PARAMETER_TYPE = int;
 enum : int
 {
@@ -401,7 +430,8 @@ enum : int
     SeAdtParmTypeMultiSzString      = 0x00000022,
     SeAdtParmTypeLogonIdEx          = 0x00000023,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ne-ntsecapi-policy_audit_event_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ne-ntsecapi-policy_audit_event_type
 alias POLICY_AUDIT_EVENT_TYPE = int;
 enum : int
 {
@@ -415,14 +445,16 @@ enum : int
     AuditCategoryDirectoryServiceAccess = 0x00000007,
     AuditCategoryAccountLogon           = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ne-ntsecapi-policy_lsa_server_role))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ne-ntsecapi-policy_lsa_server_role
 alias POLICY_LSA_SERVER_ROLE = int;
 enum : int
 {
     PolicyServerRoleBackup  = 0x00000002,
     PolicyServerRolePrimary = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ne-ntsecapi-policy_information_class))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ne-ntsecapi-policy_information_class
 alias POLICY_INFORMATION_CLASS = int;
 enum : int
 {
@@ -444,14 +476,16 @@ enum : int
     PolicyMachineAccountInformation2    = 0x00000010,
     PolicyLastEntry                     = 0x00000011,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ne-ntsecapi-policy_domain_information_class))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ne-ntsecapi-policy_domain_information_class
 alias POLICY_DOMAIN_INFORMATION_CLASS = int;
 enum : int
 {
     PolicyDomainEfsInformation            = 0x00000002,
     PolicyDomainKerberosTicketInformation = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ne-ntsecapi-policy_notification_information_class))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ne-ntsecapi-policy_notification_information_class
 alias POLICY_NOTIFICATION_INFORMATION_CLASS = int;
 enum : int
 {
@@ -465,7 +499,8 @@ enum : int
     PolicyNotifyGlobalSaclInformation             = 0x00000008,
     PolicyNotifyMax                               = 0x00000009,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ne-ntsecapi-trusted_information_class))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ne-ntsecapi-trusted_information_class
 alias TRUSTED_INFORMATION_CLASS = int;
 enum : int
 {
@@ -485,7 +520,8 @@ enum : int
     TrustedDomainAuthInformationInternalAes = 0x0000000e,
     TrustedDomainFullInformationInternalAes = 0x0000000f,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ne-ntsecapi-lsa_forest_trust_record_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ne-ntsecapi-lsa_forest_trust_record_type
 alias LSA_FOREST_TRUST_RECORD_TYPE = int;
 enum : int
 {
@@ -496,7 +532,8 @@ enum : int
     ForestTrustScannerInfo    = 0x00000004,
     ForestTrustRecordTypeLast = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ne-ntsecapi-lsa_forest_trust_collision_record_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ne-ntsecapi-lsa_forest_trust_collision_record_type
 alias LSA_FOREST_TRUST_COLLISION_RECORD_TYPE = int;
 enum : int
 {
@@ -504,6 +541,7 @@ enum : int
     CollisionXref  = 0x00000001,
     CollisionOther = 0x00000002,
 }
+
 alias NEGOTIATE_MESSAGES = int;
 enum : int
 {
@@ -513,7 +551,8 @@ enum : int
     NegMsgReserved1        = 0x00000003,
     NegCallPackageMax      = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ne-ntsecapi-msv1_0_logon_submit_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ne-ntsecapi-msv1_0_logon_submit_type
 alias MSV1_0_LOGON_SUBMIT_TYPE = int;
 enum : int
 {
@@ -527,7 +566,8 @@ enum : int
     MsV1_0NoElevationLogon       = 0x00000053,
     MsV1_0LuidLogon              = 0x00000054,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ne-ntsecapi-msv1_0_profile_buffer_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ne-ntsecapi-msv1_0_profile_buffer_type
 alias MSV1_0_PROFILE_BUFFER_TYPE = int;
 enum : int
 {
@@ -535,6 +575,7 @@ enum : int
     MsV1_0Lm20LogonProfile   = 0x00000003,
     MsV1_0SmartCardProfile   = 0x00000004,
 }
+
 alias MSV1_0_CREDENTIAL_KEY_TYPE = int;
 enum : int
 {
@@ -544,6 +585,7 @@ enum : int
     LocalUserCredKey          = 0x00000003,
     ExternallySuppliedCredKey = 0x00000004,
 }
+
 alias MSV1_0_AVID = int;
 enum : int
 {
@@ -559,7 +601,8 @@ enum : int
     MsvAvTargetName      = 0x00000009,
     MsvAvChannelBindings = 0x0000000a,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ne-ntsecapi-msv1_0_protocol_message_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ne-ntsecapi-msv1_0_protocol_message_type
 alias MSV1_0_PROTOCOL_MESSAGE_TYPE = int;
 enum : int
 {
@@ -589,7 +632,8 @@ enum : int
     MsV1_0ProvisionTbal            = 0x00000017,
     MsV1_0DeleteTbalSecrets        = 0x00000018,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ne-ntsecapi-kerb_logon_submit_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ne-ntsecapi-kerb_logon_submit_type
 alias KERB_LOGON_SUBMIT_TYPE = int;
 enum : int
 {
@@ -607,7 +651,8 @@ enum : int
     KerbNoElevationLogon       = 0x00000053,
     KerbLuidLogon              = 0x00000054,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ne-ntsecapi-kerb_profile_buffer_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ne-ntsecapi-kerb_profile_buffer_type
 alias KERB_PROFILE_BUFFER_TYPE = int;
 enum : int
 {
@@ -615,7 +660,8 @@ enum : int
     KerbSmartCardProfile   = 0x00000004,
     KerbTicketProfile      = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ne-ntsecapi-kerb_protocol_message_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ne-ntsecapi-kerb_protocol_message_type
 alias KERB_PROTOCOL_MESSAGE_TYPE = int;
 enum : int
 {
@@ -659,19 +705,22 @@ enum : int
     KerbNetworkTicketLogonMessage           = 0x00000025,
     KerbNlChangeMachinePasswordMessage      = 0x00000026,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ne-ntsecapi-kerb_certificate_info_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ne-ntsecapi-kerb_certificate_info_type
 alias KERB_CERTIFICATE_INFO_TYPE = int;
 enum : int
 {
     CertHashInfo = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ne-ntsecapi-pku2u_logon_submit_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ne-ntsecapi-pku2u_logon_submit_type
 alias PKU2U_LOGON_SUBMIT_TYPE = int;
 enum : int
 {
     Pku2uCertificateS4ULogon = 0x0000000e,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ne-sspi-sec_application_protocol_negotiation_ext))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ne-sspi-sec_application_protocol_negotiation_ext
 alias SEC_APPLICATION_PROTOCOL_NEGOTIATION_EXT = int;
 enum : int
 {
@@ -679,7 +728,8 @@ enum : int
     SecApplicationProtocolNegotiationExt_NPN  = 0x00000001,
     SecApplicationProtocolNegotiationExt_ALPN = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ne-sspi-sec_traffic_secret_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ne-sspi-sec_traffic_secret_type
 alias SEC_TRAFFIC_SECRET_TYPE = int;
 enum : int
 {
@@ -687,7 +737,8 @@ enum : int
     SecTrafficSecret_Client = 0x00000001,
     SecTrafficSecret_Server = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ne-sspi-secpkg_cred_class))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ne-sspi-secpkg_cred_class
 alias SECPKG_CRED_CLASS = int;
 enum : int
 {
@@ -697,7 +748,8 @@ enum : int
     SecPkgCredClass_PersistedSpecific = 0x0000001e,
     SecPkgCredClass_Explicit          = 0x00000028,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ne-sspi-secpkg_attr_lct_status))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ne-sspi-secpkg_attr_lct_status
 alias SECPKG_ATTR_LCT_STATUS = int;
 enum : int
 {
@@ -705,7 +757,8 @@ enum : int
     SecPkgAttrLastClientTokenNo    = 0x00000001,
     SecPkgAttrLastClientTokenMaybe = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ne-sspi-sec_application_protocol_negotiation_status))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ne-sspi-sec_application_protocol_negotiation_status
 alias SEC_APPLICATION_PROTOCOL_NEGOTIATION_STATUS = int;
 enum : int
 {
@@ -713,7 +766,8 @@ enum : int
     SecApplicationProtocolNegotiationStatus_Success            = 0x00000001,
     SecApplicationProtocolNegotiationStatus_SelectedClientOnly = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ne-sspi-secdelegationtype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ne-sspi-secdelegationtype
 enum SecDelegationType : int
 {
     SecFull      = 0x00000000,
@@ -722,13 +776,15 @@ enum SecDelegationType : int
     SecDirectory = 0x00000003,
     SecObject    = 0x00000004,
 }
+
 alias SASL_AUTHZID_STATE = int;
 enum : int
 {
     Sasl_AuthZIDForbidden = 0x00000000,
     Sasl_AuthZIDProcessed = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecpkg/ne-ntsecpkg-lsa_token_information_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecpkg/ne-ntsecpkg-lsa_token_information_type
 alias LSA_TOKEN_INFORMATION_TYPE = int;
 enum : int
 {
@@ -737,6 +793,7 @@ enum : int
     LsaTokenInformationV2   = 0x00000002,
     LsaTokenInformationV3   = 0x00000003,
 }
+
 alias SECPKG_FAILURE_SPECIAL_REASON = int;
 enum : int
 {
@@ -753,7 +810,8 @@ enum : int
     SecpkgFailureReason_Loopback      = 0x0000000a,
     SecpkgFailureReason_NullSession   = 0x0000000b,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecpkg/ne-ntsecpkg-secpkg_extended_information_class))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecpkg/ne-ntsecpkg-secpkg_extended_information_class
 alias SECPKG_EXTENDED_INFORMATION_CLASS = int;
 enum : int
 {
@@ -765,6 +823,7 @@ enum : int
     SecpkgMaxInfo         = 0x00000006,
     SecpkgNego2Info       = 0x00000007,
 }
+
 alias SECPKG_CALL_PACKAGE_MESSAGE_TYPE = int;
 enum : int
 {
@@ -774,13 +833,15 @@ enum : int
     SecPkgCallPackageTransferCredMessage = 0x00000402,
     SecPkgCallPackageMaxMessage          = 0x00000402,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecpkg/ne-ntsecpkg-secpkg_sessioninfo_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecpkg/ne-ntsecpkg-secpkg_sessioninfo_type
 alias SECPKG_SESSIONINFO_TYPE = int;
 enum : int
 {
     SecSessionPrimaryCred = 0x00000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecpkg/ne-ntsecpkg-secpkg_name_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecpkg/ne-ntsecpkg-secpkg_name_type
 alias SECPKG_NAME_TYPE = int;
 enum : int
 {
@@ -790,7 +851,8 @@ enum : int
     SecNameDN            = 0x00000003,
     SecNameSPN           = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SecMgmt/cred-fetch))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SecMgmt/cred-fetch
 alias CRED_FETCH = int;
 enum : int
 {
@@ -798,12 +860,14 @@ enum : int
     CredFetchDPAPI   = 0x00000001,
     CredFetchForced  = 0x00000002,
 }
+
 alias KSEC_CONTEXT_TYPE = int;
 enum : int
 {
     KSecPaged    = 0x00000000,
     KSecNonPaged = 0x00000001,
 }
+
 alias eTlsSignatureAlgorithm = int;
 enum : int
 {
@@ -812,6 +876,7 @@ enum : int
     TlsSignatureAlgorithm_Dsa       = 0x00000002,
     TlsSignatureAlgorithm_Ecdsa     = 0x00000003,
 }
+
 alias eTlsHashAlgorithm = int;
 enum : int
 {
@@ -823,7 +888,8 @@ enum : int
     TlsHashAlgorithm_Sha384 = 0x00000005,
     TlsHashAlgorithm_Sha512 = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/schannel/ne-schannel-etlsalgorithmusage))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/schannel/ne-schannel-etlsalgorithmusage
 alias eTlsAlgorithmUsage = int;
 enum : int
 {
@@ -833,11 +899,13 @@ enum : int
     TlsParametersCngAlgUsageDigest      = 0x00000003,
     TlsParametersCngAlgUsageCertSig     = 0x00000004,
 }
+
 enum SchGetExtensionsOptions : int
 {
     SCH_EXTENSIONS_OPTIONS_NONE = 0x00000000,
     SCH_NO_RECORD_HEADER        = 0x00000001,
 }
+
 alias NETLOGON_LOGON_INFO_CLASS = int;
 enum : int
 {
@@ -850,19 +918,22 @@ enum : int
     NetlogonServiceTransitiveInformation     = 0x00000007,
     NetlogonTicketLogonInformation           = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tokenbinding/ne-tokenbinding-tokenbinding_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tokenbinding/ne-tokenbinding-tokenbinding_type
 alias TOKENBINDING_TYPE = int;
 enum : int
 {
     TOKENBINDING_TYPE_PROVIDED = 0x00000000,
     TOKENBINDING_TYPE_REFERRED = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tokenbinding/ne-tokenbinding-tokenbinding_extension_format))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tokenbinding/ne-tokenbinding-tokenbinding_extension_format
 alias TOKENBINDING_EXTENSION_FORMAT = int;
 enum : int
 {
     TOKENBINDING_EXTENSION_FORMAT_UNDEFINED = 0x00000000,
 }
+
 alias TOKENBINDING_KEY_PARAMETERS_TYPE = int;
 enum : int
 {
@@ -871,7 +942,8 @@ enum : int
     TOKENBINDING_KEY_PARAMETERS_TYPE_ECDSAP256    = 0x00000002,
     TOKENBINDING_KEY_PARAMETERS_TYPE_ANYEXISTING  = 0x000000ff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/secext/ne-secext-extended_name_format))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/secext/ne-secext-extended_name_format
 alias EXTENDED_NAME_FORMAT = int;
 enum : int
 {
@@ -888,18 +960,20 @@ enum : int
     NameGivenName        = 0x0000000d,
     NameSurname          = 0x0000000e,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/slpublic/ne-slpublic-sldatatype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/slpublic/ne-slpublic-sldatatype
 alias SLDATATYPE = uint;
 enum : uint
 {
-    SL_DATA_NONE     = 0x00000000,
-    SL_DATA_SZ       = 0x00000001,
-    SL_DATA_DWORD    = 0x00000004,
-    SL_DATA_BINARY   = 0x00000003,
-    SL_DATA_MULTI_SZ = 0x00000007,
-    SL_DATA_SUM      = 0x00000064,
+    SL_DATA_NONE     = 0x00000000U,
+    SL_DATA_SZ       = 0x00000001U,
+    SL_DATA_DWORD    = 0x00000004U,
+    SL_DATA_BINARY   = 0x00000003U,
+    SL_DATA_MULTI_SZ = 0x00000007U,
+    SL_DATA_SUM      = 0x00000064U,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/slpublic/ne-slpublic-slidtype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/slpublic/ne-slpublic-slidtype
 alias SLIDTYPE = int;
 enum : int
 {
@@ -913,7 +987,8 @@ enum : int
     SL_ID_STORE_TOKEN       = 0x00000007,
     SL_ID_LAST              = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/slpublic/ne-slpublic-sllicensingstatus))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/slpublic/ne-slpublic-sllicensingstatus
 alias SLLICENSINGSTATUS = int;
 enum : int
 {
@@ -923,14 +998,16 @@ enum : int
     SL_LICENSING_STATUS_NOTIFICATION    = 0x00000003,
     SL_LICENSING_STATUS_LAST            = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/slpublic/ne-slpublic-sl_activation_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/slpublic/ne-slpublic-sl_activation_type
 alias SL_ACTIVATION_TYPE = int;
 enum : int
 {
     SL_ACTIVATION_TYPE_DEFAULT          = 0x00000000,
     SL_ACTIVATION_TYPE_ACTIVE_DIRECTORY = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/slpublic/ne-slpublic-slreferraltype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/slpublic/ne-slpublic-slreferraltype
 alias SLREFERRALTYPE = int;
 enum : int
 {
@@ -940,7 +1017,8 @@ enum : int
     SL_REFERRALTYPE_OVERRIDE_APPID = 0x00000003,
     SL_REFERRALTYPE_BEST_MATCH     = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/slpublic/ne-slpublic-sl_genuine_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/slpublic/ne-slpublic-sl_genuine_state
 alias SL_GENUINE_STATE = int;
 enum : int
 {
@@ -980,343 +1058,343 @@ enum const(wchar)* CLOUDAP_NAME = "CloudAP";
 
 enum : uint
 {
-    ISSP_LEVEL = 0x00000020,
-    ISSP_MODE  = 0x00000001,
+    ISSP_LEVEL = 0x00000020U,
+    ISSP_MODE  = 0x00000001U,
 }
 
 enum : uint
 {
-    SECPKG_FLAG_INTEGRITY                = 0x00000001,
-    SECPKG_FLAG_PRIVACY                  = 0x00000002,
-    SECPKG_FLAG_TOKEN_ONLY               = 0x00000004,
-    SECPKG_FLAG_DATAGRAM                 = 0x00000008,
-    SECPKG_FLAG_CONNECTION               = 0x00000010,
-    SECPKG_FLAG_MULTI_REQUIRED           = 0x00000020,
-    SECPKG_FLAG_CLIENT_ONLY              = 0x00000040,
-    SECPKG_FLAG_EXTENDED_ERROR           = 0x00000080,
-    SECPKG_FLAG_IMPERSONATION            = 0x00000100,
-    SECPKG_FLAG_ACCEPT_WIN32_NAME        = 0x00000200,
-    SECPKG_FLAG_STREAM                   = 0x00000400,
-    SECPKG_FLAG_NEGOTIABLE               = 0x00000800,
-    SECPKG_FLAG_GSS_COMPATIBLE           = 0x00001000,
-    SECPKG_FLAG_LOGON                    = 0x00002000,
-    SECPKG_FLAG_ASCII_BUFFERS            = 0x00004000,
-    SECPKG_FLAG_FRAGMENT                 = 0x00008000,
-    SECPKG_FLAG_MUTUAL_AUTH              = 0x00010000,
-    SECPKG_FLAG_DELEGATION               = 0x00020000,
-    SECPKG_FLAG_READONLY_WITH_CHECKSUM   = 0x00040000,
-    SECPKG_FLAG_RESTRICTED_TOKENS        = 0x00080000,
-    SECPKG_FLAG_NEGO_EXTENDER            = 0x00100000,
-    SECPKG_FLAG_NEGOTIABLE2              = 0x00200000,
-    SECPKG_FLAG_APPCONTAINER_PASSTHROUGH = 0x00400000,
-    SECPKG_FLAG_APPCONTAINER_CHECKS      = 0x00800000,
+    SECPKG_FLAG_INTEGRITY                = 0x00000001U,
+    SECPKG_FLAG_PRIVACY                  = 0x00000002U,
+    SECPKG_FLAG_TOKEN_ONLY               = 0x00000004U,
+    SECPKG_FLAG_DATAGRAM                 = 0x00000008U,
+    SECPKG_FLAG_CONNECTION               = 0x00000010U,
+    SECPKG_FLAG_MULTI_REQUIRED           = 0x00000020U,
+    SECPKG_FLAG_CLIENT_ONLY              = 0x00000040U,
+    SECPKG_FLAG_EXTENDED_ERROR           = 0x00000080U,
+    SECPKG_FLAG_IMPERSONATION            = 0x00000100U,
+    SECPKG_FLAG_ACCEPT_WIN32_NAME        = 0x00000200U,
+    SECPKG_FLAG_STREAM                   = 0x00000400U,
+    SECPKG_FLAG_NEGOTIABLE               = 0x00000800U,
+    SECPKG_FLAG_GSS_COMPATIBLE           = 0x00001000U,
+    SECPKG_FLAG_LOGON                    = 0x00002000U,
+    SECPKG_FLAG_ASCII_BUFFERS            = 0x00004000U,
+    SECPKG_FLAG_FRAGMENT                 = 0x00008000U,
+    SECPKG_FLAG_MUTUAL_AUTH              = 0x00010000U,
+    SECPKG_FLAG_DELEGATION               = 0x00020000U,
+    SECPKG_FLAG_READONLY_WITH_CHECKSUM   = 0x00040000U,
+    SECPKG_FLAG_RESTRICTED_TOKENS        = 0x00080000U,
+    SECPKG_FLAG_NEGO_EXTENDER            = 0x00100000U,
+    SECPKG_FLAG_NEGOTIABLE2              = 0x00200000U,
+    SECPKG_FLAG_APPCONTAINER_PASSTHROUGH = 0x00400000U,
+    SECPKG_FLAG_APPCONTAINER_CHECKS      = 0x00800000U,
 }
 
-enum uint SECPKG_FLAG_CREDENTIAL_ISOLATION_ENABLED = 0x01000000;
-enum uint SECPKG_FLAG_APPLY_LOOPBACK = 0x02000000;
+enum uint SECPKG_FLAG_CREDENTIAL_ISOLATION_ENABLED = 0x01000000U;
+enum uint SECPKG_FLAG_APPLY_LOOPBACK = 0x02000000U;
 
 enum : uint
 {
-    SECPKG_ID_NONE                            = 0x0000ffff,
-    SECPKG_CALLFLAGS_APPCONTAINER             = 0x00000001,
-    SECPKG_CALLFLAGS_APPCONTAINER_AUTHCAPABLE = 0x00000002,
-    SECPKG_CALLFLAGS_FORCE_SUPPLIED           = 0x00000004,
-    SECPKG_CALLFLAGS_APPCONTAINER_UPNCAPABLE  = 0x00000008,
-}
-
-enum : uint
-{
-    SECBUFFER_VERSION          = 0x00000000,
-    SECBUFFER_EMPTY            = 0x00000000,
-    SECBUFFER_DATA             = 0x00000001,
-    SECBUFFER_TOKEN            = 0x00000002,
-    SECBUFFER_PKG_PARAMS       = 0x00000003,
-    SECBUFFER_MISSING          = 0x00000004,
-    SECBUFFER_EXTRA            = 0x00000005,
-    SECBUFFER_STREAM_TRAILER   = 0x00000006,
-    SECBUFFER_STREAM_HEADER    = 0x00000007,
-    SECBUFFER_NEGOTIATION_INFO = 0x00000008,
+    SECPKG_ID_NONE                            = 0x0000ffffU,
+    SECPKG_CALLFLAGS_APPCONTAINER             = 0x00000001U,
+    SECPKG_CALLFLAGS_APPCONTAINER_AUTHCAPABLE = 0x00000002U,
+    SECPKG_CALLFLAGS_FORCE_SUPPLIED           = 0x00000004U,
+    SECPKG_CALLFLAGS_APPCONTAINER_UPNCAPABLE  = 0x00000008U,
 }
 
 enum : uint
 {
-    SECBUFFER_PADDING            = 0x00000009,
-    SECBUFFER_STREAM             = 0x0000000a,
-    SECBUFFER_MECHLIST           = 0x0000000b,
-    SECBUFFER_MECHLIST_SIGNATURE = 0x0000000c,
+    SECBUFFER_VERSION          = 0x00000000U,
+    SECBUFFER_EMPTY            = 0x00000000U,
+    SECBUFFER_DATA             = 0x00000001U,
+    SECBUFFER_TOKEN            = 0x00000002U,
+    SECBUFFER_PKG_PARAMS       = 0x00000003U,
+    SECBUFFER_MISSING          = 0x00000004U,
+    SECBUFFER_EXTRA            = 0x00000005U,
+    SECBUFFER_STREAM_TRAILER   = 0x00000006U,
+    SECBUFFER_STREAM_HEADER    = 0x00000007U,
+    SECBUFFER_NEGOTIATION_INFO = 0x00000008U,
 }
 
 enum : uint
 {
-    SECBUFFER_TARGET               = 0x0000000d,
-    SECBUFFER_CHANNEL_BINDINGS     = 0x0000000e,
-    SECBUFFER_CHANGE_PASS_RESPONSE = 0x0000000f,
+    SECBUFFER_PADDING            = 0x00000009U,
+    SECBUFFER_STREAM             = 0x0000000aU,
+    SECBUFFER_MECHLIST           = 0x0000000bU,
+    SECBUFFER_MECHLIST_SIGNATURE = 0x0000000cU,
 }
 
 enum : uint
 {
-    SECBUFFER_TARGET_HOST           = 0x00000010,
-    SECBUFFER_ALERT                 = 0x00000011,
-    SECBUFFER_APPLICATION_PROTOCOLS = 0x00000012,
+    SECBUFFER_TARGET               = 0x0000000dU,
+    SECBUFFER_CHANNEL_BINDINGS     = 0x0000000eU,
+    SECBUFFER_CHANGE_PASS_RESPONSE = 0x0000000fU,
 }
 
 enum : uint
 {
-    SECBUFFER_SRTP_PROTECTION_PROFILES   = 0x00000013,
-    SECBUFFER_SRTP_MASTER_KEY_IDENTIFIER = 0x00000014,
+    SECBUFFER_TARGET_HOST           = 0x00000010U,
+    SECBUFFER_ALERT                 = 0x00000011U,
+    SECBUFFER_APPLICATION_PROTOCOLS = 0x00000012U,
 }
 
 enum : uint
 {
-    SECBUFFER_TOKEN_BINDING          = 0x00000015,
-    SECBUFFER_PRESHARED_KEY          = 0x00000016,
-    SECBUFFER_PRESHARED_KEY_IDENTITY = 0x00000017,
+    SECBUFFER_SRTP_PROTECTION_PROFILES   = 0x00000013U,
+    SECBUFFER_SRTP_MASTER_KEY_IDENTIFIER = 0x00000014U,
 }
 
 enum : uint
 {
-    SECBUFFER_DTLS_MTU                   = 0x00000018,
-    SECBUFFER_SEND_GENERIC_TLS_EXTENSION = 0x00000019,
-}
-
-enum uint SECBUFFER_SUBSCRIBE_GENERIC_TLS_EXTENSION = 0x0000001a;
-
-enum : uint
-{
-    SECBUFFER_FLAGS           = 0x0000001b,
-    SECBUFFER_TRAFFIC_SECRETS = 0x0000001c,
-}
-
-enum uint SECBUFFER_CERTIFICATE_REQUEST_CONTEXT = 0x0000001d;
-enum uint SECBUFFER_CHANNEL_BINDINGS_RESULT = 0x0000001e;
-enum uint SECBUFFER_APP_SESSION_STATE = 0x0000001f;
-
-enum : uint
-{
-    SECBUFFER_SESSION_TICKET         = 0x00000020,
-    SECBUFFER_ATTRMASK               = 0xf0000000,
-    SECBUFFER_READONLY               = 0x80000000,
-    SECBUFFER_READONLY_WITH_CHECKSUM = 0x10000000,
-}
-
-enum uint SECBUFFER_RESERVED = 0x60000000;
-
-enum : uint
-{
-    SEC_CHANNEL_BINDINGS_AUDIT_BINDINGS           = 0x00000001,
-    SEC_CHANNEL_BINDINGS_VALID_FLAGS              = 0x00000001,
-    SEC_CHANNEL_BINDINGS_RESULT_CLIENT_SUPPORT    = 0x00000001,
-    SEC_CHANNEL_BINDINGS_RESULT_ABSENT            = 0x00000002,
-    SEC_CHANNEL_BINDINGS_RESULT_NOTVALID_MISMATCH = 0x00000004,
-    SEC_CHANNEL_BINDINGS_RESULT_NOTVALID_MISSING  = 0x00000008,
-    SEC_CHANNEL_BINDINGS_RESULT_VALID_MATCHED     = 0x00000010,
-    SEC_CHANNEL_BINDINGS_RESULT_VALID_PROXY       = 0x00000020,
-    SEC_CHANNEL_BINDINGS_RESULT_VALID_MISSING     = 0x00000040,
-}
-
-enum uint SZ_ALG_MAX_SIZE = 0x00000040;
-
-enum : uint
-{
-    SECURITY_NATIVE_DREP  = 0x00000010,
-    SECURITY_NETWORK_DREP = 0x00000000,
+    SECBUFFER_TOKEN_BINDING          = 0x00000015U,
+    SECBUFFER_PRESHARED_KEY          = 0x00000016U,
+    SECBUFFER_PRESHARED_KEY_IDENTITY = 0x00000017U,
 }
 
 enum : uint
 {
-    SECPKG_CRED_BOTH                 = 0x00000003,
-    SECPKG_CRED_DEFAULT              = 0x00000004,
-    SECPKG_CRED_RESERVED             = 0xf0000000,
-    SECPKG_CRED_AUTOLOGON_RESTRICTED = 0x00000010,
+    SECBUFFER_DTLS_MTU                   = 0x00000018U,
+    SECBUFFER_SEND_GENERIC_TLS_EXTENSION = 0x00000019U,
 }
 
-enum uint SECPKG_CRED_PROCESS_POLICY_ONLY = 0x00000020;
-enum uint SECPKG_CRED_KERB_ANCHOR_DS_VERSION = 0x00000040;
+enum uint SECBUFFER_SUBSCRIBE_GENERIC_TLS_EXTENSION = 0x0000001aU;
 
 enum : uint
 {
-    ISC_RET_DELEGATE      = 0x00000001,
-    ISC_RET_MUTUAL_AUTH   = 0x00000002,
-    ISC_RET_REPLAY_DETECT = 0x00000004,
+    SECBUFFER_FLAGS           = 0x0000001bU,
+    SECBUFFER_TRAFFIC_SECRETS = 0x0000001cU,
 }
 
-enum uint ISC_RET_SEQUENCE_DETECT = 0x00000008;
-enum uint ISC_RET_CONFIDENTIALITY = 0x00000010;
+enum uint SECBUFFER_CERTIFICATE_REQUEST_CONTEXT = 0x0000001dU;
+enum uint SECBUFFER_CHANNEL_BINDINGS_RESULT = 0x0000001eU;
+enum uint SECBUFFER_APP_SESSION_STATE = 0x0000001fU;
 
 enum : uint
 {
-    ISC_RET_USE_SESSION_KEY      = 0x00000020,
-    ISC_RET_USED_COLLECTED_CREDS = 0x00000040,
-    ISC_RET_USED_SUPPLIED_CREDS  = 0x00000080,
+    SECBUFFER_SESSION_TICKET         = 0x00000020U,
+    SECBUFFER_ATTRMASK               = 0xf0000000U,
+    SECBUFFER_READONLY               = 0x80000000U,
+    SECBUFFER_READONLY_WITH_CHECKSUM = 0x10000000U,
 }
 
-enum uint ISC_RET_ALLOCATED_MEMORY = 0x00000100;
-enum uint ISC_RET_USED_DCE_STYLE = 0x00000200;
+enum uint SECBUFFER_RESERVED = 0x60000000U;
 
 enum : uint
 {
-    ISC_RET_DATAGRAM            = 0x00000400,
-    ISC_RET_CONNECTION          = 0x00000800,
-    ISC_RET_INTERMEDIATE_RETURN = 0x00001000,
+    SEC_CHANNEL_BINDINGS_AUDIT_BINDINGS           = 0x00000001U,
+    SEC_CHANNEL_BINDINGS_VALID_FLAGS              = 0x00000001U,
+    SEC_CHANNEL_BINDINGS_RESULT_CLIENT_SUPPORT    = 0x00000001U,
+    SEC_CHANNEL_BINDINGS_RESULT_ABSENT            = 0x00000002U,
+    SEC_CHANNEL_BINDINGS_RESULT_NOTVALID_MISMATCH = 0x00000004U,
+    SEC_CHANNEL_BINDINGS_RESULT_NOTVALID_MISSING  = 0x00000008U,
+    SEC_CHANNEL_BINDINGS_RESULT_VALID_MATCHED     = 0x00000010U,
+    SEC_CHANNEL_BINDINGS_RESULT_VALID_PROXY       = 0x00000020U,
+    SEC_CHANNEL_BINDINGS_RESULT_VALID_MISSING     = 0x00000040U,
+}
+
+enum uint SZ_ALG_MAX_SIZE = 0x00000040U;
+
+enum : uint
+{
+    SECURITY_NATIVE_DREP  = 0x00000010U,
+    SECURITY_NETWORK_DREP = 0x00000000U,
 }
 
 enum : uint
 {
-    ISC_RET_CALL_LEVEL     = 0x00002000,
-    ISC_RET_EXTENDED_ERROR = 0x00004000,
+    SECPKG_CRED_BOTH                 = 0x00000003U,
+    SECPKG_CRED_DEFAULT              = 0x00000004U,
+    SECPKG_CRED_RESERVED             = 0xf0000000U,
+    SECPKG_CRED_AUTOLOGON_RESTRICTED = 0x00000010U,
+}
+
+enum uint SECPKG_CRED_PROCESS_POLICY_ONLY = 0x00000020U;
+enum uint SECPKG_CRED_KERB_ANCHOR_DS_VERSION = 0x00000040U;
+
+enum : uint
+{
+    ISC_RET_DELEGATE      = 0x00000001U,
+    ISC_RET_MUTUAL_AUTH   = 0x00000002U,
+    ISC_RET_REPLAY_DETECT = 0x00000004U,
+}
+
+enum uint ISC_RET_SEQUENCE_DETECT = 0x00000008U;
+enum uint ISC_RET_CONFIDENTIALITY = 0x00000010U;
+
+enum : uint
+{
+    ISC_RET_USE_SESSION_KEY      = 0x00000020U,
+    ISC_RET_USED_COLLECTED_CREDS = 0x00000040U,
+    ISC_RET_USED_SUPPLIED_CREDS  = 0x00000080U,
+}
+
+enum uint ISC_RET_ALLOCATED_MEMORY = 0x00000100U;
+enum uint ISC_RET_USED_DCE_STYLE = 0x00000200U;
+
+enum : uint
+{
+    ISC_RET_DATAGRAM            = 0x00000400U,
+    ISC_RET_CONNECTION          = 0x00000800U,
+    ISC_RET_INTERMEDIATE_RETURN = 0x00001000U,
 }
 
 enum : uint
 {
-    ISC_RET_STREAM       = 0x00008000,
-    ISC_RET_INTEGRITY    = 0x00010000,
-    ISC_RET_IDENTIFY     = 0x00020000,
-    ISC_RET_NULL_SESSION = 0x00040000,
+    ISC_RET_CALL_LEVEL     = 0x00002000U,
+    ISC_RET_EXTENDED_ERROR = 0x00004000U,
 }
-
-enum uint ISC_RET_MANUAL_CRED_VALIDATION = 0x00080000;
 
 enum : uint
 {
-    ISC_RET_RESERVED1           = 0x00100000,
-    ISC_RET_FRAGMENT_ONLY       = 0x00200000,
-    ISC_RET_FORWARD_CREDENTIALS = 0x00400000,
+    ISC_RET_STREAM       = 0x00008000U,
+    ISC_RET_INTEGRITY    = 0x00010000U,
+    ISC_RET_IDENTIFY     = 0x00020000U,
+    ISC_RET_NULL_SESSION = 0x00040000U,
 }
 
-enum uint ISC_RET_USED_HTTP_STYLE = 0x01000000;
-enum uint ISC_RET_NO_ADDITIONAL_TOKEN = 0x02000000;
-enum uint ISC_RET_REAUTHENTICATION = 0x08000000;
-enum uint ISC_RET_CONFIDENTIALITY_ONLY = 0x40000000;
+enum uint ISC_RET_MANUAL_CRED_VALIDATION = 0x00080000U;
+
+enum : uint
+{
+    ISC_RET_RESERVED1           = 0x00100000U,
+    ISC_RET_FRAGMENT_ONLY       = 0x00200000U,
+    ISC_RET_FORWARD_CREDENTIALS = 0x00400000U,
+}
+
+enum uint ISC_RET_USED_HTTP_STYLE = 0x01000000U;
+enum uint ISC_RET_NO_ADDITIONAL_TOKEN = 0x02000000U;
+enum uint ISC_RET_REAUTHENTICATION = 0x08000000U;
+enum uint ISC_RET_CONFIDENTIALITY_ONLY = 0x40000000U;
 
 enum : ulong
 {
-    ISC_RET_MESSAGES                 = 0x0000000100000000,
-    ISC_RET_DEFERRED_CRED_VALIDATION = 0x0000000200000000,
+    ISC_RET_MESSAGES                 = 0x0000000100000000UL,
+    ISC_RET_DEFERRED_CRED_VALIDATION = 0x0000000200000000UL,
 }
 
-enum ulong ISC_RET_NO_POST_HANDSHAKE_AUTH = 0x0000000400000000;
-enum ulong ISC_RET_REUSE_SESSION_TICKETS = 0x0000000800000000;
-enum ulong ISC_RET_EXPLICIT_SESSION = 0x0000001000000000;
+enum ulong ISC_RET_NO_POST_HANDSHAKE_AUTH = 0x0000000400000000UL;
+enum ulong ISC_RET_REUSE_SESSION_TICKETS = 0x0000000800000000UL;
+enum ulong ISC_RET_EXPLICIT_SESSION = 0x0000001000000000UL;
 
 enum : uint
 {
-    ASC_RET_DELEGATE      = 0x00000001,
-    ASC_RET_MUTUAL_AUTH   = 0x00000002,
-    ASC_RET_REPLAY_DETECT = 0x00000004,
+    ASC_RET_DELEGATE      = 0x00000001U,
+    ASC_RET_MUTUAL_AUTH   = 0x00000002U,
+    ASC_RET_REPLAY_DETECT = 0x00000004U,
 }
 
-enum uint ASC_RET_SEQUENCE_DETECT = 0x00000008;
-enum uint ASC_RET_CONFIDENTIALITY = 0x00000010;
-enum uint ASC_RET_USE_SESSION_KEY = 0x00000020;
-enum uint ASC_RET_SESSION_TICKET = 0x00000040;
-enum uint ASC_RET_ALLOCATED_MEMORY = 0x00000100;
-enum uint ASC_RET_USED_DCE_STYLE = 0x00000200;
+enum uint ASC_RET_SEQUENCE_DETECT = 0x00000008U;
+enum uint ASC_RET_CONFIDENTIALITY = 0x00000010U;
+enum uint ASC_RET_USE_SESSION_KEY = 0x00000020U;
+enum uint ASC_RET_SESSION_TICKET = 0x00000040U;
+enum uint ASC_RET_ALLOCATED_MEMORY = 0x00000100U;
+enum uint ASC_RET_USED_DCE_STYLE = 0x00000200U;
 
 enum : uint
 {
-    ASC_RET_DATAGRAM         = 0x00000400,
-    ASC_RET_CONNECTION       = 0x00000800,
-    ASC_RET_CALL_LEVEL       = 0x00002000,
-    ASC_RET_THIRD_LEG_FAILED = 0x00004000,
+    ASC_RET_DATAGRAM         = 0x00000400U,
+    ASC_RET_CONNECTION       = 0x00000800U,
+    ASC_RET_CALL_LEVEL       = 0x00002000U,
+    ASC_RET_THIRD_LEG_FAILED = 0x00004000U,
 }
 
-enum uint ASC_RET_EXTENDED_ERROR = 0x00008000;
+enum uint ASC_RET_EXTENDED_ERROR = 0x00008000U;
 
 enum : uint
 {
-    ASC_RET_STREAM       = 0x00010000,
-    ASC_RET_INTEGRITY    = 0x00020000,
-    ASC_RET_LICENSING    = 0x00040000,
-    ASC_RET_IDENTIFY     = 0x00080000,
-    ASC_RET_NULL_SESSION = 0x00100000,
+    ASC_RET_STREAM       = 0x00010000U,
+    ASC_RET_INTEGRITY    = 0x00020000U,
+    ASC_RET_LICENSING    = 0x00040000U,
+    ASC_RET_IDENTIFY     = 0x00080000U,
+    ASC_RET_NULL_SESSION = 0x00100000U,
 }
 
 enum : uint
 {
-    ASC_RET_ALLOW_NON_USER_LOGONS = 0x00200000,
-    ASC_RET_ALLOW_CONTEXT_REPLAY  = 0x00400000,
+    ASC_RET_ALLOW_NON_USER_LOGONS = 0x00200000U,
+    ASC_RET_ALLOW_CONTEXT_REPLAY  = 0x00400000U,
 }
 
-enum uint ASC_RET_FRAGMENT_ONLY = 0x00800000;
+enum uint ASC_RET_FRAGMENT_ONLY = 0x00800000U;
 
 enum : uint
 {
-    ASC_RET_NO_TOKEN            = 0x01000000,
-    ASC_RET_NO_ADDITIONAL_TOKEN = 0x02000000,
+    ASC_RET_NO_TOKEN            = 0x01000000U,
+    ASC_RET_NO_ADDITIONAL_TOKEN = 0x02000000U,
 }
 
 enum : ulong
 {
-    ASC_RET_MESSAGES              = 0x0000000100000000,
-    ASC_RET_REUSE_SESSION_TICKETS = 0x0000000800000000,
+    ASC_RET_MESSAGES              = 0x0000000100000000UL,
+    ASC_RET_REUSE_SESSION_TICKETS = 0x0000000800000000UL,
 }
 
-enum ulong ASC_RET_EXPLICIT_SESSION = 0x0000001000000000;
+enum ulong ASC_RET_EXPLICIT_SESSION = 0x0000001000000000UL;
 
 enum : uint
 {
-    SECPKG_CRED_ATTR_NAMES                = 0x00000001,
-    SECPKG_CRED_ATTR_SSI_PROVIDER         = 0x00000002,
-    SECPKG_CRED_ATTR_KDC_PROXY_SETTINGS   = 0x00000003,
-    SECPKG_CRED_ATTR_KDC_NETWORK_SETTINGS = 0x00000003,
-    SECPKG_CRED_ATTR_CERT                 = 0x00000004,
-    SECPKG_CRED_ATTR_PAC_BYPASS           = 0x00000005,
+    SECPKG_CRED_ATTR_NAMES                = 0x00000001U,
+    SECPKG_CRED_ATTR_SSI_PROVIDER         = 0x00000002U,
+    SECPKG_CRED_ATTR_KDC_PROXY_SETTINGS   = 0x00000003U,
+    SECPKG_CRED_ATTR_KDC_NETWORK_SETTINGS = 0x00000003U,
+    SECPKG_CRED_ATTR_CERT                 = 0x00000004U,
+    SECPKG_CRED_ATTR_PAC_BYPASS           = 0x00000005U,
 }
 
-enum uint KDC_PROXY_SETTINGS_V1 = 0x00000001;
-enum uint KDC_NETWORK_SETTINGS_V2 = 0x00000002;
-enum uint KDC_PROXY_SETTINGS_FLAGS_FORCEPROXY = 0x00000001;
+enum uint KDC_PROXY_SETTINGS_V1 = 0x00000001U;
+enum uint KDC_NETWORK_SETTINGS_V2 = 0x00000002U;
+enum uint KDC_PROXY_SETTINGS_FLAGS_FORCEPROXY = 0x00000001U;
 
 enum : uint
 {
-    KDC_NETWORK_SETTINGS_FLAGS_FORCEPROXY          = 0x00000001,
-    KDC_NETWORK_SETTINGS_FLAGS_CONFIGURE_PROXY     = 0x80000000,
-    KDC_NETWORK_SETTINGS_FLAGS_CONFIGURE_DISCOVERY = 0x40000000,
+    KDC_NETWORK_SETTINGS_FLAGS_FORCEPROXY          = 0x00000001U,
+    KDC_NETWORK_SETTINGS_FLAGS_CONFIGURE_PROXY     = 0x80000000U,
+    KDC_NETWORK_SETTINGS_FLAGS_CONFIGURE_DISCOVERY = 0x40000000U,
 }
 
-enum uint KDC_NETWORK_DISCOVERY_FLAGS_DS13_REQUIRED = 0x80000000;
+enum uint KDC_NETWORK_DISCOVERY_FLAGS_DS13_REQUIRED = 0x80000000U;
 
 enum : uint
 {
-    SECPKG_ATTR_PROTO_INFO           = 0x00000007,
-    SECPKG_ATTR_USER_FLAGS           = 0x0000000b,
-    SECPKG_ATTR_USE_VALIDATED        = 0x0000000f,
-    SECPKG_ATTR_CREDENTIAL_NAME      = 0x00000010,
-    SECPKG_ATTR_TARGET               = 0x00000013,
-    SECPKG_ATTR_AUTHENTICATION_ID    = 0x00000014,
-    SECPKG_ATTR_LOGOFF_TIME          = 0x00000015,
-    SECPKG_ATTR_NEGO_KEYS            = 0x00000016,
-    SECPKG_ATTR_PROMPTING_NEEDED     = 0x00000018,
-    SECPKG_ATTR_NEGO_PKG_INFO        = 0x0000001f,
-    SECPKG_ATTR_NEGO_STATUS          = 0x00000020,
-    SECPKG_ATTR_CONTEXT_DELETED      = 0x00000021,
-    SECPKG_ATTR_APPLICATION_PROTOCOL = 0x00000023,
+    SECPKG_ATTR_PROTO_INFO           = 0x00000007U,
+    SECPKG_ATTR_USER_FLAGS           = 0x0000000bU,
+    SECPKG_ATTR_USE_VALIDATED        = 0x0000000fU,
+    SECPKG_ATTR_CREDENTIAL_NAME      = 0x00000010U,
+    SECPKG_ATTR_TARGET               = 0x00000013U,
+    SECPKG_ATTR_AUTHENTICATION_ID    = 0x00000014U,
+    SECPKG_ATTR_LOGOFF_TIME          = 0x00000015U,
+    SECPKG_ATTR_NEGO_KEYS            = 0x00000016U,
+    SECPKG_ATTR_PROMPTING_NEEDED     = 0x00000018U,
+    SECPKG_ATTR_NEGO_PKG_INFO        = 0x0000001fU,
+    SECPKG_ATTR_NEGO_STATUS          = 0x00000020U,
+    SECPKG_ATTR_CONTEXT_DELETED      = 0x00000021U,
+    SECPKG_ATTR_APPLICATION_PROTOCOL = 0x00000023U,
 }
 
-enum uint SECPKG_ATTR_NEGOTIATED_TLS_EXTENSIONS = 0x00000024;
+enum uint SECPKG_ATTR_NEGOTIATED_TLS_EXTENSIONS = 0x00000024U;
 
 enum : uint
 {
-    SECPKG_ATTR_IS_LOOPBACK                = 0x00000025,
-    SECPKG_ATTR_NEGO_INFO_FLAG_NO_KERBEROS = 0x00000001,
-    SECPKG_ATTR_NEGO_INFO_FLAG_NO_NTLM     = 0x00000002,
+    SECPKG_ATTR_IS_LOOPBACK                = 0x00000025U,
+    SECPKG_ATTR_NEGO_INFO_FLAG_NO_KERBEROS = 0x00000001U,
+    SECPKG_ATTR_NEGO_INFO_FLAG_NO_NTLM     = 0x00000002U,
 }
 
 enum : uint
 {
-    SECPKG_NEGOTIATION_COMPLETE      = 0x00000000,
-    SECPKG_NEGOTIATION_OPTIMISTIC    = 0x00000001,
-    SECPKG_NEGOTIATION_IN_PROGRESS   = 0x00000002,
-    SECPKG_NEGOTIATION_DIRECT        = 0x00000003,
-    SECPKG_NEGOTIATION_TRY_MULTICRED = 0x00000004,
+    SECPKG_NEGOTIATION_COMPLETE      = 0x00000000U,
+    SECPKG_NEGOTIATION_OPTIMISTIC    = 0x00000001U,
+    SECPKG_NEGOTIATION_IN_PROGRESS   = 0x00000002U,
+    SECPKG_NEGOTIATION_DIRECT        = 0x00000003U,
+    SECPKG_NEGOTIATION_TRY_MULTICRED = 0x00000004U,
 }
 
-enum uint MAX_PROTOCOL_ID_SIZE = 0x000000ff;
+enum uint MAX_PROTOCOL_ID_SIZE = 0x000000ffU;
 
 enum : uint
 {
-    SECQOP_WRAP_NO_ENCRYPT = 0x80000001,
-    SECQOP_WRAP_OOB_DATA   = 0x40000000,
+    SECQOP_WRAP_NO_ENCRYPT = 0x80000001U,
+    SECQOP_WRAP_OOB_DATA   = 0x40000000U,
 }
 
 enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
@@ -1330,130 +1408,130 @@ enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(E
 
 enum : uint
 {
-    SECURITY_SUPPORT_PROVIDER_INTERFACE_VERSION   = 0x00000001,
-    SECURITY_SUPPORT_PROVIDER_INTERFACE_VERSION_2 = 0x00000002,
-    SECURITY_SUPPORT_PROVIDER_INTERFACE_VERSION_3 = 0x00000003,
-    SECURITY_SUPPORT_PROVIDER_INTERFACE_VERSION_4 = 0x00000004,
-    SECURITY_SUPPORT_PROVIDER_INTERFACE_VERSION_5 = 0x00000005,
+    SECURITY_SUPPORT_PROVIDER_INTERFACE_VERSION   = 0x00000001U,
+    SECURITY_SUPPORT_PROVIDER_INTERFACE_VERSION_2 = 0x00000002U,
+    SECURITY_SUPPORT_PROVIDER_INTERFACE_VERSION_3 = 0x00000003U,
+    SECURITY_SUPPORT_PROVIDER_INTERFACE_VERSION_4 = 0x00000004U,
+    SECURITY_SUPPORT_PROVIDER_INTERFACE_VERSION_5 = 0x00000005U,
 }
 
 enum : uint
 {
-    SASL_OPTION_SEND_SIZE        = 0x00000001,
-    SASL_OPTION_RECV_SIZE        = 0x00000002,
-    SASL_OPTION_AUTHZ_STRING     = 0x00000003,
-    SASL_OPTION_AUTHZ_PROCESSING = 0x00000004,
+    SASL_OPTION_SEND_SIZE        = 0x00000001U,
+    SASL_OPTION_RECV_SIZE        = 0x00000002U,
+    SASL_OPTION_AUTHZ_STRING     = 0x00000003U,
+    SASL_OPTION_AUTHZ_PROCESSING = 0x00000004U,
 }
 
 enum : uint
 {
-    SEC_WINNT_AUTH_IDENTITY_VERSION_2                          = 0x00000201,
-    SEC_WINNT_AUTH_IDENTITY_VERSION                            = 0x00000200,
-    SEC_WINNT_AUTH_IDENTITY_FLAGS_PROCESS_ENCRYPTED            = 0x00000010,
-    SEC_WINNT_AUTH_IDENTITY_FLAGS_SYSTEM_PROTECTED             = 0x00000020,
-    SEC_WINNT_AUTH_IDENTITY_FLAGS_USER_PROTECTED               = 0x00000040,
-    SEC_WINNT_AUTH_IDENTITY_FLAGS_SYSTEM_ENCRYPTED             = 0x00000080,
-    SEC_WINNT_AUTH_IDENTITY_FLAGS_RESERVED                     = 0x00010000,
-    SEC_WINNT_AUTH_IDENTITY_FLAGS_NULL_USER                    = 0x00020000,
-    SEC_WINNT_AUTH_IDENTITY_FLAGS_NULL_DOMAIN                  = 0x00040000,
-    SEC_WINNT_AUTH_IDENTITY_FLAGS_ID_PROVIDER                  = 0x00080000,
-    SEC_WINNT_AUTH_IDENTITY_FLAGS_SSPIPFC_USE_MASK             = 0xff000000,
-    SEC_WINNT_AUTH_IDENTITY_FLAGS_SSPIPFC_CREDPROV_DO_NOT_SAVE = 0x80000000,
-    SEC_WINNT_AUTH_IDENTITY_FLAGS_SSPIPFC_SAVE_CRED_BY_CALLER  = 0x80000000,
-    SEC_WINNT_AUTH_IDENTITY_FLAGS_SSPIPFC_SAVE_CRED_CHECKED    = 0x40000000,
-    SEC_WINNT_AUTH_IDENTITY_FLAGS_SSPIPFC_NO_CHECKBOX          = 0x20000000,
-    SEC_WINNT_AUTH_IDENTITY_FLAGS_SSPIPFC_CREDPROV_DO_NOT_LOAD = 0x10000000,
+    SEC_WINNT_AUTH_IDENTITY_VERSION_2                          = 0x00000201U,
+    SEC_WINNT_AUTH_IDENTITY_VERSION                            = 0x00000200U,
+    SEC_WINNT_AUTH_IDENTITY_FLAGS_PROCESS_ENCRYPTED            = 0x00000010U,
+    SEC_WINNT_AUTH_IDENTITY_FLAGS_SYSTEM_PROTECTED             = 0x00000020U,
+    SEC_WINNT_AUTH_IDENTITY_FLAGS_USER_PROTECTED               = 0x00000040U,
+    SEC_WINNT_AUTH_IDENTITY_FLAGS_SYSTEM_ENCRYPTED             = 0x00000080U,
+    SEC_WINNT_AUTH_IDENTITY_FLAGS_RESERVED                     = 0x00010000U,
+    SEC_WINNT_AUTH_IDENTITY_FLAGS_NULL_USER                    = 0x00020000U,
+    SEC_WINNT_AUTH_IDENTITY_FLAGS_NULL_DOMAIN                  = 0x00040000U,
+    SEC_WINNT_AUTH_IDENTITY_FLAGS_ID_PROVIDER                  = 0x00080000U,
+    SEC_WINNT_AUTH_IDENTITY_FLAGS_SSPIPFC_USE_MASK             = 0xff000000U,
+    SEC_WINNT_AUTH_IDENTITY_FLAGS_SSPIPFC_CREDPROV_DO_NOT_SAVE = 0x80000000U,
+    SEC_WINNT_AUTH_IDENTITY_FLAGS_SSPIPFC_SAVE_CRED_BY_CALLER  = 0x80000000U,
+    SEC_WINNT_AUTH_IDENTITY_FLAGS_SSPIPFC_SAVE_CRED_CHECKED    = 0x40000000U,
+    SEC_WINNT_AUTH_IDENTITY_FLAGS_SSPIPFC_NO_CHECKBOX          = 0x20000000U,
+    SEC_WINNT_AUTH_IDENTITY_FLAGS_SSPIPFC_CREDPROV_DO_NOT_LOAD = 0x10000000U,
 }
 
-enum uint SSPIPFC_CREDPROV_DO_NOT_SAVE = 0x00000001;
-enum uint SSPIPFC_SAVE_CRED_BY_CALLER = 0x00000001;
+enum uint SSPIPFC_CREDPROV_DO_NOT_SAVE = 0x00000001U;
+enum uint SSPIPFC_SAVE_CRED_BY_CALLER = 0x00000001U;
 
 enum : uint
 {
-    SSPIPFC_NO_CHECKBOX          = 0x00000002,
-    SSPIPFC_CREDPROV_DO_NOT_LOAD = 0x00000004,
+    SSPIPFC_NO_CHECKBOX          = 0x00000002U,
+    SSPIPFC_CREDPROV_DO_NOT_LOAD = 0x00000004U,
 }
 
-enum uint SSPIPFC_USE_CREDUIBROKER = 0x00000008;
+enum uint SSPIPFC_USE_CREDUIBROKER = 0x00000008U;
 
 enum : uint
 {
-    NGC_DATA_FLAG_KERB_CERTIFICATE_LOGON_FLAG_CHECK_DUPLICATES     = 0x00000001,
-    NGC_DATA_FLAG_KERB_CERTIFICATE_LOGON_FLAG_USE_CERTIFICATE_INFO = 0x00000002,
-}
-
-enum : uint
-{
-    NGC_DATA_FLAG_IS_SMARTCARD_DATA   = 0x00000004,
-    NGC_DATA_FLAG_IS_CLOUD_TRUST_CRED = 0x00000008,
+    NGC_DATA_FLAG_KERB_CERTIFICATE_LOGON_FLAG_CHECK_DUPLICATES     = 0x00000001U,
+    NGC_DATA_FLAG_KERB_CERTIFICATE_LOGON_FLAG_USE_CERTIFICATE_INFO = 0x00000002U,
 }
 
 enum : uint
 {
-    SEC_WINNT_AUTH_IDENTITY_ENCRYPT_SAME_LOGON   = 0x00000001,
-    SEC_WINNT_AUTH_IDENTITY_ENCRYPT_SAME_PROCESS = 0x00000002,
-    SEC_WINNT_AUTH_IDENTITY_ENCRYPT_FOR_SYSTEM   = 0x00000004,
-    SEC_WINNT_AUTH_IDENTITY_MARSHALLED           = 0x00000004,
-    SEC_WINNT_AUTH_IDENTITY_ONLY                 = 0x00000008,
-}
-
-enum uint SECPKG_OPTIONS_PERMANENT = 0x00000001;
-enum uint LOOKUP_VIEW_LOCAL_INFORMATION = 0x00000001;
-enum uint LOOKUP_TRANSLATE_NAMES = 0x00000800;
-
-enum : uint
-{
-    SECPKG_ATTR_ISSUER_LIST         = 0x00000050,
-    SECPKG_ATTR_REMOTE_CRED         = 0x00000051,
-    SECPKG_ATTR_SUPPORTED_ALGS      = 0x00000056,
-    SECPKG_ATTR_CIPHER_STRENGTHS    = 0x00000057,
-    SECPKG_ATTR_SUPPORTED_PROTOCOLS = 0x00000058,
+    NGC_DATA_FLAG_IS_SMARTCARD_DATA   = 0x00000004U,
+    NGC_DATA_FLAG_IS_CLOUD_TRUST_CRED = 0x00000008U,
 }
 
 enum : uint
 {
-    SECPKG_ATTR_MAPPED_CRED_ATTR    = 0x0000005c,
-    SECPKG_ATTR_REMOTE_CERTIFICATES = 0x0000005f,
+    SEC_WINNT_AUTH_IDENTITY_ENCRYPT_SAME_LOGON   = 0x00000001U,
+    SEC_WINNT_AUTH_IDENTITY_ENCRYPT_SAME_PROCESS = 0x00000002U,
+    SEC_WINNT_AUTH_IDENTITY_ENCRYPT_FOR_SYSTEM   = 0x00000004U,
+    SEC_WINNT_AUTH_IDENTITY_MARSHALLED           = 0x00000004U,
+    SEC_WINNT_AUTH_IDENTITY_ONLY                 = 0x00000008U,
+}
+
+enum uint SECPKG_OPTIONS_PERMANENT = 0x00000001U;
+enum uint LOOKUP_VIEW_LOCAL_INFORMATION = 0x00000001U;
+enum uint LOOKUP_TRANSLATE_NAMES = 0x00000800U;
+
+enum : uint
+{
+    SECPKG_ATTR_ISSUER_LIST         = 0x00000050U,
+    SECPKG_ATTR_REMOTE_CRED         = 0x00000051U,
+    SECPKG_ATTR_SUPPORTED_ALGS      = 0x00000056U,
+    SECPKG_ATTR_CIPHER_STRENGTHS    = 0x00000057U,
+    SECPKG_ATTR_SUPPORTED_PROTOCOLS = 0x00000058U,
 }
 
 enum : uint
 {
-    SECPKG_ATTR_CLIENT_CERT_POLICY = 0x00000060,
-    SECPKG_ATTR_CC_POLICY_RESULT   = 0x00000061,
-    SECPKG_ATTR_USE_NCRYPT         = 0x00000062,
-    SECPKG_ATTR_LOCAL_CERT_INFO    = 0x00000063,
-    SECPKG_ATTR_CIPHER_INFO        = 0x00000064,
-    SECPKG_ATTR_REMOTE_CERT_CHAIN  = 0x00000067,
-    SECPKG_ATTR_UI_INFO            = 0x00000068,
-    SECPKG_ATTR_KEYING_MATERIAL    = 0x0000006b,
-    SECPKG_ATTR_SRTP_PARAMETERS    = 0x0000006c,
-    SECPKG_ATTR_TOKEN_BINDING      = 0x0000006d,
-    SECPKG_ATTR_CONNECTION_INFO_EX = 0x0000006e,
+    SECPKG_ATTR_MAPPED_CRED_ATTR    = 0x0000005cU,
+    SECPKG_ATTR_REMOTE_CERTIFICATES = 0x0000005fU,
 }
 
 enum : uint
 {
-    SECPKG_ATTR_KEYING_MATERIAL_TOKEN_BINDING = 0x0000006f,
-    SECPKG_ATTR_KEYING_MATERIAL_INPROC        = 0x00000070,
+    SECPKG_ATTR_CLIENT_CERT_POLICY = 0x00000060U,
+    SECPKG_ATTR_CC_POLICY_RESULT   = 0x00000061U,
+    SECPKG_ATTR_USE_NCRYPT         = 0x00000062U,
+    SECPKG_ATTR_LOCAL_CERT_INFO    = 0x00000063U,
+    SECPKG_ATTR_CIPHER_INFO        = 0x00000064U,
+    SECPKG_ATTR_REMOTE_CERT_CHAIN  = 0x00000067U,
+    SECPKG_ATTR_UI_INFO            = 0x00000068U,
+    SECPKG_ATTR_KEYING_MATERIAL    = 0x0000006bU,
+    SECPKG_ATTR_SRTP_PARAMETERS    = 0x0000006cU,
+    SECPKG_ATTR_TOKEN_BINDING      = 0x0000006dU,
+    SECPKG_ATTR_CONNECTION_INFO_EX = 0x0000006eU,
 }
 
 enum : uint
 {
-    SECPKG_ATTR_CERT_CHECK_RESULT        = 0x00000071,
-    SECPKG_ATTR_CERT_CHECK_RESULT_INPROC = 0x00000072,
+    SECPKG_ATTR_KEYING_MATERIAL_TOKEN_BINDING = 0x0000006fU,
+    SECPKG_ATTR_KEYING_MATERIAL_INPROC        = 0x00000070U,
 }
 
 enum : uint
 {
-    SECPKG_ATTR_SESSION_TICKET_KEYS                   = 0x00000073,
-    SECPKG_ATTR_SERIALIZED_REMOTE_CERT_CONTEXT_INPROC = 0x00000074,
-    SECPKG_ATTR_SERIALIZED_REMOTE_CERT_CONTEXT        = 0x00000075,
+    SECPKG_ATTR_CERT_CHECK_RESULT        = 0x00000071U,
+    SECPKG_ATTR_CERT_CHECK_RESULT_INPROC = 0x00000072U,
 }
 
 enum : uint
 {
-    SESSION_TICKET_INFO_V0      = 0x00000000,
-    SESSION_TICKET_INFO_VERSION = 0x00000000,
+    SECPKG_ATTR_SESSION_TICKET_KEYS                   = 0x00000073U,
+    SECPKG_ATTR_SERIALIZED_REMOTE_CERT_CONTEXT_INPROC = 0x00000074U,
+    SECPKG_ATTR_SERIALIZED_REMOTE_CERT_CONTEXT        = 0x00000075U,
+}
+
+enum : uint
+{
+    SESSION_TICKET_INFO_V0      = 0x00000000U,
+    SESSION_TICKET_INFO_VERSION = 0x00000000U,
 }
 
 enum int LSA_MODE_PASSWORD_PROTECTED = 0x00000001;
@@ -1461,24 +1539,24 @@ enum int LSA_MODE_INDIVIDUAL_ACCOUNTS = 0x00000002;
 enum int LSA_MODE_MANDATORY_ACCESS = 0x00000004;
 enum int LSA_MODE_LOG_FULL = 0x00000008;
 enum int LSA_MAXIMUM_SID_COUNT = 0x00000100;
-enum uint LSA_MAXIMUM_ENUMERATION_LENGTH = 0x00007d00;
-enum uint LSA_CALL_LICENSE_SERVER = 0x80000000;
-enum uint SE_ADT_OBJECT_ONLY = 0x00000001;
-enum uint SE_MAX_AUDIT_PARAMETERS = 0x00000020;
-enum uint SE_MAX_GENERIC_AUDIT_PARAMETERS = 0x0000001c;
+enum uint LSA_MAXIMUM_ENUMERATION_LENGTH = 0x00007d00U;
+enum uint LSA_CALL_LICENSE_SERVER = 0x80000000U;
+enum uint SE_ADT_OBJECT_ONLY = 0x00000001U;
+enum uint SE_MAX_AUDIT_PARAMETERS = 0x00000020U;
+enum uint SE_MAX_GENERIC_AUDIT_PARAMETERS = 0x0000001cU;
 
 enum : uint
 {
-    SE_ADT_PARAMETERS_SELF_RELATIVE    = 0x00000001,
-    SE_ADT_PARAMETERS_SEND_TO_LSA      = 0x00000002,
-    SE_ADT_PARAMETER_EXTENSIBLE_AUDIT  = 0x00000004,
-    SE_ADT_PARAMETER_GENERIC_AUDIT     = 0x00000008,
-    SE_ADT_PARAMETER_WRITE_SYNCHRONOUS = 0x00000010,
+    SE_ADT_PARAMETERS_SELF_RELATIVE    = 0x00000001U,
+    SE_ADT_PARAMETERS_SEND_TO_LSA      = 0x00000002U,
+    SE_ADT_PARAMETER_EXTENSIBLE_AUDIT  = 0x00000004U,
+    SE_ADT_PARAMETER_GENERIC_AUDIT     = 0x00000008U,
+    SE_ADT_PARAMETER_WRITE_SYNCHRONOUS = 0x00000010U,
 }
 
 enum const(wchar)* LSA_ADT_SECURITY_SOURCE_NAME = "Microsoft-Windows-Security-Auditing";
 enum const(wchar)* LSA_ADT_LEGACY_SECURITY_SOURCE_NAME = "Security";
-enum uint SE_ADT_POLICY_AUDIT_EVENT_TYPE_EX_BEGIN = 0x00000064;
+enum uint SE_ADT_POLICY_AUDIT_EVENT_TYPE_EX_BEGIN = 0x00000064U;
 
 enum : int
 {
@@ -1522,39 +1600,39 @@ enum int POLICY_AUDIT_LOG_ADMIN = 0x00000200;
 enum int POLICY_SERVER_ADMIN = 0x00000400;
 enum int POLICY_LOOKUP_NAMES = 0x00000800;
 enum int POLICY_NOTIFICATION = 0x00001000;
-enum uint POLICY_MODE_COUNT = 0x0000000b;
-enum uint LSA_LOOKUP_ISOLATED_AS_LOCAL = 0x80000000;
-enum uint LSA_LOOKUP_DISALLOW_CONNECTED_ACCOUNT_INTERNET_SID = 0x80000000;
-enum uint LSA_LOOKUP_PREFER_INTERNET_NAMES = 0x40000000;
-enum uint PER_USER_POLICY_UNCHANGED = 0x00000000;
+enum uint POLICY_MODE_COUNT = 0x0000000bU;
+enum uint LSA_LOOKUP_ISOLATED_AS_LOCAL = 0x80000000U;
+enum uint LSA_LOOKUP_DISALLOW_CONNECTED_ACCOUNT_INTERNET_SID = 0x80000000U;
+enum uint LSA_LOOKUP_PREFER_INTERNET_NAMES = 0x40000000U;
+enum uint PER_USER_POLICY_UNCHANGED = 0x00000000U;
 
 enum : uint
 {
-    PER_USER_AUDIT_SUCCESS_INCLUDE = 0x00000001,
-    PER_USER_AUDIT_SUCCESS_EXCLUDE = 0x00000002,
-    PER_USER_AUDIT_FAILURE_INCLUDE = 0x00000004,
-    PER_USER_AUDIT_FAILURE_EXCLUDE = 0x00000008,
-    PER_USER_AUDIT_NONE            = 0x00000010,
+    PER_USER_AUDIT_SUCCESS_INCLUDE = 0x00000001U,
+    PER_USER_AUDIT_SUCCESS_EXCLUDE = 0x00000002U,
+    PER_USER_AUDIT_FAILURE_INCLUDE = 0x00000004U,
+    PER_USER_AUDIT_FAILURE_EXCLUDE = 0x00000008U,
+    PER_USER_AUDIT_NONE            = 0x00000010U,
 }
 
-enum uint POLICY_QOS_SCHANNEL_REQUIRED = 0x00000001;
+enum uint POLICY_QOS_SCHANNEL_REQUIRED = 0x00000001U;
 
 enum : uint
 {
-    POLICY_QOS_OUTBOUND_INTEGRITY       = 0x00000002,
-    POLICY_QOS_OUTBOUND_CONFIDENTIALITY = 0x00000004,
+    POLICY_QOS_OUTBOUND_INTEGRITY       = 0x00000002U,
+    POLICY_QOS_OUTBOUND_CONFIDENTIALITY = 0x00000004U,
 }
 
 enum : uint
 {
-    POLICY_QOS_INBOUND_INTEGRITY       = 0x00000008,
-    POLICY_QOS_INBOUND_CONFIDENTIALITY = 0x00000010,
+    POLICY_QOS_INBOUND_INTEGRITY       = 0x00000008U,
+    POLICY_QOS_INBOUND_CONFIDENTIALITY = 0x00000010U,
 }
 
-enum uint POLICY_QOS_ALLOW_LOCAL_ROOT_CERT_STORE = 0x00000020;
-enum uint POLICY_QOS_RAS_SERVER_ALLOWED = 0x00000040;
-enum uint POLICY_QOS_DHCP_SERVER_ALLOWED = 0x00000080;
-enum uint POLICY_KERBEROS_VALIDATE_CLIENT = 0x00000080;
+enum uint POLICY_QOS_ALLOW_LOCAL_ROOT_CERT_STORE = 0x00000020U;
+enum uint POLICY_QOS_RAS_SERVER_ALLOWED = 0x00000040U;
+enum uint POLICY_QOS_DHCP_SERVER_ALLOWED = 0x00000080U;
+enum uint POLICY_KERBEROS_VALIDATE_CLIENT = 0x00000080U;
 
 enum : int
 {
@@ -1580,36 +1658,36 @@ enum : int
     TRUSTED_QUERY_AUTH  = 0x00000040,
 }
 
-enum uint LSAD_AES_CRYPT_SHA512_HASH_SIZE = 0x00000040;
+enum uint LSAD_AES_CRYPT_SHA512_HASH_SIZE = 0x00000040U;
 
 enum : uint
 {
-    LSAD_AES_KEY_SIZE   = 0x00000010,
-    LSAD_AES_SALT_SIZE  = 0x00000010,
-    LSAD_AES_BLOCK_SIZE = 0x00000010,
+    LSAD_AES_KEY_SIZE   = 0x00000010U,
+    LSAD_AES_SALT_SIZE  = 0x00000010U,
+    LSAD_AES_BLOCK_SIZE = 0x00000010U,
 }
 
 enum : uint
 {
-    TRUST_TYPE_AAD                                       = 0x00000005,
-    TRUST_ATTRIBUTE_TREE_PARENT                          = 0x00400000,
-    TRUST_ATTRIBUTE_TREE_ROOT                            = 0x00800000,
-    TRUST_ATTRIBUTES_VALID                               = 0xff02ffff,
-    TRUST_ATTRIBUTE_QUARANTINED_DOMAIN                   = 0x00000004,
-    TRUST_ATTRIBUTE_TRUST_USES_RC4_ENCRYPTION            = 0x00000080,
-    TRUST_ATTRIBUTE_TRUST_USES_AES_KEYS                  = 0x00000100,
-    TRUST_ATTRIBUTE_CROSS_ORGANIZATION_NO_TGT_DELEGATION = 0x00000200,
+    TRUST_TYPE_AAD                                       = 0x00000005U,
+    TRUST_ATTRIBUTE_TREE_PARENT                          = 0x00400000U,
+    TRUST_ATTRIBUTE_TREE_ROOT                            = 0x00800000U,
+    TRUST_ATTRIBUTES_VALID                               = 0xff02ffffU,
+    TRUST_ATTRIBUTE_QUARANTINED_DOMAIN                   = 0x00000004U,
+    TRUST_ATTRIBUTE_TRUST_USES_RC4_ENCRYPTION            = 0x00000080U,
+    TRUST_ATTRIBUTE_TRUST_USES_AES_KEYS                  = 0x00000100U,
+    TRUST_ATTRIBUTE_CROSS_ORGANIZATION_NO_TGT_DELEGATION = 0x00000200U,
 }
 
 enum : uint
 {
-    TRUST_ATTRIBUTE_PIM_TRUST                                = 0x00000400,
-    TRUST_ATTRIBUTE_CROSS_ORGANIZATION_ENABLE_TGT_DELEGATION = 0x00000800,
+    TRUST_ATTRIBUTE_PIM_TRUST                                = 0x00000400U,
+    TRUST_ATTRIBUTE_CROSS_ORGANIZATION_ENABLE_TGT_DELEGATION = 0x00000800U,
 }
 
-enum uint TRUST_ATTRIBUTE_DISABLE_AUTH_TARGET_VALIDATION = 0x00001000;
-enum uint TRUST_ATTRIBUTES_USER = 0xff000000;
-enum uint LSA_FOREST_TRUST_RECORD_TYPE_UNRECOGNIZED = 0x80000000;
+enum uint TRUST_ATTRIBUTE_DISABLE_AUTH_TARGET_VALIDATION = 0x00001000U;
+enum uint TRUST_ATTRIBUTES_USER = 0xff000000U;
+enum uint LSA_FOREST_TRUST_RECORD_TYPE_UNRECOGNIZED = 0x80000000U;
 enum int LSA_FTRECORD_DISABLED_REASONS = 0x0000ffff;
 
 enum : int
@@ -1633,7 +1711,7 @@ enum : int
 
 enum int LSA_SCANNER_INFO_DISABLE_AUTH_TARGET_VALIDATION = 0x00000001;
 enum int LSA_SCANNER_INFO_ADMIN_ALL_FLAGS = 0x00000001;
-enum uint MAX_RECORDS_IN_FOREST_TRUST_INFO = 0x00000fa0;
+enum uint MAX_RECORDS_IN_FOREST_TRUST_INFO = 0x00000fa0U;
 
 enum : int
 {
@@ -1642,9 +1720,9 @@ enum : int
 }
 
 enum const(wchar)* LSA_GLOBAL_SECRET_PREFIX = "G$";
-enum uint LSA_GLOBAL_SECRET_PREFIX_LENGTH = 0x00000002;
+enum uint LSA_GLOBAL_SECRET_PREFIX_LENGTH = 0x00000002U;
 enum const(wchar)* LSA_LOCAL_SECRET_PREFIX = "L$";
-enum uint LSA_LOCAL_SECRET_PREFIX_LENGTH = 0x00000002;
+enum uint LSA_LOCAL_SECRET_PREFIX_LENGTH = 0x00000002U;
 enum const(wchar)* LSA_MACHINE_SECRET_PREFIX = "M$";
 
 enum : int
@@ -1653,19 +1731,19 @@ enum : int
     LSA_SECRET_MAXIMUM_LENGTH = 0x00000200,
 }
 
-enum uint MAXIMUM_CAPES_PER_CAP = 0x0000007f;
+enum uint MAXIMUM_CAPES_PER_CAP = 0x0000007fU;
 
 enum : uint
 {
-    CENTRAL_ACCESS_POLICY_OWNER_RIGHTS_PRESENT_FLAG        = 0x00000001,
-    CENTRAL_ACCESS_POLICY_STAGED_OWNER_RIGHTS_PRESENT_FLAG = 0x00000100,
-    CENTRAL_ACCESS_POLICY_STAGED_FLAG                      = 0x00010000,
+    CENTRAL_ACCESS_POLICY_OWNER_RIGHTS_PRESENT_FLAG        = 0x00000001U,
+    CENTRAL_ACCESS_POLICY_STAGED_OWNER_RIGHTS_PRESENT_FLAG = 0x00000100U,
+    CENTRAL_ACCESS_POLICY_STAGED_FLAG                      = 0x00010000U,
 }
 
 enum : uint
 {
-    LSASETCAPS_RELOAD_FLAG     = 0x00000001,
-    LSASETCAPS_VALID_FLAG_MASK = 0x00000001,
+    LSASETCAPS_RELOAD_FLAG     = 0x00000001U,
+    LSASETCAPS_VALID_FLAG_MASK = 0x00000001U,
 }
 
 enum const(wchar)* SE_INTERACTIVE_LOGON_NAME = "SeInteractiveLogonRight";
@@ -1681,17 +1759,17 @@ enum const(wchar)* SE_DENY_REMOTE_INTERACTIVE_LOGON_NAME = "SeDenyRemoteInteract
 
 enum : uint
 {
-    NEGOTIATE_MAX_PREFIX = 0x00000020,
-    NEGOTIATE_ALLOW_NTLM = 0x10000000,
-    NEGOTIATE_NEG_NTLM   = 0x20000000,
+    NEGOTIATE_MAX_PREFIX = 0x00000020U,
+    NEGOTIATE_ALLOW_NTLM = 0x10000000U,
+    NEGOTIATE_NEG_NTLM   = 0x20000000U,
 }
 
-enum uint MAX_USER_RECORDS = 0x000003e8;
+enum uint MAX_USER_RECORDS = 0x000003e8U;
 
 enum : uint
 {
-    versionbyte        = 0x00000001,
-    versionbyte_length = 0x00000001,
+    versionbyte        = 0x00000001U,
+    versionbyte_length = 0x00000001U,
 }
 
 enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
@@ -1838,117 +1916,117 @@ enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(E
     MSV1_0_SUBAUTHENTICATION_VALUE = "Auth",
 }
 
-enum uint MSV1_0_CHALLENGE_LENGTH = 0x00000008;
-enum uint MSV1_0_USER_SESSION_KEY_LENGTH = 0x00000010;
-enum uint MSV1_0_LANMAN_SESSION_KEY_LENGTH = 0x00000008;
-enum uint MSV1_0_USE_CLIENT_CHALLENGE = 0x00000080;
-enum uint MSV1_0_DISABLE_PERSONAL_FALLBACK = 0x00001000;
-enum uint MSV1_0_ALLOW_FORCE_GUEST = 0x00002000;
-enum uint MSV1_0_CLEARTEXT_PASSWORD_SUPPLIED = 0x00004000;
-enum uint MSV1_0_USE_DOMAIN_FOR_ROUTING_ONLY = 0x00008000;
-enum uint MSV1_0_SUBAUTHENTICATION_DLL_EX = 0x00100000;
-enum uint MSV1_0_ALLOW_MSVCHAPV2 = 0x00010000;
+enum uint MSV1_0_CHALLENGE_LENGTH = 0x00000008U;
+enum uint MSV1_0_USER_SESSION_KEY_LENGTH = 0x00000010U;
+enum uint MSV1_0_LANMAN_SESSION_KEY_LENGTH = 0x00000008U;
+enum uint MSV1_0_USE_CLIENT_CHALLENGE = 0x00000080U;
+enum uint MSV1_0_DISABLE_PERSONAL_FALLBACK = 0x00001000U;
+enum uint MSV1_0_ALLOW_FORCE_GUEST = 0x00002000U;
+enum uint MSV1_0_CLEARTEXT_PASSWORD_SUPPLIED = 0x00004000U;
+enum uint MSV1_0_USE_DOMAIN_FOR_ROUTING_ONLY = 0x00008000U;
+enum uint MSV1_0_SUBAUTHENTICATION_DLL_EX = 0x00100000U;
+enum uint MSV1_0_ALLOW_MSVCHAPV2 = 0x00010000U;
 
 enum : uint
 {
-    MSV1_0_S4U2SELF                 = 0x00020000,
-    MSV1_0_CHECK_LOGONHOURS_FOR_S4U = 0x00040000,
+    MSV1_0_S4U2SELF                 = 0x00020000U,
+    MSV1_0_CHECK_LOGONHOURS_FOR_S4U = 0x00040000U,
 }
 
-enum uint MSV1_0_INTERNET_DOMAIN = 0x00080000;
+enum uint MSV1_0_INTERNET_DOMAIN = 0x00080000U;
 
 enum : uint
 {
-    MSV1_0_SUBAUTHENTICATION_DLL       = 0xff000000,
-    MSV1_0_SUBAUTHENTICATION_DLL_SHIFT = 0x00000018,
-}
-
-enum : uint
-{
-    MSV1_0_MNS_LOGON                 = 0x01000000,
-    MSV1_0_SUBAUTHENTICATION_DLL_RAS = 0x00000002,
-    MSV1_0_SUBAUTHENTICATION_DLL_IIS = 0x00000084,
-}
-
-enum uint MSV1_0_S4U_LOGON_FLAG_CHECK_LOGONHOURS = 0x00000002;
-enum uint LOGON_NTLMV2_ENABLED = 0x00000100;
-
-enum : uint
-{
-    LOGON_NT_V2     = 0x00000800,
-    LOGON_LM_V2     = 0x00001000,
-    LOGON_NTLM_V2   = 0x00002000,
-    LOGON_OPTIMIZED = 0x00004000,
+    MSV1_0_SUBAUTHENTICATION_DLL       = 0xff000000U,
+    MSV1_0_SUBAUTHENTICATION_DLL_SHIFT = 0x00000018U,
 }
 
 enum : uint
 {
-    LOGON_WINLOGON     = 0x00008000,
-    LOGON_PKINIT       = 0x00010000,
-    LOGON_NO_OPTIMIZED = 0x00020000,
-    LOGON_NO_ELEVATION = 0x00040000,
+    MSV1_0_MNS_LOGON                 = 0x01000000U,
+    MSV1_0_SUBAUTHENTICATION_DLL_RAS = 0x00000002U,
+    MSV1_0_SUBAUTHENTICATION_DLL_IIS = 0x00000084U,
 }
 
-enum uint LOGON_MANAGED_SERVICE = 0x00080000;
-enum uint MSV1_0_SUBAUTHENTICATION_FLAGS = 0xff000000;
-enum uint LOGON_GRACE_LOGON = 0x01000000;
-enum uint MSV1_0_OWF_PASSWORD_LENGTH = 0x00000010;
-enum uint MSV1_0_SHA_PASSWORD_LENGTH = 0x00000014;
-enum uint MSV1_0_CREDENTIAL_KEY_LENGTH = 0x00000014;
+enum uint MSV1_0_S4U_LOGON_FLAG_CHECK_LOGONHOURS = 0x00000002U;
+enum uint LOGON_NTLMV2_ENABLED = 0x00000100U;
 
 enum : uint
 {
-    MSV1_0_CRED_REMOVED            = 0x00000004,
-    MSV1_0_CRED_CREDKEY_PRESENT    = 0x00000008,
-    MSV1_0_CRED_SHA_PRESENT        = 0x00000010,
-    MSV1_0_CRED_VERSION_V2         = 0x00000002,
-    MSV1_0_CRED_VERSION_V3         = 0x00000004,
-    MSV1_0_CRED_VERSION_IUM        = 0xffff0001,
-    MSV1_0_CRED_VERSION_REMOTE     = 0xffff0002,
-    MSV1_0_CRED_VERSION_ARSO       = 0xffff0003,
-    MSV1_0_CRED_VERSION_RESERVED_1 = 0xfffffffe,
-    MSV1_0_CRED_VERSION_INVALID    = 0xffffffff,
+    LOGON_NT_V2     = 0x00000800U,
+    LOGON_LM_V2     = 0x00001000U,
+    LOGON_NTLM_V2   = 0x00002000U,
+    LOGON_OPTIMIZED = 0x00004000U,
 }
 
 enum : uint
 {
-    MSV1_0_NTLM3_RESPONSE_LENGTH = 0x00000010,
-    MSV1_0_NTLM3_OWF_LENGTH      = 0x00000010,
+    LOGON_WINLOGON     = 0x00008000U,
+    LOGON_PKINIT       = 0x00010000U,
+    LOGON_NO_OPTIMIZED = 0x00020000U,
+    LOGON_NO_ELEVATION = 0x00040000U,
+}
+
+enum uint LOGON_MANAGED_SERVICE = 0x00080000U;
+enum uint MSV1_0_SUBAUTHENTICATION_FLAGS = 0xff000000U;
+enum uint LOGON_GRACE_LOGON = 0x01000000U;
+enum uint MSV1_0_OWF_PASSWORD_LENGTH = 0x00000010U;
+enum uint MSV1_0_SHA_PASSWORD_LENGTH = 0x00000014U;
+enum uint MSV1_0_CREDENTIAL_KEY_LENGTH = 0x00000014U;
+
+enum : uint
+{
+    MSV1_0_CRED_REMOVED            = 0x00000004U,
+    MSV1_0_CRED_CREDKEY_PRESENT    = 0x00000008U,
+    MSV1_0_CRED_SHA_PRESENT        = 0x00000010U,
+    MSV1_0_CRED_VERSION_V2         = 0x00000002U,
+    MSV1_0_CRED_VERSION_V3         = 0x00000004U,
+    MSV1_0_CRED_VERSION_IUM        = 0xffff0001U,
+    MSV1_0_CRED_VERSION_REMOTE     = 0xffff0002U,
+    MSV1_0_CRED_VERSION_ARSO       = 0xffff0003U,
+    MSV1_0_CRED_VERSION_RESERVED_1 = 0xfffffffeU,
+    MSV1_0_CRED_VERSION_INVALID    = 0xffffffffU,
 }
 
 enum : uint
 {
-    MSV1_0_MAX_NTLM3_LIFE = 0x00000708,
-    MSV1_0_MAX_AVL_SIZE   = 0x0000fa00,
+    MSV1_0_NTLM3_RESPONSE_LENGTH = 0x00000010U,
+    MSV1_0_NTLM3_OWF_LENGTH      = 0x00000010U,
 }
 
 enum : uint
 {
-    MSV1_0_AV_FLAG_FORCE_GUEST            = 0x00000001,
-    MSV1_0_AV_FLAG_MIC_HANDSHAKE_MESSAGES = 0x00000002,
-    MSV1_0_AV_FLAG_UNVERIFIED_TARGET      = 0x00000004,
+    MSV1_0_MAX_NTLM3_LIFE = 0x00000708U,
+    MSV1_0_MAX_AVL_SIZE   = 0x0000fa00U,
 }
 
 enum : uint
 {
-    RTL_ENCRYPT_MEMORY_SIZE          = 0x00000008,
-    RTL_ENCRYPT_OPTION_CROSS_PROCESS = 0x00000001,
-    RTL_ENCRYPT_OPTION_SAME_LOGON    = 0x00000002,
-    RTL_ENCRYPT_OPTION_FOR_SYSTEM    = 0x00000004,
+    MSV1_0_AV_FLAG_FORCE_GUEST            = 0x00000001U,
+    MSV1_0_AV_FLAG_MIC_HANDSHAKE_MESSAGES = 0x00000002U,
+    MSV1_0_AV_FLAG_UNVERIFIED_TARGET      = 0x00000004U,
 }
 
 enum : uint
 {
-    KERBEROS_VERSION  = 0x00000005,
-    KERBEROS_REVISION = 0x00000006,
+    RTL_ENCRYPT_MEMORY_SIZE          = 0x00000008U,
+    RTL_ENCRYPT_OPTION_CROSS_PROCESS = 0x00000001U,
+    RTL_ENCRYPT_OPTION_SAME_LOGON    = 0x00000002U,
+    RTL_ENCRYPT_OPTION_FOR_SYSTEM    = 0x00000004U,
 }
 
 enum : uint
 {
-    KERB_ETYPE_AES128_CTS_HMAC_SHA1_96 = 0x00000011,
-    KERB_ETYPE_AES256_CTS_HMAC_SHA1_96 = 0x00000012,
-    KERB_ETYPE_AES128_CTS_HMAC_SHA256  = 0x00000013,
-    KERB_ETYPE_AES256_CTS_HMAC_SHA384  = 0x00000014,
+    KERBEROS_VERSION  = 0x00000005U,
+    KERBEROS_REVISION = 0x00000006U,
+}
+
+enum : uint
+{
+    KERB_ETYPE_AES128_CTS_HMAC_SHA1_96 = 0x00000011U,
+    KERB_ETYPE_AES256_CTS_HMAC_SHA1_96 = 0x00000012U,
+    KERB_ETYPE_AES128_CTS_HMAC_SHA256  = 0x00000013U,
+    KERB_ETYPE_AES256_CTS_HMAC_SHA384  = 0x00000014U,
 }
 
 enum : int
@@ -1970,38 +2048,38 @@ enum int KERB_ETYPE_AES256_CTS_HMAC_SHA1_96_PLAIN = 0xffffff6b;
 
 enum : uint
 {
-    KERB_ETYPE_DSA_SHA1_CMS     = 0x00000009,
-    KERB_ETYPE_RSA_MD5_CMS      = 0x0000000a,
-    KERB_ETYPE_RSA_SHA1_CMS     = 0x0000000b,
-    KERB_ETYPE_RC2_CBC_ENV      = 0x0000000c,
-    KERB_ETYPE_RSA_ENV          = 0x0000000d,
-    KERB_ETYPE_RSA_ES_OEAP_ENV  = 0x0000000e,
-    KERB_ETYPE_DES_EDE3_CBC_ENV = 0x0000000f,
-    KERB_ETYPE_DSA_SIGN         = 0x00000008,
-    KERB_ETYPE_RSA_PRIV         = 0x00000009,
-    KERB_ETYPE_RSA_PUB          = 0x0000000a,
-    KERB_ETYPE_RSA_PUB_MD5      = 0x0000000b,
-    KERB_ETYPE_RSA_PUB_SHA1     = 0x0000000c,
-    KERB_ETYPE_PKCS7_PUB        = 0x0000000d,
-    KERB_ETYPE_DES3_CBC_MD5     = 0x00000005,
-    KERB_ETYPE_DES3_CBC_SHA1    = 0x00000007,
-    KERB_ETYPE_DES3_CBC_SHA1_KD = 0x00000010,
-    KERB_ETYPE_DES_CBC_MD5_NT   = 0x00000014,
-    KERB_ETYPE_RC4_HMAC_NT_EXP  = 0x00000018,
+    KERB_ETYPE_DSA_SHA1_CMS     = 0x00000009U,
+    KERB_ETYPE_RSA_MD5_CMS      = 0x0000000aU,
+    KERB_ETYPE_RSA_SHA1_CMS     = 0x0000000bU,
+    KERB_ETYPE_RC2_CBC_ENV      = 0x0000000cU,
+    KERB_ETYPE_RSA_ENV          = 0x0000000dU,
+    KERB_ETYPE_RSA_ES_OEAP_ENV  = 0x0000000eU,
+    KERB_ETYPE_DES_EDE3_CBC_ENV = 0x0000000fU,
+    KERB_ETYPE_DSA_SIGN         = 0x00000008U,
+    KERB_ETYPE_RSA_PRIV         = 0x00000009U,
+    KERB_ETYPE_RSA_PUB          = 0x0000000aU,
+    KERB_ETYPE_RSA_PUB_MD5      = 0x0000000bU,
+    KERB_ETYPE_RSA_PUB_SHA1     = 0x0000000cU,
+    KERB_ETYPE_PKCS7_PUB        = 0x0000000dU,
+    KERB_ETYPE_DES3_CBC_MD5     = 0x00000005U,
+    KERB_ETYPE_DES3_CBC_SHA1    = 0x00000007U,
+    KERB_ETYPE_DES3_CBC_SHA1_KD = 0x00000010U,
+    KERB_ETYPE_DES_CBC_MD5_NT   = 0x00000014U,
+    KERB_ETYPE_RC4_HMAC_NT_EXP  = 0x00000018U,
 }
 
 enum : uint
 {
-    KERB_CHECKSUM_NONE                = 0x00000000,
-    KERB_CHECKSUM_CRC32               = 0x00000001,
-    KERB_CHECKSUM_MD4                 = 0x00000002,
-    KERB_CHECKSUM_KRB_DES_MAC         = 0x00000004,
-    KERB_CHECKSUM_KRB_DES_MAC_K       = 0x00000005,
-    KERB_CHECKSUM_MD5                 = 0x00000007,
-    KERB_CHECKSUM_MD5_DES             = 0x00000008,
-    KERB_CHECKSUM_SHA1_NEW            = 0x0000000e,
-    KERB_CHECKSUM_HMAC_SHA1_96_AES128 = 0x0000000f,
-    KERB_CHECKSUM_HMAC_SHA1_96_AES256 = 0x00000010,
+    KERB_CHECKSUM_NONE                = 0x00000000U,
+    KERB_CHECKSUM_CRC32               = 0x00000001U,
+    KERB_CHECKSUM_MD4                 = 0x00000002U,
+    KERB_CHECKSUM_KRB_DES_MAC         = 0x00000004U,
+    KERB_CHECKSUM_KRB_DES_MAC_K       = 0x00000005U,
+    KERB_CHECKSUM_MD5                 = 0x00000007U,
+    KERB_CHECKSUM_MD5_DES             = 0x00000008U,
+    KERB_CHECKSUM_SHA1_NEW            = 0x0000000eU,
+    KERB_CHECKSUM_HMAC_SHA1_96_AES128 = 0x0000000fU,
+    KERB_CHECKSUM_HMAC_SHA1_96_AES256 = 0x00000010U,
 }
 
 enum : int
@@ -2024,47 +2102,47 @@ enum : int
 
 enum : uint
 {
-    AUTH_REQ_ALLOW_FORWARDABLE     = 0x00000001,
-    AUTH_REQ_ALLOW_PROXIABLE       = 0x00000002,
-    AUTH_REQ_ALLOW_POSTDATE        = 0x00000004,
-    AUTH_REQ_ALLOW_RENEWABLE       = 0x00000008,
-    AUTH_REQ_ALLOW_NOADDRESS       = 0x00000010,
-    AUTH_REQ_ALLOW_ENC_TKT_IN_SKEY = 0x00000020,
-    AUTH_REQ_ALLOW_VALIDATE        = 0x00000040,
+    AUTH_REQ_ALLOW_FORWARDABLE     = 0x00000001U,
+    AUTH_REQ_ALLOW_PROXIABLE       = 0x00000002U,
+    AUTH_REQ_ALLOW_POSTDATE        = 0x00000004U,
+    AUTH_REQ_ALLOW_RENEWABLE       = 0x00000008U,
+    AUTH_REQ_ALLOW_NOADDRESS       = 0x00000010U,
+    AUTH_REQ_ALLOW_ENC_TKT_IN_SKEY = 0x00000020U,
+    AUTH_REQ_ALLOW_VALIDATE        = 0x00000040U,
 }
 
-enum uint AUTH_REQ_VALIDATE_CLIENT = 0x00000080;
-enum uint AUTH_REQ_OK_AS_DELEGATE = 0x00000100;
-enum uint AUTH_REQ_PREAUTH_REQUIRED = 0x00000200;
-enum uint AUTH_REQ_TRANSITIVE_TRUST = 0x00000400;
-enum uint AUTH_REQ_ALLOW_S4U_DELEGATE = 0x00000800;
+enum uint AUTH_REQ_VALIDATE_CLIENT = 0x00000080U;
+enum uint AUTH_REQ_OK_AS_DELEGATE = 0x00000100U;
+enum uint AUTH_REQ_PREAUTH_REQUIRED = 0x00000200U;
+enum uint AUTH_REQ_TRANSITIVE_TRUST = 0x00000400U;
+enum uint AUTH_REQ_ALLOW_S4U_DELEGATE = 0x00000800U;
 
 enum : uint
 {
-    KERB_TICKET_FLAGS_name_canonicalize = 0x00010000,
-    KERB_TICKET_FLAGS_cname_in_pa_data  = 0x00040000,
-    KERB_TICKET_FLAGS_enc_pa_rep        = 0x00010000,
+    KERB_TICKET_FLAGS_name_canonicalize = 0x00010000U,
+    KERB_TICKET_FLAGS_cname_in_pa_data  = 0x00040000U,
+    KERB_TICKET_FLAGS_enc_pa_rep        = 0x00010000U,
 }
 
 enum : uint
 {
-    KRB_NT_UNKNOWN   = 0x00000000,
-    KRB_NT_PRINCIPAL = 0x00000001,
+    KRB_NT_UNKNOWN   = 0x00000000U,
+    KRB_NT_PRINCIPAL = 0x00000001U,
 }
 
 enum int KRB_NT_PRINCIPAL_AND_ID = 0xffffff7d;
-enum uint KRB_NT_SRV_INST = 0x00000002;
+enum uint KRB_NT_SRV_INST = 0x00000002U;
 enum int KRB_NT_SRV_INST_AND_ID = 0xffffff7c;
 
 enum : uint
 {
-    KRB_NT_SRV_HST              = 0x00000003,
-    KRB_NT_SRV_XHST             = 0x00000004,
-    KRB_NT_UID                  = 0x00000005,
-    KRB_NT_ENTERPRISE_PRINCIPAL = 0x0000000a,
+    KRB_NT_SRV_HST              = 0x00000003U,
+    KRB_NT_SRV_XHST             = 0x00000004U,
+    KRB_NT_UID                  = 0x00000005U,
+    KRB_NT_ENTERPRISE_PRINCIPAL = 0x0000000aU,
 }
 
-enum uint KRB_NT_WELLKNOWN = 0x0000000b;
+enum uint KRB_NT_WELLKNOWN = 0x0000000bU;
 enum int KRB_NT_ENT_PRINCIPAL_AND_ID = 0xffffff7e;
 
 enum : int
@@ -2074,95 +2152,95 @@ enum : int
 }
 
 enum int KRB_NT_MS_BRANCH_ID = 0xffffff7b;
-enum uint KRB_NT_X500_PRINCIPAL = 0x00000006;
+enum uint KRB_NT_X500_PRINCIPAL = 0x00000006U;
 enum const(wchar)* KRB_WELLKNOWN_STRING = "WELLKNOWN";
 enum const(wchar)* KRB_ANONYMOUS_STRING = "ANONYMOUS";
-enum uint KERB_WRAP_NO_ENCRYPT = 0x80000001;
+enum uint KERB_WRAP_NO_ENCRYPT = 0x80000001U;
 
 enum : uint
 {
-    KERB_CERTIFICATE_LOGON_FLAG_CHECK_DUPLICATES     = 0x00000001,
-    KERB_CERTIFICATE_LOGON_FLAG_USE_CERTIFICATE_INFO = 0x00000002,
+    KERB_CERTIFICATE_LOGON_FLAG_CHECK_DUPLICATES     = 0x00000001U,
+    KERB_CERTIFICATE_LOGON_FLAG_USE_CERTIFICATE_INFO = 0x00000002U,
 }
 
 enum : uint
 {
-    KERB_CERTIFICATE_S4U_LOGON_FLAG_CHECK_DUPLICATES                = 0x00000001,
-    KERB_CERTIFICATE_S4U_LOGON_FLAG_CHECK_LOGONHOURS                = 0x00000002,
-    KERB_CERTIFICATE_S4U_LOGON_FLAG_FAIL_IF_NT_AUTH_POLICY_REQUIRED = 0x00000004,
-    KERB_CERTIFICATE_S4U_LOGON_FLAG_IDENTIFY                        = 0x00000008,
+    KERB_CERTIFICATE_S4U_LOGON_FLAG_CHECK_DUPLICATES                = 0x00000001U,
+    KERB_CERTIFICATE_S4U_LOGON_FLAG_CHECK_LOGONHOURS                = 0x00000002U,
+    KERB_CERTIFICATE_S4U_LOGON_FLAG_FAIL_IF_NT_AUTH_POLICY_REQUIRED = 0x00000004U,
+    KERB_CERTIFICATE_S4U_LOGON_FLAG_IDENTIFY                        = 0x00000008U,
 }
 
 enum : uint
 {
-    KERB_LOGON_FLAG_ALLOW_EXPIRED_TICKET = 0x00000001,
-    KERB_LOGON_FLAG_REDIRECTED           = 0x00000002,
+    KERB_LOGON_FLAG_ALLOW_EXPIRED_TICKET = 0x00000001U,
+    KERB_LOGON_FLAG_REDIRECTED           = 0x00000002U,
 }
 
 enum : uint
 {
-    KERB_S4U_LOGON_FLAG_CHECK_LOGONHOURS = 0x00000002,
-    KERB_S4U_LOGON_FLAG_IDENTIFY         = 0x00000008,
+    KERB_S4U_LOGON_FLAG_CHECK_LOGONHOURS = 0x00000002U,
+    KERB_S4U_LOGON_FLAG_IDENTIFY         = 0x00000008U,
 }
 
-enum uint KERB_USE_DEFAULT_TICKET_FLAGS = 0x00000000;
+enum uint KERB_USE_DEFAULT_TICKET_FLAGS = 0x00000000U;
 
 enum : uint
 {
-    KERB_RETRIEVE_TICKET_DEFAULT        = 0x00000000,
-    KERB_RETRIEVE_TICKET_DONT_USE_CACHE = 0x00000001,
-    KERB_RETRIEVE_TICKET_USE_CACHE_ONLY = 0x00000002,
-    KERB_RETRIEVE_TICKET_USE_CREDHANDLE = 0x00000004,
-    KERB_RETRIEVE_TICKET_AS_KERB_CRED   = 0x00000008,
-    KERB_RETRIEVE_TICKET_WITH_SEC_CRED  = 0x00000010,
-    KERB_RETRIEVE_TICKET_CACHE_TICKET   = 0x00000020,
-    KERB_RETRIEVE_TICKET_MAX_LIFETIME   = 0x00000040,
+    KERB_RETRIEVE_TICKET_DEFAULT        = 0x00000000U,
+    KERB_RETRIEVE_TICKET_DONT_USE_CACHE = 0x00000001U,
+    KERB_RETRIEVE_TICKET_USE_CACHE_ONLY = 0x00000002U,
+    KERB_RETRIEVE_TICKET_USE_CREDHANDLE = 0x00000004U,
+    KERB_RETRIEVE_TICKET_AS_KERB_CRED   = 0x00000008U,
+    KERB_RETRIEVE_TICKET_WITH_SEC_CRED  = 0x00000010U,
+    KERB_RETRIEVE_TICKET_CACHE_TICKET   = 0x00000020U,
+    KERB_RETRIEVE_TICKET_MAX_LIFETIME   = 0x00000040U,
 }
 
-enum uint KERB_ETYPE_DEFAULT = 0x00000000;
-enum uint KERB_PURGE_ALL_TICKETS = 0x00000001;
-enum uint KERB_S4U2PROXY_CACHE_ENTRY_INFO_FLAG_NEGATIVE = 0x00000001;
-enum uint KERB_S4U2PROXY_CRED_FLAG_NEGATIVE = 0x00000001;
+enum uint KERB_ETYPE_DEFAULT = 0x00000000U;
+enum uint KERB_PURGE_ALL_TICKETS = 0x00000001U;
+enum uint KERB_S4U2PROXY_CACHE_ENTRY_INFO_FLAG_NEGATIVE = 0x00000001U;
+enum uint KERB_S4U2PROXY_CRED_FLAG_NEGATIVE = 0x00000001U;
 
 enum : uint
 {
-    KERB_REFRESH_POLICY_KERBEROS = 0x00000001,
-    KERB_REFRESH_POLICY_KDC      = 0x00000002,
+    KERB_REFRESH_POLICY_KERBEROS = 0x00000001U,
+    KERB_REFRESH_POLICY_KDC      = 0x00000002U,
 }
 
-enum uint KERB_CLOUD_KERBEROS_DEBUG_DATA_VERSION = 0x00000001;
-enum uint DS_UNKNOWN_ADDRESS_TYPE = 0x00000000;
+enum uint KERB_CLOUD_KERBEROS_DEBUG_DATA_VERSION = 0x00000001U;
+enum uint DS_UNKNOWN_ADDRESS_TYPE = 0x00000000U;
 
 enum : uint
 {
-    KERB_SETPASS_USE_LOGONID    = 0x00000001,
-    KERB_SETPASS_USE_CREDHANDLE = 0x00000002,
+    KERB_SETPASS_USE_LOGONID    = 0x00000001U,
+    KERB_SETPASS_USE_CREDHANDLE = 0x00000002U,
 }
 
-enum uint KERB_DECRYPT_FLAG_DEFAULT_KEY = 0x00000001;
+enum uint KERB_DECRYPT_FLAG_DEFAULT_KEY = 0x00000001U;
 
 enum : uint
 {
-    KERB_REFRESH_SCCRED_RELEASE = 0x00000000,
-    KERB_REFRESH_SCCRED_GETTGT  = 0x00000001,
+    KERB_REFRESH_SCCRED_RELEASE = 0x00000000U,
+    KERB_REFRESH_SCCRED_GETTGT  = 0x00000001U,
 }
 
-enum uint KERB_REQUEST_CRED_LOCAL_ACCOUNT = 0x00000008;
+enum uint KERB_REQUEST_CRED_LOCAL_ACCOUNT = 0x00000008U;
 
 enum : uint
 {
-    KERB_TRANSFER_CRED_WITH_TICKETS        = 0x00000001,
-    KERB_TRANSFER_CRED_CLEANUP_CREDENTIALS = 0x00000002,
+    KERB_TRANSFER_CRED_WITH_TICKETS        = 0x00000001U,
+    KERB_TRANSFER_CRED_CLEANUP_CREDENTIALS = 0x00000002U,
 }
 
-enum uint KERB_QUERY_DOMAIN_EXTENDED_POLICIES_RESPONSE_FLAG_DAC_DISABLED = 0x00000001;
-enum uint AUDIT_SET_SYSTEM_POLICY = 0x00000001;
-enum uint AUDIT_QUERY_SYSTEM_POLICY = 0x00000002;
-enum uint AUDIT_SET_USER_POLICY = 0x00000004;
-enum uint AUDIT_QUERY_USER_POLICY = 0x00000008;
-enum uint AUDIT_ENUMERATE_USERS = 0x00000010;
-enum uint AUDIT_SET_MISC_POLICY = 0x00000020;
-enum uint AUDIT_QUERY_MISC_POLICY = 0x00000040;
+enum uint KERB_QUERY_DOMAIN_EXTENDED_POLICIES_RESPONSE_FLAG_DAC_DISABLED = 0x00000001U;
+enum uint AUDIT_SET_SYSTEM_POLICY = 0x00000001U;
+enum uint AUDIT_QUERY_SYSTEM_POLICY = 0x00000002U;
+enum uint AUDIT_SET_USER_POLICY = 0x00000004U;
+enum uint AUDIT_QUERY_USER_POLICY = 0x00000008U;
+enum uint AUDIT_ENUMERATE_USERS = 0x00000010U;
+enum uint AUDIT_SET_MISC_POLICY = 0x00000020U;
+enum uint AUDIT_QUERY_MISC_POLICY = 0x00000040U;
 
 enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
 {
@@ -2181,189 +2259,189 @@ enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(E
 
 enum : uint
 {
-    SECPKG_CLIENT_PROCESS_TERMINATED = 0x00000001,
-    SECPKG_CLIENT_THREAD_TERMINATED  = 0x00000002,
+    SECPKG_CLIENT_PROCESS_TERMINATED = 0x00000001U,
+    SECPKG_CLIENT_THREAD_TERMINATED  = 0x00000002U,
 }
 
 enum : uint
 {
-    SECPKG_CALL_KERNEL_MODE                = 0x00000001,
-    SECPKG_CALL_ANSI                       = 0x00000002,
-    SECPKG_CALL_URGENT                     = 0x00000004,
-    SECPKG_CALL_RECURSIVE                  = 0x00000008,
-    SECPKG_CALL_IN_PROC                    = 0x00000010,
-    SECPKG_CALL_CLEANUP                    = 0x00000020,
-    SECPKG_CALL_WOWCLIENT                  = 0x00000040,
-    SECPKG_CALL_THREAD_TERM                = 0x00000080,
-    SECPKG_CALL_PROCESS_TERM               = 0x00000100,
-    SECPKG_CALL_IS_TCB                     = 0x00000200,
-    SECPKG_CALL_NETWORK_ONLY               = 0x00000400,
-    SECPKG_CALL_WINLOGON                   = 0x00000800,
-    SECPKG_CALL_ASYNC_UPDATE               = 0x00001000,
-    SECPKG_CALL_SYSTEM_PROC                = 0x00002000,
-    SECPKG_CALL_NEGO                       = 0x00004000,
-    SECPKG_CALL_NEGO_EXTENDER              = 0x00008000,
-    SECPKG_CALL_BUFFER_MARSHAL             = 0x00010000,
-    SECPKG_CALL_UNLOCK                     = 0x00020000,
-    SECPKG_CALL_CLOUDAP_CONNECT            = 0x00040000,
-    SECPKG_CALL_WOWX86                     = 0x00000040,
-    SECPKG_CALL_WOWA32                     = 0x00040000,
-    SECPKG_CREDENTIAL_VERSION              = 0x000000c9,
-    SECPKG_CREDENTIAL_FLAGS_CALLER_HAS_TCB = 0x00000001,
-    SECPKG_CREDENTIAL_FLAGS_CREDMAN_CRED   = 0x00000002,
+    SECPKG_CALL_KERNEL_MODE                = 0x00000001U,
+    SECPKG_CALL_ANSI                       = 0x00000002U,
+    SECPKG_CALL_URGENT                     = 0x00000004U,
+    SECPKG_CALL_RECURSIVE                  = 0x00000008U,
+    SECPKG_CALL_IN_PROC                    = 0x00000010U,
+    SECPKG_CALL_CLEANUP                    = 0x00000020U,
+    SECPKG_CALL_WOWCLIENT                  = 0x00000040U,
+    SECPKG_CALL_THREAD_TERM                = 0x00000080U,
+    SECPKG_CALL_PROCESS_TERM               = 0x00000100U,
+    SECPKG_CALL_IS_TCB                     = 0x00000200U,
+    SECPKG_CALL_NETWORK_ONLY               = 0x00000400U,
+    SECPKG_CALL_WINLOGON                   = 0x00000800U,
+    SECPKG_CALL_ASYNC_UPDATE               = 0x00001000U,
+    SECPKG_CALL_SYSTEM_PROC                = 0x00002000U,
+    SECPKG_CALL_NEGO                       = 0x00004000U,
+    SECPKG_CALL_NEGO_EXTENDER              = 0x00008000U,
+    SECPKG_CALL_BUFFER_MARSHAL             = 0x00010000U,
+    SECPKG_CALL_UNLOCK                     = 0x00020000U,
+    SECPKG_CALL_CLOUDAP_CONNECT            = 0x00040000U,
+    SECPKG_CALL_WOWX86                     = 0x00000040U,
+    SECPKG_CALL_WOWA32                     = 0x00040000U,
+    SECPKG_CREDENTIAL_VERSION              = 0x000000c9U,
+    SECPKG_CREDENTIAL_FLAGS_CALLER_HAS_TCB = 0x00000001U,
+    SECPKG_CREDENTIAL_FLAGS_CREDMAN_CRED   = 0x00000002U,
 }
 
-enum uint SECPKG_SURROGATE_LOGON_VERSION_1 = 0x00000001;
+enum uint SECPKG_SURROGATE_LOGON_VERSION_1 = 0x00000001U;
 
 enum : uint
 {
-    SECBUFFER_UNMAPPED   = 0x40000000,
-    SECBUFFER_KERNEL_MAP = 0x20000000,
-}
-
-enum : uint
-{
-    PRIMARY_CRED_CLEAR_PASSWORD              = 0x00000001,
-    PRIMARY_CRED_OWF_PASSWORD                = 0x00000002,
-    PRIMARY_CRED_UPDATE                      = 0x00000004,
-    PRIMARY_CRED_CACHED_LOGON                = 0x00000008,
-    PRIMARY_CRED_LOGON_NO_TCB                = 0x00000010,
-    PRIMARY_CRED_LOGON_LUA                   = 0x00000020,
-    PRIMARY_CRED_INTERACTIVE_SMARTCARD_LOGON = 0x00000040,
+    SECBUFFER_UNMAPPED   = 0x40000000U,
+    SECBUFFER_KERNEL_MAP = 0x20000000U,
 }
 
 enum : uint
 {
-    PRIMARY_CRED_REFRESH_NEEDED               = 0x00000080,
-    PRIMARY_CRED_INTERNET_USER                = 0x00000100,
-    PRIMARY_CRED_AUTH_ID                      = 0x00000200,
-    PRIMARY_CRED_DO_NOT_SPLIT                 = 0x00000400,
-    PRIMARY_CRED_PROTECTED_USER               = 0x00000800,
-    PRIMARY_CRED_EX                           = 0x00001000,
-    PRIMARY_CRED_TRANSFER                     = 0x00002000,
-    PRIMARY_CRED_RESTRICTED_TS                = 0x00004000,
-    PRIMARY_CRED_PACKED_CREDS                 = 0x00008000,
-    PRIMARY_CRED_ENTERPRISE_INTERNET_USER     = 0x00010000,
-    PRIMARY_CRED_ENCRYPTED_CREDGUARD_PASSWORD = 0x00020000,
-}
-
-enum uint PRIMARY_CRED_CACHED_INTERACTIVE_LOGON = 0x00040000;
-
-enum : uint
-{
-    PRIMARY_CRED_INTERACTIVE_NGC_LOGON  = 0x00080000,
-    PRIMARY_CRED_INTERACTIVE_FIDO_LOGON = 0x00100000,
+    PRIMARY_CRED_CLEAR_PASSWORD              = 0x00000001U,
+    PRIMARY_CRED_OWF_PASSWORD                = 0x00000002U,
+    PRIMARY_CRED_UPDATE                      = 0x00000004U,
+    PRIMARY_CRED_CACHED_LOGON                = 0x00000008U,
+    PRIMARY_CRED_LOGON_NO_TCB                = 0x00000010U,
+    PRIMARY_CRED_LOGON_LUA                   = 0x00000020U,
+    PRIMARY_CRED_INTERACTIVE_SMARTCARD_LOGON = 0x00000040U,
 }
 
 enum : uint
 {
-    PRIMARY_CRED_ARSO_LOGON          = 0x00200000,
-    PRIMARY_CRED_SUPPLEMENTAL        = 0x00400000,
-    PRIMARY_CRED_FOR_PASSWORD_CHANGE = 0x00800000,
-    PRIMARY_CRED_LOCAL_USER          = 0x01000000,
-    PRIMARY_CRED_LOGON_PACKAGE_SHIFT = 0x00000018,
-    PRIMARY_CRED_PACKAGE_MASK        = 0xff000000,
+    PRIMARY_CRED_REFRESH_NEEDED               = 0x00000080U,
+    PRIMARY_CRED_INTERNET_USER                = 0x00000100U,
+    PRIMARY_CRED_AUTH_ID                      = 0x00000200U,
+    PRIMARY_CRED_DO_NOT_SPLIT                 = 0x00000400U,
+    PRIMARY_CRED_PROTECTED_USER               = 0x00000800U,
+    PRIMARY_CRED_EX                           = 0x00001000U,
+    PRIMARY_CRED_TRANSFER                     = 0x00002000U,
+    PRIMARY_CRED_RESTRICTED_TS                = 0x00004000U,
+    PRIMARY_CRED_PACKED_CREDS                 = 0x00008000U,
+    PRIMARY_CRED_ENTERPRISE_INTERNET_USER     = 0x00010000U,
+    PRIMARY_CRED_ENCRYPTED_CREDGUARD_PASSWORD = 0x00020000U,
 }
 
-enum uint SECPKG_PRIMARY_CRED_EX_FLAGS_EX_DELEGATION_TOKEN = 0x00000001;
-enum uint MAX_CRED_SIZE = 0x00000400;
-enum uint SECPKG_STATE_ENCRYPTION_PERMITTED = 0x00000001;
-enum uint SECPKG_STATE_STRONG_ENCRYPTION_PERMITTED = 0x00000002;
+enum uint PRIMARY_CRED_CACHED_INTERACTIVE_LOGON = 0x00040000U;
 
 enum : uint
 {
-    SECPKG_STATE_DOMAIN_CONTROLLER      = 0x00000004,
-    SECPKG_STATE_WORKSTATION            = 0x00000008,
-    SECPKG_STATE_STANDALONE             = 0x00000010,
-    SECPKG_STATE_CRED_ISOLATION_ENABLED = 0x00000020,
-}
-
-enum uint SECPKG_STATE_RESERVED_1 = 0x80000000;
-enum uint SECPKG_MAX_OID_LENGTH = 0x00000020;
-
-enum : uint
-{
-    SECPKG_MSVAV_FLAGS_VALID     = 0x00000001,
-    SECPKG_MSVAV_TIMESTAMP_VALID = 0x00000002,
+    PRIMARY_CRED_INTERACTIVE_NGC_LOGON  = 0x00080000U,
+    PRIMARY_CRED_INTERACTIVE_FIDO_LOGON = 0x00100000U,
 }
 
 enum : uint
 {
-    SECPKG_ATTR_SASL_CONTEXT = 0x00010000,
-    SECPKG_ATTR_THUNK_ALL    = 0x00010000,
+    PRIMARY_CRED_ARSO_LOGON          = 0x00200000U,
+    PRIMARY_CRED_SUPPLEMENTAL        = 0x00400000U,
+    PRIMARY_CRED_FOR_PASSWORD_CHANGE = 0x00800000U,
+    PRIMARY_CRED_LOCAL_USER          = 0x01000000U,
+    PRIMARY_CRED_LOGON_PACKAGE_SHIFT = 0x00000018U,
+    PRIMARY_CRED_PACKAGE_MASK        = 0xff000000U,
 }
 
-enum uint UNDERSTANDS_LONG_NAMES = 0x00000001;
-enum uint NO_LONG_NAMES = 0x00000002;
+enum uint SECPKG_PRIMARY_CRED_EX_FLAGS_EX_DELEGATION_TOKEN = 0x00000001U;
+enum uint MAX_CRED_SIZE = 0x00000400U;
+enum uint SECPKG_STATE_ENCRYPTION_PERMITTED = 0x00000001U;
+enum uint SECPKG_STATE_STRONG_ENCRYPTION_PERMITTED = 0x00000002U;
 
 enum : uint
 {
-    SECPKG_CALL_PACKAGE_TRANSFER_CRED_REQUEST_FLAG_OPTIMISTIC_LOGON    = 0x00000001,
-    SECPKG_CALL_PACKAGE_TRANSFER_CRED_REQUEST_FLAG_CLEANUP_CREDENTIALS = 0x00000002,
-    SECPKG_CALL_PACKAGE_TRANSFER_CRED_REQUEST_FLAG_TO_SSO_SESSION      = 0x00000004,
+    SECPKG_STATE_DOMAIN_CONTROLLER      = 0x00000004U,
+    SECPKG_STATE_WORKSTATION            = 0x00000008U,
+    SECPKG_STATE_STANDALONE             = 0x00000010U,
+    SECPKG_STATE_CRED_ISOLATION_ENABLED = 0x00000020U,
+}
+
+enum uint SECPKG_STATE_RESERVED_1 = 0x80000000U;
+enum uint SECPKG_MAX_OID_LENGTH = 0x00000020U;
+
+enum : uint
+{
+    SECPKG_MSVAV_FLAGS_VALID     = 0x00000001U,
+    SECPKG_MSVAV_TIMESTAMP_VALID = 0x00000002U,
+}
+
+enum : uint
+{
+    SECPKG_ATTR_SASL_CONTEXT = 0x00010000U,
+    SECPKG_ATTR_THUNK_ALL    = 0x00010000U,
+}
+
+enum uint UNDERSTANDS_LONG_NAMES = 0x00000001U;
+enum uint NO_LONG_NAMES = 0x00000002U;
+
+enum : uint
+{
+    SECPKG_CALL_PACKAGE_TRANSFER_CRED_REQUEST_FLAG_OPTIMISTIC_LOGON    = 0x00000001U,
+    SECPKG_CALL_PACKAGE_TRANSFER_CRED_REQUEST_FLAG_CLEANUP_CREDENTIALS = 0x00000002U,
+    SECPKG_CALL_PACKAGE_TRANSFER_CRED_REQUEST_FLAG_TO_SSO_SESSION      = 0x00000004U,
 }
 
 enum GUID SECPKG_REDIRECTED_LOGON_GUID_INITIALIZER = GUID("c2be5457-82eb-483e-ae4e-7468ef14d509");
 
 enum : uint
 {
-    NOTIFIER_FLAG_NEW_THREAD   = 0x00000001,
-    NOTIFIER_FLAG_ONE_SHOT     = 0x00000002,
-    NOTIFIER_FLAG_SECONDS      = 0x80000000,
-    NOTIFIER_TYPE_INTERVAL     = 0x00000001,
-    NOTIFIER_TYPE_HANDLE_WAIT  = 0x00000002,
-    NOTIFIER_TYPE_STATE_CHANGE = 0x00000003,
-    NOTIFIER_TYPE_NOTIFY_EVENT = 0x00000004,
-    NOTIFIER_TYPE_IMMEDIATE    = 0x00000010,
+    NOTIFIER_FLAG_NEW_THREAD   = 0x00000001U,
+    NOTIFIER_FLAG_ONE_SHOT     = 0x00000002U,
+    NOTIFIER_FLAG_SECONDS      = 0x80000000U,
+    NOTIFIER_TYPE_INTERVAL     = 0x00000001U,
+    NOTIFIER_TYPE_HANDLE_WAIT  = 0x00000002U,
+    NOTIFIER_TYPE_STATE_CHANGE = 0x00000003U,
+    NOTIFIER_TYPE_NOTIFY_EVENT = 0x00000004U,
+    NOTIFIER_TYPE_IMMEDIATE    = 0x00000010U,
 }
 
 enum : uint
 {
-    NOTIFY_CLASS_PACKAGE_CHANGE  = 0x00000001,
-    NOTIFY_CLASS_ROLE_CHANGE     = 0x00000002,
-    NOTIFY_CLASS_DOMAIN_CHANGE   = 0x00000003,
-    NOTIFY_CLASS_REGISTRY_CHANGE = 0x00000004,
+    NOTIFY_CLASS_PACKAGE_CHANGE  = 0x00000001U,
+    NOTIFY_CLASS_ROLE_CHANGE     = 0x00000002U,
+    NOTIFY_CLASS_DOMAIN_CHANGE   = 0x00000003U,
+    NOTIFY_CLASS_REGISTRY_CHANGE = 0x00000004U,
 }
 
-enum uint LSA_QUERY_CLIENT_PRELOGON_SESSION_ID = 0x00000001;
+enum uint LSA_QUERY_CLIENT_PRELOGON_SESSION_ID = 0x00000001U;
 
 enum : uint
 {
-    CREDP_FLAGS_IN_PROCESS              = 0x00000001,
-    CREDP_FLAGS_USE_MIDL_HEAP           = 0x00000002,
-    CREDP_FLAGS_DONT_CACHE_TI           = 0x00000004,
-    CREDP_FLAGS_CLEAR_PASSWORD          = 0x00000008,
-    CREDP_FLAGS_USER_ENCRYPTED_PASSWORD = 0x00000010,
+    CREDP_FLAGS_IN_PROCESS              = 0x00000001U,
+    CREDP_FLAGS_USE_MIDL_HEAP           = 0x00000002U,
+    CREDP_FLAGS_DONT_CACHE_TI           = 0x00000004U,
+    CREDP_FLAGS_CLEAR_PASSWORD          = 0x00000008U,
+    CREDP_FLAGS_USER_ENCRYPTED_PASSWORD = 0x00000010U,
 }
 
 enum : uint
 {
-    CREDP_FLAGS_TRUSTED_CALLER        = 0x00000020,
-    CREDP_FLAGS_VALIDATE_PROXY_TARGET = 0x00000040,
+    CREDP_FLAGS_TRUSTED_CALLER        = 0x00000020U,
+    CREDP_FLAGS_VALIDATE_PROXY_TARGET = 0x00000040U,
 }
 
-enum uint CRED_MARSHALED_TI_SIZE_SIZE = 0x0000000c;
+enum uint CRED_MARSHALED_TI_SIZE_SIZE = 0x0000000cU;
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* LSA_AP_NAME_LOGON_USER_EX2 = "LsaApLogonUserEx2\0";
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SP_ACCEPT_CREDENTIALS_NAME = "SpAcceptCredentials\0";
-enum uint SECPKG_UNICODE_ATTRIBUTE = 0x80000000;
-enum uint SECPKG_ANSI_ATTRIBUTE = 0x00000000;
-enum uint SECPKG_CREDENTIAL_ATTRIBUTE = 0x00000000;
+enum uint SECPKG_UNICODE_ATTRIBUTE = 0x80000000U;
+enum uint SECPKG_ANSI_ATTRIBUTE = 0x00000000U;
+enum uint SECPKG_CREDENTIAL_ATTRIBUTE = 0x00000000U;
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SECPKG_LSAMODEINIT_NAME = "SpLsaModeInitialize";
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SECPKG_USERMODEINIT_NAME = "SpUserModeInitialize";
 
 enum : uint
 {
-    SECPKG_INTERFACE_VERSION    = 0x00010000,
-    SECPKG_INTERFACE_VERSION_2  = 0x00020000,
-    SECPKG_INTERFACE_VERSION_3  = 0x00040000,
-    SECPKG_INTERFACE_VERSION_4  = 0x00080000,
-    SECPKG_INTERFACE_VERSION_5  = 0x00100000,
-    SECPKG_INTERFACE_VERSION_6  = 0x00200000,
-    SECPKG_INTERFACE_VERSION_7  = 0x00400000,
-    SECPKG_INTERFACE_VERSION_8  = 0x00800000,
-    SECPKG_INTERFACE_VERSION_9  = 0x01000000,
-    SECPKG_INTERFACE_VERSION_10 = 0x02000000,
-    SECPKG_INTERFACE_VERSION_11 = 0x04000000,
+    SECPKG_INTERFACE_VERSION    = 0x00010000U,
+    SECPKG_INTERFACE_VERSION_2  = 0x00020000U,
+    SECPKG_INTERFACE_VERSION_3  = 0x00040000U,
+    SECPKG_INTERFACE_VERSION_4  = 0x00080000U,
+    SECPKG_INTERFACE_VERSION_5  = 0x00100000U,
+    SECPKG_INTERFACE_VERSION_6  = 0x00200000U,
+    SECPKG_INTERFACE_VERSION_7  = 0x00400000U,
+    SECPKG_INTERFACE_VERSION_8  = 0x00800000U,
+    SECPKG_INTERFACE_VERSION_9  = 0x01000000U,
+    SECPKG_INTERFACE_VERSION_10 = 0x02000000U,
+    SECPKG_INTERFACE_VERSION_11 = 0x04000000U,
 }
 
 enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
@@ -2415,34 +2493,34 @@ enum const(wchar)* SSL3SP_NAME = "Microsoft SSL 3.0";
 enum const(wchar)* TLS1SP_NAME = "Microsoft TLS 1.0";
 enum const(wchar)* SCHANNEL_NAME = "Schannel";
 enum const(wchar)* DEFAULT_TLS_SSP_NAME = "Default TLS SSP";
-enum uint UNISP_RPC_ID = 0x0000000e;
-enum uint RCRED_STATUS_NOCRED = 0x00000000;
-enum uint RCRED_CRED_EXISTS = 0x00000001;
-enum uint RCRED_STATUS_UNKNOWN_ISSUER = 0x00000002;
-enum uint LCRED_STATUS_NOCRED = 0x00000000;
-enum uint LCRED_CRED_EXISTS = 0x00000001;
-enum uint LCRED_STATUS_UNKNOWN_ISSUER = 0x00000002;
+enum uint UNISP_RPC_ID = 0x0000000eU;
+enum uint RCRED_STATUS_NOCRED = 0x00000000U;
+enum uint RCRED_CRED_EXISTS = 0x00000001U;
+enum uint RCRED_STATUS_UNKNOWN_ISSUER = 0x00000002U;
+enum uint LCRED_STATUS_NOCRED = 0x00000000U;
+enum uint LCRED_CRED_EXISTS = 0x00000001U;
+enum uint LCRED_STATUS_UNKNOWN_ISSUER = 0x00000002U;
 
 enum : uint
 {
-    SECPKGCONTEXT_CONNECTION_INFO_EX_V1 = 0x00000001,
-    SECPKGCONTEXT_CIPHERINFO_V1         = 0x00000001,
+    SECPKGCONTEXT_CONNECTION_INFO_EX_V1 = 0x00000001U,
+    SECPKGCONTEXT_CIPHERINFO_V1         = 0x00000001U,
 }
 
-enum uint SSL_SESSION_RECONNECT = 0x00000001;
-enum uint KERN_CONTEXT_CERT_INFO_V1 = 0x00000000;
-enum uint ENABLE_TLS_CLIENT_EARLY_START = 0x00000001;
+enum uint SSL_SESSION_RECONNECT = 0x00000001U;
+enum uint KERN_CONTEXT_CERT_INFO_V1 = 0x00000000U;
+enum uint ENABLE_TLS_CLIENT_EARLY_START = 0x00000001U;
 
 enum : uint
 {
-    SCH_CRED_V1      = 0x00000001,
-    SCH_CRED_V2      = 0x00000002,
-    SCH_CRED_VERSION = 0x00000002,
-    SCH_CRED_V3      = 0x00000003,
+    SCH_CRED_V1      = 0x00000001U,
+    SCH_CRED_V2      = 0x00000002U,
+    SCH_CRED_VERSION = 0x00000002U,
+    SCH_CRED_V3      = 0x00000003U,
 }
 
-enum uint SCHANNEL_CRED_VERSION = 0x00000004;
-enum uint SCH_CREDENTIALS_VERSION = 0x00000005;
+enum uint SCHANNEL_CRED_VERSION = 0x00000004U;
+enum uint SCH_CREDENTIALS_VERSION = 0x00000005U;
 
 enum : const(wchar)*
 {
@@ -2450,166 +2528,166 @@ enum : const(wchar)*
     SCHANNEL_RSA_PKCS_PADDING_ALGORITHM = "SCH_RSA_PKCS_PAD",
 }
 
-enum uint TLS_PARAMS_OPTIONAL = 0x00000001;
+enum uint TLS_PARAMS_OPTIONAL = 0x00000001U;
 
 enum : uint
 {
-    SCH_CRED_MAX_SUPPORTED_PARAMETERS      = 0x00000010,
-    SCH_CRED_MAX_SUPPORTED_ALPN_IDS        = 0x00000010,
-    SCH_CRED_MAX_SUPPORTED_CRYPTO_SETTINGS = 0x00000010,
-    SCH_CRED_MAX_SUPPORTED_CHAINING_MODES  = 0x00000010,
+    SCH_CRED_MAX_SUPPORTED_PARAMETERS      = 0x00000010U,
+    SCH_CRED_MAX_SUPPORTED_ALPN_IDS        = 0x00000010U,
+    SCH_CRED_MAX_SUPPORTED_CRYPTO_SETTINGS = 0x00000010U,
+    SCH_CRED_MAX_SUPPORTED_CHAINING_MODES  = 0x00000010U,
 }
 
-enum uint SCH_MAX_EXT_SUBSCRIPTIONS = 0x00000002;
+enum uint SCH_MAX_EXT_SUBSCRIPTIONS = 0x00000002U;
 
 enum : uint
 {
-    SCH_CRED_FORMAT_CERT_CONTEXT    = 0x00000000,
-    SCH_CRED_FORMAT_CERT_HASH       = 0x00000001,
-    SCH_CRED_FORMAT_CERT_HASH_STORE = 0x00000002,
-}
-
-enum : uint
-{
-    SCH_CRED_MAX_STORE_NAME_SIZE = 0x00000080,
-    SCH_CRED_MAX_SUPPORTED_ALGS  = 0x00000100,
-    SCH_CRED_MAX_SUPPORTED_CERTS = 0x00000064,
-}
-
-enum uint SCH_MACHINE_CERT_HASH = 0x00000001;
-enum uint SCH_CRED_DISABLE_RECONNECTS = 0x00000080;
-
-enum : uint
-{
-    SCH_CRED_RESTRICTED_ROOTS            = 0x00002000,
-    SCH_CRED_REVOCATION_CHECK_CACHE_ONLY = 0x00004000,
-}
-
-enum uint SCH_CRED_CACHE_ONLY_URL_RETRIEVAL = 0x00008000;
-enum uint SCH_CRED_MEMORY_STORE_CERT = 0x00010000;
-
-enum : uint
-{
-    SCH_CRED_SNI_CREDENTIAL  = 0x00080000,
-    SCH_CRED_SNI_ENABLE_OCSP = 0x00100000,
-}
-
-enum uint SCH_USE_DTLS_ONLY = 0x01000000;
-enum uint SCH_ALLOW_NULL_ENCRYPTION = 0x02000000;
-enum uint SCH_CRED_DEFERRED_CRED_VALIDATION = 0x04000000;
-
-enum : uint
-{
-    SCHANNEL_RENEGOTIATE = 0x00000000,
-    SCHANNEL_SHUTDOWN    = 0x00000001,
-    SCHANNEL_ALERT       = 0x00000002,
-    SCHANNEL_SESSION     = 0x00000003,
+    SCH_CRED_FORMAT_CERT_CONTEXT    = 0x00000000U,
+    SCH_CRED_FORMAT_CERT_HASH       = 0x00000001U,
+    SCH_CRED_FORMAT_CERT_HASH_STORE = 0x00000002U,
 }
 
 enum : uint
 {
-    TLS1_ALERT_CLOSE_NOTIFY       = 0x00000000,
-    TLS1_ALERT_UNEXPECTED_MESSAGE = 0x0000000a,
+    SCH_CRED_MAX_STORE_NAME_SIZE = 0x00000080U,
+    SCH_CRED_MAX_SUPPORTED_ALGS  = 0x00000100U,
+    SCH_CRED_MAX_SUPPORTED_CERTS = 0x00000064U,
+}
+
+enum uint SCH_MACHINE_CERT_HASH = 0x00000001U;
+enum uint SCH_CRED_DISABLE_RECONNECTS = 0x00000080U;
+
+enum : uint
+{
+    SCH_CRED_RESTRICTED_ROOTS            = 0x00002000U,
+    SCH_CRED_REVOCATION_CHECK_CACHE_ONLY = 0x00004000U,
+}
+
+enum uint SCH_CRED_CACHE_ONLY_URL_RETRIEVAL = 0x00008000U;
+enum uint SCH_CRED_MEMORY_STORE_CERT = 0x00010000U;
+
+enum : uint
+{
+    SCH_CRED_SNI_CREDENTIAL  = 0x00080000U,
+    SCH_CRED_SNI_ENABLE_OCSP = 0x00100000U,
+}
+
+enum uint SCH_USE_DTLS_ONLY = 0x01000000U;
+enum uint SCH_ALLOW_NULL_ENCRYPTION = 0x02000000U;
+enum uint SCH_CRED_DEFERRED_CRED_VALIDATION = 0x04000000U;
+
+enum : uint
+{
+    SCHANNEL_RENEGOTIATE = 0x00000000U,
+    SCHANNEL_SHUTDOWN    = 0x00000001U,
+    SCHANNEL_ALERT       = 0x00000002U,
+    SCHANNEL_SESSION     = 0x00000003U,
 }
 
 enum : uint
 {
-    TLS1_ALERT_BAD_RECORD_MAC    = 0x00000014,
-    TLS1_ALERT_DECRYPTION_FAILED = 0x00000015,
+    TLS1_ALERT_CLOSE_NOTIFY       = 0x00000000U,
+    TLS1_ALERT_UNEXPECTED_MESSAGE = 0x0000000aU,
 }
 
 enum : uint
 {
-    TLS1_ALERT_RECORD_OVERFLOW    = 0x00000016,
-    TLS1_ALERT_DECOMPRESSION_FAIL = 0x0000001e,
-}
-
-enum uint TLS1_ALERT_HANDSHAKE_FAILURE = 0x00000028;
-
-enum : uint
-{
-    TLS1_ALERT_BAD_CERTIFICATE     = 0x0000002a,
-    TLS1_ALERT_UNSUPPORTED_CERT    = 0x0000002b,
-    TLS1_ALERT_CERTIFICATE_REVOKED = 0x0000002c,
-    TLS1_ALERT_CERTIFICATE_EXPIRED = 0x0000002d,
-    TLS1_ALERT_CERTIFICATE_UNKNOWN = 0x0000002e,
-}
-
-enum uint TLS1_ALERT_ILLEGAL_PARAMETER = 0x0000002f;
-
-enum : uint
-{
-    TLS1_ALERT_UNKNOWN_CA         = 0x00000030,
-    TLS1_ALERT_ACCESS_DENIED      = 0x00000031,
-    TLS1_ALERT_DECODE_ERROR       = 0x00000032,
-    TLS1_ALERT_DECRYPT_ERROR      = 0x00000033,
-    TLS1_ALERT_EXPORT_RESTRICTION = 0x0000003c,
+    TLS1_ALERT_BAD_RECORD_MAC    = 0x00000014U,
+    TLS1_ALERT_DECRYPTION_FAILED = 0x00000015U,
 }
 
 enum : uint
 {
-    TLS1_ALERT_PROTOCOL_VERSION     = 0x00000046,
-    TLS1_ALERT_INSUFFIENT_SECURITY  = 0x00000047,
-    TLS1_ALERT_INTERNAL_ERROR       = 0x00000050,
-    TLS1_ALERT_USER_CANCELED        = 0x0000005a,
-    TLS1_ALERT_NO_RENEGOTIATION     = 0x00000064,
-    TLS1_ALERT_UNSUPPORTED_EXT      = 0x0000006e,
-    TLS1_ALERT_UNKNOWN_PSK_IDENTITY = 0x00000073,
+    TLS1_ALERT_RECORD_OVERFLOW    = 0x00000016U,
+    TLS1_ALERT_DECOMPRESSION_FAIL = 0x0000001eU,
 }
 
-enum uint TLS1_ALERT_NO_APP_PROTOCOL = 0x00000078;
+enum uint TLS1_ALERT_HANDSHAKE_FAILURE = 0x00000028U;
 
 enum : uint
 {
-    SP_PROT_PCT1_SERVER   = 0x00000001,
-    SP_PROT_PCT1_CLIENT   = 0x00000002,
-    SP_PROT_SSL2_SERVER   = 0x00000004,
-    SP_PROT_SSL2_CLIENT   = 0x00000008,
-    SP_PROT_SSL3_SERVER   = 0x00000010,
-    SP_PROT_SSL3_CLIENT   = 0x00000020,
-    SP_PROT_TLS1_SERVER   = 0x00000040,
-    SP_PROT_TLS1_CLIENT   = 0x00000080,
-    SP_PROT_UNI_SERVER    = 0x40000000,
-    SP_PROT_UNI_CLIENT    = 0x80000000,
-    SP_PROT_ALL           = 0xffffffff,
-    SP_PROT_NONE          = 0x00000000,
-    SP_PROT_TLS1_0_SERVER = 0x00000040,
-    SP_PROT_TLS1_0_CLIENT = 0x00000080,
-    SP_PROT_TLS1_1_SERVER = 0x00000100,
-    SP_PROT_TLS1_1_CLIENT = 0x00000200,
-    SP_PROT_TLS1_2_SERVER = 0x00000400,
-    SP_PROT_TLS1_2_CLIENT = 0x00000800,
-    SP_PROT_TLS1_3_SERVER = 0x00001000,
-    SP_PROT_TLS1_3_CLIENT = 0x00002000,
+    TLS1_ALERT_BAD_CERTIFICATE     = 0x0000002aU,
+    TLS1_ALERT_UNSUPPORTED_CERT    = 0x0000002bU,
+    TLS1_ALERT_CERTIFICATE_REVOKED = 0x0000002cU,
+    TLS1_ALERT_CERTIFICATE_EXPIRED = 0x0000002dU,
+    TLS1_ALERT_CERTIFICATE_UNKNOWN = 0x0000002eU,
+}
+
+enum uint TLS1_ALERT_ILLEGAL_PARAMETER = 0x0000002fU;
+
+enum : uint
+{
+    TLS1_ALERT_UNKNOWN_CA         = 0x00000030U,
+    TLS1_ALERT_ACCESS_DENIED      = 0x00000031U,
+    TLS1_ALERT_DECODE_ERROR       = 0x00000032U,
+    TLS1_ALERT_DECRYPT_ERROR      = 0x00000033U,
+    TLS1_ALERT_EXPORT_RESTRICTION = 0x0000003cU,
 }
 
 enum : uint
 {
-    SP_PROT_DTLS_SERVER    = 0x00010000,
-    SP_PROT_DTLS_CLIENT    = 0x00020000,
-    SP_PROT_DTLS1_0_SERVER = 0x00010000,
-    SP_PROT_DTLS1_0_CLIENT = 0x00020000,
-    SP_PROT_DTLS1_2_SERVER = 0x00040000,
-    SP_PROT_DTLS1_2_CLIENT = 0x00080000,
+    TLS1_ALERT_PROTOCOL_VERSION     = 0x00000046U,
+    TLS1_ALERT_INSUFFIENT_SECURITY  = 0x00000047U,
+    TLS1_ALERT_INTERNAL_ERROR       = 0x00000050U,
+    TLS1_ALERT_USER_CANCELED        = 0x0000005aU,
+    TLS1_ALERT_NO_RENEGOTIATION     = 0x00000064U,
+    TLS1_ALERT_UNSUPPORTED_EXT      = 0x0000006eU,
+    TLS1_ALERT_UNKNOWN_PSK_IDENTITY = 0x00000073U,
+}
+
+enum uint TLS1_ALERT_NO_APP_PROTOCOL = 0x00000078U;
+
+enum : uint
+{
+    SP_PROT_PCT1_SERVER   = 0x00000001U,
+    SP_PROT_PCT1_CLIENT   = 0x00000002U,
+    SP_PROT_SSL2_SERVER   = 0x00000004U,
+    SP_PROT_SSL2_CLIENT   = 0x00000008U,
+    SP_PROT_SSL3_SERVER   = 0x00000010U,
+    SP_PROT_SSL3_CLIENT   = 0x00000020U,
+    SP_PROT_TLS1_SERVER   = 0x00000040U,
+    SP_PROT_TLS1_CLIENT   = 0x00000080U,
+    SP_PROT_UNI_SERVER    = 0x40000000U,
+    SP_PROT_UNI_CLIENT    = 0x80000000U,
+    SP_PROT_ALL           = 0xffffffffU,
+    SP_PROT_NONE          = 0x00000000U,
+    SP_PROT_TLS1_0_SERVER = 0x00000040U,
+    SP_PROT_TLS1_0_CLIENT = 0x00000080U,
+    SP_PROT_TLS1_1_SERVER = 0x00000100U,
+    SP_PROT_TLS1_1_CLIENT = 0x00000200U,
+    SP_PROT_TLS1_2_SERVER = 0x00000400U,
+    SP_PROT_TLS1_2_CLIENT = 0x00000800U,
+    SP_PROT_TLS1_3_SERVER = 0x00001000U,
+    SP_PROT_TLS1_3_CLIENT = 0x00002000U,
 }
 
 enum : uint
 {
-    SP_PROT_TLS1_3PLUS_SERVER = 0x00001000,
-    SP_PROT_TLS1_3PLUS_CLIENT = 0x00002000,
+    SP_PROT_DTLS_SERVER    = 0x00010000U,
+    SP_PROT_DTLS_CLIENT    = 0x00020000U,
+    SP_PROT_DTLS1_0_SERVER = 0x00010000U,
+    SP_PROT_DTLS1_0_CLIENT = 0x00020000U,
+    SP_PROT_DTLS1_2_SERVER = 0x00040000U,
+    SP_PROT_DTLS1_2_CLIENT = 0x00080000U,
 }
 
 enum : uint
 {
-    SCHANNEL_SECRET_TYPE_CAPI = 0x00000001,
-    SCHANNEL_SECRET_PRIVKEY   = 0x00000002,
+    SP_PROT_TLS1_3PLUS_SERVER = 0x00001000U,
+    SP_PROT_TLS1_3PLUS_CLIENT = 0x00002000U,
 }
 
 enum : uint
 {
-    SCH_CRED_X509_CERTCHAIN = 0x00000001,
-    SCH_CRED_X509_CAPI      = 0x00000002,
-    SCH_CRED_CERT_CONTEXT   = 0x00000003,
+    SCHANNEL_SECRET_TYPE_CAPI = 0x00000001U,
+    SCHANNEL_SECRET_PRIVKEY   = 0x00000002U,
+}
+
+enum : uint
+{
+    SCH_CRED_X509_CERTCHAIN = 0x00000001U,
+    SCH_CRED_X509_CAPI      = 0x00000002U,
+    SCH_CRED_CERT_CONTEXT   = 0x00000003U,
 }
 
 enum const(wchar)* SSL_CRACK_CERTIFICATE_NAME = "SslCrackCertificate";
@@ -2673,17 +2751,17 @@ enum const(wchar)* SL_EVENT_USER_NOTIFICATION = "msft:rm/event/usernotification"
 
 enum : uint
 {
-    SL_SYSTEM_STATE_REBOOT_POLICY_FOUND = 0x00000001,
-    SL_SYSTEM_STATE_TAMPERED            = 0x00000002,
+    SL_SYSTEM_STATE_REBOOT_POLICY_FOUND = 0x00000001U,
+    SL_SYSTEM_STATE_TAMPERED            = 0x00000002U,
 }
 
-enum uint SL_REARM_REBOOT_REQUIRED = 0x00000001;
+enum uint SL_REARM_REBOOT_REQUIRED = 0x00000001U;
 
 enum : uint
 {
-    SPP_MIGRATION_GATHER_MIGRATABLE_APPS         = 0x00000001,
-    SPP_MIGRATION_GATHER_ACTIVATED_WINDOWS_STATE = 0x00000002,
-    SPP_MIGRATION_GATHER_ALL                     = 0xffffffff,
+    SPP_MIGRATION_GATHER_MIGRATABLE_APPS         = 0x00000001U,
+    SPP_MIGRATION_GATHER_ACTIVATED_WINDOWS_STATE = 0x00000002U,
+    SPP_MIGRATION_GATHER_ALL                     = 0xffffffffU,
 }
 
 enum : const(wchar)*
@@ -2712,72 +2790,72 @@ enum const(wchar)* SL_PROP_ACTIVATION_VALIDATION_IN_PROGRESS = "SL_ACTIVATION_VA
 enum const(wchar)* SL_POLICY_EVALUATION_MODE_ENABLED = "Security-SPP-EvaluationModeEnabled";
 enum const(wchar)* SL_DEFAULT_MIGRATION_ENCRYPTOR_URI = "msft:spp/migrationencryptor/tokenact/1.0";
 enum const(wchar)* ID_CAP_SLAPI = "slapiQueryLicenseValue";
-enum uint USER_ACCOUNT_DISABLED = 0x00000001;
-enum uint USER_HOME_DIRECTORY_REQUIRED = 0x00000002;
-enum uint USER_PASSWORD_NOT_REQUIRED = 0x00000004;
-enum uint USER_TEMP_DUPLICATE_ACCOUNT = 0x00000008;
-enum uint USER_NORMAL_ACCOUNT = 0x00000010;
-enum uint USER_MNS_LOGON_ACCOUNT = 0x00000020;
-enum uint USER_INTERDOMAIN_TRUST_ACCOUNT = 0x00000040;
-enum uint USER_WORKSTATION_TRUST_ACCOUNT = 0x00000080;
-enum uint USER_SERVER_TRUST_ACCOUNT = 0x00000100;
-enum uint USER_DONT_EXPIRE_PASSWORD = 0x00000200;
-enum uint USER_ACCOUNT_AUTO_LOCKED = 0x00000400;
-enum uint USER_ENCRYPTED_TEXT_PASSWORD_ALLOWED = 0x00000800;
-enum uint USER_SMARTCARD_REQUIRED = 0x00001000;
-enum uint USER_TRUSTED_FOR_DELEGATION = 0x00002000;
-enum uint USER_NOT_DELEGATED = 0x00004000;
-enum uint USER_USE_DES_KEY_ONLY = 0x00008000;
-enum uint USER_DONT_REQUIRE_PREAUTH = 0x00010000;
-enum uint USER_PASSWORD_EXPIRED = 0x00020000;
-enum uint USER_TRUSTED_TO_AUTHENTICATE_FOR_DELEGATION = 0x00040000;
-enum uint USER_NO_AUTH_DATA_REQUIRED = 0x00080000;
-enum uint USER_PARTIAL_SECRETS_ACCOUNT = 0x00100000;
-enum uint USER_USE_AES_KEYS = 0x00200000;
-enum uint USER_SHADOW_ACCOUNT = 0x00400000;
-enum uint SAM_DAYS_PER_WEEK = 0x00000007;
-enum uint USER_ALL_PARAMETERS = 0x00200000;
-enum uint CLEAR_BLOCK_LENGTH = 0x00000008;
-enum uint CYPHER_BLOCK_LENGTH = 0x00000008;
+enum uint USER_ACCOUNT_DISABLED = 0x00000001U;
+enum uint USER_HOME_DIRECTORY_REQUIRED = 0x00000002U;
+enum uint USER_PASSWORD_NOT_REQUIRED = 0x00000004U;
+enum uint USER_TEMP_DUPLICATE_ACCOUNT = 0x00000008U;
+enum uint USER_NORMAL_ACCOUNT = 0x00000010U;
+enum uint USER_MNS_LOGON_ACCOUNT = 0x00000020U;
+enum uint USER_INTERDOMAIN_TRUST_ACCOUNT = 0x00000040U;
+enum uint USER_WORKSTATION_TRUST_ACCOUNT = 0x00000080U;
+enum uint USER_SERVER_TRUST_ACCOUNT = 0x00000100U;
+enum uint USER_DONT_EXPIRE_PASSWORD = 0x00000200U;
+enum uint USER_ACCOUNT_AUTO_LOCKED = 0x00000400U;
+enum uint USER_ENCRYPTED_TEXT_PASSWORD_ALLOWED = 0x00000800U;
+enum uint USER_SMARTCARD_REQUIRED = 0x00001000U;
+enum uint USER_TRUSTED_FOR_DELEGATION = 0x00002000U;
+enum uint USER_NOT_DELEGATED = 0x00004000U;
+enum uint USER_USE_DES_KEY_ONLY = 0x00008000U;
+enum uint USER_DONT_REQUIRE_PREAUTH = 0x00010000U;
+enum uint USER_PASSWORD_EXPIRED = 0x00020000U;
+enum uint USER_TRUSTED_TO_AUTHENTICATE_FOR_DELEGATION = 0x00040000U;
+enum uint USER_NO_AUTH_DATA_REQUIRED = 0x00080000U;
+enum uint USER_PARTIAL_SECRETS_ACCOUNT = 0x00100000U;
+enum uint USER_USE_AES_KEYS = 0x00200000U;
+enum uint USER_SHADOW_ACCOUNT = 0x00400000U;
+enum uint SAM_DAYS_PER_WEEK = 0x00000007U;
+enum uint USER_ALL_PARAMETERS = 0x00200000U;
+enum uint CLEAR_BLOCK_LENGTH = 0x00000008U;
+enum uint CYPHER_BLOCK_LENGTH = 0x00000008U;
 
 enum : uint
 {
-    NETLOGON_TARGET_INFO_TYPE_NTLM     = 0x00000001,
-    NETLOGON_TARGET_INFO_TYPE_KERBEROS = 0x00000002,
+    NETLOGON_TARGET_INFO_TYPE_NTLM     = 0x00000001U,
+    NETLOGON_TARGET_INFO_TYPE_KERBEROS = 0x00000002U,
 }
 
-enum uint MSV1_0_KERBEROS_LOGON = 0x00000004;
+enum uint MSV1_0_KERBEROS_LOGON = 0x00000004U;
 
 enum : uint
 {
-    MSV1_0_VALIDATION_LOGOFF_TIME  = 0x00000001,
-    MSV1_0_VALIDATION_KICKOFF_TIME = 0x00000002,
-    MSV1_0_VALIDATION_LOGON_SERVER = 0x00000004,
-    MSV1_0_VALIDATION_LOGON_DOMAIN = 0x00000008,
-    MSV1_0_VALIDATION_SESSION_KEY  = 0x00000010,
-    MSV1_0_VALIDATION_USER_FLAGS   = 0x00000020,
-    MSV1_0_VALIDATION_USER_ID      = 0x00000040,
+    MSV1_0_VALIDATION_LOGOFF_TIME  = 0x00000001U,
+    MSV1_0_VALIDATION_KICKOFF_TIME = 0x00000002U,
+    MSV1_0_VALIDATION_LOGON_SERVER = 0x00000004U,
+    MSV1_0_VALIDATION_LOGON_DOMAIN = 0x00000008U,
+    MSV1_0_VALIDATION_SESSION_KEY  = 0x00000010U,
+    MSV1_0_VALIDATION_USER_FLAGS   = 0x00000020U,
+    MSV1_0_VALIDATION_USER_ID      = 0x00000040U,
 }
 
 enum : uint
 {
-    MSV1_0_SUBAUTH_ACCOUNT_DISABLED = 0x00000001,
-    MSV1_0_SUBAUTH_PASSWORD         = 0x00000002,
-    MSV1_0_SUBAUTH_WORKSTATIONS     = 0x00000004,
-    MSV1_0_SUBAUTH_LOGON_HOURS      = 0x00000008,
-    MSV1_0_SUBAUTH_ACCOUNT_EXPIRY   = 0x00000010,
-    MSV1_0_SUBAUTH_PASSWORD_EXPIRY  = 0x00000020,
-    MSV1_0_SUBAUTH_ACCOUNT_TYPE     = 0x00000040,
-    MSV1_0_SUBAUTH_LOCKOUT          = 0x00000080,
+    MSV1_0_SUBAUTH_ACCOUNT_DISABLED = 0x00000001U,
+    MSV1_0_SUBAUTH_PASSWORD         = 0x00000002U,
+    MSV1_0_SUBAUTH_WORKSTATIONS     = 0x00000004U,
+    MSV1_0_SUBAUTH_LOGON_HOURS      = 0x00000008U,
+    MSV1_0_SUBAUTH_ACCOUNT_EXPIRY   = 0x00000010U,
+    MSV1_0_SUBAUTH_PASSWORD_EXPIRY  = 0x00000020U,
+    MSV1_0_SUBAUTH_ACCOUNT_TYPE     = 0x00000040U,
+    MSV1_0_SUBAUTH_LOCKOUT          = 0x00000080U,
 }
 
-enum uint SL_MDOLLAR_ZONE = 0x0000a000;
-enum uint SL_SERVER_ZONE = 0x0000b000;
-enum uint SL_MSCH_ZONE = 0x0000c000;
-enum uint SL_INTERNAL_ZONE = 0x0000e000;
-enum uint SL_CLIENTAPI_ZONE = 0x0000f000;
-enum uint FACILITY_SL_ITF = 0x00000004;
-enum uint _FACILITY_WINDOWS_STORE = 0x0000003f;
+enum uint SL_MDOLLAR_ZONE = 0x0000a000U;
+enum uint SL_SERVER_ZONE = 0x0000b000U;
+enum uint SL_MSCH_ZONE = 0x0000c000U;
+enum uint SL_INTERNAL_ZONE = 0x0000e000U;
+enum uint SL_CLIENTAPI_ZONE = 0x0000f000U;
+enum uint FACILITY_SL_ITF = 0x00000004U;
+enum uint _FACILITY_WINDOWS_STORE = 0x0000003fU;
 
 enum : HRESULT
 {
@@ -3963,7 +4041,7 @@ alias SslDeserializeCertificateStoreFn = HRESULT function(CRYPT_INTEGER_BLOB Ser
 @RAIIFree!LsaClose
 //STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
 //STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SecMgmt/lsa-handle))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SecMgmt/lsa-handle
 struct LSA_HANDLE
 {
     ptrdiff_t Value;
@@ -3974,7 +4052,7 @@ struct _HMAPPER
     ptrdiff_t Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lsalookup/ns-lsalookup-lsa_unicode_string))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lsalookup/ns-lsalookup-lsa_unicode_string
 struct LSA_UNICODE_STRING
 {
     ushort Length;
@@ -3982,7 +4060,7 @@ struct LSA_UNICODE_STRING
     PWSTR  Buffer;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lsalookup/ns-lsalookup-lsa_string))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lsalookup/ns-lsalookup-lsa_string
 struct LSA_STRING
 {
     ushort Length;
@@ -3990,7 +4068,7 @@ struct LSA_STRING
     /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR Buffer;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lsalookup/ns-lsalookup-lsa_object_attributes))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lsalookup/ns-lsalookup-lsa_object_attributes
 struct LSA_OBJECT_ATTRIBUTES
 {
     uint                Length;
@@ -4001,21 +4079,21 @@ struct LSA_OBJECT_ATTRIBUTES
     void*               SecurityQualityOfService;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lsalookup/ns-lsalookup-lsa_trust_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lsalookup/ns-lsalookup-lsa_trust_information
 struct LSA_TRUST_INFORMATION
 {
     LSA_UNICODE_STRING Name;
     PSID               Sid;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lsalookup/ns-lsalookup-lsa_referenced_domain_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lsalookup/ns-lsalookup-lsa_referenced_domain_list
 struct LSA_REFERENCED_DOMAIN_LIST
 {
     uint Entries;
     LSA_TRUST_INFORMATION* Domains;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lsalookup/ns-lsalookup-lsa_translated_sid2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lsalookup/ns-lsalookup-lsa_translated_sid2
 struct LSA_TRANSLATED_SID2
 {
     SID_NAME_USE Use;
@@ -4024,7 +4102,7 @@ struct LSA_TRANSLATED_SID2
     uint         Flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lsalookup/ns-lsalookup-lsa_translated_name))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lsalookup/ns-lsalookup-lsa_translated_name
 struct LSA_TRANSLATED_NAME
 {
     SID_NAME_USE       Use;
@@ -4032,14 +4110,14 @@ struct LSA_TRANSLATED_NAME
     int                DomainIndex;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lsalookup/ns-lsalookup-policy_account_domain_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lsalookup/ns-lsalookup-policy_account_domain_info
 struct POLICY_ACCOUNT_DOMAIN_INFO
 {
     LSA_UNICODE_STRING DomainName;
     PSID               DomainSid;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lsalookup/ns-lsalookup-policy_dns_domain_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lsalookup/ns-lsalookup-policy_dns_domain_info
 struct POLICY_DNS_DOMAIN_INFO
 {
     LSA_UNICODE_STRING Name;
@@ -4105,7 +4183,7 @@ struct SE_ADT_PARAMETER_ARRAY_EX
     SE_ADT_PARAMETER_ARRAY_ENTRY[32] Parameters;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-lsa_translated_sid))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-lsa_translated_sid
 struct LSA_TRANSLATED_SID
 {
     SID_NAME_USE Use;
@@ -4123,7 +4201,7 @@ struct POLICY_AUDIT_LOG_INFO
     uint    NextAuditRecordId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-policy_audit_events_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-policy_audit_events_info
 struct POLICY_AUDIT_EVENTS_INFO
 {
     BOOLEAN AuditingMode;
@@ -4143,7 +4221,7 @@ struct POLICY_AUDIT_CATEGORIES_INFO
     POLICY_AUDIT_SUBCATEGORIES_INFO* SubCategoriesInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-policy_primary_domain_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-policy_primary_domain_info
 struct POLICY_PRIMARY_DOMAIN_INFO
 {
     LSA_UNICODE_STRING Name;
@@ -4155,7 +4233,7 @@ struct POLICY_PD_ACCOUNT_INFO
     LSA_UNICODE_STRING Name;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-policy_lsa_server_role_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-policy_lsa_server_role_info
 struct POLICY_LSA_SERVER_ROLE_INFO
 {
     POLICY_LSA_SERVER_ROLE LsaServerRole;
@@ -4172,7 +4250,7 @@ struct POLICY_DEFAULT_QUOTA_INFO
     QUOTA_LIMITS QuotaLimits;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-policy_modification_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-policy_modification_info
 struct POLICY_MODIFICATION_INFO
 {
     long ModifiedId;
@@ -4219,7 +4297,7 @@ struct POLICY_MACHINE_ACCT_INFO2
     GUID ObjectGuid;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-trusted_domain_name_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-trusted_domain_name_info
 struct TRUSTED_DOMAIN_NAME_INFO
 {
     LSA_UNICODE_STRING Name;
@@ -4231,20 +4309,20 @@ struct TRUSTED_CONTROLLERS_INFO
     LSA_UNICODE_STRING* Names;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-trusted_posix_offset_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-trusted_posix_offset_info
 struct TRUSTED_POSIX_OFFSET_INFO
 {
     uint Offset;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-trusted_password_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-trusted_password_info
 struct TRUSTED_PASSWORD_INFO
 {
     LSA_UNICODE_STRING Password;
     LSA_UNICODE_STRING OldPassword;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-trusted_domain_information_ex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-trusted_domain_information_ex
 struct TRUSTED_DOMAIN_INFORMATION_EX
 {
     LSA_UNICODE_STRING Name;
@@ -4267,7 +4345,7 @@ struct TRUSTED_DOMAIN_INFORMATION_EX2
     ubyte*             ForestTrustInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-lsa_auth_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-lsa_auth_information
 struct LSA_AUTH_INFORMATION
 {
     long   LastUpdateTime;
@@ -4276,7 +4354,7 @@ struct LSA_AUTH_INFORMATION
     ubyte* AuthInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-trusted_domain_auth_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-trusted_domain_auth_information
 struct TRUSTED_DOMAIN_AUTH_INFORMATION
 {
     uint IncomingAuthInfos;
@@ -4287,7 +4365,7 @@ struct TRUSTED_DOMAIN_AUTH_INFORMATION
     LSA_AUTH_INFORMATION* OutgoingPreviousAuthenticationInformation;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-trusted_domain_full_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-trusted_domain_full_information
 struct TRUSTED_DOMAIN_FULL_INFORMATION
 {
     TRUSTED_DOMAIN_INFORMATION_EX Information;
@@ -4307,7 +4385,7 @@ struct TRUSTED_DOMAIN_SUPPORTED_ENCRYPTION_TYPES
     uint SupportedEncryptionTypes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-lsa_forest_trust_domain_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-lsa_forest_trust_domain_info
 struct LSA_FOREST_TRUST_DOMAIN_INFO
 {
     PSID               Sid;
@@ -4322,20 +4400,25 @@ struct LSA_FOREST_TRUST_SCANNER_INFO
     LSA_UNICODE_STRING NetbiosName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-lsa_forest_trust_binary_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-lsa_forest_trust_binary_data
 struct LSA_FOREST_TRUST_BINARY_DATA
 {
     uint   Length;
     ubyte* Buffer;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-lsa_forest_trust_record))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-lsa_forest_trust_record
 struct LSA_FOREST_TRUST_RECORD
 {
     uint Flags;
     LSA_FOREST_TRUST_RECORD_TYPE ForestTrustType;
     long Time;
-    _ForestTrustData_e__Union ForestTrustData;
+    union ForestTrustData
+    {
+        LSA_UNICODE_STRING TopLevelName;
+        LSA_FOREST_TRUST_DOMAIN_INFO DomainInfo;
+        LSA_FOREST_TRUST_BINARY_DATA Data;
+    }
 }
 
 struct LSA_FOREST_TRUST_RECORD2
@@ -4343,10 +4426,16 @@ struct LSA_FOREST_TRUST_RECORD2
     uint Flags;
     LSA_FOREST_TRUST_RECORD_TYPE ForestTrustType;
     long Time;
-    _ForestTrustData_e__Union ForestTrustData;
+    union ForestTrustData
+    {
+        LSA_UNICODE_STRING TopLevelName;
+        LSA_FOREST_TRUST_DOMAIN_INFO DomainInfo;
+        LSA_FOREST_TRUST_BINARY_DATA BinaryData;
+        LSA_FOREST_TRUST_SCANNER_INFO ScannerInfo;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-lsa_forest_trust_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-lsa_forest_trust_information
 struct LSA_FOREST_TRUST_INFORMATION
 {
     uint RecordCount;
@@ -4359,7 +4448,7 @@ struct LSA_FOREST_TRUST_INFORMATION2
     LSA_FOREST_TRUST_RECORD2** Entries;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-lsa_forest_trust_collision_record))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-lsa_forest_trust_collision_record
 struct LSA_FOREST_TRUST_COLLISION_RECORD
 {
     uint               Index;
@@ -4368,20 +4457,20 @@ struct LSA_FOREST_TRUST_COLLISION_RECORD
     LSA_UNICODE_STRING Name;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-lsa_forest_trust_collision_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-lsa_forest_trust_collision_information
 struct LSA_FOREST_TRUST_COLLISION_INFORMATION
 {
     uint RecordCount;
     LSA_FOREST_TRUST_COLLISION_RECORD** Entries;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-lsa_enumeration_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-lsa_enumeration_information
 struct LSA_ENUMERATION_INFORMATION
 {
     PSID Sid;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-lsa_last_inter_logon_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-lsa_last_inter_logon_info
 struct LSA_LAST_INTER_LOGON_INFO
 {
     long LastSuccessfulLogon;
@@ -4389,7 +4478,7 @@ struct LSA_LAST_INTER_LOGON_INFO
     uint FailedAttemptCountSinceLastSuccessfulLogon;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-security_logon_session_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-security_logon_session_data
 struct SECURITY_LOGON_SESSION_DATA
 {
     uint               Size;
@@ -4417,7 +4506,7 @@ struct SECURITY_LOGON_SESSION_DATA
     long               PasswordMustChange;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntlsa/ns-ntlsa-central_access_policy_entry))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntlsa/ns-ntlsa-central_access_policy_entry
 struct CENTRAL_ACCESS_POLICY_ENTRY
 {
     LSA_UNICODE_STRING   Name;
@@ -4432,7 +4521,7 @@ struct CENTRAL_ACCESS_POLICY_ENTRY
     uint                 Flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntlsa/ns-ntlsa-central_access_policy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntlsa/ns-ntlsa-central_access_policy
 struct CENTRAL_ACCESS_POLICY
 {
     PSID               CAPID;
@@ -4473,7 +4562,7 @@ struct NEGOTIATE_CALLER_NAME_RESPONSE
     PWSTR CallerName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-domain_password_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-domain_password_information
 struct DOMAIN_PASSWORD_INFORMATION
 {
     ushort MinPasswordLength;
@@ -4483,7 +4572,7 @@ struct DOMAIN_PASSWORD_INFORMATION
     long   MinPasswordAge;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-msv1_0_interactive_logon))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-msv1_0_interactive_logon
 struct MSV1_0_INTERACTIVE_LOGON
 {
     MSV1_0_LOGON_SUBMIT_TYPE MessageType;
@@ -4492,7 +4581,7 @@ struct MSV1_0_INTERACTIVE_LOGON
     LSA_UNICODE_STRING Password;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-msv1_0_interactive_profile))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-msv1_0_interactive_profile
 struct MSV1_0_INTERACTIVE_PROFILE
 {
     MSV1_0_PROFILE_BUFFER_TYPE MessageType;
@@ -4513,7 +4602,7 @@ struct MSV1_0_INTERACTIVE_PROFILE
     uint               UserFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-msv1_0_lm20_logon))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-msv1_0_lm20_logon
 struct MSV1_0_LM20_LOGON
 {
     MSV1_0_LOGON_SUBMIT_TYPE MessageType;
@@ -4526,7 +4615,7 @@ struct MSV1_0_LM20_LOGON
     uint               ParameterControl;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-msv1_0_subauth_logon))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-msv1_0_subauth_logon
 struct MSV1_0_SUBAUTH_LOGON
 {
     MSV1_0_LOGON_SUBMIT_TYPE MessageType;
@@ -4548,7 +4637,7 @@ struct MSV1_0_S4U_LOGON
     LSA_UNICODE_STRING DomainName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-msv1_0_lm20_logon_profile))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-msv1_0_lm20_logon_profile
 struct MSV1_0_LM20_LOGON_PROFILE
 {
     MSV1_0_PROFILE_BUFFER_TYPE MessageType;
@@ -4567,7 +4656,7 @@ struct MSV1_0_CREDENTIAL_KEY
     ubyte[20] Data;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-msv1_0_supplemental_credential))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-msv1_0_supplemental_credential
 struct MSV1_0_SUPPLEMENTAL_CREDENTIAL
 {
     uint      Version;
@@ -4666,7 +4755,7 @@ struct MSV1_0_PASSTHROUGH_RESPONSE
     ubyte* ValidationData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-msv1_0_subauth_request))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-msv1_0_subauth_request
 struct MSV1_0_SUBAUTH_REQUEST
 {
     MSV1_0_PROTOCOL_MESSAGE_TYPE MessageType;
@@ -4675,7 +4764,7 @@ struct MSV1_0_SUBAUTH_REQUEST
     ubyte* SubAuthSubmitBuffer;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-msv1_0_subauth_response))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-msv1_0_subauth_response
 struct MSV1_0_SUBAUTH_RESPONSE
 {
     MSV1_0_PROTOCOL_MESSAGE_TYPE MessageType;
@@ -4683,7 +4772,7 @@ struct MSV1_0_SUBAUTH_RESPONSE
     ubyte* SubAuthReturnBuffer;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_interactive_logon))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_interactive_logon
 struct KERB_INTERACTIVE_LOGON
 {
     KERB_LOGON_SUBMIT_TYPE MessageType;
@@ -4692,14 +4781,14 @@ struct KERB_INTERACTIVE_LOGON
     LSA_UNICODE_STRING Password;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_interactive_unlock_logon))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_interactive_unlock_logon
 struct KERB_INTERACTIVE_UNLOCK_LOGON
 {
     KERB_INTERACTIVE_LOGON Logon;
     LUID LogonId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_smart_card_logon))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_smart_card_logon
 struct KERB_SMART_CARD_LOGON
 {
     KERB_LOGON_SUBMIT_TYPE MessageType;
@@ -4708,14 +4797,14 @@ struct KERB_SMART_CARD_LOGON
     ubyte*             CspData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_smart_card_unlock_logon))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_smart_card_unlock_logon
 struct KERB_SMART_CARD_UNLOCK_LOGON
 {
     KERB_SMART_CARD_LOGON Logon;
     LUID LogonId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_certificate_logon))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_certificate_logon
 struct KERB_CERTIFICATE_LOGON
 {
     KERB_LOGON_SUBMIT_TYPE MessageType;
@@ -4727,14 +4816,14 @@ struct KERB_CERTIFICATE_LOGON
     ubyte*             CspData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_certificate_unlock_logon))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_certificate_unlock_logon
 struct KERB_CERTIFICATE_UNLOCK_LOGON
 {
     KERB_CERTIFICATE_LOGON Logon;
     LUID LogonId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_certificate_s4u_logon))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_certificate_s4u_logon
 struct KERB_CERTIFICATE_S4U_LOGON
 {
     KERB_LOGON_SUBMIT_TYPE MessageType;
@@ -4745,7 +4834,7 @@ struct KERB_CERTIFICATE_S4U_LOGON
     ubyte*             Certificate;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_ticket_logon))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_ticket_logon
 struct KERB_TICKET_LOGON
 {
     KERB_LOGON_SUBMIT_TYPE MessageType;
@@ -4756,14 +4845,14 @@ struct KERB_TICKET_LOGON
     ubyte* TicketGrantingTicket;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_ticket_unlock_logon))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_ticket_unlock_logon
 struct KERB_TICKET_UNLOCK_LOGON
 {
     KERB_TICKET_LOGON Logon;
     LUID              LogonId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_s4u_logon))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_s4u_logon
 struct KERB_S4U_LOGON
 {
     KERB_LOGON_SUBMIT_TYPE MessageType;
@@ -4772,7 +4861,7 @@ struct KERB_S4U_LOGON
     LSA_UNICODE_STRING ClientRealm;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_interactive_profile))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_interactive_profile
 struct KERB_INTERACTIVE_PROFILE
 {
     KERB_PROFILE_BUFFER_TYPE MessageType;
@@ -4800,7 +4889,7 @@ struct KERB_SMART_CARD_PROFILE
     ubyte* CertificateData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_crypto_key))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_crypto_key
 struct KERB_CRYPTO_KEY
 {
     KERB_CRYPTO_KEY_TYPE KeyType;
@@ -4815,21 +4904,21 @@ struct KERB_CRYPTO_KEY32
     uint Offset;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_ticket_profile))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_ticket_profile
 struct KERB_TICKET_PROFILE
 {
     KERB_INTERACTIVE_PROFILE Profile;
     KERB_CRYPTO_KEY SessionKey;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_query_tkt_cache_request))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_query_tkt_cache_request
 struct KERB_QUERY_TKT_CACHE_REQUEST
 {
     KERB_PROTOCOL_MESSAGE_TYPE MessageType;
     LUID LogonId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_ticket_cache_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_ticket_cache_info
 struct KERB_TICKET_CACHE_INFO
 {
     LSA_UNICODE_STRING ServerName;
@@ -4886,7 +4975,7 @@ struct KERB_TICKET_CACHE_INFO_EX3
     LSA_UNICODE_STRING KdcCalled;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_query_tkt_cache_response))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_query_tkt_cache_response
 struct KERB_QUERY_TKT_CACHE_RESPONSE
 {
     KERB_PROTOCOL_MESSAGE_TYPE MessageType;
@@ -4935,7 +5024,7 @@ struct KERB_NET_ADDRESSES
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/KERB_NET_ADDRESS[1] Addresses;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_external_name))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_external_name
 struct KERB_EXTERNAL_NAME
 {
     short  NameType;
@@ -4943,7 +5032,7 @@ struct KERB_EXTERNAL_NAME
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/LSA_UNICODE_STRING[1] Names;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_external_ticket))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_external_ticket
 struct KERB_EXTERNAL_TICKET
 {
     KERB_EXTERNAL_NAME* ServiceName;
@@ -4964,7 +5053,7 @@ struct KERB_EXTERNAL_TICKET
     ubyte*              EncodedTicket;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_retrieve_tkt_request))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_retrieve_tkt_request
 struct KERB_RETRIEVE_TKT_REQUEST
 {
     KERB_PROTOCOL_MESSAGE_TYPE MessageType;
@@ -4976,13 +5065,13 @@ struct KERB_RETRIEVE_TKT_REQUEST
     SecHandle            CredentialsHandle;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_retrieve_tkt_response))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_retrieve_tkt_response
 struct KERB_RETRIEVE_TKT_RESPONSE
 {
     KERB_EXTERNAL_TICKET Ticket;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_purge_tkt_cache_request))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_purge_tkt_cache_request
 struct KERB_PURGE_TKT_CACHE_REQUEST
 {
     KERB_PROTOCOL_MESSAGE_TYPE MessageType;
@@ -5126,15 +5215,15 @@ struct KERB_CLOUD_KERBEROS_DEBUG_RESPONSE
 
 struct KERB_CLOUD_KERBEROS_DEBUG_DATA_V0
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(KdcProxyPresent)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield69;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(KdcProxyPresent)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield167;
 }
 
 struct KERB_CLOUD_KERBEROS_DEBUG_DATA
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(AsRepSourceCred)), FixedArgSig(ElementSig(9)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield70;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(AsRepSourceCred)), FixedArgSig(ElementSig(9)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield168;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_changepassword_request))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_changepassword_request
 struct KERB_CHANGEPASSWORD_REQUEST
 {
     KERB_PROTOCOL_MESSAGE_TYPE MessageType;
@@ -5197,7 +5286,7 @@ struct KERB_DECRYPT_RESPONSE
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] DecryptedData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_add_binding_cache_entry_request))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_add_binding_cache_entry_request
 struct KERB_ADD_BINDING_CACHE_ENTRY_REQUEST
 {
     KERB_PROTOCOL_MESSAGE_TYPE MessageType;
@@ -5214,7 +5303,7 @@ struct KERB_REFRESH_SCCRED_REQUEST
     uint               Flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_add_credentials_request))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_add_credentials_request
 struct KERB_ADD_CREDENTIALS_REQUEST
 {
     KERB_PROTOCOL_MESSAGE_TYPE MessageType;
@@ -5225,7 +5314,7 @@ struct KERB_ADD_CREDENTIALS_REQUEST
     KERB_REQUEST_FLAGS Flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_add_credentials_request_ex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_add_credentials_request_ex
 struct KERB_ADD_CREDENTIALS_REQUEST_EX
 {
     KERB_ADD_CREDENTIALS_REQUEST Credentials;
@@ -5241,14 +5330,14 @@ struct KERB_TRANSFER_CRED_REQUEST
     uint Flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_cleanup_machine_pkinit_creds_request))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_cleanup_machine_pkinit_creds_request
 struct KERB_CLEANUP_MACHINE_PKINIT_CREDS_REQUEST
 {
     KERB_PROTOCOL_MESSAGE_TYPE MessageType;
     LUID LogonId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_binding_cache_entry_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_binding_cache_entry_data
 struct KERB_BINDING_CACHE_ENTRY_DATA
 {
     ulong              DiscoveryTime;
@@ -5261,7 +5350,7 @@ struct KERB_BINDING_CACHE_ENTRY_DATA
     LSA_UNICODE_STRING KdcName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_query_binding_cache_response))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_query_binding_cache_response
 struct KERB_QUERY_BINDING_CACHE_RESPONSE
 {
     KERB_PROTOCOL_MESSAGE_TYPE MessageType;
@@ -5269,7 +5358,7 @@ struct KERB_QUERY_BINDING_CACHE_RESPONSE
     KERB_BINDING_CACHE_ENTRY_DATA* Entries;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_add_binding_cache_entry_ex_request))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_add_binding_cache_entry_ex_request
 struct KERB_ADD_BINDING_CACHE_ENTRY_EX_REQUEST
 {
     KERB_PROTOCOL_MESSAGE_TYPE MessageType;
@@ -5279,19 +5368,19 @@ struct KERB_ADD_BINDING_CACHE_ENTRY_EX_REQUEST
     uint               DcFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_query_binding_cache_request))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_query_binding_cache_request
 struct KERB_QUERY_BINDING_CACHE_REQUEST
 {
     KERB_PROTOCOL_MESSAGE_TYPE MessageType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_purge_binding_cache_request))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_purge_binding_cache_request
 struct KERB_PURGE_BINDING_CACHE_REQUEST
 {
     KERB_PROTOCOL_MESSAGE_TYPE MessageType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_query_domain_extended_policies_request))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_query_domain_extended_policies_request
 struct KERB_QUERY_DOMAIN_EXTENDED_POLICIES_REQUEST
 {
     KERB_PROTOCOL_MESSAGE_TYPE MessageType;
@@ -5299,7 +5388,7 @@ struct KERB_QUERY_DOMAIN_EXTENDED_POLICIES_REQUEST
     LSA_UNICODE_STRING DomainName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_query_domain_extended_policies_response))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_query_domain_extended_policies_response
 struct KERB_QUERY_DOMAIN_EXTENDED_POLICIES_RESPONSE
 {
     KERB_PROTOCOL_MESSAGE_TYPE MessageType;
@@ -5308,28 +5397,28 @@ struct KERB_QUERY_DOMAIN_EXTENDED_POLICIES_RESPONSE
     uint DsFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_certificate_hashinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_certificate_hashinfo
 struct KERB_CERTIFICATE_HASHINFO
 {
     ushort StoreNameLength;
     ushort HashLength;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_certificate_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-kerb_certificate_info
 struct KERB_CERTIFICATE_INFO
 {
     uint CertInfoSize;
     uint InfoType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-policy_audit_sid_array))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-policy_audit_sid_array
 struct POLICY_AUDIT_SID_ARRAY
 {
     uint  UsersCount;
     PSID* UserSidArray;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-audit_policy_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-audit_policy_information
 struct AUDIT_POLICY_INFORMATION
 {
     GUID AuditSubCategoryGuid;
@@ -5337,14 +5426,14 @@ struct AUDIT_POLICY_INFORMATION
     GUID AuditCategoryGuid;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-pku2u_cert_blob))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-pku2u_cert_blob
 struct PKU2U_CERT_BLOB
 {
     uint   CertOffset;
     ushort CertLength;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-pku2u_credui_context))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-pku2u_credui_context
 struct PKU2U_CREDUI_CONTEXT
 {
     ulong  Version;
@@ -5354,7 +5443,7 @@ struct PKU2U_CREDUI_CONTEXT
     uint   CertArrayOffset;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-pku2u_certificate_s4u_logon))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/ns-ntsecapi-pku2u_certificate_s4u_logon
 struct PKU2U_CERTIFICATE_S4U_LOGON
 {
     PKU2U_LOGON_SUBMIT_TYPE MessageType;
@@ -5365,7 +5454,7 @@ struct PKU2U_CERTIFICATE_S4U_LOGON
     ubyte*             Certificate;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-security_string))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-security_string
 struct SECURITY_STRING
 {
     ushort  Length;
@@ -5374,7 +5463,7 @@ struct SECURITY_STRING
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkginfow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkginfow
 struct SecPkgInfoW
 {
     uint    fCapabilities;
@@ -5386,7 +5475,7 @@ struct SecPkgInfoW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkginfoa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkginfoa
 struct SecPkgInfoA
 {
     uint   fCapabilities;
@@ -5397,7 +5486,7 @@ struct SecPkgInfoA
     byte*  Comment;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secbuffer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secbuffer
 struct SecBuffer
 {
     uint  cbBuffer;
@@ -5405,7 +5494,7 @@ struct SecBuffer
     void* pvBuffer;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secbufferdesc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secbufferdesc
 struct SecBufferDesc
 {
     uint       ulVersion;
@@ -5413,7 +5502,7 @@ struct SecBufferDesc
     SecBuffer* pBuffers;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-sec_negotiation_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-sec_negotiation_info
 struct SEC_NEGOTIATION_INFO
 {
     uint    Size;
@@ -5422,7 +5511,7 @@ struct SEC_NEGOTIATION_INFO
     void*   Reserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-sec_channel_bindings))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-sec_channel_bindings
 struct SEC_CHANNEL_BINDINGS
 {
     uint dwInitiatorAddrType;
@@ -5456,7 +5545,7 @@ struct SEC_CHANNEL_BINDINGS_RESULT
     uint flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-sec_application_protocol_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-sec_application_protocol_list
 struct SEC_APPLICATION_PROTOCOL_LIST
 {
     SEC_APPLICATION_PROTOCOL_NEGOTIATION_EXT ProtoNegoExt;
@@ -5464,28 +5553,28 @@ struct SEC_APPLICATION_PROTOCOL_LIST
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] ProtocolList;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-sec_application_protocols))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-sec_application_protocols
 struct SEC_APPLICATION_PROTOCOLS
 {
     uint ProtocolListsSize;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SEC_APPLICATION_PROTOCOL_LIST[1] ProtocolLists;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-sec_srtp_protection_profiles))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-sec_srtp_protection_profiles
 struct SEC_SRTP_PROTECTION_PROFILES
 {
     ushort ProfilesSize;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ushort[1] ProfilesList;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-sec_srtp_master_key_identifier))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-sec_srtp_master_key_identifier
 struct SEC_SRTP_MASTER_KEY_IDENTIFIER
 {
     ubyte MasterKeyIdentifierSize;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] MasterKeyIdentifier;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-sec_token_binding))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-sec_token_binding
 struct SEC_TOKEN_BINDING
 {
     ubyte  MajorVersion;
@@ -5494,33 +5583,33 @@ struct SEC_TOKEN_BINDING
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] KeyParameters;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-sec_presharedkey))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-sec_presharedkey
 struct SEC_PRESHAREDKEY
 {
     ushort KeySize;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Key;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-sec_presharedkey_identity))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-sec_presharedkey_identity
 struct SEC_PRESHAREDKEY_IDENTITY
 {
     ushort KeyIdentitySize;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] KeyIdentity;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-sec_dtls_mtu))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-sec_dtls_mtu
 struct SEC_DTLS_MTU
 {
     ushort PathMTU;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-sec_flags))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-sec_flags
 struct SEC_FLAGS
 {
     ulong Flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-sec_certificate_request_context))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-sec_certificate_request_context
 struct SEC_CERTIFICATE_REQUEST_CONTEXT
 {
     ubyte cbCertificateRequestContext;
@@ -5539,7 +5628,7 @@ struct SEC_SESSION_TICKET
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] SessionTicket;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-sec_traffic_secrets))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-sec_traffic_secrets
 struct SEC_TRAFFIC_SECRETS
 {
     wchar[64] SymmetricAlgId;
@@ -5555,21 +5644,21 @@ struct SEC_TRAFFIC_SECRETS
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcredentials_namesw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcredentials_namesw
 struct SecPkgCredentials_NamesW
 {
     ushort* sUserName;
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcredentials_namesa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcredentials_namesa
 struct SecPkgCredentials_NamesA
 {
     byte* sUserName;
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcredentials_ssiproviderw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcredentials_ssiproviderw
 struct SecPkgCredentials_SSIProviderW
 {
     ushort* sProviderName;
@@ -5578,7 +5667,7 @@ struct SecPkgCredentials_SSIProviderW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcredentials_ssiprovidera))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcredentials_ssiprovidera
 struct SecPkgCredentials_SSIProviderA
 {
     byte* sProviderName;
@@ -5586,7 +5675,7 @@ struct SecPkgCredentials_SSIProviderA
     PSTR  ProviderInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcredentials_kdcproxysettingsw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcredentials_kdcproxysettingsw
 struct SecPkgCredentials_KdcProxySettingsW
 {
     uint   Version;
@@ -5608,39 +5697,39 @@ struct SecPkgCredentials_KdcNetworkSettingsW
     uint   DcDiscoveryFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcredentials_cert))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcredentials_cert
 struct SecPkgCredentials_Cert
 {
     uint   EncodedCertSize;
     ubyte* EncodedCert;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_subjectattributes))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_subjectattributes
 struct SecPkgContext_SubjectAttributes
 {
     void* AttributeInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_credinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_credinfo
 struct SecPkgContext_CredInfo
 {
     SECPKG_CRED_CLASS CredClass;
     uint              IsPromptingNeeded;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_negopackageinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_negopackageinfo
 struct SecPkgContext_NegoPackageInfo
 {
     uint PackageMask;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_negostatus))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_negostatus
 struct SecPkgContext_NegoStatus
 {
     uint LastStatus;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_sizes))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_sizes
 struct SecPkgContext_Sizes
 {
     uint cbMaxToken;
@@ -5649,7 +5738,7 @@ struct SecPkgContext_Sizes
     uint cbSecurityTrailer;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_streamsizes))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_streamsizes
 struct SecPkgContext_StreamSizes
 {
     uint cbHeader;
@@ -5660,33 +5749,33 @@ struct SecPkgContext_StreamSizes
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_namesw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_namesw
 struct SecPkgContext_NamesW
 {
     ushort* sUserName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_lastclienttokenstatus))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_lastclienttokenstatus
 struct SecPkgContext_LastClientTokenStatus
 {
     SECPKG_ATTR_LCT_STATUS LastClientTokenStatus;
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_namesa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_namesa
 struct SecPkgContext_NamesA
 {
     byte* sUserName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_lifespan))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_lifespan
 struct SecPkgContext_Lifespan
 {
     long tsStart;
     long tsExpiry;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_dceinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_dceinfo
 struct SecPkgContext_DceInfo
 {
     uint  AuthzSvc;
@@ -5694,7 +5783,7 @@ struct SecPkgContext_DceInfo
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_keyinfoa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_keyinfoa
 struct SecPkgContext_KeyInfoA
 {
     byte* sSignatureAlgorithmName;
@@ -5705,7 +5794,7 @@ struct SecPkgContext_KeyInfoA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_keyinfow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_keyinfow
 struct SecPkgContext_KeyInfoW
 {
     ushort* sSignatureAlgorithmName;
@@ -5716,21 +5805,21 @@ struct SecPkgContext_KeyInfoW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_authoritya))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_authoritya
 struct SecPkgContext_AuthorityA
 {
     byte* sAuthorityName;
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_authorityw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_authorityw
 struct SecPkgContext_AuthorityW
 {
     ushort* sAuthorityName;
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_protoinfoa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_protoinfoa
 struct SecPkgContext_ProtoInfoA
 {
     byte* sProtocolName;
@@ -5739,7 +5828,7 @@ struct SecPkgContext_ProtoInfoA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_protoinfow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_protoinfow
 struct SecPkgContext_ProtoInfoW
 {
     ushort* sProtocolName;
@@ -5747,26 +5836,26 @@ struct SecPkgContext_ProtoInfoW
     uint    minorVersion;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_passwordexpiry))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_passwordexpiry
 struct SecPkgContext_PasswordExpiry
 {
     long tsPasswordExpires;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_logofftime))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_logofftime
 struct SecPkgContext_LogoffTime
 {
     long tsLogoffTime;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_sessionkey))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_sessionkey
 struct SecPkgContext_SessionKey
 {
     uint   SessionKeyLength;
     ubyte* SessionKey;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_negokeys))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_negokeys
 struct SecPkgContext_NegoKeys
 {
     uint   KeyType;
@@ -5778,33 +5867,33 @@ struct SecPkgContext_NegoKeys
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_packageinfow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_packageinfow
 struct SecPkgContext_PackageInfoW
 {
     SecPkgInfoW* PackageInfo;
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_packageinfoa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_packageinfoa
 struct SecPkgContext_PackageInfoA
 {
     SecPkgInfoA* PackageInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_userflags))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_userflags
 struct SecPkgContext_UserFlags
 {
     uint UserFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_flags))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_flags
 struct SecPkgContext_Flags
 {
     uint Flags;
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_negotiationinfoa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_negotiationinfoa
 struct SecPkgContext_NegotiationInfoA
 {
     SecPkgInfoA* PackageInfo;
@@ -5812,7 +5901,7 @@ struct SecPkgContext_NegotiationInfoA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_negotiationinfow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_negotiationinfow
 struct SecPkgContext_NegotiationInfoW
 {
     SecPkgInfoW* PackageInfo;
@@ -5820,7 +5909,7 @@ struct SecPkgContext_NegotiationInfoW
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_nativenamesw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_nativenamesw
 struct SecPkgContext_NativeNamesW
 {
     ushort* sClientName;
@@ -5828,7 +5917,7 @@ struct SecPkgContext_NativeNamesW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-_secpkgcontext_nativenamesa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-_secpkgcontext_nativenamesa
 struct SecPkgContext_NativeNamesA
 {
     byte* sClientName;
@@ -5836,7 +5925,7 @@ struct SecPkgContext_NativeNamesA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_credentialnamew))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_credentialnamew
 struct SecPkgContext_CredentialNameW
 {
     uint    CredentialType;
@@ -5844,54 +5933,54 @@ struct SecPkgContext_CredentialNameW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-_secpkgcontext_credentialnamea))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-_secpkgcontext_credentialnamea
 struct SecPkgContext_CredentialNameA
 {
     uint  CredentialType;
     byte* sCredentialName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_accesstoken))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_accesstoken
 struct SecPkgContext_AccessToken
 {
     void* AccessToken;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_targetinformation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_targetinformation
 struct SecPkgContext_TargetInformation
 {
     uint   MarshalledTargetInfoLength;
     ubyte* MarshalledTargetInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_authzid))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_authzid
 struct SecPkgContext_AuthzID
 {
     uint AuthzIDLength;
     PSTR AuthzID;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_target))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_target
 struct SecPkgContext_Target
 {
     uint TargetLength;
     PSTR Target;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_clientspecifiedtarget))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_clientspecifiedtarget
 struct SecPkgContext_ClientSpecifiedTarget
 {
     ushort* sTargetName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_bindings))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_bindings
 struct SecPkgContext_Bindings
 {
     uint BindingsLength;
     SEC_CHANNEL_BINDINGS* Bindings;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_applicationprotocol))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_applicationprotocol
 struct SecPkgContext_ApplicationProtocol
 {
     SEC_APPLICATION_PROTOCOL_NEGOTIATION_STATUS ProtoNegoStatus;
@@ -5900,7 +5989,7 @@ struct SecPkgContext_ApplicationProtocol
     ubyte[255] ProtocolId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_negotiatedtlsextensions))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-secpkgcontext_negotiatedtlsextensions
 struct SecPkgContext_NegotiatedTlsExtensions
 {
     uint    ExtensionsCount;
@@ -5917,7 +6006,7 @@ struct SECPKG_APP_MODE_INFO
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-securityfunctiontablew))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-securityfunctiontablew
 struct SecurityFunctionTableW
 {
     uint                 dwVersion;
@@ -5955,7 +6044,7 @@ struct SecurityFunctionTableW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-securityfunctiontablea))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-securityfunctiontablea
 struct SecurityFunctionTableA
 {
     uint                 dwVersion;
@@ -5992,7 +6081,7 @@ struct SecurityFunctionTableA
     QUERY_CREDENTIALS_ATTRIBUTES_EX_FN_A QueryCredentialsAttributesExA;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-sec_winnt_auth_identity_ex2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-sec_winnt_auth_identity_ex2
 struct SEC_WINNT_AUTH_IDENTITY_EX2
 {
     uint   Version;
@@ -6010,7 +6099,7 @@ struct SEC_WINNT_AUTH_IDENTITY_EX2
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-sec_winnt_auth_identity_exw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-sec_winnt_auth_identity_exw
 struct SEC_WINNT_AUTH_IDENTITY_EXW
 {
     uint    Version;
@@ -6027,7 +6116,7 @@ struct SEC_WINNT_AUTH_IDENTITY_EXW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-sec_winnt_auth_identity_exa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-sec_winnt_auth_identity_exa
 struct SEC_WINNT_AUTH_IDENTITY_EXA
 {
     uint   Version;
@@ -6043,7 +6132,7 @@ struct SEC_WINNT_AUTH_IDENTITY_EXA
     uint   PackageListLength;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-sec_winnt_auth_identity_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-sec_winnt_auth_identity_info
 union SEC_WINNT_AUTH_IDENTITY_INFO
 {
     SEC_WINNT_AUTH_IDENTITY_EXW AuthIdExw;
@@ -6053,7 +6142,7 @@ union SEC_WINNT_AUTH_IDENTITY_INFO
     SEC_WINNT_AUTH_IDENTITY_EX2 AuthIdEx2;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-security_package_options))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-security_package_options
 struct SECURITY_PACKAGE_OPTIONS
 {
     uint  Size;
@@ -6063,14 +6152,14 @@ struct SECURITY_PACKAGE_OPTIONS
     void* Signature;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-lsa_token_information_null))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-lsa_token_information_null
 struct LSA_TOKEN_INFORMATION_NULL
 {
     long          ExpirationTime;
     TOKEN_GROUPS* Groups;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-lsa_token_information_v1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-lsa_token_information_v1
 struct LSA_TOKEN_INFORMATION_V1
 {
     long                ExpirationTime;
@@ -6082,7 +6171,7 @@ struct LSA_TOKEN_INFORMATION_V1
     TOKEN_DEFAULT_DACL  DefaultDacl;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-lsa_token_information_v3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-lsa_token_information_v3
 struct LSA_TOKEN_INFORMATION_V3
 {
     long                ExpirationTime;
@@ -6097,7 +6186,7 @@ struct LSA_TOKEN_INFORMATION_V3
     TOKEN_GROUPS*       DeviceGroups;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-lsa_dispatch_table))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-lsa_dispatch_table
 struct LSA_DISPATCH_TABLE
 {
     PLSA_CREATE_LOGON_SESSION CreateLogonSession;
@@ -6132,7 +6221,7 @@ struct SAM_REGISTER_MAPPING_TABLE
     SAM_REGISTER_MAPPING_LIST* Lists;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_client_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_client_info
 struct SECPKG_CLIENT_INFO
 {
     LUID    LogonId;
@@ -6161,7 +6250,7 @@ struct SECPKG_CLIENT_INFO_EX
     HANDLE  IdentificationToken;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_call_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_call_info
 struct SECPKG_CALL_INFO
 {
     uint  ProcessId;
@@ -6177,7 +6266,7 @@ struct SECPKG_FAILURE_REASON
     SECPKG_FAILURE_SPECIAL_REASON Reason;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_supplemental_cred))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_supplemental_cred
 struct SECPKG_SUPPLEMENTAL_CRED
 {
     LSA_UNICODE_STRING PackageName;
@@ -6185,21 +6274,21 @@ struct SECPKG_SUPPLEMENTAL_CRED
     ubyte*             Credentials;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_byte_vector))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_byte_vector
 struct SECPKG_BYTE_VECTOR
 {
     uint   ByteArrayOffset;
     ushort ByteArrayLength;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_short_vector))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_short_vector
 struct SECPKG_SHORT_VECTOR
 {
     uint   ShortArrayOffset;
     ushort ShortArrayCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_supplied_credential))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_supplied_credential
 struct SECPKG_SUPPLIED_CREDENTIAL
 {
     ushort              cbHeaderLength;
@@ -6210,7 +6299,7 @@ struct SECPKG_SUPPLIED_CREDENTIAL
     uint                CredFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_credential))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_credential
 struct SECPKG_CREDENTIAL
 {
     ulong              Version;
@@ -6229,7 +6318,7 @@ struct SECPKG_CREDENTIAL
     SECPKG_BYTE_VECTOR MarshaledSuppliedCreds;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_supplemental_cred_array))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_supplemental_cred_array
 struct SECPKG_SUPPLEMENTAL_CRED_ARRAY
 {
     uint CredentialCount;
@@ -6250,7 +6339,7 @@ struct SECPKG_SURROGATE_LOGON
     SECPKG_SURROGATE_LOGON_ENTRY* Entries;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_primary_cred))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_primary_cred
 struct SECPKG_PRIMARY_CRED
 {
     LUID               LogonId;
@@ -6290,7 +6379,7 @@ struct SECPKG_PRIMARY_CRED_EX
     uint               FlagsEx;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_parameters
 struct SECPKG_PARAMETERS
 {
     uint               Version;
@@ -6302,33 +6391,33 @@ struct SECPKG_PARAMETERS
     GUID               DomainGuid;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_gss_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_gss_info
 struct SECPKG_GSS_INFO
 {
     uint     EncodedIdLength;
     ubyte[4] EncodedId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_context_thunks))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_context_thunks
 struct SECPKG_CONTEXT_THUNKS
 {
     uint InfoLevelCount;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] Levels;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_mutual_auth_level))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_mutual_auth_level
 struct SECPKG_MUTUAL_AUTH_LEVEL
 {
     uint MutualAuthLevel;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_wow_client_dll))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_wow_client_dll
 struct SECPKG_WOW_CLIENT_DLL
 {
     SECURITY_STRING WowClientDllPath;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_serialized_oid))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_serialized_oid
 struct SECPKG_SERIALIZED_OID
 {
     uint      OidLength;
@@ -6336,28 +6425,36 @@ struct SECPKG_SERIALIZED_OID
     ubyte[32] OidValue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_extra_oids))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_extra_oids
 struct SECPKG_EXTRA_OIDS
 {
     uint OidCount;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SECPKG_SERIALIZED_OID[1] Oids;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_nego2_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_nego2_info
 struct SECPKG_NEGO2_INFO
 {
     ubyte[16] AuthScheme;
     uint      PackageFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_extended_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_extended_information
 struct SECPKG_EXTENDED_INFORMATION
 {
     SECPKG_EXTENDED_INFORMATION_CLASS Class;
-    _Info_e__Union Info;
+    union Info
+    {
+        SECPKG_GSS_INFO   GssInfo;
+        SECPKG_CONTEXT_THUNKS ContextThunks;
+        SECPKG_MUTUAL_AUTH_LEVEL MutualAuthLevel;
+        SECPKG_WOW_CLIENT_DLL WowClientDll;
+        SECPKG_EXTRA_OIDS ExtraOids;
+        SECPKG_NEGO2_INFO Nego2Info;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_targetinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_targetinfo
 struct SECPKG_TARGETINFO
 {
     PSID         DomainSid;
@@ -6382,7 +6479,7 @@ struct SecPkgContext_SaslContext
     void* SaslContext;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-security_user_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-security_user_data
 struct SECURITY_USER_DATA
 {
     SECURITY_STRING UserName;
@@ -6433,7 +6530,7 @@ struct SECPKG_POST_LOGON_USER_INFO
     LUID LinkedLogonId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_event_package_change))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_event_package_change
 struct SECPKG_EVENT_PACKAGE_CHANGE
 {
     SECPKG_PACKAGE_CHANGE_TYPE ChangeType;
@@ -6447,7 +6544,7 @@ struct SECPKG_EVENT_ROLE_CHANGE
     uint NewRole;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_event_notify))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_event_notify
 struct SECPKG_EVENT_NOTIFY
 {
     uint  EventClass;
@@ -6457,7 +6554,7 @@ struct SECPKG_EVENT_NOTIFY
     void* PackageParameter;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-encrypted_credentialw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-encrypted_credentialw
 struct ENCRYPTED_CREDENTIALW
 {
     CREDENTIALW Cred;
@@ -6490,7 +6587,7 @@ struct SEC_WINNT_AUTH_IDENTITY_EX32
     uint PackageListLength;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-lsa_secpkg_function_table))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-lsa_secpkg_function_table
 struct LSA_SECPKG_FUNCTION_TABLE
 {
     PLSA_CREATE_LOGON_SESSION CreateLogonSession;
@@ -6561,7 +6658,7 @@ struct LSA_SECPKG_FUNCTION_TABLE
     PLSA_SET_SECPKG_FAILURE_REASON SetSecpkgFailureReason;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_dll_functions))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_dll_functions
 struct SECPKG_DLL_FUNCTIONS
 {
     PLSA_ALLOCATE_LSA_HEAP AllocateHeap;
@@ -6570,7 +6667,7 @@ struct SECPKG_DLL_FUNCTIONS
     PLSA_LOCATE_PKG_BY_ID LocatePackageById;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_function_table))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_function_table
 struct SECPKG_FUNCTION_TABLE
 {
     PLSA_AP_INITIALIZE_PACKAGE InitializePackage;
@@ -6618,7 +6715,7 @@ struct SECPKG_FUNCTION_TABLE
     SpExtractTargetInfoFn ExtractTargetInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_user_function_table))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecpkg/ns-ntsecpkg-secpkg_user_function_table
 struct SECPKG_USER_FUNCTION_TABLE
 {
     SpInstanceInitFn    InstanceInit;
@@ -6747,14 +6844,14 @@ struct SecPkgContext_ClientCertPolicyResult
     GUID    guidPolicyId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-secpkgcontext_issuerlistinfoex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-secpkgcontext_issuerlistinfoex
 struct SecPkgContext_IssuerListInfoEx
 {
     CRYPT_INTEGER_BLOB* aIssuers;
     uint                cIssuers;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-secpkgcontext_connectioninfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-secpkgcontext_connectioninfo
 struct SecPkgContext_ConnectionInfo
 {
     uint   dwProtocol;
@@ -6778,7 +6875,7 @@ struct SecPkgContext_ConnectionInfoEx
     uint      dwExchStrength;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-secpkgcontext_cipherinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-secpkgcontext_cipherinfo
 struct SecPkgContext_CipherInfo
 {
     uint      dwVersion;
@@ -6798,7 +6895,7 @@ struct SecPkgContext_CipherInfo
     uint      dwKeyType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-secpkgcontext_eapkeyblock))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-secpkgcontext_eapkeyblock
 struct SecPkgContext_EapKeyBlock
 {
     ubyte[128] rgbKeys;
@@ -6811,7 +6908,7 @@ struct SecPkgContext_MappedCredAttr
     void* pvBuffer;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-secpkgcontext_sessioninfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-secpkgcontext_sessioninfo
 struct SecPkgContext_SessionInfo
 {
     uint      dwFlags;
@@ -6819,7 +6916,7 @@ struct SecPkgContext_SessionInfo
     ubyte[32] rgbSessionId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-secpkgcontext_sessionappdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-secpkgcontext_sessionappdata
 struct SecPkgContext_SessionAppData
 {
     uint   dwFlags;
@@ -6827,7 +6924,7 @@ struct SecPkgContext_SessionAppData
     ubyte* pbAppData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-secpkgcontext_eapprfinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-secpkgcontext_eapprfinfo
 struct SecPkgContext_EapPrfInfo
 {
     uint   dwVersion;
@@ -6835,7 +6932,7 @@ struct SecPkgContext_EapPrfInfo
     ubyte* pbPrfData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-secpkgcontext_supportedsignatures))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-secpkgcontext_supportedsignatures
 struct SecPkgContext_SupportedSignatures
 {
     ushort  cSignatureAndHashAlgorithms;
@@ -6864,13 +6961,13 @@ struct SecPkgContext_UiInfo
     HWND hParentWindow;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-secpkgcontext_earlystart))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-secpkgcontext_earlystart
 struct SecPkgContext_EarlyStart
 {
     uint dwEarlyStartFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-secpkgcontext_keyingmaterialinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-secpkgcontext_keyingmaterialinfo
 struct SecPkgContext_KeyingMaterialInfo
 {
     ushort cbLabel;
@@ -6880,7 +6977,7 @@ struct SecPkgContext_KeyingMaterialInfo
     uint   cbKeyingMaterial;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-secpkgcontext_keyingmaterial))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-secpkgcontext_keyingmaterial
 struct SecPkgContext_KeyingMaterial
 {
     uint   cbKeyingMaterial;
@@ -6918,7 +7015,7 @@ struct SecPkgContext_CertificateValidationResult
     HRESULT hrVerifyChainStatus;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-schannel_cred))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-schannel_cred
 struct SCHANNEL_CRED
 {
     uint                dwVersion;
@@ -6937,7 +7034,7 @@ struct SCHANNEL_CRED
     uint                dwCredFormat;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-crypto_settings))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-crypto_settings
 struct CRYPTO_SETTINGS
 {
     eTlsAlgorithmUsage  eAlgorithmUsage;
@@ -6948,7 +7045,7 @@ struct CRYPTO_SETTINGS
     uint                dwMaxBitLength;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-tls_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-tls_parameters
 struct TLS_PARAMETERS
 {
     uint                cAlpnIds;
@@ -6959,7 +7056,7 @@ struct TLS_PARAMETERS
     uint                dwFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-sch_credentials))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-sch_credentials
 struct SCH_CREDENTIALS
 {
     uint            dwVersion;
@@ -6997,7 +7094,7 @@ struct SUBSCRIBE_GENERIC_TLS_EXTENSION
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/TLS_EXTENSION_SUBSCRIPTION[1] Subscriptions;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-schannel_cert_hash))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-schannel_cert_hash
 struct SCHANNEL_CERT_HASH
 {
     uint      dwLength;
@@ -7006,7 +7103,7 @@ struct SCHANNEL_CERT_HASH
     ubyte[20] ShaHash;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-schannel_cert_hash_store))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-schannel_cert_hash_store
 struct SCHANNEL_CERT_HASH_STORE
 {
     uint       dwLength;
@@ -7016,7 +7113,7 @@ struct SCHANNEL_CERT_HASH_STORE
     wchar[128] pwszStoreName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-schannel_alert_token))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-schannel_alert_token
 struct SCHANNEL_ALERT_TOKEN
 {
     uint dwTokenType;
@@ -7024,14 +7121,14 @@ struct SCHANNEL_ALERT_TOKEN
     uint dwAlertNumber;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-schannel_session_token))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-schannel_session_token
 struct SCHANNEL_SESSION_TOKEN
 {
     uint dwTokenType;
     SCHANNEL_SESSION_TOKEN_FLAGS dwFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-schannel_client_signature))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-schannel_client_signature
 struct SCHANNEL_CLIENT_SIGNATURE
 {
     uint      cbLength;
@@ -7066,7 +7163,7 @@ struct SCH_CRED_SECRET_CAPI
     size_t hProv;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-sch_cred_secret_privkey))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-sch_cred_secret_privkey
 struct SCH_CRED_SECRET_PRIVKEY
 {
     uint   dwType;
@@ -7075,7 +7172,7 @@ struct SCH_CRED_SECRET_PRIVKEY
     PSTR   pszPassword;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-sch_cred_public_certchain))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-sch_cred_public_certchain
 struct SCH_CRED_PUBLIC_CERTCHAIN
 {
     uint   dwType;
@@ -7090,7 +7187,7 @@ struct PctPublicKey
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] pKey;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-x509certificate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/schannel/ns-schannel-x509certificate
 struct X509Certificate
 {
     uint          Version;
@@ -7116,14 +7213,14 @@ struct LOGON_HOURS
     ubyte* LogonHours;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/subauth/ns-subauth-sr_security_descriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/subauth/ns-subauth-sr_security_descriptor
 struct SR_SECURITY_DESCRIPTOR
 {
     uint   Length;
     ubyte* SecurityDescriptor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/subauth/ns-subauth-user_all_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/subauth/ns-subauth-user_all_information
 struct USER_ALL_INFORMATION
 {
 align (4):
@@ -7172,7 +7269,7 @@ struct USER_SESSION_KEY
     CYPHER_BLOCK[2] data;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/subauth/ns-subauth-netlogon_logon_identity_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/subauth/ns-subauth-netlogon_logon_identity_info
 struct NETLOGON_LOGON_IDENTITY_INFO
 {
     LSA_UNICODE_STRING LogonDomainName;
@@ -7236,13 +7333,13 @@ struct MSV1_0_VALIDATION_INFO
     uint               UserId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tokenbinding/ns-tokenbinding-tokenbinding_identifier))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tokenbinding/ns-tokenbinding-tokenbinding_identifier
 struct TOKENBINDING_IDENTIFIER
 {
     ubyte keyType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tokenbinding/ns-tokenbinding-tokenbinding_result_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tokenbinding/ns-tokenbinding-tokenbinding_result_data
 struct TOKENBINDING_RESULT_DATA
 {
     TOKENBINDING_TYPE bindingType;
@@ -7253,21 +7350,21 @@ struct TOKENBINDING_RESULT_DATA
     void*             extensionData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tokenbinding/ns-tokenbinding-tokenbinding_result_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tokenbinding/ns-tokenbinding-tokenbinding_result_list
 struct TOKENBINDING_RESULT_LIST
 {
     uint resultCount;
     TOKENBINDING_RESULT_DATA* resultData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tokenbinding/ns-tokenbinding-tokenbinding_key_types))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tokenbinding/ns-tokenbinding-tokenbinding_key_types
 struct TOKENBINDING_KEY_TYPES
 {
     uint keyCount;
     TOKENBINDING_KEY_PARAMETERS_TYPE* keyType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/slpublic/ns-slpublic-sl_licensing_status))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/slpublic/ns-slpublic-sl_licensing_status
 struct SL_LICENSING_STATUS
 {
     GUID              SkuId;
@@ -7279,14 +7376,14 @@ struct SL_LICENSING_STATUS
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/slpublic/ns-slpublic-sl_activation_info_header))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/slpublic/ns-slpublic-sl_activation_info_header
 struct SL_ACTIVATION_INFO_HEADER
 {
     uint               cbSize;
     SL_ACTIVATION_TYPE type;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/slpublic/ns-slpublic-sl_ad_activation_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/slpublic/ns-slpublic-sl_ad_activation_info
 struct SL_AD_ACTIVATION_INFO
 {
     SL_ACTIVATION_INFO_HEADER header;
@@ -7295,7 +7392,7 @@ struct SL_AD_ACTIVATION_INFO
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/slpublic/ns-slpublic-sl_nongenuine_ui_options))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/slpublic/ns-slpublic-sl_nongenuine_ui_options
 struct SL_NONGENUINE_UI_OPTIONS
 {
     uint         cbSize;
@@ -7311,17 +7408,17 @@ struct SL_SYSTEM_POLICY_INFORMATION
 
 // Functions
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/nf-ntsecapi-rtlgenrandom))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/nf-ntsecapi-rtlgenrandom
 @DllImport("ADVAPI32.dll")
 BOOLEAN RtlGenRandom(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/void* RandomBuffer, 
                      uint RandomBufferLength);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/nf-ntsecapi-rtlencryptmemory))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/nf-ntsecapi-rtlencryptmemory
 @DllImport("ADVAPI32.dll")
 NTSTATUS RtlEncryptMemory(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/void* Memory, 
                           uint MemorySize, uint OptionFlags);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntsecapi/nf-ntsecapi-rtldecryptmemory))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntsecapi/nf-ntsecapi-rtldecryptmemory
 @DllImport("ADVAPI32.dll")
 NTSTATUS RtlDecryptMemory(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/void* Memory, 
                           uint MemorySize, uint OptionFlags);
@@ -8341,10 +8438,10 @@ void SendSAS(BOOL AsUser);
 // Interfaces
 
 @GUID("6ecda518-2010-4437-8bc3-46e752b7b172")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ccgplugins/nn-ccgplugins-iccgdomainauthcredentials))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ccgplugins/nn-ccgplugins-iccgdomainauthcredentials
 interface ICcgDomainAuthCredentials : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ccgplugins/nf-ccgplugins-iccgdomainauthcredentials-getpasswordcredentials))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ccgplugins/nf-ccgplugins-iccgdomainauthcredentials-getpasswordcredentials
     HRESULT GetPasswordCredentials(const(PWSTR) pluginInput, PWSTR* domainName, PWSTR* username, PWSTR* password);
 }
 

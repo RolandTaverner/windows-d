@@ -3,24 +3,26 @@
 module windows.win32.system.winrt.metadata;
 
 public import windows.core;
-public import system : Guid;
+public import system.system : Guid;
 public import windows.foundation.collections : IPropertySet;
 public import windows.storage.streams : IPropertySetSerializer;
-public import windows.win32.foundation : BOOL, HRESULT, PSTR, PWSTR;
-public import windows.win32.system.com : IStream, ITypeInfo, IUnknown;
+public import windows.win32.foundation.foundation : BOOL, HRESULT, PSTR, PWSTR;
+public import windows.win32.system.com.com : IStream, ITypeInfo, IUnknown;
 public import windows.win32.system.variant : VARIANT;
-public import windows.win32.system.winrt : HSTRING;
+public import windows.win32.system.winrt.winrt : HSTRING;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
+
 alias COINITICOR = int;
 enum : int
 {
     COINITCOR_DEFAULT = 0x00000000,
 }
+
 alias COINITIEE = int;
 enum : int
 {
@@ -28,16 +30,19 @@ enum : int
     COINITEE_DLL     = 0x00000001,
     COINITEE_MAIN    = 0x00000002,
 }
+
 alias COUNINITIEE = int;
 enum : int
 {
     COUNINITEE_DEFAULT = 0x00000000,
     COUNINITEE_DLL     = 0x00000001,
 }
+
 enum ReplacesGeneralNumericDefines : int
 {
     IMAGE_DIRECTORY_ENTRY_COMHEADER = 0x0000000e,
 }
+
 enum CorTypeAttr : int
 {
     tdVisibilityMask     = 0x00000007,
@@ -74,6 +79,7 @@ enum CorTypeAttr : int
     tdRTSpecialName      = 0x00000800,
     tdHasSecurity        = 0x00040000,
 }
+
 enum CorMethodAttr : int
 {
     mdMemberAccessMask      = 0x00000007,
@@ -101,6 +107,7 @@ enum CorMethodAttr : int
     mdHasSecurity           = 0x00004000,
     mdRequireSecObject      = 0x00008000,
 }
+
 enum CorFieldAttr : int
 {
     fdFieldAccessMask = 0x00000007,
@@ -123,6 +130,7 @@ enum CorFieldAttr : int
     fdHasDefault      = 0x00008000,
     fdHasFieldRVA     = 0x00000100,
 }
+
 enum CorParamAttr : int
 {
     pdIn              = 0x00000001,
@@ -133,6 +141,7 @@ enum CorParamAttr : int
     pdHasFieldMarshal = 0x00002000,
     pdUnused          = 0x0000cfe0,
 }
+
 enum CorPropertyAttr : int
 {
     prSpecialName   = 0x00000200,
@@ -141,12 +150,14 @@ enum CorPropertyAttr : int
     prHasDefault    = 0x00001000,
     prUnused        = 0x0000e9ff,
 }
+
 enum CorEventAttr : int
 {
     evSpecialName   = 0x00000200,
     evReservedMask  = 0x00000400,
     evRTSpecialName = 0x00000400,
 }
+
 enum CorMethodSemanticsAttr : int
 {
     msSetter   = 0x00000001,
@@ -156,6 +167,7 @@ enum CorMethodSemanticsAttr : int
     msRemoveOn = 0x00000010,
     msFire     = 0x00000020,
 }
+
 enum CorDeclSecurity : int
 {
     dclActionMask        = 0x0000001f,
@@ -177,6 +189,7 @@ enum CorDeclSecurity : int
     dclNonCasInheritance = 0x0000000f,
     dclMaximumValue      = 0x0000000f,
 }
+
 enum CorMethodImpl : int
 {
     miCodeTypeMask        = 0x00000003,
@@ -198,6 +211,7 @@ enum CorMethodImpl : int
     miUserMask            = 0x000015fc,
     miMaxMethodImplVal    = 0x0000ffff,
 }
+
 enum CorPinvokeMap : int
 {
     pmNoMangle                      = 0x00000001,
@@ -223,6 +237,7 @@ enum CorPinvokeMap : int
     pmCallConvFastcall              = 0x00000500,
     pmMaxValue                      = 0x0000ffff,
 }
+
 enum CorAssemblyFlags : int
 {
     afPublicKey                  = 0x00000001,
@@ -244,17 +259,20 @@ enum CorAssemblyFlags : int
     afContentType_WindowsRuntime = 0x00000200,
     afContentType_Mask           = 0x00000e00,
 }
+
 enum CorManifestResourceFlags : int
 {
     mrVisibilityMask = 0x00000007,
     mrPublic         = 0x00000001,
     mrPrivate        = 0x00000002,
 }
+
 enum CorFileFlags : int
 {
     ffContainsMetaData   = 0x00000000,
     ffContainsNoMetaData = 0x00000001,
 }
+
 enum CorPEKind : int
 {
     peNot            = 0x00000000,
@@ -264,6 +282,7 @@ enum CorPEKind : int
     pe32Unmanaged    = 0x00000008,
     pe32BitPreferred = 0x00000010,
 }
+
 enum CorGenericParamAttr : int
 {
     gpVarianceMask                   = 0x00000003,
@@ -276,6 +295,7 @@ enum CorGenericParamAttr : int
     gpNotNullableValueTypeConstraint = 0x00000008,
     gpDefaultConstructorConstraint   = 0x00000010,
 }
+
 enum CorElementType : ubyte
 {
     ELEMENT_TYPE_END         = 0x00,
@@ -315,6 +335,7 @@ enum CorElementType : ubyte
     ELEMENT_TYPE_SENTINEL    = 0x41,
     ELEMENT_TYPE_PINNED      = 0x45,
 }
+
 enum CorSerializationType : int
 {
     SERIALIZATION_TYPE_UNDEFINED     = 0x00000000,
@@ -338,6 +359,7 @@ enum CorSerializationType : int
     SERIALIZATION_TYPE_PROPERTY      = 0x00000054,
     SERIALIZATION_TYPE_ENUM          = 0x00000055,
 }
+
 enum CorCallingConvention : int
 {
     IMAGE_CEE_CS_CALLCONV_DEFAULT      = 0x00000000,
@@ -354,6 +376,7 @@ enum CorCallingConvention : int
     IMAGE_CEE_CS_CALLCONV_EXPLICITTHIS = 0x00000040,
     IMAGE_CEE_CS_CALLCONV_GENERIC      = 0x00000010,
 }
+
 enum CorUnmanagedCallingConvention : int
 {
     IMAGE_CEE_UNMANAGED_CALLCONV_C        = 0x00000001,
@@ -365,6 +388,7 @@ enum CorUnmanagedCallingConvention : int
     IMAGE_CEE_CS_CALLCONV_THISCALL        = 0x00000003,
     IMAGE_CEE_CS_CALLCONV_FASTCALL        = 0x00000004,
 }
+
 enum CorArgType : int
 {
     IMAGE_CEE_CS_END      = 0x00000000,
@@ -379,6 +403,7 @@ enum CorArgType : int
     IMAGE_CEE_CS_STRUCT32 = 0x00000009,
     IMAGE_CEE_CS_BYVALUE  = 0x0000000a,
 }
+
 enum CorNativeType : int
 {
     NATIVE_TYPE_END             = 0x00000000,
@@ -430,6 +455,7 @@ enum CorNativeType : int
     NATIVE_TYPE_LPUTF8STR       = 0x00000030,
     NATIVE_TYPE_MAX             = 0x00000050,
 }
+
 enum CorILMethodSect : int
 {
     CorILMethod_Sect_Reserved   = 0x00000000,
@@ -439,6 +465,7 @@ enum CorILMethodSect : int
     CorILMethod_Sect_FatFormat  = 0x00000040,
     CorILMethod_Sect_MoreSects  = 0x00000080,
 }
+
 enum CorExceptionFlag : int
 {
     COR_ILEXCEPTION_CLAUSE_NONE       = 0x00000000,
@@ -449,6 +476,7 @@ enum CorExceptionFlag : int
     COR_ILEXCEPTION_CLAUSE_FAULT      = 0x00000004,
     COR_ILEXCEPTION_CLAUSE_DUPLICATED = 0x00000008,
 }
+
 enum CorILMethodFlags : int
 {
     CorILMethod_InitLocals   = 0x00000010,
@@ -461,6 +489,7 @@ enum CorILMethodFlags : int
     CorILMethod_FatFormat    = 0x00000003,
     CorILMethod_TinyFormat1  = 0x00000006,
 }
+
 enum CorCheckDuplicatesFor : int
 {
     MDDupAll                    = 0xffffffff,
@@ -491,6 +520,7 @@ enum CorCheckDuplicatesFor : int
     MDDupAssembly               = 0x10000000,
     MDDupDefault                = 0x00102818,
 }
+
 enum CorRefToDefCheck : int
 {
     MDRefToDefDefault = 0x00000003,
@@ -499,6 +529,7 @@ enum CorRefToDefCheck : int
     MDTypeRefToDef    = 0x00000001,
     MDMemberRefToDef  = 0x00000002,
 }
+
 enum CorNotificationForTokenMovement : int
 {
     MDNotifyDefault         = 0x0000000f,
@@ -525,6 +556,7 @@ enum CorNotificationForTokenMovement : int
     MDNotifyExportedType    = 0x04000000,
     MDNotifyResource        = 0x08000000,
 }
+
 alias CorSetENC = int;
 enum : int
 {
@@ -537,6 +569,7 @@ enum : int
     MDUpdateDelta       = 0x00000005,
     MDUpdateMask        = 0x00000007,
 }
+
 enum CorErrorIfEmitOutOfOrder : int
 {
     MDErrorOutOfOrderDefault = 0x00000000,
@@ -548,6 +581,7 @@ enum CorErrorIfEmitOutOfOrder : int
     MDPropertyOutOfOrder     = 0x00000008,
     MDEventOutOfOrder        = 0x00000010,
 }
+
 enum CorImportOptions : int
 {
     MDImportOptionDefault             = 0x00000000,
@@ -560,17 +594,20 @@ enum CorImportOptions : int
     MDImportOptionAllCustomAttributes = 0x00000020,
     MDImportOptionAllExportedTypes    = 0x00000040,
 }
+
 enum CorThreadSafetyOptions : int
 {
     MDThreadSafetyDefault = 0x00000000,
     MDThreadSafetyOff     = 0x00000000,
     MDThreadSafetyOn      = 0x00000001,
 }
+
 enum CorLinkerOptions : int
 {
     MDAssembly  = 0x00000000,
     MDNetModule = 0x00000001,
 }
+
 enum MergeFlags : int
 {
     MergeFlagsNone     = 0x00000000,
@@ -579,12 +616,14 @@ enum MergeFlags : int
     NoDupCheck         = 0x00000004,
     MergeExportedTypes = 0x00000008,
 }
+
 enum CorLocalRefPreservation : int
 {
     MDPreserveLocalRefsNone  = 0x00000000,
     MDPreserveLocalTypeRef   = 0x00000001,
     MDPreserveLocalMemberRef = 0x00000002,
 }
+
 enum CorTokenType : int
 {
     mdtModule                 = 0x00000000,
@@ -615,6 +654,7 @@ enum CorTokenType : int
     mdtName                   = 0x71000000,
     mdtBaseType               = 0x72000000,
 }
+
 enum CorOpenFlags : int
 {
     ofRead           = 0x00000000,
@@ -631,11 +671,13 @@ enum CorOpenFlags : int
     ofReserved3      = 0x00000400,
     ofReserved       = 0xffffe740,
 }
+
 enum CorFileMapping : int
 {
     fmFlat            = 0x00000000,
     fmExecutableImage = 0x00000001,
 }
+
 enum CorAttributeTargets : int
 {
     catAssembly         = 0x00000001,
@@ -655,10 +697,12 @@ enum CorAttributeTargets : int
     catAll              = 0x00005fff,
     catClassMembers     = 0x000017fc,
 }
+
 enum CompilationRelaxationsEnum : int
 {
     CompilationRelaxations_NoStringInterning = 0x00000008,
 }
+
 enum NGenHintEnum : int
 {
     NGenDefault = 0x00000000,
@@ -666,6 +710,7 @@ enum NGenHintEnum : int
     NGenLazy    = 0x00000002,
     NGenNever   = 0x00000003,
 }
+
 enum LoadHintEnum : int
 {
     LoadDefault   = 0x00000000,
@@ -673,17 +718,20 @@ enum LoadHintEnum : int
     LoadSometimes = 0x00000002,
     LoadNever     = 0x00000003,
 }
+
 enum CorSaveSize : int
 {
     cssAccurate            = 0x00000000,
     cssQuick               = 0x00000001,
     cssDiscardTransientCAs = 0x00000002,
 }
+
 enum NativeTypeArrayFlags : int
 {
     ntaSizeParamIndexSpecified = 0x00000001,
     ntaReserved                = 0x0000fffe,
 }
+
 enum CorValidatorModuleType : int
 {
     ValidatorModuleTypeInvalid = 0x00000000,
@@ -694,19 +742,22 @@ enum CorValidatorModuleType : int
     ValidatorModuleTypeIncr    = 0x00000004,
     ValidatorModuleTypeMax     = 0x00000004,
 }
+
 enum CorRegFlags : int
 {
     regNoCopy  = 0x00000001,
     regConfig  = 0x00000002,
     regHasRefs = 0x00000004,
 }
+
 enum CeeSectionAttr : long
 {
-    sdNone      = 0x0000000000000000,
-    sdReadOnly  = 0x0000000040000040,
-    sdReadWrite = 0x00000000c0000040,
-    sdExecute   = 0x0000000060000020,
+    sdNone      = 0x0000000000000000L,
+    sdReadOnly  = 0x0000000040000040L,
+    sdReadWrite = 0x00000000c0000040L,
+    sdExecute   = 0x0000000060000020L,
 }
+
 enum CeeSectionRelocType : int
 {
     srRelocAbsolute       = 0x00000000,
@@ -730,6 +781,7 @@ enum CeeSectionRelocType : int
     srRelocIA64Imm64Ptr   = 0x00008009,
     srRelocDir64Ptr       = 0x0000800a,
 }
+
 enum CorNativeLinkType : int
 {
     nltNone     = 0x00000001,
@@ -739,6 +791,7 @@ enum CorNativeLinkType : int
     nltOle      = 0x00000005,
     nltMaxValue = 0x00000007,
 }
+
 enum CorNativeLinkFlags : int
 {
     nlfNone      = 0x00000000,
@@ -750,9 +803,9 @@ enum CorNativeLinkFlags : int
 // Constants
 
 
-enum uint INVALID_CONNECTION_ID = 0x00000000;
-enum uint INVALID_TASK_ID = 0x00000000;
-enum uint MAX_CONNECTION_NAME = 0x00000104;
+enum uint INVALID_CONNECTION_ID = 0x00000000U;
+enum uint INVALID_TASK_ID = 0x00000000U;
+enum uint MAX_CONNECTION_NAME = 0x00000104U;
 
 enum : const(wchar)*
 {
@@ -772,7 +825,7 @@ enum : const(wchar)*
     COR_NATIVE_LINK_CUSTOM_VALUE_ANSI = "COMPLUS_NativeLink",
 }
 
-enum uint COR_NATIVE_LINK_CUSTOM_VALUE_CC = 0x00000012;
+enum uint COR_NATIVE_LINK_CUSTOM_VALUE_CC = 0x00000012U;
 
 enum : const(wchar)*
 {
@@ -1232,12 +1285,32 @@ struct ROPARAMIIDHANDLE
     void* Value;
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct IMAGE_COR_ILMETHOD_SECT_EH_CLAUSE_SMALL
+version(X86_64)
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(TryOffset)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield1;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(HandlerLength)), FixedArgSig(ElementSig(24)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield2;
-    _Anonymous_e__Union Anonymous;
+    struct IMAGE_COR_ILMETHOD_SECT_EH_CLAUSE_SMALL
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(TryOffset)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield1;
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(HandlerLength)), FixedArgSig(ElementSig(24)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield2;
+        union
+        {
+            uint ClassToken;
+            uint FilterOffset;
+        }
+    }
+}
+
+version(AArch64)
+{
+    struct IMAGE_COR_ILMETHOD_SECT_EH_CLAUSE_SMALL
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(TryOffset)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield1;
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(HandlerLength)), FixedArgSig(ElementSig(24)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield2;
+        union
+        {
+            uint ClassToken;
+            uint FilterOffset;
+        }
+    }
 }
 
 struct IMAGE_COR_ILMETHOD_SECT_SMALL
@@ -1248,17 +1321,21 @@ struct IMAGE_COR_ILMETHOD_SECT_SMALL
 
 struct IMAGE_COR_ILMETHOD_SECT_FAT
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(DataSize)), FixedArgSig(ElementSig(8)), FixedArgSig(ElementSig(24))], [])*/uint _bitfield139;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(DataSize)), FixedArgSig(ElementSig(8)), FixedArgSig(ElementSig(24))], [])*/uint _bitfield529;
 }
 
 struct IMAGE_COR_ILMETHOD_SECT_EH_CLAUSE_FAT
 {
-    CorExceptionFlag    Flags;
-    uint                TryOffset;
-    uint                TryLength;
-    uint                HandlerOffset;
-    uint                HandlerLength;
-    _Anonymous_e__Union Anonymous;
+    CorExceptionFlag Flags;
+    uint             TryOffset;
+    uint             TryLength;
+    uint             HandlerOffset;
+    uint             HandlerLength;
+    union
+    {
+        uint ClassToken;
+        uint FilterOffset;
+    }
 }
 
 struct IMAGE_COR_ILMETHOD_SECT_EH_FAT
@@ -1267,12 +1344,14 @@ struct IMAGE_COR_ILMETHOD_SECT_EH_FAT
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/IMAGE_COR_ILMETHOD_SECT_EH_CLAUSE_FAT[1] Clauses;
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct IMAGE_COR_ILMETHOD_SECT_EH_CLAUSE_SMALL
+version(X86)
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(TryOffset)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/int _bitfield1;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(HandlerLength)), FixedArgSig(ElementSig(24)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield2;
-    _Anonymous_e__Union Anonymous;
+    struct IMAGE_COR_ILMETHOD_SECT_EH_CLAUSE_SMALL
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(TryOffset)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/int _bitfield1;
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(HandlerLength)), FixedArgSig(ElementSig(24)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield2;
+        _Anonymous_e__Union Anonymous;
+    }
 }
 
 struct IMAGE_COR_ILMETHOD_SECT_EH_SMALL
@@ -1295,7 +1374,7 @@ struct IMAGE_COR_ILMETHOD_TINY
 
 struct IMAGE_COR_ILMETHOD_FAT
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(MaxStack)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield140;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(MaxStack)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield530;
     uint CodeSize;
     uint LocalVarSigTok;
 }
@@ -1434,14 +1513,14 @@ interface IMapToken : IUnknown
 }
 
 @GUID("809c652e-7396-11d2-9771-00a0c9b4d50c")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nn-rometadataapi-imetadatadispenser))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nn-rometadataapi-imetadatadispenser
 interface IMetaDataDispenser : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatadispenser-definescope))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatadispenser-definescope
     HRESULT DefineScope(const(GUID)* rclsid, uint dwCreateFlags, const(GUID)* riid, IUnknown* ppIUnk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatadispenser-openscope))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatadispenser-openscope
     HRESULT OpenScope(const(PWSTR) szScope, uint dwOpenFlags, const(GUID)* riid, IUnknown* ppIUnk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatadispenser-openscopeonmemory))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatadispenser-openscopeonmemory
     HRESULT OpenScopeOnMemory(const(void)* pData, uint cbData, uint dwOpenFlags, const(GUID)* riid, 
                               IUnknown* ppIUnk);
 }
@@ -1534,128 +1613,128 @@ interface IMetaDataEmit2 : IMetaDataEmit
 }
 
 @GUID("7dac8207-d3ae-4c75-9b67-92801a497d44")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nn-rometadataapi-imetadataimport))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nn-rometadataapi-imetadataimport
 interface IMetaDataImport : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-closeenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-closeenum
     void    CloseEnum(void* hEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-countenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-countenum
     HRESULT CountEnum(void* hEnum, uint* pulCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-resetenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-resetenum
     HRESULT ResetEnum(void* hEnum, uint ulPos);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enumtypedefs))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enumtypedefs
     HRESULT EnumTypeDefs(void** phEnum, uint* rTypeDefs, uint cMax, uint* pcTypeDefs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enuminterfaceimpls))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enuminterfaceimpls
     HRESULT EnumInterfaceImpls(void** phEnum, uint td, uint* rImpls, uint cMax, uint* pcImpls);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enumtyperefs))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enumtyperefs
     HRESULT EnumTypeRefs(void** phEnum, uint* rTypeRefs, uint cMax, uint* pcTypeRefs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-findtypedefbyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-findtypedefbyname
     HRESULT FindTypeDefByName(const(PWSTR) szTypeDef, uint tkEnclosingClass, uint* ptd);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getscopeprops))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getscopeprops
     HRESULT GetScopeProps(PWSTR szName, uint cchName, uint* pchName, GUID* pmvid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getmodulefromscope))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getmodulefromscope
     HRESULT GetModuleFromScope(uint* pmd);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-gettypedefprops))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-gettypedefprops
     HRESULT GetTypeDefProps(uint td, PWSTR szTypeDef, uint cchTypeDef, uint* pchTypeDef, uint* pdwTypeDefFlags, 
                             uint* ptkExtends);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getinterfaceimplprops))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getinterfaceimplprops
     HRESULT GetInterfaceImplProps(uint iiImpl, uint* pClass, uint* ptkIface);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-gettyperefprops))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-gettyperefprops
     HRESULT GetTypeRefProps(uint tr, uint* ptkResolutionScope, PWSTR szName, uint cchName, uint* pchName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-resolvetyperef))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-resolvetyperef
     HRESULT ResolveTypeRef(uint tr, const(GUID)* riid, IUnknown* ppIScope, uint* ptd);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enummembers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enummembers
     HRESULT EnumMembers(void** phEnum, uint cl, uint* rMembers, uint cMax, uint* pcTokens);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enummemberswithname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enummemberswithname
     HRESULT EnumMembersWithName(void** phEnum, uint cl, const(PWSTR) szName, uint* rMembers, uint cMax, 
                                 uint* pcTokens);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enummethods))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enummethods
     HRESULT EnumMethods(void** phEnum, uint cl, uint* rMethods, uint cMax, uint* pcTokens);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enummethodswithname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enummethodswithname
     HRESULT EnumMethodsWithName(void** phEnum, uint cl, const(PWSTR) szName, uint* rMethods, uint cMax, 
                                 uint* pcTokens);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enumfields))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enumfields
     HRESULT EnumFields(void** phEnum, uint cl, uint* rFields, uint cMax, uint* pcTokens);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enumfieldswithname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enumfieldswithname
     HRESULT EnumFieldsWithName(void** phEnum, uint cl, const(PWSTR) szName, uint* rFields, uint cMax, 
                                uint* pcTokens);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enumparams))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enumparams
     HRESULT EnumParams(void** phEnum, uint mb, uint* rParams, uint cMax, uint* pcTokens);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enummemberrefs))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enummemberrefs
     HRESULT EnumMemberRefs(void** phEnum, uint tkParent, uint* rMemberRefs, uint cMax, uint* pcTokens);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enummethodimpls))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enummethodimpls
     HRESULT EnumMethodImpls(void** phEnum, uint td, uint* rMethodBody, uint* rMethodDecl, uint cMax, 
                             uint* pcTokens);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enumpermissionsets))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enumpermissionsets
     HRESULT EnumPermissionSets(void** phEnum, uint tk, uint dwActions, uint* rPermission, uint cMax, 
                                uint* pcTokens);
     HRESULT FindMember(uint td, const(PWSTR) szName, ubyte* pvSigBlob, uint cbSigBlob, uint* pmb);
     HRESULT FindMethod(uint td, const(PWSTR) szName, ubyte* pvSigBlob, uint cbSigBlob, uint* pmb);
     HRESULT FindField(uint td, const(PWSTR) szName, ubyte* pvSigBlob, uint cbSigBlob, uint* pmb);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-findmemberref))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-findmemberref
     HRESULT FindMemberRef(uint td, const(PWSTR) szName, ubyte* pvSigBlob, uint cbSigBlob, uint* pmr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getmethodprops))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getmethodprops
     HRESULT GetMethodProps(uint mb, uint* pClass, PWSTR szMethod, uint cchMethod, uint* pchMethod, uint* pdwAttr, 
                            ubyte** ppvSigBlob, uint* pcbSigBlob, uint* pulCodeRVA, uint* pdwImplFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getmemberrefprops))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getmemberrefprops
     HRESULT GetMemberRefProps(uint mr, uint* ptk, PWSTR szMember, uint cchMember, uint* pchMember, 
                               ubyte** ppvSigBlob, uint* pbSig);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enumproperties))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enumproperties
     HRESULT EnumProperties(void** phEnum, uint td, uint* rProperties, uint cMax, uint* pcProperties);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enumevents))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enumevents
     HRESULT EnumEvents(void** phEnum, uint td, uint* rEvents, uint cMax, uint* pcEvents);
     HRESULT GetEventProps(uint ev, uint* pClass, const(PWSTR) szEvent, uint cchEvent, uint* pchEvent, 
                           uint* pdwEventFlags, uint* ptkEventType, uint* pmdAddOn, uint* pmdRemoveOn, uint* pmdFire, 
                           uint* rmdOtherMethod, uint cMax, uint* pcOtherMethod);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enummethodsemantics))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enummethodsemantics
     HRESULT EnumMethodSemantics(void** phEnum, uint mb, uint* rEventProp, uint cMax, uint* pcEventProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getmethodsemantics))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getmethodsemantics
     HRESULT GetMethodSemantics(uint mb, uint tkEventProp, uint* pdwSemanticsFlags);
     HRESULT GetClassLayout(uint td, uint* pdwPackSize, COR_FIELD_OFFSET* rFieldOffset, uint cMax, 
                            uint* pcFieldOffset, uint* pulClassSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getfieldmarshal))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getfieldmarshal
     HRESULT GetFieldMarshal(uint tk, ubyte** ppvNativeType, uint* pcbNativeType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getrva))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getrva
     HRESULT GetRVA(uint tk, uint* pulCodeRVA, uint* pdwImplFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getpermissionsetprops))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getpermissionsetprops
     HRESULT GetPermissionSetProps(uint pm, uint* pdwAction, const(void)** ppvPermission, uint* pcbPermission);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getsigfromtoken))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getsigfromtoken
     HRESULT GetSigFromToken(uint mdSig, ubyte** ppvSig, uint* pcbSig);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getmodulerefprops))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getmodulerefprops
     HRESULT GetModuleRefProps(uint mur, PWSTR szName, uint cchName, uint* pchName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enummodulerefs))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enummodulerefs
     HRESULT EnumModuleRefs(void** phEnum, uint* rModuleRefs, uint cmax, uint* pcModuleRefs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-gettypespecfromtoken))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-gettypespecfromtoken
     HRESULT GetTypeSpecFromToken(uint typespec, ubyte** ppvSig, uint* pcbSig);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getnamefromtoken))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getnamefromtoken
     HRESULT GetNameFromToken(uint tk, byte** pszUtf8NamePtr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enumunresolvedmethods))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enumunresolvedmethods
     HRESULT EnumUnresolvedMethods(void** phEnum, uint* rMethods, uint cMax, uint* pcTokens);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getuserstring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getuserstring
     HRESULT GetUserString(uint stk, PWSTR szString, uint cchString, uint* pchString);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getpinvokemap))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getpinvokemap
     HRESULT GetPinvokeMap(uint tk, uint* pdwMappingFlags, PWSTR szImportName, uint cchImportName, 
                           uint* pchImportName, uint* pmrImportDLL);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enumsignatures))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enumsignatures
     HRESULT EnumSignatures(void** phEnum, uint* rSignatures, uint cmax, uint* pcSignatures);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enumtypespecs))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enumtypespecs
     HRESULT EnumTypeSpecs(void** phEnum, uint* rTypeSpecs, uint cmax, uint* pcTypeSpecs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enumuserstrings))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enumuserstrings
     HRESULT EnumUserStrings(void** phEnum, uint* rStrings, uint cmax, uint* pcStrings);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getparamformethodindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getparamformethodindex
     HRESULT GetParamForMethodIndex(uint md, uint ulParamSeq, uint* ppd);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enumcustomattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-enumcustomattributes
     HRESULT EnumCustomAttributes(void** phEnum, uint tk, uint tkType, uint* rCustomAttributes, uint cMax, 
                                  uint* pcCustomAttributes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getcustomattributeprops))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getcustomattributeprops
     HRESULT GetCustomAttributeProps(uint cv, uint* ptkObj, uint* ptkType, const(void)** ppBlob, uint* pcbSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-findtyperef))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-findtyperef
     HRESULT FindTypeRef(uint tkResolutionScope, const(PWSTR) szName, uint* ptr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getmemberprops))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getmemberprops
     HRESULT GetMemberProps(uint mb, uint* pClass, PWSTR szMember, uint cchMember, uint* pchMember, uint* pdwAttr, 
                            ubyte** ppvSigBlob, uint* pcbSigBlob, uint* pulCodeRVA, uint* pdwImplFlags, 
                            uint* pdwCPlusTypeFlag, void** ppValue, uint* pcchValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getfieldprops))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getfieldprops
     HRESULT GetFieldProps(uint mb, uint* pClass, PWSTR szField, uint cchField, uint* pchField, uint* pdwAttr, 
                           ubyte** ppvSigBlob, uint* pcbSigBlob, uint* pdwCPlusTypeFlag, void** ppValue, 
                           uint* pcchValue);
@@ -1663,42 +1742,42 @@ interface IMetaDataImport : IUnknown
                              uint* pdwPropFlags, ubyte** ppvSig, uint* pbSig, uint* pdwCPlusTypeFlag, 
                              void** ppDefaultValue, uint* pcchDefaultValue, uint* pmdSetter, uint* pmdGetter, 
                              uint* rmdOtherMethod, uint cMax, uint* pcOtherMethod);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getparamprops))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getparamprops
     HRESULT GetParamProps(uint tk, uint* pmd, uint* pulSequence, PWSTR szName, uint cchName, uint* pchName, 
                           uint* pdwAttr, uint* pdwCPlusTypeFlag, void** ppValue, uint* pcchValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getcustomattributebyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getcustomattributebyname
     HRESULT GetCustomAttributeByName(uint tkObj, const(PWSTR) szName, const(void)** ppData, uint* pcbData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-isvalidtoken))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-isvalidtoken
     BOOL    IsValidToken(uint tk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getnestedclassprops))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getnestedclassprops
     HRESULT GetNestedClassProps(uint tdNestedClass, uint* ptdEnclosingClass);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getnativecallconvfromsig))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-getnativecallconvfromsig
     HRESULT GetNativeCallConvFromSig(const(void)* pvSig, uint cbSig, uint* pCallConv);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-isglobal))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport-isglobal
     HRESULT IsGlobal(uint pd, int* pbGlobal);
 }
 
 @GUID("fce5efa0-8bba-4f8e-a036-8f2022b08466")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nn-rometadataapi-imetadataimport2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nn-rometadataapi-imetadataimport2
 interface IMetaDataImport2 : IMetaDataImport
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport2-enumgenericparams))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport2-enumgenericparams
     HRESULT EnumGenericParams(void** phEnum, uint tk, uint* rGenericParams, uint cMax, uint* pcGenericParams);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport2-getgenericparamprops))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport2-getgenericparamprops
     HRESULT GetGenericParamProps(uint gp, uint* pulParamSeq, uint* pdwParamFlags, uint* ptOwner, uint* reserved, 
                                  PWSTR wzname, uint cchName, uint* pchName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport2-getmethodspecprops))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport2-getmethodspecprops
     HRESULT GetMethodSpecProps(uint mi, uint* tkParent, ubyte** ppvSigBlob, uint* pcbSigBlob);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport2-enumgenericparamconstraints))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport2-enumgenericparamconstraints
     HRESULT EnumGenericParamConstraints(void** phEnum, uint tk, uint* rGenericParamConstraints, uint cMax, 
                                         uint* pcGenericParamConstraints);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport2-getgenericparamconstraintprops))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport2-getgenericparamconstraintprops
     HRESULT GetGenericParamConstraintProps(uint gpc, uint* ptGenericParam, uint* ptkConstraintType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport2-getpekind))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport2-getpekind
     HRESULT GetPEKind(uint* pdwPEKind, uint* pdwMAchine);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport2-getversionstring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport2-getversionstring
     HRESULT GetVersionString(PWSTR pwzBuf, uint ccBufSize, uint* pccBufSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport2-enummethodspecs))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataimport2-enummethodspecs
     HRESULT EnumMethodSpecs(void** phEnum, uint tk, uint* rMethodSpecs, uint cMax, uint* pcMethodSpecs);
 }
 
@@ -1741,43 +1820,43 @@ interface IMetaDataAssemblyEmit : IUnknown
 }
 
 @GUID("ee62470b-e94b-424e-9b7c-2f00c9249f93")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nn-rometadataapi-imetadataassemblyimport))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nn-rometadataapi-imetadataassemblyimport
 interface IMetaDataAssemblyImport : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataassemblyimport-getassemblyprops))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataassemblyimport-getassemblyprops
     HRESULT GetAssemblyProps(uint mda, const(void)** ppbPublicKey, uint* pcbPublicKey, uint* pulHashAlgId, 
                              PWSTR szName, uint cchName, uint* pchName, ASSEMBLYMETADATA* pMetaData, 
                              uint* pdwAssemblyFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataassemblyimport-getassemblyrefprops))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataassemblyimport-getassemblyrefprops
     HRESULT GetAssemblyRefProps(uint mdar, const(void)** ppbPublicKeyOrToken, uint* pcbPublicKeyOrToken, 
                                 PWSTR szName, uint cchName, uint* pchName, ASSEMBLYMETADATA* pMetaData, 
                                 const(void)** ppbHashValue, uint* pcbHashValue, uint* pdwAssemblyRefFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataassemblyimport-getfileprops))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataassemblyimport-getfileprops
     HRESULT GetFileProps(uint mdf, PWSTR szName, uint cchName, uint* pchName, const(void)** ppbHashValue, 
                          uint* pcbHashValue, uint* pdwFileFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataassemblyimport-getexportedtypeprops))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataassemblyimport-getexportedtypeprops
     HRESULT GetExportedTypeProps(uint mdct, PWSTR szName, uint cchName, uint* pchName, uint* ptkImplementation, 
                                  uint* ptkTypeDef, uint* pdwExportedTypeFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataassemblyimport-getmanifestresourceprops))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataassemblyimport-getmanifestresourceprops
     HRESULT GetManifestResourceProps(uint mdmr, PWSTR szName, uint cchName, uint* pchName, uint* ptkImplementation, 
                                      uint* pdwOffset, uint* pdwResourceFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataassemblyimport-enumassemblyrefs))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataassemblyimport-enumassemblyrefs
     HRESULT EnumAssemblyRefs(void** phEnum, uint* rAssemblyRefs, uint cMax, uint* pcTokens);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataassemblyimport-enumfiles))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataassemblyimport-enumfiles
     HRESULT EnumFiles(void** phEnum, uint* rFiles, uint cMax, uint* pcTokens);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataassemblyimport-enumexportedtypes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataassemblyimport-enumexportedtypes
     HRESULT EnumExportedTypes(void** phEnum, uint* rExportedTypes, uint cMax, uint* pcTokens);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataassemblyimport-enummanifestresources))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataassemblyimport-enummanifestresources
     HRESULT EnumManifestResources(void** phEnum, uint* rManifestResources, uint cMax, uint* pcTokens);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataassemblyimport-getassemblyfromscope))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataassemblyimport-getassemblyfromscope
     HRESULT GetAssemblyFromScope(uint* ptkAssembly);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataassemblyimport-findexportedtypebyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataassemblyimport-findexportedtypebyname
     HRESULT FindExportedTypeByName(const(PWSTR) szName, uint mdtExportedType, uint* ptkExportedType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataassemblyimport-findmanifestresourcebyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataassemblyimport-findmanifestresourcebyname
     HRESULT FindManifestResourceByName(const(PWSTR) szName, uint* ptkManifestResource);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataassemblyimport-closeenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataassemblyimport-closeenum
     void    CloseEnum(void* hEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataassemblyimport-findassembliesbyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadataassemblyimport-findassembliesbyname
     HRESULT FindAssembliesByName(const(PWSTR) szAppBase, const(PWSTR) szPrivateBin, const(PWSTR) szAssemblyName, 
                                  IUnknown* ppIUnk, uint cMax, uint* pcAssemblies);
 }
@@ -1790,21 +1869,21 @@ interface IMetaDataValidate : IUnknown
 }
 
 @GUID("31bcfce2-dafb-11d2-9f81-00c04f79a0a3")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nn-rometadataapi-imetadatadispenserex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nn-rometadataapi-imetadatadispenserex
 interface IMetaDataDispenserEx : IMetaDataDispenser
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatadispenserex-setoption))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatadispenserex-setoption
     HRESULT SetOption(const(GUID)* optionid, const(VARIANT)* value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatadispenserex-getoption))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatadispenserex-getoption
     HRESULT GetOption(const(GUID)* optionid, VARIANT* pvalue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatadispenserex-openscopeonitypeinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatadispenserex-openscopeonitypeinfo
     HRESULT OpenScopeOnITypeInfo(ITypeInfo pITI, uint dwOpenFlags, const(GUID)* riid, IUnknown* ppIUnk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatadispenserex-getcorsystemdirectory))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatadispenserex-getcorsystemdirectory
     HRESULT GetCORSystemDirectory(PWSTR szBuffer, uint cchBuffer, uint* pchBuffer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatadispenserex-findassembly))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatadispenserex-findassembly
     HRESULT FindAssembly(const(PWSTR) szAppBase, const(PWSTR) szPrivateBin, const(PWSTR) szGlobalBin, 
                          const(PWSTR) szAssemblyName, const(PWSTR) szName, uint cchName, uint* pcName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatadispenserex-findassemblymodule))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatadispenserex-findassemblymodule
     HRESULT FindAssemblyModule(const(PWSTR) szAppBase, const(PWSTR) szPrivateBin, const(PWSTR) szGlobalBin, 
                                const(PWSTR) szAssemblyName, const(PWSTR) szModuleName, PWSTR szName, uint cchName, 
                                uint* pcName);
@@ -1831,56 +1910,56 @@ interface ICeeGen : IUnknown
 }
 
 @GUID("d8f579ab-402d-4b8e-82d9-5d63b1065c68")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nn-rometadataapi-imetadatatables))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nn-rometadataapi-imetadatatables
 interface IMetaDataTables : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-getstringheapsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-getstringheapsize
     HRESULT GetStringHeapSize(uint* pcbStrings);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-getblobheapsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-getblobheapsize
     HRESULT GetBlobHeapSize(uint* pcbBlobs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-getguidheapsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-getguidheapsize
     HRESULT GetGuidHeapSize(uint* pcbGuids);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-getuserstringheapsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-getuserstringheapsize
     HRESULT GetUserStringHeapSize(uint* pcbBlobs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-getnumtables))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-getnumtables
     HRESULT GetNumTables(uint* pcTables);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-gettableindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-gettableindex
     HRESULT GetTableIndex(uint token, uint* pixTbl);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-gettableinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-gettableinfo
     HRESULT GetTableInfo(uint ixTbl, uint* pcbRow, uint* pcRows, uint* pcCols, uint* piKey, const(byte)** ppName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-getcolumninfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-getcolumninfo
     HRESULT GetColumnInfo(uint ixTbl, uint ixCol, uint* poCol, uint* pcbCol, uint* pType, const(byte)** ppName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-getcodedtokeninfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-getcodedtokeninfo
     HRESULT GetCodedTokenInfo(uint ixCdTkn, uint* pcTokens, uint** ppTokens, const(byte)** ppName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-getrow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-getrow
     HRESULT GetRow(uint ixTbl, uint rid, void** ppRow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-getcolumn))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-getcolumn
     HRESULT GetColumn(uint ixTbl, uint ixCol, uint rid, uint* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-getstring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-getstring
     HRESULT GetString(uint ixString, const(byte)** ppString);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-getblob))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-getblob
     HRESULT GetBlob(uint ixBlob, uint* pcbData, const(void)** ppData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-getguid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-getguid
     HRESULT GetGuid(uint ixGuid, const(GUID)** ppGUID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-getuserstring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-getuserstring
     HRESULT GetUserString(uint ixUserString, uint* pcbData, const(void)** ppData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-getnextstring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-getnextstring
     HRESULT GetNextString(uint ixString, uint* pNext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-getnextblob))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-getnextblob
     HRESULT GetNextBlob(uint ixBlob, uint* pNext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-getnextguid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-getnextguid
     HRESULT GetNextGuid(uint ixGuid, uint* pNext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-getnextuserstring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables-getnextuserstring
     HRESULT GetNextUserString(uint ixUserString, uint* pNext);
 }
 
 @GUID("badb5f70-58da-43a9-a1c6-d74819f19b15")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nn-rometadataapi-imetadatatables2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nn-rometadataapi-imetadatatables2
 interface IMetaDataTables2 : IMetaDataTables
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables2-getmetadatastorage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables2-getmetadatastorage
     HRESULT GetMetaDataStorage(const(void)** ppvMd, uint* pcbMd);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables2-getmetadatastreaminfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rometadataapi/nf-rometadataapi-imetadatatables2-getmetadatastreaminfo
     HRESULT GetMetaDataStreamInfo(uint ix, const(byte)** ppchName, const(void)** ppv, uint* pcb);
 }
 
@@ -1897,7 +1976,7 @@ interface IMetaDataWinMDImport : IUnknown
                                          uint* pchName);
 }
 
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/roparameterizediid/ns-roparameterizediid-irosimplemetadatabuilder))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/roparameterizediid/ns-roparameterizediid-irosimplemetadatabuilder
 interface IRoSimpleMetaDataBuilder
 {
     HRESULT SetWinRtInterface(GUID iid);
@@ -1916,7 +1995,7 @@ interface IRoSimpleMetaDataBuilder
     HRESULT SetParameterizedDelegate(GUID piid, uint numArgs);
 }
 
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/roparameterizediid/ns-roparameterizediid-irometadatalocator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/roparameterizediid/ns-roparameterizediid-irometadatalocator
 interface IRoMetaDataLocator
 {
     HRESULT Locate(const(PWSTR) nameElement, IRoSimpleMetaDataBuilder metaDataDestination);

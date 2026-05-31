@@ -3,15 +3,16 @@
 module windows.win32.media.streaming;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : DEVPROPKEY, RECT;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : DEVPROPKEY, RECT;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mfidl/ne-mfidl-mf_transfer_video_frame_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/ne-mfidl-mf_transfer_video_frame_flags
 alias MF_TRANSFER_VIDEO_FRAME_FLAGS = int;
 enum : int
 {
@@ -19,7 +20,8 @@ enum : int
     MF_TRANSFER_VIDEO_FRAME_STRETCH    = 0x00000001,
     MF_TRANSFER_VIDEO_FRAME_IGNORE_PAR = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mfidl/ne-mfidl-mf_mediasource_status_info))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfidl/ne-mfidl-mf_mediasource_status_info
 alias MF_MEDIASOURCE_STATUS_INFO = int;
 enum : int
 {
@@ -61,28 +63,28 @@ enum : GUID
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mfapi/ns-mfapi-facerectinfoblobheader))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfapi/ns-mfapi-facerectinfoblobheader
 struct FaceRectInfoBlobHeader
 {
     uint Size;
     uint Count;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mfapi/ns-mfapi-facerectinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfapi/ns-mfapi-facerectinfo
 struct FaceRectInfo
 {
     RECT Region;
     int  confidenceLevel;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mfapi/ns-mfapi-facecharacterizationblobheader))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfapi/ns-mfapi-facecharacterizationblobheader
 struct FaceCharacterizationBlobHeader
 {
     uint Size;
     uint Count;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mfapi/ns-mfapi-facecharacterization))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfapi/ns-mfapi-facecharacterization
 struct FaceCharacterization
 {
     uint BlinkScoreLeft;
@@ -91,21 +93,21 @@ struct FaceCharacterization
     uint FacialExpressionScore;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mfapi/ns-mfapi-capturedmetadataexposurecompensation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfapi/ns-mfapi-capturedmetadataexposurecompensation
 struct CapturedMetadataExposureCompensation
 {
     ulong Flags;
     int   Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mfapi/ns-mfapi-capturedmetadataisogains))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfapi/ns-mfapi-capturedmetadataisogains
 struct CapturedMetadataISOGains
 {
     float AnalogGain;
     float DigitalGain;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mfapi/ns-mfapi-capturedmetadatawhitebalancegains))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfapi/ns-mfapi-capturedmetadatawhitebalancegains
 struct CapturedMetadataWhiteBalanceGains
 {
     float R;
@@ -113,7 +115,7 @@ struct CapturedMetadataWhiteBalanceGains
     float B;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mfapi/ns-mfapi-metadatatimestamps))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfapi/ns-mfapi-metadatatimestamps
 struct MetadataTimeStamps
 {
     uint Flags;
@@ -121,7 +123,7 @@ struct MetadataTimeStamps
     long Presentation;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mfapi/ns-mfapi-histogramgrid))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfapi/ns-mfapi-histogramgrid
 struct HistogramGrid
 {
     uint Width;
@@ -129,14 +131,14 @@ struct HistogramGrid
     RECT Region;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mfapi/ns-mfapi-histogramblobheader))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfapi/ns-mfapi-histogramblobheader
 struct HistogramBlobHeader
 {
     uint Size;
     uint Histograms;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mfapi/ns-mfapi-histogramheader))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfapi/ns-mfapi-histogramheader
 struct HistogramHeader
 {
     uint          Size;
@@ -146,7 +148,7 @@ struct HistogramHeader
     HistogramGrid Grid;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mfapi/ns-mfapi-histogramdataheader))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mfapi/ns-mfapi-histogramdataheader
 struct HistogramDataHeader
 {
     uint Size;

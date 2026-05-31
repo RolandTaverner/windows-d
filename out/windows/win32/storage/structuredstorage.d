@@ -11,21 +11,21 @@ extern(Windows) @nogc nothrow:
 
 
 //STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-handle))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-handle
 struct JET_HANDLE
 {
     size_t Value;
 }
 
 //STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-tableid))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-tableid
 struct JET_TABLEID
 {
     size_t Value;
 }
 
 //STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-api-ptr))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-api-ptr
 struct JET_API_PTR
 {
     size_t Value;

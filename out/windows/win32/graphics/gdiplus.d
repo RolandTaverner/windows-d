@@ -3,14 +3,14 @@
 module windows.win32.graphics.gdiplus;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, HANDLE, HINSTANCE, HRESULT, HWND, PSTR,
-                                         PWSTR, RECT, RECTL, SIZE;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, HANDLE, HINSTANCE, HRESULT, HWND,
+                                                    PSTR, PWSTR, RECT, RECTL, SIZE;
 public import windows.win32.graphics.directdraw : IDirectDrawSurface7;
 public import windows.win32.graphics.gdi : BITMAPINFO, HBITMAP, HDC, HENHMETAFILE,
                                            HMETAFILE, HPALETTE, HRGN, LOGFONTA,
                                            LOGFONTW, METAHEADER;
-public import windows.win32.system.com : IStream, IUnknown;
+public import windows.win32.system.com.com : IStream, IUnknown;
 public import windows.win32.ui.windowsandmessaging : HICON;
 
 extern(Windows) @nogc nothrow:
@@ -18,11 +18,13 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 enum FillMode : int
 {
     FillModeAlternate = 0x00000000,
     FillModeWinding   = 0x00000001,
 }
+
 enum QualityMode : int
 {
     QualityModeInvalid = 0xffffffff,
@@ -30,11 +32,13 @@ enum QualityMode : int
     QualityModeLow     = 0x00000001,
     QualityModeHigh    = 0x00000002,
 }
+
 enum CompositingMode : int
 {
     CompositingModeSourceOver = 0x00000000,
     CompositingModeSourceCopy = 0x00000001,
 }
+
 enum CompositingQuality : int
 {
     CompositingQualityInvalid        = 0xffffffff,
@@ -44,6 +48,7 @@ enum CompositingQuality : int
     CompositingQualityGammaCorrected = 0x00000003,
     CompositingQualityAssumeLinear   = 0x00000004,
 }
+
 enum Unit : int
 {
     UnitWorld      = 0x00000000,
@@ -54,6 +59,7 @@ enum Unit : int
     UnitDocument   = 0x00000005,
     UnitMillimeter = 0x00000006,
 }
+
 enum MetafileFrameUnit : int
 {
     MetafileFrameUnitPixel      = 0x00000002,
@@ -63,12 +69,14 @@ enum MetafileFrameUnit : int
     MetafileFrameUnitMillimeter = 0x00000006,
     MetafileFrameUnitGdi        = 0x00000007,
 }
+
 enum CoordinateSpace : int
 {
     CoordinateSpaceWorld  = 0x00000000,
     CoordinateSpacePage   = 0x00000001,
     CoordinateSpaceDevice = 0x00000002,
 }
+
 enum WrapMode : int
 {
     WrapModeTile       = 0x00000000,
@@ -77,6 +85,7 @@ enum WrapMode : int
     WrapModeTileFlipXY = 0x00000003,
     WrapModeClamp      = 0x00000004,
 }
+
 enum HatchStyle : int
 {
     HatchStyleHorizontal             = 0x00000000,
@@ -137,6 +146,7 @@ enum HatchStyle : int
     HatchStyleMin                    = 0x00000000,
     HatchStyleMax                    = 0x00000034,
 }
+
 enum DashStyle : int
 {
     DashStyleSolid      = 0x00000000,
@@ -146,12 +156,14 @@ enum DashStyle : int
     DashStyleDashDotDot = 0x00000004,
     DashStyleCustom     = 0x00000005,
 }
+
 enum DashCap : int
 {
     DashCapFlat     = 0x00000000,
     DashCapRound    = 0x00000002,
     DashCapTriangle = 0x00000003,
 }
+
 enum LineCap : int
 {
     LineCapFlat          = 0x00000000,
@@ -166,11 +178,13 @@ enum LineCap : int
     LineCapCustom        = 0x000000ff,
     LineCapAnchorMask    = 0x000000f0,
 }
+
 enum CustomLineCapType : int
 {
     CustomLineCapTypeDefault         = 0x00000000,
     CustomLineCapTypeAdjustableArrow = 0x00000001,
 }
+
 enum LineJoin : int
 {
     LineJoinMiter        = 0x00000000,
@@ -178,6 +192,7 @@ enum LineJoin : int
     LineJoinRound        = 0x00000002,
     LineJoinMiterClipped = 0x00000003,
 }
+
 enum PathPointType : int
 {
     PathPointTypeStart        = 0x00000000,
@@ -189,11 +204,13 @@ enum PathPointType : int
     PathPointTypeCloseSubpath = 0x00000080,
     PathPointTypeBezier3      = 0x00000003,
 }
+
 enum WarpMode : int
 {
     WarpModePerspective = 0x00000000,
     WarpModeBilinear    = 0x00000001,
 }
+
 enum LinearGradientMode : int
 {
     LinearGradientModeHorizontal       = 0x00000000,
@@ -201,6 +218,7 @@ enum LinearGradientMode : int
     LinearGradientModeForwardDiagonal  = 0x00000002,
     LinearGradientModeBackwardDiagonal = 0x00000003,
 }
+
 enum CombineMode : int
 {
     CombineModeReplace    = 0x00000000,
@@ -210,13 +228,15 @@ enum CombineMode : int
     CombineModeExclude    = 0x00000004,
     CombineModeComplement = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/tablet/imagetype-complex-type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/tablet/imagetype-complex-type
 enum ImageType : int
 {
     ImageTypeUnknown  = 0x00000000,
     ImageTypeBitmap   = 0x00000001,
     ImageTypeMetafile = 0x00000002,
 }
+
 enum InterpolationMode : int
 {
     InterpolationModeInvalid             = 0xffffffff,
@@ -229,11 +249,13 @@ enum InterpolationMode : int
     InterpolationModeHighQualityBilinear = 0x00000006,
     InterpolationModeHighQualityBicubic  = 0x00000007,
 }
+
 enum PenAlignment : int
 {
     PenAlignmentCenter = 0x00000000,
     PenAlignmentInset  = 0x00000001,
 }
+
 enum BrushType : int
 {
     BrushTypeSolidColor     = 0x00000000,
@@ -242,6 +264,7 @@ enum BrushType : int
     BrushTypePathGradient   = 0x00000003,
     BrushTypeLinearGradient = 0x00000004,
 }
+
 enum PenType : int
 {
     PenTypeSolidColor     = 0x00000000,
@@ -251,17 +274,20 @@ enum PenType : int
     PenTypeLinearGradient = 0x00000004,
     PenTypeUnknown        = 0xffffffff,
 }
+
 enum MatrixOrder : int
 {
     MatrixOrderPrepend = 0x00000000,
     MatrixOrderAppend  = 0x00000001,
 }
+
 enum GenericFontFamily : int
 {
     GenericFontFamilySerif     = 0x00000000,
     GenericFontFamilySansSerif = 0x00000001,
     GenericFontFamilyMonospace = 0x00000002,
 }
+
 enum FontStyle : int
 {
     FontStyleRegular    = 0x00000000,
@@ -271,6 +297,7 @@ enum FontStyle : int
     FontStyleUnderline  = 0x00000004,
     FontStyleStrikeout  = 0x00000008,
 }
+
 enum SmoothingMode : int
 {
     SmoothingModeInvalid      = 0xffffffff,
@@ -282,6 +309,7 @@ enum SmoothingMode : int
     SmoothingModeAntiAlias8x4 = 0x00000004,
     SmoothingModeAntiAlias8x8 = 0x00000005,
 }
+
 enum PixelOffsetMode : int
 {
     PixelOffsetModeInvalid     = 0xffffffff,
@@ -291,6 +319,7 @@ enum PixelOffsetMode : int
     PixelOffsetModeNone        = 0x00000003,
     PixelOffsetModeHalf        = 0x00000004,
 }
+
 enum TextRenderingHint : int
 {
     TextRenderingHintSystemDefault            = 0x00000000,
@@ -300,6 +329,7 @@ enum TextRenderingHint : int
     TextRenderingHintAntiAlias                = 0x00000004,
     TextRenderingHintClearTypeGridFit         = 0x00000005,
 }
+
 enum MetafileType : int
 {
     MetafileTypeInvalid      = 0x00000000,
@@ -309,12 +339,14 @@ enum MetafileType : int
     MetafileTypeEmfPlusOnly  = 0x00000004,
     MetafileTypeEmfPlusDual  = 0x00000005,
 }
+
 enum EmfType : int
 {
     EmfTypeEmfOnly     = 0x00000003,
     EmfTypeEmfPlusOnly = 0x00000004,
     EmfTypeEmfPlusDual = 0x00000005,
 }
+
 enum ObjectType : int
 {
     ObjectTypeInvalid         = 0x00000000,
@@ -331,6 +363,7 @@ enum ObjectType : int
     ObjectTypeMax             = 0x0000000a,
     ObjectTypeMin             = 0x00000001,
 }
+
 enum EmfPlusRecordType : int
 {
     WmfRecordTypeSetBkColor                  = 0x00010201,
@@ -599,6 +632,7 @@ enum EmfPlusRecordType : int
     EmfPlusRecordTypeMax                     = 0x0000403a,
     EmfPlusRecordTypeMin                     = 0x00004001,
 }
+
 enum StringFormatFlags : int
 {
     StringFormatFlagsDirectionRightToLeft  = 0x00000001,
@@ -612,6 +646,7 @@ enum StringFormatFlags : int
     StringFormatFlagsNoClip                = 0x00004000,
     StringFormatFlagsBypassGDI             = 0x80000000,
 }
+
 enum StringTrimming : int
 {
     StringTrimmingNone              = 0x00000000,
@@ -621,6 +656,7 @@ enum StringTrimming : int
     StringTrimmingEllipsisWord      = 0x00000004,
     StringTrimmingEllipsisPath      = 0x00000005,
 }
+
 enum StringDigitSubstitute : int
 {
     StringDigitSubstituteUser        = 0x00000000,
@@ -628,18 +664,21 @@ enum StringDigitSubstitute : int
     StringDigitSubstituteNational    = 0x00000002,
     StringDigitSubstituteTraditional = 0x00000003,
 }
+
 enum HotkeyPrefix : int
 {
     HotkeyPrefixNone = 0x00000000,
     HotkeyPrefixShow = 0x00000001,
     HotkeyPrefixHide = 0x00000002,
 }
+
 enum StringAlignment : int
 {
     StringAlignmentNear   = 0x00000000,
     StringAlignmentCenter = 0x00000001,
     StringAlignmentFar    = 0x00000002,
 }
+
 enum DriverStringOptions : int
 {
     DriverStringOptionsCmapLookup      = 0x00000001,
@@ -647,11 +686,13 @@ enum DriverStringOptions : int
     DriverStringOptionsRealizedAdvance = 0x00000004,
     DriverStringOptionsLimitSubpixel   = 0x00000008,
 }
+
 enum FlushIntention : int
 {
     FlushIntentionFlush = 0x00000000,
     FlushIntentionSync  = 0x00000001,
 }
+
 enum EncoderParameterValueType : int
 {
     EncoderParameterValueTypeByte          = 0x00000001,
@@ -664,6 +705,7 @@ enum EncoderParameterValueType : int
     EncoderParameterValueTypeRationalRange = 0x00000008,
     EncoderParameterValueTypePointer       = 0x00000009,
 }
+
 enum EncoderValue : int
 {
     EncoderValueColorTypeCMYK            = 0x00000000,
@@ -693,6 +735,7 @@ enum EncoderValue : int
     EncoderValueColorTypeGray            = 0x00000018,
     EncoderValueColorTypeRGB             = 0x00000019,
 }
+
 enum EmfToWmfBitsFlags : int
 {
     EmfToWmfBitsFlagsDefault          = 0x00000000,
@@ -700,6 +743,7 @@ enum EmfToWmfBitsFlags : int
     EmfToWmfBitsFlagsIncludePlaceable = 0x00000002,
     EmfToWmfBitsFlagsNoXORClip        = 0x00000004,
 }
+
 enum ConvertToEmfPlusFlags : int
 {
     ConvertToEmfPlusFlagsDefault       = 0x00000000,
@@ -707,12 +751,14 @@ enum ConvertToEmfPlusFlags : int
     ConvertToEmfPlusFlagsText          = 0x00000002,
     ConvertToEmfPlusFlagsInvalidRecord = 0x00000004,
 }
+
 enum GpTestControlEnum : int
 {
     TestControlForceBilinear  = 0x00000000,
     TestControlNoICM          = 0x00000001,
     TestControlGetBuildNumber = 0x00000002,
 }
+
 enum Status : int
 {
     Ok                        = 0x00000000,
@@ -738,16 +784,19 @@ enum Status : int
     PropertyNotSupported      = 0x00000014,
     ProfileNotFound           = 0x00000015,
 }
+
 enum DebugEventLevel : int
 {
     DebugEventLevelFatal   = 0x00000000,
     DebugEventLevelWarning = 0x00000001,
 }
+
 enum Version : uint
 {
-    V2      = 0x00000002,
-    V3      = 0x00000003,
+    V2      = 0x00000002U,
+    V3      = 0x00000003U,
 }
+
 enum GdiplusStartupParams : int
 {
     GdiplusStartupDefault          = 0x00000000,
@@ -758,6 +807,7 @@ enum GdiplusStartupParams : int
     GdiplusStartupReserved2        = 0x00000010,
     GdiplusStartupTransparencyMask = 0xff000000,
 }
+
 enum PaletteType : int
 {
     PaletteTypeCustom           = 0x00000000,
@@ -771,6 +821,7 @@ enum PaletteType : int
     PaletteTypeFixedHalftone252 = 0x00000008,
     PaletteTypeFixedHalftone256 = 0x00000009,
 }
+
 enum DitherType : int
 {
     DitherTypeNone           = 0x00000000,
@@ -785,17 +836,20 @@ enum DitherType : int
     DitherTypeErrorDiffusion = 0x00000009,
     DitherTypeMax            = 0x0000000a,
 }
+
 enum PaletteFlags : int
 {
     PaletteFlagsHasAlpha  = 0x00000001,
     PaletteFlagsGrayScale = 0x00000002,
     PaletteFlagsHalftone  = 0x00000004,
 }
+
 enum ColorMode : int
 {
     ColorModeARGB32 = 0x00000000,
     ColorModeARGB64 = 0x00000001,
 }
+
 enum ColorChannelFlags : int
 {
     ColorChannelFlagsC    = 0x00000000,
@@ -804,6 +858,7 @@ enum ColorChannelFlags : int
     ColorChannelFlagsK    = 0x00000003,
     ColorChannelFlagsLast = 0x00000004,
 }
+
 enum ImageCodecFlags : int
 {
     ImageCodecFlagsEncoder        = 0x00000001,
@@ -816,12 +871,14 @@ enum ImageCodecFlags : int
     ImageCodecFlagsSystem         = 0x00020000,
     ImageCodecFlagsUser           = 0x00040000,
 }
+
 enum ImageLockMode : int
 {
     ImageLockModeRead         = 0x00000001,
     ImageLockModeWrite        = 0x00000002,
     ImageLockModeUserInputBuf = 0x00000004,
 }
+
 enum ImageFlags : int
 {
     ImageFlagsNone              = 0x00000000,
@@ -839,6 +896,7 @@ enum ImageFlags : int
     ImageFlagsReadOnly          = 0x00010000,
     ImageFlagsCaching           = 0x00020000,
 }
+
 enum RotateFlipType : int
 {
     RotateNoneFlipNone = 0x00000000,
@@ -858,12 +916,14 @@ enum RotateFlipType : int
     Rotate180FlipXY    = 0x00000000,
     Rotate270FlipXY    = 0x00000001,
 }
+
 enum ItemDataPosition : int
 {
     ItemDataPositionAfterHeader  = 0x00000000,
     ItemDataPositionAfterPalette = 0x00000001,
     ItemDataPositionAfterBits    = 0x00000002,
 }
+
 enum HistogramFormat : int
 {
     HistogramFormatARGB  = 0x00000000,
@@ -875,12 +935,14 @@ enum HistogramFormat : int
     HistogramFormatR     = 0x00000006,
     HistogramFormatA     = 0x00000007,
 }
+
 enum ColorMatrixFlags : int
 {
     ColorMatrixFlagsDefault   = 0x00000000,
     ColorMatrixFlagsSkipGrays = 0x00000001,
     ColorMatrixFlagsAltGray   = 0x00000002,
 }
+
 enum ColorAdjustType : int
 {
     ColorAdjustTypeDefault = 0x00000000,
@@ -891,6 +953,7 @@ enum ColorAdjustType : int
     ColorAdjustTypeCount   = 0x00000005,
     ColorAdjustTypeAny     = 0x00000006,
 }
+
 enum CurveAdjustments : int
 {
     AdjustExposure        = 0x00000000,
@@ -902,6 +965,7 @@ enum CurveAdjustments : int
     AdjustWhiteSaturation = 0x00000006,
     AdjustBlackSaturation = 0x00000007,
 }
+
 enum CurveChannel : int
 {
     CurveChannelAll   = 0x00000000,
@@ -913,8 +977,8 @@ enum CurveChannel : int
 // Constants
 
 
-enum uint GDIP_EMFPLUS_RECORD_BASE = 0x00004000;
-enum uint GDIP_WMF_RECORD_BASE = 0x00010000;
+enum uint GDIP_EMFPLUS_RECORD_BASE = 0x00004000U;
+enum uint GDIP_WMF_RECORD_BASE = 0x00010000U;
 
 enum : GUID
 {
@@ -973,310 +1037,310 @@ enum GUID CodecIImageBytes = GUID("025d1823-6c7d-447b-bbdb-a3cbc3dfa2fc");
 
 enum : uint
 {
-    PropertyTagTypeByte          = 0x00000001,
-    PropertyTagTypeASCII         = 0x00000002,
-    PropertyTagTypeShort         = 0x00000003,
-    PropertyTagTypeLong          = 0x00000004,
-    PropertyTagTypeRational      = 0x00000005,
-    PropertyTagTypeUndefined     = 0x00000007,
-    PropertyTagTypeSLONG         = 0x00000009,
-    PropertyTagTypeSRational     = 0x0000000a,
-    PropertyTagExifIFD           = 0x00008769,
-    PropertyTagGpsIFD            = 0x00008825,
-    PropertyTagNewSubfileType    = 0x000000fe,
-    PropertyTagSubfileType       = 0x000000ff,
-    PropertyTagImageWidth        = 0x00000100,
-    PropertyTagImageHeight       = 0x00000101,
-    PropertyTagBitsPerSample     = 0x00000102,
-    PropertyTagCompression       = 0x00000103,
-    PropertyTagPhotometricInterp = 0x00000106,
+    PropertyTagTypeByte          = 0x00000001U,
+    PropertyTagTypeASCII         = 0x00000002U,
+    PropertyTagTypeShort         = 0x00000003U,
+    PropertyTagTypeLong          = 0x00000004U,
+    PropertyTagTypeRational      = 0x00000005U,
+    PropertyTagTypeUndefined     = 0x00000007U,
+    PropertyTagTypeSLONG         = 0x00000009U,
+    PropertyTagTypeSRational     = 0x0000000aU,
+    PropertyTagExifIFD           = 0x00008769U,
+    PropertyTagGpsIFD            = 0x00008825U,
+    PropertyTagNewSubfileType    = 0x000000feU,
+    PropertyTagSubfileType       = 0x000000ffU,
+    PropertyTagImageWidth        = 0x00000100U,
+    PropertyTagImageHeight       = 0x00000101U,
+    PropertyTagBitsPerSample     = 0x00000102U,
+    PropertyTagCompression       = 0x00000103U,
+    PropertyTagPhotometricInterp = 0x00000106U,
 }
 
 enum : uint
 {
-    PropertyTagThreshHolding     = 0x00000107,
-    PropertyTagCellWidth         = 0x00000108,
-    PropertyTagCellHeight        = 0x00000109,
-    PropertyTagFillOrder         = 0x0000010a,
-    PropertyTagDocumentName      = 0x0000010d,
-    PropertyTagImageDescription  = 0x0000010e,
-    PropertyTagEquipMake         = 0x0000010f,
-    PropertyTagEquipModel        = 0x00000110,
-    PropertyTagStripOffsets      = 0x00000111,
-    PropertyTagOrientation       = 0x00000112,
-    PropertyTagSamplesPerPixel   = 0x00000115,
-    PropertyTagRowsPerStrip      = 0x00000116,
-    PropertyTagStripBytesCount   = 0x00000117,
-    PropertyTagMinSampleValue    = 0x00000118,
-    PropertyTagMaxSampleValue    = 0x00000119,
-    PropertyTagXResolution       = 0x0000011a,
-    PropertyTagYResolution       = 0x0000011b,
-    PropertyTagPlanarConfig      = 0x0000011c,
-    PropertyTagPageName          = 0x0000011d,
-    PropertyTagXPosition         = 0x0000011e,
-    PropertyTagYPosition         = 0x0000011f,
-    PropertyTagFreeOffset        = 0x00000120,
-    PropertyTagFreeByteCounts    = 0x00000121,
-    PropertyTagGrayResponseUnit  = 0x00000122,
-    PropertyTagGrayResponseCurve = 0x00000123,
+    PropertyTagThreshHolding     = 0x00000107U,
+    PropertyTagCellWidth         = 0x00000108U,
+    PropertyTagCellHeight        = 0x00000109U,
+    PropertyTagFillOrder         = 0x0000010aU,
+    PropertyTagDocumentName      = 0x0000010dU,
+    PropertyTagImageDescription  = 0x0000010eU,
+    PropertyTagEquipMake         = 0x0000010fU,
+    PropertyTagEquipModel        = 0x00000110U,
+    PropertyTagStripOffsets      = 0x00000111U,
+    PropertyTagOrientation       = 0x00000112U,
+    PropertyTagSamplesPerPixel   = 0x00000115U,
+    PropertyTagRowsPerStrip      = 0x00000116U,
+    PropertyTagStripBytesCount   = 0x00000117U,
+    PropertyTagMinSampleValue    = 0x00000118U,
+    PropertyTagMaxSampleValue    = 0x00000119U,
+    PropertyTagXResolution       = 0x0000011aU,
+    PropertyTagYResolution       = 0x0000011bU,
+    PropertyTagPlanarConfig      = 0x0000011cU,
+    PropertyTagPageName          = 0x0000011dU,
+    PropertyTagXPosition         = 0x0000011eU,
+    PropertyTagYPosition         = 0x0000011fU,
+    PropertyTagFreeOffset        = 0x00000120U,
+    PropertyTagFreeByteCounts    = 0x00000121U,
+    PropertyTagGrayResponseUnit  = 0x00000122U,
+    PropertyTagGrayResponseCurve = 0x00000123U,
 }
 
 enum : uint
 {
-    PropertyTagT4Option          = 0x00000124,
-    PropertyTagT6Option          = 0x00000125,
-    PropertyTagResolutionUnit    = 0x00000128,
-    PropertyTagPageNumber        = 0x00000129,
-    PropertyTagTransferFuncition = 0x0000012d,
+    PropertyTagT4Option          = 0x00000124U,
+    PropertyTagT6Option          = 0x00000125U,
+    PropertyTagResolutionUnit    = 0x00000128U,
+    PropertyTagPageNumber        = 0x00000129U,
+    PropertyTagTransferFuncition = 0x0000012dU,
 }
 
 enum : uint
 {
-    PropertyTagSoftwareUsed          = 0x00000131,
-    PropertyTagDateTime              = 0x00000132,
-    PropertyTagArtist                = 0x0000013b,
-    PropertyTagHostComputer          = 0x0000013c,
-    PropertyTagPredictor             = 0x0000013d,
-    PropertyTagWhitePoint            = 0x0000013e,
-    PropertyTagPrimaryChromaticities = 0x0000013f,
+    PropertyTagSoftwareUsed          = 0x00000131U,
+    PropertyTagDateTime              = 0x00000132U,
+    PropertyTagArtist                = 0x0000013bU,
+    PropertyTagHostComputer          = 0x0000013cU,
+    PropertyTagPredictor             = 0x0000013dU,
+    PropertyTagWhitePoint            = 0x0000013eU,
+    PropertyTagPrimaryChromaticities = 0x0000013fU,
 }
 
 enum : uint
 {
-    PropertyTagColorMap               = 0x00000140,
-    PropertyTagHalftoneHints          = 0x00000141,
-    PropertyTagTileWidth              = 0x00000142,
-    PropertyTagTileLength             = 0x00000143,
-    PropertyTagTileOffset             = 0x00000144,
-    PropertyTagTileByteCounts         = 0x00000145,
-    PropertyTagInkSet                 = 0x0000014c,
-    PropertyTagInkNames               = 0x0000014d,
-    PropertyTagNumberOfInks           = 0x0000014e,
-    PropertyTagDotRange               = 0x00000150,
-    PropertyTagTargetPrinter          = 0x00000151,
-    PropertyTagExtraSamples           = 0x00000152,
-    PropertyTagSampleFormat           = 0x00000153,
-    PropertyTagSMinSampleValue        = 0x00000154,
-    PropertyTagSMaxSampleValue        = 0x00000155,
-    PropertyTagTransferRange          = 0x00000156,
-    PropertyTagJPEGProc               = 0x00000200,
-    PropertyTagJPEGInterFormat        = 0x00000201,
-    PropertyTagJPEGInterLength        = 0x00000202,
-    PropertyTagJPEGRestartInterval    = 0x00000203,
-    PropertyTagJPEGLosslessPredictors = 0x00000205,
-    PropertyTagJPEGPointTransforms    = 0x00000206,
-    PropertyTagJPEGQTables            = 0x00000207,
-    PropertyTagJPEGDCTables           = 0x00000208,
-    PropertyTagJPEGACTables           = 0x00000209,
-    PropertyTagYCbCrCoefficients      = 0x00000211,
-    PropertyTagYCbCrSubsampling       = 0x00000212,
-    PropertyTagYCbCrPositioning       = 0x00000213,
-    PropertyTagREFBlackWhite          = 0x00000214,
-    PropertyTagICCProfile             = 0x00008773,
-    PropertyTagGamma                  = 0x00000301,
-    PropertyTagICCProfileDescriptor   = 0x00000302,
+    PropertyTagColorMap               = 0x00000140U,
+    PropertyTagHalftoneHints          = 0x00000141U,
+    PropertyTagTileWidth              = 0x00000142U,
+    PropertyTagTileLength             = 0x00000143U,
+    PropertyTagTileOffset             = 0x00000144U,
+    PropertyTagTileByteCounts         = 0x00000145U,
+    PropertyTagInkSet                 = 0x0000014cU,
+    PropertyTagInkNames               = 0x0000014dU,
+    PropertyTagNumberOfInks           = 0x0000014eU,
+    PropertyTagDotRange               = 0x00000150U,
+    PropertyTagTargetPrinter          = 0x00000151U,
+    PropertyTagExtraSamples           = 0x00000152U,
+    PropertyTagSampleFormat           = 0x00000153U,
+    PropertyTagSMinSampleValue        = 0x00000154U,
+    PropertyTagSMaxSampleValue        = 0x00000155U,
+    PropertyTagTransferRange          = 0x00000156U,
+    PropertyTagJPEGProc               = 0x00000200U,
+    PropertyTagJPEGInterFormat        = 0x00000201U,
+    PropertyTagJPEGInterLength        = 0x00000202U,
+    PropertyTagJPEGRestartInterval    = 0x00000203U,
+    PropertyTagJPEGLosslessPredictors = 0x00000205U,
+    PropertyTagJPEGPointTransforms    = 0x00000206U,
+    PropertyTagJPEGQTables            = 0x00000207U,
+    PropertyTagJPEGDCTables           = 0x00000208U,
+    PropertyTagJPEGACTables           = 0x00000209U,
+    PropertyTagYCbCrCoefficients      = 0x00000211U,
+    PropertyTagYCbCrSubsampling       = 0x00000212U,
+    PropertyTagYCbCrPositioning       = 0x00000213U,
+    PropertyTagREFBlackWhite          = 0x00000214U,
+    PropertyTagICCProfile             = 0x00008773U,
+    PropertyTagGamma                  = 0x00000301U,
+    PropertyTagICCProfileDescriptor   = 0x00000302U,
 }
 
-enum uint PropertyTagSRGBRenderingIntent = 0x00000303;
+enum uint PropertyTagSRGBRenderingIntent = 0x00000303U;
 
 enum : uint
 {
-    PropertyTagImageTitle            = 0x00000320,
-    PropertyTagCopyright             = 0x00008298,
-    PropertyTagResolutionXUnit       = 0x00005001,
-    PropertyTagResolutionYUnit       = 0x00005002,
-    PropertyTagResolutionXLengthUnit = 0x00005003,
-    PropertyTagResolutionYLengthUnit = 0x00005004,
-}
-
-enum : uint
-{
-    PropertyTagPrintFlags                = 0x00005005,
-    PropertyTagPrintFlagsVersion         = 0x00005006,
-    PropertyTagPrintFlagsCrop            = 0x00005007,
-    PropertyTagPrintFlagsBleedWidth      = 0x00005008,
-    PropertyTagPrintFlagsBleedWidthScale = 0x00005009,
+    PropertyTagImageTitle            = 0x00000320U,
+    PropertyTagCopyright             = 0x00008298U,
+    PropertyTagResolutionXUnit       = 0x00005001U,
+    PropertyTagResolutionYUnit       = 0x00005002U,
+    PropertyTagResolutionXLengthUnit = 0x00005003U,
+    PropertyTagResolutionYLengthUnit = 0x00005004U,
 }
 
 enum : uint
 {
-    PropertyTagHalftoneLPI             = 0x0000500a,
-    PropertyTagHalftoneLPIUnit         = 0x0000500b,
-    PropertyTagHalftoneDegree          = 0x0000500c,
-    PropertyTagHalftoneShape           = 0x0000500d,
-    PropertyTagHalftoneMisc            = 0x0000500e,
-    PropertyTagHalftoneScreen          = 0x0000500f,
-    PropertyTagJPEGQuality             = 0x00005010,
-    PropertyTagGridSize                = 0x00005011,
-    PropertyTagThumbnailFormat         = 0x00005012,
-    PropertyTagThumbnailWidth          = 0x00005013,
-    PropertyTagThumbnailHeight         = 0x00005014,
-    PropertyTagThumbnailColorDepth     = 0x00005015,
-    PropertyTagThumbnailPlanes         = 0x00005016,
-    PropertyTagThumbnailRawBytes       = 0x00005017,
-    PropertyTagThumbnailSize           = 0x00005018,
-    PropertyTagThumbnailCompressedSize = 0x00005019,
-}
-
-enum uint PropertyTagColorTransferFunction = 0x0000501a;
-
-enum : uint
-{
-    PropertyTagThumbnailData                  = 0x0000501b,
-    PropertyTagThumbnailImageWidth            = 0x00005020,
-    PropertyTagThumbnailImageHeight           = 0x00005021,
-    PropertyTagThumbnailBitsPerSample         = 0x00005022,
-    PropertyTagThumbnailCompression           = 0x00005023,
-    PropertyTagThumbnailPhotometricInterp     = 0x00005024,
-    PropertyTagThumbnailImageDescription      = 0x00005025,
-    PropertyTagThumbnailEquipMake             = 0x00005026,
-    PropertyTagThumbnailEquipModel            = 0x00005027,
-    PropertyTagThumbnailStripOffsets          = 0x00005028,
-    PropertyTagThumbnailOrientation           = 0x00005029,
-    PropertyTagThumbnailSamplesPerPixel       = 0x0000502a,
-    PropertyTagThumbnailRowsPerStrip          = 0x0000502b,
-    PropertyTagThumbnailStripBytesCount       = 0x0000502c,
-    PropertyTagThumbnailResolutionX           = 0x0000502d,
-    PropertyTagThumbnailResolutionY           = 0x0000502e,
-    PropertyTagThumbnailPlanarConfig          = 0x0000502f,
-    PropertyTagThumbnailResolutionUnit        = 0x00005030,
-    PropertyTagThumbnailTransferFunction      = 0x00005031,
-    PropertyTagThumbnailSoftwareUsed          = 0x00005032,
-    PropertyTagThumbnailDateTime              = 0x00005033,
-    PropertyTagThumbnailArtist                = 0x00005034,
-    PropertyTagThumbnailWhitePoint            = 0x00005035,
-    PropertyTagThumbnailPrimaryChromaticities = 0x00005036,
-    PropertyTagThumbnailYCbCrCoefficients     = 0x00005037,
-    PropertyTagThumbnailYCbCrSubsampling      = 0x00005038,
-    PropertyTagThumbnailYCbCrPositioning      = 0x00005039,
-    PropertyTagThumbnailRefBlackWhite         = 0x0000503a,
-    PropertyTagThumbnailCopyRight             = 0x0000503b,
+    PropertyTagPrintFlags                = 0x00005005U,
+    PropertyTagPrintFlagsVersion         = 0x00005006U,
+    PropertyTagPrintFlagsCrop            = 0x00005007U,
+    PropertyTagPrintFlagsBleedWidth      = 0x00005008U,
+    PropertyTagPrintFlagsBleedWidthScale = 0x00005009U,
 }
 
 enum : uint
 {
-    PropertyTagLuminanceTable            = 0x00005090,
-    PropertyTagChrominanceTable          = 0x00005091,
-    PropertyTagFrameDelay                = 0x00005100,
-    PropertyTagLoopCount                 = 0x00005101,
-    PropertyTagGlobalPalette             = 0x00005102,
-    PropertyTagIndexBackground           = 0x00005103,
-    PropertyTagIndexTransparent          = 0x00005104,
-    PropertyTagPixelUnit                 = 0x00005110,
-    PropertyTagPixelPerUnitX             = 0x00005111,
-    PropertyTagPixelPerUnitY             = 0x00005112,
-    PropertyTagPaletteHistogram          = 0x00005113,
-    PropertyTagExifExposureTime          = 0x0000829a,
-    PropertyTagExifFNumber               = 0x0000829d,
-    PropertyTagExifExposureProg          = 0x00008822,
-    PropertyTagExifSpectralSense         = 0x00008824,
-    PropertyTagExifISOSpeed              = 0x00008827,
-    PropertyTagExifOECF                  = 0x00008828,
-    PropertyTagExifVer                   = 0x00009000,
-    PropertyTagExifDTOrig                = 0x00009003,
-    PropertyTagExifDTDigitized           = 0x00009004,
-    PropertyTagExifCompConfig            = 0x00009101,
-    PropertyTagExifCompBPP               = 0x00009102,
-    PropertyTagExifShutterSpeed          = 0x00009201,
-    PropertyTagExifAperture              = 0x00009202,
-    PropertyTagExifBrightness            = 0x00009203,
-    PropertyTagExifExposureBias          = 0x00009204,
-    PropertyTagExifMaxAperture           = 0x00009205,
-    PropertyTagExifSubjectDist           = 0x00009206,
-    PropertyTagExifMeteringMode          = 0x00009207,
-    PropertyTagExifLightSource           = 0x00009208,
-    PropertyTagExifFlash                 = 0x00009209,
-    PropertyTagExifFocalLength           = 0x0000920a,
-    PropertyTagExifSubjectArea           = 0x00009214,
-    PropertyTagExifMakerNote             = 0x0000927c,
-    PropertyTagExifUserComment           = 0x00009286,
-    PropertyTagExifDTSubsec              = 0x00009290,
-    PropertyTagExifDTOrigSS              = 0x00009291,
-    PropertyTagExifDTDigSS               = 0x00009292,
-    PropertyTagExifFPXVer                = 0x0000a000,
-    PropertyTagExifColorSpace            = 0x0000a001,
-    PropertyTagExifPixXDim               = 0x0000a002,
-    PropertyTagExifPixYDim               = 0x0000a003,
-    PropertyTagExifRelatedWav            = 0x0000a004,
-    PropertyTagExifInterop               = 0x0000a005,
-    PropertyTagExifFlashEnergy           = 0x0000a20b,
-    PropertyTagExifSpatialFR             = 0x0000a20c,
-    PropertyTagExifFocalXRes             = 0x0000a20e,
-    PropertyTagExifFocalYRes             = 0x0000a20f,
-    PropertyTagExifFocalResUnit          = 0x0000a210,
-    PropertyTagExifSubjectLoc            = 0x0000a214,
-    PropertyTagExifExposureIndex         = 0x0000a215,
-    PropertyTagExifSensingMethod         = 0x0000a217,
-    PropertyTagExifFileSource            = 0x0000a300,
-    PropertyTagExifSceneType             = 0x0000a301,
-    PropertyTagExifCfaPattern            = 0x0000a302,
-    PropertyTagExifCustomRendered        = 0x0000a401,
-    PropertyTagExifExposureMode          = 0x0000a402,
-    PropertyTagExifWhiteBalance          = 0x0000a403,
-    PropertyTagExifDigitalZoomRatio      = 0x0000a404,
-    PropertyTagExifFocalLengthIn35mmFilm = 0x0000a405,
-    PropertyTagExifSceneCaptureType      = 0x0000a406,
-    PropertyTagExifGainControl           = 0x0000a407,
-    PropertyTagExifContrast              = 0x0000a408,
-    PropertyTagExifSaturation            = 0x0000a409,
-    PropertyTagExifSharpness             = 0x0000a40a,
-    PropertyTagExifDeviceSettingDesc     = 0x0000a40b,
-    PropertyTagExifSubjectDistanceRange  = 0x0000a40c,
-    PropertyTagExifUniqueImageID         = 0x0000a420,
+    PropertyTagHalftoneLPI             = 0x0000500aU,
+    PropertyTagHalftoneLPIUnit         = 0x0000500bU,
+    PropertyTagHalftoneDegree          = 0x0000500cU,
+    PropertyTagHalftoneShape           = 0x0000500dU,
+    PropertyTagHalftoneMisc            = 0x0000500eU,
+    PropertyTagHalftoneScreen          = 0x0000500fU,
+    PropertyTagJPEGQuality             = 0x00005010U,
+    PropertyTagGridSize                = 0x00005011U,
+    PropertyTagThumbnailFormat         = 0x00005012U,
+    PropertyTagThumbnailWidth          = 0x00005013U,
+    PropertyTagThumbnailHeight         = 0x00005014U,
+    PropertyTagThumbnailColorDepth     = 0x00005015U,
+    PropertyTagThumbnailPlanes         = 0x00005016U,
+    PropertyTagThumbnailRawBytes       = 0x00005017U,
+    PropertyTagThumbnailSize           = 0x00005018U,
+    PropertyTagThumbnailCompressedSize = 0x00005019U,
+}
+
+enum uint PropertyTagColorTransferFunction = 0x0000501aU;
+
+enum : uint
+{
+    PropertyTagThumbnailData                  = 0x0000501bU,
+    PropertyTagThumbnailImageWidth            = 0x00005020U,
+    PropertyTagThumbnailImageHeight           = 0x00005021U,
+    PropertyTagThumbnailBitsPerSample         = 0x00005022U,
+    PropertyTagThumbnailCompression           = 0x00005023U,
+    PropertyTagThumbnailPhotometricInterp     = 0x00005024U,
+    PropertyTagThumbnailImageDescription      = 0x00005025U,
+    PropertyTagThumbnailEquipMake             = 0x00005026U,
+    PropertyTagThumbnailEquipModel            = 0x00005027U,
+    PropertyTagThumbnailStripOffsets          = 0x00005028U,
+    PropertyTagThumbnailOrientation           = 0x00005029U,
+    PropertyTagThumbnailSamplesPerPixel       = 0x0000502aU,
+    PropertyTagThumbnailRowsPerStrip          = 0x0000502bU,
+    PropertyTagThumbnailStripBytesCount       = 0x0000502cU,
+    PropertyTagThumbnailResolutionX           = 0x0000502dU,
+    PropertyTagThumbnailResolutionY           = 0x0000502eU,
+    PropertyTagThumbnailPlanarConfig          = 0x0000502fU,
+    PropertyTagThumbnailResolutionUnit        = 0x00005030U,
+    PropertyTagThumbnailTransferFunction      = 0x00005031U,
+    PropertyTagThumbnailSoftwareUsed          = 0x00005032U,
+    PropertyTagThumbnailDateTime              = 0x00005033U,
+    PropertyTagThumbnailArtist                = 0x00005034U,
+    PropertyTagThumbnailWhitePoint            = 0x00005035U,
+    PropertyTagThumbnailPrimaryChromaticities = 0x00005036U,
+    PropertyTagThumbnailYCbCrCoefficients     = 0x00005037U,
+    PropertyTagThumbnailYCbCrSubsampling      = 0x00005038U,
+    PropertyTagThumbnailYCbCrPositioning      = 0x00005039U,
+    PropertyTagThumbnailRefBlackWhite         = 0x0000503aU,
+    PropertyTagThumbnailCopyRight             = 0x0000503bU,
 }
 
 enum : uint
 {
-    PropertyTagGpsVer              = 0x00000000,
-    PropertyTagGpsLatitudeRef      = 0x00000001,
-    PropertyTagGpsLatitude         = 0x00000002,
-    PropertyTagGpsLongitudeRef     = 0x00000003,
-    PropertyTagGpsLongitude        = 0x00000004,
-    PropertyTagGpsAltitudeRef      = 0x00000005,
-    PropertyTagGpsAltitude         = 0x00000006,
-    PropertyTagGpsGpsTime          = 0x00000007,
-    PropertyTagGpsGpsSatellites    = 0x00000008,
-    PropertyTagGpsGpsStatus        = 0x00000009,
-    PropertyTagGpsGpsMeasureMode   = 0x0000000a,
-    PropertyTagGpsGpsDop           = 0x0000000b,
-    PropertyTagGpsSpeedRef         = 0x0000000c,
-    PropertyTagGpsSpeed            = 0x0000000d,
-    PropertyTagGpsTrackRef         = 0x0000000e,
-    PropertyTagGpsTrack            = 0x0000000f,
-    PropertyTagGpsImgDirRef        = 0x00000010,
-    PropertyTagGpsImgDir           = 0x00000011,
-    PropertyTagGpsMapDatum         = 0x00000012,
-    PropertyTagGpsDestLatRef       = 0x00000013,
-    PropertyTagGpsDestLat          = 0x00000014,
-    PropertyTagGpsDestLongRef      = 0x00000015,
-    PropertyTagGpsDestLong         = 0x00000016,
-    PropertyTagGpsDestBearRef      = 0x00000017,
-    PropertyTagGpsDestBear         = 0x00000018,
-    PropertyTagGpsDestDistRef      = 0x00000019,
-    PropertyTagGpsDestDist         = 0x0000001a,
-    PropertyTagGpsProcessingMethod = 0x0000001b,
-    PropertyTagGpsAreaInformation  = 0x0000001c,
-    PropertyTagGpsDate             = 0x0000001d,
-    PropertyTagGpsDifferential     = 0x0000001e,
+    PropertyTagLuminanceTable            = 0x00005090U,
+    PropertyTagChrominanceTable          = 0x00005091U,
+    PropertyTagFrameDelay                = 0x00005100U,
+    PropertyTagLoopCount                 = 0x00005101U,
+    PropertyTagGlobalPalette             = 0x00005102U,
+    PropertyTagIndexBackground           = 0x00005103U,
+    PropertyTagIndexTransparent          = 0x00005104U,
+    PropertyTagPixelUnit                 = 0x00005110U,
+    PropertyTagPixelPerUnitX             = 0x00005111U,
+    PropertyTagPixelPerUnitY             = 0x00005112U,
+    PropertyTagPaletteHistogram          = 0x00005113U,
+    PropertyTagExifExposureTime          = 0x0000829aU,
+    PropertyTagExifFNumber               = 0x0000829dU,
+    PropertyTagExifExposureProg          = 0x00008822U,
+    PropertyTagExifSpectralSense         = 0x00008824U,
+    PropertyTagExifISOSpeed              = 0x00008827U,
+    PropertyTagExifOECF                  = 0x00008828U,
+    PropertyTagExifVer                   = 0x00009000U,
+    PropertyTagExifDTOrig                = 0x00009003U,
+    PropertyTagExifDTDigitized           = 0x00009004U,
+    PropertyTagExifCompConfig            = 0x00009101U,
+    PropertyTagExifCompBPP               = 0x00009102U,
+    PropertyTagExifShutterSpeed          = 0x00009201U,
+    PropertyTagExifAperture              = 0x00009202U,
+    PropertyTagExifBrightness            = 0x00009203U,
+    PropertyTagExifExposureBias          = 0x00009204U,
+    PropertyTagExifMaxAperture           = 0x00009205U,
+    PropertyTagExifSubjectDist           = 0x00009206U,
+    PropertyTagExifMeteringMode          = 0x00009207U,
+    PropertyTagExifLightSource           = 0x00009208U,
+    PropertyTagExifFlash                 = 0x00009209U,
+    PropertyTagExifFocalLength           = 0x0000920aU,
+    PropertyTagExifSubjectArea           = 0x00009214U,
+    PropertyTagExifMakerNote             = 0x0000927cU,
+    PropertyTagExifUserComment           = 0x00009286U,
+    PropertyTagExifDTSubsec              = 0x00009290U,
+    PropertyTagExifDTOrigSS              = 0x00009291U,
+    PropertyTagExifDTDigSS               = 0x00009292U,
+    PropertyTagExifFPXVer                = 0x0000a000U,
+    PropertyTagExifColorSpace            = 0x0000a001U,
+    PropertyTagExifPixXDim               = 0x0000a002U,
+    PropertyTagExifPixYDim               = 0x0000a003U,
+    PropertyTagExifRelatedWav            = 0x0000a004U,
+    PropertyTagExifInterop               = 0x0000a005U,
+    PropertyTagExifFlashEnergy           = 0x0000a20bU,
+    PropertyTagExifSpatialFR             = 0x0000a20cU,
+    PropertyTagExifFocalXRes             = 0x0000a20eU,
+    PropertyTagExifFocalYRes             = 0x0000a20fU,
+    PropertyTagExifFocalResUnit          = 0x0000a210U,
+    PropertyTagExifSubjectLoc            = 0x0000a214U,
+    PropertyTagExifExposureIndex         = 0x0000a215U,
+    PropertyTagExifSensingMethod         = 0x0000a217U,
+    PropertyTagExifFileSource            = 0x0000a300U,
+    PropertyTagExifSceneType             = 0x0000a301U,
+    PropertyTagExifCfaPattern            = 0x0000a302U,
+    PropertyTagExifCustomRendered        = 0x0000a401U,
+    PropertyTagExifExposureMode          = 0x0000a402U,
+    PropertyTagExifWhiteBalance          = 0x0000a403U,
+    PropertyTagExifDigitalZoomRatio      = 0x0000a404U,
+    PropertyTagExifFocalLengthIn35mmFilm = 0x0000a405U,
+    PropertyTagExifSceneCaptureType      = 0x0000a406U,
+    PropertyTagExifGainControl           = 0x0000a407U,
+    PropertyTagExifContrast              = 0x0000a408U,
+    PropertyTagExifSaturation            = 0x0000a409U,
+    PropertyTagExifSharpness             = 0x0000a40aU,
+    PropertyTagExifDeviceSettingDesc     = 0x0000a40bU,
+    PropertyTagExifSubjectDistanceRange  = 0x0000a40cU,
+    PropertyTagExifUniqueImageID         = 0x0000a420U,
 }
-
-enum uint GDIP_EMFPLUSFLAGS_DISPLAY = 0x00000001;
-enum uint ALPHA_SHIFT = 0x00000018;
-enum uint RED_SHIFT = 0x00000010;
-enum uint GREEN_SHIFT = 0x00000008;
-enum uint BLUE_SHIFT = 0x00000000;
 
 enum : uint
 {
-    PixelFormatIndexed   = 0x00010000,
-    PixelFormatGDI       = 0x00020000,
-    PixelFormatAlpha     = 0x00040000,
-    PixelFormatPAlpha    = 0x00080000,
-    PixelFormatExtended  = 0x00100000,
-    PixelFormatCanonical = 0x00200000,
-    PixelFormatUndefined = 0x00000000,
-    PixelFormatDontCare  = 0x00000000,
-    PixelFormatMax       = 0x00000010,
+    PropertyTagGpsVer              = 0x00000000U,
+    PropertyTagGpsLatitudeRef      = 0x00000001U,
+    PropertyTagGpsLatitude         = 0x00000002U,
+    PropertyTagGpsLongitudeRef     = 0x00000003U,
+    PropertyTagGpsLongitude        = 0x00000004U,
+    PropertyTagGpsAltitudeRef      = 0x00000005U,
+    PropertyTagGpsAltitude         = 0x00000006U,
+    PropertyTagGpsGpsTime          = 0x00000007U,
+    PropertyTagGpsGpsSatellites    = 0x00000008U,
+    PropertyTagGpsGpsStatus        = 0x00000009U,
+    PropertyTagGpsGpsMeasureMode   = 0x0000000aU,
+    PropertyTagGpsGpsDop           = 0x0000000bU,
+    PropertyTagGpsSpeedRef         = 0x0000000cU,
+    PropertyTagGpsSpeed            = 0x0000000dU,
+    PropertyTagGpsTrackRef         = 0x0000000eU,
+    PropertyTagGpsTrack            = 0x0000000fU,
+    PropertyTagGpsImgDirRef        = 0x00000010U,
+    PropertyTagGpsImgDir           = 0x00000011U,
+    PropertyTagGpsMapDatum         = 0x00000012U,
+    PropertyTagGpsDestLatRef       = 0x00000013U,
+    PropertyTagGpsDestLat          = 0x00000014U,
+    PropertyTagGpsDestLongRef      = 0x00000015U,
+    PropertyTagGpsDestLong         = 0x00000016U,
+    PropertyTagGpsDestBearRef      = 0x00000017U,
+    PropertyTagGpsDestBear         = 0x00000018U,
+    PropertyTagGpsDestDistRef      = 0x00000019U,
+    PropertyTagGpsDestDist         = 0x0000001aU,
+    PropertyTagGpsProcessingMethod = 0x0000001bU,
+    PropertyTagGpsAreaInformation  = 0x0000001cU,
+    PropertyTagGpsDate             = 0x0000001dU,
+    PropertyTagGpsDifferential     = 0x0000001eU,
+}
+
+enum uint GDIP_EMFPLUSFLAGS_DISPLAY = 0x00000001U;
+enum uint ALPHA_SHIFT = 0x00000018U;
+enum uint RED_SHIFT = 0x00000010U;
+enum uint GREEN_SHIFT = 0x00000008U;
+enum uint BLUE_SHIFT = 0x00000000U;
+
+enum : uint
+{
+    PixelFormatIndexed   = 0x00010000U,
+    PixelFormatGDI       = 0x00020000U,
+    PixelFormatAlpha     = 0x00040000U,
+    PixelFormatPAlpha    = 0x00080000U,
+    PixelFormatExtended  = 0x00100000U,
+    PixelFormatCanonical = 0x00200000U,
+    PixelFormatUndefined = 0x00000000U,
+    PixelFormatDontCare  = 0x00000000U,
+    PixelFormatMax       = 0x00000010U,
 }
 
 enum float FlatnessDefault = 0x1p-2;
@@ -1412,7 +1476,7 @@ struct CGpEffect
     ptrdiff_t Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/direct3dhlsl/dx-graphics-hlsl-matrix))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/direct3dhlsl/dx-graphics-hlsl-matrix
 struct Matrix
 {
     ptrdiff_t Value;
@@ -1438,13 +1502,13 @@ struct PrivateFontCollection
     ptrdiff_t Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gdiplusheaders/nl-gdiplusheaders-image))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gdiplusheaders/nl-gdiplusheaders-image
 struct Image
 {
     ptrdiff_t Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gdiplusheaders/nl-gdiplusheaders-bitmap))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gdiplusheaders/nl-gdiplusheaders-bitmap
 struct Bitmap
 {
     ptrdiff_t Value;
@@ -1475,14 +1539,14 @@ struct Region
     ptrdiff_t Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d2d1helper/nf-d2d1helper-sizef))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1helper/nf-d2d1helper-sizef
 struct SizeF
 {
     float Width;
     float Height;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/windows.foundation/ns-windows-foundation-size))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.foundation/ns-windows-foundation-size
 struct Size
 {
     int Width;
@@ -1495,14 +1559,14 @@ struct PointF
     float Y;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/windows.foundation/ns-windows-foundation-point))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.foundation/ns-windows-foundation-point
 struct Point
 {
     int X;
     int Y;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d2d1helper/nf-d2d1helper-rectf))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d2d1helper/nf-d2d1helper-rectf
 struct RectF
 {
     float X;
@@ -1511,7 +1575,7 @@ struct RectF
     float Height;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/windows.foundation/ns-windows-foundation-rect))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.foundation/ns-windows-foundation-rect
 struct Rect
 {
     int X;
@@ -1553,7 +1617,7 @@ struct ColorPalette
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] Entries;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WMP/color-element))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WMP/color-element
 struct Color
 {
     uint Argb;
@@ -1748,20 +1812,24 @@ align (2):
 
 struct MetafileHeader
 {
-    MetafileType        Type;
-    uint                Size;
-    uint                Version;
-    uint                EmfPlusFlags;
-    float               DpiX;
-    float               DpiY;
-    int                 X;
-    int                 Y;
-    int                 Width;
-    int                 Height;
-    _Anonymous_e__Union Anonymous;
-    int                 EmfPlusHeaderSize;
-    int                 LogicalDpiX;
-    int                 LogicalDpiY;
+    MetafileType Type;
+    uint         Size;
+    uint         Version;
+    uint         EmfPlusFlags;
+    float        DpiX;
+    float        DpiY;
+    int          X;
+    int          Y;
+    int          Width;
+    int          Height;
+    union
+    {
+        METAHEADER     WmfHeader;
+        ENHMETAHEADER3 EmfHeader;
+    }
+    int          EmfPlusHeaderSize;
+    int          LogicalDpiX;
+    int          LogicalDpiY;
 }
 
 struct ImageCodecInfo
@@ -1901,7 +1969,7 @@ struct ColorCurveParams
     int              adjustValue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/direct3d9/functions))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/direct3d9/functions
 struct Effect
 {
     void**     lpVtbl;

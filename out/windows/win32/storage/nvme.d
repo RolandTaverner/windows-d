@@ -3,13 +3,14 @@
 module windows.win32.storage.nvme;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : CHAR;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : CHAR;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
+
 
 alias NVME_CONTROLLER_TYPE = int;
 enum : int
@@ -21,6 +22,7 @@ enum : int
     NvmeCtrlReservedMin = 0x00000004,
     NvmeCtrlReservedMax = 0x000000ff,
 }
+
 alias NVME_PROPERTY_OFFSET = int;
 enum : int
 {
@@ -53,12 +55,14 @@ enum : int
     NvmePropPMRMSCL = 0x00000e14,
     NvmePropPMRMSCU = 0x00000e18,
 }
+
 alias NVME_AMS_OPTION = int;
 enum : int
 {
     NVME_AMS_ROUND_ROBIN                 = 0x00000000,
     NVME_AMS_WEIGHTED_ROUND_ROBIN_URGENT = 0x00000001,
 }
+
 alias NVME_CPS_VALUE = int;
 enum : int
 {
@@ -67,7 +71,8 @@ enum : int
     NVME_CPS_DOMAIN_SCOPE     = 0x00000002,
     NVME_CPS_SUBSYSTEM_SCOPE  = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_cc_shn_shutdown_notifications))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_cc_shn_shutdown_notifications
 alias NVME_CC_SHN_SHUTDOWN_NOTIFICATIONS = int;
 enum : int
 {
@@ -75,6 +80,7 @@ enum : int
     NVME_CC_SHN_NORMAL_SHUTDOWN = 0x00000001,
     NVME_CC_SHN_ABRUPT_SHUTDOWN = 0x00000002,
 }
+
 alias NVME_CSS_COMMAND_SETS = int;
 enum : int
 {
@@ -82,7 +88,8 @@ enum : int
     NVME_CSS_ALL_SUPPORTED_IO_COMMAND_SET = 0x00000006,
     NVME_CSS_ADMIN_COMMAND_SET_ONLY       = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_csts_shst_shutdown_status))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_csts_shst_shutdown_status
 alias NVME_CSTS_SHST_SHUTDOWN_STATUS = int;
 enum : int
 {
@@ -90,7 +97,8 @@ enum : int
     NVME_CSTS_SHST_SHUTDOWN_IN_PROCESS = 0x00000001,
     NVME_CSTS_SHST_SHUTDOWN_COMPLETED  = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_cmbsz_size_units))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_cmbsz_size_units
 alias NVME_CMBSZ_SIZE_UNITS = int;
 enum : int
 {
@@ -102,7 +110,8 @@ enum : int
     NVME_CMBSZ_SIZE_UNITS_4GB   = 0x00000005,
     NVME_CMBSZ_SIZE_UNITS_64GB  = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_async_event_types))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_async_event_types
 alias NVME_ASYNC_EVENT_TYPES = int;
 enum : int
 {
@@ -113,7 +122,8 @@ enum : int
     NVME_ASYNC_EVENT_TYPE_IO_COMMAND_SET_STATUS = 0x00000006,
     NVME_ASYNC_EVENT_TYPE_VENDOR_SPECIFIC       = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_async_event_error_status_codes))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_async_event_error_status_codes
 alias NVME_ASYNC_EVENT_ERROR_STATUS_CODES = int;
 enum : int
 {
@@ -124,7 +134,8 @@ enum : int
     NVME_ASYNC_ERROR_TRANSIENT_INTERNAL_DEVICE_ERROR    = 0x00000004,
     NVME_ASYNC_ERROR_FIRMWARE_IMAGE_LOAD_ERROR          = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_async_event_health_status_codes))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_async_event_health_status_codes
 alias NVME_ASYNC_EVENT_HEALTH_STATUS_CODES = int;
 enum : int
 {
@@ -132,7 +143,8 @@ enum : int
     NVME_ASYNC_HEALTH_TEMPERATURE_THRESHOLD     = 0x00000001,
     NVME_ASYNC_HEALTH_SPARE_BELOW_THRESHOLD     = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_async_event_notice_codes))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_async_event_notice_codes
 alias NVME_ASYNC_EVENT_NOTICE_CODES = int;
 enum : int
 {
@@ -146,12 +158,14 @@ enum : int
     NVME_ASYNC_NOTICE_ZONE_DESCRIPTOR_CHANGED                        = 0x000000ef,
     NVME_ASYNC_NOTICE_DISCOVERY_LOG_PAGE_CHANGED                     = 0x000000f0,
 }
+
 alias NVME_ASYNC_EVENT_IMMEDIATE_STATUS_CODES = int;
 enum : int
 {
     NVME_ASYNC_IMMEDIATE_NVM_SUBSYSTEM_NORMAL_SHUTDOWN = 0x00000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_async_event_io_command_set_status_codes))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_async_event_io_command_set_status_codes
 alias NVME_ASYNC_EVENT_IO_COMMAND_SET_STATUS_CODES = int;
 enum : int
 {
@@ -159,7 +173,8 @@ enum : int
     NVME_ASYNC_IO_CMD_SANITIZE_OPERATION_COMPLETED                              = 0x00000001,
     NVME_ASYNC_IO_CMD_SANITIZE_OPERATION_COMPLETED_WITH_UNEXPECTED_DEALLOCATION = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_status_types))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_status_types
 alias NVME_STATUS_TYPES = int;
 enum : int
 {
@@ -169,7 +184,8 @@ enum : int
     NVME_STATUS_TYPE_PATH_RELATED     = 0x00000003,
     NVME_STATUS_TYPE_VENDOR_SPECIFIC  = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_status_generic_command_codes))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_status_generic_command_codes
 alias NVME_STATUS_GENERIC_COMMAND_CODES = int;
 enum : int
 {
@@ -218,7 +234,8 @@ enum : int
     NVME_STATUS_NVM_RESERVATION_CONFLICT                       = 0x00000083,
     NVME_STATUS_FORMAT_IN_PROGRESS                             = 0x00000084,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_status_command_specific_codes))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_status_command_specific_codes
 alias NVME_STATUS_COMMAND_SPECIFIC_CODES = int;
 enum : int
 {
@@ -282,6 +299,7 @@ enum : int
     NVME_STATUS_ZONE_TOO_MANY_OPEN                               = 0x000000be,
     NVME_STATUS_ZONE_INVALID_STATE_TRANSITION                    = 0x000000bf,
 }
+
 alias NVME_STATUS_FABRIC_COMMAND_CODES = int;
 enum : int
 {
@@ -294,6 +312,7 @@ enum : int
     NVME_STATUS_DISCOVER_RESTART           = 0x00000090,
     NVME_STATUS_AUTHENTICATION_REQUIRED    = 0x00000091,
 }
+
 alias NVME_STATUS_PATH_ERROR_CODES = int;
 enum : int
 {
@@ -305,7 +324,8 @@ enum : int
     NVME_STATUS_HOST_PATHING_ERROR                = 0x00000070,
     NVME_STATUS_COMMAND_ABORTED_BY_HOST           = 0x00000071,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_status_media_error_codes))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_status_media_error_codes
 alias NVME_STATUS_MEDIA_ERROR_CODES = int;
 enum : int
 {
@@ -318,7 +338,8 @@ enum : int
     NVME_STATUS_NVM_ACCESS_DENIED                          = 0x00000086,
     NVME_STATUS_NVM_DEALLOCATED_OR_UNWRITTEN_LOGICAL_BLOCK = 0x00000087,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_admin_commands))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_admin_commands
 alias NVME_ADMIN_COMMANDS = int;
 enum : int
 {
@@ -353,7 +374,8 @@ enum : int
     NVME_ADMIN_COMMAND_SANITIZE                  = 0x00000084,
     NVME_ADMIN_COMMAND_GET_LBA_STATUS            = 0x00000086,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_features))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_features
 alias NVME_FEATURES = int;
 enum : int
 {
@@ -399,7 +421,8 @@ enum : int
     NVME_FEATURE_PLP_HEALTH_CHECK_INTERVAL              = 0x000000c6,
     NVME_FEATURE_DSSD_POWER_STATE                       = 0x000000c7,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_identify_cns_codes))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_identify_cns_codes
 alias NVME_IDENTIFY_CNS_CODES = int;
 enum : int
 {
@@ -425,6 +448,7 @@ enum : int
     NVME_IDENTIFY_CNS_ALLOCATED_NAMESPACE_IO_COMMAND_SET     = 0x0000001b,
     NVME_IDENTIFY_CNS_IO_COMMAND_SET                         = 0x0000001c,
 }
+
 alias NVME_COMMAND_SET_IDENTIFIERS = int;
 enum : int
 {
@@ -432,6 +456,7 @@ enum : int
     NVME_COMMAND_SET_KEY_VALUE       = 0x00000001,
     NVME_COMMAND_SET_ZONED_NAMESPACE = 0x00000002,
 }
+
 alias NVME_DEALLOCATE_READ_BEHAVIOR = int;
 enum : int
 {
@@ -439,6 +464,7 @@ enum : int
     NVME_READ_BEHAVIOR_RETURN_ZERO  = 0x00000001,
     NVME_READ_BEHAVIOR_RETURN_ONES  = 0x00000002,
 }
+
 alias NVME_DISC_CTRL_TYPE = int;
 enum : int
 {
@@ -448,6 +474,7 @@ enum : int
     NvmeDiscCtrlTypeReserved1   = 0x00000003,
     NvmeDiscCtrlTypeReservedMax = 0x000000ff,
 }
+
 alias NVME_IDENTIFIER_TYPE = int;
 enum : int
 {
@@ -456,6 +483,7 @@ enum : int
     NVME_IDENTIFIER_TYPE_UUID  = 0x00000003,
     NVME_IDENTIFIER_TYPE_CSI   = 0x00000004,
 }
+
 alias NVME_IDENTIFIER_TYPE_LENGTH = int;
 enum : int
 {
@@ -464,7 +492,8 @@ enum : int
     NVME_IDENTIFIER_TYPE_UUID_LENGTH  = 0x00000010,
     NVME_IDENTIFIER_TYPE_CSI_LENGTH   = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_lba_range_types))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_lba_range_types
 alias NVME_LBA_RANGE_TYPES = int;
 enum : int
 {
@@ -474,6 +503,7 @@ enum : int
     NVME_LBA_RANGE_TYPE_CACHE          = 0x00000003,
     NVME_LBA_RANGE_TYPE_PAGE_SWAP_FILE = 0x00000004,
 }
+
 alias NVME_VENDOR_LOG_PAGES = int;
 enum : int
 {
@@ -486,12 +516,14 @@ enum : int
     NVME_LOG_PAGE_OCP_TCG_CONFIGURATION           = 0x000000c8,
     NVME_LOG_PAGE_OCP_TCG_HISTORY                 = 0x000000c9,
 }
+
 alias NVME_ASYNC_EVENT_TYPE_VENDOR_SPECIFIC_CODES = int;
 enum : int
 {
     NVME_ASYNC_EVENT_TYPE_VENDOR_SPECIFIC_RESERVED     = 0x00000000,
     NVME_ASYNC_EVENT_TYPE_VENDOR_SPECIFIC_DEVICE_PANIC = 0x00000001,
 }
+
 alias NVME_WCS_DEVICE_RECOVERY_ACTION1 = int;
 enum : int
 {
@@ -503,6 +535,7 @@ enum : int
     NVMeDeviceRecoverySanitize              = 0x00000005,
     NVMeDeviceRecovery1Max                  = 0x0000000f,
 }
+
 alias NVME_WCS_DEVICE_RECOVERY_ACTION2 = int;
 enum : int
 {
@@ -514,7 +547,8 @@ enum : int
     NVMeDeviceRecoveryPcieHotReset      = 0x00000005,
     NVMeDeviceRecovery2Max              = 0x0000000f,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_nvm_queue_priorities))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_nvm_queue_priorities
 alias NVME_NVM_QUEUE_PRIORITIES = int;
 enum : int
 {
@@ -523,7 +557,8 @@ enum : int
     NVME_NVM_QUEUE_PRIORITY_MEDIUM = 0x00000002,
     NVME_NVM_QUEUE_PRIORITY_LOW    = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_feature_value_codes))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_feature_value_codes
 alias NVME_FEATURE_VALUE_CODES = int;
 enum : int
 {
@@ -532,13 +567,15 @@ enum : int
     NVME_FEATURE_VALUE_SAVED                  = 0x00000002,
     NVME_FEATURE_VALUE_SUPPORTED_CAPABILITIES = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_temperature_threshold_types))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_temperature_threshold_types
 alias NVME_TEMPERATURE_THRESHOLD_TYPES = int;
 enum : int
 {
     NVME_TEMPERATURE_OVER_THRESHOLD  = 0x00000000,
     NVME_TEMPERATURE_UNDER_THRESHOLD = 0x00000001,
 }
+
 alias NVME_HOST_METADATA_ELEMENT_ACTIONS = int;
 enum : int
 {
@@ -546,6 +583,7 @@ enum : int
     NVME_HOST_METADATA_DELETE_ENTRY_MULTIPLE = 0x00000001,
     NVME_HOST_METADATA_ADD_ENTRY_MULTIPLE    = 0x00000002,
 }
+
 alias NVME_CONTROLLER_METADATA_ELEMENT_TYPES = int;
 enum : int
 {
@@ -566,6 +604,7 @@ enum : int
     NVME_CONTROLLER_METADATA_DISPLAY_DRIVER_VERSION           = 0x0000000f,
     NVME_CONTROLLER_METADATA_HOST_DETERMINED_FAILURE_RECORD   = 0x00000010,
 }
+
 alias NVME_NAMESPACE_METADATA_ELEMENT_TYPES = int;
 enum : int
 {
@@ -574,6 +613,7 @@ enum : int
     NVME_NAMESPACE_METADATA_OPERATING_SYSTEM_NAMESPACE_NAME_QUALIFIER_1 = 0x00000003,
     NVME_NAMESPACE_METADATA_OPERATING_SYSTEM_NAMESPACE_NAME_QUALIFIER_2 = 0x00000004,
 }
+
 alias NVME_ERROR_INJECTION_TYPES = int;
 enum : int
 {
@@ -590,7 +630,8 @@ enum : int
     NVME_ERROR_INJECTION_TYPE_RESERVED1                                = 0x0000000a,
     NVME_ERROR_INJECTION_TYPE_MAX                                      = 0x0000ffff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_log_pages))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_log_pages
 alias NVME_LOG_PAGES = int;
 enum : int
 {
@@ -622,7 +663,8 @@ enum : int
     NVME_LOG_PAGE_SANITIZE_STATUS                           = 0x00000081,
     NVME_LOG_PAGE_CHANGED_ZONE_LIST                         = 0x000000bf,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_command_effect_sbumission_execution_limits))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_command_effect_sbumission_execution_limits
 alias NVME_COMMAND_EFFECT_SBUMISSION_EXECUTION_LIMITS = int;
 enum : int
 {
@@ -630,6 +672,7 @@ enum : int
     NVME_COMMAND_EFFECT_SBUMISSION_EXECUTION_LIMIT_SINGLE_PER_NAMESPACE  = 0x00000001,
     NVME_COMMAND_EFFECT_SBUMISSION_EXECUTION_LIMIT_SINGLE_PER_CONTROLLER = 0x00000002,
 }
+
 alias NVME_PERSISTENT_EVENT_LOG_EVENT_TYPES = int;
 enum : int
 {
@@ -655,7 +698,8 @@ enum : int
     NVME_PERSISTENT_EVENT_TYPE_RESERVED2_END                = 0x000000ff,
     NVME_PERSISTENT_EVENT_TYPE_MAX                          = 0x000000ff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_reservation_notification_types))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_reservation_notification_types
 alias NVME_RESERVATION_NOTIFICATION_TYPES = int;
 enum : int
 {
@@ -664,6 +708,7 @@ enum : int
     NVME_RESERVATION_NOTIFICATION_TYPE_REGISTRATION_RELEASED  = 0x00000002,
     NVME_RESERVATION_NOTIFICATION_TYPE_RESERVATION_PREEPMPTED = 0x00000003,
 }
+
 alias NVME_SANITIZE_OPERATION_STATUS = int;
 enum : int
 {
@@ -673,7 +718,8 @@ enum : int
     NVME_SANITIZE_OPERATION_FAILED                             = 0x00000003,
     NVME_SANITIZE_OPERATION_SUCCEEDED_WITH_FORCED_DEALLOCATION = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_firmware_activate_actions))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_firmware_activate_actions
 alias NVME_FIRMWARE_ACTIVATE_ACTIONS = int;
 enum : int
 {
@@ -682,7 +728,8 @@ enum : int
     NVME_FIRMWARE_ACTIVATE_ACTION_ACTIVATE                                = 0x00000002,
     NVME_FIRMWARE_ACTIVATE_ACTION_DOWNLOAD_TO_SLOT_AND_ACTIVATE_IMMEDIATE = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_protection_information_types))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_protection_information_types
 alias NVME_PROTECTION_INFORMATION_TYPES = int;
 enum : int
 {
@@ -691,7 +738,8 @@ enum : int
     NVME_PROTECTION_INFORMATION_TYPE2       = 0x00000002,
     NVME_PROTECTION_INFORMATION_TYPE3       = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_secure_erase_settings))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_secure_erase_settings
 alias NVME_SECURE_ERASE_SETTINGS = int;
 enum : int
 {
@@ -699,6 +747,7 @@ enum : int
     NVME_SECURE_ERASE_USER_DATA     = 0x00000001,
     NVME_SECURE_ERASE_CRYPTOGRAPHIC = 0x00000002,
 }
+
 alias NVME_NO_DEALLOCATE_MODIFIES_MEDIA_AFTER_SANITIZE = int;
 enum : int
 {
@@ -706,6 +755,7 @@ enum : int
     NVME_MEDIA_NOT_ADDITIONALLY_MODIFIED_AFTER_SANITIZE         = 0x00000001,
     NVME_MEDIA_ADDITIONALLY_MOFIDIED_AFTER_SANITIZE             = 0x00000002,
 }
+
 alias NVME_SANITIZE_ACTION = int;
 enum : int
 {
@@ -715,6 +765,7 @@ enum : int
     NVME_SANITIZE_ACTION_START_OVERWRITE_SANITIZE    = 0x00000003,
     NVME_SANITIZE_ACTION_START_CRYPTO_ERASE_SANITIZE = 0x00000004,
 }
+
 alias NVME_RESERVATION_TYPES = int;
 enum : int
 {
@@ -726,6 +777,7 @@ enum : int
     NVME_RESERVATION_TYPE_WRITE_EXCLUSIVE_ALL_REGISTRANTS   = 0x00000005,
     NVME_RESERVATION_TYPE_EXCLUSIVE_ACCESS_ALL_REGISTRANTS  = 0x00000006,
 }
+
 alias NVME_RESERVATION_ACQUIRE_ACTIONS = int;
 enum : int
 {
@@ -733,6 +785,7 @@ enum : int
     NVME_RESERVATION_ACQUIRE_ACTION_PREEMPT           = 0x00000001,
     NVME_RESERVATION_ACQUIRE_ACTION_PREEMPT_AND_ABORT = 0x00000002,
 }
+
 alias NVME_RESERVATION_REGISTER_ACTIONS = int;
 enum : int
 {
@@ -740,6 +793,7 @@ enum : int
     NVME_RESERVATION_REGISTER_ACTION_UNREGISTER = 0x00000001,
     NVME_RESERVATION_REGISTER_ACTION_REPLACE    = 0x00000002,
 }
+
 alias NVME_RESERVATION_REGISTER_PTPL_STATE_CHANGES = int;
 enum : int
 {
@@ -748,32 +802,37 @@ enum : int
     NVME_RESERVATION_REGISTER_PTPL_STATE_SET_TO_0  = 0x00000002,
     NVME_RESERVATION_REGISTER_PTPL_STATE_SET_TO_1  = 0x00000003,
 }
+
 alias NVME_RESERVATION_RELEASE_ACTIONS = int;
 enum : int
 {
     NVME_RESERVATION_RELEASE_ACTION_RELEASE = 0x00000000,
     NVME_RESERVATION_RELEASE_ACTION_CLEAR   = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_directive_types))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_directive_types
 alias NVME_DIRECTIVE_TYPES = int;
 enum : int
 {
     NVME_DIRECTIVE_TYPE_IDENTIFY = 0x00000000,
     NVME_DIRECTIVE_TYPE_STREAMS  = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_directive_receive_identify_operations))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_directive_receive_identify_operations
 alias NVME_DIRECTIVE_RECEIVE_IDENTIFY_OPERATIONS = int;
 enum : int
 {
     NVME_DIRECTIVE_RECEIVE_IDENTIFY_OPERATION_RETURN_PARAMETERS = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_directive_send_identify_operations))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_directive_send_identify_operations
 alias NVME_DIRECTIVE_SEND_IDENTIFY_OPERATIONS = int;
 enum : int
 {
     NVME_DIRECTIVE_SEND_IDENTIFY_OPERATION_ENABLE_DIRECTIVE = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_directive_receive_streams_operations))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_directive_receive_streams_operations
 alias NVME_DIRECTIVE_RECEIVE_STREAMS_OPERATIONS = int;
 enum : int
 {
@@ -781,14 +840,16 @@ enum : int
     NVME_DIRECTIVE_RECEIVE_STREAMS_OPERATION_GET_STATUS         = 0x00000002,
     NVME_DIRECTIVE_RECEIVE_STREAMS_OPERATION_ALLOCATE_RESOURCES = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_directive_send_streams_operations))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_directive_send_streams_operations
 alias NVME_DIRECTIVE_SEND_STREAMS_OPERATIONS = int;
 enum : int
 {
     NVME_DIRECTIVE_SEND_STREAMS_OPERATION_RELEASE_IDENTIFIER = 0x00000001,
     NVME_DIRECTIVE_SEND_STREAMS_OPERATION_RELEASE_RESOURCES  = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_nvm_commands))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_nvm_commands
 alias NVME_NVM_COMMANDS = int;
 enum : int
 {
@@ -809,7 +870,8 @@ enum : int
     NVME_NVM_COMMAND_ZONE_MANAGEMENT_RECEIVE = 0x0000007a,
     NVME_NVM_COMMAND_ZONE_APPEND             = 0x0000007d,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_access_frequencies))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_access_frequencies
 alias NVME_ACCESS_FREQUENCIES = int;
 enum : int
 {
@@ -823,7 +885,8 @@ enum : int
     NVME_ACCESS_FREQUENCY_SPECULATIVE_READ     = 0x00000007,
     NVME_ACCESS_FREQUENCY_WILL_BE_OVERWRITTEN  = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_access_latencies))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_access_latencies
 alias NVME_ACCESS_LATENCIES = int;
 enum : int
 {
@@ -832,6 +895,7 @@ enum : int
     NVME_ACCESS_LATENCY_NORMAL = 0x00000002,
     NVME_ACCESS_LATENCY_LOW    = 0x00000003,
 }
+
 alias ZONE_STATE = int;
 enum : int
 {
@@ -843,6 +907,7 @@ enum : int
     NVME_STATE_ZSF  = 0x0000000e,
     NVME_STATE_ZSO  = 0x0000000f,
 }
+
 alias NVME_ZONE_SEND_ACTION = int;
 enum : int
 {
@@ -853,12 +918,14 @@ enum : int
     NVME_ZONE_SEND_OFFLINE             = 0x00000005,
     NVME_ZONE_SEND_SET_ZONE_DESCRIPTOR = 0x00000010,
 }
+
 alias NVME_ZONE_RECEIVE_ACTION = int;
 enum : int
 {
     NVME_ZONE_RECEIVE_REPORT_ZONES          = 0x00000000,
     NVME_ZONE_RECEIVE_EXTENDED_REPORT_ZONES = 0x00000001,
 }
+
 alias NVME_ZONE_RECEIVE_ACTION_SPECIFIC = int;
 enum : int
 {
@@ -871,6 +938,7 @@ enum : int
     NVME_ZRA_RO_STATE_ZONES      = 0x00000006,
     NVME_ZRA_OFFLINE_STATE_ZONES = 0x00000007,
 }
+
 alias NVME_DISCOVERY_INFO_MGMT_TASK = int;
 enum : int
 {
@@ -878,7 +946,8 @@ enum : int
     NVME_DISCOVERY_INFO_MGMT_TASK_DEREGISTER = 0x00000001,
     NVME_DISCOVERY_INFO_MGMT_TASK_UPDATE     = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_fused_operation_codes))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ne-nvme-nvme_fused_operation_codes
 alias NVME_FUSED_OPERATION_CODES = int;
 enum : int
 {
@@ -886,6 +955,7 @@ enum : int
     NVME_FUSED_OPERATION_FIRST_CMD  = 0x00000001,
     NVME_FUSED_OPERATION_SECOND_CMD = 0x00000002,
 }
+
 alias NVME_SGL_DESC_TYPE = int;
 enum : int
 {
@@ -897,6 +967,7 @@ enum : int
     NvmeSglDescTypeTransportDataBlock = 0x00000005,
     NvmeSglDescTypeMax                = 0x0000000f,
 }
+
 alias NVME_SGL_DESC_SUBTYPE = int;
 enum : int
 {
@@ -909,11 +980,13 @@ enum : int
     NvmeSglDescSubtypeTransportE = 0x0000000e,
     NvmeSglDescSubtypeTransportF = 0x0000000f,
 }
+
 alias NVME_RDMA_KEYED_SGL_DESC_SUBTYPE = int;
 enum : int
 {
     NvmeRdmaKeyedSglDescSubtypeInvalidate = 0x0000000f,
 }
+
 alias NVME_FABRICS_COMMAND_TYPE = int;
 enum : int
 {
@@ -924,6 +997,7 @@ enum : int
     NVME_FABRICS_COMMAND_AUTH_RECV    = 0x00000006,
     NVME_FABRICS_COMMAND_DISCONNECT   = 0x00000008,
 }
+
 alias NVMEOF_TRANSPORT_TYPE = int;
 enum : int
 {
@@ -934,6 +1008,7 @@ enum : int
     NvmeofTransportLoopback = 0x000000fe,
     NvmeofTransportMax      = 0x000000ff,
 }
+
 alias NVMEOF_ADDRESS_FAMILY = int;
 enum : int
 {
@@ -945,6 +1020,7 @@ enum : int
     NvmeofAddressLoopback = 0x000000fe,
     NvmeofAddressMax      = 0x000000ff,
 }
+
 alias NVMEOF_SUBSYSTEM_TYPE = int;
 enum : int
 {
@@ -954,6 +1030,7 @@ enum : int
     NvmeofSubsysTypeDiscCurrent  = 0x00000003,
     NvmeofSubsysTypeMax          = 0x000000ff,
 }
+
 alias NVMEOF_SECURE_CHANNEL = int;
 enum : int
 {
@@ -962,6 +1039,7 @@ enum : int
     NvmeofSCNotRequired = 0x00000002,
     NvmeofSCReserved    = 0x00000003,
 }
+
 alias NVMEOF_AUTH_SECURE_CHANNEL = int;
 enum : int
 {
@@ -970,6 +1048,7 @@ enum : int
     NvmeofAuthSCAuthConcatSCRequired = 0x00000002,
     NvmeofAuthSCReserved             = 0x00000003,
 }
+
 alias NVME_EXTENDED_ATTR_TYPE = int;
 enum : int
 {
@@ -982,6 +1061,7 @@ enum : int
     NvmeExtAttrVendorStart     = 0x0000ff00,
     NvmeExtAttrVendorEnd       = 0x0000ffff,
 }
+
 alias NVME_DISCOVERY_INFO_ENTRY_FORMATS = int;
 enum : int
 {
@@ -989,6 +1069,7 @@ enum : int
     NVME_DISCOVERY_INFO_ENTRY_FORMAT_BASIC    = 0x00000001,
     NVME_DISCOVERY_INFO_ENTRY_FORMAT_EXTENDED = 0x00000002,
 }
+
 alias NVME_DISCOVERY_INFO_ENTITY_TYPES = int;
 enum : int
 {
@@ -997,17 +1078,20 @@ enum : int
     NVME_DISCOVERY_INFO_ENTITY_TYPE_DDC      = 0x00000002,
     NVME_DISCOVERY_INFO_ENTITY_TYPE_CDC      = 0x00000003,
 }
+
 alias NVMEOF_AUTH_PROTOCOL = int;
 enum : int
 {
     NvmeofAuthProtocolDHCHAP = 0x000000e9,
 }
+
 alias NVMEOF_AUTH_TYPE = int;
 enum : int
 {
     NvmeofAuthTypeCommonMessages = 0x00000000,
     NvmeofAuthTypeDHCHAPMessages = 0x00000001,
 }
+
 alias NVMEOF_AUTH_ID = int;
 enum : int
 {
@@ -1019,6 +1103,7 @@ enum : int
     NvmeofAuthIdFailure2  = 0x000000f0,
     NvmeofAuthIdFailure1  = 0x000000f1,
 }
+
 alias NVMEOF_SECURE_CHANNEL_PROTOCOL = int;
 enum : int
 {
@@ -1027,11 +1112,13 @@ enum : int
     NvmeofSecureChannelNewTLSPSK     = 0x00000002,
     NvmeofSecureChannelReplaceTLSPSK = 0x00000002,
 }
+
 alias NVMEOF_AUTH_FAIL_REASON_CODE = int;
 enum : int
 {
     NvmeofAuthFailureReasonFailed = 0x00000001,
 }
+
 alias NVMEOF_AUTH_FAIL_REASON_EXPLANATION = int;
 enum : int
 {
@@ -1043,6 +1130,7 @@ enum : int
     NvmeofAuthIncorrectPayload            = 0x00000006,
     NvmeofAuthIncorrectProtocolMessage    = 0x00000007,
 }
+
 alias NVMEOF_AUTH_DHCHAP_HASH_ID = int;
 enum : int
 {
@@ -1052,6 +1140,7 @@ enum : int
     NvmeofAuthDHCHAPHashSha512   = 0x00000003,
     NvmeofAuthDHCHAPHashMax      = 0x000000ff,
 }
+
 alias NVMEOF_AUTH_DHCHAP_GROUP_ID = int;
 enum : int
 {
@@ -1067,45 +1156,45 @@ enum : int
 // Constants
 
 
-enum uint NVME_ADMINQ_ID = 0x00000000;
+enum uint NVME_ADMINQ_ID = 0x00000000U;
 
 enum : uint
 {
-    NVME_NQN_MAX_LEN      = 0x00000100,
-    NVME_NQN_NAME_MAX_LEN = 0x000000df,
+    NVME_NQN_MAX_LEN      = 0x00000100U,
+    NVME_NQN_NAME_MAX_LEN = 0x000000dfU,
 }
 
 enum : uint
 {
-    NVME_CONTROLLER_ID_MIN          = 0x00000000,
-    NVME_CONTROLLER_ID_MAX          = 0x0000ffef,
-    NVME_CONTROLLER_ID_STAT_PERSIST = 0x0000fffe,
-    NVME_CONTROLLER_ID_DYN          = 0x0000ffff,
+    NVME_CONTROLLER_ID_MIN          = 0x00000000U,
+    NVME_CONTROLLER_ID_MAX          = 0x0000ffefU,
+    NVME_CONTROLLER_ID_STAT_PERSIST = 0x0000fffeU,
+    NVME_CONTROLLER_ID_DYN          = 0x0000ffffU,
 }
 
 enum : uint
 {
-    NVM_SUBSYSTEM_SHUTDOWN_NORMAL = 0x4e726d6c,
-    NVM_SUBSYSTEM_SHUTDOWN_ABRUPT = 0x41627074,
+    NVM_SUBSYSTEM_SHUTDOWN_NORMAL = 0x4e726d6cU,
+    NVM_SUBSYSTEM_SHUTDOWN_ABRUPT = 0x41627074U,
 }
 
-enum uint NVME_IDENTIFY_CNS_DESCRIPTOR_NAMESPACE_SIZE = 0x00001000;
+enum uint NVME_IDENTIFY_CNS_DESCRIPTOR_NAMESPACE_SIZE = 0x00001000U;
 
 enum : uint
 {
-    NVME_UUID_ASSOCIATION_NONE              = 0x00000000,
-    NVME_UUID_ASSOCIATION_PCI_VID           = 0x00000001,
-    NVME_UUID_ASSOCIATION_PCI_SUBSYSTEM_VID = 0x00000002,
-    NVME_UUID_ASSOCIATION_RESERVED          = 0x00000003,
+    NVME_UUID_ASSOCIATION_NONE              = 0x00000000U,
+    NVME_UUID_ASSOCIATION_PCI_VID           = 0x00000001U,
+    NVME_UUID_ASSOCIATION_PCI_SUBSYSTEM_VID = 0x00000002U,
+    NVME_UUID_ASSOCIATION_RESERVED          = 0x00000003U,
 }
 
-enum uint NVME_NUM_UUID_LIST_ENTRIES = 0x00000080;
-enum uint NVME_MAX_UUID_INDEX = 0x0000007f;
+enum uint NVME_NUM_UUID_LIST_ENTRIES = 0x00000080U;
+enum uint NVME_MAX_UUID_INDEX = 0x0000007fU;
 
 enum : uint
 {
-    NVME_VENDOR_SPECIFIC_LOG_PAGE_MIN_IDENTIFIER = 0x000000c0,
-    NVME_VENDOR_SPECIFIC_LOG_PAGE_MAX_IDENTIFIER = 0x000000ff,
+    NVME_VENDOR_SPECIFIC_LOG_PAGE_MIN_IDENTIFIER = 0x000000c0U,
+    NVME_VENDOR_SPECIFIC_LOG_PAGE_MAX_IDENTIFIER = 0x000000ffU,
 }
 
 enum : GUID
@@ -1164,198 +1253,225 @@ enum : GUID
     GUID_MFND_CHILD_CONTROLLER_QOS_STAT_LOG_PAGE     = GUID("9cb5fa26-0652-4644-873e-400084575f0f"),
 }
 
-enum uint NVME_WCS_DEVICE_SMART_ATTRIBUTES_LOG_VERSION_2 = 0x00000002;
-enum uint NVME_OCP_DEVICE_SMART_INFORMATION_LOG_VERSION_3 = 0x00000003;
+enum uint NVME_WCS_DEVICE_SMART_ATTRIBUTES_LOG_VERSION_2 = 0x00000002U;
+enum uint NVME_OCP_DEVICE_SMART_INFORMATION_LOG_VERSION_3 = 0x00000003U;
 
 enum : uint
 {
-    NVME_OCP_DEVICE_DSSD_SPEC_MAJOR_VERSION_0 = 0x00000000,
-    NVME_OCP_DEVICE_DSSD_SPEC_MAJOR_VERSION_2 = 0x00000002,
+    NVME_OCP_DEVICE_DSSD_SPEC_MAJOR_VERSION_0 = 0x00000000U,
+    NVME_OCP_DEVICE_DSSD_SPEC_MAJOR_VERSION_2 = 0x00000002U,
 }
 
-enum uint NVME_WCS_DEVICE_ERROR_RECOVERY_LOG_VERSION_1 = 0x00000001;
-enum uint NVME_OCP_DEVICE_ERROR_RECOVERY_LOG_VERSION_2 = 0x00000002;
-enum uint FIRMWARE_ACTIVATION_HISTORY_ENTRY_VERSION_1 = 0x00000001;
-enum uint NVME_OCP_DEVICE_FIRMWARE_ACTIVATION_HISTORY_LOG_VERSION_1 = 0x00000001;
-enum uint NVME_OCP_DEVICE_LATENCY_MONITOR_LOG_VERSION_1 = 0x00000001;
-enum uint NVME_OCP_DEVICE_CAPABILITIES_LOG_VERSION_1 = 0x00000001;
-enum uint NVME_OCP_DEVICE_UNSUPPORTED_REQUIREMENTS_LOG_VERSION_1 = 0x00000001;
-enum uint NVME_OCP_DEVICE_TCG_CONFIGURATION_LOG_VERSION_1 = 0x00000001;
-enum uint TCG_HISTORY_ENTRY_VERSION_1 = 0x00000001;
-enum uint NVME_OCP_DEVICE_TCG_HISTORY_LOG_VERSION_1 = 0x00000001;
-enum uint NVME_MAX_HOST_IDENTIFIER_SIZE = 0x00000010;
-enum uint NVME_HOST_IDENTIFIER_SIZE = 0x00000008;
-enum uint NVME_EXTENDED_HOST_IDENTIFIER_SIZE = 0x00000010;
-enum uint NVME_MAX_LOG_SIZE = 0x00001000;
+enum uint NVME_WCS_DEVICE_ERROR_RECOVERY_LOG_VERSION_1 = 0x00000001U;
+enum uint NVME_OCP_DEVICE_ERROR_RECOVERY_LOG_VERSION_2 = 0x00000002U;
+enum uint FIRMWARE_ACTIVATION_HISTORY_ENTRY_VERSION_1 = 0x00000001U;
+enum uint NVME_OCP_DEVICE_FIRMWARE_ACTIVATION_HISTORY_LOG_VERSION_1 = 0x00000001U;
+enum uint NVME_OCP_DEVICE_LATENCY_MONITOR_LOG_VERSION_1 = 0x00000001U;
+enum uint NVME_OCP_DEVICE_CAPABILITIES_LOG_VERSION_1 = 0x00000001U;
+enum uint NVME_OCP_DEVICE_UNSUPPORTED_REQUIREMENTS_LOG_VERSION_1 = 0x00000001U;
+enum uint NVME_OCP_DEVICE_TCG_CONFIGURATION_LOG_VERSION_1 = 0x00000001U;
+enum uint TCG_HISTORY_ENTRY_VERSION_1 = 0x00000001U;
+enum uint NVME_OCP_DEVICE_TCG_HISTORY_LOG_VERSION_1 = 0x00000001U;
+enum uint NVME_MAX_HOST_IDENTIFIER_SIZE = 0x00000010U;
+enum uint NVME_HOST_IDENTIFIER_SIZE = 0x00000008U;
+enum uint NVME_EXTENDED_HOST_IDENTIFIER_SIZE = 0x00000010U;
+enum uint NVME_MAX_LOG_SIZE = 0x00001000U;
 
 enum : uint
 {
-    NVME_CDW10_LSP_ACTION_READ_LOG_DATA                       = 0x00000000,
-    NVME_CDW10_LSP_ACTION_ESTABLISH_CONTEXT_AND_READ_LOG_DATA = 0x00000001,
+    NVME_CDW10_LSP_ACTION_READ_LOG_DATA                       = 0x00000000U,
+    NVME_CDW10_LSP_ACTION_ESTABLISH_CONTEXT_AND_READ_LOG_DATA = 0x00000001U,
 }
 
 enum : uint
 {
-    NVME_CDW10_LSP_ACTION_RELEASE_CONTEXT                                = 0x00000002,
-    NVME_CDW10_LSP_ACTION_ESTABLISH_CONTEXT_AND_READ_512_BYTES_OF_HEADER = 0x00000003,
+    NVME_CDW10_LSP_ACTION_RELEASE_CONTEXT                                = 0x00000002U,
+    NVME_CDW10_LSP_ACTION_ESTABLISH_CONTEXT_AND_READ_512_BYTES_OF_HEADER = 0x00000003U,
 }
 
-enum uint NVME_NUM_LOG_PAGE_IDENTIFIERS = 0x00000100;
-enum uint NVME_MAX_LOG_PAGE_IDENTIFIER = 0x000000ff;
-enum uint NVME_TELEMETRY_DATA_BLOCK_SIZE = 0x00000200;
+enum uint NVME_NUM_LOG_PAGE_IDENTIFIERS = 0x00000100U;
+enum uint NVME_MAX_LOG_PAGE_IDENTIFIER = 0x000000ffU;
+enum uint NVME_TELEMETRY_DATA_BLOCK_SIZE = 0x00000200U;
 
 enum : uint
 {
-    NVME_VENDOR_SPECIFIC_ADMIN_COMMAND_MIN_OPCODE = 0x000000c0,
-    NVME_VENDOR_SPECIFIC_ADMIN_COMMAND_MAX_OPCODE = 0x000000ff,
-    NVME_VENDOR_SPECIFIC_NVM_COMMAND_MIN_OPCODE   = 0x00000080,
-    NVME_VENDOR_SPECIFIC_NVM_COMMAND_MAX_OPCODE   = 0x000000ff,
+    NVME_VENDOR_SPECIFIC_ADMIN_COMMAND_MIN_OPCODE = 0x000000c0U,
+    NVME_VENDOR_SPECIFIC_ADMIN_COMMAND_MAX_OPCODE = 0x000000ffU,
+    NVME_VENDOR_SPECIFIC_NVM_COMMAND_MIN_OPCODE   = 0x00000080U,
+    NVME_VENDOR_SPECIFIC_NVM_COMMAND_MAX_OPCODE   = 0x000000ffU,
 }
 
-enum uint NVME_NUM_FID_SUPPORTED = 0x00000100;
+enum uint NVME_NUM_FID_SUPPORTED = 0x00000100U;
 
 enum : uint
 {
-    NVME_VENDOR_SPECIFIC_FEATURE_MIN_IDENTIFIER = 0x000000c0,
-    NVME_VENDOR_SPECIFIC_FEATURE_MAX_IDENTIFIER = 0x000000ff,
+    NVME_VENDOR_SPECIFIC_FEATURE_MIN_IDENTIFIER = 0x000000c0U,
+    NVME_VENDOR_SPECIFIC_FEATURE_MAX_IDENTIFIER = 0x000000ffU,
 }
 
-enum uint NVME_NUM_NVME_MI_COMMANDS_SUPPORTED = 0x00000100;
+enum uint NVME_NUM_NVME_MI_COMMANDS_SUPPORTED = 0x00000100U;
 
 enum : uint
 {
-    NVME_STREAMS_ID_MIN             = 0x00000001,
-    NVME_STREAMS_ID_MAX             = 0x0000ffff,
-    NVME_STREAMS_GET_STATUS_MAX_IDS = 0x0000ffff,
+    NVME_STREAMS_ID_MIN             = 0x00000001U,
+    NVME_STREAMS_ID_MAX             = 0x0000ffffU,
+    NVME_STREAMS_GET_STATUS_MAX_IDS = 0x0000ffffU,
 }
 
-enum uint ZDES_SIZE_MULTIPLIER_IN_BYTES = 0x00000040;
+enum uint ZDES_SIZE_MULTIPLIER_IN_BYTES = 0x00000040U;
 
 enum : uint
 {
-    NVME_PSDT_XFER_PRP       = 0x00000000,
-    NVME_PSDT_XFER_SGL_BYTE  = 0x00000001,
-    NVME_PSDT_XFER_SGL_QWORD = 0x00000002,
-    NVME_PSDT_XFER_RESERVED  = 0x00000003,
+    NVME_PSDT_XFER_PRP       = 0x00000000U,
+    NVME_PSDT_XFER_SGL_BYTE  = 0x00000001U,
+    NVME_PSDT_XFER_SGL_QWORD = 0x00000002U,
+    NVME_PSDT_XFER_RESERVED  = 0x00000003U,
 }
 
-enum uint NVME_NAMESPACE_ALL = 0xffffffff;
+enum uint NVME_NAMESPACE_ALL = 0xffffffffU;
 
 enum : uint
 {
-    NVMEOF_TRANSPORT_ADDR_MAX_LEN   = 0x00000100,
-    NVMEOF_TRANSPORT_SERVID_MAX_LEN = 0x00000020,
-    NVMEOF_TRANSPORT_SAS_MAX_LEN    = 0x00000100,
+    NVMEOF_TRANSPORT_ADDR_MAX_LEN   = 0x00000100U,
+    NVMEOF_TRANSPORT_SERVID_MAX_LEN = 0x00000020U,
+    NVMEOF_TRANSPORT_SAS_MAX_LEN    = 0x00000100U,
 }
 
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* NVMEOF_DISCOVERY_NQN = "nqn.2014-08.org.nvmexpress.discovery";
-enum uint NVMEOF_DISCOVERY_LOG_VERSION_0 = 0x00000000;
+enum uint NVMEOF_DISCOVERY_LOG_VERSION_0 = 0x00000000U;
 
 enum : uint
 {
-    NVMEOF_ADMINQ_MIN_DEPTH = 0x00000020,
-    NVMEOF_ADMINQ_MAX_DEPTH = 0x00001000,
+    NVMEOF_ADMINQ_MIN_DEPTH = 0x00000020U,
+    NVMEOF_ADMINQ_MAX_DEPTH = 0x00001000U,
 }
 
 enum : uint
 {
-    NVMEOF_IOQ_MIN_DEPTH = 0x00000002,
-    NVMEOF_IOQ_MAX_DEPTH = 0x00010000,
+    NVMEOF_IOQ_MIN_DEPTH = 0x00000002U,
+    NVMEOF_IOQ_MAX_DEPTH = 0x00010000U,
 }
 
 enum : uint
 {
-    NVMEOF_PROPERTY_SIZE_4Bytes = 0x00000000,
-    NVMEOF_PROPERTY_SIZE_8Bytes = 0x00000001,
+    NVMEOF_PROPERTY_SIZE_4Bytes = 0x00000000U,
+    NVMEOF_PROPERTY_SIZE_8Bytes = 0x00000001U,
 }
 
 enum : uint
 {
-    NVME_DISCOVERY_INFO_MGMT_EKTYPE_PORTID = 0x0000003f,
-    NVME_DISCOVERY_INFO_MGMT_EKTYPE_TRADDR = 0x0000005f,
+    NVME_DISCOVERY_INFO_MGMT_EKTYPE_PORTID = 0x0000003fU,
+    NVME_DISCOVERY_INFO_MGMT_EKTYPE_TRADDR = 0x0000005fU,
 }
 
-enum uint NVMEOF_DHCHAP_PROTOCOL_ID = 0x00000001;
+enum uint NVMEOF_DHCHAP_PROTOCOL_ID = 0x00000001U;
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* NVMEOF_DHCHAP_PREFIX_V1 = "DHHC-1:";
 
 enum : uint
 {
-    NVMEOF_DHCHAP_REPLY_CVAL_NOTVALID    = 0x00000000,
-    NVMEOF_DHCHAP_REPLY_CVAL_VALID       = 0x00000001,
-    NVMEOF_DHCHAP_SUCCESS1_RVAL_NOTVALID = 0x00000000,
-    NVMEOF_DHCHAP_SUCCESS1_RVAL_VALID    = 0x00000001,
+    NVMEOF_DHCHAP_REPLY_CVAL_NOTVALID    = 0x00000000U,
+    NVMEOF_DHCHAP_REPLY_CVAL_VALID       = 0x00000001U,
+    NVMEOF_DHCHAP_SUCCESS1_RVAL_NOTVALID = 0x00000000U,
+    NVMEOF_DHCHAP_SUCCESS1_RVAL_VALID    = 0x00000001U,
 }
 
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_controller_capabilities))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_controller_capabilities
 union NVME_CONTROLLER_CAPABILITIES
 {
-    _Anonymous_e__Struct Anonymous;
-    ulong                AsUlonglong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved2)), FixedArgSig(ElementSig(61)), FixedArgSig(ElementSig(3))], [])*/ulong _bitfield181;
+    }
+    ulong AsUlonglong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_version))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_version
 union NVME_VERSION
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(MJR)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield182;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_controller_configuration))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_controller_configuration
 union NVME_CONTROLLER_CONFIGURATION
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(25)), FixedArgSig(ElementSig(7))], [])*/uint _bitfield183;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_controller_status))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_controller_status
 union NVME_CONTROLLER_STATUS
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(25))], [])*/uint _bitfield184;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_nvm_subsystem_reset))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_nvm_subsystem_reset
 struct NVME_NVM_SUBSYSTEM_RESET
 {
     uint NSSRC;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_admin_queue_attributes))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_admin_queue_attributes
 union NVME_ADMIN_QUEUE_ATTRIBUTES
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(28)), FixedArgSig(ElementSig(4))], [])*/uint _bitfield185;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_admin_submission_queue_base_address))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_admin_submission_queue_base_address
 union NVME_ADMIN_SUBMISSION_QUEUE_BASE_ADDRESS
 {
-    _Anonymous_e__Struct Anonymous;
-    ulong                AsUlonglong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ASQB)), FixedArgSig(ElementSig(12)), FixedArgSig(ElementSig(52))], [])*/ulong _bitfield186;
+    }
+    ulong AsUlonglong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_admin_completion_queue_base_address))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_admin_completion_queue_base_address
 union NVME_ADMIN_COMPLETION_QUEUE_BASE_ADDRESS
 {
-    _Anonymous_e__Struct Anonymous;
-    ulong                AsUlonglong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ACQB)), FixedArgSig(ElementSig(12)), FixedArgSig(ElementSig(52))], [])*/ulong _bitfield187;
+    }
+    ulong AsUlonglong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_controller_memory_buffer_location))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_controller_memory_buffer_location
 union NVME_CONTROLLER_MEMORY_BUFFER_LOCATION
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(OFST)), FixedArgSig(ElementSig(12)), FixedArgSig(ElementSig(20))], [])*/uint _bitfield188;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_controller_memory_buffer_size))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_controller_memory_buffer_size
 union NVME_CONTROLLER_MEMORY_BUFFER_SIZE
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(SZ)), FixedArgSig(ElementSig(12)), FixedArgSig(ElementSig(20))], [])*/uint _bitfield189;
+    }
+    uint AsUlong;
 }
 
 struct NVME_NVM_SUBSYSTEM_SHUTDOWN
@@ -1365,24 +1481,34 @@ struct NVME_NVM_SUBSYSTEM_SHUTDOWN
 
 union NVME_CONTROLLER_READY_TIMEOUTS
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        ushort CRWMT;
+        ushort CRIMT;
+    }
+    uint AsUlong;
 }
 
 union NVME_SUBMISSION_QUEUE_TAIL_DOORBELL
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield190;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_completion_queue_head_doorbell))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_completion_queue_head_doorbell
 union NVME_COMPLETION_QUEUE_HEAD_DOORBELL
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield191;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_controller_registers))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_controller_registers
 struct NVME_CONTROLLER_REGISTERS
 {
     NVME_CONTROLLER_CAPABILITIES CAP;
@@ -1406,85 +1532,152 @@ struct NVME_CONTROLLER_REGISTERS
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] Doorbells;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_command_status))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_command_status
 union NVME_COMMAND_STATUS
 {
-    _Anonymous_e__Struct Anonymous;
-    ushort               AsUshort;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(DNR)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield192;
+    }
+    ushort AsUshort;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_completion_entry))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_completion_entry
 struct NVME_COMPLETION_ENTRY
 {
-    uint          DW0;
-    uint          DW1;
-    _DW2_e__Union DW2;
-    _DW3_e__Union DW3;
+    uint DW0;
+    uint DW1;
+    union DW2
+    {
+        struct
+        {
+            ushort SQHD;
+            ushort SQID;
+        }
+        uint AsUlong;
+    }
+    union DW3
+    {
+        struct
+        {
+            ushort              CID;
+            NVME_COMMAND_STATUS Status;
+        }
+        uint AsUlong;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_completion_dw0_async_event_request))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_completion_dw0_async_event_request
 struct NVME_COMPLETION_DW0_ASYNC_EVENT_REQUEST
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(24)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield72;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(24)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield193;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw10_abort))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw10_abort
 union NVME_CDW10_ABORT
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CID)), FixedArgSig(ElementSig(8)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield194;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw10_identify))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw10_identify
 union NVME_CDW10_IDENTIFY
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CNTID)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield195;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_identify))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_identify
 union NVME_CDW11_IDENTIFY
 {
-    _Anonymous1_e__Struct Anonymous1;
-    _Anonymous2_e__Struct Anonymous2;
+    struct
+    {
+        ushort NVMSETID;
+        ushort Reserved;
+    }
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CSI)), FixedArgSig(ElementSig(24)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield196;
+    }
     uint AsUlong;
 }
 
 union NVME_CDW14_IDENTIFY
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(25))], [])*/uint _bitfield197;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_lba_format))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_lba_format
 union NVME_LBA_FORMAT
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        ushort MS;
+        ubyte  LBADS;
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(6))], [])*/ubyte _bitfield198;
+    }
+    uint AsUlong;
 }
 
 union NVM_RESERVATION_CAPABILITIES
 {
-    _Anonymous_e__Struct Anonymous;
-    ubyte                AsUchar;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield199;
+    }
+    ubyte AsUchar;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_identify_namespace_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_identify_namespace_data
 struct NVME_IDENTIFY_NAMESPACE_DATA
 {
     ulong               NSZE;
     ulong               NCAP;
     ulong               NUSE;
-    _NSFEAT_e__Struct   NSFEAT;
+    struct NSFEAT
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(3))], [])*/ubyte _bitfield200;
+    }
     ubyte               NLBAF;
-    _FLBAS_e__Struct    FLBAS;
-    _MC_e__Struct       MC;
-    _DPC_e__Struct      DPC;
-    _DPS_e__Struct      DPS;
-    _NMIC_e__Struct     NMIC;
+    struct FLBAS
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield201;
+    }
+    struct MC
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(6))], [])*/ubyte _bitfield202;
+    }
+    struct DPC
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(3))], [])*/ubyte _bitfield203;
+    }
+    struct DPS
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield204;
+    }
+    struct NMIC
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield205;
+    }
     NVM_RESERVATION_CAPABILITIES RESCAP;
-    _FPI_e__Struct      FPI;
-    _DLFEAT_e__Struct   DLFEAT;
+    struct FPI
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Supported)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield206;
+    }
+    struct DLFEAT
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(3))], [])*/ubyte _bitfield207;
+    }
     ushort              NAWUN;
     ushort              NAWUPF;
     ushort              NACWU;
@@ -1504,7 +1697,10 @@ struct NVME_IDENTIFY_NAMESPACE_DATA
     ubyte[11]           Reserved2;
     uint                ANAGRPID;
     ubyte[3]            Reserved3;
-    _NSATTR_e__Struct   NSATTR;
+    struct NSATTR
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield208;
+    }
     ushort              NVMSETID;
     ushort              ENDGID;
     ubyte[16]           NGUID;
@@ -1513,7 +1709,7 @@ struct NVME_IDENTIFY_NAMESPACE_DATA
     ubyte[3712]         VS;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_power_state_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_power_state_desc
 struct NVME_POWER_STATE_DESC
 {
     ushort   MP;
@@ -1533,108 +1729,180 @@ struct NVME_POWER_STATE_DESC
     ubyte[9] Reserved9;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_identify_controller_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_identify_controller_data
 struct NVME_IDENTIFY_CONTROLLER_DATA
 {
-    ushort             VID;
-    ushort             SSVID;
-    ubyte[20]          SN;
-    ubyte[40]          MN;
-    ubyte[8]           FR;
-    ubyte              RAB;
-    ubyte[3]           IEEE;
-    _CMIC_e__Struct    CMIC;
-    ubyte              MDTS;
-    ushort             CNTLID;
-    uint               VER;
-    uint               RTD3R;
-    uint               RTD3E;
-    _OAES_e__Struct    OAES;
-    _CTRATT_e__Struct  CTRATT;
-    _RRLS_e__Struct    RRLS;
-    ubyte[9]           Reserved0;
-    ubyte              CNTRLTYPE;
-    ubyte[16]          FGUID;
-    ushort             CRDT1;
-    ushort             CRDT2;
-    ushort             CRDT3;
-    ubyte[106]         Reserved1;
-    ubyte[13]          ReservedForManagement;
-    ubyte              NVMSR;
-    ubyte              VWCI;
-    ubyte              MEC;
-    _OACS_e__Struct    OACS;
-    ubyte              ACL;
-    ubyte              AERL;
-    _FRMW_e__Struct    FRMW;
-    _LPA_e__Struct     LPA;
-    ubyte              ELPE;
-    ubyte              NPSS;
-    _AVSCC_e__Struct   AVSCC;
-    _APSTA_e__Struct   APSTA;
-    ushort             WCTEMP;
-    ushort             CCTEMP;
-    ushort             MTFA;
-    uint               HMPRE;
-    uint               HMMIN;
-    ubyte[16]          TNVMCAP;
-    ubyte[16]          UNVMCAP;
-    _RPMBS_e__Struct   RPMBS;
-    ushort             EDSTT;
-    ubyte              DSTO;
-    ubyte              FWUG;
-    ushort             KAS;
-    _HCTMA_e__Struct   HCTMA;
-    ushort             MNTMT;
-    ushort             MXTMT;
-    _SANICAP_e__Struct SANICAP;
-    uint               HMMINDS;
-    ushort             HMMAXD;
-    ushort             NSETIDMAX;
-    ushort             ENDGIDMAX;
-    ubyte              ANATT;
-    _ANACAP_e__Struct  ANACAP;
-    uint               ANAGRPMAX;
-    uint               NANAGRPID;
-    uint               PELS;
-    ushort             DomainId;
-    ubyte[10]          Reserved2;
-    ubyte[16]          MEGCAP;
-    ubyte              TMPTHHA;
-    ubyte              Reserved3;
-    ushort             CQT;
-    ubyte[124]         Reserved4;
-    _SQES_e__Struct    SQES;
-    _CQES_e__Struct    CQES;
-    ushort             MAXCMD;
-    uint               NN;
-    _ONCS_e__Struct    ONCS;
-    _FUSES_e__Struct   FUSES;
-    _FNA_e__Struct     FNA;
-    _VWC_e__Struct     VWC;
-    ushort             AWUN;
-    ushort             AWUPF;
-    _NVSCC_e__Struct   NVSCC;
-    _NWPC_e__Struct    NWPC;
-    ushort             ACWU;
-    ushort             CopyDescFormats;
-    _SGLS_e__Struct    SGLS;
-    uint               MNAN;
-    ubyte[16]          MAXDNA;
-    uint               MAXCNA;
-    ubyte[204]         Reserved6;
-    ubyte[256]         SUBNQN;
-    ubyte[768]         Reserved7;
-    uint               IOCCSZ;
-    uint               IORCSZ;
-    ushort             ICDOFF;
-    _FCATT_e__Struct   FCATT;
-    ubyte              MSDBD;
-    _OFCS_e__Struct    OFCS;
-    ubyte              DCTYPE;
-    ubyte[241]         Reserved8;
+    ushort      VID;
+    ushort      SSVID;
+    ubyte[20]   SN;
+    ubyte[40]   MN;
+    ubyte[8]    FR;
+    ubyte       RAB;
+    ubyte[3]    IEEE;
+    struct CMIC
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield209;
+    }
+    ubyte       MDTS;
+    ushort      CNTLID;
+    uint        VER;
+    uint        RTD3R;
+    uint        RTD3E;
+    struct OAES
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(DiscoveryLogChanged)), FixedArgSig(ElementSig(31)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield210;
+    }
+    struct CTRATT
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield211;
+    }
+    struct RRLS
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReadRecoveryLevel15)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield212;
+    }
+    ubyte[9]    Reserved0;
+    ubyte       CNTRLTYPE;
+    ubyte[16]   FGUID;
+    ushort      CRDT1;
+    ushort      CRDT2;
+    ushort      CRDT3;
+    ubyte[106]  Reserved1;
+    ubyte[13]   ReservedForManagement;
+    ubyte       NVMSR;
+    ubyte       VWCI;
+    ubyte       MEC;
+    struct OACS
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(11)), FixedArgSig(ElementSig(5))], [])*/ushort _bitfield213;
+    }
+    ubyte       ACL;
+    ubyte       AERL;
+    struct FRMW
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(3))], [])*/ubyte _bitfield214;
+    }
+    struct LPA
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield215;
+    }
+    ubyte       ELPE;
+    ubyte       NPSS;
+    struct AVSCC
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield216;
+    }
+    struct APSTA
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield217;
+    }
+    ushort      WCTEMP;
+    ushort      CCTEMP;
+    ushort      MTFA;
+    uint        HMPRE;
+    uint        HMMIN;
+    ubyte[16]   TNVMCAP;
+    ubyte[16]   UNVMCAP;
+    struct RPMBS
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(AccessSize)), FixedArgSig(ElementSig(24)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield218;
+    }
+    ushort      EDSTT;
+    ubyte       DSTO;
+    ubyte       FWUG;
+    ushort      KAS;
+    struct HCTMA
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(15))], [])*/ushort _bitfield219;
+    }
+    ushort      MNTMT;
+    ushort      MXTMT;
+    struct SANICAP
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NODMMAS)), FixedArgSig(ElementSig(30)), FixedArgSig(ElementSig(2))], [])*/uint _bitfield220;
+    }
+    uint        HMMINDS;
+    ushort      HMMAXD;
+    ushort      NSETIDMAX;
+    ushort      ENDGIDMAX;
+    ubyte       ANATT;
+    struct ANACAP
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(SupportNonZeroANAGRPID)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield221;
+    }
+    uint        ANAGRPMAX;
+    uint        NANAGRPID;
+    uint        PELS;
+    ushort      DomainId;
+    ubyte[10]   Reserved2;
+    ubyte[16]   MEGCAP;
+    ubyte       TMPTHHA;
+    ubyte       Reserved3;
+    ushort      CQT;
+    ubyte[124]  Reserved4;
+    struct SQES
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(MaxEntrySize)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield222;
+    }
+    struct CQES
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(MaxEntrySize)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield223;
+    }
+    ushort      MAXCMD;
+    uint        NN;
+    struct ONCS
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(8)), FixedArgSig(ElementSig(8))], [])*/ushort _bitfield224;
+    }
+    struct FUSES
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(15))], [])*/ushort _bitfield225;
+    }
+    struct FNA
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield226;
+    }
+    struct VWC
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(5))], [])*/ubyte _bitfield227;
+    }
+    ushort      AWUN;
+    ushort      AWUPF;
+    struct NVSCC
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield228;
+    }
+    struct NWPC
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(5))], [])*/ubyte _bitfield229;
+    }
+    ushort      ACWU;
+    ushort      CopyDescFormats;
+    struct SGLS
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(22)), FixedArgSig(ElementSig(10))], [])*/uint _bitfield230;
+    }
+    uint        MNAN;
+    ubyte[16]   MAXDNA;
+    uint        MAXCNA;
+    ubyte[204]  Reserved6;
+    ubyte[256]  SUBNQN;
+    ubyte[768]  Reserved7;
+    uint        IOCCSZ;
+    uint        IORCSZ;
+    ushort      ICDOFF;
+    struct FCATT
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield231;
+    }
+    ubyte       MSDBD;
+    struct OFCS
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(15))], [])*/ushort _bitfield232;
+    }
+    ubyte       DCTYPE;
+    ubyte[241]  Reserved8;
     NVME_POWER_STATE_DESC[32] PDS;
-    ubyte[1024]        VS;
+    ubyte[1024] VS;
 }
 
 struct NVME_ACTIVE_NAMESPACE_ID_LIST
@@ -1650,7 +1918,7 @@ struct NVME_IDENTIFY_NAMESPACE_DESCRIPTOR
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] NID;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_set_attributes_entry))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_set_attributes_entry
 struct NVME_SET_ATTRIBUTES_ENTRY
 {
     ushort    Identifier;
@@ -1663,7 +1931,7 @@ struct NVME_SET_ATTRIBUTES_ENTRY
     ubyte[80] Reserved2;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvm_set_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvm_set_list
 struct NVM_SET_LIST
 {
     ubyte      IdentifierCount;
@@ -1680,16 +1948,22 @@ struct NVME_LBA_ZONE_FORMAT
 
 struct NVME_IDENTIFY_SPECIFIC_NAMESPACE_IO_COMMAND_SET
 {
-    _ZOC_e__Struct  ZOC;
-    _OZCS_e__Struct OZCS;
-    uint            MAR;
-    uint            MOR;
-    uint            RRL;
-    uint            FRL;
-    ubyte[2796]     Reserved0;
+    struct ZOC
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(14))], [])*/ushort _bitfield233;
+    }
+    struct OZCS
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(15))], [])*/ushort _bitfield234;
+    }
+    uint        MAR;
+    uint        MOR;
+    uint        RRL;
+    uint        FRL;
+    ubyte[2796] Reserved0;
     NVME_LBA_ZONE_FORMAT[16] LBAEF;
-    ubyte[768]      Reserved1;
-    ubyte[256]      VS;
+    ubyte[768]  Reserved1;
+    ubyte[256]  VS;
 }
 
 struct NVME_IDENTIFY_NVM_SPECIFIC_CONTROLLER_IO_COMMAND_SET
@@ -1709,7 +1983,7 @@ struct NVME_IDENTIFY_ZNS_SPECIFIC_CONTROLLER_IO_COMMAND_SET
     ubyte[4095] Reserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_controller_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_controller_list
 struct NVME_CONTROLLER_LIST
 {
     ushort       NumberOfIdentifiers;
@@ -1718,7 +1992,7 @@ struct NVME_CONTROLLER_LIST
 
 struct NVME_UUID_LIST_ENTRY
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(6))], [])*/ubyte _bitfield73;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(6))], [])*/ubyte _bitfield235;
     ubyte[15] Reserved1;
     ubyte[16] UUID;
 }
@@ -1730,7 +2004,7 @@ struct NVME_UUID_LIST
 
 struct IO_COMMAND_SET_VECTOR
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(61))], [])*/ulong _bitfield74;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(61))], [])*/ulong _bitfield236;
 }
 
 struct NVME_IDENTIFY_IO_COMMAND_SET
@@ -1738,11 +2012,14 @@ struct NVME_IDENTIFY_IO_COMMAND_SET
     IO_COMMAND_SET_VECTOR[512] IOCommandSetVector;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_lba_ranget_type_entry))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_lba_ranget_type_entry
 struct NVME_LBA_RANGET_TYPE_ENTRY
 {
     ubyte     Type;
-    _Attributes_e__Struct Attributes;
+    struct Attributes
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(6))], [])*/ubyte _bitfield237;
+    }
     ubyte[14] Reserved0;
     ulong     SLBA;
     ulong     NLB;
@@ -1752,12 +2029,26 @@ struct NVME_LBA_RANGET_TYPE_ENTRY
 
 struct NVME_WCS_DEVICE_RESET_ACTION
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(2))], [])*/ubyte _bitfield238;
+        }
+        ubyte AsUCHAR;
+    }
 }
 
 struct NVME_WCS_DEVICE_CAPABILITIES
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(30))], [])*/uint _bitfield239;
+        }
+        uint AsULONG;
+    }
 }
 
 struct NVME_WCS_DEVICE_SMART_ATTRIBUTES_LOG
@@ -1773,16 +2064,38 @@ struct NVME_WCS_DEVICE_SMART_ATTRIBUTES_LOG_V2
 align (1):
     ubyte[16]  MediaUnitsWritten;
     ubyte[16]  MediaUnitsRead;
-    _BadUserNANDBlockCount_e__Struct BadUserNANDBlockCount;
-    _BadSystemNANDBlockCount_e__Struct BadSystemNANDBlockCount;
+    struct BadUserNANDBlockCount
+    {
+        ubyte[6] RawCount;
+        ubyte[2] Normalized;
+    }
+    struct BadSystemNANDBlockCount
+    {
+        ubyte[6] RawCount;
+        ubyte[2] Normalized;
+    }
     ulong      XORRecoveryCount;
     ulong      UnrecoverableReadErrorCount;
     ulong      SoftECCErrorCount;
-    _EndToEndCorrectionCounts_e__Struct EndToEndCorrectionCounts;
+    struct EndToEndCorrectionCounts
+    {
+    align (1):
+        uint DetectedCounts;
+        uint CorrectedCounts;
+    }
     ubyte      PercentageSystemDataUsed;
     ubyte[7]   RefreshCount;
-    _UserDataEraseCounts_e__Struct UserDataEraseCounts;
-    _ThermalThrottling_e__Struct ThermalThrottling;
+    struct UserDataEraseCounts
+    {
+    align (1):
+        uint MaximumCount;
+        uint MinimumCount;
+    }
+    struct ThermalThrottling
+    {
+        ubyte EventCount;
+        ubyte Status;
+    }
     ubyte[6]   Reserved0;
     ulong      PCIeCorrectableErrorCount;
     uint       IncompleteShutdownCount;
@@ -1806,17 +2119,46 @@ struct NVME_OCP_DEVICE_SMART_INFORMATION_LOG_V3
 align (1):
     ubyte[16]  MediaUnitsWritten;
     ubyte[16]  MediaUnitsRead;
-    _BadUserNANDBlockCount_e__Struct BadUserNANDBlockCount;
-    _BadSystemNANDBlockCount_e__Struct BadSystemNANDBlockCount;
+    struct BadUserNANDBlockCount
+    {
+        ubyte[6] RawCount;
+        ubyte[2] Normalized;
+    }
+    struct BadSystemNANDBlockCount
+    {
+        ubyte[6] RawCount;
+        ubyte[2] Normalized;
+    }
     ulong      XORRecoveryCount;
     ulong      UnrecoverableReadErrorCount;
     ulong      SoftECCErrorCount;
-    _EndToEndCorrectionCounts_e__Struct EndToEndCorrectionCounts;
+    struct EndToEndCorrectionCounts
+    {
+    align (1):
+        uint DetectedCounts;
+        uint CorrectedCounts;
+    }
     ubyte      PercentageSystemDataUsed;
     ubyte[7]   RefreshCount;
-    _UserDataEraseCounts_e__Struct UserDataEraseCounts;
-    _ThermalThrottling_e__Struct ThermalThrottling;
-    _DSSDSpecVersion_e__Struct DSSDSpecVersion;
+    struct UserDataEraseCounts
+    {
+    align (1):
+        uint MaximumCount;
+        uint MinimumCount;
+    }
+    struct ThermalThrottling
+    {
+        ubyte EventCount;
+        ubyte Status;
+    }
+    struct DSSDSpecVersion
+    {
+    align (1):
+        ubyte  Errata;
+        ushort PointVersion;
+        ushort MinorVersion;
+        ubyte  MajorVersion;
+    }
     ulong      PCIeCorrectableErrorCount;
     uint       IncompleteShutdownCount;
     uint       Reserved1;
@@ -1906,12 +2248,28 @@ align (1):
 
 struct LATENCY_MONITOR_FEATURE_STATUS
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(5))], [])*/ubyte _bitfield240;
+        }
+        ubyte AsUchar;
+    }
 }
 
 struct ACTIVE_LATENCY_CONFIGURATION
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+    align (1):
+        struct
+        {
+        align (1):
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(12)), FixedArgSig(ElementSig(4))], [])*/ushort _bitfield241;
+        }
+        ushort AsUshort;
+    }
 }
 
 struct BUCKET_COUNTER
@@ -1960,13 +2318,13 @@ align (1):
 struct LATENCY_STAMP_UNITS
 {
 align (1):
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(12)), FixedArgSig(ElementSig(4))], [])*/ushort _bitfield75;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(12)), FixedArgSig(ElementSig(4))], [])*/ushort _bitfield242;
 }
 
 struct DEBUG_BIT_FIELD
 {
 align (1):
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(12)), FixedArgSig(ElementSig(4))], [])*/ushort _bitfield76;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(12)), FixedArgSig(ElementSig(4))], [])*/ushort _bitfield243;
 }
 
 struct NVME_OCP_DEVICE_LATENCY_MONITOR_LOG
@@ -2004,7 +2362,14 @@ align (1):
     ulong               DebugLogLatencyStamp;
     ushort              DebugLogPointer;
     DEBUG_BIT_FIELD     DebugCounterTriggerSource;
-    _DebugLogStampUnits_e__Union DebugLogStampUnits;
+    union DebugLogStampUnits
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield244;
+        }
+        ubyte AsUchar;
+    }
     ubyte[29]           Reserved4;
     ushort              LogPageVersionNumber;
     GUID                LogPageGUID;
@@ -2012,19 +2377,73 @@ align (1):
 
 struct DSSD_POWER_STATE_DESCRIPTOR
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ValidDSSDPowerState)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield77;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ValidDSSDPowerState)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield245;
 }
 
 struct NVME_OCP_DEVICE_CAPABILITIES_LOG
 {
 align (1):
     ushort      PciePorts;
-    _OobMgmtSupport_e__Union OobMgmtSupport;
-    _WriteZeroesCommand_e__Union WriteZeroesCommand;
-    _SanitizeCommand_e__Union SanitizeCommand;
-    _DatasetMgmtCommand_e__Union DatasetMgmtCommand;
-    _WriteUncorrectableCommand_e__Union WriteUncorrectableCommand;
-    _FusedCommand_e__Union FusedCommand;
+    union OobMgmtSupport
+    {
+    align (1):
+        struct
+        {
+        align (1):
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CompliesWithSpec)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield246;
+        }
+        ushort AsUshort;
+    }
+    union WriteZeroesCommand
+    {
+    align (1):
+        struct
+        {
+        align (1):
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CompliesWithSpec)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield247;
+        }
+        ushort AsUshort;
+    }
+    union SanitizeCommand
+    {
+    align (1):
+        struct
+        {
+        align (1):
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CompliesWithSpec)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield248;
+        }
+        ushort AsUshort;
+    }
+    union DatasetMgmtCommand
+    {
+    align (1):
+        struct
+        {
+        align (1):
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CompliesWithSpec)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield249;
+        }
+        ushort AsUshort;
+    }
+    union WriteUncorrectableCommand
+    {
+    align (1):
+        struct
+        {
+        align (1):
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CompliesWithSpec)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield250;
+        }
+        ushort AsUshort;
+    }
+    union FusedCommand
+    {
+    align (1):
+        struct
+        {
+        align (1):
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CompliesWithSpec)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield251;
+        }
+        ushort AsUshort;
+    }
     ushort      MinimumValidDSSDPowerState;
     ubyte       Reserved0;
     DSSD_POWER_STATE_DESCRIPTOR[127] DssdDescriptors;
@@ -2052,27 +2471,34 @@ align (1):
 struct NVME_OCP_DEVICE_TCG_CONFIGURATION_LOG
 {
 align (1):
-    _State_e__Union State;
-    ubyte[3]        Reserved0;
-    ubyte           LSPActivationCount;
-    ubyte           TPRevertCount;
-    ubyte           LSPRevertCount;
-    ubyte           LOCount;
-    ubyte           SUMLOCount;
-    ubyte           RPLOCount;
-    ubyte           NPLOCount;
-    ubyte           RLLOCount;
-    ubyte           WLLOCount;
-    ubyte           RULOCount;
-    ubyte           WULOCount;
-    ubyte           Reserved1;
-    uint            SIDAuthTryCount;
-    uint            SIDAuthTryLimit;
-    uint            ResetCount;
-    uint            ResetLockCount;
-    ubyte[462]      Reserved2;
-    ushort          LogPageVersionNumber;
-    GUID            LogPageGUID;
+    union State
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield252;
+        }
+        ubyte AsUchar;
+    }
+    ubyte[3]   Reserved0;
+    ubyte      LSPActivationCount;
+    ubyte      TPRevertCount;
+    ubyte      LSPRevertCount;
+    ubyte      LOCount;
+    ubyte      SUMLOCount;
+    ubyte      RPLOCount;
+    ubyte      NPLOCount;
+    ubyte      RLLOCount;
+    ubyte      WLLOCount;
+    ubyte      RULOCount;
+    ubyte      WULOCount;
+    ubyte      Reserved1;
+    uint       SIDAuthTryCount;
+    uint       SIDAuthTryLimit;
+    uint       ResetCount;
+    uint       ResetLockCount;
+    ubyte[462] Reserved2;
+    ushort     LogPageVersionNumber;
+    GUID       LogPageGUID;
 }
 
 struct TCG_HISTORY_ENTRY
@@ -2132,193 +2558,271 @@ align (1):
     GUID      LogPageGUID;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw10_create_io_queue))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw10_create_io_queue
 union NVME_CDW10_CREATE_IO_QUEUE
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(QSIZE)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield253;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_create_io_cq))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_create_io_cq
 union NVME_CDW11_CREATE_IO_CQ
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(IV)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield254;
+    }
+    uint AsUlong;
 }
 
 union NVME_CDW10_DELETE_IO_QUEUE
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield255;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_create_io_sq))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_create_io_sq
 union NVME_CDW11_CREATE_IO_SQ
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CQID)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield256;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw10_get_features))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw10_get_features
 union NVME_CDW10_GET_FEATURES
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(11)), FixedArgSig(ElementSig(21))], [])*/uint _bitfield257;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw10_set_features))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw10_set_features
 union NVME_CDW10_SET_FEATURES
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(SV)), FixedArgSig(ElementSig(31)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield258;
+    }
+    uint AsUlong;
 }
 
 struct NVME_GET_FEATURE_TIMESTAMP
 {
-    _Anonymous_e__Struct Anonymous;
-    ulong                AsUlonglong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(52)), FixedArgSig(ElementSig(12))], [])*/ulong _bitfield259;
+    }
+    ulong AsUlonglong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_feature_number_of_queues))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_feature_number_of_queues
 union NVME_CDW11_FEATURE_NUMBER_OF_QUEUES
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NCQ)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield260;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_feature_interrupt_coalescing))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_feature_interrupt_coalescing
 union NVME_CDW11_FEATURE_INTERRUPT_COALESCING
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield261;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_feature_interrupt_vector_config))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_feature_interrupt_vector_config
 union NVME_CDW11_FEATURE_INTERRUPT_VECTOR_CONFIG
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(17)), FixedArgSig(ElementSig(15))], [])*/uint _bitfield262;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_feature_write_atomicity_normal))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_feature_write_atomicity_normal
 union NVME_CDW11_FEATURE_WRITE_ATOMICITY_NORMAL
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield263;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_feature_non_operational_power_state))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_feature_non_operational_power_state
 union NVME_CDW11_FEATURE_NON_OPERATIONAL_POWER_STATE
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield264;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_feature_lba_range_type))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_feature_lba_range_type
 union NVME_CDW11_FEATURE_LBA_RANGE_TYPE
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(26))], [])*/uint _bitfield265;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_feature_arbitration))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_feature_arbitration
 union NVME_CDW11_FEATURE_ARBITRATION
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(HPW)), FixedArgSig(ElementSig(24)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield266;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_feature_volatile_write_cache))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_feature_volatile_write_cache
 union NVME_CDW11_FEATURE_VOLATILE_WRITE_CACHE
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield267;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_feature_supported_capability))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_feature_supported_capability
 union NVME_CDW11_FEATURE_SUPPORTED_CAPABILITY
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(29))], [])*/uint _bitfield268;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_feature_async_event_config))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_feature_async_event_config
 union NVME_CDW11_FEATURE_ASYNC_EVENT_CONFIG
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(DiscoveryLogPageChange)), FixedArgSig(ElementSig(31)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield269;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_feature_power_management))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_feature_power_management
 union NVME_CDW11_FEATURE_POWER_MANAGEMENT
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(27))], [])*/uint _bitfield270;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_feature_auto_power_state_transition))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_feature_auto_power_state_transition
 union NVME_CDW11_FEATURE_AUTO_POWER_STATE_TRANSITION
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield271;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_auto_power_state_transition_entry))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_auto_power_state_transition_entry
 struct NVME_AUTO_POWER_STATE_TRANSITION_ENTRY
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(IdleTimePriorToTransition)), FixedArgSig(ElementSig(8)), FixedArgSig(ElementSig(24))], [])*/uint _bitfield78;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(IdleTimePriorToTransition)), FixedArgSig(ElementSig(8)), FixedArgSig(ElementSig(24))], [])*/uint _bitfield272;
     uint Reserved1;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_feature_temperature_threshold))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_feature_temperature_threshold
 union NVME_CDW11_FEATURE_TEMPERATURE_THRESHOLD
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(22)), FixedArgSig(ElementSig(10))], [])*/uint _bitfield273;
+    }
+    uint AsUlong;
 }
 
 union NVME_CDW11_FEATURE_ERROR_RECOVERY
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(17)), FixedArgSig(ElementSig(15))], [])*/uint _bitfield274;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_feature_host_memory_buffer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_feature_host_memory_buffer
 union NVME_CDW11_FEATURE_HOST_MEMORY_BUFFER
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(30))], [])*/uint _bitfield275;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw12_feature_host_memory_buffer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw12_feature_host_memory_buffer
 union NVME_CDW12_FEATURE_HOST_MEMORY_BUFFER
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        uint HSIZE;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw13_feature_host_memory_buffer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw13_feature_host_memory_buffer
 union NVME_CDW13_FEATURE_HOST_MEMORY_BUFFER
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(HMDLLA)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(28))], [])*/uint _bitfield276;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw14_feature_host_memory_buffer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw14_feature_host_memory_buffer
 union NVME_CDW14_FEATURE_HOST_MEMORY_BUFFER
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        uint HMDLUA;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw15_feature_host_memory_buffer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw15_feature_host_memory_buffer
 union NVME_CDW15_FEATURE_HOST_MEMORY_BUFFER
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        uint HMDLEC;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_host_memory_buffer_descriptor_entry))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_host_memory_buffer_descriptor_entry
 struct NVME_HOST_MEMORY_BUFFER_DESCRIPTOR_ENTRY
 {
     ulong BADD;
@@ -2336,25 +2840,34 @@ struct NVME_HOST_BEHAVIOR_SUPPORT_DATA
 
 union NVME_CDW11_FEATURE_IO_COMMAND_SET_PROFILE
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(8)), FixedArgSig(ElementSig(24))], [])*/uint _bitfield277;
+    }
+    uint AsUlong;
 }
 
 union NVME_CDW11_FEATURE_GET_HOST_METADATA
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield278;
+    }
+    uint AsUlong;
 }
 
 union NVME_CDW11_FEATURE_SET_HOST_METADATA
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(17))], [])*/uint _bitfield279;
+    }
+    uint AsUlong;
 }
 
 struct NVME_HOST_METADATA_ELEMENT_DESCRIPTOR
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ELEN)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield79;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ELEN)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield280;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] EVAL;
 }
 
@@ -2367,52 +2880,80 @@ struct NVME_FEATURE_HOST_METADATA_DATA
 
 union NVME_CDW0_FEATURE_ERROR_INJECTION
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(25))], [])*/uint _bitfield281;
+    }
+    uint AsUlong;
 }
 
 struct NVME_ERROR_INJECTION_ENTRY
 {
-    _Flags_e__Union Flags;
-    ubyte           Reserved1;
-    ushort          ErrorInjectionType;
-    ubyte[28]       ErrorInjectionTypeSpecific;
+    union Flags
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(6))], [])*/ubyte _bitfield282;
+        }
+        ubyte AsUchar;
+    }
+    ubyte     Reserved1;
+    ushort    ErrorInjectionType;
+    ubyte[28] ErrorInjectionTypeSpecific;
 }
 
 union NVME_CDW11_FEATURE_CLEAR_FW_UPDATE_HISTORY
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Clear)), FixedArgSig(ElementSig(31)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield283;
+    }
+    uint AsUlong;
 }
 
 union NVME_CDW11_FEATURE_READONLY_WRITETHROUGH_MODE
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(EOLBehavior)), FixedArgSig(ElementSig(30)), FixedArgSig(ElementSig(2))], [])*/uint _bitfield284;
+    }
+    uint AsUlong;
 }
 
 union NVME_CDW0_FEATURE_READONLY_WRITETHROUGH_MODE
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(29))], [])*/uint _bitfield285;
+    }
+    uint AsUlong;
 }
 
 union NVME_CDW11_FEATURE_CLEAR_PCIE_CORRECTABLE_ERROR_COUNTERS
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Clear)), FixedArgSig(ElementSig(31)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield286;
+    }
+    uint AsUlong;
 }
 
 union NVME_CDW11_FEATURE_ENABLE_IEEE1667_SILO
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Enable)), FixedArgSig(ElementSig(31)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield287;
+    }
+    uint AsUlong;
 }
 
 union NVME_CDW0_FEATURE_ENABLE_IEEE1667_SILO
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(29))], [])*/uint _bitfield288;
+    }
+    uint AsUlong;
 }
 
 struct NVME_LATENCY_MONITORING_ENTRY
@@ -2433,13 +2974,16 @@ align (1):
 
 union NVME_CDW0_FEATURE_DSSD_POWER_STATE
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(25))], [])*/uint _bitfield289;
+    }
+    uint AsUlong;
 }
 
 struct NVME_CDW11_FEATURE_HOST_IDENTIFIER
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield80;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield290;
 }
 
 struct NVME_FEATURE_HOST_IDENTIFIER_DATA
@@ -2449,15 +2993,15 @@ struct NVME_FEATURE_HOST_IDENTIFIER_DATA
 
 struct NVME_CDW11_FEATURE_RESERVATION_PERSISTENCE
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield81;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield291;
 }
 
 struct NVME_CDW11_FEATURE_RESERVATION_NOTIFICATION_MASK
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(28))], [])*/uint _bitfield82;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(28))], [])*/uint _bitfield292;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_features))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_features
 union NVME_CDW11_FEATURES
 {
     NVME_CDW11_FEATURE_NUMBER_OF_QUEUES NumberOfQueues;
@@ -2484,75 +3028,90 @@ union NVME_CDW11_FEATURES
     uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw12_features))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw12_features
 union NVME_CDW12_FEATURES
 {
     NVME_CDW12_FEATURE_HOST_MEMORY_BUFFER HostMemoryBuffer;
     uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw13_features))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw13_features
 union NVME_CDW13_FEATURES
 {
     NVME_CDW13_FEATURE_HOST_MEMORY_BUFFER HostMemoryBuffer;
     uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw14_features))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw14_features
 union NVME_CDW14_FEATURES
 {
     NVME_CDW14_FEATURE_HOST_MEMORY_BUFFER HostMemoryBuffer;
     uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw15_features))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw15_features
 union NVME_CDW15_FEATURES
 {
     NVME_CDW15_FEATURE_HOST_MEMORY_BUFFER HostMemoryBuffer;
     uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw10_get_log_page))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw10_get_log_page
 union NVME_CDW10_GET_LOG_PAGE
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(28)), FixedArgSig(ElementSig(4))], [])*/uint _bitfield293;
+    }
+    uint AsUlong;
 }
 
 union NVME_CDW10_GET_LOG_PAGE_V121
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NUMDL)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield294;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw10_get_log_page_v13))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw10_get_log_page_v13
 union NVME_CDW10_GET_LOG_PAGE_V13
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NUMDL)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield295;
+    }
+    uint AsUlong;
 }
 
 union NVME_CDW10_GET_LOG_PAGE_V20
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NUMDL)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield296;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_get_log_page))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_get_log_page
 union NVME_CDW11_GET_LOG_PAGE
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(LogSpecificIdentifier)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield297;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw12_get_log_page))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw12_get_log_page
 union NVME_CDW12_GET_LOG_PAGE
 {
     uint LPOL;
     uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw13_get_log_page))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw13_get_log_page
 union NVME_CDW13_GET_LOG_PAGE
 {
     uint LPOU;
@@ -2561,24 +3120,30 @@ union NVME_CDW13_GET_LOG_PAGE
 
 union NVME_CDW14_GET_LOG_PAGE
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CommandSetIdentifier)), FixedArgSig(ElementSig(24)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield298;
+    }
+    uint AsUlong;
 }
 
 union NVME_CDW14_GET_LOG_PAGE_V20
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CommandSetIdentifier)), FixedArgSig(ElementSig(24)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield299;
+    }
+    uint AsUlong;
 }
 
 struct NVME_LID_SPECIFIC_PERSISTENT_EVENT_LOG
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(15))], [])*/ushort _bitfield83;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(15))], [])*/ushort _bitfield300;
 }
 
 struct NVME_LID_SUPPORTED_AND_EFFECTS
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(LIDSpecific)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield84;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(LIDSpecific)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield301;
 }
 
 struct NVME_SUPPORTED_LOG_PAGES_LOG
@@ -2586,14 +3151,17 @@ struct NVME_SUPPORTED_LOG_PAGES_LOG
     NVME_LID_SUPPORTED_AND_EFFECTS[256] LogPageIdentifierSupported;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_error_info_log))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_error_info_log
 struct NVME_ERROR_INFO_LOG
 {
     ulong               ErrorCount;
     ushort              SQID;
     ushort              CMDID;
     NVME_COMMAND_STATUS Status;
-    _ParameterErrorLocation_e__Struct ParameterErrorLocation;
+    struct ParameterErrorLocation
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(11)), FixedArgSig(ElementSig(5))], [])*/ushort _bitfield302;
+    }
     ulong               Lba;
     uint                NameSpace;
     ubyte               VendorInfoAvailable;
@@ -2604,10 +3172,17 @@ struct NVME_ERROR_INFO_LOG
     ubyte[22]           Reserved1;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_health_info_log))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_health_info_log
 struct NVME_HEALTH_INFO_LOG
 {
-    _CriticalWarning_e__Union CriticalWarning;
+    union CriticalWarning
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(3))], [])*/ubyte _bitfield303;
+        }
+        ubyte AsUchar;
+    }
     ubyte[2]   Temperature;
     ubyte      AvailableSpare;
     ubyte      AvailableSpareThreshold;
@@ -2636,7 +3211,7 @@ struct NVME_HEALTH_INFO_LOG
     ubyte[296] Reserved1;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_telemetry_host_initiated_log))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_telemetry_host_initiated_log
 struct NVME_TELEMETRY_HOST_INITIATED_LOG
 {
     ubyte      LogIdentifier;
@@ -2670,16 +3245,19 @@ struct NVME_TELEMETRY_CONTROLLER_INITIATED_LOG
     ubyte[128] ReasonIdentifier;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_firmware_slot_info_log))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_firmware_slot_info_log
 struct NVME_FIRMWARE_SLOT_INFO_LOG
 {
-    _AFI_e__Struct AFI;
-    ubyte[7]       Reserved0;
-    ulong[7]       FRS;
-    ubyte[448]     Reserved1;
+    struct AFI
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield304;
+    }
+    ubyte[7]   Reserved0;
+    ulong[7]   FRS;
+    ubyte[448] Reserved1;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_changed_namespace_list_log))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_changed_namespace_list_log
 struct NVME_CHANGED_NAMESPACE_LIST_LOG
 {
     uint[1024] NSID;
@@ -2692,14 +3270,17 @@ struct NVME_CHANGED_ZONE_LIST_LOG
     ulong[511] ZoneIdentifier;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_command_effects_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_command_effects_data
 union NVME_COMMAND_EFFECTS_DATA
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CSPReserved)), FixedArgSig(ElementSig(26)), FixedArgSig(ElementSig(6))], [])*/uint _bitfield305;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_command_effects_log))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_command_effects_log
 struct NVME_COMMAND_EFFECTS_LOG
 {
     NVME_COMMAND_EFFECTS_DATA[256] ACS;
@@ -2707,32 +3288,47 @@ struct NVME_COMMAND_EFFECTS_LOG
     ubyte[2048] Reserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_device_self_test_result_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_device_self_test_result_data
 struct NVME_DEVICE_SELF_TEST_RESULT_DATA
 {
 align (1):
-    _Status_e__Struct Status;
-    ubyte             SegmentNumber;
-    _ValidDiagnostics_e__Struct ValidDiagnostics;
-    ubyte             Reserved;
-    ulong             POH;
-    uint              NSID;
-    ulong             FailingLBA;
-    _StatusCodeType_e__Struct StatusCodeType;
-    ubyte             StatusCode;
-    ushort            VendorSpecific;
+    struct Status
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CodeValue)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield306;
+    }
+    ubyte  SegmentNumber;
+    struct ValidDiagnostics
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield307;
+    }
+    ubyte  Reserved;
+    ulong  POH;
+    uint   NSID;
+    ulong  FailingLBA;
+    struct StatusCodeType
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(5))], [])*/ubyte _bitfield308;
+    }
+    ubyte  StatusCode;
+    ushort VendorSpecific;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_device_self_test_log))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_device_self_test_log
 struct NVME_DEVICE_SELF_TEST_LOG
 {
-    _CurrentOperation_e__Struct CurrentOperation;
-    _CurrentCompletion_e__Struct CurrentCompletion;
+    struct CurrentOperation
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield309;
+    }
+    struct CurrentCompletion
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield310;
+    }
     ubyte[2] Reserved;
     NVME_DEVICE_SELF_TEST_RESULT_DATA[20] ResultData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_endurance_group_log))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_endurance_group_log
 struct NVME_ENDURANCE_GROUP_LOG
 {
 align (1):
@@ -2785,7 +3381,7 @@ align (1):
 
 struct NVME_FID_SUPPORTED_AND_EFFECTS
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(FSPReserved)), FixedArgSig(ElementSig(26)), FixedArgSig(ElementSig(6))], [])*/uint _bitfield85;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(FSPReserved)), FixedArgSig(ElementSig(26)), FixedArgSig(ElementSig(6))], [])*/uint _bitfield311;
 }
 
 struct NVME_FEATURE_IDENTIFIERS_EFFECTS_LOG
@@ -2795,7 +3391,7 @@ struct NVME_FEATURE_IDENTIFIERS_EFFECTS_LOG
 
 struct NVME_NVME_MI_COMMANDS_SUPPORTED_AND_EFFECTS
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CSPReserved)), FixedArgSig(ElementSig(26)), FixedArgSig(ElementSig(6))], [])*/uint _bitfield86;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CSPReserved)), FixedArgSig(ElementSig(26)), FixedArgSig(ElementSig(6))], [])*/uint _bitfield312;
 }
 
 struct NVME_NVME_MI_COMMANDS_SUPPORTED_AND_EFFECTS_LOG
@@ -2804,7 +3400,7 @@ struct NVME_NVME_MI_COMMANDS_SUPPORTED_AND_EFFECTS_LOG
     ubyte[3072] Reserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_reservation_notification_log))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_reservation_notification_log
 struct NVME_RESERVATION_NOTIFICATION_LOG
 {
     ulong     LogPageCount;
@@ -2817,7 +3413,7 @@ struct NVME_RESERVATION_NOTIFICATION_LOG
 
 struct NVME_SANITIZE_STATUS
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(8)), FixedArgSig(ElementSig(8))], [])*/ushort _bitfield87;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(8)), FixedArgSig(ElementSig(8))], [])*/ushort _bitfield313;
 }
 
 struct NVME_SANITIZE_STATUS_LOG
@@ -2834,53 +3430,68 @@ struct NVME_SANITIZE_STATUS_LOG
     ubyte[480]           Reserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw10_firmware_download))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw10_firmware_download
 struct NVME_CDW10_FIRMWARE_DOWNLOAD
 {
     uint NUMD;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_firmware_download))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_firmware_download
 struct NVME_CDW11_FIRMWARE_DOWNLOAD
 {
     uint OFST;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw10_firmware_activate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw10_firmware_activate
 union NVME_CDW10_FIRMWARE_ACTIVATE
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(27))], [])*/uint _bitfield314;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw10_format_nvm))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw10_format_nvm
 union NVME_CDW10_FORMAT_NVM
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(14)), FixedArgSig(ElementSig(18))], [])*/uint _bitfield315;
+    }
+    uint AsUlong;
 }
 
 union NVME_CDW10_SANITIZE
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(10)), FixedArgSig(ElementSig(22))], [])*/uint _bitfield316;
+    }
+    uint AsUlong;
 }
 
 union NVME_CDW11_SANITIZE
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        uint OVRPAT;
+    }
+    uint AsUlong;
 }
 
 struct NVME_CDW0_RESERVATION_PERSISTENCE
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield88;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield317;
 }
 
 union NVME_CDW10_RESERVATION_ACQUIRE
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield318;
+    }
+    uint AsUlong;
 }
 
 struct NVME_RESERVATION_ACQUIRE_DATA_STRUCTURE
@@ -2891,8 +3502,11 @@ struct NVME_RESERVATION_ACQUIRE_DATA_STRUCTURE
 
 union NVME_CDW10_RESERVATION_REGISTER
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CPTPL)), FixedArgSig(ElementSig(30)), FixedArgSig(ElementSig(2))], [])*/uint _bitfield319;
+    }
+    uint AsUlong;
 }
 
 struct NVME_RESERVATION_REGISTER_DATA_STRUCTURE
@@ -2903,8 +3517,11 @@ struct NVME_RESERVATION_REGISTER_DATA_STRUCTURE
 
 union NVME_CDW10_RESERVATION_RELEASE
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield320;
+    }
+    uint AsUlong;
 }
 
 struct NVME_RESERVATION_RELEASE_DATA_STRUCTURE
@@ -2914,14 +3531,20 @@ struct NVME_RESERVATION_RELEASE_DATA_STRUCTURE
 
 union NVME_CDW10_RESERVATION_REPORT
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        uint NUMD;
+    }
+    uint AsUlong;
 }
 
 union NVME_CDW11_RESERVATION_REPORT
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield321;
+    }
+    uint AsUlong;
 }
 
 struct NVME_RESERVATION_REPORT_STATUS_HEADER
@@ -2937,11 +3560,14 @@ align (1):
 
 struct NVME_REGISTERED_CONTROLLER_DATA
 {
-    ushort           CNTLID;
-    _RCSTS_e__Struct RCSTS;
-    ubyte[5]         Reserved;
-    ubyte[8]         HOSTID;
-    ulong            RKEY;
+    ushort   CNTLID;
+    struct RCSTS
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield322;
+    }
+    ubyte[5] Reserved;
+    ubyte[8] HOSTID;
+    ulong    RKEY;
 }
 
 struct NVME_RESERVATION_REPORT_STATUS_DATA_STRUCTURE
@@ -2952,12 +3578,15 @@ struct NVME_RESERVATION_REPORT_STATUS_DATA_STRUCTURE
 
 struct NVME_REGISTERED_CONTROLLER_EXTENDED_DATA
 {
-    ushort           CNTLID;
-    _RCSTS_e__Struct RCSTS;
-    ubyte[5]         Reserved;
-    ulong            RKEY;
-    ubyte[16]        HOSTID;
-    ubyte[32]        Reserved1;
+    ushort    CNTLID;
+    struct RCSTS
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield323;
+    }
+    ubyte[5]  Reserved;
+    ulong     RKEY;
+    ubyte[16] HOSTID;
+    ubyte[32] Reserved1;
 }
 
 struct NVME_RESERVATION_REPORT_STATUS_EXTENDED_DATA_STRUCTURE
@@ -2967,54 +3596,63 @@ struct NVME_RESERVATION_REPORT_STATUS_EXTENDED_DATA_STRUCTURE
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/NVME_REGISTERED_CONTROLLER_EXTENDED_DATA[1] RegisteredControllersExtendedData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw10_directive_receive))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw10_directive_receive
 struct NVME_CDW10_DIRECTIVE_RECEIVE
 {
     uint NUMD;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_directive_receive))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_directive_receive
 union NVME_CDW11_DIRECTIVE_RECEIVE
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(DSPEC)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield324;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw10_directive_send))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw10_directive_send
 struct NVME_CDW10_DIRECTIVE_SEND
 {
     uint NUMD;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_directive_send))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_directive_send
 union NVME_CDW11_DIRECTIVE_SEND
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(DSPEC)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield325;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_directive_identify_return_parameters_descriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_directive_identify_return_parameters_descriptor
 struct NVME_DIRECTIVE_IDENTIFY_RETURN_PARAMETERS_DESCRIPTOR
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(6))], [])*/ubyte _bitfield89;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(6))], [])*/ubyte _bitfield326;
     ubyte[31] Reserved1;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_directive_identify_return_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_directive_identify_return_parameters
 struct NVME_DIRECTIVE_IDENTIFY_RETURN_PARAMETERS
 {
     NVME_DIRECTIVE_IDENTIFY_RETURN_PARAMETERS_DESCRIPTOR DirectivesSupported;
     NVME_DIRECTIVE_IDENTIFY_RETURN_PARAMETERS_DESCRIPTOR DirectivesEnabled;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw12_directive_send_identify_enable_directive))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw12_directive_send_identify_enable_directive
 union NVME_CDW12_DIRECTIVE_SEND_IDENTIFY_ENABLE_DIRECTIVE
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield327;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_directive_streams_return_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_directive_streams_return_parameters
 struct NVME_DIRECTIVE_STREAMS_RETURN_PARAMETERS
 {
     ushort    MSL;
@@ -3028,89 +3666,115 @@ struct NVME_DIRECTIVE_STREAMS_RETURN_PARAMETERS
     ubyte[6]  Reserved1;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_directive_streams_get_status_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_directive_streams_get_status_data
 struct NVME_DIRECTIVE_STREAMS_GET_STATUS_DATA
 {
     ushort        OpenStreamCount;
     ushort[65535] StreamIdentifiers;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw12_directive_receive_streams_allocate_resources))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw12_directive_receive_streams_allocate_resources
 union NVME_CDW12_DIRECTIVE_RECEIVE_STREAMS_ALLOCATE_RESOURCES
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield328;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_completion_dw0_directive_receive_streams_allocate_resources))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_completion_dw0_directive_receive_streams_allocate_resources
 struct NVME_COMPLETION_DW0_DIRECTIVE_RECEIVE_STREAMS_ALLOCATE_RESOURCES
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield329;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw12_directive_send))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw12_directive_send
 union NVME_CDW12_DIRECTIVE_SEND
 {
     NVME_CDW12_DIRECTIVE_SEND_IDENTIFY_ENABLE_DIRECTIVE EnableDirective;
     uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw12_directive_receive))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw12_directive_receive
 union NVME_CDW12_DIRECTIVE_RECEIVE
 {
     NVME_CDW12_DIRECTIVE_RECEIVE_STREAMS_ALLOCATE_RESOURCES AllocateResources;
     uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw10_security_send_receive))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw10_security_send_receive
 union NVME_CDW10_SECURITY_SEND_RECEIVE
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(SECP)), FixedArgSig(ElementSig(24)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield330;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_security_send))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_security_send
 struct NVME_CDW11_SECURITY_SEND
 {
     uint TL;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_security_receive))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_security_receive
 struct NVME_CDW11_SECURITY_RECEIVE
 {
     uint AL;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw12_read_write))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw12_read_write
 union NVME_CDW12_READ_WRITE
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(LR)), FixedArgSig(ElementSig(31)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield331;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw13_read_write))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw13_read_write
 union NVME_CDW13_READ_WRITE
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        struct DSM
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Incompressible)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield332;
+        }
+        ubyte  Reserved;
+        ushort DSPEC;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw15_read_write))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw15_read_write
 union NVME_CDW15_READ_WRITE
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ELBATM)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield333;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_context_attributes))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_context_attributes
 union NVME_CONTEXT_ATTRIBUTES
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CommandAccessSize)), FixedArgSig(ElementSig(24)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield334;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_lba_range))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_lba_range
 struct NVME_LBA_RANGE
 {
     NVME_CONTEXT_ATTRIBUTES Attributes;
@@ -3118,42 +3782,63 @@ struct NVME_LBA_RANGE
     ulong StartingLBA;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw10_dataset_management))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw10_dataset_management
 union NVME_CDW10_DATASET_MANAGEMENT
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(8)), FixedArgSig(ElementSig(24))], [])*/uint _bitfield335;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_dataset_management))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_cdw11_dataset_management
 union NVME_CDW11_DATASET_MANAGEMENT
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(29))], [])*/uint _bitfield336;
+    }
+    uint AsUlong;
 }
 
 union NVME_CDW12_VERIFYCOMMAND
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(LR)), FixedArgSig(ElementSig(31)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield337;
+    }
+    uint AsUlong;
 }
 
 union NVME_CDW15_VERIFY_COMMAND
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ELBATM)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield338;
+    }
+    uint AsUlong;
 }
 
 struct NVME_ZONE_DESCRIPTOR
 {
-    _Anonymous1_e__Struct Anonymous1;
-    _Anonymous2_e__Struct Anonymous2;
-    _ZA_e__Struct ZA;
-    ubyte[5]      Reserved3;
-    ulong         ZCAP;
-    ulong         ZSLBA;
-    ulong         WritePointer;
-    ubyte[32]     Reserved4;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield339;
+    }
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ZS)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield340;
+    }
+    struct ZA
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ZDEV)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield341;
+    }
+    ubyte[5]  Reserved3;
+    ulong     ZCAP;
+    ulong     ZSLBA;
+    ulong     WritePointer;
+    ubyte[32] Reserved4;
 }
 
 struct NVME_CDW10_ZONE_MANAGEMENT_SEND
@@ -3163,8 +3848,11 @@ struct NVME_CDW10_ZONE_MANAGEMENT_SEND
 
 union NVME_CDW13_ZONE_MANAGEMENT_SEND
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(9)), FixedArgSig(ElementSig(23))], [])*/uint _bitfield342;
+    }
+    uint AsUlong;
 }
 
 struct NVME_REPORT_ZONE_INFO
@@ -3199,8 +3887,11 @@ struct NVME_CDW10_ZONE_MANAGEMENT_RECEIVE
 
 union NVME_CDW13_ZONE_MANAGEMENT_RECEIVE
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(17)), FixedArgSig(ElementSig(15))], [])*/uint _bitfield343;
+    }
+    uint AsUlong;
 }
 
 struct NVME_CDW10_ZONE_APPEND
@@ -3210,54 +3901,358 @@ struct NVME_CDW10_ZONE_APPEND
 
 union NVME_CDW12_ZONE_APPEND
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(LR)), FixedArgSig(ElementSig(31)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield344;
+    }
+    uint AsUlong;
 }
 
 union NVME_CDW15_ZONE_APPEND
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(LBATM)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield345;
+    }
+    uint AsUlong;
 }
 
 union NVME_CDW10_DEVICE_SELF_TEST
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(28))], [])*/uint _bitfield346;
+    }
+    uint AsUlong;
 }
 
 union NVME_CDW10_DISCOVERY_INFO_MGMT
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(28))], [])*/uint _bitfield347;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_command_dword0))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_command_dword0
 union NVME_COMMAND_DWORD0
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUlong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CID)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield348;
+    }
+    uint AsUlong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_prp_entry))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_prp_entry
 union NVME_PRP_ENTRY
 {
-    _Anonymous_e__Struct Anonymous;
-    ulong                AsUlonglong;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(PBAO)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(62))], [])*/ulong _bitfield349;
+    }
+    ulong AsUlonglong;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_command))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_command
 struct NVME_COMMAND
 {
     NVME_COMMAND_DWORD0 CDW0;
     uint                NSID;
     uint[2]             Reserved0;
     ulong               MPTR;
-    _Anonymous_e__Union Anonymous;
-    _u_e__Union         u;
+    union
+    {
+        struct
+        {
+            ulong PRP1;
+            ulong PRP2;
+        }
+        ulong[2] SGL1;
+    }
+    union u
+    {
+        struct GENERAL
+        {
+            uint CDW10;
+            uint CDW11;
+            uint CDW12;
+            uint CDW13;
+            uint CDW14;
+            uint CDW15;
+        }
+        struct IDENTIFY
+        {
+            NVME_CDW10_IDENTIFY CDW10;
+            NVME_CDW11_IDENTIFY CDW11;
+            uint                CDW12;
+            uint                CDW13;
+            union
+            {
+                uint                CDW14;
+                NVME_CDW14_IDENTIFY CDW14_V20;
+            }
+            uint                CDW15;
+        }
+        struct ABORT
+        {
+            NVME_CDW10_ABORT CDW10;
+            uint             CDW11;
+            uint             CDW12;
+            uint             CDW13;
+            uint             CDW14;
+            uint             CDW15;
+        }
+        struct GETFEATURES
+        {
+            NVME_CDW10_GET_FEATURES CDW10;
+            NVME_CDW11_FEATURES CDW11;
+            uint                CDW12;
+            uint                CDW13;
+            uint                CDW14;
+            uint                CDW15;
+        }
+        struct SETFEATURES
+        {
+            NVME_CDW10_SET_FEATURES CDW10;
+            NVME_CDW11_FEATURES CDW11;
+            NVME_CDW12_FEATURES CDW12;
+            NVME_CDW13_FEATURES CDW13;
+            NVME_CDW14_FEATURES CDW14;
+            NVME_CDW15_FEATURES CDW15;
+        }
+        struct GETLOGPAGE
+        {
+            union
+            {
+                NVME_CDW10_GET_LOG_PAGE CDW10;
+                NVME_CDW10_GET_LOG_PAGE_V121 CDW10_V121;
+                NVME_CDW10_GET_LOG_PAGE_V13 CDW10_V13;
+                NVME_CDW10_GET_LOG_PAGE_V20 CDW10_V20;
+            }
+            NVME_CDW11_GET_LOG_PAGE CDW11;
+            NVME_CDW12_GET_LOG_PAGE CDW12;
+            NVME_CDW13_GET_LOG_PAGE CDW13;
+            union
+            {
+                NVME_CDW14_GET_LOG_PAGE CDW14;
+                NVME_CDW14_GET_LOG_PAGE_V20 CDW14_V20;
+            }
+            uint CDW15;
+        }
+        struct CREATEIOCQ
+        {
+            NVME_CDW10_CREATE_IO_QUEUE CDW10;
+            NVME_CDW11_CREATE_IO_CQ CDW11;
+            uint CDW12;
+            uint CDW13;
+            uint CDW14;
+            uint CDW15;
+        }
+        struct CREATEIOSQ
+        {
+            NVME_CDW10_CREATE_IO_QUEUE CDW10;
+            NVME_CDW11_CREATE_IO_SQ CDW11;
+            uint CDW12;
+            uint CDW13;
+            uint CDW14;
+            uint CDW15;
+        }
+        struct DELETEIOQUEUE
+        {
+            NVME_CDW10_DELETE_IO_QUEUE CDW10;
+        }
+        struct DATASETMANAGEMENT
+        {
+            NVME_CDW10_DATASET_MANAGEMENT CDW10;
+            NVME_CDW11_DATASET_MANAGEMENT CDW11;
+            uint CDW12;
+            uint CDW13;
+            uint CDW14;
+            uint CDW15;
+        }
+        struct SECURITYSEND
+        {
+            NVME_CDW10_SECURITY_SEND_RECEIVE CDW10;
+            NVME_CDW11_SECURITY_SEND CDW11;
+            uint CDW12;
+            uint CDW13;
+            uint CDW14;
+            uint CDW15;
+        }
+        struct SECURITYRECEIVE
+        {
+            NVME_CDW10_SECURITY_SEND_RECEIVE CDW10;
+            NVME_CDW11_SECURITY_RECEIVE CDW11;
+            uint CDW12;
+            uint CDW13;
+            uint CDW14;
+            uint CDW15;
+        }
+        struct FIRMWAREDOWNLOAD
+        {
+            NVME_CDW10_FIRMWARE_DOWNLOAD CDW10;
+            NVME_CDW11_FIRMWARE_DOWNLOAD CDW11;
+            uint CDW12;
+            uint CDW13;
+            uint CDW14;
+            uint CDW15;
+        }
+        struct FIRMWAREACTIVATE
+        {
+            NVME_CDW10_FIRMWARE_ACTIVATE CDW10;
+            uint CDW11;
+            uint CDW12;
+            uint CDW13;
+            uint CDW14;
+            uint CDW15;
+        }
+        struct FORMATNVM
+        {
+            NVME_CDW10_FORMAT_NVM CDW10;
+            uint CDW11;
+            uint CDW12;
+            uint CDW13;
+            uint CDW14;
+            uint CDW15;
+        }
+        struct DIRECTIVERECEIVE
+        {
+            NVME_CDW10_DIRECTIVE_RECEIVE CDW10;
+            NVME_CDW11_DIRECTIVE_RECEIVE CDW11;
+            NVME_CDW12_DIRECTIVE_RECEIVE CDW12;
+            uint CDW13;
+            uint CDW14;
+            uint CDW15;
+        }
+        struct DIRECTIVESEND
+        {
+            NVME_CDW10_DIRECTIVE_SEND CDW10;
+            NVME_CDW11_DIRECTIVE_SEND CDW11;
+            NVME_CDW12_DIRECTIVE_SEND CDW12;
+            uint CDW13;
+            uint CDW14;
+            uint CDW15;
+        }
+        struct SANITIZE
+        {
+            NVME_CDW10_SANITIZE CDW10;
+            NVME_CDW11_SANITIZE CDW11;
+            uint                CDW12;
+            uint                CDW13;
+            uint                CDW14;
+            uint                CDW15;
+        }
+        struct READWRITE
+        {
+            uint LBALOW;
+            uint LBAHIGH;
+            NVME_CDW12_READ_WRITE CDW12;
+            NVME_CDW13_READ_WRITE CDW13;
+            uint CDW14;
+            NVME_CDW15_READ_WRITE CDW15;
+        }
+        struct RESERVATIONACQUIRE
+        {
+            NVME_CDW10_RESERVATION_ACQUIRE CDW10;
+            uint CDW11;
+            uint CDW12;
+            uint CDW13;
+            uint CDW14;
+            uint CDW15;
+        }
+        struct RESERVATIONREGISTER
+        {
+            NVME_CDW10_RESERVATION_REGISTER CDW10;
+            uint CDW11;
+            uint CDW12;
+            uint CDW13;
+            uint CDW14;
+            uint CDW15;
+        }
+        struct RESERVATIONRELEASE
+        {
+            NVME_CDW10_RESERVATION_RELEASE CDW10;
+            uint CDW11;
+            uint CDW12;
+            uint CDW13;
+            uint CDW14;
+            uint CDW15;
+        }
+        struct RESERVATIONREPORT
+        {
+            NVME_CDW10_RESERVATION_REPORT CDW10;
+            NVME_CDW11_RESERVATION_REPORT CDW11;
+            uint CDW12;
+            uint CDW13;
+            uint CDW14;
+            uint CDW15;
+        }
+        struct ZONEMANAGEMENTSEND
+        {
+            NVME_CDW10_ZONE_MANAGEMENT_SEND CDW1011;
+            uint CDW12;
+            NVME_CDW13_ZONE_MANAGEMENT_SEND CDW13;
+            uint CDW14;
+            uint CDW15;
+        }
+        struct ZONEMANAGEMENTRECEIVE
+        {
+            NVME_CDW10_ZONE_MANAGEMENT_RECEIVE CDW1011;
+            uint DWORDCOUNT;
+            NVME_CDW13_ZONE_MANAGEMENT_RECEIVE CDW13;
+            uint CDW14;
+            uint CDW15;
+        }
+        struct ZONEAPPEND
+        {
+            NVME_CDW10_ZONE_APPEND CDW1011;
+            NVME_CDW12_ZONE_APPEND CDW12;
+            uint CDW13;
+            uint ILBRT;
+            NVME_CDW15_ZONE_APPEND CDW15;
+        }
+        struct DEVICESELFTEST
+        {
+            NVME_CDW10_DEVICE_SELF_TEST CDW10;
+            uint CDW11;
+            uint CDW12;
+            uint CDW13;
+            uint CDW14;
+            uint CDW15;
+        }
+        struct DISCOVERYINFOMGMT
+        {
+            NVME_CDW10_DISCOVERY_INFO_MGMT CDW10;
+            uint CDW11;
+            uint CDW12;
+            uint CDW13;
+            uint CDW14;
+            uint CDW15;
+        }
+        struct VENDORSPECIFIC
+        {
+            uint NDT;
+            uint NDM;
+            uint CDW12;
+            uint CDW13;
+            uint CDW14;
+            uint CDW15;
+        }
+        struct VERIFYCOMMAND
+        {
+            uint LBALOW;
+            uint LBAHIGH;
+            NVME_CDW12_VERIFYCOMMAND CDW12;
+            uint CDW13;
+            uint EILBRT;
+            NVME_CDW15_VERIFY_COMMAND CDW15;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_scsi_name_string))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nvme/ns-nvme-nvme_scsi_name_string
 struct NVME_SCSI_NAME_STRING
 {
     CHAR[4]  PCIVendorID;
@@ -3268,56 +4263,105 @@ struct NVME_SCSI_NAME_STRING
 
 struct NVME_SGL_DESC
 {
-    ubyte[15]            Reserved0;
-    _Identifier_e__Union Identifier;
+    ubyte[15] Reserved0;
+    union Identifier
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Type)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield350;
+        }
+        ubyte AsUchar;
+    }
 }
 
 struct NVME_SGL_DATABLOCK_DESC
 {
-    ulong                Address;
-    uint                 Length;
-    ubyte[3]             Reserved0;
-    _Identifier_e__Union Identifier;
+    ulong    Address;
+    uint     Length;
+    ubyte[3] Reserved0;
+    union Identifier
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Type)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield351;
+        }
+        ubyte AsUchar;
+    }
 }
 
 struct NVME_SGL_BITBUCKET_DESC
 {
-    ulong                Reserved0;
-    uint                 Length;
-    ubyte[3]             Reserved1;
-    _Identifier_e__Union Identifier;
+    ulong    Reserved0;
+    uint     Length;
+    ubyte[3] Reserved1;
+    union Identifier
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Type)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield352;
+        }
+        ubyte AsUchar;
+    }
 }
 
 struct NVME_SGL_SEGMENT_DESC
 {
-    ulong                Address;
-    uint                 Length;
-    ubyte[3]             Reserved0;
-    _Identifier_e__Union Identifier;
+    ulong    Address;
+    uint     Length;
+    ubyte[3] Reserved0;
+    union Identifier
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Type)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield353;
+        }
+        ubyte AsUchar;
+    }
 }
 
 struct NVME_SGL_LASTSEG_DESC
 {
-    ulong                Address;
-    uint                 Length;
-    ubyte[3]             Reserved0;
-    _Identifier_e__Union Identifier;
+    ulong    Address;
+    uint     Length;
+    ubyte[3] Reserved0;
+    union Identifier
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Type)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield354;
+        }
+        ubyte AsUchar;
+    }
 }
 
 struct NVME_SGL_KEYDATABLOCK_DESC
 {
-    ulong                Address;
-    ubyte[3]             Length;
-    ubyte[4]             Key;
-    _Identifier_e__Union Identifier;
+    ulong    Address;
+    ubyte[3] Length;
+    ubyte[4] Key;
+    union Identifier
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Type)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield355;
+        }
+        ubyte AsUchar;
+    }
 }
 
 struct NVME_SGL_TRANSPORTDATA_DESC
 {
-    ulong                Reserved0;
-    uint                 Length;
-    ubyte[3]             Reserved1;
-    _Identifier_e__Union Identifier;
+    ulong    Reserved0;
+    uint     Length;
+    ubyte[3] Reserved1;
+    union Identifier
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Type)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield356;
+        }
+        ubyte AsUchar;
+    }
 }
 
 struct NVMEOF_FABRICS_COMMAND
@@ -3341,19 +4385,26 @@ struct NVMEOF_FABRICS_RESPONSE
 
 struct NVMEOF_CONNECT_COMMAND
 {
-    ubyte           OPC;
-    ubyte           Reserved0;
-    ushort          CID;
-    ubyte           FCTYPE;
-    ubyte[19]       Reserved1;
-    NVME_SGL_DESC   SGL1;
-    ushort          RECFMT;
-    ushort          QID;
-    ushort          SQSIZE;
-    _CATTR_e__Union CATTR;
-    ubyte           Reserved2;
-    uint            KATO;
-    ubyte[12]       Reserved3;
+    ubyte         OPC;
+    ubyte         Reserved0;
+    ushort        CID;
+    ubyte         FCTYPE;
+    ubyte[19]     Reserved1;
+    NVME_SGL_DESC SGL1;
+    ushort        RECFMT;
+    ushort        QID;
+    ushort        SQSIZE;
+    union CATTR
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield357;
+        }
+        ubyte AsUchar;
+    }
+    ubyte         Reserved2;
+    uint          KATO;
+    ubyte[12]     Reserved3;
 }
 
 struct NVMEOF_CONNECT_DATA
@@ -3368,12 +4419,27 @@ struct NVMEOF_CONNECT_DATA
 
 struct NVMEOF_CONNECT_RESPONSE
 {
-    _SCSpecific_e__Union SCSpecific;
-    uint                 Reserved0;
-    ushort               SQHD;
-    ushort               Reserved1;
-    ushort               CID;
-    ushort               STS;
+    union SCSpecific
+    {
+        struct Success
+        {
+            ushort CNTLID;
+            union AUTHREQ
+            {
+                struct
+                {
+                    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(13))], [])*/ushort _bitfield358;
+                }
+                ushort AsUshort;
+            }
+        }
+        uint AsUlong;
+    }
+    uint   Reserved0;
+    ushort SQHD;
+    ushort Reserved1;
+    ushort CID;
+    ushort STS;
 }
 
 struct NVMEOF_DISCONNECT_COMMAND
@@ -3399,38 +4465,60 @@ struct NVMEOF_DISCONNECT_RESPONSE
 
 struct NVMEOF_PROPERTY_GET_COMMAND
 {
-    ubyte             OPC;
-    ubyte             Reserved0;
-    ushort            CID;
-    ubyte             FCTYPE;
-    ubyte[35]         Reserved1;
-    _ATTRIB_e__Struct ATTRIB;
-    ubyte[3]          Reserved2;
-    uint              OFST;
-    ubyte[16]         Reserved3;
+    ubyte     OPC;
+    ubyte     Reserved0;
+    ushort    CID;
+    ubyte     FCTYPE;
+    ubyte[35] Reserved1;
+    struct ATTRIB
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(5))], [])*/ubyte _bitfield359;
+    }
+    ubyte[3]  Reserved2;
+    uint      OFST;
+    ubyte[16] Reserved3;
 }
 
 struct NVMEOF_PROPERTY_GET_RESPONSE
 {
-    _VALUE_e__Union VALUE;
-    ushort          SQHD;
-    ushort          Reserved0;
-    ushort          CID;
-    ushort          STS;
+    union VALUE
+    {
+        struct FourBytes
+        {
+            uint Value;
+            uint Reserved;
+        }
+        ulong EightBytes;
+    }
+    ushort SQHD;
+    ushort Reserved0;
+    ushort CID;
+    ushort STS;
 }
 
 struct NVMEOF_PROPERTY_SET_COMMAND
 {
-    ubyte             OPC;
-    ubyte             Reserved0;
-    ushort            CID;
-    ubyte             FCTYPE;
-    ubyte[35]         Reserved1;
-    _ATTRIB_e__Struct ATTRIB;
-    ubyte[3]          Reserved2;
-    uint              OFST;
-    _VALUE_e__Union   VALUE;
-    ubyte[8]          Reserved3;
+    ubyte     OPC;
+    ubyte     Reserved0;
+    ushort    CID;
+    ubyte     FCTYPE;
+    ubyte[35] Reserved1;
+    struct ATTRIB
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(5))], [])*/ubyte _bitfield360;
+    }
+    ubyte[3]  Reserved2;
+    uint      OFST;
+    union VALUE
+    {
+        struct FourBytes
+        {
+            uint Value;
+            uint Reserved;
+        }
+        ulong EightBytes;
+    }
+    ubyte[8]  Reserved3;
 }
 
 struct NVMEOF_PROPERTY_SET_RESPONSE
@@ -3494,41 +4582,69 @@ struct NVMEOF_AUTH_SEND_RESPONSE
 
 struct NVME_DISCOVERY_ENTRY
 {
-    ubyte            TRTYPE;
-    ubyte            ADRFAM;
-    ubyte            SUBTYPE;
-    _TREQ_e__Union   TREQ;
-    ushort           PORTID;
-    ushort           CNTLID;
-    ushort           ASQSZ;
-    _EFLAGS_e__Union EFLAGS;
-    ubyte[20]        Reserved0;
-    ubyte[32]        TRSVCID;
-    ubyte[192]       Reserved1;
-    ubyte[256]       NQN;
-    ubyte[256]       TRADDR;
-    ubyte[256]       TSAS;
+    ubyte      TRTYPE;
+    ubyte      ADRFAM;
+    ubyte      SUBTYPE;
+    union TREQ
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(2))], [])*/ubyte _bitfield361;
+        }
+        ubyte AsUchar;
+    }
+    ushort     PORTID;
+    ushort     CNTLID;
+    ushort     ASQSZ;
+    union EFLAGS
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(13))], [])*/ushort _bitfield362;
+        }
+        ushort AsUshort;
+    }
+    ubyte[20]  Reserved0;
+    ubyte[32]  TRSVCID;
+    ubyte[192] Reserved1;
+    ubyte[256] NQN;
+    ubyte[256] TRADDR;
+    ubyte[256] TSAS;
 }
 
 struct NVME_EXTENDED_DISCOVERY_ENTRY
 {
-    ubyte            TRTYPE;
-    ubyte            ADRFAM;
-    ubyte            SUBTYPE;
-    _TREQ_e__Union   TREQ;
-    ushort           PORTID;
-    ushort           CNTLID;
-    ushort           ASQSZ;
-    _EFLAGS_e__Union EFLAGS;
-    ubyte[20]        Reserved0;
-    ubyte[32]        TRSVCID;
-    ubyte[192]       Reserved1;
-    ubyte[256]       NQN;
-    ubyte[256]       TRADDR;
-    ubyte[256]       TSAS;
-    uint             TEL;
-    ushort           NUMEXAT;
-    ushort           Reserved2;
+    ubyte      TRTYPE;
+    ubyte      ADRFAM;
+    ubyte      SUBTYPE;
+    union TREQ
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(2))], [])*/ubyte _bitfield363;
+        }
+        ubyte AsUchar;
+    }
+    ushort     PORTID;
+    ushort     CNTLID;
+    ushort     ASQSZ;
+    union EFLAGS
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(13))], [])*/ushort _bitfield364;
+        }
+        ushort AsUshort;
+    }
+    ubyte[20]  Reserved0;
+    ubyte[32]  TRSVCID;
+    ubyte[192] Reserved1;
+    ubyte[256] NQN;
+    ubyte[256] TRADDR;
+    ubyte[256] TSAS;
+    uint       TEL;
+    ushort     NUMEXAT;
+    ushort     Reserved2;
 }
 
 struct NVME_EXTENDED_ATTR
@@ -3540,29 +4656,43 @@ struct NVME_EXTENDED_ATTR
 
 struct NVME_DISCOVERY_HEADER
 {
-    ulong          GENCTR;
-    ulong          NUMREC;
-    ushort         RECFMT;
-    _DLPF_e__Union DLPF;
-    ubyte          Reserved0;
-    uint           TDLPL;
-    ubyte[1000]    Reserved1;
+    ulong       GENCTR;
+    ulong       NUMREC;
+    ushort      RECFMT;
+    union DLPF
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(5))], [])*/ubyte _bitfield365;
+        }
+        ubyte AsUchar;
+    }
+    ubyte       Reserved0;
+    uint        TDLPL;
+    ubyte[1000] Reserved1;
 }
 
 struct NVME_DISCOVERY_INFO_MGMT_HEADER
 {
-    uint             TDL;
-    uint             Reserved0;
-    ulong            NUMENT;
-    ushort           ENTFMT;
-    ushort           ETYPE;
-    ubyte            PORTLCL;
-    ubyte            Reserved1;
-    _EKTYPE_e__Union EKTYPE;
-    ubyte[256]       EID;
-    ubyte[256]       ENAME;
-    ubyte[64]        EVER;
-    ubyte[424]       Reserved2;
+    uint       TDL;
+    uint       Reserved0;
+    ulong      NUMENT;
+    ushort     ENTFMT;
+    ushort     ETYPE;
+    ubyte      PORTLCL;
+    ubyte      Reserved1;
+    union EKTYPE
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(9))], [])*/ushort _bitfield366;
+        }
+        ushort AsUshort;
+    }
+    ubyte[256] EID;
+    ubyte[256] ENAME;
+    ubyte[64]  EVER;
+    ubyte[424] Reserved2;
 }
 
 struct NVMEOF_AUTH_NEGOTIATE

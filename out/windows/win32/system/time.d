@@ -3,7 +3,7 @@
 module windows.win32.system.time;
 
 public import windows.core;
-public import windows.win32.foundation : BOOL, BOOLEAN, FILETIME, SYSTEMTIME;
+public import windows.win32.foundation.foundation : BOOL, BOOLEAN, FILETIME, SYSTEMTIME;
 
 extern(Windows) @nogc nothrow:
 
@@ -25,21 +25,21 @@ enum : const(wchar)*
     wszW32TimeRegValueMetaDataProvider = "MetaDataProvider",
 }
 
-enum uint TSF_Hardware = 0x00000001;
-enum uint TSF_Authenticated = 0x00000002;
+enum uint TSF_Hardware = 0x00000001U;
+enum uint TSF_Authenticated = 0x00000002U;
 
 enum : uint
 {
-    TSF_IPv6                   = 0x00000004,
-    TSF_SignatureAuthenticated = 0x00000008,
+    TSF_IPv6                   = 0x00000004U,
+    TSF_SignatureAuthenticated = 0x00000008U,
 }
 
-enum uint TIME_ZONE_ID_INVALID = 0xffffffff;
+enum uint TIME_ZONE_ID_INVALID = 0xffffffffU;
 
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/timezoneapi/ns-timezoneapi-time_zone_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/timezoneapi/ns-timezoneapi-time_zone_information
 struct TIME_ZONE_INFORMATION
 {
     int        Bias;
@@ -51,7 +51,7 @@ struct TIME_ZONE_INFORMATION
     int        DaylightBias;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/timezoneapi/ns-timezoneapi-dynamic_time_zone_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/timezoneapi/ns-timezoneapi-dynamic_time_zone_information
 struct DYNAMIC_TIME_ZONE_INFORMATION
 {
     int        Bias;

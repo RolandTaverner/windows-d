@@ -3,19 +3,20 @@
 module windows.win32.system.winrt.graphics.direct2d;
 
 public import windows.core;
-public import system : Guid;
-public import windows.foundation : IPropertyValue;
+public import system.system : Guid;
+public import windows.foundation.foundation : IPropertyValue;
 public import windows.graphics.effects : IGraphicsEffectSource;
-public import windows.win32.foundation : HRESULT, PWSTR;
-public import windows.win32.graphics.direct2d : ID2D1Factory, ID2D1Geometry;
-public import windows.win32.system.com : IUnknown;
+public import windows.win32.foundation.foundation : HRESULT, PWSTR;
+public import windows.win32.graphics.direct2d.direct2d : ID2D1Factory, ID2D1Geometry;
+public import windows.win32.system.com.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/windows.graphics.effects.interop/ne-windows-graphics-effects-interop-graphics_effect_property_mapping))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.graphics.effects.interop/ne-windows-graphics-effects-interop-graphics_effect_property_mapping
 alias GRAPHICS_EFFECT_PROPERTY_MAPPING = int;
 enum : int
 {

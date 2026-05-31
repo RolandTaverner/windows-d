@@ -3,40 +3,46 @@
 module windows.win32.graphics.direct3d10;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, HANDLE, HMODULE, HRESULT, PSTR, RECT;
-public import windows.win32.graphics.direct3d : D3D_CBUFFER_TYPE, D3D_NAME, D3D_PRIMITIVE,
-                                                D3D_PRIMITIVE_TOPOLOGY,
-                                                D3D_REGISTER_COMPONENT_TYPE,
-                                                D3D_RESOURCE_RETURN_TYPE,
-                                                D3D_SHADER_INPUT_TYPE, D3D_SHADER_MACRO,
-                                                D3D_SHADER_VARIABLE_CLASS,
-                                                D3D_SHADER_VARIABLE_TYPE, D3D_SRV_DIMENSION,
-                                                ID3DBlob, ID3DInclude;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, HANDLE, HMODULE, HRESULT, PSTR,
+                                                    RECT;
+public import windows.win32.graphics.direct3d.direct3d : D3D_CBUFFER_TYPE, D3D_NAME, D3D_PRIMITIVE,
+                                                         D3D_PRIMITIVE_TOPOLOGY,
+                                                         D3D_REGISTER_COMPONENT_TYPE,
+                                                         D3D_RESOURCE_RETURN_TYPE,
+                                                         D3D_SHADER_INPUT_TYPE,
+                                                         D3D_SHADER_MACRO,
+                                                         D3D_SHADER_VARIABLE_CLASS,
+                                                         D3D_SHADER_VARIABLE_TYPE,
+                                                         D3D_SRV_DIMENSION, ID3DBlob,
+                                                         ID3DInclude;
 public import windows.win32.graphics.dxgi.common : DXGI_FORMAT, DXGI_SAMPLE_DESC;
-public import windows.win32.graphics.dxgi : DXGI_SWAP_CHAIN_DESC, IDXGIAdapter, IDXGISwapChain;
-public import windows.win32.system.com : IUnknown;
+public import windows.win32.graphics.dxgi.dxgi : DXGI_SWAP_CHAIN_DESC, IDXGIAdapter, IDXGISwapChain;
+public import windows.win32.system.com.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_input_classification))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_input_classification
 alias D3D10_INPUT_CLASSIFICATION = int;
 enum : int
 {
     D3D10_INPUT_PER_VERTEX_DATA   = 0x00000000,
     D3D10_INPUT_PER_INSTANCE_DATA = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_fill_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_fill_mode
 alias D3D10_FILL_MODE = int;
 enum : int
 {
     D3D10_FILL_WIREFRAME = 0x00000002,
     D3D10_FILL_SOLID     = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_cull_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_cull_mode
 alias D3D10_CULL_MODE = int;
 enum : int
 {
@@ -44,7 +50,8 @@ enum : int
     D3D10_CULL_FRONT = 0x00000002,
     D3D10_CULL_BACK  = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_resource_dimension))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_resource_dimension
 alias D3D10_RESOURCE_DIMENSION = int;
 enum : int
 {
@@ -54,7 +61,8 @@ enum : int
     D3D10_RESOURCE_DIMENSION_TEXTURE2D = 0x00000003,
     D3D10_RESOURCE_DIMENSION_TEXTURE3D = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_dsv_dimension))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_dsv_dimension
 alias D3D10_DSV_DIMENSION = int;
 enum : int
 {
@@ -66,7 +74,8 @@ enum : int
     D3D10_DSV_DIMENSION_TEXTURE2DMS      = 0x00000005,
     D3D10_DSV_DIMENSION_TEXTURE2DMSARRAY = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_rtv_dimension))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_rtv_dimension
 alias D3D10_RTV_DIMENSION = int;
 enum : int
 {
@@ -80,7 +89,8 @@ enum : int
     D3D10_RTV_DIMENSION_TEXTURE2DMSARRAY = 0x00000007,
     D3D10_RTV_DIMENSION_TEXTURE3D        = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_usage))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_usage
 alias D3D10_USAGE = int;
 enum : int
 {
@@ -89,7 +99,8 @@ enum : int
     D3D10_USAGE_DYNAMIC   = 0x00000002,
     D3D10_USAGE_STAGING   = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_bind_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_bind_flag
 alias D3D10_BIND_FLAG = int;
 enum : int
 {
@@ -101,14 +112,16 @@ enum : int
     D3D10_BIND_RENDER_TARGET   = 0x00000020,
     D3D10_BIND_DEPTH_STENCIL   = 0x00000040,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_cpu_access_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_cpu_access_flag
 alias D3D10_CPU_ACCESS_FLAG = int;
 enum : int
 {
     D3D10_CPU_ACCESS_WRITE = 0x00010000,
     D3D10_CPU_ACCESS_READ  = 0x00020000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_resource_misc_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_resource_misc_flag
 alias D3D10_RESOURCE_MISC_FLAG = int;
 enum : int
 {
@@ -118,7 +131,8 @@ enum : int
     D3D10_RESOURCE_MISC_SHARED_KEYEDMUTEX = 0x00000010,
     D3D10_RESOURCE_MISC_GDI_COMPATIBLE    = 0x00000020,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_map))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_map
 alias D3D10_MAP = int;
 enum : int
 {
@@ -128,26 +142,30 @@ enum : int
     D3D10_MAP_WRITE_DISCARD      = 0x00000004,
     D3D10_MAP_WRITE_NO_OVERWRITE = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_map_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_map_flag
 alias D3D10_MAP_FLAG = int;
 enum : int
 {
     D3D10_MAP_FLAG_DO_NOT_WAIT = 0x00100000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_raise_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_raise_flag
 alias D3D10_RAISE_FLAG = int;
 enum : int
 {
     D3D10_RAISE_FLAG_DRIVER_INTERNAL_ERROR = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_clear_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_clear_flag
 alias D3D10_CLEAR_FLAG = int;
 enum : int
 {
     D3D10_CLEAR_DEPTH   = 0x00000001,
     D3D10_CLEAR_STENCIL = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_comparison_func))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_comparison_func
 alias D3D10_COMPARISON_FUNC = int;
 enum : int
 {
@@ -160,14 +178,16 @@ enum : int
     D3D10_COMPARISON_GREATER_EQUAL = 0x00000007,
     D3D10_COMPARISON_ALWAYS        = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_depth_write_mask))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_depth_write_mask
 alias D3D10_DEPTH_WRITE_MASK = int;
 enum : int
 {
     D3D10_DEPTH_WRITE_MASK_ZERO = 0x00000000,
     D3D10_DEPTH_WRITE_MASK_ALL  = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_stencil_op))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_stencil_op
 alias D3D10_STENCIL_OP = int;
 enum : int
 {
@@ -180,7 +200,8 @@ enum : int
     D3D10_STENCIL_OP_INCR     = 0x00000007,
     D3D10_STENCIL_OP_DECR     = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_blend))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_blend
 alias D3D10_BLEND = int;
 enum : int
 {
@@ -202,7 +223,8 @@ enum : int
     D3D10_BLEND_SRC1_ALPHA       = 0x00000012,
     D3D10_BLEND_INV_SRC1_ALPHA   = 0x00000013,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_blend_op))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_blend_op
 alias D3D10_BLEND_OP = int;
 enum : int
 {
@@ -212,7 +234,8 @@ enum : int
     D3D10_BLEND_OP_MIN          = 0x00000004,
     D3D10_BLEND_OP_MAX          = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_color_write_enable))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_color_write_enable
 alias D3D10_COLOR_WRITE_ENABLE = int;
 enum : int
 {
@@ -222,7 +245,8 @@ enum : int
     D3D10_COLOR_WRITE_ENABLE_ALPHA = 0x00000008,
     D3D10_COLOR_WRITE_ENABLE_ALL   = 0x0000000f,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_texturecube_face))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_texturecube_face
 alias D3D10_TEXTURECUBE_FACE = int;
 enum : int
 {
@@ -233,7 +257,8 @@ enum : int
     D3D10_TEXTURECUBE_FACE_POSITIVE_Z = 0x00000004,
     D3D10_TEXTURECUBE_FACE_NEGATIVE_Z = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_filter))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_filter
 alias D3D10_FILTER = int;
 enum : int
 {
@@ -257,14 +282,16 @@ enum : int
     D3D10_FILTER_COMPARISON_ANISOTROPIC                     = 0x000000d5,
     D3D10_FILTER_TEXT_1BIT                                  = 0x80000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_filter_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_filter_type
 alias D3D10_FILTER_TYPE = int;
 enum : int
 {
     D3D10_FILTER_TYPE_POINT  = 0x00000000,
     D3D10_FILTER_TYPE_LINEAR = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_texture_address_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_texture_address_mode
 alias D3D10_TEXTURE_ADDRESS_MODE = int;
 enum : int
 {
@@ -274,7 +301,8 @@ enum : int
     D3D10_TEXTURE_ADDRESS_BORDER      = 0x00000004,
     D3D10_TEXTURE_ADDRESS_MIRROR_ONCE = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_format_support))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_format_support
 alias D3D10_FORMAT_SUPPORT = int;
 enum : int
 {
@@ -304,13 +332,15 @@ enum : int
     D3D10_FORMAT_SUPPORT_SHADER_GATHER            = 0x00800000,
     D3D10_FORMAT_SUPPORT_BACK_BUFFER_CAST         = 0x01000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_async_getdata_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_async_getdata_flag
 alias D3D10_ASYNC_GETDATA_FLAG = int;
 enum : int
 {
     D3D10_ASYNC_GETDATA_DONOTFLUSH = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_query))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_query
 alias D3D10_QUERY = int;
 enum : int
 {
@@ -323,13 +353,15 @@ enum : int
     D3D10_QUERY_SO_STATISTICS         = 0x00000006,
     D3D10_QUERY_SO_OVERFLOW_PREDICATE = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_query_misc_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_query_misc_flag
 alias D3D10_QUERY_MISC_FLAG = int;
 enum : int
 {
     D3D10_QUERY_MISC_PREDICATEHINT = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_counter))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_counter
 alias D3D10_COUNTER = int;
 enum : int
 {
@@ -353,7 +385,8 @@ enum : int
     D3D10_COUNTER_TEXTURE_CACHE_HIT_RATE                = 0x00000011,
     D3D10_COUNTER_DEVICE_DEPENDENT_0                    = 0x40000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_counter_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_counter_type
 alias D3D10_COUNTER_TYPE = int;
 enum : int
 {
@@ -362,7 +395,8 @@ enum : int
     D3D10_COUNTER_TYPE_UINT32  = 0x00000002,
     D3D10_COUNTER_TYPE_UINT64  = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_create_device_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ne-d3d10-d3d10_create_device_flag
 alias D3D10_CREATE_DEVICE_FLAG = int;
 enum : int
 {
@@ -376,7 +410,8 @@ enum : int
     D3D10_CREATE_DEVICE_STRICT_VALIDATION                             = 0x00000200,
     D3D10_CREATE_DEVICE_DEBUGGABLE                                    = 0x00000400,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/ne-d3d10sdklayers-d3d10_message_category))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/ne-d3d10sdklayers-d3d10_message_category
 alias D3D10_MESSAGE_CATEGORY = int;
 enum : int
 {
@@ -392,7 +427,8 @@ enum : int
     D3D10_MESSAGE_CATEGORY_EXECUTION             = 0x00000009,
     D3D10_MESSAGE_CATEGORY_SHADER                = 0x0000000a,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/ne-d3d10sdklayers-d3d10_message_severity))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/ne-d3d10sdklayers-d3d10_message_severity
 alias D3D10_MESSAGE_SEVERITY = int;
 enum : int
 {
@@ -402,7 +438,8 @@ enum : int
     D3D10_MESSAGE_SEVERITY_INFO       = 0x00000003,
     D3D10_MESSAGE_SEVERITY_MESSAGE    = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/ne-d3d10sdklayers-d3d10_message_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/ne-d3d10sdklayers-d3d10_message_id
 alias D3D10_MESSAGE_ID = int;
 enum : int
 {
@@ -914,7 +951,8 @@ enum : int
     D3D10_MESSAGE_ID_COPYRESOURCE_NO_3D_MISMATCHED_UPDATES                                       = 0x0010003d,
     D3D10_MESSAGE_ID_D3D10L9_MESSAGES_END                                                        = 0x0010003e,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10misc/ne-d3d10misc-d3d10_driver_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10misc/ne-d3d10misc-d3d10_driver_type
 alias D3D10_DRIVER_TYPE = int;
 enum : int
 {
@@ -924,7 +962,8 @@ enum : int
     D3D10_DRIVER_TYPE_SOFTWARE  = 0x00000003,
     D3D10_DRIVER_TYPE_WARP      = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/ne-d3d10effect-d3d10_device_state_types))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/ne-d3d10effect-d3d10_device_state_types
 alias D3D10_DEVICE_STATE_TYPES = int;
 enum : int
 {
@@ -953,7 +992,8 @@ enum : int
     D3D10_DST_RS_RASTERIZER_STATE    = 0x00000017,
     D3D10_DST_PREDICATION            = 0x00000018,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10_1/ne-d3d10_1-d3d10_feature_level1))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1/ne-d3d10_1-d3d10_feature_level1
 alias D3D10_FEATURE_LEVEL1 = int;
 enum : int
 {
@@ -963,13 +1003,15 @@ enum : int
     D3D10_FEATURE_LEVEL_9_2  = 0x00009200,
     D3D10_FEATURE_LEVEL_9_3  = 0x00009300,
 }
+
 alias D3D10_STANDARD_MULTISAMPLE_QUALITY_LEVELS = int;
 enum : int
 {
     D3D10_STANDARD_MULTISAMPLE_PATTERN = 0xffffffff,
     D3D10_CENTER_MULTISAMPLE_PATTERN   = 0xfffffffe,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10_1shader/ne-d3d10_1shader-d3d10_shader_debug_regtype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1shader/ne-d3d10_1shader-d3d10_shader_debug_regtype
 alias D3D10_SHADER_DEBUG_REGTYPE = int;
 enum : int
 {
@@ -987,7 +1029,8 @@ enum : int
     D3D11_SHADER_DEBUG_REG_INTERFACE_POINTERS = 0x0000000b,
     D3D11_SHADER_DEBUG_REG_UAV                = 0x0000000c,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10_1shader/ne-d3d10_1shader-d3d10_shader_debug_scopetype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1shader/ne-d3d10_1shader-d3d10_shader_debug_scopetype
 alias D3D10_SHADER_DEBUG_SCOPETYPE = int;
 enum : int
 {
@@ -1000,7 +1043,8 @@ enum : int
     D3D10_SHADER_DEBUG_SCOPE_NAMESPACE   = 0x00000006,
     D3D10_SHADER_DEBUG_SCOPE_ANNOTATION  = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10_1shader/ne-d3d10_1shader-d3d10_shader_debug_vartype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1shader/ne-d3d10_1shader-d3d10_shader_debug_vartype
 alias D3D10_SHADER_DEBUG_VARTYPE = int;
 enum : int
 {
@@ -1011,58 +1055,58 @@ enum : int
 // Constants
 
 
-enum uint D3D10_16BIT_INDEX_STRIP_CUT_VALUE = 0x0000ffff;
-enum uint D3D10_32BIT_INDEX_STRIP_CUT_VALUE = 0xffffffff;
-enum uint D3D10_8BIT_INDEX_STRIP_CUT_VALUE = 0x000000ff;
-enum uint D3D10_ARRAY_AXIS_ADDRESS_RANGE_BIT_COUNT = 0x00000009;
+enum uint D3D10_16BIT_INDEX_STRIP_CUT_VALUE = 0x0000ffffU;
+enum uint D3D10_32BIT_INDEX_STRIP_CUT_VALUE = 0xffffffffU;
+enum uint D3D10_8BIT_INDEX_STRIP_CUT_VALUE = 0x000000ffU;
+enum uint D3D10_ARRAY_AXIS_ADDRESS_RANGE_BIT_COUNT = 0x00000009U;
 
 enum : uint
 {
-    D3D10_CLIP_OR_CULL_DISTANCE_COUNT         = 0x00000008,
-    D3D10_CLIP_OR_CULL_DISTANCE_ELEMENT_COUNT = 0x00000002,
+    D3D10_CLIP_OR_CULL_DISTANCE_COUNT         = 0x00000008U,
+    D3D10_CLIP_OR_CULL_DISTANCE_ELEMENT_COUNT = 0x00000002U,
 }
 
 enum : uint
 {
-    D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT          = 0x0000000e,
-    D3D10_COMMONSHADER_CONSTANT_BUFFER_COMPONENTS              = 0x00000004,
-    D3D10_COMMONSHADER_CONSTANT_BUFFER_COMPONENT_BIT_COUNT     = 0x00000020,
-    D3D10_COMMONSHADER_CONSTANT_BUFFER_HW_SLOT_COUNT           = 0x0000000f,
-    D3D10_COMMONSHADER_CONSTANT_BUFFER_REGISTER_COMPONENTS     = 0x00000004,
-    D3D10_COMMONSHADER_CONSTANT_BUFFER_REGISTER_COUNT          = 0x0000000f,
-    D3D10_COMMONSHADER_CONSTANT_BUFFER_REGISTER_READS_PER_INST = 0x00000001,
-    D3D10_COMMONSHADER_CONSTANT_BUFFER_REGISTER_READ_PORTS     = 0x00000001,
+    D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT          = 0x0000000eU,
+    D3D10_COMMONSHADER_CONSTANT_BUFFER_COMPONENTS              = 0x00000004U,
+    D3D10_COMMONSHADER_CONSTANT_BUFFER_COMPONENT_BIT_COUNT     = 0x00000020U,
+    D3D10_COMMONSHADER_CONSTANT_BUFFER_HW_SLOT_COUNT           = 0x0000000fU,
+    D3D10_COMMONSHADER_CONSTANT_BUFFER_REGISTER_COMPONENTS     = 0x00000004U,
+    D3D10_COMMONSHADER_CONSTANT_BUFFER_REGISTER_COUNT          = 0x0000000fU,
+    D3D10_COMMONSHADER_CONSTANT_BUFFER_REGISTER_READS_PER_INST = 0x00000001U,
+    D3D10_COMMONSHADER_CONSTANT_BUFFER_REGISTER_READ_PORTS     = 0x00000001U,
 }
 
 enum : uint
 {
-    D3D10_COMMONSHADER_FLOWCONTROL_NESTING_LIMIT                         = 0x00000040,
-    D3D10_COMMONSHADER_IMMEDIATE_CONSTANT_BUFFER_REGISTER_COMPONENTS     = 0x00000004,
-    D3D10_COMMONSHADER_IMMEDIATE_CONSTANT_BUFFER_REGISTER_COUNT          = 0x00000001,
-    D3D10_COMMONSHADER_IMMEDIATE_CONSTANT_BUFFER_REGISTER_READS_PER_INST = 0x00000001,
-    D3D10_COMMONSHADER_IMMEDIATE_CONSTANT_BUFFER_REGISTER_READ_PORTS     = 0x00000001,
-    D3D10_COMMONSHADER_IMMEDIATE_VALUE_COMPONENT_BIT_COUNT               = 0x00000020,
+    D3D10_COMMONSHADER_FLOWCONTROL_NESTING_LIMIT                         = 0x00000040U,
+    D3D10_COMMONSHADER_IMMEDIATE_CONSTANT_BUFFER_REGISTER_COMPONENTS     = 0x00000004U,
+    D3D10_COMMONSHADER_IMMEDIATE_CONSTANT_BUFFER_REGISTER_COUNT          = 0x00000001U,
+    D3D10_COMMONSHADER_IMMEDIATE_CONSTANT_BUFFER_REGISTER_READS_PER_INST = 0x00000001U,
+    D3D10_COMMONSHADER_IMMEDIATE_CONSTANT_BUFFER_REGISTER_READ_PORTS     = 0x00000001U,
+    D3D10_COMMONSHADER_IMMEDIATE_VALUE_COMPONENT_BIT_COUNT               = 0x00000020U,
 }
 
 enum : uint
 {
-    D3D10_COMMONSHADER_INPUT_RESOURCE_REGISTER_COMPONENTS     = 0x00000001,
-    D3D10_COMMONSHADER_INPUT_RESOURCE_REGISTER_COUNT          = 0x00000080,
-    D3D10_COMMONSHADER_INPUT_RESOURCE_REGISTER_READS_PER_INST = 0x00000001,
-    D3D10_COMMONSHADER_INPUT_RESOURCE_REGISTER_READ_PORTS     = 0x00000001,
-    D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT              = 0x00000080,
-    D3D10_COMMONSHADER_SAMPLER_REGISTER_COMPONENTS            = 0x00000001,
-    D3D10_COMMONSHADER_SAMPLER_REGISTER_COUNT                 = 0x00000010,
-    D3D10_COMMONSHADER_SAMPLER_REGISTER_READS_PER_INST        = 0x00000001,
-    D3D10_COMMONSHADER_SAMPLER_REGISTER_READ_PORTS            = 0x00000001,
-    D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT                     = 0x00000010,
-    D3D10_COMMONSHADER_SUBROUTINE_NESTING_LIMIT               = 0x00000020,
-    D3D10_COMMONSHADER_TEMP_REGISTER_COMPONENTS               = 0x00000004,
-    D3D10_COMMONSHADER_TEMP_REGISTER_COMPONENT_BIT_COUNT      = 0x00000020,
-    D3D10_COMMONSHADER_TEMP_REGISTER_COUNT                    = 0x00001000,
-    D3D10_COMMONSHADER_TEMP_REGISTER_READS_PER_INST           = 0x00000003,
-    D3D10_COMMONSHADER_TEMP_REGISTER_READ_PORTS               = 0x00000003,
-    D3D10_COMMONSHADER_TEXCOORD_RANGE_REDUCTION_MAX           = 0x0000000a,
+    D3D10_COMMONSHADER_INPUT_RESOURCE_REGISTER_COMPONENTS     = 0x00000001U,
+    D3D10_COMMONSHADER_INPUT_RESOURCE_REGISTER_COUNT          = 0x00000080U,
+    D3D10_COMMONSHADER_INPUT_RESOURCE_REGISTER_READS_PER_INST = 0x00000001U,
+    D3D10_COMMONSHADER_INPUT_RESOURCE_REGISTER_READ_PORTS     = 0x00000001U,
+    D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT              = 0x00000080U,
+    D3D10_COMMONSHADER_SAMPLER_REGISTER_COMPONENTS            = 0x00000001U,
+    D3D10_COMMONSHADER_SAMPLER_REGISTER_COUNT                 = 0x00000010U,
+    D3D10_COMMONSHADER_SAMPLER_REGISTER_READS_PER_INST        = 0x00000001U,
+    D3D10_COMMONSHADER_SAMPLER_REGISTER_READ_PORTS            = 0x00000001U,
+    D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT                     = 0x00000010U,
+    D3D10_COMMONSHADER_SUBROUTINE_NESTING_LIMIT               = 0x00000020U,
+    D3D10_COMMONSHADER_TEMP_REGISTER_COMPONENTS               = 0x00000004U,
+    D3D10_COMMONSHADER_TEMP_REGISTER_COMPONENT_BIT_COUNT      = 0x00000020U,
+    D3D10_COMMONSHADER_TEMP_REGISTER_COUNT                    = 0x00001000U,
+    D3D10_COMMONSHADER_TEMP_REGISTER_READS_PER_INST           = 0x00000003U,
+    D3D10_COMMONSHADER_TEMP_REGISTER_READ_PORTS               = 0x00000003U,
+    D3D10_COMMONSHADER_TEXCOORD_RANGE_REDUCTION_MAX           = 0x0000000aU,
 }
 
 enum : int
@@ -1071,7 +1115,7 @@ enum : int
     D3D10_COMMONSHADER_TEXEL_OFFSET_MAX_NEGATIVE    = 0xfffffff8,
 }
 
-enum uint D3D10_COMMONSHADER_TEXEL_OFFSET_MAX_POSITIVE = 0x00000007;
+enum uint D3D10_COMMONSHADER_TEXEL_OFFSET_MAX_POSITIVE = 0x00000007U;
 
 enum : float
 {
@@ -1082,7 +1126,7 @@ enum : float
     D3D10_DEFAULT_BORDER_COLOR_COMPONENT = 0x0p+0,
 }
 
-enum uint D3D10_DEFAULT_DEPTH_BIAS = 0x00000000;
+enum uint D3D10_DEFAULT_DEPTH_BIAS = 0x00000000U;
 
 enum : float
 {
@@ -1091,26 +1135,26 @@ enum : float
     D3D10_DEFAULT_MIP_LOD_BIAS     = 0x0p+0,
 }
 
-enum uint D3D10_DEFAULT_RENDER_TARGET_ARRAY_INDEX = 0x00000000;
+enum uint D3D10_DEFAULT_RENDER_TARGET_ARRAY_INDEX = 0x00000000U;
 
 enum : uint
 {
-    D3D10_DEFAULT_SAMPLE_MASK    = 0xffffffff,
-    D3D10_DEFAULT_SCISSOR_ENDX   = 0x00000000,
-    D3D10_DEFAULT_SCISSOR_ENDY   = 0x00000000,
-    D3D10_DEFAULT_SCISSOR_STARTX = 0x00000000,
-    D3D10_DEFAULT_SCISSOR_STARTY = 0x00000000,
+    D3D10_DEFAULT_SAMPLE_MASK    = 0xffffffffU,
+    D3D10_DEFAULT_SCISSOR_ENDX   = 0x00000000U,
+    D3D10_DEFAULT_SCISSOR_ENDY   = 0x00000000U,
+    D3D10_DEFAULT_SCISSOR_STARTX = 0x00000000U,
+    D3D10_DEFAULT_SCISSOR_STARTY = 0x00000000U,
 }
 
 enum float D3D10_DEFAULT_SLOPE_SCALED_DEPTH_BIAS = 0x0p+0;
 
 enum : uint
 {
-    D3D10_DEFAULT_STENCIL_READ_MASK              = 0x000000ff,
-    D3D10_DEFAULT_STENCIL_REFERENCE              = 0x00000000,
-    D3D10_DEFAULT_STENCIL_WRITE_MASK             = 0x000000ff,
-    D3D10_DEFAULT_VIEWPORT_AND_SCISSORRECT_INDEX = 0x00000000,
-    D3D10_DEFAULT_VIEWPORT_HEIGHT                = 0x00000000,
+    D3D10_DEFAULT_STENCIL_READ_MASK              = 0x000000ffU,
+    D3D10_DEFAULT_STENCIL_REFERENCE              = 0x00000000U,
+    D3D10_DEFAULT_STENCIL_WRITE_MASK             = 0x000000ffU,
+    D3D10_DEFAULT_VIEWPORT_AND_SCISSORRECT_INDEX = 0x00000000U,
+    D3D10_DEFAULT_VIEWPORT_HEIGHT                = 0x00000000U,
 }
 
 enum : float
@@ -1121,9 +1165,9 @@ enum : float
 
 enum : uint
 {
-    D3D10_DEFAULT_VIEWPORT_TOPLEFTX = 0x00000000,
-    D3D10_DEFAULT_VIEWPORT_TOPLEFTY = 0x00000000,
-    D3D10_DEFAULT_VIEWPORT_WIDTH    = 0x00000000,
+    D3D10_DEFAULT_VIEWPORT_TOPLEFTX = 0x00000000U,
+    D3D10_DEFAULT_VIEWPORT_TOPLEFTY = 0x00000000U,
+    D3D10_DEFAULT_VIEWPORT_WIDTH    = 0x00000000U,
 }
 
 enum double D3D10_FLOAT16_FUSED_TOLERANCE_IN_ULP = 0x1.3333333333333p-1;
@@ -1158,56 +1202,56 @@ enum : float
 
 enum : uint
 {
-    D3D10_GS_INPUT_PRIM_CONST_REGISTER_COMPONENTS          = 0x00000001,
-    D3D10_GS_INPUT_PRIM_CONST_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D10_GS_INPUT_PRIM_CONST_REGISTER_COUNT               = 0x00000001,
-    D3D10_GS_INPUT_PRIM_CONST_REGISTER_READS_PER_INST      = 0x00000002,
-    D3D10_GS_INPUT_PRIM_CONST_REGISTER_READ_PORTS          = 0x00000001,
+    D3D10_GS_INPUT_PRIM_CONST_REGISTER_COMPONENTS          = 0x00000001U,
+    D3D10_GS_INPUT_PRIM_CONST_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D10_GS_INPUT_PRIM_CONST_REGISTER_COUNT               = 0x00000001U,
+    D3D10_GS_INPUT_PRIM_CONST_REGISTER_READS_PER_INST      = 0x00000002U,
+    D3D10_GS_INPUT_PRIM_CONST_REGISTER_READ_PORTS          = 0x00000001U,
 }
 
 enum : uint
 {
-    D3D10_GS_INPUT_REGISTER_COMPONENTS          = 0x00000004,
-    D3D10_GS_INPUT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D10_GS_INPUT_REGISTER_COUNT               = 0x00000010,
-    D3D10_GS_INPUT_REGISTER_READS_PER_INST      = 0x00000002,
-    D3D10_GS_INPUT_REGISTER_READ_PORTS          = 0x00000001,
-    D3D10_GS_INPUT_REGISTER_VERTICES            = 0x00000006,
+    D3D10_GS_INPUT_REGISTER_COMPONENTS          = 0x00000004U,
+    D3D10_GS_INPUT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D10_GS_INPUT_REGISTER_COUNT               = 0x00000010U,
+    D3D10_GS_INPUT_REGISTER_READS_PER_INST      = 0x00000002U,
+    D3D10_GS_INPUT_REGISTER_READ_PORTS          = 0x00000001U,
+    D3D10_GS_INPUT_REGISTER_VERTICES            = 0x00000006U,
 }
 
 enum : uint
 {
-    D3D10_GS_OUTPUT_ELEMENTS                     = 0x00000020,
-    D3D10_GS_OUTPUT_REGISTER_COMPONENTS          = 0x00000004,
-    D3D10_GS_OUTPUT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D10_GS_OUTPUT_REGISTER_COUNT               = 0x00000020,
+    D3D10_GS_OUTPUT_ELEMENTS                     = 0x00000020U,
+    D3D10_GS_OUTPUT_REGISTER_COMPONENTS          = 0x00000004U,
+    D3D10_GS_OUTPUT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D10_GS_OUTPUT_REGISTER_COUNT               = 0x00000020U,
 }
 
-enum uint D3D10_IA_DEFAULT_INDEX_BUFFER_OFFSET_IN_BYTES = 0x00000000;
+enum uint D3D10_IA_DEFAULT_INDEX_BUFFER_OFFSET_IN_BYTES = 0x00000000U;
 
 enum : uint
 {
-    D3D10_IA_DEFAULT_PRIMITIVE_TOPOLOGY            = 0x00000000,
-    D3D10_IA_DEFAULT_VERTEX_BUFFER_OFFSET_IN_BYTES = 0x00000000,
+    D3D10_IA_DEFAULT_PRIMITIVE_TOPOLOGY            = 0x00000000U,
+    D3D10_IA_DEFAULT_VERTEX_BUFFER_OFFSET_IN_BYTES = 0x00000000U,
 }
 
-enum uint D3D10_IA_INDEX_INPUT_RESOURCE_SLOT_COUNT = 0x00000001;
-enum uint D3D10_IA_INSTANCE_ID_BIT_COUNT = 0x00000020;
-enum uint D3D10_IA_INTEGER_ARITHMETIC_BIT_COUNT = 0x00000020;
-enum uint D3D10_IA_PRIMITIVE_ID_BIT_COUNT = 0x00000020;
+enum uint D3D10_IA_INDEX_INPUT_RESOURCE_SLOT_COUNT = 0x00000001U;
+enum uint D3D10_IA_INSTANCE_ID_BIT_COUNT = 0x00000020U;
+enum uint D3D10_IA_INTEGER_ARITHMETIC_BIT_COUNT = 0x00000020U;
+enum uint D3D10_IA_PRIMITIVE_ID_BIT_COUNT = 0x00000020U;
 
 enum : uint
 {
-    D3D10_IA_VERTEX_ID_BIT_COUNT                        = 0x00000020,
-    D3D10_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT           = 0x00000010,
-    D3D10_IA_VERTEX_INPUT_STRUCTURE_ELEMENTS_COMPONENTS = 0x00000040,
-    D3D10_IA_VERTEX_INPUT_STRUCTURE_ELEMENT_COUNT       = 0x00000010,
+    D3D10_IA_VERTEX_ID_BIT_COUNT                        = 0x00000020U,
+    D3D10_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT           = 0x00000010U,
+    D3D10_IA_VERTEX_INPUT_STRUCTURE_ELEMENTS_COMPONENTS = 0x00000040U,
+    D3D10_IA_VERTEX_INPUT_STRUCTURE_ELEMENT_COUNT       = 0x00000010U,
 }
 
 enum : uint
 {
-    D3D10_INTEGER_DIVIDE_BY_ZERO_QUOTIENT  = 0xffffffff,
-    D3D10_INTEGER_DIVIDE_BY_ZERO_REMAINDER = 0xffffffff,
+    D3D10_INTEGER_DIVIDE_BY_ZERO_QUOTIENT  = 0xffffffffU,
+    D3D10_INTEGER_DIVIDE_BY_ZERO_REMAINDER = 0xffffffffU,
 }
 
 enum float D3D10_LINEAR_GAMMA = 0x1p+0;
@@ -1216,15 +1260,15 @@ enum float D3D10_MAX_DEPTH = 0x1p+0;
 
 enum : uint
 {
-    D3D10_MAX_MAXANISOTROPY            = 0x00000010,
-    D3D10_MAX_MULTISAMPLE_SAMPLE_COUNT = 0x00000020,
+    D3D10_MAX_MAXANISOTROPY            = 0x00000010U,
+    D3D10_MAX_MULTISAMPLE_SAMPLE_COUNT = 0x00000020U,
 }
 
 enum float D3D10_MAX_POSITION_VALUE = 0x1.a36e2ep+114;
-enum uint D3D10_MAX_TEXTURE_DIMENSION_2_TO_EXP = 0x00000011;
+enum uint D3D10_MAX_TEXTURE_DIMENSION_2_TO_EXP = 0x00000011U;
 enum float D3D10_MIN_BORDER_COLOR_COMPONENT = 0x0p+0;
 enum float D3D10_MIN_DEPTH = 0x0p+0;
-enum uint D3D10_MIN_MAXANISOTROPY = 0x00000000;
+enum uint D3D10_MIN_MAXANISOTROPY = 0x00000000U;
 
 enum : float
 {
@@ -1234,108 +1278,108 @@ enum : float
 
 enum : uint
 {
-    D3D10_MIP_LOD_FRACTIONAL_BIT_COUNT = 0x00000006,
-    D3D10_MIP_LOD_RANGE_BIT_COUNT      = 0x00000008,
+    D3D10_MIP_LOD_FRACTIONAL_BIT_COUNT = 0x00000006U,
+    D3D10_MIP_LOD_RANGE_BIT_COUNT      = 0x00000008U,
 }
 
 enum float D3D10_MULTISAMPLE_ANTIALIAS_LINE_WIDTH = 0x1.666666p+0;
-enum uint D3D10_NONSAMPLE_FETCH_OUT_OF_RANGE_ACCESS_RESULT = 0x00000000;
-enum uint D3D10_PIXEL_ADDRESS_RANGE_BIT_COUNT = 0x0000000d;
-enum uint D3D10_PRE_SCISSOR_PIXEL_ADDRESS_RANGE_BIT_COUNT = 0x0000000f;
+enum uint D3D10_NONSAMPLE_FETCH_OUT_OF_RANGE_ACCESS_RESULT = 0x00000000U;
+enum uint D3D10_PIXEL_ADDRESS_RANGE_BIT_COUNT = 0x0000000dU;
+enum uint D3D10_PRE_SCISSOR_PIXEL_ADDRESS_RANGE_BIT_COUNT = 0x0000000fU;
 
 enum : uint
 {
-    D3D10_PS_FRONTFACING_DEFAULT_VALUE = 0xffffffff,
-    D3D10_PS_FRONTFACING_FALSE_VALUE   = 0x00000000,
-    D3D10_PS_FRONTFACING_TRUE_VALUE    = 0xffffffff,
+    D3D10_PS_FRONTFACING_DEFAULT_VALUE = 0xffffffffU,
+    D3D10_PS_FRONTFACING_FALSE_VALUE   = 0x00000000U,
+    D3D10_PS_FRONTFACING_TRUE_VALUE    = 0xffffffffU,
 }
 
 enum : uint
 {
-    D3D10_PS_INPUT_REGISTER_COMPONENTS          = 0x00000004,
-    D3D10_PS_INPUT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D10_PS_INPUT_REGISTER_COUNT               = 0x00000020,
-    D3D10_PS_INPUT_REGISTER_READS_PER_INST      = 0x00000002,
-    D3D10_PS_INPUT_REGISTER_READ_PORTS          = 0x00000001,
+    D3D10_PS_INPUT_REGISTER_COMPONENTS          = 0x00000004U,
+    D3D10_PS_INPUT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D10_PS_INPUT_REGISTER_COUNT               = 0x00000020U,
+    D3D10_PS_INPUT_REGISTER_READS_PER_INST      = 0x00000002U,
+    D3D10_PS_INPUT_REGISTER_READ_PORTS          = 0x00000001U,
 }
 
 enum float D3D10_PS_LEGACY_PIXEL_CENTER_FRACTIONAL_COMPONENT = 0x0p+0;
 
 enum : uint
 {
-    D3D10_PS_OUTPUT_DEPTH_REGISTER_COMPONENTS          = 0x00000001,
-    D3D10_PS_OUTPUT_DEPTH_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D10_PS_OUTPUT_DEPTH_REGISTER_COUNT               = 0x00000001,
-    D3D10_PS_OUTPUT_REGISTER_COMPONENTS                = 0x00000004,
-    D3D10_PS_OUTPUT_REGISTER_COMPONENT_BIT_COUNT       = 0x00000020,
-    D3D10_PS_OUTPUT_REGISTER_COUNT                     = 0x00000008,
+    D3D10_PS_OUTPUT_DEPTH_REGISTER_COMPONENTS          = 0x00000001U,
+    D3D10_PS_OUTPUT_DEPTH_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D10_PS_OUTPUT_DEPTH_REGISTER_COUNT               = 0x00000001U,
+    D3D10_PS_OUTPUT_REGISTER_COMPONENTS                = 0x00000004U,
+    D3D10_PS_OUTPUT_REGISTER_COMPONENT_BIT_COUNT       = 0x00000020U,
+    D3D10_PS_OUTPUT_REGISTER_COUNT                     = 0x00000008U,
 }
 
 enum float D3D10_PS_PIXEL_CENTER_FRACTIONAL_COMPONENT = 0x1p-1;
-enum uint D3D10_REQ_BLEND_OBJECT_COUNT_PER_CONTEXT = 0x00001000;
-enum uint D3D10_REQ_BUFFER_RESOURCE_TEXEL_COUNT_2_TO_EXP = 0x0000001b;
-enum uint D3D10_REQ_CONSTANT_BUFFER_ELEMENT_COUNT = 0x00001000;
-enum uint D3D10_REQ_DEPTH_STENCIL_OBJECT_COUNT_PER_CONTEXT = 0x00001000;
-enum uint D3D10_REQ_DRAWINDEXED_INDEX_COUNT_2_TO_EXP = 0x00000020;
-enum uint D3D10_REQ_DRAW_VERTEX_COUNT_2_TO_EXP = 0x00000020;
-enum uint D3D10_REQ_FILTERING_HW_ADDRESSABLE_RESOURCE_DIMENSION = 0x00002000;
-enum uint D3D10_REQ_GS_INVOCATION_32BIT_OUTPUT_COMPONENT_LIMIT = 0x00000400;
-enum uint D3D10_REQ_IMMEDIATE_CONSTANT_BUFFER_ELEMENT_COUNT = 0x00001000;
+enum uint D3D10_REQ_BLEND_OBJECT_COUNT_PER_CONTEXT = 0x00001000U;
+enum uint D3D10_REQ_BUFFER_RESOURCE_TEXEL_COUNT_2_TO_EXP = 0x0000001bU;
+enum uint D3D10_REQ_CONSTANT_BUFFER_ELEMENT_COUNT = 0x00001000U;
+enum uint D3D10_REQ_DEPTH_STENCIL_OBJECT_COUNT_PER_CONTEXT = 0x00001000U;
+enum uint D3D10_REQ_DRAWINDEXED_INDEX_COUNT_2_TO_EXP = 0x00000020U;
+enum uint D3D10_REQ_DRAW_VERTEX_COUNT_2_TO_EXP = 0x00000020U;
+enum uint D3D10_REQ_FILTERING_HW_ADDRESSABLE_RESOURCE_DIMENSION = 0x00002000U;
+enum uint D3D10_REQ_GS_INVOCATION_32BIT_OUTPUT_COMPONENT_LIMIT = 0x00000400U;
+enum uint D3D10_REQ_IMMEDIATE_CONSTANT_BUFFER_ELEMENT_COUNT = 0x00001000U;
 
 enum : uint
 {
-    D3D10_REQ_MAXANISOTROPY                         = 0x00000010,
-    D3D10_REQ_MIP_LEVELS                            = 0x0000000e,
-    D3D10_REQ_MULTI_ELEMENT_STRUCTURE_SIZE_IN_BYTES = 0x00000800,
+    D3D10_REQ_MAXANISOTROPY                         = 0x00000010U,
+    D3D10_REQ_MIP_LEVELS                            = 0x0000000eU,
+    D3D10_REQ_MULTI_ELEMENT_STRUCTURE_SIZE_IN_BYTES = 0x00000800U,
 }
 
-enum uint D3D10_REQ_RASTERIZER_OBJECT_COUNT_PER_CONTEXT = 0x00001000;
-enum uint D3D10_REQ_RENDER_TO_BUFFER_WINDOW_WIDTH = 0x00002000;
+enum uint D3D10_REQ_RASTERIZER_OBJECT_COUNT_PER_CONTEXT = 0x00001000U;
+enum uint D3D10_REQ_RENDER_TO_BUFFER_WINDOW_WIDTH = 0x00002000U;
 
 enum : uint
 {
-    D3D10_REQ_RESOURCE_SIZE_IN_MEGABYTES               = 0x00000080,
-    D3D10_REQ_RESOURCE_VIEW_COUNT_PER_CONTEXT_2_TO_EXP = 0x00000014,
+    D3D10_REQ_RESOURCE_SIZE_IN_MEGABYTES               = 0x00000080U,
+    D3D10_REQ_RESOURCE_VIEW_COUNT_PER_CONTEXT_2_TO_EXP = 0x00000014U,
 }
 
-enum uint D3D10_REQ_SAMPLER_OBJECT_COUNT_PER_CONTEXT = 0x00001000;
+enum uint D3D10_REQ_SAMPLER_OBJECT_COUNT_PER_CONTEXT = 0x00001000U;
 
 enum : uint
 {
-    D3D10_REQ_TEXTURE1D_ARRAY_AXIS_DIMENSION = 0x00000200,
-    D3D10_REQ_TEXTURE1D_U_DIMENSION          = 0x00002000,
-    D3D10_REQ_TEXTURE2D_ARRAY_AXIS_DIMENSION = 0x00000200,
-    D3D10_REQ_TEXTURE2D_U_OR_V_DIMENSION     = 0x00002000,
-    D3D10_REQ_TEXTURE3D_U_V_OR_W_DIMENSION   = 0x00000800,
-    D3D10_REQ_TEXTURECUBE_DIMENSION          = 0x00002000,
+    D3D10_REQ_TEXTURE1D_ARRAY_AXIS_DIMENSION = 0x00000200U,
+    D3D10_REQ_TEXTURE1D_U_DIMENSION          = 0x00002000U,
+    D3D10_REQ_TEXTURE2D_ARRAY_AXIS_DIMENSION = 0x00000200U,
+    D3D10_REQ_TEXTURE2D_U_OR_V_DIMENSION     = 0x00002000U,
+    D3D10_REQ_TEXTURE3D_U_V_OR_W_DIMENSION   = 0x00000800U,
+    D3D10_REQ_TEXTURECUBE_DIMENSION          = 0x00002000U,
 }
 
-enum uint D3D10_RESINFO_INSTRUCTION_MISSING_COMPONENT_RETVAL = 0x00000000;
+enum uint D3D10_RESINFO_INSTRUCTION_MISSING_COMPONENT_RETVAL = 0x00000000U;
 
 enum : uint
 {
-    D3D10_SHADER_MAJOR_VERSION = 0x00000004,
-    D3D10_SHADER_MINOR_VERSION = 0x00000000,
+    D3D10_SHADER_MAJOR_VERSION = 0x00000004U,
+    D3D10_SHADER_MINOR_VERSION = 0x00000000U,
 }
 
 enum : uint
 {
-    D3D10_SHIFT_INSTRUCTION_PAD_VALUE             = 0x00000000,
-    D3D10_SHIFT_INSTRUCTION_SHIFT_VALUE_BIT_COUNT = 0x00000005,
+    D3D10_SHIFT_INSTRUCTION_PAD_VALUE             = 0x00000000U,
+    D3D10_SHIFT_INSTRUCTION_SHIFT_VALUE_BIT_COUNT = 0x00000005U,
 }
 
-enum uint D3D10_SIMULTANEOUS_RENDER_TARGET_COUNT = 0x00000008;
+enum uint D3D10_SIMULTANEOUS_RENDER_TARGET_COUNT = 0x00000008U;
 
 enum : uint
 {
-    D3D10_SO_BUFFER_MAX_STRIDE_IN_BYTES       = 0x00000800,
-    D3D10_SO_BUFFER_MAX_WRITE_WINDOW_IN_BYTES = 0x00000100,
+    D3D10_SO_BUFFER_MAX_STRIDE_IN_BYTES       = 0x00000800U,
+    D3D10_SO_BUFFER_MAX_WRITE_WINDOW_IN_BYTES = 0x00000100U,
 }
 
-enum uint D3D10_SO_BUFFER_SLOT_COUNT = 0x00000004;
-enum uint D3D10_SO_DDI_REGISTER_INDEX_DENOTING_GAP = 0xffffffff;
-enum uint D3D10_SO_MULTIPLE_BUFFER_ELEMENTS_PER_BUFFER = 0x00000001;
-enum uint D3D10_SO_SINGLE_BUFFER_COMPONENT_LIMIT = 0x00000040;
+enum uint D3D10_SO_BUFFER_SLOT_COUNT = 0x00000004U;
+enum uint D3D10_SO_DDI_REGISTER_INDEX_DENOTING_GAP = 0xffffffffU;
+enum uint D3D10_SO_MULTIPLE_BUFFER_ELEMENTS_PER_BUFFER = 0x00000001U;
+enum uint D3D10_SO_SINGLE_BUFFER_COMPONENT_LIMIT = 0x00000040U;
 
 enum : float
 {
@@ -1350,121 +1394,121 @@ enum : float
 
 enum : uint
 {
-    D3D10_STANDARD_COMPONENT_BIT_COUNT         = 0x00000020,
-    D3D10_STANDARD_COMPONENT_BIT_COUNT_DOUBLED = 0x00000040,
+    D3D10_STANDARD_COMPONENT_BIT_COUNT         = 0x00000020U,
+    D3D10_STANDARD_COMPONENT_BIT_COUNT_DOUBLED = 0x00000040U,
 }
 
-enum uint D3D10_STANDARD_MAXIMUM_ELEMENT_ALIGNMENT_BYTE_MULTIPLE = 0x00000004;
+enum uint D3D10_STANDARD_MAXIMUM_ELEMENT_ALIGNMENT_BYTE_MULTIPLE = 0x00000004U;
 
 enum : uint
 {
-    D3D10_STANDARD_PIXEL_COMPONENT_COUNT        = 0x00000080,
-    D3D10_STANDARD_PIXEL_ELEMENT_COUNT          = 0x00000020,
-    D3D10_STANDARD_VECTOR_SIZE                  = 0x00000004,
-    D3D10_STANDARD_VERTEX_ELEMENT_COUNT         = 0x00000010,
-    D3D10_STANDARD_VERTEX_TOTAL_COMPONENT_COUNT = 0x00000040,
+    D3D10_STANDARD_PIXEL_COMPONENT_COUNT        = 0x00000080U,
+    D3D10_STANDARD_PIXEL_ELEMENT_COUNT          = 0x00000020U,
+    D3D10_STANDARD_VECTOR_SIZE                  = 0x00000004U,
+    D3D10_STANDARD_VERTEX_ELEMENT_COUNT         = 0x00000010U,
+    D3D10_STANDARD_VERTEX_TOTAL_COMPONENT_COUNT = 0x00000040U,
 }
 
-enum uint D3D10_SUBPIXEL_FRACTIONAL_BIT_COUNT = 0x00000008;
-enum uint D3D10_SUBTEXEL_FRACTIONAL_BIT_COUNT = 0x00000006;
-enum uint D3D10_TEXEL_ADDRESS_RANGE_BIT_COUNT = 0x00000012;
-enum uint D3D10_UNBOUND_MEMORY_ACCESS_RESULT = 0x00000000;
+enum uint D3D10_SUBPIXEL_FRACTIONAL_BIT_COUNT = 0x00000008U;
+enum uint D3D10_SUBTEXEL_FRACTIONAL_BIT_COUNT = 0x00000006U;
+enum uint D3D10_TEXEL_ADDRESS_RANGE_BIT_COUNT = 0x00000012U;
+enum uint D3D10_UNBOUND_MEMORY_ACCESS_RESULT = 0x00000000U;
 
 enum : uint
 {
-    D3D10_VIEWPORT_AND_SCISSORRECT_MAX_INDEX                 = 0x0000000f,
-    D3D10_VIEWPORT_AND_SCISSORRECT_OBJECT_COUNT_PER_PIPELINE = 0x00000010,
+    D3D10_VIEWPORT_AND_SCISSORRECT_MAX_INDEX                 = 0x0000000fU,
+    D3D10_VIEWPORT_AND_SCISSORRECT_OBJECT_COUNT_PER_PIPELINE = 0x00000010U,
 }
 
-enum uint D3D10_VIEWPORT_BOUNDS_MAX = 0x00003fff;
+enum uint D3D10_VIEWPORT_BOUNDS_MAX = 0x00003fffU;
 enum int D3D10_VIEWPORT_BOUNDS_MIN = 0xffffc000;
 
 enum : uint
 {
-    D3D10_VS_INPUT_REGISTER_COMPONENTS          = 0x00000004,
-    D3D10_VS_INPUT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D10_VS_INPUT_REGISTER_COUNT               = 0x00000010,
-    D3D10_VS_INPUT_REGISTER_READS_PER_INST      = 0x00000002,
-    D3D10_VS_INPUT_REGISTER_READ_PORTS          = 0x00000001,
+    D3D10_VS_INPUT_REGISTER_COMPONENTS          = 0x00000004U,
+    D3D10_VS_INPUT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D10_VS_INPUT_REGISTER_COUNT               = 0x00000010U,
+    D3D10_VS_INPUT_REGISTER_READS_PER_INST      = 0x00000002U,
+    D3D10_VS_INPUT_REGISTER_READ_PORTS          = 0x00000001U,
 }
 
 enum : uint
 {
-    D3D10_VS_OUTPUT_REGISTER_COMPONENTS          = 0x00000004,
-    D3D10_VS_OUTPUT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D10_VS_OUTPUT_REGISTER_COUNT               = 0x00000010,
+    D3D10_VS_OUTPUT_REGISTER_COMPONENTS          = 0x00000004U,
+    D3D10_VS_OUTPUT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D10_VS_OUTPUT_REGISTER_COUNT               = 0x00000010U,
 }
 
-enum uint D3D10_WHQL_CONTEXT_COUNT_FOR_RESOURCE_LIMIT = 0x0000000a;
-enum uint D3D10_WHQL_DRAWINDEXED_INDEX_COUNT_2_TO_EXP = 0x00000019;
-enum uint D3D10_WHQL_DRAW_VERTEX_COUNT_2_TO_EXP = 0x00000019;
-enum uint D3D_MAJOR_VERSION = 0x0000000a;
-enum uint D3D_MINOR_VERSION = 0x00000000;
+enum uint D3D10_WHQL_CONTEXT_COUNT_FOR_RESOURCE_LIMIT = 0x0000000aU;
+enum uint D3D10_WHQL_DRAWINDEXED_INDEX_COUNT_2_TO_EXP = 0x00000019U;
+enum uint D3D10_WHQL_DRAW_VERTEX_COUNT_2_TO_EXP = 0x00000019U;
+enum uint D3D_MAJOR_VERSION = 0x0000000aU;
+enum uint D3D_MINOR_VERSION = 0x00000000U;
 
 enum : uint
 {
-    D3D_SPEC_DATE_DAY   = 0x00000008,
-    D3D_SPEC_DATE_MONTH = 0x00000008,
-    D3D_SPEC_DATE_YEAR  = 0x000007d6,
+    D3D_SPEC_DATE_DAY   = 0x00000008U,
+    D3D_SPEC_DATE_MONTH = 0x00000008U,
+    D3D_SPEC_DATE_YEAR  = 0x000007d6U,
 }
 
 enum double D3D_SPEC_VERSION = 0x1.0ccd20afa2f06p+0;
 
 enum : uint
 {
-    D3D10_1_IA_VERTEX_INPUT_STRUCTURE_ELEMENT_COUNT = 0x00000010,
-    D3D10_1_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT     = 0x00000010,
+    D3D10_1_IA_VERTEX_INPUT_STRUCTURE_ELEMENT_COUNT = 0x00000010U,
+    D3D10_1_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT     = 0x00000010U,
 }
 
-enum uint _FACD3D10 = 0x00000879;
-enum uint D3D10_APPEND_ALIGNED_ELEMENT = 0xffffffff;
-enum uint D3D10_FILTER_TYPE_MASK = 0x00000003;
-enum uint D3D10_MIN_FILTER_SHIFT = 0x00000004;
-enum uint D3D10_MAG_FILTER_SHIFT = 0x00000002;
-enum uint D3D10_MIP_FILTER_SHIFT = 0x00000000;
-enum uint D3D10_COMPARISON_FILTERING_BIT = 0x00000080;
-enum uint D3D10_ANISOTROPIC_FILTERING_BIT = 0x00000040;
-enum uint D3D10_TEXT_1BIT_BIT = 0x80000000;
-enum uint D3D10_SDK_VERSION = 0x0000001d;
-enum uint D3D10_1_DEFAULT_SAMPLE_MASK = 0xffffffff;
+enum uint _FACD3D10 = 0x00000879U;
+enum uint D3D10_APPEND_ALIGNED_ELEMENT = 0xffffffffU;
+enum uint D3D10_FILTER_TYPE_MASK = 0x00000003U;
+enum uint D3D10_MIN_FILTER_SHIFT = 0x00000004U;
+enum uint D3D10_MAG_FILTER_SHIFT = 0x00000002U;
+enum uint D3D10_MIP_FILTER_SHIFT = 0x00000000U;
+enum uint D3D10_COMPARISON_FILTERING_BIT = 0x00000080U;
+enum uint D3D10_ANISOTROPIC_FILTERING_BIT = 0x00000040U;
+enum uint D3D10_TEXT_1BIT_BIT = 0x80000000U;
+enum uint D3D10_SDK_VERSION = 0x0000001dU;
+enum uint D3D10_1_DEFAULT_SAMPLE_MASK = 0xffffffffU;
 enum double D3D10_1_FLOAT16_FUSED_TOLERANCE_IN_ULP = 0x1.3333333333333p-1;
 enum float D3D10_1_FLOAT32_TO_INTEGER_TOLERANCE_IN_ULP = 0x1.333334p-1;
-enum uint D3D10_1_GS_INPUT_REGISTER_COUNT = 0x00000020;
-enum uint D3D10_1_IA_VERTEX_INPUT_STRUCTURE_ELEMENTS_COMPONENTS = 0x00000080;
+enum uint D3D10_1_GS_INPUT_REGISTER_COUNT = 0x00000020U;
+enum uint D3D10_1_IA_VERTEX_INPUT_STRUCTURE_ELEMENTS_COMPONENTS = 0x00000080U;
 
 enum : uint
 {
-    D3D10_1_PS_OUTPUT_MASK_REGISTER_COMPONENTS          = 0x00000001,
-    D3D10_1_PS_OUTPUT_MASK_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D10_1_PS_OUTPUT_MASK_REGISTER_COUNT               = 0x00000001,
+    D3D10_1_PS_OUTPUT_MASK_REGISTER_COMPONENTS          = 0x00000001U,
+    D3D10_1_PS_OUTPUT_MASK_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D10_1_PS_OUTPUT_MASK_REGISTER_COUNT               = 0x00000001U,
 }
 
 enum : uint
 {
-    D3D10_1_SHADER_MAJOR_VERSION = 0x00000004,
-    D3D10_1_SHADER_MINOR_VERSION = 0x00000001,
+    D3D10_1_SHADER_MAJOR_VERSION = 0x00000004U,
+    D3D10_1_SHADER_MINOR_VERSION = 0x00000001U,
 }
 
 enum : uint
 {
-    D3D10_1_SO_BUFFER_MAX_STRIDE_IN_BYTES       = 0x00000800,
-    D3D10_1_SO_BUFFER_MAX_WRITE_WINDOW_IN_BYTES = 0x00000100,
-    D3D10_1_SO_BUFFER_SLOT_COUNT                = 0x00000004,
+    D3D10_1_SO_BUFFER_MAX_STRIDE_IN_BYTES       = 0x00000800U,
+    D3D10_1_SO_BUFFER_MAX_WRITE_WINDOW_IN_BYTES = 0x00000100U,
+    D3D10_1_SO_BUFFER_SLOT_COUNT                = 0x00000004U,
 }
 
-enum uint D3D10_1_SO_MULTIPLE_BUFFER_ELEMENTS_PER_BUFFER = 0x00000001;
-enum uint D3D10_1_SO_SINGLE_BUFFER_COMPONENT_LIMIT = 0x00000040;
-enum uint D3D10_1_STANDARD_VERTEX_ELEMENT_COUNT = 0x00000020;
-enum uint D3D10_1_SUBPIXEL_FRACTIONAL_BIT_COUNT = 0x00000008;
-enum uint D3D10_1_VS_INPUT_REGISTER_COUNT = 0x00000020;
-enum uint D3D10_1_VS_OUTPUT_REGISTER_COUNT = 0x00000020;
-enum uint D3D10_SDK_LAYERS_VERSION = 0x0000000b;
+enum uint D3D10_1_SO_MULTIPLE_BUFFER_ELEMENTS_PER_BUFFER = 0x00000001U;
+enum uint D3D10_1_SO_SINGLE_BUFFER_COMPONENT_LIMIT = 0x00000040U;
+enum uint D3D10_1_STANDARD_VERTEX_ELEMENT_COUNT = 0x00000020U;
+enum uint D3D10_1_SUBPIXEL_FRACTIONAL_BIT_COUNT = 0x00000008U;
+enum uint D3D10_1_VS_INPUT_REGISTER_COUNT = 0x00000020U;
+enum uint D3D10_1_VS_OUTPUT_REGISTER_COUNT = 0x00000020U;
+enum uint D3D10_SDK_LAYERS_VERSION = 0x0000000bU;
 
 enum : uint
 {
-    D3D10_DEBUG_FEATURE_FLUSH_PER_RENDER_OP   = 0x00000001,
-    D3D10_DEBUG_FEATURE_FINISH_PER_RENDER_OP  = 0x00000002,
-    D3D10_DEBUG_FEATURE_PRESENT_PER_RENDER_OP = 0x00000004,
+    D3D10_DEBUG_FEATURE_FLUSH_PER_RENDER_OP   = 0x00000001U,
+    D3D10_DEBUG_FEATURE_FINISH_PER_RENDER_OP  = 0x00000002U,
+    D3D10_DEBUG_FEATURE_PRESENT_PER_RENDER_OP = 0x00000004U,
 }
 
 enum GUID DXGI_DEBUG_D3D10 = GUID("243b4c52-3606-4d3a-99d7-a7e7b33ed706");
@@ -1497,67 +1541,67 @@ enum : const(wchar)*
     D3D10_APPNAME_STRING = "Name",
 }
 
-enum uint D3D10_INFO_QUEUE_DEFAULT_MESSAGE_COUNT_LIMIT = 0x00000400;
+enum uint D3D10_INFO_QUEUE_DEFAULT_MESSAGE_COUNT_LIMIT = 0x00000400U;
 
 enum : uint
 {
-    D3D10_SHADER_DEBUG                    = 0x00000001,
-    D3D10_SHADER_SKIP_VALIDATION          = 0x00000002,
-    D3D10_SHADER_SKIP_OPTIMIZATION        = 0x00000004,
-    D3D10_SHADER_PACK_MATRIX_ROW_MAJOR    = 0x00000008,
-    D3D10_SHADER_PACK_MATRIX_COLUMN_MAJOR = 0x00000010,
-    D3D10_SHADER_PARTIAL_PRECISION        = 0x00000020,
-    D3D10_SHADER_FORCE_VS_SOFTWARE_NO_OPT = 0x00000040,
-    D3D10_SHADER_FORCE_PS_SOFTWARE_NO_OPT = 0x00000080,
+    D3D10_SHADER_DEBUG                    = 0x00000001U,
+    D3D10_SHADER_SKIP_VALIDATION          = 0x00000002U,
+    D3D10_SHADER_SKIP_OPTIMIZATION        = 0x00000004U,
+    D3D10_SHADER_PACK_MATRIX_ROW_MAJOR    = 0x00000008U,
+    D3D10_SHADER_PACK_MATRIX_COLUMN_MAJOR = 0x00000010U,
+    D3D10_SHADER_PARTIAL_PRECISION        = 0x00000020U,
+    D3D10_SHADER_FORCE_VS_SOFTWARE_NO_OPT = 0x00000040U,
+    D3D10_SHADER_FORCE_PS_SOFTWARE_NO_OPT = 0x00000080U,
 }
 
 enum : uint
 {
-    D3D10_SHADER_NO_PRESHADER                   = 0x00000100,
-    D3D10_SHADER_AVOID_FLOW_CONTROL             = 0x00000200,
-    D3D10_SHADER_PREFER_FLOW_CONTROL            = 0x00000400,
-    D3D10_SHADER_ENABLE_STRICTNESS              = 0x00000800,
-    D3D10_SHADER_ENABLE_BACKWARDS_COMPATIBILITY = 0x00001000,
+    D3D10_SHADER_NO_PRESHADER                   = 0x00000100U,
+    D3D10_SHADER_AVOID_FLOW_CONTROL             = 0x00000200U,
+    D3D10_SHADER_PREFER_FLOW_CONTROL            = 0x00000400U,
+    D3D10_SHADER_ENABLE_STRICTNESS              = 0x00000800U,
+    D3D10_SHADER_ENABLE_BACKWARDS_COMPATIBILITY = 0x00001000U,
 }
 
 enum : uint
 {
-    D3D10_SHADER_IEEE_STRICTNESS     = 0x00002000,
-    D3D10_SHADER_WARNINGS_ARE_ERRORS = 0x00040000,
-    D3D10_SHADER_RESOURCES_MAY_ALIAS = 0x00080000,
+    D3D10_SHADER_IEEE_STRICTNESS     = 0x00002000U,
+    D3D10_SHADER_WARNINGS_ARE_ERRORS = 0x00040000U,
+    D3D10_SHADER_RESOURCES_MAY_ALIAS = 0x00080000U,
 }
 
-enum uint D3D10_ENABLE_UNBOUNDED_DESCRIPTOR_TABLES = 0x00100000;
-enum uint D3D10_ALL_RESOURCES_BOUND = 0x00200000;
+enum uint D3D10_ENABLE_UNBOUNDED_DESCRIPTOR_TABLES = 0x00100000U;
+enum uint D3D10_ALL_RESOURCES_BOUND = 0x00200000U;
 
 enum : uint
 {
-    D3D10_SHADER_DEBUG_NAME_FOR_SOURCE = 0x00400000,
-    D3D10_SHADER_DEBUG_NAME_FOR_BINARY = 0x00800000,
-}
-
-enum : uint
-{
-    D3D10_SHADER_OPTIMIZATION_LEVEL0                = 0x00004000,
-    D3D10_SHADER_OPTIMIZATION_LEVEL1                = 0x00000000,
-    D3D10_SHADER_OPTIMIZATION_LEVEL3                = 0x00008000,
-    D3D10_SHADER_FLAGS2_FORCE_ROOT_SIGNATURE_LATEST = 0x00000000,
-    D3D10_SHADER_FLAGS2_FORCE_ROOT_SIGNATURE_1_0    = 0x00000010,
-    D3D10_SHADER_FLAGS2_FORCE_ROOT_SIGNATURE_1_1    = 0x00000020,
+    D3D10_SHADER_DEBUG_NAME_FOR_SOURCE = 0x00400000U,
+    D3D10_SHADER_DEBUG_NAME_FOR_BINARY = 0x00800000U,
 }
 
 enum : uint
 {
-    D3D10_EFFECT_COMPILE_CHILD_EFFECT   = 0x00000001,
-    D3D10_EFFECT_COMPILE_ALLOW_SLOW_OPS = 0x00000002,
+    D3D10_SHADER_OPTIMIZATION_LEVEL0                = 0x00004000U,
+    D3D10_SHADER_OPTIMIZATION_LEVEL1                = 0x00000000U,
+    D3D10_SHADER_OPTIMIZATION_LEVEL3                = 0x00008000U,
+    D3D10_SHADER_FLAGS2_FORCE_ROOT_SIGNATURE_LATEST = 0x00000000U,
+    D3D10_SHADER_FLAGS2_FORCE_ROOT_SIGNATURE_1_0    = 0x00000010U,
+    D3D10_SHADER_FLAGS2_FORCE_ROOT_SIGNATURE_1_1    = 0x00000020U,
 }
 
 enum : uint
 {
-    D3D10_EFFECT_SINGLE_THREADED              = 0x00000008,
-    D3D10_EFFECT_VARIABLE_POOLED              = 0x00000001,
-    D3D10_EFFECT_VARIABLE_ANNOTATION          = 0x00000002,
-    D3D10_EFFECT_VARIABLE_EXPLICIT_BIND_POINT = 0x00000004,
+    D3D10_EFFECT_COMPILE_CHILD_EFFECT   = 0x00000001U,
+    D3D10_EFFECT_COMPILE_ALLOW_SLOW_OPS = 0x00000002U,
+}
+
+enum : uint
+{
+    D3D10_EFFECT_SINGLE_THREADED              = 0x00000008U,
+    D3D10_EFFECT_VARIABLE_POOLED              = 0x00000001U,
+    D3D10_EFFECT_VARIABLE_ANNOTATION          = 0x00000002U,
+    D3D10_EFFECT_VARIABLE_EXPLICIT_BIND_POINT = 0x00000004U,
 }
 
 enum GUID GUID_DeviceType = GUID("d722fb4d-7a68-437a-b20c-5804ee2494a6");
@@ -1576,7 +1620,7 @@ alias PFN_D3D10_CREATE_DEVICE_AND_SWAP_CHAIN1 = HRESULT function(IDXGIAdapter pa
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_input_element_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_input_element_desc
 struct D3D10_INPUT_ELEMENT_DESC
 {
     const(PSTR) SemanticName;
@@ -1588,7 +1632,7 @@ struct D3D10_INPUT_ELEMENT_DESC
     uint        InstanceDataStepRate;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_so_declaration_entry))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_so_declaration_entry
 struct D3D10_SO_DECLARATION_ENTRY
 {
     const(PSTR) SemanticName;
@@ -1598,7 +1642,7 @@ struct D3D10_SO_DECLARATION_ENTRY
     ubyte       OutputSlot;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_viewport))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_viewport
 struct D3D10_VIEWPORT
 {
     int   TopLeftX;
@@ -1609,7 +1653,7 @@ struct D3D10_VIEWPORT
     float MaxDepth;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_box))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_box
 struct D3D10_BOX
 {
     uint left;
@@ -1620,7 +1664,7 @@ struct D3D10_BOX
     uint back;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_depth_stencilop_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_depth_stencilop_desc
 struct D3D10_DEPTH_STENCILOP_DESC
 {
     D3D10_STENCIL_OP StencilFailOp;
@@ -1629,7 +1673,7 @@ struct D3D10_DEPTH_STENCILOP_DESC
     D3D10_COMPARISON_FUNC StencilFunc;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_depth_stencil_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_depth_stencil_desc
 struct D3D10_DEPTH_STENCIL_DESC
 {
     BOOL  DepthEnable;
@@ -1642,7 +1686,7 @@ struct D3D10_DEPTH_STENCIL_DESC
     D3D10_DEPTH_STENCILOP_DESC BackFace;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_blend_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_blend_desc
 struct D3D10_BLEND_DESC
 {
     BOOL           AlphaToCoverageEnable;
@@ -1656,7 +1700,7 @@ struct D3D10_BLEND_DESC
     ubyte[8]       RenderTargetWriteMask;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_rasterizer_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_rasterizer_desc
 struct D3D10_RASTERIZER_DESC
 {
     D3D10_FILL_MODE FillMode;
@@ -1671,7 +1715,7 @@ struct D3D10_RASTERIZER_DESC
     BOOL            AntialiasedLineEnable;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_subresource_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_subresource_data
 struct D3D10_SUBRESOURCE_DATA
 {
     const(void)* pSysMem;
@@ -1679,7 +1723,7 @@ struct D3D10_SUBRESOURCE_DATA
     uint         SysMemSlicePitch;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_buffer_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_buffer_desc
 struct D3D10_BUFFER_DESC
 {
     uint        ByteWidth;
@@ -1689,7 +1733,7 @@ struct D3D10_BUFFER_DESC
     uint        MiscFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_texture1d_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_texture1d_desc
 struct D3D10_TEXTURE1D_DESC
 {
     uint        Width;
@@ -1702,7 +1746,7 @@ struct D3D10_TEXTURE1D_DESC
     uint        MiscFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_texture2d_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_texture2d_desc
 struct D3D10_TEXTURE2D_DESC
 {
     uint             Width;
@@ -1717,14 +1761,14 @@ struct D3D10_TEXTURE2D_DESC
     uint             MiscFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_mapped_texture2d))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_mapped_texture2d
 struct D3D10_MAPPED_TEXTURE2D
 {
     void* pData;
     uint  RowPitch;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_texture3d_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_texture3d_desc
 struct D3D10_TEXTURE3D_DESC
 {
     uint        Width;
@@ -1738,7 +1782,7 @@ struct D3D10_TEXTURE3D_DESC
     uint        MiscFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_mapped_texture3d))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_mapped_texture3d
 struct D3D10_MAPPED_TEXTURE3D
 {
     void* pData;
@@ -1746,21 +1790,29 @@ struct D3D10_MAPPED_TEXTURE3D
     uint  DepthPitch;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_buffer_srv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_buffer_srv
 struct D3D10_BUFFER_SRV
 {
-    _Anonymous1_e__Union Anonymous1;
-    _Anonymous2_e__Union Anonymous2;
+    union
+    {
+        uint FirstElement;
+        uint ElementOffset;
+    }
+    union
+    {
+        uint NumElements;
+        uint ElementWidth;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex1d_srv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex1d_srv
 struct D3D10_TEX1D_SRV
 {
     uint MostDetailedMip;
     uint MipLevels;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex1d_array_srv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex1d_array_srv
 struct D3D10_TEX1D_ARRAY_SRV
 {
     uint MostDetailedMip;
@@ -1769,14 +1821,14 @@ struct D3D10_TEX1D_ARRAY_SRV
     uint ArraySize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex2d_srv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex2d_srv
 struct D3D10_TEX2D_SRV
 {
     uint MostDetailedMip;
     uint MipLevels;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex2d_array_srv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex2d_array_srv
 struct D3D10_TEX2D_ARRAY_SRV
 {
     uint MostDetailedMip;
@@ -1785,55 +1837,74 @@ struct D3D10_TEX2D_ARRAY_SRV
     uint ArraySize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex3d_srv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex3d_srv
 struct D3D10_TEX3D_SRV
 {
     uint MostDetailedMip;
     uint MipLevels;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_texcube_srv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_texcube_srv
 struct D3D10_TEXCUBE_SRV
 {
     uint MostDetailedMip;
     uint MipLevels;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex2dms_srv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex2dms_srv
 struct D3D10_TEX2DMS_SRV
 {
     uint UnusedField_NothingToDefine;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex2dms_array_srv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex2dms_array_srv
 struct D3D10_TEX2DMS_ARRAY_SRV
 {
     uint FirstArraySlice;
     uint ArraySize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_shader_resource_view_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_shader_resource_view_desc
 struct D3D10_SHADER_RESOURCE_VIEW_DESC
 {
-    DXGI_FORMAT         Format;
-    D3D_SRV_DIMENSION   ViewDimension;
-    _Anonymous_e__Union Anonymous;
+    DXGI_FORMAT       Format;
+    D3D_SRV_DIMENSION ViewDimension;
+    union
+    {
+        D3D10_BUFFER_SRV  Buffer;
+        D3D10_TEX1D_SRV   Texture1D;
+        D3D10_TEX1D_ARRAY_SRV Texture1DArray;
+        D3D10_TEX2D_SRV   Texture2D;
+        D3D10_TEX2D_ARRAY_SRV Texture2DArray;
+        D3D10_TEX2DMS_SRV Texture2DMS;
+        D3D10_TEX2DMS_ARRAY_SRV Texture2DMSArray;
+        D3D10_TEX3D_SRV   Texture3D;
+        D3D10_TEXCUBE_SRV TextureCube;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_buffer_rtv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_buffer_rtv
 struct D3D10_BUFFER_RTV
 {
-    _Anonymous1_e__Union Anonymous1;
-    _Anonymous2_e__Union Anonymous2;
+    union
+    {
+        uint FirstElement;
+        uint ElementOffset;
+    }
+    union
+    {
+        uint NumElements;
+        uint ElementWidth;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex1d_rtv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex1d_rtv
 struct D3D10_TEX1D_RTV
 {
     uint MipSlice;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex1d_array_rtv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex1d_array_rtv
 struct D3D10_TEX1D_ARRAY_RTV
 {
     uint MipSlice;
@@ -1841,19 +1912,19 @@ struct D3D10_TEX1D_ARRAY_RTV
     uint ArraySize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex2d_rtv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex2d_rtv
 struct D3D10_TEX2D_RTV
 {
     uint MipSlice;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex2dms_rtv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex2dms_rtv
 struct D3D10_TEX2DMS_RTV
 {
     uint UnusedField_NothingToDefine;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex2d_array_rtv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex2d_array_rtv
 struct D3D10_TEX2D_ARRAY_RTV
 {
     uint MipSlice;
@@ -1861,14 +1932,14 @@ struct D3D10_TEX2D_ARRAY_RTV
     uint ArraySize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex2dms_array_rtv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex2dms_array_rtv
 struct D3D10_TEX2DMS_ARRAY_RTV
 {
     uint FirstArraySlice;
     uint ArraySize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex3d_rtv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex3d_rtv
 struct D3D10_TEX3D_RTV
 {
     uint MipSlice;
@@ -1876,21 +1947,31 @@ struct D3D10_TEX3D_RTV
     uint WSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_render_target_view_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_render_target_view_desc
 struct D3D10_RENDER_TARGET_VIEW_DESC
 {
     DXGI_FORMAT         Format;
     D3D10_RTV_DIMENSION ViewDimension;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        D3D10_BUFFER_RTV  Buffer;
+        D3D10_TEX1D_RTV   Texture1D;
+        D3D10_TEX1D_ARRAY_RTV Texture1DArray;
+        D3D10_TEX2D_RTV   Texture2D;
+        D3D10_TEX2D_ARRAY_RTV Texture2DArray;
+        D3D10_TEX2DMS_RTV Texture2DMS;
+        D3D10_TEX2DMS_ARRAY_RTV Texture2DMSArray;
+        D3D10_TEX3D_RTV   Texture3D;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex1d_dsv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex1d_dsv
 struct D3D10_TEX1D_DSV
 {
     uint MipSlice;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex1d_array_dsv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex1d_array_dsv
 struct D3D10_TEX1D_ARRAY_DSV
 {
     uint MipSlice;
@@ -1898,13 +1979,13 @@ struct D3D10_TEX1D_ARRAY_DSV
     uint ArraySize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex2d_dsv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex2d_dsv
 struct D3D10_TEX2D_DSV
 {
     uint MipSlice;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex2d_array_dsv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex2d_array_dsv
 struct D3D10_TEX2D_ARRAY_DSV
 {
     uint MipSlice;
@@ -1912,28 +1993,36 @@ struct D3D10_TEX2D_ARRAY_DSV
     uint ArraySize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex2dms_dsv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex2dms_dsv
 struct D3D10_TEX2DMS_DSV
 {
     uint UnusedField_NothingToDefine;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex2dms_array_dsv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_tex2dms_array_dsv
 struct D3D10_TEX2DMS_ARRAY_DSV
 {
     uint FirstArraySlice;
     uint ArraySize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_depth_stencil_view_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_depth_stencil_view_desc
 struct D3D10_DEPTH_STENCIL_VIEW_DESC
 {
     DXGI_FORMAT         Format;
     D3D10_DSV_DIMENSION ViewDimension;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        D3D10_TEX1D_DSV   Texture1D;
+        D3D10_TEX1D_ARRAY_DSV Texture1DArray;
+        D3D10_TEX2D_DSV   Texture2D;
+        D3D10_TEX2D_ARRAY_DSV Texture2DArray;
+        D3D10_TEX2DMS_DSV Texture2DMS;
+        D3D10_TEX2DMS_ARRAY_DSV Texture2DMSArray;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_sampler_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_sampler_desc
 struct D3D10_SAMPLER_DESC
 {
     D3D10_FILTER Filter;
@@ -1948,21 +2037,21 @@ struct D3D10_SAMPLER_DESC
     float        MaxLOD;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_query_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_query_desc
 struct D3D10_QUERY_DESC
 {
     D3D10_QUERY Query;
     uint        MiscFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_query_data_timestamp_disjoint))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_query_data_timestamp_disjoint
 struct D3D10_QUERY_DATA_TIMESTAMP_DISJOINT
 {
     ulong Frequency;
     BOOL  Disjoint;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_query_data_pipeline_statistics))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_query_data_pipeline_statistics
 struct D3D10_QUERY_DATA_PIPELINE_STATISTICS
 {
     ulong IAVertices;
@@ -1975,21 +2064,21 @@ struct D3D10_QUERY_DATA_PIPELINE_STATISTICS
     ulong PSInvocations;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_query_data_so_statistics))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_query_data_so_statistics
 struct D3D10_QUERY_DATA_SO_STATISTICS
 {
     ulong NumPrimitivesWritten;
     ulong PrimitivesStorageNeeded;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_counter_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_counter_desc
 struct D3D10_COUNTER_DESC
 {
     D3D10_COUNTER Counter;
     uint          MiscFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_counter_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/ns-d3d10-d3d10_counter_info
 struct D3D10_COUNTER_INFO
 {
     D3D10_COUNTER LastDeviceDependentCounter;
@@ -1997,7 +2086,7 @@ struct D3D10_COUNTER_INFO
     ubyte         NumDetectableParallelUnits;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/ns-d3d10sdklayers-d3d10_message))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/ns-d3d10sdklayers-d3d10_message
 struct D3D10_MESSAGE
 {
     D3D10_MESSAGE_CATEGORY Category;
@@ -2007,7 +2096,7 @@ struct D3D10_MESSAGE
     size_t           DescriptionByteLength;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/ns-d3d10sdklayers-d3d10_info_queue_filter_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/ns-d3d10sdklayers-d3d10_info_queue_filter_desc
 struct D3D10_INFO_QUEUE_FILTER_DESC
 {
     uint              NumCategories;
@@ -2018,14 +2107,14 @@ struct D3D10_INFO_QUEUE_FILTER_DESC
     D3D10_MESSAGE_ID* pIDList;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/ns-d3d10sdklayers-d3d10_info_queue_filter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/ns-d3d10sdklayers-d3d10_info_queue_filter
 struct D3D10_INFO_QUEUE_FILTER
 {
     D3D10_INFO_QUEUE_FILTER_DESC AllowList;
     D3D10_INFO_QUEUE_FILTER_DESC DenyList;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10shader/ns-d3d10shader-d3d10_shader_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/ns-d3d10shader-d3d10_shader_desc
 struct D3D10_SHADER_DESC
 {
     uint        Version;
@@ -2058,7 +2147,7 @@ struct D3D10_SHADER_DESC
     uint        GSMaxOutputVertexCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10shader/ns-d3d10shader-d3d10_shader_buffer_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/ns-d3d10shader-d3d10_shader_buffer_desc
 struct D3D10_SHADER_BUFFER_DESC
 {
     const(PSTR)      Name;
@@ -2068,7 +2157,7 @@ struct D3D10_SHADER_BUFFER_DESC
     uint             uFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10shader/ns-d3d10shader-d3d10_shader_variable_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/ns-d3d10shader-d3d10_shader_variable_desc
 struct D3D10_SHADER_VARIABLE_DESC
 {
     const(PSTR) Name;
@@ -2078,7 +2167,7 @@ struct D3D10_SHADER_VARIABLE_DESC
     void*       DefaultValue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10shader/ns-d3d10shader-d3d10_shader_type_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/ns-d3d10shader-d3d10_shader_type_desc
 struct D3D10_SHADER_TYPE_DESC
 {
     D3D_SHADER_VARIABLE_CLASS Class;
@@ -2090,7 +2179,7 @@ struct D3D10_SHADER_TYPE_DESC
     uint Offset;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10shader/ns-d3d10shader-d3d10_shader_input_bind_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/ns-d3d10shader-d3d10_shader_input_bind_desc
 struct D3D10_SHADER_INPUT_BIND_DESC
 {
     const(PSTR)       Name;
@@ -2103,7 +2192,7 @@ struct D3D10_SHADER_INPUT_BIND_DESC
     uint              NumSamples;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10shader/ns-d3d10shader-d3d10_signature_parameter_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/ns-d3d10shader-d3d10_signature_parameter_desc
 struct D3D10_SIGNATURE_PARAMETER_DESC
 {
     const(PSTR) SemanticName;
@@ -2115,7 +2204,7 @@ struct D3D10_SIGNATURE_PARAMETER_DESC
     ubyte       ReadWriteMask;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/ns-d3d10effect-d3d10_state_block_mask))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/ns-d3d10effect-d3d10_state_block_mask
 struct D3D10_STATE_BLOCK_MASK
 {
     ubyte     VS;
@@ -2144,7 +2233,7 @@ struct D3D10_STATE_BLOCK_MASK
     ubyte     Predication;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/ns-d3d10effect-d3d10_effect_type_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/ns-d3d10effect-d3d10_effect_type_desc
 struct D3D10_EFFECT_TYPE_DESC
 {
     const(PSTR) TypeName;
@@ -2159,7 +2248,7 @@ struct D3D10_EFFECT_TYPE_DESC
     uint        Stride;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/ns-d3d10effect-d3d10_effect_variable_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/ns-d3d10effect-d3d10_effect_variable_desc
 struct D3D10_EFFECT_VARIABLE_DESC
 {
     const(PSTR) Name;
@@ -2170,7 +2259,7 @@ struct D3D10_EFFECT_VARIABLE_DESC
     uint        ExplicitBindPoint;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/ns-d3d10effect-d3d10_effect_shader_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/ns-d3d10effect-d3d10_effect_shader_desc
 struct D3D10_EFFECT_SHADER_DESC
 {
     const(ubyte)* pInputSignature;
@@ -2182,7 +2271,7 @@ struct D3D10_EFFECT_SHADER_DESC
     uint          NumOutputSignatureEntries;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/ns-d3d10effect-d3d10_pass_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/ns-d3d10effect-d3d10_pass_desc
 struct D3D10_PASS_DESC
 {
     const(PSTR) Name;
@@ -2194,14 +2283,14 @@ struct D3D10_PASS_DESC
     float[4]    BlendFactor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/ns-d3d10effect-d3d10_pass_shader_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/ns-d3d10effect-d3d10_pass_shader_desc
 struct D3D10_PASS_SHADER_DESC
 {
     ID3D10EffectShaderVariable pShaderVariable;
     uint ShaderIndex;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/ns-d3d10effect-d3d10_technique_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/ns-d3d10effect-d3d10_technique_desc
 struct D3D10_TECHNIQUE_DESC
 {
     const(PSTR) Name;
@@ -2209,7 +2298,7 @@ struct D3D10_TECHNIQUE_DESC
     uint        Annotations;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/ns-d3d10effect-d3d10_effect_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/ns-d3d10effect-d3d10_effect_desc
 struct D3D10_EFFECT_DESC
 {
     BOOL IsChildEffect;
@@ -2220,7 +2309,7 @@ struct D3D10_EFFECT_DESC
     uint Techniques;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10_1/ns-d3d10_1-d3d10_render_target_blend_desc1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1/ns-d3d10_1-d3d10_render_target_blend_desc1
 struct D3D10_RENDER_TARGET_BLEND_DESC1
 {
     BOOL           BlendEnable;
@@ -2233,7 +2322,7 @@ struct D3D10_RENDER_TARGET_BLEND_DESC1
     ubyte          RenderTargetWriteMask;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10_1/ns-d3d10_1-d3d10_blend_desc1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1/ns-d3d10_1-d3d10_blend_desc1
 struct D3D10_BLEND_DESC1
 {
     BOOL AlphaToCoverageEnable;
@@ -2241,7 +2330,7 @@ struct D3D10_BLEND_DESC1
     D3D10_RENDER_TARGET_BLEND_DESC1[8] RenderTarget;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10_1/ns-d3d10_1-d3d10_texcube_array_srv1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1/ns-d3d10_1-d3d10_texcube_array_srv1
 struct D3D10_TEXCUBE_ARRAY_SRV1
 {
     uint MostDetailedMip;
@@ -2250,15 +2339,27 @@ struct D3D10_TEXCUBE_ARRAY_SRV1
     uint NumCubes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10_1/ns-d3d10_1-d3d10_shader_resource_view_desc1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1/ns-d3d10_1-d3d10_shader_resource_view_desc1
 struct D3D10_SHADER_RESOURCE_VIEW_DESC1
 {
-    DXGI_FORMAT         Format;
-    D3D_SRV_DIMENSION   ViewDimension;
-    _Anonymous_e__Union Anonymous;
+    DXGI_FORMAT       Format;
+    D3D_SRV_DIMENSION ViewDimension;
+    union
+    {
+        D3D10_BUFFER_SRV  Buffer;
+        D3D10_TEX1D_SRV   Texture1D;
+        D3D10_TEX1D_ARRAY_SRV Texture1DArray;
+        D3D10_TEX2D_SRV   Texture2D;
+        D3D10_TEX2D_ARRAY_SRV Texture2DArray;
+        D3D10_TEX2DMS_SRV Texture2DMS;
+        D3D10_TEX2DMS_ARRAY_SRV Texture2DMSArray;
+        D3D10_TEX3D_SRV   Texture3D;
+        D3D10_TEXCUBE_SRV TextureCube;
+        D3D10_TEXCUBE_ARRAY_SRV1 TextureCubeArray;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10_1shader/ns-d3d10_1shader-d3d10_shader_debug_token_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1shader/ns-d3d10_1shader-d3d10_shader_debug_token_info
 struct D3D10_SHADER_DEBUG_TOKEN_INFO
 {
     uint File;
@@ -2268,7 +2369,7 @@ struct D3D10_SHADER_DEBUG_TOKEN_INFO
     uint TokenId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10_1shader/ns-d3d10_1shader-d3d10_shader_debug_var_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1shader/ns-d3d10_1shader-d3d10_shader_debug_var_info
 struct D3D10_SHADER_DEBUG_VAR_INFO
 {
     uint TokenId;
@@ -2279,7 +2380,7 @@ struct D3D10_SHADER_DEBUG_VAR_INFO
     uint ScopeVarOffset;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10_1shader/ns-d3d10_1shader-d3d10_shader_debug_input_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1shader/ns-d3d10_1shader-d3d10_shader_debug_input_info
 struct D3D10_SHADER_DEBUG_INPUT_INFO
 {
     uint Var;
@@ -2290,7 +2391,7 @@ struct D3D10_SHADER_DEBUG_INPUT_INFO
     uint InitialValue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10_1shader/ns-d3d10_1shader-d3d10_shader_debug_scopevar_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1shader/ns-d3d10_1shader-d3d10_shader_debug_scopevar_info
 struct D3D10_SHADER_DEBUG_SCOPEVAR_INFO
 {
     uint TokenId;
@@ -2306,7 +2407,7 @@ struct D3D10_SHADER_DEBUG_SCOPEVAR_INFO
     uint uFirstVariable;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10_1shader/ns-d3d10_1shader-d3d10_shader_debug_scope_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1shader/ns-d3d10_1shader-d3d10_shader_debug_scope_info
 struct D3D10_SHADER_DEBUG_SCOPE_INFO
 {
     D3D10_SHADER_DEBUG_SCOPETYPE ScopeType;
@@ -2316,7 +2417,7 @@ struct D3D10_SHADER_DEBUG_SCOPE_INFO
     uint VariableData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10_1shader/ns-d3d10_1shader-d3d10_shader_debug_outputvar))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1shader/ns-d3d10_1shader-d3d10_shader_debug_outputvar
 struct D3D10_SHADER_DEBUG_OUTPUTVAR
 {
     uint  Var;
@@ -2330,7 +2431,7 @@ struct D3D10_SHADER_DEBUG_OUTPUTVAR
     BOOL  bInfPossible;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10_1shader/ns-d3d10_1shader-d3d10_shader_debug_outputreg_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1shader/ns-d3d10_1shader-d3d10_shader_debug_outputreg_info
 struct D3D10_SHADER_DEBUG_OUTPUTREG_INFO
 {
     D3D10_SHADER_DEBUG_REGTYPE OutputRegisterSet;
@@ -2342,7 +2443,7 @@ struct D3D10_SHADER_DEBUG_OUTPUTREG_INFO
     uint    IndexComp;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10_1shader/ns-d3d10_1shader-d3d10_shader_debug_inst_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1shader/ns-d3d10_1shader-d3d10_shader_debug_inst_info
 struct D3D10_SHADER_DEBUG_INST_INFO
 {
     uint Id;
@@ -2357,7 +2458,7 @@ struct D3D10_SHADER_DEBUG_INST_INFO
     uint AccessedVarsInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10_1shader/ns-d3d10_1shader-d3d10_shader_debug_file_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1shader/ns-d3d10_1shader-d3d10_shader_debug_file_info
 struct D3D10_SHADER_DEBUG_FILE_INFO
 {
     uint FileName;
@@ -2366,7 +2467,7 @@ struct D3D10_SHADER_DEBUG_FILE_INFO
     uint FileLen;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10_1shader/ns-d3d10_1shader-d3d10_shader_debug_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1shader/ns-d3d10_1shader-d3d10_shader_debug_info
 struct D3D10_SHADER_DEBUG_INFO
 {
     uint Size;
@@ -2394,148 +2495,148 @@ struct D3D10_SHADER_DEBUG_INFO
 
 // Functions
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10misc/nf-d3d10misc-d3d10createdevice))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10misc/nf-d3d10misc-d3d10createdevice
 @DllImport("d3d10.dll")
 HRESULT D3D10CreateDevice(IDXGIAdapter pAdapter, D3D10_DRIVER_TYPE DriverType, HMODULE Software, uint Flags, 
                           uint SDKVersion, ID3D10Device* ppDevice);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10misc/nf-d3d10misc-d3d10createdeviceandswapchain))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10misc/nf-d3d10misc-d3d10createdeviceandswapchain
 @DllImport("d3d10.dll")
 HRESULT D3D10CreateDeviceAndSwapChain(IDXGIAdapter pAdapter, D3D10_DRIVER_TYPE DriverType, HMODULE Software, 
                                       uint Flags, uint SDKVersion, DXGI_SWAP_CHAIN_DESC* pSwapChainDesc, 
                                       IDXGISwapChain* ppSwapChain, ID3D10Device* ppDevice);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10misc/nf-d3d10misc-d3d10createblob))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10misc/nf-d3d10misc-d3d10createblob
 @DllImport("d3d10.dll")
 HRESULT D3D10CreateBlob(size_t NumBytes, ID3DBlob* ppBuffer);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-d3d10compileshader))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-d3d10compileshader
 @DllImport("d3d10.dll")
 HRESULT D3D10CompileShader(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(PSTR) pSrcData, 
                            size_t SrcDataSize, const(PSTR) pFileName, const(D3D_SHADER_MACRO)* pDefines, 
                            ID3DInclude pInclude, const(PSTR) pFunctionName, const(PSTR) pProfile, uint Flags, 
                            ID3DBlob* ppShader, ID3DBlob* ppErrorMsgs);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-d3d10disassembleshader))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-d3d10disassembleshader
 @DllImport("d3d10.dll")
 HRESULT D3D10DisassembleShader(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(void)* pShader, 
                                size_t BytecodeLength, BOOL EnableColorCode, const(PSTR) pComments, 
                                ID3DBlob* ppDisassembly);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-d3d10getpixelshaderprofile))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-d3d10getpixelshaderprofile
 @DllImport("d3d10.dll")
 PSTR D3D10GetPixelShaderProfile(ID3D10Device pDevice);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-d3d10getvertexshaderprofile))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-d3d10getvertexshaderprofile
 @DllImport("d3d10.dll")
 PSTR D3D10GetVertexShaderProfile(ID3D10Device pDevice);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-d3d10getgeometryshaderprofile))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-d3d10getgeometryshaderprofile
 @DllImport("d3d10.dll")
 PSTR D3D10GetGeometryShaderProfile(ID3D10Device pDevice);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-d3d10reflectshader))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-d3d10reflectshader
 @DllImport("d3d10.dll")
 HRESULT D3D10ReflectShader(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(void)* pShaderBytecode, 
                            size_t BytecodeLength, ID3D10ShaderReflection* ppReflector);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-d3d10preprocessshader))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-d3d10preprocessshader
 @DllImport("d3d10.dll")
 HRESULT D3D10PreprocessShader(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(PSTR) pSrcData, 
                               size_t SrcDataSize, const(PSTR) pFileName, const(D3D_SHADER_MACRO)* pDefines, 
                               ID3DInclude pInclude, ID3DBlob* ppShaderText, ID3DBlob* ppErrorMsgs);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-d3d10getinputsignatureblob))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-d3d10getinputsignatureblob
 @DllImport("d3d10.dll")
 HRESULT D3D10GetInputSignatureBlob(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(void)* pShaderBytecode, 
                                    size_t BytecodeLength, ID3DBlob* ppSignatureBlob);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-d3d10getoutputsignatureblob))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-d3d10getoutputsignatureblob
 @DllImport("d3d10.dll")
 HRESULT D3D10GetOutputSignatureBlob(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(void)* pShaderBytecode, 
                                     size_t BytecodeLength, ID3DBlob* ppSignatureBlob);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-d3d10getinputandoutputsignatureblob))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-d3d10getinputandoutputsignatureblob
 @DllImport("d3d10.dll")
 HRESULT D3D10GetInputAndOutputSignatureBlob(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(void)* pShaderBytecode, 
                                             size_t BytecodeLength, ID3DBlob* ppSignatureBlob);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-d3d10getshaderdebuginfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-d3d10getshaderdebuginfo
 @DllImport("d3d10.dll")
 HRESULT D3D10GetShaderDebugInfo(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(void)* pShaderBytecode, 
                                 size_t BytecodeLength, ID3DBlob* ppDebugInfo);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-d3d10stateblockmaskunion))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-d3d10stateblockmaskunion
 @DllImport("d3d10.dll")
 HRESULT D3D10StateBlockMaskUnion(D3D10_STATE_BLOCK_MASK* pA, D3D10_STATE_BLOCK_MASK* pB, 
                                  D3D10_STATE_BLOCK_MASK* pResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-d3d10stateblockmaskintersect))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-d3d10stateblockmaskintersect
 @DllImport("d3d10.dll")
 HRESULT D3D10StateBlockMaskIntersect(D3D10_STATE_BLOCK_MASK* pA, D3D10_STATE_BLOCK_MASK* pB, 
                                      D3D10_STATE_BLOCK_MASK* pResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-d3d10stateblockmaskdifference))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-d3d10stateblockmaskdifference
 @DllImport("d3d10.dll")
 HRESULT D3D10StateBlockMaskDifference(D3D10_STATE_BLOCK_MASK* pA, D3D10_STATE_BLOCK_MASK* pB, 
                                       D3D10_STATE_BLOCK_MASK* pResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-d3d10stateblockmaskenablecapture))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-d3d10stateblockmaskenablecapture
 @DllImport("d3d10.dll")
 HRESULT D3D10StateBlockMaskEnableCapture(D3D10_STATE_BLOCK_MASK* pMask, D3D10_DEVICE_STATE_TYPES StateType, 
                                          uint RangeStart, uint RangeLength);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-d3d10stateblockmaskdisablecapture))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-d3d10stateblockmaskdisablecapture
 @DllImport("d3d10.dll")
 HRESULT D3D10StateBlockMaskDisableCapture(D3D10_STATE_BLOCK_MASK* pMask, D3D10_DEVICE_STATE_TYPES StateType, 
                                           uint RangeStart, uint RangeLength);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-d3d10stateblockmaskenableall))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-d3d10stateblockmaskenableall
 @DllImport("d3d10.dll")
 HRESULT D3D10StateBlockMaskEnableAll(D3D10_STATE_BLOCK_MASK* pMask);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-d3d10stateblockmaskdisableall))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-d3d10stateblockmaskdisableall
 @DllImport("d3d10.dll")
 HRESULT D3D10StateBlockMaskDisableAll(D3D10_STATE_BLOCK_MASK* pMask);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-d3d10stateblockmaskgetsetting))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-d3d10stateblockmaskgetsetting
 @DllImport("d3d10.dll")
 BOOL D3D10StateBlockMaskGetSetting(D3D10_STATE_BLOCK_MASK* pMask, D3D10_DEVICE_STATE_TYPES StateType, uint Entry);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-d3d10createstateblock))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-d3d10createstateblock
 @DllImport("d3d10.dll")
 HRESULT D3D10CreateStateBlock(ID3D10Device pDevice, D3D10_STATE_BLOCK_MASK* pStateBlockMask, 
                               ID3D10StateBlock* ppStateBlock);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-d3d10compileeffectfrommemory))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-d3d10compileeffectfrommemory
 @DllImport("d3d10.dll")
 HRESULT D3D10CompileEffectFromMemory(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/void* pData, 
                                      size_t DataLength, const(PSTR) pSrcFileName, const(D3D_SHADER_MACRO)* pDefines, 
                                      ID3DInclude pInclude, uint HLSLFlags, uint FXFlags, ID3DBlob* ppCompiledEffect, 
                                      ID3DBlob* ppErrors);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-d3d10createeffectfrommemory))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-d3d10createeffectfrommemory
 @DllImport("d3d10.dll")
 HRESULT D3D10CreateEffectFromMemory(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/void* pData, 
                                     size_t DataLength, uint FXFlags, ID3D10Device pDevice, 
                                     ID3D10EffectPool pEffectPool, ID3D10Effect* ppEffect);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-d3d10createeffectpoolfrommemory))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-d3d10createeffectpoolfrommemory
 @DllImport("d3d10.dll")
 HRESULT D3D10CreateEffectPoolFromMemory(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/void* pData, 
                                         size_t DataLength, uint FXFlags, ID3D10Device pDevice, 
                                         ID3D10EffectPool* ppEffectPool);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-d3d10disassembleeffect))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-d3d10disassembleeffect
 @DllImport("d3d10.dll")
 HRESULT D3D10DisassembleEffect(ID3D10Effect pEffect, BOOL EnableColorCode, ID3DBlob* ppDisassembly);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10_1/nf-d3d10_1-d3d10createdevice1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1/nf-d3d10_1-d3d10createdevice1
 @DllImport("d3d10_1.dll")
 HRESULT D3D10CreateDevice1(IDXGIAdapter pAdapter, D3D10_DRIVER_TYPE DriverType, HMODULE Software, uint Flags, 
                            D3D10_FEATURE_LEVEL1 HardwareLevel, uint SDKVersion, ID3D10Device1* ppDevice);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10_1/nf-d3d10_1-d3d10createdeviceandswapchain1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1/nf-d3d10_1-d3d10createdeviceandswapchain1
 @DllImport("d3d10_1.dll")
 HRESULT D3D10CreateDeviceAndSwapChain1(IDXGIAdapter pAdapter, D3D10_DRIVER_TYPE DriverType, HMODULE Software, 
                                        uint Flags, D3D10_FEATURE_LEVEL1 HardwareLevel, uint SDKVersion, 
@@ -2546,1080 +2647,1080 @@ HRESULT D3D10CreateDeviceAndSwapChain1(IDXGIAdapter pAdapter, D3D10_DRIVER_TYPE 
 // Interfaces
 
 @GUID("9b7e4c00-342c-4106-a19f-4f2704f689f0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10devicechild))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10devicechild
 interface ID3D10DeviceChild : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10devicechild-getdevice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10devicechild-getdevice
     void    GetDevice(ID3D10Device* ppDevice);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10devicechild-getprivatedata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10devicechild-getprivatedata
     HRESULT GetPrivateData(const(GUID)* guid, uint* pDataSize, 
                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/void* pData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10devicechild-setprivatedata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10devicechild-setprivatedata
     HRESULT SetPrivateData(const(GUID)* guid, uint DataSize, 
                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(void)* pData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10devicechild-setprivatedatainterface))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10devicechild-setprivatedatainterface
     HRESULT SetPrivateDataInterface(const(GUID)* guid, const(IUnknown) pData);
 }
 
 @GUID("2b4b1cc8-a4ad-41f8-8322-ca86fc3ec675")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10depthstencilstate))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10depthstencilstate
 interface ID3D10DepthStencilState : ID3D10DeviceChild
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10depthstencilstate-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10depthstencilstate-getdesc
     void GetDesc(D3D10_DEPTH_STENCIL_DESC* pDesc);
 }
 
 @GUID("edad8d19-8a35-4d6d-8566-2ea276cde161")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10blendstate))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10blendstate
 interface ID3D10BlendState : ID3D10DeviceChild
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10blendstate-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10blendstate-getdesc
     void GetDesc(D3D10_BLEND_DESC* pDesc);
 }
 
 @GUID("a2a07292-89af-4345-be2e-c53d9fbb6e9f")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10rasterizerstate))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10rasterizerstate
 interface ID3D10RasterizerState : ID3D10DeviceChild
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10rasterizerstate-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10rasterizerstate-getdesc
     void GetDesc(D3D10_RASTERIZER_DESC* pDesc);
 }
 
 @GUID("9b7e4c01-342c-4106-a19f-4f2704f689f0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10resource))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10resource
 interface ID3D10Resource : ID3D10DeviceChild
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10resource-gettype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10resource-gettype
     void GetType(D3D10_RESOURCE_DIMENSION* rType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10resource-setevictionpriority))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10resource-setevictionpriority
     void SetEvictionPriority(uint EvictionPriority);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10resource-getevictionpriority))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10resource-getevictionpriority
     uint GetEvictionPriority();
 }
 
 @GUID("9b7e4c02-342c-4106-a19f-4f2704f689f0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10buffer))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10buffer
 interface ID3D10Buffer : ID3D10Resource
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10buffer-map))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10buffer-map
     HRESULT Map(D3D10_MAP MapType, uint MapFlags, void** ppData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10buffer-unmap))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10buffer-unmap
     void    Unmap();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10buffer-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10buffer-getdesc
     void    GetDesc(D3D10_BUFFER_DESC* pDesc);
 }
 
 @GUID("9b7e4c03-342c-4106-a19f-4f2704f689f0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10texture1d))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10texture1d
 interface ID3D10Texture1D : ID3D10Resource
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10texture1d-map))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10texture1d-map
     HRESULT Map(uint Subresource, D3D10_MAP MapType, uint MapFlags, void** ppData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10texture1d-unmap))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10texture1d-unmap
     void    Unmap(uint Subresource);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10texture1d-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10texture1d-getdesc
     void    GetDesc(D3D10_TEXTURE1D_DESC* pDesc);
 }
 
 @GUID("9b7e4c04-342c-4106-a19f-4f2704f689f0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10texture2d))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10texture2d
 interface ID3D10Texture2D : ID3D10Resource
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10texture2d-map))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10texture2d-map
     HRESULT Map(uint Subresource, D3D10_MAP MapType, uint MapFlags, D3D10_MAPPED_TEXTURE2D* pMappedTex2D);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10texture2d-unmap))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10texture2d-unmap
     void    Unmap(uint Subresource);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10texture2d-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10texture2d-getdesc
     void    GetDesc(D3D10_TEXTURE2D_DESC* pDesc);
 }
 
 @GUID("9b7e4c05-342c-4106-a19f-4f2704f689f0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10texture3d))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10texture3d
 interface ID3D10Texture3D : ID3D10Resource
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10texture3d-map))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10texture3d-map
     HRESULT Map(uint Subresource, D3D10_MAP MapType, uint MapFlags, D3D10_MAPPED_TEXTURE3D* pMappedTex3D);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10texture3d-unmap))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10texture3d-unmap
     void    Unmap(uint Subresource);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10texture3d-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10texture3d-getdesc
     void    GetDesc(D3D10_TEXTURE3D_DESC* pDesc);
 }
 
 @GUID("c902b03f-60a7-49ba-9936-2a3ab37a7e33")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10view))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10view
 interface ID3D10View : ID3D10DeviceChild
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10view-getresource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10view-getresource
     void GetResource(ID3D10Resource* ppResource);
 }
 
 @GUID("9b7e4c07-342c-4106-a19f-4f2704f689f0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10shaderresourceview))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10shaderresourceview
 interface ID3D10ShaderResourceView : ID3D10View
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10shaderresourceview-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10shaderresourceview-getdesc
     void GetDesc(D3D10_SHADER_RESOURCE_VIEW_DESC* pDesc);
 }
 
 @GUID("9b7e4c08-342c-4106-a19f-4f2704f689f0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10rendertargetview))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10rendertargetview
 interface ID3D10RenderTargetView : ID3D10View
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10rendertargetview-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10rendertargetview-getdesc
     void GetDesc(D3D10_RENDER_TARGET_VIEW_DESC* pDesc);
 }
 
 @GUID("9b7e4c09-342c-4106-a19f-4f2704f689f0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10depthstencilview))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10depthstencilview
 interface ID3D10DepthStencilView : ID3D10View
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10depthstencilview-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10depthstencilview-getdesc
     void GetDesc(D3D10_DEPTH_STENCIL_VIEW_DESC* pDesc);
 }
 
 @GUID("9b7e4c0a-342c-4106-a19f-4f2704f689f0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10vertexshader))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10vertexshader
 interface ID3D10VertexShader : ID3D10DeviceChild
 {
 }
 
 @GUID("6316be88-54cd-4040-ab44-20461bc81f68")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10geometryshader))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10geometryshader
 interface ID3D10GeometryShader : ID3D10DeviceChild
 {
 }
 
 @GUID("4968b601-9d00-4cde-8346-8e7f675819b6")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10pixelshader))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10pixelshader
 interface ID3D10PixelShader : ID3D10DeviceChild
 {
 }
 
 @GUID("9b7e4c0b-342c-4106-a19f-4f2704f689f0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10inputlayout))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10inputlayout
 interface ID3D10InputLayout : ID3D10DeviceChild
 {
 }
 
 @GUID("9b7e4c0c-342c-4106-a19f-4f2704f689f0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10samplerstate))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10samplerstate
 interface ID3D10SamplerState : ID3D10DeviceChild
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10samplerstate-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10samplerstate-getdesc
     void GetDesc(D3D10_SAMPLER_DESC* pDesc);
 }
 
 @GUID("9b7e4c0d-342c-4106-a19f-4f2704f689f0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10asynchronous))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10asynchronous
 interface ID3D10Asynchronous : ID3D10DeviceChild
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10asynchronous-begin))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10asynchronous-begin
     void    Begin();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10asynchronous-end))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10asynchronous-end
     void    End();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10asynchronous-getdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10asynchronous-getdata
     HRESULT GetData(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/void* pData, 
                     uint DataSize, uint GetDataFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10asynchronous-getdatasize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10asynchronous-getdatasize
     uint    GetDataSize();
 }
 
 @GUID("9b7e4c0e-342c-4106-a19f-4f2704f689f0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10query))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10query
 interface ID3D10Query : ID3D10Asynchronous
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10query-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10query-getdesc
     void GetDesc(D3D10_QUERY_DESC* pDesc);
 }
 
 @GUID("9b7e4c10-342c-4106-a19f-4f2704f689f0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10predicate))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10predicate
 interface ID3D10Predicate : ID3D10Query
 {
 }
 
 @GUID("9b7e4c11-342c-4106-a19f-4f2704f689f0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10counter))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10counter
 interface ID3D10Counter : ID3D10Asynchronous
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10counter-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10counter-getdesc
     void GetDesc(D3D10_COUNTER_DESC* pDesc);
 }
 
 @GUID("9b7e4c0f-342c-4106-a19f-4f2704f689f0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10device))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10device
 interface ID3D10Device : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-vssetconstantbuffers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-vssetconstantbuffers
     void    VSSetConstantBuffers(uint StartSlot, uint NumBuffers, ID3D10Buffer* ppConstantBuffers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-pssetshaderresources))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-pssetshaderresources
     void    PSSetShaderResources(uint StartSlot, uint NumViews, ID3D10ShaderResourceView* ppShaderResourceViews);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-pssetshader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-pssetshader
     void    PSSetShader(ID3D10PixelShader pPixelShader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-pssetsamplers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-pssetsamplers
     void    PSSetSamplers(uint StartSlot, uint NumSamplers, ID3D10SamplerState* ppSamplers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-vssetshader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-vssetshader
     void    VSSetShader(ID3D10VertexShader pVertexShader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-drawindexed))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-drawindexed
     void    DrawIndexed(uint IndexCount, uint StartIndexLocation, int BaseVertexLocation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-draw))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-draw
     void    Draw(uint VertexCount, uint StartVertexLocation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-pssetconstantbuffers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-pssetconstantbuffers
     void    PSSetConstantBuffers(uint StartSlot, uint NumBuffers, ID3D10Buffer* ppConstantBuffers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-iasetinputlayout))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-iasetinputlayout
     void    IASetInputLayout(ID3D10InputLayout pInputLayout);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-iasetvertexbuffers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-iasetvertexbuffers
     void    IASetVertexBuffers(uint StartSlot, uint NumBuffers, ID3D10Buffer* ppVertexBuffers, 
                                const(uint)* pStrides, const(uint)* pOffsets);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-iasetindexbuffer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-iasetindexbuffer
     void    IASetIndexBuffer(ID3D10Buffer pIndexBuffer, DXGI_FORMAT Format, uint Offset);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-drawindexedinstanced))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-drawindexedinstanced
     void    DrawIndexedInstanced(uint IndexCountPerInstance, uint InstanceCount, uint StartIndexLocation, 
                                  int BaseVertexLocation, uint StartInstanceLocation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-drawinstanced))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-drawinstanced
     void    DrawInstanced(uint VertexCountPerInstance, uint InstanceCount, uint StartVertexLocation, 
                           uint StartInstanceLocation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-gssetconstantbuffers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-gssetconstantbuffers
     void    GSSetConstantBuffers(uint StartSlot, uint NumBuffers, ID3D10Buffer* ppConstantBuffers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-gssetshader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-gssetshader
     void    GSSetShader(ID3D10GeometryShader pShader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-iasetprimitivetopology))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-iasetprimitivetopology
     void    IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY Topology);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-vssetshaderresources))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-vssetshaderresources
     void    VSSetShaderResources(uint StartSlot, uint NumViews, ID3D10ShaderResourceView* ppShaderResourceViews);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-vssetsamplers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-vssetsamplers
     void    VSSetSamplers(uint StartSlot, uint NumSamplers, ID3D10SamplerState* ppSamplers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-setpredication))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-setpredication
     void    SetPredication(ID3D10Predicate pPredicate, BOOL PredicateValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-gssetshaderresources))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-gssetshaderresources
     void    GSSetShaderResources(uint StartSlot, uint NumViews, ID3D10ShaderResourceView* ppShaderResourceViews);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-gssetsamplers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-gssetsamplers
     void    GSSetSamplers(uint StartSlot, uint NumSamplers, ID3D10SamplerState* ppSamplers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-omsetrendertargets))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-omsetrendertargets
     void    OMSetRenderTargets(uint NumViews, ID3D10RenderTargetView* ppRenderTargetViews, 
                                ID3D10DepthStencilView pDepthStencilView);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-omsetblendstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-omsetblendstate
     void    OMSetBlendState(ID3D10BlendState pBlendState, const(float)* BlendFactor, uint SampleMask);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-omsetdepthstencilstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-omsetdepthstencilstate
     void    OMSetDepthStencilState(ID3D10DepthStencilState pDepthStencilState, uint StencilRef);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-sosettargets))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-sosettargets
     void    SOSetTargets(uint NumBuffers, ID3D10Buffer* ppSOTargets, const(uint)* pOffsets);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-drawauto))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-drawauto
     void    DrawAuto();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-rssetstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-rssetstate
     void    RSSetState(ID3D10RasterizerState pRasterizerState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-rssetviewports))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-rssetviewports
     void    RSSetViewports(uint NumViewports, const(D3D10_VIEWPORT)* pViewports);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-rssetscissorrects))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-rssetscissorrects
     void    RSSetScissorRects(uint NumRects, const(RECT)* pRects);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-copysubresourceregion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-copysubresourceregion
     void    CopySubresourceRegion(ID3D10Resource pDstResource, uint DstSubresource, uint DstX, uint DstY, 
                                   uint DstZ, ID3D10Resource pSrcResource, uint SrcSubresource, 
                                   const(D3D10_BOX)* pSrcBox);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-copyresource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-copyresource
     void    CopyResource(ID3D10Resource pDstResource, ID3D10Resource pSrcResource);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-updatesubresource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-updatesubresource
     void    UpdateSubresource(ID3D10Resource pDstResource, uint DstSubresource, const(D3D10_BOX)* pDstBox, 
                               const(void)* pSrcData, uint SrcRowPitch, uint SrcDepthPitch);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-clearrendertargetview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-clearrendertargetview
     void    ClearRenderTargetView(ID3D10RenderTargetView pRenderTargetView, const(float)* ColorRGBA);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-cleardepthstencilview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-cleardepthstencilview
     void    ClearDepthStencilView(ID3D10DepthStencilView pDepthStencilView, uint ClearFlags, float Depth, 
                                   ubyte Stencil);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-generatemips))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-generatemips
     void    GenerateMips(ID3D10ShaderResourceView pShaderResourceView);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-resolvesubresource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-resolvesubresource
     void    ResolveSubresource(ID3D10Resource pDstResource, uint DstSubresource, ID3D10Resource pSrcResource, 
                                uint SrcSubresource, DXGI_FORMAT Format);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-vsgetconstantbuffers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-vsgetconstantbuffers
     void    VSGetConstantBuffers(uint StartSlot, uint NumBuffers, ID3D10Buffer* ppConstantBuffers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-psgetshaderresources))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-psgetshaderresources
     void    PSGetShaderResources(uint StartSlot, uint NumViews, ID3D10ShaderResourceView* ppShaderResourceViews);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-psgetshader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-psgetshader
     void    PSGetShader(ID3D10PixelShader* ppPixelShader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-psgetsamplers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-psgetsamplers
     void    PSGetSamplers(uint StartSlot, uint NumSamplers, ID3D10SamplerState* ppSamplers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-vsgetshader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-vsgetshader
     void    VSGetShader(ID3D10VertexShader* ppVertexShader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-psgetconstantbuffers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-psgetconstantbuffers
     void    PSGetConstantBuffers(uint StartSlot, uint NumBuffers, ID3D10Buffer* ppConstantBuffers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-iagetinputlayout))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-iagetinputlayout
     void    IAGetInputLayout(ID3D10InputLayout* ppInputLayout);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-iagetvertexbuffers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-iagetvertexbuffers
     void    IAGetVertexBuffers(uint StartSlot, uint NumBuffers, ID3D10Buffer* ppVertexBuffers, uint* pStrides, 
                                uint* pOffsets);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-iagetindexbuffer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-iagetindexbuffer
     void    IAGetIndexBuffer(ID3D10Buffer* pIndexBuffer, DXGI_FORMAT* Format, uint* Offset);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-gsgetconstantbuffers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-gsgetconstantbuffers
     void    GSGetConstantBuffers(uint StartSlot, uint NumBuffers, ID3D10Buffer* ppConstantBuffers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-gsgetshader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-gsgetshader
     void    GSGetShader(ID3D10GeometryShader* ppGeometryShader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-iagetprimitivetopology))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-iagetprimitivetopology
     void    IAGetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY* pTopology);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-vsgetshaderresources))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-vsgetshaderresources
     void    VSGetShaderResources(uint StartSlot, uint NumViews, ID3D10ShaderResourceView* ppShaderResourceViews);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-vsgetsamplers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-vsgetsamplers
     void    VSGetSamplers(uint StartSlot, uint NumSamplers, ID3D10SamplerState* ppSamplers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-getpredication))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-getpredication
     void    GetPredication(ID3D10Predicate* ppPredicate, BOOL* pPredicateValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-gsgetshaderresources))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-gsgetshaderresources
     void    GSGetShaderResources(uint StartSlot, uint NumViews, ID3D10ShaderResourceView* ppShaderResourceViews);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-gsgetsamplers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-gsgetsamplers
     void    GSGetSamplers(uint StartSlot, uint NumSamplers, ID3D10SamplerState* ppSamplers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-omgetrendertargets))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-omgetrendertargets
     void    OMGetRenderTargets(uint NumViews, ID3D10RenderTargetView* ppRenderTargetViews, 
                                ID3D10DepthStencilView* ppDepthStencilView);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-omgetblendstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-omgetblendstate
     void    OMGetBlendState(ID3D10BlendState* ppBlendState, float* BlendFactor, uint* pSampleMask);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-omgetdepthstencilstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-omgetdepthstencilstate
     void    OMGetDepthStencilState(ID3D10DepthStencilState* ppDepthStencilState, uint* pStencilRef);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-sogettargets))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-sogettargets
     void    SOGetTargets(uint NumBuffers, ID3D10Buffer* ppSOTargets, uint* pOffsets);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-rsgetstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-rsgetstate
     void    RSGetState(ID3D10RasterizerState* ppRasterizerState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-rsgetviewports))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-rsgetviewports
     void    RSGetViewports(uint* NumViewports, D3D10_VIEWPORT* pViewports);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-rsgetscissorrects))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-rsgetscissorrects
     void    RSGetScissorRects(uint* NumRects, RECT* pRects);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-getdeviceremovedreason))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-getdeviceremovedreason
     HRESULT GetDeviceRemovedReason();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-setexceptionmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-setexceptionmode
     HRESULT SetExceptionMode(uint RaiseFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-getexceptionmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-getexceptionmode
     uint    GetExceptionMode();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-getprivatedata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-getprivatedata
     HRESULT GetPrivateData(const(GUID)* guid, uint* pDataSize, 
                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/void* pData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-setprivatedata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-setprivatedata
     HRESULT SetPrivateData(const(GUID)* guid, uint DataSize, 
                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(void)* pData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-setprivatedatainterface))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-setprivatedatainterface
     HRESULT SetPrivateDataInterface(const(GUID)* guid, const(IUnknown) pData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-clearstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-clearstate
     void    ClearState();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-flush))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-flush
     void    Flush();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-createbuffer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-createbuffer
     HRESULT CreateBuffer(const(D3D10_BUFFER_DESC)* pDesc, const(D3D10_SUBRESOURCE_DATA)* pInitialData, 
                          ID3D10Buffer* ppBuffer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-createtexture1d))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-createtexture1d
     HRESULT CreateTexture1D(const(D3D10_TEXTURE1D_DESC)* pDesc, const(D3D10_SUBRESOURCE_DATA)* pInitialData, 
                             ID3D10Texture1D* ppTexture1D);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-createtexture2d))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-createtexture2d
     HRESULT CreateTexture2D(const(D3D10_TEXTURE2D_DESC)* pDesc, const(D3D10_SUBRESOURCE_DATA)* pInitialData, 
                             ID3D10Texture2D* ppTexture2D);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-createtexture3d))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-createtexture3d
     HRESULT CreateTexture3D(const(D3D10_TEXTURE3D_DESC)* pDesc, const(D3D10_SUBRESOURCE_DATA)* pInitialData, 
                             ID3D10Texture3D* ppTexture3D);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-createshaderresourceview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-createshaderresourceview
     HRESULT CreateShaderResourceView(ID3D10Resource pResource, const(D3D10_SHADER_RESOURCE_VIEW_DESC)* pDesc, 
                                      ID3D10ShaderResourceView* ppSRView);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-createrendertargetview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-createrendertargetview
     HRESULT CreateRenderTargetView(ID3D10Resource pResource, const(D3D10_RENDER_TARGET_VIEW_DESC)* pDesc, 
                                    ID3D10RenderTargetView* ppRTView);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-createdepthstencilview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-createdepthstencilview
     HRESULT CreateDepthStencilView(ID3D10Resource pResource, const(D3D10_DEPTH_STENCIL_VIEW_DESC)* pDesc, 
                                    ID3D10DepthStencilView* ppDepthStencilView);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-createinputlayout))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-createinputlayout
     HRESULT CreateInputLayout(const(D3D10_INPUT_ELEMENT_DESC)* pInputElementDescs, uint NumElements, 
                               const(void)* pShaderBytecodeWithInputSignature, size_t BytecodeLength, 
                               ID3D10InputLayout* ppInputLayout);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-createvertexshader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-createvertexshader
     HRESULT CreateVertexShader(const(void)* pShaderBytecode, size_t BytecodeLength, 
                                ID3D10VertexShader* ppVertexShader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-creategeometryshader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-creategeometryshader
     HRESULT CreateGeometryShader(const(void)* pShaderBytecode, size_t BytecodeLength, 
                                  ID3D10GeometryShader* ppGeometryShader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-creategeometryshaderwithstreamoutput))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-creategeometryshaderwithstreamoutput
     HRESULT CreateGeometryShaderWithStreamOutput(const(void)* pShaderBytecode, size_t BytecodeLength, 
                                                  const(D3D10_SO_DECLARATION_ENTRY)* pSODeclaration, uint NumEntries, 
                                                  uint OutputStreamStride, ID3D10GeometryShader* ppGeometryShader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-createpixelshader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-createpixelshader
     HRESULT CreatePixelShader(const(void)* pShaderBytecode, size_t BytecodeLength, 
                               ID3D10PixelShader* ppPixelShader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-createblendstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-createblendstate
     HRESULT CreateBlendState(const(D3D10_BLEND_DESC)* pBlendStateDesc, ID3D10BlendState* ppBlendState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-createdepthstencilstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-createdepthstencilstate
     HRESULT CreateDepthStencilState(const(D3D10_DEPTH_STENCIL_DESC)* pDepthStencilDesc, 
                                     ID3D10DepthStencilState* ppDepthStencilState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-createrasterizerstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-createrasterizerstate
     HRESULT CreateRasterizerState(const(D3D10_RASTERIZER_DESC)* pRasterizerDesc, 
                                   ID3D10RasterizerState* ppRasterizerState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-createsamplerstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-createsamplerstate
     HRESULT CreateSamplerState(const(D3D10_SAMPLER_DESC)* pSamplerDesc, ID3D10SamplerState* ppSamplerState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-createquery))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-createquery
     HRESULT CreateQuery(const(D3D10_QUERY_DESC)* pQueryDesc, ID3D10Query* ppQuery);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-createpredicate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-createpredicate
     HRESULT CreatePredicate(const(D3D10_QUERY_DESC)* pPredicateDesc, ID3D10Predicate* ppPredicate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-createcounter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-createcounter
     HRESULT CreateCounter(const(D3D10_COUNTER_DESC)* pCounterDesc, ID3D10Counter* ppCounter);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-checkformatsupport))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-checkformatsupport
     HRESULT CheckFormatSupport(DXGI_FORMAT Format, uint* pFormatSupport);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-checkmultisamplequalitylevels))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-checkmultisamplequalitylevels
     HRESULT CheckMultisampleQualityLevels(DXGI_FORMAT Format, uint SampleCount, uint* pNumQualityLevels);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-checkcounterinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-checkcounterinfo
     void    CheckCounterInfo(D3D10_COUNTER_INFO* pCounterInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-checkcounter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-checkcounter
     HRESULT CheckCounter(const(D3D10_COUNTER_DESC)* pDesc, D3D10_COUNTER_TYPE* pType, uint* pActiveCounters, 
                          PSTR szName, uint* pNameLength, PSTR szUnits, uint* pUnitsLength, PSTR szDescription, 
                          uint* pDescriptionLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-getcreationflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-getcreationflags
     uint    GetCreationFlags();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-opensharedresource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-opensharedresource
     HRESULT OpenSharedResource(HANDLE hResource, const(GUID)* ReturnedInterface, void** ppResource);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-settextfiltersize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-settextfiltersize
     void    SetTextFilterSize(uint Width, uint Height);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-gettextfiltersize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10device-gettextfiltersize
     void    GetTextFilterSize(uint* pWidth, uint* pHeight);
 }
 
 @GUID("9b7e4e00-342c-4106-a19f-4f2704f689f0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10multithread))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nn-d3d10-id3d10multithread
 interface ID3D10Multithread : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10multithread-enter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10multithread-enter
     void Enter();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10multithread-leave))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10multithread-leave
     void Leave();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10multithread-setmultithreadprotected))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10multithread-setmultithreadprotected
     BOOL SetMultithreadProtected(BOOL bMTProtect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10multithread-getmultithreadprotected))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10/nf-d3d10-id3d10multithread-getmultithreadprotected
     BOOL GetMultithreadProtected();
 }
 
 @GUID("9b7e4e01-342c-4106-a19f-4f2704f689f0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nn-d3d10sdklayers-id3d10debug))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nn-d3d10sdklayers-id3d10debug
 interface ID3D10Debug : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10debug-setfeaturemask))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10debug-setfeaturemask
     HRESULT SetFeatureMask(uint Mask);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10debug-getfeaturemask))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10debug-getfeaturemask
     uint    GetFeatureMask();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10debug-setpresentperrenderopdelay))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10debug-setpresentperrenderopdelay
     HRESULT SetPresentPerRenderOpDelay(uint Milliseconds);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10debug-getpresentperrenderopdelay))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10debug-getpresentperrenderopdelay
     uint    GetPresentPerRenderOpDelay();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10debug-setswapchain))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10debug-setswapchain
     HRESULT SetSwapChain(IDXGISwapChain pSwapChain);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10debug-getswapchain))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10debug-getswapchain
     HRESULT GetSwapChain(IDXGISwapChain* ppSwapChain);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10debug-validate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10debug-validate
     HRESULT Validate();
 }
 
 @GUID("9b7e4e02-342c-4106-a19f-4f2704f689f0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nn-d3d10sdklayers-id3d10switchtoref))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nn-d3d10sdklayers-id3d10switchtoref
 interface ID3D10SwitchToRef : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10switchtoref-setuseref))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10switchtoref-setuseref
     BOOL SetUseRef(BOOL UseRef);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10switchtoref-getuseref))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10switchtoref-getuseref
     BOOL GetUseRef();
 }
 
 @GUID("1b940b17-2642-4d1f-ab1f-b99bad0c395f")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nn-d3d10sdklayers-id3d10infoqueue))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nn-d3d10sdklayers-id3d10infoqueue
 interface ID3D10InfoQueue : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-setmessagecountlimit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-setmessagecountlimit
     HRESULT SetMessageCountLimit(ulong MessageCountLimit);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-clearstoredmessages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-clearstoredmessages
     void    ClearStoredMessages();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-getmessage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-getmessage
     HRESULT GetMessage(ulong MessageIndex, 
                        /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/D3D10_MESSAGE* pMessage, 
                        size_t* pMessageByteLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-getnummessagesallowedbystoragefilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-getnummessagesallowedbystoragefilter
     ulong   GetNumMessagesAllowedByStorageFilter();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-getnummessagesdeniedbystoragefilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-getnummessagesdeniedbystoragefilter
     ulong   GetNumMessagesDeniedByStorageFilter();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-getnumstoredmessages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-getnumstoredmessages
     ulong   GetNumStoredMessages();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-getnumstoredmessagesallowedbyretrievalfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-getnumstoredmessagesallowedbyretrievalfilter
     ulong   GetNumStoredMessagesAllowedByRetrievalFilter();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-getnummessagesdiscardedbymessagecountlimit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-getnummessagesdiscardedbymessagecountlimit
     ulong   GetNumMessagesDiscardedByMessageCountLimit();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-getmessagecountlimit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-getmessagecountlimit
     ulong   GetMessageCountLimit();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-addstoragefilterentries))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-addstoragefilterentries
     HRESULT AddStorageFilterEntries(D3D10_INFO_QUEUE_FILTER* pFilter);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-getstoragefilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-getstoragefilter
     HRESULT GetStorageFilter(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/D3D10_INFO_QUEUE_FILTER* pFilter, 
                              size_t* pFilterByteLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-clearstoragefilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-clearstoragefilter
     void    ClearStorageFilter();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-pushemptystoragefilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-pushemptystoragefilter
     HRESULT PushEmptyStorageFilter();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-pushcopyofstoragefilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-pushcopyofstoragefilter
     HRESULT PushCopyOfStorageFilter();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-pushstoragefilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-pushstoragefilter
     HRESULT PushStorageFilter(D3D10_INFO_QUEUE_FILTER* pFilter);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-popstoragefilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-popstoragefilter
     void    PopStorageFilter();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-getstoragefilterstacksize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-getstoragefilterstacksize
     uint    GetStorageFilterStackSize();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-addretrievalfilterentries))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-addretrievalfilterentries
     HRESULT AddRetrievalFilterEntries(D3D10_INFO_QUEUE_FILTER* pFilter);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-getretrievalfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-getretrievalfilter
     HRESULT GetRetrievalFilter(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/D3D10_INFO_QUEUE_FILTER* pFilter, 
                                size_t* pFilterByteLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-clearretrievalfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-clearretrievalfilter
     void    ClearRetrievalFilter();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-pushemptyretrievalfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-pushemptyretrievalfilter
     HRESULT PushEmptyRetrievalFilter();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-pushcopyofretrievalfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-pushcopyofretrievalfilter
     HRESULT PushCopyOfRetrievalFilter();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-pushretrievalfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-pushretrievalfilter
     HRESULT PushRetrievalFilter(D3D10_INFO_QUEUE_FILTER* pFilter);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-popretrievalfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-popretrievalfilter
     void    PopRetrievalFilter();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-getretrievalfilterstacksize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-getretrievalfilterstacksize
     uint    GetRetrievalFilterStackSize();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-addmessage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-addmessage
     HRESULT AddMessage(D3D10_MESSAGE_CATEGORY Category, D3D10_MESSAGE_SEVERITY Severity, D3D10_MESSAGE_ID ID, 
                        const(PSTR) pDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-addapplicationmessage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-addapplicationmessage
     HRESULT AddApplicationMessage(D3D10_MESSAGE_SEVERITY Severity, const(PSTR) pDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-setbreakoncategory))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-setbreakoncategory
     HRESULT SetBreakOnCategory(D3D10_MESSAGE_CATEGORY Category, BOOL bEnable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-setbreakonseverity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-setbreakonseverity
     HRESULT SetBreakOnSeverity(D3D10_MESSAGE_SEVERITY Severity, BOOL bEnable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-setbreakonid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-setbreakonid
     HRESULT SetBreakOnID(D3D10_MESSAGE_ID ID, BOOL bEnable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-getbreakoncategory))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-getbreakoncategory
     BOOL    GetBreakOnCategory(D3D10_MESSAGE_CATEGORY Category);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-getbreakonseverity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-getbreakonseverity
     BOOL    GetBreakOnSeverity(D3D10_MESSAGE_SEVERITY Severity);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-getbreakonid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-getbreakonid
     BOOL    GetBreakOnID(D3D10_MESSAGE_ID ID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-setmutedebugoutput))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-setmutedebugoutput
     void    SetMuteDebugOutput(BOOL bMute);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-getmutedebugoutput))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10sdklayers/nf-d3d10sdklayers-id3d10infoqueue-getmutedebugoutput
     BOOL    GetMuteDebugOutput();
 }
 
 @GUID("c530ad7d-9b16-4395-a979-ba2ecff83add")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10shader/nn-d3d10shader-id3d10shaderreflectiontype))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/nn-d3d10shader-id3d10shaderreflectiontype
 interface ID3D10ShaderReflectionType
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-id3d10shaderreflectiontype-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-id3d10shaderreflectiontype-getdesc
     HRESULT GetDesc(D3D10_SHADER_TYPE_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-id3d10shaderreflectiontype-getmembertypebyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-id3d10shaderreflectiontype-getmembertypebyindex
     ID3D10ShaderReflectionType GetMemberTypeByIndex(uint Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-id3d10shaderreflectiontype-getmembertypebyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-id3d10shaderreflectiontype-getmembertypebyname
     ID3D10ShaderReflectionType GetMemberTypeByName(const(PSTR) Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-id3d10shaderreflectiontype-getmembertypename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-id3d10shaderreflectiontype-getmembertypename
     PSTR    GetMemberTypeName(uint Index);
 }
 
 @GUID("1bf63c95-2650-405d-99c1-3636bd1da0a1")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10shader/nn-d3d10shader-id3d10shaderreflectionvariable))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/nn-d3d10shader-id3d10shaderreflectionvariable
 interface ID3D10ShaderReflectionVariable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-id3d10shaderreflectionvariable-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-id3d10shaderreflectionvariable-getdesc
     HRESULT GetDesc(D3D10_SHADER_VARIABLE_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-id3d10shaderreflectionvariable-gettype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-id3d10shaderreflectionvariable-gettype
     ID3D10ShaderReflectionType GetType();
 }
 
 @GUID("66c66a94-dddd-4b62-a66a-f0da33c2b4d0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10shader/nn-d3d10shader-id3d10shaderreflectionconstantbuffer))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/nn-d3d10shader-id3d10shaderreflectionconstantbuffer
 interface ID3D10ShaderReflectionConstantBuffer
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-id3d10shaderreflectionconstantbuffer-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-id3d10shaderreflectionconstantbuffer-getdesc
     HRESULT GetDesc(D3D10_SHADER_BUFFER_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-id3d10shaderreflectionconstantbuffer-getvariablebyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-id3d10shaderreflectionconstantbuffer-getvariablebyindex
     ID3D10ShaderReflectionVariable GetVariableByIndex(uint Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-id3d10shaderreflectionconstantbuffer-getvariablebyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-id3d10shaderreflectionconstantbuffer-getvariablebyname
     ID3D10ShaderReflectionVariable GetVariableByName(const(PSTR) Name);
 }
 
 @GUID("d40e20b6-f8f7-42ad-ab20-4baf8f15dfaa")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10shader/nn-d3d10shader-id3d10shaderreflection))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/nn-d3d10shader-id3d10shaderreflection
 interface ID3D10ShaderReflection : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-id3d10shaderreflection-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-id3d10shaderreflection-getdesc
     HRESULT GetDesc(D3D10_SHADER_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-id3d10shaderreflection-getconstantbufferbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-id3d10shaderreflection-getconstantbufferbyindex
     ID3D10ShaderReflectionConstantBuffer GetConstantBufferByIndex(uint Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-id3d10shaderreflection-getconstantbufferbyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-id3d10shaderreflection-getconstantbufferbyname
     ID3D10ShaderReflectionConstantBuffer GetConstantBufferByName(const(PSTR) Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-id3d10shaderreflection-getresourcebindingdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-id3d10shaderreflection-getresourcebindingdesc
     HRESULT GetResourceBindingDesc(uint ResourceIndex, D3D10_SHADER_INPUT_BIND_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-id3d10shaderreflection-getinputparameterdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-id3d10shaderreflection-getinputparameterdesc
     HRESULT GetInputParameterDesc(uint ParameterIndex, D3D10_SIGNATURE_PARAMETER_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-id3d10shaderreflection-getoutputparameterdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10shader/nf-d3d10shader-id3d10shaderreflection-getoutputparameterdesc
     HRESULT GetOutputParameterDesc(uint ParameterIndex, D3D10_SIGNATURE_PARAMETER_DESC* pDesc);
 }
 
 @GUID("0803425a-57f5-4dd6-9465-a87570834a08")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10stateblock))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10stateblock
 interface ID3D10StateBlock : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10stateblock-capture))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10stateblock-capture
     HRESULT Capture();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10stateblock-apply))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10stateblock-apply
     HRESULT Apply();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10stateblock-releasealldeviceobjects))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10stateblock-releasealldeviceobjects
     HRESULT ReleaseAllDeviceObjects();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10stateblock-getdevice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10stateblock-getdevice
     HRESULT GetDevice(ID3D10Device* ppDevice);
 }
 
 @GUID("4e9e1ddc-cd9d-4772-a837-00180b9b88fd")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effecttype))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effecttype
 interface ID3D10EffectType
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effecttype-isvalid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effecttype-isvalid
     BOOL    IsValid();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effecttype-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effecttype-getdesc
     HRESULT GetDesc(D3D10_EFFECT_TYPE_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effecttype-getmembertypebyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effecttype-getmembertypebyindex
     ID3D10EffectType GetMemberTypeByIndex(uint Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effecttype-getmembertypebyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effecttype-getmembertypebyname
     ID3D10EffectType GetMemberTypeByName(const(PSTR) Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effecttype-getmembertypebysemantic))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effecttype-getmembertypebysemantic
     ID3D10EffectType GetMemberTypeBySemantic(const(PSTR) Semantic);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effecttype-getmembername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effecttype-getmembername
     PSTR    GetMemberName(uint Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effecttype-getmembersemantic))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effecttype-getmembersemantic
     PSTR    GetMemberSemantic(uint Index);
 }
 
 @GUID("ae897105-00e6-45bf-bb8e-281dd6db8e1b")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectvariable))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectvariable
 interface ID3D10EffectVariable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-isvalid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-isvalid
     BOOL    IsValid();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-gettype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-gettype
     ID3D10EffectType GetType();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-getdesc
     HRESULT GetDesc(D3D10_EFFECT_VARIABLE_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-getannotationbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-getannotationbyindex
     ID3D10EffectVariable GetAnnotationByIndex(uint Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-getannotationbyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-getannotationbyname
     ID3D10EffectVariable GetAnnotationByName(const(PSTR) Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-getmemberbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-getmemberbyindex
     ID3D10EffectVariable GetMemberByIndex(uint Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-getmemberbyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-getmemberbyname
     ID3D10EffectVariable GetMemberByName(const(PSTR) Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-getmemberbysemantic))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-getmemberbysemantic
     ID3D10EffectVariable GetMemberBySemantic(const(PSTR) Semantic);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-getelement))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-getelement
     ID3D10EffectVariable GetElement(uint Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-getparentconstantbuffer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-getparentconstantbuffer
     ID3D10EffectConstantBuffer GetParentConstantBuffer();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-asscalar))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-asscalar
     ID3D10EffectScalarVariable AsScalar();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-asvector))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-asvector
     ID3D10EffectVectorVariable AsVector();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-asmatrix))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-asmatrix
     ID3D10EffectMatrixVariable AsMatrix();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-asstring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-asstring
     ID3D10EffectStringVariable AsString();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-asshaderresource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-asshaderresource
     ID3D10EffectShaderResourceVariable AsShaderResource();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-asrendertargetview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-asrendertargetview
     ID3D10EffectRenderTargetViewVariable AsRenderTargetView();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-asdepthstencilview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-asdepthstencilview
     ID3D10EffectDepthStencilViewVariable AsDepthStencilView();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-asconstantbuffer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-asconstantbuffer
     ID3D10EffectConstantBuffer AsConstantBuffer();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-asshader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-asshader
     ID3D10EffectShaderVariable AsShader();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-asblend))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-asblend
     ID3D10EffectBlendVariable AsBlend();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-asdepthstencil))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-asdepthstencil
     ID3D10EffectDepthStencilVariable AsDepthStencil();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-asrasterizer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-asrasterizer
     ID3D10EffectRasterizerVariable AsRasterizer();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-assampler))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-assampler
     ID3D10EffectSamplerVariable AsSampler();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-setrawvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-setrawvalue
     HRESULT SetRawValue(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* pData, 
                         uint Offset, uint ByteCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-getrawvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvariable-getrawvalue
     HRESULT GetRawValue(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* pData, 
                         uint Offset, uint ByteCount);
 }
 
 @GUID("00e48f7b-d2c8-49e8-a86c-022dee53431f")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectscalarvariable))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectscalarvariable
 interface ID3D10EffectScalarVariable : ID3D10EffectVariable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectscalarvariable-setfloat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectscalarvariable-setfloat
     HRESULT SetFloat(float Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectscalarvariable-getfloat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectscalarvariable-getfloat
     HRESULT GetFloat(float* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectscalarvariable-setfloatarray))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectscalarvariable-setfloatarray
     HRESULT SetFloatArray(float* pData, uint Offset, uint Count);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectscalarvariable-getfloatarray))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectscalarvariable-getfloatarray
     HRESULT GetFloatArray(float* pData, uint Offset, uint Count);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectscalarvariable-setint))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectscalarvariable-setint
     HRESULT SetInt(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectscalarvariable-getint))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectscalarvariable-getint
     HRESULT GetInt(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectscalarvariable-setintarray))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectscalarvariable-setintarray
     HRESULT SetIntArray(int* pData, uint Offset, uint Count);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectscalarvariable-getintarray))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectscalarvariable-getintarray
     HRESULT GetIntArray(int* pData, uint Offset, uint Count);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectscalarvariable-setbool))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectscalarvariable-setbool
     HRESULT SetBool(BOOL Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectscalarvariable-getbool))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectscalarvariable-getbool
     HRESULT GetBool(BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectscalarvariable-setboolarray))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectscalarvariable-setboolarray
     HRESULT SetBoolArray(BOOL* pData, uint Offset, uint Count);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectscalarvariable-getboolarray))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectscalarvariable-getboolarray
     HRESULT GetBoolArray(BOOL* pData, uint Offset, uint Count);
 }
 
 @GUID("62b98c44-1f82-4c67-bcd0-72cf8f217e81")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectvectorvariable))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectvectorvariable
 interface ID3D10EffectVectorVariable : ID3D10EffectVariable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvectorvariable-setboolvector))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvectorvariable-setboolvector
     HRESULT SetBoolVector(BOOL* pData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvectorvariable-setintvector))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvectorvariable-setintvector
     HRESULT SetIntVector(int* pData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvectorvariable-setfloatvector))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvectorvariable-setfloatvector
     HRESULT SetFloatVector(float* pData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvectorvariable-getboolvector))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvectorvariable-getboolvector
     HRESULT GetBoolVector(BOOL* pData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvectorvariable-getintvector))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvectorvariable-getintvector
     HRESULT GetIntVector(int* pData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvectorvariable-getfloatvector))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvectorvariable-getfloatvector
     HRESULT GetFloatVector(float* pData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvectorvariable-setboolvectorarray))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvectorvariable-setboolvectorarray
     HRESULT SetBoolVectorArray(BOOL* pData, uint Offset, uint Count);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvectorvariable-setintvectorarray))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvectorvariable-setintvectorarray
     HRESULT SetIntVectorArray(int* pData, uint Offset, uint Count);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvectorvariable-setfloatvectorarray))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvectorvariable-setfloatvectorarray
     HRESULT SetFloatVectorArray(float* pData, uint Offset, uint Count);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvectorvariable-getboolvectorarray))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvectorvariable-getboolvectorarray
     HRESULT GetBoolVectorArray(BOOL* pData, uint Offset, uint Count);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvectorvariable-getintvectorarray))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvectorvariable-getintvectorarray
     HRESULT GetIntVectorArray(int* pData, uint Offset, uint Count);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvectorvariable-getfloatvectorarray))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectvectorvariable-getfloatvectorarray
     HRESULT GetFloatVectorArray(float* pData, uint Offset, uint Count);
 }
 
 @GUID("50666c24-b82f-4eed-a172-5b6e7e8522e0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectmatrixvariable))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectmatrixvariable
 interface ID3D10EffectMatrixVariable : ID3D10EffectVariable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectmatrixvariable-setmatrix))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectmatrixvariable-setmatrix
     HRESULT SetMatrix(float* pData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectmatrixvariable-getmatrix))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectmatrixvariable-getmatrix
     HRESULT GetMatrix(float* pData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectmatrixvariable-setmatrixarray))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectmatrixvariable-setmatrixarray
     HRESULT SetMatrixArray(float* pData, uint Offset, uint Count);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectmatrixvariable-getmatrixarray))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectmatrixvariable-getmatrixarray
     HRESULT GetMatrixArray(float* pData, uint Offset, uint Count);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectmatrixvariable-setmatrixtranspose))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectmatrixvariable-setmatrixtranspose
     HRESULT SetMatrixTranspose(float* pData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectmatrixvariable-getmatrixtranspose))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectmatrixvariable-getmatrixtranspose
     HRESULT GetMatrixTranspose(float* pData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectmatrixvariable-setmatrixtransposearray))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectmatrixvariable-setmatrixtransposearray
     HRESULT SetMatrixTransposeArray(float* pData, uint Offset, uint Count);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectmatrixvariable-getmatrixtransposearray))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectmatrixvariable-getmatrixtransposearray
     HRESULT GetMatrixTransposeArray(float* pData, uint Offset, uint Count);
 }
 
 @GUID("71417501-8df9-4e0a-a78a-255f9756baff")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectstringvariable))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectstringvariable
 interface ID3D10EffectStringVariable : ID3D10EffectVariable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectstringvariable-getstring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectstringvariable-getstring
     HRESULT GetString(const(PSTR)* ppString);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectstringvariable-getstringarray))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectstringvariable-getstringarray
     HRESULT GetStringArray(const(PSTR)* ppStrings, uint Offset, uint Count);
 }
 
 @GUID("c0a7157b-d872-4b1d-8073-efc2acd4b1fc")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectshaderresourcevariable))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectshaderresourcevariable
 interface ID3D10EffectShaderResourceVariable : ID3D10EffectVariable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectshaderresourcevariable-setresource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectshaderresourcevariable-setresource
     HRESULT SetResource(ID3D10ShaderResourceView pResource);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectshaderresourcevariable-getresource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectshaderresourcevariable-getresource
     HRESULT GetResource(ID3D10ShaderResourceView* ppResource);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectshaderresourcevariable-setresourcearray))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectshaderresourcevariable-setresourcearray
     HRESULT SetResourceArray(ID3D10ShaderResourceView* ppResources, uint Offset, uint Count);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectshaderresourcevariable-getresourcearray))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectshaderresourcevariable-getresourcearray
     HRESULT GetResourceArray(ID3D10ShaderResourceView* ppResources, uint Offset, uint Count);
 }
 
 @GUID("28ca0cc3-c2c9-40bb-b57f-67b737122b17")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectrendertargetviewvariable))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectrendertargetviewvariable
 interface ID3D10EffectRenderTargetViewVariable : ID3D10EffectVariable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectrendertargetviewvariable-setrendertarget))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectrendertargetviewvariable-setrendertarget
     HRESULT SetRenderTarget(ID3D10RenderTargetView pResource);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectrendertargetviewvariable-getrendertarget))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectrendertargetviewvariable-getrendertarget
     HRESULT GetRenderTarget(ID3D10RenderTargetView* ppResource);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectrendertargetviewvariable-setrendertargetarray))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectrendertargetviewvariable-setrendertargetarray
     HRESULT SetRenderTargetArray(ID3D10RenderTargetView* ppResources, uint Offset, uint Count);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectrendertargetviewvariable-getrendertargetarray))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectrendertargetviewvariable-getrendertargetarray
     HRESULT GetRenderTargetArray(ID3D10RenderTargetView* ppResources, uint Offset, uint Count);
 }
 
 @GUID("3e02c918-cc79-4985-b622-2d92ad701623")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectdepthstencilviewvariable))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectdepthstencilviewvariable
 interface ID3D10EffectDepthStencilViewVariable : ID3D10EffectVariable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectdepthstencilviewvariable-setdepthstencil))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectdepthstencilviewvariable-setdepthstencil
     HRESULT SetDepthStencil(ID3D10DepthStencilView pResource);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectdepthstencilviewvariable-getdepthstencil))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectdepthstencilviewvariable-getdepthstencil
     HRESULT GetDepthStencil(ID3D10DepthStencilView* ppResource);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectdepthstencilviewvariable-setdepthstencilarray))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectdepthstencilviewvariable-setdepthstencilarray
     HRESULT SetDepthStencilArray(ID3D10DepthStencilView* ppResources, uint Offset, uint Count);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectdepthstencilviewvariable-getdepthstencilarray))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectdepthstencilviewvariable-getdepthstencilarray
     HRESULT GetDepthStencilArray(ID3D10DepthStencilView* ppResources, uint Offset, uint Count);
 }
 
 @GUID("56648f4d-cc8b-4444-a5ad-b5a3d76e91b3")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectconstantbuffer))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectconstantbuffer
 interface ID3D10EffectConstantBuffer : ID3D10EffectVariable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectconstantbuffer-setconstantbuffer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectconstantbuffer-setconstantbuffer
     HRESULT SetConstantBuffer(ID3D10Buffer pConstantBuffer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectconstantbuffer-getconstantbuffer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectconstantbuffer-getconstantbuffer
     HRESULT GetConstantBuffer(ID3D10Buffer* ppConstantBuffer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectconstantbuffer-settexturebuffer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectconstantbuffer-settexturebuffer
     HRESULT SetTextureBuffer(ID3D10ShaderResourceView pTextureBuffer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectconstantbuffer-gettexturebuffer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectconstantbuffer-gettexturebuffer
     HRESULT GetTextureBuffer(ID3D10ShaderResourceView* ppTextureBuffer);
 }
 
 @GUID("80849279-c799-4797-8c33-0407a07d9e06")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectshadervariable))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectshadervariable
 interface ID3D10EffectShaderVariable : ID3D10EffectVariable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectshadervariable-getshaderdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectshadervariable-getshaderdesc
     HRESULT GetShaderDesc(uint ShaderIndex, D3D10_EFFECT_SHADER_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectshadervariable-getvertexshader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectshadervariable-getvertexshader
     HRESULT GetVertexShader(uint ShaderIndex, ID3D10VertexShader* ppVS);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectshadervariable-getgeometryshader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectshadervariable-getgeometryshader
     HRESULT GetGeometryShader(uint ShaderIndex, ID3D10GeometryShader* ppGS);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectshadervariable-getpixelshader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectshadervariable-getpixelshader
     HRESULT GetPixelShader(uint ShaderIndex, ID3D10PixelShader* ppPS);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectshadervariable-getinputsignatureelementdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectshadervariable-getinputsignatureelementdesc
     HRESULT GetInputSignatureElementDesc(uint ShaderIndex, uint Element, D3D10_SIGNATURE_PARAMETER_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectshadervariable-getoutputsignatureelementdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectshadervariable-getoutputsignatureelementdesc
     HRESULT GetOutputSignatureElementDesc(uint ShaderIndex, uint Element, D3D10_SIGNATURE_PARAMETER_DESC* pDesc);
 }
 
 @GUID("1fcd2294-df6d-4eae-86b3-0e9160cfb07b")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectblendvariable))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectblendvariable
 interface ID3D10EffectBlendVariable : ID3D10EffectVariable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectblendvariable-getblendstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectblendvariable-getblendstate
     HRESULT GetBlendState(uint Index, ID3D10BlendState* ppBlendState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectblendvariable-getbackingstore))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectblendvariable-getbackingstore
     HRESULT GetBackingStore(uint Index, D3D10_BLEND_DESC* pBlendDesc);
 }
 
 @GUID("af482368-330a-46a5-9a5c-01c71af24c8d")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectdepthstencilvariable))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectdepthstencilvariable
 interface ID3D10EffectDepthStencilVariable : ID3D10EffectVariable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectdepthstencilvariable-getdepthstencilstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectdepthstencilvariable-getdepthstencilstate
     HRESULT GetDepthStencilState(uint Index, ID3D10DepthStencilState* ppDepthStencilState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectdepthstencilvariable-getbackingstore))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectdepthstencilvariable-getbackingstore
     HRESULT GetBackingStore(uint Index, D3D10_DEPTH_STENCIL_DESC* pDepthStencilDesc);
 }
 
 @GUID("21af9f0e-4d94-4ea9-9785-2cb76b8c0b34")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectrasterizervariable))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectrasterizervariable
 interface ID3D10EffectRasterizerVariable : ID3D10EffectVariable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectrasterizervariable-getrasterizerstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectrasterizervariable-getrasterizerstate
     HRESULT GetRasterizerState(uint Index, ID3D10RasterizerState* ppRasterizerState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectrasterizervariable-getbackingstore))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectrasterizervariable-getbackingstore
     HRESULT GetBackingStore(uint Index, D3D10_RASTERIZER_DESC* pRasterizerDesc);
 }
 
 @GUID("6530d5c7-07e9-4271-a418-e7ce4bd1e480")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectsamplervariable))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectsamplervariable
 interface ID3D10EffectSamplerVariable : ID3D10EffectVariable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectsamplervariable-getsampler))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectsamplervariable-getsampler
     HRESULT GetSampler(uint Index, ID3D10SamplerState* ppSampler);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectsamplervariable-getbackingstore))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectsamplervariable-getbackingstore
     HRESULT GetBackingStore(uint Index, D3D10_SAMPLER_DESC* pSamplerDesc);
 }
 
 @GUID("5cfbeb89-1a06-46e0-b282-e3f9bfa36a54")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectpass))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectpass
 interface ID3D10EffectPass
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectpass-isvalid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectpass-isvalid
     BOOL    IsValid();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectpass-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectpass-getdesc
     HRESULT GetDesc(D3D10_PASS_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectpass-getvertexshaderdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectpass-getvertexshaderdesc
     HRESULT GetVertexShaderDesc(D3D10_PASS_SHADER_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectpass-getgeometryshaderdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectpass-getgeometryshaderdesc
     HRESULT GetGeometryShaderDesc(D3D10_PASS_SHADER_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectpass-getpixelshaderdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectpass-getpixelshaderdesc
     HRESULT GetPixelShaderDesc(D3D10_PASS_SHADER_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectpass-getannotationbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectpass-getannotationbyindex
     ID3D10EffectVariable GetAnnotationByIndex(uint Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectpass-getannotationbyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectpass-getannotationbyname
     ID3D10EffectVariable GetAnnotationByName(const(PSTR) Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectpass-apply))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectpass-apply
     HRESULT Apply(uint Flags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectpass-computestateblockmask))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectpass-computestateblockmask
     HRESULT ComputeStateBlockMask(D3D10_STATE_BLOCK_MASK* pStateBlockMask);
 }
 
 @GUID("db122ce8-d1c9-4292-b237-24ed3de8b175")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effecttechnique))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effecttechnique
 interface ID3D10EffectTechnique
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effecttechnique-isvalid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effecttechnique-isvalid
     BOOL    IsValid();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effecttechnique-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effecttechnique-getdesc
     HRESULT GetDesc(D3D10_TECHNIQUE_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effecttechnique-getannotationbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effecttechnique-getannotationbyindex
     ID3D10EffectVariable GetAnnotationByIndex(uint Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effecttechnique-getannotationbyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effecttechnique-getannotationbyname
     ID3D10EffectVariable GetAnnotationByName(const(PSTR) Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effecttechnique-getpassbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effecttechnique-getpassbyindex
     ID3D10EffectPass GetPassByIndex(uint Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effecttechnique-getpassbyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effecttechnique-getpassbyname
     ID3D10EffectPass GetPassByName(const(PSTR) Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effecttechnique-computestateblockmask))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effecttechnique-computestateblockmask
     HRESULT ComputeStateBlockMask(D3D10_STATE_BLOCK_MASK* pStateBlockMask);
 }
 
 @GUID("51b0ca8b-ec0b-4519-870d-8ee1cb5017c7")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effect))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effect
 interface ID3D10Effect : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effect-isvalid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effect-isvalid
     BOOL    IsValid();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effect-ispool))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effect-ispool
     BOOL    IsPool();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effect-getdevice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effect-getdevice
     HRESULT GetDevice(ID3D10Device* ppDevice);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effect-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effect-getdesc
     HRESULT GetDesc(D3D10_EFFECT_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effect-getconstantbufferbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effect-getconstantbufferbyindex
     ID3D10EffectConstantBuffer GetConstantBufferByIndex(uint Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effect-getconstantbufferbyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effect-getconstantbufferbyname
     ID3D10EffectConstantBuffer GetConstantBufferByName(const(PSTR) Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effect-getvariablebyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effect-getvariablebyindex
     ID3D10EffectVariable GetVariableByIndex(uint Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effect-getvariablebyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effect-getvariablebyname
     ID3D10EffectVariable GetVariableByName(const(PSTR) Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effect-getvariablebysemantic))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effect-getvariablebysemantic
     ID3D10EffectVariable GetVariableBySemantic(const(PSTR) Semantic);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effect-gettechniquebyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effect-gettechniquebyindex
     ID3D10EffectTechnique GetTechniqueByIndex(uint Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effect-gettechniquebyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effect-gettechniquebyname
     ID3D10EffectTechnique GetTechniqueByName(const(PSTR) Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effect-optimize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effect-optimize
     HRESULT Optimize();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effect-isoptimized))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effect-isoptimized
     BOOL    IsOptimized();
 }
 
 @GUID("9537ab04-3250-412e-8213-fcd2f8677933")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectpool))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nn-d3d10effect-id3d10effectpool
 interface ID3D10EffectPool : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectpool-aseffect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10effect/nf-d3d10effect-id3d10effectpool-aseffect
     ID3D10Effect AsEffect();
 }
 
 @GUID("edad8d99-8a35-4d6d-8566-2ea276cde161")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10_1/nn-d3d10_1-id3d10blendstate1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1/nn-d3d10_1-id3d10blendstate1
 interface ID3D10BlendState1 : ID3D10BlendState
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10_1/nf-d3d10_1-id3d10blendstate1-getdesc1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1/nf-d3d10_1-id3d10blendstate1-getdesc1
     void GetDesc1(D3D10_BLEND_DESC1* pDesc);
 }
 
 @GUID("9b7e4c87-342c-4106-a19f-4f2704f689f0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10_1/nn-d3d10_1-id3d10shaderresourceview1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1/nn-d3d10_1-id3d10shaderresourceview1
 interface ID3D10ShaderResourceView1 : ID3D10ShaderResourceView
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10_1/nf-d3d10_1-id3d10shaderresourceview1-getdesc1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1/nf-d3d10_1-id3d10shaderresourceview1-getdesc1
     void GetDesc1(D3D10_SHADER_RESOURCE_VIEW_DESC1* pDesc);
 }
 
 @GUID("9b7e4c8f-342c-4106-a19f-4f2704f689f0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10_1/nn-d3d10_1-id3d10device1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1/nn-d3d10_1-id3d10device1
 interface ID3D10Device1 : ID3D10Device
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10_1/nf-d3d10_1-id3d10device1-createshaderresourceview1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1/nf-d3d10_1-id3d10device1-createshaderresourceview1
     HRESULT CreateShaderResourceView1(ID3D10Resource pResource, const(D3D10_SHADER_RESOURCE_VIEW_DESC1)* pDesc, 
                                       ID3D10ShaderResourceView1* ppSRView);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10_1/nf-d3d10_1-id3d10device1-createblendstate1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1/nf-d3d10_1-id3d10device1-createblendstate1
     HRESULT CreateBlendState1(const(D3D10_BLEND_DESC1)* pBlendStateDesc, ID3D10BlendState1* ppBlendState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10_1/nf-d3d10_1-id3d10device1-getfeaturelevel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1/nf-d3d10_1-id3d10device1-getfeaturelevel
     D3D10_FEATURE_LEVEL1 GetFeatureLevel();
 }
 
 @GUID("c3457783-a846-47ce-9520-cea6f66e7447")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10_1shader/nn-d3d10_1shader-id3d10shaderreflection1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1shader/nn-d3d10_1shader-id3d10shaderreflection1
 interface ID3D10ShaderReflection1 : IUnknown
 {
     HRESULT GetDesc(D3D10_SHADER_DESC* pDesc);
@@ -3628,23 +3729,23 @@ interface ID3D10ShaderReflection1 : IUnknown
     HRESULT GetResourceBindingDesc(uint ResourceIndex, D3D10_SHADER_INPUT_BIND_DESC* pDesc);
     HRESULT GetInputParameterDesc(uint ParameterIndex, D3D10_SIGNATURE_PARAMETER_DESC* pDesc);
     HRESULT GetOutputParameterDesc(uint ParameterIndex, D3D10_SIGNATURE_PARAMETER_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10_1shader/nf-d3d10_1shader-id3d10shaderreflection1-getvariablebyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1shader/nf-d3d10_1shader-id3d10shaderreflection1-getvariablebyname
     ID3D10ShaderReflectionVariable GetVariableByName(const(PSTR) Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10_1shader/nf-d3d10_1shader-id3d10shaderreflection1-getresourcebindingdescbyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1shader/nf-d3d10_1shader-id3d10shaderreflection1-getresourcebindingdescbyname
     HRESULT GetResourceBindingDescByName(const(PSTR) Name, D3D10_SHADER_INPUT_BIND_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10_1shader/nf-d3d10_1shader-id3d10shaderreflection1-getmovinstructioncount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1shader/nf-d3d10_1shader-id3d10shaderreflection1-getmovinstructioncount
     HRESULT GetMovInstructionCount(uint* pCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10_1shader/nf-d3d10_1shader-id3d10shaderreflection1-getmovcinstructioncount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1shader/nf-d3d10_1shader-id3d10shaderreflection1-getmovcinstructioncount
     HRESULT GetMovcInstructionCount(uint* pCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10_1shader/nf-d3d10_1shader-id3d10shaderreflection1-getconversioninstructioncount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1shader/nf-d3d10_1shader-id3d10shaderreflection1-getconversioninstructioncount
     HRESULT GetConversionInstructionCount(uint* pCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10_1shader/nf-d3d10_1shader-id3d10shaderreflection1-getbitwiseinstructioncount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1shader/nf-d3d10_1shader-id3d10shaderreflection1-getbitwiseinstructioncount
     HRESULT GetBitwiseInstructionCount(uint* pCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10_1shader/nf-d3d10_1shader-id3d10shaderreflection1-getgsinputprimitive))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1shader/nf-d3d10_1shader-id3d10shaderreflection1-getgsinputprimitive
     HRESULT GetGSInputPrimitive(D3D_PRIMITIVE* pPrim);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10_1shader/nf-d3d10_1shader-id3d10shaderreflection1-islevel9shader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1shader/nf-d3d10_1shader-id3d10shaderreflection1-islevel9shader
     HRESULT IsLevel9Shader(BOOL* pbLevel9Shader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d10_1shader/nf-d3d10_1shader-id3d10shaderreflection1-issamplefrequencyshader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d10_1shader/nf-d3d10_1shader-id3d10shaderreflection1-issamplefrequencyshader
     HRESULT IsSampleFrequencyShader(BOOL* pbSampleFrequency);
 }
 

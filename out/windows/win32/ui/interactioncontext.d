@@ -3,7 +3,7 @@
 module windows.win32.ui.interactioncontext;
 
 public import windows.core;
-public import windows.win32.foundation : HRESULT;
+public import windows.win32.foundation.foundation : HRESULT;
 public import windows.win32.ui.input.pointer : POINTER_INFO;
 public import windows.win32.ui.windowsandmessaging : POINTER_INPUT_TYPE;
 
@@ -12,7 +12,8 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/interactioncontext/ne-interactioncontext-interaction_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/interactioncontext/ne-interactioncontext-interaction_id
 alias INTERACTION_ID = int;
 enum : int
 {
@@ -25,51 +26,54 @@ enum : int
     INTERACTION_ID_CROSS_SLIDE   = 0x00000006,
     INTERACTION_ID_MAX           = 0xffffffff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/interactioncontext/ne-interactioncontext-interaction_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/interactioncontext/ne-interactioncontext-interaction_flags
 alias INTERACTION_FLAGS = uint;
 enum : uint
 {
-    INTERACTION_FLAG_NONE    = 0x00000000,
-    INTERACTION_FLAG_BEGIN   = 0x00000001,
-    INTERACTION_FLAG_END     = 0x00000002,
-    INTERACTION_FLAG_CANCEL  = 0x00000004,
-    INTERACTION_FLAG_INERTIA = 0x00000008,
-    INTERACTION_FLAG_MAX     = 0xffffffff,
+    INTERACTION_FLAG_NONE    = 0x00000000U,
+    INTERACTION_FLAG_BEGIN   = 0x00000001U,
+    INTERACTION_FLAG_END     = 0x00000002U,
+    INTERACTION_FLAG_CANCEL  = 0x00000004U,
+    INTERACTION_FLAG_INERTIA = 0x00000008U,
+    INTERACTION_FLAG_MAX     = 0xffffffffU,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/interactioncontext/ne-interactioncontext-interaction_configuration_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/interactioncontext/ne-interactioncontext-interaction_configuration_flags
 alias INTERACTION_CONFIGURATION_FLAGS = uint;
 enum : uint
 {
-    INTERACTION_CONFIGURATION_FLAG_NONE                                 = 0x00000000,
-    INTERACTION_CONFIGURATION_FLAG_MANIPULATION                         = 0x00000001,
-    INTERACTION_CONFIGURATION_FLAG_MANIPULATION_TRANSLATION_X           = 0x00000002,
-    INTERACTION_CONFIGURATION_FLAG_MANIPULATION_TRANSLATION_Y           = 0x00000004,
-    INTERACTION_CONFIGURATION_FLAG_MANIPULATION_ROTATION                = 0x00000008,
-    INTERACTION_CONFIGURATION_FLAG_MANIPULATION_SCALING                 = 0x00000010,
-    INTERACTION_CONFIGURATION_FLAG_MANIPULATION_TRANSLATION_INERTIA     = 0x00000020,
-    INTERACTION_CONFIGURATION_FLAG_MANIPULATION_ROTATION_INERTIA        = 0x00000040,
-    INTERACTION_CONFIGURATION_FLAG_MANIPULATION_SCALING_INERTIA         = 0x00000080,
-    INTERACTION_CONFIGURATION_FLAG_MANIPULATION_RAILS_X                 = 0x00000100,
-    INTERACTION_CONFIGURATION_FLAG_MANIPULATION_RAILS_Y                 = 0x00000200,
-    INTERACTION_CONFIGURATION_FLAG_MANIPULATION_EXACT                   = 0x00000400,
-    INTERACTION_CONFIGURATION_FLAG_MANIPULATION_MULTIPLE_FINGER_PANNING = 0x00000800,
-    INTERACTION_CONFIGURATION_FLAG_CROSS_SLIDE                          = 0x00000001,
-    INTERACTION_CONFIGURATION_FLAG_CROSS_SLIDE_HORIZONTAL               = 0x00000002,
-    INTERACTION_CONFIGURATION_FLAG_CROSS_SLIDE_SELECT                   = 0x00000004,
-    INTERACTION_CONFIGURATION_FLAG_CROSS_SLIDE_SPEED_BUMP               = 0x00000008,
-    INTERACTION_CONFIGURATION_FLAG_CROSS_SLIDE_REARRANGE                = 0x00000010,
-    INTERACTION_CONFIGURATION_FLAG_CROSS_SLIDE_EXACT                    = 0x00000020,
-    INTERACTION_CONFIGURATION_FLAG_TAP                                  = 0x00000001,
-    INTERACTION_CONFIGURATION_FLAG_TAP_DOUBLE                           = 0x00000002,
-    INTERACTION_CONFIGURATION_FLAG_TAP_MULTIPLE_FINGER                  = 0x00000004,
-    INTERACTION_CONFIGURATION_FLAG_SECONDARY_TAP                        = 0x00000001,
-    INTERACTION_CONFIGURATION_FLAG_HOLD                                 = 0x00000001,
-    INTERACTION_CONFIGURATION_FLAG_HOLD_MOUSE                           = 0x00000002,
-    INTERACTION_CONFIGURATION_FLAG_HOLD_MULTIPLE_FINGER                 = 0x00000004,
-    INTERACTION_CONFIGURATION_FLAG_DRAG                                 = 0x00000001,
-    INTERACTION_CONFIGURATION_FLAG_MAX                                  = 0xffffffff,
+    INTERACTION_CONFIGURATION_FLAG_NONE                                 = 0x00000000U,
+    INTERACTION_CONFIGURATION_FLAG_MANIPULATION                         = 0x00000001U,
+    INTERACTION_CONFIGURATION_FLAG_MANIPULATION_TRANSLATION_X           = 0x00000002U,
+    INTERACTION_CONFIGURATION_FLAG_MANIPULATION_TRANSLATION_Y           = 0x00000004U,
+    INTERACTION_CONFIGURATION_FLAG_MANIPULATION_ROTATION                = 0x00000008U,
+    INTERACTION_CONFIGURATION_FLAG_MANIPULATION_SCALING                 = 0x00000010U,
+    INTERACTION_CONFIGURATION_FLAG_MANIPULATION_TRANSLATION_INERTIA     = 0x00000020U,
+    INTERACTION_CONFIGURATION_FLAG_MANIPULATION_ROTATION_INERTIA        = 0x00000040U,
+    INTERACTION_CONFIGURATION_FLAG_MANIPULATION_SCALING_INERTIA         = 0x00000080U,
+    INTERACTION_CONFIGURATION_FLAG_MANIPULATION_RAILS_X                 = 0x00000100U,
+    INTERACTION_CONFIGURATION_FLAG_MANIPULATION_RAILS_Y                 = 0x00000200U,
+    INTERACTION_CONFIGURATION_FLAG_MANIPULATION_EXACT                   = 0x00000400U,
+    INTERACTION_CONFIGURATION_FLAG_MANIPULATION_MULTIPLE_FINGER_PANNING = 0x00000800U,
+    INTERACTION_CONFIGURATION_FLAG_CROSS_SLIDE                          = 0x00000001U,
+    INTERACTION_CONFIGURATION_FLAG_CROSS_SLIDE_HORIZONTAL               = 0x00000002U,
+    INTERACTION_CONFIGURATION_FLAG_CROSS_SLIDE_SELECT                   = 0x00000004U,
+    INTERACTION_CONFIGURATION_FLAG_CROSS_SLIDE_SPEED_BUMP               = 0x00000008U,
+    INTERACTION_CONFIGURATION_FLAG_CROSS_SLIDE_REARRANGE                = 0x00000010U,
+    INTERACTION_CONFIGURATION_FLAG_CROSS_SLIDE_EXACT                    = 0x00000020U,
+    INTERACTION_CONFIGURATION_FLAG_TAP                                  = 0x00000001U,
+    INTERACTION_CONFIGURATION_FLAG_TAP_DOUBLE                           = 0x00000002U,
+    INTERACTION_CONFIGURATION_FLAG_TAP_MULTIPLE_FINGER                  = 0x00000004U,
+    INTERACTION_CONFIGURATION_FLAG_SECONDARY_TAP                        = 0x00000001U,
+    INTERACTION_CONFIGURATION_FLAG_HOLD                                 = 0x00000001U,
+    INTERACTION_CONFIGURATION_FLAG_HOLD_MOUSE                           = 0x00000002U,
+    INTERACTION_CONFIGURATION_FLAG_HOLD_MULTIPLE_FINGER                 = 0x00000004U,
+    INTERACTION_CONFIGURATION_FLAG_DRAG                                 = 0x00000001U,
+    INTERACTION_CONFIGURATION_FLAG_MAX                                  = 0xffffffffU,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/interactioncontext/ne-interactioncontext-inertia_parameter))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/interactioncontext/ne-interactioncontext-inertia_parameter
 alias INERTIA_PARAMETER = int;
 enum : int
 {
@@ -81,7 +85,8 @@ enum : int
     INERTIA_PARAMETER_EXPANSION_EXPANSION      = 0x00000006,
     INERTIA_PARAMETER_MAX                      = 0xffffffff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/interactioncontext/ne-interactioncontext-interaction_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/interactioncontext/ne-interactioncontext-interaction_state
 alias INTERACTION_STATE = int;
 enum : int
 {
@@ -90,7 +95,8 @@ enum : int
     INTERACTION_STATE_POSSIBLE_DOUBLE_TAP = 0x00000002,
     INTERACTION_STATE_MAX                 = 0xffffffff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/interactioncontext/ne-interactioncontext-interaction_context_property))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/interactioncontext/ne-interactioncontext-interaction_context_property
 alias INTERACTION_CONTEXT_PROPERTY = int;
 enum : int
 {
@@ -99,7 +105,8 @@ enum : int
     INTERACTION_CONTEXT_PROPERTY_FILTER_POINTERS         = 0x00000003,
     INTERACTION_CONTEXT_PROPERTY_MAX                     = 0xffffffff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/interactioncontext/ne-interactioncontext-cross_slide_threshold))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/interactioncontext/ne-interactioncontext-cross_slide_threshold
 alias CROSS_SLIDE_THRESHOLD = int;
 enum : int
 {
@@ -110,17 +117,19 @@ enum : int
     CROSS_SLIDE_THRESHOLD_COUNT            = 0x00000004,
     CROSS_SLIDE_THRESHOLD_MAX              = 0xffffffff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/interactioncontext/ne-interactioncontext-cross_slide_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/interactioncontext/ne-interactioncontext-cross_slide_flags
 alias CROSS_SLIDE_FLAGS = uint;
 enum : uint
 {
-    CROSS_SLIDE_FLAGS_NONE       = 0x00000000,
-    CROSS_SLIDE_FLAGS_SELECT     = 0x00000001,
-    CROSS_SLIDE_FLAGS_SPEED_BUMP = 0x00000002,
-    CROSS_SLIDE_FLAGS_REARRANGE  = 0x00000004,
-    CROSS_SLIDE_FLAGS_MAX        = 0xffffffff,
+    CROSS_SLIDE_FLAGS_NONE       = 0x00000000U,
+    CROSS_SLIDE_FLAGS_SELECT     = 0x00000001U,
+    CROSS_SLIDE_FLAGS_SPEED_BUMP = 0x00000002U,
+    CROSS_SLIDE_FLAGS_REARRANGE  = 0x00000004U,
+    CROSS_SLIDE_FLAGS_MAX        = 0xffffffffU,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/interactioncontext/ne-interactioncontext-mouse_wheel_parameter))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/interactioncontext/ne-interactioncontext-mouse_wheel_parameter
 alias MOUSE_WHEEL_PARAMETER = int;
 enum : int
 {
@@ -132,6 +141,7 @@ enum : int
     MOUSE_WHEEL_PARAMETER_PAGE_TRANSLATION_Y = 0x00000006,
     MOUSE_WHEEL_PARAMETER_MAX                = 0xffffffff,
 }
+
 alias TAP_PARAMETER = int;
 enum : int
 {
@@ -139,6 +149,7 @@ enum : int
     TAP_PARAMETER_MAX_CONTACT_COUNT = 0x00000001,
     TAP_PARAMETER_MAX               = 0xffffffff,
 }
+
 alias HOLD_PARAMETER = int;
 enum : int
 {
@@ -148,6 +159,7 @@ enum : int
     HOLD_PARAMETER_THRESHOLD_START_DELAY = 0x00000003,
     HOLD_PARAMETER_MAX                   = 0xffffffff,
 }
+
 alias TRANSLATION_PARAMETER = int;
 enum : int
 {
@@ -155,7 +167,8 @@ enum : int
     TRANSLATION_PARAMETER_MAX_CONTACT_COUNT = 0x00000001,
     TRANSLATION_PARAMETER_MAX               = 0xffffffff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/interactioncontext/ne-interactioncontext-manipulation_rails_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/interactioncontext/ne-interactioncontext-manipulation_rails_state
 alias MANIPULATION_RAILS_STATE = int;
 enum : int
 {
@@ -183,7 +196,7 @@ struct HINTERACTIONCONTEXT
     void* Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/interactioncontext/ns-interactioncontext-manipulation_transform))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/interactioncontext/ns-interactioncontext-manipulation_transform
 struct MANIPULATION_TRANSFORM
 {
     float translationX;
@@ -193,7 +206,7 @@ struct MANIPULATION_TRANSFORM
     float rotation;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/interactioncontext/ns-interactioncontext-manipulation_velocity))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/interactioncontext/ns-interactioncontext-manipulation_velocity
 struct MANIPULATION_VELOCITY
 {
     float velocityX;
@@ -202,7 +215,7 @@ struct MANIPULATION_VELOCITY
     float velocityAngular;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/interactioncontext/ns-interactioncontext-interaction_arguments_manipulation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/interactioncontext/ns-interactioncontext-interaction_arguments_manipulation
 struct INTERACTION_ARGUMENTS_MANIPULATION
 {
     MANIPULATION_TRANSFORM delta;
@@ -211,49 +224,59 @@ struct INTERACTION_ARGUMENTS_MANIPULATION
     MANIPULATION_RAILS_STATE railsState;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/interactioncontext/ns-interactioncontext-interaction_arguments_tap))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/interactioncontext/ns-interactioncontext-interaction_arguments_tap
 struct INTERACTION_ARGUMENTS_TAP
 {
     uint count;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/interactioncontext/ns-interactioncontext-interaction_arguments_cross_slide))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/interactioncontext/ns-interactioncontext-interaction_arguments_cross_slide
 struct INTERACTION_ARGUMENTS_CROSS_SLIDE
 {
     CROSS_SLIDE_FLAGS flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/interactioncontext/ns-interactioncontext-interaction_context_output))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/interactioncontext/ns-interactioncontext-interaction_context_output
 struct INTERACTION_CONTEXT_OUTPUT
 {
-    INTERACTION_ID      interactionId;
-    INTERACTION_FLAGS   interactionFlags;
-    POINTER_INPUT_TYPE  inputType;
-    float               x;
-    float               y;
-    _arguments_e__Union arguments;
+    INTERACTION_ID     interactionId;
+    INTERACTION_FLAGS  interactionFlags;
+    POINTER_INPUT_TYPE inputType;
+    float              x;
+    float              y;
+    union arguments
+    {
+        INTERACTION_ARGUMENTS_MANIPULATION manipulation;
+        INTERACTION_ARGUMENTS_TAP tap;
+        INTERACTION_ARGUMENTS_CROSS_SLIDE crossSlide;
+    }
 }
 
 struct INTERACTION_CONTEXT_OUTPUT2
 {
-    INTERACTION_ID      interactionId;
-    INTERACTION_FLAGS   interactionFlags;
-    POINTER_INPUT_TYPE  inputType;
-    uint                contactCount;
-    uint                currentContactCount;
-    float               x;
-    float               y;
-    _arguments_e__Union arguments;
+    INTERACTION_ID     interactionId;
+    INTERACTION_FLAGS  interactionFlags;
+    POINTER_INPUT_TYPE inputType;
+    uint               contactCount;
+    uint               currentContactCount;
+    float              x;
+    float              y;
+    union arguments
+    {
+        INTERACTION_ARGUMENTS_MANIPULATION manipulation;
+        INTERACTION_ARGUMENTS_TAP tap;
+        INTERACTION_ARGUMENTS_CROSS_SLIDE crossSlide;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/interactioncontext/ns-interactioncontext-interaction_context_configuration))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/interactioncontext/ns-interactioncontext-interaction_context_configuration
 struct INTERACTION_CONTEXT_CONFIGURATION
 {
     INTERACTION_ID interactionId;
     INTERACTION_CONFIGURATION_FLAGS enable;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/interactioncontext/ns-interactioncontext-cross_slide_parameter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/interactioncontext/ns-interactioncontext-cross_slide_parameter
 struct CROSS_SLIDE_PARAMETER
 {
     CROSS_SLIDE_THRESHOLD threshold;

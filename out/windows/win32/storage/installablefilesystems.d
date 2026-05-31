@@ -3,14 +3,15 @@
 module windows.win32.storage.installablefilesystems;
 
 public import windows.core;
-public import windows.win32.foundation : HANDLE, HRESULT, NTSTATUS, PWSTR;
-public import windows.win32.security : SECURITY_ATTRIBUTES;
+public import windows.win32.foundation.foundation : HANDLE, HRESULT, NTSTATUS, PWSTR;
+public import windows.win32.security.security : SECURITY_ATTRIBUTES;
 public import windows.win32.system.io : OVERLAPPED;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
+
 
 alias FLT_FILESYSTEM_TYPE = int;
 enum : int
@@ -47,6 +48,7 @@ enum : int
     FLT_FSTYPE_OPENAFS    = 0x0000001d,
     FLT_FSTYPE_CIMFS      = 0x0000001e,
 }
+
 alias FILTER_INFORMATION_CLASS = int;
 enum : int
 {
@@ -54,12 +56,14 @@ enum : int
     FilterAggregateBasicInformation    = 0x00000001,
     FilterAggregateStandardInformation = 0x00000002,
 }
+
 alias FILTER_VOLUME_INFORMATION_CLASS = int;
 enum : int
 {
     FilterVolumeBasicInformation    = 0x00000000,
     FilterVolumeStandardInformation = 0x00000001,
 }
+
 alias INSTANCE_INFORMATION_CLASS = int;
 enum : int
 {
@@ -72,111 +76,111 @@ enum : int
 // Constants
 
 
-enum uint FILTER_NAME_MAX_CHARS = 0x000000ff;
-enum uint VOLUME_NAME_MAX_CHARS = 0x00000400;
-enum uint INSTANCE_NAME_MAX_CHARS = 0x000000ff;
+enum uint FILTER_NAME_MAX_CHARS = 0x000000ffU;
+enum uint VOLUME_NAME_MAX_CHARS = 0x00000400U;
+enum uint INSTANCE_NAME_MAX_CHARS = 0x000000ffU;
 
 enum : uint
 {
-    FLTFL_AGGREGATE_INFO_IS_MINIFILTER   = 0x00000001,
-    FLTFL_AGGREGATE_INFO_IS_LEGACYFILTER = 0x00000002,
+    FLTFL_AGGREGATE_INFO_IS_MINIFILTER   = 0x00000001U,
+    FLTFL_AGGREGATE_INFO_IS_LEGACYFILTER = 0x00000002U,
 }
 
 enum : uint
 {
-    FLTFL_ASI_IS_MINIFILTER   = 0x00000001,
-    FLTFL_ASI_IS_LEGACYFILTER = 0x00000002,
+    FLTFL_ASI_IS_MINIFILTER   = 0x00000001U,
+    FLTFL_ASI_IS_LEGACYFILTER = 0x00000002U,
 }
 
-enum uint FLTFL_VSI_DETACHED_VOLUME = 0x00000001;
+enum uint FLTFL_VSI_DETACHED_VOLUME = 0x00000001U;
 
 enum : uint
 {
-    FLTFL_IASI_IS_MINIFILTER   = 0x00000001,
-    FLTFL_IASI_IS_LEGACYFILTER = 0x00000002,
+    FLTFL_IASI_IS_MINIFILTER   = 0x00000001U,
+    FLTFL_IASI_IS_LEGACYFILTER = 0x00000002U,
 }
 
-enum uint FLTFL_IASIM_DETACHED_VOLUME = 0x00000001;
-enum uint FLTFL_IASIL_DETACHED_VOLUME = 0x00000001;
-enum uint FLT_PORT_FLAG_SYNC_HANDLE = 0x00000001;
+enum uint FLTFL_IASIM_DETACHED_VOLUME = 0x00000001U;
+enum uint FLTFL_IASIL_DETACHED_VOLUME = 0x00000001U;
+enum uint FLT_PORT_FLAG_SYNC_HANDLE = 0x00000001U;
 
 enum : uint
 {
-    WNNC_NET_MSNET       = 0x00010000,
-    WNNC_NET_SMB         = 0x00020000,
-    WNNC_NET_NETWARE     = 0x00030000,
-    WNNC_NET_VINES       = 0x00040000,
-    WNNC_NET_10NET       = 0x00050000,
-    WNNC_NET_LOCUS       = 0x00060000,
-    WNNC_NET_SUN_PC_NFS  = 0x00070000,
-    WNNC_NET_LANSTEP     = 0x00080000,
-    WNNC_NET_9TILES      = 0x00090000,
-    WNNC_NET_LANTASTIC   = 0x000a0000,
-    WNNC_NET_AS400       = 0x000b0000,
-    WNNC_NET_FTP_NFS     = 0x000c0000,
-    WNNC_NET_PATHWORKS   = 0x000d0000,
-    WNNC_NET_LIFENET     = 0x000e0000,
-    WNNC_NET_POWERLAN    = 0x000f0000,
-    WNNC_NET_BWNFS       = 0x00100000,
-    WNNC_NET_COGENT      = 0x00110000,
-    WNNC_NET_FARALLON    = 0x00120000,
-    WNNC_NET_APPLETALK   = 0x00130000,
-    WNNC_NET_INTERGRAPH  = 0x00140000,
-    WNNC_NET_SYMFONET    = 0x00150000,
-    WNNC_NET_CLEARCASE   = 0x00160000,
-    WNNC_NET_FRONTIER    = 0x00170000,
-    WNNC_NET_BMC         = 0x00180000,
-    WNNC_NET_DCE         = 0x00190000,
-    WNNC_NET_AVID        = 0x001a0000,
-    WNNC_NET_DOCUSPACE   = 0x001b0000,
-    WNNC_NET_MANGOSOFT   = 0x001c0000,
-    WNNC_NET_SERNET      = 0x001d0000,
-    WNNC_NET_RIVERFRONT1 = 0x001e0000,
-    WNNC_NET_RIVERFRONT2 = 0x001f0000,
-    WNNC_NET_DECORB      = 0x00200000,
-    WNNC_NET_PROTSTOR    = 0x00210000,
-    WNNC_NET_FJ_REDIR    = 0x00220000,
-    WNNC_NET_DISTINCT    = 0x00230000,
-    WNNC_NET_TWINS       = 0x00240000,
-    WNNC_NET_RDR2SAMPLE  = 0x00250000,
-    WNNC_NET_CSC         = 0x00260000,
-    WNNC_NET_3IN1        = 0x00270000,
-    WNNC_NET_EXTENDNET   = 0x00290000,
-    WNNC_NET_STAC        = 0x002a0000,
-    WNNC_NET_FOXBAT      = 0x002b0000,
-    WNNC_NET_YAHOO       = 0x002c0000,
-    WNNC_NET_EXIFS       = 0x002d0000,
-    WNNC_NET_DAV         = 0x002e0000,
-    WNNC_NET_KNOWARE     = 0x002f0000,
-    WNNC_NET_OBJECT_DIRE = 0x00300000,
-    WNNC_NET_MASFAX      = 0x00310000,
-    WNNC_NET_HOB_NFS     = 0x00320000,
-    WNNC_NET_SHIVA       = 0x00330000,
-    WNNC_NET_IBMAL       = 0x00340000,
-    WNNC_NET_LOCK        = 0x00350000,
-    WNNC_NET_TERMSRV     = 0x00360000,
-    WNNC_NET_SRT         = 0x00370000,
-    WNNC_NET_QUINCY      = 0x00380000,
-    WNNC_NET_OPENAFS     = 0x00390000,
-    WNNC_NET_AVID1       = 0x003a0000,
-    WNNC_NET_DFS         = 0x003b0000,
-    WNNC_NET_KWNP        = 0x003c0000,
-    WNNC_NET_ZENWORKS    = 0x003d0000,
-    WNNC_NET_DRIVEONWEB  = 0x003e0000,
-    WNNC_NET_VMWARE      = 0x003f0000,
-    WNNC_NET_RSFX        = 0x00400000,
-    WNNC_NET_MFILES      = 0x00410000,
-    WNNC_NET_MS_NFS      = 0x00420000,
-    WNNC_NET_GOOGLE      = 0x00430000,
-    WNNC_NET_NDFS        = 0x00440000,
-    WNNC_NET_DOCUSHARE   = 0x00450000,
-    WNNC_NET_AURISTOR_FS = 0x00460000,
-    WNNC_NET_SECUREAGENT = 0x00470000,
-    WNNC_NET_9P          = 0x00480000,
-    WNNC_CRED_MANAGER    = 0xffff0000,
+    WNNC_NET_MSNET       = 0x00010000U,
+    WNNC_NET_SMB         = 0x00020000U,
+    WNNC_NET_NETWARE     = 0x00030000U,
+    WNNC_NET_VINES       = 0x00040000U,
+    WNNC_NET_10NET       = 0x00050000U,
+    WNNC_NET_LOCUS       = 0x00060000U,
+    WNNC_NET_SUN_PC_NFS  = 0x00070000U,
+    WNNC_NET_LANSTEP     = 0x00080000U,
+    WNNC_NET_9TILES      = 0x00090000U,
+    WNNC_NET_LANTASTIC   = 0x000a0000U,
+    WNNC_NET_AS400       = 0x000b0000U,
+    WNNC_NET_FTP_NFS     = 0x000c0000U,
+    WNNC_NET_PATHWORKS   = 0x000d0000U,
+    WNNC_NET_LIFENET     = 0x000e0000U,
+    WNNC_NET_POWERLAN    = 0x000f0000U,
+    WNNC_NET_BWNFS       = 0x00100000U,
+    WNNC_NET_COGENT      = 0x00110000U,
+    WNNC_NET_FARALLON    = 0x00120000U,
+    WNNC_NET_APPLETALK   = 0x00130000U,
+    WNNC_NET_INTERGRAPH  = 0x00140000U,
+    WNNC_NET_SYMFONET    = 0x00150000U,
+    WNNC_NET_CLEARCASE   = 0x00160000U,
+    WNNC_NET_FRONTIER    = 0x00170000U,
+    WNNC_NET_BMC         = 0x00180000U,
+    WNNC_NET_DCE         = 0x00190000U,
+    WNNC_NET_AVID        = 0x001a0000U,
+    WNNC_NET_DOCUSPACE   = 0x001b0000U,
+    WNNC_NET_MANGOSOFT   = 0x001c0000U,
+    WNNC_NET_SERNET      = 0x001d0000U,
+    WNNC_NET_RIVERFRONT1 = 0x001e0000U,
+    WNNC_NET_RIVERFRONT2 = 0x001f0000U,
+    WNNC_NET_DECORB      = 0x00200000U,
+    WNNC_NET_PROTSTOR    = 0x00210000U,
+    WNNC_NET_FJ_REDIR    = 0x00220000U,
+    WNNC_NET_DISTINCT    = 0x00230000U,
+    WNNC_NET_TWINS       = 0x00240000U,
+    WNNC_NET_RDR2SAMPLE  = 0x00250000U,
+    WNNC_NET_CSC         = 0x00260000U,
+    WNNC_NET_3IN1        = 0x00270000U,
+    WNNC_NET_EXTENDNET   = 0x00290000U,
+    WNNC_NET_STAC        = 0x002a0000U,
+    WNNC_NET_FOXBAT      = 0x002b0000U,
+    WNNC_NET_YAHOO       = 0x002c0000U,
+    WNNC_NET_EXIFS       = 0x002d0000U,
+    WNNC_NET_DAV         = 0x002e0000U,
+    WNNC_NET_KNOWARE     = 0x002f0000U,
+    WNNC_NET_OBJECT_DIRE = 0x00300000U,
+    WNNC_NET_MASFAX      = 0x00310000U,
+    WNNC_NET_HOB_NFS     = 0x00320000U,
+    WNNC_NET_SHIVA       = 0x00330000U,
+    WNNC_NET_IBMAL       = 0x00340000U,
+    WNNC_NET_LOCK        = 0x00350000U,
+    WNNC_NET_TERMSRV     = 0x00360000U,
+    WNNC_NET_SRT         = 0x00370000U,
+    WNNC_NET_QUINCY      = 0x00380000U,
+    WNNC_NET_OPENAFS     = 0x00390000U,
+    WNNC_NET_AVID1       = 0x003a0000U,
+    WNNC_NET_DFS         = 0x003b0000U,
+    WNNC_NET_KWNP        = 0x003c0000U,
+    WNNC_NET_ZENWORKS    = 0x003d0000U,
+    WNNC_NET_DRIVEONWEB  = 0x003e0000U,
+    WNNC_NET_VMWARE      = 0x003f0000U,
+    WNNC_NET_RSFX        = 0x00400000U,
+    WNNC_NET_MFILES      = 0x00410000U,
+    WNNC_NET_MS_NFS      = 0x00420000U,
+    WNNC_NET_GOOGLE      = 0x00430000U,
+    WNNC_NET_NDFS        = 0x00440000U,
+    WNNC_NET_DOCUSHARE   = 0x00450000U,
+    WNNC_NET_AURISTOR_FS = 0x00460000U,
+    WNNC_NET_SECUREAGENT = 0x00470000U,
+    WNNC_NET_9P          = 0x00480000U,
+    WNNC_CRED_MANAGER    = 0xffff0000U,
 }
 
-enum uint WNNC_NET_LANMAN = 0x00020000;
+enum uint WNNC_NET_LANMAN = 0x00020000U;
 
 // Structs
 
@@ -208,16 +212,52 @@ struct FILTER_FULL_INFORMATION
 
 struct FILTER_AGGREGATE_BASIC_INFORMATION
 {
-    uint           NextEntryOffset;
-    uint           Flags;
-    _Type_e__Union Type;
+    uint NextEntryOffset;
+    uint Flags;
+    union Type
+    {
+        struct MiniFilter
+        {
+            uint   FrameID;
+            uint   NumberOfInstances;
+            ushort FilterNameLength;
+            ushort FilterNameBufferOffset;
+            ushort FilterAltitudeLength;
+            ushort FilterAltitudeBufferOffset;
+        }
+        struct LegacyFilter
+        {
+            ushort FilterNameLength;
+            ushort FilterNameBufferOffset;
+        }
+    }
 }
 
 struct FILTER_AGGREGATE_STANDARD_INFORMATION
 {
-    uint           NextEntryOffset;
-    uint           Flags;
-    _Type_e__Union Type;
+    uint NextEntryOffset;
+    uint Flags;
+    union Type
+    {
+        struct MiniFilter
+        {
+            uint   Flags;
+            uint   FrameID;
+            uint   NumberOfInstances;
+            ushort FilterNameLength;
+            ushort FilterNameBufferOffset;
+            ushort FilterAltitudeLength;
+            ushort FilterAltitudeBufferOffset;
+        }
+        struct LegacyFilter
+        {
+            uint   Flags;
+            ushort FilterNameLength;
+            ushort FilterNameBufferOffset;
+            ushort FilterAltitudeLength;
+            ushort FilterAltitudeBufferOffset;
+        }
+    }
 }
 
 struct FILTER_VOLUME_BASIC_INFORMATION
@@ -267,9 +307,37 @@ struct INSTANCE_FULL_INFORMATION
 
 struct INSTANCE_AGGREGATE_STANDARD_INFORMATION
 {
-    uint           NextEntryOffset;
-    uint           Flags;
-    _Type_e__Union Type;
+    uint NextEntryOffset;
+    uint Flags;
+    union Type
+    {
+        struct MiniFilter
+        {
+            uint                Flags;
+            uint                FrameID;
+            FLT_FILESYSTEM_TYPE VolumeFileSystemType;
+            ushort              InstanceNameLength;
+            ushort              InstanceNameBufferOffset;
+            ushort              AltitudeLength;
+            ushort              AltitudeBufferOffset;
+            ushort              VolumeNameLength;
+            ushort              VolumeNameBufferOffset;
+            ushort              FilterNameLength;
+            ushort              FilterNameBufferOffset;
+            uint                SupportedFeatures;
+        }
+        struct LegacyFilter
+        {
+            uint   Flags;
+            ushort AltitudeLength;
+            ushort AltitudeBufferOffset;
+            ushort VolumeNameLength;
+            ushort VolumeNameBufferOffset;
+            ushort FilterNameLength;
+            ushort FilterNameBufferOffset;
+            uint   SupportedFeatures;
+        }
+    }
 }
 
 struct FILTER_MESSAGE_HEADER
@@ -286,135 +354,135 @@ struct FILTER_REPLY_HEADER
 
 // Functions
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filterload))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filterload
 @DllImport("FLTLIB.dll")
 HRESULT FilterLoad(const(PWSTR) lpFilterName);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filterunload))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filterunload
 @DllImport("FLTLIB.dll")
 HRESULT FilterUnload(const(PWSTR) lpFilterName);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filtercreate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filtercreate
 @DllImport("FLTLIB.dll")
 HRESULT FilterCreate(const(PWSTR) lpFilterName, HFILTER* hFilter);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filterclose))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filterclose
 @DllImport("FLTLIB.dll")
 HRESULT FilterClose(HFILTER hFilter);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filterinstancecreate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filterinstancecreate
 @DllImport("FLTLIB.dll")
 HRESULT FilterInstanceCreate(const(PWSTR) lpFilterName, const(PWSTR) lpVolumeName, const(PWSTR) lpInstanceName, 
                              HFILTER_INSTANCE* hInstance);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filterinstanceclose))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filterinstanceclose
 @DllImport("FLTLIB.dll")
 HRESULT FilterInstanceClose(HFILTER_INSTANCE hInstance);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filterattach))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filterattach
 @DllImport("FLTLIB.dll")
 HRESULT FilterAttach(const(PWSTR) lpFilterName, const(PWSTR) lpVolumeName, const(PWSTR) lpInstanceName, 
                      uint dwCreatedInstanceNameLength, 
                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/PWSTR lpCreatedInstanceName);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filterattachataltitude))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filterattachataltitude
 @DllImport("FLTLIB.dll")
 HRESULT FilterAttachAtAltitude(const(PWSTR) lpFilterName, const(PWSTR) lpVolumeName, const(PWSTR) lpAltitude, 
                                const(PWSTR) lpInstanceName, uint dwCreatedInstanceNameLength, 
                                /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/PWSTR lpCreatedInstanceName);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filterdetach))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filterdetach
 @DllImport("FLTLIB.dll")
 HRESULT FilterDetach(const(PWSTR) lpFilterName, const(PWSTR) lpVolumeName, const(PWSTR) lpInstanceName);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filterfindfirst))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filterfindfirst
 @DllImport("FLTLIB.dll")
 HRESULT FilterFindFirst(FILTER_INFORMATION_CLASS dwInformationClass, 
                         /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* lpBuffer, 
                         uint dwBufferSize, uint* lpBytesReturned, 
                         /*PARAM ATTR: RAIIFreeAttribute : CustomAttributeSig([FixedArgSig(ElementSig(FilterFindClose))], [])*/HANDLE* lpFilterFind);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filterfindnext))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filterfindnext
 @DllImport("FLTLIB.dll")
 HRESULT FilterFindNext(HANDLE hFilterFind, FILTER_INFORMATION_CLASS dwInformationClass, 
                        /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* lpBuffer, 
                        uint dwBufferSize, uint* lpBytesReturned);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filterfindclose))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filterfindclose
 @DllImport("FLTLIB.dll")
 HRESULT FilterFindClose(HANDLE hFilterFind);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filtervolumefindfirst))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filtervolumefindfirst
 @DllImport("FLTLIB.dll")
 HRESULT FilterVolumeFindFirst(FILTER_VOLUME_INFORMATION_CLASS dwInformationClass, 
                               /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* lpBuffer, 
                               uint dwBufferSize, uint* lpBytesReturned, 
                               /*PARAM ATTR: RAIIFreeAttribute : CustomAttributeSig([FixedArgSig(ElementSig(FilterVolumeFindClose))], [])*/HANDLE* lpVolumeFind);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filtervolumefindnext))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filtervolumefindnext
 @DllImport("FLTLIB.dll")
 HRESULT FilterVolumeFindNext(HANDLE hVolumeFind, FILTER_VOLUME_INFORMATION_CLASS dwInformationClass, 
                              /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* lpBuffer, 
                              uint dwBufferSize, uint* lpBytesReturned);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filtervolumefindclose))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filtervolumefindclose
 @DllImport("FLTLIB.dll")
 HRESULT FilterVolumeFindClose(HANDLE hVolumeFind);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filterinstancefindfirst))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filterinstancefindfirst
 @DllImport("FLTLIB.dll")
 HRESULT FilterInstanceFindFirst(const(PWSTR) lpFilterName, INSTANCE_INFORMATION_CLASS dwInformationClass, 
                                 /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* lpBuffer, 
                                 uint dwBufferSize, uint* lpBytesReturned, 
                                 /*PARAM ATTR: RAIIFreeAttribute : CustomAttributeSig([FixedArgSig(ElementSig(FilterInstanceFindClose))], [])*/HANDLE* lpFilterInstanceFind);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filterinstancefindnext))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filterinstancefindnext
 @DllImport("FLTLIB.dll")
 HRESULT FilterInstanceFindNext(HANDLE hFilterInstanceFind, INSTANCE_INFORMATION_CLASS dwInformationClass, 
                                /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* lpBuffer, 
                                uint dwBufferSize, uint* lpBytesReturned);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filterinstancefindclose))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filterinstancefindclose
 @DllImport("FLTLIB.dll")
 HRESULT FilterInstanceFindClose(HANDLE hFilterInstanceFind);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filtervolumeinstancefindfirst))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filtervolumeinstancefindfirst
 @DllImport("FLTLIB.dll")
 HRESULT FilterVolumeInstanceFindFirst(const(PWSTR) lpVolumeName, INSTANCE_INFORMATION_CLASS dwInformationClass, 
                                       /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* lpBuffer, 
                                       uint dwBufferSize, uint* lpBytesReturned, 
                                       /*PARAM ATTR: RAIIFreeAttribute : CustomAttributeSig([FixedArgSig(ElementSig(FilterVolumeInstanceFindClose))], [])*/HANDLE* lpVolumeInstanceFind);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filtervolumeinstancefindnext))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filtervolumeinstancefindnext
 @DllImport("FLTLIB.dll")
 HRESULT FilterVolumeInstanceFindNext(HANDLE hVolumeInstanceFind, INSTANCE_INFORMATION_CLASS dwInformationClass, 
                                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* lpBuffer, 
                                      uint dwBufferSize, uint* lpBytesReturned);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filtervolumeinstancefindclose))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filtervolumeinstancefindclose
 @DllImport("FLTLIB.dll")
 HRESULT FilterVolumeInstanceFindClose(HANDLE hVolumeInstanceFind);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filtergetinformation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filtergetinformation
 @DllImport("FLTLIB.dll")
 HRESULT FilterGetInformation(HFILTER hFilter, FILTER_INFORMATION_CLASS dwInformationClass, 
                              /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* lpBuffer, 
                              uint dwBufferSize, uint* lpBytesReturned);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filterinstancegetinformation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filterinstancegetinformation
 @DllImport("FLTLIB.dll")
 HRESULT FilterInstanceGetInformation(HFILTER_INSTANCE hInstance, INSTANCE_INFORMATION_CLASS dwInformationClass, 
                                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* lpBuffer, 
                                      uint dwBufferSize, uint* lpBytesReturned);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filterconnectcommunicationport))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filterconnectcommunicationport
 @DllImport("FLTLIB.dll")
 HRESULT FilterConnectCommunicationPort(const(PWSTR) lpPortName, uint dwOptions, 
                                        /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/const(void)* lpContext, 
                                        ushort wSizeOfContext, SECURITY_ATTRIBUTES* lpSecurityAttributes, 
                                        HANDLE* hPort);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filtersendmessage))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filtersendmessage
 @DllImport("FLTLIB.dll")
 HRESULT FilterSendMessage(HANDLE hPort, 
                           /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* lpInBuffer, 
@@ -422,7 +490,7 @@ HRESULT FilterSendMessage(HANDLE hPort,
                           /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* lpOutBuffer, 
                           uint dwOutBufferSize, uint* lpBytesReturned);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filtergetmessage))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filtergetmessage
 @DllImport("FLTLIB.dll")
 HRESULT FilterGetMessage(HANDLE hPort, 
                          /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/FILTER_MESSAGE_HEADER* lpMessageBuffer, 
@@ -434,7 +502,7 @@ HRESULT FilterReplyMessage(HANDLE hPort,
                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/FILTER_REPLY_HEADER* lpReplyBuffer, 
                            uint dwReplyBufferSize);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filtergetdosname))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fltuser/nf-fltuser-filtergetdosname
 @DllImport("FLTLIB.dll")
 HRESULT FilterGetDosName(const(PWSTR) lpVolumeName, PWSTR lpDosName, uint dwDosNameBufferSize);
 

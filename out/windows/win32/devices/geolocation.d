@@ -3,11 +3,12 @@
 module windows.win32.devices.geolocation;
 
 public import windows.core;
-public import system : Guid;
+public import system.system : Guid;
 public import windows.win32.devices.sensors : LOCATION_DESIRED_ACCURACY;
-public import windows.win32.foundation : BOOL, BSTR, CHAR, FILETIME, HRESULT, HWND,
-                                         NTSTATUS, PROPERTYKEY, SYSTEMTIME;
-public import windows.win32.system.com : IDispatch, IUnknown;
+public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, FILETIME, HRESULT,
+                                                    HWND, NTSTATUS, PROPERTYKEY,
+                                                    SYSTEMTIME;
+public import windows.win32.system.com.com : IDispatch, IUnknown;
 public import windows.win32.system.com.structuredstorage : PROPVARIANT;
 
 extern(Windows) @nogc nothrow:
@@ -15,7 +16,8 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/locationapi/ne-locationapi-location_report_status))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/ne-locationapi-location_report_status
 alias LOCATION_REPORT_STATUS = int;
 enum : int
 {
@@ -25,6 +27,7 @@ enum : int
     REPORT_INITIALIZING  = 0x00000003,
     REPORT_RUNNING       = 0x00000004,
 }
+
 alias GNSS_DRIVERCOMMAND_TYPE = int;
 enum : int
 {
@@ -42,6 +45,7 @@ enum : int
     GNSS_SetSuplVersion2             = 0x00000011,
     GNSS_CustomCommand               = 0x00000100,
 }
+
 alias GNSS_FIXSESSIONTYPE = int;
 enum : int
 {
@@ -50,11 +54,13 @@ enum : int
     GNSS_FixSession_ContinuousTracking = 0x00000003,
     GNSS_FixSession_LKG                = 0x00000004,
 }
+
 alias GNSS_GEOREGIONTYPE = int;
 enum : int
 {
     GNSS_GeoRegion_Circle = 0x00000001,
 }
+
 alias GNSS_GEOFENCE_STATE = int;
 enum : int
 {
@@ -62,6 +68,7 @@ enum : int
     GNSS_GeofenceState_Entered = 0x00000001,
     GNSS_GeofenceState_Exited  = 0x00000002,
 }
+
 alias GNSS_EVENT_TYPE = int;
 enum : int
 {
@@ -77,6 +84,7 @@ enum : int
     GNSS_Event_FixAvailable_2          = 0x00000012,
     GNSS_Event_Custom                  = 0x00008000,
 }
+
 alias GNSS_AGNSS_REQUEST_TYPE = int;
 enum : int
 {
@@ -84,6 +92,7 @@ enum : int
     GNSS_AGNSS_PositionInjection = 0x00000002,
     GNSS_AGNSS_BlobInjection     = 0x00000003,
 }
+
 alias GNSS_NI_PLANE_TYPE = int;
 enum : int
 {
@@ -91,12 +100,14 @@ enum : int
     GNSS_NI_CP    = 0x00000002,
     GNSS_NI_V2UPL = 0x00000003,
 }
+
 alias GNSS_NI_REQUEST_TYPE = int;
 enum : int
 {
     GNSS_NI_Request_SingleShot  = 0x00000001,
     GNSS_NI_Request_AreaTrigger = 0x00000002,
 }
+
 alias GNSS_NI_NOTIFICATION_TYPE = int;
 enum : int
 {
@@ -106,11 +117,13 @@ enum : int
     GNSS_NI_NotifyVerifyDefaultNotAllow = 0x00000004,
     GNSS_NI_PrivacyOverride             = 0x00000005,
 }
+
 alias GNSS_DRIVER_REQUEST = int;
 enum : int
 {
     SUPL_CONFIG_DATA = 0x00000001,
 }
+
 alias GNSS_SUPL_CERT_ACTION = int;
 enum : int
 {
@@ -118,6 +131,7 @@ enum : int
     GNSS_Supl_Cert_Delete = 0x00000002,
     GNSS_Supl_Cert_Purge  = 0x00000003,
 }
+
 alias GNSS_NI_USER_RESPONSE = int;
 enum : int
 {
@@ -131,120 +145,120 @@ enum : int
 
 enum : uint
 {
-    GNSS_DRIVER_VERSION_1 = 0x00000001,
-    GNSS_DRIVER_VERSION_2 = 0x00000002,
-    GNSS_DRIVER_VERSION_3 = 0x00000003,
-    GNSS_DRIVER_VERSION_4 = 0x00000004,
-    GNSS_DRIVER_VERSION_5 = 0x00000005,
-    GNSS_DRIVER_VERSION_6 = 0x00000006,
+    GNSS_DRIVER_VERSION_1 = 0x00000001U,
+    GNSS_DRIVER_VERSION_2 = 0x00000002U,
+    GNSS_DRIVER_VERSION_3 = 0x00000003U,
+    GNSS_DRIVER_VERSION_4 = 0x00000004U,
+    GNSS_DRIVER_VERSION_5 = 0x00000005U,
+    GNSS_DRIVER_VERSION_6 = 0x00000006U,
 }
 
-enum uint IOCTL_GNSS_SEND_PLATFORM_CAPABILITY = 0x00220004;
-enum uint IOCTL_GNSS_GET_DEVICE_CAPABILITY = 0x00220008;
+enum uint IOCTL_GNSS_SEND_PLATFORM_CAPABILITY = 0x00220004U;
+enum uint IOCTL_GNSS_GET_DEVICE_CAPABILITY = 0x00220008U;
 
 enum : uint
 {
-    IOCTL_GNSS_SEND_DRIVERCOMMAND = 0x0022000c,
-    IOCTL_GNSS_START_FIXSESSION   = 0x00220040,
-    IOCTL_GNSS_MODIFY_FIXSESSION  = 0x00220044,
-}
-
-enum : uint
-{
-    IOCTL_GNSS_STOP_FIXSESSION                 = 0x00220048,
-    IOCTL_GNSS_GET_FIXDATA                     = 0x0022004c,
-    IOCTL_GNSS_INJECT_AGNSS                    = 0x00220080,
-    IOCTL_GNSS_LISTEN_AGNSS                    = 0x002200c0,
-    IOCTL_GNSS_LISTEN_ERROR                    = 0x002200c4,
-    IOCTL_GNSS_LISTEN_NI                       = 0x00220100,
-    IOCTL_GNSS_SET_SUPL_HSLP                   = 0x00220104,
-    IOCTL_GNSS_CONFIG_SUPL_CERT                = 0x00220108,
-    IOCTL_GNSS_RESPOND_NI                      = 0x0022010c,
-    IOCTL_GNSS_EXECUTE_CWTEST                  = 0x00220110,
-    IOCTL_GNSS_EXECUTE_SELFTEST                = 0x00220114,
-    IOCTL_GNSS_GET_CHIPSETINFO                 = 0x00220118,
-    IOCTL_GNSS_LISTEN_NMEA                     = 0x0022011c,
-    IOCTL_GNSS_SET_V2UPL_CONFIG                = 0x00220120,
-    IOCTL_GNSS_CREATE_GEOFENCE                 = 0x00220140,
-    IOCTL_GNSS_DELETE_GEOFENCE                 = 0x00220144,
-    IOCTL_GNSS_LISTEN_GEOFENCE_ALERT           = 0x00220148,
-    IOCTL_GNSS_LISTEN_GEOFENCES_TRACKINGSTATUS = 0x0022014c,
-    IOCTL_GNSS_LISTEN_DRIVER_REQUEST           = 0x00220180,
+    IOCTL_GNSS_SEND_DRIVERCOMMAND = 0x0022000cU,
+    IOCTL_GNSS_START_FIXSESSION   = 0x00220040U,
+    IOCTL_GNSS_MODIFY_FIXSESSION  = 0x00220044U,
 }
 
 enum : uint
 {
-    IOCTL_GNSS_START_BREADCRUMBING = 0x002201c0,
-    IOCTL_GNSS_STOP_BREADCRUMBING  = 0x002201c4,
-}
-
-enum uint IOCTL_GNSS_LISTEN_BREADCRUMBING_ALERT = 0x002201c8;
-enum uint IOCTL_GNSS_POP_BREADCRUMBS = 0x002201cc;
-
-enum : uint
-{
-    GNSS_AGNSSFORMAT_XTRA1    = 0x00000001,
-    GNSS_AGNSSFORMAT_XTRA2    = 0x00000002,
-    GNSS_AGNSSFORMAT_LTO      = 0x00000004,
-    GNSS_AGNSSFORMAT_XTRA3    = 0x00000008,
-    GNSS_AGNSSFORMAT_XTRA3_1  = 0x00000010,
-    GNSS_AGNSSFORMAT_XTRA3_2  = 0x00000020,
-    GNSS_AGNSSFORMAT_XTRA_INT = 0x00000040,
-}
-
-enum uint MAX_SERVER_URL_NAME = 0x00000104;
-enum uint MIN_GEOFENCES_REQUIRED = 0x00000064;
-
-enum : uint
-{
-    BREADCRUMBING_UNSUPPORTED = 0x00000000,
-    BREADCRUMBING_VERSION_1   = 0x00000001,
-}
-
-enum uint MIN_BREADCRUMBS_SUPPORTED = 0x00000078;
-
-enum : uint
-{
-    GNSS_SATELLITE_ANY     = 0x00000000,
-    GNSS_SATELLITE_GPS     = 0x00000001,
-    GNSS_SATELLITE_GLONASS = 0x00000002,
-    GNSS_SATELLITE_BEIDOU  = 0x00000004,
-    GNSS_SATELLITE_GALILEO = 0x00000008,
+    IOCTL_GNSS_STOP_FIXSESSION                 = 0x00220048U,
+    IOCTL_GNSS_GET_FIXDATA                     = 0x0022004cU,
+    IOCTL_GNSS_INJECT_AGNSS                    = 0x00220080U,
+    IOCTL_GNSS_LISTEN_AGNSS                    = 0x002200c0U,
+    IOCTL_GNSS_LISTEN_ERROR                    = 0x002200c4U,
+    IOCTL_GNSS_LISTEN_NI                       = 0x00220100U,
+    IOCTL_GNSS_SET_SUPL_HSLP                   = 0x00220104U,
+    IOCTL_GNSS_CONFIG_SUPL_CERT                = 0x00220108U,
+    IOCTL_GNSS_RESPOND_NI                      = 0x0022010cU,
+    IOCTL_GNSS_EXECUTE_CWTEST                  = 0x00220110U,
+    IOCTL_GNSS_EXECUTE_SELFTEST                = 0x00220114U,
+    IOCTL_GNSS_GET_CHIPSETINFO                 = 0x00220118U,
+    IOCTL_GNSS_LISTEN_NMEA                     = 0x0022011cU,
+    IOCTL_GNSS_SET_V2UPL_CONFIG                = 0x00220120U,
+    IOCTL_GNSS_CREATE_GEOFENCE                 = 0x00220140U,
+    IOCTL_GNSS_DELETE_GEOFENCE                 = 0x00220144U,
+    IOCTL_GNSS_LISTEN_GEOFENCE_ALERT           = 0x00220148U,
+    IOCTL_GNSS_LISTEN_GEOFENCES_TRACKINGSTATUS = 0x0022014cU,
+    IOCTL_GNSS_LISTEN_DRIVER_REQUEST           = 0x00220180U,
 }
 
 enum : uint
 {
-    GNSS_OPERMODE_ANY    = 0x00000000,
-    GNSS_OPERMODE_MSA    = 0x00000001,
-    GNSS_OPERMODE_MSB    = 0x00000002,
-    GNSS_OPERMODE_MSS    = 0x00000004,
-    GNSS_OPERMODE_CELLID = 0x00000008,
-    GNSS_OPERMODE_AFLT   = 0x00000010,
-    GNSS_OPERMODE_OTDOA  = 0x00000020,
+    IOCTL_GNSS_START_BREADCRUMBING = 0x002201c0U,
+    IOCTL_GNSS_STOP_BREADCRUMBING  = 0x002201c4U,
+}
+
+enum uint IOCTL_GNSS_LISTEN_BREADCRUMBING_ALERT = 0x002201c8U;
+enum uint IOCTL_GNSS_POP_BREADCRUMBS = 0x002201ccU;
+
+enum : uint
+{
+    GNSS_AGNSSFORMAT_XTRA1    = 0x00000001U,
+    GNSS_AGNSSFORMAT_XTRA2    = 0x00000002U,
+    GNSS_AGNSSFORMAT_LTO      = 0x00000004U,
+    GNSS_AGNSSFORMAT_XTRA3    = 0x00000008U,
+    GNSS_AGNSSFORMAT_XTRA3_1  = 0x00000010U,
+    GNSS_AGNSSFORMAT_XTRA3_2  = 0x00000020U,
+    GNSS_AGNSSFORMAT_XTRA_INT = 0x00000040U,
+}
+
+enum uint MAX_SERVER_URL_NAME = 0x00000104U;
+enum uint MIN_GEOFENCES_REQUIRED = 0x00000064U;
+
+enum : uint
+{
+    BREADCRUMBING_UNSUPPORTED = 0x00000000U,
+    BREADCRUMBING_VERSION_1   = 0x00000001U,
+}
+
+enum uint MIN_BREADCRUMBS_SUPPORTED = 0x00000078U;
+
+enum : uint
+{
+    GNSS_SATELLITE_ANY     = 0x00000000U,
+    GNSS_SATELLITE_GPS     = 0x00000001U,
+    GNSS_SATELLITE_GLONASS = 0x00000002U,
+    GNSS_SATELLITE_BEIDOU  = 0x00000004U,
+    GNSS_SATELLITE_GALILEO = 0x00000008U,
 }
 
 enum : uint
 {
-    GNSS_NMEALOGGING_NONE = 0x00000000,
-    GNSS_NMEALOGGING_ALL  = 0x000000ff,
+    GNSS_OPERMODE_ANY    = 0x00000000U,
+    GNSS_OPERMODE_MSA    = 0x00000001U,
+    GNSS_OPERMODE_MSB    = 0x00000002U,
+    GNSS_OPERMODE_MSS    = 0x00000004U,
+    GNSS_OPERMODE_CELLID = 0x00000008U,
+    GNSS_OPERMODE_AFLT   = 0x00000010U,
+    GNSS_OPERMODE_OTDOA  = 0x00000020U,
 }
 
 enum : uint
 {
-    GNSS_FIXDETAIL_BASIC     = 0x00000001,
-    GNSS_FIXDETAIL_ACCURACY  = 0x00000002,
-    GNSS_FIXDETAIL_SATELLITE = 0x00000004,
+    GNSS_NMEALOGGING_NONE = 0x00000000U,
+    GNSS_NMEALOGGING_ALL  = 0x000000ffU,
 }
-
-enum uint GNSS_MAXSATELLITE = 0x00000040;
 
 enum : uint
 {
-    GNSS_GEOFENCESUPPORT_SUPPORTED = 0x00000001,
-    GNSS_GEOFENCESUPPORT_CIRCLE    = 0x00000002,
+    GNSS_FIXDETAIL_BASIC     = 0x00000001U,
+    GNSS_FIXDETAIL_ACCURACY  = 0x00000002U,
+    GNSS_FIXDETAIL_SATELLITE = 0x00000004U,
 }
 
-enum uint LOCATION_API_VERSION = 0x00000001;
+enum uint GNSS_MAXSATELLITE = 0x00000040U;
+
+enum : uint
+{
+    GNSS_GEOFENCESUPPORT_SUPPORTED = 0x00000001U,
+    GNSS_GEOFENCESUPPORT_CIRCLE    = 0x00000002U,
+}
+
+enum uint LOCATION_API_VERSION = 0x00000001U;
 enum GUID GUID_DEVINTERFACE_GNSS = GUID("3336e5e4-018a-4669-84c5-bd05f3bd368b");
 
 // Structs
@@ -351,7 +365,14 @@ struct GNSS_FIXSESSION_PARAM
     uint                HorizontalConfidence;
     uint[9]             Reserved;
     uint                FixLevelOfDetails;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        GNSS_SINGLESHOT_PARAM SingleShotParam;
+        GNSS_DISTANCETRACKING_PARAM DistanceParam;
+        GNSS_CONTINUOUSTRACKING_PARAM ContinuousParam;
+        GNSS_LKGFIX_PARAM LkgFixParam;
+        ubyte[268]        UnusedParam;
+    }
     ubyte[256]          Unused;
 }
 
@@ -507,10 +528,13 @@ struct GNSS_BREADCRUMB_V1
 
 struct GNSS_BREADCRUMB_LIST
 {
-    uint                Size;
-    uint                Version;
-    uint                NumCrumbs;
-    _Anonymous_e__Union Anonymous;
+    uint Size;
+    uint Version;
+    uint NumCrumbs;
+    union
+    {
+        GNSS_BREADCRUMB_V1[50] v1;
+    }
 }
 
 struct GNSS_GEOREGION_CIRCLE
@@ -522,10 +546,14 @@ struct GNSS_GEOREGION_CIRCLE
 
 struct GNSS_GEOREGION
 {
-    uint                Size;
-    uint                Version;
-    GNSS_GEOREGIONTYPE  GeoRegionType;
-    _Anonymous_e__Union Anonymous;
+    uint               Size;
+    uint               Version;
+    GNSS_GEOREGIONTYPE GeoRegionType;
+    union
+    {
+        GNSS_GEOREGION_CIRCLE Circle;
+        ubyte[512] Unused;
+    }
 }
 
 struct GNSS_GEOFENCE_CREATE_PARAM
@@ -632,7 +660,12 @@ struct GNSS_NI_REQUEST_PARAM
     GNSS_NI_REQUEST_TYPE RequestType;
     GNSS_NI_NOTIFICATION_TYPE NotificationType;
     GNSS_NI_PLANE_TYPE   RequestPlaneType;
-    _Anonymous_e__Union  Anonymous;
+    union
+    {
+        GNSS_SUPL_NI_INFO  SuplNiInfo;
+        GNSS_CP_NI_INFO    CpNiInfo;
+        GNSS_V2UPL_NI_INFO V2UplNiInfo;
+    }
     uint                 ResponseTimeInSec;
     BOOL                 EmergencyLocation;
 }
@@ -647,22 +680,47 @@ struct GNSS_DRIVER_REQUEST_DATA
 
 struct GNSS_EVENT
 {
-    uint                Size;
-    uint                Version;
-    GNSS_EVENT_TYPE     EventType;
-    uint                EventDataSize;
-    ubyte[512]          Unused;
-    _Anonymous_e__Union Anonymous;
+    uint            Size;
+    uint            Version;
+    GNSS_EVENT_TYPE EventType;
+    uint            EventDataSize;
+    ubyte[512]      Unused;
+    union
+    {
+        GNSS_FIXDATA   FixData;
+        GNSS_AGNSS_REQUEST_PARAM AgnssRequest;
+        GNSS_NI_REQUEST_PARAM NiRequest;
+        GNSS_ERRORINFO ErrorInformation;
+        GNSS_NMEA_DATA NmeaData;
+        GNSS_GEOFENCE_ALERT_DATA GeofenceAlertData;
+        GNSS_BREADCRUMBING_ALERT_DATA BreadcrumbAlertData;
+        GNSS_GEOFENCES_TRACKINGSTATUS_DATA GeofencesTrackingStatus;
+        GNSS_DRIVER_REQUEST_DATA DriverRequestData;
+        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] CustomData;
+    }
 }
 
 struct GNSS_EVENT_2
 {
-    uint                Size;
-    uint                Version;
-    GNSS_EVENT_TYPE     EventType;
-    uint                EventDataSize;
-    ubyte[512]          Unused;
-    _Anonymous_e__Union Anonymous;
+    uint            Size;
+    uint            Version;
+    GNSS_EVENT_TYPE EventType;
+    uint            EventDataSize;
+    ubyte[512]      Unused;
+    union
+    {
+        GNSS_FIXDATA   FixData;
+        GNSS_FIXDATA_2 FixData2;
+        GNSS_AGNSS_REQUEST_PARAM AgnssRequest;
+        GNSS_NI_REQUEST_PARAM NiRequest;
+        GNSS_ERRORINFO ErrorInformation;
+        GNSS_NMEA_DATA NmeaData;
+        GNSS_GEOFENCE_ALERT_DATA GeofenceAlertData;
+        GNSS_BREADCRUMBING_ALERT_DATA BreadcrumbAlertData;
+        GNSS_GEOFENCES_TRACKINGSTATUS_DATA GeofencesTrackingStatus;
+        GNSS_DRIVER_REQUEST_DATA DriverRequestData;
+        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] CustomData;
+    }
 }
 
 struct GNSS_AGNSS_INJECTTIME
@@ -695,13 +753,18 @@ struct GNSS_AGNSS_INJECTBLOB
 
 struct GNSS_AGNSS_INJECT
 {
-    uint                Size;
-    uint                Version;
+    uint       Size;
+    uint       Version;
     GNSS_AGNSS_REQUEST_TYPE InjectionType;
-    NTSTATUS            InjectionStatus;
-    uint                InjectionDataSize;
-    ubyte[512]          Unused;
-    _Anonymous_e__Union Anonymous;
+    NTSTATUS   InjectionStatus;
+    uint       InjectionDataSize;
+    ubyte[512] Unused;
+    union
+    {
+        GNSS_AGNSS_INJECTTIME Time;
+        GNSS_AGNSS_INJECTPOSITION Position;
+        GNSS_AGNSS_INJECTBLOB BlobData;
+    }
 }
 
 struct GNSS_SUPL_HSLP_CONFIG
@@ -813,110 +876,110 @@ struct DispCivicAddressReport;
 
 @GUID("c8b7f7ee-75d0-4db9-b62d-7a0f369ca456")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/locationapi/nn-locationapi-ilocationreport))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nn-locationapi-ilocationreport
 interface ILocationReport : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilocationreport-getsensorid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilocationreport-getsensorid
     HRESULT GetSensorID(GUID* pSensorID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilocationreport-gettimestamp))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilocationreport-gettimestamp
     HRESULT GetTimestamp(SYSTEMTIME* pCreationTime);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilocationreport-getvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilocationreport-getvalue
     HRESULT GetValue(const(PROPERTYKEY)* pKey, PROPVARIANT* pValue);
 }
 
 @GUID("7fed806d-0ef8-4f07-80ac-36a0beae3134")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/locationapi/nn-locationapi-ilatlongreport))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nn-locationapi-ilatlongreport
 interface ILatLongReport : ILocationReport
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilatlongreport-getlatitude))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilatlongreport-getlatitude
     HRESULT GetLatitude(double* pLatitude);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilatlongreport-getlongitude))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilatlongreport-getlongitude
     HRESULT GetLongitude(double* pLongitude);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilatlongreport-geterrorradius))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilatlongreport-geterrorradius
     HRESULT GetErrorRadius(double* pErrorRadius);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilatlongreport-getaltitude))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilatlongreport-getaltitude
     HRESULT GetAltitude(double* pAltitude);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilatlongreport-getaltitudeerror))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilatlongreport-getaltitudeerror
     HRESULT GetAltitudeError(double* pAltitudeError);
 }
 
 @GUID("c0b19f70-4adf-445d-87f2-cad8fd711792")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/locationapi/nn-locationapi-icivicaddressreport))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nn-locationapi-icivicaddressreport
 interface ICivicAddressReport : ILocationReport
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-icivicaddressreport-getaddressline1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-icivicaddressreport-getaddressline1
     HRESULT GetAddressLine1(BSTR* pbstrAddress1);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-icivicaddressreport-getaddressline2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-icivicaddressreport-getaddressline2
     HRESULT GetAddressLine2(BSTR* pbstrAddress2);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-icivicaddressreport-getcity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-icivicaddressreport-getcity
     HRESULT GetCity(BSTR* pbstrCity);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-icivicaddressreport-getstateprovince))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-icivicaddressreport-getstateprovince
     HRESULT GetStateProvince(BSTR* pbstrStateProvince);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-icivicaddressreport-getpostalcode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-icivicaddressreport-getpostalcode
     HRESULT GetPostalCode(BSTR* pbstrPostalCode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-icivicaddressreport-getcountryregion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-icivicaddressreport-getcountryregion
     HRESULT GetCountryRegion(BSTR* pbstrCountryRegion);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-icivicaddressreport-getdetaillevel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-icivicaddressreport-getdetaillevel
     HRESULT GetDetailLevel(uint* pDetailLevel);
 }
 
 @GUID("ab2ece69-56d9-4f28-b525-de1b0ee44237")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/locationapi/nn-locationapi-ilocation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nn-locationapi-ilocation
 interface ILocation : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilocation-registerforreport))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilocation-registerforreport
     HRESULT RegisterForReport(ILocationEvents pEvents, const(GUID)* reportType, uint dwRequestedReportInterval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilocation-unregisterforreport))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilocation-unregisterforreport
     HRESULT UnregisterForReport(const(GUID)* reportType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilocation-getreport))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilocation-getreport
     HRESULT GetReport(const(GUID)* reportType, ILocationReport* ppLocationReport);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilocation-getreportstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilocation-getreportstatus
     HRESULT GetReportStatus(const(GUID)* reportType, LOCATION_REPORT_STATUS* pStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilocation-getreportinterval))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilocation-getreportinterval
     HRESULT GetReportInterval(const(GUID)* reportType, uint* pMilliseconds);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilocation-setreportinterval))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilocation-setreportinterval
     HRESULT SetReportInterval(const(GUID)* reportType, uint millisecondsRequested);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilocation-getdesiredaccuracy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilocation-getdesiredaccuracy
     HRESULT GetDesiredAccuracy(const(GUID)* reportType, LOCATION_DESIRED_ACCURACY* pDesiredAccuracy);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilocation-setdesiredaccuracy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilocation-setdesiredaccuracy
     HRESULT SetDesiredAccuracy(const(GUID)* reportType, LOCATION_DESIRED_ACCURACY desiredAccuracy);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilocation-requestpermissions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilocation-requestpermissions
     HRESULT RequestPermissions(HWND hParent, GUID* pReportTypes, uint count, BOOL fModal);
 }
 
 @GUID("193e7729-ab6b-4b12-8617-7596e1bb191c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/locationapi/nn-locationapi-ilocationpower))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nn-locationapi-ilocationpower
 interface ILocationPower : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilocationpower-connect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilocationpower-connect
     HRESULT Connect();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilocationpower-disconnect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilocationpower-disconnect
     HRESULT Disconnect();
 }
 
 @GUID("a65af77e-969a-4a2e-8aca-33bb7cbb1235")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/locationapi/nn-locationapi-idefaultlocation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nn-locationapi-idefaultlocation
 interface IDefaultLocation : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-idefaultlocation-setreport))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-idefaultlocation-setreport
     HRESULT SetReport(const(GUID)* reportType, ILocationReport pLocationReport);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-idefaultlocation-getreport))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-idefaultlocation-getreport
     HRESULT GetReport(const(GUID)* reportType, ILocationReport* ppLocationReport);
 }
 
 @GUID("cae02bbf-798b-4508-a207-35a7906dc73d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/locationapi/nn-locationapi-ilocationevents))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nn-locationapi-ilocationevents
 interface ILocationEvents : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilocationevents-onlocationchanged))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilocationevents-onlocationchanged
     HRESULT OnLocationChanged(const(GUID)* reportType, ILocationReport pLocationReport);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilocationevents-onstatuschanged))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/locationapi/nf-locationapi-ilocationevents-onstatuschanged
     HRESULT OnStatusChanged(const(GUID)* reportType, LOCATION_REPORT_STATUS newStatus);
 }
 

@@ -9,6 +9,7 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 enum Architecture : int
 {
     None    = 0x00000000,

@@ -3,15 +3,16 @@
 module windows.win32.security.diagnosticdataquery;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, FILETIME, HRESULT, PWSTR;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, FILETIME, HRESULT, PWSTR;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/diagnosticdataquerytypes/ne-diagnosticdataquerytypes-ddqaccesslevel))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/diagnosticdataquerytypes/ne-diagnosticdataquerytypes-ddqaccesslevel
 enum DdqAccessLevel : int
 {
     NoData          = 0x00000000,
@@ -70,7 +71,7 @@ struct HDIAGNOSTIC_RECORD
     void* Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/diagnosticdataquerytypes/ns-diagnosticdataquerytypes-diagnostic_data_record))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/diagnosticdataquerytypes/ns-diagnosticdataquerytypes-diagnostic_data_record
 struct DIAGNOSTIC_DATA_RECORD
 {
     long  rowId;
@@ -89,7 +90,7 @@ struct DIAGNOSTIC_DATA_RECORD
     PWSTR extra3;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/diagnosticdataquerytypes/ns-diagnosticdataquerytypes-diagnostic_data_search_criteria))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/diagnosticdataquerytypes/ns-diagnosticdataquerytypes-diagnostic_data_search_criteria
 struct DIAGNOSTIC_DATA_SEARCH_CRITERIA
 {
     const(PWSTR)* producerNames;
@@ -102,7 +103,7 @@ struct DIAGNOSTIC_DATA_SEARCH_CRITERIA
     BOOL          coreDataOnly;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/diagnosticdataquerytypes/ns-diagnosticdataquerytypes-diagnostic_data_event_tag_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/diagnosticdataquerytypes/ns-diagnosticdataquerytypes-diagnostic_data_event_tag_description
 struct DIAGNOSTIC_DATA_EVENT_TAG_DESCRIPTION
 {
     int   privacyTag;
@@ -110,27 +111,27 @@ struct DIAGNOSTIC_DATA_EVENT_TAG_DESCRIPTION
     PWSTR description;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/diagnosticdataquerytypes/ns-diagnosticdataquerytypes-diagnostic_data_event_producer_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/diagnosticdataquerytypes/ns-diagnosticdataquerytypes-diagnostic_data_event_producer_description
 struct DIAGNOSTIC_DATA_EVENT_PRODUCER_DESCRIPTION
 {
     PWSTR name;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/diagnosticdataquerytypes/ns-diagnosticdataquerytypes-diagnostic_data_event_category_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/diagnosticdataquerytypes/ns-diagnosticdataquerytypes-diagnostic_data_event_category_description
 struct DIAGNOSTIC_DATA_EVENT_CATEGORY_DESCRIPTION
 {
     int   id;
     PWSTR name;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/diagnosticdataquerytypes/ns-diagnosticdataquerytypes-diagnostic_data_event_tag_stats))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/diagnosticdataquerytypes/ns-diagnosticdataquerytypes-diagnostic_data_event_tag_stats
 struct DIAGNOSTIC_DATA_EVENT_TAG_STATS
 {
     int  privacyTag;
     uint eventCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/diagnosticdataquerytypes/ns-diagnosticdataquerytypes-diagnostic_data_event_binary_stats))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/diagnosticdataquerytypes/ns-diagnosticdataquerytypes-diagnostic_data_event_binary_stats
 struct DIAGNOSTIC_DATA_EVENT_BINARY_STATS
 {
     PWSTR moduleName;
@@ -139,7 +140,7 @@ struct DIAGNOSTIC_DATA_EVENT_BINARY_STATS
     ulong uploadSizeBytes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/diagnosticdataquerytypes/ns-diagnosticdataquerytypes-diagnostic_data_general_stats))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/diagnosticdataquerytypes/ns-diagnosticdataquerytypes-diagnostic_data_general_stats
 struct DIAGNOSTIC_DATA_GENERAL_STATS
 {
     uint  optInLevel;
@@ -149,7 +150,7 @@ struct DIAGNOSTIC_DATA_GENERAL_STATS
     float averageDailyEvents;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/diagnosticdataquerytypes/ns-diagnosticdataquerytypes-diagnostic_data_event_transcript_configuration))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/diagnosticdataquerytypes/ns-diagnosticdataquerytypes-diagnostic_data_event_transcript_configuration
 struct DIAGNOSTIC_DATA_EVENT_TRANSCRIPT_CONFIGURATION
 {
     uint hoursOfHistoryToKeep;
@@ -157,21 +158,21 @@ struct DIAGNOSTIC_DATA_EVENT_TRANSCRIPT_CONFIGURATION
     uint requestedMaxStoreMegabytes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/diagnosticdataquerytypes/ns-diagnosticdataquerytypes-diagnostic_report_parameter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/diagnosticdataquerytypes/ns-diagnosticdataquerytypes-diagnostic_report_parameter
 struct DIAGNOSTIC_REPORT_PARAMETER
 {
     wchar[129] name;
     wchar[260] value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/diagnosticdataquerytypes/ns-diagnosticdataquerytypes-diagnostic_report_signature))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/diagnosticdataquerytypes/ns-diagnosticdataquerytypes-diagnostic_report_signature
 struct DIAGNOSTIC_REPORT_SIGNATURE
 {
     wchar[65] eventName;
     DIAGNOSTIC_REPORT_PARAMETER[10] parameters;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/diagnosticdataquerytypes/ns-diagnosticdataquerytypes-diagnostic_report_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/diagnosticdataquerytypes/ns-diagnosticdataquerytypes-diagnostic_report_data
 struct DIAGNOSTIC_REPORT_DATA
 {
     DIAGNOSTIC_REPORT_SIGNATURE signature;

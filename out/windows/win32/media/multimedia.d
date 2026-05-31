@@ -3,19 +3,20 @@
 module windows.win32.media.multimedia;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, CHAR, FARPROC, HANDLE, HINSTANCE,
-                                         HMODULE, HRESULT, HTASK, HWND, LPARAM,
-                                         LRESULT, POINT, PSTR, PWSTR, RECT;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, CHAR, FARPROC, HANDLE, HINSTANCE,
+                                                    HMODULE, HRESULT, HTASK, HWND,
+                                                    LPARAM, LRESULT, POINT, PSTR, PWSTR,
+                                                    RECT;
 public import windows.win32.graphics.gdi : BITMAPINFO, BITMAPINFOHEADER, HDC, HPALETTE,
                                            PALETTEENTRY;
-public import windows.win32.media.audio : HMIXER, HWAVE, WAVEFORMAT, WAVEFORMATEX,
-                                          WAVEHDR;
-public import windows.win32.media : LPTIMECALLBACK;
-public import windows.win32.system.com : IPersistFile, IUnknown;
+public import windows.win32.media.audio.audio : HMIXER, HWAVE, WAVEFORMAT, WAVEFORMATEX,
+                                                WAVEHDR;
+public import windows.win32.media.media : LPTIMECALLBACK;
+public import windows.win32.system.com.com : IPersistFile, IUnknown;
 public import windows.win32.system.io : OVERLAPPED;
 public import windows.win32.ui.controls.dialogs : OPENFILENAMEA, OPENFILENAMEW;
-public import windows.win32.ui.controls : LPFNSVADDPROPSHEETPAGE;
+public import windows.win32.ui.controls.controls : LPFNSVADDPROPSHEETPAGE;
 
 extern(Windows) @nogc nothrow:
 
@@ -23,49 +24,49 @@ extern(Windows) @nogc nothrow:
 // Constants
 
 
-enum uint WM_CAP_START = 0x00000400;
-enum uint MODM_USER = 0x00004000;
-enum uint MIDM_USER = 0x00004000;
-enum uint MODM_MAPPER = 0x00002000;
-enum uint MIDM_MAPPER = 0x00002000;
-enum uint MODM_INIT = 0x00000064;
-enum uint MIDM_INIT = 0x00000064;
-enum uint MODM_INIT_EX = 0x00000068;
-enum uint MIDM_INIT_EX = 0x00000068;
-enum uint DRV_MCI_FIRST = 0x00000800;
-enum uint ACMDM_BASE = 0x00006000;
-enum uint ICM_RESERVED = 0x00005000;
+enum uint WM_CAP_START = 0x00000400U;
+enum uint MODM_USER = 0x00004000U;
+enum uint MIDM_USER = 0x00004000U;
+enum uint MODM_MAPPER = 0x00002000U;
+enum uint MIDM_MAPPER = 0x00002000U;
+enum uint MODM_INIT = 0x00000064U;
+enum uint MIDM_INIT = 0x00000064U;
+enum uint MODM_INIT_EX = 0x00000068U;
+enum uint MIDM_INIT_EX = 0x00000068U;
+enum uint DRV_MCI_FIRST = 0x00000800U;
+enum uint ACMDM_BASE = 0x00006000U;
+enum uint ICM_RESERVED = 0x00005000U;
 enum int MCI_TEST = 0x00000020;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-capture))], [])*/uint MCI_CAPTURE = 0x00000870;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-monitor))], [])*/uint MCI_MONITOR = 0x00000871;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-reserve))], [])*/uint MCI_RESERVE = 0x00000872;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-capture))], [])*/uint MCI_CAPTURE = 0x00000870U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-monitor))], [])*/uint MCI_MONITOR = 0x00000871U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-reserve))], [])*/uint MCI_RESERVE = 0x00000872U;
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-setaudio))], [])*/uint
 {
-    MCI_SETAUDIO = 0x00000873,
-    MCI_SIGNAL   = 0x00000875,
-    MCI_SETVIDEO = 0x00000876,
+    MCI_SETAUDIO = 0x00000873U,
+    MCI_SIGNAL   = 0x00000875U,
+    MCI_SETVIDEO = 0x00000876U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-quality))], [])*/uint MCI_QUALITY = 0x00000877;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-quality))], [])*/uint MCI_QUALITY = 0x00000877U;
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-list))], [])*/uint
 {
-    MCI_LIST      = 0x00000878,
-    MCI_UNDO      = 0x00000879,
-    MCI_CONFIGURE = 0x0000087a,
+    MCI_LIST      = 0x00000878U,
+    MCI_UNDO      = 0x00000879U,
+    MCI_CONFIGURE = 0x0000087aU,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-restore))], [])*/uint MCI_RESTORE = 0x0000087b;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-restore))], [])*/uint MCI_RESTORE = 0x0000087bU;
 
 enum : uint
 {
-    MCI_ON                    = 0x00000001,
-    MCI_OFF                   = 0x00000000,
-    MCI_DGV_FILE_MODE_SAVING  = 0x00000001,
-    MCI_DGV_FILE_MODE_LOADING = 0x00000002,
-    MCI_DGV_FILE_MODE_EDITING = 0x00000003,
-    MCI_DGV_FILE_MODE_IDLE    = 0x00000004,
+    MCI_ON                    = 0x00000001U,
+    MCI_OFF                   = 0x00000000U,
+    MCI_DGV_FILE_MODE_SAVING  = 0x00000001U,
+    MCI_DGV_FILE_MODE_LOADING = 0x00000002U,
+    MCI_DGV_FILE_MODE_EDITING = 0x00000003U,
+    MCI_DGV_FILE_MODE_IDLE    = 0x00000004U,
 }
 
 enum : int
@@ -100,14 +101,14 @@ enum : int
 
 enum : uint
 {
-    MCIERR_DGV_DEVICE_LIMIT       = 0x00000200,
-    MCIERR_DGV_IOERR              = 0x00000201,
-    MCIERR_DGV_WORKSPACE_EMPTY    = 0x00000202,
-    MCIERR_DGV_DISK_FULL          = 0x00000203,
-    MCIERR_DGV_DEVICE_MEMORY_FULL = 0x00000204,
+    MCIERR_DGV_DEVICE_LIMIT       = 0x00000200U,
+    MCIERR_DGV_IOERR              = 0x00000201U,
+    MCIERR_DGV_WORKSPACE_EMPTY    = 0x00000202U,
+    MCIERR_DGV_DISK_FULL          = 0x00000203U,
+    MCIERR_DGV_DEVICE_MEMORY_FULL = 0x00000204U,
 }
 
-enum uint MCIERR_DGV_BAD_CLIPBOARD_RANGE = 0x00000205;
+enum uint MCIERR_DGV_BAD_CLIPBOARD_RANGE = 0x00000205U;
 
 enum : int
 {
@@ -432,2937 +433,2937 @@ enum : int
     MCI_DGV_WINDOW_DEFAULT    = 0x00000000,
 }
 
-enum uint MM_CREATIVE = 0x00000002;
-enum uint MM_MEDIAVISION = 0x00000003;
-enum uint MM_FUJITSU = 0x00000004;
-enum uint MM_PRAGMATRAX = 0x00000005;
-enum uint MM_CYRIX = 0x00000006;
-enum uint MM_PHILIPS_SPEECH_PROCESSING = 0x00000007;
-enum uint MM_NETXL = 0x00000008;
-enum uint MM_ZYXEL = 0x00000009;
-enum uint MM_BECUBED = 0x0000000a;
-enum uint MM_AARDVARK = 0x0000000b;
-enum uint MM_BINTEC = 0x0000000c;
-enum uint MM_HEWLETT_PACKARD = 0x0000000d;
-enum uint MM_ACULAB = 0x0000000e;
-enum uint MM_FAITH = 0x0000000f;
-enum uint MM_MITEL = 0x00000010;
-enum uint MM_QUANTUM3D = 0x00000011;
+enum uint MM_CREATIVE = 0x00000002U;
+enum uint MM_MEDIAVISION = 0x00000003U;
+enum uint MM_FUJITSU = 0x00000004U;
+enum uint MM_PRAGMATRAX = 0x00000005U;
+enum uint MM_CYRIX = 0x00000006U;
+enum uint MM_PHILIPS_SPEECH_PROCESSING = 0x00000007U;
+enum uint MM_NETXL = 0x00000008U;
+enum uint MM_ZYXEL = 0x00000009U;
+enum uint MM_BECUBED = 0x0000000aU;
+enum uint MM_AARDVARK = 0x0000000bU;
+enum uint MM_BINTEC = 0x0000000cU;
+enum uint MM_HEWLETT_PACKARD = 0x0000000dU;
+enum uint MM_ACULAB = 0x0000000eU;
+enum uint MM_FAITH = 0x0000000fU;
+enum uint MM_MITEL = 0x00000010U;
+enum uint MM_QUANTUM3D = 0x00000011U;
 
 enum : uint
 {
-    MM_SNI      = 0x00000012,
-    MM_EMU      = 0x00000013,
-    MM_ARTISOFT = 0x00000014,
+    MM_SNI      = 0x00000012U,
+    MM_EMU      = 0x00000013U,
+    MM_ARTISOFT = 0x00000014U,
 }
 
-enum uint MM_TURTLE_BEACH = 0x00000015;
+enum uint MM_TURTLE_BEACH = 0x00000015U;
 
 enum : uint
 {
-    MM_IBM      = 0x00000016,
-    MM_VOCALTEC = 0x00000017,
+    MM_IBM      = 0x00000016U,
+    MM_VOCALTEC = 0x00000017U,
 }
 
-enum uint MM_ROLAND = 0x00000018;
-enum uint MM_DSP_SOLUTIONS = 0x00000019;
+enum uint MM_ROLAND = 0x00000018U;
+enum uint MM_DSP_SOLUTIONS = 0x00000019U;
 
 enum : uint
 {
-    MM_NEC      = 0x0000001a,
-    MM_ATI      = 0x0000001b,
-    MM_WANGLABS = 0x0000001c,
+    MM_NEC      = 0x0000001aU,
+    MM_ATI      = 0x0000001bU,
+    MM_WANGLABS = 0x0000001cU,
 }
 
-enum uint MM_TANDY = 0x0000001d;
-enum uint MM_VOYETRA = 0x0000001e;
-enum uint MM_ANTEX = 0x0000001f;
+enum uint MM_TANDY = 0x0000001dU;
+enum uint MM_VOYETRA = 0x0000001eU;
+enum uint MM_ANTEX = 0x0000001fU;
 
 enum : uint
 {
-    MM_ICL_PS = 0x00000020,
-    MM_INTEL  = 0x00000021,
+    MM_ICL_PS = 0x00000020U,
+    MM_INTEL  = 0x00000021U,
 }
 
-enum uint MM_GRAVIS = 0x00000022;
+enum uint MM_GRAVIS = 0x00000022U;
 
 enum : uint
 {
-    MM_VAL         = 0x00000023,
-    MM_INTERACTIVE = 0x00000024,
+    MM_VAL         = 0x00000023U,
+    MM_INTERACTIVE = 0x00000024U,
 }
 
-enum uint MM_YAMAHA = 0x00000025;
+enum uint MM_YAMAHA = 0x00000025U;
 
 enum : uint
 {
-    MM_EVEREX = 0x00000026,
-    MM_ECHO   = 0x00000027,
-    MM_SIERRA = 0x00000028,
+    MM_EVEREX = 0x00000026U,
+    MM_ECHO   = 0x00000027U,
+    MM_SIERRA = 0x00000028U,
 }
 
 enum : uint
 {
-    MM_CAT       = 0x00000029,
-    MM_APPS      = 0x0000002a,
-    MM_DSP_GROUP = 0x0000002b,
+    MM_CAT       = 0x00000029U,
+    MM_APPS      = 0x0000002aU,
+    MM_DSP_GROUP = 0x0000002bU,
 }
 
-enum uint MM_MELABS = 0x0000002c;
-enum uint MM_COMPUTER_FRIENDS = 0x0000002d;
+enum uint MM_MELABS = 0x0000002cU;
+enum uint MM_COMPUTER_FRIENDS = 0x0000002dU;
 
 enum : uint
 {
-    MM_ESS       = 0x0000002e,
-    MM_AUDIOFILE = 0x0000002f,
+    MM_ESS       = 0x0000002eU,
+    MM_AUDIOFILE = 0x0000002fU,
 }
 
-enum uint MM_MOTOROLA = 0x00000030;
-enum uint MM_CANOPUS = 0x00000031;
-enum uint MM_EPSON = 0x00000032;
-enum uint MM_TRUEVISION = 0x00000033;
-enum uint MM_AZTECH = 0x00000034;
-enum uint MM_VIDEOLOGIC = 0x00000035;
-enum uint MM_SCALACS = 0x00000036;
+enum uint MM_MOTOROLA = 0x00000030U;
+enum uint MM_CANOPUS = 0x00000031U;
+enum uint MM_EPSON = 0x00000032U;
+enum uint MM_TRUEVISION = 0x00000033U;
+enum uint MM_AZTECH = 0x00000034U;
+enum uint MM_VIDEOLOGIC = 0x00000035U;
+enum uint MM_SCALACS = 0x00000036U;
 
 enum : uint
 {
-    MM_KORG        = 0x00000037,
-    MM_APT         = 0x00000038,
-    MM_ICS         = 0x00000039,
-    MM_ITERATEDSYS = 0x0000003a,
+    MM_KORG        = 0x00000037U,
+    MM_APT         = 0x00000038U,
+    MM_ICS         = 0x00000039U,
+    MM_ITERATEDSYS = 0x0000003aU,
 }
 
-enum uint MM_METHEUS = 0x0000003b;
-enum uint MM_LOGITECH = 0x0000003c;
-enum uint MM_WINNOV = 0x0000003d;
+enum uint MM_METHEUS = 0x0000003bU;
+enum uint MM_LOGITECH = 0x0000003cU;
+enum uint MM_WINNOV = 0x0000003dU;
 
 enum : uint
 {
-    MM_NCR        = 0x0000003e,
-    MM_EXAN       = 0x0000003f,
-    MM_AST        = 0x00000040,
-    MM_WILLOWPOND = 0x00000041,
+    MM_NCR        = 0x0000003eU,
+    MM_EXAN       = 0x0000003fU,
+    MM_AST        = 0x00000040U,
+    MM_WILLOWPOND = 0x00000041U,
 }
 
-enum uint MM_SONICFOUNDRY = 0x00000042;
-enum uint MM_VITEC = 0x00000043;
-enum uint MM_MOSCOM = 0x00000044;
-enum uint MM_SILICONSOFT = 0x00000045;
-enum uint MM_TERRATEC = 0x00000046;
-enum uint MM_MEDIASONIC = 0x00000047;
+enum uint MM_SONICFOUNDRY = 0x00000042U;
+enum uint MM_VITEC = 0x00000043U;
+enum uint MM_MOSCOM = 0x00000044U;
+enum uint MM_SILICONSOFT = 0x00000045U;
+enum uint MM_TERRATEC = 0x00000046U;
+enum uint MM_MEDIASONIC = 0x00000047U;
 
 enum : uint
 {
-    MM_SANYO    = 0x00000048,
-    MM_SUPERMAC = 0x00000049,
+    MM_SANYO    = 0x00000048U,
+    MM_SUPERMAC = 0x00000049U,
 }
 
-enum uint MM_AUDIOPT = 0x0000004a;
-enum uint MM_NOGATECH = 0x0000004b;
-enum uint MM_SPEECHCOMP = 0x0000004c;
-enum uint MM_AHEAD = 0x0000004d;
-enum uint MM_DOLBY = 0x0000004e;
+enum uint MM_AUDIOPT = 0x0000004aU;
+enum uint MM_NOGATECH = 0x0000004bU;
+enum uint MM_SPEECHCOMP = 0x0000004cU;
+enum uint MM_AHEAD = 0x0000004dU;
+enum uint MM_DOLBY = 0x0000004eU;
 
 enum : uint
 {
-    MM_OKI        = 0x0000004f,
-    MM_AURAVISION = 0x00000050,
+    MM_OKI        = 0x0000004fU,
+    MM_AURAVISION = 0x00000050U,
 }
 
-enum uint MM_OLIVETTI = 0x00000051;
-enum uint MM_IOMAGIC = 0x00000052;
-enum uint MM_MATSUSHITA = 0x00000053;
-enum uint MM_CONTROLRES = 0x00000054;
-enum uint MM_XEBEC = 0x00000055;
-enum uint MM_NEWMEDIA = 0x00000056;
+enum uint MM_OLIVETTI = 0x00000051U;
+enum uint MM_IOMAGIC = 0x00000052U;
+enum uint MM_MATSUSHITA = 0x00000053U;
+enum uint MM_CONTROLRES = 0x00000054U;
+enum uint MM_XEBEC = 0x00000055U;
+enum uint MM_NEWMEDIA = 0x00000056U;
 
 enum : uint
 {
-    MM_NMS    = 0x00000057,
-    MM_LYRRUS = 0x00000058,
+    MM_NMS    = 0x00000057U,
+    MM_LYRRUS = 0x00000058U,
 }
 
-enum uint MM_COMPUSIC = 0x00000059;
+enum uint MM_COMPUSIC = 0x00000059U;
 
 enum : uint
 {
-    MM_OPTI   = 0x0000005a,
-    MM_ADLACC = 0x0000005b,
+    MM_OPTI   = 0x0000005aU,
+    MM_ADLACC = 0x0000005bU,
 }
 
-enum uint MM_COMPAQ = 0x0000005c;
-enum uint MM_DIALOGIC = 0x0000005d;
-enum uint MM_INSOFT = 0x0000005e;
-enum uint MM_MPTUS = 0x0000005f;
-enum uint MM_WEITEK = 0x00000060;
-enum uint MM_LERNOUT_AND_HAUSPIE = 0x00000061;
-enum uint MM_QCIAR = 0x00000062;
-enum uint MM_APPLE = 0x00000063;
-enum uint MM_DIGITAL = 0x00000064;
+enum uint MM_COMPAQ = 0x0000005cU;
+enum uint MM_DIALOGIC = 0x0000005dU;
+enum uint MM_INSOFT = 0x0000005eU;
+enum uint MM_MPTUS = 0x0000005fU;
+enum uint MM_WEITEK = 0x00000060U;
+enum uint MM_LERNOUT_AND_HAUSPIE = 0x00000061U;
+enum uint MM_QCIAR = 0x00000062U;
+enum uint MM_APPLE = 0x00000063U;
+enum uint MM_DIGITAL = 0x00000064U;
 
 enum : uint
 {
-    MM_MOTU    = 0x00000065,
-    MM_WORKBIT = 0x00000066,
+    MM_MOTU    = 0x00000065U,
+    MM_WORKBIT = 0x00000066U,
 }
 
-enum uint MM_OSITECH = 0x00000067;
+enum uint MM_OSITECH = 0x00000067U;
 
 enum : uint
 {
-    MM_MIRO        = 0x00000068,
-    MM_CIRRUSLOGIC = 0x00000069,
+    MM_MIRO        = 0x00000068U,
+    MM_CIRRUSLOGIC = 0x00000069U,
 }
 
-enum uint MM_ISOLUTION = 0x0000006a;
-enum uint MM_HORIZONS = 0x0000006b;
-enum uint MM_CONCEPTS = 0x0000006c;
+enum uint MM_ISOLUTION = 0x0000006aU;
+enum uint MM_HORIZONS = 0x0000006bU;
+enum uint MM_CONCEPTS = 0x0000006cU;
 
 enum : uint
 {
-    MM_VTG      = 0x0000006d,
-    MM_RADIUS   = 0x0000006e,
-    MM_ROCKWELL = 0x0000006f,
+    MM_VTG      = 0x0000006dU,
+    MM_RADIUS   = 0x0000006eU,
+    MM_ROCKWELL = 0x0000006fU,
 }
 
 enum : uint
 {
-    MM_XYZ    = 0x00000070,
-    MM_OPCODE = 0x00000071,
+    MM_XYZ    = 0x00000070U,
+    MM_OPCODE = 0x00000071U,
 }
 
-enum uint MM_VOXWARE = 0x00000072;
-enum uint MM_NORTHERN_TELECOM = 0x00000073;
-enum uint MM_APICOM = 0x00000074;
-enum uint MM_GRANDE = 0x00000075;
+enum uint MM_VOXWARE = 0x00000072U;
+enum uint MM_NORTHERN_TELECOM = 0x00000073U;
+enum uint MM_APICOM = 0x00000074U;
+enum uint MM_GRANDE = 0x00000075U;
 
 enum : uint
 {
-    MM_ADDX    = 0x00000076,
-    MM_WILDCAT = 0x00000077,
+    MM_ADDX    = 0x00000076U,
+    MM_WILDCAT = 0x00000077U,
 }
 
-enum uint MM_RHETOREX = 0x00000078;
-enum uint MM_BROOKTREE = 0x00000079;
-enum uint MM_ENSONIQ = 0x0000007d;
+enum uint MM_RHETOREX = 0x00000078U;
+enum uint MM_BROOKTREE = 0x00000079U;
+enum uint MM_ENSONIQ = 0x0000007dU;
 
 enum : uint
 {
-    MM_FAST   = 0x0000007e,
-    MM_NVIDIA = 0x0000007f,
+    MM_FAST   = 0x0000007eU,
+    MM_NVIDIA = 0x0000007fU,
 }
 
-enum uint MM_OKSORI = 0x00000080;
-enum uint MM_DIACOUSTICS = 0x00000081;
-enum uint MM_GULBRANSEN = 0x00000082;
-enum uint MM_KAY_ELEMETRICS = 0x00000083;
-enum uint MM_CRYSTAL = 0x00000084;
-enum uint MM_SPLASH_STUDIOS = 0x00000085;
-enum uint MM_QUARTERDECK = 0x00000086;
+enum uint MM_OKSORI = 0x00000080U;
+enum uint MM_DIACOUSTICS = 0x00000081U;
+enum uint MM_GULBRANSEN = 0x00000082U;
+enum uint MM_KAY_ELEMETRICS = 0x00000083U;
+enum uint MM_CRYSTAL = 0x00000084U;
+enum uint MM_SPLASH_STUDIOS = 0x00000085U;
+enum uint MM_QUARTERDECK = 0x00000086U;
 
 enum : uint
 {
-    MM_TDK                = 0x00000087,
-    MM_DIGITAL_AUDIO_LABS = 0x00000088,
+    MM_TDK                = 0x00000087U,
+    MM_DIGITAL_AUDIO_LABS = 0x00000088U,
 }
 
-enum uint MM_SEERSYS = 0x00000089;
-enum uint MM_PICTURETEL = 0x0000008a;
-enum uint MM_ATT_MICROELECTRONICS = 0x0000008b;
-enum uint MM_OSPREY = 0x0000008c;
-enum uint MM_MEDIATRIX = 0x0000008d;
-enum uint MM_SOUNDESIGNS = 0x0000008e;
-enum uint MM_ALDIGITAL = 0x0000008f;
-enum uint MM_SPECTRUM_SIGNAL_PROCESSING = 0x00000090;
+enum uint MM_SEERSYS = 0x00000089U;
+enum uint MM_PICTURETEL = 0x0000008aU;
+enum uint MM_ATT_MICROELECTRONICS = 0x0000008bU;
+enum uint MM_OSPREY = 0x0000008cU;
+enum uint MM_MEDIATRIX = 0x0000008dU;
+enum uint MM_SOUNDESIGNS = 0x0000008eU;
+enum uint MM_ALDIGITAL = 0x0000008fU;
+enum uint MM_SPECTRUM_SIGNAL_PROCESSING = 0x00000090U;
 
 enum : uint
 {
-    MM_ECS          = 0x00000091,
-    MM_AMD          = 0x00000092,
-    MM_COREDYNAMICS = 0x00000093,
+    MM_ECS          = 0x00000091U,
+    MM_AMD          = 0x00000092U,
+    MM_COREDYNAMICS = 0x00000093U,
 }
 
-enum uint MM_CANAM = 0x00000094;
-enum uint MM_SOFTSOUND = 0x00000095;
-enum uint MM_NORRIS = 0x00000096;
+enum uint MM_CANAM = 0x00000094U;
+enum uint MM_SOFTSOUND = 0x00000095U;
+enum uint MM_NORRIS = 0x00000096U;
 
 enum : uint
 {
-    MM_DDD       = 0x00000097,
-    MM_EUPHONICS = 0x00000098,
+    MM_DDD       = 0x00000097U,
+    MM_EUPHONICS = 0x00000098U,
 }
 
-enum uint MM_PRECEPT = 0x00000099;
-enum uint MM_CRYSTAL_NET = 0x0000009a;
-enum uint MM_CHROMATIC = 0x0000009b;
-enum uint MM_VOICEINFO = 0x0000009c;
-enum uint MM_VIENNASYS = 0x0000009d;
-enum uint MM_CONNECTIX = 0x0000009e;
-enum uint MM_GADGETLABS = 0x0000009f;
-enum uint MM_FRONTIER = 0x000000a0;
-enum uint MM_VIONA = 0x000000a1;
-enum uint MM_CASIO = 0x000000a2;
-enum uint MM_DIAMONDMM = 0x000000a3;
+enum uint MM_PRECEPT = 0x00000099U;
+enum uint MM_CRYSTAL_NET = 0x0000009aU;
+enum uint MM_CHROMATIC = 0x0000009bU;
+enum uint MM_VOICEINFO = 0x0000009cU;
+enum uint MM_VIENNASYS = 0x0000009dU;
+enum uint MM_CONNECTIX = 0x0000009eU;
+enum uint MM_GADGETLABS = 0x0000009fU;
+enum uint MM_FRONTIER = 0x000000a0U;
+enum uint MM_VIONA = 0x000000a1U;
+enum uint MM_CASIO = 0x000000a2U;
+enum uint MM_DIAMONDMM = 0x000000a3U;
 
 enum : uint
 {
-    MM_S3      = 0x000000a4,
-    MM_DVISION = 0x000000a5,
+    MM_S3      = 0x000000a4U,
+    MM_DVISION = 0x000000a5U,
 }
 
-enum uint MM_NETSCAPE = 0x000000a6;
-enum uint MM_SOUNDSPACE = 0x000000a7;
-enum uint MM_VANKOEVERING = 0x000000a8;
-enum uint MM_QTEAM = 0x000000a9;
-enum uint MM_ZEFIRO = 0x000000aa;
-enum uint MM_STUDER = 0x000000ab;
-enum uint MM_FRAUNHOFER_IIS = 0x000000ac;
-enum uint MM_QUICKNET = 0x000000ad;
-enum uint MM_ALARIS = 0x000000ae;
-enum uint MM_SICRESOURCE = 0x000000af;
-enum uint MM_NEOMAGIC = 0x000000b0;
-enum uint MM_MERGING_TECHNOLOGIES = 0x000000b1;
-enum uint MM_XIRLINK = 0x000000b2;
-enum uint MM_COLORGRAPH = 0x000000b3;
+enum uint MM_NETSCAPE = 0x000000a6U;
+enum uint MM_SOUNDSPACE = 0x000000a7U;
+enum uint MM_VANKOEVERING = 0x000000a8U;
+enum uint MM_QTEAM = 0x000000a9U;
+enum uint MM_ZEFIRO = 0x000000aaU;
+enum uint MM_STUDER = 0x000000abU;
+enum uint MM_FRAUNHOFER_IIS = 0x000000acU;
+enum uint MM_QUICKNET = 0x000000adU;
+enum uint MM_ALARIS = 0x000000aeU;
+enum uint MM_SICRESOURCE = 0x000000afU;
+enum uint MM_NEOMAGIC = 0x000000b0U;
+enum uint MM_MERGING_TECHNOLOGIES = 0x000000b1U;
+enum uint MM_XIRLINK = 0x000000b2U;
+enum uint MM_COLORGRAPH = 0x000000b3U;
 
 enum : uint
 {
-    MM_OTI    = 0x000000b4,
-    MM_AUREAL = 0x000000b5,
+    MM_OTI    = 0x000000b4U,
+    MM_AUREAL = 0x000000b5U,
 }
 
 enum : uint
 {
-    MM_VIVO  = 0x000000b6,
-    MM_SHARP = 0x000000b7,
+    MM_VIVO  = 0x000000b6U,
+    MM_SHARP = 0x000000b7U,
 }
 
-enum uint MM_LUCENT = 0x000000b8;
+enum uint MM_LUCENT = 0x000000b8U;
 
 enum : uint
 {
-    MM_ATT    = 0x000000b9,
-    MM_SUNCOM = 0x000000ba,
-    MM_SORVIS = 0x000000bb,
+    MM_ATT    = 0x000000b9U,
+    MM_SUNCOM = 0x000000baU,
+    MM_SORVIS = 0x000000bbU,
 }
 
-enum uint MM_INVISION = 0x000000bc;
-enum uint MM_BERKOM = 0x000000bd;
-enum uint MM_MARIAN = 0x000000be;
-enum uint MM_DPSINC = 0x000000bf;
+enum uint MM_INVISION = 0x000000bcU;
+enum uint MM_BERKOM = 0x000000bdU;
+enum uint MM_MARIAN = 0x000000beU;
+enum uint MM_DPSINC = 0x000000bfU;
 
 enum : uint
 {
-    MM_BCB          = 0x000000c0,
-    MM_MOTIONPIXELS = 0x000000c1,
+    MM_BCB          = 0x000000c0U,
+    MM_MOTIONPIXELS = 0x000000c1U,
 }
 
-enum uint MM_QDESIGN = 0x000000c2;
+enum uint MM_QDESIGN = 0x000000c2U;
 
 enum : uint
 {
-    MM_NMP        = 0x000000c3,
-    MM_DATAFUSION = 0x000000c4,
+    MM_NMP        = 0x000000c3U,
+    MM_DATAFUSION = 0x000000c4U,
 }
 
 enum : uint
 {
-    MM_DUCK   = 0x000000c5,
-    MM_FTR    = 0x000000c6,
-    MM_BERCOS = 0x000000c7,
+    MM_DUCK   = 0x000000c5U,
+    MM_FTR    = 0x000000c6U,
+    MM_BERCOS = 0x000000c7U,
 }
 
-enum uint MM_ONLIVE = 0x000000c8;
-enum uint MM_SIEMENS_SBC = 0x000000c9;
-enum uint MM_TERALOGIC = 0x000000ca;
-enum uint MM_PHONET = 0x000000cb;
-enum uint MM_WINBOND = 0x000000cc;
-enum uint MM_VIRTUALMUSIC = 0x000000cd;
+enum uint MM_ONLIVE = 0x000000c8U;
+enum uint MM_SIEMENS_SBC = 0x000000c9U;
+enum uint MM_TERALOGIC = 0x000000caU;
+enum uint MM_PHONET = 0x000000cbU;
+enum uint MM_WINBOND = 0x000000ccU;
+enum uint MM_VIRTUALMUSIC = 0x000000cdU;
 
 enum : uint
 {
-    MM_ENET      = 0x000000ce,
-    MM_GUILLEMOT = 0x000000cf,
+    MM_ENET      = 0x000000ceU,
+    MM_GUILLEMOT = 0x000000cfU,
 }
 
-enum uint MM_EMAGIC = 0x000000d0;
+enum uint MM_EMAGIC = 0x000000d0U;
 
 enum : uint
 {
-    MM_MWM             = 0x000000d1,
-    MM_PACIFICRESEARCH = 0x000000d2,
+    MM_MWM             = 0x000000d1U,
+    MM_PACIFICRESEARCH = 0x000000d2U,
 }
 
-enum uint MM_SIPROLAB = 0x000000d3;
+enum uint MM_SIPROLAB = 0x000000d3U;
 
 enum : uint
 {
-    MM_LYNX                 = 0x000000d4,
-    MM_SPECTRUM_PRODUCTIONS = 0x000000d5,
+    MM_LYNX                 = 0x000000d4U,
+    MM_SPECTRUM_PRODUCTIONS = 0x000000d5U,
 }
 
-enum uint MM_DICTAPHONE = 0x000000d6;
-enum uint MM_QUALCOMM = 0x000000d7;
+enum uint MM_DICTAPHONE = 0x000000d6U;
+enum uint MM_QUALCOMM = 0x000000d7U;
 
 enum : uint
 {
-    MM_RZS          = 0x000000d8,
-    MM_AUDIOSCIENCE = 0x000000d9,
+    MM_RZS          = 0x000000d8U,
+    MM_AUDIOSCIENCE = 0x000000d9U,
 }
 
-enum uint MM_PINNACLE = 0x000000da;
+enum uint MM_PINNACLE = 0x000000daU;
 
 enum : uint
 {
-    MM_EES      = 0x000000db,
-    MM_HAFTMANN = 0x000000dc,
+    MM_EES      = 0x000000dbU,
+    MM_HAFTMANN = 0x000000dcU,
 }
 
-enum uint MM_LUCID = 0x000000dd;
-enum uint MM_HEADSPACE = 0x000000de;
-enum uint MM_UNISYS = 0x000000df;
-enum uint MM_LUMINOSITI = 0x000000e0;
-enum uint MM_ACTIVEVOICE = 0x000000e1;
+enum uint MM_LUCID = 0x000000ddU;
+enum uint MM_HEADSPACE = 0x000000deU;
+enum uint MM_UNISYS = 0x000000dfU;
+enum uint MM_LUMINOSITI = 0x000000e0U;
+enum uint MM_ACTIVEVOICE = 0x000000e1U;
 
 enum : uint
 {
-    MM_DTS      = 0x000000e2,
-    MM_DIGIGRAM = 0x000000e3,
+    MM_DTS      = 0x000000e2U,
+    MM_DIGIGRAM = 0x000000e3U,
 }
 
-enum uint MM_SOFTLAB_NSK = 0x000000e4;
-enum uint MM_FORTEMEDIA = 0x000000e5;
-enum uint MM_SONORUS = 0x000000e6;
-enum uint MM_ARRAY = 0x000000e7;
-enum uint MM_DATARAN = 0x000000e8;
-enum uint MM_I_LINK = 0x000000e9;
-enum uint MM_SELSIUS_SYSTEMS = 0x000000ea;
-enum uint MM_ADMOS = 0x000000eb;
-enum uint MM_LEXICON = 0x000000ec;
+enum uint MM_SOFTLAB_NSK = 0x000000e4U;
+enum uint MM_FORTEMEDIA = 0x000000e5U;
+enum uint MM_SONORUS = 0x000000e6U;
+enum uint MM_ARRAY = 0x000000e7U;
+enum uint MM_DATARAN = 0x000000e8U;
+enum uint MM_I_LINK = 0x000000e9U;
+enum uint MM_SELSIUS_SYSTEMS = 0x000000eaU;
+enum uint MM_ADMOS = 0x000000ebU;
+enum uint MM_LEXICON = 0x000000ecU;
 
 enum : uint
 {
-    MM_SGI    = 0x000000ed,
-    MM_IPI    = 0x000000ee,
-    MM_ICE    = 0x000000ef,
-    MM_VQST   = 0x000000f0,
-    MM_ETEK   = 0x000000f1,
-    MM_CS     = 0x000000f2,
-    MM_ALESIS = 0x000000f3,
+    MM_SGI    = 0x000000edU,
+    MM_IPI    = 0x000000eeU,
+    MM_ICE    = 0x000000efU,
+    MM_VQST   = 0x000000f0U,
+    MM_ETEK   = 0x000000f1U,
+    MM_CS     = 0x000000f2U,
+    MM_ALESIS = 0x000000f3U,
 }
 
-enum uint MM_INTERNET = 0x000000f4;
+enum uint MM_INTERNET = 0x000000f4U;
 
 enum : uint
 {
-    MM_SONY        = 0x000000f5,
-    MM_HYPERACTIVE = 0x000000f6,
+    MM_SONY        = 0x000000f5U,
+    MM_HYPERACTIVE = 0x000000f6U,
 }
 
-enum uint MM_UHER_INFORMATIC = 0x000000f7;
-enum uint MM_SYDEC_NV = 0x000000f8;
-enum uint MM_FLEXION = 0x000000f9;
+enum uint MM_UHER_INFORMATIC = 0x000000f7U;
+enum uint MM_SYDEC_NV = 0x000000f8U;
+enum uint MM_FLEXION = 0x000000f9U;
 
 enum : uint
 {
-    MM_VIA      = 0x000000fa,
-    MM_MICRONAS = 0x000000fb,
+    MM_VIA      = 0x000000faU,
+    MM_MICRONAS = 0x000000fbU,
 }
 
-enum uint MM_ANALOGDEVICES = 0x000000fc;
+enum uint MM_ANALOGDEVICES = 0x000000fcU;
 
 enum : uint
 {
-    MM_HP         = 0x000000fd,
-    MM_MATROX_DIV = 0x000000fe,
+    MM_HP         = 0x000000fdU,
+    MM_MATROX_DIV = 0x000000feU,
 }
 
-enum uint MM_QUICKAUDIO = 0x000000ff;
-enum uint MM_YOUCOM = 0x00000100;
-enum uint MM_RICHMOND = 0x00000101;
+enum uint MM_QUICKAUDIO = 0x000000ffU;
+enum uint MM_YOUCOM = 0x00000100U;
+enum uint MM_RICHMOND = 0x00000101U;
 
 enum : uint
 {
-    MM_IODD   = 0x00000102,
-    MM_ICCC   = 0x00000103,
-    MM_3COM   = 0x00000104,
-    MM_MALDEN = 0x00000105,
+    MM_IODD   = 0x00000102U,
+    MM_ICCC   = 0x00000103U,
+    MM_3COM   = 0x00000104U,
+    MM_MALDEN = 0x00000105U,
 }
 
 enum : uint
 {
-    MM_3DFX      = 0x00000106,
-    MM_MINDMAKER = 0x00000107,
+    MM_3DFX      = 0x00000106U,
+    MM_MINDMAKER = 0x00000107U,
 }
 
-enum uint MM_TELEKOL = 0x00000108;
-enum uint MM_ST_MICROELECTRONICS = 0x00000109;
-enum uint MM_ALGOVISION = 0x0000010a;
-enum uint MM_UNMAPPED = 0x0000ffff;
-enum uint MM_PID_UNMAPPED = 0x0000ffff;
-enum uint MM_PCSPEAKER_WAVEOUT = 0x0000000d;
+enum uint MM_TELEKOL = 0x00000108U;
+enum uint MM_ST_MICROELECTRONICS = 0x00000109U;
+enum uint MM_ALGOVISION = 0x0000010aU;
+enum uint MM_UNMAPPED = 0x0000ffffU;
+enum uint MM_PID_UNMAPPED = 0x0000ffffU;
+enum uint MM_PCSPEAKER_WAVEOUT = 0x0000000dU;
 
 enum : uint
 {
-    MM_MSFT_WSS_WAVEIN             = 0x0000000e,
-    MM_MSFT_WSS_WAVEOUT            = 0x0000000f,
-    MM_MSFT_WSS_FMSYNTH_STEREO     = 0x00000010,
-    MM_MSFT_WSS_MIXER              = 0x00000011,
-    MM_MSFT_WSS_OEM_WAVEIN         = 0x00000012,
-    MM_MSFT_WSS_OEM_WAVEOUT        = 0x00000013,
-    MM_MSFT_WSS_OEM_FMSYNTH_STEREO = 0x00000014,
+    MM_MSFT_WSS_WAVEIN             = 0x0000000eU,
+    MM_MSFT_WSS_WAVEOUT            = 0x0000000fU,
+    MM_MSFT_WSS_FMSYNTH_STEREO     = 0x00000010U,
+    MM_MSFT_WSS_MIXER              = 0x00000011U,
+    MM_MSFT_WSS_OEM_WAVEIN         = 0x00000012U,
+    MM_MSFT_WSS_OEM_WAVEOUT        = 0x00000013U,
+    MM_MSFT_WSS_OEM_FMSYNTH_STEREO = 0x00000014U,
 }
 
 enum : uint
 {
-    MM_MSFT_WSS_AUX           = 0x00000015,
-    MM_MSFT_WSS_OEM_AUX       = 0x00000016,
-    MM_MSFT_GENERIC_WAVEIN    = 0x00000017,
-    MM_MSFT_GENERIC_WAVEOUT   = 0x00000018,
-    MM_MSFT_GENERIC_MIDIIN    = 0x00000019,
-    MM_MSFT_GENERIC_MIDIOUT   = 0x0000001a,
-    MM_MSFT_GENERIC_MIDISYNTH = 0x0000001b,
-    MM_MSFT_GENERIC_AUX_LINE  = 0x0000001c,
-    MM_MSFT_GENERIC_AUX_MIC   = 0x0000001d,
-    MM_MSFT_GENERIC_AUX_CD    = 0x0000001e,
+    MM_MSFT_WSS_AUX           = 0x00000015U,
+    MM_MSFT_WSS_OEM_AUX       = 0x00000016U,
+    MM_MSFT_GENERIC_WAVEIN    = 0x00000017U,
+    MM_MSFT_GENERIC_WAVEOUT   = 0x00000018U,
+    MM_MSFT_GENERIC_MIDIIN    = 0x00000019U,
+    MM_MSFT_GENERIC_MIDIOUT   = 0x0000001aU,
+    MM_MSFT_GENERIC_MIDISYNTH = 0x0000001bU,
+    MM_MSFT_GENERIC_AUX_LINE  = 0x0000001cU,
+    MM_MSFT_GENERIC_AUX_MIC   = 0x0000001dU,
+    MM_MSFT_GENERIC_AUX_CD    = 0x0000001eU,
 }
 
-enum uint MM_MSFT_WSS_OEM_MIXER = 0x0000001f;
+enum uint MM_MSFT_WSS_OEM_MIXER = 0x0000001fU;
 
 enum : uint
 {
-    MM_MSFT_MSACM        = 0x00000020,
-    MM_MSFT_ACM_MSADPCM  = 0x00000021,
-    MM_MSFT_ACM_IMAADPCM = 0x00000022,
-    MM_MSFT_ACM_MSFILTER = 0x00000023,
-    MM_MSFT_ACM_GSM610   = 0x00000024,
-    MM_MSFT_ACM_G711     = 0x00000025,
-    MM_MSFT_ACM_PCM      = 0x00000026,
+    MM_MSFT_MSACM        = 0x00000020U,
+    MM_MSFT_ACM_MSADPCM  = 0x00000021U,
+    MM_MSFT_ACM_IMAADPCM = 0x00000022U,
+    MM_MSFT_ACM_MSFILTER = 0x00000023U,
+    MM_MSFT_ACM_GSM610   = 0x00000024U,
+    MM_MSFT_ACM_G711     = 0x00000025U,
+    MM_MSFT_ACM_PCM      = 0x00000026U,
 }
 
 enum : uint
 {
-    MM_WSS_SB16_WAVEIN    = 0x00000027,
-    MM_WSS_SB16_WAVEOUT   = 0x00000028,
-    MM_WSS_SB16_MIDIIN    = 0x00000029,
-    MM_WSS_SB16_MIDIOUT   = 0x0000002a,
-    MM_WSS_SB16_SYNTH     = 0x0000002b,
-    MM_WSS_SB16_AUX_LINE  = 0x0000002c,
-    MM_WSS_SB16_AUX_CD    = 0x0000002d,
-    MM_WSS_SB16_MIXER     = 0x0000002e,
-    MM_WSS_SBPRO_WAVEIN   = 0x0000002f,
-    MM_WSS_SBPRO_WAVEOUT  = 0x00000030,
-    MM_WSS_SBPRO_MIDIIN   = 0x00000031,
-    MM_WSS_SBPRO_MIDIOUT  = 0x00000032,
-    MM_WSS_SBPRO_SYNTH    = 0x00000033,
-    MM_WSS_SBPRO_AUX_LINE = 0x00000034,
-    MM_WSS_SBPRO_AUX_CD   = 0x00000035,
-    MM_WSS_SBPRO_MIXER    = 0x00000036,
+    MM_WSS_SB16_WAVEIN    = 0x00000027U,
+    MM_WSS_SB16_WAVEOUT   = 0x00000028U,
+    MM_WSS_SB16_MIDIIN    = 0x00000029U,
+    MM_WSS_SB16_MIDIOUT   = 0x0000002aU,
+    MM_WSS_SB16_SYNTH     = 0x0000002bU,
+    MM_WSS_SB16_AUX_LINE  = 0x0000002cU,
+    MM_WSS_SB16_AUX_CD    = 0x0000002dU,
+    MM_WSS_SB16_MIXER     = 0x0000002eU,
+    MM_WSS_SBPRO_WAVEIN   = 0x0000002fU,
+    MM_WSS_SBPRO_WAVEOUT  = 0x00000030U,
+    MM_WSS_SBPRO_MIDIIN   = 0x00000031U,
+    MM_WSS_SBPRO_MIDIOUT  = 0x00000032U,
+    MM_WSS_SBPRO_SYNTH    = 0x00000033U,
+    MM_WSS_SBPRO_AUX_LINE = 0x00000034U,
+    MM_WSS_SBPRO_AUX_CD   = 0x00000035U,
+    MM_WSS_SBPRO_MIXER    = 0x00000036U,
 }
 
 enum : uint
 {
-    MM_MSFT_WSS_NT_WAVEIN         = 0x00000037,
-    MM_MSFT_WSS_NT_WAVEOUT        = 0x00000038,
-    MM_MSFT_WSS_NT_FMSYNTH_STEREO = 0x00000039,
-    MM_MSFT_WSS_NT_MIXER          = 0x0000003a,
-    MM_MSFT_WSS_NT_AUX            = 0x0000003b,
-    MM_MSFT_SB16_WAVEIN           = 0x0000003c,
-    MM_MSFT_SB16_WAVEOUT          = 0x0000003d,
-    MM_MSFT_SB16_MIDIIN           = 0x0000003e,
-    MM_MSFT_SB16_MIDIOUT          = 0x0000003f,
-    MM_MSFT_SB16_SYNTH            = 0x00000040,
-    MM_MSFT_SB16_AUX_LINE         = 0x00000041,
-    MM_MSFT_SB16_AUX_CD           = 0x00000042,
-    MM_MSFT_SB16_MIXER            = 0x00000043,
-    MM_MSFT_SBPRO_WAVEIN          = 0x00000044,
-    MM_MSFT_SBPRO_WAVEOUT         = 0x00000045,
-    MM_MSFT_SBPRO_MIDIIN          = 0x00000046,
-    MM_MSFT_SBPRO_MIDIOUT         = 0x00000047,
-    MM_MSFT_SBPRO_SYNTH           = 0x00000048,
-    MM_MSFT_SBPRO_AUX_LINE        = 0x00000049,
-    MM_MSFT_SBPRO_AUX_CD          = 0x0000004a,
-    MM_MSFT_SBPRO_MIXER           = 0x0000004b,
-    MM_MSFT_MSOPL_SYNTH           = 0x0000004c,
-    MM_MSFT_VMDMS_LINE_WAVEIN     = 0x00000050,
-    MM_MSFT_VMDMS_LINE_WAVEOUT    = 0x00000051,
-    MM_MSFT_VMDMS_HANDSET_WAVEIN  = 0x00000052,
-    MM_MSFT_VMDMS_HANDSET_WAVEOUT = 0x00000053,
-    MM_MSFT_VMDMW_LINE_WAVEIN     = 0x00000054,
-    MM_MSFT_VMDMW_LINE_WAVEOUT    = 0x00000055,
-    MM_MSFT_VMDMW_HANDSET_WAVEIN  = 0x00000056,
-    MM_MSFT_VMDMW_HANDSET_WAVEOUT = 0x00000057,
-    MM_MSFT_VMDMW_MIXER           = 0x00000058,
-    MM_MSFT_VMDM_GAME_WAVEOUT     = 0x00000059,
-    MM_MSFT_VMDM_GAME_WAVEIN      = 0x0000005a,
+    MM_MSFT_WSS_NT_WAVEIN         = 0x00000037U,
+    MM_MSFT_WSS_NT_WAVEOUT        = 0x00000038U,
+    MM_MSFT_WSS_NT_FMSYNTH_STEREO = 0x00000039U,
+    MM_MSFT_WSS_NT_MIXER          = 0x0000003aU,
+    MM_MSFT_WSS_NT_AUX            = 0x0000003bU,
+    MM_MSFT_SB16_WAVEIN           = 0x0000003cU,
+    MM_MSFT_SB16_WAVEOUT          = 0x0000003dU,
+    MM_MSFT_SB16_MIDIIN           = 0x0000003eU,
+    MM_MSFT_SB16_MIDIOUT          = 0x0000003fU,
+    MM_MSFT_SB16_SYNTH            = 0x00000040U,
+    MM_MSFT_SB16_AUX_LINE         = 0x00000041U,
+    MM_MSFT_SB16_AUX_CD           = 0x00000042U,
+    MM_MSFT_SB16_MIXER            = 0x00000043U,
+    MM_MSFT_SBPRO_WAVEIN          = 0x00000044U,
+    MM_MSFT_SBPRO_WAVEOUT         = 0x00000045U,
+    MM_MSFT_SBPRO_MIDIIN          = 0x00000046U,
+    MM_MSFT_SBPRO_MIDIOUT         = 0x00000047U,
+    MM_MSFT_SBPRO_SYNTH           = 0x00000048U,
+    MM_MSFT_SBPRO_AUX_LINE        = 0x00000049U,
+    MM_MSFT_SBPRO_AUX_CD          = 0x0000004aU,
+    MM_MSFT_SBPRO_MIXER           = 0x0000004bU,
+    MM_MSFT_MSOPL_SYNTH           = 0x0000004cU,
+    MM_MSFT_VMDMS_LINE_WAVEIN     = 0x00000050U,
+    MM_MSFT_VMDMS_LINE_WAVEOUT    = 0x00000051U,
+    MM_MSFT_VMDMS_HANDSET_WAVEIN  = 0x00000052U,
+    MM_MSFT_VMDMS_HANDSET_WAVEOUT = 0x00000053U,
+    MM_MSFT_VMDMW_LINE_WAVEIN     = 0x00000054U,
+    MM_MSFT_VMDMW_LINE_WAVEOUT    = 0x00000055U,
+    MM_MSFT_VMDMW_HANDSET_WAVEIN  = 0x00000056U,
+    MM_MSFT_VMDMW_HANDSET_WAVEOUT = 0x00000057U,
+    MM_MSFT_VMDMW_MIXER           = 0x00000058U,
+    MM_MSFT_VMDM_GAME_WAVEOUT     = 0x00000059U,
+    MM_MSFT_VMDM_GAME_WAVEIN      = 0x0000005aU,
 }
 
 enum : uint
 {
-    MM_MSFT_ACM_MSNAUDIO     = 0x0000005b,
-    MM_MSFT_ACM_MSG723       = 0x0000005c,
-    MM_MSFT_ACM_MSRT24       = 0x0000005d,
-    MM_MSFT_WDMAUDIO_WAVEOUT = 0x00000064,
-    MM_MSFT_WDMAUDIO_WAVEIN  = 0x00000065,
-    MM_MSFT_WDMAUDIO_MIDIOUT = 0x00000066,
-    MM_MSFT_WDMAUDIO_MIDIIN  = 0x00000067,
-    MM_MSFT_WDMAUDIO_MIXER   = 0x00000068,
-    MM_MSFT_WDMAUDIO_AUX     = 0x00000069,
+    MM_MSFT_ACM_MSNAUDIO     = 0x0000005bU,
+    MM_MSFT_ACM_MSG723       = 0x0000005cU,
+    MM_MSFT_ACM_MSRT24       = 0x0000005dU,
+    MM_MSFT_WDMAUDIO_WAVEOUT = 0x00000064U,
+    MM_MSFT_WDMAUDIO_WAVEIN  = 0x00000065U,
+    MM_MSFT_WDMAUDIO_MIDIOUT = 0x00000066U,
+    MM_MSFT_WDMAUDIO_MIDIIN  = 0x00000067U,
+    MM_MSFT_WDMAUDIO_MIXER   = 0x00000068U,
+    MM_MSFT_WDMAUDIO_AUX     = 0x00000069U,
 }
 
 enum : uint
 {
-    MM_CREATIVE_SB15_WAVEIN     = 0x00000001,
-    MM_CREATIVE_SB20_WAVEIN     = 0x00000002,
-    MM_CREATIVE_SBPRO_WAVEIN    = 0x00000003,
-    MM_CREATIVE_SBP16_WAVEIN    = 0x00000004,
-    MM_CREATIVE_PHNBLST_WAVEIN  = 0x00000005,
-    MM_CREATIVE_SB15_WAVEOUT    = 0x00000065,
-    MM_CREATIVE_SB20_WAVEOUT    = 0x00000066,
-    MM_CREATIVE_SBPRO_WAVEOUT   = 0x00000067,
-    MM_CREATIVE_SBP16_WAVEOUT   = 0x00000068,
-    MM_CREATIVE_PHNBLST_WAVEOUT = 0x00000069,
-    MM_CREATIVE_MIDIOUT         = 0x000000c9,
-    MM_CREATIVE_MIDIIN          = 0x000000ca,
-    MM_CREATIVE_FMSYNTH_MONO    = 0x0000012d,
-    MM_CREATIVE_FMSYNTH_STEREO  = 0x0000012e,
-    MM_CREATIVE_MIDI_AWE32      = 0x0000012f,
-    MM_CREATIVE_AUX_CD          = 0x00000191,
-    MM_CREATIVE_AUX_LINE        = 0x00000192,
-    MM_CREATIVE_AUX_MIC         = 0x00000193,
-    MM_CREATIVE_AUX_MASTER      = 0x00000194,
-    MM_CREATIVE_AUX_PCSPK       = 0x00000195,
-    MM_CREATIVE_AUX_WAVE        = 0x00000196,
-    MM_CREATIVE_AUX_MIDI        = 0x00000197,
-    MM_CREATIVE_SBPRO_MIXER     = 0x00000198,
-    MM_CREATIVE_SB16_MIXER      = 0x00000199,
+    MM_CREATIVE_SB15_WAVEIN     = 0x00000001U,
+    MM_CREATIVE_SB20_WAVEIN     = 0x00000002U,
+    MM_CREATIVE_SBPRO_WAVEIN    = 0x00000003U,
+    MM_CREATIVE_SBP16_WAVEIN    = 0x00000004U,
+    MM_CREATIVE_PHNBLST_WAVEIN  = 0x00000005U,
+    MM_CREATIVE_SB15_WAVEOUT    = 0x00000065U,
+    MM_CREATIVE_SB20_WAVEOUT    = 0x00000066U,
+    MM_CREATIVE_SBPRO_WAVEOUT   = 0x00000067U,
+    MM_CREATIVE_SBP16_WAVEOUT   = 0x00000068U,
+    MM_CREATIVE_PHNBLST_WAVEOUT = 0x00000069U,
+    MM_CREATIVE_MIDIOUT         = 0x000000c9U,
+    MM_CREATIVE_MIDIIN          = 0x000000caU,
+    MM_CREATIVE_FMSYNTH_MONO    = 0x0000012dU,
+    MM_CREATIVE_FMSYNTH_STEREO  = 0x0000012eU,
+    MM_CREATIVE_MIDI_AWE32      = 0x0000012fU,
+    MM_CREATIVE_AUX_CD          = 0x00000191U,
+    MM_CREATIVE_AUX_LINE        = 0x00000192U,
+    MM_CREATIVE_AUX_MIC         = 0x00000193U,
+    MM_CREATIVE_AUX_MASTER      = 0x00000194U,
+    MM_CREATIVE_AUX_PCSPK       = 0x00000195U,
+    MM_CREATIVE_AUX_WAVE        = 0x00000196U,
+    MM_CREATIVE_AUX_MIDI        = 0x00000197U,
+    MM_CREATIVE_SBPRO_MIXER     = 0x00000198U,
+    MM_CREATIVE_SB16_MIXER      = 0x00000199U,
 }
 
-enum uint MM_MEDIAVISION_PROAUDIO = 0x00000010;
+enum uint MM_MEDIAVISION_PROAUDIO = 0x00000010U;
 
 enum : uint
 {
-    MM_PROAUD_MIDIOUT = 0x00000011,
-    MM_PROAUD_MIDIIN  = 0x00000012,
-    MM_PROAUD_SYNTH   = 0x00000013,
-    MM_PROAUD_WAVEOUT = 0x00000014,
-    MM_PROAUD_WAVEIN  = 0x00000015,
-    MM_PROAUD_MIXER   = 0x00000016,
-    MM_PROAUD_AUX     = 0x00000017,
+    MM_PROAUD_MIDIOUT = 0x00000011U,
+    MM_PROAUD_MIDIIN  = 0x00000012U,
+    MM_PROAUD_SYNTH   = 0x00000013U,
+    MM_PROAUD_WAVEOUT = 0x00000014U,
+    MM_PROAUD_WAVEIN  = 0x00000015U,
+    MM_PROAUD_MIXER   = 0x00000016U,
+    MM_PROAUD_AUX     = 0x00000017U,
 }
 
-enum uint MM_MEDIAVISION_THUNDER = 0x00000020;
+enum uint MM_MEDIAVISION_THUNDER = 0x00000020U;
 
 enum : uint
 {
-    MM_THUNDER_SYNTH   = 0x00000023,
-    MM_THUNDER_WAVEOUT = 0x00000024,
-    MM_THUNDER_WAVEIN  = 0x00000025,
-    MM_THUNDER_AUX     = 0x00000027,
+    MM_THUNDER_SYNTH   = 0x00000023U,
+    MM_THUNDER_WAVEOUT = 0x00000024U,
+    MM_THUNDER_WAVEIN  = 0x00000025U,
+    MM_THUNDER_AUX     = 0x00000027U,
 }
 
-enum uint MM_MEDIAVISION_TPORT = 0x00000040;
+enum uint MM_MEDIAVISION_TPORT = 0x00000040U;
 
 enum : uint
 {
-    MM_TPORT_WAVEOUT = 0x00000041,
-    MM_TPORT_WAVEIN  = 0x00000042,
-    MM_TPORT_SYNTH   = 0x00000043,
+    MM_TPORT_WAVEOUT = 0x00000041U,
+    MM_TPORT_WAVEIN  = 0x00000042U,
+    MM_TPORT_SYNTH   = 0x00000043U,
 }
 
-enum uint MM_MEDIAVISION_PROAUDIO_PLUS = 0x00000050;
+enum uint MM_MEDIAVISION_PROAUDIO_PLUS = 0x00000050U;
 
 enum : uint
 {
-    MM_PROAUD_PLUS_MIDIOUT = 0x00000051,
-    MM_PROAUD_PLUS_MIDIIN  = 0x00000052,
-    MM_PROAUD_PLUS_SYNTH   = 0x00000053,
-    MM_PROAUD_PLUS_WAVEOUT = 0x00000054,
-    MM_PROAUD_PLUS_WAVEIN  = 0x00000055,
-    MM_PROAUD_PLUS_MIXER   = 0x00000056,
-    MM_PROAUD_PLUS_AUX     = 0x00000057,
+    MM_PROAUD_PLUS_MIDIOUT = 0x00000051U,
+    MM_PROAUD_PLUS_MIDIIN  = 0x00000052U,
+    MM_PROAUD_PLUS_SYNTH   = 0x00000053U,
+    MM_PROAUD_PLUS_WAVEOUT = 0x00000054U,
+    MM_PROAUD_PLUS_WAVEIN  = 0x00000055U,
+    MM_PROAUD_PLUS_MIXER   = 0x00000056U,
+    MM_PROAUD_PLUS_AUX     = 0x00000057U,
 }
 
-enum uint MM_MEDIAVISION_PROAUDIO_16 = 0x00000060;
+enum uint MM_MEDIAVISION_PROAUDIO_16 = 0x00000060U;
 
 enum : uint
 {
-    MM_PROAUD_16_MIDIOUT = 0x00000061,
-    MM_PROAUD_16_MIDIIN  = 0x00000062,
-    MM_PROAUD_16_SYNTH   = 0x00000063,
-    MM_PROAUD_16_WAVEOUT = 0x00000064,
-    MM_PROAUD_16_WAVEIN  = 0x00000065,
-    MM_PROAUD_16_MIXER   = 0x00000066,
-    MM_PROAUD_16_AUX     = 0x00000067,
+    MM_PROAUD_16_MIDIOUT = 0x00000061U,
+    MM_PROAUD_16_MIDIIN  = 0x00000062U,
+    MM_PROAUD_16_SYNTH   = 0x00000063U,
+    MM_PROAUD_16_WAVEOUT = 0x00000064U,
+    MM_PROAUD_16_WAVEIN  = 0x00000065U,
+    MM_PROAUD_16_MIXER   = 0x00000066U,
+    MM_PROAUD_16_AUX     = 0x00000067U,
 }
 
-enum uint MM_MEDIAVISION_PROSTUDIO_16 = 0x00000060;
+enum uint MM_MEDIAVISION_PROSTUDIO_16 = 0x00000060U;
 
 enum : uint
 {
-    MM_STUDIO_16_MIDIOUT = 0x00000061,
-    MM_STUDIO_16_MIDIIN  = 0x00000062,
-    MM_STUDIO_16_SYNTH   = 0x00000063,
-    MM_STUDIO_16_WAVEOUT = 0x00000064,
-    MM_STUDIO_16_WAVEIN  = 0x00000065,
-    MM_STUDIO_16_MIXER   = 0x00000066,
-    MM_STUDIO_16_AUX     = 0x00000067,
+    MM_STUDIO_16_MIDIOUT = 0x00000061U,
+    MM_STUDIO_16_MIDIIN  = 0x00000062U,
+    MM_STUDIO_16_SYNTH   = 0x00000063U,
+    MM_STUDIO_16_WAVEOUT = 0x00000064U,
+    MM_STUDIO_16_WAVEIN  = 0x00000065U,
+    MM_STUDIO_16_MIXER   = 0x00000066U,
+    MM_STUDIO_16_AUX     = 0x00000067U,
 }
 
-enum uint MM_MEDIAVISION_CDPC = 0x00000070;
+enum uint MM_MEDIAVISION_CDPC = 0x00000070U;
 
 enum : uint
 {
-    MM_CDPC_MIDIOUT = 0x00000071,
-    MM_CDPC_MIDIIN  = 0x00000072,
-    MM_CDPC_SYNTH   = 0x00000073,
-    MM_CDPC_WAVEOUT = 0x00000074,
-    MM_CDPC_WAVEIN  = 0x00000075,
-    MM_CDPC_MIXER   = 0x00000076,
-    MM_CDPC_AUX     = 0x00000077,
+    MM_CDPC_MIDIOUT = 0x00000071U,
+    MM_CDPC_MIDIIN  = 0x00000072U,
+    MM_CDPC_SYNTH   = 0x00000073U,
+    MM_CDPC_WAVEOUT = 0x00000074U,
+    MM_CDPC_WAVEIN  = 0x00000075U,
+    MM_CDPC_MIXER   = 0x00000076U,
+    MM_CDPC_AUX     = 0x00000077U,
 }
 
-enum uint MM_MEDIAVISION_OPUS1208 = 0x00000080;
+enum uint MM_MEDIAVISION_OPUS1208 = 0x00000080U;
 
 enum : uint
 {
-    MM_OPUS401_MIDIOUT  = 0x00000081,
-    MM_OPUS401_MIDIIN   = 0x00000082,
-    MM_OPUS1208_SYNTH   = 0x00000083,
-    MM_OPUS1208_WAVEOUT = 0x00000084,
-    MM_OPUS1208_WAVEIN  = 0x00000085,
-    MM_OPUS1208_MIXER   = 0x00000086,
-    MM_OPUS1208_AUX     = 0x00000087,
+    MM_OPUS401_MIDIOUT  = 0x00000081U,
+    MM_OPUS401_MIDIIN   = 0x00000082U,
+    MM_OPUS1208_SYNTH   = 0x00000083U,
+    MM_OPUS1208_WAVEOUT = 0x00000084U,
+    MM_OPUS1208_WAVEIN  = 0x00000085U,
+    MM_OPUS1208_MIXER   = 0x00000086U,
+    MM_OPUS1208_AUX     = 0x00000087U,
 }
 
-enum uint MM_MEDIAVISION_OPUS1216 = 0x00000090;
+enum uint MM_MEDIAVISION_OPUS1216 = 0x00000090U;
 
 enum : uint
 {
-    MM_OPUS1216_MIDIOUT = 0x00000091,
-    MM_OPUS1216_MIDIIN  = 0x00000092,
-    MM_OPUS1216_SYNTH   = 0x00000093,
-    MM_OPUS1216_WAVEOUT = 0x00000094,
-    MM_OPUS1216_WAVEIN  = 0x00000095,
-    MM_OPUS1216_MIXER   = 0x00000096,
-    MM_OPUS1216_AUX     = 0x00000097,
+    MM_OPUS1216_MIDIOUT = 0x00000091U,
+    MM_OPUS1216_MIDIIN  = 0x00000092U,
+    MM_OPUS1216_SYNTH   = 0x00000093U,
+    MM_OPUS1216_WAVEOUT = 0x00000094U,
+    MM_OPUS1216_WAVEIN  = 0x00000095U,
+    MM_OPUS1216_MIXER   = 0x00000096U,
+    MM_OPUS1216_AUX     = 0x00000097U,
 }
 
 enum : uint
 {
-    MM_CYRIX_XASYNTH   = 0x00000001,
-    MM_CYRIX_XAMIDIIN  = 0x00000002,
-    MM_CYRIX_XAMIDIOUT = 0x00000003,
-    MM_CYRIX_XAWAVEIN  = 0x00000004,
-    MM_CYRIX_XAWAVEOUT = 0x00000005,
-    MM_CYRIX_XAAUX     = 0x00000006,
-    MM_CYRIX_XAMIXER   = 0x00000007,
+    MM_CYRIX_XASYNTH   = 0x00000001U,
+    MM_CYRIX_XAMIDIIN  = 0x00000002U,
+    MM_CYRIX_XAMIDIOUT = 0x00000003U,
+    MM_CYRIX_XAWAVEIN  = 0x00000004U,
+    MM_CYRIX_XAWAVEOUT = 0x00000005U,
+    MM_CYRIX_XAAUX     = 0x00000006U,
+    MM_CYRIX_XAMIXER   = 0x00000007U,
 }
 
-enum uint MM_PHILIPS_ACM_LPCBB = 0x00000001;
-enum uint MM_NETXL_XLVIDEO = 0x00000001;
-enum uint MM_ZYXEL_ACM_ADPCM = 0x00000001;
+enum uint MM_PHILIPS_ACM_LPCBB = 0x00000001U;
+enum uint MM_NETXL_XLVIDEO = 0x00000001U;
+enum uint MM_ZYXEL_ACM_ADPCM = 0x00000001U;
 
 enum : uint
 {
-    MM_AARDVARK_STUDIO12_WAVEOUT = 0x00000001,
-    MM_AARDVARK_STUDIO12_WAVEIN  = 0x00000002,
-    MM_AARDVARK_STUDIO88_WAVEOUT = 0x00000003,
-    MM_AARDVARK_STUDIO88_WAVEIN  = 0x00000004,
+    MM_AARDVARK_STUDIO12_WAVEOUT = 0x00000001U,
+    MM_AARDVARK_STUDIO12_WAVEIN  = 0x00000002U,
+    MM_AARDVARK_STUDIO88_WAVEOUT = 0x00000003U,
+    MM_AARDVARK_STUDIO88_WAVEIN  = 0x00000004U,
 }
 
-enum uint MM_BINTEC_TAPI_WAVE = 0x00000001;
-enum uint MM_HEWLETT_PACKARD_CU_CODEC = 0x00000001;
+enum uint MM_BINTEC_TAPI_WAVE = 0x00000001U;
+enum uint MM_HEWLETT_PACKARD_CU_CODEC = 0x00000001U;
 
 enum : uint
 {
-    MM_MITEL_TALKTO_LINE_WAVEOUT    = 0x00000064,
-    MM_MITEL_TALKTO_LINE_WAVEIN     = 0x00000065,
-    MM_MITEL_TALKTO_HANDSET_WAVEOUT = 0x00000066,
-    MM_MITEL_TALKTO_HANDSET_WAVEIN  = 0x00000067,
-    MM_MITEL_TALKTO_BRIDGED_WAVEOUT = 0x00000068,
-    MM_MITEL_TALKTO_BRIDGED_WAVEIN  = 0x00000069,
+    MM_MITEL_TALKTO_LINE_WAVEOUT    = 0x00000064U,
+    MM_MITEL_TALKTO_LINE_WAVEIN     = 0x00000065U,
+    MM_MITEL_TALKTO_HANDSET_WAVEOUT = 0x00000066U,
+    MM_MITEL_TALKTO_HANDSET_WAVEIN  = 0x00000067U,
+    MM_MITEL_TALKTO_BRIDGED_WAVEOUT = 0x00000068U,
+    MM_MITEL_TALKTO_BRIDGED_WAVEIN  = 0x00000069U,
 }
 
 enum : uint
 {
-    MM_MITEL_MPA_HANDSET_WAVEOUT   = 0x000000c8,
-    MM_MITEL_MPA_HANDSET_WAVEIN    = 0x000000c9,
-    MM_MITEL_MPA_HANDSFREE_WAVEOUT = 0x000000ca,
-    MM_MITEL_MPA_HANDSFREE_WAVEIN  = 0x000000cb,
-    MM_MITEL_MPA_LINE1_WAVEOUT     = 0x000000cc,
-    MM_MITEL_MPA_LINE1_WAVEIN      = 0x000000cd,
-    MM_MITEL_MPA_LINE2_WAVEOUT     = 0x000000ce,
-    MM_MITEL_MPA_LINE2_WAVEIN      = 0x000000cf,
+    MM_MITEL_MPA_HANDSET_WAVEOUT   = 0x000000c8U,
+    MM_MITEL_MPA_HANDSET_WAVEIN    = 0x000000c9U,
+    MM_MITEL_MPA_HANDSFREE_WAVEOUT = 0x000000caU,
+    MM_MITEL_MPA_HANDSFREE_WAVEIN  = 0x000000cbU,
+    MM_MITEL_MPA_LINE1_WAVEOUT     = 0x000000ccU,
+    MM_MITEL_MPA_LINE1_WAVEIN      = 0x000000cdU,
+    MM_MITEL_MPA_LINE2_WAVEOUT     = 0x000000ceU,
+    MM_MITEL_MPA_LINE2_WAVEIN      = 0x000000cfU,
 }
 
 enum : uint
 {
-    MM_MITEL_MEDIAPATH_WAVEOUT = 0x0000012c,
-    MM_MITEL_MEDIAPATH_WAVEIN  = 0x0000012d,
+    MM_MITEL_MEDIAPATH_WAVEOUT = 0x0000012cU,
+    MM_MITEL_MEDIAPATH_WAVEIN  = 0x0000012dU,
 }
 
-enum uint MM_SNI_ACM_G721 = 0x00000001;
+enum uint MM_SNI_ACM_G721 = 0x00000001U;
 
 enum : uint
 {
-    MM_EMU_APSSYNTH   = 0x00000001,
-    MM_EMU_APSMIDIIN  = 0x00000002,
-    MM_EMU_APSMIDIOUT = 0x00000003,
-    MM_EMU_APSWAVEIN  = 0x00000004,
-    MM_EMU_APSWAVEOUT = 0x00000005,
+    MM_EMU_APSSYNTH   = 0x00000001U,
+    MM_EMU_APSMIDIIN  = 0x00000002U,
+    MM_EMU_APSMIDIOUT = 0x00000003U,
+    MM_EMU_APSWAVEIN  = 0x00000004U,
+    MM_EMU_APSWAVEOUT = 0x00000005U,
 }
 
 enum : uint
 {
-    MM_ARTISOFT_SBWAVEIN  = 0x00000001,
-    MM_ARTISOFT_SBWAVEOUT = 0x00000002,
+    MM_ARTISOFT_SBWAVEIN  = 0x00000001U,
+    MM_ARTISOFT_SBWAVEOUT = 0x00000002U,
 }
 
 enum : uint
 {
-    MM_TBS_TROPEZ_WAVEIN  = 0x00000025,
-    MM_TBS_TROPEZ_WAVEOUT = 0x00000026,
-    MM_TBS_TROPEZ_AUX1    = 0x00000027,
-    MM_TBS_TROPEZ_AUX2    = 0x00000028,
-    MM_TBS_TROPEZ_LINE    = 0x00000029,
+    MM_TBS_TROPEZ_WAVEIN  = 0x00000025U,
+    MM_TBS_TROPEZ_WAVEOUT = 0x00000026U,
+    MM_TBS_TROPEZ_AUX1    = 0x00000027U,
+    MM_TBS_TROPEZ_AUX2    = 0x00000028U,
+    MM_TBS_TROPEZ_LINE    = 0x00000029U,
 }
 
 enum : uint
 {
-    MM_MMOTION_WAVEAUX = 0x00000001,
-    MM_MMOTION_WAVEOUT = 0x00000002,
-    MM_MMOTION_WAVEIN  = 0x00000003,
+    MM_MMOTION_WAVEAUX = 0x00000001U,
+    MM_MMOTION_WAVEOUT = 0x00000002U,
+    MM_MMOTION_WAVEIN  = 0x00000003U,
 }
 
 enum : uint
 {
-    MM_IBM_PCMCIA_WAVEIN  = 0x0000000b,
-    MM_IBM_PCMCIA_WAVEOUT = 0x0000000c,
-    MM_IBM_PCMCIA_SYNTH   = 0x0000000d,
-    MM_IBM_PCMCIA_MIDIIN  = 0x0000000e,
-    MM_IBM_PCMCIA_MIDIOUT = 0x0000000f,
-    MM_IBM_PCMCIA_AUX     = 0x00000010,
-    MM_IBM_THINKPAD200    = 0x00000011,
+    MM_IBM_PCMCIA_WAVEIN  = 0x0000000bU,
+    MM_IBM_PCMCIA_WAVEOUT = 0x0000000cU,
+    MM_IBM_PCMCIA_SYNTH   = 0x0000000dU,
+    MM_IBM_PCMCIA_MIDIIN  = 0x0000000eU,
+    MM_IBM_PCMCIA_MIDIOUT = 0x0000000fU,
+    MM_IBM_PCMCIA_AUX     = 0x00000010U,
+    MM_IBM_THINKPAD200    = 0x00000011U,
 }
 
 enum : uint
 {
-    MM_IBM_MWAVE_WAVEIN  = 0x00000012,
-    MM_IBM_MWAVE_WAVEOUT = 0x00000013,
-    MM_IBM_MWAVE_MIXER   = 0x00000014,
-    MM_IBM_MWAVE_MIDIIN  = 0x00000015,
-    MM_IBM_MWAVE_MIDIOUT = 0x00000016,
-    MM_IBM_MWAVE_AUX     = 0x00000017,
-    MM_IBM_WC_MIDIOUT    = 0x0000001e,
-    MM_IBM_WC_WAVEOUT    = 0x0000001f,
-    MM_IBM_WC_MIXEROUT   = 0x00000021,
+    MM_IBM_MWAVE_WAVEIN  = 0x00000012U,
+    MM_IBM_MWAVE_WAVEOUT = 0x00000013U,
+    MM_IBM_MWAVE_MIXER   = 0x00000014U,
+    MM_IBM_MWAVE_MIDIIN  = 0x00000015U,
+    MM_IBM_MWAVE_MIDIOUT = 0x00000016U,
+    MM_IBM_MWAVE_AUX     = 0x00000017U,
+    MM_IBM_WC_MIDIOUT    = 0x0000001eU,
+    MM_IBM_WC_WAVEOUT    = 0x0000001fU,
+    MM_IBM_WC_MIXEROUT   = 0x00000021U,
 }
 
 enum : uint
 {
-    MM_VOCALTEC_WAVEOUT = 0x00000001,
-    MM_VOCALTEC_WAVEIN  = 0x00000002,
+    MM_VOCALTEC_WAVEOUT = 0x00000001U,
+    MM_VOCALTEC_WAVEIN  = 0x00000002U,
 }
 
 enum : uint
 {
-    MM_ROLAND_RAP10_MIDIOUT  = 0x0000000a,
-    MM_ROLAND_RAP10_MIDIIN   = 0x0000000b,
-    MM_ROLAND_RAP10_SYNTH    = 0x0000000c,
-    MM_ROLAND_RAP10_WAVEOUT  = 0x0000000d,
-    MM_ROLAND_RAP10_WAVEIN   = 0x0000000e,
-    MM_ROLAND_MPU401_MIDIOUT = 0x0000000f,
-    MM_ROLAND_MPU401_MIDIIN  = 0x00000010,
-    MM_ROLAND_SMPU_MIDIOUTA  = 0x00000011,
-    MM_ROLAND_SMPU_MIDIOUTB  = 0x00000012,
-    MM_ROLAND_SMPU_MIDIINA   = 0x00000013,
-    MM_ROLAND_SMPU_MIDIINB   = 0x00000014,
-    MM_ROLAND_SC7_MIDIOUT    = 0x00000015,
-    MM_ROLAND_SC7_MIDIIN     = 0x00000016,
-    MM_ROLAND_SERIAL_MIDIOUT = 0x00000017,
-    MM_ROLAND_SERIAL_MIDIIN  = 0x00000018,
-    MM_ROLAND_SCP_MIDIOUT    = 0x00000026,
-    MM_ROLAND_SCP_MIDIIN     = 0x00000027,
-    MM_ROLAND_SCP_WAVEOUT    = 0x00000028,
-    MM_ROLAND_SCP_WAVEIN     = 0x00000029,
-    MM_ROLAND_SCP_MIXER      = 0x0000002a,
-    MM_ROLAND_SCP_AUX        = 0x00000030,
+    MM_ROLAND_RAP10_MIDIOUT  = 0x0000000aU,
+    MM_ROLAND_RAP10_MIDIIN   = 0x0000000bU,
+    MM_ROLAND_RAP10_SYNTH    = 0x0000000cU,
+    MM_ROLAND_RAP10_WAVEOUT  = 0x0000000dU,
+    MM_ROLAND_RAP10_WAVEIN   = 0x0000000eU,
+    MM_ROLAND_MPU401_MIDIOUT = 0x0000000fU,
+    MM_ROLAND_MPU401_MIDIIN  = 0x00000010U,
+    MM_ROLAND_SMPU_MIDIOUTA  = 0x00000011U,
+    MM_ROLAND_SMPU_MIDIOUTB  = 0x00000012U,
+    MM_ROLAND_SMPU_MIDIINA   = 0x00000013U,
+    MM_ROLAND_SMPU_MIDIINB   = 0x00000014U,
+    MM_ROLAND_SC7_MIDIOUT    = 0x00000015U,
+    MM_ROLAND_SC7_MIDIIN     = 0x00000016U,
+    MM_ROLAND_SERIAL_MIDIOUT = 0x00000017U,
+    MM_ROLAND_SERIAL_MIDIIN  = 0x00000018U,
+    MM_ROLAND_SCP_MIDIOUT    = 0x00000026U,
+    MM_ROLAND_SCP_MIDIIN     = 0x00000027U,
+    MM_ROLAND_SCP_WAVEOUT    = 0x00000028U,
+    MM_ROLAND_SCP_WAVEIN     = 0x00000029U,
+    MM_ROLAND_SCP_MIXER      = 0x0000002aU,
+    MM_ROLAND_SCP_AUX        = 0x00000030U,
 }
 
 enum : uint
 {
-    MM_DSP_SOLUTIONS_WAVEOUT = 0x00000001,
-    MM_DSP_SOLUTIONS_WAVEIN  = 0x00000002,
-    MM_DSP_SOLUTIONS_SYNTH   = 0x00000003,
-    MM_DSP_SOLUTIONS_AUX     = 0x00000004,
+    MM_DSP_SOLUTIONS_WAVEOUT = 0x00000001U,
+    MM_DSP_SOLUTIONS_WAVEIN  = 0x00000002U,
+    MM_DSP_SOLUTIONS_SYNTH   = 0x00000003U,
+    MM_DSP_SOLUTIONS_AUX     = 0x00000004U,
 }
 
 enum : uint
 {
-    MM_NEC_73_86_SYNTH   = 0x00000005,
-    MM_NEC_73_86_WAVEOUT = 0x00000006,
-    MM_NEC_73_86_WAVEIN  = 0x00000007,
+    MM_NEC_73_86_SYNTH   = 0x00000005U,
+    MM_NEC_73_86_WAVEOUT = 0x00000006U,
+    MM_NEC_73_86_WAVEIN  = 0x00000007U,
 }
 
 enum : uint
 {
-    MM_NEC_26_SYNTH       = 0x00000009,
-    MM_NEC_MPU401_MIDIOUT = 0x0000000a,
-    MM_NEC_MPU401_MIDIIN  = 0x0000000b,
+    MM_NEC_26_SYNTH       = 0x00000009U,
+    MM_NEC_MPU401_MIDIOUT = 0x0000000aU,
+    MM_NEC_MPU401_MIDIIN  = 0x0000000bU,
 }
 
-enum uint MM_NEC_JOYSTICK = 0x0000000c;
+enum uint MM_NEC_JOYSTICK = 0x0000000cU;
 
 enum : uint
 {
-    MM_WANGLABS_WAVEIN1  = 0x00000001,
-    MM_WANGLABS_WAVEOUT1 = 0x00000002,
+    MM_WANGLABS_WAVEIN1  = 0x00000001U,
+    MM_WANGLABS_WAVEOUT1 = 0x00000002U,
 }
 
 enum : uint
 {
-    MM_TANDY_VISWAVEIN       = 0x00000001,
-    MM_TANDY_VISWAVEOUT      = 0x00000002,
-    MM_TANDY_VISBIOSSYNTH    = 0x00000003,
-    MM_TANDY_SENS_MMAWAVEIN  = 0x00000004,
-    MM_TANDY_SENS_MMAWAVEOUT = 0x00000005,
-    MM_TANDY_SENS_MMAMIDIIN  = 0x00000006,
-    MM_TANDY_SENS_MMAMIDIOUT = 0x00000007,
-    MM_TANDY_SENS_VISWAVEOUT = 0x00000008,
+    MM_TANDY_VISWAVEIN       = 0x00000001U,
+    MM_TANDY_VISWAVEOUT      = 0x00000002U,
+    MM_TANDY_VISBIOSSYNTH    = 0x00000003U,
+    MM_TANDY_SENS_MMAWAVEIN  = 0x00000004U,
+    MM_TANDY_SENS_MMAWAVEOUT = 0x00000005U,
+    MM_TANDY_SENS_MMAMIDIIN  = 0x00000006U,
+    MM_TANDY_SENS_MMAMIDIOUT = 0x00000007U,
+    MM_TANDY_SENS_VISWAVEOUT = 0x00000008U,
 }
 
 enum : uint
 {
-    MM_TANDY_PSSJWAVEIN  = 0x00000009,
-    MM_TANDY_PSSJWAVEOUT = 0x0000000a,
+    MM_TANDY_PSSJWAVEIN  = 0x00000009U,
+    MM_TANDY_PSSJWAVEOUT = 0x0000000aU,
 }
 
 enum : uint
 {
-    MM_ANTEX_SX12_WAVEIN          = 0x00000001,
-    MM_ANTEX_SX12_WAVEOUT         = 0x00000002,
-    MM_ANTEX_SX15_WAVEIN          = 0x00000003,
-    MM_ANTEX_SX15_WAVEOUT         = 0x00000004,
-    MM_ANTEX_VP625_WAVEIN         = 0x00000005,
-    MM_ANTEX_VP625_WAVEOUT        = 0x00000006,
-    MM_ANTEX_AUDIOPORT22_WAVEIN   = 0x00000007,
-    MM_ANTEX_AUDIOPORT22_WAVEOUT  = 0x00000008,
-    MM_ANTEX_AUDIOPORT22_FEEDTHRU = 0x00000009,
+    MM_ANTEX_SX12_WAVEIN          = 0x00000001U,
+    MM_ANTEX_SX12_WAVEOUT         = 0x00000002U,
+    MM_ANTEX_SX15_WAVEIN          = 0x00000003U,
+    MM_ANTEX_SX15_WAVEOUT         = 0x00000004U,
+    MM_ANTEX_VP625_WAVEIN         = 0x00000005U,
+    MM_ANTEX_VP625_WAVEOUT        = 0x00000006U,
+    MM_ANTEX_AUDIOPORT22_WAVEIN   = 0x00000007U,
+    MM_ANTEX_AUDIOPORT22_WAVEOUT  = 0x00000008U,
+    MM_ANTEX_AUDIOPORT22_FEEDTHRU = 0x00000009U,
 }
 
 enum : uint
 {
-    MM_INTELOPD_WAVEIN       = 0x00000001,
-    MM_INTELOPD_WAVEOUT      = 0x00000065,
-    MM_INTELOPD_AUX          = 0x00000191,
-    MM_INTEL_NSPMODEMLINEIN  = 0x000001f5,
-    MM_INTEL_NSPMODEMLINEOUT = 0x000001f6,
+    MM_INTELOPD_WAVEIN       = 0x00000001U,
+    MM_INTELOPD_WAVEOUT      = 0x00000065U,
+    MM_INTELOPD_AUX          = 0x00000191U,
+    MM_INTEL_NSPMODEMLINEIN  = 0x000001f5U,
+    MM_INTEL_NSPMODEMLINEOUT = 0x000001f6U,
 }
 
 enum : uint
 {
-    MM_VAL_MICROKEY_AP_WAVEIN  = 0x00000001,
-    MM_VAL_MICROKEY_AP_WAVEOUT = 0x00000002,
+    MM_VAL_MICROKEY_AP_WAVEIN  = 0x00000001U,
+    MM_VAL_MICROKEY_AP_WAVEOUT = 0x00000002U,
 }
 
 enum : uint
 {
-    MM_INTERACTIVE_WAVEIN  = 0x00000045,
-    MM_INTERACTIVE_WAVEOUT = 0x00000045,
+    MM_INTERACTIVE_WAVEIN  = 0x00000045U,
+    MM_INTERACTIVE_WAVEOUT = 0x00000045U,
 }
 
 enum : uint
 {
-    MM_YAMAHA_GSS_SYNTH       = 0x00000001,
-    MM_YAMAHA_GSS_WAVEOUT     = 0x00000002,
-    MM_YAMAHA_GSS_WAVEIN      = 0x00000003,
-    MM_YAMAHA_GSS_MIDIOUT     = 0x00000004,
-    MM_YAMAHA_GSS_MIDIIN      = 0x00000005,
-    MM_YAMAHA_GSS_AUX         = 0x00000006,
-    MM_YAMAHA_SERIAL_MIDIOUT  = 0x00000007,
-    MM_YAMAHA_SERIAL_MIDIIN   = 0x00000008,
-    MM_YAMAHA_OPL3SA_WAVEOUT  = 0x00000010,
-    MM_YAMAHA_OPL3SA_WAVEIN   = 0x00000011,
-    MM_YAMAHA_OPL3SA_FMSYNTH  = 0x00000012,
-    MM_YAMAHA_OPL3SA_YSYNTH   = 0x00000013,
-    MM_YAMAHA_OPL3SA_MIDIOUT  = 0x00000014,
-    MM_YAMAHA_OPL3SA_MIDIIN   = 0x00000015,
-    MM_YAMAHA_OPL3SA_MIXER    = 0x00000017,
-    MM_YAMAHA_OPL3SA_JOYSTICK = 0x00000018,
+    MM_YAMAHA_GSS_SYNTH       = 0x00000001U,
+    MM_YAMAHA_GSS_WAVEOUT     = 0x00000002U,
+    MM_YAMAHA_GSS_WAVEIN      = 0x00000003U,
+    MM_YAMAHA_GSS_MIDIOUT     = 0x00000004U,
+    MM_YAMAHA_GSS_MIDIIN      = 0x00000005U,
+    MM_YAMAHA_GSS_AUX         = 0x00000006U,
+    MM_YAMAHA_SERIAL_MIDIOUT  = 0x00000007U,
+    MM_YAMAHA_SERIAL_MIDIIN   = 0x00000008U,
+    MM_YAMAHA_OPL3SA_WAVEOUT  = 0x00000010U,
+    MM_YAMAHA_OPL3SA_WAVEIN   = 0x00000011U,
+    MM_YAMAHA_OPL3SA_FMSYNTH  = 0x00000012U,
+    MM_YAMAHA_OPL3SA_YSYNTH   = 0x00000013U,
+    MM_YAMAHA_OPL3SA_MIDIOUT  = 0x00000014U,
+    MM_YAMAHA_OPL3SA_MIDIIN   = 0x00000015U,
+    MM_YAMAHA_OPL3SA_MIXER    = 0x00000017U,
+    MM_YAMAHA_OPL3SA_JOYSTICK = 0x00000018U,
 }
 
 enum : uint
 {
-    MM_YAMAHA_YMF724LEG_MIDIOUT = 0x00000019,
-    MM_YAMAHA_YMF724LEG_MIDIIN  = 0x0000001a,
-    MM_YAMAHA_YMF724_WAVEOUT    = 0x0000001b,
-    MM_YAMAHA_YMF724_WAVEIN     = 0x0000001c,
-    MM_YAMAHA_YMF724_MIDIOUT    = 0x0000001d,
-    MM_YAMAHA_YMF724_AUX        = 0x0000001e,
-    MM_YAMAHA_YMF724_MIXER      = 0x0000001f,
-    MM_YAMAHA_YMF724LEG_FMSYNTH = 0x00000020,
-    MM_YAMAHA_YMF724LEG_MIXER   = 0x00000021,
+    MM_YAMAHA_YMF724LEG_MIDIOUT = 0x00000019U,
+    MM_YAMAHA_YMF724LEG_MIDIIN  = 0x0000001aU,
+    MM_YAMAHA_YMF724_WAVEOUT    = 0x0000001bU,
+    MM_YAMAHA_YMF724_WAVEIN     = 0x0000001cU,
+    MM_YAMAHA_YMF724_MIDIOUT    = 0x0000001dU,
+    MM_YAMAHA_YMF724_AUX        = 0x0000001eU,
+    MM_YAMAHA_YMF724_MIXER      = 0x0000001fU,
+    MM_YAMAHA_YMF724LEG_FMSYNTH = 0x00000020U,
+    MM_YAMAHA_YMF724LEG_MIXER   = 0x00000021U,
 }
 
 enum : uint
 {
-    MM_YAMAHA_SXG_MIDIOUT  = 0x00000022,
-    MM_YAMAHA_SXG_WAVEOUT  = 0x00000023,
-    MM_YAMAHA_SXG_MIXER    = 0x00000024,
-    MM_YAMAHA_ACXG_WAVEIN  = 0x00000025,
-    MM_YAMAHA_ACXG_WAVEOUT = 0x00000026,
-    MM_YAMAHA_ACXG_MIDIOUT = 0x00000027,
-    MM_YAMAHA_ACXG_MIXER   = 0x00000028,
-    MM_YAMAHA_ACXG_AUX     = 0x00000029,
+    MM_YAMAHA_SXG_MIDIOUT  = 0x00000022U,
+    MM_YAMAHA_SXG_WAVEOUT  = 0x00000023U,
+    MM_YAMAHA_SXG_MIXER    = 0x00000024U,
+    MM_YAMAHA_ACXG_WAVEIN  = 0x00000025U,
+    MM_YAMAHA_ACXG_WAVEOUT = 0x00000026U,
+    MM_YAMAHA_ACXG_MIDIOUT = 0x00000027U,
+    MM_YAMAHA_ACXG_MIXER   = 0x00000028U,
+    MM_YAMAHA_ACXG_AUX     = 0x00000029U,
 }
 
-enum uint MM_EVEREX_CARRIER = 0x00000001;
+enum uint MM_EVEREX_CARRIER = 0x00000001U;
 
 enum : uint
 {
-    MM_ECHO_SYNTH   = 0x00000001,
-    MM_ECHO_WAVEOUT = 0x00000002,
-    MM_ECHO_WAVEIN  = 0x00000003,
-    MM_ECHO_MIDIOUT = 0x00000004,
-    MM_ECHO_MIDIIN  = 0x00000005,
-    MM_ECHO_AUX     = 0x00000006,
+    MM_ECHO_SYNTH   = 0x00000001U,
+    MM_ECHO_WAVEOUT = 0x00000002U,
+    MM_ECHO_WAVEIN  = 0x00000003U,
+    MM_ECHO_MIDIOUT = 0x00000004U,
+    MM_ECHO_MIDIIN  = 0x00000005U,
+    MM_ECHO_AUX     = 0x00000006U,
 }
 
 enum : uint
 {
-    MM_SIERRA_ARIA_MIDIOUT      = 0x00000014,
-    MM_SIERRA_ARIA_MIDIIN       = 0x00000015,
-    MM_SIERRA_ARIA_SYNTH        = 0x00000016,
-    MM_SIERRA_ARIA_WAVEOUT      = 0x00000017,
-    MM_SIERRA_ARIA_WAVEIN       = 0x00000018,
-    MM_SIERRA_ARIA_AUX          = 0x00000019,
-    MM_SIERRA_ARIA_AUX2         = 0x00000020,
-    MM_SIERRA_QUARTET_WAVEIN    = 0x00000050,
-    MM_SIERRA_QUARTET_WAVEOUT   = 0x00000051,
-    MM_SIERRA_QUARTET_MIDIIN    = 0x00000052,
-    MM_SIERRA_QUARTET_MIDIOUT   = 0x00000053,
-    MM_SIERRA_QUARTET_SYNTH     = 0x00000054,
-    MM_SIERRA_QUARTET_AUX_CD    = 0x00000055,
-    MM_SIERRA_QUARTET_AUX_LINE  = 0x00000056,
-    MM_SIERRA_QUARTET_AUX_MODEM = 0x00000057,
-    MM_SIERRA_QUARTET_MIXER     = 0x00000058,
+    MM_SIERRA_ARIA_MIDIOUT      = 0x00000014U,
+    MM_SIERRA_ARIA_MIDIIN       = 0x00000015U,
+    MM_SIERRA_ARIA_SYNTH        = 0x00000016U,
+    MM_SIERRA_ARIA_WAVEOUT      = 0x00000017U,
+    MM_SIERRA_ARIA_WAVEIN       = 0x00000018U,
+    MM_SIERRA_ARIA_AUX          = 0x00000019U,
+    MM_SIERRA_ARIA_AUX2         = 0x00000020U,
+    MM_SIERRA_QUARTET_WAVEIN    = 0x00000050U,
+    MM_SIERRA_QUARTET_WAVEOUT   = 0x00000051U,
+    MM_SIERRA_QUARTET_MIDIIN    = 0x00000052U,
+    MM_SIERRA_QUARTET_MIDIOUT   = 0x00000053U,
+    MM_SIERRA_QUARTET_SYNTH     = 0x00000054U,
+    MM_SIERRA_QUARTET_AUX_CD    = 0x00000055U,
+    MM_SIERRA_QUARTET_AUX_LINE  = 0x00000056U,
+    MM_SIERRA_QUARTET_AUX_MODEM = 0x00000057U,
+    MM_SIERRA_QUARTET_MIXER     = 0x00000058U,
 }
 
-enum uint MM_CAT_WAVEOUT = 0x00000001;
-enum uint MM_DSP_GROUP_TRUESPEECH = 0x00000001;
-enum uint MM_MELABS_MIDI2GO = 0x00000001;
+enum uint MM_CAT_WAVEOUT = 0x00000001U;
+enum uint MM_DSP_GROUP_TRUESPEECH = 0x00000001U;
+enum uint MM_MELABS_MIDI2GO = 0x00000001U;
 
 enum : uint
 {
-    MM_ESS_AMWAVEOUT      = 0x00000001,
-    MM_ESS_AMWAVEIN       = 0x00000002,
-    MM_ESS_AMAUX          = 0x00000003,
-    MM_ESS_AMSYNTH        = 0x00000004,
-    MM_ESS_AMMIDIOUT      = 0x00000005,
-    MM_ESS_AMMIDIIN       = 0x00000006,
-    MM_ESS_MIXER          = 0x00000007,
-    MM_ESS_AUX_CD         = 0x00000008,
-    MM_ESS_MPU401_MIDIOUT = 0x00000009,
-    MM_ESS_MPU401_MIDIIN  = 0x0000000a,
+    MM_ESS_AMWAVEOUT      = 0x00000001U,
+    MM_ESS_AMWAVEIN       = 0x00000002U,
+    MM_ESS_AMAUX          = 0x00000003U,
+    MM_ESS_AMSYNTH        = 0x00000004U,
+    MM_ESS_AMMIDIOUT      = 0x00000005U,
+    MM_ESS_AMMIDIIN       = 0x00000006U,
+    MM_ESS_MIXER          = 0x00000007U,
+    MM_ESS_AUX_CD         = 0x00000008U,
+    MM_ESS_MPU401_MIDIOUT = 0x00000009U,
+    MM_ESS_MPU401_MIDIIN  = 0x0000000aU,
 }
 
 enum : uint
 {
-    MM_ESS_ES488_WAVEOUT  = 0x00000010,
-    MM_ESS_ES488_WAVEIN   = 0x00000011,
-    MM_ESS_ES488_MIXER    = 0x00000012,
-    MM_ESS_ES688_WAVEOUT  = 0x00000013,
-    MM_ESS_ES688_WAVEIN   = 0x00000014,
-    MM_ESS_ES688_MIXER    = 0x00000015,
-    MM_ESS_ES1488_WAVEOUT = 0x00000016,
-    MM_ESS_ES1488_WAVEIN  = 0x00000017,
-    MM_ESS_ES1488_MIXER   = 0x00000018,
-    MM_ESS_ES1688_WAVEOUT = 0x00000019,
-    MM_ESS_ES1688_WAVEIN  = 0x0000001a,
-    MM_ESS_ES1688_MIXER   = 0x0000001b,
-    MM_ESS_ES1788_WAVEOUT = 0x0000001c,
-    MM_ESS_ES1788_WAVEIN  = 0x0000001d,
-    MM_ESS_ES1788_MIXER   = 0x0000001e,
-    MM_ESS_ES1888_WAVEOUT = 0x0000001f,
-    MM_ESS_ES1888_WAVEIN  = 0x00000020,
-    MM_ESS_ES1888_MIXER   = 0x00000021,
-    MM_ESS_ES1868_WAVEOUT = 0x00000022,
-    MM_ESS_ES1868_WAVEIN  = 0x00000023,
-    MM_ESS_ES1868_MIXER   = 0x00000024,
-    MM_ESS_ES1878_WAVEOUT = 0x00000025,
-    MM_ESS_ES1878_WAVEIN  = 0x00000026,
-    MM_ESS_ES1878_MIXER   = 0x00000027,
+    MM_ESS_ES488_WAVEOUT  = 0x00000010U,
+    MM_ESS_ES488_WAVEIN   = 0x00000011U,
+    MM_ESS_ES488_MIXER    = 0x00000012U,
+    MM_ESS_ES688_WAVEOUT  = 0x00000013U,
+    MM_ESS_ES688_WAVEIN   = 0x00000014U,
+    MM_ESS_ES688_MIXER    = 0x00000015U,
+    MM_ESS_ES1488_WAVEOUT = 0x00000016U,
+    MM_ESS_ES1488_WAVEIN  = 0x00000017U,
+    MM_ESS_ES1488_MIXER   = 0x00000018U,
+    MM_ESS_ES1688_WAVEOUT = 0x00000019U,
+    MM_ESS_ES1688_WAVEIN  = 0x0000001aU,
+    MM_ESS_ES1688_MIXER   = 0x0000001bU,
+    MM_ESS_ES1788_WAVEOUT = 0x0000001cU,
+    MM_ESS_ES1788_WAVEIN  = 0x0000001dU,
+    MM_ESS_ES1788_MIXER   = 0x0000001eU,
+    MM_ESS_ES1888_WAVEOUT = 0x0000001fU,
+    MM_ESS_ES1888_WAVEIN  = 0x00000020U,
+    MM_ESS_ES1888_MIXER   = 0x00000021U,
+    MM_ESS_ES1868_WAVEOUT = 0x00000022U,
+    MM_ESS_ES1868_WAVEIN  = 0x00000023U,
+    MM_ESS_ES1868_MIXER   = 0x00000024U,
+    MM_ESS_ES1878_WAVEOUT = 0x00000025U,
+    MM_ESS_ES1878_WAVEIN  = 0x00000026U,
+    MM_ESS_ES1878_MIXER   = 0x00000027U,
 }
 
-enum uint MM_CANOPUS_ACM_DVREX = 0x00000001;
-enum uint MM_EPS_FMSND = 0x00000001;
+enum uint MM_CANOPUS_ACM_DVREX = 0x00000001U;
+enum uint MM_EPS_FMSND = 0x00000001U;
 
 enum : uint
 {
-    MM_TRUEVISION_WAVEIN1  = 0x00000001,
-    MM_TRUEVISION_WAVEOUT1 = 0x00000002,
+    MM_TRUEVISION_WAVEIN1  = 0x00000001U,
+    MM_TRUEVISION_WAVEOUT1 = 0x00000002U,
 }
 
 enum : uint
 {
-    MM_AZTECH_MIDIOUT         = 0x00000003,
-    MM_AZTECH_MIDIIN          = 0x00000004,
-    MM_AZTECH_WAVEIN          = 0x00000011,
-    MM_AZTECH_WAVEOUT         = 0x00000012,
-    MM_AZTECH_FMSYNTH         = 0x00000014,
-    MM_AZTECH_MIXER           = 0x00000015,
-    MM_AZTECH_PRO16_WAVEIN    = 0x00000021,
-    MM_AZTECH_PRO16_WAVEOUT   = 0x00000022,
-    MM_AZTECH_PRO16_FMSYNTH   = 0x00000026,
-    MM_AZTECH_DSP16_WAVEIN    = 0x00000041,
-    MM_AZTECH_DSP16_WAVEOUT   = 0x00000042,
-    MM_AZTECH_DSP16_FMSYNTH   = 0x00000044,
-    MM_AZTECH_DSP16_WAVESYNTH = 0x00000046,
+    MM_AZTECH_MIDIOUT         = 0x00000003U,
+    MM_AZTECH_MIDIIN          = 0x00000004U,
+    MM_AZTECH_WAVEIN          = 0x00000011U,
+    MM_AZTECH_WAVEOUT         = 0x00000012U,
+    MM_AZTECH_FMSYNTH         = 0x00000014U,
+    MM_AZTECH_MIXER           = 0x00000015U,
+    MM_AZTECH_PRO16_WAVEIN    = 0x00000021U,
+    MM_AZTECH_PRO16_WAVEOUT   = 0x00000022U,
+    MM_AZTECH_PRO16_FMSYNTH   = 0x00000026U,
+    MM_AZTECH_DSP16_WAVEIN    = 0x00000041U,
+    MM_AZTECH_DSP16_WAVEOUT   = 0x00000042U,
+    MM_AZTECH_DSP16_FMSYNTH   = 0x00000044U,
+    MM_AZTECH_DSP16_WAVESYNTH = 0x00000046U,
 }
 
 enum : uint
 {
-    MM_AZTECH_NOVA16_WAVEIN  = 0x00000047,
-    MM_AZTECH_NOVA16_WAVEOUT = 0x00000048,
-    MM_AZTECH_NOVA16_MIXER   = 0x00000049,
-    MM_AZTECH_WASH16_WAVEIN  = 0x0000004a,
-    MM_AZTECH_WASH16_WAVEOUT = 0x0000004b,
-    MM_AZTECH_WASH16_MIXER   = 0x0000004c,
-    MM_AZTECH_AUX_CD         = 0x00000191,
-    MM_AZTECH_AUX_LINE       = 0x00000192,
-    MM_AZTECH_AUX_MIC        = 0x00000193,
-    MM_AZTECH_AUX            = 0x00000194,
+    MM_AZTECH_NOVA16_WAVEIN  = 0x00000047U,
+    MM_AZTECH_NOVA16_WAVEOUT = 0x00000048U,
+    MM_AZTECH_NOVA16_MIXER   = 0x00000049U,
+    MM_AZTECH_WASH16_WAVEIN  = 0x0000004aU,
+    MM_AZTECH_WASH16_WAVEOUT = 0x0000004bU,
+    MM_AZTECH_WASH16_MIXER   = 0x0000004cU,
+    MM_AZTECH_AUX_CD         = 0x00000191U,
+    MM_AZTECH_AUX_LINE       = 0x00000192U,
+    MM_AZTECH_AUX_MIC        = 0x00000193U,
+    MM_AZTECH_AUX            = 0x00000194U,
 }
 
 enum : uint
 {
-    MM_VIDEOLOGIC_MSWAVEIN  = 0x00000001,
-    MM_VIDEOLOGIC_MSWAVEOUT = 0x00000002,
+    MM_VIDEOLOGIC_MSWAVEIN  = 0x00000001U,
+    MM_VIDEOLOGIC_MSWAVEOUT = 0x00000002U,
 }
 
 enum : uint
 {
-    MM_KORG_PCIF_MIDIOUT     = 0x00000001,
-    MM_KORG_PCIF_MIDIIN      = 0x00000002,
-    MM_KORG_1212IO_MSWAVEIN  = 0x00000003,
-    MM_KORG_1212IO_MSWAVEOUT = 0x00000004,
+    MM_KORG_PCIF_MIDIOUT     = 0x00000001U,
+    MM_KORG_PCIF_MIDIIN      = 0x00000002U,
+    MM_KORG_1212IO_MSWAVEIN  = 0x00000003U,
+    MM_KORG_1212IO_MSWAVEOUT = 0x00000004U,
 }
 
-enum uint MM_APT_ACE100CD = 0x00000001;
+enum uint MM_APT_ACE100CD = 0x00000001U;
 
 enum : uint
 {
-    MM_ICS_WAVEDECK_WAVEOUT          = 0x00000001,
-    MM_ICS_WAVEDECK_WAVEIN           = 0x00000002,
-    MM_ICS_WAVEDECK_MIXER            = 0x00000003,
-    MM_ICS_WAVEDECK_AUX              = 0x00000004,
-    MM_ICS_WAVEDECK_SYNTH            = 0x00000005,
-    MM_ICS_WAVEDEC_SB_WAVEOUT        = 0x00000006,
-    MM_ICS_WAVEDEC_SB_WAVEIN         = 0x00000007,
-    MM_ICS_WAVEDEC_SB_FM_MIDIOUT     = 0x00000008,
-    MM_ICS_WAVEDEC_SB_MPU401_MIDIOUT = 0x00000009,
-    MM_ICS_WAVEDEC_SB_MPU401_MIDIIN  = 0x0000000a,
-    MM_ICS_WAVEDEC_SB_MIXER          = 0x0000000b,
-    MM_ICS_WAVEDEC_SB_AUX            = 0x0000000c,
+    MM_ICS_WAVEDECK_WAVEOUT          = 0x00000001U,
+    MM_ICS_WAVEDECK_WAVEIN           = 0x00000002U,
+    MM_ICS_WAVEDECK_MIXER            = 0x00000003U,
+    MM_ICS_WAVEDECK_AUX              = 0x00000004U,
+    MM_ICS_WAVEDECK_SYNTH            = 0x00000005U,
+    MM_ICS_WAVEDEC_SB_WAVEOUT        = 0x00000006U,
+    MM_ICS_WAVEDEC_SB_WAVEIN         = 0x00000007U,
+    MM_ICS_WAVEDEC_SB_FM_MIDIOUT     = 0x00000008U,
+    MM_ICS_WAVEDEC_SB_MPU401_MIDIOUT = 0x00000009U,
+    MM_ICS_WAVEDEC_SB_MPU401_MIDIIN  = 0x0000000aU,
+    MM_ICS_WAVEDEC_SB_MIXER          = 0x0000000bU,
+    MM_ICS_WAVEDEC_SB_AUX            = 0x0000000cU,
 }
 
-enum uint MM_ICS_2115_LITE_MIDIOUT = 0x0000000d;
-enum uint MM_ICS_2120_LITE_MIDIOUT = 0x0000000e;
-enum uint MM_ITERATEDSYS_FUFCODEC = 0x00000001;
-enum uint MM_METHEUS_ZIPPER = 0x00000001;
+enum uint MM_ICS_2115_LITE_MIDIOUT = 0x0000000dU;
+enum uint MM_ICS_2120_LITE_MIDIOUT = 0x0000000eU;
+enum uint MM_ITERATEDSYS_FUFCODEC = 0x00000001U;
+enum uint MM_METHEUS_ZIPPER = 0x00000001U;
 
 enum : uint
 {
-    MM_WINNOV_CAVIAR_WAVEIN    = 0x00000001,
-    MM_WINNOV_CAVIAR_WAVEOUT   = 0x00000002,
-    MM_WINNOV_CAVIAR_VIDC      = 0x00000003,
-    MM_WINNOV_CAVIAR_CHAMPAGNE = 0x00000004,
-    MM_WINNOV_CAVIAR_YUV8      = 0x00000005,
+    MM_WINNOV_CAVIAR_WAVEIN    = 0x00000001U,
+    MM_WINNOV_CAVIAR_WAVEOUT   = 0x00000002U,
+    MM_WINNOV_CAVIAR_VIDC      = 0x00000003U,
+    MM_WINNOV_CAVIAR_CHAMPAGNE = 0x00000004U,
+    MM_WINNOV_CAVIAR_YUV8      = 0x00000005U,
 }
 
 enum : uint
 {
-    MM_NCR_BA_WAVEIN  = 0x00000001,
-    MM_NCR_BA_WAVEOUT = 0x00000002,
-    MM_NCR_BA_SYNTH   = 0x00000003,
-    MM_NCR_BA_AUX     = 0x00000004,
-    MM_NCR_BA_MIXER   = 0x00000005,
+    MM_NCR_BA_WAVEIN  = 0x00000001U,
+    MM_NCR_BA_WAVEOUT = 0x00000002U,
+    MM_NCR_BA_SYNTH   = 0x00000003U,
+    MM_NCR_BA_AUX     = 0x00000004U,
+    MM_NCR_BA_MIXER   = 0x00000005U,
 }
 
 enum : uint
 {
-    MM_AST_MODEMWAVE_WAVEIN  = 0x0000000d,
-    MM_AST_MODEMWAVE_WAVEOUT = 0x0000000e,
+    MM_AST_MODEMWAVE_WAVEIN  = 0x0000000dU,
+    MM_AST_MODEMWAVE_WAVEOUT = 0x0000000eU,
 }
 
 enum : uint
 {
-    MM_WILLOWPOND_FMSYNTH_STEREO  = 0x00000014,
-    MM_WILLOWPOND_MPU401          = 0x00000015,
-    MM_WILLOWPOND_SNDPORT_WAVEIN  = 0x00000064,
-    MM_WILLOWPOND_SNDPORT_WAVEOUT = 0x00000065,
-    MM_WILLOWPOND_SNDPORT_MIXER   = 0x00000066,
-    MM_WILLOWPOND_SNDPORT_AUX     = 0x00000067,
-    MM_WILLOWPOND_PH_WAVEIN       = 0x00000068,
-    MM_WILLOWPOND_PH_WAVEOUT      = 0x00000069,
-    MM_WILLOWPOND_PH_MIXER        = 0x0000006a,
-    MM_WILLOWPOND_PH_AUX          = 0x0000006b,
+    MM_WILLOWPOND_FMSYNTH_STEREO  = 0x00000014U,
+    MM_WILLOWPOND_MPU401          = 0x00000015U,
+    MM_WILLOWPOND_SNDPORT_WAVEIN  = 0x00000064U,
+    MM_WILLOWPOND_SNDPORT_WAVEOUT = 0x00000065U,
+    MM_WILLOWPOND_SNDPORT_MIXER   = 0x00000066U,
+    MM_WILLOWPOND_SNDPORT_AUX     = 0x00000067U,
+    MM_WILLOWPOND_PH_WAVEIN       = 0x00000068U,
+    MM_WILLOWPOND_PH_WAVEOUT      = 0x00000069U,
+    MM_WILLOWPOND_PH_MIXER        = 0x0000006aU,
+    MM_WILLOWPOND_PH_AUX          = 0x0000006bU,
 }
 
-enum uint MM_WILLOPOND_SNDCOMM_WAVEIN = 0x0000006c;
+enum uint MM_WILLOPOND_SNDCOMM_WAVEIN = 0x0000006cU;
 
 enum : uint
 {
-    MM_WILLOWPOND_SNDCOMM_WAVEOUT = 0x0000006d,
-    MM_WILLOWPOND_SNDCOMM_MIXER   = 0x0000006e,
-    MM_WILLOWPOND_SNDCOMM_AUX     = 0x0000006f,
-    MM_WILLOWPOND_GENERIC_WAVEIN  = 0x00000070,
-    MM_WILLOWPOND_GENERIC_WAVEOUT = 0x00000071,
-    MM_WILLOWPOND_GENERIC_MIXER   = 0x00000072,
-    MM_WILLOWPOND_GENERIC_AUX     = 0x00000073,
+    MM_WILLOWPOND_SNDCOMM_WAVEOUT = 0x0000006dU,
+    MM_WILLOWPOND_SNDCOMM_MIXER   = 0x0000006eU,
+    MM_WILLOWPOND_SNDCOMM_AUX     = 0x0000006fU,
+    MM_WILLOWPOND_GENERIC_WAVEIN  = 0x00000070U,
+    MM_WILLOWPOND_GENERIC_WAVEOUT = 0x00000071U,
+    MM_WILLOWPOND_GENERIC_MIXER   = 0x00000072U,
+    MM_WILLOWPOND_GENERIC_AUX     = 0x00000073U,
 }
 
 enum : uint
 {
-    MM_VITEC_VMAKER = 0x00000001,
-    MM_VITEC_VMPRO  = 0x00000002,
+    MM_VITEC_VMAKER = 0x00000001U,
+    MM_VITEC_VMPRO  = 0x00000002U,
 }
 
 enum : uint
 {
-    MM_MOSCOM_VPC2400_IN  = 0x00000001,
-    MM_MOSCOM_VPC2400_OUT = 0x00000002,
+    MM_MOSCOM_VPC2400_IN  = 0x00000001U,
+    MM_MOSCOM_VPC2400_OUT = 0x00000002U,
 }
 
 enum : uint
 {
-    MM_SILICONSOFT_SC1_WAVEIN         = 0x00000001,
-    MM_SILICONSOFT_SC1_WAVEOUT        = 0x00000002,
-    MM_SILICONSOFT_SC2_WAVEIN         = 0x00000003,
-    MM_SILICONSOFT_SC2_WAVEOUT        = 0x00000004,
-    MM_SILICONSOFT_SOUNDJR2_WAVEOUT   = 0x00000005,
-    MM_SILICONSOFT_SOUNDJR2PR_WAVEIN  = 0x00000006,
-    MM_SILICONSOFT_SOUNDJR2PR_WAVEOUT = 0x00000007,
-    MM_SILICONSOFT_SOUNDJR3_WAVEOUT   = 0x00000008,
+    MM_SILICONSOFT_SC1_WAVEIN         = 0x00000001U,
+    MM_SILICONSOFT_SC1_WAVEOUT        = 0x00000002U,
+    MM_SILICONSOFT_SC2_WAVEIN         = 0x00000003U,
+    MM_SILICONSOFT_SC2_WAVEOUT        = 0x00000004U,
+    MM_SILICONSOFT_SOUNDJR2_WAVEOUT   = 0x00000005U,
+    MM_SILICONSOFT_SOUNDJR2PR_WAVEIN  = 0x00000006U,
+    MM_SILICONSOFT_SOUNDJR2PR_WAVEOUT = 0x00000007U,
+    MM_SILICONSOFT_SOUNDJR3_WAVEOUT   = 0x00000008U,
 }
 
 enum : uint
 {
-    MM_TTEWS_WAVEIN      = 0x00000001,
-    MM_TTEWS_WAVEOUT     = 0x00000002,
-    MM_TTEWS_MIDIIN      = 0x00000003,
-    MM_TTEWS_MIDIOUT     = 0x00000004,
-    MM_TTEWS_MIDISYNTH   = 0x00000005,
-    MM_TTEWS_MIDIMONITOR = 0x00000006,
-    MM_TTEWS_VMIDIIN     = 0x00000007,
-    MM_TTEWS_VMIDIOUT    = 0x00000008,
-    MM_TTEWS_AUX         = 0x00000009,
-    MM_TTEWS_MIXER       = 0x0000000a,
+    MM_TTEWS_WAVEIN      = 0x00000001U,
+    MM_TTEWS_WAVEOUT     = 0x00000002U,
+    MM_TTEWS_MIDIIN      = 0x00000003U,
+    MM_TTEWS_MIDIOUT     = 0x00000004U,
+    MM_TTEWS_MIDISYNTH   = 0x00000005U,
+    MM_TTEWS_MIDIMONITOR = 0x00000006U,
+    MM_TTEWS_VMIDIIN     = 0x00000007U,
+    MM_TTEWS_VMIDIOUT    = 0x00000008U,
+    MM_TTEWS_AUX         = 0x00000009U,
+    MM_TTEWS_MIXER       = 0x0000000aU,
 }
 
 enum : uint
 {
-    MM_MEDIASONIC_ACM_G723 = 0x00000001,
-    MM_MEDIASONIC_ICOM     = 0x00000002,
+    MM_MEDIASONIC_ACM_G723 = 0x00000001U,
+    MM_MEDIASONIC_ICOM     = 0x00000002U,
 }
 
 enum : uint
 {
-    MM_ICOM_WAVEIN  = 0x00000003,
-    MM_ICOM_WAVEOUT = 0x00000004,
-    MM_ICOM_MIXER   = 0x00000005,
-    MM_ICOM_AUX     = 0x00000006,
-    MM_ICOM_LINE    = 0x00000007,
+    MM_ICOM_WAVEIN  = 0x00000003U,
+    MM_ICOM_WAVEOUT = 0x00000004U,
+    MM_ICOM_MIXER   = 0x00000005U,
+    MM_ICOM_AUX     = 0x00000006U,
+    MM_ICOM_LINE    = 0x00000007U,
 }
 
-enum uint MM_SANYO_ACM_LD_ADPCM = 0x00000001;
+enum uint MM_SANYO_ACM_LD_ADPCM = 0x00000001U;
 
 enum : uint
 {
-    MM_AHEAD_MULTISOUND   = 0x00000001,
-    MM_AHEAD_SOUNDBLASTER = 0x00000002,
-    MM_AHEAD_PROAUDIO     = 0x00000003,
-    MM_AHEAD_GENERIC      = 0x00000004,
+    MM_AHEAD_MULTISOUND   = 0x00000001U,
+    MM_AHEAD_SOUNDBLASTER = 0x00000002U,
+    MM_AHEAD_PROAUDIO     = 0x00000003U,
+    MM_AHEAD_GENERIC      = 0x00000004U,
 }
 
 enum : uint
 {
-    MM_OLIVETTI_WAVEIN    = 0x00000001,
-    MM_OLIVETTI_WAVEOUT   = 0x00000002,
-    MM_OLIVETTI_MIXER     = 0x00000003,
-    MM_OLIVETTI_AUX       = 0x00000004,
-    MM_OLIVETTI_MIDIIN    = 0x00000005,
-    MM_OLIVETTI_MIDIOUT   = 0x00000006,
-    MM_OLIVETTI_SYNTH     = 0x00000007,
-    MM_OLIVETTI_JOYSTICK  = 0x00000008,
-    MM_OLIVETTI_ACM_GSM   = 0x00000009,
-    MM_OLIVETTI_ACM_ADPCM = 0x0000000a,
-    MM_OLIVETTI_ACM_CELP  = 0x0000000b,
-    MM_OLIVETTI_ACM_SBC   = 0x0000000c,
-    MM_OLIVETTI_ACM_OPR   = 0x0000000d,
+    MM_OLIVETTI_WAVEIN    = 0x00000001U,
+    MM_OLIVETTI_WAVEOUT   = 0x00000002U,
+    MM_OLIVETTI_MIXER     = 0x00000003U,
+    MM_OLIVETTI_AUX       = 0x00000004U,
+    MM_OLIVETTI_MIDIIN    = 0x00000005U,
+    MM_OLIVETTI_MIDIOUT   = 0x00000006U,
+    MM_OLIVETTI_SYNTH     = 0x00000007U,
+    MM_OLIVETTI_JOYSTICK  = 0x00000008U,
+    MM_OLIVETTI_ACM_GSM   = 0x00000009U,
+    MM_OLIVETTI_ACM_ADPCM = 0x0000000aU,
+    MM_OLIVETTI_ACM_CELP  = 0x0000000bU,
+    MM_OLIVETTI_ACM_SBC   = 0x0000000cU,
+    MM_OLIVETTI_ACM_OPR   = 0x0000000dU,
 }
 
 enum : uint
 {
-    MM_IOMAGIC_TEMPO_WAVEOUT = 0x00000001,
-    MM_IOMAGIC_TEMPO_WAVEIN  = 0x00000002,
-    MM_IOMAGIC_TEMPO_SYNTH   = 0x00000003,
-    MM_IOMAGIC_TEMPO_MIDIOUT = 0x00000004,
-    MM_IOMAGIC_TEMPO_MXDOUT  = 0x00000005,
-    MM_IOMAGIC_TEMPO_AUXOUT  = 0x00000006,
+    MM_IOMAGIC_TEMPO_WAVEOUT = 0x00000001U,
+    MM_IOMAGIC_TEMPO_WAVEIN  = 0x00000002U,
+    MM_IOMAGIC_TEMPO_SYNTH   = 0x00000003U,
+    MM_IOMAGIC_TEMPO_MIDIOUT = 0x00000004U,
+    MM_IOMAGIC_TEMPO_MXDOUT  = 0x00000005U,
+    MM_IOMAGIC_TEMPO_AUXOUT  = 0x00000006U,
 }
 
 enum : uint
 {
-    MM_MATSUSHITA_WAVEIN         = 0x00000001,
-    MM_MATSUSHITA_WAVEOUT        = 0x00000002,
-    MM_MATSUSHITA_FMSYNTH_STEREO = 0x00000003,
-    MM_MATSUSHITA_MIXER          = 0x00000004,
-    MM_MATSUSHITA_AUX            = 0x00000005,
+    MM_MATSUSHITA_WAVEIN         = 0x00000001U,
+    MM_MATSUSHITA_WAVEOUT        = 0x00000002U,
+    MM_MATSUSHITA_FMSYNTH_STEREO = 0x00000003U,
+    MM_MATSUSHITA_MIXER          = 0x00000004U,
+    MM_MATSUSHITA_AUX            = 0x00000005U,
 }
 
-enum uint MM_NEWMEDIA_WAVJAMMER = 0x00000001;
-enum uint MM_LYRRUS_BRIDGE_GUITAR = 0x00000001;
+enum uint MM_NEWMEDIA_WAVJAMMER = 0x00000001U;
+enum uint MM_LYRRUS_BRIDGE_GUITAR = 0x00000001U;
 
 enum : uint
 {
-    MM_OPTI_M16_FMSYNTH_STEREO = 0x00000001,
-    MM_OPTI_M16_MIDIIN         = 0x00000002,
-    MM_OPTI_M16_MIDIOUT        = 0x00000003,
-    MM_OPTI_M16_WAVEIN         = 0x00000004,
-    MM_OPTI_M16_WAVEOUT        = 0x00000005,
-    MM_OPTI_M16_MIXER          = 0x00000006,
-    MM_OPTI_M16_AUX            = 0x00000007,
-    MM_OPTI_P16_FMSYNTH_STEREO = 0x00000010,
-    MM_OPTI_P16_MIDIIN         = 0x00000011,
-    MM_OPTI_P16_MIDIOUT        = 0x00000012,
-    MM_OPTI_P16_WAVEIN         = 0x00000013,
-    MM_OPTI_P16_WAVEOUT        = 0x00000014,
-    MM_OPTI_P16_MIXER          = 0x00000015,
-    MM_OPTI_P16_AUX            = 0x00000016,
-    MM_OPTI_M32_WAVEIN         = 0x00000020,
-    MM_OPTI_M32_WAVEOUT        = 0x00000021,
-    MM_OPTI_M32_MIDIIN         = 0x00000022,
-    MM_OPTI_M32_MIDIOUT        = 0x00000023,
-    MM_OPTI_M32_SYNTH_STEREO   = 0x00000024,
-    MM_OPTI_M32_MIXER          = 0x00000025,
-    MM_OPTI_M32_AUX            = 0x00000026,
+    MM_OPTI_M16_FMSYNTH_STEREO = 0x00000001U,
+    MM_OPTI_M16_MIDIIN         = 0x00000002U,
+    MM_OPTI_M16_MIDIOUT        = 0x00000003U,
+    MM_OPTI_M16_WAVEIN         = 0x00000004U,
+    MM_OPTI_M16_WAVEOUT        = 0x00000005U,
+    MM_OPTI_M16_MIXER          = 0x00000006U,
+    MM_OPTI_M16_AUX            = 0x00000007U,
+    MM_OPTI_P16_FMSYNTH_STEREO = 0x00000010U,
+    MM_OPTI_P16_MIDIIN         = 0x00000011U,
+    MM_OPTI_P16_MIDIOUT        = 0x00000012U,
+    MM_OPTI_P16_WAVEIN         = 0x00000013U,
+    MM_OPTI_P16_WAVEOUT        = 0x00000014U,
+    MM_OPTI_P16_MIXER          = 0x00000015U,
+    MM_OPTI_P16_AUX            = 0x00000016U,
+    MM_OPTI_M32_WAVEIN         = 0x00000020U,
+    MM_OPTI_M32_WAVEOUT        = 0x00000021U,
+    MM_OPTI_M32_MIDIIN         = 0x00000022U,
+    MM_OPTI_M32_MIDIOUT        = 0x00000023U,
+    MM_OPTI_M32_SYNTH_STEREO   = 0x00000024U,
+    MM_OPTI_M32_MIXER          = 0x00000025U,
+    MM_OPTI_M32_AUX            = 0x00000026U,
 }
 
 enum : uint
 {
-    MM_COMPAQ_BB_WAVEIN  = 0x00000001,
-    MM_COMPAQ_BB_WAVEOUT = 0x00000002,
-    MM_COMPAQ_BB_WAVEAUX = 0x00000003,
+    MM_COMPAQ_BB_WAVEIN  = 0x00000001U,
+    MM_COMPAQ_BB_WAVEOUT = 0x00000002U,
+    MM_COMPAQ_BB_WAVEAUX = 0x00000003U,
 }
 
-enum uint MM_MPTUS_SPWAVEOUT = 0x00000001;
-enum uint MM_LERNOUT_ANDHAUSPIE_LHCODECACM = 0x00000001;
+enum uint MM_MPTUS_SPWAVEOUT = 0x00000001U;
+enum uint MM_LERNOUT_ANDHAUSPIE_LHCODECACM = 0x00000001U;
 
 enum : uint
 {
-    MM_DIGITAL_AV320_WAVEIN  = 0x00000001,
-    MM_DIGITAL_AV320_WAVEOUT = 0x00000002,
-    MM_DIGITAL_ACM_G723      = 0x00000003,
-    MM_DIGITAL_ICM_H263      = 0x00000004,
-    MM_DIGITAL_ICM_H261      = 0x00000005,
+    MM_DIGITAL_AV320_WAVEIN  = 0x00000001U,
+    MM_DIGITAL_AV320_WAVEOUT = 0x00000002U,
+    MM_DIGITAL_ACM_G723      = 0x00000003U,
+    MM_DIGITAL_ICM_H263      = 0x00000004U,
+    MM_DIGITAL_ICM_H261      = 0x00000005U,
 }
 
 enum : uint
 {
-    MM_MOTU_MTP_MIDIOUT_ALL     = 0x00000064,
-    MM_MOTU_MTP_MIDIIN_1        = 0x00000065,
-    MM_MOTU_MTP_MIDIOUT_1       = 0x00000065,
-    MM_MOTU_MTP_MIDIIN_2        = 0x00000066,
-    MM_MOTU_MTP_MIDIOUT_2       = 0x00000066,
-    MM_MOTU_MTP_MIDIIN_3        = 0x00000067,
-    MM_MOTU_MTP_MIDIOUT_3       = 0x00000067,
-    MM_MOTU_MTP_MIDIIN_4        = 0x00000068,
-    MM_MOTU_MTP_MIDIOUT_4       = 0x00000068,
-    MM_MOTU_MTP_MIDIIN_5        = 0x00000069,
-    MM_MOTU_MTP_MIDIOUT_5       = 0x00000069,
-    MM_MOTU_MTP_MIDIIN_6        = 0x0000006a,
-    MM_MOTU_MTP_MIDIOUT_6       = 0x0000006a,
-    MM_MOTU_MTP_MIDIIN_7        = 0x0000006b,
-    MM_MOTU_MTP_MIDIOUT_7       = 0x0000006b,
-    MM_MOTU_MTP_MIDIIN_8        = 0x0000006c,
-    MM_MOTU_MTP_MIDIOUT_8       = 0x0000006c,
-    MM_MOTU_MTPII_MIDIOUT_ALL   = 0x000000c8,
-    MM_MOTU_MTPII_MIDIIN_SYNC   = 0x000000c8,
-    MM_MOTU_MTPII_MIDIIN_1      = 0x000000c9,
-    MM_MOTU_MTPII_MIDIOUT_1     = 0x000000c9,
-    MM_MOTU_MTPII_MIDIIN_2      = 0x000000ca,
-    MM_MOTU_MTPII_MIDIOUT_2     = 0x000000ca,
-    MM_MOTU_MTPII_MIDIIN_3      = 0x000000cb,
-    MM_MOTU_MTPII_MIDIOUT_3     = 0x000000cb,
-    MM_MOTU_MTPII_MIDIIN_4      = 0x000000cc,
-    MM_MOTU_MTPII_MIDIOUT_4     = 0x000000cc,
-    MM_MOTU_MTPII_MIDIIN_5      = 0x000000cd,
-    MM_MOTU_MTPII_MIDIOUT_5     = 0x000000cd,
-    MM_MOTU_MTPII_MIDIIN_6      = 0x000000ce,
-    MM_MOTU_MTPII_MIDIOUT_6     = 0x000000ce,
-    MM_MOTU_MTPII_MIDIIN_7      = 0x000000cf,
-    MM_MOTU_MTPII_MIDIOUT_7     = 0x000000cf,
-    MM_MOTU_MTPII_MIDIIN_8      = 0x000000d0,
-    MM_MOTU_MTPII_MIDIOUT_8     = 0x000000d0,
-    MM_MOTU_MTPII_NET_MIDIIN_1  = 0x000000d1,
-    MM_MOTU_MTPII_NET_MIDIOUT_1 = 0x000000d1,
-    MM_MOTU_MTPII_NET_MIDIIN_2  = 0x000000d2,
-    MM_MOTU_MTPII_NET_MIDIOUT_2 = 0x000000d2,
-    MM_MOTU_MTPII_NET_MIDIIN_3  = 0x000000d3,
-    MM_MOTU_MTPII_NET_MIDIOUT_3 = 0x000000d3,
-    MM_MOTU_MTPII_NET_MIDIIN_4  = 0x000000d4,
-    MM_MOTU_MTPII_NET_MIDIOUT_4 = 0x000000d4,
-    MM_MOTU_MTPII_NET_MIDIIN_5  = 0x000000d5,
-    MM_MOTU_MTPII_NET_MIDIOUT_5 = 0x000000d5,
-    MM_MOTU_MTPII_NET_MIDIIN_6  = 0x000000d6,
-    MM_MOTU_MTPII_NET_MIDIOUT_6 = 0x000000d6,
-    MM_MOTU_MTPII_NET_MIDIIN_7  = 0x000000d7,
-    MM_MOTU_MTPII_NET_MIDIOUT_7 = 0x000000d7,
-    MM_MOTU_MTPII_NET_MIDIIN_8  = 0x000000d8,
-    MM_MOTU_MTPII_NET_MIDIOUT_8 = 0x000000d8,
+    MM_MOTU_MTP_MIDIOUT_ALL     = 0x00000064U,
+    MM_MOTU_MTP_MIDIIN_1        = 0x00000065U,
+    MM_MOTU_MTP_MIDIOUT_1       = 0x00000065U,
+    MM_MOTU_MTP_MIDIIN_2        = 0x00000066U,
+    MM_MOTU_MTP_MIDIOUT_2       = 0x00000066U,
+    MM_MOTU_MTP_MIDIIN_3        = 0x00000067U,
+    MM_MOTU_MTP_MIDIOUT_3       = 0x00000067U,
+    MM_MOTU_MTP_MIDIIN_4        = 0x00000068U,
+    MM_MOTU_MTP_MIDIOUT_4       = 0x00000068U,
+    MM_MOTU_MTP_MIDIIN_5        = 0x00000069U,
+    MM_MOTU_MTP_MIDIOUT_5       = 0x00000069U,
+    MM_MOTU_MTP_MIDIIN_6        = 0x0000006aU,
+    MM_MOTU_MTP_MIDIOUT_6       = 0x0000006aU,
+    MM_MOTU_MTP_MIDIIN_7        = 0x0000006bU,
+    MM_MOTU_MTP_MIDIOUT_7       = 0x0000006bU,
+    MM_MOTU_MTP_MIDIIN_8        = 0x0000006cU,
+    MM_MOTU_MTP_MIDIOUT_8       = 0x0000006cU,
+    MM_MOTU_MTPII_MIDIOUT_ALL   = 0x000000c8U,
+    MM_MOTU_MTPII_MIDIIN_SYNC   = 0x000000c8U,
+    MM_MOTU_MTPII_MIDIIN_1      = 0x000000c9U,
+    MM_MOTU_MTPII_MIDIOUT_1     = 0x000000c9U,
+    MM_MOTU_MTPII_MIDIIN_2      = 0x000000caU,
+    MM_MOTU_MTPII_MIDIOUT_2     = 0x000000caU,
+    MM_MOTU_MTPII_MIDIIN_3      = 0x000000cbU,
+    MM_MOTU_MTPII_MIDIOUT_3     = 0x000000cbU,
+    MM_MOTU_MTPII_MIDIIN_4      = 0x000000ccU,
+    MM_MOTU_MTPII_MIDIOUT_4     = 0x000000ccU,
+    MM_MOTU_MTPII_MIDIIN_5      = 0x000000cdU,
+    MM_MOTU_MTPII_MIDIOUT_5     = 0x000000cdU,
+    MM_MOTU_MTPII_MIDIIN_6      = 0x000000ceU,
+    MM_MOTU_MTPII_MIDIOUT_6     = 0x000000ceU,
+    MM_MOTU_MTPII_MIDIIN_7      = 0x000000cfU,
+    MM_MOTU_MTPII_MIDIOUT_7     = 0x000000cfU,
+    MM_MOTU_MTPII_MIDIIN_8      = 0x000000d0U,
+    MM_MOTU_MTPII_MIDIOUT_8     = 0x000000d0U,
+    MM_MOTU_MTPII_NET_MIDIIN_1  = 0x000000d1U,
+    MM_MOTU_MTPII_NET_MIDIOUT_1 = 0x000000d1U,
+    MM_MOTU_MTPII_NET_MIDIIN_2  = 0x000000d2U,
+    MM_MOTU_MTPII_NET_MIDIOUT_2 = 0x000000d2U,
+    MM_MOTU_MTPII_NET_MIDIIN_3  = 0x000000d3U,
+    MM_MOTU_MTPII_NET_MIDIOUT_3 = 0x000000d3U,
+    MM_MOTU_MTPII_NET_MIDIIN_4  = 0x000000d4U,
+    MM_MOTU_MTPII_NET_MIDIOUT_4 = 0x000000d4U,
+    MM_MOTU_MTPII_NET_MIDIIN_5  = 0x000000d5U,
+    MM_MOTU_MTPII_NET_MIDIOUT_5 = 0x000000d5U,
+    MM_MOTU_MTPII_NET_MIDIIN_6  = 0x000000d6U,
+    MM_MOTU_MTPII_NET_MIDIOUT_6 = 0x000000d6U,
+    MM_MOTU_MTPII_NET_MIDIIN_7  = 0x000000d7U,
+    MM_MOTU_MTPII_NET_MIDIOUT_7 = 0x000000d7U,
+    MM_MOTU_MTPII_NET_MIDIIN_8  = 0x000000d8U,
+    MM_MOTU_MTPII_NET_MIDIOUT_8 = 0x000000d8U,
 }
 
 enum : uint
 {
-    MM_MOTU_MXP_MIDIIN_MIDIOUT_ALL = 0x0000012c,
-    MM_MOTU_MXP_MIDIIN_SYNC        = 0x0000012c,
-    MM_MOTU_MXP_MIDIIN_MIDIIN_1    = 0x0000012d,
-    MM_MOTU_MXP_MIDIIN_MIDIOUT_1   = 0x0000012d,
-    MM_MOTU_MXP_MIDIIN_MIDIIN_2    = 0x0000012e,
-    MM_MOTU_MXP_MIDIIN_MIDIOUT_2   = 0x0000012e,
-    MM_MOTU_MXP_MIDIIN_MIDIIN_3    = 0x0000012f,
-    MM_MOTU_MXP_MIDIIN_MIDIOUT_3   = 0x0000012f,
-    MM_MOTU_MXP_MIDIIN_MIDIIN_4    = 0x00000130,
-    MM_MOTU_MXP_MIDIIN_MIDIOUT_4   = 0x00000130,
-    MM_MOTU_MXP_MIDIIN_MIDIIN_5    = 0x00000131,
-    MM_MOTU_MXP_MIDIIN_MIDIOUT_5   = 0x00000131,
-    MM_MOTU_MXP_MIDIIN_MIDIIN_6    = 0x00000132,
-    MM_MOTU_MXP_MIDIIN_MIDIOUT_6   = 0x00000132,
+    MM_MOTU_MXP_MIDIIN_MIDIOUT_ALL = 0x0000012cU,
+    MM_MOTU_MXP_MIDIIN_SYNC        = 0x0000012cU,
+    MM_MOTU_MXP_MIDIIN_MIDIIN_1    = 0x0000012dU,
+    MM_MOTU_MXP_MIDIIN_MIDIOUT_1   = 0x0000012dU,
+    MM_MOTU_MXP_MIDIIN_MIDIIN_2    = 0x0000012eU,
+    MM_MOTU_MXP_MIDIIN_MIDIOUT_2   = 0x0000012eU,
+    MM_MOTU_MXP_MIDIIN_MIDIIN_3    = 0x0000012fU,
+    MM_MOTU_MXP_MIDIIN_MIDIOUT_3   = 0x0000012fU,
+    MM_MOTU_MXP_MIDIIN_MIDIIN_4    = 0x00000130U,
+    MM_MOTU_MXP_MIDIIN_MIDIOUT_4   = 0x00000130U,
+    MM_MOTU_MXP_MIDIIN_MIDIIN_5    = 0x00000131U,
+    MM_MOTU_MXP_MIDIIN_MIDIOUT_5   = 0x00000131U,
+    MM_MOTU_MXP_MIDIIN_MIDIIN_6    = 0x00000132U,
+    MM_MOTU_MXP_MIDIIN_MIDIOUT_6   = 0x00000132U,
 }
 
 enum : uint
 {
-    MM_MOTU_MXPMPU_MIDIOUT_ALL = 0x00000190,
-    MM_MOTU_MXPMPU_MIDIIN_SYNC = 0x00000190,
-    MM_MOTU_MXPMPU_MIDIIN_1    = 0x00000191,
-    MM_MOTU_MXPMPU_MIDIOUT_1   = 0x00000191,
-    MM_MOTU_MXPMPU_MIDIIN_2    = 0x00000192,
-    MM_MOTU_MXPMPU_MIDIOUT_2   = 0x00000192,
-    MM_MOTU_MXPMPU_MIDIIN_3    = 0x00000193,
-    MM_MOTU_MXPMPU_MIDIOUT_3   = 0x00000193,
-    MM_MOTU_MXPMPU_MIDIIN_4    = 0x00000194,
-    MM_MOTU_MXPMPU_MIDIOUT_4   = 0x00000194,
-    MM_MOTU_MXPMPU_MIDIIN_5    = 0x00000195,
-    MM_MOTU_MXPMPU_MIDIOUT_5   = 0x00000195,
-    MM_MOTU_MXPMPU_MIDIIN_6    = 0x00000196,
-    MM_MOTU_MXPMPU_MIDIOUT_6   = 0x00000196,
-    MM_MOTU_MXN_MIDIOUT_ALL    = 0x000001f4,
-    MM_MOTU_MXN_MIDIIN_SYNC    = 0x000001f4,
-    MM_MOTU_MXN_MIDIIN_1       = 0x000001f5,
-    MM_MOTU_MXN_MIDIOUT_1      = 0x000001f5,
-    MM_MOTU_MXN_MIDIIN_2       = 0x000001f6,
-    MM_MOTU_MXN_MIDIOUT_2      = 0x000001f6,
-    MM_MOTU_MXN_MIDIIN_3       = 0x000001f7,
-    MM_MOTU_MXN_MIDIOUT_3      = 0x000001f7,
-    MM_MOTU_MXN_MIDIIN_4       = 0x000001f8,
-    MM_MOTU_MXN_MIDIOUT_4      = 0x000001f8,
+    MM_MOTU_MXPMPU_MIDIOUT_ALL = 0x00000190U,
+    MM_MOTU_MXPMPU_MIDIIN_SYNC = 0x00000190U,
+    MM_MOTU_MXPMPU_MIDIIN_1    = 0x00000191U,
+    MM_MOTU_MXPMPU_MIDIOUT_1   = 0x00000191U,
+    MM_MOTU_MXPMPU_MIDIIN_2    = 0x00000192U,
+    MM_MOTU_MXPMPU_MIDIOUT_2   = 0x00000192U,
+    MM_MOTU_MXPMPU_MIDIIN_3    = 0x00000193U,
+    MM_MOTU_MXPMPU_MIDIOUT_3   = 0x00000193U,
+    MM_MOTU_MXPMPU_MIDIIN_4    = 0x00000194U,
+    MM_MOTU_MXPMPU_MIDIOUT_4   = 0x00000194U,
+    MM_MOTU_MXPMPU_MIDIIN_5    = 0x00000195U,
+    MM_MOTU_MXPMPU_MIDIOUT_5   = 0x00000195U,
+    MM_MOTU_MXPMPU_MIDIIN_6    = 0x00000196U,
+    MM_MOTU_MXPMPU_MIDIOUT_6   = 0x00000196U,
+    MM_MOTU_MXN_MIDIOUT_ALL    = 0x000001f4U,
+    MM_MOTU_MXN_MIDIIN_SYNC    = 0x000001f4U,
+    MM_MOTU_MXN_MIDIIN_1       = 0x000001f5U,
+    MM_MOTU_MXN_MIDIOUT_1      = 0x000001f5U,
+    MM_MOTU_MXN_MIDIIN_2       = 0x000001f6U,
+    MM_MOTU_MXN_MIDIOUT_2      = 0x000001f6U,
+    MM_MOTU_MXN_MIDIIN_3       = 0x000001f7U,
+    MM_MOTU_MXN_MIDIOUT_3      = 0x000001f7U,
+    MM_MOTU_MXN_MIDIIN_4       = 0x000001f8U,
+    MM_MOTU_MXN_MIDIOUT_4      = 0x000001f8U,
 }
 
 enum : uint
 {
-    MM_MOTU_FLYER_MIDI_IN_SYNC = 0x00000258,
-    MM_MOTU_FLYER_MIDI_IN_A    = 0x00000259,
-    MM_MOTU_FLYER_MIDI_OUT_A   = 0x00000259,
-    MM_MOTU_FLYER_MIDI_IN_B    = 0x0000025a,
-    MM_MOTU_FLYER_MIDI_OUT_B   = 0x0000025a,
+    MM_MOTU_FLYER_MIDI_IN_SYNC = 0x00000258U,
+    MM_MOTU_FLYER_MIDI_IN_A    = 0x00000259U,
+    MM_MOTU_FLYER_MIDI_OUT_A   = 0x00000259U,
+    MM_MOTU_FLYER_MIDI_IN_B    = 0x0000025aU,
+    MM_MOTU_FLYER_MIDI_OUT_B   = 0x0000025aU,
 }
 
 enum : uint
 {
-    MM_MOTU_PKX_MIDI_IN_SYNC = 0x000002bc,
-    MM_MOTU_PKX_MIDI_IN_A    = 0x000002bd,
-    MM_MOTU_PKX_MIDI_OUT_A   = 0x000002bd,
-    MM_MOTU_PKX_MIDI_IN_B    = 0x000002be,
-    MM_MOTU_PKX_MIDI_OUT_B   = 0x000002be,
+    MM_MOTU_PKX_MIDI_IN_SYNC = 0x000002bcU,
+    MM_MOTU_PKX_MIDI_IN_A    = 0x000002bdU,
+    MM_MOTU_PKX_MIDI_OUT_A   = 0x000002bdU,
+    MM_MOTU_PKX_MIDI_IN_B    = 0x000002beU,
+    MM_MOTU_PKX_MIDI_OUT_B   = 0x000002beU,
 }
 
 enum : uint
 {
-    MM_MOTU_DTX_MIDI_IN_SYNC = 0x00000320,
-    MM_MOTU_DTX_MIDI_IN_A    = 0x00000321,
-    MM_MOTU_DTX_MIDI_OUT_A   = 0x00000321,
-    MM_MOTU_DTX_MIDI_IN_B    = 0x00000322,
-    MM_MOTU_DTX_MIDI_OUT_B   = 0x00000322,
+    MM_MOTU_DTX_MIDI_IN_SYNC = 0x00000320U,
+    MM_MOTU_DTX_MIDI_IN_A    = 0x00000321U,
+    MM_MOTU_DTX_MIDI_OUT_A   = 0x00000321U,
+    MM_MOTU_DTX_MIDI_IN_B    = 0x00000322U,
+    MM_MOTU_DTX_MIDI_OUT_B   = 0x00000322U,
 }
 
 enum : uint
 {
-    MM_MOTU_MTPAV_MIDIOUT_ALL   = 0x00000384,
-    MM_MOTU_MTPAV_MIDIIN_SYNC   = 0x00000384,
-    MM_MOTU_MTPAV_MIDIIN_1      = 0x00000385,
-    MM_MOTU_MTPAV_MIDIOUT_1     = 0x00000385,
-    MM_MOTU_MTPAV_MIDIIN_2      = 0x00000386,
-    MM_MOTU_MTPAV_MIDIOUT_2     = 0x00000386,
-    MM_MOTU_MTPAV_MIDIIN_3      = 0x00000387,
-    MM_MOTU_MTPAV_MIDIOUT_3     = 0x00000387,
-    MM_MOTU_MTPAV_MIDIIN_4      = 0x00000388,
-    MM_MOTU_MTPAV_MIDIOUT_4     = 0x00000388,
-    MM_MOTU_MTPAV_MIDIIN_5      = 0x00000389,
-    MM_MOTU_MTPAV_MIDIOUT_5     = 0x00000389,
-    MM_MOTU_MTPAV_MIDIIN_6      = 0x0000038a,
-    MM_MOTU_MTPAV_MIDIOUT_6     = 0x0000038a,
-    MM_MOTU_MTPAV_MIDIIN_7      = 0x0000038b,
-    MM_MOTU_MTPAV_MIDIOUT_7     = 0x0000038b,
-    MM_MOTU_MTPAV_MIDIIN_8      = 0x0000038c,
-    MM_MOTU_MTPAV_MIDIOUT_8     = 0x0000038c,
-    MM_MOTU_MTPAV_NET_MIDIIN_1  = 0x0000038d,
-    MM_MOTU_MTPAV_NET_MIDIOUT_1 = 0x0000038d,
-    MM_MOTU_MTPAV_NET_MIDIIN_2  = 0x0000038e,
-    MM_MOTU_MTPAV_NET_MIDIOUT_2 = 0x0000038e,
-    MM_MOTU_MTPAV_NET_MIDIIN_3  = 0x0000038f,
-    MM_MOTU_MTPAV_NET_MIDIOUT_3 = 0x0000038f,
-    MM_MOTU_MTPAV_NET_MIDIIN_4  = 0x00000390,
-    MM_MOTU_MTPAV_NET_MIDIOUT_4 = 0x00000390,
-    MM_MOTU_MTPAV_NET_MIDIIN_5  = 0x00000391,
-    MM_MOTU_MTPAV_NET_MIDIOUT_5 = 0x00000391,
-    MM_MOTU_MTPAV_NET_MIDIIN_6  = 0x00000392,
-    MM_MOTU_MTPAV_NET_MIDIOUT_6 = 0x00000392,
-    MM_MOTU_MTPAV_NET_MIDIIN_7  = 0x00000393,
-    MM_MOTU_MTPAV_NET_MIDIOUT_7 = 0x00000393,
-    MM_MOTU_MTPAV_NET_MIDIIN_8  = 0x00000394,
-    MM_MOTU_MTPAV_NET_MIDIOUT_8 = 0x00000394,
-    MM_MOTU_MTPAV_MIDIIN_ADAT   = 0x00000395,
-    MM_MOTU_MTPAV_MIDIOUT_ADAT  = 0x00000395,
+    MM_MOTU_MTPAV_MIDIOUT_ALL   = 0x00000384U,
+    MM_MOTU_MTPAV_MIDIIN_SYNC   = 0x00000384U,
+    MM_MOTU_MTPAV_MIDIIN_1      = 0x00000385U,
+    MM_MOTU_MTPAV_MIDIOUT_1     = 0x00000385U,
+    MM_MOTU_MTPAV_MIDIIN_2      = 0x00000386U,
+    MM_MOTU_MTPAV_MIDIOUT_2     = 0x00000386U,
+    MM_MOTU_MTPAV_MIDIIN_3      = 0x00000387U,
+    MM_MOTU_MTPAV_MIDIOUT_3     = 0x00000387U,
+    MM_MOTU_MTPAV_MIDIIN_4      = 0x00000388U,
+    MM_MOTU_MTPAV_MIDIOUT_4     = 0x00000388U,
+    MM_MOTU_MTPAV_MIDIIN_5      = 0x00000389U,
+    MM_MOTU_MTPAV_MIDIOUT_5     = 0x00000389U,
+    MM_MOTU_MTPAV_MIDIIN_6      = 0x0000038aU,
+    MM_MOTU_MTPAV_MIDIOUT_6     = 0x0000038aU,
+    MM_MOTU_MTPAV_MIDIIN_7      = 0x0000038bU,
+    MM_MOTU_MTPAV_MIDIOUT_7     = 0x0000038bU,
+    MM_MOTU_MTPAV_MIDIIN_8      = 0x0000038cU,
+    MM_MOTU_MTPAV_MIDIOUT_8     = 0x0000038cU,
+    MM_MOTU_MTPAV_NET_MIDIIN_1  = 0x0000038dU,
+    MM_MOTU_MTPAV_NET_MIDIOUT_1 = 0x0000038dU,
+    MM_MOTU_MTPAV_NET_MIDIIN_2  = 0x0000038eU,
+    MM_MOTU_MTPAV_NET_MIDIOUT_2 = 0x0000038eU,
+    MM_MOTU_MTPAV_NET_MIDIIN_3  = 0x0000038fU,
+    MM_MOTU_MTPAV_NET_MIDIOUT_3 = 0x0000038fU,
+    MM_MOTU_MTPAV_NET_MIDIIN_4  = 0x00000390U,
+    MM_MOTU_MTPAV_NET_MIDIOUT_4 = 0x00000390U,
+    MM_MOTU_MTPAV_NET_MIDIIN_5  = 0x00000391U,
+    MM_MOTU_MTPAV_NET_MIDIOUT_5 = 0x00000391U,
+    MM_MOTU_MTPAV_NET_MIDIIN_6  = 0x00000392U,
+    MM_MOTU_MTPAV_NET_MIDIOUT_6 = 0x00000392U,
+    MM_MOTU_MTPAV_NET_MIDIIN_7  = 0x00000393U,
+    MM_MOTU_MTPAV_NET_MIDIOUT_7 = 0x00000393U,
+    MM_MOTU_MTPAV_NET_MIDIIN_8  = 0x00000394U,
+    MM_MOTU_MTPAV_NET_MIDIOUT_8 = 0x00000394U,
+    MM_MOTU_MTPAV_MIDIIN_ADAT   = 0x00000395U,
+    MM_MOTU_MTPAV_MIDIOUT_ADAT  = 0x00000395U,
 }
 
 enum : uint
 {
-    MM_MOTU_MXPXT_MIDIIN_SYNC = 0x000003e8,
-    MM_MOTU_MXPXT_MIDIOUT_ALL = 0x000003e8,
-    MM_MOTU_MXPXT_MIDIIN_1    = 0x000003e9,
-    MM_MOTU_MXPXT_MIDIOUT_1   = 0x000003e9,
-    MM_MOTU_MXPXT_MIDIOUT_2   = 0x000003ea,
-    MM_MOTU_MXPXT_MIDIIN_2    = 0x000003ea,
-    MM_MOTU_MXPXT_MIDIIN_3    = 0x000003eb,
-    MM_MOTU_MXPXT_MIDIOUT_3   = 0x000003eb,
-    MM_MOTU_MXPXT_MIDIIN_4    = 0x000003ec,
-    MM_MOTU_MXPXT_MIDIOUT_4   = 0x000003ec,
-    MM_MOTU_MXPXT_MIDIIN_5    = 0x000003ed,
-    MM_MOTU_MXPXT_MIDIOUT_5   = 0x000003ed,
-    MM_MOTU_MXPXT_MIDIOUT_6   = 0x000003ee,
-    MM_MOTU_MXPXT_MIDIIN_6    = 0x000003ee,
-    MM_MOTU_MXPXT_MIDIOUT_7   = 0x000003ef,
-    MM_MOTU_MXPXT_MIDIIN_7    = 0x000003ef,
-    MM_MOTU_MXPXT_MIDIOUT_8   = 0x000003f0,
-    MM_MOTU_MXPXT_MIDIIN_8    = 0x000003f0,
+    MM_MOTU_MXPXT_MIDIIN_SYNC = 0x000003e8U,
+    MM_MOTU_MXPXT_MIDIOUT_ALL = 0x000003e8U,
+    MM_MOTU_MXPXT_MIDIIN_1    = 0x000003e9U,
+    MM_MOTU_MXPXT_MIDIOUT_1   = 0x000003e9U,
+    MM_MOTU_MXPXT_MIDIOUT_2   = 0x000003eaU,
+    MM_MOTU_MXPXT_MIDIIN_2    = 0x000003eaU,
+    MM_MOTU_MXPXT_MIDIIN_3    = 0x000003ebU,
+    MM_MOTU_MXPXT_MIDIOUT_3   = 0x000003ebU,
+    MM_MOTU_MXPXT_MIDIIN_4    = 0x000003ecU,
+    MM_MOTU_MXPXT_MIDIOUT_4   = 0x000003ecU,
+    MM_MOTU_MXPXT_MIDIIN_5    = 0x000003edU,
+    MM_MOTU_MXPXT_MIDIOUT_5   = 0x000003edU,
+    MM_MOTU_MXPXT_MIDIOUT_6   = 0x000003eeU,
+    MM_MOTU_MXPXT_MIDIIN_6    = 0x000003eeU,
+    MM_MOTU_MXPXT_MIDIOUT_7   = 0x000003efU,
+    MM_MOTU_MXPXT_MIDIIN_7    = 0x000003efU,
+    MM_MOTU_MXPXT_MIDIOUT_8   = 0x000003f0U,
+    MM_MOTU_MXPXT_MIDIIN_8    = 0x000003f0U,
 }
 
 enum : uint
 {
-    MM_WORKBIT_MIXER    = 0x00000001,
-    MM_WORKBIT_WAVEOUT  = 0x00000002,
-    MM_WORKBIT_WAVEIN   = 0x00000003,
-    MM_WORKBIT_MIDIIN   = 0x00000004,
-    MM_WORKBIT_MIDIOUT  = 0x00000005,
-    MM_WORKBIT_FMSYNTH  = 0x00000006,
-    MM_WORKBIT_AUX      = 0x00000007,
-    MM_WORKBIT_JOYSTICK = 0x00000008,
+    MM_WORKBIT_MIXER    = 0x00000001U,
+    MM_WORKBIT_WAVEOUT  = 0x00000002U,
+    MM_WORKBIT_WAVEIN   = 0x00000003U,
+    MM_WORKBIT_MIDIIN   = 0x00000004U,
+    MM_WORKBIT_MIDIOUT  = 0x00000005U,
+    MM_WORKBIT_FMSYNTH  = 0x00000006U,
+    MM_WORKBIT_AUX      = 0x00000007U,
+    MM_WORKBIT_JOYSTICK = 0x00000008U,
 }
 
-enum uint MM_OSITECH_TRUMPCARD = 0x00000001;
+enum uint MM_OSITECH_TRUMPCARD = 0x00000001U;
 
 enum : uint
 {
-    MM_MIRO_MOVIEPRO     = 0x00000001,
-    MM_MIRO_VIDEOD1      = 0x00000002,
-    MM_MIRO_VIDEODC1TV   = 0x00000003,
-    MM_MIRO_VIDEOTD      = 0x00000004,
-    MM_MIRO_DC30_WAVEOUT = 0x00000005,
-    MM_MIRO_DC30_WAVEIN  = 0x00000006,
-    MM_MIRO_DC30_MIX     = 0x00000007,
+    MM_MIRO_MOVIEPRO     = 0x00000001U,
+    MM_MIRO_VIDEOD1      = 0x00000002U,
+    MM_MIRO_VIDEODC1TV   = 0x00000003U,
+    MM_MIRO_VIDEOTD      = 0x00000004U,
+    MM_MIRO_DC30_WAVEOUT = 0x00000005U,
+    MM_MIRO_DC30_WAVEIN  = 0x00000006U,
+    MM_MIRO_DC30_MIX     = 0x00000007U,
 }
 
-enum uint MM_ISOLUTION_PASCAL = 0x00000001;
-enum uint MM_VOICEMIXER = 0x00000001;
+enum uint MM_ISOLUTION_PASCAL = 0x00000001U;
+enum uint MM_VOICEMIXER = 0x00000001U;
 
 enum : uint
 {
-    ROCKWELL_WA1_WAVEIN     = 0x00000064,
-    ROCKWELL_WA1_WAVEOUT    = 0x00000065,
-    ROCKWELL_WA1_SYNTH      = 0x00000066,
-    ROCKWELL_WA1_MIXER      = 0x00000067,
-    ROCKWELL_WA1_MPU401_IN  = 0x00000068,
-    ROCKWELL_WA1_MPU401_OUT = 0x00000069,
-    ROCKWELL_WA2_WAVEIN     = 0x000000c8,
-    ROCKWELL_WA2_WAVEOUT    = 0x000000c9,
-    ROCKWELL_WA2_SYNTH      = 0x000000ca,
-    ROCKWELL_WA2_MIXER      = 0x000000cb,
-    ROCKWELL_WA2_MPU401_IN  = 0x000000cc,
-    ROCKWELL_WA2_MPU401_OUT = 0x000000cd,
+    ROCKWELL_WA1_WAVEIN     = 0x00000064U,
+    ROCKWELL_WA1_WAVEOUT    = 0x00000065U,
+    ROCKWELL_WA1_SYNTH      = 0x00000066U,
+    ROCKWELL_WA1_MIXER      = 0x00000067U,
+    ROCKWELL_WA1_MPU401_IN  = 0x00000068U,
+    ROCKWELL_WA1_MPU401_OUT = 0x00000069U,
+    ROCKWELL_WA2_WAVEIN     = 0x000000c8U,
+    ROCKWELL_WA2_WAVEOUT    = 0x000000c9U,
+    ROCKWELL_WA2_SYNTH      = 0x000000caU,
+    ROCKWELL_WA2_MIXER      = 0x000000cbU,
+    ROCKWELL_WA2_MPU401_IN  = 0x000000ccU,
+    ROCKWELL_WA2_MPU401_OUT = 0x000000cdU,
 }
 
-enum uint MM_VOXWARE_CODEC = 0x00000001;
+enum uint MM_VOXWARE_CODEC = 0x00000001U;
 
 enum : uint
 {
-    MM_NORTEL_MPXAC_WAVEIN  = 0x00000001,
-    MM_NORTEL_MPXAC_WAVEOUT = 0x00000002,
+    MM_NORTEL_MPXAC_WAVEIN  = 0x00000001U,
+    MM_NORTEL_MPXAC_WAVEOUT = 0x00000002U,
 }
 
 enum : uint
 {
-    MM_ADDX_PCTV_DIGITALMIX = 0x00000001,
-    MM_ADDX_PCTV_WAVEIN     = 0x00000002,
-    MM_ADDX_PCTV_WAVEOUT    = 0x00000003,
-    MM_ADDX_PCTV_MIXER      = 0x00000004,
-    MM_ADDX_PCTV_AUX_CD     = 0x00000005,
-    MM_ADDX_PCTV_AUX_LINE   = 0x00000006,
+    MM_ADDX_PCTV_DIGITALMIX = 0x00000001U,
+    MM_ADDX_PCTV_WAVEIN     = 0x00000002U,
+    MM_ADDX_PCTV_WAVEOUT    = 0x00000003U,
+    MM_ADDX_PCTV_MIXER      = 0x00000004U,
+    MM_ADDX_PCTV_AUX_CD     = 0x00000005U,
+    MM_ADDX_PCTV_AUX_LINE   = 0x00000006U,
 }
 
-enum uint MM_WILDCAT_AUTOSCOREMIDIIN = 0x00000001;
+enum uint MM_WILDCAT_AUTOSCOREMIDIIN = 0x00000001U;
 
 enum : uint
 {
-    MM_RHETOREX_WAVEIN  = 0x00000001,
-    MM_RHETOREX_WAVEOUT = 0x00000002,
+    MM_RHETOREX_WAVEIN  = 0x00000001U,
+    MM_RHETOREX_WAVEOUT = 0x00000002U,
 }
 
 enum : uint
 {
-    MM_BTV_WAVEIN         = 0x00000001,
-    MM_BTV_WAVEOUT        = 0x00000002,
-    MM_BTV_MIDIIN         = 0x00000003,
-    MM_BTV_MIDIOUT        = 0x00000004,
-    MM_BTV_MIDISYNTH      = 0x00000005,
-    MM_BTV_AUX_LINE       = 0x00000006,
-    MM_BTV_AUX_MIC        = 0x00000007,
-    MM_BTV_AUX_CD         = 0x00000008,
-    MM_BTV_DIGITALIN      = 0x00000009,
-    MM_BTV_DIGITALOUT     = 0x0000000a,
-    MM_BTV_MIDIWAVESTREAM = 0x0000000b,
-    MM_BTV_MIXER          = 0x0000000c,
+    MM_BTV_WAVEIN         = 0x00000001U,
+    MM_BTV_WAVEOUT        = 0x00000002U,
+    MM_BTV_MIDIIN         = 0x00000003U,
+    MM_BTV_MIDIOUT        = 0x00000004U,
+    MM_BTV_MIDISYNTH      = 0x00000005U,
+    MM_BTV_AUX_LINE       = 0x00000006U,
+    MM_BTV_AUX_MIC        = 0x00000007U,
+    MM_BTV_AUX_CD         = 0x00000008U,
+    MM_BTV_DIGITALIN      = 0x00000009U,
+    MM_BTV_DIGITALOUT     = 0x0000000aU,
+    MM_BTV_MIDIWAVESTREAM = 0x0000000bU,
+    MM_BTV_MIXER          = 0x0000000cU,
 }
 
-enum uint MM_ENSONIQ_SOUNDSCAPE = 0x00000010;
+enum uint MM_ENSONIQ_SOUNDSCAPE = 0x00000010U;
 
 enum : uint
 {
-    MM_SOUNDSCAPE_WAVEOUT     = 0x00000011,
-    MM_SOUNDSCAPE_WAVEOUT_AUX = 0x00000012,
-    MM_SOUNDSCAPE_WAVEIN      = 0x00000013,
-    MM_SOUNDSCAPE_MIDIOUT     = 0x00000014,
-    MM_SOUNDSCAPE_MIDIIN      = 0x00000015,
-    MM_SOUNDSCAPE_SYNTH       = 0x00000016,
-    MM_SOUNDSCAPE_MIXER       = 0x00000017,
-    MM_SOUNDSCAPE_AUX         = 0x00000018,
+    MM_SOUNDSCAPE_WAVEOUT     = 0x00000011U,
+    MM_SOUNDSCAPE_WAVEOUT_AUX = 0x00000012U,
+    MM_SOUNDSCAPE_WAVEIN      = 0x00000013U,
+    MM_SOUNDSCAPE_MIDIOUT     = 0x00000014U,
+    MM_SOUNDSCAPE_MIDIIN      = 0x00000015U,
+    MM_SOUNDSCAPE_SYNTH       = 0x00000016U,
+    MM_SOUNDSCAPE_MIXER       = 0x00000017U,
+    MM_SOUNDSCAPE_AUX         = 0x00000018U,
 }
 
 enum : uint
 {
-    MM_NVIDIA_WAVEOUT  = 0x00000001,
-    MM_NVIDIA_WAVEIN   = 0x00000002,
-    MM_NVIDIA_MIDIOUT  = 0x00000003,
-    MM_NVIDIA_MIDIIN   = 0x00000004,
-    MM_NVIDIA_GAMEPORT = 0x00000005,
-    MM_NVIDIA_MIXER    = 0x00000006,
-    MM_NVIDIA_AUX      = 0x00000007,
+    MM_NVIDIA_WAVEOUT  = 0x00000001U,
+    MM_NVIDIA_WAVEIN   = 0x00000002U,
+    MM_NVIDIA_MIDIOUT  = 0x00000003U,
+    MM_NVIDIA_MIDIIN   = 0x00000004U,
+    MM_NVIDIA_GAMEPORT = 0x00000005U,
+    MM_NVIDIA_MIXER    = 0x00000006U,
+    MM_NVIDIA_AUX      = 0x00000007U,
 }
 
 enum : uint
 {
-    MM_OKSORI_BASE          = 0x00000000,
-    MM_OKSORI_OSR8_WAVEOUT  = 0x00000001,
-    MM_OKSORI_OSR8_WAVEIN   = 0x00000002,
-    MM_OKSORI_OSR16_WAVEOUT = 0x00000003,
-    MM_OKSORI_OSR16_WAVEIN  = 0x00000004,
-    MM_OKSORI_FM_OPL4       = 0x00000005,
-    MM_OKSORI_MIX_MASTER    = 0x00000006,
-    MM_OKSORI_MIX_WAVE      = 0x00000007,
-    MM_OKSORI_MIX_FM        = 0x00000008,
-    MM_OKSORI_MIX_LINE      = 0x00000009,
-    MM_OKSORI_MIX_CD        = 0x0000000a,
-    MM_OKSORI_MIX_MIC       = 0x0000000b,
-    MM_OKSORI_MIX_ECHO      = 0x0000000c,
-    MM_OKSORI_MIX_AUX1      = 0x0000000d,
-    MM_OKSORI_MIX_LINE1     = 0x0000000e,
-    MM_OKSORI_EXT_MIC1      = 0x0000000f,
-    MM_OKSORI_EXT_MIC2      = 0x00000010,
-    MM_OKSORI_MIDIOUT       = 0x00000011,
-    MM_OKSORI_MIDIIN        = 0x00000012,
-    MM_OKSORI_MPEG_CDVISION = 0x00000013,
+    MM_OKSORI_BASE          = 0x00000000U,
+    MM_OKSORI_OSR8_WAVEOUT  = 0x00000001U,
+    MM_OKSORI_OSR8_WAVEIN   = 0x00000002U,
+    MM_OKSORI_OSR16_WAVEOUT = 0x00000003U,
+    MM_OKSORI_OSR16_WAVEIN  = 0x00000004U,
+    MM_OKSORI_FM_OPL4       = 0x00000005U,
+    MM_OKSORI_MIX_MASTER    = 0x00000006U,
+    MM_OKSORI_MIX_WAVE      = 0x00000007U,
+    MM_OKSORI_MIX_FM        = 0x00000008U,
+    MM_OKSORI_MIX_LINE      = 0x00000009U,
+    MM_OKSORI_MIX_CD        = 0x0000000aU,
+    MM_OKSORI_MIX_MIC       = 0x0000000bU,
+    MM_OKSORI_MIX_ECHO      = 0x0000000cU,
+    MM_OKSORI_MIX_AUX1      = 0x0000000dU,
+    MM_OKSORI_MIX_LINE1     = 0x0000000eU,
+    MM_OKSORI_EXT_MIC1      = 0x0000000fU,
+    MM_OKSORI_EXT_MIC2      = 0x00000010U,
+    MM_OKSORI_MIDIOUT       = 0x00000011U,
+    MM_OKSORI_MIDIIN        = 0x00000012U,
+    MM_OKSORI_MPEG_CDVISION = 0x00000013U,
 }
 
-enum uint MM_DIACOUSTICS_DRUM_ACTION = 0x00000001;
+enum uint MM_DIACOUSTICS_DRUM_ACTION = 0x00000001U;
 
 enum : uint
 {
-    MM_KAY_ELEMETRICS_CSL          = 0x00004300,
-    MM_KAY_ELEMETRICS_CSL_DAT      = 0x00004308,
-    MM_KAY_ELEMETRICS_CSL_4CHANNEL = 0x00004309,
+    MM_KAY_ELEMETRICS_CSL          = 0x00004300U,
+    MM_KAY_ELEMETRICS_CSL_DAT      = 0x00004308U,
+    MM_KAY_ELEMETRICS_CSL_4CHANNEL = 0x00004309U,
 }
 
 enum : uint
 {
-    MM_CRYSTAL_CS4232_WAVEIN         = 0x00000001,
-    MM_CRYSTAL_CS4232_WAVEOUT        = 0x00000002,
-    MM_CRYSTAL_CS4232_WAVEMIXER      = 0x00000003,
-    MM_CRYSTAL_CS4232_WAVEAUX_AUX1   = 0x00000004,
-    MM_CRYSTAL_CS4232_WAVEAUX_AUX2   = 0x00000005,
-    MM_CRYSTAL_CS4232_WAVEAUX_LINE   = 0x00000006,
-    MM_CRYSTAL_CS4232_WAVEAUX_MONO   = 0x00000007,
-    MM_CRYSTAL_CS4232_WAVEAUX_MASTER = 0x00000008,
-    MM_CRYSTAL_CS4232_MIDIIN         = 0x00000009,
-    MM_CRYSTAL_CS4232_MIDIOUT        = 0x0000000a,
-    MM_CRYSTAL_CS4232_INPUTGAIN_AUX1 = 0x0000000d,
-    MM_CRYSTAL_CS4232_INPUTGAIN_LOOP = 0x0000000e,
+    MM_CRYSTAL_CS4232_WAVEIN         = 0x00000001U,
+    MM_CRYSTAL_CS4232_WAVEOUT        = 0x00000002U,
+    MM_CRYSTAL_CS4232_WAVEMIXER      = 0x00000003U,
+    MM_CRYSTAL_CS4232_WAVEAUX_AUX1   = 0x00000004U,
+    MM_CRYSTAL_CS4232_WAVEAUX_AUX2   = 0x00000005U,
+    MM_CRYSTAL_CS4232_WAVEAUX_LINE   = 0x00000006U,
+    MM_CRYSTAL_CS4232_WAVEAUX_MONO   = 0x00000007U,
+    MM_CRYSTAL_CS4232_WAVEAUX_MASTER = 0x00000008U,
+    MM_CRYSTAL_CS4232_MIDIIN         = 0x00000009U,
+    MM_CRYSTAL_CS4232_MIDIOUT        = 0x0000000aU,
+    MM_CRYSTAL_CS4232_INPUTGAIN_AUX1 = 0x0000000dU,
+    MM_CRYSTAL_CS4232_INPUTGAIN_LOOP = 0x0000000eU,
 }
 
 enum : uint
 {
-    MM_CRYSTAL_SOUND_FUSION_WAVEIN   = 0x00000015,
-    MM_CRYSTAL_SOUND_FUSION_WAVEOUT  = 0x00000016,
-    MM_CRYSTAL_SOUND_FUSION_MIXER    = 0x00000017,
-    MM_CRYSTAL_SOUND_FUSION_MIDIIN   = 0x00000018,
-    MM_CRYSTAL_SOUND_FUSION_MIDIOUT  = 0x00000019,
-    MM_CRYSTAL_SOUND_FUSION_JOYSTICK = 0x0000001a,
+    MM_CRYSTAL_SOUND_FUSION_WAVEIN   = 0x00000015U,
+    MM_CRYSTAL_SOUND_FUSION_WAVEOUT  = 0x00000016U,
+    MM_CRYSTAL_SOUND_FUSION_MIXER    = 0x00000017U,
+    MM_CRYSTAL_SOUND_FUSION_MIDIIN   = 0x00000018U,
+    MM_CRYSTAL_SOUND_FUSION_MIDIOUT  = 0x00000019U,
+    MM_CRYSTAL_SOUND_FUSION_JOYSTICK = 0x0000001aU,
 }
 
 enum : uint
 {
-    MM_QUARTERDECK_LHWAVEIN  = 0x00000000,
-    MM_QUARTERDECK_LHWAVEOUT = 0x00000001,
+    MM_QUARTERDECK_LHWAVEIN  = 0x00000000U,
+    MM_QUARTERDECK_LHWAVEOUT = 0x00000001U,
 }
 
 enum : uint
 {
-    MM_TDK_MW_MIDI_SYNTH   = 0x00000001,
-    MM_TDK_MW_MIDI_IN      = 0x00000002,
-    MM_TDK_MW_MIDI_OUT     = 0x00000003,
-    MM_TDK_MW_WAVE_IN      = 0x00000004,
-    MM_TDK_MW_WAVE_OUT     = 0x00000005,
-    MM_TDK_MW_AUX          = 0x00000006,
-    MM_TDK_MW_MIXER        = 0x0000000a,
-    MM_TDK_MW_AUX_MASTER   = 0x00000064,
-    MM_TDK_MW_AUX_BASS     = 0x00000065,
-    MM_TDK_MW_AUX_TREBLE   = 0x00000066,
-    MM_TDK_MW_AUX_MIDI_VOL = 0x00000067,
-    MM_TDK_MW_AUX_WAVE_VOL = 0x00000068,
-    MM_TDK_MW_AUX_WAVE_RVB = 0x00000069,
-    MM_TDK_MW_AUX_WAVE_CHR = 0x0000006a,
-    MM_TDK_MW_AUX_VOL      = 0x0000006b,
-    MM_TDK_MW_AUX_RVB      = 0x0000006c,
-    MM_TDK_MW_AUX_CHR      = 0x0000006d,
+    MM_TDK_MW_MIDI_SYNTH   = 0x00000001U,
+    MM_TDK_MW_MIDI_IN      = 0x00000002U,
+    MM_TDK_MW_MIDI_OUT     = 0x00000003U,
+    MM_TDK_MW_WAVE_IN      = 0x00000004U,
+    MM_TDK_MW_WAVE_OUT     = 0x00000005U,
+    MM_TDK_MW_AUX          = 0x00000006U,
+    MM_TDK_MW_MIXER        = 0x0000000aU,
+    MM_TDK_MW_AUX_MASTER   = 0x00000064U,
+    MM_TDK_MW_AUX_BASS     = 0x00000065U,
+    MM_TDK_MW_AUX_TREBLE   = 0x00000066U,
+    MM_TDK_MW_AUX_MIDI_VOL = 0x00000067U,
+    MM_TDK_MW_AUX_WAVE_VOL = 0x00000068U,
+    MM_TDK_MW_AUX_WAVE_RVB = 0x00000069U,
+    MM_TDK_MW_AUX_WAVE_CHR = 0x0000006aU,
+    MM_TDK_MW_AUX_VOL      = 0x0000006bU,
+    MM_TDK_MW_AUX_RVB      = 0x0000006cU,
+    MM_TDK_MW_AUX_CHR      = 0x0000006dU,
 }
 
 enum : uint
 {
-    MM_DIGITAL_AUDIO_LABS_TC    = 0x00000001,
-    MM_DIGITAL_AUDIO_LABS_DOC   = 0x00000002,
-    MM_DIGITAL_AUDIO_LABS_V8    = 0x00000010,
-    MM_DIGITAL_AUDIO_LABS_CPRO  = 0x00000011,
-    MM_DIGITAL_AUDIO_LABS_VP    = 0x00000012,
-    MM_DIGITAL_AUDIO_LABS_CDLX  = 0x00000013,
-    MM_DIGITAL_AUDIO_LABS_CTDIF = 0x00000014,
+    MM_DIGITAL_AUDIO_LABS_TC    = 0x00000001U,
+    MM_DIGITAL_AUDIO_LABS_DOC   = 0x00000002U,
+    MM_DIGITAL_AUDIO_LABS_V8    = 0x00000010U,
+    MM_DIGITAL_AUDIO_LABS_CPRO  = 0x00000011U,
+    MM_DIGITAL_AUDIO_LABS_VP    = 0x00000012U,
+    MM_DIGITAL_AUDIO_LABS_CDLX  = 0x00000013U,
+    MM_DIGITAL_AUDIO_LABS_CTDIF = 0x00000014U,
 }
 
 enum : uint
 {
-    MM_SEERSYS_SEERSYNTH    = 0x00000001,
-    MM_SEERSYS_SEERWAVE     = 0x00000002,
-    MM_SEERSYS_SEERMIX      = 0x00000003,
-    MM_SEERSYS_WAVESYNTH    = 0x00000004,
-    MM_SEERSYS_WAVESYNTH_WG = 0x00000005,
-    MM_SEERSYS_REALITY      = 0x00000006,
+    MM_SEERSYS_SEERSYNTH    = 0x00000001U,
+    MM_SEERSYS_SEERWAVE     = 0x00000002U,
+    MM_SEERSYS_SEERMIX      = 0x00000003U,
+    MM_SEERSYS_WAVESYNTH    = 0x00000004U,
+    MM_SEERSYS_WAVESYNTH_WG = 0x00000005U,
+    MM_SEERSYS_REALITY      = 0x00000006U,
 }
 
 enum : uint
 {
-    MM_OSPREY_1000WAVEIN  = 0x00000001,
-    MM_OSPREY_1000WAVEOUT = 0x00000002,
+    MM_OSPREY_1000WAVEIN  = 0x00000001U,
+    MM_OSPREY_1000WAVEOUT = 0x00000002U,
 }
 
 enum : uint
 {
-    MM_SOUNDESIGNS_WAVEIN  = 0x00000001,
-    MM_SOUNDESIGNS_WAVEOUT = 0x00000002,
+    MM_SOUNDESIGNS_WAVEIN  = 0x00000001U,
+    MM_SOUNDESIGNS_WAVEOUT = 0x00000002U,
 }
 
 enum : uint
 {
-    MM_SSP_SNDFESWAVEIN  = 0x00000001,
-    MM_SSP_SNDFESWAVEOUT = 0x00000002,
-    MM_SSP_SNDFESMIDIIN  = 0x00000003,
-    MM_SSP_SNDFESMIDIOUT = 0x00000004,
-    MM_SSP_SNDFESSYNTH   = 0x00000005,
-    MM_SSP_SNDFESMIX     = 0x00000006,
-    MM_SSP_SNDFESAUX     = 0x00000007,
+    MM_SSP_SNDFESWAVEIN  = 0x00000001U,
+    MM_SSP_SNDFESWAVEOUT = 0x00000002U,
+    MM_SSP_SNDFESMIDIIN  = 0x00000003U,
+    MM_SSP_SNDFESMIDIOUT = 0x00000004U,
+    MM_SSP_SNDFESSYNTH   = 0x00000005U,
+    MM_SSP_SNDFESMIX     = 0x00000006U,
+    MM_SSP_SNDFESAUX     = 0x00000007U,
 }
 
 enum : uint
 {
-    MM_ECS_AADF_MIDI_IN      = 0x0000000a,
-    MM_ECS_AADF_MIDI_OUT     = 0x0000000b,
-    MM_ECS_AADF_WAVE2MIDI_IN = 0x0000000c,
+    MM_ECS_AADF_MIDI_IN      = 0x0000000aU,
+    MM_ECS_AADF_MIDI_OUT     = 0x0000000bU,
+    MM_ECS_AADF_WAVE2MIDI_IN = 0x0000000cU,
 }
 
 enum : uint
 {
-    MM_AMD_INTERWAVE_WAVEIN          = 0x00000001,
-    MM_AMD_INTERWAVE_WAVEOUT         = 0x00000002,
-    MM_AMD_INTERWAVE_SYNTH           = 0x00000003,
-    MM_AMD_INTERWAVE_MIXER1          = 0x00000004,
-    MM_AMD_INTERWAVE_MIXER2          = 0x00000005,
-    MM_AMD_INTERWAVE_JOYSTICK        = 0x00000006,
-    MM_AMD_INTERWAVE_EX_CD           = 0x00000007,
-    MM_AMD_INTERWAVE_MIDIIN          = 0x00000008,
-    MM_AMD_INTERWAVE_MIDIOUT         = 0x00000009,
-    MM_AMD_INTERWAVE_AUX1            = 0x0000000a,
-    MM_AMD_INTERWAVE_AUX2            = 0x0000000b,
-    MM_AMD_INTERWAVE_AUX_MIC         = 0x0000000c,
-    MM_AMD_INTERWAVE_AUX_CD          = 0x0000000d,
-    MM_AMD_INTERWAVE_MONO_IN         = 0x0000000e,
-    MM_AMD_INTERWAVE_MONO_OUT        = 0x0000000f,
-    MM_AMD_INTERWAVE_EX_TELEPHONY    = 0x00000010,
-    MM_AMD_INTERWAVE_WAVEOUT_BASE    = 0x00000011,
-    MM_AMD_INTERWAVE_WAVEOUT_TREBLE  = 0x00000012,
-    MM_AMD_INTERWAVE_STEREO_ENHANCED = 0x00000013,
+    MM_AMD_INTERWAVE_WAVEIN          = 0x00000001U,
+    MM_AMD_INTERWAVE_WAVEOUT         = 0x00000002U,
+    MM_AMD_INTERWAVE_SYNTH           = 0x00000003U,
+    MM_AMD_INTERWAVE_MIXER1          = 0x00000004U,
+    MM_AMD_INTERWAVE_MIXER2          = 0x00000005U,
+    MM_AMD_INTERWAVE_JOYSTICK        = 0x00000006U,
+    MM_AMD_INTERWAVE_EX_CD           = 0x00000007U,
+    MM_AMD_INTERWAVE_MIDIIN          = 0x00000008U,
+    MM_AMD_INTERWAVE_MIDIOUT         = 0x00000009U,
+    MM_AMD_INTERWAVE_AUX1            = 0x0000000aU,
+    MM_AMD_INTERWAVE_AUX2            = 0x0000000bU,
+    MM_AMD_INTERWAVE_AUX_MIC         = 0x0000000cU,
+    MM_AMD_INTERWAVE_AUX_CD          = 0x0000000dU,
+    MM_AMD_INTERWAVE_MONO_IN         = 0x0000000eU,
+    MM_AMD_INTERWAVE_MONO_OUT        = 0x0000000fU,
+    MM_AMD_INTERWAVE_EX_TELEPHONY    = 0x00000010U,
+    MM_AMD_INTERWAVE_WAVEOUT_BASE    = 0x00000011U,
+    MM_AMD_INTERWAVE_WAVEOUT_TREBLE  = 0x00000012U,
+    MM_AMD_INTERWAVE_STEREO_ENHANCED = 0x00000013U,
 }
 
 enum : uint
 {
-    MM_COREDYNAMICS_DYNAMIXHR           = 0x00000001,
-    MM_COREDYNAMICS_DYNASONIX_SYNTH     = 0x00000002,
-    MM_COREDYNAMICS_DYNASONIX_MIDI_IN   = 0x00000003,
-    MM_COREDYNAMICS_DYNASONIX_MIDI_OUT  = 0x00000004,
-    MM_COREDYNAMICS_DYNASONIX_WAVE_IN   = 0x00000005,
-    MM_COREDYNAMICS_DYNASONIX_WAVE_OUT  = 0x00000006,
-    MM_COREDYNAMICS_DYNASONIX_AUDIO_IN  = 0x00000007,
-    MM_COREDYNAMICS_DYNASONIX_AUDIO_OUT = 0x00000008,
-    MM_COREDYNAMICS_DYNAGRAFX_VGA       = 0x00000009,
-    MM_COREDYNAMICS_DYNAGRAFX_WAVE_IN   = 0x0000000a,
-    MM_COREDYNAMICS_DYNAGRAFX_WAVE_OUT  = 0x0000000b,
+    MM_COREDYNAMICS_DYNAMIXHR           = 0x00000001U,
+    MM_COREDYNAMICS_DYNASONIX_SYNTH     = 0x00000002U,
+    MM_COREDYNAMICS_DYNASONIX_MIDI_IN   = 0x00000003U,
+    MM_COREDYNAMICS_DYNASONIX_MIDI_OUT  = 0x00000004U,
+    MM_COREDYNAMICS_DYNASONIX_WAVE_IN   = 0x00000005U,
+    MM_COREDYNAMICS_DYNASONIX_WAVE_OUT  = 0x00000006U,
+    MM_COREDYNAMICS_DYNASONIX_AUDIO_IN  = 0x00000007U,
+    MM_COREDYNAMICS_DYNASONIX_AUDIO_OUT = 0x00000008U,
+    MM_COREDYNAMICS_DYNAGRAFX_VGA       = 0x00000009U,
+    MM_COREDYNAMICS_DYNAGRAFX_WAVE_IN   = 0x0000000aU,
+    MM_COREDYNAMICS_DYNAGRAFX_WAVE_OUT  = 0x0000000bU,
 }
 
 enum : uint
 {
-    MM_CANAM_CBXWAVEOUT = 0x00000001,
-    MM_CANAM_CBXWAVEIN  = 0x00000002,
+    MM_CANAM_CBXWAVEOUT = 0x00000001U,
+    MM_CANAM_CBXWAVEIN  = 0x00000002U,
 }
 
-enum uint MM_SOFTSOUND_CODEC = 0x00000001;
-enum uint MM_NORRIS_VOICELINK = 0x00000001;
+enum uint MM_SOFTSOUND_CODEC = 0x00000001U;
+enum uint MM_NORRIS_VOICELINK = 0x00000001U;
 
 enum : uint
 {
-    MM_DDD_MIDILINK_MIDIIN  = 0x00000001,
-    MM_DDD_MIDILINK_MIDIOUT = 0x00000002,
+    MM_DDD_MIDILINK_MIDIIN  = 0x00000001U,
+    MM_DDD_MIDILINK_MIDIOUT = 0x00000002U,
 }
 
 enum : uint
 {
-    MM_EUPHONICS_AUX_CD         = 0x00000001,
-    MM_EUPHONICS_AUX_LINE       = 0x00000002,
-    MM_EUPHONICS_AUX_MASTER     = 0x00000003,
-    MM_EUPHONICS_AUX_MIC        = 0x00000004,
-    MM_EUPHONICS_AUX_MIDI       = 0x00000005,
-    MM_EUPHONICS_AUX_WAVE       = 0x00000006,
-    MM_EUPHONICS_FMSYNTH_MONO   = 0x00000007,
-    MM_EUPHONICS_FMSYNTH_STEREO = 0x00000008,
-    MM_EUPHONICS_MIDIIN         = 0x00000009,
-    MM_EUPHONICS_MIDIOUT        = 0x0000000a,
-    MM_EUPHONICS_MIXER          = 0x0000000b,
-    MM_EUPHONICS_WAVEIN         = 0x0000000c,
-    MM_EUPHONICS_WAVEOUT        = 0x0000000d,
-    MM_EUPHONICS_EUSYNTH        = 0x0000000e,
+    MM_EUPHONICS_AUX_CD         = 0x00000001U,
+    MM_EUPHONICS_AUX_LINE       = 0x00000002U,
+    MM_EUPHONICS_AUX_MASTER     = 0x00000003U,
+    MM_EUPHONICS_AUX_MIC        = 0x00000004U,
+    MM_EUPHONICS_AUX_MIDI       = 0x00000005U,
+    MM_EUPHONICS_AUX_WAVE       = 0x00000006U,
+    MM_EUPHONICS_FMSYNTH_MONO   = 0x00000007U,
+    MM_EUPHONICS_FMSYNTH_STEREO = 0x00000008U,
+    MM_EUPHONICS_MIDIIN         = 0x00000009U,
+    MM_EUPHONICS_MIDIOUT        = 0x0000000aU,
+    MM_EUPHONICS_MIXER          = 0x0000000bU,
+    MM_EUPHONICS_WAVEIN         = 0x0000000cU,
+    MM_EUPHONICS_WAVEOUT        = 0x0000000dU,
+    MM_EUPHONICS_EUSYNTH        = 0x0000000eU,
 }
 
-enum uint CRYSTAL_NET_SFM_CODEC = 0x00000001;
+enum uint CRYSTAL_NET_SFM_CODEC = 0x00000001U;
 
 enum : uint
 {
-    MM_CHROMATIC_M1             = 0x00000001,
-    MM_CHROMATIC_M1_WAVEIN      = 0x00000002,
-    MM_CHROMATIC_M1_WAVEOUT     = 0x00000003,
-    MM_CHROMATIC_M1_FMSYNTH     = 0x00000004,
-    MM_CHROMATIC_M1_MIXER       = 0x00000005,
-    MM_CHROMATIC_M1_AUX         = 0x00000006,
-    MM_CHROMATIC_M1_AUX_CD      = 0x00000007,
-    MM_CHROMATIC_M1_MIDIIN      = 0x00000008,
-    MM_CHROMATIC_M1_MIDIOUT     = 0x00000009,
-    MM_CHROMATIC_M1_WTSYNTH     = 0x00000010,
-    MM_CHROMATIC_M1_MPEGWAVEIN  = 0x00000011,
-    MM_CHROMATIC_M1_MPEGWAVEOUT = 0x00000012,
-    MM_CHROMATIC_M2             = 0x00000013,
-    MM_CHROMATIC_M2_WAVEIN      = 0x00000014,
-    MM_CHROMATIC_M2_WAVEOUT     = 0x00000015,
-    MM_CHROMATIC_M2_FMSYNTH     = 0x00000016,
-    MM_CHROMATIC_M2_MIXER       = 0x00000017,
-    MM_CHROMATIC_M2_AUX         = 0x00000018,
-    MM_CHROMATIC_M2_AUX_CD      = 0x00000019,
-    MM_CHROMATIC_M2_MIDIIN      = 0x00000020,
-    MM_CHROMATIC_M2_MIDIOUT     = 0x00000021,
-    MM_CHROMATIC_M2_WTSYNTH     = 0x00000022,
-    MM_CHROMATIC_M2_MPEGWAVEIN  = 0x00000023,
-    MM_CHROMATIC_M2_MPEGWAVEOUT = 0x00000024,
+    MM_CHROMATIC_M1             = 0x00000001U,
+    MM_CHROMATIC_M1_WAVEIN      = 0x00000002U,
+    MM_CHROMATIC_M1_WAVEOUT     = 0x00000003U,
+    MM_CHROMATIC_M1_FMSYNTH     = 0x00000004U,
+    MM_CHROMATIC_M1_MIXER       = 0x00000005U,
+    MM_CHROMATIC_M1_AUX         = 0x00000006U,
+    MM_CHROMATIC_M1_AUX_CD      = 0x00000007U,
+    MM_CHROMATIC_M1_MIDIIN      = 0x00000008U,
+    MM_CHROMATIC_M1_MIDIOUT     = 0x00000009U,
+    MM_CHROMATIC_M1_WTSYNTH     = 0x00000010U,
+    MM_CHROMATIC_M1_MPEGWAVEIN  = 0x00000011U,
+    MM_CHROMATIC_M1_MPEGWAVEOUT = 0x00000012U,
+    MM_CHROMATIC_M2             = 0x00000013U,
+    MM_CHROMATIC_M2_WAVEIN      = 0x00000014U,
+    MM_CHROMATIC_M2_WAVEOUT     = 0x00000015U,
+    MM_CHROMATIC_M2_FMSYNTH     = 0x00000016U,
+    MM_CHROMATIC_M2_MIXER       = 0x00000017U,
+    MM_CHROMATIC_M2_AUX         = 0x00000018U,
+    MM_CHROMATIC_M2_AUX_CD      = 0x00000019U,
+    MM_CHROMATIC_M2_MIDIIN      = 0x00000020U,
+    MM_CHROMATIC_M2_MIDIOUT     = 0x00000021U,
+    MM_CHROMATIC_M2_WTSYNTH     = 0x00000022U,
+    MM_CHROMATIC_M2_MPEGWAVEIN  = 0x00000023U,
+    MM_CHROMATIC_M2_MPEGWAVEOUT = 0x00000024U,
 }
 
-enum uint MM_VIENNASYS_TSP_WAVE_DRIVER = 0x00000001;
-enum uint MM_CONNECTIX_VIDEC_CODEC = 0x00000001;
+enum uint MM_VIENNASYS_TSP_WAVE_DRIVER = 0x00000001U;
+enum uint MM_CONNECTIX_VIDEC_CODEC = 0x00000001U;
 
 enum : uint
 {
-    MM_GADGETLABS_WAVE44_WAVEIN  = 0x00000001,
-    MM_GADGETLABS_WAVE44_WAVEOUT = 0x00000002,
-    MM_GADGETLABS_WAVE42_WAVEIN  = 0x00000003,
-    MM_GADGETLABS_WAVE42_WAVEOUT = 0x00000004,
-    MM_GADGETLABS_WAVE4_MIDIIN   = 0x00000005,
-    MM_GADGETLABS_WAVE4_MIDIOUT  = 0x00000006,
+    MM_GADGETLABS_WAVE44_WAVEIN  = 0x00000001U,
+    MM_GADGETLABS_WAVE44_WAVEOUT = 0x00000002U,
+    MM_GADGETLABS_WAVE42_WAVEIN  = 0x00000003U,
+    MM_GADGETLABS_WAVE42_WAVEOUT = 0x00000004U,
+    MM_GADGETLABS_WAVE4_MIDIIN   = 0x00000005U,
+    MM_GADGETLABS_WAVE4_MIDIOUT  = 0x00000006U,
 }
 
 enum : uint
 {
-    MM_FRONTIER_WAVECENTER_MIDIIN  = 0x00000001,
-    MM_FRONTIER_WAVECENTER_MIDIOUT = 0x00000002,
-    MM_FRONTIER_WAVECENTER_WAVEIN  = 0x00000003,
-    MM_FRONTIER_WAVECENTER_WAVEOUT = 0x00000004,
+    MM_FRONTIER_WAVECENTER_MIDIIN  = 0x00000001U,
+    MM_FRONTIER_WAVECENTER_MIDIOUT = 0x00000002U,
+    MM_FRONTIER_WAVECENTER_WAVEIN  = 0x00000003U,
+    MM_FRONTIER_WAVECENTER_WAVEOUT = 0x00000004U,
 }
 
 enum : uint
 {
-    MM_VIONA_QVINPCI_MIXER  = 0x00000001,
-    MM_VIONA_QVINPCI_WAVEIN = 0x00000002,
+    MM_VIONA_QVINPCI_MIXER  = 0x00000001U,
+    MM_VIONA_QVINPCI_WAVEIN = 0x00000002U,
 }
 
-enum uint MM_VIONAQVINPCI_WAVEOUT = 0x00000003;
+enum uint MM_VIONAQVINPCI_WAVEOUT = 0x00000003U;
 
 enum : uint
 {
-    MM_VIONA_BUSTER_MIXER     = 0x00000004,
-    MM_VIONA_CINEMASTER_MIXER = 0x00000005,
+    MM_VIONA_BUSTER_MIXER     = 0x00000004U,
+    MM_VIONA_CINEMASTER_MIXER = 0x00000005U,
 }
 
-enum uint MM_VIONA_CONCERTO_MIXER = 0x00000006;
+enum uint MM_VIONA_CONCERTO_MIXER = 0x00000006U;
 
 enum : uint
 {
-    MM_CASIO_WP150_MIDIOUT = 0x00000001,
-    MM_CASIO_WP150_MIDIIN  = 0x00000002,
-    MM_CASIO_LSG_MIDIOUT   = 0x00000003,
+    MM_CASIO_WP150_MIDIOUT = 0x00000001U,
+    MM_CASIO_WP150_MIDIIN  = 0x00000002U,
+    MM_CASIO_LSG_MIDIOUT   = 0x00000003U,
 }
 
 enum : uint
 {
-    MM_DIMD_PLATFORM    = 0x00000000,
-    MM_DIMD_DIRSOUND    = 0x00000001,
-    MM_DIMD_VIRTMPU     = 0x00000002,
-    MM_DIMD_VIRTSB      = 0x00000003,
-    MM_DIMD_VIRTJOY     = 0x00000004,
-    MM_DIMD_WAVEIN      = 0x00000005,
-    MM_DIMD_WAVEOUT     = 0x00000006,
-    MM_DIMD_MIDIIN      = 0x00000007,
-    MM_DIMD_MIDIOUT     = 0x00000008,
-    MM_DIMD_AUX_LINE    = 0x00000009,
-    MM_DIMD_MIXER       = 0x0000000a,
-    MM_DIMD_WSS_WAVEIN  = 0x0000000e,
-    MM_DIMD_WSS_WAVEOUT = 0x0000000f,
-    MM_DIMD_WSS_MIXER   = 0x00000011,
-    MM_DIMD_WSS_AUX     = 0x00000015,
-    MM_DIMD_WSS_SYNTH   = 0x0000004c,
+    MM_DIMD_PLATFORM    = 0x00000000U,
+    MM_DIMD_DIRSOUND    = 0x00000001U,
+    MM_DIMD_VIRTMPU     = 0x00000002U,
+    MM_DIMD_VIRTSB      = 0x00000003U,
+    MM_DIMD_VIRTJOY     = 0x00000004U,
+    MM_DIMD_WAVEIN      = 0x00000005U,
+    MM_DIMD_WAVEOUT     = 0x00000006U,
+    MM_DIMD_MIDIIN      = 0x00000007U,
+    MM_DIMD_MIDIOUT     = 0x00000008U,
+    MM_DIMD_AUX_LINE    = 0x00000009U,
+    MM_DIMD_MIXER       = 0x0000000aU,
+    MM_DIMD_WSS_WAVEIN  = 0x0000000eU,
+    MM_DIMD_WSS_WAVEOUT = 0x0000000fU,
+    MM_DIMD_WSS_MIXER   = 0x00000011U,
+    MM_DIMD_WSS_AUX     = 0x00000015U,
+    MM_DIMD_WSS_SYNTH   = 0x0000004cU,
 }
 
 enum : uint
 {
-    MM_S3_WAVEOUT = 0x00000001,
-    MM_S3_WAVEIN  = 0x00000002,
-    MM_S3_MIDIOUT = 0x00000003,
-    MM_S3_MIDIIN  = 0x00000004,
-    MM_S3_FMSYNTH = 0x00000005,
-    MM_S3_MIXER   = 0x00000006,
-    MM_S3_AUX     = 0x00000007,
+    MM_S3_WAVEOUT = 0x00000001U,
+    MM_S3_WAVEIN  = 0x00000002U,
+    MM_S3_MIDIOUT = 0x00000003U,
+    MM_S3_MIDIIN  = 0x00000004U,
+    MM_S3_FMSYNTH = 0x00000005U,
+    MM_S3_MIXER   = 0x00000006U,
+    MM_S3_AUX     = 0x00000007U,
 }
 
-enum uint MM_VKC_MPU401_MIDIIN = 0x00000100;
-enum uint MM_VKC_SERIAL_MIDIIN = 0x00000101;
-enum uint MM_VKC_MPU401_MIDIOUT = 0x00000200;
-enum uint MM_VKC_SERIAL_MIDIOUT = 0x00000201;
-enum uint MM_ZEFIRO_ZA2 = 0x00000002;
+enum uint MM_VKC_MPU401_MIDIIN = 0x00000100U;
+enum uint MM_VKC_SERIAL_MIDIIN = 0x00000101U;
+enum uint MM_VKC_MPU401_MIDIOUT = 0x00000200U;
+enum uint MM_VKC_SERIAL_MIDIOUT = 0x00000201U;
+enum uint MM_ZEFIRO_ZA2 = 0x00000002U;
 
 enum : uint
 {
-    MM_FHGIIS_MPEGLAYER3_DECODE       = 0x00000009,
-    MM_FHGIIS_MPEGLAYER3              = 0x0000000a,
-    MM_FHGIIS_MPEGLAYER3_LITE         = 0x0000000a,
-    MM_FHGIIS_MPEGLAYER3_BASIC        = 0x0000000b,
-    MM_FHGIIS_MPEGLAYER3_ADVANCED     = 0x0000000c,
-    MM_FHGIIS_MPEGLAYER3_PROFESSIONAL = 0x0000000d,
-    MM_FHGIIS_MPEGLAYER3_ADVANCEDPLUS = 0x0000000e,
+    MM_FHGIIS_MPEGLAYER3_DECODE       = 0x00000009U,
+    MM_FHGIIS_MPEGLAYER3              = 0x0000000aU,
+    MM_FHGIIS_MPEGLAYER3_LITE         = 0x0000000aU,
+    MM_FHGIIS_MPEGLAYER3_BASIC        = 0x0000000bU,
+    MM_FHGIIS_MPEGLAYER3_ADVANCED     = 0x0000000cU,
+    MM_FHGIIS_MPEGLAYER3_PROFESSIONAL = 0x0000000dU,
+    MM_FHGIIS_MPEGLAYER3_ADVANCEDPLUS = 0x0000000eU,
 }
 
 enum : uint
 {
-    MM_QUICKNET_PJWAVEIN  = 0x00000001,
-    MM_QUICKNET_PJWAVEOUT = 0x00000002,
+    MM_QUICKNET_PJWAVEIN  = 0x00000001U,
+    MM_QUICKNET_PJWAVEOUT = 0x00000002U,
 }
 
 enum : uint
 {
-    MM_SICRESOURCE_SSO3D   = 0x00000002,
-    MM_SICRESOURCE_SSOW3DI = 0x00000003,
+    MM_SICRESOURCE_SSO3D   = 0x00000002U,
+    MM_SICRESOURCE_SSOW3DI = 0x00000003U,
 }
 
 enum : uint
 {
-    MM_NEOMAGIC_SYNTH         = 0x00000001,
-    MM_NEOMAGIC_WAVEOUT       = 0x00000002,
-    MM_NEOMAGIC_WAVEIN        = 0x00000003,
-    MM_NEOMAGIC_MIDIOUT       = 0x00000004,
-    MM_NEOMAGIC_MIDIIN        = 0x00000005,
-    MM_NEOMAGIC_AUX           = 0x00000006,
-    MM_NEOMAGIC_MW3DX_WAVEOUT = 0x0000000a,
-    MM_NEOMAGIC_MW3DX_WAVEIN  = 0x0000000b,
-    MM_NEOMAGIC_MW3DX_MIDIOUT = 0x0000000c,
-    MM_NEOMAGIC_MW3DX_MIDIIN  = 0x0000000d,
-    MM_NEOMAGIC_MW3DX_FMSYNTH = 0x0000000e,
-    MM_NEOMAGIC_MW3DX_GMSYNTH = 0x0000000f,
-    MM_NEOMAGIC_MW3DX_MIXER   = 0x00000010,
-    MM_NEOMAGIC_MW3DX_AUX     = 0x00000011,
-    MM_NEOMAGIC_MWAVE_WAVEOUT = 0x00000014,
-    MM_NEOMAGIC_MWAVE_WAVEIN  = 0x00000015,
-    MM_NEOMAGIC_MWAVE_MIDIOUT = 0x00000016,
-    MM_NEOMAGIC_MWAVE_MIDIIN  = 0x00000017,
-    MM_NEOMAGIC_MWAVE_MIXER   = 0x00000018,
-    MM_NEOMAGIC_MWAVE_AUX     = 0x00000019,
+    MM_NEOMAGIC_SYNTH         = 0x00000001U,
+    MM_NEOMAGIC_WAVEOUT       = 0x00000002U,
+    MM_NEOMAGIC_WAVEIN        = 0x00000003U,
+    MM_NEOMAGIC_MIDIOUT       = 0x00000004U,
+    MM_NEOMAGIC_MIDIIN        = 0x00000005U,
+    MM_NEOMAGIC_AUX           = 0x00000006U,
+    MM_NEOMAGIC_MW3DX_WAVEOUT = 0x0000000aU,
+    MM_NEOMAGIC_MW3DX_WAVEIN  = 0x0000000bU,
+    MM_NEOMAGIC_MW3DX_MIDIOUT = 0x0000000cU,
+    MM_NEOMAGIC_MW3DX_MIDIIN  = 0x0000000dU,
+    MM_NEOMAGIC_MW3DX_FMSYNTH = 0x0000000eU,
+    MM_NEOMAGIC_MW3DX_GMSYNTH = 0x0000000fU,
+    MM_NEOMAGIC_MW3DX_MIXER   = 0x00000010U,
+    MM_NEOMAGIC_MW3DX_AUX     = 0x00000011U,
+    MM_NEOMAGIC_MWAVE_WAVEOUT = 0x00000014U,
+    MM_NEOMAGIC_MWAVE_WAVEIN  = 0x00000015U,
+    MM_NEOMAGIC_MWAVE_MIDIOUT = 0x00000016U,
+    MM_NEOMAGIC_MWAVE_MIDIIN  = 0x00000017U,
+    MM_NEOMAGIC_MWAVE_MIXER   = 0x00000018U,
+    MM_NEOMAGIC_MWAVE_AUX     = 0x00000019U,
 }
 
-enum uint MM_MERGING_MPEGL3 = 0x00000001;
-enum uint MM_XIRLINK_VISIONLINK = 0x00000001;
+enum uint MM_MERGING_MPEGL3 = 0x00000001U;
+enum uint MM_XIRLINK_VISIONLINK = 0x00000001U;
 
 enum : uint
 {
-    MM_OTI_611WAVEIN  = 0x00000005,
-    MM_OTI_611WAVEOUT = 0x00000006,
-    MM_OTI_611MIXER   = 0x00000007,
-    MM_OTI_611MIDIN   = 0x00000012,
-    MM_OTI_611MIDIOUT = 0x00000013,
+    MM_OTI_611WAVEIN  = 0x00000005U,
+    MM_OTI_611WAVEOUT = 0x00000006U,
+    MM_OTI_611MIXER   = 0x00000007U,
+    MM_OTI_611MIDIN   = 0x00000012U,
+    MM_OTI_611MIDIOUT = 0x00000013U,
 }
 
-enum uint MM_AUREAL_AU8820 = 0x00000010;
+enum uint MM_AUREAL_AU8820 = 0x00000010U;
 
 enum : uint
 {
-    MM_AU8820_SYNTH   = 0x00000011,
-    MM_AU8820_WAVEOUT = 0x00000012,
-    MM_AU8820_WAVEIN  = 0x00000013,
-    MM_AU8820_MIXER   = 0x00000014,
-    MM_AU8820_AUX     = 0x00000015,
-    MM_AU8820_MIDIOUT = 0x00000016,
-    MM_AU8820_MIDIIN  = 0x00000017,
+    MM_AU8820_SYNTH   = 0x00000011U,
+    MM_AU8820_WAVEOUT = 0x00000012U,
+    MM_AU8820_WAVEIN  = 0x00000013U,
+    MM_AU8820_MIXER   = 0x00000014U,
+    MM_AU8820_AUX     = 0x00000015U,
+    MM_AU8820_MIDIOUT = 0x00000016U,
+    MM_AU8820_MIDIIN  = 0x00000017U,
 }
 
-enum uint MM_AUREAL_AU8830 = 0x00000020;
+enum uint MM_AUREAL_AU8830 = 0x00000020U;
 
 enum : uint
 {
-    MM_AU8830_SYNTH   = 0x00000021,
-    MM_AU8830_WAVEOUT = 0x00000022,
-    MM_AU8830_WAVEIN  = 0x00000023,
-    MM_AU8830_MIXER   = 0x00000024,
-    MM_AU8830_AUX     = 0x00000025,
-    MM_AU8830_MIDIOUT = 0x00000026,
-    MM_AU8830_MIDIIN  = 0x00000027,
+    MM_AU8830_SYNTH   = 0x00000021U,
+    MM_AU8830_WAVEOUT = 0x00000022U,
+    MM_AU8830_WAVEIN  = 0x00000023U,
+    MM_AU8830_MIXER   = 0x00000024U,
+    MM_AU8830_AUX     = 0x00000025U,
+    MM_AU8830_MIDIOUT = 0x00000026U,
+    MM_AU8830_MIDIIN  = 0x00000027U,
 }
 
-enum uint MM_VIVO_AUDIO_CODEC = 0x00000001;
+enum uint MM_VIVO_AUDIO_CODEC = 0x00000001U;
 
 enum : uint
 {
-    MM_SHARP_MDC_MIDI_SYNTH   = 0x00000001,
-    MM_SHARP_MDC_MIDI_IN      = 0x00000002,
-    MM_SHARP_MDC_MIDI_OUT     = 0x00000003,
-    MM_SHARP_MDC_WAVE_IN      = 0x00000004,
-    MM_SHARP_MDC_WAVE_OUT     = 0x00000005,
-    MM_SHARP_MDC_AUX          = 0x00000006,
-    MM_SHARP_MDC_MIXER        = 0x0000000a,
-    MM_SHARP_MDC_AUX_MASTER   = 0x00000064,
-    MM_SHARP_MDC_AUX_BASS     = 0x00000065,
-    MM_SHARP_MDC_AUX_TREBLE   = 0x00000066,
-    MM_SHARP_MDC_AUX_MIDI_VOL = 0x00000067,
-    MM_SHARP_MDC_AUX_WAVE_VOL = 0x00000068,
-    MM_SHARP_MDC_AUX_WAVE_RVB = 0x00000069,
-    MM_SHARP_MDC_AUX_WAVE_CHR = 0x0000006a,
-    MM_SHARP_MDC_AUX_VOL      = 0x0000006b,
-    MM_SHARP_MDC_AUX_RVB      = 0x0000006c,
-    MM_SHARP_MDC_AUX_CHR      = 0x0000006d,
+    MM_SHARP_MDC_MIDI_SYNTH   = 0x00000001U,
+    MM_SHARP_MDC_MIDI_IN      = 0x00000002U,
+    MM_SHARP_MDC_MIDI_OUT     = 0x00000003U,
+    MM_SHARP_MDC_WAVE_IN      = 0x00000004U,
+    MM_SHARP_MDC_WAVE_OUT     = 0x00000005U,
+    MM_SHARP_MDC_AUX          = 0x00000006U,
+    MM_SHARP_MDC_MIXER        = 0x0000000aU,
+    MM_SHARP_MDC_AUX_MASTER   = 0x00000064U,
+    MM_SHARP_MDC_AUX_BASS     = 0x00000065U,
+    MM_SHARP_MDC_AUX_TREBLE   = 0x00000066U,
+    MM_SHARP_MDC_AUX_MIDI_VOL = 0x00000067U,
+    MM_SHARP_MDC_AUX_WAVE_VOL = 0x00000068U,
+    MM_SHARP_MDC_AUX_WAVE_RVB = 0x00000069U,
+    MM_SHARP_MDC_AUX_WAVE_CHR = 0x0000006aU,
+    MM_SHARP_MDC_AUX_VOL      = 0x0000006bU,
+    MM_SHARP_MDC_AUX_RVB      = 0x0000006cU,
+    MM_SHARP_MDC_AUX_CHR      = 0x0000006dU,
 }
 
-enum uint MM_LUCENT_ACM_G723 = 0x00000000;
-enum uint MM_ATT_G729A = 0x00000001;
+enum uint MM_LUCENT_ACM_G723 = 0x00000000U;
+enum uint MM_ATT_G729A = 0x00000001U;
 
 enum : uint
 {
-    MM_MARIAN_ARC44WAVEIN     = 0x00000001,
-    MM_MARIAN_ARC44WAVEOUT    = 0x00000002,
-    MM_MARIAN_PRODIF24WAVEIN  = 0x00000003,
-    MM_MARIAN_PRODIF24WAVEOUT = 0x00000004,
+    MM_MARIAN_ARC44WAVEIN     = 0x00000001U,
+    MM_MARIAN_ARC44WAVEOUT    = 0x00000002U,
+    MM_MARIAN_PRODIF24WAVEIN  = 0x00000003U,
+    MM_MARIAN_PRODIF24WAVEOUT = 0x00000004U,
 }
 
 enum : uint
 {
-    MM_MARIAN_ARC88WAVEIN  = 0x00000005,
-    MM_MARIAN_ARC88WAVEOUT = 0x00000006,
+    MM_MARIAN_ARC88WAVEIN  = 0x00000005U,
+    MM_MARIAN_ARC88WAVEOUT = 0x00000006U,
 }
 
-enum uint MM_BCB_NETBOARD_10 = 0x00000001;
-enum uint MM_BCB_TT75_10 = 0x00000002;
-enum uint MM_MOTIONPIXELS_MVI2 = 0x00000001;
+enum uint MM_BCB_NETBOARD_10 = 0x00000001U;
+enum uint MM_BCB_TT75_10 = 0x00000002U;
+enum uint MM_MOTIONPIXELS_MVI2 = 0x00000001U;
 
 enum : uint
 {
-    MM_QDESIGN_ACM_MPEG          = 0x00000001,
-    MM_QDESIGN_ACM_QDESIGN_MUSIC = 0x00000002,
+    MM_QDESIGN_ACM_MPEG          = 0x00000001U,
+    MM_QDESIGN_ACM_QDESIGN_MUSIC = 0x00000002U,
 }
 
 enum : uint
 {
-    MM_NMP_CCP_WAVEIN  = 0x00000001,
-    MM_NMP_CCP_WAVEOUT = 0x00000002,
+    MM_NMP_CCP_WAVEIN  = 0x00000001U,
+    MM_NMP_CCP_WAVEOUT = 0x00000002U,
 }
 
-enum uint MM_NMP_ACM_AMR = 0x0000000a;
+enum uint MM_NMP_ACM_AMR = 0x0000000aU;
 
 enum : uint
 {
-    MM_DF_ACM_G726   = 0x00000001,
-    MM_DF_ACM_GSM610 = 0x00000002,
+    MM_DF_ACM_G726   = 0x00000001U,
+    MM_DF_ACM_GSM610 = 0x00000002U,
 }
 
 enum : uint
 {
-    MM_BERCOS_WAVEIN  = 0x00000001,
-    MM_BERCOS_MIXER   = 0x00000002,
-    MM_BERCOS_WAVEOUT = 0x00000003,
+    MM_BERCOS_WAVEIN  = 0x00000001U,
+    MM_BERCOS_MIXER   = 0x00000002U,
+    MM_BERCOS_WAVEOUT = 0x00000003U,
 }
 
-enum uint MM_ONLIVE_MPCODEC = 0x00000001;
+enum uint MM_ONLIVE_MPCODEC = 0x00000001U;
 
 enum : uint
 {
-    MM_PHONET_PP_WAVEOUT = 0x00000001,
-    MM_PHONET_PP_WAVEIN  = 0x00000002,
-    MM_PHONET_PP_MIXER   = 0x00000003,
+    MM_PHONET_PP_WAVEOUT = 0x00000001U,
+    MM_PHONET_PP_WAVEIN  = 0x00000002U,
+    MM_PHONET_PP_MIXER   = 0x00000003U,
 }
 
-enum uint MM_FTR_ENCODER_WAVEIN = 0x00000001;
-enum uint MM_FTR_ACM = 0x00000002;
+enum uint MM_FTR_ENCODER_WAVEIN = 0x00000001U;
+enum uint MM_FTR_ACM = 0x00000002U;
 
 enum : uint
 {
-    MM_ENET_T2000_LINEIN     = 0x00000001,
-    MM_ENET_T2000_LINEOUT    = 0x00000002,
-    MM_ENET_T2000_HANDSETIN  = 0x00000003,
-    MM_ENET_T2000_HANDSETOUT = 0x00000004,
+    MM_ENET_T2000_LINEIN     = 0x00000001U,
+    MM_ENET_T2000_LINEOUT    = 0x00000002U,
+    MM_ENET_T2000_HANDSETIN  = 0x00000003U,
+    MM_ENET_T2000_HANDSETOUT = 0x00000004U,
 }
 
-enum uint MM_EMAGIC_UNITOR8 = 0x00000001;
-enum uint MM_SIPROLAB_ACELPNET = 0x00000001;
-enum uint MM_DICTAPHONE_G726 = 0x00000001;
-enum uint MM_RZS_ACM_TUBGSM = 0x00000001;
+enum uint MM_EMAGIC_UNITOR8 = 0x00000001U;
+enum uint MM_SIPROLAB_ACELPNET = 0x00000001U;
+enum uint MM_DICTAPHONE_G726 = 0x00000001U;
+enum uint MM_RZS_ACM_TUBGSM = 0x00000001U;
 
 enum : uint
 {
-    MM_EES_PCMIDI14      = 0x00000001,
-    MM_EES_PCMIDI14_IN   = 0x00000002,
-    MM_EES_PCMIDI14_OUT1 = 0x00000003,
-    MM_EES_PCMIDI14_OUT2 = 0x00000004,
-    MM_EES_PCMIDI14_OUT3 = 0x00000005,
-    MM_EES_PCMIDI14_OUT4 = 0x00000006,
+    MM_EES_PCMIDI14      = 0x00000001U,
+    MM_EES_PCMIDI14_IN   = 0x00000002U,
+    MM_EES_PCMIDI14_OUT1 = 0x00000003U,
+    MM_EES_PCMIDI14_OUT2 = 0x00000004U,
+    MM_EES_PCMIDI14_OUT3 = 0x00000005U,
+    MM_EES_PCMIDI14_OUT4 = 0x00000006U,
 }
 
-enum uint MM_HAFTMANN_LPTDAC2 = 0x00000001;
+enum uint MM_HAFTMANN_LPTDAC2 = 0x00000001U;
 
 enum : uint
 {
-    MM_LUCID_PCI24WAVEIN  = 0x00000001,
-    MM_LUCID_PCI24WAVEOUT = 0x00000002,
+    MM_LUCID_PCI24WAVEIN  = 0x00000001U,
+    MM_LUCID_PCI24WAVEOUT = 0x00000002U,
 }
 
 enum : uint
 {
-    MM_HEADSPACE_HAESYNTH   = 0x00000001,
-    MM_HEADSPACE_HAEWAVEOUT = 0x00000002,
-    MM_HEADSPACE_HAEWAVEIN  = 0x00000003,
-    MM_HEADSPACE_HAEMIXER   = 0x00000004,
+    MM_HEADSPACE_HAESYNTH   = 0x00000001U,
+    MM_HEADSPACE_HAEWAVEOUT = 0x00000002U,
+    MM_HEADSPACE_HAEWAVEIN  = 0x00000003U,
+    MM_HEADSPACE_HAEMIXER   = 0x00000004U,
 }
 
-enum uint MM_UNISYS_ACM_NAP = 0x00000001;
+enum uint MM_UNISYS_ACM_NAP = 0x00000001U;
 
 enum : uint
 {
-    MM_LUMINOSITI_SCWAVEIN  = 0x00000001,
-    MM_LUMINOSITI_SCWAVEOUT = 0x00000002,
-    MM_LUMINOSITI_SCWAVEMIX = 0x00000003,
+    MM_LUMINOSITI_SCWAVEIN  = 0x00000001U,
+    MM_LUMINOSITI_SCWAVEOUT = 0x00000002U,
+    MM_LUMINOSITI_SCWAVEMIX = 0x00000003U,
 }
 
-enum uint MM_ACTIVEVOICE_ACM_VOXADPCM = 0x00000001;
-enum uint MM_DTS_DS = 0x00000001;
+enum uint MM_ACTIVEVOICE_ACM_VOXADPCM = 0x00000001U;
+enum uint MM_DTS_DS = 0x00000001U;
 
 enum : uint
 {
-    MM_SOFTLAB_NSK_FRW_WAVEIN  = 0x00000001,
-    MM_SOFTLAB_NSK_FRW_WAVEOUT = 0x00000002,
-    MM_SOFTLAB_NSK_FRW_MIXER   = 0x00000003,
-    MM_SOFTLAB_NSK_FRW_AUX     = 0x00000004,
+    MM_SOFTLAB_NSK_FRW_WAVEIN  = 0x00000001U,
+    MM_SOFTLAB_NSK_FRW_WAVEOUT = 0x00000002U,
+    MM_SOFTLAB_NSK_FRW_MIXER   = 0x00000003U,
+    MM_SOFTLAB_NSK_FRW_AUX     = 0x00000004U,
 }
 
 enum : uint
 {
-    MM_FORTEMEDIA_WAVEIN  = 0x00000001,
-    MM_FORTEMEDIA_WAVEOUT = 0x00000002,
-    MM_FORTEMEDIA_FMSYNC  = 0x00000003,
-    MM_FORTEMEDIA_MIXER   = 0x00000004,
-    MM_FORTEMEDIA_AUX     = 0x00000005,
+    MM_FORTEMEDIA_WAVEIN  = 0x00000001U,
+    MM_FORTEMEDIA_WAVEOUT = 0x00000002U,
+    MM_FORTEMEDIA_FMSYNC  = 0x00000003U,
+    MM_FORTEMEDIA_MIXER   = 0x00000004U,
+    MM_FORTEMEDIA_AUX     = 0x00000005U,
 }
 
-enum uint MM_SONORUS_STUDIO = 0x00000001;
-enum uint MM_I_LINK_VOICE_CODER = 0x00000001;
+enum uint MM_SONORUS_STUDIO = 0x00000001U;
+enum uint MM_I_LINK_VOICE_CODER = 0x00000001U;
 
 enum : uint
 {
-    MM_SELSIUS_SYSTEMS_RTPWAVEOUT = 0x00000001,
-    MM_SELSIUS_SYSTEMS_RTPWAVEIN  = 0x00000002,
+    MM_SELSIUS_SYSTEMS_RTPWAVEOUT = 0x00000001U,
+    MM_SELSIUS_SYSTEMS_RTPWAVEIN  = 0x00000002U,
 }
 
 enum : uint
 {
-    MM_ADMOS_FM_SYNTH    = 0x00000001,
-    MM_ADMOS_QS3AMIDIOUT = 0x00000002,
-    MM_ADMOS_QS3AMIDIIN  = 0x00000003,
-    MM_ADMOS_QS3AWAVEOUT = 0x00000004,
-    MM_ADMOS_QS3AWAVEIN  = 0x00000005,
+    MM_ADMOS_FM_SYNTH    = 0x00000001U,
+    MM_ADMOS_QS3AMIDIOUT = 0x00000002U,
+    MM_ADMOS_QS3AMIDIIN  = 0x00000003U,
+    MM_ADMOS_QS3AWAVEOUT = 0x00000004U,
+    MM_ADMOS_QS3AWAVEIN  = 0x00000005U,
 }
 
 enum : uint
 {
-    MM_LEXICON_STUDIO_WAVE_OUT = 0x00000001,
-    MM_LEXICON_STUDIO_WAVE_IN  = 0x00000002,
+    MM_LEXICON_STUDIO_WAVE_OUT = 0x00000001U,
+    MM_LEXICON_STUDIO_WAVE_IN  = 0x00000002U,
 }
 
 enum : uint
 {
-    MM_SGI_320_WAVEIN               = 0x00000001,
-    MM_SGI_320_WAVEOUT              = 0x00000002,
-    MM_SGI_320_MIXER                = 0x00000003,
-    MM_SGI_540_WAVEIN               = 0x00000004,
-    MM_SGI_540_WAVEOUT              = 0x00000005,
-    MM_SGI_540_MIXER                = 0x00000006,
-    MM_SGI_RAD_ADATMONO1_WAVEIN     = 0x00000007,
-    MM_SGI_RAD_ADATMONO2_WAVEIN     = 0x00000008,
-    MM_SGI_RAD_ADATMONO3_WAVEIN     = 0x00000009,
-    MM_SGI_RAD_ADATMONO4_WAVEIN     = 0x0000000a,
-    MM_SGI_RAD_ADATMONO5_WAVEIN     = 0x0000000b,
-    MM_SGI_RAD_ADATMONO6_WAVEIN     = 0x0000000c,
-    MM_SGI_RAD_ADATMONO7_WAVEIN     = 0x0000000d,
-    MM_SGI_RAD_ADATMONO8_WAVEIN     = 0x0000000e,
-    MM_SGI_RAD_ADATSTEREO12_WAVEIN  = 0x0000000f,
-    MM_SGI_RAD_ADATSTEREO34_WAVEIN  = 0x00000010,
-    MM_SGI_RAD_ADATSTEREO56_WAVEIN  = 0x00000011,
-    MM_SGI_RAD_ADATSTEREO78_WAVEIN  = 0x00000012,
-    MM_SGI_RAD_ADAT8CHAN_WAVEIN     = 0x00000013,
-    MM_SGI_RAD_ADATMONO1_WAVEOUT    = 0x00000014,
-    MM_SGI_RAD_ADATMONO2_WAVEOUT    = 0x00000015,
-    MM_SGI_RAD_ADATMONO3_WAVEOUT    = 0x00000016,
-    MM_SGI_RAD_ADATMONO4_WAVEOUT    = 0x00000017,
-    MM_SGI_RAD_ADATMONO5_WAVEOUT    = 0x00000018,
-    MM_SGI_RAD_ADATMONO6_WAVEOUT    = 0x00000019,
-    MM_SGI_RAD_ADATMONO7_WAVEOUT    = 0x0000001a,
-    MM_SGI_RAD_ADATMONO8_WAVEOUT    = 0x0000001b,
-    MM_SGI_RAD_ADATSTEREO12_WAVEOUT = 0x0000001c,
-    MM_SGI_RAD_ADATSTEREO32_WAVEOUT = 0x0000001d,
-    MM_SGI_RAD_ADATSTEREO56_WAVEOUT = 0x0000001e,
-    MM_SGI_RAD_ADATSTEREO78_WAVEOUT = 0x0000001f,
-    MM_SGI_RAD_ADAT8CHAN_WAVEOUT    = 0x00000020,
-    MM_SGI_RAD_AESMONO1_WAVEIN      = 0x00000021,
-    MM_SGI_RAD_AESMONO2_WAVEIN      = 0x00000022,
-    MM_SGI_RAD_AESSTEREO_WAVEIN     = 0x00000023,
-    MM_SGI_RAD_AESMONO1_WAVEOUT     = 0x00000024,
-    MM_SGI_RAD_AESMONO2_WAVEOUT     = 0x00000025,
-    MM_SGI_RAD_AESSTEREO_WAVEOUT    = 0x00000026,
+    MM_SGI_320_WAVEIN               = 0x00000001U,
+    MM_SGI_320_WAVEOUT              = 0x00000002U,
+    MM_SGI_320_MIXER                = 0x00000003U,
+    MM_SGI_540_WAVEIN               = 0x00000004U,
+    MM_SGI_540_WAVEOUT              = 0x00000005U,
+    MM_SGI_540_MIXER                = 0x00000006U,
+    MM_SGI_RAD_ADATMONO1_WAVEIN     = 0x00000007U,
+    MM_SGI_RAD_ADATMONO2_WAVEIN     = 0x00000008U,
+    MM_SGI_RAD_ADATMONO3_WAVEIN     = 0x00000009U,
+    MM_SGI_RAD_ADATMONO4_WAVEIN     = 0x0000000aU,
+    MM_SGI_RAD_ADATMONO5_WAVEIN     = 0x0000000bU,
+    MM_SGI_RAD_ADATMONO6_WAVEIN     = 0x0000000cU,
+    MM_SGI_RAD_ADATMONO7_WAVEIN     = 0x0000000dU,
+    MM_SGI_RAD_ADATMONO8_WAVEIN     = 0x0000000eU,
+    MM_SGI_RAD_ADATSTEREO12_WAVEIN  = 0x0000000fU,
+    MM_SGI_RAD_ADATSTEREO34_WAVEIN  = 0x00000010U,
+    MM_SGI_RAD_ADATSTEREO56_WAVEIN  = 0x00000011U,
+    MM_SGI_RAD_ADATSTEREO78_WAVEIN  = 0x00000012U,
+    MM_SGI_RAD_ADAT8CHAN_WAVEIN     = 0x00000013U,
+    MM_SGI_RAD_ADATMONO1_WAVEOUT    = 0x00000014U,
+    MM_SGI_RAD_ADATMONO2_WAVEOUT    = 0x00000015U,
+    MM_SGI_RAD_ADATMONO3_WAVEOUT    = 0x00000016U,
+    MM_SGI_RAD_ADATMONO4_WAVEOUT    = 0x00000017U,
+    MM_SGI_RAD_ADATMONO5_WAVEOUT    = 0x00000018U,
+    MM_SGI_RAD_ADATMONO6_WAVEOUT    = 0x00000019U,
+    MM_SGI_RAD_ADATMONO7_WAVEOUT    = 0x0000001aU,
+    MM_SGI_RAD_ADATMONO8_WAVEOUT    = 0x0000001bU,
+    MM_SGI_RAD_ADATSTEREO12_WAVEOUT = 0x0000001cU,
+    MM_SGI_RAD_ADATSTEREO32_WAVEOUT = 0x0000001dU,
+    MM_SGI_RAD_ADATSTEREO56_WAVEOUT = 0x0000001eU,
+    MM_SGI_RAD_ADATSTEREO78_WAVEOUT = 0x0000001fU,
+    MM_SGI_RAD_ADAT8CHAN_WAVEOUT    = 0x00000020U,
+    MM_SGI_RAD_AESMONO1_WAVEIN      = 0x00000021U,
+    MM_SGI_RAD_AESMONO2_WAVEIN      = 0x00000022U,
+    MM_SGI_RAD_AESSTEREO_WAVEIN     = 0x00000023U,
+    MM_SGI_RAD_AESMONO1_WAVEOUT     = 0x00000024U,
+    MM_SGI_RAD_AESMONO2_WAVEOUT     = 0x00000025U,
+    MM_SGI_RAD_AESSTEREO_WAVEOUT    = 0x00000026U,
 }
 
 enum : uint
 {
-    MM_IPI_ACM_HSX    = 0x00000001,
-    MM_IPI_ACM_RPELP  = 0x00000002,
-    MM_IPI_WF_ASSS    = 0x00000003,
-    MM_IPI_AT_WAVEOUT = 0x00000004,
-    MM_IPI_AT_WAVEIN  = 0x00000005,
-    MM_IPI_AT_MIXER   = 0x00000006,
+    MM_IPI_ACM_HSX    = 0x00000001U,
+    MM_IPI_ACM_RPELP  = 0x00000002U,
+    MM_IPI_WF_ASSS    = 0x00000003U,
+    MM_IPI_AT_WAVEOUT = 0x00000004U,
+    MM_IPI_AT_WAVEIN  = 0x00000005U,
+    MM_IPI_AT_MIXER   = 0x00000006U,
 }
 
 enum : uint
 {
-    MM_ICE_WAVEOUT   = 0x00000001,
-    MM_ICE_WAVEIN    = 0x00000002,
-    MM_ICE_MTWAVEOUT = 0x00000003,
-    MM_ICE_MTWAVEIN  = 0x00000004,
-    MM_ICE_MIDIOUT1  = 0x00000005,
-    MM_ICE_MIDIIN1   = 0x00000006,
-    MM_ICE_MIDIOUT2  = 0x00000007,
-    MM_ICE_MIDIIN2   = 0x00000008,
-    MM_ICE_SYNTH     = 0x00000009,
-    MM_ICE_MIXER     = 0x0000000a,
-    MM_ICE_AUX       = 0x0000000b,
+    MM_ICE_WAVEOUT   = 0x00000001U,
+    MM_ICE_WAVEIN    = 0x00000002U,
+    MM_ICE_MTWAVEOUT = 0x00000003U,
+    MM_ICE_MTWAVEIN  = 0x00000004U,
+    MM_ICE_MIDIOUT1  = 0x00000005U,
+    MM_ICE_MIDIIN1   = 0x00000006U,
+    MM_ICE_MIDIOUT2  = 0x00000007U,
+    MM_ICE_MIDIIN2   = 0x00000008U,
+    MM_ICE_SYNTH     = 0x00000009U,
+    MM_ICE_MIXER     = 0x0000000aU,
+    MM_ICE_AUX       = 0x0000000bU,
 }
 
 enum : uint
 {
-    MM_VQST_VQC1 = 0x00000001,
-    MM_VQST_VQC2 = 0x00000002,
+    MM_VQST_VQC1 = 0x00000001U,
+    MM_VQST_VQC2 = 0x00000002U,
 }
 
 enum : uint
 {
-    MM_ETEK_KWIKMIDI_MIDIIN  = 0x00000001,
-    MM_ETEK_KWIKMIDI_MIDIOUT = 0x00000002,
+    MM_ETEK_KWIKMIDI_MIDIIN  = 0x00000001U,
+    MM_ETEK_KWIKMIDI_MIDIOUT = 0x00000002U,
 }
 
 enum : uint
 {
-    MM_INTERNET_SSW_MIDIOUT = 0x0000000a,
-    MM_INTERNET_SSW_MIDIIN  = 0x0000000b,
-    MM_INTERNET_SSW_WAVEOUT = 0x0000000c,
-    MM_INTERNET_SSW_WAVEIN  = 0x0000000d,
+    MM_INTERNET_SSW_MIDIOUT = 0x0000000aU,
+    MM_INTERNET_SSW_MIDIIN  = 0x0000000bU,
+    MM_INTERNET_SSW_WAVEOUT = 0x0000000cU,
+    MM_INTERNET_SSW_WAVEIN  = 0x0000000dU,
 }
 
-enum uint MM_SONY_ACM_SCX = 0x00000001;
-enum uint MM_UH_ACM_ADPCM = 0x00000001;
+enum uint MM_SONY_ACM_SCX = 0x00000001U;
+enum uint MM_UH_ACM_ADPCM = 0x00000001U;
 
 enum : uint
 {
-    MM_SYDEC_NV_WAVEIN  = 0x00000001,
-    MM_SYDEC_NV_WAVEOUT = 0x00000002,
+    MM_SYDEC_NV_WAVEIN  = 0x00000001U,
+    MM_SYDEC_NV_WAVEOUT = 0x00000002U,
 }
 
 enum : uint
 {
-    MM_FLEXION_X300_WAVEIN  = 0x00000001,
-    MM_FLEXION_X300_WAVEOUT = 0x00000002,
+    MM_FLEXION_X300_WAVEIN  = 0x00000001U,
+    MM_FLEXION_X300_WAVEOUT = 0x00000002U,
 }
 
 enum : uint
 {
-    MM_VIA_WAVEOUT        = 0x00000001,
-    MM_VIA_WAVEIN         = 0x00000002,
-    MM_VIA_MIXER          = 0x00000003,
-    MM_VIA_AUX            = 0x00000004,
-    MM_VIA_MPU401_MIDIOUT = 0x00000005,
-    MM_VIA_MPU401_MIDIIN  = 0x00000006,
+    MM_VIA_WAVEOUT        = 0x00000001U,
+    MM_VIA_WAVEIN         = 0x00000002U,
+    MM_VIA_MIXER          = 0x00000003U,
+    MM_VIA_AUX            = 0x00000004U,
+    MM_VIA_MPU401_MIDIOUT = 0x00000005U,
+    MM_VIA_MPU401_MIDIIN  = 0x00000006U,
 }
 
 enum : uint
 {
-    MM_VIA_SWFM_SYNTH         = 0x00000007,
-    MM_VIA_WDM_WAVEOUT        = 0x00000008,
-    MM_VIA_WDM_WAVEIN         = 0x00000009,
-    MM_VIA_WDM_MIXER          = 0x0000000a,
-    MM_VIA_WDM_MPU401_MIDIOUT = 0x0000000b,
-    MM_VIA_WDM_MPU401_MIDIIN  = 0x0000000c,
+    MM_VIA_SWFM_SYNTH         = 0x00000007U,
+    MM_VIA_WDM_WAVEOUT        = 0x00000008U,
+    MM_VIA_WDM_WAVEIN         = 0x00000009U,
+    MM_VIA_WDM_MIXER          = 0x0000000aU,
+    MM_VIA_WDM_MPU401_MIDIOUT = 0x0000000bU,
+    MM_VIA_WDM_MPU401_MIDIIN  = 0x0000000cU,
 }
 
 enum : uint
 {
-    MM_MICRONAS_SC4    = 0x00000001,
-    MM_MICRONAS_CLP833 = 0x00000002,
+    MM_MICRONAS_SC4    = 0x00000001U,
+    MM_MICRONAS_CLP833 = 0x00000002U,
 }
 
 enum : uint
 {
-    MM_HP_WAVEOUT = 0x00000001,
-    MM_HP_WAVEIN  = 0x00000002,
+    MM_HP_WAVEOUT = 0x00000001U,
+    MM_HP_WAVEIN  = 0x00000002U,
 }
 
 enum : uint
 {
-    MM_QUICKAUDIO_MINIMIDI = 0x00000001,
-    MM_QUICKAUDIO_MAXIMIDI = 0x00000002,
+    MM_QUICKAUDIO_MINIMIDI = 0x00000001U,
+    MM_QUICKAUDIO_MAXIMIDI = 0x00000002U,
 }
 
 enum : uint
 {
-    MM_ICCC_UNA3_WAVEIN  = 0x00000001,
-    MM_ICCC_UNA3_WAVEOUT = 0x00000002,
-    MM_ICCC_UNA3_AUX     = 0x00000003,
-    MM_ICCC_UNA3_MIXER   = 0x00000004,
+    MM_ICCC_UNA3_WAVEIN  = 0x00000001U,
+    MM_ICCC_UNA3_WAVEOUT = 0x00000002U,
+    MM_ICCC_UNA3_AUX     = 0x00000003U,
+    MM_ICCC_UNA3_MIXER   = 0x00000004U,
 }
 
 enum : uint
 {
-    MM_3COM_CB_MIXER   = 0x00000001,
-    MM_3COM_CB_WAVEIN  = 0x00000002,
-    MM_3COM_CB_WAVEOUT = 0x00000003,
+    MM_3COM_CB_MIXER   = 0x00000001U,
+    MM_3COM_CB_WAVEIN  = 0x00000002U,
+    MM_3COM_CB_WAVEOUT = 0x00000003U,
 }
 
 enum : uint
 {
-    MM_MINDMAKER_GC_WAVEIN  = 0x00000001,
-    MM_MINDMAKER_GC_WAVEOUT = 0x00000002,
-    MM_MINDMAKER_GC_MIXER   = 0x00000003,
+    MM_MINDMAKER_GC_WAVEIN  = 0x00000001U,
+    MM_MINDMAKER_GC_WAVEOUT = 0x00000002U,
+    MM_MINDMAKER_GC_MIXER   = 0x00000003U,
 }
 
 enum : uint
 {
-    MM_TELEKOL_WAVEOUT = 0x00000001,
-    MM_TELEKOL_WAVEIN  = 0x00000002,
+    MM_TELEKOL_WAVEOUT = 0x00000001U,
+    MM_TELEKOL_WAVEIN  = 0x00000002U,
 }
 
 enum : uint
 {
-    MM_ALGOVISION_VB80WAVEOUT = 0x00000001,
-    MM_ALGOVISION_VB80WAVEIN  = 0x00000002,
-    MM_ALGOVISION_VB80MIXER   = 0x00000003,
-    MM_ALGOVISION_VB80AUX     = 0x00000004,
-    MM_ALGOVISION_VB80AUX2    = 0x00000005,
+    MM_ALGOVISION_VB80WAVEOUT = 0x00000001U,
+    MM_ALGOVISION_VB80WAVEIN  = 0x00000002U,
+    MM_ALGOVISION_VB80MIXER   = 0x00000003U,
+    MM_ALGOVISION_VB80AUX     = 0x00000004U,
+    MM_ALGOVISION_VB80AUX2    = 0x00000005U,
 }
 
 enum : uint
 {
-    WAVE_FORMAT_UNKNOWN            = 0x00000000,
-    WAVE_FORMAT_ADPCM              = 0x00000002,
-    WAVE_FORMAT_IEEE_FLOAT         = 0x00000003,
-    WAVE_FORMAT_VSELP              = 0x00000004,
-    WAVE_FORMAT_IBM_CVSD           = 0x00000005,
-    WAVE_FORMAT_ALAW               = 0x00000006,
-    WAVE_FORMAT_MULAW              = 0x00000007,
-    WAVE_FORMAT_DTS                = 0x00000008,
-    WAVE_FORMAT_DRM                = 0x00000009,
-    WAVE_FORMAT_WMAVOICE9          = 0x0000000a,
-    WAVE_FORMAT_WMAVOICE10         = 0x0000000b,
-    WAVE_FORMAT_OKI_ADPCM          = 0x00000010,
-    WAVE_FORMAT_DVI_ADPCM          = 0x00000011,
-    WAVE_FORMAT_IMA_ADPCM          = 0x00000011,
-    WAVE_FORMAT_MEDIASPACE_ADPCM   = 0x00000012,
-    WAVE_FORMAT_SIERRA_ADPCM       = 0x00000013,
-    WAVE_FORMAT_G723_ADPCM         = 0x00000014,
-    WAVE_FORMAT_DIGISTD            = 0x00000015,
-    WAVE_FORMAT_DIGIFIX            = 0x00000016,
-    WAVE_FORMAT_DIALOGIC_OKI_ADPCM = 0x00000017,
+    WAVE_FORMAT_UNKNOWN            = 0x00000000U,
+    WAVE_FORMAT_ADPCM              = 0x00000002U,
+    WAVE_FORMAT_IEEE_FLOAT         = 0x00000003U,
+    WAVE_FORMAT_VSELP              = 0x00000004U,
+    WAVE_FORMAT_IBM_CVSD           = 0x00000005U,
+    WAVE_FORMAT_ALAW               = 0x00000006U,
+    WAVE_FORMAT_MULAW              = 0x00000007U,
+    WAVE_FORMAT_DTS                = 0x00000008U,
+    WAVE_FORMAT_DRM                = 0x00000009U,
+    WAVE_FORMAT_WMAVOICE9          = 0x0000000aU,
+    WAVE_FORMAT_WMAVOICE10         = 0x0000000bU,
+    WAVE_FORMAT_OKI_ADPCM          = 0x00000010U,
+    WAVE_FORMAT_DVI_ADPCM          = 0x00000011U,
+    WAVE_FORMAT_IMA_ADPCM          = 0x00000011U,
+    WAVE_FORMAT_MEDIASPACE_ADPCM   = 0x00000012U,
+    WAVE_FORMAT_SIERRA_ADPCM       = 0x00000013U,
+    WAVE_FORMAT_G723_ADPCM         = 0x00000014U,
+    WAVE_FORMAT_DIGISTD            = 0x00000015U,
+    WAVE_FORMAT_DIGIFIX            = 0x00000016U,
+    WAVE_FORMAT_DIALOGIC_OKI_ADPCM = 0x00000017U,
 }
 
 enum : uint
 {
-    WAVE_FORMAT_MEDIAVISION_ADPCM   = 0x00000018,
-    WAVE_FORMAT_CU_CODEC            = 0x00000019,
-    WAVE_FORMAT_HP_DYN_VOICE        = 0x0000001a,
-    WAVE_FORMAT_YAMAHA_ADPCM        = 0x00000020,
-    WAVE_FORMAT_SONARC              = 0x00000021,
-    WAVE_FORMAT_DSPGROUP_TRUESPEECH = 0x00000022,
+    WAVE_FORMAT_MEDIAVISION_ADPCM   = 0x00000018U,
+    WAVE_FORMAT_CU_CODEC            = 0x00000019U,
+    WAVE_FORMAT_HP_DYN_VOICE        = 0x0000001aU,
+    WAVE_FORMAT_YAMAHA_ADPCM        = 0x00000020U,
+    WAVE_FORMAT_SONARC              = 0x00000021U,
+    WAVE_FORMAT_DSPGROUP_TRUESPEECH = 0x00000022U,
 }
 
 enum : uint
 {
-    WAVE_FORMAT_ECHOSC1                = 0x00000023,
-    WAVE_FORMAT_AUDIOFILE_AF36         = 0x00000024,
-    WAVE_FORMAT_APTX                   = 0x00000025,
-    WAVE_FORMAT_AUDIOFILE_AF10         = 0x00000026,
-    WAVE_FORMAT_PROSODY_1612           = 0x00000027,
-    WAVE_FORMAT_LRC                    = 0x00000028,
-    WAVE_FORMAT_DOLBY_AC2              = 0x00000030,
-    WAVE_FORMAT_GSM610                 = 0x00000031,
-    WAVE_FORMAT_MSNAUDIO               = 0x00000032,
-    WAVE_FORMAT_ANTEX_ADPCME           = 0x00000033,
-    WAVE_FORMAT_CONTROL_RES_VQLPC      = 0x00000034,
-    WAVE_FORMAT_DIGIREAL               = 0x00000035,
-    WAVE_FORMAT_DIGIADPCM              = 0x00000036,
-    WAVE_FORMAT_CONTROL_RES_CR10       = 0x00000037,
-    WAVE_FORMAT_NMS_VBXADPCM           = 0x00000038,
-    WAVE_FORMAT_CS_IMAADPCM            = 0x00000039,
-    WAVE_FORMAT_ECHOSC3                = 0x0000003a,
-    WAVE_FORMAT_ROCKWELL_ADPCM         = 0x0000003b,
-    WAVE_FORMAT_ROCKWELL_DIGITALK      = 0x0000003c,
-    WAVE_FORMAT_XEBEC                  = 0x0000003d,
-    WAVE_FORMAT_G721_ADPCM             = 0x00000040,
-    WAVE_FORMAT_G728_CELP              = 0x00000041,
-    WAVE_FORMAT_MSG723                 = 0x00000042,
-    WAVE_FORMAT_INTEL_G723_1           = 0x00000043,
-    WAVE_FORMAT_INTEL_G729             = 0x00000044,
-    WAVE_FORMAT_SHARP_G726             = 0x00000045,
-    WAVE_FORMAT_MPEG                   = 0x00000050,
-    WAVE_FORMAT_RT24                   = 0x00000052,
-    WAVE_FORMAT_PAC                    = 0x00000053,
-    WAVE_FORMAT_MPEGLAYER3             = 0x00000055,
-    WAVE_FORMAT_LUCENT_G723            = 0x00000059,
-    WAVE_FORMAT_CIRRUS                 = 0x00000060,
-    WAVE_FORMAT_ESPCM                  = 0x00000061,
-    WAVE_FORMAT_VOXWARE                = 0x00000062,
-    WAVE_FORMAT_CANOPUS_ATRAC          = 0x00000063,
-    WAVE_FORMAT_G726_ADPCM             = 0x00000064,
-    WAVE_FORMAT_G722_ADPCM             = 0x00000065,
-    WAVE_FORMAT_DSAT                   = 0x00000066,
-    WAVE_FORMAT_DSAT_DISPLAY           = 0x00000067,
-    WAVE_FORMAT_VOXWARE_BYTE_ALIGNED   = 0x00000069,
-    WAVE_FORMAT_VOXWARE_AC8            = 0x00000070,
-    WAVE_FORMAT_VOXWARE_AC10           = 0x00000071,
-    WAVE_FORMAT_VOXWARE_AC16           = 0x00000072,
-    WAVE_FORMAT_VOXWARE_AC20           = 0x00000073,
-    WAVE_FORMAT_VOXWARE_RT24           = 0x00000074,
-    WAVE_FORMAT_VOXWARE_RT29           = 0x00000075,
-    WAVE_FORMAT_VOXWARE_RT29HW         = 0x00000076,
-    WAVE_FORMAT_VOXWARE_VR12           = 0x00000077,
-    WAVE_FORMAT_VOXWARE_VR18           = 0x00000078,
-    WAVE_FORMAT_VOXWARE_TQ40           = 0x00000079,
-    WAVE_FORMAT_VOXWARE_SC3            = 0x0000007a,
-    WAVE_FORMAT_VOXWARE_SC3_1          = 0x0000007b,
-    WAVE_FORMAT_SOFTSOUND              = 0x00000080,
-    WAVE_FORMAT_VOXWARE_TQ60           = 0x00000081,
-    WAVE_FORMAT_MSRT24                 = 0x00000082,
-    WAVE_FORMAT_G729A                  = 0x00000083,
-    WAVE_FORMAT_MVI_MVI2               = 0x00000084,
-    WAVE_FORMAT_DF_G726                = 0x00000085,
-    WAVE_FORMAT_DF_GSM610              = 0x00000086,
-    WAVE_FORMAT_ISIAUDIO               = 0x00000088,
-    WAVE_FORMAT_ONLIVE                 = 0x00000089,
-    WAVE_FORMAT_MULTITUDE_FT_SX20      = 0x0000008a,
-    WAVE_FORMAT_INFOCOM_ITS_G721_ADPCM = 0x0000008b,
+    WAVE_FORMAT_ECHOSC1                = 0x00000023U,
+    WAVE_FORMAT_AUDIOFILE_AF36         = 0x00000024U,
+    WAVE_FORMAT_APTX                   = 0x00000025U,
+    WAVE_FORMAT_AUDIOFILE_AF10         = 0x00000026U,
+    WAVE_FORMAT_PROSODY_1612           = 0x00000027U,
+    WAVE_FORMAT_LRC                    = 0x00000028U,
+    WAVE_FORMAT_DOLBY_AC2              = 0x00000030U,
+    WAVE_FORMAT_GSM610                 = 0x00000031U,
+    WAVE_FORMAT_MSNAUDIO               = 0x00000032U,
+    WAVE_FORMAT_ANTEX_ADPCME           = 0x00000033U,
+    WAVE_FORMAT_CONTROL_RES_VQLPC      = 0x00000034U,
+    WAVE_FORMAT_DIGIREAL               = 0x00000035U,
+    WAVE_FORMAT_DIGIADPCM              = 0x00000036U,
+    WAVE_FORMAT_CONTROL_RES_CR10       = 0x00000037U,
+    WAVE_FORMAT_NMS_VBXADPCM           = 0x00000038U,
+    WAVE_FORMAT_CS_IMAADPCM            = 0x00000039U,
+    WAVE_FORMAT_ECHOSC3                = 0x0000003aU,
+    WAVE_FORMAT_ROCKWELL_ADPCM         = 0x0000003bU,
+    WAVE_FORMAT_ROCKWELL_DIGITALK      = 0x0000003cU,
+    WAVE_FORMAT_XEBEC                  = 0x0000003dU,
+    WAVE_FORMAT_G721_ADPCM             = 0x00000040U,
+    WAVE_FORMAT_G728_CELP              = 0x00000041U,
+    WAVE_FORMAT_MSG723                 = 0x00000042U,
+    WAVE_FORMAT_INTEL_G723_1           = 0x00000043U,
+    WAVE_FORMAT_INTEL_G729             = 0x00000044U,
+    WAVE_FORMAT_SHARP_G726             = 0x00000045U,
+    WAVE_FORMAT_MPEG                   = 0x00000050U,
+    WAVE_FORMAT_RT24                   = 0x00000052U,
+    WAVE_FORMAT_PAC                    = 0x00000053U,
+    WAVE_FORMAT_MPEGLAYER3             = 0x00000055U,
+    WAVE_FORMAT_LUCENT_G723            = 0x00000059U,
+    WAVE_FORMAT_CIRRUS                 = 0x00000060U,
+    WAVE_FORMAT_ESPCM                  = 0x00000061U,
+    WAVE_FORMAT_VOXWARE                = 0x00000062U,
+    WAVE_FORMAT_CANOPUS_ATRAC          = 0x00000063U,
+    WAVE_FORMAT_G726_ADPCM             = 0x00000064U,
+    WAVE_FORMAT_G722_ADPCM             = 0x00000065U,
+    WAVE_FORMAT_DSAT                   = 0x00000066U,
+    WAVE_FORMAT_DSAT_DISPLAY           = 0x00000067U,
+    WAVE_FORMAT_VOXWARE_BYTE_ALIGNED   = 0x00000069U,
+    WAVE_FORMAT_VOXWARE_AC8            = 0x00000070U,
+    WAVE_FORMAT_VOXWARE_AC10           = 0x00000071U,
+    WAVE_FORMAT_VOXWARE_AC16           = 0x00000072U,
+    WAVE_FORMAT_VOXWARE_AC20           = 0x00000073U,
+    WAVE_FORMAT_VOXWARE_RT24           = 0x00000074U,
+    WAVE_FORMAT_VOXWARE_RT29           = 0x00000075U,
+    WAVE_FORMAT_VOXWARE_RT29HW         = 0x00000076U,
+    WAVE_FORMAT_VOXWARE_VR12           = 0x00000077U,
+    WAVE_FORMAT_VOXWARE_VR18           = 0x00000078U,
+    WAVE_FORMAT_VOXWARE_TQ40           = 0x00000079U,
+    WAVE_FORMAT_VOXWARE_SC3            = 0x0000007aU,
+    WAVE_FORMAT_VOXWARE_SC3_1          = 0x0000007bU,
+    WAVE_FORMAT_SOFTSOUND              = 0x00000080U,
+    WAVE_FORMAT_VOXWARE_TQ60           = 0x00000081U,
+    WAVE_FORMAT_MSRT24                 = 0x00000082U,
+    WAVE_FORMAT_G729A                  = 0x00000083U,
+    WAVE_FORMAT_MVI_MVI2               = 0x00000084U,
+    WAVE_FORMAT_DF_G726                = 0x00000085U,
+    WAVE_FORMAT_DF_GSM610              = 0x00000086U,
+    WAVE_FORMAT_ISIAUDIO               = 0x00000088U,
+    WAVE_FORMAT_ONLIVE                 = 0x00000089U,
+    WAVE_FORMAT_MULTITUDE_FT_SX20      = 0x0000008aU,
+    WAVE_FORMAT_INFOCOM_ITS_G721_ADPCM = 0x0000008bU,
 }
 
 enum : uint
 {
-    WAVE_FORMAT_CONVEDIA_G729              = 0x0000008c,
-    WAVE_FORMAT_CONGRUENCY                 = 0x0000008d,
-    WAVE_FORMAT_SBC24                      = 0x00000091,
-    WAVE_FORMAT_DOLBY_AC3_SPDIF            = 0x00000092,
-    WAVE_FORMAT_MEDIASONIC_G723            = 0x00000093,
-    WAVE_FORMAT_PROSODY_8KBPS              = 0x00000094,
-    WAVE_FORMAT_ZYXEL_ADPCM                = 0x00000097,
-    WAVE_FORMAT_PHILIPS_LPCBB              = 0x00000098,
-    WAVE_FORMAT_PACKED                     = 0x00000099,
-    WAVE_FORMAT_MALDEN_PHONYTALK           = 0x000000a0,
-    WAVE_FORMAT_RACAL_RECORDER_GSM         = 0x000000a1,
-    WAVE_FORMAT_RACAL_RECORDER_G720_A      = 0x000000a2,
-    WAVE_FORMAT_RACAL_RECORDER_G723_1      = 0x000000a3,
-    WAVE_FORMAT_RACAL_RECORDER_TETRA_ACELP = 0x000000a4,
+    WAVE_FORMAT_CONVEDIA_G729              = 0x0000008cU,
+    WAVE_FORMAT_CONGRUENCY                 = 0x0000008dU,
+    WAVE_FORMAT_SBC24                      = 0x00000091U,
+    WAVE_FORMAT_DOLBY_AC3_SPDIF            = 0x00000092U,
+    WAVE_FORMAT_MEDIASONIC_G723            = 0x00000093U,
+    WAVE_FORMAT_PROSODY_8KBPS              = 0x00000094U,
+    WAVE_FORMAT_ZYXEL_ADPCM                = 0x00000097U,
+    WAVE_FORMAT_PHILIPS_LPCBB              = 0x00000098U,
+    WAVE_FORMAT_PACKED                     = 0x00000099U,
+    WAVE_FORMAT_MALDEN_PHONYTALK           = 0x000000a0U,
+    WAVE_FORMAT_RACAL_RECORDER_GSM         = 0x000000a1U,
+    WAVE_FORMAT_RACAL_RECORDER_G720_A      = 0x000000a2U,
+    WAVE_FORMAT_RACAL_RECORDER_G723_1      = 0x000000a3U,
+    WAVE_FORMAT_RACAL_RECORDER_TETRA_ACELP = 0x000000a4U,
 }
 
 enum : uint
 {
-    WAVE_FORMAT_NEC_AAC                 = 0x000000b0,
-    WAVE_FORMAT_RAW_AAC1                = 0x000000ff,
-    WAVE_FORMAT_RHETOREX_ADPCM          = 0x00000100,
-    WAVE_FORMAT_IRAT                    = 0x00000101,
-    WAVE_FORMAT_VIVO_G723               = 0x00000111,
-    WAVE_FORMAT_VIVO_SIREN              = 0x00000112,
-    WAVE_FORMAT_PHILIPS_CELP            = 0x00000120,
-    WAVE_FORMAT_PHILIPS_GRUNDIG         = 0x00000121,
-    WAVE_FORMAT_DIGITAL_G723            = 0x00000123,
-    WAVE_FORMAT_SANYO_LD_ADPCM          = 0x00000125,
-    WAVE_FORMAT_SIPROLAB_ACEPLNET       = 0x00000130,
-    WAVE_FORMAT_SIPROLAB_ACELP4800      = 0x00000131,
-    WAVE_FORMAT_SIPROLAB_ACELP8V3       = 0x00000132,
-    WAVE_FORMAT_SIPROLAB_G729           = 0x00000133,
-    WAVE_FORMAT_SIPROLAB_G729A          = 0x00000134,
-    WAVE_FORMAT_SIPROLAB_KELVIN         = 0x00000135,
-    WAVE_FORMAT_VOICEAGE_AMR            = 0x00000136,
-    WAVE_FORMAT_G726ADPCM               = 0x00000140,
-    WAVE_FORMAT_DICTAPHONE_CELP68       = 0x00000141,
-    WAVE_FORMAT_DICTAPHONE_CELP54       = 0x00000142,
-    WAVE_FORMAT_QUALCOMM_PUREVOICE      = 0x00000150,
-    WAVE_FORMAT_QUALCOMM_HALFRATE       = 0x00000151,
-    WAVE_FORMAT_TUBGSM                  = 0x00000155,
-    WAVE_FORMAT_MSAUDIO1                = 0x00000160,
-    WAVE_FORMAT_WMAUDIO2                = 0x00000161,
-    WAVE_FORMAT_WMAUDIO3                = 0x00000162,
-    WAVE_FORMAT_WMAUDIO_LOSSLESS        = 0x00000163,
-    WAVE_FORMAT_WMASPDIF                = 0x00000164,
-    WAVE_FORMAT_UNISYS_NAP_ADPCM        = 0x00000170,
-    WAVE_FORMAT_UNISYS_NAP_ULAW         = 0x00000171,
-    WAVE_FORMAT_UNISYS_NAP_ALAW         = 0x00000172,
-    WAVE_FORMAT_UNISYS_NAP_16K          = 0x00000173,
-    WAVE_FORMAT_SYCOM_ACM_SYC008        = 0x00000174,
-    WAVE_FORMAT_SYCOM_ACM_SYC701_G726L  = 0x00000175,
-    WAVE_FORMAT_SYCOM_ACM_SYC701_CELP54 = 0x00000176,
-    WAVE_FORMAT_SYCOM_ACM_SYC701_CELP68 = 0x00000177,
+    WAVE_FORMAT_NEC_AAC                 = 0x000000b0U,
+    WAVE_FORMAT_RAW_AAC1                = 0x000000ffU,
+    WAVE_FORMAT_RHETOREX_ADPCM          = 0x00000100U,
+    WAVE_FORMAT_IRAT                    = 0x00000101U,
+    WAVE_FORMAT_VIVO_G723               = 0x00000111U,
+    WAVE_FORMAT_VIVO_SIREN              = 0x00000112U,
+    WAVE_FORMAT_PHILIPS_CELP            = 0x00000120U,
+    WAVE_FORMAT_PHILIPS_GRUNDIG         = 0x00000121U,
+    WAVE_FORMAT_DIGITAL_G723            = 0x00000123U,
+    WAVE_FORMAT_SANYO_LD_ADPCM          = 0x00000125U,
+    WAVE_FORMAT_SIPROLAB_ACEPLNET       = 0x00000130U,
+    WAVE_FORMAT_SIPROLAB_ACELP4800      = 0x00000131U,
+    WAVE_FORMAT_SIPROLAB_ACELP8V3       = 0x00000132U,
+    WAVE_FORMAT_SIPROLAB_G729           = 0x00000133U,
+    WAVE_FORMAT_SIPROLAB_G729A          = 0x00000134U,
+    WAVE_FORMAT_SIPROLAB_KELVIN         = 0x00000135U,
+    WAVE_FORMAT_VOICEAGE_AMR            = 0x00000136U,
+    WAVE_FORMAT_G726ADPCM               = 0x00000140U,
+    WAVE_FORMAT_DICTAPHONE_CELP68       = 0x00000141U,
+    WAVE_FORMAT_DICTAPHONE_CELP54       = 0x00000142U,
+    WAVE_FORMAT_QUALCOMM_PUREVOICE      = 0x00000150U,
+    WAVE_FORMAT_QUALCOMM_HALFRATE       = 0x00000151U,
+    WAVE_FORMAT_TUBGSM                  = 0x00000155U,
+    WAVE_FORMAT_MSAUDIO1                = 0x00000160U,
+    WAVE_FORMAT_WMAUDIO2                = 0x00000161U,
+    WAVE_FORMAT_WMAUDIO3                = 0x00000162U,
+    WAVE_FORMAT_WMAUDIO_LOSSLESS        = 0x00000163U,
+    WAVE_FORMAT_WMASPDIF                = 0x00000164U,
+    WAVE_FORMAT_UNISYS_NAP_ADPCM        = 0x00000170U,
+    WAVE_FORMAT_UNISYS_NAP_ULAW         = 0x00000171U,
+    WAVE_FORMAT_UNISYS_NAP_ALAW         = 0x00000172U,
+    WAVE_FORMAT_UNISYS_NAP_16K          = 0x00000173U,
+    WAVE_FORMAT_SYCOM_ACM_SYC008        = 0x00000174U,
+    WAVE_FORMAT_SYCOM_ACM_SYC701_G726L  = 0x00000175U,
+    WAVE_FORMAT_SYCOM_ACM_SYC701_CELP54 = 0x00000176U,
+    WAVE_FORMAT_SYCOM_ACM_SYC701_CELP68 = 0x00000177U,
 }
 
-enum uint WAVE_FORMAT_KNOWLEDGE_ADVENTURE_ADPCM = 0x00000178;
-enum uint WAVE_FORMAT_FRAUNHOFER_IIS_MPEG2_AAC = 0x00000180;
+enum uint WAVE_FORMAT_KNOWLEDGE_ADVENTURE_ADPCM = 0x00000178U;
+enum uint WAVE_FORMAT_FRAUNHOFER_IIS_MPEG2_AAC = 0x00000180U;
 
 enum : uint
 {
-    WAVE_FORMAT_DTS_DS                = 0x00000190,
-    WAVE_FORMAT_CREATIVE_ADPCM        = 0x00000200,
-    WAVE_FORMAT_CREATIVE_FASTSPEECH8  = 0x00000202,
-    WAVE_FORMAT_CREATIVE_FASTSPEECH10 = 0x00000203,
+    WAVE_FORMAT_DTS_DS                = 0x00000190U,
+    WAVE_FORMAT_CREATIVE_ADPCM        = 0x00000200U,
+    WAVE_FORMAT_CREATIVE_FASTSPEECH8  = 0x00000202U,
+    WAVE_FORMAT_CREATIVE_FASTSPEECH10 = 0x00000203U,
 }
 
 enum : uint
 {
-    WAVE_FORMAT_UHER_ADPCM                 = 0x00000210,
-    WAVE_FORMAT_ULEAD_DV_AUDIO             = 0x00000215,
-    WAVE_FORMAT_ULEAD_DV_AUDIO_1           = 0x00000216,
-    WAVE_FORMAT_QUARTERDECK                = 0x00000220,
-    WAVE_FORMAT_ILINK_VC                   = 0x00000230,
-    WAVE_FORMAT_RAW_SPORT                  = 0x00000240,
-    WAVE_FORMAT_ESST_AC3                   = 0x00000241,
-    WAVE_FORMAT_GENERIC_PASSTHRU           = 0x00000249,
-    WAVE_FORMAT_IPI_HSX                    = 0x00000250,
-    WAVE_FORMAT_IPI_RPELP                  = 0x00000251,
-    WAVE_FORMAT_CS2                        = 0x00000260,
-    WAVE_FORMAT_SONY_SCX                   = 0x00000270,
-    WAVE_FORMAT_SONY_SCY                   = 0x00000271,
-    WAVE_FORMAT_SONY_ATRAC3                = 0x00000272,
-    WAVE_FORMAT_SONY_SPC                   = 0x00000273,
-    WAVE_FORMAT_TELUM_AUDIO                = 0x00000280,
-    WAVE_FORMAT_TELUM_IA_AUDIO             = 0x00000281,
-    WAVE_FORMAT_NORCOM_VOICE_SYSTEMS_ADPCM = 0x00000285,
+    WAVE_FORMAT_UHER_ADPCM                 = 0x00000210U,
+    WAVE_FORMAT_ULEAD_DV_AUDIO             = 0x00000215U,
+    WAVE_FORMAT_ULEAD_DV_AUDIO_1           = 0x00000216U,
+    WAVE_FORMAT_QUARTERDECK                = 0x00000220U,
+    WAVE_FORMAT_ILINK_VC                   = 0x00000230U,
+    WAVE_FORMAT_RAW_SPORT                  = 0x00000240U,
+    WAVE_FORMAT_ESST_AC3                   = 0x00000241U,
+    WAVE_FORMAT_GENERIC_PASSTHRU           = 0x00000249U,
+    WAVE_FORMAT_IPI_HSX                    = 0x00000250U,
+    WAVE_FORMAT_IPI_RPELP                  = 0x00000251U,
+    WAVE_FORMAT_CS2                        = 0x00000260U,
+    WAVE_FORMAT_SONY_SCX                   = 0x00000270U,
+    WAVE_FORMAT_SONY_SCY                   = 0x00000271U,
+    WAVE_FORMAT_SONY_ATRAC3                = 0x00000272U,
+    WAVE_FORMAT_SONY_SPC                   = 0x00000273U,
+    WAVE_FORMAT_TELUM_AUDIO                = 0x00000280U,
+    WAVE_FORMAT_TELUM_IA_AUDIO             = 0x00000281U,
+    WAVE_FORMAT_NORCOM_VOICE_SYSTEMS_ADPCM = 0x00000285U,
 }
 
 enum : uint
 {
-    WAVE_FORMAT_FM_TOWNS_SND       = 0x00000300,
-    WAVE_FORMAT_MICRONAS           = 0x00000350,
-    WAVE_FORMAT_MICRONAS_CELP833   = 0x00000351,
-    WAVE_FORMAT_BTV_DIGITAL        = 0x00000400,
-    WAVE_FORMAT_INTEL_MUSIC_CODER  = 0x00000401,
-    WAVE_FORMAT_INDEO_AUDIO        = 0x00000402,
-    WAVE_FORMAT_QDESIGN_MUSIC      = 0x00000450,
-    WAVE_FORMAT_ON2_VP7_AUDIO      = 0x00000500,
-    WAVE_FORMAT_ON2_VP6_AUDIO      = 0x00000501,
-    WAVE_FORMAT_VME_VMPCM          = 0x00000680,
-    WAVE_FORMAT_TPC                = 0x00000681,
-    WAVE_FORMAT_LIGHTWAVE_LOSSLESS = 0x000008ae,
+    WAVE_FORMAT_FM_TOWNS_SND       = 0x00000300U,
+    WAVE_FORMAT_MICRONAS           = 0x00000350U,
+    WAVE_FORMAT_MICRONAS_CELP833   = 0x00000351U,
+    WAVE_FORMAT_BTV_DIGITAL        = 0x00000400U,
+    WAVE_FORMAT_INTEL_MUSIC_CODER  = 0x00000401U,
+    WAVE_FORMAT_INDEO_AUDIO        = 0x00000402U,
+    WAVE_FORMAT_QDESIGN_MUSIC      = 0x00000450U,
+    WAVE_FORMAT_ON2_VP7_AUDIO      = 0x00000500U,
+    WAVE_FORMAT_ON2_VP6_AUDIO      = 0x00000501U,
+    WAVE_FORMAT_VME_VMPCM          = 0x00000680U,
+    WAVE_FORMAT_TPC                = 0x00000681U,
+    WAVE_FORMAT_LIGHTWAVE_LOSSLESS = 0x000008aeU,
 }
 
 enum : uint
 {
-    WAVE_FORMAT_OLIGSM                  = 0x00001000,
-    WAVE_FORMAT_OLIADPCM                = 0x00001001,
-    WAVE_FORMAT_OLICELP                 = 0x00001002,
-    WAVE_FORMAT_OLISBC                  = 0x00001003,
-    WAVE_FORMAT_OLIOPR                  = 0x00001004,
-    WAVE_FORMAT_LH_CODEC                = 0x00001100,
-    WAVE_FORMAT_LH_CODEC_CELP           = 0x00001101,
-    WAVE_FORMAT_LH_CODEC_SBC8           = 0x00001102,
-    WAVE_FORMAT_LH_CODEC_SBC12          = 0x00001103,
-    WAVE_FORMAT_LH_CODEC_SBC16          = 0x00001104,
-    WAVE_FORMAT_NORRIS                  = 0x00001400,
-    WAVE_FORMAT_ISIAUDIO_2              = 0x00001401,
-    WAVE_FORMAT_SOUNDSPACE_MUSICOMPRESS = 0x00001500,
+    WAVE_FORMAT_OLIGSM                  = 0x00001000U,
+    WAVE_FORMAT_OLIADPCM                = 0x00001001U,
+    WAVE_FORMAT_OLICELP                 = 0x00001002U,
+    WAVE_FORMAT_OLISBC                  = 0x00001003U,
+    WAVE_FORMAT_OLIOPR                  = 0x00001004U,
+    WAVE_FORMAT_LH_CODEC                = 0x00001100U,
+    WAVE_FORMAT_LH_CODEC_CELP           = 0x00001101U,
+    WAVE_FORMAT_LH_CODEC_SBC8           = 0x00001102U,
+    WAVE_FORMAT_LH_CODEC_SBC12          = 0x00001103U,
+    WAVE_FORMAT_LH_CODEC_SBC16          = 0x00001104U,
+    WAVE_FORMAT_NORRIS                  = 0x00001400U,
+    WAVE_FORMAT_ISIAUDIO_2              = 0x00001401U,
+    WAVE_FORMAT_SOUNDSPACE_MUSICOMPRESS = 0x00001500U,
 }
 
 enum : uint
 {
-    WAVE_FORMAT_MPEG_ADTS_AAC       = 0x00001600,
-    WAVE_FORMAT_MPEG_RAW_AAC        = 0x00001601,
-    WAVE_FORMAT_MPEG_LOAS           = 0x00001602,
-    WAVE_FORMAT_NOKIA_MPEG_ADTS_AAC = 0x00001608,
-    WAVE_FORMAT_NOKIA_MPEG_RAW_AAC  = 0x00001609,
+    WAVE_FORMAT_MPEG_ADTS_AAC       = 0x00001600U,
+    WAVE_FORMAT_MPEG_RAW_AAC        = 0x00001601U,
+    WAVE_FORMAT_MPEG_LOAS           = 0x00001602U,
+    WAVE_FORMAT_NOKIA_MPEG_ADTS_AAC = 0x00001608U,
+    WAVE_FORMAT_NOKIA_MPEG_RAW_AAC  = 0x00001609U,
 }
 
 enum : uint
 {
-    WAVE_FORMAT_VODAFONE_MPEG_ADTS_AAC = 0x0000160a,
-    WAVE_FORMAT_VODAFONE_MPEG_RAW_AAC  = 0x0000160b,
+    WAVE_FORMAT_VODAFONE_MPEG_ADTS_AAC = 0x0000160aU,
+    WAVE_FORMAT_VODAFONE_MPEG_RAW_AAC  = 0x0000160bU,
 }
 
 enum : uint
 {
-    WAVE_FORMAT_MPEG_HEAAC          = 0x00001610,
-    WAVE_FORMAT_VOXWARE_RT24_SPEECH = 0x0000181c,
+    WAVE_FORMAT_MPEG_HEAAC          = 0x00001610U,
+    WAVE_FORMAT_VOXWARE_RT24_SPEECH = 0x0000181cU,
 }
 
-enum uint WAVE_FORMAT_SONICFOUNDRY_LOSSLESS = 0x00001971;
-enum uint WAVE_FORMAT_INNINGS_TELECOM_ADPCM = 0x00001979;
+enum uint WAVE_FORMAT_SONICFOUNDRY_LOSSLESS = 0x00001971U;
+enum uint WAVE_FORMAT_INNINGS_TELECOM_ADPCM = 0x00001979U;
 
 enum : uint
 {
-    WAVE_FORMAT_LUCENT_SX8300P     = 0x00001c07,
-    WAVE_FORMAT_LUCENT_SX5363S     = 0x00001c0c,
-    WAVE_FORMAT_CUSEEME            = 0x00001f03,
-    WAVE_FORMAT_NTCSOFT_ALF2CM_ACM = 0x00001fc4,
+    WAVE_FORMAT_LUCENT_SX8300P     = 0x00001c07U,
+    WAVE_FORMAT_LUCENT_SX5363S     = 0x00001c0cU,
+    WAVE_FORMAT_CUSEEME            = 0x00001f03U,
+    WAVE_FORMAT_NTCSOFT_ALF2CM_ACM = 0x00001fc4U,
 }
 
 enum : uint
 {
-    WAVE_FORMAT_DVM                      = 0x00002000,
-    WAVE_FORMAT_DTS2                     = 0x00002001,
-    WAVE_FORMAT_MAKEAVIS                 = 0x00003313,
-    WAVE_FORMAT_DIVIO_MPEG4_AAC          = 0x00004143,
-    WAVE_FORMAT_NOKIA_ADAPTIVE_MULTIRATE = 0x00004201,
+    WAVE_FORMAT_DVM                      = 0x00002000U,
+    WAVE_FORMAT_DTS2                     = 0x00002001U,
+    WAVE_FORMAT_MAKEAVIS                 = 0x00003313U,
+    WAVE_FORMAT_DIVIO_MPEG4_AAC          = 0x00004143U,
+    WAVE_FORMAT_NOKIA_ADAPTIVE_MULTIRATE = 0x00004201U,
 }
 
 enum : uint
 {
-    WAVE_FORMAT_DIVIO_G726             = 0x00004243,
-    WAVE_FORMAT_LEAD_SPEECH            = 0x0000434c,
-    WAVE_FORMAT_LEAD_VORBIS            = 0x0000564c,
-    WAVE_FORMAT_WAVPACK_AUDIO          = 0x00005756,
-    WAVE_FORMAT_ALAC                   = 0x00006c61,
-    WAVE_FORMAT_OGG_VORBIS_MODE_1      = 0x0000674f,
-    WAVE_FORMAT_OGG_VORBIS_MODE_2      = 0x00006750,
-    WAVE_FORMAT_OGG_VORBIS_MODE_3      = 0x00006751,
-    WAVE_FORMAT_OGG_VORBIS_MODE_1_PLUS = 0x0000676f,
-    WAVE_FORMAT_OGG_VORBIS_MODE_2_PLUS = 0x00006770,
-    WAVE_FORMAT_OGG_VORBIS_MODE_3_PLUS = 0x00006771,
+    WAVE_FORMAT_DIVIO_G726             = 0x00004243U,
+    WAVE_FORMAT_LEAD_SPEECH            = 0x0000434cU,
+    WAVE_FORMAT_LEAD_VORBIS            = 0x0000564cU,
+    WAVE_FORMAT_WAVPACK_AUDIO          = 0x00005756U,
+    WAVE_FORMAT_ALAC                   = 0x00006c61U,
+    WAVE_FORMAT_OGG_VORBIS_MODE_1      = 0x0000674fU,
+    WAVE_FORMAT_OGG_VORBIS_MODE_2      = 0x00006750U,
+    WAVE_FORMAT_OGG_VORBIS_MODE_3      = 0x00006751U,
+    WAVE_FORMAT_OGG_VORBIS_MODE_1_PLUS = 0x0000676fU,
+    WAVE_FORMAT_OGG_VORBIS_MODE_2_PLUS = 0x00006770U,
+    WAVE_FORMAT_OGG_VORBIS_MODE_3_PLUS = 0x00006771U,
 }
 
 enum : uint
 {
-    WAVE_FORMAT_3COM_NBX                = 0x00007000,
-    WAVE_FORMAT_OPUS                    = 0x0000704f,
-    WAVE_FORMAT_FAAD_AAC                = 0x0000706d,
-    WAVE_FORMAT_AMR_NB                  = 0x00007361,
-    WAVE_FORMAT_AMR_WB                  = 0x00007362,
-    WAVE_FORMAT_AMR_WP                  = 0x00007363,
-    WAVE_FORMAT_GSM_AMR_CBR             = 0x00007a21,
-    WAVE_FORMAT_GSM_AMR_VBR_SID         = 0x00007a22,
-    WAVE_FORMAT_COMVERSE_INFOSYS_G723_1 = 0x0000a100,
-    WAVE_FORMAT_COMVERSE_INFOSYS_AVQSBC = 0x0000a101,
-    WAVE_FORMAT_COMVERSE_INFOSYS_SBC    = 0x0000a102,
+    WAVE_FORMAT_3COM_NBX                = 0x00007000U,
+    WAVE_FORMAT_OPUS                    = 0x0000704fU,
+    WAVE_FORMAT_FAAD_AAC                = 0x0000706dU,
+    WAVE_FORMAT_AMR_NB                  = 0x00007361U,
+    WAVE_FORMAT_AMR_WB                  = 0x00007362U,
+    WAVE_FORMAT_AMR_WP                  = 0x00007363U,
+    WAVE_FORMAT_GSM_AMR_CBR             = 0x00007a21U,
+    WAVE_FORMAT_GSM_AMR_VBR_SID         = 0x00007a22U,
+    WAVE_FORMAT_COMVERSE_INFOSYS_G723_1 = 0x0000a100U,
+    WAVE_FORMAT_COMVERSE_INFOSYS_AVQSBC = 0x0000a101U,
+    WAVE_FORMAT_COMVERSE_INFOSYS_SBC    = 0x0000a102U,
 }
 
 enum : uint
 {
-    WAVE_FORMAT_SYMBOL_G729_A         = 0x0000a103,
-    WAVE_FORMAT_VOICEAGE_AMR_WB       = 0x0000a104,
-    WAVE_FORMAT_INGENIENT_G726        = 0x0000a105,
-    WAVE_FORMAT_MPEG4_AAC             = 0x0000a106,
-    WAVE_FORMAT_ENCORE_G726           = 0x0000a107,
-    WAVE_FORMAT_ZOLL_ASAO             = 0x0000a108,
-    WAVE_FORMAT_SPEEX_VOICE           = 0x0000a109,
-    WAVE_FORMAT_VIANIX_MASC           = 0x0000a10a,
-    WAVE_FORMAT_WM9_SPECTRUM_ANALYZER = 0x0000a10b,
-    WAVE_FORMAT_WMF_SPECTRUM_ANAYZER  = 0x0000a10c,
+    WAVE_FORMAT_SYMBOL_G729_A         = 0x0000a103U,
+    WAVE_FORMAT_VOICEAGE_AMR_WB       = 0x0000a104U,
+    WAVE_FORMAT_INGENIENT_G726        = 0x0000a105U,
+    WAVE_FORMAT_MPEG4_AAC             = 0x0000a106U,
+    WAVE_FORMAT_ENCORE_G726           = 0x0000a107U,
+    WAVE_FORMAT_ZOLL_ASAO             = 0x0000a108U,
+    WAVE_FORMAT_SPEEX_VOICE           = 0x0000a109U,
+    WAVE_FORMAT_VIANIX_MASC           = 0x0000a10aU,
+    WAVE_FORMAT_WM9_SPECTRUM_ANALYZER = 0x0000a10bU,
+    WAVE_FORMAT_WMF_SPECTRUM_ANAYZER  = 0x0000a10cU,
 }
 
 enum : uint
 {
-    WAVE_FORMAT_GSM_610                   = 0x0000a10d,
-    WAVE_FORMAT_GSM_620                   = 0x0000a10e,
-    WAVE_FORMAT_GSM_660                   = 0x0000a10f,
-    WAVE_FORMAT_GSM_690                   = 0x0000a110,
-    WAVE_FORMAT_GSM_ADAPTIVE_MULTIRATE_WB = 0x0000a111,
+    WAVE_FORMAT_GSM_610                   = 0x0000a10dU,
+    WAVE_FORMAT_GSM_620                   = 0x0000a10eU,
+    WAVE_FORMAT_GSM_660                   = 0x0000a10fU,
+    WAVE_FORMAT_GSM_690                   = 0x0000a110U,
+    WAVE_FORMAT_GSM_ADAPTIVE_MULTIRATE_WB = 0x0000a111U,
 }
 
 enum : uint
 {
-    WAVE_FORMAT_POLYCOM_G722               = 0x0000a112,
-    WAVE_FORMAT_POLYCOM_G728               = 0x0000a113,
-    WAVE_FORMAT_POLYCOM_G729_A             = 0x0000a114,
-    WAVE_FORMAT_POLYCOM_SIREN              = 0x0000a115,
-    WAVE_FORMAT_GLOBAL_IP_ILBC             = 0x0000a116,
-    WAVE_FORMAT_RADIOTIME_TIME_SHIFT_RADIO = 0x0000a117,
+    WAVE_FORMAT_POLYCOM_G722               = 0x0000a112U,
+    WAVE_FORMAT_POLYCOM_G728               = 0x0000a113U,
+    WAVE_FORMAT_POLYCOM_G729_A             = 0x0000a114U,
+    WAVE_FORMAT_POLYCOM_SIREN              = 0x0000a115U,
+    WAVE_FORMAT_GLOBAL_IP_ILBC             = 0x0000a116U,
+    WAVE_FORMAT_RADIOTIME_TIME_SHIFT_RADIO = 0x0000a117U,
 }
 
 enum : uint
 {
-    WAVE_FORMAT_NICE_ACA           = 0x0000a118,
-    WAVE_FORMAT_NICE_ADPCM         = 0x0000a119,
-    WAVE_FORMAT_VOCORD_G721        = 0x0000a11a,
-    WAVE_FORMAT_VOCORD_G726        = 0x0000a11b,
-    WAVE_FORMAT_VOCORD_G722_1      = 0x0000a11c,
-    WAVE_FORMAT_VOCORD_G728        = 0x0000a11d,
-    WAVE_FORMAT_VOCORD_G729        = 0x0000a11e,
-    WAVE_FORMAT_VOCORD_G729_A      = 0x0000a11f,
-    WAVE_FORMAT_VOCORD_G723_1      = 0x0000a120,
-    WAVE_FORMAT_VOCORD_LBC         = 0x0000a121,
-    WAVE_FORMAT_NICE_G728          = 0x0000a122,
-    WAVE_FORMAT_FRACE_TELECOM_G729 = 0x0000a123,
+    WAVE_FORMAT_NICE_ACA           = 0x0000a118U,
+    WAVE_FORMAT_NICE_ADPCM         = 0x0000a119U,
+    WAVE_FORMAT_VOCORD_G721        = 0x0000a11aU,
+    WAVE_FORMAT_VOCORD_G726        = 0x0000a11bU,
+    WAVE_FORMAT_VOCORD_G722_1      = 0x0000a11cU,
+    WAVE_FORMAT_VOCORD_G728        = 0x0000a11dU,
+    WAVE_FORMAT_VOCORD_G729        = 0x0000a11eU,
+    WAVE_FORMAT_VOCORD_G729_A      = 0x0000a11fU,
+    WAVE_FORMAT_VOCORD_G723_1      = 0x0000a120U,
+    WAVE_FORMAT_VOCORD_LBC         = 0x0000a121U,
+    WAVE_FORMAT_NICE_G728          = 0x0000a122U,
+    WAVE_FORMAT_FRACE_TELECOM_G729 = 0x0000a123U,
 }
 
 enum : uint
 {
-    WAVE_FORMAT_CODIAN      = 0x0000a124,
-    WAVE_FORMAT_DOLBY_AC4   = 0x0000ac40,
-    WAVE_FORMAT_FLAC        = 0x0000f1ac,
-    WAVE_FORMAT_DEVELOPMENT = 0x0000ffff,
+    WAVE_FORMAT_CODIAN      = 0x0000a124U,
+    WAVE_FORMAT_DOLBY_AC4   = 0x0000ac40U,
+    WAVE_FORMAT_FLAC        = 0x0000f1acU,
+    WAVE_FORMAT_DEVELOPMENT = 0x0000ffffU,
 }
 
 enum : uint
 {
-    ACM_MPEG_LAYER1        = 0x00000001,
-    ACM_MPEG_LAYER2        = 0x00000002,
-    ACM_MPEG_LAYER3        = 0x00000004,
-    ACM_MPEG_STEREO        = 0x00000001,
-    ACM_MPEG_JOINTSTEREO   = 0x00000002,
-    ACM_MPEG_DUALCHANNEL   = 0x00000004,
-    ACM_MPEG_SINGLECHANNEL = 0x00000008,
-    ACM_MPEG_PRIVATEBIT    = 0x00000001,
-    ACM_MPEG_COPYRIGHT     = 0x00000002,
-    ACM_MPEG_ORIGINALHOME  = 0x00000004,
-    ACM_MPEG_PROTECTIONBIT = 0x00000008,
-    ACM_MPEG_ID_MPEG1      = 0x00000010,
+    ACM_MPEG_LAYER1        = 0x00000001U,
+    ACM_MPEG_LAYER2        = 0x00000002U,
+    ACM_MPEG_LAYER3        = 0x00000004U,
+    ACM_MPEG_STEREO        = 0x00000001U,
+    ACM_MPEG_JOINTSTEREO   = 0x00000002U,
+    ACM_MPEG_DUALCHANNEL   = 0x00000004U,
+    ACM_MPEG_SINGLECHANNEL = 0x00000008U,
+    ACM_MPEG_PRIVATEBIT    = 0x00000001U,
+    ACM_MPEG_COPYRIGHT     = 0x00000002U,
+    ACM_MPEG_ORIGINALHOME  = 0x00000004U,
+    ACM_MPEG_PROTECTIONBIT = 0x00000008U,
+    ACM_MPEG_ID_MPEG1      = 0x00000010U,
 }
 
 enum : uint
 {
-    MPEGLAYER3_WFX_EXTRA_BYTES      = 0x0000000c,
-    MPEGLAYER3_ID_UNKNOWN           = 0x00000000,
-    MPEGLAYER3_ID_MPEG              = 0x00000001,
-    MPEGLAYER3_ID_CONSTANTFRAMESIZE = 0x00000002,
+    MPEGLAYER3_WFX_EXTRA_BYTES      = 0x0000000cU,
+    MPEGLAYER3_ID_UNKNOWN           = 0x00000000U,
+    MPEGLAYER3_ID_MPEG              = 0x00000001U,
+    MPEGLAYER3_ID_CONSTANTFRAMESIZE = 0x00000002U,
 }
 
-enum uint MM_MSFT_ACM_WMAUDIO = 0x00000027;
-enum uint WMAUDIO_BITS_PER_SAMPLE = 0x00000010;
-enum uint WMAUDIO_MAX_CHANNELS = 0x00000002;
-enum uint MM_MSFT_ACM_MSAUDIO1 = 0x00000027;
-enum uint MSAUDIO1_BITS_PER_SAMPLE = 0x00000010;
-enum uint MSAUDIO1_MAX_CHANNELS = 0x00000002;
-enum uint MM_MSFT_ACM_WMAUDIO2 = 0x00000065;
-enum uint WMAUDIO2_BITS_PER_SAMPLE = 0x00000010;
-enum uint WMAUDIO2_MAX_CHANNELS = 0x00000002;
+enum uint MM_MSFT_ACM_WMAUDIO = 0x00000027U;
+enum uint WMAUDIO_BITS_PER_SAMPLE = 0x00000010U;
+enum uint WMAUDIO_MAX_CHANNELS = 0x00000002U;
+enum uint MM_MSFT_ACM_MSAUDIO1 = 0x00000027U;
+enum uint MSAUDIO1_BITS_PER_SAMPLE = 0x00000010U;
+enum uint MSAUDIO1_MAX_CHANNELS = 0x00000002U;
+enum uint MM_MSFT_ACM_WMAUDIO2 = 0x00000065U;
+enum uint WMAUDIO2_BITS_PER_SAMPLE = 0x00000010U;
+enum uint WMAUDIO2_MAX_CHANNELS = 0x00000002U;
 
 enum : uint
 {
-    WAVE_FILTER_UNKNOWN     = 0x00000000,
-    WAVE_FILTER_DEVELOPMENT = 0x0000ffff,
-    WAVE_FILTER_VOLUME      = 0x00000001,
-    WAVE_FILTER_ECHO        = 0x00000002,
+    WAVE_FILTER_UNKNOWN     = 0x00000000U,
+    WAVE_FILTER_DEVELOPMENT = 0x0000ffffU,
+    WAVE_FILTER_VOLUME      = 0x00000001U,
+    WAVE_FILTER_ECHO        = 0x00000002U,
 }
 
-enum uint JPEG_PROCESS_BASELINE = 0x00000000;
+enum uint JPEG_PROCESS_BASELINE = 0x00000000U;
 enum int AVIIF_CONTROLFRAME = 0x00000200;
 
 enum : uint
 {
-    JIFMK_SOF0  = 0x0000ffc0,
-    JIFMK_SOF1  = 0x0000ffc1,
-    JIFMK_SOF2  = 0x0000ffc2,
-    JIFMK_SOF3  = 0x0000ffc3,
-    JIFMK_SOF5  = 0x0000ffc5,
-    JIFMK_SOF6  = 0x0000ffc6,
-    JIFMK_SOF7  = 0x0000ffc7,
-    JIFMK_JPG   = 0x0000ffc8,
-    JIFMK_SOF9  = 0x0000ffc9,
-    JIFMK_SOF10 = 0x0000ffca,
-    JIFMK_SOF11 = 0x0000ffcb,
-    JIFMK_SOF13 = 0x0000ffcd,
-    JIFMK_SOF14 = 0x0000ffce,
-    JIFMK_SOF15 = 0x0000ffcf,
-    JIFMK_DHT   = 0x0000ffc4,
-    JIFMK_DAC   = 0x0000ffcc,
-    JIFMK_RST0  = 0x0000ffd0,
-    JIFMK_RST1  = 0x0000ffd1,
-    JIFMK_RST2  = 0x0000ffd2,
-    JIFMK_RST3  = 0x0000ffd3,
-    JIFMK_RST4  = 0x0000ffd4,
-    JIFMK_RST5  = 0x0000ffd5,
-    JIFMK_RST6  = 0x0000ffd6,
-    JIFMK_RST7  = 0x0000ffd7,
-    JIFMK_SOI   = 0x0000ffd8,
-    JIFMK_EOI   = 0x0000ffd9,
-    JIFMK_SOS   = 0x0000ffda,
-    JIFMK_DQT   = 0x0000ffdb,
-    JIFMK_DNL   = 0x0000ffdc,
-    JIFMK_DRI   = 0x0000ffdd,
-    JIFMK_DHP   = 0x0000ffde,
-    JIFMK_EXP   = 0x0000ffdf,
-    JIFMK_APP0  = 0x0000ffe0,
-    JIFMK_APP1  = 0x0000ffe1,
-    JIFMK_APP2  = 0x0000ffe2,
-    JIFMK_APP3  = 0x0000ffe3,
-    JIFMK_APP4  = 0x0000ffe4,
-    JIFMK_APP5  = 0x0000ffe5,
-    JIFMK_APP6  = 0x0000ffe6,
-    JIFMK_APP7  = 0x0000ffe7,
-    JIFMK_JPG0  = 0x0000fff0,
-    JIFMK_JPG1  = 0x0000fff1,
-    JIFMK_JPG2  = 0x0000fff2,
-    JIFMK_JPG3  = 0x0000fff3,
-    JIFMK_JPG4  = 0x0000fff4,
-    JIFMK_JPG5  = 0x0000fff5,
-    JIFMK_JPG6  = 0x0000fff6,
-    JIFMK_JPG7  = 0x0000fff7,
-    JIFMK_JPG8  = 0x0000fff8,
-    JIFMK_JPG9  = 0x0000fff9,
-    JIFMK_JPG10 = 0x0000fffa,
-    JIFMK_JPG11 = 0x0000fffb,
-    JIFMK_JPG12 = 0x0000fffc,
-    JIFMK_JPG13 = 0x0000fffd,
-    JIFMK_COM   = 0x0000fffe,
-    JIFMK_TEM   = 0x0000ff01,
-    JIFMK_RES   = 0x0000ff02,
-    JIFMK_00    = 0x0000ff00,
-    JIFMK_FF    = 0x0000ffff,
+    JIFMK_SOF0  = 0x0000ffc0U,
+    JIFMK_SOF1  = 0x0000ffc1U,
+    JIFMK_SOF2  = 0x0000ffc2U,
+    JIFMK_SOF3  = 0x0000ffc3U,
+    JIFMK_SOF5  = 0x0000ffc5U,
+    JIFMK_SOF6  = 0x0000ffc6U,
+    JIFMK_SOF7  = 0x0000ffc7U,
+    JIFMK_JPG   = 0x0000ffc8U,
+    JIFMK_SOF9  = 0x0000ffc9U,
+    JIFMK_SOF10 = 0x0000ffcaU,
+    JIFMK_SOF11 = 0x0000ffcbU,
+    JIFMK_SOF13 = 0x0000ffcdU,
+    JIFMK_SOF14 = 0x0000ffceU,
+    JIFMK_SOF15 = 0x0000ffcfU,
+    JIFMK_DHT   = 0x0000ffc4U,
+    JIFMK_DAC   = 0x0000ffccU,
+    JIFMK_RST0  = 0x0000ffd0U,
+    JIFMK_RST1  = 0x0000ffd1U,
+    JIFMK_RST2  = 0x0000ffd2U,
+    JIFMK_RST3  = 0x0000ffd3U,
+    JIFMK_RST4  = 0x0000ffd4U,
+    JIFMK_RST5  = 0x0000ffd5U,
+    JIFMK_RST6  = 0x0000ffd6U,
+    JIFMK_RST7  = 0x0000ffd7U,
+    JIFMK_SOI   = 0x0000ffd8U,
+    JIFMK_EOI   = 0x0000ffd9U,
+    JIFMK_SOS   = 0x0000ffdaU,
+    JIFMK_DQT   = 0x0000ffdbU,
+    JIFMK_DNL   = 0x0000ffdcU,
+    JIFMK_DRI   = 0x0000ffddU,
+    JIFMK_DHP   = 0x0000ffdeU,
+    JIFMK_EXP   = 0x0000ffdfU,
+    JIFMK_APP0  = 0x0000ffe0U,
+    JIFMK_APP1  = 0x0000ffe1U,
+    JIFMK_APP2  = 0x0000ffe2U,
+    JIFMK_APP3  = 0x0000ffe3U,
+    JIFMK_APP4  = 0x0000ffe4U,
+    JIFMK_APP5  = 0x0000ffe5U,
+    JIFMK_APP6  = 0x0000ffe6U,
+    JIFMK_APP7  = 0x0000ffe7U,
+    JIFMK_JPG0  = 0x0000fff0U,
+    JIFMK_JPG1  = 0x0000fff1U,
+    JIFMK_JPG2  = 0x0000fff2U,
+    JIFMK_JPG3  = 0x0000fff3U,
+    JIFMK_JPG4  = 0x0000fff4U,
+    JIFMK_JPG5  = 0x0000fff5U,
+    JIFMK_JPG6  = 0x0000fff6U,
+    JIFMK_JPG7  = 0x0000fff7U,
+    JIFMK_JPG8  = 0x0000fff8U,
+    JIFMK_JPG9  = 0x0000fff9U,
+    JIFMK_JPG10 = 0x0000fffaU,
+    JIFMK_JPG11 = 0x0000fffbU,
+    JIFMK_JPG12 = 0x0000fffcU,
+    JIFMK_JPG13 = 0x0000fffdU,
+    JIFMK_COM   = 0x0000fffeU,
+    JIFMK_TEM   = 0x0000ff01U,
+    JIFMK_RES   = 0x0000ff02U,
+    JIFMK_00    = 0x0000ff00U,
+    JIFMK_FF    = 0x0000ffffU,
 }
 
 enum : uint
 {
-    JPEG_Y     = 0x00000001,
-    JPEG_YCbCr = 0x00000002,
-    JPEG_RGB   = 0x00000003,
+    JPEG_Y     = 0x00000001U,
+    JPEG_YCbCr = 0x00000002U,
+    JPEG_RGB   = 0x00000003U,
 }
 
 enum : uint
 {
-    MIXERCONTROL_CONTROLTYPE_SRS_MTS         = 0x20010006,
-    MIXERCONTROL_CONTROLTYPE_SRS_ONOFF       = 0x20010007,
-    MIXERCONTROL_CONTROLTYPE_SRS_SYNTHSELECT = 0x20010008,
+    MIXERCONTROL_CONTROLTYPE_SRS_MTS         = 0x20010006U,
+    MIXERCONTROL_CONTROLTYPE_SRS_ONOFF       = 0x20010007U,
+    MIXERCONTROL_CONTROLTYPE_SRS_SYNTHSELECT = 0x20010008U,
 }
 
 enum : uint
 {
-    VP_COMMAND_GET = 0x00000001,
-    VP_COMMAND_SET = 0x00000002,
+    VP_COMMAND_GET = 0x00000001U,
+    VP_COMMAND_SET = 0x00000002U,
 }
 
 enum : uint
 {
-    VP_FLAGS_TV_MODE      = 0x00000001,
-    VP_FLAGS_TV_STANDARD  = 0x00000002,
-    VP_FLAGS_FLICKER      = 0x00000004,
-    VP_FLAGS_OVERSCAN     = 0x00000008,
-    VP_FLAGS_MAX_UNSCALED = 0x00000010,
-    VP_FLAGS_POSITION     = 0x00000020,
-    VP_FLAGS_BRIGHTNESS   = 0x00000040,
-    VP_FLAGS_CONTRAST     = 0x00000080,
-    VP_FLAGS_COPYPROTECT  = 0x00000100,
+    VP_FLAGS_TV_MODE      = 0x00000001U,
+    VP_FLAGS_TV_STANDARD  = 0x00000002U,
+    VP_FLAGS_FLICKER      = 0x00000004U,
+    VP_FLAGS_OVERSCAN     = 0x00000008U,
+    VP_FLAGS_MAX_UNSCALED = 0x00000010U,
+    VP_FLAGS_POSITION     = 0x00000020U,
+    VP_FLAGS_BRIGHTNESS   = 0x00000040U,
+    VP_FLAGS_CONTRAST     = 0x00000080U,
+    VP_FLAGS_COPYPROTECT  = 0x00000100U,
 }
 
-enum uint VP_MODE_WIN_GRAPHICS = 0x00000001;
-enum uint VP_MODE_TV_PLAYBACK = 0x00000002;
+enum uint VP_MODE_WIN_GRAPHICS = 0x00000001U;
+enum uint VP_MODE_TV_PLAYBACK = 0x00000002U;
 
 enum : uint
 {
-    VP_TV_STANDARD_NTSC_M   = 0x00000001,
-    VP_TV_STANDARD_NTSC_M_J = 0x00000002,
-    VP_TV_STANDARD_PAL_B    = 0x00000004,
-    VP_TV_STANDARD_PAL_D    = 0x00000008,
-    VP_TV_STANDARD_PAL_H    = 0x00000010,
-    VP_TV_STANDARD_PAL_I    = 0x00000020,
-    VP_TV_STANDARD_PAL_M    = 0x00000040,
-    VP_TV_STANDARD_PAL_N    = 0x00000080,
-    VP_TV_STANDARD_SECAM_B  = 0x00000100,
-    VP_TV_STANDARD_SECAM_D  = 0x00000200,
-    VP_TV_STANDARD_SECAM_G  = 0x00000400,
-    VP_TV_STANDARD_SECAM_H  = 0x00000800,
-    VP_TV_STANDARD_SECAM_K  = 0x00001000,
-    VP_TV_STANDARD_SECAM_K1 = 0x00002000,
-    VP_TV_STANDARD_SECAM_L  = 0x00004000,
-    VP_TV_STANDARD_WIN_VGA  = 0x00008000,
-    VP_TV_STANDARD_NTSC_433 = 0x00010000,
-    VP_TV_STANDARD_PAL_G    = 0x00020000,
-    VP_TV_STANDARD_PAL_60   = 0x00040000,
-    VP_TV_STANDARD_SECAM_L1 = 0x00080000,
-}
-
-enum : uint
-{
-    VP_CP_TYPE_APS_TRIGGER = 0x00000001,
-    VP_CP_TYPE_MACROVISION = 0x00000002,
+    VP_TV_STANDARD_NTSC_M   = 0x00000001U,
+    VP_TV_STANDARD_NTSC_M_J = 0x00000002U,
+    VP_TV_STANDARD_PAL_B    = 0x00000004U,
+    VP_TV_STANDARD_PAL_D    = 0x00000008U,
+    VP_TV_STANDARD_PAL_H    = 0x00000010U,
+    VP_TV_STANDARD_PAL_I    = 0x00000020U,
+    VP_TV_STANDARD_PAL_M    = 0x00000040U,
+    VP_TV_STANDARD_PAL_N    = 0x00000080U,
+    VP_TV_STANDARD_SECAM_B  = 0x00000100U,
+    VP_TV_STANDARD_SECAM_D  = 0x00000200U,
+    VP_TV_STANDARD_SECAM_G  = 0x00000400U,
+    VP_TV_STANDARD_SECAM_H  = 0x00000800U,
+    VP_TV_STANDARD_SECAM_K  = 0x00001000U,
+    VP_TV_STANDARD_SECAM_K1 = 0x00002000U,
+    VP_TV_STANDARD_SECAM_L  = 0x00004000U,
+    VP_TV_STANDARD_WIN_VGA  = 0x00008000U,
+    VP_TV_STANDARD_NTSC_433 = 0x00010000U,
+    VP_TV_STANDARD_PAL_G    = 0x00020000U,
+    VP_TV_STANDARD_PAL_60   = 0x00040000U,
+    VP_TV_STANDARD_SECAM_L1 = 0x00080000U,
 }
 
 enum : uint
 {
-    VP_CP_CMD_ACTIVATE   = 0x00000001,
-    VP_CP_CMD_DEACTIVATE = 0x00000002,
-    VP_CP_CMD_CHANGE     = 0x00000004,
+    VP_CP_TYPE_APS_TRIGGER = 0x00000001U,
+    VP_CP_TYPE_MACROVISION = 0x00000002U,
 }
 
-enum uint ICVERSION = 0x00000104;
-enum uint BI_1632 = 0x32333631;
+enum : uint
+{
+    VP_CP_CMD_ACTIVATE   = 0x00000001U,
+    VP_CP_CMD_DEACTIVATE = 0x00000002U,
+    VP_CP_CMD_CHANGE     = 0x00000004U,
+}
+
+enum uint ICVERSION = 0x00000104U;
+enum uint BI_1632 = 0x32333631U;
 
 enum : int
 {
@@ -3400,149 +3401,149 @@ enum int ICERR_CUSTOM = 0xfffffe70;
 
 enum : uint
 {
-    ICMODE_COMPRESS       = 0x00000001,
-    ICMODE_DECOMPRESS     = 0x00000002,
-    ICMODE_FASTDECOMPRESS = 0x00000003,
+    ICMODE_COMPRESS       = 0x00000001U,
+    ICMODE_DECOMPRESS     = 0x00000002U,
+    ICMODE_FASTDECOMPRESS = 0x00000003U,
 }
 
 enum : uint
 {
-    ICMODE_QUERY        = 0x00000004,
-    ICMODE_FASTCOMPRESS = 0x00000005,
+    ICMODE_QUERY        = 0x00000004U,
+    ICMODE_FASTCOMPRESS = 0x00000005U,
 }
 
 enum : uint
 {
-    ICMODE_DRAW                 = 0x00000008,
-    ICMODE_INTERNALF_FUNCTION32 = 0x00008000,
-    ICMODE_INTERNALF_MASK       = 0x00008000,
+    ICMODE_DRAW                 = 0x00000008U,
+    ICMODE_INTERNALF_FUNCTION32 = 0x00008000U,
+    ICMODE_INTERNALF_MASK       = 0x00008000U,
 }
 
 enum int AVIIF_TWOCC = 0x00000002;
 
 enum : uint
 {
-    ICQUALITY_LOW  = 0x00000000,
-    ICQUALITY_HIGH = 0x00002710,
+    ICQUALITY_LOW  = 0x00000000U,
+    ICQUALITY_HIGH = 0x00002710U,
 }
 
 enum int ICQUALITY_DEFAULT = 0xffffffff;
 
 enum : uint
 {
-    ICM_USER          = 0x00004000,
-    ICM_RESERVED_LOW  = 0x00005000,
-    ICM_RESERVED_HIGH = 0x00006000,
+    ICM_USER          = 0x00004000U,
+    ICM_RESERVED_LOW  = 0x00005000U,
+    ICM_RESERVED_HIGH = 0x00006000U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-getstate))], [])*/uint ICM_GETSTATE = 0x00005000;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-setstate))], [])*/uint ICM_SETSTATE = 0x00005001;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-getinfo))], [])*/uint ICM_GETINFO = 0x00005002;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-configure))], [])*/uint ICM_CONFIGURE = 0x0000500a;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-getstate))], [])*/uint ICM_GETSTATE = 0x00005000U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-setstate))], [])*/uint ICM_SETSTATE = 0x00005001U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-getinfo))], [])*/uint ICM_GETINFO = 0x00005002U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-configure))], [])*/uint ICM_CONFIGURE = 0x0000500aU;
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-about))], [])*/uint
 {
-    ICM_ABOUT         = 0x0000500b,
-    ICM_GETERRORTEXT  = 0x0000500c,
-    ICM_GETFORMATNAME = 0x00005014,
+    ICM_ABOUT         = 0x0000500bU,
+    ICM_GETERRORTEXT  = 0x0000500cU,
+    ICM_GETFORMATNAME = 0x00005014U,
 }
 
-enum uint ICM_ENUMFORMATS = 0x00005015;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-getdefaultquality))], [])*/uint ICM_GETDEFAULTQUALITY = 0x0000501e;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-getquality))], [])*/uint ICM_GETQUALITY = 0x0000501f;
+enum uint ICM_ENUMFORMATS = 0x00005015U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-getdefaultquality))], [])*/uint ICM_GETDEFAULTQUALITY = 0x0000501eU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-getquality))], [])*/uint ICM_GETQUALITY = 0x0000501fU;
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-setquality))], [])*/uint
 {
-    ICM_SETQUALITY          = 0x00005020,
-    ICM_SET                 = 0x00005028,
-    ICM_GET                 = 0x00005029,
-    ICM_COMPRESS_GET_FORMAT = 0x00004004,
-    ICM_COMPRESS_GET_SIZE   = 0x00004005,
-    ICM_COMPRESS_QUERY      = 0x00004006,
-    ICM_COMPRESS_BEGIN      = 0x00004007,
-    ICM_COMPRESS            = 0x00004008,
-    ICM_COMPRESS_END        = 0x00004009,
+    ICM_SETQUALITY          = 0x00005020U,
+    ICM_SET                 = 0x00005028U,
+    ICM_GET                 = 0x00005029U,
+    ICM_COMPRESS_GET_FORMAT = 0x00004004U,
+    ICM_COMPRESS_GET_SIZE   = 0x00004005U,
+    ICM_COMPRESS_QUERY      = 0x00004006U,
+    ICM_COMPRESS_BEGIN      = 0x00004007U,
+    ICM_COMPRESS            = 0x00004008U,
+    ICM_COMPRESS_END        = 0x00004009U,
 }
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-decompress-get-format))], [])*/uint
 {
-    ICM_DECOMPRESS_GET_FORMAT  = 0x0000400a,
-    ICM_DECOMPRESS_QUERY       = 0x0000400b,
-    ICM_DECOMPRESS_BEGIN       = 0x0000400c,
-    ICM_DECOMPRESS             = 0x0000400d,
-    ICM_DECOMPRESS_END         = 0x0000400e,
-    ICM_DECOMPRESS_SET_PALETTE = 0x0000401d,
-    ICM_DECOMPRESS_GET_PALETTE = 0x0000401e,
+    ICM_DECOMPRESS_GET_FORMAT  = 0x0000400aU,
+    ICM_DECOMPRESS_QUERY       = 0x0000400bU,
+    ICM_DECOMPRESS_BEGIN       = 0x0000400cU,
+    ICM_DECOMPRESS             = 0x0000400dU,
+    ICM_DECOMPRESS_END         = 0x0000400eU,
+    ICM_DECOMPRESS_SET_PALETTE = 0x0000401dU,
+    ICM_DECOMPRESS_GET_PALETTE = 0x0000401eU,
 }
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-draw-query))], [])*/uint
 {
-    ICM_DRAW_QUERY         = 0x0000401f,
-    ICM_DRAW_BEGIN         = 0x0000400f,
-    ICM_DRAW_GET_PALETTE   = 0x00004010,
-    ICM_DRAW_UPDATE        = 0x00004011,
-    ICM_DRAW_START         = 0x00004012,
-    ICM_DRAW_STOP          = 0x00004013,
-    ICM_DRAW_BITS          = 0x00004014,
-    ICM_DRAW_END           = 0x00004015,
-    ICM_DRAW_GETTIME       = 0x00004020,
-    ICM_DRAW               = 0x00004021,
-    ICM_DRAW_WINDOW        = 0x00004022,
-    ICM_DRAW_SETTIME       = 0x00004023,
-    ICM_DRAW_REALIZE       = 0x00004024,
-    ICM_DRAW_FLUSH         = 0x00004025,
-    ICM_DRAW_RENDERBUFFER  = 0x00004026,
-    ICM_DRAW_START_PLAY    = 0x00004027,
-    ICM_DRAW_STOP_PLAY     = 0x00004028,
-    ICM_DRAW_SUGGESTFORMAT = 0x00004032,
-    ICM_DRAW_CHANGEPALETTE = 0x00004033,
-    ICM_DRAW_IDLE          = 0x00004034,
+    ICM_DRAW_QUERY         = 0x0000401fU,
+    ICM_DRAW_BEGIN         = 0x0000400fU,
+    ICM_DRAW_GET_PALETTE   = 0x00004010U,
+    ICM_DRAW_UPDATE        = 0x00004011U,
+    ICM_DRAW_START         = 0x00004012U,
+    ICM_DRAW_STOP          = 0x00004013U,
+    ICM_DRAW_BITS          = 0x00004014U,
+    ICM_DRAW_END           = 0x00004015U,
+    ICM_DRAW_GETTIME       = 0x00004020U,
+    ICM_DRAW               = 0x00004021U,
+    ICM_DRAW_WINDOW        = 0x00004022U,
+    ICM_DRAW_SETTIME       = 0x00004023U,
+    ICM_DRAW_REALIZE       = 0x00004024U,
+    ICM_DRAW_FLUSH         = 0x00004025U,
+    ICM_DRAW_RENDERBUFFER  = 0x00004026U,
+    ICM_DRAW_START_PLAY    = 0x00004027U,
+    ICM_DRAW_STOP_PLAY     = 0x00004028U,
+    ICM_DRAW_SUGGESTFORMAT = 0x00004032U,
+    ICM_DRAW_CHANGEPALETTE = 0x00004033U,
+    ICM_DRAW_IDLE          = 0x00004034U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-getbufferswanted))], [])*/uint ICM_GETBUFFERSWANTED = 0x00004029;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-getdefaultkeyframerate))], [])*/uint ICM_GETDEFAULTKEYFRAMERATE = 0x0000402a;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-getbufferswanted))], [])*/uint ICM_GETBUFFERSWANTED = 0x00004029U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-getdefaultkeyframerate))], [])*/uint ICM_GETDEFAULTKEYFRAMERATE = 0x0000402aU;
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-decompressex-begin))], [])*/uint
 {
-    ICM_DECOMPRESSEX_BEGIN = 0x0000403c,
-    ICM_DECOMPRESSEX_QUERY = 0x0000403d,
-    ICM_DECOMPRESSEX       = 0x0000403e,
-    ICM_DECOMPRESSEX_END   = 0x0000403f,
+    ICM_DECOMPRESSEX_BEGIN = 0x0000403cU,
+    ICM_DECOMPRESSEX_QUERY = 0x0000403dU,
+    ICM_DECOMPRESSEX       = 0x0000403eU,
+    ICM_DECOMPRESSEX_END   = 0x0000403fU,
 }
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-compress-frames-info))], [])*/uint
 {
-    ICM_COMPRESS_FRAMES_INFO = 0x00004046,
-    ICM_COMPRESS_FRAMES      = 0x00004047,
+    ICM_COMPRESS_FRAMES_INFO = 0x00004046U,
+    ICM_COMPRESS_FRAMES      = 0x00004047U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-set-status-proc))], [])*/uint ICM_SET_STATUS_PROC = 0x00004048;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/icm-set-status-proc))], [])*/uint ICM_SET_STATUS_PROC = 0x00004048U;
 
 enum : uint
 {
-    VIDCF_QUALITY        = 0x00000001,
-    VIDCF_CRUNCH         = 0x00000002,
-    VIDCF_TEMPORAL       = 0x00000004,
-    VIDCF_COMPRESSFRAMES = 0x00000008,
+    VIDCF_QUALITY        = 0x00000001U,
+    VIDCF_CRUNCH         = 0x00000002U,
+    VIDCF_TEMPORAL       = 0x00000004U,
+    VIDCF_COMPRESSFRAMES = 0x00000008U,
 }
 
 enum : uint
 {
-    VIDCF_DRAW          = 0x00000010,
-    VIDCF_FASTTEMPORALC = 0x00000020,
-    VIDCF_FASTTEMPORALD = 0x00000080,
+    VIDCF_DRAW          = 0x00000010U,
+    VIDCF_FASTTEMPORALC = 0x00000020U,
+    VIDCF_FASTTEMPORALD = 0x00000080U,
 }
 
 enum int ICCOMPRESS_KEYFRAME = 0x00000001;
-enum uint ICCOMPRESSFRAMES_PADDING = 0x00000001;
+enum uint ICCOMPRESSFRAMES_PADDING = 0x00000001U;
 
 enum : uint
 {
-    ICSTATUS_START  = 0x00000000,
-    ICSTATUS_STATUS = 0x00000001,
-    ICSTATUS_END    = 0x00000002,
-    ICSTATUS_ERROR  = 0x00000003,
-    ICSTATUS_YIELD  = 0x00000004,
+    ICSTATUS_START  = 0x00000000U,
+    ICSTATUS_STATUS = 0x00000001U,
+    ICSTATUS_END    = 0x00000002U,
+    ICSTATUS_ERROR  = 0x00000003U,
+    ICSTATUS_YIELD  = 0x00000004U,
 }
 
 enum : int
@@ -3574,107 +3575,107 @@ enum : int
 
 enum : uint
 {
-    ICINSTALL_UNICODE  = 0x00008000,
-    ICINSTALL_FUNCTION = 0x00000001,
-    ICINSTALL_DRIVER   = 0x00000002,
-    ICINSTALL_HDRV     = 0x00000004,
-    ICINSTALL_DRIVERW  = 0x00008002,
+    ICINSTALL_UNICODE  = 0x00008000U,
+    ICINSTALL_FUNCTION = 0x00000001U,
+    ICINSTALL_DRIVER   = 0x00000002U,
+    ICINSTALL_HDRV     = 0x00000004U,
+    ICINSTALL_DRIVERW  = 0x00008002U,
 }
 
-enum uint ICMF_CONFIGURE_QUERY = 0x00000001;
-enum uint ICMF_ABOUT_QUERY = 0x00000001;
-enum uint ICMF_COMPVARS_VALID = 0x00000001;
+enum uint ICMF_CONFIGURE_QUERY = 0x00000001U;
+enum uint ICMF_ABOUT_QUERY = 0x00000001U;
+enum uint ICMF_COMPVARS_VALID = 0x00000001U;
 
 enum : uint
 {
-    ICMF_CHOOSE_KEYFRAME       = 0x00000001,
-    ICMF_CHOOSE_DATARATE       = 0x00000002,
-    ICMF_CHOOSE_PREVIEW        = 0x00000004,
-    ICMF_CHOOSE_ALLCOMPRESSORS = 0x00000008,
-}
-
-enum : uint
-{
-    DDF_0001   = 0x00000001,
-    DDF_UPDATE = 0x00000002,
+    ICMF_CHOOSE_KEYFRAME       = 0x00000001U,
+    ICMF_CHOOSE_DATARATE       = 0x00000002U,
+    ICMF_CHOOSE_PREVIEW        = 0x00000004U,
+    ICMF_CHOOSE_ALLCOMPRESSORS = 0x00000008U,
 }
 
 enum : uint
 {
-    DDF_SAME_HDC  = 0x00000004,
-    DDF_SAME_DRAW = 0x00000008,
-}
-
-enum uint DDF_DONTDRAW = 0x00000010;
-enum uint DDF_ANIMATE = 0x00000020;
-enum uint DDF_BUFFER = 0x00000040;
-enum uint DDF_JUSTDRAWIT = 0x00000080;
-enum uint DDF_FULLSCREEN = 0x00000100;
-enum uint DDF_BACKGROUNDPAL = 0x00000200;
-enum uint DDF_NOTKEYFRAME = 0x00000400;
-
-enum : uint
-{
-    DDF_HURRYUP  = 0x00000800,
-    DDF_HALFTONE = 0x00001000,
+    DDF_0001   = 0x00000001U,
+    DDF_UPDATE = 0x00000002U,
 }
 
 enum : uint
 {
-    DDF_2000    = 0x00002000,
-    DDF_PREROLL = 0x00000010,
+    DDF_SAME_HDC  = 0x00000004U,
+    DDF_SAME_DRAW = 0x00000008U,
+}
+
+enum uint DDF_DONTDRAW = 0x00000010U;
+enum uint DDF_ANIMATE = 0x00000020U;
+enum uint DDF_BUFFER = 0x00000040U;
+enum uint DDF_JUSTDRAWIT = 0x00000080U;
+enum uint DDF_FULLSCREEN = 0x00000100U;
+enum uint DDF_BACKGROUNDPAL = 0x00000200U;
+enum uint DDF_NOTKEYFRAME = 0x00000400U;
+
+enum : uint
+{
+    DDF_HURRYUP  = 0x00000800U,
+    DDF_HALFTONE = 0x00001000U,
 }
 
 enum : uint
 {
-    DDF_SAME_DIB  = 0x00000008,
-    DDF_SAME_SIZE = 0x00000008,
+    DDF_2000    = 0x00002000U,
+    DDF_PREROLL = 0x00000010U,
 }
 
 enum : uint
 {
-    PD_CAN_DRAW_DIB   = 0x00000001,
-    PD_CAN_STRETCHDIB = 0x00000002,
+    DDF_SAME_DIB  = 0x00000008U,
+    DDF_SAME_SIZE = 0x00000008U,
 }
 
 enum : uint
 {
-    PD_STRETCHDIB_1_1_OK = 0x00000004,
-    PD_STRETCHDIB_1_2_OK = 0x00000008,
-    PD_STRETCHDIB_1_N_OK = 0x00000010,
-}
-
-enum uint AVIGETFRAMEF_BESTDISPLAYFMT = 0x00000001;
-
-enum : uint
-{
-    AVISTREAMINFO_DISABLED      = 0x00000001,
-    AVISTREAMINFO_FORMATCHANGES = 0x00010000,
+    PD_CAN_DRAW_DIB   = 0x00000001U,
+    PD_CAN_STRETCHDIB = 0x00000002U,
 }
 
 enum : uint
 {
-    AVIFILEINFO_HASINDEX       = 0x00000010,
-    AVIFILEINFO_MUSTUSEINDEX   = 0x00000020,
-    AVIFILEINFO_ISINTERLEAVED  = 0x00000100,
-    AVIFILEINFO_WASCAPTUREFILE = 0x00010000,
-    AVIFILEINFO_COPYRIGHTED    = 0x00020000,
+    PD_STRETCHDIB_1_1_OK = 0x00000004U,
+    PD_STRETCHDIB_1_2_OK = 0x00000008U,
+    PD_STRETCHDIB_1_N_OK = 0x00000010U,
+}
+
+enum uint AVIGETFRAMEF_BESTDISPLAYFMT = 0x00000001U;
+
+enum : uint
+{
+    AVISTREAMINFO_DISABLED      = 0x00000001U,
+    AVISTREAMINFO_FORMATCHANGES = 0x00010000U,
 }
 
 enum : uint
 {
-    AVIFILECAPS_CANREAD       = 0x00000001,
-    AVIFILECAPS_CANWRITE      = 0x00000002,
-    AVIFILECAPS_ALLKEYFRAMES  = 0x00000010,
-    AVIFILECAPS_NOCOMPRESSION = 0x00000020,
+    AVIFILEINFO_HASINDEX       = 0x00000010U,
+    AVIFILEINFO_MUSTUSEINDEX   = 0x00000020U,
+    AVIFILEINFO_ISINTERLEAVED  = 0x00000100U,
+    AVIFILEINFO_WASCAPTUREFILE = 0x00010000U,
+    AVIFILEINFO_COPYRIGHTED    = 0x00020000U,
 }
 
 enum : uint
 {
-    AVICOMPRESSF_INTERLEAVE = 0x00000001,
-    AVICOMPRESSF_DATARATE   = 0x00000002,
-    AVICOMPRESSF_KEYFRAMES  = 0x00000004,
-    AVICOMPRESSF_VALID      = 0x00000008,
+    AVIFILECAPS_CANREAD       = 0x00000001U,
+    AVIFILECAPS_CANWRITE      = 0x00000002U,
+    AVIFILECAPS_ALLKEYFRAMES  = 0x00000010U,
+    AVIFILECAPS_NOCOMPRESSION = 0x00000020U,
+}
+
+enum : uint
+{
+    AVICOMPRESSF_INTERLEAVE = 0x00000001U,
+    AVICOMPRESSF_DATARATE   = 0x00000002U,
+    AVICOMPRESSF_KEYFRAMES  = 0x00000004U,
+    AVICOMPRESSF_VALID      = 0x00000008U,
 }
 
 enum GUID CLSID_AVISimpleUnMarshal = GUID("00020009-0000-0000-c000-000000000046");
@@ -3682,9 +3683,9 @@ enum GUID CLSID_AVIFile = GUID("00020000-0000-0000-c000-000000000046");
 
 enum : uint
 {
-    AVIFILEHANDLER_CANREAD         = 0x00000001,
-    AVIFILEHANDLER_CANWRITE        = 0x00000002,
-    AVIFILEHANDLER_CANACCEPTNONRGB = 0x00000004,
+    AVIFILEHANDLER_CANREAD         = 0x00000001U,
+    AVIFILEHANDLER_CANWRITE        = 0x00000002U,
+    AVIFILEHANDLER_CANACCEPTNONRGB = 0x00000004U,
 }
 
 enum int AVISTREAMREAD_CONVENIENT = 0xffffffff;
@@ -3722,150 +3723,150 @@ enum : int
 
 enum int AVIERR_OK = 0x00000000;
 enum const(wchar)* MCIWND_WINDOW_CLASS = "MCIWndClass";
-enum uint MCIWNDOPENF_NEW = 0x00000001;
+enum uint MCIWNDOPENF_NEW = 0x00000001U;
 
 enum : uint
 {
-    MCIWNDF_NOAUTOSIZEWINDOW = 0x00000001,
-    MCIWNDF_NOPLAYBAR        = 0x00000002,
-    MCIWNDF_NOAUTOSIZEMOVIE  = 0x00000004,
-    MCIWNDF_NOMENU           = 0x00000008,
-    MCIWNDF_SHOWNAME         = 0x00000010,
-    MCIWNDF_SHOWPOS          = 0x00000020,
-    MCIWNDF_SHOWMODE         = 0x00000040,
-    MCIWNDF_SHOWALL          = 0x00000070,
-    MCIWNDF_NOTIFYMODE       = 0x00000100,
-    MCIWNDF_NOTIFYPOS        = 0x00000200,
-    MCIWNDF_NOTIFYSIZE       = 0x00000400,
-    MCIWNDF_NOTIFYERROR      = 0x00001000,
-    MCIWNDF_NOTIFYALL        = 0x00001f00,
-    MCIWNDF_NOTIFYANSI       = 0x00000080,
-    MCIWNDF_NOTIFYMEDIAA     = 0x00000880,
-    MCIWNDF_NOTIFYMEDIAW     = 0x00000800,
-    MCIWNDF_NOTIFYMEDIA      = 0x00000800,
-    MCIWNDF_RECORD           = 0x00002000,
-    MCIWNDF_NOERRORDLG       = 0x00004000,
-    MCIWNDF_NOOPEN           = 0x00008000,
-    MCIWNDM_GETDEVICEID      = 0x00000464,
-    MCIWNDM_GETSTART         = 0x00000467,
-    MCIWNDM_GETLENGTH        = 0x00000468,
-    MCIWNDM_GETEND           = 0x00000469,
-    MCIWNDM_EJECT            = 0x0000046b,
-    MCIWNDM_SETZOOM          = 0x0000046c,
-    MCIWNDM_GETZOOM          = 0x0000046d,
-    MCIWNDM_SETVOLUME        = 0x0000046e,
-    MCIWNDM_GETVOLUME        = 0x0000046f,
-    MCIWNDM_SETSPEED         = 0x00000470,
-    MCIWNDM_GETSPEED         = 0x00000471,
-    MCIWNDM_SETREPEAT        = 0x00000472,
-    MCIWNDM_GETREPEAT        = 0x00000473,
-    MCIWNDM_REALIZE          = 0x00000476,
-    MCIWNDM_VALIDATEMEDIA    = 0x00000479,
+    MCIWNDF_NOAUTOSIZEWINDOW = 0x00000001U,
+    MCIWNDF_NOPLAYBAR        = 0x00000002U,
+    MCIWNDF_NOAUTOSIZEMOVIE  = 0x00000004U,
+    MCIWNDF_NOMENU           = 0x00000008U,
+    MCIWNDF_SHOWNAME         = 0x00000010U,
+    MCIWNDF_SHOWPOS          = 0x00000020U,
+    MCIWNDF_SHOWMODE         = 0x00000040U,
+    MCIWNDF_SHOWALL          = 0x00000070U,
+    MCIWNDF_NOTIFYMODE       = 0x00000100U,
+    MCIWNDF_NOTIFYPOS        = 0x00000200U,
+    MCIWNDF_NOTIFYSIZE       = 0x00000400U,
+    MCIWNDF_NOTIFYERROR      = 0x00001000U,
+    MCIWNDF_NOTIFYALL        = 0x00001f00U,
+    MCIWNDF_NOTIFYANSI       = 0x00000080U,
+    MCIWNDF_NOTIFYMEDIAA     = 0x00000880U,
+    MCIWNDF_NOTIFYMEDIAW     = 0x00000800U,
+    MCIWNDF_NOTIFYMEDIA      = 0x00000800U,
+    MCIWNDF_RECORD           = 0x00002000U,
+    MCIWNDF_NOERRORDLG       = 0x00004000U,
+    MCIWNDF_NOOPEN           = 0x00008000U,
+    MCIWNDM_GETDEVICEID      = 0x00000464U,
+    MCIWNDM_GETSTART         = 0x00000467U,
+    MCIWNDM_GETLENGTH        = 0x00000468U,
+    MCIWNDM_GETEND           = 0x00000469U,
+    MCIWNDM_EJECT            = 0x0000046bU,
+    MCIWNDM_SETZOOM          = 0x0000046cU,
+    MCIWNDM_GETZOOM          = 0x0000046dU,
+    MCIWNDM_SETVOLUME        = 0x0000046eU,
+    MCIWNDM_GETVOLUME        = 0x0000046fU,
+    MCIWNDM_SETSPEED         = 0x00000470U,
+    MCIWNDM_GETSPEED         = 0x00000471U,
+    MCIWNDM_SETREPEAT        = 0x00000472U,
+    MCIWNDM_GETREPEAT        = 0x00000473U,
+    MCIWNDM_REALIZE          = 0x00000476U,
+    MCIWNDM_VALIDATEMEDIA    = 0x00000479U,
 }
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-playfrom))], [])*/uint
 {
-    MCIWNDM_PLAYFROM         = 0x0000047a,
-    MCIWNDM_PLAYTO           = 0x0000047b,
-    MCIWNDM_GETPALETTE       = 0x0000047e,
-    MCIWNDM_SETPALETTE       = 0x0000047f,
-    MCIWNDM_SETTIMERS        = 0x00000481,
-    MCIWNDM_SETACTIVETIMER   = 0x00000482,
-    MCIWNDM_SETINACTIVETIMER = 0x00000483,
+    MCIWNDM_PLAYFROM         = 0x0000047aU,
+    MCIWNDM_PLAYTO           = 0x0000047bU,
+    MCIWNDM_GETPALETTE       = 0x0000047eU,
+    MCIWNDM_SETPALETTE       = 0x0000047fU,
+    MCIWNDM_SETTIMERS        = 0x00000481U,
+    MCIWNDM_SETACTIVETIMER   = 0x00000482U,
+    MCIWNDM_SETINACTIVETIMER = 0x00000483U,
 }
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-getactivetimer))], [])*/uint
 {
-    MCIWNDM_GETACTIVETIMER   = 0x00000484,
-    MCIWNDM_GETINACTIVETIMER = 0x00000485,
+    MCIWNDM_GETACTIVETIMER   = 0x00000484U,
+    MCIWNDM_GETINACTIVETIMER = 0x00000485U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-changestyles))], [])*/uint MCIWNDM_CHANGESTYLES = 0x00000487;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-changestyles))], [])*/uint MCIWNDM_CHANGESTYLES = 0x00000487U;
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-getstyles))], [])*/uint
 {
-    MCIWNDM_GETSTYLES     = 0x00000488,
-    MCIWNDM_GETALIAS      = 0x00000489,
-    MCIWNDM_PLAYREVERSE   = 0x0000048b,
-    MCIWNDM_GET_SOURCE    = 0x0000048c,
-    MCIWNDM_PUT_SOURCE    = 0x0000048d,
-    MCIWNDM_GET_DEST      = 0x0000048e,
-    MCIWNDM_PUT_DEST      = 0x0000048f,
-    MCIWNDM_CAN_PLAY      = 0x00000490,
-    MCIWNDM_CAN_WINDOW    = 0x00000491,
-    MCIWNDM_CAN_RECORD    = 0x00000492,
-    MCIWNDM_CAN_SAVE      = 0x00000493,
-    MCIWNDM_CAN_EJECT     = 0x00000494,
-    MCIWNDM_CAN_CONFIG    = 0x00000495,
-    MCIWNDM_PALETTEKICK   = 0x00000496,
-    MCIWNDM_OPENINTERFACE = 0x00000497,
+    MCIWNDM_GETSTYLES     = 0x00000488U,
+    MCIWNDM_GETALIAS      = 0x00000489U,
+    MCIWNDM_PLAYREVERSE   = 0x0000048bU,
+    MCIWNDM_GET_SOURCE    = 0x0000048cU,
+    MCIWNDM_PUT_SOURCE    = 0x0000048dU,
+    MCIWNDM_GET_DEST      = 0x0000048eU,
+    MCIWNDM_PUT_DEST      = 0x0000048fU,
+    MCIWNDM_CAN_PLAY      = 0x00000490U,
+    MCIWNDM_CAN_WINDOW    = 0x00000491U,
+    MCIWNDM_CAN_RECORD    = 0x00000492U,
+    MCIWNDM_CAN_SAVE      = 0x00000493U,
+    MCIWNDM_CAN_EJECT     = 0x00000494U,
+    MCIWNDM_CAN_CONFIG    = 0x00000495U,
+    MCIWNDM_PALETTEKICK   = 0x00000496U,
+    MCIWNDM_OPENINTERFACE = 0x00000497U,
 }
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-setowner))], [])*/uint
 {
-    MCIWNDM_SETOWNER       = 0x00000498,
-    MCIWNDM_SENDSTRINGA    = 0x00000465,
-    MCIWNDM_GETPOSITIONA   = 0x00000466,
-    MCIWNDM_GETMODEA       = 0x0000046a,
-    MCIWNDM_SETTIMEFORMATA = 0x00000477,
+    MCIWNDM_SETOWNER       = 0x00000498U,
+    MCIWNDM_SENDSTRINGA    = 0x00000465U,
+    MCIWNDM_GETPOSITIONA   = 0x00000466U,
+    MCIWNDM_GETMODEA       = 0x0000046aU,
+    MCIWNDM_SETTIMEFORMATA = 0x00000477U,
 }
 
 enum : uint
 {
-    MCIWNDM_GETTIMEFORMATA = 0x00000478,
-    MCIWNDM_GETFILENAMEA   = 0x0000047c,
-    MCIWNDM_GETDEVICEA     = 0x0000047d,
-    MCIWNDM_GETERRORA      = 0x00000480,
-    MCIWNDM_NEWA           = 0x00000486,
-    MCIWNDM_RETURNSTRINGA  = 0x0000048a,
+    MCIWNDM_GETTIMEFORMATA = 0x00000478U,
+    MCIWNDM_GETFILENAMEA   = 0x0000047cU,
+    MCIWNDM_GETDEVICEA     = 0x0000047dU,
+    MCIWNDM_GETERRORA      = 0x00000480U,
+    MCIWNDM_NEWA           = 0x00000486U,
+    MCIWNDM_RETURNSTRINGA  = 0x0000048aU,
 }
 
 enum : uint
 {
-    MCIWNDM_OPENA          = 0x00000499,
-    MCIWNDM_SENDSTRINGW    = 0x000004c9,
-    MCIWNDM_GETPOSITIONW   = 0x000004ca,
-    MCIWNDM_GETMODEW       = 0x000004ce,
-    MCIWNDM_SETTIMEFORMATW = 0x000004db,
+    MCIWNDM_OPENA          = 0x00000499U,
+    MCIWNDM_SENDSTRINGW    = 0x000004c9U,
+    MCIWNDM_GETPOSITIONW   = 0x000004caU,
+    MCIWNDM_GETMODEW       = 0x000004ceU,
+    MCIWNDM_SETTIMEFORMATW = 0x000004dbU,
 }
 
 enum : uint
 {
-    MCIWNDM_GETTIMEFORMATW = 0x000004dc,
-    MCIWNDM_GETFILENAMEW   = 0x000004e0,
-    MCIWNDM_GETDEVICEW     = 0x000004e1,
-    MCIWNDM_GETERRORW      = 0x000004e4,
-    MCIWNDM_NEWW           = 0x000004ea,
-    MCIWNDM_RETURNSTRINGW  = 0x000004ee,
+    MCIWNDM_GETTIMEFORMATW = 0x000004dcU,
+    MCIWNDM_GETFILENAMEW   = 0x000004e0U,
+    MCIWNDM_GETDEVICEW     = 0x000004e1U,
+    MCIWNDM_GETERRORW      = 0x000004e4U,
+    MCIWNDM_NEWW           = 0x000004eaU,
+    MCIWNDM_RETURNSTRINGW  = 0x000004eeU,
 }
 
 enum : uint
 {
-    MCIWNDM_OPENW         = 0x000004fc,
-    MCIWNDM_SENDSTRING    = 0x000004c9,
-    MCIWNDM_GETPOSITION   = 0x000004ca,
-    MCIWNDM_GETMODE       = 0x000004ce,
-    MCIWNDM_SETTIMEFORMAT = 0x000004db,
+    MCIWNDM_OPENW         = 0x000004fcU,
+    MCIWNDM_SENDSTRING    = 0x000004c9U,
+    MCIWNDM_GETPOSITION   = 0x000004caU,
+    MCIWNDM_GETMODE       = 0x000004ceU,
+    MCIWNDM_SETTIMEFORMAT = 0x000004dbU,
 }
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-gettimeformat))], [])*/uint
 {
-    MCIWNDM_GETTIMEFORMAT = 0x000004dc,
-    MCIWNDM_GETFILENAME   = 0x000004e0,
-    MCIWNDM_GETDEVICE     = 0x000004e1,
-    MCIWNDM_GETERROR      = 0x000004e4,
-    MCIWNDM_NEW           = 0x000004ea,
-    MCIWNDM_RETURNSTRING  = 0x000004ee,
+    MCIWNDM_GETTIMEFORMAT = 0x000004dcU,
+    MCIWNDM_GETFILENAME   = 0x000004e0U,
+    MCIWNDM_GETDEVICE     = 0x000004e1U,
+    MCIWNDM_GETERROR      = 0x000004e4U,
+    MCIWNDM_NEW           = 0x000004eaU,
+    MCIWNDM_RETURNSTRING  = 0x000004eeU,
 }
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mciwndm-open))], [])*/uint
 {
-    MCIWNDM_OPEN        = 0x000004fc,
-    MCIWNDM_NOTIFYMODE  = 0x000004c8,
-    MCIWNDM_NOTIFYPOS   = 0x000004c9,
-    MCIWNDM_NOTIFYSIZE  = 0x000004ca,
-    MCIWNDM_NOTIFYMEDIA = 0x000004cb,
-    MCIWNDM_NOTIFYERROR = 0x000004cd,
+    MCIWNDM_OPEN        = 0x000004fcU,
+    MCIWNDM_NOTIFYMODE  = 0x000004c8U,
+    MCIWNDM_NOTIFYPOS   = 0x000004c9U,
+    MCIWNDM_NOTIFYSIZE  = 0x000004caU,
+    MCIWNDM_NOTIFYMEDIA = 0x000004cbU,
+    MCIWNDM_NOTIFYERROR = 0x000004cdU,
 }
 
 enum : int
@@ -3876,427 +3877,427 @@ enum : int
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-open))], [])*/uint
 {
-    MCI_OPEN   = 0x00000803,
-    MCI_CLOSE  = 0x00000804,
-    MCI_PLAY   = 0x00000806,
-    MCI_SEEK   = 0x00000807,
-    MCI_STOP   = 0x00000808,
-    MCI_PAUSE  = 0x00000809,
-    MCI_STEP   = 0x0000080e,
-    MCI_RECORD = 0x0000080f,
+    MCI_OPEN   = 0x00000803U,
+    MCI_CLOSE  = 0x00000804U,
+    MCI_PLAY   = 0x00000806U,
+    MCI_SEEK   = 0x00000807U,
+    MCI_STOP   = 0x00000808U,
+    MCI_PAUSE  = 0x00000809U,
+    MCI_STEP   = 0x0000080eU,
+    MCI_RECORD = 0x0000080fU,
 }
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-save))], [])*/uint
 {
-    MCI_SAVE   = 0x00000813,
-    MCI_CUT    = 0x00000851,
-    MCI_COPY   = 0x00000852,
-    MCI_PASTE  = 0x00000853,
-    MCI_RESUME = 0x00000855,
+    MCI_SAVE   = 0x00000813U,
+    MCI_CUT    = 0x00000851U,
+    MCI_COPY   = 0x00000852U,
+    MCI_PASTE  = 0x00000853U,
+    MCI_RESUME = 0x00000855U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-delete))], [])*/uint MCI_DELETE = 0x00000856;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-delete))], [])*/uint MCI_DELETE = 0x00000856U;
 
 enum : uint
 {
-    MCI_MODE_NOT_READY = 0x0000020c,
-    MCI_MODE_STOP      = 0x0000020d,
-    MCI_MODE_PLAY      = 0x0000020e,
-    MCI_MODE_RECORD    = 0x0000020f,
-    MCI_MODE_SEEK      = 0x00000210,
-    MCI_MODE_PAUSE     = 0x00000211,
-    MCI_MODE_OPEN      = 0x00000212,
-}
-
-enum : uint
-{
-    DV_ERR_OK          = 0x00000000,
-    DV_ERR_BASE        = 0x00000001,
-    DV_ERR_NONSPECIFIC = 0x00000001,
+    MCI_MODE_NOT_READY = 0x0000020cU,
+    MCI_MODE_STOP      = 0x0000020dU,
+    MCI_MODE_PLAY      = 0x0000020eU,
+    MCI_MODE_RECORD    = 0x0000020fU,
+    MCI_MODE_SEEK      = 0x00000210U,
+    MCI_MODE_PAUSE     = 0x00000211U,
+    MCI_MODE_OPEN      = 0x00000212U,
 }
 
 enum : uint
 {
-    DV_ERR_BADFORMAT    = 0x00000002,
-    DV_ERR_STILLPLAYING = 0x00000003,
+    DV_ERR_OK          = 0x00000000U,
+    DV_ERR_BASE        = 0x00000001U,
+    DV_ERR_NONSPECIFIC = 0x00000001U,
 }
 
 enum : uint
 {
-    DV_ERR_UNPREPARED      = 0x00000004,
-    DV_ERR_SYNC            = 0x00000005,
-    DV_ERR_TOOMANYCHANNELS = 0x00000006,
-}
-
-enum uint DV_ERR_NOTDETECTED = 0x00000007;
-
-enum : uint
-{
-    DV_ERR_BADINSTALL    = 0x00000008,
-    DV_ERR_CREATEPALETTE = 0x00000009,
+    DV_ERR_BADFORMAT    = 0x00000002U,
+    DV_ERR_STILLPLAYING = 0x00000003U,
 }
 
 enum : uint
 {
-    DV_ERR_SIZEFIELD    = 0x0000000a,
-    DV_ERR_PARAM1       = 0x0000000b,
-    DV_ERR_PARAM2       = 0x0000000c,
-    DV_ERR_CONFIG1      = 0x0000000d,
-    DV_ERR_CONFIG2      = 0x0000000e,
-    DV_ERR_FLAGS        = 0x0000000f,
-    DV_ERR_13           = 0x00000010,
-    DV_ERR_NOTSUPPORTED = 0x00000011,
-    DV_ERR_NOMEM        = 0x00000012,
-    DV_ERR_ALLOCATED    = 0x00000013,
-    DV_ERR_BADDEVICEID  = 0x00000014,
+    DV_ERR_UNPREPARED      = 0x00000004U,
+    DV_ERR_SYNC            = 0x00000005U,
+    DV_ERR_TOOMANYCHANNELS = 0x00000006U,
 }
 
-enum uint DV_ERR_INVALHANDLE = 0x00000015;
+enum uint DV_ERR_NOTDETECTED = 0x00000007U;
 
 enum : uint
 {
-    DV_ERR_BADERRNUM    = 0x00000016,
-    DV_ERR_NO_BUFFERS   = 0x00000017,
-    DV_ERR_MEM_CONFLICT = 0x00000018,
-}
-
-enum uint DV_ERR_IO_CONFLICT = 0x00000019;
-enum uint DV_ERR_DMA_CONFLICT = 0x0000001a;
-enum uint DV_ERR_INT_CONFLICT = 0x0000001b;
-enum uint DV_ERR_PROTECT_ONLY = 0x0000001c;
-
-enum : uint
-{
-    DV_ERR_LASTERROR = 0x0000001c,
-    DV_ERR_USER_MSG  = 0x000003e9,
+    DV_ERR_BADINSTALL    = 0x00000008U,
+    DV_ERR_CREATEPALETTE = 0x00000009U,
 }
 
 enum : uint
 {
-    DV_VM_OPEN  = 0x000003d0,
-    DV_VM_CLOSE = 0x000003d1,
-    DV_VM_DATA  = 0x000003d2,
-    DV_VM_ERROR = 0x000003d3,
+    DV_ERR_SIZEFIELD    = 0x0000000aU,
+    DV_ERR_PARAM1       = 0x0000000bU,
+    DV_ERR_PARAM2       = 0x0000000cU,
+    DV_ERR_CONFIG1      = 0x0000000dU,
+    DV_ERR_CONFIG2      = 0x0000000eU,
+    DV_ERR_FLAGS        = 0x0000000fU,
+    DV_ERR_13           = 0x00000010U,
+    DV_ERR_NOTSUPPORTED = 0x00000011U,
+    DV_ERR_NOMEM        = 0x00000012U,
+    DV_ERR_ALLOCATED    = 0x00000013U,
+    DV_ERR_BADDEVICEID  = 0x00000014U,
+}
+
+enum uint DV_ERR_INVALHANDLE = 0x00000015U;
+
+enum : uint
+{
+    DV_ERR_BADERRNUM    = 0x00000016U,
+    DV_ERR_NO_BUFFERS   = 0x00000017U,
+    DV_ERR_MEM_CONFLICT = 0x00000018U,
+}
+
+enum uint DV_ERR_IO_CONFLICT = 0x00000019U;
+enum uint DV_ERR_DMA_CONFLICT = 0x0000001aU;
+enum uint DV_ERR_INT_CONFLICT = 0x0000001bU;
+enum uint DV_ERR_PROTECT_ONLY = 0x0000001cU;
+
+enum : uint
+{
+    DV_ERR_LASTERROR = 0x0000001cU,
+    DV_ERR_USER_MSG  = 0x000003e9U,
 }
 
 enum : uint
 {
-    VHDR_DONE     = 0x00000001,
-    VHDR_PREPARED = 0x00000002,
+    DV_VM_OPEN  = 0x000003d0U,
+    DV_VM_CLOSE = 0x000003d1U,
+    DV_VM_DATA  = 0x000003d2U,
+    DV_VM_ERROR = 0x000003d3U,
 }
 
 enum : uint
 {
-    VHDR_INQUEUE  = 0x00000004,
-    VHDR_KEYFRAME = 0x00000008,
-}
-
-enum uint VHDR_VALID = 0x0000000f;
-
-enum : uint
-{
-    VCAPS_OVERLAY      = 0x00000001,
-    VCAPS_SRC_CAN_CLIP = 0x00000002,
-}
-
-enum uint VCAPS_DST_CAN_CLIP = 0x00000004;
-enum uint VCAPS_CAN_SCALE = 0x00000008;
-
-enum : uint
-{
-    VIDEO_EXTERNALIN  = 0x00000001,
-    VIDEO_EXTERNALOUT = 0x00000002,
+    VHDR_DONE     = 0x00000001U,
+    VHDR_PREPARED = 0x00000002U,
 }
 
 enum : uint
 {
-    VIDEO_IN        = 0x00000004,
-    VIDEO_OUT       = 0x00000008,
-    VIDEO_DLG_QUERY = 0x00000010,
+    VHDR_INQUEUE  = 0x00000004U,
+    VHDR_KEYFRAME = 0x00000008U,
+}
+
+enum uint VHDR_VALID = 0x0000000fU;
+
+enum : uint
+{
+    VCAPS_OVERLAY      = 0x00000001U,
+    VCAPS_SRC_CAN_CLIP = 0x00000002U,
+}
+
+enum uint VCAPS_DST_CAN_CLIP = 0x00000004U;
+enum uint VCAPS_CAN_SCALE = 0x00000008U;
+
+enum : uint
+{
+    VIDEO_EXTERNALIN  = 0x00000001U,
+    VIDEO_EXTERNALOUT = 0x00000002U,
 }
 
 enum : uint
 {
-    VIDEO_CONFIGURE_QUERY     = 0x00008000,
-    VIDEO_CONFIGURE_SET       = 0x00001000,
-    VIDEO_CONFIGURE_GET       = 0x00002000,
-    VIDEO_CONFIGURE_QUERYSIZE = 0x00000001,
-    VIDEO_CONFIGURE_CURRENT   = 0x00000010,
-    VIDEO_CONFIGURE_NOMINAL   = 0x00000020,
-    VIDEO_CONFIGURE_MIN       = 0x00000040,
-    VIDEO_CONFIGURE_MAX       = 0x00000080,
+    VIDEO_IN        = 0x00000004U,
+    VIDEO_OUT       = 0x00000008U,
+    VIDEO_DLG_QUERY = 0x00000010U,
 }
 
 enum : uint
 {
-    DVM_USER            = 0x00004000,
-    DVM_CONFIGURE_START = 0x00001000,
-    DVM_CONFIGURE_END   = 0x00001fff,
+    VIDEO_CONFIGURE_QUERY     = 0x00008000U,
+    VIDEO_CONFIGURE_SET       = 0x00001000U,
+    VIDEO_CONFIGURE_GET       = 0x00002000U,
+    VIDEO_CONFIGURE_QUERYSIZE = 0x00000001U,
+    VIDEO_CONFIGURE_CURRENT   = 0x00000010U,
+    VIDEO_CONFIGURE_NOMINAL   = 0x00000020U,
+    VIDEO_CONFIGURE_MIN       = 0x00000040U,
+    VIDEO_CONFIGURE_MAX       = 0x00000080U,
 }
-
-enum uint DVM_PALETTE = 0x00001001;
-enum uint DVM_FORMAT = 0x00001002;
-enum uint DVM_PALETTERGB555 = 0x00001003;
-enum uint DVM_SRC_RECT = 0x00001004;
-enum uint DVM_DST_RECT = 0x00001005;
-enum uint WM_CAP_UNICODE_START = 0x00000464;
-enum uint WM_CAP_GET_CAPSTREAMPTR = 0x00000401;
 
 enum : uint
 {
-    WM_CAP_SET_CALLBACK_ERRORW      = 0x00000466,
-    WM_CAP_SET_CALLBACK_STATUSW     = 0x00000467,
-    WM_CAP_SET_CALLBACK_ERRORA      = 0x00000402,
-    WM_CAP_SET_CALLBACK_STATUSA     = 0x00000403,
-    WM_CAP_SET_CALLBACK_ERROR       = 0x00000466,
-    WM_CAP_SET_CALLBACK_STATUS      = 0x00000467,
-    WM_CAP_SET_CALLBACK_YIELD       = 0x00000404,
-    WM_CAP_SET_CALLBACK_FRAME       = 0x00000405,
-    WM_CAP_SET_CALLBACK_VIDEOSTREAM = 0x00000406,
-    WM_CAP_SET_CALLBACK_WAVESTREAM  = 0x00000407,
+    DVM_USER            = 0x00004000U,
+    DVM_CONFIGURE_START = 0x00001000U,
+    DVM_CONFIGURE_END   = 0x00001fffU,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-get-user-data))], [])*/uint WM_CAP_GET_USER_DATA = 0x00000408;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-set-user-data))], [])*/uint WM_CAP_SET_USER_DATA = 0x00000409;
+enum uint DVM_PALETTE = 0x00001001U;
+enum uint DVM_FORMAT = 0x00001002U;
+enum uint DVM_PALETTERGB555 = 0x00001003U;
+enum uint DVM_SRC_RECT = 0x00001004U;
+enum uint DVM_DST_RECT = 0x00001005U;
+enum uint WM_CAP_UNICODE_START = 0x00000464U;
+enum uint WM_CAP_GET_CAPSTREAMPTR = 0x00000401U;
+
+enum : uint
+{
+    WM_CAP_SET_CALLBACK_ERRORW      = 0x00000466U,
+    WM_CAP_SET_CALLBACK_STATUSW     = 0x00000467U,
+    WM_CAP_SET_CALLBACK_ERRORA      = 0x00000402U,
+    WM_CAP_SET_CALLBACK_STATUSA     = 0x00000403U,
+    WM_CAP_SET_CALLBACK_ERROR       = 0x00000466U,
+    WM_CAP_SET_CALLBACK_STATUS      = 0x00000467U,
+    WM_CAP_SET_CALLBACK_YIELD       = 0x00000404U,
+    WM_CAP_SET_CALLBACK_FRAME       = 0x00000405U,
+    WM_CAP_SET_CALLBACK_VIDEOSTREAM = 0x00000406U,
+    WM_CAP_SET_CALLBACK_WAVESTREAM  = 0x00000407U,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-get-user-data))], [])*/uint WM_CAP_GET_USER_DATA = 0x00000408U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-set-user-data))], [])*/uint WM_CAP_SET_USER_DATA = 0x00000409U;
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-driver-connect))], [])*/uint
 {
-    WM_CAP_DRIVER_CONNECT      = 0x0000040a,
-    WM_CAP_DRIVER_DISCONNECT   = 0x0000040b,
-    WM_CAP_DRIVER_GET_NAMEA    = 0x0000040c,
-    WM_CAP_DRIVER_GET_VERSIONA = 0x0000040d,
-    WM_CAP_DRIVER_GET_NAMEW    = 0x00000470,
-    WM_CAP_DRIVER_GET_VERSIONW = 0x00000471,
-    WM_CAP_DRIVER_GET_NAME     = 0x00000470,
-    WM_CAP_DRIVER_GET_VERSION  = 0x00000471,
-    WM_CAP_DRIVER_GET_CAPS     = 0x0000040e,
+    WM_CAP_DRIVER_CONNECT      = 0x0000040aU,
+    WM_CAP_DRIVER_DISCONNECT   = 0x0000040bU,
+    WM_CAP_DRIVER_GET_NAMEA    = 0x0000040cU,
+    WM_CAP_DRIVER_GET_VERSIONA = 0x0000040dU,
+    WM_CAP_DRIVER_GET_NAMEW    = 0x00000470U,
+    WM_CAP_DRIVER_GET_VERSIONW = 0x00000471U,
+    WM_CAP_DRIVER_GET_NAME     = 0x00000470U,
+    WM_CAP_DRIVER_GET_VERSION  = 0x00000471U,
+    WM_CAP_DRIVER_GET_CAPS     = 0x0000040eU,
 }
 
 enum : uint
 {
-    WM_CAP_FILE_SET_CAPTURE_FILEA = 0x00000414,
-    WM_CAP_FILE_GET_CAPTURE_FILEA = 0x00000415,
-    WM_CAP_FILE_SAVEASA           = 0x00000417,
-    WM_CAP_FILE_SAVEDIBA          = 0x00000419,
-    WM_CAP_FILE_SET_CAPTURE_FILEW = 0x00000478,
-    WM_CAP_FILE_GET_CAPTURE_FILEW = 0x00000479,
-    WM_CAP_FILE_SAVEASW           = 0x0000047b,
-    WM_CAP_FILE_SAVEDIBW          = 0x0000047d,
-    WM_CAP_FILE_SET_CAPTURE_FILE  = 0x00000478,
-    WM_CAP_FILE_GET_CAPTURE_FILE  = 0x00000479,
-    WM_CAP_FILE_SAVEAS            = 0x0000047b,
-    WM_CAP_FILE_SAVEDIB           = 0x0000047d,
-    WM_CAP_FILE_ALLOCATE          = 0x00000416,
-    WM_CAP_FILE_SET_INFOCHUNK     = 0x00000418,
+    WM_CAP_FILE_SET_CAPTURE_FILEA = 0x00000414U,
+    WM_CAP_FILE_GET_CAPTURE_FILEA = 0x00000415U,
+    WM_CAP_FILE_SAVEASA           = 0x00000417U,
+    WM_CAP_FILE_SAVEDIBA          = 0x00000419U,
+    WM_CAP_FILE_SET_CAPTURE_FILEW = 0x00000478U,
+    WM_CAP_FILE_GET_CAPTURE_FILEW = 0x00000479U,
+    WM_CAP_FILE_SAVEASW           = 0x0000047bU,
+    WM_CAP_FILE_SAVEDIBW          = 0x0000047dU,
+    WM_CAP_FILE_SET_CAPTURE_FILE  = 0x00000478U,
+    WM_CAP_FILE_GET_CAPTURE_FILE  = 0x00000479U,
+    WM_CAP_FILE_SAVEAS            = 0x0000047bU,
+    WM_CAP_FILE_SAVEDIB           = 0x0000047dU,
+    WM_CAP_FILE_ALLOCATE          = 0x00000416U,
+    WM_CAP_FILE_SET_INFOCHUNK     = 0x00000418U,
 }
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-edit-copy))], [])*/uint
 {
-    WM_CAP_EDIT_COPY       = 0x0000041e,
-    WM_CAP_SET_AUDIOFORMAT = 0x00000423,
+    WM_CAP_EDIT_COPY       = 0x0000041eU,
+    WM_CAP_SET_AUDIOFORMAT = 0x00000423U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-get-audioformat))], [])*/uint WM_CAP_GET_AUDIOFORMAT = 0x00000424;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-get-audioformat))], [])*/uint WM_CAP_GET_AUDIOFORMAT = 0x00000424U;
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-dlg-videoformat))], [])*/uint
 {
-    WM_CAP_DLG_VIDEOFORMAT  = 0x00000429,
-    WM_CAP_DLG_VIDEOSOURCE  = 0x0000042a,
-    WM_CAP_DLG_VIDEODISPLAY = 0x0000042b,
+    WM_CAP_DLG_VIDEOFORMAT  = 0x00000429U,
+    WM_CAP_DLG_VIDEOSOURCE  = 0x0000042aU,
+    WM_CAP_DLG_VIDEODISPLAY = 0x0000042bU,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-get-videoformat))], [])*/uint WM_CAP_GET_VIDEOFORMAT = 0x0000042c;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-set-videoformat))], [])*/uint WM_CAP_SET_VIDEOFORMAT = 0x0000042d;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-dlg-videocompression))], [])*/uint WM_CAP_DLG_VIDEOCOMPRESSION = 0x0000042e;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-get-videoformat))], [])*/uint WM_CAP_GET_VIDEOFORMAT = 0x0000042cU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-set-videoformat))], [])*/uint WM_CAP_SET_VIDEOFORMAT = 0x0000042dU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-dlg-videocompression))], [])*/uint WM_CAP_DLG_VIDEOCOMPRESSION = 0x0000042eU;
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-set-preview))], [])*/uint
 {
-    WM_CAP_SET_PREVIEW       = 0x00000432,
-    WM_CAP_SET_OVERLAY       = 0x00000433,
-    WM_CAP_SET_PREVIEWRATE   = 0x00000434,
-    WM_CAP_SET_SCALE         = 0x00000435,
-    WM_CAP_GET_STATUS        = 0x00000436,
-    WM_CAP_SET_SCROLL        = 0x00000437,
-    WM_CAP_GRAB_FRAME        = 0x0000043c,
-    WM_CAP_GRAB_FRAME_NOSTOP = 0x0000043d,
+    WM_CAP_SET_PREVIEW       = 0x00000432U,
+    WM_CAP_SET_OVERLAY       = 0x00000433U,
+    WM_CAP_SET_PREVIEWRATE   = 0x00000434U,
+    WM_CAP_SET_SCALE         = 0x00000435U,
+    WM_CAP_GET_STATUS        = 0x00000436U,
+    WM_CAP_SET_SCROLL        = 0x00000437U,
+    WM_CAP_GRAB_FRAME        = 0x0000043cU,
+    WM_CAP_GRAB_FRAME_NOSTOP = 0x0000043dU,
 }
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-sequence))], [])*/uint
 {
-    WM_CAP_SEQUENCE           = 0x0000043e,
-    WM_CAP_SEQUENCE_NOFILE    = 0x0000043f,
-    WM_CAP_SET_SEQUENCE_SETUP = 0x00000440,
+    WM_CAP_SEQUENCE           = 0x0000043eU,
+    WM_CAP_SEQUENCE_NOFILE    = 0x0000043fU,
+    WM_CAP_SET_SEQUENCE_SETUP = 0x00000440U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-get-sequence-setup))], [])*/uint WM_CAP_GET_SEQUENCE_SETUP = 0x00000441;
-enum uint WM_CAP_SET_MCI_DEVICEA = 0x00000442;
-enum uint WM_CAP_GET_MCI_DEVICEA = 0x00000443;
-enum uint WM_CAP_SET_MCI_DEVICEW = 0x000004a6;
-enum uint WM_CAP_GET_MCI_DEVICEW = 0x000004a7;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-set-mci-device))], [])*/uint WM_CAP_SET_MCI_DEVICE = 0x000004a6;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-get-mci-device))], [])*/uint WM_CAP_GET_MCI_DEVICE = 0x000004a7;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-get-sequence-setup))], [])*/uint WM_CAP_GET_SEQUENCE_SETUP = 0x00000441U;
+enum uint WM_CAP_SET_MCI_DEVICEA = 0x00000442U;
+enum uint WM_CAP_GET_MCI_DEVICEA = 0x00000443U;
+enum uint WM_CAP_SET_MCI_DEVICEW = 0x000004a6U;
+enum uint WM_CAP_GET_MCI_DEVICEW = 0x000004a7U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-set-mci-device))], [])*/uint WM_CAP_SET_MCI_DEVICE = 0x000004a6U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-get-mci-device))], [])*/uint WM_CAP_GET_MCI_DEVICE = 0x000004a7U;
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-stop))], [])*/uint
 {
-    WM_CAP_STOP               = 0x00000444,
-    WM_CAP_ABORT              = 0x00000445,
-    WM_CAP_SINGLE_FRAME_OPEN  = 0x00000446,
-    WM_CAP_SINGLE_FRAME_CLOSE = 0x00000447,
-    WM_CAP_SINGLE_FRAME       = 0x00000448,
+    WM_CAP_STOP               = 0x00000444U,
+    WM_CAP_ABORT              = 0x00000445U,
+    WM_CAP_SINGLE_FRAME_OPEN  = 0x00000446U,
+    WM_CAP_SINGLE_FRAME_CLOSE = 0x00000447U,
+    WM_CAP_SINGLE_FRAME       = 0x00000448U,
 }
 
 enum : uint
 {
-    WM_CAP_PAL_OPENA        = 0x00000450,
-    WM_CAP_PAL_SAVEA        = 0x00000451,
-    WM_CAP_PAL_OPENW        = 0x000004b4,
-    WM_CAP_PAL_SAVEW        = 0x000004b5,
-    WM_CAP_PAL_OPEN         = 0x000004b4,
-    WM_CAP_PAL_SAVE         = 0x000004b5,
-    WM_CAP_PAL_PASTE        = 0x00000452,
-    WM_CAP_PAL_AUTOCREATE   = 0x00000453,
-    WM_CAP_PAL_MANUALCREATE = 0x00000454,
+    WM_CAP_PAL_OPENA        = 0x00000450U,
+    WM_CAP_PAL_SAVEA        = 0x00000451U,
+    WM_CAP_PAL_OPENW        = 0x000004b4U,
+    WM_CAP_PAL_SAVEW        = 0x000004b5U,
+    WM_CAP_PAL_OPEN         = 0x000004b4U,
+    WM_CAP_PAL_SAVE         = 0x000004b5U,
+    WM_CAP_PAL_PASTE        = 0x00000452U,
+    WM_CAP_PAL_AUTOCREATE   = 0x00000453U,
+    WM_CAP_PAL_MANUALCREATE = 0x00000454U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-set-callback-capcontrol))], [])*/uint WM_CAP_SET_CALLBACK_CAPCONTROL = 0x00000455;
-enum uint WM_CAP_UNICODE_END = 0x000004b5;
-enum uint WM_CAP_END = 0x000004b5;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/wm-cap-set-callback-capcontrol))], [])*/uint WM_CAP_SET_CALLBACK_CAPCONTROL = 0x00000455U;
+enum uint WM_CAP_UNICODE_END = 0x000004b5U;
+enum uint WM_CAP_END = 0x000004b5U;
 
 enum : uint
 {
-    AVSTREAMMASTER_AUDIO = 0x00000000,
-    AVSTREAMMASTER_NONE  = 0x00000001,
-}
-
-enum : uint
-{
-    CONTROLCALLBACK_PREROLL   = 0x00000001,
-    CONTROLCALLBACK_CAPTURING = 0x00000002,
+    AVSTREAMMASTER_AUDIO = 0x00000000U,
+    AVSTREAMMASTER_NONE  = 0x00000001U,
 }
 
 enum : uint
 {
-    IDS_CAP_BEGIN        = 0x0000012c,
-    IDS_CAP_END          = 0x0000012d,
-    IDS_CAP_INFO         = 0x00000191,
-    IDS_CAP_OUTOFMEM     = 0x00000192,
-    IDS_CAP_FILEEXISTS   = 0x00000193,
-    IDS_CAP_ERRORPALOPEN = 0x00000194,
-    IDS_CAP_ERRORPALSAVE = 0x00000195,
-    IDS_CAP_ERRORDIBSAVE = 0x00000196,
+    CONTROLCALLBACK_PREROLL   = 0x00000001U,
+    CONTROLCALLBACK_CAPTURING = 0x00000002U,
 }
 
 enum : uint
 {
-    IDS_CAP_DEFAVIEXT    = 0x00000197,
-    IDS_CAP_DEFPALEXT    = 0x00000198,
-    IDS_CAP_CANTOPEN     = 0x00000199,
-    IDS_CAP_SEQ_MSGSTART = 0x0000019a,
-    IDS_CAP_SEQ_MSGSTOP  = 0x0000019b,
-    IDS_CAP_VIDEDITERR   = 0x0000019c,
-    IDS_CAP_READONLYFILE = 0x0000019d,
+    IDS_CAP_BEGIN        = 0x0000012cU,
+    IDS_CAP_END          = 0x0000012dU,
+    IDS_CAP_INFO         = 0x00000191U,
+    IDS_CAP_OUTOFMEM     = 0x00000192U,
+    IDS_CAP_FILEEXISTS   = 0x00000193U,
+    IDS_CAP_ERRORPALOPEN = 0x00000194U,
+    IDS_CAP_ERRORPALSAVE = 0x00000195U,
+    IDS_CAP_ERRORDIBSAVE = 0x00000196U,
 }
 
 enum : uint
 {
-    IDS_CAP_WRITEERROR    = 0x0000019e,
-    IDS_CAP_NODISKSPACE   = 0x0000019f,
-    IDS_CAP_SETFILESIZE   = 0x000001a0,
-    IDS_CAP_SAVEASPERCENT = 0x000001a1,
-}
-
-enum uint IDS_CAP_DRIVER_ERROR = 0x000001a2;
-
-enum : uint
-{
-    IDS_CAP_WAVE_OPEN_ERROR    = 0x000001a3,
-    IDS_CAP_WAVE_ALLOC_ERROR   = 0x000001a4,
-    IDS_CAP_WAVE_PREPARE_ERROR = 0x000001a5,
-    IDS_CAP_WAVE_ADD_ERROR     = 0x000001a6,
-    IDS_CAP_WAVE_SIZE_ERROR    = 0x000001a7,
+    IDS_CAP_DEFAVIEXT    = 0x00000197U,
+    IDS_CAP_DEFPALEXT    = 0x00000198U,
+    IDS_CAP_CANTOPEN     = 0x00000199U,
+    IDS_CAP_SEQ_MSGSTART = 0x0000019aU,
+    IDS_CAP_SEQ_MSGSTOP  = 0x0000019bU,
+    IDS_CAP_VIDEDITERR   = 0x0000019cU,
+    IDS_CAP_READONLYFILE = 0x0000019dU,
 }
 
 enum : uint
 {
-    IDS_CAP_VIDEO_OPEN_ERROR    = 0x000001a8,
-    IDS_CAP_VIDEO_ALLOC_ERROR   = 0x000001a9,
-    IDS_CAP_VIDEO_PREPARE_ERROR = 0x000001aa,
-    IDS_CAP_VIDEO_ADD_ERROR     = 0x000001ab,
-    IDS_CAP_VIDEO_SIZE_ERROR    = 0x000001ac,
+    IDS_CAP_WRITEERROR    = 0x0000019eU,
+    IDS_CAP_NODISKSPACE   = 0x0000019fU,
+    IDS_CAP_SETFILESIZE   = 0x000001a0U,
+    IDS_CAP_SAVEASPERCENT = 0x000001a1U,
+}
+
+enum uint IDS_CAP_DRIVER_ERROR = 0x000001a2U;
+
+enum : uint
+{
+    IDS_CAP_WAVE_OPEN_ERROR    = 0x000001a3U,
+    IDS_CAP_WAVE_ALLOC_ERROR   = 0x000001a4U,
+    IDS_CAP_WAVE_PREPARE_ERROR = 0x000001a5U,
+    IDS_CAP_WAVE_ADD_ERROR     = 0x000001a6U,
+    IDS_CAP_WAVE_SIZE_ERROR    = 0x000001a7U,
 }
 
 enum : uint
 {
-    IDS_CAP_FILE_OPEN_ERROR  = 0x000001ad,
-    IDS_CAP_FILE_WRITE_ERROR = 0x000001ae,
+    IDS_CAP_VIDEO_OPEN_ERROR    = 0x000001a8U,
+    IDS_CAP_VIDEO_ALLOC_ERROR   = 0x000001a9U,
+    IDS_CAP_VIDEO_PREPARE_ERROR = 0x000001aaU,
+    IDS_CAP_VIDEO_ADD_ERROR     = 0x000001abU,
+    IDS_CAP_VIDEO_SIZE_ERROR    = 0x000001acU,
 }
 
 enum : uint
 {
-    IDS_CAP_RECORDING_ERROR  = 0x000001af,
-    IDS_CAP_RECORDING_ERROR2 = 0x000001b0,
-}
-
-enum uint IDS_CAP_AVI_INIT_ERROR = 0x000001b1;
-
-enum : uint
-{
-    IDS_CAP_NO_FRAME_CAP_ERROR = 0x000001b2,
-    IDS_CAP_NO_PALETTE_WARN    = 0x000001b3,
+    IDS_CAP_FILE_OPEN_ERROR  = 0x000001adU,
+    IDS_CAP_FILE_WRITE_ERROR = 0x000001aeU,
 }
 
 enum : uint
 {
-    IDS_CAP_MCI_CONTROL_ERROR   = 0x000001b4,
-    IDS_CAP_MCI_CANT_STEP_ERROR = 0x000001b5,
+    IDS_CAP_RECORDING_ERROR  = 0x000001afU,
+    IDS_CAP_RECORDING_ERROR2 = 0x000001b0U,
 }
 
-enum uint IDS_CAP_NO_AUDIO_CAP_ERROR = 0x000001b6;
-enum uint IDS_CAP_AVI_DRAWDIB_ERROR = 0x000001b7;
-enum uint IDS_CAP_COMPRESSOR_ERROR = 0x000001b8;
+enum uint IDS_CAP_AVI_INIT_ERROR = 0x000001b1U;
 
 enum : uint
 {
-    IDS_CAP_AUDIO_DROP_ERROR     = 0x000001b9,
-    IDS_CAP_AUDIO_DROP_COMPERROR = 0x000001ba,
-}
-
-enum : uint
-{
-    IDS_CAP_STAT_LIVE_MODE     = 0x000001f4,
-    IDS_CAP_STAT_OVERLAY_MODE  = 0x000001f5,
-    IDS_CAP_STAT_CAP_INIT      = 0x000001f6,
-    IDS_CAP_STAT_CAP_FINI      = 0x000001f7,
-    IDS_CAP_STAT_PALETTE_BUILD = 0x000001f8,
-    IDS_CAP_STAT_OPTPAL_BUILD  = 0x000001f9,
-    IDS_CAP_STAT_I_FRAMES      = 0x000001fa,
-    IDS_CAP_STAT_L_FRAMES      = 0x000001fb,
-    IDS_CAP_STAT_CAP_L_FRAMES  = 0x000001fc,
-    IDS_CAP_STAT_CAP_AUDIO     = 0x000001fd,
-    IDS_CAP_STAT_VIDEOCURRENT  = 0x000001fe,
-    IDS_CAP_STAT_VIDEOAUDIO    = 0x000001ff,
-    IDS_CAP_STAT_VIDEOONLY     = 0x00000200,
-    IDS_CAP_STAT_FRAMESDROPPED = 0x00000201,
+    IDS_CAP_NO_FRAME_CAP_ERROR = 0x000001b2U,
+    IDS_CAP_NO_PALETTE_WARN    = 0x000001b3U,
 }
 
 enum : uint
 {
-    JOYERR_NOERROR   = 0x00000000,
-    JOYERR_PARMS     = 0x000000a5,
-    JOYERR_NOCANDO   = 0x000000a6,
-    JOYERR_UNPLUGGED = 0x000000a7,
+    IDS_CAP_MCI_CONTROL_ERROR   = 0x000001b4U,
+    IDS_CAP_MCI_CANT_STEP_ERROR = 0x000001b5U,
+}
+
+enum uint IDS_CAP_NO_AUDIO_CAP_ERROR = 0x000001b6U;
+enum uint IDS_CAP_AVI_DRAWDIB_ERROR = 0x000001b7U;
+enum uint IDS_CAP_COMPRESSOR_ERROR = 0x000001b8U;
+
+enum : uint
+{
+    IDS_CAP_AUDIO_DROP_ERROR     = 0x000001b9U,
+    IDS_CAP_AUDIO_DROP_COMPERROR = 0x000001baU,
 }
 
 enum : uint
 {
-    JOY_BUTTON1    = 0x00000001,
-    JOY_BUTTON2    = 0x00000002,
-    JOY_BUTTON3    = 0x00000004,
-    JOY_BUTTON4    = 0x00000008,
-    JOY_BUTTON1CHG = 0x00000100,
-    JOY_BUTTON2CHG = 0x00000200,
-    JOY_BUTTON3CHG = 0x00000400,
-    JOY_BUTTON4CHG = 0x00000800,
+    IDS_CAP_STAT_LIVE_MODE     = 0x000001f4U,
+    IDS_CAP_STAT_OVERLAY_MODE  = 0x000001f5U,
+    IDS_CAP_STAT_CAP_INIT      = 0x000001f6U,
+    IDS_CAP_STAT_CAP_FINI      = 0x000001f7U,
+    IDS_CAP_STAT_PALETTE_BUILD = 0x000001f8U,
+    IDS_CAP_STAT_OPTPAL_BUILD  = 0x000001f9U,
+    IDS_CAP_STAT_I_FRAMES      = 0x000001faU,
+    IDS_CAP_STAT_L_FRAMES      = 0x000001fbU,
+    IDS_CAP_STAT_CAP_L_FRAMES  = 0x000001fcU,
+    IDS_CAP_STAT_CAP_AUDIO     = 0x000001fdU,
+    IDS_CAP_STAT_VIDEOCURRENT  = 0x000001feU,
+    IDS_CAP_STAT_VIDEOAUDIO    = 0x000001ffU,
+    IDS_CAP_STAT_VIDEOONLY     = 0x00000200U,
+    IDS_CAP_STAT_FRAMESDROPPED = 0x00000201U,
+}
+
+enum : uint
+{
+    JOYERR_NOERROR   = 0x00000000U,
+    JOYERR_PARMS     = 0x000000a5U,
+    JOYERR_NOCANDO   = 0x000000a6U,
+    JOYERR_UNPLUGGED = 0x000000a7U,
+}
+
+enum : uint
+{
+    JOY_BUTTON1    = 0x00000001U,
+    JOY_BUTTON2    = 0x00000002U,
+    JOY_BUTTON3    = 0x00000004U,
+    JOY_BUTTON4    = 0x00000008U,
+    JOY_BUTTON1CHG = 0x00000100U,
+    JOY_BUTTON2CHG = 0x00000200U,
+    JOY_BUTTON3CHG = 0x00000400U,
+    JOY_BUTTON4CHG = 0x00000800U,
 }
 
 enum : int
@@ -4333,10 +4334,10 @@ enum : int
 
 enum : uint
 {
-    JOY_POVFORWARD  = 0x00000000,
-    JOY_POVRIGHT    = 0x00002328,
-    JOY_POVBACKWARD = 0x00004650,
-    JOY_POVLEFT     = 0x00006978,
+    JOY_POVFORWARD  = 0x00000000U,
+    JOY_POVRIGHT    = 0x00002328U,
+    JOY_POVBACKWARD = 0x00004650U,
+    JOY_POVLEFT     = 0x00006978U,
 }
 
 enum : int
@@ -4374,120 +4375,120 @@ enum : int
 
 enum : uint
 {
-    JOYSTICKID1 = 0x00000000,
-    JOYSTICKID2 = 0x00000001,
+    JOYSTICKID1 = 0x00000000U,
+    JOYSTICKID2 = 0x00000001U,
 }
 
 enum : uint
 {
-    JOYCAPS_HASZ    = 0x00000001,
-    JOYCAPS_HASR    = 0x00000002,
-    JOYCAPS_HASU    = 0x00000004,
-    JOYCAPS_HASV    = 0x00000008,
-    JOYCAPS_HASPOV  = 0x00000010,
-    JOYCAPS_POV4DIR = 0x00000020,
-    JOYCAPS_POVCTS  = 0x00000040,
+    JOYCAPS_HASZ    = 0x00000001U,
+    JOYCAPS_HASR    = 0x00000002U,
+    JOYCAPS_HASU    = 0x00000004U,
+    JOYCAPS_HASV    = 0x00000008U,
+    JOYCAPS_HASPOV  = 0x00000010U,
+    JOYCAPS_POV4DIR = 0x00000020U,
+    JOYCAPS_POVCTS  = 0x00000040U,
 }
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/drv-load))], [])*/uint
 {
-    DRV_LOAD   = 0x00000001,
-    DRV_ENABLE = 0x00000002,
+    DRV_LOAD   = 0x00000001U,
+    DRV_ENABLE = 0x00000002U,
 }
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/drv-open))], [])*/uint
 {
-    DRV_OPEN    = 0x00000003,
-    DRV_CLOSE   = 0x00000004,
-    DRV_DISABLE = 0x00000005,
+    DRV_OPEN    = 0x00000003U,
+    DRV_CLOSE   = 0x00000004U,
+    DRV_DISABLE = 0x00000005U,
 }
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/drv-free))], [])*/uint
 {
-    DRV_FREE      = 0x00000006,
-    DRV_CONFIGURE = 0x00000007,
+    DRV_FREE      = 0x00000006U,
+    DRV_CONFIGURE = 0x00000007U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/drv-queryconfigure))], [])*/uint DRV_QUERYCONFIGURE = 0x00000008;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/drv-install))], [])*/uint DRV_INSTALL = 0x00000009;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/drv-queryconfigure))], [])*/uint DRV_QUERYCONFIGURE = 0x00000008U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/drv-install))], [])*/uint DRV_INSTALL = 0x00000009U;
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/drv-remove))], [])*/uint
 {
-    DRV_REMOVE   = 0x0000000a,
-    DRV_RESERVED = 0x00000800,
+    DRV_REMOVE   = 0x0000000aU,
+    DRV_RESERVED = 0x00000800U,
 }
 
-enum uint DRV_USER = 0x00004000;
+enum uint DRV_USER = 0x00004000U;
 enum const(wchar)* DRIVERS_SECTION = "DRIVERS32";
 enum const(wchar)* MCI_SECTION = "MCI32";
-enum uint DCB_NOSWITCH = 0x00000008;
-enum uint DCB_TYPEMASK = 0x00000007;
+enum uint DCB_NOSWITCH = 0x00000008U;
+enum uint DCB_TYPEMASK = 0x00000007U;
 
 enum : uint
 {
-    DCB_NULL   = 0x00000000,
-    DCB_WINDOW = 0x00000001,
+    DCB_NULL   = 0x00000000U,
+    DCB_WINDOW = 0x00000001U,
 }
 
 enum : uint
 {
-    DCB_TASK     = 0x00000002,
-    DCB_FUNCTION = 0x00000003,
+    DCB_TASK     = 0x00000002U,
+    DCB_FUNCTION = 0x00000003U,
 }
 
-enum uint DCB_EVENT = 0x00000005;
+enum uint DCB_EVENT = 0x00000005U;
 
 enum : uint
 {
-    DRVM_INIT                       = 0x00000064,
-    DRVM_EXIT                       = 0x00000065,
-    DRVM_DISABLE                    = 0x00000066,
-    DRVM_ENABLE                     = 0x00000067,
-    DRVM_INIT_EX                    = 0x00000068,
-    DRVM_USER                       = 0x00004000,
-    DRVM_MAPPER_RECONFIGURE         = 0x00002001,
-    DRVM_MAPPER_PREFERRED_GET       = 0x00002015,
-    DRVM_MAPPER_CONSOLEVOICECOM_GET = 0x00002017,
-}
-
-enum : uint
-{
-    DRV_QUERYDEVNODE  = 0x00000802,
-    DRV_QUERYMAPPABLE = 0x00000805,
-    DRV_QUERYMODULE   = 0x00000809,
-}
-
-enum uint DRV_PNPINSTALL = 0x0000080b;
-
-enum : uint
-{
-    DRV_QUERYDEVICEINTERFACE     = 0x0000080c,
-    DRV_QUERYDEVICEINTERFACESIZE = 0x0000080d,
+    DRVM_INIT                       = 0x00000064U,
+    DRVM_EXIT                       = 0x00000065U,
+    DRVM_DISABLE                    = 0x00000066U,
+    DRVM_ENABLE                     = 0x00000067U,
+    DRVM_INIT_EX                    = 0x00000068U,
+    DRVM_USER                       = 0x00004000U,
+    DRVM_MAPPER_RECONFIGURE         = 0x00002001U,
+    DRVM_MAPPER_PREFERRED_GET       = 0x00002015U,
+    DRVM_MAPPER_CONSOLEVOICECOM_GET = 0x00002017U,
 }
 
 enum : uint
 {
-    DRV_QUERYSTRINGID       = 0x0000080e,
-    DRV_QUERYSTRINGIDSIZE   = 0x0000080f,
-    DRV_QUERYIDFROMSTRINGID = 0x00000810,
+    DRV_QUERYDEVNODE  = 0x00000802U,
+    DRV_QUERYMAPPABLE = 0x00000805U,
+    DRV_QUERYMODULE   = 0x00000809U,
+}
+
+enum uint DRV_PNPINSTALL = 0x0000080bU;
+
+enum : uint
+{
+    DRV_QUERYDEVICEINTERFACE     = 0x0000080cU,
+    DRV_QUERYDEVICEINTERFACESIZE = 0x0000080dU,
 }
 
 enum : uint
 {
-    DRV_QUERYFUNCTIONINSTANCEID     = 0x00000811,
-    DRV_QUERYFUNCTIONINSTANCEIDSIZE = 0x00000812,
+    DRV_QUERYSTRINGID       = 0x0000080eU,
+    DRV_QUERYSTRINGIDSIZE   = 0x0000080fU,
+    DRV_QUERYIDFROMSTRINGID = 0x00000810U,
 }
-
-enum uint DRVM_MAPPER_PREFERRED_FLAGS_PREFERREDONLY = 0x00000001;
 
 enum : uint
 {
-    DRVM_IOCTL    = 0x00000100,
-    DRVM_ADD_THRU = 0x00000101,
+    DRV_QUERYFUNCTIONINSTANCEID     = 0x00000811U,
+    DRV_QUERYFUNCTIONINSTANCEIDSIZE = 0x00000812U,
 }
 
-enum uint DRVM_REMOVE_THRU = 0x00000102;
-enum uint DRVM_IOCTL_LAST = 0x00000105;
+enum uint DRVM_MAPPER_PREFERRED_FLAGS_PREFERREDONLY = 0x00000001U;
+
+enum : uint
+{
+    DRVM_IOCTL    = 0x00000100U,
+    DRVM_ADD_THRU = 0x00000101U,
+}
+
+enum uint DRVM_REMOVE_THRU = 0x00000102U;
+enum uint DRVM_IOCTL_LAST = 0x00000105U;
 
 enum : int
 {
@@ -4495,68 +4496,68 @@ enum : int
     DRVM_IOCTL_CMD_SYSTEM = 0x80000000,
 }
 
-enum uint VADMAD_Device_ID = 0x00000444;
-enum uint WODM_INIT = 0x00000064;
-enum uint WIDM_INIT = 0x00000064;
-enum uint WODM_INIT_EX = 0x00000068;
-enum uint WIDM_INIT_EX = 0x00000068;
+enum uint VADMAD_Device_ID = 0x00000444U;
+enum uint WODM_INIT = 0x00000064U;
+enum uint WIDM_INIT = 0x00000064U;
+enum uint WODM_INIT_EX = 0x00000068U;
+enum uint WIDM_INIT_EX = 0x00000068U;
 
 enum : uint
 {
-    WODM_GETNUMDEVS = 0x00000003,
-    WODM_GETDEVCAPS = 0x00000004,
+    WODM_GETNUMDEVS = 0x00000003U,
+    WODM_GETDEVCAPS = 0x00000004U,
 }
 
 enum : uint
 {
-    WODM_OPEN      = 0x00000005,
-    WODM_CLOSE     = 0x00000006,
-    WODM_PREPARE   = 0x00000007,
-    WODM_UNPREPARE = 0x00000008,
+    WODM_OPEN      = 0x00000005U,
+    WODM_CLOSE     = 0x00000006U,
+    WODM_PREPARE   = 0x00000007U,
+    WODM_UNPREPARE = 0x00000008U,
 }
 
 enum : uint
 {
-    WODM_WRITE    = 0x00000009,
-    WODM_PAUSE    = 0x0000000a,
-    WODM_RESTART  = 0x0000000b,
-    WODM_RESET    = 0x0000000c,
-    WODM_GETPOS   = 0x0000000d,
-    WODM_GETPITCH = 0x0000000e,
+    WODM_WRITE    = 0x00000009U,
+    WODM_PAUSE    = 0x0000000aU,
+    WODM_RESTART  = 0x0000000bU,
+    WODM_RESET    = 0x0000000cU,
+    WODM_GETPOS   = 0x0000000dU,
+    WODM_GETPITCH = 0x0000000eU,
 }
 
-enum uint WODM_SETPITCH = 0x0000000f;
-enum uint WODM_GETVOLUME = 0x00000010;
-enum uint WODM_SETVOLUME = 0x00000011;
-enum uint WODM_GETPLAYBACKRATE = 0x00000012;
-enum uint WODM_SETPLAYBACKRATE = 0x00000013;
-enum uint WODM_BREAKLOOP = 0x00000014;
-enum uint WODM_PREFERRED = 0x00000015;
-enum uint WODM_BUSY = 0x00000015;
+enum uint WODM_SETPITCH = 0x0000000fU;
+enum uint WODM_GETVOLUME = 0x00000010U;
+enum uint WODM_SETVOLUME = 0x00000011U;
+enum uint WODM_GETPLAYBACKRATE = 0x00000012U;
+enum uint WODM_SETPLAYBACKRATE = 0x00000013U;
+enum uint WODM_BREAKLOOP = 0x00000014U;
+enum uint WODM_PREFERRED = 0x00000015U;
+enum uint WODM_BUSY = 0x00000015U;
 
 enum : uint
 {
-    WIDM_GETNUMDEVS = 0x00000032,
-    WIDM_GETDEVCAPS = 0x00000033,
+    WIDM_GETNUMDEVS = 0x00000032U,
+    WIDM_GETDEVCAPS = 0x00000033U,
 }
 
 enum : uint
 {
-    WIDM_OPEN      = 0x00000034,
-    WIDM_CLOSE     = 0x00000035,
-    WIDM_PREPARE   = 0x00000036,
-    WIDM_UNPREPARE = 0x00000037,
+    WIDM_OPEN      = 0x00000034U,
+    WIDM_CLOSE     = 0x00000035U,
+    WIDM_PREPARE   = 0x00000036U,
+    WIDM_UNPREPARE = 0x00000037U,
 }
 
-enum uint WIDM_ADDBUFFER = 0x00000038;
+enum uint WIDM_ADDBUFFER = 0x00000038U;
 
 enum : uint
 {
-    WIDM_START     = 0x00000039,
-    WIDM_STOP      = 0x0000003a,
-    WIDM_RESET     = 0x0000003b,
-    WIDM_GETPOS    = 0x0000003c,
-    WIDM_PREFERRED = 0x0000003d,
+    WIDM_START     = 0x00000039U,
+    WIDM_STOP      = 0x0000003aU,
+    WIDM_RESET     = 0x0000003bU,
+    WIDM_GETPOS    = 0x0000003cU,
+    WIDM_PREFERRED = 0x0000003dU,
 }
 
 enum : int
@@ -4567,351 +4568,351 @@ enum : int
 
 enum : uint
 {
-    MODM_GETNUMDEVS = 0x00000001,
-    MODM_GETDEVCAPS = 0x00000002,
+    MODM_GETNUMDEVS = 0x00000001U,
+    MODM_GETDEVCAPS = 0x00000002U,
 }
 
 enum : uint
 {
-    MODM_OPEN      = 0x00000003,
-    MODM_CLOSE     = 0x00000004,
-    MODM_PREPARE   = 0x00000005,
-    MODM_UNPREPARE = 0x00000006,
+    MODM_OPEN      = 0x00000003U,
+    MODM_CLOSE     = 0x00000004U,
+    MODM_PREPARE   = 0x00000005U,
+    MODM_UNPREPARE = 0x00000006U,
 }
 
 enum : uint
 {
-    MODM_DATA     = 0x00000007,
-    MODM_LONGDATA = 0x00000008,
+    MODM_DATA     = 0x00000007U,
+    MODM_LONGDATA = 0x00000008U,
 }
 
 enum : uint
 {
-    MODM_RESET     = 0x00000009,
-    MODM_GETVOLUME = 0x0000000a,
+    MODM_RESET     = 0x00000009U,
+    MODM_GETVOLUME = 0x0000000aU,
 }
 
-enum uint MODM_SETVOLUME = 0x0000000b;
+enum uint MODM_SETVOLUME = 0x0000000bU;
 
 enum : uint
 {
-    MODM_CACHEPATCHES     = 0x0000000c,
-    MODM_CACHEDRUMPATCHES = 0x0000000d,
+    MODM_CACHEPATCHES     = 0x0000000cU,
+    MODM_CACHEDRUMPATCHES = 0x0000000dU,
 }
 
-enum uint MODM_STRMDATA = 0x0000000e;
+enum uint MODM_STRMDATA = 0x0000000eU;
 
 enum : uint
 {
-    MODM_GETPOS     = 0x00000011,
-    MODM_PAUSE      = 0x00000012,
-    MODM_RESTART    = 0x00000013,
-    MODM_STOP       = 0x00000014,
-    MODM_PROPERTIES = 0x00000015,
-    MODM_PREFERRED  = 0x00000016,
+    MODM_GETPOS     = 0x00000011U,
+    MODM_PAUSE      = 0x00000012U,
+    MODM_RESTART    = 0x00000013U,
+    MODM_STOP       = 0x00000014U,
+    MODM_PROPERTIES = 0x00000015U,
+    MODM_PREFERRED  = 0x00000016U,
 }
 
-enum uint MODM_RECONFIGURE = 0x00004768;
+enum uint MODM_RECONFIGURE = 0x00004768U;
 
 enum : uint
 {
-    MIDM_GETNUMDEVS = 0x00000035,
-    MIDM_GETDEVCAPS = 0x00000036,
-}
-
-enum : uint
-{
-    MIDM_OPEN      = 0x00000037,
-    MIDM_CLOSE     = 0x00000038,
-    MIDM_PREPARE   = 0x00000039,
-    MIDM_UNPREPARE = 0x0000003a,
-}
-
-enum uint MIDM_ADDBUFFER = 0x0000003b;
-
-enum : uint
-{
-    MIDM_START = 0x0000003c,
-    MIDM_STOP  = 0x0000003d,
-    MIDM_RESET = 0x0000003e,
+    MIDM_GETNUMDEVS = 0x00000035U,
+    MIDM_GETDEVCAPS = 0x00000036U,
 }
 
 enum : uint
 {
-    AUXM_INIT    = 0x00000064,
-    AUXM_INIT_EX = 0x00000068,
+    MIDM_OPEN      = 0x00000037U,
+    MIDM_CLOSE     = 0x00000038U,
+    MIDM_PREPARE   = 0x00000039U,
+    MIDM_UNPREPARE = 0x0000003aU,
+}
+
+enum uint MIDM_ADDBUFFER = 0x0000003bU;
+
+enum : uint
+{
+    MIDM_START = 0x0000003cU,
+    MIDM_STOP  = 0x0000003dU,
+    MIDM_RESET = 0x0000003eU,
 }
 
 enum : uint
 {
-    AUXDM_GETNUMDEVS = 0x00000003,
-    AUXDM_GETDEVCAPS = 0x00000004,
-    AUXDM_GETVOLUME  = 0x00000005,
-}
-
-enum uint AUXDM_SETVOLUME = 0x00000006;
-
-enum : uint
-{
-    MXDM_INIT       = 0x00000064,
-    MXDM_INIT_EX    = 0x00000068,
-    MXDM_USER       = 0x00004000,
-    MXDM_BASE       = 0x00000001,
-    MXDM_GETNUMDEVS = 0x00000001,
-    MXDM_GETDEVCAPS = 0x00000002,
+    AUXM_INIT    = 0x00000064U,
+    AUXM_INIT_EX = 0x00000068U,
 }
 
 enum : uint
 {
-    MXDM_OPEN            = 0x00000003,
-    MXDM_CLOSE           = 0x00000004,
-    MXDM_GETLINEINFO     = 0x00000005,
-    MXDM_GETLINECONTROLS = 0x00000006,
+    AUXDM_GETNUMDEVS = 0x00000003U,
+    AUXDM_GETDEVCAPS = 0x00000004U,
+    AUXDM_GETVOLUME  = 0x00000005U,
 }
 
-enum uint MXDM_GETCONTROLDETAILS = 0x00000007;
-enum uint MXDM_SETCONTROLDETAILS = 0x00000008;
-enum uint TDD_KILLTIMEREVENT = 0x00000800;
-enum uint TDD_SETTIMEREVENT = 0x00000804;
+enum uint AUXDM_SETVOLUME = 0x00000006U;
 
 enum : uint
 {
-    TDD_GETSYSTEMTIME = 0x00000808,
-    TDD_GETDEVCAPS    = 0x0000080c,
+    MXDM_INIT       = 0x00000064U,
+    MXDM_INIT_EX    = 0x00000068U,
+    MXDM_USER       = 0x00004000U,
+    MXDM_BASE       = 0x00000001U,
+    MXDM_GETNUMDEVS = 0x00000001U,
+    MXDM_GETDEVCAPS = 0x00000002U,
 }
 
-enum uint TDD_BEGINMINPERIOD = 0x00000810;
-enum uint TDD_ENDMINPERIOD = 0x00000814;
+enum : uint
+{
+    MXDM_OPEN            = 0x00000003U,
+    MXDM_CLOSE           = 0x00000004U,
+    MXDM_GETLINEINFO     = 0x00000005U,
+    MXDM_GETLINECONTROLS = 0x00000006U,
+}
+
+enum uint MXDM_GETCONTROLDETAILS = 0x00000007U;
+enum uint MXDM_SETCONTROLDETAILS = 0x00000008U;
+enum uint TDD_KILLTIMEREVENT = 0x00000800U;
+enum uint TDD_SETTIMEREVENT = 0x00000804U;
+
+enum : uint
+{
+    TDD_GETSYSTEMTIME = 0x00000808U,
+    TDD_GETDEVCAPS    = 0x0000080cU,
+}
+
+enum uint TDD_BEGINMINPERIOD = 0x00000810U;
+enum uint TDD_ENDMINPERIOD = 0x00000814U;
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* JOY_CONFIGCHANGED_MSGSTRING = "MSJSTICK_VJOYD_MSGSTR";
 
 enum : uint
 {
-    JDD_GETNUMDEVS = 0x00000801,
-    JDD_GETDEVCAPS = 0x00000802,
-    JDD_GETPOS     = 0x00000901,
+    JDD_GETNUMDEVS = 0x00000801U,
+    JDD_GETDEVCAPS = 0x00000802U,
+    JDD_GETPOS     = 0x00000901U,
 }
 
-enum uint JDD_SETCALIBRATION = 0x00000902;
-enum uint JDD_CONFIGCHANGED = 0x00000903;
-enum uint JDD_GETPOSEX = 0x00000904;
-enum uint MCI_OPEN_DRIVER = 0x00000801;
-enum uint MCI_CLOSE_DRIVER = 0x00000802;
+enum uint JDD_SETCALIBRATION = 0x00000902U;
+enum uint JDD_CONFIGCHANGED = 0x00000903U;
+enum uint JDD_GETPOSEX = 0x00000904U;
+enum uint MCI_OPEN_DRIVER = 0x00000801U;
+enum uint MCI_CLOSE_DRIVER = 0x00000802U;
 
 enum : uint
 {
-    MCI_FALSE                 = 0x00000213,
-    MCI_TRUE                  = 0x00000214,
-    MCI_FORMAT_MILLISECONDS_S = 0x00000215,
-    MCI_FORMAT_HMS_S          = 0x00000216,
-    MCI_FORMAT_MSF_S          = 0x00000217,
-    MCI_FORMAT_FRAMES_S       = 0x00000218,
-    MCI_FORMAT_SMPTE_24_S     = 0x00000219,
-    MCI_FORMAT_SMPTE_25_S     = 0x0000021a,
-    MCI_FORMAT_SMPTE_30_S     = 0x0000021b,
-    MCI_FORMAT_SMPTE_30DROP_S = 0x0000021c,
-    MCI_FORMAT_BYTES_S        = 0x0000021d,
-    MCI_FORMAT_SAMPLES_S      = 0x0000021e,
-    MCI_FORMAT_TMSF_S         = 0x0000021f,
+    MCI_FALSE                 = 0x00000213U,
+    MCI_TRUE                  = 0x00000214U,
+    MCI_FORMAT_MILLISECONDS_S = 0x00000215U,
+    MCI_FORMAT_HMS_S          = 0x00000216U,
+    MCI_FORMAT_MSF_S          = 0x00000217U,
+    MCI_FORMAT_FRAMES_S       = 0x00000218U,
+    MCI_FORMAT_SMPTE_24_S     = 0x00000219U,
+    MCI_FORMAT_SMPTE_25_S     = 0x0000021aU,
+    MCI_FORMAT_SMPTE_30_S     = 0x0000021bU,
+    MCI_FORMAT_SMPTE_30DROP_S = 0x0000021cU,
+    MCI_FORMAT_BYTES_S        = 0x0000021dU,
+    MCI_FORMAT_SAMPLES_S      = 0x0000021eU,
+    MCI_FORMAT_TMSF_S         = 0x0000021fU,
 }
 
-enum uint MCI_VD_FORMAT_TRACK_S = 0x00000405;
-enum uint WAVE_FORMAT_PCM_S = 0x00000480;
-enum uint WAVE_MAPPER_S = 0x00000481;
+enum uint MCI_VD_FORMAT_TRACK_S = 0x00000405U;
+enum uint WAVE_FORMAT_PCM_S = 0x00000480U;
+enum uint WAVE_MAPPER_S = 0x00000481U;
 
 enum : uint
 {
-    MCI_SEQ_MAPPER_S         = 0x000004c5,
-    MCI_SEQ_FILE_S           = 0x000004c6,
-    MCI_SEQ_MIDI_S           = 0x000004c7,
-    MCI_SEQ_SMPTE_S          = 0x000004c8,
-    MCI_SEQ_FORMAT_SONGPTR_S = 0x000004c9,
+    MCI_SEQ_MAPPER_S         = 0x000004c5U,
+    MCI_SEQ_FILE_S           = 0x000004c6U,
+    MCI_SEQ_MIDI_S           = 0x000004c7U,
+    MCI_SEQ_SMPTE_S          = 0x000004c8U,
+    MCI_SEQ_FORMAT_SONGPTR_S = 0x000004c9U,
 }
 
-enum uint MCI_SEQ_NONE_S = 0x000004ca;
-enum uint MIDIMAPPER_S = 0x000004cb;
-enum uint MCI_MAX_DEVICE_TYPE_LENGTH = 0x00000050;
-enum uint MCI_RESOURCE_RETURNED = 0x00010000;
+enum uint MCI_SEQ_NONE_S = 0x000004caU;
+enum uint MIDIMAPPER_S = 0x000004cbU;
+enum uint MCI_MAX_DEVICE_TYPE_LENGTH = 0x00000050U;
+enum uint MCI_RESOURCE_RETURNED = 0x00010000U;
 
 enum : uint
 {
-    MCI_COLONIZED3_RETURN = 0x00020000,
-    MCI_COLONIZED4_RETURN = 0x00040000,
+    MCI_COLONIZED3_RETURN = 0x00020000U,
+    MCI_COLONIZED4_RETURN = 0x00040000U,
 }
 
-enum uint MCI_INTEGER_RETURNED = 0x00080000;
-enum uint MCI_RESOURCE_DRIVER = 0x00100000;
-enum uint MCI_COMMAND_HEAD = 0x00000000;
-enum uint MCI_STRING = 0x00000001;
-enum uint MCI_INTEGER = 0x00000002;
-enum uint MCI_END_COMMAND = 0x00000003;
-enum uint MCI_RETURN = 0x00000004;
+enum uint MCI_INTEGER_RETURNED = 0x00080000U;
+enum uint MCI_RESOURCE_DRIVER = 0x00100000U;
+enum uint MCI_COMMAND_HEAD = 0x00000000U;
+enum uint MCI_STRING = 0x00000001U;
+enum uint MCI_INTEGER = 0x00000002U;
+enum uint MCI_END_COMMAND = 0x00000003U;
+enum uint MCI_RETURN = 0x00000004U;
 
 enum : uint
 {
-    MCI_FLAG             = 0x00000005,
-    MCI_END_COMMAND_LIST = 0x00000006,
-}
-
-enum : uint
-{
-    MCI_RECT     = 0x00000007,
-    MCI_CONSTANT = 0x00000008,
-}
-
-enum uint MCI_END_CONSTANT = 0x00000009;
-
-enum : uint
-{
-    MCI_HWND      = 0x0000000a,
-    MCI_HPAL      = 0x0000000b,
-    MCI_HDC       = 0x0000000c,
-    MCI_INTEGER64 = 0x0000000d,
-}
-
-enum uint TASKERR_NOTASKSUPPORT = 0x00000001;
-enum uint TASKERR_OUTOFMEMORY = 0x00000002;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/drv-exitsession))], [])*/uint DRV_EXITSESSION = 0x0000000b;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/drv-power))], [])*/uint DRV_POWER = 0x0000000f;
-
-enum : uint
-{
-    DRVCNF_CANCEL  = 0x00000000,
-    DRVCNF_OK      = 0x00000001,
-    DRVCNF_RESTART = 0x00000002,
-}
-
-enum uint DRV_CANCEL = 0x00000000;
-
-enum : uint
-{
-    DRV_OK      = 0x00000001,
-    DRV_RESTART = 0x00000002,
-}
-
-enum uint DRV_MCI_LAST = 0x000017ff;
-
-enum : uint
-{
-    MMIOERR_BASE         = 0x00000100,
-    MMIOERR_FILENOTFOUND = 0x00000101,
+    MCI_FLAG             = 0x00000005U,
+    MCI_END_COMMAND_LIST = 0x00000006U,
 }
 
 enum : uint
 {
-    MMIOERR_OUTOFMEMORY   = 0x00000102,
-    MMIOERR_CANNOTOPEN    = 0x00000103,
-    MMIOERR_CANNOTCLOSE   = 0x00000104,
-    MMIOERR_CANNOTREAD    = 0x00000105,
-    MMIOERR_CANNOTWRITE   = 0x00000106,
-    MMIOERR_CANNOTSEEK    = 0x00000107,
-    MMIOERR_CANNOTEXPAND  = 0x00000108,
-    MMIOERR_CHUNKNOTFOUND = 0x00000109,
+    MCI_RECT     = 0x00000007U,
+    MCI_CONSTANT = 0x00000008U,
+}
+
+enum uint MCI_END_CONSTANT = 0x00000009U;
+
+enum : uint
+{
+    MCI_HWND      = 0x0000000aU,
+    MCI_HPAL      = 0x0000000bU,
+    MCI_HDC       = 0x0000000cU,
+    MCI_INTEGER64 = 0x0000000dU,
+}
+
+enum uint TASKERR_NOTASKSUPPORT = 0x00000001U;
+enum uint TASKERR_OUTOFMEMORY = 0x00000002U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/drv-exitsession))], [])*/uint DRV_EXITSESSION = 0x0000000bU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/drv-power))], [])*/uint DRV_POWER = 0x0000000fU;
+
+enum : uint
+{
+    DRVCNF_CANCEL  = 0x00000000U,
+    DRVCNF_OK      = 0x00000001U,
+    DRVCNF_RESTART = 0x00000002U,
+}
+
+enum uint DRV_CANCEL = 0x00000000U;
+
+enum : uint
+{
+    DRV_OK      = 0x00000001U,
+    DRV_RESTART = 0x00000002U,
+}
+
+enum uint DRV_MCI_LAST = 0x000017ffU;
+
+enum : uint
+{
+    MMIOERR_BASE         = 0x00000100U,
+    MMIOERR_FILENOTFOUND = 0x00000101U,
 }
 
 enum : uint
 {
-    MMIOERR_UNBUFFERED   = 0x0000010a,
-    MMIOERR_PATHNOTFOUND = 0x0000010b,
-}
-
-enum uint MMIOERR_ACCESSDENIED = 0x0000010c;
-enum uint MMIOERR_SHARINGVIOLATION = 0x0000010d;
-enum uint MMIOERR_NETWORKERROR = 0x0000010e;
-enum uint MMIOERR_TOOMANYOPENFILES = 0x0000010f;
-enum uint MMIOERR_INVALIDFILE = 0x00000110;
-
-enum : uint
-{
-    MMIO_RWMODE    = 0x00000003,
-    MMIO_SHAREMODE = 0x00000070,
+    MMIOERR_OUTOFMEMORY   = 0x00000102U,
+    MMIOERR_CANNOTOPEN    = 0x00000103U,
+    MMIOERR_CANNOTCLOSE   = 0x00000104U,
+    MMIOERR_CANNOTREAD    = 0x00000105U,
+    MMIOERR_CANNOTWRITE   = 0x00000106U,
+    MMIOERR_CANNOTSEEK    = 0x00000107U,
+    MMIOERR_CANNOTEXPAND  = 0x00000108U,
+    MMIOERR_CHUNKNOTFOUND = 0x00000109U,
 }
 
 enum : uint
 {
-    MMIO_CREATE   = 0x00001000,
-    MMIO_PARSE    = 0x00000100,
-    MMIO_DELETE   = 0x00000200,
-    MMIO_EXIST    = 0x00004000,
-    MMIO_ALLOCBUF = 0x00010000,
+    MMIOERR_UNBUFFERED   = 0x0000010aU,
+    MMIOERR_PATHNOTFOUND = 0x0000010bU,
+}
+
+enum uint MMIOERR_ACCESSDENIED = 0x0000010cU;
+enum uint MMIOERR_SHARINGVIOLATION = 0x0000010dU;
+enum uint MMIOERR_NETWORKERROR = 0x0000010eU;
+enum uint MMIOERR_TOOMANYOPENFILES = 0x0000010fU;
+enum uint MMIOERR_INVALIDFILE = 0x00000110U;
+
+enum : uint
+{
+    MMIO_RWMODE    = 0x00000003U,
+    MMIO_SHAREMODE = 0x00000070U,
 }
 
 enum : uint
 {
-    MMIO_GETTEMP   = 0x00020000,
-    MMIO_DIRTY     = 0x10000000,
-    MMIO_READ      = 0x00000000,
-    MMIO_WRITE     = 0x00000001,
-    MMIO_READWRITE = 0x00000002,
+    MMIO_CREATE   = 0x00001000U,
+    MMIO_PARSE    = 0x00000100U,
+    MMIO_DELETE   = 0x00000200U,
+    MMIO_EXIST    = 0x00004000U,
+    MMIO_ALLOCBUF = 0x00010000U,
 }
 
 enum : uint
 {
-    MMIO_COMPAT    = 0x00000000,
-    MMIO_EXCLUSIVE = 0x00000010,
+    MMIO_GETTEMP   = 0x00020000U,
+    MMIO_DIRTY     = 0x10000000U,
+    MMIO_READ      = 0x00000000U,
+    MMIO_WRITE     = 0x00000001U,
+    MMIO_READWRITE = 0x00000002U,
 }
 
 enum : uint
 {
-    MMIO_DENYWRITE = 0x00000020,
-    MMIO_DENYREAD  = 0x00000030,
-    MMIO_DENYNONE  = 0x00000040,
+    MMIO_COMPAT    = 0x00000000U,
+    MMIO_EXCLUSIVE = 0x00000010U,
 }
 
 enum : uint
 {
-    MMIO_FHOPEN   = 0x00000010,
-    MMIO_EMPTYBUF = 0x00000010,
+    MMIO_DENYWRITE = 0x00000020U,
+    MMIO_DENYREAD  = 0x00000030U,
+    MMIO_DENYNONE  = 0x00000040U,
 }
 
 enum : uint
 {
-    MMIO_TOUPPER     = 0x00000010,
-    MMIO_INSTALLPROC = 0x00010000,
-}
-
-enum uint MMIO_GLOBALPROC = 0x10000000;
-enum uint MMIO_REMOVEPROC = 0x00020000;
-enum uint MMIO_UNICODEPROC = 0x01000000;
-
-enum : uint
-{
-    MMIO_FINDPROC  = 0x00040000,
-    MMIO_FINDCHUNK = 0x00000010,
-    MMIO_FINDRIFF  = 0x00000020,
-    MMIO_FINDLIST  = 0x00000040,
+    MMIO_FHOPEN   = 0x00000010U,
+    MMIO_EMPTYBUF = 0x00000010U,
 }
 
 enum : uint
 {
-    MMIO_CREATERIFF = 0x00000020,
-    MMIO_CREATELIST = 0x00000040,
+    MMIO_TOUPPER     = 0x00000010U,
+    MMIO_INSTALLPROC = 0x00010000U,
+}
+
+enum uint MMIO_GLOBALPROC = 0x10000000U;
+enum uint MMIO_REMOVEPROC = 0x00020000U;
+enum uint MMIO_UNICODEPROC = 0x01000000U;
+
+enum : uint
+{
+    MMIO_FINDPROC  = 0x00040000U,
+    MMIO_FINDCHUNK = 0x00000010U,
+    MMIO_FINDRIFF  = 0x00000020U,
+    MMIO_FINDLIST  = 0x00000040U,
+}
+
+enum : uint
+{
+    MMIO_CREATERIFF = 0x00000020U,
+    MMIO_CREATELIST = 0x00000040U,
 }
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mmiom-read))], [])*/uint
 {
-    MMIOM_READ       = 0x00000000,
-    MMIOM_WRITE      = 0x00000001,
-    MMIOM_SEEK       = 0x00000002,
-    MMIOM_OPEN       = 0x00000003,
-    MMIOM_CLOSE      = 0x00000004,
-    MMIOM_WRITEFLUSH = 0x00000005,
+    MMIOM_READ       = 0x00000000U,
+    MMIOM_WRITE      = 0x00000001U,
+    MMIOM_SEEK       = 0x00000002U,
+    MMIOM_OPEN       = 0x00000003U,
+    MMIOM_CLOSE      = 0x00000004U,
+    MMIOM_WRITEFLUSH = 0x00000005U,
 }
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mmiom-rename))], [])*/uint
 {
-    MMIOM_RENAME = 0x00000006,
-    MMIOM_USER   = 0x00008000,
+    MMIOM_RENAME = 0x00000006U,
+    MMIOM_USER   = 0x00008000U,
 }
 
 enum : uint
 {
-    SEEK_SET = 0x00000000,
-    SEEK_CUR = 0x00000001,
-    SEEK_END = 0x00000002,
+    SEEK_SET = 0x00000000U,
+    SEEK_CUR = 0x00000001U,
+    SEEK_END = 0x00000002U,
 }
 
-enum uint MMIO_DEFAULTBUFFER = 0x00002000;
-enum uint FACILITY_NS = 0x0000000d;
+enum uint MMIO_DEFAULTBUFFER = 0x00002000U;
+enum uint FACILITY_NS = 0x0000000dU;
 
 enum : int
 {
@@ -4936,46 +4937,46 @@ enum : int
 
 enum : uint
 {
-    MCIERR_AVI_OLDAVIFORMAT       = 0x00000264,
-    MCIERR_AVI_NOTINTERLEAVED     = 0x00000265,
-    MCIERR_AVI_NODISPDIB          = 0x00000266,
-    MCIERR_AVI_CANTPLAYFULLSCREEN = 0x00000267,
+    MCIERR_AVI_OLDAVIFORMAT       = 0x00000264U,
+    MCIERR_AVI_NOTINTERLEAVED     = 0x00000265U,
+    MCIERR_AVI_NODISPDIB          = 0x00000266U,
+    MCIERR_AVI_CANTPLAYFULLSCREEN = 0x00000267U,
 }
 
 enum : uint
 {
-    MCIERR_AVI_TOOBIGFORVGA = 0x00000268,
-    MCIERR_AVI_NOCOMPRESSOR = 0x00000269,
-    MCIERR_AVI_DISPLAYERROR = 0x0000026a,
-    MCIERR_AVI_AUDIOERROR   = 0x0000026b,
-    MCIERR_AVI_BADPALETTE   = 0x0000026c,
+    MCIERR_AVI_TOOBIGFORVGA = 0x00000268U,
+    MCIERR_AVI_NOCOMPRESSOR = 0x00000269U,
+    MCIERR_AVI_DISPLAYERROR = 0x0000026aU,
+    MCIERR_AVI_AUDIOERROR   = 0x0000026bU,
+    MCIERR_AVI_BADPALETTE   = 0x0000026cU,
 }
 
-enum uint DLG_ACMFORMATCHOOSE_ID = 0x00000046;
+enum uint DLG_ACMFORMATCHOOSE_ID = 0x00000046U;
 
 enum : uint
 {
-    IDD_ACMFORMATCHOOSE_BTN_HELP      = 0x00000009,
-    IDD_ACMFORMATCHOOSE_CMB_CUSTOM    = 0x00000064,
-    IDD_ACMFORMATCHOOSE_CMB_FORMATTAG = 0x00000065,
-    IDD_ACMFORMATCHOOSE_CMB_FORMAT    = 0x00000066,
-    IDD_ACMFORMATCHOOSE_BTN_SETNAME   = 0x00000067,
-    IDD_ACMFORMATCHOOSE_BTN_DELNAME   = 0x00000068,
+    IDD_ACMFORMATCHOOSE_BTN_HELP      = 0x00000009U,
+    IDD_ACMFORMATCHOOSE_CMB_CUSTOM    = 0x00000064U,
+    IDD_ACMFORMATCHOOSE_CMB_FORMATTAG = 0x00000065U,
+    IDD_ACMFORMATCHOOSE_CMB_FORMAT    = 0x00000066U,
+    IDD_ACMFORMATCHOOSE_BTN_SETNAME   = 0x00000067U,
+    IDD_ACMFORMATCHOOSE_BTN_DELNAME   = 0x00000068U,
 }
 
-enum uint DLG_ACMFILTERCHOOSE_ID = 0x00000047;
+enum uint DLG_ACMFILTERCHOOSE_ID = 0x00000047U;
 
 enum : uint
 {
-    IDD_ACMFILTERCHOOSE_BTN_HELP      = 0x00000009,
-    IDD_ACMFILTERCHOOSE_CMB_CUSTOM    = 0x00000064,
-    IDD_ACMFILTERCHOOSE_CMB_FILTERTAG = 0x00000065,
-    IDD_ACMFILTERCHOOSE_CMB_FILTER    = 0x00000066,
-    IDD_ACMFILTERCHOOSE_BTN_SETNAME   = 0x00000067,
-    IDD_ACMFILTERCHOOSE_BTN_DELNAME   = 0x00000068,
+    IDD_ACMFILTERCHOOSE_BTN_HELP      = 0x00000009U,
+    IDD_ACMFILTERCHOOSE_CMB_CUSTOM    = 0x00000064U,
+    IDD_ACMFILTERCHOOSE_CMB_FILTERTAG = 0x00000065U,
+    IDD_ACMFILTERCHOOSE_CMB_FILTER    = 0x00000066U,
+    IDD_ACMFILTERCHOOSE_BTN_SETNAME   = 0x00000067U,
+    IDD_ACMFILTERCHOOSE_BTN_DELNAME   = 0x00000068U,
 }
 
-enum uint FACILITY_NS_WIN32 = 0x00000007;
+enum uint FACILITY_NS_WIN32 = 0x00000007U;
 
 enum : HRESULT
 {
@@ -7186,15 +7187,15 @@ enum HRESULT NS_E_METADATA_CANNOT_RETRIEVE_FROM_OFFLINE_CACHE = HRESULT(0xc00d32
 
 enum : uint
 {
-    VFW_HIDE_SETTINGS_PAGE      = 0x00000001,
-    VFW_HIDE_VIDEOSRC_PAGE      = 0x00000002,
-    VFW_HIDE_CAMERACONTROL_PAGE = 0x00000004,
+    VFW_HIDE_SETTINGS_PAGE      = 0x00000001U,
+    VFW_HIDE_VIDEOSRC_PAGE      = 0x00000002U,
+    VFW_HIDE_CAMERACONTROL_PAGE = 0x00000004U,
 }
 
-enum uint VFW_OEM_ADD_PAGE = 0x80000000;
-enum uint VFW_USE_DEVICE_HANDLE = 0x00000001;
-enum uint VFW_USE_STREAM_HANDLE = 0x00000002;
-enum uint VFW_QUERY_DEV_CHANGED = 0x00000100;
+enum uint VFW_OEM_ADD_PAGE = 0x80000000U;
+enum uint VFW_USE_DEVICE_HANDLE = 0x00000001U;
+enum uint VFW_USE_STREAM_HANDLE = 0x00000002U;
+enum uint VFW_QUERY_DEV_CHANGED = 0x00000100U;
 
 enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
 {
@@ -7202,224 +7203,224 @@ enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(E
     TARGET_DEVICE_OPEN_EXCLUSIVELY = "TargetDeviceOpenExclusively",
 }
 
-enum uint MCIERR_INVALID_DEVICE_ID = 0x00000101;
+enum uint MCIERR_INVALID_DEVICE_ID = 0x00000101U;
 
 enum : uint
 {
-    MCIERR_UNRECOGNIZED_KEYWORD = 0x00000103,
-    MCIERR_UNRECOGNIZED_COMMAND = 0x00000105,
+    MCIERR_UNRECOGNIZED_KEYWORD = 0x00000103U,
+    MCIERR_UNRECOGNIZED_COMMAND = 0x00000105U,
 }
 
 enum : uint
 {
-    MCIERR_HARDWARE            = 0x00000106,
-    MCIERR_INVALID_DEVICE_NAME = 0x00000107,
+    MCIERR_HARDWARE            = 0x00000106U,
+    MCIERR_INVALID_DEVICE_NAME = 0x00000107U,
 }
 
-enum uint MCIERR_OUT_OF_MEMORY = 0x00000108;
-enum uint MCIERR_DEVICE_OPEN = 0x00000109;
-enum uint MCIERR_CANNOT_LOAD_DRIVER = 0x0000010a;
-enum uint MCIERR_MISSING_COMMAND_STRING = 0x0000010b;
-enum uint MCIERR_PARAM_OVERFLOW = 0x0000010c;
-enum uint MCIERR_MISSING_STRING_ARGUMENT = 0x0000010d;
-enum uint MCIERR_BAD_INTEGER = 0x0000010e;
-enum uint MCIERR_PARSER_INTERNAL = 0x0000010f;
-enum uint MCIERR_DRIVER_INTERNAL = 0x00000110;
-enum uint MCIERR_MISSING_PARAMETER = 0x00000111;
-enum uint MCIERR_UNSUPPORTED_FUNCTION = 0x00000112;
-enum uint MCIERR_FILE_NOT_FOUND = 0x00000113;
-enum uint MCIERR_DEVICE_NOT_READY = 0x00000114;
+enum uint MCIERR_OUT_OF_MEMORY = 0x00000108U;
+enum uint MCIERR_DEVICE_OPEN = 0x00000109U;
+enum uint MCIERR_CANNOT_LOAD_DRIVER = 0x0000010aU;
+enum uint MCIERR_MISSING_COMMAND_STRING = 0x0000010bU;
+enum uint MCIERR_PARAM_OVERFLOW = 0x0000010cU;
+enum uint MCIERR_MISSING_STRING_ARGUMENT = 0x0000010dU;
+enum uint MCIERR_BAD_INTEGER = 0x0000010eU;
+enum uint MCIERR_PARSER_INTERNAL = 0x0000010fU;
+enum uint MCIERR_DRIVER_INTERNAL = 0x00000110U;
+enum uint MCIERR_MISSING_PARAMETER = 0x00000111U;
+enum uint MCIERR_UNSUPPORTED_FUNCTION = 0x00000112U;
+enum uint MCIERR_FILE_NOT_FOUND = 0x00000113U;
+enum uint MCIERR_DEVICE_NOT_READY = 0x00000114U;
 
 enum : uint
 {
-    MCIERR_INTERNAL       = 0x00000115,
-    MCIERR_DRIVER         = 0x00000116,
-    MCIERR_CANNOT_USE_ALL = 0x00000117,
-}
-
-enum : uint
-{
-    MCIERR_MULTIPLE            = 0x00000118,
-    MCIERR_EXTENSION_NOT_FOUND = 0x00000119,
+    MCIERR_INTERNAL       = 0x00000115U,
+    MCIERR_DRIVER         = 0x00000116U,
+    MCIERR_CANNOT_USE_ALL = 0x00000117U,
 }
 
 enum : uint
 {
-    MCIERR_OUTOFRANGE           = 0x0000011a,
-    MCIERR_FLAGS_NOT_COMPATIBLE = 0x0000011c,
-}
-
-enum uint MCIERR_FILE_NOT_SAVED = 0x0000011e;
-
-enum : uint
-{
-    MCIERR_DEVICE_TYPE_REQUIRED = 0x0000011f,
-    MCIERR_DEVICE_LOCKED        = 0x00000120,
-}
-
-enum uint MCIERR_DUPLICATE_ALIAS = 0x00000121;
-enum uint MCIERR_BAD_CONSTANT = 0x00000122;
-enum uint MCIERR_MUST_USE_SHAREABLE = 0x00000123;
-enum uint MCIERR_MISSING_DEVICE_NAME = 0x00000124;
-enum uint MCIERR_BAD_TIME_FORMAT = 0x00000125;
-enum uint MCIERR_NO_CLOSING_QUOTE = 0x00000126;
-enum uint MCIERR_DUPLICATE_FLAGS = 0x00000127;
-enum uint MCIERR_INVALID_FILE = 0x00000128;
-enum uint MCIERR_NULL_PARAMETER_BLOCK = 0x00000129;
-enum uint MCIERR_UNNAMED_RESOURCE = 0x0000012a;
-enum uint MCIERR_NEW_REQUIRES_ALIAS = 0x0000012b;
-enum uint MCIERR_NOTIFY_ON_AUTO_OPEN = 0x0000012c;
-enum uint MCIERR_NO_ELEMENT_ALLOWED = 0x0000012d;
-enum uint MCIERR_NONAPPLICABLE_FUNCTION = 0x0000012e;
-enum uint MCIERR_ILLEGAL_FOR_AUTO_OPEN = 0x0000012f;
-enum uint MCIERR_FILENAME_REQUIRED = 0x00000130;
-enum uint MCIERR_EXTRA_CHARACTERS = 0x00000131;
-enum uint MCIERR_DEVICE_NOT_INSTALLED = 0x00000132;
-
-enum : uint
-{
-    MCIERR_GET_CD            = 0x00000133,
-    MCIERR_SET_CD            = 0x00000134,
-    MCIERR_SET_DRIVE         = 0x00000135,
-    MCIERR_DEVICE_LENGTH     = 0x00000136,
-    MCIERR_DEVICE_ORD_LENGTH = 0x00000137,
+    MCIERR_MULTIPLE            = 0x00000118U,
+    MCIERR_EXTENSION_NOT_FOUND = 0x00000119U,
 }
 
 enum : uint
 {
-    MCIERR_NO_INTEGER               = 0x00000138,
-    MCIERR_WAVE_OUTPUTSINUSE        = 0x00000140,
-    MCIERR_WAVE_SETOUTPUTINUSE      = 0x00000141,
-    MCIERR_WAVE_INPUTSINUSE         = 0x00000142,
-    MCIERR_WAVE_SETINPUTINUSE       = 0x00000143,
-    MCIERR_WAVE_OUTPUTUNSPECIFIED   = 0x00000144,
-    MCIERR_WAVE_INPUTUNSPECIFIED    = 0x00000145,
-    MCIERR_WAVE_OUTPUTSUNSUITABLE   = 0x00000146,
-    MCIERR_WAVE_SETOUTPUTUNSUITABLE = 0x00000147,
+    MCIERR_OUTOFRANGE           = 0x0000011aU,
+    MCIERR_FLAGS_NOT_COMPATIBLE = 0x0000011cU,
+}
+
+enum uint MCIERR_FILE_NOT_SAVED = 0x0000011eU;
+
+enum : uint
+{
+    MCIERR_DEVICE_TYPE_REQUIRED = 0x0000011fU,
+    MCIERR_DEVICE_LOCKED        = 0x00000120U,
+}
+
+enum uint MCIERR_DUPLICATE_ALIAS = 0x00000121U;
+enum uint MCIERR_BAD_CONSTANT = 0x00000122U;
+enum uint MCIERR_MUST_USE_SHAREABLE = 0x00000123U;
+enum uint MCIERR_MISSING_DEVICE_NAME = 0x00000124U;
+enum uint MCIERR_BAD_TIME_FORMAT = 0x00000125U;
+enum uint MCIERR_NO_CLOSING_QUOTE = 0x00000126U;
+enum uint MCIERR_DUPLICATE_FLAGS = 0x00000127U;
+enum uint MCIERR_INVALID_FILE = 0x00000128U;
+enum uint MCIERR_NULL_PARAMETER_BLOCK = 0x00000129U;
+enum uint MCIERR_UNNAMED_RESOURCE = 0x0000012aU;
+enum uint MCIERR_NEW_REQUIRES_ALIAS = 0x0000012bU;
+enum uint MCIERR_NOTIFY_ON_AUTO_OPEN = 0x0000012cU;
+enum uint MCIERR_NO_ELEMENT_ALLOWED = 0x0000012dU;
+enum uint MCIERR_NONAPPLICABLE_FUNCTION = 0x0000012eU;
+enum uint MCIERR_ILLEGAL_FOR_AUTO_OPEN = 0x0000012fU;
+enum uint MCIERR_FILENAME_REQUIRED = 0x00000130U;
+enum uint MCIERR_EXTRA_CHARACTERS = 0x00000131U;
+enum uint MCIERR_DEVICE_NOT_INSTALLED = 0x00000132U;
+
+enum : uint
+{
+    MCIERR_GET_CD            = 0x00000133U,
+    MCIERR_SET_CD            = 0x00000134U,
+    MCIERR_SET_DRIVE         = 0x00000135U,
+    MCIERR_DEVICE_LENGTH     = 0x00000136U,
+    MCIERR_DEVICE_ORD_LENGTH = 0x00000137U,
 }
 
 enum : uint
 {
-    MCIERR_WAVE_INPUTSUNSUITABLE   = 0x00000148,
-    MCIERR_WAVE_SETINPUTUNSUITABLE = 0x00000149,
+    MCIERR_NO_INTEGER               = 0x00000138U,
+    MCIERR_WAVE_OUTPUTSINUSE        = 0x00000140U,
+    MCIERR_WAVE_SETOUTPUTINUSE      = 0x00000141U,
+    MCIERR_WAVE_INPUTSINUSE         = 0x00000142U,
+    MCIERR_WAVE_SETINPUTINUSE       = 0x00000143U,
+    MCIERR_WAVE_OUTPUTUNSPECIFIED   = 0x00000144U,
+    MCIERR_WAVE_INPUTUNSPECIFIED    = 0x00000145U,
+    MCIERR_WAVE_OUTPUTSUNSUITABLE   = 0x00000146U,
+    MCIERR_WAVE_SETOUTPUTUNSUITABLE = 0x00000147U,
 }
 
 enum : uint
 {
-    MCIERR_SEQ_DIV_INCOMPATIBLE = 0x00000150,
-    MCIERR_SEQ_PORT_INUSE       = 0x00000151,
-    MCIERR_SEQ_PORT_NONEXISTENT = 0x00000152,
-    MCIERR_SEQ_PORT_MAPNODEVICE = 0x00000153,
-    MCIERR_SEQ_PORT_MISCERROR   = 0x00000154,
-    MCIERR_SEQ_TIMER            = 0x00000155,
-    MCIERR_SEQ_PORTUNSPECIFIED  = 0x00000156,
-    MCIERR_SEQ_NOMIDIPRESENT    = 0x00000157,
+    MCIERR_WAVE_INPUTSUNSUITABLE   = 0x00000148U,
+    MCIERR_WAVE_SETINPUTUNSUITABLE = 0x00000149U,
 }
 
 enum : uint
 {
-    MCIERR_NO_WINDOW    = 0x0000015a,
-    MCIERR_CREATEWINDOW = 0x0000015b,
+    MCIERR_SEQ_DIV_INCOMPATIBLE = 0x00000150U,
+    MCIERR_SEQ_PORT_INUSE       = 0x00000151U,
+    MCIERR_SEQ_PORT_NONEXISTENT = 0x00000152U,
+    MCIERR_SEQ_PORT_MAPNODEVICE = 0x00000153U,
+    MCIERR_SEQ_PORT_MISCERROR   = 0x00000154U,
+    MCIERR_SEQ_TIMER            = 0x00000155U,
+    MCIERR_SEQ_PORTUNSPECIFIED  = 0x00000156U,
+    MCIERR_SEQ_NOMIDIPRESENT    = 0x00000157U,
 }
 
 enum : uint
 {
-    MCIERR_FILE_READ   = 0x0000015c,
-    MCIERR_FILE_WRITE  = 0x0000015d,
-    MCIERR_NO_IDENTITY = 0x0000015e,
+    MCIERR_NO_WINDOW    = 0x0000015aU,
+    MCIERR_CREATEWINDOW = 0x0000015bU,
 }
-
-enum uint MCIERR_CUSTOM_DRIVER_BASE = 0x00000200;
 
 enum : uint
 {
-    MCI_FIRST  = 0x00000800,
-    MCI_ESCAPE = 0x00000805,
+    MCIERR_FILE_READ   = 0x0000015cU,
+    MCIERR_FILE_WRITE  = 0x0000015dU,
+    MCIERR_NO_IDENTITY = 0x0000015eU,
+}
+
+enum uint MCIERR_CUSTOM_DRIVER_BASE = 0x00000200U;
+
+enum : uint
+{
+    MCI_FIRST  = 0x00000800U,
+    MCI_ESCAPE = 0x00000805U,
 }
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-info))], [])*/uint
 {
-    MCI_INFO       = 0x0000080a,
-    MCI_GETDEVCAPS = 0x0000080b,
+    MCI_INFO       = 0x0000080aU,
+    MCI_GETDEVCAPS = 0x0000080bU,
 }
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-spin))], [])*/uint
 {
-    MCI_SPIN    = 0x0000080c,
-    MCI_SET     = 0x0000080d,
-    MCI_SYSINFO = 0x00000810,
+    MCI_SPIN    = 0x0000080cU,
+    MCI_SET     = 0x0000080dU,
+    MCI_SYSINFO = 0x00000810U,
 }
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-break))], [])*/uint
 {
-    MCI_BREAK  = 0x00000811,
-    MCI_STATUS = 0x00000814,
+    MCI_BREAK  = 0x00000811U,
+    MCI_STATUS = 0x00000814U,
 }
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-cue))], [])*/uint
 {
-    MCI_CUE     = 0x00000830,
-    MCI_REALIZE = 0x00000840,
+    MCI_CUE     = 0x00000830U,
+    MCI_REALIZE = 0x00000840U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-window))], [])*/uint MCI_WINDOW = 0x00000841;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-window))], [])*/uint MCI_WINDOW = 0x00000841U;
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-put))], [])*/uint
 {
-    MCI_PUT    = 0x00000842,
-    MCI_WHERE  = 0x00000843,
-    MCI_FREEZE = 0x00000844,
+    MCI_PUT    = 0x00000842U,
+    MCI_WHERE  = 0x00000843U,
+    MCI_FREEZE = 0x00000844U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-unfreeze))], [])*/uint MCI_UNFREEZE = 0x00000845;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-unfreeze))], [])*/uint MCI_UNFREEZE = 0x00000845U;
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-load))], [])*/uint
 {
-    MCI_LOAD          = 0x00000850,
-    MCI_UPDATE        = 0x00000854,
-    MCI_USER_MESSAGES = 0x00000c00,
+    MCI_LOAD          = 0x00000850U,
+    MCI_UPDATE        = 0x00000854U,
+    MCI_USER_MESSAGES = 0x00000c00U,
 }
 
 enum : uint
 {
-    MCI_LAST                   = 0x00000fff,
-    MCI_DEVTYPE_VCR            = 0x00000201,
-    MCI_DEVTYPE_VIDEODISC      = 0x00000202,
-    MCI_DEVTYPE_OVERLAY        = 0x00000203,
-    MCI_DEVTYPE_CD_AUDIO       = 0x00000204,
-    MCI_DEVTYPE_DAT            = 0x00000205,
-    MCI_DEVTYPE_SCANNER        = 0x00000206,
-    MCI_DEVTYPE_ANIMATION      = 0x00000207,
-    MCI_DEVTYPE_DIGITAL_VIDEO  = 0x00000208,
-    MCI_DEVTYPE_OTHER          = 0x00000209,
-    MCI_DEVTYPE_WAVEFORM_AUDIO = 0x0000020a,
-    MCI_DEVTYPE_SEQUENCER      = 0x0000020b,
-    MCI_DEVTYPE_FIRST          = 0x00000201,
-    MCI_DEVTYPE_LAST           = 0x0000020b,
-    MCI_DEVTYPE_FIRST_USER     = 0x00001000,
+    MCI_LAST                   = 0x00000fffU,
+    MCI_DEVTYPE_VCR            = 0x00000201U,
+    MCI_DEVTYPE_VIDEODISC      = 0x00000202U,
+    MCI_DEVTYPE_OVERLAY        = 0x00000203U,
+    MCI_DEVTYPE_CD_AUDIO       = 0x00000204U,
+    MCI_DEVTYPE_DAT            = 0x00000205U,
+    MCI_DEVTYPE_SCANNER        = 0x00000206U,
+    MCI_DEVTYPE_ANIMATION      = 0x00000207U,
+    MCI_DEVTYPE_DIGITAL_VIDEO  = 0x00000208U,
+    MCI_DEVTYPE_OTHER          = 0x00000209U,
+    MCI_DEVTYPE_WAVEFORM_AUDIO = 0x0000020aU,
+    MCI_DEVTYPE_SEQUENCER      = 0x0000020bU,
+    MCI_DEVTYPE_FIRST          = 0x00000201U,
+    MCI_DEVTYPE_LAST           = 0x0000020bU,
+    MCI_DEVTYPE_FIRST_USER     = 0x00001000U,
 }
 
 enum : uint
 {
-    MCI_FORMAT_MILLISECONDS = 0x00000000,
-    MCI_FORMAT_HMS          = 0x00000001,
-    MCI_FORMAT_MSF          = 0x00000002,
-    MCI_FORMAT_FRAMES       = 0x00000003,
-    MCI_FORMAT_SMPTE_24     = 0x00000004,
-    MCI_FORMAT_SMPTE_25     = 0x00000005,
-    MCI_FORMAT_SMPTE_30     = 0x00000006,
-    MCI_FORMAT_SMPTE_30DROP = 0x00000007,
-    MCI_FORMAT_BYTES        = 0x00000008,
-    MCI_FORMAT_SAMPLES      = 0x00000009,
-    MCI_FORMAT_TMSF         = 0x0000000a,
+    MCI_FORMAT_MILLISECONDS = 0x00000000U,
+    MCI_FORMAT_HMS          = 0x00000001U,
+    MCI_FORMAT_MSF          = 0x00000002U,
+    MCI_FORMAT_FRAMES       = 0x00000003U,
+    MCI_FORMAT_SMPTE_24     = 0x00000004U,
+    MCI_FORMAT_SMPTE_25     = 0x00000005U,
+    MCI_FORMAT_SMPTE_30     = 0x00000006U,
+    MCI_FORMAT_SMPTE_30DROP = 0x00000007U,
+    MCI_FORMAT_BYTES        = 0x00000008U,
+    MCI_FORMAT_SAMPLES      = 0x00000009U,
+    MCI_FORMAT_TMSF         = 0x0000000aU,
 }
 
 enum : uint
 {
-    MCI_NOTIFY_SUCCESSFUL = 0x00000001,
-    MCI_NOTIFY_SUPERSEDED = 0x00000002,
-    MCI_NOTIFY_ABORTED    = 0x00000004,
-    MCI_NOTIFY_FAILURE    = 0x00000008,
+    MCI_NOTIFY_SUCCESSFUL = 0x00000001U,
+    MCI_NOTIFY_SUPERSEDED = 0x00000002U,
+    MCI_NOTIFY_ABORTED    = 0x00000004U,
+    MCI_NOTIFY_FAILURE    = 0x00000008U,
 }
 
 enum int MCI_NOTIFY = 0x00000001;
@@ -7526,13 +7527,13 @@ enum int MCI_LOAD_FILE = 0x00000100;
 
 enum : uint
 {
-    MCI_VD_MODE_PARK   = 0x00000401,
-    MCI_VD_MEDIA_CLV   = 0x00000402,
-    MCI_VD_MEDIA_CAV   = 0x00000403,
-    MCI_VD_MEDIA_OTHER = 0x00000404,
+    MCI_VD_MODE_PARK   = 0x00000401U,
+    MCI_VD_MEDIA_CLV   = 0x00000402U,
+    MCI_VD_MEDIA_CAV   = 0x00000403U,
+    MCI_VD_MEDIA_OTHER = 0x00000404U,
 }
 
-enum uint MCI_VD_FORMAT_TRACK = 0x00004001;
+enum uint MCI_VD_FORMAT_TRACK = 0x00004001U;
 
 enum : int
 {
@@ -7576,14 +7577,14 @@ enum int MCI_CDA_STATUS_TYPE_TRACK = 0x00004001;
 
 enum : uint
 {
-    MCI_CDA_TRACK_AUDIO = 0x00000440,
-    MCI_CDA_TRACK_OTHER = 0x00000441,
+    MCI_CDA_TRACK_AUDIO = 0x00000440U,
+    MCI_CDA_TRACK_OTHER = 0x00000441U,
 }
 
 enum : uint
 {
-    MCI_WAVE_PCM    = 0x00000480,
-    MCI_WAVE_MAPPER = 0x00000481,
+    MCI_WAVE_PCM    = 0x00000480U,
+    MCI_WAVE_MAPPER = 0x00000481U,
 }
 
 enum : int
@@ -7616,12 +7617,12 @@ enum : int
 
 enum : uint
 {
-    MCI_SEQ_FORMAT_SONGPTR = 0x00004001,
-    MCI_SEQ_FILE           = 0x00004002,
-    MCI_SEQ_MIDI           = 0x00004003,
-    MCI_SEQ_SMPTE          = 0x00004004,
-    MCI_SEQ_NONE           = 0x0000fffd,
-    MCI_SEQ_MAPPER         = 0x0000ffff,
+    MCI_SEQ_FORMAT_SONGPTR = 0x00004001U,
+    MCI_SEQ_FILE           = 0x00004002U,
+    MCI_SEQ_MIDI           = 0x00004003U,
+    MCI_SEQ_SMPTE          = 0x00004004U,
+    MCI_SEQ_NONE           = 0x0000fffdU,
+    MCI_SEQ_MAPPER         = 0x0000ffffU,
 }
 
 enum : int
@@ -8110,7 +8111,7 @@ align (1):
     uint JPEGVSubSampling;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-generic-parms))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-generic-parms
 struct MCI_GENERIC_PARMS
 {
 align (1):
@@ -8139,7 +8140,7 @@ align (1):
     const(PWSTR) lpstrAlias;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-play-parms))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-play-parms
 struct MCI_PLAY_PARMS
 {
 align (1):
@@ -8148,7 +8149,7 @@ align (1):
     uint   dwTo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-seek-parms))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-seek-parms
 struct MCI_SEEK_PARMS
 {
 align (1):
@@ -8156,7 +8157,7 @@ align (1):
     uint   dwTo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-status-parms))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-status-parms
 struct MCI_STATUS_PARMS
 {
 align (1):
@@ -8184,7 +8185,7 @@ align (1):
     uint   dwRetSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-getdevcaps-parms))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-getdevcaps-parms
 struct MCI_GETDEVCAPS_PARMS
 {
 align (1):
@@ -8215,7 +8216,7 @@ align (1):
     uint   wDeviceType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-set-parms))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-set-parms
 struct MCI_SET_PARMS
 {
 align (1):
@@ -8224,7 +8225,7 @@ align (1):
     uint   dwAudio;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-break-parms))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-break-parms
 struct MCI_BREAK_PARMS
 {
 align (1):
@@ -8265,7 +8266,7 @@ align (1):
     const(PWSTR) lpfilename;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-record-parms))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-record-parms
 struct MCI_RECORD_PARMS
 {
 align (1):
@@ -8274,7 +8275,7 @@ align (1):
     uint   dwTo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-vd-play-parms))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-vd-play-parms
 struct MCI_VD_PLAY_PARMS
 {
 align (1):
@@ -8284,7 +8285,7 @@ align (1):
     uint   dwSpeed;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-vd-step-parms))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-vd-step-parms
 struct MCI_VD_STEP_PARMS
 {
 align (1):
@@ -8332,7 +8333,7 @@ align (1):
     uint         dwBufferSeconds;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-wave-delete-parms))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-wave-delete-parms
 struct MCI_WAVE_DELETE_PARMS
 {
 align (1):
@@ -8341,7 +8342,7 @@ align (1):
     uint   dwTo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-wave-set-parms))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-wave-set-parms
 struct MCI_WAVE_SET_PARMS
 {
 align (1):
@@ -8362,7 +8363,7 @@ align (1):
     ushort wReserved5;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-seq-set-parms))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-seq-set-parms
 struct MCI_SEQ_SET_PARMS
 {
 align (1):
@@ -8499,7 +8500,7 @@ align (1):
     const(PWSTR) lpstrText;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Multimedia/mci-ovly-rect-parms))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Multimedia/mci-ovly-rect-parms
 struct MCI_OVLY_RECT_PARMS
 {
 align (1):
@@ -8552,7 +8553,7 @@ align (1):
     uint         dnDevNode;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmiscapi/ns-mmiscapi-drvconfiginfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmiscapi/ns-mmiscapi-drvconfiginfo
 struct DRVCONFIGINFO
 {
 align (1):
@@ -8582,7 +8583,7 @@ align (1):
     HMMIO      hmmio;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmiscapi/ns-mmiscapi-mmckinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmiscapi/ns-mmiscapi-mmckinfo
 struct MMCKINFO
 {
 align (1):
@@ -8594,7 +8595,7 @@ align (1):
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/joystickapi/ns-joystickapi-joycapsa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/joystickapi/ns-joystickapi-joycapsa
 struct JOYCAPSA
 {
 align (1):
@@ -8625,7 +8626,7 @@ align (1):
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/joystickapi/ns-joystickapi-joycapsw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/joystickapi/ns-joystickapi-joycapsw
 struct JOYCAPSW
 {
 align (1):
@@ -8721,7 +8722,7 @@ align (1):
     GUID       NameGuid;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/joystickapi/ns-joystickapi-joyinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/joystickapi/ns-joystickapi-joyinfo
 struct JOYINFO
 {
 align (1):
@@ -8731,7 +8732,7 @@ align (1):
     uint wButtons;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/joystickapi/ns-joystickapi-joyinfoex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/joystickapi/ns-joystickapi-joyinfoex
 struct JOYINFOEX
 {
 align (1):
@@ -8750,7 +8751,7 @@ align (1):
     uint dwReserved2;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_rect_parms))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_rect_parms
 struct MCI_DGV_RECT_PARMS
 {
 align (1):
@@ -8759,7 +8760,7 @@ align (1):
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_capture_parmsa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_capture_parmsa
 struct MCI_DGV_CAPTURE_PARMSA
 {
 align (1):
@@ -8769,7 +8770,7 @@ align (1):
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_capture_parmsw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_capture_parmsw
 struct MCI_DGV_CAPTURE_PARMSW
 {
 align (1):
@@ -8778,7 +8779,7 @@ align (1):
     RECT   rc;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_copy_parms))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_copy_parms
 struct MCI_DGV_COPY_PARMS
 {
 align (1):
@@ -8790,7 +8791,7 @@ align (1):
     uint   dwVideoStream;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_cue_parms))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_cue_parms
 struct MCI_DGV_CUE_PARMS
 {
 align (1):
@@ -8798,7 +8799,7 @@ align (1):
     uint   dwTo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_cut_parms))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_cut_parms
 struct MCI_DGV_CUT_PARMS
 {
 align (1):
@@ -8810,7 +8811,7 @@ align (1):
     uint   dwVideoStream;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_delete_parms))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_delete_parms
 struct MCI_DGV_DELETE_PARMS
 {
 align (1):
@@ -8823,7 +8824,7 @@ align (1):
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_info_parmsa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_info_parmsa
 struct MCI_DGV_INFO_PARMSA
 {
 align (1):
@@ -8834,7 +8835,7 @@ align (1):
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_info_parmsw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_info_parmsw
 struct MCI_DGV_INFO_PARMSW
 {
 align (1):
@@ -8845,7 +8846,7 @@ align (1):
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_list_parmsa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_list_parmsa
 struct MCI_DGV_LIST_PARMSA
 {
 align (1):
@@ -8858,7 +8859,7 @@ align (1):
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_list_parmsw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_list_parmsw
 struct MCI_DGV_LIST_PARMSW
 {
 align (1):
@@ -8870,7 +8871,7 @@ align (1):
     PWSTR  lpstrAlgorithm;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_monitor_parms))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_monitor_parms
 struct MCI_DGV_MONITOR_PARMS
 {
 align (1):
@@ -8880,7 +8881,7 @@ align (1):
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_open_parmsa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_open_parmsa
 struct MCI_DGV_OPEN_PARMSA
 {
 align (1):
@@ -8894,7 +8895,7 @@ align (1):
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_open_parmsw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_open_parmsw
 struct MCI_DGV_OPEN_PARMSW
 {
 align (1):
@@ -8907,7 +8908,7 @@ align (1):
     HWND   hWndParent;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_paste_parms))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_paste_parms
 struct MCI_DGV_PASTE_PARMS
 {
 align (1):
@@ -8919,7 +8920,7 @@ align (1):
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_quality_parmsa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_quality_parmsa
 struct MCI_DGV_QUALITY_PARMSA
 {
 align (1):
@@ -8931,7 +8932,7 @@ align (1):
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_quality_parmsw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_quality_parmsw
 struct MCI_DGV_QUALITY_PARMSW
 {
 align (1):
@@ -8942,7 +8943,7 @@ align (1):
     uint   dwHandle;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_record_parms))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_record_parms
 struct MCI_DGV_RECORD_PARMS
 {
 align (1):
@@ -8955,7 +8956,7 @@ align (1):
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_reserve_parmsa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_reserve_parmsa
 struct MCI_DGV_RESERVE_PARMSA
 {
 align (1):
@@ -8965,7 +8966,7 @@ align (1):
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_reserve_parmsw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_reserve_parmsw
 struct MCI_DGV_RESERVE_PARMSW
 {
 align (1):
@@ -8975,7 +8976,7 @@ align (1):
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_restore_parmsa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_restore_parmsa
 struct MCI_DGV_RESTORE_PARMSA
 {
 align (1):
@@ -8985,7 +8986,7 @@ align (1):
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_restore_parmsw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_restore_parmsw
 struct MCI_DGV_RESTORE_PARMSW
 {
 align (1):
@@ -8995,7 +8996,7 @@ align (1):
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_save_parmsa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_save_parmsa
 struct MCI_DGV_SAVE_PARMSA
 {
 align (1):
@@ -9005,7 +9006,7 @@ align (1):
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_save_parmsw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_save_parmsw
 struct MCI_DGV_SAVE_PARMSW
 {
 align (1):
@@ -9014,7 +9015,7 @@ align (1):
     RECT   rc;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_set_parms))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_set_parms
 struct MCI_DGV_SET_PARMS
 {
 align (1):
@@ -9026,7 +9027,7 @@ align (1):
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_setaudio_parmsa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_setaudio_parmsa
 struct MCI_DGV_SETAUDIO_PARMSA
 {
 align (1):
@@ -9039,7 +9040,7 @@ align (1):
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_setaudio_parmsw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_setaudio_parmsw
 struct MCI_DGV_SETAUDIO_PARMSW
 {
 align (1):
@@ -9051,7 +9052,7 @@ align (1):
     PWSTR  lpstrQuality;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_signal_parms))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_signal_parms
 struct MCI_DGV_SIGNAL_PARMS
 {
 align (1):
@@ -9062,7 +9063,7 @@ align (1):
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_setvideo_parmsa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_setvideo_parmsa
 struct MCI_DGV_SETVIDEO_PARMSA
 {
 align (1):
@@ -9076,7 +9077,7 @@ align (1):
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_setvideo_parmsw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_setvideo_parmsw
 struct MCI_DGV_SETVIDEO_PARMSW
 {
 align (1):
@@ -9090,7 +9091,7 @@ align (1):
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_status_parmsa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_status_parmsa
 struct MCI_DGV_STATUS_PARMSA
 {
 align (1):
@@ -9103,7 +9104,7 @@ align (1):
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_status_parmsw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_status_parmsw
 struct MCI_DGV_STATUS_PARMSW
 {
 align (1):
@@ -9115,7 +9116,7 @@ align (1):
     uint   dwReference;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_step_parms))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_step_parms
 struct MCI_DGV_STEP_PARMS
 {
 align (1):
@@ -9123,7 +9124,7 @@ align (1):
     uint   dwFrames;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_update_parms))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_update_parms
 struct MCI_DGV_UPDATE_PARMS
 {
 align (1):
@@ -9133,7 +9134,7 @@ align (1):
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_window_parmsa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_window_parmsa
 struct MCI_DGV_WINDOW_PARMSA
 {
 align (1):
@@ -9144,7 +9145,7 @@ align (1):
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_window_parmsw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/digitalv/ns-digitalv-mci_dgv_window_parmsw
 struct MCI_DGV_WINDOW_PARMSW
 {
 align (1):
@@ -9154,7 +9155,7 @@ align (1):
     PWSTR  lpstrText;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-icopen))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-icopen
 struct ICOPEN
 {
     uint    dwSize;
@@ -9168,7 +9169,7 @@ struct ICOPEN
     uint    dnDevNode;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-icinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-icinfo
 struct ICINFO
 {
     uint       dwSize;
@@ -9182,7 +9183,7 @@ struct ICINFO
     wchar[128] szDriver;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-iccompress))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-iccompress
 struct ICCOMPRESS
 {
     uint              dwFlags;
@@ -9199,7 +9200,7 @@ struct ICCOMPRESS
     void*             lpPrev;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-iccompressframes))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-iccompressframes
 struct ICCOMPRESSFRAMES
 {
     uint              dwFlags;
@@ -9220,7 +9221,7 @@ struct ICCOMPRESSFRAMES
     ptrdiff_t         PutData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-icsetstatusproc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-icsetstatusproc
 struct ICSETSTATUSPROC
 {
     uint      dwFlags;
@@ -9228,7 +9229,7 @@ struct ICSETSTATUSPROC
     ptrdiff_t Status;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-icdecompress))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-icdecompress
 struct ICDECOMPRESS
 {
     uint              dwFlags;
@@ -9239,7 +9240,7 @@ struct ICDECOMPRESS
     uint              ckid;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-icdecompressex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-icdecompressex
 struct ICDECOMPRESSEX
 {
     uint              dwFlags;
@@ -9257,7 +9258,7 @@ struct ICDECOMPRESSEX
     int               dySrc;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-icdrawbegin))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-icdrawbegin
 struct ICDRAWBEGIN
 {
     uint              dwFlags;
@@ -9277,7 +9278,7 @@ struct ICDRAWBEGIN
     uint              dwScale;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-icdraw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-icdraw
 struct ICDRAW
 {
     uint  dwFlags;
@@ -9287,7 +9288,7 @@ struct ICDRAW
     int   lTime;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-icdrawsuggest))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-icdrawsuggest
 struct ICDRAWSUGGEST
 {
     BITMAPINFOHEADER* lpbiIn;
@@ -9308,7 +9309,7 @@ struct ICPALETTE
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-compvars))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-compvars
 struct COMPVARS
 {
     int         cbSize;
@@ -9329,7 +9330,7 @@ struct COMPVARS
     int         cbState;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-drawdibtime))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-drawdibtime
 struct DRAWDIBTIME
 {
     int timeCount;
@@ -9342,7 +9343,7 @@ struct DRAWDIBTIME
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-avistreaminfow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-avistreaminfow
 struct AVISTREAMINFOW
 {
     uint      fccType;
@@ -9366,7 +9367,7 @@ struct AVISTREAMINFOW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-avistreaminfoa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-avistreaminfoa
 struct AVISTREAMINFOA
 {
     uint     fccType;
@@ -9390,7 +9391,7 @@ struct AVISTREAMINFOA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-avifileinfow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-avifileinfow
 struct AVIFILEINFOW
 {
     uint      dwMaxBytesPerSec;
@@ -9408,7 +9409,7 @@ struct AVIFILEINFOW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-avifileinfoa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-avifileinfoa
 struct AVIFILEINFOA
 {
     uint     dwMaxBytesPerSec;
@@ -9425,7 +9426,7 @@ struct AVIFILEINFOA
     CHAR[64] szFileType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-avicompressoptions))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-avicompressoptions
 struct AVICOMPRESSOPTIONS
 {
     uint  fccType;
@@ -9441,7 +9442,7 @@ struct AVICOMPRESSOPTIONS
     uint  dwInterleaveEvery;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-videohdr))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-videohdr
 struct VIDEOHDR
 {
     ubyte*    lpData;
@@ -9466,7 +9467,7 @@ struct CHANNEL_CAPS
     uint dwDstRectHeightMod;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-capdrivercaps))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-capdrivercaps
 struct CAPDRIVERCAPS
 {
     uint   wDeviceIndex;
@@ -9482,7 +9483,7 @@ struct CAPDRIVERCAPS
     HANDLE hVideoExtOut;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-capstatus))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-capstatus
 struct CAPSTATUS
 {
     uint     uiImageWidth;
@@ -9505,7 +9506,7 @@ struct CAPSTATUS
     uint     wNumAudioAllocated;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-captureparms))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-captureparms
 struct CAPTUREPARMS
 {
     uint dwRequestMicroSecPerFrame;
@@ -9534,7 +9535,7 @@ struct CAPTUREPARMS
     uint AVStreamMaster;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-capinfochunk))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/ns-vfw-capinfochunk
 struct CAPINFOCHUNK
 {
     uint  fccInfoID;
@@ -10307,23 +10308,23 @@ BOOL GetOpenFileNamePreviewW(OPENFILENAMEW* lpofn);
 @DllImport("MSVFW32.dll")
 BOOL GetSaveFileNamePreviewW(OPENFILENAMEW* lpofn);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmddk/nf-mmddk-mmtaskcreate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmddk/nf-mmddk-mmtaskcreate
 @DllImport("WINMM.dll")
 uint mmTaskCreate(LPTASKCALLBACK lpfn, HANDLE* lph, size_t dwInst);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmddk/nf-mmddk-mmtaskblock))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmddk/nf-mmddk-mmtaskblock
 @DllImport("WINMM.dll")
 void mmTaskBlock(uint h);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmddk/nf-mmddk-mmtasksignal))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmddk/nf-mmddk-mmtasksignal
 @DllImport("WINMM.dll")
 BOOL mmTaskSignal(uint h);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmddk/nf-mmddk-mmtaskyield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmddk/nf-mmddk-mmtaskyield
 @DllImport("WINMM.dll")
 void mmTaskYield();
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmddk/nf-mmddk-mmgetcurrenttask))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmddk/nf-mmddk-mmgetcurrenttask
 @DllImport("WINMM.dll")
 uint mmGetCurrentTask();
 
@@ -10335,39 +10336,39 @@ struct KSDATAFORMAT_SUBTYPE_IEEE_FLOAT;
 
 @GUID("00020021-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/nn-vfw-iavistream))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nn-vfw-iavistream
 interface IAVIStream : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavistream-create))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavistream-create
     HRESULT Create(LPARAM lParam1, LPARAM lParam2);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavistream-info))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavistream-info
     HRESULT Info(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/AVISTREAMINFOW* psi, 
                  int lSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavistream-findsample))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavistream-findsample
     int     FindSample(int lPos, int lFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavistream-readformat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavistream-readformat
     HRESULT ReadFormat(int lPos, 
                        /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* lpFormat, 
                        int* lpcbFormat);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavistream-setformat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavistream-setformat
     HRESULT SetFormat(int lPos, 
                       /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* lpFormat, 
                       int cbFormat);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavistream-read))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavistream-read
     HRESULT Read(int lStart, int lSamples, 
                  /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* lpBuffer, 
                  int cbBuffer, int* plBytes, int* plSamples);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavistream-write))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavistream-write
     HRESULT Write(int lStart, int lSamples, 
                   /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* lpBuffer, 
                   int cbBuffer, uint dwFlags, int* plSampWritten, int* plBytesWritten);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavistream-delete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavistream-delete
     HRESULT Delete(int lStart, int lSamples);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavistream-readdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavistream-readdata
     HRESULT ReadData(uint fcc, 
                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* lp, 
                      int* lpcb);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavistream-writedata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavistream-writedata
     HRESULT WriteData(uint fcc, 
                       /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* lp, 
                       int cb);
@@ -10377,29 +10378,29 @@ interface IAVIStream : IUnknown
 
 @GUID("00020022-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/nn-vfw-iavistreaming))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nn-vfw-iavistreaming
 interface IAVIStreaming : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavistreaming-begin))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavistreaming-begin
     HRESULT Begin(int lStart, int lEnd, int lRate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavistreaming-end))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavistreaming-end
     HRESULT End();
 }
 
 @GUID("00020024-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/nn-vfw-iavieditstream))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nn-vfw-iavieditstream
 interface IAVIEditStream : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavieditstream-cut))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavieditstream-cut
     HRESULT Cut(int* plStart, int* plLength, IAVIStream* ppResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavieditstream-copy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavieditstream-copy
     HRESULT Copy(int* plStart, int* plLength, IAVIStream* ppResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavieditstream-paste))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavieditstream-paste
     HRESULT Paste(int* plPos, int* plLength, IAVIStream pstream, int lStart, int lEnd);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavieditstream-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavieditstream-clone
     HRESULT Clone(IAVIStream* ppResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavieditstream-setinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavieditstream-setinfo
     HRESULT SetInfo(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/AVISTREAMINFOW* lpInfo, 
                     int cbInfo);
 }
@@ -10412,41 +10413,41 @@ interface IAVIPersistFile : IPersistFile
 
 @GUID("00020020-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/nn-vfw-iavifile))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nn-vfw-iavifile
 interface IAVIFile : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavifile-info))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavifile-info
     HRESULT Info(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/AVIFILEINFOW* pfi, 
                  int lSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavifile-getstream))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavifile-getstream
     HRESULT GetStream(IAVIStream* ppStream, uint fccType, int lParam);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavifile-createstream))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavifile-createstream
     HRESULT CreateStream(IAVIStream* ppStream, AVISTREAMINFOW* psi);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavifile-writedata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavifile-writedata
     HRESULT WriteData(uint ckid, 
                       /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* lpData, 
                       int cbData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavifile-readdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavifile-readdata
     HRESULT ReadData(uint ckid, 
                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* lpData, 
                      int* lpcbData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavifile-endrecord))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-iavifile-endrecord
     HRESULT EndRecord();
     HRESULT DeleteStream(uint fccType, int lParam);
 }
 
 @GUID("00020023-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/nn-vfw-igetframe))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nn-vfw-igetframe
 interface IGetFrame : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-igetframe-getframe))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-igetframe-getframe
     void*   GetFrame(int lPos);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-igetframe-begin))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-igetframe-begin
     HRESULT Begin(int lStart, int lEnd, int lRate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-igetframe-end))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-igetframe-end
     HRESULT End();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-igetframe-setformat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vfw/nf-vfw-igetframe-setformat
     HRESULT SetFormat(BITMAPINFOHEADER* lpbi, void* lpBits, int x, int y, int dx, int dy);
 }
 

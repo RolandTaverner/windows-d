@@ -3,31 +3,34 @@
 module windows.win32.graphics.direct3d12;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, HANDLE, HRESULT, HWND, LUID, PSTR,
-                                         PWSTR, RECT;
-public import windows.win32.graphics.direct3d : D3D_CBUFFER_TYPE, D3D_FEATURE_LEVEL,
-                                                D3D_INTERPOLATION_MODE, D3D_MIN_PRECISION,
-                                                D3D_NAME, D3D_PARAMETER_FLAGS,
-                                                D3D_PRIMITIVE, D3D_PRIMITIVE_TOPOLOGY,
-                                                D3D_REGISTER_COMPONENT_TYPE,
-                                                D3D_RESOURCE_RETURN_TYPE,
-                                                D3D_SHADER_INPUT_TYPE,
-                                                D3D_SHADER_VARIABLE_CLASS,
-                                                D3D_SHADER_VARIABLE_TYPE, D3D_SRV_DIMENSION,
-                                                D3D_TESSELLATOR_DOMAIN,
-                                                D3D_TESSELLATOR_OUTPUT_PRIMITIVE,
-                                                D3D_TESSELLATOR_PARTITIONING, ID3DBlob;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, HANDLE, HRESULT, HWND, LUID,
+                                                    PSTR, PWSTR, RECT;
+public import windows.win32.graphics.direct3d.direct3d : D3D_CBUFFER_TYPE, D3D_FEATURE_LEVEL,
+                                                         D3D_INTERPOLATION_MODE,
+                                                         D3D_MIN_PRECISION, D3D_NAME,
+                                                         D3D_PARAMETER_FLAGS, D3D_PRIMITIVE,
+                                                         D3D_PRIMITIVE_TOPOLOGY,
+                                                         D3D_REGISTER_COMPONENT_TYPE,
+                                                         D3D_RESOURCE_RETURN_TYPE,
+                                                         D3D_SHADER_INPUT_TYPE,
+                                                         D3D_SHADER_VARIABLE_CLASS,
+                                                         D3D_SHADER_VARIABLE_TYPE,
+                                                         D3D_SRV_DIMENSION, D3D_TESSELLATOR_DOMAIN,
+                                                         D3D_TESSELLATOR_OUTPUT_PRIMITIVE,
+                                                         D3D_TESSELLATOR_PARTITIONING,
+                                                         ID3DBlob;
 public import windows.win32.graphics.dxgi.common : DXGI_FORMAT, DXGI_SAMPLE_DESC;
-public import windows.win32.security : SECURITY_ATTRIBUTES;
-public import windows.win32.system.com : IUnknown;
+public import windows.win32.security.security : SECURITY_ATTRIBUTES;
+public import windows.win32.system.com.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_command_list_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_command_list_type
 alias D3D12_COMMAND_LIST_TYPE = int;
 enum : int
 {
@@ -40,7 +43,8 @@ enum : int
     D3D12_COMMAND_LIST_TYPE_VIDEO_ENCODE  = 0x00000006,
     D3D12_COMMAND_LIST_TYPE_NONE          = 0xffffffff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_command_queue_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_command_queue_flags
 alias D3D12_COMMAND_QUEUE_FLAGS = int;
 enum : int
 {
@@ -48,7 +52,8 @@ enum : int
     D3D12_COMMAND_QUEUE_FLAG_DISABLE_GPU_TIMEOUT    = 0x00000001,
     D3D12_COMMAND_QUEUE_FLAG_ALLOW_DYNAMIC_PRIORITY = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_command_queue_priority))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_command_queue_priority
 alias D3D12_COMMAND_QUEUE_PRIORITY = int;
 enum : int
 {
@@ -56,7 +61,8 @@ enum : int
     D3D12_COMMAND_QUEUE_PRIORITY_HIGH            = 0x00000064,
     D3D12_COMMAND_QUEUE_PRIORITY_GLOBAL_REALTIME = 0x00002710,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_primitive_topology_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_primitive_topology_type
 alias D3D12_PRIMITIVE_TOPOLOGY_TYPE = int;
 enum : int
 {
@@ -66,21 +72,24 @@ enum : int
     D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE  = 0x00000003,
     D3D12_PRIMITIVE_TOPOLOGY_TYPE_PATCH     = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_input_classification))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_input_classification
 alias D3D12_INPUT_CLASSIFICATION = int;
 enum : int
 {
     D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA   = 0x00000000,
     D3D12_INPUT_CLASSIFICATION_PER_INSTANCE_DATA = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_fill_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_fill_mode
 alias D3D12_FILL_MODE = int;
 enum : int
 {
     D3D12_FILL_MODE_WIREFRAME = 0x00000002,
     D3D12_FILL_MODE_SOLID     = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_cull_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_cull_mode
 alias D3D12_CULL_MODE = int;
 enum : int
 {
@@ -88,7 +97,8 @@ enum : int
     D3D12_CULL_MODE_FRONT = 0x00000002,
     D3D12_CULL_MODE_BACK  = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_comparison_func))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_comparison_func
 alias D3D12_COMPARISON_FUNC = int;
 enum : int
 {
@@ -102,14 +112,16 @@ enum : int
     D3D12_COMPARISON_FUNC_GREATER_EQUAL = 0x00000007,
     D3D12_COMPARISON_FUNC_ALWAYS        = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_depth_write_mask))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_depth_write_mask
 alias D3D12_DEPTH_WRITE_MASK = int;
 enum : int
 {
     D3D12_DEPTH_WRITE_MASK_ZERO = 0x00000000,
     D3D12_DEPTH_WRITE_MASK_ALL  = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_stencil_op))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_stencil_op
 alias D3D12_STENCIL_OP = int;
 enum : int
 {
@@ -122,7 +134,8 @@ enum : int
     D3D12_STENCIL_OP_INCR     = 0x00000007,
     D3D12_STENCIL_OP_DECR     = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_blend))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_blend
 alias D3D12_BLEND = int;
 enum : int
 {
@@ -146,7 +159,8 @@ enum : int
     D3D12_BLEND_ALPHA_FACTOR     = 0x00000014,
     D3D12_BLEND_INV_ALPHA_FACTOR = 0x00000015,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_blend_op))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_blend_op
 alias D3D12_BLEND_OP = int;
 enum : int
 {
@@ -156,7 +170,8 @@ enum : int
     D3D12_BLEND_OP_MIN          = 0x00000004,
     D3D12_BLEND_OP_MAX          = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_color_write_enable))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_color_write_enable
 alias D3D12_COLOR_WRITE_ENABLE = int;
 enum : int
 {
@@ -166,7 +181,8 @@ enum : int
     D3D12_COLOR_WRITE_ENABLE_ALPHA = 0x00000008,
     D3D12_COLOR_WRITE_ENABLE_ALL   = 0x0000000f,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_logic_op))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_logic_op
 alias D3D12_LOGIC_OP = int;
 enum : int
 {
@@ -187,13 +203,15 @@ enum : int
     D3D12_LOGIC_OP_OR_REVERSE    = 0x0000000e,
     D3D12_LOGIC_OP_OR_INVERTED   = 0x0000000f,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_conservative_rasterization_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_conservative_rasterization_mode
 alias D3D12_CONSERVATIVE_RASTERIZATION_MODE = int;
 enum : int
 {
     D3D12_CONSERVATIVE_RASTERIZATION_MODE_OFF = 0x00000000,
     D3D12_CONSERVATIVE_RASTERIZATION_MODE_ON  = 0x00000001,
 }
+
 alias D3D12_LINE_RASTERIZATION_MODE = int;
 enum : int
 {
@@ -202,7 +220,8 @@ enum : int
     D3D12_LINE_RASTERIZATION_MODE_QUADRILATERAL_WIDE   = 0x00000002,
     D3D12_LINE_RASTERIZATION_MODE_QUADRILATERAL_NARROW = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_index_buffer_strip_cut_value))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_index_buffer_strip_cut_value
 alias D3D12_INDEX_BUFFER_STRIP_CUT_VALUE = int;
 enum : int
 {
@@ -210,13 +229,15 @@ enum : int
     D3D12_INDEX_BUFFER_STRIP_CUT_VALUE_0xFFFF     = 0x00000001,
     D3D12_INDEX_BUFFER_STRIP_CUT_VALUE_0xFFFFFFFF = 0x00000002,
 }
+
 alias D3D12_STANDARD_MULTISAMPLE_QUALITY_LEVELS = int;
 enum : int
 {
     D3D12_STANDARD_MULTISAMPLE_PATTERN = 0xffffffff,
     D3D12_CENTER_MULTISAMPLE_PATTERN   = 0xfffffffe,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_pipeline_state_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_pipeline_state_flags
 alias D3D12_PIPELINE_STATE_FLAGS = int;
 enum : int
 {
@@ -226,7 +247,8 @@ enum : int
     D3D12_PIPELINE_STATE_FLAG_DYNAMIC_INDEX_BUFFER_STRIP_CUT = 0x00000008,
     D3D12_PIPELINE_STATE_FLAG_DISABLE_CACHED_BLOB            = 0x00000010,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d_root_signature_version))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d_root_signature_version
 alias D3D_ROOT_SIGNATURE_VERSION = int;
 enum : int
 {
@@ -235,7 +257,8 @@ enum : int
     D3D_ROOT_SIGNATURE_VERSION_1_1 = 0x00000002,
     D3D_ROOT_SIGNATURE_VERSION_1_2 = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_pipeline_state_subobject_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_pipeline_state_subobject_type
 alias D3D12_PIPELINE_STATE_SUBOBJECT_TYPE = int;
 enum : int
 {
@@ -270,7 +293,8 @@ enum : int
     D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_SERIALIZED_ROOT_SIGNATURE = 0x0000001d,
     D3D12_PIPELINE_STATE_SUBOBJECT_TYPE_MAX_VALID                 = 0x0000001e,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_feature))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_feature
 alias D3D12_FEATURE = int;
 enum : int
 {
@@ -325,7 +349,8 @@ enum : int
     D3D12_FEATURE_BARRIER_LAYOUT                        = 0x00000040,
     D3D12_FEATURE_D3D12_OPTIONS22                       = 0x00000041,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_shader_min_precision_support))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_shader_min_precision_support
 alias D3D12_SHADER_MIN_PRECISION_SUPPORT = int;
 enum : int
 {
@@ -333,7 +358,8 @@ enum : int
     D3D12_SHADER_MIN_PRECISION_SUPPORT_10_BIT = 0x00000001,
     D3D12_SHADER_MIN_PRECISION_SUPPORT_16_BIT = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_tiled_resources_tier))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_tiled_resources_tier
 alias D3D12_TILED_RESOURCES_TIER = int;
 enum : int
 {
@@ -343,7 +369,8 @@ enum : int
     D3D12_TILED_RESOURCES_TIER_3             = 0x00000003,
     D3D12_TILED_RESOURCES_TIER_4             = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_resource_binding_tier))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_resource_binding_tier
 alias D3D12_RESOURCE_BINDING_TIER = int;
 enum : int
 {
@@ -351,7 +378,8 @@ enum : int
     D3D12_RESOURCE_BINDING_TIER_2 = 0x00000002,
     D3D12_RESOURCE_BINDING_TIER_3 = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_conservative_rasterization_tier))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_conservative_rasterization_tier
 alias D3D12_CONSERVATIVE_RASTERIZATION_TIER = int;
 enum : int
 {
@@ -360,7 +388,8 @@ enum : int
     D3D12_CONSERVATIVE_RASTERIZATION_TIER_2             = 0x00000002,
     D3D12_CONSERVATIVE_RASTERIZATION_TIER_3             = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_format_support1))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_format_support1
 alias D3D12_FORMAT_SUPPORT1 = int;
 enum : int
 {
@@ -395,7 +424,8 @@ enum : int
     D3D12_FORMAT_SUPPORT1_VIDEO_PROCESSOR_INPUT       = 0x20000000,
     D3D12_FORMAT_SUPPORT1_VIDEO_ENCODER               = 0x40000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_format_support2))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_format_support2
 alias D3D12_FORMAT_SUPPORT2 = int;
 enum : int
 {
@@ -414,14 +444,16 @@ enum : int
     D3D12_FORMAT_SUPPORT2_SAMPLER_FEEDBACK                             = 0x00008000,
     D3D12_FORMAT_SUPPORT2_DISPLAYABLE                                  = 0x00010000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_multisample_quality_level_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_multisample_quality_level_flags
 alias D3D12_MULTISAMPLE_QUALITY_LEVEL_FLAGS = int;
 enum : int
 {
     D3D12_MULTISAMPLE_QUALITY_LEVELS_FLAG_NONE           = 0x00000000,
     D3D12_MULTISAMPLE_QUALITY_LEVELS_FLAG_TILED_RESOURCE = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_cross_node_sharing_tier))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_cross_node_sharing_tier
 alias D3D12_CROSS_NODE_SHARING_TIER = int;
 enum : int
 {
@@ -431,14 +463,16 @@ enum : int
     D3D12_CROSS_NODE_SHARING_TIER_2             = 0x00000003,
     D3D12_CROSS_NODE_SHARING_TIER_3             = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_resource_heap_tier))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_resource_heap_tier
 alias D3D12_RESOURCE_HEAP_TIER = int;
 enum : int
 {
     D3D12_RESOURCE_HEAP_TIER_1 = 0x00000001,
     D3D12_RESOURCE_HEAP_TIER_2 = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_programmable_sample_positions_tier))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_programmable_sample_positions_tier
 alias D3D12_PROGRAMMABLE_SAMPLE_POSITIONS_TIER = int;
 enum : int
 {
@@ -446,7 +480,8 @@ enum : int
     D3D12_PROGRAMMABLE_SAMPLE_POSITIONS_TIER_1             = 0x00000001,
     D3D12_PROGRAMMABLE_SAMPLE_POSITIONS_TIER_2             = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_view_instancing_tier))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_view_instancing_tier
 alias D3D12_VIEW_INSTANCING_TIER = int;
 enum : int
 {
@@ -455,13 +490,15 @@ enum : int
     D3D12_VIEW_INSTANCING_TIER_2             = 0x00000002,
     D3D12_VIEW_INSTANCING_TIER_3             = 0x00000003,
 }
+
 alias D3D12_WORK_GRAPHS_TIER = int;
 enum : int
 {
     D3D12_WORK_GRAPHS_TIER_NOT_SUPPORTED = 0x00000000,
     D3D12_WORK_GRAPHS_TIER_1_0           = 0x0000000a,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d_shader_model))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d_shader_model
 alias D3D_SHADER_MODEL = int;
 enum : int
 {
@@ -480,7 +517,8 @@ enum : int
     D3D_SHADER_MODEL_6_10    = 0x0000006a,
     D3D_HIGHEST_SHADER_MODEL = 0x0000006a,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_shader_cache_support_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_shader_cache_support_flags
 alias D3D12_SHADER_CACHE_SUPPORT_FLAGS = int;
 enum : int
 {
@@ -493,7 +531,8 @@ enum : int
     D3D12_SHADER_CACHE_SUPPORT_SHADER_CONTROL_CLEAR   = 0x00000020,
     D3D12_SHADER_CACHE_SUPPORT_SHADER_SESSION_DELETE  = 0x00000040,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_command_list_support_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_command_list_support_flags
 alias D3D12_COMMAND_LIST_SUPPORT_FLAGS = int;
 enum : int
 {
@@ -506,7 +545,8 @@ enum : int
     D3D12_COMMAND_LIST_SUPPORT_FLAG_VIDEO_PROCESS = 0x00000020,
     D3D12_COMMAND_LIST_SUPPORT_FLAG_VIDEO_ENCODE  = 0x00000040,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_shared_resource_compatibility_tier))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_shared_resource_compatibility_tier
 alias D3D12_SHARED_RESOURCE_COMPATIBILITY_TIER = int;
 enum : int
 {
@@ -514,14 +554,16 @@ enum : int
     D3D12_SHARED_RESOURCE_COMPATIBILITY_TIER_1 = 0x00000001,
     D3D12_SHARED_RESOURCE_COMPATIBILITY_TIER_2 = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_heap_serialization_tier))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_heap_serialization_tier
 alias D3D12_HEAP_SERIALIZATION_TIER = int;
 enum : int
 {
     D3D12_HEAP_SERIALIZATION_TIER_0  = 0x00000000,
     D3D12_HEAP_SERIALIZATION_TIER_10 = 0x0000000a,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_render_pass_tier))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_render_pass_tier
 alias D3D12_RENDER_PASS_TIER = int;
 enum : int
 {
@@ -529,7 +571,8 @@ enum : int
     D3D12_RENDER_PASS_TIER_1 = 0x00000001,
     D3D12_RENDER_PASS_TIER_2 = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_raytracing_tier))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_raytracing_tier
 alias D3D12_RAYTRACING_TIER = int;
 enum : int
 {
@@ -538,7 +581,8 @@ enum : int
     D3D12_RAYTRACING_TIER_1_1           = 0x0000000b,
     D3D12_RAYTRACING_TIER_1_2           = 0x0000000c,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_variable_shading_rate_tier))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_variable_shading_rate_tier
 alias D3D12_VARIABLE_SHADING_RATE_TIER = int;
 enum : int
 {
@@ -546,14 +590,16 @@ enum : int
     D3D12_VARIABLE_SHADING_RATE_TIER_1             = 0x00000001,
     D3D12_VARIABLE_SHADING_RATE_TIER_2             = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_mesh_shader_tier))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_mesh_shader_tier
 alias D3D12_MESH_SHADER_TIER = int;
 enum : int
 {
     D3D12_MESH_SHADER_TIER_NOT_SUPPORTED = 0x00000000,
     D3D12_MESH_SHADER_TIER_1             = 0x0000000a,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_sampler_feedback_tier))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_sampler_feedback_tier
 alias D3D12_SAMPLER_FEEDBACK_TIER = int;
 enum : int
 {
@@ -561,14 +607,16 @@ enum : int
     D3D12_SAMPLER_FEEDBACK_TIER_0_9           = 0x0000005a,
     D3D12_SAMPLER_FEEDBACK_TIER_1_0           = 0x00000064,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_wave_mma_tier))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_wave_mma_tier
 alias D3D12_WAVE_MMA_TIER = int;
 enum : int
 {
     D3D12_WAVE_MMA_TIER_NOT_SUPPORTED = 0x00000000,
     D3D12_WAVE_MMA_TIER_1_0           = 0x0000000a,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_tri_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_tri_state
 alias D3D12_TRI_STATE = int;
 enum : int
 {
@@ -576,25 +624,29 @@ enum : int
     D3D12_TRI_STATE_FALSE   = 0x00000000,
     D3D12_TRI_STATE_TRUE    = 0x00000001,
 }
+
 alias D3D12_RECREATE_AT_TIER = int;
 enum : int
 {
     D3D12_RECREATE_AT_TIER_NOT_SUPPORTED = 0x00000000,
     D3D12_RECREATE_AT_TIER_1             = 0x00000001,
 }
+
 alias D3D12_EXECUTE_INDIRECT_TIER = int;
 enum : int
 {
     D3D12_EXECUTE_INDIRECT_TIER_1_0 = 0x0000000a,
     D3D12_EXECUTE_INDIRECT_TIER_1_1 = 0x0000000b,
 }
+
 alias D3D12_TIGHT_ALIGNMENT_TIER = int;
 enum : int
 {
     D3D12_TIGHT_ALIGNMENT_TIER_NOT_SUPPORTED = 0x00000000,
     D3D12_TIGHT_ALIGNMENT_TIER_1             = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_heap_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_heap_type
 alias D3D12_HEAP_TYPE = int;
 enum : int
 {
@@ -604,7 +656,8 @@ enum : int
     D3D12_HEAP_TYPE_CUSTOM     = 0x00000004,
     D3D12_HEAP_TYPE_GPU_UPLOAD = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_cpu_page_property))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_cpu_page_property
 alias D3D12_CPU_PAGE_PROPERTY = int;
 enum : int
 {
@@ -613,7 +666,8 @@ enum : int
     D3D12_CPU_PAGE_PROPERTY_WRITE_COMBINE = 0x00000002,
     D3D12_CPU_PAGE_PROPERTY_WRITE_BACK    = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_memory_pool))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_memory_pool
 alias D3D12_MEMORY_POOL = int;
 enum : int
 {
@@ -621,7 +675,8 @@ enum : int
     D3D12_MEMORY_POOL_L0      = 0x00000001,
     D3D12_MEMORY_POOL_L1      = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_heap_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_heap_flags
 alias D3D12_HEAP_FLAGS = int;
 enum : int
 {
@@ -643,7 +698,8 @@ enum : int
     D3D12_HEAP_FLAG_ALLOW_ONLY_NON_RT_DS_TEXTURES   = 0x00000044,
     D3D12_HEAP_FLAG_ALLOW_ONLY_RT_DS_TEXTURES       = 0x00000084,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_resource_dimension))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_resource_dimension
 alias D3D12_RESOURCE_DIMENSION = int;
 enum : int
 {
@@ -653,7 +709,8 @@ enum : int
     D3D12_RESOURCE_DIMENSION_TEXTURE2D = 0x00000003,
     D3D12_RESOURCE_DIMENSION_TEXTURE3D = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_texture_layout))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_texture_layout
 alias D3D12_TEXTURE_LAYOUT = int;
 enum : int
 {
@@ -662,7 +719,8 @@ enum : int
     D3D12_TEXTURE_LAYOUT_64KB_UNDEFINED_SWIZZLE = 0x00000002,
     D3D12_TEXTURE_LAYOUT_64KB_STANDARD_SWIZZLE  = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_resource_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_resource_flags
 alias D3D12_RESOURCE_FLAGS = int;
 enum : int
 {
@@ -678,7 +736,8 @@ enum : int
     D3D12_RESOURCE_FLAG_RAYTRACING_ACCELERATION_STRUCTURE = 0x00000100,
     D3D12_RESOURCE_FLAG_USE_TIGHT_ALIGNMENT               = 0x00000400,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_tile_range_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_tile_range_flags
 alias D3D12_TILE_RANGE_FLAGS = int;
 enum : int
 {
@@ -687,14 +746,16 @@ enum : int
     D3D12_TILE_RANGE_FLAG_SKIP              = 0x00000002,
     D3D12_TILE_RANGE_FLAG_REUSE_SINGLE_TILE = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_tile_mapping_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_tile_mapping_flags
 alias D3D12_TILE_MAPPING_FLAGS = int;
 enum : int
 {
     D3D12_TILE_MAPPING_FLAG_NONE      = 0x00000000,
     D3D12_TILE_MAPPING_FLAG_NO_HAZARD = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_tile_copy_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_tile_copy_flags
 alias D3D12_TILE_COPY_FLAGS = int;
 enum : int
 {
@@ -703,7 +764,8 @@ enum : int
     D3D12_TILE_COPY_FLAG_LINEAR_BUFFER_TO_SWIZZLED_TILED_RESOURCE = 0x00000002,
     D3D12_TILE_COPY_FLAG_SWIZZLED_TILED_RESOURCE_TO_LINEAR_BUFFER = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_resource_states))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_resource_states
 alias D3D12_RESOURCE_STATES = int;
 enum : int
 {
@@ -740,7 +802,8 @@ enum : int
     D3D12_RESOURCE_STATE_VIDEO_ENCODE_READ                 = 0x00200000,
     D3D12_RESOURCE_STATE_VIDEO_ENCODE_WRITE                = 0x00800000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_resource_barrier_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_resource_barrier_type
 alias D3D12_RESOURCE_BARRIER_TYPE = int;
 enum : int
 {
@@ -748,7 +811,8 @@ enum : int
     D3D12_RESOURCE_BARRIER_TYPE_ALIASING   = 0x00000001,
     D3D12_RESOURCE_BARRIER_TYPE_UAV        = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_resource_barrier_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_resource_barrier_flags
 alias D3D12_RESOURCE_BARRIER_FLAGS = int;
 enum : int
 {
@@ -756,14 +820,16 @@ enum : int
     D3D12_RESOURCE_BARRIER_FLAG_BEGIN_ONLY = 0x00000001,
     D3D12_RESOURCE_BARRIER_FLAG_END_ONLY   = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_texture_copy_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_texture_copy_type
 alias D3D12_TEXTURE_COPY_TYPE = int;
 enum : int
 {
     D3D12_TEXTURE_COPY_TYPE_SUBRESOURCE_INDEX = 0x00000000,
     D3D12_TEXTURE_COPY_TYPE_PLACED_FOOTPRINT  = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_resolve_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_resolve_mode
 alias D3D12_RESOLVE_MODE = int;
 enum : int
 {
@@ -774,14 +840,16 @@ enum : int
     D3D12_RESOLVE_MODE_ENCODE_SAMPLER_FEEDBACK = 0x00000004,
     D3D12_RESOLVE_MODE_DECODE_SAMPLER_FEEDBACK = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_view_instancing_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_view_instancing_flags
 alias D3D12_VIEW_INSTANCING_FLAGS = int;
 enum : int
 {
     D3D12_VIEW_INSTANCING_FLAG_NONE                         = 0x00000000,
     D3D12_VIEW_INSTANCING_FLAG_ENABLE_VIEW_INSTANCE_MASKING = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_shader_component_mapping))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_shader_component_mapping
 alias D3D12_SHADER_COMPONENT_MAPPING = int;
 enum : int
 {
@@ -792,14 +860,16 @@ enum : int
     D3D12_SHADER_COMPONENT_MAPPING_FORCE_VALUE_0           = 0x00000004,
     D3D12_SHADER_COMPONENT_MAPPING_FORCE_VALUE_1           = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_buffer_srv_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_buffer_srv_flags
 alias D3D12_BUFFER_SRV_FLAGS = int;
 enum : int
 {
     D3D12_BUFFER_SRV_FLAG_NONE = 0x00000000,
     D3D12_BUFFER_SRV_FLAG_RAW  = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_srv_dimension))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_srv_dimension
 alias D3D12_SRV_DIMENSION = int;
 enum : int
 {
@@ -817,7 +887,8 @@ enum : int
     D3D12_SRV_DIMENSION_RAYTRACING_ACCELERATION_STRUCTURE = 0x0000000b,
     D3D12_SRV_DIMENSION_BUFFER_BYTE_OFFSET                = 0x0000000c,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_filter))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_filter
 alias D3D12_FILTER = int;
 enum : int
 {
@@ -862,14 +933,16 @@ enum : int
     D3D12_FILTER_MAXIMUM_MIN_MAG_ANISOTROPIC_MIP_POINT      = 0x000001d4,
     D3D12_FILTER_MAXIMUM_ANISOTROPIC                        = 0x000001d5,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_filter_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_filter_type
 alias D3D12_FILTER_TYPE = int;
 enum : int
 {
     D3D12_FILTER_TYPE_POINT  = 0x00000000,
     D3D12_FILTER_TYPE_LINEAR = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_filter_reduction_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_filter_reduction_type
 alias D3D12_FILTER_REDUCTION_TYPE = int;
 enum : int
 {
@@ -878,7 +951,8 @@ enum : int
     D3D12_FILTER_REDUCTION_TYPE_MINIMUM    = 0x00000002,
     D3D12_FILTER_REDUCTION_TYPE_MAXIMUM    = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_texture_address_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_texture_address_mode
 alias D3D12_TEXTURE_ADDRESS_MODE = int;
 enum : int
 {
@@ -888,6 +962,7 @@ enum : int
     D3D12_TEXTURE_ADDRESS_MODE_BORDER      = 0x00000004,
     D3D12_TEXTURE_ADDRESS_MODE_MIRROR_ONCE = 0x00000005,
 }
+
 alias D3D12_SAMPLER_FLAGS = int;
 enum : int
 {
@@ -895,14 +970,16 @@ enum : int
     D3D12_SAMPLER_FLAG_UINT_BORDER_COLOR          = 0x00000001,
     D3D12_SAMPLER_FLAG_NON_NORMALIZED_COORDINATES = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_buffer_uav_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_buffer_uav_flags
 alias D3D12_BUFFER_UAV_FLAGS = int;
 enum : int
 {
     D3D12_BUFFER_UAV_FLAG_NONE = 0x00000000,
     D3D12_BUFFER_UAV_FLAG_RAW  = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_uav_dimension))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_uav_dimension
 alias D3D12_UAV_DIMENSION = int;
 enum : int
 {
@@ -917,7 +994,8 @@ enum : int
     D3D12_UAV_DIMENSION_TEXTURE3D          = 0x00000008,
     D3D12_UAV_DIMENSION_BUFFER_BYTE_OFFSET = 0x00000009,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_rtv_dimension))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_rtv_dimension
 alias D3D12_RTV_DIMENSION = int;
 enum : int
 {
@@ -931,7 +1009,8 @@ enum : int
     D3D12_RTV_DIMENSION_TEXTURE2DMSARRAY = 0x00000007,
     D3D12_RTV_DIMENSION_TEXTURE3D        = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_dsv_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_dsv_flags
 alias D3D12_DSV_FLAGS = int;
 enum : int
 {
@@ -939,7 +1018,8 @@ enum : int
     D3D12_DSV_FLAG_READ_ONLY_DEPTH   = 0x00000001,
     D3D12_DSV_FLAG_READ_ONLY_STENCIL = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_dsv_dimension))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_dsv_dimension
 alias D3D12_DSV_DIMENSION = int;
 enum : int
 {
@@ -951,14 +1031,16 @@ enum : int
     D3D12_DSV_DIMENSION_TEXTURE2DMS      = 0x00000005,
     D3D12_DSV_DIMENSION_TEXTURE2DMSARRAY = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_clear_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_clear_flags
 alias D3D12_CLEAR_FLAGS = int;
 enum : int
 {
     D3D12_CLEAR_FLAG_DEPTH   = 0x00000001,
     D3D12_CLEAR_FLAG_STENCIL = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_fence_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_fence_flags
 alias D3D12_FENCE_FLAGS = int;
 enum : int
 {
@@ -967,7 +1049,8 @@ enum : int
     D3D12_FENCE_FLAG_SHARED_CROSS_ADAPTER = 0x00000002,
     D3D12_FENCE_FLAG_NON_MONITORED        = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_descriptor_heap_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_descriptor_heap_type
 alias D3D12_DESCRIPTOR_HEAP_TYPE = int;
 enum : int
 {
@@ -977,14 +1060,16 @@ enum : int
     D3D12_DESCRIPTOR_HEAP_TYPE_DSV         = 0x00000003,
     D3D12_DESCRIPTOR_HEAP_TYPE_NUM_TYPES   = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_descriptor_heap_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_descriptor_heap_flags
 alias D3D12_DESCRIPTOR_HEAP_FLAGS = int;
 enum : int
 {
     D3D12_DESCRIPTOR_HEAP_FLAG_NONE           = 0x00000000,
     D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_descriptor_range_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_descriptor_range_type
 alias D3D12_DESCRIPTOR_RANGE_TYPE = int;
 enum : int
 {
@@ -993,7 +1078,8 @@ enum : int
     D3D12_DESCRIPTOR_RANGE_TYPE_CBV     = 0x00000002,
     D3D12_DESCRIPTOR_RANGE_TYPE_SAMPLER = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_shader_visibility))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_shader_visibility
 alias D3D12_SHADER_VISIBILITY = int;
 enum : int
 {
@@ -1006,7 +1092,8 @@ enum : int
     D3D12_SHADER_VISIBILITY_AMPLIFICATION = 0x00000006,
     D3D12_SHADER_VISIBILITY_MESH          = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_root_parameter_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_root_parameter_type
 alias D3D12_ROOT_PARAMETER_TYPE = int;
 enum : int
 {
@@ -1016,7 +1103,8 @@ enum : int
     D3D12_ROOT_PARAMETER_TYPE_SRV              = 0x00000003,
     D3D12_ROOT_PARAMETER_TYPE_UAV              = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_root_signature_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_root_signature_flags
 alias D3D12_ROOT_SIGNATURE_FLAGS = int;
 enum : int
 {
@@ -1034,7 +1122,8 @@ enum : int
     D3D12_ROOT_SIGNATURE_FLAG_CBV_SRV_UAV_HEAP_DIRECTLY_INDEXED     = 0x00000400,
     D3D12_ROOT_SIGNATURE_FLAG_SAMPLER_HEAP_DIRECTLY_INDEXED         = 0x00000800,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_static_border_color))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_static_border_color
 alias D3D12_STATIC_BORDER_COLOR = int;
 enum : int
 {
@@ -1044,7 +1133,8 @@ enum : int
     D3D12_STATIC_BORDER_COLOR_OPAQUE_BLACK_UINT = 0x00000003,
     D3D12_STATIC_BORDER_COLOR_OPAQUE_WHITE_UINT = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_descriptor_range_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_descriptor_range_flags
 alias D3D12_DESCRIPTOR_RANGE_FLAGS = int;
 enum : int
 {
@@ -1055,7 +1145,8 @@ enum : int
     D3D12_DESCRIPTOR_RANGE_FLAG_DATA_STATIC                                     = 0x00000008,
     D3D12_DESCRIPTOR_RANGE_FLAG_DESCRIPTORS_STATIC_KEEPING_BUFFER_BOUNDS_CHECKS = 0x00010000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_root_descriptor_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_root_descriptor_flags
 alias D3D12_ROOT_DESCRIPTOR_FLAGS = int;
 enum : int
 {
@@ -1064,7 +1155,8 @@ enum : int
     D3D12_ROOT_DESCRIPTOR_FLAG_DATA_STATIC_WHILE_SET_AT_EXECUTE = 0x00000004,
     D3D12_ROOT_DESCRIPTOR_FLAG_DATA_STATIC                      = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_query_heap_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_query_heap_type
 alias D3D12_QUERY_HEAP_TYPE = int;
 enum : int
 {
@@ -1076,7 +1168,8 @@ enum : int
     D3D12_QUERY_HEAP_TYPE_COPY_QUEUE_TIMESTAMP    = 0x00000005,
     D3D12_QUERY_HEAP_TYPE_PIPELINE_STATISTICS1    = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_query_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_query_type
 alias D3D12_QUERY_TYPE = int;
 enum : int
 {
@@ -1091,14 +1184,16 @@ enum : int
     D3D12_QUERY_TYPE_VIDEO_DECODE_STATISTICS = 0x00000008,
     D3D12_QUERY_TYPE_PIPELINE_STATISTICS1    = 0x0000000a,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_predication_op))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_predication_op
 alias D3D12_PREDICATION_OP = int;
 enum : int
 {
     D3D12_PREDICATION_OP_EQUAL_ZERO     = 0x00000000,
     D3D12_PREDICATION_OP_NOT_EQUAL_ZERO = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_indirect_argument_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_indirect_argument_type
 alias D3D12_INDIRECT_ARGUMENT_TYPE = int;
 enum : int
 {
@@ -1115,7 +1210,8 @@ enum : int
     D3D12_INDIRECT_ARGUMENT_TYPE_DISPATCH_MESH         = 0x0000000a,
     D3D12_INDIRECT_ARGUMENT_TYPE_INCREMENTING_CONSTANT = 0x0000000b,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_writebufferimmediate_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_writebufferimmediate_mode
 alias D3D12_WRITEBUFFERIMMEDIATE_MODE = int;
 enum : int
 {
@@ -1123,12 +1219,14 @@ enum : int
     D3D12_WRITEBUFFERIMMEDIATE_MODE_MARKER_IN  = 0x00000001,
     D3D12_WRITEBUFFERIMMEDIATE_MODE_MARKER_OUT = 0x00000002,
 }
+
 alias D3D12_COMMAND_QUEUE_PROCESS_PRIORITY = int;
 enum : int
 {
     D3D12_COMMAND_QUEUE_PROCESS_PRIORITY_NORMAL = 0x00000000,
     D3D12_COMMAND_QUEUE_PROCESS_PRIORITY_HIGH   = 0x00000001,
 }
+
 alias D3D12_COMMAND_QUEUE_GLOBAL_PRIORITY = int;
 enum : int
 {
@@ -1151,7 +1249,8 @@ enum : int
     D3D12_COMMAND_QUEUE_GLOBAL_PRIORITY_SOFT_REALTIME_13 = 0x0000001f,
     D3D12_COMMAND_QUEUE_GLOBAL_PRIORITY_HARD_REALTIME    = 0x00000020,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_multiple_fence_wait_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_multiple_fence_wait_flags
 alias D3D12_MULTIPLE_FENCE_WAIT_FLAGS = int;
 enum : int
 {
@@ -1159,7 +1258,8 @@ enum : int
     D3D12_MULTIPLE_FENCE_WAIT_FLAG_ANY  = 0x00000001,
     D3D12_MULTIPLE_FENCE_WAIT_FLAG_ALL  = 0x00000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_residency_priority))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_residency_priority
 alias D3D12_RESIDENCY_PRIORITY = int;
 enum : int
 {
@@ -1169,57 +1269,66 @@ enum : int
     D3D12_RESIDENCY_PRIORITY_HIGH    = 0xa0010000,
     D3D12_RESIDENCY_PRIORITY_MAXIMUM = 0xc8000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_residency_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_residency_flags
 alias D3D12_RESIDENCY_FLAGS = int;
 enum : int
 {
     D3D12_RESIDENCY_FLAG_NONE            = 0x00000000,
     D3D12_RESIDENCY_FLAG_DENY_OVERBUDGET = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_command_list_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_command_list_flags
 alias D3D12_COMMAND_LIST_FLAGS = int;
 enum : int
 {
     D3D12_COMMAND_LIST_FLAG_NONE = 0x00000000,
 }
+
 alias D3D12_COMMAND_POOL_FLAGS = int;
 enum : int
 {
     D3D12_COMMAND_POOL_FLAG_NONE = 0x00000000,
 }
+
 alias D3D12_COMMAND_RECORDER_FLAGS = int;
 enum : int
 {
     D3D12_COMMAND_RECORDER_FLAG_NONE = 0x00000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_protected_session_status))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_protected_session_status
 alias D3D12_PROTECTED_SESSION_STATUS = int;
 enum : int
 {
     D3D12_PROTECTED_SESSION_STATUS_OK      = 0x00000000,
     D3D12_PROTECTED_SESSION_STATUS_INVALID = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_protected_resource_session_support_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_protected_resource_session_support_flags
 alias D3D12_PROTECTED_RESOURCE_SESSION_SUPPORT_FLAGS = int;
 enum : int
 {
     D3D12_PROTECTED_RESOURCE_SESSION_SUPPORT_FLAG_NONE      = 0x00000000,
     D3D12_PROTECTED_RESOURCE_SESSION_SUPPORT_FLAG_SUPPORTED = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_protected_resource_session_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_protected_resource_session_flags
 alias D3D12_PROTECTED_RESOURCE_SESSION_FLAGS = int;
 enum : int
 {
     D3D12_PROTECTED_RESOURCE_SESSION_FLAG_NONE = 0x00000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_lifetime_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_lifetime_state
 alias D3D12_LIFETIME_STATE = int;
 enum : int
 {
     D3D12_LIFETIME_STATE_IN_USE     = 0x00000000,
     D3D12_LIFETIME_STATE_NOT_IN_USE = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_meta_command_parameter_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_meta_command_parameter_type
 alias D3D12_META_COMMAND_PARAMETER_TYPE = int;
 enum : int
 {
@@ -1229,14 +1338,16 @@ enum : int
     D3D12_META_COMMAND_PARAMETER_TYPE_CPU_DESCRIPTOR_HANDLE_HEAP_TYPE_CBV_SRV_UAV = 0x00000003,
     D3D12_META_COMMAND_PARAMETER_TYPE_GPU_DESCRIPTOR_HANDLE_HEAP_TYPE_CBV_SRV_UAV = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_meta_command_parameter_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_meta_command_parameter_flags
 alias D3D12_META_COMMAND_PARAMETER_FLAGS = int;
 enum : int
 {
     D3D12_META_COMMAND_PARAMETER_FLAG_INPUT  = 0x00000001,
     D3D12_META_COMMAND_PARAMETER_FLAG_OUTPUT = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_meta_command_parameter_stage))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_meta_command_parameter_stage
 alias D3D12_META_COMMAND_PARAMETER_STAGE = int;
 enum : int
 {
@@ -1244,7 +1355,8 @@ enum : int
     D3D12_META_COMMAND_PARAMETER_STAGE_INITIALIZATION = 0x00000001,
     D3D12_META_COMMAND_PARAMETER_STAGE_EXECUTION      = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_graphics_states))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_graphics_states
 alias D3D12_GRAPHICS_STATES = int;
 enum : int
 {
@@ -1267,7 +1379,8 @@ enum : int
     D3D12_GRAPHICS_STATE_SAMPLE_POSITIONS        = 0x00008000,
     D3D12_GRAPHICS_STATE_VIEW_INSTANCE_MASK      = 0x00010000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_state_subobject_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_state_subobject_type
 alias D3D12_STATE_SUBOBJECT_TYPE = int;
 enum : int
 {
@@ -1306,7 +1419,8 @@ enum : int
     D3D12_STATE_SUBOBJECT_TYPE_EXISTING_COLLECTION_BY_KEY            = 0x00000024,
     D3D12_STATE_SUBOBJECT_TYPE_MAX_VALID                             = 0x00000025,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_state_object_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_state_object_flags
 alias D3D12_STATE_OBJECT_FLAGS = int;
 enum : int
 {
@@ -1315,20 +1429,23 @@ enum : int
     D3D12_STATE_OBJECT_FLAG_ALLOW_EXTERNAL_DEPENDENCIES_ON_LOCAL_DEFINITIONS = 0x00000002,
     D3D12_STATE_OBJECT_FLAG_ALLOW_STATE_OBJECT_ADDITIONS                     = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_export_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_export_flags
 alias D3D12_EXPORT_FLAGS = int;
 enum : int
 {
     D3D12_EXPORT_FLAG_NONE = 0x00000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_hit_group_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_hit_group_type
 alias D3D12_HIT_GROUP_TYPE = int;
 enum : int
 {
     D3D12_HIT_GROUP_TYPE_TRIANGLES            = 0x00000000,
     D3D12_HIT_GROUP_TYPE_PROCEDURAL_PRIMITIVE = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_raytracing_pipeline_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_raytracing_pipeline_flags
 alias D3D12_RAYTRACING_PIPELINE_FLAGS = int;
 enum : int
 {
@@ -1337,6 +1454,7 @@ enum : int
     D3D12_RAYTRACING_PIPELINE_FLAG_SKIP_PROCEDURAL_PRIMITIVES = 0x00000200,
     D3D12_RAYTRACING_PIPELINE_FLAG_ALLOW_OPACITY_MICROMAPS    = 0x00000400,
 }
+
 alias D3D12_NODE_OVERRIDES_TYPE = int;
 enum : int
 {
@@ -1346,18 +1464,21 @@ enum : int
     D3D12_NODE_OVERRIDES_TYPE_THREAD_LAUNCH       = 0x00000003,
     D3D12_NODE_OVERRIDES_TYPE_COMMON_COMPUTE      = 0x00000004,
 }
+
 alias D3D12_NODE_TYPE = int;
 enum : int
 {
     D3D12_NODE_TYPE_SHADER = 0x00000000,
 }
+
 alias D3D12_WORK_GRAPH_FLAGS = int;
 enum : int
 {
     D3D12_WORK_GRAPH_FLAG_NONE                        = 0x00000000,
     D3D12_WORK_GRAPH_FLAG_INCLUDE_ALL_AVAILABLE_NODES = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_state_object_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_state_object_type
 alias D3D12_STATE_OBJECT_TYPE = int;
 enum : int
 {
@@ -1365,7 +1486,8 @@ enum : int
     D3D12_STATE_OBJECT_TYPE_RAYTRACING_PIPELINE = 0x00000003,
     D3D12_STATE_OBJECT_TYPE_EXECUTABLE          = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_raytracing_geometry_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_raytracing_geometry_flags
 alias D3D12_RAYTRACING_GEOMETRY_FLAGS = int;
 enum : int
 {
@@ -1373,7 +1495,8 @@ enum : int
     D3D12_RAYTRACING_GEOMETRY_FLAG_OPAQUE                         = 0x00000001,
     D3D12_RAYTRACING_GEOMETRY_FLAG_NO_DUPLICATE_ANYHIT_INVOCATION = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_raytracing_geometry_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_raytracing_geometry_type
 alias D3D12_RAYTRACING_GEOMETRY_TYPE = int;
 enum : int
 {
@@ -1381,7 +1504,8 @@ enum : int
     D3D12_RAYTRACING_GEOMETRY_TYPE_PROCEDURAL_PRIMITIVE_AABBS = 0x00000001,
     D3D12_RAYTRACING_GEOMETRY_TYPE_OMM_TRIANGLES              = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_raytracing_instance_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_raytracing_instance_flags
 alias D3D12_RAYTRACING_INSTANCE_FLAGS = int;
 enum : int
 {
@@ -1393,6 +1517,7 @@ enum : int
     D3D12_RAYTRACING_INSTANCE_FLAG_FORCE_OMM_2_STATE               = 0x00000010,
     D3D12_RAYTRACING_INSTANCE_FLAG_DISABLE_OMMS                    = 0x00000020,
 }
+
 alias D3D12_RAYTRACING_OPACITY_MICROMAP_SPECIAL_INDEX = int;
 enum : int
 {
@@ -1401,6 +1526,7 @@ enum : int
     D3D12_RAYTRACING_OPACITY_MICROMAP_SPECIAL_INDEX_FULLY_UNKNOWN_TRANSPARENT = 0xfffffffd,
     D3D12_RAYTRACING_OPACITY_MICROMAP_SPECIAL_INDEX_FULLY_UNKNOWN_OPAQUE      = 0xfffffffc,
 }
+
 alias D3D12_RAYTRACING_OPACITY_MICROMAP_STATE = int;
 enum : int
 {
@@ -1409,13 +1535,15 @@ enum : int
     D3D12_RAYTRACING_OPACITY_MICROMAP_STATE_UNKNOWN_TRANSPARENT = 0x00000002,
     D3D12_RAYTRACING_OPACITY_MICROMAP_STATE_UNKNOWN_OPAQUE      = 0x00000003,
 }
+
 alias D3D12_RAYTRACING_OPACITY_MICROMAP_FORMAT = int;
 enum : int
 {
     D3D12_RAYTRACING_OPACITY_MICROMAP_FORMAT_OC1_2_STATE = 0x00000001,
     D3D12_RAYTRACING_OPACITY_MICROMAP_FORMAT_OC1_4_STATE = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_raytracing_acceleration_structure_build_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_raytracing_acceleration_structure_build_flags
 alias D3D12_RAYTRACING_ACCELERATION_STRUCTURE_BUILD_FLAGS = int;
 enum : int
 {
@@ -1429,7 +1557,8 @@ enum : int
     D3D12_RAYTRACING_ACCELERATION_STRUCTURE_BUILD_FLAG_ALLOW_OMM_UPDATE   = 0x00000040,
     D3D12_RAYTRACING_ACCELERATION_STRUCTURE_BUILD_FLAG_ALLOW_DISABLE_OMMS = 0x00000080,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_raytracing_acceleration_structure_copy_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_raytracing_acceleration_structure_copy_mode
 alias D3D12_RAYTRACING_ACCELERATION_STRUCTURE_COPY_MODE = int;
 enum : int
 {
@@ -1439,7 +1568,8 @@ enum : int
     D3D12_RAYTRACING_ACCELERATION_STRUCTURE_COPY_MODE_SERIALIZE                      = 0x00000003,
     D3D12_RAYTRACING_ACCELERATION_STRUCTURE_COPY_MODE_DESERIALIZE                    = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_raytracing_acceleration_structure_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_raytracing_acceleration_structure_type
 alias D3D12_RAYTRACING_ACCELERATION_STRUCTURE_TYPE = int;
 enum : int
 {
@@ -1447,14 +1577,16 @@ enum : int
     D3D12_RAYTRACING_ACCELERATION_STRUCTURE_TYPE_BOTTOM_LEVEL           = 0x00000001,
     D3D12_RAYTRACING_ACCELERATION_STRUCTURE_TYPE_OPACITY_MICROMAP_ARRAY = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_elements_layout))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_elements_layout
 alias D3D12_ELEMENTS_LAYOUT = int;
 enum : int
 {
     D3D12_ELEMENTS_LAYOUT_ARRAY             = 0x00000000,
     D3D12_ELEMENTS_LAYOUT_ARRAY_OF_POINTERS = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_raytracing_acceleration_structure_postbuild_info_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_raytracing_acceleration_structure_postbuild_info_type
 alias D3D12_RAYTRACING_ACCELERATION_STRUCTURE_POSTBUILD_INFO_TYPE = int;
 enum : int
 {
@@ -1463,14 +1595,16 @@ enum : int
     D3D12_RAYTRACING_ACCELERATION_STRUCTURE_POSTBUILD_INFO_SERIALIZATION       = 0x00000002,
     D3D12_RAYTRACING_ACCELERATION_STRUCTURE_POSTBUILD_INFO_CURRENT_SIZE        = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_serialized_data_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_serialized_data_type
 alias D3D12_SERIALIZED_DATA_TYPE = int;
 enum : int
 {
     D3D12_SERIALIZED_DATA_RAYTRACING_ACCELERATION_STRUCTURE = 0x00000000,
     D3D12_SERIALIZED_DATA_APPLICATION_SPECIFIC_DRIVER_STATE = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_driver_matching_identifier_status))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_driver_matching_identifier_status
 alias D3D12_DRIVER_MATCHING_IDENTIFIER_STATUS = int;
 enum : int
 {
@@ -1480,6 +1614,7 @@ enum : int
     D3D12_DRIVER_MATCHING_IDENTIFIER_INCOMPATIBLE_VERSION   = 0x00000003,
     D3D12_DRIVER_MATCHING_IDENTIFIER_INCOMPATIBLE_TYPE      = 0x00000004,
 }
+
 alias D3D12_SERIALIZED_RAYTRACING_ACCELERATION_STRUCTURE_HEADER_POSTAMBLE_TYPE = int;
 enum : int
 {
@@ -1487,18 +1622,21 @@ enum : int
     D3D12_SERIALIZED_RAYTRACING_ACCELERATION_STRUCTURE_HEADER_POSTAMBLE_TYPE_BOTTOM_LEVEL_POINTERS = 0x00000000,
     D3D12_SERIALIZED_RAYTRACING_ACCELERATION_STRUCTURE_HEADER_POSTAMBLE_TYPE_BLOCKS                = 0xffffffff,
 }
+
 alias D3D12_SERIALIZED_BLOCK_TYPE = int;
 enum : int
 {
     D3D12_RAYTRACING_SERIALIZED_BLOCK_TYPE_OPACITY_MICROMAPS = 0x00000000,
 }
+
 alias D3D12_RAYTRACING_OPACITY_MICROMAP_ARRAY_POSTBUILD_INFO_TYPE = int;
 enum : int
 {
     D3D12_RAYTRACING_OPACITY_MICROMAP_ARRAY_POSTBUILD_INFO_CURRENT_SIZE        = 0x00000000,
     D3D12_RAYTRACING_OPACITY_MICROMAP_ARRAY_POSTBUILD_INFO_TOOLS_VISUALIZATION = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_ray_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_ray_flags
 alias D3D12_RAY_FLAGS = int;
 enum : int
 {
@@ -1515,12 +1653,14 @@ enum : int
     D3D12_RAY_FLAG_SKIP_PROCEDURAL_PRIMITIVES      = 0x00000200,
     D3D12_RAY_FLAG_FORCE_OMM_2_STATE               = 0x00000400,
 }
+
 alias D3D12_HIT_KIND = int;
 enum : int
 {
     D3D12_HIT_KIND_TRIANGLE_FRONT_FACE = 0x000000fe,
     D3D12_HIT_KIND_TRIANGLE_BACK_FACE  = 0x000000ff,
 }
+
 alias D3D12_MARKER_API = int;
 enum : int
 {
@@ -1579,7 +1719,8 @@ enum : int
     D3D12_MARKER_API_PROCESSFRAMES2                                   = 0x00000034,
     D3D12_MARKER_API_SET_WORK_GRAPH_MAXIMUM_GPU_INPUT_RECORDS         = 0x00000035,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_auto_breadcrumb_op))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_auto_breadcrumb_op
 alias D3D12_AUTO_BREADCRUMB_OP = int;
 enum : int
 {
@@ -1638,7 +1779,8 @@ enum : int
     D3D12_AUTO_BREADCRUMB_OP_PROCESSFRAMES2                                   = 0x00000034,
     D3D12_AUTO_BREADCRUMB_OP_SET_WORK_GRAPH_MAXIMUM_GPU_INPUT_RECORDS         = 0x00000035,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_dred_version))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_dred_version
 alias D3D12_DRED_VERSION = int;
 enum : int
 {
@@ -1647,7 +1789,8 @@ enum : int
     D3D12_DRED_VERSION_1_2 = 0x00000003,
     D3D12_DRED_VERSION_1_3 = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_dred_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_dred_flags
 alias D3D12_DRED_FLAGS = int;
 enum : int
 {
@@ -1655,7 +1798,8 @@ enum : int
     D3D12_DRED_FLAG_FORCE_ENABLE            = 0x00000001,
     D3D12_DRED_FLAG_DISABLE_AUTOBREADCRUMBS = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_dred_enablement))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_dred_enablement
 alias D3D12_DRED_ENABLEMENT = int;
 enum : int
 {
@@ -1663,7 +1807,8 @@ enum : int
     D3D12_DRED_ENABLEMENT_FORCED_OFF        = 0x00000001,
     D3D12_DRED_ENABLEMENT_FORCED_ON         = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_dred_allocation_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_dred_allocation_type
 alias D3D12_DRED_ALLOCATION_TYPE = int;
 enum : int
 {
@@ -1697,11 +1842,13 @@ enum : int
     D3D12_DRED_ALLOCATION_TYPE_VIDEO_ENCODER_HEAP       = 0x00000031,
     D3D12_DRED_ALLOCATION_TYPE_INVALID                  = 0xffffffff,
 }
+
 alias D3D12_DRED_PAGE_FAULT_FLAGS = int;
 enum : int
 {
     D3D12_DRED_PAGE_FAULT_FLAGS_NONE = 0x00000000,
 }
+
 alias D3D12_DRED_DEVICE_STATE = int;
 enum : int
 {
@@ -1710,7 +1857,8 @@ enum : int
     D3D12_DRED_DEVICE_STATE_FAULT     = 0x00000006,
     D3D12_DRED_DEVICE_STATE_PAGEFAULT = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_background_processing_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_background_processing_mode
 alias D3D12_BACKGROUND_PROCESSING_MODE = int;
 enum : int
 {
@@ -1719,7 +1867,8 @@ enum : int
     D3D12_BACKGROUND_PROCESSING_MODE_DISABLE_BACKGROUND_WORK      = 0x00000002,
     D3D12_BACKGROUND_PROCESSING_MODE_DISABLE_PROFILING_BY_SYSTEM  = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_measurements_action))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_measurements_action
 alias D3D12_MEASUREMENTS_ACTION = int;
 enum : int
 {
@@ -1728,7 +1877,8 @@ enum : int
     D3D12_MEASUREMENTS_ACTION_COMMIT_RESULTS_HIGH_PRIORITY = 0x00000002,
     D3D12_MEASUREMENTS_ACTION_DISCARD_PREVIOUS             = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_render_pass_beginning_access_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_render_pass_beginning_access_type
 alias D3D12_RENDER_PASS_BEGINNING_ACCESS_TYPE = int;
 enum : int
 {
@@ -1740,7 +1890,8 @@ enum : int
     D3D12_RENDER_PASS_BEGINNING_ACCESS_TYPE_PRESERVE_LOCAL_SRV    = 0x00000005,
     D3D12_RENDER_PASS_BEGINNING_ACCESS_TYPE_PRESERVE_LOCAL_UAV    = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_render_pass_ending_access_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_render_pass_ending_access_type
 alias D3D12_RENDER_PASS_ENDING_ACCESS_TYPE = int;
 enum : int
 {
@@ -1752,7 +1903,8 @@ enum : int
     D3D12_RENDER_PASS_ENDING_ACCESS_TYPE_PRESERVE_LOCAL_SRV    = 0x00000005,
     D3D12_RENDER_PASS_ENDING_ACCESS_TYPE_PRESERVE_LOCAL_UAV    = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_render_pass_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_render_pass_flags
 alias D3D12_RENDER_PASS_FLAGS = int;
 enum : int
 {
@@ -1763,12 +1915,14 @@ enum : int
     D3D12_RENDER_PASS_FLAG_BIND_READ_ONLY_DEPTH   = 0x00000008,
     D3D12_RENDER_PASS_FLAG_BIND_READ_ONLY_STENCIL = 0x00000010,
 }
+
 alias D3D12_SET_WORK_GRAPH_FLAGS = int;
 enum : int
 {
     D3D12_SET_WORK_GRAPH_FLAG_NONE       = 0x00000000,
     D3D12_SET_WORK_GRAPH_FLAG_INITIALIZE = 0x00000001,
 }
+
 alias D3D12_PROGRAM_TYPE = int;
 enum : int
 {
@@ -1776,6 +1930,7 @@ enum : int
     D3D12_PROGRAM_TYPE_RAYTRACING_PIPELINE = 0x00000004,
     D3D12_PROGRAM_TYPE_WORK_GRAPH          = 0x00000005,
 }
+
 alias D3D12_DISPATCH_MODE = int;
 enum : int
 {
@@ -1784,14 +1939,16 @@ enum : int
     D3D12_DISPATCH_MODE_MULTI_NODE_CPU_INPUT = 0x00000002,
     D3D12_DISPATCH_MODE_MULTI_NODE_GPU_INPUT = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_shader_cache_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_shader_cache_mode
 alias D3D12_SHADER_CACHE_MODE = int;
 enum : int
 {
     D3D12_SHADER_CACHE_MODE_MEMORY = 0x00000000,
     D3D12_SHADER_CACHE_MODE_DISK   = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_shader_cache_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_shader_cache_flags
 alias D3D12_SHADER_CACHE_FLAGS = int;
 enum : int
 {
@@ -1799,6 +1956,7 @@ enum : int
     D3D12_SHADER_CACHE_FLAG_DRIVER_VERSIONED = 0x00000001,
     D3D12_SHADER_CACHE_FLAG_USE_WORKING_DIR  = 0x00000002,
 }
+
 alias D3D12_BARRIER_LAYOUT = int;
 enum : int
 {
@@ -1836,6 +1994,7 @@ enum : int
     D3D12_BARRIER_LAYOUT_COMPUTE_QUEUE_COPY_DEST                            = 0x0000001d,
     D3D12_BARRIER_LAYOUT_DIRECT_QUEUE_GENERIC_READ_COMPUTE_QUEUE_ACCESSIBLE = 0x0000001f,
 }
+
 alias D3D12_BARRIER_SYNC = int;
 enum : int
 {
@@ -1864,6 +2023,7 @@ enum : int
     D3D12_BARRIER_SYNC_COPY_RAYTRACING_ACCELERATION_STRUCTURE                = 0x01000000,
     D3D12_BARRIER_SYNC_SPLIT                                                 = 0x80000000,
 }
+
 alias D3D12_BARRIER_ACCESS = int;
 enum : int
 {
@@ -1894,6 +2054,7 @@ enum : int
     D3D12_BARRIER_ACCESS_VIDEO_ENCODE_WRITE                      = 0x00400000,
     D3D12_BARRIER_ACCESS_NO_ACCESS                               = 0x80000000,
 }
+
 alias D3D12_BARRIER_TYPE = int;
 enum : int
 {
@@ -1901,13 +2062,15 @@ enum : int
     D3D12_BARRIER_TYPE_TEXTURE = 0x00000001,
     D3D12_BARRIER_TYPE_BUFFER  = 0x00000002,
 }
+
 alias D3D12_TEXTURE_BARRIER_FLAGS = int;
 enum : int
 {
     D3D12_TEXTURE_BARRIER_FLAG_NONE    = 0x00000000,
     D3D12_TEXTURE_BARRIER_FLAG_DISCARD = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_shader_cache_kind_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_shader_cache_kind_flags
 alias D3D12_SHADER_CACHE_KIND_FLAGS = int;
 enum : int
 {
@@ -1916,7 +2079,8 @@ enum : int
     D3D12_SHADER_CACHE_KIND_FLAG_IMPLICIT_DRIVER_MANAGED       = 0x00000004,
     D3D12_SHADER_CACHE_KIND_FLAG_APPLICATION_MANAGED           = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_shader_cache_control_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_shader_cache_control_flags
 alias D3D12_SHADER_CACHE_CONTROL_FLAGS = int;
 enum : int
 {
@@ -1924,6 +2088,7 @@ enum : int
     D3D12_SHADER_CACHE_CONTROL_FLAG_ENABLE  = 0x00000002,
     D3D12_SHADER_CACHE_CONTROL_FLAG_CLEAR   = 0x00000004,
 }
+
 alias D3D12_TRIM_NOTIFICATION_FLAGS = int;
 enum : int
 {
@@ -1932,12 +2097,14 @@ enum : int
     D3D12_TRIM_NOTIFICATION_FLAG_RESTART_PERIODIC_TRIM = 0x00000002,
     D3D12_TRIM_NOTIFICATION_FLAG_TRIM_TO_BUDGET        = 0x00000004,
 }
+
 alias D3D12_QUERY_HEAP_FLAGS = int;
 enum : int
 {
     D3D12_QUERY_HEAP_FLAG_NONE        = 0x00000000,
     D3D12_QUERY_HEAP_FLAG_CPU_RESOLVE = 0x00000001,
 }
+
 alias D3D12_APPLICATION_SPECIFIC_DRIVER_BLOB_STATUS = int;
 enum : int
 {
@@ -1946,14 +2113,16 @@ enum : int
     D3D12_APPLICATION_SPECIFIC_DRIVER_BLOB_IGNORED       = 0x00000003,
     D3D12_APPLICATION_SPECIFIC_DRIVER_BLOB_NOT_SPECIFIED = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/ne-d3d12sdklayers-d3d12_gpu_based_validation_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/ne-d3d12sdklayers-d3d12_gpu_based_validation_flags
 alias D3D12_GPU_BASED_VALIDATION_FLAGS = int;
 enum : int
 {
     D3D12_GPU_BASED_VALIDATION_FLAGS_NONE                   = 0x00000000,
     D3D12_GPU_BASED_VALIDATION_FLAGS_DISABLE_STATE_TRACKING = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/ne-d3d12sdklayers-d3d12_rldo_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/ne-d3d12sdklayers-d3d12_rldo_flags
 alias D3D12_RLDO_FLAGS = int;
 enum : int
 {
@@ -1962,7 +2131,8 @@ enum : int
     D3D12_RLDO_DETAIL          = 0x00000002,
     D3D12_RLDO_IGNORE_INTERNAL = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/ne-d3d12sdklayers-d3d12_debug_device_parameter_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/ne-d3d12sdklayers-d3d12_debug_device_parameter_type
 alias D3D12_DEBUG_DEVICE_PARAMETER_TYPE = int;
 enum : int
 {
@@ -1971,7 +2141,8 @@ enum : int
     D3D12_DEBUG_DEVICE_PARAMETER_GPU_SLOWDOWN_PERFORMANCE_FACTOR = 0x00000002,
     D3D12_DEBUG_DEVICE_PARAMETER_BYTECODE_VALIDATION_MODE        = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/ne-d3d12sdklayers-d3d12_debug_feature))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/ne-d3d12sdklayers-d3d12_debug_feature
 alias D3D12_DEBUG_FEATURE = int;
 enum : int
 {
@@ -1981,7 +2152,8 @@ enum : int
     D3D12_DEBUG_FEATURE_DISABLE_VIRTUALIZED_BUNDLES_VALIDATION = 0x00000004,
     D3D12_DEBUG_FEATURE_EMULATE_WINDOWS7                       = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/ne-d3d12sdklayers-d3d12_gpu_based_validation_shader_patch_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/ne-d3d12sdklayers-d3d12_gpu_based_validation_shader_patch_mode
 alias D3D12_GPU_BASED_VALIDATION_SHADER_PATCH_MODE = int;
 enum : int
 {
@@ -1991,7 +2163,8 @@ enum : int
     D3D12_GPU_BASED_VALIDATION_SHADER_PATCH_MODE_GUARDED_VALIDATION   = 0x00000003,
     NUM_D3D12_GPU_BASED_VALIDATION_SHADER_PATCH_MODES                 = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/ne-d3d12sdklayers-d3d12_gpu_based_validation_pipeline_state_create_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/ne-d3d12sdklayers-d3d12_gpu_based_validation_pipeline_state_create_flags
 alias D3D12_GPU_BASED_VALIDATION_PIPELINE_STATE_CREATE_FLAGS = int;
 enum : int
 {
@@ -2001,6 +2174,7 @@ enum : int
     D3D12_GPU_BASED_VALIDATION_PIPELINE_STATE_CREATE_FLAG_FRONT_LOAD_CREATE_GUARDED_VALIDATION_SHADERS   = 0x00000004,
     D3D12_GPU_BASED_VALIDATION_PIPELINE_STATE_CREATE_FLAGS_VALID_MASK                                    = 0x00000007,
 }
+
 alias D3D12_DEBUG_DEVICE_BYTECODE_VALIDATION_MODE = int;
 enum : int
 {
@@ -2009,13 +2183,15 @@ enum : int
     D3D12_DEBUG_DEVICE_BYTECODE_VALIDATION_ALL_BYTECODE       = 0x00000002,
     D3D12_DEBUG_DEVICE_BYTECODE_VALIDATION_MODE_DEFAULT       = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/ne-d3d12sdklayers-d3d12_debug_command_list_parameter_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/ne-d3d12sdklayers-d3d12_debug_command_list_parameter_type
 alias D3D12_DEBUG_COMMAND_LIST_PARAMETER_TYPE = int;
 enum : int
 {
     D3D12_DEBUG_COMMAND_LIST_PARAMETER_GPU_BASED_VALIDATION_SETTINGS = 0x00000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/ne-d3d12sdklayers-d3d12_message_category))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/ne-d3d12sdklayers-d3d12_message_category
 alias D3D12_MESSAGE_CATEGORY = int;
 enum : int
 {
@@ -2031,7 +2207,8 @@ enum : int
     D3D12_MESSAGE_CATEGORY_EXECUTION             = 0x00000009,
     D3D12_MESSAGE_CATEGORY_SHADER                = 0x0000000a,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/ne-d3d12sdklayers-d3d12_message_severity))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/ne-d3d12sdklayers-d3d12_message_severity
 alias D3D12_MESSAGE_SEVERITY = int;
 enum : int
 {
@@ -2041,7 +2218,8 @@ enum : int
     D3D12_MESSAGE_SEVERITY_INFO       = 0x00000003,
     D3D12_MESSAGE_SEVERITY_MESSAGE    = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/ne-d3d12sdklayers-d3d12_message_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/ne-d3d12sdklayers-d3d12_message_id
 alias D3D12_MESSAGE_ID = int;
 enum : int
 {
@@ -3043,12 +3221,14 @@ enum : int
     D3D12_MESSAGE_ID_GPU_BASED_VALIDATION_NON_UNIFORM_RESOURCE_INDEX                                               = 0x000005ab,
     D3D12_MESSAGE_ID_D3D12_MESSAGES_END                                                                            = 0x000005b8,
 }
+
 alias D3D12_MESSAGE_CALLBACK_FLAGS = int;
 enum : int
 {
     D3D12_MESSAGE_CALLBACK_FLAG_NONE      = 0x00000000,
     D3D12_MESSAGE_CALLBACK_IGNORE_FILTERS = 0x00000001,
 }
+
 alias D3D12_DEVICE_FACTORY_FLAGS = int;
 enum : int
 {
@@ -3057,6 +3237,7 @@ enum : int
     D3D12_DEVICE_FACTORY_FLAG_ALLOW_RETURNING_INCOMPATIBLE_EXISTING_DEVICE = 0x00000002,
     D3D12_DEVICE_FACTORY_FLAG_DISALLOW_STORING_NEW_DEVICE_AS_SINGLETON     = 0x00000004,
 }
+
 alias D3D12_DEVICE_FLAGS = int;
 enum : int
 {
@@ -3073,13 +3254,15 @@ enum : int
     D3D12_DEVICE_FLAG_AUTO_DEBUG_NAME_ENABLED                        = 0x00000200,
     D3D12_DEVICE_FLAG_FORCE_LEGACY_STATE_VALIDATION                  = 0x00000400,
 }
+
 alias D3D12_STATE_OBJECT_DATABASE_FLAGS = int;
 enum : int
 {
     D3D12_STATE_OBJECT_DATABASE_FLAG_NONE      = 0x00000000,
     D3D12_STATE_OBJECT_DATABASE_FLAG_READ_ONLY = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_axis_shading_rate))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_axis_shading_rate
 alias D3D12_AXIS_SHADING_RATE = int;
 enum : int
 {
@@ -3087,7 +3270,8 @@ enum : int
     D3D12_AXIS_SHADING_RATE_2X = 0x00000001,
     D3D12_AXIS_SHADING_RATE_4X = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_shading_rate))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_shading_rate
 alias D3D12_SHADING_RATE = int;
 enum : int
 {
@@ -3099,7 +3283,8 @@ enum : int
     D3D12_SHADING_RATE_4X2 = 0x00000009,
     D3D12_SHADING_RATE_4X4 = 0x0000000a,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_shading_rate_combiner))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ne-d3d12-d3d12_shading_rate_combiner
 alias D3D12_SHADING_RATE_COMBINER = int;
 enum : int
 {
@@ -3109,7 +3294,8 @@ enum : int
     D3D12_SHADING_RATE_COMBINER_MAX         = 0x00000003,
     D3D12_SHADING_RATE_COMBINER_SUM         = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/ne-d3d12shader-d3d12_shader_version_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/ne-d3d12shader-d3d12_shader_version_type
 alias D3D12_SHADER_VERSION_TYPE = int;
 enum : int
 {
@@ -3131,6 +3317,7 @@ enum : int
     D3D12_SHVER_NODE_SHADER           = 0x0000000f,
     D3D12_SHVER_RESERVED0             = 0x0000fff0,
 }
+
 alias D3D12_COMPILER_VALUE_TYPE = int;
 enum : int
 {
@@ -3139,6 +3326,7 @@ enum : int
     D3D12_COMPILER_VALUE_TYPE_DEBUG_PDB        = 0x00000002,
     D3D12_COMPILER_VALUE_TYPE_PERFORMANCE_DATA = 0x00000003,
 }
+
 alias D3D12_COMPILER_VALUE_TYPE_FLAGS = int;
 enum : int
 {
@@ -3152,63 +3340,63 @@ enum : int
 // Constants
 
 
-enum uint D3D12_SHADER_COMPONENT_MAPPING_ALWAYS_SET_BIT_AVOIDING_ZEROMEM_MISTAKES = 0x00001000;
-enum uint D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING = 0x00001688;
-enum uint D3D12_16BIT_INDEX_STRIP_CUT_VALUE = 0x0000ffff;
-enum uint D3D12_32BIT_INDEX_STRIP_CUT_VALUE = 0xffffffff;
-enum uint D3D12_8BIT_INDEX_STRIP_CUT_VALUE = 0x000000ff;
-enum uint D3D12_APPEND_ALIGNED_ELEMENT = 0xffffffff;
-enum uint D3D12_ARRAY_AXIS_ADDRESS_RANGE_BIT_COUNT = 0x00000009;
-enum uint D3D12_AS_TGSM_BYTES_MINIMUM_SUPPORT = 0x00008000;
+enum uint D3D12_SHADER_COMPONENT_MAPPING_ALWAYS_SET_BIT_AVOIDING_ZEROMEM_MISTAKES = 0x00001000U;
+enum uint D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING = 0x00001688U;
+enum uint D3D12_16BIT_INDEX_STRIP_CUT_VALUE = 0x0000ffffU;
+enum uint D3D12_32BIT_INDEX_STRIP_CUT_VALUE = 0xffffffffU;
+enum uint D3D12_8BIT_INDEX_STRIP_CUT_VALUE = 0x000000ffU;
+enum uint D3D12_APPEND_ALIGNED_ELEMENT = 0xffffffffU;
+enum uint D3D12_ARRAY_AXIS_ADDRESS_RANGE_BIT_COUNT = 0x00000009U;
+enum uint D3D12_AS_TGSM_BYTES_MINIMUM_SUPPORT = 0x00008000U;
 
 enum : uint
 {
-    D3D12_CLIP_OR_CULL_DISTANCE_COUNT         = 0x00000008,
-    D3D12_CLIP_OR_CULL_DISTANCE_ELEMENT_COUNT = 0x00000002,
+    D3D12_CLIP_OR_CULL_DISTANCE_COUNT         = 0x00000008U,
+    D3D12_CLIP_OR_CULL_DISTANCE_ELEMENT_COUNT = 0x00000002U,
 }
 
 enum : uint
 {
-    D3D12_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT                        = 0x0000000e,
-    D3D12_COMMONSHADER_CONSTANT_BUFFER_COMPONENTS                            = 0x00000004,
-    D3D12_COMMONSHADER_CONSTANT_BUFFER_COMPONENT_BIT_COUNT                   = 0x00000020,
-    D3D12_COMMONSHADER_CONSTANT_BUFFER_HW_SLOT_COUNT                         = 0x0000000f,
-    D3D12_COMMONSHADER_CONSTANT_BUFFER_PARTIAL_UPDATE_EXTENTS_BYTE_ALIGNMENT = 0x00000010,
-    D3D12_COMMONSHADER_CONSTANT_BUFFER_REGISTER_COMPONENTS                   = 0x00000004,
-    D3D12_COMMONSHADER_CONSTANT_BUFFER_REGISTER_COUNT                        = 0x0000000f,
-    D3D12_COMMONSHADER_CONSTANT_BUFFER_REGISTER_READS_PER_INST               = 0x00000001,
-    D3D12_COMMONSHADER_CONSTANT_BUFFER_REGISTER_READ_PORTS                   = 0x00000001,
+    D3D12_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT                        = 0x0000000eU,
+    D3D12_COMMONSHADER_CONSTANT_BUFFER_COMPONENTS                            = 0x00000004U,
+    D3D12_COMMONSHADER_CONSTANT_BUFFER_COMPONENT_BIT_COUNT                   = 0x00000020U,
+    D3D12_COMMONSHADER_CONSTANT_BUFFER_HW_SLOT_COUNT                         = 0x0000000fU,
+    D3D12_COMMONSHADER_CONSTANT_BUFFER_PARTIAL_UPDATE_EXTENTS_BYTE_ALIGNMENT = 0x00000010U,
+    D3D12_COMMONSHADER_CONSTANT_BUFFER_REGISTER_COMPONENTS                   = 0x00000004U,
+    D3D12_COMMONSHADER_CONSTANT_BUFFER_REGISTER_COUNT                        = 0x0000000fU,
+    D3D12_COMMONSHADER_CONSTANT_BUFFER_REGISTER_READS_PER_INST               = 0x00000001U,
+    D3D12_COMMONSHADER_CONSTANT_BUFFER_REGISTER_READ_PORTS                   = 0x00000001U,
 }
 
 enum : uint
 {
-    D3D12_COMMONSHADER_FLOWCONTROL_NESTING_LIMIT                         = 0x00000040,
-    D3D12_COMMONSHADER_IMMEDIATE_CONSTANT_BUFFER_REGISTER_COMPONENTS     = 0x00000004,
-    D3D12_COMMONSHADER_IMMEDIATE_CONSTANT_BUFFER_REGISTER_COUNT          = 0x00000001,
-    D3D12_COMMONSHADER_IMMEDIATE_CONSTANT_BUFFER_REGISTER_READS_PER_INST = 0x00000001,
-    D3D12_COMMONSHADER_IMMEDIATE_CONSTANT_BUFFER_REGISTER_READ_PORTS     = 0x00000001,
-    D3D12_COMMONSHADER_IMMEDIATE_VALUE_COMPONENT_BIT_COUNT               = 0x00000020,
+    D3D12_COMMONSHADER_FLOWCONTROL_NESTING_LIMIT                         = 0x00000040U,
+    D3D12_COMMONSHADER_IMMEDIATE_CONSTANT_BUFFER_REGISTER_COMPONENTS     = 0x00000004U,
+    D3D12_COMMONSHADER_IMMEDIATE_CONSTANT_BUFFER_REGISTER_COUNT          = 0x00000001U,
+    D3D12_COMMONSHADER_IMMEDIATE_CONSTANT_BUFFER_REGISTER_READS_PER_INST = 0x00000001U,
+    D3D12_COMMONSHADER_IMMEDIATE_CONSTANT_BUFFER_REGISTER_READ_PORTS     = 0x00000001U,
+    D3D12_COMMONSHADER_IMMEDIATE_VALUE_COMPONENT_BIT_COUNT               = 0x00000020U,
 }
 
 enum : uint
 {
-    D3D12_COMMONSHADER_INPUT_RESOURCE_REGISTER_COMPONENTS     = 0x00000001,
-    D3D12_COMMONSHADER_INPUT_RESOURCE_REGISTER_COUNT          = 0x00000080,
-    D3D12_COMMONSHADER_INPUT_RESOURCE_REGISTER_READS_PER_INST = 0x00000001,
-    D3D12_COMMONSHADER_INPUT_RESOURCE_REGISTER_READ_PORTS     = 0x00000001,
-    D3D12_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT              = 0x00000080,
-    D3D12_COMMONSHADER_SAMPLER_REGISTER_COMPONENTS            = 0x00000001,
-    D3D12_COMMONSHADER_SAMPLER_REGISTER_COUNT                 = 0x00000010,
-    D3D12_COMMONSHADER_SAMPLER_REGISTER_READS_PER_INST        = 0x00000001,
-    D3D12_COMMONSHADER_SAMPLER_REGISTER_READ_PORTS            = 0x00000001,
-    D3D12_COMMONSHADER_SAMPLER_SLOT_COUNT                     = 0x00000010,
-    D3D12_COMMONSHADER_SUBROUTINE_NESTING_LIMIT               = 0x00000020,
-    D3D12_COMMONSHADER_TEMP_REGISTER_COMPONENTS               = 0x00000004,
-    D3D12_COMMONSHADER_TEMP_REGISTER_COMPONENT_BIT_COUNT      = 0x00000020,
-    D3D12_COMMONSHADER_TEMP_REGISTER_COUNT                    = 0x00001000,
-    D3D12_COMMONSHADER_TEMP_REGISTER_READS_PER_INST           = 0x00000003,
-    D3D12_COMMONSHADER_TEMP_REGISTER_READ_PORTS               = 0x00000003,
-    D3D12_COMMONSHADER_TEXCOORD_RANGE_REDUCTION_MAX           = 0x0000000a,
+    D3D12_COMMONSHADER_INPUT_RESOURCE_REGISTER_COMPONENTS     = 0x00000001U,
+    D3D12_COMMONSHADER_INPUT_RESOURCE_REGISTER_COUNT          = 0x00000080U,
+    D3D12_COMMONSHADER_INPUT_RESOURCE_REGISTER_READS_PER_INST = 0x00000001U,
+    D3D12_COMMONSHADER_INPUT_RESOURCE_REGISTER_READ_PORTS     = 0x00000001U,
+    D3D12_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT              = 0x00000080U,
+    D3D12_COMMONSHADER_SAMPLER_REGISTER_COMPONENTS            = 0x00000001U,
+    D3D12_COMMONSHADER_SAMPLER_REGISTER_COUNT                 = 0x00000010U,
+    D3D12_COMMONSHADER_SAMPLER_REGISTER_READS_PER_INST        = 0x00000001U,
+    D3D12_COMMONSHADER_SAMPLER_REGISTER_READ_PORTS            = 0x00000001U,
+    D3D12_COMMONSHADER_SAMPLER_SLOT_COUNT                     = 0x00000010U,
+    D3D12_COMMONSHADER_SUBROUTINE_NESTING_LIMIT               = 0x00000020U,
+    D3D12_COMMONSHADER_TEMP_REGISTER_COMPONENTS               = 0x00000004U,
+    D3D12_COMMONSHADER_TEMP_REGISTER_COMPONENT_BIT_COUNT      = 0x00000020U,
+    D3D12_COMMONSHADER_TEMP_REGISTER_COUNT                    = 0x00001000U,
+    D3D12_COMMONSHADER_TEMP_REGISTER_READS_PER_INST           = 0x00000003U,
+    D3D12_COMMONSHADER_TEMP_REGISTER_READ_PORTS               = 0x00000003U,
+    D3D12_COMMONSHADER_TEXCOORD_RANGE_REDUCTION_MAX           = 0x0000000aU,
 }
 
 enum : int
@@ -3217,85 +3405,85 @@ enum : int
     D3D12_COMMONSHADER_TEXEL_OFFSET_MAX_NEGATIVE    = 0xfffffff8,
 }
 
-enum uint D3D12_COMMONSHADER_TEXEL_OFFSET_MAX_POSITIVE = 0x00000007;
-enum uint D3D12_CONSTANT_BUFFER_DATA_PLACEMENT_ALIGNMENT = 0x00000100;
+enum uint D3D12_COMMONSHADER_TEXEL_OFFSET_MAX_POSITIVE = 0x00000007U;
+enum uint D3D12_CONSTANT_BUFFER_DATA_PLACEMENT_ALIGNMENT = 0x00000100U;
 
 enum : uint
 {
-    D3D12_CS_4_X_BUCKET00_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000100,
-    D3D12_CS_4_X_BUCKET00_MAX_NUM_THREADS_PER_GROUP          = 0x00000040,
-    D3D12_CS_4_X_BUCKET01_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x000000f0,
-    D3D12_CS_4_X_BUCKET01_MAX_NUM_THREADS_PER_GROUP          = 0x00000044,
-    D3D12_CS_4_X_BUCKET02_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x000000e0,
-    D3D12_CS_4_X_BUCKET02_MAX_NUM_THREADS_PER_GROUP          = 0x00000048,
-    D3D12_CS_4_X_BUCKET03_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x000000d0,
-    D3D12_CS_4_X_BUCKET03_MAX_NUM_THREADS_PER_GROUP          = 0x0000004c,
-    D3D12_CS_4_X_BUCKET04_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x000000c0,
-    D3D12_CS_4_X_BUCKET04_MAX_NUM_THREADS_PER_GROUP          = 0x00000054,
-    D3D12_CS_4_X_BUCKET05_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x000000b0,
-    D3D12_CS_4_X_BUCKET05_MAX_NUM_THREADS_PER_GROUP          = 0x0000005c,
-    D3D12_CS_4_X_BUCKET06_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x000000a0,
-    D3D12_CS_4_X_BUCKET06_MAX_NUM_THREADS_PER_GROUP          = 0x00000064,
-    D3D12_CS_4_X_BUCKET07_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000090,
-    D3D12_CS_4_X_BUCKET07_MAX_NUM_THREADS_PER_GROUP          = 0x00000070,
-    D3D12_CS_4_X_BUCKET08_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000080,
-    D3D12_CS_4_X_BUCKET08_MAX_NUM_THREADS_PER_GROUP          = 0x00000080,
-    D3D12_CS_4_X_BUCKET09_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000070,
-    D3D12_CS_4_X_BUCKET09_MAX_NUM_THREADS_PER_GROUP          = 0x00000090,
-    D3D12_CS_4_X_BUCKET10_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000060,
-    D3D12_CS_4_X_BUCKET10_MAX_NUM_THREADS_PER_GROUP          = 0x000000a8,
-    D3D12_CS_4_X_BUCKET11_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000050,
-    D3D12_CS_4_X_BUCKET11_MAX_NUM_THREADS_PER_GROUP          = 0x000000cc,
-    D3D12_CS_4_X_BUCKET12_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000040,
-    D3D12_CS_4_X_BUCKET12_MAX_NUM_THREADS_PER_GROUP          = 0x00000100,
-    D3D12_CS_4_X_BUCKET13_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000030,
-    D3D12_CS_4_X_BUCKET13_MAX_NUM_THREADS_PER_GROUP          = 0x00000154,
-    D3D12_CS_4_X_BUCKET14_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000020,
-    D3D12_CS_4_X_BUCKET14_MAX_NUM_THREADS_PER_GROUP          = 0x00000200,
-    D3D12_CS_4_X_BUCKET15_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000010,
-    D3D12_CS_4_X_BUCKET15_MAX_NUM_THREADS_PER_GROUP          = 0x00000300,
+    D3D12_CS_4_X_BUCKET00_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000100U,
+    D3D12_CS_4_X_BUCKET00_MAX_NUM_THREADS_PER_GROUP          = 0x00000040U,
+    D3D12_CS_4_X_BUCKET01_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x000000f0U,
+    D3D12_CS_4_X_BUCKET01_MAX_NUM_THREADS_PER_GROUP          = 0x00000044U,
+    D3D12_CS_4_X_BUCKET02_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x000000e0U,
+    D3D12_CS_4_X_BUCKET02_MAX_NUM_THREADS_PER_GROUP          = 0x00000048U,
+    D3D12_CS_4_X_BUCKET03_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x000000d0U,
+    D3D12_CS_4_X_BUCKET03_MAX_NUM_THREADS_PER_GROUP          = 0x0000004cU,
+    D3D12_CS_4_X_BUCKET04_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x000000c0U,
+    D3D12_CS_4_X_BUCKET04_MAX_NUM_THREADS_PER_GROUP          = 0x00000054U,
+    D3D12_CS_4_X_BUCKET05_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x000000b0U,
+    D3D12_CS_4_X_BUCKET05_MAX_NUM_THREADS_PER_GROUP          = 0x0000005cU,
+    D3D12_CS_4_X_BUCKET06_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x000000a0U,
+    D3D12_CS_4_X_BUCKET06_MAX_NUM_THREADS_PER_GROUP          = 0x00000064U,
+    D3D12_CS_4_X_BUCKET07_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000090U,
+    D3D12_CS_4_X_BUCKET07_MAX_NUM_THREADS_PER_GROUP          = 0x00000070U,
+    D3D12_CS_4_X_BUCKET08_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000080U,
+    D3D12_CS_4_X_BUCKET08_MAX_NUM_THREADS_PER_GROUP          = 0x00000080U,
+    D3D12_CS_4_X_BUCKET09_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000070U,
+    D3D12_CS_4_X_BUCKET09_MAX_NUM_THREADS_PER_GROUP          = 0x00000090U,
+    D3D12_CS_4_X_BUCKET10_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000060U,
+    D3D12_CS_4_X_BUCKET10_MAX_NUM_THREADS_PER_GROUP          = 0x000000a8U,
+    D3D12_CS_4_X_BUCKET11_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000050U,
+    D3D12_CS_4_X_BUCKET11_MAX_NUM_THREADS_PER_GROUP          = 0x000000ccU,
+    D3D12_CS_4_X_BUCKET12_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000040U,
+    D3D12_CS_4_X_BUCKET12_MAX_NUM_THREADS_PER_GROUP          = 0x00000100U,
+    D3D12_CS_4_X_BUCKET13_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000030U,
+    D3D12_CS_4_X_BUCKET13_MAX_NUM_THREADS_PER_GROUP          = 0x00000154U,
+    D3D12_CS_4_X_BUCKET14_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000020U,
+    D3D12_CS_4_X_BUCKET14_MAX_NUM_THREADS_PER_GROUP          = 0x00000200U,
+    D3D12_CS_4_X_BUCKET15_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000010U,
+    D3D12_CS_4_X_BUCKET15_MAX_NUM_THREADS_PER_GROUP          = 0x00000300U,
 }
 
-enum uint D3D12_CS_4_X_DISPATCH_MAX_THREAD_GROUPS_IN_Z_DIMENSION = 0x00000001;
-enum uint D3D12_CS_4_X_RAW_UAV_BYTE_ALIGNMENT = 0x00000100;
+enum uint D3D12_CS_4_X_DISPATCH_MAX_THREAD_GROUPS_IN_Z_DIMENSION = 0x00000001U;
+enum uint D3D12_CS_4_X_RAW_UAV_BYTE_ALIGNMENT = 0x00000100U;
 
 enum : uint
 {
-    D3D12_CS_4_X_THREAD_GROUP_MAX_THREADS_PER_GROUP = 0x00000300,
-    D3D12_CS_4_X_THREAD_GROUP_MAX_X                 = 0x00000300,
-    D3D12_CS_4_X_THREAD_GROUP_MAX_Y                 = 0x00000300,
-    D3D12_CS_4_X_UAV_REGISTER_COUNT                 = 0x00000001,
+    D3D12_CS_4_X_THREAD_GROUP_MAX_THREADS_PER_GROUP = 0x00000300U,
+    D3D12_CS_4_X_THREAD_GROUP_MAX_X                 = 0x00000300U,
+    D3D12_CS_4_X_THREAD_GROUP_MAX_Y                 = 0x00000300U,
+    D3D12_CS_4_X_UAV_REGISTER_COUNT                 = 0x00000001U,
 }
 
-enum uint D3D12_CS_DISPATCH_MAX_THREAD_GROUPS_PER_DIMENSION = 0x0000ffff;
-enum uint D3D12_CS_TGSM_BYTES_MINIMUM_SUPPORT = 0x00008000;
+enum uint D3D12_CS_DISPATCH_MAX_THREAD_GROUPS_PER_DIMENSION = 0x0000ffffU;
+enum uint D3D12_CS_TGSM_BYTES_MINIMUM_SUPPORT = 0x00008000U;
 
 enum : uint
 {
-    D3D12_CS_TGSM_REGISTER_COUNT               = 0x00002000,
-    D3D12_CS_TGSM_REGISTER_READS_PER_INST      = 0x00000001,
-    D3D12_CS_TGSM_RESOURCE_REGISTER_COMPONENTS = 0x00000001,
-    D3D12_CS_TGSM_RESOURCE_REGISTER_READ_PORTS = 0x00000001,
+    D3D12_CS_TGSM_REGISTER_COUNT               = 0x00002000U,
+    D3D12_CS_TGSM_REGISTER_READS_PER_INST      = 0x00000001U,
+    D3D12_CS_TGSM_RESOURCE_REGISTER_COMPONENTS = 0x00000001U,
+    D3D12_CS_TGSM_RESOURCE_REGISTER_READ_PORTS = 0x00000001U,
 }
 
 enum : uint
 {
-    D3D12_CS_THREADGROUPID_REGISTER_COMPONENTS            = 0x00000003,
-    D3D12_CS_THREADGROUPID_REGISTER_COUNT                 = 0x00000001,
-    D3D12_CS_THREADIDINGROUPFLATTENED_REGISTER_COMPONENTS = 0x00000001,
-    D3D12_CS_THREADIDINGROUPFLATTENED_REGISTER_COUNT      = 0x00000001,
-    D3D12_CS_THREADIDINGROUP_REGISTER_COMPONENTS          = 0x00000003,
-    D3D12_CS_THREADIDINGROUP_REGISTER_COUNT               = 0x00000001,
-    D3D12_CS_THREADID_REGISTER_COMPONENTS                 = 0x00000003,
-    D3D12_CS_THREADID_REGISTER_COUNT                      = 0x00000001,
-    D3D12_CS_THREAD_GROUP_MAX_THREADS_PER_GROUP           = 0x00000400,
-    D3D12_CS_THREAD_GROUP_MAX_X                           = 0x00000400,
-    D3D12_CS_THREAD_GROUP_MAX_Y                           = 0x00000400,
-    D3D12_CS_THREAD_GROUP_MAX_Z                           = 0x00000040,
-    D3D12_CS_THREAD_GROUP_MIN_X                           = 0x00000001,
-    D3D12_CS_THREAD_GROUP_MIN_Y                           = 0x00000001,
-    D3D12_CS_THREAD_GROUP_MIN_Z                           = 0x00000001,
-    D3D12_CS_THREAD_LOCAL_TEMP_REGISTER_POOL              = 0x00004000,
+    D3D12_CS_THREADGROUPID_REGISTER_COMPONENTS            = 0x00000003U,
+    D3D12_CS_THREADGROUPID_REGISTER_COUNT                 = 0x00000001U,
+    D3D12_CS_THREADIDINGROUPFLATTENED_REGISTER_COMPONENTS = 0x00000001U,
+    D3D12_CS_THREADIDINGROUPFLATTENED_REGISTER_COUNT      = 0x00000001U,
+    D3D12_CS_THREADIDINGROUP_REGISTER_COMPONENTS          = 0x00000003U,
+    D3D12_CS_THREADIDINGROUP_REGISTER_COUNT               = 0x00000001U,
+    D3D12_CS_THREADID_REGISTER_COMPONENTS                 = 0x00000003U,
+    D3D12_CS_THREADID_REGISTER_COUNT                      = 0x00000001U,
+    D3D12_CS_THREAD_GROUP_MAX_THREADS_PER_GROUP           = 0x00000400U,
+    D3D12_CS_THREAD_GROUP_MAX_X                           = 0x00000400U,
+    D3D12_CS_THREAD_GROUP_MAX_Y                           = 0x00000400U,
+    D3D12_CS_THREAD_GROUP_MAX_Z                           = 0x00000040U,
+    D3D12_CS_THREAD_GROUP_MIN_X                           = 0x00000001U,
+    D3D12_CS_THREAD_GROUP_MIN_Y                           = 0x00000001U,
+    D3D12_CS_THREAD_GROUP_MIN_Z                           = 0x00000001U,
+    D3D12_CS_THREAD_LOCAL_TEMP_REGISTER_POOL              = 0x00004000U,
 }
 
 enum : float
@@ -3309,34 +3497,34 @@ enum : float
 
 enum int D3D12_DEFAULT_DEPTH_BIAS = 0x00000000;
 enum float D3D12_DEFAULT_DEPTH_BIAS_CLAMP = 0x0p+0;
-enum uint D3D12_DEFAULT_MAX_ANISOTROPY = 0x00000010;
+enum uint D3D12_DEFAULT_MAX_ANISOTROPY = 0x00000010U;
 enum float D3D12_DEFAULT_MIP_LOD_BIAS = 0x0p+0;
-enum uint D3D12_DEFAULT_MSAA_RESOURCE_PLACEMENT_ALIGNMENT = 0x00400000;
+enum uint D3D12_DEFAULT_MSAA_RESOURCE_PLACEMENT_ALIGNMENT = 0x00400000U;
 
 enum : uint
 {
-    D3D12_DEFAULT_RENDER_TARGET_ARRAY_INDEX    = 0x00000000,
-    D3D12_DEFAULT_RESOURCE_PLACEMENT_ALIGNMENT = 0x00010000,
+    D3D12_DEFAULT_RENDER_TARGET_ARRAY_INDEX    = 0x00000000U,
+    D3D12_DEFAULT_RESOURCE_PLACEMENT_ALIGNMENT = 0x00010000U,
 }
 
 enum : uint
 {
-    D3D12_DEFAULT_SAMPLE_MASK    = 0xffffffff,
-    D3D12_DEFAULT_SCISSOR_ENDX   = 0x00000000,
-    D3D12_DEFAULT_SCISSOR_ENDY   = 0x00000000,
-    D3D12_DEFAULT_SCISSOR_STARTX = 0x00000000,
-    D3D12_DEFAULT_SCISSOR_STARTY = 0x00000000,
+    D3D12_DEFAULT_SAMPLE_MASK    = 0xffffffffU,
+    D3D12_DEFAULT_SCISSOR_ENDX   = 0x00000000U,
+    D3D12_DEFAULT_SCISSOR_ENDY   = 0x00000000U,
+    D3D12_DEFAULT_SCISSOR_STARTX = 0x00000000U,
+    D3D12_DEFAULT_SCISSOR_STARTY = 0x00000000U,
 }
 
 enum float D3D12_DEFAULT_SLOPE_SCALED_DEPTH_BIAS = 0x0p+0;
 
 enum : uint
 {
-    D3D12_DEFAULT_STENCIL_READ_MASK              = 0x000000ff,
-    D3D12_DEFAULT_STENCIL_REFERENCE              = 0x00000000,
-    D3D12_DEFAULT_STENCIL_WRITE_MASK             = 0x000000ff,
-    D3D12_DEFAULT_VIEWPORT_AND_SCISSORRECT_INDEX = 0x00000000,
-    D3D12_DEFAULT_VIEWPORT_HEIGHT                = 0x00000000,
+    D3D12_DEFAULT_STENCIL_READ_MASK              = 0x000000ffU,
+    D3D12_DEFAULT_STENCIL_REFERENCE              = 0x00000000U,
+    D3D12_DEFAULT_STENCIL_WRITE_MASK             = 0x000000ffU,
+    D3D12_DEFAULT_VIEWPORT_AND_SCISSORRECT_INDEX = 0x00000000U,
+    D3D12_DEFAULT_VIEWPORT_HEIGHT                = 0x00000000U,
 }
 
 enum : float
@@ -3347,61 +3535,61 @@ enum : float
 
 enum : uint
 {
-    D3D12_DEFAULT_VIEWPORT_TOPLEFTX = 0x00000000,
-    D3D12_DEFAULT_VIEWPORT_TOPLEFTY = 0x00000000,
-    D3D12_DEFAULT_VIEWPORT_WIDTH    = 0x00000000,
+    D3D12_DEFAULT_VIEWPORT_TOPLEFTX = 0x00000000U,
+    D3D12_DEFAULT_VIEWPORT_TOPLEFTY = 0x00000000U,
+    D3D12_DEFAULT_VIEWPORT_WIDTH    = 0x00000000U,
 }
 
-enum uint D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND = 0xffffffff;
+enum uint D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND = 0xffffffffU;
 
 enum : uint
 {
-    D3D12_DRIVER_RESERVED_REGISTER_SPACE_VALUES_END   = 0xfffffff7,
-    D3D12_DRIVER_RESERVED_REGISTER_SPACE_VALUES_START = 0xfffffff0,
-}
-
-enum : uint
-{
-    D3D12_DS_INPUT_CONTROL_POINTS_MAX_TOTAL_SCALARS           = 0x00000f80,
-    D3D12_DS_INPUT_CONTROL_POINT_REGISTER_COMPONENTS          = 0x00000004,
-    D3D12_DS_INPUT_CONTROL_POINT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D12_DS_INPUT_CONTROL_POINT_REGISTER_COUNT               = 0x00000020,
-    D3D12_DS_INPUT_CONTROL_POINT_REGISTER_READS_PER_INST      = 0x00000002,
-    D3D12_DS_INPUT_CONTROL_POINT_REGISTER_READ_PORTS          = 0x00000001,
+    D3D12_DRIVER_RESERVED_REGISTER_SPACE_VALUES_END   = 0xfffffff7U,
+    D3D12_DRIVER_RESERVED_REGISTER_SPACE_VALUES_START = 0xfffffff0U,
 }
 
 enum : uint
 {
-    D3D12_DS_INPUT_DOMAIN_POINT_REGISTER_COMPONENTS          = 0x00000003,
-    D3D12_DS_INPUT_DOMAIN_POINT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D12_DS_INPUT_DOMAIN_POINT_REGISTER_COUNT               = 0x00000001,
-    D3D12_DS_INPUT_DOMAIN_POINT_REGISTER_READS_PER_INST      = 0x00000002,
-    D3D12_DS_INPUT_DOMAIN_POINT_REGISTER_READ_PORTS          = 0x00000001,
+    D3D12_DS_INPUT_CONTROL_POINTS_MAX_TOTAL_SCALARS           = 0x00000f80U,
+    D3D12_DS_INPUT_CONTROL_POINT_REGISTER_COMPONENTS          = 0x00000004U,
+    D3D12_DS_INPUT_CONTROL_POINT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D12_DS_INPUT_CONTROL_POINT_REGISTER_COUNT               = 0x00000020U,
+    D3D12_DS_INPUT_CONTROL_POINT_REGISTER_READS_PER_INST      = 0x00000002U,
+    D3D12_DS_INPUT_CONTROL_POINT_REGISTER_READ_PORTS          = 0x00000001U,
 }
 
 enum : uint
 {
-    D3D12_DS_INPUT_PATCH_CONSTANT_REGISTER_COMPONENTS          = 0x00000004,
-    D3D12_DS_INPUT_PATCH_CONSTANT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D12_DS_INPUT_PATCH_CONSTANT_REGISTER_COUNT               = 0x00000020,
-    D3D12_DS_INPUT_PATCH_CONSTANT_REGISTER_READS_PER_INST      = 0x00000002,
-    D3D12_DS_INPUT_PATCH_CONSTANT_REGISTER_READ_PORTS          = 0x00000001,
+    D3D12_DS_INPUT_DOMAIN_POINT_REGISTER_COMPONENTS          = 0x00000003U,
+    D3D12_DS_INPUT_DOMAIN_POINT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D12_DS_INPUT_DOMAIN_POINT_REGISTER_COUNT               = 0x00000001U,
+    D3D12_DS_INPUT_DOMAIN_POINT_REGISTER_READS_PER_INST      = 0x00000002U,
+    D3D12_DS_INPUT_DOMAIN_POINT_REGISTER_READ_PORTS          = 0x00000001U,
 }
 
 enum : uint
 {
-    D3D12_DS_INPUT_PRIMITIVE_ID_REGISTER_COMPONENTS          = 0x00000001,
-    D3D12_DS_INPUT_PRIMITIVE_ID_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D12_DS_INPUT_PRIMITIVE_ID_REGISTER_COUNT               = 0x00000001,
-    D3D12_DS_INPUT_PRIMITIVE_ID_REGISTER_READS_PER_INST      = 0x00000002,
-    D3D12_DS_INPUT_PRIMITIVE_ID_REGISTER_READ_PORTS          = 0x00000001,
+    D3D12_DS_INPUT_PATCH_CONSTANT_REGISTER_COMPONENTS          = 0x00000004U,
+    D3D12_DS_INPUT_PATCH_CONSTANT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D12_DS_INPUT_PATCH_CONSTANT_REGISTER_COUNT               = 0x00000020U,
+    D3D12_DS_INPUT_PATCH_CONSTANT_REGISTER_READS_PER_INST      = 0x00000002U,
+    D3D12_DS_INPUT_PATCH_CONSTANT_REGISTER_READ_PORTS          = 0x00000001U,
 }
 
 enum : uint
 {
-    D3D12_DS_OUTPUT_REGISTER_COMPONENTS          = 0x00000004,
-    D3D12_DS_OUTPUT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D12_DS_OUTPUT_REGISTER_COUNT               = 0x00000020,
+    D3D12_DS_INPUT_PRIMITIVE_ID_REGISTER_COMPONENTS          = 0x00000001U,
+    D3D12_DS_INPUT_PRIMITIVE_ID_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D12_DS_INPUT_PRIMITIVE_ID_REGISTER_COUNT               = 0x00000001U,
+    D3D12_DS_INPUT_PRIMITIVE_ID_REGISTER_READS_PER_INST      = 0x00000002U,
+    D3D12_DS_INPUT_PRIMITIVE_ID_REGISTER_READ_PORTS          = 0x00000001U,
+}
+
+enum : uint
+{
+    D3D12_DS_OUTPUT_REGISTER_COMPONENTS          = 0x00000004U,
+    D3D12_DS_OUTPUT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D12_DS_OUTPUT_REGISTER_COUNT               = 0x00000020U,
 }
 
 enum double D3D12_FLOAT16_FUSED_TOLERANCE_IN_ULP = 0x1.3333333333333p-1;
@@ -3436,93 +3624,93 @@ enum : float
 
 enum : uint
 {
-    D3D12_GS_INPUT_INSTANCE_ID_READS_PER_INST               = 0x00000002,
-    D3D12_GS_INPUT_INSTANCE_ID_READ_PORTS                   = 0x00000001,
-    D3D12_GS_INPUT_INSTANCE_ID_REGISTER_COMPONENTS          = 0x00000001,
-    D3D12_GS_INPUT_INSTANCE_ID_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D12_GS_INPUT_INSTANCE_ID_REGISTER_COUNT               = 0x00000001,
+    D3D12_GS_INPUT_INSTANCE_ID_READS_PER_INST               = 0x00000002U,
+    D3D12_GS_INPUT_INSTANCE_ID_READ_PORTS                   = 0x00000001U,
+    D3D12_GS_INPUT_INSTANCE_ID_REGISTER_COMPONENTS          = 0x00000001U,
+    D3D12_GS_INPUT_INSTANCE_ID_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D12_GS_INPUT_INSTANCE_ID_REGISTER_COUNT               = 0x00000001U,
 }
 
 enum : uint
 {
-    D3D12_GS_INPUT_PRIM_CONST_REGISTER_COMPONENTS          = 0x00000001,
-    D3D12_GS_INPUT_PRIM_CONST_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D12_GS_INPUT_PRIM_CONST_REGISTER_COUNT               = 0x00000001,
-    D3D12_GS_INPUT_PRIM_CONST_REGISTER_READS_PER_INST      = 0x00000002,
-    D3D12_GS_INPUT_PRIM_CONST_REGISTER_READ_PORTS          = 0x00000001,
+    D3D12_GS_INPUT_PRIM_CONST_REGISTER_COMPONENTS          = 0x00000001U,
+    D3D12_GS_INPUT_PRIM_CONST_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D12_GS_INPUT_PRIM_CONST_REGISTER_COUNT               = 0x00000001U,
+    D3D12_GS_INPUT_PRIM_CONST_REGISTER_READS_PER_INST      = 0x00000002U,
+    D3D12_GS_INPUT_PRIM_CONST_REGISTER_READ_PORTS          = 0x00000001U,
 }
 
 enum : uint
 {
-    D3D12_GS_INPUT_REGISTER_COMPONENTS          = 0x00000004,
-    D3D12_GS_INPUT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D12_GS_INPUT_REGISTER_COUNT               = 0x00000020,
-    D3D12_GS_INPUT_REGISTER_READS_PER_INST      = 0x00000002,
-    D3D12_GS_INPUT_REGISTER_READ_PORTS          = 0x00000001,
-    D3D12_GS_INPUT_REGISTER_VERTICES            = 0x00000020,
+    D3D12_GS_INPUT_REGISTER_COMPONENTS          = 0x00000004U,
+    D3D12_GS_INPUT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D12_GS_INPUT_REGISTER_COUNT               = 0x00000020U,
+    D3D12_GS_INPUT_REGISTER_READS_PER_INST      = 0x00000002U,
+    D3D12_GS_INPUT_REGISTER_READ_PORTS          = 0x00000001U,
+    D3D12_GS_INPUT_REGISTER_VERTICES            = 0x00000020U,
 }
 
 enum : uint
 {
-    D3D12_GS_MAX_INSTANCE_COUNT                       = 0x00000020,
-    D3D12_GS_MAX_OUTPUT_VERTEX_COUNT_ACROSS_INSTANCES = 0x00000400,
+    D3D12_GS_MAX_INSTANCE_COUNT                       = 0x00000020U,
+    D3D12_GS_MAX_OUTPUT_VERTEX_COUNT_ACROSS_INSTANCES = 0x00000400U,
 }
 
 enum : uint
 {
-    D3D12_GS_OUTPUT_ELEMENTS                     = 0x00000020,
-    D3D12_GS_OUTPUT_REGISTER_COMPONENTS          = 0x00000004,
-    D3D12_GS_OUTPUT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D12_GS_OUTPUT_REGISTER_COUNT               = 0x00000020,
+    D3D12_GS_OUTPUT_ELEMENTS                     = 0x00000020U,
+    D3D12_GS_OUTPUT_REGISTER_COMPONENTS          = 0x00000004U,
+    D3D12_GS_OUTPUT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D12_GS_OUTPUT_REGISTER_COUNT               = 0x00000020U,
 }
 
 enum : uint
 {
-    D3D12_GUID_TEXTURE_LAYOUT_ROW_MAJOR_HEIGHT_ALIGNMENT = 0x00000004,
-    D3D12_GUID_TEXTURE_LAYOUT_ROW_MAJOR_PITCH_ALIGNMENT  = 0x00000100,
-    D3D12_GUID_TEXTURE_LAYOUT_ROW_MAJOR_PLANE_ALIGNMENT  = 0x00001000,
+    D3D12_GUID_TEXTURE_LAYOUT_ROW_MAJOR_HEIGHT_ALIGNMENT = 0x00000004U,
+    D3D12_GUID_TEXTURE_LAYOUT_ROW_MAJOR_PITCH_ALIGNMENT  = 0x00000100U,
+    D3D12_GUID_TEXTURE_LAYOUT_ROW_MAJOR_PLANE_ALIGNMENT  = 0x00001000U,
 }
 
 enum : uint
 {
-    D3D12_HS_CONTROL_POINT_PHASE_INPUT_REGISTER_COUNT   = 0x00000020,
-    D3D12_HS_CONTROL_POINT_PHASE_OUTPUT_REGISTER_COUNT  = 0x00000020,
-    D3D12_HS_CONTROL_POINT_REGISTER_COMPONENTS          = 0x00000004,
-    D3D12_HS_CONTROL_POINT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D12_HS_CONTROL_POINT_REGISTER_READS_PER_INST      = 0x00000002,
-    D3D12_HS_CONTROL_POINT_REGISTER_READ_PORTS          = 0x00000001,
+    D3D12_HS_CONTROL_POINT_PHASE_INPUT_REGISTER_COUNT   = 0x00000020U,
+    D3D12_HS_CONTROL_POINT_PHASE_OUTPUT_REGISTER_COUNT  = 0x00000020U,
+    D3D12_HS_CONTROL_POINT_REGISTER_COMPONENTS          = 0x00000004U,
+    D3D12_HS_CONTROL_POINT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D12_HS_CONTROL_POINT_REGISTER_READS_PER_INST      = 0x00000002U,
+    D3D12_HS_CONTROL_POINT_REGISTER_READ_PORTS          = 0x00000001U,
 }
 
-enum uint D3D12_HS_FORK_PHASE_INSTANCE_COUNT_UPPER_BOUND = 0xffffffff;
+enum uint D3D12_HS_FORK_PHASE_INSTANCE_COUNT_UPPER_BOUND = 0xffffffffU;
 
 enum : uint
 {
-    D3D12_HS_INPUT_FORK_INSTANCE_ID_REGISTER_COMPONENTS          = 0x00000001,
-    D3D12_HS_INPUT_FORK_INSTANCE_ID_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D12_HS_INPUT_FORK_INSTANCE_ID_REGISTER_COUNT               = 0x00000001,
-    D3D12_HS_INPUT_FORK_INSTANCE_ID_REGISTER_READS_PER_INST      = 0x00000002,
-    D3D12_HS_INPUT_FORK_INSTANCE_ID_REGISTER_READ_PORTS          = 0x00000001,
-}
-
-enum : uint
-{
-    D3D12_HS_INPUT_JOIN_INSTANCE_ID_REGISTER_COMPONENTS          = 0x00000001,
-    D3D12_HS_INPUT_JOIN_INSTANCE_ID_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D12_HS_INPUT_JOIN_INSTANCE_ID_REGISTER_COUNT               = 0x00000001,
-    D3D12_HS_INPUT_JOIN_INSTANCE_ID_REGISTER_READS_PER_INST      = 0x00000002,
-    D3D12_HS_INPUT_JOIN_INSTANCE_ID_REGISTER_READ_PORTS          = 0x00000001,
+    D3D12_HS_INPUT_FORK_INSTANCE_ID_REGISTER_COMPONENTS          = 0x00000001U,
+    D3D12_HS_INPUT_FORK_INSTANCE_ID_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D12_HS_INPUT_FORK_INSTANCE_ID_REGISTER_COUNT               = 0x00000001U,
+    D3D12_HS_INPUT_FORK_INSTANCE_ID_REGISTER_READS_PER_INST      = 0x00000002U,
+    D3D12_HS_INPUT_FORK_INSTANCE_ID_REGISTER_READ_PORTS          = 0x00000001U,
 }
 
 enum : uint
 {
-    D3D12_HS_INPUT_PRIMITIVE_ID_REGISTER_COMPONENTS          = 0x00000001,
-    D3D12_HS_INPUT_PRIMITIVE_ID_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D12_HS_INPUT_PRIMITIVE_ID_REGISTER_COUNT               = 0x00000001,
-    D3D12_HS_INPUT_PRIMITIVE_ID_REGISTER_READS_PER_INST      = 0x00000002,
-    D3D12_HS_INPUT_PRIMITIVE_ID_REGISTER_READ_PORTS          = 0x00000001,
+    D3D12_HS_INPUT_JOIN_INSTANCE_ID_REGISTER_COMPONENTS          = 0x00000001U,
+    D3D12_HS_INPUT_JOIN_INSTANCE_ID_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D12_HS_INPUT_JOIN_INSTANCE_ID_REGISTER_COUNT               = 0x00000001U,
+    D3D12_HS_INPUT_JOIN_INSTANCE_ID_REGISTER_READS_PER_INST      = 0x00000002U,
+    D3D12_HS_INPUT_JOIN_INSTANCE_ID_REGISTER_READ_PORTS          = 0x00000001U,
 }
 
-enum uint D3D12_HS_JOIN_PHASE_INSTANCE_COUNT_UPPER_BOUND = 0xffffffff;
+enum : uint
+{
+    D3D12_HS_INPUT_PRIMITIVE_ID_REGISTER_COMPONENTS          = 0x00000001U,
+    D3D12_HS_INPUT_PRIMITIVE_ID_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D12_HS_INPUT_PRIMITIVE_ID_REGISTER_COUNT               = 0x00000001U,
+    D3D12_HS_INPUT_PRIMITIVE_ID_REGISTER_READS_PER_INST      = 0x00000002U,
+    D3D12_HS_INPUT_PRIMITIVE_ID_REGISTER_READ_PORTS          = 0x00000001U,
+}
+
+enum uint D3D12_HS_JOIN_PHASE_INSTANCE_COUNT_UPPER_BOUND = 0xffffffffU;
 
 enum : float
 {
@@ -3532,82 +3720,82 @@ enum : float
 
 enum : uint
 {
-    D3D12_HS_OUTPUT_CONTROL_POINTS_MAX_TOTAL_SCALARS              = 0x00000f80,
-    D3D12_HS_OUTPUT_CONTROL_POINT_ID_REGISTER_COMPONENTS          = 0x00000001,
-    D3D12_HS_OUTPUT_CONTROL_POINT_ID_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D12_HS_OUTPUT_CONTROL_POINT_ID_REGISTER_COUNT               = 0x00000001,
-    D3D12_HS_OUTPUT_CONTROL_POINT_ID_REGISTER_READS_PER_INST      = 0x00000002,
-    D3D12_HS_OUTPUT_CONTROL_POINT_ID_REGISTER_READ_PORTS          = 0x00000001,
+    D3D12_HS_OUTPUT_CONTROL_POINTS_MAX_TOTAL_SCALARS              = 0x00000f80U,
+    D3D12_HS_OUTPUT_CONTROL_POINT_ID_REGISTER_COMPONENTS          = 0x00000001U,
+    D3D12_HS_OUTPUT_CONTROL_POINT_ID_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D12_HS_OUTPUT_CONTROL_POINT_ID_REGISTER_COUNT               = 0x00000001U,
+    D3D12_HS_OUTPUT_CONTROL_POINT_ID_REGISTER_READS_PER_INST      = 0x00000002U,
+    D3D12_HS_OUTPUT_CONTROL_POINT_ID_REGISTER_READ_PORTS          = 0x00000001U,
 }
 
 enum : uint
 {
-    D3D12_HS_OUTPUT_PATCH_CONSTANT_REGISTER_COMPONENTS          = 0x00000004,
-    D3D12_HS_OUTPUT_PATCH_CONSTANT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D12_HS_OUTPUT_PATCH_CONSTANT_REGISTER_COUNT               = 0x00000020,
-    D3D12_HS_OUTPUT_PATCH_CONSTANT_REGISTER_READS_PER_INST      = 0x00000002,
-    D3D12_HS_OUTPUT_PATCH_CONSTANT_REGISTER_READ_PORTS          = 0x00000001,
-    D3D12_HS_OUTPUT_PATCH_CONSTANT_REGISTER_SCALAR_COMPONENTS   = 0x00000080,
+    D3D12_HS_OUTPUT_PATCH_CONSTANT_REGISTER_COMPONENTS          = 0x00000004U,
+    D3D12_HS_OUTPUT_PATCH_CONSTANT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D12_HS_OUTPUT_PATCH_CONSTANT_REGISTER_COUNT               = 0x00000020U,
+    D3D12_HS_OUTPUT_PATCH_CONSTANT_REGISTER_READS_PER_INST      = 0x00000002U,
+    D3D12_HS_OUTPUT_PATCH_CONSTANT_REGISTER_READ_PORTS          = 0x00000001U,
+    D3D12_HS_OUTPUT_PATCH_CONSTANT_REGISTER_SCALAR_COMPONENTS   = 0x00000080U,
 }
 
-enum uint D3D12_IA_DEFAULT_INDEX_BUFFER_OFFSET_IN_BYTES = 0x00000000;
+enum uint D3D12_IA_DEFAULT_INDEX_BUFFER_OFFSET_IN_BYTES = 0x00000000U;
 
 enum : uint
 {
-    D3D12_IA_DEFAULT_PRIMITIVE_TOPOLOGY            = 0x00000000,
-    D3D12_IA_DEFAULT_VERTEX_BUFFER_OFFSET_IN_BYTES = 0x00000000,
+    D3D12_IA_DEFAULT_PRIMITIVE_TOPOLOGY            = 0x00000000U,
+    D3D12_IA_DEFAULT_VERTEX_BUFFER_OFFSET_IN_BYTES = 0x00000000U,
 }
 
-enum uint D3D12_IA_INDEX_INPUT_RESOURCE_SLOT_COUNT = 0x00000001;
-enum uint D3D12_IA_INSTANCE_ID_BIT_COUNT = 0x00000020;
-enum uint D3D12_IA_INTEGER_ARITHMETIC_BIT_COUNT = 0x00000020;
-enum uint D3D12_IA_PATCH_MAX_CONTROL_POINT_COUNT = 0x00000020;
-enum uint D3D12_IA_PRIMITIVE_ID_BIT_COUNT = 0x00000020;
+enum uint D3D12_IA_INDEX_INPUT_RESOURCE_SLOT_COUNT = 0x00000001U;
+enum uint D3D12_IA_INSTANCE_ID_BIT_COUNT = 0x00000020U;
+enum uint D3D12_IA_INTEGER_ARITHMETIC_BIT_COUNT = 0x00000020U;
+enum uint D3D12_IA_PATCH_MAX_CONTROL_POINT_COUNT = 0x00000020U;
+enum uint D3D12_IA_PRIMITIVE_ID_BIT_COUNT = 0x00000020U;
 
 enum : uint
 {
-    D3D12_IA_VERTEX_ID_BIT_COUNT                        = 0x00000020,
-    D3D12_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT           = 0x00000020,
-    D3D12_IA_VERTEX_INPUT_STRUCTURE_ELEMENTS_COMPONENTS = 0x00000080,
-    D3D12_IA_VERTEX_INPUT_STRUCTURE_ELEMENT_COUNT       = 0x00000020,
+    D3D12_IA_VERTEX_ID_BIT_COUNT                        = 0x00000020U,
+    D3D12_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT           = 0x00000020U,
+    D3D12_IA_VERTEX_INPUT_STRUCTURE_ELEMENTS_COMPONENTS = 0x00000080U,
+    D3D12_IA_VERTEX_INPUT_STRUCTURE_ELEMENT_COUNT       = 0x00000020U,
 }
 
 enum : uint
 {
-    D3D12_INTEGER_DIVIDE_BY_ZERO_QUOTIENT  = 0xffffffff,
-    D3D12_INTEGER_DIVIDE_BY_ZERO_REMAINDER = 0xffffffff,
+    D3D12_INTEGER_DIVIDE_BY_ZERO_QUOTIENT  = 0xffffffffU,
+    D3D12_INTEGER_DIVIDE_BY_ZERO_REMAINDER = 0xffffffffU,
 }
 
-enum uint D3D12_KEEP_RENDER_TARGETS_AND_DEPTH_STENCIL = 0xffffffff;
-enum uint D3D12_KEEP_UNORDERED_ACCESS_VIEWS = 0xffffffff;
+enum uint D3D12_KEEP_RENDER_TARGETS_AND_DEPTH_STENCIL = 0xffffffffU;
+enum uint D3D12_KEEP_UNORDERED_ACCESS_VIEWS = 0xffffffffU;
 enum float D3D12_LINEAR_GAMMA = 0x1p+0;
-enum uint D3D12_MAJOR_VERSION = 0x0000000c;
+enum uint D3D12_MAJOR_VERSION = 0x0000000cU;
 enum float D3D12_MAX_BORDER_COLOR_COMPONENT = 0x1p+0;
 enum float D3D12_MAX_DEPTH = 0x1p+0;
-enum uint D3D12_MAX_LIVE_STATIC_SAMPLERS = 0x000007f0;
+enum uint D3D12_MAX_LIVE_STATIC_SAMPLERS = 0x000007f0U;
 
 enum : uint
 {
-    D3D12_MAX_MAXANISOTROPY            = 0x00000010,
-    D3D12_MAX_MULTISAMPLE_SAMPLE_COUNT = 0x00000020,
+    D3D12_MAX_MAXANISOTROPY            = 0x00000010U,
+    D3D12_MAX_MULTISAMPLE_SAMPLE_COUNT = 0x00000020U,
 }
 
 enum float D3D12_MAX_POSITION_VALUE = 0x1.a36e2ep+114;
 
 enum : uint
 {
-    D3D12_MAX_ROOT_COST                                  = 0x00000040,
-    D3D12_MAX_SHADER_VISIBLE_DESCRIPTOR_HEAP_SIZE_TIER_1 = 0x000f4240,
-    D3D12_MAX_SHADER_VISIBLE_DESCRIPTOR_HEAP_SIZE_TIER_2 = 0x000f4240,
-    D3D12_MAX_SHADER_VISIBLE_SAMPLER_HEAP_SIZE           = 0x00000800,
+    D3D12_MAX_ROOT_COST                                  = 0x00000040U,
+    D3D12_MAX_SHADER_VISIBLE_DESCRIPTOR_HEAP_SIZE_TIER_1 = 0x000f4240U,
+    D3D12_MAX_SHADER_VISIBLE_DESCRIPTOR_HEAP_SIZE_TIER_2 = 0x000f4240U,
+    D3D12_MAX_SHADER_VISIBLE_SAMPLER_HEAP_SIZE           = 0x00000800U,
 }
 
-enum uint D3D12_MAX_TEXTURE_DIMENSION_2_TO_EXP = 0x00000011;
-enum uint D3D12_MAX_VIEW_INSTANCE_COUNT = 0x00000004;
-enum uint D3D12_MINOR_VERSION = 0x00000000;
+enum uint D3D12_MAX_TEXTURE_DIMENSION_2_TO_EXP = 0x00000011U;
+enum uint D3D12_MAX_VIEW_INSTANCE_COUNT = 0x00000004U;
+enum uint D3D12_MINOR_VERSION = 0x00000000U;
 enum float D3D12_MIN_BORDER_COLOR_COMPONENT = 0x0p+0;
 enum float D3D12_MIN_DEPTH = 0x0p+0;
-enum uint D3D12_MIN_MAXANISOTROPY = 0x00000000;
+enum uint D3D12_MIN_MAXANISOTROPY = 0x00000000U;
 
 enum : float
 {
@@ -3617,188 +3805,188 @@ enum : float
 
 enum : uint
 {
-    D3D12_MIP_LOD_FRACTIONAL_BIT_COUNT = 0x00000008,
-    D3D12_MIP_LOD_RANGE_BIT_COUNT      = 0x00000008,
+    D3D12_MIP_LOD_FRACTIONAL_BIT_COUNT = 0x00000008U,
+    D3D12_MIP_LOD_RANGE_BIT_COUNT      = 0x00000008U,
 }
 
-enum uint D3D12_MS_DISPATCH_MAX_THREAD_GROUPS_PER_GRID = 0x003fffff;
-enum uint D3D12_MS_TGSM_BYTES_MINIMUM_SUPPORT = 0x00007000;
+enum uint D3D12_MS_DISPATCH_MAX_THREAD_GROUPS_PER_GRID = 0x003fffffU;
+enum uint D3D12_MS_TGSM_BYTES_MINIMUM_SUPPORT = 0x00007000U;
 enum float D3D12_MULTISAMPLE_ANTIALIAS_LINE_WIDTH = 0x1.666666p+0;
-enum uint D3D12_NONSAMPLE_FETCH_OUT_OF_RANGE_ACCESS_RESULT = 0x00000000;
+enum uint D3D12_NONSAMPLE_FETCH_OUT_OF_RANGE_ACCESS_RESULT = 0x00000000U;
 
 enum : uint
 {
-    D3D12_OS_RESERVED_REGISTER_SPACE_VALUES_END   = 0xffffffff,
-    D3D12_OS_RESERVED_REGISTER_SPACE_VALUES_START = 0xfffffff8,
+    D3D12_OS_RESERVED_REGISTER_SPACE_VALUES_END   = 0xffffffffU,
+    D3D12_OS_RESERVED_REGISTER_SPACE_VALUES_START = 0xfffffff8U,
 }
 
 enum : uint
 {
-    D3D12_PACKED_TILE                   = 0xffffffff,
-    D3D12_PIXEL_ADDRESS_RANGE_BIT_COUNT = 0x0000000f,
+    D3D12_PACKED_TILE                   = 0xffffffffU,
+    D3D12_PIXEL_ADDRESS_RANGE_BIT_COUNT = 0x0000000fU,
 }
 
-enum uint D3D12_PREVIEW_SDK_VERSION = 0x000002cf;
-enum uint D3D12_PRE_SCISSOR_PIXEL_ADDRESS_RANGE_BIT_COUNT = 0x00000010;
+enum uint D3D12_PREVIEW_SDK_VERSION = 0x000002cfU;
+enum uint D3D12_PRE_SCISSOR_PIXEL_ADDRESS_RANGE_BIT_COUNT = 0x00000010U;
 
 enum : uint
 {
-    D3D12_PS_CS_UAV_REGISTER_COMPONENTS     = 0x00000001,
-    D3D12_PS_CS_UAV_REGISTER_COUNT          = 0x00000008,
-    D3D12_PS_CS_UAV_REGISTER_READS_PER_INST = 0x00000001,
-    D3D12_PS_CS_UAV_REGISTER_READ_PORTS     = 0x00000001,
-}
-
-enum : uint
-{
-    D3D12_PS_FRONTFACING_DEFAULT_VALUE = 0xffffffff,
-    D3D12_PS_FRONTFACING_FALSE_VALUE   = 0x00000000,
-    D3D12_PS_FRONTFACING_TRUE_VALUE    = 0xffffffff,
+    D3D12_PS_CS_UAV_REGISTER_COMPONENTS     = 0x00000001U,
+    D3D12_PS_CS_UAV_REGISTER_COUNT          = 0x00000008U,
+    D3D12_PS_CS_UAV_REGISTER_READS_PER_INST = 0x00000001U,
+    D3D12_PS_CS_UAV_REGISTER_READ_PORTS     = 0x00000001U,
 }
 
 enum : uint
 {
-    D3D12_PS_INPUT_REGISTER_COMPONENTS          = 0x00000004,
-    D3D12_PS_INPUT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D12_PS_INPUT_REGISTER_COUNT               = 0x00000020,
-    D3D12_PS_INPUT_REGISTER_READS_PER_INST      = 0x00000002,
-    D3D12_PS_INPUT_REGISTER_READ_PORTS          = 0x00000001,
+    D3D12_PS_FRONTFACING_DEFAULT_VALUE = 0xffffffffU,
+    D3D12_PS_FRONTFACING_FALSE_VALUE   = 0x00000000U,
+    D3D12_PS_FRONTFACING_TRUE_VALUE    = 0xffffffffU,
+}
+
+enum : uint
+{
+    D3D12_PS_INPUT_REGISTER_COMPONENTS          = 0x00000004U,
+    D3D12_PS_INPUT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D12_PS_INPUT_REGISTER_COUNT               = 0x00000020U,
+    D3D12_PS_INPUT_REGISTER_READS_PER_INST      = 0x00000002U,
+    D3D12_PS_INPUT_REGISTER_READ_PORTS          = 0x00000001U,
 }
 
 enum float D3D12_PS_LEGACY_PIXEL_CENTER_FRACTIONAL_COMPONENT = 0x0p+0;
 
 enum : uint
 {
-    D3D12_PS_OUTPUT_DEPTH_REGISTER_COMPONENTS          = 0x00000001,
-    D3D12_PS_OUTPUT_DEPTH_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D12_PS_OUTPUT_DEPTH_REGISTER_COUNT               = 0x00000001,
-    D3D12_PS_OUTPUT_MASK_REGISTER_COMPONENTS           = 0x00000001,
-    D3D12_PS_OUTPUT_MASK_REGISTER_COMPONENT_BIT_COUNT  = 0x00000020,
-    D3D12_PS_OUTPUT_MASK_REGISTER_COUNT                = 0x00000001,
-    D3D12_PS_OUTPUT_REGISTER_COMPONENTS                = 0x00000004,
-    D3D12_PS_OUTPUT_REGISTER_COMPONENT_BIT_COUNT       = 0x00000020,
-    D3D12_PS_OUTPUT_REGISTER_COUNT                     = 0x00000008,
+    D3D12_PS_OUTPUT_DEPTH_REGISTER_COMPONENTS          = 0x00000001U,
+    D3D12_PS_OUTPUT_DEPTH_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D12_PS_OUTPUT_DEPTH_REGISTER_COUNT               = 0x00000001U,
+    D3D12_PS_OUTPUT_MASK_REGISTER_COMPONENTS           = 0x00000001U,
+    D3D12_PS_OUTPUT_MASK_REGISTER_COMPONENT_BIT_COUNT  = 0x00000020U,
+    D3D12_PS_OUTPUT_MASK_REGISTER_COUNT                = 0x00000001U,
+    D3D12_PS_OUTPUT_REGISTER_COMPONENTS                = 0x00000004U,
+    D3D12_PS_OUTPUT_REGISTER_COMPONENT_BIT_COUNT       = 0x00000020U,
+    D3D12_PS_OUTPUT_REGISTER_COUNT                     = 0x00000008U,
 }
 
 enum float D3D12_PS_PIXEL_CENTER_FRACTIONAL_COMPONENT = 0x1p-1;
-enum uint D3D12_RAW_UAV_SRV_BYTE_ALIGNMENT = 0x00000010;
+enum uint D3D12_RAW_UAV_SRV_BYTE_ALIGNMENT = 0x00000010U;
 
 enum : uint
 {
-    D3D12_RAYTRACING_AABB_BYTE_ALIGNMENT                   = 0x00000008,
-    D3D12_RAYTRACING_ACCELERATION_STRUCTURE_BYTE_ALIGNMENT = 0x00000100,
+    D3D12_RAYTRACING_AABB_BYTE_ALIGNMENT                   = 0x00000008U,
+    D3D12_RAYTRACING_ACCELERATION_STRUCTURE_BYTE_ALIGNMENT = 0x00000100U,
 }
 
-enum uint D3D12_RAYTRACING_INSTANCE_DESCS_BYTE_ALIGNMENT = 0x00000010;
+enum uint D3D12_RAYTRACING_INSTANCE_DESCS_BYTE_ALIGNMENT = 0x00000010U;
 
 enum : uint
 {
-    D3D12_RAYTRACING_MAX_ATTRIBUTE_SIZE_IN_BYTES          = 0x00000020,
-    D3D12_RAYTRACING_MAX_DECLARABLE_TRACE_RECURSION_DEPTH = 0x0000001f,
+    D3D12_RAYTRACING_MAX_ATTRIBUTE_SIZE_IN_BYTES          = 0x00000020U,
+    D3D12_RAYTRACING_MAX_DECLARABLE_TRACE_RECURSION_DEPTH = 0x0000001fU,
 }
 
-enum uint D3D12_RAYTRACING_MAX_GEOMETRIES_PER_BOTTOM_LEVEL_ACCELERATION_STRUCTURE = 0x01000000;
-enum uint D3D12_RAYTRACING_MAX_INSTANCES_PER_TOP_LEVEL_ACCELERATION_STRUCTURE = 0x01000000;
-enum uint D3D12_RAYTRACING_MAX_PRIMITIVES_PER_BOTTOM_LEVEL_ACCELERATION_STRUCTURE = 0x20000000;
+enum uint D3D12_RAYTRACING_MAX_GEOMETRIES_PER_BOTTOM_LEVEL_ACCELERATION_STRUCTURE = 0x01000000U;
+enum uint D3D12_RAYTRACING_MAX_INSTANCES_PER_TOP_LEVEL_ACCELERATION_STRUCTURE = 0x01000000U;
+enum uint D3D12_RAYTRACING_MAX_PRIMITIVES_PER_BOTTOM_LEVEL_ACCELERATION_STRUCTURE = 0x20000000U;
 
 enum : uint
 {
-    D3D12_RAYTRACING_MAX_RAY_GENERATION_SHADER_THREADS          = 0x40000000,
-    D3D12_RAYTRACING_MAX_SHADER_RECORD_STRIDE                   = 0x00001000,
-    D3D12_RAYTRACING_OPACITY_MICROMAP_ARRAY_BYTE_ALIGNMENT      = 0x00000080,
-    D3D12_RAYTRACING_OPACITY_MICROMAP_OC1_MAX_SUBDIVISION_LEVEL = 0x0000000c,
+    D3D12_RAYTRACING_MAX_RAY_GENERATION_SHADER_THREADS          = 0x40000000U,
+    D3D12_RAYTRACING_MAX_SHADER_RECORD_STRIDE                   = 0x00001000U,
+    D3D12_RAYTRACING_OPACITY_MICROMAP_ARRAY_BYTE_ALIGNMENT      = 0x00000080U,
+    D3D12_RAYTRACING_OPACITY_MICROMAP_OC1_MAX_SUBDIVISION_LEVEL = 0x0000000cU,
 }
 
 enum : uint
 {
-    D3D12_RAYTRACING_SHADER_RECORD_BYTE_ALIGNMENT = 0x00000020,
-    D3D12_RAYTRACING_SHADER_TABLE_BYTE_ALIGNMENT  = 0x00000040,
+    D3D12_RAYTRACING_SHADER_RECORD_BYTE_ALIGNMENT = 0x00000020U,
+    D3D12_RAYTRACING_SHADER_TABLE_BYTE_ALIGNMENT  = 0x00000040U,
 }
 
-enum uint D3D12_RAYTRACING_TRANSFORM3X4_BYTE_ALIGNMENT = 0x00000010;
-enum uint D3D12_REQ_BLEND_OBJECT_COUNT_PER_DEVICE = 0x00001000;
-enum uint D3D12_REQ_BUFFER_RESOURCE_TEXEL_COUNT_2_TO_EXP = 0x0000001b;
-enum uint D3D12_REQ_CONSTANT_BUFFER_ELEMENT_COUNT = 0x00001000;
-enum uint D3D12_REQ_DEPTH_STENCIL_OBJECT_COUNT_PER_DEVICE = 0x00001000;
-enum uint D3D12_REQ_DRAWINDEXED_INDEX_COUNT_2_TO_EXP = 0x00000020;
-enum uint D3D12_REQ_DRAW_VERTEX_COUNT_2_TO_EXP = 0x00000020;
-enum uint D3D12_REQ_FILTERING_HW_ADDRESSABLE_RESOURCE_DIMENSION = 0x00004000;
-enum uint D3D12_REQ_GS_INVOCATION_32BIT_OUTPUT_COMPONENT_LIMIT = 0x00000400;
-enum uint D3D12_REQ_IMMEDIATE_CONSTANT_BUFFER_ELEMENT_COUNT = 0x00001000;
+enum uint D3D12_RAYTRACING_TRANSFORM3X4_BYTE_ALIGNMENT = 0x00000010U;
+enum uint D3D12_REQ_BLEND_OBJECT_COUNT_PER_DEVICE = 0x00001000U;
+enum uint D3D12_REQ_BUFFER_RESOURCE_TEXEL_COUNT_2_TO_EXP = 0x0000001bU;
+enum uint D3D12_REQ_CONSTANT_BUFFER_ELEMENT_COUNT = 0x00001000U;
+enum uint D3D12_REQ_DEPTH_STENCIL_OBJECT_COUNT_PER_DEVICE = 0x00001000U;
+enum uint D3D12_REQ_DRAWINDEXED_INDEX_COUNT_2_TO_EXP = 0x00000020U;
+enum uint D3D12_REQ_DRAW_VERTEX_COUNT_2_TO_EXP = 0x00000020U;
+enum uint D3D12_REQ_FILTERING_HW_ADDRESSABLE_RESOURCE_DIMENSION = 0x00004000U;
+enum uint D3D12_REQ_GS_INVOCATION_32BIT_OUTPUT_COMPONENT_LIMIT = 0x00000400U;
+enum uint D3D12_REQ_IMMEDIATE_CONSTANT_BUFFER_ELEMENT_COUNT = 0x00001000U;
 
 enum : uint
 {
-    D3D12_REQ_MAXANISOTROPY                         = 0x00000010,
-    D3D12_REQ_MIP_LEVELS                            = 0x0000000f,
-    D3D12_REQ_MULTI_ELEMENT_STRUCTURE_SIZE_IN_BYTES = 0x00000800,
+    D3D12_REQ_MAXANISOTROPY                         = 0x00000010U,
+    D3D12_REQ_MIP_LEVELS                            = 0x0000000fU,
+    D3D12_REQ_MULTI_ELEMENT_STRUCTURE_SIZE_IN_BYTES = 0x00000800U,
 }
 
-enum uint D3D12_REQ_RASTERIZER_OBJECT_COUNT_PER_DEVICE = 0x00001000;
-enum uint D3D12_REQ_RENDER_TO_BUFFER_WINDOW_WIDTH = 0x00004000;
-enum uint D3D12_REQ_RESOURCE_SIZE_IN_MEGABYTES_EXPRESSION_A_TERM = 0x00000080;
+enum uint D3D12_REQ_RASTERIZER_OBJECT_COUNT_PER_DEVICE = 0x00001000U;
+enum uint D3D12_REQ_RENDER_TO_BUFFER_WINDOW_WIDTH = 0x00004000U;
+enum uint D3D12_REQ_RESOURCE_SIZE_IN_MEGABYTES_EXPRESSION_A_TERM = 0x00000080U;
 enum float D3D12_REQ_RESOURCE_SIZE_IN_MEGABYTES_EXPRESSION_B_TERM = 0x1p-2;
-enum uint D3D12_REQ_RESOURCE_SIZE_IN_MEGABYTES_EXPRESSION_C_TERM = 0x00000800;
-enum uint D3D12_REQ_RESOURCE_VIEW_COUNT_PER_DEVICE_2_TO_EXP = 0x00000014;
-enum uint D3D12_REQ_SAMPLER_OBJECT_COUNT_PER_DEVICE = 0x00001000;
+enum uint D3D12_REQ_RESOURCE_SIZE_IN_MEGABYTES_EXPRESSION_C_TERM = 0x00000800U;
+enum uint D3D12_REQ_RESOURCE_VIEW_COUNT_PER_DEVICE_2_TO_EXP = 0x00000014U;
+enum uint D3D12_REQ_SAMPLER_OBJECT_COUNT_PER_DEVICE = 0x00001000U;
 
 enum : uint
 {
-    D3D12_REQ_SUBRESOURCES                   = 0x00007800,
-    D3D12_REQ_TEXTURE1D_ARRAY_AXIS_DIMENSION = 0x00000800,
-    D3D12_REQ_TEXTURE1D_U_DIMENSION          = 0x00004000,
-    D3D12_REQ_TEXTURE2D_ARRAY_AXIS_DIMENSION = 0x00000800,
-    D3D12_REQ_TEXTURE2D_U_OR_V_DIMENSION     = 0x00004000,
-    D3D12_REQ_TEXTURE3D_U_V_OR_W_DIMENSION   = 0x00000800,
-    D3D12_REQ_TEXTURECUBE_DIMENSION          = 0x00004000,
+    D3D12_REQ_SUBRESOURCES                   = 0x00007800U,
+    D3D12_REQ_TEXTURE1D_ARRAY_AXIS_DIMENSION = 0x00000800U,
+    D3D12_REQ_TEXTURE1D_U_DIMENSION          = 0x00004000U,
+    D3D12_REQ_TEXTURE2D_ARRAY_AXIS_DIMENSION = 0x00000800U,
+    D3D12_REQ_TEXTURE2D_U_OR_V_DIMENSION     = 0x00004000U,
+    D3D12_REQ_TEXTURE3D_U_V_OR_W_DIMENSION   = 0x00000800U,
+    D3D12_REQ_TEXTURECUBE_DIMENSION          = 0x00004000U,
 }
 
-enum uint D3D12_RESINFO_INSTRUCTION_MISSING_COMPONENT_RETVAL = 0x00000000;
-enum uint D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES = 0xffffffff;
-enum uint D3D12_RS_SET_SHADING_RATE_COMBINER_COUNT = 0x00000002;
+enum uint D3D12_RESINFO_INSTRUCTION_MISSING_COMPONENT_RETVAL = 0x00000000U;
+enum uint D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES = 0xffffffffU;
+enum uint D3D12_RS_SET_SHADING_RATE_COMBINER_COUNT = 0x00000002U;
 
 enum : uint
 {
-    D3D12_SDK_VERSION                     = 0x0000026b,
-    D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES = 0x00000020,
-}
-
-enum : uint
-{
-    D3D12_SHADER_MAJOR_VERSION            = 0x00000005,
-    D3D12_SHADER_MAX_INSTANCES            = 0x0000ffff,
-    D3D12_SHADER_MAX_INTERFACES           = 0x000000fd,
-    D3D12_SHADER_MAX_INTERFACE_CALL_SITES = 0x00001000,
-    D3D12_SHADER_MAX_TYPES                = 0x0000ffff,
-    D3D12_SHADER_MINOR_VERSION            = 0x00000001,
+    D3D12_SDK_VERSION                     = 0x0000026bU,
+    D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES = 0x00000020U,
 }
 
 enum : uint
 {
-    D3D12_SHIFT_INSTRUCTION_PAD_VALUE             = 0x00000000,
-    D3D12_SHIFT_INSTRUCTION_SHIFT_VALUE_BIT_COUNT = 0x00000005,
+    D3D12_SHADER_MAJOR_VERSION            = 0x00000005U,
+    D3D12_SHADER_MAX_INSTANCES            = 0x0000ffffU,
+    D3D12_SHADER_MAX_INTERFACES           = 0x000000fdU,
+    D3D12_SHADER_MAX_INTERFACE_CALL_SITES = 0x00001000U,
+    D3D12_SHADER_MAX_TYPES                = 0x0000ffffU,
+    D3D12_SHADER_MINOR_VERSION            = 0x00000001U,
 }
-
-enum uint D3D12_SIMULTANEOUS_RENDER_TARGET_COUNT = 0x00000008;
-enum uint D3D12_SMALL_MSAA_RESOURCE_PLACEMENT_ALIGNMENT = 0x00010000;
-enum uint D3D12_SMALL_RESOURCE_PLACEMENT_ALIGNMENT = 0x00001000;
 
 enum : uint
 {
-    D3D12_SO_BUFFER_MAX_STRIDE_IN_BYTES       = 0x00000800,
-    D3D12_SO_BUFFER_MAX_WRITE_WINDOW_IN_BYTES = 0x00000200,
+    D3D12_SHIFT_INSTRUCTION_PAD_VALUE             = 0x00000000U,
+    D3D12_SHIFT_INSTRUCTION_SHIFT_VALUE_BIT_COUNT = 0x00000005U,
 }
 
-enum uint D3D12_SO_BUFFER_SLOT_COUNT = 0x00000004;
-enum uint D3D12_SO_DDI_REGISTER_INDEX_DENOTING_GAP = 0xffffffff;
-enum uint D3D12_SO_NO_RASTERIZED_STREAM = 0xffffffff;
-enum uint D3D12_SO_OUTPUT_COMPONENT_COUNT = 0x00000080;
-enum uint D3D12_SO_STREAM_COUNT = 0x00000004;
+enum uint D3D12_SIMULTANEOUS_RENDER_TARGET_COUNT = 0x00000008U;
+enum uint D3D12_SMALL_MSAA_RESOURCE_PLACEMENT_ALIGNMENT = 0x00010000U;
+enum uint D3D12_SMALL_RESOURCE_PLACEMENT_ALIGNMENT = 0x00001000U;
 
 enum : uint
 {
-    D3D12_SPEC_DATE_DAY   = 0x0000000e,
-    D3D12_SPEC_DATE_MONTH = 0x0000000b,
-    D3D12_SPEC_DATE_YEAR  = 0x000007de,
+    D3D12_SO_BUFFER_MAX_STRIDE_IN_BYTES       = 0x00000800U,
+    D3D12_SO_BUFFER_MAX_WRITE_WINDOW_IN_BYTES = 0x00000200U,
+}
+
+enum uint D3D12_SO_BUFFER_SLOT_COUNT = 0x00000004U;
+enum uint D3D12_SO_DDI_REGISTER_INDEX_DENOTING_GAP = 0xffffffffU;
+enum uint D3D12_SO_NO_RASTERIZED_STREAM = 0xffffffffU;
+enum uint D3D12_SO_OUTPUT_COMPONENT_COUNT = 0x00000080U;
+enum uint D3D12_SO_STREAM_COUNT = 0x00000004U;
+
+enum : uint
+{
+    D3D12_SPEC_DATE_DAY   = 0x0000000eU,
+    D3D12_SPEC_DATE_MONTH = 0x0000000bU,
+    D3D12_SPEC_DATE_YEAR  = 0x000007deU,
 }
 
 enum double D3D12_SPEC_VERSION = 0x1.28f5c28f5c28fp+0;
@@ -3816,140 +4004,140 @@ enum : float
 
 enum : uint
 {
-    D3D12_STANDARD_COMPONENT_BIT_COUNT         = 0x00000020,
-    D3D12_STANDARD_COMPONENT_BIT_COUNT_DOUBLED = 0x00000040,
+    D3D12_STANDARD_COMPONENT_BIT_COUNT         = 0x00000020U,
+    D3D12_STANDARD_COMPONENT_BIT_COUNT_DOUBLED = 0x00000040U,
 }
 
-enum uint D3D12_STANDARD_MAXIMUM_ELEMENT_ALIGNMENT_BYTE_MULTIPLE = 0x00000004;
+enum uint D3D12_STANDARD_MAXIMUM_ELEMENT_ALIGNMENT_BYTE_MULTIPLE = 0x00000004U;
 
 enum : uint
 {
-    D3D12_STANDARD_PIXEL_COMPONENT_COUNT        = 0x00000080,
-    D3D12_STANDARD_PIXEL_ELEMENT_COUNT          = 0x00000020,
-    D3D12_STANDARD_VECTOR_SIZE                  = 0x00000004,
-    D3D12_STANDARD_VERTEX_ELEMENT_COUNT         = 0x00000020,
-    D3D12_STANDARD_VERTEX_TOTAL_COMPONENT_COUNT = 0x00000040,
+    D3D12_STANDARD_PIXEL_COMPONENT_COUNT        = 0x00000080U,
+    D3D12_STANDARD_PIXEL_ELEMENT_COUNT          = 0x00000020U,
+    D3D12_STANDARD_VECTOR_SIZE                  = 0x00000004U,
+    D3D12_STANDARD_VERTEX_ELEMENT_COUNT         = 0x00000020U,
+    D3D12_STANDARD_VERTEX_TOTAL_COMPONENT_COUNT = 0x00000040U,
 }
 
-enum uint D3D12_SUBPIXEL_FRACTIONAL_BIT_COUNT = 0x00000008;
-enum uint D3D12_SUBTEXEL_FRACTIONAL_BIT_COUNT = 0x00000008;
+enum uint D3D12_SUBPIXEL_FRACTIONAL_BIT_COUNT = 0x00000008U;
+enum uint D3D12_SUBTEXEL_FRACTIONAL_BIT_COUNT = 0x00000008U;
 
 enum : uint
 {
-    D3D12_SYSTEM_RESERVED_REGISTER_SPACE_VALUES_END   = 0xffffffff,
-    D3D12_SYSTEM_RESERVED_REGISTER_SPACE_VALUES_START = 0xfffffff0,
-}
-
-enum : uint
-{
-    D3D12_TESSELLATOR_MAX_EVEN_TESSELLATION_FACTOR            = 0x00000040,
-    D3D12_TESSELLATOR_MAX_ISOLINE_DENSITY_TESSELLATION_FACTOR = 0x00000040,
+    D3D12_SYSTEM_RESERVED_REGISTER_SPACE_VALUES_END   = 0xffffffffU,
+    D3D12_SYSTEM_RESERVED_REGISTER_SPACE_VALUES_START = 0xfffffff0U,
 }
 
 enum : uint
 {
-    D3D12_TESSELLATOR_MAX_ODD_TESSELLATION_FACTOR             = 0x0000003f,
-    D3D12_TESSELLATOR_MAX_TESSELLATION_FACTOR                 = 0x00000040,
-    D3D12_TESSELLATOR_MIN_EVEN_TESSELLATION_FACTOR            = 0x00000002,
-    D3D12_TESSELLATOR_MIN_ISOLINE_DENSITY_TESSELLATION_FACTOR = 0x00000001,
-}
-
-enum uint D3D12_TESSELLATOR_MIN_ODD_TESSELLATION_FACTOR = 0x00000001;
-enum uint D3D12_TEXEL_ADDRESS_RANGE_BIT_COUNT = 0x00000010;
-
-enum : uint
-{
-    D3D12_TEXTURE_DATA_PITCH_ALIGNMENT     = 0x00000100,
-    D3D12_TEXTURE_DATA_PLACEMENT_ALIGNMENT = 0x00000200,
+    D3D12_TESSELLATOR_MAX_EVEN_TESSELLATION_FACTOR            = 0x00000040U,
+    D3D12_TESSELLATOR_MAX_ISOLINE_DENSITY_TESSELLATION_FACTOR = 0x00000040U,
 }
 
 enum : uint
 {
-    D3D12_TIGHT_ALIGNMENT_MIN_COMMITTED_RESOURCE_ALIGNMENT = 0x00001000,
-    D3D12_TIGHT_ALIGNMENT_MIN_PLACED_RESOURCE_ALIGNMENT    = 0x00000008,
+    D3D12_TESSELLATOR_MAX_ODD_TESSELLATION_FACTOR             = 0x0000003fU,
+    D3D12_TESSELLATOR_MAX_TESSELLATION_FACTOR                 = 0x00000040U,
+    D3D12_TESSELLATOR_MIN_EVEN_TESSELLATION_FACTOR            = 0x00000002U,
+    D3D12_TESSELLATOR_MIN_ISOLINE_DENSITY_TESSELLATION_FACTOR = 0x00000001U,
 }
 
-enum uint D3D12_TILED_RESOURCE_TILE_SIZE_IN_BYTES = 0x00010000;
-enum uint D3D12_TRACKED_WORKLOAD_MAX_INSTANCES = 0x00000020;
-enum uint D3D12_UAV_COUNTER_PLACEMENT_ALIGNMENT = 0x00001000;
-enum uint D3D12_UAV_SLOT_COUNT = 0x00000040;
-enum uint D3D12_UNBOUND_MEMORY_ACCESS_RESULT = 0x00000000;
+enum uint D3D12_TESSELLATOR_MIN_ODD_TESSELLATION_FACTOR = 0x00000001U;
+enum uint D3D12_TEXEL_ADDRESS_RANGE_BIT_COUNT = 0x00000010U;
 
 enum : uint
 {
-    D3D12_VIDEO_DECODE_MAX_ARGUMENTS                  = 0x0000000a,
-    D3D12_VIDEO_DECODE_MAX_HISTOGRAM_COMPONENTS       = 0x00000004,
-    D3D12_VIDEO_DECODE_MIN_BITSTREAM_OFFSET_ALIGNMENT = 0x00000100,
-    D3D12_VIDEO_DECODE_MIN_HISTOGRAM_OFFSET_ALIGNMENT = 0x00000100,
-}
-
-enum uint D3D12_VIDEO_DECODE_STATUS_MACROBLOCKS_AFFECTED_UNKNOWN = 0xffffffff;
-
-enum : uint
-{
-    D3D12_VIDEO_ENCODER_AV1_INVALID_DPB_RESOURCE_INDEX = 0x000000ff,
-    D3D12_VIDEO_ENCODER_AV1_MAX_TILE_COLS              = 0x00000040,
-    D3D12_VIDEO_ENCODER_AV1_MAX_TILE_ROWS              = 0x00000040,
-    D3D12_VIDEO_ENCODER_AV1_SUPERRES_DENOM_MIN         = 0x00000009,
-    D3D12_VIDEO_ENCODER_AV1_SUPERRES_NUM               = 0x00000008,
+    D3D12_TEXTURE_DATA_PITCH_ALIGNMENT     = 0x00000100U,
+    D3D12_TEXTURE_DATA_PLACEMENT_ALIGNMENT = 0x00000200U,
 }
 
 enum : uint
 {
-    D3D12_VIDEO_PROCESS_MAX_FILTERS  = 0x00000020,
-    D3D12_VIDEO_PROCESS_STEREO_VIEWS = 0x00000002,
+    D3D12_TIGHT_ALIGNMENT_MIN_COMMITTED_RESOURCE_ALIGNMENT = 0x00001000U,
+    D3D12_TIGHT_ALIGNMENT_MIN_PLACED_RESOURCE_ALIGNMENT    = 0x00000008U,
+}
+
+enum uint D3D12_TILED_RESOURCE_TILE_SIZE_IN_BYTES = 0x00010000U;
+enum uint D3D12_TRACKED_WORKLOAD_MAX_INSTANCES = 0x00000020U;
+enum uint D3D12_UAV_COUNTER_PLACEMENT_ALIGNMENT = 0x00001000U;
+enum uint D3D12_UAV_SLOT_COUNT = 0x00000040U;
+enum uint D3D12_UNBOUND_MEMORY_ACCESS_RESULT = 0x00000000U;
+
+enum : uint
+{
+    D3D12_VIDEO_DECODE_MAX_ARGUMENTS                  = 0x0000000aU,
+    D3D12_VIDEO_DECODE_MAX_HISTOGRAM_COMPONENTS       = 0x00000004U,
+    D3D12_VIDEO_DECODE_MIN_BITSTREAM_OFFSET_ALIGNMENT = 0x00000100U,
+    D3D12_VIDEO_DECODE_MIN_HISTOGRAM_OFFSET_ALIGNMENT = 0x00000100U,
+}
+
+enum uint D3D12_VIDEO_DECODE_STATUS_MACROBLOCKS_AFFECTED_UNKNOWN = 0xffffffffU;
+
+enum : uint
+{
+    D3D12_VIDEO_ENCODER_AV1_INVALID_DPB_RESOURCE_INDEX = 0x000000ffU,
+    D3D12_VIDEO_ENCODER_AV1_MAX_TILE_COLS              = 0x00000040U,
+    D3D12_VIDEO_ENCODER_AV1_MAX_TILE_ROWS              = 0x00000040U,
+    D3D12_VIDEO_ENCODER_AV1_SUPERRES_DENOM_MIN         = 0x00000009U,
+    D3D12_VIDEO_ENCODER_AV1_SUPERRES_NUM               = 0x00000008U,
 }
 
 enum : uint
 {
-    D3D12_VIEWPORT_AND_SCISSORRECT_MAX_INDEX                 = 0x0000000f,
-    D3D12_VIEWPORT_AND_SCISSORRECT_OBJECT_COUNT_PER_PIPELINE = 0x00000010,
+    D3D12_VIDEO_PROCESS_MAX_FILTERS  = 0x00000020U,
+    D3D12_VIDEO_PROCESS_STEREO_VIEWS = 0x00000002U,
 }
 
-enum uint D3D12_VIEWPORT_BOUNDS_MAX = 0x00007fff;
+enum : uint
+{
+    D3D12_VIEWPORT_AND_SCISSORRECT_MAX_INDEX                 = 0x0000000fU,
+    D3D12_VIEWPORT_AND_SCISSORRECT_OBJECT_COUNT_PER_PIPELINE = 0x00000010U,
+}
+
+enum uint D3D12_VIEWPORT_BOUNDS_MAX = 0x00007fffU;
 enum int D3D12_VIEWPORT_BOUNDS_MIN = 0xffff8000;
 
 enum : uint
 {
-    D3D12_VS_INPUT_REGISTER_COMPONENTS          = 0x00000004,
-    D3D12_VS_INPUT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D12_VS_INPUT_REGISTER_COUNT               = 0x00000020,
-    D3D12_VS_INPUT_REGISTER_READS_PER_INST      = 0x00000002,
-    D3D12_VS_INPUT_REGISTER_READ_PORTS          = 0x00000001,
+    D3D12_VS_INPUT_REGISTER_COMPONENTS          = 0x00000004U,
+    D3D12_VS_INPUT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D12_VS_INPUT_REGISTER_COUNT               = 0x00000020U,
+    D3D12_VS_INPUT_REGISTER_READS_PER_INST      = 0x00000002U,
+    D3D12_VS_INPUT_REGISTER_READ_PORTS          = 0x00000001U,
 }
 
 enum : uint
 {
-    D3D12_VS_OUTPUT_REGISTER_COMPONENTS          = 0x00000004,
-    D3D12_VS_OUTPUT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D12_VS_OUTPUT_REGISTER_COUNT               = 0x00000020,
+    D3D12_VS_OUTPUT_REGISTER_COMPONENTS          = 0x00000004U,
+    D3D12_VS_OUTPUT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D12_VS_OUTPUT_REGISTER_COUNT               = 0x00000020U,
 }
 
-enum uint D3D12_WHQL_CONTEXT_COUNT_FOR_RESOURCE_LIMIT = 0x0000000a;
-enum uint D3D12_WHQL_DRAWINDEXED_INDEX_COUNT_2_TO_EXP = 0x00000019;
-enum uint D3D12_WHQL_DRAW_VERTEX_COUNT_2_TO_EXP = 0x00000019;
-enum uint D3D12_WORK_GRAPHS_BACKING_MEMORY_ALIGNMENT_IN_BYTES = 0x00000008;
-enum uint D3D12_WORK_GRAPHS_DISPATCH_MAX_THREAD_GROUPS_PER_GRID = 0x00ffffff;
-enum uint D3D12_WORK_GRAPHS_MAX_NODE_DEPTH = 0x00000020;
-enum uint LUID_DEFINED = 0x00000001;
+enum uint D3D12_WHQL_CONTEXT_COUNT_FOR_RESOURCE_LIMIT = 0x0000000aU;
+enum uint D3D12_WHQL_DRAWINDEXED_INDEX_COUNT_2_TO_EXP = 0x00000019U;
+enum uint D3D12_WHQL_DRAW_VERTEX_COUNT_2_TO_EXP = 0x00000019U;
+enum uint D3D12_WORK_GRAPHS_BACKING_MEMORY_ALIGNMENT_IN_BYTES = 0x00000008U;
+enum uint D3D12_WORK_GRAPHS_DISPATCH_MAX_THREAD_GROUPS_PER_GRID = 0x00ffffffU;
+enum uint D3D12_WORK_GRAPHS_MAX_NODE_DEPTH = 0x00000020U;
+enum uint LUID_DEFINED = 0x00000001U;
 
 enum : uint
 {
-    D3D12_SHADER_COMPONENT_MAPPING_MASK  = 0x00000007,
-    D3D12_SHADER_COMPONENT_MAPPING_SHIFT = 0x00000003,
+    D3D12_SHADER_COMPONENT_MAPPING_MASK  = 0x00000007U,
+    D3D12_SHADER_COMPONENT_MAPPING_SHIFT = 0x00000003U,
 }
 
 enum : uint
 {
-    D3D12_FILTER_REDUCTION_TYPE_MASK  = 0x00000003,
-    D3D12_FILTER_REDUCTION_TYPE_SHIFT = 0x00000007,
+    D3D12_FILTER_REDUCTION_TYPE_MASK  = 0x00000003U,
+    D3D12_FILTER_REDUCTION_TYPE_SHIFT = 0x00000007U,
 }
 
-enum uint D3D12_FILTER_TYPE_MASK = 0x00000003;
-enum uint D3D12_MIN_FILTER_SHIFT = 0x00000004;
-enum uint D3D12_MAG_FILTER_SHIFT = 0x00000002;
-enum uint D3D12_MIP_FILTER_SHIFT = 0x00000000;
-enum uint D3D12_ANISOTROPIC_FILTERING_BIT = 0x00000040;
+enum uint D3D12_FILTER_TYPE_MASK = 0x00000003U;
+enum uint D3D12_MIN_FILTER_SHIFT = 0x00000004U;
+enum uint D3D12_MAG_FILTER_SHIFT = 0x00000002U;
+enum uint D3D12_MIP_FILTER_SHIFT = 0x00000000U;
+enum uint D3D12_ANISOTROPIC_FILTERING_BIT = 0x00000040U;
 enum GUID D3D12_PROTECTED_RESOURCES_SESSION_HARDWARE_PROTECTED = GUID("62b0084e-c70e-4daa-a109-30ff8d5a0482");
 
 enum : GUID
@@ -3972,56 +4160,56 @@ enum GUID CLSID_D3D12ApplicationIdentity = GUID("08d8e1e8-75a6-42a7-bf3a-d05fe52
 
 enum : uint
 {
-    D3D12_SHADING_RATE_X_AXIS_SHIFT = 0x00000002,
-    D3D12_SHADING_RATE_VALID_MASK   = 0x00000003,
+    D3D12_SHADING_RATE_X_AXIS_SHIFT = 0x00000002U,
+    D3D12_SHADING_RATE_VALID_MASK   = 0x00000003U,
 }
 
 enum GUID WKPDID_D3DAutoDebugObjectNameW = GUID("d4902e36-757a-4942-9594-b6769afa43cd");
 enum GUID DXGI_DEBUG_D3D12 = GUID("cf59a98c-a950-4326-91ef-9bbaa17bfd95");
-enum uint D3D12_INFO_QUEUE_DEFAULT_MESSAGE_COUNT_LIMIT = 0x00000400;
+enum uint D3D12_INFO_QUEUE_DEFAULT_MESSAGE_COUNT_LIMIT = 0x00000400U;
 
 enum : uint
 {
-    D3D_SHADER_REQUIRES_STENCIL_REF                       = 0x00000200,
-    D3D_SHADER_REQUIRES_INNER_COVERAGE                    = 0x00000400,
-    D3D_SHADER_REQUIRES_TYPED_UAV_LOAD_ADDITIONAL_FORMATS = 0x00000800,
+    D3D_SHADER_REQUIRES_STENCIL_REF                       = 0x00000200U,
+    D3D_SHADER_REQUIRES_INNER_COVERAGE                    = 0x00000400U,
+    D3D_SHADER_REQUIRES_TYPED_UAV_LOAD_ADDITIONAL_FORMATS = 0x00000800U,
 }
 
 enum : uint
 {
-    D3D_SHADER_REQUIRES_ROVS                                                           = 0x00001000,
-    D3D_SHADER_REQUIRES_VIEWPORT_AND_RT_ARRAY_INDEX_FROM_ANY_SHADER_FEEDING_RASTERIZER = 0x00002000,
+    D3D_SHADER_REQUIRES_ROVS                                                           = 0x00001000U,
+    D3D_SHADER_REQUIRES_VIEWPORT_AND_RT_ARRAY_INDEX_FROM_ANY_SHADER_FEEDING_RASTERIZER = 0x00002000U,
 }
 
 enum : uint
 {
-    D3D_SHADER_REQUIRES_WAVE_OPS                                      = 0x00004000,
-    D3D_SHADER_REQUIRES_INT64_OPS                                     = 0x00008000,
-    D3D_SHADER_REQUIRES_VIEW_ID                                       = 0x00010000,
-    D3D_SHADER_REQUIRES_BARYCENTRICS                                  = 0x00020000,
-    D3D_SHADER_REQUIRES_NATIVE_16BIT_OPS                              = 0x00040000,
-    D3D_SHADER_REQUIRES_SHADING_RATE                                  = 0x00080000,
-    D3D_SHADER_REQUIRES_RAYTRACING_TIER_1_1                           = 0x00100000,
-    D3D_SHADER_REQUIRES_SAMPLER_FEEDBACK                              = 0x00200000,
-    D3D_SHADER_REQUIRES_ATOMIC_INT64_ON_TYPED_RESOURCE                = 0x00400000,
-    D3D_SHADER_REQUIRES_ATOMIC_INT64_ON_GROUP_SHARED                  = 0x00800000,
-    D3D_SHADER_REQUIRES_DERIVATIVES_IN_MESH_AND_AMPLIFICATION_SHADERS = 0x01000000,
+    D3D_SHADER_REQUIRES_WAVE_OPS                                      = 0x00004000U,
+    D3D_SHADER_REQUIRES_INT64_OPS                                     = 0x00008000U,
+    D3D_SHADER_REQUIRES_VIEW_ID                                       = 0x00010000U,
+    D3D_SHADER_REQUIRES_BARYCENTRICS                                  = 0x00020000U,
+    D3D_SHADER_REQUIRES_NATIVE_16BIT_OPS                              = 0x00040000U,
+    D3D_SHADER_REQUIRES_SHADING_RATE                                  = 0x00080000U,
+    D3D_SHADER_REQUIRES_RAYTRACING_TIER_1_1                           = 0x00100000U,
+    D3D_SHADER_REQUIRES_SAMPLER_FEEDBACK                              = 0x00200000U,
+    D3D_SHADER_REQUIRES_ATOMIC_INT64_ON_TYPED_RESOURCE                = 0x00400000U,
+    D3D_SHADER_REQUIRES_ATOMIC_INT64_ON_GROUP_SHARED                  = 0x00800000U,
+    D3D_SHADER_REQUIRES_DERIVATIVES_IN_MESH_AND_AMPLIFICATION_SHADERS = 0x01000000U,
 }
 
-enum uint D3D_SHADER_REQUIRES_RESOURCE_DESCRIPTOR_HEAP_INDEXING = 0x02000000;
-enum uint D3D_SHADER_REQUIRES_SAMPLER_DESCRIPTOR_HEAP_INDEXING = 0x04000000;
+enum uint D3D_SHADER_REQUIRES_RESOURCE_DESCRIPTOR_HEAP_INDEXING = 0x02000000U;
+enum uint D3D_SHADER_REQUIRES_SAMPLER_DESCRIPTOR_HEAP_INDEXING = 0x04000000U;
 
 enum : uint
 {
-    D3D_SHADER_REQUIRES_WAVE_MMA                                 = 0x08000000,
-    D3D_SHADER_REQUIRES_ATOMIC_INT64_ON_DESCRIPTOR_HEAP_RESOURCE = 0x10000000,
+    D3D_SHADER_REQUIRES_WAVE_MMA                                 = 0x08000000U,
+    D3D_SHADER_REQUIRES_ATOMIC_INT64_ON_DESCRIPTOR_HEAP_RESOURCE = 0x10000000U,
 }
 
 enum : uint
 {
-    D3D_SHADER_REQUIRES_ADVANCED_TEXTURE_OPS        = 0x20000000,
-    D3D_SHADER_REQUIRES_WRITEABLE_MSAA_TEXTURES     = 0x40000000,
-    D3D_SHADER_REQUIRES_SAMPLE_CMP_GRADIENT_OR_BIAS = 0x80000000,
+    D3D_SHADER_REQUIRES_ADVANCED_TEXTURE_OPS        = 0x20000000U,
+    D3D_SHADER_REQUIRES_WRITEABLE_MSAA_TEXTURES     = 0x40000000U,
+    D3D_SHADER_REQUIRES_SAMPLE_CMP_GRADIENT_OR_BIAS = 0x80000000U,
 }
 
 enum GUID D3D12ExperimentalShaderModels = GUID("76f5573e-f13a-40f5-b297-81ce9e18933f");
@@ -4077,7 +4265,7 @@ alias D3D12CompilerCacheSessionGroupValuesFunc = void function(uint ValueKeyInde
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_command_queue_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_command_queue_desc
 struct D3D12_COMMAND_QUEUE_DESC
 {
     D3D12_COMMAND_LIST_TYPE Type;
@@ -4086,7 +4274,7 @@ struct D3D12_COMMAND_QUEUE_DESC
     uint NodeMask;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_input_element_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_input_element_desc
 struct D3D12_INPUT_ELEMENT_DESC
 {
     const(PSTR) SemanticName;
@@ -4098,7 +4286,7 @@ struct D3D12_INPUT_ELEMENT_DESC
     uint        InstanceDataStepRate;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_so_declaration_entry))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_so_declaration_entry
 struct D3D12_SO_DECLARATION_ENTRY
 {
     uint        Stream;
@@ -4109,7 +4297,7 @@ struct D3D12_SO_DECLARATION_ENTRY
     ubyte       OutputSlot;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_viewport))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_viewport
 struct D3D12_VIEWPORT
 {
     float TopLeftX;
@@ -4120,7 +4308,7 @@ struct D3D12_VIEWPORT
     float MaxDepth;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_box))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_box
 struct D3D12_BOX
 {
     uint left;
@@ -4131,7 +4319,7 @@ struct D3D12_BOX
     uint back;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_depth_stencilop_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_depth_stencilop_desc
 struct D3D12_DEPTH_STENCILOP_DESC
 {
     D3D12_STENCIL_OP StencilFailOp;
@@ -4140,7 +4328,7 @@ struct D3D12_DEPTH_STENCILOP_DESC
     D3D12_COMPARISON_FUNC StencilFunc;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_depth_stencil_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_depth_stencil_desc
 struct D3D12_DEPTH_STENCIL_DESC
 {
     BOOL  DepthEnable;
@@ -4153,7 +4341,7 @@ struct D3D12_DEPTH_STENCIL_DESC
     D3D12_DEPTH_STENCILOP_DESC BackFace;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_depth_stencil_desc1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_depth_stencil_desc1
 struct D3D12_DEPTH_STENCIL_DESC1
 {
     BOOL  DepthEnable;
@@ -4188,7 +4376,7 @@ struct D3D12_DEPTH_STENCIL_DESC2
     BOOL DepthBoundsTestEnable;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_render_target_blend_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_render_target_blend_desc
 struct D3D12_RENDER_TARGET_BLEND_DESC
 {
     BOOL           BlendEnable;
@@ -4203,7 +4391,7 @@ struct D3D12_RENDER_TARGET_BLEND_DESC
     ubyte          RenderTargetWriteMask;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_blend_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_blend_desc
 struct D3D12_BLEND_DESC
 {
     BOOL AlphaToCoverageEnable;
@@ -4211,7 +4399,7 @@ struct D3D12_BLEND_DESC
     D3D12_RENDER_TARGET_BLEND_DESC[8] RenderTarget;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_rasterizer_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_rasterizer_desc
 struct D3D12_RASTERIZER_DESC
 {
     D3D12_FILL_MODE FillMode;
@@ -4256,14 +4444,14 @@ struct D3D12_RASTERIZER_DESC2
     D3D12_CONSERVATIVE_RASTERIZATION_MODE ConservativeRaster;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_shader_bytecode))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_shader_bytecode
 struct D3D12_SHADER_BYTECODE
 {
     const(void)* pShaderBytecode;
     size_t       BytecodeLength;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_stream_output_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_stream_output_desc
 struct D3D12_STREAM_OUTPUT_DESC
 {
     /*FIELD ATTR: NativeArrayInfoAttribute : CustomAttributeSig([], [NamedArgSig("CountFieldName", FixedArgSig(ElementSig(NumEntries)))])*/const(D3D12_SO_DECLARATION_ENTRY)* pSODeclaration;
@@ -4273,21 +4461,21 @@ struct D3D12_STREAM_OUTPUT_DESC
     uint RasterizedStream;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_input_layout_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_input_layout_desc
 struct D3D12_INPUT_LAYOUT_DESC
 {
     /*FIELD ATTR: NativeArrayInfoAttribute : CustomAttributeSig([], [NamedArgSig("CountFieldName", FixedArgSig(ElementSig(NumElements)))])*/const(D3D12_INPUT_ELEMENT_DESC)* pInputElementDescs;
     uint NumElements;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_cached_pipeline_state))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_cached_pipeline_state
 struct D3D12_CACHED_PIPELINE_STATE
 {
     const(void)* pCachedBlob;
     size_t       CachedBlobSizeInBytes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_graphics_pipeline_state_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_graphics_pipeline_state_desc
 struct D3D12_GRAPHICS_PIPELINE_STATE_DESC
 {
     ID3D12RootSignature pRootSignature;
@@ -4313,7 +4501,7 @@ struct D3D12_GRAPHICS_PIPELINE_STATE_DESC
     D3D12_PIPELINE_STATE_FLAGS Flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_compute_pipeline_state_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_compute_pipeline_state_desc
 struct D3D12_COMPUTE_PIPELINE_STATE_DESC
 {
     ID3D12RootSignature pRootSignature;
@@ -4339,21 +4527,21 @@ struct D3D12_LOCAL_SERIALIZED_ROOT_SIGNATURE
     D3D12_SERIALIZED_ROOT_SIGNATURE_DESC Desc;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_rt_format_array))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_rt_format_array
 struct D3D12_RT_FORMAT_ARRAY
 {
     DXGI_FORMAT[8] RTFormats;
     uint           NumRenderTargets;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_pipeline_state_stream_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_pipeline_state_stream_desc
 struct D3D12_PIPELINE_STATE_STREAM_DESC
 {
     size_t SizeInBytes;
     void*  pPipelineStateSubobjectStream;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_d3d12_options))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_d3d12_options
 struct D3D12_FEATURE_DATA_D3D12_OPTIONS
 {
     BOOL DoublePrecisionFloatShaderOps;
@@ -4373,7 +4561,7 @@ struct D3D12_FEATURE_DATA_D3D12_OPTIONS
     D3D12_RESOURCE_HEAP_TIER ResourceHeapTier;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_d3d12_options1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_d3d12_options1
 struct D3D12_FEATURE_DATA_D3D12_OPTIONS1
 {
     BOOL WaveOps;
@@ -4384,20 +4572,20 @@ struct D3D12_FEATURE_DATA_D3D12_OPTIONS1
     BOOL Int64ShaderOps;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_d3d12_options2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_d3d12_options2
 struct D3D12_FEATURE_DATA_D3D12_OPTIONS2
 {
     BOOL DepthBoundsTestSupported;
     D3D12_PROGRAMMABLE_SAMPLE_POSITIONS_TIER ProgrammableSamplePositionsTier;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_root_signature))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_root_signature
 struct D3D12_FEATURE_DATA_ROOT_SIGNATURE
 {
     D3D_ROOT_SIGNATURE_VERSION HighestVersion;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_architecture))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_architecture
 struct D3D12_FEATURE_DATA_ARCHITECTURE
 {
     uint NodeIndex;
@@ -4406,7 +4594,7 @@ struct D3D12_FEATURE_DATA_ARCHITECTURE
     BOOL CacheCoherentUMA;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_architecture1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_architecture1
 struct D3D12_FEATURE_DATA_ARCHITECTURE1
 {
     uint NodeIndex;
@@ -4416,7 +4604,7 @@ struct D3D12_FEATURE_DATA_ARCHITECTURE1
     BOOL IsolatedMMU;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_feature_levels))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_feature_levels
 struct D3D12_FEATURE_DATA_FEATURE_LEVELS
 {
     uint              NumFeatureLevels;
@@ -4424,13 +4612,13 @@ struct D3D12_FEATURE_DATA_FEATURE_LEVELS
     D3D_FEATURE_LEVEL MaxSupportedFeatureLevel;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_shader_model))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_shader_model
 struct D3D12_FEATURE_DATA_SHADER_MODEL
 {
     D3D_SHADER_MODEL HighestShaderModel;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_format_support))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_format_support
 struct D3D12_FEATURE_DATA_FORMAT_SUPPORT
 {
     DXGI_FORMAT Format;
@@ -4438,7 +4626,7 @@ struct D3D12_FEATURE_DATA_FORMAT_SUPPORT
     D3D12_FORMAT_SUPPORT2 Support2;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_multisample_quality_levels))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_multisample_quality_levels
 struct D3D12_FEATURE_DATA_MULTISAMPLE_QUALITY_LEVELS
 {
     DXGI_FORMAT Format;
@@ -4447,27 +4635,27 @@ struct D3D12_FEATURE_DATA_MULTISAMPLE_QUALITY_LEVELS
     uint        NumQualityLevels;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_format_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_format_info
 struct D3D12_FEATURE_DATA_FORMAT_INFO
 {
     DXGI_FORMAT Format;
     ubyte       PlaneCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_gpu_virtual_address_support))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_gpu_virtual_address_support
 struct D3D12_FEATURE_DATA_GPU_VIRTUAL_ADDRESS_SUPPORT
 {
     uint MaxGPUVirtualAddressBitsPerResource;
     uint MaxGPUVirtualAddressBitsPerProcess;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_shader_cache))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_shader_cache
 struct D3D12_FEATURE_DATA_SHADER_CACHE
 {
     D3D12_SHADER_CACHE_SUPPORT_FLAGS SupportFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_command_queue_priority))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_command_queue_priority
 struct D3D12_FEATURE_DATA_COMMAND_QUEUE_PRIORITY
 {
     D3D12_COMMAND_LIST_TYPE CommandListType;
@@ -4475,7 +4663,7 @@ struct D3D12_FEATURE_DATA_COMMAND_QUEUE_PRIORITY
     BOOL PriorityForTypeIsSupported;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_d3d12_options3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_d3d12_options3
 struct D3D12_FEATURE_DATA_D3D12_OPTIONS3
 {
     BOOL CopyQueueTimestampQueriesSupported;
@@ -4485,20 +4673,20 @@ struct D3D12_FEATURE_DATA_D3D12_OPTIONS3
     BOOL BarycentricsSupported;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_existing_heaps))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_existing_heaps
 struct D3D12_FEATURE_DATA_EXISTING_HEAPS
 {
     BOOL Supported;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_displayable))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_displayable
 struct D3D12_FEATURE_DATA_DISPLAYABLE
 {
     BOOL DisplayableTexture;
     D3D12_SHARED_RESOURCE_COMPATIBILITY_TIER SharedResourceCompatibilityTier;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_d3d12_options4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_d3d12_options4
 struct D3D12_FEATURE_DATA_D3D12_OPTIONS4
 {
     BOOL MSAA64KBAlignedTextureSupported;
@@ -4506,21 +4694,21 @@ struct D3D12_FEATURE_DATA_D3D12_OPTIONS4
     BOOL Native16BitShaderOpsSupported;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_serialization))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_serialization
 struct D3D12_FEATURE_DATA_SERIALIZATION
 {
     uint NodeIndex;
     D3D12_HEAP_SERIALIZATION_TIER HeapSerializationTier;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_cross_node))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_cross_node
 struct D3D12_FEATURE_DATA_CROSS_NODE
 {
     D3D12_CROSS_NODE_SHARING_TIER SharingTier;
     BOOL AtomicShaderInstructions;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_d3d12_options5))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_d3d12_options5
 struct D3D12_FEATURE_DATA_D3D12_OPTIONS5
 {
     BOOL SRVOnlyTiledResourceTier3;
@@ -4528,7 +4716,7 @@ struct D3D12_FEATURE_DATA_D3D12_OPTIONS5
     D3D12_RAYTRACING_TIER RaytracingTier;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_d3d12_options6))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_d3d12_options6
 struct D3D12_FEATURE_DATA_D3D12_OPTIONS6
 {
     BOOL AdditionalShadingRatesSupported;
@@ -4538,14 +4726,14 @@ struct D3D12_FEATURE_DATA_D3D12_OPTIONS6
     BOOL BackgroundProcessingSupported;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_d3d12_options7))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_d3d12_options7
 struct D3D12_FEATURE_DATA_D3D12_OPTIONS7
 {
     D3D12_MESH_SHADER_TIER MeshShaderTier;
     D3D12_SAMPLER_FEEDBACK_TIER SamplerFeedbackTier;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_query_meta_command))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_query_meta_command
 struct D3D12_FEATURE_DATA_QUERY_META_COMMAND
 {
     GUID         CommandId;
@@ -4556,13 +4744,13 @@ struct D3D12_FEATURE_DATA_QUERY_META_COMMAND
     size_t       QueryOutputDataSizeInBytes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_d3d12_options8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_d3d12_options8
 struct D3D12_FEATURE_DATA_D3D12_OPTIONS8
 {
     BOOL UnalignedBlockTexturesSupported;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_d3d12_options9))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_d3d12_options9
 struct D3D12_FEATURE_DATA_D3D12_OPTIONS9
 {
     BOOL                MeshShaderPipelineStatsSupported;
@@ -4573,20 +4761,20 @@ struct D3D12_FEATURE_DATA_D3D12_OPTIONS9
     D3D12_WAVE_MMA_TIER WaveMMATier;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_d3d12_options10))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_d3d12_options10
 struct D3D12_FEATURE_DATA_D3D12_OPTIONS10
 {
     BOOL VariableRateShadingSumCombinerSupported;
     BOOL MeshShaderPerPrimitiveShadingRateSupported;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_d3d12_options11))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_d3d12_options11
 struct D3D12_FEATURE_DATA_D3D12_OPTIONS11
 {
     BOOL AtomicInt64OnDescriptorHeapResourceSupported;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_d3d12_options12))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_d3d12_options12
 struct D3D12_FEATURE_DATA_D3D12_OPTIONS12
 {
     D3D12_TRI_STATE MSPrimitivesPipelineStatisticIncludesCulledPrimitives;
@@ -4594,7 +4782,7 @@ struct D3D12_FEATURE_DATA_D3D12_OPTIONS12
     BOOL            RelaxedFormatCastingSupported;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_d3d12_options13))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_d3d12_options13
 struct D3D12_FEATURE_DATA_D3D12_OPTIONS13
 {
     BOOL UnrestrictedBufferTextureCopyPitchSupported;
@@ -4696,14 +4884,14 @@ struct D3D12_FEATURE_DATA_BYTECODE_BYPASS_HASH_SUPPORTED
     BOOL Supported;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_resource_allocation_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_resource_allocation_info
 struct D3D12_RESOURCE_ALLOCATION_INFO
 {
     ulong SizeInBytes;
     ulong Alignment;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_resource_allocation_info1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_resource_allocation_info1
 struct D3D12_RESOURCE_ALLOCATION_INFO1
 {
     ulong Offset;
@@ -4711,7 +4899,7 @@ struct D3D12_RESOURCE_ALLOCATION_INFO1
     ulong SizeInBytes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_heap_properties))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_heap_properties
 struct D3D12_HEAP_PROPERTIES
 {
     D3D12_HEAP_TYPE   Type;
@@ -4721,7 +4909,7 @@ struct D3D12_HEAP_PROPERTIES
     uint              VisibleNodeMask;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_heap_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_heap_desc
 struct D3D12_HEAP_DESC
 {
     ulong            SizeInBytes;
@@ -4738,7 +4926,7 @@ struct D3D12_FEATURE_DATA_PLACED_RESOURCE_SUPPORT_INFO
     BOOL        Supported;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_mip_region))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_mip_region
 struct D3D12_MIP_REGION
 {
     uint Width;
@@ -4746,7 +4934,7 @@ struct D3D12_MIP_REGION
     uint Depth;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_resource_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_resource_desc
 struct D3D12_RESOURCE_DESC
 {
     D3D12_RESOURCE_DIMENSION Dimension;
@@ -4761,7 +4949,7 @@ struct D3D12_RESOURCE_DESC
     D3D12_RESOURCE_FLAGS Flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_resource_desc1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_resource_desc1
 struct D3D12_RESOURCE_DESC1
 {
     D3D12_RESOURCE_DIMENSION Dimension;
@@ -4777,42 +4965,46 @@ struct D3D12_RESOURCE_DESC1
     D3D12_MIP_REGION     SamplerFeedbackMipRegion;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_depth_stencil_value))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_depth_stencil_value
 struct D3D12_DEPTH_STENCIL_VALUE
 {
     float Depth;
     ubyte Stencil;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_clear_value))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_clear_value
 struct D3D12_CLEAR_VALUE
 {
-    DXGI_FORMAT         Format;
-    _Anonymous_e__Union Anonymous;
+    DXGI_FORMAT Format;
+    union
+    {
+        float[4] Color;
+        D3D12_DEPTH_STENCIL_VALUE DepthStencil;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_range))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_range
 struct D3D12_RANGE
 {
     size_t Begin;
     size_t End;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_range_uint64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_range_uint64
 struct D3D12_RANGE_UINT64
 {
     ulong Begin;
     ulong End;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_subresource_range_uint64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_subresource_range_uint64
 struct D3D12_SUBRESOURCE_RANGE_UINT64
 {
     uint               Subresource;
     D3D12_RANGE_UINT64 Range;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_subresource_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_subresource_info
 struct D3D12_SUBRESOURCE_INFO
 {
     ulong Offset;
@@ -4820,7 +5012,7 @@ struct D3D12_SUBRESOURCE_INFO
     uint  DepthPitch;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tiled_resource_coordinate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tiled_resource_coordinate
 struct D3D12_TILED_RESOURCE_COORDINATE
 {
     uint X;
@@ -4829,7 +5021,7 @@ struct D3D12_TILED_RESOURCE_COORDINATE
     uint Subresource;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tile_region_size))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tile_region_size
 struct D3D12_TILE_REGION_SIZE
 {
     uint   NumTiles;
@@ -4839,7 +5031,7 @@ struct D3D12_TILE_REGION_SIZE
     ushort Depth;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_subresource_tiling))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_subresource_tiling
 struct D3D12_SUBRESOURCE_TILING
 {
     uint   WidthInTiles;
@@ -4848,7 +5040,7 @@ struct D3D12_SUBRESOURCE_TILING
     uint   StartTileIndexInOverallResource;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tile_shape))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tile_shape
 struct D3D12_TILE_SHAPE
 {
     uint WidthInTexels;
@@ -4856,7 +5048,7 @@ struct D3D12_TILE_SHAPE
     uint DepthInTexels;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_packed_mip_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_packed_mip_info
 struct D3D12_PACKED_MIP_INFO
 {
     ubyte NumStandardMips;
@@ -4865,7 +5057,7 @@ struct D3D12_PACKED_MIP_INFO
     uint  StartTileIndexInOverallResource;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_resource_transition_barrier))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_resource_transition_barrier
 struct D3D12_RESOURCE_TRANSITION_BARRIER
 {
     ID3D12Resource pResource;
@@ -4874,28 +5066,33 @@ struct D3D12_RESOURCE_TRANSITION_BARRIER
     D3D12_RESOURCE_STATES StateAfter;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_resource_aliasing_barrier))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_resource_aliasing_barrier
 struct D3D12_RESOURCE_ALIASING_BARRIER
 {
     ID3D12Resource pResourceBefore;
     ID3D12Resource pResourceAfter;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_resource_uav_barrier))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_resource_uav_barrier
 struct D3D12_RESOURCE_UAV_BARRIER
 {
     ID3D12Resource pResource;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_resource_barrier))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_resource_barrier
 struct D3D12_RESOURCE_BARRIER
 {
     D3D12_RESOURCE_BARRIER_TYPE Type;
     D3D12_RESOURCE_BARRIER_FLAGS Flags;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        D3D12_RESOURCE_TRANSITION_BARRIER Transition;
+        D3D12_RESOURCE_ALIASING_BARRIER Aliasing;
+        D3D12_RESOURCE_UAV_BARRIER UAV;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_subresource_footprint))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_subresource_footprint
 struct D3D12_SUBRESOURCE_FOOTPRINT
 {
     DXGI_FORMAT Format;
@@ -4905,36 +5102,40 @@ struct D3D12_SUBRESOURCE_FOOTPRINT
     uint        RowPitch;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_placed_subresource_footprint))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_placed_subresource_footprint
 struct D3D12_PLACED_SUBRESOURCE_FOOTPRINT
 {
     ulong Offset;
     D3D12_SUBRESOURCE_FOOTPRINT Footprint;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_texture_copy_location))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_texture_copy_location
 struct D3D12_TEXTURE_COPY_LOCATION
 {
-    ID3D12Resource      pResource;
+    ID3D12Resource pResource;
     D3D12_TEXTURE_COPY_TYPE Type;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        D3D12_PLACED_SUBRESOURCE_FOOTPRINT PlacedFootprint;
+        uint SubresourceIndex;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_sample_position))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_sample_position
 struct D3D12_SAMPLE_POSITION
 {
     byte X;
     byte Y;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_view_instance_location))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_view_instance_location
 struct D3D12_VIEW_INSTANCE_LOCATION
 {
     uint ViewportArrayIndex;
     uint RenderTargetArrayIndex;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_view_instancing_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_view_instancing_desc
 struct D3D12_VIEW_INSTANCING_DESC
 {
     uint ViewInstanceCount;
@@ -4942,7 +5143,7 @@ struct D3D12_VIEW_INSTANCING_DESC
     D3D12_VIEW_INSTANCING_FLAGS Flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_buffer_srv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_buffer_srv
 struct D3D12_BUFFER_SRV
 {
     ulong FirstElement;
@@ -4951,7 +5152,7 @@ struct D3D12_BUFFER_SRV
     D3D12_BUFFER_SRV_FLAGS Flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex1d_srv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex1d_srv
 struct D3D12_TEX1D_SRV
 {
     uint  MostDetailedMip;
@@ -4959,7 +5160,7 @@ struct D3D12_TEX1D_SRV
     float ResourceMinLODClamp;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex1d_array_srv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex1d_array_srv
 struct D3D12_TEX1D_ARRAY_SRV
 {
     uint  MostDetailedMip;
@@ -4969,7 +5170,7 @@ struct D3D12_TEX1D_ARRAY_SRV
     float ResourceMinLODClamp;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex2d_srv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex2d_srv
 struct D3D12_TEX2D_SRV
 {
     uint  MostDetailedMip;
@@ -4978,7 +5179,7 @@ struct D3D12_TEX2D_SRV
     float ResourceMinLODClamp;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex2d_array_srv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex2d_array_srv
 struct D3D12_TEX2D_ARRAY_SRV
 {
     uint  MostDetailedMip;
@@ -4989,7 +5190,7 @@ struct D3D12_TEX2D_ARRAY_SRV
     float ResourceMinLODClamp;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex3d_srv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex3d_srv
 struct D3D12_TEX3D_SRV
 {
     uint  MostDetailedMip;
@@ -4997,7 +5198,7 @@ struct D3D12_TEX3D_SRV
     float ResourceMinLODClamp;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_texcube_srv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_texcube_srv
 struct D3D12_TEXCUBE_SRV
 {
     uint  MostDetailedMip;
@@ -5005,7 +5206,7 @@ struct D3D12_TEXCUBE_SRV
     float ResourceMinLODClamp;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_texcube_array_srv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_texcube_array_srv
 struct D3D12_TEXCUBE_ARRAY_SRV
 {
     uint  MostDetailedMip;
@@ -5015,20 +5216,20 @@ struct D3D12_TEXCUBE_ARRAY_SRV
     float ResourceMinLODClamp;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex2dms_srv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex2dms_srv
 struct D3D12_TEX2DMS_SRV
 {
     uint UnusedField_NothingToDefine;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex2dms_array_srv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex2dms_array_srv
 struct D3D12_TEX2DMS_ARRAY_SRV
 {
     uint FirstArraySlice;
     uint ArraySize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_raytracing_acceleration_structure_srv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_raytracing_acceleration_structure_srv
 struct D3D12_RAYTRACING_ACCELERATION_STRUCTURE_SRV
 {
     ulong Location;
@@ -5042,23 +5243,37 @@ struct D3D12_BUFFER_SRV_BYTE_OFFSET
     D3D12_BUFFER_SRV_FLAGS Flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_shader_resource_view_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_shader_resource_view_desc
 struct D3D12_SHADER_RESOURCE_VIEW_DESC
 {
     DXGI_FORMAT         Format;
     D3D12_SRV_DIMENSION ViewDimension;
     uint                Shader4ComponentMapping;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        D3D12_BUFFER_SRV  Buffer;
+        D3D12_TEX1D_SRV   Texture1D;
+        D3D12_TEX1D_ARRAY_SRV Texture1DArray;
+        D3D12_TEX2D_SRV   Texture2D;
+        D3D12_TEX2D_ARRAY_SRV Texture2DArray;
+        D3D12_TEX2DMS_SRV Texture2DMS;
+        D3D12_TEX2DMS_ARRAY_SRV Texture2DMSArray;
+        D3D12_TEX3D_SRV   Texture3D;
+        D3D12_TEXCUBE_SRV TextureCube;
+        D3D12_TEXCUBE_ARRAY_SRV TextureCubeArray;
+        D3D12_RAYTRACING_ACCELERATION_STRUCTURE_SRV RaytracingAccelerationStructure;
+        D3D12_BUFFER_SRV_BYTE_OFFSET BufferByteOffset;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_constant_buffer_view_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_constant_buffer_view_desc
 struct D3D12_CONSTANT_BUFFER_VIEW_DESC
 {
     ulong BufferLocation;
     uint  SizeInBytes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_sampler_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_sampler_desc
 struct D3D12_SAMPLER_DESC
 {
     D3D12_FILTER Filter;
@@ -5082,13 +5297,17 @@ struct D3D12_SAMPLER_DESC2
     float               MipLODBias;
     uint                MaxAnisotropy;
     D3D12_COMPARISON_FUNC ComparisonFunc;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        float[4] FloatBorderColor;
+        uint[4]  UintBorderColor;
+    }
     float               MinLOD;
     float               MaxLOD;
     D3D12_SAMPLER_FLAGS Flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_buffer_uav))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_buffer_uav
 struct D3D12_BUFFER_UAV
 {
     ulong FirstElement;
@@ -5098,13 +5317,13 @@ struct D3D12_BUFFER_UAV
     D3D12_BUFFER_UAV_FLAGS Flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex1d_uav))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex1d_uav
 struct D3D12_TEX1D_UAV
 {
     uint MipSlice;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex1d_array_uav))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex1d_array_uav
 struct D3D12_TEX1D_ARRAY_UAV
 {
     uint MipSlice;
@@ -5112,14 +5331,14 @@ struct D3D12_TEX1D_ARRAY_UAV
     uint ArraySize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex2d_uav))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex2d_uav
 struct D3D12_TEX2D_UAV
 {
     uint MipSlice;
     uint PlaneSlice;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex2d_array_uav))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex2d_array_uav
 struct D3D12_TEX2D_ARRAY_UAV
 {
     uint MipSlice;
@@ -5139,7 +5358,7 @@ struct D3D12_TEX2DMS_ARRAY_UAV
     uint ArraySize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex3d_uav))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex3d_uav
 struct D3D12_TEX3D_UAV
 {
     uint MipSlice;
@@ -5156,28 +5375,39 @@ struct D3D12_BUFFER_UAV_BYTE_OFFSET
     D3D12_BUFFER_UAV_FLAGS Flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_unordered_access_view_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_unordered_access_view_desc
 struct D3D12_UNORDERED_ACCESS_VIEW_DESC
 {
     DXGI_FORMAT         Format;
     D3D12_UAV_DIMENSION ViewDimension;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        D3D12_BUFFER_UAV  Buffer;
+        D3D12_TEX1D_UAV   Texture1D;
+        D3D12_TEX1D_ARRAY_UAV Texture1DArray;
+        D3D12_TEX2D_UAV   Texture2D;
+        D3D12_TEX2D_ARRAY_UAV Texture2DArray;
+        D3D12_TEX2DMS_UAV Texture2DMS;
+        D3D12_TEX2DMS_ARRAY_UAV Texture2DMSArray;
+        D3D12_TEX3D_UAV   Texture3D;
+        D3D12_BUFFER_UAV_BYTE_OFFSET BufferByteOffset;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_buffer_rtv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_buffer_rtv
 struct D3D12_BUFFER_RTV
 {
     ulong FirstElement;
     uint  NumElements;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex1d_rtv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex1d_rtv
 struct D3D12_TEX1D_RTV
 {
     uint MipSlice;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex1d_array_rtv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex1d_array_rtv
 struct D3D12_TEX1D_ARRAY_RTV
 {
     uint MipSlice;
@@ -5185,20 +5415,20 @@ struct D3D12_TEX1D_ARRAY_RTV
     uint ArraySize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex2d_rtv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex2d_rtv
 struct D3D12_TEX2D_RTV
 {
     uint MipSlice;
     uint PlaneSlice;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex2dms_rtv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex2dms_rtv
 struct D3D12_TEX2DMS_RTV
 {
     uint UnusedField_NothingToDefine;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex2d_array_rtv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex2d_array_rtv
 struct D3D12_TEX2D_ARRAY_RTV
 {
     uint MipSlice;
@@ -5207,14 +5437,14 @@ struct D3D12_TEX2D_ARRAY_RTV
     uint PlaneSlice;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex2dms_array_rtv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex2dms_array_rtv
 struct D3D12_TEX2DMS_ARRAY_RTV
 {
     uint FirstArraySlice;
     uint ArraySize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex3d_rtv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex3d_rtv
 struct D3D12_TEX3D_RTV
 {
     uint MipSlice;
@@ -5222,21 +5452,31 @@ struct D3D12_TEX3D_RTV
     uint WSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_render_target_view_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_render_target_view_desc
 struct D3D12_RENDER_TARGET_VIEW_DESC
 {
     DXGI_FORMAT         Format;
     D3D12_RTV_DIMENSION ViewDimension;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        D3D12_BUFFER_RTV  Buffer;
+        D3D12_TEX1D_RTV   Texture1D;
+        D3D12_TEX1D_ARRAY_RTV Texture1DArray;
+        D3D12_TEX2D_RTV   Texture2D;
+        D3D12_TEX2D_ARRAY_RTV Texture2DArray;
+        D3D12_TEX2DMS_RTV Texture2DMS;
+        D3D12_TEX2DMS_ARRAY_RTV Texture2DMSArray;
+        D3D12_TEX3D_RTV   Texture3D;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex1d_dsv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex1d_dsv
 struct D3D12_TEX1D_DSV
 {
     uint MipSlice;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex1d_array_dsv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex1d_array_dsv
 struct D3D12_TEX1D_ARRAY_DSV
 {
     uint MipSlice;
@@ -5244,13 +5484,13 @@ struct D3D12_TEX1D_ARRAY_DSV
     uint ArraySize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex2d_dsv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex2d_dsv
 struct D3D12_TEX2D_DSV
 {
     uint MipSlice;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex2d_array_dsv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex2d_array_dsv
 struct D3D12_TEX2D_ARRAY_DSV
 {
     uint MipSlice;
@@ -5258,29 +5498,37 @@ struct D3D12_TEX2D_ARRAY_DSV
     uint ArraySize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex2dms_dsv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex2dms_dsv
 struct D3D12_TEX2DMS_DSV
 {
     uint UnusedField_NothingToDefine;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex2dms_array_dsv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_tex2dms_array_dsv
 struct D3D12_TEX2DMS_ARRAY_DSV
 {
     uint FirstArraySlice;
     uint ArraySize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_depth_stencil_view_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_depth_stencil_view_desc
 struct D3D12_DEPTH_STENCIL_VIEW_DESC
 {
     DXGI_FORMAT         Format;
     D3D12_DSV_DIMENSION ViewDimension;
     D3D12_DSV_FLAGS     Flags;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        D3D12_TEX1D_DSV   Texture1D;
+        D3D12_TEX1D_ARRAY_DSV Texture1DArray;
+        D3D12_TEX2D_DSV   Texture2D;
+        D3D12_TEX2D_ARRAY_DSV Texture2DArray;
+        D3D12_TEX2DMS_DSV Texture2DMS;
+        D3D12_TEX2DMS_ARRAY_DSV Texture2DMSArray;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_descriptor_heap_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_descriptor_heap_desc
 struct D3D12_DESCRIPTOR_HEAP_DESC
 {
     D3D12_DESCRIPTOR_HEAP_TYPE Type;
@@ -5289,7 +5537,7 @@ struct D3D12_DESCRIPTOR_HEAP_DESC
     uint NodeMask;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_descriptor_range))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_descriptor_range
 struct D3D12_DESCRIPTOR_RANGE
 {
     D3D12_DESCRIPTOR_RANGE_TYPE RangeType;
@@ -5299,14 +5547,14 @@ struct D3D12_DESCRIPTOR_RANGE
     uint OffsetInDescriptorsFromTableStart;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_root_descriptor_table))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_root_descriptor_table
 struct D3D12_ROOT_DESCRIPTOR_TABLE
 {
     uint NumDescriptorRanges;
     /*FIELD ATTR: NativeArrayInfoAttribute : CustomAttributeSig([], [NamedArgSig("CountFieldName", FixedArgSig(ElementSig(NumDescriptorRanges)))])*/const(D3D12_DESCRIPTOR_RANGE)* pDescriptorRanges;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_root_constants))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_root_constants
 struct D3D12_ROOT_CONSTANTS
 {
     uint ShaderRegister;
@@ -5314,22 +5562,27 @@ struct D3D12_ROOT_CONSTANTS
     uint Num32BitValues;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_root_descriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_root_descriptor
 struct D3D12_ROOT_DESCRIPTOR
 {
     uint ShaderRegister;
     uint RegisterSpace;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_root_parameter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_root_parameter
 struct D3D12_ROOT_PARAMETER
 {
     D3D12_ROOT_PARAMETER_TYPE ParameterType;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        D3D12_ROOT_DESCRIPTOR_TABLE DescriptorTable;
+        D3D12_ROOT_CONSTANTS Constants;
+        D3D12_ROOT_DESCRIPTOR Descriptor;
+    }
     D3D12_SHADER_VISIBILITY ShaderVisibility;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_static_sampler_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_static_sampler_desc
 struct D3D12_STATIC_SAMPLER_DESC
 {
     D3D12_FILTER Filter;
@@ -5365,7 +5618,7 @@ struct D3D12_STATIC_SAMPLER_DESC1
     D3D12_SAMPLER_FLAGS Flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_root_signature_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_root_signature_desc
 struct D3D12_ROOT_SIGNATURE_DESC
 {
     uint NumParameters;
@@ -5375,7 +5628,7 @@ struct D3D12_ROOT_SIGNATURE_DESC
     D3D12_ROOT_SIGNATURE_FLAGS Flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_descriptor_range1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_descriptor_range1
 struct D3D12_DESCRIPTOR_RANGE1
 {
     D3D12_DESCRIPTOR_RANGE_TYPE RangeType;
@@ -5386,14 +5639,14 @@ struct D3D12_DESCRIPTOR_RANGE1
     uint OffsetInDescriptorsFromTableStart;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_root_descriptor_table1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_root_descriptor_table1
 struct D3D12_ROOT_DESCRIPTOR_TABLE1
 {
     uint NumDescriptorRanges;
     /*FIELD ATTR: NativeArrayInfoAttribute : CustomAttributeSig([], [NamedArgSig("CountFieldName", FixedArgSig(ElementSig(NumDescriptorRanges)))])*/const(D3D12_DESCRIPTOR_RANGE1)* pDescriptorRanges;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_root_descriptor1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_root_descriptor1
 struct D3D12_ROOT_DESCRIPTOR1
 {
     uint ShaderRegister;
@@ -5401,15 +5654,20 @@ struct D3D12_ROOT_DESCRIPTOR1
     D3D12_ROOT_DESCRIPTOR_FLAGS Flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_root_parameter1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_root_parameter1
 struct D3D12_ROOT_PARAMETER1
 {
     D3D12_ROOT_PARAMETER_TYPE ParameterType;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        D3D12_ROOT_DESCRIPTOR_TABLE1 DescriptorTable;
+        D3D12_ROOT_CONSTANTS Constants;
+        D3D12_ROOT_DESCRIPTOR1 Descriptor;
+    }
     D3D12_SHADER_VISIBILITY ShaderVisibility;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_root_signature_desc1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_root_signature_desc1
 struct D3D12_ROOT_SIGNATURE_DESC1
 {
     uint NumParameters;
@@ -5428,26 +5686,31 @@ struct D3D12_ROOT_SIGNATURE_DESC2
     D3D12_ROOT_SIGNATURE_FLAGS Flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_versioned_root_signature_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_versioned_root_signature_desc
 struct D3D12_VERSIONED_ROOT_SIGNATURE_DESC
 {
     D3D_ROOT_SIGNATURE_VERSION Version;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        D3D12_ROOT_SIGNATURE_DESC Desc_1_0;
+        D3D12_ROOT_SIGNATURE_DESC1 Desc_1_1;
+        D3D12_ROOT_SIGNATURE_DESC2 Desc_1_2;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_cpu_descriptor_handle))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_cpu_descriptor_handle
 struct D3D12_CPU_DESCRIPTOR_HANDLE
 {
     size_t ptr;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_gpu_descriptor_handle))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_gpu_descriptor_handle
 struct D3D12_GPU_DESCRIPTOR_HANDLE
 {
     ulong ptr;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_discard_region))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_discard_region
 struct D3D12_DISCARD_REGION
 {
     uint         NumRects;
@@ -5456,7 +5719,7 @@ struct D3D12_DISCARD_REGION
     uint         NumSubresources;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_query_heap_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_query_heap_desc
 struct D3D12_QUERY_HEAP_DESC
 {
     D3D12_QUERY_HEAP_TYPE Type;
@@ -5464,7 +5727,7 @@ struct D3D12_QUERY_HEAP_DESC
     uint NodeMask;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_query_data_pipeline_statistics))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_query_data_pipeline_statistics
 struct D3D12_QUERY_DATA_PIPELINE_STATISTICS
 {
     ulong IAVertices;
@@ -5498,14 +5761,14 @@ struct D3D12_QUERY_DATA_PIPELINE_STATISTICS1
     ulong MSPrimitives;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_query_data_so_statistics))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_query_data_so_statistics
 struct D3D12_QUERY_DATA_SO_STATISTICS
 {
     ulong NumPrimitivesWritten;
     ulong PrimitivesStorageNeeded;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_stream_output_buffer_view))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_stream_output_buffer_view
 struct D3D12_STREAM_OUTPUT_BUFFER_VIEW
 {
     ulong BufferLocation;
@@ -5513,7 +5776,7 @@ struct D3D12_STREAM_OUTPUT_BUFFER_VIEW
     ulong BufferFilledSizeLocation;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_draw_arguments))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_draw_arguments
 struct D3D12_DRAW_ARGUMENTS
 {
     uint VertexCountPerInstance;
@@ -5522,7 +5785,7 @@ struct D3D12_DRAW_ARGUMENTS
     uint StartInstanceLocation;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_draw_indexed_arguments))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_draw_indexed_arguments
 struct D3D12_DRAW_INDEXED_ARGUMENTS
 {
     uint IndexCountPerInstance;
@@ -5532,7 +5795,7 @@ struct D3D12_DRAW_INDEXED_ARGUMENTS
     uint StartInstanceLocation;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_dispatch_arguments))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_dispatch_arguments
 struct D3D12_DISPATCH_ARGUMENTS
 {
     uint ThreadGroupCountX;
@@ -5540,7 +5803,7 @@ struct D3D12_DISPATCH_ARGUMENTS
     uint ThreadGroupCountZ;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_vertex_buffer_view))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_vertex_buffer_view
 struct D3D12_VERTEX_BUFFER_VIEW
 {
     ulong BufferLocation;
@@ -5548,7 +5811,7 @@ struct D3D12_VERTEX_BUFFER_VIEW
     uint  StrideInBytes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_index_buffer_view))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_index_buffer_view
 struct D3D12_INDEX_BUFFER_VIEW
 {
     ulong       BufferLocation;
@@ -5556,14 +5819,43 @@ struct D3D12_INDEX_BUFFER_VIEW
     DXGI_FORMAT Format;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_indirect_argument_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_indirect_argument_desc
 struct D3D12_INDIRECT_ARGUMENT_DESC
 {
     D3D12_INDIRECT_ARGUMENT_TYPE Type;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct VertexBuffer
+        {
+            uint Slot;
+        }
+        struct Constant
+        {
+            uint RootParameterIndex;
+            uint DestOffsetIn32BitValues;
+            uint Num32BitValuesToSet;
+        }
+        struct ConstantBufferView
+        {
+            uint RootParameterIndex;
+        }
+        struct ShaderResourceView
+        {
+            uint RootParameterIndex;
+        }
+        struct UnorderedAccessView
+        {
+            uint RootParameterIndex;
+        }
+        struct IncrementingConstant
+        {
+            uint RootParameterIndex;
+            uint DestOffsetIn32BitValues;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_command_signature_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_command_signature_desc
 struct D3D12_COMMAND_SIGNATURE_DESC
 {
     uint ByteStride;
@@ -5572,7 +5864,7 @@ struct D3D12_COMMAND_SIGNATURE_DESC
     uint NodeMask;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_writebufferimmediate_parameter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_writebufferimmediate_parameter
 struct D3D12_WRITEBUFFERIMMEDIATE_PARAMETER
 {
     ulong Dest;
@@ -5584,21 +5876,21 @@ struct D3D12_FEATURE_DATA_HARDWARE_SCHEDULING_QUEUE_GROUPINGS
     uint ComputeQueuesPer3DQueue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_protected_resource_session_support))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_protected_resource_session_support
 struct D3D12_FEATURE_DATA_PROTECTED_RESOURCE_SESSION_SUPPORT
 {
     uint NodeIndex;
     D3D12_PROTECTED_RESOURCE_SESSION_SUPPORT_FLAGS Support;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_protected_resource_session_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_protected_resource_session_desc
 struct D3D12_PROTECTED_RESOURCE_SESSION_DESC
 {
     uint NodeMask;
     D3D12_PROTECTED_RESOURCE_SESSION_FLAGS Flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_meta_command_parameter_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_meta_command_parameter_desc
 struct D3D12_META_COMMAND_PARAMETER_DESC
 {
     const(PWSTR) Name;
@@ -5608,7 +5900,7 @@ struct D3D12_META_COMMAND_PARAMETER_DESC
     uint         StructureOffset;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_meta_command_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_meta_command_desc
 struct D3D12_META_COMMAND_DESC
 {
     GUID         Id;
@@ -5635,32 +5927,32 @@ struct D3D12_WORK_GRAPH_MEMORY_REQUIREMENTS
     uint  SizeGranularityInBytes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_state_subobject))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_state_subobject
 struct D3D12_STATE_SUBOBJECT
 {
     D3D12_STATE_SUBOBJECT_TYPE Type;
     const(void)* pDesc;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_state_object_config))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_state_object_config
 struct D3D12_STATE_OBJECT_CONFIG
 {
     D3D12_STATE_OBJECT_FLAGS Flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_global_root_signature))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_global_root_signature
 struct D3D12_GLOBAL_ROOT_SIGNATURE
 {
     ID3D12RootSignature pGlobalRootSignature;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_local_root_signature))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_local_root_signature
 struct D3D12_LOCAL_ROOT_SIGNATURE
 {
     ID3D12RootSignature pLocalRootSignature;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_node_mask))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_node_mask
 struct D3D12_NODE_MASK
 {
     uint NodeMask;
@@ -5686,7 +5978,7 @@ struct D3D12_DEPTH_STENCIL_FORMAT
     DXGI_FORMAT DepthStencilFormat;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_export_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_export_desc
 struct D3D12_EXPORT_DESC
 {
     const(PWSTR)       Name;
@@ -5694,7 +5986,7 @@ struct D3D12_EXPORT_DESC
     D3D12_EXPORT_FLAGS Flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_dxil_library_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_dxil_library_desc
 struct D3D12_DXIL_LIBRARY_DESC
 {
     D3D12_SHADER_BYTECODE DXILLibrary;
@@ -5702,7 +5994,7 @@ struct D3D12_DXIL_LIBRARY_DESC
     const(D3D12_EXPORT_DESC)* pExports;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_existing_collection_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_existing_collection_desc
 struct D3D12_EXISTING_COLLECTION_DESC
 {
     ID3D12StateObject pExistingCollection;
@@ -5710,7 +6002,7 @@ struct D3D12_EXISTING_COLLECTION_DESC
     const(D3D12_EXPORT_DESC)* pExports;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_subobject_to_exports_association))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_subobject_to_exports_association
 struct D3D12_SUBOBJECT_TO_EXPORTS_ASSOCIATION
 {
     const(D3D12_STATE_SUBOBJECT)* pSubobjectToAssociate;
@@ -5718,7 +6010,7 @@ struct D3D12_SUBOBJECT_TO_EXPORTS_ASSOCIATION
     const(PWSTR)* pExports;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_dxil_subobject_to_exports_association))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_dxil_subobject_to_exports_association
 struct D3D12_DXIL_SUBOBJECT_TO_EXPORTS_ASSOCIATION
 {
     const(PWSTR)  SubobjectToAssociate;
@@ -5726,7 +6018,7 @@ struct D3D12_DXIL_SUBOBJECT_TO_EXPORTS_ASSOCIATION
     const(PWSTR)* pExports;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_hit_group_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_hit_group_desc
 struct D3D12_HIT_GROUP_DESC
 {
     const(PWSTR)         HitGroupExport;
@@ -5736,20 +6028,20 @@ struct D3D12_HIT_GROUP_DESC
     const(PWSTR)         IntersectionShaderImport;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_raytracing_shader_config))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_raytracing_shader_config
 struct D3D12_RAYTRACING_SHADER_CONFIG
 {
     uint MaxPayloadSizeInBytes;
     uint MaxAttributeSizeInBytes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_raytracing_pipeline_config))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_raytracing_pipeline_config
 struct D3D12_RAYTRACING_PIPELINE_CONFIG
 {
     uint MaxTraceRecursionDepth;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_raytracing_pipeline_config1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_raytracing_pipeline_config1
 struct D3D12_RAYTRACING_PIPELINE_CONFIG1
 {
     uint MaxTraceRecursionDepth;
@@ -5809,15 +6101,24 @@ struct D3D12_COMMON_COMPUTE_NODE_OVERRIDES
 
 struct D3D12_SHADER_NODE
 {
-    const(PWSTR)        Shader;
+    const(PWSTR) Shader;
     D3D12_NODE_OVERRIDES_TYPE OverridesType;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        const(D3D12_BROADCASTING_LAUNCH_OVERRIDES)* pBroadcastingLaunchOverrides;
+        const(D3D12_COALESCING_LAUNCH_OVERRIDES)* pCoalescingLaunchOverrides;
+        const(D3D12_THREAD_LAUNCH_OVERRIDES)* pThreadLaunchOverrides;
+        const(D3D12_COMMON_COMPUTE_NODE_OVERRIDES)* pCommonComputeNodeOverrides;
+    }
 }
 
 struct D3D12_NODE
 {
-    D3D12_NODE_TYPE     NodeType;
-    _Anonymous_e__Union Anonymous;
+    D3D12_NODE_TYPE NodeType;
+    union
+    {
+        D3D12_SHADER_NODE Shader;
+    }
 }
 
 struct D3D12_WORK_GRAPH_DESC
@@ -5839,7 +6140,7 @@ struct D3D12_GENERIC_PROGRAM_DESC
     const(D3D12_STATE_SUBOBJECT)** ppSubobjects;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_state_object_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_state_object_desc
 struct D3D12_STATE_OBJECT_DESC
 {
     D3D12_STATE_OBJECT_TYPE Type;
@@ -5847,21 +6148,21 @@ struct D3D12_STATE_OBJECT_DESC
     const(D3D12_STATE_SUBOBJECT)* pSubobjects;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_gpu_virtual_address_and_stride))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_gpu_virtual_address_and_stride
 struct D3D12_GPU_VIRTUAL_ADDRESS_AND_STRIDE
 {
     ulong StartAddress;
     ulong StrideInBytes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_gpu_virtual_address_range))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_gpu_virtual_address_range
 struct D3D12_GPU_VIRTUAL_ADDRESS_RANGE
 {
     ulong StartAddress;
     ulong SizeInBytes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_gpu_virtual_address_range_and_stride))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_gpu_virtual_address_range_and_stride
 struct D3D12_GPU_VIRTUAL_ADDRESS_RANGE_AND_STRIDE
 {
     ulong StartAddress;
@@ -5869,7 +6170,7 @@ struct D3D12_GPU_VIRTUAL_ADDRESS_RANGE_AND_STRIDE
     ulong StrideInBytes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_raytracing_geometry_triangles_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_raytracing_geometry_triangles_desc
 struct D3D12_RAYTRACING_GEOMETRY_TRIANGLES_DESC
 {
     ulong       Transform3x4;
@@ -5881,7 +6182,7 @@ struct D3D12_RAYTRACING_GEOMETRY_TRIANGLES_DESC
     D3D12_GPU_VIRTUAL_ADDRESS_AND_STRIDE VertexBuffer;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_raytracing_aabb))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_raytracing_aabb
 struct D3D12_RAYTRACING_AABB
 {
     float MinX;
@@ -5892,7 +6193,7 @@ struct D3D12_RAYTRACING_AABB
     float MaxZ;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_raytracing_geometry_aabbs_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_raytracing_geometry_aabbs_desc
 struct D3D12_RAYTRACING_GEOMETRY_AABBS_DESC
 {
     ulong AABBCount;
@@ -5902,7 +6203,7 @@ struct D3D12_RAYTRACING_GEOMETRY_AABBS_DESC
 struct D3D12_RAYTRACING_OPACITY_MICROMAP_DESC
 {
     uint ByteOffset;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Format)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield35;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Format)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield91;
 }
 
 struct D3D12_RAYTRACING_GEOMETRY_OMM_LINKAGE_DESC
@@ -5919,47 +6220,51 @@ struct D3D12_RAYTRACING_GEOMETRY_OMM_TRIANGLES_DESC
     const(D3D12_RAYTRACING_GEOMETRY_OMM_LINKAGE_DESC)* pOmmLinkage;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_raytracing_acceleration_structure_postbuild_info_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_raytracing_acceleration_structure_postbuild_info_desc
 struct D3D12_RAYTRACING_ACCELERATION_STRUCTURE_POSTBUILD_INFO_DESC
 {
     ulong DestBuffer;
     D3D12_RAYTRACING_ACCELERATION_STRUCTURE_POSTBUILD_INFO_TYPE InfoType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_raytracing_acceleration_structure_postbuild_info_compacted_size_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_raytracing_acceleration_structure_postbuild_info_compacted_size_desc
 struct D3D12_RAYTRACING_ACCELERATION_STRUCTURE_POSTBUILD_INFO_COMPACTED_SIZE_DESC
 {
     ulong CompactedSizeInBytes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_raytracing_acceleration_structure_postbuild_info_tools_visualization_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_raytracing_acceleration_structure_postbuild_info_tools_visualization_desc
 struct D3D12_RAYTRACING_ACCELERATION_STRUCTURE_POSTBUILD_INFO_TOOLS_VISUALIZATION_DESC
 {
     ulong DecodedSizeInBytes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_build_raytracing_acceleration_structure_tools_visualization_header))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_build_raytracing_acceleration_structure_tools_visualization_header
 struct D3D12_BUILD_RAYTRACING_ACCELERATION_STRUCTURE_TOOLS_VISUALIZATION_HEADER
 {
     D3D12_RAYTRACING_ACCELERATION_STRUCTURE_TYPE Type;
     uint NumDescs;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_raytracing_acceleration_structure_postbuild_info_serialization_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_raytracing_acceleration_structure_postbuild_info_serialization_desc
 struct D3D12_RAYTRACING_ACCELERATION_STRUCTURE_POSTBUILD_INFO_SERIALIZATION_DESC
 {
-    ulong               SerializedSizeInBytes;
-    _Anonymous_e__Union Anonymous;
+    ulong SerializedSizeInBytes;
+    union
+    {
+        ulong NumBottomLevelAccelerationStructurePointers;
+        ulong NumBottomLevelAccelerationStructureHeaderAndPointerListPairs;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_serialized_data_driver_matching_identifier))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_serialized_data_driver_matching_identifier
 struct D3D12_SERIALIZED_DATA_DRIVER_MATCHING_IDENTIFIER
 {
     GUID      DriverOpaqueGUID;
     ubyte[16] DriverOpaqueVersioningData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_serialized_raytracing_acceleration_structure_header))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_serialized_raytracing_acceleration_structure_header
 struct D3D12_SERIALIZED_RAYTRACING_ACCELERATION_STRUCTURE_HEADER
 {
     D3D12_SERIALIZED_DATA_DRIVER_MATCHING_IDENTIFIER DriverMatchingIdentifier;
@@ -5971,9 +6276,13 @@ struct D3D12_SERIALIZED_RAYTRACING_ACCELERATION_STRUCTURE_HEADER
 struct D3D12_SERIALIZED_RAYTRACING_ACCELERATION_STRUCTURE_HEADER1
 {
     D3D12_SERIALIZED_DATA_DRIVER_MATCHING_IDENTIFIER DriverMatchingIdentifier;
-    ulong               SerializedSizeInBytesIncludingHeader;
-    ulong               DeserializedSizeInBytes;
-    _Anonymous_e__Union Anonymous;
+    ulong SerializedSizeInBytesIncludingHeader;
+    ulong DeserializedSizeInBytes;
+    union
+    {
+        uint NumBottomLevelAccelerationStructurePointersAfterHeader;
+        uint NumBlocks;
+    }
     D3D12_SERIALIZED_RAYTRACING_ACCELERATION_STRUCTURE_HEADER_POSTAMBLE_TYPE HeaderPostambleType;
 }
 
@@ -5983,13 +6292,13 @@ struct D3D12_RAYTRACING_SERIALIZED_BLOCK
     ulong NumBlockPointersAfterHeader;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_raytracing_acceleration_structure_postbuild_info_current_size_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_raytracing_acceleration_structure_postbuild_info_current_size_desc
 struct D3D12_RAYTRACING_ACCELERATION_STRUCTURE_POSTBUILD_INFO_CURRENT_SIZE_DESC
 {
     ulong CurrentSizeInBytes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_raytracing_instance_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_raytracing_instance_desc
 struct D3D12_RAYTRACING_INSTANCE_DESC
 {
     float[12] Transform;
@@ -5998,12 +6307,17 @@ struct D3D12_RAYTRACING_INSTANCE_DESC
     ulong     AccelerationStructure;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_raytracing_geometry_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_raytracing_geometry_desc
 struct D3D12_RAYTRACING_GEOMETRY_DESC
 {
     D3D12_RAYTRACING_GEOMETRY_TYPE Type;
     D3D12_RAYTRACING_GEOMETRY_FLAGS Flags;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        D3D12_RAYTRACING_GEOMETRY_TRIANGLES_DESC Triangles;
+        D3D12_RAYTRACING_GEOMETRY_AABBS_DESC AABBs;
+        D3D12_RAYTRACING_GEOMETRY_OMM_TRIANGLES_DESC OmmTriangles;
+    }
 }
 
 struct D3D12_RAYTRACING_OPACITY_MICROMAP_HISTOGRAM_ENTRY
@@ -6021,17 +6335,23 @@ struct D3D12_RAYTRACING_OPACITY_MICROMAP_ARRAY_DESC
     D3D12_GPU_VIRTUAL_ADDRESS_AND_STRIDE PerOmmDescs;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_build_raytracing_acceleration_structure_inputs))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_build_raytracing_acceleration_structure_inputs
 struct D3D12_BUILD_RAYTRACING_ACCELERATION_STRUCTURE_INPUTS
 {
     D3D12_RAYTRACING_ACCELERATION_STRUCTURE_TYPE Type;
     D3D12_RAYTRACING_ACCELERATION_STRUCTURE_BUILD_FLAGS Flags;
-    uint                NumDescs;
+    uint NumDescs;
     D3D12_ELEMENTS_LAYOUT DescsLayout;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        ulong InstanceDescs;
+        const(D3D12_RAYTRACING_GEOMETRY_DESC)* pGeometryDescs;
+        const(D3D12_RAYTRACING_GEOMETRY_DESC)** ppGeometryDescs;
+        const(D3D12_RAYTRACING_OPACITY_MICROMAP_ARRAY_DESC)* pOpacityMicromapArrayDesc;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_build_raytracing_acceleration_structure_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_build_raytracing_acceleration_structure_desc
 struct D3D12_BUILD_RAYTRACING_ACCELERATION_STRUCTURE_DESC
 {
     ulong DestAccelerationStructureData;
@@ -6040,7 +6360,7 @@ struct D3D12_BUILD_RAYTRACING_ACCELERATION_STRUCTURE_DESC
     ulong ScratchAccelerationStructureData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_raytracing_acceleration_structure_prebuild_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_raytracing_acceleration_structure_prebuild_info
 struct D3D12_RAYTRACING_ACCELERATION_STRUCTURE_PREBUILD_INFO
 {
     ulong ResultDataMaxSizeInBytes;
@@ -6064,7 +6384,7 @@ struct D3D12_RAYTRACING_OPACITY_MICROMAP_ARRAY_POSTBUILD_INFO_TOOLS_VISUALIZATIO
     ulong DecodedSizeInBytes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_auto_breadcrumb_node))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_auto_breadcrumb_node
 struct D3D12_AUTO_BREADCRUMB_NODE
 {
     const(ubyte)*      pCommandListDebugNameA;
@@ -6101,14 +6421,14 @@ struct D3D12_AUTO_BREADCRUMB_NODE1
     D3D12_DRED_BREADCRUMB_CONTEXT* pBreadcrumbContexts;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_device_removed_extended_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_device_removed_extended_data
 struct D3D12_DEVICE_REMOVED_EXTENDED_DATA
 {
     D3D12_DRED_FLAGS Flags;
     D3D12_AUTO_BREADCRUMB_NODE* pHeadAutoBreadcrumbNode;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_dred_allocation_node))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_dred_allocation_node
 struct D3D12_DRED_ALLOCATION_NODE
 {
     const(ubyte)* ObjectNameA;
@@ -6126,7 +6446,7 @@ struct D3D12_DRED_ALLOCATION_NODE1
     const(IUnknown) pObject;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_dred_auto_breadcrumbs_output))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_dred_auto_breadcrumbs_output
 struct D3D12_DRED_AUTO_BREADCRUMBS_OUTPUT
 {
     const(D3D12_AUTO_BREADCRUMB_NODE)* pHeadAutoBreadcrumbNode;
@@ -6137,7 +6457,7 @@ struct D3D12_DRED_AUTO_BREADCRUMBS_OUTPUT1
     const(D3D12_AUTO_BREADCRUMB_NODE1)* pHeadAutoBreadcrumbNode;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_dred_page_fault_output))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_dred_page_fault_output
 struct D3D12_DRED_PAGE_FAULT_OUTPUT
 {
     ulong PageFaultVA;
@@ -6160,7 +6480,7 @@ struct D3D12_DRED_PAGE_FAULT_OUTPUT2
     D3D12_DRED_PAGE_FAULT_FLAGS PageFaultFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_device_removed_extended_data1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_device_removed_extended_data1
 struct D3D12_DEVICE_REMOVED_EXTENDED_DATA1
 {
     HRESULT DeviceRemovedReason;
@@ -6183,21 +6503,27 @@ struct D3D12_DEVICE_REMOVED_EXTENDED_DATA3
     D3D12_DRED_DEVICE_STATE DeviceState;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_versioned_device_removed_extended_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_versioned_device_removed_extended_data
 struct D3D12_VERSIONED_DEVICE_REMOVED_EXTENDED_DATA
 {
-    D3D12_DRED_VERSION  Version;
-    _Anonymous_e__Union Anonymous;
+    D3D12_DRED_VERSION Version;
+    union
+    {
+        D3D12_DEVICE_REMOVED_EXTENDED_DATA Dred_1_0;
+        D3D12_DEVICE_REMOVED_EXTENDED_DATA1 Dred_1_1;
+        D3D12_DEVICE_REMOVED_EXTENDED_DATA2 Dred_1_2;
+        D3D12_DEVICE_REMOVED_EXTENDED_DATA3 Dred_1_3;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_protected_resource_session_type_count))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_protected_resource_session_type_count
 struct D3D12_FEATURE_DATA_PROTECTED_RESOURCE_SESSION_TYPE_COUNT
 {
     uint NodeIndex;
     uint Count;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_protected_resource_session_types))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_protected_resource_session_types
 struct D3D12_FEATURE_DATA_PROTECTED_RESOURCE_SESSION_TYPES
 {
     uint  NodeIndex;
@@ -6205,7 +6531,7 @@ struct D3D12_FEATURE_DATA_PROTECTED_RESOURCE_SESSION_TYPES
     GUID* pTypes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_protected_resource_session_desc1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_protected_resource_session_desc1
 struct D3D12_PROTECTED_RESOURCE_SESSION_DESC1
 {
     uint NodeMask;
@@ -6213,7 +6539,7 @@ struct D3D12_PROTECTED_RESOURCE_SESSION_DESC1
     GUID ProtectionType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_render_pass_beginning_access_clear_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_render_pass_beginning_access_clear_parameters
 struct D3D12_RENDER_PASS_BEGINNING_ACCESS_CLEAR_PARAMETERS
 {
     D3D12_CLEAR_VALUE ClearValue;
@@ -6225,14 +6551,18 @@ struct D3D12_RENDER_PASS_BEGINNING_ACCESS_PRESERVE_LOCAL_PARAMETERS
     uint AdditionalHeight;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_render_pass_beginning_access))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_render_pass_beginning_access
 struct D3D12_RENDER_PASS_BEGINNING_ACCESS
 {
     D3D12_RENDER_PASS_BEGINNING_ACCESS_TYPE Type;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        D3D12_RENDER_PASS_BEGINNING_ACCESS_CLEAR_PARAMETERS Clear;
+        D3D12_RENDER_PASS_BEGINNING_ACCESS_PRESERVE_LOCAL_PARAMETERS PreserveLocal;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_render_pass_ending_access_resolve_subresource_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_render_pass_ending_access_resolve_subresource_parameters
 struct D3D12_RENDER_PASS_ENDING_ACCESS_RESOLVE_SUBRESOURCE_PARAMETERS
 {
     uint SrcSubresource;
@@ -6242,7 +6572,7 @@ struct D3D12_RENDER_PASS_ENDING_ACCESS_RESOLVE_SUBRESOURCE_PARAMETERS
     RECT SrcRect;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_render_pass_ending_access_resolve_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_render_pass_ending_access_resolve_parameters
 struct D3D12_RENDER_PASS_ENDING_ACCESS_RESOLVE_PARAMETERS
 {
     ID3D12Resource     pSrcResource;
@@ -6260,14 +6590,18 @@ struct D3D12_RENDER_PASS_ENDING_ACCESS_PRESERVE_LOCAL_PARAMETERS
     uint AdditionalHeight;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_render_pass_ending_access))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_render_pass_ending_access
 struct D3D12_RENDER_PASS_ENDING_ACCESS
 {
     D3D12_RENDER_PASS_ENDING_ACCESS_TYPE Type;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        D3D12_RENDER_PASS_ENDING_ACCESS_RESOLVE_PARAMETERS Resolve;
+        D3D12_RENDER_PASS_ENDING_ACCESS_PRESERVE_LOCAL_PARAMETERS PreserveLocal;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_render_pass_render_target_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_render_pass_render_target_desc
 struct D3D12_RENDER_PASS_RENDER_TARGET_DESC
 {
     D3D12_CPU_DESCRIPTOR_HANDLE cpuDescriptor;
@@ -6275,7 +6609,7 @@ struct D3D12_RENDER_PASS_RENDER_TARGET_DESC
     D3D12_RENDER_PASS_ENDING_ACCESS EndingAccess;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_render_pass_depth_stencil_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_render_pass_depth_stencil_desc
 struct D3D12_RENDER_PASS_DEPTH_STENCIL_DESC
 {
     D3D12_CPU_DESCRIPTOR_HANDLE cpuDescriptor;
@@ -6285,7 +6619,7 @@ struct D3D12_RENDER_PASS_DEPTH_STENCIL_DESC
     D3D12_RENDER_PASS_ENDING_ACCESS StencilEndingAccess;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_dispatch_rays_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_dispatch_rays_desc
 struct D3D12_DISPATCH_RAYS_DESC
 {
     D3D12_GPU_VIRTUAL_ADDRESS_RANGE RayGenerationShaderRecord;
@@ -6317,8 +6651,13 @@ struct D3D12_SET_GENERIC_PIPELINE_DESC
 
 struct D3D12_SET_PROGRAM_DESC
 {
-    D3D12_PROGRAM_TYPE  Type;
-    _Anonymous_e__Union Anonymous;
+    D3D12_PROGRAM_TYPE Type;
+    union
+    {
+        D3D12_SET_GENERIC_PIPELINE_DESC GenericPipeline;
+        D3D12_SET_RAYTRACING_PIPELINE_DESC RaytracingPipeline;
+        D3D12_SET_WORK_GRAPH_DESC WorkGraph;
+    }
 }
 
 struct D3D12_NODE_CPU_INPUT
@@ -6352,10 +6691,16 @@ struct D3D12_MULTI_NODE_GPU_INPUT
 struct D3D12_DISPATCH_GRAPH_DESC
 {
     D3D12_DISPATCH_MODE Mode;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        D3D12_NODE_CPU_INPUT NodeCPUInput;
+        ulong                NodeGPUInput;
+        D3D12_MULTI_NODE_CPU_INPUT MultiNodeCPUInput;
+        ulong                MultiNodeGPUInput;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_shader_cache_session_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_shader_cache_session_desc
 struct D3D12_SHADER_CACHE_SESSION_DESC
 {
     GUID  Identifier;
@@ -6374,7 +6719,7 @@ struct D3D12_FEATURE_DATA_BARRIER_LAYOUT
     BOOL                 Supported;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_barrier_subresource_range))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_barrier_subresource_range
 struct D3D12_BARRIER_SUBRESOURCE_RANGE
 {
     uint IndexOrFirstMipLevel;
@@ -6385,7 +6730,7 @@ struct D3D12_BARRIER_SUBRESOURCE_RANGE
     uint NumPlanes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_global_barrier))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_global_barrier
 struct D3D12_GLOBAL_BARRIER
 {
     D3D12_BARRIER_SYNC   SyncBefore;
@@ -6394,7 +6739,7 @@ struct D3D12_GLOBAL_BARRIER
     D3D12_BARRIER_ACCESS AccessAfter;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_texture_barrier))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_texture_barrier
 struct D3D12_TEXTURE_BARRIER
 {
     D3D12_BARRIER_SYNC   SyncBefore;
@@ -6408,7 +6753,7 @@ struct D3D12_TEXTURE_BARRIER
     D3D12_TEXTURE_BARRIER_FLAGS Flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_buffer_barrier))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_buffer_barrier
 struct D3D12_BUFFER_BARRIER
 {
     D3D12_BARRIER_SYNC   SyncBefore;
@@ -6420,12 +6765,17 @@ struct D3D12_BUFFER_BARRIER
     ulong                Size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_barrier_group))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_barrier_group
 struct D3D12_BARRIER_GROUP
 {
-    D3D12_BARRIER_TYPE  Type;
-    uint                NumBarriers;
-    _Anonymous_e__Union Anonymous;
+    D3D12_BARRIER_TYPE Type;
+    uint               NumBarriers;
+    union
+    {
+        const(D3D12_GLOBAL_BARRIER)* pGlobalBarriers;
+        const(D3D12_TEXTURE_BARRIER)* pTextureBarriers;
+        const(D3D12_BUFFER_BARRIER)* pBufferBarriers;
+    }
 }
 
 struct D3D12_TRIM_NOTIFICATION
@@ -6474,7 +6824,7 @@ struct D3D12_EXISTING_COLLECTION_BY_KEY_DESC
     const(D3D12_EXPORT_DESC)* pExports;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_subresource_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_subresource_data
 struct D3D12_SUBRESOURCE_DATA
 {
     const(void)* pData;
@@ -6482,7 +6832,7 @@ struct D3D12_SUBRESOURCE_DATA
     ptrdiff_t    SlicePitch;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_memcpy_dest))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/ns-d3d12-d3d12_memcpy_dest
 struct D3D12_MEMCPY_DEST
 {
     void*  pData;
@@ -6490,7 +6840,7 @@ struct D3D12_MEMCPY_DEST
     size_t SlicePitch;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/ns-d3d12sdklayers-d3d12_debug_device_gpu_based_validation_settings))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/ns-d3d12sdklayers-d3d12_debug_device_gpu_based_validation_settings
 struct D3D12_DEBUG_DEVICE_GPU_BASED_VALIDATION_SETTINGS
 {
     uint MaxMessagesPerCommandList;
@@ -6498,19 +6848,19 @@ struct D3D12_DEBUG_DEVICE_GPU_BASED_VALIDATION_SETTINGS
     D3D12_GPU_BASED_VALIDATION_PIPELINE_STATE_CREATE_FLAGS PipelineStateCreateFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/ns-d3d12sdklayers-d3d12_debug_device_gpu_slowdown_performance_factor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/ns-d3d12sdklayers-d3d12_debug_device_gpu_slowdown_performance_factor
 struct D3D12_DEBUG_DEVICE_GPU_SLOWDOWN_PERFORMANCE_FACTOR
 {
     float SlowdownFactor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/ns-d3d12sdklayers-d3d12_debug_command_list_gpu_based_validation_settings))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/ns-d3d12sdklayers-d3d12_debug_command_list_gpu_based_validation_settings
 struct D3D12_DEBUG_COMMAND_LIST_GPU_BASED_VALIDATION_SETTINGS
 {
     D3D12_GPU_BASED_VALIDATION_SHADER_PATCH_MODE ShaderPatchMode;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/ns-d3d12sdklayers-d3d12_message))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/ns-d3d12sdklayers-d3d12_message
 struct D3D12_MESSAGE
 {
     D3D12_MESSAGE_CATEGORY Category;
@@ -6520,7 +6870,7 @@ struct D3D12_MESSAGE
     size_t           DescriptionByteLength;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/ns-d3d12sdklayers-d3d12_info_queue_filter_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/ns-d3d12sdklayers-d3d12_info_queue_filter_desc
 struct D3D12_INFO_QUEUE_FILTER_DESC
 {
     uint              NumCategories;
@@ -6531,7 +6881,7 @@ struct D3D12_INFO_QUEUE_FILTER_DESC
     D3D12_MESSAGE_ID* pIDList;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/ns-d3d12sdklayers-d3d12_info_queue_filter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/ns-d3d12sdklayers-d3d12_info_queue_filter
 struct D3D12_INFO_QUEUE_FILTER
 {
     D3D12_INFO_QUEUE_FILTER_DESC AllowList;
@@ -6568,7 +6918,7 @@ struct D3D12_STATE_OBJECT_STATISTICS
     D3D12_CREATE_STATE_OBJECT_STATISTICS StateObjectStatistics;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/ns-d3d12shader-d3d12_signature_parameter_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/ns-d3d12shader-d3d12_signature_parameter_desc
 struct D3D12_SIGNATURE_PARAMETER_DESC
 {
     const(PSTR)       SemanticName;
@@ -6582,7 +6932,7 @@ struct D3D12_SIGNATURE_PARAMETER_DESC
     D3D_MIN_PRECISION MinPrecision;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/ns-d3d12shader-d3d12_shader_buffer_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/ns-d3d12shader-d3d12_shader_buffer_desc
 struct D3D12_SHADER_BUFFER_DESC
 {
     const(PSTR)      Name;
@@ -6592,7 +6942,7 @@ struct D3D12_SHADER_BUFFER_DESC
     uint             uFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/ns-d3d12shader-d3d12_shader_variable_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/ns-d3d12shader-d3d12_shader_variable_desc
 struct D3D12_SHADER_VARIABLE_DESC
 {
     const(PSTR) Name;
@@ -6606,7 +6956,7 @@ struct D3D12_SHADER_VARIABLE_DESC
     uint        SamplerSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/ns-d3d12shader-d3d12_shader_type_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/ns-d3d12shader-d3d12_shader_type_desc
 struct D3D12_SHADER_TYPE_DESC
 {
     D3D_SHADER_VARIABLE_CLASS Class;
@@ -6619,7 +6969,7 @@ struct D3D12_SHADER_TYPE_DESC
     const(PSTR) Name;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/ns-d3d12shader-d3d12_shader_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/ns-d3d12shader-d3d12_shader_desc
 struct D3D12_SHADER_DESC
 {
     uint          Version;
@@ -6662,7 +7012,7 @@ struct D3D12_SHADER_DESC
     uint          cTextureStoreInstructions;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/ns-d3d12shader-d3d12_shader_input_bind_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/ns-d3d12shader-d3d12_shader_input_bind_desc
 struct D3D12_SHADER_INPUT_BIND_DESC
 {
     const(PSTR)       Name;
@@ -6677,7 +7027,7 @@ struct D3D12_SHADER_INPUT_BIND_DESC
     uint              uID;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/ns-d3d12shader-d3d12_library_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/ns-d3d12shader-d3d12_library_desc
 struct D3D12_LIBRARY_DESC
 {
     const(PSTR) Creator;
@@ -6685,7 +7035,7 @@ struct D3D12_LIBRARY_DESC
     uint        FunctionCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/ns-d3d12shader-d3d12_function_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/ns-d3d12shader-d3d12_function_desc
 struct D3D12_FUNCTION_DESC
 {
     uint              Version;
@@ -6723,7 +7073,7 @@ struct D3D12_FUNCTION_DESC
     BOOL              Has10Level9PixelShader;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/ns-d3d12shader-d3d12_parameter_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/ns-d3d12shader-d3d12_parameter_desc
 struct D3D12_PARAMETER_DESC
 {
     const(PSTR)         Name;
@@ -6802,45 +7152,45 @@ struct D3D12_COMPILER_EXISTING_COLLECTION_DESC
 
 // Functions
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-d3d12serializerootsignature))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-d3d12serializerootsignature
 @DllImport("d3d12.dll")
 HRESULT D3D12SerializeRootSignature(const(D3D12_ROOT_SIGNATURE_DESC)* pRootSignature, 
                                     D3D_ROOT_SIGNATURE_VERSION Version, ID3DBlob* ppBlob, ID3DBlob* ppErrorBlob);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-d3d12createrootsignaturedeserializer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-d3d12createrootsignaturedeserializer
 @DllImport("d3d12.dll")
 HRESULT D3D12CreateRootSignatureDeserializer(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(void)* pSrcData, 
                                              size_t SrcDataSizeInBytes, 
                                              const(GUID)* pRootSignatureDeserializerInterface, 
                                              void** ppRootSignatureDeserializer);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-d3d12serializeversionedrootsignature))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-d3d12serializeversionedrootsignature
 @DllImport("d3d12.dll")
 HRESULT D3D12SerializeVersionedRootSignature(const(D3D12_VERSIONED_ROOT_SIGNATURE_DESC)* pRootSignature, 
                                              ID3DBlob* ppBlob, ID3DBlob* ppErrorBlob);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-d3d12createversionedrootsignaturedeserializer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-d3d12createversionedrootsignaturedeserializer
 @DllImport("d3d12.dll")
 HRESULT D3D12CreateVersionedRootSignatureDeserializer(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(void)* pSrcData, 
                                                       size_t SrcDataSizeInBytes, 
                                                       const(GUID)* pRootSignatureDeserializerInterface, 
                                                       void** ppRootSignatureDeserializer);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-d3d12createdevice))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-d3d12createdevice
 @DllImport("d3d12.dll")
 HRESULT D3D12CreateDevice(IUnknown pAdapter, D3D_FEATURE_LEVEL MinimumFeatureLevel, const(GUID)* riid, 
                           void** ppDevice);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-d3d12getdebuginterface))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-d3d12getdebuginterface
 @DllImport("d3d12.dll")
 HRESULT D3D12GetDebugInterface(const(GUID)* riid, void** ppvDebug);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-d3d12enableexperimentalfeatures))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-d3d12enableexperimentalfeatures
 @DllImport("d3d12.dll")
 HRESULT D3D12EnableExperimentalFeatures(uint NumFeatures, const(GUID)* pIIDs, void* pConfigurationStructs, 
                                         uint* pConfigurationStructSizes);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-d3d12getinterface))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-d3d12getinterface
 @DllImport("d3d12.dll")
 HRESULT D3D12GetInterface(const(GUID)* rclsid, const(GUID)* riid, void** ppvDebug);
 
@@ -6848,34 +7198,34 @@ HRESULT D3D12GetInterface(const(GUID)* rclsid, const(GUID)* riid, void** ppvDebu
 // Interfaces
 
 @GUID("c4fec28f-7966-4e95-9f94-f431cb56c3b8")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12object))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12object
 interface ID3D12Object : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12object-getprivatedata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12object-getprivatedata
     HRESULT GetPrivateData(const(GUID)* guid, uint* pDataSize, 
                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/void* pData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12object-setprivatedata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12object-setprivatedata
     HRESULT SetPrivateData(const(GUID)* guid, uint DataSize, 
                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(void)* pData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12object-setprivatedatainterface))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12object-setprivatedatainterface
     HRESULT SetPrivateDataInterface(const(GUID)* guid, const(IUnknown) pData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12object-setname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12object-setname
     HRESULT SetName(const(PWSTR) Name);
 }
 
 @GUID("905db94b-a00c-4140-9df5-2b64ca9ea357")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12devicechild))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12devicechild
 interface ID3D12DeviceChild : ID3D12Object
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12devicechild-getdevice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12devicechild-getdevice
     HRESULT GetDevice(const(GUID)* riid, void** ppvDevice);
 }
 
 @GUID("c54a6b66-72df-4ee8-8be5-a946a1429214")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12rootsignature))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12rootsignature
 interface ID3D12RootSignature : ID3D12DeviceChild
 {
 }
@@ -6890,102 +7240,102 @@ interface ID3D12RootSignature1 : ID3D12RootSignature
 }
 
 @GUID("34ab647b-3cc8-46ac-841b-c0965645c046")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12rootsignaturedeserializer))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12rootsignaturedeserializer
 interface ID3D12RootSignatureDeserializer : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12rootsignaturedeserializer-getrootsignaturedesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12rootsignaturedeserializer-getrootsignaturedesc
     D3D12_ROOT_SIGNATURE_DESC* GetRootSignatureDesc();
 }
 
 @GUID("7f91ce67-090c-4bb7-b78e-ed8ff2e31da0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12versionedrootsignaturedeserializer))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12versionedrootsignaturedeserializer
 interface ID3D12VersionedRootSignatureDeserializer : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12versionedrootsignaturedeserializer-getrootsignaturedescatversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12versionedrootsignaturedeserializer-getrootsignaturedescatversion
     HRESULT GetRootSignatureDescAtVersion(D3D_ROOT_SIGNATURE_VERSION convertToVersion, 
                                           const(D3D12_VERSIONED_ROOT_SIGNATURE_DESC)** ppDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12versionedrootsignaturedeserializer-getunconvertedrootsignaturedesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12versionedrootsignaturedeserializer-getunconvertedrootsignaturedesc
     D3D12_VERSIONED_ROOT_SIGNATURE_DESC* GetUnconvertedRootSignatureDesc();
 }
 
 @GUID("63ee58fb-1268-4835-86da-f008ce62f0d6")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12pageable))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12pageable
 interface ID3D12Pageable : ID3D12DeviceChild
 {
 }
 
 @GUID("6b3b2502-6e51-45b3-90ee-9884265e8df3")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12heap))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12heap
 interface ID3D12Heap : ID3D12Pageable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/direct3d12/id3d12heap-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/direct3d12/id3d12heap-getdesc
     D3D12_HEAP_DESC GetDesc();
 }
 
 @GUID("696442be-a72e-4059-bc79-5b5c98040fad")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12resource))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12resource
 interface ID3D12Resource : ID3D12Pageable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12resource-map))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12resource-map
     HRESULT Map(uint Subresource, const(D3D12_RANGE)* pReadRange, void** ppData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12resource-unmap))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12resource-unmap
     void    Unmap(uint Subresource, const(D3D12_RANGE)* pWrittenRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/direct3d12/id3d12resource-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/direct3d12/id3d12resource-getdesc
     D3D12_RESOURCE_DESC GetDesc();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12resource-getgpuvirtualaddress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12resource-getgpuvirtualaddress
     ulong   GetGPUVirtualAddress();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12resource-writetosubresource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12resource-writetosubresource
     HRESULT WriteToSubresource(uint DstSubresource, const(D3D12_BOX)* pDstBox, const(void)* pSrcData, 
                                uint SrcRowPitch, uint SrcDepthPitch);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12resource-readfromsubresource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12resource-readfromsubresource
     HRESULT ReadFromSubresource(void* pDstData, uint DstRowPitch, uint DstDepthPitch, uint SrcSubresource, 
                                 const(D3D12_BOX)* pSrcBox);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12resource-getheapproperties))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12resource-getheapproperties
     HRESULT GetHeapProperties(D3D12_HEAP_PROPERTIES* pHeapProperties, D3D12_HEAP_FLAGS* pHeapFlags);
 }
 
 @GUID("6102dee4-af59-4b09-b999-b44d73f09b24")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12commandallocator))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12commandallocator
 interface ID3D12CommandAllocator : ID3D12Pageable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12commandallocator-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12commandallocator-reset
     HRESULT Reset();
 }
 
 @GUID("0a753dcf-c4d8-4b91-adf6-be5a60d95a76")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12fence))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12fence
 interface ID3D12Fence : ID3D12Pageable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12fence-getcompletedvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12fence-getcompletedvalue
     ulong   GetCompletedValue();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12fence-seteventoncompletion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12fence-seteventoncompletion
     HRESULT SetEventOnCompletion(ulong Value, HANDLE hEvent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12fence-signal))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12fence-signal
     HRESULT Signal(ulong Value);
 }
 
 @GUID("433685fe-e22b-4ca0-a8db-b5b4f4dd0e4a")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12fence1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12fence1
 interface ID3D12Fence1 : ID3D12Fence
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12fence1-getcreationflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12fence1-getcreationflags
     D3D12_FENCE_FLAGS GetCreationFlags();
 }
 
 @GUID("765a30f3-f624-4c6f-a828-ace948622445")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12pipelinestate))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12pipelinestate
 interface ID3D12PipelineState : ID3D12Pageable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12pipelinestate-getcachedblob))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12pipelinestate-getcachedblob
     HRESULT GetCachedBlob(ID3DBlob* ppBlob);
 }
 
@@ -6997,249 +7347,249 @@ interface ID3D12PipelineState1 : ID3D12PipelineState
 }
 
 @GUID("8efb471d-616c-4f49-90f7-127bb763fa51")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12descriptorheap))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12descriptorheap
 interface ID3D12DescriptorHeap : ID3D12Pageable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12descriptorheap-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12descriptorheap-getdesc
     D3D12_DESCRIPTOR_HEAP_DESC GetDesc();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12descriptorheap-getcpudescriptorhandleforheapstart))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12descriptorheap-getcpudescriptorhandleforheapstart
     D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandleForHeapStart();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12descriptorheap-getgpudescriptorhandleforheapstart))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12descriptorheap-getgpudescriptorhandleforheapstart
     D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandleForHeapStart();
 }
 
 @GUID("0d9658ae-ed45-469e-a61d-970ec583cab4")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12queryheap))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12queryheap
 interface ID3D12QueryHeap : ID3D12Pageable
 {
 }
 
 @GUID("c36a797c-ec80-4f0a-8985-a7b2475082d1")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12commandsignature))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12commandsignature
 interface ID3D12CommandSignature : ID3D12Pageable
 {
 }
 
 @GUID("7116d91c-e7e4-47ce-b8c6-ec8168f437e5")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12commandlist))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12commandlist
 interface ID3D12CommandList : ID3D12DeviceChild
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12commandlist-gettype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12commandlist-gettype
     D3D12_COMMAND_LIST_TYPE GetType();
 }
 
 @GUID("5b160d0f-ac1b-4185-8ba8-b3ae42a5a455")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12graphicscommandlist))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12graphicscommandlist
 interface ID3D12GraphicsCommandList : ID3D12CommandList
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-close))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-close
     HRESULT Close();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-reset
     HRESULT Reset(ID3D12CommandAllocator pAllocator, ID3D12PipelineState pInitialState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-clearstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-clearstate
     void    ClearState(ID3D12PipelineState pPipelineState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-drawinstanced))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-drawinstanced
     void    DrawInstanced(uint VertexCountPerInstance, uint InstanceCount, uint StartVertexLocation, 
                           uint StartInstanceLocation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-drawindexedinstanced))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-drawindexedinstanced
     void    DrawIndexedInstanced(uint IndexCountPerInstance, uint InstanceCount, uint StartIndexLocation, 
                                  int BaseVertexLocation, uint StartInstanceLocation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-dispatch))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-dispatch
     void    Dispatch(uint ThreadGroupCountX, uint ThreadGroupCountY, uint ThreadGroupCountZ);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-copybufferregion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-copybufferregion
     void    CopyBufferRegion(ID3D12Resource pDstBuffer, ulong DstOffset, ID3D12Resource pSrcBuffer, 
                              ulong SrcOffset, ulong NumBytes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-copytextureregion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-copytextureregion
     void    CopyTextureRegion(const(D3D12_TEXTURE_COPY_LOCATION)* pDst, uint DstX, uint DstY, uint DstZ, 
                               const(D3D12_TEXTURE_COPY_LOCATION)* pSrc, const(D3D12_BOX)* pSrcBox);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-copyresource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-copyresource
     void    CopyResource(ID3D12Resource pDstResource, ID3D12Resource pSrcResource);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-copytiles))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-copytiles
     void    CopyTiles(ID3D12Resource pTiledResource, 
                       const(D3D12_TILED_RESOURCE_COORDINATE)* pTileRegionStartCoordinate, 
                       const(D3D12_TILE_REGION_SIZE)* pTileRegionSize, ID3D12Resource pBuffer, 
                       ulong BufferStartOffsetInBytes, D3D12_TILE_COPY_FLAGS Flags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-resolvesubresource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-resolvesubresource
     void    ResolveSubresource(ID3D12Resource pDstResource, uint DstSubresource, ID3D12Resource pSrcResource, 
                                uint SrcSubresource, DXGI_FORMAT Format);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-iasetprimitivetopology))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-iasetprimitivetopology
     void    IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY PrimitiveTopology);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-rssetviewports))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-rssetviewports
     void    RSSetViewports(uint NumViewports, const(D3D12_VIEWPORT)* pViewports);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-rssetscissorrects))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-rssetscissorrects
     void    RSSetScissorRects(uint NumRects, const(RECT)* pRects);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-omsetblendfactor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-omsetblendfactor
     void    OMSetBlendFactor(const(float)* BlendFactor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-omsetstencilref))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-omsetstencilref
     void    OMSetStencilRef(uint StencilRef);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setpipelinestate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setpipelinestate
     void    SetPipelineState(ID3D12PipelineState pPipelineState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-resourcebarrier))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-resourcebarrier
     void    ResourceBarrier(uint NumBarriers, const(D3D12_RESOURCE_BARRIER)* pBarriers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-executebundle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-executebundle
     void    ExecuteBundle(ID3D12GraphicsCommandList pCommandList);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setdescriptorheaps))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setdescriptorheaps
     void    SetDescriptorHeaps(uint NumDescriptorHeaps, ID3D12DescriptorHeap* ppDescriptorHeaps);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setcomputerootsignature))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setcomputerootsignature
     void    SetComputeRootSignature(ID3D12RootSignature pRootSignature);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setgraphicsrootsignature))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setgraphicsrootsignature
     void    SetGraphicsRootSignature(ID3D12RootSignature pRootSignature);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setcomputerootdescriptortable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setcomputerootdescriptortable
     void    SetComputeRootDescriptorTable(uint RootParameterIndex, D3D12_GPU_DESCRIPTOR_HANDLE BaseDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setgraphicsrootdescriptortable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setgraphicsrootdescriptortable
     void    SetGraphicsRootDescriptorTable(uint RootParameterIndex, D3D12_GPU_DESCRIPTOR_HANDLE BaseDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setcomputeroot32bitconstant))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setcomputeroot32bitconstant
     void    SetComputeRoot32BitConstant(uint RootParameterIndex, uint SrcData, uint DestOffsetIn32BitValues);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setgraphicsroot32bitconstant))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setgraphicsroot32bitconstant
     void    SetGraphicsRoot32BitConstant(uint RootParameterIndex, uint SrcData, uint DestOffsetIn32BitValues);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setcomputeroot32bitconstants))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setcomputeroot32bitconstants
     void    SetComputeRoot32BitConstants(uint RootParameterIndex, uint Num32BitValuesToSet, const(void)* pSrcData, 
                                          uint DestOffsetIn32BitValues);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setgraphicsroot32bitconstants))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setgraphicsroot32bitconstants
     void    SetGraphicsRoot32BitConstants(uint RootParameterIndex, uint Num32BitValuesToSet, const(void)* pSrcData, 
                                           uint DestOffsetIn32BitValues);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setcomputerootconstantbufferview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setcomputerootconstantbufferview
     void    SetComputeRootConstantBufferView(uint RootParameterIndex, ulong BufferLocation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setgraphicsrootconstantbufferview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setgraphicsrootconstantbufferview
     void    SetGraphicsRootConstantBufferView(uint RootParameterIndex, ulong BufferLocation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setcomputerootshaderresourceview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setcomputerootshaderresourceview
     void    SetComputeRootShaderResourceView(uint RootParameterIndex, ulong BufferLocation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setgraphicsrootshaderresourceview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setgraphicsrootshaderresourceview
     void    SetGraphicsRootShaderResourceView(uint RootParameterIndex, ulong BufferLocation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setcomputerootunorderedaccessview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setcomputerootunorderedaccessview
     void    SetComputeRootUnorderedAccessView(uint RootParameterIndex, ulong BufferLocation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setgraphicsrootunorderedaccessview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setgraphicsrootunorderedaccessview
     void    SetGraphicsRootUnorderedAccessView(uint RootParameterIndex, ulong BufferLocation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-iasetindexbuffer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-iasetindexbuffer
     void    IASetIndexBuffer(const(D3D12_INDEX_BUFFER_VIEW)* pView);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-iasetvertexbuffers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-iasetvertexbuffers
     void    IASetVertexBuffers(uint StartSlot, uint NumViews, const(D3D12_VERTEX_BUFFER_VIEW)* pViews);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-sosettargets))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-sosettargets
     void    SOSetTargets(uint StartSlot, uint NumViews, const(D3D12_STREAM_OUTPUT_BUFFER_VIEW)* pViews);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-omsetrendertargets))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-omsetrendertargets
     void    OMSetRenderTargets(uint NumRenderTargetDescriptors, 
                                const(D3D12_CPU_DESCRIPTOR_HANDLE)* pRenderTargetDescriptors, 
                                BOOL RTsSingleHandleToDescriptorRange, 
                                const(D3D12_CPU_DESCRIPTOR_HANDLE)* pDepthStencilDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-cleardepthstencilview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-cleardepthstencilview
     void    ClearDepthStencilView(D3D12_CPU_DESCRIPTOR_HANDLE DepthStencilView, D3D12_CLEAR_FLAGS ClearFlags, 
                                   float Depth, ubyte Stencil, uint NumRects, const(RECT)* pRects);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-clearrendertargetview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-clearrendertargetview
     void    ClearRenderTargetView(D3D12_CPU_DESCRIPTOR_HANDLE RenderTargetView, const(float)* ColorRGBA, 
                                   uint NumRects, const(RECT)* pRects);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-clearunorderedaccessviewuint))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-clearunorderedaccessviewuint
     void    ClearUnorderedAccessViewUint(D3D12_GPU_DESCRIPTOR_HANDLE ViewGPUHandleInCurrentHeap, 
                                          D3D12_CPU_DESCRIPTOR_HANDLE ViewCPUHandle, ID3D12Resource pResource, 
                                          const(uint)* Values, uint NumRects, const(RECT)* pRects);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-clearunorderedaccessviewfloat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-clearunorderedaccessviewfloat
     void    ClearUnorderedAccessViewFloat(D3D12_GPU_DESCRIPTOR_HANDLE ViewGPUHandleInCurrentHeap, 
                                           D3D12_CPU_DESCRIPTOR_HANDLE ViewCPUHandle, ID3D12Resource pResource, 
                                           const(float)* Values, uint NumRects, const(RECT)* pRects);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-discardresource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-discardresource
     void    DiscardResource(ID3D12Resource pResource, const(D3D12_DISCARD_REGION)* pRegion);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-beginquery))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-beginquery
     void    BeginQuery(ID3D12QueryHeap pQueryHeap, D3D12_QUERY_TYPE Type, uint Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-endquery))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-endquery
     void    EndQuery(ID3D12QueryHeap pQueryHeap, D3D12_QUERY_TYPE Type, uint Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-resolvequerydata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-resolvequerydata
     void    ResolveQueryData(ID3D12QueryHeap pQueryHeap, D3D12_QUERY_TYPE Type, uint StartIndex, uint NumQueries, 
                              ID3D12Resource pDestinationBuffer, ulong AlignedDestinationBufferOffset);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setpredication))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setpredication
     void    SetPredication(ID3D12Resource pBuffer, ulong AlignedBufferOffset, D3D12_PREDICATION_OP Operation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setmarker))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setmarker
     void    SetMarker(uint Metadata, 
                       /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/const(void)* pData, 
                       uint Size);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-beginevent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-beginevent
     void    BeginEvent(uint Metadata, 
                        /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/const(void)* pData, 
                        uint Size);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-endevent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-endevent
     void    EndEvent();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-executeindirect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-executeindirect
     void    ExecuteIndirect(ID3D12CommandSignature pCommandSignature, uint MaxCommandCount, 
                             ID3D12Resource pArgumentBuffer, ulong ArgumentBufferOffset, ID3D12Resource pCountBuffer, 
                             ulong CountBufferOffset);
 }
 
 @GUID("553103fb-1fe7-4557-bb38-946d7d0e7ca7")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12graphicscommandlist1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12graphicscommandlist1
 interface ID3D12GraphicsCommandList1 : ID3D12GraphicsCommandList
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist1-atomiccopybufferuint))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist1-atomiccopybufferuint
     void AtomicCopyBufferUINT(ID3D12Resource pDstBuffer, ulong DstOffset, ID3D12Resource pSrcBuffer, 
                               ulong SrcOffset, uint Dependencies, ID3D12Resource* ppDependentResources, 
                               const(D3D12_SUBRESOURCE_RANGE_UINT64)* pDependentSubresourceRanges);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist1-atomiccopybufferuint64))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist1-atomiccopybufferuint64
     void AtomicCopyBufferUINT64(ID3D12Resource pDstBuffer, ulong DstOffset, ID3D12Resource pSrcBuffer, 
                                 ulong SrcOffset, uint Dependencies, ID3D12Resource* ppDependentResources, 
                                 const(D3D12_SUBRESOURCE_RANGE_UINT64)* pDependentSubresourceRanges);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist1-omsetdepthbounds))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist1-omsetdepthbounds
     void OMSetDepthBounds(float Min, float Max);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist1-setsamplepositions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist1-setsamplepositions
     void SetSamplePositions(uint NumSamplesPerPixel, uint NumPixels, D3D12_SAMPLE_POSITION* pSamplePositions);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist1-resolvesubresourceregion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist1-resolvesubresourceregion
     void ResolveSubresourceRegion(ID3D12Resource pDstResource, uint DstSubresource, uint DstX, uint DstY, 
                                   ID3D12Resource pSrcResource, uint SrcSubresource, RECT* pSrcRect, 
                                   DXGI_FORMAT Format, D3D12_RESOLVE_MODE ResolveMode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist1-setviewinstancemask))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist1-setviewinstancemask
     void SetViewInstanceMask(uint Mask);
 }
 
 @GUID("38c3e585-ff17-412c-9150-4fc6f9d72a28")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12graphicscommandlist2))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12graphicscommandlist2
 interface ID3D12GraphicsCommandList2 : ID3D12GraphicsCommandList1
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist2-writebufferimmediate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist2-writebufferimmediate
     void WriteBufferImmediate(uint Count, const(D3D12_WRITEBUFFERIMMEDIATE_PARAMETER)* pParams, 
                               const(D3D12_WRITEBUFFERIMMEDIATE_MODE)* pModes);
 }
 
 @GUID("0ec870a6-5d7e-4c22-8cfc-5baae07616ed")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12commandqueue))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12commandqueue
 interface ID3D12CommandQueue : ID3D12Pageable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12commandqueue-updatetilemappings))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12commandqueue-updatetilemappings
     void    UpdateTileMappings(ID3D12Resource pResource, uint NumResourceRegions, 
                                const(D3D12_TILED_RESOURCE_COORDINATE)* pResourceRegionStartCoordinates, 
                                const(D3D12_TILE_REGION_SIZE)* pResourceRegionSizes, ID3D12Heap pHeap, uint NumRanges, 
                                const(D3D12_TILE_RANGE_FLAGS)* pRangeFlags, const(uint)* pHeapRangeStartOffsets, 
                                const(uint)* pRangeTileCounts, D3D12_TILE_MAPPING_FLAGS Flags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12commandqueue-copytilemappings))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12commandqueue-copytilemappings
     void    CopyTileMappings(ID3D12Resource pDstResource, 
                              const(D3D12_TILED_RESOURCE_COORDINATE)* pDstRegionStartCoordinate, 
                              ID3D12Resource pSrcResource, 
                              const(D3D12_TILED_RESOURCE_COORDINATE)* pSrcRegionStartCoordinate, 
                              const(D3D12_TILE_REGION_SIZE)* pRegionSize, D3D12_TILE_MAPPING_FLAGS Flags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12commandqueue-executecommandlists))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12commandqueue-executecommandlists
     void    ExecuteCommandLists(uint NumCommandLists, ID3D12CommandList* ppCommandLists);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12commandqueue-setmarker))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12commandqueue-setmarker
     void    SetMarker(uint Metadata, 
                       /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/const(void)* pData, 
                       uint Size);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12commandqueue-beginevent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12commandqueue-beginevent
     void    BeginEvent(uint Metadata, 
                        /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/const(void)* pData, 
                        uint Size);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12commandqueue-endevent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12commandqueue-endevent
     void    EndEvent();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12commandqueue-signal))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12commandqueue-signal
     HRESULT Signal(ID3D12Fence pFence, ulong Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12commandqueue-wait))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12commandqueue-wait
     HRESULT Wait(ID3D12Fence pFence, ulong Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12commandqueue-gettimestampfrequency))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12commandqueue-gettimestampfrequency
     HRESULT GetTimestampFrequency(ulong* pFrequency);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12commandqueue-getclockcalibration))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12commandqueue-getclockcalibration
     HRESULT GetClockCalibration(ulong* pGpuTimestamp, ulong* pCpuTimestamp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12commandqueue-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12commandqueue-getdesc
     D3D12_COMMAND_QUEUE_DESC GetDesc();
 }
 
@@ -7254,249 +7604,249 @@ interface ID3D12CommandQueue1 : ID3D12CommandQueue
 }
 
 @GUID("189819f1-1db6-4b57-be54-1821339b85f7")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12device))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12device
 interface ID3D12Device : ID3D12Object
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-getnodecount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-getnodecount
     uint    GetNodeCount();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createcommandqueue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createcommandqueue
     HRESULT CreateCommandQueue(const(D3D12_COMMAND_QUEUE_DESC)* pDesc, const(GUID)* riid, void** ppCommandQueue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createcommandallocator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createcommandallocator
     HRESULT CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE type, const(GUID)* riid, void** ppCommandAllocator);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-creategraphicspipelinestate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-creategraphicspipelinestate
     HRESULT CreateGraphicsPipelineState(const(D3D12_GRAPHICS_PIPELINE_STATE_DESC)* pDesc, const(GUID)* riid, 
                                         void** ppPipelineState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createcomputepipelinestate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createcomputepipelinestate
     HRESULT CreateComputePipelineState(const(D3D12_COMPUTE_PIPELINE_STATE_DESC)* pDesc, const(GUID)* riid, 
                                        void** ppPipelineState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createcommandlist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createcommandlist
     HRESULT CreateCommandList(uint nodeMask, D3D12_COMMAND_LIST_TYPE type, 
                               ID3D12CommandAllocator pCommandAllocator, ID3D12PipelineState pInitialState, 
                               const(GUID)* riid, void** ppCommandList);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-checkfeaturesupport))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-checkfeaturesupport
     HRESULT CheckFeatureSupport(D3D12_FEATURE Feature, 
                                 /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* pFeatureSupportData, 
                                 uint FeatureSupportDataSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createdescriptorheap))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createdescriptorheap
     HRESULT CreateDescriptorHeap(const(D3D12_DESCRIPTOR_HEAP_DESC)* pDescriptorHeapDesc, const(GUID)* riid, 
                                  void** ppvHeap);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-getdescriptorhandleincrementsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-getdescriptorhandleincrementsize
     uint    GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE DescriptorHeapType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createrootsignature))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createrootsignature
     HRESULT CreateRootSignature(uint nodeMask, const(void)* pBlobWithRootSignature, size_t blobLengthInBytes, 
                                 const(GUID)* riid, void** ppvRootSignature);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createconstantbufferview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createconstantbufferview
     void    CreateConstantBufferView(const(D3D12_CONSTANT_BUFFER_VIEW_DESC)* pDesc, 
                                      D3D12_CPU_DESCRIPTOR_HANDLE DestDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createshaderresourceview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createshaderresourceview
     void    CreateShaderResourceView(ID3D12Resource pResource, const(D3D12_SHADER_RESOURCE_VIEW_DESC)* pDesc, 
                                      D3D12_CPU_DESCRIPTOR_HANDLE DestDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createunorderedaccessview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createunorderedaccessview
     void    CreateUnorderedAccessView(ID3D12Resource pResource, ID3D12Resource pCounterResource, 
                                       const(D3D12_UNORDERED_ACCESS_VIEW_DESC)* pDesc, 
                                       D3D12_CPU_DESCRIPTOR_HANDLE DestDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createrendertargetview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createrendertargetview
     void    CreateRenderTargetView(ID3D12Resource pResource, const(D3D12_RENDER_TARGET_VIEW_DESC)* pDesc, 
                                    D3D12_CPU_DESCRIPTOR_HANDLE DestDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createdepthstencilview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createdepthstencilview
     void    CreateDepthStencilView(ID3D12Resource pResource, const(D3D12_DEPTH_STENCIL_VIEW_DESC)* pDesc, 
                                    D3D12_CPU_DESCRIPTOR_HANDLE DestDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createsampler))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createsampler
     void    CreateSampler(const(D3D12_SAMPLER_DESC)* pDesc, D3D12_CPU_DESCRIPTOR_HANDLE DestDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-copydescriptors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-copydescriptors
     void    CopyDescriptors(uint NumDestDescriptorRanges, 
                             const(D3D12_CPU_DESCRIPTOR_HANDLE)* pDestDescriptorRangeStarts, 
                             const(uint)* pDestDescriptorRangeSizes, uint NumSrcDescriptorRanges, 
                             const(D3D12_CPU_DESCRIPTOR_HANDLE)* pSrcDescriptorRangeStarts, 
                             const(uint)* pSrcDescriptorRangeSizes, D3D12_DESCRIPTOR_HEAP_TYPE DescriptorHeapsType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-copydescriptorssimple))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-copydescriptorssimple
     void    CopyDescriptorsSimple(uint NumDescriptors, D3D12_CPU_DESCRIPTOR_HANDLE DestDescriptorRangeStart, 
                                   D3D12_CPU_DESCRIPTOR_HANDLE SrcDescriptorRangeStart, 
                                   D3D12_DESCRIPTOR_HEAP_TYPE DescriptorHeapsType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-getresourceallocationinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-getresourceallocationinfo
     D3D12_RESOURCE_ALLOCATION_INFO GetResourceAllocationInfo(uint visibleMask, uint numResourceDescs, 
                                                              const(D3D12_RESOURCE_DESC)* pResourceDescs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-getcustomheapproperties))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-getcustomheapproperties
     D3D12_HEAP_PROPERTIES GetCustomHeapProperties(uint nodeMask, D3D12_HEAP_TYPE heapType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createcommittedresource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createcommittedresource
     HRESULT CreateCommittedResource(const(D3D12_HEAP_PROPERTIES)* pHeapProperties, D3D12_HEAP_FLAGS HeapFlags, 
                                     const(D3D12_RESOURCE_DESC)* pDesc, D3D12_RESOURCE_STATES InitialResourceState, 
                                     const(D3D12_CLEAR_VALUE)* pOptimizedClearValue, const(GUID)* riidResource, 
                                     void** ppvResource);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createheap))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createheap
     HRESULT CreateHeap(const(D3D12_HEAP_DESC)* pDesc, const(GUID)* riid, void** ppvHeap);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createplacedresource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createplacedresource
     HRESULT CreatePlacedResource(ID3D12Heap pHeap, ulong HeapOffset, const(D3D12_RESOURCE_DESC)* pDesc, 
                                  D3D12_RESOURCE_STATES InitialState, const(D3D12_CLEAR_VALUE)* pOptimizedClearValue, 
                                  const(GUID)* riid, void** ppvResource);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createreservedresource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createreservedresource
     HRESULT CreateReservedResource(const(D3D12_RESOURCE_DESC)* pDesc, D3D12_RESOURCE_STATES InitialState, 
                                    const(D3D12_CLEAR_VALUE)* pOptimizedClearValue, const(GUID)* riid, 
                                    void** ppvResource);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createsharedhandle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createsharedhandle
     HRESULT CreateSharedHandle(ID3D12DeviceChild pObject, const(SECURITY_ATTRIBUTES)* pAttributes, uint Access, 
                                const(PWSTR) Name, HANDLE* pHandle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-opensharedhandle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-opensharedhandle
     HRESULT OpenSharedHandle(HANDLE NTHandle, const(GUID)* riid, void** ppvObj);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-opensharedhandlebyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-opensharedhandlebyname
     HRESULT OpenSharedHandleByName(const(PWSTR) Name, uint Access, HANDLE* pNTHandle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-makeresident))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-makeresident
     HRESULT MakeResident(uint NumObjects, ID3D12Pageable* ppObjects);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-evict))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-evict
     HRESULT Evict(uint NumObjects, ID3D12Pageable* ppObjects);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createfence))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createfence
     HRESULT CreateFence(ulong InitialValue, D3D12_FENCE_FLAGS Flags, const(GUID)* riid, void** ppFence);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-getdeviceremovedreason))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-getdeviceremovedreason
     HRESULT GetDeviceRemovedReason();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-getcopyablefootprints))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-getcopyablefootprints
     void    GetCopyableFootprints(const(D3D12_RESOURCE_DESC)* pResourceDesc, uint FirstSubresource, 
                                   uint NumSubresources, ulong BaseOffset, 
                                   D3D12_PLACED_SUBRESOURCE_FOOTPRINT* pLayouts, uint* pNumRows, 
                                   ulong* pRowSizeInBytes, ulong* pTotalBytes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createqueryheap))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createqueryheap
     HRESULT CreateQueryHeap(const(D3D12_QUERY_HEAP_DESC)* pDesc, const(GUID)* riid, void** ppvHeap);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-setstablepowerstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-setstablepowerstate
     HRESULT SetStablePowerState(BOOL Enable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createcommandsignature))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-createcommandsignature
     HRESULT CreateCommandSignature(const(D3D12_COMMAND_SIGNATURE_DESC)* pDesc, ID3D12RootSignature pRootSignature, 
                                    const(GUID)* riid, void** ppvCommandSignature);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-getresourcetiling))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-getresourcetiling
     void    GetResourceTiling(ID3D12Resource pTiledResource, uint* pNumTilesForEntireResource, 
                               D3D12_PACKED_MIP_INFO* pPackedMipDesc, 
                               D3D12_TILE_SHAPE* pStandardTileShapeForNonPackedMips, uint* pNumSubresourceTilings, 
                               uint FirstSubresourceTilingToGet, 
                               D3D12_SUBRESOURCE_TILING* pSubresourceTilingsForNonPackedMips);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-getadapterluid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device-getadapterluid
     LUID    GetAdapterLuid();
 }
 
 @GUID("c64226a8-9201-46af-b4cc-53fb9ff7414f")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12pipelinelibrary))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12pipelinelibrary
 interface ID3D12PipelineLibrary : ID3D12DeviceChild
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12pipelinelibrary-storepipeline))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12pipelinelibrary-storepipeline
     HRESULT StorePipeline(const(PWSTR) pName, ID3D12PipelineState pPipeline);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12pipelinelibrary-loadgraphicspipeline))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12pipelinelibrary-loadgraphicspipeline
     HRESULT LoadGraphicsPipeline(const(PWSTR) pName, const(D3D12_GRAPHICS_PIPELINE_STATE_DESC)* pDesc, 
                                  const(GUID)* riid, void** ppPipelineState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12pipelinelibrary-loadcomputepipeline))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12pipelinelibrary-loadcomputepipeline
     HRESULT LoadComputePipeline(const(PWSTR) pName, const(D3D12_COMPUTE_PIPELINE_STATE_DESC)* pDesc, 
                                 const(GUID)* riid, void** ppPipelineState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12pipelinelibrary-getserializedsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12pipelinelibrary-getserializedsize
     size_t  GetSerializedSize();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12pipelinelibrary-serialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12pipelinelibrary-serialize
     HRESULT Serialize(void* pData, size_t DataSizeInBytes);
 }
 
 @GUID("80eabf42-2568-4e5e-bd82-c37f86961dc3")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12pipelinelibrary1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12pipelinelibrary1
 interface ID3D12PipelineLibrary1 : ID3D12PipelineLibrary
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12pipelinelibrary1-loadpipeline))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12pipelinelibrary1-loadpipeline
     HRESULT LoadPipeline(const(PWSTR) pName, const(D3D12_PIPELINE_STATE_STREAM_DESC)* pDesc, const(GUID)* riid, 
                          void** ppPipelineState);
 }
 
 @GUID("77acce80-638e-4e65-8895-c1f23386863e")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12device1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12device1
 interface ID3D12Device1 : ID3D12Device
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device1-createpipelinelibrary))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device1-createpipelinelibrary
     HRESULT CreatePipelineLibrary(const(void)* pLibraryBlob, size_t BlobLength, const(GUID)* riid, 
                                   void** ppPipelineLibrary);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device1-seteventonmultiplefencecompletion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device1-seteventonmultiplefencecompletion
     HRESULT SetEventOnMultipleFenceCompletion(ID3D12Fence* ppFences, const(ulong)* pFenceValues, uint NumFences, 
                                               D3D12_MULTIPLE_FENCE_WAIT_FLAGS Flags, HANDLE hEvent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device1-setresidencypriority))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device1-setresidencypriority
     HRESULT SetResidencyPriority(uint NumObjects, ID3D12Pageable* ppObjects, 
                                  const(D3D12_RESIDENCY_PRIORITY)* pPriorities);
 }
 
 @GUID("30baa41e-b15b-475c-a0bb-1af5c5b64328")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12device2))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12device2
 interface ID3D12Device2 : ID3D12Device1
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device2-createpipelinestate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device2-createpipelinestate
     HRESULT CreatePipelineState(const(D3D12_PIPELINE_STATE_STREAM_DESC)* pDesc, const(GUID)* riid, 
                                 void** ppPipelineState);
 }
 
 @GUID("81dadc15-2bad-4392-93c5-101345c4aa98")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12device3))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12device3
 interface ID3D12Device3 : ID3D12Device2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device3-openexistingheapfromaddress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device3-openexistingheapfromaddress
     HRESULT OpenExistingHeapFromAddress(const(void)* pAddress, const(GUID)* riid, void** ppvHeap);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device3-openexistingheapfromfilemapping))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device3-openexistingheapfromfilemapping
     HRESULT OpenExistingHeapFromFileMapping(HANDLE hFileMapping, const(GUID)* riid, void** ppvHeap);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device3-enqueuemakeresident))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device3-enqueuemakeresident
     HRESULT EnqueueMakeResident(D3D12_RESIDENCY_FLAGS Flags, uint NumObjects, ID3D12Pageable* ppObjects, 
                                 ID3D12Fence pFenceToSignal, ulong FenceValueToSignal);
 }
 
 @GUID("a1533d18-0ac1-4084-85b9-89a96116806b")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12protectedsession))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12protectedsession
 interface ID3D12ProtectedSession : ID3D12DeviceChild
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12protectedsession-getstatusfence))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12protectedsession-getstatusfence
     HRESULT GetStatusFence(const(GUID)* riid, void** ppFence);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12protectedsession-getsessionstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12protectedsession-getsessionstatus
     D3D12_PROTECTED_SESSION_STATUS GetSessionStatus();
 }
 
 @GUID("6cd696f4-f289-40cc-8091-5a6c0a099c3d")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12protectedresourcesession))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12protectedresourcesession
 interface ID3D12ProtectedResourceSession : ID3D12ProtectedSession
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12protectedresourcesession-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12protectedresourcesession-getdesc
     D3D12_PROTECTED_RESOURCE_SESSION_DESC GetDesc();
 }
 
 @GUID("e865df17-a9ee-46f9-a463-3098315aa2e5")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12device4))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12device4
 interface ID3D12Device4 : ID3D12Device3
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device4-createcommandlist1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device4-createcommandlist1
     HRESULT CreateCommandList1(uint nodeMask, D3D12_COMMAND_LIST_TYPE type, D3D12_COMMAND_LIST_FLAGS flags, 
                                const(GUID)* riid, void** ppCommandList);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device4-createprotectedresourcesession))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device4-createprotectedresourcesession
     HRESULT CreateProtectedResourceSession(const(D3D12_PROTECTED_RESOURCE_SESSION_DESC)* pDesc, const(GUID)* riid, 
                                            void** ppSession);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device4-createcommittedresource1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device4-createcommittedresource1
     HRESULT CreateCommittedResource1(const(D3D12_HEAP_PROPERTIES)* pHeapProperties, D3D12_HEAP_FLAGS HeapFlags, 
                                      const(D3D12_RESOURCE_DESC)* pDesc, D3D12_RESOURCE_STATES InitialResourceState, 
                                      const(D3D12_CLEAR_VALUE)* pOptimizedClearValue, 
                                      ID3D12ProtectedResourceSession pProtectedSession, const(GUID)* riidResource, 
                                      void** ppvResource);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device4-createheap1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device4-createheap1
     HRESULT CreateHeap1(const(D3D12_HEAP_DESC)* pDesc, ID3D12ProtectedResourceSession pProtectedSession, 
                         const(GUID)* riid, void** ppvHeap);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device4-createreservedresource1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device4-createreservedresource1
     HRESULT CreateReservedResource1(const(D3D12_RESOURCE_DESC)* pDesc, D3D12_RESOURCE_STATES InitialState, 
                                     const(D3D12_CLEAR_VALUE)* pOptimizedClearValue, 
                                     ID3D12ProtectedResourceSession pProtectedSession, const(GUID)* riid, 
                                     void** ppvResource);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device4-getresourceallocationinfo1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device4-getresourceallocationinfo1
     D3D12_RESOURCE_ALLOCATION_INFO GetResourceAllocationInfo1(uint visibleMask, uint numResourceDescs, 
                                                               const(D3D12_RESOURCE_DESC)* pResourceDescs, 
                                                               D3D12_RESOURCE_ALLOCATION_INFO1* pResourceAllocationInfo1);
 }
 
 @GUID("e667af9f-cd56-4f46-83ce-032e595d70a8")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12lifetimeowner))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12lifetimeowner
 interface ID3D12LifetimeOwner : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12lifetimeowner-lifetimestateupdated))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12lifetimeowner-lifetimestateupdated
     void LifetimeStateUpdated(D3D12_LIFETIME_STATE NewState);
 }
 
@@ -7512,33 +7862,33 @@ interface ID3D12SwapChainAssistant : IUnknown
 }
 
 @GUID("3fd03d36-4eb1-424a-a582-494ecb8ba813")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12lifetimetracker))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12lifetimetracker
 interface ID3D12LifetimeTracker : ID3D12DeviceChild
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12lifetimetracker-destroyownedobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12lifetimetracker-destroyownedobject
     HRESULT DestroyOwnedObject(ID3D12DeviceChild pObject);
 }
 
 @GUID("47016943-fca8-4594-93ea-af258b55346d")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12stateobject))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12stateobject
 interface ID3D12StateObject : ID3D12Pageable
 {
 }
 
 @GUID("de5fa827-9bf9-4f26-89ff-d7f56fde3860")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12stateobjectproperties))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12stateobjectproperties
 interface ID3D12StateObjectProperties : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12stateobjectproperties-getshaderidentifier))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12stateobjectproperties-getshaderidentifier
     void* GetShaderIdentifier(const(PWSTR) pExportName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12stateobjectproperties-getshaderstacksize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12stateobjectproperties-getshaderstacksize
     ulong GetShaderStackSize(const(PWSTR) pExportName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12stateobjectproperties-getpipelinestacksize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12stateobjectproperties-getpipelinestacksize
     ulong GetPipelineStackSize();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12stateobjectproperties-setpipelinestacksize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12stateobjectproperties-setpipelinestacksize
     void  SetPipelineStackSize(ulong PipelineStackSizeInBytes);
 }
 
@@ -7579,44 +7929,44 @@ interface ID3D12WorkGraphProperties : IUnknown
 
 @GUID("8b4f173b-2fea-4b80-8f58-4307191ab95d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.17763))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12device5))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12device5
 interface ID3D12Device5 : ID3D12Device4
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device5-createlifetimetracker))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device5-createlifetimetracker
     HRESULT CreateLifetimeTracker(ID3D12LifetimeOwner pOwner, const(GUID)* riid, void** ppvTracker);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device5-removedevice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device5-removedevice
     void    RemoveDevice();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device5-enumeratemetacommands))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device5-enumeratemetacommands
     HRESULT EnumerateMetaCommands(uint* pNumMetaCommands, D3D12_META_COMMAND_DESC* pDescs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device5-enumeratemetacommandparameters))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device5-enumeratemetacommandparameters
     HRESULT EnumerateMetaCommandParameters(const(GUID)* CommandId, D3D12_META_COMMAND_PARAMETER_STAGE Stage, 
                                            uint* pTotalStructureSizeInBytes, uint* pParameterCount, 
                                            D3D12_META_COMMAND_PARAMETER_DESC* pParameterDescs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device5-createmetacommand))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device5-createmetacommand
     HRESULT CreateMetaCommand(const(GUID)* CommandId, uint NodeMask, 
                               /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/const(void)* pCreationParametersData, 
                               size_t CreationParametersDataSizeInBytes, const(GUID)* riid, void** ppMetaCommand);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device5-createstateobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device5-createstateobject
     HRESULT CreateStateObject(const(D3D12_STATE_OBJECT_DESC)* pDesc, const(GUID)* riid, void** ppStateObject);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device5-getraytracingaccelerationstructureprebuildinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device5-getraytracingaccelerationstructureprebuildinfo
     void    GetRaytracingAccelerationStructurePrebuildInfo(const(D3D12_BUILD_RAYTRACING_ACCELERATION_STRUCTURE_INPUTS)* pDesc, 
                                                            D3D12_RAYTRACING_ACCELERATION_STRUCTURE_PREBUILD_INFO* pInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device5-checkdrivermatchingidentifier))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device5-checkdrivermatchingidentifier
     D3D12_DRIVER_MATCHING_IDENTIFIER_STATUS CheckDriverMatchingIdentifier(D3D12_SERIALIZED_DATA_TYPE SerializedDataType, 
                                                                           const(D3D12_SERIALIZED_DATA_DRIVER_MATCHING_IDENTIFIER)* pIdentifierToCheck);
 }
 
 @GUID("82bc481c-6b9b-4030-aedb-7ee3d1df1e63")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12deviceremovedextendeddatasettings))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12deviceremovedextendeddatasettings
 interface ID3D12DeviceRemovedExtendedDataSettings : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12deviceremovedextendeddatasettings-setautobreadcrumbsenablement))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12deviceremovedextendeddatasettings-setautobreadcrumbsenablement
     void SetAutoBreadcrumbsEnablement(D3D12_DRED_ENABLEMENT Enablement);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12deviceremovedextendeddatasettings-setpagefaultenablement))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12deviceremovedextendeddatasettings-setpagefaultenablement
     void SetPageFaultEnablement(D3D12_DRED_ENABLEMENT Enablement);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12deviceremovedextendeddatasettings-setwatsondumpenablement))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12deviceremovedextendeddatasettings-setwatsondumpenablement
     void SetWatsonDumpEnablement(D3D12_DRED_ENABLEMENT Enablement);
 }
 
@@ -7635,13 +7985,13 @@ interface ID3D12DeviceRemovedExtendedDataSettings2 : ID3D12DeviceRemovedExtended
 }
 
 @GUID("98931d33-5ae8-4791-aa3c-1a73a2934e71")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12deviceremovedextendeddata))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12deviceremovedextendeddata
 interface ID3D12DeviceRemovedExtendedData : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12deviceremovedextendeddata-getautobreadcrumbsoutput))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12deviceremovedextendeddata-getautobreadcrumbsoutput
     HRESULT GetAutoBreadcrumbsOutput(D3D12_DRED_AUTO_BREADCRUMBS_OUTPUT* pOutput);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12deviceremovedextendeddata-getpagefaultallocationoutput))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12deviceremovedextendeddata-getpagefaultallocationoutput
     HRESULT GetPageFaultAllocationOutput(D3D12_DRED_PAGE_FAULT_OUTPUT* pOutput);
 }
 
@@ -7662,62 +8012,62 @@ interface ID3D12DeviceRemovedExtendedData2 : ID3D12DeviceRemovedExtendedData1
 }
 
 @GUID("c70b221b-40e4-4a17-89af-025a0727a6dc")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12device6))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12device6
 interface ID3D12Device6 : ID3D12Device5
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device6-setbackgroundprocessingmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device6-setbackgroundprocessingmode
     HRESULT SetBackgroundProcessingMode(D3D12_BACKGROUND_PROCESSING_MODE Mode, 
                                         D3D12_MEASUREMENTS_ACTION MeasurementsAction, 
                                         HANDLE hEventToSignalUponCompletion, BOOL* pbFurtherMeasurementsDesired);
 }
 
 @GUID("d6f12dd6-76fb-406e-8961-4296eefc0409")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12protectedresourcesession1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12protectedresourcesession1
 interface ID3D12ProtectedResourceSession1 : ID3D12ProtectedResourceSession
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12protectedresourcesession1-getdesc1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12protectedresourcesession1-getdesc1
     D3D12_PROTECTED_RESOURCE_SESSION_DESC1 GetDesc1();
 }
 
 @GUID("5c014b53-68a1-4b9b-8bd1-dd6046b9358b")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12device7))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12device7
 interface ID3D12Device7 : ID3D12Device6
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device7-addtostateobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device7-addtostateobject
     HRESULT AddToStateObject(const(D3D12_STATE_OBJECT_DESC)* pAddition, ID3D12StateObject pStateObjectToGrowFrom, 
                              const(GUID)* riid, void** ppNewStateObject);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device7-createprotectedresourcesession1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device7-createprotectedresourcesession1
     HRESULT CreateProtectedResourceSession1(const(D3D12_PROTECTED_RESOURCE_SESSION_DESC1)* pDesc, 
                                             const(GUID)* riid, void** ppSession);
 }
 
 @GUID("9218e6bb-f944-4f7e-a75c-b1b2c7b701f3")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12device8))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12device8
 interface ID3D12Device8 : ID3D12Device7
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device8-getresourceallocationinfo2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device8-getresourceallocationinfo2
     D3D12_RESOURCE_ALLOCATION_INFO GetResourceAllocationInfo2(uint visibleMask, uint numResourceDescs, 
                                                               const(D3D12_RESOURCE_DESC1)* pResourceDescs, 
                                                               D3D12_RESOURCE_ALLOCATION_INFO1* pResourceAllocationInfo1);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device8-createcommittedresource2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device8-createcommittedresource2
     HRESULT CreateCommittedResource2(const(D3D12_HEAP_PROPERTIES)* pHeapProperties, D3D12_HEAP_FLAGS HeapFlags, 
                                      const(D3D12_RESOURCE_DESC1)* pDesc, D3D12_RESOURCE_STATES InitialResourceState, 
                                      const(D3D12_CLEAR_VALUE)* pOptimizedClearValue, 
                                      ID3D12ProtectedResourceSession pProtectedSession, const(GUID)* riidResource, 
                                      void** ppvResource);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device8-createplacedresource1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device8-createplacedresource1
     HRESULT CreatePlacedResource1(ID3D12Heap pHeap, ulong HeapOffset, const(D3D12_RESOURCE_DESC1)* pDesc, 
                                   D3D12_RESOURCE_STATES InitialState, const(D3D12_CLEAR_VALUE)* pOptimizedClearValue, 
                                   const(GUID)* riid, void** ppvResource);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device8-createsamplerfeedbackunorderedaccessview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device8-createsamplerfeedbackunorderedaccessview
     void    CreateSamplerFeedbackUnorderedAccessView(ID3D12Resource pTargetedResource, 
                                                      ID3D12Resource pFeedbackResource, 
                                                      D3D12_CPU_DESCRIPTOR_HANDLE DestDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device8-getcopyablefootprints1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device8-getcopyablefootprints1
     void    GetCopyableFootprints1(const(D3D12_RESOURCE_DESC1)* pResourceDesc, uint FirstSubresource, 
                                    uint NumSubresources, ulong BaseOffset, 
                                    D3D12_PLACED_SUBRESOURCE_FOOTPRINT* pLayouts, uint* pNumRows, 
@@ -7746,113 +8096,113 @@ interface ID3D12Heap1 : ID3D12Heap
 }
 
 @GUID("6fda83a7-b84c-4e38-9ac8-c7bd22016b3d")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12graphicscommandlist3))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12graphicscommandlist3
 interface ID3D12GraphicsCommandList3 : ID3D12GraphicsCommandList2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist3-setprotectedresourcesession))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist3-setprotectedresourcesession
     void SetProtectedResourceSession(ID3D12ProtectedResourceSession pProtectedResourceSession);
 }
 
 @GUID("dbb84c27-36ce-4fc9-b801-f048c46ac570")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12metacommand))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12metacommand
 interface ID3D12MetaCommand : ID3D12Pageable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12metacommand-getrequiredparameterresourcesize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12metacommand-getrequiredparameterresourcesize
     ulong GetRequiredParameterResourceSize(D3D12_META_COMMAND_PARAMETER_STAGE Stage, uint ParameterIndex);
 }
 
 @GUID("8754318e-d3a9-4541-98cf-645b50dc4874")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12graphicscommandlist4))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12graphicscommandlist4
 interface ID3D12GraphicsCommandList4 : ID3D12GraphicsCommandList3
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist4-beginrenderpass))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist4-beginrenderpass
     void BeginRenderPass(uint NumRenderTargets, const(D3D12_RENDER_PASS_RENDER_TARGET_DESC)* pRenderTargets, 
                          const(D3D12_RENDER_PASS_DEPTH_STENCIL_DESC)* pDepthStencil, D3D12_RENDER_PASS_FLAGS Flags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist4-endrenderpass))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist4-endrenderpass
     void EndRenderPass();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist4-initializemetacommand))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist4-initializemetacommand
     void InitializeMetaCommand(ID3D12MetaCommand pMetaCommand, 
                                /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/const(void)* pInitializationParametersData, 
                                size_t InitializationParametersDataSizeInBytes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist4-executemetacommand))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist4-executemetacommand
     void ExecuteMetaCommand(ID3D12MetaCommand pMetaCommand, 
                             /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/const(void)* pExecutionParametersData, 
                             size_t ExecutionParametersDataSizeInBytes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist4-buildraytracingaccelerationstructure))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist4-buildraytracingaccelerationstructure
     void BuildRaytracingAccelerationStructure(const(D3D12_BUILD_RAYTRACING_ACCELERATION_STRUCTURE_DESC)* pDesc, 
                                               uint NumPostbuildInfoDescs, 
                                               const(D3D12_RAYTRACING_ACCELERATION_STRUCTURE_POSTBUILD_INFO_DESC)* pPostbuildInfoDescs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist4-emitraytracingaccelerationstructurepostbuildinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist4-emitraytracingaccelerationstructurepostbuildinfo
     void EmitRaytracingAccelerationStructurePostbuildInfo(const(D3D12_RAYTRACING_ACCELERATION_STRUCTURE_POSTBUILD_INFO_DESC)* pDesc, 
                                                           uint NumSourceAccelerationStructures, 
                                                           const(ulong)* pSourceAccelerationStructureData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist4-copyraytracingaccelerationstructure))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist4-copyraytracingaccelerationstructure
     void CopyRaytracingAccelerationStructure(ulong DestAccelerationStructureData, 
                                              ulong SourceAccelerationStructureData, 
                                              D3D12_RAYTRACING_ACCELERATION_STRUCTURE_COPY_MODE Mode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist4-setpipelinestate1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist4-setpipelinestate1
     void SetPipelineState1(ID3D12StateObject pStateObject);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist4-dispatchrays))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist4-dispatchrays
     void DispatchRays(const(D3D12_DISPATCH_RAYS_DESC)* pDesc);
 }
 
 @GUID("28e2495d-0f64-4ae4-a6ec-129255dc49a8")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12shadercachesession))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12shadercachesession
 interface ID3D12ShaderCacheSession : ID3D12DeviceChild
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12shadercachesession-findvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12shadercachesession-findvalue
     HRESULT FindValue(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(void)* pKey, 
                       uint KeySize, 
                       /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* pValue, 
                       uint* pValueSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12shadercachesession-storevalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12shadercachesession-storevalue
     HRESULT StoreValue(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(void)* pKey, 
                        uint KeySize, 
                        /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/const(void)* pValue, 
                        uint ValueSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12shadercachesession-setdeleteondestroy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12shadercachesession-setdeleteondestroy
     void    SetDeleteOnDestroy();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12shadercachesession-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12shadercachesession-getdesc
     D3D12_SHADER_CACHE_SESSION_DESC GetDesc();
 }
 
 @GUID("4c80e962-f032-4f60-bc9e-ebc2cfa1d83c")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12device9))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12device9
 interface ID3D12Device9 : ID3D12Device8
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device9-createshadercachesession))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device9-createshadercachesession
     HRESULT CreateShaderCacheSession(const(D3D12_SHADER_CACHE_SESSION_DESC)* pDesc, const(GUID)* riid, 
                                      void** ppvSession);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device9-shadercachecontrol))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device9-shadercachecontrol
     HRESULT ShaderCacheControl(D3D12_SHADER_CACHE_KIND_FLAGS Kinds, D3D12_SHADER_CACHE_CONTROL_FLAGS Control);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device9-createcommandqueue1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device9-createcommandqueue1
     HRESULT CreateCommandQueue1(const(D3D12_COMMAND_QUEUE_DESC)* pDesc, const(GUID)* CreatorID, const(GUID)* riid, 
                                 void** ppCommandQueue);
 }
 
 @GUID("517f8718-aa66-49f9-b02b-a7ab89c06031")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12device10))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12device10
 interface ID3D12Device10 : ID3D12Device9
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device10-createcommittedresource3))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device10-createcommittedresource3
     HRESULT CreateCommittedResource3(const(D3D12_HEAP_PROPERTIES)* pHeapProperties, D3D12_HEAP_FLAGS HeapFlags, 
                                      const(D3D12_RESOURCE_DESC1)* pDesc, D3D12_BARRIER_LAYOUT InitialLayout, 
                                      const(D3D12_CLEAR_VALUE)* pOptimizedClearValue, 
                                      ID3D12ProtectedResourceSession pProtectedSession, uint NumCastableFormats, 
                                      const(DXGI_FORMAT)* pCastableFormats, const(GUID)* riidResource, 
                                      void** ppvResource);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device10-createplacedresource2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device10-createplacedresource2
     HRESULT CreatePlacedResource2(ID3D12Heap pHeap, ulong HeapOffset, const(D3D12_RESOURCE_DESC1)* pDesc, 
                                   D3D12_BARRIER_LAYOUT InitialLayout, const(D3D12_CLEAR_VALUE)* pOptimizedClearValue, 
                                   uint NumCastableFormats, const(DXGI_FORMAT)* pCastableFormats, const(GUID)* riid, 
                                   void** ppvResource);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device10-createreservedresource2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12device10-createreservedresource2
     HRESULT CreateReservedResource2(const(D3D12_RESOURCE_DESC)* pDesc, D3D12_BARRIER_LAYOUT InitialLayout, 
                                     const(D3D12_CLEAR_VALUE)* pOptimizedClearValue, 
                                     ID3D12ProtectedResourceSession pProtectedSession, uint NumCastableFormats, 
@@ -7938,24 +8288,24 @@ interface ID3D12StateObjectDatabase : IUnknown
 }
 
 @GUID("bc66d368-7373-4943-8757-fc87dc79e476")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12virtualizationguestdevice))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12virtualizationguestdevice
 interface ID3D12VirtualizationGuestDevice : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12virtualizationguestdevice-sharewithhost))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12virtualizationguestdevice-sharewithhost
     HRESULT ShareWithHost(ID3D12DeviceChild pObject, HANDLE* pHandle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12virtualizationguestdevice-createfencefd))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12virtualizationguestdevice-createfencefd
     HRESULT CreateFenceFd(ID3D12Fence pFence, ulong FenceValue, int* pFenceFd);
 }
 
 @GUID("7071e1f0-e84b-4b33-974f-12fa49de65c5")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12tools))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12tools
 interface ID3D12Tools : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12tools-enableshaderinstrumentation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12tools-enableshaderinstrumentation
     void EnableShaderInstrumentation(BOOL bEnable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12tools-shaderinstrumentationenabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12tools-shaderinstrumentationenabled
     BOOL ShaderInstrumentationEnabled();
 }
 
@@ -8005,103 +8355,103 @@ interface ID3D12DeviceTools1 : ID3D12DeviceTools
 }
 
 @GUID("344488b7-6846-474b-b989-f027448245e0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12debug))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12debug
 interface ID3D12Debug : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debug-enabledebuglayer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debug-enabledebuglayer
     void EnableDebugLayer();
 }
 
 @GUID("affaa4ca-63fe-4d8e-b8ad-159000af4304")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12debug1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12debug1
 interface ID3D12Debug1 : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debug1-enabledebuglayer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debug1-enabledebuglayer
     void EnableDebugLayer();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debug1-setenablegpubasedvalidation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debug1-setenablegpubasedvalidation
     void SetEnableGPUBasedValidation(BOOL Enable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debug1-setenablesynchronizedcommandqueuevalidation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debug1-setenablesynchronizedcommandqueuevalidation
     void SetEnableSynchronizedCommandQueueValidation(BOOL Enable);
 }
 
 @GUID("93a665c4-a3b2-4e5d-b692-a26ae14e3374")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12debug2))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12debug2
 interface ID3D12Debug2 : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debug2-setgpubasedvalidationflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debug2-setgpubasedvalidationflags
     void SetGPUBasedValidationFlags(D3D12_GPU_BASED_VALIDATION_FLAGS Flags);
 }
 
 @GUID("5cf4e58f-f671-4ff1-a542-3686e3d153d1")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12debug3))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12debug3
 interface ID3D12Debug3 : ID3D12Debug
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debug3-setenablegpubasedvalidation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debug3-setenablegpubasedvalidation
     void SetEnableGPUBasedValidation(BOOL Enable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debug3-setenablesynchronizedcommandqueuevalidation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debug3-setenablesynchronizedcommandqueuevalidation
     void SetEnableSynchronizedCommandQueueValidation(BOOL Enable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debug3-setgpubasedvalidationflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debug3-setgpubasedvalidationflags
     void SetGPUBasedValidationFlags(D3D12_GPU_BASED_VALIDATION_FLAGS Flags);
 }
 
 @GUID("014b816e-9ec5-4a2f-a845-ffbe441ce13a")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12debug4))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12debug4
 interface ID3D12Debug4 : ID3D12Debug3
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debug4-disabledebuglayer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debug4-disabledebuglayer
     void DisableDebugLayer();
 }
 
 @GUID("548d6b12-09fa-40e0-9069-5dcd589a52c9")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12debug5))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12debug5
 interface ID3D12Debug5 : ID3D12Debug4
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debug5-setenableautoname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debug5-setenableautoname
     void SetEnableAutoName(BOOL Enable);
 }
 
 @GUID("82a816d6-5d01-4157-97d0-4975463fd1ed")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12debug6))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12debug6
 interface ID3D12Debug6 : ID3D12Debug5
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debug6-setforcelegacybarriervalidation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debug6-setforcelegacybarriervalidation
     void SetForceLegacyBarrierValidation(BOOL Enable);
 }
 
 @GUID("a9b71770-d099-4a65-a698-3dee10020f88")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12debugdevice1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12debugdevice1
 interface ID3D12DebugDevice1 : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debugdevice1-setdebugparameter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debugdevice1-setdebugparameter
     HRESULT SetDebugParameter(D3D12_DEBUG_DEVICE_PARAMETER_TYPE Type, 
                               /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/const(void)* pData, 
                               uint DataSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debugdevice1-getdebugparameter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debugdevice1-getdebugparameter
     HRESULT GetDebugParameter(D3D12_DEBUG_DEVICE_PARAMETER_TYPE Type, 
                               /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* pData, 
                               uint DataSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debugdevice1-reportlivedeviceobjects))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debugdevice1-reportlivedeviceobjects
     HRESULT ReportLiveDeviceObjects(D3D12_RLDO_FLAGS Flags);
 }
 
 @GUID("3febd6dd-4973-4787-8194-e45f9e28923e")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12debugdevice))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12debugdevice
 interface ID3D12DebugDevice : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debugdevice-setfeaturemask))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debugdevice-setfeaturemask
     HRESULT SetFeatureMask(D3D12_DEBUG_FEATURE Mask);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debugdevice-getfeaturemask))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debugdevice-getfeaturemask
     D3D12_DEBUG_FEATURE GetFeatureMask();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debugdevice-reportlivedeviceobjects))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debugdevice-reportlivedeviceobjects
     HRESULT ReportLiveDeviceObjects(D3D12_RLDO_FLAGS Flags);
 }
 
@@ -8118,11 +8468,11 @@ interface ID3D12DebugDevice2 : ID3D12DebugDevice
 }
 
 @GUID("09e0bf36-54ac-484f-8847-4baeeab6053a")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12debugcommandqueue))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12debugcommandqueue
 interface ID3D12DebugCommandQueue : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debugcommandqueue-assertresourcestate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debugcommandqueue-assertresourcestate
     BOOL AssertResourceState(ID3D12Resource pResource, uint Subresource, uint State);
 }
 
@@ -8135,32 +8485,32 @@ interface ID3D12DebugCommandQueue1 : ID3D12DebugCommandQueue
 }
 
 @GUID("102ca951-311b-4b01-b11f-ecb83e061b37")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12debugcommandlist1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12debugcommandlist1
 interface ID3D12DebugCommandList1 : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debugcommandlist1-assertresourcestate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debugcommandlist1-assertresourcestate
     BOOL    AssertResourceState(ID3D12Resource pResource, uint Subresource, uint State);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debugcommandlist1-setdebugparameter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debugcommandlist1-setdebugparameter
     HRESULT SetDebugParameter(D3D12_DEBUG_COMMAND_LIST_PARAMETER_TYPE Type, 
                               /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/const(void)* pData, 
                               uint DataSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debugcommandlist1-getdebugparameter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debugcommandlist1-getdebugparameter
     HRESULT GetDebugParameter(D3D12_DEBUG_COMMAND_LIST_PARAMETER_TYPE Type, 
                               /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* pData, 
                               uint DataSize);
 }
 
 @GUID("09e0bf36-54ac-484f-8847-4baeeab6053f")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12debugcommandlist))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12debugcommandlist
 interface ID3D12DebugCommandList : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debugcommandlist-assertresourcestate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debugcommandlist-assertresourcestate
     BOOL    AssertResourceState(ID3D12Resource pResource, uint Subresource, uint State);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debugcommandlist-setfeaturemask))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debugcommandlist-setfeaturemask
     HRESULT SetFeatureMask(D3D12_DEBUG_FEATURE Mask);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debugcommandlist-getfeaturemask))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12debugcommandlist-getfeaturemask
     D3D12_DEBUG_FEATURE GetFeatureMask();
 }
 
@@ -8185,13 +8535,13 @@ interface ID3D12DebugCommandList3 : ID3D12DebugCommandList2
 }
 
 @GUID("0adf7d52-929c-4e61-addb-ffed30de66ef")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12sharingcontract))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12sharingcontract
 interface ID3D12SharingContract : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12sharingcontract-present))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12sharingcontract-present
     void Present(ID3D12Resource pResource, uint Subresource, HWND window);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12sharingcontract-sharedfencesignal))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12sharingcontract-sharedfencesignal
     void SharedFenceSignal(ID3D12Fence pFence, ulong FenceValue);
     void BeginCapturableWork(const(GUID)* guid);
     void EndCapturableWork(const(GUID)* guid);
@@ -8205,84 +8555,84 @@ interface ID3D12ManualWriteTrackingResource : IUnknown
 }
 
 @GUID("0742a90b-c387-483f-b946-30a7e4e61458")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12infoqueue))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nn-d3d12sdklayers-id3d12infoqueue
 interface ID3D12InfoQueue : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-setmessagecountlimit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-setmessagecountlimit
     HRESULT SetMessageCountLimit(ulong MessageCountLimit);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-clearstoredmessages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-clearstoredmessages
     void    ClearStoredMessages();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-getmessage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-getmessage
     HRESULT GetMessage(ulong MessageIndex, 
                        /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/D3D12_MESSAGE* pMessage, 
                        size_t* pMessageByteLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-getnummessagesallowedbystoragefilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-getnummessagesallowedbystoragefilter
     ulong   GetNumMessagesAllowedByStorageFilter();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-getnummessagesdeniedbystoragefilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-getnummessagesdeniedbystoragefilter
     ulong   GetNumMessagesDeniedByStorageFilter();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-getnumstoredmessages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-getnumstoredmessages
     ulong   GetNumStoredMessages();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-getnumstoredmessagesallowedbyretrievalfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-getnumstoredmessagesallowedbyretrievalfilter
     ulong   GetNumStoredMessagesAllowedByRetrievalFilter();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-getnummessagesdiscardedbymessagecountlimit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-getnummessagesdiscardedbymessagecountlimit
     ulong   GetNumMessagesDiscardedByMessageCountLimit();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-getmessagecountlimit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-getmessagecountlimit
     ulong   GetMessageCountLimit();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-addstoragefilterentries))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-addstoragefilterentries
     HRESULT AddStorageFilterEntries(D3D12_INFO_QUEUE_FILTER* pFilter);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-getstoragefilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-getstoragefilter
     HRESULT GetStorageFilter(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/D3D12_INFO_QUEUE_FILTER* pFilter, 
                              size_t* pFilterByteLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-clearstoragefilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-clearstoragefilter
     void    ClearStorageFilter();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-pushemptystoragefilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-pushemptystoragefilter
     HRESULT PushEmptyStorageFilter();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-pushcopyofstoragefilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-pushcopyofstoragefilter
     HRESULT PushCopyOfStorageFilter();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-pushstoragefilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-pushstoragefilter
     HRESULT PushStorageFilter(D3D12_INFO_QUEUE_FILTER* pFilter);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-popstoragefilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-popstoragefilter
     void    PopStorageFilter();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-getstoragefilterstacksize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-getstoragefilterstacksize
     uint    GetStorageFilterStackSize();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-addretrievalfilterentries))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-addretrievalfilterentries
     HRESULT AddRetrievalFilterEntries(D3D12_INFO_QUEUE_FILTER* pFilter);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-getretrievalfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-getretrievalfilter
     HRESULT GetRetrievalFilter(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/D3D12_INFO_QUEUE_FILTER* pFilter, 
                                size_t* pFilterByteLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-clearretrievalfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-clearretrievalfilter
     void    ClearRetrievalFilter();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-pushemptyretrievalfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-pushemptyretrievalfilter
     HRESULT PushEmptyRetrievalFilter();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-pushcopyofretrievalfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-pushcopyofretrievalfilter
     HRESULT PushCopyOfRetrievalFilter();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-pushretrievalfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-pushretrievalfilter
     HRESULT PushRetrievalFilter(D3D12_INFO_QUEUE_FILTER* pFilter);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-popretrievalfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-popretrievalfilter
     void    PopRetrievalFilter();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-getretrievalfilterstacksize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-getretrievalfilterstacksize
     uint    GetRetrievalFilterStackSize();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-addmessage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-addmessage
     HRESULT AddMessage(D3D12_MESSAGE_CATEGORY Category, D3D12_MESSAGE_SEVERITY Severity, D3D12_MESSAGE_ID ID, 
                        const(PSTR) pDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-addapplicationmessage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-addapplicationmessage
     HRESULT AddApplicationMessage(D3D12_MESSAGE_SEVERITY Severity, const(PSTR) pDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-setbreakoncategory))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-setbreakoncategory
     HRESULT SetBreakOnCategory(D3D12_MESSAGE_CATEGORY Category, BOOL bEnable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-setbreakonseverity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-setbreakonseverity
     HRESULT SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY Severity, BOOL bEnable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-setbreakonid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-setbreakonid
     HRESULT SetBreakOnID(D3D12_MESSAGE_ID ID, BOOL bEnable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-getbreakoncategory))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-getbreakoncategory
     BOOL    GetBreakOnCategory(D3D12_MESSAGE_CATEGORY Category);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-getbreakonseverity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-getbreakonseverity
     BOOL    GetBreakOnSeverity(D3D12_MESSAGE_SEVERITY Severity);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-getbreakonid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-getbreakonid
     BOOL    GetBreakOnID(D3D12_MESSAGE_ID ID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-setmutedebugoutput))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-setmutedebugoutput
     void    SetMuteDebugOutput(BOOL bMute);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-getmutedebugoutput))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12sdklayers/nf-d3d12sdklayers-id3d12infoqueue-getmutedebugoutput
     BOOL    GetMuteDebugOutput();
 }
 
@@ -8297,11 +8647,11 @@ interface ID3D12InfoQueue1 : ID3D12InfoQueue
 }
 
 @GUID("e9eb5314-33aa-42b2-a718-d77f58b1f1c7")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12sdkconfiguration))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12sdkconfiguration
 interface ID3D12SDKConfiguration : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12sdkconfiguration-setsdkversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12sdkconfiguration-setsdkversion
     HRESULT SetSDKVersion(uint SDKVersion, const(PSTR) SDKPath);
 }
 
@@ -8365,13 +8715,13 @@ interface ID3D12ApplicationIdentity : IUnknown
 }
 
 @GUID("55050859-4024-474c-87f5-6472eaee44ea")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12graphicscommandlist5))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12graphicscommandlist5
 interface ID3D12GraphicsCommandList5 : ID3D12GraphicsCommandList4
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist5-rssetshadingrate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist5-rssetshadingrate
     void RSSetShadingRate(D3D12_SHADING_RATE baseShadingRate, const(D3D12_SHADING_RATE_COMBINER)* combiners);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist5-rssetshadingrateimage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist5-rssetshadingrateimage
     void RSSetShadingRateImage(ID3D12Resource shadingRateImage);
 }
 
@@ -8383,11 +8733,11 @@ interface ID3D12GraphicsCommandList6 : ID3D12GraphicsCommandList5
 }
 
 @GUID("dd171223-8b61-4769-90e3-160ccde4e2c1")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12graphicscommandlist7))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nn-d3d12-id3d12graphicscommandlist7
 interface ID3D12GraphicsCommandList7 : ID3D12GraphicsCommandList6
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist7-barrier))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist7-barrier
     void Barrier(uint NumBarrierGroups, const(D3D12_BARRIER_GROUP)* pBarrierGroups);
 }
 
@@ -8444,145 +8794,145 @@ interface ID3D12DeviceStatistics : IUnknown
 }
 
 @GUID("e913c351-783d-48ca-a1d1-4f306284ad56")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nn-d3d12shader-id3d12shaderreflectiontype))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nn-d3d12shader-id3d12shaderreflectiontype
 interface ID3D12ShaderReflectionType
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectiontype-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectiontype-getdesc
     HRESULT GetDesc(D3D12_SHADER_TYPE_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectiontype-getmembertypebyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectiontype-getmembertypebyindex
     ID3D12ShaderReflectionType GetMemberTypeByIndex(uint Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectiontype-getmembertypebyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectiontype-getmembertypebyname
     ID3D12ShaderReflectionType GetMemberTypeByName(const(PSTR) Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectiontype-getmembertypename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectiontype-getmembertypename
     PSTR    GetMemberTypeName(uint Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectiontype-isequal))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectiontype-isequal
     HRESULT IsEqual(ID3D12ShaderReflectionType pType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectiontype-getsubtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectiontype-getsubtype
     ID3D12ShaderReflectionType GetSubType();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectiontype-getbaseclass))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectiontype-getbaseclass
     ID3D12ShaderReflectionType GetBaseClass();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectiontype-getnuminterfaces))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectiontype-getnuminterfaces
     uint    GetNumInterfaces();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectiontype-getinterfacebyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectiontype-getinterfacebyindex
     ID3D12ShaderReflectionType GetInterfaceByIndex(uint uIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectiontype-isoftype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectiontype-isoftype
     HRESULT IsOfType(ID3D12ShaderReflectionType pType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectiontype-implementsinterface))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectiontype-implementsinterface
     HRESULT ImplementsInterface(ID3D12ShaderReflectionType pBase);
 }
 
 @GUID("8337a8a6-a216-444a-b2f4-314733a73aea")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nn-d3d12shader-id3d12shaderreflectionvariable))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nn-d3d12shader-id3d12shaderreflectionvariable
 interface ID3D12ShaderReflectionVariable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectionvariable-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectionvariable-getdesc
     HRESULT GetDesc(D3D12_SHADER_VARIABLE_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectionvariable-gettype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectionvariable-gettype
     ID3D12ShaderReflectionType GetType();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectionvariable-getbuffer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectionvariable-getbuffer
     ID3D12ShaderReflectionConstantBuffer GetBuffer();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectionvariable-getinterfaceslot))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectionvariable-getinterfaceslot
     uint    GetInterfaceSlot(uint uArrayIndex);
 }
 
 @GUID("c59598b4-48b3-4869-b9b1-b1618b14a8b7")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nn-d3d12shader-id3d12shaderreflectionconstantbuffer))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nn-d3d12shader-id3d12shaderreflectionconstantbuffer
 interface ID3D12ShaderReflectionConstantBuffer
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectionconstantbuffer-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectionconstantbuffer-getdesc
     HRESULT GetDesc(D3D12_SHADER_BUFFER_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectionconstantbuffer-getvariablebyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectionconstantbuffer-getvariablebyindex
     ID3D12ShaderReflectionVariable GetVariableByIndex(uint Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectionconstantbuffer-getvariablebyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflectionconstantbuffer-getvariablebyname
     ID3D12ShaderReflectionVariable GetVariableByName(const(PSTR) Name);
 }
 
 @GUID("5a58797d-a72c-478d-8ba2-efc6b0efe88e")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nn-d3d12shader-id3d12shaderreflection))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nn-d3d12shader-id3d12shaderreflection
 interface ID3D12ShaderReflection : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-getdesc
     HRESULT GetDesc(D3D12_SHADER_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-getconstantbufferbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-getconstantbufferbyindex
     ID3D12ShaderReflectionConstantBuffer GetConstantBufferByIndex(uint Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-getconstantbufferbyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-getconstantbufferbyname
     ID3D12ShaderReflectionConstantBuffer GetConstantBufferByName(const(PSTR) Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-getresourcebindingdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-getresourcebindingdesc
     HRESULT GetResourceBindingDesc(uint ResourceIndex, D3D12_SHADER_INPUT_BIND_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-getinputparameterdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-getinputparameterdesc
     HRESULT GetInputParameterDesc(uint ParameterIndex, D3D12_SIGNATURE_PARAMETER_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-getoutputparameterdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-getoutputparameterdesc
     HRESULT GetOutputParameterDesc(uint ParameterIndex, D3D12_SIGNATURE_PARAMETER_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-getpatchconstantparameterdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-getpatchconstantparameterdesc
     HRESULT GetPatchConstantParameterDesc(uint ParameterIndex, D3D12_SIGNATURE_PARAMETER_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-getvariablebyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-getvariablebyname
     ID3D12ShaderReflectionVariable GetVariableByName(const(PSTR) Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-getresourcebindingdescbyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-getresourcebindingdescbyname
     HRESULT GetResourceBindingDescByName(const(PSTR) Name, D3D12_SHADER_INPUT_BIND_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-getmovinstructioncount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-getmovinstructioncount
     uint    GetMovInstructionCount();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-getmovcinstructioncount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-getmovcinstructioncount
     uint    GetMovcInstructionCount();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-getconversioninstructioncount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-getconversioninstructioncount
     uint    GetConversionInstructionCount();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-getbitwiseinstructioncount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-getbitwiseinstructioncount
     uint    GetBitwiseInstructionCount();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-getgsinputprimitive))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-getgsinputprimitive
     D3D_PRIMITIVE GetGSInputPrimitive();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-issamplefrequencyshader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-issamplefrequencyshader
     BOOL    IsSampleFrequencyShader();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-getnuminterfaceslots))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-getnuminterfaceslots
     uint    GetNumInterfaceSlots();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-getminfeaturelevel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-getminfeaturelevel
     HRESULT GetMinFeatureLevel(D3D_FEATURE_LEVEL* pLevel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-getthreadgroupsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-getthreadgroupsize
     uint    GetThreadGroupSize(uint* pSizeX, uint* pSizeY, uint* pSizeZ);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-getrequiresflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12shaderreflection-getrequiresflags
     ulong   GetRequiresFlags();
 }
 
 @GUID("8e349d19-54db-4a56-9dc9-119d87bdb804")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nn-d3d12shader-id3d12libraryreflection))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nn-d3d12shader-id3d12libraryreflection
 interface ID3D12LibraryReflection : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12libraryreflection-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12libraryreflection-getdesc
     HRESULT GetDesc(D3D12_LIBRARY_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12libraryreflection-getfunctionbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12libraryreflection-getfunctionbyindex
     ID3D12FunctionReflection GetFunctionByIndex(int FunctionIndex);
 }
 
 @GUID("1108795c-2772-4ba9-b2a8-d464dc7e2799")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nn-d3d12shader-id3d12functionreflection))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nn-d3d12shader-id3d12functionreflection
 interface ID3D12FunctionReflection
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12functionreflection-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12functionreflection-getdesc
     HRESULT GetDesc(D3D12_FUNCTION_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12functionreflection-getconstantbufferbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12functionreflection-getconstantbufferbyindex
     ID3D12ShaderReflectionConstantBuffer GetConstantBufferByIndex(uint BufferIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12functionreflection-getconstantbufferbyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12functionreflection-getconstantbufferbyname
     ID3D12ShaderReflectionConstantBuffer GetConstantBufferByName(const(PSTR) Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12functionreflection-getresourcebindingdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12functionreflection-getresourcebindingdesc
     HRESULT GetResourceBindingDesc(uint ResourceIndex, D3D12_SHADER_INPUT_BIND_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12functionreflection-getvariablebyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12functionreflection-getvariablebyname
     ID3D12ShaderReflectionVariable GetVariableByName(const(PSTR) Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12functionreflection-getresourcebindingdescbyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12functionreflection-getresourcebindingdescbyname
     HRESULT GetResourceBindingDescByName(const(PSTR) Name, D3D12_SHADER_INPUT_BIND_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12functionreflection-getfunctionparameter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12functionreflection-getfunctionparameter
     ID3D12FunctionParameterReflection GetFunctionParameter(int ParameterIndex);
 }
 
 @GUID("ec25f42d-7006-4f2b-b33e-02cc3375733f")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nn-d3d12shader-id3d12functionparameterreflection))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nn-d3d12shader-id3d12functionparameterreflection
 interface ID3D12FunctionParameterReflection
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12functionparameterreflection-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d12shader/nf-d3d12shader-id3d12functionparameterreflection-getdesc
     HRESULT GetDesc(D3D12_PARAMETER_DESC* pDesc);
 }
 

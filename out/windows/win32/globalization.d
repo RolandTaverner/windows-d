@@ -3,121 +3,133 @@
 module windows.win32.globalization;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BSTR, CHAR, HRESULT, HWND, LPARAM,
-                                         PSTR, PWSTR, RECT, SIZE, SYSTEMTIME;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, HRESULT, HWND, LPARAM,
+                                                    PSTR, PWSTR, RECT, SIZE, SYSTEMTIME;
 public import windows.win32.graphics.gdi : ABC, AXESLISTA, AXESLISTW, ETO_OPTIONS,
                                            HDC, HFONT, NEWTEXTMETRICA, NEWTEXTMETRICW;
-public import windows.win32.system.com : IEnumString, IStream, IUnknown;
+public import windows.win32.system.com.com : IEnumString, IStream, IUnknown;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
+
 alias FOLD_STRING_MAP_FLAGS = uint;
 enum : uint
 {
-    MAP_COMPOSITE        = 0x00000040,
-    MAP_EXPAND_LIGATURES = 0x00002000,
-    MAP_FOLDCZONE        = 0x00000010,
-    MAP_FOLDDIGITS       = 0x00000080,
-    MAP_PRECOMPOSED      = 0x00000020,
+    MAP_COMPOSITE        = 0x00000040U,
+    MAP_EXPAND_LIGATURES = 0x00002000U,
+    MAP_FOLDCZONE        = 0x00000010U,
+    MAP_FOLDDIGITS       = 0x00000080U,
+    MAP_PRECOMPOSED      = 0x00000020U,
 }
+
 alias ENUM_DATE_FORMATS_FLAGS = uint;
 enum : uint
 {
-    DATE_SHORTDATE        = 0x00000001,
-    DATE_LONGDATE         = 0x00000002,
-    DATE_YEARMONTH        = 0x00000008,
-    DATE_MONTHDAY         = 0x00000080,
-    DATE_AUTOLAYOUT       = 0x00000040,
-    DATE_LTRREADING       = 0x00000010,
-    DATE_RTLREADING       = 0x00000020,
-    DATE_USE_ALT_CALENDAR = 0x00000004,
+    DATE_SHORTDATE        = 0x00000001U,
+    DATE_LONGDATE         = 0x00000002U,
+    DATE_YEARMONTH        = 0x00000008U,
+    DATE_MONTHDAY         = 0x00000080U,
+    DATE_AUTOLAYOUT       = 0x00000040U,
+    DATE_LTRREADING       = 0x00000010U,
+    DATE_RTLREADING       = 0x00000020U,
+    DATE_USE_ALT_CALENDAR = 0x00000004U,
 }
+
 alias TRANSLATE_CHARSET_INFO_FLAGS = uint;
 enum : uint
 {
-    TCI_SRCCHARSET  = 0x00000001,
-    TCI_SRCCODEPAGE = 0x00000002,
-    TCI_SRCFONTSIG  = 0x00000003,
-    TCI_SRCLOCALE   = 0x00001000,
+    TCI_SRCCHARSET  = 0x00000001U,
+    TCI_SRCCODEPAGE = 0x00000002U,
+    TCI_SRCFONTSIG  = 0x00000003U,
+    TCI_SRCLOCALE   = 0x00001000U,
 }
+
 alias TIME_FORMAT_FLAGS = uint;
 enum : uint
 {
-    TIME_NOMINUTESORSECONDS = 0x00000001,
-    TIME_NOSECONDS          = 0x00000002,
-    TIME_NOTIMEMARKER       = 0x00000004,
-    TIME_FORCE24HOURFORMAT  = 0x00000008,
+    TIME_NOMINUTESORSECONDS = 0x00000001U,
+    TIME_NOSECONDS          = 0x00000002U,
+    TIME_NOTIMEMARKER       = 0x00000004U,
+    TIME_FORCE24HOURFORMAT  = 0x00000008U,
 }
+
 alias ENUM_SYSTEM_LANGUAGE_GROUPS_FLAGS = uint;
 enum : uint
 {
-    LGRPID_INSTALLED = 0x00000001,
-    LGRPID_SUPPORTED = 0x00000002,
+    LGRPID_INSTALLED = 0x00000001U,
+    LGRPID_SUPPORTED = 0x00000002U,
 }
+
 alias MULTI_BYTE_TO_WIDE_CHAR_FLAGS = uint;
 enum : uint
 {
-    MB_COMPOSITE         = 0x00000002,
-    MB_ERR_INVALID_CHARS = 0x00000008,
-    MB_PRECOMPOSED       = 0x00000001,
-    MB_USEGLYPHCHARS     = 0x00000004,
+    MB_COMPOSITE         = 0x00000002U,
+    MB_ERR_INVALID_CHARS = 0x00000008U,
+    MB_PRECOMPOSED       = 0x00000001U,
+    MB_USEGLYPHCHARS     = 0x00000004U,
 }
+
 alias COMPARE_STRING_FLAGS = uint;
 enum : uint
 {
-    LINGUISTIC_IGNORECASE      = 0x00000010,
-    LINGUISTIC_IGNOREDIACRITIC = 0x00000020,
-    NORM_IGNORECASE            = 0x00000001,
-    NORM_IGNOREKANATYPE        = 0x00010000,
-    NORM_IGNORENONSPACE        = 0x00000002,
-    NORM_IGNORESYMBOLS         = 0x00000004,
-    NORM_IGNOREWIDTH           = 0x00020000,
-    NORM_LINGUISTIC_CASING     = 0x08000000,
-    SORT_DIGITSASNUMBERS       = 0x00000008,
-    SORT_STRINGSORT            = 0x00001000,
+    LINGUISTIC_IGNORECASE      = 0x00000010U,
+    LINGUISTIC_IGNOREDIACRITIC = 0x00000020U,
+    NORM_IGNORECASE            = 0x00000001U,
+    NORM_IGNOREKANATYPE        = 0x00010000U,
+    NORM_IGNORENONSPACE        = 0x00000002U,
+    NORM_IGNORESYMBOLS         = 0x00000004U,
+    NORM_IGNOREWIDTH           = 0x00020000U,
+    NORM_LINGUISTIC_CASING     = 0x08000000U,
+    SORT_DIGITSASNUMBERS       = 0x00000008U,
+    SORT_STRINGSORT            = 0x00001000U,
 }
+
 alias IS_VALID_LOCALE_FLAGS = uint;
 enum : uint
 {
-    LCID_INSTALLED = 0x00000001,
-    LCID_SUPPORTED = 0x00000002,
+    LCID_INSTALLED = 0x00000001U,
+    LCID_SUPPORTED = 0x00000002U,
 }
+
 alias ENUM_SYSTEM_CODE_PAGES_FLAGS = uint;
 enum : uint
 {
-    CP_INSTALLED = 0x00000001,
-    CP_SUPPORTED = 0x00000002,
+    CP_INSTALLED = 0x00000001U,
+    CP_SUPPORTED = 0x00000002U,
 }
+
 alias SCRIPT_IS_COMPLEX_FLAGS = uint;
 enum : uint
 {
-    SIC_ASCIIDIGIT = 0x00000002,
-    SIC_COMPLEX    = 0x00000001,
-    SIC_NEUTRAL    = 0x00000004,
+    SIC_ASCIIDIGIT = 0x00000002U,
+    SIC_COMPLEX    = 0x00000001U,
+    SIC_NEUTRAL    = 0x00000004U,
 }
+
 alias IS_TEXT_UNICODE_RESULT = uint;
 enum : uint
 {
-    IS_TEXT_UNICODE_ASCII16            = 0x00000001,
-    IS_TEXT_UNICODE_REVERSE_ASCII16    = 0x00000010,
-    IS_TEXT_UNICODE_STATISTICS         = 0x00000002,
-    IS_TEXT_UNICODE_REVERSE_STATISTICS = 0x00000020,
-    IS_TEXT_UNICODE_CONTROLS           = 0x00000004,
-    IS_TEXT_UNICODE_REVERSE_CONTROLS   = 0x00000040,
-    IS_TEXT_UNICODE_SIGNATURE          = 0x00000008,
-    IS_TEXT_UNICODE_REVERSE_SIGNATURE  = 0x00000080,
-    IS_TEXT_UNICODE_ILLEGAL_CHARS      = 0x00000100,
-    IS_TEXT_UNICODE_ODD_LENGTH         = 0x00000200,
-    IS_TEXT_UNICODE_NULL_BYTES         = 0x00001000,
-    IS_TEXT_UNICODE_UNICODE_MASK       = 0x0000000f,
-    IS_TEXT_UNICODE_REVERSE_MASK       = 0x000000f0,
-    IS_TEXT_UNICODE_NOT_UNICODE_MASK   = 0x00000f00,
-    IS_TEXT_UNICODE_NOT_ASCII_MASK     = 0x0000f000,
+    IS_TEXT_UNICODE_ASCII16            = 0x00000001U,
+    IS_TEXT_UNICODE_REVERSE_ASCII16    = 0x00000010U,
+    IS_TEXT_UNICODE_STATISTICS         = 0x00000002U,
+    IS_TEXT_UNICODE_REVERSE_STATISTICS = 0x00000020U,
+    IS_TEXT_UNICODE_CONTROLS           = 0x00000004U,
+    IS_TEXT_UNICODE_REVERSE_CONTROLS   = 0x00000040U,
+    IS_TEXT_UNICODE_SIGNATURE          = 0x00000008U,
+    IS_TEXT_UNICODE_REVERSE_SIGNATURE  = 0x00000080U,
+    IS_TEXT_UNICODE_ILLEGAL_CHARS      = 0x00000100U,
+    IS_TEXT_UNICODE_ODD_LENGTH         = 0x00000200U,
+    IS_TEXT_UNICODE_NULL_BYTES         = 0x00001000U,
+    IS_TEXT_UNICODE_UNICODE_MASK       = 0x0000000fU,
+    IS_TEXT_UNICODE_REVERSE_MASK       = 0x000000f0U,
+    IS_TEXT_UNICODE_NOT_UNICODE_MASK   = 0x00000f00U,
+    IS_TEXT_UNICODE_NOT_ASCII_MASK     = 0x0000f000U,
 }
+
 alias COMPARESTRING_RESULT = int;
 enum : int
 {
@@ -125,13 +137,15 @@ enum : int
     CSTR_EQUAL        = 0x00000002,
     CSTR_GREATER_THAN = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnls/ne-winnls-sysnls_function))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnls/ne-winnls-sysnls_function
 alias SYSNLS_FUNCTION = int;
 enum : int
 {
     COMPARE_STRING = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnls/ne-winnls-sysgeotype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnls/ne-winnls-sysgeotype
 alias SYSGEOTYPE = int;
 enum : int
 {
@@ -154,7 +168,8 @@ enum : int
     GEO_NAME              = 0x00000011,
     GEO_ID                = 0x00000012,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnls/ne-winnls-sysgeoclass))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnls/ne-winnls-sysgeoclass
 alias SYSGEOCLASS = int;
 enum : int
 {
@@ -162,7 +177,8 @@ enum : int
     GEOCLASS_REGION = 0x0000000e,
     GEOCLASS_ALL    = 0x00000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnls/ne-winnls-norm_form))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnls/ne-winnls-norm_form
 alias NORM_FORM = int;
 enum : int
 {
@@ -172,7 +188,8 @@ enum : int
     NormalizationKC    = 0x00000005,
     NormalizationKD    = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/ne-spellcheck-wordlist_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/ne-spellcheck-wordlist_type
 alias WORDLIST_TYPE = int;
 enum : int
 {
@@ -181,7 +198,8 @@ enum : int
     WORDLIST_TYPE_EXCLUDE     = 0x00000002,
     WORDLIST_TYPE_AUTOCORRECT = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/ne-spellcheck-corrective_action))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/ne-spellcheck-corrective_action
 alias CORRECTIVE_ACTION = int;
 enum : int
 {
@@ -190,7 +208,8 @@ enum : int
     CORRECTIVE_ACTION_REPLACE         = 0x00000002,
     CORRECTIVE_ACTION_DELETE          = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/usp10/ne-usp10-script_justify))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usp10/ne-usp10-script_justify
 alias SCRIPT_JUSTIFY = int;
 enum : int
 {
@@ -211,6 +230,7 @@ enum : int
     SCRIPT_JUSTIFY_ARABIC_SEEN    = 0x0000000e,
     SCRIPT_JUSTIFY_ARABIC_SEEN_M  = 0x0000000f,
 }
+
 enum UErrorCode : int
 {
     U_USING_FALLBACK_WARNING           = 0xffffff80,
@@ -367,6 +387,7 @@ enum UErrorCode : int
     U_PLUGIN_TOO_HIGH                  = 0x00010500,
     U_PLUGIN_DIDNT_SET_LEVEL           = 0x00010501,
 }
+
 enum UTraceLevel : int
 {
     UTRACE_OFF        = 0xffffffff,
@@ -376,6 +397,7 @@ enum UTraceLevel : int
     UTRACE_INFO       = 0x00000007,
     UTRACE_VERBOSE    = 0x00000009,
 }
+
 enum UTraceFunctionNumber : int
 {
     UTRACE_FUNCTION_START              = 0x00000000,
@@ -406,6 +428,7 @@ enum UTraceFunctionNumber : int
     UTRACE_UDATA_DATA_FILE             = 0x00003002,
     UTRACE_UDATA_RES_FILE              = 0x00003003,
 }
+
 enum UStringTrieResult : int
 {
     USTRINGTRIE_NO_MATCH           = 0x00000000,
@@ -413,6 +436,7 @@ enum UStringTrieResult : int
     USTRINGTRIE_FINAL_VALUE        = 0x00000002,
     USTRINGTRIE_INTERMEDIATE_VALUE = 0x00000003,
 }
+
 enum UScriptCode : int
 {
     USCRIPT_INVALID_CODE                 = 0xffffffff,
@@ -615,6 +639,7 @@ enum UScriptCode : int
     USCRIPT_KHITAN_SMALL_SCRIPT          = 0x000000bf,
     USCRIPT_YEZIDI                       = 0x000000c0,
 }
+
 enum UScriptUsage : int
 {
     USCRIPT_USAGE_NOT_ENCODED  = 0x00000000,
@@ -624,6 +649,7 @@ enum UScriptUsage : int
     USCRIPT_USAGE_ASPIRATIONAL = 0x00000004,
     USCRIPT_USAGE_RECOMMENDED  = 0x00000005,
 }
+
 enum UCharIteratorOrigin : int
 {
     UITER_START   = 0x00000000,
@@ -632,17 +658,20 @@ enum UCharIteratorOrigin : int
     UITER_ZERO    = 0x00000003,
     UITER_LENGTH  = 0x00000004,
 }
+
 enum ULocDataLocaleType : int
 {
     ULOC_ACTUAL_LOCALE = 0x00000000,
     ULOC_VALID_LOCALE  = 0x00000001,
 }
+
 enum ULocAvailableType : int
 {
     ULOC_AVAILABLE_DEFAULT             = 0x00000000,
     ULOC_AVAILABLE_ONLY_LEGACY_ALIASES = 0x00000001,
     ULOC_AVAILABLE_WITH_LEGACY_ALIASES = 0x00000002,
 }
+
 enum ULayoutType : int
 {
     ULOC_LAYOUT_LTR     = 0x00000000,
@@ -651,12 +680,14 @@ enum ULayoutType : int
     ULOC_LAYOUT_BTT     = 0x00000003,
     ULOC_LAYOUT_UNKNOWN = 0x00000004,
 }
+
 enum UAcceptResult : int
 {
     ULOC_ACCEPT_FAILED   = 0x00000000,
     ULOC_ACCEPT_VALID    = 0x00000001,
     ULOC_ACCEPT_FALLBACK = 0x00000002,
 }
+
 enum UResType : int
 {
     URES_NONE       = 0xffffffff,
@@ -668,6 +699,7 @@ enum UResType : int
     URES_ARRAY      = 0x00000008,
     URES_INT_VECTOR = 0x0000000e,
 }
+
 enum UDisplayContextType : int
 {
     UDISPCTX_TYPE_DIALECT_HANDLING    = 0x00000000,
@@ -675,6 +707,7 @@ enum UDisplayContextType : int
     UDISPCTX_TYPE_DISPLAY_LENGTH      = 0x00000002,
     UDISPCTX_TYPE_SUBSTITUTE_HANDLING = 0x00000003,
 }
+
 enum UDisplayContext : int
 {
     UDISPCTX_STANDARD_NAMES                           = 0x00000000,
@@ -689,16 +722,19 @@ enum UDisplayContext : int
     UDISPCTX_SUBSTITUTE                               = 0x00000300,
     UDISPCTX_NO_SUBSTITUTE                            = 0x00000301,
 }
+
 enum UDialectHandling : int
 {
     ULDN_STANDARD_NAMES = 0x00000000,
     ULDN_DIALECT_NAMES  = 0x00000001,
 }
+
 enum UCurrencyUsage : int
 {
     UCURR_USAGE_STANDARD = 0x00000000,
     UCURR_USAGE_CASH     = 0x00000001,
 }
+
 enum UCurrNameStyle : int
 {
     UCURR_SYMBOL_NAME         = 0x00000000,
@@ -706,6 +742,7 @@ enum UCurrNameStyle : int
     UCURR_NARROW_SYMBOL_NAME  = 0x00000002,
     UCURR_VARIANT_SYMBOL_NAME = 0x00000003,
 }
+
 enum UCurrCurrencyType : int
 {
     UCURR_ALL            = 0x7fffffff,
@@ -714,18 +751,21 @@ enum UCurrCurrencyType : int
     UCURR_DEPRECATED     = 0x00000004,
     UCURR_NON_DEPRECATED = 0x00000008,
 }
+
 enum UCPMapRangeOption : int
 {
     UCPMAP_RANGE_NORMAL                = 0x00000000,
     UCPMAP_RANGE_FIXED_LEAD_SURROGATES = 0x00000001,
     UCPMAP_RANGE_FIXED_ALL_SURROGATES  = 0x00000002,
 }
+
 enum UCPTrieType : int
 {
     UCPTRIE_TYPE_ANY   = 0xffffffff,
     UCPTRIE_TYPE_FAST  = 0x00000000,
     UCPTRIE_TYPE_SMALL = 0x00000001,
 }
+
 enum UCPTrieValueWidth : int
 {
     UCPTRIE_VALUE_BITS_ANY = 0xffffffff,
@@ -733,6 +773,7 @@ enum UCPTrieValueWidth : int
     UCPTRIE_VALUE_BITS_32  = 0x00000001,
     UCPTRIE_VALUE_BITS_8   = 0x00000002,
 }
+
 enum UConverterCallbackReason : int
 {
     UCNV_UNASSIGNED = 0x00000000,
@@ -742,6 +783,7 @@ enum UConverterCallbackReason : int
     UCNV_CLOSE      = 0x00000004,
     UCNV_CLONE      = 0x00000005,
 }
+
 enum UConverterType : int
 {
     UCNV_UNSUPPORTED_CONVERTER               = 0xffffffff,
@@ -782,16 +824,19 @@ enum UConverterType : int
     UCNV_COMPOUND_TEXT                       = 0x00000021,
     UCNV_NUMBER_OF_SUPPORTED_CONVERTER_TYPES = 0x00000022,
 }
+
 enum UConverterPlatform : int
 {
     UCNV_UNKNOWN = 0xffffffff,
     UCNV_IBM     = 0x00000000,
 }
+
 enum UConverterUnicodeSet : int
 {
     UCNV_ROUNDTRIP_SET              = 0x00000000,
     UCNV_ROUNDTRIP_AND_FALLBACK_SET = 0x00000001,
 }
+
 enum UProperty : int
 {
     UCHAR_ALPHABETIC                      = 0x00000000,
@@ -907,6 +952,7 @@ enum UProperty : int
     UCHAR_OTHER_PROPERTY_START            = 0x00007000,
     UCHAR_INVALID_CODE                    = 0xffffffff,
 }
+
 enum UCharCategory : int
 {
     U_UNASSIGNED             = 0x00000000,
@@ -942,6 +988,7 @@ enum UCharCategory : int
     U_FINAL_PUNCTUATION      = 0x0000001d,
     U_CHAR_CATEGORY_COUNT    = 0x0000001e,
 }
+
 enum UCharDirection : int
 {
     U_LEFT_TO_RIGHT              = 0x00000000,
@@ -968,12 +1015,14 @@ enum UCharDirection : int
     U_RIGHT_TO_LEFT_ISOLATE      = 0x00000015,
     U_POP_DIRECTIONAL_ISOLATE    = 0x00000016,
 }
+
 enum UBidiPairedBracketType : int
 {
     U_BPT_NONE  = 0x00000000,
     U_BPT_OPEN  = 0x00000001,
     U_BPT_CLOSE = 0x00000002,
 }
+
 enum UBlockCode : int
 {
     UBLOCK_NO_BLOCK                                       = 0x00000000,
@@ -1289,6 +1338,7 @@ enum UBlockCode : int
     UBLOCK_YEZIDI                                         = 0x00000134,
     UBLOCK_INVALID_CODE                                   = 0xffffffff,
 }
+
 enum UEastAsianWidth : int
 {
     U_EA_NEUTRAL   = 0x00000000,
@@ -1298,17 +1348,20 @@ enum UEastAsianWidth : int
     U_EA_NARROW    = 0x00000004,
     U_EA_WIDE      = 0x00000005,
 }
+
 enum UCharNameChoice : int
 {
     U_UNICODE_CHAR_NAME  = 0x00000000,
     U_EXTENDED_CHAR_NAME = 0x00000002,
     U_CHAR_NAME_ALIAS    = 0x00000003,
 }
+
 enum UPropertyNameChoice : int
 {
     U_SHORT_PROPERTY_NAME = 0x00000000,
     U_LONG_PROPERTY_NAME  = 0x00000001,
 }
+
 enum UDecompositionType : int
 {
     U_DT_NONE      = 0x00000000,
@@ -1330,6 +1383,7 @@ enum UDecompositionType : int
     U_DT_VERTICAL  = 0x00000010,
     U_DT_WIDE      = 0x00000011,
 }
+
 enum UJoiningType : int
 {
     U_JT_NON_JOINING   = 0x00000000,
@@ -1339,6 +1393,7 @@ enum UJoiningType : int
     U_JT_RIGHT_JOINING = 0x00000004,
     U_JT_TRANSPARENT   = 0x00000005,
 }
+
 enum UJoiningGroup : int
 {
     U_JG_NO_JOINING_GROUP         = 0x00000000,
@@ -1447,6 +1502,7 @@ enum UJoiningGroup : int
     U_JG_THIN_YEH                 = 0x00000066,
     U_JG_VERTICAL_TAIL            = 0x00000067,
 }
+
 enum UGraphemeClusterBreak : int
 {
     U_GCB_OTHER              = 0x00000000,
@@ -1468,6 +1524,7 @@ enum UGraphemeClusterBreak : int
     U_GCB_GLUE_AFTER_ZWJ     = 0x00000010,
     U_GCB_ZWJ                = 0x00000011,
 }
+
 enum UWordBreakValues : int
 {
     U_WB_OTHER              = 0x00000000,
@@ -1494,6 +1551,7 @@ enum UWordBreakValues : int
     U_WB_ZWJ                = 0x00000015,
     U_WB_WSEGSPACE          = 0x00000016,
 }
+
 enum USentenceBreak : int
 {
     U_SB_OTHER     = 0x00000000,
@@ -1512,6 +1570,7 @@ enum USentenceBreak : int
     U_SB_LF        = 0x0000000d,
     U_SB_SCONTINUE = 0x0000000e,
 }
+
 enum ULineBreak : int
 {
     U_LB_UNKNOWN                      = 0x00000000,
@@ -1559,6 +1618,7 @@ enum ULineBreak : int
     U_LB_E_MODIFIER                   = 0x00000029,
     U_LB_ZWJ                          = 0x0000002a,
 }
+
 enum UNumericType : int
 {
     U_NT_NONE    = 0x00000000,
@@ -1566,6 +1626,7 @@ enum UNumericType : int
     U_NT_DIGIT   = 0x00000002,
     U_NT_NUMERIC = 0x00000003,
 }
+
 enum UHangulSyllableType : int
 {
     U_HST_NOT_APPLICABLE = 0x00000000,
@@ -1575,6 +1636,7 @@ enum UHangulSyllableType : int
     U_HST_LV_SYLLABLE    = 0x00000004,
     U_HST_LVT_SYLLABLE   = 0x00000005,
 }
+
 enum UIndicPositionalCategory : int
 {
     U_INPC_NA                       = 0x00000000,
@@ -1594,6 +1656,7 @@ enum UIndicPositionalCategory : int
     U_INPC_VISUAL_ORDER_LEFT        = 0x0000000e,
     U_INPC_TOP_AND_BOTTOM_AND_LEFT  = 0x0000000f,
 }
+
 enum UIndicSyllabicCategory : int
 {
     U_INSC_OTHER                       = 0x00000000,
@@ -1633,6 +1696,7 @@ enum UIndicSyllabicCategory : int
     U_INSC_VOWEL_DEPENDENT             = 0x00000022,
     U_INSC_VOWEL_INDEPENDENT           = 0x00000023,
 }
+
 enum UVerticalOrientation : int
 {
     U_VO_ROTATED             = 0x00000000,
@@ -1640,6 +1704,7 @@ enum UVerticalOrientation : int
     U_VO_TRANSFORMED_UPRIGHT = 0x00000002,
     U_VO_UPRIGHT             = 0x00000003,
 }
+
 enum UBiDiDirection : int
 {
     UBIDI_LTR     = 0x00000000,
@@ -1647,6 +1712,7 @@ enum UBiDiDirection : int
     UBIDI_MIXED   = 0x00000002,
     UBIDI_NEUTRAL = 0x00000003,
 }
+
 enum UBiDiReorderingMode : int
 {
     UBIDI_REORDER_DEFAULT                     = 0x00000000,
@@ -1657,6 +1723,7 @@ enum UBiDiReorderingMode : int
     UBIDI_REORDER_INVERSE_LIKE_DIRECT         = 0x00000005,
     UBIDI_REORDER_INVERSE_FOR_NUMBERS_SPECIAL = 0x00000006,
 }
+
 enum UBiDiReorderingOption : int
 {
     UBIDI_OPTION_DEFAULT         = 0x00000000,
@@ -1664,22 +1731,26 @@ enum UBiDiReorderingOption : int
     UBIDI_OPTION_REMOVE_CONTROLS = 0x00000002,
     UBIDI_OPTION_STREAMING       = 0x00000004,
 }
+
 enum UBiDiOrder : int
 {
     UBIDI_LOGICAL = 0x00000000,
     UBIDI_VISUAL  = 0x00000001,
 }
+
 enum UBiDiMirroring : int
 {
     UBIDI_MIRRORING_OFF = 0x00000000,
     UBIDI_MIRRORING_ON  = 0x00000001,
 }
+
 enum USetSpanCondition : int
 {
     USET_SPAN_NOT_CONTAINED = 0x00000000,
     USET_SPAN_CONTAINED     = 0x00000001,
     USET_SPAN_SIMPLE        = 0x00000002,
 }
+
 enum UNormalization2Mode : int
 {
     UNORM2_COMPOSE            = 0x00000000,
@@ -1687,12 +1758,14 @@ enum UNormalization2Mode : int
     UNORM2_FCD                = 0x00000002,
     UNORM2_COMPOSE_CONTIGUOUS = 0x00000003,
 }
+
 enum UNormalizationCheckResult : int
 {
     UNORM_NO    = 0x00000000,
     UNORM_YES   = 0x00000001,
     UNORM_MAYBE = 0x00000002,
 }
+
 enum UNormalizationMode : int
 {
     UNORM_NONE       = 0x00000001,
@@ -1704,6 +1777,7 @@ enum UNormalizationMode : int
     UNORM_FCD        = 0x00000006,
     UNORM_MODE_COUNT = 0x00000007,
 }
+
 enum UStringPrepProfileType : int
 {
     USPREP_RFC3491_NAMEPREP               = 0x00000000,
@@ -1721,6 +1795,7 @@ enum UStringPrepProfileType : int
     USPREP_RFC4518_LDAP                   = 0x0000000c,
     USPREP_RFC4518_LDAP_CI                = 0x0000000d,
 }
+
 enum UBreakIteratorType : int
 {
     UBRK_CHARACTER = 0x00000000,
@@ -1728,6 +1803,7 @@ enum UBreakIteratorType : int
     UBRK_LINE      = 0x00000002,
     UBRK_SENTENCE  = 0x00000003,
 }
+
 enum UWordBreak : int
 {
     UBRK_WORD_NONE         = 0x00000000,
@@ -1741,6 +1817,7 @@ enum UWordBreak : int
     UBRK_WORD_IDEO         = 0x00000190,
     UBRK_WORD_IDEO_LIMIT   = 0x000001f4,
 }
+
 enum ULineBreakTag : int
 {
     UBRK_LINE_SOFT       = 0x00000000,
@@ -1748,6 +1825,7 @@ enum ULineBreakTag : int
     UBRK_LINE_HARD       = 0x00000064,
     UBRK_LINE_HARD_LIMIT = 0x000000c8,
 }
+
 enum USentenceBreakTag : int
 {
     UBRK_SENTENCE_TERM       = 0x00000000,
@@ -1755,12 +1833,14 @@ enum USentenceBreakTag : int
     UBRK_SENTENCE_SEP        = 0x00000064,
     UBRK_SENTENCE_SEP_LIMIT  = 0x000000c8,
 }
+
 enum UCalendarType : int
 {
     UCAL_TRADITIONAL = 0x00000000,
     UCAL_DEFAULT     = 0x00000000,
     UCAL_GREGORIAN   = 0x00000001,
 }
+
 enum UCalendarDateFields : int
 {
     UCAL_ERA                  = 0x00000000,
@@ -1789,6 +1869,7 @@ enum UCalendarDateFields : int
     UCAL_FIELD_COUNT          = 0x00000017,
     UCAL_DAY_OF_MONTH         = 0x00000005,
 }
+
 enum UCalendarDaysOfWeek : int
 {
     UCAL_SUNDAY    = 0x00000001,
@@ -1799,6 +1880,7 @@ enum UCalendarDaysOfWeek : int
     UCAL_FRIDAY    = 0x00000006,
     UCAL_SATURDAY  = 0x00000007,
 }
+
 enum UCalendarMonths : int
 {
     UCAL_JANUARY    = 0x00000000,
@@ -1815,17 +1897,20 @@ enum UCalendarMonths : int
     UCAL_DECEMBER   = 0x0000000b,
     UCAL_UNDECIMBER = 0x0000000c,
 }
+
 enum UCalendarAMPMs : int
 {
     UCAL_AM = 0x00000000,
     UCAL_PM = 0x00000001,
 }
+
 enum USystemTimeZoneType : int
 {
     UCAL_ZONE_TYPE_ANY                = 0x00000000,
     UCAL_ZONE_TYPE_CANONICAL          = 0x00000001,
     UCAL_ZONE_TYPE_CANONICAL_LOCATION = 0x00000002,
 }
+
 enum UCalendarDisplayNameType : int
 {
     UCAL_STANDARD       = 0x00000000,
@@ -1833,6 +1918,7 @@ enum UCalendarDisplayNameType : int
     UCAL_DST            = 0x00000002,
     UCAL_SHORT_DST      = 0x00000003,
 }
+
 enum UCalendarAttribute : int
 {
     UCAL_LENIENT                    = 0x00000000,
@@ -1841,12 +1927,14 @@ enum UCalendarAttribute : int
     UCAL_REPEATED_WALL_TIME         = 0x00000003,
     UCAL_SKIPPED_WALL_TIME          = 0x00000004,
 }
+
 enum UCalendarWallTimeOption : int
 {
     UCAL_WALLTIME_LAST       = 0x00000000,
     UCAL_WALLTIME_FIRST      = 0x00000001,
     UCAL_WALLTIME_NEXT_VALID = 0x00000002,
 }
+
 enum UCalendarLimitType : int
 {
     UCAL_MINIMUM          = 0x00000000,
@@ -1856,6 +1944,7 @@ enum UCalendarLimitType : int
     UCAL_ACTUAL_MINIMUM   = 0x00000004,
     UCAL_ACTUAL_MAXIMUM   = 0x00000005,
 }
+
 enum UCalendarWeekdayType : int
 {
     UCAL_WEEKDAY       = 0x00000000,
@@ -1863,6 +1952,7 @@ enum UCalendarWeekdayType : int
     UCAL_WEEKEND_ONSET = 0x00000002,
     UCAL_WEEKEND_CEASE = 0x00000003,
 }
+
 enum UTimeZoneTransitionType : int
 {
     UCAL_TZ_TRANSITION_NEXT               = 0x00000000,
@@ -1870,6 +1960,7 @@ enum UTimeZoneTransitionType : int
     UCAL_TZ_TRANSITION_PREVIOUS           = 0x00000002,
     UCAL_TZ_TRANSITION_PREVIOUS_INCLUSIVE = 0x00000003,
 }
+
 enum UTimeZoneLocalOption : int
 {
     UCAL_TZ_LOCAL_FORMER          = 0x00000004,
@@ -1879,12 +1970,14 @@ enum UTimeZoneLocalOption : int
     UCAL_TZ_LOCAL_DAYLIGHT_FORMER = 0x00000007,
     UCAL_TZ_LOCAL_DAYLIGHT_LATTER = 0x0000000f,
 }
+
 enum UCollationResult : int
 {
     UCOL_EQUAL   = 0x00000000,
     UCOL_GREATER = 0x00000001,
     UCOL_LESS    = 0xffffffff,
 }
+
 enum UColAttributeValue : int
 {
     UCOL_DEFAULT           = 0xffffffff,
@@ -1903,6 +1996,7 @@ enum UColAttributeValue : int
     UCOL_LOWER_FIRST       = 0x00000018,
     UCOL_UPPER_FIRST       = 0x00000019,
 }
+
 enum UColReorderCode : int
 {
     UCOL_REORDER_CODE_DEFAULT     = 0xffffffff,
@@ -1915,6 +2009,7 @@ enum UColReorderCode : int
     UCOL_REORDER_CODE_CURRENCY    = 0x00001003,
     UCOL_REORDER_CODE_DIGIT       = 0x00001004,
 }
+
 enum UColAttribute : int
 {
     UCOL_FRENCH_COLLATION   = 0x00000000,
@@ -1927,17 +2022,20 @@ enum UColAttribute : int
     UCOL_NUMERIC_COLLATION  = 0x00000007,
     UCOL_ATTRIBUTE_COUNT    = 0x00000008,
 }
+
 enum UColRuleOption : int
 {
     UCOL_TAILORING_ONLY = 0x00000000,
     UCOL_FULL_RULES     = 0x00000001,
 }
+
 enum UColBoundMode : int
 {
     UCOL_BOUND_LOWER      = 0x00000000,
     UCOL_BOUND_UPPER      = 0x00000001,
     UCOL_BOUND_UPPER_LONG = 0x00000002,
 }
+
 enum UFormattableType : int
 {
     UFMT_DATE   = 0x00000000,
@@ -1948,6 +2046,7 @@ enum UFormattableType : int
     UFMT_INT64  = 0x00000005,
     UFMT_OBJECT = 0x00000006,
 }
+
 enum UFieldCategory : int
 {
     UFIELD_CATEGORY_UNDEFINED          = 0x00000000,
@@ -1960,29 +2059,34 @@ enum UFieldCategory : int
     UFIELD_CATEGORY_DATE_INTERVAL_SPAN = 0x00001005,
     UFIELD_CATEGORY_NUMBER_RANGE_SPAN  = 0x00001002,
 }
+
 enum UGender : int
 {
     UGENDER_MALE   = 0x00000000,
     UGENDER_FEMALE = 0x00000001,
     UGENDER_OTHER  = 0x00000002,
 }
+
 enum UListFormatterField : int
 {
     ULISTFMT_LITERAL_FIELD = 0x00000000,
     ULISTFMT_ELEMENT_FIELD = 0x00000001,
 }
+
 enum UListFormatterType : int
 {
     ULISTFMT_TYPE_AND   = 0x00000000,
     ULISTFMT_TYPE_OR    = 0x00000001,
     ULISTFMT_TYPE_UNITS = 0x00000002,
 }
+
 enum UListFormatterWidth : int
 {
     ULISTFMT_WIDTH_WIDE   = 0x00000000,
     ULISTFMT_WIDTH_SHORT  = 0x00000001,
     ULISTFMT_WIDTH_NARROW = 0x00000002,
 }
+
 enum ULocaleDataExemplarSetType : int
 {
     ULOCDATA_ES_STANDARD    = 0x00000000,
@@ -1990,6 +2094,7 @@ enum ULocaleDataExemplarSetType : int
     ULOCDATA_ES_INDEX       = 0x00000002,
     ULOCDATA_ES_PUNCTUATION = 0x00000003,
 }
+
 enum ULocaleDataDelimiterType : int
 {
     ULOCDATA_QUOTATION_START     = 0x00000000,
@@ -1997,12 +2102,14 @@ enum ULocaleDataDelimiterType : int
     ULOCDATA_ALT_QUOTATION_START = 0x00000002,
     ULOCDATA_ALT_QUOTATION_END   = 0x00000003,
 }
+
 enum UMeasurementSystem : int
 {
     UMS_SI  = 0x00000000,
     UMS_US  = 0x00000001,
     UMS_UK  = 0x00000002,
 }
+
 enum UNumberFormatStyle : int
 {
     UNUM_PATTERN_DECIMAL       = 0x00000000,
@@ -2025,6 +2132,7 @@ enum UNumberFormatStyle : int
     UNUM_DEFAULT               = 0x00000001,
     UNUM_IGNORE                = 0x00000000,
 }
+
 enum UNumberFormatRoundingMode : int
 {
     UNUM_ROUND_CEILING      = 0x00000000,
@@ -2039,6 +2147,7 @@ enum UNumberFormatRoundingMode : int
     UNUM_ROUND_HALF_CEILING = 0x00000009,
     UNUM_ROUND_HALF_FLOOR   = 0x0000000a,
 }
+
 enum UNumberFormatPadPosition : int
 {
     UNUM_PAD_BEFORE_PREFIX = 0x00000000,
@@ -2046,11 +2155,13 @@ enum UNumberFormatPadPosition : int
     UNUM_PAD_BEFORE_SUFFIX = 0x00000002,
     UNUM_PAD_AFTER_SUFFIX  = 0x00000003,
 }
+
 enum UNumberCompactStyle : int
 {
     UNUM_SHORT = 0x00000000,
     UNUM_LONG  = 0x00000001,
 }
+
 enum UCurrencySpacing : int
 {
     UNUM_CURRENCY_MATCH             = 0x00000000,
@@ -2058,6 +2169,7 @@ enum UCurrencySpacing : int
     UNUM_CURRENCY_INSERT            = 0x00000002,
     UNUM_CURRENCY_SPACING_COUNT     = 0x00000003,
 }
+
 enum UNumberFormatFields : int
 {
     UNUM_INTEGER_FIELD            = 0x00000000,
@@ -2074,15 +2186,18 @@ enum UNumberFormatFields : int
     UNUM_MEASURE_UNIT_FIELD       = 0x0000000b,
     UNUM_COMPACT_FIELD            = 0x0000000c,
 }
+
 enum UNumberFormatMinimumGroupingDigits : int
 {
     UNUM_MINIMUM_GROUPING_DIGITS_AUTO = 0xfffffffe,
     UNUM_MINIMUM_GROUPING_DIGITS_MIN2 = 0xfffffffd,
 }
+
 enum UNumberFormatAttributeValue : int
 {
     UNUM_FORMAT_ATTRIBUTE_VALUE_HIDDEN = 0x00000000,
 }
+
 enum UNumberFormatAttribute : int
 {
     UNUM_PARSE_INT_ONLY                      = 0x00000000,
@@ -2115,6 +2230,7 @@ enum UNumberFormatAttribute : int
     UNUM_PARSE_CASE_SENSITIVE                = 0x00001003,
     UNUM_SIGN_ALWAYS_SHOWN                   = 0x00001004,
 }
+
 enum UNumberFormatTextAttribute : int
 {
     UNUM_POSITIVE_PREFIX   = 0x00000000,
@@ -2126,6 +2242,7 @@ enum UNumberFormatTextAttribute : int
     UNUM_DEFAULT_RULESET   = 0x00000006,
     UNUM_PUBLIC_RULESETS   = 0x00000007,
 }
+
 enum UNumberFormatSymbol : int
 {
     UNUM_DECIMAL_SEPARATOR_SYMBOL           = 0x00000000,
@@ -2157,6 +2274,7 @@ enum UNumberFormatSymbol : int
     UNUM_NINE_DIGIT_SYMBOL                  = 0x0000001a,
     UNUM_EXPONENT_MULTIPLICATION_SYMBOL     = 0x0000001b,
 }
+
 enum UDateFormatStyle : int
 {
     UDAT_FULL            = 0x00000000,
@@ -2172,6 +2290,7 @@ enum UDateFormatStyle : int
     UDAT_NONE            = 0xffffffff,
     UDAT_PATTERN         = 0xfffffffe,
 }
+
 enum UDateFormatField : int
 {
     UDAT_ERA_FIELD                           = 0x00000000,
@@ -2211,6 +2330,7 @@ enum UDateFormatField : int
     UDAT_AM_PM_MIDNIGHT_NOON_FIELD           = 0x00000023,
     UDAT_FLEXIBLE_DAY_PERIOD_FIELD           = 0x00000024,
 }
+
 enum UDateFormatBooleanAttribute : int
 {
     UDAT_PARSE_ALLOW_WHITESPACE            = 0x00000000,
@@ -2219,6 +2339,7 @@ enum UDateFormatBooleanAttribute : int
     UDAT_PARSE_MULTIPLE_PATTERNS_FOR_MATCH = 0x00000003,
     UDAT_BOOLEAN_ATTRIBUTE_COUNT           = 0x00000004,
 }
+
 enum UDateFormatHourCycle : int
 {
     UDAT_HOUR_CYCLE_11 = 0x00000000,
@@ -2226,6 +2347,7 @@ enum UDateFormatHourCycle : int
     UDAT_HOUR_CYCLE_23 = 0x00000002,
     UDAT_HOUR_CYCLE_24 = 0x00000003,
 }
+
 enum UDateFormatSymbolType : int
 {
     UDAT_ERAS                        = 0x00000000,
@@ -2259,6 +2381,7 @@ enum UDateFormatSymbolType : int
     UDAT_NARROW_QUARTERS             = 0x0000001c,
     UDAT_STANDALONE_NARROW_QUARTERS  = 0x0000001d,
 }
+
 enum UDateTimePatternField : int
 {
     UDATPG_ERA_FIELD                  = 0x00000000,
@@ -2279,24 +2402,28 @@ enum UDateTimePatternField : int
     UDATPG_ZONE_FIELD                 = 0x0000000f,
     UDATPG_FIELD_COUNT                = 0x00000010,
 }
+
 enum UDateTimePGDisplayWidth : int
 {
     UDATPG_WIDE        = 0x00000000,
     UDATPG_ABBREVIATED = 0x00000001,
     UDATPG_NARROW      = 0x00000002,
 }
+
 enum UDateTimePatternMatchOptions : int
 {
     UDATPG_MATCH_NO_OPTIONS        = 0x00000000,
     UDATPG_MATCH_HOUR_FIELD_LENGTH = 0x00000800,
     UDATPG_MATCH_ALL_FIELDS_LENGTH = 0x0000ffff,
 }
+
 enum UDateTimePatternConflict : int
 {
     UDATPG_NO_CONFLICT   = 0x00000000,
     UDATPG_BASE_CONFLICT = 0x00000001,
     UDATPG_CONFLICT      = 0x00000002,
 }
+
 enum UNumberUnitWidth : int
 {
     UNUM_UNIT_WIDTH_NARROW    = 0x00000000,
@@ -2308,6 +2435,7 @@ enum UNumberUnitWidth : int
     UNUM_UNIT_WIDTH_HIDDEN    = 0x00000006,
     UNUM_UNIT_WIDTH_COUNT     = 0x00000007,
 }
+
 enum UNumberGroupingStrategy : int
 {
     UNUM_GROUPING_OFF        = 0x00000000,
@@ -2316,6 +2444,7 @@ enum UNumberGroupingStrategy : int
     UNUM_GROUPING_ON_ALIGNED = 0x00000003,
     UNUM_GROUPING_THOUSANDS  = 0x00000004,
 }
+
 enum UNumberSignDisplay : int
 {
     UNUM_SIGN_AUTO                   = 0x00000000,
@@ -2329,17 +2458,20 @@ enum UNumberSignDisplay : int
     UNUM_SIGN_ACCOUNTING_NEGATIVE    = 0x00000008,
     UNUM_SIGN_COUNT                  = 0x00000009,
 }
+
 enum UNumberDecimalSeparatorDisplay : int
 {
     UNUM_DECIMAL_SEPARATOR_AUTO   = 0x00000000,
     UNUM_DECIMAL_SEPARATOR_ALWAYS = 0x00000001,
     UNUM_DECIMAL_SEPARATOR_COUNT  = 0x00000002,
 }
+
 enum UNumberTrailingZeroDisplay : int
 {
     UNUM_TRAILING_ZERO_AUTO          = 0x00000000,
     UNUM_TRAILING_ZERO_HIDE_IF_WHOLE = 0x00000001,
 }
+
 enum UNumberRangeCollapse : int
 {
     UNUM_RANGE_COLLAPSE_AUTO = 0x00000000,
@@ -2347,6 +2479,7 @@ enum UNumberRangeCollapse : int
     UNUM_RANGE_COLLAPSE_UNIT = 0x00000002,
     UNUM_RANGE_COLLAPSE_ALL  = 0x00000003,
 }
+
 enum UNumberRangeIdentityFallback : int
 {
     UNUM_IDENTITY_FALLBACK_SINGLE_VALUE                  = 0x00000000,
@@ -2354,17 +2487,20 @@ enum UNumberRangeIdentityFallback : int
     UNUM_IDENTITY_FALLBACK_APPROXIMATELY                 = 0x00000002,
     UNUM_IDENTITY_FALLBACK_RANGE                         = 0x00000003,
 }
+
 enum UNumberRangeIdentityResult : int
 {
     UNUM_IDENTITY_RESULT_EQUAL_BEFORE_ROUNDING = 0x00000000,
     UNUM_IDENTITY_RESULT_EQUAL_AFTER_ROUNDING  = 0x00000001,
     UNUM_IDENTITY_RESULT_NOT_EQUAL             = 0x00000002,
 }
+
 enum UPluralType : int
 {
     UPLURAL_TYPE_CARDINAL = 0x00000000,
     UPLURAL_TYPE_ORDINAL  = 0x00000001,
 }
+
 enum URegexpFlag : int
 {
     UREGEX_CASE_INSENSITIVE         = 0x00000002,
@@ -2376,6 +2512,7 @@ enum URegexpFlag : int
     UREGEX_UWORD                    = 0x00000100,
     UREGEX_ERROR_ON_UNKNOWN_ESCAPES = 0x00000200,
 }
+
 enum URegionType : int
 {
     URGN_UNKNOWN      = 0x00000000,
@@ -2386,12 +2523,14 @@ enum URegionType : int
     URGN_GROUPING     = 0x00000005,
     URGN_DEPRECATED   = 0x00000006,
 }
+
 enum UDateRelativeDateTimeFormatterStyle : int
 {
     UDAT_STYLE_LONG   = 0x00000000,
     UDAT_STYLE_SHORT  = 0x00000001,
     UDAT_STYLE_NARROW = 0x00000002,
 }
+
 enum URelativeDateTimeUnit : int
 {
     UDAT_REL_UNIT_YEAR      = 0x00000000,
@@ -2410,16 +2549,19 @@ enum URelativeDateTimeUnit : int
     UDAT_REL_UNIT_FRIDAY    = 0x0000000d,
     UDAT_REL_UNIT_SATURDAY  = 0x0000000e,
 }
+
 enum URelativeDateTimeFormatterField : int
 {
     UDAT_REL_LITERAL_FIELD = 0x00000000,
     UDAT_REL_NUMERIC_FIELD = 0x00000001,
 }
+
 enum USearchAttribute : int
 {
     USEARCH_OVERLAP            = 0x00000000,
     USEARCH_ELEMENT_COMPARISON = 0x00000002,
 }
+
 enum USearchAttributeValue : int
 {
     USEARCH_DEFAULT                         = 0xffffffff,
@@ -2429,6 +2571,7 @@ enum USearchAttributeValue : int
     USEARCH_PATTERN_BASE_WEIGHT_IS_WILDCARD = 0x00000003,
     USEARCH_ANY_BASE_WEIGHT_IS_WILDCARD     = 0x00000004,
 }
+
 enum USpoofChecks : int
 {
     USPOOF_SINGLE_SCRIPT_CONFUSABLE = 0x00000001,
@@ -2443,6 +2586,7 @@ enum USpoofChecks : int
     USPOOF_ALL_CHECKS               = 0x0000ffff,
     USPOOF_AUX_INFO                 = 0x40000000,
 }
+
 enum URestrictionLevel : int
 {
     USPOOF_ASCII                     = 0x10000000,
@@ -2453,6 +2597,7 @@ enum URestrictionLevel : int
     USPOOF_UNRESTRICTIVE             = 0x60000000,
     USPOOF_RESTRICTION_LEVEL_MASK    = 0x7f000000,
 }
+
 enum UDateTimeScale : int
 {
     UDTS_JAVA_TIME              = 0x00000000,
@@ -2466,6 +2611,7 @@ enum UDateTimeScale : int
     UDTS_DB2_TIME               = 0x00000008,
     UDTS_UNIX_MICROSECONDS_TIME = 0x00000009,
 }
+
 enum UTimeScaleValue : int
 {
     UTSV_UNITS_VALUE        = 0x00000000,
@@ -2475,21 +2621,25 @@ enum UTimeScaleValue : int
     UTSV_TO_MIN_VALUE       = 0x00000004,
     UTSV_TO_MAX_VALUE       = 0x00000005,
 }
+
 enum UTransDirection : int
 {
     UTRANS_FORWARD = 0x00000000,
     UTRANS_REVERSE = 0x00000001,
 }
+
 enum UStringTrieBuildOption : int
 {
     USTRINGTRIE_BUILD_FAST  = 0x00000000,
     USTRINGTRIE_BUILD_SMALL = 0x00000001,
 }
+
 enum UMessagePatternApostropheMode : int
 {
     UMSGPAT_APOS_DOUBLE_OPTIONAL = 0x00000000,
     UMSGPAT_APOS_DOUBLE_REQUIRED = 0x00000001,
 }
+
 enum UMessagePatternPartType : int
 {
     UMSGPAT_PART_TYPE_MSG_START      = 0x00000000,
@@ -2507,6 +2657,7 @@ enum UMessagePatternPartType : int
     UMSGPAT_PART_TYPE_ARG_INT        = 0x0000000c,
     UMSGPAT_PART_TYPE_ARG_DOUBLE     = 0x0000000d,
 }
+
 enum UMessagePatternArgType : int
 {
     UMSGPAT_ARG_TYPE_NONE          = 0x00000000,
@@ -2516,6 +2667,7 @@ enum UMessagePatternArgType : int
     UMSGPAT_ARG_TYPE_SELECT        = 0x00000004,
     UMSGPAT_ARG_TYPE_SELECTORDINAL = 0x00000005,
 }
+
 enum UAlphabeticIndexLabelType : int
 {
     U_ALPHAINDEX_NORMAL    = 0x00000000,
@@ -2523,6 +2675,7 @@ enum UAlphabeticIndexLabelType : int
     U_ALPHAINDEX_INFLOW    = 0x00000002,
     U_ALPHAINDEX_OVERFLOW  = 0x00000003,
 }
+
 enum UTimeZoneNameType : int
 {
     UTZNM_UNKNOWN           = 0x00000000,
@@ -2534,6 +2687,7 @@ enum UTimeZoneNameType : int
     UTZNM_SHORT_DAYLIGHT    = 0x00000020,
     UTZNM_EXEMPLAR_LOCATION = 0x00000040,
 }
+
 enum UTimeZoneFormatStyle : int
 {
     UTZFMT_STYLE_GENERIC_LOCATION         = 0x00000000,
@@ -2557,6 +2711,7 @@ enum UTimeZoneFormatStyle : int
     UTZFMT_STYLE_ZONE_ID_SHORT            = 0x00000012,
     UTZFMT_STYLE_EXEMPLAR_LOCATION        = 0x00000013,
 }
+
 enum UTimeZoneFormatGMTOffsetPatternType : int
 {
     UTZFMT_PAT_POSITIVE_HM  = 0x00000000,
@@ -2567,18 +2722,21 @@ enum UTimeZoneFormatGMTOffsetPatternType : int
     UTZFMT_PAT_NEGATIVE_H   = 0x00000005,
     UTZFMT_PAT_COUNT        = 0x00000006,
 }
+
 enum UTimeZoneFormatTimeType : int
 {
     UTZFMT_TIME_TYPE_UNKNOWN  = 0x00000000,
     UTZFMT_TIME_TYPE_STANDARD = 0x00000001,
     UTZFMT_TIME_TYPE_DAYLIGHT = 0x00000002,
 }
+
 enum UTimeZoneFormatParseOption : int
 {
     UTZFMT_PARSE_OPTION_NONE                      = 0x00000000,
     UTZFMT_PARSE_OPTION_ALL_STYLES                = 0x00000001,
     UTZFMT_PARSE_OPTION_TZ_DATABASE_ABBREVIATIONS = 0x00000002,
 }
+
 enum UMeasureFormatWidth : int
 {
     UMEASFMT_WIDTH_WIDE    = 0x00000000,
@@ -2587,6 +2745,7 @@ enum UMeasureFormatWidth : int
     UMEASFMT_WIDTH_NUMERIC = 0x00000003,
     UMEASFMT_WIDTH_COUNT   = 0x00000004,
 }
+
 enum UDateRelativeUnit : int
 {
     UDAT_RELATIVE_SECONDS    = 0x00000000,
@@ -2598,6 +2757,7 @@ enum UDateRelativeUnit : int
     UDAT_RELATIVE_YEARS      = 0x00000006,
     UDAT_RELATIVE_UNIT_COUNT = 0x00000007,
 }
+
 enum UDateAbsoluteUnit : int
 {
     UDAT_ABSOLUTE_SUNDAY     = 0x00000000,
@@ -2614,6 +2774,7 @@ enum UDateAbsoluteUnit : int
     UDAT_ABSOLUTE_NOW        = 0x0000000b,
     UDAT_ABSOLUTE_UNIT_COUNT = 0x0000000c,
 }
+
 enum UDateDirection : int
 {
     UDAT_DIRECTION_LAST_2 = 0x00000000,
@@ -2624,6 +2785,7 @@ enum UDateDirection : int
     UDAT_DIRECTION_PLAIN  = 0x00000005,
     UDAT_DIRECTION_COUNT  = 0x00000006,
 }
+
 alias MIMECONTF = int;
 enum : int
 {
@@ -2641,6 +2803,7 @@ enum : int
     MIMECONTF_MIME_LATEST      = 0x20000000,
     MIMECONTF_MIME_REGISTRY    = 0x40000000,
 }
+
 alias SCRIPTCONTF = int;
 enum : int
 {
@@ -2689,6 +2852,7 @@ enum : int
     sidFEFirst     = 0x00000017,
     sidFELast      = 0x0000001a,
 }
+
 alias MLCONVCHAR = int;
 enum : int
 {
@@ -2700,6 +2864,7 @@ enum : int
     MLCONVCHARF_NOBESTFITCHARS = 0x00000010,
     MLCONVCHARF_DETECTJPN      = 0x00000020,
 }
+
 alias MLCP = int;
 enum : int
 {
@@ -2712,6 +2877,7 @@ enum : int
     MLDETECTF_FILTER_SPECIALCHAR = 0x00000040,
     MLDETECTF_EURO_UTF8          = 0x00000080,
 }
+
 alias MLDETECTCP = int;
 enum : int
 {
@@ -2722,6 +2888,7 @@ enum : int
     MLDETECTCP_HTML   = 0x00000008,
     MLDETECTCP_NUMBER = 0x00000010,
 }
+
 alias SCRIPTFONTCONTF = int;
 enum : int
 {
@@ -2731,13 +2898,15 @@ enum : int
     SCRIPTCONTF_SCRIPT_HIDE       = 0x00020000,
     SCRIPTCONTF_SCRIPT_SYSTEM     = 0x00040000,
 }
+
 alias MLSTR_FLAGS = int;
 enum : int
 {
     MLSTR_READ  = 0x00000001,
     MLSTR_WRITE = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/caldatetime-dateunit))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/caldatetime-dateunit
 alias CALDATETIME_DATEUNIT = int;
 enum : int
 {
@@ -2757,868 +2926,868 @@ enum : int
 
 enum int LANG_SYSTEM_DEFAULT = 0x00000800;
 enum int LANG_USER_DEFAULT = 0x00000400;
-enum uint LOCALE_SYSTEM_DEFAULT = 0x00000800;
-enum uint LOCALE_USER_DEFAULT = 0x00000400;
+enum uint LOCALE_SYSTEM_DEFAULT = 0x00000800U;
+enum uint LOCALE_USER_DEFAULT = 0x00000400U;
 
 enum : uint
 {
-    LOCALE_CUSTOM_DEFAULT     = 0x00000c00,
-    LOCALE_CUSTOM_UNSPECIFIED = 0x00001000,
-    LOCALE_CUSTOM_UI_DEFAULT  = 0x00001400,
+    LOCALE_CUSTOM_DEFAULT     = 0x00000c00U,
+    LOCALE_CUSTOM_UNSPECIFIED = 0x00001000U,
+    LOCALE_CUSTOM_UI_DEFAULT  = 0x00001400U,
 }
 
 enum : uint
 {
-    LOCALE_NEUTRAL   = 0x00000000,
-    LOCALE_INVARIANT = 0x0000007f,
+    LOCALE_NEUTRAL   = 0x00000000U,
+    LOCALE_INVARIANT = 0x0000007fU,
 }
 
-enum uint ALL_SERVICE_TYPES = 0x00000000;
-enum uint HIGHLEVEL_SERVICE_TYPES = 0x00000001;
-enum uint LOWLEVEL_SERVICE_TYPES = 0x00000002;
-enum uint ALL_SERVICES = 0x00000000;
-enum uint ONLINE_SERVICES = 0x00000001;
-enum uint OFFLINE_SERVICES = 0x00000002;
-enum uint MAX_LEADBYTES = 0x0000000c;
-enum uint MAX_DEFAULTCHAR = 0x00000002;
+enum uint ALL_SERVICE_TYPES = 0x00000000U;
+enum uint HIGHLEVEL_SERVICE_TYPES = 0x00000001U;
+enum uint LOWLEVEL_SERVICE_TYPES = 0x00000002U;
+enum uint ALL_SERVICES = 0x00000000U;
+enum uint ONLINE_SERVICES = 0x00000001U;
+enum uint OFFLINE_SERVICES = 0x00000002U;
+enum uint MAX_LEADBYTES = 0x0000000cU;
+enum uint MAX_DEFAULTCHAR = 0x00000002U;
 
 enum : uint
 {
-    HIGH_SURROGATE_START = 0x0000d800,
-    HIGH_SURROGATE_END   = 0x0000dbff,
+    HIGH_SURROGATE_START = 0x0000d800U,
+    HIGH_SURROGATE_END   = 0x0000dbffU,
 }
 
 enum : uint
 {
-    LOW_SURROGATE_START = 0x0000dc00,
-    LOW_SURROGATE_END   = 0x0000dfff,
+    LOW_SURROGATE_START = 0x0000dc00U,
+    LOW_SURROGATE_END   = 0x0000dfffU,
 }
 
-enum uint WC_COMPOSITECHECK = 0x00000200;
-enum uint WC_DISCARDNS = 0x00000010;
-enum uint WC_SEPCHARS = 0x00000020;
-enum uint WC_DEFAULTCHAR = 0x00000040;
-enum uint WC_ERR_INVALID_CHARS = 0x00000080;
-enum uint WC_NO_BEST_FIT_CHARS = 0x00000400;
+enum uint WC_COMPOSITECHECK = 0x00000200U;
+enum uint WC_DISCARDNS = 0x00000010U;
+enum uint WC_SEPCHARS = 0x00000020U;
+enum uint WC_DEFAULTCHAR = 0x00000040U;
+enum uint WC_ERR_INVALID_CHARS = 0x00000080U;
+enum uint WC_NO_BEST_FIT_CHARS = 0x00000400U;
 
 enum : uint
 {
-    CT_CTYPE1 = 0x00000001,
-    CT_CTYPE2 = 0x00000002,
-    CT_CTYPE3 = 0x00000004,
+    CT_CTYPE1 = 0x00000001U,
+    CT_CTYPE2 = 0x00000002U,
+    CT_CTYPE3 = 0x00000004U,
 }
 
-enum uint C1_UPPER = 0x00000001;
-enum uint C1_LOWER = 0x00000002;
-enum uint C1_DIGIT = 0x00000004;
-enum uint C1_SPACE = 0x00000008;
-enum uint C1_PUNCT = 0x00000010;
-enum uint C1_CNTRL = 0x00000020;
-enum uint C1_BLANK = 0x00000040;
-enum uint C1_XDIGIT = 0x00000080;
-enum uint C1_ALPHA = 0x00000100;
-enum uint C1_DEFINED = 0x00000200;
-enum uint C2_LEFTTORIGHT = 0x00000001;
-enum uint C2_RIGHTTOLEFT = 0x00000002;
+enum uint C1_UPPER = 0x00000001U;
+enum uint C1_LOWER = 0x00000002U;
+enum uint C1_DIGIT = 0x00000004U;
+enum uint C1_SPACE = 0x00000008U;
+enum uint C1_PUNCT = 0x00000010U;
+enum uint C1_CNTRL = 0x00000020U;
+enum uint C1_BLANK = 0x00000040U;
+enum uint C1_XDIGIT = 0x00000080U;
+enum uint C1_ALPHA = 0x00000100U;
+enum uint C1_DEFINED = 0x00000200U;
+enum uint C2_LEFTTORIGHT = 0x00000001U;
+enum uint C2_RIGHTTOLEFT = 0x00000002U;
 
 enum : uint
 {
-    C2_EUROPENUMBER     = 0x00000003,
-    C2_EUROPESEPARATOR  = 0x00000004,
-    C2_EUROPETERMINATOR = 0x00000005,
+    C2_EUROPENUMBER     = 0x00000003U,
+    C2_EUROPESEPARATOR  = 0x00000004U,
+    C2_EUROPETERMINATOR = 0x00000005U,
 }
 
-enum uint C2_ARABICNUMBER = 0x00000006;
-enum uint C2_COMMONSEPARATOR = 0x00000007;
-enum uint C2_BLOCKSEPARATOR = 0x00000008;
-enum uint C2_SEGMENTSEPARATOR = 0x00000009;
-enum uint C2_WHITESPACE = 0x0000000a;
-enum uint C2_OTHERNEUTRAL = 0x0000000b;
-enum uint C2_NOTAPPLICABLE = 0x00000000;
-enum uint C3_NONSPACING = 0x00000001;
-enum uint C3_DIACRITIC = 0x00000002;
-enum uint C3_VOWELMARK = 0x00000004;
-enum uint C3_SYMBOL = 0x00000008;
-enum uint C3_KATAKANA = 0x00000010;
-enum uint C3_HIRAGANA = 0x00000020;
-enum uint C3_HALFWIDTH = 0x00000040;
-enum uint C3_FULLWIDTH = 0x00000080;
-enum uint C3_IDEOGRAPH = 0x00000100;
-enum uint C3_KASHIDA = 0x00000200;
-enum uint C3_LEXICAL = 0x00000400;
-enum uint C3_HIGHSURROGATE = 0x00000800;
-enum uint C3_LOWSURROGATE = 0x00001000;
-enum uint C3_ALPHA = 0x00008000;
-enum uint C3_NOTAPPLICABLE = 0x00000000;
-enum uint LCMAP_LOWERCASE = 0x00000100;
-enum uint LCMAP_UPPERCASE = 0x00000200;
-enum uint LCMAP_TITLECASE = 0x00000300;
+enum uint C2_ARABICNUMBER = 0x00000006U;
+enum uint C2_COMMONSEPARATOR = 0x00000007U;
+enum uint C2_BLOCKSEPARATOR = 0x00000008U;
+enum uint C2_SEGMENTSEPARATOR = 0x00000009U;
+enum uint C2_WHITESPACE = 0x0000000aU;
+enum uint C2_OTHERNEUTRAL = 0x0000000bU;
+enum uint C2_NOTAPPLICABLE = 0x00000000U;
+enum uint C3_NONSPACING = 0x00000001U;
+enum uint C3_DIACRITIC = 0x00000002U;
+enum uint C3_VOWELMARK = 0x00000004U;
+enum uint C3_SYMBOL = 0x00000008U;
+enum uint C3_KATAKANA = 0x00000010U;
+enum uint C3_HIRAGANA = 0x00000020U;
+enum uint C3_HALFWIDTH = 0x00000040U;
+enum uint C3_FULLWIDTH = 0x00000080U;
+enum uint C3_IDEOGRAPH = 0x00000100U;
+enum uint C3_KASHIDA = 0x00000200U;
+enum uint C3_LEXICAL = 0x00000400U;
+enum uint C3_HIGHSURROGATE = 0x00000800U;
+enum uint C3_LOWSURROGATE = 0x00001000U;
+enum uint C3_ALPHA = 0x00008000U;
+enum uint C3_NOTAPPLICABLE = 0x00000000U;
+enum uint LCMAP_LOWERCASE = 0x00000100U;
+enum uint LCMAP_UPPERCASE = 0x00000200U;
+enum uint LCMAP_TITLECASE = 0x00000300U;
 
 enum : uint
 {
-    LCMAP_SORTKEY   = 0x00000400,
-    LCMAP_BYTEREV   = 0x00000800,
-    LCMAP_HIRAGANA  = 0x00100000,
-    LCMAP_KATAKANA  = 0x00200000,
-    LCMAP_HALFWIDTH = 0x00400000,
+    LCMAP_SORTKEY   = 0x00000400U,
+    LCMAP_BYTEREV   = 0x00000800U,
+    LCMAP_HIRAGANA  = 0x00100000U,
+    LCMAP_KATAKANA  = 0x00200000U,
+    LCMAP_HALFWIDTH = 0x00400000U,
 }
 
-enum uint LCMAP_FULLWIDTH = 0x00800000;
-enum uint LCMAP_LINGUISTIC_CASING = 0x01000000;
-enum uint LCMAP_SIMPLIFIED_CHINESE = 0x02000000;
-enum uint LCMAP_TRADITIONAL_CHINESE = 0x04000000;
-enum uint LCMAP_SORTHANDLE = 0x20000000;
-enum uint LCMAP_HASH = 0x00040000;
-enum uint FIND_STARTSWITH = 0x00100000;
-enum uint FIND_ENDSWITH = 0x00200000;
+enum uint LCMAP_FULLWIDTH = 0x00800000U;
+enum uint LCMAP_LINGUISTIC_CASING = 0x01000000U;
+enum uint LCMAP_SIMPLIFIED_CHINESE = 0x02000000U;
+enum uint LCMAP_TRADITIONAL_CHINESE = 0x04000000U;
+enum uint LCMAP_SORTHANDLE = 0x20000000U;
+enum uint LCMAP_HASH = 0x00040000U;
+enum uint FIND_STARTSWITH = 0x00100000U;
+enum uint FIND_ENDSWITH = 0x00200000U;
 
 enum : uint
 {
-    FIND_FROMSTART = 0x00400000,
-    FIND_FROMEND   = 0x00800000,
+    FIND_FROMSTART = 0x00400000U,
+    FIND_FROMEND   = 0x00800000U,
 }
 
-enum uint LCID_ALTERNATE_SORTS = 0x00000004;
+enum uint LCID_ALTERNATE_SORTS = 0x00000004U;
 
 enum : uint
 {
-    LOCALE_ALL          = 0x00000000,
-    LOCALE_WINDOWS      = 0x00000001,
-    LOCALE_SUPPLEMENTAL = 0x00000002,
+    LOCALE_ALL          = 0x00000000U,
+    LOCALE_WINDOWS      = 0x00000001U,
+    LOCALE_SUPPLEMENTAL = 0x00000002U,
 }
 
-enum uint LOCALE_ALTERNATE_SORTS = 0x00000004;
-enum uint LOCALE_REPLACEMENT = 0x00000008;
-enum uint LOCALE_NEUTRALDATA = 0x00000010;
-enum uint LOCALE_SPECIFICDATA = 0x00000020;
+enum uint LOCALE_ALTERNATE_SORTS = 0x00000004U;
+enum uint LOCALE_REPLACEMENT = 0x00000008U;
+enum uint LOCALE_NEUTRALDATA = 0x00000010U;
+enum uint LOCALE_SPECIFICDATA = 0x00000020U;
 
 enum : uint
 {
-    CP_ACP   = 0x00000000,
-    CP_OEMCP = 0x00000001,
+    CP_ACP   = 0x00000000U,
+    CP_OEMCP = 0x00000001U,
 }
 
-enum uint CP_MACCP = 0x00000002;
-enum uint CP_THREAD_ACP = 0x00000003;
-enum uint CP_SYMBOL = 0x0000002a;
+enum uint CP_MACCP = 0x00000002U;
+enum uint CP_THREAD_ACP = 0x00000003U;
+enum uint CP_SYMBOL = 0x0000002aU;
 
 enum : uint
 {
-    CP_UTF7 = 0x0000fde8,
-    CP_UTF8 = 0x0000fde9,
+    CP_UTF7 = 0x0000fde8U,
+    CP_UTF8 = 0x0000fde9U,
 }
 
 enum : uint
 {
-    CTRY_DEFAULT    = 0x00000000,
-    CTRY_ALBANIA    = 0x00000163,
-    CTRY_ALGERIA    = 0x000000d5,
-    CTRY_ARGENTINA  = 0x00000036,
-    CTRY_ARMENIA    = 0x00000176,
-    CTRY_AUSTRALIA  = 0x0000003d,
-    CTRY_AUSTRIA    = 0x0000002b,
-    CTRY_AZERBAIJAN = 0x000003e2,
+    CTRY_DEFAULT    = 0x00000000U,
+    CTRY_ALBANIA    = 0x00000163U,
+    CTRY_ALGERIA    = 0x000000d5U,
+    CTRY_ARGENTINA  = 0x00000036U,
+    CTRY_ARMENIA    = 0x00000176U,
+    CTRY_AUSTRALIA  = 0x0000003dU,
+    CTRY_AUSTRIA    = 0x0000002bU,
+    CTRY_AZERBAIJAN = 0x000003e2U,
 }
 
 enum : uint
 {
-    CTRY_BAHRAIN           = 0x000003cd,
-    CTRY_BELARUS           = 0x00000177,
-    CTRY_BELGIUM           = 0x00000020,
-    CTRY_BELIZE            = 0x000001f5,
-    CTRY_BOLIVIA           = 0x0000024f,
-    CTRY_BRAZIL            = 0x00000037,
-    CTRY_BRUNEI_DARUSSALAM = 0x000002a1,
+    CTRY_BAHRAIN           = 0x000003cdU,
+    CTRY_BELARUS           = 0x00000177U,
+    CTRY_BELGIUM           = 0x00000020U,
+    CTRY_BELIZE            = 0x000001f5U,
+    CTRY_BOLIVIA           = 0x0000024fU,
+    CTRY_BRAZIL            = 0x00000037U,
+    CTRY_BRUNEI_DARUSSALAM = 0x000002a1U,
 }
 
-enum uint CTRY_BULGARIA = 0x00000167;
+enum uint CTRY_BULGARIA = 0x00000167U;
 
 enum : uint
 {
-    CTRY_CANADA     = 0x00000002,
-    CTRY_CARIBBEAN  = 0x00000001,
-    CTRY_CHILE      = 0x00000038,
-    CTRY_COLOMBIA   = 0x00000039,
-    CTRY_COSTA_RICA = 0x000001fa,
+    CTRY_CANADA     = 0x00000002U,
+    CTRY_CARIBBEAN  = 0x00000001U,
+    CTRY_CHILE      = 0x00000038U,
+    CTRY_COLOMBIA   = 0x00000039U,
+    CTRY_COSTA_RICA = 0x000001faU,
 }
 
 enum : uint
 {
-    CTRY_CROATIA            = 0x00000181,
-    CTRY_CZECH              = 0x000001a4,
-    CTRY_DENMARK            = 0x0000002d,
-    CTRY_DOMINICAN_REPUBLIC = 0x00000001,
+    CTRY_CROATIA            = 0x00000181U,
+    CTRY_CZECH              = 0x000001a4U,
+    CTRY_DENMARK            = 0x0000002dU,
+    CTRY_DOMINICAN_REPUBLIC = 0x00000001U,
 }
 
 enum : uint
 {
-    CTRY_ECUADOR     = 0x00000251,
-    CTRY_EGYPT       = 0x00000014,
-    CTRY_EL_SALVADOR = 0x000001f7,
+    CTRY_ECUADOR     = 0x00000251U,
+    CTRY_EGYPT       = 0x00000014U,
+    CTRY_EL_SALVADOR = 0x000001f7U,
 }
 
 enum : uint
 {
-    CTRY_ESTONIA        = 0x00000174,
-    CTRY_FAEROE_ISLANDS = 0x0000012a,
+    CTRY_ESTONIA        = 0x00000174U,
+    CTRY_FAEROE_ISLANDS = 0x0000012aU,
 }
 
 enum : uint
 {
-    CTRY_FINLAND   = 0x00000166,
-    CTRY_FRANCE    = 0x00000021,
-    CTRY_GEORGIA   = 0x000003e3,
-    CTRY_GERMANY   = 0x00000031,
-    CTRY_GREECE    = 0x0000001e,
-    CTRY_GUATEMALA = 0x000001f6,
+    CTRY_FINLAND   = 0x00000166U,
+    CTRY_FRANCE    = 0x00000021U,
+    CTRY_GEORGIA   = 0x000003e3U,
+    CTRY_GERMANY   = 0x00000031U,
+    CTRY_GREECE    = 0x0000001eU,
+    CTRY_GUATEMALA = 0x000001f6U,
 }
 
 enum : uint
 {
-    CTRY_HONDURAS   = 0x000001f8,
-    CTRY_HONG_KONG  = 0x00000354,
-    CTRY_HUNGARY    = 0x00000024,
-    CTRY_ICELAND    = 0x00000162,
-    CTRY_INDIA      = 0x0000005b,
-    CTRY_INDONESIA  = 0x0000003e,
-    CTRY_IRAN       = 0x000003d5,
-    CTRY_IRAQ       = 0x000003c4,
-    CTRY_IRELAND    = 0x00000161,
-    CTRY_ISRAEL     = 0x000003cc,
-    CTRY_ITALY      = 0x00000027,
-    CTRY_JAMAICA    = 0x00000001,
-    CTRY_JAPAN      = 0x00000051,
-    CTRY_JORDAN     = 0x000003c2,
-    CTRY_KAZAKSTAN  = 0x00000007,
-    CTRY_KENYA      = 0x000000fe,
-    CTRY_KUWAIT     = 0x000003c5,
-    CTRY_KYRGYZSTAN = 0x000003e4,
+    CTRY_HONDURAS   = 0x000001f8U,
+    CTRY_HONG_KONG  = 0x00000354U,
+    CTRY_HUNGARY    = 0x00000024U,
+    CTRY_ICELAND    = 0x00000162U,
+    CTRY_INDIA      = 0x0000005bU,
+    CTRY_INDONESIA  = 0x0000003eU,
+    CTRY_IRAN       = 0x000003d5U,
+    CTRY_IRAQ       = 0x000003c4U,
+    CTRY_IRELAND    = 0x00000161U,
+    CTRY_ISRAEL     = 0x000003ccU,
+    CTRY_ITALY      = 0x00000027U,
+    CTRY_JAMAICA    = 0x00000001U,
+    CTRY_JAPAN      = 0x00000051U,
+    CTRY_JORDAN     = 0x000003c2U,
+    CTRY_KAZAKSTAN  = 0x00000007U,
+    CTRY_KENYA      = 0x000000feU,
+    CTRY_KUWAIT     = 0x000003c5U,
+    CTRY_KYRGYZSTAN = 0x000003e4U,
 }
 
 enum : uint
 {
-    CTRY_LATVIA        = 0x00000173,
-    CTRY_LEBANON       = 0x000003c1,
-    CTRY_LIBYA         = 0x000000da,
-    CTRY_LIECHTENSTEIN = 0x00000029,
+    CTRY_LATVIA        = 0x00000173U,
+    CTRY_LEBANON       = 0x000003c1U,
+    CTRY_LIBYA         = 0x000000daU,
+    CTRY_LIECHTENSTEIN = 0x00000029U,
 }
 
 enum : uint
 {
-    CTRY_LITHUANIA  = 0x00000172,
-    CTRY_LUXEMBOURG = 0x00000160,
+    CTRY_LITHUANIA  = 0x00000172U,
+    CTRY_LUXEMBOURG = 0x00000160U,
 }
 
 enum : uint
 {
-    CTRY_MACAU       = 0x00000355,
-    CTRY_MACEDONIA   = 0x00000185,
-    CTRY_MALAYSIA    = 0x0000003c,
-    CTRY_MALDIVES    = 0x000003c0,
-    CTRY_MEXICO      = 0x00000034,
-    CTRY_MONACO      = 0x00000021,
-    CTRY_MONGOLIA    = 0x000003d0,
-    CTRY_MOROCCO     = 0x000000d4,
-    CTRY_NETHERLANDS = 0x0000001f,
-    CTRY_NEW_ZEALAND = 0x00000040,
+    CTRY_MACAU       = 0x00000355U,
+    CTRY_MACEDONIA   = 0x00000185U,
+    CTRY_MALAYSIA    = 0x0000003cU,
+    CTRY_MALDIVES    = 0x000003c0U,
+    CTRY_MEXICO      = 0x00000034U,
+    CTRY_MONACO      = 0x00000021U,
+    CTRY_MONGOLIA    = 0x000003d0U,
+    CTRY_MOROCCO     = 0x000000d4U,
+    CTRY_NETHERLANDS = 0x0000001fU,
+    CTRY_NEW_ZEALAND = 0x00000040U,
 }
 
 enum : uint
 {
-    CTRY_NICARAGUA   = 0x000001f9,
-    CTRY_NORWAY      = 0x0000002f,
-    CTRY_OMAN        = 0x000003c8,
-    CTRY_PAKISTAN    = 0x0000005c,
-    CTRY_PANAMA      = 0x000001fb,
-    CTRY_PARAGUAY    = 0x00000253,
-    CTRY_PERU        = 0x00000033,
-    CTRY_PHILIPPINES = 0x0000003f,
+    CTRY_NICARAGUA   = 0x000001f9U,
+    CTRY_NORWAY      = 0x0000002fU,
+    CTRY_OMAN        = 0x000003c8U,
+    CTRY_PAKISTAN    = 0x0000005cU,
+    CTRY_PANAMA      = 0x000001fbU,
+    CTRY_PARAGUAY    = 0x00000253U,
+    CTRY_PERU        = 0x00000033U,
+    CTRY_PHILIPPINES = 0x0000003fU,
 }
 
 enum : uint
 {
-    CTRY_POLAND      = 0x00000030,
-    CTRY_PORTUGAL    = 0x0000015f,
-    CTRY_PRCHINA     = 0x00000056,
-    CTRY_PUERTO_RICO = 0x00000001,
+    CTRY_POLAND      = 0x00000030U,
+    CTRY_PORTUGAL    = 0x0000015fU,
+    CTRY_PRCHINA     = 0x00000056U,
+    CTRY_PUERTO_RICO = 0x00000001U,
 }
 
 enum : uint
 {
-    CTRY_QATAR        = 0x000003ce,
-    CTRY_ROMANIA      = 0x00000028,
-    CTRY_RUSSIA       = 0x00000007,
-    CTRY_SAUDI_ARABIA = 0x000003c6,
+    CTRY_QATAR        = 0x000003ceU,
+    CTRY_ROMANIA      = 0x00000028U,
+    CTRY_RUSSIA       = 0x00000007U,
+    CTRY_SAUDI_ARABIA = 0x000003c6U,
 }
 
 enum : uint
 {
-    CTRY_SERBIA       = 0x0000017d,
-    CTRY_SINGAPORE    = 0x00000041,
-    CTRY_SLOVAK       = 0x000001a5,
-    CTRY_SLOVENIA     = 0x00000182,
-    CTRY_SOUTH_AFRICA = 0x0000001b,
-    CTRY_SOUTH_KOREA  = 0x00000052,
+    CTRY_SERBIA       = 0x0000017dU,
+    CTRY_SINGAPORE    = 0x00000041U,
+    CTRY_SLOVAK       = 0x000001a5U,
+    CTRY_SLOVENIA     = 0x00000182U,
+    CTRY_SOUTH_AFRICA = 0x0000001bU,
+    CTRY_SOUTH_KOREA  = 0x00000052U,
 }
 
 enum : uint
 {
-    CTRY_SPAIN       = 0x00000022,
-    CTRY_SWEDEN      = 0x0000002e,
-    CTRY_SWITZERLAND = 0x00000029,
+    CTRY_SPAIN       = 0x00000022U,
+    CTRY_SWEDEN      = 0x0000002eU,
+    CTRY_SWITZERLAND = 0x00000029U,
 }
 
 enum : uint
 {
-    CTRY_SYRIA             = 0x000003c3,
-    CTRY_TAIWAN            = 0x00000376,
-    CTRY_TATARSTAN         = 0x00000007,
-    CTRY_THAILAND          = 0x00000042,
-    CTRY_TRINIDAD_Y_TOBAGO = 0x00000001,
+    CTRY_SYRIA             = 0x000003c3U,
+    CTRY_TAIWAN            = 0x00000376U,
+    CTRY_TATARSTAN         = 0x00000007U,
+    CTRY_THAILAND          = 0x00000042U,
+    CTRY_TRINIDAD_Y_TOBAGO = 0x00000001U,
 }
 
 enum : uint
 {
-    CTRY_TUNISIA        = 0x000000d8,
-    CTRY_TURKEY         = 0x0000005a,
-    CTRY_UAE            = 0x000003cb,
-    CTRY_UKRAINE        = 0x0000017c,
-    CTRY_UNITED_KINGDOM = 0x0000002c,
-    CTRY_UNITED_STATES  = 0x00000001,
+    CTRY_TUNISIA        = 0x000000d8U,
+    CTRY_TURKEY         = 0x0000005aU,
+    CTRY_UAE            = 0x000003cbU,
+    CTRY_UKRAINE        = 0x0000017cU,
+    CTRY_UNITED_KINGDOM = 0x0000002cU,
+    CTRY_UNITED_STATES  = 0x00000001U,
 }
 
 enum : uint
 {
-    CTRY_URUGUAY    = 0x00000256,
-    CTRY_UZBEKISTAN = 0x00000007,
+    CTRY_URUGUAY    = 0x00000256U,
+    CTRY_UZBEKISTAN = 0x00000007U,
 }
 
 enum : uint
 {
-    CTRY_VENEZUELA = 0x0000003a,
-    CTRY_VIET_NAM  = 0x00000054,
+    CTRY_VENEZUELA = 0x0000003aU,
+    CTRY_VIET_NAM  = 0x00000054U,
 }
 
 enum : uint
 {
-    CTRY_YEMEN    = 0x000003c7,
-    CTRY_ZIMBABWE = 0x00000107,
+    CTRY_YEMEN    = 0x000003c7U,
+    CTRY_ZIMBABWE = 0x00000107U,
 }
 
-enum uint LOCALE_NOUSEROVERRIDE = 0x80000000;
+enum uint LOCALE_NOUSEROVERRIDE = 0x80000000U;
 
 enum : uint
 {
-    LOCALE_USE_CP_ACP            = 0x40000000,
-    LOCALE_RETURN_NUMBER         = 0x20000000,
-    LOCALE_RETURN_GENITIVE_NAMES = 0x10000000,
+    LOCALE_USE_CP_ACP            = 0x40000000U,
+    LOCALE_RETURN_NUMBER         = 0x20000000U,
+    LOCALE_RETURN_GENITIVE_NAMES = 0x10000000U,
 }
 
-enum uint LOCALE_ALLOW_NEUTRAL_NAMES = 0x08000000;
-enum uint LOCALE_SLOCALIZEDDISPLAYNAME = 0x00000002;
-enum uint LOCALE_SENGLISHDISPLAYNAME = 0x00000072;
-enum uint LOCALE_SNATIVEDISPLAYNAME = 0x00000073;
-enum uint LOCALE_SLOCALIZEDLANGUAGENAME = 0x0000006f;
-enum uint LOCALE_SENGLISHLANGUAGENAME = 0x00001001;
-enum uint LOCALE_SNATIVELANGUAGENAME = 0x00000004;
-enum uint LOCALE_SLOCALIZEDCOUNTRYNAME = 0x00000006;
-enum uint LOCALE_SENGLISHCOUNTRYNAME = 0x00001002;
-enum uint LOCALE_SNATIVECOUNTRYNAME = 0x00000008;
-enum uint LOCALE_IDIALINGCODE = 0x00000005;
+enum uint LOCALE_ALLOW_NEUTRAL_NAMES = 0x08000000U;
+enum uint LOCALE_SLOCALIZEDDISPLAYNAME = 0x00000002U;
+enum uint LOCALE_SENGLISHDISPLAYNAME = 0x00000072U;
+enum uint LOCALE_SNATIVEDISPLAYNAME = 0x00000073U;
+enum uint LOCALE_SLOCALIZEDLANGUAGENAME = 0x0000006fU;
+enum uint LOCALE_SENGLISHLANGUAGENAME = 0x00001001U;
+enum uint LOCALE_SNATIVELANGUAGENAME = 0x00000004U;
+enum uint LOCALE_SLOCALIZEDCOUNTRYNAME = 0x00000006U;
+enum uint LOCALE_SENGLISHCOUNTRYNAME = 0x00001002U;
+enum uint LOCALE_SNATIVECOUNTRYNAME = 0x00000008U;
+enum uint LOCALE_IDIALINGCODE = 0x00000005U;
 
 enum : uint
 {
-    LOCALE_SLIST         = 0x0000000c,
-    LOCALE_IMEASURE      = 0x0000000d,
-    LOCALE_SDECIMAL      = 0x0000000e,
-    LOCALE_STHOUSAND     = 0x0000000f,
-    LOCALE_SGROUPING     = 0x00000010,
-    LOCALE_IDIGITS       = 0x00000011,
-    LOCALE_ILZERO        = 0x00000012,
-    LOCALE_INEGNUMBER    = 0x00001010,
-    LOCALE_SNATIVEDIGITS = 0x00000013,
+    LOCALE_SLIST         = 0x0000000cU,
+    LOCALE_IMEASURE      = 0x0000000dU,
+    LOCALE_SDECIMAL      = 0x0000000eU,
+    LOCALE_STHOUSAND     = 0x0000000fU,
+    LOCALE_SGROUPING     = 0x00000010U,
+    LOCALE_IDIGITS       = 0x00000011U,
+    LOCALE_ILZERO        = 0x00000012U,
+    LOCALE_INEGNUMBER    = 0x00001010U,
+    LOCALE_SNATIVEDIGITS = 0x00000013U,
 }
 
 enum : uint
 {
-    LOCALE_SCURRENCY       = 0x00000014,
-    LOCALE_SINTLSYMBOL     = 0x00000015,
-    LOCALE_SMONDECIMALSEP  = 0x00000016,
-    LOCALE_SMONTHOUSANDSEP = 0x00000017,
-    LOCALE_SMONGROUPING    = 0x00000018,
+    LOCALE_SCURRENCY       = 0x00000014U,
+    LOCALE_SINTLSYMBOL     = 0x00000015U,
+    LOCALE_SMONDECIMALSEP  = 0x00000016U,
+    LOCALE_SMONTHOUSANDSEP = 0x00000017U,
+    LOCALE_SMONGROUPING    = 0x00000018U,
 }
 
 enum : uint
 {
-    LOCALE_ICURRDIGITS   = 0x00000019,
-    LOCALE_ICURRENCY     = 0x0000001b,
-    LOCALE_INEGCURR      = 0x0000001c,
-    LOCALE_SSHORTDATE    = 0x0000001f,
-    LOCALE_SLONGDATE     = 0x00000020,
-    LOCALE_STIMEFORMAT   = 0x00001003,
-    LOCALE_SAM           = 0x00000028,
-    LOCALE_SPM           = 0x00000029,
-    LOCALE_ICALENDARTYPE = 0x00001009,
+    LOCALE_ICURRDIGITS   = 0x00000019U,
+    LOCALE_ICURRENCY     = 0x0000001bU,
+    LOCALE_INEGCURR      = 0x0000001cU,
+    LOCALE_SSHORTDATE    = 0x0000001fU,
+    LOCALE_SLONGDATE     = 0x00000020U,
+    LOCALE_STIMEFORMAT   = 0x00001003U,
+    LOCALE_SAM           = 0x00000028U,
+    LOCALE_SPM           = 0x00000029U,
+    LOCALE_ICALENDARTYPE = 0x00001009U,
 }
 
-enum uint LOCALE_IOPTIONALCALENDAR = 0x0000100b;
+enum uint LOCALE_IOPTIONALCALENDAR = 0x0000100bU;
 
 enum : uint
 {
-    LOCALE_IFIRSTDAYOFWEEK  = 0x0000100c,
-    LOCALE_IFIRSTWEEKOFYEAR = 0x0000100d,
+    LOCALE_IFIRSTDAYOFWEEK  = 0x0000100cU,
+    LOCALE_IFIRSTWEEKOFYEAR = 0x0000100dU,
 }
 
 enum : uint
 {
-    LOCALE_SDAYNAME1       = 0x0000002a,
-    LOCALE_SDAYNAME2       = 0x0000002b,
-    LOCALE_SDAYNAME3       = 0x0000002c,
-    LOCALE_SDAYNAME4       = 0x0000002d,
-    LOCALE_SDAYNAME5       = 0x0000002e,
-    LOCALE_SDAYNAME6       = 0x0000002f,
-    LOCALE_SDAYNAME7       = 0x00000030,
-    LOCALE_SABBREVDAYNAME1 = 0x00000031,
-    LOCALE_SABBREVDAYNAME2 = 0x00000032,
-    LOCALE_SABBREVDAYNAME3 = 0x00000033,
-    LOCALE_SABBREVDAYNAME4 = 0x00000034,
-    LOCALE_SABBREVDAYNAME5 = 0x00000035,
-    LOCALE_SABBREVDAYNAME6 = 0x00000036,
-    LOCALE_SABBREVDAYNAME7 = 0x00000037,
+    LOCALE_SDAYNAME1       = 0x0000002aU,
+    LOCALE_SDAYNAME2       = 0x0000002bU,
+    LOCALE_SDAYNAME3       = 0x0000002cU,
+    LOCALE_SDAYNAME4       = 0x0000002dU,
+    LOCALE_SDAYNAME5       = 0x0000002eU,
+    LOCALE_SDAYNAME6       = 0x0000002fU,
+    LOCALE_SDAYNAME7       = 0x00000030U,
+    LOCALE_SABBREVDAYNAME1 = 0x00000031U,
+    LOCALE_SABBREVDAYNAME2 = 0x00000032U,
+    LOCALE_SABBREVDAYNAME3 = 0x00000033U,
+    LOCALE_SABBREVDAYNAME4 = 0x00000034U,
+    LOCALE_SABBREVDAYNAME5 = 0x00000035U,
+    LOCALE_SABBREVDAYNAME6 = 0x00000036U,
+    LOCALE_SABBREVDAYNAME7 = 0x00000037U,
 }
 
 enum : uint
 {
-    LOCALE_SMONTHNAME1        = 0x00000038,
-    LOCALE_SMONTHNAME2        = 0x00000039,
-    LOCALE_SMONTHNAME3        = 0x0000003a,
-    LOCALE_SMONTHNAME4        = 0x0000003b,
-    LOCALE_SMONTHNAME5        = 0x0000003c,
-    LOCALE_SMONTHNAME6        = 0x0000003d,
-    LOCALE_SMONTHNAME7        = 0x0000003e,
-    LOCALE_SMONTHNAME8        = 0x0000003f,
-    LOCALE_SMONTHNAME9        = 0x00000040,
-    LOCALE_SMONTHNAME10       = 0x00000041,
-    LOCALE_SMONTHNAME11       = 0x00000042,
-    LOCALE_SMONTHNAME12       = 0x00000043,
-    LOCALE_SMONTHNAME13       = 0x0000100e,
-    LOCALE_SABBREVMONTHNAME1  = 0x00000044,
-    LOCALE_SABBREVMONTHNAME2  = 0x00000045,
-    LOCALE_SABBREVMONTHNAME3  = 0x00000046,
-    LOCALE_SABBREVMONTHNAME4  = 0x00000047,
-    LOCALE_SABBREVMONTHNAME5  = 0x00000048,
-    LOCALE_SABBREVMONTHNAME6  = 0x00000049,
-    LOCALE_SABBREVMONTHNAME7  = 0x0000004a,
-    LOCALE_SABBREVMONTHNAME8  = 0x0000004b,
-    LOCALE_SABBREVMONTHNAME9  = 0x0000004c,
-    LOCALE_SABBREVMONTHNAME10 = 0x0000004d,
-    LOCALE_SABBREVMONTHNAME11 = 0x0000004e,
-    LOCALE_SABBREVMONTHNAME12 = 0x0000004f,
-    LOCALE_SABBREVMONTHNAME13 = 0x0000100f,
+    LOCALE_SMONTHNAME1        = 0x00000038U,
+    LOCALE_SMONTHNAME2        = 0x00000039U,
+    LOCALE_SMONTHNAME3        = 0x0000003aU,
+    LOCALE_SMONTHNAME4        = 0x0000003bU,
+    LOCALE_SMONTHNAME5        = 0x0000003cU,
+    LOCALE_SMONTHNAME6        = 0x0000003dU,
+    LOCALE_SMONTHNAME7        = 0x0000003eU,
+    LOCALE_SMONTHNAME8        = 0x0000003fU,
+    LOCALE_SMONTHNAME9        = 0x00000040U,
+    LOCALE_SMONTHNAME10       = 0x00000041U,
+    LOCALE_SMONTHNAME11       = 0x00000042U,
+    LOCALE_SMONTHNAME12       = 0x00000043U,
+    LOCALE_SMONTHNAME13       = 0x0000100eU,
+    LOCALE_SABBREVMONTHNAME1  = 0x00000044U,
+    LOCALE_SABBREVMONTHNAME2  = 0x00000045U,
+    LOCALE_SABBREVMONTHNAME3  = 0x00000046U,
+    LOCALE_SABBREVMONTHNAME4  = 0x00000047U,
+    LOCALE_SABBREVMONTHNAME5  = 0x00000048U,
+    LOCALE_SABBREVMONTHNAME6  = 0x00000049U,
+    LOCALE_SABBREVMONTHNAME7  = 0x0000004aU,
+    LOCALE_SABBREVMONTHNAME8  = 0x0000004bU,
+    LOCALE_SABBREVMONTHNAME9  = 0x0000004cU,
+    LOCALE_SABBREVMONTHNAME10 = 0x0000004dU,
+    LOCALE_SABBREVMONTHNAME11 = 0x0000004eU,
+    LOCALE_SABBREVMONTHNAME12 = 0x0000004fU,
+    LOCALE_SABBREVMONTHNAME13 = 0x0000100fU,
 }
 
-enum uint LOCALE_SPOSITIVESIGN = 0x00000050;
-enum uint LOCALE_SNEGATIVESIGN = 0x00000051;
+enum uint LOCALE_SPOSITIVESIGN = 0x00000050U;
+enum uint LOCALE_SNEGATIVESIGN = 0x00000051U;
 
 enum : uint
 {
-    LOCALE_IPOSSIGNPOSN    = 0x00000052,
-    LOCALE_INEGSIGNPOSN    = 0x00000053,
-    LOCALE_IPOSSYMPRECEDES = 0x00000054,
-    LOCALE_IPOSSEPBYSPACE  = 0x00000055,
+    LOCALE_IPOSSIGNPOSN    = 0x00000052U,
+    LOCALE_INEGSIGNPOSN    = 0x00000053U,
+    LOCALE_IPOSSYMPRECEDES = 0x00000054U,
+    LOCALE_IPOSSEPBYSPACE  = 0x00000055U,
 }
 
 enum : uint
 {
-    LOCALE_INEGSYMPRECEDES = 0x00000056,
-    LOCALE_INEGSEPBYSPACE  = 0x00000057,
+    LOCALE_INEGSYMPRECEDES = 0x00000056U,
+    LOCALE_INEGSEPBYSPACE  = 0x00000057U,
 }
 
-enum uint LOCALE_FONTSIGNATURE = 0x00000058;
+enum uint LOCALE_FONTSIGNATURE = 0x00000058U;
 
 enum : uint
 {
-    LOCALE_SISO639LANGNAME  = 0x00000059,
-    LOCALE_SISO3166CTRYNAME = 0x0000005a,
+    LOCALE_SISO639LANGNAME  = 0x00000059U,
+    LOCALE_SISO3166CTRYNAME = 0x0000005aU,
 }
 
 enum : uint
 {
-    LOCALE_IPAPERSIZE      = 0x0000100a,
-    LOCALE_SENGCURRNAME    = 0x00001007,
-    LOCALE_SNATIVECURRNAME = 0x00001008,
+    LOCALE_IPAPERSIZE      = 0x0000100aU,
+    LOCALE_SENGCURRNAME    = 0x00001007U,
+    LOCALE_SNATIVECURRNAME = 0x00001008U,
 }
 
 enum : uint
 {
-    LOCALE_SYEARMONTH         = 0x00001006,
-    LOCALE_SSORTNAME          = 0x00001013,
-    LOCALE_IDIGITSUBSTITUTION = 0x00001014,
+    LOCALE_SYEARMONTH         = 0x00001006U,
+    LOCALE_SSORTNAME          = 0x00001013U,
+    LOCALE_IDIGITSUBSTITUTION = 0x00001014U,
 }
 
 enum : uint
 {
-    LOCALE_SNAME             = 0x0000005c,
-    LOCALE_SDURATION         = 0x0000005d,
-    LOCALE_SSHORTESTDAYNAME1 = 0x00000060,
-    LOCALE_SSHORTESTDAYNAME2 = 0x00000061,
-    LOCALE_SSHORTESTDAYNAME3 = 0x00000062,
-    LOCALE_SSHORTESTDAYNAME4 = 0x00000063,
-    LOCALE_SSHORTESTDAYNAME5 = 0x00000064,
-    LOCALE_SSHORTESTDAYNAME6 = 0x00000065,
-    LOCALE_SSHORTESTDAYNAME7 = 0x00000066,
+    LOCALE_SNAME             = 0x0000005cU,
+    LOCALE_SDURATION         = 0x0000005dU,
+    LOCALE_SSHORTESTDAYNAME1 = 0x00000060U,
+    LOCALE_SSHORTESTDAYNAME2 = 0x00000061U,
+    LOCALE_SSHORTESTDAYNAME3 = 0x00000062U,
+    LOCALE_SSHORTESTDAYNAME4 = 0x00000063U,
+    LOCALE_SSHORTESTDAYNAME5 = 0x00000064U,
+    LOCALE_SSHORTESTDAYNAME6 = 0x00000065U,
+    LOCALE_SSHORTESTDAYNAME7 = 0x00000066U,
 }
 
 enum : uint
 {
-    LOCALE_SISO639LANGNAME2  = 0x00000067,
-    LOCALE_SISO3166CTRYNAME2 = 0x00000068,
+    LOCALE_SISO639LANGNAME2  = 0x00000067U,
+    LOCALE_SISO3166CTRYNAME2 = 0x00000068U,
 }
 
 enum : uint
 {
-    LOCALE_SNAN                 = 0x00000069,
-    LOCALE_SPOSINFINITY         = 0x0000006a,
-    LOCALE_SNEGINFINITY         = 0x0000006b,
-    LOCALE_SSCRIPTS             = 0x0000006c,
-    LOCALE_SPARENT              = 0x0000006d,
-    LOCALE_SCONSOLEFALLBACKNAME = 0x0000006e,
+    LOCALE_SNAN                 = 0x00000069U,
+    LOCALE_SPOSINFINITY         = 0x0000006aU,
+    LOCALE_SNEGINFINITY         = 0x0000006bU,
+    LOCALE_SSCRIPTS             = 0x0000006cU,
+    LOCALE_SPARENT              = 0x0000006dU,
+    LOCALE_SCONSOLEFALLBACKNAME = 0x0000006eU,
 }
 
-enum uint LOCALE_IREADINGLAYOUT = 0x00000070;
+enum uint LOCALE_IREADINGLAYOUT = 0x00000070U;
 
 enum : uint
 {
-    LOCALE_INEUTRAL         = 0x00000071,
-    LOCALE_INEGATIVEPERCENT = 0x00000074,
+    LOCALE_INEUTRAL         = 0x00000071U,
+    LOCALE_INEGATIVEPERCENT = 0x00000074U,
 }
 
-enum uint LOCALE_IPOSITIVEPERCENT = 0x00000075;
+enum uint LOCALE_IPOSITIVEPERCENT = 0x00000075U;
 
 enum : uint
 {
-    LOCALE_SPERCENT             = 0x00000076,
-    LOCALE_SPERMILLE            = 0x00000077,
-    LOCALE_SMONTHDAY            = 0x00000078,
-    LOCALE_SSHORTTIME           = 0x00000079,
-    LOCALE_SOPENTYPELANGUAGETAG = 0x0000007a,
+    LOCALE_SPERCENT             = 0x00000076U,
+    LOCALE_SPERMILLE            = 0x00000077U,
+    LOCALE_SMONTHDAY            = 0x00000078U,
+    LOCALE_SSHORTTIME           = 0x00000079U,
+    LOCALE_SOPENTYPELANGUAGETAG = 0x0000007aU,
 }
 
 enum : uint
 {
-    LOCALE_SSORTLOCALE       = 0x0000007b,
-    LOCALE_SRELATIVELONGDATE = 0x0000007c,
+    LOCALE_SSORTLOCALE       = 0x0000007bU,
+    LOCALE_SRELATIVELONGDATE = 0x0000007cU,
 }
 
-enum uint LOCALE_ICONSTRUCTEDLOCALE = 0x0000007d;
+enum uint LOCALE_ICONSTRUCTEDLOCALE = 0x0000007dU;
 
 enum : uint
 {
-    LOCALE_SSHORTESTAM = 0x0000007e,
-    LOCALE_SSHORTESTPM = 0x0000007f,
+    LOCALE_SSHORTESTAM = 0x0000007eU,
+    LOCALE_SSHORTESTPM = 0x0000007fU,
 }
 
 enum : uint
 {
-    LOCALE_IUSEUTF8LEGACYACP   = 0x00000666,
-    LOCALE_IUSEUTF8LEGACYOEMCP = 0x00000999,
+    LOCALE_IUSEUTF8LEGACYACP   = 0x00000666U,
+    LOCALE_IUSEUTF8LEGACYOEMCP = 0x00000999U,
 }
 
 enum : uint
 {
-    LOCALE_IDEFAULTCODEPAGE       = 0x0000000b,
-    LOCALE_IDEFAULTANSICODEPAGE   = 0x00001004,
-    LOCALE_IDEFAULTMACCODEPAGE    = 0x00001011,
-    LOCALE_IDEFAULTEBCDICCODEPAGE = 0x00001012,
+    LOCALE_IDEFAULTCODEPAGE       = 0x0000000bU,
+    LOCALE_IDEFAULTANSICODEPAGE   = 0x00001004U,
+    LOCALE_IDEFAULTMACCODEPAGE    = 0x00001011U,
+    LOCALE_IDEFAULTEBCDICCODEPAGE = 0x00001012U,
 }
 
 enum : uint
 {
-    LOCALE_ILANGUAGE       = 0x00000001,
-    LOCALE_SABBREVLANGNAME = 0x00000003,
-    LOCALE_SABBREVCTRYNAME = 0x00000007,
+    LOCALE_ILANGUAGE       = 0x00000001U,
+    LOCALE_SABBREVLANGNAME = 0x00000003U,
+    LOCALE_SABBREVCTRYNAME = 0x00000007U,
 }
 
 enum : uint
 {
-    LOCALE_IGEOID           = 0x0000005b,
-    LOCALE_IDEFAULTLANGUAGE = 0x00000009,
-    LOCALE_IDEFAULTCOUNTRY  = 0x0000000a,
+    LOCALE_IGEOID           = 0x0000005bU,
+    LOCALE_IDEFAULTLANGUAGE = 0x00000009U,
+    LOCALE_IDEFAULTCOUNTRY  = 0x0000000aU,
 }
 
-enum uint LOCALE_IINTLCURRDIGITS = 0x0000001a;
+enum uint LOCALE_IINTLCURRDIGITS = 0x0000001aU;
 
 enum : uint
 {
-    LOCALE_SDATE         = 0x0000001d,
-    LOCALE_STIME         = 0x0000001e,
-    LOCALE_IDATE         = 0x00000021,
-    LOCALE_ILDATE        = 0x00000022,
-    LOCALE_ITIME         = 0x00000023,
-    LOCALE_ITIMEMARKPOSN = 0x00001005,
+    LOCALE_SDATE         = 0x0000001dU,
+    LOCALE_STIME         = 0x0000001eU,
+    LOCALE_IDATE         = 0x00000021U,
+    LOCALE_ILDATE        = 0x00000022U,
+    LOCALE_ITIME         = 0x00000023U,
+    LOCALE_ITIMEMARKPOSN = 0x00001005U,
 }
 
 enum : uint
 {
-    LOCALE_ICENTURY            = 0x00000024,
-    LOCALE_ITLZERO             = 0x00000025,
-    LOCALE_IDAYLZERO           = 0x00000026,
-    LOCALE_IMONLZERO           = 0x00000027,
-    LOCALE_SKEYBOARDSTOINSTALL = 0x0000005e,
+    LOCALE_ICENTURY            = 0x00000024U,
+    LOCALE_ITLZERO             = 0x00000025U,
+    LOCALE_IDAYLZERO           = 0x00000026U,
+    LOCALE_IMONLZERO           = 0x00000027U,
+    LOCALE_SKEYBOARDSTOINSTALL = 0x0000005eU,
 }
 
 enum : uint
 {
-    LOCALE_SLANGUAGE        = 0x00000002,
-    LOCALE_SLANGDISPLAYNAME = 0x0000006f,
+    LOCALE_SLANGUAGE        = 0x00000002U,
+    LOCALE_SLANGDISPLAYNAME = 0x0000006fU,
 }
 
 enum : uint
 {
-    LOCALE_SENGLANGUAGE    = 0x00001001,
-    LOCALE_SNATIVELANGNAME = 0x00000004,
+    LOCALE_SENGLANGUAGE    = 0x00001001U,
+    LOCALE_SNATIVELANGNAME = 0x00000004U,
 }
 
 enum : uint
 {
-    LOCALE_SCOUNTRY        = 0x00000006,
-    LOCALE_SENGCOUNTRY     = 0x00001002,
-    LOCALE_SNATIVECTRYNAME = 0x00000008,
+    LOCALE_SCOUNTRY        = 0x00000006U,
+    LOCALE_SENGCOUNTRY     = 0x00001002U,
+    LOCALE_SNATIVECTRYNAME = 0x00000008U,
 }
 
 enum : uint
 {
-    LOCALE_ICOUNTRY = 0x00000005,
-    LOCALE_S1159    = 0x00000028,
-    LOCALE_S2359    = 0x00000029,
+    LOCALE_ICOUNTRY = 0x00000005U,
+    LOCALE_S1159    = 0x00000028U,
+    LOCALE_S2359    = 0x00000029U,
 }
 
-enum uint CAL_NOUSEROVERRIDE = 0x80000000;
-enum uint CAL_USE_CP_ACP = 0x40000000;
+enum uint CAL_NOUSEROVERRIDE = 0x80000000U;
+enum uint CAL_USE_CP_ACP = 0x40000000U;
 
 enum : uint
 {
-    CAL_RETURN_NUMBER         = 0x20000000,
-    CAL_RETURN_GENITIVE_NAMES = 0x10000000,
+    CAL_RETURN_NUMBER         = 0x20000000U,
+    CAL_RETURN_GENITIVE_NAMES = 0x10000000U,
 }
 
-enum uint CAL_ICALINTVALUE = 0x00000001;
-enum uint CAL_SCALNAME = 0x00000002;
-enum uint CAL_IYEAROFFSETRANGE = 0x00000003;
-enum uint CAL_SERASTRING = 0x00000004;
-enum uint CAL_SSHORTDATE = 0x00000005;
-enum uint CAL_SLONGDATE = 0x00000006;
+enum uint CAL_ICALINTVALUE = 0x00000001U;
+enum uint CAL_SCALNAME = 0x00000002U;
+enum uint CAL_IYEAROFFSETRANGE = 0x00000003U;
+enum uint CAL_SERASTRING = 0x00000004U;
+enum uint CAL_SSHORTDATE = 0x00000005U;
+enum uint CAL_SLONGDATE = 0x00000006U;
 
 enum : uint
 {
-    CAL_SDAYNAME1 = 0x00000007,
-    CAL_SDAYNAME2 = 0x00000008,
-    CAL_SDAYNAME3 = 0x00000009,
-    CAL_SDAYNAME4 = 0x0000000a,
-    CAL_SDAYNAME5 = 0x0000000b,
-    CAL_SDAYNAME6 = 0x0000000c,
-    CAL_SDAYNAME7 = 0x0000000d,
+    CAL_SDAYNAME1 = 0x00000007U,
+    CAL_SDAYNAME2 = 0x00000008U,
+    CAL_SDAYNAME3 = 0x00000009U,
+    CAL_SDAYNAME4 = 0x0000000aU,
+    CAL_SDAYNAME5 = 0x0000000bU,
+    CAL_SDAYNAME6 = 0x0000000cU,
+    CAL_SDAYNAME7 = 0x0000000dU,
 }
 
 enum : uint
 {
-    CAL_SABBREVDAYNAME1 = 0x0000000e,
-    CAL_SABBREVDAYNAME2 = 0x0000000f,
-    CAL_SABBREVDAYNAME3 = 0x00000010,
-    CAL_SABBREVDAYNAME4 = 0x00000011,
-    CAL_SABBREVDAYNAME5 = 0x00000012,
-    CAL_SABBREVDAYNAME6 = 0x00000013,
-    CAL_SABBREVDAYNAME7 = 0x00000014,
+    CAL_SABBREVDAYNAME1 = 0x0000000eU,
+    CAL_SABBREVDAYNAME2 = 0x0000000fU,
+    CAL_SABBREVDAYNAME3 = 0x00000010U,
+    CAL_SABBREVDAYNAME4 = 0x00000011U,
+    CAL_SABBREVDAYNAME5 = 0x00000012U,
+    CAL_SABBREVDAYNAME6 = 0x00000013U,
+    CAL_SABBREVDAYNAME7 = 0x00000014U,
 }
 
 enum : uint
 {
-    CAL_SMONTHNAME1  = 0x00000015,
-    CAL_SMONTHNAME2  = 0x00000016,
-    CAL_SMONTHNAME3  = 0x00000017,
-    CAL_SMONTHNAME4  = 0x00000018,
-    CAL_SMONTHNAME5  = 0x00000019,
-    CAL_SMONTHNAME6  = 0x0000001a,
-    CAL_SMONTHNAME7  = 0x0000001b,
-    CAL_SMONTHNAME8  = 0x0000001c,
-    CAL_SMONTHNAME9  = 0x0000001d,
-    CAL_SMONTHNAME10 = 0x0000001e,
-    CAL_SMONTHNAME11 = 0x0000001f,
-    CAL_SMONTHNAME12 = 0x00000020,
-    CAL_SMONTHNAME13 = 0x00000021,
+    CAL_SMONTHNAME1  = 0x00000015U,
+    CAL_SMONTHNAME2  = 0x00000016U,
+    CAL_SMONTHNAME3  = 0x00000017U,
+    CAL_SMONTHNAME4  = 0x00000018U,
+    CAL_SMONTHNAME5  = 0x00000019U,
+    CAL_SMONTHNAME6  = 0x0000001aU,
+    CAL_SMONTHNAME7  = 0x0000001bU,
+    CAL_SMONTHNAME8  = 0x0000001cU,
+    CAL_SMONTHNAME9  = 0x0000001dU,
+    CAL_SMONTHNAME10 = 0x0000001eU,
+    CAL_SMONTHNAME11 = 0x0000001fU,
+    CAL_SMONTHNAME12 = 0x00000020U,
+    CAL_SMONTHNAME13 = 0x00000021U,
 }
 
 enum : uint
 {
-    CAL_SABBREVMONTHNAME1  = 0x00000022,
-    CAL_SABBREVMONTHNAME2  = 0x00000023,
-    CAL_SABBREVMONTHNAME3  = 0x00000024,
-    CAL_SABBREVMONTHNAME4  = 0x00000025,
-    CAL_SABBREVMONTHNAME5  = 0x00000026,
-    CAL_SABBREVMONTHNAME6  = 0x00000027,
-    CAL_SABBREVMONTHNAME7  = 0x00000028,
-    CAL_SABBREVMONTHNAME8  = 0x00000029,
-    CAL_SABBREVMONTHNAME9  = 0x0000002a,
-    CAL_SABBREVMONTHNAME10 = 0x0000002b,
-    CAL_SABBREVMONTHNAME11 = 0x0000002c,
-    CAL_SABBREVMONTHNAME12 = 0x0000002d,
-    CAL_SABBREVMONTHNAME13 = 0x0000002e,
+    CAL_SABBREVMONTHNAME1  = 0x00000022U,
+    CAL_SABBREVMONTHNAME2  = 0x00000023U,
+    CAL_SABBREVMONTHNAME3  = 0x00000024U,
+    CAL_SABBREVMONTHNAME4  = 0x00000025U,
+    CAL_SABBREVMONTHNAME5  = 0x00000026U,
+    CAL_SABBREVMONTHNAME6  = 0x00000027U,
+    CAL_SABBREVMONTHNAME7  = 0x00000028U,
+    CAL_SABBREVMONTHNAME8  = 0x00000029U,
+    CAL_SABBREVMONTHNAME9  = 0x0000002aU,
+    CAL_SABBREVMONTHNAME10 = 0x0000002bU,
+    CAL_SABBREVMONTHNAME11 = 0x0000002cU,
+    CAL_SABBREVMONTHNAME12 = 0x0000002dU,
+    CAL_SABBREVMONTHNAME13 = 0x0000002eU,
 }
 
-enum uint CAL_SYEARMONTH = 0x0000002f;
-enum uint CAL_ITWODIGITYEARMAX = 0x00000030;
+enum uint CAL_SYEARMONTH = 0x0000002fU;
+enum uint CAL_ITWODIGITYEARMAX = 0x00000030U;
 
 enum : uint
 {
-    CAL_SSHORTESTDAYNAME1 = 0x00000031,
-    CAL_SSHORTESTDAYNAME2 = 0x00000032,
-    CAL_SSHORTESTDAYNAME3 = 0x00000033,
-    CAL_SSHORTESTDAYNAME4 = 0x00000034,
-    CAL_SSHORTESTDAYNAME5 = 0x00000035,
-    CAL_SSHORTESTDAYNAME6 = 0x00000036,
-    CAL_SSHORTESTDAYNAME7 = 0x00000037,
+    CAL_SSHORTESTDAYNAME1 = 0x00000031U,
+    CAL_SSHORTESTDAYNAME2 = 0x00000032U,
+    CAL_SSHORTESTDAYNAME3 = 0x00000033U,
+    CAL_SSHORTESTDAYNAME4 = 0x00000034U,
+    CAL_SSHORTESTDAYNAME5 = 0x00000035U,
+    CAL_SSHORTESTDAYNAME6 = 0x00000036U,
+    CAL_SSHORTESTDAYNAME7 = 0x00000037U,
 }
 
-enum uint CAL_SMONTHDAY = 0x00000038;
-enum uint CAL_SABBREVERASTRING = 0x00000039;
-enum uint CAL_SRELATIVELONGDATE = 0x0000003a;
+enum uint CAL_SMONTHDAY = 0x00000038U;
+enum uint CAL_SABBREVERASTRING = 0x00000039U;
+enum uint CAL_SRELATIVELONGDATE = 0x0000003aU;
 
 enum : uint
 {
-    CAL_SENGLISHERANAME       = 0x0000003b,
-    CAL_SENGLISHABBREVERANAME = 0x0000003c,
+    CAL_SENGLISHERANAME       = 0x0000003bU,
+    CAL_SENGLISHABBREVERANAME = 0x0000003cU,
 }
 
-enum uint CAL_SJAPANESEERAFIRSTYEAR = 0x0000003d;
-enum uint ENUM_ALL_CALENDARS = 0xffffffff;
+enum uint CAL_SJAPANESEERAFIRSTYEAR = 0x0000003dU;
+enum uint ENUM_ALL_CALENDARS = 0xffffffffU;
 
 enum : uint
 {
-    CAL_GREGORIAN    = 0x00000001,
-    CAL_GREGORIAN_US = 0x00000002,
+    CAL_GREGORIAN    = 0x00000001U,
+    CAL_GREGORIAN_US = 0x00000002U,
 }
 
 enum : uint
 {
-    CAL_JAPAN  = 0x00000003,
-    CAL_TAIWAN = 0x00000004,
+    CAL_JAPAN  = 0x00000003U,
+    CAL_TAIWAN = 0x00000004U,
 }
 
 enum : uint
 {
-    CAL_KOREA  = 0x00000005,
-    CAL_HIJRI  = 0x00000006,
-    CAL_THAI   = 0x00000007,
-    CAL_HEBREW = 0x00000008,
+    CAL_KOREA  = 0x00000005U,
+    CAL_HIJRI  = 0x00000006U,
+    CAL_THAI   = 0x00000007U,
+    CAL_HEBREW = 0x00000008U,
 }
 
 enum : uint
 {
-    CAL_GREGORIAN_ME_FRENCH    = 0x00000009,
-    CAL_GREGORIAN_ARABIC       = 0x0000000a,
-    CAL_GREGORIAN_XLIT_ENGLISH = 0x0000000b,
-    CAL_GREGORIAN_XLIT_FRENCH  = 0x0000000c,
+    CAL_GREGORIAN_ME_FRENCH    = 0x00000009U,
+    CAL_GREGORIAN_ARABIC       = 0x0000000aU,
+    CAL_GREGORIAN_XLIT_ENGLISH = 0x0000000bU,
+    CAL_GREGORIAN_XLIT_FRENCH  = 0x0000000cU,
 }
 
-enum uint CAL_PERSIAN = 0x00000016;
-enum uint CAL_UMALQURA = 0x00000017;
-enum uint LGRPID_WESTERN_EUROPE = 0x00000001;
-enum uint LGRPID_CENTRAL_EUROPE = 0x00000002;
+enum uint CAL_PERSIAN = 0x00000016U;
+enum uint CAL_UMALQURA = 0x00000017U;
+enum uint LGRPID_WESTERN_EUROPE = 0x00000001U;
+enum uint LGRPID_CENTRAL_EUROPE = 0x00000002U;
 
 enum : uint
 {
-    LGRPID_BALTIC              = 0x00000003,
-    LGRPID_GREEK               = 0x00000004,
-    LGRPID_CYRILLIC            = 0x00000005,
-    LGRPID_TURKIC              = 0x00000006,
-    LGRPID_TURKISH             = 0x00000006,
-    LGRPID_JAPANESE            = 0x00000007,
-    LGRPID_KOREAN              = 0x00000008,
-    LGRPID_TRADITIONAL_CHINESE = 0x00000009,
+    LGRPID_BALTIC              = 0x00000003U,
+    LGRPID_GREEK               = 0x00000004U,
+    LGRPID_CYRILLIC            = 0x00000005U,
+    LGRPID_TURKIC              = 0x00000006U,
+    LGRPID_TURKISH             = 0x00000006U,
+    LGRPID_JAPANESE            = 0x00000007U,
+    LGRPID_KOREAN              = 0x00000008U,
+    LGRPID_TRADITIONAL_CHINESE = 0x00000009U,
 }
 
-enum uint LGRPID_SIMPLIFIED_CHINESE = 0x0000000a;
+enum uint LGRPID_SIMPLIFIED_CHINESE = 0x0000000aU;
 
 enum : uint
 {
-    LGRPID_THAI       = 0x0000000b,
-    LGRPID_HEBREW     = 0x0000000c,
-    LGRPID_ARABIC     = 0x0000000d,
-    LGRPID_VIETNAMESE = 0x0000000e,
-    LGRPID_INDIC      = 0x0000000f,
-    LGRPID_GEORGIAN   = 0x00000010,
-    LGRPID_ARMENIAN   = 0x00000011,
+    LGRPID_THAI       = 0x0000000bU,
+    LGRPID_HEBREW     = 0x0000000cU,
+    LGRPID_ARABIC     = 0x0000000dU,
+    LGRPID_VIETNAMESE = 0x0000000eU,
+    LGRPID_INDIC      = 0x0000000fU,
+    LGRPID_GEORGIAN   = 0x00000010U,
+    LGRPID_ARMENIAN   = 0x00000011U,
 }
 
 enum : uint
 {
-    MUI_LANGUAGE_ID   = 0x00000004,
-    MUI_LANGUAGE_NAME = 0x00000008,
+    MUI_LANGUAGE_ID   = 0x00000004U,
+    MUI_LANGUAGE_NAME = 0x00000008U,
 }
 
-enum uint MUI_MERGE_SYSTEM_FALLBACK = 0x00000010;
-enum uint MUI_MERGE_USER_FALLBACK = 0x00000020;
-enum uint MUI_THREAD_LANGUAGES = 0x00000040;
-enum uint MUI_CONSOLE_FILTER = 0x00000100;
-enum uint MUI_COMPLEX_SCRIPT_FILTER = 0x00000200;
-enum uint MUI_RESET_FILTERS = 0x00000001;
-enum uint MUI_USER_PREFERRED_UI_LANGUAGES = 0x00000010;
-enum uint MUI_USE_INSTALLED_LANGUAGES = 0x00000020;
-enum uint MUI_USE_SEARCH_ALL_LANGUAGES = 0x00000040;
-enum uint MUI_LANG_NEUTRAL_PE_FILE = 0x00000100;
-enum uint MUI_NON_LANG_NEUTRAL_FILE = 0x00000200;
-enum uint MUI_MACHINE_LANGUAGE_SETTINGS = 0x00000400;
-enum uint MUI_FILETYPE_NOT_LANGUAGE_NEUTRAL = 0x00000001;
+enum uint MUI_MERGE_SYSTEM_FALLBACK = 0x00000010U;
+enum uint MUI_MERGE_USER_FALLBACK = 0x00000020U;
+enum uint MUI_THREAD_LANGUAGES = 0x00000040U;
+enum uint MUI_CONSOLE_FILTER = 0x00000100U;
+enum uint MUI_COMPLEX_SCRIPT_FILTER = 0x00000200U;
+enum uint MUI_RESET_FILTERS = 0x00000001U;
+enum uint MUI_USER_PREFERRED_UI_LANGUAGES = 0x00000010U;
+enum uint MUI_USE_INSTALLED_LANGUAGES = 0x00000020U;
+enum uint MUI_USE_SEARCH_ALL_LANGUAGES = 0x00000040U;
+enum uint MUI_LANG_NEUTRAL_PE_FILE = 0x00000100U;
+enum uint MUI_NON_LANG_NEUTRAL_FILE = 0x00000200U;
+enum uint MUI_MACHINE_LANGUAGE_SETTINGS = 0x00000400U;
+enum uint MUI_FILETYPE_NOT_LANGUAGE_NEUTRAL = 0x00000001U;
 
 enum : uint
 {
-    MUI_FILETYPE_LANGUAGE_NEUTRAL_MAIN = 0x00000002,
-    MUI_FILETYPE_LANGUAGE_NEUTRAL_MUI  = 0x00000004,
+    MUI_FILETYPE_LANGUAGE_NEUTRAL_MAIN = 0x00000002U,
+    MUI_FILETYPE_LANGUAGE_NEUTRAL_MUI  = 0x00000004U,
 }
 
 enum : uint
 {
-    MUI_QUERY_TYPE           = 0x00000001,
-    MUI_QUERY_CHECKSUM       = 0x00000002,
-    MUI_QUERY_LANGUAGE_NAME  = 0x00000004,
-    MUI_QUERY_RESOURCE_TYPES = 0x00000008,
+    MUI_QUERY_TYPE           = 0x00000001U,
+    MUI_QUERY_CHECKSUM       = 0x00000002U,
+    MUI_QUERY_LANGUAGE_NAME  = 0x00000004U,
+    MUI_QUERY_RESOURCE_TYPES = 0x00000008U,
 }
 
-enum uint MUI_FILEINFO_VERSION = 0x00000001;
-enum uint MUI_FULL_LANGUAGE = 0x00000001;
-enum uint MUI_PARTIAL_LANGUAGE = 0x00000002;
-enum uint MUI_LIP_LANGUAGE = 0x00000004;
+enum uint MUI_FILEINFO_VERSION = 0x00000001U;
+enum uint MUI_FULL_LANGUAGE = 0x00000001U;
+enum uint MUI_PARTIAL_LANGUAGE = 0x00000002U;
+enum uint MUI_LIP_LANGUAGE = 0x00000004U;
 
 enum : uint
 {
-    MUI_LANGUAGE_INSTALLED = 0x00000020,
-    MUI_LANGUAGE_LICENSED  = 0x00000040,
+    MUI_LANGUAGE_INSTALLED = 0x00000020U,
+    MUI_LANGUAGE_LICENSED  = 0x00000040U,
 }
 
 enum int GEOID_NOT_AVAILABLE = 0xffffffff;
 
 enum : uint
 {
-    SORTING_PARADIGM_NLS = 0x00000000,
-    SORTING_PARADIGM_ICU = 0x01000000,
+    SORTING_PARADIGM_NLS = 0x00000000U,
+    SORTING_PARADIGM_ICU = 0x01000000U,
 }
 
-enum uint IDN_ALLOW_UNASSIGNED = 0x00000001;
-enum uint IDN_USE_STD3_ASCII_RULES = 0x00000002;
-enum uint IDN_EMAIL_ADDRESS = 0x00000004;
-enum uint IDN_RAW_PUNYCODE = 0x00000008;
-enum uint VS_ALLOW_LATIN = 0x00000001;
-enum uint GSS_ALLOW_INHERITED_COMMON = 0x00000001;
+enum uint IDN_ALLOW_UNASSIGNED = 0x00000001U;
+enum uint IDN_USE_STD3_ASCII_RULES = 0x00000002U;
+enum uint IDN_EMAIL_ADDRESS = 0x00000004U;
+enum uint IDN_RAW_PUNYCODE = 0x00000008U;
+enum uint VS_ALLOW_LATIN = 0x00000001U;
+enum uint GSS_ALLOW_INHERITED_COMMON = 0x00000001U;
 
 enum : uint
 {
-    MUI_FORMAT_REG_COMPAT = 0x00000001,
-    MUI_FORMAT_INF_COMPAT = 0x00000002,
+    MUI_FORMAT_REG_COMPAT = 0x00000001U,
+    MUI_FORMAT_INF_COMPAT = 0x00000002U,
 }
 
-enum uint MUI_VERIFY_FILE_EXISTS = 0x00000004;
-enum uint MUI_SKIP_STRING_CACHE = 0x00000008;
-enum uint MUI_IMMUTABLE_LOOKUP = 0x00000010;
+enum uint MUI_VERIFY_FILE_EXISTS = 0x00000004U;
+enum uint MUI_SKIP_STRING_CACHE = 0x00000008U;
+enum uint MUI_IMMUTABLE_LOOKUP = 0x00000010U;
 
 enum : const(wchar)*
 {
@@ -3626,203 +3795,203 @@ enum : const(wchar)*
     LOCALE_NAME_SYSTEM_DEFAULT = "!x-sys-default-locale",
 }
 
-enum uint MIN_SPELLING_NTDDI = 0x06020000;
-enum uint SCRIPT_UNDEFINED = 0x00000000;
+enum uint MIN_SPELLING_NTDDI = 0x06020000U;
+enum uint SCRIPT_UNDEFINED = 0x00000000U;
 enum HRESULT USP_E_SCRIPT_NOT_IN_FONT = HRESULT(0x80040200);
-enum uint SGCM_RTL = 0x00000001;
-enum uint SSA_PASSWORD = 0x00000001;
+enum uint SGCM_RTL = 0x00000001U;
+enum uint SSA_PASSWORD = 0x00000001U;
 
 enum : uint
 {
-    SSA_TAB      = 0x00000002,
-    SSA_CLIP     = 0x00000004,
-    SSA_FIT      = 0x00000008,
-    SSA_DZWG     = 0x00000010,
-    SSA_FALLBACK = 0x00000020,
+    SSA_TAB      = 0x00000002U,
+    SSA_CLIP     = 0x00000004U,
+    SSA_FIT      = 0x00000008U,
+    SSA_DZWG     = 0x00000010U,
+    SSA_FALLBACK = 0x00000020U,
 }
 
 enum : uint
 {
-    SSA_BREAK  = 0x00000040,
-    SSA_GLYPHS = 0x00000080,
+    SSA_BREAK  = 0x00000040U,
+    SSA_GLYPHS = 0x00000080U,
 }
 
 enum : uint
 {
-    SSA_RTL    = 0x00000100,
-    SSA_GCP    = 0x00000200,
-    SSA_HOTKEY = 0x00000400,
+    SSA_RTL    = 0x00000100U,
+    SSA_GCP    = 0x00000200U,
+    SSA_HOTKEY = 0x00000400U,
 }
 
-enum uint SSA_METAFILE = 0x00000800;
+enum uint SSA_METAFILE = 0x00000800U;
 
 enum : uint
 {
-    SSA_LINK       = 0x00001000,
-    SSA_HIDEHOTKEY = 0x00002000,
+    SSA_LINK       = 0x00001000U,
+    SSA_HIDEHOTKEY = 0x00002000U,
 }
 
-enum uint SSA_HOTKEYONLY = 0x00002400;
-enum uint SSA_FULLMEASURE = 0x04000000;
-enum uint SSA_LPKANSIFALLBACK = 0x08000000;
+enum uint SSA_HOTKEYONLY = 0x00002400U;
+enum uint SSA_FULLMEASURE = 0x04000000U;
+enum uint SSA_LPKANSIFALLBACK = 0x08000000U;
 
 enum : uint
 {
-    SSA_PIDX      = 0x10000000,
-    SSA_LAYOUTRTL = 0x20000000,
+    SSA_PIDX      = 0x10000000U,
+    SSA_LAYOUTRTL = 0x20000000U,
 }
 
-enum uint SSA_DONTGLYPH = 0x40000000;
-enum uint SSA_NOKASHIDA = 0x80000000;
+enum uint SSA_DONTGLYPH = 0x40000000U;
+enum uint SSA_NOKASHIDA = 0x80000000U;
 
 enum : uint
 {
-    SCRIPT_DIGITSUBSTITUTE_CONTEXT     = 0x00000000,
-    SCRIPT_DIGITSUBSTITUTE_NONE        = 0x00000001,
-    SCRIPT_DIGITSUBSTITUTE_NATIONAL    = 0x00000002,
-    SCRIPT_DIGITSUBSTITUTE_TRADITIONAL = 0x00000003,
+    SCRIPT_DIGITSUBSTITUTE_CONTEXT     = 0x00000000U,
+    SCRIPT_DIGITSUBSTITUTE_NONE        = 0x00000001U,
+    SCRIPT_DIGITSUBSTITUTE_NATIONAL    = 0x00000002U,
+    SCRIPT_DIGITSUBSTITUTE_TRADITIONAL = 0x00000003U,
 }
 
-enum uint UNISCRIBE_OPENTYPE = 0x00000100;
-enum uint SCRIPT_TAG_UNKNOWN = 0x00000000;
-enum uint MUI_LANGUAGE_EXACT = 0x00000010;
+enum uint UNISCRIBE_OPENTYPE = 0x00000100U;
+enum uint SCRIPT_TAG_UNKNOWN = 0x00000000U;
+enum uint MUI_LANGUAGE_EXACT = 0x00000010U;
 
 enum : uint
 {
-    NLS_CP_CPINFO = 0x10000000,
-    NLS_CP_MBTOWC = 0x40000000,
-    NLS_CP_WCTOMB = 0x80000000,
+    NLS_CP_CPINFO = 0x10000000U,
+    NLS_CP_MBTOWC = 0x40000000U,
+    NLS_CP_WCTOMB = 0x80000000U,
 }
 
-enum uint U_DISABLE_RENAMING = 0x00000001;
-enum uint U_SHOW_CPLUSPLUS_API = 0x00000000;
-enum uint U_DEFAULT_SHOW_DRAFT = 0x00000000;
+enum uint U_DISABLE_RENAMING = 0x00000001U;
+enum uint U_SHOW_CPLUSPLUS_API = 0x00000000U;
+enum uint U_DEFAULT_SHOW_DRAFT = 0x00000000U;
 
 enum : uint
 {
-    U_HIDE_DRAFT_API      = 0x00000001,
-    U_HIDE_DEPRECATED_API = 0x00000001,
+    U_HIDE_DRAFT_API      = 0x00000001U,
+    U_HIDE_DEPRECATED_API = 0x00000001U,
 }
 
-enum uint U_HIDE_OBSOLETE_API = 0x00000001;
-enum uint U_HIDE_INTERNAL_API = 0x00000001;
-enum uint U_NO_DEFAULT_INCLUDE_UTF_HEADERS = 0x00000001;
-enum uint U_DEBUG = 0x00000001;
-enum uint UCLN_NO_AUTO_CLEANUP = 0x00000001;
-enum uint U_OVERRIDE_CXX_ALLOCATION = 0x00000001;
-enum uint U_ENABLE_TRACING = 0x00000000;
-enum uint UCONFIG_ENABLE_PLUGINS = 0x00000000;
-enum uint U_ENABLE_DYLOAD = 0x00000001;
-enum uint U_CHECK_DYLOAD = 0x00000001;
-enum uint U_HAVE_LIB_SUFFIX = 0x00000001;
+enum uint U_HIDE_OBSOLETE_API = 0x00000001U;
+enum uint U_HIDE_INTERNAL_API = 0x00000001U;
+enum uint U_NO_DEFAULT_INCLUDE_UTF_HEADERS = 0x00000001U;
+enum uint U_DEBUG = 0x00000001U;
+enum uint UCLN_NO_AUTO_CLEANUP = 0x00000001U;
+enum uint U_OVERRIDE_CXX_ALLOCATION = 0x00000001U;
+enum uint U_ENABLE_TRACING = 0x00000000U;
+enum uint UCONFIG_ENABLE_PLUGINS = 0x00000000U;
+enum uint U_ENABLE_DYLOAD = 0x00000001U;
+enum uint U_CHECK_DYLOAD = 0x00000001U;
+enum uint U_HAVE_LIB_SUFFIX = 0x00000001U;
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* U_LIB_SUFFIX_C_NAME_STRING = "";
-enum uint UCONFIG_ONLY_COLLATION = 0x00000000;
+enum uint UCONFIG_ONLY_COLLATION = 0x00000000U;
 
 enum : uint
 {
-    UCONFIG_NO_BREAK_ITERATION     = 0x00000001,
-    UCONFIG_NO_IDNA                = 0x00000001,
-    UCONFIG_NO_FORMATTING          = 0x00000001,
-    UCONFIG_NO_TRANSLITERATION     = 0x00000001,
-    UCONFIG_NO_REGULAR_EXPRESSIONS = 0x00000001,
+    UCONFIG_NO_BREAK_ITERATION     = 0x00000001U,
+    UCONFIG_NO_IDNA                = 0x00000001U,
+    UCONFIG_NO_FORMATTING          = 0x00000001U,
+    UCONFIG_NO_TRANSLITERATION     = 0x00000001U,
+    UCONFIG_NO_REGULAR_EXPRESSIONS = 0x00000001U,
 }
 
 enum : uint
 {
-    UCONFIG_NO_FILE_IO           = 0x00000000,
-    UCONFIG_NO_CONVERSION        = 0x00000000,
-    UCONFIG_NO_LEGACY_CONVERSION = 0x00000001,
+    UCONFIG_NO_FILE_IO           = 0x00000000U,
+    UCONFIG_NO_CONVERSION        = 0x00000000U,
+    UCONFIG_NO_LEGACY_CONVERSION = 0x00000001U,
 }
 
-enum uint UCONFIG_ONLY_HTML_CONVERSION = 0x00000000;
+enum uint UCONFIG_ONLY_HTML_CONVERSION = 0x00000000U;
 
 enum : uint
 {
-    UCONFIG_NO_NORMALIZATION   = 0x00000000,
-    UCONFIG_NO_COLLATION       = 0x00000001,
-    UCONFIG_NO_SERVICE         = 0x00000000,
-    UCONFIG_HAVE_PARSEALLINPUT = 0x00000001,
+    UCONFIG_NO_NORMALIZATION   = 0x00000000U,
+    UCONFIG_NO_COLLATION       = 0x00000001U,
+    UCONFIG_NO_SERVICE         = 0x00000000U,
+    UCONFIG_HAVE_PARSEALLINPUT = 0x00000001U,
 }
 
-enum uint UCONFIG_NO_FILTERED_BREAK_ITERATION = 0x00000000;
+enum uint UCONFIG_NO_FILTERED_BREAK_ITERATION = 0x00000000U;
 
 enum : uint
 {
-    U_PF_UNKNOWN               = 0x00000000,
-    U_PF_WINDOWS               = 0x000003e8,
-    U_PF_MINGW                 = 0x00000708,
-    U_PF_CYGWIN                = 0x0000076c,
-    U_PF_HPUX                  = 0x00000834,
-    U_PF_SOLARIS               = 0x00000a28,
-    U_PF_BSD                   = 0x00000bb8,
-    U_PF_AIX                   = 0x00000c1c,
-    U_PF_IRIX                  = 0x00000c80,
-    U_PF_DARWIN                = 0x00000dac,
-    U_PF_IPHONE                = 0x00000dde,
-    U_PF_QNX                   = 0x00000e74,
-    U_PF_LINUX                 = 0x00000fa0,
-    U_PF_BROWSER_NATIVE_CLIENT = 0x00000fb4,
-}
-
-enum : uint
-{
-    U_PF_ANDROID    = 0x00000fd2,
-    U_PF_FUCHSIA    = 0x00001004,
-    U_PF_EMSCRIPTEN = 0x00001392,
+    U_PF_UNKNOWN               = 0x00000000U,
+    U_PF_WINDOWS               = 0x000003e8U,
+    U_PF_MINGW                 = 0x00000708U,
+    U_PF_CYGWIN                = 0x0000076cU,
+    U_PF_HPUX                  = 0x00000834U,
+    U_PF_SOLARIS               = 0x00000a28U,
+    U_PF_BSD                   = 0x00000bb8U,
+    U_PF_AIX                   = 0x00000c1cU,
+    U_PF_IRIX                  = 0x00000c80U,
+    U_PF_DARWIN                = 0x00000dacU,
+    U_PF_IPHONE                = 0x00000ddeU,
+    U_PF_QNX                   = 0x00000e74U,
+    U_PF_LINUX                 = 0x00000fa0U,
+    U_PF_BROWSER_NATIVE_CLIENT = 0x00000fb4U,
 }
 
 enum : uint
 {
-    U_PF_OS390 = 0x00002328,
-    U_PF_OS400 = 0x000024b8,
+    U_PF_ANDROID    = 0x00000fd2U,
+    U_PF_FUCHSIA    = 0x00001004U,
+    U_PF_EMSCRIPTEN = 0x00001392U,
 }
 
 enum : uint
 {
-    U_PLATFORM                     = 0x00000708,
-    U_PLATFORM_USES_ONLY_WIN32_API = 0x00000001,
+    U_PF_OS390 = 0x00002328U,
+    U_PF_OS400 = 0x000024b8U,
 }
 
 enum : uint
 {
-    U_PLATFORM_HAS_WIN32_API    = 0x00000001,
-    U_PLATFORM_IMPLEMENTS_POSIX = 0x00000000,
-    U_PLATFORM_IS_LINUX_BASED   = 0x00000001,
-    U_PLATFORM_IS_DARWIN_BASED  = 0x00000001,
+    U_PLATFORM                     = 0x00000708U,
+    U_PLATFORM_USES_ONLY_WIN32_API = 0x00000001U,
 }
 
 enum : uint
 {
-    U_HAVE_STDINT_H   = 0x00000001,
-    U_HAVE_INTTYPES_H = 0x00000001,
+    U_PLATFORM_HAS_WIN32_API    = 0x00000001U,
+    U_PLATFORM_IMPLEMENTS_POSIX = 0x00000000U,
+    U_PLATFORM_IS_LINUX_BASED   = 0x00000001U,
+    U_PLATFORM_IS_DARWIN_BASED  = 0x00000001U,
 }
-
-enum uint U_GCC_MAJOR_MINOR = 0x00000000;
-enum uint U_IS_BIG_ENDIAN = 0x00000000;
-enum uint U_HAVE_PLACEMENT_NEW = 0x00000000;
-enum uint U_HAVE_DEBUG_LOCATION_NEW = 0x00000001;
-enum uint U_CPLUSPLUS_VERSION = 0x00000000;
-enum uint U_ASCII_FAMILY = 0x00000000;
-enum uint U_EBCDIC_FAMILY = 0x00000001;
 
 enum : uint
 {
-    U_CHARSET_FAMILY  = 0x00000001,
-    U_CHARSET_IS_UTF8 = 0x00000001,
+    U_HAVE_STDINT_H   = 0x00000001U,
+    U_HAVE_INTTYPES_H = 0x00000001U,
 }
 
-enum uint U_HAVE_WCHAR_H = 0x00000000;
-enum uint U_SIZEOF_WCHAR_T = 0x00000001;
+enum uint U_GCC_MAJOR_MINOR = 0x00000000U;
+enum uint U_IS_BIG_ENDIAN = 0x00000000U;
+enum uint U_HAVE_PLACEMENT_NEW = 0x00000000U;
+enum uint U_HAVE_DEBUG_LOCATION_NEW = 0x00000001U;
+enum uint U_CPLUSPLUS_VERSION = 0x00000000U;
+enum uint U_ASCII_FAMILY = 0x00000000U;
+enum uint U_EBCDIC_FAMILY = 0x00000001U;
 
 enum : uint
 {
-    U_HAVE_WCSCPY   = 0x00000000,
-    U_HAVE_CHAR16_T = 0x00000001,
+    U_CHARSET_FAMILY  = 0x00000001U,
+    U_CHARSET_IS_UTF8 = 0x00000001U,
 }
 
-enum uint U_DEFINE_FALSE_AND_TRUE = 0x00000001;
-enum uint U_SIZEOF_UCHAR = 0x00000002;
-enum uint U_CHAR16_IS_TYPEDEF = 0x00000001;
+enum uint U_HAVE_WCHAR_H = 0x00000000U;
+enum uint U_SIZEOF_WCHAR_T = 0x00000001U;
+
+enum : uint
+{
+    U_HAVE_WCSCPY   = 0x00000000U,
+    U_HAVE_CHAR16_T = 0x00000001U,
+}
+
+enum uint U_DEFINE_FALSE_AND_TRUE = 0x00000001U;
+enum uint U_SIZEOF_UCHAR = 0x00000002U;
+enum uint U_CHAR16_IS_TYPEDEF = 0x00000001U;
 enum int U_SENTINEL = 0xffffffff;
 
 enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
@@ -3831,140 +4000,140 @@ enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(E
     U8_LEAD4_T1_BITS = "\0\0\0\0\0\0\0\0\0\0\0\0",
 }
 
-enum uint U8_MAX_LENGTH = 0x00000004;
-enum uint U16_MAX_LENGTH = 0x00000002;
-enum uint U_HIDE_OBSOLETE_UTF_OLD_H = 0x00000000;
-enum uint UTF_SIZE = 0x00000010;
+enum uint U8_MAX_LENGTH = 0x00000004U;
+enum uint U16_MAX_LENGTH = 0x00000002U;
+enum uint U_HIDE_OBSOLETE_UTF_OLD_H = 0x00000000U;
+enum uint UTF_SIZE = 0x00000010U;
 
 enum : uint
 {
-    UTF8_ERROR_VALUE_1 = 0x00000015,
-    UTF8_ERROR_VALUE_2 = 0x0000009f,
+    UTF8_ERROR_VALUE_1 = 0x00000015U,
+    UTF8_ERROR_VALUE_2 = 0x0000009fU,
 }
 
-enum uint UTF_ERROR_VALUE = 0x0000ffff;
-enum uint UTF8_MAX_CHAR_LENGTH = 0x00000004;
-enum uint UTF16_MAX_CHAR_LENGTH = 0x00000002;
-enum uint UTF32_MAX_CHAR_LENGTH = 0x00000001;
-enum uint UTF_MAX_CHAR_LENGTH = 0x00000002;
-enum uint U_COPYRIGHT_STRING_LENGTH = 0x00000080;
+enum uint UTF_ERROR_VALUE = 0x0000ffffU;
+enum uint UTF8_MAX_CHAR_LENGTH = 0x00000004U;
+enum uint UTF16_MAX_CHAR_LENGTH = 0x00000002U;
+enum uint UTF32_MAX_CHAR_LENGTH = 0x00000001U;
+enum uint UTF_MAX_CHAR_LENGTH = 0x00000002U;
+enum uint U_COPYRIGHT_STRING_LENGTH = 0x00000080U;
 
 enum : uint
 {
-    U_MAX_VERSION_LENGTH        = 0x00000004,
-    U_MAX_VERSION_STRING_LENGTH = 0x00000014,
-}
-
-enum : uint
-{
-    U_MILLIS_PER_SECOND = 0x000003e8,
-    U_MILLIS_PER_MINUTE = 0x0000ea60,
-    U_MILLIS_PER_HOUR   = 0x0036ee80,
-    U_MILLIS_PER_DAY    = 0x05265c00,
-}
-
-enum uint U_COMBINED_IMPLEMENTATION = 0x00000001;
-enum uint U_SHAPE_LENGTH_GROW_SHRINK = 0x00000000;
-
-enum : uint
-{
-    U_SHAPE_LAMALEF_RESIZE           = 0x00000000,
-    U_SHAPE_LENGTH_FIXED_SPACES_NEAR = 0x00000001,
+    U_MAX_VERSION_LENGTH        = 0x00000004U,
+    U_MAX_VERSION_STRING_LENGTH = 0x00000014U,
 }
 
 enum : uint
 {
-    U_SHAPE_LAMALEF_NEAR               = 0x00000001,
-    U_SHAPE_LENGTH_FIXED_SPACES_AT_END = 0x00000002,
+    U_MILLIS_PER_SECOND = 0x000003e8U,
+    U_MILLIS_PER_MINUTE = 0x0000ea60U,
+    U_MILLIS_PER_HOUR   = 0x0036ee80U,
+    U_MILLIS_PER_DAY    = 0x05265c00U,
+}
+
+enum uint U_COMBINED_IMPLEMENTATION = 0x00000001U;
+enum uint U_SHAPE_LENGTH_GROW_SHRINK = 0x00000000U;
+
+enum : uint
+{
+    U_SHAPE_LAMALEF_RESIZE           = 0x00000000U,
+    U_SHAPE_LENGTH_FIXED_SPACES_NEAR = 0x00000001U,
 }
 
 enum : uint
 {
-    U_SHAPE_LAMALEF_END                      = 0x00000002,
-    U_SHAPE_LENGTH_FIXED_SPACES_AT_BEGINNING = 0x00000003,
+    U_SHAPE_LAMALEF_NEAR               = 0x00000001U,
+    U_SHAPE_LENGTH_FIXED_SPACES_AT_END = 0x00000002U,
 }
 
 enum : uint
 {
-    U_SHAPE_LAMALEF_BEGIN = 0x00000003,
-    U_SHAPE_LAMALEF_AUTO  = 0x00010000,
-    U_SHAPE_LENGTH_MASK   = 0x00010003,
-    U_SHAPE_LAMALEF_MASK  = 0x00010003,
+    U_SHAPE_LAMALEF_END                      = 0x00000002U,
+    U_SHAPE_LENGTH_FIXED_SPACES_AT_BEGINNING = 0x00000003U,
 }
 
 enum : uint
 {
-    U_SHAPE_TEXT_DIRECTION_LOGICAL    = 0x00000000,
-    U_SHAPE_TEXT_DIRECTION_VISUAL_RTL = 0x00000000,
-    U_SHAPE_TEXT_DIRECTION_VISUAL_LTR = 0x00000004,
-    U_SHAPE_TEXT_DIRECTION_MASK       = 0x00000004,
+    U_SHAPE_LAMALEF_BEGIN = 0x00000003U,
+    U_SHAPE_LAMALEF_AUTO  = 0x00010000U,
+    U_SHAPE_LENGTH_MASK   = 0x00010003U,
+    U_SHAPE_LAMALEF_MASK  = 0x00010003U,
 }
 
 enum : uint
 {
-    U_SHAPE_LETTERS_NOOP                    = 0x00000000,
-    U_SHAPE_LETTERS_SHAPE                   = 0x00000008,
-    U_SHAPE_LETTERS_UNSHAPE                 = 0x00000010,
-    U_SHAPE_LETTERS_SHAPE_TASHKEEL_ISOLATED = 0x00000018,
-    U_SHAPE_LETTERS_MASK                    = 0x00000018,
+    U_SHAPE_TEXT_DIRECTION_LOGICAL    = 0x00000000U,
+    U_SHAPE_TEXT_DIRECTION_VISUAL_RTL = 0x00000000U,
+    U_SHAPE_TEXT_DIRECTION_VISUAL_LTR = 0x00000004U,
+    U_SHAPE_TEXT_DIRECTION_MASK       = 0x00000004U,
 }
 
 enum : uint
 {
-    U_SHAPE_DIGITS_NOOP            = 0x00000000,
-    U_SHAPE_DIGITS_EN2AN           = 0x00000020,
-    U_SHAPE_DIGITS_AN2EN           = 0x00000040,
-    U_SHAPE_DIGITS_ALEN2AN_INIT_LR = 0x00000060,
-    U_SHAPE_DIGITS_ALEN2AN_INIT_AL = 0x00000080,
-    U_SHAPE_DIGITS_RESERVED        = 0x000000a0,
-    U_SHAPE_DIGITS_MASK            = 0x000000e0,
-    U_SHAPE_DIGIT_TYPE_AN          = 0x00000000,
-    U_SHAPE_DIGIT_TYPE_AN_EXTENDED = 0x00000100,
-    U_SHAPE_DIGIT_TYPE_RESERVED    = 0x00000200,
-    U_SHAPE_DIGIT_TYPE_MASK        = 0x00000300,
+    U_SHAPE_LETTERS_NOOP                    = 0x00000000U,
+    U_SHAPE_LETTERS_SHAPE                   = 0x00000008U,
+    U_SHAPE_LETTERS_UNSHAPE                 = 0x00000010U,
+    U_SHAPE_LETTERS_SHAPE_TASHKEEL_ISOLATED = 0x00000018U,
+    U_SHAPE_LETTERS_MASK                    = 0x00000018U,
 }
 
 enum : uint
 {
-    U_SHAPE_AGGREGATE_TASHKEEL      = 0x00004000,
-    U_SHAPE_AGGREGATE_TASHKEEL_NOOP = 0x00000000,
-    U_SHAPE_AGGREGATE_TASHKEEL_MASK = 0x00004000,
+    U_SHAPE_DIGITS_NOOP            = 0x00000000U,
+    U_SHAPE_DIGITS_EN2AN           = 0x00000020U,
+    U_SHAPE_DIGITS_AN2EN           = 0x00000040U,
+    U_SHAPE_DIGITS_ALEN2AN_INIT_LR = 0x00000060U,
+    U_SHAPE_DIGITS_ALEN2AN_INIT_AL = 0x00000080U,
+    U_SHAPE_DIGITS_RESERVED        = 0x000000a0U,
+    U_SHAPE_DIGITS_MASK            = 0x000000e0U,
+    U_SHAPE_DIGIT_TYPE_AN          = 0x00000000U,
+    U_SHAPE_DIGIT_TYPE_AN_EXTENDED = 0x00000100U,
+    U_SHAPE_DIGIT_TYPE_RESERVED    = 0x00000200U,
+    U_SHAPE_DIGIT_TYPE_MASK        = 0x00000300U,
 }
 
 enum : uint
 {
-    U_SHAPE_PRESERVE_PRESENTATION      = 0x00008000,
-    U_SHAPE_PRESERVE_PRESENTATION_NOOP = 0x00000000,
-    U_SHAPE_PRESERVE_PRESENTATION_MASK = 0x00008000,
+    U_SHAPE_AGGREGATE_TASHKEEL      = 0x00004000U,
+    U_SHAPE_AGGREGATE_TASHKEEL_NOOP = 0x00000000U,
+    U_SHAPE_AGGREGATE_TASHKEEL_MASK = 0x00004000U,
 }
 
 enum : uint
 {
-    U_SHAPE_SEEN_TWOCELL_NEAR     = 0x00200000,
-    U_SHAPE_SEEN_MASK             = 0x00700000,
-    U_SHAPE_YEHHAMZA_TWOCELL_NEAR = 0x01000000,
-    U_SHAPE_YEHHAMZA_MASK         = 0x03800000,
+    U_SHAPE_PRESERVE_PRESENTATION      = 0x00008000U,
+    U_SHAPE_PRESERVE_PRESENTATION_NOOP = 0x00000000U,
+    U_SHAPE_PRESERVE_PRESENTATION_MASK = 0x00008000U,
 }
 
 enum : uint
 {
-    U_SHAPE_TASHKEEL_BEGIN              = 0x00040000,
-    U_SHAPE_TASHKEEL_END                = 0x00060000,
-    U_SHAPE_TASHKEEL_RESIZE             = 0x00080000,
-    U_SHAPE_TASHKEEL_REPLACE_BY_TATWEEL = 0x000c0000,
-    U_SHAPE_TASHKEEL_MASK               = 0x000e0000,
+    U_SHAPE_SEEN_TWOCELL_NEAR     = 0x00200000U,
+    U_SHAPE_SEEN_MASK             = 0x00700000U,
+    U_SHAPE_YEHHAMZA_TWOCELL_NEAR = 0x01000000U,
+    U_SHAPE_YEHHAMZA_MASK         = 0x03800000U,
 }
 
 enum : uint
 {
-    U_SHAPE_SPACES_RELATIVE_TO_TEXT_BEGIN_END = 0x04000000,
-    U_SHAPE_SPACES_RELATIVE_TO_TEXT_MASK      = 0x04000000,
+    U_SHAPE_TASHKEEL_BEGIN              = 0x00040000U,
+    U_SHAPE_TASHKEEL_END                = 0x00060000U,
+    U_SHAPE_TASHKEEL_RESIZE             = 0x00080000U,
+    U_SHAPE_TASHKEEL_REPLACE_BY_TATWEEL = 0x000c0000U,
+    U_SHAPE_TASHKEEL_MASK               = 0x000e0000U,
 }
 
 enum : uint
 {
-    U_SHAPE_TAIL_NEW_UNICODE = 0x08000000,
-    U_SHAPE_TAIL_TYPE_MASK   = 0x08000000,
+    U_SHAPE_SPACES_RELATIVE_TO_TEXT_BEGIN_END = 0x04000000U,
+    U_SHAPE_SPACES_RELATIVE_TO_TEXT_MASK      = 0x04000000U,
+}
+
+enum : uint
+{
+    U_SHAPE_TAIL_NEW_UNICODE = 0x08000000U,
+    U_SHAPE_TAIL_TYPE_MASK   = 0x08000000U,
 }
 
 enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
@@ -4005,18 +4174,18 @@ enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(E
     ULOC_US      = "en_US",
 }
 
-enum uint ULOC_LANG_CAPACITY = 0x0000000c;
-enum uint ULOC_COUNTRY_CAPACITY = 0x00000004;
-enum uint ULOC_FULLNAME_CAPACITY = 0x0000009d;
-enum uint ULOC_SCRIPT_CAPACITY = 0x00000006;
+enum uint ULOC_LANG_CAPACITY = 0x0000000cU;
+enum uint ULOC_COUNTRY_CAPACITY = 0x00000004U;
+enum uint ULOC_FULLNAME_CAPACITY = 0x0000009dU;
+enum uint ULOC_SCRIPT_CAPACITY = 0x00000006U;
 
 enum : uint
 {
-    ULOC_KEYWORDS_CAPACITY              = 0x00000060,
-    ULOC_KEYWORD_AND_VALUES_CAPACITY    = 0x00000064,
-    ULOC_KEYWORD_SEPARATOR_UNICODE      = 0x00000040,
-    ULOC_KEYWORD_ASSIGN_UNICODE         = 0x0000003d,
-    ULOC_KEYWORD_ITEM_SEPARATOR_UNICODE = 0x0000003b,
+    ULOC_KEYWORDS_CAPACITY              = 0x00000060U,
+    ULOC_KEYWORD_AND_VALUES_CAPACITY    = 0x00000064U,
+    ULOC_KEYWORD_SEPARATOR_UNICODE      = 0x00000040U,
+    ULOC_KEYWORD_ASSIGN_UNICODE         = 0x0000003dU,
+    ULOC_KEYWORD_ITEM_SEPARATOR_UNICODE = 0x0000003bU,
 }
 
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* UCNV_SUB_STOP_ON_ILLEGAL = "i";
@@ -4032,12 +4201,12 @@ enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(E
     UCNV_ESCAPE_CSS2    = "S",
 }
 
-enum uint UCNV_MAX_CONVERTER_NAME_LENGTH = 0x0000003c;
+enum uint UCNV_MAX_CONVERTER_NAME_LENGTH = 0x0000003cU;
 
 enum : uint
 {
-    UCNV_SI = 0x0000000f,
-    UCNV_SO = 0x0000000e,
+    UCNV_SI = 0x0000000fU,
+    UCNV_SO = 0x0000000eU,
 }
 
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* UCNV_OPTION_SEP_STRING = ",";
@@ -4048,50 +4217,50 @@ enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(Ele
 
 enum : uint
 {
-    U_FOLD_CASE_DEFAULT           = 0x00000000,
-    U_FOLD_CASE_EXCLUDE_SPECIAL_I = 0x00000001,
+    U_FOLD_CASE_DEFAULT           = 0x00000000U,
+    U_FOLD_CASE_EXCLUDE_SPECIAL_I = 0x00000001U,
 }
 
 enum : uint
 {
-    U_TITLECASE_WHOLE_STRING        = 0x00000020,
-    U_TITLECASE_SENTENCES           = 0x00000040,
-    U_TITLECASE_NO_LOWERCASE        = 0x00000100,
-    U_TITLECASE_NO_BREAK_ADJUSTMENT = 0x00000200,
+    U_TITLECASE_WHOLE_STRING        = 0x00000020U,
+    U_TITLECASE_SENTENCES           = 0x00000040U,
+    U_TITLECASE_NO_LOWERCASE        = 0x00000100U,
+    U_TITLECASE_NO_BREAK_ADJUSTMENT = 0x00000200U,
 }
 
-enum uint U_TITLECASE_ADJUST_TO_CASED = 0x00000400;
-enum uint U_EDITS_NO_RESET = 0x00002000;
-enum uint U_OMIT_UNCHANGED_TEXT = 0x00004000;
-enum uint U_COMPARE_CODE_POINT_ORDER = 0x00008000;
-enum uint U_COMPARE_IGNORE_CASE = 0x00010000;
-enum uint UNORM_INPUT_IS_FCD = 0x00020000;
+enum uint U_TITLECASE_ADJUST_TO_CASED = 0x00000400U;
+enum uint U_EDITS_NO_RESET = 0x00002000U;
+enum uint U_OMIT_UNCHANGED_TEXT = 0x00004000U;
+enum uint U_COMPARE_CODE_POINT_ORDER = 0x00008000U;
+enum uint U_COMPARE_IGNORE_CASE = 0x00010000U;
+enum uint UNORM_INPUT_IS_FCD = 0x00020000U;
 
 enum : uint
 {
-    UCHAR_MIN_VALUE = 0x00000000,
-    UCHAR_MAX_VALUE = 0x0010ffff,
+    UCHAR_MIN_VALUE = 0x00000000U,
+    UCHAR_MAX_VALUE = 0x0010ffffU,
 }
 
 enum : uint
 {
-    UBIDI_DEFAULT_LTR = 0x000000fe,
-    UBIDI_DEFAULT_RTL = 0x000000ff,
+    UBIDI_DEFAULT_LTR = 0x000000feU,
+    UBIDI_DEFAULT_RTL = 0x000000ffU,
 }
 
-enum uint UBIDI_MAX_EXPLICIT_LEVEL = 0x0000007d;
-enum uint UBIDI_LEVEL_OVERRIDE = 0x00000080;
+enum uint UBIDI_MAX_EXPLICIT_LEVEL = 0x0000007dU;
+enum uint UBIDI_LEVEL_OVERRIDE = 0x00000080U;
 enum int UBIDI_MAP_NOWHERE = 0xffffffff;
-enum uint UBIDI_KEEP_BASE_COMBINING = 0x00000001;
-enum uint UBIDI_DO_MIRRORING = 0x00000002;
-enum uint UBIDI_INSERT_LRM_FOR_NUMERIC = 0x00000004;
-enum uint UBIDI_REMOVE_BIDI_CONTROLS = 0x00000008;
-enum uint UBIDI_OUTPUT_REVERSE = 0x00000010;
+enum uint UBIDI_KEEP_BASE_COMBINING = 0x00000001U;
+enum uint UBIDI_DO_MIRRORING = 0x00000002U;
+enum uint UBIDI_INSERT_LRM_FOR_NUMERIC = 0x00000004U;
+enum uint UBIDI_REMOVE_BIDI_CONTROLS = 0x00000008U;
+enum uint UBIDI_OUTPUT_REVERSE = 0x00000010U;
 
 enum : uint
 {
-    USPREP_DEFAULT          = 0x00000000,
-    USPREP_ALLOW_UNASSIGNED = 0x00000001,
+    USPREP_DEFAULT          = 0x00000000U,
+    USPREP_ALLOW_UNASSIGNED = 0x00000001U,
 }
 
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* U_ICU_VERSION_BUNDLE = "icuver";
@@ -4179,28 +4348,28 @@ enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(E
 }
 
 enum int USEARCH_DONE = 0xffffffff;
-enum uint U_HAVE_STD_STRING = 0x00000000;
-enum uint UCONFIG_FORMAT_FASTPATHS_49 = 0x00000001;
-enum uint U_PLATFORM_HAS_WINUWP_API = 0x00000000;
-enum uint U_IOSTREAM_SOURCE = 0x00030c1f;
-enum uint U_HAVE_RVALUE_REFERENCES = 0x00000001;
-enum uint U_USING_ICU_NAMESPACE = 0x00000001;
+enum uint U_HAVE_STD_STRING = 0x00000000U;
+enum uint UCONFIG_FORMAT_FASTPATHS_49 = 0x00000001U;
+enum uint U_PLATFORM_HAS_WINUWP_API = 0x00000000U;
+enum uint U_IOSTREAM_SOURCE = 0x00030c1fU;
+enum uint U_HAVE_RVALUE_REFERENCES = 0x00000001U;
+enum uint U_USING_ICU_NAMESPACE = 0x00000001U;
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* U_ICUDATA_TYPE_LETTER = "e";
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* U_UNICODE_VERSION = "8.0";
-enum uint CANITER_SKIP_ZEROES = 0x00000001;
-enum uint NUMSYS_NAME_CAPACITY = 0x00000008;
-enum uint U_HAVE_RBNF = 0x00000000;
+enum uint CANITER_SKIP_ZEROES = 0x00000001U;
+enum uint NUMSYS_NAME_CAPACITY = 0x00000008U;
+enum uint U_HAVE_RBNF = 0x00000000U;
 
 enum : uint
 {
-    MAX_MIMECP_NAME   = 0x00000040,
-    MAX_MIMECSET_NAME = 0x00000032,
-    MAX_MIMEFACE_NAME = 0x00000020,
+    MAX_MIMECP_NAME   = 0x00000040U,
+    MAX_MIMECSET_NAME = 0x00000032U,
+    MAX_MIMEFACE_NAME = 0x00000020U,
 }
 
-enum uint MAX_RFC1766_NAME = 0x00000006;
-enum uint MAX_LOCALE_NAME = 0x00000020;
-enum uint MAX_SCRIPT_NAME = 0x00000030;
+enum uint MAX_RFC1766_NAME = 0x00000006U;
+enum uint MAX_LOCALE_NAME = 0x00000020U;
+enum uint MAX_SCRIPT_NAME = 0x00000030U;
 
 enum : int
 {
@@ -4634,14 +4803,14 @@ struct UStringSearch
     ptrdiff_t Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-fontsignature))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-fontsignature
 struct FONTSIGNATURE
 {
     uint[4] fsUsb;
     uint[2] fsCsb;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-charsetinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-charsetinfo
 struct CHARSETINFO
 {
     uint          ciCharset;
@@ -4649,7 +4818,7 @@ struct CHARSETINFO
     FONTSIGNATURE fs;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-localesignature))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-localesignature
 struct LOCALESIGNATURE
 {
     uint[4] lsUsb;
@@ -4658,7 +4827,7 @@ struct LOCALESIGNATURE
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-newtextmetricexa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-newtextmetricexa
 struct NEWTEXTMETRICEXA
 {
     NEWTEXTMETRICA ntmTm;
@@ -4666,7 +4835,7 @@ struct NEWTEXTMETRICEXA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-newtextmetricexw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-newtextmetricexw
 struct NEWTEXTMETRICEXW
 {
     NEWTEXTMETRICW ntmTm;
@@ -4674,7 +4843,7 @@ struct NEWTEXTMETRICEXW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-enumtextmetrica))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-enumtextmetrica
 struct ENUMTEXTMETRICA
 {
     NEWTEXTMETRICEXA etmNewTextMetricEx;
@@ -4682,14 +4851,14 @@ struct ENUMTEXTMETRICA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-enumtextmetricw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-enumtextmetricw
 struct ENUMTEXTMETRICW
 {
     NEWTEXTMETRICEXW etmNewTextMetricEx;
     AXESLISTW        etmAxesList;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnls/ns-winnls-cpinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnls/ns-winnls-cpinfo
 struct CPINFO
 {
     uint      MaxCharSize;
@@ -4698,7 +4867,7 @@ struct CPINFO
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnls/ns-winnls-cpinfoexa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnls/ns-winnls-cpinfoexa
 struct CPINFOEXA
 {
     uint      MaxCharSize;
@@ -4710,7 +4879,7 @@ struct CPINFOEXA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnls/ns-winnls-cpinfoexw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnls/ns-winnls-cpinfoexw
 struct CPINFOEXW
 {
     uint       MaxCharSize;
@@ -4722,7 +4891,7 @@ struct CPINFOEXW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnls/ns-winnls-numberfmta))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnls/ns-winnls-numberfmta
 struct NUMBERFMTA
 {
     uint NumDigits;
@@ -4734,7 +4903,7 @@ struct NUMBERFMTA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnls/ns-winnls-numberfmtw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnls/ns-winnls-numberfmtw
 struct NUMBERFMTW
 {
     uint  NumDigits;
@@ -4746,7 +4915,7 @@ struct NUMBERFMTW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnls/ns-winnls-currencyfmta))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnls/ns-winnls-currencyfmta
 struct CURRENCYFMTA
 {
     uint NumDigits;
@@ -4760,7 +4929,7 @@ struct CURRENCYFMTA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnls/ns-winnls-currencyfmtw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnls/ns-winnls-currencyfmtw
 struct CURRENCYFMTW
 {
     uint  NumDigits;
@@ -4773,7 +4942,7 @@ struct CURRENCYFMTW
     PWSTR lpCurrencySymbol;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnls/ns-winnls-nlsversioninfo~r1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnls/ns-winnls-nlsversioninfo~r1
 struct NLSVERSIONINFO
 {
     uint dwNLSVersionInfoSize;
@@ -4783,7 +4952,7 @@ struct NLSVERSIONINFO
     GUID guidCustomVersion;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnls/ns-winnls-nlsversioninfoex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnls/ns-winnls-nlsversioninfoex
 struct NLSVERSIONINFOEX
 {
     uint dwNLSVersionInfoSize;
@@ -4793,7 +4962,7 @@ struct NLSVERSIONINFOEX
     GUID guidCustomVersion;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnls/ns-winnls-filemuiinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnls/ns-winnls-filemuiinfo
 struct FILEMUIINFO
 {
     uint      dwSize;
@@ -4811,7 +4980,7 @@ struct FILEMUIINFO
     ubyte[8]  abBuffer;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/elscore/ns-elscore-mapping_service_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/elscore/ns-elscore-mapping_service_info
 struct MAPPING_SERVICE_INFO
 {
     size_t Size;
@@ -4838,10 +5007,10 @@ struct MAPPING_SERVICE_INFO
     uint   dwPrivateDataSize;
     void*  pPrivateData;
     void*  pContext;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ServiceType)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(2))], [])*/uint _bitfield25;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ServiceType)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(2))], [])*/uint _bitfield80;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/elscore/ns-elscore-mapping_enum_options))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/elscore/ns-elscore-mapping_enum_options
 struct MAPPING_ENUM_OPTIONS
 {
     size_t Size;
@@ -4853,10 +5022,10 @@ struct MAPPING_ENUM_OPTIONS
     PWSTR  pszInputContentType;
     PWSTR  pszOutputContentType;
     GUID*  pGuid;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ServiceType)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(2))], [])*/uint _bitfield26;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ServiceType)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(2))], [])*/uint _bitfield81;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/elscore/ns-elscore-mapping_options))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/elscore/ns-elscore-mapping_options
 struct MAPPING_OPTIONS
 {
     size_t Size;
@@ -4874,10 +5043,10 @@ struct MAPPING_OPTIONS
     void*  pActionCallerData;
     uint   dwActionCallerDataSize;
     uint   dwServiceFlag;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(GetActionDisplayName)), FixedArgSig(ElementSig(0)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield27;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(GetActionDisplayName)), FixedArgSig(ElementSig(0)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield82;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/elscore/ns-elscore-mapping_data_range))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/elscore/ns-elscore-mapping_data_range
 struct MAPPING_DATA_RANGE
 {
     uint   dwStartIndex;
@@ -4892,7 +5061,7 @@ struct MAPPING_DATA_RANGE
     PWSTR* prgActionDisplayNames;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/elscore/ns-elscore-mapping_property_bag))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/elscore/ns-elscore-mapping_property_bag
 struct MAPPING_PROPERTY_BAG
 {
     size_t              Size;
@@ -4905,59 +5074,59 @@ struct MAPPING_PROPERTY_BAG
     void*               pContext;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-script_control))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-script_control
 struct SCRIPT_CONTROL
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fReserved)), FixedArgSig(ElementSig(26)), FixedArgSig(ElementSig(6))], [])*/uint _bitfield28;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fReserved)), FixedArgSig(ElementSig(26)), FixedArgSig(ElementSig(6))], [])*/uint _bitfield83;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-script_state))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-script_state
 struct SCRIPT_STATE
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fEngineReserved)), FixedArgSig(ElementSig(14)), FixedArgSig(ElementSig(2))], [])*/ushort _bitfield29;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fEngineReserved)), FixedArgSig(ElementSig(14)), FixedArgSig(ElementSig(2))], [])*/ushort _bitfield84;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-script_analysis))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-script_analysis
 struct SCRIPT_ANALYSIS
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fNoGlyphIndex)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield30;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fNoGlyphIndex)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield85;
     SCRIPT_STATE s;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-script_item))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-script_item
 struct SCRIPT_ITEM
 {
     int             iCharPos;
     SCRIPT_ANALYSIS a;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-script_visattr))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-script_visattr
 struct SCRIPT_VISATTR
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fShapeReserved)), FixedArgSig(ElementSig(8)), FixedArgSig(ElementSig(8))], [])*/ushort _bitfield31;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fShapeReserved)), FixedArgSig(ElementSig(8)), FixedArgSig(ElementSig(8))], [])*/ushort _bitfield86;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-goffset))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-goffset
 struct GOFFSET
 {
     int du;
     int dv;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-script_logattr))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-script_logattr
 struct SCRIPT_LOGATTR
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fReserved)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(3))], [])*/ubyte _bitfield32;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fReserved)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(3))], [])*/ubyte _bitfield87;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-script_properties))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-script_properties
 struct SCRIPT_PROPERTIES
 {
     /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fInvalidGlyph)), FixedArgSig(ElementSig(31)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield1;
     /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fRejectInvalid)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield2;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-script_fontproperties))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-script_fontproperties
 struct SCRIPT_FONTPROPERTIES
 {
     int    cBytes;
@@ -4968,7 +5137,7 @@ struct SCRIPT_FONTPROPERTIES
     int    iKashidaWidth;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-script_tabdef))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-script_tabdef
 struct SCRIPT_TABDEF
 {
     int  cTabStops;
@@ -4977,7 +5146,7 @@ struct SCRIPT_TABDEF
     int  iTabOrigin;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-script_digitsubstitute))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-script_digitsubstitute
 struct SCRIPT_DIGITSUBSTITUTE
 {
     /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(TraditionalDigitLanguage)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield1;
@@ -4985,27 +5154,27 @@ struct SCRIPT_DIGITSUBSTITUTE
     uint dwReserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-opentype_feature_record))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-opentype_feature_record
 struct OPENTYPE_FEATURE_RECORD
 {
     uint tagFeature;
     int  lParameter;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-textrange_properties))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-textrange_properties
 struct TEXTRANGE_PROPERTIES
 {
     OPENTYPE_FEATURE_RECORD* potfRecords;
     int cotfRecords;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-script_charprop))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-script_charprop
 struct SCRIPT_CHARPROP
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(15))], [])*/ushort _bitfield33;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(15))], [])*/ushort _bitfield88;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-script_glyphprop))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/usp10/ns-usp10-script_glyphprop
 struct SCRIPT_GLYPHPROP
 {
     SCRIPT_VISATTR sva;
@@ -5237,7 +5406,7 @@ struct UNICODERANGE
     wchar wcTo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/caldatetime))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/caldatetime
 struct CALDATETIME
 {
     uint CalId;
@@ -9480,41 +9649,41 @@ int utrans_toRules(const(void)** trans, byte escapeUnprintable, ushort* result, 
 @DllImport("icuin.dll")
 USet* utrans_getSourceSet(const(void)** trans, byte ignoreFilter, USet* fillIn, UErrorCode* status);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bcp47mrm/nf-bcp47mrm-getdistanceofclosestlanguageinlist))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bcp47mrm/nf-bcp47mrm-getdistanceofclosestlanguageinlist
 @DllImport("bcp47mrm.dll")
 HRESULT GetDistanceOfClosestLanguageInList(const(PWSTR) pszLanguage, const(PWSTR) pszLanguagesList, 
                                            wchar wchListDelimiter, double* pClosestDistance);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bcp47mrm/nf-bcp47mrm-iswellformedtag))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bcp47mrm/nf-bcp47mrm-iswellformedtag
 @DllImport("bcp47mrm.dll")
 ubyte IsWellFormedTag(const(PWSTR) pszTag);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/getcalendarsupporteddaterange))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/getcalendarsupporteddaterange
 @DllImport("KERNEL32.dll")
 BOOL GetCalendarSupportedDateRange(uint Calendar, CALDATETIME* lpCalMinDateTime, CALDATETIME* lpCalMaxDateTime);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/getcalendardateformatex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/getcalendardateformatex
 @DllImport("KERNEL32.dll")
 BOOL GetCalendarDateFormatEx(const(PWSTR) lpszLocale, uint dwFlags, const(CALDATETIME)* lpCalDateTime, 
                              const(PWSTR) lpFormat, PWSTR lpDateStr, int cchDate);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/convertsystemtimetocaldatetime))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/convertsystemtimetocaldatetime
 @DllImport("KERNEL32.dll")
 BOOL ConvertSystemTimeToCalDateTime(const(SYSTEMTIME)* lpSysTime, uint calId, CALDATETIME* lpCalDateTime);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/updatecalendardayofweek))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/updatecalendardayofweek
 @DllImport("KERNEL32.dll")
 BOOL UpdateCalendarDayOfWeek(CALDATETIME* lpCalDateTime);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/adjustcalendardate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/adjustcalendardate
 @DllImport("KERNEL32.dll")
 BOOL AdjustCalendarDate(CALDATETIME* lpCalDateTime, CALDATETIME_DATEUNIT calUnit, int amount);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/convertcaldatetimetosystemtime))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/convertcaldatetimetosystemtime
 @DllImport("KERNEL32.dll")
 BOOL ConvertCalDateTimeToSystemTime(const(CALDATETIME)* lpCalDateTime, SYSTEMTIME* lpSysTime);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/iscalendarleapyear))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/iscalendarleapyear
 @DllImport("KERNEL32.dll")
 BOOL IsCalendarLeapYear(uint calId, uint year, uint era);
 
@@ -9593,22 +9762,22 @@ struct CMultiLanguage;
 
 @GUID("b7c82d61-fbe8-4b47-9b27-6c0d2e0de0a3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/nn-spellcheck-ispellingerror))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nn-spellcheck-ispellingerror
 interface ISpellingError : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellingerror-get_startindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellingerror-get_startindex
     HRESULT get_StartIndex(uint* value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellingerror-get_length))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellingerror-get_length
     HRESULT get_Length(uint* value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellingerror-get_correctiveaction))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellingerror-get_correctiveaction
     HRESULT get_CorrectiveAction(CORRECTIVE_ACTION* value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellingerror-get_replacement))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellingerror-get_replacement
     HRESULT get_Replacement(/*PARAM ATTR: FreeWithAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CoTaskMemFree))], [])*/PWSTR* value);
 }
 
 @GUID("803e3bd4-2828-4410-8290-418d1d73c762")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/nn-spellcheck-ienumspellingerror))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nn-spellcheck-ienumspellingerror
 interface IEnumSpellingError : IUnknown
 {
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
@@ -9617,141 +9786,141 @@ interface IEnumSpellingError : IUnknown
 
 @GUID("432e5f85-35cf-4606-a801-6f70277e1d7a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/nn-spellcheck-ioptiondescription))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nn-spellcheck-ioptiondescription
 interface IOptionDescription : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ioptiondescription-get_id))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ioptiondescription-get_id
     HRESULT get_Id(PWSTR* value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ioptiondescription-get_heading))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ioptiondescription-get_heading
     HRESULT get_Heading(PWSTR* value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ioptiondescription-get_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ioptiondescription-get_description
     HRESULT get_Description(PWSTR* value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ioptiondescription-get_labels))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ioptiondescription-get_labels
     HRESULT get_Labels(IEnumString* value);
 }
 
 @GUID("0b83a5b0-792f-4eab-9799-acf52c5ed08a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/nn-spellcheck-ispellcheckerchangedeventhandler))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nn-spellcheck-ispellcheckerchangedeventhandler
 interface ISpellCheckerChangedEventHandler : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellcheckerchangedeventhandler-invoke))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellcheckerchangedeventhandler-invoke
     HRESULT Invoke(ISpellChecker sender);
 }
 
 @GUID("b6fd0b71-e2bc-4653-8d05-f197e412770b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/nn-spellcheck-ispellchecker))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nn-spellcheck-ispellchecker
 interface ISpellChecker : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellchecker-get_languagetag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellchecker-get_languagetag
     HRESULT get_LanguageTag(PWSTR* value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellchecker-check))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellchecker-check
     HRESULT Check(const(PWSTR) text, IEnumSpellingError* value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellchecker-suggest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellchecker-suggest
     HRESULT Suggest(const(PWSTR) word, IEnumString* value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellchecker-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellchecker-add
     HRESULT Add(const(PWSTR) word);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellchecker-ignore))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellchecker-ignore
     HRESULT Ignore(const(PWSTR) word);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellchecker-autocorrect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellchecker-autocorrect
     HRESULT AutoCorrect(const(PWSTR) from, const(PWSTR) to);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellchecker-getoptionvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellchecker-getoptionvalue
     HRESULT GetOptionValue(const(PWSTR) optionId, ubyte* value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellchecker-get_optionids))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellchecker-get_optionids
     HRESULT get_OptionIds(IEnumString* value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellchecker-get_id))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellchecker-get_id
     HRESULT get_Id(PWSTR* value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellchecker-get_localizedname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellchecker-get_localizedname
     HRESULT get_LocalizedName(PWSTR* value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellchecker-add_spellcheckerchanged))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellchecker-add_spellcheckerchanged
     HRESULT add_SpellCheckerChanged(ISpellCheckerChangedEventHandler handler, uint* eventCookie);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellchecker-remove_spellcheckerchanged))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellchecker-remove_spellcheckerchanged
     HRESULT remove_SpellCheckerChanged(uint eventCookie);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellchecker-getoptiondescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellchecker-getoptiondescription
     HRESULT GetOptionDescription(const(PWSTR) optionId, IOptionDescription* value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellchecker-comprehensivecheck))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellchecker-comprehensivecheck
     HRESULT ComprehensiveCheck(const(PWSTR) text, IEnumSpellingError* value);
 }
 
 @GUID("e7ed1c71-87f7-4378-a840-c9200dacee47")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/nn-spellcheck-ispellchecker2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nn-spellcheck-ispellchecker2
 interface ISpellChecker2 : ISpellChecker
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellchecker2-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellchecker2-remove
     HRESULT Remove(const(PWSTR) word);
 }
 
 @GUID("8e018a9d-2415-4677-bf08-794ea61f94bb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/nn-spellcheck-ispellcheckerfactory))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nn-spellcheck-ispellcheckerfactory
 interface ISpellCheckerFactory : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellcheckerfactory-get_supportedlanguages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellcheckerfactory-get_supportedlanguages
     HRESULT get_SupportedLanguages(IEnumString* value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellcheckerfactory-issupported))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellcheckerfactory-issupported
     HRESULT IsSupported(const(PWSTR) languageTag, BOOL* value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellcheckerfactory-createspellchecker))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-ispellcheckerfactory-createspellchecker
     HRESULT CreateSpellChecker(const(PWSTR) languageTag, ISpellChecker* value);
 }
 
 @GUID("aa176b85-0e12-4844-8e1a-eef1da77f586")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/nn-spellcheck-iuserdictionariesregistrar))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nn-spellcheck-iuserdictionariesregistrar
 interface IUserDictionariesRegistrar : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-iuserdictionariesregistrar-registeruserdictionary))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-iuserdictionariesregistrar-registeruserdictionary
     HRESULT RegisterUserDictionary(const(PWSTR) dictionaryPath, const(PWSTR) languageTag);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-iuserdictionariesregistrar-unregisteruserdictionary))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheck/nf-spellcheck-iuserdictionariesregistrar-unregisteruserdictionary
     HRESULT UnregisterUserDictionary(const(PWSTR) dictionaryPath, const(PWSTR) languageTag);
 }
 
 @GUID("73e976e0-8ed4-4eb1-80d7-1be0a16b0c38")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheckprovider/nn-spellcheckprovider-ispellcheckprovider))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheckprovider/nn-spellcheckprovider-ispellcheckprovider
 interface ISpellCheckProvider : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheckprovider/nf-spellcheckprovider-ispellcheckprovider-get_languagetag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheckprovider/nf-spellcheckprovider-ispellcheckprovider-get_languagetag
     HRESULT get_LanguageTag(PWSTR* value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheckprovider/nf-spellcheckprovider-ispellcheckprovider-check))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheckprovider/nf-spellcheckprovider-ispellcheckprovider-check
     HRESULT Check(const(PWSTR) text, IEnumSpellingError* value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheckprovider/nf-spellcheckprovider-ispellcheckprovider-suggest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheckprovider/nf-spellcheckprovider-ispellcheckprovider-suggest
     HRESULT Suggest(const(PWSTR) word, IEnumString* value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheckprovider/nf-spellcheckprovider-ispellcheckprovider-getoptionvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheckprovider/nf-spellcheckprovider-ispellcheckprovider-getoptionvalue
     HRESULT GetOptionValue(const(PWSTR) optionId, ubyte* value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheckprovider/nf-spellcheckprovider-ispellcheckprovider-setoptionvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheckprovider/nf-spellcheckprovider-ispellcheckprovider-setoptionvalue
     HRESULT SetOptionValue(const(PWSTR) optionId, ubyte value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheckprovider/nf-spellcheckprovider-ispellcheckprovider-get_optionids))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheckprovider/nf-spellcheckprovider-ispellcheckprovider-get_optionids
     HRESULT get_OptionIds(IEnumString* value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheckprovider/nf-spellcheckprovider-ispellcheckprovider-get_id))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheckprovider/nf-spellcheckprovider-ispellcheckprovider-get_id
     HRESULT get_Id(PWSTR* value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheckprovider/nf-spellcheckprovider-ispellcheckprovider-get_localizedname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheckprovider/nf-spellcheckprovider-ispellcheckprovider-get_localizedname
     HRESULT get_LocalizedName(PWSTR* value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheckprovider/nf-spellcheckprovider-ispellcheckprovider-getoptiondescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheckprovider/nf-spellcheckprovider-ispellcheckprovider-getoptiondescription
     HRESULT GetOptionDescription(const(PWSTR) optionId, IOptionDescription* value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheckprovider/nf-spellcheckprovider-ispellcheckprovider-initializewordlist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheckprovider/nf-spellcheckprovider-ispellcheckprovider-initializewordlist
     HRESULT InitializeWordlist(WORDLIST_TYPE wordlistType, IEnumString words);
 }
 
 @GUID("0c58f8de-8e94-479e-9717-70c42c4ad2c3")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheckprovider/nn-spellcheckprovider-icomprehensivespellcheckprovider))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheckprovider/nn-spellcheckprovider-icomprehensivespellcheckprovider
 interface IComprehensiveSpellCheckProvider : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/icomprehensivespellcheckprovider-comprehensivecheck))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Intl/icomprehensivespellcheckprovider-comprehensivecheck
     HRESULT ComprehensiveCheck(const(PWSTR) text, IEnumSpellingError* value);
 }
 
 @GUID("9f671e11-77d6-4c92-aefb-615215e3a4be")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheckprovider/nn-spellcheckprovider-ispellcheckproviderfactory))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheckprovider/nn-spellcheckprovider-ispellcheckproviderfactory
 interface ISpellCheckProviderFactory : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheckprovider/nf-spellcheckprovider-ispellcheckproviderfactory-get_supportedlanguages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheckprovider/nf-spellcheckprovider-ispellcheckproviderfactory-get_supportedlanguages
     HRESULT get_SupportedLanguages(IEnumString* value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheckprovider/nf-spellcheckprovider-ispellcheckproviderfactory-issupported))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheckprovider/nf-spellcheckprovider-ispellcheckproviderfactory-issupported
     HRESULT IsSupported(const(PWSTR) languageTag, BOOL* value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spellcheckprovider/nf-spellcheckprovider-ispellcheckproviderfactory-createspellcheckprovider))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spellcheckprovider/nf-spellcheckprovider-ispellcheckproviderfactory-createspellcheckprovider
     HRESULT CreateSpellCheckProvider(const(PWSTR) languageTag, ISpellCheckProvider* value);
 }
 

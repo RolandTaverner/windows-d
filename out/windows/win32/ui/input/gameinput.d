@@ -3,13 +3,15 @@
 module windows.win32.ui.input.gameinput;
 
 public import windows.core;
-public import windows.win32.foundation : APP_LOCAL_DEVICE_ID, HANDLE, HRESULT, PSTR, PWSTR;
-public import windows.win32.system.com : IUnknown;
+public import windows.win32.foundation.foundation : APP_LOCAL_DEVICE_ID, HANDLE, HRESULT, PSTR,
+                                                    PWSTR;
+public import windows.win32.system.com.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
+
 
 enum GameInputKind : int
 {
@@ -29,12 +31,14 @@ enum GameInputKind : int
     GameInputKindRacingWheel      = 0x00080000,
     GameInputKindUiNavigation     = 0x01000000,
 }
+
 enum GameInputEnumerationKind : int
 {
     GameInputNoEnumeration       = 0x00000000,
     GameInputAsyncEnumeration    = 0x00000001,
     GameInputBlockingEnumeration = 0x00000002,
 }
+
 enum GameInputFocusPolicy : int
 {
     GameInputDefaultFocusPolicy             = 0x00000000,
@@ -45,6 +49,7 @@ enum GameInputFocusPolicy : int
     GameInputDisableBackgroundShareButton   = 0x00000010,
     GameInputExclusiveForegroundShareButton = 0x00000020,
 }
+
 enum GameInputSwitchKind : int
 {
     GameInputUnknownSwitchKind = 0xffffffff,
@@ -52,6 +57,7 @@ enum GameInputSwitchKind : int
     GameInput4WaySwitch        = 0x00000001,
     GameInput8WaySwitch        = 0x00000002,
 }
+
 enum GameInputSwitchPosition : int
 {
     GameInputSwitchCenter    = 0x00000000,
@@ -64,6 +70,7 @@ enum GameInputSwitchPosition : int
     GameInputSwitchLeft      = 0x00000007,
     GameInputSwitchUpLeft    = 0x00000008,
 }
+
 enum GameInputKeyboardKind : int
 {
     GameInputUnknownKeyboard = 0xffffffff,
@@ -73,6 +80,7 @@ enum GameInputKeyboardKind : int
     GameInputAbntKeyboard    = 0x00000003,
     GameInputJisKeyboard     = 0x00000004,
 }
+
 enum GameInputMouseButtons : int
 {
     GameInputMouseNone           = 0x00000000,
@@ -84,6 +92,7 @@ enum GameInputMouseButtons : int
     GameInputMouseWheelTiltLeft  = 0x00000020,
     GameInputMouseWheelTiltRight = 0x00000040,
 }
+
 enum GameInputTouchShape : int
 {
     GameInputTouchShapeUnknown       = 0xffffffff,
@@ -95,6 +104,7 @@ enum GameInputTouchShape : int
     GameInputTouchShape2DElliptical  = 0x00000005,
     GameInputTouchShape2DIrregular   = 0x00000006,
 }
+
 enum GameInputMotionAccuracy : int
 {
     GameInputMotionAccuracyUnknown = 0xffffffff,
@@ -103,6 +113,7 @@ enum GameInputMotionAccuracy : int
     GameInputMotionApproximate     = 0x00000002,
     GameInputMotionAccurate        = 0x00000003,
 }
+
 enum GameInputArcadeStickButtons : int
 {
     GameInputArcadeStickNone     = 0x00000000,
@@ -121,6 +132,7 @@ enum GameInputArcadeStickButtons : int
     GameInputArcadeStickSpecial1 = 0x00001000,
     GameInputArcadeStickSpecial2 = 0x00002000,
 }
+
 enum GameInputFlightStickButtons : int
 {
     GameInputFlightStickNone          = 0x00000000,
@@ -129,6 +141,7 @@ enum GameInputFlightStickButtons : int
     GameInputFlightStickFirePrimary   = 0x00000004,
     GameInputFlightStickFireSecondary = 0x00000008,
 }
+
 enum GameInputGamepadButtons : int
 {
     GameInputGamepadNone            = 0x00000000,
@@ -147,6 +160,7 @@ enum GameInputGamepadButtons : int
     GameInputGamepadLeftThumbstick  = 0x00001000,
     GameInputGamepadRightThumbstick = 0x00002000,
 }
+
 enum GameInputRacingWheelButtons : int
 {
     GameInputRacingWheelNone         = 0x00000000,
@@ -159,6 +173,7 @@ enum GameInputRacingWheelButtons : int
     GameInputRacingWheelDpadLeft     = 0x00000040,
     GameInputRacingWheelDpadRight    = 0x00000080,
 }
+
 enum GameInputUiNavigationButtons : int
 {
     GameInputUiNavigationNone        = 0x00000000,
@@ -183,12 +198,14 @@ enum GameInputUiNavigationButtons : int
     GameInputUiNavigationScrollLeft  = 0x00040000,
     GameInputUiNavigationScrollRight = 0x00080000,
 }
+
 enum GameInputSystemButtons : int
 {
     GameInputSystemButtonNone  = 0x00000000,
     GameInputSystemButtonGuide = 0x00000001,
     GameInputSystemButtonShare = 0x00000002,
 }
+
 enum GameInputDeviceStatus : int
 {
     GameInputDeviceNoStatus      = 0x00000000,
@@ -203,6 +220,7 @@ enum GameInputDeviceStatus : int
     GameInputDeviceUserIdle      = 0x00100000,
     GameInputDeviceAnyStatus     = 0x00ffffff,
 }
+
 enum GameInputBatteryStatus : int
 {
     GameInputBatteryUnknown     = 0xffffffff,
@@ -211,6 +229,7 @@ enum GameInputBatteryStatus : int
     GameInputBatteryIdle        = 0x00000002,
     GameInputBatteryCharging    = 0x00000003,
 }
+
 enum GameInputDeviceFamily : int
 {
     GameInputFamilyVirtual   = 0xffffffff,
@@ -220,6 +239,7 @@ enum GameInputDeviceFamily : int
     GameInputFamilyHid       = 0x00000003,
     GameInputFamilyI8042     = 0x00000004,
 }
+
 enum GameInputDeviceCapabilities : int
 {
     GameInputDeviceCapabilityNone            = 0x00000000,
@@ -229,12 +249,14 @@ enum GameInputDeviceCapabilities : int
     GameInputDeviceCapabilitySynchronization = 0x00000008,
     GameInputDeviceCapabilityWireless        = 0x00000010,
 }
+
 enum GameInputRawDeviceReportKind : int
 {
     GameInputRawInputReport   = 0x00000000,
     GameInputRawOutputReport  = 0x00000001,
     GameInputRawFeatureReport = 0x00000002,
 }
+
 enum GameInputRawDeviceReportItemFlags : int
 {
     GameInputDefaultItem    = 0x00000000,
@@ -248,6 +270,7 @@ enum GameInputRawDeviceReportItemFlags : int
     GameInputVolatileItem   = 0x00000080,
     GameInputBufferedItem   = 0x00000100,
 }
+
 enum GameInputRawDeviceItemCollectionKind : int
 {
     GameInputUnknownItemCollection       = 0xffffffff,
@@ -259,6 +282,7 @@ enum GameInputRawDeviceItemCollectionKind : int
     GameInputUsageSwitchItemCollection   = 0x00000005,
     GameInputUsageModifierItemCollection = 0x00000006,
 }
+
 enum GameInputRawDevicePhysicalUnitKind : int
 {
     GameInputPhysicalUnitUnknown             = 0xffffffff,
@@ -288,6 +312,7 @@ enum GameInputRawDevicePhysicalUnitKind : int
     GameInputPhysicalUnitLuminousFlux        = 0x00000017,
     GameInputPhysicalUnitIlluminance         = 0x00000018,
 }
+
 enum GameInputLabel : int
 {
     GameInputLabelUnknown                  = 0xffffffff,
@@ -416,6 +441,7 @@ enum GameInputLabel : int
     GameInputLabelP3                       = 0x0000007b,
     GameInputLabelP4                       = 0x0000007c,
 }
+
 enum GameInputLocation : int
 {
     GameInputLocationUnknown  = 0xffffffff,
@@ -427,6 +453,7 @@ enum GameInputLocation : int
     GameInputLocationKey      = 0x00000005,
     GameInputLocationTouchPad = 0x00000006,
 }
+
 enum GameInputFeedbackAxes : int
 {
     GameInputFeedbackAxisNone     = 0x00000000,
@@ -438,12 +465,14 @@ enum GameInputFeedbackAxes : int
     GameInputFeedbackAxisAngularZ = 0x00000020,
     GameInputFeedbackAxisNormal   = 0x00000040,
 }
+
 enum GameInputFeedbackEffectState : int
 {
     GameInputFeedbackStopped = 0x00000000,
     GameInputFeedbackRunning = 0x00000001,
     GameInputFeedbackPaused  = 0x00000002,
 }
+
 enum GameInputForceFeedbackEffectKind : int
 {
     GameInputForceFeedbackConstant         = 0x00000000,
@@ -458,6 +487,7 @@ enum GameInputForceFeedbackEffectKind : int
     GameInputForceFeedbackDamper           = 0x00000009,
     GameInputForceFeedbackInertia          = 0x0000000a,
 }
+
 enum GameInputRumbleMotors : int
 {
     GameInputRumbleNone          = 0x00000000,
@@ -470,7 +500,7 @@ enum GameInputRumbleMotors : int
 // Constants
 
 
-enum uint FACILITY_GAMEINPUT = 0x0000038a;
+enum uint FACILITY_GAMEINPUT = 0x0000038aU;
 
 enum : HRESULT
 {
@@ -990,7 +1020,20 @@ struct GameInputForceFeedbackRampParams
 struct GameInputForceFeedbackParams
 {
     GameInputForceFeedbackEffectKind kind;
-    _data_e__Union data;
+    union data
+    {
+        GameInputForceFeedbackConstantParams constant;
+        GameInputForceFeedbackRampParams ramp;
+        GameInputForceFeedbackPeriodicParams sineWave;
+        GameInputForceFeedbackPeriodicParams squareWave;
+        GameInputForceFeedbackPeriodicParams triangleWave;
+        GameInputForceFeedbackPeriodicParams sawtoothUpWave;
+        GameInputForceFeedbackPeriodicParams sawtoothDownWave;
+        GameInputForceFeedbackConditionParams spring;
+        GameInputForceFeedbackConditionParams friction;
+        GameInputForceFeedbackConditionParams damper;
+        GameInputForceFeedbackConditionParams inertia;
+    }
 }
 
 struct GameInputHapticFeedbackParams

@@ -3,10 +3,11 @@
 module windows.win32.devices.display;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BOOLEAN, CHAR, DEVPROPKEY, HANDLE,
-                                         HRESULT, HWND, LUID, NTSTATUS, POINTL,
-                                         PSTR, PWSTR, RECT, RECTL, SIZE, WIN32_ERROR;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BOOLEAN, CHAR, DEVPROPKEY, HANDLE,
+                                                    HRESULT, HWND, LUID, NTSTATUS,
+                                                    POINTL, PSTR, PWSTR, RECT, RECTL,
+                                                    SIZE, WIN32_ERROR;
 public import windows.win32.graphics.direct3d9 : IDirect3DDevice9;
 public import windows.win32.graphics.directdraw : DD_CALLBACKS, DD_DIRECTDRAW_GLOBAL, DD_HALINFO,
                                                   DD_PALETTECALLBACKS, DD_SURFACECALLBACKS,
@@ -18,7 +19,7 @@ public import windows.win32.graphics.gdi : BLENDFUNCTION, COLORADJUSTMENT, DESIG
                                            PALETTEENTRY, PANOSE, TRIVERTEX,
                                            TTPOLYGONHEADER;
 public import windows.win32.graphics.opengl : PIXELFORMATDESCRIPTOR;
-public import windows.win32.system.com : IStream, IUnknown;
+public import windows.win32.system.com.com : IStream, IUnknown;
 public import windows.win32.system.console : CHAR_INFO, COORD;
 public import windows.win32.ui.colorsystem : LOGCOLORSPACEW;
 
@@ -27,38 +28,41 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias SET_DISPLAY_CONFIG_FLAGS = uint;
 enum : uint
 {
-    SDC_USE_DATABASE_CURRENT        = 0x0000000f,
-    SDC_TOPOLOGY_INTERNAL           = 0x00000001,
-    SDC_TOPOLOGY_CLONE              = 0x00000002,
-    SDC_TOPOLOGY_EXTEND             = 0x00000004,
-    SDC_TOPOLOGY_EXTERNAL           = 0x00000008,
-    SDC_TOPOLOGY_SUPPLIED           = 0x00000010,
-    SDC_USE_SUPPLIED_DISPLAY_CONFIG = 0x00000020,
-    SDC_VALIDATE                    = 0x00000040,
-    SDC_APPLY                       = 0x00000080,
-    SDC_NO_OPTIMIZATION             = 0x00000100,
-    SDC_SAVE_TO_DATABASE            = 0x00000200,
-    SDC_ALLOW_CHANGES               = 0x00000400,
-    SDC_PATH_PERSIST_IF_REQUIRED    = 0x00000800,
-    SDC_FORCE_MODE_ENUMERATION      = 0x00001000,
-    SDC_ALLOW_PATH_ORDER_CHANGES    = 0x00002000,
-    SDC_VIRTUAL_MODE_AWARE          = 0x00008000,
-    SDC_VIRTUAL_REFRESH_RATE_AWARE  = 0x00020000,
+    SDC_USE_DATABASE_CURRENT        = 0x0000000fU,
+    SDC_TOPOLOGY_INTERNAL           = 0x00000001U,
+    SDC_TOPOLOGY_CLONE              = 0x00000002U,
+    SDC_TOPOLOGY_EXTEND             = 0x00000004U,
+    SDC_TOPOLOGY_EXTERNAL           = 0x00000008U,
+    SDC_TOPOLOGY_SUPPLIED           = 0x00000010U,
+    SDC_USE_SUPPLIED_DISPLAY_CONFIG = 0x00000020U,
+    SDC_VALIDATE                    = 0x00000040U,
+    SDC_APPLY                       = 0x00000080U,
+    SDC_NO_OPTIMIZATION             = 0x00000100U,
+    SDC_SAVE_TO_DATABASE            = 0x00000200U,
+    SDC_ALLOW_CHANGES               = 0x00000400U,
+    SDC_PATH_PERSIST_IF_REQUIRED    = 0x00000800U,
+    SDC_FORCE_MODE_ENUMERATION      = 0x00001000U,
+    SDC_ALLOW_PATH_ORDER_CHANGES    = 0x00002000U,
+    SDC_VIRTUAL_MODE_AWARE          = 0x00008000U,
+    SDC_VIRTUAL_REFRESH_RATE_AWARE  = 0x00020000U,
 }
+
 alias QUERY_DISPLAY_CONFIG_FLAGS = uint;
 enum : uint
 {
-    QDC_ALL_PATHS                  = 0x00000001,
-    QDC_ONLY_ACTIVE_PATHS          = 0x00000002,
-    QDC_DATABASE_CURRENT           = 0x00000004,
-    QDC_VIRTUAL_MODE_AWARE         = 0x00000010,
-    QDC_INCLUDE_HMD                = 0x00000020,
-    QDC_VIRTUAL_REFRESH_RATE_AWARE = 0x00000040,
+    QDC_ALL_PATHS                  = 0x00000001U,
+    QDC_ONLY_ACTIVE_PATHS          = 0x00000002U,
+    QDC_DATABASE_CURRENT           = 0x00000004U,
+    QDC_VIRTUAL_MODE_AWARE         = 0x00000010U,
+    QDC_INCLUDE_HMD                = 0x00000020U,
+    QDC_VIRTUAL_REFRESH_RATE_AWARE = 0x00000040U,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ne-wingdi-displayconfig_video_output_technology))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ne-wingdi-displayconfig_video_output_technology
 alias DISPLAYCONFIG_VIDEO_OUTPUT_TECHNOLOGY = int;
 enum : int
 {
@@ -83,7 +87,8 @@ enum : int
     DISPLAYCONFIG_OUTPUT_TECHNOLOGY_DISPLAYPORT_USB_TUNNEL = 0x00000012,
     DISPLAYCONFIG_OUTPUT_TECHNOLOGY_INTERNAL               = 0x80000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ne-wingdi-displayconfig_scanline_ordering))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ne-wingdi-displayconfig_scanline_ordering
 alias DISPLAYCONFIG_SCANLINE_ORDERING = int;
 enum : int
 {
@@ -93,7 +98,8 @@ enum : int
     DISPLAYCONFIG_SCANLINE_ORDERING_INTERLACED_UPPERFIELDFIRST = 0x00000002,
     DISPLAYCONFIG_SCANLINE_ORDERING_INTERLACED_LOWERFIELDFIRST = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ne-wingdi-displayconfig_scaling))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ne-wingdi-displayconfig_scaling
 alias DISPLAYCONFIG_SCALING = int;
 enum : int
 {
@@ -104,7 +110,8 @@ enum : int
     DISPLAYCONFIG_SCALING_CUSTOM                 = 0x00000005,
     DISPLAYCONFIG_SCALING_PREFERRED              = 0x00000080,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ne-wingdi-displayconfig_rotation))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ne-wingdi-displayconfig_rotation
 alias DISPLAYCONFIG_ROTATION = int;
 enum : int
 {
@@ -113,7 +120,8 @@ enum : int
     DISPLAYCONFIG_ROTATION_ROTATE180 = 0x00000003,
     DISPLAYCONFIG_ROTATION_ROTATE270 = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ne-wingdi-displayconfig_mode_info_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ne-wingdi-displayconfig_mode_info_type
 alias DISPLAYCONFIG_MODE_INFO_TYPE = int;
 enum : int
 {
@@ -121,7 +129,8 @@ enum : int
     DISPLAYCONFIG_MODE_INFO_TYPE_TARGET        = 0x00000002,
     DISPLAYCONFIG_MODE_INFO_TYPE_DESKTOP_IMAGE = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ne-wingdi-displayconfig_pixelformat))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ne-wingdi-displayconfig_pixelformat
 alias DISPLAYCONFIG_PIXELFORMAT = int;
 enum : int
 {
@@ -131,7 +140,8 @@ enum : int
     DISPLAYCONFIG_PIXELFORMAT_32BPP  = 0x00000004,
     DISPLAYCONFIG_PIXELFORMAT_NONGDI = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ne-wingdi-displayconfig_topology_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ne-wingdi-displayconfig_topology_id
 alias DISPLAYCONFIG_TOPOLOGY_ID = int;
 enum : int
 {
@@ -140,7 +150,8 @@ enum : int
     DISPLAYCONFIG_TOPOLOGY_EXTEND   = 0x00000004,
     DISPLAYCONFIG_TOPOLOGY_EXTERNAL = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ne-wingdi-displayconfig_device_info_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ne-wingdi-displayconfig_device_info_type
 alias DISPLAYCONFIG_DEVICE_INFO_TYPE = int;
 enum : int
 {
@@ -162,14 +173,16 @@ enum : int
     DISPLAYCONFIG_DEVICE_INFO_SET_HDR_STATE                  = 0x00000010,
     DISPLAYCONFIG_DEVICE_INFO_SET_WCG_STATE                  = 0x00000011,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lowlevelmonitorconfigurationapi/ne-lowlevelmonitorconfigurationapi-mc_vcp_code_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lowlevelmonitorconfigurationapi/ne-lowlevelmonitorconfigurationapi-mc_vcp_code_type
 alias MC_VCP_CODE_TYPE = int;
 enum : int
 {
     MC_MOMENTARY     = 0x00000000,
     MC_SET_PARAMETER = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/highlevelmonitorconfigurationapi/ne-highlevelmonitorconfigurationapi-mc_display_technology_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/highlevelmonitorconfigurationapi/ne-highlevelmonitorconfigurationapi-mc_display_technology_type
 alias MC_DISPLAY_TECHNOLOGY_TYPE = int;
 enum : int
 {
@@ -183,7 +196,8 @@ enum : int
     MC_MICROELECTROMECHANICAL          = 0x00000007,
     MC_FIELD_EMISSION_DEVICE           = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/highlevelmonitorconfigurationapi/ne-highlevelmonitorconfigurationapi-mc_drive_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/highlevelmonitorconfigurationapi/ne-highlevelmonitorconfigurationapi-mc_drive_type
 alias MC_DRIVE_TYPE = int;
 enum : int
 {
@@ -191,7 +205,8 @@ enum : int
     MC_GREEN_DRIVE = 0x00000001,
     MC_BLUE_DRIVE  = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/highlevelmonitorconfigurationapi/ne-highlevelmonitorconfigurationapi-mc_gain_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/highlevelmonitorconfigurationapi/ne-highlevelmonitorconfigurationapi-mc_gain_type
 alias MC_GAIN_TYPE = int;
 enum : int
 {
@@ -199,21 +214,24 @@ enum : int
     MC_GREEN_GAIN = 0x00000001,
     MC_BLUE_GAIN  = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/highlevelmonitorconfigurationapi/ne-highlevelmonitorconfigurationapi-mc_position_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/highlevelmonitorconfigurationapi/ne-highlevelmonitorconfigurationapi-mc_position_type
 alias MC_POSITION_TYPE = int;
 enum : int
 {
     MC_HORIZONTAL_POSITION = 0x00000000,
     MC_VERTICAL_POSITION   = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/highlevelmonitorconfigurationapi/ne-highlevelmonitorconfigurationapi-mc_size_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/highlevelmonitorconfigurationapi/ne-highlevelmonitorconfigurationapi-mc_size_type
 alias MC_SIZE_TYPE = int;
 enum : int
 {
     MC_WIDTH  = 0x00000000,
     MC_HEIGHT = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/highlevelmonitorconfigurationapi/ne-highlevelmonitorconfigurationapi-mc_color_temperature))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/highlevelmonitorconfigurationapi/ne-highlevelmonitorconfigurationapi-mc_color_temperature
 alias MC_COLOR_TEMPERATURE = int;
 enum : int
 {
@@ -227,6 +245,7 @@ enum : int
     MC_COLOR_TEMPERATURE_10000K  = 0x00000007,
     MC_COLOR_TEMPERATURE_11500K  = 0x00000008,
 }
+
 alias ENG_SYSTEM_ATTRIBUTE = int;
 enum : int
 {
@@ -235,12 +254,14 @@ enum : int
     EngOptimumAvailableUserMemory   = 0x00000003,
     EngOptimumAvailableSystemMemory = 0x00000004,
 }
+
 alias ENG_DEVICE_ATTRIBUTE = int;
 enum : int
 {
     QDA_RESERVED           = 0x00000000,
     QDA_ACCELERATION_LEVEL = 0x00000001,
 }
+
 alias VIDEO_WIN32K_CALLBACKS_PARAMS_TYPE = int;
 enum : int
 {
@@ -258,11 +279,13 @@ enum : int
     VideoBlackScreenDiagnostics         = 0x00000010,
     VideoForceCompositionRender         = 0x00000011,
 }
+
 enum BlackScreenDiagnosticsCalloutParam : int
 {
     BlackScreenDiagnosticsData = 0x00000001,
     BlackScreenDisplayRecovery = 0x00000002,
 }
+
 alias VIDEO_BANK_TYPE = int;
 enum : int
 {
@@ -272,6 +295,7 @@ enum : int
     VideoBanked2RW    = 0x00000003,
     NumVideoBankTypes = 0x00000004,
 }
+
 alias VIDEO_POWER_STATE = int;
 enum : int
 {
@@ -284,6 +308,7 @@ enum : int
     VideoPowerShutdown    = 0x00000006,
     VideoPowerMaximum     = 0x00000007,
 }
+
 alias BRIGHTNESS_INTERFACE_VERSION = int;
 enum : int
 {
@@ -291,6 +316,7 @@ enum : int
     BRIGHTNESS_INTERFACE_VERSION_2 = 0x00000002,
     BRIGHTNESS_INTERFACE_VERSION_3 = 0x00000003,
 }
+
 alias BACKLIGHT_OPTIMIZATION_LEVEL = int;
 enum : int
 {
@@ -300,12 +326,14 @@ enum : int
     BacklightOptimizationDimmed  = 0x00000003,
     BacklightOptimizationEDR     = 0x00000004,
 }
+
 alias COLORSPACE_TRANSFORM_DATA_TYPE = int;
 enum : int
 {
     COLORSPACE_TRANSFORM_DATA_TYPE_FIXED_POINT = 0x00000000,
     COLORSPACE_TRANSFORM_DATA_TYPE_FLOAT       = 0x00000001,
 }
+
 alias COLORSPACE_TRANSFORM_TARGET_CAPS_VERSION = int;
 enum : int
 {
@@ -313,6 +341,7 @@ enum : int
     COLORSPACE_TRANSFORM_VERSION_1             = 0x00000001,
     COLORSPACE_TRANSFORM_VERSION_NOT_SUPPORTED = 0x00000000,
 }
+
 alias COLORSPACE_TRANSFORM_TYPE = int;
 enum : int
 {
@@ -323,6 +352,7 @@ enum : int
     COLORSPACE_TRANSFORM_TYPE_MATRIX_3x4    = 0x00000004,
     COLORSPACE_TRANSFORM_TYPE_MATRIX_V2     = 0x00000005,
 }
+
 alias OUTPUT_WIRE_COLOR_SPACE_TYPE = int;
 enum : int
 {
@@ -334,6 +364,7 @@ enum : int
     OUTPUT_WIRE_COLOR_SPACE_G2084_P2020_HDR10PLUS = 0x00000020,
     OUTPUT_WIRE_COLOR_SPACE_G2084_P2020_DVLL      = 0x00000021,
 }
+
 alias OUTPUT_COLOR_ENCODING = int;
 enum : int
 {
@@ -343,6 +374,7 @@ enum : int
     OUTPUT_COLOR_ENCODING_YCBCR420  = 0x00000003,
     OUTPUT_COLOR_ENCODING_INTENSITY = 0x00000004,
 }
+
 alias COLORSPACE_TRANSFORM_STAGE_CONTROL = int;
 enum : int
 {
@@ -350,6 +382,7 @@ enum : int
     ColorSpaceTransformStageControl_Enable    = 0x00000001,
     ColorSpaceTransformStageControl_Bypass    = 0x00000002,
 }
+
 alias DSI_CONTROL_TRANSMISSION_MODE = int;
 enum : int
 {
@@ -357,7 +390,8 @@ enum : int
     DCT_FORCE_LOW_POWER        = 0x00000001,
     DCT_FORCE_HIGH_PERFORMANCE = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ne-winuser-ar_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ne-winuser-ar_state
 alias AR_STATE = int;
 enum : int
 {
@@ -371,7 +405,8 @@ enum : int
     AR_DOCKED        = 0x00000040,
     AR_LAPTOP        = 0x00000080,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ne-winuser-orientation_preference))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ne-winuser-orientation_preference
 alias ORIENTATION_PREFERENCE = int;
 enum : int
 {
@@ -410,8 +445,8 @@ enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(Element
 
 enum : uint
 {
-    INDIRECT_DISPLAY_INFO_FLAGS_CREATED_IDDCX_ADAPTER = 0x00000001,
-    INDIRECT_DISPLAY_INFO_FLAGS_SUPPORT_FP16          = 0x00000002,
+    INDIRECT_DISPLAY_INFO_FLAGS_CREATED_IDDCX_ADAPTER = 0x00000001U,
+    INDIRECT_DISPLAY_INFO_FLAGS_SUPPORT_FP16          = 0x00000002U,
 }
 
 enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({4277826612, 57597, 19242, 144, 90, 125, 1, 39, 169, 240, 28}, 1))], [])*/DEVPROPKEY
@@ -428,306 +463,306 @@ enum const(wchar)* WVIDEO_DEVICE_NAME = "DISPLAY%d";
 
 enum : uint
 {
-    IOCTL_VIDEO_DISABLE_VDM                   = 0x00230004,
-    IOCTL_VIDEO_REGISTER_VDM                  = 0x00230008,
-    IOCTL_VIDEO_SET_OUTPUT_DEVICE_POWER_STATE = 0x0023000c,
+    IOCTL_VIDEO_DISABLE_VDM                   = 0x00230004U,
+    IOCTL_VIDEO_REGISTER_VDM                  = 0x00230008U,
+    IOCTL_VIDEO_SET_OUTPUT_DEVICE_POWER_STATE = 0x0023000cU,
 }
 
-enum uint IOCTL_VIDEO_GET_OUTPUT_DEVICE_POWER_STATE = 0x00230010;
+enum uint IOCTL_VIDEO_GET_OUTPUT_DEVICE_POWER_STATE = 0x00230010U;
 
 enum : uint
 {
-    IOCTL_VIDEO_MONITOR_DEVICE        = 0x00230014,
-    IOCTL_VIDEO_ENUM_MONITOR_PDO      = 0x00230018,
-    IOCTL_VIDEO_INIT_WIN32K_CALLBACKS = 0x0023001c,
-}
-
-enum : uint
-{
-    IOCTL_VIDEO_IS_VGA_DEVICE         = 0x00230024,
-    IOCTL_VIDEO_USE_DEVICE_IN_SESSION = 0x00230028,
-}
-
-enum uint IOCTL_VIDEO_PREPARE_FOR_EARECOVERY = 0x0023002c;
-
-enum : uint
-{
-    IOCTL_VIDEO_ENABLE_VDM          = 0x00230000,
-    IOCTL_VIDEO_SAVE_HARDWARE_STATE = 0x00230200,
-}
-
-enum uint IOCTL_VIDEO_RESTORE_HARDWARE_STATE = 0x00230204;
-enum uint IOCTL_VIDEO_HANDLE_VIDEOPARAMETERS = 0x00230020;
-
-enum : uint
-{
-    IOCTL_VIDEO_QUERY_AVAIL_MODES     = 0x00230400,
-    IOCTL_VIDEO_QUERY_NUM_AVAIL_MODES = 0x00230404,
-    IOCTL_VIDEO_QUERY_CURRENT_MODE    = 0x00230408,
+    IOCTL_VIDEO_MONITOR_DEVICE        = 0x00230014U,
+    IOCTL_VIDEO_ENUM_MONITOR_PDO      = 0x00230018U,
+    IOCTL_VIDEO_INIT_WIN32K_CALLBACKS = 0x0023001cU,
 }
 
 enum : uint
 {
-    IOCTL_VIDEO_SET_CURRENT_MODE      = 0x0023040c,
-    IOCTL_VIDEO_RESET_DEVICE          = 0x00230410,
-    IOCTL_VIDEO_LOAD_AND_SET_FONT     = 0x00230414,
-    IOCTL_VIDEO_SET_PALETTE_REGISTERS = 0x00230418,
-    IOCTL_VIDEO_SET_COLOR_REGISTERS   = 0x0023041c,
+    IOCTL_VIDEO_IS_VGA_DEVICE         = 0x00230024U,
+    IOCTL_VIDEO_USE_DEVICE_IN_SESSION = 0x00230028U,
+}
+
+enum uint IOCTL_VIDEO_PREPARE_FOR_EARECOVERY = 0x0023002cU;
+
+enum : uint
+{
+    IOCTL_VIDEO_ENABLE_VDM          = 0x00230000U,
+    IOCTL_VIDEO_SAVE_HARDWARE_STATE = 0x00230200U,
+}
+
+enum uint IOCTL_VIDEO_RESTORE_HARDWARE_STATE = 0x00230204U;
+enum uint IOCTL_VIDEO_HANDLE_VIDEOPARAMETERS = 0x00230020U;
+
+enum : uint
+{
+    IOCTL_VIDEO_QUERY_AVAIL_MODES     = 0x00230400U,
+    IOCTL_VIDEO_QUERY_NUM_AVAIL_MODES = 0x00230404U,
+    IOCTL_VIDEO_QUERY_CURRENT_MODE    = 0x00230408U,
 }
 
 enum : uint
 {
-    IOCTL_VIDEO_ENABLE_CURSOR       = 0x00230420,
-    IOCTL_VIDEO_DISABLE_CURSOR      = 0x00230424,
-    IOCTL_VIDEO_SET_CURSOR_ATTR     = 0x00230428,
-    IOCTL_VIDEO_QUERY_CURSOR_ATTR   = 0x0023042c,
-    IOCTL_VIDEO_SET_CURSOR_POSITION = 0x00230430,
-}
-
-enum uint IOCTL_VIDEO_QUERY_CURSOR_POSITION = 0x00230434;
-
-enum : uint
-{
-    IOCTL_VIDEO_ENABLE_POINTER     = 0x00230438,
-    IOCTL_VIDEO_DISABLE_POINTER    = 0x0023043c,
-    IOCTL_VIDEO_SET_POINTER_ATTR   = 0x00230440,
-    IOCTL_VIDEO_QUERY_POINTER_ATTR = 0x00230444,
-}
-
-enum uint IOCTL_VIDEO_SET_POINTER_POSITION = 0x00230448;
-
-enum : uint
-{
-    IOCTL_VIDEO_QUERY_POINTER_POSITION     = 0x0023044c,
-    IOCTL_VIDEO_QUERY_POINTER_CAPABILITIES = 0x00230450,
-}
-
-enum uint IOCTL_VIDEO_GET_BANK_SELECT_CODE = 0x00230454;
-
-enum : uint
-{
-    IOCTL_VIDEO_MAP_VIDEO_MEMORY   = 0x00230458,
-    IOCTL_VIDEO_UNMAP_VIDEO_MEMORY = 0x0023045c,
-}
-
-enum uint IOCTL_VIDEO_QUERY_PUBLIC_ACCESS_RANGES = 0x00230460;
-enum uint IOCTL_VIDEO_FREE_PUBLIC_ACCESS_RANGES = 0x00230464;
-enum uint IOCTL_VIDEO_QUERY_COLOR_CAPABILITIES = 0x00230468;
-enum uint IOCTL_VIDEO_SET_POWER_MANAGEMENT = 0x0023046c;
-enum uint IOCTL_VIDEO_GET_POWER_MANAGEMENT = 0x00230470;
-enum uint IOCTL_VIDEO_SHARE_VIDEO_MEMORY = 0x00230474;
-enum uint IOCTL_VIDEO_UNSHARE_VIDEO_MEMORY = 0x00230478;
-enum uint IOCTL_VIDEO_SET_COLOR_LUT_DATA = 0x0023047c;
-
-enum : uint
-{
-    IOCTL_VIDEO_GET_CHILD_STATE                    = 0x00230480,
-    IOCTL_VIDEO_VALIDATE_CHILD_STATE_CONFIGURATION = 0x00230484,
-}
-
-enum uint IOCTL_VIDEO_SET_CHILD_STATE_CONFIGURATION = 0x00230488;
-
-enum : uint
-{
-    IOCTL_VIDEO_SWITCH_DUALVIEW            = 0x0023048c,
-    IOCTL_VIDEO_SET_BANK_POSITION          = 0x00230490,
-    IOCTL_VIDEO_QUERY_SUPPORTED_BRIGHTNESS = 0x00230494,
-    IOCTL_VIDEO_QUERY_DISPLAY_BRIGHTNESS   = 0x00230498,
-}
-
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Power/ioctl-video-set-display-brightness))], [])*/uint IOCTL_VIDEO_SET_DISPLAY_BRIGHTNESS = 0x0023049c;
-
-enum : uint
-{
-    IOCTL_FSVIDEO_COPY_FRAME_BUFFER     = 0x00340800,
-    IOCTL_FSVIDEO_WRITE_TO_FRAME_BUFFER = 0x00340804,
-}
-
-enum uint IOCTL_FSVIDEO_REVERSE_MOUSE_POINTER = 0x00340808;
-
-enum : uint
-{
-    IOCTL_FSVIDEO_SET_CURRENT_MODE       = 0x0034080c,
-    IOCTL_FSVIDEO_SET_SCREEN_INFORMATION = 0x00340810,
-    IOCTL_FSVIDEO_SET_CURSOR_POSITION    = 0x00340814,
+    IOCTL_VIDEO_SET_CURRENT_MODE      = 0x0023040cU,
+    IOCTL_VIDEO_RESET_DEVICE          = 0x00230410U,
+    IOCTL_VIDEO_LOAD_AND_SET_FONT     = 0x00230414U,
+    IOCTL_VIDEO_SET_PALETTE_REGISTERS = 0x00230418U,
+    IOCTL_VIDEO_SET_COLOR_REGISTERS   = 0x0023041cU,
 }
 
 enum : uint
 {
-    IOCTL_PANEL_QUERY_BRIGHTNESS_CAPS   = 0x00230c00,
-    IOCTL_PANEL_QUERY_BRIGHTNESS_RANGES = 0x00230c04,
+    IOCTL_VIDEO_ENABLE_CURSOR       = 0x00230420U,
+    IOCTL_VIDEO_DISABLE_CURSOR      = 0x00230424U,
+    IOCTL_VIDEO_SET_CURSOR_ATTR     = 0x00230428U,
+    IOCTL_VIDEO_QUERY_CURSOR_ATTR   = 0x0023042cU,
+    IOCTL_VIDEO_SET_CURSOR_POSITION = 0x00230430U,
+}
+
+enum uint IOCTL_VIDEO_QUERY_CURSOR_POSITION = 0x00230434U;
+
+enum : uint
+{
+    IOCTL_VIDEO_ENABLE_POINTER     = 0x00230438U,
+    IOCTL_VIDEO_DISABLE_POINTER    = 0x0023043cU,
+    IOCTL_VIDEO_SET_POINTER_ATTR   = 0x00230440U,
+    IOCTL_VIDEO_QUERY_POINTER_ATTR = 0x00230444U,
+}
+
+enum uint IOCTL_VIDEO_SET_POINTER_POSITION = 0x00230448U;
+
+enum : uint
+{
+    IOCTL_VIDEO_QUERY_POINTER_POSITION     = 0x0023044cU,
+    IOCTL_VIDEO_QUERY_POINTER_CAPABILITIES = 0x00230450U,
+}
+
+enum uint IOCTL_VIDEO_GET_BANK_SELECT_CODE = 0x00230454U;
+
+enum : uint
+{
+    IOCTL_VIDEO_MAP_VIDEO_MEMORY   = 0x00230458U,
+    IOCTL_VIDEO_UNMAP_VIDEO_MEMORY = 0x0023045cU,
+}
+
+enum uint IOCTL_VIDEO_QUERY_PUBLIC_ACCESS_RANGES = 0x00230460U;
+enum uint IOCTL_VIDEO_FREE_PUBLIC_ACCESS_RANGES = 0x00230464U;
+enum uint IOCTL_VIDEO_QUERY_COLOR_CAPABILITIES = 0x00230468U;
+enum uint IOCTL_VIDEO_SET_POWER_MANAGEMENT = 0x0023046cU;
+enum uint IOCTL_VIDEO_GET_POWER_MANAGEMENT = 0x00230470U;
+enum uint IOCTL_VIDEO_SHARE_VIDEO_MEMORY = 0x00230474U;
+enum uint IOCTL_VIDEO_UNSHARE_VIDEO_MEMORY = 0x00230478U;
+enum uint IOCTL_VIDEO_SET_COLOR_LUT_DATA = 0x0023047cU;
+
+enum : uint
+{
+    IOCTL_VIDEO_GET_CHILD_STATE                    = 0x00230480U,
+    IOCTL_VIDEO_VALIDATE_CHILD_STATE_CONFIGURATION = 0x00230484U,
+}
+
+enum uint IOCTL_VIDEO_SET_CHILD_STATE_CONFIGURATION = 0x00230488U;
+
+enum : uint
+{
+    IOCTL_VIDEO_SWITCH_DUALVIEW            = 0x0023048cU,
+    IOCTL_VIDEO_SET_BANK_POSITION          = 0x00230490U,
+    IOCTL_VIDEO_QUERY_SUPPORTED_BRIGHTNESS = 0x00230494U,
+    IOCTL_VIDEO_QUERY_DISPLAY_BRIGHTNESS   = 0x00230498U,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Power/ioctl-video-set-display-brightness))], [])*/uint IOCTL_VIDEO_SET_DISPLAY_BRIGHTNESS = 0x0023049cU;
+
+enum : uint
+{
+    IOCTL_FSVIDEO_COPY_FRAME_BUFFER     = 0x00340800U,
+    IOCTL_FSVIDEO_WRITE_TO_FRAME_BUFFER = 0x00340804U,
+}
+
+enum uint IOCTL_FSVIDEO_REVERSE_MOUSE_POINTER = 0x00340808U;
+
+enum : uint
+{
+    IOCTL_FSVIDEO_SET_CURRENT_MODE       = 0x0034080cU,
+    IOCTL_FSVIDEO_SET_SCREEN_INFORMATION = 0x00340810U,
+    IOCTL_FSVIDEO_SET_CURSOR_POSITION    = 0x00340814U,
 }
 
 enum : uint
 {
-    IOCTL_PANEL_GET_BRIGHTNESS             = 0x00230c08,
-    IOCTL_PANEL_SET_BRIGHTNESS             = 0x00230c0c,
-    IOCTL_PANEL_SET_BRIGHTNESS_STATE       = 0x00230c10,
-    IOCTL_PANEL_SET_BACKLIGHT_OPTIMIZATION = 0x00230c14,
+    IOCTL_PANEL_QUERY_BRIGHTNESS_CAPS   = 0x00230c00U,
+    IOCTL_PANEL_QUERY_BRIGHTNESS_RANGES = 0x00230c04U,
 }
 
 enum : uint
 {
-    IOCTL_PANEL_GET_BACKLIGHT_REDUCTION = 0x00230c18,
-    IOCTL_PANEL_GET_MANUFACTURING_MODE  = 0x00230c1c,
+    IOCTL_PANEL_GET_BRIGHTNESS             = 0x00230c08U,
+    IOCTL_PANEL_SET_BRIGHTNESS             = 0x00230c0cU,
+    IOCTL_PANEL_SET_BRIGHTNESS_STATE       = 0x00230c10U,
+    IOCTL_PANEL_SET_BACKLIGHT_OPTIMIZATION = 0x00230c14U,
 }
 
 enum : uint
 {
-    IOCTL_COLORSPACE_TRANSFORM_QUERY_TARGET_CAPS = 0x00231000,
-    IOCTL_COLORSPACE_TRANSFORM_SET               = 0x00231004,
-}
-
-enum uint IOCTL_SET_ACTIVE_COLOR_PROFILE_NAME = 0x00231008;
-enum uint IOCTL_GET_SCALAR_MULTIPLIER_CAPS = 0x0023100c;
-enum uint IOCTL_SET_SCALAR_MULTIPLIER = 0x00231010;
-
-enum : uint
-{
-    IOCTL_MIPI_DSI_QUERY_CAPS   = 0x00231400,
-    IOCTL_MIPI_DSI_TRANSMISSION = 0x00231404,
-    IOCTL_MIPI_DSI_RESET        = 0x00231408,
+    IOCTL_PANEL_GET_BACKLIGHT_REDUCTION = 0x00230c18U,
+    IOCTL_PANEL_GET_MANUFACTURING_MODE  = 0x00230c1cU,
 }
 
 enum : uint
 {
-    DXGK_WIN32K_PARAM_FLAG_UPDATEREGISTRY = 0x00000001,
-    DXGK_WIN32K_PARAM_FLAG_MODESWITCH     = 0x00000002,
-    DXGK_WIN32K_PARAM_FLAG_DISABLEVIEW    = 0x00000004,
+    IOCTL_COLORSPACE_TRANSFORM_QUERY_TARGET_CAPS = 0x00231000U,
+    IOCTL_COLORSPACE_TRANSFORM_SET               = 0x00231004U,
+}
+
+enum uint IOCTL_SET_ACTIVE_COLOR_PROFILE_NAME = 0x00231008U;
+enum uint IOCTL_GET_SCALAR_MULTIPLIER_CAPS = 0x0023100cU;
+enum uint IOCTL_SET_SCALAR_MULTIPLIER = 0x00231010U;
+
+enum : uint
+{
+    IOCTL_MIPI_DSI_QUERY_CAPS   = 0x00231400U,
+    IOCTL_MIPI_DSI_TRANSMISSION = 0x00231404U,
+    IOCTL_MIPI_DSI_RESET        = 0x00231408U,
 }
 
 enum : uint
 {
-    VIDEO_DUALVIEW_REMOVABLE = 0x00000001,
-    VIDEO_DUALVIEW_PRIMARY   = 0x80000000,
-    VIDEO_DUALVIEW_SECONDARY = 0x40000000,
-    VIDEO_DUALVIEW_WDDM_VGA  = 0x20000000,
+    DXGK_WIN32K_PARAM_FLAG_UPDATEREGISTRY = 0x00000001U,
+    DXGK_WIN32K_PARAM_FLAG_MODESWITCH     = 0x00000002U,
+    DXGK_WIN32K_PARAM_FLAG_DISABLEVIEW    = 0x00000004U,
 }
 
 enum : uint
 {
-    VIDEO_STATE_NON_STANDARD_VGA     = 0x00000001,
-    VIDEO_STATE_UNEMULATED_VGA_STATE = 0x00000002,
-}
-
-enum uint VIDEO_STATE_PACKED_CHAIN4_MODE = 0x00000004;
-
-enum : uint
-{
-    VIDEO_MODE_NO_ZERO_MEMORY   = 0x80000000,
-    VIDEO_MODE_MAP_MEM_LINEAR   = 0x40000000,
-    VIDEO_MODE_COLOR            = 0x00000001,
-    VIDEO_MODE_GRAPHICS         = 0x00000002,
-    VIDEO_MODE_PALETTE_DRIVEN   = 0x00000004,
-    VIDEO_MODE_MANAGED_PALETTE  = 0x00000008,
-    VIDEO_MODE_INTERLACED       = 0x00000010,
-    VIDEO_MODE_NO_OFF_SCREEN    = 0x00000020,
-    VIDEO_MODE_NO_64_BIT_ACCESS = 0x00000040,
-    VIDEO_MODE_BANKED           = 0x00000080,
-    VIDEO_MODE_LINEAR           = 0x00000100,
-    VIDEO_MODE_ASYNC_POINTER    = 0x00000001,
-    VIDEO_MODE_MONO_POINTER     = 0x00000002,
-    VIDEO_MODE_COLOR_POINTER    = 0x00000004,
-    VIDEO_MODE_ANIMATE_START    = 0x00000008,
-    VIDEO_MODE_ANIMATE_UPDATE   = 0x00000010,
-}
-
-enum uint PLANAR_HC = 0x00000001;
-enum uint VIDEO_DEVICE_COLOR = 0x00000001;
-enum uint VIDEO_OPTIONAL_GAMMET_TABLE = 0x00000002;
-
-enum : uint
-{
-    VIDEO_COLOR_LUT_DATA_FORMAT_RGB256WORDS   = 0x00000001,
-    VIDEO_COLOR_LUT_DATA_FORMAT_PRIVATEFORMAT = 0x80000000,
+    VIDEO_DUALVIEW_REMOVABLE = 0x00000001U,
+    VIDEO_DUALVIEW_PRIMARY   = 0x80000000U,
+    VIDEO_DUALVIEW_SECONDARY = 0x40000000U,
+    VIDEO_DUALVIEW_WDDM_VGA  = 0x20000000U,
 }
 
 enum : uint
 {
-    DISPLAYPOLICY_AC = 0x00000001,
-    DISPLAYPOLICY_DC = 0x00000002,
+    VIDEO_STATE_NON_STANDARD_VGA     = 0x00000001U,
+    VIDEO_STATE_UNEMULATED_VGA_STATE = 0x00000002U,
+}
+
+enum uint VIDEO_STATE_PACKED_CHAIN4_MODE = 0x00000004U;
+
+enum : uint
+{
+    VIDEO_MODE_NO_ZERO_MEMORY   = 0x80000000U,
+    VIDEO_MODE_MAP_MEM_LINEAR   = 0x40000000U,
+    VIDEO_MODE_COLOR            = 0x00000001U,
+    VIDEO_MODE_GRAPHICS         = 0x00000002U,
+    VIDEO_MODE_PALETTE_DRIVEN   = 0x00000004U,
+    VIDEO_MODE_MANAGED_PALETTE  = 0x00000008U,
+    VIDEO_MODE_INTERLACED       = 0x00000010U,
+    VIDEO_MODE_NO_OFF_SCREEN    = 0x00000020U,
+    VIDEO_MODE_NO_64_BIT_ACCESS = 0x00000040U,
+    VIDEO_MODE_BANKED           = 0x00000080U,
+    VIDEO_MODE_LINEAR           = 0x00000100U,
+    VIDEO_MODE_ASYNC_POINTER    = 0x00000001U,
+    VIDEO_MODE_MONO_POINTER     = 0x00000002U,
+    VIDEO_MODE_COLOR_POINTER    = 0x00000004U,
+    VIDEO_MODE_ANIMATE_START    = 0x00000008U,
+    VIDEO_MODE_ANIMATE_UPDATE   = 0x00000010U,
+}
+
+enum uint PLANAR_HC = 0x00000001U;
+enum uint VIDEO_DEVICE_COLOR = 0x00000001U;
+enum uint VIDEO_OPTIONAL_GAMMET_TABLE = 0x00000002U;
+
+enum : uint
+{
+    VIDEO_COLOR_LUT_DATA_FORMAT_RGB256WORDS   = 0x00000001U,
+    VIDEO_COLOR_LUT_DATA_FORMAT_PRIVATEFORMAT = 0x80000000U,
 }
 
 enum : uint
 {
-    BITMAP_BITS_BYTE_ALIGN = 0x00000008,
-    BITMAP_BITS_WORD_ALIGN = 0x00000010,
+    DISPLAYPOLICY_AC = 0x00000001U,
+    DISPLAYPOLICY_DC = 0x00000002U,
 }
 
 enum : uint
 {
-    BITMAP_ARRAY_BYTE = 0x00000003,
-    BITMAP_PLANES     = 0x00000001,
-    BITMAP_BITS_PIXEL = 0x00000001,
+    BITMAP_BITS_BYTE_ALIGN = 0x00000008U,
+    BITMAP_BITS_WORD_ALIGN = 0x00000010U,
+}
+
+enum : uint
+{
+    BITMAP_ARRAY_BYTE = 0x00000003U,
+    BITMAP_PLANES     = 0x00000001U,
+    BITMAP_BITS_PIXEL = 0x00000001U,
 }
 
 enum const(wchar)* DD_FULLSCREEN_VIDEO_DEVICE_NAME = "\\Device\\FSVideo";
 
 enum : uint
 {
-    VIDEO_REASON_NONE            = 0x00000000,
-    VIDEO_REASON_POLICY1         = 0x00000001,
-    VIDEO_REASON_POLICY2         = 0x00000002,
-    VIDEO_REASON_POLICY3         = 0x00000003,
-    VIDEO_REASON_POLICY4         = 0x00000004,
-    VIDEO_REASON_LOCK            = 0x00000005,
-    VIDEO_REASON_FAILED_ROTATION = 0x00000005,
-    VIDEO_REASON_ALLOCATION      = 0x00000006,
-    VIDEO_REASON_SCRATCH         = 0x00000008,
-    VIDEO_REASON_CONFIGURATION   = 0x00000009,
+    VIDEO_REASON_NONE            = 0x00000000U,
+    VIDEO_REASON_POLICY1         = 0x00000001U,
+    VIDEO_REASON_POLICY2         = 0x00000002U,
+    VIDEO_REASON_POLICY3         = 0x00000003U,
+    VIDEO_REASON_POLICY4         = 0x00000004U,
+    VIDEO_REASON_LOCK            = 0x00000005U,
+    VIDEO_REASON_FAILED_ROTATION = 0x00000005U,
+    VIDEO_REASON_ALLOCATION      = 0x00000006U,
+    VIDEO_REASON_SCRATCH         = 0x00000008U,
+    VIDEO_REASON_CONFIGURATION   = 0x00000009U,
 }
 
-enum uint VIDEO_MAX_REASON = 0x00000009;
+enum uint VIDEO_MAX_REASON = 0x00000009U;
 
 enum : uint
 {
-    BRIGHTNESS_MAX_LEVEL_COUNT     = 0x00000067,
-    BRIGHTNESS_MAX_NIT_RANGE_COUNT = 0x00000010,
+    BRIGHTNESS_MAX_LEVEL_COUNT     = 0x00000067U,
+    BRIGHTNESS_MAX_NIT_RANGE_COUNT = 0x00000010U,
 }
 
-enum uint DSI_PACKET_EMBEDDED_PAYLOAD_SIZE = 0x00000008;
-enum uint MAX_PACKET_COUNT = 0x00000080;
-enum uint DSI_INVALID_PACKET_INDEX = 0x000000ff;
+enum uint DSI_PACKET_EMBEDDED_PAYLOAD_SIZE = 0x00000008U;
+enum uint MAX_PACKET_COUNT = 0x00000080U;
+enum uint DSI_INVALID_PACKET_INDEX = 0x000000ffU;
 
 enum : uint
 {
-    DSI_SOT_ERROR      = 0x00000001,
-    DSI_SOT_SYNC_ERROR = 0x00000002,
+    DSI_SOT_ERROR      = 0x00000001U,
+    DSI_SOT_SYNC_ERROR = 0x00000002U,
 }
 
-enum uint DSI_EOT_SYNC_ERROR = 0x00000004;
-enum uint DSI_ESCAPE_MODE_ENTRY_COMMAND_ERROR = 0x00000008;
-enum uint DSI_LOW_POWER_TRANSMIT_SYNC_ERROR = 0x00000010;
-enum uint DSI_PERIPHERAL_TIMEOUT_ERROR = 0x00000020;
-enum uint DSI_FALSE_CONTROL_ERROR = 0x00000040;
-enum uint DSI_CONTENTION_DETECTED = 0x00000080;
+enum uint DSI_EOT_SYNC_ERROR = 0x00000004U;
+enum uint DSI_ESCAPE_MODE_ENTRY_COMMAND_ERROR = 0x00000008U;
+enum uint DSI_LOW_POWER_TRANSMIT_SYNC_ERROR = 0x00000010U;
+enum uint DSI_PERIPHERAL_TIMEOUT_ERROR = 0x00000020U;
+enum uint DSI_FALSE_CONTROL_ERROR = 0x00000040U;
+enum uint DSI_CONTENTION_DETECTED = 0x00000080U;
 
 enum : uint
 {
-    DSI_CHECKSUM_ERROR_CORRECTED     = 0x00000100,
-    DSI_CHECKSUM_ERROR_NOT_CORRECTED = 0x00000200,
+    DSI_CHECKSUM_ERROR_CORRECTED     = 0x00000100U,
+    DSI_CHECKSUM_ERROR_NOT_CORRECTED = 0x00000200U,
 }
 
-enum uint DSI_LONG_PACKET_PAYLOAD_CHECKSUM_ERROR = 0x00000400;
-enum uint DSI_DSI_DATA_TYPE_NOT_RECOGNIZED = 0x00000800;
-enum uint DSI_DSI_VC_ID_INVALID = 0x00001000;
-enum uint DSI_INVALID_TRANSMISSION_LENGTH = 0x00002000;
-enum uint DSI_DSI_PROTOCOL_VIOLATION = 0x00008000;
-enum uint HOST_DSI_DEVICE_NOT_READY = 0x00000001;
-enum uint HOST_DSI_INTERFACE_RESET = 0x00000002;
+enum uint DSI_LONG_PACKET_PAYLOAD_CHECKSUM_ERROR = 0x00000400U;
+enum uint DSI_DSI_DATA_TYPE_NOT_RECOGNIZED = 0x00000800U;
+enum uint DSI_DSI_VC_ID_INVALID = 0x00001000U;
+enum uint DSI_INVALID_TRANSMISSION_LENGTH = 0x00002000U;
+enum uint DSI_DSI_PROTOCOL_VIOLATION = 0x00008000U;
+enum uint HOST_DSI_DEVICE_NOT_READY = 0x00000001U;
+enum uint HOST_DSI_INTERFACE_RESET = 0x00000002U;
 
 enum : uint
 {
-    HOST_DSI_DEVICE_RESET           = 0x00000004,
-    HOST_DSI_TRANSMISSION_CANCELLED = 0x00000010,
-    HOST_DSI_TRANSMISSION_DROPPED   = 0x00000020,
-    HOST_DSI_TRANSMISSION_TIMEOUT   = 0x00000040,
+    HOST_DSI_DEVICE_RESET           = 0x00000004U,
+    HOST_DSI_TRANSMISSION_CANCELLED = 0x00000010U,
+    HOST_DSI_TRANSMISSION_DROPPED   = 0x00000020U,
+    HOST_DSI_TRANSMISSION_TIMEOUT   = 0x00000040U,
 }
 
-enum uint HOST_DSI_INVALID_TRANSMISSION = 0x00000100;
-enum uint HOST_DSI_OS_REJECTED_PACKET = 0x00000200;
-enum uint HOST_DSI_DRIVER_REJECTED_PACKET = 0x00000400;
-enum uint HOST_DSI_BAD_TRANSMISSION_MODE = 0x00001000;
+enum uint HOST_DSI_INVALID_TRANSMISSION = 0x00000100U;
+enum uint HOST_DSI_OS_REJECTED_PACKET = 0x00000200U;
+enum uint HOST_DSI_DRIVER_REJECTED_PACKET = 0x00000400U;
+enum uint HOST_DSI_BAD_TRANSMISSION_MODE = 0x00001000U;
 
 enum : GUID
 {
@@ -735,119 +770,119 @@ enum : GUID
     GUID_MONITOR_OVERRIDE_TEST_SPECIALIZED   = GUID("0457e531-3cb9-4a07-83c1-a79146c64db3"),
 }
 
-enum uint FD_ERROR = 0xffffffff;
-enum uint DDI_ERROR = 0xffffffff;
+enum uint FD_ERROR = 0xffffffffU;
+enum uint DDI_ERROR = 0xffffffffU;
 
 enum : uint
 {
-    FDM_TYPE_BM_SIDE_CONST        = 0x00000001,
-    FDM_TYPE_MAXEXT_EQUAL_BM_SIDE = 0x00000002,
+    FDM_TYPE_BM_SIDE_CONST        = 0x00000001U,
+    FDM_TYPE_MAXEXT_EQUAL_BM_SIDE = 0x00000002U,
 }
 
-enum uint FDM_TYPE_CHAR_INC_EQUAL_BM_BASE = 0x00000004;
+enum uint FDM_TYPE_CHAR_INC_EQUAL_BM_BASE = 0x00000004U;
 
 enum : uint
 {
-    FDM_TYPE_ZERO_BEARINGS  = 0x00000008,
-    FDM_TYPE_CONST_BEARINGS = 0x00000010,
+    FDM_TYPE_ZERO_BEARINGS  = 0x00000008U,
+    FDM_TYPE_CONST_BEARINGS = 0x00000010U,
 }
 
-enum uint GS_UNICODE_HANDLES = 0x00000001;
-enum uint GS_8BIT_HANDLES = 0x00000002;
-enum uint GS_16BIT_HANDLES = 0x00000004;
-enum uint FM_VERSION_NUMBER = 0x00000000;
-enum uint FM_TYPE_LICENSED = 0x00000002;
-enum uint FM_READONLY_EMBED = 0x00000004;
-enum uint FM_EDITABLE_EMBED = 0x00000008;
-enum uint FM_NO_EMBEDDING = 0x00000002;
+enum uint GS_UNICODE_HANDLES = 0x00000001U;
+enum uint GS_8BIT_HANDLES = 0x00000002U;
+enum uint GS_16BIT_HANDLES = 0x00000004U;
+enum uint FM_VERSION_NUMBER = 0x00000000U;
+enum uint FM_TYPE_LICENSED = 0x00000002U;
+enum uint FM_READONLY_EMBED = 0x00000004U;
+enum uint FM_EDITABLE_EMBED = 0x00000008U;
+enum uint FM_NO_EMBEDDING = 0x00000002U;
 
 enum : uint
 {
-    FM_INFO_TECH_TRUETYPE             = 0x00000001,
-    FM_INFO_TECH_BITMAP               = 0x00000002,
-    FM_INFO_TECH_STROKE               = 0x00000004,
-    FM_INFO_TECH_OUTLINE_NOT_TRUETYPE = 0x00000008,
-}
-
-enum : uint
-{
-    FM_INFO_ARB_XFORMS    = 0x00000010,
-    FM_INFO_1BPP          = 0x00000020,
-    FM_INFO_4BPP          = 0x00000040,
-    FM_INFO_8BPP          = 0x00000080,
-    FM_INFO_16BPP         = 0x00000100,
-    FM_INFO_24BPP         = 0x00000200,
-    FM_INFO_32BPP         = 0x00000400,
-    FM_INFO_INTEGER_WIDTH = 0x00000800,
-}
-
-enum uint FM_INFO_CONSTANT_WIDTH = 0x00001000;
-enum uint FM_INFO_NOT_CONTIGUOUS = 0x00002000;
-
-enum : uint
-{
-    FM_INFO_TECH_MM          = 0x00004000,
-    FM_INFO_RETURNS_OUTLINES = 0x00008000,
-    FM_INFO_RETURNS_STROKES  = 0x00010000,
-    FM_INFO_RETURNS_BITMAPS  = 0x00020000,
+    FM_INFO_TECH_TRUETYPE             = 0x00000001U,
+    FM_INFO_TECH_BITMAP               = 0x00000002U,
+    FM_INFO_TECH_STROKE               = 0x00000004U,
+    FM_INFO_TECH_OUTLINE_NOT_TRUETYPE = 0x00000008U,
 }
 
 enum : uint
 {
-    FM_INFO_DSIG         = 0x00040000,
-    FM_INFO_RIGHT_HANDED = 0x00080000,
+    FM_INFO_ARB_XFORMS    = 0x00000010U,
+    FM_INFO_1BPP          = 0x00000020U,
+    FM_INFO_4BPP          = 0x00000040U,
+    FM_INFO_8BPP          = 0x00000080U,
+    FM_INFO_16BPP         = 0x00000100U,
+    FM_INFO_24BPP         = 0x00000200U,
+    FM_INFO_32BPP         = 0x00000400U,
+    FM_INFO_INTEGER_WIDTH = 0x00000800U,
 }
 
-enum uint FM_INFO_INTEGRAL_SCALING = 0x00100000;
-enum uint FM_INFO_90DEGREE_ROTATIONS = 0x00200000;
-enum uint FM_INFO_OPTICALLY_FIXED_PITCH = 0x00400000;
-enum uint FM_INFO_DO_NOT_ENUMERATE = 0x00800000;
-enum uint FM_INFO_ISOTROPIC_SCALING_ONLY = 0x01000000;
-enum uint FM_INFO_ANISOTROPIC_SCALING_ONLY = 0x02000000;
+enum uint FM_INFO_CONSTANT_WIDTH = 0x00001000U;
+enum uint FM_INFO_NOT_CONTIGUOUS = 0x00002000U;
 
 enum : uint
 {
-    FM_INFO_TECH_CFF     = 0x04000000,
-    FM_INFO_FAMILY_EQUIV = 0x08000000,
-}
-
-enum uint FM_INFO_DBCS_FIXED_PITCH = 0x10000000;
-enum uint FM_INFO_NONNEGATIVE_AC = 0x20000000;
-enum uint FM_INFO_IGNORE_TC_RA_ABLE = 0x40000000;
-enum uint FM_INFO_TECH_TYPE1 = 0x80000000;
-enum uint MAXCHARSETS = 0x00000010;
-enum uint FM_PANOSE_CULTURE_LATIN = 0x00000000;
-
-enum : uint
-{
-    FM_SEL_ITALIC           = 0x00000001,
-    FM_SEL_UNDERSCORE       = 0x00000002,
-    FM_SEL_NEGATIVE         = 0x00000004,
-    FM_SEL_OUTLINED         = 0x00000008,
-    FM_SEL_STRIKEOUT        = 0x00000010,
-    FM_SEL_BOLD             = 0x00000020,
-    FM_SEL_REGULAR          = 0x00000040,
-    FM_SEL_USE_TYPO_METRICS = 0x00000080,
+    FM_INFO_TECH_MM          = 0x00004000U,
+    FM_INFO_RETURNS_OUTLINES = 0x00008000U,
+    FM_INFO_RETURNS_STROKES  = 0x00010000U,
+    FM_INFO_RETURNS_BITMAPS  = 0x00020000U,
 }
 
 enum : uint
 {
-    OPENGL_CMD     = 0x00001100,
-    OPENGL_GETINFO = 0x00001101,
+    FM_INFO_DSIG         = 0x00040000U,
+    FM_INFO_RIGHT_HANDED = 0x00080000U,
 }
 
-enum uint WNDOBJ_SETUP = 0x00001102;
+enum uint FM_INFO_INTEGRAL_SCALING = 0x00100000U;
+enum uint FM_INFO_90DEGREE_ROTATIONS = 0x00200000U;
+enum uint FM_INFO_OPTICALLY_FIXED_PITCH = 0x00400000U;
+enum uint FM_INFO_DO_NOT_ENUMERATE = 0x00800000U;
+enum uint FM_INFO_ISOTROPIC_SCALING_ONLY = 0x01000000U;
+enum uint FM_INFO_ANISOTROPIC_SCALING_ONLY = 0x02000000U;
 
 enum : uint
 {
-    DDI_DRIVER_VERSION_NT4        = 0x00020000,
-    DDI_DRIVER_VERSION_SP3        = 0x00020003,
-    DDI_DRIVER_VERSION_NT5        = 0x00030000,
-    DDI_DRIVER_VERSION_NT5_01     = 0x00030100,
-    DDI_DRIVER_VERSION_NT5_01_SP1 = 0x00030101,
+    FM_INFO_TECH_CFF     = 0x04000000U,
+    FM_INFO_FAMILY_EQUIV = 0x08000000U,
 }
 
-enum uint GDI_DRIVER_VERSION = 0x00004000;
+enum uint FM_INFO_DBCS_FIXED_PITCH = 0x10000000U;
+enum uint FM_INFO_NONNEGATIVE_AC = 0x20000000U;
+enum uint FM_INFO_IGNORE_TC_RA_ABLE = 0x40000000U;
+enum uint FM_INFO_TECH_TYPE1 = 0x80000000U;
+enum uint MAXCHARSETS = 0x00000010U;
+enum uint FM_PANOSE_CULTURE_LATIN = 0x00000000U;
+
+enum : uint
+{
+    FM_SEL_ITALIC           = 0x00000001U,
+    FM_SEL_UNDERSCORE       = 0x00000002U,
+    FM_SEL_NEGATIVE         = 0x00000004U,
+    FM_SEL_OUTLINED         = 0x00000008U,
+    FM_SEL_STRIKEOUT        = 0x00000010U,
+    FM_SEL_BOLD             = 0x00000020U,
+    FM_SEL_REGULAR          = 0x00000040U,
+    FM_SEL_USE_TYPO_METRICS = 0x00000080U,
+}
+
+enum : uint
+{
+    OPENGL_CMD     = 0x00001100U,
+    OPENGL_GETINFO = 0x00001101U,
+}
+
+enum uint WNDOBJ_SETUP = 0x00001102U;
+
+enum : uint
+{
+    DDI_DRIVER_VERSION_NT4        = 0x00020000U,
+    DDI_DRIVER_VERSION_SP3        = 0x00020003U,
+    DDI_DRIVER_VERSION_NT5        = 0x00030000U,
+    DDI_DRIVER_VERSION_NT5_01     = 0x00030100U,
+    DDI_DRIVER_VERSION_NT5_01_SP1 = 0x00030101U,
+}
+
+enum uint GDI_DRIVER_VERSION = 0x00004000U;
 
 enum : int
 {
@@ -1023,110 +1058,110 @@ enum int INDEX_LAST = 0x00000059;
 
 enum : uint
 {
-    GCAPS_BEZIERS       = 0x00000001,
-    GCAPS_GEOMETRICWIDE = 0x00000002,
+    GCAPS_BEZIERS       = 0x00000001U,
+    GCAPS_GEOMETRICWIDE = 0x00000002U,
 }
 
-enum uint GCAPS_ALTERNATEFILL = 0x00000004;
-enum uint GCAPS_WINDINGFILL = 0x00000008;
+enum uint GCAPS_ALTERNATEFILL = 0x00000004U;
+enum uint GCAPS_WINDINGFILL = 0x00000008U;
 
 enum : uint
 {
-    GCAPS_HALFTONE     = 0x00000010,
-    GCAPS_COLOR_DITHER = 0x00000020,
+    GCAPS_HALFTONE     = 0x00000010U,
+    GCAPS_COLOR_DITHER = 0x00000020U,
 }
 
-enum uint GCAPS_HORIZSTRIKE = 0x00000040;
-enum uint GCAPS_VERTSTRIKE = 0x00000080;
-enum uint GCAPS_OPAQUERECT = 0x00000100;
-enum uint GCAPS_VECTORFONT = 0x00000200;
-enum uint GCAPS_MONO_DITHER = 0x00000400;
+enum uint GCAPS_HORIZSTRIKE = 0x00000040U;
+enum uint GCAPS_VERTSTRIKE = 0x00000080U;
+enum uint GCAPS_OPAQUERECT = 0x00000100U;
+enum uint GCAPS_VECTORFONT = 0x00000200U;
+enum uint GCAPS_MONO_DITHER = 0x00000400U;
 
 enum : uint
 {
-    GCAPS_ASYNCCHANGE = 0x00000800,
-    GCAPS_ASYNCMOVE   = 0x00001000,
-}
-
-enum : uint
-{
-    GCAPS_DONTJOURNAL = 0x00002000,
-    GCAPS_DIRECTDRAW  = 0x00004000,
-}
-
-enum uint GCAPS_ARBRUSHOPAQUE = 0x00008000;
-
-enum : uint
-{
-    GCAPS_PANNING     = 0x00010000,
-    GCAPS_HIGHRESTEXT = 0x00040000,
-}
-
-enum uint GCAPS_PALMANAGED = 0x00080000;
-enum uint GCAPS_DITHERONREALIZE = 0x00200000;
-enum uint GCAPS_NO64BITMEMACCESS = 0x00400000;
-enum uint GCAPS_FORCEDITHER = 0x00800000;
-
-enum : uint
-{
-    GCAPS_GRAY16    = 0x01000000,
-    GCAPS_ICM       = 0x02000000,
-    GCAPS_CMYKCOLOR = 0x04000000,
+    GCAPS_ASYNCCHANGE = 0x00000800U,
+    GCAPS_ASYNCMOVE   = 0x00001000U,
 }
 
 enum : uint
 {
-    GCAPS_LAYERED     = 0x08000000,
-    GCAPS_ARBRUSHTEXT = 0x10000000,
+    GCAPS_DONTJOURNAL = 0x00002000U,
+    GCAPS_DIRECTDRAW  = 0x00004000U,
 }
 
-enum uint GCAPS_SCREENPRECISION = 0x20000000;
-enum uint GCAPS_FONT_RASTERIZER = 0x40000000;
+enum uint GCAPS_ARBRUSHOPAQUE = 0x00008000U;
 
 enum : uint
 {
-    GCAPS_NUP              = 0x80000000,
-    GCAPS2_JPEGSRC         = 0x00000001,
-    GCAPS2_xxxx            = 0x00000002,
-    GCAPS2_PNGSRC          = 0x00000008,
-    GCAPS2_CHANGEGAMMARAMP = 0x00000010,
+    GCAPS_PANNING     = 0x00010000U,
+    GCAPS_HIGHRESTEXT = 0x00040000U,
 }
 
-enum uint GCAPS2_ALPHACURSOR = 0x00000020;
+enum uint GCAPS_PALMANAGED = 0x00080000U;
+enum uint GCAPS_DITHERONREALIZE = 0x00200000U;
+enum uint GCAPS_NO64BITMEMACCESS = 0x00400000U;
+enum uint GCAPS_FORCEDITHER = 0x00800000U;
 
 enum : uint
 {
-    GCAPS2_SYNCFLUSH    = 0x00000040,
-    GCAPS2_SYNCTIMER    = 0x00000080,
-    GCAPS2_ICD_MULTIMON = 0x00000100,
+    GCAPS_GRAY16    = 0x01000000U,
+    GCAPS_ICM       = 0x02000000U,
+    GCAPS_CMYKCOLOR = 0x04000000U,
 }
-
-enum uint GCAPS2_MOUSETRAILS = 0x00000200;
 
 enum : uint
 {
-    GCAPS2_RESERVED1    = 0x00000400,
-    GCAPS2_REMOTEDRIVER = 0x00000400,
+    GCAPS_LAYERED     = 0x08000000U,
+    GCAPS_ARBRUSHTEXT = 0x10000000U,
 }
 
-enum uint GCAPS2_EXCLUDELAYERED = 0x00000800;
-enum uint GCAPS2_INCLUDEAPIBITMAPS = 0x00001000;
-enum uint GCAPS2_SHOWHIDDENPOINTER = 0x00002000;
+enum uint GCAPS_SCREENPRECISION = 0x20000000U;
+enum uint GCAPS_FONT_RASTERIZER = 0x40000000U;
 
 enum : uint
 {
-    GCAPS2_CLEARTYPE     = 0x00004000,
-    GCAPS2_ACC_DRIVER    = 0x00008000,
-    GCAPS2_BITMAPEXREUSE = 0x00010000,
+    GCAPS_NUP              = 0x80000000U,
+    GCAPS2_JPEGSRC         = 0x00000001U,
+    GCAPS2_xxxx            = 0x00000002U,
+    GCAPS2_PNGSRC          = 0x00000008U,
+    GCAPS2_CHANGEGAMMARAMP = 0x00000010U,
 }
 
-enum uint LA_GEOMETRIC = 0x00000001;
-enum uint LA_ALTERNATE = 0x00000002;
+enum uint GCAPS2_ALPHACURSOR = 0x00000020U;
 
 enum : uint
 {
-    LA_STARTGAP = 0x00000004,
-    LA_STYLED   = 0x00000008,
+    GCAPS2_SYNCFLUSH    = 0x00000040U,
+    GCAPS2_SYNCTIMER    = 0x00000080U,
+    GCAPS2_ICD_MULTIMON = 0x00000100U,
+}
+
+enum uint GCAPS2_MOUSETRAILS = 0x00000200U;
+
+enum : uint
+{
+    GCAPS2_RESERVED1    = 0x00000400U,
+    GCAPS2_REMOTEDRIVER = 0x00000400U,
+}
+
+enum uint GCAPS2_EXCLUDELAYERED = 0x00000800U;
+enum uint GCAPS2_INCLUDEAPIBITMAPS = 0x00001000U;
+enum uint GCAPS2_SHOWHIDDENPOINTER = 0x00002000U;
+
+enum : uint
+{
+    GCAPS2_CLEARTYPE     = 0x00004000U,
+    GCAPS2_ACC_DRIVER    = 0x00008000U,
+    GCAPS2_BITMAPEXREUSE = 0x00010000U,
+}
+
+enum uint LA_GEOMETRIC = 0x00000001U;
+enum uint LA_ALTERNATE = 0x00000002U;
+
+enum : uint
+{
+    LA_STARTGAP = 0x00000004U,
+    LA_STYLED   = 0x00000008U,
 }
 
 enum : int
@@ -1145,163 +1180,163 @@ enum : int
 
 enum : uint
 {
-    PRIMARY_ORDER_ABC = 0x00000000,
-    PRIMARY_ORDER_ACB = 0x00000001,
-    PRIMARY_ORDER_BAC = 0x00000002,
-    PRIMARY_ORDER_BCA = 0x00000003,
-    PRIMARY_ORDER_CBA = 0x00000004,
-    PRIMARY_ORDER_CAB = 0x00000005,
+    PRIMARY_ORDER_ABC = 0x00000000U,
+    PRIMARY_ORDER_ACB = 0x00000001U,
+    PRIMARY_ORDER_BAC = 0x00000002U,
+    PRIMARY_ORDER_BCA = 0x00000003U,
+    PRIMARY_ORDER_CBA = 0x00000004U,
+    PRIMARY_ORDER_CAB = 0x00000005U,
 }
 
 enum : uint
 {
-    HT_PATSIZE_2x2         = 0x00000000,
-    HT_PATSIZE_2x2_M       = 0x00000001,
-    HT_PATSIZE_4x4         = 0x00000002,
-    HT_PATSIZE_4x4_M       = 0x00000003,
-    HT_PATSIZE_6x6         = 0x00000004,
-    HT_PATSIZE_6x6_M       = 0x00000005,
-    HT_PATSIZE_8x8         = 0x00000006,
-    HT_PATSIZE_8x8_M       = 0x00000007,
-    HT_PATSIZE_10x10       = 0x00000008,
-    HT_PATSIZE_10x10_M     = 0x00000009,
-    HT_PATSIZE_12x12       = 0x0000000a,
-    HT_PATSIZE_12x12_M     = 0x0000000b,
-    HT_PATSIZE_14x14       = 0x0000000c,
-    HT_PATSIZE_14x14_M     = 0x0000000d,
-    HT_PATSIZE_16x16       = 0x0000000e,
-    HT_PATSIZE_16x16_M     = 0x0000000f,
-    HT_PATSIZE_SUPERCELL   = 0x00000010,
-    HT_PATSIZE_SUPERCELL_M = 0x00000011,
-    HT_PATSIZE_USER        = 0x00000012,
-    HT_PATSIZE_MAX_INDEX   = 0x00000012,
-    HT_PATSIZE_DEFAULT     = 0x00000011,
+    HT_PATSIZE_2x2         = 0x00000000U,
+    HT_PATSIZE_2x2_M       = 0x00000001U,
+    HT_PATSIZE_4x4         = 0x00000002U,
+    HT_PATSIZE_4x4_M       = 0x00000003U,
+    HT_PATSIZE_6x6         = 0x00000004U,
+    HT_PATSIZE_6x6_M       = 0x00000005U,
+    HT_PATSIZE_8x8         = 0x00000006U,
+    HT_PATSIZE_8x8_M       = 0x00000007U,
+    HT_PATSIZE_10x10       = 0x00000008U,
+    HT_PATSIZE_10x10_M     = 0x00000009U,
+    HT_PATSIZE_12x12       = 0x0000000aU,
+    HT_PATSIZE_12x12_M     = 0x0000000bU,
+    HT_PATSIZE_14x14       = 0x0000000cU,
+    HT_PATSIZE_14x14_M     = 0x0000000dU,
+    HT_PATSIZE_16x16       = 0x0000000eU,
+    HT_PATSIZE_16x16_M     = 0x0000000fU,
+    HT_PATSIZE_SUPERCELL   = 0x00000010U,
+    HT_PATSIZE_SUPERCELL_M = 0x00000011U,
+    HT_PATSIZE_USER        = 0x00000012U,
+    HT_PATSIZE_MAX_INDEX   = 0x00000012U,
+    HT_PATSIZE_DEFAULT     = 0x00000011U,
 }
 
 enum : uint
 {
-    HT_USERPAT_CX_MIN = 0x00000004,
-    HT_USERPAT_CX_MAX = 0x00000100,
-    HT_USERPAT_CY_MIN = 0x00000004,
-    HT_USERPAT_CY_MAX = 0x00000100,
+    HT_USERPAT_CX_MIN = 0x00000004U,
+    HT_USERPAT_CX_MAX = 0x00000100U,
+    HT_USERPAT_CY_MIN = 0x00000004U,
+    HT_USERPAT_CY_MAX = 0x00000100U,
 }
 
 enum : uint
 {
-    HT_FORMAT_1BPP      = 0x00000000,
-    HT_FORMAT_4BPP      = 0x00000002,
-    HT_FORMAT_4BPP_IRGB = 0x00000003,
-    HT_FORMAT_8BPP      = 0x00000004,
-    HT_FORMAT_16BPP     = 0x00000005,
-    HT_FORMAT_24BPP     = 0x00000006,
-    HT_FORMAT_32BPP     = 0x00000007,
+    HT_FORMAT_1BPP      = 0x00000000U,
+    HT_FORMAT_4BPP      = 0x00000002U,
+    HT_FORMAT_4BPP_IRGB = 0x00000003U,
+    HT_FORMAT_8BPP      = 0x00000004U,
+    HT_FORMAT_16BPP     = 0x00000005U,
+    HT_FORMAT_24BPP     = 0x00000006U,
+    HT_FORMAT_32BPP     = 0x00000007U,
 }
 
-enum uint WINDDI_MAX_BROADCAST_CONTEXT = 0x00000040;
-enum uint HT_FLAG_SQUARE_DEVICE_PEL = 0x00000001;
-enum uint HT_FLAG_HAS_BLACK_DYE = 0x00000002;
-enum uint HT_FLAG_ADDITIVE_PRIMS = 0x00000004;
-enum uint HT_FLAG_USE_8BPP_BITMASK = 0x00000008;
+enum uint WINDDI_MAX_BROADCAST_CONTEXT = 0x00000040U;
+enum uint HT_FLAG_SQUARE_DEVICE_PEL = 0x00000001U;
+enum uint HT_FLAG_HAS_BLACK_DYE = 0x00000002U;
+enum uint HT_FLAG_ADDITIVE_PRIMS = 0x00000004U;
+enum uint HT_FLAG_USE_8BPP_BITMASK = 0x00000008U;
 
 enum : uint
 {
-    HT_FLAG_INK_HIGH_ABSORPTION    = 0x00000010,
-    HT_FLAG_INK_ABSORPTION_INDICES = 0x00000060,
+    HT_FLAG_INK_HIGH_ABSORPTION    = 0x00000010U,
+    HT_FLAG_INK_ABSORPTION_INDICES = 0x00000060U,
 }
 
-enum uint HT_FLAG_DO_DEVCLR_XFORM = 0x00000080;
+enum uint HT_FLAG_DO_DEVCLR_XFORM = 0x00000080U;
 
 enum : uint
 {
-    HT_FLAG_OUTPUT_CMY       = 0x00000100,
-    HT_FLAG_PRINT_DRAFT_MODE = 0x00000200,
+    HT_FLAG_OUTPUT_CMY       = 0x00000100U,
+    HT_FLAG_PRINT_DRAFT_MODE = 0x00000200U,
 }
 
-enum uint HT_FLAG_INVERT_8BPP_BITMASK_IDX = 0x00000400;
-enum uint HT_FLAG_8BPP_CMY332_MASK = 0xff000000;
+enum uint HT_FLAG_INVERT_8BPP_BITMASK_IDX = 0x00000400U;
+enum uint HT_FLAG_8BPP_CMY332_MASK = 0xff000000U;
 
 enum : uint
 {
-    HT_FLAG_INK_ABSORPTION_IDX0 = 0x00000000,
-    HT_FLAG_INK_ABSORPTION_IDX1 = 0x00000020,
-    HT_FLAG_INK_ABSORPTION_IDX2 = 0x00000040,
-    HT_FLAG_INK_ABSORPTION_IDX3 = 0x00000060,
+    HT_FLAG_INK_ABSORPTION_IDX0 = 0x00000000U,
+    HT_FLAG_INK_ABSORPTION_IDX1 = 0x00000020U,
+    HT_FLAG_INK_ABSORPTION_IDX2 = 0x00000040U,
+    HT_FLAG_INK_ABSORPTION_IDX3 = 0x00000060U,
 }
 
-enum uint HT_FLAG_NORMAL_INK_ABSORPTION = 0x00000000;
+enum uint HT_FLAG_NORMAL_INK_ABSORPTION = 0x00000000U;
 
 enum : uint
 {
-    HT_FLAG_LOW_INK_ABSORPTION    = 0x00000020,
-    HT_FLAG_LOWER_INK_ABSORPTION  = 0x00000040,
-    HT_FLAG_LOWEST_INK_ABSORPTION = 0x00000060,
+    HT_FLAG_LOW_INK_ABSORPTION    = 0x00000020U,
+    HT_FLAG_LOWER_INK_ABSORPTION  = 0x00000040U,
+    HT_FLAG_LOWEST_INK_ABSORPTION = 0x00000060U,
 }
 
-enum uint PPC_DEFAULT = 0x00000000;
-enum uint PPC_UNDEFINED = 0x00000001;
-enum uint PPC_RGB_ORDER_VERTICAL_STRIPES = 0x00000002;
-enum uint PPC_BGR_ORDER_VERTICAL_STRIPES = 0x00000003;
-enum uint PPC_RGB_ORDER_HORIZONTAL_STRIPES = 0x00000004;
-enum uint PPC_BGR_ORDER_HORIZONTAL_STRIPES = 0x00000005;
-enum uint PPG_DEFAULT = 0x00000000;
-enum uint PPG_SRGB = 0x00000001;
-enum uint BR_DEVICE_ICM = 0x00000001;
-enum uint BR_HOST_ICM = 0x00000002;
-enum uint BR_CMYKCOLOR = 0x00000004;
-enum uint BR_ORIGCOLOR = 0x00000008;
+enum uint PPC_DEFAULT = 0x00000000U;
+enum uint PPC_UNDEFINED = 0x00000001U;
+enum uint PPC_RGB_ORDER_VERTICAL_STRIPES = 0x00000002U;
+enum uint PPC_BGR_ORDER_VERTICAL_STRIPES = 0x00000003U;
+enum uint PPC_RGB_ORDER_HORIZONTAL_STRIPES = 0x00000004U;
+enum uint PPC_BGR_ORDER_HORIZONTAL_STRIPES = 0x00000005U;
+enum uint PPG_DEFAULT = 0x00000000U;
+enum uint PPG_SRGB = 0x00000001U;
+enum uint BR_DEVICE_ICM = 0x00000001U;
+enum uint BR_HOST_ICM = 0x00000002U;
+enum uint BR_CMYKCOLOR = 0x00000004U;
+enum uint BR_ORIGCOLOR = 0x00000008U;
 
 enum : uint
 {
-    FO_SIM_BOLD   = 0x00002000,
-    FO_SIM_ITALIC = 0x00004000,
+    FO_SIM_BOLD   = 0x00002000U,
+    FO_SIM_ITALIC = 0x00004000U,
 }
 
-enum uint FO_EM_HEIGHT = 0x00008000;
-enum uint FO_GRAY16 = 0x00010000;
+enum uint FO_EM_HEIGHT = 0x00008000U;
+enum uint FO_GRAY16 = 0x00010000U;
 
 enum : uint
 {
-    FO_NOGRAY16  = 0x00020000,
-    FO_NOHINTS   = 0x00040000,
-    FO_NO_CHOICE = 0x00080000,
-}
-
-enum : uint
-{
-    FO_CFF        = 0x00100000,
-    FO_POSTSCRIPT = 0x00200000,
-}
-
-enum uint FO_MULTIPLEMASTER = 0x00400000;
-enum uint FO_VERT_FACE = 0x00800000;
-enum uint FO_DBCS_FONT = 0x01000000;
-enum uint FO_NOCLEARTYPE = 0x02000000;
-
-enum : uint
-{
-    FO_CLEARTYPE_X        = 0x10000000,
-    FO_CLEARTYPE_Y        = 0x20000000,
-    FO_CLEARTYPENATURAL_X = 0x40000000,
-}
-
-enum uint DC_TRIVIAL = 0x00000000;
-
-enum : uint
-{
-    DC_RECT    = 0x00000001,
-    DC_COMPLEX = 0x00000003,
+    FO_NOGRAY16  = 0x00020000U,
+    FO_NOHINTS   = 0x00040000U,
+    FO_NO_CHOICE = 0x00080000U,
 }
 
 enum : uint
 {
-    FC_RECT  = 0x00000001,
-    FC_RECT4 = 0x00000002,
+    FO_CFF        = 0x00100000U,
+    FO_POSTSCRIPT = 0x00200000U,
 }
 
-enum uint FC_COMPLEX = 0x00000003;
-enum uint TC_RECTANGLES = 0x00000000;
-enum uint TC_PATHOBJ = 0x00000002;
-enum uint OC_BANK_CLIP = 0x00000001;
+enum uint FO_MULTIPLEMASTER = 0x00400000U;
+enum uint FO_VERT_FACE = 0x00800000U;
+enum uint FO_DBCS_FONT = 0x01000000U;
+enum uint FO_NOCLEARTYPE = 0x02000000U;
+
+enum : uint
+{
+    FO_CLEARTYPE_X        = 0x10000000U,
+    FO_CLEARTYPE_Y        = 0x20000000U,
+    FO_CLEARTYPENATURAL_X = 0x40000000U,
+}
+
+enum uint DC_TRIVIAL = 0x00000000U;
+
+enum : uint
+{
+    DC_RECT    = 0x00000001U,
+    DC_COMPLEX = 0x00000003U,
+}
+
+enum : uint
+{
+    FC_RECT  = 0x00000001U,
+    FC_RECT4 = 0x00000002U,
+}
+
+enum uint FC_COMPLEX = 0x00000003U;
+enum uint TC_RECTANGLES = 0x00000000U;
+enum uint TC_PATHOBJ = 0x00000002U;
+enum uint OC_BANK_CLIP = 0x00000001U;
 enum int CT_RECTANGLES = 0x00000000;
 enum int CD_RIGHTDOWN = 0x00000000;
 enum int CD_LEFTDOWN = 0x00000001;
@@ -1321,46 +1356,46 @@ enum int FO_PATHOBJ = 0x00000002;
 enum int FD_NEGATIVE_FONT = 0x00000001;
 enum int FO_DEVICE_FONT = 0x00000001;
 enum int FO_OUTLINE_CAPABLE = 0x00000002;
-enum uint SO_FLAG_DEFAULT_PLACEMENT = 0x00000001;
-enum uint SO_HORIZONTAL = 0x00000002;
-enum uint SO_VERTICAL = 0x00000004;
-enum uint SO_REVERSED = 0x00000008;
-enum uint SO_ZERO_BEARINGS = 0x00000010;
-enum uint SO_CHAR_INC_EQUAL_BM_BASE = 0x00000020;
-enum uint SO_MAXEXT_EQUAL_BM_SIDE = 0x00000040;
-enum uint SO_DO_NOT_SUBSTITUTE_DEVICE_FONT = 0x00000080;
-enum uint SO_GLYPHINDEX_TEXTOUT = 0x00000100;
-enum uint SO_ESC_NOT_ORIENT = 0x00000200;
+enum uint SO_FLAG_DEFAULT_PLACEMENT = 0x00000001U;
+enum uint SO_HORIZONTAL = 0x00000002U;
+enum uint SO_VERTICAL = 0x00000004U;
+enum uint SO_REVERSED = 0x00000008U;
+enum uint SO_ZERO_BEARINGS = 0x00000010U;
+enum uint SO_CHAR_INC_EQUAL_BM_BASE = 0x00000020U;
+enum uint SO_MAXEXT_EQUAL_BM_SIDE = 0x00000040U;
+enum uint SO_DO_NOT_SUBSTITUTE_DEVICE_FONT = 0x00000080U;
+enum uint SO_GLYPHINDEX_TEXTOUT = 0x00000100U;
+enum uint SO_ESC_NOT_ORIENT = 0x00000200U;
 
 enum : uint
 {
-    SO_DXDY            = 0x00000400,
-    SO_CHARACTER_EXTRA = 0x00000800,
+    SO_DXDY            = 0x00000400U,
+    SO_CHARACTER_EXTRA = 0x00000800U,
 }
 
-enum uint SO_BREAK_EXTRA = 0x00001000;
-enum uint FO_ATTR_MODE_ROTATE = 0x00000001;
-enum uint PAL_INDEXED = 0x00000001;
-enum uint PAL_BITFIELDS = 0x00000002;
+enum uint SO_BREAK_EXTRA = 0x00001000U;
+enum uint FO_ATTR_MODE_ROTATE = 0x00000001U;
+enum uint PAL_INDEXED = 0x00000001U;
+enum uint PAL_BITFIELDS = 0x00000002U;
 
 enum : uint
 {
-    PAL_RGB  = 0x00000004,
-    PAL_BGR  = 0x00000008,
-    PAL_CMYK = 0x00000010,
+    PAL_RGB  = 0x00000004U,
+    PAL_BGR  = 0x00000008U,
+    PAL_CMYK = 0x00000010U,
 }
 
-enum uint PO_BEZIERS = 0x00000001;
-enum uint PO_ELLIPSE = 0x00000002;
-enum uint PO_ALL_INTEGERS = 0x00000004;
-enum uint PO_ENUM_AS_INTEGERS = 0x00000008;
-enum uint PO_WIDENED = 0x00000010;
-enum uint PD_BEGINSUBPATH = 0x00000001;
-enum uint PD_ENDSUBPATH = 0x00000002;
-enum uint PD_RESETSTYLE = 0x00000004;
-enum uint PD_CLOSEFIGURE = 0x00000008;
-enum uint PD_BEZIERS = 0x00000010;
-enum uint SGI_EXTRASPACE = 0x00000000;
+enum uint PO_BEZIERS = 0x00000001U;
+enum uint PO_ELLIPSE = 0x00000002U;
+enum uint PO_ALL_INTEGERS = 0x00000004U;
+enum uint PO_ENUM_AS_INTEGERS = 0x00000008U;
+enum uint PO_WIDENED = 0x00000010U;
+enum uint PD_BEGINSUBPATH = 0x00000001U;
+enum uint PD_ENDSUBPATH = 0x00000002U;
+enum uint PD_RESETSTYLE = 0x00000004U;
+enum uint PD_CLOSEFIGURE = 0x00000008U;
+enum uint PD_BEZIERS = 0x00000010U;
+enum uint SGI_EXTRASPACE = 0x00000000U;
 
 enum : int
 {
@@ -1382,18 +1417,18 @@ enum : int
     BMF_PNG   = 0x0000000a,
 }
 
-enum uint BMF_TOPDOWN = 0x00000001;
-enum uint BMF_NOZEROINIT = 0x00000002;
-enum uint BMF_DONTCACHE = 0x00000004;
-enum uint BMF_USERMEM = 0x00000008;
-enum uint BMF_KMSECTION = 0x00000010;
-enum uint BMF_NOTSYSMEM = 0x00000020;
-enum uint BMF_WINDOW_BLT = 0x00000040;
-enum uint BMF_UMPDMEM = 0x00000080;
-enum uint BMF_TEMP_ALPHA = 0x00000100;
-enum uint BMF_ACC_NOTIFY = 0x00008000;
-enum uint BMF_RMT_ENTER = 0x00004000;
-enum uint BMF_RESERVED = 0x00003e00;
+enum uint BMF_TOPDOWN = 0x00000001U;
+enum uint BMF_NOZEROINIT = 0x00000002U;
+enum uint BMF_DONTCACHE = 0x00000004U;
+enum uint BMF_USERMEM = 0x00000008U;
+enum uint BMF_KMSECTION = 0x00000010U;
+enum uint BMF_NOTSYSMEM = 0x00000020U;
+enum uint BMF_WINDOW_BLT = 0x00000040U;
+enum uint BMF_UMPDMEM = 0x00000080U;
+enum uint BMF_TEMP_ALPHA = 0x00000100U;
+enum uint BMF_ACC_NOTIFY = 0x00008000U;
+enum uint BMF_RMT_ENTER = 0x00004000U;
+enum uint BMF_RESERVED = 0x00003e00U;
 enum int GX_IDENTITY = 0x00000000;
 enum int GX_OFFSET = 0x00000001;
 enum int GX_SCALE = 0x00000002;
@@ -1407,97 +1442,97 @@ enum : int
 
 enum int XF_LTOFX = 0x00000002;
 enum int XF_INV_FXTOL = 0x00000003;
-enum uint XO_TRIVIAL = 0x00000001;
+enum uint XO_TRIVIAL = 0x00000001U;
 
 enum : uint
 {
-    XO_TABLE   = 0x00000002,
-    XO_TO_MONO = 0x00000004,
+    XO_TABLE   = 0x00000002U,
+    XO_TO_MONO = 0x00000004U,
 }
 
-enum uint XO_FROM_CMYK = 0x00000008;
-enum uint XO_DEVICE_ICM = 0x00000010;
-enum uint XO_HOST_ICM = 0x00000020;
-enum uint XO_SRCPALETTE = 0x00000001;
+enum uint XO_FROM_CMYK = 0x00000008U;
+enum uint XO_DEVICE_ICM = 0x00000010U;
+enum uint XO_HOST_ICM = 0x00000020U;
+enum uint XO_SRCPALETTE = 0x00000001U;
 
 enum : uint
 {
-    XO_DESTPALETTE   = 0x00000002,
-    XO_DESTDCPALETTE = 0x00000003,
+    XO_DESTPALETTE   = 0x00000002U,
+    XO_DESTDCPALETTE = 0x00000003U,
 }
 
-enum uint XO_SRCBITFIELDS = 0x00000004;
-enum uint XO_DESTBITFIELDS = 0x00000005;
+enum uint XO_SRCBITFIELDS = 0x00000004U;
+enum uint XO_DESTBITFIELDS = 0x00000005U;
 
 enum : uint
 {
-    HOOK_BITBLT     = 0x00000001,
-    HOOK_STRETCHBLT = 0x00000002,
+    HOOK_BITBLT     = 0x00000001U,
+    HOOK_STRETCHBLT = 0x00000002U,
 }
 
 enum : uint
 {
-    HOOK_PLGBLT     = 0x00000004,
-    HOOK_TEXTOUT    = 0x00000008,
-    HOOK_PAINT      = 0x00000010,
-    HOOK_STROKEPATH = 0x00000020,
+    HOOK_PLGBLT     = 0x00000004U,
+    HOOK_TEXTOUT    = 0x00000008U,
+    HOOK_PAINT      = 0x00000010U,
+    HOOK_STROKEPATH = 0x00000020U,
 }
 
-enum uint HOOK_FILLPATH = 0x00000040;
-enum uint HOOK_STROKEANDFILLPATH = 0x00000080;
+enum uint HOOK_FILLPATH = 0x00000040U;
+enum uint HOOK_STROKEANDFILLPATH = 0x00000080U;
 
 enum : uint
 {
-    HOOK_LINETO   = 0x00000100,
-    HOOK_COPYBITS = 0x00000400,
+    HOOK_LINETO   = 0x00000100U,
+    HOOK_COPYBITS = 0x00000400U,
 }
 
-enum uint HOOK_MOVEPANNING = 0x00000800;
-enum uint HOOK_SYNCHRONIZE = 0x00001000;
-enum uint HOOK_STRETCHBLTROP = 0x00002000;
-enum uint HOOK_SYNCHRONIZEACCESS = 0x00004000;
-enum uint HOOK_TRANSPARENTBLT = 0x00008000;
-enum uint HOOK_ALPHABLEND = 0x00010000;
-enum uint HOOK_GRADIENTFILL = 0x00020000;
-enum uint HOOK_FLAGS = 0x0003b5ff;
-enum uint MS_NOTSYSTEMMEMORY = 0x00000001;
-enum uint MS_SHAREDACCESS = 0x00000002;
-enum uint MS_CDDDEVICEBITMAP = 0x00000004;
-enum uint MS_REUSEDDEVICEBITMAP = 0x00000008;
-enum uint DRVQUERY_USERMODE = 0x00000001;
-enum uint HS_DDI_MAX = 0x00000006;
-enum uint DRD_SUCCESS = 0x00000000;
-enum uint DRD_ERROR = 0x00000001;
+enum uint HOOK_MOVEPANNING = 0x00000800U;
+enum uint HOOK_SYNCHRONIZE = 0x00001000U;
+enum uint HOOK_STRETCHBLTROP = 0x00002000U;
+enum uint HOOK_SYNCHRONIZEACCESS = 0x00004000U;
+enum uint HOOK_TRANSPARENTBLT = 0x00008000U;
+enum uint HOOK_ALPHABLEND = 0x00010000U;
+enum uint HOOK_GRADIENTFILL = 0x00020000U;
+enum uint HOOK_FLAGS = 0x0003b5ffU;
+enum uint MS_NOTSYSTEMMEMORY = 0x00000001U;
+enum uint MS_SHAREDACCESS = 0x00000002U;
+enum uint MS_CDDDEVICEBITMAP = 0x00000004U;
+enum uint MS_REUSEDDEVICEBITMAP = 0x00000008U;
+enum uint DRVQUERY_USERMODE = 0x00000001U;
+enum uint HS_DDI_MAX = 0x00000006U;
+enum uint DRD_SUCCESS = 0x00000000U;
+enum uint DRD_ERROR = 0x00000001U;
 
 enum : uint
 {
-    SS_SAVE    = 0x00000000,
-    SS_RESTORE = 0x00000001,
+    SS_SAVE    = 0x00000000U,
+    SS_RESTORE = 0x00000001U,
 }
 
-enum uint SS_FREE = 0x00000002;
-enum uint CDBEX_REDIRECTION = 0x00000001;
-enum uint CDBEX_DXINTEROP = 0x00000002;
-enum uint CDBEX_NTSHAREDSURFACEHANDLE = 0x00000004;
-enum uint CDBEX_CROSSADAPTER = 0x00000008;
-enum uint CDBEX_REUSE = 0x00000010;
+enum uint SS_FREE = 0x00000002U;
+enum uint CDBEX_REDIRECTION = 0x00000001U;
+enum uint CDBEX_DXINTEROP = 0x00000002U;
+enum uint CDBEX_NTSHAREDSURFACEHANDLE = 0x00000004U;
+enum uint CDBEX_CROSSADAPTER = 0x00000008U;
+enum uint CDBEX_REUSE = 0x00000010U;
 
 enum : uint
 {
-    WINDDI_MAXSETPALETTECOLORS     = 0x00000100,
-    WINDDI_MAXSETPALETTECOLORINDEX = 0x000000ff,
+    WINDDI_MAXSETPALETTECOLORS     = 0x00000100U,
+    WINDDI_MAXSETPALETTECOLORINDEX = 0x000000ffU,
 }
 
-enum uint DM_DEFAULT = 0x00000001;
-enum uint DM_MONOCHROME = 0x00000002;
+enum uint DM_DEFAULT = 0x00000001U;
+enum uint DM_MONOCHROME = 0x00000002U;
 
 enum : uint
 {
-    DCR_SOLID  = 0x00000000,
-    DCR_DRIVER = 0x00000001,
+    DCR_SOLID  = 0x00000000U,
+    DCR_DRIVER = 0x00000001U,
 }
 
-enum uint DCR_HALFTONE = 0x00000002;
+enum uint DCR_HALFTONE = 0x00000002U;
 enum int RB_DITHERCOLOR = 0x80000000;
 enum int QFT_LIGATURES = 0x00000001;
 enum int QFT_KERNPAIRS = 0x00000002;
@@ -1521,26 +1556,26 @@ enum : int
 }
 
 enum int QFD_TT_MONO_BITMAP = 0x00000005;
-enum uint QC_OUTLINES = 0x00000001;
+enum uint QC_OUTLINES = 0x00000001U;
 
 enum : uint
 {
-    QC_1BIT = 0x00000002,
-    QC_4BIT = 0x00000004,
+    QC_1BIT = 0x00000002U,
+    QC_4BIT = 0x00000004U,
 }
 
-enum uint FF_SIGNATURE_VERIFIED = 0x00000001;
-enum uint FF_IGNORED_SIGNATURE = 0x00000002;
+enum uint FF_SIGNATURE_VERIFIED = 0x00000001U;
+enum uint FF_IGNORED_SIGNATURE = 0x00000002U;
 
 enum : uint
 {
-    QAW_GETWIDTHS     = 0x00000000,
-    QAW_GETEASYWIDTHS = 0x00000001,
+    QAW_GETWIDTHS     = 0x00000000U,
+    QAW_GETEASYWIDTHS = 0x00000001U,
 }
 
-enum uint TTO_METRICS_ONLY = 0x00000001;
-enum uint TTO_QUBICS = 0x00000002;
-enum uint TTO_UNHINTED = 0x00000004;
+enum uint TTO_METRICS_ONLY = 0x00000001U;
+enum uint TTO_QUBICS = 0x00000002U;
+enum uint TTO_UNHINTED = 0x00000004U;
 enum int QFF_DESCRIPTION = 0x00000001;
 enum int QFF_NUMFACES = 0x00000002;
 enum int FP_ALTERNATEMODE = 0x00000001;
@@ -1548,15 +1583,15 @@ enum int FP_WINDINGMODE = 0x00000002;
 
 enum : uint
 {
-    SPS_ERROR   = 0x00000000,
-    SPS_DECLINE = 0x00000001,
+    SPS_ERROR   = 0x00000000U,
+    SPS_DECLINE = 0x00000001U,
 }
 
 enum : uint
 {
-    SPS_ACCEPT_NOEXCLUDE   = 0x00000002,
-    SPS_ACCEPT_EXCLUDE     = 0x00000003,
-    SPS_ACCEPT_SYNCHRONOUS = 0x00000004,
+    SPS_ACCEPT_NOEXCLUDE   = 0x00000002U,
+    SPS_ACCEPT_EXCLUDE     = 0x00000003U,
+    SPS_ACCEPT_SYNCHRONOUS = 0x00000004U,
 }
 
 enum int SPS_CHANGE = 0x00000001;
@@ -1578,168 +1613,168 @@ enum : int
 enum int SPS_FLAGSMASK = 0x000000ff;
 enum int SPS_LENGTHMASK = 0x00000f00;
 enum int SPS_FREQMASK = 0x000ff000;
-enum uint ED_ABORTDOC = 0x00000001;
+enum uint ED_ABORTDOC = 0x00000001U;
 
 enum : uint
 {
-    IGRF_RGB_256BYTES = 0x00000000,
-    IGRF_RGB_256WORDS = 0x00000001,
+    IGRF_RGB_256BYTES = 0x00000000U,
+    IGRF_RGB_256WORDS = 0x00000001U,
 }
 
 enum : uint
 {
-    QDS_CHECKJPEGFORMAT = 0x00000000,
-    QDS_CHECKPNGFORMAT  = 0x00000001,
+    QDS_CHECKJPEGFORMAT = 0x00000000U,
+    QDS_CHECKPNGFORMAT  = 0x00000001U,
 }
 
-enum uint DSS_TIMER_EVENT = 0x00000001;
-enum uint DSS_FLUSH_EVENT = 0x00000002;
+enum uint DSS_TIMER_EVENT = 0x00000001U;
+enum uint DSS_FLUSH_EVENT = 0x00000002U;
 
 enum : uint
 {
-    DSS_RESERVED  = 0x00000004,
-    DSS_RESERVED1 = 0x00000008,
-    DSS_RESERVED2 = 0x00000010,
+    DSS_RESERVED  = 0x00000004U,
+    DSS_RESERVED1 = 0x00000008U,
+    DSS_RESERVED2 = 0x00000010U,
 }
 
-enum uint DN_ACCELERATION_LEVEL = 0x00000001;
-enum uint DN_DEVICE_ORIGIN = 0x00000002;
-enum uint DN_SLEEP_MODE = 0x00000003;
-enum uint DN_DRAWING_BEGIN = 0x00000004;
-enum uint DN_ASSOCIATE_WINDOW = 0x00000005;
-enum uint DN_COMPOSITION_CHANGED = 0x00000006;
-enum uint DN_DRAWING_BEGIN_APIBITMAP = 0x00000007;
-enum uint DN_SURFOBJ_DESTRUCTION = 0x00000008;
+enum uint DN_ACCELERATION_LEVEL = 0x00000001U;
+enum uint DN_DEVICE_ORIGIN = 0x00000002U;
+enum uint DN_SLEEP_MODE = 0x00000003U;
+enum uint DN_DRAWING_BEGIN = 0x00000004U;
+enum uint DN_ASSOCIATE_WINDOW = 0x00000005U;
+enum uint DN_COMPOSITION_CHANGED = 0x00000006U;
+enum uint DN_DRAWING_BEGIN_APIBITMAP = 0x00000007U;
+enum uint DN_SURFOBJ_DESTRUCTION = 0x00000008U;
 
 enum : uint
 {
-    WOC_RGN_CLIENT_DELTA  = 0x00000001,
-    WOC_RGN_CLIENT        = 0x00000002,
-    WOC_RGN_SURFACE_DELTA = 0x00000004,
-    WOC_RGN_SURFACE       = 0x00000008,
+    WOC_RGN_CLIENT_DELTA  = 0x00000001U,
+    WOC_RGN_CLIENT        = 0x00000002U,
+    WOC_RGN_SURFACE_DELTA = 0x00000004U,
+    WOC_RGN_SURFACE       = 0x00000008U,
 }
 
-enum uint WOC_CHANGED = 0x00000010;
+enum uint WOC_CHANGED = 0x00000010U;
 
 enum : uint
 {
-    WOC_DELETE            = 0x00000020,
-    WOC_DRAWN             = 0x00000040,
-    WOC_SPRITE_OVERLAP    = 0x00000080,
-    WOC_SPRITE_NO_OVERLAP = 0x00000100,
+    WOC_DELETE            = 0x00000020U,
+    WOC_DRAWN             = 0x00000040U,
+    WOC_SPRITE_OVERLAP    = 0x00000080U,
+    WOC_SPRITE_NO_OVERLAP = 0x00000100U,
 }
 
-enum uint WOC_RGN_SPRITE = 0x00000200;
+enum uint WOC_RGN_SPRITE = 0x00000200U;
 
 enum : uint
 {
-    WO_RGN_CLIENT_DELTA  = 0x00000001,
-    WO_RGN_CLIENT        = 0x00000002,
-    WO_RGN_SURFACE_DELTA = 0x00000004,
-    WO_RGN_SURFACE       = 0x00000008,
-    WO_RGN_UPDATE_ALL    = 0x00000010,
-    WO_RGN_WINDOW        = 0x00000020,
+    WO_RGN_CLIENT_DELTA  = 0x00000001U,
+    WO_RGN_CLIENT        = 0x00000002U,
+    WO_RGN_SURFACE_DELTA = 0x00000004U,
+    WO_RGN_SURFACE       = 0x00000008U,
+    WO_RGN_UPDATE_ALL    = 0x00000010U,
+    WO_RGN_WINDOW        = 0x00000020U,
 }
 
-enum uint WO_DRAW_NOTIFY = 0x00000040;
-enum uint WO_SPRITE_NOTIFY = 0x00000080;
-enum uint WO_RGN_DESKTOP_COORD = 0x00000100;
-enum uint WO_RGN_SPRITE = 0x00000200;
-enum uint EHN_RESTORED = 0x00000000;
-enum uint EHN_ERROR = 0x00000001;
-enum uint ECS_TEARDOWN = 0x00000001;
-enum uint ECS_REDRAW = 0x00000002;
+enum uint WO_DRAW_NOTIFY = 0x00000040U;
+enum uint WO_SPRITE_NOTIFY = 0x00000080U;
+enum uint WO_RGN_DESKTOP_COORD = 0x00000100U;
+enum uint WO_RGN_SPRITE = 0x00000200U;
+enum uint EHN_RESTORED = 0x00000000U;
+enum uint EHN_ERROR = 0x00000001U;
+enum uint ECS_TEARDOWN = 0x00000001U;
+enum uint ECS_REDRAW = 0x00000002U;
 
 enum : uint
 {
-    DEVHTADJF_COLOR_DEVICE    = 0x00000001,
-    DEVHTADJF_ADDITIVE_DEVICE = 0x00000002,
+    DEVHTADJF_COLOR_DEVICE    = 0x00000001U,
+    DEVHTADJF_ADDITIVE_DEVICE = 0x00000002U,
 }
 
-enum uint FL_ZERO_MEMORY = 0x00000001;
-enum uint FL_NONPAGED_MEMORY = 0x00000002;
-enum uint FL_NON_SESSION = 0x00000004;
+enum uint FL_ZERO_MEMORY = 0x00000001U;
+enum uint FL_NONPAGED_MEMORY = 0x00000002U;
+enum uint FL_NON_SESSION = 0x00000004U;
 
 enum : uint
 {
-    QSA_MMX   = 0x00000100,
-    QSA_SSE   = 0x00002000,
-    QSA_3DNOW = 0x00004000,
-    QSA_SSE1  = 0x00002000,
-    QSA_SSE2  = 0x00010000,
-    QSA_SSE3  = 0x00080000,
-}
-
-enum : uint
-{
-    ENG_FNT_CACHE_READ_FAULT  = 0x00000001,
-    ENG_FNT_CACHE_WRITE_FAULT = 0x00000002,
-}
-
-enum uint DRH_APIBITMAP = 0x00000001;
-
-enum : uint
-{
-    MC_CAPS_NONE                    = 0x00000000,
-    MC_CAPS_MONITOR_TECHNOLOGY_TYPE = 0x00000001,
+    QSA_MMX   = 0x00000100U,
+    QSA_SSE   = 0x00002000U,
+    QSA_3DNOW = 0x00004000U,
+    QSA_SSE1  = 0x00002000U,
+    QSA_SSE2  = 0x00010000U,
+    QSA_SSE3  = 0x00080000U,
 }
 
 enum : uint
 {
-    MC_CAPS_BRIGHTNESS        = 0x00000002,
-    MC_CAPS_CONTRAST          = 0x00000004,
-    MC_CAPS_COLOR_TEMPERATURE = 0x00000008,
+    ENG_FNT_CACHE_READ_FAULT  = 0x00000001U,
+    ENG_FNT_CACHE_WRITE_FAULT = 0x00000002U,
+}
+
+enum uint DRH_APIBITMAP = 0x00000001U;
+
+enum : uint
+{
+    MC_CAPS_NONE                    = 0x00000000U,
+    MC_CAPS_MONITOR_TECHNOLOGY_TYPE = 0x00000001U,
 }
 
 enum : uint
 {
-    MC_CAPS_RED_GREEN_BLUE_GAIN  = 0x00000010,
-    MC_CAPS_RED_GREEN_BLUE_DRIVE = 0x00000020,
+    MC_CAPS_BRIGHTNESS        = 0x00000002U,
+    MC_CAPS_CONTRAST          = 0x00000004U,
+    MC_CAPS_COLOR_TEMPERATURE = 0x00000008U,
 }
 
 enum : uint
 {
-    MC_CAPS_DEGAUSS               = 0x00000040,
-    MC_CAPS_DISPLAY_AREA_POSITION = 0x00000080,
-    MC_CAPS_DISPLAY_AREA_SIZE     = 0x00000100,
+    MC_CAPS_RED_GREEN_BLUE_GAIN  = 0x00000010U,
+    MC_CAPS_RED_GREEN_BLUE_DRIVE = 0x00000020U,
 }
 
 enum : uint
 {
-    MC_CAPS_RESTORE_FACTORY_DEFAULTS       = 0x00000400,
-    MC_CAPS_RESTORE_FACTORY_COLOR_DEFAULTS = 0x00000800,
+    MC_CAPS_DEGAUSS               = 0x00000040U,
+    MC_CAPS_DISPLAY_AREA_POSITION = 0x00000080U,
+    MC_CAPS_DISPLAY_AREA_SIZE     = 0x00000100U,
 }
-
-enum uint MC_RESTORE_FACTORY_DEFAULTS_ENABLES_MONITOR_SETTINGS = 0x00001000;
 
 enum : uint
 {
-    MC_SUPPORTED_COLOR_TEMPERATURE_NONE   = 0x00000000,
-    MC_SUPPORTED_COLOR_TEMPERATURE_4000K  = 0x00000001,
-    MC_SUPPORTED_COLOR_TEMPERATURE_5000K  = 0x00000002,
-    MC_SUPPORTED_COLOR_TEMPERATURE_6500K  = 0x00000004,
-    MC_SUPPORTED_COLOR_TEMPERATURE_7500K  = 0x00000008,
-    MC_SUPPORTED_COLOR_TEMPERATURE_8200K  = 0x00000010,
-    MC_SUPPORTED_COLOR_TEMPERATURE_9300K  = 0x00000020,
-    MC_SUPPORTED_COLOR_TEMPERATURE_10000K = 0x00000040,
-    MC_SUPPORTED_COLOR_TEMPERATURE_11500K = 0x00000080,
+    MC_CAPS_RESTORE_FACTORY_DEFAULTS       = 0x00000400U,
+    MC_CAPS_RESTORE_FACTORY_COLOR_DEFAULTS = 0x00000800U,
 }
 
-enum uint PHYSICAL_MONITOR_DESCRIPTION_SIZE = 0x00000080;
+enum uint MC_RESTORE_FACTORY_DEFAULTS_ENABLES_MONITOR_SETTINGS = 0x00001000U;
 
 enum : uint
 {
-    GETCONNECTEDIDS_TARGET = 0x00000000,
-    GETCONNECTEDIDS_SOURCE = 0x00000001,
+    MC_SUPPORTED_COLOR_TEMPERATURE_NONE   = 0x00000000U,
+    MC_SUPPORTED_COLOR_TEMPERATURE_4000K  = 0x00000001U,
+    MC_SUPPORTED_COLOR_TEMPERATURE_5000K  = 0x00000002U,
+    MC_SUPPORTED_COLOR_TEMPERATURE_6500K  = 0x00000004U,
+    MC_SUPPORTED_COLOR_TEMPERATURE_7500K  = 0x00000008U,
+    MC_SUPPORTED_COLOR_TEMPERATURE_8200K  = 0x00000010U,
+    MC_SUPPORTED_COLOR_TEMPERATURE_9300K  = 0x00000020U,
+    MC_SUPPORTED_COLOR_TEMPERATURE_10000K = 0x00000040U,
+    MC_SUPPORTED_COLOR_TEMPERATURE_11500K = 0x00000080U,
 }
 
-enum uint S_INIT = 0x00000002;
+enum uint PHYSICAL_MONITOR_DESCRIPTION_SIZE = 0x00000080U;
 
 enum : uint
 {
-    SETCONFIGURATION_STATUS_APPLIED    = 0x00000000,
-    SETCONFIGURATION_STATUS_ADDITIONAL = 0x00000001,
-    SETCONFIGURATION_STATUS_OVERRIDDEN = 0x00000002,
+    GETCONNECTEDIDS_TARGET = 0x00000000U,
+    GETCONNECTEDIDS_SOURCE = 0x00000001U,
+}
+
+enum uint S_INIT = 0x00000002U;
+
+enum : uint
+{
+    SETCONFIGURATION_STATUS_APPLIED    = 0x00000000U,
+    SETCONFIGURATION_STATUS_ADDITIONAL = 0x00000001U,
+    SETCONFIGURATION_STATUS_OVERRIDDEN = 0x00000002U,
 }
 
 // Callbacks
@@ -1939,33 +1974,40 @@ struct DHPDEV
     void* Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_rational))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_rational
 struct DISPLAYCONFIG_RATIONAL
 {
     uint Numerator;
     uint Denominator;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_2dregion))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_2dregion
 struct DISPLAYCONFIG_2DREGION
 {
     uint cx;
     uint cy;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_video_signal_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_video_signal_info
 struct DISPLAYCONFIG_VIDEO_SIGNAL_INFO
 {
-    ulong               pixelRate;
+    ulong pixelRate;
     DISPLAYCONFIG_RATIONAL hSyncFreq;
     DISPLAYCONFIG_RATIONAL vSyncFreq;
     DISPLAYCONFIG_2DREGION activeSize;
     DISPLAYCONFIG_2DREGION totalSize;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct AdditionalSignalInfo
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(22)), FixedArgSig(ElementSig(10))], [])*/uint _bitfield10;
+        }
+        uint videoStandard;
+    }
     DISPLAYCONFIG_SCANLINE_ORDERING scanLineOrdering;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_source_mode))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_source_mode
 struct DISPLAYCONFIG_SOURCE_MODE
 {
     uint   width;
@@ -1974,13 +2016,13 @@ struct DISPLAYCONFIG_SOURCE_MODE
     POINTL position;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_target_mode))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_target_mode
 struct DISPLAYCONFIG_TARGET_MODE
 {
     DISPLAYCONFIG_VIDEO_SIGNAL_INFO targetVideoSignalInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_desktop_image_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_desktop_image_info
 struct DISPLAYCONFIG_DESKTOP_IMAGE_INFO
 {
     POINTL PathSourceSize;
@@ -1988,40 +2030,59 @@ struct DISPLAYCONFIG_DESKTOP_IMAGE_INFO
     RECTL  DesktopImageClip;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_mode_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_mode_info
 struct DISPLAYCONFIG_MODE_INFO
 {
     DISPLAYCONFIG_MODE_INFO_TYPE infoType;
-    uint                id;
-    LUID                adapterId;
-    _Anonymous_e__Union Anonymous;
+    uint id;
+    LUID adapterId;
+    union
+    {
+        DISPLAYCONFIG_TARGET_MODE targetMode;
+        DISPLAYCONFIG_SOURCE_MODE sourceMode;
+        DISPLAYCONFIG_DESKTOP_IMAGE_INFO desktopImageInfo;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_path_source_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_path_source_info
 struct DISPLAYCONFIG_PATH_SOURCE_INFO
 {
-    LUID                adapterId;
-    uint                id;
-    _Anonymous_e__Union Anonymous;
-    uint                statusFlags;
+    LUID adapterId;
+    uint id;
+    union
+    {
+        uint modeInfoIdx;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(sourceModeInfoIdx)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield11;
+        }
+    }
+    uint statusFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_path_target_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_path_target_info
 struct DISPLAYCONFIG_PATH_TARGET_INFO
 {
-    LUID                adapterId;
-    uint                id;
-    _Anonymous_e__Union Anonymous;
+    LUID adapterId;
+    uint id;
+    union
+    {
+        uint modeInfoIdx;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(targetModeInfoIdx)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield12;
+        }
+    }
     DISPLAYCONFIG_VIDEO_OUTPUT_TECHNOLOGY outputTechnology;
     DISPLAYCONFIG_ROTATION rotation;
     DISPLAYCONFIG_SCALING scaling;
     DISPLAYCONFIG_RATIONAL refreshRate;
     DISPLAYCONFIG_SCANLINE_ORDERING scanLineOrdering;
-    BOOL                targetAvailable;
-    uint                statusFlags;
+    BOOL targetAvailable;
+    uint statusFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_path_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_path_info
 struct DISPLAYCONFIG_PATH_INFO
 {
     DISPLAYCONFIG_PATH_SOURCE_INFO sourceInfo;
@@ -2029,7 +2090,7 @@ struct DISPLAYCONFIG_PATH_INFO
     uint flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_device_info_header))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_device_info_header
 struct DISPLAYCONFIG_DEVICE_INFO_HEADER
 {
     DISPLAYCONFIG_DEVICE_INFO_TYPE type;
@@ -2038,20 +2099,27 @@ struct DISPLAYCONFIG_DEVICE_INFO_HEADER
     uint id;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_source_device_name))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_source_device_name
 struct DISPLAYCONFIG_SOURCE_DEVICE_NAME
 {
     DISPLAYCONFIG_DEVICE_INFO_HEADER header;
     wchar[32] viewGdiDeviceName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_target_device_name_flags))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_target_device_name_flags
 struct DISPLAYCONFIG_TARGET_DEVICE_NAME_FLAGS
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(29))], [])*/uint _bitfield13;
+        }
+        uint value;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_target_device_name))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_target_device_name
 struct DISPLAYCONFIG_TARGET_DEVICE_NAME
 {
     DISPLAYCONFIG_DEVICE_INFO_HEADER header;
@@ -2064,7 +2132,7 @@ struct DISPLAYCONFIG_TARGET_DEVICE_NAME
     wchar[128] monitorDevicePath;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_target_preferred_mode))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_target_preferred_mode
 struct DISPLAYCONFIG_TARGET_PREFERRED_MODE
 {
     DISPLAYCONFIG_DEVICE_INFO_HEADER header;
@@ -2073,70 +2141,119 @@ struct DISPLAYCONFIG_TARGET_PREFERRED_MODE
     DISPLAYCONFIG_TARGET_MODE targetMode;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_adapter_name))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_adapter_name
 struct DISPLAYCONFIG_ADAPTER_NAME
 {
     DISPLAYCONFIG_DEVICE_INFO_HEADER header;
     wchar[128] adapterDevicePath;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_target_base_type))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_target_base_type
 struct DISPLAYCONFIG_TARGET_BASE_TYPE
 {
     DISPLAYCONFIG_DEVICE_INFO_HEADER header;
     DISPLAYCONFIG_VIDEO_OUTPUT_TECHNOLOGY baseOutputTechnology;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_set_target_persistence))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_set_target_persistence
 struct DISPLAYCONFIG_SET_TARGET_PERSISTENCE
 {
     DISPLAYCONFIG_DEVICE_INFO_HEADER header;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield14;
+        }
+        uint value;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_support_virtual_resolution))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_support_virtual_resolution
 struct DISPLAYCONFIG_SUPPORT_VIRTUAL_RESOLUTION
 {
     DISPLAYCONFIG_DEVICE_INFO_HEADER header;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield15;
+        }
+        uint value;
+    }
 }
 
 struct DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO
 {
     DISPLAYCONFIG_DEVICE_INFO_HEADER header;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(28))], [])*/uint _bitfield16;
+        }
+        uint value;
+    }
     DISPLAYCONFIG_COLOR_ENCODING colorEncoding;
-    uint                bitsPerColorChannel;
+    uint bitsPerColorChannel;
 }
 
 struct DISPLAYCONFIG_SET_ADVANCED_COLOR_STATE
 {
     DISPLAYCONFIG_DEVICE_INFO_HEADER header;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield17;
+        }
+        uint value;
+    }
 }
 
 struct DISPLAYCONFIG_GET_ADVANCED_COLOR_INFO_2
 {
     DISPLAYCONFIG_DEVICE_INFO_HEADER header;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(8)), FixedArgSig(ElementSig(24))], [])*/uint _bitfield18;
+        }
+        uint value;
+    }
     DISPLAYCONFIG_COLOR_ENCODING colorEncoding;
-    uint                bitsPerColorChannel;
+    uint bitsPerColorChannel;
     DISPLAYCONFIG_ADVANCED_COLOR_MODE activeColorMode;
 }
 
 struct DISPLAYCONFIG_SET_HDR_STATE
 {
     DISPLAYCONFIG_DEVICE_INFO_HEADER header;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield19;
+        }
+        uint value;
+    }
 }
 
 struct DISPLAYCONFIG_SET_WCG_STATE
 {
     DISPLAYCONFIG_DEVICE_INFO_HEADER header;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield20;
+        }
+        uint value;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_sdr_white_level))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-displayconfig_sdr_white_level
 struct DISPLAYCONFIG_SDR_WHITE_LEVEL
 {
     DISPLAYCONFIG_DEVICE_INFO_HEADER header;
@@ -2146,19 +2263,33 @@ struct DISPLAYCONFIG_SDR_WHITE_LEVEL
 struct DISPLAYCONFIG_GET_MONITOR_SPECIALIZATION
 {
     DISPLAYCONFIG_DEVICE_INFO_HEADER header;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(29))], [])*/uint _bitfield21;
+        }
+        uint value;
+    }
 }
 
 struct DISPLAYCONFIG_SET_MONITOR_SPECIALIZATION
 {
     DISPLAYCONFIG_DEVICE_INFO_HEADER header;
-    _Anonymous_e__Union Anonymous;
-    GUID                specializationType;
-    GUID                specializationSubType;
-    wchar[128]          specializationApplicationName;
+    union
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield22;
+        }
+        uint value;
+    }
+    GUID       specializationType;
+    GUID       specializationSubType;
+    wchar[128] specializationApplicationName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/physicalmonitorenumerationapi/ns-physicalmonitorenumerationapi-physical_monitor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/physicalmonitorenumerationapi/ns-physicalmonitorenumerationapi-physical_monitor
 struct PHYSICAL_MONITOR
 {
 align (1):
@@ -2166,7 +2297,7 @@ align (1):
     wchar[128] szPhysicalMonitorDescription;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lowlevelmonitorconfigurationapi/ns-lowlevelmonitorconfigurationapi-mc_timing_report))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lowlevelmonitorconfigurationapi/ns-lowlevelmonitorconfigurationapi-mc_timing_report
 struct MC_TIMING_REPORT
 {
 align (1):
@@ -2175,7 +2306,7 @@ align (1):
     ubyte bTimingStatusByte;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cloneviewhelper/ns-cloneviewhelper-sources))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cloneviewhelper/ns-cloneviewhelper-sources
 struct Sources
 {
     uint sourceId;
@@ -2183,7 +2314,7 @@ struct Sources
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] aTargets;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cloneviewhelper/ns-cloneviewhelper-adapter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cloneviewhelper/ns-cloneviewhelper-adapter
 struct Adapter
 {
     wchar[128] AdapterName;
@@ -2191,28 +2322,28 @@ struct Adapter
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/Sources[1] sources;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cloneviewhelper/ns-cloneviewhelper-adapters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cloneviewhelper/ns-cloneviewhelper-adapters
 struct Adapters
 {
     int numAdapters;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/Adapter[1] adapter;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cloneviewhelper/ns-cloneviewhelper-displaymode))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cloneviewhelper/ns-cloneviewhelper-displaymode
 struct DisplayMode
 {
     wchar[32] DeviceName;
     DEVMODEW  devMode;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cloneviewhelper/ns-cloneviewhelper-displaymodes))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cloneviewhelper/ns-cloneviewhelper-displaymodes
 struct DisplayModes
 {
     int numDisplayModes;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DisplayMode[1] displayMode;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tvout/ns-tvout-videoparameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tvout/ns-tvout-videoparameters
 struct VIDEOPARAMETERS
 {
     GUID       Guid;
@@ -2240,146 +2371,306 @@ struct VIDEOPARAMETERS
     ubyte[256] bOEMCopyProtection;
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct POINTE
+version(X86_64)
 {
-    float x;
-    float y;
+    struct POINTE
+    {
+        float x;
+        float y;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-union FLOAT_LONG
+version(AArch64)
 {
-    float e;
-    int   l;
+    struct POINTE
+    {
+        float x;
+        float y;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-fd_xform))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct FD_XFORM
+version(X86_64)
 {
-    float eXX;
-    float eXY;
-    float eYX;
-    float eYY;
+    union FLOAT_LONG
+    {
+        float e;
+        int   l;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-ifimetrics))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct IFIMETRICS
+version(AArch64)
 {
-    uint     cjThis;
-    uint     cjIfiExtra;
-    int      dpwszFamilyName;
-    int      dpwszStyleName;
-    int      dpwszFaceName;
-    int      dpwszUniqueName;
-    int      dpFontSim;
-    int      lEmbedId;
-    int      lItalicAngle;
-    int      lCharBias;
-    int      dpCharSets;
-    ubyte    jWinCharSet;
-    ubyte    jWinPitchAndFamily;
-    ushort   usWinWeight;
-    uint     flInfo;
-    ushort   fsSelection;
-    ushort   fsType;
-    short    fwdUnitsPerEm;
-    short    fwdLowestPPEm;
-    short    fwdWinAscender;
-    short    fwdWinDescender;
-    short    fwdMacAscender;
-    short    fwdMacDescender;
-    short    fwdMacLineGap;
-    short    fwdTypoAscender;
-    short    fwdTypoDescender;
-    short    fwdTypoLineGap;
-    short    fwdAveCharWidth;
-    short    fwdMaxCharInc;
-    short    fwdCapHeight;
-    short    fwdXHeight;
-    short    fwdSubscriptXSize;
-    short    fwdSubscriptYSize;
-    short    fwdSubscriptXOffset;
-    short    fwdSubscriptYOffset;
-    short    fwdSuperscriptXSize;
-    short    fwdSuperscriptYSize;
-    short    fwdSuperscriptXOffset;
-    short    fwdSuperscriptYOffset;
-    short    fwdUnderscoreSize;
-    short    fwdUnderscorePosition;
-    short    fwdStrikeoutSize;
-    short    fwdStrikeoutPosition;
-    ubyte    chFirstChar;
-    ubyte    chLastChar;
-    ubyte    chDefaultChar;
-    ubyte    chBreakChar;
-    wchar    wcFirstChar;
-    wchar    wcLastChar;
-    wchar    wcDefaultChar;
-    wchar    wcBreakChar;
-    POINTL   ptlBaseline;
-    POINTL   ptlAspect;
-    POINTL   ptlCaret;
-    RECTL    rclFontBox;
-    ubyte[4] achVendId;
-    uint     cKerningPairs;
-    uint     ulPanoseCulture;
-    PANOSE   panose;
-    void*    Align;
+    union FLOAT_LONG
+    {
+        float e;
+        int   l;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-lineattrs))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct LINEATTRS
+version(X86_64)
 {
-    uint        fl;
-    uint        iJoin;
-    uint        iEndCap;
-    FLOAT_LONG  elWidth;
-    float       eMiterLimit;
-    uint        cstyle;
-    FLOAT_LONG* pstyle;
-    FLOAT_LONG  elStyleState;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-fd_xform
+    struct FD_XFORM
+    {
+        float eXX;
+        float eXY;
+        float eYX;
+        float eYY;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-xforml))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct XFORML
+version(AArch64)
 {
-    float eM11;
-    float eM12;
-    float eM21;
-    float eM22;
-    float eDx;
-    float eDy;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-fd_xform
+    struct FD_XFORM
+    {
+        float eXX;
+        float eXY;
+        float eYX;
+        float eYY;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-floatobj_xform))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct FLOATOBJ_XFORM
+version(X86_64)
 {
-    float eM11;
-    float eM12;
-    float eM21;
-    float eM22;
-    float eDx;
-    float eDy;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-ifimetrics
+    struct IFIMETRICS
+    {
+        uint     cjThis;
+        uint     cjIfiExtra;
+        int      dpwszFamilyName;
+        int      dpwszStyleName;
+        int      dpwszFaceName;
+        int      dpwszUniqueName;
+        int      dpFontSim;
+        int      lEmbedId;
+        int      lItalicAngle;
+        int      lCharBias;
+        int      dpCharSets;
+        ubyte    jWinCharSet;
+        ubyte    jWinPitchAndFamily;
+        ushort   usWinWeight;
+        uint     flInfo;
+        ushort   fsSelection;
+        ushort   fsType;
+        short    fwdUnitsPerEm;
+        short    fwdLowestPPEm;
+        short    fwdWinAscender;
+        short    fwdWinDescender;
+        short    fwdMacAscender;
+        short    fwdMacDescender;
+        short    fwdMacLineGap;
+        short    fwdTypoAscender;
+        short    fwdTypoDescender;
+        short    fwdTypoLineGap;
+        short    fwdAveCharWidth;
+        short    fwdMaxCharInc;
+        short    fwdCapHeight;
+        short    fwdXHeight;
+        short    fwdSubscriptXSize;
+        short    fwdSubscriptYSize;
+        short    fwdSubscriptXOffset;
+        short    fwdSubscriptYOffset;
+        short    fwdSuperscriptXSize;
+        short    fwdSuperscriptYSize;
+        short    fwdSuperscriptXOffset;
+        short    fwdSuperscriptYOffset;
+        short    fwdUnderscoreSize;
+        short    fwdUnderscorePosition;
+        short    fwdStrikeoutSize;
+        short    fwdStrikeoutPosition;
+        ubyte    chFirstChar;
+        ubyte    chLastChar;
+        ubyte    chDefaultChar;
+        ubyte    chBreakChar;
+        wchar    wcFirstChar;
+        wchar    wcLastChar;
+        wchar    wcDefaultChar;
+        wchar    wcBreakChar;
+        POINTL   ptlBaseline;
+        POINTL   ptlAspect;
+        POINTL   ptlCaret;
+        RECTL    rclFontBox;
+        ubyte[4] achVendId;
+        uint     cKerningPairs;
+        uint     ulPanoseCulture;
+        PANOSE   panose;
+        void*    Align;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct POINTE
+version(AArch64)
 {
-    uint x;
-    uint y;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-ifimetrics
+    struct IFIMETRICS
+    {
+        uint     cjThis;
+        uint     cjIfiExtra;
+        int      dpwszFamilyName;
+        int      dpwszStyleName;
+        int      dpwszFaceName;
+        int      dpwszUniqueName;
+        int      dpFontSim;
+        int      lEmbedId;
+        int      lItalicAngle;
+        int      lCharBias;
+        int      dpCharSets;
+        ubyte    jWinCharSet;
+        ubyte    jWinPitchAndFamily;
+        ushort   usWinWeight;
+        uint     flInfo;
+        ushort   fsSelection;
+        ushort   fsType;
+        short    fwdUnitsPerEm;
+        short    fwdLowestPPEm;
+        short    fwdWinAscender;
+        short    fwdWinDescender;
+        short    fwdMacAscender;
+        short    fwdMacDescender;
+        short    fwdMacLineGap;
+        short    fwdTypoAscender;
+        short    fwdTypoDescender;
+        short    fwdTypoLineGap;
+        short    fwdAveCharWidth;
+        short    fwdMaxCharInc;
+        short    fwdCapHeight;
+        short    fwdXHeight;
+        short    fwdSubscriptXSize;
+        short    fwdSubscriptYSize;
+        short    fwdSubscriptXOffset;
+        short    fwdSubscriptYOffset;
+        short    fwdSuperscriptXSize;
+        short    fwdSuperscriptYSize;
+        short    fwdSuperscriptXOffset;
+        short    fwdSuperscriptYOffset;
+        short    fwdUnderscoreSize;
+        short    fwdUnderscorePosition;
+        short    fwdStrikeoutSize;
+        short    fwdStrikeoutPosition;
+        ubyte    chFirstChar;
+        ubyte    chLastChar;
+        ubyte    chDefaultChar;
+        ubyte    chBreakChar;
+        wchar    wcFirstChar;
+        wchar    wcLastChar;
+        wchar    wcDefaultChar;
+        wchar    wcBreakChar;
+        POINTL   ptlBaseline;
+        POINTL   ptlAspect;
+        POINTL   ptlCaret;
+        RECTL    rclFontBox;
+        ubyte[4] achVendId;
+        uint     cKerningPairs;
+        uint     ulPanoseCulture;
+        PANOSE   panose;
+        void*    Align;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-union FLOAT_LONG
+version(X86_64)
 {
-    uint e;
-    int  l;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-lineattrs
+    struct LINEATTRS
+    {
+        uint        fl;
+        uint        iJoin;
+        uint        iEndCap;
+        FLOAT_LONG  elWidth;
+        float       eMiterLimit;
+        uint        cstyle;
+        FLOAT_LONG* pstyle;
+        FLOAT_LONG  elStyleState;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-lineattrs
+    struct LINEATTRS
+    {
+        uint        fl;
+        uint        iJoin;
+        uint        iEndCap;
+        FLOAT_LONG  elWidth;
+        float       eMiterLimit;
+        uint        cstyle;
+        FLOAT_LONG* pstyle;
+        FLOAT_LONG  elStyleState;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-xforml
+    struct XFORML
+    {
+        float eM11;
+        float eM12;
+        float eM21;
+        float eM22;
+        float eDx;
+        float eDy;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-xforml
+    struct XFORML
+    {
+        float eM11;
+        float eM12;
+        float eM21;
+        float eM22;
+        float eDx;
+        float eDy;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-floatobj_xform
+    struct FLOATOBJ_XFORM
+    {
+        float eM11;
+        float eM12;
+        float eM21;
+        float eM22;
+        float eDx;
+        float eDy;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-floatobj_xform
+    struct FLOATOBJ_XFORM
+    {
+        float eM11;
+        float eM12;
+        float eM21;
+        float eM22;
+        float eDx;
+        float eDy;
+    }
+}
+
+version(X86)
+{
+    struct POINTE
+    {
+        uint x;
+        uint y;
+    }
+}
+
+version(X86)
+{
+    union FLOAT_LONG
+    {
+        uint e;
+        int  l;
+    }
 }
 
 struct POINTFIX
@@ -2396,17 +2687,19 @@ struct RECTFX
     int yBottom;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-fd_xform))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct FD_XFORM
+version(X86)
 {
-    uint eXX;
-    uint eXY;
-    uint eYX;
-    uint eYY;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-fd_xform
+    struct FD_XFORM
+    {
+        uint eXX;
+        uint eXY;
+        uint eYX;
+        uint eYY;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-fd_devicemetrics))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-fd_devicemetrics
 struct FD_DEVICEMETRICS
 {
     uint     flRealizedType;
@@ -2455,7 +2748,7 @@ struct POINTQF
     long y;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-wcrun))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-wcrun
 struct WCRUN
 {
     wchar  wcLow;
@@ -2463,7 +2756,7 @@ struct WCRUN
     uint*  phg;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-fd_glyphset))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-fd_glyphset
 struct FD_GLYPHSET
 {
     uint cjThis;
@@ -2473,7 +2766,7 @@ struct FD_GLYPHSET
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/WCRUN[1] awcrun;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-fd_glyphattr))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-fd_glyphattr
 struct FD_GLYPHATTR
 {
     uint cjThis;
@@ -2482,7 +2775,7 @@ struct FD_GLYPHATTR
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] aGlyphAttr;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-fd_kerningpair))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-fd_kerningpair
 struct FD_KERNINGPAIR
 {
     wchar wcFirst;
@@ -2490,7 +2783,7 @@ struct FD_KERNINGPAIR
     short fwdKern;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-fontdiff))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-fontdiff
 struct FONTDIFF
 {
     ubyte  jReserved1;
@@ -2504,7 +2797,7 @@ struct FONTDIFF
     POINTL ptlCaret;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-fontsim))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-fontsim
 struct FONTSIM
 {
     int dpBold;
@@ -2512,72 +2805,74 @@ struct FONTSIM
     int dpBoldItalic;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-ifimetrics))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct IFIMETRICS
+version(X86)
 {
-    uint     cjThis;
-    uint     cjIfiExtra;
-    int      dpwszFamilyName;
-    int      dpwszStyleName;
-    int      dpwszFaceName;
-    int      dpwszUniqueName;
-    int      dpFontSim;
-    int      lEmbedId;
-    int      lItalicAngle;
-    int      lCharBias;
-    int      dpCharSets;
-    ubyte    jWinCharSet;
-    ubyte    jWinPitchAndFamily;
-    ushort   usWinWeight;
-    uint     flInfo;
-    ushort   fsSelection;
-    ushort   fsType;
-    short    fwdUnitsPerEm;
-    short    fwdLowestPPEm;
-    short    fwdWinAscender;
-    short    fwdWinDescender;
-    short    fwdMacAscender;
-    short    fwdMacDescender;
-    short    fwdMacLineGap;
-    short    fwdTypoAscender;
-    short    fwdTypoDescender;
-    short    fwdTypoLineGap;
-    short    fwdAveCharWidth;
-    short    fwdMaxCharInc;
-    short    fwdCapHeight;
-    short    fwdXHeight;
-    short    fwdSubscriptXSize;
-    short    fwdSubscriptYSize;
-    short    fwdSubscriptXOffset;
-    short    fwdSubscriptYOffset;
-    short    fwdSuperscriptXSize;
-    short    fwdSuperscriptYSize;
-    short    fwdSuperscriptXOffset;
-    short    fwdSuperscriptYOffset;
-    short    fwdUnderscoreSize;
-    short    fwdUnderscorePosition;
-    short    fwdStrikeoutSize;
-    short    fwdStrikeoutPosition;
-    ubyte    chFirstChar;
-    ubyte    chLastChar;
-    ubyte    chDefaultChar;
-    ubyte    chBreakChar;
-    wchar    wcFirstChar;
-    wchar    wcLastChar;
-    wchar    wcDefaultChar;
-    wchar    wcBreakChar;
-    POINTL   ptlBaseline;
-    POINTL   ptlAspect;
-    POINTL   ptlCaret;
-    RECTL    rclFontBox;
-    ubyte[4] achVendId;
-    uint     cKerningPairs;
-    uint     ulPanoseCulture;
-    PANOSE   panose;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-ifimetrics
+    struct IFIMETRICS
+    {
+        uint     cjThis;
+        uint     cjIfiExtra;
+        int      dpwszFamilyName;
+        int      dpwszStyleName;
+        int      dpwszFaceName;
+        int      dpwszUniqueName;
+        int      dpFontSim;
+        int      lEmbedId;
+        int      lItalicAngle;
+        int      lCharBias;
+        int      dpCharSets;
+        ubyte    jWinCharSet;
+        ubyte    jWinPitchAndFamily;
+        ushort   usWinWeight;
+        uint     flInfo;
+        ushort   fsSelection;
+        ushort   fsType;
+        short    fwdUnitsPerEm;
+        short    fwdLowestPPEm;
+        short    fwdWinAscender;
+        short    fwdWinDescender;
+        short    fwdMacAscender;
+        short    fwdMacDescender;
+        short    fwdMacLineGap;
+        short    fwdTypoAscender;
+        short    fwdTypoDescender;
+        short    fwdTypoLineGap;
+        short    fwdAveCharWidth;
+        short    fwdMaxCharInc;
+        short    fwdCapHeight;
+        short    fwdXHeight;
+        short    fwdSubscriptXSize;
+        short    fwdSubscriptYSize;
+        short    fwdSubscriptXOffset;
+        short    fwdSubscriptYOffset;
+        short    fwdSuperscriptXSize;
+        short    fwdSuperscriptYSize;
+        short    fwdSuperscriptXOffset;
+        short    fwdSuperscriptYOffset;
+        short    fwdUnderscoreSize;
+        short    fwdUnderscorePosition;
+        short    fwdStrikeoutSize;
+        short    fwdStrikeoutPosition;
+        ubyte    chFirstChar;
+        ubyte    chLastChar;
+        ubyte    chDefaultChar;
+        ubyte    chBreakChar;
+        wchar    wcFirstChar;
+        wchar    wcLastChar;
+        wchar    wcDefaultChar;
+        wchar    wcBreakChar;
+        POINTL   ptlBaseline;
+        POINTL   ptlAspect;
+        POINTL   ptlCaret;
+        RECTL    rclFontBox;
+        ubyte[4] achVendId;
+        uint     cKerningPairs;
+        uint     ulPanoseCulture;
+        PANOSE   panose;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-ifiextra))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-ifiextra
 struct IFIEXTRA
 {
     uint ulIdentifier;
@@ -2588,14 +2883,14 @@ struct IFIEXTRA
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] aulReserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-drvfn))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-drvfn
 struct DRVFN
 {
     uint iFunc;
     PFN  pfn;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-drvenabledata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-drvenabledata
 struct DRVENABLEDATA
 {
     uint   iDriverVersion;
@@ -2603,7 +2898,7 @@ struct DRVENABLEDATA
     DRVFN* pdrvfn;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-devinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-devinfo
 struct DEVINFO
 {
     uint     flGraphicsCaps;
@@ -2618,33 +2913,37 @@ struct DEVINFO
     uint     flGraphicsCaps2;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-lineattrs))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct LINEATTRS
+version(X86)
 {
-    uint        fl;
-    uint        iJoin;
-    uint        iEndCap;
-    FLOAT_LONG  elWidth;
-    uint        eMiterLimit;
-    uint        cstyle;
-    FLOAT_LONG* pstyle;
-    FLOAT_LONG  elStyleState;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-lineattrs
+    struct LINEATTRS
+    {
+        uint        fl;
+        uint        iJoin;
+        uint        iEndCap;
+        FLOAT_LONG  elWidth;
+        uint        eMiterLimit;
+        uint        cstyle;
+        FLOAT_LONG* pstyle;
+        FLOAT_LONG  elStyleState;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-xforml))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct XFORML
+version(X86)
 {
-    uint eM11;
-    uint eM12;
-    uint eM21;
-    uint eM22;
-    uint eDx;
-    uint eDy;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-xforml
+    struct XFORML
+    {
+        uint eM11;
+        uint eM12;
+        uint eM21;
+        uint eM22;
+        uint eDx;
+        uint eDy;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-ciechroma))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-ciechroma
 struct CIECHROMA
 {
     int x;
@@ -2652,7 +2951,7 @@ struct CIECHROMA
     int Y;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-colorinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-colorinfo
 struct COLORINFO
 {
     CIECHROMA Red;
@@ -2682,7 +2981,7 @@ struct CDDDXGK_REDIRBITMAPPRESENTINFO
     BOOLEAN    bDoNotSynchronizeWithDxContent;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-gdiinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-gdiinfo
 struct GDIINFO
 {
     uint      ulVersion;
@@ -2732,7 +3031,7 @@ struct GDIINFO
     uint      ulPhysicalPixelGamma;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-brushobj))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-brushobj
 struct BRUSHOBJ
 {
     uint  iSolidColor;
@@ -2740,7 +3039,7 @@ struct BRUSHOBJ
     uint  flColorType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-clipobj))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-clipobj
 struct CLIPOBJ
 {
     uint  iUniq;
@@ -2751,7 +3050,7 @@ struct CLIPOBJ
     ubyte fjOptions;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-driverobj))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-driverobj
 struct DRIVEROBJ
 {
     void*       pvObj;
@@ -2760,7 +3059,7 @@ struct DRIVEROBJ
     DHPDEV      dhpdev;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-fontobj))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-fontobj
 struct FONTOBJ
 {
     uint   iUniq;
@@ -2775,26 +3074,26 @@ struct FONTOBJ
     void*  pvProducer;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-blendobj))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-blendobj
 struct BLENDOBJ
 {
     BLENDFUNCTION BlendFunction;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-palobj))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-palobj
 struct PALOBJ
 {
     uint ulReserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-pathobj))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-pathobj
 struct PATHOBJ
 {
     uint fl;
     uint cCurves;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-surfobj))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-surfobj
 struct SURFOBJ
 {
     DHSURF dhsurf;
@@ -2812,7 +3111,7 @@ struct SURFOBJ
     ushort fjBitmap;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-wndobj))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-wndobj
 struct WNDOBJ
 {
     CLIPOBJ  coClient;
@@ -2821,13 +3120,13 @@ struct WNDOBJ
     SURFOBJ* psoOwner;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-xformobj))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-xformobj
 struct XFORMOBJ
 {
     uint ulReserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-xlateobj))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-xlateobj
 struct XLATEOBJ
 {
     uint   iUniq;
@@ -2838,14 +3137,14 @@ struct XLATEOBJ
     uint*  pulXlate;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-enumrects))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-enumrects
 struct ENUMRECTS
 {
     uint c;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/RECTL[1] arcl;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-glyphbits))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-glyphbits
 struct GLYPHBITS
 {
     POINTL ptlOrigin;
@@ -2853,14 +3152,14 @@ struct GLYPHBITS
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] aj;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-glyphdef))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-glyphdef
 union GLYPHDEF
 {
     GLYPHBITS* pgb;
     PATHOBJ*   ppo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-glyphpos))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-glyphpos
 struct GLYPHPOS
 {
     uint      hg;
@@ -2868,7 +3167,7 @@ struct GLYPHPOS
     POINTL    ptl;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-glyphdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-glyphdata
 struct GLYPHDATA
 {
     GLYPHDEF gdf;
@@ -2882,7 +3181,7 @@ struct GLYPHDATA
     POINTQF  ptqD;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-strobj))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-strobj
 struct STROBJ
 {
     uint      cGlyphs;
@@ -2893,7 +3192,7 @@ struct STROBJ
     PWSTR     pwszOrg;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-fontinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-fontinfo
 struct FONTINFO
 {
     uint cjThis;
@@ -2905,7 +3204,7 @@ struct FONTINFO
     uint cjMaxGlyph32;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-pathdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-pathdata
 struct PATHDATA
 {
     uint      flags;
@@ -2913,14 +3212,14 @@ struct PATHDATA
     POINTFIX* pptfx;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-run))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-run
 struct RUN
 {
     int iStart;
     int iStop;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-clipline))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-clipline
 struct CLIPLINE
 {
     POINTFIX ptfxA;
@@ -2930,7 +3229,7 @@ struct CLIPLINE
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/RUN[1] arun;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-perbandinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-perbandinfo
 struct PERBANDINFO
 {
     BOOL bRepeatThisBand;
@@ -2939,7 +3238,7 @@ struct PERBANDINFO
     uint ulVertRes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-gammaramp))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-gammaramp
 struct GAMMARAMP
 {
     ushort[256] Red;
@@ -2947,7 +3246,7 @@ struct GAMMARAMP
     ushort[256] Blue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-devhtinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-devhtinfo
 struct DEVHTINFO
 {
     uint      HTFlags;
@@ -2956,7 +3255,7 @@ struct DEVHTINFO
     COLORINFO ColorInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-devhtadjdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-devhtadjdata
 struct DEVHTADJDATA
 {
     uint       DeviceFlags;
@@ -2966,7 +3265,7 @@ struct DEVHTADJDATA
     DEVHTINFO* pAdjHTInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-type1_font))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-type1_font
 struct TYPE1_FONT
 {
     HANDLE hPFM;
@@ -2974,34 +3273,38 @@ struct TYPE1_FONT
     uint   ulIdentifier;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-engsafesemaphore))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-engsafesemaphore
 struct ENGSAFESEMAPHORE
 {
     HSEMAPHORE hsem;
     int        lCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-floatobj))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct FLOATOBJ
+version(X86)
 {
-    uint ul1;
-    uint ul2;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-floatobj
+    struct FLOATOBJ
+    {
+        uint ul1;
+        uint ul2;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-floatobj_xform))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct FLOATOBJ_XFORM
+version(X86)
 {
-    FLOATOBJ eM11;
-    FLOATOBJ eM12;
-    FLOATOBJ eM21;
-    FLOATOBJ eM22;
-    FLOATOBJ eDx;
-    FLOATOBJ eDy;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-floatobj_xform
+    struct FLOATOBJ_XFORM
+    {
+        FLOATOBJ eM11;
+        FLOATOBJ eM12;
+        FLOATOBJ eM21;
+        FLOATOBJ eM22;
+        FLOATOBJ eDx;
+        FLOATOBJ eDy;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-eng_time_fields))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winddi/ns-winddi-eng_time_fields
 struct ENG_TIME_FIELDS
 {
     ushort usYear;
@@ -3192,7 +3495,11 @@ struct VIDEO_CLUT
 {
     ushort NumEntries;
     ushort FirstEntry;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/_Anonymous_e__Union[1] LookupTable;
+    union
+    {
+        VIDEO_CLUTDATA RgbArray;
+        uint           RgbLong;
+    }
 }
 
 struct VIDEO_CURSOR_POSITION
@@ -3350,7 +3657,11 @@ struct VIDEO_BRIGHTNESS_POLICY
 {
     BOOLEAN DefaultToBiosPolicy;
     ubyte   LevelCount;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/_Anonymous_e__Struct[1] Level;
+    struct
+    {
+        ubyte BatteryLevel;
+        ubyte Brightness;
+    }
 }
 
 struct FSCNTL_SCREEN_INFO
@@ -3454,7 +3765,14 @@ struct VIDEO_QUERY_PERFORMANCE_COUNTER
 struct PANEL_QUERY_BRIGHTNESS_CAPS
 {
     BRIGHTNESS_INTERFACE_VERSION Version;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(29))], [])*/uint _bitfield23;
+        }
+        uint Value;
+    }
 }
 
 struct BRIGHTNESS_LEVEL
@@ -3481,13 +3799,25 @@ struct BRIGHTNESS_NIT_RANGES
 struct PANEL_QUERY_BRIGHTNESS_RANGES
 {
     BRIGHTNESS_INTERFACE_VERSION Version;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        BRIGHTNESS_LEVEL BrightnessLevel;
+        BRIGHTNESS_NIT_RANGES NitRanges;
+    }
 }
 
 struct PANEL_GET_BRIGHTNESS
 {
     BRIGHTNESS_INTERFACE_VERSION Version;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        ubyte Level;
+        struct
+        {
+            uint CurrentInMillinits;
+            uint TargetInMillinits;
+        }
+    }
 }
 
 struct CHROMATICITY_COORDINATE
@@ -3498,21 +3828,44 @@ struct CHROMATICITY_COORDINATE
 
 struct PANEL_BRIGHTNESS_SENSOR_DATA
 {
-    _Anonymous_e__Union Anonymous;
-    float               AlsReading;
+    union
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(29))], [])*/uint _bitfield24;
+        }
+        uint Value;
+    }
+    float AlsReading;
     CHROMATICITY_COORDINATE ChromaticityCoordinate;
-    float               ColorTemperature;
+    float ColorTemperature;
 }
 
 struct PANEL_SET_BRIGHTNESS
 {
     BRIGHTNESS_INTERFACE_VERSION Version;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        ubyte Level;
+        struct
+        {
+            uint Millinits;
+            uint TransitionTimeInMs;
+            PANEL_BRIGHTNESS_SENSOR_DATA SensorData;
+        }
+    }
 }
 
 struct PANEL_SET_BRIGHTNESS_STATE
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield25;
+        }
+        uint Value;
+    }
 }
 
 struct PANEL_SET_BACKLIGHT_OPTIMIZATION
@@ -3537,9 +3890,20 @@ struct PANEL_GET_BACKLIGHT_REDUCTION
 struct COLORSPACE_TRANSFORM_DATA_CAP
 {
     COLORSPACE_TRANSFORM_DATA_TYPE DataType;
-    _Anonymous_e__Union Anonymous;
-    float               NumericRangeMin;
-    float               NumericRangeMax;
+    union
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(BitCountOfFraction)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(6))], [])*/uint _bitfield26;
+        }
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(BitCountOfMantissa)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(6))], [])*/uint _bitfield27;
+        }
+        uint Value;
+    }
+    float NumericRangeMin;
+    float NumericRangeMax;
 }
 
 struct COLORSPACE_TRANSFORM_1DLUT_CAP
@@ -3550,7 +3914,14 @@ struct COLORSPACE_TRANSFORM_1DLUT_CAP
 
 struct COLORSPACE_TRANSFORM_MATRIX_CAP
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(MatrixSizeY)), FixedArgSig(ElementSig(10)), FixedArgSig(ElementSig(10))], [])*/uint _bitfield28;
+        }
+        uint Value;
+    }
     COLORSPACE_TRANSFORM_DATA_CAP DataCap;
 }
 
@@ -3616,7 +3987,13 @@ struct COLORSPACE_TRANSFORM_MATRIX_V2
 struct COLORSPACE_TRANSFORM
 {
     COLORSPACE_TRANSFORM_TYPE Type;
-    _Data_e__Union Data;
+    union Data
+    {
+        GAMMA_RAMP_RGB256x3x16 Rgb256x3x16;
+        GAMMA_RAMP_DXGI_1 Dxgi1;
+        COLORSPACE_TRANSFORM_3x4 T3x4;
+        COLORSPACE_TRANSFORM_MATRIX_V2 MatrixV2;
+    }
 }
 
 struct COLORSPACE_TRANSFORM_SET_INPUT
@@ -3655,29 +4032,54 @@ struct MIPI_DSI_CAPS
 
 struct MIPI_DSI_PACKET
 {
-    _Anonymous1_e__Union Anonymous1;
-    _Anonymous2_e__Union Anonymous2;
-    ubyte                EccFiller;
-    ubyte[8]             Payload;
+    union
+    {
+        ubyte DataId;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(VirtualChannel)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(2))], [])*/ubyte _bitfield29;
+        }
+    }
+    union
+    {
+        struct
+        {
+            ubyte Data0;
+            ubyte Data1;
+        }
+        ushort LongWriteWordCount;
+    }
+    ubyte    EccFiller;
+    ubyte[8] Payload;
 }
 
 struct MIPI_DSI_TRANSMISSION
 {
-    uint                 TotalBufferSize;
-    ubyte                PacketCount;
-    ubyte                FailedPacket;
-    _Anonymous_e__Struct Anonymous;
-    ushort               ReadWordCount;
-    ushort               FinalCommandExtraPayload;
-    ushort               MipiErrors;
-    ushort               HostErrors;
+    uint   TotalBufferSize;
+    ubyte  PacketCount;
+    ubyte  FailedPacket;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(10))], [])*/ushort _bitfield30;
+    }
+    ushort ReadWordCount;
+    ushort FinalCommandExtraPayload;
+    ushort MipiErrors;
+    ushort HostErrors;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MIPI_DSI_PACKET[1] Packets;
 }
 
 struct MIPI_DSI_RESET
 {
-    uint                Flags;
-    _Anonymous_e__Union Anonymous;
+    uint Flags;
+    union
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NeedModeSet)), FixedArgSig(ElementSig(17)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield31;
+        }
+        uint Results;
+    }
 }
 
 // Functions
@@ -4190,15 +4592,15 @@ int DisplayConfigGetDeviceInfo(DISPLAYCONFIG_DEVICE_INFO_HEADER* requestPacket);
 @DllImport("USER32.dll")
 int DisplayConfigSetDeviceInfo(DISPLAYCONFIG_DEVICE_INFO_HEADER* setPacket);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/nf-winuser-getautorotationstate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/nf-winuser-getautorotationstate
 @DllImport("USER32.dll")
 BOOL GetAutoRotationState(AR_STATE* pState);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/nf-winuser-getdisplayautorotationpreferences))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/nf-winuser-getdisplayautorotationpreferences
 @DllImport("USER32.dll")
 BOOL GetDisplayAutoRotationPreferences(ORIENTATION_PREFERENCE* pOrientation);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/nf-winuser-setdisplayautorotationpreferences))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/nf-winuser-setdisplayautorotationpreferences
 @DllImport("USER32.dll")
 BOOL SetDisplayAutoRotationPreferences(ORIENTATION_PREFERENCE orientation);
 
@@ -4217,17 +4619,17 @@ interface ICloneViewHelper : IUnknown
 @GUID("e85ccef5-aaaa-47f0-b5e3-61f7aecdc4c1")
 interface IViewHelper : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cloneviewhelper/nf-cloneviewhelper-iviewhelper-getconnectedids))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cloneviewhelper/nf-cloneviewhelper-iviewhelper-getconnectedids
     HRESULT GetConnectedIDs(const(PWSTR) wszAdaptorName, uint* pulCount, uint* pulID, uint ulFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cloneviewhelper/nf-cloneviewhelper-iviewhelper-getactivetopology))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cloneviewhelper/nf-cloneviewhelper-iviewhelper-getactivetopology
     HRESULT GetActiveTopology(const(PWSTR) wszAdaptorName, uint ulSourceID, uint* pulCount, uint* pulTargetID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cloneviewhelper/nf-cloneviewhelper-iviewhelper-setactivetopology))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cloneviewhelper/nf-cloneviewhelper-iviewhelper-setactivetopology
     HRESULT SetActiveTopology(const(PWSTR) wszAdaptorName, uint ulSourceID, uint ulCount, uint* pulTargetID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cloneviewhelper/nf-cloneviewhelper-iviewhelper-commit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cloneviewhelper/nf-cloneviewhelper-iviewhelper-commit
     HRESULT Commit();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cloneviewhelper/nf-cloneviewhelper-iviewhelper-setconfiguration))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cloneviewhelper/nf-cloneviewhelper-iviewhelper-setconfiguration
     HRESULT SetConfiguration(IStream pIStream, uint* pulStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cloneviewhelper/nf-cloneviewhelper-iviewhelper-getproceedonnewconfiguration))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cloneviewhelper/nf-cloneviewhelper-iviewhelper-getproceedonnewconfiguration
     HRESULT GetProceedOnNewConfiguration();
 }
 

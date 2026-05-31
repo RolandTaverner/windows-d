@@ -1,12 +1,12 @@
 // Written in the D programming language.
 
-module windows.win32.system.winrt;
+module windows.win32.system.winrt.winrt;
 
 public import windows.core;
-public import system : Guid;
+public import system.system : Guid;
 public import windows.system : DispatcherQueueController;
-public import windows.win32.foundation : BOOL, BSTR, HRESULT, HWND, PWSTR;
-public import windows.win32.system.com : IStream, IUnknown;
+public import windows.win32.foundation.foundation : BOOL, BSTR, HRESULT, HWND, PWSTR;
+public import windows.win32.system.com.com : IStream, IUnknown;
 public import windows.win32.system.com.marshal : IMarshal;
 public import windows.win32.ui.shell.propertiessystem : INamedPropertyStore;
 
@@ -15,7 +15,8 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/ne-objidl-activationtype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/ne-objidl-activationtype
 alias ACTIVATIONTYPE = int;
 enum : int
 {
@@ -26,20 +27,23 @@ enum : int
     ACTIVATIONTYPE_FROM_STREAM   = 0x00000008,
     ACTIVATIONTYPE_FROM_FILE     = 0x00000010,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/combaseapi/ne-combaseapi-agilereferenceoptions))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/combaseapi/ne-combaseapi-agilereferenceoptions
 enum AgileReferenceOptions : int
 {
     AGILEREFERENCE_DEFAULT        = 0x00000000,
     AGILEREFERENCE_DELAYEDMARSHAL = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inspectable/ne-inspectable-trustlevel))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inspectable/ne-inspectable-trustlevel
 enum TrustLevel : int
 {
     BaseTrust    = 0x00000000,
     PartialTrust = 0x00000001,
     FullTrust    = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dispatcherqueue/ne-dispatcherqueue-dispatcherqueue_thread_apartmenttype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dispatcherqueue/ne-dispatcherqueue-dispatcherqueue_thread_apartmenttype
 alias DISPATCHERQUEUE_THREAD_APARTMENTTYPE = int;
 enum : int
 {
@@ -47,13 +51,15 @@ enum : int
     DQTAT_COM_ASTA = 0x00000001,
     DQTAT_COM_STA  = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dispatcherqueue/ne-dispatcherqueue-dispatcherqueue_thread_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dispatcherqueue/ne-dispatcherqueue-dispatcherqueue_thread_type
 alias DISPATCHERQUEUE_THREAD_TYPE = int;
 enum : int
 {
     DQTYPE_THREAD_DEDICATED = 0x00000001,
     DQTYPE_THREAD_CURRENT   = 0x00000002,
 }
+
 alias CASTING_CONNECTION_ERROR_STATUS = int;
 enum : int
 {
@@ -65,6 +71,7 @@ enum : int
     CASTING_CONNECTION_ERROR_STATUS_INVALID_CASTING_SOURCE    = 0x00000005,
     CASTING_CONNECTION_ERROR_STATUS_UNKNOWN                   = 0x00000006,
 }
+
 alias CASTING_CONNECTION_STATE = int;
 enum : int
 {
@@ -74,14 +81,16 @@ enum : int
     CASTING_CONNECTION_STATE_DISCONNECTING = 0x00000003,
     CASTING_CONNECTION_STATE_CONNECTING    = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/roapi/ne-roapi-ro_init_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/roapi/ne-roapi-ro_init_type
 alias RO_INIT_TYPE = int;
 enum : int
 {
     RO_INIT_SINGLETHREADED = 0x00000000,
     RO_INIT_MULTITHREADED  = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/roerrorapi/ne-roerrorapi-ro_error_reporting_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/roerrorapi/ne-roerrorapi-ro_error_reporting_flags
 alias RO_ERROR_REPORTING_FLAGS = int;
 enum : int
 {
@@ -91,7 +100,8 @@ enum : int
     RO_ERROR_REPORTING_USESETERRORINFO      = 0x00000004,
     RO_ERROR_REPORTING_SUPPRESSSETERRORINFO = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/shcore/ne-shcore-bsos_options))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shcore/ne-shcore-bsos_options
 alias BSOS_OPTIONS = int;
 enum : int
 {
@@ -102,7 +112,7 @@ enum : int
 // Constants
 
 
-enum uint MAX_ERROR_MESSAGE_CHARS = 0x00000200;
+enum uint MAX_ERROR_MESSAGE_CHARS = 0x00000200U;
 
 enum : const(wchar)*
 {
@@ -121,13 +131,13 @@ alias PINSPECT_MEMORY_CALLBACK = HRESULT function(void* context, size_t readAddr
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eventtoken/ns-eventtoken-eventregistrationtoken))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eventtoken/ns-eventtoken-eventregistrationtoken
 struct EventRegistrationToken
 {
     long value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/hstring/ns-hstring-hstring_header))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/hstring/ns-hstring-hstring_header
 struct HSTRING_HEADER
 {
     uint      flags;
@@ -138,7 +148,7 @@ struct HSTRING_HEADER
 }
 
 @RAIIFree!WindowsDeleteString
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinRT/hstring))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WinRT/hstring
 struct HSTRING
 {
     void* Value;
@@ -147,7 +157,7 @@ struct HSTRING
 @RAIIFree!WindowsDeleteStringBuffer
 //STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
 //STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinRT/hstring-buffer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WinRT/hstring-buffer
 struct HSTRING_BUFFER
 {
     void* Value;
@@ -160,13 +170,13 @@ struct APARTMENT_SHUTDOWN_REGISTRATION_COOKIE
     void* Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinRT/ro-registration-cookie))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WinRT/ro-registration-cookie
 struct RO_REGISTRATION_COOKIE
 {
     ptrdiff_t Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/combaseapi/ns-combaseapi-serverinformation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/combaseapi/ns-combaseapi-serverinformation
 struct ServerInformation
 {
     uint  dwServerPid;
@@ -174,7 +184,7 @@ struct ServerInformation
     ulong ui64ServerAddress;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dispatcherqueue/ns-dispatcherqueue-dispatcherqueueoptions))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dispatcherqueue/ns-dispatcherqueue-dispatcherqueueoptions
 struct DispatcherQueueOptions
 {
     uint dwSize;
@@ -184,7 +194,7 @@ struct DispatcherQueueOptions
 
 // Functions
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/combaseapi/nf-combaseapi-codecodeproxy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/combaseapi/nf-combaseapi-codecodeproxy
 @DllImport("OLE32.dll")
 HRESULT CoDecodeProxy(uint dwClientPid, ulong ui64ProxyAddress, ServerInformation* pServerInformation);
 
@@ -403,7 +413,7 @@ BOOL RoOriginateLanguageException(HRESULT error, HSTRING message, IUnknown langu
 @DllImport("api-ms-win-core-winrt-error-l1-1-1.dll")
 void RoClearError();
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/roerrorapi/nf-roerrorapi-roreportunhandlederror))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/roerrorapi/nf-roerrorapi-roreportunhandlederror
 @DllImport("api-ms-win-core-winrt-error-l1-1-1.dll")
 HRESULT RoReportUnhandledError(IRestrictedErrorInfo pRestrictedErrorInfo);
 
@@ -419,11 +429,11 @@ HRESULT RoInspectCapturedStackBackTrace(size_t targetErrorInfoAddress, ushort ma
                                         PINSPECT_MEMORY_CALLBACK readMemoryCallback, void* context, uint* frameCount, 
                                         size_t* targetBackTraceAddress);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/roerrorapi/nf-roerrorapi-rogetmatchingrestrictederrorinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/roerrorapi/nf-roerrorapi-rogetmatchingrestrictederrorinfo
 @DllImport("api-ms-win-core-winrt-error-l1-1-1.dll")
 HRESULT RoGetMatchingRestrictedErrorInfo(HRESULT hrIn, IRestrictedErrorInfo* ppRestrictedErrorInfo);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/roerrorapi/nf-roerrorapi-roreportfaileddelegate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/roerrorapi/nf-roerrorapi-roreportfaileddelegate
 @DllImport("api-ms-win-core-winrt-error-l1-1-1.dll")
 HRESULT RoReportFailedDelegate(IUnknown punkDelegate, IRestrictedErrorInfo pRestrictedErrorInfo);
 
@@ -447,11 +457,11 @@ HRESULT CreateRandomAccessStreamOverStream(IStream stream, BSOS_OPTIONS options,
 @DllImport("api-ms-win-shcore-stream-winrt-l1-1-0.dll")
 HRESULT CreateStreamOverRandomAccessStream(IUnknown randomAccessStream, const(GUID)* riid, void** ppv);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/corewindow/nf-corewindow-createcontrolinput))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/corewindow/nf-corewindow-createcontrolinput
 @DllImport("Windows.UI.dll")
 HRESULT CreateControlInput(const(GUID)* riid, void** ppv);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/corewindow/nf-corewindow-createcontrolinputex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/corewindow/nf-corewindow-createcontrolinputex
 @DllImport("Windows.UI.dll")
 HRESULT CreateControlInputEx(IUnknown pCoreWindow, const(GUID)* riid, void** ppv);
 
@@ -460,62 +470,62 @@ HRESULT CreateControlInputEx(IUnknown pCoreWindow, const(GUID)* riid, void** ppv
 
 @GUID("c03f6a43-65a4-9818-987e-e0b810d2a6f2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nn-objidl-iagilereference))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nn-objidl-iagilereference
 interface IAgileReference : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinRT/iagilereference-resolve))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/WinRT/iagilereference-resolve
     HRESULT Resolve(const(GUID)* riid, void** ppvObjectReference);
 }
 
 @GUID("a2f05a09-27a2-42b5-bc0e-ac163ef49d9b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nn-objidl-iapartmentshutdown))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nn-objidl-iapartmentshutdown
 interface IApartmentShutdown : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-iapartmentshutdown-onuninitialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-iapartmentshutdown-onuninitialize
     void OnUninitialize(ulong ui64ApartmentIdentifier);
 }
 
 @GUID("5c4ee536-6a98-4b86-a170-587013d6fd4b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spatialinteractionmanagerinterop/nn-spatialinteractionmanagerinterop-ispatialinteractionmanagerinterop))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialinteractionmanagerinterop/nn-spatialinteractionmanagerinterop-ispatialinteractionmanagerinterop
 interface ISpatialInteractionManagerInterop : IInspectable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/spatialinteractionmanagerinterop/nf-spatialinteractionmanagerinterop-ispatialinteractionmanagerinterop-getforwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/spatialinteractionmanagerinterop/nf-spatialinteractionmanagerinterop-ispatialinteractionmanagerinterop-getforwindow
     HRESULT GetForWindow(HWND window, const(GUID)* riid, void** spatialInteractionManager);
 }
 
 @GUID("5c4ee536-6a98-4b86-a170-587013d6fd4b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/holographicspaceinterop/nn-holographicspaceinterop-iholographicspaceinterop))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/holographicspaceinterop/nn-holographicspaceinterop-iholographicspaceinterop
 interface IHolographicSpaceInterop : IInspectable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/holographicspaceinterop/nf-holographicspaceinterop-iholographicspaceinterop-createforwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/holographicspaceinterop/nf-holographicspaceinterop-iholographicspaceinterop-createforwindow
     HRESULT CreateForWindow(HWND window, const(GUID)* riid, void** holographicSpace);
 }
 
 @GUID("af86e2e0-b12d-4c6a-9c5a-d7aa65101e90")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inspectable/nn-inspectable-iinspectable))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inspectable/nn-inspectable-iinspectable
 interface IInspectable : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inspectable/nf-inspectable-iinspectable-getiids))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inspectable/nf-inspectable-iinspectable-getiids
     HRESULT GetIids(uint* iidCount, GUID** iids);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inspectable/nf-inspectable-iinspectable-getruntimeclassname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inspectable/nf-inspectable-iinspectable-getruntimeclassname
     HRESULT GetRuntimeClassName(HSTRING* className);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inspectable/nf-inspectable-iinspectable-gettrustlevel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inspectable/nf-inspectable-iinspectable-gettrustlevel
     HRESULT GetTrustLevel(TrustLevel* trustLevel);
 }
 
 @GUID("d3ee12ad-3865-4362-9746-b75a682df0e6")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/accountssettingspaneinterop/nn-accountssettingspaneinterop-iaccountssettingspaneinterop))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accountssettingspaneinterop/nn-accountssettingspaneinterop-iaccountssettingspaneinterop
 interface IAccountsSettingsPaneInterop : IInspectable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/accountssettingspaneinterop/nf-accountssettingspaneinterop-iaccountssettingspaneinterop-getforwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accountssettingspaneinterop/nf-accountssettingspaneinterop-iaccountssettingspaneinterop-getforwindow
     HRESULT GetForWindow(HWND appWindow, const(GUID)* riid, void** accountsSettingsPane);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/accountssettingspaneinterop/nf-accountssettingspaneinterop-iaccountssettingspaneinterop-showmanageaccountsforwindowasync))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accountssettingspaneinterop/nf-accountssettingspaneinterop-iaccountssettingspaneinterop-showmanageaccountsforwindowasync
     HRESULT ShowManageAccountsForWindowAsync(HWND appWindow, const(GUID)* riid, void** asyncAction);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/accountssettingspaneinterop/nf-accountssettingspaneinterop-iaccountssettingspaneinterop-showaddaccountforwindowasync))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accountssettingspaneinterop/nf-accountssettingspaneinterop-iaccountssettingspaneinterop-showaddaccountforwindowasync
     HRESULT ShowAddAccountForWindowAsync(HWND appWindow, const(GUID)* riid, void** asyncAction);
 }
 
@@ -556,30 +566,30 @@ interface ICastingSourceInfo : IUnknown
 }
 
 @GUID("5ad8cba7-4c01-4dac-9074-827894292d63")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dragdropinterop/nn-dragdropinterop-idragdropmanagerinterop))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dragdropinterop/nn-dragdropinterop-idragdropmanagerinterop
 interface IDragDropManagerInterop : IInspectable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dragdropinterop/nf-dragdropinterop-idragdropmanagerinterop-getforwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dragdropinterop/nf-dragdropinterop-idragdropmanagerinterop-getforwindow
     HRESULT GetForWindow(HWND hwnd, const(GUID)* riid, void** ppv);
 }
 
 @GUID("75cf2c57-9195-4931-8332-f0b409e916af")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.14393))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inputpaneinterop/nn-inputpaneinterop-iinputpaneinterop))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inputpaneinterop/nn-inputpaneinterop-iinputpaneinterop
 interface IInputPaneInterop : IInspectable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inputpaneinterop/nf-inputpaneinterop-iinputpaneinterop-getforwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inputpaneinterop/nf-inputpaneinterop-iinputpaneinterop-getforwindow
     HRESULT GetForWindow(HWND appWindow, const(GUID)* riid, void** inputPane);
 }
 
 @GUID("24394699-1f2c-4eb3-8cd7-0ec1da42a540")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/playtomanagerinterop/nn-playtomanagerinterop-iplaytomanagerinterop))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/playtomanagerinterop/nn-playtomanagerinterop-iplaytomanagerinterop
 interface IPlayToManagerInterop : IInspectable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/playtomanagerinterop/nf-playtomanagerinterop-iplaytomanagerinterop-getforwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/playtomanagerinterop/nf-playtomanagerinterop-iplaytomanagerinterop-getforwindow
     HRESULT GetForWindow(HWND appWindow, const(GUID)* riid, void** playToManager);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/playtomanagerinterop/nf-playtomanagerinterop-iplaytomanagerinterop-showplaytouiforwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/playtomanagerinterop/nf-playtomanagerinterop-iplaytomanagerinterop-showplaytouiforwindow
     HRESULT ShowPlayToUIForWindow(HWND appWindow);
 }
 
@@ -592,53 +602,53 @@ interface ICorrelationVectorInformation : IInspectable
 }
 
 @GUID("3694dbf9-8f68-44be-8ff5-195c98ede8a6")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/uiviewsettingsinterop/nn-uiviewsettingsinterop-iuiviewsettingsinterop))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiviewsettingsinterop/nn-uiviewsettingsinterop-iuiviewsettingsinterop
 interface IUIViewSettingsInterop : IInspectable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/uiviewsettingsinterop/nf-uiviewsettingsinterop-iuiviewsettingsinterop-getforwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/uiviewsettingsinterop/nf-uiviewsettingsinterop-iuiviewsettingsinterop-getforwindow
     HRESULT GetForWindow(HWND hwnd, const(GUID)* riid, void** ppv);
 }
 
 @GUID("1ade314d-0e0a-40d9-824c-9a088a50059f")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/useractivityinterop/nn-useractivityinterop-iuseractivityinterop))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/useractivityinterop/nn-useractivityinterop-iuseractivityinterop
 interface IUserActivityInterop : IInspectable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/useractivityinterop/nf-useractivityinterop-iuseractivityinterop-createsessionforwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/useractivityinterop/nf-useractivityinterop-iuseractivityinterop-createsessionforwindow
     HRESULT CreateSessionForWindow(HWND window, const(GUID)* iid, void** value);
 }
 
 @GUID("c15df8bc-8844-487a-b85b-7578e0f61419")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/useractivityinterop/nn-useractivityinterop-iuseractivitysourcehostinterop))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/useractivityinterop/nn-useractivityinterop-iuseractivitysourcehostinterop
 interface IUserActivitySourceHostInterop : IInspectable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/useractivityinterop/nf-useractivityinterop-iuseractivitysourcehostinterop-setactivitysourcehost))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/useractivityinterop/nf-useractivityinterop-iuseractivitysourcehostinterop-setactivitysourcehost
     HRESULT SetActivitySourceHost(HSTRING activitySourceHost);
 }
 
 @GUID("dd69f876-9699-4715-9095-e37ea30dfa1b")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/useractivityinterop/nn-useractivityinterop-iuseractivityrequestmanagerinterop))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/useractivityinterop/nn-useractivityinterop-iuseractivityrequestmanagerinterop
 interface IUserActivityRequestManagerInterop : IInspectable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/useractivityinterop/nf-useractivityinterop-iuseractivityrequestmanagerinterop-getforwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/useractivityinterop/nf-useractivityinterop-iuseractivityrequestmanagerinterop-getforwindow
     HRESULT GetForWindow(HWND window, const(GUID)* iid, void** value);
 }
 
 @GUID("39e050c3-4e74-441a-8dc0-b81104df949c")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/userconsentverifierinterop/nn-userconsentverifierinterop-iuserconsentverifierinterop))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/userconsentverifierinterop/nn-userconsentverifierinterop-iuserconsentverifierinterop
 interface IUserConsentVerifierInterop : IInspectable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/userconsentverifierinterop/nf-userconsentverifierinterop-iuserconsentverifierinterop-requestverificationforwindowasync))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/userconsentverifierinterop/nf-userconsentverifierinterop-iuserconsentverifierinterop-requestverificationforwindowasync
     HRESULT RequestVerificationForWindowAsync(HWND appWindow, HSTRING message, const(GUID)* riid, 
                                               void** asyncOperation);
 }
 
 @GUID("f4b8e804-811e-4436-b69c-44cb67b72084")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthenticationcoremanagerinterop/nn-webauthenticationcoremanagerinterop-iwebauthenticationcoremanagerinterop))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthenticationcoremanagerinterop/nn-webauthenticationcoremanagerinterop-iwebauthenticationcoremanagerinterop
 interface IWebAuthenticationCoreManagerInterop : IInspectable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthenticationcoremanagerinterop/nf-webauthenticationcoremanagerinterop-iwebauthenticationcoremanagerinterop-requesttokenforwindowasync))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthenticationcoremanagerinterop/nf-webauthenticationcoremanagerinterop-iwebauthenticationcoremanagerinterop-requesttokenforwindowasync
     HRESULT RequestTokenForWindowAsync(HWND appWindow, IInspectable request, const(GUID)* riid, void** asyncInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthenticationcoremanagerinterop/nf-webauthenticationcoremanagerinterop-iwebauthenticationcoremanagerinterop-requesttokenwithwebaccountforwindowasync))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthenticationcoremanagerinterop/nf-webauthenticationcoremanagerinterop-iwebauthenticationcoremanagerinterop-requesttokenwithwebaccountforwindowasync
     HRESULT RequestTokenWithWebAccountForWindowAsync(HWND appWindow, IInspectable request, IInspectable webAccount, 
                                                      const(GUID)* riid, void** asyncInfo);
 }
@@ -646,146 +656,146 @@ interface IWebAuthenticationCoreManagerInterop : IInspectable
 @GUID("82ba7092-4c88-427d-a7bc-16dd93feb67e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/restrictederrorinfo/nn-restrictederrorinfo-irestrictederrorinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/restrictederrorinfo/nn-restrictederrorinfo-irestrictederrorinfo
 interface IRestrictedErrorInfo : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/restrictederrorinfo/nf-restrictederrorinfo-irestrictederrorinfo-geterrordetails))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/restrictederrorinfo/nf-restrictederrorinfo-irestrictederrorinfo-geterrordetails
     HRESULT GetErrorDetails(BSTR* description, HRESULT* error, BSTR* restrictedDescription, BSTR* capabilitySid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/restrictederrorinfo/nf-restrictederrorinfo-irestrictederrorinfo-getreference))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/restrictederrorinfo/nf-restrictederrorinfo-irestrictederrorinfo-getreference
     HRESULT GetReference(BSTR* reference);
 }
 
 @GUID("04a2dbf3-df83-116c-0946-0812abf6e07d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/restrictederrorinfo/nn-restrictederrorinfo-ilanguageexceptionerrorinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/restrictederrorinfo/nn-restrictederrorinfo-ilanguageexceptionerrorinfo
 interface ILanguageExceptionErrorInfo : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/restrictederrorinfo/nf-restrictederrorinfo-ilanguageexceptionerrorinfo-getlanguageexception))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/restrictederrorinfo/nf-restrictederrorinfo-ilanguageexceptionerrorinfo-getlanguageexception
     HRESULT GetLanguageException(IUnknown* languageException);
 }
 
 @GUID("feb5a271-a6cd-45ce-880a-696706badc65")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/restrictederrorinfo/nn-restrictederrorinfo-ilanguageexceptiontransform))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/restrictederrorinfo/nn-restrictederrorinfo-ilanguageexceptiontransform
 interface ILanguageExceptionTransform : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/restrictederrorinfo/nf-restrictederrorinfo-ilanguageexceptiontransform-gettransformedrestrictederrorinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/restrictederrorinfo/nf-restrictederrorinfo-ilanguageexceptiontransform-gettransformedrestrictederrorinfo
     HRESULT GetTransformedRestrictedErrorInfo(IRestrictedErrorInfo* restrictedErrorInfo);
 }
 
 @GUID("cbe53fb5-f967-4258-8d34-42f5e25833de")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/restrictederrorinfo/nn-restrictederrorinfo-ilanguageexceptionstackbacktrace))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/restrictederrorinfo/nn-restrictederrorinfo-ilanguageexceptionstackbacktrace
 interface ILanguageExceptionStackBackTrace : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/restrictederrorinfo/nf-restrictederrorinfo-ilanguageexceptionstackbacktrace-getstackbacktrace))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/restrictederrorinfo/nf-restrictederrorinfo-ilanguageexceptionstackbacktrace-getstackbacktrace
     HRESULT GetStackBackTrace(uint maxFramesToCapture, size_t* stackBackTrace, uint* framesCaptured);
 }
 
 @GUID("5746e5c4-5b97-424c-b620-2822915734dd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/restrictederrorinfo/nn-restrictederrorinfo-ilanguageexceptionerrorinfo2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/restrictederrorinfo/nn-restrictederrorinfo-ilanguageexceptionerrorinfo2
 interface ILanguageExceptionErrorInfo2 : ILanguageExceptionErrorInfo
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/restrictederrorinfo/nf-restrictederrorinfo-ilanguageexceptionerrorinfo2-getpreviouslanguageexceptionerrorinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/restrictederrorinfo/nf-restrictederrorinfo-ilanguageexceptionerrorinfo2-getpreviouslanguageexceptionerrorinfo
     HRESULT GetPreviousLanguageExceptionErrorInfo(ILanguageExceptionErrorInfo2* previousLanguageExceptionErrorInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/restrictederrorinfo/nf-restrictederrorinfo-ilanguageexceptionerrorinfo2-capturepropagationcontext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/restrictederrorinfo/nf-restrictederrorinfo-ilanguageexceptionerrorinfo2-capturepropagationcontext
     HRESULT CapturePropagationContext(IUnknown languageException);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/restrictederrorinfo/nf-restrictederrorinfo-ilanguageexceptionerrorinfo2-getpropagationcontexthead))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/restrictederrorinfo/nf-restrictederrorinfo-ilanguageexceptionerrorinfo2-getpropagationcontexthead
     HRESULT GetPropagationContextHead(ILanguageExceptionErrorInfo2* propagatedLanguageExceptionErrorInfoHead);
 }
 
 @GUID("00000035-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/activation/nn-activation-iactivationfactory))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/activation/nn-activation-iactivationfactory
 interface IActivationFactory : IInspectable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/activation/nf-activation-iactivationfactory-activateinstance))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/activation/nf-activation-iactivationfactory-activateinstance
     HRESULT ActivateInstance(IInspectable* instance);
 }
 
 @GUID("905a0fef-bc53-11df-8c49-001e4fc686da")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/robuffer/ns-robuffer-ibufferbyteaccess))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/robuffer/ns-robuffer-ibufferbyteaccess
 interface IBufferByteAccess : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/robuffer/nf-robuffer-ibufferbyteaccess-buffer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/robuffer/nf-robuffer-ibufferbyteaccess-buffer
     HRESULT Buffer(ubyte** value);
 }
 
 @GUID("5b0d3235-4dba-4d44-865e-8f1d0e4fd04d")
 interface IMemoryBufferByteAccess : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/memorybuffer/nf-memorybuffer-imemorybufferbyteaccess-getbuffer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/memorybuffer/nf-memorybuffer-imemorybufferbyteaccess-getbuffer
     HRESULT GetBuffer(ubyte** value, uint* capacity);
 }
 
 @GUID("00000037-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/weakreference/nn-weakreference-iweakreference))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/weakreference/nn-weakreference-iweakreference
 interface IWeakReference : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/weakreference/nf-weakreference-iweakreference-resolve(t_)))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/weakreference/nf-weakreference-iweakreference-resolve(t_)
     HRESULT Resolve(const(GUID)* riid, void** objectReference);
 }
 
 @GUID("00000038-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/weakreference/nn-weakreference-iweakreferencesource))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/weakreference/nn-weakreference-iweakreferencesource
 interface IWeakReferenceSource : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/weakreference/nf-weakreference-iweakreferencesource-getweakreference))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/weakreference/nf-weakreference-iweakreferencesource-getweakreference
     HRESULT GetWeakReference(IWeakReference* weakReference);
 }
 
 @GUID("ddb0472d-c911-4a1f-86d9-dc3d71a95f5a")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/systemmediatransportcontrolsinterop/nn-systemmediatransportcontrolsinterop-isystemmediatransportcontrolsinterop))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/systemmediatransportcontrolsinterop/nn-systemmediatransportcontrolsinterop-isystemmediatransportcontrolsinterop
 interface ISystemMediaTransportControlsInterop : IInspectable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/systemmediatransportcontrolsinterop/nf-systemmediatransportcontrolsinterop-isystemmediatransportcontrolsinterop-getforwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/systemmediatransportcontrolsinterop/nf-systemmediatransportcontrolsinterop-isystemmediatransportcontrolsinterop-getforwindow
     HRESULT GetForWindow(HWND appWindow, const(GUID)* riid, void** mediaTransportControl);
 }
 
 @GUID("6571a721-643d-43d4-aca4-6b6f5f30f1ad")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sharewindowcommandsourceinterop/nn-sharewindowcommandsourceinterop-isharewindowcommandeventargsinterop))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sharewindowcommandsourceinterop/nn-sharewindowcommandsourceinterop-isharewindowcommandeventargsinterop
 interface IShareWindowCommandEventArgsInterop : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sharewindowcommandsourceinterop/nf-sharewindowcommandsourceinterop-isharewindowcommandeventargsinterop-getwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sharewindowcommandsourceinterop/nf-sharewindowcommandsourceinterop-isharewindowcommandeventargsinterop-getwindow
     HRESULT GetWindow(HWND* value);
 }
 
 @GUID("461a191f-8424-43a6-a0fa-3451a22f56ab")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sharewindowcommandsourceinterop/nn-sharewindowcommandsourceinterop-isharewindowcommandsourceinterop))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sharewindowcommandsourceinterop/nn-sharewindowcommandsourceinterop-isharewindowcommandsourceinterop
 interface IShareWindowCommandSourceInterop : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sharewindowcommandsourceinterop/nf-sharewindowcommandsourceinterop-isharewindowcommandsourceinterop-getforwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sharewindowcommandsourceinterop/nf-sharewindowcommandsourceinterop-isharewindowcommandsourceinterop-getforwindow
     HRESULT GetForWindow(HWND appWindow, const(GUID)* riid, void** shareWindowCommandSource);
 }
 
 @GUID("f5f84c8f-cfd0-4cd6-b66b-c5d26ff1689d")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/imessagedispatcher/nn-imessagedispatcher-imessagedispatcher))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imessagedispatcher/nn-imessagedispatcher-imessagedispatcher
 interface IMessageDispatcher : IInspectable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/imessagedispatcher/nf-imessagedispatcher-imessagedispatcher-pumpmessages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imessagedispatcher/nf-imessagedispatcher-imessagedispatcher-pumpmessages
     HRESULT PumpMessages();
 }
 
 @GUID("45d64a29-a63e-4cb6-b498-5781d298cb4f")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/corewindow/nn-corewindow-icorewindowinterop))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/corewindow/nn-corewindow-icorewindowinterop
 interface ICoreWindowInterop : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/corewindow/nf-corewindow-icorewindowinterop-get_windowhandle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/corewindow/nf-corewindow-icorewindowinterop-get_windowhandle
     HRESULT get_WindowHandle(HWND* hwnd);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/corewindow/nf-corewindow-icorewindowinterop-put_messagehandled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/corewindow/nf-corewindow-icorewindowinterop-put_messagehandled
     HRESULT put_MessageHandled(ubyte value);
 }
 
 @GUID("40bfe3e3-b75a-4479-ac96-475365749bb8")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/corewindow/nn-corewindow-icoreinputinterop))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/corewindow/nn-corewindow-icoreinputinterop
 interface ICoreInputInterop : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/corewindow/nf-corewindow-icoreinputinterop-setinputsource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/corewindow/nf-corewindow-icoreinputinterop-setinputsource
     HRESULT SetInputSource(IUnknown value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/corewindow/nf-corewindow-icoreinputinterop-put_messagehandled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/corewindow/nf-corewindow-icoreinputinterop-put_messagehandled
     HRESULT put_MessageHandled(ubyte value);
 }
 

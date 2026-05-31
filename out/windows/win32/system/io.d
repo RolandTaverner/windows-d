@@ -3,7 +3,7 @@
 module windows.win32.system.io;
 
 public import windows.core;
-public import windows.win32.foundation : BOOL, HANDLE, NTSTATUS;
+public import windows.win32.foundation.foundation : BOOL, HANDLE, NTSTATUS;
 
 extern(Windows) @nogc nothrow:
 
@@ -17,16 +17,24 @@ alias PIO_APC_ROUTINE = void function(void* ApcContext, IO_STATUS_BLOCK* IoStatu
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minwinbase/ns-minwinbase-overlapped))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minwinbase/ns-minwinbase-overlapped
 struct OVERLAPPED
 {
-    size_t              Internal;
-    size_t              InternalHigh;
-    _Anonymous_e__Union Anonymous;
-    HANDLE              hEvent;
+    size_t Internal;
+    size_t InternalHigh;
+    union
+    {
+        struct
+        {
+            uint Offset;
+            uint OffsetHigh;
+        }
+        void* Pointer;
+    }
+    HANDLE hEvent;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minwinbase/ns-minwinbase-overlapped_entry))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minwinbase/ns-minwinbase-overlapped_entry
 struct OVERLAPPED_ENTRY
 {
     size_t      lpCompletionKey;
@@ -37,8 +45,12 @@ struct OVERLAPPED_ENTRY
 
 struct IO_STATUS_BLOCK
 {
-    _Anonymous_e__Union Anonymous;
-    size_t              Information;
+    union
+    {
+        NTSTATUS Status;
+        void*    Pointer;
+    }
+    size_t Information;
 }
 
 // Functions

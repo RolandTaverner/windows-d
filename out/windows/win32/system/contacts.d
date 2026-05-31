@@ -3,14 +3,15 @@
 module windows.win32.system.contacts;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, FILETIME, HRESULT, PWSTR;
-public import windows.win32.system.com : IStream, IUnknown;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, FILETIME, HRESULT, PWSTR;
+public import windows.win32.system.com.com : IStream, IUnknown;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
+
 
 alias CONTACT_AGGREGATION_CREATE_OR_OPEN_OPTIONS = int;
 enum : int
@@ -18,6 +19,7 @@ enum : int
     CA_CREATE_LOCAL    = 0x00000000,
     CA_CREATE_EXTERNAL = 0x00000001,
 }
+
 alias CONTACT_AGGREGATION_COLLECTION_OPTIONS = int;
 enum : int
 {
@@ -29,12 +31,12 @@ enum : int
 // Constants
 
 
-enum uint CGD_DEFAULT = 0x00000000;
-enum uint CGD_UNKNOWN_PROPERTY = 0x00000000;
-enum uint CGD_STRING_PROPERTY = 0x00000001;
-enum uint CGD_DATE_PROPERTY = 0x00000002;
-enum uint CGD_BINARY_PROPERTY = 0x00000004;
-enum uint CGD_ARRAY_NODE = 0x00000008;
+enum uint CGD_DEFAULT = 0x00000000U;
+enum uint CGD_UNKNOWN_PROPERTY = 0x00000000U;
+enum uint CGD_STRING_PROPERTY = 0x00000001U;
+enum uint CGD_DATE_PROPERTY = 0x00000002U;
+enum uint CGD_BINARY_PROPERTY = 0x00000004U;
+enum uint CGD_ARRAY_NODE = 0x00000008U;
 enum GUID CLSID_ContactAggregationManager = GUID("96c8ad95-c199-44de-b34e-ac33c442df39");
 
 enum : const(wchar)*
@@ -166,70 +168,70 @@ struct ContactManager;
 
 @GUID("ad553d98-deb1-474a-8e17-fc0c2075b738")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontact/nn-icontact-icontactmanager))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nn-icontact-icontactmanager
 interface IContactManager : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactmanager-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactmanager-initialize
     HRESULT Initialize(const(PWSTR) pszAppName, const(PWSTR) pszAppVersion);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactmanager-load))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactmanager-load
     HRESULT Load(const(PWSTR) pszContactID, IContact* ppContact);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactmanager-mergecontactids))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactmanager-mergecontactids
     HRESULT MergeContactIDs(const(PWSTR) pszNewContactID, const(PWSTR) pszOldContactID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactmanager-getmecontact))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactmanager-getmecontact
     HRESULT GetMeContact(IContact* ppMeContact);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactmanager-setmecontact))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactmanager-setmecontact
     HRESULT SetMeContact(IContact pMeContact);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactmanager-getcontactcollection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactmanager-getcontactcollection
     HRESULT GetContactCollection(IContactCollection* ppContactCollection);
 }
 
 @GUID("b6afa338-d779-11d9-8bde-f66bad1e3f3a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontact/nn-icontact-icontactcollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nn-icontact-icontactcollection
 interface IContactCollection : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactcollection-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactcollection-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactcollection-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactcollection-next
     HRESULT Next();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactcollection-getcurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactcollection-getcurrent
     HRESULT GetCurrent(IContact* ppContact);
 }
 
 @GUID("70dd27dd-5cbd-46e8-bef0-23b6b346288f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontact/nn-icontact-icontactproperties))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nn-icontact-icontactproperties
 interface IContactProperties : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactproperties-getstring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactproperties-getstring
     HRESULT GetString(const(PWSTR) pszPropertyName, uint dwFlags, PWSTR pszValue, uint cchValue, 
                       uint* pdwcchPropertyValueRequired);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactproperties-getdate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactproperties-getdate
     HRESULT GetDate(const(PWSTR) pszPropertyName, uint dwFlags, FILETIME* pftDateTime);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactproperties-getbinary))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactproperties-getbinary
     HRESULT GetBinary(const(PWSTR) pszPropertyName, uint dwFlags, PWSTR pszContentType, uint cchContentType, 
                       uint* pdwcchContentTypeRequired, IStream* ppStream);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactproperties-getlabels))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactproperties-getlabels
     HRESULT GetLabels(const(PWSTR) pszArrayElementName, uint dwFlags, PWSTR pszLabels, uint cchLabels, 
                       uint* pdwcchLabelsRequired);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactproperties-setstring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactproperties-setstring
     HRESULT SetString(const(PWSTR) pszPropertyName, uint dwFlags, const(PWSTR) pszValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactproperties-setdate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactproperties-setdate
     HRESULT SetDate(const(PWSTR) pszPropertyName, uint dwFlags, FILETIME ftDateTime);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactproperties-setbinary))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactproperties-setbinary
     HRESULT SetBinary(const(PWSTR) pszPropertyName, uint dwFlags, const(PWSTR) pszContentType, IStream pStream);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactproperties-setlabels))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactproperties-setlabels
     HRESULT SetLabels(const(PWSTR) pszArrayElementName, uint dwFlags, uint dwLabelCount, const(PWSTR)* ppszLabels);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactproperties-createarraynode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactproperties-createarraynode
     HRESULT CreateArrayNode(const(PWSTR) pszArrayName, uint dwFlags, BOOL fAppend, PWSTR pszNewArrayElementName, 
                             uint cchNewArrayElementName, uint* pdwcchNewArrayElementNameRequired);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactproperties-deleteproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactproperties-deleteproperty
     HRESULT DeleteProperty(const(PWSTR) pszPropertyName, uint dwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactproperties-deletearraynode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactproperties-deletearraynode
     HRESULT DeleteArrayNode(const(PWSTR) pszArrayElementName, uint dwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactproperties-deletelabels))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactproperties-deletelabels
     HRESULT DeleteLabels(const(PWSTR) pszArrayElementName, uint dwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactproperties-getpropertycollection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactproperties-getpropertycollection
     HRESULT GetPropertyCollection(IContactPropertyCollection* ppPropertyCollection, uint dwFlags, 
                                   const(PWSTR) pszMultiValueName, uint dwLabelCount, const(PWSTR)* ppszLabels, 
                                   BOOL fAnyLabelMatches);
@@ -237,35 +239,35 @@ interface IContactProperties : IUnknown
 
 @GUID("f941b671-bda7-4f77-884a-f46462f226a7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontact/nn-icontact-icontact))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nn-icontact-icontact
 interface IContact : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontact-getcontactid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontact-getcontactid
     HRESULT GetContactID(PWSTR pszContactID, uint cchContactID, uint* pdwcchContactIDRequired);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontact-getpath))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontact-getpath
     HRESULT GetPath(PWSTR pszPath, uint cchPath, uint* pdwcchPathRequired);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontact-commitchanges))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontact-commitchanges
     HRESULT CommitChanges(uint dwCommitFlags);
 }
 
 @GUID("ffd3adf8-fa64-4328-b1b6-2e0db509cb3c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontact/nn-icontact-icontactpropertycollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nn-icontact-icontactpropertycollection
 interface IContactPropertyCollection : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactpropertycollection-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactpropertycollection-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactpropertycollection-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactpropertycollection-next
     HRESULT Next();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactpropertycollection-getpropertyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactpropertycollection-getpropertyname
     HRESULT GetPropertyName(PWSTR pszPropertyName, uint cchPropertyName, uint* pdwcchPropertyNameRequired);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactpropertycollection-getpropertytype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactpropertycollection-getpropertytype
     HRESULT GetPropertyType(uint* pdwType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactpropertycollection-getpropertyversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactpropertycollection-getpropertyversion
     HRESULT GetPropertyVersion(uint* pdwVersion);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactpropertycollection-getpropertymodificationdate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactpropertycollection-getpropertymodificationdate
     HRESULT GetPropertyModificationDate(FILETIME* pftModificationDate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactpropertycollection-getpropertyarrayelementid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontact/nf-icontact-icontactpropertycollection-getpropertyarrayelementid
     HRESULT GetPropertyArrayElementID(PWSTR pszArrayElementID, uint cchArrayElementID, 
                                       uint* pdwcchArrayElementIDRequired);
 }

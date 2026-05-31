@@ -3,14 +3,15 @@
 module windows.win32.ui.shell.common;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : HRESULT, PWSTR;
-public import windows.win32.system.com : IUnknown;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : HRESULT, PWSTR;
+public import windows.win32.system.com.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
+
 
 alias STRRET_TYPE = int;
 enum : int
@@ -19,7 +20,8 @@ enum : int
     STRRET_OFFSET = 0x00000001,
     STRRET_CSTR   = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/shtypes/ne-shtypes-perceived))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shtypes/ne-shtypes-perceived
 alias PERCEIVED = int;
 enum : int
 {
@@ -40,7 +42,8 @@ enum : int
     PERCEIVED_TYPE_CONTACTS    = 0x0000000a,
     PERCEIVED_TYPE_LAST        = 0x0000000a,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/shtypes/ne-shtypes-shcolstate))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shtypes/ne-shtypes-shcolstate
 alias SHCOLSTATE = int;
 enum : int
 {
@@ -65,7 +68,8 @@ enum : int
     SHCOLSTATE_FIXED_RATIO        = 0x00004000,
     SHCOLSTATE_DISPLAYMASK        = 0x0000f000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/shtypes/ne-shtypes-device_scale_factor))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shtypes/ne-shtypes-device_scale_factor
 alias DEVICE_SCALE_FACTOR = int;
 enum : int
 {
@@ -93,19 +97,19 @@ enum : int
 
 enum : uint
 {
-    PERCEIVEDFLAG_UNDEFINED     = 0x00000000,
-    PERCEIVEDFLAG_SOFTCODED     = 0x00000001,
-    PERCEIVEDFLAG_HARDCODED     = 0x00000002,
-    PERCEIVEDFLAG_NATIVESUPPORT = 0x00000004,
-    PERCEIVEDFLAG_GDIPLUS       = 0x00000010,
-    PERCEIVEDFLAG_WMSDK         = 0x00000020,
-    PERCEIVEDFLAG_ZIPFOLDER     = 0x00000040,
+    PERCEIVEDFLAG_UNDEFINED     = 0x00000000U,
+    PERCEIVEDFLAG_SOFTCODED     = 0x00000001U,
+    PERCEIVEDFLAG_HARDCODED     = 0x00000002U,
+    PERCEIVEDFLAG_NATIVESUPPORT = 0x00000004U,
+    PERCEIVEDFLAG_GDIPLUS       = 0x00000010U,
+    PERCEIVEDFLAG_WMSDK         = 0x00000020U,
+    PERCEIVEDFLAG_ZIPFOLDER     = 0x00000040U,
 }
 
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/shtypes/ns-shtypes-shitemid))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shtypes/ns-shtypes-shitemid
 struct SHITEMID
 {
 align (1):
@@ -113,21 +117,26 @@ align (1):
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] abID;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/shtypes/ns-shtypes-itemidlist))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shtypes/ns-shtypes-itemidlist
 struct ITEMIDLIST
 {
 align (1):
     SHITEMID mkid;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/shtypes/ns-shtypes-strret))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shtypes/ns-shtypes-strret
 struct STRRET
 {
-    uint                uType;
-    _Anonymous_e__Union Anonymous;
+    uint uType;
+    union
+    {
+        PWSTR      pOleStr;
+        uint       uOffset;
+        ubyte[260] cStr;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/shtypes/ns-shtypes-shelldetails))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shtypes/ns-shtypes-shelldetails
 struct SHELLDETAILS
 {
 align (1):
@@ -136,7 +145,7 @@ align (1):
     STRRET str;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/shtypes/ns-shtypes-comdlg_filterspec))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shtypes/ns-shtypes-comdlg_filterspec
 struct COMDLG_FILTERSPEC
 {
     const(PWSTR) pszName;
@@ -147,27 +156,27 @@ struct COMDLG_FILTERSPEC
 
 @GUID("92ca9dcd-5622-4bba-a805-5e9f541bd8c9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objectarray/nn-objectarray-iobjectarray))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objectarray/nn-objectarray-iobjectarray
 interface IObjectArray : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objectarray/nf-objectarray-iobjectarray-getcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objectarray/nf-objectarray-iobjectarray-getcount
     HRESULT GetCount(uint* pcObjects);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objectarray/nf-objectarray-iobjectarray-getat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objectarray/nf-objectarray-iobjectarray-getat
     HRESULT GetAt(uint uiIndex, const(GUID)* riid, void** ppv);
 }
 
 @GUID("5632b1a4-e38a-400a-928a-d4cd63230295")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objectarray/nn-objectarray-iobjectcollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objectarray/nn-objectarray-iobjectcollection
 interface IObjectCollection : IObjectArray
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objectarray/nf-objectarray-iobjectcollection-addobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objectarray/nf-objectarray-iobjectcollection-addobject
     HRESULT AddObject(IUnknown punk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objectarray/nf-objectarray-iobjectcollection-addfromarray))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objectarray/nf-objectarray-iobjectcollection-addfromarray
     HRESULT AddFromArray(IObjectArray poaSource);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objectarray/nf-objectarray-iobjectcollection-removeobjectat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objectarray/nf-objectarray-iobjectcollection-removeobjectat
     HRESULT RemoveObjectAt(uint uiIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objectarray/nf-objectarray-iobjectcollection-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objectarray/nf-objectarray-iobjectcollection-clear
     HRESULT Clear();
 }
 

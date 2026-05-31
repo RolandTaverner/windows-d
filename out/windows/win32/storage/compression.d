@@ -3,22 +3,24 @@
 module windows.win32.storage.compression;
 
 public import windows.core;
-public import windows.win32.foundation : BOOL;
+public import windows.win32.foundation.foundation : BOOL;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
+
 alias COMPRESS_ALGORITHM = uint;
 enum : uint
 {
-    COMPRESS_ALGORITHM_MSZIP       = 0x00000002,
-    COMPRESS_ALGORITHM_XPRESS      = 0x00000003,
-    COMPRESS_ALGORITHM_XPRESS_HUFF = 0x00000004,
-    COMPRESS_ALGORITHM_LZMS        = 0x00000005,
+    COMPRESS_ALGORITHM_MSZIP       = 0x00000002U,
+    COMPRESS_ALGORITHM_XPRESS      = 0x00000003U,
+    COMPRESS_ALGORITHM_XPRESS_HUFF = 0x00000004U,
+    COMPRESS_ALGORITHM_LZMS        = 0x00000005U,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/compressapi/ne-compressapi-compress_information_class))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/compressapi/ne-compressapi-compress_information_class
 alias COMPRESS_INFORMATION_CLASS = int;
 enum : int
 {
@@ -32,10 +34,10 @@ enum : int
 
 enum : uint
 {
-    COMPRESS_ALGORITHM_INVALID = 0x00000000,
-    COMPRESS_ALGORITHM_NULL    = 0x00000001,
-    COMPRESS_ALGORITHM_MAX     = 0x00000006,
-    COMPRESS_RAW               = 0x20000000,
+    COMPRESS_ALGORITHM_INVALID = 0x00000000U,
+    COMPRESS_ALGORITHM_NULL    = 0x00000001U,
+    COMPRESS_ALGORITHM_MAX     = 0x00000006U,
+    COMPRESS_RAW               = 0x20000000U,
 }
 
 // Callbacks
@@ -62,7 +64,7 @@ struct DECOMPRESSOR_HANDLE
     void* Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/compressapi/ns-compressapi-compress_allocation_routines))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/compressapi/ns-compressapi-compress_allocation_routines
 struct COMPRESS_ALLOCATION_ROUTINES
 {
     PFN_COMPRESS_ALLOCATE Allocate;

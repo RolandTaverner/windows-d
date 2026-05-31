@@ -3,8 +3,8 @@
 module windows.win32.system.winrt.isolation;
 
 public import windows.core;
-public import windows.win32.foundation : HRESULT, HWND;
-public import windows.win32.system.com : IUnknown;
+public import windows.win32.foundation.foundation : HRESULT, HWND;
+public import windows.win32.system.com.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 

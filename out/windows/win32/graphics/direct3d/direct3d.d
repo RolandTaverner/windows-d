@@ -1,11 +1,11 @@
 // Written in the D programming language.
 
-module windows.win32.graphics.direct3d;
+module windows.win32.graphics.direct3d.direct3d;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : HRESULT, PSTR, PWSTR;
-public import windows.win32.system.com : IUnknown;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : HRESULT, PSTR, PWSTR;
+public import windows.win32.system.com.com : IUnknown;
 public import windows.win32.system.services : SC_HANDLE;
 
 extern(Windows) @nogc nothrow:
@@ -13,7 +13,8 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_driver_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_driver_type
 alias D3D_DRIVER_TYPE = int;
 enum : int
 {
@@ -24,7 +25,8 @@ enum : int
     D3D_DRIVER_TYPE_SOFTWARE  = 0x00000004,
     D3D_DRIVER_TYPE_WARP      = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_feature_level))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_feature_level
 alias D3D_FEATURE_LEVEL = int;
 enum : int
 {
@@ -41,7 +43,8 @@ enum : int
     D3D_FEATURE_LEVEL_12_1        = 0x0000c100,
     D3D_FEATURE_LEVEL_12_2        = 0x0000c200,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_primitive_topology))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_primitive_topology
 alias D3D_PRIMITIVE_TOPOLOGY = int;
 enum : int
 {
@@ -141,7 +144,8 @@ enum : int
     D3D11_PRIMITIVE_TOPOLOGY_31_CONTROL_POINT_PATCHLIST = 0x0000003f,
     D3D11_PRIMITIVE_TOPOLOGY_32_CONTROL_POINT_PATCHLIST = 0x00000040,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_primitive))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_primitive
 alias D3D_PRIMITIVE = int;
 enum : int
 {
@@ -228,7 +232,8 @@ enum : int
     D3D11_PRIMITIVE_31_CONTROL_POINT_PATCH = 0x00000026,
     D3D11_PRIMITIVE_32_CONTROL_POINT_PATCH = 0x00000027,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_srv_dimension))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_srv_dimension
 alias D3D_SRV_DIMENSION = int;
 enum : int
 {
@@ -278,7 +283,8 @@ enum : int
     D3D11_SRV_DIMENSION_TEXTURECUBEARRAY   = 0x0000000a,
     D3D11_SRV_DIMENSION_BUFFEREX           = 0x0000000b,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_include_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_include_type
 alias D3D_INCLUDE_TYPE = int;
 enum : int
 {
@@ -287,7 +293,8 @@ enum : int
     D3D10_INCLUDE_LOCAL  = 0x00000000,
     D3D10_INCLUDE_SYSTEM = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_shader_variable_class))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_shader_variable_class
 alias D3D_SHADER_VARIABLE_CLASS = int;
 enum : int
 {
@@ -308,7 +315,8 @@ enum : int
     D3D11_SVC_INTERFACE_CLASS   = 0x00000006,
     D3D11_SVC_INTERFACE_POINTER = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_shader_variable_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_shader_variable_flags
 alias D3D_SHADER_VARIABLE_FLAGS = int;
 enum : int
 {
@@ -321,7 +329,8 @@ enum : int
     D3D11_SVF_INTERFACE_POINTER   = 0x00000004,
     D3D11_SVF_INTERFACE_PARAMETER = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_shader_variable_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_shader_variable_type
 alias D3D_SHADER_VARIABLE_TYPE = int;
 enum : int
 {
@@ -441,7 +450,8 @@ enum : int
     D3D11_SVT_APPEND_STRUCTURED_BUFFER  = 0x00000032,
     D3D11_SVT_CONSUME_STRUCTURED_BUFFER = 0x00000033,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_shader_input_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_shader_input_flags
 alias D3D_SHADER_INPUT_FLAGS = int;
 enum : int
 {
@@ -457,7 +467,8 @@ enum : int
     D3D10_SIF_TEXTURE_COMPONENT_1 = 0x00000008,
     D3D10_SIF_TEXTURE_COMPONENTS  = 0x0000000c,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_shader_input_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_shader_input_type
 alias D3D_SHADER_INPUT_TYPE = int;
 enum : int
 {
@@ -488,14 +499,16 @@ enum : int
     D3D11_SIT_UAV_CONSUME_STRUCTURED        = 0x0000000a,
     D3D11_SIT_UAV_RWSTRUCTURED_WITH_COUNTER = 0x0000000b,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_shader_cbuffer_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_shader_cbuffer_flags
 alias D3D_SHADER_CBUFFER_FLAGS = int;
 enum : int
 {
     D3D_CBF_USERPACKED   = 0x00000001,
     D3D10_CBF_USERPACKED = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_cbuffer_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_cbuffer_type
 alias D3D_CBUFFER_TYPE = int;
 enum : int
 {
@@ -510,7 +523,8 @@ enum : int
     D3D11_CT_INTERFACE_POINTERS = 0x00000002,
     D3D11_CT_RESOURCE_BIND_INFO = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_name))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_name
 alias D3D_NAME = int;
 enum : int
 {
@@ -569,7 +583,8 @@ enum : int
     D3D12_NAME_SHADINGRATE                   = 0x00000018,
     D3D12_NAME_CULLPRIMITIVE                 = 0x00000019,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_resource_return_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_resource_return_type
 alias D3D_RESOURCE_RETURN_TYPE = int;
 enum : int
 {
@@ -596,7 +611,8 @@ enum : int
     D3D11_RETURN_TYPE_DOUBLE    = 0x00000007,
     D3D11_RETURN_TYPE_CONTINUED = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_register_component_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_register_component_type
 alias D3D_REGISTER_COMPONENT_TYPE = int;
 enum : int
 {
@@ -621,7 +637,8 @@ enum : int
     D3D10_REGISTER_COMPONENT_SINT64  = 0x00000008,
     D3D10_REGISTER_COMPONENT_FLOAT64 = 0x00000009,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_tessellator_domain))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_tessellator_domain
 alias D3D_TESSELLATOR_DOMAIN = int;
 enum : int
 {
@@ -634,7 +651,8 @@ enum : int
     D3D11_TESSELLATOR_DOMAIN_TRI       = 0x00000002,
     D3D11_TESSELLATOR_DOMAIN_QUAD      = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_tessellator_partitioning))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_tessellator_partitioning
 alias D3D_TESSELLATOR_PARTITIONING = int;
 enum : int
 {
@@ -649,7 +667,8 @@ enum : int
     D3D11_TESSELLATOR_PARTITIONING_FRACTIONAL_ODD  = 0x00000003,
     D3D11_TESSELLATOR_PARTITIONING_FRACTIONAL_EVEN = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_tessellator_output_primitive))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_tessellator_output_primitive
 alias D3D_TESSELLATOR_OUTPUT_PRIMITIVE = int;
 enum : int
 {
@@ -664,7 +683,8 @@ enum : int
     D3D11_TESSELLATOR_OUTPUT_TRIANGLE_CW  = 0x00000003,
     D3D11_TESSELLATOR_OUTPUT_TRIANGLE_CCW = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_min_precision))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_min_precision
 alias D3D_MIN_PRECISION = int;
 enum : int
 {
@@ -677,7 +697,8 @@ enum : int
     D3D_MIN_PRECISION_ANY_16    = 0x000000f0,
     D3D_MIN_PRECISION_ANY_10    = 0x000000f1,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_interpolation_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_interpolation_mode
 alias D3D_INTERPOLATION_MODE = int;
 enum : int
 {
@@ -690,7 +711,8 @@ enum : int
     D3D_INTERPOLATION_LINEAR_SAMPLE                 = 0x00000006,
     D3D_INTERPOLATION_LINEAR_NOPERSPECTIVE_SAMPLE   = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_parameter_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcommon/ne-d3dcommon-d3d_parameter_flags
 alias D3D_PARAMETER_FLAGS = int;
 enum : int
 {
@@ -698,12 +720,14 @@ enum : int
     D3D_PF_IN   = 0x00000001,
     D3D_PF_OUT  = 0x00000002,
 }
+
 alias D3D_FORMAT_LAYOUT = int;
 enum : int
 {
     D3DFL_STANDARD = 0x00000000,
     D3DFL_CUSTOM   = 0xffffffff,
 }
+
 alias D3D_FORMAT_TYPE_LEVEL = int;
 enum : int
 {
@@ -711,6 +735,7 @@ enum : int
     D3DFTL_PARTIAL_TYPE = 0xfffffffe,
     D3DFTL_FULL_TYPE    = 0xffffffff,
 }
+
 alias D3D_FORMAT_COMPONENT_NAME = int;
 enum : int
 {
@@ -722,6 +747,7 @@ enum : int
     D3DFCN_S = 0x00000001,
     D3DFCN_X = 0x00000002,
 }
+
 alias D3D_FORMAT_COMPONENT_INTERPRETATION = int;
 enum : int
 {
@@ -734,12 +760,14 @@ enum : int
     D3DFCI_UNORM_SRGB       = 0x00000002,
     D3DFCI_BIASED_FIXED_2_8 = 0x00000003,
 }
+
 alias D3D_SHADER_CACHE_APP_REGISTRATION_SCOPE = int;
 enum : int
 {
     D3D_SHADER_CACHE_APP_REGISTRATION_SCOPE_USER   = 0x00000000,
     D3D_SHADER_CACHE_APP_REGISTRATION_SCOPE_SYSTEM = 0x00000001,
 }
+
 alias D3D_SHADER_CACHE_TARGET_FLAGS = int;
 enum : int
 {
@@ -749,77 +777,77 @@ enum : int
 // Constants
 
 
-enum uint D3D_FL9_1_REQ_TEXTURE1D_U_DIMENSION = 0x00000800;
-enum uint D3D_FL9_3_REQ_TEXTURE1D_U_DIMENSION = 0x00001000;
-enum uint D3D_FL9_1_REQ_TEXTURE2D_U_OR_V_DIMENSION = 0x00000800;
-enum uint D3D_FL9_3_REQ_TEXTURE2D_U_OR_V_DIMENSION = 0x00001000;
-enum uint D3D_FL9_1_REQ_TEXTURECUBE_DIMENSION = 0x00000200;
-enum uint D3D_FL9_3_REQ_TEXTURECUBE_DIMENSION = 0x00001000;
-enum uint D3D_FL9_1_REQ_TEXTURE3D_U_V_OR_W_DIMENSION = 0x00000100;
-enum uint D3D_FL9_1_DEFAULT_MAX_ANISOTROPY = 0x00000002;
-enum uint D3D_FL9_1_IA_PRIMITIVE_MAX_COUNT = 0x0000ffff;
-enum uint D3D_FL9_2_IA_PRIMITIVE_MAX_COUNT = 0x000fffff;
-enum uint D3D_FL9_1_SIMULTANEOUS_RENDER_TARGET_COUNT = 0x00000001;
-enum uint D3D_FL9_3_SIMULTANEOUS_RENDER_TARGET_COUNT = 0x00000004;
-enum uint D3D_FL9_1_MAX_TEXTURE_REPEAT = 0x00000080;
-enum uint D3D_FL9_2_MAX_TEXTURE_REPEAT = 0x00000800;
-enum uint D3D_FL9_3_MAX_TEXTURE_REPEAT = 0x00002000;
+enum uint D3D_FL9_1_REQ_TEXTURE1D_U_DIMENSION = 0x00000800U;
+enum uint D3D_FL9_3_REQ_TEXTURE1D_U_DIMENSION = 0x00001000U;
+enum uint D3D_FL9_1_REQ_TEXTURE2D_U_OR_V_DIMENSION = 0x00000800U;
+enum uint D3D_FL9_3_REQ_TEXTURE2D_U_OR_V_DIMENSION = 0x00001000U;
+enum uint D3D_FL9_1_REQ_TEXTURECUBE_DIMENSION = 0x00000200U;
+enum uint D3D_FL9_3_REQ_TEXTURECUBE_DIMENSION = 0x00001000U;
+enum uint D3D_FL9_1_REQ_TEXTURE3D_U_V_OR_W_DIMENSION = 0x00000100U;
+enum uint D3D_FL9_1_DEFAULT_MAX_ANISOTROPY = 0x00000002U;
+enum uint D3D_FL9_1_IA_PRIMITIVE_MAX_COUNT = 0x0000ffffU;
+enum uint D3D_FL9_2_IA_PRIMITIVE_MAX_COUNT = 0x000fffffU;
+enum uint D3D_FL9_1_SIMULTANEOUS_RENDER_TARGET_COUNT = 0x00000001U;
+enum uint D3D_FL9_3_SIMULTANEOUS_RENDER_TARGET_COUNT = 0x00000004U;
+enum uint D3D_FL9_1_MAX_TEXTURE_REPEAT = 0x00000080U;
+enum uint D3D_FL9_2_MAX_TEXTURE_REPEAT = 0x00000800U;
+enum uint D3D_FL9_3_MAX_TEXTURE_REPEAT = 0x00002000U;
 
 enum : uint
 {
-    D3D_SHADER_FEATURE_DOUBLES                                                        = 0x00000001,
-    D3D_SHADER_FEATURE_COMPUTE_SHADERS_PLUS_RAW_AND_STRUCTURED_BUFFERS_VIA_SHADER_4_X = 0x00000002,
+    D3D_SHADER_FEATURE_DOUBLES                                                        = 0x00000001U,
+    D3D_SHADER_FEATURE_COMPUTE_SHADERS_PLUS_RAW_AND_STRUCTURED_BUFFERS_VIA_SHADER_4_X = 0x00000002U,
 }
 
 enum : uint
 {
-    D3D_SHADER_FEATURE_UAVS_AT_EVERY_STAGE               = 0x00000004,
-    D3D_SHADER_FEATURE_64_UAVS                           = 0x00000008,
-    D3D_SHADER_FEATURE_MINIMUM_PRECISION                 = 0x00000010,
-    D3D_SHADER_FEATURE_11_1_DOUBLE_EXTENSIONS            = 0x00000020,
-    D3D_SHADER_FEATURE_11_1_SHADER_EXTENSIONS            = 0x00000040,
-    D3D_SHADER_FEATURE_LEVEL_9_COMPARISON_FILTERING      = 0x00000080,
-    D3D_SHADER_FEATURE_TILED_RESOURCES                   = 0x00000100,
-    D3D_SHADER_FEATURE_STENCIL_REF                       = 0x00000200,
-    D3D_SHADER_FEATURE_INNER_COVERAGE                    = 0x00000400,
-    D3D_SHADER_FEATURE_TYPED_UAV_LOAD_ADDITIONAL_FORMATS = 0x00000800,
+    D3D_SHADER_FEATURE_UAVS_AT_EVERY_STAGE               = 0x00000004U,
+    D3D_SHADER_FEATURE_64_UAVS                           = 0x00000008U,
+    D3D_SHADER_FEATURE_MINIMUM_PRECISION                 = 0x00000010U,
+    D3D_SHADER_FEATURE_11_1_DOUBLE_EXTENSIONS            = 0x00000020U,
+    D3D_SHADER_FEATURE_11_1_SHADER_EXTENSIONS            = 0x00000040U,
+    D3D_SHADER_FEATURE_LEVEL_9_COMPARISON_FILTERING      = 0x00000080U,
+    D3D_SHADER_FEATURE_TILED_RESOURCES                   = 0x00000100U,
+    D3D_SHADER_FEATURE_STENCIL_REF                       = 0x00000200U,
+    D3D_SHADER_FEATURE_INNER_COVERAGE                    = 0x00000400U,
+    D3D_SHADER_FEATURE_TYPED_UAV_LOAD_ADDITIONAL_FORMATS = 0x00000800U,
 }
 
 enum : uint
 {
-    D3D_SHADER_FEATURE_ROVS                                                           = 0x00001000,
-    D3D_SHADER_FEATURE_VIEWPORT_AND_RT_ARRAY_INDEX_FROM_ANY_SHADER_FEEDING_RASTERIZER = 0x00002000,
+    D3D_SHADER_FEATURE_ROVS                                                           = 0x00001000U,
+    D3D_SHADER_FEATURE_VIEWPORT_AND_RT_ARRAY_INDEX_FROM_ANY_SHADER_FEEDING_RASTERIZER = 0x00002000U,
 }
 
 enum : uint
 {
-    D3D_SHADER_FEATURE_WAVE_OPS                                      = 0x00004000,
-    D3D_SHADER_FEATURE_INT64_OPS                                     = 0x00008000,
-    D3D_SHADER_FEATURE_VIEW_ID                                       = 0x00010000,
-    D3D_SHADER_FEATURE_BARYCENTRICS                                  = 0x00020000,
-    D3D_SHADER_FEATURE_NATIVE_16BIT_OPS                              = 0x00040000,
-    D3D_SHADER_FEATURE_SHADING_RATE                                  = 0x00080000,
-    D3D_SHADER_FEATURE_RAYTRACING_TIER_1_1                           = 0x00100000,
-    D3D_SHADER_FEATURE_SAMPLER_FEEDBACK                              = 0x00200000,
-    D3D_SHADER_FEATURE_ATOMIC_INT64_ON_TYPED_RESOURCE                = 0x00400000,
-    D3D_SHADER_FEATURE_ATOMIC_INT64_ON_GROUP_SHARED                  = 0x00800000,
-    D3D_SHADER_FEATURE_DERIVATIVES_IN_MESH_AND_AMPLIFICATION_SHADERS = 0x01000000,
+    D3D_SHADER_FEATURE_WAVE_OPS                                      = 0x00004000U,
+    D3D_SHADER_FEATURE_INT64_OPS                                     = 0x00008000U,
+    D3D_SHADER_FEATURE_VIEW_ID                                       = 0x00010000U,
+    D3D_SHADER_FEATURE_BARYCENTRICS                                  = 0x00020000U,
+    D3D_SHADER_FEATURE_NATIVE_16BIT_OPS                              = 0x00040000U,
+    D3D_SHADER_FEATURE_SHADING_RATE                                  = 0x00080000U,
+    D3D_SHADER_FEATURE_RAYTRACING_TIER_1_1                           = 0x00100000U,
+    D3D_SHADER_FEATURE_SAMPLER_FEEDBACK                              = 0x00200000U,
+    D3D_SHADER_FEATURE_ATOMIC_INT64_ON_TYPED_RESOURCE                = 0x00400000U,
+    D3D_SHADER_FEATURE_ATOMIC_INT64_ON_GROUP_SHARED                  = 0x00800000U,
+    D3D_SHADER_FEATURE_DERIVATIVES_IN_MESH_AND_AMPLIFICATION_SHADERS = 0x01000000U,
 }
 
-enum uint D3D_SHADER_FEATURE_RESOURCE_DESCRIPTOR_HEAP_INDEXING = 0x02000000;
-enum uint D3D_SHADER_FEATURE_SAMPLER_DESCRIPTOR_HEAP_INDEXING = 0x04000000;
+enum uint D3D_SHADER_FEATURE_RESOURCE_DESCRIPTOR_HEAP_INDEXING = 0x02000000U;
+enum uint D3D_SHADER_FEATURE_SAMPLER_DESCRIPTOR_HEAP_INDEXING = 0x04000000U;
 
 enum : uint
 {
-    D3D_SHADER_FEATURE_WAVE_MMA                                 = 0x08000000,
-    D3D_SHADER_FEATURE_ATOMIC_INT64_ON_DESCRIPTOR_HEAP_RESOURCE = 0x10000000,
+    D3D_SHADER_FEATURE_WAVE_MMA                                 = 0x08000000U,
+    D3D_SHADER_FEATURE_ATOMIC_INT64_ON_DESCRIPTOR_HEAP_RESOURCE = 0x10000000U,
 }
 
 enum : uint
 {
-    D3D_SHADER_FEATURE_ADVANCED_TEXTURE_OPS        = 0x20000000,
-    D3D_SHADER_FEATURE_WRITEABLE_MSAA_TEXTURES     = 0x40000000,
-    D3D_SHADER_FEATURE_SAMPLE_CMP_GRADIENT_OR_BIAS = 0x80000000,
+    D3D_SHADER_FEATURE_ADVANCED_TEXTURE_OPS        = 0x20000000U,
+    D3D_SHADER_FEATURE_WRITEABLE_MSAA_TEXTURES     = 0x40000000U,
+    D3D_SHADER_FEATURE_SAMPLE_CMP_GRADIENT_OR_BIAS = 0x80000000U,
 }
 
 enum : GUID
@@ -833,10 +861,10 @@ enum GUID WKPDID_D3D12UniqueObjectId = GUID("1b39de15-ec04-4bae-ba4d-8cef79fc04c
 
 enum : uint
 {
-    D3D_COMPONENT_MASK_X = 0x00000001,
-    D3D_COMPONENT_MASK_Y = 0x00000002,
-    D3D_COMPONENT_MASK_Z = 0x00000004,
-    D3D_COMPONENT_MASK_W = 0x00000008,
+    D3D_COMPONENT_MASK_X = 0x00000001U,
+    D3D_COMPONENT_MASK_Y = 0x00000002U,
+    D3D_COMPONENT_MASK_Z = 0x00000004U,
+    D3D_COMPONENT_MASK_W = 0x00000008U,
 }
 
 enum : GUID
@@ -854,7 +882,7 @@ alias PFN_DESTRUCTION_CALLBACK = void function(void* pData);
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcommon/ns-d3dcommon-d3d_shader_macro))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcommon/ns-d3dcommon-d3d_shader_macro
 struct D3D_SHADER_MACRO
 {
     const(PSTR) Name;
@@ -891,7 +919,7 @@ struct D3D_SHADER_CACHE_APPLICATION_DESC
     D3D_VERSION_NUMBER EngineVersion;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/direct3d10/d3d10-d3dvector))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/direct3d10/d3d10-d3dvector
 struct D3DVECTOR
 {
     float x;
@@ -899,10 +927,32 @@ struct D3DVECTOR
     float z;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/direct3d10/d3d10-d3dmatrix))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/direct3d10/d3d10-d3dmatrix
 struct D3DMATRIX
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct
+        {
+            float _11;
+            float _12;
+            float _13;
+            float _14;
+            float _21;
+            float _22;
+            float _23;
+            float _24;
+            float _31;
+            float _32;
+            float _33;
+            float _34;
+            float _41;
+            float _42;
+            float _43;
+            float _44;
+        }
+        float[16] m;
+    }
 }
 
 // Interfaces
@@ -917,24 +967,24 @@ interface ID3DBlob : IUnknown
 
 @GUID("a06eb39a-50da-425b-8c31-4eecd6c270f3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcommon/nn-d3dcommon-id3ddestructionotifier))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcommon/nn-d3dcommon-id3ddestructionotifier
 interface ID3DDestructionNotifier : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcommon/nf-d3dcommon-id3ddestructionotifier-registerdestructioncallback))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcommon/nf-d3dcommon-id3ddestructionotifier-registerdestructioncallback
     HRESULT RegisterDestructionCallback(PFN_DESTRUCTION_CALLBACK callbackFn, void* pData, uint* pCallbackID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcommon/nf-d3dcommon-id3ddestructionotifier-unregisterdestructioncallback))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcommon/nf-d3dcommon-id3ddestructionotifier-unregisterdestructioncallback
     HRESULT UnregisterDestructionCallback(uint callbackID);
 }
 
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcommon/nn-d3dcommon-id3dinclude))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcommon/nn-d3dcommon-id3dinclude
 interface ID3DInclude
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcommon/nf-d3dcommon-id3dinclude-open))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcommon/nf-d3dcommon-id3dinclude-open
     HRESULT Open(D3D_INCLUDE_TYPE IncludeType, const(PSTR) pFileName, const(void)* pParentData, void** ppData, 
                  uint* pBytes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcommon/nf-d3dcommon-id3dinclude-close))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcommon/nf-d3dcommon-id3dinclude-close
     HRESULT Close(const(void)* pData);
 }
 

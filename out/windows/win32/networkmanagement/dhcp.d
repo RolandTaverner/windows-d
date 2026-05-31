@@ -3,14 +3,15 @@
 module windows.win32.networkmanagement.dhcp;
 
 public import windows.core;
-public import windows.win32.foundation : BOOL, BOOLEAN, PSTR, PWSTR;
+public import windows.win32.foundation.foundation : BOOL, BOOLEAN, PSTR, PWSTR;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpv6csdk/ne-dhcpv6csdk-statuscode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpv6csdk/ne-dhcpv6csdk-statuscode
 enum StatusCode : int
 {
     STATUS_NO_ERROR            = 0x00000000,
@@ -18,7 +19,8 @@ enum StatusCode : int
     STATUS_NO_BINDING          = 0x00000003,
     STATUS_NOPREFIX_AVAIL      = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-dhcp_force_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-dhcp_force_flag
 alias DHCP_FORCE_FLAG = int;
 enum : int
 {
@@ -26,7 +28,8 @@ enum : int
     DhcpNoForce       = 0x00000001,
     DhcpFailoverForce = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-dhcp_subnet_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-dhcp_subnet_state
 alias DHCP_SUBNET_STATE = int;
 enum : int
 {
@@ -36,7 +39,8 @@ enum : int
     DhcpSubnetDisabledSwitched = 0x00000003,
     DhcpSubnetInvalidState     = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-dhcp_subnet_element_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-dhcp_subnet_element_type
 alias DHCP_SUBNET_ELEMENT_TYPE = int;
 enum : int
 {
@@ -49,14 +53,16 @@ enum : int
     DhcpIpRangesDhcpBootp = 0x00000006,
     DhcpIpRangesBootpOnly = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-dhcp_filter_list_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-dhcp_filter_list_type
 alias DHCP_FILTER_LIST_TYPE = int;
 enum : int
 {
     Deny    = 0x00000000,
     Allow   = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-dhcp_option_data_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-dhcp_option_data_type
 alias DHCP_OPTION_DATA_TYPE = int;
 enum : int
 {
@@ -70,14 +76,16 @@ enum : int
     DhcpEncapsulatedDataOption = 0x00000007,
     DhcpIpv6AddressOption      = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-dhcp_option_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-dhcp_option_type
 alias DHCP_OPTION_TYPE = int;
 enum : int
 {
     DhcpUnaryElementTypeOption = 0x00000000,
     DhcpArrayTypeOption        = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-dhcp_option_scope_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-dhcp_option_scope_type
 alias DHCP_OPTION_SCOPE_TYPE = int;
 enum : int
 {
@@ -87,7 +95,8 @@ enum : int
     DhcpReservedOptions = 0x00000003,
     DhcpMScopeOptions   = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-dhcp_option_scope_type6))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-dhcp_option_scope_type6
 alias DHCP_OPTION_SCOPE_TYPE6 = int;
 enum : int
 {
@@ -96,7 +105,8 @@ enum : int
     DhcpReservedOptions6 = 0x00000002,
     DhcpGlobalOptions6   = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-quarantinestatus))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-quarantinestatus
 enum QuarantineStatus : int
 {
     NOQUARANTINE       = 0x00000000,
@@ -107,7 +117,8 @@ enum QuarantineStatus : int
     DEFAULTQUARSETTING = 0x00000005,
     NOQUARINFO         = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-dhcp_search_info_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-dhcp_search_info_type
 alias DHCP_SEARCH_INFO_TYPE = int;
 enum : int
 {
@@ -115,6 +126,7 @@ enum : int
     DhcpClientHardwareAddress = 0x00000001,
     DhcpClientName            = 0x00000002,
 }
+
 alias DHCP_PROPERTY_TYPE = int;
 enum : int
 {
@@ -124,19 +136,22 @@ enum : int
     DhcpPropTypeString = 0x00000003,
     DhcpPropTypeBinary = 0x00000004,
 }
+
 alias DHCP_PROPERTY_ID = int;
 enum : int
 {
     DhcpPropIdPolicyDnsSuffix      = 0x00000000,
     DhcpPropIdClientAddressStateEx = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-dhcp_scan_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-dhcp_scan_flag
 alias DHCP_SCAN_FLAG = int;
 enum : int
 {
     DhcpRegistryFix = 0x00000000,
     DhcpDatabaseFix = 0x00000001,
 }
+
 alias DHCP_SUBNET_ELEMENT_TYPE_V6 = int;
 enum : int
 {
@@ -144,7 +159,8 @@ enum : int
     Dhcpv6ReservedIps      = 0x00000001,
     Dhcpv6ExcludedIpRanges = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-dhcp_search_info_type_v6))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-dhcp_search_info_type_v6
 alias DHCP_SEARCH_INFO_TYPE_V6 = int;
 enum : int
 {
@@ -152,7 +168,8 @@ enum : int
     Dhcpv6ClientDUID      = 0x00000001,
     Dhcpv6ClientName      = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-dhcp_pol_attr_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-dhcp_pol_attr_type
 alias DHCP_POL_ATTR_TYPE = int;
 enum : int
 {
@@ -162,7 +179,8 @@ enum : int
     DhcpAttrFqdn            = 0x00000003,
     DhcpAttrFqdnSingleLabel = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-dhcp_pol_comparator))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-dhcp_pol_comparator
 alias DHCP_POL_COMPARATOR = int;
 enum : int
 {
@@ -173,14 +191,16 @@ enum : int
     DhcpCompEndsWith     = 0x00000004,
     DhcpCompNotEndWith   = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-dhcp_pol_logic_oper))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-dhcp_pol_logic_oper
 alias DHCP_POL_LOGIC_OPER = int;
 enum : int
 {
     DhcpLogicalOr  = 0x00000000,
     DhcpLogicalAnd = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-dhcp_policy_fields_to_update))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-dhcp_policy_fields_to_update
 alias DHCP_POLICY_FIELDS_TO_UPDATE = int;
 enum : int
 {
@@ -192,28 +212,32 @@ enum : int
     DhcpUpdatePolicyStatus    = 0x00000020,
     DhcpUpdatePolicyDnsSuffix = 0x00000040,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-dhcpv6_stateless_param_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-dhcpv6_stateless_param_type
 alias DHCPV6_STATELESS_PARAM_TYPE = int;
 enum : int
 {
     DhcpStatelessPurgeInterval = 0x00000001,
     DhcpStatelessStatus        = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-dhcp_failover_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-dhcp_failover_mode
 alias DHCP_FAILOVER_MODE = int;
 enum : int
 {
     LoadBalance = 0x00000000,
     HotStandby  = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-dhcp_failover_server))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-dhcp_failover_server
 alias DHCP_FAILOVER_SERVER = int;
 enum : int
 {
     PrimaryServer   = 0x00000000,
     SecondaryServer = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-fsm_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ne-dhcpsapi-fsm_state
 alias FSM_STATE = int;
 enum : int
 {
@@ -238,554 +262,554 @@ enum : int
 
 enum : uint
 {
-    OPTION_PAD         = 0x00000000,
-    OPTION_SUBNET_MASK = 0x00000001,
+    OPTION_PAD         = 0x00000000U,
+    OPTION_SUBNET_MASK = 0x00000001U,
 }
 
-enum uint OPTION_TIME_OFFSET = 0x00000002;
-enum uint OPTION_ROUTER_ADDRESS = 0x00000003;
-enum uint OPTION_TIME_SERVERS = 0x00000004;
-enum uint OPTION_IEN116_NAME_SERVERS = 0x00000005;
-enum uint OPTION_DOMAIN_NAME_SERVERS = 0x00000006;
-enum uint OPTION_LOG_SERVERS = 0x00000007;
-enum uint OPTION_COOKIE_SERVERS = 0x00000008;
-enum uint OPTION_LPR_SERVERS = 0x00000009;
-enum uint OPTION_IMPRESS_SERVERS = 0x0000000a;
-enum uint OPTION_RLP_SERVERS = 0x0000000b;
+enum uint OPTION_TIME_OFFSET = 0x00000002U;
+enum uint OPTION_ROUTER_ADDRESS = 0x00000003U;
+enum uint OPTION_TIME_SERVERS = 0x00000004U;
+enum uint OPTION_IEN116_NAME_SERVERS = 0x00000005U;
+enum uint OPTION_DOMAIN_NAME_SERVERS = 0x00000006U;
+enum uint OPTION_LOG_SERVERS = 0x00000007U;
+enum uint OPTION_COOKIE_SERVERS = 0x00000008U;
+enum uint OPTION_LPR_SERVERS = 0x00000009U;
+enum uint OPTION_IMPRESS_SERVERS = 0x0000000aU;
+enum uint OPTION_RLP_SERVERS = 0x0000000bU;
 
 enum : uint
 {
-    OPTION_HOST_NAME      = 0x0000000c,
-    OPTION_BOOT_FILE_SIZE = 0x0000000d,
+    OPTION_HOST_NAME      = 0x0000000cU,
+    OPTION_BOOT_FILE_SIZE = 0x0000000dU,
 }
 
-enum uint OPTION_MERIT_DUMP_FILE = 0x0000000e;
-enum uint OPTION_DOMAIN_NAME = 0x0000000f;
-enum uint OPTION_SWAP_SERVER = 0x00000010;
+enum uint OPTION_MERIT_DUMP_FILE = 0x0000000eU;
+enum uint OPTION_DOMAIN_NAME = 0x0000000fU;
+enum uint OPTION_SWAP_SERVER = 0x00000010U;
 
 enum : uint
 {
-    OPTION_ROOT_DISK       = 0x00000011,
-    OPTION_EXTENSIONS_PATH = 0x00000012,
+    OPTION_ROOT_DISK       = 0x00000011U,
+    OPTION_EXTENSIONS_PATH = 0x00000012U,
 }
 
-enum uint OPTION_BE_A_ROUTER = 0x00000013;
-enum uint OPTION_NON_LOCAL_SOURCE_ROUTING = 0x00000014;
-enum uint OPTION_POLICY_FILTER_FOR_NLSR = 0x00000015;
-enum uint OPTION_MAX_REASSEMBLY_SIZE = 0x00000016;
-enum uint OPTION_DEFAULT_TTL = 0x00000017;
+enum uint OPTION_BE_A_ROUTER = 0x00000013U;
+enum uint OPTION_NON_LOCAL_SOURCE_ROUTING = 0x00000014U;
+enum uint OPTION_POLICY_FILTER_FOR_NLSR = 0x00000015U;
+enum uint OPTION_MAX_REASSEMBLY_SIZE = 0x00000016U;
+enum uint OPTION_DEFAULT_TTL = 0x00000017U;
 
 enum : uint
 {
-    OPTION_PMTU_AGING_TIMEOUT = 0x00000018,
-    OPTION_PMTU_PLATEAU_TABLE = 0x00000019,
-}
-
-enum : uint
-{
-    OPTION_MTU             = 0x0000001a,
-    OPTION_ALL_SUBNETS_MTU = 0x0000001b,
-}
-
-enum uint OPTION_BROADCAST_ADDRESS = 0x0000001c;
-enum uint OPTION_PERFORM_MASK_DISCOVERY = 0x0000001d;
-enum uint OPTION_BE_A_MASK_SUPPLIER = 0x0000001e;
-enum uint OPTION_PERFORM_ROUTER_DISCOVERY = 0x0000001f;
-enum uint OPTION_ROUTER_SOLICITATION_ADDR = 0x00000020;
-enum uint OPTION_STATIC_ROUTES = 0x00000021;
-
-enum : uint
-{
-    OPTION_TRAILERS          = 0x00000022,
-    OPTION_ARP_CACHE_TIMEOUT = 0x00000023,
-}
-
-enum uint OPTION_ETHERNET_ENCAPSULATION = 0x00000024;
-
-enum : uint
-{
-    OPTION_TTL                  = 0x00000025,
-    OPTION_KEEP_ALIVE_INTERVAL  = 0x00000026,
-    OPTION_KEEP_ALIVE_DATA_SIZE = 0x00000027,
+    OPTION_PMTU_AGING_TIMEOUT = 0x00000018U,
+    OPTION_PMTU_PLATEAU_TABLE = 0x00000019U,
 }
 
 enum : uint
 {
-    OPTION_NETWORK_INFO_SERVICE_DOM = 0x00000028,
-    OPTION_NETWORK_INFO_SERVERS     = 0x00000029,
-    OPTION_NETWORK_TIME_SERVERS     = 0x0000002a,
+    OPTION_MTU             = 0x0000001aU,
+    OPTION_ALL_SUBNETS_MTU = 0x0000001bU,
 }
 
-enum uint OPTION_VENDOR_SPEC_INFO = 0x0000002b;
+enum uint OPTION_BROADCAST_ADDRESS = 0x0000001cU;
+enum uint OPTION_PERFORM_MASK_DISCOVERY = 0x0000001dU;
+enum uint OPTION_BE_A_MASK_SUPPLIER = 0x0000001eU;
+enum uint OPTION_PERFORM_ROUTER_DISCOVERY = 0x0000001fU;
+enum uint OPTION_ROUTER_SOLICITATION_ADDR = 0x00000020U;
+enum uint OPTION_STATIC_ROUTES = 0x00000021U;
 
 enum : uint
 {
-    OPTION_NETBIOS_NAME_SERVER     = 0x0000002c,
-    OPTION_NETBIOS_DATAGRAM_SERVER = 0x0000002d,
-    OPTION_NETBIOS_NODE_TYPE       = 0x0000002e,
-    OPTION_NETBIOS_SCOPE_OPTION    = 0x0000002f,
+    OPTION_TRAILERS          = 0x00000022U,
+    OPTION_ARP_CACHE_TIMEOUT = 0x00000023U,
 }
+
+enum uint OPTION_ETHERNET_ENCAPSULATION = 0x00000024U;
 
 enum : uint
 {
-    OPTION_XWINDOW_FONT_SERVER     = 0x00000030,
-    OPTION_XWINDOW_DISPLAY_MANAGER = 0x00000031,
-}
-
-enum uint OPTION_REQUESTED_ADDRESS = 0x00000032;
-
-enum : uint
-{
-    OPTION_LEASE_TIME    = 0x00000033,
-    OPTION_OK_TO_OVERLAY = 0x00000034,
-}
-
-enum uint OPTION_MESSAGE_TYPE = 0x00000035;
-enum uint OPTION_SERVER_IDENTIFIER = 0x00000036;
-enum uint OPTION_PARAMETER_REQUEST_LIST = 0x00000037;
-
-enum : uint
-{
-    OPTION_MESSAGE        = 0x00000038,
-    OPTION_MESSAGE_LENGTH = 0x00000039,
+    OPTION_TTL                  = 0x00000025U,
+    OPTION_KEEP_ALIVE_INTERVAL  = 0x00000026U,
+    OPTION_KEEP_ALIVE_DATA_SIZE = 0x00000027U,
 }
 
 enum : uint
 {
-    OPTION_RENEWAL_TIME = 0x0000003a,
-    OPTION_REBIND_TIME  = 0x0000003b,
+    OPTION_NETWORK_INFO_SERVICE_DOM = 0x00000028U,
+    OPTION_NETWORK_INFO_SERVERS     = 0x00000029U,
+    OPTION_NETWORK_TIME_SERVERS     = 0x0000002aU,
+}
+
+enum uint OPTION_VENDOR_SPEC_INFO = 0x0000002bU;
+
+enum : uint
+{
+    OPTION_NETBIOS_NAME_SERVER     = 0x0000002cU,
+    OPTION_NETBIOS_DATAGRAM_SERVER = 0x0000002dU,
+    OPTION_NETBIOS_NODE_TYPE       = 0x0000002eU,
+    OPTION_NETBIOS_SCOPE_OPTION    = 0x0000002fU,
 }
 
 enum : uint
 {
-    OPTION_CLIENT_CLASS_INFO = 0x0000003c,
-    OPTION_CLIENT_ID         = 0x0000003d,
-    OPTION_TFTP_SERVER_NAME  = 0x00000042,
+    OPTION_XWINDOW_FONT_SERVER     = 0x00000030U,
+    OPTION_XWINDOW_DISPLAY_MANAGER = 0x00000031U,
 }
 
-enum uint OPTION_BOOTFILE_NAME = 0x00000043;
-enum uint OPTION_IPV6_ONLY_PREFERRED = 0x0000006c;
+enum uint OPTION_REQUESTED_ADDRESS = 0x00000032U;
 
 enum : uint
 {
-    OPTION_DNR           = 0x000000a2,
-    OPTION_MSFT_IE_PROXY = 0x000000fc,
+    OPTION_LEASE_TIME    = 0x00000033U,
+    OPTION_OK_TO_OVERLAY = 0x00000034U,
 }
 
-enum uint OPTION_END = 0x000000ff;
+enum uint OPTION_MESSAGE_TYPE = 0x00000035U;
+enum uint OPTION_SERVER_IDENTIFIER = 0x00000036U;
+enum uint OPTION_PARAMETER_REQUEST_LIST = 0x00000037U;
 
 enum : uint
 {
-    DHCPCAPI_REQUEST_PERSISTENT    = 0x00000001,
-    DHCPCAPI_REQUEST_SYNCHRONOUS   = 0x00000002,
-    DHCPCAPI_REQUEST_ASYNCHRONOUS  = 0x00000004,
-    DHCPCAPI_REQUEST_CANCEL        = 0x00000008,
-    DHCPCAPI_REQUEST_MASK          = 0x0000000f,
-    DHCPCAPI_REGISTER_HANDLE_EVENT = 0x00000001,
-}
-
-enum uint DHCPCAPI_DEREGISTER_HANDLE_EVENT = 0x00000001;
-enum uint ERROR_DHCP_REGISTRY_INIT_FAILED = 0x00004e20;
-enum uint ERROR_DHCP_DATABASE_INIT_FAILED = 0x00004e21;
-
-enum : uint
-{
-    ERROR_DHCP_RPC_INIT_FAILED     = 0x00004e22,
-    ERROR_DHCP_NETWORK_INIT_FAILED = 0x00004e23,
+    OPTION_MESSAGE        = 0x00000038U,
+    OPTION_MESSAGE_LENGTH = 0x00000039U,
 }
 
 enum : uint
 {
-    ERROR_DHCP_SUBNET_EXITS       = 0x00004e24,
-    ERROR_DHCP_SUBNET_NOT_PRESENT = 0x00004e25,
-}
-
-enum uint ERROR_DHCP_PRIMARY_NOT_FOUND = 0x00004e26;
-enum uint ERROR_DHCP_ELEMENT_CANT_REMOVE = 0x00004e27;
-
-enum : uint
-{
-    ERROR_DHCP_OPTION_EXITS       = 0x00004e29,
-    ERROR_DHCP_OPTION_NOT_PRESENT = 0x00004e2a,
-}
-
-enum uint ERROR_DHCP_ADDRESS_NOT_AVAILABLE = 0x00004e2b;
-
-enum : uint
-{
-    ERROR_DHCP_RANGE_FULL           = 0x00004e2c,
-    ERROR_DHCP_JET_ERROR            = 0x00004e2d,
-    ERROR_DHCP_CLIENT_EXISTS        = 0x00004e2e,
-    ERROR_DHCP_INVALID_DHCP_MESSAGE = 0x00004e2f,
-    ERROR_DHCP_INVALID_DHCP_CLIENT  = 0x00004e30,
+    OPTION_RENEWAL_TIME = 0x0000003aU,
+    OPTION_REBIND_TIME  = 0x0000003bU,
 }
 
 enum : uint
 {
-    ERROR_DHCP_SERVICE_PAUSED      = 0x00004e31,
-    ERROR_DHCP_NOT_RESERVED_CLIENT = 0x00004e32,
+    OPTION_CLIENT_CLASS_INFO = 0x0000003cU,
+    OPTION_CLIENT_ID         = 0x0000003dU,
+    OPTION_TFTP_SERVER_NAME  = 0x00000042U,
+}
+
+enum uint OPTION_BOOTFILE_NAME = 0x00000043U;
+enum uint OPTION_IPV6_ONLY_PREFERRED = 0x0000006cU;
+
+enum : uint
+{
+    OPTION_DNR           = 0x000000a2U,
+    OPTION_MSFT_IE_PROXY = 0x000000fcU,
+}
+
+enum uint OPTION_END = 0x000000ffU;
+
+enum : uint
+{
+    DHCPCAPI_REQUEST_PERSISTENT    = 0x00000001U,
+    DHCPCAPI_REQUEST_SYNCHRONOUS   = 0x00000002U,
+    DHCPCAPI_REQUEST_ASYNCHRONOUS  = 0x00000004U,
+    DHCPCAPI_REQUEST_CANCEL        = 0x00000008U,
+    DHCPCAPI_REQUEST_MASK          = 0x0000000fU,
+    DHCPCAPI_REGISTER_HANDLE_EVENT = 0x00000001U,
+}
+
+enum uint DHCPCAPI_DEREGISTER_HANDLE_EVENT = 0x00000001U;
+enum uint ERROR_DHCP_REGISTRY_INIT_FAILED = 0x00004e20U;
+enum uint ERROR_DHCP_DATABASE_INIT_FAILED = 0x00004e21U;
+
+enum : uint
+{
+    ERROR_DHCP_RPC_INIT_FAILED     = 0x00004e22U,
+    ERROR_DHCP_NETWORK_INIT_FAILED = 0x00004e23U,
 }
 
 enum : uint
 {
-    ERROR_DHCP_RESERVED_CLIENT  = 0x00004e33,
-    ERROR_DHCP_RANGE_TOO_SMALL  = 0x00004e34,
-    ERROR_DHCP_IPRANGE_EXITS    = 0x00004e35,
-    ERROR_DHCP_RESERVEDIP_EXITS = 0x00004e36,
-    ERROR_DHCP_INVALID_RANGE    = 0x00004e37,
-    ERROR_DHCP_RANGE_EXTENDED   = 0x00004e38,
+    ERROR_DHCP_SUBNET_EXITS       = 0x00004e24U,
+    ERROR_DHCP_SUBNET_NOT_PRESENT = 0x00004e25U,
 }
 
-enum uint ERROR_EXTEND_TOO_SMALL = 0x00004e39;
+enum uint ERROR_DHCP_PRIMARY_NOT_FOUND = 0x00004e26U;
+enum uint ERROR_DHCP_ELEMENT_CANT_REMOVE = 0x00004e27U;
+
+enum : uint
+{
+    ERROR_DHCP_OPTION_EXITS       = 0x00004e29U,
+    ERROR_DHCP_OPTION_NOT_PRESENT = 0x00004e2aU,
+}
+
+enum uint ERROR_DHCP_ADDRESS_NOT_AVAILABLE = 0x00004e2bU;
+
+enum : uint
+{
+    ERROR_DHCP_RANGE_FULL           = 0x00004e2cU,
+    ERROR_DHCP_JET_ERROR            = 0x00004e2dU,
+    ERROR_DHCP_CLIENT_EXISTS        = 0x00004e2eU,
+    ERROR_DHCP_INVALID_DHCP_MESSAGE = 0x00004e2fU,
+    ERROR_DHCP_INVALID_DHCP_CLIENT  = 0x00004e30U,
+}
+
+enum : uint
+{
+    ERROR_DHCP_SERVICE_PAUSED      = 0x00004e31U,
+    ERROR_DHCP_NOT_RESERVED_CLIENT = 0x00004e32U,
+}
+
+enum : uint
+{
+    ERROR_DHCP_RESERVED_CLIENT  = 0x00004e33U,
+    ERROR_DHCP_RANGE_TOO_SMALL  = 0x00004e34U,
+    ERROR_DHCP_IPRANGE_EXITS    = 0x00004e35U,
+    ERROR_DHCP_RESERVEDIP_EXITS = 0x00004e36U,
+    ERROR_DHCP_INVALID_RANGE    = 0x00004e37U,
+    ERROR_DHCP_RANGE_EXTENDED   = 0x00004e38U,
+}
+
+enum uint ERROR_EXTEND_TOO_SMALL = 0x00004e39U;
 enum int WARNING_EXTENDED_LESS = 0x00004e3a;
-enum uint ERROR_DHCP_JET_CONV_REQUIRED = 0x00004e3b;
-enum uint ERROR_SERVER_INVALID_BOOT_FILE_TABLE = 0x00004e3c;
-enum uint ERROR_SERVER_UNKNOWN_BOOT_FILE_NAME = 0x00004e3d;
-enum uint ERROR_DHCP_SUPER_SCOPE_NAME_TOO_LONG = 0x00004e3e;
-enum uint ERROR_DHCP_IP_ADDRESS_IN_USE = 0x00004e40;
-enum uint ERROR_DHCP_LOG_FILE_PATH_TOO_LONG = 0x00004e41;
-enum uint ERROR_DHCP_UNSUPPORTED_CLIENT = 0x00004e42;
-enum uint ERROR_DHCP_JET97_CONV_REQUIRED = 0x00004e44;
+enum uint ERROR_DHCP_JET_CONV_REQUIRED = 0x00004e3bU;
+enum uint ERROR_SERVER_INVALID_BOOT_FILE_TABLE = 0x00004e3cU;
+enum uint ERROR_SERVER_UNKNOWN_BOOT_FILE_NAME = 0x00004e3dU;
+enum uint ERROR_DHCP_SUPER_SCOPE_NAME_TOO_LONG = 0x00004e3eU;
+enum uint ERROR_DHCP_IP_ADDRESS_IN_USE = 0x00004e40U;
+enum uint ERROR_DHCP_LOG_FILE_PATH_TOO_LONG = 0x00004e41U;
+enum uint ERROR_DHCP_UNSUPPORTED_CLIENT = 0x00004e42U;
+enum uint ERROR_DHCP_JET97_CONV_REQUIRED = 0x00004e44U;
 
 enum : uint
 {
-    ERROR_DHCP_ROGUE_INIT_FAILED        = 0x00004e45,
-    ERROR_DHCP_ROGUE_SAMSHUTDOWN        = 0x00004e46,
-    ERROR_DHCP_ROGUE_NOT_AUTHORIZED     = 0x00004e47,
-    ERROR_DHCP_ROGUE_DS_UNREACHABLE     = 0x00004e48,
-    ERROR_DHCP_ROGUE_DS_CONFLICT        = 0x00004e49,
-    ERROR_DHCP_ROGUE_NOT_OUR_ENTERPRISE = 0x00004e4a,
-    ERROR_DHCP_ROGUE_STANDALONE_IN_DS   = 0x00004e4b,
+    ERROR_DHCP_ROGUE_INIT_FAILED        = 0x00004e45U,
+    ERROR_DHCP_ROGUE_SAMSHUTDOWN        = 0x00004e46U,
+    ERROR_DHCP_ROGUE_NOT_AUTHORIZED     = 0x00004e47U,
+    ERROR_DHCP_ROGUE_DS_UNREACHABLE     = 0x00004e48U,
+    ERROR_DHCP_ROGUE_DS_CONFLICT        = 0x00004e49U,
+    ERROR_DHCP_ROGUE_NOT_OUR_ENTERPRISE = 0x00004e4aU,
+    ERROR_DHCP_ROGUE_STANDALONE_IN_DS   = 0x00004e4bU,
 }
 
 enum : uint
 {
-    ERROR_DHCP_CLASS_NOT_FOUND      = 0x00004e4c,
-    ERROR_DHCP_CLASS_ALREADY_EXISTS = 0x00004e4d,
+    ERROR_DHCP_CLASS_NOT_FOUND      = 0x00004e4cU,
+    ERROR_DHCP_CLASS_ALREADY_EXISTS = 0x00004e4dU,
 }
 
-enum uint ERROR_DHCP_SCOPE_NAME_TOO_LONG = 0x00004e4e;
-enum uint ERROR_DHCP_DEFAULT_SCOPE_EXITS = 0x00004e4f;
-enum uint ERROR_DHCP_CANT_CHANGE_ATTRIBUTE = 0x00004e50;
-enum uint ERROR_DHCP_IPRANGE_CONV_ILLEGAL = 0x00004e51;
+enum uint ERROR_DHCP_SCOPE_NAME_TOO_LONG = 0x00004e4eU;
+enum uint ERROR_DHCP_DEFAULT_SCOPE_EXITS = 0x00004e4fU;
+enum uint ERROR_DHCP_CANT_CHANGE_ATTRIBUTE = 0x00004e50U;
+enum uint ERROR_DHCP_IPRANGE_CONV_ILLEGAL = 0x00004e51U;
 
 enum : uint
 {
-    ERROR_DHCP_NETWORK_CHANGED        = 0x00004e52,
-    ERROR_DHCP_CANNOT_MODIFY_BINDINGS = 0x00004e53,
-}
-
-enum : uint
-{
-    ERROR_DHCP_SUBNET_EXISTS = 0x00004e54,
-    ERROR_DHCP_MSCOPE_EXISTS = 0x00004e55,
-}
-
-enum uint ERROR_MSCOPE_RANGE_TOO_SMALL = 0x00004e56;
-
-enum : uint
-{
-    ERROR_DHCP_EXEMPTION_EXISTS      = 0x00004e57,
-    ERROR_DHCP_EXEMPTION_NOT_PRESENT = 0x00004e58,
-}
-
-enum uint ERROR_DHCP_INVALID_PARAMETER_OPTION32 = 0x00004e59;
-
-enum : uint
-{
-    ERROR_DDS_NO_DS_AVAILABLE  = 0x00004e66,
-    ERROR_DDS_NO_DHCP_ROOT     = 0x00004e67,
-    ERROR_DDS_UNEXPECTED_ERROR = 0x00004e68,
-}
-
-enum uint ERROR_DDS_TOO_MANY_ERRORS = 0x00004e69;
-enum uint ERROR_DDS_DHCP_SERVER_NOT_FOUND = 0x00004e6a;
-
-enum : uint
-{
-    ERROR_DDS_OPTION_ALREADY_EXISTS = 0x00004e6b,
-    ERROR_DDS_OPTION_DOES_NOT_EXIST = 0x00004e6c,
+    ERROR_DHCP_NETWORK_CHANGED        = 0x00004e52U,
+    ERROR_DHCP_CANNOT_MODIFY_BINDINGS = 0x00004e53U,
 }
 
 enum : uint
 {
-    ERROR_DDS_CLASS_EXISTS         = 0x00004e6d,
-    ERROR_DDS_CLASS_DOES_NOT_EXIST = 0x00004e6e,
+    ERROR_DHCP_SUBNET_EXISTS = 0x00004e54U,
+    ERROR_DHCP_MSCOPE_EXISTS = 0x00004e55U,
+}
+
+enum uint ERROR_MSCOPE_RANGE_TOO_SMALL = 0x00004e56U;
+
+enum : uint
+{
+    ERROR_DHCP_EXEMPTION_EXISTS      = 0x00004e57U,
+    ERROR_DHCP_EXEMPTION_NOT_PRESENT = 0x00004e58U,
+}
+
+enum uint ERROR_DHCP_INVALID_PARAMETER_OPTION32 = 0x00004e59U;
+
+enum : uint
+{
+    ERROR_DDS_NO_DS_AVAILABLE  = 0x00004e66U,
+    ERROR_DDS_NO_DHCP_ROOT     = 0x00004e67U,
+    ERROR_DDS_UNEXPECTED_ERROR = 0x00004e68U,
+}
+
+enum uint ERROR_DDS_TOO_MANY_ERRORS = 0x00004e69U;
+enum uint ERROR_DDS_DHCP_SERVER_NOT_FOUND = 0x00004e6aU;
+
+enum : uint
+{
+    ERROR_DDS_OPTION_ALREADY_EXISTS = 0x00004e6bU,
+    ERROR_DDS_OPTION_DOES_NOT_EXIST = 0x00004e6cU,
 }
 
 enum : uint
 {
-    ERROR_DDS_SERVER_ALREADY_EXISTS   = 0x00004e6f,
-    ERROR_DDS_SERVER_DOES_NOT_EXIST   = 0x00004e70,
-    ERROR_DDS_SERVER_ADDRESS_MISMATCH = 0x00004e71,
+    ERROR_DDS_CLASS_EXISTS         = 0x00004e6dU,
+    ERROR_DDS_CLASS_DOES_NOT_EXIST = 0x00004e6eU,
 }
 
 enum : uint
 {
-    ERROR_DDS_SUBNET_EXISTS          = 0x00004e72,
-    ERROR_DDS_SUBNET_HAS_DIFF_SSCOPE = 0x00004e73,
-    ERROR_DDS_SUBNET_NOT_PRESENT     = 0x00004e74,
+    ERROR_DDS_SERVER_ALREADY_EXISTS   = 0x00004e6fU,
+    ERROR_DDS_SERVER_DOES_NOT_EXIST   = 0x00004e70U,
+    ERROR_DDS_SERVER_ADDRESS_MISMATCH = 0x00004e71U,
 }
 
 enum : uint
 {
-    ERROR_DDS_RESERVATION_NOT_PRESENT = 0x00004e75,
-    ERROR_DDS_RESERVATION_CONFLICT    = 0x00004e76,
-}
-
-enum uint ERROR_DDS_POSSIBLE_RANGE_CONFLICT = 0x00004e77;
-enum uint ERROR_DDS_RANGE_DOES_NOT_EXIST = 0x00004e78;
-enum uint ERROR_DHCP_DELETE_BUILTIN_CLASS = 0x00004e79;
-
-enum : uint
-{
-    ERROR_DHCP_INVALID_SUBNET_PREFIX                = 0x00004e7b,
-    ERROR_DHCP_INVALID_DELAY                        = 0x00004e7c,
-    ERROR_DHCP_LINKLAYER_ADDRESS_EXISTS             = 0x00004e7d,
-    ERROR_DHCP_LINKLAYER_ADDRESS_RESERVATION_EXISTS = 0x00004e7e,
-    ERROR_DHCP_LINKLAYER_ADDRESS_DOES_NOT_EXIST     = 0x00004e7f,
-}
-
-enum uint ERROR_DHCP_HARDWARE_ADDRESS_TYPE_ALREADY_EXEMPT = 0x00004e85;
-enum uint ERROR_DHCP_UNDEFINED_HARDWARE_ADDRESS_TYPE = 0x00004e86;
-enum uint ERROR_DHCP_OPTION_TYPE_MISMATCH = 0x00004e87;
-
-enum : uint
-{
-    ERROR_DHCP_POLICY_BAD_PARENT_EXPR         = 0x00004e88,
-    ERROR_DHCP_POLICY_EXISTS                  = 0x00004e89,
-    ERROR_DHCP_POLICY_RANGE_EXISTS            = 0x00004e8a,
-    ERROR_DHCP_POLICY_RANGE_BAD               = 0x00004e8b,
-    ERROR_DHCP_RANGE_INVALID_IN_SERVER_POLICY = 0x00004e8c,
+    ERROR_DDS_SUBNET_EXISTS          = 0x00004e72U,
+    ERROR_DDS_SUBNET_HAS_DIFF_SSCOPE = 0x00004e73U,
+    ERROR_DDS_SUBNET_NOT_PRESENT     = 0x00004e74U,
 }
 
 enum : uint
 {
-    ERROR_DHCP_INVALID_POLICY_EXPRESSION = 0x00004e8d,
-    ERROR_DHCP_INVALID_PROCESSING_ORDER  = 0x00004e8e,
+    ERROR_DDS_RESERVATION_NOT_PRESENT = 0x00004e75U,
+    ERROR_DDS_RESERVATION_CONFLICT    = 0x00004e76U,
 }
 
-enum uint ERROR_DHCP_POLICY_NOT_FOUND = 0x00004e8f;
-enum uint ERROR_SCOPE_RANGE_POLICY_RANGE_CONFLICT = 0x00004e90;
-enum uint ERROR_DHCP_FO_SCOPE_ALREADY_IN_RELATIONSHIP = 0x00004e91;
+enum uint ERROR_DDS_POSSIBLE_RANGE_CONFLICT = 0x00004e77U;
+enum uint ERROR_DDS_RANGE_DOES_NOT_EXIST = 0x00004e78U;
+enum uint ERROR_DHCP_DELETE_BUILTIN_CLASS = 0x00004e79U;
 
 enum : uint
 {
-    ERROR_DHCP_FO_RELATIONSHIP_EXISTS         = 0x00004e92,
-    ERROR_DHCP_FO_RELATIONSHIP_DOES_NOT_EXIST = 0x00004e93,
+    ERROR_DHCP_INVALID_SUBNET_PREFIX                = 0x00004e7bU,
+    ERROR_DHCP_INVALID_DELAY                        = 0x00004e7cU,
+    ERROR_DHCP_LINKLAYER_ADDRESS_EXISTS             = 0x00004e7dU,
+    ERROR_DHCP_LINKLAYER_ADDRESS_RESERVATION_EXISTS = 0x00004e7eU,
+    ERROR_DHCP_LINKLAYER_ADDRESS_DOES_NOT_EXIST     = 0x00004e7fU,
 }
 
-enum uint ERROR_DHCP_FO_SCOPE_NOT_IN_RELATIONSHIP = 0x00004e94;
-enum uint ERROR_DHCP_FO_RELATION_IS_SECONDARY = 0x00004e95;
+enum uint ERROR_DHCP_HARDWARE_ADDRESS_TYPE_ALREADY_EXEMPT = 0x00004e85U;
+enum uint ERROR_DHCP_UNDEFINED_HARDWARE_ADDRESS_TYPE = 0x00004e86U;
+enum uint ERROR_DHCP_OPTION_TYPE_MISMATCH = 0x00004e87U;
 
 enum : uint
 {
-    ERROR_DHCP_FO_NOT_SUPPORTED    = 0x00004e96,
-    ERROR_DHCP_FO_TIME_OUT_OF_SYNC = 0x00004e97,
-    ERROR_DHCP_FO_STATE_NOT_NORMAL = 0x00004e98,
-}
-
-enum uint ERROR_DHCP_NO_ADMIN_PERMISSION = 0x00004e99;
-
-enum : uint
-{
-    ERROR_DHCP_SERVER_NOT_REACHABLE     = 0x00004e9a,
-    ERROR_DHCP_SERVER_NOT_RUNNING       = 0x00004e9b,
-    ERROR_DHCP_SERVER_NAME_NOT_RESOLVED = 0x00004e9c,
-}
-
-enum uint ERROR_DHCP_FO_RELATIONSHIP_NAME_TOO_LONG = 0x00004e9d;
-enum uint ERROR_DHCP_REACHED_END_OF_SELECTION = 0x00004e9e;
-enum uint ERROR_DHCP_FO_ADDSCOPE_LEASES_NOT_SYNCED = 0x00004e9f;
-
-enum : uint
-{
-    ERROR_DHCP_FO_MAX_RELATIONSHIPS         = 0x00004ea0,
-    ERROR_DHCP_FO_IPRANGE_TYPE_CONV_ILLEGAL = 0x00004ea1,
+    ERROR_DHCP_POLICY_BAD_PARENT_EXPR         = 0x00004e88U,
+    ERROR_DHCP_POLICY_EXISTS                  = 0x00004e89U,
+    ERROR_DHCP_POLICY_RANGE_EXISTS            = 0x00004e8aU,
+    ERROR_DHCP_POLICY_RANGE_BAD               = 0x00004e8bU,
+    ERROR_DHCP_RANGE_INVALID_IN_SERVER_POLICY = 0x00004e8cU,
 }
 
 enum : uint
 {
-    ERROR_DHCP_FO_MAX_ADD_SCOPES         = 0x00004ea2,
-    ERROR_DHCP_FO_BOOT_NOT_SUPPORTED     = 0x00004ea3,
-    ERROR_DHCP_FO_RANGE_PART_OF_REL      = 0x00004ea4,
-    ERROR_DHCP_FO_SCOPE_SYNC_IN_PROGRESS = 0x00004ea5,
+    ERROR_DHCP_INVALID_POLICY_EXPRESSION = 0x00004e8dU,
+    ERROR_DHCP_INVALID_PROCESSING_ORDER  = 0x00004e8eU,
 }
 
-enum uint ERROR_DHCP_FO_FEATURE_NOT_SUPPORTED = 0x00004ea6;
+enum uint ERROR_DHCP_POLICY_NOT_FOUND = 0x00004e8fU;
+enum uint ERROR_SCOPE_RANGE_POLICY_RANGE_CONFLICT = 0x00004e90U;
+enum uint ERROR_DHCP_FO_SCOPE_ALREADY_IN_RELATIONSHIP = 0x00004e91U;
 
 enum : uint
 {
-    ERROR_DHCP_POLICY_FQDN_RANGE_UNSUPPORTED  = 0x00004ea7,
-    ERROR_DHCP_POLICY_FQDN_OPTION_UNSUPPORTED = 0x00004ea8,
-    ERROR_DHCP_POLICY_EDIT_FQDN_UNSUPPORTED   = 0x00004ea9,
+    ERROR_DHCP_FO_RELATIONSHIP_EXISTS         = 0x00004e92U,
+    ERROR_DHCP_FO_RELATIONSHIP_DOES_NOT_EXIST = 0x00004e93U,
 }
 
-enum uint ERROR_DHCP_NAP_NOT_SUPPORTED = 0x00004eaa;
-enum uint ERROR_LAST_DHCP_SERVER_ERROR = 0x00004eab;
-enum uint DHCP_SUBNET_INFO_VQ_FLAG_QUARANTINE = 0x00000001;
-enum uint MAX_PATTERN_LENGTH = 0x000000ff;
-enum uint MAC_ADDRESS_LENGTH = 0x00000006;
-enum uint HWTYPE_ETHERNET_10MB = 0x00000001;
+enum uint ERROR_DHCP_FO_SCOPE_NOT_IN_RELATIONSHIP = 0x00004e94U;
+enum uint ERROR_DHCP_FO_RELATION_IS_SECONDARY = 0x00004e95U;
 
 enum : uint
 {
-    FILTER_STATUS_NONE                     = 0x00000001,
-    FILTER_STATUS_FULL_MATCH_IN_ALLOW_LIST = 0x00000002,
-    FILTER_STATUS_FULL_MATCH_IN_DENY_LIST  = 0x00000004,
+    ERROR_DHCP_FO_NOT_SUPPORTED    = 0x00004e96U,
+    ERROR_DHCP_FO_TIME_OUT_OF_SYNC = 0x00004e97U,
+    ERROR_DHCP_FO_STATE_NOT_NORMAL = 0x00004e98U,
 }
+
+enum uint ERROR_DHCP_NO_ADMIN_PERMISSION = 0x00004e99U;
 
 enum : uint
 {
-    FILTER_STATUS_WILDCARD_MATCH_IN_ALLOW_LIST = 0x00000008,
-    FILTER_STATUS_WILDCARD_MATCH_IN_DENY_LIST  = 0x00000010,
+    ERROR_DHCP_SERVER_NOT_REACHABLE     = 0x00004e9aU,
+    ERROR_DHCP_SERVER_NOT_RUNNING       = 0x00004e9bU,
+    ERROR_DHCP_SERVER_NAME_NOT_RESOLVED = 0x00004e9cU,
 }
 
-enum uint Set_APIProtocolSupport = 0x00000001;
+enum uint ERROR_DHCP_FO_RELATIONSHIP_NAME_TOO_LONG = 0x00004e9dU;
+enum uint ERROR_DHCP_REACHED_END_OF_SELECTION = 0x00004e9eU;
+enum uint ERROR_DHCP_FO_ADDSCOPE_LEASES_NOT_SYNCED = 0x00004e9fU;
 
 enum : uint
 {
-    Set_DatabaseName = 0x00000002,
-    Set_DatabasePath = 0x00000004,
-}
-
-enum : uint
-{
-    Set_BackupPath     = 0x00000008,
-    Set_BackupInterval = 0x00000010,
-}
-
-enum uint Set_DatabaseLoggingFlag = 0x00000020;
-enum uint Set_RestoreFlag = 0x00000040;
-enum uint Set_DatabaseCleanupInterval = 0x00000080;
-enum uint Set_DebugFlag = 0x00000100;
-enum uint Set_PingRetries = 0x00000200;
-enum uint Set_BootFileTable = 0x00000400;
-enum uint Set_AuditLogState = 0x00000800;
-
-enum : uint
-{
-    Set_QuarantineON      = 0x00001000,
-    Set_QuarantineDefFail = 0x00002000,
+    ERROR_DHCP_FO_MAX_RELATIONSHIPS         = 0x00004ea0U,
+    ERROR_DHCP_FO_IPRANGE_TYPE_CONV_ILLEGAL = 0x00004ea1U,
 }
 
 enum : uint
 {
-    CLIENT_TYPE_UNSPECIFIED      = 0x00000000,
-    CLIENT_TYPE_DHCP             = 0x00000001,
-    CLIENT_TYPE_BOOTP            = 0x00000002,
-    CLIENT_TYPE_RESERVATION_FLAG = 0x00000004,
-    CLIENT_TYPE_NONE             = 0x00000064,
+    ERROR_DHCP_FO_MAX_ADD_SCOPES         = 0x00004ea2U,
+    ERROR_DHCP_FO_BOOT_NOT_SUPPORTED     = 0x00004ea3U,
+    ERROR_DHCP_FO_RANGE_PART_OF_REL      = 0x00004ea4U,
+    ERROR_DHCP_FO_SCOPE_SYNC_IN_PROGRESS = 0x00004ea5U,
 }
 
-enum uint Set_UnicastFlag = 0x00000001;
-enum uint Set_RapidCommitFlag = 0x00000002;
-enum uint Set_PreferredLifetime = 0x00000004;
-enum uint Set_ValidLifetime = 0x00000008;
+enum uint ERROR_DHCP_FO_FEATURE_NOT_SUPPORTED = 0x00004ea6U;
 
 enum : uint
 {
-    Set_T1                    = 0x00000010,
-    Set_T2                    = 0x00000020,
-    Set_PreferredLifetimeIATA = 0x00000040,
+    ERROR_DHCP_POLICY_FQDN_RANGE_UNSUPPORTED  = 0x00004ea7U,
+    ERROR_DHCP_POLICY_FQDN_OPTION_UNSUPPORTED = 0x00004ea8U,
+    ERROR_DHCP_POLICY_EDIT_FQDN_UNSUPPORTED   = 0x00004ea9U,
 }
 
-enum uint Set_ValidLifetimeIATA = 0x00000080;
+enum uint ERROR_DHCP_NAP_NOT_SUPPORTED = 0x00004eaaU;
+enum uint ERROR_LAST_DHCP_SERVER_ERROR = 0x00004eabU;
+enum uint DHCP_SUBNET_INFO_VQ_FLAG_QUARANTINE = 0x00000001U;
+enum uint MAX_PATTERN_LENGTH = 0x000000ffU;
+enum uint MAC_ADDRESS_LENGTH = 0x00000006U;
+enum uint HWTYPE_ETHERNET_10MB = 0x00000001U;
 
 enum : uint
 {
-    V5_ADDRESS_STATE_OFFERED         = 0x00000000,
-    V5_ADDRESS_STATE_ACTIVE          = 0x00000001,
-    V5_ADDRESS_STATE_DECLINED        = 0x00000002,
-    V5_ADDRESS_STATE_DOOM            = 0x00000003,
-    V5_ADDRESS_BIT_DELETED           = 0x00000080,
-    V5_ADDRESS_BIT_UNREGISTERED      = 0x00000040,
-    V5_ADDRESS_BIT_BOTH_REC          = 0x00000020,
-    V5_ADDRESS_EX_BIT_DISABLE_PTR_RR = 0x00000001,
+    FILTER_STATUS_NONE                     = 0x00000001U,
+    FILTER_STATUS_FULL_MATCH_IN_ALLOW_LIST = 0x00000002U,
+    FILTER_STATUS_FULL_MATCH_IN_DENY_LIST  = 0x00000004U,
 }
 
 enum : uint
 {
-    DNS_FLAG_ENABLED          = 0x00000001,
-    DNS_FLAG_UPDATE_DOWNLEVEL = 0x00000002,
+    FILTER_STATUS_WILDCARD_MATCH_IN_ALLOW_LIST = 0x00000008U,
+    FILTER_STATUS_WILDCARD_MATCH_IN_DENY_LIST  = 0x00000010U,
 }
 
-enum uint DNS_FLAG_CLEANUP_EXPIRED = 0x00000004;
+enum uint Set_APIProtocolSupport = 0x00000001U;
 
 enum : uint
 {
-    DNS_FLAG_UPDATE_BOTH_ALWAYS = 0x00000010,
-    DNS_FLAG_UPDATE_DHCID       = 0x00000020,
-    DNS_FLAG_DISABLE_PTR_UPDATE = 0x00000040,
-}
-
-enum uint DNS_FLAG_HAS_DNS_SUFFIX = 0x00000080;
-
-enum : uint
-{
-    DHCP_OPT_ENUM_IGNORE_VENDOR = 0x00000001,
-    DHCP_OPT_ENUM_USE_CLASSNAME = 0x00000002,
+    Set_DatabaseName = 0x00000002U,
+    Set_DatabasePath = 0x00000004U,
 }
 
 enum : uint
 {
-    DHCP_FLAGS_DONT_ACCESS_DS   = 0x00000001,
-    DHCP_FLAGS_DONT_DO_RPC      = 0x00000002,
-    DHCP_FLAGS_OPTION_IS_VENDOR = 0x00000003,
+    Set_BackupPath     = 0x00000008U,
+    Set_BackupInterval = 0x00000010U,
+}
+
+enum uint Set_DatabaseLoggingFlag = 0x00000020U;
+enum uint Set_RestoreFlag = 0x00000040U;
+enum uint Set_DatabaseCleanupInterval = 0x00000080U;
+enum uint Set_DebugFlag = 0x00000100U;
+enum uint Set_PingRetries = 0x00000200U;
+enum uint Set_BootFileTable = 0x00000400U;
+enum uint Set_AuditLogState = 0x00000800U;
+
+enum : uint
+{
+    Set_QuarantineON      = 0x00001000U,
+    Set_QuarantineDefFail = 0x00002000U,
 }
 
 enum : uint
 {
-    DHCP_ATTRIB_BOOL_IS_ROGUE         = 0x00000001,
-    DHCP_ATTRIB_BOOL_IS_DYNBOOTP      = 0x00000002,
-    DHCP_ATTRIB_BOOL_IS_PART_OF_DSDC  = 0x00000003,
-    DHCP_ATTRIB_BOOL_IS_BINDING_AWARE = 0x00000004,
-    DHCP_ATTRIB_BOOL_IS_ADMIN         = 0x00000005,
-    DHCP_ATTRIB_ULONG_RESTORE_STATUS  = 0x00000006,
+    CLIENT_TYPE_UNSPECIFIED      = 0x00000000U,
+    CLIENT_TYPE_DHCP             = 0x00000001U,
+    CLIENT_TYPE_BOOTP            = 0x00000002U,
+    CLIENT_TYPE_RESERVATION_FLAG = 0x00000004U,
+    CLIENT_TYPE_NONE             = 0x00000064U,
+}
+
+enum uint Set_UnicastFlag = 0x00000001U;
+enum uint Set_RapidCommitFlag = 0x00000002U;
+enum uint Set_PreferredLifetime = 0x00000004U;
+enum uint Set_ValidLifetime = 0x00000008U;
+
+enum : uint
+{
+    Set_T1                    = 0x00000010U,
+    Set_T2                    = 0x00000020U,
+    Set_PreferredLifetimeIATA = 0x00000040U,
+}
+
+enum uint Set_ValidLifetimeIATA = 0x00000080U;
+
+enum : uint
+{
+    V5_ADDRESS_STATE_OFFERED         = 0x00000000U,
+    V5_ADDRESS_STATE_ACTIVE          = 0x00000001U,
+    V5_ADDRESS_STATE_DECLINED        = 0x00000002U,
+    V5_ADDRESS_STATE_DOOM            = 0x00000003U,
+    V5_ADDRESS_BIT_DELETED           = 0x00000080U,
+    V5_ADDRESS_BIT_UNREGISTERED      = 0x00000040U,
+    V5_ADDRESS_BIT_BOTH_REC          = 0x00000020U,
+    V5_ADDRESS_EX_BIT_DISABLE_PTR_RR = 0x00000001U,
 }
 
 enum : uint
 {
-    DHCP_ATTRIB_TYPE_BOOL  = 0x00000001,
-    DHCP_ATTRIB_TYPE_ULONG = 0x00000002,
+    DNS_FLAG_ENABLED          = 0x00000001U,
+    DNS_FLAG_UPDATE_DOWNLEVEL = 0x00000002U,
 }
 
-enum uint DHCP_ENDPOINT_FLAG_CANT_MODIFY = 0x00000001;
+enum uint DNS_FLAG_CLEANUP_EXPIRED = 0x00000004U;
 
 enum : uint
 {
-    QUARANTIN_OPTION_BASE               = 0x0000a8d4,
-    QUARANTINE_SCOPE_QUARPROFILE_OPTION = 0x0000a8d5,
+    DNS_FLAG_UPDATE_BOTH_ALWAYS = 0x00000010U,
+    DNS_FLAG_UPDATE_DHCID       = 0x00000020U,
+    DNS_FLAG_DISABLE_PTR_UPDATE = 0x00000040U,
 }
 
-enum uint QUARANTINE_CONFIG_OPTION = 0x0000a8d6;
+enum uint DNS_FLAG_HAS_DNS_SUFFIX = 0x00000080U;
 
 enum : uint
 {
-    ADDRESS_TYPE_IANA = 0x00000000,
-    ADDRESS_TYPE_IATA = 0x00000001,
-}
-
-enum : uint
-{
-    DHCP_MIN_DELAY = 0x00000000,
-    DHCP_MAX_DELAY = 0x000003e8,
+    DHCP_OPT_ENUM_IGNORE_VENDOR = 0x00000001U,
+    DHCP_OPT_ENUM_USE_CLASSNAME = 0x00000002U,
 }
 
 enum : uint
 {
-    DHCP_FAILOVER_DELETE_SCOPES      = 0x00000001,
-    DHCP_FAILOVER_MAX_NUM_ADD_SCOPES = 0x00000190,
-    DHCP_FAILOVER_MAX_NUM_REL        = 0x0000001f,
+    DHCP_FLAGS_DONT_ACCESS_DS   = 0x00000001U,
+    DHCP_FLAGS_DONT_DO_RPC      = 0x00000002U,
+    DHCP_FLAGS_OPTION_IS_VENDOR = 0x00000003U,
 }
 
-enum uint MCLT = 0x00000001;
-enum uint SAFEPERIOD = 0x00000002;
-enum uint CHANGESTATE = 0x00000004;
-enum uint PERCENTAGE = 0x00000008;
-enum uint MODE = 0x00000010;
-enum uint PREVSTATE = 0x00000020;
-enum uint SHAREDSECRET = 0x00000040;
+enum : uint
+{
+    DHCP_ATTRIB_BOOL_IS_ROGUE         = 0x00000001U,
+    DHCP_ATTRIB_BOOL_IS_DYNBOOTP      = 0x00000002U,
+    DHCP_ATTRIB_BOOL_IS_PART_OF_DSDC  = 0x00000003U,
+    DHCP_ATTRIB_BOOL_IS_BINDING_AWARE = 0x00000004U,
+    DHCP_ATTRIB_BOOL_IS_ADMIN         = 0x00000005U,
+    DHCP_ATTRIB_ULONG_RESTORE_STATUS  = 0x00000006U,
+}
+
+enum : uint
+{
+    DHCP_ATTRIB_TYPE_BOOL  = 0x00000001U,
+    DHCP_ATTRIB_TYPE_ULONG = 0x00000002U,
+}
+
+enum uint DHCP_ENDPOINT_FLAG_CANT_MODIFY = 0x00000001U;
+
+enum : uint
+{
+    QUARANTIN_OPTION_BASE               = 0x0000a8d4U,
+    QUARANTINE_SCOPE_QUARPROFILE_OPTION = 0x0000a8d5U,
+}
+
+enum uint QUARANTINE_CONFIG_OPTION = 0x0000a8d6U;
+
+enum : uint
+{
+    ADDRESS_TYPE_IANA = 0x00000000U,
+    ADDRESS_TYPE_IATA = 0x00000001U,
+}
+
+enum : uint
+{
+    DHCP_MIN_DELAY = 0x00000000U,
+    DHCP_MAX_DELAY = 0x000003e8U,
+}
+
+enum : uint
+{
+    DHCP_FAILOVER_DELETE_SCOPES      = 0x00000001U,
+    DHCP_FAILOVER_MAX_NUM_ADD_SCOPES = 0x00000190U,
+    DHCP_FAILOVER_MAX_NUM_REL        = 0x0000001fU,
+}
+
+enum uint MCLT = 0x00000001U;
+enum uint SAFEPERIOD = 0x00000002U;
+enum uint CHANGESTATE = 0x00000004U;
+enum uint PERCENTAGE = 0x00000008U;
+enum uint MODE = 0x00000010U;
+enum uint PREVSTATE = 0x00000020U;
+enum uint SHAREDSECRET = 0x00000040U;
 
 enum : const(wchar)*
 {
@@ -796,74 +820,74 @@ enum : const(wchar)*
 
 enum : uint
 {
-    DHCP_CONTROL_START    = 0x00000001,
-    DHCP_CONTROL_STOP     = 0x00000002,
-    DHCP_CONTROL_PAUSE    = 0x00000003,
-    DHCP_CONTROL_CONTINUE = 0x00000004,
+    DHCP_CONTROL_START    = 0x00000001U,
+    DHCP_CONTROL_STOP     = 0x00000002U,
+    DHCP_CONTROL_PAUSE    = 0x00000003U,
+    DHCP_CONTROL_CONTINUE = 0x00000004U,
 }
 
 enum : uint
 {
-    DHCP_DROP_DUPLICATE      = 0x00000001,
-    DHCP_DROP_NOMEM          = 0x00000002,
-    DHCP_DROP_INTERNAL_ERROR = 0x00000003,
-    DHCP_DROP_TIMEOUT        = 0x00000004,
-    DHCP_DROP_UNAUTH         = 0x00000005,
-    DHCP_DROP_PAUSED         = 0x00000006,
-    DHCP_DROP_NO_SUBNETS     = 0x00000007,
-    DHCP_DROP_INVALID        = 0x00000008,
-    DHCP_DROP_WRONG_SERVER   = 0x00000009,
-    DHCP_DROP_NOADDRESS      = 0x0000000a,
-    DHCP_DROP_PROCESSED      = 0x0000000b,
-    DHCP_DROP_GEN_FAILURE    = 0x00000100,
+    DHCP_DROP_DUPLICATE      = 0x00000001U,
+    DHCP_DROP_NOMEM          = 0x00000002U,
+    DHCP_DROP_INTERNAL_ERROR = 0x00000003U,
+    DHCP_DROP_TIMEOUT        = 0x00000004U,
+    DHCP_DROP_UNAUTH         = 0x00000005U,
+    DHCP_DROP_PAUSED         = 0x00000006U,
+    DHCP_DROP_NO_SUBNETS     = 0x00000007U,
+    DHCP_DROP_INVALID        = 0x00000008U,
+    DHCP_DROP_WRONG_SERVER   = 0x00000009U,
+    DHCP_DROP_NOADDRESS      = 0x0000000aU,
+    DHCP_DROP_PROCESSED      = 0x0000000bU,
+    DHCP_DROP_GEN_FAILURE    = 0x00000100U,
 }
 
-enum uint DHCP_SEND_PACKET = 0x10000000;
+enum uint DHCP_SEND_PACKET = 0x10000000U;
 
 enum : uint
 {
-    DHCP_PROB_CONFLICT = 0x20000001,
-    DHCP_PROB_DECLINE  = 0x20000002,
-    DHCP_PROB_RELEASE  = 0x20000003,
-    DHCP_PROB_NACKED   = 0x20000004,
-}
-
-enum : uint
-{
-    DHCP_GIVE_ADDRESS_NEW = 0x30000001,
-    DHCP_GIVE_ADDRESS_OLD = 0x30000002,
+    DHCP_PROB_CONFLICT = 0x20000001U,
+    DHCP_PROB_DECLINE  = 0x20000002U,
+    DHCP_PROB_RELEASE  = 0x20000003U,
+    DHCP_PROB_NACKED   = 0x20000004U,
 }
 
 enum : uint
 {
-    DHCP_CLIENT_BOOTP = 0x30000003,
-    DHCP_CLIENT_DHCP  = 0x30000004,
+    DHCP_GIVE_ADDRESS_NEW = 0x30000001U,
+    DHCP_GIVE_ADDRESS_OLD = 0x30000002U,
 }
 
 enum : uint
 {
-    DHCPV6_OPTION_CLIENTID          = 0x00000001,
-    DHCPV6_OPTION_SERVERID          = 0x00000002,
-    DHCPV6_OPTION_IA_NA             = 0x00000003,
-    DHCPV6_OPTION_IA_TA             = 0x00000004,
-    DHCPV6_OPTION_ORO               = 0x00000006,
-    DHCPV6_OPTION_PREFERENCE        = 0x00000007,
-    DHCPV6_OPTION_UNICAST           = 0x0000000c,
-    DHCPV6_OPTION_RAPID_COMMIT      = 0x0000000e,
-    DHCPV6_OPTION_USER_CLASS        = 0x0000000f,
-    DHCPV6_OPTION_VENDOR_CLASS      = 0x00000010,
-    DHCPV6_OPTION_VENDOR_OPTS       = 0x00000011,
-    DHCPV6_OPTION_RECONF_MSG        = 0x00000013,
-    DHCPV6_OPTION_SIP_SERVERS_NAMES = 0x00000015,
-    DHCPV6_OPTION_SIP_SERVERS_ADDRS = 0x00000016,
-    DHCPV6_OPTION_DNS_SERVERS       = 0x00000017,
-    DHCPV6_OPTION_DOMAIN_LIST       = 0x00000018,
-    DHCPV6_OPTION_IA_PD             = 0x00000019,
-    DHCPV6_OPTION_NIS_SERVERS       = 0x0000001b,
-    DHCPV6_OPTION_NISP_SERVERS      = 0x0000001c,
-    DHCPV6_OPTION_NIS_DOMAIN_NAME   = 0x0000001d,
-    DHCPV6_OPTION_NISP_DOMAIN_NAME  = 0x0000001e,
-    DHCPV6_OPTION_DNR               = 0x00000090,
+    DHCP_CLIENT_BOOTP = 0x30000003U,
+    DHCP_CLIENT_DHCP  = 0x30000004U,
+}
+
+enum : uint
+{
+    DHCPV6_OPTION_CLIENTID          = 0x00000001U,
+    DHCPV6_OPTION_SERVERID          = 0x00000002U,
+    DHCPV6_OPTION_IA_NA             = 0x00000003U,
+    DHCPV6_OPTION_IA_TA             = 0x00000004U,
+    DHCPV6_OPTION_ORO               = 0x00000006U,
+    DHCPV6_OPTION_PREFERENCE        = 0x00000007U,
+    DHCPV6_OPTION_UNICAST           = 0x0000000cU,
+    DHCPV6_OPTION_RAPID_COMMIT      = 0x0000000eU,
+    DHCPV6_OPTION_USER_CLASS        = 0x0000000fU,
+    DHCPV6_OPTION_VENDOR_CLASS      = 0x00000010U,
+    DHCPV6_OPTION_VENDOR_OPTS       = 0x00000011U,
+    DHCPV6_OPTION_RECONF_MSG        = 0x00000013U,
+    DHCPV6_OPTION_SIP_SERVERS_NAMES = 0x00000015U,
+    DHCPV6_OPTION_SIP_SERVERS_ADDRS = 0x00000016U,
+    DHCPV6_OPTION_DNS_SERVERS       = 0x00000017U,
+    DHCPV6_OPTION_DOMAIN_LIST       = 0x00000018U,
+    DHCPV6_OPTION_IA_PD             = 0x00000019U,
+    DHCPV6_OPTION_NIS_SERVERS       = 0x0000001bU,
+    DHCPV6_OPTION_NISP_SERVERS      = 0x0000001cU,
+    DHCPV6_OPTION_NIS_DOMAIN_NAME   = 0x0000001dU,
+    DHCPV6_OPTION_NISP_DOMAIN_NAME  = 0x0000001eU,
+    DHCPV6_OPTION_DNR               = 0x00000090U,
 }
 
 // Callbacks
@@ -887,7 +911,7 @@ alias LPDHCP_ENTRY_POINT_FUNC = uint function(PWSTR ChainDlls, uint CalloutVersi
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpv6csdk/ns-dhcpv6csdk-dhcpv6capi_params))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpv6csdk/ns-dhcpv6csdk-dhcpv6capi_params
 struct DHCPV6CAPI_PARAMS
 {
     uint   Flags;
@@ -897,14 +921,14 @@ struct DHCPV6CAPI_PARAMS
     uint   nBytesData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpv6csdk/ns-dhcpv6csdk-dhcpv6capi_params_array))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpv6csdk/ns-dhcpv6csdk-dhcpv6capi_params_array
 struct DHCPV6CAPI_PARAMS_ARRAY
 {
     uint               nParams;
     DHCPV6CAPI_PARAMS* Params;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpv6csdk/ns-dhcpv6csdk-dhcpv6capi_classid))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpv6csdk/ns-dhcpv6csdk-dhcpv6capi_classid
 struct DHCPV6CAPI_CLASSID
 {
     uint   Flags;
@@ -912,7 +936,7 @@ struct DHCPV6CAPI_CLASSID
     uint   nBytesData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpv6csdk/ns-dhcpv6csdk-dhcpv6prefix))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpv6csdk/ns-dhcpv6csdk-dhcpv6prefix
 struct DHCPV6Prefix
 {
     ubyte[16]  prefix;
@@ -922,7 +946,7 @@ struct DHCPV6Prefix
     StatusCode status;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpv6csdk/ns-dhcpv6csdk-dhcpv6prefixleaseinformation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpv6csdk/ns-dhcpv6csdk-dhcpv6prefixleaseinformation
 struct DHCPV6PrefixLeaseInformation
 {
     uint          nPrefixes;
@@ -937,7 +961,7 @@ struct DHCPV6PrefixLeaseInformation
     uint          ServerIdLen;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpcsdk/ns-dhcpcsdk-dhcpapi_params))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpcsdk/ns-dhcpcsdk-dhcpapi_params
 struct DHCPAPI_PARAMS
 {
     uint   Flags;
@@ -947,14 +971,14 @@ struct DHCPAPI_PARAMS
     uint   nBytesData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpcsdk/ns-dhcpcsdk-dhcpcapi_params_array))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpcsdk/ns-dhcpcsdk-dhcpcapi_params_array
 struct DHCPCAPI_PARAMS_ARRAY
 {
     uint            nParams;
     DHCPAPI_PARAMS* Params;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpcsdk/ns-dhcpcsdk-dhcpcapi_classid))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpcsdk/ns-dhcpcsdk-dhcpcapi_classid
 struct DHCPCAPI_CLASSID
 {
     uint   Flags;
@@ -962,7 +986,7 @@ struct DHCPCAPI_CLASSID
     uint   nBytesData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpssdk/ns-dhcpssdk-dhcp_server_options))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpssdk/ns-dhcpssdk-dhcp_server_options
 struct DHCP_SERVER_OPTIONS
 {
     ubyte*  MessageType;
@@ -992,7 +1016,7 @@ struct DHCP_SERVER_OPTIONS
     uint*   ScopeId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpssdk/ns-dhcpssdk-dhcp_callout_table))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpssdk/ns-dhcpssdk-dhcp_callout_table
 struct DHCP_CALLOUT_TABLE
 {
     LPDHCP_CONTROL       DhcpControlHook;
@@ -1007,28 +1031,28 @@ struct DHCP_CALLOUT_TABLE
     void*                DhcpReservedHook;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-date_time))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-date_time
 struct DATE_TIME
 {
     uint dwLowDateTime;
     uint dwHighDateTime;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_ip_range))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_ip_range
 struct DHCP_IP_RANGE
 {
     uint StartAddress;
     uint EndAddress;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_binary_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_binary_data
 struct DHCP_BINARY_DATA
 {
     uint   DataLength;
     ubyte* Data;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_host_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_host_info
 struct DHCP_HOST_INFO
 {
     uint  IpAddress;
@@ -1036,14 +1060,14 @@ struct DHCP_HOST_INFO
     PWSTR HostName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dword_dword))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dword_dword
 struct DWORD_DWORD
 {
     uint DWord1;
     uint DWord2;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_subnet_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_subnet_info
 struct DHCP_SUBNET_INFO
 {
     uint              SubnetAddress;
@@ -1054,7 +1078,7 @@ struct DHCP_SUBNET_INFO
     DHCP_SUBNET_STATE SubnetState;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_subnet_info_vq))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_subnet_info_vq
 struct DHCP_SUBNET_INFO_VQ
 {
     uint              SubnetAddress;
@@ -1070,49 +1094,56 @@ struct DHCP_SUBNET_INFO_VQ
     long              Reserved4;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_ip_array))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_ip_array
 struct DHCP_IP_ARRAY
 {
     uint NumElements;
     /*FIELD ATTR: NativeArrayInfoAttribute : CustomAttributeSig([], [NamedArgSig("CountParamIndex", FixedArgSig(ElementSig(0)))])*/uint* Elements;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_ip_cluster))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_ip_cluster
 struct DHCP_IP_CLUSTER
 {
     uint ClusterAddress;
     uint ClusterMask;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_ip_reservation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_ip_reservation
 struct DHCP_IP_RESERVATION
 {
     uint              ReservedIpAddress;
     DHCP_BINARY_DATA* ReservedForClient;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_subnet_element_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_subnet_element_data
 struct DHCP_SUBNET_ELEMENT_DATA
 {
     DHCP_SUBNET_ELEMENT_TYPE ElementType;
-    DHCP_SUBNET_ELEMENT_UNION Element;
+    union Element
+    {
+        DHCP_IP_RANGE*       IpRange;
+        DHCP_HOST_INFO*      SecondaryHost;
+        DHCP_IP_RESERVATION* ReservedIp;
+        DHCP_IP_RANGE*       ExcludeIpRange;
+        DHCP_IP_CLUSTER*     IpUsedCluster;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_subnet_element_info_array))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_subnet_element_info_array
 struct DHCP_SUBNET_ELEMENT_INFO_ARRAY
 {
     uint NumElements;
     DHCP_SUBNET_ELEMENT_DATA* Elements;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_ipv6_address))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_ipv6_address
 struct DHCP_IPV6_ADDRESS
 {
     ulong HighOrderBits;
     ulong LowOrderBits;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_addr_pattern))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_addr_pattern
 struct DHCP_ADDR_PATTERN
 {
     BOOL       MatchHWType;
@@ -1122,7 +1153,7 @@ struct DHCP_ADDR_PATTERN
     ubyte[255] Pattern;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_filter_add_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_filter_add_info
 struct DHCP_FILTER_ADD_INFO
 {
     DHCP_ADDR_PATTERN AddrPatt;
@@ -1130,42 +1161,53 @@ struct DHCP_FILTER_ADD_INFO
     DHCP_FILTER_LIST_TYPE ListType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_filter_global_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_filter_global_info
 struct DHCP_FILTER_GLOBAL_INFO
 {
     BOOL EnforceAllowList;
     BOOL EnforceDenyList;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_filter_record))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_filter_record
 struct DHCP_FILTER_RECORD
 {
     DHCP_ADDR_PATTERN AddrPatt;
     PWSTR             Comment;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_filter_enum_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_filter_enum_info
 struct DHCP_FILTER_ENUM_INFO
 {
     uint                NumElements;
     DHCP_FILTER_RECORD* pEnumRecords;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_option_data_element))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_option_data_element
 struct DHCP_OPTION_DATA_ELEMENT
 {
     DHCP_OPTION_DATA_TYPE OptionType;
-    DHCP_OPTION_ELEMENT_UNION Element;
+    union Element
+    {
+        ubyte            ByteOption;
+        ushort           WordOption;
+        uint             DWordOption;
+        DWORD_DWORD      DWordDWordOption;
+        uint             IpAddressOption;
+        PWSTR            StringDataOption;
+        DHCP_BINARY_DATA BinaryDataOption;
+        DHCP_BINARY_DATA EncapsulatedDataOption;
+        PWSTR            Ipv6AddressDataOption;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_option_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_option_data
 struct DHCP_OPTION_DATA
 {
     uint NumElements;
     DHCP_OPTION_DATA_ELEMENT* Elements;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_option))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_option
 struct DHCP_OPTION
 {
     uint             OptionID;
@@ -1175,39 +1217,46 @@ struct DHCP_OPTION
     DHCP_OPTION_TYPE OptionType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_option_array))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_option_array
 struct DHCP_OPTION_ARRAY
 {
     uint         NumElements;
     DHCP_OPTION* Options;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_option_value))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_option_value
 struct DHCP_OPTION_VALUE
 {
     uint             OptionID;
     DHCP_OPTION_DATA Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_option_value_array))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_option_value_array
 struct DHCP_OPTION_VALUE_ARRAY
 {
     uint               NumElements;
     DHCP_OPTION_VALUE* Values;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_reserved_scope))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_reserved_scope
 struct DHCP_RESERVED_SCOPE
 {
     uint ReservedIpAddress;
     uint ReservedIpSubnetAddress;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_option_scope_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_option_scope_info
 struct DHCP_OPTION_SCOPE_INFO
 {
     DHCP_OPTION_SCOPE_TYPE ScopeType;
-    _DHCP_OPTION_SCOPE_UNION ScopeInfo;
+    union ScopeInfo
+    {
+        void*               DefaultScopeInfo;
+        void*               GlobalScopeInfo;
+        uint                SubnetScopeInfo;
+        DHCP_RESERVED_SCOPE ReservedScopeInfo;
+        PWSTR               MScopeInfo;
+    }
 }
 
 struct DHCP_RESERVED_SCOPE6
@@ -1216,21 +1265,26 @@ struct DHCP_RESERVED_SCOPE6
     DHCP_IPV6_ADDRESS ReservedIpSubnetAddress;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_option_scope_info6))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_option_scope_info6
 struct DHCP_OPTION_SCOPE_INFO6
 {
     DHCP_OPTION_SCOPE_TYPE6 ScopeType;
-    DHCP_OPTION_SCOPE_UNION6 ScopeInfo;
+    union ScopeInfo
+    {
+        void*                DefaultScopeInfo;
+        DHCP_IPV6_ADDRESS    SubnetScopeInfo;
+        DHCP_RESERVED_SCOPE6 ReservedScopeInfo;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_option_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_option_list
 struct DHCP_OPTION_LIST
 {
     uint               NumOptions;
     DHCP_OPTION_VALUE* Options;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_client_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_client_info
 struct DHCP_CLIENT_INFO
 {
     uint             ClientIpAddress;
@@ -1242,14 +1296,14 @@ struct DHCP_CLIENT_INFO
     DHCP_HOST_INFO   OwnerHost;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_client_info_array))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_client_info_array
 struct DHCP_CLIENT_INFO_ARRAY
 {
     uint               NumElements;
     DHCP_CLIENT_INFO** Clients;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_client_info_vq))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_client_info_vq
 struct DHCP_CLIENT_INFO_VQ
 {
     uint             ClientIpAddress;
@@ -1266,14 +1320,14 @@ struct DHCP_CLIENT_INFO_VQ
     BOOL             QuarantineCapable;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_client_info_array_vq))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_client_info_array_vq
 struct DHCP_CLIENT_INFO_ARRAY_VQ
 {
     uint NumElements;
     DHCP_CLIENT_INFO_VQ** Clients;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_client_filter_status_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_client_filter_status_info
 struct DHCP_CLIENT_FILTER_STATUS_INFO
 {
     uint             ClientIpAddress;
@@ -1291,14 +1345,14 @@ struct DHCP_CLIENT_FILTER_STATUS_INFO
     uint             FilterStatus;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_client_filter_status_info_array))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_client_filter_status_info_array
 struct DHCP_CLIENT_FILTER_STATUS_INFO_ARRAY
 {
     uint NumElements;
     DHCP_CLIENT_FILTER_STATUS_INFO** Clients;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_client_info_pb))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_client_info_pb
 struct DHCP_CLIENT_INFO_PB
 {
     uint             ClientIpAddress;
@@ -1317,25 +1371,37 @@ struct DHCP_CLIENT_INFO_PB
     PWSTR            PolicyName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_client_info_pb_array))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_client_info_pb_array
 struct DHCP_CLIENT_INFO_PB_ARRAY
 {
     uint NumElements;
     DHCP_CLIENT_INFO_PB** Clients;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_search_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_search_info
 struct DHCP_SEARCH_INFO
 {
     DHCP_SEARCH_INFO_TYPE SearchType;
-    DHCP_CLIENT_SEARCH_UNION SearchInfo;
+    union SearchInfo
+    {
+        uint             ClientIpAddress;
+        DHCP_BINARY_DATA ClientHardwareAddress;
+        PWSTR            ClientName;
+    }
 }
 
 struct DHCP_PROPERTY
 {
     DHCP_PROPERTY_ID   ID;
     DHCP_PROPERTY_TYPE Type;
-    _DHCP_PROPERTY_VALUE_UNION Value;
+    union Value
+    {
+        ubyte            ByteValue;
+        ushort           WordValue;
+        uint             DWordValue;
+        PWSTR            StringValue;
+        DHCP_BINARY_DATA BinaryValue;
+    }
 }
 
 struct DHCP_PROPERTY_ARRAY
@@ -1369,7 +1435,7 @@ struct DHCP_CLIENT_INFO_EX_ARRAY
     DHCP_CLIENT_INFO_EX** Clients;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-scope_mib_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-scope_mib_info
 struct SCOPE_MIB_INFO
 {
     uint Subnet;
@@ -1378,7 +1444,7 @@ struct SCOPE_MIB_INFO
     uint NumPendingOffers;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_mib_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_mib_info
 struct DHCP_MIB_INFO
 {
     uint            Discovers;
@@ -1428,7 +1494,7 @@ struct DHCP_MIB_INFO_VQ
     SCOPE_MIB_INFO_VQ* ScopeInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-scope_mib_info_v5))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-scope_mib_info_v5
 struct SCOPE_MIB_INFO_V5
 {
     uint Subnet;
@@ -1437,7 +1503,7 @@ struct SCOPE_MIB_INFO_V5
     uint NumPendingOffers;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_mib_info_v5))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_mib_info_v5
 struct DHCP_MIB_INFO_V5
 {
     uint               Discovers;
@@ -1461,7 +1527,7 @@ struct DHCP_MIB_INFO_V5
     SCOPE_MIB_INFO_V5* ScopeInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_server_config_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_server_config_info
 struct DHCP_SERVER_CONFIG_INFO
 {
     uint  APIProtocolSupport;
@@ -1475,21 +1541,21 @@ struct DHCP_SERVER_CONFIG_INFO
     uint  DebugFlag;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_scan_item))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_scan_item
 struct DHCP_SCAN_ITEM
 {
     uint           IpAddress;
     DHCP_SCAN_FLAG ScanFlag;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_scan_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_scan_list
 struct DHCP_SCAN_LIST
 {
     uint            NumScanItems;
     DHCP_SCAN_ITEM* ScanItems;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_class_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_class_info
 struct DHCP_CLASS_INFO
 {
     PWSTR  ClassName;
@@ -1500,14 +1566,14 @@ struct DHCP_CLASS_INFO
     ubyte* ClassData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_class_info_array))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_class_info_array
 struct DHCP_CLASS_INFO_ARRAY
 {
     uint             NumElements;
     DHCP_CLASS_INFO* Classes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_class_info_v6))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_class_info_v6
 struct DHCP_CLASS_INFO_V6
 {
     PWSTR  ClassName;
@@ -1519,21 +1585,21 @@ struct DHCP_CLASS_INFO_V6
     ubyte* ClassData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_class_info_array_v6))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_class_info_array_v6
 struct DHCP_CLASS_INFO_ARRAY_V6
 {
     uint                NumElements;
     DHCP_CLASS_INFO_V6* Classes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_server_specific_strings))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_server_specific_strings
 struct DHCP_SERVER_SPECIFIC_STRINGS
 {
     PWSTR DefaultVendorClassName;
     PWSTR DefaultUserClassName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_ip_reservation_v4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_ip_reservation_v4
 struct DHCP_IP_RESERVATION_V4
 {
     uint              ReservedIpAddress;
@@ -1541,7 +1607,7 @@ struct DHCP_IP_RESERVATION_V4
     ubyte             bAllowedClientTypes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_ip_reservation_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_ip_reservation_info
 struct DHCP_IP_RESERVATION_INFO
 {
     uint             ReservedIpAddress;
@@ -1552,28 +1618,35 @@ struct DHCP_IP_RESERVATION_INFO
     ubyte            fOptionsPresent;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_reservation_info_array))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_reservation_info_array
 struct DHCP_RESERVATION_INFO_ARRAY
 {
     uint NumElements;
     DHCP_IP_RESERVATION_INFO** Elements;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_subnet_element_data_v4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_subnet_element_data_v4
 struct DHCP_SUBNET_ELEMENT_DATA_V4
 {
     DHCP_SUBNET_ELEMENT_TYPE ElementType;
-    DHCP_SUBNET_ELEMENT_UNION_V4 Element;
+    union Element
+    {
+        DHCP_IP_RANGE*   IpRange;
+        DHCP_HOST_INFO*  SecondaryHost;
+        DHCP_IP_RESERVATION_V4* ReservedIp;
+        DHCP_IP_RANGE*   ExcludeIpRange;
+        DHCP_IP_CLUSTER* IpUsedCluster;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_subnet_element_info_array_v4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_subnet_element_info_array_v4
 struct DHCP_SUBNET_ELEMENT_INFO_ARRAY_V4
 {
     uint NumElements;
     DHCP_SUBNET_ELEMENT_DATA_V4* Elements;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_client_info_v4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_client_info_v4
 struct DHCP_CLIENT_INFO_V4
 {
     uint             ClientIpAddress;
@@ -1586,14 +1659,14 @@ struct DHCP_CLIENT_INFO_V4
     ubyte            bClientType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_client_info_array_v4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_client_info_array_v4
 struct DHCP_CLIENT_INFO_ARRAY_V4
 {
     uint NumElements;
     DHCP_CLIENT_INFO_V4** Clients;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_server_config_info_v4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_server_config_info_v4
 struct DHCP_SERVER_CONFIG_INFO_V4
 {
     uint  APIProtocolSupport;
@@ -1611,7 +1684,7 @@ struct DHCP_SERVER_CONFIG_INFO_V4
     BOOL  fAuditLog;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_server_config_info_vq))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_server_config_info_vq
 struct DHCP_SERVER_CONFIG_INFO_VQ
 {
     uint  APIProtocolSupport;
@@ -1632,7 +1705,7 @@ struct DHCP_SERVER_CONFIG_INFO_VQ
     BOOL  QuarRuntimeStatus;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_server_config_info_v6))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_server_config_info_v6
 struct DHCP_SERVER_CONFIG_INFO_V6
 {
     BOOL UnicastFlag;
@@ -1646,7 +1719,7 @@ struct DHCP_SERVER_CONFIG_INFO_V6
     BOOL fAuditLog;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_super_scope_table_entry))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_super_scope_table_entry
 struct DHCP_SUPER_SCOPE_TABLE_ENTRY
 {
     uint  SubnetAddress;
@@ -1655,14 +1728,14 @@ struct DHCP_SUPER_SCOPE_TABLE_ENTRY
     PWSTR SuperScopeName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_super_scope_table))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_super_scope_table
 struct DHCP_SUPER_SCOPE_TABLE
 {
     uint cEntries;
     DHCP_SUPER_SCOPE_TABLE_ENTRY* pEntries;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_client_info_v5))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_client_info_v5
 struct DHCP_CLIENT_INFO_V5
 {
     uint             ClientIpAddress;
@@ -1676,39 +1749,56 @@ struct DHCP_CLIENT_INFO_V5
     ubyte            AddressState;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_client_info_array_v5))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_client_info_array_v5
 struct DHCP_CLIENT_INFO_ARRAY_V5
 {
     uint NumElements;
     DHCP_CLIENT_INFO_V5** Clients;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_all_options))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_all_options
 struct DHCP_ALL_OPTIONS
 {
     uint               Flags;
     DHCP_OPTION_ARRAY* NonVendorOptions;
     uint               NumVendorOptions;
-    _Anonymous_e__Struct* VendorOptions;
+    struct
+    {
+        DHCP_OPTION Option;
+        PWSTR       VendorName;
+        PWSTR       ClassName;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_all_option_values))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_all_option_values
 struct DHCP_ALL_OPTION_VALUES
 {
     uint Flags;
     uint NumElements;
-    _Anonymous_e__Struct* Options;
+    struct
+    {
+        PWSTR ClassName;
+        PWSTR VendorName;
+        BOOL  IsVendor;
+        DHCP_OPTION_VALUE_ARRAY* OptionsArray;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_all_option_values_pb))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_all_option_values_pb
 struct DHCP_ALL_OPTION_VALUES_PB
 {
     uint Flags;
     uint NumElements;
-    _Anonymous_e__Struct* Options;
+    struct
+    {
+        PWSTR PolicyName;
+        PWSTR VendorName;
+        BOOL  IsVendor;
+        DHCP_OPTION_VALUE_ARRAY* OptionsArray;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcpds_server))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcpds_server
 struct DHCPDS_SERVER
 {
     uint  Version;
@@ -1720,7 +1810,7 @@ struct DHCPDS_SERVER
     uint  DsLocType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcpds_servers))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcpds_servers
 struct DHCPDS_SERVERS
 {
     uint           Flags;
@@ -1728,22 +1818,26 @@ struct DHCPDS_SERVERS
     DHCPDS_SERVER* Servers;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_attrib))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_attrib
 struct DHCP_ATTRIB
 {
-    uint                DhcpAttribId;
-    uint                DhcpAttribType;
-    _Anonymous_e__Union Anonymous;
+    uint DhcpAttribId;
+    uint DhcpAttribType;
+    union
+    {
+        BOOL DhcpAttribBool;
+        uint DhcpAttribUlong;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_attrib_array))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_attrib_array
 struct DHCP_ATTRIB_ARRAY
 {
     uint         NumElements;
     DHCP_ATTRIB* DhcpAttribs;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_bootp_ip_range))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_bootp_ip_range
 struct DHCP_BOOTP_IP_RANGE
 {
     uint StartAddress;
@@ -1752,14 +1846,21 @@ struct DHCP_BOOTP_IP_RANGE
     uint MaxBootpAllowed;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_subnet_element_data_v5))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_subnet_element_data_v5
 struct DHCP_SUBNET_ELEMENT_DATA_V5
 {
     DHCP_SUBNET_ELEMENT_TYPE ElementType;
-    _DHCP_SUBNET_ELEMENT_UNION_V5 Element;
+    union Element
+    {
+        DHCP_BOOTP_IP_RANGE* IpRange;
+        DHCP_HOST_INFO*      SecondaryHost;
+        DHCP_IP_RESERVATION_V4* ReservedIp;
+        DHCP_IP_RANGE*       ExcludeIpRange;
+        DHCP_IP_CLUSTER*     IpUsedCluster;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_subnet_element_info_array_v5))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_subnet_element_info_array_v5
 struct DHCP_SUBNET_ELEMENT_INFO_ARRAY_V5
 {
     uint NumElements;
@@ -1789,7 +1890,7 @@ struct DHCP_PERF_STATS
     uint dwNumPacketsInQuarDecisionQueue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_bind_element))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_bind_element
 struct DHCP_BIND_ELEMENT
 {
     uint   Flags;
@@ -1801,14 +1902,14 @@ struct DHCP_BIND_ELEMENT
     ubyte* IfId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_bind_element_array))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_bind_element_array
 struct DHCP_BIND_ELEMENT_ARRAY
 {
     uint               NumElements;
     DHCP_BIND_ELEMENT* Elements;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcpv6_bind_element))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcpv6_bind_element
 struct DHCPV6_BIND_ELEMENT
 {
     uint              Flags;
@@ -1821,21 +1922,21 @@ struct DHCPV6_BIND_ELEMENT
     ubyte*            IfId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcpv6_bind_element_array))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcpv6_bind_element_array
 struct DHCPV6_BIND_ELEMENT_ARRAY
 {
     uint                 NumElements;
     DHCPV6_BIND_ELEMENT* Elements;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_ip_range_v6))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_ip_range_v6
 struct DHCP_IP_RANGE_V6
 {
     DHCP_IPV6_ADDRESS StartAddress;
     DHCP_IPV6_ADDRESS EndAddress;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_host_info_v6))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_host_info_v6
 struct DHCP_HOST_INFO_V6
 {
     DHCP_IPV6_ADDRESS IpAddress;
@@ -1843,7 +1944,7 @@ struct DHCP_HOST_INFO_V6
     PWSTR             HostName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_subnet_info_v6))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_subnet_info_v6
 struct DHCP_SUBNET_INFO_V6
 {
     DHCP_IPV6_ADDRESS SubnetAddress;
@@ -1863,7 +1964,7 @@ struct SCOPE_MIB_INFO_V6
     ulong             NumPendingAdvertises;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_mib_info_v6))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_mib_info_v6
 struct DHCP_MIB_INFO_V6
 {
     uint               Solicits;
@@ -1881,7 +1982,7 @@ struct DHCP_MIB_INFO_V6
     SCOPE_MIB_INFO_V6* ScopeInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_ip_reservation_v6))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_ip_reservation_v6
 struct DHCP_IP_RESERVATION_V6
 {
     DHCP_IPV6_ADDRESS ReservedIpAddress;
@@ -1889,21 +1990,26 @@ struct DHCP_IP_RESERVATION_V6
     uint              InterfaceId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_subnet_element_data_v6))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_subnet_element_data_v6
 struct DHCP_SUBNET_ELEMENT_DATA_V6
 {
     DHCP_SUBNET_ELEMENT_TYPE_V6 ElementType;
-    DHCP_SUBNET_ELEMENT_UNION_V6 Element;
+    union Element
+    {
+        DHCP_IP_RANGE_V6* IpRange;
+        DHCP_IP_RESERVATION_V6* ReservedIp;
+        DHCP_IP_RANGE_V6* ExcludeIpRange;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_subnet_element_info_array_v6))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_subnet_element_info_array_v6
 struct DHCP_SUBNET_ELEMENT_INFO_ARRAY_V6
 {
     uint NumElements;
     DHCP_SUBNET_ELEMENT_DATA_V6* Elements;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_client_info_v6))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_client_info_v6
 struct DHCP_CLIENT_INFO_V6
 {
     DHCP_IPV6_ADDRESS ClientIpAddress;
@@ -1917,28 +2023,33 @@ struct DHCP_CLIENT_INFO_V6
     DHCP_HOST_INFO_V6 OwnerHost;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcpv6_ip_array))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcpv6_ip_array
 struct DHCPV6_IP_ARRAY
 {
     uint               NumElements;
     DHCP_IPV6_ADDRESS* Elements;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_client_info_array_v6))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_client_info_array_v6
 struct DHCP_CLIENT_INFO_ARRAY_V6
 {
     uint NumElements;
     DHCP_CLIENT_INFO_V6** Clients;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_search_info_v6))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_search_info_v6
 struct DHCP_SEARCH_INFO_V6
 {
     DHCP_SEARCH_INFO_TYPE_V6 SearchType;
-    _DHCP_CLIENT_SEARCH_UNION_V6 SearchInfo;
+    union SearchInfo
+    {
+        DHCP_IPV6_ADDRESS ClientIpAddress;
+        DHCP_BINARY_DATA  ClientDUID;
+        PWSTR             ClientName;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_pol_cond))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_pol_cond
 struct DHCP_POL_COND
 {
     uint                ParentExpr;
@@ -1951,35 +2062,35 @@ struct DHCP_POL_COND
     uint                ValueLength;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_pol_cond_array))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_pol_cond_array
 struct DHCP_POL_COND_ARRAY
 {
     uint           NumElements;
     DHCP_POL_COND* Elements;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_pol_expr))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_pol_expr
 struct DHCP_POL_EXPR
 {
     uint                ParentExpr;
     DHCP_POL_LOGIC_OPER Operator;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_pol_expr_array))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_pol_expr_array
 struct DHCP_POL_EXPR_ARRAY
 {
     uint           NumElements;
     DHCP_POL_EXPR* Elements;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_ip_range_array))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_ip_range_array
 struct DHCP_IP_RANGE_ARRAY
 {
     uint           NumElements;
     DHCP_IP_RANGE* Elements;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_policy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_policy
 struct DHCP_POLICY
 {
     PWSTR                PolicyName;
@@ -1993,7 +2104,7 @@ struct DHCP_POLICY
     BOOL                 Enabled;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_policy_array))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_policy_array
 struct DHCP_POLICY_ARRAY
 {
     uint         NumElements;
@@ -2020,14 +2131,14 @@ struct DHCP_POLICY_EX_ARRAY
     DHCP_POLICY_EX* Elements;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcpv6_stateless_params))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcpv6_stateless_params
 struct DHCPV6_STATELESS_PARAMS
 {
     BOOL Status;
     uint PurgeInterval;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcpv6_stateless_scope_stats))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcpv6_stateless_scope_stats
 struct DHCPV6_STATELESS_SCOPE_STATS
 {
     DHCP_IPV6_ADDRESS SubnetAddress;
@@ -2035,14 +2146,14 @@ struct DHCPV6_STATELESS_SCOPE_STATS
     ulong             NumStatelessClientsRemoved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcpv6_stateless_stats))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcpv6_stateless_stats
 struct DHCPV6_STATELESS_STATS
 {
     uint NumScopes;
     DHCPV6_STATELESS_SCOPE_STATS* ScopeStats;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_failover_relationship))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_failover_relationship
 struct DHCP_FAILOVER_RELATIONSHIP
 {
     uint                 PrimaryServer;
@@ -2061,14 +2172,14 @@ struct DHCP_FAILOVER_RELATIONSHIP
     PWSTR                SharedSecret;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_failover_relationship_array))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_failover_relationship_array
 struct DHCP_FAILOVER_RELATIONSHIP_ARRAY
 {
     uint NumElements;
     DHCP_FAILOVER_RELATIONSHIP* pRelationships;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcpv4_failover_client_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcpv4_failover_client_info
 struct DHCPV4_FAILOVER_CLIENT_INFO
 {
     uint             ClientIpAddress;
@@ -2094,7 +2205,7 @@ struct DHCPV4_FAILOVER_CLIENT_INFO
     ubyte            Flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcpv4_failover_client_info_array))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcpv4_failover_client_info_array
 struct DHCPV4_FAILOVER_CLIENT_INFO_ARRAY
 {
     uint NumElements;
@@ -2127,7 +2238,7 @@ struct DHCPV4_FAILOVER_CLIENT_INFO_EX
     uint             AddressStateEx;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_failover_statistics))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dhcpsapi/ns-dhcpsapi-dhcp_failover_statistics
 struct DHCP_FAILOVER_STATISTICS
 {
     uint NumAddr;

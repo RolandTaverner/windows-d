@@ -3,24 +3,26 @@
 module windows.win32.ui.xaml.diagnostics;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BSTR, HRESULT, PWSTR, RECT;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BSTR, HRESULT, PWSTR, RECT;
 public import windows.win32.graphics.dxgi.common : DXGI_ALPHA_MODE, DXGI_FORMAT;
-public import windows.win32.system.com : IUnknown, SAFEARRAY;
-public import windows.win32.system.winrt : IInspectable;
+public import windows.win32.system.com.com : IUnknown, SAFEARRAY;
+public import windows.win32.system.winrt.winrt : IInspectable;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/ne-xamlom-visualmutationtype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/ne-xamlom-visualmutationtype
 enum VisualMutationType : int
 {
     Add     = 0x00000000,
     Remove  = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/ne-xamlom-basevaluesource))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/ne-xamlom-basevaluesource
 enum BaseValueSource : int
 {
     BaseValueSourceUnknown      = 0x00000000,
@@ -39,8 +41,9 @@ enum BaseValueSource : int
     Coercion                    = 0x0000000d,
     BaseValueSourceVisualState  = 0x0000000e,
 }
+
 //ENUM ATTR: ScopedEnumAttribute : CustomAttributeSig([], [])
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/ne-xamlom-metadatabit))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/ne-xamlom-metadatabit
 enum MetadataBit : int
 {
     None                           = 0x00000000,
@@ -52,19 +55,22 @@ enum MetadataBit : int
     IsValueNull                    = 0x00000020,
     IsValueHandleAndEvaluatedValue = 0x00000040,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/ne-xamlom-rendertargetbitmapoptions))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/ne-xamlom-rendertargetbitmapoptions
 enum RenderTargetBitmapOptions : int
 {
     RenderTarget            = 0x00000000,
     RenderTargetAndChildren = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/ne-xamlom-resourcetype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/ne-xamlom-resourcetype
 enum ResourceType : int
 {
     ResourceTypeStatic = 0x00000000,
     ResourceTypeTheme  = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/ne-xamlom-visualelementstate))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/ne-xamlom-visualelementstate
 enum VisualElementState : int
 {
     ErrorResolved         = 0x00000000,
@@ -80,7 +86,7 @@ enum HRESULT E_UNKNOWNTYPE = HRESULT(0x802b0028);
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/ns-xamlom-sourceinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/ns-xamlom-sourceinfo
 struct SourceInfo
 {
     BSTR FileName;
@@ -90,7 +96,7 @@ struct SourceInfo
     BSTR Hash;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/ns-xamlom-parentchildrelation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/ns-xamlom-parentchildrelation
 struct ParentChildRelation
 {
     ulong Parent;
@@ -98,7 +104,7 @@ struct ParentChildRelation
     uint  ChildIndex;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/ns-xamlom-visualelement))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/ns-xamlom-visualelement
 struct VisualElement
 {
     ulong      Handle;
@@ -108,7 +114,7 @@ struct VisualElement
     uint       NumChildren;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/ns-xamlom-propertychainsource))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/ns-xamlom-propertychainsource
 struct PropertyChainSource
 {
     ulong           Handle;
@@ -118,7 +124,7 @@ struct PropertyChainSource
     SourceInfo      SrcInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/ns-xamlom-propertychainvalue))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/ns-xamlom-propertychainvalue
 struct PropertyChainValue
 {
     uint Index;
@@ -133,7 +139,7 @@ struct PropertyChainValue
     uint PropertyChainIndex;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/ns-xamlom-enumtype))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/ns-xamlom-enumtype
 struct EnumType
 {
     BSTR       Name;
@@ -141,7 +147,7 @@ struct EnumType
     SAFEARRAY* ValueStrings;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/ns-xamlom-collectionelementvalue))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/ns-xamlom-collectionelementvalue
 struct CollectionElementValue
 {
     uint Index;
@@ -150,7 +156,7 @@ struct CollectionElementValue
     long MetadataBits;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/ns-xamlom-bitmapdescription))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/ns-xamlom-bitmapdescription
 struct BitmapDescription
 {
     uint            Width;
@@ -175,124 +181,124 @@ HRESULT InitializeXamlDiagnosticsEx(const(PWSTR) endPointName, uint pid, const(P
 
 @GUID("aa7a8931-80e4-4fec-8f3b-553f87b4966e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nn-xamlom-ivisualtreeservicecallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nn-xamlom-ivisualtreeservicecallback
 interface IVisualTreeServiceCallback : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservicecallback-onvisualtreechange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservicecallback-onvisualtreechange
     HRESULT OnVisualTreeChange(ParentChildRelation relation, VisualElement element, 
                                VisualMutationType mutationType);
 }
 
 @GUID("bad9eb88-ae77-4397-b948-5fa2db0a19ea")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.14393))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nn-xamlom-ivisualtreeservicecallback2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nn-xamlom-ivisualtreeservicecallback2
 interface IVisualTreeServiceCallback2 : IVisualTreeServiceCallback
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservicecallback2-onelementstatechanged))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservicecallback2-onelementstatechanged
     HRESULT OnElementStateChanged(ulong element, VisualElementState elementState, const(PWSTR) context);
 }
 
 @GUID("a593b11a-d17f-48bb-8f66-83910731c8a5")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nn-xamlom-ivisualtreeservice))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nn-xamlom-ivisualtreeservice
 interface IVisualTreeService : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice-advisevisualtreechange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice-advisevisualtreechange
     HRESULT AdviseVisualTreeChange(IVisualTreeServiceCallback pCallback);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice-unadvisevisualtreechange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice-unadvisevisualtreechange
     HRESULT UnadviseVisualTreeChange(IVisualTreeServiceCallback pCallback);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice-getenums))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice-getenums
     HRESULT GetEnums(uint* pCount, EnumType** ppEnums);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice-createinstance))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice-createinstance
     HRESULT CreateInstance(BSTR typeName, BSTR value, ulong* pInstanceHandle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice-getpropertyvalueschain))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice-getpropertyvalueschain
     HRESULT GetPropertyValuesChain(ulong instanceHandle, uint* pSourceCount, 
                                    PropertyChainSource** ppPropertySources, uint* pPropertyCount, 
                                    PropertyChainValue** ppPropertyValues);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice-setproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice-setproperty
     HRESULT SetProperty(ulong instanceHandle, ulong value, uint propertyIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice-clearproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice-clearproperty
     HRESULT ClearProperty(ulong instanceHandle, uint propertyIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice-getcollectioncount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice-getcollectioncount
     HRESULT GetCollectionCount(ulong instanceHandle, uint* pCollectionSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice-getcollectionelements))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice-getcollectionelements
     HRESULT GetCollectionElements(ulong instanceHandle, uint startIndex, uint* pElementCount, 
                                   CollectionElementValue** ppElementValues);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice-addchild))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice-addchild
     HRESULT AddChild(ulong parent, ulong child, uint index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice-removechild))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice-removechild
     HRESULT RemoveChild(ulong parent, uint index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice-clearchildren))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice-clearchildren
     HRESULT ClearChildren(ulong parent);
 }
 
 @GUID("18c9e2b6-3f43-4116-9f2b-ff935d7770d2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nn-xamlom-ixamldiagnostics))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nn-xamlom-ixamldiagnostics
 interface IXamlDiagnostics : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ixamldiagnostics-getdispatcher))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ixamldiagnostics-getdispatcher
     HRESULT GetDispatcher(IInspectable* ppDispatcher);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ixamldiagnostics-getuilayer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ixamldiagnostics-getuilayer
     HRESULT GetUiLayer(IInspectable* ppLayer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ixamldiagnostics-getapplication))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ixamldiagnostics-getapplication
     HRESULT GetApplication(IInspectable* ppApplication);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ixamldiagnostics-getiinspectablefromhandle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ixamldiagnostics-getiinspectablefromhandle
     HRESULT GetIInspectableFromHandle(ulong instanceHandle, IInspectable* ppInstance);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ixamldiagnostics-gethandlefromiinspectable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ixamldiagnostics-gethandlefromiinspectable
     HRESULT GetHandleFromIInspectable(IInspectable pInstance, ulong* pHandle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ixamldiagnostics-hittest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ixamldiagnostics-hittest
     HRESULT HitTest(RECT rect, uint* pCount, ulong** ppInstanceHandles);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ixamldiagnostics-registerinstance))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ixamldiagnostics-registerinstance
     HRESULT RegisterInstance(IInspectable pInstance, ulong* pInstanceHandle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ixamldiagnostics-getinitializationdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ixamldiagnostics-getinitializationdata
     HRESULT GetInitializationData(BSTR* pInitializationData);
 }
 
 @GUID("d1a34ef2-cad8-4635-a3d2-fcda8d3f3caf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.14393))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nn-xamlom-ibitmapdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nn-xamlom-ibitmapdata
 interface IBitmapData : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ibitmapdata-copybytesto))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ibitmapdata-copybytesto
     HRESULT CopyBytesTo(uint sourceOffsetInBytes, uint maxBytesToCopy, ubyte* pvBytes, uint* numberOfBytesCopied);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ibitmapdata-getstride))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ibitmapdata-getstride
     HRESULT GetStride(uint* pStride);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ibitmapdata-getbitmapdescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ibitmapdata-getbitmapdescription
     HRESULT GetBitmapDescription(BitmapDescription* pBitmapDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ibitmapdata-getsourcebitmapdescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ibitmapdata-getsourcebitmapdescription
     HRESULT GetSourceBitmapDescription(BitmapDescription* pBitmapDescription);
 }
 
 @GUID("130f5136-ec43-4f61-89c7-9801a36d2e95")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.14393))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nn-xamlom-ivisualtreeservice2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nn-xamlom-ivisualtreeservice2
 interface IVisualTreeService2 : IVisualTreeService
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice2-getpropertyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice2-getpropertyindex
     HRESULT GetPropertyIndex(ulong object, const(PWSTR) propertyName, uint* pPropertyIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice2-getproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice2-getproperty
     HRESULT GetProperty(ulong object, uint propertyIndex, ulong* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice2-replaceresource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice2-replaceresource
     HRESULT ReplaceResource(ulong resourceDictionary, ulong key, ulong newValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice2-rendertargetbitmap))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice2-rendertargetbitmap
     HRESULT RenderTargetBitmap(ulong handle, RenderTargetBitmapOptions options, uint maxPixelWidth, 
                                uint maxPixelHeight, IBitmapData* ppBitmapData);
 }
 
 @GUID("0e79c6e0-85a0-4be8-b41a-655cf1fd19bd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nn-xamlom-ivisualtreeservice3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nn-xamlom-ivisualtreeservice3
 interface IVisualTreeService3 : IVisualTreeService2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice3-resolveresource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice3-resolveresource
     HRESULT ResolveResource(ulong resourceContext, const(PWSTR) resourceName, ResourceType resourceType, 
                             uint propertyIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice3-getdictionaryitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice3-getdictionaryitem
     HRESULT GetDictionaryItem(ulong dictionaryHandle, const(PWSTR) resourceName, BOOL resourceIsImplicitStyle, 
                               ulong* resourceHandle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice3-adddictionaryitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice3-adddictionaryitem
     HRESULT AddDictionaryItem(ulong dictionaryHandle, ulong resourceKey, ulong resourceHandle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice3-removedictionaryitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xamlom/nf-xamlom-ivisualtreeservice3-removedictionaryitem
     HRESULT RemoveDictionaryItem(ulong dictionaryHandle, ulong resourceKey);
 }
 

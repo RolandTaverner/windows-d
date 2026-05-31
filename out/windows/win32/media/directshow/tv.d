@@ -3,28 +3,30 @@
 module windows.win32.media.directshow.tv;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BSTR, CHAR, HANDLE, HRESULT, HWND,
-                                         PWSTR, RECT, SIZE, VARIANT_BOOL;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, HANDLE, HRESULT,
+                                                    HWND, PWSTR, RECT, SIZE, VARIANT_BOOL;
 public import windows.win32.graphics.gdi : HDC;
-public import windows.win32.media.directshow : AnalogVideoStandard, BinaryConvolutionCodeRate,
-                                               ComponentCategory, ComponentStatus,
-                                               DVBSystemType, FECMethod, GuardInterval,
-                                               HierarchyAlpha, IESEvent, IESEvents,
-                                               IEnumFilters, IFilterGraph, IGraphBuilder,
-                                               IMediaSeeking, IPin, IVMRImageCompositor,
-                                               IVMRMixerBitmap, IVMRSurfaceAllocator,
-                                               LNB_Source, MPEG2StreamType,
-                                               ModulationType, Pilot, Polarisation,
-                                               RollOff, SpectralInversion, TVAudioMode,
-                                               TransmissionMode, TunerInputType,
-                                               VMRALPHABITMAP;
+public import windows.win32.media.directshow.directshow : AnalogVideoStandard, BinaryConvolutionCodeRate,
+                                                          ComponentCategory, ComponentStatus,
+                                                          DVBSystemType, FECMethod,
+                                                          GuardInterval, HierarchyAlpha,
+                                                          IESEvent, IESEvents, IEnumFilters,
+                                                          IFilterGraph, IGraphBuilder,
+                                                          IMediaSeeking, IPin,
+                                                          IVMRImageCompositor, IVMRMixerBitmap,
+                                                          IVMRSurfaceAllocator, LNB_Source,
+                                                          MPEG2StreamType, ModulationType,
+                                                          Pilot, Polarisation, RollOff,
+                                                          SpectralInversion, TVAudioMode,
+                                                          TransmissionMode, TunerInputType,
+                                                          VMRALPHABITMAP;
 public import windows.win32.media.kernelstreaming : KSDATAFORMAT, KSEVENTDATA, KSIDENTIFIER,
                                                     KSM_NODE, KSP_NODE;
 public import windows.win32.media.mediafoundation : AM_MEDIA_TYPE, IMFVideoPresenter;
-public import windows.win32.security : PSID;
-public import windows.win32.system.com : IDispatch, IEnumGUID, IEnumMoniker, IPersist,
-                                         IUnknown, SAFEARRAY;
+public import windows.win32.security.security : PSID;
+public import windows.win32.system.com.com : IDispatch, IEnumGUID, IEnumMoniker, IPersist,
+                                             IUnknown, SAFEARRAY;
 public import windows.win32.system.ole : IEnumVARIANT, IPictureDisp;
 public import windows.win32.system.registry : HKEY;
 public import windows.win32.system.variant : VARIANT;
@@ -33,6 +35,7 @@ extern(Windows) @nogc nothrow:
 
 
 // Enums
+
 
 alias DISPID_TUNER = int;
 enum : int
@@ -150,6 +153,7 @@ enum : int
     DISPID_MP2TUNER_PROGNO                            = 0x00000066,
     DISPID_MP2TUNERFACTORY_CREATETUNEREQUEST          = 0x00000001,
 }
+
 alias EnTvRat_System = int;
 enum : int
 {
@@ -166,6 +170,7 @@ enum : int
     TvRat_kSystems       = 0x0000000a,
     TvRat_SystemDontKnow = 0x000000ff,
 }
+
 alias EnTvRat_GenericLevel = int;
 enum : int
 {
@@ -195,6 +200,7 @@ enum : int
     TvRat_Unblock       = 0xffffffff,
     TvRat_LevelDontKnow = 0x000000ff,
 }
+
 alias EnTvRat_MPAA = int;
 enum : int
 {
@@ -207,6 +213,7 @@ enum : int
     MPAA_X             = 0x00000006,
     MPAA_NotRated      = 0x00000007,
 }
+
 alias EnTvRat_US_TV = int;
 enum : int
 {
@@ -219,6 +226,7 @@ enum : int
     US_TV_MA    = 0x00000006,
     US_TV_None7 = 0x00000007,
 }
+
 alias EnTvRat_CAE_TV = int;
 enum : int
 {
@@ -231,6 +239,7 @@ enum : int
     CAE_TV_18       = 0x00000006,
     CAE_TV_Reserved = 0x00000007,
 }
+
 alias EnTvRat_CAF_TV = int;
 enum : int
 {
@@ -243,6 +252,7 @@ enum : int
     CAF_TV_Reserved6 = 0x00000006,
     CAF_TV_Reserved  = 0x00000007,
 }
+
 alias BfEnTvRat_GenericAttributes = int;
 enum : int
 {
@@ -257,6 +267,7 @@ enum : int
     BfIsAttr_7         = 0x00000080,
     BfValidAttrSubmask = 0x000000ff,
 }
+
 alias BfEnTvRat_Attributes_US_TV = int;
 enum : int
 {
@@ -267,30 +278,35 @@ enum : int
     US_TV_IsSexuallySuggestiveDialog = 0x00000010,
     US_TV_ValidAttrSubmask           = 0x0000001f,
 }
+
 alias BfEnTvRat_Attributes_MPAA = int;
 enum : int
 {
     MPAA_IsBlocked        = 0x00000001,
     MPAA_ValidAttrSubmask = 0x00000001,
 }
+
 alias BfEnTvRat_Attributes_CAE_TV = int;
 enum : int
 {
     CAE_IsBlocked        = 0x00000001,
     CAE_ValidAttrSubmask = 0x00000001,
 }
+
 alias BfEnTvRat_Attributes_CAF_TV = int;
 enum : int
 {
     CAF_IsBlocked        = 0x00000001,
     CAF_ValidAttrSubmask = 0x00000001,
 }
+
 enum FormatNotSupportedEvents : int
 {
     FORMATNOTSUPPORTED_CLEAR        = 0x00000000,
     FORMATNOTSUPPORTED_NOTSUPPORTED = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/ne-encdec-prottype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/ne-encdec-prottype
 enum ProtType : int
 {
     PROT_COPY_FREE              = 0x00000001,
@@ -304,16 +320,19 @@ enum ProtType : int
     PROT_COPY_FREE_SECURE       = 0x00000009,
     PROT_COPY_INVALID           = 0x00000032,
 }
+
 enum EncDecEvents : int
 {
     ENCDEC_CPEVENT          = 0x00000000,
     ENCDEC_RECORDING_STATUS = 0x00000001,
 }
+
 enum CPRecordingStatus : int
 {
     RECORDING_STOPPED = 0x00000000,
     RECORDING_STARTED = 0x00000001,
 }
+
 enum CPEventBitShift : int
 {
     CPEVENT_BITSHIFT_RATINGS             = 0x00000000,
@@ -327,7 +346,8 @@ enum CPEventBitShift : int
     CPEVENT_BITSHIFT_PENDING_CERTIFICATE = 0x00000008,
     CPEVENT_BITSHIFT_NO_PLAYREADY        = 0x00000009,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/ne-encdec-cpevents))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/ne-encdec-cpevents
 enum CPEvents : int
 {
     CPEVENT_NONE            = 0x00000000,
@@ -341,6 +361,7 @@ enum CPEvents : int
     CPEVENT_UNTRUSTEDGRAPH  = 0x00000008,
     CPEVENT_PROTECTWINDOWED = 0x00000009,
 }
+
 enum RevokedComponent : int
 {
     REVOKED_COPP            = 0x00000000,
@@ -349,6 +370,7 @@ enum RevokedComponent : int
     REVOKED_SECURE_PIPELINE = 0x00000003,
     REVOKED_MAX_TYPES       = 0x00000004,
 }
+
 alias EnTag_Mode = int;
 enum : int
 {
@@ -356,6 +378,7 @@ enum : int
     EnTag_Once   = 0x00000001,
     EnTag_Repeat = 0x00000002,
 }
+
 enum COPPEventBlockReason : int
 {
     COPP_Unknown                 = 0xffffffff,
@@ -370,6 +393,7 @@ enum COPPEventBlockReason : int
     COPP_Activate                = 0x00000008,
     COPP_DigitalAudioUnprotected = 0x00000009,
 }
+
 enum LicenseEventBlockReason : int
 {
     LIC_BadLicense      = 0x00000000,
@@ -378,12 +402,14 @@ enum LicenseEventBlockReason : int
     LIC_NeedActivation  = 0x00000003,
     LIC_ExtenderBlocked = 0x00000004,
 }
+
 enum DownResEventParam : int
 {
     DOWNRES_Always       = 0x00000000,
     DOWNRES_InWindowOnly = 0x00000001,
     DOWNRES_Undefined    = 0x00000002,
 }
+
 enum SegDispidList : int
 {
     dispidName                             = 0x00000000,
@@ -610,6 +636,7 @@ enum SegDispidList : int
     dispid_Bookmark                        = 0x000000dd,
     LastReservedDeviceDispid               = 0x00003fff,
 }
+
 enum SegEventidList : int
 {
     eventidStateChange                   = 0x00000000,
@@ -672,18 +699,21 @@ enum SegEventidList : int
     eventidWriteFailureClear             = 0x00000039,
     LastReservedDeviceEvent              = 0x00003fff,
 }
+
 enum PositionModeList : int
 {
     FrameMode         = 0x00000000,
     TenthsSecondsMode = 0x00000001,
 }
+
 enum RecordingType : int
 {
     CONTENT   = 0x00000000,
     REFERENCE = 0x00000001,
 }
+
 //ENUM ATTR: ScopedEnumAttribute : CustomAttributeSig([], [])
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/ne-segment-msvidccservice))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/ne-segment-msvidccservice
 enum MSVidCCService : int
 {
     None     = 0x00000000,
@@ -693,19 +723,22 @@ enum MSVidCCService : int
     Text2    = 0x00000004,
     XDS      = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/ne-segment-msvidsinkstreams))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/ne-segment-msvidsinkstreams
 enum MSVidSinkStreams : int
 {
     MSVidSink_Video = 0x00000001,
     MSVidSink_Audio = 0x00000002,
     MSVidSink_Other = 0x00000004,
 }
+
 enum MSVidSegmentType : int
 {
     MSVidSEG_SOURCE = 0x00000000,
     MSVidSEG_XFORM  = 0x00000001,
     MSVidSEG_DEST   = 0x00000002,
 }
+
 enum MSVidCtlButtonstate : int
 {
     MSVIDCTL_LEFT_BUTTON   = 0x00000001,
@@ -717,7 +750,8 @@ enum MSVidCtlButtonstate : int
     MSVIDCTL_CTRL          = 0x00000002,
     MSVIDCTL_ALT           = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/ne-segment-dvdmenuidconstants))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/ne-segment-dvdmenuidconstants
 enum DVDMenuIDConstants : int
 {
     dvdMenu_Title      = 0x00000002,
@@ -727,6 +761,7 @@ enum DVDMenuIDConstants : int
     dvdMenu_Angle      = 0x00000006,
     dvdMenu_Chapter    = 0x00000007,
 }
+
 enum DVDFilterState : int
 {
     dvdState_Undefined   = 0xfffffffe,
@@ -735,7 +770,8 @@ enum DVDFilterState : int
     dvdState_Paused      = 0x00000001,
     dvdState_Running     = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/ne-segment-dvdtextstringtype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/ne-segment-dvdtextstringtype
 enum DVDTextStringType : int
 {
     dvdStruct_Volume      = 0x00000001,
@@ -771,7 +807,8 @@ enum DVDTextStringType : int
     dvdOther_Cut          = 0x00000051,
     dvdOther_Take         = 0x00000052,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/ne-segment-dvdspext))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/ne-segment-dvdspext
 alias DVDSPExt = int;
 enum : int
 {
@@ -787,13 +824,15 @@ enum : int
     dvdSPExt_DirectorComments_Big      = 0x0000000e,
     dvdSPExt_DirectorComments_Children = 0x0000000f,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/ne-segment-sourcesizelist))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/ne-segment-sourcesizelist
 enum SourceSizeList : int
 {
     sslFullSize       = 0x00000000,
     sslClipByOverScan = 0x00000001,
     sslClipByClipRect = 0x00000002,
 }
+
 enum MSViddispidList : int
 {
     dispidInputs              = 0x00000000,
@@ -826,7 +865,8 @@ enum MSViddispidList : int
     dispidViewNext            = 0x0000001b,
     dispidServiceP            = 0x0000001c,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/ne-msvidctl-displaysizelist))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/ne-msvidctl-displaysizelist
 enum DisplaySizeList : int
 {
     dslDefaultSize      = 0x00000000,
@@ -838,7 +878,8 @@ enum DisplaySizeList : int
     dslQuarterScreen    = 0x00000005,
     dslSixteenthScreen  = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/ne-msvidctl-msvidctlstatelist))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/ne-msvidctl-msvidctlstatelist
 enum MSVidCtlStateList : int
 {
     STATE_UNBUILT = 0xffffffff,
@@ -846,13 +887,15 @@ enum MSVidCtlStateList : int
     STATE_PAUSE   = 0x00000001,
     STATE_PLAY    = 0x00000002,
 }
+
 alias RECORDING_TYPE = int;
 enum : int
 {
     RECORDING_TYPE_CONTENT   = 0x00000000,
     RECORDING_TYPE_REFERENCE = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/ne-sbe-streambuffer_attr_datatype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/ne-sbe-streambuffer_attr_datatype
 alias STREAMBUFFER_ATTR_DATATYPE = int;
 enum : int
 {
@@ -864,27 +907,31 @@ enum : int
     STREAMBUFFER_TYPE_WORD   = 0x00000005,
     STREAMBUFFER_TYPE_GUID   = 0x00000006,
 }
+
 alias CROSSBAR_DEFAULT_FLAGS = int;
 enum : int
 {
     DEF_MODE_PROFILE = 0x00000001,
     DEF_MODE_STREAMS = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2structs/ne-mpeg2structs-mpeg_current_next_bit))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2structs/ne-mpeg2structs-mpeg_current_next_bit
 alias MPEG_CURRENT_NEXT_BIT = int;
 enum : int
 {
     MPEG_SECTION_IS_NEXT    = 0x00000000,
     MPEG_SECTION_IS_CURRENT = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2structs/ne-mpeg2structs-mpeg_context_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2structs/ne-mpeg2structs-mpeg_context_type
 alias MPEG_CONTEXT_TYPE = int;
 enum : int
 {
     MPEG_CONTEXT_BCS_DEMUX = 0x00000000,
     MPEG_CONTEXT_WINSOCK   = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2structs/ne-mpeg2structs-mpeg_request_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2structs/ne-mpeg2structs-mpeg_request_type
 alias MPEG_REQUEST_TYPE = int;
 enum : int
 {
@@ -898,6 +945,7 @@ enum : int
     MPEG_RQST_GET_TS_STREAM       = 0x00000007,
     MPEG_RQST_START_MPE_STREAM    = 0x00000008,
 }
+
 alias VA_VIDEO_FORMAT = int;
 enum : int
 {
@@ -908,6 +956,7 @@ enum : int
     VA_VIDEO_MAC         = 0x00000004,
     VA_VIDEO_UNSPECIFIED = 0x00000005,
 }
+
 alias VA_COLOR_PRIMARIES = int;
 enum : int
 {
@@ -919,6 +968,7 @@ enum : int
     VA_PRIMARIES_SMPTE_240M              = 0x00000007,
     VA_PRIMARIES_H264_GENERIC_FILM       = 0x00000008,
 }
+
 alias VA_TRANSFER_CHARACTERISTICS = int;
 enum : int
 {
@@ -932,6 +982,7 @@ enum : int
     VA_TRANSFER_CHARACTERISTICS_H264_LOG_100_TO_1       = 0x00000009,
     VA_TRANSFER_CHARACTERISTICS_H264_LOG_316_TO_1       = 0x0000000a,
 }
+
 alias VA_MATRIX_COEFFICIENTS = int;
 enum : int
 {
@@ -944,6 +995,7 @@ enum : int
     VA_MATRIX_COEFF_SMPTE_240M              = 0x00000007,
     VA_MATRIX_COEFF_H264_YCgCo              = 0x00000008,
 }
+
 alias DVB_STRCONV_MODE = int;
 enum : int
 {
@@ -952,6 +1004,7 @@ enum : int
     STRCONV_MODE_DVB_WITHOUT_EMPHASIS = 0x00000002,
     STRCONV_MODE_ISDB                 = 0x00000003,
 }
+
 alias CRID_LOCATION = int;
 enum : int
 {
@@ -960,6 +1013,7 @@ enum : int
     CRID_LOCATION_DVB_RESERVED1 = 0x00000002,
     CRID_LOCATION_DVB_RESERVED2 = 0x00000003,
 }
+
 alias DESC_LINKAGE_TYPE = int;
 enum : int
 {
@@ -974,13 +1028,15 @@ enum : int
     DESC_LINKAGE_USER                    = 0x00000008,
     DESC_LINKAGE_RESERVED2               = 0x000000ff,
 }
+
 alias ChannelChangeSpanningEvent_State = int;
 enum : int
 {
     ChannelChangeSpanningEvent_Start = 0x00000000,
     ChannelChangeSpanningEvent_End   = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WES/eventmanifestschema-channeltype-complextype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WES/eventmanifestschema-channeltype-complextype
 enum ChannelType : int
 {
     ChannelTypeNone        = 0x00000000,
@@ -993,6 +1049,7 @@ enum ChannelType : int
     ChannelTypeSuperimpose = 0x00000040,
     ChannelTypeData        = 0x00000080,
 }
+
 alias SignalAndServiceStatusSpanningEvent_State = int;
 enum : int
 {
@@ -1004,6 +1061,7 @@ enum : int
     SignalAndServiceStatusSpanningEvent_NoSubscription = 0x00000004,
     SignalAndServiceStatusSpanningEvent_AllAVScrambled = 0x00000005,
 }
+
 alias KSPROPERTY_BDA_ETHERNET_FILTER = int;
 enum : int
 {
@@ -1011,6 +1069,7 @@ enum : int
     KSPROPERTY_BDA_ETHERNET_FILTER_MULTICAST_LIST      = 0x00000001,
     KSPROPERTY_BDA_ETHERNET_FILTER_MULTICAST_MODE      = 0x00000002,
 }
+
 alias KSPROPERTY_BDA_IPv4_FILTER = int;
 enum : int
 {
@@ -1018,6 +1077,7 @@ enum : int
     KSPROPERTY_BDA_IPv4_FILTER_MULTICAST_LIST      = 0x00000001,
     KSPROPERTY_BDA_IPv4_FILTER_MULTICAST_MODE      = 0x00000002,
 }
+
 alias KSPROPERTY_BDA_IPv6_FILTER = int;
 enum : int
 {
@@ -1025,6 +1085,7 @@ enum : int
     KSPROPERTY_BDA_IPv6_FILTER_MULTICAST_LIST      = 0x00000001,
     KSPROPERTY_BDA_IPv6_FILTER_MULTICAST_MODE      = 0x00000002,
 }
+
 alias KSPROPERTY_BDA_SIGNAL_STATS = int;
 enum : int
 {
@@ -1036,6 +1097,7 @@ enum : int
     KSPROPERTY_BDA_SIGNAL_LOCK_CAPS = 0x00000005,
     KSPROPERTY_BDA_SIGNAL_LOCK_TYPE = 0x00000006,
 }
+
 alias BDA_LockType = int;
 enum : int
 {
@@ -1044,6 +1106,7 @@ enum : int
     Bda_LockType_DecoderDemod = 0x00000002,
     Bda_LockType_Complete     = 0x00000080,
 }
+
 alias KSMETHOD_BDA_CHANGE_SYNC = int;
 enum : int
 {
@@ -1052,6 +1115,7 @@ enum : int
     KSMETHOD_BDA_COMMIT_CHANGES   = 0x00000002,
     KSMETHOD_BDA_GET_CHANGE_STATE = 0x00000003,
 }
+
 alias KSMETHOD_BDA_DEVICE_CONFIGURATION = int;
 enum : int
 {
@@ -1059,6 +1123,7 @@ enum : int
     KSMETHOD_BDA_DELETE_PIN_FACTORY = 0x00000001,
     KSMETHOD_BDA_CREATE_TOPOLOGY    = 0x00000002,
 }
+
 alias KSPROPERTY_BDA_TOPOLOGY = int;
 enum : int
 {
@@ -1071,30 +1136,35 @@ enum : int
     KSPROPERTY_BDA_CONTROLLING_PIN_ID   = 0x00000006,
     KSPROPERTY_BDA_NODE_DESCRIPTORS     = 0x00000007,
 }
+
 alias KSPROPERTY_BDA_PIN_CONTROL = int;
 enum : int
 {
     KSPROPERTY_BDA_PIN_ID   = 0x00000000,
     KSPROPERTY_BDA_PIN_TYPE = 0x00000001,
 }
+
 alias KSPROPERTY_BDA_PIN_EVENT = int;
 enum : int
 {
     KSEVENT_BDA_PIN_CONNECTED    = 0x00000000,
     KSEVENT_BDA_PIN_DISCONNECTED = 0x00000001,
 }
+
 alias KSPROPERTY_BDA_VOID_TRANSFORM = int;
 enum : int
 {
     KSPROPERTY_BDA_VOID_TRANSFORM_START = 0x00000000,
     KSPROPERTY_BDA_VOID_TRANSFORM_STOP  = 0x00000001,
 }
+
 alias KSPROPERTY_BDA_NULL_TRANSFORM = int;
 enum : int
 {
     KSPROPERTY_BDA_NULL_TRANSFORM_START = 0x00000000,
     KSPROPERTY_BDA_NULL_TRANSFORM_STOP  = 0x00000001,
 }
+
 alias KSPROPERTY_BDA_FREQUENCY_FILTER = int;
 enum : int
 {
@@ -1109,6 +1179,7 @@ enum : int
     KSPROPERTY_BDA_RF_TUNER_STANDARD             = 0x00000008,
     KSPROPERTY_BDA_RF_TUNER_STANDARD_MODE        = 0x00000009,
 }
+
 alias BDA_SignalType = int;
 enum : int
 {
@@ -1116,6 +1187,7 @@ enum : int
     Bda_SignalType_Analog  = 0x00000001,
     Bda_SignalType_Digital = 0x00000002,
 }
+
 alias BDA_DigitalSignalStandard = int;
 enum : int
 {
@@ -1128,11 +1200,13 @@ enum : int
     Bda_DigitalStandard_ISDB_S = 0x00000020,
     Bda_DigitalStandard_ISDB_C = 0x00000040,
 }
+
 alias KSEVENT_BDA_TUNER = int;
 enum : int
 {
     KSEVENT_BDA_TUNER_SCAN = 0x00000000,
 }
+
 alias KSPROPERTY_BDA_LNB_INFO = int;
 enum : int
 {
@@ -1140,6 +1214,7 @@ enum : int
     KSPROPERTY_BDA_LNB_LOF_HIGH_BAND    = 0x00000001,
     KSPROPERTY_BDA_LNB_SWITCH_FREQUENCY = 0x00000002,
 }
+
 alias KSPROPERTY_BDA_DISEQC_COMMAND = int;
 enum : int
 {
@@ -1150,11 +1225,13 @@ enum : int
     KSPROPERTY_BDA_DISEQC_SEND         = 0x00000004,
     KSPROPERTY_BDA_DISEQC_RESPONSE     = 0x00000005,
 }
+
 alias KSPROPERTY_BDA_DISEQC_EVENT = int;
 enum : int
 {
     KSEVENT_BDA_DISEQC_DATA_RECEIVED = 0x00000000,
 }
+
 alias KSPROPERTY_BDA_DIGITAL_DEMODULATOR = int;
 enum : int
 {
@@ -1172,17 +1249,20 @@ enum : int
     KSPROPERTY_BDA_SIGNALTIMEOUTS     = 0x0000000b,
     KSPROPERTY_BDA_PLP_NUMBER         = 0x0000000c,
 }
+
 alias KSPROPERTY_BDA_AUTODEMODULATE = int;
 enum : int
 {
     KSPROPERTY_BDA_AUTODEMODULATE_START = 0x00000000,
     KSPROPERTY_BDA_AUTODEMODULATE_STOP  = 0x00000001,
 }
+
 alias KSPROPERTY_IDS_BDA_TABLE = int;
 enum : int
 {
     KSPROPERTY_BDA_TABLE_SECTION = 0x00000000,
 }
+
 alias KSPROPERTY_BDA_PIDFILTER = int;
 enum : int
 {
@@ -1190,6 +1270,7 @@ enum : int
     KSPROPERTY_BDA_PIDFILTER_UNMAP_PIDS = 0x00000001,
     KSPROPERTY_BDA_PIDFILTER_LIST_PIDS  = 0x00000002,
 }
+
 alias KSPROPERTY_BDA_CA = int;
 enum : int
 {
@@ -1200,6 +1281,7 @@ enum : int
     KSPROPERTY_BDA_CA_SET_PROGRAM_PIDS  = 0x00000004,
     KSPROPERTY_BDA_CA_REMOVE_PROGRAM    = 0x00000005,
 }
+
 alias KSPROPERTY_BDA_CA_EVENT = int;
 enum : int
 {
@@ -1208,12 +1290,14 @@ enum : int
     KSEVENT_BDA_CA_SMART_CARD_STATUS_CHANGED = 0x00000002,
     KSEVENT_BDA_CA_MODULE_UI_REQUESTED       = 0x00000003,
 }
+
 alias KSMETHOD_BDA_DRM = int;
 enum : int
 {
     KSMETHOD_BDA_DRM_CURRENT   = 0x00000000,
     KSMETHOD_BDA_DRM_DRMSTATUS = 0x00000001,
 }
+
 alias KSMETHOD_BDA_WMDRM = int;
 enum : int
 {
@@ -1226,6 +1310,7 @@ enum : int
     KSMETHOD_BDA_WMDRM_LICENSE        = 0x00000006,
     KSMETHOD_BDA_WMDRM_KEYINFO        = 0x00000007,
 }
+
 alias KSMETHOD_BDA_WMDRM_TUNER = int;
 enum : int
 {
@@ -1236,23 +1321,27 @@ enum : int
     KSMETHOD_BDA_WMDRMTUNER_STARTCODEPROFILE     = 0x00000004,
     KSMETHOD_BDA_WMDRMTUNER_PURCHASE_ENTITLEMENT = 0x00000005,
 }
+
 alias KSMETHOD_BDA_EVENTING_SERVICE = int;
 enum : int
 {
     KSMETHOD_BDA_EVENT_DATA     = 0x00000000,
     KSMETHOD_BDA_EVENT_COMPLETE = 0x00000001,
 }
+
 alias KSEVENT_BDA_EVENT_TYPE = int;
 enum : int
 {
     KSEVENT_BDA_EVENT_PENDINGEVENT = 0x00000000,
 }
+
 alias KSMETHOD_BDA_DEBUG_SERVICE = int;
 enum : int
 {
     KSMETHOD_BDA_DEBUG_LEVEL = 0x00000000,
     KSMETHOD_BDA_DEBUG_DATA  = 0x00000001,
 }
+
 alias KSMETHOD_BDA_TUNER_SERVICE = int;
 enum : int
 {
@@ -1260,6 +1349,7 @@ enum : int
     KSMETHOD_BDA_TUNER_GETTUNERSTATE    = 0x00000001,
     KSMETHOD_BDA_TUNER_SIGNALNOISERATIO = 0x00000002,
 }
+
 alias KSMETHOD_BDA_GPNV_SERVICE = int;
 enum : int
 {
@@ -1268,12 +1358,14 @@ enum : int
     KSMETHOD_BDA_GPNV_NAMEFROMINDEX      = 0x00000002,
     KSMETHOD_BDA_GPNV_GETVALUEUPDATENAME = 0x00000003,
 }
+
 alias KSMETHOD_BDA_MUX_SERVICE = int;
 enum : int
 {
     KSMETHOD_BDA_MUX_GETPIDLIST = 0x00000000,
     KSMETHOD_BDA_MUX_SETPIDLIST = 0x00000001,
 }
+
 alias KSMETHOD_BDA_SCAN_SERVICE = int;
 enum : int
 {
@@ -1284,6 +1376,7 @@ enum : int
     KSMETHOD_BDA_SCAN_RESUME      = 0x00000004,
     KSMETHOD_BDA_SCAN_STOP        = 0x00000005,
 }
+
 alias KSMETHOD_BDA_GDDS_SERVICE = int;
 enum : int
 {
@@ -1294,6 +1387,7 @@ enum : int
     KSMETHOD_BDA_GDDS_SERVICEFROMTUNEXML = 0x00000004,
     KSMETHOD_BDA_GDDS_DATAUPDATE         = 0x00000005,
 }
+
 alias KSMETHOD_BDA_CAS_SERVICE = int;
 enum : int
 {
@@ -1302,18 +1396,21 @@ enum : int
     KSMETHOD_BDA_CAS_OPENBROADCASTMMI      = 0x00000002,
     KSMETHOD_BDA_CAS_CLOSEMMIDIALOG        = 0x00000003,
 }
+
 alias KSMETHOD_BDA_ISDB_CAS = int;
 enum : int
 {
     KSMETHOD_BDA_ISDBCAS_SETREQUEST   = 0x00000000,
     KSMETHOD_BDA_ISDBCAS_RESPONSEDATA = 0x00000001,
 }
+
 alias KSMETHOD_BDA_TS_SELECTOR = int;
 enum : int
 {
     KSMETHOD_BDA_TS_SELECTOR_SETTSID          = 0x00000000,
     KSMETHOD_BDA_TS_SELECTOR_GETTSINFORMATION = 0x00000001,
 }
+
 alias KSMETHOD_BDA_USERACTIVITY_SERVICE = int;
 enum : int
 {
@@ -1327,69 +1424,69 @@ enum : int
 
 enum : uint
 {
-    DTV_CardStatus_Inserted         = 0x00000000,
-    DTV_CardStatus_Removed          = 0x00000001,
-    DTV_CardStatus_Error            = 0x00000002,
-    DTV_CardStatus_FirmwareDownload = 0x00000003,
+    DTV_CardStatus_Inserted         = 0x00000000U,
+    DTV_CardStatus_Removed          = 0x00000001U,
+    DTV_CardStatus_Error            = 0x00000002U,
+    DTV_CardStatus_FirmwareDownload = 0x00000003U,
 }
 
-enum uint OCUR_PAIRING_PROTOCOL_VERSION = 0x00000002;
-enum uint PBDA_PAIRING_PROTOCOL_VERSION = 0x00000003;
+enum uint OCUR_PAIRING_PROTOCOL_VERSION = 0x00000002U;
+enum uint PBDA_PAIRING_PROTOCOL_VERSION = 0x00000003U;
 
 enum : uint
 {
-    DTV_MMIMessage_Open  = 0x00000000,
-    DTV_MMIMessage_Close = 0x00000001,
-}
-
-enum : uint
-{
-    DTV_Entitlement_CanDecrypt       = 0x00000000,
-    DTV_Entitlement_NotEntitled      = 0x00000001,
-    DTV_Entitlement_TechnicalFailure = 0x00000002,
+    DTV_MMIMessage_Open  = 0x00000000U,
+    DTV_MMIMessage_Close = 0x00000001U,
 }
 
 enum : uint
 {
-    AudioType_Standard          = 0x00000000,
-    AudioType_Music_And_Effects = 0x00000001,
+    DTV_Entitlement_CanDecrypt       = 0x00000000U,
+    DTV_Entitlement_NotEntitled      = 0x00000001U,
+    DTV_Entitlement_TechnicalFailure = 0x00000002U,
 }
-
-enum uint AudioType_Visually_Impaired = 0x00000002;
-enum uint AudioType_Hearing_Impaired = 0x00000003;
 
 enum : uint
 {
-    AudioType_Dialogue   = 0x00000004,
-    AudioType_Commentary = 0x00000005,
-    AudioType_Emergency  = 0x00000006,
-    AudioType_Voiceover  = 0x00000007,
+    AudioType_Standard          = 0x00000000U,
+    AudioType_Music_And_Effects = 0x00000001U,
+}
+
+enum uint AudioType_Visually_Impaired = 0x00000002U;
+enum uint AudioType_Hearing_Impaired = 0x00000003U;
+
+enum : uint
+{
+    AudioType_Dialogue   = 0x00000004U,
+    AudioType_Commentary = 0x00000005U,
+    AudioType_Emergency  = 0x00000006U,
+    AudioType_Voiceover  = 0x00000007U,
 }
 
 enum int AudioType_Reserved = 0xffffffff;
-enum uint MAX_COUNTRY_CODE_STRING = 0x00000003;
-enum uint PARENTAL_CONTROL_TIME_RANGE = 0x00000001;
-enum uint REQUIRED_PARENTAL_CONTROL_TIME_RANGE = 0x00000002;
+enum uint MAX_COUNTRY_CODE_STRING = 0x00000003U;
+enum uint PARENTAL_CONTROL_TIME_RANGE = 0x00000001U;
+enum uint REQUIRED_PARENTAL_CONTROL_TIME_RANGE = 0x00000002U;
 
 enum : uint
 {
-    PARENTAL_CONTROL_CONTENT_RATING  = 0x00000100,
-    PARENTAL_CONTROL_ATTRIB_VIOLENCE = 0x00000200,
-    PARENTAL_CONTROL_ATTRIB_LANGUAGE = 0x00000201,
-    PARENTAL_CONTROL_ATTRIB_SEXUAL   = 0x00000202,
-    PARENTAL_CONTROL_ATTRIB_DIALOGUE = 0x00000203,
-    PARENTAL_CONTROL_ATTRIB_FANTASY  = 0x00000204,
-    PARENTAL_CONTROL_VALUE_UNDEFINED = 0x00000000,
+    PARENTAL_CONTROL_CONTENT_RATING  = 0x00000100U,
+    PARENTAL_CONTROL_ATTRIB_VIOLENCE = 0x00000200U,
+    PARENTAL_CONTROL_ATTRIB_LANGUAGE = 0x00000201U,
+    PARENTAL_CONTROL_ATTRIB_SEXUAL   = 0x00000202U,
+    PARENTAL_CONTROL_ATTRIB_DIALOGUE = 0x00000203U,
+    PARENTAL_CONTROL_ATTRIB_FANTASY  = 0x00000204U,
+    PARENTAL_CONTROL_VALUE_UNDEFINED = 0x00000000U,
 }
 
 enum : uint
 {
-    MPEG2_FILTER_VERSION_1_SIZE = 0x0000007c,
-    MPEG2_FILTER_VERSION_2_SIZE = 0x00000085,
+    MPEG2_FILTER_VERSION_1_SIZE = 0x0000007cU,
+    MPEG2_FILTER_VERSION_2_SIZE = 0x00000085U,
 }
 
 enum GUID SID_MSVidCtl_CurrentAudioEndpoint = GUID("cf9a88f4-abcf-4ed8-9b74-7db33445459e");
-enum uint STREAMBUFFER_EC_BASE = 0x00000326;
+enum uint STREAMBUFFER_EC_BASE = 0x00000326U;
 
 enum : GUID
 {
@@ -1400,7 +1497,7 @@ enum : GUID
 enum GUID SBE2_STREAM_DESC_EVENT = GUID("2313a4ed-bf2d-454f-ad8a-d95ba7f91fee");
 enum GUID SBE2_V1_STREAMS_CREATION_EVENT = GUID("000fcf09-97f5-46ac-9769-7a83b35384fb");
 enum GUID SBE2_V2_STREAMS_CREATION_EVENT = GUID("a72530a3-0344-4cab-a2d0-fe937dbdcab3");
-enum uint SBE2_STREAM_DESC_VERSION = 0x00000001;
+enum uint SBE2_STREAM_DESC_VERSION = 0x00000001U;
 enum GUID SID_DRMSecureServiceChannel = GUID("c4c4c4c4-0049-4e2b-98fb-9537f6ce516d");
 
 enum : GUID
@@ -1479,172 +1576,172 @@ enum GUID DSATTRIB_BadSampleInfo = GUID("e4846dda-5838-42b4-b897-6f7e5faa2f2f");
 
 enum : uint
 {
-    MPEG_PAT_PID  = 0x00000000,
-    MPEG_PAT_TID  = 0x00000000,
-    MPEG_CAT_PID  = 0x00000001,
-    MPEG_CAT_TID  = 0x00000001,
-    MPEG_PMT_TID  = 0x00000002,
-    MPEG_TSDT_PID = 0x00000002,
-    MPEG_TSDT_TID = 0x00000003,
+    MPEG_PAT_PID  = 0x00000000U,
+    MPEG_PAT_TID  = 0x00000000U,
+    MPEG_CAT_PID  = 0x00000001U,
+    MPEG_CAT_TID  = 0x00000001U,
+    MPEG_PMT_TID  = 0x00000002U,
+    MPEG_TSDT_PID = 0x00000002U,
+    MPEG_TSDT_TID = 0x00000003U,
 }
 
 enum : uint
 {
-    ATSC_MGT_PID      = 0x00001ffb,
-    ATSC_MGT_TID      = 0x000000c7,
-    ATSC_VCT_PID      = 0x00001ffb,
-    ATSC_VCT_TERR_TID = 0x000000c8,
-    ATSC_VCT_CABL_TID = 0x000000c9,
+    ATSC_MGT_PID      = 0x00001ffbU,
+    ATSC_MGT_TID      = 0x000000c7U,
+    ATSC_VCT_PID      = 0x00001ffbU,
+    ATSC_VCT_TERR_TID = 0x000000c8U,
+    ATSC_VCT_CABL_TID = 0x000000c9U,
 }
 
 enum : uint
 {
-    ATSC_EIT_TID = 0x000000cb,
-    ATSC_ETT_TID = 0x000000cc,
-    ATSC_RRT_TID = 0x000000ca,
-    ATSC_RRT_PID = 0x00001ffb,
-    ATSC_STT_PID = 0x00001ffb,
-    ATSC_STT_TID = 0x000000cd,
-    ATSC_PIT_TID = 0x000000d0,
+    ATSC_EIT_TID = 0x000000cbU,
+    ATSC_ETT_TID = 0x000000ccU,
+    ATSC_RRT_TID = 0x000000caU,
+    ATSC_RRT_PID = 0x00001ffbU,
+    ATSC_STT_PID = 0x00001ffbU,
+    ATSC_STT_TID = 0x000000cdU,
+    ATSC_PIT_TID = 0x000000d0U,
 }
 
 enum : uint
 {
-    DVB_NIT_PID        = 0x00000010,
-    DVB_NIT_ACTUAL_TID = 0x00000040,
-    DVB_NIT_OTHER_TID  = 0x00000041,
+    DVB_NIT_PID        = 0x00000010U,
+    DVB_NIT_ACTUAL_TID = 0x00000040U,
+    DVB_NIT_OTHER_TID  = 0x00000041U,
 }
 
 enum : uint
 {
-    DVB_SDT_PID        = 0x00000011,
-    DVB_SDT_ACTUAL_TID = 0x00000042,
-    DVB_SDT_OTHER_TID  = 0x00000046,
+    DVB_SDT_PID        = 0x00000011U,
+    DVB_SDT_ACTUAL_TID = 0x00000042U,
+    DVB_SDT_OTHER_TID  = 0x00000046U,
 }
 
 enum : uint
 {
-    DVB_BAT_PID = 0x00000011,
-    DVB_BAT_TID = 0x0000004a,
+    DVB_BAT_PID = 0x00000011U,
+    DVB_BAT_TID = 0x0000004aU,
 }
 
 enum : uint
 {
-    DVB_EIT_PID        = 0x00000012,
-    DVB_EIT_ACTUAL_TID = 0x0000004e,
-    DVB_EIT_OTHER_TID  = 0x0000004f,
+    DVB_EIT_PID        = 0x00000012U,
+    DVB_EIT_ACTUAL_TID = 0x0000004eU,
+    DVB_EIT_OTHER_TID  = 0x0000004fU,
 }
 
 enum : uint
 {
-    DVB_RST_PID = 0x00000013,
-    DVB_RST_TID = 0x00000071,
+    DVB_RST_PID = 0x00000013U,
+    DVB_RST_TID = 0x00000071U,
 }
 
 enum : uint
 {
-    DVB_TDT_PID = 0x00000014,
-    DVB_TDT_TID = 0x00000070,
+    DVB_TDT_PID = 0x00000014U,
+    DVB_TDT_TID = 0x00000070U,
 }
 
 enum : uint
 {
-    DVB_ST_PID_16 = 0x00000010,
-    DVB_ST_PID_17 = 0x00000011,
-    DVB_ST_PID_18 = 0x00000012,
-    DVB_ST_PID_19 = 0x00000013,
-    DVB_ST_PID_20 = 0x00000014,
-    DVB_ST_TID    = 0x00000072,
+    DVB_ST_PID_16 = 0x00000010U,
+    DVB_ST_PID_17 = 0x00000011U,
+    DVB_ST_PID_18 = 0x00000012U,
+    DVB_ST_PID_19 = 0x00000013U,
+    DVB_ST_PID_20 = 0x00000014U,
+    DVB_ST_TID    = 0x00000072U,
 }
 
-enum uint ISDB_ST_TID = 0x00000072;
+enum uint ISDB_ST_TID = 0x00000072U;
 
 enum : uint
 {
-    DVB_TOT_PID = 0x00000014,
-    DVB_TOT_TID = 0x00000073,
-}
-
-enum : uint
-{
-    DVB_DIT_PID = 0x0000001e,
-    DVB_DIT_TID = 0x0000007e,
+    DVB_TOT_PID = 0x00000014U,
+    DVB_TOT_TID = 0x00000073U,
 }
 
 enum : uint
 {
-    DVB_SIT_PID = 0x0000001f,
-    DVB_SIT_TID = 0x0000007f,
+    DVB_DIT_PID = 0x0000001eU,
+    DVB_DIT_TID = 0x0000007eU,
 }
 
 enum : uint
 {
-    ISDB_EMM_TID      = 0x00000085,
-    ISDB_BIT_PID      = 0x00000024,
-    ISDB_BIT_TID      = 0x000000c4,
-    ISDB_NBIT_PID     = 0x00000025,
-    ISDB_NBIT_MSG_TID = 0x000000c5,
-    ISDB_NBIT_REF_TID = 0x000000c6,
+    DVB_SIT_PID = 0x0000001fU,
+    DVB_SIT_TID = 0x0000007fU,
 }
 
 enum : uint
 {
-    ISDB_LDT_PID      = 0x00000025,
-    ISDB_LDT_TID      = 0x000000c7,
-    ISDB_SDTT_PID     = 0x00000023,
-    ISDB_SDTT_ALT_PID = 0x00000028,
-    ISDB_SDTT_TID     = 0x000000c3,
+    ISDB_EMM_TID      = 0x00000085U,
+    ISDB_BIT_PID      = 0x00000024U,
+    ISDB_BIT_TID      = 0x000000c4U,
+    ISDB_NBIT_PID     = 0x00000025U,
+    ISDB_NBIT_MSG_TID = 0x000000c5U,
+    ISDB_NBIT_REF_TID = 0x000000c6U,
 }
 
 enum : uint
 {
-    ISDB_CDT_PID = 0x00000029,
-    ISDB_CDT_TID = 0x000000c8,
+    ISDB_LDT_PID      = 0x00000025U,
+    ISDB_LDT_TID      = 0x000000c7U,
+    ISDB_SDTT_PID     = 0x00000023U,
+    ISDB_SDTT_ALT_PID = 0x00000028U,
+    ISDB_SDTT_TID     = 0x000000c3U,
 }
 
 enum : uint
 {
-    SCTE_EAS_TID     = 0x000000d8,
-    SCTE_EAS_IB_PID  = 0x00001ffb,
-    SCTE_EAS_OOB_PID = 0x00001ffc,
+    ISDB_CDT_PID = 0x00000029U,
+    ISDB_CDT_TID = 0x000000c8U,
+}
+
+enum : uint
+{
+    SCTE_EAS_TID     = 0x000000d8U,
+    SCTE_EAS_IB_PID  = 0x00001ffbU,
+    SCTE_EAS_OOB_PID = 0x00001ffcU,
 }
 
 enum GUID CLSID_Mpeg2TableFilter = GUID("752845f1-758f-4c83-a043-4270c593308e");
 
 enum : uint
 {
-    ATSC_ETM_LOCATION_NOT_PRESENT      = 0x00000000,
-    ATSC_ETM_LOCATION_IN_PTC_FOR_PSIP  = 0x00000001,
-    ATSC_ETM_LOCATION_IN_PTC_FOR_EVENT = 0x00000002,
-    ATSC_ETM_LOCATION_RESERVED         = 0x00000003,
+    ATSC_ETM_LOCATION_NOT_PRESENT      = 0x00000000U,
+    ATSC_ETM_LOCATION_IN_PTC_FOR_PSIP  = 0x00000001U,
+    ATSC_ETM_LOCATION_IN_PTC_FOR_EVENT = 0x00000002U,
+    ATSC_ETM_LOCATION_RESERVED         = 0x00000003U,
 }
 
 enum : uint
 {
-    SAMPLE_SEQ_SEQUENCE_HEADER          = 0x00000001,
-    SAMPLE_SEQ_GOP_HEADER               = 0x00000002,
-    SAMPLE_SEQ_PICTURE_HEADER           = 0x00000003,
-    SAMPLE_SEQ_SEQUENCE_START           = 0x00000001,
-    SAMPLE_SEQ_SEEK_POINT               = 0x00000002,
-    SAMPLE_SEQ_FRAME_START              = 0x00000003,
-    SAMPLE_SEQ_CONTENT_UNKNOWN          = 0x00000000,
-    SAMPLE_SEQ_CONTENT_I_FRAME          = 0x00000001,
-    SAMPLE_SEQ_CONTENT_P_FRAME          = 0x00000002,
-    SAMPLE_SEQ_CONTENT_B_FRAME          = 0x00000003,
-    SAMPLE_SEQ_CONTENT_STANDALONE_FRAME = 0x00000001,
-    SAMPLE_SEQ_CONTENT_REF_FRAME        = 0x00000002,
-    SAMPLE_SEQ_CONTENT_NONREF_FRAME     = 0x00000003,
+    SAMPLE_SEQ_SEQUENCE_HEADER          = 0x00000001U,
+    SAMPLE_SEQ_GOP_HEADER               = 0x00000002U,
+    SAMPLE_SEQ_PICTURE_HEADER           = 0x00000003U,
+    SAMPLE_SEQ_SEQUENCE_START           = 0x00000001U,
+    SAMPLE_SEQ_SEEK_POINT               = 0x00000002U,
+    SAMPLE_SEQ_FRAME_START              = 0x00000003U,
+    SAMPLE_SEQ_CONTENT_UNKNOWN          = 0x00000000U,
+    SAMPLE_SEQ_CONTENT_I_FRAME          = 0x00000001U,
+    SAMPLE_SEQ_CONTENT_P_FRAME          = 0x00000002U,
+    SAMPLE_SEQ_CONTENT_B_FRAME          = 0x00000003U,
+    SAMPLE_SEQ_CONTENT_STANDALONE_FRAME = 0x00000001U,
+    SAMPLE_SEQ_CONTENT_REF_FRAME        = 0x00000002U,
+    SAMPLE_SEQ_CONTENT_NONREF_FRAME     = 0x00000003U,
 }
 
 enum : uint
 {
-    COMPONENT_TAG_CAPTION_MIN     = 0x00000030,
-    COMPONENT_TAG_CAPTION_MAX     = 0x00000037,
-    COMPONENT_TAG_SUPERIMPOSE_MIN = 0x00000038,
-    COMPONENT_TAG_SUPERIMPOSE_MAX = 0x0000003f,
+    COMPONENT_TAG_CAPTION_MIN     = 0x00000030U,
+    COMPONENT_TAG_CAPTION_MAX     = 0x00000037U,
+    COMPONENT_TAG_SUPERIMPOSE_MIN = 0x00000038U,
+    COMPONENT_TAG_SUPERIMPOSE_MAX = 0x0000003fU,
 }
 
-enum uint DVBS_SCAN_TABLE_MAX_SIZE = 0x00000190;
+enum uint DVBS_SCAN_TABLE_MAX_SIZE = 0x00000190U;
 
 enum : const(wchar)*
 {
@@ -1739,7 +1836,7 @@ align (1):
     HRESULT hrReason;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/ns-sbe-streambuffer_attribute))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/ns-sbe-streambuffer_attribute
 struct STREAMBUFFER_ATTRIBUTE
 {
     PWSTR  pszName;
@@ -1748,7 +1845,7 @@ struct STREAMBUFFER_ATTRIBUTE
     ushort cbLength;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/ns-sbe-sbe_pin_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/ns-sbe-sbe_pin_data
 struct SBE_PIN_DATA
 {
     ulong cDataBytes;
@@ -1758,7 +1855,7 @@ struct SBE_PIN_DATA
     ulong cTimestamps;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/ns-sbe-sbe2_stream_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/ns-sbe-sbe2_stream_desc
 struct SBE2_STREAM_DESC
 {
     uint Version;
@@ -1767,7 +1864,7 @@ struct SBE2_STREAM_DESC
     uint Reserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/ns-sbe-dvr_stream_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/ns-sbe-dvr_stream_desc
 struct DVR_STREAM_DESC
 {
     uint          Version;
@@ -1804,49 +1901,72 @@ align (1):
     ushort wCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-section))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-section
 struct SECTION
 {
 align (1):
-    ubyte            TableId;
-    _Header_e__Union Header;
+    ubyte TableId;
+    union Header
+    {
+    align (1):
+        MPEG_HEADER_BITS_MIDL S;
+        ushort W;
+    }
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] SectionData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-long_section))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-long_section
 struct LONG_SECTION
 {
 align (1):
-    ubyte             TableId;
-    _Header_e__Union  Header;
-    ushort            TableIdExtension;
-    _Version_e__Union Version;
-    ubyte             SectionNumber;
-    ubyte             LastSectionNumber;
+    ubyte  TableId;
+    union Header
+    {
+    align (1):
+        MPEG_HEADER_BITS_MIDL S;
+        ushort W;
+    }
+    ushort TableIdExtension;
+    union Version
+    {
+        MPEG_HEADER_VERSION_BITS_MIDL S;
+        ubyte B;
+    }
+    ubyte  SectionNumber;
+    ubyte  LastSectionNumber;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] RemainingData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-dsmcc_section))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-dsmcc_section
 struct DSMCC_SECTION
 {
 align (1):
-    ubyte             TableId;
-    _Header_e__Union  Header;
-    ushort            TableIdExtension;
-    _Version_e__Union Version;
-    ubyte             SectionNumber;
-    ubyte             LastSectionNumber;
-    ubyte             ProtocolDiscriminator;
-    ubyte             DsmccType;
-    ushort            MessageId;
-    uint              TransactionId;
-    ubyte             Reserved;
-    ubyte             AdaptationLength;
-    ushort            MessageLength;
+    ubyte  TableId;
+    union Header
+    {
+    align (1):
+        MPEG_HEADER_BITS_MIDL S;
+        ushort W;
+    }
+    ushort TableIdExtension;
+    union Version
+    {
+        MPEG_HEADER_VERSION_BITS_MIDL S;
+        ubyte B;
+    }
+    ubyte  SectionNumber;
+    ubyte  LastSectionNumber;
+    ubyte  ProtocolDiscriminator;
+    ubyte  DsmccType;
+    ushort MessageId;
+    uint   TransactionId;
+    ubyte  Reserved;
+    ubyte  AdaptationLength;
+    ushort MessageLength;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] RemainingData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-mpeg_rqst_packet))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-mpeg_rqst_packet
 struct MPEG_RQST_PACKET
 {
 align (1):
@@ -1854,7 +1974,7 @@ align (1):
     SECTION* pSection;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-mpeg_packet_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-mpeg_packet_list
 struct MPEG_PACKET_LIST
 {
 align (1):
@@ -1862,7 +1982,7 @@ align (1):
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MPEG_RQST_PACKET[1]* PacketList;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-dsmcc_filter_options))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-dsmcc_filter_options
 struct DSMCC_FILTER_OPTIONS
 {
 align (1):
@@ -1883,7 +2003,7 @@ align (1):
     ushort NumberOfBlocksInModule;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-atsc_filter_options))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-atsc_filter_options
 struct ATSC_FILTER_OPTIONS
 {
 align (1):
@@ -1891,7 +2011,7 @@ align (1):
     uint EtmId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-dvb_eit_filter_options))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-dvb_eit_filter_options
 struct DVB_EIT_FILTER_OPTIONS
 {
 align (1):
@@ -1899,7 +2019,7 @@ align (1):
     ubyte bSegment;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-mpeg2_filter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-mpeg2_filter
 struct MPEG2_FILTER
 {
 align (1):
@@ -1922,16 +2042,40 @@ align (1):
     ATSC_FILTER_OPTIONS  Atsc;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-mpeg2_filter2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-mpeg2_filter2
 struct MPEG2_FILTER2
 {
 align (1):
-    _Anonymous_e__Union Anonymous;
-    BOOL                fSpecifyDvbEitOptions;
+    union
+    {
+        struct
+        {
+        align (1):
+            ubyte                bVersionNumber;
+            ushort               wFilterSize;
+            BOOL                 fUseRawFilteringBits;
+            ubyte[16]            Filter;
+            ubyte[16]            Mask;
+            BOOL                 fSpecifyTableIdExtension;
+            ushort               TableIdExtension;
+            BOOL                 fSpecifyVersion;
+            ubyte                Version;
+            BOOL                 fSpecifySectionNumber;
+            ubyte                SectionNumber;
+            BOOL                 fSpecifyCurrentNext;
+            BOOL                 fNext;
+            BOOL                 fSpecifyDsmccOptions;
+            DSMCC_FILTER_OPTIONS Dsmcc;
+            BOOL                 fSpecifyAtscOptions;
+            ATSC_FILTER_OPTIONS  Atsc;
+        }
+        ubyte[124] bVersion1Bytes;
+    }
+    BOOL fSpecifyDvbEitOptions;
     DVB_EIT_FILTER_OPTIONS DvbEit;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-mpeg_stream_buffer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-mpeg_stream_buffer
 struct MPEG_STREAM_BUFFER
 {
 align (1):
@@ -1941,7 +2085,7 @@ align (1):
     ubyte*  pDataBuffer;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-mpeg_time))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-mpeg_time
 struct MPEG_TIME
 {
 align (1):
@@ -1950,7 +2094,7 @@ align (1):
     ubyte Seconds;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-mpeg_date))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-mpeg_date
 struct MPEG_DATE
 {
 align (1):
@@ -1959,7 +2103,7 @@ align (1):
     ushort Year;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-mpeg_date_and_time))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-mpeg_date_and_time
 struct MPEG_DATE_AND_TIME
 {
 align (1):
@@ -1967,26 +2111,30 @@ align (1):
     MPEG_TIME T;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-mpeg_bcs_demux))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-mpeg_bcs_demux
 struct MPEG_BCS_DEMUX
 {
 align (1):
     uint AVMGraphId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-mpeg_winsock))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-mpeg_winsock
 struct MPEG_WINSOCK
 {
 align (1):
     uint AVMGraphId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-mpeg_context))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-mpeg_context
 struct MPEG_CONTEXT
 {
 align (1):
     MPEG_CONTEXT_TYPE Type;
-    _U_e__Union       U;
+    union U
+    {
+        MPEG_BCS_DEMUX Demux;
+        MPEG_WINSOCK   Winsock;
+    }
 }
 
 struct MPEG_SERVICE_REQUEST
@@ -2007,7 +2155,7 @@ align (1):
     ushort Port;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-dsmcc_element))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-dsmcc_element
 struct DSMCC_ELEMENT
 {
 align (1):
@@ -2018,7 +2166,7 @@ align (1):
     DSMCC_ELEMENT* pNext;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-mpe_element))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2structs/ns-mpeg2structs-mpe_element
 struct MPE_ELEMENT
 {
 align (1):
@@ -2065,12 +2213,12 @@ struct UDCR_TAG
 
 struct PIC_SEQ_SAMPLE
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Version)), FixedArgSig(ElementSig(28)), FixedArgSig(ElementSig(4))], [])*/uint _bitfield43;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Version)), FixedArgSig(ElementSig(28)), FixedArgSig(ElementSig(4))], [])*/uint _bitfield100;
 }
 
 struct SAMPLE_SEQ_OFFSET
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(24)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield44;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(24)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield101;
 }
 
 struct VA_OPTIONAL_VIDEO_PROPERTIES
@@ -2087,9 +2235,16 @@ struct VA_OPTIONAL_VIDEO_PROPERTIES
 
 struct TRANSPORT_PROPERTIES
 {
-    uint             PID;
-    long             PCR;
-    _Fields_e__Union Fields;
+    uint PID;
+    long PCR;
+    union Fields
+    {
+        struct Others
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(8)), FixedArgSig(ElementSig(56))], [])*/long _bitfield102;
+        }
+        long Value;
+    }
 }
 
 struct PBDA_TAG_ATTRIBUTE
@@ -2131,16 +2286,28 @@ struct KSP_BDA_NODE_PIN
 
 struct KSM_BDA_PIN
 {
-    KSIDENTIFIER        Method;
-    _Anonymous_e__Union Anonymous;
-    uint                Reserved;
+    KSIDENTIFIER Method;
+    union
+    {
+        uint PinId;
+        uint PinType;
+    }
+    uint         Reserved;
 }
 
 struct KSM_BDA_PIN_PAIR
 {
-    KSIDENTIFIER         Method;
-    _Anonymous1_e__Union Anonymous1;
-    _Anonymous2_e__Union Anonymous2;
+    KSIDENTIFIER Method;
+    union
+    {
+        uint InputPinId;
+        uint InputPinType;
+    }
+    union
+    {
+        uint OutputPinId;
+        uint OutputPinType;
+    }
 }
 
 struct KSP_NODE_ESPID
@@ -2388,8 +2555,24 @@ struct ChannelTypeInfo
 
 struct ChannelInfo
 {
-    int                 lFrequency;
-    _Anonymous_e__Union Anonymous;
+    int lFrequency;
+    union
+    {
+        struct DVB
+        {
+            int lONID;
+            int lTSID;
+            int lSID;
+        }
+        struct DC
+        {
+            int lProgNumber;
+        }
+        struct ATSC
+        {
+            int lProgNumber;
+        }
+    }
 }
 
 struct SpanningEventDescriptor
@@ -2454,7 +2637,7 @@ struct RATING_SYSTEM
 {
 align (1):
     GUID              rating_system_id;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield45;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield103;
     ubyte[3]          country_code;
     uint              rating_attribute_count;
     RATING_ATTRIBUTE* lpratingattrib;
@@ -2533,20 +2716,20 @@ struct KSEVENTDATA_BDA_RF_TUNER_SCAN_S
 struct PID_BITS
 {
 align (1):
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ProgramId)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(13))], [])*/ushort _bitfield46;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ProgramId)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(13))], [])*/ushort _bitfield104;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2bits/ns-mpeg2bits-mpeg_header_bits))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2bits/ns-mpeg2bits-mpeg_header_bits
 struct MPEG_HEADER_BITS
 {
 align (1):
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(SectionSyntaxIndicator)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield47;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(SectionSyntaxIndicator)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield105;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2bits/ns-mpeg2bits-mpeg_header_version_bits))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2bits/ns-mpeg2bits-mpeg_header_version_bits
 struct MPEG_HEADER_VERSION_BITS
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(2))], [])*/ubyte _bitfield48;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(2))], [])*/ubyte _bitfield106;
 }
 
 // Interfaces
@@ -3432,688 +3615,688 @@ struct BDANETWORKTYPE_ATSC;
 
 @GUID("8a674b48-1f63-11d3-b64c-00c04f79498e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/regbag/nn-regbag-icreatepropbagonregkey))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/regbag/nn-regbag-icreatepropbagonregkey
 interface ICreatePropBagOnRegKey : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/regbag/nf-regbag-icreatepropbagonregkey-create))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/regbag/nf-regbag-icreatepropbagonregkey-create
     HRESULT Create(HKEY hkey, const(PWSTR) subkey, uint ulOptions, uint samDesired, const(GUID)* iid, void** ppBag);
 }
 
 @GUID("901284e4-33fe-4b69-8d63-634a596f3756")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ituningspaces))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ituningspaces
 interface ITuningSpaces : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspaces-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspaces-get_count
     HRESULT get_Count(int* Count);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspaces-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspaces-get__newenum
     HRESULT get__NewEnum(IEnumVARIANT* NewEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspaces-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspaces-get_item
     HRESULT get_Item(VARIANT varIndex, ITuningSpace* TuningSpace);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspaces-get_enumtuningspaces))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspaces-get_enumtuningspaces
     HRESULT get_EnumTuningSpaces(IEnumTuningSpaces* NewEnum);
 }
 
 @GUID("5b692e84-e2f1-11d2-9493-00c04f72d980")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ituningspacecontainer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ituningspacecontainer
 interface ITuningSpaceContainer : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspacecontainer-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspacecontainer-get_count
     HRESULT get_Count(int* Count);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspacecontainer-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspacecontainer-get__newenum
     HRESULT get__NewEnum(IEnumVARIANT* NewEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspacecontainer-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspacecontainer-get_item
     HRESULT get_Item(VARIANT varIndex, ITuningSpace* TuningSpace);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspacecontainer-put_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspacecontainer-put_item
     HRESULT put_Item(VARIANT varIndex, ITuningSpace TuningSpace);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspacecontainer-tuningspacesforclsid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspacecontainer-tuningspacesforclsid
     HRESULT TuningSpacesForCLSID(BSTR SpaceCLSID, ITuningSpaces* NewColl);
     HRESULT _TuningSpacesForCLSID2(const(GUID)* SpaceCLSID, ITuningSpaces* NewColl);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspacecontainer-tuningspacesforname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspacecontainer-tuningspacesforname
     HRESULT TuningSpacesForName(BSTR Name, ITuningSpaces* NewColl);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspacecontainer-findid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspacecontainer-findid
     HRESULT FindID(ITuningSpace TuningSpace, int* ID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspacecontainer-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspacecontainer-add
     HRESULT Add(ITuningSpace TuningSpace, VARIANT* NewIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspacecontainer-get_enumtuningspaces))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspacecontainer-get_enumtuningspaces
     HRESULT get_EnumTuningSpaces(IEnumTuningSpaces* ppEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspacecontainer-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspacecontainer-remove
     HRESULT Remove(VARIANT Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspacecontainer-get_maxcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspacecontainer-get_maxcount
     HRESULT get_MaxCount(int* MaxCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspacecontainer-put_maxcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspacecontainer-put_maxcount
     HRESULT put_MaxCount(int MaxCount);
 }
 
 @GUID("061c6e30-e622-11d2-9493-00c04f72d980")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ituningspace))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ituningspace
 interface ITuningSpace : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspace-get_uniquename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspace-get_uniquename
     HRESULT get_UniqueName(BSTR* Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspace-put_uniquename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspace-put_uniquename
     HRESULT put_UniqueName(BSTR Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspace-get_friendlyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspace-get_friendlyname
     HRESULT get_FriendlyName(BSTR* Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspace-put_friendlyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspace-put_friendlyname
     HRESULT put_FriendlyName(BSTR Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspace-get_clsid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspace-get_clsid
     HRESULT get_CLSID(BSTR* SpaceCLSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspace-get_networktype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspace-get_networktype
     HRESULT get_NetworkType(BSTR* NetworkTypeGuid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspace-put_networktype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspace-put_networktype
     HRESULT put_NetworkType(BSTR NetworkTypeGuid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspace-get__networktype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspace-get__networktype
     HRESULT get__NetworkType(GUID* NetworkTypeGuid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspace-put__networktype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspace-put__networktype
     HRESULT put__NetworkType(const(GUID)* NetworkTypeGuid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspace-createtunerequest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspace-createtunerequest
     HRESULT CreateTuneRequest(ITuneRequest* TuneRequest);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspace-enumcategoryguids))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspace-enumcategoryguids
     HRESULT EnumCategoryGUIDs(IEnumGUID* ppEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspace-enumdevicemonikers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspace-enumdevicemonikers
     HRESULT EnumDeviceMonikers(IEnumMoniker* ppEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspace-get_defaultpreferredcomponenttypes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspace-get_defaultpreferredcomponenttypes
     HRESULT get_DefaultPreferredComponentTypes(IComponentTypes* ComponentTypes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspace-put_defaultpreferredcomponenttypes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspace-put_defaultpreferredcomponenttypes
     HRESULT put_DefaultPreferredComponentTypes(IComponentTypes NewComponentTypes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspace-get_frequencymapping))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspace-get_frequencymapping
     HRESULT get_FrequencyMapping(BSTR* pMapping);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspace-put_frequencymapping))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspace-put_frequencymapping
     HRESULT put_FrequencyMapping(BSTR Mapping);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspace-get_defaultlocator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspace-get_defaultlocator
     HRESULT get_DefaultLocator(ILocator* LocatorVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspace-put_defaultlocator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspace-put_defaultlocator
     HRESULT put_DefaultLocator(ILocator LocatorVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspace-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituningspace-clone
     HRESULT Clone(ITuningSpace* NewTS);
 }
 
 @GUID("8b8eb248-fc2b-11d2-9d8c-00c04f72d980")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ienumtuningspaces))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ienumtuningspaces
 interface IEnumTuningSpaces : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ienumtuningspaces-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ienumtuningspaces-next
     HRESULT Next(uint celt, ITuningSpace* rgelt, uint* pceltFetched);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ienumtuningspaces-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ienumtuningspaces-skip
     HRESULT Skip(uint celt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ienumtuningspaces-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ienumtuningspaces-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ienumtuningspaces-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ienumtuningspaces-clone
     HRESULT Clone(IEnumTuningSpaces* ppEnum);
 }
 
 @GUID("ada0b268-3b19-4e5b-acc4-49f852be13ba")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-idvbtuningspace))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-idvbtuningspace
 interface IDVBTuningSpace : ITuningSpace
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtuningspace-get_systemtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtuningspace-get_systemtype
     HRESULT get_SystemType(DVBSystemType* SysType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtuningspace-put_systemtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtuningspace-put_systemtype
     HRESULT put_SystemType(DVBSystemType SysType);
 }
 
 @GUID("843188b4-ce62-43db-966b-8145a094e040")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-idvbtuningspace2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-idvbtuningspace2
 interface IDVBTuningSpace2 : IDVBTuningSpace
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtuningspace2-get_networkid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtuningspace2-get_networkid
     HRESULT get_NetworkID(int* NetworkID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtuningspace2-put_networkid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtuningspace2-put_networkid
     HRESULT put_NetworkID(int NetworkID);
 }
 
 @GUID("cdf7be60-d954-42fd-a972-78971958e470")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-idvbstuningspace))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-idvbstuningspace
 interface IDVBSTuningSpace : IDVBTuningSpace2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbstuningspace-get_lowoscillator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbstuningspace-get_lowoscillator
     HRESULT get_LowOscillator(int* LowOscillator);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbstuningspace-put_lowoscillator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbstuningspace-put_lowoscillator
     HRESULT put_LowOscillator(int LowOscillator);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbstuningspace-get_highoscillator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbstuningspace-get_highoscillator
     HRESULT get_HighOscillator(int* HighOscillator);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbstuningspace-put_highoscillator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbstuningspace-put_highoscillator
     HRESULT put_HighOscillator(int HighOscillator);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbstuningspace-get_lnbswitch))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbstuningspace-get_lnbswitch
     HRESULT get_LNBSwitch(int* LNBSwitch);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbstuningspace-put_lnbswitch))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbstuningspace-put_lnbswitch
     HRESULT put_LNBSwitch(int LNBSwitch);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbstuningspace-get_inputrange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbstuningspace-get_inputrange
     HRESULT get_InputRange(BSTR* InputRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbstuningspace-put_inputrange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbstuningspace-put_inputrange
     HRESULT put_InputRange(BSTR InputRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbstuningspace-get_spectralinversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbstuningspace-get_spectralinversion
     HRESULT get_SpectralInversion(SpectralInversion* SpectralInversionVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbstuningspace-put_spectralinversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbstuningspace-put_spectralinversion
     HRESULT put_SpectralInversion(SpectralInversion SpectralInversionVal);
 }
 
 @GUID("e48244b8-7e17-4f76-a763-5090ff1e2f30")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-iauxintuningspace))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-iauxintuningspace
 interface IAuxInTuningSpace : ITuningSpace
 {
 }
 
 @GUID("b10931ed-8bfe-4ab0-9dce-e469c29a9729")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-iauxintuningspace2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-iauxintuningspace2
 interface IAuxInTuningSpace2 : IAuxInTuningSpace
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iauxintuningspace2-get_countrycode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iauxintuningspace2-get_countrycode
     HRESULT get_CountryCode(int* CountryCodeVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iauxintuningspace2-put_countrycode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iauxintuningspace2-put_countrycode
     HRESULT put_CountryCode(int NewCountryCodeVal);
 }
 
 @GUID("2a6e293c-2595-11d3-b64c-00c04f79498e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ianalogtvtuningspace))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ianalogtvtuningspace
 interface IAnalogTVTuningSpace : ITuningSpace
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianalogtvtuningspace-get_minchannel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianalogtvtuningspace-get_minchannel
     HRESULT get_MinChannel(int* MinChannelVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianalogtvtuningspace-put_minchannel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianalogtvtuningspace-put_minchannel
     HRESULT put_MinChannel(int NewMinChannelVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianalogtvtuningspace-get_maxchannel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianalogtvtuningspace-get_maxchannel
     HRESULT get_MaxChannel(int* MaxChannelVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianalogtvtuningspace-put_maxchannel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianalogtvtuningspace-put_maxchannel
     HRESULT put_MaxChannel(int NewMaxChannelVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianalogtvtuningspace-get_inputtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianalogtvtuningspace-get_inputtype
     HRESULT get_InputType(TunerInputType* InputTypeVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianalogtvtuningspace-put_inputtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianalogtvtuningspace-put_inputtype
     HRESULT put_InputType(TunerInputType NewInputTypeVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianalogtvtuningspace-get_countrycode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianalogtvtuningspace-get_countrycode
     HRESULT get_CountryCode(int* CountryCodeVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianalogtvtuningspace-put_countrycode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianalogtvtuningspace-put_countrycode
     HRESULT put_CountryCode(int NewCountryCodeVal);
 }
 
 @GUID("0369b4e2-45b6-11d3-b650-00c04f79498e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-iatsctuningspace))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-iatsctuningspace
 interface IATSCTuningSpace : IAnalogTVTuningSpace
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iatsctuningspace-get_minminorchannel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iatsctuningspace-get_minminorchannel
     HRESULT get_MinMinorChannel(int* MinMinorChannelVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iatsctuningspace-put_minminorchannel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iatsctuningspace-put_minminorchannel
     HRESULT put_MinMinorChannel(int NewMinMinorChannelVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iatsctuningspace-get_maxminorchannel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iatsctuningspace-get_maxminorchannel
     HRESULT get_MaxMinorChannel(int* MaxMinorChannelVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iatsctuningspace-put_maxminorchannel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iatsctuningspace-put_maxminorchannel
     HRESULT put_MaxMinorChannel(int NewMaxMinorChannelVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iatsctuningspace-get_minphysicalchannel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iatsctuningspace-get_minphysicalchannel
     HRESULT get_MinPhysicalChannel(int* MinPhysicalChannelVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iatsctuningspace-put_minphysicalchannel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iatsctuningspace-put_minphysicalchannel
     HRESULT put_MinPhysicalChannel(int NewMinPhysicalChannelVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iatsctuningspace-get_maxphysicalchannel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iatsctuningspace-get_maxphysicalchannel
     HRESULT get_MaxPhysicalChannel(int* MaxPhysicalChannelVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iatsctuningspace-put_maxphysicalchannel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iatsctuningspace-put_maxphysicalchannel
     HRESULT put_MaxPhysicalChannel(int NewMaxPhysicalChannelVal);
 }
 
 @GUID("013f9f9c-b449-4ec7-a6d2-9d4f2fc70ae5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-idigitalcabletuningspace))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-idigitalcabletuningspace
 interface IDigitalCableTuningSpace : IATSCTuningSpace
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idigitalcabletuningspace-get_minmajorchannel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idigitalcabletuningspace-get_minmajorchannel
     HRESULT get_MinMajorChannel(int* MinMajorChannelVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idigitalcabletuningspace-put_minmajorchannel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idigitalcabletuningspace-put_minmajorchannel
     HRESULT put_MinMajorChannel(int NewMinMajorChannelVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idigitalcabletuningspace-get_maxmajorchannel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idigitalcabletuningspace-get_maxmajorchannel
     HRESULT get_MaxMajorChannel(int* MaxMajorChannelVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idigitalcabletuningspace-put_maxmajorchannel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idigitalcabletuningspace-put_maxmajorchannel
     HRESULT put_MaxMajorChannel(int NewMaxMajorChannelVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idigitalcabletuningspace-get_minsourceid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idigitalcabletuningspace-get_minsourceid
     HRESULT get_MinSourceID(int* MinSourceIDVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idigitalcabletuningspace-put_minsourceid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idigitalcabletuningspace-put_minsourceid
     HRESULT put_MinSourceID(int NewMinSourceIDVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idigitalcabletuningspace-get_maxsourceid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idigitalcabletuningspace-get_maxsourceid
     HRESULT get_MaxSourceID(int* MaxSourceIDVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idigitalcabletuningspace-put_maxsourceid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idigitalcabletuningspace-put_maxsourceid
     HRESULT put_MaxSourceID(int NewMaxSourceIDVal);
 }
 
 @GUID("2a6e293b-2595-11d3-b64c-00c04f79498e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ianalogradiotuningspace))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ianalogradiotuningspace
 interface IAnalogRadioTuningSpace : ITuningSpace
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianalogradiotuningspace-get_minfrequency))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianalogradiotuningspace-get_minfrequency
     HRESULT get_MinFrequency(int* MinFrequencyVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianalogradiotuningspace-put_minfrequency))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianalogradiotuningspace-put_minfrequency
     HRESULT put_MinFrequency(int NewMinFrequencyVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianalogradiotuningspace-get_maxfrequency))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianalogradiotuningspace-get_maxfrequency
     HRESULT get_MaxFrequency(int* MaxFrequencyVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianalogradiotuningspace-put_maxfrequency))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianalogradiotuningspace-put_maxfrequency
     HRESULT put_MaxFrequency(int NewMaxFrequencyVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianalogradiotuningspace-get_step))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianalogradiotuningspace-get_step
     HRESULT get_Step(int* StepVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianalogradiotuningspace-put_step))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianalogradiotuningspace-put_step
     HRESULT put_Step(int NewStepVal);
 }
 
 @GUID("39dd45da-2da8-46ba-8a8a-87e2b73d983a")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ianalogradiotuningspace2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ianalogradiotuningspace2
 interface IAnalogRadioTuningSpace2 : IAnalogRadioTuningSpace
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianalogradiotuningspace2-get_countrycode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianalogradiotuningspace2-get_countrycode
     HRESULT get_CountryCode(int* CountryCodeVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianalogradiotuningspace2-put_countrycode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianalogradiotuningspace2-put_countrycode
     HRESULT put_CountryCode(int NewCountryCodeVal);
 }
 
 @GUID("07ddc146-fc3d-11d2-9d8c-00c04f72d980")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-itunerequest))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-itunerequest
 interface ITuneRequest : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-itunerequest-get_tuningspace))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-itunerequest-get_tuningspace
     HRESULT get_TuningSpace(ITuningSpace* TuningSpace);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-itunerequest-get_components))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-itunerequest-get_components
     HRESULT get_Components(IComponents* Components);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-itunerequest-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-itunerequest-clone
     HRESULT Clone(ITuneRequest* NewTuneRequest);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-itunerequest-get_locator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-itunerequest-get_locator
     HRESULT get_Locator(ILocator* Locator);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-itunerequest-put_locator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-itunerequest-put_locator
     HRESULT put_Locator(ILocator Locator);
 }
 
 @GUID("156eff60-86f4-4e28-89fc-109799fd57ee")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ichannelidtunerequest))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ichannelidtunerequest
 interface IChannelIDTuneRequest : ITuneRequest
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ichannelidtunerequest-get_channelid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ichannelidtunerequest-get_channelid
     HRESULT get_ChannelID(BSTR* ChannelID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ichannelidtunerequest-put_channelid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ichannelidtunerequest-put_channelid
     HRESULT put_ChannelID(BSTR ChannelID);
 }
 
 @GUID("0369b4e0-45b6-11d3-b650-00c04f79498e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ichanneltunerequest))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ichanneltunerequest
 interface IChannelTuneRequest : ITuneRequest
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ichanneltunerequest-get_channel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ichanneltunerequest-get_channel
     HRESULT get_Channel(int* Channel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ichanneltunerequest-put_channel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ichanneltunerequest-put_channel
     HRESULT put_Channel(int Channel);
 }
 
 @GUID("0369b4e1-45b6-11d3-b650-00c04f79498e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-iatscchanneltunerequest))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-iatscchanneltunerequest
 interface IATSCChannelTuneRequest : IChannelTuneRequest
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iatscchanneltunerequest-get_minorchannel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iatscchanneltunerequest-get_minorchannel
     HRESULT get_MinorChannel(int* MinorChannel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iatscchanneltunerequest-put_minorchannel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iatscchanneltunerequest-put_minorchannel
     HRESULT put_MinorChannel(int MinorChannel);
 }
 
 @GUID("bad7753b-6b37-4810-ae57-3ce0c4a9e6cb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-idigitalcabletunerequest))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-idigitalcabletunerequest
 interface IDigitalCableTuneRequest : IATSCChannelTuneRequest
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idigitalcabletunerequest-get_majorchannel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idigitalcabletunerequest-get_majorchannel
     HRESULT get_MajorChannel(int* pMajorChannel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idigitalcabletunerequest-put_majorchannel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idigitalcabletunerequest-put_majorchannel
     HRESULT put_MajorChannel(int MajorChannel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idigitalcabletunerequest-get_sourceid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idigitalcabletunerequest-get_sourceid
     HRESULT get_SourceID(int* pSourceID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idigitalcabletunerequest-put_sourceid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idigitalcabletunerequest-put_sourceid
     HRESULT put_SourceID(int SourceID);
 }
 
 @GUID("0d6f567e-a636-42bb-83ba-ce4c1704afa2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-idvbtunerequest))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-idvbtunerequest
 interface IDVBTuneRequest : ITuneRequest
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtunerequest-get_onid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtunerequest-get_onid
     HRESULT get_ONID(int* ONID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtunerequest-put_onid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtunerequest-put_onid
     HRESULT put_ONID(int ONID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtunerequest-get_tsid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtunerequest-get_tsid
     HRESULT get_TSID(int* TSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtunerequest-put_tsid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtunerequest-put_tsid
     HRESULT put_TSID(int TSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtunerequest-get_sid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtunerequest-get_sid
     HRESULT get_SID(int* SID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtunerequest-put_sid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtunerequest-put_sid
     HRESULT put_SID(int SID);
 }
 
 @GUID("eb7d987f-8a01-42ad-b8ae-574deee44d1a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-impeg2tunerequest))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-impeg2tunerequest
 interface IMPEG2TuneRequest : ITuneRequest
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-impeg2tunerequest-get_tsid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-impeg2tunerequest-get_tsid
     HRESULT get_TSID(int* TSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-impeg2tunerequest-put_tsid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-impeg2tunerequest-put_tsid
     HRESULT put_TSID(int TSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-impeg2tunerequest-get_progno))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-impeg2tunerequest-get_progno
     HRESULT get_ProgNo(int* ProgNo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-impeg2tunerequest-put_progno))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-impeg2tunerequest-put_progno
     HRESULT put_ProgNo(int ProgNo);
 }
 
 @GUID("14e11abd-ee37-4893-9ea1-6964de933e39")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-impeg2tunerequestfactory))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-impeg2tunerequestfactory
 interface IMPEG2TuneRequestFactory : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-impeg2tunerequestfactory-createtunerequest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-impeg2tunerequestfactory-createtunerequest
     HRESULT CreateTuneRequest(ITuningSpace TuningSpace, IMPEG2TuneRequest* TuneRequest);
 }
 
 @GUID("1b9d5fc3-5bbc-4b6c-bb18-b9d10e3eeebf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-impeg2tunerequestsupport))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-impeg2tunerequestsupport
 interface IMPEG2TuneRequestSupport : IUnknown
 {
 }
 
 @GUID("e60dfa45-8d56-4e65-a8ab-d6be9412c249")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-itunercap))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-itunercap
 interface ITunerCap : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-itunercap-get_supportednetworktypes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-itunercap-get_supportednetworktypes
     HRESULT get_SupportedNetworkTypes(uint ulcNetworkTypesMax, uint* pulcNetworkTypes, GUID* pguidNetworkTypes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-itunercap-get_supportedvideoformats))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-itunercap-get_supportedvideoformats
     HRESULT get_SupportedVideoFormats(uint* pulAMTunerModeType, uint* pulAnalogVideoStandard);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-itunercap-get_auxinputcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-itunercap-get_auxinputcount
     HRESULT get_AuxInputCount(uint* pulCompositeCount, uint* pulSvideoCount);
 }
 
 @GUID("ed3e0c66-18c8-4ea6-9300-f6841fdd35dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-itunercapex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-itunercapex
 interface ITunerCapEx : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-itunercapex-get_has608_708caption))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-itunercapex-get_has608_708caption
     HRESULT get_Has608_708Caption(VARIANT_BOOL* pbHasCaption);
 }
 
 @GUID("28c52640-018a-11d3-9d8e-00c04f72d980")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ituner))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ituner
 interface ITuner : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituner-get_tuningspace))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituner-get_tuningspace
     HRESULT get_TuningSpace(ITuningSpace* TuningSpace);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituner-put_tuningspace))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituner-put_tuningspace
     HRESULT put_TuningSpace(ITuningSpace TuningSpace);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituner-enumtuningspaces))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituner-enumtuningspaces
     HRESULT EnumTuningSpaces(IEnumTuningSpaces* ppEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituner-get_tunerequest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituner-get_tunerequest
     HRESULT get_TuneRequest(ITuneRequest* TuneRequest);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituner-put_tunerequest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituner-put_tunerequest
     HRESULT put_TuneRequest(ITuneRequest TuneRequest);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituner-validate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituner-validate
     HRESULT Validate(ITuneRequest TuneRequest);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituner-get_preferredcomponenttypes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituner-get_preferredcomponenttypes
     HRESULT get_PreferredComponentTypes(IComponentTypes* ComponentTypes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituner-put_preferredcomponenttypes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituner-put_preferredcomponenttypes
     HRESULT put_PreferredComponentTypes(IComponentTypes ComponentTypes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituner-get_signalstrength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituner-get_signalstrength
     HRESULT get_SignalStrength(int* Strength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituner-triggersignalevents))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ituner-triggersignalevents
     HRESULT TriggerSignalEvents(int Interval);
 }
 
 @GUID("1dfd0a5c-0284-11d3-9d8e-00c04f72d980")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-iscanningtuner))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-iscanningtuner
 interface IScanningTuner : ITuner
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iscanningtuner-seekup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iscanningtuner-seekup
     HRESULT SeekUp();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iscanningtuner-seekdown))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iscanningtuner-seekdown
     HRESULT SeekDown();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iscanningtuner-scanup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iscanningtuner-scanup
     HRESULT ScanUp(int MillisecondsPause);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iscanningtuner-scandown))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iscanningtuner-scandown
     HRESULT ScanDown(int MillisecondsPause);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iscanningtuner-autoprogram))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iscanningtuner-autoprogram
     HRESULT AutoProgram();
 }
 
 @GUID("04bbd195-0e2d-4593-9bd5-4f908bc33cf5")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-iscanningtunerex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-iscanningtunerex
 interface IScanningTunerEx : IScanningTuner
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iscanningtunerex-getcurrentlocator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iscanningtunerex-getcurrentlocator
     HRESULT GetCurrentLocator(ILocator* pILocator);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iscanningtunerex-performexhaustivescan))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iscanningtunerex-performexhaustivescan
     HRESULT PerformExhaustiveScan(int dwLowerFreq, int dwHigherFreq, VARIANT_BOOL bFineTune, size_t hEvent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iscanningtunerex-terminatecurrentscan))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iscanningtunerex-terminatecurrentscan
     HRESULT TerminateCurrentScan(int* pcurrentFreq);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iscanningtunerex-resumecurrentscan))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iscanningtunerex-resumecurrentscan
     HRESULT ResumeCurrentScan(size_t hEvent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iscanningtunerex-gettunerscanningcapability))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iscanningtunerex-gettunerscanningcapability
     HRESULT GetTunerScanningCapability(int* HardwareAssistedScanning, int* NumStandardsSupported, 
                                        GUID* BroadcastStandards);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iscanningtunerex-gettunerstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iscanningtunerex-gettunerstatus
     HRESULT GetTunerStatus(int* SecondsLeft, int* CurrentLockType, int* AutoDetect, int* CurrentFreq);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iscanningtunerex-getcurrenttunerstandardcapability))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iscanningtunerex-getcurrenttunerstandardcapability
     HRESULT GetCurrentTunerStandardCapability(GUID CurrentBroadcastStandard, int* SettlingTime, 
                                               int* TvStandardsSupported);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iscanningtunerex-setscansignaltypefilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iscanningtunerex-setscansignaltypefilter
     HRESULT SetScanSignalTypeFilter(int ScanModulationTypes, int AnalogVideoStandard);
 }
 
 @GUID("6a340dc0-0311-11d3-9d8e-00c04f72d980")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-icomponenttype))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-icomponenttype
 interface IComponentType : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttype-get_category))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttype-get_category
     HRESULT get_Category(ComponentCategory* Category);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttype-put_category))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttype-put_category
     HRESULT put_Category(ComponentCategory Category);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttype-get_mediamajortype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttype-get_mediamajortype
     HRESULT get_MediaMajorType(BSTR* MediaMajorType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttype-put_mediamajortype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttype-put_mediamajortype
     HRESULT put_MediaMajorType(BSTR MediaMajorType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttype-get__mediamajortype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttype-get__mediamajortype
     HRESULT get__MediaMajorType(GUID* MediaMajorTypeGuid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttype-put__mediamajortype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttype-put__mediamajortype
     HRESULT put__MediaMajorType(const(GUID)* MediaMajorTypeGuid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttype-get_mediasubtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttype-get_mediasubtype
     HRESULT get_MediaSubType(BSTR* MediaSubType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttype-put_mediasubtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttype-put_mediasubtype
     HRESULT put_MediaSubType(BSTR MediaSubType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttype-get__mediasubtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttype-get__mediasubtype
     HRESULT get__MediaSubType(GUID* MediaSubTypeGuid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttype-put__mediasubtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttype-put__mediasubtype
     HRESULT put__MediaSubType(const(GUID)* MediaSubTypeGuid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttype-get_mediaformattype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttype-get_mediaformattype
     HRESULT get_MediaFormatType(BSTR* MediaFormatType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttype-put_mediaformattype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttype-put_mediaformattype
     HRESULT put_MediaFormatType(BSTR MediaFormatType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttype-get__mediaformattype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttype-get__mediaformattype
     HRESULT get__MediaFormatType(GUID* MediaFormatTypeGuid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttype-put__mediaformattype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttype-put__mediaformattype
     HRESULT put__MediaFormatType(const(GUID)* MediaFormatTypeGuid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttype-get_mediatype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttype-get_mediatype
     HRESULT get_MediaType(AM_MEDIA_TYPE* MediaType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttype-put_mediatype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttype-put_mediatype
     HRESULT put_MediaType(AM_MEDIA_TYPE* MediaType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttype-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttype-clone
     HRESULT Clone(IComponentType* NewCT);
 }
 
 @GUID("b874c8ba-0fa2-11d3-9d8e-00c04f72d980")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ilanguagecomponenttype))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ilanguagecomponenttype
 interface ILanguageComponentType : IComponentType
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ilanguagecomponenttype-get_langid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ilanguagecomponenttype-get_langid
     HRESULT get_LangID(int* LangID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ilanguagecomponenttype-put_langid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ilanguagecomponenttype-put_langid
     HRESULT put_LangID(int LangID);
 }
 
 @GUID("2c073d84-b51c-48c9-aa9f-68971e1f6e38")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-impeg2componenttype))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-impeg2componenttype
 interface IMPEG2ComponentType : ILanguageComponentType
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-impeg2componenttype-get_streamtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-impeg2componenttype-get_streamtype
     HRESULT get_StreamType(MPEG2StreamType* MP2StreamType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-impeg2componenttype-put_streamtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-impeg2componenttype-put_streamtype
     HRESULT put_StreamType(MPEG2StreamType MP2StreamType);
 }
 
 @GUID("fc189e4d-7bd4-4125-b3b3-3a76a332cc96")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-iatsccomponenttype))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-iatsccomponenttype
 interface IATSCComponentType : IMPEG2ComponentType
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iatsccomponenttype-get_flags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iatsccomponenttype-get_flags
     HRESULT get_Flags(int* Flags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iatsccomponenttype-put_flags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iatsccomponenttype-put_flags
     HRESULT put_Flags(int flags);
 }
 
 @GUID("8a674b4a-1f63-11d3-b64c-00c04f79498e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ienumcomponenttypes))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ienumcomponenttypes
 interface IEnumComponentTypes : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ienumcomponenttypes-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ienumcomponenttypes-next
     HRESULT Next(uint celt, IComponentType* rgelt, uint* pceltFetched);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ienumcomponenttypes-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ienumcomponenttypes-skip
     HRESULT Skip(uint celt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ienumcomponenttypes-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ienumcomponenttypes-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ienumcomponenttypes-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ienumcomponenttypes-clone
     HRESULT Clone(IEnumComponentTypes* ppEnum);
 }
 
 @GUID("0dc13d4a-0313-11d3-9d8e-00c04f72d980")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-icomponenttypes))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-icomponenttypes
 interface IComponentTypes : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttypes-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttypes-get_count
     HRESULT get_Count(int* Count);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttypes-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttypes-get__newenum
     HRESULT get__NewEnum(IEnumVARIANT* ppNewEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttypes-enumcomponenttypes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttypes-enumcomponenttypes
     HRESULT EnumComponentTypes(IEnumComponentTypes* ppNewEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttypes-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttypes-get_item
     HRESULT get_Item(VARIANT Index, IComponentType* ComponentType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttypes-put_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttypes-put_item
     HRESULT put_Item(VARIANT Index, IComponentType ComponentType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttypes-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttypes-add
     HRESULT Add(IComponentType ComponentType, VARIANT* NewIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttypes-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttypes-remove
     HRESULT Remove(VARIANT Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttypes-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponenttypes-clone
     HRESULT Clone(IComponentTypes* NewList);
 }
 
 @GUID("1a5576fc-0e19-11d3-9d8e-00c04f72d980")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-icomponent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-icomponent
 interface IComponent : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponent-get_type))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponent-get_type
     HRESULT get_Type(IComponentType* CT);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponent-put_type))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponent-put_type
     HRESULT put_Type(IComponentType CT);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponent-get_desclangid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponent-get_desclangid
     HRESULT get_DescLangID(int* LangID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponent-put_desclangid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponent-put_desclangid
     HRESULT put_DescLangID(int LangID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponent-get_status))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponent-get_status
     HRESULT get_Status(ComponentStatus* Status);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponent-put_status))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponent-put_status
     HRESULT put_Status(ComponentStatus Status);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponent-get_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponent-get_description
     HRESULT get_Description(BSTR* Description);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponent-put_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponent-put_description
     HRESULT put_Description(BSTR Description);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponent-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponent-clone
     HRESULT Clone(IComponent* NewComponent);
 }
 
 @GUID("2cfeb2a8-1787-4a24-a941-c6eaec39c842")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ianalogaudiocomponenttype))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ianalogaudiocomponenttype
 interface IAnalogAudioComponentType : IComponentType
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianalogaudiocomponenttype-get_analogaudiomode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianalogaudiocomponenttype-get_analogaudiomode
     HRESULT get_AnalogAudioMode(TVAudioMode* Mode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianalogaudiocomponenttype-put_analogaudiomode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianalogaudiocomponenttype-put_analogaudiomode
     HRESULT put_AnalogAudioMode(TVAudioMode Mode);
 }
 
 @GUID("1493e353-1eb6-473c-802d-8e6b8ec9d2a9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-impeg2component))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-impeg2component
 interface IMPEG2Component : IComponent
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-impeg2component-get_pid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-impeg2component-get_pid
     HRESULT get_PID(int* PID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-impeg2component-put_pid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-impeg2component-put_pid
     HRESULT put_PID(int PID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-impeg2component-get_pcrpid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-impeg2component-get_pcrpid
     HRESULT get_PCRPID(int* PCRPID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-impeg2component-put_pcrpid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-impeg2component-put_pcrpid
     HRESULT put_PCRPID(int PCRPID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-impeg2component-get_programnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-impeg2component-get_programnumber
     HRESULT get_ProgramNumber(int* ProgramNumber);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-impeg2component-put_programnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-impeg2component-put_programnumber
     HRESULT put_ProgramNumber(int ProgramNumber);
 }
 
 @GUID("2a6e2939-2595-11d3-b64c-00c04f79498e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ienumcomponents))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ienumcomponents
 interface IEnumComponents : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ienumcomponents-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ienumcomponents-next
     HRESULT Next(uint celt, IComponent* rgelt, uint* pceltFetched);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ienumcomponents-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ienumcomponents-skip
     HRESULT Skip(uint celt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ienumcomponents-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ienumcomponents-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ienumcomponents-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ienumcomponents-clone
     HRESULT Clone(IEnumComponents* ppEnum);
 }
 
 @GUID("39a48091-fffe-4182-a161-3ff802640e26")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-icomponents))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-icomponents
 interface IComponents : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponents-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponents-get_count
     HRESULT get_Count(int* Count);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponents-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponents-get__newenum
     HRESULT get__NewEnum(IEnumVARIANT* ppNewEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponents-enumcomponents))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponents-enumcomponents
     HRESULT EnumComponents(IEnumComponents* ppNewEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponents-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponents-get_item
     HRESULT get_Item(VARIANT Index, IComponent* ppComponent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponents-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponents-add
     HRESULT Add(IComponent Component, VARIANT* NewIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponents-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponents-remove
     HRESULT Remove(VARIANT Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponents-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponents-clone
     HRESULT Clone(IComponents* NewList);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponents-put_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-icomponents-put_item
     HRESULT put_Item(VARIANT Index, IComponent ppComponent);
 }
 
@@ -4131,203 +4314,203 @@ interface IComponentsOld : IDispatch
 
 @GUID("286d7f89-760c-4f89-80c4-66841d2507aa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ilocator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ilocator
 interface ILocator : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ilocator-get_carrierfrequency))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ilocator-get_carrierfrequency
     HRESULT get_CarrierFrequency(int* Frequency);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ilocator-put_carrierfrequency))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ilocator-put_carrierfrequency
     HRESULT put_CarrierFrequency(int Frequency);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ilocator-get_innerfec))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ilocator-get_innerfec
     HRESULT get_InnerFEC(FECMethod* FEC);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ilocator-put_innerfec))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ilocator-put_innerfec
     HRESULT put_InnerFEC(FECMethod FEC);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ilocator-get_innerfecrate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ilocator-get_innerfecrate
     HRESULT get_InnerFECRate(BinaryConvolutionCodeRate* FEC);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ilocator-put_innerfecrate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ilocator-put_innerfecrate
     HRESULT put_InnerFECRate(BinaryConvolutionCodeRate FEC);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ilocator-get_outerfec))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ilocator-get_outerfec
     HRESULT get_OuterFEC(FECMethod* FEC);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ilocator-put_outerfec))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ilocator-put_outerfec
     HRESULT put_OuterFEC(FECMethod FEC);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ilocator-get_outerfecrate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ilocator-get_outerfecrate
     HRESULT get_OuterFECRate(BinaryConvolutionCodeRate* FEC);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ilocator-put_outerfecrate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ilocator-put_outerfecrate
     HRESULT put_OuterFECRate(BinaryConvolutionCodeRate FEC);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ilocator-get_modulation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ilocator-get_modulation
     HRESULT get_Modulation(ModulationType* Modulation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ilocator-put_modulation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ilocator-put_modulation
     HRESULT put_Modulation(ModulationType Modulation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ilocator-get_symbolrate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ilocator-get_symbolrate
     HRESULT get_SymbolRate(int* Rate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ilocator-put_symbolrate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ilocator-put_symbolrate
     HRESULT put_SymbolRate(int Rate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ilocator-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ilocator-clone
     HRESULT Clone(ILocator* NewLocator);
 }
 
 @GUID("34d1f26b-e339-430d-abce-738cb48984dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ianaloglocator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ianaloglocator
 interface IAnalogLocator : ILocator
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianaloglocator-get_videostandard))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianaloglocator-get_videostandard
     HRESULT get_VideoStandard(AnalogVideoStandard* AVS);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianaloglocator-put_videostandard))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ianaloglocator-put_videostandard
     HRESULT put_VideoStandard(AnalogVideoStandard AVS);
 }
 
 @GUID("19b595d8-839a-47f0-96df-4f194f3c768c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-idigitallocator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-idigitallocator
 interface IDigitalLocator : ILocator
 {
 }
 
 @GUID("bf8d986f-8c2b-4131-94d7-4d3d9fcc21ef")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-iatsclocator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-iatsclocator
 interface IATSCLocator : IDigitalLocator
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iatsclocator-get_physicalchannel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iatsclocator-get_physicalchannel
     HRESULT get_PhysicalChannel(int* PhysicalChannel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iatsclocator-put_physicalchannel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iatsclocator-put_physicalchannel
     HRESULT put_PhysicalChannel(int PhysicalChannel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iatsclocator-get_tsid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iatsclocator-get_tsid
     HRESULT get_TSID(int* TSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iatsclocator-put_tsid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iatsclocator-put_tsid
     HRESULT put_TSID(int TSID);
 }
 
 @GUID("612aa885-66cf-4090-ba0a-566f5312e4ca")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-iatsclocator2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-iatsclocator2
 interface IATSCLocator2 : IATSCLocator
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iatsclocator2-get_programnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iatsclocator2-get_programnumber
     HRESULT get_ProgramNumber(int* ProgramNumber);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iatsclocator2-put_programnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iatsclocator2-put_programnumber
     HRESULT put_ProgramNumber(int ProgramNumber);
 }
 
 @GUID("48f66a11-171a-419a-9525-beeecd51584c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-idigitalcablelocator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-idigitalcablelocator
 interface IDigitalCableLocator : IATSCLocator2
 {
 }
 
 @GUID("8664da16-dda2-42ac-926a-c18f9127c302")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-idvbtlocator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-idvbtlocator
 interface IDVBTLocator : IDigitalLocator
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtlocator-get_bandwidth))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtlocator-get_bandwidth
     HRESULT get_Bandwidth(int* BandWidthVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtlocator-put_bandwidth))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtlocator-put_bandwidth
     HRESULT put_Bandwidth(int BandwidthVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtlocator-get_lpinnerfec))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtlocator-get_lpinnerfec
     HRESULT get_LPInnerFEC(FECMethod* FEC);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtlocator-put_lpinnerfec))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtlocator-put_lpinnerfec
     HRESULT put_LPInnerFEC(FECMethod FEC);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtlocator-get_lpinnerfecrate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtlocator-get_lpinnerfecrate
     HRESULT get_LPInnerFECRate(BinaryConvolutionCodeRate* FEC);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtlocator-put_lpinnerfecrate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtlocator-put_lpinnerfecrate
     HRESULT put_LPInnerFECRate(BinaryConvolutionCodeRate FEC);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtlocator-get_halpha))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtlocator-get_halpha
     HRESULT get_HAlpha(HierarchyAlpha* Alpha);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtlocator-put_halpha))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtlocator-put_halpha
     HRESULT put_HAlpha(HierarchyAlpha Alpha);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtlocator-get_guard))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtlocator-get_guard
     HRESULT get_Guard(GuardInterval* GI);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtlocator-put_guard))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtlocator-put_guard
     HRESULT put_Guard(GuardInterval GI);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtlocator-get_mode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtlocator-get_mode
     HRESULT get_Mode(TransmissionMode* mode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtlocator-put_mode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtlocator-put_mode
     HRESULT put_Mode(TransmissionMode mode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtlocator-get_otherfrequencyinuse))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtlocator-get_otherfrequencyinuse
     HRESULT get_OtherFrequencyInUse(VARIANT_BOOL* OtherFrequencyInUseVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtlocator-put_otherfrequencyinuse))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtlocator-put_otherfrequencyinuse
     HRESULT put_OtherFrequencyInUse(VARIANT_BOOL OtherFrequencyInUseVal);
 }
 
 @GUID("448a2edf-ae95-4b43-a3cc-747843c453d4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-idvbtlocator2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-idvbtlocator2
 interface IDVBTLocator2 : IDVBTLocator
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtlocator2-get_physicallayerpipeid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtlocator2-get_physicallayerpipeid
     HRESULT get_PhysicalLayerPipeId(int* PhysicalLayerPipeIdVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtlocator2-put_physicallayerpipeid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbtlocator2-put_physicallayerpipeid
     HRESULT put_PhysicalLayerPipeId(int PhysicalLayerPipeIdVal);
 }
 
 @GUID("3d7c353c-0d04-45f1-a742-f97cc1188dc8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-idvbslocator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-idvbslocator
 interface IDVBSLocator : IDigitalLocator
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator-get_signalpolarisation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator-get_signalpolarisation
     HRESULT get_SignalPolarisation(Polarisation* PolarisationVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator-put_signalpolarisation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator-put_signalpolarisation
     HRESULT put_SignalPolarisation(Polarisation PolarisationVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator-get_westposition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator-get_westposition
     HRESULT get_WestPosition(VARIANT_BOOL* WestLongitude);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator-put_westposition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator-put_westposition
     HRESULT put_WestPosition(VARIANT_BOOL WestLongitude);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator-get_orbitalposition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator-get_orbitalposition
     HRESULT get_OrbitalPosition(int* longitude);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator-put_orbitalposition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator-put_orbitalposition
     HRESULT put_OrbitalPosition(int longitude);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator-get_azimuth))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator-get_azimuth
     HRESULT get_Azimuth(int* Azimuth);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator-put_azimuth))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator-put_azimuth
     HRESULT put_Azimuth(int Azimuth);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator-get_elevation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator-get_elevation
     HRESULT get_Elevation(int* Elevation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator-put_elevation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator-put_elevation
     HRESULT put_Elevation(int Elevation);
 }
 
 @GUID("6044634a-1733-4f99-b982-5fb12afce4f0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-idvbslocator2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-idvbslocator2
 interface IDVBSLocator2 : IDVBSLocator
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator2-get_diseqlnbsource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator2-get_diseqlnbsource
     HRESULT get_DiseqLNBSource(LNB_Source* DiseqLNBSourceVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator2-put_diseqlnbsource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator2-put_diseqlnbsource
     HRESULT put_DiseqLNBSource(LNB_Source DiseqLNBSourceVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator2-get_localoscillatoroverridelow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator2-get_localoscillatoroverridelow
     HRESULT get_LocalOscillatorOverrideLow(int* LocalOscillatorOverrideLowVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator2-put_localoscillatoroverridelow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator2-put_localoscillatoroverridelow
     HRESULT put_LocalOscillatorOverrideLow(int LocalOscillatorOverrideLowVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator2-get_localoscillatoroverridehigh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator2-get_localoscillatoroverridehigh
     HRESULT get_LocalOscillatorOverrideHigh(int* LocalOscillatorOverrideHighVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator2-put_localoscillatoroverridehigh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator2-put_localoscillatoroverridehigh
     HRESULT put_LocalOscillatorOverrideHigh(int LocalOscillatorOverrideHighVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator2-get_locallnbswitchoverride))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator2-get_locallnbswitchoverride
     HRESULT get_LocalLNBSwitchOverride(int* LocalLNBSwitchOverrideVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator2-put_locallnbswitchoverride))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator2-put_locallnbswitchoverride
     HRESULT put_LocalLNBSwitchOverride(int LocalLNBSwitchOverrideVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator2-get_localspectralinversionoverride))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator2-get_localspectralinversionoverride
     HRESULT get_LocalSpectralInversionOverride(SpectralInversion* LocalSpectralInversionOverrideVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator2-put_localspectralinversionoverride))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator2-put_localspectralinversionoverride
     HRESULT put_LocalSpectralInversionOverride(SpectralInversion LocalSpectralInversionOverrideVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator2-get_signalrolloff))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator2-get_signalrolloff
     HRESULT get_SignalRollOff(RollOff* RollOffVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator2-put_signalrolloff))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator2-put_signalrolloff
     HRESULT put_SignalRollOff(RollOff RollOffVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator2-get_signalpilot))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator2-get_signalpilot
     HRESULT get_SignalPilot(Pilot* PilotVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator2-put_signalpilot))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-idvbslocator2-put_signalpilot
     HRESULT put_SignalPilot(Pilot PilotVal);
 }
 
 @GUID("6e42f36e-1dd2-43c4-9f78-69d25ae39034")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-idvbclocator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-idvbclocator
 interface IDVBCLocator : IDigitalLocator
 {
 }
@@ -4339,64 +4522,64 @@ interface IISDBSLocator : IDVBSLocator
 
 @GUID("ba4b6526-1a35-4635-8b56-3ec612746a8c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-iesopenmmievent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-iesopenmmievent
 interface IESOpenMmiEvent : IESEvent
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesopenmmievent-getdialognumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesopenmmievent-getdialognumber
     HRESULT GetDialogNumber(uint* pDialogRequest, uint* pDialogNumber);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesopenmmievent-getdialogtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesopenmmievent-getdialogtype
     HRESULT GetDialogType(GUID* guidDialogType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesopenmmievent-getdialogdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesopenmmievent-getdialogdata
     HRESULT GetDialogData(SAFEARRAY** pbData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesopenmmievent-getdialogstringdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesopenmmievent-getdialogstringdata
     HRESULT GetDialogStringData(BSTR* pbstrBaseUrl, BSTR* pbstrData);
 }
 
 @GUID("6b80e96f-55e2-45aa-b754-0c23c8e7d5c1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-iesclosemmievent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-iesclosemmievent
 interface IESCloseMmiEvent : IESEvent
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesclosemmievent-getdialognumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesclosemmievent-getdialognumber
     HRESULT GetDialogNumber(uint* pDialogNumber);
 }
 
 @GUID("8a24c46e-bb63-4664-8602-5d9c718c146d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-iesvalueupdatedevent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-iesvalueupdatedevent
 interface IESValueUpdatedEvent : IESEvent
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesvalueupdatedevent-getvaluenames))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesvalueupdatedevent-getvaluenames
     HRESULT GetValueNames(SAFEARRAY** pbstrNames);
 }
 
 @GUID("54c7a5e8-c3bb-4f51-af14-e0e2c0e34c6d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-iesrequesttunerevent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-iesrequesttunerevent
 interface IESRequestTunerEvent : IESEvent
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesrequesttunerevent-getpriority))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesrequesttunerevent-getpriority
     HRESULT GetPriority(ubyte* pbyPriority);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesrequesttunerevent-getreason))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesrequesttunerevent-getreason
     HRESULT GetReason(ubyte* pbyReason);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesrequesttunerevent-getconsequences))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesrequesttunerevent-getconsequences
     HRESULT GetConsequences(ubyte* pbyConsequences);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesrequesttunerevent-getestimatedtime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesrequesttunerevent-getestimatedtime
     HRESULT GetEstimatedTime(uint* pdwEstimatedTime);
 }
 
 @GUID("2017cb03-dc0f-4c24-83ca-36307b2cd19f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-iesisdbcasresponseevent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-iesisdbcasresponseevent
 interface IESIsdbCasResponseEvent : IESEvent
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesisdbcasresponseevent-getrequestid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesisdbcasresponseevent-getrequestid
     HRESULT GetRequestId(uint* pRequestId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesisdbcasresponseevent-getstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesisdbcasresponseevent-getstatus
     HRESULT GetStatus(uint* pStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesisdbcasresponseevent-getdatalength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesisdbcasresponseevent-getdatalength
     HRESULT GetDataLength(uint* pRequestLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesisdbcasresponseevent-getresponsedata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesisdbcasresponseevent-getresponsedata
     HRESULT GetResponseData(SAFEARRAY** pbData);
 }
 
@@ -4415,175 +4598,175 @@ interface IESEventFactory : IUnknown
 
 @GUID("d5a48ef5-a81b-4df0-acaa-5e35e7ea45d4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ieslicenserenewalresultevent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ieslicenserenewalresultevent
 interface IESLicenseRenewalResultEvent : IESEvent
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ieslicenserenewalresultevent-getcallersid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ieslicenserenewalresultevent-getcallersid
     HRESULT GetCallersId(uint* pdwCallersId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ieslicenserenewalresultevent-getfilename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ieslicenserenewalresultevent-getfilename
     HRESULT GetFileName(BSTR* pbstrFilename);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ieslicenserenewalresultevent-isrenewalsuccessful))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ieslicenserenewalresultevent-isrenewalsuccessful
     HRESULT IsRenewalSuccessful(BOOL* pfRenewalSuccessful);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ieslicenserenewalresultevent-ischeckentitlementcallrequired))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ieslicenserenewalresultevent-ischeckentitlementcallrequired
     HRESULT IsCheckEntitlementCallRequired(BOOL* pfCheckEntTokenCallNeeded);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ieslicenserenewalresultevent-getdescrambledstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ieslicenserenewalresultevent-getdescrambledstatus
     HRESULT GetDescrambledStatus(uint* pDescrambledStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ieslicenserenewalresultevent-getrenewalresultcode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ieslicenserenewalresultevent-getrenewalresultcode
     HRESULT GetRenewalResultCode(uint* pdwRenewalResultCode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ieslicenserenewalresultevent-getcasfailurecode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ieslicenserenewalresultevent-getcasfailurecode
     HRESULT GetCASFailureCode(uint* pdwCASFailureCode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ieslicenserenewalresultevent-getrenewalhresult))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ieslicenserenewalresultevent-getrenewalhresult
     HRESULT GetRenewalHResult(HRESULT* phr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ieslicenserenewalresultevent-getentitlementtokenlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ieslicenserenewalresultevent-getentitlementtokenlength
     HRESULT GetEntitlementTokenLength(uint* pdwLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ieslicenserenewalresultevent-getentitlementtoken))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ieslicenserenewalresultevent-getentitlementtoken
     HRESULT GetEntitlementToken(SAFEARRAY** pbData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ieslicenserenewalresultevent-getexpirydate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ieslicenserenewalresultevent-getexpirydate
     HRESULT GetExpiryDate(ulong* pqwExpiryDate);
 }
 
 @GUID("ba9edcb6-4d36-4cfe-8c56-87a6b0ca48e1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-iesfileexpirydateevent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-iesfileexpirydateevent
 interface IESFileExpiryDateEvent : IESEvent
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesfileexpirydateevent-gettunerid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesfileexpirydateevent-gettunerid
     HRESULT GetTunerId(GUID* pguidTunerId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesfileexpirydateevent-getexpirydate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesfileexpirydateevent-getexpirydate
     HRESULT GetExpiryDate(ulong* pqwExpiryDate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesfileexpirydateevent-getfinalexpirydate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesfileexpirydateevent-getfinalexpirydate
     HRESULT GetFinalExpiryDate(ulong* pqwExpiryDate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesfileexpirydateevent-getmaxrenewalcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesfileexpirydateevent-getmaxrenewalcount
     HRESULT GetMaxRenewalCount(uint* dwMaxRenewalCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesfileexpirydateevent-isentitlementtokenpresent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesfileexpirydateevent-isentitlementtokenpresent
     HRESULT IsEntitlementTokenPresent(BOOL* pfEntTokenPresent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesfileexpirydateevent-doesexpireafterfirstuse))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iesfileexpirydateevent-doesexpireafterfirstuse
     HRESULT DoesExpireAfterFirstUse(BOOL* pfExpireAfterFirstUse);
 }
 
 @GUID("ed89a619-4c06-4b2f-99eb-c7669b13047c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ieseventservice))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ieseventservice
 interface IESEventService : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ieseventservice-fireesevent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ieseventservice-fireesevent
     HRESULT FireESEvent(IESEvent pESEvent);
 }
 
 @GUID("33b9daae-9309-491d-a051-bcad2a70cd66")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ieseventserviceconfiguration))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ieseventserviceconfiguration
 interface IESEventServiceConfiguration : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ieseventserviceconfiguration-setparent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ieseventserviceconfiguration-setparent
     HRESULT SetParent(IESEventService pEventService);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ieseventserviceconfiguration-removeparent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ieseventserviceconfiguration-removeparent
     HRESULT RemoveParent();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ieseventserviceconfiguration-setowner))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ieseventserviceconfiguration-setowner
     HRESULT SetOwner(IESEvents pESEvents);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ieseventserviceconfiguration-removeowner))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ieseventserviceconfiguration-removeowner
     HRESULT RemoveOwner();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ieseventserviceconfiguration-setgraph))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ieseventserviceconfiguration-setgraph
     HRESULT SetGraph(IFilterGraph pGraph);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ieseventserviceconfiguration-removegraph))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ieseventserviceconfiguration-removegraph
     HRESULT RemoveGraph(IFilterGraph pGraph);
 }
 
 @GUID("359b3901-572c-4854-bb49-cdef66606a25")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-iregistertuner))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-iregistertuner
 interface IRegisterTuner : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iregistertuner-register))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iregistertuner-register
     HRESULT Register(ITuner pTuner, IGraphBuilder pGraph);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iregistertuner-unregister))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-iregistertuner-unregister
     HRESULT Unregister();
 }
 
 @GUID("b34505e0-2f0e-497b-80bc-d43f3b24ed7f")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ibdacomparable))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ibdacomparable
 interface IBDAComparable : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ibdacomparable-compareexact))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ibdacomparable-compareexact
     HRESULT CompareExact(IDispatch CompareTo, int* Result);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ibdacomparable-compareequivalent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ibdacomparable-compareequivalent
     HRESULT CompareEquivalent(IDispatch CompareTo, uint dwFlags, int* Result);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ibdacomparable-hashexact))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ibdacomparable-hashexact
     HRESULT HashExact(long* Result);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ibdacomparable-hashexactincremental))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ibdacomparable-hashexactincremental
     HRESULT HashExactIncremental(long PartialResult, long* Result);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ibdacomparable-hashequivalent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ibdacomparable-hashequivalent
     HRESULT HashEquivalent(uint dwFlags, long* Result);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ibdacomparable-hashequivalentincremental))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ibdacomparable-hashequivalentincremental
     HRESULT HashEquivalentIncremental(long PartialResult, uint dwFlags, long* Result);
 }
 
 @GUID("0754cd31-8d15-47a9-8215-d20064157244")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ipersisttunexml))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ipersisttunexml
 interface IPersistTuneXml : IPersist
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ipersisttunexml-initnew))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ipersisttunexml-initnew
     HRESULT InitNew();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ipersisttunexml-load))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ipersisttunexml-load
     HRESULT Load(VARIANT varValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ipersisttunexml-save))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ipersisttunexml-save
     HRESULT Save(VARIANT* pvarFragment);
 }
 
 @GUID("990237ae-ac11-4614-be8f-dd217a4cb4cb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ipersisttunexmlutility))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ipersisttunexmlutility
 interface IPersistTuneXmlUtility : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ipersisttunexmlutility-deserialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ipersisttunexmlutility-deserialize
     HRESULT Deserialize(VARIANT varValue, IUnknown* ppObject);
 }
 
 @GUID("992e165f-ea24-4b2f-9a1d-009d92120451")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ipersisttunexmlutility2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ipersisttunexmlutility2
 interface IPersistTuneXmlUtility2 : IPersistTuneXmlUtility
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ipersisttunexmlutility2-serialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ipersisttunexmlutility2-serialize
     HRESULT Serialize(ITuneRequest piTuneRequest, BSTR* pString);
 }
 
 @GUID("c0a4a1d4-2b3c-491a-ba22-499fbadd4d12")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ibdacreatetunerequestex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-ibdacreatetunerequestex
 interface IBDACreateTuneRequestEx : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ibdacreatetunerequestex-createtunerequestex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nf-tuner-ibdacreatetunerequestex-createtunerequestex
     HRESULT CreateTuneRequestEx(const(GUID)* TuneRequestIID, ITuneRequest* TuneRequest);
 }
 
 @GUID("c4c4c4d1-0049-4e2b-98fb-9537f6ce516d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nn-encdec-ietfilterconfig))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nn-encdec-ietfilterconfig
 interface IETFilterConfig : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-ietfilterconfig-initlicense))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-ietfilterconfig-initlicense
     HRESULT InitLicense(int LicenseId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-ietfilterconfig-getsecurechannelobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-ietfilterconfig-getsecurechannelobject
     HRESULT GetSecureChannelObject(IUnknown* ppUnkDRMSecureChannel);
 }
 
 @GUID("c4c4c4d2-0049-4e2b-98fb-9537f6ce516d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nn-encdec-idtfilterconfig))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nn-encdec-idtfilterconfig
 interface IDTFilterConfig : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-idtfilterconfig-getsecurechannelobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-idtfilterconfig-getsecurechannelobject
     HRESULT GetSecureChannelObject(IUnknown* ppUnkDRMSecureChannel);
 }
 
 @GUID("c4c4c4d3-0049-4e2b-98fb-9537f6ce516d")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nn-encdec-ixdscodecconfig))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nn-encdec-ixdscodecconfig
 interface IXDSCodecConfig : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-ixdscodecconfig-getsecurechannelobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-ixdscodecconfig-getsecurechannelobject
     HRESULT GetSecureChannelObject(IUnknown* ppUnkDRMSecureChannel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-ixdscodecconfig-setpausebuffertime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-ixdscodecconfig-setpausebuffertime
     HRESULT SetPauseBufferTime(uint dwPauseBufferTime);
 }
 
@@ -4608,18 +4791,18 @@ interface IMceBurnerControl : IUnknown
 
 @GUID("c4c4c4b1-0049-4e2b-98fb-9537f6ce516d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nn-encdec-ietfilter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nn-encdec-ietfilter
 interface IETFilter : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-ietfilter-get_evalratobjok))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-ietfilter-get_evalratobjok
     HRESULT get_EvalRatObjOK(HRESULT* pHrCoCreateRetVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-ietfilter-getcurrrating))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-ietfilter-getcurrrating
     HRESULT GetCurrRating(EnTvRat_System* pEnSystem, EnTvRat_GenericLevel* pEnRating, int* plbfEnAttr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-ietfilter-getcurrlicenseexpdate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-ietfilter-getcurrlicenseexpdate
     HRESULT GetCurrLicenseExpDate(ProtType* protType, int* lpDateTime);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-ietfilter-getlasterrorcode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-ietfilter-getlasterrorcode
     HRESULT GetLastErrorCode();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-ietfilter-setrecordingon))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-ietfilter-setrecordingon
     HRESULT SetRecordingOn(BOOL fRecState);
 }
 
@@ -4630,50 +4813,50 @@ interface IETFilterEvents : IDispatch
 
 @GUID("c4c4c4b2-0049-4e2b-98fb-9537f6ce516d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nn-encdec-idtfilter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nn-encdec-idtfilter
 interface IDTFilter : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-idtfilter-get_evalratobjok))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-idtfilter-get_evalratobjok
     HRESULT get_EvalRatObjOK(HRESULT* pHrCoCreateRetVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-idtfilter-getcurrrating))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-idtfilter-getcurrrating
     HRESULT GetCurrRating(EnTvRat_System* pEnSystem, EnTvRat_GenericLevel* pEnRating, int* plbfEnAttr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-idtfilter-get_blockedratingattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-idtfilter-get_blockedratingattributes
     HRESULT get_BlockedRatingAttributes(EnTvRat_System enSystem, EnTvRat_GenericLevel enLevel, int* plbfEnAttr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-idtfilter-put_blockedratingattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-idtfilter-put_blockedratingattributes
     HRESULT put_BlockedRatingAttributes(EnTvRat_System enSystem, EnTvRat_GenericLevel enLevel, int lbfAttrs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-idtfilter-get_blockunrated))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-idtfilter-get_blockunrated
     HRESULT get_BlockUnRated(BOOL* pfBlockUnRatedShows);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-idtfilter-put_blockunrated))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-idtfilter-put_blockunrated
     HRESULT put_BlockUnRated(BOOL fBlockUnRatedShows);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-idtfilter-get_blockunrateddelay))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-idtfilter-get_blockunrateddelay
     HRESULT get_BlockUnRatedDelay(int* pmsecsDelayBeforeBlock);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-idtfilter-put_blockunrateddelay))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-idtfilter-put_blockunrateddelay
     HRESULT put_BlockUnRatedDelay(int msecsDelayBeforeBlock);
 }
 
 @GUID("c4c4c4b4-0049-4e2b-98fb-9537f6ce516d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nn-encdec-idtfilter2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nn-encdec-idtfilter2
 interface IDTFilter2 : IDTFilter
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-idtfilter2-get_challengeurl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-idtfilter2-get_challengeurl
     HRESULT get_ChallengeUrl(BSTR* pbstrChallengeUrl);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-idtfilter2-getcurrlicenseexpdate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-idtfilter2-getcurrlicenseexpdate
     HRESULT GetCurrLicenseExpDate(ProtType* protType, int* lpDateTime);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-idtfilter2-getlasterrorcode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-idtfilter2-getlasterrorcode
     HRESULT GetLastErrorCode();
 }
 
 @GUID("513998cc-e929-4cdf-9fbd-bad1e0314866")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nn-encdec-idtfilter3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nn-encdec-idtfilter3
 interface IDTFilter3 : IDTFilter2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-idtfilter3-getprotectiontype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-idtfilter3-getprotectiontype
     HRESULT GetProtectionType(ProtType* pProtectionType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-idtfilter3-licensehasexpirationdate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-idtfilter3-licensehasexpirationdate
     HRESULT LicenseHasExpirationDate(BOOL* pfLicenseHasExpirationDate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-idtfilter3-setrights))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-idtfilter3-setrights
     HRESULT SetRights(BSTR bstrRights);
 }
 
@@ -4684,23 +4867,23 @@ interface IDTFilterEvents : IDispatch
 
 @GUID("c4c4c4b3-0049-4e2b-98fb-9537f6ce516d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nn-encdec-ixdscodec))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nn-encdec-ixdscodec
 interface IXDSCodec : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-ixdscodec-get_xdstoratobjok))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-ixdscodec-get_xdstoratobjok
     HRESULT get_XDSToRatObjOK(HRESULT* pHrCoCreateRetVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-ixdscodec-put_ccsubstreamservice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-ixdscodec-put_ccsubstreamservice
     HRESULT put_CCSubstreamService(int SubstreamMask);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-ixdscodec-get_ccsubstreamservice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-ixdscodec-get_ccsubstreamservice
     HRESULT get_CCSubstreamService(int* pSubstreamMask);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-ixdscodec-getcontentadvisoryrating))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-ixdscodec-getcontentadvisoryrating
     HRESULT GetContentAdvisoryRating(int* pRat, int* pPktSeqID, int* pCallSeqID, long* pTimeStart, long* pTimeEnd);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-ixdscodec-getxdspacket))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-ixdscodec-getxdspacket
     HRESULT GetXDSPacket(int* pXDSClassPkt, int* pXDSTypePkt, BSTR* pBstrXDSPkt, int* pPktSeqID, int* pCallSeqID, 
                          long* pTimeStart, long* pTimeEnd);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-ixdscodec-getcurrlicenseexpdate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-ixdscodec-getcurrlicenseexpdate
     HRESULT GetCurrLicenseExpDate(ProtType* protType, int* lpDateTime);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-ixdscodec-getlasterrorcode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/encdec/nf-encdec-ixdscodec-getlasterrorcode
     HRESULT GetLastErrorCode();
 }
 
@@ -4711,72 +4894,72 @@ interface IXDSCodecEvents : IDispatch
 
 @GUID("c5c5c5b0-3abc-11d6-b25b-00c04fa0c026")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tvratings/nn-tvratings-ixdstorat))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tvratings/nn-tvratings-ixdstorat
 interface IXDSToRat : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tvratings/nf-tvratings-ixdstorat-init))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tvratings/nf-tvratings-ixdstorat-init
     HRESULT Init();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tvratings/nf-tvratings-ixdstorat-parsexdsbytepair))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tvratings/nf-tvratings-ixdstorat-parsexdsbytepair
     HRESULT ParseXDSBytePair(ubyte byte1, ubyte byte2, EnTvRat_System* pEnSystem, EnTvRat_GenericLevel* pEnLevel, 
                              int* plBfEnAttributes);
 }
 
 @GUID("c5c5c5b1-3abc-11d6-b25b-00c04fa0c026")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tvratings/nn-tvratings-ievalrat))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tvratings/nn-tvratings-ievalrat
 interface IEvalRat : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tvratings/nf-tvratings-ievalrat-get_blockedratingattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tvratings/nf-tvratings-ievalrat-get_blockedratingattributes
     HRESULT get_BlockedRatingAttributes(EnTvRat_System enSystem, EnTvRat_GenericLevel enLevel, int* plbfAttrs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tvratings/nf-tvratings-ievalrat-put_blockedratingattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tvratings/nf-tvratings-ievalrat-put_blockedratingattributes
     HRESULT put_BlockedRatingAttributes(EnTvRat_System enSystem, EnTvRat_GenericLevel enLevel, int lbfAttrs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tvratings/nf-tvratings-ievalrat-get_blockunrated))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tvratings/nf-tvratings-ievalrat-get_blockunrated
     HRESULT get_BlockUnRated(BOOL* pfBlockUnRatedShows);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tvratings/nf-tvratings-ievalrat-put_blockunrated))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tvratings/nf-tvratings-ievalrat-put_blockunrated
     HRESULT put_BlockUnRated(BOOL fBlockUnRatedShows);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tvratings/nf-tvratings-ievalrat-mostrestrictiverating))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tvratings/nf-tvratings-ievalrat-mostrestrictiverating
     HRESULT MostRestrictiveRating(EnTvRat_System enSystem1, EnTvRat_GenericLevel enEnLevel1, int lbfEnAttr1, 
                                   EnTvRat_System enSystem2, EnTvRat_GenericLevel enEnLevel2, int lbfEnAttr2, 
                                   EnTvRat_System* penSystem, EnTvRat_GenericLevel* penEnLevel, int* plbfEnAttr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tvratings/nf-tvratings-ievalrat-testrating))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tvratings/nf-tvratings-ievalrat-testrating
     HRESULT TestRating(EnTvRat_System enShowSystem, EnTvRat_GenericLevel enShowLevel, int lbfEnShowAttributes);
 }
 
 @GUID("7f5000a6-a440-47ca-8acc-c0e75531a2c2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidrect))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidrect
 interface IMSVidRect : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidrect-get_top))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidrect-get_top
     HRESULT get_Top(int* TopVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidrect-put_top))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidrect-put_top
     HRESULT put_Top(int TopVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidrect-get_left))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidrect-get_left
     HRESULT get_Left(int* LeftVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidrect-put_left))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidrect-put_left
     HRESULT put_Left(int LeftVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidrect-get_width))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidrect-get_width
     HRESULT get_Width(int* WidthVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidrect-put_width))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidrect-put_width
     HRESULT put_Width(int WidthVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidrect-get_height))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidrect-get_height
     HRESULT get_Height(int* HeightVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidrect-put_height))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidrect-put_height
     HRESULT put_Height(int HeightVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidrect-get_hwnd))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidrect-get_hwnd
     HRESULT get_HWnd(HWND* HWndVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidrect-put_hwnd))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidrect-put_hwnd
     HRESULT put_HWnd(HWND HWndVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidrect-put_rect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidrect-put_rect
     HRESULT put_Rect(IMSVidRect RectVal);
 }
 
 @GUID("3dd2903d-e0aa-11d2-b63a-00c04f79498e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidgraphsegmentcontainer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidgraphsegmentcontainer
 interface IMSVidGraphSegmentContainer : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidgraphsegmentcontainer-get_graph))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidgraphsegmentcontainer-get_graph
     HRESULT get_Graph(IGraphBuilder* ppGraph);
     HRESULT get_Input(IMSVidGraphSegment* ppInput);
     HRESULT get_Outputs(IEnumMSVidGraphSegment* ppOutputs);
@@ -4868,201 +5051,201 @@ interface IMSVidVRGraphSegment : IMSVidGraphSegment
 
 @GUID("1c15d47c-911d-11d2-b632-00c04f79498e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsviddevice))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsviddevice
 interface IMSVidDevice : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsviddevice-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsviddevice-get_name
     HRESULT get_Name(BSTR* Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsviddevice-get_status))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsviddevice-get_status
     HRESULT get_Status(int* Status);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsviddevice-put_power))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsviddevice-put_power
     HRESULT put_Power(VARIANT_BOOL Power);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsviddevice-get_power))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsviddevice-get_power
     HRESULT get_Power(VARIANT_BOOL* Power);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsviddevice-get_category))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsviddevice-get_category
     HRESULT get_Category(BSTR* Guid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsviddevice-get_classid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsviddevice-get_classid
     HRESULT get_ClassID(BSTR* Clsid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsviddevice-get__category))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsviddevice-get__category
     HRESULT get__Category(GUID* Guid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsviddevice-get__classid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsviddevice-get__classid
     HRESULT get__ClassID(GUID* Clsid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsviddevice-isequaldevice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsviddevice-isequaldevice
     HRESULT IsEqualDevice(IMSVidDevice Device, VARIANT_BOOL* IsEqual);
 }
 
 @GUID("87bd2783-ebc0-478c-b4a0-e8e7f43ab78e")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsviddevice2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsviddevice2
 interface IMSVidDevice2 : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsviddevice2-get_devicepath))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsviddevice2-get_devicepath
     HRESULT get_DevicePath(BSTR* DevPath);
 }
 
 @GUID("37b0353d-a4c8-11d2-b634-00c04f79498e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidinputdevice))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidinputdevice
 interface IMSVidInputDevice : IMSVidDevice
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidinputdevice-isviewable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidinputdevice-isviewable
     HRESULT IsViewable(VARIANT* v, VARIANT_BOOL* pfViewable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidinputdevice-view))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidinputdevice-view
     HRESULT View(VARIANT* v);
 }
 
 @GUID("1c15d480-911d-11d2-b632-00c04f79498e")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsviddeviceevent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsviddeviceevent
 interface IMSVidDeviceEvent : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsviddeviceevent-statechange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsviddeviceevent-statechange
     HRESULT StateChange(IMSVidDevice lpd, int oldState, int newState);
 }
 
 @GUID("37b0353e-a4c8-11d2-b634-00c04f79498e")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidinputdeviceevent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidinputdeviceevent
 interface IMSVidInputDeviceEvent : IDispatch
 {
 }
 
 @GUID("1c15d47f-911d-11d2-b632-00c04f79498e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidvideoinputdevice))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidvideoinputdevice
 interface IMSVidVideoInputDevice : IMSVidInputDevice
 {
 }
 
 @GUID("37b03538-a4c8-11d2-b634-00c04f79498e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidplayback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidplayback
 interface IMSVidPlayback : IMSVidInputDevice
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidplayback-get_enableresetonstop))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidplayback-get_enableresetonstop
     HRESULT get_EnableResetOnStop(VARIANT_BOOL* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidplayback-put_enableresetonstop))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidplayback-put_enableresetonstop
     HRESULT put_EnableResetOnStop(VARIANT_BOOL newVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidplayback-run))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidplayback-run
     HRESULT Run();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidplayback-pause))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidplayback-pause
     HRESULT Pause();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidplayback-stop))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidplayback-stop
     HRESULT Stop();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidplayback-get_canstep))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidplayback-get_canstep
     HRESULT get_CanStep(VARIANT_BOOL fBackwards, VARIANT_BOOL* pfCan);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidplayback-step))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidplayback-step
     HRESULT Step(int lStep);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidplayback-put_rate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidplayback-put_rate
     HRESULT put_Rate(double plRate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidplayback-get_rate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidplayback-get_rate
     HRESULT get_Rate(double* plRate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidplayback-put_currentposition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidplayback-put_currentposition
     HRESULT put_CurrentPosition(int lPosition);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidplayback-get_currentposition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidplayback-get_currentposition
     HRESULT get_CurrentPosition(int* lPosition);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidplayback-put_positionmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidplayback-put_positionmode
     HRESULT put_PositionMode(PositionModeList lPositionMode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidplayback-get_positionmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidplayback-get_positionmode
     HRESULT get_PositionMode(PositionModeList* lPositionMode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidplayback-get_length))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidplayback-get_length
     HRESULT get_Length(int* lLength);
 }
 
 @GUID("37b0353b-a4c8-11d2-b634-00c04f79498e")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidplaybackevent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidplaybackevent
 interface IMSVidPlaybackEvent : IMSVidInputDeviceEvent
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidplaybackevent-endofmedia))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidplaybackevent-endofmedia
     HRESULT EndOfMedia(IMSVidPlayback lpd);
 }
 
 @GUID("1c15d47d-911d-11d2-b632-00c04f79498e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidtuner))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidtuner
 interface IMSVidTuner : IMSVidVideoInputDevice
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidtuner-get_tune))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidtuner-get_tune
     HRESULT get_Tune(ITuneRequest* ppTR);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidtuner-put_tune))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidtuner-put_tune
     HRESULT put_Tune(ITuneRequest pTR);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidtuner-get_tuningspace))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidtuner-get_tuningspace
     HRESULT get_TuningSpace(ITuningSpace* plTS);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidtuner-put_tuningspace))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidtuner-put_tuningspace
     HRESULT put_TuningSpace(ITuningSpace plTS);
 }
 
 @GUID("1c15d485-911d-11d2-b632-00c04f79498e")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidtunerevent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidtunerevent
 interface IMSVidTunerEvent : IMSVidInputDeviceEvent
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidtunerevent-tunechanged))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidtunerevent-tunechanged
     HRESULT TuneChanged(IMSVidTuner lpd);
 }
 
 @GUID("1c15d47e-911d-11d2-b632-00c04f79498e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidanalogtuner))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidanalogtuner
 interface IMSVidAnalogTuner : IMSVidTuner
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidanalogtuner-get_channel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidanalogtuner-get_channel
     HRESULT get_Channel(int* Channel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidanalogtuner-put_channel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidanalogtuner-put_channel
     HRESULT put_Channel(int Channel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidanalogtuner-get_videofrequency))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidanalogtuner-get_videofrequency
     HRESULT get_VideoFrequency(int* lcc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidanalogtuner-get_audiofrequency))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidanalogtuner-get_audiofrequency
     HRESULT get_AudioFrequency(int* lcc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidanalogtuner-get_countrycode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidanalogtuner-get_countrycode
     HRESULT get_CountryCode(int* lcc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidanalogtuner-put_countrycode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidanalogtuner-put_countrycode
     HRESULT put_CountryCode(int lcc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidanalogtuner-get_sap))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidanalogtuner-get_sap
     HRESULT get_SAP(VARIANT_BOOL* pfSapOn);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidanalogtuner-put_sap))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidanalogtuner-put_sap
     HRESULT put_SAP(VARIANT_BOOL fSapOn);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidanalogtuner-channelavailable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidanalogtuner-channelavailable
     HRESULT ChannelAvailable(int nChannel, int* SignalStrength, VARIANT_BOOL* fSignalPresent);
 }
 
 @GUID("37647bf7-3dde-4cc8-a4dc-0d534d3d0037")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidanalogtuner2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidanalogtuner2
 interface IMSVidAnalogTuner2 : IMSVidAnalogTuner
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidanalogtuner2-get_tvformats))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidanalogtuner2-get_tvformats
     HRESULT get_TVFormats(int* Formats);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidanalogtuner2-get_tunermodes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidanalogtuner2-get_tunermodes
     HRESULT get_TunerModes(int* Modes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidanalogtuner2-get_numauxinputs))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidanalogtuner2-get_numauxinputs
     HRESULT get_NumAuxInputs(int* Inputs);
 }
 
 @GUID("1c15d486-911d-11d2-b632-00c04f79498e")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidanalogtunerevent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidanalogtunerevent
 interface IMSVidAnalogTunerEvent : IMSVidTunerEvent
 {
 }
 
 @GUID("37b03539-a4c8-11d2-b634-00c04f79498e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidfileplayback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidfileplayback
 interface IMSVidFilePlayback : IMSVidPlayback
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidfileplayback-get_filename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidfileplayback-get_filename
     HRESULT get_FileName(BSTR* FileName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidfileplayback-put_filename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidfileplayback-put_filename
     HRESULT put_FileName(BSTR FileName);
 }
 
 @GUID("2f7e44af-6e52-4660-bc08-d8d542587d72")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidfileplayback2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidfileplayback2
 interface IMSVidFilePlayback2 : IMSVidFilePlayback
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidfileplayback2-put__sourcefilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidfileplayback2-put__sourcefilter
     HRESULT put__SourceFilter(BSTR FileName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidfileplayback2-put___sourcefilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidfileplayback2-put___sourcefilter
     HRESULT put___SourceFilter(GUID FileName);
 }
 
 @GUID("37b0353a-a4c8-11d2-b634-00c04f79498e")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidfileplaybackevent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidfileplaybackevent
 interface IMSVidFilePlaybackEvent : IMSVidPlaybackEvent
 {
 }
@@ -5169,12 +5352,12 @@ interface IMSVidWebDVD : IMSVidPlayback
 
 @GUID("7027212f-ee9a-4a7c-8b67-f023714cdaff")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidwebdvd2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidwebdvd2
 interface IMSVidWebDVD2 : IMSVidWebDVD
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidwebdvd2-get_bookmark))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidwebdvd2-get_bookmark
     HRESULT get_Bookmark(ubyte** ppData, uint* pDataLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidwebdvd2-put_bookmark))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidwebdvd2-put_bookmark
     HRESULT put_Bookmark(ubyte* pData, uint dwDataLength);
 }
 
@@ -5227,84 +5410,84 @@ interface IMSVidWebDVDAdm : IDispatch
 
 @GUID("37b03546-a4c8-11d2-b634-00c04f79498e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidoutputdevice))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidoutputdevice
 interface IMSVidOutputDevice : IMSVidDevice
 {
 }
 
 @GUID("2e6a14e2-571c-11d3-b652-00c04f79498e")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidoutputdeviceevent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidoutputdeviceevent
 interface IMSVidOutputDeviceEvent : IMSVidDeviceEvent
 {
 }
 
 @GUID("37b03547-a4c8-11d2-b634-00c04f79498e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidfeature))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidfeature
 interface IMSVidFeature : IMSVidDevice
 {
 }
 
 @GUID("3dd2903c-e0aa-11d2-b63a-00c04f79498e")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidfeatureevent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidfeatureevent
 interface IMSVidFeatureEvent : IMSVidDeviceEvent
 {
 }
 
 @GUID("c0020fd4-bee7-43d9-a495-9f213117103d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidencoder))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidencoder
 interface IMSVidEncoder : IMSVidFeature
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidencoder-get_videoencoderinterface))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidencoder-get_videoencoderinterface
     HRESULT get_VideoEncoderInterface(IUnknown* ppEncInt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidencoder-get_audioencoderinterface))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidencoder-get_audioencoderinterface
     HRESULT get_AudioEncoderInterface(IUnknown* ppEncInt);
 }
 
 @GUID("99652ea1-c1f7-414f-bb7b-1c967de75983")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidclosedcaptioning))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidclosedcaptioning
 interface IMSVidClosedCaptioning : IMSVidFeature
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidclosedcaptioning-get_enable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidclosedcaptioning-get_enable
     HRESULT get_Enable(VARIANT_BOOL* On);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidclosedcaptioning-put_enable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidclosedcaptioning-put_enable
     HRESULT put_Enable(VARIANT_BOOL On);
 }
 
 @GUID("e00cb864-a029-4310-9987-a873f5887d97")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidclosedcaptioning2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidclosedcaptioning2
 interface IMSVidClosedCaptioning2 : IMSVidClosedCaptioning
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidclosedcaptioning2-get_service))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidclosedcaptioning2-get_service
     HRESULT get_Service(MSVidCCService* On);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidclosedcaptioning2-put_service))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidclosedcaptioning2-put_service
     HRESULT put_Service(MSVidCCService On);
 }
 
 @GUID("c8638e8a-7625-4c51-9366-2f40a9831fc0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidclosedcaptioning3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidclosedcaptioning3
 interface IMSVidClosedCaptioning3 : IMSVidClosedCaptioning2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidclosedcaptioning3-get_teletextfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidclosedcaptioning3-get_teletextfilter
     HRESULT get_TeleTextFilter(IUnknown* punkTTFilter);
 }
 
 @GUID("11ebc158-e712-4d1f-8bb3-01ed5274c4ce")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidxds))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidxds
 interface IMSVidXDS : IMSVidFeature
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidxds-get_channelchangeinterface))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidxds-get_channelchangeinterface
     HRESULT get_ChannelChangeInterface(IUnknown* punkCC);
 }
 
 @GUID("6db2317d-3b23-41ec-ba4b-701f407eaf3a")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidxdsevent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidxdsevent
 interface IMSVidXDSEvent : IMSVidFeatureEvent
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidxdsevent-ratingchange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidxdsevent-ratingchange
     HRESULT RatingChange(EnTvRat_System PrevRatingSystem, EnTvRat_GenericLevel PrevLevel, 
                          BfEnTvRat_GenericAttributes PrevAttributes, EnTvRat_System NewRatingSystem, 
                          EnTvRat_GenericLevel NewLevel, BfEnTvRat_GenericAttributes NewAttributes);
@@ -5312,7 +5495,7 @@ interface IMSVidXDSEvent : IMSVidFeatureEvent
 
 @GUID("334125c1-77e5-11d3-b653-00c04f79498e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsviddataservices))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsviddataservices
 interface IMSVidDataServices : IMSVidFeature
 {
 }
@@ -5324,628 +5507,628 @@ interface IMSVidDataServicesEvent : IMSVidDeviceEvent
 
 @GUID("37b03540-a4c8-11d2-b634-00c04f79498e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidvideorenderer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidvideorenderer
 interface IMSVidVideoRenderer : IMSVidOutputDevice
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-get_customcompositorclass))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-get_customcompositorclass
     HRESULT get_CustomCompositorClass(BSTR* CompositorCLSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-put_customcompositorclass))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-put_customcompositorclass
     HRESULT put_CustomCompositorClass(BSTR CompositorCLSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-get__customcompositorclass))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-get__customcompositorclass
     HRESULT get__CustomCompositorClass(GUID* CompositorCLSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-put__customcompositorclass))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-put__customcompositorclass
     HRESULT put__CustomCompositorClass(const(GUID)* CompositorCLSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-get__customcompositor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-get__customcompositor
     HRESULT get__CustomCompositor(IVMRImageCompositor* Compositor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-put__customcompositor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-put__customcompositor
     HRESULT put__CustomCompositor(IVMRImageCompositor Compositor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-get_mixerbitmap))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-get_mixerbitmap
     HRESULT get_MixerBitmap(IPictureDisp* MixerPictureDisp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-get__mixerbitmap))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-get__mixerbitmap
     HRESULT get__MixerBitmap(IVMRMixerBitmap* MixerPicture);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-put_mixerbitmap))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-put_mixerbitmap
     HRESULT put_MixerBitmap(IPictureDisp MixerPictureDisp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-put__mixerbitmap))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-put__mixerbitmap
     HRESULT put__MixerBitmap(VMRALPHABITMAP* MixerPicture);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-get_mixerbitmappositionrect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-get_mixerbitmappositionrect
     HRESULT get_MixerBitmapPositionRect(IMSVidRect* rDest);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-put_mixerbitmappositionrect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-put_mixerbitmappositionrect
     HRESULT put_MixerBitmapPositionRect(IMSVidRect rDest);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-get_mixerbitmapopacity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-get_mixerbitmapopacity
     HRESULT get_MixerBitmapOpacity(int* opacity);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-put_mixerbitmapopacity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-put_mixerbitmapopacity
     HRESULT put_MixerBitmapOpacity(int opacity);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-setupmixerbitmap))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-setupmixerbitmap
     HRESULT SetupMixerBitmap(IPictureDisp MixerPictureDisp, int Opacity, IMSVidRect rDest);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-get_sourcesize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-get_sourcesize
     HRESULT get_SourceSize(SourceSizeList* CurrentSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-put_sourcesize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-put_sourcesize
     HRESULT put_SourceSize(SourceSizeList NewSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-get_overscan))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-get_overscan
     HRESULT get_OverScan(int* plPercent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-put_overscan))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-put_overscan
     HRESULT put_OverScan(int lPercent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-get_availablesourcerect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-get_availablesourcerect
     HRESULT get_AvailableSourceRect(IMSVidRect* pRect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-get_maxvidrect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-get_maxvidrect
     HRESULT get_MaxVidRect(IMSVidRect* ppVidRect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-get_minvidrect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-get_minvidrect
     HRESULT get_MinVidRect(IMSVidRect* ppVidRect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-get_clippedsourcerect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-get_clippedsourcerect
     HRESULT get_ClippedSourceRect(IMSVidRect* pRect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-put_clippedsourcerect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-put_clippedsourcerect
     HRESULT put_ClippedSourceRect(IMSVidRect pRect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-get_usingoverlay))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-get_usingoverlay
     HRESULT get_UsingOverlay(VARIANT_BOOL* UseOverlayVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-put_usingoverlay))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-put_usingoverlay
     HRESULT put_UsingOverlay(VARIANT_BOOL UseOverlayVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-capture))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-capture
     HRESULT Capture(IPictureDisp* currentImage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-get_framespersecond))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-get_framespersecond
     HRESULT get_FramesPerSecond(int* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-get_decimateinput))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-get_decimateinput
     HRESULT get_DecimateInput(VARIANT_BOOL* pDeci);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-put_decimateinput))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer-put_decimateinput
     HRESULT put_DecimateInput(VARIANT_BOOL pDeci);
 }
 
 @GUID("37b03545-a4c8-11d2-b634-00c04f79498e")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidvideorendererevent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidvideorendererevent
 interface IMSVidVideoRendererEvent : IMSVidOutputDeviceEvent
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorendererevent-overlayunavailable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorendererevent-overlayunavailable
     HRESULT OverlayUnavailable();
 }
 
 @GUID("6c29b41d-455b-4c33-963a-0d28e5e555ea")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidgenericsink))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidgenericsink
 interface IMSVidGenericSink : IMSVidOutputDevice
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidgenericsink-setsinkfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidgenericsink-setsinkfilter
     HRESULT SetSinkFilter(BSTR bstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidgenericsink-get_sinkstreams))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidgenericsink-get_sinkstreams
     HRESULT get_SinkStreams(MSVidSinkStreams* pStreams);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidgenericsink-put_sinkstreams))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidgenericsink-put_sinkstreams
     HRESULT put_SinkStreams(MSVidSinkStreams Streams);
 }
 
 @GUID("6b5a28f3-47f1-4092-b168-60cabec08f1c")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidgenericsink2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidgenericsink2
 interface IMSVidGenericSink2 : IMSVidGenericSink
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidgenericsink2-addfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidgenericsink2-addfilter
     HRESULT AddFilter(BSTR bstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidgenericsink2-resetfilterlist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidgenericsink2-resetfilterlist
     HRESULT ResetFilterList();
 }
 
 @GUID("160621aa-bbbc-4326-a824-c395aebc6e74")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidstreambufferrecordingcontrol))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidstreambufferrecordingcontrol
 interface IMSVidStreamBufferRecordingControl : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambufferrecordingcontrol-get_starttime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambufferrecordingcontrol-get_starttime
     HRESULT get_StartTime(int* rtStart);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambufferrecordingcontrol-put_starttime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambufferrecordingcontrol-put_starttime
     HRESULT put_StartTime(int rtStart);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambufferrecordingcontrol-get_stoptime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambufferrecordingcontrol-get_stoptime
     HRESULT get_StopTime(int* rtStop);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambufferrecordingcontrol-put_stoptime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambufferrecordingcontrol-put_stoptime
     HRESULT put_StopTime(int rtStop);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambufferrecordingcontrol-get_recordingstopped))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambufferrecordingcontrol-get_recordingstopped
     HRESULT get_RecordingStopped(VARIANT_BOOL* phResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambufferrecordingcontrol-get_recordingstarted))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambufferrecordingcontrol-get_recordingstarted
     HRESULT get_RecordingStarted(VARIANT_BOOL* phResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambufferrecordingcontrol-get_recordingtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambufferrecordingcontrol-get_recordingtype
     HRESULT get_RecordingType(RecordingType* dwType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambufferrecordingcontrol-get_recordingattribute))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambufferrecordingcontrol-get_recordingattribute
     HRESULT get_RecordingAttribute(IUnknown* pRecordingAttribute);
 }
 
 @GUID("159dbb45-cd1b-4dab-83ea-5cb1f4f21d07")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidstreambuffersink))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidstreambuffersink
 interface IMSVidStreamBufferSink : IMSVidOutputDevice
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink-get_contentrecorder))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink-get_contentrecorder
     HRESULT get_ContentRecorder(BSTR pszFilename, IMSVidStreamBufferRecordingControl* pRecordingIUnknown);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink-get_referencerecorder))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink-get_referencerecorder
     HRESULT get_ReferenceRecorder(BSTR pszFilename, IMSVidStreamBufferRecordingControl* pRecordingIUnknown);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink-get_sinkname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink-get_sinkname
     HRESULT get_SinkName(BSTR* pName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink-put_sinkname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink-put_sinkname
     HRESULT put_SinkName(BSTR Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink-namesetlock))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink-namesetlock
     HRESULT NameSetLock();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink-get_sbesink))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink-get_sbesink
     HRESULT get_SBESink(IUnknown* sbeConfig);
 }
 
 @GUID("2ca9fc63-c131-4e5a-955a-544a47c67146")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidstreambuffersink2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidstreambuffersink2
 interface IMSVidStreamBufferSink2 : IMSVidStreamBufferSink
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink2-unlockprofile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink2-unlockprofile
     HRESULT UnlockProfile();
 }
 
 @GUID("4f8721d7-7d59-4d8b-99f5-a77775586bd5")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidstreambuffersink3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidstreambuffersink3
 interface IMSVidStreamBufferSink3 : IMSVidStreamBufferSink2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink3-setminseek))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink3-setminseek
     HRESULT SetMinSeek(int* pdwMin);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink3-get_audiocounter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink3-get_audiocounter
     HRESULT get_AudioCounter(IUnknown* ppUnk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink3-get_videocounter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink3-get_videocounter
     HRESULT get_VideoCounter(IUnknown* ppUnk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink3-get_cccounter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink3-get_cccounter
     HRESULT get_CCCounter(IUnknown* ppUnk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink3-get_wstcounter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink3-get_wstcounter
     HRESULT get_WSTCounter(IUnknown* ppUnk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink3-put_audioanalysisfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink3-put_audioanalysisfilter
     HRESULT put_AudioAnalysisFilter(BSTR szCLSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink3-get_audioanalysisfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink3-get_audioanalysisfilter
     HRESULT get_AudioAnalysisFilter(BSTR* pszCLSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink3-put__audioanalysisfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink3-put__audioanalysisfilter
     HRESULT put__AudioAnalysisFilter(GUID guid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink3-get__audioanalysisfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink3-get__audioanalysisfilter
     HRESULT get__AudioAnalysisFilter(GUID* pGuid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink3-put_videoanalysisfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink3-put_videoanalysisfilter
     HRESULT put_VideoAnalysisFilter(BSTR szCLSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink3-get_videoanalysisfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink3-get_videoanalysisfilter
     HRESULT get_VideoAnalysisFilter(BSTR* pszCLSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink3-put__videoanalysisfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink3-put__videoanalysisfilter
     HRESULT put__VideoAnalysisFilter(GUID guid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink3-get__videoanalysisfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink3-get__videoanalysisfilter
     HRESULT get__VideoAnalysisFilter(GUID* pGuid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink3-put_dataanalysisfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink3-put_dataanalysisfilter
     HRESULT put_DataAnalysisFilter(BSTR szCLSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink3-get_dataanalysisfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink3-get_dataanalysisfilter
     HRESULT get_DataAnalysisFilter(BSTR* pszCLSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink3-put__dataanalysisfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink3-put__dataanalysisfilter
     HRESULT put__DataAnalysisFilter(GUID guid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink3-get__dataanalysisfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink3-get__dataanalysisfilter
     HRESULT get__DataAnalysisFilter(GUID* pGuid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink3-get_licenseerrorcode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersink3-get_licenseerrorcode
     HRESULT get_LicenseErrorCode(HRESULT* hres);
 }
 
 @GUID("f798a36b-b05b-4bbe-9703-eaea7d61cd51")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidstreambuffersinkevent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidstreambuffersinkevent
 interface IMSVidStreamBufferSinkEvent : IMSVidOutputDeviceEvent
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersinkevent-certificatefailure))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersinkevent-certificatefailure
     HRESULT CertificateFailure();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersinkevent-certificatesuccess))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersinkevent-certificatesuccess
     HRESULT CertificateSuccess();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersinkevent-writefailure))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersinkevent-writefailure
     HRESULT WriteFailure();
 }
 
 @GUID("3d7a5166-72d7-484b-a06f-286187b80ca1")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidstreambuffersinkevent2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidstreambuffersinkevent2
 interface IMSVidStreamBufferSinkEvent2 : IMSVidStreamBufferSinkEvent
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersinkevent2-encryptionon))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersinkevent2-encryptionon
     HRESULT EncryptionOn();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersinkevent2-encryptionoff))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersinkevent2-encryptionoff
     HRESULT EncryptionOff();
 }
 
 @GUID("735ad8d5-c259-48e9-81e7-d27953665b23")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidstreambuffersinkevent3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidstreambuffersinkevent3
 interface IMSVidStreamBufferSinkEvent3 : IMSVidStreamBufferSinkEvent2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersinkevent3-licensechange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersinkevent3-licensechange
     HRESULT LicenseChange(int dwProt);
 }
 
 @GUID("1b01dcb0-daf0-412c-a5d1-590c7f62e2b8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidstreambuffersinkevent4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidstreambuffersinkevent4
 interface IMSVidStreamBufferSinkEvent4 : IMSVidStreamBufferSinkEvent3
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersinkevent4-writefailureclear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersinkevent4-writefailureclear
     HRESULT WriteFailureClear();
 }
 
 @GUID("eb0c8cf9-6950-4772-87b1-47d11cf3a02f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidstreambuffersource))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidstreambuffersource
 interface IMSVidStreamBufferSource : IMSVidFilePlayback
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersource-get_start))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersource-get_start
     HRESULT get_Start(int* lStart);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersource-get_recordingattribute))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersource-get_recordingattribute
     HRESULT get_RecordingAttribute(IUnknown* pRecordingAttribute);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersource-currentratings))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersource-currentratings
     HRESULT CurrentRatings(EnTvRat_System* pEnSystem, EnTvRat_GenericLevel* pEnRating, int* pBfEnAttr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersource-maxratingslevel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersource-maxratingslevel
     HRESULT MaxRatingsLevel(EnTvRat_System enSystem, EnTvRat_GenericLevel enRating, int lbfEnAttr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersource-put_blockunrated))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersource-put_blockunrated
     HRESULT put_BlockUnrated(VARIANT_BOOL bBlock);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersource-put_unrateddelay))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersource-put_unrateddelay
     HRESULT put_UnratedDelay(int dwDelay);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersource-get_sbesource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersource-get_sbesource
     HRESULT get_SBESource(IUnknown* sbeFilter);
 }
 
 @GUID("e4ba9059-b1ce-40d8-b9a0-d4ea4a9989d3")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidstreambuffersource2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidstreambuffersource2
 interface IMSVidStreamBufferSource2 : IMSVidStreamBufferSource
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersource2-put_rateex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersource2-put_rateex
     HRESULT put_RateEx(double dwRate, uint dwFramesPerSecond);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersource2-get_audiocounter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersource2-get_audiocounter
     HRESULT get_AudioCounter(IUnknown* ppUnk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersource2-get_videocounter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersource2-get_videocounter
     HRESULT get_VideoCounter(IUnknown* ppUnk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersource2-get_cccounter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersource2-get_cccounter
     HRESULT get_CCCounter(IUnknown* ppUnk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersource2-get_wstcounter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersource2-get_wstcounter
     HRESULT get_WSTCounter(IUnknown* ppUnk);
 }
 
 @GUID("50ce8a7d-9c28-4da8-9042-cdfa7116f979")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidstreambuffersourceevent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidstreambuffersourceevent
 interface IMSVidStreamBufferSourceEvent : IMSVidFilePlaybackEvent
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersourceevent-certificatefailure))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersourceevent-certificatefailure
     HRESULT CertificateFailure();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersourceevent-certificatesuccess))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersourceevent-certificatesuccess
     HRESULT CertificateSuccess();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersourceevent-ratingsblocked))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersourceevent-ratingsblocked
     HRESULT RatingsBlocked();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersourceevent-ratingsunblocked))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersourceevent-ratingsunblocked
     HRESULT RatingsUnblocked();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersourceevent-ratingschanged))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersourceevent-ratingschanged
     HRESULT RatingsChanged();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersourceevent-timehole))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersourceevent-timehole
     HRESULT TimeHole(int StreamOffsetMS, int SizeMS);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersourceevent-staledataread))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersourceevent-staledataread
     HRESULT StaleDataRead();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersourceevent-contentbecomingstale))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersourceevent-contentbecomingstale
     HRESULT ContentBecomingStale();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersourceevent-stalefiledeleted))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersourceevent-stalefiledeleted
     HRESULT StaleFileDeleted();
 }
 
 @GUID("7aef50ce-8e22-4ba8-bc06-a92a458b4ef2")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidstreambuffersourceevent2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidstreambuffersourceevent2
 interface IMSVidStreamBufferSourceEvent2 : IMSVidStreamBufferSourceEvent
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersourceevent2-ratechange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersourceevent2-ratechange
     HRESULT RateChange(double qwNewRate, double qwOldRate);
 }
 
 @GUID("ceabd6ab-9b90-4570-adf1-3ce76e00a763")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidstreambuffersourceevent3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidstreambuffersourceevent3
 interface IMSVidStreamBufferSourceEvent3 : IMSVidStreamBufferSourceEvent2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersourceevent3-broadcastevent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersourceevent3-broadcastevent
     HRESULT BroadcastEvent(BSTR Guid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersourceevent3-broadcasteventex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersourceevent3-broadcasteventex
     HRESULT BroadcastEventEx(BSTR Guid, uint Param1, uint Param2, uint Param3, uint Param4);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersourceevent3-coppblocked))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersourceevent3-coppblocked
     HRESULT COPPBlocked();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersourceevent3-coppunblocked))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersourceevent3-coppunblocked
     HRESULT COPPUnblocked();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersourceevent3-contentprimarilyaudio))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambuffersourceevent3-contentprimarilyaudio
     HRESULT ContentPrimarilyAudio();
 }
 
 @GUID("49c771f9-41b2-4cf7-9f9a-a313a8f6027e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidstreambufferv2sourceevent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidstreambufferv2sourceevent
 interface IMSVidStreamBufferV2SourceEvent : IMSVidFilePlaybackEvent
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambufferv2sourceevent-ratingschanged))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambufferv2sourceevent-ratingschanged
     HRESULT RatingsChanged();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambufferv2sourceevent-timehole))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambufferv2sourceevent-timehole
     HRESULT TimeHole(int StreamOffsetMS, int SizeMS);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambufferv2sourceevent-staledataread))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambufferv2sourceevent-staledataread
     HRESULT StaleDataRead();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambufferv2sourceevent-contentbecomingstale))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambufferv2sourceevent-contentbecomingstale
     HRESULT ContentBecomingStale();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambufferv2sourceevent-stalefiledeleted))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambufferv2sourceevent-stalefiledeleted
     HRESULT StaleFileDeleted();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambufferv2sourceevent-ratechange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambufferv2sourceevent-ratechange
     HRESULT RateChange(double qwNewRate, double qwOldRate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambufferv2sourceevent-broadcastevent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambufferv2sourceevent-broadcastevent
     HRESULT BroadcastEvent(BSTR Guid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambufferv2sourceevent-broadcasteventex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambufferv2sourceevent-broadcasteventex
     HRESULT BroadcastEventEx(BSTR Guid, uint Param1, uint Param2, uint Param3, uint Param4);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambufferv2sourceevent-contentprimarilyaudio))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidstreambufferv2sourceevent-contentprimarilyaudio
     HRESULT ContentPrimarilyAudio();
 }
 
 @GUID("6bdd5c1e-2810-4159-94bc-05511ae8549b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidvideorenderer2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidvideorenderer2
 interface IMSVidVideoRenderer2 : IMSVidVideoRenderer
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer2-get_allocator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer2-get_allocator
     HRESULT get_Allocator(IUnknown* AllocPresent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer2-get__allocator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer2-get__allocator
     HRESULT get__Allocator(IVMRSurfaceAllocator* AllocPresent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer2-get_allocator_id))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer2-get_allocator_id
     HRESULT get_Allocator_ID(int* ID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer2-setallocator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer2-setallocator
     HRESULT SetAllocator(IUnknown AllocPresent, int ID);
     HRESULT _SetAllocator2(IVMRSurfaceAllocator AllocPresent, int ID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer2-put_suppresseffects))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer2-put_suppresseffects
     HRESULT put_SuppressEffects(VARIANT_BOOL bSuppress);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer2-get_suppresseffects))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorenderer2-get_suppresseffects
     HRESULT get_SuppressEffects(VARIANT_BOOL* bSuppress);
 }
 
 @GUID("7145ed66-4730-4fdb-8a53-fde7508d3e5e")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidvideorendererevent2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidvideorendererevent2
 interface IMSVidVideoRendererEvent2 : IMSVidOutputDeviceEvent
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorendererevent2-overlayunavailable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorendererevent2-overlayunavailable
     HRESULT OverlayUnavailable();
 }
 
 @GUID("d58b0015-ebef-44bb-bbdd-3f3699d76ea1")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidvmr9))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidvmr9
 interface IMSVidVMR9 : IMSVidVideoRenderer
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvmr9-get_allocator_id))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvmr9-get_allocator_id
     HRESULT get_Allocator_ID(int* ID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvmr9-setallocator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvmr9-setallocator
     HRESULT SetAllocator(IUnknown AllocPresent, int ID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvmr9-put_suppresseffects))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvmr9-put_suppresseffects
     HRESULT put_SuppressEffects(VARIANT_BOOL bSuppress);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvmr9-get_suppresseffects))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvmr9-get_suppresseffects
     HRESULT get_SuppressEffects(VARIANT_BOOL* bSuppress);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvmr9-get_allocator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvmr9-get_allocator
     HRESULT get_Allocator(IUnknown* AllocPresent);
 }
 
 @GUID("15e496ae-82a8-4cf9-a6b6-c561dc60398f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidevr))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidevr
 interface IMSVidEVR : IMSVidVideoRenderer
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidevr-get_presenter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidevr-get_presenter
     HRESULT get_Presenter(IMFVideoPresenter* ppAllocPresent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidevr-put_presenter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidevr-put_presenter
     HRESULT put_Presenter(IMFVideoPresenter pAllocPresent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidevr-put_suppresseffects))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidevr-put_suppresseffects
     HRESULT put_SuppressEffects(VARIANT_BOOL bSuppress);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidevr-get_suppresseffects))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidevr-get_suppresseffects
     HRESULT get_SuppressEffects(VARIANT_BOOL* bSuppress);
 }
 
 @GUID("349abb10-883c-4f22-8714-cecaeee45d62")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidevrevent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidevrevent
 interface IMSVidEVREvent : IMSVidOutputDeviceEvent
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidevrevent-onuserevent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidevrevent-onuserevent
     HRESULT OnUserEvent(int lEventCode);
 }
 
 @GUID("37b0353f-a4c8-11d2-b634-00c04f79498e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidaudiorenderer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidaudiorenderer
 interface IMSVidAudioRenderer : IMSVidOutputDevice
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidaudiorenderer-put_volume))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidaudiorenderer-put_volume
     HRESULT put_Volume(int lVol);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidaudiorenderer-get_volume))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidaudiorenderer-get_volume
     HRESULT get_Volume(int* lVol);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidaudiorenderer-put_balance))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidaudiorenderer-put_balance
     HRESULT put_Balance(int lBal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidaudiorenderer-get_balance))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidaudiorenderer-get_balance
     HRESULT get_Balance(int* lBal);
 }
 
 @GUID("37b03541-a4c8-11d2-b634-00c04f79498e")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidaudiorendererevent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidaudiorendererevent
 interface IMSVidAudioRendererEvent : IMSVidOutputDeviceEvent
 {
 }
 
 @GUID("e3f55729-353b-4c43-a028-50f79aa9a907")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidaudiorendererevent2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidaudiorendererevent2
 interface IMSVidAudioRendererEvent2 : IMSVidAudioRendererEvent
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidaudiorendererevent2-avdecaudiodualmono))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidaudiorendererevent2-avdecaudiodualmono
     HRESULT AVDecAudioDualMono();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidaudiorendererevent2-avaudiosamplerate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidaudiorendererevent2-avaudiosamplerate
     HRESULT AVAudioSampleRate();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidaudiorendererevent2-avaudiochannelconfig))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidaudiorendererevent2-avaudiochannelconfig
     HRESULT AVAudioChannelConfig();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidaudiorendererevent2-avaudiochannelcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidaudiorendererevent2-avaudiochannelcount
     HRESULT AVAudioChannelCount();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidaudiorendererevent2-avdeccommonmeanbitrate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidaudiorendererevent2-avdeccommonmeanbitrate
     HRESULT AVDecCommonMeanBitRate();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidaudiorendererevent2-avddsurroundmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidaudiorendererevent2-avddsurroundmode
     HRESULT AVDDSurroundMode();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidaudiorendererevent2-avdeccommoninputformat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidaudiorendererevent2-avdeccommoninputformat
     HRESULT AVDecCommonInputFormat();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidaudiorendererevent2-avdeccommonoutputformat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidaudiorendererevent2-avdeccommonoutputformat
     HRESULT AVDecCommonOutputFormat();
 }
 
 @GUID("c5702cd1-9b79-11d3-b654-00c04f79498e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidinputdevices))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidinputdevices
 interface IMSVidInputDevices : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidinputdevices-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidinputdevices-get_count
     HRESULT get_Count(int* lCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidinputdevices-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidinputdevices-get__newenum
     HRESULT get__NewEnum(IEnumVARIANT* pD);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidinputdevices-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidinputdevices-get_item
     HRESULT get_Item(VARIANT v, IMSVidInputDevice* pDB);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidinputdevices-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidinputdevices-add
     HRESULT Add(IMSVidInputDevice pDB);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidinputdevices-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidinputdevices-remove
     HRESULT Remove(VARIANT v);
 }
 
 @GUID("c5702cd2-9b79-11d3-b654-00c04f79498e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidoutputdevices))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidoutputdevices
 interface IMSVidOutputDevices : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidoutputdevices-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidoutputdevices-get_count
     HRESULT get_Count(int* lCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidoutputdevices-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidoutputdevices-get__newenum
     HRESULT get__NewEnum(IEnumVARIANT* pD);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidoutputdevices-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidoutputdevices-get_item
     HRESULT get_Item(VARIANT v, IMSVidOutputDevice* pDB);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidoutputdevices-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidoutputdevices-add
     HRESULT Add(IMSVidOutputDevice pDB);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidoutputdevices-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidoutputdevices-remove
     HRESULT Remove(VARIANT v);
 }
 
 @GUID("c5702cd3-9b79-11d3-b654-00c04f79498e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidvideorendererdevices))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidvideorendererdevices
 interface IMSVidVideoRendererDevices : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorendererdevices-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorendererdevices-get_count
     HRESULT get_Count(int* lCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorendererdevices-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorendererdevices-get__newenum
     HRESULT get__NewEnum(IEnumVARIANT* pD);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorendererdevices-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorendererdevices-get_item
     HRESULT get_Item(VARIANT v, IMSVidVideoRenderer* pDB);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorendererdevices-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorendererdevices-add
     HRESULT Add(IMSVidVideoRenderer pDB);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorendererdevices-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidvideorendererdevices-remove
     HRESULT Remove(VARIANT v);
 }
 
 @GUID("c5702cd4-9b79-11d3-b654-00c04f79498e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidaudiorendererdevices))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidaudiorendererdevices
 interface IMSVidAudioRendererDevices : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidaudiorendererdevices-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidaudiorendererdevices-get_count
     HRESULT get_Count(int* lCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidaudiorendererdevices-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidaudiorendererdevices-get__newenum
     HRESULT get__NewEnum(IEnumVARIANT* pD);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidaudiorendererdevices-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidaudiorendererdevices-get_item
     HRESULT get_Item(VARIANT v, IMSVidAudioRenderer* pDB);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidaudiorendererdevices-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidaudiorendererdevices-add
     HRESULT Add(IMSVidAudioRenderer pDB);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidaudiorendererdevices-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidaudiorendererdevices-remove
     HRESULT Remove(VARIANT v);
 }
 
 @GUID("c5702cd5-9b79-11d3-b654-00c04f79498e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidfeatures))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nn-segment-imsvidfeatures
 interface IMSVidFeatures : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidfeatures-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidfeatures-get_count
     HRESULT get_Count(int* lCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidfeatures-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidfeatures-get__newenum
     HRESULT get__NewEnum(IEnumVARIANT* pD);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidfeatures-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidfeatures-get_item
     HRESULT get_Item(VARIANT v, IMSVidFeature* pDB);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidfeatures-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidfeatures-add
     HRESULT Add(IMSVidFeature pDB);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidfeatures-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/segment/nf-segment-imsvidfeatures-remove
     HRESULT Remove(VARIANT v);
 }
 
 @GUID("b0edf162-910a-11d2-b632-00c04f79498e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nn-msvidctl-imsvidctl))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nn-msvidctl-imsvidctl
 interface IMSVidCtl : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get_autosize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get_autosize
     HRESULT get_AutoSize(VARIANT_BOOL* pbool);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-put_autosize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-put_autosize
     HRESULT put_AutoSize(VARIANT_BOOL vbool);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get_backcolor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get_backcolor
     HRESULT get_BackColor(uint* backcolor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-put_backcolor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-put_backcolor
     HRESULT put_BackColor(uint backcolor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get_enabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get_enabled
     HRESULT get_Enabled(VARIANT_BOOL* pbool);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-put_enabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-put_enabled
     HRESULT put_Enabled(VARIANT_BOOL vbool);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get_tabstop))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get_tabstop
     HRESULT get_TabStop(VARIANT_BOOL* pbool);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-put_tabstop))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-put_tabstop
     HRESULT put_TabStop(VARIANT_BOOL vbool);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get_window))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get_window
     HRESULT get_Window(HWND* phwnd);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-refresh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-refresh
     HRESULT Refresh();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get_displaysize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get_displaysize
     HRESULT get_DisplaySize(DisplaySizeList* CurrentValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-put_displaysize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-put_displaysize
     HRESULT put_DisplaySize(DisplaySizeList NewValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get_maintainaspectratio))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get_maintainaspectratio
     HRESULT get_MaintainAspectRatio(VARIANT_BOOL* CurrentValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-put_maintainaspectratio))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-put_maintainaspectratio
     HRESULT put_MaintainAspectRatio(VARIANT_BOOL NewValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get_colorkey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get_colorkey
     HRESULT get_ColorKey(uint* CurrentValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-put_colorkey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-put_colorkey
     HRESULT put_ColorKey(uint NewValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get_inputsavailable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get_inputsavailable
     HRESULT get_InputsAvailable(BSTR CategoryGuid, IMSVidInputDevices* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get_outputsavailable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get_outputsavailable
     HRESULT get_OutputsAvailable(BSTR CategoryGuid, IMSVidOutputDevices* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get__inputsavailable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get__inputsavailable
     HRESULT get__InputsAvailable(const(GUID)* CategoryGuid, IMSVidInputDevices* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get__outputsavailable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get__outputsavailable
     HRESULT get__OutputsAvailable(const(GUID)* CategoryGuid, IMSVidOutputDevices* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get_videorenderersavailable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get_videorenderersavailable
     HRESULT get_VideoRenderersAvailable(IMSVidVideoRendererDevices* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get_audiorenderersavailable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get_audiorenderersavailable
     HRESULT get_AudioRenderersAvailable(IMSVidAudioRendererDevices* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get_featuresavailable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get_featuresavailable
     HRESULT get_FeaturesAvailable(IMSVidFeatures* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get_inputactive))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get_inputactive
     HRESULT get_InputActive(IMSVidInputDevice* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-put_inputactive))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-put_inputactive
     HRESULT put_InputActive(IMSVidInputDevice pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get_outputsactive))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get_outputsactive
     HRESULT get_OutputsActive(IMSVidOutputDevices* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-put_outputsactive))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-put_outputsactive
     HRESULT put_OutputsActive(IMSVidOutputDevices pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get_videorendereractive))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get_videorendereractive
     HRESULT get_VideoRendererActive(IMSVidVideoRenderer* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-put_videorendereractive))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-put_videorendereractive
     HRESULT put_VideoRendererActive(IMSVidVideoRenderer pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get_audiorendereractive))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get_audiorendereractive
     HRESULT get_AudioRendererActive(IMSVidAudioRenderer* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-put_audiorendereractive))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-put_audiorendereractive
     HRESULT put_AudioRendererActive(IMSVidAudioRenderer pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get_featuresactive))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get_featuresactive
     HRESULT get_FeaturesActive(IMSVidFeatures* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-put_featuresactive))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-put_featuresactive
     HRESULT put_FeaturesActive(IMSVidFeatures pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get_state))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-get_state
     HRESULT get_State(MSVidCtlStateList* lState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-view))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-view
     HRESULT View(VARIANT* v);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-build))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-build
     HRESULT Build();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-pause))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-pause
     HRESULT Pause();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-run))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-run
     HRESULT Run();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-stop))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-stop
     HRESULT Stop();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-decompose))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-decompose
     HRESULT Decompose();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-disablevideo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-disablevideo
     HRESULT DisableVideo();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-disableaudio))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-disableaudio
     HRESULT DisableAudio();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-viewnext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msvidctl/nf-msvidctl-imsvidctl-viewnext
     HRESULT ViewNext(VARIANT* v);
 }
 
@@ -5963,371 +6146,371 @@ interface _IMSVidCtlEvents : IDispatch
 
 @GUID("9ce50f2d-6ba7-40fb-a034-50b1a674ec78")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-istreambufferinitialize))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-istreambufferinitialize
 interface IStreamBufferInitialize : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferinitialize-sethkey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferinitialize-sethkey
     HRESULT SetHKEY(HKEY hkeyRoot);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferinitialize-setsids))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferinitialize-setsids
     HRESULT SetSIDs(uint cSIDs, PSID* ppSID);
 }
 
 @GUID("afd1f242-7efd-45ee-ba4e-407a25c9a77a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-istreambuffersink))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-istreambuffersink
 interface IStreamBufferSink : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambuffersink-lockprofile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambuffersink-lockprofile
     HRESULT LockProfile(const(PWSTR) pszStreamBufferFilename);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambuffersink-createrecorder))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambuffersink-createrecorder
     HRESULT CreateRecorder(const(PWSTR) pszFilename, uint dwRecordType, IUnknown* pRecordingIUnknown);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambuffersink-isprofilelocked))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambuffersink-isprofilelocked
     HRESULT IsProfileLocked();
 }
 
 @GUID("db94a660-f4fb-4bfa-bcc6-fe159a4eea93")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-istreambuffersink2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-istreambuffersink2
 interface IStreamBufferSink2 : IStreamBufferSink
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambuffersink2-unlockprofile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambuffersink2-unlockprofile
     HRESULT UnlockProfile();
 }
 
 @GUID("974723f2-887a-4452-9366-2cff3057bc8f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-istreambuffersink3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-istreambuffersink3
 interface IStreamBufferSink3 : IStreamBufferSink2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambuffersink3-setavailablefilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambuffersink3-setavailablefilter
     HRESULT SetAvailableFilter(long* prtMin);
 }
 
 @GUID("1c5bd776-6ced-4f44-8164-5eab0e98db12")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-istreambuffersource))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-istreambuffersource
 interface IStreamBufferSource : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambuffersource-setstreamsink))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambuffersource-setstreamsink
     HRESULT SetStreamSink(IStreamBufferSink pIStreamBufferSink);
 }
 
 @GUID("ba9b6c99-f3c7-4ff2-92db-cfdd4851bf31")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-istreambufferrecordcontrol))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-istreambufferrecordcontrol
 interface IStreamBufferRecordControl : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferrecordcontrol-start))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferrecordcontrol-start
     HRESULT Start(long* prtStart);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferrecordcontrol-stop))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferrecordcontrol-stop
     HRESULT Stop(long rtStop);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferrecordcontrol-getrecordingstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferrecordcontrol-getrecordingstatus
     HRESULT GetRecordingStatus(HRESULT* phResult, BOOL* pbStarted, BOOL* pbStopped);
 }
 
 @GUID("9e259a9b-8815-42ae-b09f-221970b154fd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-istreambufferreccomp))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-istreambufferreccomp
 interface IStreamBufferRecComp : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferreccomp-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferreccomp-initialize
     HRESULT Initialize(const(PWSTR) pszTargetFilename, const(PWSTR) pszSBRecProfileRef);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferreccomp-append))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferreccomp-append
     HRESULT Append(const(PWSTR) pszSBRecording);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferreccomp-appendex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferreccomp-appendex
     HRESULT AppendEx(const(PWSTR) pszSBRecording, long rtStart, long rtStop);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferreccomp-getcurrentlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferreccomp-getcurrentlength
     HRESULT GetCurrentLength(uint* pcSeconds);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferreccomp-close))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferreccomp-close
     HRESULT Close();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferreccomp-cancel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferreccomp-cancel
     HRESULT Cancel();
 }
 
 @GUID("16ca4e03-fe69-4705-bd41-5b7dfc0c95f3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-istreambufferrecordingattribute))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-istreambufferrecordingattribute
 interface IStreamBufferRecordingAttribute : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferrecordingattribute-setattribute))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferrecordingattribute-setattribute
     HRESULT SetAttribute(uint ulReserved, const(PWSTR) pszAttributeName, 
                          STREAMBUFFER_ATTR_DATATYPE StreamBufferAttributeType, ubyte* pbAttribute, 
                          ushort cbAttributeLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferrecordingattribute-getattributecount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferrecordingattribute-getattributecount
     HRESULT GetAttributeCount(uint ulReserved, ushort* pcAttributes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferrecordingattribute-getattributebyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferrecordingattribute-getattributebyname
     HRESULT GetAttributeByName(const(PWSTR) pszAttributeName, uint* pulReserved, 
                                STREAMBUFFER_ATTR_DATATYPE* pStreamBufferAttributeType, ubyte* pbAttribute, 
                                ushort* pcbLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferrecordingattribute-getattributebyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferrecordingattribute-getattributebyindex
     HRESULT GetAttributeByIndex(ushort wIndex, uint* pulReserved, PWSTR pszAttributeName, ushort* pcchNameLength, 
                                 STREAMBUFFER_ATTR_DATATYPE* pStreamBufferAttributeType, ubyte* pbAttribute, 
                                 ushort* pcbLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferrecordingattribute-enumattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferrecordingattribute-enumattributes
     HRESULT EnumAttributes(IEnumStreamBufferRecordingAttrib* ppIEnumStreamBufferAttrib);
 }
 
 @GUID("c18a9162-1e82-4142-8c73-5690fa62fe33")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-ienumstreambufferrecordingattrib))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-ienumstreambufferrecordingattrib
 interface IEnumStreamBufferRecordingAttrib : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-ienumstreambufferrecordingattrib-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-ienumstreambufferrecordingattrib-next
     HRESULT Next(uint cRequest, STREAMBUFFER_ATTRIBUTE* pStreamBufferAttribute, uint* pcReceived);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-ienumstreambufferrecordingattrib-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-ienumstreambufferrecordingattrib-skip
     HRESULT Skip(uint cRecords);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-ienumstreambufferrecordingattrib-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-ienumstreambufferrecordingattrib-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-ienumstreambufferrecordingattrib-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-ienumstreambufferrecordingattrib-clone
     HRESULT Clone(IEnumStreamBufferRecordingAttrib* ppIEnumStreamBufferAttrib);
 }
 
 @GUID("ce14dfae-4098-4af7-bbf7-d6511f835414")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-istreambufferconfigure))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-istreambufferconfigure
 interface IStreamBufferConfigure : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferconfigure-setdirectory))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferconfigure-setdirectory
     HRESULT SetDirectory(const(PWSTR) pszDirectoryName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferconfigure-getdirectory))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferconfigure-getdirectory
     HRESULT GetDirectory(PWSTR* ppszDirectoryName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferconfigure-setbackingfilecount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferconfigure-setbackingfilecount
     HRESULT SetBackingFileCount(uint dwMin, uint dwMax);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferconfigure-getbackingfilecount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferconfigure-getbackingfilecount
     HRESULT GetBackingFileCount(uint* pdwMin, uint* pdwMax);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferconfigure-setbackingfileduration))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferconfigure-setbackingfileduration
     HRESULT SetBackingFileDuration(uint dwSeconds);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferconfigure-getbackingfileduration))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferconfigure-getbackingfileduration
     HRESULT GetBackingFileDuration(uint* pdwSeconds);
 }
 
 @GUID("53e037bf-3992-4282-ae34-2487b4dae06b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-istreambufferconfigure2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-istreambufferconfigure2
 interface IStreamBufferConfigure2 : IStreamBufferConfigure
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferconfigure2-setmultiplexedpacketsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferconfigure2-setmultiplexedpacketsize
     HRESULT SetMultiplexedPacketSize(uint cbBytesPerPacket);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferconfigure2-getmultiplexedpacketsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferconfigure2-getmultiplexedpacketsize
     HRESULT GetMultiplexedPacketSize(uint* pcbBytesPerPacket);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferconfigure2-setfftransitionrates))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferconfigure2-setfftransitionrates
     HRESULT SetFFTransitionRates(uint dwMaxFullFrameRate, uint dwMaxNonSkippingRate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferconfigure2-getfftransitionrates))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferconfigure2-getfftransitionrates
     HRESULT GetFFTransitionRates(uint* pdwMaxFullFrameRate, uint* pdwMaxNonSkippingRate);
 }
 
 @GUID("7e2d2a1e-7192-4bd7-80c1-061fd1d10402")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-istreambufferconfigure3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-istreambufferconfigure3
 interface IStreamBufferConfigure3 : IStreamBufferConfigure2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferconfigure3-setstartrecconfig))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferconfigure3-setstartrecconfig
     HRESULT SetStartRecConfig(BOOL fStartStopsCur);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferconfigure3-getstartrecconfig))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferconfigure3-getstartrecconfig
     HRESULT GetStartRecConfig(BOOL* pfStartStopsCur);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferconfigure3-setnamespace))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferconfigure3-setnamespace
     HRESULT SetNamespace(PWSTR pszNamespace);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferconfigure3-getnamespace))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferconfigure3-getnamespace
     HRESULT GetNamespace(PWSTR* ppszNamespace);
 }
 
 @GUID("f61f5c26-863d-4afa-b0ba-2f81dc978596")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-istreambuffermediaseeking))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-istreambuffermediaseeking
 interface IStreamBufferMediaSeeking : IMediaSeeking
 {
 }
 
 @GUID("3a439ab0-155f-470a-86a6-9ea54afd6eaf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-istreambuffermediaseeking2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-istreambuffermediaseeking2
 interface IStreamBufferMediaSeeking2 : IStreamBufferMediaSeeking
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambuffermediaseeking2-setrateex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambuffermediaseeking2-setrateex
     HRESULT SetRateEx(double dRate, uint dwFramesPerSec);
 }
 
 @GUID("9d2a2563-31ab-402e-9a6b-adb903489440")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-istreambufferdatacounters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-istreambufferdatacounters
 interface IStreamBufferDataCounters : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferdatacounters-getdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferdatacounters-getdata
     HRESULT GetData(SBE_PIN_DATA* pPinData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferdatacounters-resetdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-istreambufferdatacounters-resetdata
     HRESULT ResetData();
 }
 
 @GUID("caede759-b6b1-11db-a578-0018f3fa24c6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-isbe2globalevent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-isbe2globalevent
 interface ISBE2GlobalEvent : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-isbe2globalevent-getevent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-isbe2globalevent-getevent
     HRESULT GetEvent(const(GUID)* idEvt, uint param1, uint param2, uint param3, uint param4, BOOL* pSpanning, 
                      uint* pcb, ubyte* pb);
 }
 
 @GUID("6d8309bf-00fe-4506-8b03-f8c65b5c9b39")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-isbe2globalevent2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-isbe2globalevent2
 interface ISBE2GlobalEvent2 : ISBE2GlobalEvent
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-isbe2globalevent2-geteventex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-isbe2globalevent2-geteventex
     HRESULT GetEventEx(const(GUID)* idEvt, uint param1, uint param2, uint param3, uint param4, BOOL* pSpanning, 
                        uint* pcb, ubyte* pb, long* pStreamTime);
 }
 
 @GUID("caede760-b6b1-11db-a578-0018f3fa24c6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-isbe2spanningevent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-isbe2spanningevent
 interface ISBE2SpanningEvent : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-isbe2spanningevent-getevent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-isbe2spanningevent-getevent
     HRESULT GetEvent(const(GUID)* idEvt, uint streamId, uint* pcb, ubyte* pb);
 }
 
 @GUID("547b6d26-3226-487e-8253-8aa168749434")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-isbe2crossbar))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-isbe2crossbar
 interface ISBE2Crossbar : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-isbe2crossbar-enabledefaultmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-isbe2crossbar-enabledefaultmode
     HRESULT EnableDefaultMode(uint DefaultFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-isbe2crossbar-getinitialprofile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-isbe2crossbar-getinitialprofile
     HRESULT GetInitialProfile(ISBE2MediaTypeProfile* ppProfile);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-isbe2crossbar-setoutputprofile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-isbe2crossbar-setoutputprofile
     HRESULT SetOutputProfile(ISBE2MediaTypeProfile pProfile, uint* pcOutputPins, IPin* ppOutputPins);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-isbe2crossbar-enumstreams))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-isbe2crossbar-enumstreams
     HRESULT EnumStreams(ISBE2EnumStream* ppStreams);
 }
 
 @GUID("667c7745-85b1-4c55-ae55-4e25056159fc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-isbe2streammap))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-isbe2streammap
 interface ISBE2StreamMap : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-isbe2streammap-mapstream))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-isbe2streammap-mapstream
     HRESULT MapStream(uint Stream);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-isbe2streammap-unmapstream))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-isbe2streammap-unmapstream
     HRESULT UnmapStream(uint Stream);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-isbe2streammap-enummappedstreams))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-isbe2streammap-enummappedstreams
     HRESULT EnumMappedStreams(ISBE2EnumStream* ppStreams);
 }
 
 @GUID("f7611092-9fbc-46ec-a7c7-548ea78b71a4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-isbe2enumstream))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-isbe2enumstream
 interface ISBE2EnumStream : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-isbe2enumstream-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-isbe2enumstream-next
     HRESULT Next(uint cRequest, SBE2_STREAM_DESC* pStreamDesc, uint* pcReceived);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-isbe2enumstream-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-isbe2enumstream-skip
     HRESULT Skip(uint cRecords);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-isbe2enumstream-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-isbe2enumstream-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-isbe2enumstream-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-isbe2enumstream-clone
     HRESULT Clone(ISBE2EnumStream* ppIEnumStream);
 }
 
 @GUID("f238267d-4671-40d7-997e-25dc32cfed2a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-isbe2mediatypeprofile))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-isbe2mediatypeprofile
 interface ISBE2MediaTypeProfile : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-isbe2mediatypeprofile-getstreamcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-isbe2mediatypeprofile-getstreamcount
     HRESULT GetStreamCount(uint* pCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-isbe2mediatypeprofile-getstream))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-isbe2mediatypeprofile-getstream
     HRESULT GetStream(uint Index, AM_MEDIA_TYPE** ppMediaType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-isbe2mediatypeprofile-addstream))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-isbe2mediatypeprofile-addstream
     HRESULT AddStream(AM_MEDIA_TYPE* pMediaType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-isbe2mediatypeprofile-deletestream))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-isbe2mediatypeprofile-deletestream
     HRESULT DeleteStream(uint Index);
 }
 
 @GUID("3e2bf5a5-4f96-4899-a1a3-75e8be9a5ac0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-isbe2filescan))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nn-sbe-isbe2filescan
 interface ISBE2FileScan : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-isbe2filescan-repairfile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sbe/nf-sbe-isbe2filescan-repairfile
     HRESULT RepairFile(const(PWSTR) filename);
 }
 
 @GUID("bdcdd913-9ecd-4fb2-81ae-adf747ea75a5")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2data/nn-mpeg2data-impeg2tablefilter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2data/nn-mpeg2data-impeg2tablefilter
 interface IMpeg2TableFilter : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2data/nf-mpeg2data-impeg2tablefilter-addpid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2data/nf-mpeg2data-impeg2tablefilter-addpid
     HRESULT AddPID(ushort p);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2data/nf-mpeg2data-impeg2tablefilter-addtable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2data/nf-mpeg2data-impeg2tablefilter-addtable
     HRESULT AddTable(ushort p, ubyte t);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2data/nf-mpeg2data-impeg2tablefilter-addextension))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2data/nf-mpeg2data-impeg2tablefilter-addextension
     HRESULT AddExtension(ushort p, ubyte t, ushort e);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2data/nf-mpeg2data-impeg2tablefilter-removepid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2data/nf-mpeg2data-impeg2tablefilter-removepid
     HRESULT RemovePID(ushort p);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2data/nf-mpeg2data-impeg2tablefilter-removetable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2data/nf-mpeg2data-impeg2tablefilter-removetable
     HRESULT RemoveTable(ushort p, ubyte t);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2data/nf-mpeg2data-impeg2tablefilter-removeextension))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2data/nf-mpeg2data-impeg2tablefilter-removeextension
     HRESULT RemoveExtension(ushort p, ubyte t, ushort e);
 }
 
 @GUID("9b396d40-f380-4e3c-a514-1a82bf6ebfe6")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2data/nn-mpeg2data-impeg2data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2data/nn-mpeg2data-impeg2data
 interface IMpeg2Data : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2data/nf-mpeg2data-impeg2data-getsection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2data/nf-mpeg2data-impeg2data-getsection
     HRESULT GetSection(ushort pid, ubyte tid, MPEG2_FILTER* pFilter, uint dwTimeout, ISectionList* ppSectionList);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2data/nf-mpeg2data-impeg2data-gettable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2data/nf-mpeg2data-impeg2data-gettable
     HRESULT GetTable(ushort pid, ubyte tid, MPEG2_FILTER* pFilter, uint dwTimeout, ISectionList* ppSectionList);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2data/nf-mpeg2data-impeg2data-getstreamofsections))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2data/nf-mpeg2data-impeg2data-getstreamofsections
     HRESULT GetStreamOfSections(ushort pid, ubyte tid, MPEG2_FILTER* pFilter, HANDLE hDataReadyEvent, 
                                 IMpeg2Stream* ppMpegStream);
 }
 
 @GUID("afec1eb5-2a64-46c6-bf4b-ae3ccb6afdb0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2data/nn-mpeg2data-isectionlist))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2data/nn-mpeg2data-isectionlist
 interface ISectionList : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2data/nf-mpeg2data-isectionlist-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2data/nf-mpeg2data-isectionlist-initialize
     HRESULT Initialize(MPEG_REQUEST_TYPE requestType, IMpeg2Data pMpeg2Data, MPEG_CONTEXT* pContext, ushort pid, 
                        ubyte tid, MPEG2_FILTER* pFilter, uint timeout, HANDLE hDoneEvent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2data/nf-mpeg2data-isectionlist-initializewithrawsections))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2data/nf-mpeg2data-isectionlist-initializewithrawsections
     HRESULT InitializeWithRawSections(MPEG_PACKET_LIST* pmplSections);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2data/nf-mpeg2data-isectionlist-cancelpendingrequest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2data/nf-mpeg2data-isectionlist-cancelpendingrequest
     HRESULT CancelPendingRequest();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2data/nf-mpeg2data-isectionlist-getnumberofsections))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2data/nf-mpeg2data-isectionlist-getnumberofsections
     HRESULT GetNumberOfSections(ushort* pCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2data/nf-mpeg2data-isectionlist-getsectiondata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2data/nf-mpeg2data-isectionlist-getsectiondata
     HRESULT GetSectionData(ushort sectionNumber, uint* pdwRawPacketLength, SECTION** ppSection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2data/nf-mpeg2data-isectionlist-getprogramidentifier))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2data/nf-mpeg2data-isectionlist-getprogramidentifier
     HRESULT GetProgramIdentifier(ushort* pPid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2data/nf-mpeg2data-isectionlist-gettableidentifier))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2data/nf-mpeg2data-isectionlist-gettableidentifier
     HRESULT GetTableIdentifier(ubyte* pTableId);
 }
 
 @GUID("400cc286-32a0-4ce4-9041-39571125a635")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2data/nn-mpeg2data-impeg2stream))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2data/nn-mpeg2data-impeg2stream
 interface IMpeg2Stream : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2data/nf-mpeg2data-impeg2stream-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2data/nf-mpeg2data-impeg2stream-initialize
     HRESULT Initialize(MPEG_REQUEST_TYPE requestType, IMpeg2Data pMpeg2Data, MPEG_CONTEXT* pContext, ushort pid, 
                        ubyte tid, MPEG2_FILTER* pFilter, HANDLE hDataReadyEvent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2data/nf-mpeg2data-impeg2stream-supplydatabuffer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2data/nf-mpeg2data-impeg2stream-supplydatabuffer
     HRESULT SupplyDataBuffer(MPEG_STREAM_BUFFER* pStreamBuffer);
 }
 
 @GUID("6a5918f8-a77a-4f61-aed0-5702bdcda3e6")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nn-mpeg2psiparser-igenericdescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nn-mpeg2psiparser-igenericdescriptor
 interface IGenericDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-igenericdescriptor-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-igenericdescriptor-initialize
     HRESULT Initialize(ubyte* pbDesc, int bCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-igenericdescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-igenericdescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-igenericdescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-igenericdescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-igenericdescriptor-getbody))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-igenericdescriptor-getbody
     HRESULT GetBody(ubyte** ppbVal);
 }
 
@@ -6339,1029 +6522,1029 @@ interface IGenericDescriptor2 : IGenericDescriptor
 }
 
 @GUID("6623b511-4b5f-43c3-9a01-e8ff84188060")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nn-mpeg2psiparser-ipat))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nn-mpeg2psiparser-ipat
 interface IPAT : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipat-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipat-initialize
     HRESULT Initialize(ISectionList pSectionList, IMpeg2Data pMPEGData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipat-gettransportstreamid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipat-gettransportstreamid
     HRESULT GetTransportStreamId(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipat-getversionnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipat-getversionnumber
     HRESULT GetVersionNumber(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipat-getcountofrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipat-getcountofrecords
     HRESULT GetCountOfRecords(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipat-getrecordprogramnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipat-getrecordprogramnumber
     HRESULT GetRecordProgramNumber(uint dwIndex, ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipat-getrecordprogrammappid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipat-getrecordprogrammappid
     HRESULT GetRecordProgramMapPid(uint dwIndex, ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipat-findrecordprogrammappid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipat-findrecordprogrammappid
     HRESULT FindRecordProgramMapPid(ushort wProgramNumber, ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipat-registerfornexttable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipat-registerfornexttable
     HRESULT RegisterForNextTable(HANDLE hNextTableAvailable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipat-getnexttable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipat-getnexttable
     HRESULT GetNextTable(IPAT* ppPAT);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipat-registerforwhencurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipat-registerforwhencurrent
     HRESULT RegisterForWhenCurrent(HANDLE hNextTableIsCurrent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipat-convertnexttocurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipat-convertnexttocurrent
     HRESULT ConvertNextToCurrent();
 }
 
 @GUID("7c6995fb-2a31-4bd7-953e-b1ad7fb7d31c")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nn-mpeg2psiparser-icat))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nn-mpeg2psiparser-icat
 interface ICAT : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-icat-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-icat-initialize
     HRESULT Initialize(ISectionList pSectionList, IMpeg2Data pMPEGData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-icat-getversionnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-icat-getversionnumber
     HRESULT GetVersionNumber(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-icat-getcountoftabledescriptors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-icat-getcountoftabledescriptors
     HRESULT GetCountOfTableDescriptors(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-icat-gettabledescriptorbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-icat-gettabledescriptorbyindex
     HRESULT GetTableDescriptorByIndex(uint dwIndex, IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-icat-gettabledescriptorbytag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-icat-gettabledescriptorbytag
     HRESULT GetTableDescriptorByTag(ubyte bTag, uint* pdwCookie, IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-icat-registerfornexttable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-icat-registerfornexttable
     HRESULT RegisterForNextTable(HANDLE hNextTableAvailable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-icat-getnexttable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-icat-getnexttable
     HRESULT GetNextTable(uint dwTimeout, ICAT* ppCAT);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-icat-registerforwhencurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-icat-registerforwhencurrent
     HRESULT RegisterForWhenCurrent(HANDLE hNextTableIsCurrent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-icat-convertnexttocurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-icat-convertnexttocurrent
     HRESULT ConvertNextToCurrent();
 }
 
 @GUID("01f3b398-9527-4736-94db-5195878e97a8")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nn-mpeg2psiparser-ipmt))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nn-mpeg2psiparser-ipmt
 interface IPMT : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipmt-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipmt-initialize
     HRESULT Initialize(ISectionList pSectionList, IMpeg2Data pMPEGData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipmt-getprogramnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipmt-getprogramnumber
     HRESULT GetProgramNumber(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipmt-getversionnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipmt-getversionnumber
     HRESULT GetVersionNumber(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipmt-getpcrpid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipmt-getpcrpid
     HRESULT GetPcrPid(ushort* pPidVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipmt-getcountoftabledescriptors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipmt-getcountoftabledescriptors
     HRESULT GetCountOfTableDescriptors(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipmt-gettabledescriptorbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipmt-gettabledescriptorbyindex
     HRESULT GetTableDescriptorByIndex(uint dwIndex, IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipmt-gettabledescriptorbytag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipmt-gettabledescriptorbytag
     HRESULT GetTableDescriptorByTag(ubyte bTag, uint* pdwCookie, IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipmt-getcountofrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipmt-getcountofrecords
     HRESULT GetCountOfRecords(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipmt-getrecordstreamtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipmt-getrecordstreamtype
     HRESULT GetRecordStreamType(uint dwRecordIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipmt-getrecordelementarypid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipmt-getrecordelementarypid
     HRESULT GetRecordElementaryPid(uint dwRecordIndex, ushort* pPidVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipmt-getrecordcountofdescriptors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipmt-getrecordcountofdescriptors
     HRESULT GetRecordCountOfDescriptors(uint dwRecordIndex, uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipmt-getrecorddescriptorbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipmt-getrecorddescriptorbyindex
     HRESULT GetRecordDescriptorByIndex(uint dwRecordIndex, uint dwDescIndex, IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipmt-getrecorddescriptorbytag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipmt-getrecorddescriptorbytag
     HRESULT GetRecordDescriptorByTag(uint dwRecordIndex, ubyte bTag, uint* pdwCookie, 
                                      IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipmt-queryservicegatewayinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipmt-queryservicegatewayinfo
     HRESULT QueryServiceGatewayInfo(DSMCC_ELEMENT** ppDSMCCList, uint* puiCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipmt-querympeinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipmt-querympeinfo
     HRESULT QueryMPEInfo(MPE_ELEMENT** ppMPEList, uint* puiCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipmt-registerfornexttable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipmt-registerfornexttable
     HRESULT RegisterForNextTable(HANDLE hNextTableAvailable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipmt-getnexttable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipmt-getnexttable
     HRESULT GetNextTable(IPMT* ppPMT);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipmt-registerforwhencurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipmt-registerforwhencurrent
     HRESULT RegisterForWhenCurrent(HANDLE hNextTableIsCurrent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipmt-convertnexttocurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipmt-convertnexttocurrent
     HRESULT ConvertNextToCurrent();
 }
 
 @GUID("d19bdb43-405b-4a7c-a791-c89110c33165")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nn-mpeg2psiparser-itsdt))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nn-mpeg2psiparser-itsdt
 interface ITSDT : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-itsdt-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-itsdt-initialize
     HRESULT Initialize(ISectionList pSectionList, IMpeg2Data pMPEGData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-itsdt-getversionnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-itsdt-getversionnumber
     HRESULT GetVersionNumber(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-itsdt-getcountoftabledescriptors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-itsdt-getcountoftabledescriptors
     HRESULT GetCountOfTableDescriptors(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-itsdt-gettabledescriptorbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-itsdt-gettabledescriptorbyindex
     HRESULT GetTableDescriptorByIndex(uint dwIndex, IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-itsdt-gettabledescriptorbytag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-itsdt-gettabledescriptorbytag
     HRESULT GetTableDescriptorByTag(ubyte bTag, uint* pdwCookie, IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-itsdt-registerfornexttable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-itsdt-registerfornexttable
     HRESULT RegisterForNextTable(HANDLE hNextTableAvailable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-itsdt-getnexttable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-itsdt-getnexttable
     HRESULT GetNextTable(ITSDT* ppTSDT);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-itsdt-registerforwhencurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-itsdt-registerforwhencurrent
     HRESULT RegisterForWhenCurrent(HANDLE hNextTableIsCurrent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-itsdt-convertnexttocurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-itsdt-convertnexttocurrent
     HRESULT ConvertNextToCurrent();
 }
 
 @GUID("919f24c5-7b14-42ac-a4b0-2ae08daf00ac")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nn-mpeg2psiparser-ipsitables))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nn-mpeg2psiparser-ipsitables
 interface IPSITables : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipsitables-gettable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mpeg2psiparser/nf-mpeg2psiparser-ipsitables-gettable
     HRESULT GetTable(uint dwTSID, uint dwTID_PID, uint dwHashedVer, uint dwPara4, IUnknown* ppIUnknown);
 }
 
 @GUID("b2c98995-5eb2-4fb1-b406-f3e8e2026a9a")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nn-atscpsipparser-iatscpsipparser))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nn-atscpsipparser-iatscpsipparser
 interface IAtscPsipParser : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatscpsipparser-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatscpsipparser-initialize
     HRESULT Initialize(IUnknown punkMpeg2Data);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatscpsipparser-getpat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatscpsipparser-getpat
     HRESULT GetPAT(IPAT* ppPAT);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatscpsipparser-getcat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatscpsipparser-getcat
     HRESULT GetCAT(uint dwTimeout, ICAT* ppCAT);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatscpsipparser-getpmt))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatscpsipparser-getpmt
     HRESULT GetPMT(ushort pid, ushort* pwProgramNumber, IPMT* ppPMT);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatscpsipparser-gettsdt))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatscpsipparser-gettsdt
     HRESULT GetTSDT(ITSDT* ppTSDT);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatscpsipparser-getmgt))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatscpsipparser-getmgt
     HRESULT GetMGT(IATSC_MGT* ppMGT);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatscpsipparser-getvct))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatscpsipparser-getvct
     HRESULT GetVCT(ubyte tableId, BOOL fGetNextTable, IATSC_VCT* ppVCT);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatscpsipparser-geteit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatscpsipparser-geteit
     HRESULT GetEIT(ushort pid, ushort* pwSourceId, uint dwTimeout, IATSC_EIT* ppEIT);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatscpsipparser-getett))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatscpsipparser-getett
     HRESULT GetETT(ushort pid, ushort* wSourceId, ushort* pwEventId, IATSC_ETT* ppETT);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatscpsipparser-getstt))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatscpsipparser-getstt
     HRESULT GetSTT(IATSC_STT* ppSTT);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatscpsipparser-geteas))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatscpsipparser-geteas
     HRESULT GetEAS(ushort pid, ISCTE_EAS* ppEAS);
 }
 
 @GUID("8877dabd-c137-4073-97e3-779407a5d87a")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nn-atscpsipparser-iatsc_mgt))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nn-atscpsipparser-iatsc_mgt
 interface IATSC_MGT : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_mgt-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_mgt-initialize
     HRESULT Initialize(ISectionList pSectionList, IMpeg2Data pMPEGData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_mgt-getversionnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_mgt-getversionnumber
     HRESULT GetVersionNumber(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_mgt-getprotocolversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_mgt-getprotocolversion
     HRESULT GetProtocolVersion(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_mgt-getcountofrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_mgt-getcountofrecords
     HRESULT GetCountOfRecords(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_mgt-getrecordtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_mgt-getrecordtype
     HRESULT GetRecordType(uint dwRecordIndex, ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_mgt-getrecordtypepid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_mgt-getrecordtypepid
     HRESULT GetRecordTypePid(uint dwRecordIndex, ushort* ppidVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_mgt-getrecordversionnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_mgt-getrecordversionnumber
     HRESULT GetRecordVersionNumber(uint dwRecordIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_mgt-getrecordcountofdescriptors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_mgt-getrecordcountofdescriptors
     HRESULT GetRecordCountOfDescriptors(uint dwRecordIndex, uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_mgt-getrecorddescriptorbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_mgt-getrecorddescriptorbyindex
     HRESULT GetRecordDescriptorByIndex(uint dwRecordIndex, uint dwIndex, IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_mgt-getrecorddescriptorbytag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_mgt-getrecorddescriptorbytag
     HRESULT GetRecordDescriptorByTag(uint dwRecordIndex, ubyte bTag, uint* pdwCookie, 
                                      IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_mgt-getcountoftabledescriptors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_mgt-getcountoftabledescriptors
     HRESULT GetCountOfTableDescriptors(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_mgt-gettabledescriptorbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_mgt-gettabledescriptorbyindex
     HRESULT GetTableDescriptorByIndex(uint dwIndex, IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_mgt-gettabledescriptorbytag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_mgt-gettabledescriptorbytag
     HRESULT GetTableDescriptorByTag(ubyte bTag, uint* pdwCookie, IGenericDescriptor* ppDescriptor);
 }
 
 @GUID("26879a18-32f9-46c6-91f0-fb6479270e8c")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nn-atscpsipparser-iatsc_vct))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nn-atscpsipparser-iatsc_vct
 interface IATSC_VCT : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-initialize
     HRESULT Initialize(ISectionList pSectionList, IMpeg2Data pMPEGData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getversionnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getversionnumber
     HRESULT GetVersionNumber(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-gettransportstreamid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-gettransportstreamid
     HRESULT GetTransportStreamId(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getprotocolversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getprotocolversion
     HRESULT GetProtocolVersion(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getcountofrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getcountofrecords
     HRESULT GetCountOfRecords(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getrecordname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getrecordname
     HRESULT GetRecordName(uint dwRecordIndex, PWSTR* pwsName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getrecordmajorchannelnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getrecordmajorchannelnumber
     HRESULT GetRecordMajorChannelNumber(uint dwRecordIndex, ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getrecordminorchannelnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getrecordminorchannelnumber
     HRESULT GetRecordMinorChannelNumber(uint dwRecordIndex, ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getrecordmodulationmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getrecordmodulationmode
     HRESULT GetRecordModulationMode(uint dwRecordIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getrecordcarrierfrequency))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getrecordcarrierfrequency
     HRESULT GetRecordCarrierFrequency(uint dwRecordIndex, uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getrecordtransportstreamid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getrecordtransportstreamid
     HRESULT GetRecordTransportStreamId(uint dwRecordIndex, ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getrecordprogramnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getrecordprogramnumber
     HRESULT GetRecordProgramNumber(uint dwRecordIndex, ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getrecordetmlocation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getrecordetmlocation
     HRESULT GetRecordEtmLocation(uint dwRecordIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getrecordisaccesscontrolledbitset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getrecordisaccesscontrolledbitset
     HRESULT GetRecordIsAccessControlledBitSet(uint dwRecordIndex, BOOL* pfVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getrecordishiddenbitset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getrecordishiddenbitset
     HRESULT GetRecordIsHiddenBitSet(uint dwRecordIndex, BOOL* pfVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getrecordispathselectbitset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getrecordispathselectbitset
     HRESULT GetRecordIsPathSelectBitSet(uint dwRecordIndex, BOOL* pfVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getrecordisoutofbandbitset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getrecordisoutofbandbitset
     HRESULT GetRecordIsOutOfBandBitSet(uint dwRecordIndex, BOOL* pfVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getrecordishideguidebitset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getrecordishideguidebitset
     HRESULT GetRecordIsHideGuideBitSet(uint dwRecordIndex, BOOL* pfVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getrecordservicetype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getrecordservicetype
     HRESULT GetRecordServiceType(uint dwRecordIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getrecordsourceid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getrecordsourceid
     HRESULT GetRecordSourceId(uint dwRecordIndex, ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getrecordcountofdescriptors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getrecordcountofdescriptors
     HRESULT GetRecordCountOfDescriptors(uint dwRecordIndex, uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getrecorddescriptorbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getrecorddescriptorbyindex
     HRESULT GetRecordDescriptorByIndex(uint dwRecordIndex, uint dwIndex, IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getrecorddescriptorbytag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getrecorddescriptorbytag
     HRESULT GetRecordDescriptorByTag(uint dwRecordIndex, ubyte bTag, uint* pdwCookie, 
                                      IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getcountoftabledescriptors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-getcountoftabledescriptors
     HRESULT GetCountOfTableDescriptors(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-gettabledescriptorbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-gettabledescriptorbyindex
     HRESULT GetTableDescriptorByIndex(uint dwIndex, IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-gettabledescriptorbytag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_vct-gettabledescriptorbytag
     HRESULT GetTableDescriptorByTag(ubyte bTag, uint* pdwCookie, IGenericDescriptor* ppDescriptor);
 }
 
 @GUID("d7c212d7-76a2-4b4b-aa56-846879a80096")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nn-atscpsipparser-iatsc_eit))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nn-atscpsipparser-iatsc_eit
 interface IATSC_EIT : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_eit-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_eit-initialize
     HRESULT Initialize(ISectionList pSectionList, IMpeg2Data pMPEGData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_eit-getversionnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_eit-getversionnumber
     HRESULT GetVersionNumber(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_eit-getsourceid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_eit-getsourceid
     HRESULT GetSourceId(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_eit-getprotocolversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_eit-getprotocolversion
     HRESULT GetProtocolVersion(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_eit-getcountofrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_eit-getcountofrecords
     HRESULT GetCountOfRecords(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_eit-getrecordeventid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_eit-getrecordeventid
     HRESULT GetRecordEventId(uint dwRecordIndex, ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_eit-getrecordstarttime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_eit-getrecordstarttime
     HRESULT GetRecordStartTime(uint dwRecordIndex, MPEG_DATE_AND_TIME* pmdtVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_eit-getrecordetmlocation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_eit-getrecordetmlocation
     HRESULT GetRecordEtmLocation(uint dwRecordIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_eit-getrecordduration))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_eit-getrecordduration
     HRESULT GetRecordDuration(uint dwRecordIndex, MPEG_TIME* pmdVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_eit-getrecordtitletext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_eit-getrecordtitletext
     HRESULT GetRecordTitleText(uint dwRecordIndex, uint* pdwLength, ubyte** ppText);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_eit-getrecordcountofdescriptors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_eit-getrecordcountofdescriptors
     HRESULT GetRecordCountOfDescriptors(uint dwRecordIndex, uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_eit-getrecorddescriptorbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_eit-getrecorddescriptorbyindex
     HRESULT GetRecordDescriptorByIndex(uint dwRecordIndex, uint dwIndex, IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_eit-getrecorddescriptorbytag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_eit-getrecorddescriptorbytag
     HRESULT GetRecordDescriptorByTag(uint dwRecordIndex, ubyte bTag, uint* pdwCookie, 
                                      IGenericDescriptor* ppDescriptor);
 }
 
 @GUID("5a142cc9-b8cf-4a86-a040-e9cadf3ef3e7")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nn-atscpsipparser-iatsc_ett))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nn-atscpsipparser-iatsc_ett
 interface IATSC_ETT : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_ett-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_ett-initialize
     HRESULT Initialize(ISectionList pSectionList, IMpeg2Data pMPEGData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_ett-getversionnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_ett-getversionnumber
     HRESULT GetVersionNumber(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_ett-getprotocolversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_ett-getprotocolversion
     HRESULT GetProtocolVersion(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_ett-getetmid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_ett-getetmid
     HRESULT GetEtmId(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_ett-getextendedmessagetext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_ett-getextendedmessagetext
     HRESULT GetExtendedMessageText(uint* pdwLength, ubyte** ppText);
 }
 
 @GUID("6bf42423-217d-4d6f-81e1-3a7b360ec896")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nn-atscpsipparser-iatsc_stt))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nn-atscpsipparser-iatsc_stt
 interface IATSC_STT : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_stt-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_stt-initialize
     HRESULT Initialize(ISectionList pSectionList, IMpeg2Data pMPEGData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_stt-getprotocolversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_stt-getprotocolversion
     HRESULT GetProtocolVersion(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_stt-getsystemtime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_stt-getsystemtime
     HRESULT GetSystemTime(MPEG_DATE_AND_TIME* pmdtSystemTime);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_stt-getgpsutcoffset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_stt-getgpsutcoffset
     HRESULT GetGpsUtcOffset(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_stt-getdaylightsavings))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_stt-getdaylightsavings
     HRESULT GetDaylightSavings(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_stt-getcountoftabledescriptors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_stt-getcountoftabledescriptors
     HRESULT GetCountOfTableDescriptors(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_stt-gettabledescriptorbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_stt-gettabledescriptorbyindex
     HRESULT GetTableDescriptorByIndex(uint dwIndex, IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_stt-gettabledescriptorbytag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsc_stt-gettabledescriptorbytag
     HRESULT GetTableDescriptorByTag(ubyte bTag, uint* pdwCookie, IGenericDescriptor* ppDescriptor);
 }
 
 @GUID("1ff544d6-161d-4fae-9faa-4f9f492ae999")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nn-atscpsipparser-iscte_eas))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nn-atscpsipparser-iscte_eas
 interface ISCTE_EAS : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-initialize
     HRESULT Initialize(ISectionList pSectionList, IMpeg2Data pMPEGData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getversionnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getversionnumber
     HRESULT GetVersionNumber(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getsequencynumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getsequencynumber
     HRESULT GetSequencyNumber(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getprotocolversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getprotocolversion
     HRESULT GetProtocolVersion(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-geteaseventid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-geteaseventid
     HRESULT GetEASEventID(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getoriginatorcode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getoriginatorcode
     HRESULT GetOriginatorCode(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-geteaseventcodelen))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-geteaseventcodelen
     HRESULT GetEASEventCodeLen(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-geteaseventcode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-geteaseventcode
     HRESULT GetEASEventCode(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getrawnatureofactivationtextlen))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getrawnatureofactivationtextlen
     HRESULT GetRawNatureOfActivationTextLen(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getrawnatureofactivationtext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getrawnatureofactivationtext
     HRESULT GetRawNatureOfActivationText(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getnatureofactivationtext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getnatureofactivationtext
     HRESULT GetNatureOfActivationText(BSTR bstrIS0639code, BSTR* pbstrString);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-gettimeremaining))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-gettimeremaining
     HRESULT GetTimeRemaining(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getstarttime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getstarttime
     HRESULT GetStartTime(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getduration))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getduration
     HRESULT GetDuration(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getalertpriority))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getalertpriority
     HRESULT GetAlertPriority(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getdetailsoobsourceid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getdetailsoobsourceid
     HRESULT GetDetailsOOBSourceID(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getdetailsmajor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getdetailsmajor
     HRESULT GetDetailsMajor(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getdetailsminor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getdetailsminor
     HRESULT GetDetailsMinor(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getdetailsaudiooobsourceid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getdetailsaudiooobsourceid
     HRESULT GetDetailsAudioOOBSourceID(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getalerttext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getalerttext
     HRESULT GetAlertText(BSTR bstrIS0639code, BSTR* pbstrString);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getrawalerttextlen))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getrawalerttextlen
     HRESULT GetRawAlertTextLen(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getrawalerttext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getrawalerttext
     HRESULT GetRawAlertText(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getlocationcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getlocationcount
     HRESULT GetLocationCount(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getlocationcodes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getlocationcodes
     HRESULT GetLocationCodes(ubyte bIndex, ubyte* pbState, ubyte* pbCountySubdivision, ushort* pwCounty);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getexceptioncount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getexceptioncount
     HRESULT GetExceptionCount(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getexceptionservice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getexceptionservice
     HRESULT GetExceptionService(ubyte bIndex, ubyte* pbIBRef, ushort* pwFirst, ushort* pwSecond);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getcountoftabledescriptors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-getcountoftabledescriptors
     HRESULT GetCountOfTableDescriptors(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-gettabledescriptorbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-gettabledescriptorbyindex
     HRESULT GetTableDescriptorByIndex(uint dwIndex, IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-gettabledescriptorbytag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iscte_eas-gettabledescriptorbytag
     HRESULT GetTableDescriptorByTag(ubyte bTag, uint* pdwCookie, IGenericDescriptor* ppDescriptor);
 }
 
 @GUID("ff76e60c-0283-43ea-ba32-b422238547ee")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nn-atscpsipparser-iatsccontentadvisorydescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nn-atscpsipparser-iatsccontentadvisorydescriptor
 interface IAtscContentAdvisoryDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsccontentadvisorydescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsccontentadvisorydescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsccontentadvisorydescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsccontentadvisorydescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsccontentadvisorydescriptor-getratingregioncount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsccontentadvisorydescriptor-getratingregioncount
     HRESULT GetRatingRegionCount(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsccontentadvisorydescriptor-getrecordratingregion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsccontentadvisorydescriptor-getrecordratingregion
     HRESULT GetRecordRatingRegion(ubyte bIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsccontentadvisorydescriptor-getrecordrateddimensions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsccontentadvisorydescriptor-getrecordrateddimensions
     HRESULT GetRecordRatedDimensions(ubyte bIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsccontentadvisorydescriptor-getrecordratingdimension))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsccontentadvisorydescriptor-getrecordratingdimension
     HRESULT GetRecordRatingDimension(ubyte bIndexOuter, ubyte bIndexInner, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsccontentadvisorydescriptor-getrecordratingvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsccontentadvisorydescriptor-getrecordratingvalue
     HRESULT GetRecordRatingValue(ubyte bIndexOuter, ubyte bIndexInner, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsccontentadvisorydescriptor-getrecordratingdescriptiontext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iatsccontentadvisorydescriptor-getrecordratingdescriptiontext
     HRESULT GetRecordRatingDescriptionText(ubyte bIndex, ubyte* pbLength, ubyte** ppText);
 }
 
 @GUID("40834007-6834-46f0-bd45-d5f6a6be258c")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nn-atscpsipparser-icaptionservicedescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nn-atscpsipparser-icaptionservicedescriptor
 interface ICaptionServiceDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-icaptionservicedescriptor-getnumberofservices))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-icaptionservicedescriptor-getnumberofservices
     HRESULT GetNumberOfServices(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-icaptionservicedescriptor-getlanguagecode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-icaptionservicedescriptor-getlanguagecode
     HRESULT GetLanguageCode(ubyte bIndex, ubyte* LangCode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-icaptionservicedescriptor-getcaptionservicenumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-icaptionservicedescriptor-getcaptionservicenumber
     HRESULT GetCaptionServiceNumber(ubyte bIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-icaptionservicedescriptor-getcctype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-icaptionservicedescriptor-getcctype
     HRESULT GetCCType(ubyte bIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-icaptionservicedescriptor-geteasyreader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-icaptionservicedescriptor-geteasyreader
     HRESULT GetEasyReader(ubyte bIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-icaptionservicedescriptor-getwideaspectratio))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-icaptionservicedescriptor-getwideaspectratio
     HRESULT GetWideAspectRatio(ubyte bIndex, ubyte* pbVal);
 }
 
 @GUID("58c3c827-9d91-4215-bff3-820a49f0904c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nn-atscpsipparser-iservicelocationdescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nn-atscpsipparser-iservicelocationdescriptor
 interface IServiceLocationDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iservicelocationdescriptor-getpcr_pid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iservicelocationdescriptor-getpcr_pid
     HRESULT GetPCR_PID(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iservicelocationdescriptor-getnumberofelements))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iservicelocationdescriptor-getnumberofelements
     HRESULT GetNumberOfElements(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iservicelocationdescriptor-getelementstreamtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iservicelocationdescriptor-getelementstreamtype
     HRESULT GetElementStreamType(ubyte bIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iservicelocationdescriptor-getelementpid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iservicelocationdescriptor-getelementpid
     HRESULT GetElementPID(ubyte bIndex, ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iservicelocationdescriptor-getelementlanguagecode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/atscpsipparser/nf-atscpsipparser-iservicelocationdescriptor-getelementlanguagecode
     HRESULT GetElementLanguageCode(ubyte bIndex, ubyte* LangCode);
 }
 
 @GUID("583ec3cc-4960-4857-982b-41a33ea0a006")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsattrib/nn-dsattrib-iattributeset))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsattrib/nn-dsattrib-iattributeset
 interface IAttributeSet : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsattrib/nf-dsattrib-iattributeset-setattrib))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsattrib/nf-dsattrib-iattributeset-setattrib
     HRESULT SetAttrib(GUID guidAttribute, ubyte* pbAttribute, uint dwAttributeLength);
 }
 
 @GUID("52dbd1ec-e48f-4528-9232-f442a68f0ae1")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsattrib/nn-dsattrib-iattributeget))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsattrib/nn-dsattrib-iattributeget
 interface IAttributeGet : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsattrib/nf-dsattrib-iattributeget-getcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsattrib/nf-dsattrib-iattributeget-getcount
     HRESULT GetCount(int* plCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsattrib/nf-dsattrib-iattributeget-getattribindexed))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsattrib/nf-dsattrib-iattributeget-getattribindexed
     HRESULT GetAttribIndexed(int lIndex, GUID* pguidAttribute, ubyte* pbAttribute, uint* pdwAttributeLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dsattrib/nf-dsattrib-iattributeget-getattrib))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dsattrib/nf-dsattrib-iattributeget-getattrib
     HRESULT GetAttrib(GUID guidAttribute, ubyte* pbAttribute, uint* pdwAttributeLength);
 }
 
 @GUID("b758a7bd-14dc-449d-b828-35909acb3b1e")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbsiparser))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbsiparser
 interface IDvbSiParser : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsiparser-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsiparser-initialize
     HRESULT Initialize(IUnknown punkMpeg2Data);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsiparser-getpat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsiparser-getpat
     HRESULT GetPAT(IPAT* ppPAT);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsiparser-getcat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsiparser-getcat
     HRESULT GetCAT(uint dwTimeout, ICAT* ppCAT);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsiparser-getpmt))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsiparser-getpmt
     HRESULT GetPMT(ushort pid, ushort* pwProgramNumber, IPMT* ppPMT);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsiparser-gettsdt))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsiparser-gettsdt
     HRESULT GetTSDT(ITSDT* ppTSDT);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsiparser-getnit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsiparser-getnit
     HRESULT GetNIT(ubyte tableId, ushort* pwNetworkId, IDVB_NIT* ppNIT);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsiparser-getsdt))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsiparser-getsdt
     HRESULT GetSDT(ubyte tableId, ushort* pwTransportStreamId, IDVB_SDT* ppSDT);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsiparser-geteit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsiparser-geteit
     HRESULT GetEIT(ubyte tableId, ushort* pwServiceId, IDVB_EIT* ppEIT);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsiparser-getbat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsiparser-getbat
     HRESULT GetBAT(ushort* pwBouquetId, IDVB_BAT* ppBAT);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsiparser-getrst))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsiparser-getrst
     HRESULT GetRST(uint dwTimeout, IDVB_RST* ppRST);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsiparser-getst))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsiparser-getst
     HRESULT GetST(ushort pid, uint dwTimeout, IDVB_ST* ppST);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsiparser-gettdt))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsiparser-gettdt
     HRESULT GetTDT(IDVB_TDT* ppTDT);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsiparser-gettot))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsiparser-gettot
     HRESULT GetTOT(IDVB_TOT* ppTOT);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsiparser-getdit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsiparser-getdit
     HRESULT GetDIT(uint dwTimeout, IDVB_DIT* ppDIT);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsiparser-getsit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsiparser-getsit
     HRESULT GetSIT(uint dwTimeout, IDVB_SIT* ppSIT);
 }
 
 @GUID("0ac5525f-f816-42f4-93ba-4c0f32f46e54")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbsiparser2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbsiparser2
 interface IDvbSiParser2 : IDvbSiParser
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsiparser2-geteit2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsiparser2-geteit2
     HRESULT GetEIT2(ubyte tableId, ushort* pwServiceId, ubyte* pbSegment, IDVB_EIT2* ppEIT);
 }
 
 @GUID("900e4bb7-18cd-453f-98be-3be6aa211772")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdbsiparser2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdbsiparser2
 interface IIsdbSiParser2 : IDvbSiParser2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbsiparser2-getsdt))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbsiparser2-getsdt
     HRESULT GetSDT(ubyte tableId, ushort* pwTransportStreamId, IISDB_SDT* ppSDT);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbsiparser2-getbit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbsiparser2-getbit
     HRESULT GetBIT(ubyte tableId, ushort* pwOriginalNetworkId, IISDB_BIT* ppBIT);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbsiparser2-getnbit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbsiparser2-getnbit
     HRESULT GetNBIT(ubyte tableId, ushort* pwOriginalNetworkId, IISDB_NBIT* ppNBIT);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbsiparser2-getldt))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbsiparser2-getldt
     HRESULT GetLDT(ubyte tableId, ushort* pwOriginalServiceId, IISDB_LDT* ppLDT);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbsiparser2-getsdtt))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbsiparser2-getsdtt
     HRESULT GetSDTT(ubyte tableId, ushort* pwTableIdExt, IISDB_SDTT* ppSDTT);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbsiparser2-getcdt))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbsiparser2-getcdt
     HRESULT GetCDT(ubyte tableId, ubyte bSectionNumber, ushort* pwDownloadDataId, IISDB_CDT* ppCDT);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbsiparser2-getemm))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbsiparser2-getemm
     HRESULT GetEMM(ushort pid, ushort wTableIdExt, IISDB_EMM* ppEMM);
 }
 
 @GUID("c64935f4-29e4-4e22-911a-63f7f55cb097")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvb_nit))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvb_nit
 interface IDVB_NIT : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_nit-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_nit-initialize
     HRESULT Initialize(ISectionList pSectionList, IMpeg2Data pMPEGData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_nit-getversionnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_nit-getversionnumber
     HRESULT GetVersionNumber(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_nit-getnetworkid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_nit-getnetworkid
     HRESULT GetNetworkId(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_nit-getcountoftabledescriptors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_nit-getcountoftabledescriptors
     HRESULT GetCountOfTableDescriptors(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_nit-gettabledescriptorbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_nit-gettabledescriptorbyindex
     HRESULT GetTableDescriptorByIndex(uint dwIndex, IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_nit-gettabledescriptorbytag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_nit-gettabledescriptorbytag
     HRESULT GetTableDescriptorByTag(ubyte bTag, uint* pdwCookie, IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_nit-getcountofrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_nit-getcountofrecords
     HRESULT GetCountOfRecords(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_nit-getrecordtransportstreamid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_nit-getrecordtransportstreamid
     HRESULT GetRecordTransportStreamId(uint dwRecordIndex, ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_nit-getrecordoriginalnetworkid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_nit-getrecordoriginalnetworkid
     HRESULT GetRecordOriginalNetworkId(uint dwRecordIndex, ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_nit-getrecordcountofdescriptors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_nit-getrecordcountofdescriptors
     HRESULT GetRecordCountOfDescriptors(uint dwRecordIndex, uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_nit-getrecorddescriptorbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_nit-getrecorddescriptorbyindex
     HRESULT GetRecordDescriptorByIndex(uint dwRecordIndex, uint dwIndex, IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_nit-getrecorddescriptorbytag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_nit-getrecorddescriptorbytag
     HRESULT GetRecordDescriptorByTag(uint dwRecordIndex, ubyte bTag, uint* pdwCookie, 
                                      IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_nit-registerfornexttable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_nit-registerfornexttable
     HRESULT RegisterForNextTable(HANDLE hNextTableAvailable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_nit-getnexttable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_nit-getnexttable
     HRESULT GetNextTable(IDVB_NIT* ppNIT);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_nit-registerforwhencurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_nit-registerforwhencurrent
     HRESULT RegisterForWhenCurrent(HANDLE hNextTableIsCurrent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_nit-convertnexttocurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_nit-convertnexttocurrent
     HRESULT ConvertNextToCurrent();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_nit-getversionhash))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_nit-getversionhash
     HRESULT GetVersionHash(uint* pdwVersionHash);
 }
 
 @GUID("02cad8d3-fe43-48e2-90bd-450ed9a8a5fd")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvb_sdt))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvb_sdt
 interface IDVB_SDT : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sdt-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sdt-initialize
     HRESULT Initialize(ISectionList pSectionList, IMpeg2Data pMPEGData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sdt-getversionnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sdt-getversionnumber
     HRESULT GetVersionNumber(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sdt-gettransportstreamid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sdt-gettransportstreamid
     HRESULT GetTransportStreamId(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sdt-getoriginalnetworkid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sdt-getoriginalnetworkid
     HRESULT GetOriginalNetworkId(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sdt-getcountofrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sdt-getcountofrecords
     HRESULT GetCountOfRecords(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sdt-getrecordserviceid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sdt-getrecordserviceid
     HRESULT GetRecordServiceId(uint dwRecordIndex, ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sdt-getrecordeitscheduleflag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sdt-getrecordeitscheduleflag
     HRESULT GetRecordEITScheduleFlag(uint dwRecordIndex, BOOL* pfVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sdt-getrecordeitpresentfollowingflag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sdt-getrecordeitpresentfollowingflag
     HRESULT GetRecordEITPresentFollowingFlag(uint dwRecordIndex, BOOL* pfVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sdt-getrecordrunningstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sdt-getrecordrunningstatus
     HRESULT GetRecordRunningStatus(uint dwRecordIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sdt-getrecordfreecamode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sdt-getrecordfreecamode
     HRESULT GetRecordFreeCAMode(uint dwRecordIndex, BOOL* pfVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sdt-getrecordcountofdescriptors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sdt-getrecordcountofdescriptors
     HRESULT GetRecordCountOfDescriptors(uint dwRecordIndex, uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sdt-getrecorddescriptorbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sdt-getrecorddescriptorbyindex
     HRESULT GetRecordDescriptorByIndex(uint dwRecordIndex, uint dwIndex, IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sdt-getrecorddescriptorbytag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sdt-getrecorddescriptorbytag
     HRESULT GetRecordDescriptorByTag(uint dwRecordIndex, ubyte bTag, uint* pdwCookie, 
                                      IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sdt-registerfornexttable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sdt-registerfornexttable
     HRESULT RegisterForNextTable(HANDLE hNextTableAvailable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sdt-getnexttable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sdt-getnexttable
     HRESULT GetNextTable(IDVB_SDT* ppSDT);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sdt-registerforwhencurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sdt-registerforwhencurrent
     HRESULT RegisterForWhenCurrent(HANDLE hNextTableIsCurrent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sdt-convertnexttocurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sdt-convertnexttocurrent
     HRESULT ConvertNextToCurrent();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sdt-getversionhash))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sdt-getversionhash
     HRESULT GetVersionHash(uint* pdwVersionHash);
 }
 
 @GUID("3f3dc9a2-bb32-4fb9-ae9e-d856848927a3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdb_sdt))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdb_sdt
 interface IISDB_SDT : IDVB_SDT
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdt-getrecordeituserdefinedflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdt-getrecordeituserdefinedflags
     HRESULT GetRecordEITUserDefinedFlags(uint dwRecordIndex, ubyte* pbVal);
 }
 
 @GUID("442db029-02cb-4495-8b92-1c13375bce99")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvb_eit))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvb_eit
 interface IDVB_EIT : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-initialize
     HRESULT Initialize(ISectionList pSectionList, IMpeg2Data pMPEGData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-getversionnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-getversionnumber
     HRESULT GetVersionNumber(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-getserviceid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-getserviceid
     HRESULT GetServiceId(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-gettransportstreamid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-gettransportstreamid
     HRESULT GetTransportStreamId(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-getoriginalnetworkid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-getoriginalnetworkid
     HRESULT GetOriginalNetworkId(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-getsegmentlastsectionnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-getsegmentlastsectionnumber
     HRESULT GetSegmentLastSectionNumber(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-getlasttableid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-getlasttableid
     HRESULT GetLastTableId(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-getcountofrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-getcountofrecords
     HRESULT GetCountOfRecords(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-getrecordeventid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-getrecordeventid
     HRESULT GetRecordEventId(uint dwRecordIndex, ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-getrecordstarttime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-getrecordstarttime
     HRESULT GetRecordStartTime(uint dwRecordIndex, MPEG_DATE_AND_TIME* pmdtVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-getrecordduration))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-getrecordduration
     HRESULT GetRecordDuration(uint dwRecordIndex, MPEG_TIME* pmdVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-getrecordrunningstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-getrecordrunningstatus
     HRESULT GetRecordRunningStatus(uint dwRecordIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-getrecordfreecamode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-getrecordfreecamode
     HRESULT GetRecordFreeCAMode(uint dwRecordIndex, BOOL* pfVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-getrecordcountofdescriptors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-getrecordcountofdescriptors
     HRESULT GetRecordCountOfDescriptors(uint dwRecordIndex, uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-getrecorddescriptorbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-getrecorddescriptorbyindex
     HRESULT GetRecordDescriptorByIndex(uint dwRecordIndex, uint dwIndex, IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-getrecorddescriptorbytag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-getrecorddescriptorbytag
     HRESULT GetRecordDescriptorByTag(uint dwRecordIndex, ubyte bTag, uint* pdwCookie, 
                                      IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-registerfornexttable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-registerfornexttable
     HRESULT RegisterForNextTable(HANDLE hNextTableAvailable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-getnexttable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-getnexttable
     HRESULT GetNextTable(IDVB_EIT* ppEIT);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-registerforwhencurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-registerforwhencurrent
     HRESULT RegisterForWhenCurrent(HANDLE hNextTableIsCurrent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-convertnexttocurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-convertnexttocurrent
     HRESULT ConvertNextToCurrent();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-getversionhash))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit-getversionhash
     HRESULT GetVersionHash(uint* pdwVersionHash);
 }
 
 @GUID("61a389e0-9b9e-4ba0-aeea-5ddd159820ea")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvb_eit2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvb_eit2
 interface IDVB_EIT2 : IDVB_EIT
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit2-getsegmentinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit2-getsegmentinfo
     HRESULT GetSegmentInfo(ubyte* pbTid, ubyte* pbSegment);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit2-getrecordsection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_eit2-getrecordsection
     HRESULT GetRecordSection(uint dwRecordIndex, ubyte* pbVal);
 }
 
 @GUID("ece9bb0c-43b6-4558-a0ec-1812c34cd6ca")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvb_bat))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvb_bat
 interface IDVB_BAT : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_bat-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_bat-initialize
     HRESULT Initialize(ISectionList pSectionList, IMpeg2Data pMPEGData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_bat-getversionnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_bat-getversionnumber
     HRESULT GetVersionNumber(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_bat-getbouquetid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_bat-getbouquetid
     HRESULT GetBouquetId(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_bat-getcountoftabledescriptors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_bat-getcountoftabledescriptors
     HRESULT GetCountOfTableDescriptors(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_bat-gettabledescriptorbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_bat-gettabledescriptorbyindex
     HRESULT GetTableDescriptorByIndex(uint dwIndex, IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_bat-gettabledescriptorbytag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_bat-gettabledescriptorbytag
     HRESULT GetTableDescriptorByTag(ubyte bTag, uint* pdwCookie, IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_bat-getcountofrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_bat-getcountofrecords
     HRESULT GetCountOfRecords(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_bat-getrecordtransportstreamid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_bat-getrecordtransportstreamid
     HRESULT GetRecordTransportStreamId(uint dwRecordIndex, ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_bat-getrecordoriginalnetworkid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_bat-getrecordoriginalnetworkid
     HRESULT GetRecordOriginalNetworkId(uint dwRecordIndex, ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_bat-getrecordcountofdescriptors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_bat-getrecordcountofdescriptors
     HRESULT GetRecordCountOfDescriptors(uint dwRecordIndex, uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_bat-getrecorddescriptorbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_bat-getrecorddescriptorbyindex
     HRESULT GetRecordDescriptorByIndex(uint dwRecordIndex, uint dwIndex, IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_bat-getrecorddescriptorbytag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_bat-getrecorddescriptorbytag
     HRESULT GetRecordDescriptorByTag(uint dwRecordIndex, ubyte bTag, uint* pdwCookie, 
                                      IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_bat-registerfornexttable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_bat-registerfornexttable
     HRESULT RegisterForNextTable(HANDLE hNextTableAvailable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_bat-getnexttable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_bat-getnexttable
     HRESULT GetNextTable(IDVB_BAT* ppBAT);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_bat-registerforwhencurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_bat-registerforwhencurrent
     HRESULT RegisterForWhenCurrent(HANDLE hNextTableIsCurrent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_bat-convertnexttocurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_bat-convertnexttocurrent
     HRESULT ConvertNextToCurrent();
 }
 
 @GUID("f47dcd04-1e23-4fb7-9f96-b40eead10b2b")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvb_rst))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvb_rst
 interface IDVB_RST : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_rst-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_rst-initialize
     HRESULT Initialize(ISectionList pSectionList);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_rst-getcountofrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_rst-getcountofrecords
     HRESULT GetCountOfRecords(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_rst-getrecordtransportstreamid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_rst-getrecordtransportstreamid
     HRESULT GetRecordTransportStreamId(uint dwRecordIndex, ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_rst-getrecordoriginalnetworkid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_rst-getrecordoriginalnetworkid
     HRESULT GetRecordOriginalNetworkId(uint dwRecordIndex, ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_rst-getrecordserviceid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_rst-getrecordserviceid
     HRESULT GetRecordServiceId(uint dwRecordIndex, ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_rst-getrecordeventid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_rst-getrecordeventid
     HRESULT GetRecordEventId(uint dwRecordIndex, ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_rst-getrecordrunningstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_rst-getrecordrunningstatus
     HRESULT GetRecordRunningStatus(uint dwRecordIndex, ubyte* pbVal);
 }
 
 @GUID("4d5b9f23-2a02-45de-bcda-5d5dbfbfbe62")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvb_st))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvb_st
 interface IDVB_ST : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_st-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_st-initialize
     HRESULT Initialize(ISectionList pSectionList);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_st-getdatalength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_st-getdatalength
     HRESULT GetDataLength(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_st-getdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_st-getdata
     HRESULT GetData(ubyte** ppData);
 }
 
 @GUID("0780dc7d-d55c-4aef-97e6-6b75906e2796")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvb_tdt))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvb_tdt
 interface IDVB_TDT : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_tdt-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_tdt-initialize
     HRESULT Initialize(ISectionList pSectionList);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_tdt-getutctime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_tdt-getutctime
     HRESULT GetUTCTime(MPEG_DATE_AND_TIME* pmdtVal);
 }
 
 @GUID("83295d6a-faba-4ee1-9b15-8067696910ae")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvb_tot))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvb_tot
 interface IDVB_TOT : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_tot-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_tot-initialize
     HRESULT Initialize(ISectionList pSectionList);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_tot-getutctime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_tot-getutctime
     HRESULT GetUTCTime(MPEG_DATE_AND_TIME* pmdtVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_tot-getcountoftabledescriptors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_tot-getcountoftabledescriptors
     HRESULT GetCountOfTableDescriptors(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_tot-gettabledescriptorbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_tot-gettabledescriptorbyindex
     HRESULT GetTableDescriptorByIndex(uint dwIndex, IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_tot-gettabledescriptorbytag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_tot-gettabledescriptorbytag
     HRESULT GetTableDescriptorByTag(ubyte bTag, uint* pdwCookie, IGenericDescriptor* ppDescriptor);
 }
 
 @GUID("91bffdf9-9432-410f-86ef-1c228ed0ad70")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvb_dit))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvb_dit
 interface IDVB_DIT : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_dit-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_dit-initialize
     HRESULT Initialize(ISectionList pSectionList);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_dit-gettransitionflag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_dit-gettransitionflag
     HRESULT GetTransitionFlag(BOOL* pfVal);
 }
 
 @GUID("68cdce53-8bea-45c2-9d9d-acf575a089b5")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvb_sit))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvb_sit
 interface IDVB_SIT : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sit-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sit-initialize
     HRESULT Initialize(ISectionList pSectionList, IMpeg2Data pMPEGData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sit-getversionnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sit-getversionnumber
     HRESULT GetVersionNumber(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sit-getcountoftabledescriptors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sit-getcountoftabledescriptors
     HRESULT GetCountOfTableDescriptors(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sit-gettabledescriptorbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sit-gettabledescriptorbyindex
     HRESULT GetTableDescriptorByIndex(uint dwIndex, IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sit-gettabledescriptorbytag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sit-gettabledescriptorbytag
     HRESULT GetTableDescriptorByTag(ubyte bTag, uint* pdwCookie, IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sit-getcountofrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sit-getcountofrecords
     HRESULT GetCountOfRecords(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sit-getrecordserviceid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sit-getrecordserviceid
     HRESULT GetRecordServiceId(uint dwRecordIndex, ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sit-getrecordrunningstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sit-getrecordrunningstatus
     HRESULT GetRecordRunningStatus(uint dwRecordIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sit-getrecordcountofdescriptors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sit-getrecordcountofdescriptors
     HRESULT GetRecordCountOfDescriptors(uint dwRecordIndex, uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sit-getrecorddescriptorbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sit-getrecorddescriptorbyindex
     HRESULT GetRecordDescriptorByIndex(uint dwRecordIndex, uint dwIndex, IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sit-getrecorddescriptorbytag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sit-getrecorddescriptorbytag
     HRESULT GetRecordDescriptorByTag(uint dwRecordIndex, ubyte bTag, uint* pdwCookie, 
                                      IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sit-registerfornexttable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sit-registerfornexttable
     HRESULT RegisterForNextTable(HANDLE hNextTableAvailable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sit-getnexttable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sit-getnexttable
     HRESULT GetNextTable(uint dwTimeout, IDVB_SIT* ppSIT);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sit-registerforwhencurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sit-registerforwhencurrent
     HRESULT RegisterForWhenCurrent(HANDLE hNextTableIsCurrent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sit-convertnexttocurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvb_sit-convertnexttocurrent
     HRESULT ConvertNextToCurrent();
 }
 
 @GUID("537cd71e-0e46-4173-9001-ba043f3e49e2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdb_bit))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdb_bit
 interface IISDB_BIT : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_bit-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_bit-initialize
     HRESULT Initialize(ISectionList pSectionList, IMpeg2Data pMPEGData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_bit-getversionnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_bit-getversionnumber
     HRESULT GetVersionNumber(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_bit-getoriginalnetworkid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_bit-getoriginalnetworkid
     HRESULT GetOriginalNetworkId(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_bit-getbroadcastviewpropriety))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_bit-getbroadcastviewpropriety
     HRESULT GetBroadcastViewPropriety(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_bit-getcountoftabledescriptors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_bit-getcountoftabledescriptors
     HRESULT GetCountOfTableDescriptors(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_bit-gettabledescriptorbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_bit-gettabledescriptorbyindex
     HRESULT GetTableDescriptorByIndex(uint dwIndex, IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_bit-gettabledescriptorbytag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_bit-gettabledescriptorbytag
     HRESULT GetTableDescriptorByTag(ubyte bTag, uint* pdwCookie, IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_bit-getcountofrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_bit-getcountofrecords
     HRESULT GetCountOfRecords(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_bit-getrecordbroadcasterid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_bit-getrecordbroadcasterid
     HRESULT GetRecordBroadcasterId(uint dwRecordIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_bit-getrecordcountofdescriptors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_bit-getrecordcountofdescriptors
     HRESULT GetRecordCountOfDescriptors(uint dwRecordIndex, uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_bit-getrecorddescriptorbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_bit-getrecorddescriptorbyindex
     HRESULT GetRecordDescriptorByIndex(uint dwRecordIndex, uint dwIndex, IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_bit-getrecorddescriptorbytag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_bit-getrecorddescriptorbytag
     HRESULT GetRecordDescriptorByTag(uint dwRecordIndex, ubyte bTag, uint* pdwCookie, 
                                      IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_bit-getversionhash))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_bit-getversionhash
     HRESULT GetVersionHash(uint* pdwVersionHash);
 }
 
 @GUID("1b1863ef-08f1-40b7-a559-3b1eff8cafa6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdb_nbit))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdb_nbit
 interface IISDB_NBIT : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_nbit-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_nbit-initialize
     HRESULT Initialize(ISectionList pSectionList, IMpeg2Data pMPEGData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_nbit-getversionnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_nbit-getversionnumber
     HRESULT GetVersionNumber(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_nbit-getoriginalnetworkid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_nbit-getoriginalnetworkid
     HRESULT GetOriginalNetworkId(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_nbit-getcountofrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_nbit-getcountofrecords
     HRESULT GetCountOfRecords(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_nbit-getrecordinformationid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_nbit-getrecordinformationid
     HRESULT GetRecordInformationId(uint dwRecordIndex, ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_nbit-getrecordinformationtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_nbit-getrecordinformationtype
     HRESULT GetRecordInformationType(uint dwRecordIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_nbit-getrecorddescriptionbodylocation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_nbit-getrecorddescriptionbodylocation
     HRESULT GetRecordDescriptionBodyLocation(uint dwRecordIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_nbit-getrecordmessagesectionnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_nbit-getrecordmessagesectionnumber
     HRESULT GetRecordMessageSectionNumber(uint dwRecordIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_nbit-getrecorduserdefined))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_nbit-getrecorduserdefined
     HRESULT GetRecordUserDefined(uint dwRecordIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_nbit-getrecordnumberofkeys))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_nbit-getrecordnumberofkeys
     HRESULT GetRecordNumberOfKeys(uint dwRecordIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_nbit-getrecordkeys))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_nbit-getrecordkeys
     HRESULT GetRecordKeys(uint dwRecordIndex, ubyte** pbKeys);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_nbit-getrecordcountofdescriptors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_nbit-getrecordcountofdescriptors
     HRESULT GetRecordCountOfDescriptors(uint dwRecordIndex, uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_nbit-getrecorddescriptorbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_nbit-getrecorddescriptorbyindex
     HRESULT GetRecordDescriptorByIndex(uint dwRecordIndex, uint dwIndex, IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_nbit-getrecorddescriptorbytag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_nbit-getrecorddescriptorbytag
     HRESULT GetRecordDescriptorByTag(uint dwRecordIndex, ubyte bTag, uint* pdwCookie, 
                                      IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_nbit-getversionhash))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_nbit-getversionhash
     HRESULT GetVersionHash(uint* pdwVersionHash);
 }
 
 @GUID("141a546b-02ff-4fb9-a3a3-2f074b74a9a9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdb_ldt))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdb_ldt
 interface IISDB_LDT : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_ldt-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_ldt-initialize
     HRESULT Initialize(ISectionList pSectionList, IMpeg2Data pMPEGData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_ldt-getversionnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_ldt-getversionnumber
     HRESULT GetVersionNumber(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_ldt-getoriginalserviceid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_ldt-getoriginalserviceid
     HRESULT GetOriginalServiceId(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_ldt-gettransportstreamid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_ldt-gettransportstreamid
     HRESULT GetTransportStreamId(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_ldt-getoriginalnetworkid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_ldt-getoriginalnetworkid
     HRESULT GetOriginalNetworkId(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_ldt-getcountofrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_ldt-getcountofrecords
     HRESULT GetCountOfRecords(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_ldt-getrecorddescriptionid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_ldt-getrecorddescriptionid
     HRESULT GetRecordDescriptionId(uint dwRecordIndex, ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_ldt-getrecordcountofdescriptors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_ldt-getrecordcountofdescriptors
     HRESULT GetRecordCountOfDescriptors(uint dwRecordIndex, uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_ldt-getrecorddescriptorbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_ldt-getrecorddescriptorbyindex
     HRESULT GetRecordDescriptorByIndex(uint dwRecordIndex, uint dwIndex, IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_ldt-getrecorddescriptorbytag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_ldt-getrecorddescriptorbytag
     HRESULT GetRecordDescriptorByTag(uint dwRecordIndex, ubyte bTag, uint* pdwCookie, 
                                      IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_ldt-getversionhash))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_ldt-getversionhash
     HRESULT GetVersionHash(uint* pdwVersionHash);
 }
 
 @GUID("ee60ef2d-813a-4dc7-bf92-ea13dac85313")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdb_sdtt))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdb_sdtt
 interface IISDB_SDTT : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-initialize
     HRESULT Initialize(ISectionList pSectionList, IMpeg2Data pMPEGData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-getversionnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-getversionnumber
     HRESULT GetVersionNumber(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-gettableidext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-gettableidext
     HRESULT GetTableIdExt(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-gettransportstreamid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-gettransportstreamid
     HRESULT GetTransportStreamId(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-getoriginalnetworkid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-getoriginalnetworkid
     HRESULT GetOriginalNetworkId(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-getserviceid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-getserviceid
     HRESULT GetServiceId(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-getcountofrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-getcountofrecords
     HRESULT GetCountOfRecords(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-getrecordgroup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-getrecordgroup
     HRESULT GetRecordGroup(uint dwRecordIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-getrecordtargetversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-getrecordtargetversion
     HRESULT GetRecordTargetVersion(uint dwRecordIndex, ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-getrecordnewversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-getrecordnewversion
     HRESULT GetRecordNewVersion(uint dwRecordIndex, ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-getrecorddownloadlevel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-getrecorddownloadlevel
     HRESULT GetRecordDownloadLevel(uint dwRecordIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-getrecordversionindicator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-getrecordversionindicator
     HRESULT GetRecordVersionIndicator(uint dwRecordIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-getrecordscheduletimeshiftinformation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-getrecordscheduletimeshiftinformation
     HRESULT GetRecordScheduleTimeShiftInformation(uint dwRecordIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-getrecordcountofschedules))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-getrecordcountofschedules
     HRESULT GetRecordCountOfSchedules(uint dwRecordIndex, uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-getrecordstarttimebyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-getrecordstarttimebyindex
     HRESULT GetRecordStartTimeByIndex(uint dwRecordIndex, uint dwIndex, MPEG_DATE_AND_TIME* pmdtVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-getrecorddurationbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-getrecorddurationbyindex
     HRESULT GetRecordDurationByIndex(uint dwRecordIndex, uint dwIndex, MPEG_TIME* pmdVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-getrecordcountofdescriptors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-getrecordcountofdescriptors
     HRESULT GetRecordCountOfDescriptors(uint dwRecordIndex, uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-getrecorddescriptorbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-getrecorddescriptorbyindex
     HRESULT GetRecordDescriptorByIndex(uint dwRecordIndex, uint dwIndex, IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-getrecorddescriptorbytag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-getrecorddescriptorbytag
     HRESULT GetRecordDescriptorByTag(uint dwRecordIndex, ubyte bTag, uint* pdwCookie, 
                                      IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-getversionhash))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_sdtt-getversionhash
     HRESULT GetVersionHash(uint* pdwVersionHash);
 }
 
 @GUID("25fa92c2-8b80-4787-a841-3a0e8f17984b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdb_cdt))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdb_cdt
 interface IISDB_CDT : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_cdt-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_cdt-initialize
     HRESULT Initialize(ISectionList pSectionList, IMpeg2Data pMPEGData, ubyte bSectionNumber);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_cdt-getversionnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_cdt-getversionnumber
     HRESULT GetVersionNumber(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_cdt-getdownloaddataid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_cdt-getdownloaddataid
     HRESULT GetDownloadDataId(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_cdt-getsectionnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_cdt-getsectionnumber
     HRESULT GetSectionNumber(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_cdt-getoriginalnetworkid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_cdt-getoriginalnetworkid
     HRESULT GetOriginalNetworkId(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_cdt-getdatatype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_cdt-getdatatype
     HRESULT GetDataType(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_cdt-getcountoftabledescriptors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_cdt-getcountoftabledescriptors
     HRESULT GetCountOfTableDescriptors(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_cdt-gettabledescriptorbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_cdt-gettabledescriptorbyindex
     HRESULT GetTableDescriptorByIndex(uint dwIndex, IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_cdt-gettabledescriptorbytag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_cdt-gettabledescriptorbytag
     HRESULT GetTableDescriptorByTag(ubyte bTag, uint* pdwCookie, IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_cdt-getsizeofdatamodule))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_cdt-getsizeofdatamodule
     HRESULT GetSizeOfDataModule(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_cdt-getdatamodule))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_cdt-getdatamodule
     HRESULT GetDataModule(ubyte** pbData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_cdt-getversionhash))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_cdt-getversionhash
     HRESULT GetVersionHash(uint* pdwVersionHash);
 }
 
 @GUID("0edb556d-43ad-4938-9668-321b2ffecfd3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdb_emm))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdb_emm
 interface IISDB_EMM : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_emm-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_emm-initialize
     HRESULT Initialize(ISectionList pSectionList, IMpeg2Data pMPEGData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_emm-getversionnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_emm-getversionnumber
     HRESULT GetVersionNumber(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_emm-gettableidextension))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_emm-gettableidextension
     HRESULT GetTableIdExtension(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_emm-getdatabytes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_emm-getdatabytes
     HRESULT GetDataBytes(ushort* pwBufferLength, ubyte* pbBuffer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_emm-getsharedemmmessage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_emm-getsharedemmmessage
     HRESULT GetSharedEmmMessage(ushort* pwLength, ubyte** ppbMessage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_emm-getindividualemmmessage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_emm-getindividualemmmessage
     HRESULT GetIndividualEmmMessage(IUnknown pUnknown, ushort* pwLength, ubyte** ppbMessage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_emm-getversionhash))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdb_emm-getversionhash
     HRESULT GetVersionHash(uint* pdwVersionHash);
 }
 
@@ -7378,101 +7561,101 @@ interface IDvbServiceAttributeDescriptor : IUnknown
 
 @GUID("05e0c1ea-f661-4053-9fbf-d93b28359838")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbcontentidentifierdescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbcontentidentifierdescriptor
 interface IDvbContentIdentifierDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcontentidentifierdescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcontentidentifierdescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcontentidentifierdescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcontentidentifierdescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcontentidentifierdescriptor-getcountofrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcontentidentifierdescriptor-getcountofrecords
     HRESULT GetCountOfRecords(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcontentidentifierdescriptor-getrecordcrid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcontentidentifierdescriptor-getrecordcrid
     HRESULT GetRecordCrid(ubyte bRecordIndex, ubyte* pbType, ubyte* pbLocation, ubyte* pbLength, ubyte** ppbBytes);
 }
 
 @GUID("05ec24d1-3a31-44e7-b408-67c60a352276")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbdefaultauthoritydescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbdefaultauthoritydescriptor
 interface IDvbDefaultAuthorityDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbdefaultauthoritydescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbdefaultauthoritydescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbdefaultauthoritydescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbdefaultauthoritydescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbdefaultauthoritydescriptor-getdefaultauthority))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbdefaultauthoritydescriptor-getdefaultauthority
     HRESULT GetDefaultAuthority(ubyte* pbLength, ubyte** ppbBytes);
 }
 
 @GUID("02f2225a-805b-4ec5-a9a6-f9b5913cd470")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbsatellitedeliverysystemdescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbsatellitedeliverysystemdescriptor
 interface IDvbSatelliteDeliverySystemDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsatellitedeliverysystemdescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsatellitedeliverysystemdescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsatellitedeliverysystemdescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsatellitedeliverysystemdescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsatellitedeliverysystemdescriptor-getfrequency))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsatellitedeliverysystemdescriptor-getfrequency
     HRESULT GetFrequency(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsatellitedeliverysystemdescriptor-getorbitalposition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsatellitedeliverysystemdescriptor-getorbitalposition
     HRESULT GetOrbitalPosition(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsatellitedeliverysystemdescriptor-getwesteastflag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsatellitedeliverysystemdescriptor-getwesteastflag
     HRESULT GetWestEastFlag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsatellitedeliverysystemdescriptor-getpolarization))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsatellitedeliverysystemdescriptor-getpolarization
     HRESULT GetPolarization(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsatellitedeliverysystemdescriptor-getmodulation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsatellitedeliverysystemdescriptor-getmodulation
     HRESULT GetModulation(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsatellitedeliverysystemdescriptor-getsymbolrate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsatellitedeliverysystemdescriptor-getsymbolrate
     HRESULT GetSymbolRate(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsatellitedeliverysystemdescriptor-getfecinner))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsatellitedeliverysystemdescriptor-getfecinner
     HRESULT GetFECInner(ubyte* pbVal);
 }
 
 @GUID("dfb98e36-9e1a-4862-9946-993a4e59017b")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbcabledeliverysystemdescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbcabledeliverysystemdescriptor
 interface IDvbCableDeliverySystemDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcabledeliverysystemdescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcabledeliverysystemdescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcabledeliverysystemdescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcabledeliverysystemdescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcabledeliverysystemdescriptor-getfrequency))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcabledeliverysystemdescriptor-getfrequency
     HRESULT GetFrequency(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcabledeliverysystemdescriptor-getfecouter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcabledeliverysystemdescriptor-getfecouter
     HRESULT GetFECOuter(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcabledeliverysystemdescriptor-getmodulation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcabledeliverysystemdescriptor-getmodulation
     HRESULT GetModulation(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcabledeliverysystemdescriptor-getsymbolrate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcabledeliverysystemdescriptor-getsymbolrate
     HRESULT GetSymbolRate(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcabledeliverysystemdescriptor-getfecinner))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcabledeliverysystemdescriptor-getfecinner
     HRESULT GetFECInner(ubyte* pbVal);
 }
 
 @GUID("ed7e1b91-d12e-420c-b41d-a49d84fe1823")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbterrestrialdeliverysystemdescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbterrestrialdeliverysystemdescriptor
 interface IDvbTerrestrialDeliverySystemDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbterrestrialdeliverysystemdescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbterrestrialdeliverysystemdescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbterrestrialdeliverysystemdescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbterrestrialdeliverysystemdescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbterrestrialdeliverysystemdescriptor-getcentrefrequency))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbterrestrialdeliverysystemdescriptor-getcentrefrequency
     HRESULT GetCentreFrequency(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbterrestrialdeliverysystemdescriptor-getbandwidth))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbterrestrialdeliverysystemdescriptor-getbandwidth
     HRESULT GetBandwidth(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbterrestrialdeliverysystemdescriptor-getconstellation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbterrestrialdeliverysystemdescriptor-getconstellation
     HRESULT GetConstellation(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbterrestrialdeliverysystemdescriptor-gethierarchyinformation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbterrestrialdeliverysystemdescriptor-gethierarchyinformation
     HRESULT GetHierarchyInformation(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbterrestrialdeliverysystemdescriptor-getcoderatehpstream))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbterrestrialdeliverysystemdescriptor-getcoderatehpstream
     HRESULT GetCodeRateHPStream(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbterrestrialdeliverysystemdescriptor-getcoderatelpstream))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbterrestrialdeliverysystemdescriptor-getcoderatelpstream
     HRESULT GetCodeRateLPStream(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbterrestrialdeliverysystemdescriptor-getguardinterval))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbterrestrialdeliverysystemdescriptor-getguardinterval
     HRESULT GetGuardInterval(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbterrestrialdeliverysystemdescriptor-gettransmissionmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbterrestrialdeliverysystemdescriptor-gettransmissionmode
     HRESULT GetTransmissionMode(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbterrestrialdeliverysystemdescriptor-getotherfrequencyflag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbterrestrialdeliverysystemdescriptor-getotherfrequencyflag
     HRESULT GetOtherFrequencyFlag(ubyte* pbVal);
 }
 
@@ -7495,53 +7678,53 @@ interface IDvbTerrestrial2DeliverySystemDescriptor : IUnknown
 }
 
 @GUID("1cadb613-e1dd-4512-afa8-bb7a007ef8b1")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbfrequencylistdescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbfrequencylistdescriptor
 interface IDvbFrequencyListDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbfrequencylistdescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbfrequencylistdescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbfrequencylistdescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbfrequencylistdescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbfrequencylistdescriptor-getcodingtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbfrequencylistdescriptor-getcodingtype
     HRESULT GetCodingType(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbfrequencylistdescriptor-getcountofrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbfrequencylistdescriptor-getcountofrecords
     HRESULT GetCountOfRecords(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbfrequencylistdescriptor-getrecordcentrefrequency))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbfrequencylistdescriptor-getrecordcentrefrequency
     HRESULT GetRecordCentreFrequency(ubyte bRecordIndex, uint* pdwVal);
 }
 
 @GUID("5660a019-e75a-4b82-9b4c-ed2256d165a2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbprivatedataspecifierdescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbprivatedataspecifierdescriptor
 interface IDvbPrivateDataSpecifierDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbprivatedataspecifierdescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbprivatedataspecifierdescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbprivatedataspecifierdescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbprivatedataspecifierdescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbprivatedataspecifierdescriptor-getprivatedataspecifier))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbprivatedataspecifierdescriptor-getprivatedataspecifier
     HRESULT GetPrivateDataSpecifier(uint* pdwVal);
 }
 
 @GUID("cf1edaff-3ffd-4cf7-8201-35756acbf85f")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvblogicalchanneldescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvblogicalchanneldescriptor
 interface IDvbLogicalChannelDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblogicalchanneldescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblogicalchanneldescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblogicalchanneldescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblogicalchanneldescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblogicalchanneldescriptor-getcountofrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblogicalchanneldescriptor-getcountofrecords
     HRESULT GetCountOfRecords(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblogicalchanneldescriptor-getrecordserviceid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblogicalchanneldescriptor-getrecordserviceid
     HRESULT GetRecordServiceId(ubyte bRecordIndex, ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblogicalchanneldescriptor-getrecordlogicalchannelnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblogicalchanneldescriptor-getrecordlogicalchannelnumber
     HRESULT GetRecordLogicalChannelNumber(ubyte bRecordIndex, ushort* pwVal);
 }
 
 @GUID("43aca974-4be8-4b98-bc17-9eafd788b1d7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvblogicalchanneldescriptor2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvblogicalchanneldescriptor2
 interface IDvbLogicalChannelDescriptor2 : IDvbLogicalChannelDescriptor
 {
     HRESULT GetRecordLogicalChannelAndVisibility(ubyte bRecordIndex, ushort* pwVal);
@@ -7549,841 +7732,841 @@ interface IDvbLogicalChannelDescriptor2 : IDvbLogicalChannelDescriptor
 
 @GUID("f69c3747-8a30-4980-998c-01fe7f0ba35a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvblogicalchannel2descriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvblogicalchannel2descriptor
 interface IDvbLogicalChannel2Descriptor : IDvbLogicalChannelDescriptor2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblogicalchannel2descriptor-getcountoflists))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblogicalchannel2descriptor-getcountoflists
     HRESULT GetCountOfLists(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblogicalchannel2descriptor-getlistid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblogicalchannel2descriptor-getlistid
     HRESULT GetListId(ubyte bListIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblogicalchannel2descriptor-getlistnamew))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblogicalchannel2descriptor-getlistnamew
     HRESULT GetListNameW(ubyte bListIndex, DVB_STRCONV_MODE convMode, BSTR* pbstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblogicalchannel2descriptor-getlistcountrycode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblogicalchannel2descriptor-getlistcountrycode
     HRESULT GetListCountryCode(ubyte bListIndex, ubyte* pszCode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblogicalchannel2descriptor-getlistcountofrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblogicalchannel2descriptor-getlistcountofrecords
     HRESULT GetListCountOfRecords(ubyte bChannelListIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblogicalchannel2descriptor-getlistrecordserviceid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblogicalchannel2descriptor-getlistrecordserviceid
     HRESULT GetListRecordServiceId(ubyte bListIndex, ubyte bRecordIndex, ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblogicalchannel2descriptor-getlistrecordlogicalchannelnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblogicalchannel2descriptor-getlistrecordlogicalchannelnumber
     HRESULT GetListRecordLogicalChannelNumber(ubyte bListIndex, ubyte bRecordIndex, ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblogicalchannel2descriptor-getlistrecordlogicalchannelandvisibility))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblogicalchannel2descriptor-getlistrecordlogicalchannelandvisibility
     HRESULT GetListRecordLogicalChannelAndVisibility(ubyte bListIndex, ubyte bRecordIndex, ushort* pwVal);
 }
 
 @GUID("1ea8b738-a307-4680-9e26-d0a908c824f4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbhdsimulcastlogicalchanneldescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbhdsimulcastlogicalchanneldescriptor
 interface IDvbHDSimulcastLogicalChannelDescriptor : IDvbLogicalChannelDescriptor2
 {
 }
 
 @GUID("5f26f518-65c8-4048-91f2-9290f59f7b90")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbdatabroadcastiddescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbdatabroadcastiddescriptor
 interface IDvbDataBroadcastIDDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbdatabroadcastiddescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbdatabroadcastiddescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbdatabroadcastiddescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbdatabroadcastiddescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbdatabroadcastiddescriptor-getdatabroadcastid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbdatabroadcastiddescriptor-getdatabroadcastid
     HRESULT GetDataBroadcastID(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbdatabroadcastiddescriptor-getidselectorbytes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbdatabroadcastiddescriptor-getidselectorbytes
     HRESULT GetIDSelectorBytes(ubyte* pbLen, ubyte* pbVal);
 }
 
 @GUID("d1ebc1d6-8b60-4c20-9caf-e59382e7c400")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbdatabroadcastdescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbdatabroadcastdescriptor
 interface IDvbDataBroadcastDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbdatabroadcastdescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbdatabroadcastdescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbdatabroadcastdescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbdatabroadcastdescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbdatabroadcastdescriptor-getdatabroadcastid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbdatabroadcastdescriptor-getdatabroadcastid
     HRESULT GetDataBroadcastID(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbdatabroadcastdescriptor-getcomponenttag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbdatabroadcastdescriptor-getcomponenttag
     HRESULT GetComponentTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbdatabroadcastdescriptor-getselectorlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbdatabroadcastdescriptor-getselectorlength
     HRESULT GetSelectorLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbdatabroadcastdescriptor-getselectorbytes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbdatabroadcastdescriptor-getselectorbytes
     HRESULT GetSelectorBytes(ubyte* pbLen, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbdatabroadcastdescriptor-getlangid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbdatabroadcastdescriptor-getlangid
     HRESULT GetLangID(uint* pulVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbdatabroadcastdescriptor-gettextlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbdatabroadcastdescriptor-gettextlength
     HRESULT GetTextLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbdatabroadcastdescriptor-gettext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbdatabroadcastdescriptor-gettext
     HRESULT GetText(ubyte* pbLen, ubyte* pbVal);
 }
 
 @GUID("1cdf8b31-994a-46fc-acfd-6a6be8934dd5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvblinkagedescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvblinkagedescriptor
 interface IDvbLinkageDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblinkagedescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblinkagedescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblinkagedescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblinkagedescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblinkagedescriptor-gettsid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblinkagedescriptor-gettsid
     HRESULT GetTSId(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblinkagedescriptor-getonid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblinkagedescriptor-getonid
     HRESULT GetONId(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblinkagedescriptor-getserviceid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblinkagedescriptor-getserviceid
     HRESULT GetServiceId(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblinkagedescriptor-getlinkagetype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblinkagedescriptor-getlinkagetype
     HRESULT GetLinkageType(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblinkagedescriptor-getprivatedatalength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblinkagedescriptor-getprivatedatalength
     HRESULT GetPrivateDataLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblinkagedescriptor-getprivatedata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvblinkagedescriptor-getprivatedata
     HRESULT GetPrivateData(ubyte* pbLen, ubyte* pbData);
 }
 
 @GUID("9cd29d47-69c6-4f92-98a9-210af1b7303a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbteletextdescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbteletextdescriptor
 interface IDvbTeletextDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbteletextdescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbteletextdescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbteletextdescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbteletextdescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbteletextdescriptor-getcountofrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbteletextdescriptor-getcountofrecords
     HRESULT GetCountOfRecords(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbteletextdescriptor-getrecordlangid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbteletextdescriptor-getrecordlangid
     HRESULT GetRecordLangId(ubyte bRecordIndex, uint* pulVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbteletextdescriptor-getrecordteletexttype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbteletextdescriptor-getrecordteletexttype
     HRESULT GetRecordTeletextType(ubyte bRecordIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbteletextdescriptor-getrecordmagazinenumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbteletextdescriptor-getrecordmagazinenumber
     HRESULT GetRecordMagazineNumber(ubyte bRecordIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbteletextdescriptor-getrecordpagenumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbteletextdescriptor-getrecordpagenumber
     HRESULT GetRecordPageNumber(ubyte bRecordIndex, ubyte* pbVal);
 }
 
 @GUID("9b25fe1d-fa23-4e50-9784-6df8b26f8a49")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbsubtitlingdescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbsubtitlingdescriptor
 interface IDvbSubtitlingDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsubtitlingdescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsubtitlingdescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsubtitlingdescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsubtitlingdescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsubtitlingdescriptor-getcountofrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsubtitlingdescriptor-getcountofrecords
     HRESULT GetCountOfRecords(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsubtitlingdescriptor-getrecordlangid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsubtitlingdescriptor-getrecordlangid
     HRESULT GetRecordLangId(ubyte bRecordIndex, uint* pulVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsubtitlingdescriptor-getrecordsubtitlingtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsubtitlingdescriptor-getrecordsubtitlingtype
     HRESULT GetRecordSubtitlingType(ubyte bRecordIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsubtitlingdescriptor-getrecordcompositionpageid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsubtitlingdescriptor-getrecordcompositionpageid
     HRESULT GetRecordCompositionPageID(ubyte bRecordIndex, ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsubtitlingdescriptor-getrecordancillarypageid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbsubtitlingdescriptor-getrecordancillarypageid
     HRESULT GetRecordAncillaryPageID(ubyte bRecordIndex, ushort* pwVal);
 }
 
 @GUID("f9c7fbcf-e2d6-464d-b32d-2ef526e49290")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbservicedescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbservicedescriptor
 interface IDvbServiceDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbservicedescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbservicedescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbservicedescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbservicedescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbservicedescriptor-getservicetype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbservicedescriptor-getservicetype
     HRESULT GetServiceType(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbservicedescriptor-getserviceprovidername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbservicedescriptor-getserviceprovidername
     HRESULT GetServiceProviderName(ubyte** pszName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbservicedescriptor-getserviceprovidernamew))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbservicedescriptor-getserviceprovidernamew
     HRESULT GetServiceProviderNameW(BSTR* pbstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbservicedescriptor-getservicename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbservicedescriptor-getservicename
     HRESULT GetServiceName(ubyte** pszName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbservicedescriptor-getprocessedservicename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbservicedescriptor-getprocessedservicename
     HRESULT GetProcessedServiceName(BSTR* pbstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbservicedescriptor-getservicenameemphasized))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbservicedescriptor-getservicenameemphasized
     HRESULT GetServiceNameEmphasized(BSTR* pbstrName);
 }
 
 @GUID("d6c76506-85ab-487c-9b2b-36416511e4a2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbservicedescriptor2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbservicedescriptor2
 interface IDvbServiceDescriptor2 : IDvbServiceDescriptor
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbservicedescriptor2-getserviceprovidernamew))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbservicedescriptor2-getserviceprovidernamew
     HRESULT GetServiceProviderNameW(DVB_STRCONV_MODE convMode, BSTR* pbstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbservicedescriptor2-getservicenamew))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbservicedescriptor2-getservicenamew
     HRESULT GetServiceNameW(DVB_STRCONV_MODE convMode, BSTR* pbstrName);
 }
 
 @GUID("05db0d8f-6008-491a-acd3-7090952707d0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbservicelistdescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbservicelistdescriptor
 interface IDvbServiceListDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbservicelistdescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbservicelistdescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbservicelistdescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbservicelistdescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbservicelistdescriptor-getcountofrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbservicelistdescriptor-getcountofrecords
     HRESULT GetCountOfRecords(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbservicelistdescriptor-getrecordserviceid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbservicelistdescriptor-getrecordserviceid
     HRESULT GetRecordServiceId(ubyte bRecordIndex, ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbservicelistdescriptor-getrecordservicetype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbservicelistdescriptor-getrecordservicetype
     HRESULT GetRecordServiceType(ubyte bRecordIndex, ubyte* pbVal);
 }
 
 @GUID("2d80433b-b32c-47ef-987f-e78ebb773e34")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbmultilingualservicenamedescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbmultilingualservicenamedescriptor
 interface IDvbMultilingualServiceNameDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbmultilingualservicenamedescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbmultilingualservicenamedescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbmultilingualservicenamedescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbmultilingualservicenamedescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbmultilingualservicenamedescriptor-getcountofrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbmultilingualservicenamedescriptor-getcountofrecords
     HRESULT GetCountOfRecords(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbmultilingualservicenamedescriptor-getrecordlangid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbmultilingualservicenamedescriptor-getrecordlangid
     HRESULT GetRecordLangId(ubyte bRecordIndex, uint* ulVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbmultilingualservicenamedescriptor-getrecordserviceprovidernamew))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbmultilingualservicenamedescriptor-getrecordserviceprovidernamew
     HRESULT GetRecordServiceProviderNameW(ubyte bRecordIndex, DVB_STRCONV_MODE convMode, BSTR* pbstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbmultilingualservicenamedescriptor-getrecordservicenamew))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbmultilingualservicenamedescriptor-getrecordservicenamew
     HRESULT GetRecordServiceNameW(ubyte bRecordIndex, DVB_STRCONV_MODE convMode, BSTR* pbstrName);
 }
 
 @GUID("5b2a80cf-35b9-446c-b3e4-048b761dbc51")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbnetworknamedescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbnetworknamedescriptor
 interface IDvbNetworkNameDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbnetworknamedescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbnetworknamedescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbnetworknamedescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbnetworknamedescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbnetworknamedescriptor-getnetworkname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbnetworknamedescriptor-getnetworkname
     HRESULT GetNetworkName(ubyte** pszName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbnetworknamedescriptor-getnetworknamew))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbnetworknamedescriptor-getnetworknamew
     HRESULT GetNetworkNameW(DVB_STRCONV_MODE convMode, BSTR* pbstrName);
 }
 
 @GUID("b170be92-5b75-458e-9c6e-b0008231491a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbshorteventdescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbshorteventdescriptor
 interface IDvbShortEventDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbshorteventdescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbshorteventdescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbshorteventdescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbshorteventdescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbshorteventdescriptor-getlanguagecode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbshorteventdescriptor-getlanguagecode
     HRESULT GetLanguageCode(ubyte* pszCode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbshorteventdescriptor-geteventnamew))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbshorteventdescriptor-geteventnamew
     HRESULT GetEventNameW(DVB_STRCONV_MODE convMode, BSTR* pbstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbshorteventdescriptor-gettextw))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbshorteventdescriptor-gettextw
     HRESULT GetTextW(DVB_STRCONV_MODE convMode, BSTR* pbstrText);
 }
 
 @GUID("c9b22eca-85f4-499f-b1db-efa93a91ee57")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbextendedeventdescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbextendedeventdescriptor
 interface IDvbExtendedEventDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbextendedeventdescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbextendedeventdescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbextendedeventdescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbextendedeventdescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbextendedeventdescriptor-getdescriptornumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbextendedeventdescriptor-getdescriptornumber
     HRESULT GetDescriptorNumber(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbextendedeventdescriptor-getlastdescriptornumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbextendedeventdescriptor-getlastdescriptornumber
     HRESULT GetLastDescriptorNumber(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbextendedeventdescriptor-getlanguagecode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbextendedeventdescriptor-getlanguagecode
     HRESULT GetLanguageCode(ubyte* pszCode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbextendedeventdescriptor-getcountofrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbextendedeventdescriptor-getcountofrecords
     HRESULT GetCountOfRecords(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbextendedeventdescriptor-getrecorditemw))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbextendedeventdescriptor-getrecorditemw
     HRESULT GetRecordItemW(ubyte bRecordIndex, DVB_STRCONV_MODE convMode, BSTR* pbstrDesc, BSTR* pbstrItem);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbextendedeventdescriptor-getconcatenateditemw))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbextendedeventdescriptor-getconcatenateditemw
     HRESULT GetConcatenatedItemW(IDvbExtendedEventDescriptor pFollowingDescriptor, DVB_STRCONV_MODE convMode, 
                                  BSTR* pbstrDesc, BSTR* pbstrItem);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbextendedeventdescriptor-gettextw))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbextendedeventdescriptor-gettextw
     HRESULT GetTextW(DVB_STRCONV_MODE convMode, BSTR* pbstrText);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbextendedeventdescriptor-getconcatenatedtextw))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbextendedeventdescriptor-getconcatenatedtextw
     HRESULT GetConcatenatedTextW(IDvbExtendedEventDescriptor FollowingDescriptor, DVB_STRCONV_MODE convMode, 
                                  BSTR* pbstrText);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbextendedeventdescriptor-getrecorditemrawbytes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbextendedeventdescriptor-getrecorditemrawbytes
     HRESULT GetRecordItemRawBytes(ubyte bRecordIndex, ubyte** ppbRawItem, ubyte* pbItemLength);
 }
 
 @GUID("91e405cf-80e7-457f-9096-1b9d1ce32141")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbcomponentdescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbcomponentdescriptor
 interface IDvbComponentDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcomponentdescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcomponentdescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcomponentdescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcomponentdescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcomponentdescriptor-getstreamcontent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcomponentdescriptor-getstreamcontent
     HRESULT GetStreamContent(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcomponentdescriptor-getcomponenttype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcomponentdescriptor-getcomponenttype
     HRESULT GetComponentType(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcomponentdescriptor-getcomponenttag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcomponentdescriptor-getcomponenttag
     HRESULT GetComponentTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcomponentdescriptor-getlanguagecode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcomponentdescriptor-getlanguagecode
     HRESULT GetLanguageCode(ubyte* pszCode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcomponentdescriptor-gettextw))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcomponentdescriptor-gettextw
     HRESULT GetTextW(DVB_STRCONV_MODE convMode, BSTR* pbstrText);
 }
 
 @GUID("2e883881-a467-412a-9d63-6f2b6da05bf0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbcontentdescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbcontentdescriptor
 interface IDvbContentDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcontentdescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcontentdescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcontentdescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcontentdescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcontentdescriptor-getcountofrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcontentdescriptor-getcountofrecords
     HRESULT GetCountOfRecords(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcontentdescriptor-getrecordcontentnibbles))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcontentdescriptor-getrecordcontentnibbles
     HRESULT GetRecordContentNibbles(ubyte bRecordIndex, ubyte* pbValLevel1, ubyte* pbValLevel2);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcontentdescriptor-getrecordusernibbles))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbcontentdescriptor-getrecordusernibbles
     HRESULT GetRecordUserNibbles(ubyte bRecordIndex, ubyte* pbVal1, ubyte* pbVal2);
 }
 
 @GUID("3ad9dde1-fb1b-4186-937f-22e6b5a72a10")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbparentalratingdescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-idvbparentalratingdescriptor
 interface IDvbParentalRatingDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbparentalratingdescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbparentalratingdescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbparentalratingdescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbparentalratingdescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbparentalratingdescriptor-getcountofrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbparentalratingdescriptor-getcountofrecords
     HRESULT GetCountOfRecords(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbparentalratingdescriptor-getrecordrating))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-idvbparentalratingdescriptor-getrecordrating
     HRESULT GetRecordRating(ubyte bRecordIndex, ubyte* pszCountryCode, ubyte* pbVal);
 }
 
 @GUID("39fae0a6-d151-44dd-a28a-765de5991670")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdbterrestrialdeliverysystemdescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdbterrestrialdeliverysystemdescriptor
 interface IIsdbTerrestrialDeliverySystemDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbterrestrialdeliverysystemdescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbterrestrialdeliverysystemdescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbterrestrialdeliverysystemdescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbterrestrialdeliverysystemdescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbterrestrialdeliverysystemdescriptor-getareacode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbterrestrialdeliverysystemdescriptor-getareacode
     HRESULT GetAreaCode(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbterrestrialdeliverysystemdescriptor-getguardinterval))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbterrestrialdeliverysystemdescriptor-getguardinterval
     HRESULT GetGuardInterval(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbterrestrialdeliverysystemdescriptor-gettransmissionmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbterrestrialdeliverysystemdescriptor-gettransmissionmode
     HRESULT GetTransmissionMode(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbterrestrialdeliverysystemdescriptor-getcountofrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbterrestrialdeliverysystemdescriptor-getcountofrecords
     HRESULT GetCountOfRecords(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbterrestrialdeliverysystemdescriptor-getrecordfrequency))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbterrestrialdeliverysystemdescriptor-getrecordfrequency
     HRESULT GetRecordFrequency(ubyte bRecordIndex, uint* pdwVal);
 }
 
 @GUID("d7ad183e-38f5-4210-b55f-ec8d601bbd47")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdbtsinformationdescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdbtsinformationdescriptor
 interface IIsdbTSInformationDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbtsinformationdescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbtsinformationdescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbtsinformationdescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbtsinformationdescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbtsinformationdescriptor-getremotecontrolkeyid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbtsinformationdescriptor-getremotecontrolkeyid
     HRESULT GetRemoteControlKeyId(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbtsinformationdescriptor-gettsnamew))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbtsinformationdescriptor-gettsnamew
     HRESULT GetTSNameW(DVB_STRCONV_MODE convMode, BSTR* pbstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbtsinformationdescriptor-getcountofrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbtsinformationdescriptor-getcountofrecords
     HRESULT GetCountOfRecords(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbtsinformationdescriptor-getrecordtransmissiontypeinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbtsinformationdescriptor-getrecordtransmissiontypeinfo
     HRESULT GetRecordTransmissionTypeInfo(ubyte bRecordIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbtsinformationdescriptor-getrecordnumberofservices))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbtsinformationdescriptor-getrecordnumberofservices
     HRESULT GetRecordNumberOfServices(ubyte bRecordIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbtsinformationdescriptor-getrecordserviceidbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbtsinformationdescriptor-getrecordserviceidbyindex
     HRESULT GetRecordServiceIdByIndex(ubyte bRecordIndex, ubyte bServiceIndex, ushort* pdwVal);
 }
 
 @GUID("1a28417e-266a-4bb8-a4bd-d782bcfb8161")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdbdigitalcopycontroldescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdbdigitalcopycontroldescriptor
 interface IIsdbDigitalCopyControlDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdigitalcopycontroldescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdigitalcopycontroldescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdigitalcopycontroldescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdigitalcopycontroldescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdigitalcopycontroldescriptor-getcopycontrol))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdigitalcopycontroldescriptor-getcopycontrol
     HRESULT GetCopyControl(ubyte* pbDigitalRecordingControlData, ubyte* pbCopyControlType, ubyte* pbAPSControlData, 
                            ubyte* pbMaximumBitrate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdigitalcopycontroldescriptor-getcountofrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdigitalcopycontroldescriptor-getcountofrecords
     HRESULT GetCountOfRecords(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdigitalcopycontroldescriptor-getrecordcopycontrol))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdigitalcopycontroldescriptor-getrecordcopycontrol
     HRESULT GetRecordCopyControl(ubyte bRecordIndex, ubyte* pbComponentTag, ubyte* pbDigitalRecordingControlData, 
                                  ubyte* pbCopyControlType, ubyte* pbAPSControlData, ubyte* pbMaximumBitrate);
 }
 
 @GUID("679d2002-2425-4be4-a4c7-d6632a574f4d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdbaudiocomponentdescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdbaudiocomponentdescriptor
 interface IIsdbAudioComponentDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbaudiocomponentdescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbaudiocomponentdescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbaudiocomponentdescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbaudiocomponentdescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbaudiocomponentdescriptor-getstreamcontent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbaudiocomponentdescriptor-getstreamcontent
     HRESULT GetStreamContent(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbaudiocomponentdescriptor-getcomponenttype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbaudiocomponentdescriptor-getcomponenttype
     HRESULT GetComponentType(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbaudiocomponentdescriptor-getcomponenttag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbaudiocomponentdescriptor-getcomponenttag
     HRESULT GetComponentTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbaudiocomponentdescriptor-getstreamtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbaudiocomponentdescriptor-getstreamtype
     HRESULT GetStreamType(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbaudiocomponentdescriptor-getsimulcastgrouptag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbaudiocomponentdescriptor-getsimulcastgrouptag
     HRESULT GetSimulcastGroupTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbaudiocomponentdescriptor-getesmultilingualflag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbaudiocomponentdescriptor-getesmultilingualflag
     HRESULT GetESMultiLingualFlag(BOOL* pfVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbaudiocomponentdescriptor-getmaincomponentflag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbaudiocomponentdescriptor-getmaincomponentflag
     HRESULT GetMainComponentFlag(BOOL* pfVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbaudiocomponentdescriptor-getqualityindicator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbaudiocomponentdescriptor-getqualityindicator
     HRESULT GetQualityIndicator(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbaudiocomponentdescriptor-getsamplingrate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbaudiocomponentdescriptor-getsamplingrate
     HRESULT GetSamplingRate(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbaudiocomponentdescriptor-getlanguagecode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbaudiocomponentdescriptor-getlanguagecode
     HRESULT GetLanguageCode(ubyte* pszCode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbaudiocomponentdescriptor-getlanguagecode2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbaudiocomponentdescriptor-getlanguagecode2
     HRESULT GetLanguageCode2(ubyte* pszCode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbaudiocomponentdescriptor-gettextw))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbaudiocomponentdescriptor-gettextw
     HRESULT GetTextW(DVB_STRCONV_MODE convMode, BSTR* pbstrText);
 }
 
 @GUID("a428100a-e646-4bd6-aa14-6087bdc08cd5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdbdatacontentdescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdbdatacontentdescriptor
 interface IIsdbDataContentDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdatacontentdescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdatacontentdescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdatacontentdescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdatacontentdescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdatacontentdescriptor-getdatacomponentid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdatacontentdescriptor-getdatacomponentid
     HRESULT GetDataComponentId(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdatacontentdescriptor-getentrycomponent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdatacontentdescriptor-getentrycomponent
     HRESULT GetEntryComponent(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdatacontentdescriptor-getselectorlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdatacontentdescriptor-getselectorlength
     HRESULT GetSelectorLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdatacontentdescriptor-getselectorbytes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdatacontentdescriptor-getselectorbytes
     HRESULT GetSelectorBytes(ubyte bBufLength, ubyte* pbBuf);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdatacontentdescriptor-getcountofrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdatacontentdescriptor-getcountofrecords
     HRESULT GetCountOfRecords(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdatacontentdescriptor-getrecordcomponentref))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdatacontentdescriptor-getrecordcomponentref
     HRESULT GetRecordComponentRef(ubyte bRecordIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdatacontentdescriptor-getlanguagecode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdatacontentdescriptor-getlanguagecode
     HRESULT GetLanguageCode(ubyte* pszCode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdatacontentdescriptor-gettextw))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdatacontentdescriptor-gettextw
     HRESULT GetTextW(DVB_STRCONV_MODE convMode, BSTR* pbstrText);
 }
 
 @GUID("08e18b25-a28f-4e92-821e-4fced5cc2291")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdbcacontractinformationdescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdbcacontractinformationdescriptor
 interface IIsdbCAContractInformationDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcacontractinformationdescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcacontractinformationdescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcacontractinformationdescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcacontractinformationdescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcacontractinformationdescriptor-getcasystemid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcacontractinformationdescriptor-getcasystemid
     HRESULT GetCASystemId(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcacontractinformationdescriptor-getcaunitid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcacontractinformationdescriptor-getcaunitid
     HRESULT GetCAUnitId(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcacontractinformationdescriptor-getcountofrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcacontractinformationdescriptor-getcountofrecords
     HRESULT GetCountOfRecords(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcacontractinformationdescriptor-getrecordcomponenttag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcacontractinformationdescriptor-getrecordcomponenttag
     HRESULT GetRecordComponentTag(ubyte bRecordIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcacontractinformationdescriptor-getcontractverificationinfolength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcacontractinformationdescriptor-getcontractverificationinfolength
     HRESULT GetContractVerificationInfoLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcacontractinformationdescriptor-getcontractverificationinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcacontractinformationdescriptor-getcontractverificationinfo
     HRESULT GetContractVerificationInfo(ubyte bBufLength, ubyte* pbBuf);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcacontractinformationdescriptor-getfeenamew))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcacontractinformationdescriptor-getfeenamew
     HRESULT GetFeeNameW(DVB_STRCONV_MODE convMode, BSTR* pbstrName);
 }
 
 @GUID("94b06780-2e2a-44dc-a966-cc56fdabc6c2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdbeventgroupdescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdbeventgroupdescriptor
 interface IIsdbEventGroupDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbeventgroupdescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbeventgroupdescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbeventgroupdescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbeventgroupdescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbeventgroupdescriptor-getgrouptype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbeventgroupdescriptor-getgrouptype
     HRESULT GetGroupType(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbeventgroupdescriptor-getcountofrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbeventgroupdescriptor-getcountofrecords
     HRESULT GetCountOfRecords(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbeventgroupdescriptor-getrecordevent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbeventgroupdescriptor-getrecordevent
     HRESULT GetRecordEvent(ubyte bRecordIndex, ushort* pwServiceId, ushort* pwEventId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbeventgroupdescriptor-getcountofrefrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbeventgroupdescriptor-getcountofrefrecords
     HRESULT GetCountOfRefRecords(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbeventgroupdescriptor-getrefrecordevent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbeventgroupdescriptor-getrefrecordevent
     HRESULT GetRefRecordEvent(ubyte bRecordIndex, ushort* pwOriginalNetworkId, ushort* pwTransportStreamId, 
                               ushort* pwServiceId, ushort* pwEventId);
 }
 
 @GUID("a494f17f-c592-47d8-8943-64c9a34be7b9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdbcomponentgroupdescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdbcomponentgroupdescriptor
 interface IIsdbComponentGroupDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcomponentgroupdescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcomponentgroupdescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcomponentgroupdescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcomponentgroupdescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcomponentgroupdescriptor-getcomponentgrouptype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcomponentgroupdescriptor-getcomponentgrouptype
     HRESULT GetComponentGroupType(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcomponentgroupdescriptor-getcountofrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcomponentgroupdescriptor-getcountofrecords
     HRESULT GetCountOfRecords(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcomponentgroupdescriptor-getrecordgroupid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcomponentgroupdescriptor-getrecordgroupid
     HRESULT GetRecordGroupId(ubyte bRecordIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcomponentgroupdescriptor-getrecordnumberofcaunit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcomponentgroupdescriptor-getrecordnumberofcaunit
     HRESULT GetRecordNumberOfCAUnit(ubyte bRecordIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcomponentgroupdescriptor-getrecordcaunitcaunitid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcomponentgroupdescriptor-getrecordcaunitcaunitid
     HRESULT GetRecordCAUnitCAUnitId(ubyte bRecordIndex, ubyte bCAUnitIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcomponentgroupdescriptor-getrecordcaunitnumberofcomponents))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcomponentgroupdescriptor-getrecordcaunitnumberofcomponents
     HRESULT GetRecordCAUnitNumberOfComponents(ubyte bRecordIndex, ubyte bCAUnitIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcomponentgroupdescriptor-getrecordcaunitcomponenttag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcomponentgroupdescriptor-getrecordcaunitcomponenttag
     HRESULT GetRecordCAUnitComponentTag(ubyte bRecordIndex, ubyte bCAUnitIndex, ubyte bComponentIndex, 
                                         ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcomponentgroupdescriptor-getrecordtotalbitrate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcomponentgroupdescriptor-getrecordtotalbitrate
     HRESULT GetRecordTotalBitRate(ubyte bRecordIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcomponentgroupdescriptor-getrecordtextw))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcomponentgroupdescriptor-getrecordtextw
     HRESULT GetRecordTextW(ubyte bRecordIndex, DVB_STRCONV_MODE convMode, BSTR* pbstrText);
 }
 
 @GUID("07ef6370-1660-4f26-87fc-614adab24b11")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdbseriesdescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdbseriesdescriptor
 interface IIsdbSeriesDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbseriesdescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbseriesdescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbseriesdescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbseriesdescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbseriesdescriptor-getseriesid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbseriesdescriptor-getseriesid
     HRESULT GetSeriesId(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbseriesdescriptor-getrepeatlabel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbseriesdescriptor-getrepeatlabel
     HRESULT GetRepeatLabel(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbseriesdescriptor-getprogrampattern))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbseriesdescriptor-getprogrampattern
     HRESULT GetProgramPattern(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbseriesdescriptor-getexpiredate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbseriesdescriptor-getexpiredate
     HRESULT GetExpireDate(BOOL* pfValid, MPEG_DATE_AND_TIME* pmdtVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbseriesdescriptor-getepisodenumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbseriesdescriptor-getepisodenumber
     HRESULT GetEpisodeNumber(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbseriesdescriptor-getlastepisodenumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbseriesdescriptor-getlastepisodenumber
     HRESULT GetLastEpisodeNumber(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbseriesdescriptor-getseriesnamew))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbseriesdescriptor-getseriesnamew
     HRESULT GetSeriesNameW(DVB_STRCONV_MODE convMode, BSTR* pbstrName);
 }
 
 @GUID("5298661e-cb88-4f5f-a1de-5f440c185b92")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdbdownloadcontentdescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdbdownloadcontentdescriptor
 interface IIsdbDownloadContentDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdownloadcontentdescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdownloadcontentdescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdownloadcontentdescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdownloadcontentdescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdownloadcontentdescriptor-getflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdownloadcontentdescriptor-getflags
     HRESULT GetFlags(BOOL* pfReboot, BOOL* pfAddOn, BOOL* pfCompatibility, BOOL* pfModuleInfo, BOOL* pfTextInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdownloadcontentdescriptor-getcomponentsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdownloadcontentdescriptor-getcomponentsize
     HRESULT GetComponentSize(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdownloadcontentdescriptor-getdownloadid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdownloadcontentdescriptor-getdownloadid
     HRESULT GetDownloadId(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdownloadcontentdescriptor-gettimeoutvaluedii))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdownloadcontentdescriptor-gettimeoutvaluedii
     HRESULT GetTimeOutValueDII(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdownloadcontentdescriptor-getleakrate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdownloadcontentdescriptor-getleakrate
     HRESULT GetLeakRate(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdownloadcontentdescriptor-getcomponenttag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdownloadcontentdescriptor-getcomponenttag
     HRESULT GetComponentTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdownloadcontentdescriptor-getcompatiblitydescriptorlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdownloadcontentdescriptor-getcompatiblitydescriptorlength
     HRESULT GetCompatiblityDescriptorLength(ushort* pwLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdownloadcontentdescriptor-getcompatiblitydescriptor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdownloadcontentdescriptor-getcompatiblitydescriptor
     HRESULT GetCompatiblityDescriptor(ubyte** ppbData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdownloadcontentdescriptor-getcountofrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdownloadcontentdescriptor-getcountofrecords
     HRESULT GetCountOfRecords(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdownloadcontentdescriptor-getrecordmoduleid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdownloadcontentdescriptor-getrecordmoduleid
     HRESULT GetRecordModuleId(ushort wRecordIndex, ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdownloadcontentdescriptor-getrecordmodulesize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdownloadcontentdescriptor-getrecordmodulesize
     HRESULT GetRecordModuleSize(ushort wRecordIndex, uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdownloadcontentdescriptor-getrecordmoduleinfolength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdownloadcontentdescriptor-getrecordmoduleinfolength
     HRESULT GetRecordModuleInfoLength(ushort wRecordIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdownloadcontentdescriptor-getrecordmoduleinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdownloadcontentdescriptor-getrecordmoduleinfo
     HRESULT GetRecordModuleInfo(ushort wRecordIndex, ubyte** ppbData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdownloadcontentdescriptor-gettextlanguagecode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdownloadcontentdescriptor-gettextlanguagecode
     HRESULT GetTextLanguageCode(ubyte* szCode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdownloadcontentdescriptor-gettextw))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbdownloadcontentdescriptor-gettextw
     HRESULT GetTextW(DVB_STRCONV_MODE convMode, BSTR* pbstrName);
 }
 
 @GUID("e0103f49-4ae1-4f07-9098-756db1fa88cd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdblogotransmissiondescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdblogotransmissiondescriptor
 interface IIsdbLogoTransmissionDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdblogotransmissiondescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdblogotransmissiondescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdblogotransmissiondescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdblogotransmissiondescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdblogotransmissiondescriptor-getlogotransmissiontype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdblogotransmissiondescriptor-getlogotransmissiontype
     HRESULT GetLogoTransmissionType(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdblogotransmissiondescriptor-getlogoid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdblogotransmissiondescriptor-getlogoid
     HRESULT GetLogoId(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdblogotransmissiondescriptor-getlogoversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdblogotransmissiondescriptor-getlogoversion
     HRESULT GetLogoVersion(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdblogotransmissiondescriptor-getdownloaddataid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdblogotransmissiondescriptor-getdownloaddataid
     HRESULT GetDownloadDataId(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdblogotransmissiondescriptor-getlogocharw))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdblogotransmissiondescriptor-getlogocharw
     HRESULT GetLogoCharW(DVB_STRCONV_MODE convMode, BSTR* pbstrChar);
 }
 
 @GUID("f837dc36-867c-426a-9111-f62093951a45")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdbsiparameterdescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdbsiparameterdescriptor
 interface IIsdbSIParameterDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbsiparameterdescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbsiparameterdescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbsiparameterdescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbsiparameterdescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbsiparameterdescriptor-getparameterversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbsiparameterdescriptor-getparameterversion
     HRESULT GetParameterVersion(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbsiparameterdescriptor-getupdatetime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbsiparameterdescriptor-getupdatetime
     HRESULT GetUpdateTime(MPEG_DATE* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbsiparameterdescriptor-getrecordnumberoftable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbsiparameterdescriptor-getrecordnumberoftable
     HRESULT GetRecordNumberOfTable(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbsiparameterdescriptor-gettableid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbsiparameterdescriptor-gettableid
     HRESULT GetTableId(ubyte bRecordIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbsiparameterdescriptor-gettabledescriptionlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbsiparameterdescriptor-gettabledescriptionlength
     HRESULT GetTableDescriptionLength(ubyte bRecordIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbsiparameterdescriptor-gettabledescriptionbytes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbsiparameterdescriptor-gettabledescriptionbytes
     HRESULT GetTableDescriptionBytes(ubyte bRecordIndex, ubyte* pbBufferLength, ubyte* pbBuffer);
 }
 
 @GUID("ba6fa681-b973-4da1-9207-ac3e7f0341eb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdbemergencyinformationdescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdbemergencyinformationdescriptor
 interface IIsdbEmergencyInformationDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbemergencyinformationdescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbemergencyinformationdescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbemergencyinformationdescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbemergencyinformationdescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbemergencyinformationdescriptor-getcountofrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbemergencyinformationdescriptor-getcountofrecords
     HRESULT GetCountOfRecords(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbemergencyinformationdescriptor-getserviceid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbemergencyinformationdescriptor-getserviceid
     HRESULT GetServiceId(ubyte bRecordIndex, ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbemergencyinformationdescriptor-getstartendflag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbemergencyinformationdescriptor-getstartendflag
     HRESULT GetStartEndFlag(ubyte bRecordIndex, ubyte* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbemergencyinformationdescriptor-getsignallevel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbemergencyinformationdescriptor-getsignallevel
     HRESULT GetSignalLevel(ubyte bRecordIndex, ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbemergencyinformationdescriptor-getareacode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbemergencyinformationdescriptor-getareacode
     HRESULT GetAreaCode(ubyte bRecordIndex, ushort** ppwVal, ubyte* pbNumAreaCodes);
 }
 
 @GUID("0570aa47-52bc-42ae-8ca5-969f41e81aea")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdbcadescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdbcadescriptor
 interface IIsdbCADescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcadescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcadescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcadescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcadescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcadescriptor-getcasystemid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcadescriptor-getcasystemid
     HRESULT GetCASystemId(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcadescriptor-getreservedbits))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcadescriptor-getreservedbits
     HRESULT GetReservedBits(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcadescriptor-getcapid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcadescriptor-getcapid
     HRESULT GetCAPID(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcadescriptor-getprivatedatabytes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcadescriptor-getprivatedatabytes
     HRESULT GetPrivateDataBytes(ubyte* pbBufferLength, ubyte* pbBuffer);
 }
 
 @GUID("39cbeb97-ff0b-42a7-9ab9-7b9cfe70a77a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdbcaservicedescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdbcaservicedescriptor
 interface IIsdbCAServiceDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcaservicedescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcaservicedescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcaservicedescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcaservicedescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcaservicedescriptor-getcasystemid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcaservicedescriptor-getcasystemid
     HRESULT GetCASystemId(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcaservicedescriptor-getcabroadcastergroupid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcaservicedescriptor-getcabroadcastergroupid
     HRESULT GetCABroadcasterGroupId(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcaservicedescriptor-getmessagecontrol))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcaservicedescriptor-getmessagecontrol
     HRESULT GetMessageControl(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcaservicedescriptor-getserviceids))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbcaservicedescriptor-getserviceids
     HRESULT GetServiceIds(ubyte* pbNumServiceIds, ushort* pwServiceIds);
 }
 
 @GUID("b7b3ae90-ee0b-446d-8769-f7e2aa266aa6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdbhierarchicaltransmissiondescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-iisdbhierarchicaltransmissiondescriptor
 interface IIsdbHierarchicalTransmissionDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbhierarchicaltransmissiondescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbhierarchicaltransmissiondescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbhierarchicaltransmissiondescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbhierarchicaltransmissiondescriptor-getlength
     HRESULT GetLength(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbhierarchicaltransmissiondescriptor-getfutureuse1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbhierarchicaltransmissiondescriptor-getfutureuse1
     HRESULT GetFutureUse1(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbhierarchicaltransmissiondescriptor-getqualitylevel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbhierarchicaltransmissiondescriptor-getqualitylevel
     HRESULT GetQualityLevel(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbhierarchicaltransmissiondescriptor-getfutureuse2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbhierarchicaltransmissiondescriptor-getfutureuse2
     HRESULT GetFutureUse2(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbhierarchicaltransmissiondescriptor-getreferencepid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-iisdbhierarchicaltransmissiondescriptor-getreferencepid
     HRESULT GetReferencePid(ushort* pwVal);
 }
 
 @GUID("9de49a74-aba2-4a18-93e1-21f17f95c3c3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-ipbdasiparser))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-ipbdasiparser
 interface IPBDASiParser : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbdasiparser-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbdasiparser-initialize
     HRESULT Initialize(IUnknown punk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbdasiparser-geteit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbdasiparser-geteit
     HRESULT GetEIT(uint dwSize, ubyte* pBuffer, IPBDA_EIT* ppEIT);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbdasiparser-getservices))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbdasiparser-getservices
     HRESULT GetServices(uint dwSize, const(ubyte)* pBuffer, IPBDA_Services* ppServices);
 }
 
 @GUID("a35f2dea-098f-4ebd-984c-2bd4c3c8ce0a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-ipbda_eit))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-ipbda_eit
 interface IPBDA_EIT : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbda_eit-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbda_eit-initialize
     HRESULT Initialize(uint size, const(ubyte)* pBuffer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbda_eit-gettableid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbda_eit-gettableid
     HRESULT GetTableId(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbda_eit-getversionnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbda_eit-getversionnumber
     HRESULT GetVersionNumber(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbda_eit-getserviceidx))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbda_eit-getserviceidx
     HRESULT GetServiceIdx(ulong* plwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbda_eit-getcountofrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbda_eit-getcountofrecords
     HRESULT GetCountOfRecords(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbda_eit-getrecordeventid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbda_eit-getrecordeventid
     HRESULT GetRecordEventId(uint dwRecordIndex, ulong* plwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbda_eit-getrecordstarttime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbda_eit-getrecordstarttime
     HRESULT GetRecordStartTime(uint dwRecordIndex, MPEG_DATE_AND_TIME* pmdtVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbda_eit-getrecordduration))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbda_eit-getrecordduration
     HRESULT GetRecordDuration(uint dwRecordIndex, MPEG_TIME* pmdVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbda_eit-getrecordcountofdescriptors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbda_eit-getrecordcountofdescriptors
     HRESULT GetRecordCountOfDescriptors(uint dwRecordIndex, uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbda_eit-getrecorddescriptorbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbda_eit-getrecorddescriptorbyindex
     HRESULT GetRecordDescriptorByIndex(uint dwRecordIndex, uint dwIndex, IGenericDescriptor* ppDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbda_eit-getrecorddescriptorbytag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbda_eit-getrecorddescriptorbytag
     HRESULT GetRecordDescriptorByTag(uint dwRecordIndex, ubyte bTag, uint* pdwCookie, 
                                      IGenericDescriptor* ppDescriptor);
 }
 
 @GUID("944eab37-eed4-4850-afd2-77e7efeb4427")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-ipbda_services))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-ipbda_services
 interface IPBDA_Services : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbda_services-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbda_services-initialize
     HRESULT Initialize(uint size, ubyte* pBuffer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbda_services-getcountofrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbda_services-getcountofrecords
     HRESULT GetCountOfRecords(uint* pdwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbda_services-getrecordbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbda_services-getrecordbyindex
     HRESULT GetRecordByIndex(uint dwRecordIndex, ulong* pul64ServiceIdx);
 }
 
 @GUID("22632497-0de3-4587-aadc-d8d99017e760")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-ipbdaentitlementdescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-ipbdaentitlementdescriptor
 interface IPBDAEntitlementDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbdaentitlementdescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbdaentitlementdescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbdaentitlementdescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbdaentitlementdescriptor-getlength
     HRESULT GetLength(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbdaentitlementdescriptor-gettoken))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbdaentitlementdescriptor-gettoken
     HRESULT GetToken(ubyte** ppbTokenBuffer, uint* pdwTokenLength);
 }
 
 @GUID("313b3620-3263-45a6-9533-968befbeac03")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-ipbdaattributesdescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nn-dvbsiparser-ipbdaattributesdescriptor
 interface IPBDAAttributesDescriptor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbdaattributesdescriptor-gettag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbdaattributesdescriptor-gettag
     HRESULT GetTag(ubyte* pbVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbdaattributesdescriptor-getlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbdaattributesdescriptor-getlength
     HRESULT GetLength(ushort* pwVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbdaattributesdescriptor-getattributepayload))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dvbsiparser/nf-dvbsiparser-ipbdaattributesdescriptor-getattributepayload
     HRESULT GetAttributePayload(ubyte** ppbAttributeBuffer, uint* pdwAttributeLength);
 }
 
 @GUID("dfef4a68-ee61-415f-9ccb-cd95f2f98a3a")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nn-bdatif-ibda_tif_registration))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nn-bdatif-ibda_tif_registration
 interface IBDA_TIF_REGISTRATION : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-ibda_tif_registration-registertifex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-ibda_tif_registration-registertifex
     HRESULT RegisterTIFEx(IPin pTIFInputPin, uint* ppvRegistrationContext, IUnknown* ppMpeg2DataControl);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-ibda_tif_registration-unregistertif))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-ibda_tif_registration-unregistertif
     HRESULT UnregisterTIF(uint pvRegistrationContext);
 }
 
 @GUID("f9bac2f9-4149-4916-b2ef-faa202326862")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nn-bdatif-impeg2_tif_control))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nn-bdatif-impeg2_tif_control
 interface IMPEG2_TIF_CONTROL : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-impeg2_tif_control-registertif))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-impeg2_tif_control-registertif
     HRESULT RegisterTIF(IUnknown pUnkTIF, uint* ppvRegistrationContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-impeg2_tif_control-unregistertif))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-impeg2_tif_control-unregistertif
     HRESULT UnregisterTIF(uint pvRegistrationContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-impeg2_tif_control-addpids))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-impeg2_tif_control-addpids
     HRESULT AddPIDs(uint ulcPIDs, uint* pulPIDs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-impeg2_tif_control-deletepids))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-impeg2_tif_control-deletepids
     HRESULT DeletePIDs(uint ulcPIDs, uint* pulPIDs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-impeg2_tif_control-getpidcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-impeg2_tif_control-getpidcount
     HRESULT GetPIDCount(uint* pulcPIDs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-impeg2_tif_control-getpids))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-impeg2_tif_control-getpids
     HRESULT GetPIDs(uint* pulcPIDs, uint* pulPIDs);
 }
 
 @GUID("a3b152df-7a90-4218-ac54-9830bee8c0b6")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nn-bdatif-itunerequestinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nn-bdatif-itunerequestinfo
 interface ITuneRequestInfo : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-itunerequestinfo-getlocatordata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-itunerequestinfo-getlocatordata
     HRESULT GetLocatorData(ITuneRequest Request);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-itunerequestinfo-getcomponentdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-itunerequestinfo-getcomponentdata
     HRESULT GetComponentData(ITuneRequest CurrentRequest);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-itunerequestinfo-createcomponentlist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-itunerequestinfo-createcomponentlist
     HRESULT CreateComponentList(ITuneRequest CurrentRequest);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-itunerequestinfo-getnextprogram))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-itunerequestinfo-getnextprogram
     HRESULT GetNextProgram(ITuneRequest CurrentRequest, ITuneRequest* TuneRequest);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-itunerequestinfo-getpreviousprogram))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-itunerequestinfo-getpreviousprogram
     HRESULT GetPreviousProgram(ITuneRequest CurrentRequest, ITuneRequest* TuneRequest);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-itunerequestinfo-getnextlocator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-itunerequestinfo-getnextlocator
     HRESULT GetNextLocator(ITuneRequest CurrentRequest, ITuneRequest* TuneRequest);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-itunerequestinfo-getpreviouslocator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-itunerequestinfo-getpreviouslocator
     HRESULT GetPreviousLocator(ITuneRequest CurrentRequest, ITuneRequest* TuneRequest);
 }
 
@@ -8408,80 +8591,80 @@ interface ISIInbandEPG : IUnknown
 }
 
 @GUID("efda0c80-f395-42c3-9b3c-56b37dec7bb7")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nn-bdatif-iguidedataevent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nn-bdatif-iguidedataevent
 interface IGuideDataEvent : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-iguidedataevent-guidedataacquired))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-iguidedataevent-guidedataacquired
     HRESULT GuideDataAcquired();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-iguidedataevent-programchanged))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-iguidedataevent-programchanged
     HRESULT ProgramChanged(VARIANT varProgramDescriptionID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-iguidedataevent-servicechanged))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-iguidedataevent-servicechanged
     HRESULT ServiceChanged(VARIANT varServiceDescriptionID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-iguidedataevent-scheduleentrychanged))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-iguidedataevent-scheduleentrychanged
     HRESULT ScheduleEntryChanged(VARIANT varScheduleEntryDescriptionID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-iguidedataevent-programdeleted))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-iguidedataevent-programdeleted
     HRESULT ProgramDeleted(VARIANT varProgramDescriptionID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-iguidedataevent-servicedeleted))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-iguidedataevent-servicedeleted
     HRESULT ServiceDeleted(VARIANT varServiceDescriptionID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-iguidedataevent-scheduledeleted))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-iguidedataevent-scheduledeleted
     HRESULT ScheduleDeleted(VARIANT varScheduleEntryDescriptionID);
 }
 
 @GUID("88ec5e58-bb73-41d6-99ce-66c524b8b591")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nn-bdatif-iguidedataproperty))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nn-bdatif-iguidedataproperty
 interface IGuideDataProperty : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-iguidedataproperty-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-iguidedataproperty-get_name
     HRESULT get_Name(BSTR* pbstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-iguidedataproperty-get_language))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-iguidedataproperty-get_language
     HRESULT get_Language(int* idLang);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-iguidedataproperty-get_value))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-iguidedataproperty-get_value
     HRESULT get_Value(VARIANT* pvar);
 }
 
 @GUID("ae44423b-4571-475c-ad2c-f40a771d80ef")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nn-bdatif-ienumguidedataproperties))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nn-bdatif-ienumguidedataproperties
 interface IEnumGuideDataProperties : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-ienumguidedataproperties-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-ienumguidedataproperties-next
     HRESULT Next(uint celt, IGuideDataProperty* ppprop, uint* pcelt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-ienumguidedataproperties-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-ienumguidedataproperties-skip
     HRESULT Skip(uint celt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-ienumguidedataproperties-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-ienumguidedataproperties-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-ienumguidedataproperties-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-ienumguidedataproperties-clone
     HRESULT Clone(IEnumGuideDataProperties* ppenum);
 }
 
 @GUID("1993299c-ced6-4788-87a3-420067dce0c7")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nn-bdatif-ienumtunerequests))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nn-bdatif-ienumtunerequests
 interface IEnumTuneRequests : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-ienumtunerequests-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-ienumtunerequests-next
     HRESULT Next(uint celt, ITuneRequest* ppprop, uint* pcelt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-ienumtunerequests-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-ienumtunerequests-skip
     HRESULT Skip(uint celt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-ienumtunerequests-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-ienumtunerequests-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-ienumtunerequests-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-ienumtunerequests-clone
     HRESULT Clone(IEnumTuneRequests* ppenum);
 }
 
 @GUID("61571138-5b01-43cd-aeaf-60b784a0bf93")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nn-bdatif-iguidedata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nn-bdatif-iguidedata
 interface IGuideData : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-iguidedata-getservices))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-iguidedata-getservices
     HRESULT GetServices(IEnumTuneRequests* ppEnumTuneRequests);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-iguidedata-getserviceproperties))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-iguidedata-getserviceproperties
     HRESULT GetServiceProperties(ITuneRequest pTuneRequest, IEnumGuideDataProperties* ppEnumProperties);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-iguidedata-getguideprogramids))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-iguidedata-getguideprogramids
     HRESULT GetGuideProgramIDs(IEnumVARIANT* pEnumPrograms);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-iguidedata-getprogramproperties))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-iguidedata-getprogramproperties
     HRESULT GetProgramProperties(VARIANT varProgramDescriptionID, IEnumGuideDataProperties* ppEnumProperties);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-iguidedata-getscheduleentryids))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-iguidedata-getscheduleentryids
     HRESULT GetScheduleEntryIDs(IEnumVARIANT* pEnumScheduleEntries);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-iguidedata-getscheduleentryproperties))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bdatif/nf-bdatif-iguidedata-getscheduleentryproperties
     HRESULT GetScheduleEntryProperties(VARIANT varScheduleEntryDescriptionID, 
                                        IEnumGuideDataProperties* ppEnumProperties);
 }

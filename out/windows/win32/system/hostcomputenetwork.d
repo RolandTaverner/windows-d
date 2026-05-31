@@ -3,15 +3,16 @@
 module windows.win32.system.hostcomputenetwork;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : HANDLE, HRESULT, PWSTR;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : HANDLE, HRESULT, PWSTR;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HCN_NOTIFICATIONS))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HCN_NOTIFICATIONS
 alias HCN_NOTIFICATIONS = int;
 enum : int
 {
@@ -31,7 +32,8 @@ enum : int
     HcnNotificationServiceDisconnect                        = 0x01000000,
     HcnNotificationFlagsReserved                            = 0xf0000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HCN_PORT_PROTOCOL))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HCN_PORT_PROTOCOL
 alias HCN_PORT_PROTOCOL = int;
 enum : int
 {
@@ -39,7 +41,8 @@ enum : int
     HCN_PORT_PROTOCOL_UDP  = 0x00000002,
     HCN_PORT_PROTOCOL_BOTH = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HCN_PORT_ACCESS))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HCN_PORT_ACCESS
 alias HCN_PORT_ACCESS = int;
 enum : int
 {
@@ -55,14 +58,14 @@ alias HCN_NOTIFICATION_CALLBACK = void function(uint NotificationType, void* Con
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HCN_PORT_RANGE_RESERVATION))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HCN_PORT_RANGE_RESERVATION
 struct HCN_PORT_RANGE_RESERVATION
 {
     ushort startingPort;
     ushort endingPort;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HCN_PORT_RANGE_ENTRY))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HCN_PORT_RANGE_ENTRY
 struct HCN_PORT_RANGE_ENTRY
 {
     GUID              OwningPartitionId;
@@ -78,175 +81,175 @@ struct HCN_PORT_RANGE_ENTRY
 
 // Functions
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnEnumerateNetworks))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnEnumerateNetworks
 @DllImport("computenetwork.dll")
 HRESULT HcnEnumerateNetworks(const(PWSTR) Query, PWSTR* Networks, PWSTR* ErrorRecord);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnCreateNetwork))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnCreateNetwork
 @DllImport("computenetwork.dll")
 HRESULT HcnCreateNetwork(const(GUID)* Id, const(PWSTR) Settings, void** Network, PWSTR* ErrorRecord);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnOpenNetwork))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnOpenNetwork
 @DllImport("computenetwork.dll")
 HRESULT HcnOpenNetwork(const(GUID)* Id, void** Network, PWSTR* ErrorRecord);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnModifyNetwork))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnModifyNetwork
 @DllImport("computenetwork.dll")
 HRESULT HcnModifyNetwork(void* Network, const(PWSTR) Settings, PWSTR* ErrorRecord);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnQueryNetworkProperties))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnQueryNetworkProperties
 @DllImport("computenetwork.dll")
 HRESULT HcnQueryNetworkProperties(void* Network, const(PWSTR) Query, PWSTR* Properties, PWSTR* ErrorRecord);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnDeleteNetwork))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnDeleteNetwork
 @DllImport("computenetwork.dll")
 HRESULT HcnDeleteNetwork(const(GUID)* Id, PWSTR* ErrorRecord);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnCloseNetwork))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnCloseNetwork
 @DllImport("computenetwork.dll")
 HRESULT HcnCloseNetwork(void* Network);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnEnumerateNamespaces))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnEnumerateNamespaces
 @DllImport("computenetwork.dll")
 HRESULT HcnEnumerateNamespaces(const(PWSTR) Query, PWSTR* Namespaces, PWSTR* ErrorRecord);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnCreateNamespace))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnCreateNamespace
 @DllImport("computenetwork.dll")
 HRESULT HcnCreateNamespace(const(GUID)* Id, const(PWSTR) Settings, void** Namespace, PWSTR* ErrorRecord);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnOpenNamespace))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnOpenNamespace
 @DllImport("computenetwork.dll")
 HRESULT HcnOpenNamespace(const(GUID)* Id, void** Namespace, PWSTR* ErrorRecord);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnModifyNamespace))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnModifyNamespace
 @DllImport("computenetwork.dll")
 HRESULT HcnModifyNamespace(void* Namespace, const(PWSTR) Settings, PWSTR* ErrorRecord);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnQueryNamespaceProperties))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnQueryNamespaceProperties
 @DllImport("computenetwork.dll")
 HRESULT HcnQueryNamespaceProperties(void* Namespace, const(PWSTR) Query, PWSTR* Properties, PWSTR* ErrorRecord);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnDeleteNamespace))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnDeleteNamespace
 @DllImport("computenetwork.dll")
 HRESULT HcnDeleteNamespace(const(GUID)* Id, PWSTR* ErrorRecord);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnCloseNamespace))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnCloseNamespace
 @DllImport("computenetwork.dll")
 HRESULT HcnCloseNamespace(void* Namespace);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnEnumerateEndpoints))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnEnumerateEndpoints
 @DllImport("computenetwork.dll")
 HRESULT HcnEnumerateEndpoints(const(PWSTR) Query, PWSTR* Endpoints, PWSTR* ErrorRecord);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnCreateEndpoint))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnCreateEndpoint
 @DllImport("computenetwork.dll")
 HRESULT HcnCreateEndpoint(void* Network, const(GUID)* Id, const(PWSTR) Settings, void** Endpoint, 
                           PWSTR* ErrorRecord);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnOpenEndpoint))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnOpenEndpoint
 @DllImport("computenetwork.dll")
 HRESULT HcnOpenEndpoint(const(GUID)* Id, void** Endpoint, PWSTR* ErrorRecord);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnModifyEndpoint))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnModifyEndpoint
 @DllImport("computenetwork.dll")
 HRESULT HcnModifyEndpoint(void* Endpoint, const(PWSTR) Settings, PWSTR* ErrorRecord);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnQueryEndpointProperties))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnQueryEndpointProperties
 @DllImport("computenetwork.dll")
 HRESULT HcnQueryEndpointProperties(void* Endpoint, const(PWSTR) Query, PWSTR* Properties, PWSTR* ErrorRecord);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnDeleteEndpoint))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnDeleteEndpoint
 @DllImport("computenetwork.dll")
 HRESULT HcnDeleteEndpoint(const(GUID)* Id, PWSTR* ErrorRecord);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnCloseEndpoint))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnCloseEndpoint
 @DllImport("computenetwork.dll")
 HRESULT HcnCloseEndpoint(void* Endpoint);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnEnumerateLoadBalancers))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnEnumerateLoadBalancers
 @DllImport("computenetwork.dll")
 HRESULT HcnEnumerateLoadBalancers(const(PWSTR) Query, PWSTR* LoadBalancer, PWSTR* ErrorRecord);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnCreateLoadBalancer))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnCreateLoadBalancer
 @DllImport("computenetwork.dll")
 HRESULT HcnCreateLoadBalancer(const(GUID)* Id, const(PWSTR) Settings, void** LoadBalancer, PWSTR* ErrorRecord);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnOpenLoadBalancer))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnOpenLoadBalancer
 @DllImport("computenetwork.dll")
 HRESULT HcnOpenLoadBalancer(const(GUID)* Id, void** LoadBalancer, PWSTR* ErrorRecord);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnModifyLoadBalancer))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnModifyLoadBalancer
 @DllImport("computenetwork.dll")
 HRESULT HcnModifyLoadBalancer(void* LoadBalancer, const(PWSTR) Settings, PWSTR* ErrorRecord);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnQueryLoadBalancerProperties))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnQueryLoadBalancerProperties
 @DllImport("computenetwork.dll")
 HRESULT HcnQueryLoadBalancerProperties(void* LoadBalancer, const(PWSTR) Query, PWSTR* Properties, 
                                        PWSTR* ErrorRecord);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnDeleteLoadBalancer))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnDeleteLoadBalancer
 @DllImport("computenetwork.dll")
 HRESULT HcnDeleteLoadBalancer(const(GUID)* Id, PWSTR* ErrorRecord);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnCloseLoadBalancer))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnCloseLoadBalancer
 @DllImport("computenetwork.dll")
 HRESULT HcnCloseLoadBalancer(void* LoadBalancer);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnRegisterServiceCallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnRegisterServiceCallback
 @DllImport("computenetwork.dll")
 HRESULT HcnRegisterServiceCallback(HCN_NOTIFICATION_CALLBACK Callback, void* Context, void** CallbackHandle);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnUnregisterServiceCallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnUnregisterServiceCallback
 @DllImport("computenetwork.dll")
 HRESULT HcnUnregisterServiceCallback(void* CallbackHandle);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnRegisterGuestNetworkServiceCallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnRegisterGuestNetworkServiceCallback
 @DllImport("computenetwork.dll")
 HRESULT HcnRegisterGuestNetworkServiceCallback(void* GuestNetworkService, HCN_NOTIFICATION_CALLBACK Callback, 
                                                void* Context, void** CallbackHandle);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnUnregisterGuestNetworkServiceCallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnUnregisterGuestNetworkServiceCallback
 @DllImport("computenetwork.dll")
 HRESULT HcnUnregisterGuestNetworkServiceCallback(void* CallbackHandle);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnCreateGuestNetworkService))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnCreateGuestNetworkService
 @DllImport("computenetwork.dll")
 HRESULT HcnCreateGuestNetworkService(const(GUID)* Id, const(PWSTR) Settings, void** GuestNetworkService, 
                                      PWSTR* ErrorRecord);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnCloseGuestNetworkService))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnCloseGuestNetworkService
 @DllImport("computenetwork.dll")
 HRESULT HcnCloseGuestNetworkService(void* GuestNetworkService);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnModifyGuestNetworkService))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnModifyGuestNetworkService
 @DllImport("computenetwork.dll")
 HRESULT HcnModifyGuestNetworkService(void* GuestNetworkService, const(PWSTR) Settings, PWSTR* ErrorRecord);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnDeleteGuestNetworkService))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnDeleteGuestNetworkService
 @DllImport("computenetwork.dll")
 HRESULT HcnDeleteGuestNetworkService(const(GUID)* Id, PWSTR* ErrorRecord);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnReserveGuestNetworkServicePort))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnReserveGuestNetworkServicePort
 @DllImport("computenetwork.dll")
 HRESULT HcnReserveGuestNetworkServicePort(void* GuestNetworkService, HCN_PORT_PROTOCOL Protocol, 
                                           HCN_PORT_ACCESS Access, ushort Port, HANDLE* PortReservationHandle);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnReserveGuestNetworkServicePortRange))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnReserveGuestNetworkServicePortRange
 @DllImport("computenetwork.dll")
 HRESULT HcnReserveGuestNetworkServicePortRange(void* GuestNetworkService, ushort PortCount, 
                                                HCN_PORT_RANGE_RESERVATION* PortRangeReservation, 
                                                HANDLE* PortReservationHandle);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnReleaseGuestNetworkServicePortReservationHandle))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnReleaseGuestNetworkServicePortReservationHandle
 @DllImport("computenetwork.dll")
 HRESULT HcnReleaseGuestNetworkServicePortReservationHandle(HANDLE PortReservationHandle);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnEnumerateGuestNetworkPortReservations))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnEnumerateGuestNetworkPortReservations
 @DllImport("computenetwork.dll")
 HRESULT HcnEnumerateGuestNetworkPortReservations(uint* ReturnCount, 
                                                  /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(0)))])*/HCN_PORT_RANGE_ENTRY** PortEntries);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnFreeGuestNetworkPortReservations))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcn/Reference/HcnFreeGuestNetworkPortReservations
 @DllImport("computenetwork.dll")
 void HcnFreeGuestNetworkPortReservations(HCN_PORT_RANGE_ENTRY* PortEntries);
 

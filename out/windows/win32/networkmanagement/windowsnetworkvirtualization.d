@@ -3,7 +3,7 @@
 module windows.win32.networkmanagement.windowsnetworkvirtualization;
 
 public import windows.core;
-public import windows.win32.foundation : HANDLE;
+public import windows.win32.foundation.foundation : HANDLE;
 public import windows.win32.networking.winsock : ADDRESS_FAMILY, DL_EUI48, IN6_ADDR, IN_ADDR,
                                                  NL_DAD_STATE;
 public import windows.win32.system.io : OVERLAPPED;
@@ -13,7 +13,8 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wnvapi/ne-wnvapi-wnv_notification_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wnvapi/ne-wnvapi-wnv_notification_type
 alias WNV_NOTIFICATION_TYPE = int;
 enum : int
 {
@@ -22,7 +23,8 @@ enum : int
     WnvObjectChangeType    = 0x00000002,
     WnvNotificationTypeMax = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wnvapi/ne-wnvapi-wnv_object_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wnvapi/ne-wnvapi-wnv_object_type
 alias WNV_OBJECT_TYPE = int;
 enum : int
 {
@@ -30,6 +32,7 @@ enum : int
     WnvCustomerAddressType = 0x00000001,
     WnvObjectTypeMax       = 0x00000002,
 }
+
 alias WNV_CA_NOTIFICATION_TYPE = int;
 enum : int
 {
@@ -42,13 +45,13 @@ enum : int
 // Constants
 
 
-enum uint WNV_API_MAJOR_VERSION_1 = 0x00000001;
-enum uint WNV_API_MINOR_VERSION_0 = 0x00000000;
+enum uint WNV_API_MAJOR_VERSION_1 = 0x00000001U;
+enum uint WNV_API_MINOR_VERSION_0 = 0x00000000U;
 
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wnvapi/ns-wnvapi-wnv_object_header))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wnvapi/ns-wnvapi-wnv_object_header
 struct WNV_OBJECT_HEADER
 {
     ubyte MajorVersion;
@@ -56,7 +59,7 @@ struct WNV_OBJECT_HEADER
     uint  Size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wnvapi/ns-wnvapi-wnv_notification_param))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wnvapi/ns-wnvapi-wnv_notification_param
 struct WNV_NOTIFICATION_PARAM
 {
     WNV_OBJECT_HEADER Header;
@@ -65,13 +68,18 @@ struct WNV_NOTIFICATION_PARAM
     ubyte*            Buffer;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wnvapi/ns-wnvapi-wnv_ip_address))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wnvapi/ns-wnvapi-wnv_ip_address
 struct WNV_IP_ADDRESS
 {
-    _IP_e__Union IP;
+    union IP
+    {
+        IN_ADDR   v4;
+        IN6_ADDR  v6;
+        ubyte[16] Addr;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wnvapi/ns-wnvapi-wnv_policy_mismatch_param))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wnvapi/ns-wnvapi-wnv_policy_mismatch_param
 struct WNV_POLICY_MISMATCH_PARAM
 {
     ADDRESS_FAMILY CAFamily;
@@ -81,7 +89,7 @@ struct WNV_POLICY_MISMATCH_PARAM
     WNV_IP_ADDRESS PA;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wnvapi/ns-wnvapi-wnv_provider_address_change_param))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wnvapi/ns-wnvapi-wnv_provider_address_change_param
 struct WNV_PROVIDER_ADDRESS_CHANGE_PARAM
 {
     ADDRESS_FAMILY PAFamily;
@@ -100,14 +108,18 @@ struct WNV_CUSTOMER_ADDRESS_CHANGE_PARAM
     WNV_CA_NOTIFICATION_TYPE NotificationReason;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wnvapi/ns-wnvapi-wnv_object_change_param))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wnvapi/ns-wnvapi-wnv_object_change_param
 struct WNV_OBJECT_CHANGE_PARAM
 {
     WNV_OBJECT_TYPE ObjectType;
-    _ObjectParam_e__Union ObjectParam;
+    union ObjectParam
+    {
+        WNV_PROVIDER_ADDRESS_CHANGE_PARAM ProviderAddressChange;
+        WNV_CUSTOMER_ADDRESS_CHANGE_PARAM CustomerAddressChange;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wnvapi/ns-wnvapi-wnv_redirect_param))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wnvapi/ns-wnvapi-wnv_redirect_param
 struct WNV_REDIRECT_PARAM
 {
     ADDRESS_FAMILY CAFamily;

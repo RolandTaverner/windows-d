@@ -3,9 +3,9 @@
 module windows.win32.system.settingsmanagementinfrastructure;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BSTR, HMODULE, HRESULT, PWSTR;
-public import windows.win32.system.com : IStream, IUnknown;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BSTR, HMODULE, HRESULT, PWSTR;
+public import windows.win32.system.com.com : IStream, IUnknown;
 public import windows.win32.system.variant : VARIANT;
 
 extern(Windows) @nogc nothrow:
@@ -13,20 +13,23 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/ne-wcmconfig-wcmtargetmode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/ne-wcmconfig-wcmtargetmode
 enum WcmTargetMode : int
 {
     OfflineMode = 0x00000001,
     OnlineMode  = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/ne-wcmconfig-wcmnamespaceenumerationflags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/ne-wcmconfig-wcmnamespaceenumerationflags
 enum WcmNamespaceEnumerationFlags : int
 {
     SharedEnumeration = 0x00000001,
     UserEnumeration   = 0x00000002,
     AllEnumeration    = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/ne-wcmconfig-wcmdatatype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/ne-wcmconfig-wcmdatatype
 enum WcmDataType : int
 {
     dataTypeByte      = 0x00000001,
@@ -41,14 +44,16 @@ enum WcmDataType : int
     dataTypeString    = 0x0000000c,
     dataTypeFlagArray = 0x00008000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/ne-wcmconfig-wcmsettingtype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/ne-wcmconfig-wcmsettingtype
 enum WcmSettingType : int
 {
     settingTypeScalar  = 0x00000001,
     settingTypeComplex = 0x00000002,
     settingTypeList    = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/ne-wcmconfig-wcmrestrictionfacets))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/ne-wcmconfig-wcmrestrictionfacets
 enum WcmRestrictionFacets : int
 {
     restrictionFacetMaxLength    = 0x00000001,
@@ -56,7 +61,8 @@ enum WcmRestrictionFacets : int
     restrictionFacetMaxInclusive = 0x00000004,
     restrictionFacetMinInclusive = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/ne-wcmconfig-wcmuserstatus))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/ne-wcmconfig-wcmuserstatus
 enum WcmUserStatus : int
 {
     UnknownStatus    = 0x00000000,
@@ -65,7 +71,8 @@ enum WcmUserStatus : int
     UserLoaded       = 0x00000003,
     UserUnloaded     = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/ne-wcmconfig-wcmnamespaceaccess))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/ne-wcmconfig-wcmnamespaceaccess
 enum WcmNamespaceAccess : int
 {
     ReadOnlyAccess  = 0x00000001,
@@ -88,12 +95,12 @@ enum : const(wchar)*
 
 enum : uint
 {
-    WCM_SETTINGS_ID_FLAG_REFERENCE  = 0x00000000,
-    WCM_SETTINGS_ID_FLAG_DEFINITION = 0x00000001,
+    WCM_SETTINGS_ID_FLAG_REFERENCE  = 0x00000000U,
+    WCM_SETTINGS_ID_FLAG_DEFINITION = 0x00000001U,
 }
 
-enum uint LINK_STORE_TO_ENGINE_INSTANCE = 0x00000001;
-enum uint LIMITED_VALIDATION_MODE = 0x00000001;
+enum uint LINK_STORE_TO_ENGINE_INSTANCE = 0x00000001U;
+enum uint LIMITED_VALIDATION_MODE = 0x00000001U;
 enum HRESULT WCM_E_INTERNALERROR = HRESULT(0x80220000);
 
 enum : HRESULT
@@ -181,229 +188,229 @@ struct SettingsEngine;
 
 @GUID("9f7d7bb7-20b3-11da-81a5-0030f1642e3c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nn-wcmconfig-iitemenumerator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nn-wcmconfig-iitemenumerator
 interface IItemEnumerator : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-iitemenumerator-current))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-iitemenumerator-current
     HRESULT Current(VARIANT* Item);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-iitemenumerator-movenext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-iitemenumerator-movenext
     HRESULT MoveNext(BOOL* ItemValid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-iitemenumerator-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-iitemenumerator-reset
     HRESULT Reset();
 }
 
 @GUID("9f7d7bb6-20b3-11da-81a5-0030f1642e3c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nn-wcmconfig-isettingsidentity))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nn-wcmconfig-isettingsidentity
 interface ISettingsIdentity : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsidentity-getattribute))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsidentity-getattribute
     HRESULT GetAttribute(void* Reserved, const(PWSTR) Name, BSTR* Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsidentity-setattribute))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsidentity-setattribute
     HRESULT SetAttribute(void* Reserved, const(PWSTR) Name, const(PWSTR) Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsidentity-getflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsidentity-getflags
     HRESULT GetFlags(uint* Flags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsidentity-setflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsidentity-setflags
     HRESULT SetFlags(uint Flags);
 }
 
 @GUID("9f7d7bb8-20b3-11da-81a5-0030f1642e3c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nn-wcmconfig-itargetinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nn-wcmconfig-itargetinfo
 interface ITargetInfo : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-gettargetmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-gettargetmode
     HRESULT GetTargetMode(WcmTargetMode* TargetMode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-settargetmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-settargetmode
     HRESULT SetTargetMode(WcmTargetMode TargetMode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-gettemporarystorelocation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-gettemporarystorelocation
     HRESULT GetTemporaryStoreLocation(BSTR* TemporaryStoreLocation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-settemporarystorelocation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-settemporarystorelocation
     HRESULT SetTemporaryStoreLocation(const(PWSTR) TemporaryStoreLocation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-gettargetid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-gettargetid
     HRESULT GetTargetID(BSTR* TargetID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-settargetid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-settargetid
     HRESULT SetTargetID(GUID TargetID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-gettargetprocessorarchitecture))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-gettargetprocessorarchitecture
     HRESULT GetTargetProcessorArchitecture(BSTR* ProcessorArchitecture);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-settargetprocessorarchitecture))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-settargetprocessorarchitecture
     HRESULT SetTargetProcessorArchitecture(const(PWSTR) ProcessorArchitecture);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-getproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-getproperty
     HRESULT GetProperty(BOOL Offline, const(PWSTR) Property, BSTR* Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-setproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-setproperty
     HRESULT SetProperty(BOOL Offline, const(PWSTR) Property, const(PWSTR) Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-getenumerator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-getenumerator
     HRESULT GetEnumerator(IItemEnumerator* Enumerator);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-expandtarget))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-expandtarget
     HRESULT ExpandTarget(BOOL Offline, const(PWSTR) Location, BSTR* ExpandedLocation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-expandtargetpath))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-expandtargetpath
     HRESULT ExpandTargetPath(BOOL Offline, const(PWSTR) Location, BSTR* ExpandedLocation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-setmodulepath))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-setmodulepath
     HRESULT SetModulePath(const(PWSTR) Module, const(PWSTR) Path);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-loadmodule))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-loadmodule
     HRESULT LoadModule(const(PWSTR) Module, HMODULE* ModuleHandle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-setwow64context))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-setwow64context
     HRESULT SetWow64Context(const(PWSTR) InstallerModule, ubyte* Wow64Context);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-translatewow64))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-translatewow64
     HRESULT TranslateWow64(const(PWSTR) ClientArchitecture, const(PWSTR) Value, BSTR* TranslatedValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-setschemahivelocation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-setschemahivelocation
     HRESULT SetSchemaHiveLocation(const(PWSTR) pwzHiveDir);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-getschemahivelocation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-getschemahivelocation
     HRESULT GetSchemaHiveLocation(BSTR* pHiveLocation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-setschemahivemountname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-setschemahivemountname
     HRESULT SetSchemaHiveMountName(const(PWSTR) pwzMountName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-getschemahivemountname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-itargetinfo-getschemahivemountname
     HRESULT GetSchemaHiveMountName(BSTR* pMountName);
 }
 
 @GUID("9f7d7bb9-20b3-11da-81a5-0030f1642e3c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nn-wcmconfig-isettingsengine))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nn-wcmconfig-isettingsengine
 interface ISettingsEngine : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsengine-getnamespaces))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsengine-getnamespaces
     HRESULT GetNamespaces(WcmNamespaceEnumerationFlags Flags, void* Reserved, IItemEnumerator* Namespaces);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsengine-getnamespace))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsengine-getnamespace
     HRESULT GetNamespace(ISettingsIdentity SettingsID, WcmNamespaceAccess Access, void* Reserved, 
                          ISettingsNamespace* NamespaceItem);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsengine-geterrordescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsengine-geterrordescription
     HRESULT GetErrorDescription(int HResult, BSTR* Message);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsengine-createsettingsidentity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsengine-createsettingsidentity
     HRESULT CreateSettingsIdentity(ISettingsIdentity* SettingsID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsengine-getstorestatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsengine-getstorestatus
     HRESULT GetStoreStatus(void* Reserved, WcmUserStatus* Status);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsengine-loadstore))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsengine-loadstore
     HRESULT LoadStore(uint Flags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsengine-unloadstore))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsengine-unloadstore
     HRESULT UnloadStore(void* Reserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsengine-registernamespace))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsengine-registernamespace
     HRESULT RegisterNamespace(ISettingsIdentity SettingsID, IStream Stream, BOOL PushSettings, VARIANT* Results);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsengine-unregisternamespace))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsengine-unregisternamespace
     HRESULT UnregisterNamespace(ISettingsIdentity SettingsID, BOOL RemoveSettings);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsengine-createtargetinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsengine-createtargetinfo
     HRESULT CreateTargetInfo(ITargetInfo* Target);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsengine-gettargetinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsengine-gettargetinfo
     HRESULT GetTargetInfo(ITargetInfo* Target);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsengine-settargetinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsengine-settargetinfo
     HRESULT SetTargetInfo(ITargetInfo Target);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsengine-createsettingscontext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsengine-createsettingscontext
     HRESULT CreateSettingsContext(uint Flags, void* Reserved, ISettingsContext* SettingsContext);
     HRESULT SetSettingsContext(ISettingsContext SettingsContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsengine-applysettingscontext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsengine-applysettingscontext
     HRESULT ApplySettingsContext(ISettingsContext SettingsContext, PWSTR** pppwzIdentities, size_t* pcIdentities);
     HRESULT GetSettingsContext(ISettingsContext* SettingsContext);
 }
 
 @GUID("9f7d7bbb-20b3-11da-81a5-0030f1642e3c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nn-wcmconfig-isettingsitem))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nn-wcmconfig-isettingsitem
 interface ISettingsItem : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-getname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-getname
     HRESULT GetName(BSTR* Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-getvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-getvalue
     HRESULT GetValue(VARIANT* Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-setvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-setvalue
     HRESULT SetValue(const(VARIANT)* Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-getsettingtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-getsettingtype
     HRESULT GetSettingType(WcmSettingType* Type);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-getdatatype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-getdatatype
     HRESULT GetDataType(WcmDataType* Type);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-getvalueraw))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-getvalueraw
     HRESULT GetValueRaw(ubyte** Data, uint* DataSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-setvalueraw))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-setvalueraw
     HRESULT SetValueRaw(int DataType, const(ubyte)* Data, uint DataSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-haschild))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-haschild
     HRESULT HasChild(BOOL* ItemHasChild);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-children))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-children
     HRESULT Children(IItemEnumerator* Children);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-getchild))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-getchild
     HRESULT GetChild(const(PWSTR) Name, ISettingsItem* Child);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-getsettingbypath))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-getsettingbypath
     HRESULT GetSettingByPath(const(PWSTR) Path, ISettingsItem* Setting);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-createsettingbypath))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-createsettingbypath
     HRESULT CreateSettingByPath(const(PWSTR) Path, ISettingsItem* Setting);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-removesettingbypath))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-removesettingbypath
     HRESULT RemoveSettingByPath(const(PWSTR) Path);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-getlistkeyinformation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-getlistkeyinformation
     HRESULT GetListKeyInformation(BSTR* KeyName, WcmDataType* DataType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-createlistelement))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-createlistelement
     HRESULT CreateListElement(const(VARIANT)* KeyData, ISettingsItem* Child);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-removelistelement))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-removelistelement
     HRESULT RemoveListElement(const(PWSTR) ElementName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-attributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-attributes
     HRESULT Attributes(IItemEnumerator* Attributes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-getattribute))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-getattribute
     HRESULT GetAttribute(const(PWSTR) Name, VARIANT* Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-getpath))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-getpath
     HRESULT GetPath(BSTR* Path);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-getrestrictionfacets))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-getrestrictionfacets
     HRESULT GetRestrictionFacets(WcmRestrictionFacets* RestrictionFacets);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-getrestriction))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-getrestriction
     HRESULT GetRestriction(WcmRestrictionFacets RestrictionFacet, VARIANT* FacetData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-getkeyvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsitem-getkeyvalue
     HRESULT GetKeyValue(VARIANT* Value);
 }
 
 @GUID("9f7d7bba-20b3-11da-81a5-0030f1642e3c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nn-wcmconfig-isettingsnamespace))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nn-wcmconfig-isettingsnamespace
 interface ISettingsNamespace : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsnamespace-getidentity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsnamespace-getidentity
     HRESULT GetIdentity(ISettingsIdentity* SettingsID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsnamespace-settings))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsnamespace-settings
     HRESULT Settings(IItemEnumerator* Settings);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsnamespace-save))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsnamespace-save
     HRESULT Save(BOOL PushSettings, ISettingsResult* Result);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsnamespace-getsettingbypath))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsnamespace-getsettingbypath
     HRESULT GetSettingByPath(const(PWSTR) Path, ISettingsItem* Setting);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsnamespace-createsettingbypath))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsnamespace-createsettingbypath
     HRESULT CreateSettingByPath(const(PWSTR) Path, ISettingsItem* Setting);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsnamespace-removesettingbypath))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsnamespace-removesettingbypath
     HRESULT RemoveSettingByPath(const(PWSTR) Path);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsnamespace-getattribute))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsnamespace-getattribute
     HRESULT GetAttribute(const(PWSTR) Name, VARIANT* Value);
 }
 
 @GUID("9f7d7bbc-20b3-11da-81a5-0030f1642e3c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nn-wcmconfig-isettingsresult))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nn-wcmconfig-isettingsresult
 interface ISettingsResult : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsresult-getdescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsresult-getdescription
     HRESULT GetDescription(BSTR* description);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsresult-geterrorcode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsresult-geterrorcode
     HRESULT GetErrorCode(HRESULT* hrOut);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsresult-getcontextdescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsresult-getcontextdescription
     HRESULT GetContextDescription(BSTR* description);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsresult-getline))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsresult-getline
     HRESULT GetLine(uint* dwLine);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsresult-getcolumn))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsresult-getcolumn
     HRESULT GetColumn(uint* dwColumn);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsresult-getsource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingsresult-getsource
     HRESULT GetSource(BSTR* file);
 }
 
 @GUID("9f7d7bbd-20b3-11da-81a5-0030f1642e3c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nn-wcmconfig-isettingscontext))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nn-wcmconfig-isettingscontext
 interface ISettingsContext : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingscontext-serialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingscontext-serialize
     HRESULT Serialize(IStream pStream, ITargetInfo pTarget);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingscontext-deserialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingscontext-deserialize
     HRESULT Deserialize(IStream pStream, ITargetInfo pTarget, ISettingsResult** pppResults, size_t* pcResultCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingscontext-setuserdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingscontext-setuserdata
     HRESULT SetUserData(void* pUserData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingscontext-getuserdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingscontext-getuserdata
     HRESULT GetUserData(void** pUserData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingscontext-getnamespaces))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingscontext-getnamespaces
     HRESULT GetNamespaces(IItemEnumerator* ppNamespaceIds);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingscontext-getstoredsettings))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingscontext-getstoredsettings
     HRESULT GetStoredSettings(ISettingsIdentity pIdentity, IItemEnumerator* ppAddedSettings, 
                               IItemEnumerator* ppModifiedSettings, IItemEnumerator* ppDeletedSettings);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingscontext-revertsetting))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmconfig/nf-wcmconfig-isettingscontext-revertsetting
     HRESULT RevertSetting(ISettingsIdentity pIdentity, const(PWSTR) pwzSetting);
 }
 

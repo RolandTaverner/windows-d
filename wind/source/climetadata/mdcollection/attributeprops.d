@@ -229,3 +229,13 @@ public enum Constraint : ushort
     notNullable = 0x0008,
     defaultConstructor = 0x0010
 }
+
+// SupportedArchitectureAttribute CustomAttribute
+public enum SupportedArchitecture : uint
+{
+    None = 0x00,
+    X86 = 0x01,
+    X64 = 0x02,
+    Arm64 = 0x04,
+    All = X64 | X86 | Arm64
+}

@@ -1,9 +1,10 @@
 // Written in the D programming language.
 
-module windows.ui.composition;
+module system.system;
 
 public import windows.core;
 
 extern(Windows) @nogc nothrow:
 
 
+public alias Guid = GUID;

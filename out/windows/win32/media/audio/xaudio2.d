@@ -3,24 +3,26 @@
 module windows.win32.media.audio.xaudio2;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, HRESULT, PWSTR;
-public import windows.win32.media.audio : AUDIO_STREAM_CATEGORY, WAVEFORMATEX;
-public import windows.win32.system.com : IUnknown;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, HRESULT, PWSTR;
+public import windows.win32.media.audio.audio : AUDIO_STREAM_CATEGORY, WAVEFORMATEX;
+public import windows.win32.system.com.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xapo/ne-xapo-xapo_buffer_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xapo/ne-xapo-xapo_buffer_flags
 alias XAPO_BUFFER_FLAGS = int;
 enum : int
 {
     XAPO_BUFFER_SILENT = 0x00000000,
     XAPO_BUFFER_VALID  = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/ne-xaudio2-xaudio2_filter_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/ne-xaudio2-xaudio2_filter_type
 alias XAUDIO2_FILTER_TYPE = int;
 enum : int
 {
@@ -31,14 +33,16 @@ enum : int
     LowPassOnePoleFilter  = 0x00000004,
     HighPassOnePoleFilter = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/hrtfapoapi/ne-hrtfapoapi-hrtfdirectivitytype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/hrtfapoapi/ne-hrtfapoapi-hrtfdirectivitytype
 enum HrtfDirectivityType : int
 {
     OmniDirectional = 0x00000000,
     Cardioid        = 0x00000001,
     Cone            = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/hrtfapoapi/ne-hrtfapoapi-hrtfenvironment))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/hrtfapoapi/ne-hrtfapoapi-hrtfenvironment
 enum HrtfEnvironment : int
 {
     Small    = 0x00000000,
@@ -46,7 +50,8 @@ enum HrtfEnvironment : int
     Large    = 0x00000002,
     Outdoors = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/hrtfapoapi/ne-hrtfapoapi-hrtfdistancedecaytype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/hrtfapoapi/ne-hrtfapoapi-hrtfdistancedecaytype
 enum HrtfDistanceDecayType : int
 {
     NaturalDecay = 0x00000000,
@@ -56,8 +61,8 @@ enum HrtfDistanceDecayType : int
 // Constants
 
 
-enum uint FXEQ_MIN_FRAMERATE = 0x000055f0;
-enum uint FXEQ_MAX_FRAMERATE = 0x0000bb80;
+enum uint FXEQ_MIN_FRAMERATE = 0x000055f0U;
+enum uint FXEQ_MAX_FRAMERATE = 0x0000bb80U;
 enum float FXEQ_MIN_FREQUENCY_CENTER = 0x1.4p+4;
 enum float FXEQ_MAX_FREQUENCY_CENTER = 0x1.388p+14;
 
@@ -82,12 +87,12 @@ enum float FXEQ_DEFAULT_BANDWIDTH = 0x1p+0;
 
 enum : uint
 {
-    FXMASTERINGLIMITER_MIN_RELEASE      = 0x00000001,
-    FXMASTERINGLIMITER_MAX_RELEASE      = 0x00000014,
-    FXMASTERINGLIMITER_DEFAULT_RELEASE  = 0x00000006,
-    FXMASTERINGLIMITER_MIN_LOUDNESS     = 0x00000001,
-    FXMASTERINGLIMITER_MAX_LOUDNESS     = 0x00000708,
-    FXMASTERINGLIMITER_DEFAULT_LOUDNESS = 0x000003e8,
+    FXMASTERINGLIMITER_MIN_RELEASE      = 0x00000001U,
+    FXMASTERINGLIMITER_MAX_RELEASE      = 0x00000014U,
+    FXMASTERINGLIMITER_DEFAULT_RELEASE  = 0x00000006U,
+    FXMASTERINGLIMITER_MIN_LOUDNESS     = 0x00000001U,
+    FXMASTERINGLIMITER_MAX_LOUDNESS     = 0x00000708U,
+    FXMASTERINGLIMITER_DEFAULT_LOUDNESS = 0x000003e8U,
 }
 
 enum : float
@@ -106,8 +111,8 @@ enum : float
 
 enum : uint
 {
-    FXLOUDNESS_DEFAULT_MOMENTARY_MS = 0x00000190,
-    FXLOUDNESS_DEFAULT_SHORTTERM_MS = 0x00000bb8,
+    FXLOUDNESS_DEFAULT_MOMENTARY_MS = 0x00000190U,
+    FXLOUDNESS_DEFAULT_SHORTTERM_MS = 0x00000bb8U,
 }
 
 enum float FXECHO_MIN_WETDRYMIX = 0x0p+0;
@@ -141,14 +146,14 @@ enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(E
 
 enum : uint
 {
-    XAUDIO2_MAX_BUFFER_BYTES   = 0x80000000,
-    XAUDIO2_MAX_QUEUED_BUFFERS = 0x00000040,
-    XAUDIO2_MAX_BUFFERS_SYSTEM = 0x00000002,
-    XAUDIO2_MAX_AUDIO_CHANNELS = 0x00000040,
+    XAUDIO2_MAX_BUFFER_BYTES   = 0x80000000U,
+    XAUDIO2_MAX_QUEUED_BUFFERS = 0x00000040U,
+    XAUDIO2_MAX_BUFFERS_SYSTEM = 0x00000002U,
+    XAUDIO2_MAX_AUDIO_CHANNELS = 0x00000040U,
 }
 
-enum uint XAUDIO2_MIN_SAMPLE_RATE = 0x000003e8;
-enum uint XAUDIO2_MAX_SAMPLE_RATE = 0x00030d40;
+enum uint XAUDIO2_MIN_SAMPLE_RATE = 0x000003e8U;
+enum uint XAUDIO2_MAX_SAMPLE_RATE = 0x00030d40U;
 
 enum : float
 {
@@ -166,47 +171,47 @@ enum : float
 
 enum : uint
 {
-    XAUDIO2_MAX_LOOP_COUNT                        = 0x000000fe,
-    XAUDIO2_MAX_INSTANCES                         = 0x00000008,
-    XAUDIO2_MAX_RATIO_TIMES_RATE_XMA_MONO         = 0x000927c0,
-    XAUDIO2_MAX_RATIO_TIMES_RATE_XMA_MULTICHANNEL = 0x000493e0,
+    XAUDIO2_MAX_LOOP_COUNT                        = 0x000000feU,
+    XAUDIO2_MAX_INSTANCES                         = 0x00000008U,
+    XAUDIO2_MAX_RATIO_TIMES_RATE_XMA_MONO         = 0x000927c0U,
+    XAUDIO2_MAX_RATIO_TIMES_RATE_XMA_MULTICHANNEL = 0x000493e0U,
 }
 
 enum : uint
 {
-    XAUDIO2_COMMIT_NOW     = 0x00000000,
-    XAUDIO2_COMMIT_ALL     = 0x00000000,
-    XAUDIO2_NO_LOOP_REGION = 0x00000000,
+    XAUDIO2_COMMIT_NOW     = 0x00000000U,
+    XAUDIO2_COMMIT_ALL     = 0x00000000U,
+    XAUDIO2_NO_LOOP_REGION = 0x00000000U,
 }
 
-enum uint XAUDIO2_LOOP_INFINITE = 0x000000ff;
+enum uint XAUDIO2_LOOP_INFINITE = 0x000000ffU;
 
 enum : uint
 {
-    XAUDIO2_DEFAULT_CHANNELS   = 0x00000000,
-    XAUDIO2_DEFAULT_SAMPLERATE = 0x00000000,
+    XAUDIO2_DEFAULT_CHANNELS   = 0x00000000U,
+    XAUDIO2_DEFAULT_SAMPLERATE = 0x00000000U,
 }
 
-enum uint XAUDIO2_DEBUG_ENGINE = 0x00000001;
+enum uint XAUDIO2_DEBUG_ENGINE = 0x00000001U;
 
 enum : uint
 {
-    XAUDIO2_VOICE_NOPITCH   = 0x00000002,
-    XAUDIO2_VOICE_NOSRC     = 0x00000004,
-    XAUDIO2_VOICE_USEFILTER = 0x00000008,
+    XAUDIO2_VOICE_NOPITCH   = 0x00000002U,
+    XAUDIO2_VOICE_NOSRC     = 0x00000004U,
+    XAUDIO2_VOICE_USEFILTER = 0x00000008U,
 }
 
 enum : uint
 {
-    XAUDIO2_PLAY_TAILS    = 0x00000020,
-    XAUDIO2_END_OF_STREAM = 0x00000040,
+    XAUDIO2_PLAY_TAILS    = 0x00000020U,
+    XAUDIO2_END_OF_STREAM = 0x00000040U,
 }
 
-enum uint XAUDIO2_SEND_USEFILTER = 0x00000080;
-enum uint XAUDIO2_VOICE_NOSAMPLESPLAYED = 0x00000100;
-enum uint XAUDIO2_STOP_ENGINE_WHEN_IDLE = 0x00002000;
-enum uint XAUDIO2_1024_QUANTUM = 0x00008000;
-enum uint XAUDIO2_NO_VIRTUAL_AUDIO_CLIENT = 0x00010000;
+enum uint XAUDIO2_SEND_USEFILTER = 0x00000080U;
+enum uint XAUDIO2_VOICE_NOSAMPLESPLAYED = 0x00000100U;
+enum uint XAUDIO2_STOP_ENGINE_WHEN_IDLE = 0x00002000U;
+enum uint XAUDIO2_1024_QUANTUM = 0x00008000U;
+enum uint XAUDIO2_NO_VIRTUAL_AUDIO_CLIENT = 0x00010000U;
 
 enum : float
 {
@@ -216,11 +221,11 @@ enum : float
 
 enum : uint
 {
-    XAUDIO2_QUANTUM_NUMERATOR   = 0x00000001,
-    XAUDIO2_QUANTUM_DENOMINATOR = 0x00000064,
+    XAUDIO2_QUANTUM_NUMERATOR   = 0x00000001U,
+    XAUDIO2_QUANTUM_DENOMINATOR = 0x00000064U,
 }
 
-enum uint FACILITY_XAUDIO2 = 0x00000896;
+enum uint FACILITY_XAUDIO2 = 0x00000896U;
 
 enum : HRESULT
 {
@@ -233,79 +238,79 @@ enum HRESULT XAUDIO2_E_DEVICE_INVALIDATED = HRESULT(0x88960004);
 
 enum : uint
 {
-    Processor1  = 0x00000001,
-    Processor2  = 0x00000002,
-    Processor3  = 0x00000004,
-    Processor4  = 0x00000008,
-    Processor5  = 0x00000010,
-    Processor6  = 0x00000020,
-    Processor7  = 0x00000040,
-    Processor8  = 0x00000080,
-    Processor9  = 0x00000100,
-    Processor10 = 0x00000200,
-    Processor11 = 0x00000400,
-    Processor12 = 0x00000800,
-    Processor13 = 0x00001000,
-    Processor14 = 0x00002000,
-    Processor15 = 0x00004000,
-    Processor16 = 0x00008000,
-    Processor17 = 0x00010000,
-    Processor18 = 0x00020000,
-    Processor19 = 0x00040000,
-    Processor20 = 0x00080000,
-    Processor21 = 0x00100000,
-    Processor22 = 0x00200000,
-    Processor23 = 0x00400000,
-    Processor24 = 0x00800000,
-    Processor25 = 0x01000000,
-    Processor26 = 0x02000000,
-    Processor27 = 0x04000000,
-    Processor28 = 0x08000000,
-    Processor29 = 0x10000000,
-    Processor30 = 0x20000000,
-    Processor31 = 0x40000000,
-    Processor32 = 0x80000000,
+    Processor1  = 0x00000001U,
+    Processor2  = 0x00000002U,
+    Processor3  = 0x00000004U,
+    Processor4  = 0x00000008U,
+    Processor5  = 0x00000010U,
+    Processor6  = 0x00000020U,
+    Processor7  = 0x00000040U,
+    Processor8  = 0x00000080U,
+    Processor9  = 0x00000100U,
+    Processor10 = 0x00000200U,
+    Processor11 = 0x00000400U,
+    Processor12 = 0x00000800U,
+    Processor13 = 0x00001000U,
+    Processor14 = 0x00002000U,
+    Processor15 = 0x00004000U,
+    Processor16 = 0x00008000U,
+    Processor17 = 0x00010000U,
+    Processor18 = 0x00020000U,
+    Processor19 = 0x00040000U,
+    Processor20 = 0x00080000U,
+    Processor21 = 0x00100000U,
+    Processor22 = 0x00200000U,
+    Processor23 = 0x00400000U,
+    Processor24 = 0x00800000U,
+    Processor25 = 0x01000000U,
+    Processor26 = 0x02000000U,
+    Processor27 = 0x04000000U,
+    Processor28 = 0x08000000U,
+    Processor29 = 0x10000000U,
+    Processor30 = 0x20000000U,
+    Processor31 = 0x40000000U,
+    Processor32 = 0x80000000U,
 }
 
-enum uint XAUDIO2_ANY_PROCESSOR = 0xffffffff;
-enum uint XAUDIO2_USE_DEFAULT_PROCESSOR = 0x00000000;
-enum uint XAUDIO2_DEFAULT_PROCESSOR = 0x00000001;
+enum uint XAUDIO2_ANY_PROCESSOR = 0xffffffffU;
+enum uint XAUDIO2_USE_DEFAULT_PROCESSOR = 0x00000000U;
+enum uint XAUDIO2_DEFAULT_PROCESSOR = 0x00000001U;
 
 enum : uint
 {
-    XAUDIO2_LOG_ERRORS     = 0x00000001,
-    XAUDIO2_LOG_WARNINGS   = 0x00000002,
-    XAUDIO2_LOG_INFO       = 0x00000004,
-    XAUDIO2_LOG_DETAIL     = 0x00000008,
-    XAUDIO2_LOG_API_CALLS  = 0x00000010,
-    XAUDIO2_LOG_FUNC_CALLS = 0x00000020,
-    XAUDIO2_LOG_TIMING     = 0x00000040,
-    XAUDIO2_LOG_LOCKS      = 0x00000080,
-    XAUDIO2_LOG_MEMORY     = 0x00000100,
-    XAUDIO2_LOG_STREAMING  = 0x00001000,
+    XAUDIO2_LOG_ERRORS     = 0x00000001U,
+    XAUDIO2_LOG_WARNINGS   = 0x00000002U,
+    XAUDIO2_LOG_INFO       = 0x00000004U,
+    XAUDIO2_LOG_DETAIL     = 0x00000008U,
+    XAUDIO2_LOG_API_CALLS  = 0x00000010U,
+    XAUDIO2_LOG_FUNC_CALLS = 0x00000020U,
+    XAUDIO2_LOG_TIMING     = 0x00000040U,
+    XAUDIO2_LOG_LOCKS      = 0x00000080U,
+    XAUDIO2_LOG_MEMORY     = 0x00000100U,
+    XAUDIO2_LOG_STREAMING  = 0x00001000U,
 }
 
 enum : uint
 {
-    XAUDIO2FX_REVERB_MIN_FRAMERATE = 0x00004e20,
-    XAUDIO2FX_REVERB_MAX_FRAMERATE = 0x0000bb80,
+    XAUDIO2FX_REVERB_MIN_FRAMERATE = 0x00004e20U,
+    XAUDIO2FX_REVERB_MAX_FRAMERATE = 0x0000bb80U,
 }
 
 enum float XAUDIO2FX_REVERB_MIN_WET_DRY_MIX = 0x0p+0;
 
 enum : uint
 {
-    XAUDIO2FX_REVERB_MIN_REFLECTIONS_DELAY  = 0x00000000,
-    XAUDIO2FX_REVERB_MIN_REVERB_DELAY       = 0x00000000,
-    XAUDIO2FX_REVERB_MIN_REAR_DELAY         = 0x00000000,
-    XAUDIO2FX_REVERB_MIN_7POINT1_SIDE_DELAY = 0x00000000,
-    XAUDIO2FX_REVERB_MIN_7POINT1_REAR_DELAY = 0x00000000,
-    XAUDIO2FX_REVERB_MIN_POSITION           = 0x00000000,
-    XAUDIO2FX_REVERB_MIN_DIFFUSION          = 0x00000000,
-    XAUDIO2FX_REVERB_MIN_LOW_EQ_GAIN        = 0x00000000,
-    XAUDIO2FX_REVERB_MIN_LOW_EQ_CUTOFF      = 0x00000000,
-    XAUDIO2FX_REVERB_MIN_HIGH_EQ_GAIN       = 0x00000000,
-    XAUDIO2FX_REVERB_MIN_HIGH_EQ_CUTOFF     = 0x00000000,
+    XAUDIO2FX_REVERB_MIN_REFLECTIONS_DELAY  = 0x00000000U,
+    XAUDIO2FX_REVERB_MIN_REVERB_DELAY       = 0x00000000U,
+    XAUDIO2FX_REVERB_MIN_REAR_DELAY         = 0x00000000U,
+    XAUDIO2FX_REVERB_MIN_7POINT1_SIDE_DELAY = 0x00000000U,
+    XAUDIO2FX_REVERB_MIN_7POINT1_REAR_DELAY = 0x00000000U,
+    XAUDIO2FX_REVERB_MIN_POSITION           = 0x00000000U,
+    XAUDIO2FX_REVERB_MIN_DIFFUSION          = 0x00000000U,
+    XAUDIO2FX_REVERB_MIN_LOW_EQ_GAIN        = 0x00000000U,
+    XAUDIO2FX_REVERB_MIN_LOW_EQ_CUTOFF      = 0x00000000U,
+    XAUDIO2FX_REVERB_MIN_HIGH_EQ_GAIN       = 0x00000000U,
+    XAUDIO2FX_REVERB_MIN_HIGH_EQ_CUTOFF     = 0x00000000U,
 }
 
 enum : float
@@ -323,17 +328,17 @@ enum : float
 
 enum : uint
 {
-    XAUDIO2FX_REVERB_MAX_REFLECTIONS_DELAY  = 0x0000012c,
-    XAUDIO2FX_REVERB_MAX_REVERB_DELAY       = 0x00000055,
-    XAUDIO2FX_REVERB_MAX_REAR_DELAY         = 0x00000005,
-    XAUDIO2FX_REVERB_MAX_7POINT1_SIDE_DELAY = 0x00000005,
-    XAUDIO2FX_REVERB_MAX_7POINT1_REAR_DELAY = 0x00000014,
-    XAUDIO2FX_REVERB_MAX_POSITION           = 0x0000001e,
-    XAUDIO2FX_REVERB_MAX_DIFFUSION          = 0x0000000f,
-    XAUDIO2FX_REVERB_MAX_LOW_EQ_GAIN        = 0x0000000c,
-    XAUDIO2FX_REVERB_MAX_LOW_EQ_CUTOFF      = 0x00000009,
-    XAUDIO2FX_REVERB_MAX_HIGH_EQ_GAIN       = 0x00000008,
-    XAUDIO2FX_REVERB_MAX_HIGH_EQ_CUTOFF     = 0x0000000e,
+    XAUDIO2FX_REVERB_MAX_REFLECTIONS_DELAY  = 0x0000012cU,
+    XAUDIO2FX_REVERB_MAX_REVERB_DELAY       = 0x00000055U,
+    XAUDIO2FX_REVERB_MAX_REAR_DELAY         = 0x00000005U,
+    XAUDIO2FX_REVERB_MAX_7POINT1_SIDE_DELAY = 0x00000005U,
+    XAUDIO2FX_REVERB_MAX_7POINT1_REAR_DELAY = 0x00000014U,
+    XAUDIO2FX_REVERB_MAX_POSITION           = 0x0000001eU,
+    XAUDIO2FX_REVERB_MAX_DIFFUSION          = 0x0000000fU,
+    XAUDIO2FX_REVERB_MAX_LOW_EQ_GAIN        = 0x0000000cU,
+    XAUDIO2FX_REVERB_MAX_LOW_EQ_CUTOFF      = 0x00000009U,
+    XAUDIO2FX_REVERB_MAX_HIGH_EQ_GAIN       = 0x00000008U,
+    XAUDIO2FX_REVERB_MAX_HIGH_EQ_CUTOFF     = 0x0000000eU,
 }
 
 enum : float
@@ -350,19 +355,19 @@ enum : float
 
 enum : uint
 {
-    XAUDIO2FX_REVERB_DEFAULT_REFLECTIONS_DELAY  = 0x00000005,
-    XAUDIO2FX_REVERB_DEFAULT_REVERB_DELAY       = 0x00000005,
-    XAUDIO2FX_REVERB_DEFAULT_REAR_DELAY         = 0x00000005,
-    XAUDIO2FX_REVERB_DEFAULT_7POINT1_SIDE_DELAY = 0x00000005,
-    XAUDIO2FX_REVERB_DEFAULT_7POINT1_REAR_DELAY = 0x00000014,
-    XAUDIO2FX_REVERB_DEFAULT_POSITION           = 0x00000006,
-    XAUDIO2FX_REVERB_DEFAULT_POSITION_MATRIX    = 0x0000001b,
-    XAUDIO2FX_REVERB_DEFAULT_EARLY_DIFFUSION    = 0x00000008,
-    XAUDIO2FX_REVERB_DEFAULT_LATE_DIFFUSION     = 0x00000008,
-    XAUDIO2FX_REVERB_DEFAULT_LOW_EQ_GAIN        = 0x00000008,
-    XAUDIO2FX_REVERB_DEFAULT_LOW_EQ_CUTOFF      = 0x00000004,
-    XAUDIO2FX_REVERB_DEFAULT_HIGH_EQ_GAIN       = 0x00000008,
-    XAUDIO2FX_REVERB_DEFAULT_HIGH_EQ_CUTOFF     = 0x00000004,
+    XAUDIO2FX_REVERB_DEFAULT_REFLECTIONS_DELAY  = 0x00000005U,
+    XAUDIO2FX_REVERB_DEFAULT_REVERB_DELAY       = 0x00000005U,
+    XAUDIO2FX_REVERB_DEFAULT_REAR_DELAY         = 0x00000005U,
+    XAUDIO2FX_REVERB_DEFAULT_7POINT1_SIDE_DELAY = 0x00000005U,
+    XAUDIO2FX_REVERB_DEFAULT_7POINT1_REAR_DELAY = 0x00000014U,
+    XAUDIO2FX_REVERB_DEFAULT_POSITION           = 0x00000006U,
+    XAUDIO2FX_REVERB_DEFAULT_POSITION_MATRIX    = 0x0000001bU,
+    XAUDIO2FX_REVERB_DEFAULT_EARLY_DIFFUSION    = 0x00000008U,
+    XAUDIO2FX_REVERB_DEFAULT_LATE_DIFFUSION     = 0x00000008U,
+    XAUDIO2FX_REVERB_DEFAULT_LOW_EQ_GAIN        = 0x00000008U,
+    XAUDIO2FX_REVERB_DEFAULT_LOW_EQ_CUTOFF      = 0x00000004U,
+    XAUDIO2FX_REVERB_DEFAULT_HIGH_EQ_GAIN       = 0x00000008U,
+    XAUDIO2FX_REVERB_DEFAULT_HIGH_EQ_CUTOFF     = 0x00000004U,
 }
 
 enum : float
@@ -377,7 +382,7 @@ enum : float
     XAUDIO2FX_REVERB_DEFAULT_ROOM_SIZE        = 0x1.9p+6,
 }
 
-enum uint XAUDIO2FX_REVERB_DEFAULT_DISABLE_LATE_FIELD = 0x00000000;
+enum uint XAUDIO2FX_REVERB_DEFAULT_DISABLE_LATE_FIELD = 0x00000000U;
 enum float HRTF_MAX_GAIN_LIMIT = 0x1.8p+3;
 
 enum : float
@@ -387,26 +392,26 @@ enum : float
 }
 
 enum float HRTF_DEFAULT_UNITY_GAIN_DISTANCE = 0x1p+0;
-enum uint FACILITY_XAPO = 0x00000897;
+enum uint FACILITY_XAPO = 0x00000897U;
 enum HRESULT XAPO_E_FORMAT_UNSUPPORTED = HRESULT(0x88970001);
-enum uint XAPO_MIN_CHANNELS = 0x00000001;
-enum uint XAPO_MAX_CHANNELS = 0x00000040;
-enum uint XAPO_MIN_FRAMERATE = 0x000003e8;
-enum uint XAPO_MAX_FRAMERATE = 0x00030d40;
-enum uint XAPO_REGISTRATION_STRING_LENGTH = 0x00000100;
-enum uint XAPO_FLAG_CHANNELS_MUST_MATCH = 0x00000001;
-enum uint XAPO_FLAG_FRAMERATE_MUST_MATCH = 0x00000002;
-enum uint XAPO_FLAG_BITSPERSAMPLE_MUST_MATCH = 0x00000004;
-enum uint XAPO_FLAG_BUFFERCOUNT_MUST_MATCH = 0x00000008;
+enum uint XAPO_MIN_CHANNELS = 0x00000001U;
+enum uint XAPO_MAX_CHANNELS = 0x00000040U;
+enum uint XAPO_MIN_FRAMERATE = 0x000003e8U;
+enum uint XAPO_MAX_FRAMERATE = 0x00030d40U;
+enum uint XAPO_REGISTRATION_STRING_LENGTH = 0x00000100U;
+enum uint XAPO_FLAG_CHANNELS_MUST_MATCH = 0x00000001U;
+enum uint XAPO_FLAG_FRAMERATE_MUST_MATCH = 0x00000002U;
+enum uint XAPO_FLAG_BITSPERSAMPLE_MUST_MATCH = 0x00000004U;
+enum uint XAPO_FLAG_BUFFERCOUNT_MUST_MATCH = 0x00000008U;
 
 enum : uint
 {
-    XAPO_FLAG_INPLACE_REQUIRED  = 0x00000020,
-    XAPO_FLAG_INPLACE_SUPPORTED = 0x00000010,
+    XAPO_FLAG_INPLACE_REQUIRED  = 0x00000020U,
+    XAPO_FLAG_INPLACE_SUPPORTED = 0x00000010U,
 }
 
-enum uint SPEAKER_MONO = 0x00000004;
-enum uint X3DAUDIO_HANDLE_BYTESIZE = 0x00000014;
+enum uint SPEAKER_MONO = 0x00000004U;
+enum uint X3DAUDIO_HANDLE_BYTESIZE = 0x00000014U;
 
 enum : float
 {
@@ -417,21 +422,21 @@ enum : float
 
 enum : uint
 {
-    X3DAUDIO_CALCULATE_MATRIX          = 0x00000001,
-    X3DAUDIO_CALCULATE_DELAY           = 0x00000002,
-    X3DAUDIO_CALCULATE_LPF_DIRECT      = 0x00000004,
-    X3DAUDIO_CALCULATE_LPF_REVERB      = 0x00000008,
-    X3DAUDIO_CALCULATE_REVERB          = 0x00000010,
-    X3DAUDIO_CALCULATE_DOPPLER         = 0x00000020,
-    X3DAUDIO_CALCULATE_EMITTER_ANGLE   = 0x00000040,
-    X3DAUDIO_CALCULATE_ZEROCENTER      = 0x00010000,
-    X3DAUDIO_CALCULATE_REDIRECT_TO_LFE = 0x00020000,
+    X3DAUDIO_CALCULATE_MATRIX          = 0x00000001U,
+    X3DAUDIO_CALCULATE_DELAY           = 0x00000002U,
+    X3DAUDIO_CALCULATE_LPF_DIRECT      = 0x00000004U,
+    X3DAUDIO_CALCULATE_LPF_REVERB      = 0x00000008U,
+    X3DAUDIO_CALCULATE_REVERB          = 0x00000010U,
+    X3DAUDIO_CALCULATE_DOPPLER         = 0x00000020U,
+    X3DAUDIO_CALCULATE_EMITTER_ANGLE   = 0x00000040U,
+    X3DAUDIO_CALCULATE_ZEROCENTER      = 0x00010000U,
+    X3DAUDIO_CALCULATE_REDIRECT_TO_LFE = 0x00020000U,
 }
 
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xapo/ns-xapo-xapo_registration_properties))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xapo/ns-xapo-xapo_registration_properties
 struct XAPO_REGISTRATION_PROPERTIES
 {
 align (1):
@@ -447,7 +452,7 @@ align (1):
     uint       MaxOutputBufferCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xapo/ns-xapo-xapo_lockforprocess_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xapo/ns-xapo-xapo_lockforprocess_parameters
 struct XAPO_LOCKFORPROCESS_PARAMETERS
 {
 align (1):
@@ -455,7 +460,7 @@ align (1):
     uint                 MaxFrameCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xapo/ns-xapo-xapo_process_buffer_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xapo/ns-xapo-xapo_process_buffer_parameters
 struct XAPO_PROCESS_BUFFER_PARAMETERS
 {
 align (1):
@@ -464,7 +469,7 @@ align (1):
     uint              ValidFrameCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xapofx/ns-xapofx-fxeq_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xapofx/ns-xapofx-fxeq_parameters
 struct FXEQ_PARAMETERS
 {
 align (1):
@@ -482,7 +487,7 @@ align (1):
     float Bandwidth3;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xapofx/ns-xapofx-fxmasteringlimiter_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xapofx/ns-xapofx-fxmasteringlimiter_parameters
 struct FXMASTERINGLIMITER_PARAMETERS
 {
 align (1):
@@ -490,7 +495,7 @@ align (1):
     uint Loudness;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xapofx/ns-xapofx-fxreverb_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xapofx/ns-xapofx-fxreverb_parameters
 struct FXREVERB_PARAMETERS
 {
 align (1):
@@ -498,14 +503,14 @@ align (1):
     float RoomSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xapofx/ns-xapofx-fxecho_initdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xapofx/ns-xapofx-fxecho_initdata
 struct FXECHO_INITDATA
 {
 align (1):
     float MaxDelay;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xapofx/ns-xapofx-fxecho_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xapofx/ns-xapofx-fxecho_parameters
 struct FXECHO_PARAMETERS
 {
 align (1):
@@ -514,7 +519,7 @@ align (1):
     float Delay;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/ns-xaudio2-xaudio2_voice_details))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/ns-xaudio2-xaudio2_voice_details
 struct XAUDIO2_VOICE_DETAILS
 {
 align (1):
@@ -524,7 +529,7 @@ align (1):
     uint InputSampleRate;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/ns-xaudio2-xaudio2_send_descriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/ns-xaudio2-xaudio2_send_descriptor
 struct XAUDIO2_SEND_DESCRIPTOR
 {
 align (1):
@@ -532,7 +537,7 @@ align (1):
     IXAudio2Voice pOutputVoice;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/ns-xaudio2-xaudio2_voice_sends))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/ns-xaudio2-xaudio2_voice_sends
 struct XAUDIO2_VOICE_SENDS
 {
 align (1):
@@ -540,7 +545,7 @@ align (1):
     XAUDIO2_SEND_DESCRIPTOR* pSends;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/ns-xaudio2-xaudio2_effect_descriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/ns-xaudio2-xaudio2_effect_descriptor
 struct XAUDIO2_EFFECT_DESCRIPTOR
 {
 align (1):
@@ -549,7 +554,7 @@ align (1):
     uint     OutputChannels;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/ns-xaudio2-xaudio2_effect_chain))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/ns-xaudio2-xaudio2_effect_chain
 struct XAUDIO2_EFFECT_CHAIN
 {
 align (1):
@@ -557,7 +562,7 @@ align (1):
     XAUDIO2_EFFECT_DESCRIPTOR* pEffectDescriptors;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/ns-xaudio2-xaudio2_filter_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/ns-xaudio2-xaudio2_filter_parameters
 struct XAUDIO2_FILTER_PARAMETERS
 {
 align (1):
@@ -566,7 +571,7 @@ align (1):
     float               OneOverQ;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/ns-xaudio2-xaudio2_buffer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/ns-xaudio2-xaudio2_buffer
 struct XAUDIO2_BUFFER
 {
 align (1):
@@ -581,7 +586,7 @@ align (1):
     void*         pContext;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/ns-xaudio2-xaudio2_buffer_wma))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/ns-xaudio2-xaudio2_buffer_wma
 struct XAUDIO2_BUFFER_WMA
 {
 align (1):
@@ -589,7 +594,7 @@ align (1):
     uint         PacketCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/ns-xaudio2-xaudio2_voice_state))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/ns-xaudio2-xaudio2_voice_state
 struct XAUDIO2_VOICE_STATE
 {
 align (1):
@@ -598,7 +603,7 @@ align (1):
     ulong SamplesPlayed;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/ns-xaudio2-xaudio2_performance_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/ns-xaudio2-xaudio2_performance_data
 struct XAUDIO2_PERFORMANCE_DATA
 {
 align (1):
@@ -618,7 +623,7 @@ align (1):
     uint  ActiveXmaStreams;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/ns-xaudio2-xaudio2_debug_configuration))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/ns-xaudio2-xaudio2_debug_configuration
 struct XAUDIO2_DEBUG_CONFIGURATION
 {
 align (1):
@@ -630,7 +635,7 @@ align (1):
     BOOL LogTiming;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2fx/ns-xaudio2fx-xaudio2fx_volumemeter_levels))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2fx/ns-xaudio2fx-xaudio2fx_volumemeter_levels
 struct XAUDIO2FX_VOLUMEMETER_LEVELS
 {
 align (1):
@@ -639,7 +644,7 @@ align (1):
     uint   ChannelCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2fx/ns-xaudio2fx-xaudio2fx_reverb_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2fx/ns-xaudio2fx-xaudio2fx_reverb_parameters
 struct XAUDIO2FX_REVERB_PARAMETERS
 {
 align (1):
@@ -669,7 +674,7 @@ align (1):
     BOOL  DisableLateField;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2fx/ns-xaudio2fx-xaudio2fx_reverb_i3dl2_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2fx/ns-xaudio2fx-xaudio2fx_reverb_i3dl2_parameters
 struct XAUDIO2FX_REVERB_I3DL2_PARAMETERS
 {
 align (1):
@@ -688,7 +693,7 @@ align (1):
     float HFReference;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/hrtfapoapi/ns-hrtfapoapi-hrtfposition))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/hrtfapoapi/ns-hrtfapoapi-hrtfposition
 struct HrtfPosition
 {
     float x;
@@ -696,27 +701,27 @@ struct HrtfPosition
     float z;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/hrtfapoapi/ns-hrtfapoapi-hrtforientation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/hrtfapoapi/ns-hrtfapoapi-hrtforientation
 struct HrtfOrientation
 {
     float[9] element;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/hrtfapoapi/ns-hrtfapoapi-hrtfdirectivity))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/hrtfapoapi/ns-hrtfapoapi-hrtfdirectivity
 struct HrtfDirectivity
 {
     HrtfDirectivityType type;
     float               scaling;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/hrtfapoapi/ns-hrtfapoapi-hrtfdirectivitycardioid))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/hrtfapoapi/ns-hrtfapoapi-hrtfdirectivitycardioid
 struct HrtfDirectivityCardioid
 {
     HrtfDirectivity directivity;
     float           order;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/hrtfapoapi/ns-hrtfapoapi-hrtfdirectivitycone))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/hrtfapoapi/ns-hrtfapoapi-hrtfdirectivitycone
 struct HrtfDirectivityCone
 {
     HrtfDirectivity directivity;
@@ -724,7 +729,7 @@ struct HrtfDirectivityCone
     float           outerAngle;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/hrtfapoapi/ns-hrtfapoapi-hrtfdistancedecay))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/hrtfapoapi/ns-hrtfapoapi-hrtfdistancedecay
 struct HrtfDistanceDecay
 {
     HrtfDistanceDecayType type;
@@ -734,7 +739,7 @@ struct HrtfDistanceDecay
     float cutoffDistance;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/hrtfapoapi/ns-hrtfapoapi-hrtfapoinit))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/hrtfapoapi/ns-hrtfapoapi-hrtfapoinit
 struct HrtfApoInit
 {
     HrtfDistanceDecay* distanceDecay;
@@ -743,7 +748,7 @@ struct HrtfApoInit
 
 // Functions
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xapofx/nf-xapofx-createfx))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xapofx/nf-xapofx-createfx
 @DllImport("XAudio2_8.dll")
 HRESULT CreateFX(const(GUID)* clsid, IUnknown* pEffect, 
                  /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/const(void)* pInitDat, 
@@ -758,7 +763,7 @@ HRESULT CreateAudioVolumeMeter(IUnknown* ppApo);
 @DllImport("XAudio2_8.dll")
 HRESULT CreateAudioReverb(IUnknown* ppApo);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/hrtfapoapi/nf-hrtfapoapi-createhrtfapo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/hrtfapoapi/nf-hrtfapoapi-createhrtfapo
 @DllImport("HrtfApo.dll")
 HRESULT CreateHrtfApo(const(HrtfApoInit)* init, IXAPO* xApo);
 
@@ -784,80 +789,80 @@ struct AudioVolumeMeter;
 struct AudioReverb;
 
 @GUID("a410b984-9839-4819-a0be-2856ae6b3adb")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xapo/nn-xapo-ixapo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xapo/nn-xapo-ixapo
 interface IXAPO : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xapo/nf-xapo-ixapo-getregistrationproperties))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xapo/nf-xapo-ixapo-getregistrationproperties
     HRESULT GetRegistrationProperties(XAPO_REGISTRATION_PROPERTIES** ppRegistrationProperties);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xapo/nf-xapo-ixapo-isinputformatsupported))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xapo/nf-xapo-ixapo-isinputformatsupported
     HRESULT IsInputFormatSupported(const(WAVEFORMATEX)* pOutputFormat, const(WAVEFORMATEX)* pRequestedInputFormat, 
                                    WAVEFORMATEX** ppSupportedInputFormat);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xapo/nf-xapo-ixapo-isoutputformatsupported))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xapo/nf-xapo-ixapo-isoutputformatsupported
     HRESULT IsOutputFormatSupported(const(WAVEFORMATEX)* pInputFormat, const(WAVEFORMATEX)* pRequestedOutputFormat, 
                                     WAVEFORMATEX** ppSupportedOutputFormat);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xapo/nf-xapo-ixapo-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xapo/nf-xapo-ixapo-initialize
     HRESULT Initialize(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(void)* pData, 
                        uint DataByteSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xapo/nf-xapo-ixapo-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xapo/nf-xapo-ixapo-reset
     void    Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xapo/nf-xapo-ixapo-lockforprocess))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xapo/nf-xapo-ixapo-lockforprocess
     HRESULT LockForProcess(uint InputLockedParameterCount, 
                            const(XAPO_LOCKFORPROCESS_PARAMETERS)* pInputLockedParameters, 
                            uint OutputLockedParameterCount, 
                            const(XAPO_LOCKFORPROCESS_PARAMETERS)* pOutputLockedParameters);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xapo/nf-xapo-ixapo-unlockforprocess))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xapo/nf-xapo-ixapo-unlockforprocess
     void    UnlockForProcess();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xapo/nf-xapo-ixapo-process))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xapo/nf-xapo-ixapo-process
     void    Process(uint InputProcessParameterCount, 
                     const(XAPO_PROCESS_BUFFER_PARAMETERS)* pInputProcessParameters, uint OutputProcessParameterCount, 
                     XAPO_PROCESS_BUFFER_PARAMETERS* pOutputProcessParameters, BOOL IsEnabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xapo/nf-xapo-ixapo-calcinputframes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xapo/nf-xapo-ixapo-calcinputframes
     uint    CalcInputFrames(uint OutputFrameCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xapo/nf-xapo-ixapo-calcoutputframes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xapo/nf-xapo-ixapo-calcoutputframes
     uint    CalcOutputFrames(uint InputFrameCount);
 }
 
 @GUID("26d95c66-80f2-499a-ad54-5ae7f01c6d98")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xapo/nn-xapo-ixapoparameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xapo/nn-xapo-ixapoparameters
 interface IXAPOParameters : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xapo/nf-xapo-ixapoparameters-setparameters))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xapo/nf-xapo-ixapoparameters-setparameters
     void SetParameters(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(void)* pParameters, 
                        uint ParameterByteSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xapo/nf-xapo-ixapoparameters-getparameters))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xapo/nf-xapo-ixapoparameters-getparameters
     void GetParameters(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/void* pParameters, 
                        uint ParameterByteSize);
 }
 
 @GUID("2b02e3cf-2e0b-4ec3-be45-1b2a3fe7210d")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nn-xaudio2-ixaudio2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nn-xaudio2-ixaudio2
 interface IXAudio2 : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2-registerforcallbacks))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2-registerforcallbacks
     HRESULT RegisterForCallbacks(IXAudio2EngineCallback pCallback);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2-unregisterforcallbacks))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2-unregisterforcallbacks
     void    UnregisterForCallbacks(IXAudio2EngineCallback pCallback);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2-createsourcevoice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2-createsourcevoice
     HRESULT CreateSourceVoice(IXAudio2SourceVoice* ppSourceVoice, const(WAVEFORMATEX)* pSourceFormat, uint Flags, 
                               float MaxFrequencyRatio, IXAudio2VoiceCallback pCallback, 
                               const(XAUDIO2_VOICE_SENDS)* pSendList, const(XAUDIO2_EFFECT_CHAIN)* pEffectChain);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2-createsubmixvoice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2-createsubmixvoice
     HRESULT CreateSubmixVoice(IXAudio2SubmixVoice* ppSubmixVoice, uint InputChannels, uint InputSampleRate, 
                               uint Flags, uint ProcessingStage, const(XAUDIO2_VOICE_SENDS)* pSendList, 
                               const(XAUDIO2_EFFECT_CHAIN)* pEffectChain);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2-createmasteringvoice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2-createmasteringvoice
     HRESULT CreateMasteringVoice(IXAudio2MasteringVoice* ppMasteringVoice, uint InputChannels, 
                                  uint InputSampleRate, uint Flags, const(PWSTR) szDeviceId, 
                                  const(XAUDIO2_EFFECT_CHAIN)* pEffectChain, AUDIO_STREAM_CATEGORY StreamCategory);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2-startengine))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2-startengine
     HRESULT StartEngine();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2-stopengine))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2-stopengine
     void    StopEngine();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2-commitchanges))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2-commitchanges
     HRESULT CommitChanges(uint OperationSet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2-getperformancedata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2-getperformancedata
     void    GetPerformanceData(XAUDIO2_PERFORMANCE_DATA* pPerfData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2-setdebugconfiguration))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2-setdebugconfiguration
     void    SetDebugConfiguration(const(XAUDIO2_DEBUG_CONFIGURATION)* pDebugConfiguration, 
                                   /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* pReserved);
 }
@@ -869,135 +874,135 @@ interface IXAudio2Extension : IUnknown
     void GetProcessor(uint* processor);
 }
 
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nn-xaudio2-ixaudio2voice))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nn-xaudio2-ixaudio2voice
 interface IXAudio2Voice
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voice-getvoicedetails))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voice-getvoicedetails
     void    GetVoiceDetails(XAUDIO2_VOICE_DETAILS* pVoiceDetails);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voice-setoutputvoices))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voice-setoutputvoices
     HRESULT SetOutputVoices(const(XAUDIO2_VOICE_SENDS)* pSendList);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voice-seteffectchain))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voice-seteffectchain
     HRESULT SetEffectChain(const(XAUDIO2_EFFECT_CHAIN)* pEffectChain);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voice-enableeffect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voice-enableeffect
     HRESULT EnableEffect(uint EffectIndex, uint OperationSet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voice-disableeffect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voice-disableeffect
     HRESULT DisableEffect(uint EffectIndex, uint OperationSet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voice-geteffectstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voice-geteffectstate
     void    GetEffectState(uint EffectIndex, BOOL* pEnabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voice-seteffectparameters))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voice-seteffectparameters
     HRESULT SetEffectParameters(uint EffectIndex, 
                                 /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/const(void)* pParameters, 
                                 uint ParametersByteSize, uint OperationSet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voice-geteffectparameters))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voice-geteffectparameters
     HRESULT GetEffectParameters(uint EffectIndex, 
                                 /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* pParameters, 
                                 uint ParametersByteSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voice-setfilterparameters))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voice-setfilterparameters
     HRESULT SetFilterParameters(const(XAUDIO2_FILTER_PARAMETERS)* pParameters, uint OperationSet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voice-getfilterparameters))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voice-getfilterparameters
     void    GetFilterParameters(XAUDIO2_FILTER_PARAMETERS* pParameters);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voice-setoutputfilterparameters))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voice-setoutputfilterparameters
     HRESULT SetOutputFilterParameters(IXAudio2Voice pDestinationVoice, 
                                       const(XAUDIO2_FILTER_PARAMETERS)* pParameters, uint OperationSet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voice-getoutputfilterparameters))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voice-getoutputfilterparameters
     void    GetOutputFilterParameters(IXAudio2Voice pDestinationVoice, XAUDIO2_FILTER_PARAMETERS* pParameters);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voice-setvolume))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voice-setvolume
     HRESULT SetVolume(float Volume, uint OperationSet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voice-getvolume))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voice-getvolume
     void    GetVolume(float* pVolume);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voice-setchannelvolumes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voice-setchannelvolumes
     HRESULT SetChannelVolumes(uint Channels, const(float)* pVolumes, uint OperationSet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voice-getchannelvolumes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voice-getchannelvolumes
     void    GetChannelVolumes(uint Channels, float* pVolumes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voice-setoutputmatrix))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voice-setoutputmatrix
     HRESULT SetOutputMatrix(IXAudio2Voice pDestinationVoice, uint SourceChannels, uint DestinationChannels, 
                             const(float)* pLevelMatrix, uint OperationSet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voice-getoutputmatrix))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voice-getoutputmatrix
     void    GetOutputMatrix(IXAudio2Voice pDestinationVoice, uint SourceChannels, uint DestinationChannels, 
                             float* pLevelMatrix);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voice-destroyvoice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voice-destroyvoice
     void    DestroyVoice();
 }
 
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nn-xaudio2-ixaudio2sourcevoice))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nn-xaudio2-ixaudio2sourcevoice
 interface IXAudio2SourceVoice : IXAudio2Voice
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2sourcevoice-start))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2sourcevoice-start
     HRESULT Start(uint Flags, uint OperationSet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2sourcevoice-stop))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2sourcevoice-stop
     HRESULT Stop(uint Flags, uint OperationSet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2sourcevoice-submitsourcebuffer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2sourcevoice-submitsourcebuffer
     HRESULT SubmitSourceBuffer(const(XAUDIO2_BUFFER)* pBuffer, const(XAUDIO2_BUFFER_WMA)* pBufferWMA);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2sourcevoice-flushsourcebuffers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2sourcevoice-flushsourcebuffers
     HRESULT FlushSourceBuffers();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2sourcevoice-discontinuity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2sourcevoice-discontinuity
     HRESULT Discontinuity();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2sourcevoice-exitloop))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2sourcevoice-exitloop
     HRESULT ExitLoop(uint OperationSet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2sourcevoice-getstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2sourcevoice-getstate
     void    GetState(XAUDIO2_VOICE_STATE* pVoiceState, uint Flags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2sourcevoice-setfrequencyratio))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2sourcevoice-setfrequencyratio
     HRESULT SetFrequencyRatio(float Ratio, uint OperationSet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2sourcevoice-getfrequencyratio))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2sourcevoice-getfrequencyratio
     void    GetFrequencyRatio(float* pRatio);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2sourcevoice-setsourcesamplerate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2sourcevoice-setsourcesamplerate
     HRESULT SetSourceSampleRate(uint NewSourceSampleRate);
 }
 
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nn-xaudio2-ixaudio2submixvoice))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nn-xaudio2-ixaudio2submixvoice
 interface IXAudio2SubmixVoice : IXAudio2Voice
 {
 }
 
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nn-xaudio2-ixaudio2masteringvoice))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nn-xaudio2-ixaudio2masteringvoice
 interface IXAudio2MasteringVoice : IXAudio2Voice
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2masteringvoice-getchannelmask))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2masteringvoice-getchannelmask
     HRESULT GetChannelMask(uint* pChannelmask);
 }
 
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nn-xaudio2-ixaudio2enginecallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nn-xaudio2-ixaudio2enginecallback
 interface IXAudio2EngineCallback
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2enginecallback-onprocessingpassstart))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2enginecallback-onprocessingpassstart
     void OnProcessingPassStart();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2enginecallback-onprocessingpassend))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2enginecallback-onprocessingpassend
     void OnProcessingPassEnd();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2enginecallback-oncriticalerror))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2enginecallback-oncriticalerror
     void OnCriticalError(HRESULT Error);
 }
 
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nn-xaudio2-ixaudio2voicecallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nn-xaudio2-ixaudio2voicecallback
 interface IXAudio2VoiceCallback
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voicecallback-onvoiceprocessingpassstart))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voicecallback-onvoiceprocessingpassstart
     void OnVoiceProcessingPassStart(uint BytesRequired);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voicecallback-onvoiceprocessingpassend))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voicecallback-onvoiceprocessingpassend
     void OnVoiceProcessingPassEnd();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voicecallback-onstreamend))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voicecallback-onstreamend
     void OnStreamEnd();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voicecallback-onbufferstart))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voicecallback-onbufferstart
     void OnBufferStart(void* pBufferContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voicecallback-onbufferend))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voicecallback-onbufferend
     void OnBufferEnd(void* pBufferContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voicecallback-onloopend))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voicecallback-onloopend
     void OnLoopEnd(void* pBufferContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voicecallback-onvoiceerror))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xaudio2/nf-xaudio2-ixaudio2voicecallback-onvoiceerror
     void OnVoiceError(void* pBufferContext, HRESULT Error);
 }
 
 @GUID("15b3cd66-e9de-4464-b6e6-2bc3cf63d455")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/hrtfapoapi/nn-hrtfapoapi-ixapohrtfparameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/hrtfapoapi/nn-hrtfapoapi-ixapohrtfparameters
 interface IXAPOHrtfParameters : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/hrtfapoapi/nf-hrtfapoapi-ixapohrtfparameters-setsourceposition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/hrtfapoapi/nf-hrtfapoapi-ixapohrtfparameters-setsourceposition
     HRESULT SetSourcePosition(const(HrtfPosition)* position);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/hrtfapoapi/nf-hrtfapoapi-ixapohrtfparameters-setsourceorientation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/hrtfapoapi/nf-hrtfapoapi-ixapohrtfparameters-setsourceorientation
     HRESULT SetSourceOrientation(const(HrtfOrientation)* orientation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/hrtfapoapi/nf-hrtfapoapi-ixapohrtfparameters-setsourcegain))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/hrtfapoapi/nf-hrtfapoapi-ixapohrtfparameters-setsourcegain
     HRESULT SetSourceGain(float gain);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/hrtfapoapi/nf-hrtfapoapi-ixapohrtfparameters-setenvironment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/hrtfapoapi/nf-hrtfapoapi-ixapohrtfparameters-setenvironment
     HRESULT SetEnvironment(HrtfEnvironment environment);
 }
 

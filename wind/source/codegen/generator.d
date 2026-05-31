@@ -6,6 +6,7 @@ import std.algorithm.sorting : sort;
 import std.array : array, join, replace, split;
 import std.container.rbtree : RedBlackTree;
 import std.conv : to;
+import std.exception : enforce;
 import std.file : copy, mkdirRecurse;
 import std.format : format;
 import std.path : buildPath, dirName, dirSeparator;
@@ -71,14 +72,29 @@ public struct Generator
             }
         }
         nestedMap.rehash();
-    
-        foreach (parent, children; nestedMap) {
-            writeln(parent.getTypeName());
-            foreach(child, _; children)
+
+        bool[string] nestedNamespaces;
+        foreach(namespace; namespaces)
+        {
+            string[] nsParts = namespace.split(".");
+            if (nsParts.length < 2)
             {
-                writeln("         ", child.getTypeName());
+                continue;
+            }
+            foreach(n; 1 .. nsParts.length)
+            {
+                auto parentNamespace = nsParts[0 .. n];
+                nestedNamespaces[parentNamespace.join(".")] = true;
             }
         }
+
+        // foreach (parent, children; nestedMap) {
+        //     writeln(parent.getTypeName());
+        //     foreach(child, _; children)
+        //     {
+        //         writeln("         ", child.getTypeName());
+        //     }
+        // }
 
         foreach(namespace; namespaces)
         {
@@ -95,9 +111,9 @@ public struct Generator
         bool mustCopyCore = true;
         foreach(namespace; namespaces)
         {
-            string path = makePath(outDirectory, namespace, configNamespace) ~ ".d";
-            string modName = makeModuleName(namespace, configNamespace);        
-            mkdirRecurse(dirName(path));        
+            string path = makePath(outDirectory, namespace, configNamespace, nestedNamespaces) ~ ".d";
+            string modName = makeModuleName(namespace, configNamespace, safeWords, nestedNamespaces);
+            mkdirRecurse(dirName(path));
             if (mustCopyCore)
             {
                 copy(cfgCoreFileName, buildPath(dirName(path), "core.d"));
@@ -112,7 +128,7 @@ public struct Generator
             writefln("Processing %s", namespace);
             f.writeln("public import windows.core;");
 
-            writeImports(namespace, f);
+            writeImports(f, namespace, nestedNamespaces);
             dumpEnums(f, namespace, false /*docsDirectory.length > 0*/);
             dumpApisConstants(f, namespace, safeWords);
             dumpDelegates(f, namespace, false /*docsDirectory.length > 0*/);
@@ -216,7 +232,8 @@ public struct Generator
 
     }
 
-    private void writeImports(string namespace, scope ref File f)
+    private void writeImports(scope ref File f, string namespace,
+        scope ref const bool[string] nestedNamespaces)
     {
         auto imports = dependencies[namespace].array.filter!(a => !ignoredNamespaces.canFind(getNamespace(a))).array.sort;
 
@@ -233,7 +250,7 @@ public struct Generator
                 {
                     f.writeln(";");
                 }
-                auto moduleName = makeModuleName(n, configNamespace);
+                auto moduleName = makeModuleName(n, configNamespace, safeWords, nestedNamespaces);
                 auto importName = getName(i);
                 f.writef("public import %s : %s", moduleName, importName);
                 lastNamespace = n;
@@ -270,30 +287,49 @@ public struct Generator
     private void dumpEnums(scope ref std.stdio.File f, string namespace, bool docs = false)
     {
         auto enums = getEnums(db, namespace);
-        if (!enums.empty())
+        if (enums.empty())
         {
-            dumpSectionHeader(f, "Enums");
-            foreach(e; enums)
-            {
-                dumpEnum(f, e, docs);
-            }
+            return;
+        }
+
+        bool[string] structNames;
+        foreach(struc; getStructs(db, namespace))
+        {
+            structNames[struc.getTypeName()] = true;
+        }
+
+        dumpSectionHeader(f, "Enums");
+        foreach(e; enums)
+        {
+            dumpEnum(f, e, structNames, docs);
         }
     }
 
-    private void dumpEnum(scope ref std.stdio.File f, const ref TypeDefEntity e, bool docs = false)
+    private void dumpEnum(scope ref std.stdio.File f, const ref TypeDefEntity e, scope ref const bool[string] structNames, bool docs = false)
     {
+        f.writeln;
+        string docsAttr = "";
         foreach(ca; e.getAttributes())
         {
             if (ca.name() == "FlagsAttribute")
             {
                 //can't find any use
             }
+            else if (ca.name() == "DocumentationAttribute")
+            {
+                docsAttr = getDocumentationAttribute(ca);
+            }
             else
             {
                 f.writefln("//ENUM ATTR: %s : %s", ca.name(), ca.value);
             }
         }
-        
+
+        if (docsAttr.length != 0)
+        {
+            f.writefln("// Microsoft documentation: %s", docsAttr);
+        }
+
         bool hasMembers = e.getFieldList().any!(f => !f.getFlags().hasRuntimeSpecialName);
         bool trueEnum = hasMembers && seemsLikeTrueEnum(e.getTypeName());
         size_t maxLen;
@@ -311,7 +347,7 @@ public struct Generator
         // f.writeln;
         // if (doc)
         //     dumpDocumentation(f, doc.description, 0);
-            
+
 
         if (!trueEnum)
         {
@@ -330,8 +366,14 @@ public struct Generator
         {
             f.writeln("{");
             foreach(fx; e.getFieldList())
-            {            
-                auto name = safeWords.get(fx.getName(), fx.getName());
+            {
+                auto name = fx.getName();
+                if (!trueEnum && name in structNames)
+                {
+                    name ~= "_";
+                }
+                name = safeWords.get(name, name);
+
                 if (!fx.getFlags().hasRuntimeSpecialName)
                 {
                     // if (doc)
@@ -378,19 +420,19 @@ public struct Generator
         else if (auto i = v.peek!int)
             f.writef("0x%08x", *i);
         else if (auto i = v.peek!uint)
-            f.writef("0x%08x", *i);
+            f.writef("0x%08xU", *i);
         else if (auto i = v.peek!short)
-            f.writef("0x%04x", *i);
+            f.writef("cast(short) 0x%04x", *i);
         else if (auto i = v.peek!ushort)
-            f.writef("0x%04x", *i);
+            f.writef("cast(ushort) 0x%04x", *i);
         else if (auto i = v.peek!byte)
             f.writef("0x%02x", *i);
         else if (auto i = v.peek!ubyte)
             f.writef("0x%02x", *i);
         else if (auto i = v.peek!long)
-            f.writef("0x%016x", *i);
+            f.writef("0x%016xL", *i);
         else if (auto i = v.peek!ulong)
-            f.writef("0x%016x", *i);
+            f.writef("0x%016xUL", *i);
         else if (auto i = v.peek!float)
         {
             if (signbit(*i))
@@ -423,51 +465,60 @@ public struct Generator
     {
         bool wasOne;
         auto apis = getApisClasses(db, namespace);
-        if (!apis.empty() && !apis.front().getFieldList().empty())
+
+        if (apis.empty() || apis.front().getFieldList().empty())
         {
-            dumpSectionHeader(f, "Constants");
-            FieldEntity[] flds;
-            string lastTypeText;
-            string lastField;
-            bool mustReturn;
+            return;
+        }
 
-            foreach(fld; apis.front().getFieldList())
+        bool[string] structNames;
+        foreach(struc; getStructs(db, namespace))
+        {
+            structNames[struc.getTypeName()] = true;
+        }
+
+        dumpSectionHeader(f, "Constants");
+        FieldEntity[] flds;
+        string lastTypeText;
+        string lastField;
+        bool mustReturn;
+
+        foreach(fld; apis.front().getFieldList())
+        {
+            auto typeText = getTypeText(fld.getSignature().typeSig, safeWords);
+            auto fieldName = fld.getName();
+
+            if (!flds.length)
             {
-                auto typeText = getTypeText(fld.getSignature().typeSig, safeWords);
-                auto fieldName = fld.getName();
-
-                if (!flds.length)
-                {
-                    lastField = fld.getName();
-                    lastTypeText = typeText;
-                    flds ~= fld;
-                    continue;
-                }
-
-                if ((typeText == lastTypeText && lastField.length > 0 && commonPrefix(lastField, fieldName).length / cast(double)(lastField.length) > minSetTreshold))
-                {
-                    lastField = fld.getName();
-                    lastTypeText = typeText;
-                    flds ~= fld;
-                    continue;
-                }
-
-                dumpFieldCollection(f, flds, wasOne);    
-                wasOne = flds.length == 1;
-
                 lastField = fld.getName();
                 lastTypeText = typeText;
-                flds = [fld];
+                flds ~= fld;
+                continue;
             }
 
-            if (flds.length)
+            if ((typeText == lastTypeText && lastField.length > 0 && commonPrefix(lastField, fieldName).length / cast(double)(lastField.length) > minSetTreshold))
             {
-                dumpFieldCollection(f, flds, wasOne);
+                lastField = fld.getName();
+                lastTypeText = typeText;
+                flds ~= fld;
+                continue;
             }
+
+            dumpFieldCollection(f, flds, wasOne, structNames);
+            wasOne = flds.length == 1;
+
+            lastField = fld.getName();
+            lastTypeText = typeText;
+            flds = [fld];
+        }
+
+        if (flds.length)
+        {
+            dumpFieldCollection(f, flds, wasOne, structNames);
         }
     }
 
-    private void dumpFieldCollection(scope ref std.stdio.File f, scope ref const FieldEntity[] flds, bool wasOne)
+    private void dumpFieldCollection(scope ref std.stdio.File f, scope ref const FieldEntity[] flds, bool wasOne, scope ref const bool[string] structNames)
     {
         auto sig = flds[0].getSignature().typeSig;
         bool isStruct = sig.type.peek!TypeRefEntity || sig.type.peek!TypeDefEntity;
@@ -478,6 +529,7 @@ public struct Generator
             isStruct = true;
         }
         auto isPropKey = typeText.endsWith("/PROPERTYKEY") || typeText.endsWith("/DEVPROPKEY"); // TODO: get type name instead of typeText here, getFieldTypeText() change may break this
+        auto isSidIdAuth = typeText.endsWith("/SID_IDENTIFIER_AUTHORITY");
 
         if (flds.length == 1)
         {
@@ -488,7 +540,15 @@ public struct Generator
             f.write("enum ");
             f.write(typeText);   
             f.write(" ");
-            f.write(safeWords.get(fx.getName(), fx.getName()));
+            
+            auto constName = fx.getName();
+            if (constName in structNames)
+            {
+                constName ~= "_";
+            }
+            constName = safeWords.get(constName, constName);
+
+            f.write(constName);
             f.write(" = ");
             if (isStruct)
             {
@@ -511,7 +571,7 @@ public struct Generator
                     }
                     else if (ca.name() == "ConstantAttribute")
                     {
-                        auto constValue = readConstantValue(ca, isPropKey);
+                        auto constValue = readConstantValue(ca, isPropKey, isSidIdAuth);
                         f.write(constValue);
                         break;
                     }
@@ -555,7 +615,13 @@ public struct Generator
                         break;
                     }
                 }
-                auto name = safeWords.get(fx.getName(), fx.getName());
+                auto constName = fx.getName();
+                if (constName in structNames)
+                {
+                    constName ~= "_";
+                }
+                auto name = safeWords.get(constName, constName);
+
                 f.write(name);
                 if (name.length < maxLen)
                     f.write("".padLeft(' ', maxLen - name.length));
@@ -582,7 +648,7 @@ public struct Generator
                         }
                         else if (ca.name() == "ConstantAttribute")
                         {
-                            auto constValue = readConstantValue(ca, isPropKey);
+                            auto constValue = readConstantValue(ca, isPropKey, isSidIdAuth);
                             f.write(constValue);
                             break;
                         }
@@ -606,11 +672,41 @@ public struct Generator
     private void dumpStructs(scope ref std.stdio.File f, string namespace, bool docs = false)
     {
         auto structs = getStructs(db, namespace);
-        if (!structs.empty)
+        if (!structs.empty())
         {
             dumpSectionHeader(f, "Structs");
             foreach(s; structs)
-                dumpStruct(f, s, 0, null, docs);
+            {
+                SupportedArchitecture arch = SupportedArchitecture.All;
+                foreach(ca; s.getAttributes())
+                {
+                    if (ca.name() == "SupportedArchitectureAttribute")
+                    {
+                        arch = getSupportedArchitecture(ca);
+                        break;
+                    }
+                }
+
+                if (arch == SupportedArchitecture.None)
+                {
+                    f.write(format("// Type %s attributed with SupportedArchitecture.None\n", s.getTypeName()));
+                    continue;
+                }
+                else if (arch != SupportedArchitecture.All)
+                {
+                    auto versions = getSupportedArchitectureVersions(arch);
+                    foreach(ver; versions)
+                    {
+                        f.write(format("\nversion(%s)\n{\n", ver));
+                        dumpStruct(f, s, 1, null, docs);
+                        f.write("}\n");
+                    }
+                }
+                else
+                {
+                    dumpStruct(f, s, 0, null, docs);
+                }
+            }
         }
     }
 
@@ -623,11 +719,16 @@ public struct Generator
         // if (doc)
         //     dumpDocumentation(f, doc.description, 0); 
 
+        string docsAttr = "";
         foreach(ca; struc.getAttributes())
         {
-            if (ca.name() == "NativeTypedefAttribute")
+            if (ca.name() == "NativeTypedefAttribute" || ca.name() == "SupportedArchitectureAttribute")
             {
                 //do nothing
+            }
+            else if (ca.name() == "DocumentationAttribute")
+            {
+                docsAttr = getDocumentationAttribute(ca);
             }
             else if (ca.name() == "RAIIFreeAttribute")
             {
@@ -642,6 +743,12 @@ public struct Generator
                 f.write("".padLeft(' ', level * 4));
                 f.writefln("//STRUCT ATTR: %s : %s", ca.name(), ca.value());
             }
+        }
+
+        if (docsAttr.length != 0)
+        {
+            f.write("".padLeft(' ', level * 4));
+            f.writefln("// Microsoft documentation: %s", docsAttr);
         }
 
         string[string] types;
@@ -666,7 +773,7 @@ public struct Generator
             }
                 
             if (name.length > maxNameLen && name.length <= maxFieldAlignment)
-                maxNameLen = name.length;        
+                maxNameLen = name.length;
             auto type = getFieldTypeText(fx, safeWords, true);
             if (type.length > maxTypeLen && type.length <= maxFieldAlignment)
                 maxTypeLen = type.length;    
@@ -676,6 +783,7 @@ public struct Generator
         bool isExplicit = struc.getFlags().layout == TypeLayout.explicitLayout;
         bool isAnonymous = struc.getTypeName().startsWith("_Anonymous");
 
+        f.write("".padLeft(' ', level * 4));
         f.write(isExplicit ? "union" : "struct");
         
         if (!isAnonymous)
@@ -688,7 +796,6 @@ public struct Generator
         }
         f.writeln;
 
-    
         f.write("".padLeft(' ', level * 4));
         f.writeln("{");
 
@@ -699,8 +806,18 @@ public struct Generator
             f.writefln("align (%d):", lay.get.getPackingSize());
         }
 
+        // Dump fields
         foreach(fx; struc.getFieldList())
         {
+            string fieldDocsAttr;
+            foreach(ca; fx.getCustomAttributes())
+            {
+                if (ca.name() == "DocumentationAttribute")
+                {
+                    fieldDocsAttr = getDocumentationAttribute(ca);
+                }
+            }
+
             if (nestedClasses)
             {
                 auto td = resolveType(fx.getSignature().typeSig.type);
@@ -728,6 +845,13 @@ public struct Generator
             //         dumpDocumentation(f, fdoc.front.description, level + 1);            
             // }
             
+            if (fieldDocsAttr.length != 0)
+            {
+                f.write("".padLeft(' ', level * 4));
+                f.write("".padLeft(' ' , 4));
+                f.writefln("// Microsoft documentation: %s", docsAttr);
+            }
+
             f.write("".padLeft(' ', level * 4));
             f.write("".padLeft(' ' , 4));
             f.write(type);
@@ -756,16 +880,56 @@ public struct Generator
         {
             dumpSectionHeader(f, "Callbacks");
             foreach(d; delegates)
-                dumpDelegate(f, d, docs);
+            {
+                SupportedArchitecture arch = SupportedArchitecture.All;
+                foreach(ca; d.getAttributes())
+                {
+                    if (ca.name() == "SupportedArchitectureAttribute")
+                    {
+                        arch = getSupportedArchitecture(ca);
+                        break;
+                    }
+                }
+
+                if (arch == SupportedArchitecture.None)
+                {
+                    f.write(format("// Delegate %s attributed with SupportedArchitecture.None\n", d.getTypeName()));
+                    continue;
+                }
+                else if (arch != SupportedArchitecture.All)
+                {
+                    auto versions = getSupportedArchitectureVersions(arch);
+                    foreach(ver; versions)
+                    {
+                        f.write(format("\nversion(%s)\n{\n", ver));
+                        dumpDelegate(f, d, 1, docs);
+                        f.write("}\n");
+                    }
+                }
+                else
+                {
+                    dumpDelegate(f, d, 0, docs);
+                }                    
+            }                
         }
     }
 
-    private void dumpDelegate(scope ref std.stdio.File f, scope ref const TypeDefEntity type, bool docs = false)
+    private void dumpDelegate(scope ref std.stdio.File f, scope ref const TypeDefEntity type, int level, bool docs = false)
     {
         string conv;
+        string docsAttr;
+
         foreach(ca; type.getAttributes())
         {
-            if (ca.name() == "UnmanagedFunctionPointerAttribute")
+            if (ca.name() == "SupportedArchitectureAttribute")
+            {
+                continue;
+            }
+            else if (ca.name() == "DocumentationAttribute")
+            {
+                docsAttr = getDocumentationAttribute(ca);
+            } 
+            else if (ca.name() == "UnmanagedFunctionPointerAttribute")
             {
                 auto fixed = ca.value().fixed[0];
                 auto element = fixed.value.get!ElementSig;
@@ -778,7 +942,10 @@ public struct Generator
                     conv = format("Unknown[%s]", v);
             }
             else
+            {
+                f.write("".padLeft(' ', level * 4));
                 f.writefln("//DELEGATE ATTR: %s : %s", ca.name(), ca.value());
+            }
         }
 
         foreach(meth; type.getMethodList())
@@ -792,8 +959,15 @@ public struct Generator
                 //     dumpDocumentationParams(f, *doc, 0);
                 //     dumpDocumentationReturn(f, doc.returns, 0);
                 // }
+
+                if (docsAttr.length != 0)
+                {
+                    f.writefln("// Microsoft documentation: %s", docsAttr);
+                }
+
                 auto name = safeWords.get(type.getTypeName(), type.getTypeName());
                 size_t w, v;
+                f.write("".padLeft(' ', level * 4));
                 f.write("alias ");
                 f.write(name);
                 f.write(" = ");
@@ -869,7 +1043,36 @@ public struct Generator
             {
                 if (meth.getName() in skipMethods)
                     continue;
-                dumpMethod(f, meth, 0, 0, docs);
+
+                SupportedArchitecture arch = SupportedArchitecture.All;
+                foreach(ca; meth.getAttributes())
+                {
+                    if (ca.name() == "SupportedArchitectureAttribute")
+                    {
+                        arch = getSupportedArchitecture(ca);
+                        break;
+                    }
+                }
+
+                if (arch == SupportedArchitecture.None)
+                {
+                    f.write(format("// Method %s attributed with SupportedArchitecture.None\n", meth.getName()));
+                    continue;
+                }
+                else if (arch != SupportedArchitecture.All)
+                {
+                    auto versions = getSupportedArchitectureVersions(arch);
+                    foreach(ver; versions)
+                    {
+                        f.write(format("\nversion(%s)\n{\n", ver));
+                        dumpMethod(f, meth, 1, 0, docs);
+                        f.write("}\n");
+                    }
+                }
+                else
+                {
+                    dumpMethod(f, meth, 0, 0, docs);
+                }                    
             }
         }
     }
@@ -877,10 +1080,22 @@ public struct Generator
     private void dumpMethod(scope ref std.stdio.File f, scope ref const MethodDefEntity meth, int level, size_t maxReturnTypeLength, bool docs = false, string prefix = null)
     {
         size_t w, v;
+        string docsAttr;
 
         foreach(ca; meth.getAttributes())
         {
-            f.writefln("//METH ATTR: %s : %s", ca.name(), ca.value());
+            if (ca.name() == "SupportedArchitectureAttribute")
+            {
+                continue;
+            }
+            else if (ca.name() == "DocumentationAttribute")
+            {
+                docsAttr = getDocumentationAttribute(ca);
+            } 
+            else
+            {
+                f.writefln("//METH ATTR: %s : %s", ca.name(), ca.value());
+            }
         }
     
         // auto doc = docs ? findDoc(prefix.length ? prefix ~ '.' ~ meth.name: meth.name) : null;
@@ -891,6 +1106,12 @@ public struct Generator
         //     dumpDocumentationParams(f, *doc, level);     
         //     dumpDocumentationReturn(f, doc.returns, level);
         // }
+
+        if (docsAttr.length != 0)
+        {
+            f.write("".padLeft(' ', level * 4));
+            f.writefln("// Microsoft documentation: %s", docsAttr);
+        }
 
         f.write("".padLeft(' ', level * 4));
         w = level * 4;
@@ -1005,6 +1226,7 @@ public struct Generator
             if (intf.getTypeName() in skipInterfaces)
                 continue;
             bool hasGuid;
+            string docsAttr;
 
             // auto doc = docs ? findDoc(intf.name) : null;
             // if (doc)
@@ -1018,10 +1240,19 @@ public struct Generator
                     dumpGUIDAttr(f, ca); 
                     hasGuid = true;
                 }
+                else if (ca.name() == "DocumentationAttribute")
+                {
+                    docsAttr = getDocumentationAttribute(ca);
+                }                 
                 else
                 {
                     f.writefln("//INTERFACEF ATTR: %s : %s", ca.name(), ca.value());
                 }
+            }
+
+            if (docsAttr.length != 0)
+            {
+                f.writefln("// Microsoft documentation: %s", docsAttr);
             }
 
             auto name = intf.getTypeName();
@@ -1123,35 +1354,74 @@ string fullnameof(T)(T value)
     return null;
 }
 
-string makePath(string outDir, string namespace, ref const string[string] config)
+string makePath(string outDir, string namespace, 
+    scope ref const string[string] config, scope ref const bool[string] nestedNamespaces)
 {
+    bool needMove = false;
+    if (namespace in nestedNamespaces)
+    {
+        needMove = true;
+    }
+
     string result;
+    string lastPart = "";
     foreach(name; namespace.splitter('.'))
     {
         auto part = config.get(name.toLower, name.toLower);
         if (part.length)
         {
+            lastPart = part;
             if (result.length)
                 result ~= dirSeparator;
             result ~= part;
         }
     }
+
+    if (needMove)
+    {
+        assert(lastPart.length != 0);
+        if (result.length)
+            result ~= dirSeparator;
+        result ~= lastPart;
+    }
+
     return buildPath(outDir, result);
 }
 
-string makeModuleName(string namespace, ref const string[string] config)
+string makeModuleName(string namespace, ref const string[string] config,
+    scope ref const string[string] safeWords, scope ref const bool[string] nestedNamespaces)
 {
+    bool needMove = false;
+    if (namespace in nestedNamespaces)
+    {
+        needMove = true;
+    }
+
     string result;
+    string lastPart = "";
     foreach(name; namespace.splitter('.'))
     {
         auto part = config.get(name.toLower, name.toLower);
         if (part.length)
         {
+            lastPart = part;
             if (result.length)
                 result ~= '.';
-            result ~= part;
+
+            auto partSafe = safeWords.get(part, part);
+            result ~= partSafe;
         }
     }
+
+    if (needMove)
+    {
+        assert(lastPart.length != 0);
+        auto lastPartSafe = safeWords.get(lastPart, lastPart);
+        if (result.length)
+            result ~= '.';
+        result ~= lastPartSafe;
+    }
+
     return result;
 }
 
@@ -1356,6 +1626,10 @@ string getFieldTypeText(scope ref const FieldEntity field, scope ref const strin
             auto element = fixed.value().get!ElementSig;
             nativeReplacement = element.value().get!int;
         }
+        // else if (ca.name() == "DocumentationAttribute") // TODO: uncomment
+        // {
+        //     // do nothing
+        // }
         else if (ca.name() == "NotNullTerminated")
         {
             //cant't find any use
@@ -1365,7 +1639,9 @@ string getFieldTypeText(scope ref const FieldEntity field, scope ref const strin
             //ignore now, use when writing field
         }
         else
+        {
             s = format("/*FIELD ATTR: %s : %s*/", ca.name(), ca.value());
+        }
     }
     s ~= getTypeText(field.getSignature().typeSig, safeWords, isConst, nativeReplacement);
     return s;
@@ -1406,7 +1682,7 @@ private UUID readGuid(scope ref const CustomAttributeEntity ca)
     return guid;
 }
 
-private string readConstantValue(scope ref const CustomAttributeEntity ca, bool isPropKey)
+private string readConstantValue(scope ref const CustomAttributeEntity ca, bool isPropKey, bool isSidIdAuth)
 {
     assert(ca.name() == "ConstantAttribute");
     auto sig = ca.value();
@@ -1467,6 +1743,26 @@ private string readConstantValue(scope ref const CustomAttributeEntity ca, bool 
         auto pidStr = strValue[idxCloseBr + 1 .. $];
 
         return "GUID(\"" ~ guidValue ~ "\")" ~ pidStr;
+    }
+    else if (isSidIdAuth)
+    {
+        if (element.value.peek!string == null)
+        {
+            throw new Exception("ConstantAttribute fixed[0] FixedArgSig element's value is not string");
+        }
+        const string strValue = element.value.get!string;
+        if (strValue.count('{') != 1)
+        {
+            throw new Exception("ConstantAttribute: invalid SID_IDENTIFIER_AUTHORITY value: '{' count != 1");
+        }
+        if (strValue.count('}') != 1)
+        {
+            throw new Exception("ConstantAttribute: invalid SID_IDENTIFIER_AUTHORITY value: '}' count != 1");
+        }
+        auto idxOpenBr = strValue.indexOf('{');
+        auto idxCloseBr = strValue.indexOf('}');
+        auto arrayStr = strValue[idxOpenBr + 1 .. idxCloseBr];
+        return "[" ~ arrayStr ~ "]";
     }
 
     // This is unused
@@ -1638,4 +1934,61 @@ string nameof(T)(T value)
     else if (auto td = value.peek!TypeRefEntity)
         return td.getTypeName();
     return null;
+}
+
+SupportedArchitecture getSupportedArchitecture(scope ref const CustomAttributeEntity ca)
+{
+    assert(ca.name() == "SupportedArchitectureAttribute");
+    auto sig = ca.value();
+    
+    if (sig.fixed.length != 1)
+    {
+        throw new Exception(format("SupportedArchitectureAttribute contains %s FixedArgSig elements, expected 1", sig.fixed.length));
+    }
+
+    auto element = sig.fixed[0].value.peek!ElementSig;
+    assert(element != null);
+    
+    auto value = element.value.peek!uint;
+    enforce(value != null, "SupportedArchitectureAttribute: can't get uint value");
+    
+    return cast(SupportedArchitecture)(*value);
+}
+
+string[] getSupportedArchitectureVersions(SupportedArchitecture arch)
+{
+    string[] result;
+    if (arch & SupportedArchitecture.X86)
+    {
+        result ~= "X86";
+    }
+    if (arch & SupportedArchitecture.X64)
+    {
+        result ~= "X86_64";
+    }
+    if (arch & SupportedArchitecture.Arm64)
+    {
+        result ~= "AArch64";
+    }
+
+    return result;
+}
+
+string getDocumentationAttribute(scope ref const CustomAttributeEntity ca)
+{
+    assert(ca.name() == "DocumentationAttribute");
+    auto sig = ca.value();
+    
+    if (sig.fixed.length != 1)
+    {
+        throw new Exception(format("DocumentationAttribute contains %s FixedArgSig elements, expected 1", sig.fixed.length));
+    }
+
+    auto element = sig.fixed[0].value.peek!ElementSig;
+    assert(element != null);
+    
+    auto value = element.value.peek!string;
+    enforce(value != null, "DocumentationAttribute: can't get string value");
+    
+    return *value;
 }

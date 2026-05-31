@@ -3,11 +3,12 @@
 module windows.win32.system.applicationinstallationandservicing;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BSTR, FILETIME, HANDLE, HMODULE,
-                                         HRESULT, HWND, PSTR, PWSTR, VARIANT_BOOL;
-public import windows.win32.security.cryptography : ALG_ID, CERT_CONTEXT;
-public import windows.win32.system.com : IDispatch, IStream, IUnknown, SAFEARRAY;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BSTR, FILETIME, HANDLE, HMODULE,
+                                                    HRESULT, HWND, PSTR, PWSTR,
+                                                    VARIANT_BOOL;
+public import windows.win32.security.cryptography.cryptography : ALG_ID, CERT_CONTEXT;
+public import windows.win32.system.com.com : IDispatch, IStream, IUnknown, SAFEARRAY;
 public import windows.win32.system.registry : HKEY;
 public import windows.win32.system.windowsprogramming : ACTCTX_SECTION_KEYED_DATA_ASSEMBLY_METADATA;
 
@@ -16,25 +17,29 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias MSIASSEMBLYINFO = uint;
 enum : uint
 {
-    MSIASSEMBLYINFO_NETASSEMBLY   = 0x00000000,
-    MSIASSEMBLYINFO_WIN32ASSEMBLY = 0x00000001,
+    MSIASSEMBLYINFO_NETASSEMBLY   = 0x00000000U,
+    MSIASSEMBLYINFO_WIN32ASSEMBLY = 0x00000001U,
 }
+
 alias IASSEMBLYCACHE_UNINSTALL_DISPOSITION = uint;
 enum : uint
 {
-    IASSEMBLYCACHE_UNINSTALL_DISPOSITION_UNINSTALLED         = 0x00000001,
-    IASSEMBLYCACHE_UNINSTALL_DISPOSITION_STILL_IN_USE        = 0x00000002,
-    IASSEMBLYCACHE_UNINSTALL_DISPOSITION_ALREADY_UNINSTALLED = 0x00000003,
-    IASSEMBLYCACHE_UNINSTALL_DISPOSITION_DELETE_PENDING      = 0x00000004,
+    IASSEMBLYCACHE_UNINSTALL_DISPOSITION_UNINSTALLED         = 0x00000001U,
+    IASSEMBLYCACHE_UNINSTALL_DISPOSITION_STILL_IN_USE        = 0x00000002U,
+    IASSEMBLYCACHE_UNINSTALL_DISPOSITION_ALREADY_UNINSTALLED = 0x00000003U,
+    IASSEMBLYCACHE_UNINSTALL_DISPOSITION_DELETE_PENDING      = 0x00000004U,
 }
+
 alias QUERYASMINFO_FLAGS = uint;
 enum : uint
 {
-    QUERYASMINFO_FLAG_VALIDATE = 0x00000001,
+    QUERYASMINFO_FLAG_VALIDATE = 0x00000001U,
 }
+
 alias RESULTTYPES = int;
 enum : int
 {
@@ -43,6 +48,7 @@ enum : int
     ieWarning = 0x00000002,
     ieInfo    = 0x00000003,
 }
+
 alias STATUSTYPES = int;
 enum : int
 {
@@ -58,6 +64,7 @@ enum : int
     ieStatusFail         = 0x00000009,
     ieStatusCancel       = 0x0000000a,
 }
+
 alias msmErrorType = int;
 enum : int
 {
@@ -70,6 +77,7 @@ enum : int
     msmErrorDirCreate           = 0x00000007,
     msmErrorFeatureRequired     = 0x00000008,
 }
+
 alias INSTALLMESSAGE = int;
 enum : int
 {
@@ -93,6 +101,7 @@ enum : int
     INSTALLMESSAGE_INSTALLSTART   = 0x1a000000,
     INSTALLMESSAGE_INSTALLEND     = 0x1b000000,
 }
+
 alias INSTALLUILEVEL = int;
 enum : int
 {
@@ -108,6 +117,7 @@ enum : int
     INSTALLUILEVEL_SOURCERESONLY = 0x00000100,
     INSTALLUILEVEL_UACONLY       = 0x00000200,
 }
+
 alias INSTALLSTATE = int;
 enum : int
 {
@@ -126,6 +136,7 @@ enum : int
     INSTALLSTATE_SOURCE       = 0x00000004,
     INSTALLSTATE_DEFAULT      = 0x00000005,
 }
+
 alias USERINFOSTATE = int;
 enum : int
 {
@@ -135,7 +146,8 @@ enum : int
     USERINFOSTATE_ABSENT     = 0x00000000,
     USERINFOSTATE_PRESENT    = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Msi/installlevel))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Msi/installlevel
 alias INSTALLLEVEL = int;
 enum : int
 {
@@ -143,7 +155,8 @@ enum : int
     INSTALLLEVEL_MINIMUM = 0x00000001,
     INSTALLLEVEL_MAXIMUM = 0x0000ffff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Msi/reinstallmode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Msi/reinstallmode
 alias REINSTALLMODE = int;
 enum : int
 {
@@ -159,6 +172,7 @@ enum : int
     REINSTALLMODE_SHORTCUT         = 0x00000200,
     REINSTALLMODE_PACKAGE          = 0x00000400,
 }
+
 alias INSTALLLOGMODE = int;
 enum : int
 {
@@ -186,12 +200,14 @@ enum : int
     INSTALLLOGMODE_INSTALLSTART   = 0x04000000,
     INSTALLLOGMODE_INSTALLEND     = 0x08000000,
 }
+
 alias INSTALLLOGATTRIBUTES = int;
 enum : int
 {
     INSTALLLOGATTRIBUTES_APPEND        = 0x00000001,
     INSTALLLOGATTRIBUTES_FLUSHEACHLINE = 0x00000002,
 }
+
 alias INSTALLFEATUREATTRIBUTE = int;
 enum : int
 {
@@ -202,6 +218,7 @@ enum : int
     INSTALLFEATUREATTRIBUTE_DISALLOWADVERTISE      = 0x00000010,
     INSTALLFEATUREATTRIBUTE_NOUNSUPPORTEDADVERTISE = 0x00000020,
 }
+
 alias INSTALLMODE = int;
 enum : int
 {
@@ -211,6 +228,7 @@ enum : int
     INSTALLMODE_EXISTING           = 0xffffffff,
     INSTALLMODE_DEFAULT            = 0x00000000,
 }
+
 alias MSIPATCHSTATE = int;
 enum : int
 {
@@ -221,6 +239,7 @@ enum : int
     MSIPATCHSTATE_REGISTERED = 0x00000008,
     MSIPATCHSTATE_ALL        = 0x0000000f,
 }
+
 alias MSIINSTALLCONTEXT = int;
 enum : int
 {
@@ -232,6 +251,7 @@ enum : int
     MSIINSTALLCONTEXT_ALL            = 0x00000007,
     MSIINSTALLCONTEXT_ALLUSERMANAGED = 0x00000008,
 }
+
 alias MSIPATCHDATATYPE = int;
 enum : int
 {
@@ -239,6 +259,7 @@ enum : int
     MSIPATCH_DATATYPE_XMLPATH   = 0x00000001,
     MSIPATCH_DATATYPE_XMLBLOB   = 0x00000002,
 }
+
 alias SCRIPTFLAGS = int;
 enum : int
 {
@@ -252,12 +273,14 @@ enum : int
     SCRIPTFLAGS_REGDATA_APPINFO          = 0x00000180,
     SCRIPTFLAGS_REGDATA                  = 0x000001a0,
 }
+
 alias ADVERTISEFLAGS = int;
 enum : int
 {
     ADVERTISEFLAGS_MACHINEASSIGN = 0x00000000,
     ADVERTISEFLAGS_USERASSIGN    = 0x00000001,
 }
+
 alias INSTALLTYPE = int;
 enum : int
 {
@@ -265,6 +288,7 @@ enum : int
     INSTALLTYPE_NETWORK_IMAGE   = 0x00000001,
     INSTALLTYPE_SINGLE_INSTANCE = 0x00000002,
 }
+
 alias MSIARCHITECTUREFLAGS = int;
 enum : int
 {
@@ -273,16 +297,19 @@ enum : int
     MSIARCHITECTUREFLAGS_AMD64 = 0x00000004,
     MSIARCHITECTUREFLAGS_ARM   = 0x00000008,
 }
+
 alias MSIOPENPACKAGEFLAGS = int;
 enum : int
 {
     MSIOPENPACKAGEFLAGS_IGNOREMACHINESTATE = 0x00000001,
 }
+
 alias MSIADVERTISEOPTIONFLAGS = int;
 enum : int
 {
     MSIADVERTISEOPTIONFLAGS_INSTANCE = 0x00000001,
 }
+
 alias MSISOURCETYPE = int;
 enum : int
 {
@@ -291,24 +318,28 @@ enum : int
     MSISOURCETYPE_URL     = 0x00000002,
     MSISOURCETYPE_MEDIA   = 0x00000004,
 }
+
 alias MSICODE = int;
 enum : int
 {
     MSICODE_PRODUCT = 0x00000000,
     MSICODE_PATCH   = 0x40000000,
 }
+
 alias MSITRANSACTION = int;
 enum : int
 {
     MSITRANSACTION_CHAIN_EMBEDDEDUI         = 0x00000001,
     MSITRANSACTION_JOIN_EXISTING_EMBEDDEDUI = 0x00000002,
 }
+
 alias MSITRANSACTIONSTATE = uint;
 enum : uint
 {
-    MSITRANSACTIONSTATE_ROLLBACK = 0x00000000,
-    MSITRANSACTIONSTATE_COMMIT   = 0x00000001,
+    MSITRANSACTIONSTATE_ROLLBACK = 0x00000000U,
+    MSITRANSACTIONSTATE_COMMIT   = 0x00000001U,
 }
+
 alias MSIDBSTATE = int;
 enum : int
 {
@@ -316,6 +347,7 @@ enum : int
     MSIDBSTATE_READ  = 0x00000000,
     MSIDBSTATE_WRITE = 0x00000001,
 }
+
 alias MSIMODIFY = int;
 enum : int
 {
@@ -333,12 +365,14 @@ enum : int
     MSIMODIFY_VALIDATE_FIELD   = 0x0000000a,
     MSIMODIFY_VALIDATE_DELETE  = 0x0000000b,
 }
+
 alias MSICOLINFO = int;
 enum : int
 {
     MSICOLINFO_NAMES = 0x00000000,
     MSICOLINFO_TYPES = 0x00000001,
 }
+
 alias MSICONDITION = int;
 enum : int
 {
@@ -347,6 +381,7 @@ enum : int
     MSICONDITION_NONE  = 0x00000002,
     MSICONDITION_ERROR = 0x00000003,
 }
+
 alias MSICOSTTREE = int;
 enum : int
 {
@@ -355,6 +390,7 @@ enum : int
     MSICOSTTREE_PARENTS  = 0x00000002,
     MSICOSTTREE_RESERVED = 0x00000003,
 }
+
 alias MSIDBERROR = int;
 enum : int
 {
@@ -392,6 +428,7 @@ enum : int
     MSIDBERROR_STRINGOVERFLOW    = 0x0000001c,
     MSIDBERROR_BADLOCALIZEATTRIB = 0x0000001d,
 }
+
 alias MSIRUNMODE = int;
 enum : int
 {
@@ -415,6 +452,7 @@ enum : int
     MSIRUNMODE_ROLLBACK         = 0x00000011,
     MSIRUNMODE_COMMIT           = 0x00000012,
 }
+
 alias MSITRANSFORM_ERROR = int;
 enum : int
 {
@@ -427,6 +465,7 @@ enum : int
     MSITRANSFORM_ERROR_VIEWTRANSFORM    = 0x00000100,
     MSITRANSFORM_ERROR_NONE             = 0x00000000,
 }
+
 alias MSITRANSFORM_VALIDATE = int;
 enum : int
 {
@@ -443,7 +482,8 @@ enum : int
     MSITRANSFORM_VALIDATE_NEWGREATERBASEVERSION      = 0x00000400,
     MSITRANSFORM_VALIDATE_UPGRADECODE                = 0x00000800,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsxs/ne-winsxs-asm_name))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsxs/ne-winsxs-asm_name
 alias ASM_NAME = int;
 enum : int
 {
@@ -469,6 +509,7 @@ enum : int
     ASM_NAME_MVID                  = 0x00000013,
     ASM_NAME_MAX_PARAMS            = 0x00000014,
 }
+
 alias ASM_BIND_FLAGS = int;
 enum : int
 {
@@ -479,7 +520,8 @@ enum : int
     ASM_BINDF_SHARED_BINPATH_HINT = 0x00000010,
     ASM_BINDF_PARENT_ASM_HINT     = 0x00000020,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsxs/ne-winsxs-asm_display_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsxs/ne-winsxs-asm_display_flags
 alias ASM_DISPLAY_FLAGS = int;
 enum : int
 {
@@ -491,7 +533,8 @@ enum : int
     ASM_DISPLAYF_PROCESSORARCHITECTURE = 0x00000020,
     ASM_DISPLAYF_LANGUAGEID            = 0x00000040,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsxs/ne-winsxs-asm_cmp_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsxs/ne-winsxs-asm_cmp_flags
 alias ASM_CMP_FLAGS = int;
 enum : int
 {
@@ -506,13 +549,15 @@ enum : int
     ASM_CMPF_ALL              = 0x000000ff,
     ASM_CMPF_DEFAULT          = 0x00000100,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsxs/ne-winsxs-create_asm_name_obj_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsxs/ne-winsxs-create_asm_name_obj_flags
 alias CREATE_ASM_NAME_OBJ_FLAGS = int;
 enum : int
 {
     CANOF_PARSE_DISPLAY_NAME = 0x00000001,
     CANOF_SET_DEFAULT_VALUES = 0x00000002,
 }
+
 alias msidbControlAttributes = int;
 enum : int
 {
@@ -553,6 +598,7 @@ enum : int
     msidbControlAttributesElevationShield = 0x00800000,
     msidbControlAttributesHasBorder       = 0x01000000,
 }
+
 alias msidbLocatorType = int;
 enum : int
 {
@@ -561,6 +607,7 @@ enum : int
     msidbLocatorTypeRawValue  = 0x00000002,
     msidbLocatorType64bit     = 0x00000010,
 }
+
 alias msidbComponentAttributes = int;
 enum : int
 {
@@ -578,12 +625,14 @@ enum : int
     msidbComponentAttributesUninstallOnSupersedence   = 0x00000400,
     msidbComponentAttributesShared                    = 0x00000800,
 }
+
 alias msidbAssemblyAttributes = int;
 enum : int
 {
     msidbAssemblyAttributesURT   = 0x00000000,
     msidbAssemblyAttributesWin32 = 0x00000001,
 }
+
 alias msidbCustomActionType = int;
 enum : int
 {
@@ -611,6 +660,7 @@ enum : int
     msidbCustomActionTypeHideTarget     = 0x00002000,
     msidbCustomActionTypePatchUninstall = 0x00008000,
 }
+
 alias msidbDialogAttributes = int;
 enum : int
 {
@@ -627,6 +677,7 @@ enum : int
     msidbDialogAttributesBiDi             = 0x00000380,
     msidbDialogAttributesError            = 0x00010000,
 }
+
 alias msidbFeatureAttributes = int;
 enum : int
 {
@@ -638,6 +689,7 @@ enum : int
     msidbFeatureAttributesUIDisallowAbsent       = 0x00000010,
     msidbFeatureAttributesNoUnsupportedAdvertise = 0x00000020,
 }
+
 alias msidbFileAttributes = int;
 enum : int
 {
@@ -656,6 +708,7 @@ enum : int
     msidbFileAttributesCompressed    = 0x00004000,
     msidbFileAttributesReserved4     = 0x00008000,
 }
+
 alias msidbIniFileAction = int;
 enum : int
 {
@@ -665,27 +718,32 @@ enum : int
     msidbIniFileActionAddTag     = 0x00000003,
     msidbIniFileActionRemoveTag  = 0x00000004,
 }
+
 alias msidbMoveFileOptions = int;
 enum : int
 {
     msidbMoveFileOptionsMove = 0x00000001,
 }
+
 alias msidbODBCDataSourceRegistration = int;
 enum : int
 {
     msidbODBCDataSourceRegistrationPerMachine = 0x00000000,
     msidbODBCDataSourceRegistrationPerUser    = 0x00000001,
 }
+
 alias msidbClassAttributes = int;
 enum : int
 {
     msidbClassAttributesRelativePath = 0x00000001,
 }
+
 alias msidbPatchAttributes = int;
 enum : int
 {
     msidbPatchAttributesNonVital = 0x00000001,
 }
+
 alias msidbRegistryRoot = int;
 enum : int
 {
@@ -694,6 +752,7 @@ enum : int
     msidbRegistryRootLocalMachine = 0x00000002,
     msidbRegistryRootUsers        = 0x00000003,
 }
+
 alias msidbRemoveFileInstallMode = int;
 enum : int
 {
@@ -701,6 +760,7 @@ enum : int
     msidbRemoveFileInstallModeOnRemove  = 0x00000002,
     msidbRemoveFileInstallModeOnBoth    = 0x00000003,
 }
+
 alias msidbServiceControlEvent = int;
 enum : int
 {
@@ -711,6 +771,7 @@ enum : int
     msidbServiceControlEventUninstallStop   = 0x00000020,
     msidbServiceControlEventUninstallDelete = 0x00000080,
 }
+
 alias msidbServiceConfigEvent = int;
 enum : int
 {
@@ -718,11 +779,13 @@ enum : int
     msidbServiceConfigEventUninstall = 0x00000002,
     msidbServiceConfigEventReinstall = 0x00000004,
 }
+
 alias msidbServiceInstallErrorControl = int;
 enum : int
 {
     msidbServiceInstallErrorControlVital = 0x00008000,
 }
+
 alias msidbTextStyleStyleBits = int;
 enum : int
 {
@@ -731,6 +794,7 @@ enum : int
     msidbTextStyleStyleBitsUnderline = 0x00000004,
     msidbTextStyleStyleBitsStrike    = 0x00000008,
 }
+
 alias msidbUpgradeAttributes = int;
 enum : int
 {
@@ -741,12 +805,14 @@ enum : int
     msidbUpgradeAttributesVersionMaxInclusive = 0x00000200,
     msidbUpgradeAttributesLanguagesExclusive  = 0x00000400,
 }
+
 alias msidbEmbeddedUIAttributes = int;
 enum : int
 {
     msidbEmbeddedUI           = 0x00000001,
     msidbEmbeddedHandlesBasic = 0x00000002,
 }
+
 alias msidbSumInfoSourceType = int;
 enum : int
 {
@@ -755,12 +821,14 @@ enum : int
     msidbSumInfoSourceTypeAdminImage = 0x00000004,
     msidbSumInfoSourceTypeLUAPackage = 0x00000008,
 }
+
 alias msirbRebootType = int;
 enum : int
 {
     msirbRebootImmediate = 0x00000001,
     msirbRebootDeferred  = 0x00000002,
 }
+
 alias msirbRebootReason = int;
 enum : int
 {
@@ -770,6 +838,7 @@ enum : int
     msirbRebootForceRebootReason    = 0x00000003,
     msirbRebootCustomActionReason   = 0x00000004,
 }
+
 alias msifiFastInstallBits = int;
 enum : int
 {
@@ -777,6 +846,7 @@ enum : int
     msifiFastInstallQuickCosting = 0x00000002,
     msifiFastInstallLessPrgMsg   = 0x00000004,
 }
+
 alias TILE_TEMPLATE_TYPE = int;
 enum : int
 {
@@ -839,6 +909,7 @@ enum : int
     TILE_TEMPLATE_FOLDER                = 0x0000003b,
     TILE_TEMPLATE_ALL                   = 0x00000064,
 }
+
 alias PM_APP_GENRE = int;
 enum : int
 {
@@ -846,6 +917,7 @@ enum : int
     PM_APP_GENRE_OTHER   = 0x00000001,
     PM_APP_GENRE_INVALID = 0x00000002,
 }
+
 alias PM_APPLICATION_INSTALL_TYPE = int;
 enum : int
 {
@@ -856,6 +928,7 @@ enum : int
     PM_APPLICATION_INSTALL_ENTERPRISE = 0x00000004,
     PM_APPLICATION_INSTALL_INVALID    = 0x00000005,
 }
+
 alias PM_APPLICATION_STATE = int;
 enum : int
 {
@@ -873,6 +946,7 @@ enum : int
     PM_APPLICATION_STATE_MAX                   = 0x0000000a,
     PM_APPLICATION_STATE_INVALID               = 0x0000000b,
 }
+
 alias PM_APPLICATION_HUBTYPE = int;
 enum : int
 {
@@ -880,6 +954,7 @@ enum : int
     PM_APPLICATION_HUBTYPE_MUSIC    = 0x00000001,
     PM_APPLICATION_HUBTYPE_INVALID  = 0x00000002,
 }
+
 alias PM_TILE_HUBTYPE = int;
 enum : int
 {
@@ -893,6 +968,7 @@ enum : int
     PM_TILE_HUBTYPE_CACHED     = 0x04000000,
     PM_TILE_HUBTYPE_INVALID    = 0x04000001,
 }
+
 alias PM_STARTTILE_TYPE = int;
 enum : int
 {
@@ -902,6 +978,7 @@ enum : int
     PM_STARTTILE_TYPE_APPLISTPRIMARY = 0x00000004,
     PM_STARTTILE_TYPE_INVALID        = 0x00000005,
 }
+
 alias PM_TASK_TYPE = int;
 enum : int
 {
@@ -912,6 +989,7 @@ enum : int
     PM_TASK_TYPE_BACKGROUNDWORKER       = 0x00000004,
     PM_TASK_TYPE_INVALID                = 0x00000005,
 }
+
 alias PACKMAN_RUNTIME = int;
 enum : int
 {
@@ -922,6 +1000,7 @@ enum : int
     PACKMAN_RUNTIME_JUPITER           = 0x00000005,
     PACKMAN_RUNTIME_INVALID           = 0x00000006,
 }
+
 alias PM_ACTIVATION_POLICY = int;
 enum : int
 {
@@ -934,6 +1013,7 @@ enum : int
     PM_ACTIVATION_POLICY_UNKNOWN                  = 0x00000006,
     PM_ACTIVATION_POLICY_INVALID                  = 0x00000007,
 }
+
 alias PM_TASK_TRANSITION = int;
 enum : int
 {
@@ -946,6 +1026,7 @@ enum : int
     PM_TASK_TRANSITION_CUSTOM      = 0x00000006,
     PM_TASK_TRANSITION_INVALID     = 0x00000007,
 }
+
 alias PM_ENUM_APP_FILTER = int;
 enum : int
 {
@@ -959,6 +1040,7 @@ enum : int
     PM_APP_FILTER_FRAMEWORK          = 0x00000007,
     PM_APP_FILTER_MAX                = 0x00000008,
 }
+
 alias PM_ENUM_TILE_FILTER = int;
 enum : int
 {
@@ -968,6 +1050,7 @@ enum : int
     PM_TILE_FILTER_APP_ALL = 0x0000000b,
     PM_TILE_FILTER_MAX     = 0x0000000c,
 }
+
 alias PM_ENUM_TASK_FILTER = int;
 enum : int
 {
@@ -978,6 +1061,7 @@ enum : int
     PM_TASK_FILTER_BGEXECUTION      = 0x00000010,
     PM_TASK_FILTER_MAX              = 0x00000011,
 }
+
 alias PM_ENUM_EXTENSION_FILTER = int;
 enum : int
 {
@@ -993,6 +1077,7 @@ enum : int
     PM_ENUM_EXTENSION_FILTER_CACHEDFILEUPDATER_ALL   = 0x00000019,
     PM_ENUM_EXTENSION_FILTER_MAX                     = 0x0000001a,
 }
+
 alias PM_ENUM_BSA_FILTER = int;
 enum : int
 {
@@ -1003,6 +1088,7 @@ enum : int
     PM_ENUM_BSA_FILTER_BY_ALL_LAUNCHONBOOT = 0x0000001e,
     PM_ENUM_BSA_FILTER_MAX                 = 0x0000001f,
 }
+
 alias PM_ENUM_BW_FILTER = int;
 enum : int
 {
@@ -1010,6 +1096,7 @@ enum : int
     PM_ENUM_BW_FILTER_BY_TASKID      = 0x00000020,
     PM_ENUM_BW_FILTER_MAX            = 0x00000021,
 }
+
 alias PM_LIVETILE_RECURRENCE_TYPE = int;
 enum : int
 {
@@ -1018,6 +1105,7 @@ enum : int
     PM_LIVETILE_RECURRENCE_TYPE_INTERVAL = 0x00000002,
     PM_LIVETILE_RECURRENCE_TYPE_MAX      = 0x00000002,
 }
+
 alias PM_TILE_SIZE = int;
 enum : int
 {
@@ -1028,6 +1116,7 @@ enum : int
     PM_TILE_SIZE_TALL150X310   = 0x00000004,
     PM_TILE_SIZE_INVALID       = 0x00000005,
 }
+
 alias PM_LOGO_SIZE = int;
 enum : int
 {
@@ -1036,7 +1125,8 @@ enum : int
     PM_LOGO_SIZE_LARGE   = 0x00000002,
     PM_LOGO_SIZE_INVALID = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-actctx_requested_run_level))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-actctx_requested_run_level
 alias ACTCTX_REQUESTED_RUN_LEVEL = int;
 enum : int
 {
@@ -1046,7 +1136,8 @@ enum : int
     ACTCTX_RUN_LEVEL_REQUIRE_ADMIN     = 0x00000003,
     ACTCTX_RUN_LEVEL_NUMBERS           = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-actctx_compatibility_element_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-actctx_compatibility_element_type
 alias ACTCTX_COMPATIBILITY_ELEMENT_TYPE = int;
 enum : int
 {
@@ -1069,80 +1160,80 @@ enum : PWSTR
 }
 
 enum int MSIDBOPEN_PATCHFILE = 0x00000010;
-enum uint UIALL = 0x00008000;
+enum uint UIALL = 0x00008000U;
 
 enum : uint
 {
-    LOGTOKEN_TYPE_MASK       = 0x00000003,
-    LOGTOKEN_UNSPECIFIED     = 0x00000000,
-    LOGTOKEN_NO_LOG          = 0x00000001,
-    LOGTOKEN_SETUPAPI_APPLOG = 0x00000002,
-    LOGTOKEN_SETUPAPI_DEVLOG = 0x00000003,
+    LOGTOKEN_TYPE_MASK       = 0x00000003U,
+    LOGTOKEN_UNSPECIFIED     = 0x00000000U,
+    LOGTOKEN_NO_LOG          = 0x00000001U,
+    LOGTOKEN_SETUPAPI_APPLOG = 0x00000002U,
+    LOGTOKEN_SETUPAPI_DEVLOG = 0x00000003U,
 }
 
 enum : uint
 {
-    TXTLOG_SETUPAPI_DEVLOG  = 0x00000001,
-    TXTLOG_SETUPAPI_CMDLINE = 0x00000002,
-    TXTLOG_SETUPAPI_BITS    = 0x00000003,
+    TXTLOG_SETUPAPI_DEVLOG  = 0x00000001U,
+    TXTLOG_SETUPAPI_CMDLINE = 0x00000002U,
+    TXTLOG_SETUPAPI_BITS    = 0x00000003U,
 }
 
 enum : uint
 {
-    TXTLOG_ERROR               = 0x00000001,
-    TXTLOG_WARNING             = 0x00000002,
-    TXTLOG_SYSTEM_STATE_CHANGE = 0x00000003,
+    TXTLOG_ERROR               = 0x00000001U,
+    TXTLOG_WARNING             = 0x00000002U,
+    TXTLOG_SYSTEM_STATE_CHANGE = 0x00000003U,
 }
 
 enum : uint
 {
-    TXTLOG_SUMMARY      = 0x00000004,
-    TXTLOG_DETAILS      = 0x00000005,
-    TXTLOG_VERBOSE      = 0x00000006,
-    TXTLOG_VERY_VERBOSE = 0x00000007,
+    TXTLOG_SUMMARY      = 0x00000004U,
+    TXTLOG_DETAILS      = 0x00000005U,
+    TXTLOG_VERBOSE      = 0x00000006U,
+    TXTLOG_VERY_VERBOSE = 0x00000007U,
 }
 
-enum uint TXTLOG_RESERVED_FLAGS = 0x0000fff0;
+enum uint TXTLOG_RESERVED_FLAGS = 0x0000fff0U;
 
 enum : uint
 {
-    TXTLOG_TIMESTAMP    = 0x00010000,
-    TXTLOG_DEPTH_INCR   = 0x00020000,
-    TXTLOG_DEPTH_DECR   = 0x00040000,
-    TXTLOG_TAB_1        = 0x00080000,
-    TXTLOG_FLUSH_FILE   = 0x00100000,
-    TXTLOG_DEVINST      = 0x00000001,
-    TXTLOG_INF          = 0x00000002,
-    TXTLOG_FILEQ        = 0x00000004,
-    TXTLOG_COPYFILES    = 0x00000008,
-    TXTLOG_SIGVERIF     = 0x00000020,
-    TXTLOG_BACKUP       = 0x00000080,
-    TXTLOG_UI           = 0x00000100,
-    TXTLOG_UTIL         = 0x00000200,
-    TXTLOG_INFDB        = 0x00000400,
-    TXTLOG_DRVSETUP     = 0x00400000,
-    TXTLOG_POLICY       = 0x00800000,
-    TXTLOG_NEWDEV       = 0x01000000,
-    TXTLOG_UMPNPMGR     = 0x02000000,
-    TXTLOG_DRIVER_STORE = 0x04000000,
+    TXTLOG_TIMESTAMP    = 0x00010000U,
+    TXTLOG_DEPTH_INCR   = 0x00020000U,
+    TXTLOG_DEPTH_DECR   = 0x00040000U,
+    TXTLOG_TAB_1        = 0x00080000U,
+    TXTLOG_FLUSH_FILE   = 0x00100000U,
+    TXTLOG_DEVINST      = 0x00000001U,
+    TXTLOG_INF          = 0x00000002U,
+    TXTLOG_FILEQ        = 0x00000004U,
+    TXTLOG_COPYFILES    = 0x00000008U,
+    TXTLOG_SIGVERIF     = 0x00000020U,
+    TXTLOG_BACKUP       = 0x00000080U,
+    TXTLOG_UI           = 0x00000100U,
+    TXTLOG_UTIL         = 0x00000200U,
+    TXTLOG_INFDB        = 0x00000400U,
+    TXTLOG_DRVSETUP     = 0x00400000U,
+    TXTLOG_POLICY       = 0x00800000U,
+    TXTLOG_NEWDEV       = 0x01000000U,
+    TXTLOG_UMPNPMGR     = 0x02000000U,
+    TXTLOG_DRIVER_STORE = 0x04000000U,
 }
 
 enum : uint
 {
-    TXTLOG_SETUP     = 0x08000000,
-    TXTLOG_CMI       = 0x10000000,
-    TXTLOG_DEVMGR    = 0x20000000,
-    TXTLOG_INSTALLER = 0x40000000,
-    TXTLOG_VENDOR    = 0x80000000,
+    TXTLOG_SETUP     = 0x08000000U,
+    TXTLOG_CMI       = 0x10000000U,
+    TXTLOG_DEVMGR    = 0x20000000U,
+    TXTLOG_INSTALLER = 0x40000000U,
+    TXTLOG_VENDOR    = 0x80000000U,
 }
 
 enum GUID CLSID_EvalCom2 = GUID("6e5e1910-8053-4660-b795-6b612e29bc58");
-enum uint _WIN32_MSM = 0x00000064;
+enum uint _WIN32_MSM = 0x00000064U;
 enum GUID LIBID_MsmMergeTypeLib = GUID("0adda82f-2c26-11d2-ad65-00a0c9af11a6");
 enum GUID CLSID_MsmMerge2 = GUID("f94985d5-29f9-4743-9805-99bc3f35b678");
-enum uint _WIN32_MSI = 0x000001f4;
-enum uint MAX_GUID_CHARS = 0x00000026;
-enum uint MAX_FEATURE_CHARS = 0x00000026;
+enum uint _WIN32_MSI = 0x000001f4U;
+enum uint MAX_GUID_CHARS = 0x00000026U;
+enum uint MAX_FEATURE_CHARS = 0x00000026U;
 
 enum : const(wchar)*
 {
@@ -1186,32 +1277,32 @@ enum : const(wchar)*
     INSTALLPROPERTY_DISKPROMPT           = "DiskPrompt",
 }
 
-enum uint MSI_INVALID_HASH_IS_FATAL = 0x00000001;
-enum uint ERROR_ROLLBACK_DISABLED = 0x00000675;
-enum uint MSI_NULL_INTEGER = 0x80000000;
+enum uint MSI_INVALID_HASH_IS_FATAL = 0x00000001U;
+enum uint ERROR_ROLLBACK_DISABLED = 0x00000675U;
+enum uint MSI_NULL_INTEGER = 0x80000000U;
 enum int INSTALLMESSAGE_TYPEMASK = 0xff000000;
 
 enum : uint
 {
-    STREAM_FORMAT_COMPLIB_MODULE   = 0x00000000,
-    STREAM_FORMAT_COMPLIB_MANIFEST = 0x00000001,
-    STREAM_FORMAT_WIN32_MODULE     = 0x00000002,
-    STREAM_FORMAT_WIN32_MANIFEST   = 0x00000004,
+    STREAM_FORMAT_COMPLIB_MODULE   = 0x00000000U,
+    STREAM_FORMAT_COMPLIB_MANIFEST = 0x00000001U,
+    STREAM_FORMAT_WIN32_MODULE     = 0x00000002U,
+    STREAM_FORMAT_WIN32_MANIFEST   = 0x00000004U,
 }
 
-enum uint IASSEMBLYCACHEITEM_COMMIT_FLAG_REFRESH = 0x00000001;
+enum uint IASSEMBLYCACHEITEM_COMMIT_FLAG_REFRESH = 0x00000001U;
 
 enum : uint
 {
-    ASSEMBLYINFO_FLAG_INSTALLED       = 0x00000001,
-    ASSEMBLYINFO_FLAG_PAYLOADRESIDENT = 0x00000002,
+    ASSEMBLYINFO_FLAG_INSTALLED       = 0x00000001U,
+    ASSEMBLYINFO_FLAG_PAYLOADRESIDENT = 0x00000002U,
 }
 
 enum : uint
 {
-    IASSEMBLYCACHEITEM_COMMIT_DISPOSITION_INSTALLED         = 0x00000001,
-    IASSEMBLYCACHEITEM_COMMIT_DISPOSITION_REFRESHED         = 0x00000002,
-    IASSEMBLYCACHEITEM_COMMIT_DISPOSITION_ALREADY_INSTALLED = 0x00000003,
+    IASSEMBLYCACHEITEM_COMMIT_DISPOSITION_INSTALLED         = 0x00000001U,
+    IASSEMBLYCACHEITEM_COMMIT_DISPOSITION_REFRESHED         = 0x00000002U,
+    IASSEMBLYCACHEITEM_COMMIT_DISPOSITION_ALREADY_INSTALLED = 0x00000003U,
 }
 
 enum : GUID
@@ -1223,22 +1314,22 @@ enum : GUID
 
 enum : uint
 {
-    SFC_DISABLE_NORMAL   = 0x00000000,
-    SFC_DISABLE_ASK      = 0x00000001,
-    SFC_DISABLE_ONCE     = 0x00000002,
-    SFC_DISABLE_SETUP    = 0x00000003,
-    SFC_DISABLE_NOPOPUPS = 0x00000004,
+    SFC_DISABLE_NORMAL   = 0x00000000U,
+    SFC_DISABLE_ASK      = 0x00000001U,
+    SFC_DISABLE_ONCE     = 0x00000002U,
+    SFC_DISABLE_SETUP    = 0x00000003U,
+    SFC_DISABLE_NOPOPUPS = 0x00000004U,
 }
 
 enum : uint
 {
-    SFC_SCAN_NORMAL    = 0x00000000,
-    SFC_SCAN_ALWAYS    = 0x00000001,
-    SFC_SCAN_ONCE      = 0x00000002,
-    SFC_SCAN_IMMEDIATE = 0x00000003,
+    SFC_SCAN_NORMAL    = 0x00000000U,
+    SFC_SCAN_ALWAYS    = 0x00000001U,
+    SFC_SCAN_ONCE      = 0x00000002U,
+    SFC_SCAN_IMMEDIATE = 0x00000003U,
 }
 
-enum uint SFC_QUOTA_DEFAULT = 0x00000032;
+enum uint SFC_QUOTA_DEFAULT = 0x00000032U;
 enum const(wchar)* SFC_IDLE_TRIGGER = "WFP_IDLE_TRIGGER";
 
 enum : const(wchar)*
@@ -1640,500 +1731,500 @@ enum : const(wchar)*
 
 enum : uint
 {
-    PID_TITLE   = 0x00000002,
-    PID_SUBJECT = 0x00000003,
+    PID_TITLE   = 0x00000002U,
+    PID_SUBJECT = 0x00000003U,
 }
 
-enum uint PID_AUTHOR = 0x00000004;
-enum uint PID_KEYWORDS = 0x00000005;
-enum uint PID_COMMENTS = 0x00000006;
-enum uint PID_TEMPLATE = 0x00000007;
-enum uint PID_LASTAUTHOR = 0x00000008;
-enum uint PID_REVNUMBER = 0x00000009;
-enum uint PID_EDITTIME = 0x0000000a;
-enum uint PID_LASTPRINTED = 0x0000000b;
-enum uint PID_CREATE_DTM = 0x0000000c;
-enum uint PID_LASTSAVE_DTM = 0x0000000d;
-enum uint PID_PAGECOUNT = 0x0000000e;
-enum uint PID_WORDCOUNT = 0x0000000f;
-enum uint PID_CHARCOUNT = 0x00000010;
-enum uint PID_THUMBNAIL = 0x00000011;
-enum uint PID_APPNAME = 0x00000012;
+enum uint PID_AUTHOR = 0x00000004U;
+enum uint PID_KEYWORDS = 0x00000005U;
+enum uint PID_COMMENTS = 0x00000006U;
+enum uint PID_TEMPLATE = 0x00000007U;
+enum uint PID_LASTAUTHOR = 0x00000008U;
+enum uint PID_REVNUMBER = 0x00000009U;
+enum uint PID_EDITTIME = 0x0000000aU;
+enum uint PID_LASTPRINTED = 0x0000000bU;
+enum uint PID_CREATE_DTM = 0x0000000cU;
+enum uint PID_LASTSAVE_DTM = 0x0000000dU;
+enum uint PID_PAGECOUNT = 0x0000000eU;
+enum uint PID_WORDCOUNT = 0x0000000fU;
+enum uint PID_CHARCOUNT = 0x00000010U;
+enum uint PID_THUMBNAIL = 0x00000011U;
+enum uint PID_APPNAME = 0x00000012U;
 
 enum : uint
 {
-    PID_MSIVERSION  = 0x0000000e,
-    PID_MSISOURCE   = 0x0000000f,
-    PID_MSIRESTRICT = 0x00000010,
-}
-
-enum : uint
-{
-    PATCH_OPTION_USE_BEST          = 0x00000000,
-    PATCH_OPTION_USE_LZX_BEST      = 0x00000003,
-    PATCH_OPTION_USE_LZX_A         = 0x00000001,
-    PATCH_OPTION_USE_LZX_B         = 0x00000002,
-    PATCH_OPTION_USE_LZX_LARGE     = 0x00000004,
-    PATCH_OPTION_NO_BINDFIX        = 0x00010000,
-    PATCH_OPTION_NO_LOCKFIX        = 0x00020000,
-    PATCH_OPTION_NO_REBASE         = 0x00040000,
-    PATCH_OPTION_FAIL_IF_SAME_FILE = 0x00080000,
-    PATCH_OPTION_FAIL_IF_BIGGER    = 0x00100000,
-    PATCH_OPTION_NO_CHECKSUM       = 0x00200000,
-    PATCH_OPTION_NO_RESTIMEFIX     = 0x00400000,
-    PATCH_OPTION_NO_TIMESTAMP      = 0x00800000,
-    PATCH_OPTION_SIGNATURE_MD5     = 0x01000000,
-    PATCH_OPTION_INTERLEAVE_FILES  = 0x40000000,
-    PATCH_OPTION_RESERVED1         = 0x80000000,
-    PATCH_OPTION_VALID_FLAGS       = 0xc0ff0007,
+    PID_MSIVERSION  = 0x0000000eU,
+    PID_MSISOURCE   = 0x0000000fU,
+    PID_MSIRESTRICT = 0x00000010U,
 }
 
 enum : uint
 {
-    PATCH_SYMBOL_NO_IMAGEHLP     = 0x00000001,
-    PATCH_SYMBOL_NO_FAILURES     = 0x00000002,
-    PATCH_SYMBOL_UNDECORATED_TOO = 0x00000004,
-    PATCH_SYMBOL_RESERVED1       = 0x80000000,
+    PATCH_OPTION_USE_BEST          = 0x00000000U,
+    PATCH_OPTION_USE_LZX_BEST      = 0x00000003U,
+    PATCH_OPTION_USE_LZX_A         = 0x00000001U,
+    PATCH_OPTION_USE_LZX_B         = 0x00000002U,
+    PATCH_OPTION_USE_LZX_LARGE     = 0x00000004U,
+    PATCH_OPTION_NO_BINDFIX        = 0x00010000U,
+    PATCH_OPTION_NO_LOCKFIX        = 0x00020000U,
+    PATCH_OPTION_NO_REBASE         = 0x00040000U,
+    PATCH_OPTION_FAIL_IF_SAME_FILE = 0x00080000U,
+    PATCH_OPTION_FAIL_IF_BIGGER    = 0x00100000U,
+    PATCH_OPTION_NO_CHECKSUM       = 0x00200000U,
+    PATCH_OPTION_NO_RESTIMEFIX     = 0x00400000U,
+    PATCH_OPTION_NO_TIMESTAMP      = 0x00800000U,
+    PATCH_OPTION_SIGNATURE_MD5     = 0x01000000U,
+    PATCH_OPTION_INTERLEAVE_FILES  = 0x40000000U,
+    PATCH_OPTION_RESERVED1         = 0x80000000U,
+    PATCH_OPTION_VALID_FLAGS       = 0xc0ff0007U,
 }
 
 enum : uint
 {
-    PATCH_TRANSFORM_PE_RESOURCE_2 = 0x00000100,
-    PATCH_TRANSFORM_PE_IRELOC_2   = 0x00000200,
+    PATCH_SYMBOL_NO_IMAGEHLP     = 0x00000001U,
+    PATCH_SYMBOL_NO_FAILURES     = 0x00000002U,
+    PATCH_SYMBOL_UNDECORATED_TOO = 0x00000004U,
+    PATCH_SYMBOL_RESERVED1       = 0x80000000U,
 }
 
 enum : uint
 {
-    APPLY_OPTION_FAIL_IF_EXACT = 0x00000001,
-    APPLY_OPTION_FAIL_IF_CLOSE = 0x00000002,
-    APPLY_OPTION_TEST_ONLY     = 0x00000004,
-    APPLY_OPTION_VALID_FLAGS   = 0x00000007,
+    PATCH_TRANSFORM_PE_RESOURCE_2 = 0x00000100U,
+    PATCH_TRANSFORM_PE_IRELOC_2   = 0x00000200U,
 }
 
 enum : uint
 {
-    ERROR_PATCH_ENCODE_FAILURE       = 0xc00e3101,
-    ERROR_PATCH_INVALID_OPTIONS      = 0xc00e3102,
-    ERROR_PATCH_SAME_FILE            = 0xc00e3103,
-    ERROR_PATCH_RETAIN_RANGES_DIFFER = 0xc00e3104,
-}
-
-enum uint ERROR_PATCH_BIGGER_THAN_COMPRESSED = 0xc00e3105;
-
-enum : uint
-{
-    ERROR_PATCH_IMAGEHLP_FAILURE = 0xc00e3106,
-    ERROR_PATCH_DECODE_FAILURE   = 0xc00e4101,
-    ERROR_PATCH_CORRUPT          = 0xc00e4102,
-    ERROR_PATCH_NEWER_FORMAT     = 0xc00e4103,
-    ERROR_PATCH_WRONG_FILE       = 0xc00e4104,
-    ERROR_PATCH_NOT_NECESSARY    = 0xc00e4105,
-    ERROR_PATCH_NOT_AVAILABLE    = 0xc00e4106,
+    APPLY_OPTION_FAIL_IF_EXACT = 0x00000001U,
+    APPLY_OPTION_FAIL_IF_CLOSE = 0x00000002U,
+    APPLY_OPTION_TEST_ONLY     = 0x00000004U,
+    APPLY_OPTION_VALID_FLAGS   = 0x00000007U,
 }
 
 enum : uint
 {
-    ERROR_PCW_BASE                    = 0xc00e5101,
-    ERROR_PCW_PCP_DOESNT_EXIST        = 0xc00e5101,
-    ERROR_PCW_PCP_BAD_FORMAT          = 0xc00e5102,
-    ERROR_PCW_CANT_CREATE_TEMP_FOLDER = 0xc00e5103,
+    ERROR_PATCH_ENCODE_FAILURE       = 0xc00e3101U,
+    ERROR_PATCH_INVALID_OPTIONS      = 0xc00e3102U,
+    ERROR_PATCH_SAME_FILE            = 0xc00e3103U,
+    ERROR_PATCH_RETAIN_RANGES_DIFFER = 0xc00e3104U,
 }
 
-enum uint ERROR_PCW_MISSING_PATCH_PATH = 0xc00e5104;
+enum uint ERROR_PATCH_BIGGER_THAN_COMPRESSED = 0xc00e3105U;
 
 enum : uint
 {
-    ERROR_PCW_CANT_OVERWRITE_PATCH   = 0xc00e5105,
-    ERROR_PCW_CANT_CREATE_PATCH_FILE = 0xc00e5106,
-}
-
-enum uint ERROR_PCW_MISSING_PATCH_GUID = 0xc00e5107;
-
-enum : uint
-{
-    ERROR_PCW_BAD_PATCH_GUID               = 0xc00e5108,
-    ERROR_PCW_BAD_GUIDS_TO_REPLACE         = 0xc00e5109,
-    ERROR_PCW_BAD_TARGET_PRODUCT_CODE_LIST = 0xc00e510a,
-}
-
-enum uint ERROR_PCW_NO_UPGRADED_IMAGES_TO_PATCH = 0xc00e510b;
-enum uint ERROR_PCW_BAD_API_PATCHING_SYMBOL_FLAGS = 0xc00e510d;
-enum uint ERROR_PCW_OODS_COPYING_MSI = 0xc00e510e;
-enum uint ERROR_PCW_UPGRADED_IMAGE_NAME_TOO_LONG = 0xc00e510f;
-enum uint ERROR_PCW_BAD_UPGRADED_IMAGE_NAME = 0xc00e5110;
-enum uint ERROR_PCW_DUP_UPGRADED_IMAGE_NAME = 0xc00e5111;
-
-enum : uint
-{
-    ERROR_PCW_UPGRADED_IMAGE_PATH_TOO_LONG  = 0xc00e5112,
-    ERROR_PCW_UPGRADED_IMAGE_PATH_EMPTY     = 0xc00e5113,
-    ERROR_PCW_UPGRADED_IMAGE_PATH_NOT_EXIST = 0xc00e5114,
-    ERROR_PCW_UPGRADED_IMAGE_PATH_NOT_MSI   = 0xc00e5115,
-    ERROR_PCW_UPGRADED_IMAGE_COMPRESSED     = 0xc00e5116,
-}
-
-enum uint ERROR_PCW_TARGET_IMAGE_NAME_TOO_LONG = 0xc00e5117;
-enum uint ERROR_PCW_BAD_TARGET_IMAGE_NAME = 0xc00e5118;
-enum uint ERROR_PCW_DUP_TARGET_IMAGE_NAME = 0xc00e5119;
-
-enum : uint
-{
-    ERROR_PCW_TARGET_IMAGE_PATH_TOO_LONG  = 0xc00e511a,
-    ERROR_PCW_TARGET_IMAGE_PATH_EMPTY     = 0xc00e511b,
-    ERROR_PCW_TARGET_IMAGE_PATH_NOT_EXIST = 0xc00e511c,
-    ERROR_PCW_TARGET_IMAGE_PATH_NOT_MSI   = 0xc00e511d,
-    ERROR_PCW_TARGET_IMAGE_COMPRESSED     = 0xc00e511e,
-    ERROR_PCW_TARGET_BAD_PROD_VALIDATE    = 0xc00e511f,
-    ERROR_PCW_TARGET_BAD_PROD_CODE_VAL    = 0xc00e5120,
-}
-
-enum uint ERROR_PCW_UPGRADED_MISSING_SRC_FILES = 0xc00e5121;
-enum uint ERROR_PCW_TARGET_MISSING_SRC_FILES = 0xc00e5122;
-enum uint ERROR_PCW_IMAGE_FAMILY_NAME_TOO_LONG = 0xc00e5123;
-enum uint ERROR_PCW_BAD_IMAGE_FAMILY_NAME = 0xc00e5124;
-enum uint ERROR_PCW_DUP_IMAGE_FAMILY_NAME = 0xc00e5125;
-enum uint ERROR_PCW_BAD_IMAGE_FAMILY_SRC_PROP = 0xc00e5126;
-
-enum : uint
-{
-    ERROR_PCW_UFILEDATA_LONG_FILE_TABLE_KEY    = 0xc00e5127,
-    ERROR_PCW_UFILEDATA_BLANK_FILE_TABLE_KEY   = 0xc00e5128,
-    ERROR_PCW_UFILEDATA_MISSING_FILE_TABLE_KEY = 0xc00e5129,
+    ERROR_PATCH_IMAGEHLP_FAILURE = 0xc00e3106U,
+    ERROR_PATCH_DECODE_FAILURE   = 0xc00e4101U,
+    ERROR_PATCH_CORRUPT          = 0xc00e4102U,
+    ERROR_PATCH_NEWER_FORMAT     = 0xc00e4103U,
+    ERROR_PATCH_WRONG_FILE       = 0xc00e4104U,
+    ERROR_PATCH_NOT_NECESSARY    = 0xc00e4105U,
+    ERROR_PATCH_NOT_AVAILABLE    = 0xc00e4106U,
 }
 
 enum : uint
 {
-    ERROR_PCW_EXTFILE_LONG_FILE_TABLE_KEY  = 0xc00e512a,
-    ERROR_PCW_EXTFILE_BLANK_FILE_TABLE_KEY = 0xc00e512b,
-    ERROR_PCW_EXTFILE_BAD_FAMILY_FIELD     = 0xc00e512c,
-    ERROR_PCW_EXTFILE_LONG_PATH_TO_FILE    = 0xc00e512d,
-    ERROR_PCW_EXTFILE_BLANK_PATH_TO_FILE   = 0xc00e512e,
-    ERROR_PCW_EXTFILE_MISSING_FILE         = 0xc00e512f,
+    ERROR_PCW_BASE                    = 0xc00e5101U,
+    ERROR_PCW_PCP_DOESNT_EXIST        = 0xc00e5101U,
+    ERROR_PCW_PCP_BAD_FORMAT          = 0xc00e5102U,
+    ERROR_PCW_CANT_CREATE_TEMP_FOLDER = 0xc00e5103U,
 }
 
-enum uint ERROR_PCW_BAD_FILE_SEQUENCE_START = 0xc00e513a;
+enum uint ERROR_PCW_MISSING_PATCH_PATH = 0xc00e5104U;
 
 enum : uint
 {
-    ERROR_PCW_CANT_COPY_FILE_TO_TEMP_FOLDER = 0xc00e513b,
-    ERROR_PCW_CANT_CREATE_ONE_PATCH_FILE    = 0xc00e513c,
+    ERROR_PCW_CANT_OVERWRITE_PATCH   = 0xc00e5105U,
+    ERROR_PCW_CANT_CREATE_PATCH_FILE = 0xc00e5106U,
 }
+
+enum uint ERROR_PCW_MISSING_PATCH_GUID = 0xc00e5107U;
 
 enum : uint
 {
-    ERROR_PCW_BAD_IMAGE_FAMILY_DISKID       = 0xc00e513d,
-    ERROR_PCW_BAD_IMAGE_FAMILY_FILESEQSTART = 0xc00e513e,
+    ERROR_PCW_BAD_PATCH_GUID               = 0xc00e5108U,
+    ERROR_PCW_BAD_GUIDS_TO_REPLACE         = 0xc00e5109U,
+    ERROR_PCW_BAD_TARGET_PRODUCT_CODE_LIST = 0xc00e510aU,
 }
 
-enum uint ERROR_PCW_BAD_UPGRADED_IMAGE_FAMILY = 0xc00e513f;
-enum uint ERROR_PCW_BAD_TARGET_IMAGE_UPGRADED = 0xc00e5140;
-enum uint ERROR_PCW_DUP_TARGET_IMAGE_PACKCODE = 0xc00e5141;
-enum uint ERROR_PCW_UFILEDATA_BAD_UPGRADED_FIELD = 0xc00e5142;
+enum uint ERROR_PCW_NO_UPGRADED_IMAGES_TO_PATCH = 0xc00e510bU;
+enum uint ERROR_PCW_BAD_API_PATCHING_SYMBOL_FLAGS = 0xc00e510dU;
+enum uint ERROR_PCW_OODS_COPYING_MSI = 0xc00e510eU;
+enum uint ERROR_PCW_UPGRADED_IMAGE_NAME_TOO_LONG = 0xc00e510fU;
+enum uint ERROR_PCW_BAD_UPGRADED_IMAGE_NAME = 0xc00e5110U;
+enum uint ERROR_PCW_DUP_UPGRADED_IMAGE_NAME = 0xc00e5111U;
 
 enum : uint
 {
-    ERROR_PCW_MISMATCHED_PRODUCT_CODES    = 0xc00e5143,
-    ERROR_PCW_MISMATCHED_PRODUCT_VERSIONS = 0xc00e5144,
+    ERROR_PCW_UPGRADED_IMAGE_PATH_TOO_LONG  = 0xc00e5112U,
+    ERROR_PCW_UPGRADED_IMAGE_PATH_EMPTY     = 0xc00e5113U,
+    ERROR_PCW_UPGRADED_IMAGE_PATH_NOT_EXIST = 0xc00e5114U,
+    ERROR_PCW_UPGRADED_IMAGE_PATH_NOT_MSI   = 0xc00e5115U,
+    ERROR_PCW_UPGRADED_IMAGE_COMPRESSED     = 0xc00e5116U,
 }
+
+enum uint ERROR_PCW_TARGET_IMAGE_NAME_TOO_LONG = 0xc00e5117U;
+enum uint ERROR_PCW_BAD_TARGET_IMAGE_NAME = 0xc00e5118U;
+enum uint ERROR_PCW_DUP_TARGET_IMAGE_NAME = 0xc00e5119U;
 
 enum : uint
 {
-    ERROR_PCW_CANNOT_WRITE_DDF   = 0xc00e5145,
-    ERROR_PCW_CANNOT_RUN_MAKECAB = 0xc00e5146,
+    ERROR_PCW_TARGET_IMAGE_PATH_TOO_LONG  = 0xc00e511aU,
+    ERROR_PCW_TARGET_IMAGE_PATH_EMPTY     = 0xc00e511bU,
+    ERROR_PCW_TARGET_IMAGE_PATH_NOT_EXIST = 0xc00e511cU,
+    ERROR_PCW_TARGET_IMAGE_PATH_NOT_MSI   = 0xc00e511dU,
+    ERROR_PCW_TARGET_IMAGE_COMPRESSED     = 0xc00e511eU,
+    ERROR_PCW_TARGET_BAD_PROD_VALIDATE    = 0xc00e511fU,
+    ERROR_PCW_TARGET_BAD_PROD_CODE_VAL    = 0xc00e5120U,
 }
 
-enum uint ERROR_PCW_WRITE_SUMMARY_PROPERTIES = 0xc00e514b;
+enum uint ERROR_PCW_UPGRADED_MISSING_SRC_FILES = 0xc00e5121U;
+enum uint ERROR_PCW_TARGET_MISSING_SRC_FILES = 0xc00e5122U;
+enum uint ERROR_PCW_IMAGE_FAMILY_NAME_TOO_LONG = 0xc00e5123U;
+enum uint ERROR_PCW_BAD_IMAGE_FAMILY_NAME = 0xc00e5124U;
+enum uint ERROR_PCW_DUP_IMAGE_FAMILY_NAME = 0xc00e5125U;
+enum uint ERROR_PCW_BAD_IMAGE_FAMILY_SRC_PROP = 0xc00e5126U;
 
 enum : uint
 {
-    ERROR_PCW_TFILEDATA_LONG_FILE_TABLE_KEY    = 0xc00e514c,
-    ERROR_PCW_TFILEDATA_BLANK_FILE_TABLE_KEY   = 0xc00e514d,
-    ERROR_PCW_TFILEDATA_MISSING_FILE_TABLE_KEY = 0xc00e514e,
-    ERROR_PCW_TFILEDATA_BAD_TARGET_FIELD       = 0xc00e514f,
-}
-
-enum : uint
-{
-    ERROR_PCW_UPGRADED_IMAGE_PATCH_PATH_TOO_LONG  = 0xc00e5150,
-    ERROR_PCW_UPGRADED_IMAGE_PATCH_PATH_NOT_EXIST = 0xc00e5151,
-    ERROR_PCW_UPGRADED_IMAGE_PATCH_PATH_NOT_MSI   = 0xc00e5152,
-}
-
-enum uint ERROR_PCW_DUP_UPGRADED_IMAGE_PACKCODE = 0xc00e5153;
-
-enum : uint
-{
-    ERROR_PCW_UFILEIGNORE_BAD_UPGRADED_FIELD   = 0xc00e5154,
-    ERROR_PCW_UFILEIGNORE_LONG_FILE_TABLE_KEY  = 0xc00e5155,
-    ERROR_PCW_UFILEIGNORE_BLANK_FILE_TABLE_KEY = 0xc00e5156,
-    ERROR_PCW_UFILEIGNORE_BAD_FILE_TABLE_KEY   = 0xc00e5157,
-}
-
-enum uint ERROR_PCW_FAMILY_RANGE_NAME_TOO_LONG = 0xc00e5158;
-enum uint ERROR_PCW_BAD_FAMILY_RANGE_NAME = 0xc00e5159;
-
-enum : uint
-{
-    ERROR_PCW_FAMILY_RANGE_LONG_FILE_TABLE_KEY  = 0xc00e515a,
-    ERROR_PCW_FAMILY_RANGE_BLANK_FILE_TABLE_KEY = 0xc00e515b,
-    ERROR_PCW_FAMILY_RANGE_LONG_RETAIN_OFFSETS  = 0xc00e515c,
-    ERROR_PCW_FAMILY_RANGE_BLANK_RETAIN_OFFSETS = 0xc00e515d,
-    ERROR_PCW_FAMILY_RANGE_BAD_RETAIN_OFFSETS   = 0xc00e515e,
-    ERROR_PCW_FAMILY_RANGE_LONG_RETAIN_LENGTHS  = 0xc00e515f,
-    ERROR_PCW_FAMILY_RANGE_BLANK_RETAIN_LENGTHS = 0xc00e5160,
-    ERROR_PCW_FAMILY_RANGE_BAD_RETAIN_LENGTHS   = 0xc00e5161,
-    ERROR_PCW_FAMILY_RANGE_COUNT_MISMATCH       = 0xc00e5162,
+    ERROR_PCW_UFILEDATA_LONG_FILE_TABLE_KEY    = 0xc00e5127U,
+    ERROR_PCW_UFILEDATA_BLANK_FILE_TABLE_KEY   = 0xc00e5128U,
+    ERROR_PCW_UFILEDATA_MISSING_FILE_TABLE_KEY = 0xc00e5129U,
 }
 
 enum : uint
 {
-    ERROR_PCW_EXTFILE_LONG_IGNORE_OFFSETS   = 0xc00e5163,
-    ERROR_PCW_EXTFILE_BAD_IGNORE_OFFSETS    = 0xc00e5164,
-    ERROR_PCW_EXTFILE_LONG_IGNORE_LENGTHS   = 0xc00e5165,
-    ERROR_PCW_EXTFILE_BAD_IGNORE_LENGTHS    = 0xc00e5166,
-    ERROR_PCW_EXTFILE_IGNORE_COUNT_MISMATCH = 0xc00e5167,
-    ERROR_PCW_EXTFILE_LONG_RETAIN_OFFSETS   = 0xc00e5168,
-    ERROR_PCW_EXTFILE_BAD_RETAIN_OFFSETS    = 0xc00e5169,
+    ERROR_PCW_EXTFILE_LONG_FILE_TABLE_KEY  = 0xc00e512aU,
+    ERROR_PCW_EXTFILE_BLANK_FILE_TABLE_KEY = 0xc00e512bU,
+    ERROR_PCW_EXTFILE_BAD_FAMILY_FIELD     = 0xc00e512cU,
+    ERROR_PCW_EXTFILE_LONG_PATH_TO_FILE    = 0xc00e512dU,
+    ERROR_PCW_EXTFILE_BLANK_PATH_TO_FILE   = 0xc00e512eU,
+    ERROR_PCW_EXTFILE_MISSING_FILE         = 0xc00e512fU,
+}
+
+enum uint ERROR_PCW_BAD_FILE_SEQUENCE_START = 0xc00e513aU;
+
+enum : uint
+{
+    ERROR_PCW_CANT_COPY_FILE_TO_TEMP_FOLDER = 0xc00e513bU,
+    ERROR_PCW_CANT_CREATE_ONE_PATCH_FILE    = 0xc00e513cU,
 }
 
 enum : uint
 {
-    ERROR_PCW_TFILEDATA_LONG_IGNORE_OFFSETS   = 0xc00e516b,
-    ERROR_PCW_TFILEDATA_BAD_IGNORE_OFFSETS    = 0xc00e516c,
-    ERROR_PCW_TFILEDATA_LONG_IGNORE_LENGTHS   = 0xc00e516d,
-    ERROR_PCW_TFILEDATA_BAD_IGNORE_LENGTHS    = 0xc00e516e,
-    ERROR_PCW_TFILEDATA_IGNORE_COUNT_MISMATCH = 0xc00e516f,
-    ERROR_PCW_TFILEDATA_LONG_RETAIN_OFFSETS   = 0xc00e5170,
-    ERROR_PCW_TFILEDATA_BAD_RETAIN_OFFSETS    = 0xc00e5171,
+    ERROR_PCW_BAD_IMAGE_FAMILY_DISKID       = 0xc00e513dU,
+    ERROR_PCW_BAD_IMAGE_FAMILY_FILESEQSTART = 0xc00e513eU,
+}
+
+enum uint ERROR_PCW_BAD_UPGRADED_IMAGE_FAMILY = 0xc00e513fU;
+enum uint ERROR_PCW_BAD_TARGET_IMAGE_UPGRADED = 0xc00e5140U;
+enum uint ERROR_PCW_DUP_TARGET_IMAGE_PACKCODE = 0xc00e5141U;
+enum uint ERROR_PCW_UFILEDATA_BAD_UPGRADED_FIELD = 0xc00e5142U;
+
+enum : uint
+{
+    ERROR_PCW_MISMATCHED_PRODUCT_CODES    = 0xc00e5143U,
+    ERROR_PCW_MISMATCHED_PRODUCT_VERSIONS = 0xc00e5144U,
 }
 
 enum : uint
 {
-    ERROR_PCW_CANT_GENERATE_TRANSFORM       = 0xc00e5173,
-    ERROR_PCW_CANT_CREATE_SUMMARY_INFO      = 0xc00e5174,
-    ERROR_PCW_CANT_GENERATE_TRANSFORM_POUND = 0xc00e5175,
+    ERROR_PCW_CANNOT_WRITE_DDF   = 0xc00e5145U,
+    ERROR_PCW_CANNOT_RUN_MAKECAB = 0xc00e5146U,
 }
 
-enum uint ERROR_PCW_CANT_CREATE_SUMMARY_INFO_POUND = 0xc00e5176;
+enum uint ERROR_PCW_WRITE_SUMMARY_PROPERTIES = 0xc00e514bU;
 
 enum : uint
 {
-    ERROR_PCW_BAD_UPGRADED_IMAGE_PRODUCT_CODE    = 0xc00e5177,
-    ERROR_PCW_BAD_UPGRADED_IMAGE_PRODUCT_VERSION = 0xc00e5178,
-    ERROR_PCW_BAD_UPGRADED_IMAGE_UPGRADE_CODE    = 0xc00e5179,
-}
-
-enum : uint
-{
-    ERROR_PCW_BAD_TARGET_IMAGE_PRODUCT_CODE    = 0xc00e517a,
-    ERROR_PCW_BAD_TARGET_IMAGE_PRODUCT_VERSION = 0xc00e517b,
-    ERROR_PCW_BAD_TARGET_IMAGE_UPGRADE_CODE    = 0xc00e517c,
-}
-
-enum uint ERROR_PCW_MATCHED_PRODUCT_VERSIONS = 0xc00e517d;
-
-enum : uint
-{
-    ERROR_PCW_OBSOLETION_WITH_SEQUENCE_DATA = 0xc00e517e,
-    ERROR_PCW_OBSOLETION_WITH_MSI30         = 0xc00e517f,
-    ERROR_PCW_OBSOLETION_WITH_PATCHSEQUENCE = 0xc00e5180,
+    ERROR_PCW_TFILEDATA_LONG_FILE_TABLE_KEY    = 0xc00e514cU,
+    ERROR_PCW_TFILEDATA_BLANK_FILE_TABLE_KEY   = 0xc00e514dU,
+    ERROR_PCW_TFILEDATA_MISSING_FILE_TABLE_KEY = 0xc00e514eU,
+    ERROR_PCW_TFILEDATA_BAD_TARGET_FIELD       = 0xc00e514fU,
 }
 
 enum : uint
 {
-    ERROR_PCW_CANNOT_CREATE_TABLE                  = 0xc00e5181,
-    ERROR_PCW_CANT_GENERATE_SEQUENCEINFO_MAJORUPGD = 0xc00e5182,
+    ERROR_PCW_UPGRADED_IMAGE_PATCH_PATH_TOO_LONG  = 0xc00e5150U,
+    ERROR_PCW_UPGRADED_IMAGE_PATCH_PATH_NOT_EXIST = 0xc00e5151U,
+    ERROR_PCW_UPGRADED_IMAGE_PATCH_PATH_NOT_MSI   = 0xc00e5152U,
 }
 
-enum uint ERROR_PCW_MAJOR_UPGD_WITHOUT_SEQUENCING = 0xc00e5183;
-enum uint ERROR_PCW_BAD_PRODUCTVERSION_VALIDATION = 0xc00e5184;
+enum uint ERROR_PCW_DUP_UPGRADED_IMAGE_PACKCODE = 0xc00e5153U;
 
 enum : uint
 {
-    ERROR_PCW_BAD_TRANSFORMSET     = 0xc00e5185,
-    ERROR_PCW_BAD_TGT_UPD_IMAGES   = 0xc00e5186,
-    ERROR_PCW_BAD_SUPERCEDENCE     = 0xc00e5187,
-    ERROR_PCW_BAD_SEQUENCE         = 0xc00e5188,
-    ERROR_PCW_BAD_TARGET           = 0xc00e5189,
-    ERROR_PCW_NULL_PATCHFAMILY     = 0xc00e518a,
-    ERROR_PCW_NULL_SEQUENCE_NUMBER = 0xc00e518b,
+    ERROR_PCW_UFILEIGNORE_BAD_UPGRADED_FIELD   = 0xc00e5154U,
+    ERROR_PCW_UFILEIGNORE_LONG_FILE_TABLE_KEY  = 0xc00e5155U,
+    ERROR_PCW_UFILEIGNORE_BLANK_FILE_TABLE_KEY = 0xc00e5156U,
+    ERROR_PCW_UFILEIGNORE_BAD_FILE_TABLE_KEY   = 0xc00e5157U,
 }
+
+enum uint ERROR_PCW_FAMILY_RANGE_NAME_TOO_LONG = 0xc00e5158U;
+enum uint ERROR_PCW_BAD_FAMILY_RANGE_NAME = 0xc00e5159U;
 
 enum : uint
 {
-    ERROR_PCW_BAD_VERSION_STRING = 0xc00e518c,
-    ERROR_PCW_BAD_MAJOR_VERSION  = 0xc00e518d,
-}
-
-enum uint ERROR_PCW_SEQUENCING_BAD_TARGET = 0xc00e518e;
-enum uint ERROR_PCW_PATCHMETADATA_PROP_NOT_SET = 0xc00e518f;
-
-enum : uint
-{
-    ERROR_PCW_INVALID_PATCHMETADATA_PROP = 0xc00e5190,
-    ERROR_PCW_INVALID_SUPERCEDENCE       = 0xc00e5191,
-}
-
-enum uint ERROR_PCW_DUPLICATE_SEQUENCE_RECORD = 0xc00e5192;
-enum uint ERROR_PCW_WRONG_PATCHMETADATA_STRD_PROP = 0xc00e5193;
-enum uint ERROR_PCW_INVALID_PARAMETER = 0xc00e5194;
-enum uint ERROR_PCW_CREATEFILE_LOG_FAILED = 0xc00e5195;
-
-enum : uint
-{
-    ERROR_PCW_INVALID_LOG_LEVEL = 0xc00e5196,
-    ERROR_PCW_INVALID_UI_LEVEL  = 0xc00e5197,
-}
-
-enum uint ERROR_PCW_ERROR_WRITING_TO_LOG = 0xc00e5198;
-
-enum : uint
-{
-    ERROR_PCW_OUT_OF_MEMORY      = 0xc00e5199,
-    ERROR_PCW_UNKNOWN_ERROR      = 0xc00e519a,
-    ERROR_PCW_UNKNOWN_INFO       = 0xc00e519b,
-    ERROR_PCW_UNKNOWN_WARN       = 0xc00e519c,
-    ERROR_PCW_OPEN_VIEW          = 0xc00e519d,
-    ERROR_PCW_EXECUTE_VIEW       = 0xc00e519e,
-    ERROR_PCW_VIEW_FETCH         = 0xc00e519f,
-    ERROR_PCW_FAILED_EXPAND_PATH = 0xc00e51a0,
+    ERROR_PCW_FAMILY_RANGE_LONG_FILE_TABLE_KEY  = 0xc00e515aU,
+    ERROR_PCW_FAMILY_RANGE_BLANK_FILE_TABLE_KEY = 0xc00e515bU,
+    ERROR_PCW_FAMILY_RANGE_LONG_RETAIN_OFFSETS  = 0xc00e515cU,
+    ERROR_PCW_FAMILY_RANGE_BLANK_RETAIN_OFFSETS = 0xc00e515dU,
+    ERROR_PCW_FAMILY_RANGE_BAD_RETAIN_OFFSETS   = 0xc00e515eU,
+    ERROR_PCW_FAMILY_RANGE_LONG_RETAIN_LENGTHS  = 0xc00e515fU,
+    ERROR_PCW_FAMILY_RANGE_BLANK_RETAIN_LENGTHS = 0xc00e5160U,
+    ERROR_PCW_FAMILY_RANGE_BAD_RETAIN_LENGTHS   = 0xc00e5161U,
+    ERROR_PCW_FAMILY_RANGE_COUNT_MISMATCH       = 0xc00e5162U,
 }
 
 enum : uint
 {
-    ERROR_PCW_INTERNAL_ERROR           = 0xc00e5201,
-    ERROR_PCW_INVALID_PCP_PROPERTY     = 0xc00e5202,
-    ERROR_PCW_INVALID_PCP_TARGETIMAGES = 0xc00e5203,
-}
-
-enum uint ERROR_PCW_LAX_VALIDATION_FLAGS = 0xc00e5204;
-enum uint ERROR_PCW_FAILED_CREATE_TRANSFORM = 0xc00e5205;
-enum uint ERROR_PCW_CANT_DELETE_TEMP_FOLDER = 0xc00e5206;
-enum uint ERROR_PCW_MISSING_DIRECTORY_TABLE = 0xc00e5207;
-
-enum : uint
-{
-    ERROR_PCW_INVALID_SUPERSEDENCE_VALUE    = 0xc00e5208,
-    ERROR_PCW_INVALID_PATCH_TYPE_SEQUENCING = 0xc00e5209,
+    ERROR_PCW_EXTFILE_LONG_IGNORE_OFFSETS   = 0xc00e5163U,
+    ERROR_PCW_EXTFILE_BAD_IGNORE_OFFSETS    = 0xc00e5164U,
+    ERROR_PCW_EXTFILE_LONG_IGNORE_LENGTHS   = 0xc00e5165U,
+    ERROR_PCW_EXTFILE_BAD_IGNORE_LENGTHS    = 0xc00e5166U,
+    ERROR_PCW_EXTFILE_IGNORE_COUNT_MISMATCH = 0xc00e5167U,
+    ERROR_PCW_EXTFILE_LONG_RETAIN_OFFSETS   = 0xc00e5168U,
+    ERROR_PCW_EXTFILE_BAD_RETAIN_OFFSETS    = 0xc00e5169U,
 }
 
 enum : uint
 {
-    ERROR_PCW_CANT_READ_FILE                    = 0xc00e520a,
-    ERROR_PCW_TARGET_WRONG_PRODUCT_VERSION_COMP = 0xc00e520b,
+    ERROR_PCW_TFILEDATA_LONG_IGNORE_OFFSETS   = 0xc00e516bU,
+    ERROR_PCW_TFILEDATA_BAD_IGNORE_OFFSETS    = 0xc00e516cU,
+    ERROR_PCW_TFILEDATA_LONG_IGNORE_LENGTHS   = 0xc00e516dU,
+    ERROR_PCW_TFILEDATA_BAD_IGNORE_LENGTHS    = 0xc00e516eU,
+    ERROR_PCW_TFILEDATA_IGNORE_COUNT_MISMATCH = 0xc00e516fU,
+    ERROR_PCW_TFILEDATA_LONG_RETAIN_OFFSETS   = 0xc00e5170U,
+    ERROR_PCW_TFILEDATA_BAD_RETAIN_OFFSETS    = 0xc00e5171U,
 }
 
 enum : uint
 {
-    ERROR_PCW_INVALID_PCP_UPGRADEDFILESTOIGNORE      = 0xc00e520c,
-    ERROR_PCW_INVALID_PCP_UPGRADEDIMAGES             = 0xc00e520d,
-    ERROR_PCW_INVALID_PCP_EXTERNALFILES              = 0xc00e520e,
-    ERROR_PCW_INVALID_PCP_IMAGEFAMILIES              = 0xc00e520f,
-    ERROR_PCW_INVALID_PCP_PATCHSEQUENCE              = 0xc00e5210,
-    ERROR_PCW_INVALID_PCP_TARGETFILES_OPTIONALDATA   = 0xc00e5211,
-    ERROR_PCW_INVALID_PCP_UPGRADEDFILES_OPTIONALDATA = 0xc00e5212,
+    ERROR_PCW_CANT_GENERATE_TRANSFORM       = 0xc00e5173U,
+    ERROR_PCW_CANT_CREATE_SUMMARY_INFO      = 0xc00e5174U,
+    ERROR_PCW_CANT_GENERATE_TRANSFORM_POUND = 0xc00e5175U,
 }
 
-enum uint ERROR_PCW_MISSING_PATCHMETADATA = 0xc00e5213;
-enum uint ERROR_PCW_IMAGE_PATH_NOT_EXIST = 0xc00e5214;
+enum uint ERROR_PCW_CANT_CREATE_SUMMARY_INFO_POUND = 0xc00e5176U;
 
 enum : uint
 {
-    ERROR_PCW_INVALID_RANGE_ELEMENT        = 0xc00e5215,
-    ERROR_PCW_INVALID_MAJOR_VERSION        = 0xc00e5216,
-    ERROR_PCW_INVALID_PCP_PROPERTIES       = 0xc00e5217,
-    ERROR_PCW_INVALID_PCP_FAMILYFILERANGES = 0xc00e5218,
+    ERROR_PCW_BAD_UPGRADED_IMAGE_PRODUCT_CODE    = 0xc00e5177U,
+    ERROR_PCW_BAD_UPGRADED_IMAGE_PRODUCT_VERSION = 0xc00e5178U,
+    ERROR_PCW_BAD_UPGRADED_IMAGE_UPGRADE_CODE    = 0xc00e5179U,
 }
 
 enum : uint
 {
-    INFO_BASE                = 0xc00f5101,
-    INFO_PASSED_MAIN_CONTROL = 0xc00f5101,
+    ERROR_PCW_BAD_TARGET_IMAGE_PRODUCT_CODE    = 0xc00e517aU,
+    ERROR_PCW_BAD_TARGET_IMAGE_PRODUCT_VERSION = 0xc00e517bU,
+    ERROR_PCW_BAD_TARGET_IMAGE_UPGRADE_CODE    = 0xc00e517cU,
+}
+
+enum uint ERROR_PCW_MATCHED_PRODUCT_VERSIONS = 0xc00e517dU;
+
+enum : uint
+{
+    ERROR_PCW_OBSOLETION_WITH_SEQUENCE_DATA = 0xc00e517eU,
+    ERROR_PCW_OBSOLETION_WITH_MSI30         = 0xc00e517fU,
+    ERROR_PCW_OBSOLETION_WITH_PATCHSEQUENCE = 0xc00e5180U,
 }
 
 enum : uint
 {
-    INFO_ENTERING_PHASE_I_VALIDATION = 0xc00f5102,
-    INFO_ENTERING_PHASE_I            = 0xc00f5103,
+    ERROR_PCW_CANNOT_CREATE_TABLE                  = 0xc00e5181U,
+    ERROR_PCW_CANT_GENERATE_SEQUENCEINFO_MAJORUPGD = 0xc00e5182U,
 }
 
-enum uint INFO_PCP_PATH = 0xc00f5104;
-enum uint INFO_TEMP_DIR = 0xc00f5105;
-enum uint INFO_SET_OPTIONS = 0xc00f5106;
-enum uint INFO_PROPERTY = 0xc00f5107;
+enum uint ERROR_PCW_MAJOR_UPGD_WITHOUT_SEQUENCING = 0xc00e5183U;
+enum uint ERROR_PCW_BAD_PRODUCTVERSION_VALIDATION = 0xc00e5184U;
 
 enum : uint
 {
-    INFO_ENTERING_PHASE_II  = 0xc00f5108,
-    INFO_ENTERING_PHASE_III = 0xc00f5109,
-    INFO_ENTERING_PHASE_IV  = 0xc00f510a,
-    INFO_ENTERING_PHASE_V   = 0xc00f510b,
-}
-
-enum uint INFO_GENERATING_METADATA = 0xc00f5111;
-enum uint INFO_TEMP_DIR_CLEANUP = 0xc00f5112;
-
-enum : uint
-{
-    INFO_PATCHCACHE_FILEINFO_FAILURE = 0xc00f5113,
-    INFO_PATCHCACHE_PCI_READFAILURE  = 0xc00f5114,
-    INFO_PATCHCACHE_PCI_WRITEFAILURE = 0xc00f5115,
-}
-
-enum uint INFO_USING_USER_MSI_FOR_PATCH_TABLES = 0xc00f5116;
-enum uint INFO_SUCCESSFUL_PATCH_CREATION = 0xc00f5117;
-
-enum : uint
-{
-    WARN_BASE                = 0xc0105101,
-    WARN_MAJOR_UPGRADE_PATCH = 0xc0105101,
+    ERROR_PCW_BAD_TRANSFORMSET     = 0xc00e5185U,
+    ERROR_PCW_BAD_TGT_UPD_IMAGES   = 0xc00e5186U,
+    ERROR_PCW_BAD_SUPERCEDENCE     = 0xc00e5187U,
+    ERROR_PCW_BAD_SEQUENCE         = 0xc00e5188U,
+    ERROR_PCW_BAD_TARGET           = 0xc00e5189U,
+    ERROR_PCW_NULL_PATCHFAMILY     = 0xc00e518aU,
+    ERROR_PCW_NULL_SEQUENCE_NUMBER = 0xc00e518bU,
 }
 
 enum : uint
 {
-    WARN_SEQUENCE_DATA_GENERATION_DISABLED  = 0xc0105102,
-    WARN_SEQUENCE_DATA_SUPERSEDENCE_IGNORED = 0xc0105103,
+    ERROR_PCW_BAD_VERSION_STRING = 0xc00e518cU,
+    ERROR_PCW_BAD_MAJOR_VERSION  = 0xc00e518dU,
 }
 
-enum uint WARN_IMPROPER_TRANSFORM_VALIDATION = 0xc0105104;
+enum uint ERROR_PCW_SEQUENCING_BAD_TARGET = 0xc00e518eU;
+enum uint ERROR_PCW_PATCHMETADATA_PROP_NOT_SET = 0xc00e518fU;
 
 enum : uint
 {
-    WARN_PCW_MISMATCHED_PRODUCT_CODES    = 0xc0105105,
-    WARN_PCW_MISMATCHED_PRODUCT_VERSIONS = 0xc0105106,
+    ERROR_PCW_INVALID_PATCHMETADATA_PROP = 0xc00e5190U,
+    ERROR_PCW_INVALID_SUPERCEDENCE       = 0xc00e5191U,
 }
 
-enum uint WARN_INVALID_TRANSFORM_VALIDATION = 0xc0105107;
-enum uint WARN_BAD_MAJOR_VERSION = 0xc0105108;
-enum uint WARN_FILE_VERSION_DOWNREV = 0xc0105109;
-enum uint WARN_EQUAL_FILE_VERSION = 0xc010510a;
-enum uint WARN_PATCHPROPERTYNOTSET = 0xc010510b;
+enum uint ERROR_PCW_DUPLICATE_SEQUENCE_RECORD = 0xc00e5192U;
+enum uint ERROR_PCW_WRONG_PATCHMETADATA_STRD_PROP = 0xc00e5193U;
+enum uint ERROR_PCW_INVALID_PARAMETER = 0xc00e5194U;
+enum uint ERROR_PCW_CREATEFILE_LOG_FAILED = 0xc00e5195U;
 
 enum : uint
 {
-    WARN_OBSOLETION_WITH_SEQUENCE_DATA = 0xc0105112,
-    WARN_OBSOLETION_WITH_MSI30         = 0xc0105111,
-    WARN_OBSOLETION_WITH_PATCHSEQUENCE = 0xc0105113,
+    ERROR_PCW_INVALID_LOG_LEVEL = 0xc00e5196U,
+    ERROR_PCW_INVALID_UI_LEVEL  = 0xc00e5197U,
 }
 
-enum uint DELTA_MAX_HASH_SIZE = 0x00000020;
+enum uint ERROR_PCW_ERROR_WRITING_TO_LOG = 0xc00e5198U;
+
+enum : uint
+{
+    ERROR_PCW_OUT_OF_MEMORY      = 0xc00e5199U,
+    ERROR_PCW_UNKNOWN_ERROR      = 0xc00e519aU,
+    ERROR_PCW_UNKNOWN_INFO       = 0xc00e519bU,
+    ERROR_PCW_UNKNOWN_WARN       = 0xc00e519cU,
+    ERROR_PCW_OPEN_VIEW          = 0xc00e519dU,
+    ERROR_PCW_EXECUTE_VIEW       = 0xc00e519eU,
+    ERROR_PCW_VIEW_FETCH         = 0xc00e519fU,
+    ERROR_PCW_FAILED_EXPAND_PATH = 0xc00e51a0U,
+}
+
+enum : uint
+{
+    ERROR_PCW_INTERNAL_ERROR           = 0xc00e5201U,
+    ERROR_PCW_INVALID_PCP_PROPERTY     = 0xc00e5202U,
+    ERROR_PCW_INVALID_PCP_TARGETIMAGES = 0xc00e5203U,
+}
+
+enum uint ERROR_PCW_LAX_VALIDATION_FLAGS = 0xc00e5204U;
+enum uint ERROR_PCW_FAILED_CREATE_TRANSFORM = 0xc00e5205U;
+enum uint ERROR_PCW_CANT_DELETE_TEMP_FOLDER = 0xc00e5206U;
+enum uint ERROR_PCW_MISSING_DIRECTORY_TABLE = 0xc00e5207U;
+
+enum : uint
+{
+    ERROR_PCW_INVALID_SUPERSEDENCE_VALUE    = 0xc00e5208U,
+    ERROR_PCW_INVALID_PATCH_TYPE_SEQUENCING = 0xc00e5209U,
+}
+
+enum : uint
+{
+    ERROR_PCW_CANT_READ_FILE                    = 0xc00e520aU,
+    ERROR_PCW_TARGET_WRONG_PRODUCT_VERSION_COMP = 0xc00e520bU,
+}
+
+enum : uint
+{
+    ERROR_PCW_INVALID_PCP_UPGRADEDFILESTOIGNORE      = 0xc00e520cU,
+    ERROR_PCW_INVALID_PCP_UPGRADEDIMAGES             = 0xc00e520dU,
+    ERROR_PCW_INVALID_PCP_EXTERNALFILES              = 0xc00e520eU,
+    ERROR_PCW_INVALID_PCP_IMAGEFAMILIES              = 0xc00e520fU,
+    ERROR_PCW_INVALID_PCP_PATCHSEQUENCE              = 0xc00e5210U,
+    ERROR_PCW_INVALID_PCP_TARGETFILES_OPTIONALDATA   = 0xc00e5211U,
+    ERROR_PCW_INVALID_PCP_UPGRADEDFILES_OPTIONALDATA = 0xc00e5212U,
+}
+
+enum uint ERROR_PCW_MISSING_PATCHMETADATA = 0xc00e5213U;
+enum uint ERROR_PCW_IMAGE_PATH_NOT_EXIST = 0xc00e5214U;
+
+enum : uint
+{
+    ERROR_PCW_INVALID_RANGE_ELEMENT        = 0xc00e5215U,
+    ERROR_PCW_INVALID_MAJOR_VERSION        = 0xc00e5216U,
+    ERROR_PCW_INVALID_PCP_PROPERTIES       = 0xc00e5217U,
+    ERROR_PCW_INVALID_PCP_FAMILYFILERANGES = 0xc00e5218U,
+}
+
+enum : uint
+{
+    INFO_BASE                = 0xc00f5101U,
+    INFO_PASSED_MAIN_CONTROL = 0xc00f5101U,
+}
+
+enum : uint
+{
+    INFO_ENTERING_PHASE_I_VALIDATION = 0xc00f5102U,
+    INFO_ENTERING_PHASE_I            = 0xc00f5103U,
+}
+
+enum uint INFO_PCP_PATH = 0xc00f5104U;
+enum uint INFO_TEMP_DIR = 0xc00f5105U;
+enum uint INFO_SET_OPTIONS = 0xc00f5106U;
+enum uint INFO_PROPERTY = 0xc00f5107U;
+
+enum : uint
+{
+    INFO_ENTERING_PHASE_II  = 0xc00f5108U,
+    INFO_ENTERING_PHASE_III = 0xc00f5109U,
+    INFO_ENTERING_PHASE_IV  = 0xc00f510aU,
+    INFO_ENTERING_PHASE_V   = 0xc00f510bU,
+}
+
+enum uint INFO_GENERATING_METADATA = 0xc00f5111U;
+enum uint INFO_TEMP_DIR_CLEANUP = 0xc00f5112U;
+
+enum : uint
+{
+    INFO_PATCHCACHE_FILEINFO_FAILURE = 0xc00f5113U,
+    INFO_PATCHCACHE_PCI_READFAILURE  = 0xc00f5114U,
+    INFO_PATCHCACHE_PCI_WRITEFAILURE = 0xc00f5115U,
+}
+
+enum uint INFO_USING_USER_MSI_FOR_PATCH_TABLES = 0xc00f5116U;
+enum uint INFO_SUCCESSFUL_PATCH_CREATION = 0xc00f5117U;
+
+enum : uint
+{
+    WARN_BASE                = 0xc0105101U,
+    WARN_MAJOR_UPGRADE_PATCH = 0xc0105101U,
+}
+
+enum : uint
+{
+    WARN_SEQUENCE_DATA_GENERATION_DISABLED  = 0xc0105102U,
+    WARN_SEQUENCE_DATA_SUPERSEDENCE_IGNORED = 0xc0105103U,
+}
+
+enum uint WARN_IMPROPER_TRANSFORM_VALIDATION = 0xc0105104U;
+
+enum : uint
+{
+    WARN_PCW_MISMATCHED_PRODUCT_CODES    = 0xc0105105U,
+    WARN_PCW_MISMATCHED_PRODUCT_VERSIONS = 0xc0105106U,
+}
+
+enum uint WARN_INVALID_TRANSFORM_VALIDATION = 0xc0105107U;
+enum uint WARN_BAD_MAJOR_VERSION = 0xc0105108U;
+enum uint WARN_FILE_VERSION_DOWNREV = 0xc0105109U;
+enum uint WARN_EQUAL_FILE_VERSION = 0xc010510aU;
+enum uint WARN_PATCHPROPERTYNOTSET = 0xc010510bU;
+
+enum : uint
+{
+    WARN_OBSOLETION_WITH_SEQUENCE_DATA = 0xc0105112U,
+    WARN_OBSOLETION_WITH_MSI30         = 0xc0105111U,
+    WARN_OBSOLETION_WITH_PATCHSEQUENCE = 0xc0105113U,
+}
+
+enum uint DELTA_MAX_HASH_SIZE = 0x00000020U;
 enum int cchMaxInteger = 0x0000000c;
 
 enum : uint
 {
-    LOGNONE         = 0x00000000,
-    LOGINFO         = 0x00000001,
-    LOGWARN         = 0x00000002,
-    LOGERR          = 0x00000004,
-    LOGPERFMESSAGES = 0x00000008,
+    LOGNONE         = 0x00000000U,
+    LOGINFO         = 0x00000001U,
+    LOGWARN         = 0x00000002U,
+    LOGERR          = 0x00000004U,
+    LOGPERFMESSAGES = 0x00000008U,
 }
 
-enum uint LOGALL = 0x0000000f;
-enum uint UINONE = 0x00000000;
-enum uint UILOGBITS = 0x0000000f;
-enum uint DEFAULT_MINIMUM_REQUIRED_MSI_VERSION = 0x00000064;
-enum uint DEFAULT_FILE_SEQUENCE_START = 0x00000002;
-enum uint DEFAULT_DISK_ID = 0x00000002;
+enum uint LOGALL = 0x0000000fU;
+enum uint UINONE = 0x00000000U;
+enum uint UILOGBITS = 0x0000000fU;
+enum uint DEFAULT_MINIMUM_REQUIRED_MSI_VERSION = 0x00000064U;
+enum uint DEFAULT_FILE_SEQUENCE_START = 0x00000002U;
+enum uint DEFAULT_DISK_ID = 0x00000002U;
 
 // Callbacks
 
@@ -2167,7 +2258,7 @@ struct PMSIHANDLE
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msi/ns-msi-msipatchsequenceinfoa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msi/ns-msi-msipatchsequenceinfoa
 struct MSIPATCHSEQUENCEINFOA
 {
     const(PSTR)      szPatchData;
@@ -2177,7 +2268,7 @@ struct MSIPATCHSEQUENCEINFOA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msi/ns-msi-msipatchsequenceinfow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msi/ns-msi-msipatchsequenceinfow
 struct MSIPATCHSEQUENCEINFOW
 {
     const(PWSTR)     szPatchData;
@@ -2186,14 +2277,14 @@ struct MSIPATCHSEQUENCEINFOW
     uint             uStatus;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msi/ns-msi-msifilehashinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msi/ns-msi-msifilehashinfo
 struct MSIFILEHASHINFO
 {
     uint    dwFileHashInfoSize;
     uint[4] dwData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsxs/ns-winsxs-assembly_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsxs/ns-winsxs-assembly_info
 struct ASSEMBLY_INFO
 {
     uint  cbAssemblyInfo;
@@ -2204,7 +2295,7 @@ struct ASSEMBLY_INFO
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsxs/ns-winsxs-fusion_install_reference))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsxs/ns-winsxs-fusion_install_reference
 struct FUSION_INSTALL_REFERENCE
 {
     uint         cbSize;
@@ -2247,7 +2338,26 @@ struct PM_BWTASKID
 struct PM_ENUM_FILTER
 {
     int FilterType;
-    _FilterParameter_e__Union FilterParameter;
+    union FilterParameter
+    {
+        int                  Dummy;
+        PM_APP_GENRE         Genre;
+        PM_APPLICATION_HUBTYPE AppHubType;
+        PM_TILE_HUBTYPE      HubType;
+        PM_TASK_TYPE         Tasktype;
+        GUID                 TaskProductID;
+        GUID                 TileProductID;
+        PM_APPTASKTYPE       AppTaskType;
+        PM_EXTENSIONCONSUMER Consumer;
+        PM_BSATASKID         BSATask;
+        GUID                 BSAProductID;
+        PM_BWTASKID          BWTask;
+        BSTR                 ProtocolName;
+        BSTR                 FileType;
+        BSTR                 ContentType;
+        GUID                 AppSupportedFileExtPID;
+        BSTR                 ShareTargetFileType;
+    }
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
@@ -2372,7 +2482,12 @@ struct PATCH_OLD_FILE_INFO_H
 struct PATCH_OLD_FILE_INFO
 {
     uint                SizeOfThisStruct;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        const(PSTR)  OldFileNameA;
+        const(PWSTR) OldFileNameW;
+        HANDLE       OldFileHandle;
+    }
     uint                IgnoreRangeCount;
     PATCH_IGNORE_RANGE* IgnoreRangeArray;
     uint                RetainRangeCount;
@@ -2382,7 +2497,12 @@ struct PATCH_OLD_FILE_INFO
 struct PATCH_INTERLEAVE_MAP
 {
     uint CountRanges;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/_Anonymous_e__Struct[1] Range;
+    struct
+    {
+        uint OldOffset;
+        uint OldLength;
+        uint NewLength;
+    }
 }
 
 struct PATCH_OPTION_DATA
@@ -2400,9 +2520,13 @@ struct PATCH_OPTION_DATA
 
 struct DELTA_INPUT
 {
-    _Anonymous_e__Union Anonymous;
-    size_t              uSize;
-    BOOL                Editable;
+    union
+    {
+        const(void)* lpcStart;
+        void*        lpStart;
+    }
+    size_t uSize;
+    BOOL   Editable;
 }
 
 struct DELTA_OUTPUT
@@ -2428,14 +2552,14 @@ struct DELTA_HEADER_INFO
     DELTA_HASH TargetHash;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-activation_context_query_index))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-activation_context_query_index
 struct ACTIVATION_CONTEXT_QUERY_INDEX
 {
     uint ulAssemblyIndex;
     uint ulFileIndexInAssembly;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-assembly_file_detailed_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-assembly_file_detailed_information
 struct ASSEMBLY_FILE_DETAILED_INFORMATION
 {
     uint         ulFlags;
@@ -2445,7 +2569,7 @@ struct ASSEMBLY_FILE_DETAILED_INFORMATION
     const(PWSTR) lpFilePath;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-activation_context_assembly_detailed_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-activation_context_assembly_detailed_information
 struct ACTIVATION_CONTEXT_ASSEMBLY_DETAILED_INFORMATION
 {
     uint         ulFlags;
@@ -2469,7 +2593,7 @@ struct ACTIVATION_CONTEXT_ASSEMBLY_DETAILED_INFORMATION
     uint         ulFileCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-activation_context_run_level_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-activation_context_run_level_information
 struct ACTIVATION_CONTEXT_RUN_LEVEL_INFORMATION
 {
     uint ulFlags;
@@ -2477,7 +2601,7 @@ struct ACTIVATION_CONTEXT_RUN_LEVEL_INFORMATION
     uint UiAccess;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-compatibility_context_element))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-compatibility_context_element
 struct COMPATIBILITY_CONTEXT_ELEMENT
 {
     GUID  Id;
@@ -2485,14 +2609,14 @@ struct COMPATIBILITY_CONTEXT_ELEMENT
     ulong MaxVersionTested;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-activation_context_compatibility_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-activation_context_compatibility_information
 struct ACTIVATION_CONTEXT_COMPATIBILITY_INFORMATION
 {
     uint ElementCount;
     COMPATIBILITY_CONTEXT_ELEMENT[1] Elements;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-activation_context_detailed_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-activation_context_detailed_information
 struct ACTIVATION_CONTEXT_DETAILED_INFORMATION
 {
     uint         dwFlags;
@@ -2511,7 +2635,7 @@ struct ACTIVATION_CONTEXT_DETAILED_INFORMATION
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winbase/ns-winbase-actctxa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winbase/ns-winbase-actctxa
 struct ACTCTXA
 {
     uint        cbSize;
@@ -2527,7 +2651,7 @@ struct ACTCTXA
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winbase/ns-winbase-actctxw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winbase/ns-winbase-actctxw
 struct ACTCTXW
 {
     uint         cbSize;
@@ -2542,7 +2666,7 @@ struct ACTCTXW
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winbase/ns-winbase-actctx_section_keyed_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winbase/ns-winbase-actctx_section_keyed_data
 struct ACTCTX_SECTION_KEYED_DATA
 {
     uint   cbSize;
@@ -3950,7 +4074,7 @@ BOOL GetDeltaInfoW(const(PWSTR) lpDeltaName, DELTA_HEADER_INFO* lpHeaderInfo);
 BOOL ApplyDeltaGetReverseB(long ApplyFlags, DELTA_INPUT Source, DELTA_INPUT Delta, 
                            const(FILETIME)* lpReverseFileTime, DELTA_OUTPUT* lpTarget, DELTA_OUTPUT* lpTargetReverse);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DevNotes/msdelta-applydeltab))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/DevNotes/msdelta-applydeltab
 @DllImport("msdelta.dll")
 BOOL ApplyDeltaB(long ApplyFlags, DELTA_INPUT Source, DELTA_INPUT Delta, DELTA_OUTPUT* lpTarget);
 
@@ -3967,7 +4091,7 @@ BOOL ApplyDeltaA(long ApplyFlags, const(PSTR) lpSourceName, const(PSTR) lpDeltaN
 @DllImport("msdelta.dll")
 BOOL ApplyDeltaW(long ApplyFlags, const(PWSTR) lpSourceName, const(PWSTR) lpDeltaName, const(PWSTR) lpTargetName);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DevNotes/msdelta-createdeltab))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/DevNotes/msdelta-createdeltab
 @DllImport("msdelta.dll")
 BOOL CreateDeltaB(long FileTypeSet, long SetFlags, long ResetFlags, DELTA_INPUT Source, DELTA_INPUT Target, 
                   DELTA_INPUT SourceOptions, DELTA_INPUT TargetOptions, DELTA_INPUT GlobalOptions, 
@@ -4003,7 +4127,7 @@ BOOL DeltaNormalizeProvidedB(long FileTypeSet, long NormalizeFlags, DELTA_INPUT 
                              /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* lpSource, 
                              size_t uSourceSize);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DevNotes/msdelta-deltafree))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/DevNotes/msdelta-deltafree
 @DllImport("msdelta.dll")
 BOOL DeltaFree(void* lpMemory);
 
@@ -4079,22 +4203,22 @@ struct MsmMerge;
 struct PMSvc;
 
 @GUID("e482e5c6-e31e-4143-a2e6-dbc3d8e4b8d3")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/evalcom2/nn-evalcom2-ivalidate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evalcom2/nn-evalcom2-ivalidate
 interface IValidate : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/evalcom2/nf-evalcom2-ivalidate-opendatabase))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evalcom2/nf-evalcom2-ivalidate-opendatabase
     HRESULT OpenDatabase(const(PWSTR) szDatabase);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/evalcom2/nf-evalcom2-ivalidate-opencub))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evalcom2/nf-evalcom2-ivalidate-opencub
     HRESULT OpenCUB(const(PWSTR) szCUBFile);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/evalcom2/nf-evalcom2-ivalidate-closedatabase))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evalcom2/nf-evalcom2-ivalidate-closedatabase
     HRESULT CloseDatabase();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/evalcom2/nf-evalcom2-ivalidate-closecub))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evalcom2/nf-evalcom2-ivalidate-closecub
     HRESULT CloseCUB();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/evalcom2/nf-evalcom2-ivalidate-setdisplay))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evalcom2/nf-evalcom2-ivalidate-setdisplay
     HRESULT SetDisplay(LPDISPLAYVAL pDisplayFunction, void* pContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/evalcom2/nf-evalcom2-ivalidate-setstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evalcom2/nf-evalcom2-ivalidate-setstatus
     HRESULT SetStatus(LPEVALCOMCALLBACK pStatusFunction, void* pContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/evalcom2/nf-evalcom2-ivalidate-validate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/evalcom2/nf-evalcom2-ivalidate-validate
     HRESULT Validate(const(PWSTR) wzICEs);
 }
 
@@ -4116,22 +4240,22 @@ interface IMsmStrings : IDispatch
 }
 
 @GUID("0adda828-2c26-11d2-ad65-00a0c9af11a6")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mergemod/nn-mergemod-imsmerror))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mergemod/nn-mergemod-imsmerror
 interface IMsmError : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmerror-get_type))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmerror-get_type
     HRESULT get_Type(msmErrorType* ErrorType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmerror-get_path))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmerror-get_path
     HRESULT get_Path(BSTR* ErrorPath);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmerror-get_language))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmerror-get_language
     HRESULT get_Language(short* ErrorLanguage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmerror-get_databasetable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmerror-get_databasetable
     HRESULT get_DatabaseTable(BSTR* ErrorTable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmerror-get_databasekeys))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmerror-get_databasekeys
     HRESULT get_DatabaseKeys(IMsmStrings* ErrorKeys);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmerror-get_moduletable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmerror-get_moduletable
     HRESULT get_ModuleTable(BSTR* ErrorTable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmerror-get_modulekeys))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmerror-get_modulekeys
     HRESULT get_ModuleKeys(IMsmStrings* ErrorKeys);
 }
 
@@ -4153,14 +4277,14 @@ interface IMsmErrors : IDispatch
 }
 
 @GUID("0adda82b-2c26-11d2-ad65-00a0c9af11a6")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mergemod/nn-mergemod-imsmdependency))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mergemod/nn-mergemod-imsmdependency
 interface IMsmDependency : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmdependency-get_module))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmdependency-get_module
     HRESULT get_Module(BSTR* Module);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmdependency-get_language))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmdependency-get_language
     HRESULT get_Language(short* Language);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmdependency-get_version))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmdependency-get_version
     HRESULT get_Version(BSTR* Version);
 }
 
@@ -4182,97 +4306,97 @@ interface IMsmDependencies : IDispatch
 }
 
 @GUID("0adda82e-2c26-11d2-ad65-00a0c9af11a6")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mergemod/nn-mergemod-imsmmerge))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mergemod/nn-mergemod-imsmmerge
 interface IMsmMerge : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmmerge-opendatabase))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmmerge-opendatabase
     HRESULT OpenDatabase(const(BSTR) Path);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmmerge-openmodule))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmmerge-openmodule
     HRESULT OpenModule(const(BSTR) Path, const(short) Language);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmmerge-closedatabase))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmmerge-closedatabase
     HRESULT CloseDatabase(const(VARIANT_BOOL) Commit);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmmerge-closemodule))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmmerge-closemodule
     HRESULT CloseModule();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmmerge-openlog))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmmerge-openlog
     HRESULT OpenLog(const(BSTR) Path);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmmerge-closelog))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmmerge-closelog
     HRESULT CloseLog();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmmerge-log))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmmerge-log
     HRESULT Log(const(BSTR) Message);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmmerge-get_errors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmmerge-get_errors
     HRESULT get_Errors(IMsmErrors* Errors);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmmerge-get_dependencies))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmmerge-get_dependencies
     HRESULT get_Dependencies(IMsmDependencies* Dependencies);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmmerge-merge))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmmerge-merge
     HRESULT Merge(const(BSTR) Feature, const(BSTR) RedirectDir);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmmerge-connect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmmerge-connect
     HRESULT Connect(const(BSTR) Feature);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmmerge-extractcab))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmmerge-extractcab
     HRESULT ExtractCAB(const(BSTR) FileName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmmerge-extractfiles))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmmerge-extractfiles
     HRESULT ExtractFiles(const(BSTR) Path);
 }
 
 @GUID("7041ae26-2d78-11d2-888a-00a0c981b015")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mergemod/nn-mergemod-imsmgetfiles))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mergemod/nn-mergemod-imsmgetfiles
 interface IMsmGetFiles : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmgetfiles-get_modulefiles))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mergemod/nf-mergemod-imsmgetfiles-get_modulefiles
     HRESULT get_ModuleFiles(IMsmStrings* Files);
 }
 
 @GUID("cd193bc0-b4bc-11d2-9833-00c04fc31d2e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsxs/nn-winsxs-iassemblyname))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsxs/nn-winsxs-iassemblyname
 interface IAssemblyName : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsxs/nf-winsxs-iassemblyname-setproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsxs/nf-winsxs-iassemblyname-setproperty
     HRESULT SetProperty(uint PropertyId, void* pvProperty, uint cbProperty);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsxs/nf-winsxs-iassemblyname-getproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsxs/nf-winsxs-iassemblyname-getproperty
     HRESULT GetProperty(uint PropertyId, void* pvProperty, uint* pcbProperty);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsxs/nf-winsxs-iassemblyname-finalize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsxs/nf-winsxs-iassemblyname-finalize
     HRESULT Finalize();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsxs/nf-winsxs-iassemblyname-getdisplayname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsxs/nf-winsxs-iassemblyname-getdisplayname
     HRESULT GetDisplayName(PWSTR szDisplayName, uint* pccDisplayName, uint dwDisplayFlags);
     HRESULT Reserved(const(GUID)* refIID, IUnknown pUnkReserved1, IUnknown pUnkReserved2, const(PWSTR) szReserved, 
                      long llReserved, void* pvReserved, uint cbReserved, void** ppReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsxs/nf-winsxs-iassemblyname-getname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsxs/nf-winsxs-iassemblyname-getname
     HRESULT GetName(uint* lpcwBuffer, PWSTR pwzName);
     HRESULT GetVersion(uint* pdwVersionHi, uint* pdwVersionLow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsxs/nf-winsxs-iassemblyname-isequal))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsxs/nf-winsxs-iassemblyname-isequal
     HRESULT IsEqual(IAssemblyName pName, uint dwCmpFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsxs/nf-winsxs-iassemblyname-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsxs/nf-winsxs-iassemblyname-clone
     HRESULT Clone(IAssemblyName* pName);
 }
 
 @GUID("9e3aaeb4-d1cd-11d2-bab9-00c04f8eceae")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsxs/nn-winsxs-iassemblycacheitem))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsxs/nn-winsxs-iassemblycacheitem
 interface IAssemblyCacheItem : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsxs/nf-winsxs-iassemblycacheitem-createstream))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsxs/nf-winsxs-iassemblycacheitem-createstream
     HRESULT CreateStream(uint dwFlags, const(PWSTR) pszStreamName, uint dwFormat, uint dwFormatFlags, 
                          IStream* ppIStream, ulong* puliMaxSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsxs/nf-winsxs-iassemblycacheitem-commit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsxs/nf-winsxs-iassemblycacheitem-commit
     HRESULT Commit(uint dwFlags, uint* pulDisposition);
     HRESULT AbortItem();
 }
 
 @GUID("e707dcde-d1cd-11d2-bab9-00c04f8eceae")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsxs/nn-winsxs-iassemblycache))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsxs/nn-winsxs-iassemblycache
 interface IAssemblyCache : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsxs/nf-winsxs-iassemblycache-uninstallassembly))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsxs/nf-winsxs-iassemblycache-uninstallassembly
     HRESULT UninstallAssembly(uint dwFlags, const(PWSTR) pszAssemblyName, FUSION_INSTALL_REFERENCE* pRefData, 
                               IASSEMBLYCACHE_UNINSTALL_DISPOSITION* pulDisposition);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsxs/nf-winsxs-iassemblycache-queryassemblyinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsxs/nf-winsxs-iassemblycache-queryassemblyinfo
     HRESULT QueryAssemblyInfo(QUERYASMINFO_FLAGS dwFlags, const(PWSTR) pszAssemblyName, ASSEMBLY_INFO* pAsmInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsxs/nf-winsxs-iassemblycache-createassemblycacheitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsxs/nf-winsxs-iassemblycache-createassemblycacheitem
     HRESULT CreateAssemblyCacheItem(uint dwFlags, void* pvReserved, IAssemblyCacheItem* ppAsmItem, 
                                     const(PWSTR) pszAssemblyName);
     HRESULT Reserved(IUnknown* ppUnk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsxs/nf-winsxs-iassemblycache-installassembly))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsxs/nf-winsxs-iassemblycache-installassembly
     HRESULT InstallAssembly(uint dwFlags, const(PWSTR) pszManifestFilePath, FUSION_INSTALL_REFERENCE* pRefData);
 }
 

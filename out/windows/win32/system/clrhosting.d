@@ -3,12 +3,12 @@
 module windows.win32.system.clrhosting;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BOOLEAN, BSTR, HANDLE, HINSTANCE,
-                                         HMODULE, HRESULT, HWND, PSTR, PWSTR;
-public import windows.win32.security : ACL;
-public import windows.win32.system.com : IEnumUnknown, IStream, IUnknown;
-public import windows.win32.system.diagnostics.debug : EXCEPTION_POINTERS;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BOOLEAN, BSTR, HANDLE, HINSTANCE,
+                                                    HMODULE, HRESULT, HWND, PSTR, PWSTR;
+public import windows.win32.security.security : ACL;
+public import windows.win32.system.com.com : IEnumUnknown, IStream, IUnknown;
+public import windows.win32.system.diagnostics.debug_.debug_ : EXCEPTION_POINTERS;
 public import windows.win32.system.io : LPOVERLAPPED_COMPLETION_ROUTINE;
 public import windows.win32.system.threading : LPTHREAD_START_ROUTINE, PROCESS_INFORMATION,
                                                WAITORTIMERCALLBACK;
@@ -19,17 +19,20 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias COR_GC_STAT_TYPES = int;
 enum : int
 {
     COR_GC_COUNTS      = 0x00000001,
     COR_GC_MEMORYUSAGE = 0x00000002,
 }
+
 alias COR_GC_THREAD_STATS_TYPES = int;
 enum : int
 {
     COR_GC_THREAD_HAS_PROMOTED_BYTES = 0x00000001,
 }
+
 alias HOST_TYPE = int;
 enum : int
 {
@@ -37,6 +40,7 @@ enum : int
     HOST_TYPE_APPLAUNCH = 0x00000001,
     HOST_TYPE_CORFLAG   = 0x00000002,
 }
+
 alias STARTUP_FLAGS = int;
 enum : int
 {
@@ -57,12 +61,14 @@ enum : int
     STARTUP_ETW                                   = 0x00100000,
     STARTUP_ARM                                   = 0x00400000,
 }
+
 alias CLSID_RESOLUTION_FLAGS = int;
 enum : int
 {
     CLSID_RESOLUTION_DEFAULT    = 0x00000000,
     CLSID_RESOLUTION_REGISTERED = 0x00000001,
 }
+
 alias RUNTIME_INFO_FLAGS = int;
 enum : int
 {
@@ -76,6 +82,7 @@ enum : int
     RUNTIME_INFO_IGNORE_ERROR_MODE      = 0x00001000,
     RUNTIME_INFO_REQUEST_ARM64          = 0x00002000,
 }
+
 alias APPDOMAIN_SECURITY_FLAGS = int;
 enum : int
 {
@@ -84,18 +91,21 @@ enum : int
     APPDOMAIN_SECURITY_FORBID_CROSSAD_REVERSE_PINVOKE = 0x00000002,
     APPDOMAIN_FORCE_TRIVIAL_WAIT_OPERATIONS           = 0x00000008,
 }
+
 enum EMemoryAvailable : int
 {
     eMemoryAvailableLow     = 0x00000001,
     eMemoryAvailableNeutral = 0x00000002,
     eMemoryAvailableHigh    = 0x00000003,
 }
+
 enum EMemoryCriticalLevel : int
 {
     eTaskCritical      = 0x00000000,
     eAppDomainCritical = 0x00000001,
     eProcessCritical   = 0x00000002,
 }
+
 alias WAIT_OPTION = int;
 enum : int
 {
@@ -103,12 +113,14 @@ enum : int
     WAIT_ALERTABLE     = 0x00000002,
     WAIT_NOTINDEADLOCK = 0x00000004,
 }
+
 alias MALLOC_TYPE = int;
 enum : int
 {
     MALLOC_THREADSAFE = 0x00000001,
     MALLOC_EXECUTABLE = 0x00000002,
 }
+
 enum ETaskType : int
 {
     TT_DEBUGGERHELPER          = 0x00000001,
@@ -123,12 +135,14 @@ enum ETaskType : int
     TT_THREADPOOL_WAIT         = 0x00000200,
     TT_UNKNOWN                 = 0x80000000,
 }
+
 enum ESymbolReadingPolicy : int
 {
     eSymbolReadingNever         = 0x00000000,
     eSymbolReadingAlways        = 0x00000001,
     eSymbolReadingFullTrustOnly = 0x00000002,
 }
+
 enum ECustomDumpFlavor : int
 {
     DUMP_FLAVOR_Mini             = 0x00000000,
@@ -136,10 +150,12 @@ enum ECustomDumpFlavor : int
     DUMP_FLAVOR_NonHeapCLRState  = 0x00000002,
     DUMP_FLAVOR_Default          = 0x00000000,
 }
+
 enum ECustomDumpItemKind : int
 {
     DUMP_ITEM_None = 0x00000000,
 }
+
 enum BucketParameterIndex : int
 {
     Parameter1              = 0x00000000,
@@ -153,6 +169,7 @@ enum BucketParameterIndex : int
     Parameter9              = 0x00000008,
     InvalidBucketParamIndex = 0x00000009,
 }
+
 enum EClrOperation : int
 {
     OPR_ThreadAbort                        = 0x00000000,
@@ -164,6 +181,7 @@ enum EClrOperation : int
     OPR_FinalizerRun                       = 0x00000006,
     MaxClrOperation                        = 0x00000007,
 }
+
 enum EClrFailure : int
 {
     FAIL_NonCriticalResource = 0x00000000,
@@ -175,11 +193,13 @@ enum EClrFailure : int
     FAIL_CodeContract        = 0x00000006,
     MaxClrFailure            = 0x00000007,
 }
+
 enum EClrUnhandledException : int
 {
     eRuntimeDeterminedPolicy = 0x00000000,
     eHostDeterminedPolicy    = 0x00000001,
 }
+
 enum EPolicyAction : int
 {
     eNoAction            = 0x00000000,
@@ -194,6 +214,7 @@ enum EPolicyAction : int
     eDisableRuntime      = 0x00000009,
     MaxPolicyAction      = 0x0000000a,
 }
+
 enum EClrEvent : int
 {
     Event_DomainUnload  = 0x00000000,
@@ -202,16 +223,19 @@ enum EClrEvent : int
     Event_StackOverflow = 0x00000003,
     MaxClrEvent         = 0x00000004,
 }
+
 enum StackOverflowType : int
 {
     SO_Managed   = 0x00000000,
     SO_ClrEngine = 0x00000001,
     SO_Other     = 0x00000002,
 }
+
 enum ECLRAssemblyIdentityFlags : int
 {
     CLR_ASSEMBLY_IDENTITY_FLAGS_DEFAULT = 0x00000000,
 }
+
 enum EHostBindingPolicyModifyFlags : int
 {
     HOST_BINDING_POLICY_MODIFY_DEFAULT = 0x00000000,
@@ -219,6 +243,7 @@ enum EHostBindingPolicyModifyFlags : int
     HOST_BINDING_POLICY_MODIFY_REMOVE  = 0x00000002,
     HOST_BINDING_POLICY_MODIFY_MAX     = 0x00000003,
 }
+
 enum EBindPolicyLevels : int
 {
     ePolicyLevelNone         = 0x00000000,
@@ -230,10 +255,12 @@ enum EBindPolicyLevels : int
     ePolicyLevelAdmin        = 0x00000020,
     ePolicyPortability       = 0x00000040,
 }
+
 enum EHostApplicationPolicy : int
 {
     HOST_APPLICATION_BINDING_POLICY = 0x00000001,
 }
+
 enum EApiCategories : int
 {
     eNoChecks                 = 0x00000000,
@@ -248,16 +275,19 @@ enum EApiCategories : int
     eMayLeakOnAbort           = 0x00000100,
     eAll                      = 0x000001ff,
 }
+
 enum EInitializeNewDomainFlags : int
 {
     eInitializeNewDomainFlags_None              = 0x00000000,
     eInitializeNewDomainFlags_NoSecurityChanges = 0x00000002,
 }
+
 enum EContextType : int
 {
     eCurrentContext    = 0x00000000,
     eRestrictedContext = 0x00000001,
 }
+
 alias METAHOST_POLICY_FLAGS = int;
 enum : int
 {
@@ -269,6 +299,7 @@ enum : int
     METAHOST_POLICY_ENSURE_SKU_SUPPORTED   = 0x00000080,
     METAHOST_POLICY_IGNORE_ERROR_MODE      = 0x00001000,
 }
+
 alias METAHOST_CONFIG_FLAGS = int;
 enum : int
 {
@@ -277,6 +308,7 @@ enum : int
     METAHOST_CONFIG_FLAGS_LEGACY_V2_ACTIVATION_POLICY_FALSE = 0x00000002,
     METAHOST_CONFIG_FLAGS_LEGACY_V2_ACTIVATION_POLICY_MASK  = 0x00000003,
 }
+
 alias CLR_DEBUGGING_PROCESS_FLAGS = int;
 enum : int
 {
@@ -288,21 +320,21 @@ enum : int
 
 
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* DEPRECATED_CLR_API_MESG = "This API has been deprecated. Refer to https://go.microsoft.com/fwlink/?LinkId=143720 for more details.";
-enum uint CLR_MAJOR_VERSION = 0x00000004;
-enum uint CLR_MINOR_VERSION = 0x00000000;
-enum uint CLR_BUILD_VERSION = 0x000056cc;
+enum uint CLR_MAJOR_VERSION = 0x00000004U;
+enum uint CLR_MINOR_VERSION = 0x00000000U;
+enum uint CLR_BUILD_VERSION = 0x000056ccU;
 
 enum : uint
 {
-    CLR_ASSEMBLY_MAJOR_VERSION = 0x00000004,
-    CLR_ASSEMBLY_MINOR_VERSION = 0x00000000,
-    CLR_ASSEMBLY_BUILD_VERSION = 0x00000000,
+    CLR_ASSEMBLY_MAJOR_VERSION = 0x00000004U,
+    CLR_ASSEMBLY_MINOR_VERSION = 0x00000000U,
+    CLR_ASSEMBLY_BUILD_VERSION = 0x00000000U,
 }
 
 enum : uint
 {
-    BucketParamsCount = 0x0000000a,
-    BucketParamLength = 0x000000ff,
+    BucketParamsCount = 0x0000000aU,
+    BucketParamLength = 0x000000ffU,
 }
 
 enum GUID LIBID_mscoree = GUID("5477469e-83b1-11d2-8b49-00a0c9b7c9c4");
@@ -362,7 +394,10 @@ struct COR_GC_THREAD_STATS
 struct CustomDumpItem
 {
     ECustomDumpItemKind itemKind;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        size_t pReserved;
+    }
 }
 
 struct BucketParameters

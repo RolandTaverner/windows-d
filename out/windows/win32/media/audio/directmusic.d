@@ -3,14 +3,14 @@
 module windows.win32.media.audio.directmusic;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, CHAR, HANDLE, HRESULT, HWND, PSTR,
-                                         PWSTR;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, CHAR, HANDLE, HRESULT, HWND,
+                                                    PSTR, PWSTR;
 public import windows.win32.media.audio.directsound : IDirectSound, IDirectSoundBuffer;
-public import windows.win32.media.audio : HMIDI, WAVEFORMATEX;
-public import windows.win32.media : IReferenceClock;
+public import windows.win32.media.audio.audio : HMIDI, WAVEFORMATEX;
+public import windows.win32.media.media : IReferenceClock;
 public import windows.win32.media.multimedia : MIDIOPENSTRMID;
-public import windows.win32.system.com : IUnknown;
+public import windows.win32.system.com.com : IUnknown;
 public import windows.win32.system.io : OVERLAPPED;
 
 extern(Windows) @nogc nothrow:
@@ -18,12 +18,14 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias DMUS_CLOCKTYPE = int;
 enum : int
 {
     DMUS_CLOCK_SYSTEM = 0x00000000,
     DMUS_CLOCK_WAVE   = 0x00000001,
 }
+
 alias DSPROPERTY_DIRECTSOUNDDEVICE = int;
 enum : int
 {
@@ -36,6 +38,7 @@ enum : int
     DSPROPERTY_DIRECTSOUNDDEVICE_ENUMERATE_A         = 0x00000007,
     DSPROPERTY_DIRECTSOUNDDEVICE_ENUMERATE_W         = 0x00000008,
 }
+
 alias DIRECTSOUNDDEVICE_TYPE = int;
 enum : int
 {
@@ -43,6 +46,7 @@ enum : int
     DIRECTSOUNDDEVICE_TYPE_VXD      = 0x00000001,
     DIRECTSOUNDDEVICE_TYPE_WDM      = 0x00000002,
 }
+
 alias DIRECTSOUNDDEVICE_DATAFLOW = int;
 enum : int
 {
@@ -55,149 +59,149 @@ enum : int
 
 enum : uint
 {
-    DMUS_MAX_DESCRIPTION = 0x00000080,
-    DMUS_MAX_DRIVER      = 0x00000080,
+    DMUS_MAX_DESCRIPTION = 0x00000080U,
+    DMUS_MAX_DRIVER      = 0x00000080U,
 }
 
 enum : uint
 {
-    DMUS_EFFECT_NONE   = 0x00000000,
-    DMUS_EFFECT_REVERB = 0x00000001,
-    DMUS_EFFECT_CHORUS = 0x00000002,
-    DMUS_EFFECT_DELAY  = 0x00000004,
+    DMUS_EFFECT_NONE   = 0x00000000U,
+    DMUS_EFFECT_REVERB = 0x00000001U,
+    DMUS_EFFECT_CHORUS = 0x00000002U,
+    DMUS_EFFECT_DELAY  = 0x00000004U,
 }
 
 enum : uint
 {
-    DMUS_PC_INPUTCLASS    = 0x00000000,
-    DMUS_PC_OUTPUTCLASS   = 0x00000001,
-    DMUS_PC_DLS           = 0x00000001,
-    DMUS_PC_EXTERNAL      = 0x00000002,
-    DMUS_PC_SOFTWARESYNTH = 0x00000004,
+    DMUS_PC_INPUTCLASS    = 0x00000000U,
+    DMUS_PC_OUTPUTCLASS   = 0x00000001U,
+    DMUS_PC_DLS           = 0x00000001U,
+    DMUS_PC_EXTERNAL      = 0x00000002U,
+    DMUS_PC_SOFTWARESYNTH = 0x00000004U,
 }
 
-enum uint DMUS_PC_MEMORYSIZEFIXED = 0x00000008;
+enum uint DMUS_PC_MEMORYSIZEFIXED = 0x00000008U;
 
 enum : uint
 {
-    DMUS_PC_GMINHARDWARE = 0x00000010,
-    DMUS_PC_GSINHARDWARE = 0x00000020,
+    DMUS_PC_GMINHARDWARE = 0x00000010U,
+    DMUS_PC_GSINHARDWARE = 0x00000020U,
 }
 
-enum uint DMUS_PC_XGINHARDWARE = 0x00000040;
+enum uint DMUS_PC_XGINHARDWARE = 0x00000040U;
 
 enum : uint
 {
-    DMUS_PC_DIRECTSOUND  = 0x00000080,
-    DMUS_PC_SHAREABLE    = 0x00000100,
-    DMUS_PC_DLS2         = 0x00000200,
-    DMUS_PC_AUDIOPATH    = 0x00000400,
-    DMUS_PC_WAVE         = 0x00000800,
-    DMUS_PC_SYSTEMMEMORY = 0x7fffffff,
-}
-
-enum : uint
-{
-    DMUS_PORT_WINMM_DRIVER    = 0x00000000,
-    DMUS_PORT_USER_MODE_SYNTH = 0x00000001,
+    DMUS_PC_DIRECTSOUND  = 0x00000080U,
+    DMUS_PC_SHAREABLE    = 0x00000100U,
+    DMUS_PC_DLS2         = 0x00000200U,
+    DMUS_PC_AUDIOPATH    = 0x00000400U,
+    DMUS_PC_WAVE         = 0x00000800U,
+    DMUS_PC_SYSTEMMEMORY = 0x7fffffffU,
 }
 
 enum : uint
 {
-    DMUS_PORT_KERNEL_MODE         = 0x00000002,
-    DMUS_PORTPARAMS_VOICES        = 0x00000001,
-    DMUS_PORTPARAMS_CHANNELGROUPS = 0x00000002,
-    DMUS_PORTPARAMS_AUDIOCHANNELS = 0x00000004,
-    DMUS_PORTPARAMS_SAMPLERATE    = 0x00000008,
-    DMUS_PORTPARAMS_EFFECTS       = 0x00000020,
-    DMUS_PORTPARAMS_SHARE         = 0x00000040,
-    DMUS_PORTPARAMS_FEATURES      = 0x00000080,
+    DMUS_PORT_WINMM_DRIVER    = 0x00000000U,
+    DMUS_PORT_USER_MODE_SYNTH = 0x00000001U,
 }
 
 enum : uint
 {
-    DMUS_PORT_FEATURE_AUDIOPATH = 0x00000001,
-    DMUS_PORT_FEATURE_STREAMING = 0x00000002,
+    DMUS_PORT_KERNEL_MODE         = 0x00000002U,
+    DMUS_PORTPARAMS_VOICES        = 0x00000001U,
+    DMUS_PORTPARAMS_CHANNELGROUPS = 0x00000002U,
+    DMUS_PORTPARAMS_AUDIOCHANNELS = 0x00000004U,
+    DMUS_PORTPARAMS_SAMPLERATE    = 0x00000008U,
+    DMUS_PORTPARAMS_EFFECTS       = 0x00000020U,
+    DMUS_PORTPARAMS_SHARE         = 0x00000040U,
+    DMUS_PORTPARAMS_FEATURES      = 0x00000080U,
 }
 
 enum : uint
 {
-    DMUS_SYNTHSTATS_VOICES        = 0x00000001,
-    DMUS_SYNTHSTATS_TOTAL_CPU     = 0x00000002,
-    DMUS_SYNTHSTATS_CPU_PER_VOICE = 0x00000004,
-    DMUS_SYNTHSTATS_LOST_NOTES    = 0x00000008,
-    DMUS_SYNTHSTATS_PEAK_VOLUME   = 0x00000010,
-    DMUS_SYNTHSTATS_FREE_MEMORY   = 0x00000020,
-    DMUS_SYNTHSTATS_SYSTEMMEMORY  = 0x7fffffff,
-}
-
-enum uint DMUS_CLOCKF_GLOBAL = 0x00000001;
-
-enum : uint
-{
-    DSBUSID_FIRST_SPKR_LOC = 0x00000000,
-    DSBUSID_FRONT_LEFT     = 0x00000000,
-    DSBUSID_LEFT           = 0x00000000,
-    DSBUSID_FRONT_RIGHT    = 0x00000001,
-    DSBUSID_RIGHT          = 0x00000001,
-    DSBUSID_FRONT_CENTER   = 0x00000002,
-}
-
-enum uint DSBUSID_LOW_FREQUENCY = 0x00000003;
-
-enum : uint
-{
-    DSBUSID_BACK_LEFT             = 0x00000004,
-    DSBUSID_BACK_RIGHT            = 0x00000005,
-    DSBUSID_FRONT_LEFT_OF_CENTER  = 0x00000006,
-    DSBUSID_FRONT_RIGHT_OF_CENTER = 0x00000007,
+    DMUS_PORT_FEATURE_AUDIOPATH = 0x00000001U,
+    DMUS_PORT_FEATURE_STREAMING = 0x00000002U,
 }
 
 enum : uint
 {
-    DSBUSID_BACK_CENTER      = 0x00000008,
-    DSBUSID_SIDE_LEFT        = 0x00000009,
-    DSBUSID_SIDE_RIGHT       = 0x0000000a,
-    DSBUSID_TOP_CENTER       = 0x0000000b,
-    DSBUSID_TOP_FRONT_LEFT   = 0x0000000c,
-    DSBUSID_TOP_FRONT_CENTER = 0x0000000d,
-    DSBUSID_TOP_FRONT_RIGHT  = 0x0000000e,
-    DSBUSID_TOP_BACK_LEFT    = 0x0000000f,
-    DSBUSID_TOP_BACK_CENTER  = 0x00000010,
-    DSBUSID_TOP_BACK_RIGHT   = 0x00000011,
+    DMUS_SYNTHSTATS_VOICES        = 0x00000001U,
+    DMUS_SYNTHSTATS_TOTAL_CPU     = 0x00000002U,
+    DMUS_SYNTHSTATS_CPU_PER_VOICE = 0x00000004U,
+    DMUS_SYNTHSTATS_LOST_NOTES    = 0x00000008U,
+    DMUS_SYNTHSTATS_PEAK_VOLUME   = 0x00000010U,
+    DMUS_SYNTHSTATS_FREE_MEMORY   = 0x00000020U,
+    DMUS_SYNTHSTATS_SYSTEMMEMORY  = 0x7fffffffU,
 }
 
-enum uint DSBUSID_LAST_SPKR_LOC = 0x00000011;
+enum uint DMUS_CLOCKF_GLOBAL = 0x00000001U;
 
 enum : uint
 {
-    DSBUSID_REVERB_SEND = 0x00000040,
-    DSBUSID_CHORUS_SEND = 0x00000041,
-    DSBUSID_DYNAMIC_0   = 0x00000200,
-    DSBUSID_NULL        = 0xffffffff,
+    DSBUSID_FIRST_SPKR_LOC = 0x00000000U,
+    DSBUSID_FRONT_LEFT     = 0x00000000U,
+    DSBUSID_LEFT           = 0x00000000U,
+    DSBUSID_FRONT_RIGHT    = 0x00000001U,
+    DSBUSID_RIGHT          = 0x00000001U,
+    DSBUSID_FRONT_CENTER   = 0x00000002U,
 }
 
-enum uint DAUD_CRITICAL_VOICE_PRIORITY = 0xf0000000;
-enum uint DAUD_HIGH_VOICE_PRIORITY = 0xc0000000;
-enum uint DAUD_STANDARD_VOICE_PRIORITY = 0x80000000;
-enum uint DAUD_LOW_VOICE_PRIORITY = 0x40000000;
-enum uint DAUD_PERSIST_VOICE_PRIORITY = 0x10000000;
-enum uint DAUD_CHAN1_VOICE_PRIORITY_OFFSET = 0x0000000e;
-enum uint DAUD_CHAN2_VOICE_PRIORITY_OFFSET = 0x0000000d;
-enum uint DAUD_CHAN3_VOICE_PRIORITY_OFFSET = 0x0000000c;
-enum uint DAUD_CHAN4_VOICE_PRIORITY_OFFSET = 0x0000000b;
-enum uint DAUD_CHAN5_VOICE_PRIORITY_OFFSET = 0x0000000a;
-enum uint DAUD_CHAN6_VOICE_PRIORITY_OFFSET = 0x00000009;
-enum uint DAUD_CHAN7_VOICE_PRIORITY_OFFSET = 0x00000008;
-enum uint DAUD_CHAN8_VOICE_PRIORITY_OFFSET = 0x00000007;
-enum uint DAUD_CHAN9_VOICE_PRIORITY_OFFSET = 0x00000006;
-enum uint DAUD_CHAN10_VOICE_PRIORITY_OFFSET = 0x0000000f;
-enum uint DAUD_CHAN11_VOICE_PRIORITY_OFFSET = 0x00000005;
-enum uint DAUD_CHAN12_VOICE_PRIORITY_OFFSET = 0x00000004;
-enum uint DAUD_CHAN13_VOICE_PRIORITY_OFFSET = 0x00000003;
-enum uint DAUD_CHAN14_VOICE_PRIORITY_OFFSET = 0x00000002;
-enum uint DAUD_CHAN15_VOICE_PRIORITY_OFFSET = 0x00000001;
-enum uint DAUD_CHAN16_VOICE_PRIORITY_OFFSET = 0x00000000;
+enum uint DSBUSID_LOW_FREQUENCY = 0x00000003U;
+
+enum : uint
+{
+    DSBUSID_BACK_LEFT             = 0x00000004U,
+    DSBUSID_BACK_RIGHT            = 0x00000005U,
+    DSBUSID_FRONT_LEFT_OF_CENTER  = 0x00000006U,
+    DSBUSID_FRONT_RIGHT_OF_CENTER = 0x00000007U,
+}
+
+enum : uint
+{
+    DSBUSID_BACK_CENTER      = 0x00000008U,
+    DSBUSID_SIDE_LEFT        = 0x00000009U,
+    DSBUSID_SIDE_RIGHT       = 0x0000000aU,
+    DSBUSID_TOP_CENTER       = 0x0000000bU,
+    DSBUSID_TOP_FRONT_LEFT   = 0x0000000cU,
+    DSBUSID_TOP_FRONT_CENTER = 0x0000000dU,
+    DSBUSID_TOP_FRONT_RIGHT  = 0x0000000eU,
+    DSBUSID_TOP_BACK_LEFT    = 0x0000000fU,
+    DSBUSID_TOP_BACK_CENTER  = 0x00000010U,
+    DSBUSID_TOP_BACK_RIGHT   = 0x00000011U,
+}
+
+enum uint DSBUSID_LAST_SPKR_LOC = 0x00000011U;
+
+enum : uint
+{
+    DSBUSID_REVERB_SEND = 0x00000040U,
+    DSBUSID_CHORUS_SEND = 0x00000041U,
+    DSBUSID_DYNAMIC_0   = 0x00000200U,
+    DSBUSID_NULL        = 0xffffffffU,
+}
+
+enum uint DAUD_CRITICAL_VOICE_PRIORITY = 0xf0000000U;
+enum uint DAUD_HIGH_VOICE_PRIORITY = 0xc0000000U;
+enum uint DAUD_STANDARD_VOICE_PRIORITY = 0x80000000U;
+enum uint DAUD_LOW_VOICE_PRIORITY = 0x40000000U;
+enum uint DAUD_PERSIST_VOICE_PRIORITY = 0x10000000U;
+enum uint DAUD_CHAN1_VOICE_PRIORITY_OFFSET = 0x0000000eU;
+enum uint DAUD_CHAN2_VOICE_PRIORITY_OFFSET = 0x0000000dU;
+enum uint DAUD_CHAN3_VOICE_PRIORITY_OFFSET = 0x0000000cU;
+enum uint DAUD_CHAN4_VOICE_PRIORITY_OFFSET = 0x0000000bU;
+enum uint DAUD_CHAN5_VOICE_PRIORITY_OFFSET = 0x0000000aU;
+enum uint DAUD_CHAN6_VOICE_PRIORITY_OFFSET = 0x00000009U;
+enum uint DAUD_CHAN7_VOICE_PRIORITY_OFFSET = 0x00000008U;
+enum uint DAUD_CHAN8_VOICE_PRIORITY_OFFSET = 0x00000007U;
+enum uint DAUD_CHAN9_VOICE_PRIORITY_OFFSET = 0x00000006U;
+enum uint DAUD_CHAN10_VOICE_PRIORITY_OFFSET = 0x0000000fU;
+enum uint DAUD_CHAN11_VOICE_PRIORITY_OFFSET = 0x00000005U;
+enum uint DAUD_CHAN12_VOICE_PRIORITY_OFFSET = 0x00000004U;
+enum uint DAUD_CHAN13_VOICE_PRIORITY_OFFSET = 0x00000003U;
+enum uint DAUD_CHAN14_VOICE_PRIORITY_OFFSET = 0x00000002U;
+enum uint DAUD_CHAN15_VOICE_PRIORITY_OFFSET = 0x00000001U;
+enum uint DAUD_CHAN16_VOICE_PRIORITY_OFFSET = 0x00000000U;
 
 enum : GUID
 {
@@ -229,69 +233,69 @@ enum : GUID
     GUID_DMUS_PROP_Volume             = GUID("fedfae25-e46e-11d1-aace-0000f875ac12"),
 }
 
-enum uint DMUS_VOLUME_MAX = 0x000007d0;
+enum uint DMUS_VOLUME_MAX = 0x000007d0U;
 enum int DMUS_VOLUME_MIN = 0xffffb1e0;
-enum uint DMUS_EVENT_STRUCTURED = 0x00000001;
+enum uint DMUS_EVENT_STRUCTURED = 0x00000001U;
 
 enum : uint
 {
-    DMUS_DOWNLOADINFO_INSTRUMENT       = 0x00000001,
-    DMUS_DOWNLOADINFO_WAVE             = 0x00000002,
-    DMUS_DOWNLOADINFO_INSTRUMENT2      = 0x00000003,
-    DMUS_DOWNLOADINFO_WAVEARTICULATION = 0x00000004,
-    DMUS_DOWNLOADINFO_STREAMINGWAVE    = 0x00000005,
-    DMUS_DOWNLOADINFO_ONESHOTWAVE      = 0x00000006,
+    DMUS_DOWNLOADINFO_INSTRUMENT       = 0x00000001U,
+    DMUS_DOWNLOADINFO_WAVE             = 0x00000002U,
+    DMUS_DOWNLOADINFO_INSTRUMENT2      = 0x00000003U,
+    DMUS_DOWNLOADINFO_WAVEARTICULATION = 0x00000004U,
+    DMUS_DOWNLOADINFO_STREAMINGWAVE    = 0x00000005U,
+    DMUS_DOWNLOADINFO_ONESHOTWAVE      = 0x00000006U,
 }
 
-enum uint DMUS_DEFAULT_SIZE_OFFSETTABLE = 0x00000001;
-enum uint DMUS_INSTRUMENT_GM_INSTRUMENT = 0x00000001;
-enum uint DMUS_MIN_DATA_SIZE = 0x00000004;
+enum uint DMUS_DEFAULT_SIZE_OFFSETTABLE = 0x00000001U;
+enum uint DMUS_INSTRUMENT_GM_INSTRUMENT = 0x00000001U;
+enum uint DMUS_MIN_DATA_SIZE = 0x00000004U;
 
 enum : uint
 {
-    CONN_SRC_NONE          = 0x00000000,
-    CONN_SRC_LFO           = 0x00000001,
-    CONN_SRC_KEYONVELOCITY = 0x00000002,
-    CONN_SRC_KEYNUMBER     = 0x00000003,
-    CONN_SRC_EG1           = 0x00000004,
-    CONN_SRC_EG2           = 0x00000005,
-    CONN_SRC_PITCHWHEEL    = 0x00000006,
-    CONN_SRC_CC1           = 0x00000081,
-    CONN_SRC_CC7           = 0x00000087,
-    CONN_SRC_CC10          = 0x0000008a,
-    CONN_SRC_CC11          = 0x0000008b,
-}
-
-enum : uint
-{
-    CONN_DST_NONE           = 0x00000000,
-    CONN_DST_ATTENUATION    = 0x00000001,
-    CONN_DST_PITCH          = 0x00000003,
-    CONN_DST_PAN            = 0x00000004,
-    CONN_DST_LFO_FREQUENCY  = 0x00000104,
-    CONN_DST_LFO_STARTDELAY = 0x00000105,
+    CONN_SRC_NONE          = 0x00000000U,
+    CONN_SRC_LFO           = 0x00000001U,
+    CONN_SRC_KEYONVELOCITY = 0x00000002U,
+    CONN_SRC_KEYNUMBER     = 0x00000003U,
+    CONN_SRC_EG1           = 0x00000004U,
+    CONN_SRC_EG2           = 0x00000005U,
+    CONN_SRC_PITCHWHEEL    = 0x00000006U,
+    CONN_SRC_CC1           = 0x00000081U,
+    CONN_SRC_CC7           = 0x00000087U,
+    CONN_SRC_CC10          = 0x0000008aU,
+    CONN_SRC_CC11          = 0x0000008bU,
 }
 
 enum : uint
 {
-    CONN_DST_EG1_ATTACKTIME   = 0x00000206,
-    CONN_DST_EG1_DECAYTIME    = 0x00000207,
-    CONN_DST_EG1_RELEASETIME  = 0x00000209,
-    CONN_DST_EG1_SUSTAINLEVEL = 0x0000020a,
-    CONN_DST_EG2_ATTACKTIME   = 0x0000030a,
-    CONN_DST_EG2_DECAYTIME    = 0x0000030b,
-    CONN_DST_EG2_RELEASETIME  = 0x0000030d,
-    CONN_DST_EG2_SUSTAINLEVEL = 0x0000030e,
+    CONN_DST_NONE           = 0x00000000U,
+    CONN_DST_ATTENUATION    = 0x00000001U,
+    CONN_DST_PITCH          = 0x00000003U,
+    CONN_DST_PAN            = 0x00000004U,
+    CONN_DST_LFO_FREQUENCY  = 0x00000104U,
+    CONN_DST_LFO_STARTDELAY = 0x00000105U,
 }
 
 enum : uint
 {
-    CONN_TRN_NONE    = 0x00000000,
-    CONN_TRN_CONCAVE = 0x00000001,
+    CONN_DST_EG1_ATTACKTIME   = 0x00000206U,
+    CONN_DST_EG1_DECAYTIME    = 0x00000207U,
+    CONN_DST_EG1_RELEASETIME  = 0x00000209U,
+    CONN_DST_EG1_SUSTAINLEVEL = 0x0000020aU,
+    CONN_DST_EG2_ATTACKTIME   = 0x0000030aU,
+    CONN_DST_EG2_DECAYTIME    = 0x0000030bU,
+    CONN_DST_EG2_RELEASETIME  = 0x0000030dU,
+    CONN_DST_EG2_SUSTAINLEVEL = 0x0000030eU,
 }
 
-enum uint F_INSTRUMENT_DRUMS = 0x80000000;
-enum uint F_RGN_OPTION_SELFNONEXCLUSIVE = 0x00000001;
+enum : uint
+{
+    CONN_TRN_NONE    = 0x00000000U,
+    CONN_TRN_CONCAVE = 0x00000001U,
+}
+
+enum uint F_INSTRUMENT_DRUMS = 0x80000000U;
+enum uint F_RGN_OPTION_SELFNONEXCLUSIVE = 0x00000001U;
 
 enum : int
 {
@@ -299,7 +303,7 @@ enum : int
     WAVELINK_CHANNEL_RIGHT = 0x00000002,
 }
 
-enum uint F_WAVELINK_PHASE_MASTER = 0x00000001;
+enum uint F_WAVELINK_PHASE_MASTER = 0x00000001U;
 enum int POOL_CUE_NULL = 0xffffffff;
 
 enum : int
@@ -308,79 +312,79 @@ enum : int
     F_WSMP_NO_COMPRESSION = 0x00000002,
 }
 
-enum uint WLOOP_TYPE_FORWARD = 0x00000000;
+enum uint WLOOP_TYPE_FORWARD = 0x00000000U;
 
 enum : uint
 {
-    CONN_SRC_POLYPRESSURE    = 0x00000007,
-    CONN_SRC_CHANNELPRESSURE = 0x00000008,
+    CONN_SRC_POLYPRESSURE    = 0x00000007U,
+    CONN_SRC_CHANNELPRESSURE = 0x00000008U,
 }
 
 enum : uint
 {
-    CONN_SRC_VIBRATO      = 0x00000009,
-    CONN_SRC_MONOPRESSURE = 0x0000000a,
-    CONN_SRC_CC91         = 0x000000db,
-    CONN_SRC_CC93         = 0x000000dd,
+    CONN_SRC_VIBRATO      = 0x00000009U,
+    CONN_SRC_MONOPRESSURE = 0x0000000aU,
+    CONN_SRC_CC91         = 0x000000dbU,
+    CONN_SRC_CC93         = 0x000000ddU,
 }
 
 enum : uint
 {
-    CONN_DST_GAIN           = 0x00000001,
-    CONN_DST_KEYNUMBER      = 0x00000005,
-    CONN_DST_LEFT           = 0x00000010,
-    CONN_DST_RIGHT          = 0x00000011,
-    CONN_DST_CENTER         = 0x00000012,
-    CONN_DST_LEFTREAR       = 0x00000013,
-    CONN_DST_RIGHTREAR      = 0x00000014,
-    CONN_DST_LFE_CHANNEL    = 0x00000015,
-    CONN_DST_CHORUS         = 0x00000080,
-    CONN_DST_REVERB         = 0x00000081,
-    CONN_DST_VIB_FREQUENCY  = 0x00000114,
-    CONN_DST_VIB_STARTDELAY = 0x00000115,
+    CONN_DST_GAIN           = 0x00000001U,
+    CONN_DST_KEYNUMBER      = 0x00000005U,
+    CONN_DST_LEFT           = 0x00000010U,
+    CONN_DST_RIGHT          = 0x00000011U,
+    CONN_DST_CENTER         = 0x00000012U,
+    CONN_DST_LEFTREAR       = 0x00000013U,
+    CONN_DST_RIGHTREAR      = 0x00000014U,
+    CONN_DST_LFE_CHANNEL    = 0x00000015U,
+    CONN_DST_CHORUS         = 0x00000080U,
+    CONN_DST_REVERB         = 0x00000081U,
+    CONN_DST_VIB_FREQUENCY  = 0x00000114U,
+    CONN_DST_VIB_STARTDELAY = 0x00000115U,
 }
 
 enum : uint
 {
-    CONN_DST_EG1_DELAYTIME    = 0x0000020b,
-    CONN_DST_EG1_HOLDTIME     = 0x0000020c,
-    CONN_DST_EG1_SHUTDOWNTIME = 0x0000020d,
-    CONN_DST_EG2_DELAYTIME    = 0x0000030f,
-    CONN_DST_EG2_HOLDTIME     = 0x00000310,
-    CONN_DST_FILTER_CUTOFF    = 0x00000500,
-    CONN_DST_FILTER_Q         = 0x00000501,
+    CONN_DST_EG1_DELAYTIME    = 0x0000020bU,
+    CONN_DST_EG1_HOLDTIME     = 0x0000020cU,
+    CONN_DST_EG1_SHUTDOWNTIME = 0x0000020dU,
+    CONN_DST_EG2_DELAYTIME    = 0x0000030fU,
+    CONN_DST_EG2_HOLDTIME     = 0x00000310U,
+    CONN_DST_FILTER_CUTOFF    = 0x00000500U,
+    CONN_DST_FILTER_Q         = 0x00000501U,
 }
 
 enum : uint
 {
-    CONN_TRN_CONVEX = 0x00000002,
-    CONN_TRN_SWITCH = 0x00000003,
+    CONN_TRN_CONVEX = 0x00000002U,
+    CONN_TRN_SWITCH = 0x00000003U,
 }
 
 enum : uint
 {
-    DLS_CDL_AND            = 0x00000001,
-    DLS_CDL_OR             = 0x00000002,
-    DLS_CDL_XOR            = 0x00000003,
-    DLS_CDL_ADD            = 0x00000004,
-    DLS_CDL_SUBTRACT       = 0x00000005,
-    DLS_CDL_MULTIPLY       = 0x00000006,
-    DLS_CDL_DIVIDE         = 0x00000007,
-    DLS_CDL_LOGICAL_AND    = 0x00000008,
-    DLS_CDL_LOGICAL_OR     = 0x00000009,
-    DLS_CDL_LT             = 0x0000000a,
-    DLS_CDL_LE             = 0x0000000b,
-    DLS_CDL_GT             = 0x0000000c,
-    DLS_CDL_GE             = 0x0000000d,
-    DLS_CDL_EQ             = 0x0000000e,
-    DLS_CDL_NOT            = 0x0000000f,
-    DLS_CDL_CONST          = 0x00000010,
-    DLS_CDL_QUERY          = 0x00000011,
-    DLS_CDL_QUERYSUPPORTED = 0x00000012,
+    DLS_CDL_AND            = 0x00000001U,
+    DLS_CDL_OR             = 0x00000002U,
+    DLS_CDL_XOR            = 0x00000003U,
+    DLS_CDL_ADD            = 0x00000004U,
+    DLS_CDL_SUBTRACT       = 0x00000005U,
+    DLS_CDL_MULTIPLY       = 0x00000006U,
+    DLS_CDL_DIVIDE         = 0x00000007U,
+    DLS_CDL_LOGICAL_AND    = 0x00000008U,
+    DLS_CDL_LOGICAL_OR     = 0x00000009U,
+    DLS_CDL_LT             = 0x0000000aU,
+    DLS_CDL_LE             = 0x0000000bU,
+    DLS_CDL_GT             = 0x0000000cU,
+    DLS_CDL_GE             = 0x0000000dU,
+    DLS_CDL_EQ             = 0x0000000eU,
+    DLS_CDL_NOT            = 0x0000000fU,
+    DLS_CDL_CONST          = 0x00000010U,
+    DLS_CDL_QUERY          = 0x00000011U,
+    DLS_CDL_QUERYSUPPORTED = 0x00000012U,
 }
 
-enum uint WLOOP_TYPE_RELEASE = 0x00000002;
-enum uint F_WAVELINK_MULTICHANNEL = 0x00000002;
+enum uint WLOOP_TYPE_RELEASE = 0x00000002U;
+enum uint F_WAVELINK_MULTICHANNEL = 0x00000002U;
 enum GUID DLSID_GMInHardware = GUID("178f2f24-c364-11d1-a760-0000f875ac12");
 enum GUID DLSID_GSInHardware = GUID("178f2f25-c364-11d1-a760-0000f875ac12");
 enum GUID DLSID_XGInHardware = GUID("178f2f26-c364-11d1-a760-0000f875ac12");
@@ -396,7 +400,7 @@ enum GUID DLSID_ManufacturersID = GUID("b03e1181-8095-11d2-a1ef-00600833dbd8");
 enum GUID DLSID_ProductID = GUID("b03e1182-8095-11d2-a1ef-00600833dbd8");
 enum GUID DLSID_SamplePlaybackRate = GUID("2a91f713-a4bf-11d2-bbdf-00600833dbd8");
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* REGSTR_PATH_SOFTWARESYNTHS = "Software\\Microsoft\\DirectMusic\\SoftwareSynths";
-enum uint REFRESH_F_LASTBUFFER = 0x00000001;
+enum uint REFRESH_F_LASTBUFFER = 0x00000001U;
 enum GUID CLSID_DirectMusicSynthSink = GUID("aec17ce3-a514-11d1-afa6-00aa0024d8b6");
 
 enum : GUID
@@ -409,30 +413,30 @@ enum GUID CLSID_DirectSoundPrivate = GUID("11ab3ec0-25ec-11d1-a4d8-00c04fc28aca"
 enum GUID DSPROPSETID_DirectSoundDevice = GUID("84624f82-25ec-11d1-a4d8-00c04fc28aca");
 enum int DV_DVSD_NTSC_FRAMESIZE = 0x0001d4c0;
 enum int DV_DVSD_PAL_FRAMESIZE = 0x00023280;
-enum uint DV_SMCHN = 0x0000e000;
+enum uint DV_SMCHN = 0x0000e000U;
 
 enum : uint
 {
-    DV_AUDIOMODE = 0x00000f00,
-    DV_AUDIOSMP  = 0x38000000,
-    DV_AUDIOQU   = 0x07000000,
+    DV_AUDIOMODE = 0x00000f00U,
+    DV_AUDIOSMP  = 0x38000000U,
+    DV_AUDIOQU   = 0x07000000U,
 }
 
-enum uint DV_NTSCPAL = 0x00200000;
-enum uint DV_STYPE = 0x001f0000;
+enum uint DV_NTSCPAL = 0x00200000U;
+enum uint DV_STYPE = 0x001f0000U;
 
 enum : uint
 {
-    DV_NTSC          = 0x00000000,
-    DV_PAL           = 0x00000001,
-    DV_SD            = 0x00000000,
-    DV_HD            = 0x00000001,
-    DV_SL            = 0x00000002,
-    DV_CAP_AUD16Bits = 0x00000000,
-    DV_CAP_AUD12Bits = 0x00000001,
+    DV_NTSC          = 0x00000000U,
+    DV_PAL           = 0x00000001U,
+    DV_SD            = 0x00000000U,
+    DV_HD            = 0x00000001U,
+    DV_SL            = 0x00000002U,
+    DV_CAP_AUD16Bits = 0x00000000U,
+    DV_CAP_AUD12Bits = 0x00000001U,
 }
 
-enum uint SIZE_DVINFO = 0x00000020;
+enum uint SIZE_DVINFO = 0x00000020U;
 
 // Callbacks
 
@@ -802,7 +806,7 @@ struct DMUS_CLOCKINFO8
     uint           dwFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmusics/ns-dmusics-dmus_voice_state))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/ns-dmusics-dmus_voice_state
 struct DMUS_VOICE_STATE
 {
     BOOL  bExists;
@@ -888,7 +892,7 @@ struct DVAudInfo
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmddk/ns-mmddk-mdevicecapsex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmddk/ns-mmddk-mdevicecapsex
 struct MDEVICECAPSEX
 {
 align (1):
@@ -896,7 +900,7 @@ align (1):
     void* pCaps;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmddk/ns-mmddk-midiopendesc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmddk/ns-mmddk-midiopendesc
 struct MIDIOPENDESC
 {
 align (1):
@@ -1018,81 +1022,81 @@ interface IDirectMusicThru : IUnknown
 }
 
 @GUID("09823661-5c85-11d2-afa6-00aa0024d8b6")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmusics/nn-dmusics-idirectmusicsynth))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nn-dmusics-idirectmusicsynth
 interface IDirectMusicSynth : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth-open))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth-open
     HRESULT Open(DMUS_PORTPARAMS8* pPortParams);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth-close))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth-close
     HRESULT Close();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth-setnumchannelgroups))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth-setnumchannelgroups
     HRESULT SetNumChannelGroups(uint dwGroups);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth-download))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth-download
     HRESULT Download(HANDLE* phDownload, void* pvData, BOOL* pbFree);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth-unload))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth-unload
     HRESULT Unload(HANDLE hDownload, ptrdiff_t lpFreeHandle, HANDLE hUserData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth-playbuffer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth-playbuffer
     HRESULT PlayBuffer(long rt, ubyte* pbBuffer, uint cbBuffer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth-getrunningstats))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth-getrunningstats
     HRESULT GetRunningStats(DMUS_SYNTHSTATS* pStats);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth-getportcaps))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth-getportcaps
     HRESULT GetPortCaps(DMUS_PORTCAPS* pCaps);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth-setmasterclock))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth-setmasterclock
     HRESULT SetMasterClock(IReferenceClock pClock);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth-getlatencyclock))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth-getlatencyclock
     HRESULT GetLatencyClock(IReferenceClock* ppClock);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth-activate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth-activate
     HRESULT Activate(BOOL fEnable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth-setsynthsink))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth-setsynthsink
     HRESULT SetSynthSink(IDirectMusicSynthSink pSynthSink);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth-render))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth-render
     HRESULT Render(short* pBuffer, uint dwLength, long llPosition);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth-setchannelpriority))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth-setchannelpriority
     HRESULT SetChannelPriority(uint dwChannelGroup, uint dwChannel, uint dwPriority);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth-getchannelpriority))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth-getchannelpriority
     HRESULT GetChannelPriority(uint dwChannelGroup, uint dwChannel, uint* pdwPriority);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth-getformat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth-getformat
     HRESULT GetFormat(WAVEFORMATEX* pWaveFormatEx, uint* pdwWaveFormatExSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth-getappend))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth-getappend
     HRESULT GetAppend(uint* pdwAppend);
 }
 
 @GUID("53cab625-2711-4c9f-9de7-1b7f925f6fc8")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmusics/nn-dmusics-idirectmusicsynth8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nn-dmusics-idirectmusicsynth8
 interface IDirectMusicSynth8 : IDirectMusicSynth
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth8-playvoice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth8-playvoice
     HRESULT PlayVoice(long rt, uint dwVoiceId, uint dwChannelGroup, uint dwChannel, uint dwDLId, int prPitch, 
                       int vrVolume, ulong stVoiceStart, ulong stLoopStart, ulong stLoopEnd);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth8-stopvoice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth8-stopvoice
     HRESULT StopVoice(long rt, uint dwVoiceId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth8-getvoicestate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth8-getvoicestate
     HRESULT GetVoiceState(uint* dwVoice, uint cbVoice, DMUS_VOICE_STATE* dwVoiceState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth8-refresh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth8-refresh
     HRESULT Refresh(uint dwDownloadID, uint dwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth8-assignchanneltobuses))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynth8-assignchanneltobuses
     HRESULT AssignChannelToBuses(uint dwChannelGroup, uint dwChannel, uint* pdwBuses, uint cBuses);
 }
 
 @GUID("09823663-5c85-11d2-afa6-00aa0024d8b6")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmusics/nn-dmusics-idirectmusicsynthsink))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nn-dmusics-idirectmusicsynthsink
 interface IDirectMusicSynthSink : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynthsink-init))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynthsink-init
     HRESULT Init(IDirectMusicSynth pSynth);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynthsink-setmasterclock))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynthsink-setmasterclock
     HRESULT SetMasterClock(IReferenceClock pClock);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynthsink-getlatencyclock))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynthsink-getlatencyclock
     HRESULT GetLatencyClock(IReferenceClock* ppClock);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynthsink-activate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynthsink-activate
     HRESULT Activate(BOOL fEnable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynthsink-sampletoreftime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynthsink-sampletoreftime
     HRESULT SampleToRefTime(long llSampleTime, long* prfTime);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynthsink-reftimetosample))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynthsink-reftimetosample
     HRESULT RefTimeToSample(long rfTime, long* pllSampleTime);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynthsink-setdirectsound))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynthsink-setdirectsound
     HRESULT SetDirectSound(IDirectSound pDirectSound, IDirectSoundBuffer pDirectSoundBuffer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynthsink-getdesiredbuffersize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmusics/nf-dmusics-idirectmusicsynthsink-getdesiredbuffersize
     HRESULT GetDesiredBufferSize(uint* pdwBufferSizeInSamples);
 }
 

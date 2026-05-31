@@ -3,7 +3,7 @@
 module windows.win32.networkmanagement.multicast;
 
 public import windows.core;
-public import windows.win32.foundation : BOOL, UNICODE_STRING;
+public import windows.win32.foundation.foundation : BOOL, UNICODE_STRING;
 
 extern(Windows) @nogc nothrow:
 
@@ -11,7 +11,7 @@ extern(Windows) @nogc nothrow:
 // Constants
 
 
-enum uint MCAST_CLIENT_ID_LEN = 0x00000011;
+enum uint MCAST_CLIENT_ID_LEN = 0x00000011U;
 enum int MCAST_API_CURRENT_VERSION = 0x00000001;
 
 enum : int
@@ -23,21 +23,21 @@ enum : int
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/madcapcl/ns-madcapcl-ipng_address))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/madcapcl/ns-madcapcl-ipng_address
 union IPNG_ADDRESS
 {
     uint      IpAddrV4;
     ubyte[16] IpAddrV6;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/madcapcl/ns-madcapcl-mcast_client_uid))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/madcapcl/ns-madcapcl-mcast_client_uid
 struct MCAST_CLIENT_UID
 {
     ubyte* ClientUID;
     uint   ClientUIDLength;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/madcapcl/ns-madcapcl-mcast_scope_ctx))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/madcapcl/ns-madcapcl-mcast_scope_ctx
 struct MCAST_SCOPE_CTX
 {
     IPNG_ADDRESS ScopeID;
@@ -45,7 +45,7 @@ struct MCAST_SCOPE_CTX
     IPNG_ADDRESS ServerID;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/madcapcl/ns-madcapcl-mcast_scope_entry))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/madcapcl/ns-madcapcl-mcast_scope_entry
 struct MCAST_SCOPE_ENTRY
 {
     MCAST_SCOPE_CTX ScopeCtx;
@@ -54,7 +54,7 @@ struct MCAST_SCOPE_ENTRY
     UNICODE_STRING  ScopeDesc;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/madcapcl/ns-madcapcl-mcast_lease_request))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/madcapcl/ns-madcapcl-mcast_lease_request
 struct MCAST_LEASE_REQUEST
 {
     int          LeaseStartTime;
@@ -67,7 +67,7 @@ struct MCAST_LEASE_REQUEST
     ubyte*       pAddrBuf;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/madcapcl/ns-madcapcl-mcast_lease_response))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/madcapcl/ns-madcapcl-mcast_lease_response
 struct MCAST_LEASE_RESPONSE
 {
     int          LeaseStartTime;

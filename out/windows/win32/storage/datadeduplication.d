@@ -3,9 +3,9 @@
 module windows.win32.storage.datadeduplication;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BSTR, HRESULT;
-public import windows.win32.system.com : IStream, IUnknown;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BSTR, HRESULT;
+public import windows.win32.system.com.com : IStream, IUnknown;
 public import windows.win32.system.variant : VARIANT;
 
 extern(Windows) @nogc nothrow:
@@ -13,13 +13,15 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddpbackup/ne-ddpbackup-dedup_backup_support_param_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddpbackup/ne-ddpbackup-dedup_backup_support_param_type
 alias DEDUP_BACKUP_SUPPORT_PARAM_TYPE = int;
 enum : int
 {
     DEDUP_RECONSTRUCT_UNOPTIMIZED = 0x00000001,
     DEDUP_RECONSTRUCT_OPTIMIZED   = 0x00000002,
 }
+
 alias DEDUP_SET_PARAM_TYPE = int;
 enum : int
 {
@@ -29,12 +31,14 @@ enum : int
     DEDUP_PT_InvariantChunking            = 0x00000004,
     DEDUP_PT_DisableStrongHashComputation = 0x00000005,
 }
+
 enum DedupDataPortManagerOption : int
 {
     DedupDataPortManagerOption_None               = 0x00000000,
     DedupDataPortManagerOption_AutoStart          = 0x00000001,
     DedupDataPortManagerOption_SkipReconciliation = 0x00000002,
 }
+
 enum DedupDataPortVolumeStatus : int
 {
     DedupDataPortVolumeStatus_Unknown      = 0x00000000,
@@ -45,6 +49,7 @@ enum DedupDataPortVolumeStatus : int
     DedupDataPortVolumeStatus_Maintenance  = 0x00000005,
     DedupDataPortVolumeStatus_Shutdown     = 0x00000006,
 }
+
 enum DedupDataPortRequestStatus : int
 {
     DedupDataPortRequestStatus_Unknown    = 0x00000000,
@@ -54,21 +59,25 @@ enum DedupDataPortRequestStatus : int
     DedupDataPortRequestStatus_Complete   = 0x00000004,
     DedupDataPortRequestStatus_Failed     = 0x00000005,
 }
+
 enum DedupChunkFlags : int
 {
     DedupChunkFlags_None       = 0x00000000,
     DedupChunkFlags_Compressed = 0x00000001,
 }
+
 enum DedupChunkingAlgorithm : int
 {
     DedupChunkingAlgorithm_Unknonwn = 0x00000000,
     DedupChunkingAlgorithm_V1       = 0x00000001,
 }
+
 enum DedupHashingAlgorithm : int
 {
     DedupHashingAlgorithm_Unknonwn = 0x00000000,
     DedupHashingAlgorithm_V1       = 0x00000001,
 }
+
 enum DedupCompressionAlgorithm : int
 {
     DedupCompressionAlgorithm_Unknonwn = 0x00000000,
@@ -78,12 +87,12 @@ enum DedupCompressionAlgorithm : int
 // Constants
 
 
-enum uint DEDUP_CHUNKLIB_MAX_CHUNKS_ENUM = 0x00000400;
+enum uint DEDUP_CHUNKLIB_MAX_CHUNKS_ENUM = 0x00000400U;
 
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddpbackup/ns-ddpbackup-dedup_container_extent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddpbackup/ns-ddpbackup-dedup_container_extent
 struct DEDUP_CONTAINER_EXTENT
 {
     uint ContainerIndex;
@@ -91,7 +100,7 @@ struct DEDUP_CONTAINER_EXTENT
     long Length;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddpbackup/ns-ddpbackup-ddp_file_extent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddpbackup/ns-ddpbackup-ddp_file_extent
 struct DDP_FILE_EXTENT
 {
     long Length;
@@ -144,25 +153,25 @@ struct DedupDataPort;
 
 @GUID("7bacc67a-2f1d-42d0-897e-6ff62dd533bb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddpbackup/nn-ddpbackup-idedupreadfilecallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddpbackup/nn-ddpbackup-idedupreadfilecallback
 interface IDedupReadFileCallback : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddpbackup/nf-ddpbackup-idedupreadfilecallback-readbackupfile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddpbackup/nf-ddpbackup-idedupreadfilecallback-readbackupfile
     HRESULT ReadBackupFile(BSTR FileFullPath, long FileOffset, uint SizeToRead, ubyte* FileBuffer, 
                            uint* ReturnedSize, uint Flags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddpbackup/nf-ddpbackup-idedupreadfilecallback-ordercontainersrestore))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddpbackup/nf-ddpbackup-idedupreadfilecallback-ordercontainersrestore
     HRESULT OrderContainersRestore(uint NumberOfContainers, BSTR* ContainerPaths, uint* ReadPlanEntries, 
                                    DEDUP_CONTAINER_EXTENT** ReadPlan);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddpbackup/nf-ddpbackup-idedupreadfilecallback-previewcontainerread))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddpbackup/nf-ddpbackup-idedupreadfilecallback-previewcontainerread
     HRESULT PreviewContainerRead(BSTR FileFullPath, uint NumberOfReads, DDP_FILE_EXTENT* ReadOffsets);
 }
 
 @GUID("c719d963-2b2d-415e-acf7-7eb7ca596ff4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddpbackup/nn-ddpbackup-idedupbackupsupport))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddpbackup/nn-ddpbackup-idedupbackupsupport
 interface IDedupBackupSupport : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddpbackup/nf-ddpbackup-idedupbackupsupport-restorefiles))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddpbackup/nf-ddpbackup-idedupbackupsupport-restorefiles
     HRESULT RestoreFiles(uint NumberOfFiles, BSTR* FileFullPaths, IDedupReadFileCallback Store, uint Flags, 
                          HRESULT* FileResults);
 }

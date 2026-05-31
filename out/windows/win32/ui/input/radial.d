@@ -3,9 +3,9 @@
 module windows.win32.ui.input.radial;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : HRESULT, HWND;
-public import windows.win32.system.winrt : IInspectable;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : HRESULT, HWND;
+public import windows.win32.system.winrt.winrt : IInspectable;
 
 extern(Windows) @nogc nothrow:
 
@@ -14,19 +14,19 @@ extern(Windows) @nogc nothrow:
 
 @GUID("1b0535c9-57ad-45c1-9d79-ad5c34360513")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.14393))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/radialcontrollerinterop/nn-radialcontrollerinterop-iradialcontrollerinterop))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/radialcontrollerinterop/nn-radialcontrollerinterop-iradialcontrollerinterop
 interface IRadialControllerInterop : IInspectable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/radialcontrollerinterop/nf-radialcontrollerinterop-iradialcontrollerinterop-createforwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/radialcontrollerinterop/nf-radialcontrollerinterop-iradialcontrollerinterop-createforwindow
     HRESULT CreateForWindow(HWND hwnd, const(GUID)* riid, void** ppv);
 }
 
 @GUID("787cdaac-3186-476d-87e4-b9374a7b9970")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.14393))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/radialcontrollerinterop/nn-radialcontrollerinterop-iradialcontrollerconfigurationinterop))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/radialcontrollerinterop/nn-radialcontrollerinterop-iradialcontrollerconfigurationinterop
 interface IRadialControllerConfigurationInterop : IInspectable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/radialcontrollerinterop/nf-radialcontrollerinterop-iradialcontrollerconfigurationinterop-getforwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/radialcontrollerinterop/nf-radialcontrollerinterop-iradialcontrollerconfigurationinterop-getforwindow
     HRESULT GetForWindow(HWND hwnd, const(GUID)* riid, void** ppv);
 }
 

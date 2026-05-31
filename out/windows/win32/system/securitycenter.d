@@ -3,14 +3,15 @@
 module windows.win32.system.securitycenter;
 
 public import windows.core;
-public import windows.win32.foundation : BOOL, BSTR, HANDLE, HRESULT, PWSTR;
-public import windows.win32.system.com : IDispatch;
+public import windows.win32.foundation.foundation : BOOL, BSTR, HANDLE, HRESULT, PWSTR;
+public import windows.win32.system.com.com : IDispatch;
 public import windows.win32.system.threading : LPTHREAD_START_ROUTINE;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
+
 
 alias WSC_SECURITY_PRODUCT_SUBSTATUS = int;
 enum : int
@@ -20,7 +21,8 @@ enum : int
     WSC_SECURITY_PRODUCT_SUBSTATUS_ACTION_RECOMMENDED = 0x00000002,
     WSC_SECURITY_PRODUCT_SUBSTATUS_ACTION_NEEDED      = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iwscapi/ne-iwscapi-wsc_security_product_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iwscapi/ne-iwscapi-wsc_security_product_state
 alias WSC_SECURITY_PRODUCT_STATE = int;
 enum : int
 {
@@ -29,6 +31,7 @@ enum : int
     WSC_SECURITY_PRODUCT_STATE_SNOOZED = 0x00000002,
     WSC_SECURITY_PRODUCT_STATE_EXPIRED = 0x00000003,
 }
+
 alias SECURITY_PRODUCT_TYPE = int;
 enum : int
 {
@@ -36,14 +39,16 @@ enum : int
     SECURITY_PRODUCT_TYPE_FIREWALL    = 0x00000001,
     SECURITY_PRODUCT_TYPE_ANTISPYWARE = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iwscapi/ne-iwscapi-wsc_security_signature_status))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iwscapi/ne-iwscapi-wsc_security_signature_status
 alias WSC_SECURITY_SIGNATURE_STATUS = int;
 enum : int
 {
     WSC_SECURITY_PRODUCT_OUT_OF_DATE = 0x00000000,
     WSC_SECURITY_PRODUCT_UP_TO_DATE  = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wscapi/ne-wscapi-wsc_security_provider))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wscapi/ne-wscapi-wsc_security_provider
 alias WSC_SECURITY_PROVIDER = int;
 enum : int
 {
@@ -57,7 +62,8 @@ enum : int
     WSC_SECURITY_PROVIDER_NONE                 = 0x00000000,
     WSC_SECURITY_PROVIDER_ALL                  = 0x0000007f,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wscapi/ne-wscapi-wsc_security_provider_health))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wscapi/ne-wscapi-wsc_security_provider_health
 alias WSC_SECURITY_PROVIDER_HEALTH = int;
 enum : int
 {
@@ -102,18 +108,18 @@ struct WSCDefaultProduct;
 
 @GUID("8c38232e-3a45-4a27-92b0-1a16a975f669")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iwscapi/nn-iwscapi-iwscproduct))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iwscapi/nn-iwscapi-iwscproduct
 interface IWscProduct : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iwscapi/nf-iwscapi-iwscproduct-get_productname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iwscapi/nf-iwscapi-iwscproduct-get_productname
     HRESULT get_ProductName(BSTR* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iwscapi/nf-iwscapi-iwscproduct-get_productstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iwscapi/nf-iwscapi-iwscproduct-get_productstate
     HRESULT get_ProductState(WSC_SECURITY_PRODUCT_STATE* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iwscapi/nf-iwscapi-iwscproduct-get_signaturestatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iwscapi/nf-iwscapi-iwscproduct-get_signaturestatus
     HRESULT get_SignatureStatus(WSC_SECURITY_SIGNATURE_STATUS* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iwscapi/nf-iwscapi-iwscproduct-get_remediationpath))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iwscapi/nf-iwscapi-iwscproduct-get_remediationpath
     HRESULT get_RemediationPath(BSTR* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iwscapi/nf-iwscapi-iwscproduct-get_productstatetimestamp))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iwscapi/nf-iwscapi-iwscproduct-get_productstatetimestamp
     HRESULT get_ProductStateTimestamp(BSTR* pVal);
     HRESULT get_ProductGuid(BSTR* pVal);
     HRESULT get_ProductIsDefault(BOOL* pVal);
@@ -138,14 +144,14 @@ interface IWscProduct3 : IWscProduct2
 
 @GUID("722a338c-6e8e-4e72-ac27-1417fb0c81c2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iwscapi/nn-iwscapi-iwscproductlist))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iwscapi/nn-iwscapi-iwscproductlist
 interface IWSCProductList : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iwscapi/nf-iwscapi-iwscproductlist-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iwscapi/nf-iwscapi-iwscproductlist-initialize
     HRESULT Initialize(/*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(WSC_SECURITY_PROVIDER))], [])*/uint provider);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iwscapi/nf-iwscapi-iwscproductlist-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iwscapi/nf-iwscapi-iwscproductlist-get_count
     HRESULT get_Count(int* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iwscapi/nf-iwscapi-iwscproductlist-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iwscapi/nf-iwscapi-iwscproductlist-get_item
     HRESULT get_Item(uint index, IWscProduct* pVal);
 }
 

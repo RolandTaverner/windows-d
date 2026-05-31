@@ -3,108 +3,116 @@
 module windows.win32.system.registry;
 
 public import windows.core;
-public import windows.win32.foundation : BOOL, FILETIME, HANDLE, PSTR, PWSTR,
-                                         WIN32_ERROR;
-public import windows.win32.security : OBJECT_SECURITY_INFORMATION, PSECURITY_DESCRIPTOR,
-                                       SECURITY_ATTRIBUTES;
+public import windows.win32.foundation.foundation : BOOL, FILETIME, HANDLE, PSTR, PWSTR,
+                                                    WIN32_ERROR;
+public import windows.win32.security.security : OBJECT_SECURITY_INFORMATION, PSECURITY_DESCRIPTOR,
+                                                SECURITY_ATTRIBUTES;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
+
 alias REG_VALUE_TYPE = uint;
 enum : uint
 {
-    REG_NONE                       = 0x00000000,
-    REG_SZ                         = 0x00000001,
-    REG_EXPAND_SZ                  = 0x00000002,
-    REG_BINARY                     = 0x00000003,
-    REG_DWORD                      = 0x00000004,
-    REG_DWORD_LITTLE_ENDIAN        = 0x00000004,
-    REG_DWORD_BIG_ENDIAN           = 0x00000005,
-    REG_LINK                       = 0x00000006,
-    REG_MULTI_SZ                   = 0x00000007,
-    REG_RESOURCE_LIST              = 0x00000008,
-    REG_FULL_RESOURCE_DESCRIPTOR   = 0x00000009,
-    REG_RESOURCE_REQUIREMENTS_LIST = 0x0000000a,
-    REG_QWORD                      = 0x0000000b,
-    REG_QWORD_LITTLE_ENDIAN        = 0x0000000b,
+    REG_NONE                       = 0x00000000U,
+    REG_SZ                         = 0x00000001U,
+    REG_EXPAND_SZ                  = 0x00000002U,
+    REG_BINARY                     = 0x00000003U,
+    REG_DWORD                      = 0x00000004U,
+    REG_DWORD_LITTLE_ENDIAN        = 0x00000004U,
+    REG_DWORD_BIG_ENDIAN           = 0x00000005U,
+    REG_LINK                       = 0x00000006U,
+    REG_MULTI_SZ                   = 0x00000007U,
+    REG_RESOURCE_LIST              = 0x00000008U,
+    REG_FULL_RESOURCE_DESCRIPTOR   = 0x00000009U,
+    REG_RESOURCE_REQUIREMENTS_LIST = 0x0000000aU,
+    REG_QWORD                      = 0x0000000bU,
+    REG_QWORD_LITTLE_ENDIAN        = 0x0000000bU,
 }
+
 alias REG_SAM_FLAGS = uint;
 enum : uint
 {
-    KEY_QUERY_VALUE        = 0x00000001,
-    KEY_SET_VALUE          = 0x00000002,
-    KEY_CREATE_SUB_KEY     = 0x00000004,
-    KEY_ENUMERATE_SUB_KEYS = 0x00000008,
-    KEY_NOTIFY             = 0x00000010,
-    KEY_CREATE_LINK        = 0x00000020,
-    KEY_WOW64_32KEY        = 0x00000200,
-    KEY_WOW64_64KEY        = 0x00000100,
-    KEY_WOW64_RES          = 0x00000300,
-    KEY_READ               = 0x00020019,
-    KEY_WRITE              = 0x00020006,
-    KEY_EXECUTE            = 0x00020019,
-    KEY_ALL_ACCESS         = 0x000f003f,
+    KEY_QUERY_VALUE        = 0x00000001U,
+    KEY_SET_VALUE          = 0x00000002U,
+    KEY_CREATE_SUB_KEY     = 0x00000004U,
+    KEY_ENUMERATE_SUB_KEYS = 0x00000008U,
+    KEY_NOTIFY             = 0x00000010U,
+    KEY_CREATE_LINK        = 0x00000020U,
+    KEY_WOW64_32KEY        = 0x00000200U,
+    KEY_WOW64_64KEY        = 0x00000100U,
+    KEY_WOW64_RES          = 0x00000300U,
+    KEY_READ               = 0x00020019U,
+    KEY_WRITE              = 0x00020006U,
+    KEY_EXECUTE            = 0x00020019U,
+    KEY_ALL_ACCESS         = 0x000f003fU,
 }
+
 alias REG_OPEN_CREATE_OPTIONS = uint;
 enum : uint
 {
-    REG_OPTION_RESERVED        = 0x00000000,
-    REG_OPTION_NON_VOLATILE    = 0x00000000,
-    REG_OPTION_VOLATILE        = 0x00000001,
-    REG_OPTION_CREATE_LINK     = 0x00000002,
-    REG_OPTION_BACKUP_RESTORE  = 0x00000004,
-    REG_OPTION_OPEN_LINK       = 0x00000008,
-    REG_OPTION_DONT_VIRTUALIZE = 0x00000010,
+    REG_OPTION_RESERVED        = 0x00000000U,
+    REG_OPTION_NON_VOLATILE    = 0x00000000U,
+    REG_OPTION_VOLATILE        = 0x00000001U,
+    REG_OPTION_CREATE_LINK     = 0x00000002U,
+    REG_OPTION_BACKUP_RESTORE  = 0x00000004U,
+    REG_OPTION_OPEN_LINK       = 0x00000008U,
+    REG_OPTION_DONT_VIRTUALIZE = 0x00000010U,
 }
+
 alias REG_CREATE_KEY_DISPOSITION = uint;
 enum : uint
 {
-    REG_CREATED_NEW_KEY     = 0x00000001,
-    REG_OPENED_EXISTING_KEY = 0x00000002,
+    REG_CREATED_NEW_KEY     = 0x00000001U,
+    REG_OPENED_EXISTING_KEY = 0x00000002U,
 }
+
 alias REG_SAVE_FORMAT = uint;
 enum : uint
 {
-    REG_STANDARD_FORMAT = 0x00000001,
-    REG_LATEST_FORMAT   = 0x00000002,
-    REG_NO_COMPRESSION  = 0x00000004,
+    REG_STANDARD_FORMAT = 0x00000001U,
+    REG_LATEST_FORMAT   = 0x00000002U,
+    REG_NO_COMPRESSION  = 0x00000004U,
 }
+
 alias REG_RESTORE_KEY_FLAGS = int;
 enum : int
 {
     REG_FORCE_RESTORE       = 0x00000008,
     REG_WHOLE_HIVE_VOLATILE = 0x00000001,
 }
+
 alias REG_NOTIFY_FILTER = uint;
 enum : uint
 {
-    REG_NOTIFY_CHANGE_NAME       = 0x00000001,
-    REG_NOTIFY_CHANGE_ATTRIBUTES = 0x00000002,
-    REG_NOTIFY_CHANGE_LAST_SET   = 0x00000004,
-    REG_NOTIFY_CHANGE_SECURITY   = 0x00000008,
-    REG_NOTIFY_THREAD_AGNOSTIC   = 0x10000000,
+    REG_NOTIFY_CHANGE_NAME       = 0x00000001U,
+    REG_NOTIFY_CHANGE_ATTRIBUTES = 0x00000002U,
+    REG_NOTIFY_CHANGE_LAST_SET   = 0x00000004U,
+    REG_NOTIFY_CHANGE_SECURITY   = 0x00000008U,
+    REG_NOTIFY_THREAD_AGNOSTIC   = 0x10000000U,
 }
+
 alias REG_ROUTINE_FLAGS = uint;
 enum : uint
 {
-    RRF_RT_DWORD          = 0x00000018,
-    RRF_RT_QWORD          = 0x00000048,
-    RRF_RT_REG_NONE       = 0x00000001,
-    RRF_RT_REG_SZ         = 0x00000002,
-    RRF_RT_REG_EXPAND_SZ  = 0x00000004,
-    RRF_RT_REG_BINARY     = 0x00000008,
-    RRF_RT_REG_DWORD      = 0x00000010,
-    RRF_RT_REG_MULTI_SZ   = 0x00000020,
-    RRF_RT_REG_QWORD      = 0x00000040,
-    RRF_RT_ANY            = 0x0000ffff,
-    RRF_SUBKEY_WOW6464KEY = 0x00010000,
-    RRF_SUBKEY_WOW6432KEY = 0x00020000,
-    RRF_WOW64_MASK        = 0x00030000,
-    RRF_NOEXPAND          = 0x10000000,
-    RRF_ZEROONFAILURE     = 0x20000000,
+    RRF_RT_DWORD          = 0x00000018U,
+    RRF_RT_QWORD          = 0x00000048U,
+    RRF_RT_REG_NONE       = 0x00000001U,
+    RRF_RT_REG_SZ         = 0x00000002U,
+    RRF_RT_REG_EXPAND_SZ  = 0x00000004U,
+    RRF_RT_REG_BINARY     = 0x00000008U,
+    RRF_RT_REG_DWORD      = 0x00000010U,
+    RRF_RT_REG_MULTI_SZ   = 0x00000020U,
+    RRF_RT_REG_QWORD      = 0x00000040U,
+    RRF_RT_ANY            = 0x0000ffffU,
+    RRF_SUBKEY_WOW6464KEY = 0x00010000U,
+    RRF_SUBKEY_WOW6432KEY = 0x00020000U,
+    RRF_WOW64_MASK        = 0x00030000U,
+    RRF_NOEXPAND          = 0x10000000U,
+    RRF_ZEROONFAILURE     = 0x20000000U,
 }
 
 // Constants
@@ -125,13 +133,13 @@ enum : HKEY
 enum HKEY HKEY_CURRENT_CONFIG = HKEY(0x80000005);
 enum HKEY HKEY_DYN_DATA = HKEY(0x80000006);
 enum HKEY HKEY_CURRENT_USER_LOCAL_SETTINGS = HKEY(0x80000007);
-enum uint REG_PROCESS_APPKEY = 0x00000001;
-enum uint REG_USE_CURRENT_SECURITY_CONTEXT = 0x00000002;
-enum uint PROVIDER_KEEPS_VALUE_LENGTH = 0x00000001;
-enum uint REG_MUI_STRING_TRUNCATE = 0x00000001;
-enum uint REG_SECURE_CONNECTION = 0x00000001;
-enum uint REG_ALLOW_TRANSPORT_FALLBACK = 0x00000002;
-enum uint REG_ALLOW_UNSECURE_CONNECTION = 0x00000004;
+enum uint REG_PROCESS_APPKEY = 0x00000001U;
+enum uint REG_USE_CURRENT_SECURITY_CONTEXT = 0x00000002U;
+enum uint PROVIDER_KEEPS_VALUE_LENGTH = 0x00000001U;
+enum uint REG_MUI_STRING_TRUNCATE = 0x00000001U;
+enum uint REG_SECURE_CONNECTION = 0x00000001U;
+enum uint REG_ALLOW_TRANSPORT_FALLBACK = 0x00000002U;
+enum uint REG_ALLOW_UNSECURE_CONNECTION = 0x00000004U;
 
 enum : const(wchar)*
 {
@@ -266,7 +274,7 @@ enum : const(wchar)*
     REGSTR_PATH_VMM32FILES     = "System\\CurrentControlSet\\Control\\VMM32Files",
 }
 
-enum uint REGSTR_MAX_VALUE_LENGTH = 0x00000100;
+enum uint REGSTR_MAX_VALUE_LENGTH = 0x00000100U;
 enum const(wchar)* REGSTR_KEY_DEVICE_PROPERTIES = "Properties";
 
 enum : const(wchar)*
@@ -377,10 +385,10 @@ enum : const(wchar)*
 }
 
 enum const(wchar)* REGSTR_VAL_INSTALLTYPE = "InstallType";
-enum uint IT_COMPACT = 0x00000000;
-enum uint IT_TYPICAL = 0x00000001;
-enum uint IT_PORTABLE = 0x00000002;
-enum uint IT_CUSTOM = 0x00000003;
+enum uint IT_COMPACT = 0x00000000U;
+enum uint IT_TYPICAL = 0x00000001U;
+enum uint IT_PORTABLE = 0x00000002U;
+enum uint IT_CUSTOM = 0x00000003U;
 enum const(wchar)* REGSTR_VAL_WRAPPER = "Wrapper";
 enum const(wchar)* REGSTR_KEY_RUNHISTORY = "RunHistory";
 enum const(wchar)* REGSTR_VAL_LASTALIVEINTERVAL = "TimeStampInterval";
@@ -449,9 +457,9 @@ enum : const(wchar)*
 
 enum : uint
 {
-    DRIVERSIGN_NONE     = 0x00000000,
-    DRIVERSIGN_WARNING  = 0x00000001,
-    DRIVERSIGN_BLOCKING = 0x00000002,
+    DRIVERSIGN_NONE     = 0x00000000U,
+    DRIVERSIGN_WARNING  = 0x00000001U,
+    DRIVERSIGN_BLOCKING = 0x00000002U,
 }
 
 enum : const(wchar)*
@@ -511,19 +519,19 @@ enum : const(wchar)*
     REGSTR_VAL_VPOWERDFLAGS = "Flags",
 }
 
-enum uint VPDF_DISABLEPWRMGMT = 0x00000001;
-enum uint VPDF_FORCEAPM10MODE = 0x00000002;
-enum uint VPDF_SKIPINTELSLCHECK = 0x00000004;
+enum uint VPDF_DISABLEPWRMGMT = 0x00000001U;
+enum uint VPDF_FORCEAPM10MODE = 0x00000002U;
+enum uint VPDF_SKIPINTELSLCHECK = 0x00000004U;
 
 enum : uint
 {
-    VPDF_DISABLEPWRSTATUSPOLL = 0x00000008,
-    VPDF_DISABLERINGRESUME    = 0x00000010,
+    VPDF_DISABLEPWRSTATUSPOLL = 0x00000008U,
+    VPDF_DISABLERINGRESUME    = 0x00000010U,
 }
 
-enum uint VPDF_SHOWMULTIBATT = 0x00000020;
-enum uint BIF_SHOWSIMILARDRIVERS = 0x00000001;
-enum uint BIF_RAWDEVICENEEDSDRIVER = 0x00000002;
+enum uint VPDF_SHOWMULTIBATT = 0x00000020U;
+enum uint BIF_SHOWSIMILARDRIVERS = 0x00000001U;
+enum uint BIF_RAWDEVICENEEDSDRIVER = 0x00000002U;
 
 enum : const(wchar)*
 {
@@ -680,9 +688,9 @@ enum const(wchar)* REGSTR_VAL_PCMCIA_MEM = "Memory";
 
 enum : uint
 {
-    PCMCIA_DEF_MEMBEGIN = 0x000c0000,
-    PCMCIA_DEF_MEMEND   = 0x00ffffff,
-    PCMCIA_DEF_MEMLEN   = 0x00001000,
+    PCMCIA_DEF_MEMBEGIN = 0x000c0000U,
+    PCMCIA_DEF_MEMEND   = 0x00ffffffU,
+    PCMCIA_DEF_MEMLEN   = 0x00001000U,
 }
 
 enum : const(wchar)*
@@ -692,7 +700,7 @@ enum : const(wchar)*
     REGSTR_VAL_PCMCIA_SIZ   = "MinRegionSize",
 }
 
-enum uint PCMCIA_DEF_MIN_REGION = 0x00010000;
+enum uint PCMCIA_DEF_MIN_REGION = 0x00010000U;
 
 enum : const(wchar)*
 {
@@ -776,7 +784,7 @@ enum : const(wchar)*
 }
 
 enum const(wchar)* REGSTR_VAL_IDE_FORCE_SERIALIZE = "ForceSerialization";
-enum uint REGSTR_VAL_MAX_HCID_LEN = 0x00000400;
+enum uint REGSTR_VAL_MAX_HCID_LEN = 0x00000400U;
 
 enum : const(wchar)*
 {
@@ -786,26 +794,26 @@ enum : const(wchar)*
 
 enum : uint
 {
-    REGDF_NOTDETIO       = 0x00000001,
-    REGDF_NOTDETMEM      = 0x00000002,
-    REGDF_NOTDETIRQ      = 0x00000004,
-    REGDF_NOTDETDMA      = 0x00000008,
-    REGDF_NEEDFULLCONFIG = 0x00000010,
+    REGDF_NOTDETIO       = 0x00000001U,
+    REGDF_NOTDETMEM      = 0x00000002U,
+    REGDF_NOTDETIRQ      = 0x00000004U,
+    REGDF_NOTDETDMA      = 0x00000008U,
+    REGDF_NEEDFULLCONFIG = 0x00000010U,
 }
 
-enum uint REGDF_GENFORCEDCONFIG = 0x00000020;
-enum uint REGDF_NODETCONFIG = 0x00008000;
+enum uint REGDF_GENFORCEDCONFIG = 0x00000020U;
+enum uint REGDF_NODETCONFIG = 0x00008000U;
 
 enum : uint
 {
-    REGDF_CONFLICTIO  = 0x00010000,
-    REGDF_CONFLICTMEM = 0x00020000,
-    REGDF_CONFLICTIRQ = 0x00040000,
-    REGDF_CONFLICTDMA = 0x00080000,
+    REGDF_CONFLICTIO  = 0x00010000U,
+    REGDF_CONFLICTMEM = 0x00020000U,
+    REGDF_CONFLICTIRQ = 0x00040000U,
+    REGDF_CONFLICTDMA = 0x00080000U,
 }
 
-enum uint REGDF_MAPIRQ2TO9 = 0x00100000;
-enum uint REGDF_NOTVERIFIED = 0x80000000;
+enum uint REGDF_MAPIRQ2TO9 = 0x00100000U;
+enum uint REGDF_NOTVERIFIED = 0x80000000U;
 
 enum : const(wchar)*
 {
@@ -849,10 +857,10 @@ enum const(wchar)* REGSTR_VAL_APMMENUSUSPEND = "APMMenuSuspend";
 
 enum : uint
 {
-    APMMENUSUSPEND_DISABLED = 0x00000000,
-    APMMENUSUSPEND_ENABLED  = 0x00000001,
-    APMMENUSUSPEND_UNDOCKED = 0x00000002,
-    APMMENUSUSPEND_NOCHANGE = 0x00000080,
+    APMMENUSUSPEND_DISABLED = 0x00000000U,
+    APMMENUSUSPEND_ENABLED  = 0x00000001U,
+    APMMENUSUSPEND_UNDOCKED = 0x00000002U,
+    APMMENUSUSPEND_NOCHANGE = 0x00000080U,
 }
 
 enum : const(wchar)*
@@ -861,7 +869,7 @@ enum : const(wchar)*
     REGSTR_VAL_APMBATTIMEOUT = "APMBatTimeout",
 }
 
-enum uint APMTIMEOUT_DISABLED = 0x00000000;
+enum uint APMTIMEOUT_DISABLED = 0x00000000U;
 
 enum : const(wchar)*
 {
@@ -896,13 +904,13 @@ enum : const(wchar)*
 
 enum : uint
 {
-    CSCONFIGFLAG_BITS          = 0x00000007,
-    CSCONFIGFLAG_DISABLED      = 0x00000001,
-    CSCONFIGFLAG_DO_NOT_CREATE = 0x00000002,
-    CSCONFIGFLAG_DO_NOT_START  = 0x00000004,
+    CSCONFIGFLAG_BITS          = 0x00000007U,
+    CSCONFIGFLAG_DISABLED      = 0x00000001U,
+    CSCONFIGFLAG_DO_NOT_CREATE = 0x00000002U,
+    CSCONFIGFLAG_DO_NOT_START  = 0x00000004U,
 }
 
-enum uint DMSTATEFLAG_APPLYTOALL = 0x00000001;
+enum uint DMSTATEFLAG_APPLYTOALL = 0x00000001U;
 
 enum : const(wchar)*
 {
@@ -913,12 +921,12 @@ enum : const(wchar)*
 enum const(wchar)* REGSTR_PATH_MULTI_FUNCTION = "MF";
 enum const(wchar)* REGSTR_VAL_RESOURCE_MAP = "ResourceMap";
 enum const(wchar)* REGSTR_PATH_CHILD_PREFIX = "Child";
-enum uint NUM_RESOURCE_MAP = 0x00000100;
+enum uint NUM_RESOURCE_MAP = 0x00000100U;
 enum const(wchar)* REGSTR_VAL_MF_FLAGS = "MFFlags";
-enum uint MF_FLAGS_EVEN_IF_NO_RESOURCE = 0x00000001;
-enum uint MF_FLAGS_NO_CREATE_IF_NO_RESOURCE = 0x00000002;
-enum uint MF_FLAGS_FILL_IN_UNKNOWN_RESOURCE = 0x00000004;
-enum uint MF_FLAGS_CREATE_BUT_NO_SHOW_DISABLED = 0x00000008;
+enum uint MF_FLAGS_EVEN_IF_NO_RESOURCE = 0x00000001U;
+enum uint MF_FLAGS_NO_CREATE_IF_NO_RESOURCE = 0x00000002U;
+enum uint MF_FLAGS_FILL_IN_UNKNOWN_RESOURCE = 0x00000004U;
+enum uint MF_FLAGS_CREATE_BUT_NO_SHOW_DISABLED = 0x00000008U;
 
 enum : const(wchar)*
 {
@@ -931,12 +939,12 @@ enum : const(wchar)*
 
 enum : uint
 {
-    EISAFLAG_NO_IO_MERGE   = 0x00000001,
-    EISAFLAG_SLOT_IO_FIRST = 0x00000002,
+    EISAFLAG_NO_IO_MERGE   = 0x00000001U,
+    EISAFLAG_SLOT_IO_FIRST = 0x00000002U,
 }
 
-enum uint EISA_NO_MAX_FUNCTION = 0x000000ff;
-enum uint NUM_EISA_RANGES = 0x00000004;
+enum uint EISA_NO_MAX_FUNCTION = 0x000000ffU;
+enum uint NUM_EISA_RANGES = 0x00000004U;
 
 enum : const(wchar)*
 {
@@ -1066,8 +1074,8 @@ enum : const(wchar)*
 
 enum : uint
 {
-    PCIC_DEFAULT_IRQMASK    = 0x00004eb8,
-    PCIC_DEFAULT_NUMSOCKETS = 0x00000000,
+    PCIC_DEFAULT_IRQMASK    = 0x00004eb8U,
+    PCIC_DEFAULT_NUMSOCKETS = 0x00000000U,
 }
 
 enum const(wchar)* REGSTR_VAL_PCICIRQMAP = "PCICIRQMap";
@@ -1379,10 +1387,10 @@ enum : const(wchar)*
 
 enum : uint
 {
-    DTRESULTOK   = 0x00000000,
-    DTRESULTFIX  = 0x00000001,
-    DTRESULTPROB = 0x00000002,
-    DTRESULTPART = 0x00000003,
+    DTRESULTOK   = 0x00000000U,
+    DTRESULTFIX  = 0x00000001U,
+    DTRESULTPROB = 0x00000002U,
+    DTRESULTPART = 0x00000003U,
 }
 
 enum : const(wchar)*
@@ -1490,36 +1498,36 @@ enum : const(wchar)*
 
 enum : uint
 {
-    PIR_OPTION_ENABLED  = 0x00000001,
-    PIR_OPTION_REGISTRY = 0x00000002,
-    PIR_OPTION_MSSPEC   = 0x00000004,
-    PIR_OPTION_REALMODE = 0x00000008,
-    PIR_OPTION_DEFAULT  = 0x0000000f,
+    PIR_OPTION_ENABLED  = 0x00000001U,
+    PIR_OPTION_REGISTRY = 0x00000002U,
+    PIR_OPTION_MSSPEC   = 0x00000004U,
+    PIR_OPTION_REALMODE = 0x00000008U,
+    PIR_OPTION_DEFAULT  = 0x0000000fU,
 }
 
 enum : uint
 {
-    PIR_STATUS_ERROR               = 0x00000000,
-    PIR_STATUS_ENABLED             = 0x00000001,
-    PIR_STATUS_DISABLED            = 0x00000002,
-    PIR_STATUS_MAX                 = 0x00000003,
-    PIR_STATUS_TABLE_REGISTRY      = 0x00000000,
-    PIR_STATUS_TABLE_MSSPEC        = 0x00000001,
-    PIR_STATUS_TABLE_REALMODE      = 0x00000002,
-    PIR_STATUS_TABLE_NONE          = 0x00000003,
-    PIR_STATUS_TABLE_ERROR         = 0x00000004,
-    PIR_STATUS_TABLE_BAD           = 0x00000005,
-    PIR_STATUS_TABLE_SUCCESS       = 0x00000006,
-    PIR_STATUS_TABLE_MAX           = 0x00000007,
-    PIR_STATUS_MINIPORT_NORMAL     = 0x00000000,
-    PIR_STATUS_MINIPORT_COMPATIBLE = 0x00000001,
-    PIR_STATUS_MINIPORT_OVERRIDE   = 0x00000002,
-    PIR_STATUS_MINIPORT_NONE       = 0x00000003,
-    PIR_STATUS_MINIPORT_ERROR      = 0x00000004,
-    PIR_STATUS_MINIPORT_NOKEY      = 0x00000005,
-    PIR_STATUS_MINIPORT_SUCCESS    = 0x00000006,
-    PIR_STATUS_MINIPORT_INVALID    = 0x00000007,
-    PIR_STATUS_MINIPORT_MAX        = 0x00000008,
+    PIR_STATUS_ERROR               = 0x00000000U,
+    PIR_STATUS_ENABLED             = 0x00000001U,
+    PIR_STATUS_DISABLED            = 0x00000002U,
+    PIR_STATUS_MAX                 = 0x00000003U,
+    PIR_STATUS_TABLE_REGISTRY      = 0x00000000U,
+    PIR_STATUS_TABLE_MSSPEC        = 0x00000001U,
+    PIR_STATUS_TABLE_REALMODE      = 0x00000002U,
+    PIR_STATUS_TABLE_NONE          = 0x00000003U,
+    PIR_STATUS_TABLE_ERROR         = 0x00000004U,
+    PIR_STATUS_TABLE_BAD           = 0x00000005U,
+    PIR_STATUS_TABLE_SUCCESS       = 0x00000006U,
+    PIR_STATUS_TABLE_MAX           = 0x00000007U,
+    PIR_STATUS_MINIPORT_NORMAL     = 0x00000000U,
+    PIR_STATUS_MINIPORT_COMPATIBLE = 0x00000001U,
+    PIR_STATUS_MINIPORT_OVERRIDE   = 0x00000002U,
+    PIR_STATUS_MINIPORT_NONE       = 0x00000003U,
+    PIR_STATUS_MINIPORT_ERROR      = 0x00000004U,
+    PIR_STATUS_MINIPORT_NOKEY      = 0x00000005U,
+    PIR_STATUS_MINIPORT_SUCCESS    = 0x00000006U,
+    PIR_STATUS_MINIPORT_INVALID    = 0x00000007U,
+    PIR_STATUS_MINIPORT_MAX        = 0x00000008U,
 }
 
 enum : const(wchar)*
@@ -1530,9 +1538,9 @@ enum : const(wchar)*
 
 enum : uint
 {
-    LASTGOOD_OPERATION            = 0x000000ff,
-    LASTGOOD_OPERATION_NOPOSTPROC = 0x00000000,
-    LASTGOOD_OPERATION_DELETE     = 0x00000001,
+    LASTGOOD_OPERATION            = 0x000000ffU,
+    LASTGOOD_OPERATION_NOPOSTPROC = 0x00000000U,
+    LASTGOOD_OPERATION_DELETE     = 0x00000001U,
 }
 
 // Callbacks
@@ -1587,7 +1595,7 @@ struct REG_PROVIDER
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winreg/ns-winreg-valenta))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winreg/ns-winreg-valenta
 struct VALENTA
 {
     PSTR           ve_valuename;
@@ -1597,7 +1605,7 @@ struct VALENTA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winreg/ns-winreg-valentw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winreg/ns-winreg-valentw
 struct VALENTW
 {
     PWSTR          ve_valuename;
@@ -1920,7 +1928,7 @@ WIN32_ERROR RegRestoreKeyA(HKEY hKey, const(PSTR) lpFile,
 WIN32_ERROR RegRestoreKeyW(HKEY hKey, const(PWSTR) lpFile, 
                            /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(REG_RESTORE_KEY_FLAGS))], [])*/uint dwFlags);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winreg/nf-winreg-regrenamekey))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winreg/nf-winreg-regrenamekey
 @DllImport("ADVAPI32.dll")
 WIN32_ERROR RegRenameKey(HKEY hKey, const(PWSTR) lpSubKeyName, const(PWSTR) lpNewKeyName);
 

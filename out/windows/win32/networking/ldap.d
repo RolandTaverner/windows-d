@@ -3,14 +3,16 @@
 module windows.win32.networking.ldap;
 
 public import windows.core;
-public import windows.win32.foundation : BOOLEAN, CHAR, HANDLE, PSTR, PWSTR, WIN32_ERROR;
-public import windows.win32.security.authentication.identity : SecPkgContext_IssuerListInfoEx;
-public import windows.win32.security.cryptography : CERT_CONTEXT;
+public import windows.win32.foundation.foundation : BOOLEAN, CHAR, HANDLE, PSTR, PWSTR,
+                                                    WIN32_ERROR;
+public import windows.win32.security.authentication.identity.identity : SecPkgContext_IssuerListInfoEx;
+public import windows.win32.security.cryptography.cryptography : CERT_CONTEXT;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
+
 
 alias LDAP_RETCODE = int;
 enum : int
@@ -91,23 +93,23 @@ enum : int
 
 enum : uint
 {
-    LDAP_UNICODE  = 0x00000001,
-    LDAP_PORT     = 0x00000185,
-    LDAP_SSL_PORT = 0x0000027c,
+    LDAP_UNICODE  = 0x00000001U,
+    LDAP_PORT     = 0x00000185U,
+    LDAP_SSL_PORT = 0x0000027cU,
 }
 
 enum : uint
 {
-    LDAP_GC_PORT     = 0x00000cc4,
-    LDAP_SSL_GC_PORT = 0x00000cc5,
+    LDAP_GC_PORT     = 0x00000cc4U,
+    LDAP_SSL_GC_PORT = 0x00000cc5U,
 }
 
 enum : uint
 {
-    LDAP_VERSION1 = 0x00000001,
-    LDAP_VERSION2 = 0x00000002,
-    LDAP_VERSION3 = 0x00000003,
-    LDAP_VERSION  = 0x00000002,
+    LDAP_VERSION1 = 0x00000001U,
+    LDAP_VERSION2 = 0x00000002U,
+    LDAP_VERSION3 = 0x00000003U,
+    LDAP_VERSION  = 0x00000002U,
 }
 
 enum int LDAP_BIND_CMD = 0x00000060;
@@ -145,8 +147,8 @@ enum : int
 
 enum : uint
 {
-    LDAP_INVALID_CMD = 0x000000ff,
-    LDAP_INVALID_RES = 0x000000ff,
+    LDAP_INVALID_CMD = 0x000000ffU,
+    LDAP_INVALID_RES = 0x000000ffU,
 }
 
 enum : int
@@ -158,16 +160,16 @@ enum : int
 
 enum : uint
 {
-    LDAP_FILTER_AND        = 0x000000a0,
-    LDAP_FILTER_OR         = 0x000000a1,
-    LDAP_FILTER_NOT        = 0x000000a2,
-    LDAP_FILTER_EQUALITY   = 0x000000a3,
-    LDAP_FILTER_SUBSTRINGS = 0x000000a4,
-    LDAP_FILTER_GE         = 0x000000a5,
-    LDAP_FILTER_LE         = 0x000000a6,
-    LDAP_FILTER_PRESENT    = 0x00000087,
-    LDAP_FILTER_APPROX     = 0x000000a8,
-    LDAP_FILTER_EXTENSIBLE = 0x000000a9,
+    LDAP_FILTER_AND        = 0x000000a0U,
+    LDAP_FILTER_OR         = 0x000000a1U,
+    LDAP_FILTER_NOT        = 0x000000a2U,
+    LDAP_FILTER_EQUALITY   = 0x000000a3U,
+    LDAP_FILTER_SUBSTRINGS = 0x000000a4U,
+    LDAP_FILTER_GE         = 0x000000a5U,
+    LDAP_FILTER_LE         = 0x000000a6U,
+    LDAP_FILTER_PRESENT    = 0x00000087U,
+    LDAP_FILTER_APPROX     = 0x000000a8U,
+    LDAP_FILTER_EXTENSIBLE = 0x000000a9U,
 }
 
 enum : int
@@ -179,21 +181,21 @@ enum : int
 
 enum : uint
 {
-    LDAP_DEREF_NEVER     = 0x00000000,
-    LDAP_DEREF_SEARCHING = 0x00000001,
-    LDAP_DEREF_FINDING   = 0x00000002,
-    LDAP_DEREF_ALWAYS    = 0x00000003,
+    LDAP_DEREF_NEVER     = 0x00000000U,
+    LDAP_DEREF_SEARCHING = 0x00000001U,
+    LDAP_DEREF_FINDING   = 0x00000002U,
+    LDAP_DEREF_ALWAYS    = 0x00000003U,
 }
 
-enum uint LDAP_NO_LIMIT = 0x00000000;
+enum uint LDAP_NO_LIMIT = 0x00000000U;
 
 enum : uint
 {
-    LDAP_OPT_DNS             = 0x00000001,
-    LDAP_OPT_CHASE_REFERRALS = 0x00000002,
+    LDAP_OPT_DNS             = 0x00000001U,
+    LDAP_OPT_CHASE_REFERRALS = 0x00000002U,
 }
 
-enum uint LDAP_OPT_RETURN_REFS = 0x00000004;
+enum uint LDAP_OPT_RETURN_REFS = 0x00000004U;
 
 enum : const(wchar)*
 {
@@ -203,139 +205,139 @@ enum : const(wchar)*
 
 enum : uint
 {
-    LDAP_MOD_ADD     = 0x00000000,
-    LDAP_MOD_DELETE  = 0x00000001,
-    LDAP_MOD_REPLACE = 0x00000002,
-    LDAP_MOD_BVALUES = 0x00000080,
+    LDAP_MOD_ADD     = 0x00000000U,
+    LDAP_MOD_DELETE  = 0x00000001U,
+    LDAP_MOD_REPLACE = 0x00000002U,
+    LDAP_MOD_BVALUES = 0x00000080U,
 }
 
 enum : uint
 {
-    LDAP_OPT_API_INFO       = 0x00000000,
-    LDAP_OPT_DESC           = 0x00000001,
-    LDAP_OPT_DEREF          = 0x00000002,
-    LDAP_OPT_SIZELIMIT      = 0x00000003,
-    LDAP_OPT_TIMELIMIT      = 0x00000004,
-    LDAP_OPT_THREAD_FN_PTRS = 0x00000005,
+    LDAP_OPT_API_INFO       = 0x00000000U,
+    LDAP_OPT_DESC           = 0x00000001U,
+    LDAP_OPT_DEREF          = 0x00000002U,
+    LDAP_OPT_SIZELIMIT      = 0x00000003U,
+    LDAP_OPT_TIMELIMIT      = 0x00000004U,
+    LDAP_OPT_THREAD_FN_PTRS = 0x00000005U,
 }
 
 enum : uint
 {
-    LDAP_OPT_REBIND_FN          = 0x00000006,
-    LDAP_OPT_REBIND_ARG         = 0x00000007,
-    LDAP_OPT_REFERRALS          = 0x00000008,
-    LDAP_OPT_RESTART            = 0x00000009,
-    LDAP_OPT_SSL                = 0x0000000a,
-    LDAP_OPT_IO_FN_PTRS         = 0x0000000b,
-    LDAP_OPT_CACHE_FN_PTRS      = 0x0000000d,
-    LDAP_OPT_CACHE_STRATEGY     = 0x0000000e,
-    LDAP_OPT_CACHE_ENABLE       = 0x0000000f,
-    LDAP_OPT_REFERRAL_HOP_LIMIT = 0x00000010,
+    LDAP_OPT_REBIND_FN          = 0x00000006U,
+    LDAP_OPT_REBIND_ARG         = 0x00000007U,
+    LDAP_OPT_REFERRALS          = 0x00000008U,
+    LDAP_OPT_RESTART            = 0x00000009U,
+    LDAP_OPT_SSL                = 0x0000000aU,
+    LDAP_OPT_IO_FN_PTRS         = 0x0000000bU,
+    LDAP_OPT_CACHE_FN_PTRS      = 0x0000000dU,
+    LDAP_OPT_CACHE_STRATEGY     = 0x0000000eU,
+    LDAP_OPT_CACHE_ENABLE       = 0x0000000fU,
+    LDAP_OPT_REFERRAL_HOP_LIMIT = 0x00000010U,
 }
 
-enum uint LDAP_OPT_PROTOCOL_VERSION = 0x00000011;
+enum uint LDAP_OPT_PROTOCOL_VERSION = 0x00000011U;
 
 enum : uint
 {
-    LDAP_OPT_VERSION          = 0x00000011,
-    LDAP_OPT_API_FEATURE_INFO = 0x00000015,
-}
-
-enum : uint
-{
-    LDAP_OPT_HOST_NAME        = 0x00000030,
-    LDAP_OPT_ERROR_NUMBER     = 0x00000031,
-    LDAP_OPT_ERROR_STRING     = 0x00000032,
-    LDAP_OPT_SERVER_ERROR     = 0x00000033,
-    LDAP_OPT_SERVER_EXT_ERROR = 0x00000034,
-}
-
-enum uint LDAP_OPT_HOST_REACHABLE = 0x0000003e;
-
-enum : uint
-{
-    LDAP_OPT_PING_KEEP_ALIVE = 0x00000036,
-    LDAP_OPT_PING_WAIT_TIME  = 0x00000037,
-    LDAP_OPT_PING_LIMIT      = 0x00000038,
-    LDAP_OPT_DNSDOMAIN_NAME  = 0x0000003b,
-}
-
-enum uint LDAP_OPT_GETDSNAME_FLAGS = 0x0000003d;
-enum uint LDAP_OPT_PROMPT_CREDENTIALS = 0x0000003f;
-enum uint LDAP_OPT_AUTO_RECONNECT = 0x00000091;
-
-enum : uint
-{
-    LDAP_OPT_SSPI_FLAGS     = 0x00000092,
-    LDAP_OPT_SSL_INFO       = 0x00000093,
-    LDAP_OPT_TLS            = 0x0000000a,
-    LDAP_OPT_TLS_INFO       = 0x00000093,
-    LDAP_OPT_SIGN           = 0x00000095,
-    LDAP_OPT_ENCRYPT        = 0x00000096,
-    LDAP_OPT_SASL_METHOD    = 0x00000097,
-    LDAP_OPT_AREC_EXCLUSIVE = 0x00000098,
-}
-
-enum uint LDAP_OPT_SECURITY_CONTEXT = 0x00000099;
-
-enum : uint
-{
-    LDAP_OPT_ROOTDSE_CACHE        = 0x0000009a,
-    LDAP_OPT_TCP_KEEPALIVE        = 0x00000040,
-    LDAP_OPT_FAST_CONCURRENT_BIND = 0x00000041,
+    LDAP_OPT_VERSION          = 0x00000011U,
+    LDAP_OPT_API_FEATURE_INFO = 0x00000015U,
 }
 
 enum : uint
 {
-    LDAP_OPT_SEND_TIMEOUT          = 0x00000042,
-    LDAP_OPT_SCH_FLAGS             = 0x00000043,
-    LDAP_OPT_SOCKET_BIND_ADDRESSES = 0x00000044,
+    LDAP_OPT_HOST_NAME        = 0x00000030U,
+    LDAP_OPT_ERROR_NUMBER     = 0x00000031U,
+    LDAP_OPT_ERROR_STRING     = 0x00000032U,
+    LDAP_OPT_SERVER_ERROR     = 0x00000033U,
+    LDAP_OPT_SERVER_EXT_ERROR = 0x00000034U,
+}
+
+enum uint LDAP_OPT_HOST_REACHABLE = 0x0000003eU;
+
+enum : uint
+{
+    LDAP_OPT_PING_KEEP_ALIVE = 0x00000036U,
+    LDAP_OPT_PING_WAIT_TIME  = 0x00000037U,
+    LDAP_OPT_PING_LIMIT      = 0x00000038U,
+    LDAP_OPT_DNSDOMAIN_NAME  = 0x0000003bU,
+}
+
+enum uint LDAP_OPT_GETDSNAME_FLAGS = 0x0000003dU;
+enum uint LDAP_OPT_PROMPT_CREDENTIALS = 0x0000003fU;
+enum uint LDAP_OPT_AUTO_RECONNECT = 0x00000091U;
+
+enum : uint
+{
+    LDAP_OPT_SSPI_FLAGS     = 0x00000092U,
+    LDAP_OPT_SSL_INFO       = 0x00000093U,
+    LDAP_OPT_TLS            = 0x0000000aU,
+    LDAP_OPT_TLS_INFO       = 0x00000093U,
+    LDAP_OPT_SIGN           = 0x00000095U,
+    LDAP_OPT_ENCRYPT        = 0x00000096U,
+    LDAP_OPT_SASL_METHOD    = 0x00000097U,
+    LDAP_OPT_AREC_EXCLUSIVE = 0x00000098U,
+}
+
+enum uint LDAP_OPT_SECURITY_CONTEXT = 0x00000099U;
+
+enum : uint
+{
+    LDAP_OPT_ROOTDSE_CACHE        = 0x0000009aU,
+    LDAP_OPT_TCP_KEEPALIVE        = 0x00000040U,
+    LDAP_OPT_FAST_CONCURRENT_BIND = 0x00000041U,
 }
 
 enum : uint
 {
-    LDAP_OPT_CLDAP_TIMEOUT           = 0x00000045,
-    LDAP_OPT_CLDAP_TRIES             = 0x00000046,
-    LDAP_OPT_ANONYMOUS_MAX_VAL_RANGE = 0x00000047,
-}
-
-enum uint LDAP_CHASE_SUBORDINATE_REFERRALS = 0x00000020;
-enum uint LDAP_CHASE_EXTERNAL_REFERRALS = 0x00000040;
-
-enum : uint
-{
-    LDAP_SCOPE_BASE     = 0x00000000,
-    LDAP_SCOPE_ONELEVEL = 0x00000001,
-    LDAP_SCOPE_SUBTREE  = 0x00000002,
+    LDAP_OPT_SEND_TIMEOUT          = 0x00000042U,
+    LDAP_OPT_SCH_FLAGS             = 0x00000043U,
+    LDAP_OPT_SOCKET_BIND_ADDRESSES = 0x00000044U,
 }
 
 enum : uint
 {
-    LDAP_MSG_ONE      = 0x00000000,
-    LDAP_MSG_ALL      = 0x00000001,
-    LDAP_MSG_RECEIVED = 0x00000002,
+    LDAP_OPT_CLDAP_TIMEOUT           = 0x00000045U,
+    LDAP_OPT_CLDAP_TRIES             = 0x00000046U,
+    LDAP_OPT_ANONYMOUS_MAX_VAL_RANGE = 0x00000047U,
+}
+
+enum uint LDAP_CHASE_SUBORDINATE_REFERRALS = 0x00000020U;
+enum uint LDAP_CHASE_EXTERNAL_REFERRALS = 0x00000040U;
+
+enum : uint
+{
+    LDAP_SCOPE_BASE     = 0x00000000U,
+    LDAP_SCOPE_ONELEVEL = 0x00000001U,
+    LDAP_SCOPE_SUBTREE  = 0x00000002U,
 }
 
 enum : uint
 {
-    LBER_USE_DER            = 0x00000001,
-    LBER_USE_INDEFINITE_LEN = 0x00000002,
-}
-
-enum uint LBER_TRANSLATE_STRINGS = 0x00000004;
-enum uint LAPI_MAJOR_VER1 = 0x00000001;
-enum uint LAPI_MINOR_VER1 = 0x00000001;
-
-enum : uint
-{
-    LDAP_API_INFO_VERSION = 0x00000001,
-    LDAP_API_VERSION      = 0x000007d4,
+    LDAP_MSG_ONE      = 0x00000000U,
+    LDAP_MSG_ALL      = 0x00000001U,
+    LDAP_MSG_RECEIVED = 0x00000002U,
 }
 
 enum : uint
 {
-    LDAP_VERSION_MIN = 0x00000002,
-    LDAP_VERSION_MAX = 0x00000003,
+    LBER_USE_DER            = 0x00000001U,
+    LBER_USE_INDEFINITE_LEN = 0x00000002U,
+}
+
+enum uint LBER_TRANSLATE_STRINGS = 0x00000004U;
+enum uint LAPI_MAJOR_VER1 = 0x00000001U;
+enum uint LAPI_MINOR_VER1 = 0x00000001U;
+
+enum : uint
+{
+    LDAP_API_INFO_VERSION = 0x00000001U,
+    LDAP_API_VERSION      = 0x000007d4U,
+}
+
+enum : uint
+{
+    LDAP_VERSION_MIN = 0x00000002U,
+    LDAP_VERSION_MAX = 0x00000003U,
 }
 
 enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
@@ -344,8 +346,8 @@ enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(E
     LDAP_VENDOR_NAME_W = "Microsoft Corporation.",
 }
 
-enum uint LDAP_VENDOR_VERSION = 0x000001fe;
-enum uint LDAP_FEATURE_INFO_VERSION = 0x00000001;
+enum uint LDAP_VENDOR_VERSION = 0x000001feU;
+enum uint LDAP_FEATURE_INFO_VERSION = 0x00000001U;
 
 enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
 {
@@ -369,8 +371,8 @@ enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(E
     LDAP_CONTROL_VLVRESPONSE_W = "2.16.840.1.113730.3.4.10",
 }
 
-enum uint LDAP_API_FEATURE_VIRTUAL_LIST_VIEW = 0x000003e9;
-enum uint LDAP_VLVINFO_VERSION = 0x00000001;
+enum uint LDAP_API_FEATURE_VIRTUAL_LIST_VIEW = 0x000003e9U;
+enum uint LDAP_VLVINFO_VERSION = 0x00000001U;
 
 enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
 {
@@ -384,10 +386,10 @@ enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(E
     LDAP_TTL_EXTENDED_OP_OID_W = "1.3.6.1.4.1.1466.101.119.1",
 }
 
-enum uint LDAP_OPT_REFERRAL_CALLBACK = 0x00000070;
-enum uint LDAP_OPT_CLIENT_CERTIFICATE = 0x00000080;
-enum uint LDAP_OPT_SERVER_CERTIFICATE = 0x00000081;
-enum uint LDAP_OPT_REF_DEREF_CONN_PER_MSG = 0x00000094;
+enum uint LDAP_OPT_REFERRAL_CALLBACK = 0x00000070U;
+enum uint LDAP_OPT_CLIENT_CERTIFICATE = 0x00000080U;
+enum uint LDAP_OPT_SERVER_CERTIFICATE = 0x00000081U;
+enum uint LDAP_OPT_REF_DEREF_CONN_PER_MSG = 0x00000094U;
 
 enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
 {
@@ -517,8 +519,8 @@ enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(E
 
 enum : uint
 {
-    SERVER_SEARCH_FLAG_DOMAIN_SCOPE = 0x00000001,
-    SERVER_SEARCH_FLAG_PHANTOM_ROOT = 0x00000002,
+    SERVER_SEARCH_FLAG_DOMAIN_SCOPE = 0x00000001U,
+    SERVER_SEARCH_FLAG_PHANTOM_ROOT = 0x00000002U,
 }
 
 enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
@@ -725,18 +727,18 @@ enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(E
 
 enum : uint
 {
-    LDAP_DIRSYNC_OBJECT_SECURITY       = 0x00000001,
-    LDAP_DIRSYNC_ANCESTORS_FIRST_ORDER = 0x00000800,
+    LDAP_DIRSYNC_OBJECT_SECURITY       = 0x00000001U,
+    LDAP_DIRSYNC_ANCESTORS_FIRST_ORDER = 0x00000800U,
 }
 
 enum : uint
 {
-    LDAP_DIRSYNC_PUBLIC_DATA_ONLY   = 0x00002000,
-    LDAP_DIRSYNC_INCREMENTAL_VALUES = 0x80000000,
-    LDAP_DIRSYNC_ROPAS_DATA_ONLY    = 0x40000000,
+    LDAP_DIRSYNC_PUBLIC_DATA_ONLY   = 0x00002000U,
+    LDAP_DIRSYNC_INCREMENTAL_VALUES = 0x80000000U,
+    LDAP_DIRSYNC_ROPAS_DATA_ONLY    = 0x40000000U,
 }
 
-enum uint LDAP_POLICYHINT_APPLY_FULLPWDPOLICY = 0x00000001;
+enum uint LDAP_POLICYHINT_APPLY_FULLPWDPOLICY = 0x00000001U;
 
 // Callbacks
 
@@ -764,43 +766,49 @@ struct PLDAPSearch
     ptrdiff_t Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldap))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldap
 struct LDAP
 {
-    _ld_sb_e__Struct ld_sb;
+    struct ld_sb
+    {
+        size_t    sb_sd;
+        ubyte[41] Reserved1;
+        size_t    sb_naddr;
+        ubyte[24] Reserved2;
+    }
     /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR ld_host;
-    uint             ld_version;
-    ubyte            ld_lberoptions;
-    uint             ld_deref;
-    uint             ld_timelimit;
-    uint             ld_sizelimit;
-    uint             ld_errno;
+    uint      ld_version;
+    ubyte     ld_lberoptions;
+    uint      ld_deref;
+    uint      ld_timelimit;
+    uint      ld_sizelimit;
+    uint      ld_errno;
     /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR ld_matched;
     /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR ld_error;
-    uint             ld_msgid;
-    ubyte[25]        Reserved3;
-    uint             ld_cldaptries;
-    uint             ld_cldaptimeout;
-    uint             ld_refhoplimit;
-    uint             ld_options;
-    uint             ld_anonymousmaxvalrange;
+    uint      ld_msgid;
+    ubyte[25] Reserved3;
+    uint      ld_cldaptries;
+    uint      ld_cldaptimeout;
+    uint      ld_refhoplimit;
+    uint      ld_options;
+    uint      ld_anonymousmaxvalrange;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldap_timeval))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldap_timeval
 struct LDAP_TIMEVAL
 {
     int tv_sec;
     int tv_usec;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldap_berval))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldap_berval
 struct LDAP_BERVAL
 {
     uint bv_len;
     /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR bv_val;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapmessage))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapmessage
 struct LDAPMessage
 {
     uint         lm_msgid;
@@ -819,7 +827,7 @@ struct LDAPMessage
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapcontrola))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapcontrola
 struct LDAPControlA
 {
     /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR ldctl_oid;
@@ -828,7 +836,7 @@ struct LDAPControlA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapcontrolw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapcontrolw
 struct LDAPControlW
 {
     /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR ldctl_oid;
@@ -837,24 +845,32 @@ struct LDAPControlW
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapmodw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapmodw
 struct LDAPModW
 {
-    uint               mod_op;
+    uint mod_op;
     /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR mod_type;
-    _mod_vals_e__Union mod_vals;
+    union mod_vals
+    {
+        PWSTR*        modv_strvals;
+        LDAP_BERVAL** modv_bvals;
+    }
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapmoda))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapmoda
 struct LDAPModA
 {
-    uint               mod_op;
+    uint mod_op;
     /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR mod_type;
-    _mod_vals_e__Union mod_vals;
+    union mod_vals
+    {
+        PSTR*         modv_strvals;
+        LDAP_BERVAL** modv_bvals;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-berelement))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-berelement
 struct BerElement
 {
     /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR opaque;
@@ -868,7 +884,7 @@ struct LDAP_VERSION_INFO
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapapiinfoa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapapiinfoa
 struct LDAPAPIInfoA
 {
     int    ldapai_info_version;
@@ -880,7 +896,7 @@ struct LDAPAPIInfoA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapapiinfow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapapiinfow
 struct LDAPAPIInfoW
 {
     int    ldapai_info_version;
@@ -892,7 +908,7 @@ struct LDAPAPIInfoW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapapifeatureinfoa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapapifeatureinfoa
 struct LDAPAPIFeatureInfoA
 {
     int  ldapaif_info_version;
@@ -901,7 +917,7 @@ struct LDAPAPIFeatureInfoA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapapifeatureinfow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapapifeatureinfow
 struct LDAPAPIFeatureInfoW
 {
     int ldapaif_info_version;
@@ -910,7 +926,7 @@ struct LDAPAPIFeatureInfoW
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapsortkeyw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapsortkeyw
 struct LDAPSortKeyW
 {
     /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR sk_attrtype;
@@ -919,7 +935,7 @@ struct LDAPSortKeyW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapsortkeya))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapsortkeya
 struct LDAPSortKeyA
 {
     /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR sk_attrtype;
@@ -927,7 +943,7 @@ struct LDAPSortKeyA
     BOOLEAN sk_reverseorder;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapvlvinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldapvlvinfo
 struct LDAPVLVInfo
 {
     int          ldvlv_version;
@@ -940,7 +956,7 @@ struct LDAPVLVInfo
     void*        ldvlv_extradata;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldap_referral_callback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winldap/ns-winldap-ldap_referral_callback
 struct LDAP_REFERRAL_CALLBACK
 {
     uint               SizeOfCallbacks;

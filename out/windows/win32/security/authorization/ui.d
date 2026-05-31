@@ -3,49 +3,53 @@
 module windows.win32.security.authorization.ui;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BOOLEAN, HINSTANCE, HRESULT, HWND,
-                                         PWSTR;
-public import windows.win32.security : ACE_FLAGS, ACL;
-public import windows.win32.security.authorization : AUTHZ_SECURITY_ATTRIBUTES_INFORMATION,
-                                                     AUTHZ_SECURITY_ATTRIBUTE_OPERATION,
-                                                     AUTHZ_SID_OPERATION, INHERITED_FROMA;
-public import windows.win32.security : OBJECT_SECURITY_INFORMATION, OBJECT_TYPE_LIST,
-                                       PSECURITY_DESCRIPTOR, PSID, TOKEN_GROUPS;
-public import windows.win32.system.com : IDataObject, IUnknown;
-public import windows.win32.ui.controls : HPROPSHEETPAGE, PSPCB_MESSAGE;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BOOLEAN, HINSTANCE, HRESULT,
+                                                    HWND, PWSTR;
+public import windows.win32.security.security : ACE_FLAGS, ACL;
+public import windows.win32.security.authorization.authorization : AUTHZ_SECURITY_ATTRIBUTES_INFORMATION,
+                                                                   AUTHZ_SECURITY_ATTRIBUTE_OPERATION,
+                                                                   AUTHZ_SID_OPERATION,
+                                                                   INHERITED_FROMA;
+public import windows.win32.security.security : OBJECT_SECURITY_INFORMATION, OBJECT_TYPE_LIST,
+                                                PSECURITY_DESCRIPTOR, PSID, TOKEN_GROUPS;
+public import windows.win32.system.com.com : IDataObject, IUnknown;
+public import windows.win32.ui.controls.controls : HPROPSHEETPAGE, PSPCB_MESSAGE;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
+
 alias SECURITY_INFO_PAGE_FLAGS = uint;
 enum : uint
 {
-    SI_ADVANCED        = 0x00000010,
-    SI_EDIT_AUDITS     = 0x00000002,
-    SI_EDIT_PROPERTIES = 0x00000080,
+    SI_ADVANCED        = 0x00000010U,
+    SI_EDIT_AUDITS     = 0x00000002U,
+    SI_EDIT_PROPERTIES = 0x00000080U,
 }
+
 alias SI_OBJECT_INFO_FLAGS = uint;
 enum : uint
 {
-    SI_AUDITS_ELEVATION_REQUIRED       = 0x02000000,
-    SI_DISABLE_DENY_ACE                = 0x80000000,
-    SI_EDIT_EFFECTIVE                  = 0x00020000,
-    SI_ENABLE_CENTRAL_POLICY           = 0x40000000,
-    SI_ENABLE_EDIT_ATTRIBUTE_CONDITION = 0x20000000,
-    SI_MAY_WRITE                       = 0x10000000,
-    SI_NO_ADDITIONAL_PERMISSION        = 0x00200000,
-    SI_OWNER_ELEVATION_REQUIRED        = 0x04000000,
-    SI_PERMS_ELEVATION_REQUIRED        = 0x01000000,
-    SI_RESET_DACL                      = 0x00040000,
-    SI_RESET_OWNER                     = 0x00100000,
-    SI_RESET_SACL                      = 0x00080000,
-    SI_SCOPE_ELEVATION_REQUIRED        = 0x08000000,
-    SI_VIEW_ONLY                       = 0x00400000,
+    SI_AUDITS_ELEVATION_REQUIRED       = 0x02000000U,
+    SI_DISABLE_DENY_ACE                = 0x80000000U,
+    SI_EDIT_EFFECTIVE                  = 0x00020000U,
+    SI_ENABLE_CENTRAL_POLICY           = 0x40000000U,
+    SI_ENABLE_EDIT_ATTRIBUTE_CONDITION = 0x20000000U,
+    SI_MAY_WRITE                       = 0x10000000U,
+    SI_NO_ADDITIONAL_PERMISSION        = 0x00200000U,
+    SI_OWNER_ELEVATION_REQUIRED        = 0x04000000U,
+    SI_PERMS_ELEVATION_REQUIRED        = 0x01000000U,
+    SI_RESET_DACL                      = 0x00040000U,
+    SI_RESET_OWNER                     = 0x00100000U,
+    SI_RESET_SACL                      = 0x00080000U,
+    SI_SCOPE_ELEVATION_REQUIRED        = 0x08000000U,
+    SI_VIEW_ONLY                       = 0x00400000U,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/aclui/ne-aclui-si_page_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/ne-aclui-si_page_type
 alias SI_PAGE_TYPE = int;
 enum : int
 {
@@ -57,6 +61,7 @@ enum : int
     SI_PAGE_TAKEOWNERSHIP = 0x00000005,
     SI_PAGE_SHARE         = 0x00000006,
 }
+
 alias SI_PAGE_ACTIVATED = int;
 enum : int
 {
@@ -126,16 +131,16 @@ enum const(wchar)* CFSTR_ACLUI_SID_INFO_LIST = "CFSTR_ACLUI_SID_INFO_LIST";
 
 enum : uint
 {
-    SECURITY_OBJECT_ID_OBJECT_SD           = 0x00000001,
-    SECURITY_OBJECT_ID_SHARE               = 0x00000002,
-    SECURITY_OBJECT_ID_CENTRAL_POLICY      = 0x00000003,
-    SECURITY_OBJECT_ID_CENTRAL_ACCESS_RULE = 0x00000004,
+    SECURITY_OBJECT_ID_OBJECT_SD           = 0x00000001U,
+    SECURITY_OBJECT_ID_SHARE               = 0x00000002U,
+    SECURITY_OBJECT_ID_CENTRAL_POLICY      = 0x00000003U,
+    SECURITY_OBJECT_ID_CENTRAL_ACCESS_RULE = 0x00000004U,
 }
 
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/aclui/ns-aclui-si_object_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/ns-aclui-si_object_info
 struct SI_OBJECT_INFO
 {
     SI_OBJECT_INFO_FLAGS dwFlags;
@@ -146,7 +151,7 @@ struct SI_OBJECT_INFO
     GUID                 guidObjectType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/aclui/ns-aclui-si_access))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/ns-aclui-si_access
 struct SI_ACCESS
 {
     const(GUID)* pguid;
@@ -155,7 +160,7 @@ struct SI_ACCESS
     uint         dwFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/aclui/ns-aclui-si_inherit_type))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/ns-aclui-si_inherit_type
 struct SI_INHERIT_TYPE
 {
     const(GUID)* pguid;
@@ -163,7 +168,7 @@ struct SI_INHERIT_TYPE
     const(PWSTR) pszName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/aclui/ns-aclui-sid_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/ns-aclui-sid_info
 struct SID_INFO
 {
     PSID  pSid;
@@ -172,14 +177,14 @@ struct SID_INFO
     PWSTR pwzUPN;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/aclui/ns-aclui-sid_info_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/ns-aclui-sid_info_list
 struct SID_INFO_LIST
 {
     uint cItems;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SID_INFO[1] aSidInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/aclui/ns-aclui-security_object))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/ns-aclui-security_object
 struct SECURITY_OBJECT
 {
     PWSTR   pwszName;
@@ -191,7 +196,7 @@ struct SECURITY_OBJECT
     BOOLEAN fWellKnown;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/aclui/ns-aclui-effperm_result_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/ns-aclui-effperm_result_list
 struct EFFPERM_RESULT_LIST
 {
     BOOLEAN           fEvaluated;
@@ -219,44 +224,44 @@ HRESULT EditSecurityAdvanced(HWND hwndOwner, ISecurityInformation psi, SI_PAGE_T
 
 @GUID("965fc360-16ff-11d0-91cb-00aa00bbb723")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/aclui/nn-aclui-isecurityinformation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/nn-aclui-isecurityinformation
 interface ISecurityInformation : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/aclui/nf-aclui-isecurityinformation-getobjectinformation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/nf-aclui-isecurityinformation-getobjectinformation
     HRESULT GetObjectInformation(SI_OBJECT_INFO* pObjectInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/aclui/nf-aclui-isecurityinformation-getsecurity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/nf-aclui-isecurityinformation-getsecurity
     HRESULT GetSecurity(OBJECT_SECURITY_INFORMATION RequestedInformation, 
                         PSECURITY_DESCRIPTOR* ppSecurityDescriptor, BOOL fDefault);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/aclui/nf-aclui-isecurityinformation-setsecurity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/nf-aclui-isecurityinformation-setsecurity
     HRESULT SetSecurity(OBJECT_SECURITY_INFORMATION SecurityInformation, PSECURITY_DESCRIPTOR pSecurityDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/aclui/nf-aclui-isecurityinformation-getaccessrights))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/nf-aclui-isecurityinformation-getaccessrights
     HRESULT GetAccessRights(const(GUID)* pguidObjectType, SECURITY_INFO_PAGE_FLAGS dwFlags, SI_ACCESS** ppAccess, 
                             uint* pcAccesses, uint* piDefaultAccess);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/aclui/nf-aclui-isecurityinformation-mapgeneric))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/nf-aclui-isecurityinformation-mapgeneric
     HRESULT MapGeneric(const(GUID)* pguidObjectType, ubyte* pAceFlags, uint* pMask);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/aclui/nf-aclui-isecurityinformation-getinherittypes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/nf-aclui-isecurityinformation-getinherittypes
     HRESULT GetInheritTypes(SI_INHERIT_TYPE** ppInheritTypes, uint* pcInheritTypes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/aclui/nf-aclui-isecurityinformation-propertysheetpagecallback))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/nf-aclui-isecurityinformation-propertysheetpagecallback
     HRESULT PropertySheetPageCallback(HWND hwnd, PSPCB_MESSAGE uMsg, SI_PAGE_TYPE uPage);
 }
 
 @GUID("c3ccfdb4-6f88-11d2-a3ce-00c04fb1782a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/aclui/nn-aclui-isecurityinformation2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/nn-aclui-isecurityinformation2
 interface ISecurityInformation2 : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/aclui/nf-aclui-isecurityinformation2-isdaclcanonical))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/nf-aclui-isecurityinformation2-isdaclcanonical
     BOOL    IsDaclCanonical(ACL* pDacl);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/aclui/nf-aclui-isecurityinformation2-lookupsids))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/nf-aclui-isecurityinformation2-lookupsids
     HRESULT LookupSids(uint cSids, PSID* rgpSids, IDataObject* ppdo);
 }
 
 @GUID("3853dc76-9f35-407c-88a1-d19344365fbc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/aclui/nn-aclui-ieffectivepermission))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/nn-aclui-ieffectivepermission
 interface IEffectivePermission : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/aclui/nf-aclui-ieffectivepermission-geteffectivepermission))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/nf-aclui-ieffectivepermission-geteffectivepermission
     HRESULT GetEffectivePermission(const(GUID)* pguidObjectType, PSID pUserSid, const(PWSTR) pszServerName, 
                                    PSECURITY_DESCRIPTOR pSD, OBJECT_TYPE_LIST** ppObjectTypeList, 
                                    uint* pcObjectTypeListLength, uint** ppGrantedAccessList, 
@@ -265,39 +270,39 @@ interface IEffectivePermission : IUnknown
 
 @GUID("fc3066eb-79ef-444b-9111-d18a75ebf2fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/aclui/nn-aclui-isecurityobjecttypeinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/nn-aclui-isecurityobjecttypeinfo
 interface ISecurityObjectTypeInfo : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/aclui/nf-aclui-isecurityobjecttypeinfo-getinheritsource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/nf-aclui-isecurityobjecttypeinfo-getinheritsource
     HRESULT GetInheritSource(uint si, ACL* pACL, INHERITED_FROMA** ppInheritArray);
 }
 
 @GUID("e2cdc9cc-31bd-4f8f-8c8b-b641af516a1a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/aclui/nn-aclui-isecurityinformation3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/nn-aclui-isecurityinformation3
 interface ISecurityInformation3 : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/aclui/nf-aclui-isecurityinformation3-getfullresourcename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/nf-aclui-isecurityinformation3-getfullresourcename
     HRESULT GetFullResourceName(PWSTR* ppszResourceName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/aclui/nf-aclui-isecurityinformation3-openelevatededitor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/nf-aclui-isecurityinformation3-openelevatededitor
     HRESULT OpenElevatedEditor(HWND hWnd, SI_PAGE_TYPE uPage);
 }
 
 @GUID("ea961070-cd14-4621-ace4-f63c03e583e4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/aclui/nn-aclui-isecurityinformation4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/nn-aclui-isecurityinformation4
 interface ISecurityInformation4 : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/aclui/nf-aclui-isecurityinformation4-getsecondarysecurity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/nf-aclui-isecurityinformation4-getsecondarysecurity
     HRESULT GetSecondarySecurity(SECURITY_OBJECT** pSecurityObjects, uint* pSecurityObjectCount);
 }
 
 @GUID("941fabca-dd47-4fca-90bb-b0e10255f20d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/aclui/nn-aclui-ieffectivepermission2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/nn-aclui-ieffectivepermission2
 interface IEffectivePermission2 : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/aclui/nf-aclui-ieffectivepermission2-computeeffectivepermissionwithsecondarysecurity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/aclui/nf-aclui-ieffectivepermission2-computeeffectivepermissionwithsecondarysecurity
     HRESULT ComputeEffectivePermissionWithSecondarySecurity(PSID pSid, PSID pDeviceSid, const(PWSTR) pszServerName, 
                                                             SECURITY_OBJECT* pSecurityObjects, 
                                                             uint dwSecurityObjectCount, TOKEN_GROUPS* pUserGroups, 

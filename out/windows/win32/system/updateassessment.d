@@ -3,15 +3,16 @@
 module windows.win32.system.updateassessment;
 
 public import windows.core;
-public import windows.win32.foundation : BOOL, FILETIME, HRESULT, PWSTR;
-public import windows.win32.system.com : IUnknown;
+public import windows.win32.foundation.foundation : BOOL, FILETIME, HRESULT, PWSTR;
+public import windows.win32.system.com.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SysInfo/updateimpactlevel))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SysInfo/updateimpactlevel
 enum UpdateImpactLevel : int
 {
     UpdateImpactLevel_None   = 0x00000000,
@@ -19,7 +20,8 @@ enum UpdateImpactLevel : int
     UpdateImpactLevel_Medium = 0x00000002,
     UpdateImpactLevel_High   = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SysInfo/updateassessmentstatus))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SysInfo/updateassessmentstatus
 enum UpdateAssessmentStatus : int
 {
     UpdateAssessmentStatus_Latest                   = 0x00000000,
@@ -39,7 +41,7 @@ enum UpdateAssessmentStatus : int
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/waasapitypes/ns-waasapitypes-updateassessment))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/waasapitypes/ns-waasapitypes-updateassessment
 struct UpdateAssessment
 {
     UpdateAssessmentStatus status;
@@ -47,7 +49,7 @@ struct UpdateAssessment
     uint              daysOutOfDate;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/waasapitypes/ns-waasapitypes-osupdateassessment))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/waasapitypes/ns-waasapitypes-osupdateassessment
 struct OSUpdateAssessment
 {
     BOOL             isEndOfSupport;
@@ -75,10 +77,10 @@ struct WaaSAssessor;
 
 @GUID("2347bbef-1a3b-45a4-902d-3e09c269b45e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/waasapi/nn-waasapi-iwaasassessor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/waasapi/nn-waasapi-iwaasassessor
 interface IWaaSAssessor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/waasapi/nf-waasapi-iwaasassessor-getosupdateassessment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/waasapi/nf-waasapi-iwaasassessor-getosupdateassessment
     HRESULT GetOSUpdateAssessment(OSUpdateAssessment* result);
 }
 

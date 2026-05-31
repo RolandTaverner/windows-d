@@ -3,11 +3,11 @@
 module windows.win32.security.cryptography.sip;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, HANDLE, PWSTR;
-public import windows.win32.security.cryptography : CERT_QUERY_ENCODING_TYPE, CRYPT_ALGORITHM_IDENTIFIER,
-                                                    CRYPT_ATTRIBUTE_TYPE_VALUE,
-                                                    CRYPT_INTEGER_BLOB;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, HANDLE, PWSTR;
+public import windows.win32.security.cryptography.cryptography : CERT_QUERY_ENCODING_TYPE, CRYPT_ALGORITHM_IDENTIFIER,
+                                                                 CRYPT_ATTRIBUTE_TYPE_VALUE,
+                                                                 CRYPT_INTEGER_BLOB;
 public import windows.win32.security.cryptography.catalog : MS_ADDINFO_CATALOGMEMBER;
 
 extern(Windows) @nogc nothrow:
@@ -16,37 +16,37 @@ extern(Windows) @nogc nothrow:
 // Constants
 
 
-enum uint MSSIP_FLAGS_PROHIBIT_RESIZE_ON_CREATE = 0x00010000;
+enum uint MSSIP_FLAGS_PROHIBIT_RESIZE_ON_CREATE = 0x00010000U;
 
 enum : uint
 {
-    MSSIP_FLAGS_USE_CATALOG = 0x00020000,
-    MSSIP_FLAGS_MULTI_HASH  = 0x00040000,
+    MSSIP_FLAGS_USE_CATALOG = 0x00020000U,
+    MSSIP_FLAGS_MULTI_HASH  = 0x00040000U,
 }
 
-enum uint SPC_RELAXED_PE_MARKER_CHECK = 0x00000800;
-enum uint SPC_MARKER_CHECK_SKIP_SIP_INDIRECT_DATA_FLAG = 0x00000001;
-enum uint SPC_MARKER_CHECK_CURRENTLY_SUPPORTED_FLAGS = 0x00000001;
+enum uint SPC_RELAXED_PE_MARKER_CHECK = 0x00000800U;
+enum uint SPC_MARKER_CHECK_SKIP_SIP_INDIRECT_DATA_FLAG = 0x00000001U;
+enum uint SPC_MARKER_CHECK_CURRENTLY_SUPPORTED_FLAGS = 0x00000001U;
 
 enum : uint
 {
-    MSSIP_ADDINFO_NONE        = 0x00000000,
-    MSSIP_ADDINFO_FLAT        = 0x00000001,
-    MSSIP_ADDINFO_CATMEMBER   = 0x00000002,
-    MSSIP_ADDINFO_BLOB        = 0x00000003,
-    MSSIP_ADDINFO_DETACHEDSIG = 0x00000004,
-    MSSIP_ADDINFO_NONMSSIP    = 0x000001f4,
+    MSSIP_ADDINFO_NONE        = 0x00000000U,
+    MSSIP_ADDINFO_FLAT        = 0x00000001U,
+    MSSIP_ADDINFO_CATMEMBER   = 0x00000002U,
+    MSSIP_ADDINFO_BLOB        = 0x00000003U,
+    MSSIP_ADDINFO_DETACHEDSIG = 0x00000004U,
+    MSSIP_ADDINFO_NONMSSIP    = 0x000001f4U,
 }
 
 enum : uint
 {
-    SIP_CAP_SET_VERSION_2 = 0x00000002,
-    SIP_CAP_SET_VERSION_3 = 0x00000003,
-    SIP_CAP_SET_CUR_VER   = 0x00000003,
-    SIP_CAP_FLAG_SEALING  = 0x00000001,
+    SIP_CAP_SET_VERSION_2 = 0x00000002U,
+    SIP_CAP_SET_VERSION_3 = 0x00000003U,
+    SIP_CAP_SET_CUR_VER   = 0x00000003U,
+    SIP_CAP_FLAG_SEALING  = 0x00000001U,
 }
 
-enum uint SIP_MAX_MAGIC_NUMBER = 0x00000004;
+enum uint SIP_MAX_MAGIC_NUMBER = 0x00000004U;
 
 // Callbacks
 
@@ -68,37 +68,43 @@ alias pCryptSIPGetSealedDigest = BOOL function(SIP_SUBJECTINFO* pSubjectInfo, co
 
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mssip/ns-mssip-sip_subjectinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mssip/ns-mssip-sip_subjectinfo
 struct SIP_SUBJECTINFO
 {
-    uint                cbSize;
-    GUID*               pgSubjectType;
-    HANDLE              hFile;
-    const(PWSTR)        pwsFileName;
-    const(PWSTR)        pwsDisplayName;
-    uint                dwReserved1;
-    uint                dwIntVersion;
-    size_t              hProv;
+    uint         cbSize;
+    GUID*        pgSubjectType;
+    HANDLE       hFile;
+    const(PWSTR) pwsFileName;
+    const(PWSTR) pwsDisplayName;
+    uint         dwReserved1;
+    uint         dwIntVersion;
+    size_t       hProv;
     CRYPT_ALGORITHM_IDENTIFIER DigestAlgorithm;
-    uint                dwFlags;
-    uint                dwEncodingType;
-    uint                dwReserved2;
-    uint                fdwCAPISettings;
-    uint                fdwSecuritySettings;
-    uint                dwIndex;
-    uint                dwUnionChoice;
-    _Anonymous_e__Union Anonymous;
-    void*               pClientData;
+    uint         dwFlags;
+    uint         dwEncodingType;
+    uint         dwReserved2;
+    uint         fdwCAPISettings;
+    uint         fdwSecuritySettings;
+    uint         dwIndex;
+    uint         dwUnionChoice;
+    union
+    {
+        MS_ADDINFO_FLAT* psFlat;
+        MS_ADDINFO_CATALOGMEMBER* psCatMember;
+        MS_ADDINFO_BLOB* psBlob;
+        MS_ADDINFO_DETACHEDSIG* psDetachedSig;
+    }
+    void*        pClientData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mssip/ns-mssip-ms_addinfo_flat))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mssip/ns-mssip-ms_addinfo_flat
 struct MS_ADDINFO_FLAT
 {
     uint               cbStruct;
     SIP_INDIRECT_DATA* pIndirectData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mssip/ns-mssip-ms_addinfo_blob))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mssip/ns-mssip-ms_addinfo_blob
 struct MS_ADDINFO_BLOB
 {
     uint   cbStruct;
@@ -117,7 +123,7 @@ struct MS_ADDINFO_DETACHEDSIG
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mssip/ns-mssip-sip_cap_set_v2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mssip/ns-mssip-sip_cap_set_v2
 struct SIP_CAP_SET_V2
 {
     uint cbSize;
@@ -127,16 +133,20 @@ struct SIP_CAP_SET_V2
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mssip/ns-mssip-sip_cap_set_v3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mssip/ns-mssip-sip_cap_set_v3
 struct SIP_CAP_SET_V3
 {
-    uint                cbSize;
-    uint                dwVersion;
-    BOOL                isMultiSign;
-    _Anonymous_e__Union Anonymous;
+    uint cbSize;
+    uint dwVersion;
+    BOOL isMultiSign;
+    union
+    {
+        uint dwFlags;
+        uint dwReserved;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mssip/ns-mssip-sip_indirect_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mssip/ns-mssip-sip_indirect_data
 struct SIP_INDIRECT_DATA
 {
     CRYPT_ATTRIBUTE_TYPE_VALUE Data;
@@ -145,7 +155,7 @@ struct SIP_INDIRECT_DATA
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mssip/ns-mssip-sip_dispatch_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mssip/ns-mssip-sip_dispatch_info
 struct SIP_DISPATCH_INFO
 {
     uint   cbSize;
@@ -157,7 +167,7 @@ struct SIP_DISPATCH_INFO
     pCryptSIPRemoveSignedDataMsg pfRemove;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mssip/ns-mssip-sip_add_newprovider))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mssip/ns-mssip-sip_add_newprovider
 struct SIP_ADD_NEWPROVIDER
 {
     uint  cbStruct;

@@ -3,18 +3,19 @@
 module windows.win32.security.extensibleauthenticationprotocol;
 
 public import windows.core;
-public import system : Guid;
+public import system.system : Guid;
 public import windows.win32.data.xml.msxml : IXMLDOMDocument2, IXMLDOMNode;
-public import windows.win32.foundation : BOOL, HANDLE, HRESULT, HWND, PWSTR;
-public import windows.win32.security.cryptography : NCRYPT_KEY_HANDLE;
-public import windows.win32.system.com : IUnknown;
+public import windows.win32.foundation.foundation : BOOL, HANDLE, HRESULT, HWND, PWSTR;
+public import windows.win32.security.cryptography.cryptography : NCRYPT_KEY_HANDLE;
+public import windows.win32.system.com.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/raseapif/ne-raseapif-ras_auth_attribute_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/raseapif/ne-raseapif-ras_auth_attribute_type
 alias RAS_AUTH_ATTRIBUTE_TYPE = int;
 enum : int
 {
@@ -115,7 +116,8 @@ enum : int
     raatSessionId              = 0x0000232c,
     raatReserved               = 0xffffffff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/raseapif/ne-raseapif-ppp_eap_action))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/raseapif/ne-raseapif-ppp_eap_action
 alias PPP_EAP_ACTION = int;
 enum : int
 {
@@ -129,7 +131,8 @@ enum : int
     EAPACTION_IndicateTLV                = 0x00000007,
     EAPACTION_IndicateIdentity           = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eaptypes/ne-eaptypes-eap_attribute_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eaptypes/ne-eaptypes-eap_attribute_type
 alias EAP_ATTRIBUTE_TYPE = int;
 enum : int
 {
@@ -232,7 +235,8 @@ enum : int
     eatSessionId              = 0x0000232c,
     eatReserved               = 0xffffffff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eaptypes/ne-eaptypes-eap_config_input_field_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eaptypes/ne-eaptypes-eap_config_input_field_type
 alias EAP_CONFIG_INPUT_FIELD_TYPE = int;
 enum : int
 {
@@ -246,7 +250,8 @@ enum : int
     EapConfigSmartCardUsername    = 0x00000007,
     EapConfigSmartCardError       = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eaptypes/ne-eaptypes-eap_interactive_ui_data_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eaptypes/ne-eaptypes-eap_interactive_ui_data_type
 alias EAP_INTERACTIVE_UI_DATA_TYPE = int;
 enum : int
 {
@@ -257,7 +262,8 @@ enum : int
     EapCredLogonReq   = 0x00000004,
     EapCredLogonResp  = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eaptypes/ne-eaptypes-eap_method_property_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eaptypes/ne-eaptypes-eap_method_property_type
 alias EAP_METHOD_PROPERTY_TYPE = int;
 enum : int
 {
@@ -293,7 +299,8 @@ enum : int
     emptLegacyMethodPropertyFlag       = 0x0000001f,
     emptPropVendorSpecific             = 0x000000ff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eaptypes/ne-eaptypes-eap_method_property_value_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eaptypes/ne-eaptypes-eap_method_property_value_type
 alias EAP_METHOD_PROPERTY_VALUE_TYPE = int;
 enum : int
 {
@@ -301,7 +308,8 @@ enum : int
     empvtDword  = 0x00000001,
     empvtString = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eaptypes/ne-eaptypes-eapcredentialtype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eaptypes/ne-eaptypes-eapcredentialtype
 enum EapCredentialType : int
 {
     EAP_EMPTY_CREDENTIAL             = 0x00000000,
@@ -310,14 +318,16 @@ enum EapCredentialType : int
     EAP_CERTIFICATE_CREDENTIAL       = 0x00000003,
     EAP_SIM_CREDENTIAL               = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eaphostpeertypes/ne-eaphostpeertypes-eaphostpeermethodresultreason))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eaphostpeertypes/ne-eaphostpeertypes-eaphostpeermethodresultreason
 enum EapHostPeerMethodResultReason : int
 {
     EapHostPeerMethodResultAltSuccessReceived = 0x00000001,
     EapHostPeerMethodResultTimeout            = 0x00000002,
     EapHostPeerMethodResultFromMethod         = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eaphostpeertypes/ne-eaphostpeertypes-eaphostpeerresponseaction))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eaphostpeertypes/ne-eaphostpeertypes-eaphostpeerresponseaction
 enum EapHostPeerResponseAction : int
 {
     EapHostPeerResponseDiscard             = 0x00000000,
@@ -328,7 +338,8 @@ enum EapHostPeerResponseAction : int
     EapHostPeerResponseStartAuthentication = 0x00000005,
     EapHostPeerResponseNone                = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eaphostpeertypes/ne-eaphostpeertypes-eaphostpeerauthparams))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eaphostpeertypes/ne-eaphostpeertypes-eaphostpeerauthparams
 enum EapHostPeerAuthParams : int
 {
     EapHostPeerAuthStatus           = 0x00000001,
@@ -336,7 +347,8 @@ enum EapHostPeerAuthParams : int
     EapHostPeerIdentityExtendedInfo = 0x00000003,
     EapHostNapInfo                  = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eaphostpeertypes/ne-eaphostpeertypes-eaphost_auth_status))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eaphostpeertypes/ne-eaphostpeertypes-eaphost_auth_status
 alias EAPHOST_AUTH_STATUS = int;
 enum : int
 {
@@ -348,7 +360,8 @@ enum : int
     EapHostAuthSucceeded        = 0x00000005,
     EapHostAuthFailed           = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eaphostpeertypes/ne-eaphostpeertypes-isolation_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eaphostpeertypes/ne-eaphostpeertypes-isolation_state
 alias ISOLATION_STATE = int;
 enum : int
 {
@@ -357,7 +370,8 @@ enum : int
     ISOLATION_STATE_IN_PROBATION      = 0x00000002,
     ISOLATION_STATE_RESTRICTED_ACCESS = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eapmethodtypes/ne-eapmethodtypes-eapcode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eapmethodtypes/ne-eapmethodtypes-eapcode
 enum EapCode : int
 {
     EapCodeMinimum  = 0x00000001,
@@ -367,7 +381,8 @@ enum EapCode : int
     EapCodeFailure  = 0x00000004,
     EapCodeMaximum  = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eapauthenticatoractiondefine/ne-eapauthenticatoractiondefine-eap_method_authenticator_response_action))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eapauthenticatoractiondefine/ne-eapauthenticatoractiondefine-eap_method_authenticator_response_action
 alias EAP_METHOD_AUTHENTICATOR_RESPONSE_ACTION = int;
 enum : int
 {
@@ -378,7 +393,8 @@ enum : int
     EAP_METHOD_AUTHENTICATOR_RESPONSE_AUTHENTICATE    = 0x00000004,
     EAP_METHOD_AUTHENTICATOR_RESPONSE_HANDLE_IDENTITY = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eapauthenticatoractiondefine/ne-eapauthenticatoractiondefine-eappeermethodresponseaction))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eapauthenticatoractiondefine/ne-eapauthenticatoractiondefine-eappeermethodresponseaction
 enum EapPeerMethodResponseAction : int
 {
     EapPeerMethodResponseActionDiscard  = 0x00000000,
@@ -388,14 +404,16 @@ enum EapPeerMethodResponseAction : int
     EapPeerMethodResponseActionRespond  = 0x00000004,
     EapPeerMethodResponseActionNone     = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eapauthenticatoractiondefine/ne-eapauthenticatoractiondefine-eappeermethodresultreason))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eapauthenticatoractiondefine/ne-eapauthenticatoractiondefine-eappeermethodresultreason
 enum EapPeerMethodResultReason : int
 {
     EapPeerMethodResultUnknown = 0x00000001,
     EapPeerMethodResultSuccess = 0x00000002,
     EapPeerMethodResultFailure = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eapauthenticatortypes/ne-eapauthenticatortypes-eap_authenticator_send_timeout))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eapauthenticatortypes/ne-eapauthenticatortypes-eap_authenticator_send_timeout
 alias EAP_AUTHENTICATOR_SEND_TIMEOUT = int;
 enum : int
 {
@@ -407,7 +425,7 @@ enum : int
 // Constants
 
 
-enum uint FACILITY_EAP_MESSAGE = 0x00000842;
+enum uint FACILITY_EAP_MESSAGE = 0x00000842U;
 enum int EAP_GROUP_MASK = 0x0000ff00;
 
 enum : int
@@ -422,27 +440,27 @@ enum : int
     EAP_I_EAPHOST_LAST  = 0x804200ff,
 }
 
-enum uint EAP_E_CERT_STORE_INACCESSIBLE = 0x80420010;
+enum uint EAP_E_CERT_STORE_INACCESSIBLE = 0x80420010U;
 
 enum : uint
 {
-    EAP_E_EAPHOST_METHOD_NOT_INSTALLED         = 0x80420011,
-    EAP_E_EAPHOST_THIRDPARTY_METHOD_HOST_RESET = 0x80420012,
+    EAP_E_EAPHOST_METHOD_NOT_INSTALLED         = 0x80420011U,
+    EAP_E_EAPHOST_THIRDPARTY_METHOD_HOST_RESET = 0x80420012U,
 }
 
 enum : uint
 {
-    EAP_E_EAPHOST_EAPQEC_INACCESSIBLE = 0x80420013,
-    EAP_E_EAPHOST_IDENTITY_UNKNOWN    = 0x80420014,
+    EAP_E_EAPHOST_EAPQEC_INACCESSIBLE = 0x80420013U,
+    EAP_E_EAPHOST_IDENTITY_UNKNOWN    = 0x80420014U,
 }
 
-enum uint EAP_E_AUTHENTICATION_FAILED = 0x80420015;
-enum uint EAP_I_EAPHOST_EAP_NEGOTIATION_FAILED = 0x40420016;
-enum uint EAP_E_EAPHOST_METHOD_INVALID_PACKET = 0x80420017;
-enum uint EAP_E_EAPHOST_REMOTE_INVALID_PACKET = 0x80420018;
-enum uint EAP_E_EAPHOST_XML_MALFORMED = 0x80420019;
-enum uint EAP_E_METHOD_CONFIG_DOES_NOT_SUPPORT_SSO = 0x8042001a;
-enum uint EAP_E_EAPHOST_METHOD_OPERATION_NOT_SUPPORTED = 0x80420020;
+enum uint EAP_E_AUTHENTICATION_FAILED = 0x80420015U;
+enum uint EAP_I_EAPHOST_EAP_NEGOTIATION_FAILED = 0x40420016U;
+enum uint EAP_E_EAPHOST_METHOD_INVALID_PACKET = 0x80420017U;
+enum uint EAP_E_EAPHOST_REMOTE_INVALID_PACKET = 0x80420018U;
+enum uint EAP_E_EAPHOST_XML_MALFORMED = 0x80420019U;
+enum uint EAP_E_METHOD_CONFIG_DOES_NOT_SUPPORT_SSO = 0x8042001aU;
+enum uint EAP_E_EAPHOST_METHOD_OPERATION_NOT_SUPPORTED = 0x80420020U;
 
 enum : int
 {
@@ -458,18 +476,18 @@ enum : int
 
 enum : uint
 {
-    EAP_E_USER_CERT_NOT_FOUND   = 0x80420100,
-    EAP_E_USER_CERT_INVALID     = 0x80420101,
-    EAP_E_USER_CERT_EXPIRED     = 0x80420102,
-    EAP_E_USER_CERT_REVOKED     = 0x80420103,
-    EAP_E_USER_CERT_OTHER_ERROR = 0x80420104,
-    EAP_E_USER_CERT_REJECTED    = 0x80420105,
+    EAP_E_USER_CERT_NOT_FOUND   = 0x80420100U,
+    EAP_E_USER_CERT_INVALID     = 0x80420101U,
+    EAP_E_USER_CERT_EXPIRED     = 0x80420102U,
+    EAP_E_USER_CERT_REVOKED     = 0x80420103U,
+    EAP_E_USER_CERT_OTHER_ERROR = 0x80420104U,
+    EAP_E_USER_CERT_REJECTED    = 0x80420105U,
 }
 
-enum uint EAP_I_USER_ACCOUNT_OTHER_ERROR = 0x40420110;
-enum uint EAP_E_USER_CREDENTIALS_REJECTED = 0x80420111;
-enum uint EAP_E_USER_NAME_PASSWORD_REJECTED = 0x80420112;
-enum uint EAP_E_NO_SMART_CARD_READER = 0x80420113;
+enum uint EAP_I_USER_ACCOUNT_OTHER_ERROR = 0x40420110U;
+enum uint EAP_E_USER_CREDENTIALS_REJECTED = 0x80420111U;
+enum uint EAP_E_USER_NAME_PASSWORD_REJECTED = 0x80420112U;
+enum uint EAP_E_NO_SMART_CARD_READER = 0x80420113U;
 
 enum : int
 {
@@ -479,11 +497,11 @@ enum : int
 
 enum : uint
 {
-    EAP_E_SERVER_CERT_NOT_FOUND   = 0x80420200,
-    EAP_E_SERVER_CERT_INVALID     = 0x80420201,
-    EAP_E_SERVER_CERT_EXPIRED     = 0x80420202,
-    EAP_E_SERVER_CERT_REVOKED     = 0x80420203,
-    EAP_E_SERVER_CERT_OTHER_ERROR = 0x80420204,
+    EAP_E_SERVER_CERT_NOT_FOUND   = 0x80420200U,
+    EAP_E_SERVER_CERT_INVALID     = 0x80420201U,
+    EAP_E_SERVER_CERT_EXPIRED     = 0x80420202U,
+    EAP_E_SERVER_CERT_REVOKED     = 0x80420203U,
+    EAP_E_SERVER_CERT_OTHER_ERROR = 0x80420204U,
 }
 
 enum : int
@@ -494,9 +512,9 @@ enum : int
 
 enum : uint
 {
-    EAP_E_USER_ROOT_CERT_NOT_FOUND = 0x80420300,
-    EAP_E_USER_ROOT_CERT_INVALID   = 0x80420301,
-    EAP_E_USER_ROOT_CERT_EXPIRED   = 0x80420302,
+    EAP_E_USER_ROOT_CERT_NOT_FOUND = 0x80420300U,
+    EAP_E_USER_ROOT_CERT_INVALID   = 0x80420301U,
+    EAP_E_USER_ROOT_CERT_EXPIRED   = 0x80420302U,
 }
 
 enum : int
@@ -507,141 +525,141 @@ enum : int
 
 enum : uint
 {
-    EAP_E_SERVER_ROOT_CERT_NOT_FOUND     = 0x80420400,
-    EAP_E_SERVER_ROOT_CERT_INVALID       = 0x80420401,
-    EAP_E_SERVER_ROOT_CERT_NAME_REQUIRED = 0x80420406,
+    EAP_E_SERVER_ROOT_CERT_NOT_FOUND     = 0x80420400U,
+    EAP_E_SERVER_ROOT_CERT_INVALID       = 0x80420401U,
+    EAP_E_SERVER_ROOT_CERT_NAME_REQUIRED = 0x80420406U,
 }
 
-enum uint EAP_E_SIM_NOT_VALID = 0x80420500;
-enum uint EAP_METHOD_INVALID_PACKET = 0x80420017;
-enum uint EAP_INVALID_PACKET = 0x80420018;
-enum uint EAP_PEER_FLAG_GUEST_ACCESS = 0x00000040;
-enum uint eapPropCipherSuiteNegotiation = 0x00000001;
+enum uint EAP_E_SIM_NOT_VALID = 0x80420500U;
+enum uint EAP_METHOD_INVALID_PACKET = 0x80420017U;
+enum uint EAP_INVALID_PACKET = 0x80420018U;
+enum uint EAP_PEER_FLAG_GUEST_ACCESS = 0x00000040U;
+enum uint eapPropCipherSuiteNegotiation = 0x00000001U;
 
 enum : uint
 {
-    eapPropMutualAuth       = 0x00000002,
-    eapPropIntegrity        = 0x00000004,
-    eapPropReplayProtection = 0x00000008,
+    eapPropMutualAuth       = 0x00000002U,
+    eapPropIntegrity        = 0x00000004U,
+    eapPropReplayProtection = 0x00000008U,
 }
 
-enum uint eapPropConfidentiality = 0x00000010;
+enum uint eapPropConfidentiality = 0x00000010U;
 
 enum : uint
 {
-    eapPropKeyDerivation   = 0x00000020,
-    eapPropKeyStrength64   = 0x00000040,
-    eapPropKeyStrength128  = 0x00000080,
-    eapPropKeyStrength256  = 0x00000100,
-    eapPropKeyStrength512  = 0x00000200,
-    eapPropKeyStrength1024 = 0x00000400,
+    eapPropKeyDerivation   = 0x00000020U,
+    eapPropKeyStrength64   = 0x00000040U,
+    eapPropKeyStrength128  = 0x00000080U,
+    eapPropKeyStrength256  = 0x00000100U,
+    eapPropKeyStrength512  = 0x00000200U,
+    eapPropKeyStrength1024 = 0x00000400U,
 }
 
-enum uint eapPropDictionaryAttackResistance = 0x00000800;
-enum uint eapPropFastReconnect = 0x00001000;
-enum uint eapPropCryptoBinding = 0x00002000;
-enum uint eapPropSessionIndependence = 0x00004000;
-enum uint eapPropFragmentation = 0x00008000;
-enum uint eapPropChannelBinding = 0x00010000;
+enum uint eapPropDictionaryAttackResistance = 0x00000800U;
+enum uint eapPropFastReconnect = 0x00001000U;
+enum uint eapPropCryptoBinding = 0x00002000U;
+enum uint eapPropSessionIndependence = 0x00004000U;
+enum uint eapPropFragmentation = 0x00008000U;
+enum uint eapPropChannelBinding = 0x00010000U;
 
 enum : uint
 {
-    eapPropNap            = 0x00020000,
-    eapPropStandalone     = 0x00040000,
-    eapPropMppeEncryption = 0x00080000,
+    eapPropNap            = 0x00020000U,
+    eapPropStandalone     = 0x00040000U,
+    eapPropMppeEncryption = 0x00080000U,
 }
 
-enum uint eapPropTunnelMethod = 0x00100000;
-enum uint eapPropSupportsConfig = 0x00200000;
-enum uint eapPropCertifiedMethod = 0x00400000;
-enum uint eapPropHiddenMethod = 0x00800000;
-enum uint eapPropMachineAuth = 0x01000000;
+enum uint eapPropTunnelMethod = 0x00100000U;
+enum uint eapPropSupportsConfig = 0x00200000U;
+enum uint eapPropCertifiedMethod = 0x00400000U;
+enum uint eapPropHiddenMethod = 0x00800000U;
+enum uint eapPropMachineAuth = 0x01000000U;
 
 enum : uint
 {
-    eapPropUserAuth        = 0x02000000,
-    eapPropIdentityPrivacy = 0x04000000,
+    eapPropUserAuth        = 0x02000000U,
+    eapPropIdentityPrivacy = 0x04000000U,
 }
 
-enum uint eapPropMethodChaining = 0x08000000;
-enum uint eapPropSharedStateEquivalence = 0x10000000;
-enum uint eapPropReserved = 0x80000000;
+enum uint eapPropMethodChaining = 0x08000000U;
+enum uint eapPropSharedStateEquivalence = 0x10000000U;
+enum uint eapPropReserved = 0x80000000U;
 enum const(wchar)* EAP_VALUENAME_PROPERTIES = "Properties";
 
 enum : uint
 {
-    EAP_FLAG_Reserved1       = 0x00000001,
-    EAP_FLAG_NON_INTERACTIVE = 0x00000002,
+    EAP_FLAG_Reserved1       = 0x00000001U,
+    EAP_FLAG_NON_INTERACTIVE = 0x00000002U,
 }
 
 enum : uint
 {
-    EAP_FLAG_LOGON                 = 0x00000004,
-    EAP_FLAG_PREVIEW               = 0x00000008,
-    EAP_FLAG_Reserved2             = 0x00000010,
-    EAP_FLAG_MACHINE_AUTH          = 0x00000020,
-    EAP_FLAG_GUEST_ACCESS          = 0x00000040,
-    EAP_FLAG_Reserved3             = 0x00000080,
-    EAP_FLAG_Reserved4             = 0x00000100,
-    EAP_FLAG_RESUME_FROM_HIBERNATE = 0x00000200,
+    EAP_FLAG_LOGON                 = 0x00000004U,
+    EAP_FLAG_PREVIEW               = 0x00000008U,
+    EAP_FLAG_Reserved2             = 0x00000010U,
+    EAP_FLAG_MACHINE_AUTH          = 0x00000020U,
+    EAP_FLAG_GUEST_ACCESS          = 0x00000040U,
+    EAP_FLAG_Reserved3             = 0x00000080U,
+    EAP_FLAG_Reserved4             = 0x00000100U,
+    EAP_FLAG_RESUME_FROM_HIBERNATE = 0x00000200U,
 }
 
 enum : uint
 {
-    EAP_FLAG_Reserved5              = 0x00000400,
-    EAP_FLAG_Reserved6              = 0x00000800,
-    EAP_FLAG_FULL_AUTH              = 0x00001000,
-    EAP_FLAG_PREFER_ALT_CREDENTIALS = 0x00002000,
+    EAP_FLAG_Reserved5              = 0x00000400U,
+    EAP_FLAG_Reserved6              = 0x00000800U,
+    EAP_FLAG_FULL_AUTH              = 0x00001000U,
+    EAP_FLAG_PREFER_ALT_CREDENTIALS = 0x00002000U,
 }
 
-enum uint EAP_FLAG_Reserved7 = 0x00004000;
-enum uint EAP_PEER_FLAG_HEALTH_STATE_CHANGE = 0x00008000;
+enum uint EAP_FLAG_Reserved7 = 0x00004000U;
+enum uint EAP_PEER_FLAG_HEALTH_STATE_CHANGE = 0x00008000U;
 
 enum : uint
 {
-    EAP_FLAG_SUPRESS_UI     = 0x00010000,
-    EAP_FLAG_PRE_LOGON      = 0x00020000,
-    EAP_FLAG_USER_AUTH      = 0x00040000,
-    EAP_FLAG_CONFG_READONLY = 0x00080000,
-}
-
-enum : uint
-{
-    EAP_FLAG_Reserved8                  = 0x00100000,
-    EAP_FLAG_Reserved9                  = 0x00400000,
-    EAP_FLAG_VPN                        = 0x00800000,
-    EAP_FLAG_ONLY_EAP_TLS               = 0x01000000,
-    EAP_FLAG_SERVER_VALIDATION_REQUIRED = 0x02000000,
+    EAP_FLAG_SUPRESS_UI     = 0x00010000U,
+    EAP_FLAG_PRE_LOGON      = 0x00020000U,
+    EAP_FLAG_USER_AUTH      = 0x00040000U,
+    EAP_FLAG_CONFG_READONLY = 0x00080000U,
 }
 
 enum : uint
 {
-    EAP_CONFIG_INPUT_FIELD_PROPS_DEFAULT         = 0x00000000,
-    EAP_CONFIG_INPUT_FIELD_PROPS_NON_DISPLAYABLE = 0x00000001,
-    EAP_CONFIG_INPUT_FIELD_PROPS_NON_PERSIST     = 0x00000002,
+    EAP_FLAG_Reserved8                  = 0x00100000U,
+    EAP_FLAG_Reserved9                  = 0x00400000U,
+    EAP_FLAG_VPN                        = 0x00800000U,
+    EAP_FLAG_ONLY_EAP_TLS               = 0x01000000U,
+    EAP_FLAG_SERVER_VALIDATION_REQUIRED = 0x02000000U,
 }
 
 enum : uint
 {
-    EAP_UI_INPUT_FIELD_PROPS_DEFAULT         = 0x00000000,
-    EAP_UI_INPUT_FIELD_PROPS_NON_DISPLAYABLE = 0x00000001,
-    EAP_UI_INPUT_FIELD_PROPS_NON_PERSIST     = 0x00000002,
-    EAP_UI_INPUT_FIELD_PROPS_READ_ONLY       = 0x00000004,
+    EAP_CONFIG_INPUT_FIELD_PROPS_DEFAULT         = 0x00000000U,
+    EAP_CONFIG_INPUT_FIELD_PROPS_NON_DISPLAYABLE = 0x00000001U,
+    EAP_CONFIG_INPUT_FIELD_PROPS_NON_PERSIST     = 0x00000002U,
 }
-
-enum uint EAP_CREDENTIAL_VERSION = 0x00000001;
-enum uint EAP_INTERACTIVE_UI_DATA_VERSION = 0x00000001;
-enum uint EAPHOST_PEER_API_VERSION = 0x00000001;
-enum uint EAPHOST_METHOD_API_VERSION = 0x00000001;
 
 enum : uint
 {
-    MAX_EAP_CONFIG_INPUT_FIELD_LENGTH       = 0x00000100,
-    MAX_EAP_CONFIG_INPUT_FIELD_VALUE_LENGTH = 0x00000400,
+    EAP_UI_INPUT_FIELD_PROPS_DEFAULT         = 0x00000000U,
+    EAP_UI_INPUT_FIELD_PROPS_NON_DISPLAYABLE = 0x00000001U,
+    EAP_UI_INPUT_FIELD_PROPS_NON_PERSIST     = 0x00000002U,
+    EAP_UI_INPUT_FIELD_PROPS_READ_ONLY       = 0x00000004U,
 }
 
-enum uint CERTIFICATE_HASH_LENGTH = 0x00000014;
-enum uint NCRYPT_PIN_CACHE_PIN_BYTE_LENGTH = 0x0000005a;
+enum uint EAP_CREDENTIAL_VERSION = 0x00000001U;
+enum uint EAP_INTERACTIVE_UI_DATA_VERSION = 0x00000001U;
+enum uint EAPHOST_PEER_API_VERSION = 0x00000001U;
+enum uint EAPHOST_METHOD_API_VERSION = 0x00000001U;
+
+enum : uint
+{
+    MAX_EAP_CONFIG_INPUT_FIELD_LENGTH       = 0x00000100U,
+    MAX_EAP_CONFIG_INPUT_FIELD_VALUE_LENGTH = 0x00000400U,
+}
+
+enum uint CERTIFICATE_HASH_LENGTH = 0x00000014U;
+enum uint NCRYPT_PIN_CACHE_PIN_BYTE_LENGTH = 0x0000005aU;
 enum const(wchar)* EAP_REGISTRY_LOCATION = "System\\CurrentControlSet\\Services\\EapHost\\Methods";
 
 enum : const(wchar)*
@@ -665,7 +683,7 @@ enum : const(wchar)*
     EAP_AUTHENTICATOR_VALUENAME_CONFIGUI      = "AuthenticatorConfigUIPath",
 }
 
-enum uint EAP_METHOD_AUTHENTICATOR_CONFIG_IS_IDENTITY_PRIVACY = 0x00000001;
+enum uint EAP_METHOD_AUTHENTICATOR_CONFIG_IS_IDENTITY_PRIVACY = 0x00000001U;
 enum const(wchar)* RAS_EAP_REGISTRY_LOCATION = "System\\CurrentControlSet\\Services\\Rasman\\PPP\\EAP";
 
 enum : const(wchar)*
@@ -690,55 +708,55 @@ enum : const(wchar)*
 
 enum : uint
 {
-    RAS_EAP_ROLE_AUTHENTICATOR   = 0x00000001,
-    RAS_EAP_ROLE_AUTHENTICATEE   = 0x00000002,
-    RAS_EAP_ROLE_EXCLUDE_IN_EAP  = 0x00000004,
-    RAS_EAP_ROLE_EXCLUDE_IN_PEAP = 0x00000008,
-    RAS_EAP_ROLE_EXCLUDE_IN_VPN  = 0x00000010,
+    RAS_EAP_ROLE_AUTHENTICATOR   = 0x00000001U,
+    RAS_EAP_ROLE_AUTHENTICATEE   = 0x00000002U,
+    RAS_EAP_ROLE_EXCLUDE_IN_EAP  = 0x00000004U,
+    RAS_EAP_ROLE_EXCLUDE_IN_PEAP = 0x00000008U,
+    RAS_EAP_ROLE_EXCLUDE_IN_VPN  = 0x00000010U,
 }
 
 enum : uint
 {
-    raatARAPChallenge            = 0x00000021,
-    raatARAPOldPassword          = 0x00000013,
-    raatARAPNewPassword          = 0x00000014,
-    raatARAPPasswordChangeReason = 0x00000015,
+    raatARAPChallenge            = 0x00000021U,
+    raatARAPOldPassword          = 0x00000013U,
+    raatARAPNewPassword          = 0x00000014U,
+    raatARAPPasswordChangeReason = 0x00000015U,
 }
 
 enum : uint
 {
-    EAPCODE_Request  = 0x00000001,
-    EAPCODE_Response = 0x00000002,
-    EAPCODE_Success  = 0x00000003,
-    EAPCODE_Failure  = 0x00000004,
+    EAPCODE_Request  = 0x00000001U,
+    EAPCODE_Response = 0x00000002U,
+    EAPCODE_Success  = 0x00000003U,
+    EAPCODE_Failure  = 0x00000004U,
 }
 
-enum uint MAXEAPCODE = 0x00000004;
+enum uint MAXEAPCODE = 0x00000004U;
 
 enum : uint
 {
-    RAS_EAP_FLAG_ROUTER                = 0x00000001,
-    RAS_EAP_FLAG_NON_INTERACTIVE       = 0x00000002,
-    RAS_EAP_FLAG_LOGON                 = 0x00000004,
-    RAS_EAP_FLAG_PREVIEW               = 0x00000008,
-    RAS_EAP_FLAG_FIRST_LINK            = 0x00000010,
-    RAS_EAP_FLAG_MACHINE_AUTH          = 0x00000020,
-    RAS_EAP_FLAG_GUEST_ACCESS          = 0x00000040,
-    RAS_EAP_FLAG_8021X_AUTH            = 0x00000080,
-    RAS_EAP_FLAG_HOSTED_IN_PEAP        = 0x00000100,
-    RAS_EAP_FLAG_RESUME_FROM_HIBERNATE = 0x00000200,
+    RAS_EAP_FLAG_ROUTER                = 0x00000001U,
+    RAS_EAP_FLAG_NON_INTERACTIVE       = 0x00000002U,
+    RAS_EAP_FLAG_LOGON                 = 0x00000004U,
+    RAS_EAP_FLAG_PREVIEW               = 0x00000008U,
+    RAS_EAP_FLAG_FIRST_LINK            = 0x00000010U,
+    RAS_EAP_FLAG_MACHINE_AUTH          = 0x00000020U,
+    RAS_EAP_FLAG_GUEST_ACCESS          = 0x00000040U,
+    RAS_EAP_FLAG_8021X_AUTH            = 0x00000080U,
+    RAS_EAP_FLAG_HOSTED_IN_PEAP        = 0x00000100U,
+    RAS_EAP_FLAG_RESUME_FROM_HIBERNATE = 0x00000200U,
 }
 
 enum : uint
 {
-    RAS_EAP_FLAG_PEAP_UPFRONT               = 0x00000400,
-    RAS_EAP_FLAG_ALTERNATIVE_USER_DB        = 0x00000800,
-    RAS_EAP_FLAG_PEAP_FORCE_FULL_AUTH       = 0x00001000,
-    RAS_EAP_FLAG_PRE_LOGON                  = 0x00020000,
-    RAS_EAP_FLAG_CONFG_READONLY             = 0x00080000,
-    RAS_EAP_FLAG_RESERVED                   = 0x00100000,
-    RAS_EAP_FLAG_SAVE_CREDMAN               = 0x00200000,
-    RAS_EAP_FLAG_SERVER_VALIDATION_REQUIRED = 0x02000000,
+    RAS_EAP_FLAG_PEAP_UPFRONT               = 0x00000400U,
+    RAS_EAP_FLAG_ALTERNATIVE_USER_DB        = 0x00000800U,
+    RAS_EAP_FLAG_PEAP_FORCE_FULL_AUTH       = 0x00001000U,
+    RAS_EAP_FLAG_PRE_LOGON                  = 0x00020000U,
+    RAS_EAP_FLAG_CONFG_READONLY             = 0x00080000U,
+    RAS_EAP_FLAG_RESERVED                   = 0x00100000U,
+    RAS_EAP_FLAG_SAVE_CREDMAN               = 0x00200000U,
+    RAS_EAP_FLAG_SERVER_VALIDATION_REQUIRED = 0x02000000U,
 }
 
 enum : GUID
@@ -840,7 +858,7 @@ struct NgcTicketContext
     HANDLE            hImpersonateToken;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/raseapif/ns-raseapif-ras_auth_attribute))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/raseapif/ns-raseapif-ras_auth_attribute
 struct RAS_AUTH_ATTRIBUTE
 {
     RAS_AUTH_ATTRIBUTE_TYPE raaType;
@@ -848,7 +866,7 @@ struct RAS_AUTH_ATTRIBUTE
     void* Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/raseapif/ns-raseapif-ppp_eap_packet))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/raseapif/ns-raseapif-ppp_eap_packet
 struct PPP_EAP_PACKET
 {
     ubyte    Code;
@@ -857,7 +875,7 @@ struct PPP_EAP_PACKET
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Data;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/raseapif/ns-raseapif-ppp_eap_input))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/raseapif/ns-raseapif-ppp_eap_input
 struct PPP_EAP_INPUT
 {
     uint                dwSizeInBytes;
@@ -883,7 +901,7 @@ struct PPP_EAP_INPUT
     BOOL                isVpn;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/raseapif/ns-raseapif-ppp_eap_output))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/raseapif/ns-raseapif-ppp_eap_output
 struct PPP_EAP_OUTPUT
 {
     uint                dwSizeInBytes;
@@ -903,7 +921,7 @@ struct PPP_EAP_OUTPUT
     BOOL                fSaveToCredMan;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/raseapif/ns-raseapif-ppp_eap_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/raseapif/ns-raseapif-ppp_eap_info
 struct PPP_EAP_INFO
 {
     uint      dwSizeInBytes;
@@ -938,7 +956,7 @@ struct LEGACY_INTERACTIVE_UI_PARAMS
     uint   dwError;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_type))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_type
 struct EAP_TYPE
 {
     ubyte type;
@@ -946,14 +964,14 @@ struct EAP_TYPE
     uint  dwVendorType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_method_type))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_method_type
 struct EAP_METHOD_TYPE
 {
     EAP_TYPE eapType;
     uint     dwAuthorId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_method_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_method_info
 struct EAP_METHOD_INFO
 {
     EAP_METHOD_TYPE  eaptype;
@@ -963,7 +981,7 @@ struct EAP_METHOD_INFO
     EAP_METHOD_INFO* pInnerMethodInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_method_info_ex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_method_info_ex
 struct EAP_METHOD_INFO_EX
 {
     EAP_METHOD_TYPE eaptype;
@@ -973,21 +991,21 @@ struct EAP_METHOD_INFO_EX
     EAP_METHOD_INFO_ARRAY_EX* pInnerMethodInfoArray;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_method_info_array))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_method_info_array
 struct EAP_METHOD_INFO_ARRAY
 {
     uint             dwNumberOfMethods;
     EAP_METHOD_INFO* pEapMethods;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_method_info_array_ex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_method_info_array_ex
 struct EAP_METHOD_INFO_ARRAY_EX
 {
     uint                dwNumberOfMethods;
     EAP_METHOD_INFO_EX* pEapMethods;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_error))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_error
 struct EAP_ERROR
 {
     uint            dwWinError;
@@ -1000,7 +1018,7 @@ struct EAP_ERROR
     PWSTR           pRepairString;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_attribute))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_attribute
 struct EAP_ATTRIBUTE
 {
     EAP_ATTRIBUTE_TYPE eaType;
@@ -1008,14 +1026,14 @@ struct EAP_ATTRIBUTE
     ubyte*             pValue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_attributes))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_attributes
 struct EAP_ATTRIBUTES
 {
     uint           dwNumberOfAttributes;
     EAP_ATTRIBUTE* pAttribs;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_config_input_field_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_config_input_field_data
 struct EAP_CONFIG_INPUT_FIELD_DATA
 {
     uint  dwSize;
@@ -1027,7 +1045,7 @@ struct EAP_CONFIG_INPUT_FIELD_DATA
     uint  dwMaxDataLength;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_config_input_field_array))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_config_input_field_array
 struct EAP_CONFIG_INPUT_FIELD_ARRAY
 {
     uint dwVersion;
@@ -1035,14 +1053,14 @@ struct EAP_CONFIG_INPUT_FIELD_ARRAY
     EAP_CONFIG_INPUT_FIELD_DATA* pFields;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_cred_expiry_req))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_cred_expiry_req
 struct EAP_CRED_EXPIRY_REQ
 {
     EAP_CONFIG_INPUT_FIELD_ARRAY curCreds;
     EAP_CONFIG_INPUT_FIELD_ARRAY newCreds;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_ui_data_format))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_ui_data_format
 union EAP_UI_DATA_FORMAT
 {
     EAP_CONFIG_INPUT_FIELD_ARRAY* credData;
@@ -1050,7 +1068,7 @@ union EAP_UI_DATA_FORMAT
     EAP_CONFIG_INPUT_FIELD_ARRAY* credLogonData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_interactive_ui_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_interactive_ui_data
 struct EAP_INTERACTIVE_UI_DATA
 {
     uint               dwVersion;
@@ -1060,28 +1078,28 @@ struct EAP_INTERACTIVE_UI_DATA
     EAP_UI_DATA_FORMAT pbUiData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_method_property_value_bool))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_method_property_value_bool
 struct EAP_METHOD_PROPERTY_VALUE_BOOL
 {
     uint length;
     BOOL value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_method_property_value_dword))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_method_property_value_dword
 struct EAP_METHOD_PROPERTY_VALUE_DWORD
 {
     uint length;
     uint value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_method_property_value_string))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_method_property_value_string
 struct EAP_METHOD_PROPERTY_VALUE_STRING
 {
     uint   length;
     ubyte* value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_method_property_value))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_method_property_value
 union EAP_METHOD_PROPERTY_VALUE
 {
     EAP_METHOD_PROPERTY_VALUE_BOOL empvBool;
@@ -1089,7 +1107,7 @@ union EAP_METHOD_PROPERTY_VALUE
     EAP_METHOD_PROPERTY_VALUE_STRING empvString;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_method_property))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_method_property
 struct EAP_METHOD_PROPERTY
 {
     EAP_METHOD_PROPERTY_TYPE eapMethodPropertyType;
@@ -1097,7 +1115,7 @@ struct EAP_METHOD_PROPERTY
     EAP_METHOD_PROPERTY_VALUE eapMethodPropertyValue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_method_property_array))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eap_method_property_array
 struct EAP_METHOD_PROPERTY_ARRAY
 {
     uint                 dwNumberOfProperties;
@@ -1129,21 +1147,21 @@ struct EAPHOST_INTERACTIVE_UI_PARAMS
     EAP_ERROR* pEapError;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eapusernamepasswordcredential))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eapusernamepasswordcredential
 struct EapUsernamePasswordCredential
 {
     PWSTR username;
     PWSTR password;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eapcertificatecredential))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eapcertificatecredential
 struct EapCertificateCredential
 {
     ubyte[20] certHash;
     PWSTR     password;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eapsimcredential))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eapsimcredential
 struct EapSimCredential
 {
     PWSTR iccID;
@@ -1156,14 +1174,14 @@ union EapCredentialTypeData
     EapSimCredential sim;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eapcredential))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eaptypes/ns-eaptypes-eapcredential
 struct EapCredential
 {
     EapCredentialType credType;
     EapCredentialTypeData credData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eaphostpeertypes/ns-eaphostpeertypes-eaphost_auth_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eaphostpeertypes/ns-eaphostpeertypes-eaphost_auth_info
 struct EAPHOST_AUTH_INFO
 {
     EAPHOST_AUTH_STATUS status;
@@ -1171,7 +1189,7 @@ struct EAPHOST_AUTH_INFO
     uint                dwReasonCode;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eaphostpeertypes/ns-eaphostpeertypes-eaphostpeermethodresult))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eaphostpeertypes/ns-eaphostpeertypes-eaphostpeermethodresult
 struct EapHostPeerMethodResult
 {
     BOOL             fIsSuccess;
@@ -1188,7 +1206,7 @@ struct EapHostPeerMethodResult
     EAP_ERROR*       pEapError;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eapmethodtypes/ns-eapmethodtypes-eappacket))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eapmethodtypes/ns-eapmethodtypes-eappacket
 struct EapPacket
 {
     ubyte    Code;
@@ -1197,7 +1215,7 @@ struct EapPacket
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Data;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eapauthenticatoractiondefine/ns-eapauthenticatoractiondefine-eap_method_authenticator_result))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eapauthenticatoractiondefine/ns-eapauthenticatoractiondefine-eap_method_authenticator_result
 struct EAP_METHOD_AUTHENTICATOR_RESULT
 {
     BOOL            fIsSuccess;
@@ -1205,14 +1223,14 @@ struct EAP_METHOD_AUTHENTICATOR_RESULT
     EAP_ATTRIBUTES* pAuthAttribs;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eapauthenticatoractiondefine/ns-eapauthenticatoractiondefine-eappeermethodoutput))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eapauthenticatoractiondefine/ns-eapauthenticatoractiondefine-eappeermethodoutput
 struct EapPeerMethodOutput
 {
     EapPeerMethodResponseAction action;
     BOOL fAllowNotifications;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eapmethodpeerapis/ns-eapmethodpeerapis-eappeermethodresult))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eapmethodpeerapis/ns-eapmethodpeerapis-eappeermethodresult
 struct EapPeerMethodResult
 {
     BOOL              fIsSuccess;
@@ -1229,7 +1247,7 @@ struct EapPeerMethodResult
     BOOL              fSaveToCredMan;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eapmethodpeerapis/ns-eapmethodpeerapis-eap_peer_method_routines))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eapmethodpeerapis/ns-eapmethodpeerapis-eap_peer_method_routines
 struct EAP_PEER_METHOD_ROUTINES
 {
     uint      dwVersion;
@@ -1249,7 +1267,7 @@ struct EAP_PEER_METHOD_ROUTINES
     ptrdiff_t EapPeerShutdown;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/eapmethodauthenticatorapis/ns-eapmethodauthenticatorapis-eap_authenticator_method_routines))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/eapmethodauthenticatorapis/ns-eapmethodauthenticatorapis-eap_authenticator_method_routines
 struct EAP_AUTHENTICATOR_METHOD_ROUTINES
 {
     uint             dwSizeInBytes;
@@ -1478,21 +1496,21 @@ interface IAccountingProviderConfig : IUnknown
 
 @GUID("66a2db19-d706-11d0-a37b-00c04fc9da04")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rrascfg/nn-rrascfg-ieapproviderconfig))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rrascfg/nn-rrascfg-ieapproviderconfig
 interface IEAPProviderConfig : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rrascfg/nf-rrascfg-ieapproviderconfig-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rrascfg/nf-rrascfg-ieapproviderconfig-initialize
     HRESULT Initialize(const(PWSTR) pszMachineName, uint dwEapTypeId, size_t* puConnectionParam);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rrascfg/nf-rrascfg-ieapproviderconfig-uninitialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rrascfg/nf-rrascfg-ieapproviderconfig-uninitialize
     HRESULT Uninitialize(uint dwEapTypeId, size_t uConnectionParam);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rrascfg/nf-rrascfg-ieapproviderconfig-serverinvokeconfigui))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rrascfg/nf-rrascfg-ieapproviderconfig-serverinvokeconfigui
     HRESULT ServerInvokeConfigUI(uint dwEapTypeId, size_t uConnectionParam, HWND hWnd, size_t uReserved1, 
                                  size_t uReserved2);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rrascfg/nf-rrascfg-ieapproviderconfig-routerinvokeconfigui))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rrascfg/nf-rrascfg-ieapproviderconfig-routerinvokeconfigui
     HRESULT RouterInvokeConfigUI(uint dwEapTypeId, size_t uConnectionParam, HWND hwndParent, uint dwFlags, 
                                  ubyte* pConnectionDataIn, uint dwSizeOfConnectionDataIn, 
                                  ubyte** ppConnectionDataOut, uint* pdwSizeOfConnectionDataOut);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rrascfg/nf-rrascfg-ieapproviderconfig-routerinvokecredentialsui))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rrascfg/nf-rrascfg-ieapproviderconfig-routerinvokecredentialsui
     HRESULT RouterInvokeCredentialsUI(uint dwEapTypeId, size_t uConnectionParam, HWND hwndParent, uint dwFlags, 
                                       ubyte* pConnectionDataIn, uint dwSizeOfConnectionDataIn, ubyte* pUserDataIn, 
                                       uint dwSizeOfUserDataIn, ubyte** ppUserDataOut, uint* pdwSizeOfUserDataOut);

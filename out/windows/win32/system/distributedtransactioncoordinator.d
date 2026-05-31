@@ -3,15 +3,16 @@
 module windows.win32.system.distributedtransactioncoordinator;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, CHAR, FILETIME, HANDLE, HRESULT, PSTR,
-                                         PWSTR;
-public import windows.win32.system.com : IMoniker, IUnknown;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, CHAR, FILETIME, HANDLE, HRESULT,
+                                                    PSTR, PWSTR;
+public import windows.win32.system.com.com : IMoniker, IUnknown;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
+
 
 alias DTC_STATUS_ = int;
 enum : int
@@ -27,11 +28,13 @@ enum : int
     DTC_STATUS_E_CANTCONTROL = 0x00000008,
     DTC_STATUS_FAILED        = 0x00000009,
 }
+
 alias TX_MISC_CONSTANTS = int;
 enum : int
 {
     MAX_TRAN_DESC = 0x00000028,
 }
+
 alias ISOLATIONLEVEL = int;
 enum : int
 {
@@ -45,6 +48,7 @@ enum : int
     ISOLATIONLEVEL_SERIALIZABLE    = 0x00100000,
     ISOLATIONLEVEL_ISOLATED        = 0x00100000,
 }
+
 alias ISOFLAG = int;
 enum : int
 {
@@ -60,6 +64,7 @@ enum : int
     ISOFLAG_OPTIMISTIC       = 0x00000010,
     ISOFLAG_READONLY         = 0x00000020,
 }
+
 alias XACTTC = int;
 enum : int
 {
@@ -70,17 +75,20 @@ enum : int
     XACTTC_ASYNC_PHASEONE = 0x00000004,
     XACTTC_ASYNC          = 0x00000004,
 }
+
 alias XACTRM = int;
 enum : int
 {
     XACTRM_OPTIMISTICLASTWINS = 0x00000001,
     XACTRM_NOREADONLYPREPARES = 0x00000002,
 }
+
 alias XACTCONST = int;
 enum : int
 {
     XACTCONST_TIMEOUTINFINITE = 0x00000000,
 }
+
 alias XACTHEURISTIC = int;
 enum : int
 {
@@ -89,6 +97,7 @@ enum : int
     XACTHEURISTIC_DAMAGE = 0x00000003,
     XACTHEURISTIC_DANGER = 0x00000004,
 }
+
 alias XACTSTAT = int;
 enum : int
 {
@@ -116,6 +125,7 @@ enum : int
     XACTSTAT_NOTPREPARED      = 0x0007ffc3,
     XACTSTAT_ALL              = 0x0007ffff,
 }
+
 alias AUTHENTICATION_LEVEL = int;
 enum : int
 {
@@ -123,12 +133,14 @@ enum : int
     INCOMING_AUTHENTICATION_REQUIRED = 0x00000001,
     MUTUAL_AUTHENTICATION_REQUIRED   = 0x00000002,
 }
+
 alias APPLICATIONTYPE = int;
 enum : int
 {
     LOCAL_APPLICATIONTYPE           = 0x00000000,
     CLUSTERRESOURCE_APPLICATIONTYPE = 0x00000001,
 }
+
 alias XACT_DTC_CONSTANTS = int;
 enum : int
 {
@@ -156,6 +168,7 @@ enum : int
     XACT_OK_NONOTIFY                 = 0x0004d101,
     dwUSER_MS_SQLSERVER              = 0x0000ffff,
 }
+
 alias DTCINITIATEDRECOVERYWORK = int;
 enum : int
 {
@@ -163,12 +176,14 @@ enum : int
     DTCINITIATEDRECOVERYWORK_TRANS         = 0x00000002,
     DTCINITIATEDRECOVERYWORK_TMDOWN        = 0x00000003,
 }
+
 alias DTCLUXLN = int;
 enum : int
 {
     DTCLUXLN_COLD = 0x00000001,
     DTCLUXLN_WARM = 0x00000002,
 }
+
 alias DTCLUXLNCONFIRMATION = int;
 enum : int
 {
@@ -177,6 +192,7 @@ enum : int
     DTCLUXLNCONFIRMATION_COLDWARMMISMATCH = 0x00000003,
     DTCLUXLNCONFIRMATION_OBSOLETE         = 0x00000004,
 }
+
 alias DTCLUXLNRESPONSE = int;
 enum : int
 {
@@ -185,6 +201,7 @@ enum : int
     DTCLUXLNRESPONSE_LOGNAMEMISMATCH     = 0x00000003,
     DTCLUXLNRESPONSE_COLDWARMMISMATCH    = 0x00000004,
 }
+
 alias DTCLUXLNERROR = int;
 enum : int
 {
@@ -192,6 +209,7 @@ enum : int
     DTCLUXLNERROR_LOGNAMEMISMATCH  = 0x00000002,
     DTCLUXLNERROR_COLDWARMMISMATCH = 0x00000003,
 }
+
 alias DTCLUCOMPARESTATE = int;
 enum : int
 {
@@ -202,17 +220,20 @@ enum : int
     DTCLUCOMPARESTATE_INDOUBT            = 0x00000005,
     DTCLUCOMPARESTATE_RESET              = 0x00000006,
 }
+
 alias DTCLUCOMPARESTATESCONFIRMATION = int;
 enum : int
 {
     DTCLUCOMPARESTATESCONFIRMATION_CONFIRM  = 0x00000001,
     DTCLUCOMPARESTATESCONFIRMATION_PROTOCOL = 0x00000002,
 }
+
 alias DTCLUCOMPARESTATESERROR = int;
 enum : int
 {
     DTCLUCOMPARESTATESERROR_PROTOCOL = 0x00000001,
 }
+
 alias DTCLUCOMPARESTATESRESPONSE = int;
 enum : int
 {
@@ -225,19 +246,19 @@ enum : int
 
 enum int DTCINSTALL_E_CLIENT_ALREADY_INSTALLED = 0x00000180;
 enum int DTCINSTALL_E_SERVER_ALREADY_INSTALLED = 0x00000181;
-enum uint XA_SWITCH_F_DTC = 0x00000001;
+enum uint XA_SWITCH_F_DTC = 0x00000001U;
 
 enum : uint
 {
-    XA_FMTID_DTC      = 0x00445443,
-    XA_FMTID_DTC_VER1 = 0x01445443,
+    XA_FMTID_DTC      = 0x00445443U,
+    XA_FMTID_DTC_VER1 = 0x01445443U,
 }
 
-enum uint XIDDATASIZE = 0x00000080;
-enum uint MAXGTRIDSIZE = 0x00000040;
-enum uint MAXBQUALSIZE = 0x00000040;
-enum uint RMNAMESZ = 0x00000020;
-enum uint MAXINFOSIZE = 0x00000100;
+enum uint XIDDATASIZE = 0x00000080U;
+enum uint MAXGTRIDSIZE = 0x00000040U;
+enum uint MAXBQUALSIZE = 0x00000040U;
+enum uint RMNAMESZ = 0x00000020U;
+enum uint MAXINFOSIZE = 0x00000100U;
 enum int TMNOFLAGS = 0x00000000;
 enum int TMREGISTER = 0x00000001;
 enum int TMNOMIGRATE = 0x00000002;
@@ -262,11 +283,11 @@ enum int TMMIGRATE = 0x00100000;
 
 enum : uint
 {
-    TM_JOIN   = 0x00000002,
-    TM_RESUME = 0x00000001,
+    TM_JOIN   = 0x00000002U,
+    TM_RESUME = 0x00000001U,
 }
 
-enum uint TM_OK = 0x00000000;
+enum uint TM_OK = 0x00000000U;
 
 enum : int
 {
@@ -277,40 +298,40 @@ enum : int
 
 enum : uint
 {
-    XA_RBBASE     = 0x00000064,
-    XA_RBROLLBACK = 0x00000064,
+    XA_RBBASE     = 0x00000064U,
+    XA_RBROLLBACK = 0x00000064U,
 }
 
-enum uint XA_RBCOMMFAIL = 0x00000065;
-enum uint XA_RBDEADLOCK = 0x00000066;
-enum uint XA_RBINTEGRITY = 0x00000067;
+enum uint XA_RBCOMMFAIL = 0x00000065U;
+enum uint XA_RBDEADLOCK = 0x00000066U;
+enum uint XA_RBINTEGRITY = 0x00000067U;
 
 enum : uint
 {
-    XA_RBOTHER     = 0x00000068,
-    XA_RBPROTO     = 0x00000069,
-    XA_RBTIMEOUT   = 0x0000006a,
-    XA_RBTRANSIENT = 0x0000006b,
+    XA_RBOTHER     = 0x00000068U,
+    XA_RBPROTO     = 0x00000069U,
+    XA_RBTIMEOUT   = 0x0000006aU,
+    XA_RBTRANSIENT = 0x0000006bU,
 }
 
-enum uint XA_RBEND = 0x0000006b;
-enum uint XA_NOMIGRATE = 0x00000009;
+enum uint XA_RBEND = 0x0000006bU;
+enum uint XA_NOMIGRATE = 0x00000009U;
 
 enum : uint
 {
-    XA_HEURHAZ = 0x00000008,
-    XA_HEURCOM = 0x00000007,
-    XA_HEURRB  = 0x00000006,
-    XA_HEURMIX = 0x00000005,
+    XA_HEURHAZ = 0x00000008U,
+    XA_HEURCOM = 0x00000007U,
+    XA_HEURRB  = 0x00000006U,
+    XA_HEURMIX = 0x00000005U,
 }
 
 enum : uint
 {
-    XA_RETRY  = 0x00000004,
-    XA_RDONLY = 0x00000003,
+    XA_RETRY  = 0x00000004U,
+    XA_RDONLY = 0x00000003U,
 }
 
-enum uint XA_OK = 0x00000000;
+enum uint XA_OK = 0x00000000U;
 
 enum : int
 {
@@ -326,25 +347,25 @@ enum : int
 
 enum : uint
 {
-    DTC_INSTALL_OVERWRITE_CLIENT = 0x00000001,
-    DTC_INSTALL_OVERWRITE_SERVER = 0x00000002,
+    DTC_INSTALL_OVERWRITE_CLIENT = 0x00000001U,
+    DTC_INSTALL_OVERWRITE_SERVER = 0x00000002U,
 }
 
 enum : uint
 {
-    OLE_TM_CONFIG_VERSION_1 = 0x00000001,
-    OLE_TM_CONFIG_VERSION_2 = 0x00000002,
+    OLE_TM_CONFIG_VERSION_1 = 0x00000001U,
+    OLE_TM_CONFIG_VERSION_2 = 0x00000002U,
 }
 
 enum : uint
 {
-    OLE_TM_FLAG_NONE                     = 0x00000000,
-    OLE_TM_FLAG_NODEMANDSTART            = 0x00000001,
-    OLE_TM_FLAG_NOAGILERECOVERY          = 0x00000002,
-    OLE_TM_FLAG_QUERY_SERVICE_LOCKSTATUS = 0x80000000,
+    OLE_TM_FLAG_NONE                     = 0x00000000U,
+    OLE_TM_FLAG_NODEMANDSTART            = 0x00000001U,
+    OLE_TM_FLAG_NOAGILERECOVERY          = 0x00000002U,
+    OLE_TM_FLAG_QUERY_SERVICE_LOCKSTATUS = 0x80000000U,
 }
 
-enum uint OLE_TM_FLAG_INTERNAL_TO_TM = 0x40000000;
+enum uint OLE_TM_FLAG_INTERNAL_TO_TM = 0x40000000U;
 
 enum : GUID
 {
@@ -718,7 +739,7 @@ interface IResourceManagerSink : IUnknown
 
 @GUID("13741d21-87eb-11ce-8081-0080c758527e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iresourcemanager))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/strmif/nn-strmif-iresourcemanager
 interface IResourceManager : IUnknown
 {
     HRESULT Enlist(ITransaction pTransaction, ITransactionResourceAsync pRes, BOID* pUOW, int* pisoLevel, 

@@ -3,19 +3,20 @@
 module windows.win32.networking.windowswebservices;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, CHAR, DECIMAL, FILETIME, HRESULT,
-                                         PWSTR;
-public import windows.win32.security.authentication.identity : SecPkgContext_IssuerListInfoEx;
-public import windows.win32.security.cryptography : CERT_CONTEXT, NCRYPT_KEY_HANDLE;
-public import windows.win32.system.winrt : IInspectable;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, CHAR, DECIMAL, FILETIME, HRESULT,
+                                                    PWSTR;
+public import windows.win32.security.authentication.identity.identity : SecPkgContext_IssuerListInfoEx;
+public import windows.win32.security.cryptography.cryptography : CERT_CONTEXT, NCRYPT_KEY_HANDLE;
+public import windows.win32.system.winrt.winrt : IInspectable;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_xml_reader_property_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_xml_reader_property_id
 alias WS_XML_READER_PROPERTY_ID = int;
 enum : int
 {
@@ -35,7 +36,8 @@ enum : int
     WS_XML_READER_PROPERTY_ALLOW_INVALID_CHARACTER_REFERENCES = 0x0000000d,
     WS_XML_READER_PROPERTY_MAX_NAMESPACES                     = 0x0000000e,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_xml_canonicalization_algorithm))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_xml_canonicalization_algorithm
 alias WS_XML_CANONICALIZATION_ALGORITHM = int;
 enum : int
 {
@@ -44,7 +46,8 @@ enum : int
     WS_INCLUSIVE_XML_CANONICALIZATION_ALGORITHM               = 0x00000002,
     WS_INCLUSIVE_WITH_COMMENTS_XML_CANONICALIZATION_ALGORITHM = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_xml_canonicalization_property_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_xml_canonicalization_property_id
 alias WS_XML_CANONICALIZATION_PROPERTY_ID = int;
 enum : int
 {
@@ -53,7 +56,8 @@ enum : int
     WS_XML_CANONICALIZATION_PROPERTY_OMITTED_ELEMENT    = 0x00000002,
     WS_XML_CANONICALIZATION_PROPERTY_OUTPUT_BUFFER_SIZE = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_xml_writer_property_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_xml_writer_property_id
 alias WS_XML_WRITER_PROPERTY_ID = int;
 enum : int
 {
@@ -77,9 +81,11 @@ enum : int
     WS_XML_WRITER_PROPERTY_COMPRESS_EMPTY_ELEMENTS            = 0x00000011,
     WS_XML_WRITER_PROPERTY_EMIT_UNCOMPRESSED_EMPTY_ELEMENTS   = 0x00000012,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_xml_buffer_property_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_xml_buffer_property_id
 alias WS_XML_BUFFER_PROPERTY_ID = int;
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_xml_text_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_xml_text_type
 alias WS_XML_TEXT_TYPE = int;
 enum : int
 {
@@ -100,7 +106,8 @@ enum : int
     WS_XML_TEXT_TYPE_QNAME     = 0x0000000f,
     WS_XML_TEXT_TYPE_LIST      = 0x00000010,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_xml_node_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_xml_node_type
 alias WS_XML_NODE_TYPE = int;
 enum : int
 {
@@ -113,7 +120,8 @@ enum : int
     WS_XML_NODE_TYPE_EOF         = 0x00000008,
     WS_XML_NODE_TYPE_BOF         = 0x00000009,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_move_to))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_move_to
 alias WS_MOVE_TO = int;
 enum : int
 {
@@ -130,7 +138,8 @@ enum : int
     WS_MOVE_TO_EOF              = 0x0000000a,
     WS_MOVE_TO_CHILD_NODE       = 0x0000000b,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_value_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_value_type
 alias WS_VALUE_TYPE = int;
 enum : int
 {
@@ -151,14 +160,16 @@ enum : int
     WS_GUID_VALUE_TYPE     = 0x0000000e,
     WS_DURATION_VALUE_TYPE = 0x0000000f,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_xml_reader_input_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_xml_reader_input_type
 alias WS_XML_READER_INPUT_TYPE = int;
 enum : int
 {
     WS_XML_READER_INPUT_TYPE_BUFFER = 0x00000001,
     WS_XML_READER_INPUT_TYPE_STREAM = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_xml_reader_encoding_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_xml_reader_encoding_type
 alias WS_XML_READER_ENCODING_TYPE = int;
 enum : int
 {
@@ -167,7 +178,8 @@ enum : int
     WS_XML_READER_ENCODING_TYPE_MTOM   = 0x00000003,
     WS_XML_READER_ENCODING_TYPE_RAW    = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_charset))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_charset
 alias WS_CHARSET = int;
 enum : int
 {
@@ -176,7 +188,8 @@ enum : int
     WS_CHARSET_UTF16LE = 0x00000002,
     WS_CHARSET_UTF16BE = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_xml_writer_encoding_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_xml_writer_encoding_type
 alias WS_XML_WRITER_ENCODING_TYPE = int;
 enum : int
 {
@@ -185,21 +198,24 @@ enum : int
     WS_XML_WRITER_ENCODING_TYPE_MTOM   = 0x00000003,
     WS_XML_WRITER_ENCODING_TYPE_RAW    = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_xml_writer_output_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_xml_writer_output_type
 alias WS_XML_WRITER_OUTPUT_TYPE = int;
 enum : int
 {
     WS_XML_WRITER_OUTPUT_TYPE_BUFFER = 0x00000001,
     WS_XML_WRITER_OUTPUT_TYPE_STREAM = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_callback_model))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_callback_model
 alias WS_CALLBACK_MODEL = int;
 enum : int
 {
     WS_SHORT_CALLBACK = 0x00000000,
     WS_LONG_CALLBACK  = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_encoding))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_encoding
 alias WS_ENCODING = int;
 enum : int
 {
@@ -213,7 +229,8 @@ enum : int
     WS_ENCODING_XML_UTF16LE          = 0x00000007,
     WS_ENCODING_RAW                  = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_channel_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_channel_state
 alias WS_CHANNEL_STATE = int;
 enum : int
 {
@@ -225,14 +242,16 @@ enum : int
     WS_CHANNEL_STATE_CLOSING   = 0x00000005,
     WS_CHANNEL_STATE_CLOSED    = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_receive_option))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_receive_option
 alias WS_RECEIVE_OPTION = int;
 enum : int
 {
     WS_RECEIVE_REQUIRED_MESSAGE = 0x00000001,
     WS_RECEIVE_OPTIONAL_MESSAGE = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_channel_binding))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_channel_binding
 alias WS_CHANNEL_BINDING = int;
 enum : int
 {
@@ -242,7 +261,8 @@ enum : int
     WS_CUSTOM_CHANNEL_BINDING    = 0x00000003,
     WS_NAMEDPIPE_CHANNEL_BINDING = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_channel_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_channel_type
 alias WS_CHANNEL_TYPE = int;
 enum : int
 {
@@ -256,7 +276,8 @@ enum : int
     WS_CHANNEL_TYPE_REQUEST        = 0x00000008,
     WS_CHANNEL_TYPE_REPLY          = 0x00000010,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_transfer_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_transfer_mode
 alias WS_TRANSFER_MODE = int;
 enum : int
 {
@@ -265,7 +286,8 @@ enum : int
     WS_BUFFERED_TRANSFER_MODE        = 0x00000000,
     WS_STREAMED_TRANSFER_MODE        = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_http_proxy_setting_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_http_proxy_setting_mode
 alias WS_HTTP_PROXY_SETTING_MODE = int;
 enum : int
 {
@@ -273,7 +295,8 @@ enum : int
     WS_HTTP_PROXY_SETTING_MODE_NONE   = 0x00000002,
     WS_HTTP_PROXY_SETTING_MODE_CUSTOM = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_channel_property_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_channel_property_id
 alias WS_CHANNEL_PROPERTY_ID = int;
 enum : int
 {
@@ -328,14 +351,16 @@ enum : int
     WS_CHANNEL_PROPERTY_HTTP_PROXY_SPN                       = 0x00000030,
     WS_CHANNEL_PROPERTY_MAX_HTTP_REQUEST_HEADERS_BUFFER_SIZE = 0x00000031,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_cookie_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_cookie_mode
 alias WS_COOKIE_MODE = int;
 enum : int
 {
     WS_MANUAL_COOKIE_MODE = 0x00000001,
     WS_AUTO_COOKIE_MODE   = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_operation_context_property_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_operation_context_property_id
 alias WS_OPERATION_CONTEXT_PROPERTY_ID = int;
 enum : int
 {
@@ -349,7 +374,8 @@ enum : int
     WS_OPERATION_CONTEXT_PROPERTY_LISTENER             = 0x00000007,
     WS_OPERATION_CONTEXT_PROPERTY_ENDPOINT_ADDRESS     = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_endpoint_identity_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_endpoint_identity_type
 alias WS_ENDPOINT_IDENTITY_TYPE = int;
 enum : int
 {
@@ -360,13 +386,15 @@ enum : int
     WS_CERT_ENDPOINT_IDENTITY_TYPE    = 0x00000005,
     WS_UNKNOWN_ENDPOINT_IDENTITY_TYPE = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_endpoint_address_extension_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_endpoint_address_extension_type
 alias WS_ENDPOINT_ADDRESS_EXTENSION_TYPE = int;
 enum : int
 {
     WS_ENDPOINT_ADDRESS_EXTENSION_METADATA_ADDRESS = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_error_property_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_error_property_id
 alias WS_ERROR_PROPERTY_ID = int;
 enum : int
 {
@@ -374,14 +402,16 @@ enum : int
     WS_ERROR_PROPERTY_ORIGINAL_ERROR_CODE = 0x00000001,
     WS_ERROR_PROPERTY_LANGID              = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_exception_code))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_exception_code
 alias WS_EXCEPTION_CODE = int;
 enum : int
 {
     WS_EXCEPTION_CODE_USAGE_FAILURE    = 0xc03d0000,
     WS_EXCEPTION_CODE_INTERNAL_FAILURE = 0xc03d0001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_fault_error_property_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_fault_error_property_id
 alias WS_FAULT_ERROR_PROPERTY_ID = int;
 enum : int
 {
@@ -389,14 +419,16 @@ enum : int
     WS_FAULT_ERROR_PROPERTY_ACTION = 0x00000001,
     WS_FAULT_ERROR_PROPERTY_HEADER = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_fault_disclosure))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_fault_disclosure
 alias WS_FAULT_DISCLOSURE = int;
 enum : int
 {
     WS_MINIMAL_FAULT_DISCLOSURE = 0x00000000,
     WS_FULL_FAULT_DISCLOSURE    = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_heap_property_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_heap_property_id
 alias WS_HEAP_PROPERTY_ID = int;
 enum : int
 {
@@ -405,7 +437,8 @@ enum : int
     WS_HEAP_PROPERTY_REQUESTED_SIZE = 0x00000002,
     WS_HEAP_PROPERTY_ACTUAL_SIZE    = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_listener_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_listener_state
 alias WS_LISTENER_STATE = int;
 enum : int
 {
@@ -416,7 +449,8 @@ enum : int
     WS_LISTENER_STATE_CLOSING = 0x00000004,
     WS_LISTENER_STATE_CLOSED  = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_listener_property_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_listener_property_id
 alias WS_LISTENER_PROPERTY_ID = int;
 enum : int
 {
@@ -438,7 +472,8 @@ enum : int
     WS_LISTENER_PROPERTY_CUSTOM_LISTENER_INSTANCE       = 0x0000000f,
     WS_LISTENER_PROPERTY_DISALLOWED_USER_AGENT          = 0x00000010,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_ip_version))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_ip_version
 alias WS_IP_VERSION = int;
 enum : int
 {
@@ -446,7 +481,8 @@ enum : int
     WS_IP_VERSION_6    = 0x00000002,
     WS_IP_VERSION_AUTO = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_message_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_message_state
 alias WS_MESSAGE_STATE = int;
 enum : int
 {
@@ -456,7 +492,8 @@ enum : int
     WS_MESSAGE_STATE_WRITING     = 0x00000004,
     WS_MESSAGE_STATE_DONE        = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_message_initialization))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_message_initialization
 alias WS_MESSAGE_INITIALIZATION = int;
 enum : int
 {
@@ -466,14 +503,16 @@ enum : int
     WS_REPLY_MESSAGE     = 0x00000003,
     WS_FAULT_MESSAGE     = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_repeating_header_option))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_repeating_header_option
 alias WS_REPEATING_HEADER_OPTION = int;
 enum : int
 {
     WS_REPEATING_HEADER = 0x00000001,
     WS_SINGLETON_HEADER = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_header_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_header_type
 alias WS_HEADER_TYPE = int;
 enum : int
 {
@@ -485,7 +524,8 @@ enum : int
     WS_REPLY_TO_HEADER   = 0x00000006,
     WS_FAULT_TO_HEADER   = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_addressing_version))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_addressing_version
 alias WS_ADDRESSING_VERSION = int;
 enum : int
 {
@@ -493,7 +533,8 @@ enum : int
     WS_ADDRESSING_VERSION_1_0       = 0x00000002,
     WS_ADDRESSING_VERSION_TRANSPORT = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_envelope_version))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_envelope_version
 alias WS_ENVELOPE_VERSION = int;
 enum : int
 {
@@ -501,7 +542,8 @@ enum : int
     WS_ENVELOPE_VERSION_SOAP_1_2 = 0x00000002,
     WS_ENVELOPE_VERSION_NONE     = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_message_property_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_message_property_id
 alias WS_MESSAGE_PROPERTY_ID = int;
 enum : int
 {
@@ -528,7 +570,8 @@ enum : int
     WS_MESSAGE_PROPERTY_SECURITY_CONTEXT                 = 0x00000014,
     WS_MESSAGE_PROPERTY_PROTECTION_LEVEL                 = 0x00000015,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_binding_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_binding_type
 alias WS_SECURITY_BINDING_TYPE = int;
 enum : int
 {
@@ -542,14 +585,16 @@ enum : int
     WS_SECURITY_CONTEXT_MESSAGE_SECURITY_BINDING_TYPE = 0x00000008,
     WS_NAMEDPIPE_SSPI_TRANSPORT_SECURITY_BINDING_TYPE = 0x00000009,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_http_header_auth_target))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_http_header_auth_target
 alias WS_HTTP_HEADER_AUTH_TARGET = int;
 enum : int
 {
     WS_HTTP_HEADER_AUTH_TARGET_SERVICE = 0x00000001,
     WS_HTTP_HEADER_AUTH_TARGET_PROXY   = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_windows_integrated_auth_package))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_windows_integrated_auth_package
 alias WS_WINDOWS_INTEGRATED_AUTH_PACKAGE = int;
 enum : int
 {
@@ -557,21 +602,24 @@ enum : int
     WS_WINDOWS_INTEGRATED_AUTH_PACKAGE_NTLM     = 0x00000002,
     WS_WINDOWS_INTEGRATED_AUTH_PACKAGE_SPNEGO   = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_header_version))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_header_version
 alias WS_SECURITY_HEADER_VERSION = int;
 enum : int
 {
     WS_SECURITY_HEADER_VERSION_1_0 = 0x00000001,
     WS_SECURITY_HEADER_VERSION_1_1 = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_trust_version))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_trust_version
 alias WS_TRUST_VERSION = int;
 enum : int
 {
     WS_TRUST_VERSION_FEBRUARY_2005 = 0x00000001,
     WS_TRUST_VERSION_1_3           = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_request_security_token_action))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_request_security_token_action
 alias WS_REQUEST_SECURITY_TOKEN_ACTION = int;
 enum : int
 {
@@ -579,13 +627,15 @@ enum : int
     WS_REQUEST_SECURITY_TOKEN_ACTION_NEW_CONTEXT   = 0x00000002,
     WS_REQUEST_SECURITY_TOKEN_ACTION_RENEW_CONTEXT = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_secure_conversation_version))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_secure_conversation_version
 alias WS_SECURE_CONVERSATION_VERSION = int;
 enum : int
 {
     WS_SECURE_CONVERSATION_VERSION_FEBRUARY_2005 = 0x00000001,
     WS_SECURE_CONVERSATION_VERSION_1_3           = 0x00000002,
 }
+
 alias WS_SECURE_PROTOCOL = int;
 enum : int
 {
@@ -595,7 +645,8 @@ enum : int
     WS_SECURE_PROTOCOL_TLS1_1 = 0x00000008,
     WS_SECURE_PROTOCOL_TLS1_2 = 0x00000010,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_timestamp_usage))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_timestamp_usage
 alias WS_SECURITY_TIMESTAMP_USAGE = int;
 enum : int
 {
@@ -603,7 +654,8 @@ enum : int
     WS_SECURITY_TIMESTAMP_USAGE_NEVER         = 0x00000002,
     WS_SECURITY_TIMESTAMP_USAGE_REQUESTS_ONLY = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_header_layout))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_header_layout
 alias WS_SECURITY_HEADER_LAYOUT = int;
 enum : int
 {
@@ -612,9 +664,11 @@ enum : int
     WS_SECURITY_HEADER_LAYOUT_LAX_WITH_TIMESTAMP_FIRST = 0x00000003,
     WS_SECURITY_HEADER_LAYOUT_LAX_WITH_TIMESTAMP_LAST  = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_algorithm_property_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_algorithm_property_id
 alias WS_SECURITY_ALGORITHM_PROPERTY_ID = int;
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_algorithm_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_algorithm_id
 alias WS_SECURITY_ALGORITHM_ID = int;
 enum : int
 {
@@ -638,7 +692,8 @@ enum : int
     WS_SECURITY_ALGORITHM_ASYMMETRIC_KEYWRAP_RSA_OAEP              = 0x00000011,
     WS_SECURITY_ALGORITHM_KEY_DERIVATION_P_SHA1                    = 0x00000012,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_protection_level))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_protection_level
 alias WS_PROTECTION_LEVEL = int;
 enum : int
 {
@@ -646,7 +701,8 @@ enum : int
     WS_PROTECTION_LEVEL_SIGN             = 0x00000002,
     WS_PROTECTION_LEVEL_SIGN_AND_ENCRYPT = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_property_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_property_id
 alias WS_SECURITY_PROPERTY_ID = int;
 enum : int
 {
@@ -663,7 +719,8 @@ enum : int
     WS_SECURITY_PROPERTY_EXTENDED_PROTECTION_SCENARIO = 0x0000000b,
     WS_SECURITY_PROPERTY_SERVICE_IDENTITIES           = 0x0000000c,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_key_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_key_type
 alias WS_SECURITY_KEY_TYPE = int;
 enum : int
 {
@@ -671,7 +728,8 @@ enum : int
     WS_SECURITY_KEY_TYPE_SYMMETRIC  = 0x00000002,
     WS_SECURITY_KEY_TYPE_ASYMMETRIC = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_algorithm_suite_name))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_algorithm_suite_name
 alias WS_SECURITY_ALGORITHM_SUITE_NAME = int;
 enum : int
 {
@@ -688,7 +746,8 @@ enum : int
     WS_SECURITY_ALGORITHM_SUITE_NAME_BASIC192_SHA256_RSA15 = 0x0000000b,
     WS_SECURITY_ALGORITHM_SUITE_NAME_BASIC128_SHA256_RSA15 = 0x0000000c,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_token_reference_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_token_reference_mode
 alias WS_SECURITY_TOKEN_REFERENCE_MODE = int;
 enum : int
 {
@@ -698,7 +757,8 @@ enum : int
     WS_SECURITY_TOKEN_REFERENCE_MODE_SECURITY_CONTEXT_ID = 0x00000004,
     WS_SECURITY_TOKEN_REFERENCE_MODE_SAML_ASSERTION_ID   = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_key_entropy_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_key_entropy_mode
 alias WS_SECURITY_KEY_ENTROPY_MODE = int;
 enum : int
 {
@@ -706,7 +766,8 @@ enum : int
     WS_SECURITY_KEY_ENTROPY_MODE_SERVER_ONLY = 0x00000002,
     WS_SECURITY_KEY_ENTROPY_MODE_COMBINED    = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_extended_protection_policy))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_extended_protection_policy
 alias WS_EXTENDED_PROTECTION_POLICY = int;
 enum : int
 {
@@ -714,14 +775,16 @@ enum : int
     WS_EXTENDED_PROTECTION_POLICY_WHEN_SUPPORTED = 0x00000002,
     WS_EXTENDED_PROTECTION_POLICY_ALWAYS         = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_extended_protection_scenario))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_extended_protection_scenario
 alias WS_EXTENDED_PROTECTION_SCENARIO = int;
 enum : int
 {
     WS_EXTENDED_PROTECTION_SCENARIO_BOUND_SERVER   = 0x00000001,
     WS_EXTENDED_PROTECTION_SCENARIO_TERMINATED_SSL = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_binding_property_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_binding_property_id
 alias WS_SECURITY_BINDING_PROPERTY_ID = int;
 enum : int
 {
@@ -749,7 +812,8 @@ enum : int
     WS_SECURITY_BINDING_PROPERTY_DISALLOWED_SECURE_PROTOCOLS             = 0x00000016,
     WS_SECURITY_BINDING_PROPERTY_CERTIFICATE_VALIDATION_CALLBACK_CONTEXT = 0x00000017,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_cert_credential_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_cert_credential_type
 alias WS_CERT_CREDENTIAL_TYPE = int;
 enum : int
 {
@@ -757,7 +821,8 @@ enum : int
     WS_THUMBPRINT_CERT_CREDENTIAL_TYPE   = 0x00000002,
     WS_CUSTOM_CERT_CREDENTIAL_TYPE       = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_windows_integrated_auth_credential_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_windows_integrated_auth_credential_type
 alias WS_WINDOWS_INTEGRATED_AUTH_CREDENTIAL_TYPE = int;
 enum : int
 {
@@ -765,13 +830,15 @@ enum : int
     WS_DEFAULT_WINDOWS_INTEGRATED_AUTH_CREDENTIAL_TYPE = 0x00000002,
     WS_OPAQUE_WINDOWS_INTEGRATED_AUTH_CREDENTIAL_TYPE  = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_username_credential_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_username_credential_type
 alias WS_USERNAME_CREDENTIAL_TYPE = int;
 enum : int
 {
     WS_STRING_USERNAME_CREDENTIAL_TYPE = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_token_property_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_token_property_id
 alias WS_SECURITY_TOKEN_PROPERTY_ID = int;
 enum : int
 {
@@ -783,7 +850,8 @@ enum : int
     WS_SECURITY_TOKEN_PROPERTY_UNATTACHED_REFERENCE_XML = 0x00000006,
     WS_SECURITY_TOKEN_PROPERTY_SYMMETRIC_KEY            = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_key_handle_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_key_handle_type
 alias WS_SECURITY_KEY_HANDLE_TYPE = int;
 enum : int
 {
@@ -791,13 +859,15 @@ enum : int
     WS_NCRYPT_ASYMMETRIC_SECURITY_KEY_HANDLE_TYPE = 0x00000002,
     WS_CAPI_ASYMMETRIC_SECURITY_KEY_HANDLE_TYPE   = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_message_security_usage))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_message_security_usage
 alias WS_MESSAGE_SECURITY_USAGE = int;
 enum : int
 {
     WS_SUPPORTING_MESSAGE_SECURITY_USAGE = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_context_property_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_context_property_id
 alias WS_SECURITY_CONTEXT_PROPERTY_ID = int;
 enum : int
 {
@@ -806,7 +876,8 @@ enum : int
     WS_SECURITY_CONTEXT_PROPERTY_MESSAGE_SECURITY_WINDOWS_TOKEN = 0x00000003,
     WS_SECURITY_CONTEXT_PROPERTY_SAML_ASSERTION                 = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_xml_security_token_property_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_xml_security_token_property_id
 alias WS_XML_SECURITY_TOKEN_PROPERTY_ID = int;
 enum : int
 {
@@ -815,13 +886,15 @@ enum : int
     WS_XML_SECURITY_TOKEN_PROPERTY_VALID_FROM_TIME      = 0x00000003,
     WS_XML_SECURITY_TOKEN_PROPERTY_VALID_TILL_TIME      = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_saml_authenticator_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_saml_authenticator_type
 alias WS_SAML_AUTHENTICATOR_TYPE = int;
 enum : int
 {
     WS_CERT_SIGNED_SAML_AUTHENTICATOR_TYPE = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_request_security_token_property_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_request_security_token_property_id
 alias WS_REQUEST_SECURITY_TOKEN_PROPERTY_ID = int;
 enum : int
 {
@@ -839,6 +912,7 @@ enum : int
     WS_REQUEST_SECURITY_TOKEN_PROPERTY_MESSAGE_PROPERTIES          = 0x0000000c,
     WS_REQUEST_SECURITY_TOKEN_PROPERTY_BEARER_KEY_TYPE_VERSION     = 0x0000000d,
 }
+
 alias WS_SECURITY_BEARER_KEY_TYPE_VERSION = int;
 enum : int
 {
@@ -846,7 +920,8 @@ enum : int
     WS_SECURITY_BEARER_KEY_TYPE_VERSION_1_3_ORIGINAL_SCHEMA        = 0x00000002,
     WS_SECURITY_BEARER_KEY_TYPE_VERSION_1_3_ERRATA_01              = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_type
 alias WS_TYPE = int;
 enum : int
 {
@@ -886,7 +961,8 @@ enum : int
     WS_UNION_TYPE            = 0x00000021,
     WS_ANY_ATTRIBUTES_TYPE   = 0x00000022,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_field_mapping))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_field_mapping
 alias WS_FIELD_MAPPING = int;
 enum : int
 {
@@ -904,7 +980,8 @@ enum : int
     WS_ANY_CONTENT_FIELD_MAPPING              = 0x0000000b,
     WS_ANY_ATTRIBUTES_FIELD_MAPPING           = 0x0000000c,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_type_mapping))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_type_mapping
 alias WS_TYPE_MAPPING = int;
 enum : int
 {
@@ -913,7 +990,8 @@ enum : int
     WS_ELEMENT_CONTENT_TYPE_MAPPING = 0x00000003,
     WS_ANY_ELEMENT_TYPE_MAPPING     = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_read_option))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_read_option
 alias WS_READ_OPTION = int;
 enum : int
 {
@@ -923,7 +1001,8 @@ enum : int
     WS_READ_NILLABLE_POINTER = 0x00000004,
     WS_READ_NILLABLE_VALUE   = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_write_option))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_write_option
 alias WS_WRITE_OPTION = int;
 enum : int
 {
@@ -932,21 +1011,24 @@ enum : int
     WS_WRITE_NILLABLE_VALUE   = 0x00000003,
     WS_WRITE_NILLABLE_POINTER = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_service_cancel_reason))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_service_cancel_reason
 alias WS_SERVICE_CANCEL_REASON = int;
 enum : int
 {
     WS_SERVICE_HOST_ABORT      = 0x00000000,
     WS_SERVICE_CHANNEL_FAULTED = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_operation_style))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_operation_style
 alias WS_OPERATION_STYLE = int;
 enum : int
 {
     WS_NON_RPC_LITERAL_OPERATION = 0x00000000,
     WS_RPC_LITERAL_OPERATION     = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_parameter_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_parameter_type
 alias WS_PARAMETER_TYPE = int;
 enum : int
 {
@@ -955,7 +1037,8 @@ enum : int
     WS_PARAMETER_TYPE_ARRAY_COUNT = 0x00000002,
     WS_PARAMETER_TYPE_MESSAGES    = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_service_endpoint_property_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_service_endpoint_property_id
 alias WS_SERVICE_ENDPOINT_PROPERTY_ID = int;
 enum : int
 {
@@ -976,7 +1059,8 @@ enum : int
     WS_SERVICE_ENDPOINT_PROPERTY_MAX_CHANNELS                 = 0x0000000e,
     WS_SERVICE_ENDPOINT_PROPERTY_MAX_CHANNELS_PER_IP          = 0x0000000f,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_metadata_exchange_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_metadata_exchange_type
 alias WS_METADATA_EXCHANGE_TYPE = int;
 enum : int
 {
@@ -984,7 +1068,8 @@ enum : int
     WS_METADATA_EXCHANGE_TYPE_MEX      = 0x00000001,
     WS_METADATA_EXCHANGE_TYPE_HTTP_GET = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_service_property_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_service_property_id
 alias WS_SERVICE_PROPERTY_ID = int;
 enum : int
 {
@@ -995,7 +1080,8 @@ enum : int
     WS_SERVICE_PROPERTY_METADATA         = 0x00000004,
     WS_SERVICE_PROPERTY_CLOSE_TIMEOUT    = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_service_host_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_service_host_state
 alias WS_SERVICE_HOST_STATE = int;
 enum : int
 {
@@ -1006,7 +1092,8 @@ enum : int
     WS_SERVICE_HOST_STATE_CLOSED  = 0x00000004,
     WS_SERVICE_HOST_STATE_FAULTED = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_service_proxy_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_service_proxy_state
 alias WS_SERVICE_PROXY_STATE = int;
 enum : int
 {
@@ -1017,7 +1104,8 @@ enum : int
     WS_SERVICE_PROXY_STATE_CLOSED  = 0x00000004,
     WS_SERVICE_PROXY_STATE_FAULTED = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_proxy_property_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_proxy_property_id
 alias WS_PROXY_PROPERTY_ID = int;
 enum : int
 {
@@ -1029,7 +1117,8 @@ enum : int
     WS_PROXY_PROPERTY_MAX_CLOSE_TIMEOUT  = 0x00000005,
     WS_PROXY_FAULT_LANG_ID               = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_call_property_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_call_property_id
 alias WS_CALL_PROPERTY_ID = int;
 enum : int
 {
@@ -1038,7 +1127,8 @@ enum : int
     WS_CALL_PROPERTY_RECEIVE_MESSAGE_CONTEXT = 0x00000002,
     WS_CALL_PROPERTY_CALL_ID                 = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_trace_api))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_trace_api
 alias WS_TRACE_API = int;
 enum : int
 {
@@ -1239,7 +1329,8 @@ enum : int
     WS_TRACE_API_WS_CREATE_SERVICE_PROXY_FROM_TEMPLATE = 0x000000c1,
     WS_TRACE_API_WS_CREATE_SERVICE_HOST_FROM_TEMPLATE  = 0x000000c2,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_url_scheme_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_url_scheme_type
 alias WS_URL_SCHEME_TYPE = int;
 enum : int
 {
@@ -1249,7 +1340,8 @@ enum : int
     WS_URL_SOAPUDP_SCHEME_TYPE = 0x00000003,
     WS_URL_NETPIPE_SCHEME_TYPE = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_datetime_format))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_datetime_format
 alias WS_DATETIME_FORMAT = int;
 enum : int
 {
@@ -1257,7 +1349,8 @@ enum : int
     WS_DATETIME_FORMAT_LOCAL = 0x00000001,
     WS_DATETIME_FORMAT_NONE  = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_metadata_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_metadata_state
 alias WS_METADATA_STATE = int;
 enum : int
 {
@@ -1265,7 +1358,8 @@ enum : int
     WS_METADATA_STATE_RESOLVED = 0x00000002,
     WS_METADATA_STATE_FAULTED  = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_metadata_property_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_metadata_property_id
 alias WS_METADATA_PROPERTY_ID = int;
 enum : int
 {
@@ -1277,14 +1371,16 @@ enum : int
     WS_METADATA_PROPERTY_HOST_NAMES          = 0x00000006,
     WS_METADATA_PROPERTY_VERIFY_HOST_NAMES   = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_policy_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_policy_state
 alias WS_POLICY_STATE = int;
 enum : int
 {
     WS_POLICY_STATE_CREATED = 0x00000001,
     WS_POLICY_STATE_FAULTED = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_policy_property_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_policy_property_id
 alias WS_POLICY_PROPERTY_ID = int;
 enum : int
 {
@@ -1293,7 +1389,8 @@ enum : int
     WS_POLICY_PROPERTY_MAX_DEPTH        = 0x00000003,
     WS_POLICY_PROPERTY_MAX_EXTENSIONS   = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_binding_constraint_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_security_binding_constraint_type
 alias WS_SECURITY_BINDING_CONSTRAINT_TYPE = int;
 enum : int
 {
@@ -1306,13 +1403,15 @@ enum : int
     WS_CERT_MESSAGE_SECURITY_BINDING_CONSTRAINT_TYPE             = 0x00000007,
     WS_SECURITY_CONTEXT_MESSAGE_SECURITY_BINDING_CONSTRAINT_TYPE = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_policy_extension_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_policy_extension_type
 alias WS_POLICY_EXTENSION_TYPE = int;
 enum : int
 {
     WS_ENDPOINT_POLICY_EXTENSION_TYPE = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_binding_template_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ne-webservices-ws_binding_template_type
 alias WS_BINDING_TEMPLATE_TYPE = int;
 enum : int
 {
@@ -1563,97 +1662,97 @@ alias WS_PROXY_MESSAGE_CALLBACK = HRESULT function(WS_MESSAGE* message, WS_HEAP*
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wsw/ws-channel))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wsw/ws-channel
 struct WS_CHANNEL
 {
     ptrdiff_t Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wsw/ws-error))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wsw/ws-error
 struct WS_ERROR
 {
     ptrdiff_t Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wsw/ws-heap))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wsw/ws-heap
 struct WS_HEAP
 {
     ptrdiff_t Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wsw/ws-listener))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wsw/ws-listener
 struct WS_LISTENER
 {
     ptrdiff_t Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wsw/ws-message))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wsw/ws-message
 struct WS_MESSAGE
 {
     ptrdiff_t Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wsw/ws-metadata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wsw/ws-metadata
 struct WS_METADATA
 {
     ptrdiff_t Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wsw/ws-operation-context))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wsw/ws-operation-context
 struct WS_OPERATION_CONTEXT
 {
     ptrdiff_t Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wsw/ws-policy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wsw/ws-policy
 struct WS_POLICY
 {
     ptrdiff_t Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wsw/ws-security-context))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wsw/ws-security-context
 struct WS_SECURITY_CONTEXT
 {
     ptrdiff_t Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wsw/ws-security-token))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wsw/ws-security-token
 struct WS_SECURITY_TOKEN
 {
     ptrdiff_t Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wsw/ws-service-host))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wsw/ws-service-host
 struct WS_SERVICE_HOST
 {
     ptrdiff_t Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wsw/ws-service-proxy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wsw/ws-service-proxy
 struct WS_SERVICE_PROXY
 {
     ptrdiff_t Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wsw/ws-xml-buffer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wsw/ws-xml-buffer
 struct WS_XML_BUFFER
 {
     ptrdiff_t Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wsw/ws-xml-reader))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wsw/ws-xml-reader
 struct WS_XML_READER
 {
     ptrdiff_t Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wsw/ws-xml-writer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wsw/ws-xml-writer
 struct WS_XML_WRITER
 {
     ptrdiff_t Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_dictionary))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_dictionary
 struct WS_XML_DICTIONARY
 {
     GUID           guid;
@@ -1662,7 +1761,7 @@ struct WS_XML_DICTIONARY
     BOOL           isConst;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_string))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_string
 struct WS_XML_STRING
 {
     uint               length;
@@ -1671,21 +1770,21 @@ struct WS_XML_STRING
     uint               id;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_qname))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_qname
 struct WS_XML_QNAME
 {
     WS_XML_STRING localName;
     WS_XML_STRING ns;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_node_position))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_node_position
 struct WS_XML_NODE_POSITION
 {
     WS_XML_BUFFER* buffer;
     void*          node;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_reader_property))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_reader_property
 struct WS_XML_READER_PROPERTY
 {
     WS_XML_READER_PROPERTY_ID id;
@@ -1693,14 +1792,14 @@ struct WS_XML_READER_PROPERTY
     uint  valueSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_canonicalization_inclusive_prefixes))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_canonicalization_inclusive_prefixes
 struct WS_XML_CANONICALIZATION_INCLUSIVE_PREFIXES
 {
     uint           prefixCount;
     WS_XML_STRING* prefixes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_canonicalization_property))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_canonicalization_property
 struct WS_XML_CANONICALIZATION_PROPERTY
 {
     WS_XML_CANONICALIZATION_PROPERTY_ID id;
@@ -1708,7 +1807,7 @@ struct WS_XML_CANONICALIZATION_PROPERTY
     uint  valueSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_writer_property))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_writer_property
 struct WS_XML_WRITER_PROPERTY
 {
     WS_XML_WRITER_PROPERTY_ID id;
@@ -1716,7 +1815,7 @@ struct WS_XML_WRITER_PROPERTY
     uint  valueSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_buffer_property))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_buffer_property
 struct WS_XML_BUFFER_PROPERTY
 {
     WS_XML_BUFFER_PROPERTY_ID id;
@@ -1724,20 +1823,20 @@ struct WS_XML_BUFFER_PROPERTY
     uint  valueSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_text))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_text
 struct WS_XML_TEXT
 {
     WS_XML_TEXT_TYPE textType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_utf8_text))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_utf8_text
 struct WS_XML_UTF8_TEXT
 {
     WS_XML_TEXT   text;
     WS_XML_STRING value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_utf16_text))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_utf16_text
 struct WS_XML_UTF16_TEXT
 {
     WS_XML_TEXT text;
@@ -1745,7 +1844,7 @@ struct WS_XML_UTF16_TEXT
     uint        byteCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_base64_text))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_base64_text
 struct WS_XML_BASE64_TEXT
 {
     WS_XML_TEXT text;
@@ -1753,97 +1852,97 @@ struct WS_XML_BASE64_TEXT
     uint        length;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_bool_text))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_bool_text
 struct WS_XML_BOOL_TEXT
 {
     WS_XML_TEXT text;
     BOOL        value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_int32_text))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_int32_text
 struct WS_XML_INT32_TEXT
 {
     WS_XML_TEXT text;
     int         value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_int64_text))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_int64_text
 struct WS_XML_INT64_TEXT
 {
     WS_XML_TEXT text;
     long        value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_uint64_text))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_uint64_text
 struct WS_XML_UINT64_TEXT
 {
     WS_XML_TEXT text;
     ulong       value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_float_text))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_float_text
 struct WS_XML_FLOAT_TEXT
 {
     WS_XML_TEXT text;
     float       value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_double_text))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_double_text
 struct WS_XML_DOUBLE_TEXT
 {
     WS_XML_TEXT text;
     double      value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_decimal_text))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_decimal_text
 struct WS_XML_DECIMAL_TEXT
 {
     WS_XML_TEXT text;
     DECIMAL     value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_guid_text))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_guid_text
 struct WS_XML_GUID_TEXT
 {
     WS_XML_TEXT text;
     GUID        value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_unique_id_text))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_unique_id_text
 struct WS_XML_UNIQUE_ID_TEXT
 {
     WS_XML_TEXT text;
     GUID        value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_datetime))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_datetime
 struct WS_DATETIME
 {
     ulong              ticks;
     WS_DATETIME_FORMAT format;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_datetime_text))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_datetime_text
 struct WS_XML_DATETIME_TEXT
 {
     WS_XML_TEXT text;
     WS_DATETIME value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_timespan))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_timespan
 struct WS_TIMESPAN
 {
     long ticks;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_timespan_text))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_timespan_text
 struct WS_XML_TIMESPAN_TEXT
 {
     WS_XML_TEXT text;
     WS_TIMESPAN value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_qname_text))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_qname_text
 struct WS_XML_QNAME_TEXT
 {
     WS_XML_TEXT    text;
@@ -1852,7 +1951,7 @@ struct WS_XML_QNAME_TEXT
     WS_XML_STRING* ns;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_list_text))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_list_text
 struct WS_XML_LIST_TEXT
 {
     WS_XML_TEXT   text;
@@ -1860,13 +1959,13 @@ struct WS_XML_LIST_TEXT
     WS_XML_TEXT** items;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_node))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_node
 struct WS_XML_NODE
 {
     WS_XML_NODE_TYPE nodeType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_attribute))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_attribute
 struct WS_XML_ATTRIBUTE
 {
     ubyte          singleQuote;
@@ -1877,7 +1976,7 @@ struct WS_XML_ATTRIBUTE
     WS_XML_TEXT*   value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_element_node))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_element_node
 struct WS_XML_ELEMENT_NODE
 {
     WS_XML_NODE        node;
@@ -1889,27 +1988,27 @@ struct WS_XML_ELEMENT_NODE
     BOOL               isEmpty;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_text_node))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_text_node
 struct WS_XML_TEXT_NODE
 {
     WS_XML_NODE  node;
     WS_XML_TEXT* text;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_comment_node))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_comment_node
 struct WS_XML_COMMENT_NODE
 {
     WS_XML_NODE   node;
     WS_XML_STRING value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_reader_input))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_reader_input
 struct WS_XML_READER_INPUT
 {
     WS_XML_READER_INPUT_TYPE inputType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_reader_buffer_input))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_reader_buffer_input
 struct WS_XML_READER_BUFFER_INPUT
 {
     WS_XML_READER_INPUT input;
@@ -1917,7 +2016,7 @@ struct WS_XML_READER_BUFFER_INPUT
     uint                encodedDataSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_reader_stream_input))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_reader_stream_input
 struct WS_XML_READER_STREAM_INPUT
 {
     WS_XML_READER_INPUT input;
@@ -1925,20 +2024,20 @@ struct WS_XML_READER_STREAM_INPUT
     void*               readCallbackState;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_reader_encoding))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_reader_encoding
 struct WS_XML_READER_ENCODING
 {
     WS_XML_READER_ENCODING_TYPE encodingType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_reader_text_encoding))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_reader_text_encoding
 struct WS_XML_READER_TEXT_ENCODING
 {
     WS_XML_READER_ENCODING encoding;
     WS_CHARSET charSet;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_reader_binary_encoding))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_reader_binary_encoding
 struct WS_XML_READER_BINARY_ENCODING
 {
     WS_XML_READER_ENCODING encoding;
@@ -1946,14 +2045,14 @@ struct WS_XML_READER_BINARY_ENCODING
     WS_XML_DICTIONARY* dynamicDictionary;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_string))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_string
 struct WS_STRING
 {
     uint  length;
     PWSTR chars;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_reader_mtom_encoding))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_reader_mtom_encoding
 struct WS_XML_READER_MTOM_ENCODING
 {
     WS_XML_READER_ENCODING encoding;
@@ -1964,26 +2063,26 @@ struct WS_XML_READER_MTOM_ENCODING
     WS_STRING startUri;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_reader_raw_encoding))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_reader_raw_encoding
 struct WS_XML_READER_RAW_ENCODING
 {
     WS_XML_READER_ENCODING encoding;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_writer_encoding))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_writer_encoding
 struct WS_XML_WRITER_ENCODING
 {
     WS_XML_WRITER_ENCODING_TYPE encodingType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_writer_text_encoding))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_writer_text_encoding
 struct WS_XML_WRITER_TEXT_ENCODING
 {
     WS_XML_WRITER_ENCODING encoding;
     WS_CHARSET charSet;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_writer_binary_encoding))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_writer_binary_encoding
 struct WS_XML_WRITER_BINARY_ENCODING
 {
     WS_XML_WRITER_ENCODING encoding;
@@ -1992,7 +2091,7 @@ struct WS_XML_WRITER_BINARY_ENCODING
     void*              dynamicStringCallbackState;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_writer_mtom_encoding))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_writer_mtom_encoding
 struct WS_XML_WRITER_MTOM_ENCODING
 {
     WS_XML_WRITER_ENCODING encoding;
@@ -2004,25 +2103,25 @@ struct WS_XML_WRITER_MTOM_ENCODING
     uint      maxInlineByteCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_writer_raw_encoding))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_writer_raw_encoding
 struct WS_XML_WRITER_RAW_ENCODING
 {
     WS_XML_WRITER_ENCODING encoding;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_writer_output))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_writer_output
 struct WS_XML_WRITER_OUTPUT
 {
     WS_XML_WRITER_OUTPUT_TYPE outputType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_writer_buffer_output))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_writer_buffer_output
 struct WS_XML_WRITER_BUFFER_OUTPUT
 {
     WS_XML_WRITER_OUTPUT output;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_writer_stream_output))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_writer_stream_output
 struct WS_XML_WRITER_STREAM_OUTPUT
 {
     WS_XML_WRITER_OUTPUT output;
@@ -2030,28 +2129,28 @@ struct WS_XML_WRITER_STREAM_OUTPUT
     void*                writeCallbackState;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_writer_properties))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_writer_properties
 struct WS_XML_WRITER_PROPERTIES
 {
     WS_XML_WRITER_PROPERTY* properties;
     uint propertyCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_reader_properties))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_reader_properties
 struct WS_XML_READER_PROPERTIES
 {
     WS_XML_READER_PROPERTY* properties;
     uint propertyCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_async_context))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_async_context
 struct WS_ASYNC_CONTEXT
 {
     WS_ASYNC_CALLBACK callback;
     void*             callbackState;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_async_state))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_async_state
 struct WS_ASYNC_STATE
 {
     void* internal0;
@@ -2061,13 +2160,13 @@ struct WS_ASYNC_STATE
     void* internal4;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_async_operation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_async_operation
 struct WS_ASYNC_OPERATION
 {
     WS_ASYNC_FUNCTION function_;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_channel_property))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_channel_property
 struct WS_CHANNEL_PROPERTY
 {
     WS_CHANNEL_PROPERTY_ID id;
@@ -2075,21 +2174,21 @@ struct WS_CHANNEL_PROPERTY
     uint  valueSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_custom_http_proxy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_custom_http_proxy
 struct WS_CUSTOM_HTTP_PROXY
 {
     WS_STRING servers;
     WS_STRING bypass;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_channel_properties))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_channel_properties
 struct WS_CHANNEL_PROPERTIES
 {
     WS_CHANNEL_PROPERTY* properties;
     uint                 propertyCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_custom_channel_callbacks))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_custom_channel_callbacks
 struct WS_CUSTOM_CHANNEL_CALLBACKS
 {
     WS_CREATE_CHANNEL_CALLBACK createChannelCallback;
@@ -2108,14 +2207,14 @@ struct WS_CUSTOM_CHANNEL_CALLBACKS
     WS_SHUTDOWN_SESSION_CHANNEL_CALLBACK shutdownSessionChannelCallback;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_header_mapping))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_header_mapping
 struct WS_HTTP_HEADER_MAPPING
 {
     WS_XML_STRING headerName;
     uint          headerMappingOptions;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_message_mapping))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_message_mapping
 struct WS_HTTP_MESSAGE_MAPPING
 {
     uint requestMappingOptions;
@@ -2126,7 +2225,7 @@ struct WS_HTTP_MESSAGE_MAPPING
     uint responseHeaderMappingCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_element_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_element_description
 struct WS_ELEMENT_DESCRIPTION
 {
     WS_XML_STRING* elementLocalName;
@@ -2135,14 +2234,14 @@ struct WS_ELEMENT_DESCRIPTION
     void*          typeDescription;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_message_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_message_description
 struct WS_MESSAGE_DESCRIPTION
 {
     WS_XML_STRING* action;
     WS_ELEMENT_DESCRIPTION* bodyElementDescription;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_channel_encoder))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_channel_encoder
 struct WS_CHANNEL_ENCODER
 {
     void* createContext;
@@ -2154,7 +2253,7 @@ struct WS_CHANNEL_ENCODER
     WS_FREE_ENCODER_CALLBACK freeEncoderCallback;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_channel_decoder))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_channel_decoder
 struct WS_CHANNEL_DECODER
 {
     void* createContext;
@@ -2166,20 +2265,20 @@ struct WS_CHANNEL_DECODER
     WS_FREE_DECODER_CALLBACK freeDecoderCallback;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_redirect_callback_context))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_redirect_callback_context
 struct WS_HTTP_REDIRECT_CALLBACK_CONTEXT
 {
     WS_HTTP_REDIRECT_CALLBACK callback;
     void* state;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_endpoint_identity))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_endpoint_identity
 struct WS_ENDPOINT_IDENTITY
 {
     WS_ENDPOINT_IDENTITY_TYPE identityType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_endpoint_address))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_endpoint_address
 struct WS_ENDPOINT_ADDRESS
 {
     WS_STRING      url;
@@ -2188,35 +2287,35 @@ struct WS_ENDPOINT_ADDRESS
     WS_ENDPOINT_IDENTITY* identity;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_dns_endpoint_identity))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_dns_endpoint_identity
 struct WS_DNS_ENDPOINT_IDENTITY
 {
     WS_ENDPOINT_IDENTITY identity;
     WS_STRING            dns;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_upn_endpoint_identity))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_upn_endpoint_identity
 struct WS_UPN_ENDPOINT_IDENTITY
 {
     WS_ENDPOINT_IDENTITY identity;
     WS_STRING            upn;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_spn_endpoint_identity))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_spn_endpoint_identity
 struct WS_SPN_ENDPOINT_IDENTITY
 {
     WS_ENDPOINT_IDENTITY identity;
     WS_STRING            spn;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_bytes))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_bytes
 struct WS_BYTES
 {
     uint   length;
     ubyte* bytes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_rsa_endpoint_identity))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_rsa_endpoint_identity
 struct WS_RSA_ENDPOINT_IDENTITY
 {
     WS_ENDPOINT_IDENTITY identity;
@@ -2224,21 +2323,21 @@ struct WS_RSA_ENDPOINT_IDENTITY
     WS_BYTES             exponent;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_cert_endpoint_identity))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_cert_endpoint_identity
 struct WS_CERT_ENDPOINT_IDENTITY
 {
     WS_ENDPOINT_IDENTITY identity;
     WS_BYTES             rawCertificateData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_unknown_endpoint_identity))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_unknown_endpoint_identity
 struct WS_UNKNOWN_ENDPOINT_IDENTITY
 {
     WS_ENDPOINT_IDENTITY identity;
     WS_XML_BUFFER*       element;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_error_property))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_error_property
 struct WS_ERROR_PROPERTY
 {
     WS_ERROR_PROPERTY_ID id;
@@ -2246,21 +2345,21 @@ struct WS_ERROR_PROPERTY
     uint                 valueSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_fault_reason))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_fault_reason
 struct WS_FAULT_REASON
 {
     WS_STRING text;
     WS_STRING lang;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_fault_code))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_fault_code
 struct WS_FAULT_CODE
 {
     WS_XML_QNAME   value;
     WS_FAULT_CODE* subCode;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_fault))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_fault
 struct WS_FAULT
 {
     WS_FAULT_CODE*   code;
@@ -2271,14 +2370,14 @@ struct WS_FAULT
     WS_XML_BUFFER*   detail;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_fault_detail_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_fault_detail_description
 struct WS_FAULT_DETAIL_DESCRIPTION
 {
     WS_XML_STRING* action;
     WS_ELEMENT_DESCRIPTION* detailElementDescription;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_heap_property))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_heap_property
 struct WS_HEAP_PROPERTY
 {
     WS_HEAP_PROPERTY_ID id;
@@ -2286,14 +2385,14 @@ struct WS_HEAP_PROPERTY
     uint                valueSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_heap_properties))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_heap_properties
 struct WS_HEAP_PROPERTIES
 {
     WS_HEAP_PROPERTY* properties;
     uint              propertyCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_listener_property))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_listener_property
 struct WS_LISTENER_PROPERTY
 {
     WS_LISTENER_PROPERTY_ID id;
@@ -2301,28 +2400,28 @@ struct WS_LISTENER_PROPERTY
     uint  valueSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_disallowed_user_agent_substrings))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_disallowed_user_agent_substrings
 struct WS_DISALLOWED_USER_AGENT_SUBSTRINGS
 {
     uint        subStringCount;
     WS_STRING** subStrings;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_listener_properties))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_listener_properties
 struct WS_LISTENER_PROPERTIES
 {
     WS_LISTENER_PROPERTY* properties;
     uint propertyCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_host_names))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_host_names
 struct WS_HOST_NAMES
 {
     WS_STRING* hostNames;
     uint       hostNameCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_custom_listener_callbacks))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_custom_listener_callbacks
 struct WS_CUSTOM_LISTENER_CALLBACKS
 {
     WS_CREATE_LISTENER_CALLBACK createListenerCallback;
@@ -2337,7 +2436,7 @@ struct WS_CUSTOM_LISTENER_CALLBACKS
     WS_ACCEPT_CHANNEL_CALLBACK acceptChannelCallback;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_message_property))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_message_property
 struct WS_MESSAGE_PROPERTY
 {
     WS_MESSAGE_PROPERTY_ID id;
@@ -2345,14 +2444,14 @@ struct WS_MESSAGE_PROPERTY
     uint  valueSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_message_properties))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_message_properties
 struct WS_MESSAGE_PROPERTIES
 {
     WS_MESSAGE_PROPERTY* properties;
     uint                 propertyCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_algorithm_property))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_algorithm_property
 struct WS_SECURITY_ALGORITHM_PROPERTY
 {
     WS_SECURITY_ALGORITHM_PROPERTY_ID id;
@@ -2360,7 +2459,7 @@ struct WS_SECURITY_ALGORITHM_PROPERTY
     uint  valueSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_algorithm_suite))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_algorithm_suite
 struct WS_SECURITY_ALGORITHM_SUITE
 {
     WS_SECURITY_ALGORITHM_ID canonicalizationAlgorithm;
@@ -2379,7 +2478,7 @@ struct WS_SECURITY_ALGORITHM_SUITE
     uint propertyCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_property))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_property
 struct WS_SECURITY_PROPERTY
 {
     WS_SECURITY_PROPERTY_ID id;
@@ -2387,14 +2486,14 @@ struct WS_SECURITY_PROPERTY
     uint  valueSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_properties))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_properties
 struct WS_SECURITY_PROPERTIES
 {
     WS_SECURITY_PROPERTY* properties;
     uint propertyCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_binding_property))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_binding_property
 struct WS_SECURITY_BINDING_PROPERTY
 {
     WS_SECURITY_BINDING_PROPERTY_ID id;
@@ -2402,34 +2501,34 @@ struct WS_SECURITY_BINDING_PROPERTY
     uint  valueSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_binding_properties))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_binding_properties
 struct WS_SECURITY_BINDING_PROPERTIES
 {
     WS_SECURITY_BINDING_PROPERTY* properties;
     uint propertyCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_service_security_identities))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_service_security_identities
 struct WS_SERVICE_SECURITY_IDENTITIES
 {
     WS_STRING* serviceIdentities;
     uint       serviceIdentityCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_certificate_validation_callback_context))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_certificate_validation_callback_context
 struct WS_CERTIFICATE_VALIDATION_CALLBACK_CONTEXT
 {
     WS_CERTIFICATE_VALIDATION_CALLBACK callback;
     void* state;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_cert_credential))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_cert_credential
 struct WS_CERT_CREDENTIAL
 {
     WS_CERT_CREDENTIAL_TYPE credentialType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_subject_name_cert_credential))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_subject_name_cert_credential
 struct WS_SUBJECT_NAME_CERT_CREDENTIAL
 {
     WS_CERT_CREDENTIAL credential;
@@ -2438,7 +2537,7 @@ struct WS_SUBJECT_NAME_CERT_CREDENTIAL
     WS_STRING          subjectName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_thumbprint_cert_credential))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_thumbprint_cert_credential
 struct WS_THUMBPRINT_CERT_CREDENTIAL
 {
     WS_CERT_CREDENTIAL credential;
@@ -2447,7 +2546,7 @@ struct WS_THUMBPRINT_CERT_CREDENTIAL
     WS_STRING          thumbprint;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_custom_cert_credential))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_custom_cert_credential
 struct WS_CUSTOM_CERT_CREDENTIAL
 {
     WS_CERT_CREDENTIAL   credential;
@@ -2457,13 +2556,13 @@ struct WS_CUSTOM_CERT_CREDENTIAL
     void*                certIssuerListNotificationCallbackState;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_windows_integrated_auth_credential))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_windows_integrated_auth_credential
 struct WS_WINDOWS_INTEGRATED_AUTH_CREDENTIAL
 {
     WS_WINDOWS_INTEGRATED_AUTH_CREDENTIAL_TYPE credentialType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_string_windows_integrated_auth_credential))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_string_windows_integrated_auth_credential
 struct WS_STRING_WINDOWS_INTEGRATED_AUTH_CREDENTIAL
 {
     WS_WINDOWS_INTEGRATED_AUTH_CREDENTIAL credential;
@@ -2472,26 +2571,26 @@ struct WS_STRING_WINDOWS_INTEGRATED_AUTH_CREDENTIAL
     WS_STRING domain;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_default_windows_integrated_auth_credential))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_default_windows_integrated_auth_credential
 struct WS_DEFAULT_WINDOWS_INTEGRATED_AUTH_CREDENTIAL
 {
     WS_WINDOWS_INTEGRATED_AUTH_CREDENTIAL credential;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_opaque_windows_integrated_auth_credential))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_opaque_windows_integrated_auth_credential
 struct WS_OPAQUE_WINDOWS_INTEGRATED_AUTH_CREDENTIAL
 {
     WS_WINDOWS_INTEGRATED_AUTH_CREDENTIAL credential;
     void* opaqueAuthIdentity;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_username_credential))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_username_credential
 struct WS_USERNAME_CREDENTIAL
 {
     WS_USERNAME_CREDENTIAL_TYPE credentialType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_string_username_credential))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_string_username_credential
 struct WS_STRING_USERNAME_CREDENTIAL
 {
     WS_USERNAME_CREDENTIAL credential;
@@ -2499,27 +2598,27 @@ struct WS_STRING_USERNAME_CREDENTIAL
     WS_STRING password;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_key_handle))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_key_handle
 struct WS_SECURITY_KEY_HANDLE
 {
     WS_SECURITY_KEY_HANDLE_TYPE keyHandleType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_raw_symmetric_security_key_handle))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_raw_symmetric_security_key_handle
 struct WS_RAW_SYMMETRIC_SECURITY_KEY_HANDLE
 {
     WS_SECURITY_KEY_HANDLE keyHandle;
     WS_BYTES rawKeyBytes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_ncrypt_asymmetric_security_key_handle))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_ncrypt_asymmetric_security_key_handle
 struct WS_NCRYPT_ASYMMETRIC_SECURITY_KEY_HANDLE
 {
     WS_SECURITY_KEY_HANDLE keyHandle;
     NCRYPT_KEY_HANDLE asymmetricKey;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_capi_asymmetric_security_key_handle))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_capi_asymmetric_security_key_handle
 struct WS_CAPI_ASYMMETRIC_SECURITY_KEY_HANDLE
 {
     WS_SECURITY_KEY_HANDLE keyHandle;
@@ -2527,7 +2626,7 @@ struct WS_CAPI_ASYMMETRIC_SECURITY_KEY_HANDLE
     uint   keySpec;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_binding))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_binding
 struct WS_SECURITY_BINDING
 {
     WS_SECURITY_BINDING_TYPE bindingType;
@@ -2535,35 +2634,35 @@ struct WS_SECURITY_BINDING
     uint propertyCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_ssl_transport_security_binding))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_ssl_transport_security_binding
 struct WS_SSL_TRANSPORT_SECURITY_BINDING
 {
     WS_SECURITY_BINDING binding;
     WS_CERT_CREDENTIAL* localCertCredential;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_transport_security_binding))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_transport_security_binding
 struct WS_TCP_SSPI_TRANSPORT_SECURITY_BINDING
 {
     WS_SECURITY_BINDING binding;
     WS_WINDOWS_INTEGRATED_AUTH_CREDENTIAL* clientCredential;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_namedpipe_sspi_transport_security_binding))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_namedpipe_sspi_transport_security_binding
 struct WS_NAMEDPIPE_SSPI_TRANSPORT_SECURITY_BINDING
 {
     WS_SECURITY_BINDING binding;
     WS_WINDOWS_INTEGRATED_AUTH_CREDENTIAL* clientCredential;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_header_auth_security_binding))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_header_auth_security_binding
 struct WS_HTTP_HEADER_AUTH_SECURITY_BINDING
 {
     WS_SECURITY_BINDING binding;
     WS_WINDOWS_INTEGRATED_AUTH_CREDENTIAL* clientCredential;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_kerberos_apreq_message_security_binding))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_kerberos_apreq_message_security_binding
 struct WS_KERBEROS_APREQ_MESSAGE_SECURITY_BINDING
 {
     WS_SECURITY_BINDING binding;
@@ -2571,7 +2670,7 @@ struct WS_KERBEROS_APREQ_MESSAGE_SECURITY_BINDING
     WS_WINDOWS_INTEGRATED_AUTH_CREDENTIAL* clientCredential;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_username_message_security_binding))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_username_message_security_binding
 struct WS_USERNAME_MESSAGE_SECURITY_BINDING
 {
     WS_SECURITY_BINDING binding;
@@ -2581,7 +2680,7 @@ struct WS_USERNAME_MESSAGE_SECURITY_BINDING
     void*               passwordValidatorCallbackState;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_description
 struct WS_SECURITY_DESCRIPTION
 {
     WS_SECURITY_BINDING** securityBindings;
@@ -2590,7 +2689,7 @@ struct WS_SECURITY_DESCRIPTION
     uint propertyCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_context_message_security_binding))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_context_message_security_binding
 struct WS_SECURITY_CONTEXT_MESSAGE_SECURITY_BINDING
 {
     WS_SECURITY_BINDING binding;
@@ -2598,7 +2697,7 @@ struct WS_SECURITY_CONTEXT_MESSAGE_SECURITY_BINDING
     WS_SECURITY_DESCRIPTION* bootstrapSecurityDescription;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_context_property))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_context_property
 struct WS_SECURITY_CONTEXT_PROPERTY
 {
     WS_SECURITY_CONTEXT_PROPERTY_ID id;
@@ -2606,7 +2705,7 @@ struct WS_SECURITY_CONTEXT_PROPERTY
     uint  valueSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_security_token_property))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_security_token_property
 struct WS_XML_SECURITY_TOKEN_PROPERTY
 {
     WS_XML_SECURITY_TOKEN_PROPERTY_ID id;
@@ -2614,7 +2713,7 @@ struct WS_XML_SECURITY_TOKEN_PROPERTY
     uint  valueSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_token_message_security_binding))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_token_message_security_binding
 struct WS_XML_TOKEN_MESSAGE_SECURITY_BINDING
 {
     WS_SECURITY_BINDING binding;
@@ -2622,13 +2721,13 @@ struct WS_XML_TOKEN_MESSAGE_SECURITY_BINDING
     WS_SECURITY_TOKEN*  xmlToken;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_saml_authenticator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_saml_authenticator
 struct WS_SAML_AUTHENTICATOR
 {
     WS_SAML_AUTHENTICATOR_TYPE authenticatorType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_cert_signed_saml_authenticator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_cert_signed_saml_authenticator
 struct WS_CERT_SIGNED_SAML_AUTHENTICATOR
 {
     WS_SAML_AUTHENTICATOR authenticator;
@@ -2639,7 +2738,7 @@ struct WS_CERT_SIGNED_SAML_AUTHENTICATOR
     void*                samlValidatorCallbackState;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_saml_message_security_binding))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_saml_message_security_binding
 struct WS_SAML_MESSAGE_SECURITY_BINDING
 {
     WS_SECURITY_BINDING binding;
@@ -2647,7 +2746,7 @@ struct WS_SAML_MESSAGE_SECURITY_BINDING
     WS_SAML_AUTHENTICATOR* authenticator;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_request_security_token_property))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_request_security_token_property
 struct WS_REQUEST_SECURITY_TOKEN_PROPERTY
 {
     WS_REQUEST_SECURITY_TOKEN_PROPERTY_ID id;
@@ -2655,7 +2754,7 @@ struct WS_REQUEST_SECURITY_TOKEN_PROPERTY
     uint  valueSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_any_attribute))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_any_attribute
 struct WS_ANY_ATTRIBUTE
 {
     WS_XML_STRING localName;
@@ -2663,33 +2762,33 @@ struct WS_ANY_ATTRIBUTE
     WS_XML_TEXT*  value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_any_attributes))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_any_attributes
 struct WS_ANY_ATTRIBUTES
 {
     WS_ANY_ATTRIBUTE* attributes;
     uint              attributeCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_bool_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_bool_description
 struct WS_BOOL_DESCRIPTION
 {
     BOOL value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_guid_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_guid_description
 struct WS_GUID_DESCRIPTION
 {
     GUID value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_datetime_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_datetime_description
 struct WS_DATETIME_DESCRIPTION
 {
     WS_DATETIME minValue;
     WS_DATETIME maxValue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_duration))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_duration
 struct WS_DURATION
 {
     BOOL negative;
@@ -2703,7 +2802,7 @@ struct WS_DURATION
     uint ticks;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_duration_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_duration_description
 struct WS_DURATION_DESCRIPTION
 {
     WS_DURATION minValue;
@@ -2711,35 +2810,35 @@ struct WS_DURATION_DESCRIPTION
     WS_DURATION_COMPARISON_CALLBACK comparer;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_timespan_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_timespan_description
 struct WS_TIMESPAN_DESCRIPTION
 {
     WS_TIMESPAN minValue;
     WS_TIMESPAN maxValue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_unique_id_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_unique_id_description
 struct WS_UNIQUE_ID_DESCRIPTION
 {
     uint minCharCount;
     uint maxCharCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_string_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_string_description
 struct WS_STRING_DESCRIPTION
 {
     uint minCharCount;
     uint maxCharCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_string_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_string_description
 struct WS_XML_STRING_DESCRIPTION
 {
     uint minByteCount;
     uint maxByteCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_qname_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_xml_qname_description
 struct WS_XML_QNAME_DESCRIPTION
 {
     uint minLocalNameByteCount;
@@ -2748,126 +2847,126 @@ struct WS_XML_QNAME_DESCRIPTION
     uint maxNsByteCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_char_array_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_char_array_description
 struct WS_CHAR_ARRAY_DESCRIPTION
 {
     uint minCharCount;
     uint maxCharCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_byte_array_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_byte_array_description
 struct WS_BYTE_ARRAY_DESCRIPTION
 {
     uint minByteCount;
     uint maxByteCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_utf8_array_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_utf8_array_description
 struct WS_UTF8_ARRAY_DESCRIPTION
 {
     uint minByteCount;
     uint maxByteCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_wsz_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_wsz_description
 struct WS_WSZ_DESCRIPTION
 {
     uint minCharCount;
     uint maxCharCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_int8_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_int8_description
 struct WS_INT8_DESCRIPTION
 {
     CHAR minValue;
     CHAR maxValue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_uint8_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_uint8_description
 struct WS_UINT8_DESCRIPTION
 {
     ubyte minValue;
     ubyte maxValue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_int16_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_int16_description
 struct WS_INT16_DESCRIPTION
 {
     short minValue;
     short maxValue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_uint16_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_uint16_description
 struct WS_UINT16_DESCRIPTION
 {
     ushort minValue;
     ushort maxValue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_int32_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_int32_description
 struct WS_INT32_DESCRIPTION
 {
     int minValue;
     int maxValue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_uint32_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_uint32_description
 struct WS_UINT32_DESCRIPTION
 {
     uint minValue;
     uint maxValue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_int64_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_int64_description
 struct WS_INT64_DESCRIPTION
 {
     long minValue;
     long maxValue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_uint64_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_uint64_description
 struct WS_UINT64_DESCRIPTION
 {
     ulong minValue;
     ulong maxValue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_float_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_float_description
 struct WS_FLOAT_DESCRIPTION
 {
     float minValue;
     float maxValue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_double_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_double_description
 struct WS_DOUBLE_DESCRIPTION
 {
     double minValue;
     double maxValue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_decimal_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_decimal_description
 struct WS_DECIMAL_DESCRIPTION
 {
     DECIMAL minValue;
     DECIMAL maxValue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_bytes_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_bytes_description
 struct WS_BYTES_DESCRIPTION
 {
     uint minByteCount;
     uint maxByteCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_enum_value))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_enum_value
 struct WS_ENUM_VALUE
 {
     int            value;
     WS_XML_STRING* name;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_enum_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_enum_description
 struct WS_ENUM_DESCRIPTION
 {
     WS_ENUM_VALUE* values;
@@ -2876,21 +2975,21 @@ struct WS_ENUM_DESCRIPTION
     uint*          nameIndices;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_item_range))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_item_range
 struct WS_ITEM_RANGE
 {
     uint minItemCount;
     uint maxItemCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_default_value))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_default_value
 struct WS_DEFAULT_VALUE
 {
     void* value;
     uint  valueSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_field_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_field_description
 struct WS_FIELD_DESCRIPTION
 {
     WS_FIELD_MAPPING  mapping;
@@ -2907,14 +3006,14 @@ struct WS_FIELD_DESCRIPTION
     WS_ITEM_RANGE*    itemRange;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_union_field_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_union_field_description
 struct WS_UNION_FIELD_DESCRIPTION
 {
     int                  value;
     WS_FIELD_DESCRIPTION field;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_struct_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_struct_description
 struct WS_STRUCT_DESCRIPTION
 {
     uint           size;
@@ -2929,7 +3028,7 @@ struct WS_STRUCT_DESCRIPTION
     uint           structOptions;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_union_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_union_description
 struct WS_UNION_DESCRIPTION
 {
     uint  size;
@@ -2941,25 +3040,25 @@ struct WS_UNION_DESCRIPTION
     uint* valueIndices;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_endpoint_address_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_endpoint_address_description
 struct WS_ENDPOINT_ADDRESS_DESCRIPTION
 {
     WS_ADDRESSING_VERSION addressingVersion;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_fault_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_fault_description
 struct WS_FAULT_DESCRIPTION
 {
     WS_ENVELOPE_VERSION envelopeVersion;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_void_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_void_description
 struct WS_VOID_DESCRIPTION
 {
     uint size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_custom_type_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_custom_type_description
 struct WS_CUSTOM_TYPE_DESCRIPTION
 {
     uint  size;
@@ -2970,7 +3069,7 @@ struct WS_CUSTOM_TYPE_DESCRIPTION
     WS_IS_DEFAULT_VALUE_CALLBACK isDefaultValueCallback;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_attribute_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_attribute_description
 struct WS_ATTRIBUTE_DESCRIPTION
 {
     WS_XML_STRING* attributeLocalName;
@@ -2979,7 +3078,7 @@ struct WS_ATTRIBUTE_DESCRIPTION
     void*          typeDescription;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_parameter_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_parameter_description
 struct WS_PARAMETER_DESCRIPTION
 {
     WS_PARAMETER_TYPE parameterType;
@@ -2987,7 +3086,7 @@ struct WS_PARAMETER_DESCRIPTION
     ushort            outputMessageIndex;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_operation_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_operation_description
 struct WS_OPERATION_DESCRIPTION
 {
     uint               versionInfo;
@@ -3001,14 +3100,14 @@ struct WS_OPERATION_DESCRIPTION
     WS_OPERATION_STYLE style;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_contract_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_contract_description
 struct WS_CONTRACT_DESCRIPTION
 {
     uint operationCount;
     WS_OPERATION_DESCRIPTION** operations;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_service_contract))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_service_contract
 struct WS_SERVICE_CONTRACT
 {
     const(WS_CONTRACT_DESCRIPTION)* contractDescription;
@@ -3016,7 +3115,7 @@ struct WS_SERVICE_CONTRACT
     const(void)* methodTable;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_service_property))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_service_property
 struct WS_SERVICE_PROPERTY
 {
     WS_SERVICE_PROPERTY_ID id;
@@ -3024,7 +3123,7 @@ struct WS_SERVICE_PROPERTY
     uint  valueSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_service_endpoint_property))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_service_endpoint_property
 struct WS_SERVICE_ENDPOINT_PROPERTY
 {
     WS_SERVICE_ENDPOINT_PROPERTY_ID id;
@@ -3032,20 +3131,20 @@ struct WS_SERVICE_ENDPOINT_PROPERTY
     uint  valueSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_service_property_accept_callback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_service_property_accept_callback
 struct WS_SERVICE_PROPERTY_ACCEPT_CALLBACK
 {
     WS_SERVICE_ACCEPT_CHANNEL_CALLBACK callback;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_service_metadata_document))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_service_metadata_document
 struct WS_SERVICE_METADATA_DOCUMENT
 {
     WS_XML_STRING* content;
     WS_STRING*     name;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_service_metadata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_service_metadata
 struct WS_SERVICE_METADATA
 {
     uint           documentCount;
@@ -3054,13 +3153,13 @@ struct WS_SERVICE_METADATA
     WS_XML_STRING* serviceNs;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_service_property_close_callback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_service_property_close_callback
 struct WS_SERVICE_PROPERTY_CLOSE_CALLBACK
 {
     WS_SERVICE_CLOSE_CHANNEL_CALLBACK callback;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_service_endpoint_metadata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_service_endpoint_metadata
 struct WS_SERVICE_ENDPOINT_METADATA
 {
     WS_XML_STRING* portName;
@@ -3068,7 +3167,7 @@ struct WS_SERVICE_ENDPOINT_METADATA
     WS_XML_STRING* bindingNs;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_service_endpoint))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_service_endpoint
 struct WS_SERVICE_ENDPOINT
 {
     WS_ENDPOINT_ADDRESS address;
@@ -3082,7 +3181,7 @@ struct WS_SERVICE_ENDPOINT
     WS_CHANNEL_PROPERTIES channelProperties;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_proxy_property))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_proxy_property
 struct WS_PROXY_PROPERTY
 {
     WS_PROXY_PROPERTY_ID id;
@@ -3090,14 +3189,14 @@ struct WS_PROXY_PROPERTY
     uint                 valueSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_proxy_message_callback_context))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_proxy_message_callback_context
 struct WS_PROXY_MESSAGE_CALLBACK_CONTEXT
 {
     WS_PROXY_MESSAGE_CALLBACK callback;
     void* state;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_call_property))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_call_property
 struct WS_CALL_PROPERTY
 {
     WS_CALL_PROPERTY_ID id;
@@ -3105,13 +3204,13 @@ struct WS_CALL_PROPERTY
     uint                valueSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_url))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_url
 struct WS_URL
 {
     WS_URL_SCHEME_TYPE scheme;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_url))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_url
 struct WS_HTTP_URL
 {
     WS_URL    url;
@@ -3123,7 +3222,7 @@ struct WS_HTTP_URL
     WS_STRING fragment;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_https_url))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_https_url
 struct WS_HTTPS_URL
 {
     WS_URL    url;
@@ -3135,7 +3234,7 @@ struct WS_HTTPS_URL
     WS_STRING fragment;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_nettcp_url))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_nettcp_url
 struct WS_NETTCP_URL
 {
     WS_URL    url;
@@ -3147,7 +3246,7 @@ struct WS_NETTCP_URL
     WS_STRING fragment;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_soapudp_url))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_soapudp_url
 struct WS_SOAPUDP_URL
 {
     WS_URL    url;
@@ -3159,7 +3258,7 @@ struct WS_SOAPUDP_URL
     WS_STRING fragment;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_netpipe_url))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_netpipe_url
 struct WS_NETPIPE_URL
 {
     WS_URL    url;
@@ -3171,21 +3270,21 @@ struct WS_NETPIPE_URL
     WS_STRING fragment;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_unique_id))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_unique_id
 struct WS_UNIQUE_ID
 {
     WS_STRING uri;
     GUID      guid;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_buffers))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_buffers
 struct WS_BUFFERS
 {
     uint      bufferCount;
     WS_BYTES* buffers;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_metadata_endpoint))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_metadata_endpoint
 struct WS_METADATA_ENDPOINT
 {
     WS_ENDPOINT_ADDRESS endpointAddress;
@@ -3199,14 +3298,14 @@ struct WS_METADATA_ENDPOINT
     WS_XML_STRING*      portTypeNs;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_metadata_endpoints))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_metadata_endpoints
 struct WS_METADATA_ENDPOINTS
 {
     WS_METADATA_ENDPOINT* endpoints;
     uint endpointCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_metadata_property))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_metadata_property
 struct WS_METADATA_PROPERTY
 {
     WS_METADATA_PROPERTY_ID id;
@@ -3214,7 +3313,7 @@ struct WS_METADATA_PROPERTY
     uint  valueSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_policy_property))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_policy_property
 struct WS_POLICY_PROPERTY
 {
     WS_POLICY_PROPERTY_ID id;
@@ -3222,23 +3321,26 @@ struct WS_POLICY_PROPERTY
     uint  valueSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_policy_properties))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_policy_properties
 struct WS_POLICY_PROPERTIES
 {
     WS_POLICY_PROPERTY* properties;
     uint                propertyCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_binding_property_constraint))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_binding_property_constraint
 struct WS_SECURITY_BINDING_PROPERTY_CONSTRAINT
 {
     WS_SECURITY_BINDING_PROPERTY_ID id;
-    void*          allowedValues;
-    uint           allowedValuesSize;
-    _out_e__Struct out_;
+    void* allowedValues;
+    uint  allowedValuesSize;
+    struct out_
+    {
+        WS_SECURITY_BINDING_PROPERTY securityBindingProperty;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_binding_constraint))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_binding_constraint
 struct WS_SECURITY_BINDING_CONSTRAINT
 {
     WS_SECURITY_BINDING_CONSTRAINT_TYPE type;
@@ -3246,56 +3348,62 @@ struct WS_SECURITY_BINDING_CONSTRAINT
     uint propertyConstraintCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_ssl_transport_security_binding_constraint))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_ssl_transport_security_binding_constraint
 struct WS_SSL_TRANSPORT_SECURITY_BINDING_CONSTRAINT
 {
     WS_SECURITY_BINDING_CONSTRAINT bindingConstraint;
-    _out_e__Struct out_;
+    struct out_
+    {
+        BOOL clientCertCredentialRequired;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_username_message_security_binding_constraint))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_username_message_security_binding_constraint
 struct WS_USERNAME_MESSAGE_SECURITY_BINDING_CONSTRAINT
 {
     WS_SECURITY_BINDING_CONSTRAINT bindingConstraint;
     WS_MESSAGE_SECURITY_USAGE bindingUsage;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_header_auth_security_binding_constraint))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_header_auth_security_binding_constraint
 struct WS_HTTP_HEADER_AUTH_SECURITY_BINDING_CONSTRAINT
 {
     WS_SECURITY_BINDING_CONSTRAINT bindingConstraint;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_transport_security_binding_constraint))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_transport_security_binding_constraint
 struct WS_TCP_SSPI_TRANSPORT_SECURITY_BINDING_CONSTRAINT
 {
     WS_SECURITY_BINDING_CONSTRAINT bindingConstraint;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_cert_message_security_binding_constraint))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_cert_message_security_binding_constraint
 struct WS_CERT_MESSAGE_SECURITY_BINDING_CONSTRAINT
 {
     WS_SECURITY_BINDING_CONSTRAINT bindingConstraint;
     WS_MESSAGE_SECURITY_USAGE bindingUsage;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_kerberos_apreq_message_security_binding_constraint))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_kerberos_apreq_message_security_binding_constraint
 struct WS_KERBEROS_APREQ_MESSAGE_SECURITY_BINDING_CONSTRAINT
 {
     WS_SECURITY_BINDING_CONSTRAINT bindingConstraint;
     WS_MESSAGE_SECURITY_USAGE bindingUsage;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_request_security_token_property_constraint))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_request_security_token_property_constraint
 struct WS_REQUEST_SECURITY_TOKEN_PROPERTY_CONSTRAINT
 {
     WS_REQUEST_SECURITY_TOKEN_PROPERTY_ID id;
-    void*          allowedValues;
-    uint           allowedValuesSize;
-    _out_e__Struct out_;
+    void* allowedValues;
+    uint  allowedValuesSize;
+    struct out_
+    {
+        WS_REQUEST_SECURITY_TOKEN_PROPERTY requestSecurityTokenProperty;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_issued_token_message_security_binding_constraint))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_issued_token_message_security_binding_constraint
 struct WS_ISSUED_TOKEN_MESSAGE_SECURITY_BINDING_CONSTRAINT
 {
     WS_SECURITY_BINDING_CONSTRAINT bindingConstraint;
@@ -3304,19 +3412,26 @@ struct WS_ISSUED_TOKEN_MESSAGE_SECURITY_BINDING_CONSTRAINT
     uint           claimConstraintCount;
     WS_REQUEST_SECURITY_TOKEN_PROPERTY_CONSTRAINT* requestSecurityTokenPropertyConstraints;
     uint           requestSecurityTokenPropertyConstraintCount;
-    _out_e__Struct out_;
+    struct out_
+    {
+        WS_ENDPOINT_ADDRESS* issuerAddress;
+        WS_XML_BUFFER*       requestSecurityTokenTemplate;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_property_constraint))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_property_constraint
 struct WS_SECURITY_PROPERTY_CONSTRAINT
 {
     WS_SECURITY_PROPERTY_ID id;
-    void*          allowedValues;
-    uint           allowedValuesSize;
-    _out_e__Struct out_;
+    void* allowedValues;
+    uint  allowedValuesSize;
+    struct out_
+    {
+        WS_SECURITY_PROPERTY securityProperty;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_constraints))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_constraints
 struct WS_SECURITY_CONSTRAINTS
 {
     WS_SECURITY_PROPERTY_CONSTRAINT* securityPropertyConstraints;
@@ -3325,7 +3440,7 @@ struct WS_SECURITY_CONSTRAINTS
     uint securityBindingConstraintCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_context_message_security_binding_constraint))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_context_message_security_binding_constraint
 struct WS_SECURITY_CONTEXT_MESSAGE_SECURITY_BINDING_CONSTRAINT
 {
     WS_SECURITY_BINDING_CONSTRAINT bindingConstraint;
@@ -3333,31 +3448,37 @@ struct WS_SECURITY_CONTEXT_MESSAGE_SECURITY_BINDING_CONSTRAINT
     WS_SECURITY_CONSTRAINTS* bootstrapSecurityConstraint;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_channel_property_constraint))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_channel_property_constraint
 struct WS_CHANNEL_PROPERTY_CONSTRAINT
 {
     WS_CHANNEL_PROPERTY_ID id;
-    void*          allowedValues;
-    uint           allowedValuesSize;
-    _out_e__Struct out_;
+    void* allowedValues;
+    uint  allowedValuesSize;
+    struct out_
+    {
+        WS_CHANNEL_PROPERTY channelProperty;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_policy_extension))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_policy_extension
 struct WS_POLICY_EXTENSION
 {
     WS_POLICY_EXTENSION_TYPE type;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_endpoint_policy_extension))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_endpoint_policy_extension
 struct WS_ENDPOINT_POLICY_EXTENSION
 {
     WS_POLICY_EXTENSION policyExtension;
     WS_XML_STRING*      assertionName;
     WS_XML_STRING*      assertionNs;
-    _out_e__Struct      out_;
+    struct out_
+    {
+        WS_XML_BUFFER* assertionValue;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_policy_constraints))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_policy_constraints
 struct WS_POLICY_CONSTRAINTS
 {
     WS_CHANNEL_BINDING channelBinding;
@@ -3368,19 +3489,19 @@ struct WS_POLICY_CONSTRAINTS
     uint               policyExtensionCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_policy_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_policy_description
 struct WS_HTTP_POLICY_DESCRIPTION
 {
     WS_CHANNEL_PROPERTIES channelProperties;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_ssl_transport_security_binding_policy_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_ssl_transport_security_binding_policy_description
 struct WS_SSL_TRANSPORT_SECURITY_BINDING_POLICY_DESCRIPTION
 {
     WS_SECURITY_BINDING_PROPERTIES securityBindingProperties;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_ssl_policy_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_ssl_policy_description
 struct WS_HTTP_SSL_POLICY_DESCRIPTION
 {
     WS_CHANNEL_PROPERTIES channelProperties;
@@ -3388,13 +3509,13 @@ struct WS_HTTP_SSL_POLICY_DESCRIPTION
     WS_SSL_TRANSPORT_SECURITY_BINDING_POLICY_DESCRIPTION sslTransportSecurityBinding;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_header_auth_security_binding_policy_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_header_auth_security_binding_policy_description
 struct WS_HTTP_HEADER_AUTH_SECURITY_BINDING_POLICY_DESCRIPTION
 {
     WS_SECURITY_BINDING_PROPERTIES securityBindingProperties;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_header_auth_policy_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_header_auth_policy_description
 struct WS_HTTP_HEADER_AUTH_POLICY_DESCRIPTION
 {
     WS_CHANNEL_PROPERTIES channelProperties;
@@ -3402,7 +3523,7 @@ struct WS_HTTP_HEADER_AUTH_POLICY_DESCRIPTION
     WS_HTTP_HEADER_AUTH_SECURITY_BINDING_POLICY_DESCRIPTION httpHeaderAuthSecurityBinding;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_ssl_header_auth_policy_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_ssl_header_auth_policy_description
 struct WS_HTTP_SSL_HEADER_AUTH_POLICY_DESCRIPTION
 {
     WS_CHANNEL_PROPERTIES channelProperties;
@@ -3411,14 +3532,14 @@ struct WS_HTTP_SSL_HEADER_AUTH_POLICY_DESCRIPTION
     WS_HTTP_HEADER_AUTH_SECURITY_BINDING_POLICY_DESCRIPTION httpHeaderAuthSecurityBinding;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_username_message_security_binding_policy_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_username_message_security_binding_policy_description
 struct WS_USERNAME_MESSAGE_SECURITY_BINDING_POLICY_DESCRIPTION
 {
     WS_SECURITY_BINDING_PROPERTIES securityBindingProperties;
     WS_MESSAGE_SECURITY_USAGE bindingUsage;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_ssl_username_policy_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_ssl_username_policy_description
 struct WS_HTTP_SSL_USERNAME_POLICY_DESCRIPTION
 {
     WS_CHANNEL_PROPERTIES channelProperties;
@@ -3427,14 +3548,14 @@ struct WS_HTTP_SSL_USERNAME_POLICY_DESCRIPTION
     WS_USERNAME_MESSAGE_SECURITY_BINDING_POLICY_DESCRIPTION usernameMessageSecurityBinding;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_kerberos_apreq_message_security_binding_policy_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_kerberos_apreq_message_security_binding_policy_description
 struct WS_KERBEROS_APREQ_MESSAGE_SECURITY_BINDING_POLICY_DESCRIPTION
 {
     WS_SECURITY_BINDING_PROPERTIES securityBindingProperties;
     WS_MESSAGE_SECURITY_USAGE bindingUsage;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_ssl_kerberos_apreq_policy_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_ssl_kerberos_apreq_policy_description
 struct WS_HTTP_SSL_KERBEROS_APREQ_POLICY_DESCRIPTION
 {
     WS_CHANNEL_PROPERTIES channelProperties;
@@ -3443,19 +3564,19 @@ struct WS_HTTP_SSL_KERBEROS_APREQ_POLICY_DESCRIPTION
     WS_KERBEROS_APREQ_MESSAGE_SECURITY_BINDING_POLICY_DESCRIPTION kerberosApreqMessageSecurityBinding;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_policy_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_policy_description
 struct WS_TCP_POLICY_DESCRIPTION
 {
     WS_CHANNEL_PROPERTIES channelProperties;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_sspi_transport_security_binding_policy_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_sspi_transport_security_binding_policy_description
 struct WS_SSPI_TRANSPORT_SECURITY_BINDING_POLICY_DESCRIPTION
 {
     WS_SECURITY_BINDING_PROPERTIES securityBindingProperties;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_policy_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_policy_description
 struct WS_TCP_SSPI_POLICY_DESCRIPTION
 {
     WS_CHANNEL_PROPERTIES channelProperties;
@@ -3463,7 +3584,7 @@ struct WS_TCP_SSPI_POLICY_DESCRIPTION
     WS_SSPI_TRANSPORT_SECURITY_BINDING_POLICY_DESCRIPTION sspiTransportSecurityBinding;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_username_policy_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_username_policy_description
 struct WS_TCP_SSPI_USERNAME_POLICY_DESCRIPTION
 {
     WS_CHANNEL_PROPERTIES channelProperties;
@@ -3472,7 +3593,7 @@ struct WS_TCP_SSPI_USERNAME_POLICY_DESCRIPTION
     WS_USERNAME_MESSAGE_SECURITY_BINDING_POLICY_DESCRIPTION usernameMessageSecurityBinding;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_kerberos_apreq_policy_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_kerberos_apreq_policy_description
 struct WS_TCP_SSPI_KERBEROS_APREQ_POLICY_DESCRIPTION
 {
     WS_CHANNEL_PROPERTIES channelProperties;
@@ -3481,21 +3602,21 @@ struct WS_TCP_SSPI_KERBEROS_APREQ_POLICY_DESCRIPTION
     WS_KERBEROS_APREQ_MESSAGE_SECURITY_BINDING_POLICY_DESCRIPTION kerberosApreqMessageSecurityBinding;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_context_message_security_binding_policy_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_context_message_security_binding_policy_description
 struct WS_SECURITY_CONTEXT_MESSAGE_SECURITY_BINDING_POLICY_DESCRIPTION
 {
     WS_SECURITY_BINDING_PROPERTIES securityBindingProperties;
     WS_MESSAGE_SECURITY_USAGE bindingUsage;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_context_security_binding_policy_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_context_security_binding_policy_description
 struct WS_SECURITY_CONTEXT_SECURITY_BINDING_POLICY_DESCRIPTION
 {
     WS_SECURITY_CONTEXT_MESSAGE_SECURITY_BINDING_POLICY_DESCRIPTION securityContextMessageSecurityBinding;
     WS_SECURITY_PROPERTIES securityProperties;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_kerberos_apreq_security_context_policy_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_kerberos_apreq_security_context_policy_description
 struct WS_TCP_SSPI_KERBEROS_APREQ_SECURITY_CONTEXT_POLICY_DESCRIPTION
 {
     WS_CHANNEL_PROPERTIES channelProperties;
@@ -3505,7 +3626,7 @@ struct WS_TCP_SSPI_KERBEROS_APREQ_SECURITY_CONTEXT_POLICY_DESCRIPTION
     WS_SECURITY_CONTEXT_SECURITY_BINDING_POLICY_DESCRIPTION securityContextSecurityBinding;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_username_security_context_policy_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_username_security_context_policy_description
 struct WS_TCP_SSPI_USERNAME_SECURITY_CONTEXT_POLICY_DESCRIPTION
 {
     WS_CHANNEL_PROPERTIES channelProperties;
@@ -3515,7 +3636,7 @@ struct WS_TCP_SSPI_USERNAME_SECURITY_CONTEXT_POLICY_DESCRIPTION
     WS_SECURITY_CONTEXT_SECURITY_BINDING_POLICY_DESCRIPTION securityContextSecurityBinding;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_ssl_username_security_context_policy_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_ssl_username_security_context_policy_description
 struct WS_HTTP_SSL_USERNAME_SECURITY_CONTEXT_POLICY_DESCRIPTION
 {
     WS_CHANNEL_PROPERTIES channelProperties;
@@ -3525,7 +3646,7 @@ struct WS_HTTP_SSL_USERNAME_SECURITY_CONTEXT_POLICY_DESCRIPTION
     WS_SECURITY_CONTEXT_SECURITY_BINDING_POLICY_DESCRIPTION securityContextSecurityBinding;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_ssl_kerberos_apreq_security_context_policy_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_ssl_kerberos_apreq_security_context_policy_description
 struct WS_HTTP_SSL_KERBEROS_APREQ_SECURITY_CONTEXT_POLICY_DESCRIPTION
 {
     WS_CHANNEL_PROPERTIES channelProperties;
@@ -3535,26 +3656,26 @@ struct WS_HTTP_SSL_KERBEROS_APREQ_SECURITY_CONTEXT_POLICY_DESCRIPTION
     WS_SECURITY_CONTEXT_SECURITY_BINDING_POLICY_DESCRIPTION securityContextSecurityBinding;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_binding_template))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_binding_template
 struct WS_HTTP_BINDING_TEMPLATE
 {
     WS_CHANNEL_PROPERTIES channelProperties;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_binding_template))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_binding_template
 struct WS_TCP_BINDING_TEMPLATE
 {
     WS_CHANNEL_PROPERTIES channelProperties;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_ssl_transport_security_binding_template))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_ssl_transport_security_binding_template
 struct WS_SSL_TRANSPORT_SECURITY_BINDING_TEMPLATE
 {
     WS_SECURITY_BINDING_PROPERTIES securityBindingProperties;
     WS_CERT_CREDENTIAL* localCertCredential;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_ssl_binding_template))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_ssl_binding_template
 struct WS_HTTP_SSL_BINDING_TEMPLATE
 {
     WS_CHANNEL_PROPERTIES channelProperties;
@@ -3562,14 +3683,14 @@ struct WS_HTTP_SSL_BINDING_TEMPLATE
     WS_SSL_TRANSPORT_SECURITY_BINDING_TEMPLATE sslTransportSecurityBinding;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_header_auth_security_binding_template))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_header_auth_security_binding_template
 struct WS_HTTP_HEADER_AUTH_SECURITY_BINDING_TEMPLATE
 {
     WS_SECURITY_BINDING_PROPERTIES securityBindingProperties;
     WS_WINDOWS_INTEGRATED_AUTH_CREDENTIAL* clientCredential;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_header_auth_binding_template))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_header_auth_binding_template
 struct WS_HTTP_HEADER_AUTH_BINDING_TEMPLATE
 {
     WS_CHANNEL_PROPERTIES channelProperties;
@@ -3577,14 +3698,14 @@ struct WS_HTTP_HEADER_AUTH_BINDING_TEMPLATE
     WS_HTTP_HEADER_AUTH_SECURITY_BINDING_TEMPLATE httpHeaderAuthSecurityBinding;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_transport_security_binding_template))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_transport_security_binding_template
 struct WS_TCP_SSPI_TRANSPORT_SECURITY_BINDING_TEMPLATE
 {
     WS_SECURITY_BINDING_PROPERTIES securityBindingProperties;
     WS_WINDOWS_INTEGRATED_AUTH_CREDENTIAL* clientCredential;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_binding_template))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_binding_template
 struct WS_TCP_SSPI_BINDING_TEMPLATE
 {
     WS_CHANNEL_PROPERTIES channelProperties;
@@ -3592,7 +3713,7 @@ struct WS_TCP_SSPI_BINDING_TEMPLATE
     WS_TCP_SSPI_TRANSPORT_SECURITY_BINDING_TEMPLATE sspiTransportSecurityBinding;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_ssl_header_auth_binding_template))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_ssl_header_auth_binding_template
 struct WS_HTTP_SSL_HEADER_AUTH_BINDING_TEMPLATE
 {
     WS_CHANNEL_PROPERTIES channelProperties;
@@ -3601,7 +3722,7 @@ struct WS_HTTP_SSL_HEADER_AUTH_BINDING_TEMPLATE
     WS_HTTP_HEADER_AUTH_SECURITY_BINDING_TEMPLATE httpHeaderAuthSecurityBinding;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_username_message_security_binding_template))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_username_message_security_binding_template
 struct WS_USERNAME_MESSAGE_SECURITY_BINDING_TEMPLATE
 {
     WS_SECURITY_BINDING_PROPERTIES securityBindingProperties;
@@ -3610,7 +3731,7 @@ struct WS_USERNAME_MESSAGE_SECURITY_BINDING_TEMPLATE
     void* passwordValidatorCallbackState;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_ssl_username_binding_template))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_ssl_username_binding_template
 struct WS_HTTP_SSL_USERNAME_BINDING_TEMPLATE
 {
     WS_CHANNEL_PROPERTIES channelProperties;
@@ -3619,14 +3740,14 @@ struct WS_HTTP_SSL_USERNAME_BINDING_TEMPLATE
     WS_USERNAME_MESSAGE_SECURITY_BINDING_TEMPLATE usernameMessageSecurityBinding;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_kerberos_apreq_message_security_binding_template))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_kerberos_apreq_message_security_binding_template
 struct WS_KERBEROS_APREQ_MESSAGE_SECURITY_BINDING_TEMPLATE
 {
     WS_SECURITY_BINDING_PROPERTIES securityBindingProperties;
     WS_WINDOWS_INTEGRATED_AUTH_CREDENTIAL* clientCredential;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_ssl_kerberos_apreq_binding_template))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_ssl_kerberos_apreq_binding_template
 struct WS_HTTP_SSL_KERBEROS_APREQ_BINDING_TEMPLATE
 {
     WS_CHANNEL_PROPERTIES channelProperties;
@@ -3635,7 +3756,7 @@ struct WS_HTTP_SSL_KERBEROS_APREQ_BINDING_TEMPLATE
     WS_KERBEROS_APREQ_MESSAGE_SECURITY_BINDING_TEMPLATE kerberosApreqMessageSecurityBinding;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_username_binding_template))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_username_binding_template
 struct WS_TCP_SSPI_USERNAME_BINDING_TEMPLATE
 {
     WS_CHANNEL_PROPERTIES channelProperties;
@@ -3644,7 +3765,7 @@ struct WS_TCP_SSPI_USERNAME_BINDING_TEMPLATE
     WS_USERNAME_MESSAGE_SECURITY_BINDING_TEMPLATE usernameMessageSecurityBinding;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_kerberos_apreq_binding_template))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_kerberos_apreq_binding_template
 struct WS_TCP_SSPI_KERBEROS_APREQ_BINDING_TEMPLATE
 {
     WS_CHANNEL_PROPERTIES channelProperties;
@@ -3653,20 +3774,20 @@ struct WS_TCP_SSPI_KERBEROS_APREQ_BINDING_TEMPLATE
     WS_KERBEROS_APREQ_MESSAGE_SECURITY_BINDING_TEMPLATE kerberosApreqMessageSecurityBinding;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_context_message_security_binding_template))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_context_message_security_binding_template
 struct WS_SECURITY_CONTEXT_MESSAGE_SECURITY_BINDING_TEMPLATE
 {
     WS_SECURITY_BINDING_PROPERTIES securityBindingProperties;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_context_security_binding_template))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_security_context_security_binding_template
 struct WS_SECURITY_CONTEXT_SECURITY_BINDING_TEMPLATE
 {
     WS_SECURITY_CONTEXT_MESSAGE_SECURITY_BINDING_TEMPLATE securityContextMessageSecurityBinding;
     WS_SECURITY_PROPERTIES securityProperties;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_ssl_username_security_context_binding_template))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_ssl_username_security_context_binding_template
 struct WS_HTTP_SSL_USERNAME_SECURITY_CONTEXT_BINDING_TEMPLATE
 {
     WS_CHANNEL_PROPERTIES channelProperties;
@@ -3676,7 +3797,7 @@ struct WS_HTTP_SSL_USERNAME_SECURITY_CONTEXT_BINDING_TEMPLATE
     WS_SECURITY_CONTEXT_SECURITY_BINDING_TEMPLATE securityContextSecurityBinding;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_ssl_kerberos_apreq_security_context_binding_template))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_http_ssl_kerberos_apreq_security_context_binding_template
 struct WS_HTTP_SSL_KERBEROS_APREQ_SECURITY_CONTEXT_BINDING_TEMPLATE
 {
     WS_CHANNEL_PROPERTIES channelProperties;
@@ -3686,7 +3807,7 @@ struct WS_HTTP_SSL_KERBEROS_APREQ_SECURITY_CONTEXT_BINDING_TEMPLATE
     WS_SECURITY_CONTEXT_SECURITY_BINDING_TEMPLATE securityContextSecurityBinding;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_username_security_context_binding_template))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_username_security_context_binding_template
 struct WS_TCP_SSPI_USERNAME_SECURITY_CONTEXT_BINDING_TEMPLATE
 {
     WS_CHANNEL_PROPERTIES channelProperties;
@@ -3696,7 +3817,7 @@ struct WS_TCP_SSPI_USERNAME_SECURITY_CONTEXT_BINDING_TEMPLATE
     WS_SECURITY_CONTEXT_SECURITY_BINDING_TEMPLATE securityContextSecurityBinding;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_kerberos_apreq_security_context_binding_template))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webservices/ns-webservices-ws_tcp_sspi_kerberos_apreq_security_context_binding_template
 struct WS_TCP_SSPI_KERBEROS_APREQ_SECURITY_CONTEXT_BINDING_TEMPLATE
 {
     WS_CHANNEL_PROPERTIES channelProperties;
@@ -4700,12 +4821,12 @@ HRESULT WsCreateServiceEndpointFromTemplate(WS_CHANNEL_TYPE channelType,
 
 @GUID("1b35a14a-6094-4799-a60e-e474e15d4dc9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontentprefetchertasktrigger/nn-icontentprefetchertasktrigger-icontentprefetchertasktrigger))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontentprefetchertasktrigger/nn-icontentprefetchertasktrigger-icontentprefetchertasktrigger
 interface IContentPrefetcherTaskTrigger : IInspectable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontentprefetchertasktrigger/nf-icontentprefetchertasktrigger-icontentprefetchertasktrigger-triggercontentprefetchertask))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontentprefetchertasktrigger/nf-icontentprefetchertasktrigger-icontentprefetchertasktrigger-triggercontentprefetchertask
     HRESULT TriggerContentPrefetcherTask(const(PWSTR) packageFullName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icontentprefetchertasktrigger/nf-icontentprefetchertasktrigger-icontentprefetchertasktrigger-isregisteredforcontentprefetch))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icontentprefetchertasktrigger/nf-icontentprefetchertasktrigger-icontentprefetchertasktrigger-isregisteredforcontentprefetch
     HRESULT IsRegisteredForContentPrefetch(const(PWSTR) packageFullName, ubyte* isRegistered);
 }
 

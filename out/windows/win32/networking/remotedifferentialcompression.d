@@ -3,15 +3,16 @@
 module windows.win32.networking.remotedifferentialcompression;
 
 public import windows.core;
-public import windows.win32.foundation : BOOL, HRESULT, PWSTR;
-public import windows.win32.system.com : IUnknown;
+public import windows.win32.foundation.foundation : BOOL, HRESULT, PWSTR;
+public import windows.win32.system.com.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/ne-msrdc-rdc_errorcode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/ne-msrdc-rdc_errorcode
 alias RDC_ErrorCode = int;
 enum : int
 {
@@ -27,13 +28,15 @@ enum : int
     RDC_Aborted                = 0x00000009,
     RDC_Win32Error             = 0x0000000a,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/ne-msrdc-generatorparameterstype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/ne-msrdc-generatorparameterstype
 enum GeneratorParametersType : int
 {
     RDCGENTYPE_Unused    = 0x00000000,
     RDCGENTYPE_FilterMax = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/ne-msrdc-rdcneedtype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/ne-msrdc-rdcneedtype
 enum RdcNeedType : int
 {
     RDCNEED_SOURCE   = 0x00000000,
@@ -41,14 +44,16 @@ enum RdcNeedType : int
     RDCNEED_SEED     = 0x00000002,
     RDCNEED_SEED_MAX = 0x000000ff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/ne-msrdc-rdccreatedtables))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/ne-msrdc-rdccreatedtables
 enum RdcCreatedTables : int
 {
     RDCTABLE_InvalidOrUnknown = 0x00000000,
     RDCTABLE_Existing         = 0x00000001,
     RDCTABLE_New              = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/ne-msrdc-rdcmappingaccessmode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/ne-msrdc-rdcmappingaccessmode
 enum RdcMappingAccessMode : int
 {
     RDCMAPPING_Undefined = 0x00000000,
@@ -61,56 +66,56 @@ enum RdcMappingAccessMode : int
 
 enum : uint
 {
-    RDCE_TABLE_FULL    = 0x80040001,
-    RDCE_TABLE_CORRUPT = 0x80040002,
+    RDCE_TABLE_FULL    = 0x80040001U,
+    RDCE_TABLE_CORRUPT = 0x80040002U,
 }
 
-enum uint MSRDC_SIGNATURE_HASHSIZE = 0x00000010;
+enum uint MSRDC_SIGNATURE_HASHSIZE = 0x00000010U;
 
 enum : uint
 {
-    SimilarityFileIdMinSize = 0x00000004,
-    SimilarityFileIdMaxSize = 0x00000020,
+    SimilarityFileIdMinSize = 0x00000004U,
+    SimilarityFileIdMaxSize = 0x00000020U,
 }
 
 enum : uint
 {
-    MSRDC_VERSION                        = 0x00010000,
-    MSRDC_MINIMUM_COMPATIBLE_APP_VERSION = 0x00010000,
+    MSRDC_VERSION                        = 0x00010000U,
+    MSRDC_MINIMUM_COMPATIBLE_APP_VERSION = 0x00010000U,
 }
 
-enum uint MSRDC_MINIMUM_DEPTH = 0x00000001;
-enum uint MSRDC_MAXIMUM_DEPTH = 0x00000008;
-enum uint MSRDC_MINIMUM_COMPAREBUFFER = 0x000186a0;
-enum uint MSRDC_MAXIMUM_COMPAREBUFFER = 0x40000000;
-enum uint MSRDC_DEFAULT_COMPAREBUFFER = 0x0030d400;
+enum uint MSRDC_MINIMUM_DEPTH = 0x00000001U;
+enum uint MSRDC_MAXIMUM_DEPTH = 0x00000008U;
+enum uint MSRDC_MINIMUM_COMPAREBUFFER = 0x000186a0U;
+enum uint MSRDC_MAXIMUM_COMPAREBUFFER = 0x40000000U;
+enum uint MSRDC_DEFAULT_COMPAREBUFFER = 0x0030d400U;
 
 enum : uint
 {
-    MSRDC_MINIMUM_INPUTBUFFERSIZE = 0x00000400,
-    MSRDC_MINIMUM_HORIZONSIZE     = 0x00000080,
+    MSRDC_MINIMUM_INPUTBUFFERSIZE = 0x00000400U,
+    MSRDC_MINIMUM_HORIZONSIZE     = 0x00000080U,
 }
 
-enum uint MSRDC_MAXIMUM_HORIZONSIZE = 0x00004000;
-enum uint MSRDC_MINIMUM_HASHWINDOWSIZE = 0x00000002;
-enum uint MSRDC_MAXIMUM_HASHWINDOWSIZE = 0x00000060;
+enum uint MSRDC_MAXIMUM_HORIZONSIZE = 0x00004000U;
+enum uint MSRDC_MINIMUM_HASHWINDOWSIZE = 0x00000002U;
+enum uint MSRDC_MAXIMUM_HASHWINDOWSIZE = 0x00000060U;
 
 enum : uint
 {
-    MSRDC_DEFAULT_HASHWINDOWSIZE_1 = 0x00000030,
-    MSRDC_DEFAULT_HORIZONSIZE_1    = 0x00000400,
-    MSRDC_DEFAULT_HASHWINDOWSIZE_N = 0x00000002,
-    MSRDC_DEFAULT_HORIZONSIZE_N    = 0x00000080,
+    MSRDC_DEFAULT_HASHWINDOWSIZE_1 = 0x00000030U,
+    MSRDC_DEFAULT_HORIZONSIZE_1    = 0x00000400U,
+    MSRDC_DEFAULT_HASHWINDOWSIZE_N = 0x00000002U,
+    MSRDC_DEFAULT_HORIZONSIZE_N    = 0x00000080U,
 }
 
-enum uint MSRDC_MAXIMUM_TRAITVALUE = 0x0000003f;
-enum uint MSRDC_MINIMUM_MATCHESREQUIRED = 0x00000001;
-enum uint MSRDC_MAXIMUM_MATCHESREQUIRED = 0x00000010;
+enum uint MSRDC_MAXIMUM_TRAITVALUE = 0x0000003fU;
+enum uint MSRDC_MINIMUM_MATCHESREQUIRED = 0x00000001U;
+enum uint MSRDC_MAXIMUM_MATCHESREQUIRED = 0x00000010U;
 
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/ns-msrdc-rdcneed))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/ns-msrdc-rdcneed
 struct RdcNeed
 {
     RdcNeedType m_BlockType;
@@ -118,7 +123,7 @@ struct RdcNeed
     ulong       m_BlockLength;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/ns-msrdc-rdcbufferpointer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/ns-msrdc-rdcbufferpointer
 struct RdcBufferPointer
 {
     uint   m_Size;
@@ -126,7 +131,7 @@ struct RdcBufferPointer
     ubyte* m_Data;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/ns-msrdc-rdcneedpointer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/ns-msrdc-rdcneedpointer
 struct RdcNeedPointer
 {
     uint     m_Size;
@@ -134,14 +139,14 @@ struct RdcNeedPointer
     RdcNeed* m_Data;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/ns-msrdc-rdcsignature))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/ns-msrdc-rdcsignature
 struct RdcSignature
 {
     ubyte[16] m_Signature;
     ushort    m_BlockLength;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/ns-msrdc-rdcsignaturepointer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/ns-msrdc-rdcsignaturepointer
 struct RdcSignaturePointer
 {
     uint          m_Size;
@@ -149,34 +154,34 @@ struct RdcSignaturePointer
     RdcSignature* m_Data;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/ns-msrdc-similaritymappedviewinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/ns-msrdc-similaritymappedviewinfo
 struct SimilarityMappedViewInfo
 {
     ubyte* m_Data;
     uint   m_Length;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/ns-msrdc-similaritydata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/ns-msrdc-similaritydata
 struct SimilarityData
 {
     ubyte[16] m_Data;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/ns-msrdc-findsimilarfileindexresults))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/ns-msrdc-findsimilarfileindexresults
 struct FindSimilarFileIndexResults
 {
     uint m_FileIndex;
     uint m_MatchCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/ns-msrdc-similaritydumpdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/ns-msrdc-similaritydumpdata
 struct SimilarityDumpData
 {
     uint           m_FileIndex;
     SimilarityData m_Data;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/ns-msrdc-similarityfileid))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/ns-msrdc-similarityfileid
 struct SimilarityFileId
 {
     ubyte[32] m_FileId;
@@ -234,261 +239,261 @@ struct SimilarityTraitsMappedView;
 
 @GUID("96236a71-9dbc-11da-9e3f-0011114ae311")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nn-msrdc-irdcgeneratorparameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nn-msrdc-irdcgeneratorparameters
 interface IRdcGeneratorParameters : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcgeneratorparameters-getgeneratorparameterstype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcgeneratorparameters-getgeneratorparameterstype
     HRESULT GetGeneratorParametersType(GeneratorParametersType* parametersType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcgeneratorparameters-getparametersversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcgeneratorparameters-getparametersversion
     HRESULT GetParametersVersion(uint* currentVersion, uint* minimumCompatibleAppVersion);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcgeneratorparameters-getserializesize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcgeneratorparameters-getserializesize
     HRESULT GetSerializeSize(uint* size);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcgeneratorparameters-serialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcgeneratorparameters-serialize
     HRESULT Serialize(uint size, ubyte* parametersBlob, uint* bytesWritten);
 }
 
 @GUID("96236a72-9dbc-11da-9e3f-0011114ae311")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nn-msrdc-irdcgeneratorfiltermaxparameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nn-msrdc-irdcgeneratorfiltermaxparameters
 interface IRdcGeneratorFilterMaxParameters : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcgeneratorfiltermaxparameters-gethorizonsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcgeneratorfiltermaxparameters-gethorizonsize
     HRESULT GetHorizonSize(uint* horizonSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcgeneratorfiltermaxparameters-sethorizonsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcgeneratorfiltermaxparameters-sethorizonsize
     HRESULT SetHorizonSize(uint horizonSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcgeneratorfiltermaxparameters-gethashwindowsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcgeneratorfiltermaxparameters-gethashwindowsize
     HRESULT GetHashWindowSize(uint* hashWindowSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcgeneratorfiltermaxparameters-sethashwindowsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcgeneratorfiltermaxparameters-sethashwindowsize
     HRESULT SetHashWindowSize(uint hashWindowSize);
 }
 
 @GUID("96236a73-9dbc-11da-9e3f-0011114ae311")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nn-msrdc-irdcgenerator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nn-msrdc-irdcgenerator
 interface IRdcGenerator : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcgenerator-getgeneratorparameters))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcgenerator-getgeneratorparameters
     HRESULT GetGeneratorParameters(uint level, IRdcGeneratorParameters* iGeneratorParameters);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcgenerator-process))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcgenerator-process
     HRESULT Process(BOOL endOfInput, BOOL* endOfOutput, RdcBufferPointer* inputBuffer, uint depth, 
                     RdcBufferPointer** outputBuffers, RDC_ErrorCode* rdc_ErrorCode);
 }
 
 @GUID("96236a74-9dbc-11da-9e3f-0011114ae311")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nn-msrdc-irdcfilereader))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nn-msrdc-irdcfilereader
 interface IRdcFileReader : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcfilereader-getfilesize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcfilereader-getfilesize
     HRESULT GetFileSize(ulong* fileSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcfilereader-read))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcfilereader-read
     HRESULT Read(ulong offsetFileStart, uint bytesToRead, uint* bytesActuallyRead, ubyte* buffer, BOOL* eof);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcfilereader-getfileposition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcfilereader-getfileposition
     HRESULT GetFilePosition(ulong* offsetFromStart);
 }
 
 @GUID("96236a75-9dbc-11da-9e3f-0011114ae311")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nn-msrdc-irdcfilewriter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nn-msrdc-irdcfilewriter
 interface IRdcFileWriter : IRdcFileReader
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcfilewriter-write))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcfilewriter-write
     HRESULT Write(ulong offsetFileStart, uint bytesToWrite, ubyte* buffer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcfilewriter-truncate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcfilewriter-truncate
     HRESULT Truncate();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcfilewriter-deleteonclose))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcfilewriter-deleteonclose
     HRESULT DeleteOnClose();
 }
 
 @GUID("96236a76-9dbc-11da-9e3f-0011114ae311")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nn-msrdc-irdcsignaturereader))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nn-msrdc-irdcsignaturereader
 interface IRdcSignatureReader : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcsignaturereader-readheader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcsignaturereader-readheader
     HRESULT ReadHeader(RDC_ErrorCode* rdc_ErrorCode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcsignaturereader-readsignatures))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcsignaturereader-readsignatures
     HRESULT ReadSignatures(RdcSignaturePointer* rdcSignaturePointer, BOOL* endOfOutput);
 }
 
 @GUID("96236a77-9dbc-11da-9e3f-0011114ae311")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nn-msrdc-irdccomparator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nn-msrdc-irdccomparator
 interface IRdcComparator : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdccomparator-process))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdccomparator-process
     HRESULT Process(BOOL endOfInput, BOOL* endOfOutput, RdcBufferPointer* inputBuffer, 
                     RdcNeedPointer* outputBuffer, RDC_ErrorCode* rdc_ErrorCode);
 }
 
 @GUID("96236a78-9dbc-11da-9e3f-0011114ae311")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nn-msrdc-irdclibrary))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nn-msrdc-irdclibrary
 interface IRdcLibrary : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdclibrary-computedefaultrecursiondepth))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdclibrary-computedefaultrecursiondepth
     HRESULT ComputeDefaultRecursionDepth(ulong fileSize, uint* depth);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdclibrary-creategeneratorparameters))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdclibrary-creategeneratorparameters
     HRESULT CreateGeneratorParameters(GeneratorParametersType parametersType, uint level, 
                                       IRdcGeneratorParameters* iGeneratorParameters);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdclibrary-opengeneratorparameters))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdclibrary-opengeneratorparameters
     HRESULT OpenGeneratorParameters(uint size, const(ubyte)* parametersBlob, 
                                     IRdcGeneratorParameters* iGeneratorParameters);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdclibrary-creategenerator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdclibrary-creategenerator
     HRESULT CreateGenerator(uint depth, IRdcGeneratorParameters* iGeneratorParametersArray, 
                             IRdcGenerator* iGenerator);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdclibrary-createcomparator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdclibrary-createcomparator
     HRESULT CreateComparator(IRdcFileReader iSeedSignaturesFile, uint comparatorBufferSize, 
                              IRdcComparator* iComparator);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdclibrary-createsignaturereader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdclibrary-createsignaturereader
     HRESULT CreateSignatureReader(IRdcFileReader iFileReader, IRdcSignatureReader* iSignatureReader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdclibrary-getrdcversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdclibrary-getrdcversion
     HRESULT GetRDCVersion(uint* currentVersion, uint* minimumCompatibleAppVersion);
 }
 
 @GUID("96236a7a-9dbc-11da-9e3f-0011114ae311")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nn-msrdc-isimilarityreportprogress))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nn-msrdc-isimilarityreportprogress
 interface ISimilarityReportProgress : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilarityreportprogress-reportprogress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilarityreportprogress-reportprogress
     HRESULT ReportProgress(uint percentCompleted);
 }
 
 @GUID("96236a7b-9dbc-11da-9e3f-0011114ae311")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nn-msrdc-isimilaritytabledumpstate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nn-msrdc-isimilaritytabledumpstate
 interface ISimilarityTableDumpState : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilaritytabledumpstate-getnextdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilaritytabledumpstate-getnextdata
     HRESULT GetNextData(uint resultsSize, uint* resultsUsed, BOOL* eof, SimilarityDumpData* results);
 }
 
 @GUID("96236a7c-9dbc-11da-9e3f-0011114ae311")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nn-msrdc-isimilaritytraitsmappedview))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nn-msrdc-isimilaritytraitsmappedview
 interface ISimilarityTraitsMappedView : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilaritytraitsmappedview-flush))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilaritytraitsmappedview-flush
     HRESULT Flush();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilaritytraitsmappedview-unmap))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilaritytraitsmappedview-unmap
     HRESULT Unmap();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilaritytraitsmappedview-get))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilaritytraitsmappedview-get
     HRESULT Get(ulong index, BOOL dirty, uint numElements, SimilarityMappedViewInfo* viewInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilaritytraitsmappedview-getview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilaritytraitsmappedview-getview
     void    GetView(const(ubyte)** mappedPageBegin, const(ubyte)** mappedPageEnd);
 }
 
 @GUID("96236a7d-9dbc-11da-9e3f-0011114ae311")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nn-msrdc-isimilaritytraitsmapping))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nn-msrdc-isimilaritytraitsmapping
 interface ISimilarityTraitsMapping : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilaritytraitsmapping-closemapping))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilaritytraitsmapping-closemapping
     void    CloseMapping();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilaritytraitsmapping-setfilesize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilaritytraitsmapping-setfilesize
     HRESULT SetFileSize(ulong fileSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilaritytraitsmapping-getfilesize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilaritytraitsmapping-getfilesize
     HRESULT GetFileSize(ulong* fileSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilaritytraitsmapping-openmapping))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilaritytraitsmapping-openmapping
     HRESULT OpenMapping(RdcMappingAccessMode accessMode, ulong begin, ulong end, ulong* actualEnd);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilaritytraitsmapping-resizemapping))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilaritytraitsmapping-resizemapping
     HRESULT ResizeMapping(RdcMappingAccessMode accessMode, ulong begin, ulong end, ulong* actualEnd);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilaritytraitsmapping-getpagesize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilaritytraitsmapping-getpagesize
     void    GetPageSize(uint* pageSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilaritytraitsmapping-createview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilaritytraitsmapping-createview
     HRESULT CreateView(uint minimumMappedPages, RdcMappingAccessMode accessMode, 
                        ISimilarityTraitsMappedView* mappedView);
 }
 
 @GUID("96236a7e-9dbc-11da-9e3f-0011114ae311")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nn-msrdc-isimilaritytraitstable))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nn-msrdc-isimilaritytraitstable
 interface ISimilarityTraitsTable : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilaritytraitstable-createtable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilaritytraitstable-createtable
     HRESULT CreateTable(PWSTR path, BOOL truncate, ubyte* securityDescriptor, RdcCreatedTables* isNew);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilaritytraitstable-createtableindirect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilaritytraitstable-createtableindirect
     HRESULT CreateTableIndirect(ISimilarityTraitsMapping mapping, BOOL truncate, RdcCreatedTables* isNew);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilaritytraitstable-closetable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilaritytraitstable-closetable
     HRESULT CloseTable(BOOL isValid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilaritytraitstable-append))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilaritytraitstable-append
     HRESULT Append(SimilarityData* data, uint fileIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilaritytraitstable-findsimilarfileindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilaritytraitstable-findsimilarfileindex
     HRESULT FindSimilarFileIndex(SimilarityData* similarityData, ushort numberOfMatchesRequired, 
                                  FindSimilarFileIndexResults* findSimilarFileIndexResults, uint resultsSize, 
                                  uint* resultsUsed);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilaritytraitstable-begindump))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilaritytraitstable-begindump
     HRESULT BeginDump(ISimilarityTableDumpState* similarityTableDumpState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilaritytraitstable-getlastindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilaritytraitstable-getlastindex
     HRESULT GetLastIndex(uint* fileIndex);
 }
 
 @GUID("96236a7f-9dbc-11da-9e3f-0011114ae311")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nn-msrdc-isimilarityfileidtable))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nn-msrdc-isimilarityfileidtable
 interface ISimilarityFileIdTable : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilarityfileidtable-createtable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilarityfileidtable-createtable
     HRESULT CreateTable(PWSTR path, BOOL truncate, ubyte* securityDescriptor, uint recordSize, 
                         RdcCreatedTables* isNew);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilarityfileidtable-createtableindirect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilarityfileidtable-createtableindirect
     HRESULT CreateTableIndirect(IRdcFileWriter fileIdFile, BOOL truncate, uint recordSize, RdcCreatedTables* isNew);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilarityfileidtable-closetable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilarityfileidtable-closetable
     HRESULT CloseTable(BOOL isValid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilarityfileidtable-append))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilarityfileidtable-append
     HRESULT Append(SimilarityFileId* similarityFileId, uint* similarityFileIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilarityfileidtable-lookup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilarityfileidtable-lookup
     HRESULT Lookup(uint similarityFileIndex, SimilarityFileId* similarityFileId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilarityfileidtable-invalidate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilarityfileidtable-invalidate
     HRESULT Invalidate(uint similarityFileIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilarityfileidtable-getrecordcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilarityfileidtable-getrecordcount
     HRESULT GetRecordCount(uint* recordCount);
 }
 
 @GUID("96236a80-9dbc-11da-9e3f-0011114ae311")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nn-msrdc-irdcsimilaritygenerator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nn-msrdc-irdcsimilaritygenerator
 interface IRdcSimilarityGenerator : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcsimilaritygenerator-enablesimilarity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcsimilaritygenerator-enablesimilarity
     HRESULT EnableSimilarity();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcsimilaritygenerator-results))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-irdcsimilaritygenerator-results
     HRESULT Results(SimilarityData* similarityData);
 }
 
 @GUID("96236a81-9dbc-11da-9e3f-0011114ae311")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nn-msrdc-ifindsimilarresults))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nn-msrdc-ifindsimilarresults
 interface IFindSimilarResults : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-ifindsimilarresults-getsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-ifindsimilarresults-getsize
     HRESULT GetSize(uint* size);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-ifindsimilarresults-getnextfileid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-ifindsimilarresults-getnextfileid
     HRESULT GetNextFileId(uint* numTraitsMatched, SimilarityFileId* similarityFileId);
 }
 
 @GUID("96236a83-9dbc-11da-9e3f-0011114ae311")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nn-msrdc-isimilarity))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nn-msrdc-isimilarity
 interface ISimilarity : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilarity-createtable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilarity-createtable
     HRESULT CreateTable(PWSTR path, BOOL truncate, ubyte* securityDescriptor, uint recordSize, 
                         RdcCreatedTables* isNew);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilarity-createtableindirect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilarity-createtableindirect
     HRESULT CreateTableIndirect(ISimilarityTraitsMapping mapping, IRdcFileWriter fileIdFile, BOOL truncate, 
                                 uint recordSize, RdcCreatedTables* isNew);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilarity-closetable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilarity-closetable
     HRESULT CloseTable(BOOL isValid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilarity-append))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilarity-append
     HRESULT Append(SimilarityFileId* similarityFileId, SimilarityData* similarityData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilarity-findsimilarfileid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilarity-findsimilarfileid
     HRESULT FindSimilarFileId(SimilarityData* similarityData, ushort numberOfMatchesRequired, uint resultsSize, 
                               IFindSimilarResults* findSimilarResults);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilarity-copyandswap))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilarity-copyandswap
     HRESULT CopyAndSwap(ISimilarity newSimilarityTables, ISimilarityReportProgress reportProgress);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilarity-getrecordcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msrdc/nf-msrdc-isimilarity-getrecordcount
     HRESULT GetRecordCount(uint* recordCount);
 }
 

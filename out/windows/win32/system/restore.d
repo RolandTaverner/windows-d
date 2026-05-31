@@ -3,70 +3,72 @@
 module windows.win32.system.restore;
 
 public import windows.core;
-public import windows.win32.foundation : BOOL, CHAR, FILETIME, WIN32_ERROR;
+public import windows.win32.foundation.foundation : BOOL, CHAR, FILETIME, WIN32_ERROR;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
+
 alias RESTOREPOINTINFO_TYPE = uint;
 enum : uint
 {
-    APPLICATION_INSTALL   = 0x00000000,
-    APPLICATION_UNINSTALL = 0x00000001,
-    DEVICE_DRIVER_INSTALL = 0x0000000a,
-    MODIFY_SETTINGS       = 0x0000000c,
-    CANCELLED_OPERATION   = 0x0000000d,
+    APPLICATION_INSTALL   = 0x00000000U,
+    APPLICATION_UNINSTALL = 0x00000001U,
+    DEVICE_DRIVER_INSTALL = 0x0000000aU,
+    MODIFY_SETTINGS       = 0x0000000cU,
+    CANCELLED_OPERATION   = 0x0000000dU,
 }
+
 alias RESTOREPOINTINFO_EVENT_TYPE = uint;
 enum : uint
 {
-    BEGIN_NESTED_SYSTEM_CHANGE = 0x00000066,
-    BEGIN_SYSTEM_CHANGE        = 0x00000064,
-    END_NESTED_SYSTEM_CHANGE   = 0x00000067,
-    END_SYSTEM_CHANGE          = 0x00000065,
+    BEGIN_NESTED_SYSTEM_CHANGE = 0x00000066U,
+    BEGIN_SYSTEM_CHANGE        = 0x00000064U,
+    END_NESTED_SYSTEM_CHANGE   = 0x00000067U,
+    END_SYSTEM_CHANGE          = 0x00000065U,
 }
 
 // Constants
 
 
-enum uint MIN_EVENT = 0x00000064;
-enum uint BEGIN_NESTED_SYSTEM_CHANGE_NORP = 0x00000068;
-enum uint MAX_EVENT = 0x00000068;
-enum uint MIN_RPT = 0x00000000;
-enum uint DESKTOP_SETTING = 0x00000002;
-enum uint ACCESSIBILITY_SETTING = 0x00000003;
-enum uint OE_SETTING = 0x00000004;
-enum uint APPLICATION_RUN = 0x00000005;
-enum uint RESTORE = 0x00000006;
-enum uint CHECKPOINT = 0x00000007;
+enum uint MIN_EVENT = 0x00000064U;
+enum uint BEGIN_NESTED_SYSTEM_CHANGE_NORP = 0x00000068U;
+enum uint MAX_EVENT = 0x00000068U;
+enum uint MIN_RPT = 0x00000000U;
+enum uint DESKTOP_SETTING = 0x00000002U;
+enum uint ACCESSIBILITY_SETTING = 0x00000003U;
+enum uint OE_SETTING = 0x00000004U;
+enum uint APPLICATION_RUN = 0x00000005U;
+enum uint RESTORE = 0x00000006U;
+enum uint CHECKPOINT = 0x00000007U;
 
 enum : uint
 {
-    WINDOWS_SHUTDOWN = 0x00000008,
-    WINDOWS_BOOT     = 0x00000009,
+    WINDOWS_SHUTDOWN = 0x00000008U,
+    WINDOWS_BOOT     = 0x00000009U,
 }
 
-enum uint FIRSTRUN = 0x0000000b;
-enum uint BACKUP_RECOVERY = 0x0000000e;
-enum uint BACKUP = 0x0000000f;
-enum uint MANUAL_CHECKPOINT = 0x00000010;
-enum uint WINDOWS_UPDATE = 0x00000011;
-enum uint CRITICAL_UPDATE = 0x00000012;
+enum uint FIRSTRUN = 0x0000000bU;
+enum uint BACKUP_RECOVERY = 0x0000000eU;
+enum uint BACKUP = 0x0000000fU;
+enum uint MANUAL_CHECKPOINT = 0x00000010U;
+enum uint WINDOWS_UPDATE = 0x00000011U;
+enum uint CRITICAL_UPDATE = 0x00000012U;
 
 enum : uint
 {
-    MAX_RPT    = 0x00000012,
-    MAX_DESC   = 0x00000040,
-    MAX_DESC_W = 0x00000100,
+    MAX_RPT    = 0x00000012U,
+    MAX_DESC   = 0x00000040U,
+    MAX_DESC_W = 0x00000100U,
 }
 
 // Structs
 
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/srrestoreptapi/ns-srrestoreptapi-restorepointinfoa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/srrestoreptapi/ns-srrestoreptapi-restorepointinfoa
 struct RESTOREPOINTINFOA
 {
 align (1):
@@ -77,7 +79,7 @@ align (1):
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/srrestoreptapi/ns-srrestoreptapi-restorepointinfow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/srrestoreptapi/ns-srrestoreptapi-restorepointinfow
 struct RESTOREPOINTINFOW
 {
 align (1):
@@ -97,7 +99,7 @@ align (1):
     wchar[256] szDescription;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/srrestoreptapi/ns-srrestoreptapi-statemgrstatus))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/srrestoreptapi/ns-srrestoreptapi-statemgrstatus
 struct STATEMGRSTATUS
 {
 align (1):

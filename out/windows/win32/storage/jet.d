@@ -10,6 +10,7 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias JET_RELOP = int;
 enum : int
 {
@@ -23,7 +24,8 @@ enum : int
     JET_relopBitmaskEqualsZero    = 0x00000007,
     JET_relopBitmaskNotEqualsZero = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-errcat-enumeration))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-errcat-enumeration
 alias JET_ERRCAT = int;
 enum : int
 {
@@ -46,6 +48,7 @@ enum : int
     JET_errcatObsolete      = 0x00000010,
     JET_errcatMax           = 0x00000011,
 }
+
 alias JET_INDEXCHECKING = int;
 enum : int
 {
@@ -58,14 +61,14 @@ enum : int
 // Constants
 
 
-enum uint JET_VERSION = 0x00000500;
+enum uint JET_VERSION = 0x00000500U;
 enum const(wchar)* JET_wszConfigStoreReadControl = "CsReadControl";
 
 enum : uint
 {
-    JET_bitConfigStoreReadControlInhibitRead = 0x00000001,
-    JET_bitConfigStoreReadControlDisableAll  = 0x00000002,
-    JET_bitConfigStoreReadControlDefault     = 0x00000000,
+    JET_bitConfigStoreReadControlInhibitRead = 0x00000001U,
+    JET_bitConfigStoreReadControlDisableAll  = 0x00000002U,
+    JET_bitConfigStoreReadControlDefault     = 0x00000000U,
 }
 
 enum : const(wchar)*
@@ -76,928 +79,928 @@ enum : const(wchar)*
 
 enum : uint
 {
-    JET_efvUseEngineDefault   = 0x40000001,
-    JET_efvUsePersistedFormat = 0x40000002,
+    JET_efvUseEngineDefault   = 0x40000001U,
+    JET_efvUsePersistedFormat = 0x40000002U,
 }
 
-enum uint JET_efvAllowHigherPersistedFormat = 0x41000000;
+enum uint JET_efvAllowHigherPersistedFormat = 0x41000000U;
 
 enum : uint
 {
-    JET_efvWindows19H1Rtm    = 0x000022d8,
-    JET_efvWindows10v2004    = 0x000023dc,
-    JET_efvWindowsServer2022 = 0x00002490,
-    JET_efvWindows11v21H2    = 0x000024b8,
-    JET_efvWindows11v22H2    = 0x00002508,
-    JET_efvWindows11v23H2    = 0x00002580,
-}
-
-enum : uint
-{
-    JET_bitDefragmentBatchStart          = 0x00000001,
-    JET_bitDefragmentBatchStop           = 0x00000002,
-    JET_bitDefragmentAvailSpaceTreesOnly = 0x00000040,
-    JET_bitDefragmentNoPartialMerges     = 0x00000080,
-    JET_bitDefragmentBTree               = 0x00000100,
+    JET_efvWindows19H1Rtm    = 0x000022d8U,
+    JET_efvWindows10v2004    = 0x000023dcU,
+    JET_efvWindowsServer2022 = 0x00002490U,
+    JET_efvWindows11v21H2    = 0x000024b8U,
+    JET_efvWindows11v22H2    = 0x00002508U,
+    JET_efvWindows11v23H2    = 0x00002580U,
 }
 
 enum : uint
 {
-    JET_cbtypNull                    = 0x00000000,
-    JET_cbtypFinalize                = 0x00000001,
-    JET_cbtypBeforeInsert            = 0x00000002,
-    JET_cbtypAfterInsert             = 0x00000004,
-    JET_cbtypBeforeReplace           = 0x00000008,
-    JET_cbtypAfterReplace            = 0x00000010,
-    JET_cbtypBeforeDelete            = 0x00000020,
-    JET_cbtypAfterDelete             = 0x00000040,
-    JET_cbtypUserDefinedDefaultValue = 0x00000080,
-}
-
-enum uint JET_cbtypOnlineDefragCompleted = 0x00000100;
-
-enum : uint
-{
-    JET_cbtypFreeCursorLS = 0x00000200,
-    JET_cbtypFreeTableLS  = 0x00000400,
+    JET_bitDefragmentBatchStart          = 0x00000001U,
+    JET_bitDefragmentBatchStop           = 0x00000002U,
+    JET_bitDefragmentAvailSpaceTreesOnly = 0x00000040U,
+    JET_bitDefragmentNoPartialMerges     = 0x00000080U,
+    JET_bitDefragmentBTree               = 0x00000100U,
 }
 
 enum : uint
 {
-    JET_bitTableInfoUpdatable = 0x00000001,
-    JET_bitTableInfoBookmark  = 0x00000002,
-    JET_bitTableInfoRollback  = 0x00000004,
+    JET_cbtypNull                    = 0x00000000U,
+    JET_cbtypFinalize                = 0x00000001U,
+    JET_cbtypBeforeInsert            = 0x00000002U,
+    JET_cbtypAfterInsert             = 0x00000004U,
+    JET_cbtypBeforeReplace           = 0x00000008U,
+    JET_cbtypAfterReplace            = 0x00000010U,
+    JET_cbtypBeforeDelete            = 0x00000020U,
+    JET_cbtypAfterDelete             = 0x00000040U,
+    JET_cbtypUserDefinedDefaultValue = 0x00000080U,
+}
+
+enum uint JET_cbtypOnlineDefragCompleted = 0x00000100U;
+
+enum : uint
+{
+    JET_cbtypFreeCursorLS = 0x00000200U,
+    JET_cbtypFreeTableLS  = 0x00000400U,
 }
 
 enum : uint
 {
-    JET_bitObjectSystem                                = 0x80000000,
-    JET_bitObjectTableFixedDDL                         = 0x40000000,
-    JET_bitObjectTableTemplate                         = 0x20000000,
-    JET_bitObjectTableDerived                          = 0x10000000,
-    JET_bitObjectTableNoFixedVarColumnsInDerivedTables = 0x04000000,
-}
-
-enum uint cObjectInfoCols = 0x00000009;
-enum uint cColumnInfoCols = 0x0000000e;
-enum uint cIndexInfoCols = 0x0000000f;
-enum uint JET_MAX_COMPUTERNAME_LENGTH = 0x0000000f;
-enum uint JET_bitDurableCommitCallbackLogUnavailable = 0x00000001;
-enum uint JET_cbBookmarkMost = 0x00000100;
-
-enum : uint
-{
-    JET_cbNameMost     = 0x00000040,
-    JET_cbFullNameMost = 0x000000ff,
-}
-
-enum uint JET_cbColumnLVPageOverhead = 0x00000052;
-enum uint JET_cbLVDefaultValueMost = 0x000000ff;
-enum uint JET_cbColumnMost = 0x000000ff;
-enum uint JET_cbLVColumnMost = 0x7fffffff;
-
-enum : uint
-{
-    JET_cbKeyMost8KBytePage = 0x000007d0,
-    JET_cbKeyMost4KBytePage = 0x000003e8,
-    JET_cbKeyMost2KBytePage = 0x000001f4,
-    JET_cbKeyMostMin        = 0x000000ff,
-    JET_cbKeyMost           = 0x000000ff,
-    JET_cbLimitKeyMost      = 0x00000100,
-}
-
-enum uint JET_cbPrimaryKeyMost = 0x000000ff;
-enum uint JET_cbSecondaryKeyMost = 0x000000ff;
-
-enum : uint
-{
-    JET_ccolKeyMost    = 0x00000010,
-    JET_ccolMost       = 0x0000fee0,
-    JET_ccolFixedMost  = 0x0000007f,
-    JET_ccolVarMost    = 0x00000080,
-    JET_ccolTaggedMost = 0x0000fde1,
+    JET_bitTableInfoUpdatable = 0x00000001U,
+    JET_bitTableInfoBookmark  = 0x00000002U,
+    JET_bitTableInfoRollback  = 0x00000004U,
 }
 
 enum : uint
 {
-    JET_EventLoggingDisable     = 0x00000000,
-    JET_EventLoggingLevelMin    = 0x00000001,
-    JET_EventLoggingLevelLow    = 0x00000019,
-    JET_EventLoggingLevelMedium = 0x00000032,
-    JET_EventLoggingLevelHigh   = 0x0000004b,
-    JET_EventLoggingLevelMax    = 0x00000064,
+    JET_bitObjectSystem                                = 0x80000000U,
+    JET_bitObjectTableFixedDDL                         = 0x40000000U,
+    JET_bitObjectTableTemplate                         = 0x20000000U,
+    JET_bitObjectTableDerived                          = 0x10000000U,
+    JET_bitObjectTableNoFixedVarColumnsInDerivedTables = 0x04000000U,
+}
+
+enum uint cObjectInfoCols = 0x00000009U;
+enum uint cColumnInfoCols = 0x0000000eU;
+enum uint cIndexInfoCols = 0x0000000fU;
+enum uint JET_MAX_COMPUTERNAME_LENGTH = 0x0000000fU;
+enum uint JET_bitDurableCommitCallbackLogUnavailable = 0x00000001U;
+enum uint JET_cbBookmarkMost = 0x00000100U;
+
+enum : uint
+{
+    JET_cbNameMost     = 0x00000040U,
+    JET_cbFullNameMost = 0x000000ffU,
+}
+
+enum uint JET_cbColumnLVPageOverhead = 0x00000052U;
+enum uint JET_cbLVDefaultValueMost = 0x000000ffU;
+enum uint JET_cbColumnMost = 0x000000ffU;
+enum uint JET_cbLVColumnMost = 0x7fffffffU;
+
+enum : uint
+{
+    JET_cbKeyMost8KBytePage = 0x000007d0U,
+    JET_cbKeyMost4KBytePage = 0x000003e8U,
+    JET_cbKeyMost2KBytePage = 0x000001f4U,
+    JET_cbKeyMostMin        = 0x000000ffU,
+    JET_cbKeyMost           = 0x000000ffU,
+    JET_cbLimitKeyMost      = 0x00000100U,
+}
+
+enum uint JET_cbPrimaryKeyMost = 0x000000ffU;
+enum uint JET_cbSecondaryKeyMost = 0x000000ffU;
+
+enum : uint
+{
+    JET_ccolKeyMost    = 0x00000010U,
+    JET_ccolMost       = 0x0000fee0U,
+    JET_ccolFixedMost  = 0x0000007fU,
+    JET_ccolVarMost    = 0x00000080U,
+    JET_ccolTaggedMost = 0x0000fde1U,
 }
 
 enum : uint
 {
-    JET_IOPriorityNormal = 0x00000000,
-    JET_IOPriorityLow    = 0x00000001,
+    JET_EventLoggingDisable     = 0x00000000U,
+    JET_EventLoggingLevelMin    = 0x00000001U,
+    JET_EventLoggingLevelLow    = 0x00000019U,
+    JET_EventLoggingLevelMedium = 0x00000032U,
+    JET_EventLoggingLevelHigh   = 0x0000004bU,
+    JET_EventLoggingLevelMax    = 0x00000064U,
 }
 
 enum : uint
 {
-    JET_configDefault          = 0x00000001,
-    JET_configRemoveQuotas     = 0x00000002,
-    JET_configLowDiskFootprint = 0x00000004,
-}
-
-enum uint JET_configMediumDiskFootprint = 0x00000008;
-
-enum : uint
-{
-    JET_configLowMemory           = 0x00000010,
-    JET_configDynamicMediumMemory = 0x00000020,
+    JET_IOPriorityNormal = 0x00000000U,
+    JET_IOPriorityLow    = 0x00000001U,
 }
 
 enum : uint
 {
-    JET_configLowPower          = 0x00000040,
-    JET_configSSDProfileIO      = 0x00000080,
-    JET_configRunSilent         = 0x00000100,
-    JET_configUnthrottledMemory = 0x00000200,
+    JET_configDefault          = 0x00000001U,
+    JET_configRemoveQuotas     = 0x00000002U,
+    JET_configLowDiskFootprint = 0x00000004U,
 }
 
-enum uint JET_configHighConcurrencyScaling = 0x00000400;
+enum uint JET_configMediumDiskFootprint = 0x00000008U;
 
 enum : uint
 {
-    JET_paramSystemPath             = 0x00000000,
-    JET_paramTempPath               = 0x00000001,
-    JET_paramLogFilePath            = 0x00000002,
-    JET_paramBaseName               = 0x00000003,
-    JET_paramEventSource            = 0x00000004,
-    JET_paramMaxSessions            = 0x00000005,
-    JET_paramMaxOpenTables          = 0x00000006,
-    JET_paramPreferredMaxOpenTables = 0x00000007,
-}
-
-enum uint JET_paramCachedClosedTables = 0x0000007d;
-
-enum : uint
-{
-    JET_paramMaxCursors        = 0x00000008,
-    JET_paramMaxVerPages       = 0x00000009,
-    JET_paramPreferredVerPages = 0x0000003f,
-}
-
-enum uint JET_paramGlobalMinVerPages = 0x00000051;
-enum uint JET_paramVersionStoreTaskQueueMax = 0x00000069;
-enum uint JET_paramMaxTemporaryTables = 0x0000000a;
-
-enum : uint
-{
-    JET_paramLogFileSize         = 0x0000000b,
-    JET_paramLogBuffers          = 0x0000000c,
-    JET_paramWaitLogFlush        = 0x0000000d,
-    JET_paramLogCheckpointPeriod = 0x0000000e,
-    JET_paramLogWaitingUserMax   = 0x0000000f,
+    JET_configLowMemory           = 0x00000010U,
+    JET_configDynamicMediumMemory = 0x00000020U,
 }
 
 enum : uint
 {
-    JET_paramCommitDefault   = 0x00000010,
-    JET_paramCircularLog     = 0x00000011,
-    JET_paramDbExtensionSize = 0x00000012,
+    JET_configLowPower          = 0x00000040U,
+    JET_configSSDProfileIO      = 0x00000080U,
+    JET_configRunSilent         = 0x00000100U,
+    JET_configUnthrottledMemory = 0x00000200U,
+}
+
+enum uint JET_configHighConcurrencyScaling = 0x00000400U;
+
+enum : uint
+{
+    JET_paramSystemPath             = 0x00000000U,
+    JET_paramTempPath               = 0x00000001U,
+    JET_paramLogFilePath            = 0x00000002U,
+    JET_paramBaseName               = 0x00000003U,
+    JET_paramEventSource            = 0x00000004U,
+    JET_paramMaxSessions            = 0x00000005U,
+    JET_paramMaxOpenTables          = 0x00000006U,
+    JET_paramPreferredMaxOpenTables = 0x00000007U,
+}
+
+enum uint JET_paramCachedClosedTables = 0x0000007dU;
+
+enum : uint
+{
+    JET_paramMaxCursors        = 0x00000008U,
+    JET_paramMaxVerPages       = 0x00000009U,
+    JET_paramPreferredVerPages = 0x0000003fU,
+}
+
+enum uint JET_paramGlobalMinVerPages = 0x00000051U;
+enum uint JET_paramVersionStoreTaskQueueMax = 0x00000069U;
+enum uint JET_paramMaxTemporaryTables = 0x0000000aU;
+
+enum : uint
+{
+    JET_paramLogFileSize         = 0x0000000bU,
+    JET_paramLogBuffers          = 0x0000000cU,
+    JET_paramWaitLogFlush        = 0x0000000dU,
+    JET_paramLogCheckpointPeriod = 0x0000000eU,
+    JET_paramLogWaitingUserMax   = 0x0000000fU,
 }
 
 enum : uint
 {
-    JET_paramPageTempDBMin   = 0x00000013,
-    JET_paramPageFragment    = 0x00000014,
-    JET_paramEnableFileCache = 0x0000007e,
+    JET_paramCommitDefault   = 0x00000010U,
+    JET_paramCircularLog     = 0x00000011U,
+    JET_paramDbExtensionSize = 0x00000012U,
 }
 
 enum : uint
 {
-    JET_paramVerPageSize    = 0x00000080,
-    JET_paramConfiguration  = 0x00000081,
-    JET_paramEnableAdvanced = 0x00000082,
+    JET_paramPageTempDBMin   = 0x00000013U,
+    JET_paramPageFragment    = 0x00000014U,
+    JET_paramEnableFileCache = 0x0000007eU,
 }
 
 enum : uint
 {
-    JET_paramMaxColtyp        = 0x00000083,
-    JET_paramBatchIOBufferMax = 0x00000016,
+    JET_paramVerPageSize    = 0x00000080U,
+    JET_paramConfiguration  = 0x00000081U,
+    JET_paramEnableAdvanced = 0x00000082U,
 }
 
 enum : uint
 {
-    JET_paramCacheSize          = 0x00000029,
-    JET_paramCacheSizeMin       = 0x0000003c,
-    JET_paramCacheSizeMax       = 0x00000017,
-    JET_paramCheckpointDepthMax = 0x00000018,
+    JET_paramMaxColtyp        = 0x00000083U,
+    JET_paramBatchIOBufferMax = 0x00000016U,
 }
 
 enum : uint
 {
-    JET_paramLRUKCorrInterval    = 0x00000019,
-    JET_paramLRUKHistoryMax      = 0x0000001a,
-    JET_paramLRUKPolicy          = 0x0000001b,
-    JET_paramLRUKTimeout         = 0x0000001c,
-    JET_paramLRUKTrxCorrInterval = 0x0000001d,
-}
-
-enum uint JET_paramOutstandingIOMax = 0x0000001e;
-enum uint JET_paramStartFlushThreshold = 0x0000001f;
-enum uint JET_paramStopFlushThreshold = 0x00000020;
-enum uint JET_paramEnableViewCache = 0x0000007f;
-enum uint JET_paramCheckpointIOMax = 0x00000087;
-
-enum : uint
-{
-    JET_paramTableClass1Name  = 0x00000089,
-    JET_paramTableClass2Name  = 0x0000008a,
-    JET_paramTableClass3Name  = 0x0000008b,
-    JET_paramTableClass4Name  = 0x0000008c,
-    JET_paramTableClass5Name  = 0x0000008d,
-    JET_paramTableClass6Name  = 0x0000008e,
-    JET_paramTableClass7Name  = 0x0000008f,
-    JET_paramTableClass8Name  = 0x00000090,
-    JET_paramTableClass9Name  = 0x00000091,
-    JET_paramTableClass10Name = 0x00000092,
-    JET_paramTableClass11Name = 0x00000093,
-    JET_paramTableClass12Name = 0x00000094,
-    JET_paramTableClass13Name = 0x00000095,
-    JET_paramTableClass14Name = 0x00000096,
-    JET_paramTableClass15Name = 0x00000097,
+    JET_paramCacheSize          = 0x00000029U,
+    JET_paramCacheSizeMin       = 0x0000003cU,
+    JET_paramCacheSizeMax       = 0x00000017U,
+    JET_paramCheckpointDepthMax = 0x00000018U,
 }
 
 enum : uint
 {
-    JET_paramIOPriority         = 0x00000098,
-    JET_paramRecovery           = 0x00000022,
-    JET_paramEnableOnlineDefrag = 0x00000023,
+    JET_paramLRUKCorrInterval    = 0x00000019U,
+    JET_paramLRUKHistoryMax      = 0x0000001aU,
+    JET_paramLRUKPolicy          = 0x0000001bU,
+    JET_paramLRUKTimeout         = 0x0000001cU,
+    JET_paramLRUKTrxCorrInterval = 0x0000001dU,
 }
 
-enum uint JET_paramCheckFormatWhenOpenFail = 0x0000002c;
-enum uint JET_paramEnableTempTableVersioning = 0x0000002e;
-enum uint JET_paramIgnoreLogVersion = 0x0000002f;
+enum uint JET_paramOutstandingIOMax = 0x0000001eU;
+enum uint JET_paramStartFlushThreshold = 0x0000001fU;
+enum uint JET_paramStopFlushThreshold = 0x00000020U;
+enum uint JET_paramEnableViewCache = 0x0000007fU;
+enum uint JET_paramCheckpointIOMax = 0x00000087U;
 
 enum : uint
 {
-    JET_paramDeleteOldLogs  = 0x00000030,
-    JET_paramEventSourceKey = 0x00000031,
-}
-
-enum uint JET_paramNoInformationEvent = 0x00000032;
-enum uint JET_paramEventLoggingLevel = 0x00000033;
-enum uint JET_paramDeleteOutOfRangeLogs = 0x00000034;
-enum uint JET_paramAccessDeniedRetryPeriod = 0x00000035;
-
-enum : uint
-{
-    JET_paramEnableIndexChecking = 0x0000002d,
-    JET_paramEnableIndexCleanup  = 0x00000036,
-}
-
-enum uint JET_paramDatabasePageSize = 0x00000040;
-enum uint JET_paramDisableCallbacks = 0x00000041;
-enum uint JET_paramLogFileCreateAsynch = 0x00000045;
-
-enum : uint
-{
-    JET_paramErrorToString            = 0x00000046,
-    JET_paramZeroDatabaseDuringBackup = 0x00000047,
-}
-
-enum uint JET_paramUnicodeIndexDefault = 0x00000048;
-enum uint JET_paramRuntimeCallback = 0x00000049;
-enum uint JET_paramCleanupMismatchedLogFiles = 0x0000004d;
-enum uint JET_paramRecordUpgradeDirtyLevel = 0x0000004e;
-enum uint JET_paramOSSnapshotTimeout = 0x00000052;
-
-enum : uint
-{
-    JET_paramExceptionAction      = 0x00000062,
-    JET_paramEventLogCache        = 0x00000063,
-    JET_paramCreatePathIfNotExist = 0x00000064,
-}
-
-enum uint JET_paramPageHintCacheSize = 0x00000065;
-enum uint JET_paramOneDatabasePerSession = 0x00000066;
-
-enum : uint
-{
-    JET_paramMaxInstances   = 0x00000068,
-    JET_paramDisablePerfmon = 0x0000006b,
+    JET_paramTableClass1Name  = 0x00000089U,
+    JET_paramTableClass2Name  = 0x0000008aU,
+    JET_paramTableClass3Name  = 0x0000008bU,
+    JET_paramTableClass4Name  = 0x0000008cU,
+    JET_paramTableClass5Name  = 0x0000008dU,
+    JET_paramTableClass6Name  = 0x0000008eU,
+    JET_paramTableClass7Name  = 0x0000008fU,
+    JET_paramTableClass8Name  = 0x00000090U,
+    JET_paramTableClass9Name  = 0x00000091U,
+    JET_paramTableClass10Name = 0x00000092U,
+    JET_paramTableClass11Name = 0x00000093U,
+    JET_paramTableClass12Name = 0x00000094U,
+    JET_paramTableClass13Name = 0x00000095U,
+    JET_paramTableClass14Name = 0x00000096U,
+    JET_paramTableClass15Name = 0x00000097U,
 }
 
 enum : uint
 {
-    JET_paramIndexTuplesLengthMin  = 0x0000006e,
-    JET_paramIndexTuplesLengthMax  = 0x0000006f,
-    JET_paramIndexTuplesToIndexMax = 0x00000070,
+    JET_paramIOPriority         = 0x00000098U,
+    JET_paramRecovery           = 0x00000022U,
+    JET_paramEnableOnlineDefrag = 0x00000023U,
 }
 
-enum uint JET_paramAlternateDatabaseRecoveryPath = 0x00000071;
+enum uint JET_paramCheckFormatWhenOpenFail = 0x0000002cU;
+enum uint JET_paramEnableTempTableVersioning = 0x0000002eU;
+enum uint JET_paramIgnoreLogVersion = 0x0000002fU;
 
 enum : uint
 {
-    JET_paramIndexTupleIncrement = 0x00000084,
-    JET_paramIndexTupleStart     = 0x00000085,
+    JET_paramDeleteOldLogs  = 0x00000030U,
+    JET_paramEventSourceKey = 0x00000031U,
 }
+
+enum uint JET_paramNoInformationEvent = 0x00000032U;
+enum uint JET_paramEventLoggingLevel = 0x00000033U;
+enum uint JET_paramDeleteOutOfRangeLogs = 0x00000034U;
+enum uint JET_paramAccessDeniedRetryPeriod = 0x00000035U;
 
 enum : uint
 {
-    JET_paramKeyMost         = 0x00000086,
-    JET_paramLegacyFileNames = 0x00000088,
+    JET_paramEnableIndexChecking = 0x0000002dU,
+    JET_paramEnableIndexCleanup  = 0x00000036U,
 }
 
-enum uint JET_paramEnablePersistedCallbacks = 0x0000009c;
-enum uint JET_paramWaypointLatency = 0x00000099;
+enum uint JET_paramDatabasePageSize = 0x00000040U;
+enum uint JET_paramDisableCallbacks = 0x00000041U;
+enum uint JET_paramLogFileCreateAsynch = 0x00000045U;
 
 enum : uint
 {
-    JET_paramDefragmentSequentialBTrees                      = 0x000000a0,
-    JET_paramDefragmentSequentialBTreesDensityCheckFrequency = 0x000000a1,
+    JET_paramErrorToString            = 0x00000046U,
+    JET_paramZeroDatabaseDuringBackup = 0x00000047U,
 }
 
-enum uint JET_paramIOThrottlingTimeQuanta = 0x000000a2;
-enum uint JET_paramLVChunkSizeMost = 0x000000a3;
+enum uint JET_paramUnicodeIndexDefault = 0x00000048U;
+enum uint JET_paramRuntimeCallback = 0x00000049U;
+enum uint JET_paramCleanupMismatchedLogFiles = 0x0000004dU;
+enum uint JET_paramRecordUpgradeDirtyLevel = 0x0000004eU;
+enum uint JET_paramOSSnapshotTimeout = 0x00000052U;
 
 enum : uint
 {
-    JET_paramMaxCoalesceReadSize     = 0x000000a4,
-    JET_paramMaxCoalesceWriteSize    = 0x000000a5,
-    JET_paramMaxCoalesceReadGapSize  = 0x000000a6,
-    JET_paramMaxCoalesceWriteGapSize = 0x000000a7,
+    JET_paramExceptionAction      = 0x00000062U,
+    JET_paramEventLogCache        = 0x00000063U,
+    JET_paramCreatePathIfNotExist = 0x00000064U,
 }
 
-enum uint JET_paramEnableDBScanInRecovery = 0x000000a9;
+enum uint JET_paramPageHintCacheSize = 0x00000065U;
+enum uint JET_paramOneDatabasePerSession = 0x00000066U;
 
 enum : uint
 {
-    JET_paramDbScanThrottle       = 0x000000aa,
-    JET_paramDbScanIntervalMinSec = 0x000000ab,
-    JET_paramDbScanIntervalMaxSec = 0x000000ac,
-}
-
-enum : uint
-{
-    JET_paramCachePriority      = 0x000000b1,
-    JET_paramMaxTransactionSize = 0x000000b2,
-}
-
-enum : uint
-{
-    JET_paramPrereadIOMax              = 0x000000b3,
-    JET_paramEnableDBScanSerialization = 0x000000b4,
-}
-
-enum : uint
-{
-    JET_paramHungIOThreshold  = 0x000000b5,
-    JET_paramHungIOActions    = 0x000000b6,
-    JET_paramMinDataForXpress = 0x000000b7,
-}
-
-enum uint JET_paramEnableShrinkDatabase = 0x000000b8;
-enum uint JET_paramProcessFriendlyName = 0x000000ba;
-enum uint JET_paramDurableCommitCallback = 0x000000bb;
-
-enum : uint
-{
-    JET_paramEnableSqm       = 0x000000bc,
-    JET_paramConfigStoreSpec = 0x000000bd,
-}
-
-enum uint JET_paramEngineFormatVersion = 0x000000c2;
-enum uint JET_paramUseFlushForWriteDurability = 0x000000d6;
-
-enum : uint
-{
-    JET_paramEnableRBS              = 0x000000d7,
-    JET_paramRBSFilePath            = 0x000000d8,
-    JET_paramPerfmonRefreshInterval = 0x000000d9,
-}
-
-enum uint JET_paramEnableBlockCache = 0x000000da;
-
-enum : uint
-{
-    JET_paramTraceFlags      = 0x000000df,
-    JET_paramMaxValueInvalid = 0x000000e8,
+    JET_paramMaxInstances   = 0x00000068U,
+    JET_paramDisablePerfmon = 0x0000006bU,
 }
 
 enum : uint
 {
-    JET_sesparamCommitDefault    = 0x00001001,
-    JET_sesparamTransactionLevel = 0x00001003,
-    JET_sesparamOperationContext = 0x00001004,
-    JET_sesparamCorrelationID    = 0x00001005,
-    JET_sesparamMaxValueInvalid  = 0x0000100f,
+    JET_paramIndexTuplesLengthMin  = 0x0000006eU,
+    JET_paramIndexTuplesLengthMax  = 0x0000006fU,
+    JET_paramIndexTuplesToIndexMax = 0x00000070U,
 }
 
-enum uint JET_bitESE98FileNames = 0x00000001;
-enum uint JET_bitEightDotThreeSoftCompat = 0x00000002;
-enum uint JET_bitHungIOEvent = 0x00000001;
+enum uint JET_paramAlternateDatabaseRecoveryPath = 0x00000071U;
 
 enum : uint
 {
-    JET_bitShrinkDatabaseOff      = 0x00000000,
-    JET_bitShrinkDatabaseOn       = 0x00000001,
-    JET_bitShrinkDatabaseRealtime = 0x00000002,
-    JET_bitShrinkDatabaseTrim     = 0x00000001,
-}
-
-enum uint JET_bitReplayIgnoreMissingDB = 0x00000004;
-enum uint JET_bitRecoveryWithoutUndo = 0x00000008;
-enum uint JET_bitTruncateLogsAfterRecovery = 0x00000010;
-enum uint JET_bitReplayMissingMapEntryDB = 0x00000020;
-enum uint JET_bitLogStreamMustExist = 0x00000040;
-enum uint JET_bitReplayIgnoreLostLogs = 0x00000080;
-enum uint JET_bitKeepDbAttachedAtEndOfRecovery = 0x00001000;
-
-enum : uint
-{
-    JET_bitTermComplete           = 0x00000001,
-    JET_bitTermAbrupt             = 0x00000002,
-    JET_bitTermStopBackup         = 0x00000004,
-    JET_bitTermDirty              = 0x00000008,
-    JET_bitIdleFlushBuffers       = 0x00000001,
-    JET_bitIdleCompact            = 0x00000002,
-    JET_bitIdleStatus             = 0x00000004,
-    JET_bitDbReadOnly             = 0x00000001,
-    JET_bitDbExclusive            = 0x00000002,
-    JET_bitDbDeleteCorruptIndexes = 0x00000010,
-    JET_bitDbDeleteUnicodeIndexes = 0x00000400,
+    JET_paramIndexTupleIncrement = 0x00000084U,
+    JET_paramIndexTupleStart     = 0x00000085U,
 }
 
 enum : uint
 {
-    JET_bitDbUpgrade                     = 0x00000200,
-    JET_bitDbEnableBackgroundMaintenance = 0x00000800,
+    JET_paramKeyMost         = 0x00000086U,
+    JET_paramLegacyFileNames = 0x00000088U,
 }
 
-enum uint JET_bitDbPurgeCacheOnAttach = 0x00001000;
-enum uint JET_bitForceDetach = 0x00000001;
+enum uint JET_paramEnablePersistedCallbacks = 0x0000009cU;
+enum uint JET_paramWaypointLatency = 0x00000099U;
 
 enum : uint
 {
-    JET_bitDbRecoveryOff       = 0x00000008,
-    JET_bitDbShadowingOff      = 0x00000080,
-    JET_bitDbOverwriteExisting = 0x00000200,
+    JET_paramDefragmentSequentialBTrees                      = 0x000000a0U,
+    JET_paramDefragmentSequentialBTreesDensityCheckFrequency = 0x000000a1U,
 }
+
+enum uint JET_paramIOThrottlingTimeQuanta = 0x000000a2U;
+enum uint JET_paramLVChunkSizeMost = 0x000000a3U;
 
 enum : uint
 {
-    JET_bitBackupIncremental  = 0x00000001,
-    JET_bitBackupAtomic       = 0x00000004,
-    JET_bitBackupSnapshot     = 0x00000010,
-    JET_bitBackupEndNormal    = 0x00000001,
-    JET_bitBackupEndAbort     = 0x00000002,
-    JET_bitBackupTruncateDone = 0x00000100,
+    JET_paramMaxCoalesceReadSize     = 0x000000a4U,
+    JET_paramMaxCoalesceWriteSize    = 0x000000a5U,
+    JET_paramMaxCoalesceReadGapSize  = 0x000000a6U,
+    JET_paramMaxCoalesceWriteGapSize = 0x000000a7U,
 }
+
+enum uint JET_paramEnableDBScanInRecovery = 0x000000a9U;
 
 enum : uint
 {
-    JET_bitTableCreateFixedDDL                         = 0x00000001,
-    JET_bitTableCreateTemplateTable                    = 0x00000002,
-    JET_bitTableCreateNoFixedVarColumnsInDerivedTables = 0x00000004,
-}
-
-enum uint JET_bitTableCreateImmutableStructure = 0x00000008;
-
-enum : uint
-{
-    JET_bitColumnFixed              = 0x00000001,
-    JET_bitColumnTagged             = 0x00000002,
-    JET_bitColumnNotNULL            = 0x00000004,
-    JET_bitColumnVersion            = 0x00000008,
-    JET_bitColumnAutoincrement      = 0x00000010,
-    JET_bitColumnUpdatable          = 0x00000020,
-    JET_bitColumnTTKey              = 0x00000040,
-    JET_bitColumnTTDescending       = 0x00000080,
-    JET_bitColumnMultiValued        = 0x00000400,
-    JET_bitColumnEscrowUpdate       = 0x00000800,
-    JET_bitColumnUnversioned        = 0x00001000,
-    JET_bitColumnMaybeNull          = 0x00002000,
-    JET_bitColumnFinalize           = 0x00004000,
-    JET_bitColumnUserDefinedDefault = 0x00008000,
-    JET_bitColumnDeleteOnZero       = 0x00020000,
-    JET_bitColumnCompressed         = 0x00080000,
-}
-
-enum uint JET_bitDeleteColumnIgnoreTemplateColumns = 0x00000001;
-
-enum : uint
-{
-    JET_bitMoveFirst   = 0x00000000,
-    JET_bitNoMove      = 0x00000002,
-    JET_bitNewKey      = 0x00000001,
-    JET_bitStrLimit    = 0x00000002,
-    JET_bitSubStrLimit = 0x00000004,
-}
-
-enum uint JET_bitNormalizedKey = 0x00000008;
-enum uint JET_bitKeyDataZeroLength = 0x00000010;
-
-enum : uint
-{
-    JET_bitFullColumnStartLimit = 0x00000100,
-    JET_bitFullColumnEndLimit   = 0x00000200,
+    JET_paramDbScanThrottle       = 0x000000aaU,
+    JET_paramDbScanIntervalMinSec = 0x000000abU,
+    JET_paramDbScanIntervalMaxSec = 0x000000acU,
 }
 
 enum : uint
 {
-    JET_bitPartialColumnStartLimit = 0x00000400,
-    JET_bitPartialColumnEndLimit   = 0x00000800,
+    JET_paramCachePriority      = 0x000000b1U,
+    JET_paramMaxTransactionSize = 0x000000b2U,
 }
 
 enum : uint
 {
-    JET_bitRangeInclusive       = 0x00000001,
-    JET_bitRangeUpperLimit      = 0x00000002,
-    JET_bitRangeInstantDuration = 0x00000004,
-    JET_bitRangeRemove          = 0x00000008,
-    JET_bitReadLock             = 0x00000001,
-    JET_bitWriteLock            = 0x00000002,
+    JET_paramPrereadIOMax              = 0x000000b3U,
+    JET_paramEnableDBScanSerialization = 0x000000b4U,
 }
 
-enum uint JET_MoveFirst = 0x80000000;
+enum : uint
+{
+    JET_paramHungIOThreshold  = 0x000000b5U,
+    JET_paramHungIOActions    = 0x000000b6U,
+    JET_paramMinDataForXpress = 0x000000b7U,
+}
+
+enum uint JET_paramEnableShrinkDatabase = 0x000000b8U;
+enum uint JET_paramProcessFriendlyName = 0x000000baU;
+enum uint JET_paramDurableCommitCallback = 0x000000bbU;
+
+enum : uint
+{
+    JET_paramEnableSqm       = 0x000000bcU,
+    JET_paramConfigStoreSpec = 0x000000bdU,
+}
+
+enum uint JET_paramEngineFormatVersion = 0x000000c2U;
+enum uint JET_paramUseFlushForWriteDurability = 0x000000d6U;
+
+enum : uint
+{
+    JET_paramEnableRBS              = 0x000000d7U,
+    JET_paramRBSFilePath            = 0x000000d8U,
+    JET_paramPerfmonRefreshInterval = 0x000000d9U,
+}
+
+enum uint JET_paramEnableBlockCache = 0x000000daU;
+
+enum : uint
+{
+    JET_paramTraceFlags      = 0x000000dfU,
+    JET_paramMaxValueInvalid = 0x000000e8U,
+}
+
+enum : uint
+{
+    JET_sesparamCommitDefault    = 0x00001001U,
+    JET_sesparamTransactionLevel = 0x00001003U,
+    JET_sesparamOperationContext = 0x00001004U,
+    JET_sesparamCorrelationID    = 0x00001005U,
+    JET_sesparamMaxValueInvalid  = 0x0000100fU,
+}
+
+enum uint JET_bitESE98FileNames = 0x00000001U;
+enum uint JET_bitEightDotThreeSoftCompat = 0x00000002U;
+enum uint JET_bitHungIOEvent = 0x00000001U;
+
+enum : uint
+{
+    JET_bitShrinkDatabaseOff      = 0x00000000U,
+    JET_bitShrinkDatabaseOn       = 0x00000001U,
+    JET_bitShrinkDatabaseRealtime = 0x00000002U,
+    JET_bitShrinkDatabaseTrim     = 0x00000001U,
+}
+
+enum uint JET_bitReplayIgnoreMissingDB = 0x00000004U;
+enum uint JET_bitRecoveryWithoutUndo = 0x00000008U;
+enum uint JET_bitTruncateLogsAfterRecovery = 0x00000010U;
+enum uint JET_bitReplayMissingMapEntryDB = 0x00000020U;
+enum uint JET_bitLogStreamMustExist = 0x00000040U;
+enum uint JET_bitReplayIgnoreLostLogs = 0x00000080U;
+enum uint JET_bitKeepDbAttachedAtEndOfRecovery = 0x00001000U;
+
+enum : uint
+{
+    JET_bitTermComplete           = 0x00000001U,
+    JET_bitTermAbrupt             = 0x00000002U,
+    JET_bitTermStopBackup         = 0x00000004U,
+    JET_bitTermDirty              = 0x00000008U,
+    JET_bitIdleFlushBuffers       = 0x00000001U,
+    JET_bitIdleCompact            = 0x00000002U,
+    JET_bitIdleStatus             = 0x00000004U,
+    JET_bitDbReadOnly             = 0x00000001U,
+    JET_bitDbExclusive            = 0x00000002U,
+    JET_bitDbDeleteCorruptIndexes = 0x00000010U,
+    JET_bitDbDeleteUnicodeIndexes = 0x00000400U,
+}
+
+enum : uint
+{
+    JET_bitDbUpgrade                     = 0x00000200U,
+    JET_bitDbEnableBackgroundMaintenance = 0x00000800U,
+}
+
+enum uint JET_bitDbPurgeCacheOnAttach = 0x00001000U;
+enum uint JET_bitForceDetach = 0x00000001U;
+
+enum : uint
+{
+    JET_bitDbRecoveryOff       = 0x00000008U,
+    JET_bitDbShadowingOff      = 0x00000080U,
+    JET_bitDbOverwriteExisting = 0x00000200U,
+}
+
+enum : uint
+{
+    JET_bitBackupIncremental  = 0x00000001U,
+    JET_bitBackupAtomic       = 0x00000004U,
+    JET_bitBackupSnapshot     = 0x00000010U,
+    JET_bitBackupEndNormal    = 0x00000001U,
+    JET_bitBackupEndAbort     = 0x00000002U,
+    JET_bitBackupTruncateDone = 0x00000100U,
+}
+
+enum : uint
+{
+    JET_bitTableCreateFixedDDL                         = 0x00000001U,
+    JET_bitTableCreateTemplateTable                    = 0x00000002U,
+    JET_bitTableCreateNoFixedVarColumnsInDerivedTables = 0x00000004U,
+}
+
+enum uint JET_bitTableCreateImmutableStructure = 0x00000008U;
+
+enum : uint
+{
+    JET_bitColumnFixed              = 0x00000001U,
+    JET_bitColumnTagged             = 0x00000002U,
+    JET_bitColumnNotNULL            = 0x00000004U,
+    JET_bitColumnVersion            = 0x00000008U,
+    JET_bitColumnAutoincrement      = 0x00000010U,
+    JET_bitColumnUpdatable          = 0x00000020U,
+    JET_bitColumnTTKey              = 0x00000040U,
+    JET_bitColumnTTDescending       = 0x00000080U,
+    JET_bitColumnMultiValued        = 0x00000400U,
+    JET_bitColumnEscrowUpdate       = 0x00000800U,
+    JET_bitColumnUnversioned        = 0x00001000U,
+    JET_bitColumnMaybeNull          = 0x00002000U,
+    JET_bitColumnFinalize           = 0x00004000U,
+    JET_bitColumnUserDefinedDefault = 0x00008000U,
+    JET_bitColumnDeleteOnZero       = 0x00020000U,
+    JET_bitColumnCompressed         = 0x00080000U,
+}
+
+enum uint JET_bitDeleteColumnIgnoreTemplateColumns = 0x00000001U;
+
+enum : uint
+{
+    JET_bitMoveFirst   = 0x00000000U,
+    JET_bitNoMove      = 0x00000002U,
+    JET_bitNewKey      = 0x00000001U,
+    JET_bitStrLimit    = 0x00000002U,
+    JET_bitSubStrLimit = 0x00000004U,
+}
+
+enum uint JET_bitNormalizedKey = 0x00000008U;
+enum uint JET_bitKeyDataZeroLength = 0x00000010U;
+
+enum : uint
+{
+    JET_bitFullColumnStartLimit = 0x00000100U,
+    JET_bitFullColumnEndLimit   = 0x00000200U,
+}
+
+enum : uint
+{
+    JET_bitPartialColumnStartLimit = 0x00000400U,
+    JET_bitPartialColumnEndLimit   = 0x00000800U,
+}
+
+enum : uint
+{
+    JET_bitRangeInclusive       = 0x00000001U,
+    JET_bitRangeUpperLimit      = 0x00000002U,
+    JET_bitRangeInstantDuration = 0x00000004U,
+    JET_bitRangeRemove          = 0x00000008U,
+    JET_bitReadLock             = 0x00000001U,
+    JET_bitWriteLock            = 0x00000002U,
+}
+
+enum uint JET_MoveFirst = 0x80000000U;
 enum int JET_MovePrevious = 0xffffffff;
-enum uint JET_MoveLast = 0x7fffffff;
+enum uint JET_MoveLast = 0x7fffffffU;
 
 enum : uint
 {
-    JET_bitMoveKeyNE     = 0x00000001,
-    JET_bitSeekEQ        = 0x00000001,
-    JET_bitSeekLT        = 0x00000002,
-    JET_bitSeekLE        = 0x00000004,
-    JET_bitSeekGE        = 0x00000008,
-    JET_bitSeekGT        = 0x00000010,
-    JET_bitSetIndexRange = 0x00000020,
+    JET_bitMoveKeyNE     = 0x00000001U,
+    JET_bitSeekEQ        = 0x00000001U,
+    JET_bitSeekLT        = 0x00000002U,
+    JET_bitSeekLE        = 0x00000004U,
+    JET_bitSeekGE        = 0x00000008U,
+    JET_bitSeekGT        = 0x00000010U,
+    JET_bitSetIndexRange = 0x00000020U,
 }
 
-enum uint JET_bitCheckUniqueness = 0x00000040;
-enum uint JET_bitBookmarkPermitVirtualCurrency = 0x00000001;
+enum uint JET_bitCheckUniqueness = 0x00000040U;
+enum uint JET_bitBookmarkPermitVirtualCurrency = 0x00000001U;
 
 enum : uint
 {
-    JET_bitIndexColumnMustBeNull    = 0x00000001,
-    JET_bitIndexColumnMustBeNonNull = 0x00000002,
-}
-
-enum : uint
-{
-    JET_bitRecordInIndex    = 0x00000001,
-    JET_bitRecordNotInIndex = 0x00000002,
+    JET_bitIndexColumnMustBeNull    = 0x00000001U,
+    JET_bitIndexColumnMustBeNonNull = 0x00000002U,
 }
 
 enum : uint
 {
-    JET_bitIndexUnique             = 0x00000001,
-    JET_bitIndexPrimary            = 0x00000002,
-    JET_bitIndexDisallowNull       = 0x00000004,
-    JET_bitIndexIgnoreNull         = 0x00000008,
-    JET_bitIndexIgnoreAnyNull      = 0x00000020,
-    JET_bitIndexIgnoreFirstNull    = 0x00000040,
-    JET_bitIndexLazyFlush          = 0x00000080,
-    JET_bitIndexEmpty              = 0x00000100,
-    JET_bitIndexUnversioned        = 0x00000200,
-    JET_bitIndexSortNullsHigh      = 0x00000400,
-    JET_bitIndexUnicode            = 0x00000800,
-    JET_bitIndexTuples             = 0x00001000,
-    JET_bitIndexTupleLimits        = 0x00002000,
-    JET_bitIndexCrossProduct       = 0x00004000,
-    JET_bitIndexKeyMost            = 0x00008000,
-    JET_bitIndexDisallowTruncation = 0x00010000,
+    JET_bitRecordInIndex    = 0x00000001U,
+    JET_bitRecordNotInIndex = 0x00000002U,
 }
 
 enum : uint
 {
-    JET_bitIndexNestedTable        = 0x00020000,
-    JET_bitIndexDotNetGuid         = 0x00040000,
-    JET_bitIndexImmutableStructure = 0x00080000,
+    JET_bitIndexUnique             = 0x00000001U,
+    JET_bitIndexPrimary            = 0x00000002U,
+    JET_bitIndexDisallowNull       = 0x00000004U,
+    JET_bitIndexIgnoreNull         = 0x00000008U,
+    JET_bitIndexIgnoreAnyNull      = 0x00000020U,
+    JET_bitIndexIgnoreFirstNull    = 0x00000040U,
+    JET_bitIndexLazyFlush          = 0x00000080U,
+    JET_bitIndexEmpty              = 0x00000100U,
+    JET_bitIndexUnversioned        = 0x00000200U,
+    JET_bitIndexSortNullsHigh      = 0x00000400U,
+    JET_bitIndexUnicode            = 0x00000800U,
+    JET_bitIndexTuples             = 0x00001000U,
+    JET_bitIndexTupleLimits        = 0x00002000U,
+    JET_bitIndexCrossProduct       = 0x00004000U,
+    JET_bitIndexKeyMost            = 0x00008000U,
+    JET_bitIndexDisallowTruncation = 0x00010000U,
 }
 
 enum : uint
 {
-    JET_bitKeyAscending  = 0x00000000,
-    JET_bitKeyDescending = 0x00000001,
+    JET_bitIndexNestedTable        = 0x00020000U,
+    JET_bitIndexDotNetGuid         = 0x00040000U,
+    JET_bitIndexImmutableStructure = 0x00080000U,
 }
 
 enum : uint
 {
-    JET_bitTableDenyWrite     = 0x00000001,
-    JET_bitTableDenyRead      = 0x00000002,
-    JET_bitTableReadOnly      = 0x00000004,
-    JET_bitTableUpdatable     = 0x00000008,
-    JET_bitTablePermitDDL     = 0x00000010,
-    JET_bitTableNoCache       = 0x00000020,
-    JET_bitTablePreread       = 0x00000040,
-    JET_bitTableOpportuneRead = 0x00000080,
-    JET_bitTableSequential    = 0x00008000,
-    JET_bitTableClassMask     = 0x001f0000,
-    JET_bitTableClassNone     = 0x00000000,
-    JET_bitTableClass1        = 0x00010000,
-    JET_bitTableClass2        = 0x00020000,
-    JET_bitTableClass3        = 0x00030000,
-    JET_bitTableClass4        = 0x00040000,
-    JET_bitTableClass5        = 0x00050000,
-    JET_bitTableClass6        = 0x00060000,
-    JET_bitTableClass7        = 0x00070000,
-    JET_bitTableClass8        = 0x00080000,
-    JET_bitTableClass9        = 0x00090000,
-    JET_bitTableClass10       = 0x000a0000,
-    JET_bitTableClass11       = 0x000b0000,
-    JET_bitTableClass12       = 0x000c0000,
-    JET_bitTableClass13       = 0x000d0000,
-    JET_bitTableClass14       = 0x000e0000,
-    JET_bitTableClass15       = 0x000f0000,
+    JET_bitKeyAscending  = 0x00000000U,
+    JET_bitKeyDescending = 0x00000001U,
 }
 
 enum : uint
 {
-    JET_bitLSReset              = 0x00000001,
-    JET_bitLSCursor             = 0x00000002,
-    JET_bitLSTable              = 0x00000004,
-    JET_bitPrereadForward       = 0x00000001,
-    JET_bitPrereadBackward      = 0x00000002,
-    JET_bitPrereadFirstPage     = 0x00000004,
-    JET_bitPrereadNormalizedKey = 0x00000008,
+    JET_bitTableDenyWrite     = 0x00000001U,
+    JET_bitTableDenyRead      = 0x00000002U,
+    JET_bitTableReadOnly      = 0x00000004U,
+    JET_bitTableUpdatable     = 0x00000008U,
+    JET_bitTablePermitDDL     = 0x00000010U,
+    JET_bitTableNoCache       = 0x00000020U,
+    JET_bitTablePreread       = 0x00000040U,
+    JET_bitTableOpportuneRead = 0x00000080U,
+    JET_bitTableSequential    = 0x00008000U,
+    JET_bitTableClassMask     = 0x001f0000U,
+    JET_bitTableClassNone     = 0x00000000U,
+    JET_bitTableClass1        = 0x00010000U,
+    JET_bitTableClass2        = 0x00020000U,
+    JET_bitTableClass3        = 0x00030000U,
+    JET_bitTableClass4        = 0x00040000U,
+    JET_bitTableClass5        = 0x00050000U,
+    JET_bitTableClass6        = 0x00060000U,
+    JET_bitTableClass7        = 0x00070000U,
+    JET_bitTableClass8        = 0x00080000U,
+    JET_bitTableClass9        = 0x00090000U,
+    JET_bitTableClass10       = 0x000a0000U,
+    JET_bitTableClass11       = 0x000b0000U,
+    JET_bitTableClass12       = 0x000c0000U,
+    JET_bitTableClass13       = 0x000d0000U,
+    JET_bitTableClass14       = 0x000e0000U,
+    JET_bitTableClass15       = 0x000f0000U,
 }
 
 enum : uint
 {
-    JET_bitTTIndexed              = 0x00000001,
-    JET_bitTTUnique               = 0x00000002,
-    JET_bitTTUpdatable            = 0x00000004,
-    JET_bitTTScrollable           = 0x00000008,
-    JET_bitTTSortNullsHigh        = 0x00000010,
-    JET_bitTTForceMaterialization = 0x00000020,
-}
-
-enum uint JET_bitTTErrorOnDuplicateInsertion = 0x00000020;
-
-enum : uint
-{
-    JET_bitTTForwardOnly      = 0x00000040,
-    JET_bitTTIntrinsicLVsOnly = 0x00000080,
+    JET_bitLSReset              = 0x00000001U,
+    JET_bitLSCursor             = 0x00000002U,
+    JET_bitLSTable              = 0x00000004U,
+    JET_bitPrereadForward       = 0x00000001U,
+    JET_bitPrereadBackward      = 0x00000002U,
+    JET_bitPrereadFirstPage     = 0x00000004U,
+    JET_bitPrereadNormalizedKey = 0x00000008U,
 }
 
 enum : uint
 {
-    JET_bitTTDotNetGuid     = 0x00000100,
-    JET_bitTTMaterializeBBT = 0x00000200,
+    JET_bitTTIndexed              = 0x00000001U,
+    JET_bitTTUnique               = 0x00000002U,
+    JET_bitTTUpdatable            = 0x00000004U,
+    JET_bitTTScrollable           = 0x00000008U,
+    JET_bitTTSortNullsHigh        = 0x00000010U,
+    JET_bitTTForceMaterialization = 0x00000020U,
+}
+
+enum uint JET_bitTTErrorOnDuplicateInsertion = 0x00000020U;
+
+enum : uint
+{
+    JET_bitTTForwardOnly      = 0x00000040U,
+    JET_bitTTIntrinsicLVsOnly = 0x00000080U,
 }
 
 enum : uint
 {
-    JET_bitSetAppendLV                    = 0x00000001,
-    JET_bitSetOverwriteLV                 = 0x00000004,
-    JET_bitSetSizeLV                      = 0x00000008,
-    JET_bitSetZeroLength                  = 0x00000020,
-    JET_bitSetSeparateLV                  = 0x00000040,
-    JET_bitSetUniqueMultiValues           = 0x00000080,
-    JET_bitSetUniqueNormalizedMultiValues = 0x00000100,
-}
-
-enum uint JET_bitSetRevertToDefaultValue = 0x00000200;
-
-enum : uint
-{
-    JET_bitSetIntrinsicLV  = 0x00000400,
-    JET_bitSetUncompressed = 0x00010000,
-    JET_bitSetCompressed   = 0x00020000,
-    JET_bitSetContiguousLV = 0x00040000,
-}
-
-enum uint JET_bitSpaceHintsUtilizeParentSpace = 0x00000001;
-
-enum : uint
-{
-    JET_bitCreateHintAppendSequential   = 0x00000002,
-    JET_bitCreateHintHotpointSequential = 0x00000004,
+    JET_bitTTDotNetGuid     = 0x00000100U,
+    JET_bitTTMaterializeBBT = 0x00000200U,
 }
 
 enum : uint
 {
-    JET_bitRetrieveHintReserve1          = 0x00000008,
-    JET_bitRetrieveHintTableScanForward  = 0x00000010,
-    JET_bitRetrieveHintTableScanBackward = 0x00000020,
-    JET_bitRetrieveHintReserve2          = 0x00000040,
-    JET_bitRetrieveHintReserve3          = 0x00000080,
+    JET_bitSetAppendLV                    = 0x00000001U,
+    JET_bitSetOverwriteLV                 = 0x00000004U,
+    JET_bitSetSizeLV                      = 0x00000008U,
+    JET_bitSetZeroLength                  = 0x00000020U,
+    JET_bitSetSeparateLV                  = 0x00000040U,
+    JET_bitSetUniqueMultiValues           = 0x00000080U,
+    JET_bitSetUniqueNormalizedMultiValues = 0x00000100U,
 }
 
-enum uint JET_bitDeleteHintTableSequential = 0x00000100;
+enum uint JET_bitSetRevertToDefaultValue = 0x00000200U;
 
 enum : uint
 {
-    JET_prepInsert        = 0x00000000,
-    JET_prepReplace       = 0x00000002,
-    JET_prepCancel        = 0x00000003,
-    JET_prepReplaceNoLock = 0x00000004,
+    JET_bitSetIntrinsicLV  = 0x00000400U,
+    JET_bitSetUncompressed = 0x00010000U,
+    JET_bitSetCompressed   = 0x00020000U,
+    JET_bitSetContiguousLV = 0x00040000U,
 }
+
+enum uint JET_bitSpaceHintsUtilizeParentSpace = 0x00000001U;
 
 enum : uint
 {
-    JET_prepInsertCopy                = 0x00000005,
-    JET_prepInsertCopyDeleteOriginal  = 0x00000007,
-    JET_prepInsertCopyReplaceOriginal = 0x00000009,
-}
-
-enum : uint
-{
-    JET_sqmDisable  = 0x00000000,
-    JET_sqmEnable   = 0x00000001,
-    JET_sqmFromCEIP = 0x00000002,
-}
-
-enum uint JET_bitUpdateCheckESE97Compatibility = 0x00000001;
-enum uint JET_bitEscrowNoRollback = 0x00000001;
-
-enum : uint
-{
-    JET_bitRetrieveCopy                = 0x00000001,
-    JET_bitRetrieveFromIndex           = 0x00000002,
-    JET_bitRetrieveFromPrimaryBookmark = 0x00000004,
-    JET_bitRetrieveTag                 = 0x00000008,
-    JET_bitRetrieveNull                = 0x00000010,
-    JET_bitRetrieveIgnoreDefault       = 0x00000020,
-    JET_bitRetrieveTuple               = 0x00000800,
+    JET_bitCreateHintAppendSequential   = 0x00000002U,
+    JET_bitCreateHintHotpointSequential = 0x00000004U,
 }
 
 enum : uint
 {
-    JET_bitZeroLength                        = 0x00000001,
-    JET_bitEnumerateCopy                     = 0x00000001,
-    JET_bitEnumerateIgnoreDefault            = 0x00000020,
-    JET_bitEnumeratePresenceOnly             = 0x00020000,
-    JET_bitEnumerateTaggedOnly               = 0x00040000,
-    JET_bitEnumerateCompressOutput           = 0x00080000,
-    JET_bitEnumerateIgnoreUserDefinedDefault = 0x00100000,
-    JET_bitEnumerateInRecordOnly             = 0x00200000,
+    JET_bitRetrieveHintReserve1          = 0x00000008U,
+    JET_bitRetrieveHintTableScanForward  = 0x00000010U,
+    JET_bitRetrieveHintTableScanBackward = 0x00000020U,
+    JET_bitRetrieveHintReserve2          = 0x00000040U,
+    JET_bitRetrieveHintReserve3          = 0x00000080U,
+}
+
+enum uint JET_bitDeleteHintTableSequential = 0x00000100U;
+
+enum : uint
+{
+    JET_prepInsert        = 0x00000000U,
+    JET_prepReplace       = 0x00000002U,
+    JET_prepCancel        = 0x00000003U,
+    JET_prepReplaceNoLock = 0x00000004U,
 }
 
 enum : uint
 {
-    JET_bitRecordSizeInCopyBuffer = 0x00000001,
-    JET_bitRecordSizeRunningTotal = 0x00000002,
-    JET_bitRecordSizeLocal        = 0x00000004,
-}
-
-enum uint JET_bitTransactionReadOnly = 0x00000001;
-enum uint JET_bitCommitLazyFlush = 0x00000001;
-
-enum : uint
-{
-    JET_bitWaitLastLevel0Commit = 0x00000002,
-    JET_bitWaitAllLevel0Commit  = 0x00000008,
-}
-
-enum uint JET_bitForceNewLog = 0x00000010;
-enum uint JET_bitRollbackAll = 0x00000001;
-enum uint JET_bitIncrementalSnapshot = 0x00000001;
-
-enum : uint
-{
-    JET_bitCopySnapshot      = 0x00000002,
-    JET_bitContinueAfterThaw = 0x00000004,
-}
-
-enum uint JET_bitExplicitPrepare = 0x00000008;
-enum uint JET_bitAllDatabasesSnapshot = 0x00000001;
-enum uint JET_bitAbortSnapshot = 0x00000001;
-
-enum : uint
-{
-    JET_DbInfoFilename       = 0x00000000,
-    JET_DbInfoConnect        = 0x00000001,
-    JET_DbInfoCountry        = 0x00000002,
-    JET_DbInfoLCID           = 0x00000003,
-    JET_DbInfoLangid         = 0x00000003,
-    JET_DbInfoCp             = 0x00000004,
-    JET_DbInfoCollate        = 0x00000005,
-    JET_DbInfoOptions        = 0x00000006,
-    JET_DbInfoTransactions   = 0x00000007,
-    JET_DbInfoVersion        = 0x00000008,
-    JET_DbInfoIsam           = 0x00000009,
-    JET_DbInfoFilesize       = 0x0000000a,
-    JET_DbInfoSpaceOwned     = 0x0000000b,
-    JET_DbInfoSpaceAvailable = 0x0000000c,
-    JET_DbInfoUpgrade        = 0x0000000d,
-    JET_DbInfoMisc           = 0x0000000e,
-    JET_DbInfoDBInUse        = 0x0000000f,
-    JET_DbInfoPageSize       = 0x00000011,
-    JET_DbInfoFileType       = 0x00000013,
-    JET_DbInfoFilesizeOnDisk = 0x00000015,
+    JET_prepInsertCopy                = 0x00000005U,
+    JET_prepInsertCopyDeleteOriginal  = 0x00000007U,
+    JET_prepInsertCopyReplaceOriginal = 0x00000009U,
 }
 
 enum : uint
 {
-    JET_dbstateJustCreated    = 0x00000001,
-    JET_dbstateDirtyShutdown  = 0x00000002,
-    JET_dbstateCleanShutdown  = 0x00000003,
-    JET_dbstateBeingConverted = 0x00000004,
-    JET_dbstateForceDetach    = 0x00000005,
+    JET_sqmDisable  = 0x00000000U,
+    JET_sqmEnable   = 0x00000001U,
+    JET_sqmFromCEIP = 0x00000002U,
+}
+
+enum uint JET_bitUpdateCheckESE97Compatibility = 0x00000001U;
+enum uint JET_bitEscrowNoRollback = 0x00000001U;
+
+enum : uint
+{
+    JET_bitRetrieveCopy                = 0x00000001U,
+    JET_bitRetrieveFromIndex           = 0x00000002U,
+    JET_bitRetrieveFromPrimaryBookmark = 0x00000004U,
+    JET_bitRetrieveTag                 = 0x00000008U,
+    JET_bitRetrieveNull                = 0x00000010U,
+    JET_bitRetrieveIgnoreDefault       = 0x00000020U,
+    JET_bitRetrieveTuple               = 0x00000800U,
 }
 
 enum : uint
 {
-    JET_filetypeUnknown      = 0x00000000,
-    JET_filetypeDatabase     = 0x00000001,
-    JET_filetypeLog          = 0x00000003,
-    JET_filetypeCheckpoint   = 0x00000004,
-    JET_filetypeTempDatabase = 0x00000005,
-    JET_filetypeFlushMap     = 0x00000007,
+    JET_bitZeroLength                        = 0x00000001U,
+    JET_bitEnumerateCopy                     = 0x00000001U,
+    JET_bitEnumerateIgnoreDefault            = 0x00000020U,
+    JET_bitEnumeratePresenceOnly             = 0x00020000U,
+    JET_bitEnumerateTaggedOnly               = 0x00040000U,
+    JET_bitEnumerateCompressOutput           = 0x00080000U,
+    JET_bitEnumerateIgnoreUserDefinedDefault = 0x00100000U,
+    JET_bitEnumerateInRecordOnly             = 0x00200000U,
 }
 
 enum : uint
 {
-    JET_coltypNil              = 0x00000000,
-    JET_coltypBit              = 0x00000001,
-    JET_coltypUnsignedByte     = 0x00000002,
-    JET_coltypShort            = 0x00000003,
-    JET_coltypLong             = 0x00000004,
-    JET_coltypCurrency         = 0x00000005,
-    JET_coltypIEEESingle       = 0x00000006,
-    JET_coltypIEEEDouble       = 0x00000007,
-    JET_coltypDateTime         = 0x00000008,
-    JET_coltypBinary           = 0x00000009,
-    JET_coltypText             = 0x0000000a,
-    JET_coltypLongBinary       = 0x0000000b,
-    JET_coltypLongText         = 0x0000000c,
-    JET_coltypMax              = 0x0000000d,
-    JET_coltypSLV              = 0x0000000d,
-    JET_coltypUnsignedLong     = 0x0000000e,
-    JET_coltypLongLong         = 0x0000000f,
-    JET_coltypGUID             = 0x00000010,
-    JET_coltypUnsignedShort    = 0x00000011,
-    JET_coltypUnsignedLongLong = 0x00000012,
+    JET_bitRecordSizeInCopyBuffer = 0x00000001U,
+    JET_bitRecordSizeRunningTotal = 0x00000002U,
+    JET_bitRecordSizeLocal        = 0x00000004U,
+}
+
+enum uint JET_bitTransactionReadOnly = 0x00000001U;
+enum uint JET_bitCommitLazyFlush = 0x00000001U;
+
+enum : uint
+{
+    JET_bitWaitLastLevel0Commit = 0x00000002U,
+    JET_bitWaitAllLevel0Commit  = 0x00000008U,
+}
+
+enum uint JET_bitForceNewLog = 0x00000010U;
+enum uint JET_bitRollbackAll = 0x00000001U;
+enum uint JET_bitIncrementalSnapshot = 0x00000001U;
+
+enum : uint
+{
+    JET_bitCopySnapshot      = 0x00000002U,
+    JET_bitContinueAfterThaw = 0x00000004U,
+}
+
+enum uint JET_bitExplicitPrepare = 0x00000008U;
+enum uint JET_bitAllDatabasesSnapshot = 0x00000001U;
+enum uint JET_bitAbortSnapshot = 0x00000001U;
+
+enum : uint
+{
+    JET_DbInfoFilename       = 0x00000000U,
+    JET_DbInfoConnect        = 0x00000001U,
+    JET_DbInfoCountry        = 0x00000002U,
+    JET_DbInfoLCID           = 0x00000003U,
+    JET_DbInfoLangid         = 0x00000003U,
+    JET_DbInfoCp             = 0x00000004U,
+    JET_DbInfoCollate        = 0x00000005U,
+    JET_DbInfoOptions        = 0x00000006U,
+    JET_DbInfoTransactions   = 0x00000007U,
+    JET_DbInfoVersion        = 0x00000008U,
+    JET_DbInfoIsam           = 0x00000009U,
+    JET_DbInfoFilesize       = 0x0000000aU,
+    JET_DbInfoSpaceOwned     = 0x0000000bU,
+    JET_DbInfoSpaceAvailable = 0x0000000cU,
+    JET_DbInfoUpgrade        = 0x0000000dU,
+    JET_DbInfoMisc           = 0x0000000eU,
+    JET_DbInfoDBInUse        = 0x0000000fU,
+    JET_DbInfoPageSize       = 0x00000011U,
+    JET_DbInfoFileType       = 0x00000013U,
+    JET_DbInfoFilesizeOnDisk = 0x00000015U,
 }
 
 enum : uint
 {
-    JET_ColInfoGrbitNonDerivedColumnsOnly = 0x80000000,
-    JET_ColInfoGrbitMinimalInfo           = 0x40000000,
-    JET_ColInfoGrbitSortByColumnid        = 0x20000000,
+    JET_dbstateJustCreated    = 0x00000001U,
+    JET_dbstateDirtyShutdown  = 0x00000002U,
+    JET_dbstateCleanShutdown  = 0x00000003U,
+    JET_dbstateBeingConverted = 0x00000004U,
+    JET_dbstateForceDetach    = 0x00000005U,
 }
 
 enum : uint
 {
-    JET_objtypNil   = 0x00000000,
-    JET_objtypTable = 0x00000001,
+    JET_filetypeUnknown      = 0x00000000U,
+    JET_filetypeDatabase     = 0x00000001U,
+    JET_filetypeLog          = 0x00000003U,
+    JET_filetypeCheckpoint   = 0x00000004U,
+    JET_filetypeTempDatabase = 0x00000005U,
+    JET_filetypeFlushMap     = 0x00000007U,
 }
 
 enum : uint
 {
-    JET_bitCompactStats  = 0x00000020,
-    JET_bitCompactRepair = 0x00000040,
+    JET_coltypNil              = 0x00000000U,
+    JET_coltypBit              = 0x00000001U,
+    JET_coltypUnsignedByte     = 0x00000002U,
+    JET_coltypShort            = 0x00000003U,
+    JET_coltypLong             = 0x00000004U,
+    JET_coltypCurrency         = 0x00000005U,
+    JET_coltypIEEESingle       = 0x00000006U,
+    JET_coltypIEEEDouble       = 0x00000007U,
+    JET_coltypDateTime         = 0x00000008U,
+    JET_coltypBinary           = 0x00000009U,
+    JET_coltypText             = 0x0000000aU,
+    JET_coltypLongBinary       = 0x0000000bU,
+    JET_coltypLongText         = 0x0000000cU,
+    JET_coltypMax              = 0x0000000dU,
+    JET_coltypSLV              = 0x0000000dU,
+    JET_coltypUnsignedLong     = 0x0000000eU,
+    JET_coltypLongLong         = 0x0000000fU,
+    JET_coltypGUID             = 0x00000010U,
+    JET_coltypUnsignedShort    = 0x00000011U,
+    JET_coltypUnsignedLongLong = 0x00000012U,
 }
 
 enum : uint
 {
-    JET_snpRepair              = 0x00000002,
-    JET_snpCompact             = 0x00000004,
-    JET_snpRestore             = 0x00000008,
-    JET_snpBackup              = 0x00000009,
-    JET_snpUpgrade             = 0x0000000a,
-    JET_snpScrub               = 0x0000000b,
-    JET_snpUpgradeRecordFormat = 0x0000000c,
+    JET_ColInfoGrbitNonDerivedColumnsOnly = 0x80000000U,
+    JET_ColInfoGrbitMinimalInfo           = 0x40000000U,
+    JET_ColInfoGrbitSortByColumnid        = 0x20000000U,
 }
 
 enum : uint
 {
-    JET_sntBegin        = 0x00000005,
-    JET_sntRequirements = 0x00000007,
+    JET_objtypNil   = 0x00000000U,
+    JET_objtypTable = 0x00000001U,
 }
 
 enum : uint
 {
-    JET_sntProgress = 0x00000000,
-    JET_sntComplete = 0x00000006,
-    JET_sntFail     = 0x00000003,
+    JET_bitCompactStats  = 0x00000020U,
+    JET_bitCompactRepair = 0x00000040U,
 }
 
 enum : uint
 {
-    JET_ExceptionMsgBox   = 0x00000001,
-    JET_ExceptionNone     = 0x00000002,
-    JET_ExceptionFailFast = 0x00000004,
+    JET_snpRepair              = 0x00000002U,
+    JET_snpCompact             = 0x00000004U,
+    JET_snpRestore             = 0x00000008U,
+    JET_snpBackup              = 0x00000009U,
+    JET_snpUpgrade             = 0x0000000aU,
+    JET_snpScrub               = 0x0000000bU,
+    JET_snpUpgradeRecordFormat = 0x0000000cU,
 }
 
 enum : uint
 {
-    JET_OnlineDefragDisable     = 0x00000000,
-    JET_OnlineDefragAllOBSOLETE = 0x00000001,
-    JET_OnlineDefragDatabases   = 0x00000002,
-    JET_OnlineDefragSpaceTrees  = 0x00000004,
-    JET_OnlineDefragAll         = 0x0000ffff,
+    JET_sntBegin        = 0x00000005U,
+    JET_sntRequirements = 0x00000007U,
 }
 
 enum : uint
 {
-    JET_bitResizeDatabaseOnlyGrow   = 0x00000001,
-    JET_bitResizeDatabaseOnlyShrink = 0x00000002,
+    JET_sntProgress = 0x00000000U,
+    JET_sntComplete = 0x00000006U,
+    JET_sntFail     = 0x00000003U,
 }
 
 enum : uint
 {
-    JET_bitStopServiceAll                 = 0x00000000,
-    JET_bitStopServiceBackgroundUserTasks = 0x00000002,
-    JET_bitStopServiceQuiesceCaches       = 0x00000004,
-    JET_bitStopServiceResume              = 0x80000000,
+    JET_ExceptionMsgBox   = 0x00000001U,
+    JET_ExceptionNone     = 0x00000002U,
+    JET_ExceptionFailFast = 0x00000004U,
+}
+
+enum : uint
+{
+    JET_OnlineDefragDisable     = 0x00000000U,
+    JET_OnlineDefragAllOBSOLETE = 0x00000001U,
+    JET_OnlineDefragDatabases   = 0x00000002U,
+    JET_OnlineDefragSpaceTrees  = 0x00000004U,
+    JET_OnlineDefragAll         = 0x0000ffffU,
+}
+
+enum : uint
+{
+    JET_bitResizeDatabaseOnlyGrow   = 0x00000001U,
+    JET_bitResizeDatabaseOnlyShrink = 0x00000002U,
+}
+
+enum : uint
+{
+    JET_bitStopServiceAll                 = 0x00000000U,
+    JET_bitStopServiceBackgroundUserTasks = 0x00000002U,
+    JET_bitStopServiceQuiesceCaches       = 0x00000004U,
+    JET_bitStopServiceResume              = 0x80000000U,
 }
 
 enum int JET_errSuccess = 0x00000000;
@@ -1025,7 +1028,7 @@ enum int JET_errInternalError = 0xffffff95;
 enum int JET_errDisabledFunctionality = 0xffffff90;
 enum int JET_errUnloadableOSFunctionality = 0xffffff8f;
 enum int JET_errDatabaseBufferDependenciesCorrupted = 0xffffff01;
-enum uint JET_wrnRemainingVersions = 0x00000141;
+enum uint JET_wrnRemainingVersions = 0x00000141U;
 enum int JET_errPreviousVersion = 0xfffffebe;
 enum int JET_errPageBoundary = 0xfffffebd;
 enum int JET_errKeyBoundary = 0xfffffebc;
@@ -1048,15 +1051,15 @@ enum : int
 
 enum int JET_errSPOwnExtCorrupted = 0xfffffea9;
 enum int JET_errDbTimeCorrupted = 0xfffffea8;
-enum uint JET_wrnUniqueKey = 0x00000159;
+enum uint JET_wrnUniqueKey = 0x00000159U;
 enum int JET_errKeyTruncated = 0xfffffea6;
 enum int JET_errDatabaseLeakInSpace = 0xfffffea4;
 enum int JET_errBadEmptyPage = 0xfffffea1;
 
 enum : uint
 {
-    wrnBTNotVisibleRejected    = 0x00000160,
-    wrnBTNotVisibleAccumulated = 0x00000161,
+    wrnBTNotVisibleRejected    = 0x00000160U,
+    wrnBTNotVisibleAccumulated = 0x00000161U,
 }
 
 enum int JET_errBadLineCount = 0xfffffe9e;
@@ -1069,7 +1072,7 @@ enum : int
     JET_errBBTBuffCorrupted = 0xfffffe93,
 }
 
-enum uint JET_wrnSeparateLongValue = 0x00000196;
+enum uint JET_wrnSeparateLongValue = 0x00000196U;
 
 enum : int
 {
@@ -1185,8 +1188,8 @@ enum int JET_errMissingRestoreLogFiles = 0xfffffdd3;
 
 enum : uint
 {
-    JET_wrnExistingLogFileHasBadSignature = 0x0000022e,
-    JET_wrnExistingLogFileIsNotContiguous = 0x0000022f,
+    JET_wrnExistingLogFileHasBadSignature = 0x0000022eU,
+    JET_wrnExistingLogFileIsNotContiguous = 0x0000022fU,
 }
 
 enum int JET_errMissingFullBackup = 0xfffffdd0;
@@ -1198,7 +1201,7 @@ enum : int
     JET_errDatabaseIncompleteUpgrade = 0xfffffdcd,
 }
 
-enum uint JET_wrnSkipThisRecord = 0x00000234;
+enum uint JET_wrnSkipThisRecord = 0x00000234U;
 enum int JET_errMissingCurrentLogFiles = 0xfffffdcb;
 
 enum : int
@@ -1223,19 +1226,19 @@ enum : int
 
 enum int JET_errMustDisableLoggingForDbUpgrade = 0xfffffdc1;
 enum int JET_errBadRestoreTargetInstance = 0xfffffdbf;
-enum uint JET_wrnTargetInstanceRunning = 0x00000242;
+enum uint JET_wrnTargetInstanceRunning = 0x00000242U;
 enum int JET_errRecoveredWithoutUndo = 0xfffffdbd;
 enum int JET_errDatabasesNotFromSameSnapshot = 0xfffffdbc;
 enum int JET_errSoftRecoveryOnSnapshot = 0xfffffdbb;
 enum int JET_errCommittedLogFilesMissing = 0xfffffdba;
 enum int JET_errSectorSizeNotSupported = 0xfffffdb9;
 enum int JET_errRecoveredWithoutUndoDatabasesConsistent = 0xfffffdb8;
-enum uint JET_wrnCommittedLogFilesLost = 0x00000249;
+enum uint JET_wrnCommittedLogFilesLost = 0x00000249U;
 enum int JET_errCommittedLogFileCorrupt = 0xfffffdb6;
-enum uint JET_wrnCommittedLogFilesRemoved = 0x0000024b;
-enum uint JET_wrnFinishWithUndo = 0x0000024c;
+enum uint JET_wrnCommittedLogFilesRemoved = 0x0000024bU;
+enum uint JET_wrnFinishWithUndo = 0x0000024cU;
 enum int JET_errLogSequenceChecksumMismatch = 0xfffffdb2;
-enum uint JET_wrnDatabaseRepaired = 0x00000253;
+enum uint JET_wrnDatabaseRepaired = 0x00000253U;
 enum int JET_errPageInitializedMismatch = 0xfffffdac;
 
 enum : int
@@ -1284,13 +1287,13 @@ enum : int
 
 enum : uint
 {
-    JET_wrnColumnNull      = 0x000003ec,
-    JET_wrnBufferTruncated = 0x000003ee,
+    JET_wrnColumnNull      = 0x000003ecU,
+    JET_wrnBufferTruncated = 0x000003eeU,
 }
 
-enum uint JET_wrnDatabaseAttached = 0x000003ef;
+enum uint JET_wrnDatabaseAttached = 0x000003efU;
 enum int JET_errDatabaseFileReadOnly = 0xfffffc10;
-enum uint JET_wrnSortOverflow = 0x000003f1;
+enum uint JET_wrnSortOverflow = 0x000003f1U;
 enum int JET_errInvalidDatabaseId = 0xfffffc0e;
 
 enum : int
@@ -1333,7 +1336,7 @@ enum int JET_errAlreadyInitialized = 0xfffffbfa;
 enum int JET_errInitInProgress = 0xfffffbf9;
 enum int JET_errFileAccessDenied = 0xfffffbf8;
 enum int JET_errBufferTooSmall = 0xfffffbf2;
-enum uint JET_wrnSeekNotEqual = 0x0000040f;
+enum uint JET_wrnSeekNotEqual = 0x0000040fU;
 enum int JET_errTooManyColumns = 0xfffffbf0;
 enum int JET_errContainerNotEmpty = 0xfffffbed;
 
@@ -1355,9 +1358,9 @@ enum : int
 
 enum int JET_errNullKeyDisallowed = 0xfffffbe3;
 enum int JET_errNotInTransaction = 0xfffffbe2;
-enum uint JET_wrnNoErrorInfo = 0x0000041f;
+enum uint JET_wrnNoErrorInfo = 0x0000041fU;
 enum int JET_errMustRollback = 0xfffffbdf;
-enum uint JET_wrnNoIdleActivity = 0x00000422;
+enum uint JET_wrnNoIdleActivity = 0x00000422U;
 enum int JET_errTooManyActiveUsers = 0xfffffbdd;
 
 enum : int
@@ -1374,8 +1377,8 @@ enum : int
     JET_errVersionStoreOutOfMemoryAndCleanupTimedOut = 0xfffffbd6,
 }
 
-enum uint JET_wrnNoWriteLock = 0x0000042b;
-enum uint JET_wrnColumnSetNull = 0x0000042c;
+enum uint JET_wrnNoWriteLock = 0x0000042bU;
+enum uint JET_wrnColumnSetNull = 0x0000042cU;
 enum int JET_errVersionStoreOutOfMemory = 0xfffffbd3;
 enum int JET_errCannotIndex = 0xfffffbd1;
 enum int JET_errRecordNotDeleted = 0xfffffbd0;
@@ -1433,7 +1436,7 @@ enum int JET_errDirtyShutdown = 0xfffffba4;
 enum int JET_errReadPgnoVerifyFailure = 0xfffffba2;
 enum int JET_errReadLostFlushVerifyFailure = 0xfffffba1;
 enum int JET_errFileSystemCorruption = 0xfffffb9f;
-enum uint JET_wrnShrinkNotPossible = 0x00000462;
+enum uint JET_wrnShrinkNotPossible = 0x00000462U;
 enum int JET_errRecoveryVerifyFailure = 0xfffffb9d;
 enum int JET_errFilteredMoveNotSupported = 0xfffffb9c;
 
@@ -1488,7 +1491,7 @@ enum : int
 }
 
 enum int JET_errTransactionsNotReadyDuringRecovery = 0xfffffb30;
-enum uint JET_wrnTableEmpty = 0x00000515;
+enum uint JET_wrnTableEmpty = 0x00000515U;
 
 enum : int
 {
@@ -1524,7 +1527,7 @@ enum : int
 
 enum int JET_errCannotNestDDL = 0xfffffad3;
 enum int JET_errDDLNotInheritable = 0xfffffad2;
-enum uint JET_wrnTableInUseBySystem = 0x0000052f;
+enum uint JET_wrnTableInUseBySystem = 0x0000052fU;
 enum int JET_errInvalidSettings = 0xfffffad0;
 enum int JET_errClientRequestToStopJetService = 0xfffffacf;
 enum int JET_errCannotAddFixedVarColumnToDerivedTable = 0xffffface;
@@ -1545,10 +1548,10 @@ enum int JET_errMultiValuedIndexViolation = 0xfffffa7d;
 enum int JET_errIndexBuildCorrupted = 0xfffffa7c;
 enum int JET_errPrimaryIndexCorrupted = 0xfffffa7b;
 enum int JET_errSecondaryIndexCorrupted = 0xfffffa7a;
-enum uint JET_wrnCorruptIndexDeleted = 0x00000587;
+enum uint JET_wrnCorruptIndexDeleted = 0x00000587U;
 enum int JET_errInvalidIndexId = 0xfffffa78;
-enum uint JET_wrnPrimaryIndexOutOfDate = 0x00000589;
-enum uint JET_wrnSecondaryIndexOutOfDate = 0x0000058a;
+enum uint JET_wrnPrimaryIndexOutOfDate = 0x00000589U;
+enum uint JET_wrnSecondaryIndexOutOfDate = 0x0000058aU;
 
 enum : int
 {
@@ -1588,7 +1591,7 @@ enum : int
 enum int JET_errMultiValuedColumnMustBeTagged = 0xfffffa1b;
 enum int JET_errColumnRedundant = 0xfffffa1a;
 enum int JET_errInvalidColumnType = 0xfffffa19;
-enum uint JET_wrnColumnMaxTruncated = 0x000005e8;
+enum uint JET_wrnColumnMaxTruncated = 0x000005e8U;
 enum int JET_errTaggedNotNULL = 0xfffffa16;
 enum int JET_errNoCurrentIndex = 0xfffffa15;
 
@@ -1600,7 +1603,7 @@ enum : int
 }
 
 enum int JET_errColumnInRelationship = 0xfffffa11;
-enum uint JET_wrnCopyLongValue = 0x000005f0;
+enum uint JET_wrnCopyLongValue = 0x000005f0U;
 enum int JET_errCannotBeTagged = 0xfffffa0f;
 enum int JET_errDefaultValueTooBig = 0xfffffa0c;
 enum int JET_errMultiValuedDuplicate = 0xfffffa0b;
@@ -1611,19 +1614,19 @@ enum int JET_errInvalidPlaceholderColumn = 0xfffffa06;
 
 enum : uint
 {
-    JET_wrnColumnSkipped     = 0x000005fb,
-    JET_wrnColumnNotLocal    = 0x000005fc,
-    JET_wrnColumnMoreTags    = 0x000005fd,
-    JET_wrnColumnTruncated   = 0x000005fe,
-    JET_wrnColumnPresent     = 0x000005ff,
-    JET_wrnColumnSingleValue = 0x00000600,
-    JET_wrnColumnDefault     = 0x00000601,
+    JET_wrnColumnSkipped     = 0x000005fbU,
+    JET_wrnColumnNotLocal    = 0x000005fcU,
+    JET_wrnColumnMoreTags    = 0x000005fdU,
+    JET_wrnColumnTruncated   = 0x000005feU,
+    JET_wrnColumnPresent     = 0x000005ffU,
+    JET_wrnColumnSingleValue = 0x00000600U,
+    JET_wrnColumnDefault     = 0x00000601U,
 }
 
 enum int JET_errColumnCannotBeCompressed = 0xfffff9fe;
-enum uint JET_wrnColumnNotInRecord = 0x00000603;
+enum uint JET_wrnColumnNotInRecord = 0x00000603U;
 enum int JET_errColumnNoEncryptionKey = 0xfffff9fc;
-enum uint JET_wrnColumnReference = 0x00000605;
+enum uint JET_wrnColumnReference = 0x00000605U;
 
 enum : int
 {
@@ -1642,9 +1645,9 @@ enum : int
     JET_errUpdateNotPrepared = 0xfffff9b7,
 }
 
-enum uint JET_wrnDataHasChanged = 0x0000064a;
+enum uint JET_wrnDataHasChanged = 0x0000064aU;
 enum int JET_errDataHasChanged = 0xfffff9b5;
-enum uint JET_wrnKeyChanged = 0x00000652;
+enum uint JET_wrnKeyChanged = 0x00000652U;
 enum int JET_errLanguageNotSupported = 0xfffff9ad;
 enum int JET_errDecompressionFailed = 0xfffff9ac;
 enum int JET_errUpdateMustVersion = 0xfffff9ab;
@@ -1669,13 +1672,13 @@ enum : int
     JET_errFileInvalidType = 0xfffff8ec,
 }
 
-enum uint JET_wrnFileOpenReadOnly = 0x00000715;
+enum uint JET_wrnFileOpenReadOnly = 0x00000715U;
 enum int JET_errFileAlreadyExists = 0xfffff8ea;
 enum int JET_errAfterInitialization = 0xfffff8c6;
 enum int JET_errLogCorrupted = 0xfffff8c4;
 enum int JET_errInvalidOperation = 0xfffff88e;
 enum int JET_errAccessDenied = 0xfffff88d;
-enum uint JET_wrnIdleFull = 0x00000774;
+enum uint JET_wrnIdleFull = 0x00000774U;
 enum int JET_errTooManySplits = 0xfffff88b;
 enum int JET_errSessionSharingViolation = 0xfffff88a;
 enum int JET_errEntryPointNotFound = 0xfffff889;
@@ -1700,12 +1703,12 @@ enum : int
 
 enum : uint
 {
-    JET_wrnDefragAlreadyRunning = 0x000007d0,
-    JET_wrnDefragNotRunning     = 0x000007d1,
+    JET_wrnDefragAlreadyRunning = 0x000007d0U,
+    JET_wrnDefragNotRunning     = 0x000007d1U,
 }
 
 enum int JET_errDatabaseAlreadyRunningMaintenance = 0xfffff82c;
-enum uint JET_wrnCallbackNotRegistered = 0x00000834;
+enum uint JET_wrnCallbackNotRegistered = 0x00000834U;
 
 enum : int
 {
@@ -1743,18 +1746,18 @@ enum : int
     JET_errClientSpaceEnd   = 0xffffd121,
 }
 
-enum uint JET_BASE_NAME_LENGTH = 0x00000003;
+enum uint JET_BASE_NAME_LENGTH = 0x00000003U;
 
 enum : uint
 {
-    JET_bitDumpMinimum                    = 0x00000001,
-    JET_bitDumpMaximum                    = 0x00000002,
-    JET_bitDumpCacheMinimum               = 0x00000004,
-    JET_bitDumpCacheMaximum               = 0x00000008,
-    JET_bitDumpCacheIncludeDirtyPages     = 0x00000010,
-    JET_bitDumpCacheIncludeCachedPages    = 0x00000020,
-    JET_bitDumpCacheIncludeCorruptedPages = 0x00000040,
-    JET_bitDumpCacheNoDecommit            = 0x00000080,
+    JET_bitDumpMinimum                    = 0x00000001U,
+    JET_bitDumpMaximum                    = 0x00000002U,
+    JET_bitDumpCacheMinimum               = 0x00000004U,
+    JET_bitDumpCacheMaximum               = 0x00000008U,
+    JET_bitDumpCacheIncludeDirtyPages     = 0x00000010U,
+    JET_bitDumpCacheIncludeCachedPages    = 0x00000020U,
+    JET_bitDumpCacheIncludeCorruptedPages = 0x00000040U,
+    JET_bitDumpCacheNoDecommit            = 0x00000080U,
 }
 
 // Callbacks
@@ -1770,7 +1773,7 @@ alias JET_PFNREALLOC = void* function(void* pvContext, void* pv, uint cb);
 
 @RAIIFree!JetTerm
 //STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-instance))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-instance
 struct JET_INSTANCE
 {
     size_t Value;
@@ -1778,120 +1781,265 @@ struct JET_INSTANCE
 
 @RAIIFree!JetEndSession
 //STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-sesid-structure))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-sesid-structure
 struct JET_SESID
 {
     size_t Value;
 }
 
 //STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-ossnapid))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-ossnapid
 struct JET_OSSNAPID
 {
     size_t Value;
 }
 
 //STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-ls))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-ls
 struct JET_LS
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-ls
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-ls.value-property))], [])*/size_t Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexid-structure))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct JET_INDEXID
+version(X86_64)
 {
-    uint      cbStruct;
-    ubyte[16] rgbIndexId;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexid-structure
+    struct JET_INDEXID
+    {
+        uint      cbStruct;
+        ubyte[16] rgbIndexId;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo-constructor))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct JET_OBJECTINFO
+version(AArch64)
 {
-    uint   cbStruct;
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.objtyp-property))], [])*/uint objtyp;
-    double dtCreate;
-    double dtUpdate;
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.grbit-property))], [])*/uint grbit;
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.flags-property))], [])*/uint flags;
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.crecord-property))], [])*/uint cRecord;
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.cpage-property))], [])*/uint cPage;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexid-structure
+    struct JET_INDEXID
+    {
+        uint      cbStruct;
+        ubyte[16] rgbIndexId;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct JET_RECPOS2
+version(X86_64)
 {
-    uint  cbStruct;
-    uint  centriesLTDeprecated;
-    uint  centriesInRangeDeprecated;
-    uint  centriesTotalDeprecated;
-    ulong centriesLT;
-    ulong centriesTotal;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo-constructor
+    struct JET_OBJECTINFO
+    {
+        uint   cbStruct;
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo-constructor
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.objtyp-property))], [])*/uint objtyp;
+        double dtCreate;
+        double dtUpdate;
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo-constructor
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.grbit-property))], [])*/uint grbit;
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo-constructor
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.flags-property))], [])*/uint flags;
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo-constructor
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.crecord-property))], [])*/uint cRecord;
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo-constructor
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.cpage-property))], [])*/uint cPage;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct JET_THREADSTATS2
+version(AArch64)
 {
-    uint  cbStruct;
-    uint  cPageReferenced;
-    uint  cPageRead;
-    uint  cPagePreread;
-    uint  cPageDirtied;
-    uint  cPageRedirtied;
-    uint  cLogRecord;
-    uint  cbLogRecord;
-    ulong cusecPageCacheMiss;
-    uint  cPageCacheMiss;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo-constructor
+    struct JET_OBJECTINFO
+    {
+        uint   cbStruct;
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo-constructor
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.objtyp-property))], [])*/uint objtyp;
+        double dtCreate;
+        double dtUpdate;
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo-constructor
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.grbit-property))], [])*/uint grbit;
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo-constructor
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.flags-property))], [])*/uint flags;
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo-constructor
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.crecord-property))], [])*/uint cRecord;
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo-constructor
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.cpage-property))], [])*/uint cPage;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-commit-id-class))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct JET_COMMIT_ID
+version(X86_64)
 {
-    JET_SIGNATURE signLog;
-    int           reserved;
-    long          commitId;
+    struct JET_RECPOS2
+    {
+        uint  cbStruct;
+        uint  centriesLTDeprecated;
+        uint  centriesInRangeDeprecated;
+        uint  centriesTotalDeprecated;
+        ulong centriesLT;
+        ulong centriesTotal;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize-structure2))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct JET_RECSIZE
+version(AArch64)
 {
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cbdata-property))], [])*/ulong cbData;
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cblongvaluedata-property))], [])*/ulong cbLongValueData;
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cboverhead-property))], [])*/ulong cbOverhead;
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cblongvalueoverhead-property))], [])*/ulong cbLongValueOverhead;
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cnontaggedcolumns-property))], [])*/ulong cNonTaggedColumns;
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.ctaggedcolumns-property))], [])*/ulong cTaggedColumns;
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.clongvalues-property))], [])*/ulong cLongValues;
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cmultivalues-property))], [])*/ulong cMultiValues;
+    struct JET_RECPOS2
+    {
+        uint  cbStruct;
+        uint  centriesLTDeprecated;
+        uint  centriesInRangeDeprecated;
+        uint  centriesTotalDeprecated;
+        ulong centriesLT;
+        ulong centriesTotal;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize2-structure))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct JET_RECSIZE2
+version(X86_64)
 {
-    ulong cbData;
-    ulong cbLongValueData;
-    ulong cbOverhead;
-    ulong cbLongValueOverhead;
-    ulong cNonTaggedColumns;
-    ulong cTaggedColumns;
-    ulong cLongValues;
-    ulong cMultiValues;
-    ulong cCompressedColumns;
-    ulong cbDataCompressed;
-    ulong cbLongValueDataCompressed;
+    struct JET_THREADSTATS2
+    {
+        uint  cbStruct;
+        uint  cPageReferenced;
+        uint  cPageRead;
+        uint  cPagePreread;
+        uint  cPageDirtied;
+        uint  cPageRedirtied;
+        uint  cLogRecord;
+        uint  cbLogRecord;
+        ulong cusecPageCacheMiss;
+        uint  cPageCacheMiss;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexid-structure))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct JET_INDEXID
+version(AArch64)
 {
-    uint      cbStruct;
-    ubyte[12] rgbIndexId;
+    struct JET_THREADSTATS2
+    {
+        uint  cbStruct;
+        uint  cPageReferenced;
+        uint  cPageRead;
+        uint  cPagePreread;
+        uint  cPageDirtied;
+        uint  cPageRedirtied;
+        uint  cLogRecord;
+        uint  cbLogRecord;
+        ulong cusecPageCacheMiss;
+        uint  cPageCacheMiss;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-commit-id-class
+    struct JET_COMMIT_ID
+    {
+        JET_SIGNATURE signLog;
+        int           reserved;
+        long          commitId;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-commit-id-class
+    struct JET_COMMIT_ID
+    {
+        JET_SIGNATURE signLog;
+        int           reserved;
+        long          commitId;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize-structure2
+    struct JET_RECSIZE
+    {
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize-structure2
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cbdata-property))], [])*/ulong cbData;
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize-structure2
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cblongvaluedata-property))], [])*/ulong cbLongValueData;
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize-structure2
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cboverhead-property))], [])*/ulong cbOverhead;
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize-structure2
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cblongvalueoverhead-property))], [])*/ulong cbLongValueOverhead;
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize-structure2
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cnontaggedcolumns-property))], [])*/ulong cNonTaggedColumns;
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize-structure2
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.ctaggedcolumns-property))], [])*/ulong cTaggedColumns;
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize-structure2
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.clongvalues-property))], [])*/ulong cLongValues;
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize-structure2
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cmultivalues-property))], [])*/ulong cMultiValues;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize-structure2
+    struct JET_RECSIZE
+    {
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize-structure2
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cbdata-property))], [])*/ulong cbData;
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize-structure2
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cblongvaluedata-property))], [])*/ulong cbLongValueData;
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize-structure2
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cboverhead-property))], [])*/ulong cbOverhead;
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize-structure2
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cblongvalueoverhead-property))], [])*/ulong cbLongValueOverhead;
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize-structure2
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cnontaggedcolumns-property))], [])*/ulong cNonTaggedColumns;
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize-structure2
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.ctaggedcolumns-property))], [])*/ulong cTaggedColumns;
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize-structure2
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.clongvalues-property))], [])*/ulong cLongValues;
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize-structure2
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cmultivalues-property))], [])*/ulong cMultiValues;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize2-structure
+    struct JET_RECSIZE2
+    {
+        ulong cbData;
+        ulong cbLongValueData;
+        ulong cbOverhead;
+        ulong cbLongValueOverhead;
+        ulong cNonTaggedColumns;
+        ulong cTaggedColumns;
+        ulong cLongValues;
+        ulong cMultiValues;
+        ulong cCompressedColumns;
+        ulong cbDataCompressed;
+        ulong cbLongValueDataCompressed;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize2-structure
+    struct JET_RECSIZE2
+    {
+        ulong cbData;
+        ulong cbLongValueData;
+        ulong cbOverhead;
+        ulong cbLongValueOverhead;
+        ulong cNonTaggedColumns;
+        ulong cTaggedColumns;
+        ulong cLongValues;
+        ulong cMultiValues;
+        ulong cCompressedColumns;
+        ulong cbDataCompressed;
+        ulong cbLongValueDataCompressed;
+    }
+}
+
+version(X86)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexid-structure
+    struct JET_INDEXID
+    {
+        uint      cbStruct;
+        ubyte[12] rgbIndexId;
+    }
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
@@ -1911,102 +2059,154 @@ struct JET_RSTMAP_W
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct JET_CONVERT_A
 {
-    byte*               szOldDll;
-    _Anonymous_e__Union Anonymous;
+    byte* szOldDll;
+    union
+    {
+        uint fFlags;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fSchemaChangesOnly)), FixedArgSig(ElementSig(0)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield174;
+        }
+    }
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct JET_CONVERT_W
 {
-    ushort*             szOldDll;
-    _Anonymous_e__Union Anonymous;
+    ushort* szOldDll;
+    union
+    {
+        uint fFlags;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fSchemaChangesOnly)), FixedArgSig(ElementSig(0)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield175;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-snprog-class))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-snprog-class
 struct JET_SNPROG
 {
     uint cbStruct;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-snprog-class
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-snprog.cunitdone-property))], [])*/uint cunitDone;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-snprog-class
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-snprog.cunittotal-property))], [])*/uint cunitTotal;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfoupgrade-structure))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfoupgrade-structure
 struct JET_DBINFOUPGRADE
 {
-    uint                cbStruct;
-    uint                cbFilesizeLow;
-    uint                cbFilesizeHigh;
-    uint                cbFreeSpaceRequiredLow;
-    uint                cbFreeSpaceRequiredHigh;
-    uint                csecToUpgrade;
-    _Anonymous_e__Union Anonymous;
+    uint cbStruct;
+    uint cbFilesizeLow;
+    uint cbFilesizeHigh;
+    uint cbFreeSpaceRequiredLow;
+    uint cbFreeSpaceRequiredHigh;
+    uint csecToUpgrade;
+    union
+    {
+        uint ulFlags;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fAlreadyUpgraded)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield176;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo-constructor))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct JET_OBJECTINFO
+version(X86)
 {
-align (4):
-    uint   cbStruct;
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.objtyp-property))], [])*/uint objtyp;
-    double dtCreate;
-    double dtUpdate;
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.grbit-property))], [])*/uint grbit;
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.flags-property))], [])*/uint flags;
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.crecord-property))], [])*/uint cRecord;
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.cpage-property))], [])*/uint cPage;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo-constructor
+    struct JET_OBJECTINFO
+    {
+    align (4):
+        uint   cbStruct;
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo-constructor
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.objtyp-property))], [])*/uint objtyp;
+        double dtCreate;
+        double dtUpdate;
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo-constructor
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.grbit-property))], [])*/uint grbit;
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo-constructor
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.flags-property))], [])*/uint flags;
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo-constructor
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.crecord-property))], [])*/uint cRecord;
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo-constructor
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectinfo.cpage-property))], [])*/uint cPage;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectlist-class))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectlist-class
 struct JET_OBJECTLIST
 {
     uint cbStruct;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectlist-class
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectlist.tableid-property))], [])*/JET_TABLEID tableid;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectlist-class
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectlist.crecord-property))], [])*/uint cRecord;
     uint columnidcontainername;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectlist-class
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectlist.columnidobjectname-property))], [])*/uint columnidobjectname;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectlist-class
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectlist.columnidobjtyp-property))], [])*/uint columnidobjtyp;
     uint columniddtCreate;
     uint columniddtUpdate;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectlist-class
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectlist.columnidgrbit-property))], [])*/uint columnidgrbit;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectlist-class
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectlist.columnidflags-property))], [])*/uint columnidflags;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectlist-class
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectlist.columnidcrecord-property))], [])*/uint columnidcRecord;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectlist-class
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-objectlist.columnidcpage-property))], [])*/uint columnidcPage;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist-structure))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist-structure
 struct JET_COLUMNLIST
 {
     uint cbStruct;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist.tableid-property))], [])*/JET_TABLEID tableid;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist.crecord-property))], [])*/uint cRecord;
     uint columnidPresentationOrder;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist.columnidcolumnname-property))], [])*/uint columnidcolumnname;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist.columnidcolumnid-property))], [])*/uint columnidcolumnid;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist.columnidcoltyp-property))], [])*/uint columnidcoltyp;
     uint columnidCountry;
     uint columnidLangid;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist.columnidcp-property))], [])*/uint columnidCp;
     uint columnidCollate;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist.columnidcbmax-property))], [])*/uint columnidcbMax;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist.columnidgrbit-property))], [])*/uint columnidgrbit;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columnlist.columniddefault-property))], [])*/uint columnidDefault;
     uint columnidBaseTableName;
     uint columnidBaseColumnName;
     uint columnidDefinitionName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columndef-constructor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columndef-constructor
 struct JET_COLUMNDEF
 {
     uint   cbStruct;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columndef-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columndef.columnid-property))], [])*/uint columnid;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columndef-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columndef.coltyp-property))], [])*/uint coltyp;
     ushort wCountry;
     ushort langid;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columndef-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columndef.cp-property))], [])*/ushort cp;
     ushort wCollate;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columndef-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columndef.cbmax-property))], [])*/uint cbMax;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columndef-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-columndef.grbit-property))], [])*/uint grbit;
 }
 
@@ -2042,27 +2242,43 @@ struct JET_COLUMNBASE_W
     ushort[256] szBaseColumnName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist-structure))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist-structure
 struct JET_INDEXLIST
 {
     uint cbStruct;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.tableid-property))], [])*/JET_TABLEID tableid;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.crecord-property))], [])*/uint cRecord;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidindexname-property))], [])*/uint columnidindexname;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidgrbitindex-property))], [])*/uint columnidgrbitIndex;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidckey-property))], [])*/uint columnidcKey;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidcentry-property))], [])*/uint columnidcEntry;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidcpage-property))], [])*/uint columnidcPage;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidccolumn-property))], [])*/uint columnidcColumn;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidicolumn-property))], [])*/uint columnidiColumn;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidcolumnid-property))], [])*/uint columnidcolumnid;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidcoltyp-property))], [])*/uint columnidcoltyp;
     uint columnidCountry;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidlangid-property))], [])*/uint columnidLangid;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidcp-property))], [])*/uint columnidCp;
     uint columnidCollate;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidgrbitcolumn-property))], [])*/uint columnidgrbitColumn;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidcolumnname-property))], [])*/uint columnidcolumnname;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexlist.columnidlcmapflags-property))], [])*/uint columnidLCMapFlags;
 }
 
@@ -2130,10 +2346,12 @@ struct JET_CONDITIONALCOLUMN_W
     uint    grbit;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-unicodeindex-structure))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-unicodeindex-structure
 struct JET_UNICODEINDEX
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-unicodeindex-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-unicodeindex.lcid-property))], [])*/uint lcid;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-unicodeindex-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-unicodeindex.dwmapflags-property))], [])*/uint dwMapFlags;
 }
 
@@ -2143,7 +2361,7 @@ struct JET_UNICODEINDEX2
     uint    dwMapFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-tuplelimits-structure))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-tuplelimits-structure
 struct JET_TUPLELIMITS
 {
     uint chLengthMin;
@@ -2153,123 +2371,170 @@ struct JET_TUPLELIMITS
     uint ichStart;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-spacehints-class))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-spacehints-class
 struct JET_SPACEHINTS
 {
     uint cbStruct;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-spacehints-class
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-spacehints.ulinitialdensity-property))], [])*/uint ulInitialDensity;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-spacehints-class
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-spacehints.cbinitial-property))], [])*/uint cbInitial;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-spacehints-class
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-spacehints.grbit-property))], [])*/uint grbit;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-spacehints-class
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-spacehints.ulmaintdensity-property))], [])*/uint ulMaintDensity;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-spacehints-class
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-spacehints.ulgrowth-property))], [])*/uint ulGrowth;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-spacehints-class
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-spacehints.cbminextent-property))], [])*/uint cbMinExtent;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-spacehints-class
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-spacehints.cbmaxextent-property))], [])*/uint cbMaxExtent;
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct JET_INDEXCREATE_A
 {
-    uint                 cbStruct;
-    byte*                szIndexName;
-    byte*                szKey;
-    uint                 cbKey;
-    uint                 grbit;
-    uint                 ulDensity;
-    _Anonymous1_e__Union Anonymous1;
-    _Anonymous2_e__Union Anonymous2;
+    uint  cbStruct;
+    byte* szIndexName;
+    byte* szKey;
+    uint  cbKey;
+    uint  grbit;
+    uint  ulDensity;
+    union
+    {
+        uint              lcid;
+        JET_UNICODEINDEX* pidxunicode;
+    }
+    union
+    {
+        uint             cbVarSegMac;
+        JET_TUPLELIMITS* ptuplelimits;
+    }
     JET_CONDITIONALCOLUMN_A* rgconditionalcolumn;
-    uint                 cConditionalColumn;
-    int                  err;
-    uint                 cbKeyMost;
+    uint  cConditionalColumn;
+    int   err;
+    uint  cbKeyMost;
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct JET_INDEXCREATE_W
 {
-    uint                 cbStruct;
-    ushort*              szIndexName;
-    ushort*              szKey;
-    uint                 cbKey;
-    uint                 grbit;
-    uint                 ulDensity;
-    _Anonymous1_e__Union Anonymous1;
-    _Anonymous2_e__Union Anonymous2;
+    uint    cbStruct;
+    ushort* szIndexName;
+    ushort* szKey;
+    uint    cbKey;
+    uint    grbit;
+    uint    ulDensity;
+    union
+    {
+        uint              lcid;
+        JET_UNICODEINDEX* pidxunicode;
+    }
+    union
+    {
+        uint             cbVarSegMac;
+        JET_TUPLELIMITS* ptuplelimits;
+    }
     JET_CONDITIONALCOLUMN_W* rgconditionalcolumn;
-    uint                 cConditionalColumn;
-    int                  err;
-    uint                 cbKeyMost;
+    uint    cConditionalColumn;
+    int     err;
+    uint    cbKeyMost;
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct JET_INDEXCREATE2_A
 {
-    uint                 cbStruct;
-    byte*                szIndexName;
-    byte*                szKey;
-    uint                 cbKey;
-    uint                 grbit;
-    uint                 ulDensity;
-    _Anonymous1_e__Union Anonymous1;
-    _Anonymous2_e__Union Anonymous2;
+    uint            cbStruct;
+    byte*           szIndexName;
+    byte*           szKey;
+    uint            cbKey;
+    uint            grbit;
+    uint            ulDensity;
+    union
+    {
+        uint              lcid;
+        JET_UNICODEINDEX* pidxunicode;
+    }
+    union
+    {
+        uint             cbVarSegMac;
+        JET_TUPLELIMITS* ptuplelimits;
+    }
     JET_CONDITIONALCOLUMN_A* rgconditionalcolumn;
-    uint                 cConditionalColumn;
-    int                  err;
-    uint                 cbKeyMost;
-    JET_SPACEHINTS*      pSpacehints;
+    uint            cConditionalColumn;
+    int             err;
+    uint            cbKeyMost;
+    JET_SPACEHINTS* pSpacehints;
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct JET_INDEXCREATE2_W
 {
-    uint                 cbStruct;
-    ushort*              szIndexName;
-    ushort*              szKey;
-    uint                 cbKey;
-    uint                 grbit;
-    uint                 ulDensity;
-    _Anonymous1_e__Union Anonymous1;
-    _Anonymous2_e__Union Anonymous2;
+    uint            cbStruct;
+    ushort*         szIndexName;
+    ushort*         szKey;
+    uint            cbKey;
+    uint            grbit;
+    uint            ulDensity;
+    union
+    {
+        uint              lcid;
+        JET_UNICODEINDEX* pidxunicode;
+    }
+    union
+    {
+        uint             cbVarSegMac;
+        JET_TUPLELIMITS* ptuplelimits;
+    }
     JET_CONDITIONALCOLUMN_W* rgconditionalcolumn;
-    uint                 cConditionalColumn;
-    int                  err;
-    uint                 cbKeyMost;
-    JET_SPACEHINTS*      pSpacehints;
+    uint            cConditionalColumn;
+    int             err;
+    uint            cbKeyMost;
+    JET_SPACEHINTS* pSpacehints;
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct JET_INDEXCREATE3_A
 {
-    uint                cbStruct;
-    byte*               szIndexName;
-    byte*               szKey;
-    uint                cbKey;
-    uint                grbit;
-    uint                ulDensity;
-    JET_UNICODEINDEX2*  pidxunicode;
-    _Anonymous_e__Union Anonymous;
+    uint               cbStruct;
+    byte*              szIndexName;
+    byte*              szKey;
+    uint               cbKey;
+    uint               grbit;
+    uint               ulDensity;
+    JET_UNICODEINDEX2* pidxunicode;
+    union
+    {
+        uint             cbVarSegMac;
+        JET_TUPLELIMITS* ptuplelimits;
+    }
     JET_CONDITIONALCOLUMN_A* rgconditionalcolumn;
-    uint                cConditionalColumn;
-    int                 err;
-    uint                cbKeyMost;
-    JET_SPACEHINTS*     pSpacehints;
+    uint               cConditionalColumn;
+    int                err;
+    uint               cbKeyMost;
+    JET_SPACEHINTS*    pSpacehints;
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct JET_INDEXCREATE3_W
 {
-    uint                cbStruct;
-    ushort*             szIndexName;
-    ushort*             szKey;
-    uint                cbKey;
-    uint                grbit;
-    uint                ulDensity;
-    JET_UNICODEINDEX2*  pidxunicode;
-    _Anonymous_e__Union Anonymous;
+    uint               cbStruct;
+    ushort*            szIndexName;
+    ushort*            szKey;
+    uint               cbKey;
+    uint               grbit;
+    uint               ulDensity;
+    JET_UNICODEINDEX2* pidxunicode;
+    union
+    {
+        uint             cbVarSegMac;
+        JET_TUPLELIMITS* ptuplelimits;
+    }
     JET_CONDITIONALCOLUMN_W* rgconditionalcolumn;
-    uint                cConditionalColumn;
-    int                 err;
-    uint                cbKeyMost;
-    JET_SPACEHINTS*     pSpacehints;
+    uint               cConditionalColumn;
+    int                err;
+    uint               cbKeyMost;
+    JET_SPACEHINTS*    pSpacehints;
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
@@ -2432,17 +2697,25 @@ struct JET_TABLECREATE4_W
     uint                cCreated;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-opentemporarytable-structure))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-opentemporarytable-structure
 struct JET_OPENTEMPORARYTABLE
 {
     uint cbStruct;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-opentemporarytable-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-opentemporarytable.prgcolumndef-property))], [])*/const(JET_COLUMNDEF)* prgcolumndef;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-opentemporarytable-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-opentemporarytable.ccolumn-property))], [])*/uint ccolumn;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-opentemporarytable-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-opentemporarytable.pidxunicode-property))], [])*/JET_UNICODEINDEX* pidxunicode;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-opentemporarytable-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-opentemporarytable.grbit-property))], [])*/uint grbit;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-opentemporarytable-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-opentemporarytable.prgcolumnid-property))], [])*/uint* prgcolumnid;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-opentemporarytable-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-opentemporarytable.cbkeymost-property))], [])*/uint cbKeyMost;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-opentemporarytable-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-opentemporarytable.cbvarsegmac-property))], [])*/uint cbVarSegMac;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-opentemporarytable-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-opentemporarytable.tableid-property))], [])*/JET_TABLEID tableid;
 }
 
@@ -2459,72 +2732,88 @@ struct JET_OPENTEMPORARYTABLE2
     JET_TABLEID        tableid;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retinfo-structure))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retinfo-structure
 struct JET_RETINFO
 {
     uint cbStruct;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retinfo-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retinfo.iblongvalue-property))], [])*/uint ibLongValue;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retinfo-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retinfo.itagsequence-property))], [])*/uint itagSequence;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retinfo-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retinfo.columnidnexttagged-property))], [])*/uint columnidNextTagged;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setinfo-class))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setinfo-class
 struct JET_SETINFO
 {
     uint cbStruct;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setinfo-class
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setinfo.iblongvalue-property))], [])*/uint ibLongValue;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setinfo-class
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setinfo.itagsequence-property))], [])*/uint itagSequence;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recpos-constructor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recpos-constructor
 struct JET_RECPOS
 {
     uint cbStruct;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recpos-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recpos.centrieslt-property))], [])*/uint centriesLT;
     uint centriesInRange;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recpos-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recpos.centriestotal-property))], [])*/uint centriesTotal;
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct JET_RECPOS2
+version(X86)
 {
-align (4):
-    uint  cbStruct;
-    uint  centriesLTDeprecated;
-    uint  centriesInRangeDeprecated;
-    uint  centriesTotalDeprecated;
-    ulong centriesLT;
-    ulong centriesTotal;
+    struct JET_RECPOS2
+    {
+    align (4):
+        uint  cbStruct;
+        uint  centriesLTDeprecated;
+        uint  centriesInRangeDeprecated;
+        uint  centriesTotalDeprecated;
+        ulong centriesLT;
+        ulong centriesTotal;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recordlist-constructor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recordlist-constructor
 struct JET_RECORDLIST
 {
     uint cbStruct;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recordlist-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recordlist.tableid-property))], [])*/JET_TABLEID tableid;
     uint cRecord;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recordlist-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recordlist.columnidbookmark-property))], [])*/uint columnidBookmark;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexrange-structure))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexrange-structure
 struct JET_INDEXRANGE
 {
     uint cbStruct;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexrange-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexrange.tableid-property))], [])*/JET_TABLEID tableid;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexrange-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-indexrange.grbit-property))], [])*/uint grbit;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-index-column-constructor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-index-column-constructor
 struct JET_INDEX_COLUMN
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-index-column-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-index-column.columnid-property))], [])*/uint columnid;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-index-column-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-index-column.relop-property))], [])*/JET_RELOP relop;
     void* pv;
     uint  cb;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-index-column-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-index-column.grbit-property))], [])*/uint grbit;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-index-range-constructor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-index-range-constructor
 struct JET_INDEX_RANGE
 {
     JET_INDEX_COLUMN* rgStartColumns;
@@ -2533,42 +2822,73 @@ struct JET_INDEX_RANGE
     uint              cEndColumns;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-logtime-structure))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-logtime-structure
 struct JET_LOGTIME
 {
-    byte                 bSeconds;
-    byte                 bMinutes;
-    byte                 bHours;
-    byte                 bDay;
-    byte                 bMonth;
-    byte                 bYear;
-    _Anonymous1_e__Union Anonymous1;
-    _Anonymous2_e__Union Anonymous2;
+    byte bSeconds;
+    byte bMinutes;
+    byte bHours;
+    byte bDay;
+    byte bMonth;
+    byte bYear;
+    union
+    {
+        ubyte bFiller1;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(bMillisecondsLow)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield177;
+        }
+    }
+    union
+    {
+        ubyte bFiller2;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fUnused)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield178;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-bklogtime-structure))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-bklogtime-structure
 struct JET_BKLOGTIME
 {
-    byte                 bSeconds;
-    byte                 bMinutes;
-    byte                 bHours;
-    byte                 bDay;
-    byte                 bMonth;
-    byte                 bYear;
-    _Anonymous1_e__Union Anonymous1;
-    _Anonymous2_e__Union Anonymous2;
+    byte bSeconds;
+    byte bMinutes;
+    byte bHours;
+    byte bDay;
+    byte bMonth;
+    byte bYear;
+    union
+    {
+        ubyte bFiller1;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(bMillisecondsLow)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield179;
+        }
+    }
+    union
+    {
+        ubyte bFiller2;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fReserved)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield180;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-lgpos-structure2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-lgpos-structure2
 struct JET_LGPOS
 {
 align (1):
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-lgpos-structure2
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-lgpos.ib-property))], [])*/ushort ib;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-lgpos-structure2
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-lgpos.isec-property))], [])*/ushort isec;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-lgpos-structure2
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-lgpos.lgeneration-property))], [])*/int lGeneration;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-signature-structure))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-signature-structure
 struct JET_SIGNATURE
 {
 align (1):
@@ -2577,43 +2897,71 @@ align (1):
     byte[16]    szComputerName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-bkinfo-structure2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-bkinfo-structure2
 struct JET_BKINFO
 {
 align (1):
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-bkinfo-structure2
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-bkinfo.lgposmark-property))], [])*/JET_LGPOS lgposMark;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        JET_LOGTIME   logtimeMark;
+        JET_BKLOGTIME bklogtimeMark;
+    }
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-bkinfo-structure2
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-bkinfo.genlow-property))], [])*/uint genLow;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-bkinfo-structure2
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-bkinfo.genhigh-property))], [])*/uint genHigh;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc-constructor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc-constructor
 struct JET_DBINFOMISC
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.ulversion-property))], [])*/uint ulVersion;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.ulupdate-property))], [])*/uint ulUpdate;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.signdb-property))], [])*/JET_SIGNATURE signDb;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.dbstate-property))], [])*/uint dbstate;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.lgposconsistent-property))], [])*/JET_LGPOS lgposConsistent;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.logtimeconsistent-property))], [])*/JET_LOGTIME logtimeConsistent;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.logtimeattach-property))], [])*/JET_LOGTIME logtimeAttach;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.lgposattach-property))], [])*/JET_LGPOS lgposAttach;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.logtimedetach-property))], [])*/JET_LOGTIME logtimeDetach;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.lgposdetach-property))], [])*/JET_LGPOS lgposDetach;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.signlog-property))], [])*/JET_SIGNATURE signLog;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.bkinfofullprev-property))], [])*/JET_BKINFO bkinfoFullPrev;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.bkinfoincprev-property))], [])*/JET_BKINFO bkinfoIncPrev;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.bkinfofullcur-property))], [])*/JET_BKINFO bkinfoFullCur;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.fshadowingdisabled-property))], [])*/uint fShadowingDisabled;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.fupgradedb-property))], [])*/uint fUpgradeDb;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.dwmajorversion-property))], [])*/uint dwMajorVersion;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.dwminorversion-property))], [])*/uint dwMinorVersion;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.dwbuildnumber-property))], [])*/uint dwBuildNumber;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.lspnumber-property))], [])*/int lSPNumber;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc.cbpagesize-property))], [])*/uint cbPageSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc2-structure))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc2-structure
 struct JET_DBINFOMISC2
 {
     uint          ulVersion;
@@ -2654,7 +3002,7 @@ struct JET_DBINFOMISC2
     uint          ulBadChecksumOld;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc3-structure))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc3-structure
 struct JET_DBINFOMISC3
 {
     uint          ulVersion;
@@ -2696,7 +3044,7 @@ struct JET_DBINFOMISC3
     uint          genCommitted;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc4-structure))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-dbinfomisc4-structure
 struct JET_DBINFOMISC4
 {
     uint          ulVersion;
@@ -2740,33 +3088,42 @@ struct JET_DBINFOMISC4
     JET_BKINFO    bkinfoDiffPrev;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-threadstats-structure2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-threadstats-structure2
 struct JET_THREADSTATS
 {
     uint cbStruct;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-threadstats-structure2
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-threadstats.cpagereferenced-property))], [])*/uint cPageReferenced;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-threadstats-structure2
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-threadstats.cpageread-property))], [])*/uint cPageRead;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-threadstats-structure2
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-threadstats.cpagepreread-property))], [])*/uint cPagePreread;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-threadstats-structure2
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-threadstats.cpagedirtied-property))], [])*/uint cPageDirtied;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-threadstats-structure2
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-threadstats.cpageredirtied-property))], [])*/uint cPageRedirtied;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-threadstats-structure2
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-threadstats.clogrecord-property))], [])*/uint cLogRecord;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-threadstats-structure2
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-threadstats.cblogrecord-property))], [])*/uint cbLogRecord;
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct JET_THREADSTATS2
+version(X86)
 {
-align (4):
-    uint  cbStruct;
-    uint  cPageReferenced;
-    uint  cPageRead;
-    uint  cPagePreread;
-    uint  cPageDirtied;
-    uint  cPageRedirtied;
-    uint  cLogRecord;
-    uint  cbLogRecord;
-    ulong cusecPageCacheMiss;
-    uint  cPageCacheMiss;
+    struct JET_THREADSTATS2
+    {
+    align (4):
+        uint  cbStruct;
+        uint  cPageReferenced;
+        uint  cPageRead;
+        uint  cPagePreread;
+        uint  cPageDirtied;
+        uint  cPageRedirtied;
+        uint  cLogRecord;
+        uint  cbLogRecord;
+        ulong cusecPageCacheMiss;
+        uint  cPageCacheMiss;
+    }
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
@@ -2801,14 +3158,16 @@ struct JET_ERRINFOBASIC_W
     ushort[64] rgszSourceFile;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-commit-id-class))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct JET_COMMIT_ID
+version(X86)
 {
-align (4):
-    JET_SIGNATURE signLog;
-    int           reserved;
-    long          commitId;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-commit-id-class
+    struct JET_COMMIT_ID
+    {
+    align (4):
+        JET_SIGNATURE signLog;
+        int           reserved;
+        long          commitId;
+    }
 }
 
 struct JET_OPERATIONCONTEXT
@@ -2820,15 +3179,22 @@ struct JET_OPERATIONCONTEXT
     ubyte fFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setcolumn-constructor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setcolumn-constructor
 struct JET_SETCOLUMN
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setcolumn-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setcolumn.columnid-property))], [])*/uint columnid;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setcolumn-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setcolumn.pvdata-property))], [])*/void* pvData;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setcolumn-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setcolumn.cbdata-property))], [])*/uint cbData;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setcolumn-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setcolumn.grbit-property))], [])*/uint grbit;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setcolumn-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setcolumn.iblongvalue-property))], [])*/uint ibLongValue;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setcolumn-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setcolumn.itagsequence-property))], [])*/uint itagSequence;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setcolumn-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-setcolumn.err-property))], [])*/int err;
 }
 
@@ -2850,76 +3216,118 @@ struct JET_SETSYSPARAM_W
     int         err;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retrievecolumn-structure))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retrievecolumn-structure
 struct JET_RETRIEVECOLUMN
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retrievecolumn-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retrievecolumn.columnid-property))], [])*/uint columnid;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retrievecolumn-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retrievecolumn.pvdata-property))], [])*/void* pvData;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retrievecolumn-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retrievecolumn.cbdata-property))], [])*/uint cbData;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retrievecolumn-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retrievecolumn.cbactual-property))], [])*/uint cbActual;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retrievecolumn-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retrievecolumn.grbit-property))], [])*/uint grbit;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retrievecolumn-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retrievecolumn.iblongvalue-property))], [])*/uint ibLongValue;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retrievecolumn-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retrievecolumn.itagsequence-property))], [])*/uint itagSequence;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retrievecolumn-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retrievecolumn.columnidnexttagged-property))], [])*/uint columnidNextTagged;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retrievecolumn-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-retrievecolumn.err-property))], [])*/int err;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumnid-structure))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumnid-structure
 struct JET_ENUMCOLUMNID
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumnid-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumnid.columnid-property))], [])*/uint columnid;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumnid-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumnid.ctagsequence-property))], [])*/uint ctagSequence;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumnid-structure
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumnid.rgtagsequence-property))], [])*/uint* rgtagSequence;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumnvalue-constructor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumnvalue-constructor
 struct JET_ENUMCOLUMNVALUE
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumnvalue-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumnvalue.itagsequence-property))], [])*/uint itagSequence;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumnvalue-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumnvalue.err-property))], [])*/int err;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumnvalue-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumnvalue.cbdata-property))], [])*/uint cbData;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumnvalue-constructor
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumnvalue.pvdata-property))], [])*/void* pvData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumn-class))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumn-class
 struct JET_ENUMCOLUMN
 {
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumn-class
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumn.columnid-property))], [])*/uint columnid;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumn-class
     /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-enumcolumn.err-property))], [])*/int err;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct
+        {
+            uint                 cEnumColumnValue;
+            JET_ENUMCOLUMNVALUE* rgEnumColumnValue;
+        }
+        struct
+        {
+            uint  cbData;
+            void* pvData;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize-structure2))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct JET_RECSIZE
+version(X86)
 {
-align (4):
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cbdata-property))], [])*/ulong cbData;
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cblongvaluedata-property))], [])*/ulong cbLongValueData;
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cboverhead-property))], [])*/ulong cbOverhead;
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cblongvalueoverhead-property))], [])*/ulong cbLongValueOverhead;
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cnontaggedcolumns-property))], [])*/ulong cNonTaggedColumns;
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.ctaggedcolumns-property))], [])*/ulong cTaggedColumns;
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.clongvalues-property))], [])*/ulong cLongValues;
-    /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cmultivalues-property))], [])*/ulong cMultiValues;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize-structure2
+    struct JET_RECSIZE
+    {
+    align (4):
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize-structure2
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cbdata-property))], [])*/ulong cbData;
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize-structure2
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cblongvaluedata-property))], [])*/ulong cbLongValueData;
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize-structure2
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cboverhead-property))], [])*/ulong cbOverhead;
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize-structure2
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cblongvalueoverhead-property))], [])*/ulong cbLongValueOverhead;
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize-structure2
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cnontaggedcolumns-property))], [])*/ulong cNonTaggedColumns;
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize-structure2
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.ctaggedcolumns-property))], [])*/ulong cTaggedColumns;
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize-structure2
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.clongvalues-property))], [])*/ulong cLongValues;
+        // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize-structure2
+        /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize.cmultivalues-property))], [])*/ulong cMultiValues;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize2-structure))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct JET_RECSIZE2
+version(X86)
 {
-align (4):
-    ulong cbData;
-    ulong cbLongValueData;
-    ulong cbOverhead;
-    ulong cbLongValueOverhead;
-    ulong cNonTaggedColumns;
-    ulong cTaggedColumns;
-    ulong cLongValues;
-    ulong cMultiValues;
-    ulong cCompressedColumns;
-    ulong cbDataCompressed;
-    ulong cbLongValueDataCompressed;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jet-recsize2-structure
+    struct JET_RECSIZE2
+    {
+    align (4):
+        ulong cbData;
+        ulong cbLongValueData;
+        ulong cbOverhead;
+        ulong cbLongValueOverhead;
+        ulong cNonTaggedColumns;
+        ulong cTaggedColumns;
+        ulong cLongValues;
+        ulong cMultiValues;
+        ulong cCompressedColumns;
+        ulong cbDataCompressed;
+        ulong cbLongValueDataCompressed;
+    }
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
@@ -2966,11 +3374,11 @@ struct JET_INSTANCE_INFO_W
 
 // Functions
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetinit-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetinit-function
 @DllImport("ESENT.dll")
 int JetInit(JET_INSTANCE* pinstance);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetinit2-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetinit2-function
 @DllImport("ESENT.dll")
 int JetInit2(JET_INSTANCE* pinstance, uint grbit);
 
@@ -2998,37 +3406,37 @@ int JetCreateInstance2A(JET_INSTANCE* pinstance, byte* szInstanceName, byte* szD
 @DllImport("ESENT.dll")
 int JetCreateInstance2W(JET_INSTANCE* pinstance, ushort* szInstanceName, ushort* szDisplayName, uint grbit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetgetinstancemiscinfo-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetgetinstancemiscinfo-function
 @DllImport("ESENT.dll")
 int JetGetInstanceMiscInfo(JET_INSTANCE instance, 
                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* pvResult, 
                            uint cbMax, uint InfoLevel);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetterm-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetterm-function
 @DllImport("ESENT.dll")
 int JetTerm(JET_INSTANCE instance);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetterm2-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetterm2-function
 @DllImport("ESENT.dll")
 int JetTerm2(JET_INSTANCE instance, uint grbit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetstopservice-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetstopservice-function
 @DllImport("ESENT.dll")
 int JetStopService();
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetstopserviceinstance-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetstopserviceinstance-function
 @DllImport("ESENT.dll")
 int JetStopServiceInstance(JET_INSTANCE instance);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetstopserviceinstance2-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetstopserviceinstance2-function
 @DllImport("ESENT.dll")
 int JetStopServiceInstance2(JET_INSTANCE instance, const(uint) grbit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetstopbackup-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetstopbackup-function
 @DllImport("ESENT.dll")
 int JetStopBackup();
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetstopbackupinstance-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetstopbackupinstance-function
 @DllImport("ESENT.dll")
 int JetStopBackupInstance(JET_INSTANCE instance);
 
@@ -3062,7 +3470,7 @@ int JetEnableMultiInstanceA(JET_SETSYSPARAM_A* psetsysparam, uint csetsysparam, 
 @DllImport("ESENT.dll")
 int JetEnableMultiInstanceW(JET_SETSYSPARAM_W* psetsysparam, uint csetsysparam, uint* pcsetsucceed);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetgetthreadstats-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetgetthreadstats-function
 @DllImport("ESENT.dll")
 int JetGetThreadStats(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/void* pvResult, 
                       uint cbMax);
@@ -3075,19 +3483,19 @@ int JetBeginSessionA(JET_INSTANCE instance, JET_SESID* psesid, byte* szUserName,
 @DllImport("ESENT.dll")
 int JetBeginSessionW(JET_INSTANCE instance, JET_SESID* psesid, ushort* szUserName, ushort* szPassword);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetdupsession-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetdupsession-function
 @DllImport("ESENT.dll")
 int JetDupSession(JET_SESID sesid, JET_SESID* psesid);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetendsession-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetendsession-function
 @DllImport("ESENT.dll")
 int JetEndSession(JET_SESID sesid, uint grbit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetgetversion-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetgetversion-function
 @DllImport("ESENT.dll")
 int JetGetVersion(JET_SESID sesid, uint* pwVersion);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetidle-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetidle-function
 @DllImport("ESENT.dll")
 int JetIdle(JET_SESID sesid, uint grbit);
 
@@ -3362,27 +3770,27 @@ int JetDeleteIndexA(JET_SESID sesid, JET_TABLEID tableid, byte* szIndexName);
 @DllImport("ESENT.dll")
 int JetDeleteIndexW(JET_SESID sesid, JET_TABLEID tableid, ushort* szIndexName);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetbegintransaction-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetbegintransaction-function
 @DllImport("ESENT.dll")
 int JetBeginTransaction(JET_SESID sesid);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetbegintransaction2-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetbegintransaction2-function
 @DllImport("ESENT.dll")
 int JetBeginTransaction2(JET_SESID sesid, uint grbit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetbegintransaction3-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetbegintransaction3-function
 @DllImport("ESENT.dll")
 int JetBeginTransaction3(JET_SESID sesid, long trxid, uint grbit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetcommittransaction-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetcommittransaction-function
 @DllImport("ESENT.dll")
 int JetCommitTransaction(JET_SESID sesid, uint grbit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetcommittransaction2-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetcommittransaction2-function
 @DllImport("ESENT.dll")
 int JetCommitTransaction2(JET_SESID sesid, uint grbit, uint cmsecDurableCommit, JET_COMMIT_ID* pCommitId);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetrollback-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetrollback-function
 @DllImport("ESENT.dll")
 int JetRollback(JET_SESID sesid, uint grbit);
 
@@ -3418,7 +3826,7 @@ int JetOpenDatabaseA(JET_SESID sesid, byte* szFilename, byte* szConnect, uint* p
 @DllImport("ESENT.dll")
 int JetOpenDatabaseW(JET_SESID sesid, ushort* szFilename, ushort* szConnect, uint* pdbid, uint grbit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetclosedatabase-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetclosedatabase-function
 @DllImport("ESENT.dll")
 int JetCloseDatabase(JET_SESID sesid, uint dbid, uint grbit);
 
@@ -3434,35 +3842,35 @@ int JetOpenTableW(JET_SESID sesid, uint dbid, ushort* szTableName,
                   /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* pvParameters, 
                   uint cbParameters, uint grbit, JET_TABLEID* ptableid);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetsettablesequential-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetsettablesequential-function
 @DllImport("ESENT.dll")
 int JetSetTableSequential(JET_SESID sesid, JET_TABLEID tableid, uint grbit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetresettablesequential-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetresettablesequential-function
 @DllImport("ESENT.dll")
 int JetResetTableSequential(JET_SESID sesid, JET_TABLEID tableid, uint grbit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetclosetable-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetclosetable-function
 @DllImport("ESENT.dll")
 int JetCloseTable(JET_SESID sesid, JET_TABLEID tableid);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetdelete-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetdelete-function
 @DllImport("ESENT.dll")
 int JetDelete(JET_SESID sesid, JET_TABLEID tableid);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetupdate-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetupdate-function
 @DllImport("ESENT.dll")
 int JetUpdate(JET_SESID sesid, JET_TABLEID tableid, 
               /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* pvBookmark, 
               uint cbBookmark, uint* pcbActual);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetupdate2-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetupdate2-function
 @DllImport("ESENT.dll")
 int JetUpdate2(JET_SESID sesid, JET_TABLEID tableid, 
                /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* pvBookmark, 
                uint cbBookmark, uint* pcbActual, const(uint) grbit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetescrowupdate-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetescrowupdate-function
 @DllImport("ESENT.dll")
 int JetEscrowUpdate(JET_SESID sesid, JET_TABLEID tableid, uint columnid, 
                     /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* pv, 
@@ -3470,62 +3878,62 @@ int JetEscrowUpdate(JET_SESID sesid, JET_TABLEID tableid, uint columnid,
                     /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(6)))])*/void* pvOld, 
                     uint cbOldMax, uint* pcbOldActual, uint grbit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetretrievecolumn-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetretrievecolumn-function
 @DllImport("ESENT.dll")
 int JetRetrieveColumn(JET_SESID sesid, JET_TABLEID tableid, uint columnid, 
                       /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* pvData, 
                       uint cbData, uint* pcbActual, uint grbit, JET_RETINFO* pretinfo);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetretrievecolumns-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetretrievecolumns-function
 @DllImport("ESENT.dll")
 int JetRetrieveColumns(JET_SESID sesid, JET_TABLEID tableid, JET_RETRIEVECOLUMN* pretrievecolumn, 
                        uint cretrievecolumn);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetenumeratecolumns-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetenumeratecolumns-function
 @DllImport("ESENT.dll")
 int JetEnumerateColumns(JET_SESID sesid, JET_TABLEID tableid, uint cEnumColumnId, JET_ENUMCOLUMNID* rgEnumColumnId, 
                         uint* pcEnumColumn, JET_ENUMCOLUMN** prgEnumColumn, JET_PFNREALLOC pfnRealloc, 
                         void* pvReallocContext, uint cbDataMost, uint grbit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetgetrecordsize-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetgetrecordsize-function
 @DllImport("ESENT.dll")
 int JetGetRecordSize(JET_SESID sesid, JET_TABLEID tableid, JET_RECSIZE* precsize, const(uint) grbit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetgetrecordsize2-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetgetrecordsize2-function
 @DllImport("ESENT.dll")
 int JetGetRecordSize2(JET_SESID sesid, JET_TABLEID tableid, JET_RECSIZE2* precsize, const(uint) grbit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetsetcolumn-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetsetcolumn-function
 @DllImport("ESENT.dll")
 int JetSetColumn(JET_SESID sesid, JET_TABLEID tableid, uint columnid, 
                  /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* pvData, 
                  uint cbData, uint grbit, JET_SETINFO* psetinfo);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetsetcolumns-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetsetcolumns-function
 @DllImport("ESENT.dll")
 int JetSetColumns(JET_SESID sesid, JET_TABLEID tableid, JET_SETCOLUMN* psetcolumn, uint csetcolumn);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetprepareupdate-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetprepareupdate-function
 @DllImport("ESENT.dll")
 int JetPrepareUpdate(JET_SESID sesid, JET_TABLEID tableid, uint prep);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetgetrecordposition-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetgetrecordposition-function
 @DllImport("ESENT.dll")
 int JetGetRecordPosition(JET_SESID sesid, JET_TABLEID tableid, 
                          /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/JET_RECPOS* precpos, 
                          uint cbRecpos);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetgotoposition-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetgotoposition-function
 @DllImport("ESENT.dll")
 int JetGotoPosition(JET_SESID sesid, JET_TABLEID tableid, JET_RECPOS* precpos);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetgetcursorinfo-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetgetcursorinfo-function
 @DllImport("ESENT.dll")
 int JetGetCursorInfo(JET_SESID sesid, JET_TABLEID tableid, 
                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* pvResult, 
                      uint cbMax, uint InfoLevel);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetdupcursor-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetdupcursor-function
 @DllImport("ESENT.dll")
 int JetDupCursor(JET_SESID sesid, JET_TABLEID tableid, JET_TABLEID* ptableid, uint grbit);
 
@@ -3575,47 +3983,47 @@ int JetSetCurrentIndex4A(JET_SESID sesid, JET_TABLEID tableid, byte* szIndexName
 int JetSetCurrentIndex4W(JET_SESID sesid, JET_TABLEID tableid, ushort* szIndexName, JET_INDEXID* pindexid, 
                          uint grbit, uint itagSequence);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetmove-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetmove-function
 @DllImport("ESENT.dll")
 int JetMove(JET_SESID sesid, JET_TABLEID tableid, int cRow, uint grbit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetsetcursorfilter-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetsetcursorfilter-function
 @DllImport("ESENT.dll")
 int JetSetCursorFilter(JET_SESID sesid, JET_TABLEID tableid, JET_INDEX_COLUMN* rgColumnFilters, 
                        uint cColumnFilters, uint grbit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetgetlock-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetgetlock-function
 @DllImport("ESENT.dll")
 int JetGetLock(JET_SESID sesid, JET_TABLEID tableid, uint grbit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetmakekey-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetmakekey-function
 @DllImport("ESENT.dll")
 int JetMakeKey(JET_SESID sesid, JET_TABLEID tableid, 
                /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* pvData, 
                uint cbData, uint grbit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetseek-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetseek-function
 @DllImport("ESENT.dll")
 int JetSeek(JET_SESID sesid, JET_TABLEID tableid, uint grbit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetprereadkeys-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetprereadkeys-function
 @DllImport("ESENT.dll")
 int JetPrereadKeys(JET_SESID sesid, JET_TABLEID tableid, void** rgpvKeys, const(uint)* rgcbKeys, int ckeys, 
                    int* pckeysPreread, uint grbit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetprereadindexranges-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetprereadindexranges-function
 @DllImport("ESENT.dll")
 int JetPrereadIndexRanges(JET_SESID sesid, JET_TABLEID tableid, const(JET_INDEX_RANGE)* rgIndexRanges, 
                           const(uint) cIndexRanges, uint* pcRangesPreread, const(uint)* rgcolumnidPreread, 
                           const(uint) ccolumnidPreread, uint grbit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetgetbookmark-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetgetbookmark-function
 @DllImport("ESENT.dll")
 int JetGetBookmark(JET_SESID sesid, JET_TABLEID tableid, 
                    /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* pvBookmark, 
                    uint cbMax, uint* pcbActual);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetgetsecondaryindexbookmark-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetgetsecondaryindexbookmark-function
 @DllImport("ESENT.dll")
 int JetGetSecondaryIndexBookmark(JET_SESID sesid, JET_TABLEID tableid, 
                                  /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* pvSecondaryKey, 
@@ -3669,29 +4077,29 @@ int JetSetDatabaseSizeA(JET_SESID sesid, byte* szDatabaseName, uint cpg, uint* p
 @DllImport("ESENT.dll")
 int JetSetDatabaseSizeW(JET_SESID sesid, ushort* szDatabaseName, uint cpg, uint* pcpgReal);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetgrowdatabase-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetgrowdatabase-function
 @DllImport("ESENT.dll")
 int JetGrowDatabase(JET_SESID sesid, uint dbid, uint cpg, uint* pcpgReal);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetresizedatabase-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetresizedatabase-function
 @DllImport("ESENT.dll")
 int JetResizeDatabase(JET_SESID sesid, uint dbid, uint cpgTarget, uint* pcpgActual, const(uint) grbit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetsetsessioncontext-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetsetsessioncontext-function
 @DllImport("ESENT.dll")
 int JetSetSessionContext(JET_SESID sesid, JET_API_PTR ulContext);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetresetsessioncontext-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetresetsessioncontext-function
 @DllImport("ESENT.dll")
 int JetResetSessionContext(JET_SESID sesid);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetgotobookmark-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetgotobookmark-function
 @DllImport("ESENT.dll")
 int JetGotoBookmark(JET_SESID sesid, JET_TABLEID tableid, 
                     /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* pvBookmark, 
                     uint cbBookmark);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetgotosecondaryindexbookmark-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetgotosecondaryindexbookmark-function
 @DllImport("ESENT.dll")
 int JetGotoSecondaryIndexBookmark(JET_SESID sesid, JET_TABLEID tableid, 
                                   /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* pvSecondaryKey, 
@@ -3699,35 +4107,35 @@ int JetGotoSecondaryIndexBookmark(JET_SESID sesid, JET_TABLEID tableid,
                                   /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/void* pvPrimaryBookmark, 
                                   uint cbPrimaryBookmark, const(uint) grbit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetintersectindexes-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetintersectindexes-function
 @DllImport("ESENT.dll")
 int JetIntersectIndexes(JET_SESID sesid, JET_INDEXRANGE* rgindexrange, uint cindexrange, 
                         JET_RECORDLIST* precordlist, uint grbit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetcomputestats-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetcomputestats-function
 @DllImport("ESENT.dll")
 int JetComputeStats(JET_SESID sesid, JET_TABLEID tableid);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetopentemptable-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetopentemptable-function
 @DllImport("ESENT.dll")
 int JetOpenTempTable(JET_SESID sesid, const(JET_COLUMNDEF)* prgcolumndef, uint ccolumn, uint grbit, 
                      JET_TABLEID* ptableid, uint* prgcolumnid);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetopentemptable2-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetopentemptable2-function
 @DllImport("ESENT.dll")
 int JetOpenTempTable2(JET_SESID sesid, const(JET_COLUMNDEF)* prgcolumndef, uint ccolumn, uint lcid, uint grbit, 
                       JET_TABLEID* ptableid, uint* prgcolumnid);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetopentemptable3-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetopentemptable3-function
 @DllImport("ESENT.dll")
 int JetOpenTempTable3(JET_SESID sesid, const(JET_COLUMNDEF)* prgcolumndef, uint ccolumn, 
                       JET_UNICODEINDEX* pidxunicode, uint grbit, JET_TABLEID* ptableid, uint* prgcolumnid);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetopentemporarytable-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetopentemporarytable-function
 @DllImport("ESENT.dll")
 int JetOpenTemporaryTable(JET_SESID sesid, JET_OPENTEMPORARYTABLE* popentemporarytable);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetopentemporarytable2-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetopentemporarytable2-function
 @DllImport("ESENT.dll")
 int JetOpenTemporaryTable2(JET_SESID sesid, JET_OPENTEMPORARYTABLE2* popentemporarytable);
 
@@ -3771,25 +4179,25 @@ int JetRestoreInstanceA(JET_INSTANCE instance, byte* sz, byte* szDest, JET_PFNST
 @DllImport("ESENT.dll")
 int JetRestoreInstanceW(JET_INSTANCE instance, ushort* sz, ushort* szDest, JET_PFNSTATUS pfn);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetsetindexrange-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetsetindexrange-function
 @DllImport("ESENT.dll")
 int JetSetIndexRange(JET_SESID sesid, JET_TABLEID tableidSrc, uint grbit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetindexrecordcount-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetindexrecordcount-function
 @DllImport("ESENT.dll")
 int JetIndexRecordCount(JET_SESID sesid, JET_TABLEID tableid, uint* pcrec, uint crecMax);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetretrievekey-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetretrievekey-function
 @DllImport("ESENT.dll")
 int JetRetrieveKey(JET_SESID sesid, JET_TABLEID tableid, 
                    /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* pvKey, 
                    uint cbMax, uint* pcbActual, uint grbit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetbeginexternalbackup-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetbeginexternalbackup-function
 @DllImport("ESENT.dll")
 int JetBeginExternalBackup(uint grbit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetbeginexternalbackupinstance-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetbeginexternalbackupinstance-function
 @DllImport("ESENT.dll")
 int JetBeginExternalBackupInstance(JET_INSTANCE instance, uint grbit);
 
@@ -3833,23 +4241,23 @@ int JetOpenFileInstanceA(JET_INSTANCE instance, byte* szFileName, JET_HANDLE* ph
 int JetOpenFileInstanceW(JET_INSTANCE instance, ushort* szFileName, JET_HANDLE* phfFile, uint* pulFileSizeLow, 
                          uint* pulFileSizeHigh);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetreadfile-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetreadfile-function
 @DllImport("ESENT.dll")
 int JetReadFile(JET_HANDLE hfFile, 
                 /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* pv, 
                 uint cb, uint* pcbActual);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetreadfileinstance-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetreadfileinstance-function
 @DllImport("ESENT.dll")
 int JetReadFileInstance(JET_INSTANCE instance, JET_HANDLE hfFile, 
                         /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* pv, 
                         uint cb, uint* pcbActual);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetclosefile-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetclosefile-function
 @DllImport("ESENT.dll")
 int JetCloseFile(JET_HANDLE hfFile);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetclosefileinstance-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetclosefileinstance-function
 @DllImport("ESENT.dll")
 int JetCloseFileInstance(JET_INSTANCE instance, JET_HANDLE hfFile);
 
@@ -3899,23 +4307,23 @@ int JetGetTruncateLogInfoInstanceW(JET_INSTANCE instance,
                                    /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/ushort* wszzLogs, 
                                    uint cbMax, uint* pcbActual);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jettruncatelog-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jettruncatelog-function
 @DllImport("ESENT.dll")
 int JetTruncateLog();
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jettruncateloginstance-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jettruncateloginstance-function
 @DllImport("ESENT.dll")
 int JetTruncateLogInstance(JET_INSTANCE instance);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetendexternalbackup-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetendexternalbackup-function
 @DllImport("ESENT.dll")
 int JetEndExternalBackup();
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetendexternalbackupinstance-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetendexternalbackupinstance-function
 @DllImport("ESENT.dll")
 int JetEndExternalBackupInstance(JET_INSTANCE instance);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetendexternalbackupinstance2-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetendexternalbackupinstance2-function
 @DllImport("ESENT.dll")
 int JetEndExternalBackupInstance2(JET_INSTANCE instance, uint grbit);
 
@@ -3941,12 +4349,12 @@ int JetExternalRestore2W(ushort* szCheckpointFilePath, ushort* szLogPath, JET_RS
                          ushort* szBackupLogPath, JET_LOGINFO_W* pLogInfo, ushort* szTargetInstanceName, 
                          ushort* szTargetInstanceLogPath, ushort* szTargetInstanceCheckpointPath, JET_PFNSTATUS pfn);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetregistercallback-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetregistercallback-function
 @DllImport("ESENT.dll")
 int JetRegisterCallback(JET_SESID sesid, JET_TABLEID tableid, uint cbtyp, JET_CALLBACK pCallback, void* pvContext, 
                         JET_HANDLE* phCallbackId);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetunregistercallback-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetunregistercallback-function
 @DllImport("ESENT.dll")
 int JetUnregisterCallback(JET_SESID sesid, JET_TABLEID tableid, uint cbtyp, JET_HANDLE hCallbackId);
 
@@ -3958,23 +4366,23 @@ int JetGetInstanceInfoA(uint* pcInstanceInfo, JET_INSTANCE_INFO_A** paInstanceIn
 @DllImport("ESENT.dll")
 int JetGetInstanceInfoW(uint* pcInstanceInfo, JET_INSTANCE_INFO_W** paInstanceInfo);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetfreebuffer-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetfreebuffer-function
 @DllImport("ESENT.dll")
 int JetFreeBuffer(byte* pbBuf);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetsetls-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetsetls-function
 @DllImport("ESENT.dll")
 int JetSetLS(JET_SESID sesid, JET_TABLEID tableid, JET_LS ls, uint grbit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetgetls-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetgetls-function
 @DllImport("ESENT.dll")
 int JetGetLS(JET_SESID sesid, JET_TABLEID tableid, JET_LS* pls, uint grbit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetossnapshotprepare-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetossnapshotprepare-function
 @DllImport("ESENT.dll")
 int JetOSSnapshotPrepare(JET_OSSNAPID* psnapId, const(uint) grbit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetossnapshotprepareinstance-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetossnapshotprepareinstance-function
 @DllImport("ESENT.dll")
 int JetOSSnapshotPrepareInstance(JET_OSSNAPID snapId, JET_INSTANCE instance, const(uint) grbit);
 
@@ -3988,19 +4396,19 @@ int JetOSSnapshotFreezeA(const(JET_OSSNAPID) snapId, uint* pcInstanceInfo, JET_I
 int JetOSSnapshotFreezeW(const(JET_OSSNAPID) snapId, uint* pcInstanceInfo, JET_INSTANCE_INFO_W** paInstanceInfo, 
                          const(uint) grbit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetossnapshotthaw-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetossnapshotthaw-function
 @DllImport("ESENT.dll")
 int JetOSSnapshotThaw(const(JET_OSSNAPID) snapId, const(uint) grbit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetossnapshotabort-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetossnapshotabort-function
 @DllImport("ESENT.dll")
 int JetOSSnapshotAbort(const(JET_OSSNAPID) snapId, const(uint) grbit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetossnapshottruncatelog-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetossnapshottruncatelog-function
 @DllImport("ESENT.dll")
 int JetOSSnapshotTruncateLog(const(JET_OSSNAPID) snapId, const(uint) grbit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetossnapshottruncateloginstance-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetossnapshottruncateloginstance-function
 @DllImport("ESENT.dll")
 int JetOSSnapshotTruncateLogInstance(const(JET_OSSNAPID) snapId, JET_INSTANCE instance, const(uint) grbit);
 
@@ -4014,26 +4422,26 @@ int JetOSSnapshotGetFreezeInfoA(const(JET_OSSNAPID) snapId, uint* pcInstanceInfo
 int JetOSSnapshotGetFreezeInfoW(const(JET_OSSNAPID) snapId, uint* pcInstanceInfo, 
                                 JET_INSTANCE_INFO_W** paInstanceInfo, const(uint) grbit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetossnapshotend-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetossnapshotend-function
 @DllImport("ESENT.dll")
 int JetOSSnapshotEnd(const(JET_OSSNAPID) snapId, const(uint) grbit);
 
 @DllImport("ESENT.dll")
 int JetConfigureProcessForCrashDump(const(uint) grbit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetgeterrorinfow-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetgeterrorinfow-function
 @DllImport("ESENT.dll")
 int JetGetErrorInfoW(void* pvContext, 
                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* pvResult, 
                      uint cbMax, uint InfoLevel, uint grbit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetsetsessionparameter-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetsetsessionparameter-function
 @DllImport("ESENT.dll")
 int JetSetSessionParameter(JET_SESID sesid, uint sesparamid, 
                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* pvParam, 
                            uint cbParam);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetgetsessionparameter-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/extensible-storage-engine/jetgetsessionparameter-function
 @DllImport("ESENT.dll")
 int JetGetSessionParameter(JET_SESID sesid, uint sesparamid, void* pvParam, uint cbParamMax, uint* pcbParamActual);
 

@@ -3,16 +3,17 @@
 module windows.win32.storage.distributedfilesystem;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : PWSTR;
-public import windows.win32.security : PSECURITY_DESCRIPTOR;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : PWSTR;
+public import windows.win32.security.security : PSECURITY_DESCRIPTOR;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmdfs/ne-lmdfs-dfs_target_priority_class~r1))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmdfs/ne-lmdfs-dfs_target_priority_class~r1
 alias DFS_TARGET_PRIORITY_CLASS = int;
 enum : int
 {
@@ -23,7 +24,8 @@ enum : int
     DfsSiteCostLowPriorityClass    = 0x00000003,
     DfsGlobalLowPriorityClass      = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmdfs/ne-lmdfs-dfs_namespace_version_origin))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmdfs/ne-lmdfs-dfs_namespace_version_origin
 alias DFS_NAMESPACE_VERSION_ORIGIN = int;
 enum : int
 {
@@ -35,107 +37,172 @@ enum : int
 // Constants
 
 
-enum uint FSCTL_DFS_BASE = 0x00000006;
+enum uint FSCTL_DFS_BASE = 0x00000006U;
 
 enum : uint
 {
-    DFS_VOLUME_STATES              = 0x0000000f,
-    DFS_VOLUME_STATE_OK            = 0x00000001,
-    DFS_VOLUME_STATE_INCONSISTENT  = 0x00000002,
-    DFS_VOLUME_STATE_OFFLINE       = 0x00000003,
-    DFS_VOLUME_STATE_ONLINE        = 0x00000004,
-    DFS_VOLUME_STATE_RESYNCHRONIZE = 0x00000010,
-    DFS_VOLUME_STATE_STANDBY       = 0x00000020,
-    DFS_VOLUME_STATE_FORCE_SYNC    = 0x00000040,
-    DFS_VOLUME_FLAVORS             = 0x00000300,
-    DFS_VOLUME_FLAVOR_UNUSED1      = 0x00000000,
-    DFS_VOLUME_FLAVOR_STANDALONE   = 0x00000100,
-    DFS_VOLUME_FLAVOR_AD_BLOB      = 0x00000200,
+    DFS_VOLUME_STATES              = 0x0000000fU,
+    DFS_VOLUME_STATE_OK            = 0x00000001U,
+    DFS_VOLUME_STATE_INCONSISTENT  = 0x00000002U,
+    DFS_VOLUME_STATE_OFFLINE       = 0x00000003U,
+    DFS_VOLUME_STATE_ONLINE        = 0x00000004U,
+    DFS_VOLUME_STATE_RESYNCHRONIZE = 0x00000010U,
+    DFS_VOLUME_STATE_STANDBY       = 0x00000020U,
+    DFS_VOLUME_STATE_FORCE_SYNC    = 0x00000040U,
+    DFS_VOLUME_FLAVORS             = 0x00000300U,
+    DFS_VOLUME_FLAVOR_UNUSED1      = 0x00000000U,
+    DFS_VOLUME_FLAVOR_STANDALONE   = 0x00000100U,
+    DFS_VOLUME_FLAVOR_AD_BLOB      = 0x00000200U,
 }
 
 enum : uint
 {
-    DFS_STORAGE_FLAVOR_UNUSED2 = 0x00000300,
-    DFS_STORAGE_STATES         = 0x0000000f,
-    DFS_STORAGE_STATE_OFFLINE  = 0x00000001,
-    DFS_STORAGE_STATE_ONLINE   = 0x00000002,
-    DFS_STORAGE_STATE_ACTIVE   = 0x00000004,
+    DFS_STORAGE_FLAVOR_UNUSED2 = 0x00000300U,
+    DFS_STORAGE_STATES         = 0x0000000fU,
+    DFS_STORAGE_STATE_OFFLINE  = 0x00000001U,
+    DFS_STORAGE_STATE_ONLINE   = 0x00000002U,
+    DFS_STORAGE_STATE_ACTIVE   = 0x00000004U,
 }
 
 enum : uint
 {
-    DFS_PROPERTY_FLAG_INSITE_REFERRALS = 0x00000001,
-    DFS_PROPERTY_FLAG_ROOT_SCALABILITY = 0x00000002,
-    DFS_PROPERTY_FLAG_SITE_COSTING     = 0x00000004,
-    DFS_PROPERTY_FLAG_TARGET_FAILBACK  = 0x00000008,
-    DFS_PROPERTY_FLAG_CLUSTER_ENABLED  = 0x00000010,
-    DFS_PROPERTY_FLAG_ABDE             = 0x00000020,
+    DFS_PROPERTY_FLAG_INSITE_REFERRALS = 0x00000001U,
+    DFS_PROPERTY_FLAG_ROOT_SCALABILITY = 0x00000002U,
+    DFS_PROPERTY_FLAG_SITE_COSTING     = 0x00000004U,
+    DFS_PROPERTY_FLAG_TARGET_FAILBACK  = 0x00000008U,
+    DFS_PROPERTY_FLAG_CLUSTER_ENABLED  = 0x00000010U,
+    DFS_PROPERTY_FLAG_ABDE             = 0x00000020U,
 }
 
-enum uint DFS_ADD_VOLUME = 0x00000001;
-enum uint DFS_RESTORE_VOLUME = 0x00000002;
+enum uint DFS_ADD_VOLUME = 0x00000001U;
+enum uint DFS_RESTORE_VOLUME = 0x00000002U;
 
 enum : uint
 {
-    NET_DFS_SETDC_FLAGS   = 0x00000000,
-    NET_DFS_SETDC_TIMEOUT = 0x00000001,
-    NET_DFS_SETDC_INITPKT = 0x00000002,
+    NET_DFS_SETDC_FLAGS   = 0x00000000U,
+    NET_DFS_SETDC_TIMEOUT = 0x00000001U,
+    NET_DFS_SETDC_INITPKT = 0x00000002U,
 }
 
-enum uint DFS_SITE_PRIMARY = 0x00000001;
-enum uint DFS_MOVE_FLAG_REPLACE_IF_EXISTS = 0x00000001;
-enum uint DFS_FORCE_REMOVE = 0x80000000;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dfs/fsctl-dfs-get-pkt-entry-state))], [])*/uint FSCTL_DFS_GET_PKT_ENTRY_STATE = 0x00061fbc;
+enum uint DFS_SITE_PRIMARY = 0x00000001U;
+enum uint DFS_MOVE_FLAG_REPLACE_IF_EXISTS = 0x00000001U;
+enum uint DFS_FORCE_REMOVE = 0x80000000U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dfs/fsctl-dfs-get-pkt-entry-state))], [])*/uint FSCTL_DFS_GET_PKT_ENTRY_STATE = 0x00061fbcU;
 
 // Structs
 
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct DFS_INFO_1_32
+version(X86_64)
 {
-    uint EntryPath;
+    struct DFS_INFO_1_32
+    {
+        uint EntryPath;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct DFS_INFO_2_32
+version(AArch64)
 {
-    uint EntryPath;
-    uint Comment;
-    uint State;
-    uint NumberOfStorages;
+    struct DFS_INFO_1_32
+    {
+        uint EntryPath;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct DFS_STORAGE_INFO_0_32
+version(X86_64)
 {
-    uint State;
-    uint ServerName;
-    uint ShareName;
+    struct DFS_INFO_2_32
+    {
+        uint EntryPath;
+        uint Comment;
+        uint State;
+        uint NumberOfStorages;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct DFS_INFO_3_32
+version(AArch64)
 {
-    uint EntryPath;
-    uint Comment;
-    uint State;
-    uint NumberOfStorages;
-    uint Storage;
+    struct DFS_INFO_2_32
+    {
+        uint EntryPath;
+        uint Comment;
+        uint State;
+        uint NumberOfStorages;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct DFS_INFO_4_32
+version(X86_64)
 {
-    uint EntryPath;
-    uint Comment;
-    uint State;
-    uint Timeout;
-    GUID Guid;
-    uint NumberOfStorages;
-    uint Storage;
+    struct DFS_STORAGE_INFO_0_32
+    {
+        uint State;
+        uint ServerName;
+        uint ShareName;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_target_priority))], [])
+version(AArch64)
+{
+    struct DFS_STORAGE_INFO_0_32
+    {
+        uint State;
+        uint ServerName;
+        uint ShareName;
+    }
+}
+
+version(X86_64)
+{
+    struct DFS_INFO_3_32
+    {
+        uint EntryPath;
+        uint Comment;
+        uint State;
+        uint NumberOfStorages;
+        uint Storage;
+    }
+}
+
+version(AArch64)
+{
+    struct DFS_INFO_3_32
+    {
+        uint EntryPath;
+        uint Comment;
+        uint State;
+        uint NumberOfStorages;
+        uint Storage;
+    }
+}
+
+version(X86_64)
+{
+    struct DFS_INFO_4_32
+    {
+        uint EntryPath;
+        uint Comment;
+        uint State;
+        uint Timeout;
+        GUID Guid;
+        uint NumberOfStorages;
+        uint Storage;
+    }
+}
+
+version(AArch64)
+{
+    struct DFS_INFO_4_32
+    {
+        uint EntryPath;
+        uint Comment;
+        uint State;
+        uint Timeout;
+        GUID Guid;
+        uint NumberOfStorages;
+        uint Storage;
+    }
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_target_priority
 struct DFS_TARGET_PRIORITY
 {
     DFS_TARGET_PRIORITY_CLASS TargetPriorityClass;
@@ -143,13 +210,13 @@ struct DFS_TARGET_PRIORITY
     ushort Reserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_1
 struct DFS_INFO_1
 {
     PWSTR EntryPath;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_2
 struct DFS_INFO_2
 {
     PWSTR EntryPath;
@@ -158,7 +225,7 @@ struct DFS_INFO_2
     uint  NumberOfStorages;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_storage_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_storage_info
 struct DFS_STORAGE_INFO
 {
     uint  State;
@@ -166,7 +233,7 @@ struct DFS_STORAGE_INFO
     PWSTR ShareName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_storage_info_1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_storage_info_1
 struct DFS_STORAGE_INFO_1
 {
     uint                State;
@@ -175,7 +242,7 @@ struct DFS_STORAGE_INFO_1
     DFS_TARGET_PRIORITY TargetPriority;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_3
 struct DFS_INFO_3
 {
     PWSTR             EntryPath;
@@ -185,7 +252,7 @@ struct DFS_INFO_3
     DFS_STORAGE_INFO* Storage;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_4
 struct DFS_INFO_4
 {
     PWSTR             EntryPath;
@@ -197,7 +264,7 @@ struct DFS_INFO_4
     DFS_STORAGE_INFO* Storage;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_5))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_5
 struct DFS_INFO_5
 {
     PWSTR EntryPath;
@@ -210,7 +277,7 @@ struct DFS_INFO_5
     uint  NumberOfStorages;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_6))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_6
 struct DFS_INFO_6
 {
     PWSTR               EntryPath;
@@ -224,13 +291,13 @@ struct DFS_INFO_6
     DFS_STORAGE_INFO_1* Storage;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_7))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_7
 struct DFS_INFO_7
 {
     GUID GenerationGuid;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_8
 struct DFS_INFO_8
 {
     PWSTR                EntryPath;
@@ -245,7 +312,7 @@ struct DFS_INFO_8
     uint                 NumberOfStorages;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_9))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_9
 struct DFS_INFO_9
 {
     PWSTR                EntryPath;
@@ -261,7 +328,7 @@ struct DFS_INFO_9
     DFS_STORAGE_INFO_1*  Storage;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_50))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_50
 struct DFS_INFO_50
 {
     uint  NamespaceMajorVersion;
@@ -269,38 +336,38 @@ struct DFS_INFO_50
     ulong NamespaceCapabilities;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_100))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_100
 struct DFS_INFO_100
 {
     PWSTR Comment;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_101))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_101
 struct DFS_INFO_101
 {
     uint State;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_102))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_102
 struct DFS_INFO_102
 {
     uint Timeout;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_103))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_103
 struct DFS_INFO_103
 {
     uint PropertyFlagMask;
     uint PropertyFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_104))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_104
 struct DFS_INFO_104
 {
     DFS_TARGET_PRIORITY TargetPriority;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_105))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_105
 struct DFS_INFO_105
 {
     PWSTR Comment;
@@ -310,14 +377,14 @@ struct DFS_INFO_105
     uint  PropertyFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_106))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_106
 struct DFS_INFO_106
 {
     uint                State;
     DFS_TARGET_PRIORITY TargetPriority;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_107))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_107
 struct DFS_INFO_107
 {
     PWSTR                Comment;
@@ -329,20 +396,20 @@ struct DFS_INFO_107
     PSECURITY_DESCRIPTOR pSecurityDescriptor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_150))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_150
 struct DFS_INFO_150
 {
     uint                 SdLengthReserved;
     PSECURITY_DESCRIPTOR pSecurityDescriptor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_200))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_200
 struct DFS_INFO_200
 {
     PWSTR FtDfsName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_300))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_info_300
 struct DFS_INFO_300
 {
     uint  Flags;
@@ -361,7 +428,7 @@ struct DFS_SITELIST_INFO
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DFS_SITENAME_INFO[1] Site;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_supported_namespace_version_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_supported_namespace_version_info
 struct DFS_SUPPORTED_NAMESPACE_VERSION_INFO
 {
     uint  DomainDfsMajorVersion;
@@ -372,7 +439,7 @@ struct DFS_SUPPORTED_NAMESPACE_VERSION_INFO
     ulong StandaloneDfsCapabilities;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_get_pkt_entry_state_arg))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmdfs/ns-lmdfs-dfs_get_pkt_entry_state_arg
 struct DFS_GET_PKT_ENTRY_STATE_ARG
 {
     ushort DfsEntryPathLen;

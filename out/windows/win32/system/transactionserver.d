@@ -3,22 +3,25 @@
 module windows.win32.system.transactionserver;
 
 public import windows.core;
-public import windows.win32.foundation : BSTR, HRESULT;
-public import windows.win32.system.com : IDispatch, SAFEARRAY;
+public import windows.win32.foundation.foundation : BSTR, HRESULT;
+public import windows.win32.system.com.com : IDispatch, SAFEARRAY;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
+
 enum MTSPackageInstallOptions : int
 {
     mtsInstallUsers = 0x00000001,
 }
+
 enum MTSPackageExportOptions : int
 {
     mtsExportUsers = 0x00000001,
 }
+
 enum MTSAdminErrorCodes : int
 {
     mtsErrObjectErrors           = 0x80110401,

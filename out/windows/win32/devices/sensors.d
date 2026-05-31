@@ -3,13 +3,13 @@
 module windows.win32.devices.sensors;
 
 public import windows.core;
-public import system : Guid;
+public import system.system : Guid;
 public import windows.win32.devices.portabledevices : IPortableDeviceKeyCollection, IPortableDeviceValues;
 public import windows.win32.devices.properties : DEVPROPTYPE;
-public import windows.win32.foundation : BOOL, BOOLEAN, BSTR, FILETIME, HRESULT, HWND,
-                                         NTSTATUS, PROPERTYKEY, SYSTEMTIME,
-                                         VARIANT_BOOL;
-public import windows.win32.system.com : IUnknown;
+public import windows.win32.foundation.foundation : BOOL, BOOLEAN, BSTR, FILETIME, HRESULT,
+                                                    HWND, NTSTATUS, PROPERTYKEY,
+                                                    SYSTEMTIME, VARIANT_BOOL;
+public import windows.win32.system.com.com : IUnknown;
 public import windows.win32.system.com.structuredstorage : PROPVARIANT;
 
 extern(Windows) @nogc nothrow:
@@ -17,7 +17,8 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/ne-sensorsapi-sensorstate))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/ne-sensorsapi-sensorstate
 enum SensorState : int
 {
     SENSOR_STATE_MIN           = 0x00000000,
@@ -29,20 +30,23 @@ enum SensorState : int
     SENSOR_STATE_ERROR         = 0x00000005,
     SENSOR_STATE_MAX           = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/ne-sensorsapi-sensorconnectiontype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/ne-sensorsapi-sensorconnectiontype
 enum SensorConnectionType : int
 {
     SENSOR_CONNECTION_TYPE_PC_INTEGRATED = 0x00000000,
     SENSOR_CONNECTION_TYPE_PC_ATTACHED   = 0x00000001,
     SENSOR_CONNECTION_TYPE_PC_EXTERNAL   = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/ne-sensorsapi-location_desired_accuracy))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/ne-sensorsapi-location_desired_accuracy
 alias LOCATION_DESIRED_ACCURACY = int;
 enum : int
 {
     LOCATION_DESIRED_ACCURACY_DEFAULT = 0x00000000,
     LOCATION_DESIRED_ACCURACY_HIGH    = 0x00000001,
 }
+
 alias LOCATION_POSITION_SOURCE = int;
 enum : int
 {
@@ -52,6 +56,7 @@ enum : int
     LOCATION_POSITION_SOURCE_IPADDRESS = 0x00000003,
     LOCATION_POSITION_SOURCE_UNKNOWN   = 0x00000004,
 }
+
 enum SimpleDeviceOrientation : int
 {
     SIMPLE_DEVICE_ORIENTATION_NOT_ROTATED       = 0x00000000,
@@ -61,7 +66,8 @@ enum SimpleDeviceOrientation : int
     SIMPLE_DEVICE_ORIENTATION_ROTATED_FACE_UP   = 0x00000004,
     SIMPLE_DEVICE_ORIENTATION_ROTATED_FACE_DOWN = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/ne-sensorsapi-magnetometeraccuracy))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/ne-sensorsapi-magnetometeraccuracy
 enum MagnetometerAccuracy : int
 {
     MAGNETOMETER_ACCURACY_UNKNOWN     = 0x00000000,
@@ -69,11 +75,13 @@ enum MagnetometerAccuracy : int
     MAGNETOMETER_ACCURACY_APPROXIMATE = 0x00000002,
     MAGNETOMETER_ACCURACY_HIGH        = 0x00000003,
 }
+
 alias ACTIVITY_STATE_COUNT = int;
 enum : int
 {
     ActivityStateCount = 0x00000008,
 }
+
 alias ACTIVITY_STATE = int;
 enum : int
 {
@@ -88,6 +96,7 @@ enum : int
     ActivityState_Max         = 0x00000100,
     ActivityState_Force_Dword = 0xffffffff,
 }
+
 alias ELEVATION_CHANGE_MODE = int;
 enum : int
 {
@@ -97,6 +106,7 @@ enum : int
     ElevationChangeMode_Max         = 0x00000003,
     ElevationChangeMode_Force_Dword = 0xffffffff,
 }
+
 alias MAGNETOMETER_ACCURACY = int;
 enum : int
 {
@@ -105,11 +115,13 @@ enum : int
     MagnetometerAccuracy_Approximate = 0x00000002,
     MagnetometerAccuracy_High        = 0x00000003,
 }
+
 alias PEDOMETER_STEP_TYPE_COUNT = int;
 enum : int
 {
     PedometerStepTypeCount = 0x00000003,
 }
+
 alias PEDOMETER_STEP_TYPE = int;
 enum : int
 {
@@ -119,6 +131,7 @@ enum : int
     PedometerStepType_Max         = 0x00000008,
     PedometerStepType_Force_Dword = 0xffffffff,
 }
+
 alias PROXIMITY_TYPE = int;
 enum : int
 {
@@ -126,11 +139,13 @@ enum : int
     ProximityType_HumanProximity  = 0x00000001,
     ProximityType_Force_Dword     = 0xffffffff,
 }
+
 alias HUMAN_PRESENCE_DETECTION_TYPE_COUNT = int;
 enum : int
 {
     HumanPresenceDetectionTypeCount = 0x00000004,
 }
+
 alias HUMAN_PRESENCE_DETECTION_TYPE = int;
 enum : int
 {
@@ -141,6 +156,7 @@ enum : int
     HumanPresenceDetectionType_AudioBiometric            = 0x00000008,
     HumanPresenceDetectionType_Force_Dword               = 0xffffffff,
 }
+
 alias PROXIMITY_SENSOR_CAPABILITIES = int;
 enum : int
 {
@@ -155,6 +171,7 @@ enum : int
     Proximity_Sensor_Multi_Person_Detection_Capable = 0x00000100,
     Proximity_Sensor_Supported_Capabilities         = 0x000001ff,
 }
+
 alias SIMPLE_DEVICE_ORIENTATION = int;
 enum : int
 {
@@ -165,6 +182,7 @@ enum : int
     SimpleDeviceOrientation_Faceup                            = 0x00000004,
     SimpleDeviceOrientation_Facedown                          = 0x00000005,
 }
+
 alias SENSOR_STATE = int;
 enum : int
 {
@@ -173,6 +191,7 @@ enum : int
     SensorState_Active       = 0x00000002,
     SensorState_Error        = 0x00000003,
 }
+
 alias SENSOR_CONNECTION_TYPES = int;
 enum : int
 {
@@ -180,6 +199,7 @@ enum : int
     SensorConnectionType_Attached   = 0x00000001,
     SensorConnectionType_External   = 0x00000002,
 }
+
 alias AXIS = int;
 enum : int
 {
@@ -558,7 +578,7 @@ enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(Element
     SENSOR_PROPERTY_TURN_ON_OFF_NMEA      = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3790168820, 28261, 17911, 156, 54, 212, 135, 183, 177, 189, 52}, 2))], [])*/PROPERTYKEY(GUID("E1E962F4-6E65-45F7-9C36-D487B7B1BD34"), 3),
 }
 
-enum uint GNSS_CLEAR_ALL_ASSISTANCE_DATA = 0x00000001;
+enum uint GNSS_CLEAR_ALL_ASSISTANCE_DATA = 0x00000001U;
 
 enum : GUID
 {
@@ -600,7 +620,7 @@ enum : GUID
     GUID_SensorType_HingeAngle              = GUID("82358065-f4c4-4da1-b272-13c23332a207"),
 }
 
-enum uint SENSOR_PROPERTY_LIST_HEADER_SIZE = 0x00000008;
+enum uint SENSOR_PROPERTY_LIST_HEADER_SIZE = 0x00000008U;
 
 // Structs
 
@@ -634,7 +654,28 @@ struct VEC3D
 
 struct MATRIX3X3
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct
+        {
+            float A11;
+            float A12;
+            float A13;
+            float A21;
+            float A22;
+            float A23;
+            float A31;
+            float A32;
+            float A33;
+        }
+        struct
+        {
+            VEC3D V1;
+            VEC3D V2;
+            VEC3D V3;
+        }
+        float[9] M;
+    }
 }
 
 struct QUATERNION
@@ -799,122 +840,122 @@ struct SensorDataReport;
 
 @GUID("bd77db67-45a8-42dc-8d00-6dcf15f8377a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nn-sensorsapi-isensormanager))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nn-sensorsapi-isensormanager
 interface ISensorManager : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensormanager-getsensorsbycategory))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensormanager-getsensorsbycategory
     HRESULT GetSensorsByCategory(GUID* sensorCategory, ISensorCollection* ppSensorsFound);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensormanager-getsensorsbytype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensormanager-getsensorsbytype
     HRESULT GetSensorsByType(GUID* sensorType, ISensorCollection* ppSensorsFound);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensormanager-getsensorbyid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensormanager-getsensorbyid
     HRESULT GetSensorByID(GUID* sensorID, ISensor* ppSensor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensormanager-seteventsink))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensormanager-seteventsink
     HRESULT SetEventSink(ISensorManagerEvents pEvents);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensormanager-requestpermissions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensormanager-requestpermissions
     HRESULT RequestPermissions(HWND hParent, ISensorCollection pSensors, BOOL fModal);
 }
 
 @GUID("d5fb0a7f-e74e-44f5-8e02-4806863a274f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nn-sensorsapi-ilocationpermissions))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nn-sensorsapi-ilocationpermissions
 interface ILocationPermissions : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-ilocationpermissions-getgloballocationpermission))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-ilocationpermissions-getgloballocationpermission
     HRESULT GetGlobalLocationPermission(BOOL* pfEnabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-ilocationpermissions-checklocationcapability))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-ilocationpermissions-checklocationcapability
     HRESULT CheckLocationCapability(uint dwClientThreadId);
 }
 
 @GUID("23571e11-e545-4dd8-a337-b89bf44b10df")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nn-sensorsapi-isensorcollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nn-sensorsapi-isensorcollection
 interface ISensorCollection : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensorcollection-getat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensorcollection-getat
     HRESULT GetAt(uint ulIndex, ISensor* ppSensor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensorcollection-getcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensorcollection-getcount
     HRESULT GetCount(uint* pCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensorcollection-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensorcollection-add
     HRESULT Add(ISensor pSensor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensorcollection-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensorcollection-remove
     HRESULT Remove(ISensor pSensor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensorcollection-removebyid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensorcollection-removebyid
     HRESULT RemoveByID(GUID* sensorID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensorcollection-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensorcollection-clear
     HRESULT Clear();
 }
 
 @GUID("5fa08f80-2657-458e-af75-46f73fa6ac5c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nn-sensorsapi-isensor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nn-sensorsapi-isensor
 interface ISensor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensor-getid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensor-getid
     HRESULT GetID(GUID* pID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensor-getcategory))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensor-getcategory
     HRESULT GetCategory(GUID* pSensorCategory);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensor-gettype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensor-gettype
     HRESULT GetType(GUID* pSensorType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensor-getfriendlyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensor-getfriendlyname
     HRESULT GetFriendlyName(BSTR* pFriendlyName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensor-getproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensor-getproperty
     HRESULT GetProperty(const(PROPERTYKEY)* key, PROPVARIANT* pProperty);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensor-getproperties))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensor-getproperties
     HRESULT GetProperties(IPortableDeviceKeyCollection pKeys, IPortableDeviceValues* ppProperties);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensor-getsupporteddatafields))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensor-getsupporteddatafields
     HRESULT GetSupportedDataFields(IPortableDeviceKeyCollection* ppDataFields);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensor-setproperties))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensor-setproperties
     HRESULT SetProperties(IPortableDeviceValues pProperties, IPortableDeviceValues* ppResults);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensor-supportsdatafield))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensor-supportsdatafield
     HRESULT SupportsDataField(const(PROPERTYKEY)* key, VARIANT_BOOL* pIsSupported);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensor-getstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensor-getstate
     HRESULT GetState(SensorState* pState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensor-getdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensor-getdata
     HRESULT GetData(ISensorDataReport* ppDataReport);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensor-supportsevent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensor-supportsevent
     HRESULT SupportsEvent(const(GUID)* eventGuid, VARIANT_BOOL* pIsSupported);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensor-geteventinterest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensor-geteventinterest
     HRESULT GetEventInterest(GUID** ppValues, uint* pCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensor-seteventinterest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensor-seteventinterest
     HRESULT SetEventInterest(GUID* pValues, uint count);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensor-seteventsink))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensor-seteventsink
     HRESULT SetEventSink(ISensorEvents pEvents);
 }
 
 @GUID("0ab9df9b-c4b5-4796-8898-0470706a2e1d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nn-sensorsapi-isensordatareport))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nn-sensorsapi-isensordatareport
 interface ISensorDataReport : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensordatareport-gettimestamp))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensordatareport-gettimestamp
     HRESULT GetTimestamp(SYSTEMTIME* pTimeStamp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensordatareport-getsensorvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensordatareport-getsensorvalue
     HRESULT GetSensorValue(const(PROPERTYKEY)* pKey, PROPVARIANT* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensordatareport-getsensorvalues))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensordatareport-getsensorvalues
     HRESULT GetSensorValues(IPortableDeviceKeyCollection pKeys, IPortableDeviceValues* ppValues);
 }
 
 @GUID("9b3b0b86-266a-4aad-b21f-fde5501001b7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nn-sensorsapi-isensormanagerevents))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nn-sensorsapi-isensormanagerevents
 interface ISensorManagerEvents : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensormanagerevents-onsensorenter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensormanagerevents-onsensorenter
     HRESULT OnSensorEnter(ISensor pSensor, SensorState state);
 }
 
 @GUID("5d8dcc91-4641-47e7-b7c3-b74f48a6c391")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nn-sensorsapi-isensorevents))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nn-sensorsapi-isensorevents
 interface ISensorEvents : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensorevents-onstatechanged))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensorevents-onstatechanged
     HRESULT OnStateChanged(ISensor pSensor, SensorState state);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensorevents-ondataupdated))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensorevents-ondataupdated
     HRESULT OnDataUpdated(ISensor pSensor, ISensorDataReport pNewData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensorevents-onevent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensorevents-onevent
     HRESULT OnEvent(ISensor pSensor, const(GUID)* eventID, IPortableDeviceValues pEventData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensorevents-onleave))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensorsapi/nf-sensorsapi-isensorevents-onleave
     HRESULT OnLeave(GUID* ID);
 }
 

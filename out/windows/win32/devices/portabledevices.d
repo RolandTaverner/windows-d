@@ -3,11 +3,11 @@
 module windows.win32.devices.portabledevices;
 
 public import windows.core;
-public import system : Guid;
+public import system.system : Guid;
 public import windows.win32.devices.properties : DEVPROPTYPE;
-public import windows.win32.foundation : BOOL, BSTR, DEVPROPKEY, HRESULT, PROPERTYKEY,
-                                         PWSTR;
-public import windows.win32.system.com : IDispatch, IStream, IUnknown;
+public import windows.win32.foundation.foundation : BOOL, BSTR, DEVPROPKEY, HRESULT,
+                                                    PROPERTYKEY, PWSTR;
+public import windows.win32.system.com.com : IDispatch, IStream, IUnknown;
 public import windows.win32.system.com.structuredstorage : PROPVARIANT;
 public import windows.win32.ui.shell.propertiessystem : IPropertyStore;
 
@@ -16,14 +16,16 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/delete-object-options))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/delete-object-options
 alias DELETE_OBJECT_OPTIONS = int;
 enum : int
 {
     PORTABLE_DEVICE_DELETE_NO_RECURSION   = 0x00000000,
     PORTABLE_DEVICE_DELETE_WITH_RECURSION = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-device-types))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-device-types
 alias WPD_DEVICE_TYPES = int;
 enum : int
 {
@@ -35,7 +37,8 @@ enum : int
     WPD_DEVICE_TYPE_PERSONAL_INFORMATION_MANAGER = 0x00000005,
     WPD_DEVICE_TYPE_AUDIO_RECORDER               = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/wpdattributeform))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/wpdattributeform
 enum WpdAttributeForm : int
 {
     WPD_PROPERTY_ATTRIBUTE_FORM_UNSPECIFIED        = 0x00000000,
@@ -44,7 +47,8 @@ enum WpdAttributeForm : int
     WPD_PROPERTY_ATTRIBUTE_FORM_REGULAR_EXPRESSION = 0x00000003,
     WPD_PROPERTY_ATTRIBUTE_FORM_OBJECT_IDENTIFIER  = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-parameter-attribute-form))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-parameter-attribute-form
 enum WpdParameterAttributeForm : int
 {
     WPD_PARAMETER_ATTRIBUTE_FORM_UNSPECIFIED        = 0x00000000,
@@ -53,7 +57,8 @@ enum WpdParameterAttributeForm : int
     WPD_PARAMETER_ATTRIBUTE_FORM_REGULAR_EXPRESSION = 0x00000003,
     WPD_PARAMETER_ATTRIBUTE_FORM_OBJECT_IDENTIFIER  = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-device-transports))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-device-transports
 alias WPD_DEVICE_TRANSPORTS = int;
 enum : int
 {
@@ -62,7 +67,8 @@ enum : int
     WPD_DEVICE_TRANSPORT_IP          = 0x00000002,
     WPD_DEVICE_TRANSPORT_BLUETOOTH   = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-storage-type-values))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-storage-type-values
 alias WPD_STORAGE_TYPE_VALUES = int;
 enum : int
 {
@@ -72,6 +78,7 @@ enum : int
     WPD_STORAGE_TYPE_FIXED_RAM     = 0x00000003,
     WPD_STORAGE_TYPE_REMOVABLE_RAM = 0x00000004,
 }
+
 alias WPD_STORAGE_ACCESS_CAPABILITY_VALUES = int;
 enum : int
 {
@@ -79,7 +86,8 @@ enum : int
     WPD_STORAGE_ACCESS_CAPABILITY_READ_ONLY_WITHOUT_OBJECT_DELETION = 0x00000001,
     WPD_STORAGE_ACCESS_CAPABILITY_READ_ONLY_WITH_OBJECT_DELETION    = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-sms-encoding-types))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-sms-encoding-types
 alias WPD_SMS_ENCODING_TYPES = int;
 enum : int
 {
@@ -87,21 +95,24 @@ enum : int
     SMS_ENCODING_8_BIT  = 0x00000001,
     SMS_ENCODING_UTF_16 = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/sms-message-types))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/sms-message-types
 alias SMS_MESSAGE_TYPES = int;
 enum : int
 {
     SMS_TEXT_MESSAGE   = 0x00000000,
     SMS_BINARY_MESSAGE = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-power-sources))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-power-sources
 alias WPD_POWER_SOURCES = int;
 enum : int
 {
     WPD_POWER_SOURCE_BATTERY  = 0x00000000,
     WPD_POWER_SOURCE_EXTERNAL = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-white-balance-settings))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-white-balance-settings
 alias WPD_WHITE_BALANCE_SETTINGS = int;
 enum : int
 {
@@ -114,7 +125,8 @@ enum : int
     WPD_WHITE_BALANCE_TUNGSTEN           = 0x00000006,
     WPD_WHITE_BALANCE_FLASH              = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-focus-modes))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-focus-modes
 alias WPD_FOCUS_MODES = int;
 enum : int
 {
@@ -123,7 +135,8 @@ enum : int
     WPD_FOCUS_AUTOMATIC       = 0x00000002,
     WPD_FOCUS_AUTOMATIC_MACRO = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-exposure-metering-modes))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-exposure-metering-modes
 alias WPD_EXPOSURE_METERING_MODES = int;
 enum : int
 {
@@ -133,7 +146,8 @@ enum : int
     WPD_EXPOSURE_METERING_MODE_MULTI_SPOT              = 0x00000003,
     WPD_EXPOSURE_METERING_MODE_CENTER_SPOT             = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-flash-modes))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-flash-modes
 alias WPD_FLASH_MODES = int;
 enum : int
 {
@@ -145,7 +159,8 @@ enum : int
     WPD_FLASH_MODE_RED_EYE_FILL  = 0x00000005,
     WPD_FLASH_MODE_EXTERNAL_SYNC = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-exposure-program-modes))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-exposure-program-modes
 alias WPD_EXPOSURE_PROGRAM_MODES = int;
 enum : int
 {
@@ -158,7 +173,8 @@ enum : int
     WPD_EXPOSURE_PROGRAM_MODE_ACTION            = 0x00000006,
     WPD_EXPOSURE_PROGRAM_MODE_PORTRAIT          = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-capture-modes))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-capture-modes
 alias WPD_CAPTURE_MODES = int;
 enum : int
 {
@@ -167,7 +183,8 @@ enum : int
     WPD_CAPTURE_MODE_BURST     = 0x00000002,
     WPD_CAPTURE_MODE_TIMELAPSE = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-effect-modes))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-effect-modes
 alias WPD_EFFECT_MODES = int;
 enum : int
 {
@@ -176,7 +193,8 @@ enum : int
     WPD_EFFECT_MODE_BLACK_AND_WHITE = 0x00000002,
     WPD_EFFECT_MODE_SEPIA           = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-focus-metering-modes))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-focus-metering-modes
 alias WPD_FOCUS_METERING_MODES = int;
 enum : int
 {
@@ -184,7 +202,8 @@ enum : int
     WPD_FOCUS_METERING_MODE_CENTER_SPOT = 0x00000001,
     WPD_FOCUS_METERING_MODE_MULTI_SPOT  = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-bitrate-types))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-bitrate-types
 alias WPD_BITRATE_TYPES = int;
 enum : int
 {
@@ -193,7 +212,8 @@ enum : int
     WPD_BITRATE_TYPE_VARIABLE = 0x00000002,
     WPD_BITRATE_TYPE_FREE     = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-meta-genres))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-meta-genres
 alias WPD_META_GENRES = int;
 enum : int
 {
@@ -217,7 +237,8 @@ enum : int
     WPD_META_GENRE_VIDEO_PODCAST                    = 0x00000041,
     WPD_META_GENRE_MIXED_PODCAST                    = 0x00000042,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-cropped-status-values))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-cropped-status-values
 alias WPD_CROPPED_STATUS_VALUES = int;
 enum : int
 {
@@ -225,7 +246,8 @@ enum : int
     WPD_CROPPED_STATUS_CROPPED               = 0x00000001,
     WPD_CROPPED_STATUS_SHOULD_NOT_BE_CROPPED = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-color-corrected-status-values))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-color-corrected-status-values
 alias WPD_COLOR_CORRECTED_STATUS_VALUES = int;
 enum : int
 {
@@ -233,7 +255,8 @@ enum : int
     WPD_COLOR_CORRECTED_STATUS_CORRECTED               = 0x00000001,
     WPD_COLOR_CORRECTED_STATUS_SHOULD_NOT_BE_CORRECTED = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-video-scan-types))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-video-scan-types
 alias WPD_VIDEO_SCAN_TYPES = int;
 enum : int
 {
@@ -246,7 +269,8 @@ enum : int
     WPD_VIDEO_SCAN_TYPE_MIXED_INTERLACE                 = 0x00000006,
     WPD_VIDEO_SCAN_TYPE_MIXED_INTERLACE_AND_PROGRESSIVE = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-operation-states))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-operation-states
 alias WPD_OPERATION_STATES = int;
 enum : int
 {
@@ -258,20 +282,23 @@ enum : int
     WPD_OPERATION_STATE_FINISHED    = 0x00000005,
     WPD_OPERATION_STATE_ABORTED     = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-section-data-units-values))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-section-data-units-values
 alias WPD_SECTION_DATA_UNITS_VALUES = int;
 enum : int
 {
     WPD_SECTION_DATA_UNITS_BYTES        = 0x00000000,
     WPD_SECTION_DATA_UNITS_MILLISECONDS = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-rendering-information-profile-entry-types))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-rendering-information-profile-entry-types
 alias WPD_RENDERING_INFORMATION_PROFILE_ENTRY_TYPES = int;
 enum : int
 {
     WPD_RENDERING_INFORMATION_PROFILE_ENTRY_TYPE_OBJECT   = 0x00000000,
     WPD_RENDERING_INFORMATION_PROFILE_ENTRY_TYPE_RESOURCE = 0x00000001,
 }
+
 alias WPD_COMMAND_ACCESS_TYPES = int;
 enum : int
 {
@@ -281,13 +308,15 @@ enum : int
     WPD_COMMAND_ACCESS_FROM_PROPERTY_WITH_FILE_ACCESS    = 0x00000008,
     WPD_COMMAND_ACCESS_FROM_ATTRIBUTE_WITH_METHOD_ACCESS = 0x00000010,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-service-inheritance-types2))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-service-inheritance-types2
 alias WPD_SERVICE_INHERITANCE_TYPES = int;
 enum : int
 {
     WPD_SERVICE_INHERITANCE_IMPLEMENTATION = 0x00000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-parameter-usage-types))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-parameter-usage-types
 alias WPD_PARAMETER_USAGE_TYPES = int;
 enum : int
 {
@@ -296,7 +325,8 @@ enum : int
     WPD_PARAMETER_USAGE_OUT    = 0x00000002,
     WPD_PARAMETER_USAGE_INOUT  = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-stream-units))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/wpd-stream-units
 alias WPD_STREAM_UNITS = int;
 enum : int
 {
@@ -306,6 +336,7 @@ enum : int
     WPD_STREAM_UNITS_MILLISECONDS = 0x00000004,
     WPD_STREAM_UNITS_MICROSECONDS = 0x00000008,
 }
+
 alias DEVICE_RADIO_STATE = int;
 enum : int
 {
@@ -318,6 +349,7 @@ enum : int
     DRS_HW_RADIO_OFF_UNCONTROLLABLE = 0x00000006,
     DRS_RADIO_MAX                   = 0x00000006,
 }
+
 alias SYSTEM_RADIO_STATE = int;
 enum : int
 {
@@ -337,12 +369,12 @@ enum : GUID
     GUID_DEVINTERFACE_WPD_SERVICE = GUID("9ef44f80-3d64-4246-a6aa-206f328d1edc"),
 }
 
-enum uint WPD_CONTROL_FUNCTION_GENERIC_MESSAGE = 0x00000042;
+enum uint WPD_CONTROL_FUNCTION_GENERIC_MESSAGE = 0x00000042U;
 
 enum : uint
 {
-    IOCTL_WPD_MESSAGE_READWRITE_ACCESS = 0x0040c108,
-    IOCTL_WPD_MESSAGE_READ_ACCESS      = 0x00404108,
+    IOCTL_WPD_MESSAGE_READWRITE_ACCESS = 0x0040c108U,
+    IOCTL_WPD_MESSAGE_READ_ACCESS      = 0x00404108U,
 }
 
 enum const(wchar)* WPD_DEVICE_OBJECT_ID = "DEVICE";
@@ -363,7 +395,7 @@ enum : const(wchar)*
     PORTABLE_DEVICE_DRM_SCHEME_PDDRM      = "PDDRM",
 }
 
-enum uint FACILITY_WPD = 0x0000002a;
+enum uint FACILITY_WPD = 0x0000002aU;
 
 enum : HRESULT
 {
@@ -1828,12 +1860,12 @@ enum : const(wchar)*
     NAME_MediaObj_AudioEncodingProfile = "AudioEncodingProfile",
 }
 
-enum uint DEVSVC_SERVICEINFO_VERSION = 0x00000064;
+enum uint DEVSVC_SERVICEINFO_VERSION = 0x00000064U;
 
 enum : uint
 {
-    DEVSVCTYPE_DEFAULT  = 0x00000000,
-    DEVSVCTYPE_ABSTRACT = 0x00000001,
+    DEVSVCTYPE_DEFAULT  = 0x00000000U,
+    DEVSVCTYPE_ABSTRACT = 0x00000001U,
 }
 
 enum : const(wchar)*
@@ -1844,7 +1876,7 @@ enum : const(wchar)*
 }
 
 enum const(wchar)* NAME_CalendarSvc = "Calendar";
-enum uint TYPE_CalendarSvc = 0x00000000;
+enum uint TYPE_CalendarSvc = 0x00000000U;
 
 enum : const(wchar)*
 {
@@ -1874,10 +1906,10 @@ enum : const(wchar)*
 
 enum : uint
 {
-    ENUM_CalendarObj_BusyStatusFree        = 0x00000000,
-    ENUM_CalendarObj_BusyStatusBusy        = 0x00000001,
-    ENUM_CalendarObj_BusyStatusOutOfOffice = 0x00000002,
-    ENUM_CalendarObj_BusyStatusTentative   = 0x00000003,
+    ENUM_CalendarObj_BusyStatusFree        = 0x00000000U,
+    ENUM_CalendarObj_BusyStatusBusy        = 0x00000001U,
+    ENUM_CalendarObj_BusyStatusOutOfOffice = 0x00000002U,
+    ENUM_CalendarObj_BusyStatusTentative   = 0x00000003U,
 }
 
 enum : const(wchar)*
@@ -1889,9 +1921,9 @@ enum : const(wchar)*
 }
 
 enum const(wchar)* NAME_HintsSvc = "Hints";
-enum uint TYPE_HintsSvc = 0x00000000;
+enum uint TYPE_HintsSvc = 0x00000000U;
 enum const(wchar)* NAME_MessageSvc = "Message";
-enum uint TYPE_MessageSvc = 0x00000000;
+enum uint TYPE_MessageSvc = 0x00000000U;
 
 enum : const(wchar)*
 {
@@ -1908,9 +1940,9 @@ enum : const(wchar)*
 
 enum : uint
 {
-    ENUM_MessageObj_PriorityHighest = 0x00000002,
-    ENUM_MessageObj_PriorityNormal  = 0x00000001,
-    ENUM_MessageObj_PriorityLowest  = 0x00000000,
+    ENUM_MessageObj_PriorityHighest = 0x00000002U,
+    ENUM_MessageObj_PriorityNormal  = 0x00000001U,
+    ENUM_MessageObj_PriorityLowest  = 0x00000000U,
 }
 
 enum : const(wchar)*
@@ -1925,8 +1957,8 @@ enum : const(wchar)*
 
 enum : uint
 {
-    ENUM_MessageObj_ReadFalse = 0x00000000,
-    ENUM_MessageObj_ReadTrue  = 0x000000ff,
+    ENUM_MessageObj_ReadFalse = 0x00000000U,
+    ENUM_MessageObj_ReadTrue  = 0x000000ffU,
 }
 
 enum : const(wchar)*
@@ -1938,10 +1970,10 @@ enum : const(wchar)*
 
 enum : uint
 {
-    ENUM_MessageObj_PatternTypeDaily   = 0x00000001,
-    ENUM_MessageObj_PatternTypeWeekly  = 0x00000002,
-    ENUM_MessageObj_PatternTypeMonthly = 0x00000003,
-    ENUM_MessageObj_PatternTypeYearly  = 0x00000004,
+    ENUM_MessageObj_PatternTypeDaily   = 0x00000001U,
+    ENUM_MessageObj_PatternTypeWeekly  = 0x00000002U,
+    ENUM_MessageObj_PatternTypeMonthly = 0x00000003U,
+    ENUM_MessageObj_PatternTypeYearly  = 0x00000004U,
 }
 
 enum : const(wchar)*
@@ -1954,39 +1986,39 @@ enum : const(wchar)*
 
 enum : uint
 {
-    FLAG_MessageObj_DayOfWeekNone      = 0x00000000,
-    FLAG_MessageObj_DayOfWeekSunday    = 0x00000001,
-    FLAG_MessageObj_DayOfWeekMonday    = 0x00000002,
-    FLAG_MessageObj_DayOfWeekTuesday   = 0x00000004,
-    FLAG_MessageObj_DayOfWeekWednesday = 0x00000008,
-    FLAG_MessageObj_DayOfWeekThursday  = 0x00000010,
-    FLAG_MessageObj_DayOfWeekFriday    = 0x00000020,
-    FLAG_MessageObj_DayOfWeekSaturday  = 0x00000040,
+    FLAG_MessageObj_DayOfWeekNone      = 0x00000000U,
+    FLAG_MessageObj_DayOfWeekSunday    = 0x00000001U,
+    FLAG_MessageObj_DayOfWeekMonday    = 0x00000002U,
+    FLAG_MessageObj_DayOfWeekTuesday   = 0x00000004U,
+    FLAG_MessageObj_DayOfWeekWednesday = 0x00000008U,
+    FLAG_MessageObj_DayOfWeekThursday  = 0x00000010U,
+    FLAG_MessageObj_DayOfWeekFriday    = 0x00000020U,
+    FLAG_MessageObj_DayOfWeekSaturday  = 0x00000040U,
 }
 
 enum const(wchar)* NAME_MessageObj_PatternDayOfMonth = "PatternDayOfMonth";
-enum uint RANGEMIN_MessageObj_PatternDayOfMonth = 0x00000001;
-enum uint RANGEMAX_MessageObj_PatternDayOfMonth = 0x0000001f;
-enum uint RANGESTEP_MessageObj_PatternDayOfMonth = 0x00000001;
+enum uint RANGEMIN_MessageObj_PatternDayOfMonth = 0x00000001U;
+enum uint RANGEMAX_MessageObj_PatternDayOfMonth = 0x0000001fU;
+enum uint RANGESTEP_MessageObj_PatternDayOfMonth = 0x00000001U;
 enum const(wchar)* NAME_MessageObj_PatternMonthOfYear = "PatternMonthOfYear";
-enum uint RANGEMIN_MessageObj_PatternMonthOfYear = 0x00000001;
-enum uint RANGEMAX_MessageObj_PatternMonthOfYear = 0x0000000c;
-enum uint RANGESTEP_MessageObj_PatternMonthOfYear = 0x00000001;
+enum uint RANGEMIN_MessageObj_PatternMonthOfYear = 0x00000001U;
+enum uint RANGEMAX_MessageObj_PatternMonthOfYear = 0x0000000cU;
+enum uint RANGESTEP_MessageObj_PatternMonthOfYear = 0x00000001U;
 enum const(wchar)* NAME_MessageObj_PatternInstance = "PatternInstance";
 
 enum : uint
 {
-    ENUM_MessageObj_PatternInstanceNone   = 0x00000000,
-    ENUM_MessageObj_PatternInstanceFirst  = 0x00000001,
-    ENUM_MessageObj_PatternInstanceSecond = 0x00000002,
-    ENUM_MessageObj_PatternInstanceThird  = 0x00000003,
-    ENUM_MessageObj_PatternInstanceFourth = 0x00000004,
-    ENUM_MessageObj_PatternInstanceLast   = 0x00000005,
+    ENUM_MessageObj_PatternInstanceNone   = 0x00000000U,
+    ENUM_MessageObj_PatternInstanceFirst  = 0x00000001U,
+    ENUM_MessageObj_PatternInstanceSecond = 0x00000002U,
+    ENUM_MessageObj_PatternInstanceThird  = 0x00000003U,
+    ENUM_MessageObj_PatternInstanceFourth = 0x00000004U,
+    ENUM_MessageObj_PatternInstanceLast   = 0x00000005U,
 }
 
 enum const(wchar)* NAME_MessageObj_PatternDeleteDates = "PatternDeleteDates";
 enum const(wchar)* NAME_DeviceMetadataSvc = "Metadata";
-enum uint TYPE_DeviceMetadataSvc = 0x00000000;
+enum uint TYPE_DeviceMetadataSvc = 0x00000000U;
 
 enum : const(wchar)*
 {
@@ -1997,27 +2029,27 @@ enum : const(wchar)*
 
 enum : uint
 {
-    ENUM_DeviceMetadataObj_DefaultCABFalse = 0x00000000,
-    ENUM_DeviceMetadataObj_DefaultCABTrue  = 0x00000001,
+    ENUM_DeviceMetadataObj_DefaultCABFalse = 0x00000000U,
+    ENUM_DeviceMetadataObj_DefaultCABTrue  = 0x00000001U,
 }
 
 enum const(wchar)* NAME_NotesSvc = "Notes";
-enum uint TYPE_NotesSvc = 0x00000000;
+enum uint TYPE_NotesSvc = 0x00000000U;
 enum const(wchar)* NAME_AbstractNote = "AbstractNote";
 enum const(wchar)* NAME_StatusSvc = "Status";
-enum uint TYPE_StatusSvc = 0x00000000;
+enum uint TYPE_StatusSvc = 0x00000000U;
 enum const(wchar)* NAME_StatusSvc_SignalStrength = "SignalStrength";
-enum uint RANGEMIN_StatusSvc_SignalStrength = 0x00000000;
-enum uint RANGEMAX_StatusSvc_SignalStrength = 0x00000004;
-enum uint RANGESTEP_StatusSvc_SignalStrength = 0x00000001;
+enum uint RANGEMIN_StatusSvc_SignalStrength = 0x00000000U;
+enum uint RANGEMAX_StatusSvc_SignalStrength = 0x00000004U;
+enum uint RANGESTEP_StatusSvc_SignalStrength = 0x00000001U;
 enum const(wchar)* NAME_StatusSvc_TextMessages = "TextMessages";
-enum uint RANGEMAX_StatusSvc_TextMessages = 0x000000ff;
+enum uint RANGEMAX_StatusSvc_TextMessages = 0x000000ffU;
 enum const(wchar)* NAME_StatusSvc_NewPictures = "NewPictures";
-enum uint RANGEMAX_StatusSvc_NewPictures = 0x0000ffff;
+enum uint RANGEMAX_StatusSvc_NewPictures = 0x0000ffffU;
 enum const(wchar)* NAME_StatusSvc_MissedCalls = "MissedCalls";
-enum uint RANGEMAX_StatusSvc_MissedCalls = 0x000000ff;
+enum uint RANGEMAX_StatusSvc_MissedCalls = 0x000000ffU;
 enum const(wchar)* NAME_StatusSvc_VoiceMail = "VoiceMail";
-enum uint RANGEMAX_StatusSvc_VoiceMail = 0x000000ff;
+enum uint RANGEMAX_StatusSvc_VoiceMail = 0x000000ffU;
 
 enum : const(wchar)*
 {
@@ -2028,22 +2060,22 @@ enum : const(wchar)*
 
 enum : uint
 {
-    ENUM_StatusSvc_RoamingInactive = 0x00000000,
-    ENUM_StatusSvc_RoamingActive   = 0x00000001,
-    ENUM_StatusSvc_RoamingUnknown  = 0x00000002,
+    ENUM_StatusSvc_RoamingInactive = 0x00000000U,
+    ENUM_StatusSvc_RoamingActive   = 0x00000001U,
+    ENUM_StatusSvc_RoamingUnknown  = 0x00000002U,
 }
 
 enum const(wchar)* NAME_StatusSvc_BatteryLife = "BatteryLife";
-enum uint RANGEMIN_StatusSvc_BatteryLife = 0x00000000;
-enum uint RANGEMAX_StatusSvc_BatteryLife = 0x00000064;
-enum uint RANGESTEP_StatusSvc_BatteryLife = 0x00000001;
+enum uint RANGEMIN_StatusSvc_BatteryLife = 0x00000000U;
+enum uint RANGEMAX_StatusSvc_BatteryLife = 0x00000064U;
+enum uint RANGESTEP_StatusSvc_BatteryLife = 0x00000001U;
 enum const(wchar)* NAME_StatusSvc_ChargingState = "ChargingState";
 
 enum : uint
 {
-    ENUM_StatusSvc_ChargingInactive = 0x00000000,
-    ENUM_StatusSvc_ChargingActive   = 0x00000001,
-    ENUM_StatusSvc_ChargingUnknown  = 0x00000002,
+    ENUM_StatusSvc_ChargingInactive = 0x00000000U,
+    ENUM_StatusSvc_ChargingActive   = 0x00000001U,
+    ENUM_StatusSvc_ChargingUnknown  = 0x00000002U,
 }
 
 enum : const(wchar)*
@@ -2061,18 +2093,18 @@ enum : const(wchar)*
 
 enum : uint
 {
-    SYNCSVC_FILTER_NONE                            = 0x00000000,
-    SYNCSVC_FILTER_CONTACTS_WITH_PHONE             = 0x00000001,
-    SYNCSVC_FILTER_TASK_ACTIVE                     = 0x00000002,
-    SYNCSVC_FILTER_CALENDAR_WINDOW_WITH_RECURRENCE = 0x00000003,
+    SYNCSVC_FILTER_NONE                            = 0x00000000U,
+    SYNCSVC_FILTER_CONTACTS_WITH_PHONE             = 0x00000001U,
+    SYNCSVC_FILTER_TASK_ACTIVE                     = 0x00000002U,
+    SYNCSVC_FILTER_CALENDAR_WINDOW_WITH_RECURRENCE = 0x00000003U,
 }
 
 enum const(wchar)* NAME_SyncSvc_SyncObjectReferences = "SyncObjectReferences";
 
 enum : uint
 {
-    ENUM_SyncSvc_SyncObjectReferencesDisabled = 0x00000000,
-    ENUM_SyncSvc_SyncObjectReferencesEnabled  = 0x000000ff,
+    ENUM_SyncSvc_SyncObjectReferencesDisabled = 0x00000000U,
+    ENUM_SyncSvc_SyncObjectReferencesEnabled  = 0x000000ffU,
 }
 
 enum const(wchar)* NAME_SyncObj_LastAuthorProxyID = "LastAuthorProxyID";
@@ -2084,7 +2116,7 @@ enum : const(wchar)*
 }
 
 enum const(wchar)* NAME_TasksSvc = "Tasks";
-enum uint TYPE_TasksSvc = 0x00000000;
+enum uint TYPE_TasksSvc = 0x00000000U;
 enum const(wchar)* NAME_TasksSvc_SyncActiveOnly = "FilterType";
 enum const(wchar)* NAME_AbstractTask = "AbstractTask";
 
@@ -2096,8 +2128,8 @@ enum : const(wchar)*
 
 enum : uint
 {
-    ENUM_TaskObj_CompleteFalse = 0x00000000,
-    ENUM_TaskObj_CompleteTrue  = 0x000000ff,
+    ENUM_TaskObj_CompleteFalse = 0x00000000U,
+    ENUM_TaskObj_CompleteTrue  = 0x000000ffU,
 }
 
 enum : const(wchar)*
@@ -2165,12 +2197,12 @@ enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(Element
 
 enum : uint
 {
-    WPDNSE_PROPSHEET_DEVICE_GENERAL     = 0x00000001,
-    WPDNSE_PROPSHEET_STORAGE_GENERAL    = 0x00000002,
-    WPDNSE_PROPSHEET_CONTENT_GENERAL    = 0x00000004,
-    WPDNSE_PROPSHEET_CONTENT_REFERENCES = 0x00000008,
-    WPDNSE_PROPSHEET_CONTENT_RESOURCES  = 0x00000010,
-    WPDNSE_PROPSHEET_CONTENT_DETAILS    = 0x00000020,
+    WPDNSE_PROPSHEET_DEVICE_GENERAL     = 0x00000001U,
+    WPDNSE_PROPSHEET_STORAGE_GENERAL    = 0x00000002U,
+    WPDNSE_PROPSHEET_CONTENT_GENERAL    = 0x00000004U,
+    WPDNSE_PROPSHEET_CONTENT_REFERENCES = 0x00000008U,
+    WPDNSE_PROPSHEET_CONTENT_RESOURCES  = 0x00000010U,
+    WPDNSE_PROPSHEET_CONTENT_DETAILS    = 0x00000020U,
 }
 
 enum : const(wchar)*
@@ -2180,7 +2212,7 @@ enum : const(wchar)*
 }
 
 enum const(wchar)* NAME_ContactsSvc = "Contacts";
-enum uint TYPE_ContactsSvc = 0x00000000;
+enum uint TYPE_ContactsSvc = 0x00000000U;
 enum const(wchar)* NAME_ContactSvc_SyncWithPhoneOnly = "FilterType";
 enum const(wchar)* NAME_AbstractContact = "AbstractContact";
 
@@ -2258,10 +2290,10 @@ enum : const(wchar)*
 }
 
 enum const(wchar)* NAME_RingtonesSvc = "Ringtones";
-enum uint TYPE_RingtonesSvc = 0x00000000;
+enum uint TYPE_RingtonesSvc = 0x00000000U;
 enum const(wchar)* NAME_RingtonesSvc_DefaultRingtone = "DefaultRingtone";
 enum const(wchar)* NAME_AnchorSyncSvc = "AnchorSync";
-enum uint TYPE_AnchorSyncSvc = 0x00000001;
+enum uint TYPE_AnchorSyncSvc = 0x00000001U;
 
 enum : const(wchar)*
 {
@@ -2281,9 +2313,9 @@ enum : const(wchar)*
 
 enum : uint
 {
-    ENUM_AnchorResults_AnchorStateNormal  = 0x00000000,
-    ENUM_AnchorResults_AnchorStateInvalid = 0x00000001,
-    ENUM_AnchorResults_AnchorStateOld     = 0x00000002,
+    ENUM_AnchorResults_AnchorStateNormal  = 0x00000000U,
+    ENUM_AnchorResults_AnchorStateInvalid = 0x00000001U,
+    ENUM_AnchorResults_AnchorStateOld     = 0x00000002U,
 }
 
 enum : const(wchar)*
@@ -2301,15 +2333,15 @@ enum : const(wchar)*
 
 enum : uint
 {
-    ENUM_AnchorResults_ItemStateInvalid = 0x00000000,
-    ENUM_AnchorResults_ItemStateDeleted = 0x00000001,
-    ENUM_AnchorResults_ItemStateCreated = 0x00000002,
-    ENUM_AnchorResults_ItemStateUpdated = 0x00000003,
-    ENUM_AnchorResults_ItemStateChanged = 0x00000004,
+    ENUM_AnchorResults_ItemStateInvalid = 0x00000000U,
+    ENUM_AnchorResults_ItemStateDeleted = 0x00000001U,
+    ENUM_AnchorResults_ItemStateCreated = 0x00000002U,
+    ENUM_AnchorResults_ItemStateUpdated = 0x00000003U,
+    ENUM_AnchorResults_ItemStateChanged = 0x00000004U,
 }
 
 enum const(wchar)* NAME_FullEnumSyncSvc = "FullEnumSync";
-enum uint TYPE_FullEnumSyncSvc = 0x00000001;
+enum uint TYPE_FullEnumSyncSvc = 0x00000001U;
 
 enum : const(wchar)*
 {
@@ -2385,506 +2417,506 @@ struct PortableDeviceWebControl;
 struct EnumBthMtpConnectors;
 
 @GUID("b32f4002-bb27-45ff-af4f-06631c1e8dad")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iwpdserializer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iwpdserializer
 interface IWpdSerializer : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iwpdserializer-getiportabledevicevaluesfrombuffer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iwpdserializer-getiportabledevicevaluesfrombuffer
     HRESULT GetIPortableDeviceValuesFromBuffer(ubyte* pBuffer, uint dwInputBufferLength, 
                                                IPortableDeviceValues* ppParams);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iwpdserializer-writeiportabledevicevaluestobuffer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iwpdserializer-writeiportabledevicevaluestobuffer
     HRESULT WriteIPortableDeviceValuesToBuffer(uint dwOutputBufferLength, IPortableDeviceValues pResults, 
                                                ubyte* pBuffer, uint* pdwBytesWritten);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iwpdserializer-getbufferfromiportabledevicevalues))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iwpdserializer-getbufferfromiportabledevicevalues
     HRESULT GetBufferFromIPortableDeviceValues(IPortableDeviceValues pSource, ubyte** ppBuffer, 
                                                uint* pdwBufferSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iwpdserializer-getserializedsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iwpdserializer-getserializedsize
     HRESULT GetSerializedSize(IPortableDeviceValues pSource, uint* pdwSize);
 }
 
 @GUID("6848f6f2-3155-4f86-b6f5-263eeeab3143")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues
 interface IPortableDeviceValues : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-getcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-getcount
     HRESULT GetCount(uint* pcelt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-getat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-getat
     HRESULT GetAt(const(uint) index, PROPERTYKEY* pKey, PROPVARIANT* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-setvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-setvalue
     HRESULT SetValue(const(PROPERTYKEY)* key, const(PROPVARIANT)* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-getvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-getvalue
     HRESULT GetValue(const(PROPERTYKEY)* key, PROPVARIANT* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-setstringvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-setstringvalue
     HRESULT SetStringValue(const(PROPERTYKEY)* key, const(PWSTR) Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-getstringvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-getstringvalue
     HRESULT GetStringValue(const(PROPERTYKEY)* key, PWSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-setunsignedintegervalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-setunsignedintegervalue
     HRESULT SetUnsignedIntegerValue(const(PROPERTYKEY)* key, const(uint) Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-getunsignedintegervalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-getunsignedintegervalue
     HRESULT GetUnsignedIntegerValue(const(PROPERTYKEY)* key, uint* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-setsignedintegervalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-setsignedintegervalue
     HRESULT SetSignedIntegerValue(const(PROPERTYKEY)* key, const(int) Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-getsignedintegervalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-getsignedintegervalue
     HRESULT GetSignedIntegerValue(const(PROPERTYKEY)* key, int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-setunsignedlargeintegervalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-setunsignedlargeintegervalue
     HRESULT SetUnsignedLargeIntegerValue(const(PROPERTYKEY)* key, const(ulong) Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-getunsignedlargeintegervalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-getunsignedlargeintegervalue
     HRESULT GetUnsignedLargeIntegerValue(const(PROPERTYKEY)* key, ulong* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-setsignedlargeintegervalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-setsignedlargeintegervalue
     HRESULT SetSignedLargeIntegerValue(const(PROPERTYKEY)* key, const(long) Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-getsignedlargeintegervalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-getsignedlargeintegervalue
     HRESULT GetSignedLargeIntegerValue(const(PROPERTYKEY)* key, long* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-setfloatvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-setfloatvalue
     HRESULT SetFloatValue(const(PROPERTYKEY)* key, const(float) Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-getfloatvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-getfloatvalue
     HRESULT GetFloatValue(const(PROPERTYKEY)* key, float* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-seterrorvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-seterrorvalue
     HRESULT SetErrorValue(const(PROPERTYKEY)* key, const(HRESULT) Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-geterrorvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-geterrorvalue
     HRESULT GetErrorValue(const(PROPERTYKEY)* key, HRESULT* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-setkeyvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-setkeyvalue
     HRESULT SetKeyValue(const(PROPERTYKEY)* key, const(PROPERTYKEY)* Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-getkeyvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-getkeyvalue
     HRESULT GetKeyValue(const(PROPERTYKEY)* key, PROPERTYKEY* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-setboolvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-setboolvalue
     HRESULT SetBoolValue(const(PROPERTYKEY)* key, const(BOOL) Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-getboolvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-getboolvalue
     HRESULT GetBoolValue(const(PROPERTYKEY)* key, BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-setiunknownvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-setiunknownvalue
     HRESULT SetIUnknownValue(const(PROPERTYKEY)* key, IUnknown pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-getiunknownvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-getiunknownvalue
     HRESULT GetIUnknownValue(const(PROPERTYKEY)* key, IUnknown* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-setguidvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-setguidvalue
     HRESULT SetGuidValue(const(PROPERTYKEY)* key, const(GUID)* Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-getguidvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-getguidvalue
     HRESULT GetGuidValue(const(PROPERTYKEY)* key, GUID* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-setbuffervalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-setbuffervalue
     HRESULT SetBufferValue(const(PROPERTYKEY)* key, ubyte* pValue, uint cbValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-getbuffervalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-getbuffervalue
     HRESULT GetBufferValue(const(PROPERTYKEY)* key, ubyte** ppValue, uint* pcbValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-setiportabledevicevaluesvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-setiportabledevicevaluesvalue
     HRESULT SetIPortableDeviceValuesValue(const(PROPERTYKEY)* key, IPortableDeviceValues pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-getiportabledevicevaluesvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-getiportabledevicevaluesvalue
     HRESULT GetIPortableDeviceValuesValue(const(PROPERTYKEY)* key, IPortableDeviceValues* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-setiportabledevicepropvariantcollectionvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-setiportabledevicepropvariantcollectionvalue
     HRESULT SetIPortableDevicePropVariantCollectionValue(const(PROPERTYKEY)* key, 
                                                          IPortableDevicePropVariantCollection pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-getiportabledevicepropvariantcollectionvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-getiportabledevicepropvariantcollectionvalue
     HRESULT GetIPortableDevicePropVariantCollectionValue(const(PROPERTYKEY)* key, 
                                                          IPortableDevicePropVariantCollection* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-setiportabledevicekeycollectionvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-setiportabledevicekeycollectionvalue
     HRESULT SetIPortableDeviceKeyCollectionValue(const(PROPERTYKEY)* key, IPortableDeviceKeyCollection pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-getiportabledevicekeycollectionvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-getiportabledevicekeycollectionvalue
     HRESULT GetIPortableDeviceKeyCollectionValue(const(PROPERTYKEY)* key, IPortableDeviceKeyCollection* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-setiportabledevicevaluescollectionvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-setiportabledevicevaluescollectionvalue
     HRESULT SetIPortableDeviceValuesCollectionValue(const(PROPERTYKEY)* key, 
                                                     IPortableDeviceValuesCollection pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-getiportabledevicevaluescollectionvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-getiportabledevicevaluescollectionvalue
     HRESULT GetIPortableDeviceValuesCollectionValue(const(PROPERTYKEY)* key, 
                                                     IPortableDeviceValuesCollection* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-removevalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-removevalue
     HRESULT RemoveValue(const(PROPERTYKEY)* key);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-copyvaluesfrompropertystore))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-copyvaluesfrompropertystore
     HRESULT CopyValuesFromPropertyStore(IPropertyStore pStore);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-copyvaluestopropertystore))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-copyvaluestopropertystore
     HRESULT CopyValuesToPropertyStore(IPropertyStore pStore);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevalues-clear
     HRESULT Clear();
 }
 
 @GUID("dada2357-e0ad-492e-98db-dd61c53ba353")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicekeycollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicekeycollection
 interface IPortableDeviceKeyCollection : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicekeycollection-getcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicekeycollection-getcount
     HRESULT GetCount(uint* pcElems);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicekeycollection-getat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicekeycollection-getat
     HRESULT GetAt(const(uint) dwIndex, PROPERTYKEY* pKey);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicekeycollection-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicekeycollection-add
     HRESULT Add(const(PROPERTYKEY)* Key);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicekeycollection-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicekeycollection-clear
     HRESULT Clear();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicekeycollection-removeat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicekeycollection-removeat
     HRESULT RemoveAt(const(uint) dwIndex);
 }
 
 @GUID("89b2e422-4f1b-4316-bcef-a44afea83eb3")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicepropvariantcollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicepropvariantcollection
 interface IPortableDevicePropVariantCollection : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicepropvariantcollection-getcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicepropvariantcollection-getcount
     HRESULT GetCount(uint* pcElems);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicepropvariantcollection-getat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicepropvariantcollection-getat
     HRESULT GetAt(const(uint) dwIndex, PROPVARIANT* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicepropvariantcollection-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicepropvariantcollection-add
     HRESULT Add(const(PROPVARIANT)* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicepropvariantcollection-gettype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicepropvariantcollection-gettype
     HRESULT GetType(ushort* pvt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicepropvariantcollection-changetype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicepropvariantcollection-changetype
     HRESULT ChangeType(const(ushort) vt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicepropvariantcollection-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicepropvariantcollection-clear
     HRESULT Clear();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicepropvariantcollection-removeat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicepropvariantcollection-removeat
     HRESULT RemoveAt(const(uint) dwIndex);
 }
 
 @GUID("6e3f2d79-4e07-48c4-8208-d8c2e5af4a99")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevaluescollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevaluescollection
 interface IPortableDeviceValuesCollection : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevaluescollection-getcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevaluescollection-getcount
     HRESULT GetCount(uint* pcElems);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevaluescollection-getat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevaluescollection-getat
     HRESULT GetAt(const(uint) dwIndex, IPortableDeviceValues* ppValues);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevaluescollection-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevaluescollection-add
     HRESULT Add(IPortableDeviceValues pValues);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevaluescollection-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevaluescollection-clear
     HRESULT Clear();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevaluescollection-removeat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iportabledevicevaluescollection-removeat
     HRESULT RemoveAt(const(uint) dwIndex);
 }
 
 @GUID("a1567595-4c2f-4574-a6fa-ecef917b9a40")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledevicemanager))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledevicemanager
 interface IPortableDeviceManager : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicemanager-getdevices))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicemanager-getdevices
     HRESULT GetDevices(PWSTR* pPnPDeviceIDs, uint* pcPnPDeviceIDs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicemanager-refreshdevicelist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicemanager-refreshdevicelist
     HRESULT RefreshDeviceList();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicemanager-getdevicefriendlyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicemanager-getdevicefriendlyname
     HRESULT GetDeviceFriendlyName(const(PWSTR) pszPnPDeviceID, PWSTR pDeviceFriendlyName, 
                                   uint* pcchDeviceFriendlyName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicemanager-getdevicedescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicemanager-getdevicedescription
     HRESULT GetDeviceDescription(const(PWSTR) pszPnPDeviceID, PWSTR pDeviceDescription, 
                                  uint* pcchDeviceDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicemanager-getdevicemanufacturer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicemanager-getdevicemanufacturer
     HRESULT GetDeviceManufacturer(const(PWSTR) pszPnPDeviceID, PWSTR pDeviceManufacturer, 
                                   uint* pcchDeviceManufacturer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicemanager-getdeviceproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicemanager-getdeviceproperty
     HRESULT GetDeviceProperty(const(PWSTR) pszPnPDeviceID, const(PWSTR) pszDevicePropertyName, ubyte* pData, 
                               uint* pcbData, uint* pdwType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicemanager-getprivatedevices))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicemanager-getprivatedevices
     HRESULT GetPrivateDevices(PWSTR* pPnPDeviceIDs, uint* pcPnPDeviceIDs);
 }
 
 @GUID("625e2df8-6392-4cf0-9ad1-3cfa5f17775c")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledevice))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledevice
 interface IPortableDevice : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevice-open))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevice-open
     HRESULT Open(const(PWSTR) pszPnPDeviceID, IPortableDeviceValues pClientInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevice-sendcommand))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevice-sendcommand
     HRESULT SendCommand(const(uint) dwFlags, IPortableDeviceValues pParameters, IPortableDeviceValues* ppResults);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevice-content))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevice-content
     HRESULT Content(IPortableDeviceContent* ppContent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevice-capabilities))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevice-capabilities
     HRESULT Capabilities(IPortableDeviceCapabilities* ppCapabilities);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevice-cancel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevice-cancel
     HRESULT Cancel();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevice-close))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevice-close
     HRESULT Close();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevice-advise))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevice-advise
     HRESULT Advise(const(uint) dwFlags, IPortableDeviceEventCallback pCallback, IPortableDeviceValues pParameters, 
                    PWSTR* ppszCookie);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevice-unadvise))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevice-unadvise
     HRESULT Unadvise(const(PWSTR) pszCookie);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevice-getpnpdeviceid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevice-getpnpdeviceid
     HRESULT GetPnPDeviceID(PWSTR* ppszPnPDeviceID);
 }
 
 @GUID("6a96ed84-7c73-4480-9938-bf5af477d426")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledevicecontent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledevicecontent
 interface IPortableDeviceContent : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecontent-enumobjects))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecontent-enumobjects
     HRESULT EnumObjects(const(uint) dwFlags, const(PWSTR) pszParentObjectID, IPortableDeviceValues pFilter, 
                         IEnumPortableDeviceObjectIDs* ppEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecontent-properties))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecontent-properties
     HRESULT Properties(IPortableDeviceProperties* ppProperties);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecontent-transfer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecontent-transfer
     HRESULT Transfer(IPortableDeviceResources* ppResources);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecontent-createobjectwithpropertiesonly))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecontent-createobjectwithpropertiesonly
     HRESULT CreateObjectWithPropertiesOnly(IPortableDeviceValues pValues, PWSTR* ppszObjectID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecontent-createobjectwithpropertiesanddata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecontent-createobjectwithpropertiesanddata
     HRESULT CreateObjectWithPropertiesAndData(IPortableDeviceValues pValues, IStream* ppData, 
                                               uint* pdwOptimalWriteBufferSize, PWSTR* ppszCookie);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecontent-delete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecontent-delete
     HRESULT Delete(const(uint) dwOptions, IPortableDevicePropVariantCollection pObjectIDs, 
                    IPortableDevicePropVariantCollection* ppResults);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecontent-getobjectidsfrompersistentuniqueids))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecontent-getobjectidsfrompersistentuniqueids
     HRESULT GetObjectIDsFromPersistentUniqueIDs(IPortableDevicePropVariantCollection pPersistentUniqueIDs, 
                                                 IPortableDevicePropVariantCollection* ppObjectIDs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecontent-cancel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecontent-cancel
     HRESULT Cancel();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecontent-move))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecontent-move
     HRESULT Move(IPortableDevicePropVariantCollection pObjectIDs, const(PWSTR) pszDestinationFolderObjectID, 
                  IPortableDevicePropVariantCollection* ppResults);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecontent-copy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecontent-copy
     HRESULT Copy(IPortableDevicePropVariantCollection pObjectIDs, const(PWSTR) pszDestinationFolderObjectID, 
                  IPortableDevicePropVariantCollection* ppResults);
 }
 
 @GUID("9b4add96-f6bf-4034-8708-eca72bf10554")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledevicecontent2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledevicecontent2
 interface IPortableDeviceContent2 : IPortableDeviceContent
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecontent2-updateobjectwithpropertiesanddata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecontent2-updateobjectwithpropertiesanddata
     HRESULT UpdateObjectWithPropertiesAndData(const(PWSTR) pszObjectID, IPortableDeviceValues pProperties, 
                                               IStream* ppData, uint* pdwOptimalWriteBufferSize);
 }
 
 @GUID("10ece955-cf41-4728-bfa0-41eedf1bbf19")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-ienumportabledeviceobjectids))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-ienumportabledeviceobjectids
 interface IEnumPortableDeviceObjectIDs : IUnknown
 {
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
     HRESULT Next(uint cObjects, PWSTR* pObjIDs, uint* pcFetched);
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
     HRESULT Skip(uint cObjects);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-ienumportabledeviceobjectids-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-ienumportabledeviceobjectids-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-ienumportabledeviceobjectids-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-ienumportabledeviceobjectids-clone
     HRESULT Clone(IEnumPortableDeviceObjectIDs* ppEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-ienumportabledeviceobjectids-cancel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-ienumportabledeviceobjectids-cancel
     HRESULT Cancel();
 }
 
 @GUID("7f6d695c-03df-4439-a809-59266beee3a6")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledeviceproperties))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledeviceproperties
 interface IPortableDeviceProperties : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceproperties-getsupportedproperties))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceproperties-getsupportedproperties
     HRESULT GetSupportedProperties(const(PWSTR) pszObjectID, IPortableDeviceKeyCollection* ppKeys);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceproperties-getpropertyattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceproperties-getpropertyattributes
     HRESULT GetPropertyAttributes(const(PWSTR) pszObjectID, const(PROPERTYKEY)* Key, 
                                   IPortableDeviceValues* ppAttributes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceproperties-getvalues))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceproperties-getvalues
     HRESULT GetValues(const(PWSTR) pszObjectID, IPortableDeviceKeyCollection pKeys, 
                       IPortableDeviceValues* ppValues);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceproperties-setvalues))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceproperties-setvalues
     HRESULT SetValues(const(PWSTR) pszObjectID, IPortableDeviceValues pValues, IPortableDeviceValues* ppResults);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceproperties-delete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceproperties-delete
     HRESULT Delete(const(PWSTR) pszObjectID, IPortableDeviceKeyCollection pKeys);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceproperties-cancel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceproperties-cancel
     HRESULT Cancel();
 }
 
 @GUID("fd8878ac-d841-4d17-891c-e6829cdb6934")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledeviceresources))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledeviceresources
 interface IPortableDeviceResources : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceresources-getsupportedresources))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceresources-getsupportedresources
     HRESULT GetSupportedResources(const(PWSTR) pszObjectID, IPortableDeviceKeyCollection* ppKeys);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceresources-getresourceattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceresources-getresourceattributes
     HRESULT GetResourceAttributes(const(PWSTR) pszObjectID, const(PROPERTYKEY)* Key, 
                                   IPortableDeviceValues* ppResourceAttributes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceresources-getstream))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceresources-getstream
     HRESULT GetStream(const(PWSTR) pszObjectID, const(PROPERTYKEY)* Key, const(uint) dwMode, 
                       uint* pdwOptimalBufferSize, IStream* ppStream);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceresources-delete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceresources-delete
     HRESULT Delete(const(PWSTR) pszObjectID, IPortableDeviceKeyCollection pKeys);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceresources-cancel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceresources-cancel
     HRESULT Cancel();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceresources-createresource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceresources-createresource
     HRESULT CreateResource(IPortableDeviceValues pResourceAttributes, IStream* ppData, 
                            uint* pdwOptimalWriteBufferSize, PWSTR* ppszCookie);
 }
 
 @GUID("2c8c6dbf-e3dc-4061-becc-8542e810d126")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledevicecapabilities))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledevicecapabilities
 interface IPortableDeviceCapabilities : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecapabilities-getsupportedcommands))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecapabilities-getsupportedcommands
     HRESULT GetSupportedCommands(IPortableDeviceKeyCollection* ppCommands);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecapabilities-getcommandoptions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecapabilities-getcommandoptions
     HRESULT GetCommandOptions(const(PROPERTYKEY)* Command, IPortableDeviceValues* ppOptions);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecapabilities-getfunctionalcategories))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecapabilities-getfunctionalcategories
     HRESULT GetFunctionalCategories(IPortableDevicePropVariantCollection* ppCategories);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecapabilities-getfunctionalobjects))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecapabilities-getfunctionalobjects
     HRESULT GetFunctionalObjects(const(GUID)* Category, IPortableDevicePropVariantCollection* ppObjectIDs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecapabilities-getsupportedcontenttypes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecapabilities-getsupportedcontenttypes
     HRESULT GetSupportedContentTypes(const(GUID)* Category, IPortableDevicePropVariantCollection* ppContentTypes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecapabilities-getsupportedformats))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecapabilities-getsupportedformats
     HRESULT GetSupportedFormats(const(GUID)* ContentType, IPortableDevicePropVariantCollection* ppFormats);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecapabilities-getsupportedformatproperties))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecapabilities-getsupportedformatproperties
     HRESULT GetSupportedFormatProperties(const(GUID)* Format, IPortableDeviceKeyCollection* ppKeys);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecapabilities-getfixedpropertyattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecapabilities-getfixedpropertyattributes
     HRESULT GetFixedPropertyAttributes(const(GUID)* Format, const(PROPERTYKEY)* Key, 
                                        IPortableDeviceValues* ppAttributes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecapabilities-cancel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecapabilities-cancel
     HRESULT Cancel();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecapabilities-getsupportedevents))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecapabilities-getsupportedevents
     HRESULT GetSupportedEvents(IPortableDevicePropVariantCollection* ppEvents);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecapabilities-geteventoptions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicecapabilities-geteventoptions
     HRESULT GetEventOptions(const(GUID)* Event, IPortableDeviceValues* ppOptions);
 }
 
 @GUID("a8792a31-f385-493c-a893-40f64eb45f6e")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledeviceeventcallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledeviceeventcallback
 interface IPortableDeviceEventCallback : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceeventcallback-onevent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceeventcallback-onevent
     HRESULT OnEvent(IPortableDeviceValues pEventParameters);
 }
 
 @GUID("88e04db3-1012-4d64-9996-f703a950d3f4")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledevicedatastream))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledevicedatastream
 interface IPortableDeviceDataStream : IStream
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicedatastream-getobjectid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicedatastream-getobjectid
     HRESULT GetObjectID(PWSTR* ppszObjectID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicedatastream-cancel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicedatastream-cancel
     HRESULT Cancel();
 }
 
 @GUID("5e98025f-bfc4-47a2-9a5f-bc900a507c67")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledeviceunitsstream))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledeviceunitsstream
 interface IPortableDeviceUnitsStream : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceunitsstream-seekinunits))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceunitsstream-seekinunits
     HRESULT SeekInUnits(long dlibMove, WPD_STREAM_UNITS units, uint dwOrigin, ulong* plibNewPosition);
     HRESULT Cancel();
 }
 
 @GUID("482b05c0-4056-44ed-9e0f-5e23b009da93")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledevicepropertiesbulk))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledevicepropertiesbulk
 interface IPortableDevicePropertiesBulk : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicepropertiesbulk-queuegetvaluesbyobjectlist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicepropertiesbulk-queuegetvaluesbyobjectlist
     HRESULT QueueGetValuesByObjectList(IPortableDevicePropVariantCollection pObjectIDs, 
                                        IPortableDeviceKeyCollection pKeys, 
                                        IPortableDevicePropertiesBulkCallback pCallback, GUID* pContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicepropertiesbulk-queuegetvaluesbyobjectformat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicepropertiesbulk-queuegetvaluesbyobjectformat
     HRESULT QueueGetValuesByObjectFormat(const(GUID)* pguidObjectFormat, const(PWSTR) pszParentObjectID, 
                                          const(uint) dwDepth, IPortableDeviceKeyCollection pKeys, 
                                          IPortableDevicePropertiesBulkCallback pCallback, GUID* pContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicepropertiesbulk-queuesetvaluesbyobjectlist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicepropertiesbulk-queuesetvaluesbyobjectlist
     HRESULT QueueSetValuesByObjectList(IPortableDeviceValuesCollection pObjectValues, 
                                        IPortableDevicePropertiesBulkCallback pCallback, GUID* pContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicepropertiesbulk-start))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicepropertiesbulk-start
     HRESULT Start(const(GUID)* pContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicepropertiesbulk-cancel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicepropertiesbulk-cancel
     HRESULT Cancel(const(GUID)* pContext);
 }
 
 @GUID("9deacb80-11e8-40e3-a9f3-f557986a7845")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledevicepropertiesbulkcallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledevicepropertiesbulkcallback
 interface IPortableDevicePropertiesBulkCallback : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicepropertiesbulkcallback-onstart))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicepropertiesbulkcallback-onstart
     HRESULT OnStart(const(GUID)* pContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicepropertiesbulkcallback-onprogress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicepropertiesbulkcallback-onprogress
     HRESULT OnProgress(const(GUID)* pContext, IPortableDeviceValuesCollection pResults);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicepropertiesbulkcallback-onend))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicepropertiesbulkcallback-onend
     HRESULT OnEnd(const(GUID)* pContext, HRESULT hrStatus);
 }
 
 @GUID("a8abc4e9-a84a-47a9-80b3-c5d9b172a961")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledeviceservicemanager))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledeviceservicemanager
 interface IPortableDeviceServiceManager : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicemanager-getdeviceservices))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicemanager-getdeviceservices
     HRESULT GetDeviceServices(const(PWSTR) pszPnPDeviceID, const(GUID)* guidServiceCategory, PWSTR* pServices, 
                               uint* pcServices);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicemanager-getdeviceforservice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicemanager-getdeviceforservice
     HRESULT GetDeviceForService(const(PWSTR) pszPnPServiceID, PWSTR* ppszPnPDeviceID);
 }
 
 @GUID("d3bd3a44-d7b5-40a9-98b7-2fa4d01dec08")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledeviceservice))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledeviceservice
 interface IPortableDeviceService : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservice-open))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservice-open
     HRESULT Open(const(PWSTR) pszPnPServiceID, IPortableDeviceValues pClientInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservice-capabilities))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservice-capabilities
     HRESULT Capabilities(IPortableDeviceServiceCapabilities* ppCapabilities);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservice-content))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservice-content
     HRESULT Content(IPortableDeviceContent2* ppContent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservice-methods))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservice-methods
     HRESULT Methods(IPortableDeviceServiceMethods* ppMethods);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservice-cancel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservice-cancel
     HRESULT Cancel();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservice-close))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservice-close
     HRESULT Close();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservice-getserviceobjectid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservice-getserviceobjectid
     HRESULT GetServiceObjectID(PWSTR* ppszServiceObjectID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservice-getpnpserviceid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservice-getpnpserviceid
     HRESULT GetPnPServiceID(PWSTR* ppszPnPServiceID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservice-advise))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservice-advise
     HRESULT Advise(const(uint) dwFlags, IPortableDeviceEventCallback pCallback, IPortableDeviceValues pParameters, 
                    PWSTR* ppszCookie);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservice-unadvise))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservice-unadvise
     HRESULT Unadvise(const(PWSTR) pszCookie);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservice-sendcommand))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservice-sendcommand
     HRESULT SendCommand(const(uint) dwFlags, IPortableDeviceValues pParameters, IPortableDeviceValues* ppResults);
 }
 
 @GUID("24dbd89d-413e-43e0-bd5b-197f3c56c886")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledeviceservicecapabilities))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledeviceservicecapabilities
 interface IPortableDeviceServiceCapabilities : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicecapabilities-getsupportedmethods))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicecapabilities-getsupportedmethods
     HRESULT GetSupportedMethods(IPortableDevicePropVariantCollection* ppMethods);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicecapabilities-getsupportedmethodsbyformat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicecapabilities-getsupportedmethodsbyformat
     HRESULT GetSupportedMethodsByFormat(const(GUID)* Format, IPortableDevicePropVariantCollection* ppMethods);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicecapabilities-getmethodattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicecapabilities-getmethodattributes
     HRESULT GetMethodAttributes(const(GUID)* Method, IPortableDeviceValues* ppAttributes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicecapabilities-getmethodparameterattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicecapabilities-getmethodparameterattributes
     HRESULT GetMethodParameterAttributes(const(GUID)* Method, const(PROPERTYKEY)* Parameter, 
                                          IPortableDeviceValues* ppAttributes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicecapabilities-getsupportedformats))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicecapabilities-getsupportedformats
     HRESULT GetSupportedFormats(IPortableDevicePropVariantCollection* ppFormats);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicecapabilities-getformatattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicecapabilities-getformatattributes
     HRESULT GetFormatAttributes(const(GUID)* Format, IPortableDeviceValues* ppAttributes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicecapabilities-getsupportedformatproperties))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicecapabilities-getsupportedformatproperties
     HRESULT GetSupportedFormatProperties(const(GUID)* Format, IPortableDeviceKeyCollection* ppKeys);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicecapabilities-getformatpropertyattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicecapabilities-getformatpropertyattributes
     HRESULT GetFormatPropertyAttributes(const(GUID)* Format, const(PROPERTYKEY)* Property, 
                                         IPortableDeviceValues* ppAttributes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicecapabilities-getsupportedevents))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicecapabilities-getsupportedevents
     HRESULT GetSupportedEvents(IPortableDevicePropVariantCollection* ppEvents);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicecapabilities-geteventattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicecapabilities-geteventattributes
     HRESULT GetEventAttributes(const(GUID)* Event, IPortableDeviceValues* ppAttributes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicecapabilities-geteventparameterattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicecapabilities-geteventparameterattributes
     HRESULT GetEventParameterAttributes(const(GUID)* Event, const(PROPERTYKEY)* Parameter, 
                                         IPortableDeviceValues* ppAttributes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicecapabilities-getinheritedservices))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicecapabilities-getinheritedservices
     HRESULT GetInheritedServices(const(uint) dwInheritanceType, IPortableDevicePropVariantCollection* ppServices);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicecapabilities-getformatrenderingprofiles))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicecapabilities-getformatrenderingprofiles
     HRESULT GetFormatRenderingProfiles(const(GUID)* Format, IPortableDeviceValuesCollection* ppRenderingProfiles);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicecapabilities-getsupportedcommands))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicecapabilities-getsupportedcommands
     HRESULT GetSupportedCommands(IPortableDeviceKeyCollection* ppCommands);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicecapabilities-getcommandoptions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicecapabilities-getcommandoptions
     HRESULT GetCommandOptions(const(PROPERTYKEY)* Command, IPortableDeviceValues* ppOptions);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicecapabilities-cancel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicecapabilities-cancel
     HRESULT Cancel();
 }
 
 @GUID("e20333c9-fd34-412d-a381-cc6f2d820df7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledeviceservicemethods))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledeviceservicemethods
 interface IPortableDeviceServiceMethods : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicemethods-invoke))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicemethods-invoke
     HRESULT Invoke(const(GUID)* Method, IPortableDeviceValues pParameters, IPortableDeviceValues* ppResults);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicemethods-invokeasync))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicemethods-invokeasync
     HRESULT InvokeAsync(const(GUID)* Method, IPortableDeviceValues pParameters, 
                         IPortableDeviceServiceMethodCallback pCallback);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicemethods-cancel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicemethods-cancel
     HRESULT Cancel(IPortableDeviceServiceMethodCallback pCallback);
 }
 
 @GUID("c424233c-afce-4828-a756-7ed7a2350083")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledeviceservicemethodcallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledeviceservicemethodcallback
 interface IPortableDeviceServiceMethodCallback : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicemethodcallback-oncomplete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledeviceservicemethodcallback-oncomplete
     HRESULT OnComplete(HRESULT hrStatus, IPortableDeviceValues pResults);
 }
 
@@ -2904,63 +2936,63 @@ interface IPortableDeviceServiceOpenCallback : IUnknown
 
 @GUID("5e1eafc3-e3d7-4132-96fa-759c0f9d1e0f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledevicedispatchfactory))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledevicedispatchfactory
 interface IPortableDeviceDispatchFactory : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicedispatchfactory-getdevicedispatch))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicedispatchfactory-getdevicedispatch
     HRESULT GetDeviceDispatch(const(PWSTR) pszPnPDeviceID, IDispatch* ppDeviceDispatch);
 }
 
 @GUID("94fc7953-5ca1-483a-8aee-df52e7747d00")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledevicewebcontrol))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nn-portabledeviceapi-iportabledevicewebcontrol
 interface IPortableDeviceWebControl : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicewebcontrol-getdevicefromid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicewebcontrol-getdevicefromid
     HRESULT GetDeviceFromId(BSTR deviceId, IDispatch* ppDevice);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicewebcontrol-getdevicefromidasync))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceapi/nf-portabledeviceapi-iportabledevicewebcontrol-getdevicefromidasync
     HRESULT GetDeviceFromIdAsync(BSTR deviceId, IDispatch pCompletionHandler, IDispatch pErrorHandler);
 }
 
 @GUID("bfdef549-9247-454f-bd82-06fe80853faa")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/ienumportabledeviceconnectors))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/ienumportabledeviceconnectors
 interface IEnumPortableDeviceConnectors : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/ienumportabledeviceconnectors-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/ienumportabledeviceconnectors-next
     HRESULT Next(uint cRequested, IPortableDeviceConnector* pConnectors, uint* pcFetched);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/ienumportabledeviceconnectors-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/ienumportabledeviceconnectors-skip
     HRESULT Skip(uint cConnectors);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/ienumportabledeviceconnectors-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/ienumportabledeviceconnectors-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/ienumportabledeviceconnectors-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/ienumportabledeviceconnectors-clone
     HRESULT Clone(IEnumPortableDeviceConnectors* ppEnum);
 }
 
 @GUID("625e2df8-6392-4cf0-9ad1-3cfa5f17775c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceconnectapi/nn-portabledeviceconnectapi-iportabledeviceconnector))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceconnectapi/nn-portabledeviceconnectapi-iportabledeviceconnector
 interface IPortableDeviceConnector : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceconnectapi/nf-portabledeviceconnectapi-iportabledeviceconnector-connect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceconnectapi/nf-portabledeviceconnectapi-iportabledeviceconnector-connect
     HRESULT Connect(IConnectionRequestCallback pCallback);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceconnectapi/nf-portabledeviceconnectapi-iportabledeviceconnector-disconnect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceconnectapi/nf-portabledeviceconnectapi-iportabledeviceconnector-disconnect
     HRESULT Disconnect(IConnectionRequestCallback pCallback);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceconnectapi/nf-portabledeviceconnectapi-iportabledeviceconnector-cancel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceconnectapi/nf-portabledeviceconnectapi-iportabledeviceconnector-cancel
     HRESULT Cancel(IConnectionRequestCallback pCallback);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceconnectapi/nf-portabledeviceconnectapi-iportabledeviceconnector-getproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceconnectapi/nf-portabledeviceconnectapi-iportabledeviceconnector-getproperty
     HRESULT GetProperty(const(DEVPROPKEY)* pPropertyKey, DEVPROPTYPE* pPropertyType, ubyte** ppData, uint* pcbData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceconnectapi/nf-portabledeviceconnectapi-iportabledeviceconnector-setproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceconnectapi/nf-portabledeviceconnectapi-iportabledeviceconnector-setproperty
     HRESULT SetProperty(const(DEVPROPKEY)* pPropertyKey, DEVPROPTYPE PropertyType, const(ubyte)* pData, 
                         uint cbData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/portabledeviceconnectapi/nf-portabledeviceconnectapi-iportabledeviceconnector-getpnpid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/portabledeviceconnectapi/nf-portabledeviceconnectapi-iportabledeviceconnector-getpnpid
     HRESULT GetPnPID(PWSTR* ppwszPnPID);
 }
 
 @GUID("272c9ae0-7161-4ae0-91bd-9f448ee9c427")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iconnectionrequestcallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iconnectionrequestcallback
 interface IConnectionRequestCallback : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/iconnectionrequestcallback-oncomplete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/iconnectionrequestcallback-oncomplete
     HRESULT OnComplete(HRESULT hrStatus);
 }
 

@@ -3,24 +3,26 @@
 module windows.win32.graphics.direct3d.dxc;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BSTR, HRESULT, PSTR, PWSTR;
-public import windows.win32.system.com : IMalloc, IStream, IUnknown;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BSTR, HRESULT, PSTR, PWSTR;
+public import windows.win32.system.com.com : IMalloc, IStream, IUnknown;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
+
 alias DXC_CP = uint;
 enum : uint
 {
-    DXC_CP_ACP   = 0x00000000,
-    DXC_CP_UTF16 = 0x000004b0,
-    DXC_CP_UTF8  = 0x0000fde9,
-    DXC_CP_UTF32 = 0x00002ee0,
-    DXC_CP_WIDE  = 0x000004b0,
+    DXC_CP_ACP   = 0x00000000U,
+    DXC_CP_UTF16 = 0x000004b0U,
+    DXC_CP_UTF8  = 0x0000fde9U,
+    DXC_CP_UTF32 = 0x00002ee0U,
+    DXC_CP_WIDE  = 0x000004b0U,
 }
+
 alias DXC_OUT_KIND = int;
 enum : int
 {
@@ -46,7 +48,7 @@ enum : int
 
 
 enum GUID CLSID_DxcUtils = GUID("6245d6af-66e0-48fd-80b4-4d271796748c");
-enum uint DXC_HASHFLAG_INCLUDES_SOURCE = 0x00000001;
+enum uint DXC_HASHFLAG_INCLUDES_SOURCE = 0x00000001U;
 
 enum : const(wchar)*
 {
@@ -98,18 +100,18 @@ enum : const(wchar)*
 
 enum : uint
 {
-    DxcValidatorFlags_Default           = 0x00000000,
-    DxcValidatorFlags_InPlaceEdit       = 0x00000001,
-    DxcValidatorFlags_RootSignatureOnly = 0x00000002,
-    DxcValidatorFlags_ModuleOnly        = 0x00000004,
-    DxcValidatorFlags_ValidMask         = 0x00000007,
+    DxcValidatorFlags_Default           = 0x00000000U,
+    DxcValidatorFlags_InPlaceEdit       = 0x00000001U,
+    DxcValidatorFlags_RootSignatureOnly = 0x00000002U,
+    DxcValidatorFlags_ModuleOnly        = 0x00000004U,
+    DxcValidatorFlags_ValidMask         = 0x00000007U,
 }
 
 enum : uint
 {
-    DxcVersionInfoFlags_None     = 0x00000000,
-    DxcVersionInfoFlags_Debug    = 0x00000001,
-    DxcVersionInfoFlags_Internal = 0x00000002,
+    DxcVersionInfoFlags_None     = 0x00000000U,
+    DxcVersionInfoFlags_Debug    = 0x00000001U,
+    DxcVersionInfoFlags_Internal = 0x00000002U,
 }
 
 enum : GUID

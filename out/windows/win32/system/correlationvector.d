@@ -3,8 +3,8 @@
 module windows.win32.system.correlationvector;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : CHAR;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : CHAR;
 
 extern(Windows) @nogc nothrow:
 
@@ -14,11 +14,11 @@ extern(Windows) @nogc nothrow:
 
 enum : uint
 {
-    RTL_CORRELATION_VECTOR_STRING_LENGTH    = 0x00000081,
-    RTL_CORRELATION_VECTOR_V1_PREFIX_LENGTH = 0x00000010,
-    RTL_CORRELATION_VECTOR_V1_LENGTH        = 0x00000040,
-    RTL_CORRELATION_VECTOR_V2_PREFIX_LENGTH = 0x00000016,
-    RTL_CORRELATION_VECTOR_V2_LENGTH        = 0x00000080,
+    RTL_CORRELATION_VECTOR_STRING_LENGTH    = 0x00000081U,
+    RTL_CORRELATION_VECTOR_V1_PREFIX_LENGTH = 0x00000010U,
+    RTL_CORRELATION_VECTOR_V1_LENGTH        = 0x00000040U,
+    RTL_CORRELATION_VECTOR_V2_PREFIX_LENGTH = 0x00000016U,
+    RTL_CORRELATION_VECTOR_V2_LENGTH        = 0x00000080U,
 }
 
 // Structs

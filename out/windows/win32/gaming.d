@@ -3,15 +3,16 @@
 module windows.win32.gaming;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BSTR, HRESULT, PWSTR;
-public import windows.win32.system.com : IUnknown;
-public import windows.win32.system.winrt : HSTRING, IInspectable;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BSTR, HRESULT, PWSTR;
+public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.system.winrt.winrt : HSTRING, IInspectable;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
+
 
 alias GAME_INSTALL_SCOPE = int;
 enum : int
@@ -20,26 +21,30 @@ enum : int
     GIS_CURRENT_USER  = 0x00000002,
     GIS_ALL_USERS     = 0x00000003,
 }
+
 alias GAMESTATS_OPEN_TYPE = int;
 enum : int
 {
     GAMESTATS_OPEN_OPENORCREATE = 0x00000000,
     GAMESTATS_OPEN_OPENONLY     = 0x00000001,
 }
+
 alias GAMESTATS_OPEN_RESULT = int;
 enum : int
 {
     GAMESTATS_OPEN_CREATED = 0x00000000,
     GAMESTATS_OPEN_OPENED  = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gamingdeviceinformation/ne-gamingdeviceinformation-gaming_device_vendor_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gamingdeviceinformation/ne-gamingdeviceinformation-gaming_device_vendor_id
 alias GAMING_DEVICE_VENDOR_ID = int;
 enum : int
 {
     GAMING_DEVICE_VENDOR_ID_NONE      = 0x00000000,
     GAMING_DEVICE_VENDOR_ID_MICROSOFT = 0xc2ec5032,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gamingdeviceinformation/ne-gamingdeviceinformation-gaming_device_device_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gamingdeviceinformation/ne-gamingdeviceinformation-gaming_device_device_id
 alias GAMING_DEVICE_DEVICE_ID = int;
 enum : int
 {
@@ -52,7 +57,8 @@ enum : int
     GAMING_DEVICE_DEVICE_ID_XBOX_SERIES_X        = 0x2f7a3dff,
     GAMING_DEVICE_DEVICE_ID_XBOX_SERIES_X_DEVKIT = 0xde8a5661,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gamingtcui/ne-gamingtcui-knowngamingprivileges))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gamingtcui/ne-gamingtcui-knowngamingprivileges
 enum KnownGamingPrivileges : int
 {
     XPRIVILEGE_BROADCAST                   = 0x000000be,
@@ -78,7 +84,8 @@ enum KnownGamingPrivileges : int
     XPRIVILEGE_MULTIPLAYER_SESSIONS        = 0x000000fe,
     XPRIVILEGE_ADD_FRIEND                  = 0x000000ff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/ne-xblidpauthmanager-xbl_idp_auth_token_status))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/ne-xblidpauthmanager-xbl_idp_auth_token_status
 alias XBL_IDP_AUTH_TOKEN_STATUS = int;
 enum : int
 {
@@ -111,7 +118,7 @@ alias PlayerPickerUICompletionRoutine = void function(HRESULT returnCode, void* 
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gamingdeviceinformation/ns-gamingdeviceinformation-gaming_device_model_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gamingdeviceinformation/ns-gamingdeviceinformation-gaming_device_model_information
 struct GAMING_DEVICE_MODEL_INFORMATION
 {
     GAMING_DEVICE_VENDOR_ID vendorId;
@@ -120,56 +127,56 @@ struct GAMING_DEVICE_MODEL_INFORMATION
 
 // Functions
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/expandedresources/nf-expandedresources-hasexpandedresources))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/expandedresources/nf-expandedresources-hasexpandedresources
 @DllImport("api-ms-win-gaming-expandedresources-l1-1-0.dll")
 HRESULT HasExpandedResources(BOOL* hasExpandedResources);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/expandedresources/nf-expandedresources-getexpandedresourceexclusivecpucount))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/expandedresources/nf-expandedresources-getexpandedresourceexclusivecpucount
 @DllImport("api-ms-win-gaming-expandedresources-l1-1-0.dll")
 HRESULT GetExpandedResourceExclusiveCpuCount(uint* exclusiveCpuCount);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/expandedresources/nf-expandedresources-releaseexclusivecpusets))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/expandedresources/nf-expandedresources-releaseexclusivecpusets
 @DllImport("api-ms-win-gaming-expandedresources-l1-1-0.dll")
 HRESULT ReleaseExclusiveCpuSets();
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gamingdeviceinformation/nf-gamingdeviceinformation-getgamingdevicemodelinformation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gamingdeviceinformation/nf-gamingdeviceinformation-getgamingdevicemodelinformation
 @DllImport("api-ms-win-gaming-deviceinformation-l1-1-0.dll")
 HRESULT GetGamingDeviceModelInformation(GAMING_DEVICE_MODEL_INFORMATION* information);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gamingtcui/nf-gamingtcui-showgameinviteui))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gamingtcui/nf-gamingtcui-showgameinviteui
 @DllImport("api-ms-win-gaming-tcui-l1-1-0.dll")
 HRESULT ShowGameInviteUI(HSTRING serviceConfigurationId, HSTRING sessionTemplateName, HSTRING sessionId, 
                          HSTRING invitationDisplayText, GameUICompletionRoutine completionRoutine, void* context);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gamingtcui/nf-gamingtcui-showplayerpickerui))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gamingtcui/nf-gamingtcui-showplayerpickerui
 @DllImport("api-ms-win-gaming-tcui-l1-1-0.dll")
 HRESULT ShowPlayerPickerUI(HSTRING promptDisplayText, const(HSTRING)* xuids, size_t xuidsCount, 
                            const(HSTRING)* preSelectedXuids, size_t preSelectedXuidsCount, size_t minSelectionCount, 
                            size_t maxSelectionCount, PlayerPickerUICompletionRoutine completionRoutine, 
                            void* context);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gamingtcui/nf-gamingtcui-showprofilecardui))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gamingtcui/nf-gamingtcui-showprofilecardui
 @DllImport("api-ms-win-gaming-tcui-l1-1-0.dll")
 HRESULT ShowProfileCardUI(HSTRING targetUserXuid, GameUICompletionRoutine completionRoutine, void* context);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gamingtcui/nf-gamingtcui-showchangefriendrelationshipui))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gamingtcui/nf-gamingtcui-showchangefriendrelationshipui
 @DllImport("api-ms-win-gaming-tcui-l1-1-0.dll")
 HRESULT ShowChangeFriendRelationshipUI(HSTRING targetUserXuid, GameUICompletionRoutine completionRoutine, 
                                        void* context);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gamingtcui/nf-gamingtcui-showtitleachievementsui))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gamingtcui/nf-gamingtcui-showtitleachievementsui
 @DllImport("api-ms-win-gaming-tcui-l1-1-0.dll")
 HRESULT ShowTitleAchievementsUI(uint titleId, GameUICompletionRoutine completionRoutine, void* context);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gamingtcui/nf-gamingtcui-processpendinggameui))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gamingtcui/nf-gamingtcui-processpendinggameui
 @DllImport("api-ms-win-gaming-tcui-l1-1-0.dll")
 HRESULT ProcessPendingGameUI(BOOL waitForCompletion);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gamingtcui/nf-gamingtcui-trycancelpendinggameui))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gamingtcui/nf-gamingtcui-trycancelpendinggameui
 @DllImport("api-ms-win-gaming-tcui-l1-1-0.dll")
 BOOL TryCancelPendingGameUI();
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gamingtcui/nf-gamingtcui-checkgamingprivilegewithui))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gamingtcui/nf-gamingtcui-checkgamingprivilegewithui
 @DllImport("api-ms-win-gaming-tcui-l1-1-1.dll")
 HRESULT CheckGamingPrivilegeWithUI(uint privilegeId, HSTRING scope_, HSTRING policy, HSTRING friendlyMessage, 
                                    GameUICompletionRoutine completionRoutine, void* context);
@@ -305,20 +312,20 @@ interface IGameExplorer2 : IUnknown
 }
 
 @GUID("eb5ddb08-8bbf-449b-ac21-b02ddeb3b136")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nn-xblidpauthmanager-ixblidpauthmanager))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nn-xblidpauthmanager-ixblidpauthmanager
 interface IXblIdpAuthManager : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthmanager-setgameraccount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthmanager-setgameraccount
     HRESULT SetGamerAccount(const(PWSTR) msaAccountId, const(PWSTR) xuid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthmanager-getgameraccount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthmanager-getgameraccount
     HRESULT GetGamerAccount(PWSTR* msaAccountId, PWSTR* xuid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthmanager-setappviewinitialized))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthmanager-setappviewinitialized
     HRESULT SetAppViewInitialized(const(PWSTR) appSid, const(PWSTR) msaAccountId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthmanager-getenvironment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthmanager-getenvironment
     HRESULT GetEnvironment(PWSTR* environment);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthmanager-getsandbox))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthmanager-getsandbox
     HRESULT GetSandbox(PWSTR* sandbox);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthmanager-gettokenandsignaturewithtokenresult))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthmanager-gettokenandsignaturewithtokenresult
     HRESULT GetTokenAndSignatureWithTokenResult(const(PWSTR) msaAccountId, const(PWSTR) appSid, 
                                                 const(PWSTR) msaTarget, const(PWSTR) msaPolicy, 
                                                 const(PWSTR) httpMethod, const(PWSTR) uri, const(PWSTR) headers, 
@@ -337,48 +344,48 @@ interface IXblIdpAuthManager2 : IUnknown
 }
 
 @GUID("46ce0225-f267-4d68-b299-b2762552dec1")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nn-xblidpauthmanager-ixblidpauthtokenresult))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nn-xblidpauthmanager-ixblidpauthtokenresult
 interface IXblIdpAuthTokenResult : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-getstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-getstatus
     HRESULT GetStatus(XBL_IDP_AUTH_TOKEN_STATUS* status);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-geterrorcode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-geterrorcode
     HRESULT GetErrorCode(HRESULT* errorCode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-gettoken))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-gettoken
     HRESULT GetToken(PWSTR* token);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-getsignature))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-getsignature
     HRESULT GetSignature(PWSTR* signature);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-getsandbox))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-getsandbox
     HRESULT GetSandbox(PWSTR* sandbox);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-getenvironment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-getenvironment
     HRESULT GetEnvironment(PWSTR* environment);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-getmsaaccountid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-getmsaaccountid
     HRESULT GetMsaAccountId(PWSTR* msaAccountId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-getxuid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-getxuid
     HRESULT GetXuid(PWSTR* xuid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-getgamertag))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-getgamertag
     HRESULT GetGamertag(PWSTR* gamertag);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-getagegroup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-getagegroup
     HRESULT GetAgeGroup(PWSTR* ageGroup);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-getprivileges))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-getprivileges
     HRESULT GetPrivileges(PWSTR* privileges);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-getmsatarget))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-getmsatarget
     HRESULT GetMsaTarget(PWSTR* msaTarget);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-getmsapolicy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-getmsapolicy
     HRESULT GetMsaPolicy(PWSTR* msaPolicy);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-getmsaappid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-getmsaappid
     HRESULT GetMsaAppId(PWSTR* msaAppId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-getredirect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-getredirect
     HRESULT GetRedirect(PWSTR* redirect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-getmessage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-getmessage
     HRESULT GetMessage(PWSTR* message);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-gethelpid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-gethelpid
     HRESULT GetHelpId(PWSTR* helpId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-getenforcementbans))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-getenforcementbans
     HRESULT GetEnforcementBans(PWSTR* enforcementBans);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-getrestrictions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-getrestrictions
     HRESULT GetRestrictions(PWSTR* restrictions);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-gettitlerestrictions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xblidpauthmanager/nf-xblidpauthmanager-ixblidpauthtokenresult-gettitlerestrictions
     HRESULT GetTitleRestrictions(PWSTR* titleRestrictions);
 }
 

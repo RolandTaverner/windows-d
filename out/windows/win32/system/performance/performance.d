@@ -1,13 +1,13 @@
 // Written in the D programming language.
 
-module windows.win32.system.performance;
+module windows.win32.system.performance.performance;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BOOLEAN, BSTR, FILETIME, HANDLE,
-                                         HRESULT, HWND, PSTR, PWSTR, SYSTEMTIME,
-                                         VARIANT_BOOL;
-public import windows.win32.system.com : IDispatch, IUnknown, SAFEARRAY;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BOOLEAN, BSTR, FILETIME, HANDLE,
+                                                    HRESULT, HWND, PSTR, PWSTR,
+                                                    SYSTEMTIME, VARIANT_BOOL;
+public import windows.win32.system.com.com : IDispatch, IUnknown, SAFEARRAY;
 public import windows.win32.system.ole : IFontDisp;
 public import windows.win32.system.variant : VARIANT;
 
@@ -16,73 +16,83 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias PERF_DETAIL = uint;
 enum : uint
 {
-    PERF_DETAIL_NOVICE   = 0x00000064,
-    PERF_DETAIL_ADVANCED = 0x000000c8,
-    PERF_DETAIL_EXPERT   = 0x0000012c,
-    PERF_DETAIL_WIZARD   = 0x00000190,
+    PERF_DETAIL_NOVICE   = 0x00000064U,
+    PERF_DETAIL_ADVANCED = 0x000000c8U,
+    PERF_DETAIL_EXPERT   = 0x0000012cU,
+    PERF_DETAIL_WIZARD   = 0x00000190U,
 }
+
 alias REAL_TIME_DATA_SOURCE_ID_FLAGS = uint;
 enum : uint
 {
-    DATA_SOURCE_REGISTRY = 0x00000001,
-    DATA_SOURCE_WBEM     = 0x00000004,
+    DATA_SOURCE_REGISTRY = 0x00000001U,
+    DATA_SOURCE_WBEM     = 0x00000004U,
 }
+
 alias PDH_PATH_FLAGS = uint;
 enum : uint
 {
-    PDH_PATH_WBEM_RESULT = 0x00000001,
-    PDH_PATH_WBEM_INPUT  = 0x00000002,
-    PDH_PATH_WBEM_NONE   = 0x00000000,
+    PDH_PATH_WBEM_RESULT = 0x00000001U,
+    PDH_PATH_WBEM_INPUT  = 0x00000002U,
+    PDH_PATH_WBEM_NONE   = 0x00000000U,
 }
+
 alias PDH_FMT = uint;
 enum : uint
 {
-    PDH_FMT_DOUBLE = 0x00000200,
-    PDH_FMT_LARGE  = 0x00000400,
-    PDH_FMT_LONG   = 0x00000100,
+    PDH_FMT_DOUBLE = 0x00000200U,
+    PDH_FMT_LARGE  = 0x00000400U,
+    PDH_FMT_LONG   = 0x00000100U,
 }
+
 alias PDH_LOG_TYPE = uint;
 enum : uint
 {
-    PDH_LOG_TYPE_UNDEFINED = 0x00000000,
-    PDH_LOG_TYPE_CSV       = 0x00000001,
-    PDH_LOG_TYPE_SQL       = 0x00000007,
-    PDH_LOG_TYPE_TSV       = 0x00000002,
-    PDH_LOG_TYPE_BINARY    = 0x00000008,
-    PDH_LOG_TYPE_PERFMON   = 0x00000006,
+    PDH_LOG_TYPE_UNDEFINED = 0x00000000U,
+    PDH_LOG_TYPE_CSV       = 0x00000001U,
+    PDH_LOG_TYPE_SQL       = 0x00000007U,
+    PDH_LOG_TYPE_TSV       = 0x00000002U,
+    PDH_LOG_TYPE_BINARY    = 0x00000008U,
+    PDH_LOG_TYPE_PERFMON   = 0x00000006U,
 }
+
 alias PDH_LOG = uint;
 enum : uint
 {
-    PDH_LOG_READ_ACCESS   = 0x00010000,
-    PDH_LOG_WRITE_ACCESS  = 0x00020000,
-    PDH_LOG_UPDATE_ACCESS = 0x00040000,
+    PDH_LOG_READ_ACCESS   = 0x00010000U,
+    PDH_LOG_WRITE_ACCESS  = 0x00020000U,
+    PDH_LOG_UPDATE_ACCESS = 0x00040000U,
 }
+
 alias PDH_SELECT_DATA_SOURCE_FLAGS = uint;
 enum : uint
 {
-    PDH_FLAGS_FILE_BROWSER_ONLY = 0x00000001,
-    PDH_FLAGS_NONE              = 0x00000000,
+    PDH_FLAGS_FILE_BROWSER_ONLY = 0x00000001U,
+    PDH_FLAGS_NONE              = 0x00000000U,
 }
+
 alias PDH_DLL_VERSION = uint;
 enum : uint
 {
-    PDH_CVERSION_WIN50 = 0x00000500,
-    PDH_VERSION        = 0x00000503,
+    PDH_CVERSION_WIN50 = 0x00000500U,
+    PDH_VERSION        = 0x00000503U,
 }
+
 alias PERF_COUNTER_AGGREGATE_FUNC = uint;
 enum : uint
 {
-    PERF_AGGREGATE_UNDEFINED = 0x00000000,
-    PERF_AGGREGATE_TOTAL     = 0x00000001,
-    PERF_AGGREGATE_AVG       = 0x00000002,
-    PERF_AGGREGATE_MIN       = 0x00000003,
-    PERF_AGGREGATE_MAX       = 0x00000004,
+    PERF_AGGREGATE_UNDEFINED = 0x00000000U,
+    PERF_AGGREGATE_TOTAL     = 0x00000001U,
+    PERF_AGGREGATE_AVG       = 0x00000002U,
+    PERF_AGGREGATE_MIN       = 0x00000003U,
+    PERF_AGGREGATE_MAX       = 0x00000004U,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/ne-pla-datacollectortype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/ne-pla-datacollectortype
 enum DataCollectorType : int
 {
     plaPerformanceCounter = 0x00000000,
@@ -91,7 +101,8 @@ enum DataCollectorType : int
     plaAlert              = 0x00000003,
     plaApiTrace           = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/ne-pla-fileformat))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/ne-pla-fileformat
 enum FileFormat : int
 {
     plaCommaSeparated = 0x00000000,
@@ -99,7 +110,8 @@ enum FileFormat : int
     plaSql            = 0x00000002,
     plaBinary         = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/ne-pla-autopathformat))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/ne-pla-autopathformat
 enum AutoPathFormat : int
 {
     plaNone               = 0x00000000,
@@ -113,7 +125,8 @@ enum AutoPathFormat : int
     plaYearMonthDayHour   = 0x00002000,
     plaMonthDayHourMinute = 0x00004000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/ne-pla-datacollectorsetstatus))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/ne-pla-datacollectorsetstatus
 enum DataCollectorSetStatus : int
 {
     plaStopped   = 0x00000000,
@@ -122,7 +135,8 @@ enum DataCollectorSetStatus : int
     plaPending   = 0x00000003,
     plaUndefined = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/ne-pla-clocktype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/ne-pla-clocktype
 enum ClockType : int
 {
     plaTimeStamp   = 0x00000000,
@@ -130,7 +144,8 @@ enum ClockType : int
     plaSystem      = 0x00000002,
     plaCycle       = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/ne-pla-streammode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/ne-pla-streammode
 enum StreamMode : int
 {
     plaFile      = 0x00000001,
@@ -138,7 +153,8 @@ enum StreamMode : int
     plaBoth      = 0x00000003,
     plaBuffering = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/ne-pla-commitmode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/ne-pla-commitmode
 enum CommitMode : int
 {
     plaCreateNew             = 0x00000001,
@@ -148,7 +164,8 @@ enum CommitMode : int
     plaFlushTrace            = 0x00000020,
     plaValidateOnly          = 0x00001000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/ne-pla-valuemaptype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/ne-pla-valuemaptype
 enum ValueMapType : int
 {
     plaIndex      = 0x00000001,
@@ -156,7 +173,8 @@ enum ValueMapType : int
     plaFlagArray  = 0x00000003,
     plaValidation = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/ne-pla-weekdays))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/ne-pla-weekdays
 enum WeekDays : int
 {
     plaRunOnce   = 0x00000000,
@@ -169,13 +187,15 @@ enum WeekDays : int
     plaSaturday  = 0x00000040,
     plaEveryday  = 0x0000007f,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/ne-pla-resourcepolicy))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/ne-pla-resourcepolicy
 enum ResourcePolicy : int
 {
     plaDeleteLargest = 0x00000000,
     plaDeleteOldest  = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/ne-pla-datamanagersteps))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/ne-pla-datamanagersteps
 enum DataManagerSteps : int
 {
     plaCreateReport    = 0x00000001,
@@ -184,7 +204,8 @@ enum DataManagerSteps : int
     plaFolderActions   = 0x00000008,
     plaResourceFreeing = 0x00000010,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/ne-pla-folderactionsteps))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/ne-pla-folderactionsteps
 enum FolderActionSteps : int
 {
     plaCreateCab    = 0x00000001,
@@ -193,7 +214,8 @@ enum FolderActionSteps : int
     plaDeleteCab    = 0x00000008,
     plaDeleteReport = 0x00000010,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/perflib/ne-perflib-perfreginfotype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/perflib/ne-perflib-perfreginfotype
 enum PerfRegInfoType : int
 {
     PERF_REG_COUNTERSET_STRUCT       = 0x00000001,
@@ -207,7 +229,8 @@ enum PerfRegInfoType : int
     PERF_REG_COUNTERSET_ENGLISH_NAME = 0x00000009,
     PERF_REG_COUNTER_ENGLISH_NAMES   = 0x0000000a,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/perflib/ne-perflib-perfcounterdatatype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/perflib/ne-perflib-perfcounterdatatype
 enum PerfCounterDataType : int
 {
     PERF_ERROR_RETURN       = 0x00000000,
@@ -216,7 +239,8 @@ enum PerfCounterDataType : int
     PERF_MULTIPLE_INSTANCES = 0x00000004,
     PERF_COUNTERSET         = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/isysmon/ne-isysmon-displaytypeconstants))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/isysmon/ne-isysmon-displaytypeconstants
 enum DisplayTypeConstants : int
 {
     sysmonLineGraph        = 0x00000001,
@@ -225,7 +249,8 @@ enum DisplayTypeConstants : int
     sysmonChartArea        = 0x00000004,
     sysmonChartStackedArea = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/isysmon/ne-isysmon-reportvaluetypeconstants))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/isysmon/ne-isysmon-reportvaluetypeconstants
 enum ReportValueTypeConstants : int
 {
     sysmonDefaultValue = 0x00000000,
@@ -234,7 +259,8 @@ enum ReportValueTypeConstants : int
     sysmonMinimum      = 0x00000003,
     sysmonMaximum      = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/isysmon/ne-isysmon-datasourcetypeconstants))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/isysmon/ne-isysmon-datasourcetypeconstants
 enum DataSourceTypeConstants : int
 {
     sysmonNullDataSource  = 0xffffffff,
@@ -242,7 +268,8 @@ enum DataSourceTypeConstants : int
     sysmonLogFiles        = 0x00000002,
     sysmonSqlLog          = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/isysmon/ne-isysmon-sysmonfiletype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/isysmon/ne-isysmon-sysmonfiletype
 enum SysmonFileType : int
 {
     sysmonFileHtml       = 0x00000001,
@@ -253,7 +280,8 @@ enum SysmonFileType : int
     sysmonFileRetiredBlg = 0x00000006,
     sysmonFileGif        = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/isysmon/ne-isysmon-sysmondatatype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/isysmon/ne-isysmon-sysmondatatype
 enum SysmonDataType : int
 {
     sysmonDataAvg   = 0x00000001,
@@ -262,7 +290,8 @@ enum SysmonDataType : int
     sysmonDataTime  = 0x00000004,
     sysmonDataCount = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/isysmon/ne-isysmon-sysmonbatchreason))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/isysmon/ne-isysmon-sysmonbatchreason
 enum SysmonBatchReason : int
 {
     sysmonBatchNone                 = 0x00000000,
@@ -274,80 +303,80 @@ enum SysmonBatchReason : int
 // Constants
 
 
-enum uint MAX_COUNTER_PATH = 0x00000100;
-enum uint PDH_MAX_COUNTER_NAME = 0x00000400;
-enum uint PDH_MAX_INSTANCE_NAME = 0x00000400;
-enum uint PDH_MAX_COUNTER_PATH = 0x00000800;
-enum uint PDH_MAX_DATASOURCE_PATH = 0x00000400;
+enum uint MAX_COUNTER_PATH = 0x00000100U;
+enum uint PDH_MAX_COUNTER_NAME = 0x00000400U;
+enum uint PDH_MAX_INSTANCE_NAME = 0x00000400U;
+enum uint PDH_MAX_COUNTER_PATH = 0x00000800U;
+enum uint PDH_MAX_DATASOURCE_PATH = 0x00000400U;
 enum int H_WBEM_DATASOURCE = 0xffffffff;
 enum int PDH_MAX_SCALE = 0x00000007;
 enum int PDH_MIN_SCALE = 0xfffffff9;
 
 enum : uint
 {
-    PDH_NOEXPANDCOUNTERS  = 0x00000001,
-    PDH_NOEXPANDINSTANCES = 0x00000002,
+    PDH_NOEXPANDCOUNTERS  = 0x00000001U,
+    PDH_NOEXPANDINSTANCES = 0x00000002U,
 }
 
-enum uint PDH_REFRESHCOUNTERS = 0x00000004;
+enum uint PDH_REFRESHCOUNTERS = 0x00000004U;
 
 enum : uint
 {
-    PDH_LOG_TYPE_RETIRED_BIN   = 0x00000003,
-    PDH_LOG_TYPE_TRACE_KERNEL  = 0x00000004,
-    PDH_LOG_TYPE_TRACE_GENERIC = 0x00000005,
-}
-
-enum : uint
-{
-    PERF_PROVIDER_USER_MODE   = 0x00000000,
-    PERF_PROVIDER_KERNEL_MODE = 0x00000001,
-    PERF_PROVIDER_DRIVER      = 0x00000002,
+    PDH_LOG_TYPE_RETIRED_BIN   = 0x00000003U,
+    PDH_LOG_TYPE_TRACE_KERNEL  = 0x00000004U,
+    PDH_LOG_TYPE_TRACE_GENERIC = 0x00000005U,
 }
 
 enum : uint
 {
-    PERF_COUNTERSET_FLAG_MULTIPLE    = 0x00000002,
-    PERF_COUNTERSET_FLAG_AGGREGATE   = 0x00000004,
-    PERF_COUNTERSET_FLAG_HISTORY     = 0x00000008,
-    PERF_COUNTERSET_FLAG_INSTANCE    = 0x00000010,
-    PERF_COUNTERSET_SINGLE_INSTANCE  = 0x00000000,
-    PERF_COUNTERSET_MULTI_INSTANCES  = 0x00000002,
-    PERF_COUNTERSET_SINGLE_AGGREGATE = 0x00000004,
+    PERF_PROVIDER_USER_MODE   = 0x00000000U,
+    PERF_PROVIDER_KERNEL_MODE = 0x00000001U,
+    PERF_PROVIDER_DRIVER      = 0x00000002U,
+}
+
+enum : uint
+{
+    PERF_COUNTERSET_FLAG_MULTIPLE    = 0x00000002U,
+    PERF_COUNTERSET_FLAG_AGGREGATE   = 0x00000004U,
+    PERF_COUNTERSET_FLAG_HISTORY     = 0x00000008U,
+    PERF_COUNTERSET_FLAG_INSTANCE    = 0x00000010U,
+    PERF_COUNTERSET_SINGLE_INSTANCE  = 0x00000000U,
+    PERF_COUNTERSET_MULTI_INSTANCES  = 0x00000002U,
+    PERF_COUNTERSET_SINGLE_AGGREGATE = 0x00000004U,
 }
 
 enum : ulong
 {
-    PERF_ATTRIB_BY_REFERENCE       = 0x0000000000000001,
-    PERF_ATTRIB_NO_DISPLAYABLE     = 0x0000000000000002,
-    PERF_ATTRIB_NO_GROUP_SEPARATOR = 0x0000000000000004,
+    PERF_ATTRIB_BY_REFERENCE       = 0x0000000000000001UL,
+    PERF_ATTRIB_NO_DISPLAYABLE     = 0x0000000000000002UL,
+    PERF_ATTRIB_NO_GROUP_SEPARATOR = 0x0000000000000004UL,
 }
 
 enum : ulong
 {
-    PERF_ATTRIB_DISPLAY_AS_REAL = 0x0000000000000008,
-    PERF_ATTRIB_DISPLAY_AS_HEX  = 0x0000000000000010,
+    PERF_ATTRIB_DISPLAY_AS_REAL = 0x0000000000000008UL,
+    PERF_ATTRIB_DISPLAY_AS_HEX  = 0x0000000000000010UL,
 }
 
-enum uint PERF_WILDCARD_COUNTER = 0xffffffff;
+enum uint PERF_WILDCARD_COUNTER = 0xffffffffU;
 enum const(wchar)* PERF_WILDCARD_INSTANCE = "*";
 enum const(wchar)* PERF_AGGREGATE_INSTANCE = "_Total";
-enum uint PERF_MAX_INSTANCE_NAME = 0x00000400;
-enum uint PERF_ADD_COUNTER = 0x00000001;
-enum uint PERF_REMOVE_COUNTER = 0x00000002;
-enum uint PERF_ENUM_INSTANCES = 0x00000003;
+enum uint PERF_MAX_INSTANCE_NAME = 0x00000400U;
+enum uint PERF_ADD_COUNTER = 0x00000001U;
+enum uint PERF_REMOVE_COUNTER = 0x00000002U;
+enum uint PERF_ENUM_INSTANCES = 0x00000003U;
 
 enum : uint
 {
-    PERF_COLLECT_START = 0x00000005,
-    PERF_COLLECT_END   = 0x00000006,
+    PERF_COLLECT_START = 0x00000005U,
+    PERF_COLLECT_END   = 0x00000006U,
 }
 
 enum : uint
 {
-    PERF_FILTER        = 0x00000009,
-    PERF_DATA_VERSION  = 0x00000001,
-    PERF_DATA_REVISION = 0x00000001,
+    PERF_FILTER        = 0x00000009U,
+    PERF_DATA_VERSION  = 0x00000001U,
+    PERF_DATA_REVISION = 0x00000001U,
 }
 
 enum int PERF_NO_INSTANCES = 0xffffffff;
@@ -360,81 +389,81 @@ enum : int
 
 enum : uint
 {
-    PERF_SIZE_DWORD        = 0x00000000,
-    PERF_SIZE_LARGE        = 0x00000100,
-    PERF_SIZE_ZERO         = 0x00000200,
-    PERF_SIZE_VARIABLE_LEN = 0x00000300,
+    PERF_SIZE_DWORD        = 0x00000000U,
+    PERF_SIZE_LARGE        = 0x00000100U,
+    PERF_SIZE_ZERO         = 0x00000200U,
+    PERF_SIZE_VARIABLE_LEN = 0x00000300U,
 }
 
 enum : uint
 {
-    PERF_TYPE_NUMBER  = 0x00000000,
-    PERF_TYPE_COUNTER = 0x00000400,
-    PERF_TYPE_TEXT    = 0x00000800,
-    PERF_TYPE_ZERO    = 0x00000c00,
+    PERF_TYPE_NUMBER  = 0x00000000U,
+    PERF_TYPE_COUNTER = 0x00000400U,
+    PERF_TYPE_TEXT    = 0x00000800U,
+    PERF_TYPE_ZERO    = 0x00000c00U,
 }
 
 enum : uint
 {
-    PERF_NUMBER_HEX      = 0x00000000,
-    PERF_NUMBER_DECIMAL  = 0x00010000,
-    PERF_NUMBER_DEC_1000 = 0x00020000,
+    PERF_NUMBER_HEX      = 0x00000000U,
+    PERF_NUMBER_DECIMAL  = 0x00010000U,
+    PERF_NUMBER_DEC_1000 = 0x00020000U,
 }
 
 enum : uint
 {
-    PERF_COUNTER_VALUE     = 0x00000000,
-    PERF_COUNTER_RATE      = 0x00010000,
-    PERF_COUNTER_FRACTION  = 0x00020000,
-    PERF_COUNTER_BASE      = 0x00030000,
-    PERF_COUNTER_ELAPSED   = 0x00040000,
-    PERF_COUNTER_QUEUELEN  = 0x00050000,
-    PERF_COUNTER_HISTOGRAM = 0x00060000,
-    PERF_COUNTER_PRECISION = 0x00070000,
+    PERF_COUNTER_VALUE     = 0x00000000U,
+    PERF_COUNTER_RATE      = 0x00010000U,
+    PERF_COUNTER_FRACTION  = 0x00020000U,
+    PERF_COUNTER_BASE      = 0x00030000U,
+    PERF_COUNTER_ELAPSED   = 0x00040000U,
+    PERF_COUNTER_QUEUELEN  = 0x00050000U,
+    PERF_COUNTER_HISTOGRAM = 0x00060000U,
+    PERF_COUNTER_PRECISION = 0x00070000U,
 }
 
 enum : uint
 {
-    PERF_TEXT_UNICODE = 0x00000000,
-    PERF_TEXT_ASCII   = 0x00010000,
+    PERF_TEXT_UNICODE = 0x00000000U,
+    PERF_TEXT_ASCII   = 0x00010000U,
 }
 
 enum : uint
 {
-    PERF_TIMER_TICK  = 0x00000000,
-    PERF_TIMER_100NS = 0x00100000,
+    PERF_TIMER_TICK  = 0x00000000U,
+    PERF_TIMER_100NS = 0x00100000U,
 }
 
-enum uint PERF_OBJECT_TIMER = 0x00200000;
+enum uint PERF_OBJECT_TIMER = 0x00200000U;
 
 enum : uint
 {
-    PERF_DELTA_COUNTER = 0x00400000,
-    PERF_DELTA_BASE    = 0x00800000,
+    PERF_DELTA_COUNTER = 0x00400000U,
+    PERF_DELTA_BASE    = 0x00800000U,
 }
 
-enum uint PERF_INVERSE_COUNTER = 0x01000000;
-enum uint PERF_MULTI_COUNTER = 0x02000000;
+enum uint PERF_INVERSE_COUNTER = 0x01000000U;
+enum uint PERF_MULTI_COUNTER = 0x02000000U;
 
 enum : uint
 {
-    PERF_DISPLAY_NO_SUFFIX = 0x00000000,
-    PERF_DISPLAY_PER_SEC   = 0x10000000,
-    PERF_DISPLAY_PERCENT   = 0x20000000,
-    PERF_DISPLAY_SECONDS   = 0x30000000,
-    PERF_DISPLAY_NOSHOW    = 0x40000000,
+    PERF_DISPLAY_NO_SUFFIX = 0x00000000U,
+    PERF_DISPLAY_PER_SEC   = 0x10000000U,
+    PERF_DISPLAY_PERCENT   = 0x20000000U,
+    PERF_DISPLAY_SECONDS   = 0x30000000U,
+    PERF_DISPLAY_NOSHOW    = 0x40000000U,
 }
 
-enum uint PERF_COUNTER_HISTOGRAM_TYPE = 0x80000000;
+enum uint PERF_COUNTER_HISTOGRAM_TYPE = 0x80000000U;
 enum int PERF_NO_UNIQUE_ID = 0xffffffff;
 enum int MAX_PERF_OBJECTS_IN_QUERY_FUNCTION = 0x00000040;
 
 enum : uint
 {
-    WINPERF_LOG_NONE    = 0x00000000,
-    WINPERF_LOG_USER    = 0x00000001,
-    WINPERF_LOG_DEBUG   = 0x00000002,
-    WINPERF_LOG_VERBOSE = 0x00000003,
+    WINPERF_LOG_NONE    = 0x00000000U,
+    WINPERF_LOG_USER    = 0x00000001U,
+    WINPERF_LOG_DEBUG   = 0x00000002U,
+    WINPERF_LOG_VERBOSE = 0x00000003U,
 }
 
 enum GUID LIBID_SystemMonitor = GUID("1b773e42-2509-11cf-942f-008029004347");
@@ -450,184 +479,184 @@ enum : GUID
 
 enum : uint
 {
-    PDH_CSTATUS_VALID_DATA  = 0x00000000,
-    PDH_CSTATUS_NEW_DATA    = 0x00000001,
-    PDH_CSTATUS_NO_MACHINE  = 0x800007d0,
-    PDH_CSTATUS_NO_INSTANCE = 0x800007d1,
+    PDH_CSTATUS_VALID_DATA  = 0x00000000U,
+    PDH_CSTATUS_NEW_DATA    = 0x00000001U,
+    PDH_CSTATUS_NO_MACHINE  = 0x800007d0U,
+    PDH_CSTATUS_NO_INSTANCE = 0x800007d1U,
 }
 
-enum uint PDH_MORE_DATA = 0x800007d2;
-enum uint PDH_CSTATUS_ITEM_NOT_VALIDATED = 0x800007d3;
+enum uint PDH_MORE_DATA = 0x800007d2U;
+enum uint PDH_CSTATUS_ITEM_NOT_VALIDATED = 0x800007d3U;
 
 enum : uint
 {
-    PDH_RETRY   = 0x800007d4,
-    PDH_NO_DATA = 0x800007d5,
-}
-
-enum : uint
-{
-    PDH_CALC_NEGATIVE_DENOMINATOR = 0x800007d6,
-    PDH_CALC_NEGATIVE_TIMEBASE    = 0x800007d7,
-    PDH_CALC_NEGATIVE_VALUE       = 0x800007d8,
-}
-
-enum uint PDH_DIALOG_CANCELLED = 0x800007d9;
-enum uint PDH_END_OF_LOG_FILE = 0x800007da;
-enum uint PDH_ASYNC_QUERY_TIMEOUT = 0x800007db;
-enum uint PDH_CANNOT_SET_DEFAULT_REALTIME_DATASOURCE = 0x800007dc;
-enum uint PDH_UNABLE_MAP_NAME_FILES = 0x80000bd5;
-enum uint PDH_PLA_VALIDATION_WARNING = 0x80000bf3;
-
-enum : uint
-{
-    PDH_CSTATUS_NO_OBJECT    = 0xc0000bb8,
-    PDH_CSTATUS_NO_COUNTER   = 0xc0000bb9,
-    PDH_CSTATUS_INVALID_DATA = 0xc0000bba,
-}
-
-enum uint PDH_MEMORY_ALLOCATION_FAILURE = 0xc0000bbb;
-
-enum : uint
-{
-    PDH_INVALID_HANDLE   = 0xc0000bbc,
-    PDH_INVALID_ARGUMENT = 0xc0000bbd,
-}
-
-enum uint PDH_FUNCTION_NOT_FOUND = 0xc0000bbe;
-
-enum : uint
-{
-    PDH_CSTATUS_NO_COUNTERNAME  = 0xc0000bbf,
-    PDH_CSTATUS_BAD_COUNTERNAME = 0xc0000bc0,
-}
-
-enum uint PDH_INVALID_BUFFER = 0xc0000bc1;
-enum uint PDH_INSUFFICIENT_BUFFER = 0xc0000bc2;
-enum uint PDH_CANNOT_CONNECT_MACHINE = 0xc0000bc3;
-
-enum : uint
-{
-    PDH_INVALID_PATH     = 0xc0000bc4,
-    PDH_INVALID_INSTANCE = 0xc0000bc5,
-    PDH_INVALID_DATA     = 0xc0000bc6,
-}
-
-enum uint PDH_NO_DIALOG_DATA = 0xc0000bc7;
-enum uint PDH_CANNOT_READ_NAME_STRINGS = 0xc0000bc8;
-
-enum : uint
-{
-    PDH_LOG_FILE_CREATE_ERROR = 0xc0000bc9,
-    PDH_LOG_FILE_OPEN_ERROR   = 0xc0000bca,
-}
-
-enum uint PDH_LOG_TYPE_NOT_FOUND = 0xc0000bcb;
-enum uint PDH_NO_MORE_DATA = 0xc0000bcc;
-enum uint PDH_ENTRY_NOT_IN_LOG_FILE = 0xc0000bcd;
-
-enum : uint
-{
-    PDH_DATA_SOURCE_IS_LOG_FILE  = 0xc0000bce,
-    PDH_DATA_SOURCE_IS_REAL_TIME = 0xc0000bcf,
-}
-
-enum uint PDH_UNABLE_READ_LOG_HEADER = 0xc0000bd0;
-
-enum : uint
-{
-    PDH_FILE_NOT_FOUND      = 0xc0000bd1,
-    PDH_FILE_ALREADY_EXISTS = 0xc0000bd2,
-}
-
-enum uint PDH_NOT_IMPLEMENTED = 0xc0000bd3;
-enum uint PDH_STRING_NOT_FOUND = 0xc0000bd4;
-
-enum : uint
-{
-    PDH_UNKNOWN_LOG_FORMAT     = 0xc0000bd6,
-    PDH_UNKNOWN_LOGSVC_COMMAND = 0xc0000bd7,
+    PDH_RETRY   = 0x800007d4U,
+    PDH_NO_DATA = 0x800007d5U,
 }
 
 enum : uint
 {
-    PDH_LOGSVC_QUERY_NOT_FOUND = 0xc0000bd8,
-    PDH_LOGSVC_NOT_OPENED      = 0xc0000bd9,
+    PDH_CALC_NEGATIVE_DENOMINATOR = 0x800007d6U,
+    PDH_CALC_NEGATIVE_TIMEBASE    = 0x800007d7U,
+    PDH_CALC_NEGATIVE_VALUE       = 0x800007d8U,
 }
 
-enum uint PDH_WBEM_ERROR = 0xc0000bda;
-enum uint PDH_ACCESS_DENIED = 0xc0000bdb;
-enum uint PDH_LOG_FILE_TOO_SMALL = 0xc0000bdc;
+enum uint PDH_DIALOG_CANCELLED = 0x800007d9U;
+enum uint PDH_END_OF_LOG_FILE = 0x800007daU;
+enum uint PDH_ASYNC_QUERY_TIMEOUT = 0x800007dbU;
+enum uint PDH_CANNOT_SET_DEFAULT_REALTIME_DATASOURCE = 0x800007dcU;
+enum uint PDH_UNABLE_MAP_NAME_FILES = 0x80000bd5U;
+enum uint PDH_PLA_VALIDATION_WARNING = 0x80000bf3U;
 
 enum : uint
 {
-    PDH_INVALID_DATASOURCE = 0xc0000bdd,
-    PDH_INVALID_SQLDB      = 0xc0000bde,
+    PDH_CSTATUS_NO_OBJECT    = 0xc0000bb8U,
+    PDH_CSTATUS_NO_COUNTER   = 0xc0000bb9U,
+    PDH_CSTATUS_INVALID_DATA = 0xc0000bbaU,
 }
 
-enum uint PDH_NO_COUNTERS = 0xc0000bdf;
+enum uint PDH_MEMORY_ALLOCATION_FAILURE = 0xc0000bbbU;
 
 enum : uint
 {
-    PDH_SQL_ALLOC_FAILED    = 0xc0000be0,
-    PDH_SQL_ALLOCCON_FAILED = 0xc0000be1,
+    PDH_INVALID_HANDLE   = 0xc0000bbcU,
+    PDH_INVALID_ARGUMENT = 0xc0000bbdU,
 }
 
-enum uint PDH_SQL_EXEC_DIRECT_FAILED = 0xc0000be2;
-enum uint PDH_SQL_FETCH_FAILED = 0xc0000be3;
-enum uint PDH_SQL_ROWCOUNT_FAILED = 0xc0000be4;
-enum uint PDH_SQL_MORE_RESULTS_FAILED = 0xc0000be5;
-enum uint PDH_SQL_CONNECT_FAILED = 0xc0000be6;
-enum uint PDH_SQL_BIND_FAILED = 0xc0000be7;
-enum uint PDH_CANNOT_CONNECT_WMI_SERVER = 0xc0000be8;
-enum uint PDH_PLA_COLLECTION_ALREADY_RUNNING = 0xc0000be9;
-enum uint PDH_PLA_ERROR_SCHEDULE_OVERLAP = 0xc0000bea;
-enum uint PDH_PLA_COLLECTION_NOT_FOUND = 0xc0000beb;
+enum uint PDH_FUNCTION_NOT_FOUND = 0xc0000bbeU;
 
 enum : uint
 {
-    PDH_PLA_ERROR_SCHEDULE_ELAPSED = 0xc0000bec,
-    PDH_PLA_ERROR_NOSTART          = 0xc0000bed,
-    PDH_PLA_ERROR_ALREADY_EXISTS   = 0xc0000bee,
-    PDH_PLA_ERROR_TYPE_MISMATCH    = 0xc0000bef,
-    PDH_PLA_ERROR_FILEPATH         = 0xc0000bf0,
+    PDH_CSTATUS_NO_COUNTERNAME  = 0xc0000bbfU,
+    PDH_CSTATUS_BAD_COUNTERNAME = 0xc0000bc0U,
 }
 
-enum uint PDH_PLA_SERVICE_ERROR = 0xc0000bf1;
-enum uint PDH_PLA_VALIDATION_ERROR = 0xc0000bf2;
-enum uint PDH_PLA_ERROR_NAME_TOO_LONG = 0xc0000bf4;
-enum uint PDH_INVALID_SQL_LOG_FORMAT = 0xc0000bf5;
-enum uint PDH_COUNTER_ALREADY_IN_QUERY = 0xc0000bf6;
-enum uint PDH_BINARY_LOG_CORRUPT = 0xc0000bf7;
-enum uint PDH_LOG_SAMPLE_TOO_SMALL = 0xc0000bf8;
-enum uint PDH_OS_LATER_VERSION = 0xc0000bf9;
-enum uint PDH_OS_EARLIER_VERSION = 0xc0000bfa;
-enum uint PDH_INCORRECT_APPEND_TIME = 0xc0000bfb;
-enum uint PDH_UNMATCHED_APPEND_COUNTER = 0xc0000bfc;
-enum uint PDH_SQL_ALTER_DETAIL_FAILED = 0xc0000bfd;
-enum uint PDH_QUERY_PERF_DATA_TIMEOUT = 0xc0000bfe;
+enum uint PDH_INVALID_BUFFER = 0xc0000bc1U;
+enum uint PDH_INSUFFICIENT_BUFFER = 0xc0000bc2U;
+enum uint PDH_CANNOT_CONNECT_MACHINE = 0xc0000bc3U;
 
 enum : uint
 {
-    PLA_CAPABILITY_LOCAL          = 0x10000000,
-    PLA_CAPABILITY_V1_SVC         = 0x00000001,
-    PLA_CAPABILITY_V1_SESSION     = 0x00000002,
-    PLA_CAPABILITY_V1_SYSTEM      = 0x00000004,
-    PLA_CAPABILITY_LEGACY_SESSION = 0x00000008,
-    PLA_CAPABILITY_LEGACY_SVC     = 0x00000010,
-    PLA_CAPABILITY_AUTOLOGGER     = 0x00000020,
+    PDH_INVALID_PATH     = 0xc0000bc4U,
+    PDH_INVALID_INSTANCE = 0xc0000bc5U,
+    PDH_INVALID_DATA     = 0xc0000bc6U,
+}
+
+enum uint PDH_NO_DIALOG_DATA = 0xc0000bc7U;
+enum uint PDH_CANNOT_READ_NAME_STRINGS = 0xc0000bc8U;
+
+enum : uint
+{
+    PDH_LOG_FILE_CREATE_ERROR = 0xc0000bc9U,
+    PDH_LOG_FILE_OPEN_ERROR   = 0xc0000bcaU,
+}
+
+enum uint PDH_LOG_TYPE_NOT_FOUND = 0xc0000bcbU;
+enum uint PDH_NO_MORE_DATA = 0xc0000bccU;
+enum uint PDH_ENTRY_NOT_IN_LOG_FILE = 0xc0000bcdU;
+
+enum : uint
+{
+    PDH_DATA_SOURCE_IS_LOG_FILE  = 0xc0000bceU,
+    PDH_DATA_SOURCE_IS_REAL_TIME = 0xc0000bcfU,
+}
+
+enum uint PDH_UNABLE_READ_LOG_HEADER = 0xc0000bd0U;
+
+enum : uint
+{
+    PDH_FILE_NOT_FOUND      = 0xc0000bd1U,
+    PDH_FILE_ALREADY_EXISTS = 0xc0000bd2U,
+}
+
+enum uint PDH_NOT_IMPLEMENTED = 0xc0000bd3U;
+enum uint PDH_STRING_NOT_FOUND = 0xc0000bd4U;
+
+enum : uint
+{
+    PDH_UNKNOWN_LOG_FORMAT     = 0xc0000bd6U,
+    PDH_UNKNOWN_LOGSVC_COMMAND = 0xc0000bd7U,
 }
 
 enum : uint
 {
-    PLAL_ALERT_CMD_LINE_SINGLE = 0x00000100,
-    PLAL_ALERT_CMD_LINE_A_NAME = 0x00000200,
-    PLAL_ALERT_CMD_LINE_C_NAME = 0x00000400,
-    PLAL_ALERT_CMD_LINE_D_TIME = 0x00000800,
-    PLAL_ALERT_CMD_LINE_L_VAL  = 0x00001000,
-    PLAL_ALERT_CMD_LINE_M_VAL  = 0x00002000,
-    PLAL_ALERT_CMD_LINE_U_TEXT = 0x00004000,
-    PLAL_ALERT_CMD_LINE_MASK   = 0x00007f00,
+    PDH_LOGSVC_QUERY_NOT_FOUND = 0xc0000bd8U,
+    PDH_LOGSVC_NOT_OPENED      = 0xc0000bd9U,
+}
+
+enum uint PDH_WBEM_ERROR = 0xc0000bdaU;
+enum uint PDH_ACCESS_DENIED = 0xc0000bdbU;
+enum uint PDH_LOG_FILE_TOO_SMALL = 0xc0000bdcU;
+
+enum : uint
+{
+    PDH_INVALID_DATASOURCE = 0xc0000bddU,
+    PDH_INVALID_SQLDB      = 0xc0000bdeU,
+}
+
+enum uint PDH_NO_COUNTERS = 0xc0000bdfU;
+
+enum : uint
+{
+    PDH_SQL_ALLOC_FAILED    = 0xc0000be0U,
+    PDH_SQL_ALLOCCON_FAILED = 0xc0000be1U,
+}
+
+enum uint PDH_SQL_EXEC_DIRECT_FAILED = 0xc0000be2U;
+enum uint PDH_SQL_FETCH_FAILED = 0xc0000be3U;
+enum uint PDH_SQL_ROWCOUNT_FAILED = 0xc0000be4U;
+enum uint PDH_SQL_MORE_RESULTS_FAILED = 0xc0000be5U;
+enum uint PDH_SQL_CONNECT_FAILED = 0xc0000be6U;
+enum uint PDH_SQL_BIND_FAILED = 0xc0000be7U;
+enum uint PDH_CANNOT_CONNECT_WMI_SERVER = 0xc0000be8U;
+enum uint PDH_PLA_COLLECTION_ALREADY_RUNNING = 0xc0000be9U;
+enum uint PDH_PLA_ERROR_SCHEDULE_OVERLAP = 0xc0000beaU;
+enum uint PDH_PLA_COLLECTION_NOT_FOUND = 0xc0000bebU;
+
+enum : uint
+{
+    PDH_PLA_ERROR_SCHEDULE_ELAPSED = 0xc0000becU,
+    PDH_PLA_ERROR_NOSTART          = 0xc0000bedU,
+    PDH_PLA_ERROR_ALREADY_EXISTS   = 0xc0000beeU,
+    PDH_PLA_ERROR_TYPE_MISMATCH    = 0xc0000befU,
+    PDH_PLA_ERROR_FILEPATH         = 0xc0000bf0U,
+}
+
+enum uint PDH_PLA_SERVICE_ERROR = 0xc0000bf1U;
+enum uint PDH_PLA_VALIDATION_ERROR = 0xc0000bf2U;
+enum uint PDH_PLA_ERROR_NAME_TOO_LONG = 0xc0000bf4U;
+enum uint PDH_INVALID_SQL_LOG_FORMAT = 0xc0000bf5U;
+enum uint PDH_COUNTER_ALREADY_IN_QUERY = 0xc0000bf6U;
+enum uint PDH_BINARY_LOG_CORRUPT = 0xc0000bf7U;
+enum uint PDH_LOG_SAMPLE_TOO_SMALL = 0xc0000bf8U;
+enum uint PDH_OS_LATER_VERSION = 0xc0000bf9U;
+enum uint PDH_OS_EARLIER_VERSION = 0xc0000bfaU;
+enum uint PDH_INCORRECT_APPEND_TIME = 0xc0000bfbU;
+enum uint PDH_UNMATCHED_APPEND_COUNTER = 0xc0000bfcU;
+enum uint PDH_SQL_ALTER_DETAIL_FAILED = 0xc0000bfdU;
+enum uint PDH_QUERY_PERF_DATA_TIMEOUT = 0xc0000bfeU;
+
+enum : uint
+{
+    PLA_CAPABILITY_LOCAL          = 0x10000000U,
+    PLA_CAPABILITY_V1_SVC         = 0x00000001U,
+    PLA_CAPABILITY_V1_SESSION     = 0x00000002U,
+    PLA_CAPABILITY_V1_SYSTEM      = 0x00000004U,
+    PLA_CAPABILITY_LEGACY_SESSION = 0x00000008U,
+    PLA_CAPABILITY_LEGACY_SVC     = 0x00000010U,
+    PLA_CAPABILITY_AUTOLOGGER     = 0x00000020U,
+}
+
+enum : uint
+{
+    PLAL_ALERT_CMD_LINE_SINGLE = 0x00000100U,
+    PLAL_ALERT_CMD_LINE_A_NAME = 0x00000200U,
+    PLAL_ALERT_CMD_LINE_C_NAME = 0x00000400U,
+    PLAL_ALERT_CMD_LINE_D_TIME = 0x00000800U,
+    PLAL_ALERT_CMD_LINE_L_VAL  = 0x00001000U,
+    PLAL_ALERT_CMD_LINE_M_VAL  = 0x00002000U,
+    PLAL_ALERT_CMD_LINE_U_TEXT = 0x00004000U,
+    PLAL_ALERT_CMD_LINE_MASK   = 0x00007f00U,
 }
 
 enum GUID S_PDH = GUID("04d66358-c4a1-419b-8023-23b73902de2c");
@@ -669,43 +698,87 @@ struct PDH_HCOUNTER
     void* Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winperf/ns-winperf-perf_object_type))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct PERF_OBJECT_TYPE
+version(X86_64)
 {
-    uint TotalByteLength;
-    uint DefinitionLength;
-    uint HeaderLength;
-    uint ObjectNameTitleIndex;
-    uint ObjectNameTitle;
-    uint ObjectHelpTitleIndex;
-    uint ObjectHelpTitle;
-    uint DetailLevel;
-    uint NumCounters;
-    int  DefaultCounter;
-    int  NumInstances;
-    uint CodePage;
-    long PerfTime;
-    long PerfFreq;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winperf/ns-winperf-perf_object_type
+    struct PERF_OBJECT_TYPE
+    {
+        uint TotalByteLength;
+        uint DefinitionLength;
+        uint HeaderLength;
+        uint ObjectNameTitleIndex;
+        uint ObjectNameTitle;
+        uint ObjectHelpTitleIndex;
+        uint ObjectHelpTitle;
+        uint DetailLevel;
+        uint NumCounters;
+        int  DefaultCounter;
+        int  NumInstances;
+        uint CodePage;
+        long PerfTime;
+        long PerfFreq;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winperf/ns-winperf-perf_counter_definition))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct PERF_COUNTER_DEFINITION
+version(AArch64)
 {
-    uint ByteLength;
-    uint CounterNameTitleIndex;
-    uint CounterNameTitle;
-    uint CounterHelpTitleIndex;
-    uint CounterHelpTitle;
-    int  DefaultScale;
-    uint DetailLevel;
-    uint CounterType;
-    uint CounterSize;
-    uint CounterOffset;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winperf/ns-winperf-perf_object_type
+    struct PERF_OBJECT_TYPE
+    {
+        uint TotalByteLength;
+        uint DefinitionLength;
+        uint HeaderLength;
+        uint ObjectNameTitleIndex;
+        uint ObjectNameTitle;
+        uint ObjectHelpTitleIndex;
+        uint ObjectHelpTitle;
+        uint DetailLevel;
+        uint NumCounters;
+        int  DefaultCounter;
+        int  NumInstances;
+        uint CodePage;
+        long PerfTime;
+        long PerfFreq;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/perflib/ns-perflib-perf_counterset_info))], [])
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winperf/ns-winperf-perf_counter_definition
+    struct PERF_COUNTER_DEFINITION
+    {
+        uint ByteLength;
+        uint CounterNameTitleIndex;
+        uint CounterNameTitle;
+        uint CounterHelpTitleIndex;
+        uint CounterHelpTitle;
+        int  DefaultScale;
+        uint DetailLevel;
+        uint CounterType;
+        uint CounterSize;
+        uint CounterOffset;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winperf/ns-winperf-perf_counter_definition
+    struct PERF_COUNTER_DEFINITION
+    {
+        uint ByteLength;
+        uint CounterNameTitleIndex;
+        uint CounterNameTitle;
+        uint CounterHelpTitleIndex;
+        uint CounterHelpTitle;
+        int  DefaultScale;
+        uint DetailLevel;
+        uint CounterType;
+        uint CounterSize;
+        uint CounterOffset;
+    }
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/perflib/ns-perflib-perf_counterset_info
 struct PERF_COUNTERSET_INFO
 {
     GUID CounterSetGuid;
@@ -714,7 +787,7 @@ struct PERF_COUNTERSET_INFO
     uint InstanceType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/perflib/ns-perflib-perf_counter_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/perflib/ns-perflib-perf_counter_info
 struct PERF_COUNTER_INFO
 {
     uint  CounterId;
@@ -726,7 +799,7 @@ struct PERF_COUNTER_INFO
     uint  Offset;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/perflib/ns-perflib-perf_counterset_instance))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/perflib/ns-perflib-perf_counterset_instance
 struct PERF_COUNTERSET_INSTANCE
 {
     GUID CounterSetGuid;
@@ -736,7 +809,7 @@ struct PERF_COUNTERSET_INSTANCE
     uint InstanceNameSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/perflib/ns-perflib-perf_counter_identity))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/perflib/ns-perflib-perf_counter_identity
 struct PERF_COUNTER_IDENTITY
 {
     GUID CounterSetGuid;
@@ -748,7 +821,7 @@ struct PERF_COUNTER_IDENTITY
     uint Reserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/perflib/ns-perflib-perf_provider_context))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/perflib/ns-perflib-perf_provider_context
 struct PERF_PROVIDER_CONTEXT
 {
     uint           ContextSize;
@@ -759,14 +832,14 @@ struct PERF_PROVIDER_CONTEXT
     void*          pMemContext;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/perflib/ns-perflib-perf_instance_header))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/perflib/ns-perflib-perf_instance_header
 struct PERF_INSTANCE_HEADER
 {
     uint Size;
     uint InstanceId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/perflib/ns-perflib-perf_counterset_reg_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/perflib/ns-perflib-perf_counterset_reg_info
 struct PERF_COUNTERSET_REG_INFO
 {
     GUID CounterSetGuid;
@@ -776,7 +849,7 @@ struct PERF_COUNTERSET_REG_INFO
     uint InstanceType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/perflib/ns-perflib-perf_counter_reg_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/perflib/ns-perflib-perf_counter_reg_info
 struct PERF_COUNTER_REG_INFO
 {
     uint  CounterId;
@@ -792,21 +865,21 @@ struct PERF_COUNTER_REG_INFO
     uint  Reserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/perflib/ns-perflib-perf_string_buffer_header))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/perflib/ns-perflib-perf_string_buffer_header
 struct PERF_STRING_BUFFER_HEADER
 {
     uint dwSize;
     uint dwCounters;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/perflib/ns-perflib-perf_string_counter_header))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/perflib/ns-perflib-perf_string_counter_header
 struct PERF_STRING_COUNTER_HEADER
 {
     uint dwCounterId;
     uint dwOffset;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/perflib/ns-perflib-perf_counter_identifier))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/perflib/ns-perflib-perf_counter_identifier
 struct PERF_COUNTER_IDENTIFIER
 {
     GUID CounterSetGuid;
@@ -818,7 +891,7 @@ struct PERF_COUNTER_IDENTIFIER
     uint Reserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/perflib/ns-perflib-perf_data_header))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/perflib/ns-perflib-perf_data_header
 struct PERF_DATA_HEADER
 {
     uint       dwTotalSize;
@@ -829,7 +902,7 @@ struct PERF_DATA_HEADER
     SYSTEMTIME SystemTime;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/perflib/ns-perflib-perf_counter_header))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/perflib/ns-perflib-perf_counter_header
 struct PERF_COUNTER_HEADER
 {
     uint                dwStatus;
@@ -838,28 +911,28 @@ struct PERF_COUNTER_HEADER
     uint                Reserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/perflib/ns-perflib-perf_multi_instances))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/perflib/ns-perflib-perf_multi_instances
 struct PERF_MULTI_INSTANCES
 {
     uint dwTotalSize;
     uint dwInstances;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/perflib/ns-perflib-perf_multi_counters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/perflib/ns-perflib-perf_multi_counters
 struct PERF_MULTI_COUNTERS
 {
     uint dwSize;
     uint dwCounters;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/perflib/ns-perflib-perf_counter_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/perflib/ns-perflib-perf_counter_data
 struct PERF_COUNTER_DATA
 {
     uint dwDataSize;
     uint dwSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winperf/ns-winperf-perf_data_block))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winperf/ns-winperf-perf_data_block
 struct PERF_DATA_BLOCK
 {
     wchar[4]   Signature;
@@ -878,43 +951,47 @@ struct PERF_DATA_BLOCK
     uint       SystemNameOffset;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winperf/ns-winperf-perf_object_type))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct PERF_OBJECT_TYPE
+version(X86)
 {
-    uint  TotalByteLength;
-    uint  DefinitionLength;
-    uint  HeaderLength;
-    uint  ObjectNameTitleIndex;
-    PWSTR ObjectNameTitle;
-    uint  ObjectHelpTitleIndex;
-    PWSTR ObjectHelpTitle;
-    uint  DetailLevel;
-    uint  NumCounters;
-    int   DefaultCounter;
-    int   NumInstances;
-    uint  CodePage;
-    long  PerfTime;
-    long  PerfFreq;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winperf/ns-winperf-perf_object_type
+    struct PERF_OBJECT_TYPE
+    {
+        uint  TotalByteLength;
+        uint  DefinitionLength;
+        uint  HeaderLength;
+        uint  ObjectNameTitleIndex;
+        PWSTR ObjectNameTitle;
+        uint  ObjectHelpTitleIndex;
+        PWSTR ObjectHelpTitle;
+        uint  DetailLevel;
+        uint  NumCounters;
+        int   DefaultCounter;
+        int   NumInstances;
+        uint  CodePage;
+        long  PerfTime;
+        long  PerfFreq;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winperf/ns-winperf-perf_counter_definition))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct PERF_COUNTER_DEFINITION
+version(X86)
 {
-    uint  ByteLength;
-    uint  CounterNameTitleIndex;
-    PWSTR CounterNameTitle;
-    uint  CounterHelpTitleIndex;
-    PWSTR CounterHelpTitle;
-    int   DefaultScale;
-    uint  DetailLevel;
-    uint  CounterType;
-    uint  CounterSize;
-    uint  CounterOffset;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winperf/ns-winperf-perf_counter_definition
+    struct PERF_COUNTER_DEFINITION
+    {
+        uint  ByteLength;
+        uint  CounterNameTitleIndex;
+        PWSTR CounterNameTitle;
+        uint  CounterHelpTitleIndex;
+        PWSTR CounterHelpTitle;
+        int   DefaultScale;
+        uint  DetailLevel;
+        uint  CounterType;
+        uint  CounterSize;
+        uint  CounterOffset;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winperf/ns-winperf-perf_instance_definition))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winperf/ns-winperf-perf_instance_definition
 struct PERF_INSTANCE_DEFINITION
 {
     uint ByteLength;
@@ -925,13 +1002,13 @@ struct PERF_INSTANCE_DEFINITION
     uint NameLength;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winperf/ns-winperf-perf_counter_block))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winperf/ns-winperf-perf_counter_block
 struct PERF_COUNTER_BLOCK
 {
     uint ByteLength;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_raw_counter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_raw_counter
 struct PDH_RAW_COUNTER
 {
     uint     CStatus;
@@ -942,7 +1019,7 @@ struct PDH_RAW_COUNTER
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_raw_counter_item_a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_raw_counter_item_a
 struct PDH_RAW_COUNTER_ITEM_A
 {
     PSTR            szName;
@@ -950,22 +1027,29 @@ struct PDH_RAW_COUNTER_ITEM_A
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_raw_counter_item_w))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_raw_counter_item_w
 struct PDH_RAW_COUNTER_ITEM_W
 {
     PWSTR           szName;
     PDH_RAW_COUNTER RawValue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_fmt_countervalue))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_fmt_countervalue
 struct PDH_FMT_COUNTERVALUE
 {
-    uint                CStatus;
-    _Anonymous_e__Union Anonymous;
+    uint CStatus;
+    union
+    {
+        int          longValue;
+        double       doubleValue;
+        long         largeValue;
+        const(PSTR)  AnsiStringValue;
+        const(PWSTR) WideStringValue;
+    }
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_fmt_countervalue_item_a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_fmt_countervalue_item_a
 struct PDH_FMT_COUNTERVALUE_ITEM_A
 {
     PSTR                 szName;
@@ -973,14 +1057,14 @@ struct PDH_FMT_COUNTERVALUE_ITEM_A
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_fmt_countervalue_item_w))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_fmt_countervalue_item_w
 struct PDH_FMT_COUNTERVALUE_ITEM_W
 {
     PWSTR                szName;
     PDH_FMT_COUNTERVALUE FmtValue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_statistics))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_statistics
 struct PDH_STATISTICS
 {
     uint                 dwFormat;
@@ -991,7 +1075,7 @@ struct PDH_STATISTICS
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_counter_path_elements_a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_counter_path_elements_a
 struct PDH_COUNTER_PATH_ELEMENTS_A
 {
     PSTR szMachineName;
@@ -1003,7 +1087,7 @@ struct PDH_COUNTER_PATH_ELEMENTS_A
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_counter_path_elements_w))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_counter_path_elements_w
 struct PDH_COUNTER_PATH_ELEMENTS_W
 {
     PWSTR szMachineName;
@@ -1015,7 +1099,7 @@ struct PDH_COUNTER_PATH_ELEMENTS_W
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_data_item_path_elements_a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_data_item_path_elements_a
 struct PDH_DATA_ITEM_PATH_ELEMENTS_A
 {
     PSTR szMachineName;
@@ -1025,7 +1109,7 @@ struct PDH_DATA_ITEM_PATH_ELEMENTS_A
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_data_item_path_elements_w))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_data_item_path_elements_w
 struct PDH_DATA_ITEM_PATH_ELEMENTS_W
 {
     PWSTR szMachineName;
@@ -1035,42 +1119,68 @@ struct PDH_DATA_ITEM_PATH_ELEMENTS_W
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_counter_info_a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_counter_info_a
 struct PDH_COUNTER_INFO_A
 {
-    uint                dwLength;
-    uint                dwType;
-    uint                CVersion;
-    uint                CStatus;
-    int                 lScale;
-    int                 lDefaultScale;
-    size_t              dwUserData;
-    size_t              dwQueryUserData;
-    PSTR                szFullPath;
-    _Anonymous_e__Union Anonymous;
-    PSTR                szExplainText;
+    uint   dwLength;
+    uint   dwType;
+    uint   CVersion;
+    uint   CStatus;
+    int    lScale;
+    int    lDefaultScale;
+    size_t dwUserData;
+    size_t dwQueryUserData;
+    PSTR   szFullPath;
+    union
+    {
+        PDH_DATA_ITEM_PATH_ELEMENTS_A DataItemPath;
+        PDH_COUNTER_PATH_ELEMENTS_A CounterPath;
+        struct
+        {
+            PSTR szMachineName;
+            PSTR szObjectName;
+            PSTR szInstanceName;
+            PSTR szParentInstance;
+            uint dwInstanceIndex;
+            PSTR szCounterName;
+        }
+    }
+    PSTR   szExplainText;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] DataBuffer;
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_counter_info_w))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_counter_info_w
 struct PDH_COUNTER_INFO_W
 {
-    uint                dwLength;
-    uint                dwType;
-    uint                CVersion;
-    uint                CStatus;
-    int                 lScale;
-    int                 lDefaultScale;
-    size_t              dwUserData;
-    size_t              dwQueryUserData;
-    PWSTR               szFullPath;
-    _Anonymous_e__Union Anonymous;
-    PWSTR               szExplainText;
+    uint   dwLength;
+    uint   dwType;
+    uint   CVersion;
+    uint   CStatus;
+    int    lScale;
+    int    lDefaultScale;
+    size_t dwUserData;
+    size_t dwQueryUserData;
+    PWSTR  szFullPath;
+    union
+    {
+        PDH_DATA_ITEM_PATH_ELEMENTS_W DataItemPath;
+        PDH_COUNTER_PATH_ELEMENTS_W CounterPath;
+        struct
+        {
+            PWSTR szMachineName;
+            PWSTR szObjectName;
+            PWSTR szInstanceName;
+            PWSTR szParentInstance;
+            uint  dwInstanceIndex;
+            PWSTR szCounterName;
+        }
+    }
+    PWSTR  szExplainText;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] DataBuffer;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_time_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_time_info
 struct PDH_TIME_INFO
 {
     long StartTime;
@@ -1078,7 +1188,7 @@ struct PDH_TIME_INFO
     uint SampleCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_raw_log_record))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_raw_log_record
 struct PDH_RAW_LOG_RECORD
 {
     uint         dwStructureSize;
@@ -1090,36 +1200,88 @@ struct PDH_RAW_LOG_RECORD
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 struct PDH_LOG_SERVICE_QUERY_INFO_A
 {
-    uint                dwSize;
-    uint                dwFlags;
-    uint                dwLogQuota;
-    PSTR                szLogFileCaption;
-    PSTR                szDefaultDir;
-    PSTR                szBaseFileName;
-    uint                dwFileType;
-    uint                dwReserved;
-    _Anonymous_e__Union Anonymous;
+    uint dwSize;
+    uint dwFlags;
+    uint dwLogQuota;
+    PSTR szLogFileCaption;
+    PSTR szDefaultDir;
+    PSTR szBaseFileName;
+    uint dwFileType;
+    uint dwReserved;
+    union
+    {
+        struct
+        {
+            uint     PdlAutoNameInterval;
+            uint     PdlAutoNameUnits;
+            PSTR     PdlCommandFilename;
+            PSTR     PdlCounterList;
+            uint     PdlAutoNameFormat;
+            uint     PdlSampleInterval;
+            FILETIME PdlLogStartTime;
+            FILETIME PdlLogEndTime;
+        }
+        struct
+        {
+            uint TlNumberOfBuffers;
+            uint TlMinimumBuffers;
+            uint TlMaximumBuffers;
+            uint TlFreeBuffers;
+            uint TlBufferSize;
+            uint TlEventsLost;
+            uint TlLoggerThreadId;
+            uint TlBuffersWritten;
+            uint TlLogHandle;
+            PSTR TlLogFileName;
+        }
+    }
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 struct PDH_LOG_SERVICE_QUERY_INFO_W
 {
-    uint                dwSize;
-    uint                dwFlags;
-    uint                dwLogQuota;
-    PWSTR               szLogFileCaption;
-    PWSTR               szDefaultDir;
-    PWSTR               szBaseFileName;
-    uint                dwFileType;
-    uint                dwReserved;
-    _Anonymous_e__Union Anonymous;
+    uint  dwSize;
+    uint  dwFlags;
+    uint  dwLogQuota;
+    PWSTR szLogFileCaption;
+    PWSTR szDefaultDir;
+    PWSTR szBaseFileName;
+    uint  dwFileType;
+    uint  dwReserved;
+    union
+    {
+        struct
+        {
+            uint     PdlAutoNameInterval;
+            uint     PdlAutoNameUnits;
+            PWSTR    PdlCommandFilename;
+            PWSTR    PdlCounterList;
+            uint     PdlAutoNameFormat;
+            uint     PdlSampleInterval;
+            FILETIME PdlLogStartTime;
+            FILETIME PdlLogEndTime;
+        }
+        struct
+        {
+            uint  TlNumberOfBuffers;
+            uint  TlMinimumBuffers;
+            uint  TlMaximumBuffers;
+            uint  TlFreeBuffers;
+            uint  TlBufferSize;
+            uint  TlEventsLost;
+            uint  TlLoggerThreadId;
+            uint  TlBuffersWritten;
+            uint  TlLogHandle;
+            PWSTR TlLogFileName;
+        }
+    }
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_browse_dlg_config_hw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_browse_dlg_config_hw
 struct PDH_BROWSE_DLG_CONFIG_HW
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(bReserved)), FixedArgSig(ElementSig(10)), FixedArgSig(ElementSig(22))], [])*/uint _bitfield112;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(bReserved)), FixedArgSig(ElementSig(10)), FixedArgSig(ElementSig(22))], [])*/uint _bitfield458;
     HWND                hWndOwner;
     PDH_HLOG            hDataSource;
     PWSTR               szReturnPathBuffer;
@@ -1132,10 +1294,10 @@ struct PDH_BROWSE_DLG_CONFIG_HW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_browse_dlg_config_ha))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_browse_dlg_config_ha
 struct PDH_BROWSE_DLG_CONFIG_HA
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(bReserved)), FixedArgSig(ElementSig(10)), FixedArgSig(ElementSig(22))], [])*/uint _bitfield113;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(bReserved)), FixedArgSig(ElementSig(10)), FixedArgSig(ElementSig(22))], [])*/uint _bitfield459;
     HWND                hWndOwner;
     PDH_HLOG            hDataSource;
     PSTR                szReturnPathBuffer;
@@ -1148,10 +1310,10 @@ struct PDH_BROWSE_DLG_CONFIG_HA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_browse_dlg_config_w))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_browse_dlg_config_w
 struct PDH_BROWSE_DLG_CONFIG_W
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(bReserved)), FixedArgSig(ElementSig(10)), FixedArgSig(ElementSig(22))], [])*/uint _bitfield114;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(bReserved)), FixedArgSig(ElementSig(10)), FixedArgSig(ElementSig(22))], [])*/uint _bitfield460;
     HWND                hWndOwner;
     PWSTR               szDataSource;
     PWSTR               szReturnPathBuffer;
@@ -1164,10 +1326,10 @@ struct PDH_BROWSE_DLG_CONFIG_W
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_browse_dlg_config_a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pdh/ns-pdh-pdh_browse_dlg_config_a
 struct PDH_BROWSE_DLG_CONFIG_A
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(bReserved)), FixedArgSig(ElementSig(10)), FixedArgSig(ElementSig(22))], [])*/uint _bitfield115;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(bReserved)), FixedArgSig(ElementSig(10)), FixedArgSig(ElementSig(22))], [])*/uint _bitfield461;
     HWND                hWndOwner;
     PSTR                szDataSource;
     PSTR                szReturnPathBuffer;
@@ -1917,737 +2079,737 @@ struct CounterPropPage;
 
 @GUID("03837520-098b-11d8-9414-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nn-pla-idatacollectorset))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nn-pla-idatacollectorset
 interface IDataCollectorSet : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_datacollectors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_datacollectors
     HRESULT get_DataCollectors(IDataCollectorCollection* collectors);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_duration))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_duration
     HRESULT get_Duration(uint* seconds);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_duration))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_duration
     HRESULT put_Duration(uint seconds);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_description
     HRESULT get_Description(BSTR* description);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_description
     HRESULT put_Description(BSTR description);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_descriptionunresolved))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_descriptionunresolved
     HRESULT get_DescriptionUnresolved(BSTR* Descr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_displayname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_displayname
     HRESULT get_DisplayName(BSTR* DisplayName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_displayname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_displayname
     HRESULT put_DisplayName(BSTR DisplayName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_displaynameunresolved))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_displaynameunresolved
     HRESULT get_DisplayNameUnresolved(BSTR* name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_keywords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_keywords
     HRESULT get_Keywords(SAFEARRAY** keywords);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_keywords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_keywords
     HRESULT put_Keywords(SAFEARRAY* keywords);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_latestoutputlocation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_latestoutputlocation
     HRESULT get_LatestOutputLocation(BSTR* path);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_latestoutputlocation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_latestoutputlocation
     HRESULT put_LatestOutputLocation(BSTR path);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_name
     HRESULT get_Name(BSTR* name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_outputlocation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_outputlocation
     HRESULT get_OutputLocation(BSTR* path);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_rootpath))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_rootpath
     HRESULT get_RootPath(BSTR* folder);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_rootpath))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_rootpath
     HRESULT put_RootPath(BSTR folder);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_segment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_segment
     HRESULT get_Segment(VARIANT_BOOL* segment);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_segment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_segment
     HRESULT put_Segment(VARIANT_BOOL segment);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_segmentmaxduration))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_segmentmaxduration
     HRESULT get_SegmentMaxDuration(uint* seconds);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_segmentmaxduration))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_segmentmaxduration
     HRESULT put_SegmentMaxDuration(uint seconds);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_segmentmaxsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_segmentmaxsize
     HRESULT get_SegmentMaxSize(uint* size);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_segmentmaxsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_segmentmaxsize
     HRESULT put_SegmentMaxSize(uint size);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_serialnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_serialnumber
     HRESULT get_SerialNumber(uint* index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_serialnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_serialnumber
     HRESULT put_SerialNumber(uint index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_server))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_server
     HRESULT get_Server(BSTR* server);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_status))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_status
     HRESULT get_Status(DataCollectorSetStatus* status);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_subdirectory))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_subdirectory
     HRESULT get_Subdirectory(BSTR* folder);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_subdirectory))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_subdirectory
     HRESULT put_Subdirectory(BSTR folder);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_subdirectoryformat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_subdirectoryformat
     HRESULT get_SubdirectoryFormat(AutoPathFormat* format);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_subdirectoryformat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_subdirectoryformat
     HRESULT put_SubdirectoryFormat(AutoPathFormat format);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_subdirectoryformatpattern))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_subdirectoryformatpattern
     HRESULT get_SubdirectoryFormatPattern(BSTR* pattern);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_subdirectoryformatpattern))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_subdirectoryformatpattern
     HRESULT put_SubdirectoryFormatPattern(BSTR pattern);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_task))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_task
     HRESULT get_Task(BSTR* task);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_task))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_task
     HRESULT put_Task(BSTR task);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_taskrunasself))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_taskrunasself
     HRESULT get_TaskRunAsSelf(VARIANT_BOOL* RunAsSelf);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_taskrunasself))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_taskrunasself
     HRESULT put_TaskRunAsSelf(VARIANT_BOOL RunAsSelf);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_taskarguments))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_taskarguments
     HRESULT get_TaskArguments(BSTR* task);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_taskarguments))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_taskarguments
     HRESULT put_TaskArguments(BSTR task);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_taskusertextarguments))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_taskusertextarguments
     HRESULT get_TaskUserTextArguments(BSTR* UserText);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_taskusertextarguments))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_taskusertextarguments
     HRESULT put_TaskUserTextArguments(BSTR UserText);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_schedules))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_schedules
     HRESULT get_Schedules(IScheduleCollection* ppSchedules);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_schedulesenabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_schedulesenabled
     HRESULT get_SchedulesEnabled(VARIANT_BOOL* enabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_schedulesenabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_schedulesenabled
     HRESULT put_SchedulesEnabled(VARIANT_BOOL enabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_useraccount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_useraccount
     HRESULT get_UserAccount(BSTR* user);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_xml))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_xml
     HRESULT get_Xml(BSTR* xml);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_security))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_security
     HRESULT get_Security(BSTR* pbstrSecurity);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_security))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_security
     HRESULT put_Security(BSTR bstrSecurity);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_stoponcompletion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_stoponcompletion
     HRESULT get_StopOnCompletion(VARIANT_BOOL* Stop);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_stoponcompletion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-put_stoponcompletion
     HRESULT put_StopOnCompletion(VARIANT_BOOL Stop);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_datamanager))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-get_datamanager
     HRESULT get_DataManager(IDataManager* DataManager);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-setcredentials))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-setcredentials
     HRESULT SetCredentials(BSTR user, BSTR password);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-query))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-query
     HRESULT Query(BSTR name, BSTR server);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-commit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-commit
     HRESULT Commit(BSTR name, BSTR server, CommitMode mode, IValueMap* validation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-delete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-delete
     HRESULT Delete();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-start))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-start
     HRESULT Start(VARIANT_BOOL Synchronous);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-stop))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-stop
     HRESULT Stop(VARIANT_BOOL Synchronous);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-setxml))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-setxml
     HRESULT SetXml(BSTR xml, IValueMap* validation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-setvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-setvalue
     HRESULT SetValue(BSTR key, BSTR value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-getvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorset-getvalue
     HRESULT GetValue(BSTR key, BSTR* value);
 }
 
 @GUID("03837541-098b-11d8-9414-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nn-pla-idatamanager))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nn-pla-idatamanager
 interface IDataManager : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-get_enabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-get_enabled
     HRESULT get_Enabled(VARIANT_BOOL* pfEnabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-put_enabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-put_enabled
     HRESULT put_Enabled(VARIANT_BOOL fEnabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-get_checkbeforerunning))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-get_checkbeforerunning
     HRESULT get_CheckBeforeRunning(VARIANT_BOOL* pfCheck);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-put_checkbeforerunning))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-put_checkbeforerunning
     HRESULT put_CheckBeforeRunning(VARIANT_BOOL fCheck);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-get_minfreedisk))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-get_minfreedisk
     HRESULT get_MinFreeDisk(uint* MinFreeDisk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-put_minfreedisk))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-put_minfreedisk
     HRESULT put_MinFreeDisk(uint MinFreeDisk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-get_maxsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-get_maxsize
     HRESULT get_MaxSize(uint* pulMaxSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-put_maxsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-put_maxsize
     HRESULT put_MaxSize(uint ulMaxSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-get_maxfoldercount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-get_maxfoldercount
     HRESULT get_MaxFolderCount(uint* pulMaxFolderCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-put_maxfoldercount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-put_maxfoldercount
     HRESULT put_MaxFolderCount(uint ulMaxFolderCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-get_resourcepolicy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-get_resourcepolicy
     HRESULT get_ResourcePolicy(ResourcePolicy* pPolicy);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-put_resourcepolicy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-put_resourcepolicy
     HRESULT put_ResourcePolicy(ResourcePolicy Policy);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-get_folderactions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-get_folderactions
     HRESULT get_FolderActions(IFolderActionCollection* Actions);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-get_reportschema))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-get_reportschema
     HRESULT get_ReportSchema(BSTR* ReportSchema);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-put_reportschema))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-put_reportschema
     HRESULT put_ReportSchema(BSTR ReportSchema);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-get_reportfilename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-get_reportfilename
     HRESULT get_ReportFileName(BSTR* pbstrFilename);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-put_reportfilename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-put_reportfilename
     HRESULT put_ReportFileName(BSTR pbstrFilename);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-get_ruletargetfilename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-get_ruletargetfilename
     HRESULT get_RuleTargetFileName(BSTR* Filename);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-put_ruletargetfilename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-put_ruletargetfilename
     HRESULT put_RuleTargetFileName(BSTR Filename);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-get_eventsfilename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-get_eventsfilename
     HRESULT get_EventsFileName(BSTR* pbstrFilename);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-put_eventsfilename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-put_eventsfilename
     HRESULT put_EventsFileName(BSTR pbstrFilename);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-get_rules))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-get_rules
     HRESULT get_Rules(BSTR* pbstrXml);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-put_rules))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-put_rules
     HRESULT put_Rules(BSTR bstrXml);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-run))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-run
     HRESULT Run(DataManagerSteps Steps, BSTR bstrFolder, IValueMap* Errors);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-extract))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatamanager-extract
     HRESULT Extract(BSTR CabFilename, BSTR DestinationPath);
 }
 
 @GUID("03837543-098b-11d8-9414-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nn-pla-ifolderaction))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nn-pla-ifolderaction
 interface IFolderAction : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ifolderaction-get_age))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ifolderaction-get_age
     HRESULT get_Age(uint* pulAge);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ifolderaction-put_age))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ifolderaction-put_age
     HRESULT put_Age(uint ulAge);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ifolderaction-get_size))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ifolderaction-get_size
     HRESULT get_Size(uint* pulAge);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ifolderaction-put_size))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ifolderaction-put_size
     HRESULT put_Size(uint ulAge);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ifolderaction-get_actions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ifolderaction-get_actions
     HRESULT get_Actions(FolderActionSteps* Steps);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ifolderaction-put_actions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ifolderaction-put_actions
     HRESULT put_Actions(FolderActionSteps Steps);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ifolderaction-get_sendcabto))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ifolderaction-get_sendcabto
     HRESULT get_SendCabTo(BSTR* pbstrDestination);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ifolderaction-put_sendcabto))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ifolderaction-put_sendcabto
     HRESULT put_SendCabTo(BSTR bstrDestination);
 }
 
 @GUID("03837544-098b-11d8-9414-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nn-pla-ifolderactioncollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nn-pla-ifolderactioncollection
 interface IFolderActionCollection : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ifolderactioncollection-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ifolderactioncollection-get_count
     HRESULT get_Count(uint* Count);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ifolderactioncollection-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ifolderactioncollection-get_item
     HRESULT get_Item(VARIANT Index, IFolderAction* Action);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ifolderactioncollection-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ifolderactioncollection-get__newenum
     HRESULT get__NewEnum(IUnknown* Enum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ifolderactioncollection-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ifolderactioncollection-add
     HRESULT Add(IFolderAction Action);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ifolderactioncollection-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ifolderactioncollection-remove
     HRESULT Remove(VARIANT Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ifolderactioncollection-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ifolderactioncollection-clear
     HRESULT Clear();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ifolderactioncollection-addrange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ifolderactioncollection-addrange
     HRESULT AddRange(IFolderActionCollection Actions);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ifolderactioncollection-createfolderaction))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ifolderactioncollection-createfolderaction
     HRESULT CreateFolderAction(IFolderAction* FolderAction);
 }
 
 @GUID("038374ff-098b-11d8-9414-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nn-pla-idatacollector))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nn-pla-idatacollector
 interface IDataCollector : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-get_datacollectorset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-get_datacollectorset
     HRESULT get_DataCollectorSet(IDataCollectorSet* group);
     HRESULT put_DataCollectorSet(IDataCollectorSet group);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-get_datacollectortype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-get_datacollectortype
     HRESULT get_DataCollectorType(DataCollectorType* type);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-get_filename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-get_filename
     HRESULT get_FileName(BSTR* name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-put_filename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-put_filename
     HRESULT put_FileName(BSTR name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-get_filenameformat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-get_filenameformat
     HRESULT get_FileNameFormat(AutoPathFormat* format);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-put_filenameformat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-put_filenameformat
     HRESULT put_FileNameFormat(AutoPathFormat format);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-get_filenameformatpattern))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-get_filenameformatpattern
     HRESULT get_FileNameFormatPattern(BSTR* pattern);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-put_filenameformatpattern))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-put_filenameformatpattern
     HRESULT put_FileNameFormatPattern(BSTR pattern);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-get_latestoutputlocation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-get_latestoutputlocation
     HRESULT get_LatestOutputLocation(BSTR* path);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-put_latestoutputlocation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-put_latestoutputlocation
     HRESULT put_LatestOutputLocation(BSTR path);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-get_logappend))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-get_logappend
     HRESULT get_LogAppend(VARIANT_BOOL* append);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-put_logappend))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-put_logappend
     HRESULT put_LogAppend(VARIANT_BOOL append);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-get_logcircular))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-get_logcircular
     HRESULT get_LogCircular(VARIANT_BOOL* circular);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-put_logcircular))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-put_logcircular
     HRESULT put_LogCircular(VARIANT_BOOL circular);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-get_logoverwrite))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-get_logoverwrite
     HRESULT get_LogOverwrite(VARIANT_BOOL* overwrite);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-put_logoverwrite))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-put_logoverwrite
     HRESULT put_LogOverwrite(VARIANT_BOOL overwrite);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-get_name
     HRESULT get_Name(BSTR* name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-put_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-put_name
     HRESULT put_Name(BSTR name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-get_outputlocation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-get_outputlocation
     HRESULT get_OutputLocation(BSTR* path);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-get_index))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-get_index
     HRESULT get_Index(int* index);
     HRESULT put_Index(int index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-get_xml))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-get_xml
     HRESULT get_Xml(BSTR* Xml);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-setxml))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollector-setxml
     HRESULT SetXml(BSTR Xml, IValueMap* Validation);
     HRESULT CreateOutputLocation(VARIANT_BOOL Latest, BSTR* Location);
 }
 
 @GUID("03837506-098b-11d8-9414-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nn-pla-iperformancecounterdatacollector))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nn-pla-iperformancecounterdatacollector
 interface IPerformanceCounterDataCollector : IDataCollector
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iperformancecounterdatacollector-get_datasourcename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iperformancecounterdatacollector-get_datasourcename
     HRESULT get_DataSourceName(BSTR* dsn);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iperformancecounterdatacollector-put_datasourcename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iperformancecounterdatacollector-put_datasourcename
     HRESULT put_DataSourceName(BSTR dsn);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iperformancecounterdatacollector-get_performancecounters))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iperformancecounterdatacollector-get_performancecounters
     HRESULT get_PerformanceCounters(SAFEARRAY** counters);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iperformancecounterdatacollector-put_performancecounters))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iperformancecounterdatacollector-put_performancecounters
     HRESULT put_PerformanceCounters(SAFEARRAY* counters);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iperformancecounterdatacollector-get_logfileformat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iperformancecounterdatacollector-get_logfileformat
     HRESULT get_LogFileFormat(FileFormat* format);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iperformancecounterdatacollector-put_logfileformat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iperformancecounterdatacollector-put_logfileformat
     HRESULT put_LogFileFormat(FileFormat format);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iperformancecounterdatacollector-get_sampleinterval))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iperformancecounterdatacollector-get_sampleinterval
     HRESULT get_SampleInterval(uint* interval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iperformancecounterdatacollector-put_sampleinterval))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iperformancecounterdatacollector-put_sampleinterval
     HRESULT put_SampleInterval(uint interval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iperformancecounterdatacollector-get_segmentmaxrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iperformancecounterdatacollector-get_segmentmaxrecords
     HRESULT get_SegmentMaxRecords(uint* records);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iperformancecounterdatacollector-put_segmentmaxrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iperformancecounterdatacollector-put_segmentmaxrecords
     HRESULT put_SegmentMaxRecords(uint records);
 }
 
 @GUID("0383750b-098b-11d8-9414-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nn-pla-itracedatacollector))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nn-pla-itracedatacollector
 interface ITraceDataCollector : IDataCollector
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_buffersize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_buffersize
     HRESULT get_BufferSize(uint* size);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-put_buffersize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-put_buffersize
     HRESULT put_BufferSize(uint size);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_bufferslost))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_bufferslost
     HRESULT get_BuffersLost(uint* buffers);
     HRESULT put_BuffersLost(uint buffers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_bufferswritten))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_bufferswritten
     HRESULT get_BuffersWritten(uint* buffers);
     HRESULT put_BuffersWritten(uint buffers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_clocktype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_clocktype
     HRESULT get_ClockType(ClockType* clock);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-put_clocktype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-put_clocktype
     HRESULT put_ClockType(ClockType clock);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_eventslost))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_eventslost
     HRESULT get_EventsLost(uint* events);
     HRESULT put_EventsLost(uint events);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_extendedmodes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_extendedmodes
     HRESULT get_ExtendedModes(uint* mode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-put_extendedmodes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-put_extendedmodes
     HRESULT put_ExtendedModes(uint mode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_flushtimer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_flushtimer
     HRESULT get_FlushTimer(uint* seconds);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-put_flushtimer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-put_flushtimer
     HRESULT put_FlushTimer(uint seconds);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_freebuffers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_freebuffers
     HRESULT get_FreeBuffers(uint* buffers);
     HRESULT put_FreeBuffers(uint buffers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_guid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_guid
     HRESULT get_Guid(GUID* guid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-put_guid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-put_guid
     HRESULT put_Guid(GUID guid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_iskerneltrace))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_iskerneltrace
     HRESULT get_IsKernelTrace(VARIANT_BOOL* kernel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_maximumbuffers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_maximumbuffers
     HRESULT get_MaximumBuffers(uint* buffers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-put_maximumbuffers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-put_maximumbuffers
     HRESULT put_MaximumBuffers(uint buffers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_minimumbuffers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_minimumbuffers
     HRESULT get_MinimumBuffers(uint* buffers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-put_minimumbuffers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-put_minimumbuffers
     HRESULT put_MinimumBuffers(uint buffers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_numberofbuffers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_numberofbuffers
     HRESULT get_NumberOfBuffers(uint* buffers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-put_numberofbuffers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-put_numberofbuffers
     HRESULT put_NumberOfBuffers(uint buffers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_preallocatefile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_preallocatefile
     HRESULT get_PreallocateFile(VARIANT_BOOL* allocate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-put_preallocatefile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-put_preallocatefile
     HRESULT put_PreallocateFile(VARIANT_BOOL allocate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_processmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_processmode
     HRESULT get_ProcessMode(VARIANT_BOOL* process);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-put_processmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-put_processmode
     HRESULT put_ProcessMode(VARIANT_BOOL process);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_realtimebufferslost))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_realtimebufferslost
     HRESULT get_RealTimeBuffersLost(uint* buffers);
     HRESULT put_RealTimeBuffersLost(uint buffers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_sessionid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_sessionid
     HRESULT get_SessionId(ulong* id);
     HRESULT put_SessionId(ulong id);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_sessionname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_sessionname
     HRESULT get_SessionName(BSTR* name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-put_sessionname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-put_sessionname
     HRESULT put_SessionName(BSTR name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_sessionthreadid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_sessionthreadid
     HRESULT get_SessionThreadId(uint* tid);
     HRESULT put_SessionThreadId(uint tid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_streammode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_streammode
     HRESULT get_StreamMode(StreamMode* mode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-put_streammode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-put_streammode
     HRESULT put_StreamMode(StreamMode mode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_tracedataproviders))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedatacollector-get_tracedataproviders
     HRESULT get_TraceDataProviders(ITraceDataProviderCollection* providers);
 }
 
 @GUID("03837514-098b-11d8-9414-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nn-pla-iconfigurationdatacollector))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nn-pla-iconfigurationdatacollector
 interface IConfigurationDataCollector : IDataCollector
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iconfigurationdatacollector-get_filemaxcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iconfigurationdatacollector-get_filemaxcount
     HRESULT get_FileMaxCount(uint* count);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iconfigurationdatacollector-put_filemaxcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iconfigurationdatacollector-put_filemaxcount
     HRESULT put_FileMaxCount(uint count);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iconfigurationdatacollector-get_filemaxrecursivedepth))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iconfigurationdatacollector-get_filemaxrecursivedepth
     HRESULT get_FileMaxRecursiveDepth(uint* depth);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iconfigurationdatacollector-put_filemaxrecursivedepth))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iconfigurationdatacollector-put_filemaxrecursivedepth
     HRESULT put_FileMaxRecursiveDepth(uint depth);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iconfigurationdatacollector-get_filemaxtotalsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iconfigurationdatacollector-get_filemaxtotalsize
     HRESULT get_FileMaxTotalSize(uint* size);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iconfigurationdatacollector-put_filemaxtotalsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iconfigurationdatacollector-put_filemaxtotalsize
     HRESULT put_FileMaxTotalSize(uint size);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iconfigurationdatacollector-get_files))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iconfigurationdatacollector-get_files
     HRESULT get_Files(SAFEARRAY** Files);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iconfigurationdatacollector-put_files))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iconfigurationdatacollector-put_files
     HRESULT put_Files(SAFEARRAY* Files);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iconfigurationdatacollector-get_managementqueries))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iconfigurationdatacollector-get_managementqueries
     HRESULT get_ManagementQueries(SAFEARRAY** Queries);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iconfigurationdatacollector-put_managementqueries))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iconfigurationdatacollector-put_managementqueries
     HRESULT put_ManagementQueries(SAFEARRAY* Queries);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iconfigurationdatacollector-get_querynetworkadapters))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iconfigurationdatacollector-get_querynetworkadapters
     HRESULT get_QueryNetworkAdapters(VARIANT_BOOL* network);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iconfigurationdatacollector-put_querynetworkadapters))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iconfigurationdatacollector-put_querynetworkadapters
     HRESULT put_QueryNetworkAdapters(VARIANT_BOOL network);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iconfigurationdatacollector-get_registrykeys))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iconfigurationdatacollector-get_registrykeys
     HRESULT get_RegistryKeys(SAFEARRAY** query);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iconfigurationdatacollector-put_registrykeys))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iconfigurationdatacollector-put_registrykeys
     HRESULT put_RegistryKeys(SAFEARRAY* query);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iconfigurationdatacollector-get_registrymaxrecursivedepth))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iconfigurationdatacollector-get_registrymaxrecursivedepth
     HRESULT get_RegistryMaxRecursiveDepth(uint* depth);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iconfigurationdatacollector-put_registrymaxrecursivedepth))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iconfigurationdatacollector-put_registrymaxrecursivedepth
     HRESULT put_RegistryMaxRecursiveDepth(uint depth);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iconfigurationdatacollector-get_systemstatefile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iconfigurationdatacollector-get_systemstatefile
     HRESULT get_SystemStateFile(BSTR* FileName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iconfigurationdatacollector-put_systemstatefile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iconfigurationdatacollector-put_systemstatefile
     HRESULT put_SystemStateFile(BSTR FileName);
 }
 
 @GUID("03837516-098b-11d8-9414-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nn-pla-ialertdatacollector))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nn-pla-ialertdatacollector
 interface IAlertDataCollector : IDataCollector
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ialertdatacollector-get_alertthresholds))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ialertdatacollector-get_alertthresholds
     HRESULT get_AlertThresholds(SAFEARRAY** alerts);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ialertdatacollector-put_alertthresholds))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ialertdatacollector-put_alertthresholds
     HRESULT put_AlertThresholds(SAFEARRAY* alerts);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ialertdatacollector-get_eventlog))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ialertdatacollector-get_eventlog
     HRESULT get_EventLog(VARIANT_BOOL* log);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ialertdatacollector-put_eventlog))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ialertdatacollector-put_eventlog
     HRESULT put_EventLog(VARIANT_BOOL log);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ialertdatacollector-get_sampleinterval))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ialertdatacollector-get_sampleinterval
     HRESULT get_SampleInterval(uint* interval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ialertdatacollector-put_sampleinterval))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ialertdatacollector-put_sampleinterval
     HRESULT put_SampleInterval(uint interval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ialertdatacollector-get_task))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ialertdatacollector-get_task
     HRESULT get_Task(BSTR* task);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ialertdatacollector-put_task))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ialertdatacollector-put_task
     HRESULT put_Task(BSTR task);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ialertdatacollector-get_taskrunasself))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ialertdatacollector-get_taskrunasself
     HRESULT get_TaskRunAsSelf(VARIANT_BOOL* RunAsSelf);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ialertdatacollector-put_taskrunasself))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ialertdatacollector-put_taskrunasself
     HRESULT put_TaskRunAsSelf(VARIANT_BOOL RunAsSelf);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ialertdatacollector-get_taskarguments))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ialertdatacollector-get_taskarguments
     HRESULT get_TaskArguments(BSTR* task);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ialertdatacollector-put_taskarguments))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ialertdatacollector-put_taskarguments
     HRESULT put_TaskArguments(BSTR task);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ialertdatacollector-get_taskusertextarguments))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ialertdatacollector-get_taskusertextarguments
     HRESULT get_TaskUserTextArguments(BSTR* task);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ialertdatacollector-put_taskusertextarguments))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ialertdatacollector-put_taskusertextarguments
     HRESULT put_TaskUserTextArguments(BSTR task);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ialertdatacollector-get_triggerdatacollectorset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ialertdatacollector-get_triggerdatacollectorset
     HRESULT get_TriggerDataCollectorSet(BSTR* name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ialertdatacollector-put_triggerdatacollectorset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ialertdatacollector-put_triggerdatacollectorset
     HRESULT put_TriggerDataCollectorSet(BSTR name);
 }
 
 @GUID("0383751a-098b-11d8-9414-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nn-pla-iapitracingdatacollector))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nn-pla-iapitracingdatacollector
 interface IApiTracingDataCollector : IDataCollector
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iapitracingdatacollector-get_logapinamesonly))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iapitracingdatacollector-get_logapinamesonly
     HRESULT get_LogApiNamesOnly(VARIANT_BOOL* logapinames);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iapitracingdatacollector-put_logapinamesonly))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iapitracingdatacollector-put_logapinamesonly
     HRESULT put_LogApiNamesOnly(VARIANT_BOOL logapinames);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iapitracingdatacollector-get_logapisrecursively))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iapitracingdatacollector-get_logapisrecursively
     HRESULT get_LogApisRecursively(VARIANT_BOOL* logrecursively);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iapitracingdatacollector-put_logapisrecursively))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iapitracingdatacollector-put_logapisrecursively
     HRESULT put_LogApisRecursively(VARIANT_BOOL logrecursively);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iapitracingdatacollector-get_exepath))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iapitracingdatacollector-get_exepath
     HRESULT get_ExePath(BSTR* exepath);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iapitracingdatacollector-put_exepath))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iapitracingdatacollector-put_exepath
     HRESULT put_ExePath(BSTR exepath);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iapitracingdatacollector-get_logfilepath))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iapitracingdatacollector-get_logfilepath
     HRESULT get_LogFilePath(BSTR* logfilepath);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iapitracingdatacollector-put_logfilepath))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iapitracingdatacollector-put_logfilepath
     HRESULT put_LogFilePath(BSTR logfilepath);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iapitracingdatacollector-get_includemodules))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iapitracingdatacollector-get_includemodules
     HRESULT get_IncludeModules(SAFEARRAY** includemodules);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iapitracingdatacollector-put_includemodules))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iapitracingdatacollector-put_includemodules
     HRESULT put_IncludeModules(SAFEARRAY* includemodules);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iapitracingdatacollector-get_includeapis))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iapitracingdatacollector-get_includeapis
     HRESULT get_IncludeApis(SAFEARRAY** includeapis);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iapitracingdatacollector-put_includeapis))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iapitracingdatacollector-put_includeapis
     HRESULT put_IncludeApis(SAFEARRAY* includeapis);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iapitracingdatacollector-get_excludeapis))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iapitracingdatacollector-get_excludeapis
     HRESULT get_ExcludeApis(SAFEARRAY** excludeapis);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iapitracingdatacollector-put_excludeapis))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-iapitracingdatacollector-put_excludeapis
     HRESULT put_ExcludeApis(SAFEARRAY* excludeapis);
 }
 
 @GUID("03837502-098b-11d8-9414-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nn-pla-idatacollectorcollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nn-pla-idatacollectorcollection
 interface IDataCollectorCollection : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorcollection-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorcollection-get_count
     HRESULT get_Count(int* retVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorcollection-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorcollection-get_item
     HRESULT get_Item(VARIANT index, IDataCollector* collector);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorcollection-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorcollection-get__newenum
     HRESULT get__NewEnum(IUnknown* retVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorcollection-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorcollection-add
     HRESULT Add(IDataCollector collector);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorcollection-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorcollection-remove
     HRESULT Remove(VARIANT collector);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorcollection-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorcollection-clear
     HRESULT Clear();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorcollection-addrange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorcollection-addrange
     HRESULT AddRange(IDataCollectorCollection collectors);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorcollection-createdatacollectorfromxml))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorcollection-createdatacollectorfromxml
     HRESULT CreateDataCollectorFromXml(BSTR bstrXml, IValueMap* pValidation, IDataCollector* pCollector);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorcollection-createdatacollector))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorcollection-createdatacollector
     HRESULT CreateDataCollector(DataCollectorType Type, IDataCollector* Collector);
 }
 
 @GUID("03837524-098b-11d8-9414-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nn-pla-idatacollectorsetcollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nn-pla-idatacollectorsetcollection
 interface IDataCollectorSetCollection : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorsetcollection-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorsetcollection-get_count
     HRESULT get_Count(int* retVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorsetcollection-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorsetcollection-get_item
     HRESULT get_Item(VARIANT index, IDataCollectorSet* set);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorsetcollection-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorsetcollection-get__newenum
     HRESULT get__NewEnum(IUnknown* retVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorsetcollection-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorsetcollection-add
     HRESULT Add(IDataCollectorSet set);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorsetcollection-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorsetcollection-remove
     HRESULT Remove(VARIANT set);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorsetcollection-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorsetcollection-clear
     HRESULT Clear();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorsetcollection-addrange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorsetcollection-addrange
     HRESULT AddRange(IDataCollectorSetCollection sets);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorsetcollection-getdatacollectorsets))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-idatacollectorsetcollection-getdatacollectorsets
     HRESULT GetDataCollectorSets(BSTR server, BSTR filter);
 }
 
 @GUID("03837512-098b-11d8-9414-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nn-pla-itracedataprovider))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nn-pla-itracedataprovider
 interface ITraceDataProvider : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-get_displayname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-get_displayname
     HRESULT get_DisplayName(BSTR* name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-put_displayname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-put_displayname
     HRESULT put_DisplayName(BSTR name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-get_guid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-get_guid
     HRESULT get_Guid(GUID* guid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-put_guid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-put_guid
     HRESULT put_Guid(GUID guid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-get_level))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-get_level
     HRESULT get_Level(IValueMap* ppLevel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-get_keywordsany))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-get_keywordsany
     HRESULT get_KeywordsAny(IValueMap* ppKeywords);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-get_keywordsall))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-get_keywordsall
     HRESULT get_KeywordsAll(IValueMap* ppKeywords);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-get_properties))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-get_properties
     HRESULT get_Properties(IValueMap* ppProperties);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-get_filterenabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-get_filterenabled
     HRESULT get_FilterEnabled(VARIANT_BOOL* FilterEnabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-put_filterenabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-put_filterenabled
     HRESULT put_FilterEnabled(VARIANT_BOOL FilterEnabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-get_filtertype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-get_filtertype
     HRESULT get_FilterType(uint* pulType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-put_filtertype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-put_filtertype
     HRESULT put_FilterType(uint ulType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-get_filterdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-get_filterdata
     HRESULT get_FilterData(SAFEARRAY** ppData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-put_filterdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-put_filterdata
     HRESULT put_FilterData(SAFEARRAY* pData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-query))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-query
     HRESULT Query(BSTR bstrName, BSTR bstrServer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-resolve))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-resolve
     HRESULT Resolve(IDispatch pFrom);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-setsecurity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-setsecurity
     HRESULT SetSecurity(BSTR Sddl);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-getsecurity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-getsecurity
     HRESULT GetSecurity(uint SecurityInfo, BSTR* Sddl);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-getregisteredprocesses))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovider-getregisteredprocesses
     HRESULT GetRegisteredProcesses(IValueMap* Processes);
 }
 
 @GUID("03837510-098b-11d8-9414-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nn-pla-itracedataprovidercollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nn-pla-itracedataprovidercollection
 interface ITraceDataProviderCollection : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovidercollection-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovidercollection-get_count
     HRESULT get_Count(int* retVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovidercollection-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovidercollection-get_item
     HRESULT get_Item(VARIANT index, ITraceDataProvider* ppProvider);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovidercollection-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovidercollection-get__newenum
     HRESULT get__NewEnum(IUnknown* retVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovidercollection-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovidercollection-add
     HRESULT Add(ITraceDataProvider pProvider);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovidercollection-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovidercollection-remove
     HRESULT Remove(VARIANT vProvider);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovidercollection-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovidercollection-clear
     HRESULT Clear();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovidercollection-addrange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovidercollection-addrange
     HRESULT AddRange(ITraceDataProviderCollection providers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovidercollection-createtracedataprovider))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovidercollection-createtracedataprovider
     HRESULT CreateTraceDataProvider(ITraceDataProvider* Provider);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovidercollection-gettracedataproviders))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovidercollection-gettracedataproviders
     HRESULT GetTraceDataProviders(BSTR server);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovidercollection-gettracedataprovidersbyprocess))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-itracedataprovidercollection-gettracedataprovidersbyprocess
     HRESULT GetTraceDataProvidersByProcess(BSTR Server, uint Pid);
 }
 
 @GUID("0383753a-098b-11d8-9414-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nn-pla-ischedule))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nn-pla-ischedule
 interface ISchedule : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ischedule-get_startdate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ischedule-get_startdate
     HRESULT get_StartDate(VARIANT* start);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ischedule-put_startdate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ischedule-put_startdate
     HRESULT put_StartDate(VARIANT start);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ischedule-get_enddate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ischedule-get_enddate
     HRESULT get_EndDate(VARIANT* end);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ischedule-put_enddate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ischedule-put_enddate
     HRESULT put_EndDate(VARIANT end);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ischedule-get_starttime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ischedule-get_starttime
     HRESULT get_StartTime(VARIANT* start);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ischedule-put_starttime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ischedule-put_starttime
     HRESULT put_StartTime(VARIANT start);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ischedule-get_days))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ischedule-get_days
     HRESULT get_Days(WeekDays* days);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ischedule-put_days))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ischedule-put_days
     HRESULT put_Days(WeekDays days);
 }
 
 @GUID("0383753d-098b-11d8-9414-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nn-pla-ischedulecollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nn-pla-ischedulecollection
 interface IScheduleCollection : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ischedulecollection-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ischedulecollection-get_count
     HRESULT get_Count(int* retVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ischedulecollection-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ischedulecollection-get_item
     HRESULT get_Item(VARIANT index, ISchedule* ppSchedule);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ischedulecollection-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ischedulecollection-get__newenum
     HRESULT get__NewEnum(IUnknown* ienum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ischedulecollection-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ischedulecollection-add
     HRESULT Add(ISchedule pSchedule);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ischedulecollection-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ischedulecollection-remove
     HRESULT Remove(VARIANT vSchedule);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ischedulecollection-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ischedulecollection-clear
     HRESULT Clear();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ischedulecollection-addrange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ischedulecollection-addrange
     HRESULT AddRange(IScheduleCollection pSchedules);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ischedulecollection-createschedule))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ischedulecollection-createschedule
     HRESULT CreateSchedule(ISchedule* Schedule);
 }
 
 @GUID("03837533-098b-11d8-9414-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nn-pla-ivaluemapitem))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nn-pla-ivaluemapitem
 interface IValueMapItem : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemapitem-get_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemapitem-get_description
     HRESULT get_Description(BSTR* description);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemapitem-put_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemapitem-put_description
     HRESULT put_Description(BSTR description);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemapitem-get_enabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemapitem-get_enabled
     HRESULT get_Enabled(VARIANT_BOOL* enabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemapitem-put_enabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemapitem-put_enabled
     HRESULT put_Enabled(VARIANT_BOOL enabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemapitem-get_key))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemapitem-get_key
     HRESULT get_Key(BSTR* key);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemapitem-put_key))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemapitem-put_key
     HRESULT put_Key(BSTR key);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemapitem-get_value))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemapitem-get_value
     HRESULT get_Value(VARIANT* Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemapitem-put_value))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemapitem-put_value
     HRESULT put_Value(VARIANT Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemapitem-get_valuemaptype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemapitem-get_valuemaptype
     HRESULT get_ValueMapType(ValueMapType* type);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemapitem-put_valuemaptype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemapitem-put_valuemaptype
     HRESULT put_ValueMapType(ValueMapType type);
 }
 
 @GUID("03837534-098b-11d8-9414-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nn-pla-ivaluemap))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nn-pla-ivaluemap
 interface IValueMap : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemap-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemap-get_count
     HRESULT get_Count(int* retVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemap-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemap-get_item
     HRESULT get_Item(VARIANT index, IValueMapItem* value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemap-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemap-get__newenum
     HRESULT get__NewEnum(IUnknown* retVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemap-get_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemap-get_description
     HRESULT get_Description(BSTR* description);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemap-put_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemap-put_description
     HRESULT put_Description(BSTR description);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemap-get_value))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemap-get_value
     HRESULT get_Value(VARIANT* Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemap-put_value))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemap-put_value
     HRESULT put_Value(VARIANT Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemap-get_valuemaptype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemap-get_valuemaptype
     HRESULT get_ValueMapType(ValueMapType* type);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemap-put_valuemaptype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemap-put_valuemaptype
     HRESULT put_ValueMapType(ValueMapType type);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemap-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemap-add
     HRESULT Add(VARIANT value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemap-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemap-remove
     HRESULT Remove(VARIANT value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemap-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemap-clear
     HRESULT Clear();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemap-addrange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemap-addrange
     HRESULT AddRange(IValueMap map);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemap-createvaluemapitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pla/nf-pla-ivaluemap-createvaluemapitem
     HRESULT CreateValueMapItem(IValueMapItem* Item);
 }
 

@@ -3,50 +3,54 @@
 module windows.win32.system.errorreporting;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, FILETIME, HANDLE, HRESULT, HWND, PSTR,
-                                         PWSTR;
-public import windows.win32.system.diagnostics.debug : CONTEXT, EXCEPTION_POINTERS,
-                                                       EXCEPTION_RECORD;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, FILETIME, HANDLE, HRESULT, HWND,
+                                                    PSTR, PWSTR;
+public import windows.win32.system.diagnostics.debug_.debug_ : CONTEXT, EXCEPTION_POINTERS,
+                                                               EXCEPTION_RECORD;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
+
 alias WER_FILE = uint;
 enum : uint
 {
-    WER_FILE_ANONYMOUS_DATA   = 0x00000002,
-    WER_FILE_DELETE_WHEN_DONE = 0x00000001,
+    WER_FILE_ANONYMOUS_DATA   = 0x00000002U,
+    WER_FILE_DELETE_WHEN_DONE = 0x00000001U,
 }
+
 alias WER_SUBMIT_FLAGS = uint;
 enum : uint
 {
-    WER_SUBMIT_ADD_REGISTERED_DATA     = 0x00000010,
-    WER_SUBMIT_HONOR_RECOVERY          = 0x00000001,
-    WER_SUBMIT_HONOR_RESTART           = 0x00000002,
-    WER_SUBMIT_NO_ARCHIVE              = 0x00000100,
-    WER_SUBMIT_NO_CLOSE_UI             = 0x00000040,
-    WER_SUBMIT_NO_QUEUE                = 0x00000080,
-    WER_SUBMIT_OUTOFPROCESS            = 0x00000020,
-    WER_SUBMIT_OUTOFPROCESS_ASYNC      = 0x00000400,
-    WER_SUBMIT_QUEUE                   = 0x00000004,
-    WER_SUBMIT_SHOW_DEBUG              = 0x00000008,
-    WER_SUBMIT_START_MINIMIZED         = 0x00000200,
-    WER_SUBMIT_BYPASS_DATA_THROTTLING  = 0x00000800,
-    WER_SUBMIT_ARCHIVE_PARAMETERS_ONLY = 0x00001000,
-    WER_SUBMIT_REPORT_MACHINE_ID       = 0x00002000,
+    WER_SUBMIT_ADD_REGISTERED_DATA     = 0x00000010U,
+    WER_SUBMIT_HONOR_RECOVERY          = 0x00000001U,
+    WER_SUBMIT_HONOR_RESTART           = 0x00000002U,
+    WER_SUBMIT_NO_ARCHIVE              = 0x00000100U,
+    WER_SUBMIT_NO_CLOSE_UI             = 0x00000040U,
+    WER_SUBMIT_NO_QUEUE                = 0x00000080U,
+    WER_SUBMIT_OUTOFPROCESS            = 0x00000020U,
+    WER_SUBMIT_OUTOFPROCESS_ASYNC      = 0x00000400U,
+    WER_SUBMIT_QUEUE                   = 0x00000004U,
+    WER_SUBMIT_SHOW_DEBUG              = 0x00000008U,
+    WER_SUBMIT_START_MINIMIZED         = 0x00000200U,
+    WER_SUBMIT_BYPASS_DATA_THROTTLING  = 0x00000800U,
+    WER_SUBMIT_ARCHIVE_PARAMETERS_ONLY = 0x00001000U,
+    WER_SUBMIT_REPORT_MACHINE_ID       = 0x00002000U,
 }
+
 alias WER_FAULT_REPORTING = uint;
 enum : uint
 {
-    WER_FAULT_REPORTING_FLAG_DISABLE_THREAD_SUSPENSION = 0x00000004,
-    WER_FAULT_REPORTING_FLAG_NOHEAP                    = 0x00000001,
-    WER_FAULT_REPORTING_FLAG_QUEUE                     = 0x00000002,
-    WER_FAULT_REPORTING_FLAG_QUEUE_UPLOAD              = 0x00000008,
-    WER_FAULT_REPORTING_ALWAYS_SHOW_UI                 = 0x00000010,
+    WER_FAULT_REPORTING_FLAG_DISABLE_THREAD_SUSPENSION = 0x00000004U,
+    WER_FAULT_REPORTING_FLAG_NOHEAP                    = 0x00000001U,
+    WER_FAULT_REPORTING_FLAG_QUEUE                     = 0x00000002U,
+    WER_FAULT_REPORTING_FLAG_QUEUE_UPLOAD              = 0x00000008U,
+    WER_FAULT_REPORTING_ALWAYS_SHOW_UI                 = 0x00000010U,
 }
+
 alias WER_REPORT_UI = int;
 enum : int
 {
@@ -62,6 +66,7 @@ enum : int
     WerUICloseDlgButtonText       = 0x0000000a,
     WerUIMax                      = 0x0000000b,
 }
+
 alias WER_REGISTER_FILE_TYPE = int;
 enum : int
 {
@@ -69,6 +74,7 @@ enum : int
     WerRegFileTypeOther        = 0x00000002,
     WerRegFileTypeMax          = 0x00000003,
 }
+
 alias WER_FILE_TYPE = int;
 enum : int
 {
@@ -84,6 +90,7 @@ enum : int
     WerFileTypeAuxiliaryHeapDump = 0x0000000a,
     WerFileTypeMax               = 0x0000000b,
 }
+
 alias WER_SUBMIT_RESULT = int;
 enum : int
 {
@@ -101,6 +108,7 @@ enum : int
     WerStorageLocationNotFound = 0x0000000c,
     WerSubmitResultMax         = 0x0000000d,
 }
+
 alias WER_REPORT_TYPE = int;
 enum : int
 {
@@ -111,6 +119,7 @@ enum : int
     WerReportKernel           = 0x00000004,
     WerReportInvalid          = 0x00000005,
 }
+
 alias WER_CONSENT = int;
 enum : int
 {
@@ -120,6 +129,7 @@ enum : int
     WerConsentAlwaysPrompt = 0x00000004,
     WerConsentMax          = 0x00000005,
 }
+
 alias WER_DUMP_TYPE = int;
 enum : int
 {
@@ -130,6 +140,7 @@ enum : int
     WerDumpTypeTriageDump = 0x00000004,
     WerDumpTypeMax        = 0x00000005,
 }
+
 alias REPORT_STORE_TYPES = int;
 enum : int
 {
@@ -139,6 +150,7 @@ enum : int
     E_STORE_MACHINE_QUEUE   = 0x00000003,
     E_STORE_INVALID         = 0x00000004,
 }
+
 enum EFaultRepRetVal : int
 {
     frrvOk                 = 0x00000000,
@@ -159,20 +171,20 @@ enum EFaultRepRetVal : int
 
 enum : uint
 {
-    WER_FAULT_REPORTING_NO_UI                  = 0x00000020,
-    WER_FAULT_REPORTING_FLAG_NO_HEAP_ON_QUEUE  = 0x00000040,
-    WER_FAULT_REPORTING_DISABLE_SNAPSHOT_CRASH = 0x00000080,
-    WER_FAULT_REPORTING_DISABLE_SNAPSHOT_HANG  = 0x00000100,
-    WER_FAULT_REPORTING_CRITICAL               = 0x00000200,
-    WER_FAULT_REPORTING_DURABLE                = 0x00000400,
+    WER_FAULT_REPORTING_NO_UI                  = 0x00000020U,
+    WER_FAULT_REPORTING_FLAG_NO_HEAP_ON_QUEUE  = 0x00000040U,
+    WER_FAULT_REPORTING_DISABLE_SNAPSHOT_CRASH = 0x00000080U,
+    WER_FAULT_REPORTING_DISABLE_SNAPSHOT_HANG  = 0x00000100U,
+    WER_FAULT_REPORTING_CRITICAL               = 0x00000200U,
+    WER_FAULT_REPORTING_DURABLE                = 0x00000400U,
 }
 
-enum uint WER_MAX_TOTAL_PARAM_LENGTH = 0x000006b8;
+enum uint WER_MAX_TOTAL_PARAM_LENGTH = 0x000006b8U;
 
 enum : uint
 {
-    WER_MAX_PREFERRED_MODULES        = 0x00000080,
-    WER_MAX_PREFERRED_MODULES_BUFFER = 0x00000100,
+    WER_MAX_PREFERRED_MODULES        = 0x00000080U,
+    WER_MAX_PREFERRED_MODULES_BUFFER = 0x00000100U,
 }
 
 enum const(wchar)* APPCRASH_EVENT = "APPCRASH";
@@ -180,65 +192,65 @@ enum const(wchar)* PACKAGED_APPCRASH_EVENT = "MoAppCrash";
 
 enum : uint
 {
-    WER_P0              = 0x00000000,
-    WER_P1              = 0x00000001,
-    WER_P2              = 0x00000002,
-    WER_P3              = 0x00000003,
-    WER_P4              = 0x00000004,
-    WER_P5              = 0x00000005,
-    WER_P6              = 0x00000006,
-    WER_P7              = 0x00000007,
-    WER_P8              = 0x00000008,
-    WER_P9              = 0x00000009,
-    WER_FILE_COMPRESSED = 0x00000004,
+    WER_P0              = 0x00000000U,
+    WER_P1              = 0x00000001U,
+    WER_P2              = 0x00000002U,
+    WER_P3              = 0x00000003U,
+    WER_P4              = 0x00000004U,
+    WER_P5              = 0x00000005U,
+    WER_P6              = 0x00000006U,
+    WER_P7              = 0x00000007U,
+    WER_P8              = 0x00000008U,
+    WER_P9              = 0x00000009U,
+    WER_FILE_COMPRESSED = 0x00000004U,
 }
 
 enum : uint
 {
-    WER_SUBMIT_BYPASS_POWER_THROTTLING        = 0x00004000,
-    WER_SUBMIT_BYPASS_NETWORK_COST_THROTTLING = 0x00008000,
+    WER_SUBMIT_BYPASS_POWER_THROTTLING        = 0x00004000U,
+    WER_SUBMIT_BYPASS_NETWORK_COST_THROTTLING = 0x00008000U,
 }
 
 enum : uint
 {
-    WER_DUMP_MASK_START     = 0x00000001,
-    WER_DUMP_NOHEAP_ONQUEUE = 0x00000001,
+    WER_DUMP_MASK_START     = 0x00000001U,
+    WER_DUMP_NOHEAP_ONQUEUE = 0x00000001U,
 }
 
 enum : uint
 {
-    WER_DUMP_AUXILIARY   = 0x00000002,
-    WER_DUMP_AUX_PROMOTE = 0x00000004,
+    WER_DUMP_AUXILIARY   = 0x00000002U,
+    WER_DUMP_AUX_PROMOTE = 0x00000004U,
 }
 
 enum : uint
 {
-    WER_MAX_REGISTERED_ENTRIES        = 0x00000200,
-    WER_MAX_REGISTERED_METADATA       = 0x00000008,
-    WER_MAX_REGISTERED_DUMPCOLLECTION = 0x00000004,
+    WER_MAX_REGISTERED_ENTRIES        = 0x00000200U,
+    WER_MAX_REGISTERED_METADATA       = 0x00000008U,
+    WER_MAX_REGISTERED_DUMPCOLLECTION = 0x00000004U,
 }
 
 enum : uint
 {
-    WER_METADATA_KEY_MAX_LENGTH   = 0x00000040,
-    WER_METADATA_VALUE_MAX_LENGTH = 0x00000080,
+    WER_METADATA_KEY_MAX_LENGTH   = 0x00000040U,
+    WER_METADATA_VALUE_MAX_LENGTH = 0x00000080U,
 }
 
-enum uint WER_MAX_SIGNATURE_NAME_LENGTH = 0x00000080;
-enum uint WER_MAX_EVENT_NAME_LENGTH = 0x00000040;
+enum uint WER_MAX_SIGNATURE_NAME_LENGTH = 0x00000080U;
+enum uint WER_MAX_EVENT_NAME_LENGTH = 0x00000040U;
 
 enum : uint
 {
-    WER_MAX_PARAM_LENGTH               = 0x00000104,
-    WER_MAX_PARAM_COUNT                = 0x0000000a,
-    WER_MAX_FRIENDLY_EVENT_NAME_LENGTH = 0x00000080,
+    WER_MAX_PARAM_LENGTH               = 0x00000104U,
+    WER_MAX_PARAM_COUNT                = 0x0000000aU,
+    WER_MAX_FRIENDLY_EVENT_NAME_LENGTH = 0x00000080U,
 }
 
-enum uint WER_MAX_APPLICATION_NAME_LENGTH = 0x00000080;
-enum uint WER_MAX_DESCRIPTION_LENGTH = 0x00000200;
-enum uint WER_MAX_BUCKET_ID_STRING_LENGTH = 0x00000104;
-enum uint WER_MAX_LOCAL_DUMP_SUBPATH_LENGTH = 0x00000040;
-enum uint WER_MAX_REGISTERED_RUNTIME_EXCEPTION_MODULES = 0x00000010;
+enum uint WER_MAX_APPLICATION_NAME_LENGTH = 0x00000080U;
+enum uint WER_MAX_DESCRIPTION_LENGTH = 0x00000200U;
+enum uint WER_MAX_BUCKET_ID_STRING_LENGTH = 0x00000104U;
+enum uint WER_MAX_LOCAL_DUMP_SUBPATH_LENGTH = 0x00000040U;
+enum uint WER_MAX_REGISTERED_RUNTIME_EXCEPTION_MODULES = 0x00000010U;
 
 enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
 {
@@ -287,7 +299,7 @@ struct HREPORTSTORE
     void* Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/werapi/ns-werapi-wer_report_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/werapi/ns-werapi-wer_report_information
 struct WER_REPORT_INFORMATION
 {
     uint       dwSize;
@@ -314,7 +326,7 @@ struct WER_REPORT_INFORMATION_V3
     wchar[64]  wzNamespaceGroup;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/werapi/ns-werapi-wer_dump_custom_options))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/werapi/ns-werapi-wer_dump_custom_options
 struct WER_DUMP_CUSTOM_OPTIONS
 {
     uint       dwSize;
@@ -402,14 +414,14 @@ struct WER_DUMP_CUSTOM_OPTIONS_V3
     uint       dwThreadID;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/werapi/ns-werapi-wer_exception_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/werapi/ns-werapi-wer_exception_information
 struct WER_EXCEPTION_INFORMATION
 {
     EXCEPTION_POINTERS* pExceptionPointers;
     BOOL                bClientPointers;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/werapi/ns-werapi-wer_runtime_exception_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/werapi/ns-werapi-wer_runtime_exception_information
 struct WER_RUNTIME_EXCEPTION_INFORMATION
 {
     uint             dwSize;
@@ -434,7 +446,7 @@ struct WER_REPORT_SIGNATURE
     WER_REPORT_PARAMETER[10] Parameters;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/werapi/ns-werapi-wer_report_metadata_v2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/werapi/ns-werapi-wer_report_metadata_v2
 struct WER_REPORT_METADATA_V2
 {
     WER_REPORT_SIGNATURE Signature;

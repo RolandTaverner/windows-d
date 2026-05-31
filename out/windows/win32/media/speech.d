@@ -3,12 +3,12 @@
 module windows.win32.media.speech;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BSTR, FILETIME, HANDLE, HMODULE,
-                                         HRESULT, HWND, LPARAM, LRESULT, PWSTR,
-                                         VARIANT_BOOL, WPARAM;
-public import windows.win32.media.audio : WAVEFORMATEX;
-public import windows.win32.system.com : IDispatch, IServiceProvider, IStream, IUnknown;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BSTR, FILETIME, HANDLE, HMODULE,
+                                                    HRESULT, HWND, LPARAM, LRESULT,
+                                                    PWSTR, VARIANT_BOOL, WPARAM;
+public import windows.win32.media.audio.audio : WAVEFORMATEX;
+public import windows.win32.system.com.com : IDispatch, IServiceProvider, IStream, IUnknown;
 public import windows.win32.system.com.urlmon : IInternetSecurityManager;
 public import windows.win32.system.registry : HKEY;
 public import windows.win32.system.variant : VARIANT;
@@ -18,6 +18,7 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias SPDATAKEYLOCATION = int;
 enum : int
 {
@@ -26,6 +27,7 @@ enum : int
     SPDKL_LocalMachine    = 0x00000002,
     SPDKL_CurrentConfig   = 0x00000005,
 }
+
 alias SPSTREAMFORMAT = int;
 enum : int
 {
@@ -101,6 +103,7 @@ enum : int
     SPSF_GSM610_44kHzMono        = 0x00000044,
     SPSF_NUM_FORMATS             = 0x00000045,
 }
+
 alias SPEVENTLPARAMTYPE = int;
 enum : int
 {
@@ -110,6 +113,7 @@ enum : int
     SPET_LPARAM_IS_POINTER   = 0x00000003,
     SPET_LPARAM_IS_STRING    = 0x00000004,
 }
+
 alias SPEVENTENUM = int;
 enum : int
 {
@@ -154,6 +158,7 @@ enum : int
     SPEI_RESERVED2              = 0x00000021,
     SPEI_RESERVED3              = 0x0000003f,
 }
+
 alias SPINTERFERENCE = int;
 enum : int
 {
@@ -168,6 +173,7 @@ enum : int
     SPINTERFERENCE_LATENCY_TRUNCATE_BEGIN = 0x00000008,
     SPINTERFERENCE_LATENCY_TRUNCATE_END   = 0x00000009,
 }
+
 alias SPENDSRSTREAMFLAGS = int;
 enum : int
 {
@@ -175,12 +181,14 @@ enum : int
     SPESF_STREAM_RELEASED = 0x00000001,
     SPESF_EMULATED        = 0x00000002,
 }
+
 alias SPVFEATURE = int;
 enum : int
 {
     SPVFEATURE_STRESSED = 0x00000001,
     SPVFEATURE_EMPHASIS = 0x00000002,
 }
+
 alias SPVISEMES = int;
 enum : int
 {
@@ -207,6 +215,7 @@ enum : int
     SP_VISEME_20 = 0x00000014,
     SP_VISEME_21 = 0x00000015,
 }
+
 alias SPFILEMODE = int;
 enum : int
 {
@@ -216,6 +225,7 @@ enum : int
     SPFM_CREATE_ALWAYS  = 0x00000003,
     SPFM_NUM_MODES      = 0x00000004,
 }
+
 alias SPAUDIOSTATE = int;
 enum : int
 {
@@ -224,6 +234,7 @@ enum : int
     SPAS_PAUSE  = 0x00000002,
     SPAS_RUN    = 0x00000003,
 }
+
 alias SPDISPLAYATTRIBUTES = int;
 enum : int
 {
@@ -234,12 +245,14 @@ enum : int
     SPAF_ALL                    = 0x0000001f,
     SPAF_USER_SPECIFIED         = 0x00000080,
 }
+
 alias SPPHRASEPROPERTYUNIONTYPE = int;
 enum : int
 {
     SPPPUT_UNUSED      = 0x00000000,
     SPPPUT_ARRAY_INDEX = 0x00000001,
 }
+
 alias SPSEMANTICFORMAT = int;
 enum : int
 {
@@ -249,6 +262,7 @@ enum : int
     SPSMF_UPS                             = 0x00000004,
     SPSMF_SRGS_SEMANTICINTERPRETATION_W3C = 0x00000008,
 }
+
 alias SPVALUETYPE = int;
 enum : int
 {
@@ -262,11 +276,13 @@ enum : int
     SPDF_ALTERNATES    = 0x00000080,
     SPDF_ALL           = 0x000000ff,
 }
+
 alias SPPHRASERNG = int;
 enum : int
 {
     SPPR_ALL_ELEMENTS = 0xffffffff,
 }
+
 alias SPRECOEVENTFLAGS = int;
 enum : int
 {
@@ -278,6 +294,7 @@ enum : int
     SPREF_Hypothesis       = 0x00000020,
     SPREF_FalseRecognition = 0x00000040,
 }
+
 alias SPPARTOFSPEECH = int;
 enum : int
 {
@@ -292,6 +309,7 @@ enum : int
     SPPS_LMA          = 0x00007000,
     SPPS_SuppressWord = 0x0000f000,
 }
+
 alias SPLEXICONTYPE = int;
 enum : int
 {
@@ -328,17 +346,20 @@ enum : int
     eLEXTYPE_PRIVATE19     = 0x40000000,
     eLEXTYPE_PRIVATE20     = 0x80000000,
 }
+
 alias SPWORDTYPE = int;
 enum : int
 {
     eWORDTYPE_ADDED   = 0x00000001,
     eWORDTYPE_DELETED = 0x00000002,
 }
+
 alias SPPRONUNCIATIONFLAGS = int;
 enum : int
 {
     ePRONFLAG_USED = 0x00000001,
 }
+
 alias SPSHORTCUTTYPE = int;
 enum : int
 {
@@ -351,6 +372,7 @@ enum : int
     SPPS_RESERVED3     = 0x00005000,
     SPPS_RESERVED4     = 0x0000f000,
 }
+
 alias SPVACTIONS = int;
 enum : int
 {
@@ -362,12 +384,14 @@ enum : int
     SPVA_Section         = 0x00000005,
     SPVA_ParseUnknownTag = 0x00000006,
 }
+
 alias SPRUNSTATE = int;
 enum : int
 {
     SPRS_DONE        = 0x00000001,
     SPRS_IS_SPEAKING = 0x00000002,
 }
+
 alias SPVLIMITS = int;
 enum : int
 {
@@ -376,6 +400,7 @@ enum : int
     SPMIN_RATE   = 0xfffffff6,
     SPMAX_RATE   = 0x0000000a,
 }
+
 alias SPVPRIORITY = int;
 enum : int
 {
@@ -383,6 +408,7 @@ enum : int
     SPVPRI_ALERT  = 0x00000001,
     SPVPRI_OVER   = 0x00000002,
 }
+
 alias SPEAKFLAGS = int;
 enum : int
 {
@@ -402,12 +428,14 @@ enum : int
     SPF_VOICE_MASK       = 0x000001ff,
     SPF_UNUSED_FLAGS     = 0xfffffe00,
 }
+
 alias SPXMLRESULTOPTIONS = int;
 enum : int
 {
     SPXRO_SML            = 0x00000000,
     SPXRO_Alternates_SML = 0x00000001,
 }
+
 alias SPCOMMITFLAGS = int;
 enum : int
 {
@@ -415,6 +443,7 @@ enum : int
     SPCF_ADD_TO_USER_LEXICON = 0x00000001,
     SPCF_DEFINITE_CORRECTION = 0x00000002,
 }
+
 alias SPWORDPRONOUNCEABLE = int;
 enum : int
 {
@@ -422,6 +451,7 @@ enum : int
     SPWP_UNKNOWN_WORD_PRONOUNCEABLE   = 0x00000001,
     SPWP_KNOWN_WORD_PRONOUNCEABLE     = 0x00000002,
 }
+
 alias SPGRAMMARSTATE = int;
 enum : int
 {
@@ -429,12 +459,14 @@ enum : int
     SPGS_ENABLED   = 0x00000001,
     SPGS_EXCLUSIVE = 0x00000003,
 }
+
 alias SPCONTEXTSTATE = int;
 enum : int
 {
     SPCS_DISABLED = 0x00000000,
     SPCS_ENABLED  = 0x00000001,
 }
+
 alias SPRULESTATE = int;
 enum : int
 {
@@ -443,6 +475,7 @@ enum : int
     SPRS_ACTIVE_WITH_AUTO_PAUSE = 0x00000003,
     SPRS_ACTIVE_USER_DELIMITED  = 0x00000004,
 }
+
 alias SPGRAMMARWORDTYPE = int;
 enum : int
 {
@@ -451,6 +484,7 @@ enum : int
     SPWT_PRONUNCIATION            = 0x00000002,
     SPWT_LEXICAL_NO_SPECIAL_CHARS = 0x00000003,
 }
+
 alias SPCFGRULEATTRIBUTES = int;
 enum : int
 {
@@ -464,12 +498,14 @@ enum : int
     SPRAF_AutoPause     = 0x00010000,
     SPRAF_UserDelimited = 0x00020000,
 }
+
 alias SPLOADOPTIONS = int;
 enum : int
 {
     SPLO_STATIC  = 0x00000000,
     SPLO_DYNAMIC = 0x00000001,
 }
+
 alias SPMATCHINGMODE = int;
 enum : int
 {
@@ -479,6 +515,7 @@ enum : int
     SubsequenceContentRequired   = 0x00000005,
     OrderedSubsetContentRequired = 0x00000007,
 }
+
 alias PHONETICALPHABET = int;
 enum : int
 {
@@ -486,6 +523,7 @@ enum : int
     PA_Ups  = 0x00000001,
     PA_Sapi = 0x00000002,
 }
+
 alias SPBOOKMARKOPTIONS = int;
 enum : int
 {
@@ -494,12 +532,14 @@ enum : int
     SPBO_AHEAD      = 0x00000002,
     SPBO_TIME_UNITS = 0x00000004,
 }
+
 alias SPAUDIOOPTIONS = int;
 enum : int
 {
     SPAO_NONE         = 0x00000000,
     SPAO_RETAIN_AUDIO = 0x00000001,
 }
+
 alias SPGRAMMAROPTIONS = int;
 enum : int
 {
@@ -517,6 +557,7 @@ enum : int
     SPGO_DEFAULT         = 0x000003fb,
     SPGO_ALL             = 0x000003ff,
 }
+
 alias SPADAPTATIONSETTINGS = int;
 enum : int
 {
@@ -527,6 +568,7 @@ enum : int
     SPADS_Reset                = 0x00000008,
     SPADS_HighVolumeDataSource = 0x00000010,
 }
+
 alias SPADAPTATIONRELEVANCE = int;
 enum : int
 {
@@ -535,12 +577,14 @@ enum : int
     SPAR_Medium  = 0x00000002,
     SPAR_High    = 0x00000003,
 }
+
 alias SPSTREAMFORMATTYPE = int;
 enum : int
 {
     SPWF_INPUT    = 0x00000000,
     SPWF_SRENGINE = 0x00000001,
 }
+
 alias SPRECOSTATE = int;
 enum : int
 {
@@ -550,6 +594,7 @@ enum : int
     SPRST_INACTIVE_WITH_PURGE = 0x00000003,
     SPRST_NUM_STATES          = 0x00000004,
 }
+
 alias DISPID_SpeechDataKey = int;
 enum : int
 {
@@ -566,6 +611,7 @@ enum : int
     DISPID_SDKEnumKeys       = 0x0000000b,
     DISPID_SDKEnumValues     = 0x0000000c,
 }
+
 alias DISPID_SpeechObjectToken = int;
 enum : int
 {
@@ -583,6 +629,7 @@ enum : int
     DISPID_SOTDisplayUI             = 0x0000000c,
     DISPID_SOTMatchesAttributes     = 0x0000000d,
 }
+
 enum SpeechDataKeyLocation : int
 {
     SDKLDefaultLocation = 0x00000000,
@@ -590,14 +637,16 @@ enum SpeechDataKeyLocation : int
     SDKLLocalMachine    = 0x00000002,
     SDKLCurrentConfig   = 0x00000005,
 }
+
 enum SpeechTokenContext : uint
 {
-    STCInprocServer  = 0x00000001,
-    STCInprocHandler = 0x00000002,
-    STCLocalServer   = 0x00000004,
-    STCRemoteServer  = 0x00000010,
-    STCAll           = 0x00000017,
+    STCInprocServer  = 0x00000001U,
+    STCInprocHandler = 0x00000002U,
+    STCLocalServer   = 0x00000004U,
+    STCRemoteServer  = 0x00000010U,
+    STCAll           = 0x00000017U,
 }
+
 enum SpeechTokenShellFolder : int
 {
     STSF_AppData       = 0x0000001a,
@@ -605,6 +654,7 @@ enum SpeechTokenShellFolder : int
     STSF_CommonAppData = 0x00000023,
     STSF_FlagCreate    = 0x00008000,
 }
+
 alias DISPID_SpeechObjectTokens = int;
 enum : int
 {
@@ -612,6 +662,7 @@ enum : int
     DISPID_SOTsItem     = 0x00000000,
     DISPID_SOTs_NewEnum = 0xfffffffc,
 }
+
 alias DISPID_SpeechObjectTokenCategory = int;
 enum : int
 {
@@ -621,6 +672,7 @@ enum : int
     DISPID_SOTCGetDataKey      = 0x00000004,
     DISPID_SOTCEnumerateTokens = 0x00000005,
 }
+
 enum SpeechAudioFormatType : int
 {
     SAFTDefault                 = 0xffffffff,
@@ -694,6 +746,7 @@ enum SpeechAudioFormatType : int
     SAFTGSM610_22kHzMono        = 0x00000043,
     SAFTGSM610_44kHzMono        = 0x00000044,
 }
+
 alias DISPID_SpeechAudioFormat = int;
 enum : int
 {
@@ -702,6 +755,7 @@ enum : int
     DISPID_SAFGetWaveFormatEx = 0x00000003,
     DISPID_SAFSetWaveFormatEx = 0x00000004,
 }
+
 alias DISPID_SpeechBaseStream = int;
 enum : int
 {
@@ -710,12 +764,14 @@ enum : int
     DISPID_SBSWrite  = 0x00000003,
     DISPID_SBSSeek   = 0x00000004,
 }
+
 enum SpeechStreamSeekPositionType : uint
 {
-    SSSPTRelativeToStart           = 0x00000000,
-    SSSPTRelativeToCurrentPosition = 0x00000001,
-    SSSPTRelativeToEnd             = 0x00000002,
+    SSSPTRelativeToStart           = 0x00000000U,
+    SSSPTRelativeToCurrentPosition = 0x00000001U,
+    SSSPTRelativeToEnd             = 0x00000002U,
 }
+
 alias DISPID_SpeechAudio = int;
 enum : int
 {
@@ -727,6 +783,7 @@ enum : int
     DISPID_SAEventHandle      = 0x000000cd,
     DISPID_SASetState         = 0x000000ce,
 }
+
 enum SpeechAudioState : int
 {
     SASClosed = 0x00000000,
@@ -734,6 +791,7 @@ enum SpeechAudioState : int
     SASPause  = 0x00000002,
     SASRun    = 0x00000003,
 }
+
 alias DISPID_SpeechMMSysAudio = int;
 enum : int
 {
@@ -741,12 +799,14 @@ enum : int
     DISPID_SMSALineId   = 0x0000012d,
     DISPID_SMSAMMHandle = 0x0000012e,
 }
+
 alias DISPID_SpeechFileStream = int;
 enum : int
 {
     DISPID_SFSOpen  = 0x00000064,
     DISPID_SFSClose = 0x00000065,
 }
+
 enum SpeechStreamFileMode : int
 {
     SSFMOpenForRead    = 0x00000000,
@@ -754,17 +814,20 @@ enum SpeechStreamFileMode : int
     SSFMCreate         = 0x00000002,
     SSFMCreateForWrite = 0x00000003,
 }
+
 alias DISPID_SpeechCustomStream = int;
 enum : int
 {
     DISPID_SCSBaseStream = 0x00000064,
 }
+
 alias DISPID_SpeechMemoryStream = int;
 enum : int
 {
     DISPID_SMSSetData = 0x00000064,
     DISPID_SMSGetData = 0x00000065,
 }
+
 alias DISPID_SpeechAudioStatus = int;
 enum : int
 {
@@ -774,6 +837,7 @@ enum : int
     DISPID_SASCurrentSeekPosition   = 0x00000004,
     DISPID_SASCurrentDevicePosition = 0x00000005,
 }
+
 alias DISPID_SpeechAudioBufferInfo = int;
 enum : int
 {
@@ -781,6 +845,7 @@ enum : int
     DISPID_SABIBufferSize      = 0x00000002,
     DISPID_SABIEventBias       = 0x00000003,
 }
+
 alias DISPID_SpeechWaveFormatEx = int;
 enum : int
 {
@@ -792,6 +857,7 @@ enum : int
     DISPID_SWFEBitsPerSample  = 0x00000006,
     DISPID_SWFEExtraData      = 0x00000007,
 }
+
 alias DISPID_SpeechVoice = int;
 enum : int
 {
@@ -818,12 +884,14 @@ enum : int
     DISPID_SVIsUISupported                         = 0x00000015,
     DISPID_SVDisplayUI                             = 0x00000016,
 }
+
 enum SpeechVoicePriority : int
 {
     SVPNormal = 0x00000000,
     SVPAlert  = 0x00000001,
     SVPOver   = 0x00000002,
 }
+
 enum SpeechVoiceSpeakFlags : int
 {
     SVSFDefault          = 0x00000000,
@@ -842,6 +910,7 @@ enum SpeechVoiceSpeakFlags : int
     SVSFVoiceMask        = 0x000001ff,
     SVSFUnusedFlags      = 0xfffffe00,
 }
+
 enum SpeechVoiceEvents : int
 {
     SVEStartInputStream = 0x00000002,
@@ -856,6 +925,7 @@ enum SpeechVoiceEvents : int
     SVEPrivate          = 0x00008000,
     SVEAllEvents        = 0x000083fe,
 }
+
 alias DISPID_SpeechVoiceStatus = int;
 enum : int
 {
@@ -872,11 +942,13 @@ enum : int
     DISPID_SVSPhonemeId              = 0x0000000b,
     DISPID_SVSVisemeId               = 0x0000000c,
 }
+
 enum SpeechRunState : int
 {
     SRSEDone       = 0x00000001,
     SRSEIsSpeaking = 0x00000002,
 }
+
 enum SpeechVisemeType : int
 {
     SVP_0   = 0x00000000,
@@ -902,12 +974,14 @@ enum SpeechVisemeType : int
     SVP_20  = 0x00000014,
     SVP_21  = 0x00000015,
 }
+
 enum SpeechVisemeFeature : int
 {
     SVF_None     = 0x00000000,
     SVF_Stressed = 0x00000001,
     SVF_Emphasis = 0x00000002,
 }
+
 alias DISPID_SpeechVoiceEvent = int;
 enum : int
 {
@@ -922,6 +996,7 @@ enum : int
     DISPID_SVEAudioLevel       = 0x00000009,
     DISPID_SVEEnginePrivate    = 0x0000000a,
 }
+
 alias DISPID_SpeechRecognizer = int;
 enum : int
 {
@@ -946,6 +1021,7 @@ enum : int
     DISPID_SVGetAudioInputs                        = 0x00000013,
     DISPID_SVGetProfiles                           = 0x00000014,
 }
+
 enum SpeechRecognizerState : int
 {
     SRSInactive          = 0x00000000,
@@ -953,6 +1029,7 @@ enum SpeechRecognizerState : int
     SRSActiveAlways      = 0x00000002,
     SRSInactiveWithPurge = 0x00000003,
 }
+
 enum SpeechDisplayAttributes : int
 {
     SDA_No_Trailing_Space      = 0x00000000,
@@ -960,11 +1037,13 @@ enum SpeechDisplayAttributes : int
     SDA_Two_Trailing_Spaces    = 0x00000004,
     SDA_Consume_Leading_Spaces = 0x00000008,
 }
+
 enum SpeechFormatType : int
 {
     SFTInput    = 0x00000000,
     SFTSREngine = 0x00000001,
 }
+
 enum SpeechEmulationCompareFlags : int
 {
     SECFIgnoreCase     = 0x00000001,
@@ -974,6 +1053,7 @@ enum SpeechEmulationCompareFlags : int
     SECFEmulateResult  = 0x40000000,
     SECFDefault        = 0x00030001,
 }
+
 alias DISPID_SpeechRecognizerStatus = int;
 enum : int
 {
@@ -984,6 +1064,7 @@ enum : int
     DISPID_SRSClsidEngine           = 0x00000005,
     DISPID_SRSSupportedLanguages    = 0x00000006,
 }
+
 alias DISPID_SpeechRecoContext = int;
 enum : int
 {
@@ -1005,16 +1086,19 @@ enum : int
     DISPID_SRCBookmark                         = 0x00000010,
     DISPID_SRCSetAdaptationData                = 0x00000011,
 }
+
 enum SpeechRetainedAudioOptions : int
 {
     SRAONone        = 0x00000000,
     SRAORetainAudio = 0x00000001,
 }
+
 enum SpeechBookmarkOptions : int
 {
     SBONone  = 0x00000000,
     SBOPause = 0x00000001,
 }
+
 enum SpeechInterference : int
 {
     SINone     = 0x00000000,
@@ -1025,6 +1109,7 @@ enum SpeechInterference : int
     SITooFast  = 0x00000005,
     SITooSlow  = 0x00000006,
 }
+
 enum SpeechRecoEvents : int
 {
     SREStreamEnd            = 0x00000001,
@@ -1047,11 +1132,13 @@ enum SpeechRecoEvents : int
     SREPrivate              = 0x00040000,
     SREAllEvents            = 0x0005ffff,
 }
+
 enum SpeechRecoContextState : int
 {
     SRCS_Disabled = 0x00000000,
     SRCS_Enabled  = 0x00000001,
 }
+
 alias DISPIDSPRG = int;
 enum : int
 {
@@ -1075,23 +1162,27 @@ enum : int
     DISPID_SRGSetTextSelection              = 0x00000012,
     DISPID_SRGIsPronounceable               = 0x00000013,
 }
+
 enum SpeechLoadOption : int
 {
     SLOStatic  = 0x00000000,
     SLODynamic = 0x00000001,
 }
+
 enum SpeechWordPronounceable : int
 {
     SWPUnknownWordUnpronounceable = 0x00000000,
     SWPUnknownWordPronounceable   = 0x00000001,
     SWPKnownWordPronounceable     = 0x00000002,
 }
+
 enum SpeechGrammarState : int
 {
     SGSEnabled   = 0x00000001,
     SGSDisabled  = 0x00000000,
     SGSExclusive = 0x00000003,
 }
+
 enum SpeechRuleState : int
 {
     SGDSInactive            = 0x00000000,
@@ -1099,6 +1190,7 @@ enum SpeechRuleState : int
     SGDSActiveWithAutoPause = 0x00000003,
     SGDSActiveUserDelimited = 0x00000004,
 }
+
 enum SpeechRuleAttributes : int
 {
     SRATopLevel        = 0x00000001,
@@ -1109,6 +1201,7 @@ enum SpeechRuleAttributes : int
     SRADynamic         = 0x00000020,
     SRARoot            = 0x00000040,
 }
+
 enum SpeechGrammarWordType : int
 {
     SGDisplay               = 0x00000000,
@@ -1116,6 +1209,7 @@ enum SpeechGrammarWordType : int
     SGPronounciation        = 0x00000002,
     SGLexicalNoSpecialChars = 0x00000003,
 }
+
 alias DISPID_SpeechRecoContextEvents = int;
 enum : int
 {
@@ -1138,6 +1232,7 @@ enum : int
     DISPID_SRCEAudioLevel                 = 0x00000011,
     DISPID_SRCEEnginePrivate              = 0x00000012,
 }
+
 enum SpeechRecognitionType : int
 {
     SRTStandard        = 0x00000000,
@@ -1147,6 +1242,7 @@ enum SpeechRecognitionType : int
     SRTExtendableParse = 0x00000008,
     SRTReSent          = 0x00000010,
 }
+
 alias DISPID_SpeechGrammarRule = int;
 enum : int
 {
@@ -1158,6 +1254,7 @@ enum : int
     DISPID_SGRAddResource  = 0x00000006,
     DISPID_SGRAddState     = 0x00000007,
 }
+
 alias DISPID_SpeechGrammarRules = int;
 enum : int
 {
@@ -1170,6 +1267,7 @@ enum : int
     DISPID_SGRsItem          = 0x00000000,
     DISPID_SGRs_NewEnum      = 0xfffffffc,
 }
+
 alias DISPID_SpeechGrammarRuleState = int;
 enum : int
 {
@@ -1179,12 +1277,14 @@ enum : int
     DISPID_SGRSAddRuleTransition    = 0x00000004,
     DISPID_SGRSAddSpecialTransition = 0x00000005,
 }
+
 enum SpeechSpecialTransitionType : int
 {
     SSTTWildcard   = 0x00000001,
     SSTTDictation  = 0x00000002,
     SSTTTextBuffer = 0x00000003,
 }
+
 alias DISPID_SpeechGrammarRuleStateTransitions = int;
 enum : int
 {
@@ -1192,6 +1292,7 @@ enum : int
     DISPID_SGRSTsItem     = 0x00000000,
     DISPID_SGRSTs_NewEnum = 0xfffffffc,
 }
+
 alias DISPID_SpeechGrammarRuleStateTransition = int;
 enum : int
 {
@@ -1204,6 +1305,7 @@ enum : int
     DISPID_SGRSTPropertyValue = 0x00000007,
     DISPID_SGRSTNextState     = 0x00000008,
 }
+
 enum SpeechGrammarRuleStateTransitionType : int
 {
     SGRSTTEpsilon    = 0x00000000,
@@ -1213,6 +1315,7 @@ enum SpeechGrammarRuleStateTransitionType : int
     SGRSTTWildcard   = 0x00000004,
     SGRSTTTextBuffer = 0x00000005,
 }
+
 alias DISPIDSPTSI = int;
 enum : int
 {
@@ -1221,6 +1324,7 @@ enum : int
     DISPIDSPTSI_SelectionOffset = 0x00000003,
     DISPIDSPTSI_SelectionLength = 0x00000004,
 }
+
 alias DISPID_SpeechRecoResult = int;
 enum : int
 {
@@ -1234,6 +1338,7 @@ enum : int
     DISPID_SRRSaveToMemory      = 0x00000008,
     DISPID_SRRDiscardResultInfo = 0x00000009,
 }
+
 enum SpeechDiscardType : int
 {
     SDTProperty      = 0x00000001,
@@ -1246,22 +1351,26 @@ enum SpeechDiscardType : int
     SDTAlternates    = 0x00000080,
     SDTAll           = 0x000000ff,
 }
+
 alias DISPID_SpeechXMLRecoResult = int;
 enum : int
 {
     DISPID_SRRGetXMLResult    = 0x0000000a,
     DISPID_SRRGetXMLErrorInfo = 0x0000000b,
 }
+
 alias DISPID_SpeechRecoResult2 = int;
 enum : int
 {
     DISPID_SRRSetTextFeedback = 0x0000000c,
 }
+
 alias DISPID_SpeechPhraseBuilder = int;
 enum : int
 {
     DISPID_SPPBRestorePhraseFromMemory = 0x00000001,
 }
+
 alias DISPID_SpeechRecoResultTimes = int;
 enum : int
 {
@@ -1270,6 +1379,7 @@ enum : int
     DISPID_SRRTTickCount       = 0x00000003,
     DISPID_SRRTOffsetFromStart = 0x00000004,
 }
+
 alias DISPID_SpeechPhraseAlternate = int;
 enum : int
 {
@@ -1279,6 +1389,7 @@ enum : int
     DISPID_SPAPhraseInfo               = 0x00000004,
     DISPID_SPACommit                   = 0x00000005,
 }
+
 alias DISPID_SpeechPhraseAlternates = int;
 enum : int
 {
@@ -1286,6 +1397,7 @@ enum : int
     DISPID_SPAsItem     = 0x00000000,
     DISPID_SPAs_NewEnum = 0xfffffffc,
 }
+
 alias DISPID_SpeechPhraseInfo = int;
 enum : int
 {
@@ -1306,6 +1418,7 @@ enum : int
     DISPID_SPIGetText              = 0x0000000f,
     DISPID_SPIGetDisplayAttributes = 0x00000010,
 }
+
 alias DISPID_SpeechPhraseElement = int;
 enum : int
 {
@@ -1323,12 +1436,14 @@ enum : int
     DISPID_SPEActualConfidence     = 0x0000000c,
     DISPID_SPEEngineConfidence     = 0x0000000d,
 }
+
 enum SpeechEngineConfidence : int
 {
     SECLowConfidence    = 0xffffffff,
     SECNormalConfidence = 0x00000000,
     SECHighConfidence   = 0x00000001,
 }
+
 alias DISPID_SpeechPhraseElements = int;
 enum : int
 {
@@ -1336,6 +1451,7 @@ enum : int
     DISPID_SPEsItem     = 0x00000000,
     DISPID_SPEs_NewEnum = 0xfffffffc,
 }
+
 alias DISPID_SpeechPhraseReplacement = int;
 enum : int
 {
@@ -1344,6 +1460,7 @@ enum : int
     DISPID_SPRFirstElement      = 0x00000003,
     DISPID_SPRNumberOfElements  = 0x00000004,
 }
+
 alias DISPID_SpeechPhraseReplacements = int;
 enum : int
 {
@@ -1351,6 +1468,7 @@ enum : int
     DISPID_SPRsItem     = 0x00000000,
     DISPID_SPRs_NewEnum = 0xfffffffc,
 }
+
 alias DISPID_SpeechPhraseProperty = int;
 enum : int
 {
@@ -1364,6 +1482,7 @@ enum : int
     DISPID_SPPParent           = 0x00000008,
     DISPID_SPPChildren         = 0x00000009,
 }
+
 alias DISPID_SpeechPhraseProperties = int;
 enum : int
 {
@@ -1371,6 +1490,7 @@ enum : int
     DISPID_SPPsItem     = 0x00000000,
     DISPID_SPPs_NewEnum = 0xfffffffc,
 }
+
 alias DISPID_SpeechPhraseRule = int;
 enum : int
 {
@@ -1383,6 +1503,7 @@ enum : int
     DISPID_SPRuleConfidence       = 0x00000007,
     DISPID_SPRuleEngineConfidence = 0x00000008,
 }
+
 alias DISPID_SpeechPhraseRules = int;
 enum : int
 {
@@ -1390,6 +1511,7 @@ enum : int
     DISPID_SPRulesItem     = 0x00000000,
     DISPID_SPRules_NewEnum = 0xfffffffc,
 }
+
 alias DISPID_SpeechLexicon = int;
 enum : int
 {
@@ -1402,11 +1524,13 @@ enum : int
     DISPID_SLGetPronunciations             = 0x00000007,
     DISPID_SLGetGenerationChange           = 0x00000008,
 }
+
 enum SpeechLexiconType : int
 {
     SLTUser = 0x00000001,
     SLTApp  = 0x00000002,
 }
+
 enum SpeechPartOfSpeech : int
 {
     SPSNotOverriden = 0xffffffff,
@@ -1419,6 +1543,7 @@ enum SpeechPartOfSpeech : int
     SPSLMA          = 0x00007000,
     SPSSuppressWord = 0x0000f000,
 }
+
 alias DISPID_SpeechLexiconWords = int;
 enum : int
 {
@@ -1426,11 +1551,13 @@ enum : int
     DISPID_SLWsItem     = 0x00000000,
     DISPID_SLWs_NewEnum = 0xfffffffc,
 }
+
 enum SpeechWordType : int
 {
     SWTAdded   = 0x00000001,
     SWTDeleted = 0x00000002,
 }
+
 alias DISPID_SpeechLexiconWord = int;
 enum : int
 {
@@ -1439,6 +1566,7 @@ enum : int
     DISPID_SLWWord           = 0x00000003,
     DISPID_SLWPronunciations = 0x00000004,
 }
+
 alias DISPID_SpeechLexiconProns = int;
 enum : int
 {
@@ -1446,6 +1574,7 @@ enum : int
     DISPID_SLPsItem     = 0x00000000,
     DISPID_SLPs_NewEnum = 0xfffffffc,
 }
+
 alias DISPID_SpeechLexiconPronunciation = int;
 enum : int
 {
@@ -1455,6 +1584,7 @@ enum : int
     DISPID_SLPPhoneIds     = 0x00000004,
     DISPID_SLPSymbolic     = 0x00000005,
 }
+
 alias DISPID_SpeechPhoneConverter = int;
 enum : int
 {
@@ -1462,11 +1592,13 @@ enum : int
     DISPID_SPCPhoneToId = 0x00000002,
     DISPID_SPCIdToPhone = 0x00000003,
 }
+
 alias SPVSKIPTYPE = int;
 enum : int
 {
     SPVST_SENTENCE = 0x00000001,
 }
+
 alias SPVESACTIONS = int;
 enum : int
 {
@@ -1476,6 +1608,7 @@ enum : int
     SPVES_RATE     = 0x00000004,
     SPVES_VOLUME   = 0x00000008,
 }
+
 alias SPTRANSITIONTYPE = int;
 enum : int
 {
@@ -1486,6 +1619,7 @@ enum : int
     SPTRANSWILDCARD  = 0x00000004,
     SPTRANSDICTATION = 0x00000005,
 }
+
 alias SPCFGNOTIFY = int;
 enum : int
 {
@@ -1495,6 +1629,7 @@ enum : int
     SPCFGN_ACTIVATE   = 0x00000003,
     SPCFGN_DEACTIVATE = 0x00000004,
 }
+
 alias SPRESULTTYPE = int;
 enum : int
 {
@@ -1506,17 +1641,20 @@ enum : int
     SPRT_EMULATED          = 0x00000008,
     SPRT_EXTENDABLE_PARSE  = 0x00000010,
 }
+
 alias SPWORDINFOOPT = int;
 enum : int
 {
     SPWIO_NONE      = 0x00000000,
     SPWIO_WANT_TEXT = 0x00000001,
 }
+
 alias SPRULEINFOOPT = int;
 enum : int
 {
     SPRIO_NONE = 0x00000000,
 }
+
 alias SPPROPSRC = int;
 enum : int
 {
@@ -1606,19 +1744,19 @@ enum const(wchar)* SPDICTATION = "*";
 enum const(wchar)* SPINFDICTATION = "*+";
 enum const(wchar)* SPREG_SAFE_USER_TOKENS = "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\UserTokens";
 enum int SP_LOW_CONFIDENCE = 0xffffffff;
-enum uint SP_NORMAL_CONFIDENCE = 0x00000000;
-enum uint DEFAULT_WEIGHT = 0x00000001;
-enum uint SP_MAX_WORD_LENGTH = 0x00000080;
-enum uint SP_MAX_PRON_LENGTH = 0x00000180;
-enum uint SP_EMULATE_RESULT = 0x40000000;
-enum uint SP_STREAMPOS_ASAP = 0x00000000;
+enum uint SP_NORMAL_CONFIDENCE = 0x00000000U;
+enum uint DEFAULT_WEIGHT = 0x00000001U;
+enum uint SP_MAX_WORD_LENGTH = 0x00000080U;
+enum uint SP_MAX_PRON_LENGTH = 0x00000180U;
+enum uint SP_EMULATE_RESULT = 0x40000000U;
+enum uint SP_STREAMPOS_ASAP = 0x00000000U;
 enum int SP_STREAMPOS_REALTIME = 0xffffffff;
-enum uint SPRP_NORMAL = 0x00000000;
-enum uint SP_MAX_LANGIDS = 0x00000014;
+enum uint SPRP_NORMAL = 0x00000000U;
+enum uint SP_MAX_LANGIDS = 0x00000014U;
 enum const(wchar)* SPRECOEXTENSION = "RecoExtension";
 enum const(wchar)* SPALTERNATESCLSID = "AlternatesCLSID";
 enum const(wchar)* SR_LOCALIZED_DESCRIPTION = "Description";
-enum uint SAPI_ERROR_BASE = 0x00005000;
+enum uint SAPI_ERROR_BASE = 0x00005000U;
 enum float Speech_Default_Weight = 0x1p+0;
 
 enum : int
@@ -1700,7 +1838,7 @@ struct SPTRANSITIONID
 
 struct SPEVENT
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(elParamType)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/int _bitfield50;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(elParamType)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/int _bitfield112;
     uint   ulStreamNum;
     ulong  ullAudioStreamOffset;
     WPARAM wParam;
@@ -1709,7 +1847,7 @@ struct SPEVENT
 
 struct SPSERIALIZEDEVENT
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(elParamType)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/int _bitfield51;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(elParamType)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/int _bitfield113;
     uint  ulStreamNum;
     ulong ullAudioStreamOffset;
     uint  SerializedwParam;
@@ -1718,7 +1856,7 @@ struct SPSERIALIZEDEVENT
 
 struct SPSERIALIZEDEVENT64
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(elParamType)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/int _bitfield52;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(elParamType)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/int _bitfield114;
     uint  ulStreamNum;
     ulong ullAudioStreamOffset;
     ulong SerializedwParam;
@@ -1727,7 +1865,7 @@ struct SPSERIALIZEDEVENT64
 
 struct SPEVENTEX
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(elParamType)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/int _bitfield53;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(elParamType)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/int _bitfield115;
     uint   ulStreamNum;
     ulong  ullAudioStreamOffset;
     WPARAM wParam;
@@ -1792,16 +1930,25 @@ struct SPPHRASERULE
 
 struct SPPHRASEPROPERTY
 {
-    const(PWSTR)        pszName;
-    _Anonymous_e__Union Anonymous;
-    const(PWSTR)        pszValue;
-    VARIANT             vValue;
-    uint                ulFirstElement;
-    uint                ulCountOfElements;
+    const(PWSTR) pszName;
+    union
+    {
+        uint ulId;
+        struct
+        {
+            ubyte  bType;
+            ubyte  bReserved;
+            ushort usArrayIndex;
+        }
+    }
+    const(PWSTR) pszValue;
+    VARIANT      vValue;
+    uint         ulFirstElement;
+    uint         ulCountOfElements;
     const(SPPHRASEPROPERTY)* pNextSibling;
     const(SPPHRASEPROPERTY)* pFirstChild;
-    float               SREngineConfidence;
-    byte                Confidence;
+    float        SREngineConfidence;
+    byte         Confidence;
 }
 
 struct SPPHRASEREPLACEMENT
@@ -2068,13 +2215,33 @@ struct SPRULEENTRY
 
 struct SPTRANSITIONENTRY
 {
-    SPTRANSITIONID       ID;
-    SPSTATEHANDLE        hNextState;
-    ubyte                Type;
-    ubyte                RequiredConfidence;
-    _Anonymous1_e__Struct Anonymous1;
-    float                Weight;
-    _Anonymous2_e__Union Anonymous2;
+    SPTRANSITIONID ID;
+    SPSTATEHANDLE  hNextState;
+    ubyte          Type;
+    ubyte          RequiredConfidence;
+    struct
+    {
+        uint fHasProperty;
+    }
+    float          Weight;
+    union
+    {
+        struct
+        {
+            SPSTATEHANDLE hRuleInitialState;
+            SPRULEHANDLE  hRule;
+            void*         pvClientRuleContext;
+        }
+        struct
+        {
+            SPWORDHANDLE hWord;
+            void*        pvClientWordContext;
+        }
+        struct
+        {
+            void* pvGrammarCookie;
+        }
+    }
 }
 
 struct SPTRANSITIONPROPERTY

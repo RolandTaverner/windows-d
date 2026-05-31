@@ -3,47 +3,49 @@
 module windows.win32.system.diagnostics.toolhelp;
 
 public import windows.core;
-public import windows.win32.foundation : BOOL, CHAR, HANDLE, HMODULE;
+public import windows.win32.foundation.foundation : BOOL, CHAR, HANDLE, HMODULE;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
+
 alias CREATE_TOOLHELP_SNAPSHOT_FLAGS = uint;
 enum : uint
 {
-    TH32CS_INHERIT      = 0x80000000,
-    TH32CS_SNAPALL      = 0x0000000f,
-    TH32CS_SNAPHEAPLIST = 0x00000001,
-    TH32CS_SNAPMODULE   = 0x00000008,
-    TH32CS_SNAPMODULE32 = 0x00000010,
-    TH32CS_SNAPPROCESS  = 0x00000002,
-    TH32CS_SNAPTHREAD   = 0x00000004,
+    TH32CS_INHERIT      = 0x80000000U,
+    TH32CS_SNAPALL      = 0x0000000fU,
+    TH32CS_SNAPHEAPLIST = 0x00000001U,
+    TH32CS_SNAPMODULE   = 0x00000008U,
+    TH32CS_SNAPMODULE32 = 0x00000010U,
+    TH32CS_SNAPPROCESS  = 0x00000002U,
+    TH32CS_SNAPTHREAD   = 0x00000004U,
 }
+
 alias HEAPENTRY32_FLAGS = uint;
 enum : uint
 {
-    LF32_FIXED    = 0x00000001,
-    LF32_FREE     = 0x00000002,
-    LF32_MOVEABLE = 0x00000004,
+    LF32_FIXED    = 0x00000001U,
+    LF32_FREE     = 0x00000002U,
+    LF32_MOVEABLE = 0x00000004U,
 }
 
 // Constants
 
 
-enum uint MAX_MODULE_NAME32 = 0x000000ff;
+enum uint MAX_MODULE_NAME32 = 0x000000ffU;
 
 enum : uint
 {
-    HF32_DEFAULT = 0x00000001,
-    HF32_SHARED  = 0x00000002,
+    HF32_DEFAULT = 0x00000001U,
+    HF32_SHARED  = 0x00000002U,
 }
 
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tlhelp32/ns-tlhelp32-heaplist32))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tlhelp32/ns-tlhelp32-heaplist32
 struct HEAPLIST32
 {
     size_t dwSize;
@@ -52,7 +54,7 @@ struct HEAPLIST32
     uint   dwFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tlhelp32/ns-tlhelp32-heapentry32))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tlhelp32/ns-tlhelp32-heapentry32
 struct HEAPENTRY32
 {
     size_t            dwSize;
@@ -67,7 +69,7 @@ struct HEAPENTRY32
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tlhelp32/ns-tlhelp32-processentry32w))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tlhelp32/ns-tlhelp32-processentry32w
 struct PROCESSENTRY32W
 {
     uint       dwSize;
@@ -83,7 +85,7 @@ struct PROCESSENTRY32W
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tlhelp32/ns-tlhelp32-processentry32))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tlhelp32/ns-tlhelp32-processentry32
 struct PROCESSENTRY32
 {
     uint      dwSize;
@@ -98,7 +100,7 @@ struct PROCESSENTRY32
     CHAR[260] szExeFile;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tlhelp32/ns-tlhelp32-threadentry32))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tlhelp32/ns-tlhelp32-threadentry32
 struct THREADENTRY32
 {
     uint dwSize;
@@ -111,7 +113,7 @@ struct THREADENTRY32
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tlhelp32/ns-tlhelp32-moduleentry32w))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tlhelp32/ns-tlhelp32-moduleentry32w
 struct MODULEENTRY32W
 {
     uint       dwSize;
@@ -127,7 +129,7 @@ struct MODULEENTRY32W
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tlhelp32/ns-tlhelp32-moduleentry32))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tlhelp32/ns-tlhelp32-moduleentry32
 struct MODULEENTRY32
 {
     uint      dwSize;

@@ -3,14 +3,15 @@
 module windows.win32.data.xml.xmllite;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, HRESULT, PWSTR;
-public import windows.win32.system.com : IMalloc, IUnknown;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, HRESULT, PWSTR;
+public import windows.win32.system.com.com : IMalloc, IUnknown;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
+
 
 enum XmlNodeType : int
 {
@@ -27,6 +28,7 @@ enum XmlNodeType : int
     XmlNodeType_XmlDeclaration        = 0x00000011,
     _XmlNodeType_Last                 = 0x00000011,
 }
+
 enum XmlConformanceLevel : int
 {
     XmlConformanceLevel_Auto     = 0x00000000,
@@ -34,12 +36,14 @@ enum XmlConformanceLevel : int
     XmlConformanceLevel_Document = 0x00000002,
     _XmlConformanceLevel_Last    = 0x00000002,
 }
+
 enum DtdProcessing : int
 {
     DtdProcessing_Prohibit = 0x00000000,
     DtdProcessing_Parse    = 0x00000001,
     _DtdProcessing_Last    = 0x00000001,
 }
+
 enum XmlReadState : int
 {
     XmlReadState_Initial     = 0x00000000,
@@ -48,6 +52,7 @@ enum XmlReadState : int
     XmlReadState_EndOfFile   = 0x00000003,
     XmlReadState_Closed      = 0x00000004,
 }
+
 enum XmlReaderProperty : int
 {
     XmlReaderProperty_MultiLanguage      = 0x00000000,
@@ -60,6 +65,7 @@ enum XmlReaderProperty : int
     XmlReaderProperty_MaxEntityExpansion = 0x00000007,
     _XmlReaderProperty_Last              = 0x00000007,
 }
+
 enum XmlError : int
 {
     MX_E_MX                     = 0xc00cee00,
@@ -148,6 +154,7 @@ enum XmlError : int
     XML_E_INVALID_UNICODE       = 0xc00ce01f,
     XML_E_INVALIDENCODING       = 0xc00ce06e,
 }
+
 enum XmlStandalone : int
 {
     XmlStandalone_Omit  = 0x00000000,
@@ -155,6 +162,7 @@ enum XmlStandalone : int
     XmlStandalone_No    = 0x00000002,
     _XmlStandalone_Last = 0x00000002,
 }
+
 enum XmlWriterProperty : int
 {
     XmlWriterProperty_MultiLanguage       = 0x00000000,

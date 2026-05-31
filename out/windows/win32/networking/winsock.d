@@ -3,11 +3,11 @@
 module windows.win32.networking.winsock;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BOOLEAN, CHAR, FARPROC, HANDLE, HRESULT,
-                                         HWND, LPARAM, LUID, PSTR, PWSTR, WAIT_EVENT,
-                                         WPARAM;
-public import windows.win32.system.com : BLOB;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BOOLEAN, CHAR, FARPROC, HANDLE,
+                                                    HRESULT, HWND, LPARAM, LUID, PSTR,
+                                                    PWSTR, WAIT_EVENT, WPARAM;
+public import windows.win32.system.com.com : BLOB;
 public import windows.win32.system.io : OVERLAPPED, OVERLAPPED_ENTRY;
 public import windows.win32.system.kernel : COMPARTMENT_ID, PROCESSOR_NUMBER;
 
@@ -15,6 +15,7 @@ extern(Windows) @nogc nothrow:
 
 
 // Enums
+
 
 alias WSA_ERROR = int;
 enum : int
@@ -120,22 +121,25 @@ enum : int
     WSA_SECURE_HOST_NOT_FOUND   = 0x00002b18,
     WSA_IPSEC_NAME_POLICY_ERROR = 0x00002b19,
 }
+
 alias ADDRESS_FAMILY = ushort;
 enum : ushort
 {
-    AF_INET   = 0x0002,
-    AF_INET6  = 0x0017,
-    AF_UNSPEC = 0x0000,
+    AF_INET   = cast(ushort) 0x0002,
+    AF_INET6  = cast(ushort) 0x0017,
+    AF_UNSPEC = cast(ushort) 0x0000,
 }
+
 alias SET_SERVICE_OPERATION = uint;
 enum : uint
 {
-    SERVICE_REGISTER    = 0x00000001,
-    SERVICE_DEREGISTER  = 0x00000002,
-    SERVICE_FLUSH       = 0x00000003,
-    SERVICE_ADD_TYPE    = 0x00000004,
-    SERVICE_DELETE_TYPE = 0x00000005,
+    SERVICE_REGISTER    = 0x00000001U,
+    SERVICE_DEREGISTER  = 0x00000002U,
+    SERVICE_FLUSH       = 0x00000003U,
+    SERVICE_ADD_TYPE    = 0x00000004U,
+    SERVICE_DELETE_TYPE = 0x00000005U,
 }
+
 alias SEND_RECV_FLAGS = int;
 enum : int
 {
@@ -145,31 +149,34 @@ enum : int
     MSG_WAITALL        = 0x00000008,
     MSG_PUSH_IMMEDIATE = 0x00000020,
 }
+
 alias RESOURCE_DISPLAY_TYPE = uint;
 enum : uint
 {
-    RESOURCEDISPLAYTYPE_DOMAIN  = 0x00000001,
-    RESOURCEDISPLAYTYPE_FILE    = 0x00000004,
-    RESOURCEDISPLAYTYPE_GENERIC = 0x00000000,
-    RESOURCEDISPLAYTYPE_GROUP   = 0x00000005,
-    RESOURCEDISPLAYTYPE_SERVER  = 0x00000002,
-    RESOURCEDISPLAYTYPE_SHARE   = 0x00000003,
-    RESOURCEDISPLAYTYPE_TREE    = 0x0000000a,
+    RESOURCEDISPLAYTYPE_DOMAIN  = 0x00000001U,
+    RESOURCEDISPLAYTYPE_FILE    = 0x00000004U,
+    RESOURCEDISPLAYTYPE_GENERIC = 0x00000000U,
+    RESOURCEDISPLAYTYPE_GROUP   = 0x00000005U,
+    RESOURCEDISPLAYTYPE_SERVER  = 0x00000002U,
+    RESOURCEDISPLAYTYPE_SHARE   = 0x00000003U,
+    RESOURCEDISPLAYTYPE_TREE    = 0x0000000aU,
 }
+
 alias WSAPOLL_EVENT_FLAGS = short;
 enum : short
 {
-    POLLRDNORM = 0x0100,
-    POLLRDBAND = 0x0200,
-    POLLIN     = 0x0300,
-    POLLPRI    = 0x0400,
-    POLLWRNORM = 0x0010,
-    POLLOUT    = 0x0010,
-    POLLWRBAND = 0x0020,
-    POLLERR    = 0x0001,
-    POLLHUP    = 0x0002,
-    POLLNVAL   = 0x0004,
+    POLLRDNORM = cast(short) 0x0100,
+    POLLRDBAND = cast(short) 0x0200,
+    POLLIN     = cast(short) 0x0300,
+    POLLPRI    = cast(short) 0x0400,
+    POLLWRNORM = cast(short) 0x0010,
+    POLLOUT    = cast(short) 0x0010,
+    POLLWRBAND = cast(short) 0x0020,
+    POLLERR    = cast(short) 0x0001,
+    POLLHUP    = cast(short) 0x0002,
+    POLLNVAL   = cast(short) 0x0004,
 }
+
 alias WINSOCK_SHUTDOWN_HOW = int;
 enum : int
 {
@@ -177,6 +184,7 @@ enum : int
     SD_SEND    = 0x00000001,
     SD_BOTH    = 0x00000002,
 }
+
 alias WINSOCK_SOCKET_TYPE = int;
 enum : int
 {
@@ -186,6 +194,7 @@ enum : int
     SOCK_RDM       = 0x00000004,
     SOCK_SEQPACKET = 0x00000005,
 }
+
 alias IPPROTO = int;
 enum : int
 {
@@ -227,7 +236,8 @@ enum : int
     IPPROTO_IP                    = 0x00000000,
     IPPROTO_RM                    = 0x00000071,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2def/ne-ws2def-scope_level))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2def/ne-ws2def-scope_level
 alias SCOPE_LEVEL = int;
 enum : int
 {
@@ -240,6 +250,7 @@ enum : int
     ScopeLevelGlobal       = 0x0000000e,
     ScopeLevelCount        = 0x00000010,
 }
+
 alias WSACOMPLETIONTYPE = int;
 enum : int
 {
@@ -249,13 +260,15 @@ enum : int
     NSP_NOTIFY_PORT        = 0x00000003,
     NSP_NOTIFY_APC         = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsock2/ne-winsock2-wsaecomparator))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock2/ne-winsock2-wsaecomparator
 alias WSAECOMPARATOR = int;
 enum : int
 {
     COMP_EQUAL   = 0x00000000,
     COMP_NOTLESS = 0x00000001,
 }
+
 alias WSAESETSERVICEOP = int;
 enum : int
 {
@@ -263,6 +276,7 @@ enum : int
     RNRSERVICE_DEREGISTER = 0x00000001,
     RNRSERVICE_DELETE     = 0x00000002,
 }
+
 alias PMTUD_STATE = int;
 enum : int
 {
@@ -272,21 +286,24 @@ enum : int
     IP_PMTUDISC_PROBE   = 0x00000003,
     IP_PMTUDISC_MAX     = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2ipdef/ne-ws2ipdef-multicast_mode_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2ipdef/ne-ws2ipdef-multicast_mode_type
 alias MULTICAST_MODE_TYPE = int;
 enum : int
 {
     MCAST_INCLUDE = 0x00000000,
     MCAST_EXCLUDE = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wsrm/ne-wsrm-ewindow_advance_method))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsrm/ne-wsrm-ewindow_advance_method
 alias eWINDOW_ADVANCE_METHOD = int;
 enum : int
 {
     E_WINDOW_ADVANCE_BY_TIME   = 0x00000001,
     E_WINDOW_USE_AS_DATA_CACHE = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nldef/ne-nldef-nl_prefix_origin))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nldef/ne-nldef-nl_prefix_origin
 alias NL_PREFIX_ORIGIN = int;
 enum : int
 {
@@ -297,7 +314,8 @@ enum : int
     IpPrefixOriginRouterAdvertisement = 0x00000004,
     IpPrefixOriginUnchanged           = 0x00000010,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nldef/ne-nldef-nl_suffix_origin))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nldef/ne-nldef-nl_suffix_origin
 alias NL_SUFFIX_ORIGIN = int;
 enum : int
 {
@@ -315,7 +333,8 @@ enum : int
     IpSuffixOriginRandom           = 0x00000005,
     IpSuffixOriginUnchanged        = 0x00000010,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nldef/ne-nldef-nl_dad_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nldef/ne-nldef-nl_dad_state
 alias NL_DAD_STATE = int;
 enum : int
 {
@@ -330,7 +349,8 @@ enum : int
     IpDadStateDeprecated = 0x00000003,
     IpDadStatePreferred  = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nldef/ne-nldef-nl_route_protocol))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nldef/ne-nldef-nl_route_protocol
 alias NL_ROUTE_PROTOCOL = int;
 enum : int
 {
@@ -398,7 +418,8 @@ enum : int
     MIB_IPPROTO_NT_STATIC_NON_DOD = 0x00002717,
     PROTO_IP_NT_STATIC_NON_DOD    = 0x00002717,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nldef/ne-nldef-nl_address_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nldef/ne-nldef-nl_address_type
 alias NL_ADDRESS_TYPE = int;
 enum : int
 {
@@ -409,7 +430,8 @@ enum : int
     NlatBroadcast   = 0x00000004,
     NlatInvalid     = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nldef/ne-nldef-nl_route_origin))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nldef/ne-nldef-nl_route_origin
 alias NL_ROUTE_ORIGIN = int;
 enum : int
 {
@@ -419,7 +441,8 @@ enum : int
     NlroRouterAdvertisement = 0x00000003,
     Nlro6to4                = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nldef/ne-nldef-nl_neighbor_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nldef/ne-nldef-nl_neighbor_state
 alias NL_NEIGHBOR_STATE = int;
 enum : int
 {
@@ -432,7 +455,8 @@ enum : int
     NlnsPermanent   = 0x00000006,
     NlnsMaximum     = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nldef/ne-nldef-nl_link_local_address_behavior))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nldef/ne-nldef-nl_link_local_address_behavior
 alias NL_LINK_LOCAL_ADDRESS_BEHAVIOR = int;
 enum : int
 {
@@ -441,7 +465,8 @@ enum : int
     LinkLocalAlwaysOn  = 0x00000002,
     LinkLocalUnchanged = 0xffffffff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nldef/ne-nldef-nl_router_discovery_behavior))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nldef/ne-nldef-nl_router_discovery_behavior
 alias NL_ROUTER_DISCOVERY_BEHAVIOR = int;
 enum : int
 {
@@ -450,6 +475,7 @@ enum : int
     RouterDiscoveryDhcp      = 0x00000002,
     RouterDiscoveryUnchanged = 0xffffffff,
 }
+
 alias NL_BANDWIDTH_FLAG = int;
 enum : int
 {
@@ -457,6 +483,7 @@ enum : int
     NlbwEnabled   = 0x00000001,
     NlbwUnchanged = 0xffffffff,
 }
+
 alias NL_NETWORK_CATEGORY = int;
 enum : int
 {
@@ -466,6 +493,7 @@ enum : int
     NetworkCategoryUnchanged           = 0xffffffff,
     NetworkCategoryUnknown             = 0xffffffff,
 }
+
 alias NL_INTERFACE_NETWORK_CATEGORY_STATE = int;
 enum : int
 {
@@ -475,7 +503,8 @@ enum : int
     NlincDomainAuthenticated = 0x00000003,
     NlincCategoryStateMax    = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nldef/ne-nldef-nl_network_connectivity_level_hint))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nldef/ne-nldef-nl_network_connectivity_level_hint
 alias NL_NETWORK_CONNECTIVITY_LEVEL_HINT = int;
 enum : int
 {
@@ -486,7 +515,8 @@ enum : int
     NetworkConnectivityLevelHintConstrainedInternetAccess = 0x00000004,
     NetworkConnectivityLevelHintHidden                    = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nldef/ne-nldef-nl_network_connectivity_cost_hint))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nldef/ne-nldef-nl_network_connectivity_cost_hint
 alias NL_NETWORK_CONNECTIVITY_COST_HINT = int;
 enum : int
 {
@@ -495,7 +525,8 @@ enum : int
     NetworkConnectivityCostHintFixed        = 0x00000002,
     NetworkConnectivityCostHintVariable     = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mstcpip/ne-mstcpip-tcpstate))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mstcpip/ne-mstcpip-tcpstate
 alias TCPSTATE = int;
 enum : int
 {
@@ -512,7 +543,8 @@ enum : int
     TCPSTATE_TIME_WAIT   = 0x0000000a,
     TCPSTATE_MAX         = 0x0000000b,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mstcpip/ne-mstcpip-control_channel_trigger_status))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mstcpip/ne-mstcpip-control_channel_trigger_status
 alias CONTROL_CHANNEL_TRIGGER_STATUS = int;
 enum : int
 {
@@ -524,6 +556,7 @@ enum : int
     CONTROL_CHANNEL_TRIGGER_STATUS_TRANSPORT_DISCONNECTED  = 0x00000005,
     CONTROL_CHANNEL_TRIGGER_STATUS_SERVICE_UNAVAILABLE     = 0x00000006,
 }
+
 alias SOCKET_PRIORITY_HINT = int;
 enum : int
 {
@@ -532,6 +565,7 @@ enum : int
     SocketPriorityHintNormal      = 0x00000002,
     SocketMaximumPriorityHintType = 0x00000003,
 }
+
 alias RCVALL_VALUE = int;
 enum : int
 {
@@ -540,6 +574,7 @@ enum : int
     RCVALL_SOCKETLEVELONLY = 0x00000002,
     RCVALL_IPLEVEL         = 0x00000003,
 }
+
 alias TCP_ICW_LEVEL = int;
 enum : int
 {
@@ -551,13 +586,15 @@ enum : int
     TCP_ICW_LEVEL_COMPAT       = 0x000000fe,
     TCP_ICW_LEVEL_MAX          = 0x000000ff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mstcpip/ne-mstcpip-socket_usage_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mstcpip/ne-mstcpip-socket_usage_type
 alias SOCKET_USAGE_TYPE = int;
 enum : int
 {
     SYSTEM_CRITICAL_SOCKET = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mstcpip/ne-mstcpip-socket_security_protocol))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mstcpip/ne-mstcpip-socket_security_protocol
 alias SOCKET_SECURITY_PROTOCOL = int;
 enum : int
 {
@@ -566,6 +603,7 @@ enum : int
     SOCKET_SECURITY_PROTOCOL_IPSEC2  = 0x00000002,
     SOCKET_SECURITY_PROTOCOL_INVALID = 0x00000003,
 }
+
 alias WSA_COMPATIBILITY_BEHAVIOR_ID = int;
 enum : int
 {
@@ -573,6 +611,7 @@ enum : int
     WsaBehaviorReceiveBuffering = 0x00000001,
     WsaBehaviorAutoTuning       = 0x00000002,
 }
+
 alias Q2931_IE_TYPE = int;
 enum : int
 {
@@ -589,20 +628,23 @@ enum : int
     IE_QOSClass                  = 0x0000000a,
     IE_TransitNetworkSelection   = 0x0000000b,
 }
+
 alias AAL_TYPE = int;
 enum : int
 {
     AALTYPE_5    = 0x00000005,
     AALTYPE_USER = 0x00000010,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nsemail/ne-nsemail-napi_provider_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nsemail/ne-nsemail-napi_provider_type
 alias NAPI_PROVIDER_TYPE = int;
 enum : int
 {
     ProviderType_Application = 0x00000001,
     ProviderType_Service     = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nsemail/ne-nsemail-napi_provider_level))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nsemail/ne-nsemail-napi_provider_level
 alias NAPI_PROVIDER_LEVEL = int;
 enum : int
 {
@@ -610,6 +652,7 @@ enum : int
     ProviderLevel_Secondary = 0x00000001,
     ProviderLevel_Primary   = 0x00000002,
 }
+
 alias NLA_BLOB_DATA_TYPE = int;
 enum : int
 {
@@ -619,6 +662,7 @@ enum : int
     NLA_CONNECTIVITY    = 0x00000003,
     NLA_ICS             = 0x00000004,
 }
+
 alias NLA_CONNECTIVITY_TYPE = int;
 enum : int
 {
@@ -627,6 +671,7 @@ enum : int
     NLA_NETWORK_UNMANAGED = 0x00000002,
     NLA_NETWORK_UNKNOWN   = 0x00000003,
 }
+
 alias NLA_INTERNET = int;
 enum : int
 {
@@ -634,20 +679,23 @@ enum : int
     NLA_INTERNET_NO      = 0x00000001,
     NLA_INTERNET_YES     = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswsock/ne-mswsock-rio_notification_completion_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswsock/ne-mswsock-rio_notification_completion_type
 alias RIO_NOTIFICATION_COMPLETION_TYPE = int;
 enum : int
 {
     RIO_EVENT_COMPLETION = 0x00000001,
     RIO_IOCP_COMPLETION  = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2spi/ne-ws2spi-wsc_provider_info_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2spi/ne-ws2spi-wsc_provider_info_type
 alias WSC_PROVIDER_INFO_TYPE = int;
 enum : int
 {
     ProviderInfoLspCategories = 0x00000000,
     ProviderInfoAudit         = 0x00000001,
 }
+
 alias IPV4_OPTION_TYPE = int;
 enum : int
 {
@@ -662,6 +710,7 @@ enum : int
     IP_OPT_ROUTER_ALERT = 0x00000094,
     IP_OPT_MULTIDEST    = 0x00000095,
 }
+
 alias IP_OPTION_TIMESTAMP_FLAGS = int;
 enum : int
 {
@@ -669,6 +718,7 @@ enum : int
     IP_OPTION_TIMESTAMP_ADDRESS          = 0x00000001,
     IP_OPTION_TIMESTAMP_SPECIFIC_ADDRESS = 0x00000003,
 }
+
 alias ICMP4_UNREACH_CODE = int;
 enum : int
 {
@@ -687,30 +737,35 @@ enum : int
     ICMP4_UNREACH_HOST_TOS           = 0x0000000c,
     ICMP4_UNREACH_ADMIN              = 0x0000000d,
 }
+
 alias ICMP4_TIME_EXCEED_CODE = int;
 enum : int
 {
     ICMP4_TIME_EXCEED_TRANSIT    = 0x00000000,
     ICMP4_TIME_EXCEED_REASSEMBLY = 0x00000001,
 }
+
 alias ARP_OPCODE = int;
 enum : int
 {
     ARP_REQUEST  = 0x00000001,
     ARP_RESPONSE = 0x00000002,
 }
+
 alias ARP_HARDWARE_TYPE = int;
 enum : int
 {
     ARP_HW_ENET = 0x00000001,
     ARP_HW_802  = 0x00000006,
 }
+
 alias IGMP_MAX_RESP_CODE_TYPE = int;
 enum : int
 {
     IGMP_MAX_RESP_CODE_TYPE_NORMAL = 0x00000000,
     IGMP_MAX_RESP_CODE_TYPE_FLOAT  = 0x00000001,
 }
+
 alias IPV6_OPTION_TYPE = int;
 enum : int
 {
@@ -721,6 +776,7 @@ enum : int
     IP6OPT_JUMBO        = 0x000000c2,
     IP6OPT_NSAP_ADDR    = 0x000000c3,
 }
+
 alias ND_OPTION_TYPE = int;
 enum : int
 {
@@ -739,6 +795,7 @@ enum : int
     ND_OPT_DNSSL                  = 0x0000001f,
     ND_OPT_PREF64                 = 0x00000026,
 }
+
 alias ND_OPT_PREF64_PREFIX_LENGTH_CODE = int;
 enum : int
 {
@@ -749,12 +806,14 @@ enum : int
     ND_OPT_PREF64_PREFIX_LENGTH_40 = 0x00000004,
     ND_OPT_PREF64_PREFIX_LENGTH_32 = 0x00000005,
 }
+
 alias MLD_MAX_RESP_CODE_TYPE = int;
 enum : int
 {
     MLD_MAX_RESP_CODE_TYPE_NORMAL = 0x00000000,
     MLD_MAX_RESP_CODE_TYPE_FLOAT  = 0x00000001,
 }
+
 alias TUNNEL_SUB_TYPE = int;
 enum : int
 {
@@ -763,12 +822,14 @@ enum : int
     TUNNEL_SUB_TYPE_IPTLS = 0x00000002,
     TUNNEL_SUB_TYPE_HA    = 0x00000003,
 }
+
 alias NPI_MODULEID_TYPE = int;
 enum : int
 {
     MIT_GUID    = 0x00000001,
     MIT_IF_LUID = 0x00000002,
 }
+
 alias FALLBACK_INDEX = int;
 enum : int
 {
@@ -791,212 +852,212 @@ enum GUID ASSOCIATE_NAMERES_CONTEXT = GUID("59a38b67-d4fe-46e1-ba3c-87ea74ca3049
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-rcvall))], [])*/uint
 {
-    SIO_RCVALL           = 0x98000001,
-    SIO_RCVALL_MCAST     = 0x98000002,
-    SIO_RCVALL_IGMPMCAST = 0x98000003,
+    SIO_RCVALL           = 0x98000001U,
+    SIO_RCVALL_MCAST     = 0x98000002U,
+    SIO_RCVALL_IGMPMCAST = 0x98000003U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-keepalive-vals))], [])*/uint SIO_KEEPALIVE_VALS = 0x98000004;
-enum uint SIO_ABSORB_RTRALERT = 0x98000005;
-enum uint SIO_UCAST_IF = 0x98000006;
-enum uint SIO_LIMIT_BROADCASTS = 0x98000007;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-keepalive-vals))], [])*/uint SIO_KEEPALIVE_VALS = 0x98000004U;
+enum uint SIO_ABSORB_RTRALERT = 0x98000005U;
+enum uint SIO_UCAST_IF = 0x98000006U;
+enum uint SIO_LIMIT_BROADCASTS = 0x98000007U;
 
 enum : uint
 {
-    SIO_INDEX_BIND      = 0x98000008,
-    SIO_INDEX_MCASTIF   = 0x98000009,
-    SIO_INDEX_ADD_MCAST = 0x9800000a,
-    SIO_INDEX_DEL_MCAST = 0x9800000b,
-}
-
-enum : uint
-{
-    SIO_RCVALL_MCAST_IF = 0x9800000d,
-    SIO_RCVALL_IF       = 0x9800000e,
-}
-
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-loopback-fast-path))], [])*/uint SIO_LOOPBACK_FAST_PATH = 0x98000010;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-tcp-initial-rto))], [])*/uint SIO_TCP_INITIAL_RTO = 0x98000011;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-apply-transport-setting))], [])*/uint SIO_APPLY_TRANSPORT_SETTING = 0x98000013;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-query-transport-setting))], [])*/uint SIO_QUERY_TRANSPORT_SETTING = 0x98000014;
-
-enum : uint
-{
-    SIO_TCP_SET_ICW           = 0x98000016,
-    SIO_TCP_SET_ACK_FREQUENCY = 0x98000017,
-}
-
-enum uint SIO_SET_PRIORITY_HINT = 0x98000018;
-enum uint SIO_PRIORITY_HINT = 0x98000018;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-tcp-info))], [])*/uint SIO_TCP_INFO = 0xd8000027;
-enum uint SIO_CPU_AFFINITY = 0x98000015;
-enum uint SIO_TIMESTAMPING = 0x980000eb;
-
-enum : uint
-{
-    TIMESTAMPING_FLAG_RX = 0x00000001,
-    TIMESTAMPING_FLAG_TX = 0x00000002,
+    SIO_INDEX_BIND      = 0x98000008U,
+    SIO_INDEX_MCASTIF   = 0x98000009U,
+    SIO_INDEX_ADD_MCAST = 0x9800000aU,
+    SIO_INDEX_DEL_MCAST = 0x9800000bU,
 }
 
 enum : uint
 {
-    SO_TIMESTAMP    = 0x0000300a,
-    SO_TIMESTAMP_ID = 0x0000300b,
+    SIO_RCVALL_MCAST_IF = 0x9800000dU,
+    SIO_RCVALL_IF       = 0x9800000eU,
 }
 
-enum uint SIO_GET_TX_TIMESTAMP = 0x980000ea;
-enum ushort TCP_INITIAL_RTO_UNSPECIFIED_MAX_SYN_RETRANSMISSIONS = 0xffff;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-loopback-fast-path))], [])*/uint SIO_LOOPBACK_FAST_PATH = 0x98000010U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-tcp-initial-rto))], [])*/uint SIO_TCP_INITIAL_RTO = 0x98000011U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-apply-transport-setting))], [])*/uint SIO_APPLY_TRANSPORT_SETTING = 0x98000013U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-query-transport-setting))], [])*/uint SIO_QUERY_TRANSPORT_SETTING = 0x98000014U;
 
 enum : uint
 {
-    TCP_INITIAL_RTO_DEFAULT_RTT                     = 0x00000000,
-    TCP_INITIAL_RTO_DEFAULT_MAX_SYN_RETRANSMISSIONS = 0x00000000,
+    SIO_TCP_SET_ICW           = 0x98000016U,
+    SIO_TCP_SET_ACK_FREQUENCY = 0x98000017U,
 }
 
-enum ushort TCP_INITIAL_RTO_NO_SYN_RETRANSMISSIONS = 0xfffe;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-acquire-port-reservation))], [])*/uint SIO_ACQUIRE_PORT_RESERVATION = 0x98000064;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-release-port-reservation))], [])*/uint SIO_RELEASE_PORT_RESERVATION = 0x98000065;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-associate-port-reservation))], [])*/uint SIO_ASSOCIATE_PORT_RESERVATION = 0x98000066;
-enum uint SIO_SET_SECURITY = 0x980000c8;
-enum uint SIO_QUERY_SECURITY = 0xd80000c9;
-enum uint SIO_SET_PEER_TARGET_NAME = 0x980000ca;
-enum uint SIO_DELETE_PEER_TARGET_NAME = 0x980000cb;
+enum uint SIO_SET_PRIORITY_HINT = 0x98000018U;
+enum uint SIO_PRIORITY_HINT = 0x98000018U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-tcp-info))], [])*/uint SIO_TCP_INFO = 0xd8000027U;
+enum uint SIO_CPU_AFFINITY = 0x98000015U;
+enum uint SIO_TIMESTAMPING = 0x980000ebU;
+
+enum : uint
+{
+    TIMESTAMPING_FLAG_RX = 0x00000001U,
+    TIMESTAMPING_FLAG_TX = 0x00000002U,
+}
+
+enum : uint
+{
+    SO_TIMESTAMP    = 0x0000300aU,
+    SO_TIMESTAMP_ID = 0x0000300bU,
+}
+
+enum uint SIO_GET_TX_TIMESTAMP = 0x980000eaU;
+enum ushort TCP_INITIAL_RTO_UNSPECIFIED_MAX_SYN_RETRANSMISSIONS = cast(ushort) 0xffff;
+
+enum : uint
+{
+    TCP_INITIAL_RTO_DEFAULT_RTT                     = 0x00000000U,
+    TCP_INITIAL_RTO_DEFAULT_MAX_SYN_RETRANSMISSIONS = 0x00000000U,
+}
+
+enum ushort TCP_INITIAL_RTO_NO_SYN_RETRANSMISSIONS = cast(ushort) 0xfffe;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-acquire-port-reservation))], [])*/uint SIO_ACQUIRE_PORT_RESERVATION = 0x98000064U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-release-port-reservation))], [])*/uint SIO_RELEASE_PORT_RESERVATION = 0x98000065U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-associate-port-reservation))], [])*/uint SIO_ASSOCIATE_PORT_RESERVATION = 0x98000066U;
+enum uint SIO_SET_SECURITY = 0x980000c8U;
+enum uint SIO_QUERY_SECURITY = 0xd80000c9U;
+enum uint SIO_SET_PEER_TARGET_NAME = 0x980000caU;
+enum uint SIO_DELETE_PEER_TARGET_NAME = 0x980000cbU;
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-query-wfp-connection-redirect-records))], [])*/uint
 {
-    SIO_QUERY_WFP_CONNECTION_REDIRECT_RECORDS = 0x980000dc,
-    SIO_QUERY_WFP_CONNECTION_REDIRECT_CONTEXT = 0x980000dd,
+    SIO_QUERY_WFP_CONNECTION_REDIRECT_RECORDS = 0x980000dcU,
+    SIO_QUERY_WFP_CONNECTION_REDIRECT_CONTEXT = 0x980000ddU,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-set-wfp-connection-redirect-records))], [])*/uint SIO_SET_WFP_CONNECTION_REDIRECT_RECORDS = 0x980000de;
-enum uint SIO_SOCKET_USAGE_NOTIFICATION = 0x980000cc;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-set-wfp-connection-redirect-records))], [])*/uint SIO_SET_WFP_CONNECTION_REDIRECT_RECORDS = 0x980000deU;
+enum uint SIO_SOCKET_USAGE_NOTIFICATION = 0x980000ccU;
 
 enum : uint
 {
-    SOCKET_SETTINGS_GUARANTEE_ENCRYPTION                      = 0x00000001,
-    SOCKET_SETTINGS_ALLOW_INSECURE                            = 0x00000002,
-    SOCKET_SETTINGS_IPSEC_SKIP_FILTER_INSTANTIATION           = 0x00000001,
-    SOCKET_SETTINGS_IPSEC_OPTIONAL_PEER_NAME_VERIFICATION     = 0x00000002,
-    SOCKET_SETTINGS_IPSEC_ALLOW_FIRST_INBOUND_PKT_UNENCRYPTED = 0x00000004,
+    SOCKET_SETTINGS_GUARANTEE_ENCRYPTION                      = 0x00000001U,
+    SOCKET_SETTINGS_ALLOW_INSECURE                            = 0x00000002U,
+    SOCKET_SETTINGS_IPSEC_SKIP_FILTER_INSTANTIATION           = 0x00000001U,
+    SOCKET_SETTINGS_IPSEC_OPTIONAL_PEER_NAME_VERIFICATION     = 0x00000002U,
+    SOCKET_SETTINGS_IPSEC_ALLOW_FIRST_INBOUND_PKT_UNENCRYPTED = 0x00000004U,
 }
 
-enum uint SOCKET_SETTINGS_IPSEC_PEER_NAME_IS_RAW_FORMAT = 0x00000008;
-enum uint SOCKET_QUERY_IPSEC2_ABORT_CONNECTION_ON_FIELD_CHANGE = 0x00000001;
+enum uint SOCKET_SETTINGS_IPSEC_PEER_NAME_IS_RAW_FORMAT = 0x00000008U;
+enum uint SOCKET_QUERY_IPSEC2_ABORT_CONNECTION_ON_FIELD_CHANGE = 0x00000001U;
 
 enum : uint
 {
-    SOCKET_QUERY_IPSEC2_FIELD_MASK_MM_SA_ID = 0x00000001,
-    SOCKET_QUERY_IPSEC2_FIELD_MASK_QM_SA_ID = 0x00000002,
+    SOCKET_QUERY_IPSEC2_FIELD_MASK_MM_SA_ID = 0x00000001U,
+    SOCKET_QUERY_IPSEC2_FIELD_MASK_QM_SA_ID = 0x00000002U,
 }
 
 enum : uint
 {
-    SOCKET_INFO_CONNECTION_SECURED      = 0x00000001,
-    SOCKET_INFO_CONNECTION_ENCRYPTED    = 0x00000002,
-    SOCKET_INFO_CONNECTION_IMPERSONATED = 0x00000004,
+    SOCKET_INFO_CONNECTION_SECURED      = 0x00000001U,
+    SOCKET_INFO_CONNECTION_ENCRYPTED    = 0x00000002U,
+    SOCKET_INFO_CONNECTION_IMPERSONATED = 0x00000004U,
 }
 
-enum uint SIO_QUERY_WFP_ALE_ENDPOINT_HANDLE = 0x580000cd;
-enum uint SIO_QUERY_RSS_SCALABILITY_INFO = 0x580000d2;
+enum uint SIO_QUERY_WFP_ALE_ENDPOINT_HANDLE = 0x580000cdU;
+enum uint SIO_QUERY_RSS_SCALABILITY_INFO = 0x580000d2U;
 
 enum : uint
 {
-    IN4ADDR_ANY                   = 0x00000000,
-    IN4ADDR_LOOPBACK              = 0x0100007f,
-    IN4ADDR_BROADCAST             = 0xffffffff,
-    IN4ADDR_LOOPBACKPREFIX_LENGTH = 0x00000008,
+    IN4ADDR_ANY                   = 0x00000000U,
+    IN4ADDR_LOOPBACK              = 0x0100007fU,
+    IN4ADDR_BROADCAST             = 0xffffffffU,
+    IN4ADDR_LOOPBACKPREFIX_LENGTH = 0x00000008U,
 }
 
-enum uint IN4ADDR_LINKLOCALPREFIX_LENGTH = 0x00000010;
-enum uint IN4ADDR_MULTICASTPREFIX_LENGTH = 0x00000004;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-set-compatibility-mode))], [])*/uint SIO_SET_COMPATIBILITY_MODE = 0x9800012c;
+enum uint IN4ADDR_LINKLOCALPREFIX_LENGTH = 0x00000010U;
+enum uint IN4ADDR_MULTICASTPREFIX_LENGTH = 0x00000004U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-set-compatibility-mode))], [])*/uint SIO_SET_COMPATIBILITY_MODE = 0x9800012cU;
 
 enum : uint
 {
-    RIO_MSG_DONT_NOTIFY = 0x00000001,
-    RIO_MSG_DEFER       = 0x00000002,
-    RIO_MSG_WAITALL     = 0x00000004,
-    RIO_MSG_COMMIT_ONLY = 0x00000008,
+    RIO_MSG_DONT_NOTIFY = 0x00000001U,
+    RIO_MSG_DEFER       = 0x00000002U,
+    RIO_MSG_WAITALL     = 0x00000004U,
+    RIO_MSG_COMMIT_ONLY = 0x00000008U,
 }
 
-enum uint RIO_MAX_CQ_SIZE = 0x08000000;
-enum uint RIO_CORRUPT_CQ = 0xffffffff;
+enum uint RIO_MAX_CQ_SIZE = 0x08000000U;
+enum uint RIO_CORRUPT_CQ = 0xffffffffU;
 
 enum : ushort
 {
-    AF_UNIX    = 0x0001,
-    AF_IMPLINK = 0x0003,
-}
-
-enum : ushort
-{
-    AF_PUP   = 0x0004,
-    AF_CHAOS = 0x0005,
+    AF_UNIX    = cast(ushort) 0x0001,
+    AF_IMPLINK = cast(ushort) 0x0003,
 }
 
 enum : ushort
 {
-    AF_NS      = 0x0006,
-    AF_IPX     = 0x0006,
-    AF_ISO     = 0x0007,
-    AF_OSI     = 0x0007,
-    AF_ECMA    = 0x0008,
-    AF_DATAKIT = 0x0009,
-}
-
-enum ushort AF_CCITT = 0x000a;
-
-enum : ushort
-{
-    AF_SNA    = 0x000b,
-    AF_DECnet = 0x000c,
-    AF_DLI    = 0x000d,
-    AF_LAT    = 0x000e,
-    AF_HYLINK = 0x000f,
-}
-
-enum ushort AF_APPLETALK = 0x0010;
-enum ushort AF_NETBIOS = 0x0011;
-enum ushort AF_VOICEVIEW = 0x0012;
-enum ushort AF_FIREFOX = 0x0013;
-enum ushort AF_UNKNOWN1 = 0x0014;
-
-enum : ushort
-{
-    AF_BAN     = 0x0015,
-    AF_ATM     = 0x0016,
-    AF_CLUSTER = 0x0018,
-}
-
-enum ushort AF_12844 = 0x0019;
-
-enum : ushort
-{
-    AF_IRDA   = 0x001a,
-    AF_NETDES = 0x001c,
+    AF_PUP   = cast(ushort) 0x0004,
+    AF_CHAOS = cast(ushort) 0x0005,
 }
 
 enum : ushort
 {
-    AF_MAX        = 0x001d,
-    AF_TCNPROCESS = 0x001d,
-    AF_TCNMESSAGE = 0x001e,
+    AF_NS      = cast(ushort) 0x0006,
+    AF_IPX     = cast(ushort) 0x0006,
+    AF_ISO     = cast(ushort) 0x0007,
+    AF_OSI     = cast(ushort) 0x0007,
+    AF_ECMA    = cast(ushort) 0x0008,
+    AF_DATAKIT = cast(ushort) 0x0009,
 }
 
-enum ushort AF_ICLFXBM = 0x001f;
+enum ushort AF_CCITT = cast(ushort) 0x000a;
 
 enum : ushort
 {
-    AF_LINK   = 0x0021,
-    AF_HYPERV = 0x0022,
+    AF_SNA    = cast(ushort) 0x000b,
+    AF_DECnet = cast(ushort) 0x000c,
+    AF_DLI    = cast(ushort) 0x000d,
+    AF_LAT    = cast(ushort) 0x000e,
+    AF_HYLINK = cast(ushort) 0x000f,
+}
+
+enum ushort AF_APPLETALK = cast(ushort) 0x0010;
+enum ushort AF_NETBIOS = cast(ushort) 0x0011;
+enum ushort AF_VOICEVIEW = cast(ushort) 0x0012;
+enum ushort AF_FIREFOX = cast(ushort) 0x0013;
+enum ushort AF_UNKNOWN1 = cast(ushort) 0x0014;
+
+enum : ushort
+{
+    AF_BAN     = cast(ushort) 0x0015,
+    AF_ATM     = cast(ushort) 0x0016,
+    AF_CLUSTER = cast(ushort) 0x0018,
+}
+
+enum ushort AF_12844 = cast(ushort) 0x0019;
+
+enum : ushort
+{
+    AF_IRDA   = cast(ushort) 0x001a,
+    AF_NETDES = cast(ushort) 0x001c,
+}
+
+enum : ushort
+{
+    AF_MAX        = cast(ushort) 0x001d,
+    AF_TCNPROCESS = cast(ushort) 0x001d,
+    AF_TCNMESSAGE = cast(ushort) 0x001e,
+}
+
+enum ushort AF_ICLFXBM = cast(ushort) 0x001f;
+
+enum : ushort
+{
+    AF_LINK   = cast(ushort) 0x0021,
+    AF_HYPERV = cast(ushort) 0x0022,
 }
 
 enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sol-socket-socket-options))], [])*/int SOL_SOCKET = 0x0000ffff;
 
 enum : uint
 {
-    SOL_IP   = 0x0000fffb,
-    SOL_IPV6 = 0x0000fffa,
+    SOL_IP   = 0x0000fffbU,
+    SOL_IPV6 = 0x0000fffaU,
 }
 
 enum int SO_DEBUG = 0x00000001;
@@ -1030,8 +1091,8 @@ enum : int
 
 enum int SO_MAX_MSG_SIZE = 0x00002003;
 enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/so-conditional-accept))], [])*/int SO_CONDITIONAL_ACCEPT = 0x00003002;
-enum uint SO_PAUSE_ACCEPT = 0x00003003;
-enum uint SO_COMPARTMENT_ID = 0x00003004;
+enum uint SO_PAUSE_ACCEPT = 0x00003003U;
+enum uint SO_COMPARTMENT_ID = 0x00003004U;
 enum int SO_RANDOMIZE_PORT = 0x00003005;
 enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/so-port-scalability))], [])*/int SO_PORT_SCALABILITY = 0x00003006;
 
@@ -1041,329 +1102,329 @@ enum : int
     SO_REUSE_MULTICASTPORT = 0x00003008,
 }
 
-enum uint SO_ORIGINAL_DST = 0x0000300f;
-enum uint IP6T_SO_ORIGINAL_DST = 0x0000300f;
+enum uint SO_ORIGINAL_DST = 0x0000300fU;
+enum uint IP6T_SO_ORIGINAL_DST = 0x0000300fU;
 
 enum : uint
 {
-    SO_RECEIVED_HOPLIMIT  = 0x00003010,
-    SO_RECEIVED_PROCESSOR = 0x00003011,
+    SO_RECEIVED_HOPLIMIT  = 0x00003010U,
+    SO_RECEIVED_PROCESSOR = 0x00003011U,
 }
 
-enum uint WSK_SO_BASE = 0x00004000;
+enum uint WSK_SO_BASE = 0x00004000U;
 enum int TCP_NODELAY = 0x00000001;
-enum uint _SS_MAXSIZE = 0x00000080;
+enum uint _SS_MAXSIZE = 0x00000080U;
 
 enum : uint
 {
-    IOC_UNIX     = 0x00000000,
-    IOC_WS2      = 0x08000000,
-    IOC_PROTOCOL = 0x10000000,
+    IOC_UNIX     = 0x00000000U,
+    IOC_WS2      = 0x08000000U,
+    IOC_PROTOCOL = 0x10000000U,
 }
 
-enum uint IOC_VENDOR = 0x18000000;
-enum uint SIO_ASSOCIATE_HANDLE = 0x88000001;
-enum uint SIO_ENABLE_CIRCULAR_QUEUEING = 0x28000002;
-enum uint SIO_FIND_ROUTE = 0x48000003;
+enum uint IOC_VENDOR = 0x18000000U;
+enum uint SIO_ASSOCIATE_HANDLE = 0x88000001U;
+enum uint SIO_ENABLE_CIRCULAR_QUEUEING = 0x28000002U;
+enum uint SIO_FIND_ROUTE = 0x48000003U;
 
 enum : uint
 {
-    SIO_FLUSH                 = 0x28000004,
-    SIO_GET_BROADCAST_ADDRESS = 0x48000005,
+    SIO_FLUSH                 = 0x28000004U,
+    SIO_GET_BROADCAST_ADDRESS = 0x48000005U,
 }
 
-enum uint SIO_GET_EXTENSION_FUNCTION_POINTER = 0xc8000006;
+enum uint SIO_GET_EXTENSION_FUNCTION_POINTER = 0xc8000006U;
 
 enum : uint
 {
-    SIO_GET_QOS       = 0xc8000007,
-    SIO_GET_GROUP_QOS = 0xc8000008,
+    SIO_GET_QOS       = 0xc8000007U,
+    SIO_GET_GROUP_QOS = 0xc8000008U,
 }
 
-enum uint SIO_MULTIPOINT_LOOPBACK = 0x88000009;
-enum uint SIO_MULTICAST_SCOPE = 0x8800000a;
+enum uint SIO_MULTIPOINT_LOOPBACK = 0x88000009U;
+enum uint SIO_MULTICAST_SCOPE = 0x8800000aU;
 
 enum : uint
 {
-    SIO_SET_QOS       = 0x8800000b,
-    SIO_SET_GROUP_QOS = 0x8800000c,
+    SIO_SET_QOS       = 0x8800000bU,
+    SIO_SET_GROUP_QOS = 0x8800000cU,
 }
 
-enum uint SIO_TRANSLATE_HANDLE = 0xc800000d;
+enum uint SIO_TRANSLATE_HANDLE = 0xc800000dU;
 
 enum : uint
 {
-    SIO_ROUTING_INTERFACE_QUERY  = 0xc8000014,
-    SIO_ROUTING_INTERFACE_CHANGE = 0x88000015,
+    SIO_ROUTING_INTERFACE_QUERY  = 0xc8000014U,
+    SIO_ROUTING_INTERFACE_CHANGE = 0x88000015U,
 }
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-address-list-query))], [])*/uint
 {
-    SIO_ADDRESS_LIST_QUERY  = 0x48000016,
-    SIO_ADDRESS_LIST_CHANGE = 0x28000017,
+    SIO_ADDRESS_LIST_QUERY  = 0x48000016U,
+    SIO_ADDRESS_LIST_CHANGE = 0x28000017U,
 }
 
-enum uint SIO_QUERY_TARGET_PNP_HANDLE = 0x48000018;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-query-rss-processor-info))], [])*/uint SIO_QUERY_RSS_PROCESSOR_INFO = 0x48000025;
-enum uint SIO_ADDRESS_LIST_SORT = 0xc8000019;
+enum uint SIO_QUERY_TARGET_PNP_HANDLE = 0x48000018U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sio-query-rss-processor-info))], [])*/uint SIO_QUERY_RSS_PROCESSOR_INFO = 0x48000025U;
+enum uint SIO_ADDRESS_LIST_SORT = 0xc8000019U;
 
 enum : uint
 {
-    SIO_RESERVED_1 = 0x8800001a,
-    SIO_RESERVED_2 = 0x88000021,
+    SIO_RESERVED_1 = 0x8800001aU,
+    SIO_RESERVED_2 = 0x88000021U,
 }
 
-enum uint SIO_GET_MULTIPLE_EXTENSION_FUNCTION_POINTER = 0xc8000024;
+enum uint SIO_GET_MULTIPLE_EXTENSION_FUNCTION_POINTER = 0xc8000024U;
 
 enum : uint
 {
-    IPPORT_TCPMUX      = 0x00000001,
-    IPPORT_ECHO        = 0x00000007,
-    IPPORT_DISCARD     = 0x00000009,
-    IPPORT_SYSTAT      = 0x0000000b,
-    IPPORT_DAYTIME     = 0x0000000d,
-    IPPORT_NETSTAT     = 0x0000000f,
-    IPPORT_QOTD        = 0x00000011,
-    IPPORT_MSP         = 0x00000012,
-    IPPORT_CHARGEN     = 0x00000013,
-    IPPORT_FTP_DATA    = 0x00000014,
-    IPPORT_FTP         = 0x00000015,
-    IPPORT_TELNET      = 0x00000017,
-    IPPORT_SMTP        = 0x00000019,
-    IPPORT_TIMESERVER  = 0x00000025,
-    IPPORT_NAMESERVER  = 0x0000002a,
-    IPPORT_WHOIS       = 0x0000002b,
-    IPPORT_MTP         = 0x00000039,
-    IPPORT_TFTP        = 0x00000045,
-    IPPORT_RJE         = 0x0000004d,
-    IPPORT_FINGER      = 0x0000004f,
-    IPPORT_TTYLINK     = 0x00000057,
-    IPPORT_SUPDUP      = 0x0000005f,
-    IPPORT_POP3        = 0x0000006e,
-    IPPORT_NTP         = 0x0000007b,
-    IPPORT_EPMAP       = 0x00000087,
-    IPPORT_NETBIOS_NS  = 0x00000089,
-    IPPORT_NETBIOS_DGM = 0x0000008a,
-    IPPORT_NETBIOS_SSN = 0x0000008b,
-}
-
-enum : uint
-{
-    IPPORT_IMAP         = 0x0000008f,
-    IPPORT_SNMP         = 0x000000a1,
-    IPPORT_SNMP_TRAP    = 0x000000a2,
-    IPPORT_IMAP3        = 0x000000dc,
-    IPPORT_LDAP         = 0x00000185,
-    IPPORT_HTTPS        = 0x000001bb,
-    IPPORT_MICROSOFT_DS = 0x000001bd,
+    IPPORT_TCPMUX      = 0x00000001U,
+    IPPORT_ECHO        = 0x00000007U,
+    IPPORT_DISCARD     = 0x00000009U,
+    IPPORT_SYSTAT      = 0x0000000bU,
+    IPPORT_DAYTIME     = 0x0000000dU,
+    IPPORT_NETSTAT     = 0x0000000fU,
+    IPPORT_QOTD        = 0x00000011U,
+    IPPORT_MSP         = 0x00000012U,
+    IPPORT_CHARGEN     = 0x00000013U,
+    IPPORT_FTP_DATA    = 0x00000014U,
+    IPPORT_FTP         = 0x00000015U,
+    IPPORT_TELNET      = 0x00000017U,
+    IPPORT_SMTP        = 0x00000019U,
+    IPPORT_TIMESERVER  = 0x00000025U,
+    IPPORT_NAMESERVER  = 0x0000002aU,
+    IPPORT_WHOIS       = 0x0000002bU,
+    IPPORT_MTP         = 0x00000039U,
+    IPPORT_TFTP        = 0x00000045U,
+    IPPORT_RJE         = 0x0000004dU,
+    IPPORT_FINGER      = 0x0000004fU,
+    IPPORT_TTYLINK     = 0x00000057U,
+    IPPORT_SUPDUP      = 0x0000005fU,
+    IPPORT_POP3        = 0x0000006eU,
+    IPPORT_NTP         = 0x0000007bU,
+    IPPORT_EPMAP       = 0x00000087U,
+    IPPORT_NETBIOS_NS  = 0x00000089U,
+    IPPORT_NETBIOS_DGM = 0x0000008aU,
+    IPPORT_NETBIOS_SSN = 0x0000008bU,
 }
 
 enum : uint
 {
-    IPPORT_EXECSERVER  = 0x00000200,
-    IPPORT_LOGINSERVER = 0x00000201,
+    IPPORT_IMAP         = 0x0000008fU,
+    IPPORT_SNMP         = 0x000000a1U,
+    IPPORT_SNMP_TRAP    = 0x000000a2U,
+    IPPORT_IMAP3        = 0x000000dcU,
+    IPPORT_LDAP         = 0x00000185U,
+    IPPORT_HTTPS        = 0x000001bbU,
+    IPPORT_MICROSOFT_DS = 0x000001bdU,
 }
 
 enum : uint
 {
-    IPPORT_CMDSERVER      = 0x00000202,
-    IPPORT_EFSSERVER      = 0x00000208,
-    IPPORT_BIFFUDP        = 0x00000200,
-    IPPORT_WHOSERVER      = 0x00000201,
-    IPPORT_ROUTESERVER    = 0x00000208,
-    IPPORT_RESERVED       = 0x00000400,
-    IPPORT_REGISTERED_MIN = 0x00000400,
-    IPPORT_REGISTERED_MAX = 0x0000bfff,
+    IPPORT_EXECSERVER  = 0x00000200U,
+    IPPORT_LOGINSERVER = 0x00000201U,
 }
 
 enum : uint
 {
-    IPPORT_DYNAMIC_MIN = 0x0000c000,
-    IPPORT_DYNAMIC_MAX = 0x0000ffff,
+    IPPORT_CMDSERVER      = 0x00000202U,
+    IPPORT_EFSSERVER      = 0x00000208U,
+    IPPORT_BIFFUDP        = 0x00000200U,
+    IPPORT_WHOSERVER      = 0x00000201U,
+    IPPORT_ROUTESERVER    = 0x00000208U,
+    IPPORT_RESERVED       = 0x00000400U,
+    IPPORT_REGISTERED_MIN = 0x00000400U,
+    IPPORT_REGISTERED_MAX = 0x0000bfffU,
 }
 
 enum : uint
 {
-    IN_CLASSA_NET    = 0xff000000,
-    IN_CLASSA_NSHIFT = 0x00000018,
-    IN_CLASSA_HOST   = 0x00ffffff,
-    IN_CLASSA_MAX    = 0x00000080,
-    IN_CLASSB_NET    = 0xffff0000,
-    IN_CLASSB_NSHIFT = 0x00000010,
-    IN_CLASSB_HOST   = 0x0000ffff,
-    IN_CLASSB_MAX    = 0x00010000,
-    IN_CLASSC_NET    = 0xffffff00,
-    IN_CLASSC_NSHIFT = 0x00000008,
-    IN_CLASSC_HOST   = 0x000000ff,
-    IN_CLASSD_NET    = 0xf0000000,
-    IN_CLASSD_NSHIFT = 0x0000001c,
-    IN_CLASSD_HOST   = 0x0fffffff,
+    IPPORT_DYNAMIC_MIN = 0x0000c000U,
+    IPPORT_DYNAMIC_MAX = 0x0000ffffU,
 }
 
 enum : uint
 {
-    INADDR_LOOPBACK = 0x7f000001,
-    INADDR_NONE     = 0xffffffff,
-}
-
-enum uint IOCPARM_MASK = 0x0000007f;
-
-enum : uint
-{
-    IOC_VOID = 0x20000000,
-    IOC_OUT  = 0x40000000,
-    IOC_IN   = 0x80000000,
-}
-
-enum : uint
-{
-    MSG_TRUNC  = 0x00000100,
-    MSG_CTRUNC = 0x00000200,
+    IN_CLASSA_NET    = 0xff000000U,
+    IN_CLASSA_NSHIFT = 0x00000018U,
+    IN_CLASSA_HOST   = 0x00ffffffU,
+    IN_CLASSA_MAX    = 0x00000080U,
+    IN_CLASSB_NET    = 0xffff0000U,
+    IN_CLASSB_NSHIFT = 0x00000010U,
+    IN_CLASSB_HOST   = 0x0000ffffU,
+    IN_CLASSB_MAX    = 0x00010000U,
+    IN_CLASSC_NET    = 0xffffff00U,
+    IN_CLASSC_NSHIFT = 0x00000008U,
+    IN_CLASSC_HOST   = 0x000000ffU,
+    IN_CLASSD_NET    = 0xf0000000U,
+    IN_CLASSD_NSHIFT = 0x0000001cU,
+    IN_CLASSD_HOST   = 0x0fffffffU,
 }
 
 enum : uint
 {
-    MSG_BCAST    = 0x00000400,
-    MSG_MCAST    = 0x00000800,
-    MSG_ERRQUEUE = 0x00001000,
+    INADDR_LOOPBACK = 0x7f000001U,
+    INADDR_NONE     = 0xffffffffU,
 }
 
-enum uint AI_PASSIVE = 0x00000001;
-enum uint AI_CANONNAME = 0x00000002;
+enum uint IOCPARM_MASK = 0x0000007fU;
 
 enum : uint
 {
-    AI_NUMERICHOST = 0x00000004,
-    AI_NUMERICSERV = 0x00000008,
-}
-
-enum uint AI_DNS_ONLY = 0x00000010;
-enum uint AI_FORCE_CLEAR_TEXT = 0x00000020;
-enum uint AI_BYPASS_DNS_CACHE = 0x00000040;
-enum uint AI_RETURN_TTL = 0x00000080;
-
-enum : uint
-{
-    AI_ALL        = 0x00000100,
-    AI_ADDRCONFIG = 0x00000400,
-}
-
-enum uint AI_V4MAPPED = 0x00000800;
-enum uint AI_NON_AUTHORITATIVE = 0x00004000;
-enum uint AI_SECURE = 0x00008000;
-enum uint AI_RETURN_PREFERRED_NAMES = 0x00010000;
-
-enum : uint
-{
-    AI_FQDN       = 0x00020000,
-    AI_FILESERVER = 0x00040000,
-}
-
-enum uint AI_DISABLE_IDN_ENCODING = 0x00080000;
-enum uint AI_SECURE_WITH_FALLBACK = 0x00100000;
-enum uint AI_EXCLUSIVE_CUSTOM_SERVERS = 0x00200000;
-enum uint AI_RETURN_RESPONSE_FLAGS = 0x10000000;
-enum uint AI_REQUIRE_SECURE = 0x20000000;
-enum uint AI_RESOLUTION_HANDLE = 0x40000000;
-enum uint AI_EXTENDED = 0x80000000;
-
-enum : uint
-{
-    ADDRINFOEX_VERSION_2 = 0x00000002,
-    ADDRINFOEX_VERSION_3 = 0x00000003,
-    ADDRINFOEX_VERSION_4 = 0x00000004,
-    ADDRINFOEX_VERSION_5 = 0x00000005,
-    ADDRINFOEX_VERSION_6 = 0x00000006,
-    ADDRINFOEX_VERSION_7 = 0x00000007,
+    IOC_VOID = 0x20000000U,
+    IOC_OUT  = 0x40000000U,
+    IOC_IN   = 0x80000000U,
 }
 
 enum : uint
 {
-    AI_DNS_SERVER_TYPE_UDP     = 0x00000001,
-    AI_DNS_SERVER_TYPE_DOH     = 0x00000002,
-    AI_DNS_SERVER_TYPE_DOT     = 0x00000003,
-    AI_DNS_SERVER_UDP_FALLBACK = 0x00000001,
+    MSG_TRUNC  = 0x00000100U,
+    MSG_CTRUNC = 0x00000200U,
 }
 
 enum : uint
 {
-    AI_DNS_RESPONSE_SECURE   = 0x00000001,
-    AI_DNS_RESPONSE_HOSTFILE = 0x00000002,
+    MSG_BCAST    = 0x00000400U,
+    MSG_MCAST    = 0x00000800U,
+    MSG_ERRQUEUE = 0x00001000U,
 }
 
-enum ulong AI_EXTRA_DNSSEC_REQUIRED = 0x0000000000000001;
+enum uint AI_PASSIVE = 0x00000001U;
+enum uint AI_CANONNAME = 0x00000002U;
 
 enum : uint
 {
-    NS_ALL         = 0x00000000,
-    NS_SAP         = 0x00000001,
-    NS_NDS         = 0x00000002,
-    NS_PEER_BROWSE = 0x00000003,
+    AI_NUMERICHOST = 0x00000004U,
+    AI_NUMERICSERV = 0x00000008U,
 }
+
+enum uint AI_DNS_ONLY = 0x00000010U;
+enum uint AI_FORCE_CLEAR_TEXT = 0x00000020U;
+enum uint AI_BYPASS_DNS_CACHE = 0x00000040U;
+enum uint AI_RETURN_TTL = 0x00000080U;
 
 enum : uint
 {
-    NS_SLP         = 0x00000005,
-    NS_DHCP        = 0x00000006,
-    NS_TCPIP_LOCAL = 0x0000000a,
-    NS_TCPIP_HOSTS = 0x0000000b,
+    AI_ALL        = 0x00000100U,
+    AI_ADDRCONFIG = 0x00000400U,
 }
+
+enum uint AI_V4MAPPED = 0x00000800U;
+enum uint AI_NON_AUTHORITATIVE = 0x00004000U;
+enum uint AI_SECURE = 0x00008000U;
+enum uint AI_RETURN_PREFERRED_NAMES = 0x00010000U;
 
 enum : uint
 {
-    NS_DNS   = 0x0000000c,
-    NS_NETBT = 0x0000000d,
+    AI_FQDN       = 0x00020000U,
+    AI_FILESERVER = 0x00040000U,
 }
+
+enum uint AI_DISABLE_IDN_ENCODING = 0x00080000U;
+enum uint AI_SECURE_WITH_FALLBACK = 0x00100000U;
+enum uint AI_EXCLUSIVE_CUSTOM_SERVERS = 0x00200000U;
+enum uint AI_RETURN_RESPONSE_FLAGS = 0x10000000U;
+enum uint AI_REQUIRE_SECURE = 0x20000000U;
+enum uint AI_RESOLUTION_HANDLE = 0x40000000U;
+enum uint AI_EXTENDED = 0x80000000U;
 
 enum : uint
 {
-    NS_WINS  = 0x0000000e,
-    NS_NLA   = 0x0000000f,
-    NS_NBP   = 0x00000014,
-    NS_MS    = 0x0000001e,
-    NS_STDA  = 0x0000001f,
-    NS_NTDS  = 0x00000020,
-    NS_EMAIL = 0x00000025,
-}
-
-enum : uint
-{
-    NS_X500    = 0x00000028,
-    NS_NIS     = 0x00000029,
-    NS_NISPLUS = 0x0000002a,
-}
-
-enum : uint
-{
-    NS_WRQ    = 0x00000032,
-    NS_NETDES = 0x0000003c,
-}
-
-enum : uint
-{
-    NI_NOFQDN      = 0x00000001,
-    NI_NUMERICHOST = 0x00000002,
-}
-
-enum uint NI_NAMEREQD = 0x00000004;
-enum uint NI_NUMERICSERV = 0x00000008;
-enum uint NI_DGRAM = 0x00000010;
-
-enum : uint
-{
-    NI_MAXHOST = 0x00000401,
-    NI_MAXSERV = 0x00000020,
+    ADDRINFOEX_VERSION_2 = 0x00000002U,
+    ADDRINFOEX_VERSION_3 = 0x00000003U,
+    ADDRINFOEX_VERSION_4 = 0x00000004U,
+    ADDRINFOEX_VERSION_5 = 0x00000005U,
+    ADDRINFOEX_VERSION_6 = 0x00000006U,
+    ADDRINFOEX_VERSION_7 = 0x00000007U,
 }
 
 enum : uint
 {
-    IFF_UP        = 0x00000001,
-    IFF_BROADCAST = 0x00000002,
+    AI_DNS_SERVER_TYPE_UDP     = 0x00000001U,
+    AI_DNS_SERVER_TYPE_DOH     = 0x00000002U,
+    AI_DNS_SERVER_TYPE_DOT     = 0x00000003U,
+    AI_DNS_SERVER_UDP_FALLBACK = 0x00000001U,
 }
 
-enum uint IFF_LOOPBACK = 0x00000004;
-enum uint IFF_POINTTOPOINT = 0x00000008;
-enum uint IFF_MULTICAST = 0x00000010;
+enum : uint
+{
+    AI_DNS_RESPONSE_SECURE   = 0x00000001U,
+    AI_DNS_RESPONSE_HOSTFILE = 0x00000002U,
+}
+
+enum ulong AI_EXTRA_DNSSEC_REQUIRED = 0x0000000000000001UL;
+
+enum : uint
+{
+    NS_ALL         = 0x00000000U,
+    NS_SAP         = 0x00000001U,
+    NS_NDS         = 0x00000002U,
+    NS_PEER_BROWSE = 0x00000003U,
+}
+
+enum : uint
+{
+    NS_SLP         = 0x00000005U,
+    NS_DHCP        = 0x00000006U,
+    NS_TCPIP_LOCAL = 0x0000000aU,
+    NS_TCPIP_HOSTS = 0x0000000bU,
+}
+
+enum : uint
+{
+    NS_DNS   = 0x0000000cU,
+    NS_NETBT = 0x0000000dU,
+}
+
+enum : uint
+{
+    NS_WINS  = 0x0000000eU,
+    NS_NLA   = 0x0000000fU,
+    NS_NBP   = 0x00000014U,
+    NS_MS    = 0x0000001eU,
+    NS_STDA  = 0x0000001fU,
+    NS_NTDS  = 0x00000020U,
+    NS_EMAIL = 0x00000025U,
+}
+
+enum : uint
+{
+    NS_X500    = 0x00000028U,
+    NS_NIS     = 0x00000029U,
+    NS_NISPLUS = 0x0000002aU,
+}
+
+enum : uint
+{
+    NS_WRQ    = 0x00000032U,
+    NS_NETDES = 0x0000003cU,
+}
+
+enum : uint
+{
+    NI_NOFQDN      = 0x00000001U,
+    NI_NUMERICHOST = 0x00000002U,
+}
+
+enum uint NI_NAMEREQD = 0x00000004U;
+enum uint NI_NUMERICSERV = 0x00000008U;
+enum uint NI_DGRAM = 0x00000010U;
+
+enum : uint
+{
+    NI_MAXHOST = 0x00000401U,
+    NI_MAXSERV = 0x00000020U,
+}
+
+enum : uint
+{
+    IFF_UP        = 0x00000001U,
+    IFF_BROADCAST = 0x00000002U,
+}
+
+enum uint IFF_LOOPBACK = 0x00000004U;
+enum uint IFF_POINTTOPOINT = 0x00000008U;
+enum uint IFF_MULTICAST = 0x00000010U;
 enum int IP_OPTIONS = 0x00000001;
 enum int IP_HDRINCL = 0x00000002;
 
@@ -1440,19 +1501,19 @@ enum : int
 enum int IP_RECVERR = 0x0000004b;
 enum int IP_USER_MTU = 0x0000004c;
 enum int IP_UNSPECIFIED_TYPE_OF_SERVICE = 0xffffffff;
-enum uint IP_UNSPECIFIED_USER_MTU = 0xffffffff;
-enum uint IN6ADDR_LINKLOCALPREFIX_LENGTH = 0x00000040;
-enum uint IN6ADDR_MULTICASTPREFIX_LENGTH = 0x00000008;
-enum uint IN6ADDR_SOLICITEDNODEMULTICASTPREFIX_LENGTH = 0x00000068;
-enum uint IN6ADDR_V4MAPPEDPREFIX_LENGTH = 0x00000060;
-enum uint IN6ADDR_6TO4PREFIX_LENGTH = 0x00000010;
-enum uint IN6ADDR_TEREDOPREFIX_LENGTH = 0x00000020;
-enum uint MCAST_JOIN_GROUP = 0x00000029;
-enum uint MCAST_LEAVE_GROUP = 0x0000002a;
-enum uint MCAST_BLOCK_SOURCE = 0x0000002b;
-enum uint MCAST_UNBLOCK_SOURCE = 0x0000002c;
-enum uint MCAST_JOIN_SOURCE_GROUP = 0x0000002d;
-enum uint MCAST_LEAVE_SOURCE_GROUP = 0x0000002e;
+enum uint IP_UNSPECIFIED_USER_MTU = 0xffffffffU;
+enum uint IN6ADDR_LINKLOCALPREFIX_LENGTH = 0x00000040U;
+enum uint IN6ADDR_MULTICASTPREFIX_LENGTH = 0x00000008U;
+enum uint IN6ADDR_SOLICITEDNODEMULTICASTPREFIX_LENGTH = 0x00000068U;
+enum uint IN6ADDR_V4MAPPEDPREFIX_LENGTH = 0x00000060U;
+enum uint IN6ADDR_6TO4PREFIX_LENGTH = 0x00000010U;
+enum uint IN6ADDR_TEREDOPREFIX_LENGTH = 0x00000020U;
+enum uint MCAST_JOIN_GROUP = 0x00000029U;
+enum uint MCAST_LEAVE_GROUP = 0x0000002aU;
+enum uint MCAST_BLOCK_SOURCE = 0x0000002bU;
+enum uint MCAST_UNBLOCK_SOURCE = 0x0000002cU;
+enum uint MCAST_JOIN_SOURCE_GROUP = 0x0000002dU;
+enum uint MCAST_LEAVE_SOURCE_GROUP = 0x0000002eU;
 
 enum : int
 {
@@ -1545,14 +1606,14 @@ enum int IP_PROTECTION_LEVEL = 0x00000017;
 
 enum : uint
 {
-    PROTECTION_LEVEL_UNRESTRICTED   = 0x0000000a,
-    PROTECTION_LEVEL_EDGERESTRICTED = 0x00000014,
-    PROTECTION_LEVEL_RESTRICTED     = 0x0000001e,
-    PROTECTION_LEVEL_DEFAULT        = 0x00000014,
+    PROTECTION_LEVEL_UNRESTRICTED   = 0x0000000aU,
+    PROTECTION_LEVEL_EDGERESTRICTED = 0x00000014U,
+    PROTECTION_LEVEL_RESTRICTED     = 0x0000001eU,
+    PROTECTION_LEVEL_DEFAULT        = 0x00000014U,
 }
 
-enum uint INET_ADDRSTRLEN = 0x00000016;
-enum uint INET6_ADDRSTRLEN = 0x00000041;
+enum uint INET_ADDRSTRLEN = 0x00000016U;
+enum uint INET6_ADDRSTRLEN = 0x00000041U;
 
 enum : int
 {
@@ -1596,18 +1657,18 @@ enum int TCP_FAIL_CONNECT_ON_ICMP_ERROR = 0x00000012;
 enum int TCP_ICMP_ERROR_INFO = 0x00000013;
 enum int UDP_SEND_MSG_SIZE = 0x00000002;
 enum int UDP_RECV_MAX_COALESCED_SIZE = 0x00000003;
-enum uint UDP_COALESCED_INFO = 0x00000003;
+enum uint UDP_COALESCED_INFO = 0x00000003U;
 
 enum : uint
 {
-    WINDOWS_AF_IRDA = 0x0000001a,
-    WINDOWS_PF_IRDA = 0x0000001a,
+    WINDOWS_AF_IRDA = 0x0000001aU,
+    WINDOWS_PF_IRDA = 0x0000001aU,
 }
 
-enum uint WCE_AF_IRDA = 0x00000016;
-enum uint WCE_PF_IRDA = 0x00000016;
-enum uint IRDA_PROTO_SOCK_STREAM = 0x00000001;
-enum ushort PF_IRDA = 0x001a;
+enum uint WCE_AF_IRDA = 0x00000016U;
+enum uint WCE_PF_IRDA = 0x00000016U;
+enum uint IRDA_PROTO_SOCK_STREAM = 0x00000001U;
+enum ushort PF_IRDA = cast(ushort) 0x001a;
 enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/sol-irlmp-socket-options))], [])*/int SOL_IRLMP = 0x000000ff;
 enum int IRLMP_ENUMDEVICES = 0x00000010;
 
@@ -1628,53 +1689,53 @@ enum int IRLMP_SHARP_MODE = 0x00000020;
 
 enum : uint
 {
-    IAS_ATTRIB_NO_CLASS  = 0x00000010,
-    IAS_ATTRIB_NO_ATTRIB = 0x00000000,
-    IAS_ATTRIB_INT       = 0x00000001,
-    IAS_ATTRIB_OCTETSEQ  = 0x00000002,
-    IAS_ATTRIB_STR       = 0x00000003,
+    IAS_ATTRIB_NO_CLASS  = 0x00000010U,
+    IAS_ATTRIB_NO_ATTRIB = 0x00000000U,
+    IAS_ATTRIB_INT       = 0x00000001U,
+    IAS_ATTRIB_OCTETSEQ  = 0x00000002U,
+    IAS_ATTRIB_STR       = 0x00000003U,
 }
 
 enum : uint
 {
-    IAS_MAX_USER_STRING  = 0x00000100,
-    IAS_MAX_OCTET_STRING = 0x00000400,
+    IAS_MAX_USER_STRING  = 0x00000100U,
+    IAS_MAX_OCTET_STRING = 0x00000400U,
 }
 
 enum : uint
 {
-    IAS_MAX_CLASSNAME  = 0x00000040,
-    IAS_MAX_ATTRIBNAME = 0x00000100,
+    IAS_MAX_CLASSNAME  = 0x00000040U,
+    IAS_MAX_ATTRIBNAME = 0x00000100U,
 }
 
 enum : uint
 {
-    LmCharSetASCII      = 0x00000000,
-    LmCharSetISO_8859_1 = 0x00000001,
-    LmCharSetISO_8859_2 = 0x00000002,
-    LmCharSetISO_8859_3 = 0x00000003,
-    LmCharSetISO_8859_4 = 0x00000004,
-    LmCharSetISO_8859_5 = 0x00000005,
-    LmCharSetISO_8859_6 = 0x00000006,
-    LmCharSetISO_8859_7 = 0x00000007,
-    LmCharSetISO_8859_8 = 0x00000008,
-    LmCharSetISO_8859_9 = 0x00000009,
-    LmCharSetUNICODE    = 0x000000ff,
+    LmCharSetASCII      = 0x00000000U,
+    LmCharSetISO_8859_1 = 0x00000001U,
+    LmCharSetISO_8859_2 = 0x00000002U,
+    LmCharSetISO_8859_3 = 0x00000003U,
+    LmCharSetISO_8859_4 = 0x00000004U,
+    LmCharSetISO_8859_5 = 0x00000005U,
+    LmCharSetISO_8859_6 = 0x00000006U,
+    LmCharSetISO_8859_7 = 0x00000007U,
+    LmCharSetISO_8859_8 = 0x00000008U,
+    LmCharSetISO_8859_9 = 0x00000009U,
+    LmCharSetUNICODE    = 0x000000ffU,
 }
 
 enum : uint
 {
-    LM_BAUD_1200   = 0x000004b0,
-    LM_BAUD_2400   = 0x00000960,
-    LM_BAUD_9600   = 0x00002580,
-    LM_BAUD_19200  = 0x00004b00,
-    LM_BAUD_38400  = 0x00009600,
-    LM_BAUD_57600  = 0x0000e100,
-    LM_BAUD_115200 = 0x0001c200,
-    LM_BAUD_576K   = 0x0008ca00,
-    LM_BAUD_1152K  = 0x00119400,
-    LM_BAUD_4M     = 0x003d0900,
-    LM_BAUD_16M    = 0x00f42400,
+    LM_BAUD_1200   = 0x000004b0U,
+    LM_BAUD_2400   = 0x00000960U,
+    LM_BAUD_9600   = 0x00002580U,
+    LM_BAUD_19200  = 0x00004b00U,
+    LM_BAUD_38400  = 0x00009600U,
+    LM_BAUD_57600  = 0x0000e100U,
+    LM_BAUD_115200 = 0x0001c200U,
+    LM_BAUD_576K   = 0x0008ca00U,
+    LM_BAUD_1152K  = 0x00119400U,
+    LM_BAUD_4M     = 0x003d0900U,
+    LM_BAUD_16M    = 0x00f42400U,
 }
 
 enum : int
@@ -1705,8 +1766,8 @@ enum int SO_OPENTYPE = 0x00007008;
 
 enum : uint
 {
-    SO_SYNCHRONOUS_ALERT    = 0x00000010,
-    SO_SYNCHRONOUS_NONALERT = 0x00000020,
+    SO_SYNCHRONOUS_ALERT    = 0x00000010U,
+    SO_SYNCHRONOUS_NONALERT = 0x00000020U,
 }
 
 enum : int
@@ -1719,15 +1780,15 @@ enum int SO_UPDATE_ACCEPT_CONTEXT = 0x0000700b;
 enum int SO_CONNECT_TIME = 0x0000700c;
 enum int SO_UPDATE_CONNECT_CONTEXT = 0x00007010;
 enum int TCP_BSDURGENT = 0x00007000;
-enum uint SIO_UDP_CONNRESET = 0x9800000c;
-enum uint SIO_SOCKET_CLOSE_NOTIFY = 0x9800000d;
-enum uint SIO_UDP_NETRESET = 0x9800000f;
-enum uint TF_DISCONNECT = 0x00000001;
-enum uint TF_REUSE_SOCKET = 0x00000002;
-enum uint TF_WRITE_BEHIND = 0x00000004;
-enum uint TF_USE_DEFAULT_WORKER = 0x00000000;
-enum uint TF_USE_SYSTEM_THREAD = 0x00000010;
-enum uint TF_USE_KERNEL_APC = 0x00000020;
+enum uint SIO_UDP_CONNRESET = 0x9800000cU;
+enum uint SIO_SOCKET_CLOSE_NOTIFY = 0x9800000dU;
+enum uint SIO_UDP_NETRESET = 0x9800000fU;
+enum uint TF_DISCONNECT = 0x00000001U;
+enum uint TF_REUSE_SOCKET = 0x00000002U;
+enum uint TF_WRITE_BEHIND = 0x00000004U;
+enum uint TF_USE_DEFAULT_WORKER = 0x00000000U;
+enum uint TF_USE_SYSTEM_THREAD = 0x00000010U;
+enum uint TF_USE_KERNEL_APC = 0x00000020U;
 enum GUID WSAID_TRANSMITFILE = GUID("b5367df0-cbac-11cf-95ca-00805f48a192");
 
 enum : GUID
@@ -1738,40 +1799,40 @@ enum : GUID
 
 enum : uint
 {
-    TP_ELEMENT_MEMORY = 0x00000001,
-    TP_ELEMENT_FILE   = 0x00000002,
-    TP_ELEMENT_EOP    = 0x00000004,
+    TP_ELEMENT_MEMORY = 0x00000001U,
+    TP_ELEMENT_FILE   = 0x00000002U,
+    TP_ELEMENT_EOP    = 0x00000004U,
 }
 
-enum uint TP_DISCONNECT = 0x00000001;
-enum uint TP_REUSE_SOCKET = 0x00000002;
-enum uint TP_USE_DEFAULT_WORKER = 0x00000000;
-enum uint TP_USE_SYSTEM_THREAD = 0x00000010;
-enum uint TP_USE_KERNEL_APC = 0x00000020;
+enum uint TP_DISCONNECT = 0x00000001U;
+enum uint TP_REUSE_SOCKET = 0x00000002U;
+enum uint TP_USE_DEFAULT_WORKER = 0x00000000U;
+enum uint TP_USE_SYSTEM_THREAD = 0x00000010U;
+enum uint TP_USE_KERNEL_APC = 0x00000020U;
 enum GUID WSAID_TRANSMITPACKETS = GUID("d9689da0-1f90-11d3-9971-00c04f68c876");
 enum GUID WSAID_CONNECTEX = GUID("25a207b9-ddf3-4660-8ee9-76e58c74063e");
 enum GUID WSAID_DISCONNECTEX = GUID("7fda2e11-8630-436f-a031-f536a6eec157");
-enum uint DE_REUSE_SOCKET = 0x00000002;
+enum uint DE_REUSE_SOCKET = 0x00000002U;
 enum GUID NLA_NAMESPACE_GUID = GUID("6642243a-3ba8-4aa6-baa5-2e0bd71fdd83");
 enum GUID NLA_SERVICE_CLASS_GUID = GUID("0037e515-b5c9-4a43-bada-8b48a87ad239");
-enum uint NLA_ALLUSERS_NETWORK = 0x00000001;
-enum uint NLA_FRIENDLY_NAME = 0x00000002;
+enum uint NLA_ALLUSERS_NETWORK = 0x00000001U;
+enum uint NLA_FRIENDLY_NAME = 0x00000002U;
 enum GUID WSAID_WSARECVMSG = GUID("f689d7c8-6f1f-436b-8a53-e54fe351c322");
 
 enum : uint
 {
-    SIO_BSP_HANDLE        = 0x4800001b,
-    SIO_BSP_HANDLE_SELECT = 0x4800001c,
-    SIO_BSP_HANDLE_POLL   = 0x4800001d,
+    SIO_BSP_HANDLE        = 0x4800001bU,
+    SIO_BSP_HANDLE_SELECT = 0x4800001cU,
+    SIO_BSP_HANDLE_POLL   = 0x4800001dU,
 }
 
-enum uint SIO_BASE_HANDLE = 0x48000022;
+enum uint SIO_BASE_HANDLE = 0x48000022U;
 
 enum : uint
 {
-    SIO_EXT_SELECT  = 0xc800001e,
-    SIO_EXT_POLL    = 0xc800001f,
-    SIO_EXT_SENDMSG = 0xc8000020,
+    SIO_EXT_SELECT  = 0xc800001eU,
+    SIO_EXT_POLL    = 0xc800001fU,
+    SIO_EXT_SENDMSG = 0xc8000020U,
 }
 
 enum : GUID
@@ -1783,83 +1844,83 @@ enum : GUID
 
 enum : uint
 {
-    SERVICE_RESOURCE   = 0x00000001,
-    SERVICE_SERVICE    = 0x00000002,
-    SERVICE_LOCAL      = 0x00000004,
-    SERVICE_FLAG_DEFER = 0x00000001,
-    SERVICE_FLAG_HARD  = 0x00000002,
+    SERVICE_RESOURCE   = 0x00000001U,
+    SERVICE_SERVICE    = 0x00000002U,
+    SERVICE_LOCAL      = 0x00000004U,
+    SERVICE_FLAG_DEFER = 0x00000001U,
+    SERVICE_FLAG_HARD  = 0x00000002U,
 }
 
 enum : uint
 {
-    PROP_COMMENT      = 0x00000001,
-    PROP_LOCALE       = 0x00000002,
-    PROP_DISPLAY_HINT = 0x00000004,
+    PROP_COMMENT      = 0x00000001U,
+    PROP_LOCALE       = 0x00000002U,
+    PROP_DISPLAY_HINT = 0x00000004U,
 }
 
 enum : uint
 {
-    PROP_VERSION    = 0x00000008,
-    PROP_START_TIME = 0x00000010,
+    PROP_VERSION    = 0x00000008U,
+    PROP_START_TIME = 0x00000010U,
 }
 
 enum : uint
 {
-    PROP_MACHINE   = 0x00000020,
-    PROP_ADDRESSES = 0x00000100,
+    PROP_MACHINE   = 0x00000020U,
+    PROP_ADDRESSES = 0x00000100U,
 }
 
 enum : uint
 {
-    PROP_SD  = 0x00000200,
-    PROP_ALL = 0x80000000,
+    PROP_SD  = 0x00000200U,
+    PROP_ALL = 0x80000000U,
 }
 
 enum : uint
 {
-    SERVICE_ADDRESS_FLAG_RPC_CN = 0x00000001,
-    SERVICE_ADDRESS_FLAG_RPC_DG = 0x00000002,
-    SERVICE_ADDRESS_FLAG_RPC_NB = 0x00000004,
+    SERVICE_ADDRESS_FLAG_RPC_CN = 0x00000001U,
+    SERVICE_ADDRESS_FLAG_RPC_DG = 0x00000002U,
+    SERVICE_ADDRESS_FLAG_RPC_NB = 0x00000004U,
 }
 
-enum uint NS_DEFAULT = 0x00000000;
-enum uint NS_VNS = 0x00000032;
-enum uint NSTYPE_HIERARCHICAL = 0x00000001;
+enum uint NS_DEFAULT = 0x00000000U;
+enum uint NS_VNS = 0x00000032U;
+enum uint NSTYPE_HIERARCHICAL = 0x00000001U;
 
 enum : uint
 {
-    NSTYPE_DYNAMIC    = 0x00000002,
-    NSTYPE_ENUMERABLE = 0x00000004,
-    NSTYPE_WORKGROUP  = 0x00000008,
+    NSTYPE_DYNAMIC    = 0x00000002U,
+    NSTYPE_ENUMERABLE = 0x00000004U,
+    NSTYPE_WORKGROUP  = 0x00000008U,
 }
 
-enum uint XP_CONNECTIONLESS = 0x00000001;
+enum uint XP_CONNECTIONLESS = 0x00000001U;
 
 enum : uint
 {
-    XP_GUARANTEED_DELIVERY = 0x00000002,
-    XP_GUARANTEED_ORDER    = 0x00000004,
+    XP_GUARANTEED_DELIVERY = 0x00000002U,
+    XP_GUARANTEED_ORDER    = 0x00000004U,
 }
 
-enum uint XP_MESSAGE_ORIENTED = 0x00000008;
-enum uint XP_PSEUDO_STREAM = 0x00000010;
-enum uint XP_GRACEFUL_CLOSE = 0x00000020;
-enum uint XP_EXPEDITED_DATA = 0x00000040;
-enum uint XP_CONNECT_DATA = 0x00000080;
-enum uint XP_DISCONNECT_DATA = 0x00000100;
+enum uint XP_MESSAGE_ORIENTED = 0x00000008U;
+enum uint XP_PSEUDO_STREAM = 0x00000010U;
+enum uint XP_GRACEFUL_CLOSE = 0x00000020U;
+enum uint XP_EXPEDITED_DATA = 0x00000040U;
+enum uint XP_CONNECT_DATA = 0x00000080U;
+enum uint XP_DISCONNECT_DATA = 0x00000100U;
 
 enum : uint
 {
-    XP_SUPPORTS_BROADCAST = 0x00000200,
-    XP_SUPPORTS_MULTICAST = 0x00000400,
+    XP_SUPPORTS_BROADCAST = 0x00000200U,
+    XP_SUPPORTS_MULTICAST = 0x00000400U,
 }
 
-enum uint XP_BANDWIDTH_ALLOCATION = 0x00000800;
-enum uint XP_FRAGMENTATION = 0x00001000;
-enum uint XP_ENCRYPTS = 0x00002000;
-enum uint RES_SOFT_SEARCH = 0x00000001;
-enum uint RES_FIND_MULTIPLE = 0x00000002;
-enum uint RES_SERVICE = 0x00000004;
+enum uint XP_BANDWIDTH_ALLOCATION = 0x00000800U;
+enum uint XP_FRAGMENTATION = 0x00001000U;
+enum uint XP_ENCRYPTS = 0x00002000U;
+enum uint RES_SOFT_SEARCH = 0x00000001U;
+enum uint RES_FIND_MULTIPLE = 0x00000002U;
+enum uint RES_SERVICE = 0x00000004U;
 
 enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
 {
@@ -1877,99 +1938,99 @@ enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(E
     SERVICE_TYPE_VALUE_UDPPORT  = "UdpPort",
 }
 
-enum uint SET_SERVICE_PARTIAL_SUCCESS = 0x00000001;
-enum uint FD_SETSIZE = 0x00000040;
+enum uint SET_SERVICE_PARTIAL_SUCCESS = 0x00000001U;
+enum uint FD_SETSIZE = 0x00000040U;
 
 enum : uint
 {
-    IMPLINK_IP        = 0x0000009b,
-    IMPLINK_LOWEXPER  = 0x0000009c,
-    IMPLINK_HIGHEXPER = 0x0000009e,
+    IMPLINK_IP        = 0x0000009bU,
+    IMPLINK_LOWEXPER  = 0x0000009cU,
+    IMPLINK_HIGHEXPER = 0x0000009eU,
 }
 
-enum uint WSADESCRIPTION_LEN = 0x00000100;
-enum uint WSASYS_STATUS_LEN = 0x00000080;
+enum uint WSADESCRIPTION_LEN = 0x00000100U;
+enum uint WSASYS_STATUS_LEN = 0x00000080U;
 
 enum : uint
 {
-    IP_DEFAULT_MULTICAST_TTL  = 0x00000001,
-    IP_DEFAULT_MULTICAST_LOOP = 0x00000001,
+    IP_DEFAULT_MULTICAST_TTL  = 0x00000001U,
+    IP_DEFAULT_MULTICAST_LOOP = 0x00000001U,
 }
 
-enum uint IP_MAX_MEMBERSHIPS = 0x00000014;
+enum uint IP_MAX_MEMBERSHIPS = 0x00000014U;
 enum int SOCKET_ERROR = 0xffffffff;
 
 enum : ushort
 {
-    PF_UNIX    = 0x0001,
-    PF_IMPLINK = 0x0003,
+    PF_UNIX    = cast(ushort) 0x0001,
+    PF_IMPLINK = cast(ushort) 0x0003,
 }
 
 enum : ushort
 {
-    PF_PUP   = 0x0004,
-    PF_CHAOS = 0x0005,
+    PF_PUP   = cast(ushort) 0x0004,
+    PF_CHAOS = cast(ushort) 0x0005,
 }
 
 enum : ushort
 {
-    PF_NS      = 0x0006,
-    PF_IPX     = 0x0006,
-    PF_ISO     = 0x0007,
-    PF_OSI     = 0x0007,
-    PF_ECMA    = 0x0008,
-    PF_DATAKIT = 0x0009,
+    PF_NS      = cast(ushort) 0x0006,
+    PF_IPX     = cast(ushort) 0x0006,
+    PF_ISO     = cast(ushort) 0x0007,
+    PF_OSI     = cast(ushort) 0x0007,
+    PF_ECMA    = cast(ushort) 0x0008,
+    PF_DATAKIT = cast(ushort) 0x0009,
 }
 
-enum ushort PF_CCITT = 0x000a;
+enum ushort PF_CCITT = cast(ushort) 0x000a;
 
 enum : ushort
 {
-    PF_SNA    = 0x000b,
-    PF_DECnet = 0x000c,
-    PF_DLI    = 0x000d,
-    PF_LAT    = 0x000e,
-    PF_HYLINK = 0x000f,
+    PF_SNA    = cast(ushort) 0x000b,
+    PF_DECnet = cast(ushort) 0x000c,
+    PF_DLI    = cast(ushort) 0x000d,
+    PF_LAT    = cast(ushort) 0x000e,
+    PF_HYLINK = cast(ushort) 0x000f,
 }
 
-enum ushort PF_APPLETALK = 0x0010;
-enum ushort PF_VOICEVIEW = 0x0012;
-enum ushort PF_FIREFOX = 0x0013;
-enum ushort PF_UNKNOWN1 = 0x0014;
+enum ushort PF_APPLETALK = cast(ushort) 0x0010;
+enum ushort PF_VOICEVIEW = cast(ushort) 0x0012;
+enum ushort PF_FIREFOX = cast(ushort) 0x0013;
+enum ushort PF_UNKNOWN1 = cast(ushort) 0x0014;
 
 enum : ushort
 {
-    PF_BAN = 0x0015,
-    PF_MAX = 0x001d,
+    PF_BAN = cast(ushort) 0x0015,
+    PF_MAX = cast(ushort) 0x001d,
 }
 
-enum uint SOMAXCONN = 0x00000005;
-enum uint MSG_MAXIOVLEN = 0x00000010;
-enum uint MSG_PARTIAL = 0x00008000;
-enum uint MAXGETHOSTSTRUCT = 0x00000400;
+enum uint SOMAXCONN = 0x00000005U;
+enum uint MSG_MAXIOVLEN = 0x00000010U;
+enum uint MSG_PARTIAL = 0x00008000U;
+enum uint MAXGETHOSTSTRUCT = 0x00000400U;
 
 enum : uint
 {
-    FD_READ  = 0x00000001,
-    FD_WRITE = 0x00000002,
+    FD_READ  = 0x00000001U,
+    FD_WRITE = 0x00000002U,
 }
 
 enum : uint
 {
-    FD_OOB    = 0x00000004,
-    FD_ACCEPT = 0x00000008,
+    FD_OOB    = 0x00000004U,
+    FD_ACCEPT = 0x00000008U,
 }
 
-enum uint FD_CONNECT = 0x00000010;
-enum uint FD_CLOSE = 0x00000020;
+enum uint FD_CONNECT = 0x00000010U;
+enum uint FD_CLOSE = 0x00000020U;
 
 enum : uint
 {
-    INCL_WINSOCK_API_PROTOTYPES = 0x00000001,
-    INCL_WINSOCK_API_TYPEDEFS   = 0x00000000,
+    INCL_WINSOCK_API_PROTOTYPES = 0x00000001U,
+    INCL_WINSOCK_API_TYPEDEFS   = 0x00000000U,
 }
 
-enum uint ADDR_ANY = 0x00000000;
+enum uint ADDR_ANY = 0x00000000U;
 enum int FROM_PROTOCOL_INFO = 0xffffffff;
 
 enum : int
@@ -1980,106 +2041,106 @@ enum : int
 }
 
 enum int PVD_CONFIG = 0x00003001;
-enum ushort PF_ATM = 0x0016;
-enum uint MSG_INTERRUPT = 0x00000010;
-enum uint FD_READ_BIT = 0x00000000;
-enum uint FD_WRITE_BIT = 0x00000001;
-enum uint FD_OOB_BIT = 0x00000002;
-enum uint FD_ACCEPT_BIT = 0x00000003;
-enum uint FD_CONNECT_BIT = 0x00000004;
-enum uint FD_CLOSE_BIT = 0x00000005;
-enum uint FD_QOS_BIT = 0x00000006;
-enum uint FD_GROUP_QOS_BIT = 0x00000007;
-enum uint FD_ROUTING_INTERFACE_CHANGE_BIT = 0x00000008;
-enum uint FD_ADDRESS_LIST_CHANGE_BIT = 0x00000009;
-enum uint FD_MAX_EVENTS = 0x0000000a;
-enum uint WSA_MAXIMUM_WAIT_EVENTS = 0x00000040;
+enum ushort PF_ATM = cast(ushort) 0x0016;
+enum uint MSG_INTERRUPT = 0x00000010U;
+enum uint FD_READ_BIT = 0x00000000U;
+enum uint FD_WRITE_BIT = 0x00000001U;
+enum uint FD_OOB_BIT = 0x00000002U;
+enum uint FD_ACCEPT_BIT = 0x00000003U;
+enum uint FD_CONNECT_BIT = 0x00000004U;
+enum uint FD_CLOSE_BIT = 0x00000005U;
+enum uint FD_QOS_BIT = 0x00000006U;
+enum uint FD_GROUP_QOS_BIT = 0x00000007U;
+enum uint FD_ROUTING_INTERFACE_CHANGE_BIT = 0x00000008U;
+enum uint FD_ADDRESS_LIST_CHANGE_BIT = 0x00000009U;
+enum uint FD_MAX_EVENTS = 0x0000000aU;
+enum uint WSA_MAXIMUM_WAIT_EVENTS = 0x00000040U;
 
 enum : uint
 {
-    WSA_WAIT_FAILED  = 0xffffffff,
-    WSA_WAIT_TIMEOUT = 0x00000102,
+    WSA_WAIT_FAILED  = 0xffffffffU,
+    WSA_WAIT_TIMEOUT = 0x00000102U,
 }
 
-enum uint CF_ACCEPT = 0x00000000;
-enum uint CF_REJECT = 0x00000001;
-enum uint CF_DEFER = 0x00000002;
-enum uint SG_UNCONSTRAINED_GROUP = 0x00000001;
-enum uint SG_CONSTRAINED_GROUP = 0x00000002;
-enum uint MAX_PROTOCOL_CHAIN = 0x00000007;
-enum uint BASE_PROTOCOL = 0x00000001;
-enum uint LAYERED_PROTOCOL = 0x00000000;
-enum uint WSAPROTOCOL_LEN = 0x000000ff;
-enum uint PFL_MULTIPLE_PROTO_ENTRIES = 0x00000001;
-enum uint PFL_RECOMMENDED_PROTO_ENTRY = 0x00000002;
-enum uint PFL_HIDDEN = 0x00000004;
-enum uint PFL_MATCHES_PROTOCOL_ZERO = 0x00000008;
-enum uint PFL_NETWORKDIRECT_PROVIDER = 0x00000010;
-enum uint XP1_CONNECTIONLESS = 0x00000001;
+enum uint CF_ACCEPT = 0x00000000U;
+enum uint CF_REJECT = 0x00000001U;
+enum uint CF_DEFER = 0x00000002U;
+enum uint SG_UNCONSTRAINED_GROUP = 0x00000001U;
+enum uint SG_CONSTRAINED_GROUP = 0x00000002U;
+enum uint MAX_PROTOCOL_CHAIN = 0x00000007U;
+enum uint BASE_PROTOCOL = 0x00000001U;
+enum uint LAYERED_PROTOCOL = 0x00000000U;
+enum uint WSAPROTOCOL_LEN = 0x000000ffU;
+enum uint PFL_MULTIPLE_PROTO_ENTRIES = 0x00000001U;
+enum uint PFL_RECOMMENDED_PROTO_ENTRY = 0x00000002U;
+enum uint PFL_HIDDEN = 0x00000004U;
+enum uint PFL_MATCHES_PROTOCOL_ZERO = 0x00000008U;
+enum uint PFL_NETWORKDIRECT_PROVIDER = 0x00000010U;
+enum uint XP1_CONNECTIONLESS = 0x00000001U;
 
 enum : uint
 {
-    XP1_GUARANTEED_DELIVERY = 0x00000002,
-    XP1_GUARANTEED_ORDER    = 0x00000004,
+    XP1_GUARANTEED_DELIVERY = 0x00000002U,
+    XP1_GUARANTEED_ORDER    = 0x00000004U,
 }
 
-enum uint XP1_MESSAGE_ORIENTED = 0x00000008;
-enum uint XP1_PSEUDO_STREAM = 0x00000010;
-enum uint XP1_GRACEFUL_CLOSE = 0x00000020;
-enum uint XP1_EXPEDITED_DATA = 0x00000040;
-enum uint XP1_CONNECT_DATA = 0x00000080;
-enum uint XP1_DISCONNECT_DATA = 0x00000100;
+enum uint XP1_MESSAGE_ORIENTED = 0x00000008U;
+enum uint XP1_PSEUDO_STREAM = 0x00000010U;
+enum uint XP1_GRACEFUL_CLOSE = 0x00000020U;
+enum uint XP1_EXPEDITED_DATA = 0x00000040U;
+enum uint XP1_CONNECT_DATA = 0x00000080U;
+enum uint XP1_DISCONNECT_DATA = 0x00000100U;
 
 enum : uint
 {
-    XP1_SUPPORT_BROADCAST  = 0x00000200,
-    XP1_SUPPORT_MULTIPOINT = 0x00000400,
+    XP1_SUPPORT_BROADCAST  = 0x00000200U,
+    XP1_SUPPORT_MULTIPOINT = 0x00000400U,
 }
 
 enum : uint
 {
-    XP1_MULTIPOINT_CONTROL_PLANE = 0x00000800,
-    XP1_MULTIPOINT_DATA_PLANE    = 0x00001000,
+    XP1_MULTIPOINT_CONTROL_PLANE = 0x00000800U,
+    XP1_MULTIPOINT_DATA_PLANE    = 0x00001000U,
 }
 
-enum uint XP1_QOS_SUPPORTED = 0x00002000;
-enum uint XP1_INTERRUPT = 0x00004000;
+enum uint XP1_QOS_SUPPORTED = 0x00002000U;
+enum uint XP1_INTERRUPT = 0x00004000U;
 
 enum : uint
 {
-    XP1_UNI_SEND = 0x00008000,
-    XP1_UNI_RECV = 0x00010000,
+    XP1_UNI_SEND = 0x00008000U,
+    XP1_UNI_RECV = 0x00010000U,
 }
 
-enum uint XP1_IFS_HANDLES = 0x00020000;
-enum uint XP1_PARTIAL_MESSAGE = 0x00040000;
-enum uint XP1_SAN_SUPPORT_SDP = 0x00080000;
-enum uint BIGENDIAN = 0x00000000;
-enum uint LITTLEENDIAN = 0x00000001;
-enum uint SECURITY_PROTOCOL_NONE = 0x00000000;
-enum uint JL_SENDER_ONLY = 0x00000001;
-enum uint JL_RECEIVER_ONLY = 0x00000002;
-enum uint JL_BOTH = 0x00000004;
+enum uint XP1_IFS_HANDLES = 0x00020000U;
+enum uint XP1_PARTIAL_MESSAGE = 0x00040000U;
+enum uint XP1_SAN_SUPPORT_SDP = 0x00080000U;
+enum uint BIGENDIAN = 0x00000000U;
+enum uint LITTLEENDIAN = 0x00000001U;
+enum uint SECURITY_PROTOCOL_NONE = 0x00000000U;
+enum uint JL_SENDER_ONLY = 0x00000001U;
+enum uint JL_RECEIVER_ONLY = 0x00000002U;
+enum uint JL_BOTH = 0x00000004U;
 
 enum : uint
 {
-    WSA_FLAG_OVERLAPPED        = 0x00000001,
-    WSA_FLAG_MULTIPOINT_C_ROOT = 0x00000002,
-    WSA_FLAG_MULTIPOINT_C_LEAF = 0x00000004,
-    WSA_FLAG_MULTIPOINT_D_ROOT = 0x00000008,
-    WSA_FLAG_MULTIPOINT_D_LEAF = 0x00000010,
+    WSA_FLAG_OVERLAPPED        = 0x00000001U,
+    WSA_FLAG_MULTIPOINT_C_ROOT = 0x00000002U,
+    WSA_FLAG_MULTIPOINT_C_LEAF = 0x00000004U,
+    WSA_FLAG_MULTIPOINT_D_ROOT = 0x00000008U,
+    WSA_FLAG_MULTIPOINT_D_LEAF = 0x00000010U,
 }
 
-enum uint WSA_FLAG_ACCESS_SYSTEM_SECURITY = 0x00000040;
-enum uint WSA_FLAG_NO_HANDLE_INHERIT = 0x00000080;
-enum uint WSA_FLAG_REGISTERED_IO = 0x00000100;
-enum uint SIO_NSP_NOTIFY_CHANGE = 0x88000019;
-enum uint TH_NETDEV = 0x00000001;
-enum uint TH_TAPI = 0x00000002;
-enum uint SERVICE_MULTIPLE = 0x00000001;
-enum uint NS_LOCALNAME = 0x00000013;
-enum uint RES_UNUSED_1 = 0x00000001;
-enum uint RES_FLUSH_CACHE = 0x00000002;
+enum uint WSA_FLAG_ACCESS_SYSTEM_SECURITY = 0x00000040U;
+enum uint WSA_FLAG_NO_HANDLE_INHERIT = 0x00000080U;
+enum uint WSA_FLAG_REGISTERED_IO = 0x00000100U;
+enum uint SIO_NSP_NOTIFY_CHANGE = 0x88000019U;
+enum uint TH_NETDEV = 0x00000001U;
+enum uint TH_TAPI = 0x00000002U;
+enum uint SERVICE_MULTIPLE = 0x00000001U;
+enum uint NS_LOCALNAME = 0x00000013U;
+enum uint RES_UNUSED_1 = 0x00000001U;
+enum uint RES_FLUSH_CACHE = 0x00000002U;
 
 enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
 {
@@ -2092,373 +2153,373 @@ enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(E
 
 enum : uint
 {
-    LUP_DEEP       = 0x00000001,
-    LUP_CONTAINERS = 0x00000002,
+    LUP_DEEP       = 0x00000001U,
+    LUP_CONTAINERS = 0x00000002U,
 }
 
-enum uint LUP_NOCONTAINERS = 0x00000004;
-enum uint LUP_NEAREST = 0x00000008;
+enum uint LUP_NOCONTAINERS = 0x00000004U;
+enum uint LUP_NEAREST = 0x00000008U;
 
 enum : uint
 {
-    LUP_RETURN_NAME         = 0x00000010,
-    LUP_RETURN_TYPE         = 0x00000020,
-    LUP_RETURN_VERSION      = 0x00000040,
-    LUP_RETURN_COMMENT      = 0x00000080,
-    LUP_RETURN_ADDR         = 0x00000100,
-    LUP_RETURN_BLOB         = 0x00000200,
-    LUP_RETURN_ALIASES      = 0x00000400,
-    LUP_RETURN_QUERY_STRING = 0x00000800,
-    LUP_RETURN_ALL          = 0x00000ff0,
-    LUP_RES_SERVICE         = 0x00008000,
-}
-
-enum : uint
-{
-    LUP_FLUSHCACHE    = 0x00001000,
-    LUP_FLUSHPREVIOUS = 0x00002000,
-}
-
-enum uint LUP_NON_AUTHORITATIVE = 0x00004000;
-enum uint LUP_SECURE = 0x00008000;
-enum uint LUP_RETURN_PREFERRED_NAMES = 0x00010000;
-enum uint LUP_DNS_ONLY = 0x00020000;
-enum uint LUP_RETURN_RESPONSE_FLAGS = 0x00040000;
-enum uint LUP_RESERVED_UNUSED = 0x00080000;
-enum uint LUP_ADDRCONFIG = 0x00100000;
-enum uint LUP_DUAL_ADDR = 0x00200000;
-enum uint LUP_FILESERVER = 0x00400000;
-enum uint LUP_DISABLE_IDN_ENCODING = 0x00800000;
-enum uint LUP_API_ANSI = 0x01000000;
-enum uint LUP_EXTENDED_QUERYSET = 0x02000000;
-enum uint LUP_SECURE_WITH_FALLBACK = 0x04000000;
-enum uint LUP_EXCLUSIVE_CUSTOM_SERVERS = 0x08000000;
-enum uint LUP_REQUIRE_SECURE = 0x10000000;
-enum uint LUP_RETURN_TTL = 0x20000000;
-enum uint LUP_FORCE_CLEAR_TEXT = 0x40000000;
-enum uint LUP_RESOLUTION_HANDLE = 0x80000000;
-
-enum : uint
-{
-    RESULT_IS_ALIAS   = 0x00000001,
-    RESULT_IS_ADDED   = 0x00000010,
-    RESULT_IS_CHANGED = 0x00000020,
-    RESULT_IS_DELETED = 0x00000040,
+    LUP_RETURN_NAME         = 0x00000010U,
+    LUP_RETURN_TYPE         = 0x00000020U,
+    LUP_RETURN_VERSION      = 0x00000040U,
+    LUP_RETURN_COMMENT      = 0x00000080U,
+    LUP_RETURN_ADDR         = 0x00000100U,
+    LUP_RETURN_BLOB         = 0x00000200U,
+    LUP_RETURN_ALIASES      = 0x00000400U,
+    LUP_RETURN_QUERY_STRING = 0x00000800U,
+    LUP_RETURN_ALL          = 0x00000ff0U,
+    LUP_RES_SERVICE         = 0x00008000U,
 }
 
 enum : uint
 {
-    SOCK_NOTIFY_REGISTER_EVENT_NONE   = 0x00000000,
-    SOCK_NOTIFY_REGISTER_EVENT_IN     = 0x00000001,
-    SOCK_NOTIFY_REGISTER_EVENT_OUT    = 0x00000002,
-    SOCK_NOTIFY_REGISTER_EVENT_HANGUP = 0x00000004,
+    LUP_FLUSHCACHE    = 0x00001000U,
+    LUP_FLUSHPREVIOUS = 0x00002000U,
+}
+
+enum uint LUP_NON_AUTHORITATIVE = 0x00004000U;
+enum uint LUP_SECURE = 0x00008000U;
+enum uint LUP_RETURN_PREFERRED_NAMES = 0x00010000U;
+enum uint LUP_DNS_ONLY = 0x00020000U;
+enum uint LUP_RETURN_RESPONSE_FLAGS = 0x00040000U;
+enum uint LUP_RESERVED_UNUSED = 0x00080000U;
+enum uint LUP_ADDRCONFIG = 0x00100000U;
+enum uint LUP_DUAL_ADDR = 0x00200000U;
+enum uint LUP_FILESERVER = 0x00400000U;
+enum uint LUP_DISABLE_IDN_ENCODING = 0x00800000U;
+enum uint LUP_API_ANSI = 0x01000000U;
+enum uint LUP_EXTENDED_QUERYSET = 0x02000000U;
+enum uint LUP_SECURE_WITH_FALLBACK = 0x04000000U;
+enum uint LUP_EXCLUSIVE_CUSTOM_SERVERS = 0x08000000U;
+enum uint LUP_REQUIRE_SECURE = 0x10000000U;
+enum uint LUP_RETURN_TTL = 0x20000000U;
+enum uint LUP_FORCE_CLEAR_TEXT = 0x40000000U;
+enum uint LUP_RESOLUTION_HANDLE = 0x80000000U;
+
+enum : uint
+{
+    RESULT_IS_ALIAS   = 0x00000001U,
+    RESULT_IS_ADDED   = 0x00000010U,
+    RESULT_IS_CHANGED = 0x00000020U,
+    RESULT_IS_DELETED = 0x00000040U,
 }
 
 enum : uint
 {
-    SOCK_NOTIFY_EVENT_IN           = 0x00000001,
-    SOCK_NOTIFY_EVENT_OUT          = 0x00000002,
-    SOCK_NOTIFY_EVENT_HANGUP       = 0x00000004,
-    SOCK_NOTIFY_EVENT_ERR          = 0x00000040,
-    SOCK_NOTIFY_EVENT_REMOVE       = 0x00000080,
-    SOCK_NOTIFY_OP_NONE            = 0x00000000,
-    SOCK_NOTIFY_OP_ENABLE          = 0x00000001,
-    SOCK_NOTIFY_OP_DISABLE         = 0x00000002,
-    SOCK_NOTIFY_OP_REMOVE          = 0x00000004,
-    SOCK_NOTIFY_TRIGGER_ONESHOT    = 0x00000001,
-    SOCK_NOTIFY_TRIGGER_PERSISTENT = 0x00000002,
-    SOCK_NOTIFY_TRIGGER_LEVEL      = 0x00000004,
-    SOCK_NOTIFY_TRIGGER_EDGE       = 0x00000008,
+    SOCK_NOTIFY_REGISTER_EVENT_NONE   = 0x00000000U,
+    SOCK_NOTIFY_REGISTER_EVENT_IN     = 0x00000001U,
+    SOCK_NOTIFY_REGISTER_EVENT_OUT    = 0x00000002U,
+    SOCK_NOTIFY_REGISTER_EVENT_HANGUP = 0x00000004U,
 }
 
 enum : uint
 {
-    ATMPROTO_AALUSER = 0x00000000,
-    ATMPROTO_AAL1    = 0x00000001,
-    ATMPROTO_AAL2    = 0x00000002,
-    ATMPROTO_AAL34   = 0x00000003,
-    ATMPROTO_AAL5    = 0x00000005,
+    SOCK_NOTIFY_EVENT_IN           = 0x00000001U,
+    SOCK_NOTIFY_EVENT_OUT          = 0x00000002U,
+    SOCK_NOTIFY_EVENT_HANGUP       = 0x00000004U,
+    SOCK_NOTIFY_EVENT_ERR          = 0x00000040U,
+    SOCK_NOTIFY_EVENT_REMOVE       = 0x00000080U,
+    SOCK_NOTIFY_OP_NONE            = 0x00000000U,
+    SOCK_NOTIFY_OP_ENABLE          = 0x00000001U,
+    SOCK_NOTIFY_OP_DISABLE         = 0x00000002U,
+    SOCK_NOTIFY_OP_REMOVE          = 0x00000004U,
+    SOCK_NOTIFY_TRIGGER_ONESHOT    = 0x00000001U,
+    SOCK_NOTIFY_TRIGGER_PERSISTENT = 0x00000002U,
+    SOCK_NOTIFY_TRIGGER_LEVEL      = 0x00000004U,
+    SOCK_NOTIFY_TRIGGER_EDGE       = 0x00000008U,
 }
 
 enum : uint
 {
-    SAP_FIELD_ABSENT        = 0xfffffffe,
-    SAP_FIELD_ANY           = 0xffffffff,
-    SAP_FIELD_ANY_AESA_SEL  = 0xfffffffa,
-    SAP_FIELD_ANY_AESA_REST = 0xfffffffb,
+    ATMPROTO_AALUSER = 0x00000000U,
+    ATMPROTO_AAL1    = 0x00000001U,
+    ATMPROTO_AAL2    = 0x00000002U,
+    ATMPROTO_AAL34   = 0x00000003U,
+    ATMPROTO_AAL5    = 0x00000005U,
 }
 
 enum : uint
 {
-    ATM_E164      = 0x00000001,
-    ATM_NSAP      = 0x00000002,
-    ATM_AESA      = 0x00000002,
-    ATM_ADDR_SIZE = 0x00000014,
+    SAP_FIELD_ABSENT        = 0xfffffffeU,
+    SAP_FIELD_ANY           = 0xffffffffU,
+    SAP_FIELD_ANY_AESA_SEL  = 0xfffffffaU,
+    SAP_FIELD_ANY_AESA_REST = 0xfffffffbU,
 }
 
 enum : uint
 {
-    BLLI_L2_ISO_1745       = 0x00000001,
-    BLLI_L2_Q921           = 0x00000002,
-    BLLI_L2_X25L           = 0x00000006,
-    BLLI_L2_X25M           = 0x00000007,
-    BLLI_L2_ELAPB          = 0x00000008,
-    BLLI_L2_HDLC_ARM       = 0x00000009,
-    BLLI_L2_HDLC_NRM       = 0x0000000a,
-    BLLI_L2_HDLC_ABM       = 0x0000000b,
-    BLLI_L2_LLC            = 0x0000000c,
-    BLLI_L2_X75            = 0x0000000d,
-    BLLI_L2_Q922           = 0x0000000e,
-    BLLI_L2_USER_SPECIFIED = 0x00000010,
-}
-
-enum uint BLLI_L2_ISO_7776 = 0x00000011;
-
-enum : uint
-{
-    BLLI_L3_X25            = 0x00000006,
-    BLLI_L3_ISO_8208       = 0x00000007,
-    BLLI_L3_X223           = 0x00000008,
-    BLLI_L3_SIO_8473       = 0x00000009,
-    BLLI_L3_T70            = 0x0000000a,
-    BLLI_L3_ISO_TR9577     = 0x0000000b,
-    BLLI_L3_USER_SPECIFIED = 0x00000010,
+    ATM_E164      = 0x00000001U,
+    ATM_NSAP      = 0x00000002U,
+    ATM_AESA      = 0x00000002U,
+    ATM_ADDR_SIZE = 0x00000014U,
 }
 
 enum : uint
 {
-    BLLI_L3_IPI_SNAP = 0x00000080,
-    BLLI_L3_IPI_IP   = 0x000000cc,
+    BLLI_L2_ISO_1745       = 0x00000001U,
+    BLLI_L2_Q921           = 0x00000002U,
+    BLLI_L2_X25L           = 0x00000006U,
+    BLLI_L2_X25M           = 0x00000007U,
+    BLLI_L2_ELAPB          = 0x00000008U,
+    BLLI_L2_HDLC_ARM       = 0x00000009U,
+    BLLI_L2_HDLC_NRM       = 0x0000000aU,
+    BLLI_L2_HDLC_ABM       = 0x0000000bU,
+    BLLI_L2_LLC            = 0x0000000cU,
+    BLLI_L2_X75            = 0x0000000dU,
+    BLLI_L2_Q922           = 0x0000000eU,
+    BLLI_L2_USER_SPECIFIED = 0x00000010U,
+}
+
+enum uint BLLI_L2_ISO_7776 = 0x00000011U;
+
+enum : uint
+{
+    BLLI_L3_X25            = 0x00000006U,
+    BLLI_L3_ISO_8208       = 0x00000007U,
+    BLLI_L3_X223           = 0x00000008U,
+    BLLI_L3_SIO_8473       = 0x00000009U,
+    BLLI_L3_T70            = 0x0000000aU,
+    BLLI_L3_ISO_TR9577     = 0x0000000bU,
+    BLLI_L3_USER_SPECIFIED = 0x00000010U,
 }
 
 enum : uint
 {
-    BHLI_ISO          = 0x00000000,
-    BHLI_UserSpecific = 0x00000001,
-}
-
-enum uint BHLI_HighLayerProfile = 0x00000002;
-enum uint BHLI_VendorSpecificAppId = 0x00000003;
-
-enum : uint
-{
-    AAL5_MODE_MESSAGE   = 0x00000001,
-    AAL5_MODE_STREAMING = 0x00000002,
+    BLLI_L3_IPI_SNAP = 0x00000080U,
+    BLLI_L3_IPI_IP   = 0x000000ccU,
 }
 
 enum : uint
 {
-    AAL5_SSCS_NULL              = 0x00000000,
-    AAL5_SSCS_SSCOP_ASSURED     = 0x00000001,
-    AAL5_SSCS_SSCOP_NON_ASSURED = 0x00000002,
+    BHLI_ISO          = 0x00000000U,
+    BHLI_UserSpecific = 0x00000001U,
 }
 
-enum uint AAL5_SSCS_FRAME_RELAY = 0x00000004;
+enum uint BHLI_HighLayerProfile = 0x00000002U;
+enum uint BHLI_VendorSpecificAppId = 0x00000003U;
 
 enum : uint
 {
-    BCOB_A = 0x00000001,
-    BCOB_C = 0x00000003,
-    BCOB_X = 0x00000010,
-}
-
-enum uint TT_NOIND = 0x00000000;
-
-enum : uint
-{
-    TT_CBR = 0x00000004,
-    TT_VBR = 0x00000008,
-}
-
-enum uint TR_NOIND = 0x00000000;
-enum uint TR_END_TO_END = 0x00000001;
-enum uint TR_NO_END_TO_END = 0x00000002;
-
-enum : uint
-{
-    CLIP_NOT = 0x00000000,
-    CLIP_SUS = 0x00000020,
+    AAL5_MODE_MESSAGE   = 0x00000001U,
+    AAL5_MODE_STREAMING = 0x00000002U,
 }
 
 enum : uint
 {
-    UP_P2P  = 0x00000000,
-    UP_P2MP = 0x00000001,
+    AAL5_SSCS_NULL              = 0x00000000U,
+    AAL5_SSCS_SSCOP_ASSURED     = 0x00000001U,
+    AAL5_SSCS_SSCOP_NON_ASSURED = 0x00000002U,
+}
+
+enum uint AAL5_SSCS_FRAME_RELAY = 0x00000004U;
+
+enum : uint
+{
+    BCOB_A = 0x00000001U,
+    BCOB_C = 0x00000003U,
+    BCOB_X = 0x00000010U,
+}
+
+enum uint TT_NOIND = 0x00000000U;
+
+enum : uint
+{
+    TT_CBR = 0x00000004U,
+    TT_VBR = 0x00000008U,
+}
+
+enum uint TR_NOIND = 0x00000000U;
+enum uint TR_END_TO_END = 0x00000001U;
+enum uint TR_NO_END_TO_END = 0x00000002U;
+
+enum : uint
+{
+    CLIP_NOT = 0x00000000U,
+    CLIP_SUS = 0x00000020U,
 }
 
 enum : uint
 {
-    BLLI_L2_MODE_NORMAL = 0x00000040,
-    BLLI_L2_MODE_EXT    = 0x00000080,
+    UP_P2P  = 0x00000000U,
+    UP_P2MP = 0x00000001U,
 }
 
 enum : uint
 {
-    BLLI_L3_MODE_NORMAL = 0x00000040,
-    BLLI_L3_MODE_EXT    = 0x00000080,
-    BLLI_L3_PACKET_16   = 0x00000004,
-    BLLI_L3_PACKET_32   = 0x00000005,
-    BLLI_L3_PACKET_64   = 0x00000006,
-    BLLI_L3_PACKET_128  = 0x00000007,
-    BLLI_L3_PACKET_256  = 0x00000008,
-    BLLI_L3_PACKET_512  = 0x00000009,
-    BLLI_L3_PACKET_1024 = 0x0000000a,
-    BLLI_L3_PACKET_2048 = 0x0000000b,
-    BLLI_L3_PACKET_4096 = 0x0000000c,
-}
-
-enum uint PI_ALLOWED = 0x00000000;
-enum uint PI_RESTRICTED = 0x00000040;
-enum uint PI_NUMBER_NOT_AVAILABLE = 0x00000080;
-enum uint SI_USER_NOT_SCREENED = 0x00000000;
-
-enum : uint
-{
-    SI_USER_PASSED = 0x00000001,
-    SI_USER_FAILED = 0x00000002,
-}
-
-enum uint SI_NETWORK = 0x00000003;
-
-enum : uint
-{
-    CAUSE_LOC_USER            = 0x00000000,
-    CAUSE_LOC_PRIVATE_LOCAL   = 0x00000001,
-    CAUSE_LOC_PUBLIC_LOCAL    = 0x00000002,
-    CAUSE_LOC_TRANSIT_NETWORK = 0x00000003,
+    BLLI_L2_MODE_NORMAL = 0x00000040U,
+    BLLI_L2_MODE_EXT    = 0x00000080U,
 }
 
 enum : uint
 {
-    CAUSE_LOC_PUBLIC_REMOTE         = 0x00000004,
-    CAUSE_LOC_PRIVATE_REMOTE        = 0x00000005,
-    CAUSE_LOC_INTERNATIONAL_NETWORK = 0x00000007,
+    BLLI_L3_MODE_NORMAL = 0x00000040U,
+    BLLI_L3_MODE_EXT    = 0x00000080U,
+    BLLI_L3_PACKET_16   = 0x00000004U,
+    BLLI_L3_PACKET_32   = 0x00000005U,
+    BLLI_L3_PACKET_64   = 0x00000006U,
+    BLLI_L3_PACKET_128  = 0x00000007U,
+    BLLI_L3_PACKET_256  = 0x00000008U,
+    BLLI_L3_PACKET_512  = 0x00000009U,
+    BLLI_L3_PACKET_1024 = 0x0000000aU,
+    BLLI_L3_PACKET_2048 = 0x0000000bU,
+    BLLI_L3_PACKET_4096 = 0x0000000cU,
 }
 
-enum uint CAUSE_LOC_BEYOND_INTERWORKING = 0x0000000a;
-enum uint CAUSE_UNALLOCATED_NUMBER = 0x00000001;
+enum uint PI_ALLOWED = 0x00000000U;
+enum uint PI_RESTRICTED = 0x00000040U;
+enum uint PI_NUMBER_NOT_AVAILABLE = 0x00000080U;
+enum uint SI_USER_NOT_SCREENED = 0x00000000U;
 
 enum : uint
 {
-    CAUSE_NO_ROUTE_TO_TRANSIT_NETWORK = 0x00000002,
-    CAUSE_NO_ROUTE_TO_DESTINATION     = 0x00000003,
+    SI_USER_PASSED = 0x00000001U,
+    SI_USER_FAILED = 0x00000002U,
 }
 
-enum uint CAUSE_VPI_VCI_UNACCEPTABLE = 0x0000000a;
-enum uint CAUSE_NORMAL_CALL_CLEARING = 0x00000010;
-enum uint CAUSE_USER_BUSY = 0x00000011;
-enum uint CAUSE_NO_USER_RESPONDING = 0x00000012;
-enum uint CAUSE_CALL_REJECTED = 0x00000015;
-enum uint CAUSE_NUMBER_CHANGED = 0x00000016;
-enum uint CAUSE_USER_REJECTS_CLIR = 0x00000017;
-enum uint CAUSE_DESTINATION_OUT_OF_ORDER = 0x0000001b;
-enum uint CAUSE_INVALID_NUMBER_FORMAT = 0x0000001c;
-enum uint CAUSE_STATUS_ENQUIRY_RESPONSE = 0x0000001e;
-enum uint CAUSE_NORMAL_UNSPECIFIED = 0x0000001f;
-enum uint CAUSE_VPI_VCI_UNAVAILABLE = 0x00000023;
-enum uint CAUSE_NETWORK_OUT_OF_ORDER = 0x00000026;
-enum uint CAUSE_TEMPORARY_FAILURE = 0x00000029;
-enum uint CAUSE_ACCESS_INFORMAION_DISCARDED = 0x0000002b;
-enum uint CAUSE_NO_VPI_VCI_AVAILABLE = 0x0000002d;
-enum uint CAUSE_RESOURCE_UNAVAILABLE = 0x0000002f;
-enum uint CAUSE_QOS_UNAVAILABLE = 0x00000031;
-enum uint CAUSE_USER_CELL_RATE_UNAVAILABLE = 0x00000033;
+enum uint SI_NETWORK = 0x00000003U;
 
 enum : uint
 {
-    CAUSE_BEARER_CAPABILITY_UNAUTHORIZED = 0x00000039,
-    CAUSE_BEARER_CAPABILITY_UNAVAILABLE  = 0x0000003a,
-}
-
-enum uint CAUSE_OPTION_UNAVAILABLE = 0x0000003f;
-enum uint CAUSE_BEARER_CAPABILITY_UNIMPLEMENTED = 0x00000041;
-enum uint CAUSE_UNSUPPORTED_TRAFFIC_PARAMETERS = 0x00000049;
-enum uint CAUSE_INVALID_CALL_REFERENCE = 0x00000051;
-enum uint CAUSE_CHANNEL_NONEXISTENT = 0x00000052;
-enum uint CAUSE_INCOMPATIBLE_DESTINATION = 0x00000058;
-
-enum : uint
-{
-    CAUSE_INVALID_ENDPOINT_REFERENCE        = 0x00000059,
-    CAUSE_INVALID_TRANSIT_NETWORK_SELECTION = 0x0000005b,
-}
-
-enum uint CAUSE_TOO_MANY_PENDING_ADD_PARTY = 0x0000005c;
-enum uint CAUSE_AAL_PARAMETERS_UNSUPPORTED = 0x0000005d;
-enum uint CAUSE_MANDATORY_IE_MISSING = 0x00000060;
-
-enum : uint
-{
-    CAUSE_UNIMPLEMENTED_MESSAGE_TYPE = 0x00000061,
-    CAUSE_UNIMPLEMENTED_IE           = 0x00000063,
+    CAUSE_LOC_USER            = 0x00000000U,
+    CAUSE_LOC_PRIVATE_LOCAL   = 0x00000001U,
+    CAUSE_LOC_PUBLIC_LOCAL    = 0x00000002U,
+    CAUSE_LOC_TRANSIT_NETWORK = 0x00000003U,
 }
 
 enum : uint
 {
-    CAUSE_INVALID_IE_CONTENTS       = 0x00000064,
-    CAUSE_INVALID_STATE_FOR_MESSAGE = 0x00000065,
+    CAUSE_LOC_PUBLIC_REMOTE         = 0x00000004U,
+    CAUSE_LOC_PRIVATE_REMOTE        = 0x00000005U,
+    CAUSE_LOC_INTERNATIONAL_NETWORK = 0x00000007U,
 }
 
-enum uint CAUSE_RECOVERY_ON_TIMEOUT = 0x00000066;
-enum uint CAUSE_INCORRECT_MESSAGE_LENGTH = 0x00000068;
-enum uint CAUSE_PROTOCOL_ERROR = 0x0000006f;
+enum uint CAUSE_LOC_BEYOND_INTERWORKING = 0x0000000aU;
+enum uint CAUSE_UNALLOCATED_NUMBER = 0x00000001U;
 
 enum : uint
 {
-    CAUSE_COND_UNKNOWN   = 0x00000000,
-    CAUSE_COND_PERMANENT = 0x00000001,
-    CAUSE_COND_TRANSIENT = 0x00000002,
+    CAUSE_NO_ROUTE_TO_TRANSIT_NETWORK = 0x00000002U,
+    CAUSE_NO_ROUTE_TO_DESTINATION     = 0x00000003U,
+}
+
+enum uint CAUSE_VPI_VCI_UNACCEPTABLE = 0x0000000aU;
+enum uint CAUSE_NORMAL_CALL_CLEARING = 0x00000010U;
+enum uint CAUSE_USER_BUSY = 0x00000011U;
+enum uint CAUSE_NO_USER_RESPONDING = 0x00000012U;
+enum uint CAUSE_CALL_REJECTED = 0x00000015U;
+enum uint CAUSE_NUMBER_CHANGED = 0x00000016U;
+enum uint CAUSE_USER_REJECTS_CLIR = 0x00000017U;
+enum uint CAUSE_DESTINATION_OUT_OF_ORDER = 0x0000001bU;
+enum uint CAUSE_INVALID_NUMBER_FORMAT = 0x0000001cU;
+enum uint CAUSE_STATUS_ENQUIRY_RESPONSE = 0x0000001eU;
+enum uint CAUSE_NORMAL_UNSPECIFIED = 0x0000001fU;
+enum uint CAUSE_VPI_VCI_UNAVAILABLE = 0x00000023U;
+enum uint CAUSE_NETWORK_OUT_OF_ORDER = 0x00000026U;
+enum uint CAUSE_TEMPORARY_FAILURE = 0x00000029U;
+enum uint CAUSE_ACCESS_INFORMAION_DISCARDED = 0x0000002bU;
+enum uint CAUSE_NO_VPI_VCI_AVAILABLE = 0x0000002dU;
+enum uint CAUSE_RESOURCE_UNAVAILABLE = 0x0000002fU;
+enum uint CAUSE_QOS_UNAVAILABLE = 0x00000031U;
+enum uint CAUSE_USER_CELL_RATE_UNAVAILABLE = 0x00000033U;
+
+enum : uint
+{
+    CAUSE_BEARER_CAPABILITY_UNAUTHORIZED = 0x00000039U,
+    CAUSE_BEARER_CAPABILITY_UNAVAILABLE  = 0x0000003aU,
+}
+
+enum uint CAUSE_OPTION_UNAVAILABLE = 0x0000003fU;
+enum uint CAUSE_BEARER_CAPABILITY_UNIMPLEMENTED = 0x00000041U;
+enum uint CAUSE_UNSUPPORTED_TRAFFIC_PARAMETERS = 0x00000049U;
+enum uint CAUSE_INVALID_CALL_REFERENCE = 0x00000051U;
+enum uint CAUSE_CHANNEL_NONEXISTENT = 0x00000052U;
+enum uint CAUSE_INCOMPATIBLE_DESTINATION = 0x00000058U;
+
+enum : uint
+{
+    CAUSE_INVALID_ENDPOINT_REFERENCE        = 0x00000059U,
+    CAUSE_INVALID_TRANSIT_NETWORK_SELECTION = 0x0000005bU,
+}
+
+enum uint CAUSE_TOO_MANY_PENDING_ADD_PARTY = 0x0000005cU;
+enum uint CAUSE_AAL_PARAMETERS_UNSUPPORTED = 0x0000005dU;
+enum uint CAUSE_MANDATORY_IE_MISSING = 0x00000060U;
+
+enum : uint
+{
+    CAUSE_UNIMPLEMENTED_MESSAGE_TYPE = 0x00000061U,
+    CAUSE_UNIMPLEMENTED_IE           = 0x00000063U,
 }
 
 enum : uint
 {
-    CAUSE_REASON_USER            = 0x00000000,
-    CAUSE_REASON_IE_MISSING      = 0x00000004,
-    CAUSE_REASON_IE_INSUFFICIENT = 0x00000008,
+    CAUSE_INVALID_IE_CONTENTS       = 0x00000064U,
+    CAUSE_INVALID_STATE_FOR_MESSAGE = 0x00000065U,
+}
+
+enum uint CAUSE_RECOVERY_ON_TIMEOUT = 0x00000066U;
+enum uint CAUSE_INCORRECT_MESSAGE_LENGTH = 0x00000068U;
+enum uint CAUSE_PROTOCOL_ERROR = 0x0000006fU;
+
+enum : uint
+{
+    CAUSE_COND_UNKNOWN   = 0x00000000U,
+    CAUSE_COND_PERMANENT = 0x00000001U,
+    CAUSE_COND_TRANSIENT = 0x00000002U,
 }
 
 enum : uint
 {
-    CAUSE_PU_PROVIDER = 0x00000000,
-    CAUSE_PU_USER     = 0x00000008,
-    CAUSE_NA_NORMAL   = 0x00000000,
-    CAUSE_NA_ABNORMAL = 0x00000004,
+    CAUSE_REASON_USER            = 0x00000000U,
+    CAUSE_REASON_IE_MISSING      = 0x00000004U,
+    CAUSE_REASON_IE_INSUFFICIENT = 0x00000008U,
 }
 
 enum : uint
 {
-    QOS_CLASS0 = 0x00000000,
-    QOS_CLASS1 = 0x00000001,
-    QOS_CLASS2 = 0x00000002,
-    QOS_CLASS3 = 0x00000003,
-    QOS_CLASS4 = 0x00000004,
+    CAUSE_PU_PROVIDER = 0x00000000U,
+    CAUSE_PU_USER     = 0x00000008U,
+    CAUSE_NA_NORMAL   = 0x00000000U,
+    CAUSE_NA_ABNORMAL = 0x00000004U,
 }
 
-enum uint TNS_TYPE_NATIONAL = 0x00000040;
-enum uint TNS_PLAN_CARRIER_ID_CODE = 0x00000001;
-enum uint SIO_GET_NUMBER_OF_ATM_DEVICES = 0x50160001;
-enum uint SIO_GET_ATM_ADDRESS = 0xd0160002;
-enum uint SIO_ASSOCIATE_PVC = 0x90160003;
-enum uint SIO_GET_ATM_CONNECTION_ID = 0x50160004;
-enum uint WSPDESCRIPTION_LEN = 0x000000ff;
+enum : uint
+{
+    QOS_CLASS0 = 0x00000000U,
+    QOS_CLASS1 = 0x00000001U,
+    QOS_CLASS2 = 0x00000002U,
+    QOS_CLASS3 = 0x00000003U,
+    QOS_CLASS4 = 0x00000004U,
+}
+
+enum uint TNS_TYPE_NATIONAL = 0x00000040U;
+enum uint TNS_PLAN_CARRIER_ID_CODE = 0x00000001U;
+enum uint SIO_GET_NUMBER_OF_ATM_DEVICES = 0x50160001U;
+enum uint SIO_GET_ATM_ADDRESS = 0xd0160002U;
+enum uint SIO_ASSOCIATE_PVC = 0x90160003U;
+enum uint SIO_GET_ATM_CONNECTION_ID = 0x50160004U;
+enum uint WSPDESCRIPTION_LEN = 0x000000ffU;
 enum int WSS_OPERATION_IN_PROGRESS = 0x00000103;
-enum uint LSP_SYSTEM = 0x80000000;
-enum uint LSP_INSPECTOR = 0x00000001;
-enum uint LSP_REDIRECTOR = 0x00000002;
+enum uint LSP_SYSTEM = 0x80000000U;
+enum uint LSP_INSPECTOR = 0x00000001U;
+enum uint LSP_REDIRECTOR = 0x00000002U;
 
 enum : uint
 {
-    LSP_PROXY    = 0x00000004,
-    LSP_FIREWALL = 0x00000008,
+    LSP_PROXY    = 0x00000004U,
+    LSP_FIREWALL = 0x00000008U,
 }
 
-enum uint LSP_INBOUND_MODIFY = 0x00000010;
-enum uint LSP_OUTBOUND_MODIFY = 0x00000020;
-enum uint LSP_CRYPTO_COMPRESS = 0x00000040;
-enum uint LSP_LOCAL_CACHE = 0x00000080;
+enum uint LSP_INBOUND_MODIFY = 0x00000010U;
+enum uint LSP_OUTBOUND_MODIFY = 0x00000020U;
+enum uint LSP_CRYPTO_COMPRESS = 0x00000040U;
+enum uint LSP_LOCAL_CACHE = 0x00000080U;
 enum int UDP_NOCHECKSUM = 0x00000001;
 enum int UDP_CHECKSUM_COVERAGE = 0x00000014;
-enum uint GAI_STRERROR_BUFFER_SIZE = 0x00000400;
+enum uint GAI_STRERROR_BUFFER_SIZE = 0x00000400U;
 
 enum : int
 {
@@ -2485,7 +2546,7 @@ enum int IPX_MAX_ADAPTER_NUM = 0x0000400d;
 enum int IPX_RERIPNETNUMBER = 0x0000400e;
 enum int IPX_RECEIVE_BROADCAST = 0x0000400f;
 enum int IPX_IMMEDIATESPXACK = 0x00004010;
-enum uint MAX_MCAST_TTL = 0x000000ff;
+enum uint MAX_MCAST_TTL = 0x000000ffU;
 enum int RM_OPTIONSBASE = 0x000003e8;
 enum int RM_RATE_WINDOW_SIZE = 0x000003e9;
 enum int RM_SET_MESSAGE_BOUNDARY = 0x000003ea;
@@ -2504,256 +2565,256 @@ enum int RM_HIGH_SPEED_INTRANET_OPT = 0x000003f6;
 
 enum : uint
 {
-    SENDER_DEFAULT_RATE_KBITS_PER_SEC    = 0x00000038,
-    SENDER_DEFAULT_WINDOW_ADV_PERCENTAGE = 0x0000000f,
+    SENDER_DEFAULT_RATE_KBITS_PER_SEC    = 0x00000038U,
+    SENDER_DEFAULT_WINDOW_ADV_PERCENTAGE = 0x0000000fU,
 }
 
-enum uint MAX_WINDOW_INCREMENT_PERCENTAGE = 0x00000019;
-enum uint SENDER_DEFAULT_LATE_JOINER_PERCENTAGE = 0x00000000;
-enum uint SENDER_MAX_LATE_JOINER_PERCENTAGE = 0x0000004b;
-enum uint BITS_PER_BYTE = 0x00000008;
-enum uint LOG2_BITS_PER_BYTE = 0x00000003;
-enum uint UNIX_PATH_MAX = 0x0000006c;
+enum uint MAX_WINDOW_INCREMENT_PERCENTAGE = 0x00000019U;
+enum uint SENDER_DEFAULT_LATE_JOINER_PERCENTAGE = 0x00000000U;
+enum uint SENDER_MAX_LATE_JOINER_PERCENTAGE = 0x0000004bU;
+enum uint BITS_PER_BYTE = 0x00000008U;
+enum uint LOG2_BITS_PER_BYTE = 0x00000003U;
+enum uint UNIX_PATH_MAX = 0x0000006cU;
 
 enum : uint
 {
-    SIO_AF_UNIX_GETPEERPID        = 0x58000100,
-    SIO_AF_UNIX_SETBINDPARENTPATH = 0x98000101,
-    SIO_AF_UNIX_SETCONNPARENTPATH = 0x98000102,
+    SIO_AF_UNIX_GETPEERPID        = 0x58000100U,
+    SIO_AF_UNIX_SETBINDPARENTPATH = 0x98000101U,
+    SIO_AF_UNIX_SETCONNPARENTPATH = 0x98000102U,
 }
 
 enum : uint
 {
-    ISOPROTO_TP0       = 0x00000019,
-    ISOPROTO_TP1       = 0x0000001a,
-    ISOPROTO_TP2       = 0x0000001b,
-    ISOPROTO_TP3       = 0x0000001c,
-    ISOPROTO_TP4       = 0x0000001d,
-    ISOPROTO_TP        = 0x0000001d,
-    ISOPROTO_CLTP      = 0x0000001e,
-    ISOPROTO_CLNP      = 0x0000001f,
-    ISOPROTO_X25       = 0x00000020,
-    ISOPROTO_INACT_NL  = 0x00000021,
-    ISOPROTO_ESIS      = 0x00000022,
-    ISOPROTO_INTRAISIS = 0x00000023,
+    ISOPROTO_TP0       = 0x00000019U,
+    ISOPROTO_TP1       = 0x0000001aU,
+    ISOPROTO_TP2       = 0x0000001bU,
+    ISOPROTO_TP3       = 0x0000001cU,
+    ISOPROTO_TP4       = 0x0000001dU,
+    ISOPROTO_TP        = 0x0000001dU,
+    ISOPROTO_CLTP      = 0x0000001eU,
+    ISOPROTO_CLNP      = 0x0000001fU,
+    ISOPROTO_X25       = 0x00000020U,
+    ISOPROTO_INACT_NL  = 0x00000021U,
+    ISOPROTO_ESIS      = 0x00000022U,
+    ISOPROTO_INTRAISIS = 0x00000023U,
 }
 
-enum uint ISO_MAX_ADDR_LENGTH = 0x00000040;
-enum uint ISO_HIERARCHICAL = 0x00000000;
-enum uint ISO_NON_HIERARCHICAL = 0x00000001;
+enum uint ISO_MAX_ADDR_LENGTH = 0x00000040U;
+enum uint ISO_HIERARCHICAL = 0x00000000U;
+enum uint ISO_NON_HIERARCHICAL = 0x00000001U;
 
 enum : uint
 {
-    ISO_EXP_DATA_USE  = 0x00000000,
-    ISO_EXP_DATA_NUSE = 0x00000001,
+    ISO_EXP_DATA_USE  = 0x00000000U,
+    ISO_EXP_DATA_NUSE = 0x00000001U,
 }
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/nsproto-ipx-socket-options))], [])*/uint
 {
-    NSPROTO_IPX   = 0x000003e8,
-    NSPROTO_SPX   = 0x000004e8,
-    NSPROTO_SPXII = 0x000004e9,
+    NSPROTO_IPX   = 0x000003e8U,
+    NSPROTO_SPX   = 0x000004e8U,
+    NSPROTO_SPXII = 0x000004e9U,
 }
 
 enum : uint
 {
-    NETBIOS_NAME_LENGTH       = 0x00000010,
-    NETBIOS_UNIQUE_NAME       = 0x00000000,
-    NETBIOS_GROUP_NAME        = 0x00000001,
-    NETBIOS_TYPE_QUICK_UNIQUE = 0x00000002,
-    NETBIOS_TYPE_QUICK_GROUP  = 0x00000003,
+    NETBIOS_NAME_LENGTH       = 0x00000010U,
+    NETBIOS_UNIQUE_NAME       = 0x00000000U,
+    NETBIOS_GROUP_NAME        = 0x00000001U,
+    NETBIOS_TYPE_QUICK_UNIQUE = 0x00000002U,
+    NETBIOS_TYPE_QUICK_GROUP  = 0x00000003U,
 }
 
 enum : uint
 {
-    VNSPROTO_IPC          = 0x00000001,
-    VNSPROTO_RELIABLE_IPC = 0x00000002,
-    VNSPROTO_SPP          = 0x00000003,
+    VNSPROTO_IPC          = 0x00000001U,
+    VNSPROTO_RELIABLE_IPC = 0x00000002U,
+    VNSPROTO_SPP          = 0x00000003U,
 }
 
-enum uint _LITTLE_ENDIAN = 0x000004d2;
-enum uint _BIG_ENDIAN = 0x000010e1;
-enum uint _PDP_ENDIAN = 0x00000d54;
-enum uint BYTE_ORDER = 0x000004d2;
-enum uint DL_ADDRESS_LENGTH_MAXIMUM = 0x00000020;
-enum uint DL_HEADER_LENGTH_MAXIMUM = 0x00000040;
+enum uint _LITTLE_ENDIAN = 0x000004d2U;
+enum uint _BIG_ENDIAN = 0x000010e1U;
+enum uint _PDP_ENDIAN = 0x00000d54U;
+enum uint BYTE_ORDER = 0x000004d2U;
+enum uint DL_ADDRESS_LENGTH_MAXIMUM = 0x00000020U;
+enum uint DL_HEADER_LENGTH_MAXIMUM = 0x00000040U;
 
 enum : uint
 {
-    SNAP_DSAP    = 0x000000aa,
-    SNAP_SSAP    = 0x000000aa,
-    SNAP_CONTROL = 0x00000003,
-    SNAP_OUI     = 0x00000000,
-}
-
-enum : uint
-{
-    ETH_LENGTH_OF_HEADER      = 0x0000000e,
-    ETH_LENGTH_OF_VLAN_HEADER = 0x00000004,
-    ETH_LENGTH_OF_SNAP_HEADER = 0x00000008,
+    SNAP_DSAP    = 0x000000aaU,
+    SNAP_SSAP    = 0x000000aaU,
+    SNAP_CONTROL = 0x00000003U,
+    SNAP_OUI     = 0x00000000U,
 }
 
 enum : uint
 {
-    ETHERNET_TYPE_MINIMUM = 0x00000600,
-    ETHERNET_TYPE_IPV4    = 0x00000800,
-    ETHERNET_TYPE_ARP     = 0x00000806,
-    ETHERNET_TYPE_IPV6    = 0x000086dd,
-    ETHERNET_TYPE_802_1Q  = 0x00008100,
-    ETHERNET_TYPE_802_1AD = 0x000088a8,
-}
-
-enum uint IP_VER_MASK = 0x000000f0;
-enum uint IPV4_VERSION = 0x00000004;
-
-enum : uint
-{
-    MAX_IPV4_PACKET = 0x0000ffff,
-    MAX_IPV4_HLEN   = 0x0000003c,
+    ETH_LENGTH_OF_HEADER      = 0x0000000eU,
+    ETH_LENGTH_OF_VLAN_HEADER = 0x00000004U,
+    ETH_LENGTH_OF_SNAP_HEADER = 0x00000008U,
 }
 
 enum : uint
 {
-    IPV4_MINIMUM_MTU     = 0x00000240,
-    IPV4_MIN_MINIMUM_MTU = 0x00000160,
+    ETHERNET_TYPE_MINIMUM = 0x00000600U,
+    ETHERNET_TYPE_IPV4    = 0x00000800U,
+    ETHERNET_TYPE_ARP     = 0x00000806U,
+    ETHERNET_TYPE_IPV6    = 0x000086ddU,
+    ETHERNET_TYPE_802_1Q  = 0x00008100U,
+    ETHERNET_TYPE_802_1AD = 0x000088a8U,
 }
 
-enum uint IPV4_MAX_MINIMUM_MTU = 0x00000240;
+enum uint IP_VER_MASK = 0x000000f0U;
+enum uint IPV4_VERSION = 0x00000004U;
 
 enum : uint
 {
-    SIZEOF_IP_OPT_ROUTING_HEADER   = 0x00000003,
-    SIZEOF_IP_OPT_TIMESTAMP_HEADER = 0x00000004,
-    SIZEOF_IP_OPT_SECURITY         = 0x0000000b,
-    SIZEOF_IP_OPT_STREAMIDENTIFIER = 0x00000004,
-    SIZEOF_IP_OPT_ROUTERALERT      = 0x00000004,
-}
-
-enum uint IP4_OFF_MASK = 0x0000ff1f;
-enum uint ICMPV4_INVALID_PREFERENCE_LEVEL = 0x80000000;
-enum uint IGMP_QUERY_TYPE = 0x00000011;
-
-enum : uint
-{
-    IGMP_VERSION1_REPORT_TYPE = 0x00000012,
-    IGMP_VERSION2_REPORT_TYPE = 0x00000016,
-}
-
-enum uint IGMP_LEAVE_GROUP_TYPE = 0x00000017;
-enum uint IGMP_VERSION3_REPORT_TYPE = 0x00000022;
-
-enum : uint
-{
-    IPV6_VERSION            = 0x00000060,
-    IPV6_TRAFFIC_CLASS_MASK = 0x0000c00f,
-}
-
-enum uint IPV6_FULL_TRAFFIC_CLASS_MASK = 0x0000f00f;
-enum uint IPV6_ECN_MASK = 0x00003000;
-enum uint IPV6_FLOW_LABEL_MASK = 0xffff0f00;
-enum uint MAX_IPV6_PAYLOAD = 0x0000ffff;
-enum uint IPV6_ECN_SHIFT = 0x0000000c;
-enum uint IPV6_MINIMUM_MTU = 0x00000500;
-enum uint IP6F_OFF_MASK = 0x0000f8ff;
-enum uint IP6F_RESERVED_MASK = 0x00000600;
-enum uint IP6F_MORE_FRAG = 0x00000100;
-enum uint EXT_LEN_UNIT = 0x00000008;
-
-enum : uint
-{
-    IP6OPT_TYPE_SKIP      = 0x00000000,
-    IP6OPT_TYPE_DISCARD   = 0x00000040,
-    IP6OPT_TYPE_FORCEICMP = 0x00000080,
-    IP6OPT_TYPE_ICMP      = 0x000000c0,
-    IP6OPT_MUTABLE        = 0x00000020,
+    MAX_IPV4_PACKET = 0x0000ffffU,
+    MAX_IPV4_HLEN   = 0x0000003cU,
 }
 
 enum : uint
 {
-    ICMP6_DST_UNREACH_NOROUTE     = 0x00000000,
-    ICMP6_DST_UNREACH_ADMIN       = 0x00000001,
-    ICMP6_DST_UNREACH_BEYONDSCOPE = 0x00000002,
-    ICMP6_DST_UNREACH_ADDR        = 0x00000003,
-    ICMP6_DST_UNREACH_NOPORT      = 0x00000004,
+    IPV4_MINIMUM_MTU     = 0x00000240U,
+    IPV4_MIN_MINIMUM_MTU = 0x00000160U,
+}
+
+enum uint IPV4_MAX_MINIMUM_MTU = 0x00000240U;
+
+enum : uint
+{
+    SIZEOF_IP_OPT_ROUTING_HEADER   = 0x00000003U,
+    SIZEOF_IP_OPT_TIMESTAMP_HEADER = 0x00000004U,
+    SIZEOF_IP_OPT_SECURITY         = 0x0000000bU,
+    SIZEOF_IP_OPT_STREAMIDENTIFIER = 0x00000004U,
+    SIZEOF_IP_OPT_ROUTERALERT      = 0x00000004U,
+}
+
+enum uint IP4_OFF_MASK = 0x0000ff1fU;
+enum uint ICMPV4_INVALID_PREFERENCE_LEVEL = 0x80000000U;
+enum uint IGMP_QUERY_TYPE = 0x00000011U;
+
+enum : uint
+{
+    IGMP_VERSION1_REPORT_TYPE = 0x00000012U,
+    IGMP_VERSION2_REPORT_TYPE = 0x00000016U,
+}
+
+enum uint IGMP_LEAVE_GROUP_TYPE = 0x00000017U;
+enum uint IGMP_VERSION3_REPORT_TYPE = 0x00000022U;
+
+enum : uint
+{
+    IPV6_VERSION            = 0x00000060U,
+    IPV6_TRAFFIC_CLASS_MASK = 0x0000c00fU,
+}
+
+enum uint IPV6_FULL_TRAFFIC_CLASS_MASK = 0x0000f00fU;
+enum uint IPV6_ECN_MASK = 0x00003000U;
+enum uint IPV6_FLOW_LABEL_MASK = 0xffff0f00U;
+enum uint MAX_IPV6_PAYLOAD = 0x0000ffffU;
+enum uint IPV6_ECN_SHIFT = 0x0000000cU;
+enum uint IPV6_MINIMUM_MTU = 0x00000500U;
+enum uint IP6F_OFF_MASK = 0x0000f8ffU;
+enum uint IP6F_RESERVED_MASK = 0x00000600U;
+enum uint IP6F_MORE_FRAG = 0x00000100U;
+enum uint EXT_LEN_UNIT = 0x00000008U;
+
+enum : uint
+{
+    IP6OPT_TYPE_SKIP      = 0x00000000U,
+    IP6OPT_TYPE_DISCARD   = 0x00000040U,
+    IP6OPT_TYPE_FORCEICMP = 0x00000080U,
+    IP6OPT_TYPE_ICMP      = 0x000000c0U,
+    IP6OPT_MUTABLE        = 0x00000020U,
 }
 
 enum : uint
 {
-    ICMP6_TIME_EXCEED_TRANSIT    = 0x00000000,
-    ICMP6_TIME_EXCEED_REASSEMBLY = 0x00000001,
+    ICMP6_DST_UNREACH_NOROUTE     = 0x00000000U,
+    ICMP6_DST_UNREACH_ADMIN       = 0x00000001U,
+    ICMP6_DST_UNREACH_BEYONDSCOPE = 0x00000002U,
+    ICMP6_DST_UNREACH_ADDR        = 0x00000003U,
+    ICMP6_DST_UNREACH_NOPORT      = 0x00000004U,
 }
 
 enum : uint
 {
-    ICMP6_PARAMPROB_HEADER        = 0x00000000,
-    ICMP6_PARAMPROB_NEXTHEADER    = 0x00000001,
-    ICMP6_PARAMPROB_OPTION        = 0x00000002,
-    ICMP6_PARAMPROB_FIRSTFRAGMENT = 0x00000003,
-}
-
-enum uint ICMPV6_ECHO_REQUEST_FLAG_REVERSE = 0x00000001;
-
-enum : uint
-{
-    ND_RA_FLAG_MANAGED    = 0x00000080,
-    ND_RA_FLAG_OTHER      = 0x00000040,
-    ND_RA_FLAG_HOME_AGENT = 0x00000020,
-    ND_RA_FLAG_PREFERENCE = 0x00000018,
+    ICMP6_TIME_EXCEED_TRANSIT    = 0x00000000U,
+    ICMP6_TIME_EXCEED_REASSEMBLY = 0x00000001U,
 }
 
 enum : uint
 {
-    ND_NA_FLAG_ROUTER    = 0x80000000,
-    ND_NA_FLAG_SOLICITED = 0x40000000,
-    ND_NA_FLAG_OVERRIDE  = 0x20000000,
+    ICMP6_PARAMPROB_HEADER        = 0x00000000U,
+    ICMP6_PARAMPROB_NEXTHEADER    = 0x00000001U,
+    ICMP6_PARAMPROB_OPTION        = 0x00000002U,
+    ICMP6_PARAMPROB_FIRSTFRAGMENT = 0x00000003U,
+}
+
+enum uint ICMPV6_ECHO_REQUEST_FLAG_REVERSE = 0x00000001U;
+
+enum : uint
+{
+    ND_RA_FLAG_MANAGED    = 0x00000080U,
+    ND_RA_FLAG_OTHER      = 0x00000040U,
+    ND_RA_FLAG_HOME_AGENT = 0x00000020U,
+    ND_RA_FLAG_PREFERENCE = 0x00000018U,
 }
 
 enum : uint
 {
-    ND_OPT_PI_FLAG_ONLINK      = 0x00000080,
-    ND_OPT_PI_FLAG_AUTO        = 0x00000040,
-    ND_OPT_PI_FLAG_ROUTER_ADDR = 0x00000020,
-    ND_OPT_PI_FLAG_SITE_PREFIX = 0x00000010,
-    ND_OPT_PI_FLAG_ROUTE       = 0x00000001,
+    ND_NA_FLAG_ROUTER    = 0x80000000U,
+    ND_NA_FLAG_SOLICITED = 0x40000000U,
+    ND_NA_FLAG_OVERRIDE  = 0x20000000U,
 }
-
-enum uint ND_OPT_RI_FLAG_PREFERENCE = 0x00000018;
-enum uint ND_OPT_RDNSS_MIN_LEN = 0x00000018;
-enum uint ND_OPT_DNSSL_MIN_LEN = 0x00000010;
 
 enum : uint
 {
-    IN6_EMBEDDEDV4_UOCTET_POSITION = 0x00000008,
-    IN6_EMBEDDEDV4_BITS_IN_BYTE    = 0x00000008,
+    ND_OPT_PI_FLAG_ONLINK      = 0x00000080U,
+    ND_OPT_PI_FLAG_AUTO        = 0x00000040U,
+    ND_OPT_PI_FLAG_ROUTER_ADDR = 0x00000020U,
+    ND_OPT_PI_FLAG_SITE_PREFIX = 0x00000010U,
+    ND_OPT_PI_FLAG_ROUTE       = 0x00000001U,
 }
 
-enum uint TH_MAX_LEN = 0x0000003c;
+enum uint ND_OPT_RI_FLAG_PREFERENCE = 0x00000018U;
+enum uint ND_OPT_RDNSS_MIN_LEN = 0x00000018U;
+enum uint ND_OPT_DNSSL_MIN_LEN = 0x00000010U;
 
 enum : uint
 {
-    TH_FIN                = 0x00000001,
-    TH_SYN                = 0x00000002,
-    TH_RST                = 0x00000004,
-    TH_PSH                = 0x00000008,
-    TH_ACK                = 0x00000010,
-    TH_URG                = 0x00000020,
-    TH_ECE                = 0x00000040,
-    TH_CWR                = 0x00000080,
-    TH_OPT_EOL            = 0x00000000,
-    TH_OPT_NOP            = 0x00000001,
-    TH_OPT_MSS            = 0x00000002,
-    TH_OPT_WS             = 0x00000003,
-    TH_OPT_SACK_PERMITTED = 0x00000004,
-    TH_OPT_SACK           = 0x00000005,
-    TH_OPT_TS             = 0x00000008,
-    TH_OPT_FASTOPEN       = 0x00000022,
+    IN6_EMBEDDEDV4_UOCTET_POSITION = 0x00000008U,
+    IN6_EMBEDDEDV4_BITS_IN_BYTE    = 0x00000008U,
+}
+
+enum uint TH_MAX_LEN = 0x0000003cU;
+
+enum : uint
+{
+    TH_FIN                = 0x00000001U,
+    TH_SYN                = 0x00000002U,
+    TH_RST                = 0x00000004U,
+    TH_PSH                = 0x00000008U,
+    TH_ACK                = 0x00000010U,
+    TH_URG                = 0x00000020U,
+    TH_ECE                = 0x00000040U,
+    TH_CWR                = 0x00000080U,
+    TH_OPT_EOL            = 0x00000000U,
+    TH_OPT_NOP            = 0x00000001U,
+    TH_OPT_MSS            = 0x00000002U,
+    TH_OPT_WS             = 0x00000003U,
+    TH_OPT_SACK_PERMITTED = 0x00000004U,
+    TH_OPT_SACK           = 0x00000005U,
+    TH_OPT_TS             = 0x00000008U,
+    TH_OPT_FASTOPEN       = 0x00000022U,
 }
 
 enum const(wchar)* NMR_REG_KEY_PATH = "\\Registry\\Machine\\System\\CurrentControlSet\\Control\\NMR\\providers";
 enum SOCKET INVALID_SOCKET = SOCKET(0xffffffff);
-enum uint WSA_INFINITE = 0xffffffff;
+enum uint WSA_INFINITE = 0xffffffffU;
 enum WSAEVENT WSA_INVALID_EVENT = WSAEVENT(0x00000000);
-enum uint IOC_INOUT = 0xc0000000;
+enum uint IOC_INOUT = 0xc0000000U;
 
 enum : int
 {
@@ -2770,8 +2831,8 @@ enum int SIOCATMARK = 0x40047307;
 
 enum : uint
 {
-    INADDR_ANY       = 0x00000000,
-    INADDR_BROADCAST = 0xffffffff,
+    INADDR_ANY       = 0x00000000U,
+    INADDR_BROADCAST = 0xffffffffU,
 }
 
 enum int SO_DONTLINGER = 0xffffff7f;
@@ -3034,25 +3095,25 @@ struct socklen_t
     int Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/rio-bufferid))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WinSock/rio-bufferid
 struct RIO_BUFFERID
 {
     ptrdiff_t Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/riocqueue))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WinSock/riocqueue
 struct RIO_CQ
 {
     ptrdiff_t Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WinSock/riorqueue))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WinSock/riorqueue
 struct RIO_RQ
 {
     ptrdiff_t Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qos/ns-qos-flowspec))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qos/ns-qos-flowspec
 struct FLOWSPEC
 {
     uint TokenRate;
@@ -3065,57 +3126,103 @@ struct FLOWSPEC
     uint MinimumPolicedSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsock/ns-winsock-servent))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct SERVENT
+version(X86_64)
 {
-    PSTR   s_name;
-    byte** s_aliases;
-    PSTR   s_proto;
-    short  s_port;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock/ns-winsock-servent
+    struct SERVENT
+    {
+        PSTR   s_name;
+        byte** s_aliases;
+        PSTR   s_proto;
+        short  s_port;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsock/ns-winsock-wsadata))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct WSADATA
+version(AArch64)
 {
-    ushort    wVersion;
-    ushort    wHighVersion;
-    ushort    iMaxSockets;
-    ushort    iMaxUdpDg;
-    PSTR      lpVendorInfo;
-    CHAR[257] szDescription;
-    CHAR[129] szSystemStatus;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock/ns-winsock-servent
+    struct SERVENT
+    {
+        PSTR   s_name;
+        byte** s_aliases;
+        PSTR   s_proto;
+        short  s_port;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inaddr/ns-inaddr-in_addr))], [])
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock/ns-winsock-wsadata
+    struct WSADATA
+    {
+        ushort    wVersion;
+        ushort    wHighVersion;
+        ushort    iMaxSockets;
+        ushort    iMaxUdpDg;
+        PSTR      lpVendorInfo;
+        CHAR[257] szDescription;
+        CHAR[129] szSystemStatus;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock/ns-winsock-wsadata
+    struct WSADATA
+    {
+        ushort    wVersion;
+        ushort    wHighVersion;
+        ushort    iMaxSockets;
+        ushort    iMaxUdpDg;
+        PSTR      lpVendorInfo;
+        CHAR[257] szDescription;
+        CHAR[129] szSystemStatus;
+    }
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inaddr/ns-inaddr-in_addr
 struct IN_ADDR
 {
-    _S_un_e__Union S_un;
+    union S_un
+    {
+        struct S_un_b
+        {
+            ubyte s_b1;
+            ubyte s_b2;
+            ubyte s_b3;
+            ubyte s_b4;
+        }
+        struct S_un_w
+        {
+            ushort s_w1;
+            ushort s_w2;
+        }
+        uint S_addr;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsock/ns-winsock-sockaddr))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock/ns-winsock-sockaddr
 struct SOCKADDR
 {
     ADDRESS_FAMILY sa_family;
     CHAR[14]       sa_data;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-socket_address))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-socket_address
 struct SOCKET_ADDRESS
 {
     SOCKADDR* lpSockaddr;
     int       iSockaddrLength;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-socket_address_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-socket_address_list
 struct SOCKET_ADDRESS_LIST
 {
     int iAddressCount;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SOCKET_ADDRESS[1] Address;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-csaddr_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-csaddr_info
 struct CSADDR_INFO
 {
     SOCKET_ADDRESS LocalAddr;
@@ -3132,7 +3239,7 @@ struct SOCKADDR_STORAGE
     CHAR[112]      __ss_pad2;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-sockaddr_storage_xp))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-sockaddr_storage_xp
 struct SOCKADDR_STORAGE_XP
 {
     short     ss_family;
@@ -3141,7 +3248,7 @@ struct SOCKADDR_STORAGE_XP
     CHAR[112] __ss_pad2;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-socket_processor_affinity))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-socket_processor_affinity
 struct SOCKET_PROCESSOR_AFFINITY
 {
     PROCESSOR_NUMBER Processor;
@@ -3151,10 +3258,17 @@ struct SOCKET_PROCESSOR_AFFINITY
 
 struct SCOPE_ID
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Level)), FixedArgSig(ElementSig(28)), FixedArgSig(ElementSig(4))], [])*/uint _bitfield143;
+        }
+        uint Value;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsock/ns-winsock-sockaddr_in))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock/ns-winsock-sockaddr_in
 struct SOCKADDR_IN
 {
     ADDRESS_FAMILY sin_family;
@@ -3170,14 +3284,14 @@ struct SOCKADDR_DL
     ubyte[4]       sdl_zero;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-wsabuf))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-wsabuf
 struct WSABUF
 {
     uint len;
     PSTR buf;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-wsamsg))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-wsamsg
 struct WSAMSG
 {
     SOCKADDR* name;
@@ -3196,7 +3310,7 @@ struct CMSGHDR
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-addrinfoa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-addrinfoa
 struct ADDRINFOA
 {
     int        ai_flags;
@@ -3210,7 +3324,7 @@ struct ADDRINFOA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-addrinfow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-addrinfow
 struct ADDRINFOW
 {
     int        ai_flags;
@@ -3225,7 +3339,7 @@ struct ADDRINFOW
 
 //STRUCT ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ADDRINFOEXW))], [])
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-addrinfoexa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-addrinfoexa
 struct ADDRINFOEXA
 {
     int          ai_flags;
@@ -3242,7 +3356,7 @@ struct ADDRINFOEXA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-addrinfoexw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-addrinfoexw
 struct ADDRINFOEXW
 {
     int          ai_flags;
@@ -3260,7 +3374,7 @@ struct ADDRINFOEXW
 
 //STRUCT ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ADDRINFOEX2W))], [])
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-addrinfoex2a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-addrinfoex2a
 struct ADDRINFOEX2A
 {
     int           ai_flags;
@@ -3279,7 +3393,7 @@ struct ADDRINFOEX2A
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-addrinfoex2w))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-addrinfoex2w
 struct ADDRINFOEX2W
 {
     int           ai_flags;
@@ -3297,7 +3411,7 @@ struct ADDRINFOEX2W
     PWSTR         ai_fqdn;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-addrinfoex3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-addrinfoex3
 struct ADDRINFOEX3
 {
     int          ai_flags;
@@ -3316,7 +3430,7 @@ struct ADDRINFOEX3
     int          ai_interfaceindex;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-addrinfoex4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-addrinfoex4
 struct ADDRINFOEX4
 {
     int          ai_flags;
@@ -3336,7 +3450,7 @@ struct ADDRINFOEX4
     HANDLE       ai_resolutionhandle;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-addrinfoex5))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-addrinfoex5
 struct ADDRINFOEX5
 {
     int          ai_flags;
@@ -3357,17 +3471,21 @@ struct ADDRINFOEX5
     uint         ai_ttl;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-addrinfo_dns_server))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-addrinfo_dns_server
 struct ADDRINFO_DNS_SERVER
 {
-    uint                ai_servertype;
-    ulong               ai_flags;
-    uint                ai_addrlen;
-    SOCKADDR*           ai_addr;
-    _Anonymous_e__Union Anonymous;
+    uint      ai_servertype;
+    ulong     ai_flags;
+    uint      ai_addrlen;
+    SOCKADDR* ai_addr;
+    union
+    {
+        PWSTR ai_template;
+        PWSTR ai_hostname;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-addrinfoex6))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2def/ns-ws2def-addrinfoex6
 struct ADDRINFOEX6
 {
     int                  ai_flags;
@@ -3415,21 +3533,21 @@ struct ADDRINFOEX7
     ulong                ai_extraflags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsock/nf-winsock-fd_set))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock/nf-winsock-fd_set
 struct FD_SET
 {
     uint       fd_count;
     SOCKET[64] fd_array;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsock/ns-winsock-timeval))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock/ns-winsock-timeval
 struct TIMEVAL
 {
     int tv_sec;
     int tv_usec;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsock/ns-winsock-hostent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock/ns-winsock-hostent
 struct HOSTENT
 {
     PSTR   h_name;
@@ -3447,17 +3565,19 @@ struct netent
     uint   n_net;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsock/ns-winsock-servent))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct SERVENT
+version(X86)
 {
-    PSTR   s_name;
-    byte** s_aliases;
-    short  s_port;
-    PSTR   s_proto;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock/ns-winsock-servent
+    struct SERVENT
+    {
+        PSTR   s_name;
+        byte** s_aliases;
+        short  s_port;
+        PSTR   s_proto;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsock/ns-winsock-protoent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock/ns-winsock-protoent
 struct PROTOENT
 {
     PSTR   p_name;
@@ -3465,17 +3585,19 @@ struct PROTOENT
     short  p_proto;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsock/ns-winsock-wsadata))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct WSADATA
+version(X86)
 {
-    ushort    wVersion;
-    ushort    wHighVersion;
-    CHAR[257] szDescription;
-    CHAR[129] szSystemStatus;
-    ushort    iMaxSockets;
-    ushort    iMaxUdpDg;
-    PSTR      lpVendorInfo;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock/ns-winsock-wsadata
+    struct WSADATA
+    {
+        ushort    wVersion;
+        ushort    wHighVersion;
+        CHAR[257] szDescription;
+        CHAR[129] szSystemStatus;
+        ushort    iMaxSockets;
+        ushort    iMaxUdpDg;
+        PSTR      lpVendorInfo;
+    }
 }
 
 struct sockproto
@@ -3484,14 +3606,14 @@ struct sockproto
     ushort sp_protocol;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsock/ns-winsock-linger))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock/ns-winsock-linger
 struct LINGER
 {
     ushort l_onoff;
     ushort l_linger;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-qos))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-qos
 struct QOS
 {
     FLOWSPEC SendingFlowspec;
@@ -3499,14 +3621,14 @@ struct QOS
     WSABUF   ProviderSpecific;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsanetworkevents))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsanetworkevents
 struct WSANETWORKEVENTS
 {
     int     lNetworkEvents;
     int[10] iErrorCode;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsaprotocolchain))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsaprotocolchain
 struct WSAPROTOCOLCHAIN
 {
     int     ChainLen;
@@ -3515,7 +3637,7 @@ struct WSAPROTOCOLCHAIN
 
 //STRUCT ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(WSAPROTOCOL_INFOW))], [])
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsaprotocol_infoa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsaprotocol_infoa
 struct WSAPROTOCOL_INFOA
 {
     uint             dwServiceFlags1;
@@ -3541,7 +3663,7 @@ struct WSAPROTOCOL_INFOA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsaprotocol_infow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsaprotocol_infow
 struct WSAPROTOCOL_INFOW
 {
     uint             dwServiceFlags1;
@@ -3566,21 +3688,44 @@ struct WSAPROTOCOL_INFOW
     wchar[256]       szProtocol;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsacompletion))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsacompletion
 struct WSACOMPLETION
 {
-    WSACOMPLETIONTYPE    Type;
-    _Parameters_e__Union Parameters;
+    WSACOMPLETIONTYPE Type;
+    union Parameters
+    {
+        struct WindowMessage
+        {
+            HWND   hWnd;
+            uint   uMsg;
+            WPARAM context;
+        }
+        struct Event
+        {
+            OVERLAPPED* lpOverlapped;
+        }
+        struct Apc
+        {
+            OVERLAPPED* lpOverlapped;
+            LPWSAOVERLAPPED_COMPLETION_ROUTINE lpfnCompletionProc;
+        }
+        struct Port
+        {
+            OVERLAPPED* lpOverlapped;
+            HANDLE      hPort;
+            size_t      Key;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-afprotocols))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-afprotocols
 struct AFPROTOCOLS
 {
     int iAddressFamily;
     int iProtocol;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsaversion))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsaversion
 struct WSAVERSION
 {
     uint           dwVersion;
@@ -3589,7 +3734,7 @@ struct WSAVERSION
 
 //STRUCT ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(WSAQUERYSETW))], [])
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsaqueryseta))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsaqueryseta
 struct WSAQUERYSETA
 {
     uint         dwSize;
@@ -3610,7 +3755,7 @@ struct WSAQUERYSETA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsaquerysetw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsaquerysetw
 struct WSAQUERYSETW
 {
     uint         dwSize;
@@ -3632,7 +3777,7 @@ struct WSAQUERYSETW
 
 //STRUCT ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(WSAQUERYSET2W))], [])
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsaqueryset2a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsaqueryset2a
 struct WSAQUERYSET2A
 {
     uint         dwSize;
@@ -3652,7 +3797,7 @@ struct WSAQUERYSET2A
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsaqueryset2w))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsaqueryset2w
 struct WSAQUERYSET2W
 {
     uint         dwSize;
@@ -3673,7 +3818,7 @@ struct WSAQUERYSET2W
 
 //STRUCT ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(WSANSCLASSINFOW))], [])
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsansclassinfoa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsansclassinfoa
 struct WSANSCLASSINFOA
 {
     PSTR  lpszName;
@@ -3684,7 +3829,7 @@ struct WSANSCLASSINFOA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsansclassinfow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsansclassinfow
 struct WSANSCLASSINFOW
 {
     PWSTR lpszName;
@@ -3696,7 +3841,7 @@ struct WSANSCLASSINFOW
 
 //STRUCT ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(WSASERVICECLASSINFOW))], [])
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsaserviceclassinfoa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsaserviceclassinfoa
 struct WSASERVICECLASSINFOA
 {
     GUID*            lpServiceClassId;
@@ -3706,7 +3851,7 @@ struct WSASERVICECLASSINFOA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsaserviceclassinfow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsaserviceclassinfow
 struct WSASERVICECLASSINFOW
 {
     GUID*            lpServiceClassId;
@@ -3717,7 +3862,7 @@ struct WSASERVICECLASSINFOW
 
 //STRUCT ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(WSANAMESPACE_INFOW))], [])
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsanamespace_infoa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsanamespace_infoa
 struct WSANAMESPACE_INFOA
 {
     GUID NSProviderId;
@@ -3728,7 +3873,7 @@ struct WSANAMESPACE_INFOA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsanamespace_infow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsanamespace_infow
 struct WSANAMESPACE_INFOW
 {
     GUID  NSProviderId;
@@ -3740,7 +3885,7 @@ struct WSANAMESPACE_INFOW
 
 //STRUCT ATTR: ObsoleteAttribute : CustomAttributeSig([FixedArgSig(ElementSig(WSANAMESPACE_INFOEXW))], [])
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsanamespace_infoexa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsanamespace_infoexa
 struct WSANAMESPACE_INFOEXA
 {
     GUID NSProviderId;
@@ -3752,7 +3897,7 @@ struct WSANAMESPACE_INFOEXA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsanamespace_infoexw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsanamespace_infoexw
 struct WSANAMESPACE_INFOEXW
 {
     GUID  NSProviderId;
@@ -3763,7 +3908,7 @@ struct WSANAMESPACE_INFOEXW
     BLOB  ProviderSpecific;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsapollfd))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-wsapollfd
 struct WSAPOLLFD
 {
     SOCKET              fd;
@@ -3771,7 +3916,7 @@ struct WSAPOLLFD
     WSAPOLL_EVENT_FLAGS revents;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-sock_notify_registration))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock2/ns-winsock2-sock_notify_registration
 struct SOCK_NOTIFY_REGISTRATION
 {
     SOCKET socket;
@@ -3782,13 +3927,17 @@ struct SOCK_NOTIFY_REGISTRATION
     uint   registrationResult;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/in6addr/ns-in6addr-in6_addr))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/in6addr/ns-in6addr-in6_addr
 struct IN6_ADDR
 {
-    _u_e__Union u;
+    union u
+    {
+        ubyte[16] Byte;
+        ushort[8] Word;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2ipdef/ns-ws2ipdef-sockaddr_in6_old))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2ipdef/ns-ws2ipdef-sockaddr_in6_old
 struct sockaddr_in6_old
 {
     short    sin6_family;
@@ -3797,7 +3946,7 @@ struct sockaddr_in6_old
     IN6_ADDR sin6_addr;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2ipdef/ns-ws2ipdef-sockaddr_gen))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2ipdef/ns-ws2ipdef-sockaddr_gen
 union sockaddr_gen
 {
     SOCKADDR         Address;
@@ -3805,7 +3954,7 @@ union sockaddr_gen
     sockaddr_in6_old AddressIn6;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2ipdef/ns-ws2ipdef-interface_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2ipdef/ns-ws2ipdef-interface_info
 struct INTERFACE_INFO
 {
     uint         iiFlags;
@@ -3814,7 +3963,7 @@ struct INTERFACE_INFO
     sockaddr_gen iiNetmask;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2ipdef/ns-ws2ipdef-interface_info_ex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2ipdef/ns-ws2ipdef-interface_info_ex
 struct INTERFACE_INFO_EX
 {
     uint           iiFlags;
@@ -3825,14 +3974,18 @@ struct INTERFACE_INFO_EX
 
 struct SOCKADDR_IN6
 {
-    ADDRESS_FAMILY      sin6_family;
-    ushort              sin6_port;
-    uint                sin6_flowinfo;
-    IN6_ADDR            sin6_addr;
-    _Anonymous_e__Union Anonymous;
+    ADDRESS_FAMILY sin6_family;
+    ushort         sin6_port;
+    uint           sin6_flowinfo;
+    IN6_ADDR       sin6_addr;
+    union
+    {
+        uint     sin6_scope_id;
+        SCOPE_ID sin6_scope_struct;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2ipdef/ns-ws2ipdef-sockaddr_in6_w2ksp1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2ipdef/ns-ws2ipdef-sockaddr_in6_w2ksp1
 struct SOCKADDR_IN6_W2KSP1
 {
     short    sin6_family;
@@ -3842,7 +3995,7 @@ struct SOCKADDR_IN6_W2KSP1
     uint     sin6_scope_id;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2ipdef/ns-ws2ipdef-sockaddr_inet))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2ipdef/ns-ws2ipdef-sockaddr_inet
 union SOCKADDR_INET
 {
     SOCKADDR_IN    Ipv4;
@@ -3850,21 +4003,21 @@ union SOCKADDR_INET
     ADDRESS_FAMILY si_family;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2ipdef/ns-ws2ipdef-sockaddr_in6_pair))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2ipdef/ns-ws2ipdef-sockaddr_in6_pair
 struct SOCKADDR_IN6_PAIR
 {
     SOCKADDR_IN6* SourceAddress;
     SOCKADDR_IN6* DestinationAddress;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2ipdef/ns-ws2ipdef-ip_mreq))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2ipdef/ns-ws2ipdef-ip_mreq
 struct IP_MREQ
 {
     IN_ADDR imr_multiaddr;
     IN_ADDR imr_interface;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2ipdef/ns-ws2ipdef-ip_mreq_source))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2ipdef/ns-ws2ipdef-ip_mreq_source
 struct IP_MREQ_SOURCE
 {
     IN_ADDR imr_multiaddr;
@@ -3872,7 +4025,7 @@ struct IP_MREQ_SOURCE
     IN_ADDR imr_interface;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2ipdef/ns-ws2ipdef-ip_msfilter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2ipdef/ns-ws2ipdef-ip_msfilter
 struct IP_MSFILTER
 {
     IN_ADDR             imsf_multiaddr;
@@ -3882,21 +4035,21 @@ struct IP_MSFILTER
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/IN_ADDR[1] imsf_slist;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2ipdef/ns-ws2ipdef-ipv6_mreq))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2ipdef/ns-ws2ipdef-ipv6_mreq
 struct IPV6_MREQ
 {
     IN6_ADDR ipv6mr_multiaddr;
     uint     ipv6mr_interface;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2ipdef/ns-ws2ipdef-group_req))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2ipdef/ns-ws2ipdef-group_req
 struct GROUP_REQ
 {
     uint             gr_interface;
     SOCKADDR_STORAGE gr_group;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2ipdef/ns-ws2ipdef-group_source_req))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2ipdef/ns-ws2ipdef-group_source_req
 struct GROUP_SOURCE_REQ
 {
     uint             gsr_interface;
@@ -3904,7 +4057,7 @@ struct GROUP_SOURCE_REQ
     SOCKADDR_STORAGE gsr_source;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2ipdef/ns-ws2ipdef-group_filter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2ipdef/ns-ws2ipdef-group_filter
 struct GROUP_FILTER
 {
     uint                gf_interface;
@@ -3914,14 +4067,14 @@ struct GROUP_FILTER
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SOCKADDR_STORAGE[1] gf_slist;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2ipdef/ns-ws2ipdef-in_pktinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2ipdef/ns-ws2ipdef-in_pktinfo
 struct IN_PKTINFO
 {
     IN_ADDR ipi_addr;
     uint    ipi_ifindex;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2ipdef/ns-ws2ipdef-in6_pktinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2ipdef/ns-ws2ipdef-in6_pktinfo
 struct IN6_PKTINFO
 {
     IN6_ADDR ipi6_addr;
@@ -3948,7 +4101,7 @@ struct IN_RECVERR
     ubyte   code;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2ipdef/ns-ws2ipdef-icmp_error_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2ipdef/ns-ws2ipdef-icmp_error_info
 struct ICMP_ERROR_INFO
 {
     SOCKADDR_INET srcaddress;
@@ -3957,7 +4110,7 @@ struct ICMP_ERROR_INFO
     ubyte         code;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wsrm/ns-wsrm-rm_send_window))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsrm/ns-wsrm-rm_send_window
 struct RM_SEND_WINDOW
 {
     uint RateKbitsPerSec;
@@ -3965,7 +4118,7 @@ struct RM_SEND_WINDOW
     uint WindowSizeInBytes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wsrm/ns-wsrm-rm_sender_stats))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsrm/ns-wsrm-rm_sender_stats
 struct RM_SENDER_STATS
 {
     ulong DataBytesSent;
@@ -3983,7 +4136,7 @@ struct RM_SENDER_STATS
     ulong TotalODataPacketsSent;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wsrm/ns-wsrm-rm_receiver_stats))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsrm/ns-wsrm-rm_receiver_stats
 struct RM_RECEIVER_STATS
 {
     ulong NumODataPacketsReceived;
@@ -4006,7 +4159,7 @@ struct RM_RECEIVER_STATS
     ulong TotalParityNaksSent;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wsrm/ns-wsrm-rm_fec_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsrm/ns-wsrm-rm_fec_info
 struct RM_FEC_INFO
 {
     ushort  FECBlockSize;
@@ -4015,7 +4168,7 @@ struct RM_FEC_INFO
     BOOLEAN fFECOnDemandParityEnabled;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wsnwlink/ns-wsnwlink-ipx_address_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsnwlink/ns-wsnwlink-ipx_address_data
 struct IPX_ADDRESS_DATA
 {
     int      adapternum;
@@ -4027,7 +4180,7 @@ struct IPX_ADDRESS_DATA
     uint     linkspeed;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wsnwlink/ns-wsnwlink-ipx_netnum_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsnwlink/ns-wsnwlink-ipx_netnum_data
 struct IPX_NETNUM_DATA
 {
     ubyte[4] netnum;
@@ -4037,7 +4190,7 @@ struct IPX_NETNUM_DATA
     ubyte[6] router;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wsnwlink/ns-wsnwlink-ipx_spxconnstatus_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wsnwlink/ns-wsnwlink-ipx_spxconnstatus_data
 struct IPX_SPXCONNSTATUS_DATA
 {
     ubyte    ConnectionState;
@@ -4072,7 +4225,7 @@ struct LM_IRPARMS
     ubyte  nRXPackets;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/af_irda/ns-af_irda-sockaddr_irda))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/af_irda/ns-af_irda-sockaddr_irda
 struct SOCKADDR_IRDA
 {
     ushort   irdaAddressFamily;
@@ -4113,7 +4266,21 @@ struct WINDOWS_IAS_SET
     CHAR[64]  irdaClassName;
     CHAR[256] irdaAttribName;
     uint      irdaAttribType;
-    _irdaAttribute_e__Union irdaAttribute;
+    union irdaAttribute
+    {
+        int irdaAttribInt;
+        struct irdaAttribOctetSeq
+        {
+            ushort      Len;
+            ubyte[1024] OctetSeq;
+        }
+        struct irdaAttribUsrStr
+        {
+            ubyte      Len;
+            ubyte      CharSet;
+            ubyte[256] UsrStr;
+        }
+    }
 }
 
 struct WINDOWS_IAS_QUERY
@@ -4122,13 +4289,27 @@ struct WINDOWS_IAS_QUERY
     CHAR[64]  irdaClassName;
     CHAR[256] irdaAttribName;
     uint      irdaAttribType;
-    _irdaAttribute_e__Union irdaAttribute;
+    union irdaAttribute
+    {
+        int irdaAttribInt;
+        struct irdaAttribOctetSeq
+        {
+            uint        Len;
+            ubyte[1024] OctetSeq;
+        }
+        struct irdaAttribUsrStr
+        {
+            uint       Len;
+            uint       CharSet;
+            ubyte[256] UsrStr;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nldef/ns-nldef-nl_interface_offload_rod))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nldef/ns-nldef-nl_interface_offload_rod
 struct NL_INTERFACE_OFFLOAD_ROD
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(TlGiantSendOffloadSupported)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield65;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(TlGiantSendOffloadSupported)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield144;
 }
 
 struct NL_PATH_BANDWIDTH_ROD
@@ -4138,7 +4319,7 @@ struct NL_PATH_BANDWIDTH_ROD
     BOOLEAN BandwidthPeaked;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nldef/ns-nldef-nl_network_connectivity_hint))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nldef/ns-nldef-nl_network_connectivity_hint
 struct NL_NETWORK_CONNECTIVITY_HINT
 {
     NL_NETWORK_CONNECTIVITY_LEVEL_HINT ConnectivityLevel;
@@ -4148,7 +4329,7 @@ struct NL_NETWORK_CONNECTIVITY_HINT
     BOOLEAN Roaming;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nldef/ns-nldef-nl_bandwidth_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nldef/ns-nldef-nl_bandwidth_information
 struct NL_BANDWIDTH_INFORMATION
 {
     ulong   Bandwidth;
@@ -4156,7 +4337,7 @@ struct NL_BANDWIDTH_INFORMATION
     BOOLEAN BandwidthPeaked;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mstcpip/ns-mstcpip-transport_setting_id))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mstcpip/ns-mstcpip-transport_setting_id
 struct TRANSPORT_SETTING_ID
 {
     GUID Guid;
@@ -4169,7 +4350,7 @@ struct tcp_keepalive
     uint keepaliveinterval;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mstcpip/ns-mstcpip-real_time_notification_setting_input))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mstcpip/ns-mstcpip-real_time_notification_setting_input
 struct REAL_TIME_NOTIFICATION_SETTING_INPUT
 {
     TRANSPORT_SETTING_ID TransportSettingId;
@@ -4183,20 +4364,20 @@ struct REAL_TIME_NOTIFICATION_SETTING_INPUT_EX
     BOOLEAN              Unmark;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mstcpip/ns-mstcpip-real_time_notification_setting_output))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mstcpip/ns-mstcpip-real_time_notification_setting_output
 struct REAL_TIME_NOTIFICATION_SETTING_OUTPUT
 {
     CONTROL_CHANNEL_TRIGGER_STATUS ChannelStatus;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mstcpip/ns-mstcpip-associate_nameres_context_input))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mstcpip/ns-mstcpip-associate_nameres_context_input
 struct ASSOCIATE_NAMERES_CONTEXT_INPUT
 {
     TRANSPORT_SETTING_ID TransportSettingId;
     ulong                Handle;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mstcpip/ns-mstcpip-timestamping_config))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mstcpip/ns-mstcpip-timestamping_config
 struct TIMESTAMPING_CONFIG
 {
     uint   Flags;
@@ -4215,7 +4396,7 @@ struct RCVALL_IF
     uint         Interface;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mstcpip/ns-mstcpip-tcp_initial_rto_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mstcpip/ns-mstcpip-tcp_initial_rto_parameters
 struct TCP_INITIAL_RTO_PARAMETERS
 {
     ushort Rtt;
@@ -4232,7 +4413,7 @@ struct TCP_ACK_FREQUENCY_PARAMETERS
     ubyte TcpDelayedAckFrequency;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mstcpip/ns-mstcpip-tcp_info_v0))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mstcpip/ns-mstcpip-tcp_info_v0
 struct TCP_INFO_v0
 {
     TCPSTATE State;
@@ -4256,7 +4437,7 @@ struct TCP_INFO_v0
     ubyte    SynRetrans;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mstcpip/ns-mstcpip-tcp_info_v1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mstcpip/ns-mstcpip-tcp_info_v1
 struct TCP_INFO_v1
 {
     TCPSTATE State;
@@ -4325,20 +4506,20 @@ struct TCP_INFO_v2
     uint     PtoEpisodes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mstcpip/ns-mstcpip-inet_port_range))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mstcpip/ns-mstcpip-inet_port_range
 struct INET_PORT_RANGE
 {
     ushort StartPort;
     ushort NumberOfPorts;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mstcpip/ns-mstcpip-inet_port_reservation_token))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mstcpip/ns-mstcpip-inet_port_reservation_token
 struct INET_PORT_RESERVATION_TOKEN
 {
     ulong Token;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mstcpip/ns-mstcpip-inet_port_reservation_instance))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mstcpip/ns-mstcpip-inet_port_reservation_instance
 struct INET_PORT_RESERVATION_INSTANCE
 {
     INET_PORT_RANGE Reservation;
@@ -4350,14 +4531,14 @@ struct INET_PORT_RESERVATION_INFORMATION
     uint OwningPid;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mstcpip/ns-mstcpip-socket_security_settings))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mstcpip/ns-mstcpip-socket_security_settings
 struct SOCKET_SECURITY_SETTINGS
 {
     SOCKET_SECURITY_PROTOCOL SecurityProtocol;
     uint SecurityFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mstcpip/ns-mstcpip-socket_security_settings_ipsec))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mstcpip/ns-mstcpip-socket_security_settings_ipsec
 struct SOCKET_SECURITY_SETTINGS_IPSEC
 {
     SOCKET_SECURITY_PROTOCOL SecurityProtocol;
@@ -4373,7 +4554,7 @@ struct SOCKET_SECURITY_SETTINGS_IPSEC
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] AllStrings;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mstcpip/ns-mstcpip-socket_peer_target_name))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mstcpip/ns-mstcpip-socket_peer_target_name
 struct SOCKET_PEER_TARGET_NAME
 {
     SOCKET_SECURITY_PROTOCOL SecurityProtocol;
@@ -4382,7 +4563,7 @@ struct SOCKET_PEER_TARGET_NAME
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] AllStrings;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mstcpip/ns-mstcpip-socket_security_query_template))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mstcpip/ns-mstcpip-socket_security_query_template
 struct SOCKET_SECURITY_QUERY_TEMPLATE
 {
     SOCKET_SECURITY_PROTOCOL SecurityProtocol;
@@ -4399,7 +4580,7 @@ struct SOCKET_SECURITY_QUERY_TEMPLATE_IPSEC2
     uint             FieldMask;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mstcpip/ns-mstcpip-socket_security_query_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mstcpip/ns-mstcpip-socket_security_query_info
 struct SOCKET_SECURITY_QUERY_INFO
 {
     SOCKET_SECURITY_PROTOCOL SecurityProtocol;
@@ -4431,7 +4612,7 @@ struct WSA_COMPATIBILITY_MODE
     uint TargetOsVersion;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswsockdef/ns-mswsockdef-rioresult))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswsockdef/ns-mswsockdef-rioresult
 struct RIORESULT
 {
     int   Status;
@@ -4440,7 +4621,7 @@ struct RIORESULT
     ulong RequestContext;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswsockdef/ns-mswsockdef-rio_buf))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswsockdef/ns-mswsockdef-rio_buf
 struct RIO_BUF
 {
     RIO_BUFFERID BufferId;
@@ -4453,7 +4634,7 @@ struct RIO_CMSG_BUFFER
     uint TotalLength;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2atm/ns-ws2atm-atm_address))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2atm/ns-ws2atm-atm_address
 struct ATM_ADDRESS
 {
     uint      AddressType;
@@ -4461,7 +4642,7 @@ struct ATM_ADDRESS
     ubyte[20] Addr;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2atm/ns-ws2atm-atm_blli))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2atm/ns-ws2atm-atm_blli
 struct ATM_BLLI
 {
     uint     Layer2Protocol;
@@ -4472,7 +4653,7 @@ struct ATM_BLLI
     ubyte[5] SnapID;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2atm/ns-ws2atm-atm_bhli))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2atm/ns-ws2atm-atm_bhli
 struct ATM_BHLI
 {
     uint     HighLayerInfoType;
@@ -4511,7 +4692,11 @@ struct AALUSER_PARAMETERS
 struct AAL_PARAMETERS_IE
 {
     AAL_TYPE AALType;
-    _AALSpecificParameters_e__Union AALSpecificParameters;
+    union AALSpecificParameters
+    {
+        AAL5_PARAMETERS    AAL5Parameters;
+        AALUSER_PARAMETERS AALUserParameters;
+    }
 }
 
 struct ATM_TD
@@ -4599,7 +4784,7 @@ align (4):
     QOS               PvcQos;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nsemail/ns-nsemail-napi_domain_description_blob))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nsemail/ns-nsemail-napi_domain_description_blob
 struct NAPI_DOMAIN_DESCRIPTION_BLOB
 {
     uint AuthLevel;
@@ -4608,7 +4793,7 @@ struct NAPI_DOMAIN_DESCRIPTION_BLOB
     uint OffsetThisDomainName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nsemail/ns-nsemail-napi_provider_installation_blob))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nsemail/ns-nsemail-napi_provider_installation_blob
 struct NAPI_PROVIDER_INSTALLATION_BLOB
 {
     uint dwVersion;
@@ -4618,7 +4803,7 @@ struct NAPI_PROVIDER_INSTALLATION_BLOB
     uint OffsetFirstDomain;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswsock/ns-mswsock-transmit_file_buffers))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswsock/ns-mswsock-transmit_file_buffers
 struct TRANSMIT_FILE_BUFFERS
 {
     void* Head;
@@ -4627,18 +4812,60 @@ struct TRANSMIT_FILE_BUFFERS
     uint  TailLength;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswsock/ns-mswsock-transmit_packets_element))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswsock/ns-mswsock-transmit_packets_element
 struct TRANSMIT_PACKETS_ELEMENT
 {
-    uint                dwElFlags;
-    uint                cLength;
-    _Anonymous_e__Union Anonymous;
+    uint dwElFlags;
+    uint cLength;
+    union
+    {
+        struct
+        {
+            long   nFileOffset;
+            HANDLE hFile;
+        }
+        void* pBuffer;
+    }
 }
 
 struct NLA_BLOB
 {
-    _header_e__Struct header;
-    _data_e__Union    data;
+    struct header
+    {
+        NLA_BLOB_DATA_TYPE type;
+        uint               dwSize;
+        uint               nextOffset;
+    }
+    union data
+    {
+        CHAR[1] rawData;
+        struct interfaceData
+        {
+            uint dwType;
+            uint dwSpeed;
+            /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/CHAR[1] adapterName;
+        }
+        struct locationData
+        {
+            /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/CHAR[1] information;
+        }
+        struct connectivity
+        {
+            NLA_CONNECTIVITY_TYPE type;
+            NLA_INTERNET internet;
+        }
+        struct ICS
+        {
+            struct remote
+            {
+                uint       speed;
+                uint       type;
+                uint       state;
+                wchar[256] machineName;
+                wchar[256] sharedAdapterName;
+            }
+        }
+    }
 }
 
 struct WSAPOLLDATA
@@ -4658,15 +4885,28 @@ struct WSASENDMSG
     LPWSAOVERLAPPED_COMPLETION_ROUTINE lpCompletionRoutine;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswsock/ns-mswsock-rio_notification_completion))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswsock/ns-mswsock-rio_notification_completion
 struct RIO_NOTIFICATION_COMPLETION
 {
     RIO_NOTIFICATION_COMPLETION_TYPE Type;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct Event
+        {
+            HANDLE EventHandle;
+            BOOL   NotifyReset;
+        }
+        struct Iocp
+        {
+            HANDLE IocpHandle;
+            void*  CompletionKey;
+            void*  Overlapped;
+        }
+    }
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswsock/ns-mswsock-rio_extension_function_table))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswsock/ns-mswsock-rio_extension_function_table
 struct RIO_EXTENSION_FUNCTION_TABLE
 {
     uint              cbSize;
@@ -4685,7 +4925,7 @@ struct RIO_EXTENSION_FUNCTION_TABLE
     LPFN_RIORESIZEREQUESTQUEUE RIOResizeRequestQueue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2spi/ns-ws2spi-wspdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2spi/ns-ws2spi-wspdata
 struct WSPDATA
 {
     ushort     wVersion;
@@ -4693,14 +4933,14 @@ struct WSPDATA
     wchar[256] szDescription;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2spi/ns-ws2spi-wsathreadid))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2spi/ns-ws2spi-wsathreadid
 struct WSATHREADID
 {
     HANDLE ThreadHandle;
     size_t Reserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2spi/ns-ws2spi-wspproc_table))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2spi/ns-ws2spi-wspproc_table
 struct WSPPROC_TABLE
 {
     LPWSPACCEPT          lpWSPAccept;
@@ -4735,7 +4975,7 @@ struct WSPPROC_TABLE
     LPWSPSTRINGTOADDRESS lpWSPStringToAddress;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2spi/ns-ws2spi-wspupcalltable))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2spi/ns-ws2spi-wspupcalltable
 struct WSPUPCALLTABLE
 {
     LPWPUCLOSEEVENT      lpWPUCloseEvent;
@@ -4755,7 +4995,7 @@ struct WSPUPCALLTABLE
     LPWPUCLOSETHREAD     lpWPUCloseThread;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2spi/ns-ws2spi-wsc_provider_audit_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2spi/ns-ws2spi-wsc_provider_audit_info
 struct WSC_PROVIDER_AUDIT_INFO
 {
     uint  RecordSize;
@@ -4763,7 +5003,7 @@ struct WSC_PROVIDER_AUDIT_INFO
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2spi/ns-ws2spi-nsp_routine))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2spi/ns-ws2spi-nsp_routine
 struct NSP_ROUTINE
 {
     uint            cbSize;
@@ -4781,7 +5021,7 @@ struct NSP_ROUTINE
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2spi/ns-ws2spi-nspv2_routine))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2spi/ns-ws2spi-nspv2_routine
 struct NSPV2_ROUTINE
 {
     uint                cbSize;
@@ -4822,7 +5062,7 @@ struct SERVICE_TYPE_VALUE
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-service_type_value_absa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-service_type_value_absa
 struct SERVICE_TYPE_VALUE_ABSA
 {
     uint  dwNameSpace;
@@ -4833,7 +5073,7 @@ struct SERVICE_TYPE_VALUE_ABSA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-service_type_value_absw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-service_type_value_absw
 struct SERVICE_TYPE_VALUE_ABSW
 {
     uint  dwNameSpace;
@@ -4851,7 +5091,7 @@ struct SERVICE_TYPE_INFO
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-service_type_info_absa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-service_type_info_absa
 struct SERVICE_TYPE_INFO_ABSA
 {
     PSTR lpTypeName;
@@ -4860,7 +5100,7 @@ struct SERVICE_TYPE_INFO_ABSA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-service_type_info_absw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-service_type_info_absw
 struct SERVICE_TYPE_INFO_ABSW
 {
     PWSTR lpTypeName;
@@ -4868,7 +5108,7 @@ struct SERVICE_TYPE_INFO_ABSW
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SERVICE_TYPE_VALUE_ABSW[1] Values;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-service_address))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-service_address
 struct SERVICE_ADDRESS
 {
     uint   dwAddressType;
@@ -4879,7 +5119,7 @@ struct SERVICE_ADDRESS
     ubyte* lpPrincipal;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-service_addresses))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-service_addresses
 struct SERVICE_ADDRESSES
 {
     uint dwAddressCount;
@@ -4887,7 +5127,7 @@ struct SERVICE_ADDRESSES
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-service_infoa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-service_infoa
 struct SERVICE_INFOA
 {
     GUID*              lpServiceType;
@@ -4903,7 +5143,7 @@ struct SERVICE_INFOA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-service_infow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-service_infow
 struct SERVICE_INFOW
 {
     GUID*              lpServiceType;
@@ -4919,7 +5159,7 @@ struct SERVICE_INFOW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-ns_service_infoa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-ns_service_infoa
 struct NS_SERVICE_INFOA
 {
     uint          dwNameSpace;
@@ -4927,7 +5167,7 @@ struct NS_SERVICE_INFOA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-ns_service_infow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-ns_service_infow
 struct NS_SERVICE_INFOW
 {
     uint          dwNameSpace;
@@ -4935,7 +5175,7 @@ struct NS_SERVICE_INFOW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-protocol_infoa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-protocol_infoa
 struct PROTOCOL_INFOA
 {
     uint dwServiceFlags;
@@ -4949,7 +5189,7 @@ struct PROTOCOL_INFOA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-protocol_infow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nspapi/ns-nspapi-protocol_infow
 struct PROTOCOL_INFOW
 {
     uint  dwServiceFlags;
@@ -5043,8 +5283,11 @@ struct SOCKADDR_VNS
 
 union DL_OUI
 {
-    ubyte[3]             Byte;
-    _Anonymous_e__Struct Anonymous;
+    ubyte[3] Byte;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Local)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield145;
+    }
 }
 
 union DL_EI48
@@ -5054,8 +5297,12 @@ union DL_EI48
 
 union DL_EUI48
 {
-    ubyte[6]             Byte;
-    _Anonymous_e__Struct Anonymous;
+    ubyte[6] Byte;
+    struct
+    {
+        DL_OUI  Oui;
+        DL_EI48 Ei48;
+    }
 }
 
 union DL_EI64
@@ -5065,9 +5312,22 @@ union DL_EI64
 
 union DL_EUI64
 {
-    ubyte[8]             Byte;
-    ulong                Value;
-    _Anonymous_e__Struct Anonymous;
+    ubyte[8] Byte;
+    ulong    Value;
+    struct
+    {
+        DL_OUI Oui;
+        union
+        {
+            DL_EI64 Ei64;
+            struct
+            {
+                ubyte   Type;
+                ubyte   Tse;
+                DL_EI48 Ei48;
+            }
+        }
+    }
 }
 
 struct SNAP_HEADER
@@ -5081,15 +5341,26 @@ struct SNAP_HEADER
 
 struct ETHERNET_HEADER
 {
-    DL_EUI48            Destination;
-    DL_EUI48            Source;
-    _Anonymous_e__Union Anonymous;
+    DL_EUI48 Destination;
+    DL_EUI48 Source;
+    union
+    {
+        ushort Type;
+        ushort Length;
+    }
 }
 
 struct VLAN_TAG
 {
-    _Anonymous_e__Union Anonymous;
-    ushort              Type;
+    union
+    {
+        ushort Tag;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(User_Priority)), FixedArgSig(ElementSig(13)), FixedArgSig(ElementSig(3))], [])*/ushort _bitfield146;
+        }
+    }
+    ushort Type;
 }
 
 struct ICMP_HEADER
@@ -5101,35 +5372,75 @@ struct ICMP_HEADER
 
 struct ICMP_MESSAGE
 {
-    ICMP_HEADER    Header;
-    _Data_e__Union Data;
+    ICMP_HEADER Header;
+    union Data
+    {
+        uint[1]   Data32;
+        ushort[2] Data16;
+        ubyte[4]  Data8;
+    }
 }
 
 struct IPV4_HEADER
 {
-    _Anonymous1_e__Union Anonymous1;
-    _Anonymous2_e__Union Anonymous2;
-    ushort               TotalLength;
-    ushort               Identification;
-    _Anonymous3_e__Union Anonymous3;
-    ubyte                TimeToLive;
-    ubyte                Protocol;
-    ushort               HeaderChecksum;
-    IN_ADDR              SourceAddress;
-    IN_ADDR              DestinationAddress;
+    union
+    {
+        ubyte VersionAndHeaderLength;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Version)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield147;
+        }
+    }
+    union
+    {
+        ubyte TypeOfServiceAndEcnField;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(TypeOfService)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(6))], [])*/ubyte _bitfield148;
+        }
+    }
+    ushort  TotalLength;
+    ushort  Identification;
+    union
+    {
+        ushort FlagsAndOffset;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(DontUse2)), FixedArgSig(ElementSig(8)), FixedArgSig(ElementSig(8))], [])*/ushort _bitfield149;
+        }
+    }
+    ubyte   TimeToLive;
+    ubyte   Protocol;
+    ushort  HeaderChecksum;
+    IN_ADDR SourceAddress;
+    IN_ADDR DestinationAddress;
 }
 
 struct IPV4_OPTION_HEADER
 {
-    _Anonymous_e__Union Anonymous;
-    ubyte               OptionLength;
+    union
+    {
+        ubyte OptionType;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CopiedFlag)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield150;
+        }
+    }
+    ubyte OptionLength;
 }
 
 struct IPV4_TIMESTAMP_OPTION
 {
-    IPV4_OPTION_HEADER  OptionHeader;
-    ubyte               Pointer;
-    _Anonymous_e__Union Anonymous;
+    IPV4_OPTION_HEADER OptionHeader;
+    ubyte              Pointer;
+    union
+    {
+        ubyte FlagsOverflow;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Overflow)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield151;
+        }
+    }
 }
 
 struct IPV4_ROUTING_HEADER
@@ -5180,21 +5491,47 @@ struct ARP_HEADER
 
 struct IGMP_HEADER
 {
-    _Anonymous1_e__Union Anonymous1;
-    _Anonymous2_e__Union Anonymous2;
-    ushort               Checksum;
-    IN_ADDR              MulticastAddress;
+    union
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Version)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield152;
+        }
+        ubyte VersionType;
+    }
+    union
+    {
+        ubyte Reserved;
+        ubyte MaxRespTime;
+        ubyte Code;
+    }
+    ushort  Checksum;
+    IN_ADDR MulticastAddress;
 }
 
 struct IGMPV3_QUERY_HEADER
 {
-    ubyte                Type;
-    _Anonymous1_e__Union Anonymous1;
-    ushort               Checksum;
-    IN_ADDR              MulticastAddress;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield66;
-    _Anonymous2_e__Union Anonymous2;
-    ushort               SourceCount;
+    ubyte   Type;
+    union
+    {
+        ubyte MaxRespCode;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(MaxRespCodeType)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield153;
+        }
+    }
+    ushort  Checksum;
+    IN_ADDR MulticastAddress;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield154;
+    union
+    {
+        ubyte QueriersQueryInterfaceCode;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(QQCType)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield155;
+        }
+    }
+    ushort  SourceCount;
 }
 
 struct IGMPV3_REPORT_RECORD_HEADER
@@ -5216,20 +5553,34 @@ struct IGMPV3_REPORT_HEADER
 
 struct IPV6_HEADER
 {
-    _Anonymous_e__Union Anonymous;
-    ushort              PayloadLength;
-    ubyte               NextHeader;
-    ubyte               HopLimit;
-    IN6_ADDR            SourceAddress;
-    IN6_ADDR            DestinationAddress;
+    union
+    {
+        uint VersionClassFlow;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Anonymous2)), FixedArgSig(ElementSig(8)), FixedArgSig(ElementSig(24))], [])*/uint _bitfield156;
+        }
+    }
+    ushort   PayloadLength;
+    ubyte    NextHeader;
+    ubyte    HopLimit;
+    IN6_ADDR SourceAddress;
+    IN6_ADDR DestinationAddress;
 }
 
 struct IPV6_FRAGMENT_HEADER
 {
-    ubyte               NextHeader;
-    ubyte               Reserved;
-    _Anonymous_e__Union Anonymous;
-    uint                Id;
+    ubyte NextHeader;
+    ubyte Reserved;
+    union
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(DontUse2)), FixedArgSig(ElementSig(11)), FixedArgSig(ElementSig(5))], [])*/ushort _bitfield157;
+        }
+        ushort OffsetAndFlags;
+    }
+    uint  Id;
 }
 
 struct IPV6_EXTENSION_HEADER
@@ -5279,8 +5630,11 @@ struct ND_ROUTER_ADVERT_HEADER
 
 union IPV6_ROUTER_ADVERTISEMENT_FLAGS
 {
-    _Anonymous_e__Struct Anonymous;
-    ubyte                Value;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ManagedAddressConfiguration)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield158;
+    }
+    ubyte Value;
 }
 
 struct ND_NEIGHBOR_SOLICIT_HEADER
@@ -5297,8 +5651,12 @@ struct ND_NEIGHBOR_ADVERT_HEADER
 
 union IPV6_NEIGHBOR_ADVERTISEMENT_FLAGS
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 Value;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Router)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield159;
+        ubyte[3] Reserved2;
+    }
+    uint Value;
 }
 
 struct ND_REDIRECT_HEADER
@@ -5316,14 +5674,29 @@ struct ND_OPTION_HDR
 
 struct ND_OPTION_PREFIX_INFO
 {
-    ubyte                nd_opt_pi_type;
-    ubyte                nd_opt_pi_len;
-    ubyte                nd_opt_pi_prefix_len;
-    _Anonymous1_e__Union Anonymous1;
-    uint                 nd_opt_pi_valid_time;
-    uint                 nd_opt_pi_preferred_time;
-    _Anonymous2_e__Union Anonymous2;
-    IN6_ADDR             nd_opt_pi_prefix;
+    ubyte    nd_opt_pi_type;
+    ubyte    nd_opt_pi_len;
+    ubyte    nd_opt_pi_prefix_len;
+    union
+    {
+        ubyte nd_opt_pi_flags_reserved;
+        struct Flags
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(OnLink)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield160;
+        }
+    }
+    uint     nd_opt_pi_valid_time;
+    uint     nd_opt_pi_preferred_time;
+    union
+    {
+        uint nd_opt_pi_reserved2;
+        struct
+        {
+            ubyte[3] nd_opt_pi_reserved3;
+            ubyte    nd_opt_pi_site_prefix_len;
+        }
+    }
+    IN6_ADDR nd_opt_pi_prefix;
 }
 
 struct ND_OPTION_RD_HDR
@@ -5344,12 +5717,19 @@ struct ND_OPTION_MTU
 
 struct ND_OPTION_ROUTE_INFO
 {
-    ubyte               nd_opt_ri_type;
-    ubyte               nd_opt_ri_len;
-    ubyte               nd_opt_ri_prefix_len;
-    _Anonymous_e__Union Anonymous;
-    uint                nd_opt_ri_route_lifetime;
-    IN6_ADDR            nd_opt_ri_prefix;
+    ubyte    nd_opt_ri_type;
+    ubyte    nd_opt_ri_len;
+    ubyte    nd_opt_ri_prefix_len;
+    union
+    {
+        ubyte nd_opt_ri_flags_reserved;
+        struct Flags
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Preference)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(2))], [])*/ubyte _bitfield161;
+        }
+    }
+    uint     nd_opt_ri_route_lifetime;
+    IN6_ADDR nd_opt_ri_prefix;
 }
 
 struct ND_OPTION_RDNSS
@@ -5370,10 +5750,17 @@ struct ND_OPTION_DNSSL
 
 struct ND_OPTION_PREF64
 {
-    ubyte               nd_opt_p64_type;
-    ubyte               nd_opt_p64_len;
-    _Anonymous_e__Union Anonymous;
-    ubyte[12]           nd_opt_p64_prefix;
+    ubyte     nd_opt_p64_type;
+    ubyte     nd_opt_p64_len;
+    union
+    {
+        ushort nd_opt_p64_lifetime_plc;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(nd_opt_p64_scaled_lifetime)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(13))], [])*/ushort _bitfield162;
+        }
+    }
+    ubyte[12] nd_opt_p64_prefix;
 }
 
 struct MLD_HEADER
@@ -5386,13 +5773,27 @@ struct MLD_HEADER
 
 struct MLDV2_QUERY_HEADER
 {
-    ICMP_HEADER          IcmpHeader;
-    _Anonymous1_e__Union Anonymous1;
-    ushort               Reserved;
-    IN6_ADDR             MulticastAddress;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(QueryReserved)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield67;
-    _Anonymous2_e__Union Anonymous2;
-    ushort               SourceCount;
+    ICMP_HEADER IcmpHeader;
+    union
+    {
+        ushort MaxRespCode;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(MaxRespCodeMantissaLo)), FixedArgSig(ElementSig(8)), FixedArgSig(ElementSig(8))], [])*/ushort _bitfield163;
+        }
+    }
+    ushort      Reserved;
+    IN6_ADDR    MulticastAddress;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(QueryReserved)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield164;
+    union
+    {
+        ubyte QueriersQueryInterfaceCode;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(QQCType)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/ubyte _bitfield165;
+        }
+    }
+    ushort      SourceCount;
 }
 
 struct MLDV2_REPORT_RECORD_HEADER
@@ -5417,7 +5818,7 @@ align (1):
     ushort th_dport;
     uint   th_seq;
     uint   th_ack;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(th_len)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield68;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(th_len)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield166;
     ubyte  th_flags;
     ushort th_win;
     ushort th_sum;
@@ -5452,7 +5853,12 @@ struct TCP_OPT_SACK
 align (1):
     ubyte Kind;
     ubyte Length;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/tcp_opt_sack_block[1] Block;
+    struct Block
+    {
+    align (1):
+        uint Left;
+        uint Right;
+    }
 }
 
 struct TCP_OPT_TS
@@ -5489,15 +5895,41 @@ struct DL_TUNNEL_ADDRESS
 struct DL_TEREDO_ADDRESS
 {
 align (1):
-    ubyte[6]            Reserved;
-    _Anonymous_e__Union Anonymous;
+    ubyte[6] Reserved;
+    union
+    {
+    align (1):
+        DL_EUI64 Eui64;
+        struct
+        {
+        align (1):
+            ushort  Flags;
+            ushort  MappedPort;
+            IN_ADDR MappedAddress;
+        }
+    }
 }
 
 struct DL_TEREDO_ADDRESS_PRV
 {
 align (1):
-    ubyte[6]            Reserved;
-    _Anonymous_e__Union Anonymous;
+    ubyte[6] Reserved;
+    union
+    {
+    align (1):
+        DL_EUI64 Eui64;
+        struct
+        {
+        align (1):
+            ushort   Flags;
+            ushort   MappedPort;
+            IN_ADDR  MappedAddress;
+            IN_ADDR  LocalAddress;
+            uint     InterfaceIndex;
+            ushort   LocalPort;
+            DL_EUI48 DlDestination;
+        }
+    }
 }
 
 struct IPTLS_METADATA
@@ -5508,9 +5940,13 @@ align (1):
 
 struct NPI_MODULEID
 {
-    ushort              Length;
-    NPI_MODULEID_TYPE   Type;
-    _Anonymous_e__Union Anonymous;
+    ushort            Length;
+    NPI_MODULEID_TYPE Type;
+    union
+    {
+        GUID Guid;
+        LUID IfLuid;
+    }
 }
 
 // Functions
@@ -6123,7 +6559,7 @@ int WSAProviderConfigChange(HANDLE* lpNotificationHandle, OVERLAPPED* lpOverlapp
 @DllImport("WS2_32.dll")
 int WSAPoll(WSAPOLLFD* fdArray, uint fds, int timeout);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsock2/nf-winsock2-processsocketnotifications))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsock2/nf-winsock2-processsocketnotifications
 @DllImport("WS2_32.dll")
 uint ProcessSocketNotifications(HANDLE completionPort, uint registrationCount, 
                                 SOCK_NOTIFY_REGISTRATION* registrationInfos, uint timeoutMs, uint completionCount, 

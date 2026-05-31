@@ -3,12 +3,12 @@
 module windows.win32.graphics.imaging.d2d;
 
 public import windows.core;
-public import windows.win32.foundation : HRESULT;
-public import windows.win32.graphics.direct2d : ID2D1Device, ID2D1Image;
-public import windows.win32.graphics.imaging : IWICBitmapEncoder, IWICBitmapFrameEncode,
-                                               IWICBitmapToneMapper, IWICImagingFactory,
-                                               WICImageParameters;
-public import windows.win32.system.com : IUnknown;
+public import windows.win32.foundation.foundation : HRESULT;
+public import windows.win32.graphics.direct2d.direct2d : ID2D1Device, ID2D1Image;
+public import windows.win32.graphics.imaging.imaging : IWICBitmapEncoder, IWICBitmapFrameEncode,
+                                                       IWICBitmapToneMapper, IWICImagingFactory,
+                                                       WICImageParameters;
+public import windows.win32.system.com.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
@@ -17,26 +17,26 @@ extern(Windows) @nogc nothrow:
 
 @GUID("04c75bf8-3ce1-473b-acc5-3cc4f5e94999")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicimageencoder))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicimageencoder
 interface IWICImageEncoder : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicimageencoder-writeframe))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicimageencoder-writeframe
     HRESULT WriteFrame(ID2D1Image pImage, IWICBitmapFrameEncode pFrameEncode, 
                        const(WICImageParameters)* pImageParameters);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicimageencoder-writeframethumbnail))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicimageencoder-writeframethumbnail
     HRESULT WriteFrameThumbnail(ID2D1Image pImage, IWICBitmapFrameEncode pFrameEncode, 
                                 const(WICImageParameters)* pImageParameters);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicimageencoder-writethumbnail))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicimageencoder-writethumbnail
     HRESULT WriteThumbnail(ID2D1Image pImage, IWICBitmapEncoder pEncoder, 
                            const(WICImageParameters)* pImageParameters);
 }
 
 @GUID("7b816b45-1996-4476-b132-de9e247c8af0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicimagingfactory2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nn-wincodec-iwicimagingfactory2
 interface IWICImagingFactory2 : IWICImagingFactory
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicimagingfactory2-createimageencoder))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincodec/nf-wincodec-iwicimagingfactory2-createimageencoder
     HRESULT CreateImageEncoder(ID2D1Device pD2DDevice, IWICImageEncoder* ppWICImageEncoder);
 }
 

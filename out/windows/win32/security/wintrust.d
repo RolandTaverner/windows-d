@@ -3,18 +3,18 @@
 module windows.win32.security.wintrust;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BOOLEAN, FILETIME, HANDLE, HRESULT,
-                                         HWND, PSTR, PWSTR;
-public import windows.win32.security.cryptography : CERT_CHAIN_CONTEXT, CERT_CHAIN_ELEMENT,
-                                                    CERT_CHAIN_PARA, CERT_CONTEXT,
-                                                    CERT_INFO, CERT_STRONG_SIGN_PARA,
-                                                    CERT_USAGE_MATCH, CMSG_SIGNER_INFO,
-                                                    CRYPT_ALGORITHM_IDENTIFIER,
-                                                    CRYPT_ATTRIBUTE_TYPE_VALUE,
-                                                    CRYPT_BIT_BLOB, CRYPT_INTEGER_BLOB,
-                                                    CTL_CONTEXT, HCERTCHAINENGINE,
-                                                    HCERTSTORE;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BOOLEAN, FILETIME, HANDLE, HRESULT,
+                                                    HWND, PSTR, PWSTR;
+public import windows.win32.security.cryptography.cryptography : CERT_CHAIN_CONTEXT, CERT_CHAIN_ELEMENT,
+                                                                 CERT_CHAIN_PARA, CERT_CONTEXT,
+                                                                 CERT_INFO, CERT_STRONG_SIGN_PARA,
+                                                                 CERT_USAGE_MATCH, CMSG_SIGNER_INFO,
+                                                                 CRYPT_ALGORITHM_IDENTIFIER,
+                                                                 CRYPT_ATTRIBUTE_TYPE_VALUE,
+                                                                 CRYPT_BIT_BLOB, CRYPT_INTEGER_BLOB,
+                                                                 CTL_CONTEXT, HCERTCHAINENGINE,
+                                                                 HCERTSTORE;
 public import windows.win32.security.cryptography.sip : SIP_DISPATCH_INFO, SIP_INDIRECT_DATA,
                                                         SIP_SUBJECTINFO;
 
@@ -23,88 +23,97 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias WINTRUST_GET_DEFAULT_FOR_USAGE_ACTION = uint;
 enum : uint
 {
-    DWACTION_ALLOCANDFILL = 0x00000001,
-    DWACTION_FREE         = 0x00000002,
+    DWACTION_ALLOCANDFILL = 0x00000001U,
+    DWACTION_FREE         = 0x00000002U,
 }
+
 alias WINTRUST_POLICY_FLAGS = uint;
 enum : uint
 {
-    WTPF_TRUSTTEST            = 0x00000020,
-    WTPF_TESTCANBEVALID       = 0x00000080,
-    WTPF_IGNOREEXPIRATION     = 0x00000100,
-    WTPF_IGNOREREVOKATION     = 0x00000200,
-    WTPF_OFFLINEOK_IND        = 0x00000400,
-    WTPF_OFFLINEOK_COM        = 0x00000800,
-    WTPF_OFFLINEOKNBU_IND     = 0x00001000,
-    WTPF_OFFLINEOKNBU_COM     = 0x00002000,
-    WTPF_VERIFY_V1_OFF        = 0x00010000,
-    WTPF_IGNOREREVOCATIONONTS = 0x00020000,
-    WTPF_ALLOWONLYPERTRUST    = 0x00040000,
+    WTPF_TRUSTTEST            = 0x00000020U,
+    WTPF_TESTCANBEVALID       = 0x00000080U,
+    WTPF_IGNOREEXPIRATION     = 0x00000100U,
+    WTPF_IGNOREREVOKATION     = 0x00000200U,
+    WTPF_OFFLINEOK_IND        = 0x00000400U,
+    WTPF_OFFLINEOK_COM        = 0x00000800U,
+    WTPF_OFFLINEOKNBU_IND     = 0x00001000U,
+    WTPF_OFFLINEOKNBU_COM     = 0x00002000U,
+    WTPF_VERIFY_V1_OFF        = 0x00010000U,
+    WTPF_IGNOREREVOCATIONONTS = 0x00020000U,
+    WTPF_ALLOWONLYPERTRUST    = 0x00040000U,
 }
+
 alias WINTRUST_DATA_PROVIDER_FLAGS = uint;
 enum : uint
 {
-    WTD_USE_IE4_TRUST_FLAG                  = 0x00000001,
-    WTD_NO_IE4_CHAIN_FLAG                   = 0x00000002,
-    WTD_NO_POLICY_USAGE_FLAG                = 0x00000004,
-    WTD_REVOCATION_CHECK_NONE               = 0x00000010,
-    WTD_REVOCATION_CHECK_END_CERT           = 0x00000020,
-    WTD_REVOCATION_CHECK_CHAIN              = 0x00000040,
-    WTD_REVOCATION_CHECK_CHAIN_EXCLUDE_ROOT = 0x00000080,
-    WTD_SAFER_FLAG                          = 0x00000100,
-    WTD_HASH_ONLY_FLAG                      = 0x00000200,
-    WTD_USE_DEFAULT_OSVER_CHECK             = 0x00000400,
-    WTD_LIFETIME_SIGNING_FLAG               = 0x00000800,
-    WTD_CACHE_ONLY_URL_RETRIEVAL            = 0x00001000,
-    WTD_DISABLE_MD2_MD4                     = 0x00002000,
-    WTD_MOTW                                = 0x00004000,
+    WTD_USE_IE4_TRUST_FLAG                  = 0x00000001U,
+    WTD_NO_IE4_CHAIN_FLAG                   = 0x00000002U,
+    WTD_NO_POLICY_USAGE_FLAG                = 0x00000004U,
+    WTD_REVOCATION_CHECK_NONE               = 0x00000010U,
+    WTD_REVOCATION_CHECK_END_CERT           = 0x00000020U,
+    WTD_REVOCATION_CHECK_CHAIN              = 0x00000040U,
+    WTD_REVOCATION_CHECK_CHAIN_EXCLUDE_ROOT = 0x00000080U,
+    WTD_SAFER_FLAG                          = 0x00000100U,
+    WTD_HASH_ONLY_FLAG                      = 0x00000200U,
+    WTD_USE_DEFAULT_OSVER_CHECK             = 0x00000400U,
+    WTD_LIFETIME_SIGNING_FLAG               = 0x00000800U,
+    WTD_CACHE_ONLY_URL_RETRIEVAL            = 0x00001000U,
+    WTD_DISABLE_MD2_MD4                     = 0x00002000U,
+    WTD_MOTW                                = 0x00004000U,
 }
+
 alias WINTRUST_DATA_UICHOICE = uint;
 enum : uint
 {
-    WTD_UI_ALL    = 0x00000001,
-    WTD_UI_NONE   = 0x00000002,
-    WTD_UI_NOBAD  = 0x00000003,
-    WTD_UI_NOGOOD = 0x00000004,
+    WTD_UI_ALL    = 0x00000001U,
+    WTD_UI_NONE   = 0x00000002U,
+    WTD_UI_NOBAD  = 0x00000003U,
+    WTD_UI_NOGOOD = 0x00000004U,
 }
+
 alias WINTRUST_SIGNATURE_SETTINGS_FLAGS = uint;
 enum : uint
 {
-    WSS_VERIFY_SPECIFIC         = 0x00000001,
-    WSS_GET_SECONDARY_SIG_COUNT = 0x00000002,
+    WSS_VERIFY_SPECIFIC         = 0x00000001U,
+    WSS_GET_SECONDARY_SIG_COUNT = 0x00000002U,
 }
+
 alias WINTRUST_DATA_STATE_ACTION = uint;
 enum : uint
 {
-    WTD_STATEACTION_IGNORE           = 0x00000000,
-    WTD_STATEACTION_VERIFY           = 0x00000001,
-    WTD_STATEACTION_CLOSE            = 0x00000002,
-    WTD_STATEACTION_AUTO_CACHE       = 0x00000003,
-    WTD_STATEACTION_AUTO_CACHE_FLUSH = 0x00000004,
+    WTD_STATEACTION_IGNORE           = 0x00000000U,
+    WTD_STATEACTION_VERIFY           = 0x00000001U,
+    WTD_STATEACTION_CLOSE            = 0x00000002U,
+    WTD_STATEACTION_AUTO_CACHE       = 0x00000003U,
+    WTD_STATEACTION_AUTO_CACHE_FLUSH = 0x00000004U,
 }
+
 alias WINTRUST_DATA_UNION_CHOICE = uint;
 enum : uint
 {
-    WTD_CHOICE_FILE    = 0x00000001,
-    WTD_CHOICE_CATALOG = 0x00000002,
-    WTD_CHOICE_BLOB    = 0x00000003,
-    WTD_CHOICE_SIGNER  = 0x00000004,
-    WTD_CHOICE_CERT    = 0x00000005,
+    WTD_CHOICE_FILE    = 0x00000001U,
+    WTD_CHOICE_CATALOG = 0x00000002U,
+    WTD_CHOICE_BLOB    = 0x00000003U,
+    WTD_CHOICE_SIGNER  = 0x00000004U,
+    WTD_CHOICE_CERT    = 0x00000005U,
 }
+
 alias WINTRUST_DATA_REVOCATION_CHECKS = uint;
 enum : uint
 {
-    WTD_REVOKE_NONE       = 0x00000000,
-    WTD_REVOKE_WHOLECHAIN = 0x00000001,
+    WTD_REVOKE_NONE       = 0x00000000U,
+    WTD_REVOKE_WHOLECHAIN = 0x00000001U,
 }
+
 alias WINTRUST_DATA_UICONTEXT = uint;
 enum : uint
 {
-    WTD_UICONTEXT_EXECUTE = 0x00000000,
-    WTD_UICONTEXT_INSTALL = 0x00000001,
+    WTD_UICONTEXT_EXECUTE = 0x00000000U,
+    WTD_UICONTEXT_INSTALL = 0x00000001U,
 }
 
 // Constants
@@ -112,99 +121,99 @@ enum : uint
 
 enum const(wchar)* WINTRUST_CONFIG_REGPATH = "Software\\Microsoft\\Cryptography\\Wintrust\\Config";
 enum const(wchar)* WINTRUST_MAX_HEADER_BYTES_TO_MAP_VALUE_NAME = "MaxHeaderBytesToMap";
-enum uint WINTRUST_MAX_HEADER_BYTES_TO_MAP_DEFAULT = 0x00a00000;
+enum uint WINTRUST_MAX_HEADER_BYTES_TO_MAP_DEFAULT = 0x00a00000U;
 enum const(wchar)* WINTRUST_MAX_HASH_BYTES_TO_MAP_VALUE_NAME = "MaxHashBytesToMap";
-enum uint WINTRUST_MAX_HASH_BYTES_TO_MAP_DEFAULT = 0x00100000;
-enum uint WTD_CHOICE_DETACHED_SIG = 0x00000006;
-enum uint WTD_PROV_FLAGS_MASK = 0x0000ffff;
-enum uint WTD_USE_LOCAL_MACHINE_CERTS = 0x00000008;
-enum uint WTD_CODE_INTEGRITY_DRIVER_MODE = 0x00008000;
-enum uint WSS_VERIFY_SEALING = 0x00000004;
-enum uint WSS_INPUT_FLAG_MASK = 0x00000007;
-enum uint WSS_OUT_SEALING_STATUS_VERIFIED = 0x80000000;
-enum uint WSS_OUT_HAS_SEALING_INTENT = 0x40000000;
-enum uint WSS_OUT_FILE_SUPPORTS_SEAL = 0x20000000;
-enum uint WSS_OUTPUT_FLAG_MASK = 0xe0000000;
+enum uint WINTRUST_MAX_HASH_BYTES_TO_MAP_DEFAULT = 0x00100000U;
+enum uint WTD_CHOICE_DETACHED_SIG = 0x00000006U;
+enum uint WTD_PROV_FLAGS_MASK = 0x0000ffffU;
+enum uint WTD_USE_LOCAL_MACHINE_CERTS = 0x00000008U;
+enum uint WTD_CODE_INTEGRITY_DRIVER_MODE = 0x00008000U;
+enum uint WSS_VERIFY_SEALING = 0x00000004U;
+enum uint WSS_INPUT_FLAG_MASK = 0x00000007U;
+enum uint WSS_OUT_SEALING_STATUS_VERIFIED = 0x80000000U;
+enum uint WSS_OUT_HAS_SEALING_INTENT = 0x40000000U;
+enum uint WSS_OUT_FILE_SUPPORTS_SEAL = 0x20000000U;
+enum uint WSS_OUTPUT_FLAG_MASK = 0xe0000000U;
 
 enum : uint
 {
-    WINTRUST_DETACHED_SIG_CHOICE_HANDLE = 0x00000001,
-    WINTRUST_DETACHED_SIG_CHOICE_BLOB   = 0x00000002,
+    WINTRUST_DETACHED_SIG_CHOICE_HANDLE = 0x00000001U,
+    WINTRUST_DETACHED_SIG_CHOICE_BLOB   = 0x00000002U,
 }
 
-enum uint WTCI_DONT_OPEN_STORES = 0x00000001;
-enum uint WTCI_OPEN_ONLY_ROOT = 0x00000002;
-enum uint WTCI_USE_LOCAL_MACHINE = 0x00000004;
+enum uint WTCI_DONT_OPEN_STORES = 0x00000001U;
+enum uint WTCI_OPEN_ONLY_ROOT = 0x00000002U;
+enum uint WTCI_USE_LOCAL_MACHINE = 0x00000004U;
 
 enum : uint
 {
-    TRUSTERROR_STEP_WVTPARAMS              = 0x00000000,
-    TRUSTERROR_STEP_FILEIO                 = 0x00000002,
-    TRUSTERROR_STEP_SIP                    = 0x00000003,
-    TRUSTERROR_STEP_SIPSUBJINFO            = 0x00000005,
-    TRUSTERROR_STEP_CATALOGFILE            = 0x00000006,
-    TRUSTERROR_STEP_CERTSTORE              = 0x00000007,
-    TRUSTERROR_STEP_MESSAGE                = 0x00000008,
-    TRUSTERROR_STEP_MSG_SIGNERCOUNT        = 0x00000009,
-    TRUSTERROR_STEP_MSG_INNERCNTTYPE       = 0x0000000a,
-    TRUSTERROR_STEP_MSG_INNERCNT           = 0x0000000b,
-    TRUSTERROR_STEP_MSG_STORE              = 0x0000000c,
-    TRUSTERROR_STEP_MSG_SIGNERINFO         = 0x0000000d,
-    TRUSTERROR_STEP_MSG_SIGNERCERT         = 0x0000000e,
-    TRUSTERROR_STEP_MSG_CERTCHAIN          = 0x0000000f,
-    TRUSTERROR_STEP_MSG_COUNTERSIGINFO     = 0x00000010,
-    TRUSTERROR_STEP_MSG_COUNTERSIGCERT     = 0x00000011,
-    TRUSTERROR_STEP_VERIFY_MSGHASH         = 0x00000012,
-    TRUSTERROR_STEP_VERIFY_MSGINDIRECTDATA = 0x00000013,
-    TRUSTERROR_STEP_FINAL_WVTINIT          = 0x0000001e,
-    TRUSTERROR_STEP_FINAL_INITPROV         = 0x0000001f,
-    TRUSTERROR_STEP_FINAL_OBJPROV          = 0x00000020,
-    TRUSTERROR_STEP_FINAL_SIGPROV          = 0x00000021,
-    TRUSTERROR_STEP_FINAL_CERTPROV         = 0x00000022,
-    TRUSTERROR_STEP_FINAL_CERTCHKPROV      = 0x00000023,
-    TRUSTERROR_STEP_FINAL_POLICYPROV       = 0x00000024,
-    TRUSTERROR_STEP_FINAL_UIPROV           = 0x00000025,
+    TRUSTERROR_STEP_WVTPARAMS              = 0x00000000U,
+    TRUSTERROR_STEP_FILEIO                 = 0x00000002U,
+    TRUSTERROR_STEP_SIP                    = 0x00000003U,
+    TRUSTERROR_STEP_SIPSUBJINFO            = 0x00000005U,
+    TRUSTERROR_STEP_CATALOGFILE            = 0x00000006U,
+    TRUSTERROR_STEP_CERTSTORE              = 0x00000007U,
+    TRUSTERROR_STEP_MESSAGE                = 0x00000008U,
+    TRUSTERROR_STEP_MSG_SIGNERCOUNT        = 0x00000009U,
+    TRUSTERROR_STEP_MSG_INNERCNTTYPE       = 0x0000000aU,
+    TRUSTERROR_STEP_MSG_INNERCNT           = 0x0000000bU,
+    TRUSTERROR_STEP_MSG_STORE              = 0x0000000cU,
+    TRUSTERROR_STEP_MSG_SIGNERINFO         = 0x0000000dU,
+    TRUSTERROR_STEP_MSG_SIGNERCERT         = 0x0000000eU,
+    TRUSTERROR_STEP_MSG_CERTCHAIN          = 0x0000000fU,
+    TRUSTERROR_STEP_MSG_COUNTERSIGINFO     = 0x00000010U,
+    TRUSTERROR_STEP_MSG_COUNTERSIGCERT     = 0x00000011U,
+    TRUSTERROR_STEP_VERIFY_MSGHASH         = 0x00000012U,
+    TRUSTERROR_STEP_VERIFY_MSGINDIRECTDATA = 0x00000013U,
+    TRUSTERROR_STEP_FINAL_WVTINIT          = 0x0000001eU,
+    TRUSTERROR_STEP_FINAL_INITPROV         = 0x0000001fU,
+    TRUSTERROR_STEP_FINAL_OBJPROV          = 0x00000020U,
+    TRUSTERROR_STEP_FINAL_SIGPROV          = 0x00000021U,
+    TRUSTERROR_STEP_FINAL_CERTPROV         = 0x00000022U,
+    TRUSTERROR_STEP_FINAL_CERTCHKPROV      = 0x00000023U,
+    TRUSTERROR_STEP_FINAL_POLICYPROV       = 0x00000024U,
+    TRUSTERROR_STEP_FINAL_UIPROV           = 0x00000025U,
 }
 
-enum uint TRUSTERROR_MAX_STEPS = 0x00000026;
-enum uint CPD_CHOICE_SIP = 0x00000001;
-enum uint CPD_USE_NT5_CHAIN_FLAG = 0x80000000;
+enum uint TRUSTERROR_MAX_STEPS = 0x00000026U;
+enum uint CPD_CHOICE_SIP = 0x00000001U;
+enum uint CPD_USE_NT5_CHAIN_FLAG = 0x80000000U;
 
 enum : uint
 {
-    CPD_REVOCATION_CHECK_NONE               = 0x00010000,
-    CPD_REVOCATION_CHECK_END_CERT           = 0x00020000,
-    CPD_REVOCATION_CHECK_CHAIN              = 0x00040000,
-    CPD_REVOCATION_CHECK_CHAIN_EXCLUDE_ROOT = 0x00080000,
+    CPD_REVOCATION_CHECK_NONE               = 0x00010000U,
+    CPD_REVOCATION_CHECK_END_CERT           = 0x00020000U,
+    CPD_REVOCATION_CHECK_CHAIN              = 0x00040000U,
+    CPD_REVOCATION_CHECK_CHAIN_EXCLUDE_ROOT = 0x00080000U,
 }
 
-enum uint CPD_RETURN_LOWER_QUALITY_CHAINS = 0x00100000;
-enum uint CPD_RFC3161v21 = 0x00200000;
+enum uint CPD_RETURN_LOWER_QUALITY_CHAINS = 0x00100000U;
+enum uint CPD_RFC3161v21 = 0x00200000U;
 
 enum : uint
 {
-    CPD_UISTATE_MODE_PROMPT = 0x00000000,
-    CPD_UISTATE_MODE_BLOCK  = 0x00000001,
-    CPD_UISTATE_MODE_ALLOW  = 0x00000002,
-    CPD_UISTATE_MODE_MASK   = 0x00000003,
+    CPD_UISTATE_MODE_PROMPT = 0x00000000U,
+    CPD_UISTATE_MODE_BLOCK  = 0x00000001U,
+    CPD_UISTATE_MODE_ALLOW  = 0x00000002U,
+    CPD_UISTATE_MODE_MASK   = 0x00000003U,
 }
 
-enum uint WSS_OBJTRUST_SUPPORT = 0x00000001;
-enum uint WSS_SIGTRUST_SUPPORT = 0x00000002;
-enum uint WSS_CERTTRUST_SUPPORT = 0x00000004;
-enum uint SGNR_TYPE_TIMESTAMP = 0x00000010;
+enum uint WSS_OBJTRUST_SUPPORT = 0x00000001U;
+enum uint WSS_SIGTRUST_SUPPORT = 0x00000002U;
+enum uint WSS_CERTTRUST_SUPPORT = 0x00000004U;
+enum uint SGNR_TYPE_TIMESTAMP = 0x00000010U;
 
 enum : uint
 {
-    CERT_CONFIDENCE_SIG       = 0x10000000,
-    CERT_CONFIDENCE_TIME      = 0x01000000,
-    CERT_CONFIDENCE_TIMENEST  = 0x00100000,
-    CERT_CONFIDENCE_AUTHIDEXT = 0x00010000,
-    CERT_CONFIDENCE_HYGIENE   = 0x00001000,
-    CERT_CONFIDENCE_HIGHEST   = 0x11111000,
+    CERT_CONFIDENCE_SIG       = 0x10000000U,
+    CERT_CONFIDENCE_TIME      = 0x01000000U,
+    CERT_CONFIDENCE_TIMENEST  = 0x00100000U,
+    CERT_CONFIDENCE_AUTHIDEXT = 0x00010000U,
+    CERT_CONFIDENCE_HYGIENE   = 0x00001000U,
+    CERT_CONFIDENCE_HIGHEST   = 0x11111000U,
 }
 
-enum uint WT_CURRENT_VERSION = 0x00000200;
+enum uint WT_CURRENT_VERSION = 0x00000200U;
 
 enum : const(wchar)*
 {
@@ -212,7 +221,7 @@ enum : const(wchar)*
     WT_PROVIDER_CERTTRUST_FUNCTION = "WintrustCertificateTrust",
 }
 
-enum uint WT_ADD_ACTION_ID_RET_RESULT_FLAG = 0x00000001;
+enum uint WT_ADD_ACTION_ID_RET_RESULT_FLAG = 0x00000001U;
 
 enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
 {
@@ -307,19 +316,19 @@ enum : PSTR
     CAT_MEMBERINFO2_STRUCT = PSTR(0x000008af),
 }
 
-enum uint SPC_UUID_LENGTH = 0x00000010;
-enum uint SPC_URL_LINK_CHOICE = 0x00000001;
-enum uint SPC_MONIKER_LINK_CHOICE = 0x00000002;
-enum uint SPC_FILE_LINK_CHOICE = 0x00000003;
+enum uint SPC_UUID_LENGTH = 0x00000010U;
+enum uint SPC_URL_LINK_CHOICE = 0x00000001U;
+enum uint SPC_MONIKER_LINK_CHOICE = 0x00000002U;
+enum uint SPC_FILE_LINK_CHOICE = 0x00000003U;
 
 enum : uint
 {
-    WIN_CERT_REVISION_1_0          = 0x00000100,
-    WIN_CERT_REVISION_2_0          = 0x00000200,
-    WIN_CERT_TYPE_X509             = 0x00000001,
-    WIN_CERT_TYPE_PKCS_SIGNED_DATA = 0x00000002,
-    WIN_CERT_TYPE_RESERVED_1       = 0x00000003,
-    WIN_CERT_TYPE_TS_STACK_SIGNED  = 0x00000004,
+    WIN_CERT_REVISION_1_0          = 0x00000100U,
+    WIN_CERT_REVISION_2_0          = 0x00000200U,
+    WIN_CERT_TYPE_X509             = 0x00000001U,
+    WIN_CERT_TYPE_PKCS_SIGNED_DATA = 0x00000002U,
+    WIN_CERT_TYPE_RESERVED_1       = 0x00000003U,
+    WIN_CERT_TYPE_TS_STACK_SIGNED  = 0x00000004U,
 }
 
 enum : GUID
@@ -344,10 +353,10 @@ enum : GUID
 
 enum : uint
 {
-    WT_TRUSTDBDIALOG_NO_UI_FLAG            = 0x00000001,
-    WT_TRUSTDBDIALOG_ONLY_PUB_TAB_FLAG     = 0x00000002,
-    WT_TRUSTDBDIALOG_WRITE_LEGACY_REG_FLAG = 0x00000100,
-    WT_TRUSTDBDIALOG_WRITE_IEAK_STORE_FLAG = 0x00000200,
+    WT_TRUSTDBDIALOG_NO_UI_FLAG            = 0x00000001U,
+    WT_TRUSTDBDIALOG_ONLY_PUB_TAB_FLAG     = 0x00000002U,
+    WT_TRUSTDBDIALOG_WRITE_LEGACY_REG_FLAG = 0x00000100U,
+    WT_TRUSTDBDIALOG_WRITE_IEAK_STORE_FLAG = 0x00000200U,
 }
 
 enum const(wchar)* SP_POLICY_PROVIDER_DLL_NAME = "WINTRUST.DLL";
@@ -386,9 +395,9 @@ enum GUID CONFIG_CI_ACTION_VERIFY = GUID("6078065b-8f22-4b13-bd9b-5b762776f386")
 
 enum : uint
 {
-    CCPI_RESULT_ALLOW = 0x00000001,
-    CCPI_RESULT_DENY  = 0x00000002,
-    CCPI_RESULT_AUDIT = 0x00000003,
+    CCPI_RESULT_ALLOW = 0x00000001U,
+    CCPI_RESULT_DENY  = 0x00000002U,
+    CCPI_RESULT_AUDIT = 0x00000003U,
 }
 
 // Callbacks
@@ -421,25 +430,33 @@ alias PFN_WTD_GENERIC_CHAIN_POLICY_CALLBACK = HRESULT function(CRYPT_PROVIDER_DA
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-wintrust_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-wintrust_data
 struct WINTRUST_DATA
 {
-    uint                cbStruct;
-    void*               pPolicyCallbackData;
-    void*               pSIPClientData;
+    uint   cbStruct;
+    void*  pPolicyCallbackData;
+    void*  pSIPClientData;
     WINTRUST_DATA_UICHOICE dwUIChoice;
     WINTRUST_DATA_REVOCATION_CHECKS fdwRevocationChecks;
     WINTRUST_DATA_UNION_CHOICE dwUnionChoice;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        WINTRUST_FILE_INFO* pFile;
+        WINTRUST_CATALOG_INFO* pCatalog;
+        WINTRUST_BLOB_INFO* pBlob;
+        WINTRUST_SGNR_INFO* pSgnr;
+        WINTRUST_CERT_INFO* pCert;
+        WINTRUST_DETACHED_SIG_INFO* pDetachedSig;
+    }
     WINTRUST_DATA_STATE_ACTION dwStateAction;
-    HANDLE              hWVTStateData;
-    PWSTR               pwszURLReference;
+    HANDLE hWVTStateData;
+    PWSTR  pwszURLReference;
     WINTRUST_DATA_PROVIDER_FLAGS dwProvFlags;
     WINTRUST_DATA_UICONTEXT dwUIContext;
     WINTRUST_SIGNATURE_SETTINGS* pSignatureSettings;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-wintrust_signature_settings))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-wintrust_signature_settings
 struct WINTRUST_SIGNATURE_SETTINGS
 {
     uint cbStruct;
@@ -450,7 +467,7 @@ struct WINTRUST_SIGNATURE_SETTINGS
     CERT_STRONG_SIGN_PARA* pCryptoPolicy;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-wintrust_file_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-wintrust_file_info
 struct WINTRUST_FILE_INFO
 {
     uint         cbStruct;
@@ -475,12 +492,16 @@ struct WINTRUST_DETACHED_SIG_BLOBS
 
 struct WINTRUST_DETACHED_SIG_INFO
 {
-    uint                cbStruct;
-    uint                dwUnionChoice;
-    _Anonymous_e__Union Anonymous;
+    uint cbStruct;
+    uint dwUnionChoice;
+    union
+    {
+        WINTRUST_DETACHED_SIG_FILE_HANDLES* pDetachedSigHandles;
+        WINTRUST_DETACHED_SIG_BLOBS* pDetachedSigBlobs;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-wintrust_catalog_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-wintrust_catalog_info
 struct WINTRUST_CATALOG_INFO
 {
     uint         cbStruct;
@@ -495,7 +516,7 @@ struct WINTRUST_CATALOG_INFO
     ptrdiff_t    hCatAdmin;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-wintrust_blob_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-wintrust_blob_info
 struct WINTRUST_BLOB_INFO
 {
     uint         cbStruct;
@@ -507,7 +528,7 @@ struct WINTRUST_BLOB_INFO
     ubyte*       pbMemSignedMsg;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-wintrust_sgnr_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-wintrust_sgnr_info
 struct WINTRUST_SGNR_INFO
 {
     uint              cbStruct;
@@ -517,7 +538,7 @@ struct WINTRUST_SGNR_INFO
     HCERTSTORE*       pahStores;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-wintrust_cert_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-wintrust_cert_info
 struct WINTRUST_CERT_INFO
 {
     uint          cbStruct;
@@ -529,7 +550,7 @@ struct WINTRUST_CERT_INFO
     FILETIME*     psftVerifyAsOf;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-crypt_provider_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-crypt_provider_data
 struct CRYPT_PROVIDER_DATA
 {
     uint                 cbStruct;
@@ -553,7 +574,10 @@ struct CRYPT_PROVIDER_DATA
     uint                 csProvPrivData;
     CRYPT_PROVIDER_PRIVDATA* pasProvPrivData;
     uint                 dwSubjectChoice;
-    _Anonymous_e__Union  Anonymous;
+    union
+    {
+        PROVDATA_SIP* pPDSip;
+    }
     PSTR                 pszUsageOID;
     BOOL                 fRecallWithState;
     FILETIME             sftSystemTime;
@@ -567,7 +591,7 @@ struct CRYPT_PROVIDER_DATA
     WINTRUST_SIGNATURE_SETTINGS* pSigSettings;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-crypt_provider_sigstate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-crypt_provider_sigstate
 struct CRYPT_PROVIDER_SIGSTATE
 {
     uint   cbStruct;
@@ -584,7 +608,7 @@ struct CRYPT_PROVIDER_SIGSTATE
     SEALING_SIGNATURE_ATTRIBUTE* pSealingSignature;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-crypt_provider_functions))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-crypt_provider_functions
 struct CRYPT_PROVIDER_FUNCTIONS
 {
     uint                 cbStruct;
@@ -605,7 +629,7 @@ struct CRYPT_PROVIDER_FUNCTIONS
     PFN_PROVIDER_CLEANUP_CALL pfnCleanupPolicy;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-crypt_provui_funcs))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-crypt_provui_funcs
 struct CRYPT_PROVUI_FUNCS
 {
     uint               cbStruct;
@@ -616,7 +640,7 @@ struct CRYPT_PROVUI_FUNCS
     PFN_PROVUI_CALL    pfnOnAdvancedClickDefault;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-crypt_provui_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-crypt_provui_data
 struct CRYPT_PROVUI_DATA
 {
     uint  cbStruct;
@@ -630,7 +654,7 @@ struct CRYPT_PROVUI_DATA
     PWSTR pCopyActionTextNotSigned;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-crypt_provider_sgnr))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-crypt_provider_sgnr
 struct CRYPT_PROVIDER_SGNR
 {
     uint                 cbStruct;
@@ -645,7 +669,7 @@ struct CRYPT_PROVIDER_SGNR
     CERT_CHAIN_CONTEXT*  pChainContext;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-crypt_provider_cert))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-crypt_provider_cert
 struct CRYPT_PROVIDER_CERT
 {
     uint                 cbStruct;
@@ -665,7 +689,7 @@ struct CRYPT_PROVIDER_CERT
     CERT_CHAIN_ELEMENT*  pChainElement;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-crypt_provider_privdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-crypt_provider_privdata
 struct CRYPT_PROVIDER_PRIVDATA
 {
     uint  cbStruct;
@@ -685,7 +709,7 @@ struct PROVDATA_SIP
     SIP_INDIRECT_DATA* psIndirectData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-crypt_trust_reg_entry))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-crypt_trust_reg_entry
 struct CRYPT_TRUST_REG_ENTRY
 {
     uint  cbStruct;
@@ -693,7 +717,7 @@ struct CRYPT_TRUST_REG_ENTRY
     PWSTR pwszFunctionName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-crypt_register_actionid))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-crypt_register_actionid
 struct CRYPT_REGISTER_ACTIONID
 {
     uint cbStruct;
@@ -707,7 +731,7 @@ struct CRYPT_REGISTER_ACTIONID
     CRYPT_TRUST_REG_ENTRY sCleanupProvider;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-crypt_provider_regdefusage))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-crypt_provider_regdefusage
 struct CRYPT_PROVIDER_REGDEFUSAGE
 {
     uint  cbStruct;
@@ -717,7 +741,7 @@ struct CRYPT_PROVIDER_REGDEFUSAGE
     PSTR  pwszFreeCallbackDataFunctionName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-crypt_provider_defusage))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-crypt_provider_defusage
 struct CRYPT_PROVIDER_DEFUSAGE
 {
     uint  cbStruct;
@@ -745,8 +769,13 @@ struct SPC_SIGINFO
 
 struct SPC_LINK
 {
-    uint                dwLinkChoice;
-    _Anonymous_e__Union Anonymous;
+    uint dwLinkChoice;
+    union
+    {
+        PWSTR pwszUrl;
+        SPC_SERIALIZED_OBJECT Moniker;
+        PWSTR pwszFile;
+    }
 }
 
 struct SPC_PE_IMAGE_DATA
@@ -755,7 +784,7 @@ struct SPC_PE_IMAGE_DATA
     SPC_LINK*      pFile;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-spc_indirect_data_content))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-spc_indirect_data_content
 struct SPC_INDIRECT_DATA_CONTENT
 {
     CRYPT_ATTRIBUTE_TYPE_VALUE Data;
@@ -839,7 +868,7 @@ struct SEALING_TIMESTAMP_ATTRIBUTE
     CRYPT_INTEGER_BLOB sealTimeStampToken;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-win_certificate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wintrust/ns-wintrust-win_certificate
 struct WIN_CERTIFICATE
 {
     uint   dwLength;
@@ -882,7 +911,12 @@ struct WIN_SPUB_TRUSTED_PUBLISHER_DATA
 
 struct WTD_GENERIC_CHAIN_POLICY_SIGNER_INFO
 {
-    _Anonymous_e__Union Anonymous;
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    union
+    {
+        uint cbStruct;
+        uint cbSize;
+    }
     CERT_CHAIN_CONTEXT* pChainContext;
     uint                dwSignerType;
     CMSG_SIGNER_INFO*   pMsgSignerInfo;
@@ -893,20 +927,30 @@ struct WTD_GENERIC_CHAIN_POLICY_SIGNER_INFO
 
 struct WTD_GENERIC_CHAIN_POLICY_CREATE_INFO
 {
-    _Anonymous_e__Union Anonymous;
-    HCERTCHAINENGINE    hChainEngine;
-    CERT_CHAIN_PARA*    pChainPara;
-    uint                dwFlags;
-    void*               pvReserved;
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    union
+    {
+        uint cbStruct;
+        uint cbSize;
+    }
+    HCERTCHAINENGINE hChainEngine;
+    CERT_CHAIN_PARA* pChainPara;
+    uint             dwFlags;
+    void*            pvReserved;
 }
 
 struct WTD_GENERIC_CHAIN_POLICY_DATA
 {
-    _Anonymous_e__Union Anonymous;
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    union
+    {
+        uint cbStruct;
+        uint cbSize;
+    }
     WTD_GENERIC_CHAIN_POLICY_CREATE_INFO* pSignerChainInfo;
     WTD_GENERIC_CHAIN_POLICY_CREATE_INFO* pCounterSignerChainInfo;
     PFN_WTD_GENERIC_CHAIN_POLICY_CALLBACK pfnPolicyCallback;
-    void*               pvPolicyArg;
+    void* pvPolicyArg;
 }
 
 struct DRIVER_VER_MAJORMINOR

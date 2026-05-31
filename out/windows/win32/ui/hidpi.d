@@ -3,10 +3,10 @@
 module windows.win32.ui.hidpi;
 
 public import windows.core;
-public import windows.win32.foundation : BOOL, HANDLE, HRESULT, HWND, POINT, PWSTR,
-                                         RECT;
+public import windows.win32.foundation.foundation : BOOL, HANDLE, HRESULT, HWND, POINT,
+                                                    PWSTR, RECT;
 public import windows.win32.graphics.gdi : HMONITOR;
-public import windows.win32.ui.controls : HTHEME;
+public import windows.win32.ui.controls.controls : HTHEME;
 public import windows.win32.ui.windowsandmessaging : SYSTEM_METRICS_INDEX, WINDOW_EX_STYLE,
                                                      WINDOW_STYLE;
 
@@ -15,7 +15,8 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/windef/ne-windef-dpi_awareness))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windef/ne-windef-dpi_awareness
 alias DPI_AWARENESS = int;
 enum : int
 {
@@ -24,7 +25,8 @@ enum : int
     DPI_AWARENESS_SYSTEM_AWARE      = 0x00000001,
     DPI_AWARENESS_PER_MONITOR_AWARE = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/windef/ne-windef-dpi_hosting_behavior))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windef/ne-windef-dpi_hosting_behavior
 alias DPI_HOSTING_BEHAVIOR = int;
 enum : int
 {
@@ -32,7 +34,8 @@ enum : int
     DPI_HOSTING_BEHAVIOR_DEFAULT = 0x00000000,
     DPI_HOSTING_BEHAVIOR_MIXED   = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ne-winuser-dialog_control_dpi_change_behaviors))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ne-winuser-dialog_control_dpi_change_behaviors
 alias DIALOG_CONTROL_DPI_CHANGE_BEHAVIORS = int;
 enum : int
 {
@@ -40,7 +43,8 @@ enum : int
     DCDC_DISABLE_FONT_UPDATE = 0x00000001,
     DCDC_DISABLE_RELAYOUT    = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ne-winuser-dialog_dpi_change_behaviors))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ne-winuser-dialog_dpi_change_behaviors
 alias DIALOG_DPI_CHANGE_BEHAVIORS = int;
 enum : int
 {
@@ -49,7 +53,8 @@ enum : int
     DDC_DISABLE_RESIZE           = 0x00000002,
     DDC_DISABLE_CONTROL_RELAYOUT = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/shellscalingapi/ne-shellscalingapi-process_dpi_awareness))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shellscalingapi/ne-shellscalingapi-process_dpi_awareness
 alias PROCESS_DPI_AWARENESS = int;
 enum : int
 {
@@ -57,7 +62,8 @@ enum : int
     PROCESS_SYSTEM_DPI_AWARE      = 0x00000001,
     PROCESS_PER_MONITOR_DPI_AWARE = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/shellscalingapi/ne-shellscalingapi-monitor_dpi_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shellscalingapi/ne-shellscalingapi-monitor_dpi_type
 alias MONITOR_DPI_TYPE = int;
 enum : int
 {

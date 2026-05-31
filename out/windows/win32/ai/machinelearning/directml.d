@@ -3,19 +3,20 @@
 module windows.win32.ai.machinelearning.directml;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, HRESULT, PSTR, PWSTR;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, HRESULT, PSTR, PWSTR;
 public import windows.win32.graphics.direct3d12 : D3D12_CPU_DESCRIPTOR_HANDLE, D3D12_GPU_DESCRIPTOR_HANDLE,
                                                   ID3D12CommandList, ID3D12Device,
                                                   ID3D12Resource;
-public import windows.win32.system.com : IUnknown;
+public import windows.win32.system.com.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_tensor_data_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_tensor_data_type
 alias DML_TENSOR_DATA_TYPE = int;
 enum : int
 {
@@ -32,21 +33,24 @@ enum : int
     DML_TENSOR_DATA_TYPE_UINT64  = 0x0000000a,
     DML_TENSOR_DATA_TYPE_INT64   = 0x0000000b,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_tensor_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_tensor_type
 alias DML_TENSOR_TYPE = int;
 enum : int
 {
     DML_TENSOR_TYPE_INVALID = 0x00000000,
     DML_TENSOR_TYPE_BUFFER  = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_tensor_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_tensor_flags
 alias DML_TENSOR_FLAGS = int;
 enum : int
 {
     DML_TENSOR_FLAG_NONE         = 0x00000000,
     DML_TENSOR_FLAG_OWNED_BY_DML = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_operator_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_operator_type
 alias DML_OPERATOR_TYPE = int;
 enum : int
 {
@@ -209,7 +213,8 @@ enum : int
     DML_OPERATOR_PADDING1                                   = 0x0000009b,
     DML_OPERATOR_ELEMENT_WISE_NEGATE                        = 0x0000009c,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_reduce_function))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_reduce_function
 alias DML_REDUCE_FUNCTION = int;
 enum : int
 {
@@ -226,28 +231,32 @@ enum : int
     DML_REDUCE_FUNCTION_SUM         = 0x0000000a,
     DML_REDUCE_FUNCTION_SUM_SQUARE  = 0x0000000b,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_matrix_transform))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_matrix_transform
 alias DML_MATRIX_TRANSFORM = int;
 enum : int
 {
     DML_MATRIX_TRANSFORM_NONE      = 0x00000000,
     DML_MATRIX_TRANSFORM_TRANSPOSE = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_convolution_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_convolution_mode
 alias DML_CONVOLUTION_MODE = int;
 enum : int
 {
     DML_CONVOLUTION_MODE_CONVOLUTION       = 0x00000000,
     DML_CONVOLUTION_MODE_CROSS_CORRELATION = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_convolution_direction))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_convolution_direction
 alias DML_CONVOLUTION_DIRECTION = int;
 enum : int
 {
     DML_CONVOLUTION_DIRECTION_FORWARD  = 0x00000000,
     DML_CONVOLUTION_DIRECTION_BACKWARD = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_padding_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_padding_mode
 alias DML_PADDING_MODE = int;
 enum : int
 {
@@ -256,14 +265,16 @@ enum : int
     DML_PADDING_MODE_REFLECTION = 0x00000002,
     DML_PADDING_MODE_SYMMETRIC  = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_interpolation_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_interpolation_mode
 alias DML_INTERPOLATION_MODE = int;
 enum : int
 {
     DML_INTERPOLATION_MODE_NEAREST_NEIGHBOR = 0x00000000,
     DML_INTERPOLATION_MODE_LINEAR           = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_recurrent_network_direction))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_recurrent_network_direction
 alias DML_RECURRENT_NETWORK_DIRECTION = int;
 enum : int
 {
@@ -271,6 +282,7 @@ enum : int
     DML_RECURRENT_NETWORK_DIRECTION_BACKWARD      = 0x00000001,
     DML_RECURRENT_NETWORK_DIRECTION_BIDIRECTIONAL = 0x00000002,
 }
+
 alias DML_ROUNDING_MODE = int;
 enum : int
 {
@@ -278,6 +290,7 @@ enum : int
     DML_ROUNDING_MODE_TOWARD_ZERO            = 0x00000001,
     DML_ROUNDING_MODE_TOWARD_INFINITY        = 0x00000002,
 }
+
 alias DML_IS_INFINITY_MODE = int;
 enum : int
 {
@@ -285,27 +298,31 @@ enum : int
     DML_IS_INFINITY_MODE_POSITIVE = 0x00000001,
     DML_IS_INFINITY_MODE_NEGATIVE = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_axis_direction))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_axis_direction
 alias DML_AXIS_DIRECTION = int;
 enum : int
 {
     DML_AXIS_DIRECTION_INCREASING = 0x00000000,
     DML_AXIS_DIRECTION_DECREASING = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_depth_space_order))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_depth_space_order
 alias DML_DEPTH_SPACE_ORDER = int;
 enum : int
 {
     DML_DEPTH_SPACE_ORDER_DEPTH_COLUMN_ROW = 0x00000000,
     DML_DEPTH_SPACE_ORDER_COLUMN_ROW_DEPTH = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_random_generator_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_random_generator_type
 alias DML_RANDOM_GENERATOR_TYPE = int;
 enum : int
 {
     DML_RANDOM_GENERATOR_TYPE_PHILOX_4X32_10 = 0x00000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_feature_level))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_feature_level
 alias DML_FEATURE_LEVEL = int;
 enum : int
 {
@@ -325,14 +342,16 @@ enum : int
     DML_FEATURE_LEVEL_6_3 = 0x00006300,
     DML_FEATURE_LEVEL_6_4 = 0x00006400,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_feature))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_feature
 alias DML_FEATURE = int;
 enum : int
 {
     DML_FEATURE_TENSOR_DATA_TYPE_SUPPORT = 0x00000000,
     DML_FEATURE_FEATURE_LEVELS           = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_execution_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_execution_flags
 alias DML_EXECUTION_FLAGS = int;
 enum : int
 {
@@ -341,14 +360,16 @@ enum : int
     DML_EXECUTION_FLAG_DISABLE_META_COMMANDS            = 0x00000002,
     DML_EXECUTION_FLAG_DESCRIPTORS_VOLATILE             = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_create_device_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_create_device_flags
 alias DML_CREATE_DEVICE_FLAGS = int;
 enum : int
 {
     DML_CREATE_DEVICE_FLAG_NONE  = 0x00000000,
     DML_CREATE_DEVICE_FLAG_DEBUG = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_binding_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_binding_type
 alias DML_BINDING_TYPE = int;
 enum : int
 {
@@ -356,7 +377,8 @@ enum : int
     DML_BINDING_TYPE_BUFFER       = 0x00000001,
     DML_BINDING_TYPE_BUFFER_ARRAY = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_graph_edge_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_graph_edge_type
 alias DML_GRAPH_EDGE_TYPE = int;
 enum : int
 {
@@ -365,7 +387,8 @@ enum : int
     DML_GRAPH_EDGE_TYPE_OUTPUT       = 0x00000002,
     DML_GRAPH_EDGE_TYPE_INTERMEDIATE = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_graph_node_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ne-directml-dml_graph_node_type
 alias DML_GRAPH_NODE_TYPE = int;
 enum : int
 {
@@ -376,22 +399,22 @@ enum : int
 // Constants
 
 
-enum uint DML_TARGET_VERSION = 0x00006400;
+enum uint DML_TARGET_VERSION = 0x00006400U;
 
 enum : uint
 {
-    DML_TENSOR_DIMENSION_COUNT_MAX  = 0x00000005,
-    DML_TENSOR_DIMENSION_COUNT_MAX1 = 0x00000008,
+    DML_TENSOR_DIMENSION_COUNT_MAX  = 0x00000005U,
+    DML_TENSOR_DIMENSION_COUNT_MAX1 = 0x00000008U,
 }
 
-enum uint DML_TEMPORARY_BUFFER_ALIGNMENT = 0x00000100;
-enum uint DML_PERSISTENT_BUFFER_ALIGNMENT = 0x00000100;
-enum uint DML_MINIMUM_BUFFER_TENSOR_ALIGNMENT = 0x00000010;
+enum uint DML_TEMPORARY_BUFFER_ALIGNMENT = 0x00000100U;
+enum uint DML_PERSISTENT_BUFFER_ALIGNMENT = 0x00000100U;
+enum uint DML_MINIMUM_BUFFER_TENSOR_ALIGNMENT = 0x00000010U;
 
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_buffer_tensor_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_buffer_tensor_desc
 struct DML_BUFFER_TENSOR_DESC
 {
     DML_TENSOR_DATA_TYPE DataType;
@@ -403,28 +426,28 @@ struct DML_BUFFER_TENSOR_DESC
     uint                 GuaranteedBaseOffsetAlignment;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_tensor_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_tensor_desc
 struct DML_TENSOR_DESC
 {
     DML_TENSOR_TYPE Type;
     const(void)*    Desc;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_scale_bias))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_scale_bias
 struct DML_SCALE_BIAS
 {
     float Scale;
     float Bias;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_size_2d))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_size_2d
 struct DML_SIZE_2D
 {
     uint Width;
     uint Height;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_scalar_union))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_scalar_union
 union DML_SCALAR_UNION
 {
     ubyte[8] Bytes;
@@ -440,14 +463,14 @@ union DML_SCALAR_UNION
     double   Float64;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_operator_desc
 struct DML_OPERATOR_DESC
 {
     DML_OPERATOR_TYPE Type;
     const(void)*      Desc;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_identity_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_identity_operator_desc
 struct DML_ELEMENT_WISE_IDENTITY_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -455,7 +478,7 @@ struct DML_ELEMENT_WISE_IDENTITY_OPERATOR_DESC
     const(DML_SCALE_BIAS)* ScaleBias;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_abs_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_abs_operator_desc
 struct DML_ELEMENT_WISE_ABS_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -463,7 +486,7 @@ struct DML_ELEMENT_WISE_ABS_OPERATOR_DESC
     const(DML_SCALE_BIAS)* ScaleBias;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_acos_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_acos_operator_desc
 struct DML_ELEMENT_WISE_ACOS_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -471,7 +494,7 @@ struct DML_ELEMENT_WISE_ACOS_OPERATOR_DESC
     const(DML_SCALE_BIAS)* ScaleBias;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_add_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_add_operator_desc
 struct DML_ELEMENT_WISE_ADD_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* ATensor;
@@ -479,7 +502,7 @@ struct DML_ELEMENT_WISE_ADD_OPERATOR_DESC
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_add1_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_add1_operator_desc
 struct DML_ELEMENT_WISE_ADD1_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* ATensor;
@@ -488,7 +511,7 @@ struct DML_ELEMENT_WISE_ADD1_OPERATOR_DESC
     const(DML_OPERATOR_DESC)* FusedActivation;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_asin_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_asin_operator_desc
 struct DML_ELEMENT_WISE_ASIN_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -496,7 +519,7 @@ struct DML_ELEMENT_WISE_ASIN_OPERATOR_DESC
     const(DML_SCALE_BIAS)* ScaleBias;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_atan_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_atan_operator_desc
 struct DML_ELEMENT_WISE_ATAN_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -504,7 +527,7 @@ struct DML_ELEMENT_WISE_ATAN_OPERATOR_DESC
     const(DML_SCALE_BIAS)* ScaleBias;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_ceil_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_ceil_operator_desc
 struct DML_ELEMENT_WISE_CEIL_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -512,7 +535,7 @@ struct DML_ELEMENT_WISE_CEIL_OPERATOR_DESC
     const(DML_SCALE_BIAS)* ScaleBias;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_clip_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_clip_operator_desc
 struct DML_ELEMENT_WISE_CLIP_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -522,7 +545,7 @@ struct DML_ELEMENT_WISE_CLIP_OPERATOR_DESC
     float Max;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_cos_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_cos_operator_desc
 struct DML_ELEMENT_WISE_COS_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -530,7 +553,7 @@ struct DML_ELEMENT_WISE_COS_OPERATOR_DESC
     const(DML_SCALE_BIAS)* ScaleBias;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_divide_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_divide_operator_desc
 struct DML_ELEMENT_WISE_DIVIDE_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* ATensor;
@@ -538,7 +561,7 @@ struct DML_ELEMENT_WISE_DIVIDE_OPERATOR_DESC
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_exp_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_exp_operator_desc
 struct DML_ELEMENT_WISE_EXP_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -546,7 +569,7 @@ struct DML_ELEMENT_WISE_EXP_OPERATOR_DESC
     const(DML_SCALE_BIAS)* ScaleBias;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_floor_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_floor_operator_desc
 struct DML_ELEMENT_WISE_FLOOR_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -554,7 +577,7 @@ struct DML_ELEMENT_WISE_FLOOR_OPERATOR_DESC
     const(DML_SCALE_BIAS)* ScaleBias;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_log_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_log_operator_desc
 struct DML_ELEMENT_WISE_LOG_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -562,7 +585,7 @@ struct DML_ELEMENT_WISE_LOG_OPERATOR_DESC
     const(DML_SCALE_BIAS)* ScaleBias;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_logical_and_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_logical_and_operator_desc
 struct DML_ELEMENT_WISE_LOGICAL_AND_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* ATensor;
@@ -570,7 +593,7 @@ struct DML_ELEMENT_WISE_LOGICAL_AND_OPERATOR_DESC
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_logical_equals_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_logical_equals_operator_desc
 struct DML_ELEMENT_WISE_LOGICAL_EQUALS_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* ATensor;
@@ -578,7 +601,7 @@ struct DML_ELEMENT_WISE_LOGICAL_EQUALS_OPERATOR_DESC
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_logical_greater_than_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_logical_greater_than_operator_desc
 struct DML_ELEMENT_WISE_LOGICAL_GREATER_THAN_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* ATensor;
@@ -586,7 +609,7 @@ struct DML_ELEMENT_WISE_LOGICAL_GREATER_THAN_OPERATOR_DESC
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_logical_less_than_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_logical_less_than_operator_desc
 struct DML_ELEMENT_WISE_LOGICAL_LESS_THAN_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* ATensor;
@@ -594,14 +617,14 @@ struct DML_ELEMENT_WISE_LOGICAL_LESS_THAN_OPERATOR_DESC
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_logical_not_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_logical_not_operator_desc
 struct DML_ELEMENT_WISE_LOGICAL_NOT_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_logical_or_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_logical_or_operator_desc
 struct DML_ELEMENT_WISE_LOGICAL_OR_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* ATensor;
@@ -609,7 +632,7 @@ struct DML_ELEMENT_WISE_LOGICAL_OR_OPERATOR_DESC
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_logical_xor_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_logical_xor_operator_desc
 struct DML_ELEMENT_WISE_LOGICAL_XOR_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* ATensor;
@@ -617,7 +640,7 @@ struct DML_ELEMENT_WISE_LOGICAL_XOR_OPERATOR_DESC
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_max_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_max_operator_desc
 struct DML_ELEMENT_WISE_MAX_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* ATensor;
@@ -625,7 +648,7 @@ struct DML_ELEMENT_WISE_MAX_OPERATOR_DESC
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_mean_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_mean_operator_desc
 struct DML_ELEMENT_WISE_MEAN_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* ATensor;
@@ -633,7 +656,7 @@ struct DML_ELEMENT_WISE_MEAN_OPERATOR_DESC
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_min_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_min_operator_desc
 struct DML_ELEMENT_WISE_MIN_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* ATensor;
@@ -641,7 +664,7 @@ struct DML_ELEMENT_WISE_MIN_OPERATOR_DESC
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_multiply_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_multiply_operator_desc
 struct DML_ELEMENT_WISE_MULTIPLY_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* ATensor;
@@ -649,7 +672,7 @@ struct DML_ELEMENT_WISE_MULTIPLY_OPERATOR_DESC
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_pow_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_pow_operator_desc
 struct DML_ELEMENT_WISE_POW_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -658,7 +681,7 @@ struct DML_ELEMENT_WISE_POW_OPERATOR_DESC
     const(DML_SCALE_BIAS)* ScaleBias;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_constant_pow_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_constant_pow_operator_desc
 struct DML_ELEMENT_WISE_CONSTANT_POW_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -667,7 +690,7 @@ struct DML_ELEMENT_WISE_CONSTANT_POW_OPERATOR_DESC
     float Exponent;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_recip_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_recip_operator_desc
 struct DML_ELEMENT_WISE_RECIP_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -675,7 +698,7 @@ struct DML_ELEMENT_WISE_RECIP_OPERATOR_DESC
     const(DML_SCALE_BIAS)* ScaleBias;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_sin_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_sin_operator_desc
 struct DML_ELEMENT_WISE_SIN_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -683,7 +706,7 @@ struct DML_ELEMENT_WISE_SIN_OPERATOR_DESC
     const(DML_SCALE_BIAS)* ScaleBias;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_sqrt_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_sqrt_operator_desc
 struct DML_ELEMENT_WISE_SQRT_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -691,7 +714,7 @@ struct DML_ELEMENT_WISE_SQRT_OPERATOR_DESC
     const(DML_SCALE_BIAS)* ScaleBias;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_subtract_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_subtract_operator_desc
 struct DML_ELEMENT_WISE_SUBTRACT_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* ATensor;
@@ -699,7 +722,7 @@ struct DML_ELEMENT_WISE_SUBTRACT_OPERATOR_DESC
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_tan_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_tan_operator_desc
 struct DML_ELEMENT_WISE_TAN_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -707,7 +730,7 @@ struct DML_ELEMENT_WISE_TAN_OPERATOR_DESC
     const(DML_SCALE_BIAS)* ScaleBias;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_threshold_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_threshold_operator_desc
 struct DML_ELEMENT_WISE_THRESHOLD_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -716,7 +739,7 @@ struct DML_ELEMENT_WISE_THRESHOLD_OPERATOR_DESC
     float Min;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_quantize_linear_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_quantize_linear_operator_desc
 struct DML_ELEMENT_WISE_QUANTIZE_LINEAR_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -725,7 +748,7 @@ struct DML_ELEMENT_WISE_QUANTIZE_LINEAR_OPERATOR_DESC
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_dequantize_linear_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_dequantize_linear_operator_desc
 struct DML_ELEMENT_WISE_DEQUANTIZE_LINEAR_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -734,7 +757,7 @@ struct DML_ELEMENT_WISE_DEQUANTIZE_LINEAR_OPERATOR_DESC
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_elu_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_elu_operator_desc
 struct DML_ACTIVATION_ELU_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -742,14 +765,14 @@ struct DML_ACTIVATION_ELU_OPERATOR_DESC
     float Alpha;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_hardmax_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_hardmax_operator_desc
 struct DML_ACTIVATION_HARDMAX_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_hard_sigmoid_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_hard_sigmoid_operator_desc
 struct DML_ACTIVATION_HARD_SIGMOID_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -758,14 +781,14 @@ struct DML_ACTIVATION_HARD_SIGMOID_OPERATOR_DESC
     float Beta;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_identity_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_identity_operator_desc
 struct DML_ACTIVATION_IDENTITY_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_leaky_relu_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_leaky_relu_operator_desc
 struct DML_ACTIVATION_LEAKY_RELU_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -773,7 +796,7 @@ struct DML_ACTIVATION_LEAKY_RELU_OPERATOR_DESC
     float Alpha;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_linear_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_linear_operator_desc
 struct DML_ACTIVATION_LINEAR_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -782,14 +805,14 @@ struct DML_ACTIVATION_LINEAR_OPERATOR_DESC
     float Beta;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_log_softmax_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_log_softmax_operator_desc
 struct DML_ACTIVATION_LOG_SOFTMAX_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_parameterized_relu_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_parameterized_relu_operator_desc
 struct DML_ACTIVATION_PARAMETERIZED_RELU_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -797,7 +820,7 @@ struct DML_ACTIVATION_PARAMETERIZED_RELU_OPERATOR_DESC
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_parametric_softplus_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_parametric_softplus_operator_desc
 struct DML_ACTIVATION_PARAMETRIC_SOFTPLUS_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -806,14 +829,14 @@ struct DML_ACTIVATION_PARAMETRIC_SOFTPLUS_OPERATOR_DESC
     float Beta;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_relu_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_relu_operator_desc
 struct DML_ACTIVATION_RELU_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_scaled_elu_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_scaled_elu_operator_desc
 struct DML_ACTIVATION_SCALED_ELU_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -822,7 +845,7 @@ struct DML_ACTIVATION_SCALED_ELU_OPERATOR_DESC
     float Gamma;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_scaled_tanh_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_scaled_tanh_operator_desc
 struct DML_ACTIVATION_SCALED_TANH_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -831,21 +854,21 @@ struct DML_ACTIVATION_SCALED_TANH_OPERATOR_DESC
     float Beta;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_sigmoid_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_sigmoid_operator_desc
 struct DML_ACTIVATION_SIGMOID_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_softmax_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_softmax_operator_desc
 struct DML_ACTIVATION_SOFTMAX_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_softplus_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_softplus_operator_desc
 struct DML_ACTIVATION_SOFTPLUS_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -853,21 +876,21 @@ struct DML_ACTIVATION_SOFTPLUS_OPERATOR_DESC
     float Steepness;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_softsign_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_softsign_operator_desc
 struct DML_ACTIVATION_SOFTSIGN_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_tanh_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_tanh_operator_desc
 struct DML_ACTIVATION_TANH_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_thresholded_relu_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_thresholded_relu_operator_desc
 struct DML_ACTIVATION_THRESHOLDED_RELU_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -875,7 +898,7 @@ struct DML_ACTIVATION_THRESHOLDED_RELU_OPERATOR_DESC
     float Alpha;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_convolution_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_convolution_operator_desc
 struct DML_CONVOLUTION_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -894,7 +917,7 @@ struct DML_CONVOLUTION_OPERATOR_DESC
     const(DML_OPERATOR_DESC)* FusedActivation;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_gemm_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_gemm_operator_desc
 struct DML_GEMM_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* ATensor;
@@ -908,7 +931,7 @@ struct DML_GEMM_OPERATOR_DESC
     const(DML_OPERATOR_DESC)* FusedActivation;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_reduce_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_reduce_operator_desc
 struct DML_REDUCE_OPERATOR_DESC
 {
     DML_REDUCE_FUNCTION Function;
@@ -918,7 +941,7 @@ struct DML_REDUCE_OPERATOR_DESC
     const(uint)*        Axes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_average_pooling_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_average_pooling_operator_desc
 struct DML_AVERAGE_POOLING_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -931,7 +954,7 @@ struct DML_AVERAGE_POOLING_OPERATOR_DESC
     BOOL         IncludePadding;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_lp_pooling_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_lp_pooling_operator_desc
 struct DML_LP_POOLING_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -944,7 +967,7 @@ struct DML_LP_POOLING_OPERATOR_DESC
     uint         P;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_max_pooling_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_max_pooling_operator_desc
 struct DML_MAX_POOLING_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -956,7 +979,7 @@ struct DML_MAX_POOLING_OPERATOR_DESC
     const(uint)* EndPadding;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_roi_pooling_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_roi_pooling_operator_desc
 struct DML_ROI_POOLING_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -966,7 +989,7 @@ struct DML_ROI_POOLING_OPERATOR_DESC
     DML_SIZE_2D PooledSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_slice_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_slice_operator_desc
 struct DML_SLICE_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -977,14 +1000,14 @@ struct DML_SLICE_OPERATOR_DESC
     const(uint)* Strides;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_cast_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_cast_operator_desc
 struct DML_CAST_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_split_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_split_operator_desc
 struct DML_SPLIT_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -993,7 +1016,7 @@ struct DML_SPLIT_OPERATOR_DESC
     uint Axis;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_join_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_join_operator_desc
 struct DML_JOIN_OPERATOR_DESC
 {
     uint InputCount;
@@ -1002,7 +1025,7 @@ struct DML_JOIN_OPERATOR_DESC
     uint Axis;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_padding_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_padding_operator_desc
 struct DML_PADDING_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1014,7 +1037,7 @@ struct DML_PADDING_OPERATOR_DESC
     const(uint)*     EndPadding;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_value_scale_2d_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_value_scale_2d_operator_desc
 struct DML_VALUE_SCALE_2D_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1024,7 +1047,7 @@ struct DML_VALUE_SCALE_2D_OPERATOR_DESC
     const(float)* Bias;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_upsample_2d_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_upsample_2d_operator_desc
 struct DML_UPSAMPLE_2D_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1033,7 +1056,7 @@ struct DML_UPSAMPLE_2D_OPERATOR_DESC
     DML_INTERPOLATION_MODE InterpolationMode;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_gather_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_gather_operator_desc
 struct DML_GATHER_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1043,7 +1066,7 @@ struct DML_GATHER_OPERATOR_DESC
     uint IndexDimensions;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_space_to_depth_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_space_to_depth_operator_desc
 struct DML_SPACE_TO_DEPTH_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1051,7 +1074,7 @@ struct DML_SPACE_TO_DEPTH_OPERATOR_DESC
     uint BlockSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_depth_to_space_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_depth_to_space_operator_desc
 struct DML_DEPTH_TO_SPACE_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1059,7 +1082,7 @@ struct DML_DEPTH_TO_SPACE_OPERATOR_DESC
     uint BlockSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_tile_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_tile_operator_desc
 struct DML_TILE_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1068,7 +1091,7 @@ struct DML_TILE_OPERATOR_DESC
     const(uint)* Repeats;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_top_k_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_top_k_operator_desc
 struct DML_TOP_K_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1078,7 +1101,7 @@ struct DML_TOP_K_OPERATOR_DESC
     uint K;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_batch_normalization_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_batch_normalization_operator_desc
 struct DML_BATCH_NORMALIZATION_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1092,7 +1115,7 @@ struct DML_BATCH_NORMALIZATION_OPERATOR_DESC
     const(DML_OPERATOR_DESC)* FusedActivation;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_mean_variance_normalization_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_mean_variance_normalization_operator_desc
 struct DML_MEAN_VARIANCE_NORMALIZATION_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1105,7 +1128,7 @@ struct DML_MEAN_VARIANCE_NORMALIZATION_OPERATOR_DESC
     const(DML_OPERATOR_DESC)* FusedActivation;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_local_response_normalization_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_local_response_normalization_operator_desc
 struct DML_LOCAL_RESPONSE_NORMALIZATION_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1117,7 +1140,7 @@ struct DML_LOCAL_RESPONSE_NORMALIZATION_OPERATOR_DESC
     float Bias;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_lp_normalization_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_lp_normalization_operator_desc
 struct DML_LP_NORMALIZATION_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1127,7 +1150,7 @@ struct DML_LP_NORMALIZATION_OPERATOR_DESC
     uint  P;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_rnn_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_rnn_operator_desc
 struct DML_RNN_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1143,7 +1166,7 @@ struct DML_RNN_OPERATOR_DESC
     DML_RECURRENT_NETWORK_DIRECTION Direction;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_lstm_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_lstm_operator_desc
 struct DML_LSTM_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1165,7 +1188,7 @@ struct DML_LSTM_OPERATOR_DESC
     BOOL  CoupleInputForget;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_gru_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_gru_operator_desc
 struct DML_GRU_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1182,21 +1205,21 @@ struct DML_GRU_OPERATOR_DESC
     BOOL LinearBeforeReset;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_sign_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_sign_operator_desc
 struct DML_ELEMENT_WISE_SIGN_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_is_nan_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_is_nan_operator_desc
 struct DML_ELEMENT_WISE_IS_NAN_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_erf_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_erf_operator_desc
 struct DML_ELEMENT_WISE_ERF_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1204,7 +1227,7 @@ struct DML_ELEMENT_WISE_ERF_OPERATOR_DESC
     const(DML_SCALE_BIAS)* ScaleBias;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_sinh_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_sinh_operator_desc
 struct DML_ELEMENT_WISE_SINH_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1212,7 +1235,7 @@ struct DML_ELEMENT_WISE_SINH_OPERATOR_DESC
     const(DML_SCALE_BIAS)* ScaleBias;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_cosh_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_cosh_operator_desc
 struct DML_ELEMENT_WISE_COSH_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1220,7 +1243,7 @@ struct DML_ELEMENT_WISE_COSH_OPERATOR_DESC
     const(DML_SCALE_BIAS)* ScaleBias;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_tanh_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_tanh_operator_desc
 struct DML_ELEMENT_WISE_TANH_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1228,7 +1251,7 @@ struct DML_ELEMENT_WISE_TANH_OPERATOR_DESC
     const(DML_SCALE_BIAS)* ScaleBias;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_asinh_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_asinh_operator_desc
 struct DML_ELEMENT_WISE_ASINH_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1236,7 +1259,7 @@ struct DML_ELEMENT_WISE_ASINH_OPERATOR_DESC
     const(DML_SCALE_BIAS)* ScaleBias;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_acosh_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_acosh_operator_desc
 struct DML_ELEMENT_WISE_ACOSH_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1244,7 +1267,7 @@ struct DML_ELEMENT_WISE_ACOSH_OPERATOR_DESC
     const(DML_SCALE_BIAS)* ScaleBias;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_atanh_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_atanh_operator_desc
 struct DML_ELEMENT_WISE_ATANH_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1252,7 +1275,7 @@ struct DML_ELEMENT_WISE_ATANH_OPERATOR_DESC
     const(DML_SCALE_BIAS)* ScaleBias;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_if_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_if_operator_desc
 struct DML_ELEMENT_WISE_IF_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* ConditionTensor;
@@ -1261,7 +1284,7 @@ struct DML_ELEMENT_WISE_IF_OPERATOR_DESC
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_shrink_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_shrink_operator_desc
 struct DML_ACTIVATION_SHRINK_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1270,7 +1293,7 @@ struct DML_ACTIVATION_SHRINK_OPERATOR_DESC
     float Threshold;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_max_pooling1_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_max_pooling1_operator_desc
 struct DML_MAX_POOLING1_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1283,7 +1306,7 @@ struct DML_MAX_POOLING1_OPERATOR_DESC
     const(uint)* EndPadding;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_max_unpooling_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_max_unpooling_operator_desc
 struct DML_MAX_UNPOOLING_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1291,7 +1314,7 @@ struct DML_MAX_UNPOOLING_OPERATOR_DESC
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_diagonal_matrix_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_diagonal_matrix_operator_desc
 struct DML_DIAGONAL_MATRIX_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* OutputTensor;
@@ -1299,7 +1322,7 @@ struct DML_DIAGONAL_MATRIX_OPERATOR_DESC
     float Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_scatter_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_scatter_operator_desc
 struct DML_SCATTER_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1309,7 +1332,7 @@ struct DML_SCATTER_OPERATOR_DESC
     uint Axis;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_one_hot_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_one_hot_operator_desc
 struct DML_ONE_HOT_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* IndicesTensor;
@@ -1318,7 +1341,7 @@ struct DML_ONE_HOT_OPERATOR_DESC
     uint Axis;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_resample_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_resample_operator_desc
 struct DML_RESAMPLE_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1328,7 +1351,7 @@ struct DML_RESAMPLE_OPERATOR_DESC
     const(float)* Scales;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_bit_shift_left_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_bit_shift_left_operator_desc
 struct DML_ELEMENT_WISE_BIT_SHIFT_LEFT_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* ATensor;
@@ -1336,7 +1359,7 @@ struct DML_ELEMENT_WISE_BIT_SHIFT_LEFT_OPERATOR_DESC
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_bit_shift_right_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_bit_shift_right_operator_desc
 struct DML_ELEMENT_WISE_BIT_SHIFT_RIGHT_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* ATensor;
@@ -1344,7 +1367,7 @@ struct DML_ELEMENT_WISE_BIT_SHIFT_RIGHT_OPERATOR_DESC
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_round_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_round_operator_desc
 struct DML_ELEMENT_WISE_ROUND_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1352,7 +1375,7 @@ struct DML_ELEMENT_WISE_ROUND_OPERATOR_DESC
     DML_ROUNDING_MODE RoundingMode;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_is_infinity_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_is_infinity_operator_desc
 struct DML_ELEMENT_WISE_IS_INFINITY_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1360,7 +1383,7 @@ struct DML_ELEMENT_WISE_IS_INFINITY_OPERATOR_DESC
     DML_IS_INFINITY_MODE InfinityMode;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_modulus_truncate_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_modulus_truncate_operator_desc
 struct DML_ELEMENT_WISE_MODULUS_TRUNCATE_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* ATensor;
@@ -1368,7 +1391,7 @@ struct DML_ELEMENT_WISE_MODULUS_TRUNCATE_OPERATOR_DESC
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_modulus_floor_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_modulus_floor_operator_desc
 struct DML_ELEMENT_WISE_MODULUS_FLOOR_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* ATensor;
@@ -1376,7 +1399,7 @@ struct DML_ELEMENT_WISE_MODULUS_FLOOR_OPERATOR_DESC
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_fill_value_constant_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_fill_value_constant_operator_desc
 struct DML_FILL_VALUE_CONSTANT_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* OutputTensor;
@@ -1384,7 +1407,7 @@ struct DML_FILL_VALUE_CONSTANT_OPERATOR_DESC
     DML_SCALAR_UNION     Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_fill_value_sequence_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_fill_value_sequence_operator_desc
 struct DML_FILL_VALUE_SEQUENCE_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* OutputTensor;
@@ -1393,7 +1416,7 @@ struct DML_FILL_VALUE_SEQUENCE_OPERATOR_DESC
     DML_SCALAR_UNION     ValueDelta;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_cumulative_summation_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_cumulative_summation_operator_desc
 struct DML_CUMULATIVE_SUMMATION_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1403,7 +1426,7 @@ struct DML_CUMULATIVE_SUMMATION_OPERATOR_DESC
     BOOL               HasExclusiveSum;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_reverse_subsequences_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_reverse_subsequences_desc
 struct DML_REVERSE_SUBSEQUENCES_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1412,7 +1435,7 @@ struct DML_REVERSE_SUBSEQUENCES_OPERATOR_DESC
     uint Axis;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_gather_elements_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_gather_elements_operator_desc
 struct DML_GATHER_ELEMENTS_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1421,7 +1444,7 @@ struct DML_GATHER_ELEMENTS_OPERATOR_DESC
     uint Axis;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_gather_nd_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_gather_nd_operator_desc
 struct DML_GATHER_ND_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1431,7 +1454,7 @@ struct DML_GATHER_ND_OPERATOR_DESC
     uint IndicesDimensionCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_scatter_nd_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_scatter_nd_operator_desc
 struct DML_SCATTER_ND_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1442,7 +1465,7 @@ struct DML_SCATTER_ND_OPERATOR_DESC
     uint IndicesDimensionCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_max_pooling2_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_max_pooling2_operator_desc
 struct DML_MAX_POOLING2_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1456,7 +1479,7 @@ struct DML_MAX_POOLING2_OPERATOR_DESC
     const(uint)* Dilations;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_slice1_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_slice1_operator_desc
 struct DML_SLICE1_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1467,7 +1490,7 @@ struct DML_SLICE1_OPERATOR_DESC
     const(int)*  InputWindowStrides;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_top_k1_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_top_k1_operator_desc
 struct DML_TOP_K1_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1478,7 +1501,7 @@ struct DML_TOP_K1_OPERATOR_DESC
     DML_AXIS_DIRECTION AxisDirection;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_depth_to_space1_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_depth_to_space1_operator_desc
 struct DML_DEPTH_TO_SPACE1_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1487,7 +1510,7 @@ struct DML_DEPTH_TO_SPACE1_OPERATOR_DESC
     DML_DEPTH_SPACE_ORDER Order;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_space_to_depth1_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_space_to_depth1_operator_desc
 struct DML_SPACE_TO_DEPTH1_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1496,7 +1519,7 @@ struct DML_SPACE_TO_DEPTH1_OPERATOR_DESC
     DML_DEPTH_SPACE_ORDER Order;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_mean_variance_normalization1_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_mean_variance_normalization1_operator_desc
 struct DML_MEAN_VARIANCE_NORMALIZATION1_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1510,7 +1533,7 @@ struct DML_MEAN_VARIANCE_NORMALIZATION1_OPERATOR_DESC
     const(DML_OPERATOR_DESC)* FusedActivation;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_resample1_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_resample1_operator_desc
 struct DML_RESAMPLE1_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1522,7 +1545,7 @@ struct DML_RESAMPLE1_OPERATOR_DESC
     const(float)* OutputPixelOffsets;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_matrix_multiply_integer_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_matrix_multiply_integer_operator_desc
 struct DML_MATRIX_MULTIPLY_INTEGER_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* ATensor;
@@ -1532,7 +1555,7 @@ struct DML_MATRIX_MULTIPLY_INTEGER_OPERATOR_DESC
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_quantized_linear_matrix_multiply_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_quantized_linear_matrix_multiply_operator_desc
 struct DML_QUANTIZED_LINEAR_MATRIX_MULTIPLY_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* ATensor;
@@ -1561,7 +1584,7 @@ struct DML_CONVOLUTION_INTEGER_OPERATOR_DESC
     uint         GroupCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_quantized_linear_convolution_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_quantized_linear_convolution_operator_desc
 struct DML_QUANTIZED_LINEAR_CONVOLUTION_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1582,7 +1605,7 @@ struct DML_QUANTIZED_LINEAR_CONVOLUTION_OPERATOR_DESC
     uint         GroupCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_bit_and_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_bit_and_operator_desc
 struct DML_ELEMENT_WISE_BIT_AND_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* ATensor;
@@ -1590,7 +1613,7 @@ struct DML_ELEMENT_WISE_BIT_AND_OPERATOR_DESC
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_bit_or_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_bit_or_operator_desc
 struct DML_ELEMENT_WISE_BIT_OR_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* ATensor;
@@ -1598,7 +1621,7 @@ struct DML_ELEMENT_WISE_BIT_OR_OPERATOR_DESC
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_bit_xor_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_bit_xor_operator_desc
 struct DML_ELEMENT_WISE_BIT_XOR_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* ATensor;
@@ -1606,21 +1629,21 @@ struct DML_ELEMENT_WISE_BIT_XOR_OPERATOR_DESC
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_bit_not_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_bit_not_operator_desc
 struct DML_ELEMENT_WISE_BIT_NOT_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_bit_count_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_bit_count_operator_desc
 struct DML_ELEMENT_WISE_BIT_COUNT_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_logical_greater_than_or_equal_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_logical_greater_than_or_equal_operator_desc
 struct DML_ELEMENT_WISE_LOGICAL_GREATER_THAN_OR_EQUAL_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* ATensor;
@@ -1628,7 +1651,7 @@ struct DML_ELEMENT_WISE_LOGICAL_GREATER_THAN_OR_EQUAL_OPERATOR_DESC
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_logical_less_than_or_equal_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_logical_less_than_or_equal_operator_desc
 struct DML_ELEMENT_WISE_LOGICAL_LESS_THAN_OR_EQUAL_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* ATensor;
@@ -1636,7 +1659,7 @@ struct DML_ELEMENT_WISE_LOGICAL_LESS_THAN_OR_EQUAL_OPERATOR_DESC
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_celu_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_celu_operator_desc
 struct DML_ACTIVATION_CELU_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1644,7 +1667,7 @@ struct DML_ACTIVATION_CELU_OPERATOR_DESC
     float Alpha;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_relu_grad_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_activation_relu_grad_operator_desc
 struct DML_ACTIVATION_RELU_GRAD_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1652,7 +1675,7 @@ struct DML_ACTIVATION_RELU_GRAD_OPERATOR_DESC
     const(DML_TENSOR_DESC)* OutputGradientTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_average_pooling_grad_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_average_pooling_grad_operator_desc
 struct DML_AVERAGE_POOLING_GRAD_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputGradientTensor;
@@ -1665,7 +1688,7 @@ struct DML_AVERAGE_POOLING_GRAD_OPERATOR_DESC
     BOOL         IncludePadding;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_max_pooling_grad_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_max_pooling_grad_operator_desc
 struct DML_MAX_POOLING_GRAD_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1679,7 +1702,7 @@ struct DML_MAX_POOLING_GRAD_OPERATOR_DESC
     const(uint)* Dilations;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_random_generator_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_random_generator_operator_desc
 struct DML_RANDOM_GENERATOR_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputStateTensor;
@@ -1688,7 +1711,7 @@ struct DML_RANDOM_GENERATOR_OPERATOR_DESC
     DML_RANDOM_GENERATOR_TYPE Type;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_nonzero_coordinates_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_nonzero_coordinates_operator_desc
 struct DML_NONZERO_COORDINATES_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1696,7 +1719,7 @@ struct DML_NONZERO_COORDINATES_OPERATOR_DESC
     const(DML_TENSOR_DESC)* OutputCoordinatesTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_resample_grad_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_resample_grad_operator_desc
 struct DML_RESAMPLE_GRAD_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputGradientTensor;
@@ -1708,7 +1731,7 @@ struct DML_RESAMPLE_GRAD_OPERATOR_DESC
     const(float)* OutputPixelOffsets;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_slice_grad_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_slice_grad_operator_desc
 struct DML_SLICE_GRAD_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputGradientTensor;
@@ -1719,7 +1742,7 @@ struct DML_SLICE_GRAD_OPERATOR_DESC
     const(int)*  InputWindowStrides;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_adam_optimizer_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_adam_optimizer_operator_desc
 struct DML_ADAM_OPTIMIZER_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputParametersTensor;
@@ -1736,7 +1759,7 @@ struct DML_ADAM_OPTIMIZER_OPERATOR_DESC
     float Epsilon;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_argmin_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_argmin_operator_desc
 struct DML_ARGMIN_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1746,7 +1769,7 @@ struct DML_ARGMIN_OPERATOR_DESC
     DML_AXIS_DIRECTION AxisDirection;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_argmax_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_argmax_operator_desc
 struct DML_ARGMAX_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1756,7 +1779,7 @@ struct DML_ARGMAX_OPERATOR_DESC
     DML_AXIS_DIRECTION AxisDirection;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_roi_align_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_roi_align_operator_desc
 struct DML_ROI_ALIGN_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1772,7 +1795,7 @@ struct DML_ROI_ALIGN_OPERATOR_DESC
     uint                MaximumSamplesPerOutput;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_gather_nd1_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_gather_nd1_operator_desc
 struct DML_GATHER_ND1_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1783,7 +1806,7 @@ struct DML_GATHER_ND1_OPERATOR_DESC
     uint BatchDimensionCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_atan_yx_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_atan_yx_operator_desc
 struct DML_ELEMENT_WISE_ATAN_YX_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* ATensor;
@@ -1791,7 +1814,7 @@ struct DML_ELEMENT_WISE_ATAN_YX_OPERATOR_DESC
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_clip_grad_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_clip_grad_operator_desc
 struct DML_ELEMENT_WISE_CLIP_GRAD_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1801,7 +1824,7 @@ struct DML_ELEMENT_WISE_CLIP_GRAD_OPERATOR_DESC
     float Max;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_difference_square_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_difference_square_operator_desc
 struct DML_ELEMENT_WISE_DIFFERENCE_SQUARE_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* ATensor;
@@ -1809,7 +1832,7 @@ struct DML_ELEMENT_WISE_DIFFERENCE_SQUARE_OPERATOR_DESC
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_local_response_normalization_grad_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_local_response_normalization_grad_operator_desc
 struct DML_LOCAL_RESPONSE_NORMALIZATION_GRAD_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1822,7 +1845,7 @@ struct DML_LOCAL_RESPONSE_NORMALIZATION_GRAD_OPERATOR_DESC
     float Bias;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_cumulative_product_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_cumulative_product_operator_desc
 struct DML_CUMULATIVE_PRODUCT_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1832,7 +1855,7 @@ struct DML_CUMULATIVE_PRODUCT_OPERATOR_DESC
     BOOL               HasExclusiveProduct;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_batch_normalization_grad_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_batch_normalization_grad_operator_desc
 struct DML_BATCH_NORMALIZATION_GRAD_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1846,7 +1869,7 @@ struct DML_BATCH_NORMALIZATION_GRAD_OPERATOR_DESC
     float Epsilon;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_quantized_linear_add_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_quantized_linear_add_operator_desc
 struct DML_ELEMENT_WISE_QUANTIZED_LINEAR_ADD_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* ATensor;
@@ -1860,7 +1883,7 @@ struct DML_ELEMENT_WISE_QUANTIZED_LINEAR_ADD_OPERATOR_DESC
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_dynamic_quantize_linear_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_dynamic_quantize_linear_operator_desc
 struct DML_DYNAMIC_QUANTIZE_LINEAR_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1869,7 +1892,7 @@ struct DML_DYNAMIC_QUANTIZE_LINEAR_OPERATOR_DESC
     const(DML_TENSOR_DESC)* OutputZeroPointTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_roi_align1_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_roi_align1_operator_desc
 struct DML_ROI_ALIGN1_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1888,7 +1911,7 @@ struct DML_ROI_ALIGN1_OPERATOR_DESC
     BOOL                AlignRegionsToCorners;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_roi_align_grad_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_roi_align_grad_operator_desc
 struct DML_ROI_ALIGN_GRAD_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1908,7 +1931,7 @@ struct DML_ROI_ALIGN_GRAD_OPERATOR_DESC
     BOOL                AlignRegionsToCorners;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_batch_normalization_training_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_batch_normalization_training_operator_desc
 struct DML_BATCH_NORMALIZATION_TRAINING_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1922,7 +1945,7 @@ struct DML_BATCH_NORMALIZATION_TRAINING_OPERATOR_DESC
     const(DML_OPERATOR_DESC)* FusedActivation;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_batch_normalization_training_grad_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_batch_normalization_training_grad_operator_desc
 struct DML_BATCH_NORMALIZATION_TRAINING_GRAD_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1936,7 +1959,7 @@ struct DML_BATCH_NORMALIZATION_TRAINING_GRAD_OPERATOR_DESC
     float Epsilon;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_clip1_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_clip1_operator_desc
 struct DML_ELEMENT_WISE_CLIP1_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1947,7 +1970,7 @@ struct DML_ELEMENT_WISE_CLIP1_OPERATOR_DESC
     DML_SCALAR_UNION     Max;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_clip_grad1_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_clip_grad1_operator_desc
 struct DML_ELEMENT_WISE_CLIP_GRAD1_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1958,7 +1981,7 @@ struct DML_ELEMENT_WISE_CLIP_GRAD1_OPERATOR_DESC
     DML_SCALAR_UNION     Max;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_padding1_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_padding1_operator_desc
 struct DML_PADDING1_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
@@ -1971,39 +1994,39 @@ struct DML_PADDING1_OPERATOR_DESC
     const(uint)*         EndPadding;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_negate_operator_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_element_wise_negate_operator_desc
 struct DML_ELEMENT_WISE_NEGATE_OPERATOR_DESC
 {
     const(DML_TENSOR_DESC)* InputTensor;
     const(DML_TENSOR_DESC)* OutputTensor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_feature_query_tensor_data_type_support))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_feature_query_tensor_data_type_support
 struct DML_FEATURE_QUERY_TENSOR_DATA_TYPE_SUPPORT
 {
     DML_TENSOR_DATA_TYPE DataType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_feature_data_tensor_data_type_support))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_feature_data_tensor_data_type_support
 struct DML_FEATURE_DATA_TENSOR_DATA_TYPE_SUPPORT
 {
     BOOL IsSupported;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_feature_query_feature_levels))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_feature_query_feature_levels
 struct DML_FEATURE_QUERY_FEATURE_LEVELS
 {
     uint RequestedFeatureLevelCount;
     const(DML_FEATURE_LEVEL)* RequestedFeatureLevels;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_feature_data_feature_levels))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_feature_data_feature_levels
 struct DML_FEATURE_DATA_FEATURE_LEVELS
 {
     DML_FEATURE_LEVEL MaxSupportedFeatureLevel;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_binding_table_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_binding_table_desc
 struct DML_BINDING_TABLE_DESC
 {
     IDMLDispatchable Dispatchable;
@@ -2012,7 +2035,7 @@ struct DML_BINDING_TABLE_DESC
     uint             SizeInDescriptors;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_binding_properties))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_binding_properties
 struct DML_BINDING_PROPERTIES
 {
     uint  RequiredDescriptorCount;
@@ -2020,14 +2043,14 @@ struct DML_BINDING_PROPERTIES
     ulong PersistentResourceSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_binding_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_binding_desc
 struct DML_BINDING_DESC
 {
     DML_BINDING_TYPE Type;
     const(void)*     Desc;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_buffer_binding))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_buffer_binding
 struct DML_BUFFER_BINDING
 {
     ID3D12Resource Buffer;
@@ -2035,21 +2058,21 @@ struct DML_BUFFER_BINDING
     ulong          SizeInBytes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_buffer_array_binding))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_buffer_array_binding
 struct DML_BUFFER_ARRAY_BINDING
 {
     uint BindingCount;
     const(DML_BUFFER_BINDING)* Bindings;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_graph_edge_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_graph_edge_desc
 struct DML_GRAPH_EDGE_DESC
 {
     DML_GRAPH_EDGE_TYPE Type;
     const(void)*        Desc;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_input_graph_edge_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_input_graph_edge_desc
 struct DML_INPUT_GRAPH_EDGE_DESC
 {
     uint        GraphInputIndex;
@@ -2058,7 +2081,7 @@ struct DML_INPUT_GRAPH_EDGE_DESC
     const(PSTR) Name;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_output_graph_edge_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_output_graph_edge_desc
 struct DML_OUTPUT_GRAPH_EDGE_DESC
 {
     uint        FromNodeIndex;
@@ -2067,7 +2090,7 @@ struct DML_OUTPUT_GRAPH_EDGE_DESC
     const(PSTR) Name;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_intermediate_graph_edge_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_intermediate_graph_edge_desc
 struct DML_INTERMEDIATE_GRAPH_EDGE_DESC
 {
     uint        FromNodeIndex;
@@ -2077,21 +2100,21 @@ struct DML_INTERMEDIATE_GRAPH_EDGE_DESC
     const(PSTR) Name;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_graph_node_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_graph_node_desc
 struct DML_GRAPH_NODE_DESC
 {
     DML_GRAPH_NODE_TYPE Type;
     const(void)*        Desc;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_operator_graph_node_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_operator_graph_node_desc
 struct DML_OPERATOR_GRAPH_NODE_DESC
 {
     IDMLOperator Operator;
     const(PSTR)  Name;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_graph_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/ns-directml-dml_graph_desc
 struct DML_GRAPH_DESC
 {
     uint InputCount;
@@ -2112,7 +2135,7 @@ struct DML_GRAPH_DESC
 @DllImport("DirectML.dll")
 HRESULT DMLCreateDevice(ID3D12Device d3d12Device, DML_CREATE_DEVICE_FLAGS flags, const(GUID)* riid, void** ppv);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/nf-directml-dmlcreatedevice1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nf-directml-dmlcreatedevice1
 @DllImport("DirectML.dll")
 HRESULT DMLCreateDevice1(ID3D12Device d3d12Device, DML_CREATE_DEVICE_FLAGS flags, 
                          DML_FEATURE_LEVEL minimumFeatureLevel, const(GUID)* riid, void** ppv);
@@ -2121,130 +2144,130 @@ HRESULT DMLCreateDevice1(ID3D12Device d3d12Device, DML_CREATE_DEVICE_FLAGS flags
 // Interfaces
 
 @GUID("c8263aac-9e0c-4a2d-9b8e-007521a3317c")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/nn-directml-idmlobject))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nn-directml-idmlobject
 interface IDMLObject : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmlobject-getprivatedata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmlobject-getprivatedata
     HRESULT GetPrivateData(const(GUID)* guid, uint* dataSize, 
                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/void* data);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmlobject-setprivatedata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmlobject-setprivatedata
     HRESULT SetPrivateData(const(GUID)* guid, uint dataSize, 
                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(void)* data);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmlobject-setprivatedatainterface))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmlobject-setprivatedatainterface
     HRESULT SetPrivateDataInterface(const(GUID)* guid, IUnknown data);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmlobject-setname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmlobject-setname
     HRESULT SetName(const(PWSTR) name);
 }
 
 @GUID("6dbd6437-96fd-423f-a98c-ae5e7c2a573f")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/nn-directml-idmldevice))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nn-directml-idmldevice
 interface IDMLDevice : IDMLObject
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmldevice-checkfeaturesupport))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmldevice-checkfeaturesupport
     HRESULT CheckFeatureSupport(DML_FEATURE feature, uint featureQueryDataSize, 
                                 /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(void)* featureQueryData, 
                                 uint featureSupportDataSize, 
                                 /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* featureSupportData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmldevice-createoperator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmldevice-createoperator
     HRESULT CreateOperator(const(DML_OPERATOR_DESC)* desc, const(GUID)* riid, void** ppv);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmldevice-compileoperator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmldevice-compileoperator
     HRESULT CompileOperator(IDMLOperator op, DML_EXECUTION_FLAGS flags, const(GUID)* riid, void** ppv);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmldevice-createoperatorinitializer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmldevice-createoperatorinitializer
     HRESULT CreateOperatorInitializer(uint operatorCount, IDMLCompiledOperator* operators, const(GUID)* riid, 
                                       void** ppv);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmldevice-createcommandrecorder))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmldevice-createcommandrecorder
     HRESULT CreateCommandRecorder(const(GUID)* riid, void** ppv);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmldevice-createbindingtable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmldevice-createbindingtable
     HRESULT CreateBindingTable(const(DML_BINDING_TABLE_DESC)* desc, const(GUID)* riid, void** ppv);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmldevice-evict))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmldevice-evict
     HRESULT Evict(uint count, IDMLPageable* ppObjects);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmldevice-makeresident))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmldevice-makeresident
     HRESULT MakeResident(uint count, IDMLPageable* ppObjects);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmldevice-getdeviceremovedreason))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmldevice-getdeviceremovedreason
     HRESULT GetDeviceRemovedReason();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmldevice-getparentdevice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmldevice-getparentdevice
     HRESULT GetParentDevice(const(GUID)* riid, void** ppv);
 }
 
 @GUID("27e83142-8165-49e3-974e-2fd66e4cb69d")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/nn-directml-idmldevicechild))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nn-directml-idmldevicechild
 interface IDMLDeviceChild : IDMLObject
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmldevicechild-getdevice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmldevicechild-getdevice
     HRESULT GetDevice(const(GUID)* riid, void** ppv);
 }
 
 @GUID("b1ab0825-4542-4a4b-8617-6dde6e8f6201")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/nn-directml-idmlpageable))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nn-directml-idmlpageable
 interface IDMLPageable : IDMLDeviceChild
 {
 }
 
 @GUID("26caae7a-3081-4633-9581-226fbe57695d")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/nn-directml-idmloperator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nn-directml-idmloperator
 interface IDMLOperator : IDMLDeviceChild
 {
 }
 
 @GUID("dcb821a8-1039-441e-9f1c-b1759c2f3cec")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/nn-directml-idmldispatchable))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nn-directml-idmldispatchable
 interface IDMLDispatchable : IDMLPageable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmldispatchable-getbindingproperties))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmldispatchable-getbindingproperties
     DML_BINDING_PROPERTIES GetBindingProperties();
 }
 
 @GUID("6b15e56a-bf5c-4902-92d8-da3a650afea4")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/nn-directml-idmlcompiledoperator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nn-directml-idmlcompiledoperator
 interface IDMLCompiledOperator : IDMLDispatchable
 {
 }
 
 @GUID("427c1113-435c-469c-8676-4d5dd072f813")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/nn-directml-idmloperatorinitializer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nn-directml-idmloperatorinitializer
 interface IDMLOperatorInitializer : IDMLDispatchable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmloperatorinitializer-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmloperatorinitializer-reset
     HRESULT Reset(uint operatorCount, IDMLCompiledOperator* operators);
 }
 
 @GUID("29c687dc-de74-4e3b-ab00-1168f2fc3cfc")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/nn-directml-idmlbindingtable))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nn-directml-idmlbindingtable
 interface IDMLBindingTable : IDMLDeviceChild
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmlbindingtable-bindinputs))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmlbindingtable-bindinputs
     void    BindInputs(uint bindingCount, const(DML_BINDING_DESC)* bindings);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmlbindingtable-bindoutputs))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmlbindingtable-bindoutputs
     void    BindOutputs(uint bindingCount, const(DML_BINDING_DESC)* bindings);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmlbindingtable-bindtemporaryresource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmlbindingtable-bindtemporaryresource
     void    BindTemporaryResource(const(DML_BINDING_DESC)* binding);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmlbindingtable-bindpersistentresource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmlbindingtable-bindpersistentresource
     void    BindPersistentResource(const(DML_BINDING_DESC)* binding);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmlbindingtable-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmlbindingtable-reset
     HRESULT Reset(const(DML_BINDING_TABLE_DESC)* desc);
 }
 
 @GUID("e6857a76-2e3e-4fdd-bff4-5d2ba10fb453")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/nn-directml-idmlcommandrecorder))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nn-directml-idmlcommandrecorder
 interface IDMLCommandRecorder : IDMLDeviceChild
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmlcommandrecorder-recorddispatch))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmlcommandrecorder-recorddispatch
     void RecordDispatch(ID3D12CommandList commandList, IDMLDispatchable dispatchable, IDMLBindingTable bindings);
 }
 
 @GUID("7d6f3ac9-394a-4ac3-92a7-390cc57a8217")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/nn-directml-idmldebugdevice))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nn-directml-idmldebugdevice
 interface IDMLDebugDevice : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmldebugdevice-setmutedebugoutput))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmldebugdevice-setmutedebugoutput
     void SetMuteDebugOutput(BOOL mute);
 }
 
 @GUID("a0884f9a-d2be-4355-aa5d-5901281ad1d2")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/nn-directml-idmldevice1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nn-directml-idmldevice1
 interface IDMLDevice1 : IDMLDevice
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmldevice1-compilegraph))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/directml/nf-directml-idmldevice1-compilegraph
     HRESULT CompileGraph(const(DML_GRAPH_DESC)* desc, DML_EXECUTION_FLAGS flags, const(GUID)* riid, void** ppv);
 }
 

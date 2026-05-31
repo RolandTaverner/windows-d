@@ -3,12 +3,12 @@
 module windows.win32.networkmanagement.wifi;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BOOLEAN, DEVPROPKEY, HANDLE, HRESULT,
-                                         HWND, PWSTR;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BOOLEAN, DEVPROPKEY, HANDLE,
+                                                    HRESULT, HWND, PWSTR;
 public import windows.win32.networkmanagement.ndis : NDIS_OBJECT_HEADER;
 public import windows.win32.security.extensibleauthenticationprotocol : EAP_ATTRIBUTES, EAP_METHOD_TYPE;
-public import windows.win32.system.com : IUnknown;
+public import windows.win32.system.com.com : IUnknown;
 public import windows.win32.system.remotedesktop : WTSSESSION_NOTIFICATION;
 
 extern(Windows) @nogc nothrow:
@@ -16,176 +16,194 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias WLAN_SET_EAPHOST_FLAGS = uint;
 enum : uint
 {
-    WLAN_SET_EAPHOST_DATA_ALL_USERS = 0x00000001,
+    WLAN_SET_EAPHOST_DATA_ALL_USERS = 0x00000001U,
 }
+
 alias WLAN_CONNECTION_NOTIFICATION_FLAGS = uint;
 enum : uint
 {
-    WLAN_CONNECTION_NOTIFICATION_ADHOC_NETWORK_FORMED = 0x00000001,
-    WLAN_CONNECTION_NOTIFICATION_CONSOLE_USER_PROFILE = 0x00000004,
+    WLAN_CONNECTION_NOTIFICATION_ADHOC_NETWORK_FORMED = 0x00000001U,
+    WLAN_CONNECTION_NOTIFICATION_CONSOLE_USER_PROFILE = 0x00000004U,
 }
+
 alias WLAN_NOTIFICATION_SOURCES = uint;
 enum : uint
 {
-    WLAN_NOTIFICATION_SOURCE_NONE           = 0x00000000,
-    WLAN_NOTIFICATION_SOURCE_ALL            = 0x0000ffff,
-    WLAN_NOTIFICATION_SOURCE_ACM            = 0x00000008,
-    WLAN_NOTIFICATION_SOURCE_MSM            = 0x00000010,
-    WLAN_NOTIFICATION_SOURCE_SECURITY       = 0x00000020,
-    WLAN_NOTIFICATION_SOURCE_IHV            = 0x00000040,
-    WLAN_NOTIFICATION_SOURCE_HNWK           = 0x00000080,
-    WLAN_NOTIFICATION_SOURCE_ONEX           = 0x00000004,
-    WLAN_NOTIFICATION_SOURCE_DEVICE_SERVICE = 0x00000800,
+    WLAN_NOTIFICATION_SOURCE_NONE           = 0x00000000U,
+    WLAN_NOTIFICATION_SOURCE_ALL            = 0x0000ffffU,
+    WLAN_NOTIFICATION_SOURCE_ACM            = 0x00000008U,
+    WLAN_NOTIFICATION_SOURCE_MSM            = 0x00000010U,
+    WLAN_NOTIFICATION_SOURCE_SECURITY       = 0x00000020U,
+    WLAN_NOTIFICATION_SOURCE_IHV            = 0x00000040U,
+    WLAN_NOTIFICATION_SOURCE_HNWK           = 0x00000080U,
+    WLAN_NOTIFICATION_SOURCE_ONEX           = 0x00000004U,
+    WLAN_NOTIFICATION_SOURCE_DEVICE_SERVICE = 0x00000800U,
 }
+
 alias DEVPROP_PCIROOTBUS_SECONDARYINTERFACE = uint;
 enum : uint
 {
-    DevProp_PciRootBus_SecondaryInterface_PciConventional = 0x00000000,
-    DevProp_PciRootBus_SecondaryInterface_PciXMode1       = 0x00000001,
-    DevProp_PciRootBus_SecondaryInterface_PciXMode2       = 0x00000002,
-    DevProp_PciRootBus_SecondaryInterface_PciExpress      = 0x00000003,
+    DevProp_PciRootBus_SecondaryInterface_PciConventional = 0x00000000U,
+    DevProp_PciRootBus_SecondaryInterface_PciXMode1       = 0x00000001U,
+    DevProp_PciRootBus_SecondaryInterface_PciXMode2       = 0x00000002U,
+    DevProp_PciRootBus_SecondaryInterface_PciExpress      = 0x00000003U,
 }
+
 alias DEVPROP_PCIROOTBUS_CURRENTSPEEDANDMODE = uint;
 enum : uint
 {
-    DevProp_PciRootBus_CurrentSpeedAndMode_Pci_Conventional_33Mhz = 0x00000000,
-    DevProp_PciRootBus_CurrentSpeedAndMode_Pci_Conventional_66Mhz = 0x00000001,
-    DevProp_PciRootBus_CurrentSpeedAndMode_Pci_X_Mode1_66Mhz      = 0x00000002,
-    DevProp_PciRootBus_CurrentSpeedAndMode_Pci_X_Mode1_100Mhz     = 0x00000003,
-    DevProp_PciRootBus_CurrentSpeedAndMode_Pci_X_Mode1_133Mhz     = 0x00000004,
-    DevProp_PciRootBus_CurrentSpeedAndMode_Pci_X_Mode1_ECC_66Mhz  = 0x00000005,
-    DevProp_PciRootBus_CurrentSpeedAndMode_Pci_X_Mode1_ECC_100Mhz = 0x00000006,
-    DevProp_PciRootBus_CurrentSpeedAndMode_Pci_X_Mode1_ECC_133Mhz = 0x00000007,
-    DevProp_PciRootBus_CurrentSpeedAndMode_Pci_X_266_Mode2_66Mhz  = 0x00000008,
-    DevProp_PciRootBus_CurrentSpeedAndMode_Pci_X_266_Mode2_100Mhz = 0x00000009,
-    DevProp_PciRootBus_CurrentSpeedAndMode_Pci_X_266_Mode2_133Mhz = 0x0000000a,
-    DevProp_PciRootBus_CurrentSpeedAndMode_Pci_X_533_Mode2_66Mhz  = 0x0000000b,
-    DevProp_PciRootBus_CurrentSpeedAndMode_Pci_X_533_Mode2_100Mhz = 0x0000000c,
-    DevProp_PciRootBus_CurrentSpeedAndMode_Pci_X_533_Mode2_133Mhz = 0x0000000d,
+    DevProp_PciRootBus_CurrentSpeedAndMode_Pci_Conventional_33Mhz = 0x00000000U,
+    DevProp_PciRootBus_CurrentSpeedAndMode_Pci_Conventional_66Mhz = 0x00000001U,
+    DevProp_PciRootBus_CurrentSpeedAndMode_Pci_X_Mode1_66Mhz      = 0x00000002U,
+    DevProp_PciRootBus_CurrentSpeedAndMode_Pci_X_Mode1_100Mhz     = 0x00000003U,
+    DevProp_PciRootBus_CurrentSpeedAndMode_Pci_X_Mode1_133Mhz     = 0x00000004U,
+    DevProp_PciRootBus_CurrentSpeedAndMode_Pci_X_Mode1_ECC_66Mhz  = 0x00000005U,
+    DevProp_PciRootBus_CurrentSpeedAndMode_Pci_X_Mode1_ECC_100Mhz = 0x00000006U,
+    DevProp_PciRootBus_CurrentSpeedAndMode_Pci_X_Mode1_ECC_133Mhz = 0x00000007U,
+    DevProp_PciRootBus_CurrentSpeedAndMode_Pci_X_266_Mode2_66Mhz  = 0x00000008U,
+    DevProp_PciRootBus_CurrentSpeedAndMode_Pci_X_266_Mode2_100Mhz = 0x00000009U,
+    DevProp_PciRootBus_CurrentSpeedAndMode_Pci_X_266_Mode2_133Mhz = 0x0000000aU,
+    DevProp_PciRootBus_CurrentSpeedAndMode_Pci_X_533_Mode2_66Mhz  = 0x0000000bU,
+    DevProp_PciRootBus_CurrentSpeedAndMode_Pci_X_533_Mode2_100Mhz = 0x0000000cU,
+    DevProp_PciRootBus_CurrentSpeedAndMode_Pci_X_533_Mode2_133Mhz = 0x0000000dU,
 }
+
 alias DEVPROP_PCIROOTBUS_SUPPORTEDSPEEDSANDMODES = uint;
 enum : uint
 {
-    DevProp_PciRootBus_SupportedSpeedsAndModes_Pci_Conventional_33Mhz = 0x00000001,
-    DevProp_PciRootBus_SupportedSpeedsAndModes_Pci_Conventional_66Mhz = 0x00000002,
-    DevProp_PciRootBus_SupportedSpeedsAndModes_Pci_X_66Mhz            = 0x00000004,
-    DevProp_PciRootBus_SupportedSpeedsAndModes_Pci_X_133Mhz           = 0x00000008,
-    DevProp_PciRootBus_SupportedSpeedsAndModes_Pci_X_266Mhz           = 0x00000010,
-    DevProp_PciRootBus_SupportedSpeedsAndModes_Pci_X_533Mhz           = 0x00000020,
+    DevProp_PciRootBus_SupportedSpeedsAndModes_Pci_Conventional_33Mhz = 0x00000001U,
+    DevProp_PciRootBus_SupportedSpeedsAndModes_Pci_Conventional_66Mhz = 0x00000002U,
+    DevProp_PciRootBus_SupportedSpeedsAndModes_Pci_X_66Mhz            = 0x00000004U,
+    DevProp_PciRootBus_SupportedSpeedsAndModes_Pci_X_133Mhz           = 0x00000008U,
+    DevProp_PciRootBus_SupportedSpeedsAndModes_Pci_X_266Mhz           = 0x00000010U,
+    DevProp_PciRootBus_SupportedSpeedsAndModes_Pci_X_533Mhz           = 0x00000020U,
 }
+
 alias DEVPROP_PCIROOTBUS_BUSWIDTH = uint;
 enum : uint
 {
-    DevProp_PciRootBus_BusWidth_32Bits = 0x00000000,
-    DevProp_PciRootBus_BusWidth_64Bits = 0x00000001,
+    DevProp_PciRootBus_BusWidth_32Bits = 0x00000000U,
+    DevProp_PciRootBus_BusWidth_64Bits = 0x00000001U,
 }
+
 alias DEVPROP_PCIDEVICE_DEVICEBRIDGETYPE = uint;
 enum : uint
 {
-    DevProp_PciDevice_DeviceType_PciConventional                         = 0x00000000,
-    DevProp_PciDevice_DeviceType_PciX                                    = 0x00000001,
-    DevProp_PciDevice_DeviceType_PciExpressEndpoint                      = 0x00000002,
-    DevProp_PciDevice_DeviceType_PciExpressLegacyEndpoint                = 0x00000003,
-    DevProp_PciDevice_DeviceType_PciExpressRootComplexIntegratedEndpoint = 0x00000004,
-    DevProp_PciDevice_DeviceType_PciExpressTreatedAsPci                  = 0x00000005,
-    DevProp_PciDevice_BridgeType_PciConventional                         = 0x00000006,
-    DevProp_PciDevice_BridgeType_PciX                                    = 0x00000007,
-    DevProp_PciDevice_BridgeType_PciExpressRootPort                      = 0x00000008,
-    DevProp_PciDevice_BridgeType_PciExpressUpstreamSwitchPort            = 0x00000009,
-    DevProp_PciDevice_BridgeType_PciExpressDownstreamSwitchPort          = 0x0000000a,
-    DevProp_PciDevice_BridgeType_PciExpressToPciXBridge                  = 0x0000000b,
-    DevProp_PciDevice_BridgeType_PciXToExpressBridge                     = 0x0000000c,
-    DevProp_PciDevice_BridgeType_PciExpressTreatedAsPci                  = 0x0000000d,
-    DevProp_PciDevice_BridgeType_PciExpressEventCollector                = 0x0000000e,
+    DevProp_PciDevice_DeviceType_PciConventional                         = 0x00000000U,
+    DevProp_PciDevice_DeviceType_PciX                                    = 0x00000001U,
+    DevProp_PciDevice_DeviceType_PciExpressEndpoint                      = 0x00000002U,
+    DevProp_PciDevice_DeviceType_PciExpressLegacyEndpoint                = 0x00000003U,
+    DevProp_PciDevice_DeviceType_PciExpressRootComplexIntegratedEndpoint = 0x00000004U,
+    DevProp_PciDevice_DeviceType_PciExpressTreatedAsPci                  = 0x00000005U,
+    DevProp_PciDevice_BridgeType_PciConventional                         = 0x00000006U,
+    DevProp_PciDevice_BridgeType_PciX                                    = 0x00000007U,
+    DevProp_PciDevice_BridgeType_PciExpressRootPort                      = 0x00000008U,
+    DevProp_PciDevice_BridgeType_PciExpressUpstreamSwitchPort            = 0x00000009U,
+    DevProp_PciDevice_BridgeType_PciExpressDownstreamSwitchPort          = 0x0000000aU,
+    DevProp_PciDevice_BridgeType_PciExpressToPciXBridge                  = 0x0000000bU,
+    DevProp_PciDevice_BridgeType_PciXToExpressBridge                     = 0x0000000cU,
+    DevProp_PciDevice_BridgeType_PciExpressTreatedAsPci                  = 0x0000000dU,
+    DevProp_PciDevice_BridgeType_PciExpressEventCollector                = 0x0000000eU,
 }
+
 alias DEVPROP_PCIDEVICE_CURRENTSPEEDANDMODE = uint;
 enum : uint
 {
-    DevProp_PciDevice_CurrentSpeedAndMode_Pci_Conventional_33MHz     = 0x00000000,
-    DevProp_PciDevice_CurrentSpeedAndMode_Pci_Conventional_66MHz     = 0x00000001,
-    DevProp_PciDevice_CurrentSpeedAndMode_PciX_Mode_Conventional_Pci = 0x00000000,
-    DevProp_PciDevice_CurrentSpeedAndMode_PciX_Mode1_66Mhz           = 0x00000001,
-    DevProp_PciDevice_CurrentSpeedAndMode_PciX_Mode1_100Mhz          = 0x00000002,
-    DevProp_PciDevice_CurrentSpeedAndMode_PciX_Mode1_133MHZ          = 0x00000003,
-    DevProp_PciDevice_CurrentSpeedAndMode_PciX_Mode1_ECC_66Mhz       = 0x00000005,
-    DevProp_PciDevice_CurrentSpeedAndMode_PciX_Mode1_ECC_100Mhz      = 0x00000006,
-    DevProp_PciDevice_CurrentSpeedAndMode_PciX_Mode1_ECC_133Mhz      = 0x00000007,
-    DevProp_PciDevice_CurrentSpeedAndMode_PciX_Mode2_266_66MHz       = 0x00000009,
-    DevProp_PciDevice_CurrentSpeedAndMode_PciX_Mode2_266_100MHz      = 0x0000000a,
-    DevProp_PciDevice_CurrentSpeedAndMode_PciX_Mode2_266_133MHz      = 0x0000000b,
-    DevProp_PciDevice_CurrentSpeedAndMode_PciX_Mode2_533_66MHz       = 0x0000000d,
-    DevProp_PciDevice_CurrentSpeedAndMode_PciX_Mode2_533_100MHz      = 0x0000000e,
-    DevProp_PciDevice_CurrentSpeedAndMode_PciX_Mode2_533_133MHz      = 0x0000000f,
+    DevProp_PciDevice_CurrentSpeedAndMode_Pci_Conventional_33MHz     = 0x00000000U,
+    DevProp_PciDevice_CurrentSpeedAndMode_Pci_Conventional_66MHz     = 0x00000001U,
+    DevProp_PciDevice_CurrentSpeedAndMode_PciX_Mode_Conventional_Pci = 0x00000000U,
+    DevProp_PciDevice_CurrentSpeedAndMode_PciX_Mode1_66Mhz           = 0x00000001U,
+    DevProp_PciDevice_CurrentSpeedAndMode_PciX_Mode1_100Mhz          = 0x00000002U,
+    DevProp_PciDevice_CurrentSpeedAndMode_PciX_Mode1_133MHZ          = 0x00000003U,
+    DevProp_PciDevice_CurrentSpeedAndMode_PciX_Mode1_ECC_66Mhz       = 0x00000005U,
+    DevProp_PciDevice_CurrentSpeedAndMode_PciX_Mode1_ECC_100Mhz      = 0x00000006U,
+    DevProp_PciDevice_CurrentSpeedAndMode_PciX_Mode1_ECC_133Mhz      = 0x00000007U,
+    DevProp_PciDevice_CurrentSpeedAndMode_PciX_Mode2_266_66MHz       = 0x00000009U,
+    DevProp_PciDevice_CurrentSpeedAndMode_PciX_Mode2_266_100MHz      = 0x0000000aU,
+    DevProp_PciDevice_CurrentSpeedAndMode_PciX_Mode2_266_133MHz      = 0x0000000bU,
+    DevProp_PciDevice_CurrentSpeedAndMode_PciX_Mode2_533_66MHz       = 0x0000000dU,
+    DevProp_PciDevice_CurrentSpeedAndMode_PciX_Mode2_533_100MHz      = 0x0000000eU,
+    DevProp_PciDevice_CurrentSpeedAndMode_PciX_Mode2_533_133MHz      = 0x0000000fU,
 }
+
 alias DEVPROP_PCIEXPRESSDEVICE_PAYLOADORREQUESTSIZE = uint;
 enum : uint
 {
-    DevProp_PciExpressDevice_PayloadOrRequestSize_128Bytes  = 0x00000000,
-    DevProp_PciExpressDevice_PayloadOrRequestSize_256Bytes  = 0x00000001,
-    DevProp_PciExpressDevice_PayloadOrRequestSize_512Bytes  = 0x00000002,
-    DevProp_PciExpressDevice_PayloadOrRequestSize_1024Bytes = 0x00000003,
-    DevProp_PciExpressDevice_PayloadOrRequestSize_2048Bytes = 0x00000004,
-    DevProp_PciExpressDevice_PayloadOrRequestSize_4096Bytes = 0x00000005,
+    DevProp_PciExpressDevice_PayloadOrRequestSize_128Bytes  = 0x00000000U,
+    DevProp_PciExpressDevice_PayloadOrRequestSize_256Bytes  = 0x00000001U,
+    DevProp_PciExpressDevice_PayloadOrRequestSize_512Bytes  = 0x00000002U,
+    DevProp_PciExpressDevice_PayloadOrRequestSize_1024Bytes = 0x00000003U,
+    DevProp_PciExpressDevice_PayloadOrRequestSize_2048Bytes = 0x00000004U,
+    DevProp_PciExpressDevice_PayloadOrRequestSize_4096Bytes = 0x00000005U,
 }
+
 alias DEVPROP_PCIEXPRESSDEVICE_LINKSPEED = uint;
 enum : uint
 {
-    DevProp_PciExpressDevice_LinkSpeed_TwoAndHalf_Gbps = 0x00000001,
-    DevProp_PciExpressDevice_LinkSpeed_Five_Gbps       = 0x00000002,
+    DevProp_PciExpressDevice_LinkSpeed_TwoAndHalf_Gbps = 0x00000001U,
+    DevProp_PciExpressDevice_LinkSpeed_Five_Gbps       = 0x00000002U,
 }
+
 alias DEVPROP_PCIEXPRESSDEVICE_LINKWIDTH = uint;
 enum : uint
 {
-    DevProp_PciExpressDevice_LinkWidth_By_1  = 0x00000001,
-    DevProp_PciExpressDevice_LinkWidth_By_2  = 0x00000002,
-    DevProp_PciExpressDevice_LinkWidth_By_4  = 0x00000004,
-    DevProp_PciExpressDevice_LinkWidth_By_8  = 0x00000008,
-    DevProp_PciExpressDevice_LinkWidth_By_12 = 0x0000000c,
-    DevProp_PciExpressDevice_LinkWidth_By_16 = 0x00000010,
-    DevProp_PciExpressDevice_LinkWidth_By_32 = 0x00000020,
+    DevProp_PciExpressDevice_LinkWidth_By_1  = 0x00000001U,
+    DevProp_PciExpressDevice_LinkWidth_By_2  = 0x00000002U,
+    DevProp_PciExpressDevice_LinkWidth_By_4  = 0x00000004U,
+    DevProp_PciExpressDevice_LinkWidth_By_8  = 0x00000008U,
+    DevProp_PciExpressDevice_LinkWidth_By_12 = 0x0000000cU,
+    DevProp_PciExpressDevice_LinkWidth_By_16 = 0x00000010U,
+    DevProp_PciExpressDevice_LinkWidth_By_32 = 0x00000020U,
 }
+
 alias DEVPROP_PCIEXPRESSDEVICE_SPEC_VERSION = uint;
 enum : uint
 {
-    DevProp_PciExpressDevice_Spec_Version_10 = 0x00000001,
-    DevProp_PciExpressDevice_Spec_Version_11 = 0x00000002,
+    DevProp_PciExpressDevice_Spec_Version_10 = 0x00000001U,
+    DevProp_PciExpressDevice_Spec_Version_11 = 0x00000002U,
 }
+
 alias DEVPROP_PCIDEVICE_INTERRUPTTYPE = uint;
 enum : uint
 {
-    DevProp_PciDevice_InterruptType_LineBased = 0x00000001,
-    DevProp_PciDevice_InterruptType_Msi       = 0x00000002,
-    DevProp_PciDevice_InterruptType_MsiX      = 0x00000004,
+    DevProp_PciDevice_InterruptType_LineBased = 0x00000001U,
+    DevProp_PciDevice_InterruptType_Msi       = 0x00000002U,
+    DevProp_PciDevice_InterruptType_MsiX      = 0x00000004U,
 }
+
 alias DEVPROP_PCIDEVICE_SRIOVSUPPORT = uint;
 enum : uint
 {
-    DevProp_PciDevice_SriovSupport_Ok                 = 0x00000000,
-    DevProp_PciDevice_SriovSupport_MissingAcs         = 0x00000001,
-    DevProp_PciDevice_SriovSupport_MissingPfDriver    = 0x00000002,
-    DevProp_PciDevice_SriovSupport_NoBusResource      = 0x00000003,
-    DevProp_PciDevice_SriovSupport_DidntGetVfBarSpace = 0x00000004,
+    DevProp_PciDevice_SriovSupport_Ok                 = 0x00000000U,
+    DevProp_PciDevice_SriovSupport_MissingAcs         = 0x00000001U,
+    DevProp_PciDevice_SriovSupport_MissingPfDriver    = 0x00000002U,
+    DevProp_PciDevice_SriovSupport_NoBusResource      = 0x00000003U,
+    DevProp_PciDevice_SriovSupport_DidntGetVfBarSpace = 0x00000004U,
 }
+
 alias DEVPROP_PCIDEVICE_ACSSUPPORT = uint;
 enum : uint
 {
-    DevProp_PciDevice_AcsSupport_Present   = 0x00000000,
-    DevProp_PciDevice_AcsSupport_NotNeeded = 0x00000001,
-    DevProp_PciDevice_AcsSupport_Missing   = 0x00000002,
+    DevProp_PciDevice_AcsSupport_Present   = 0x00000000U,
+    DevProp_PciDevice_AcsSupport_NotNeeded = 0x00000001U,
+    DevProp_PciDevice_AcsSupport_Missing   = 0x00000002U,
 }
+
 alias DEVPROP_PCIDEVICE_ACSCOMPATIBLEUPHIERARCHY = uint;
 enum : uint
 {
-    DevProp_PciDevice_AcsCompatibleUpHierarchy_NotSupported            = 0x00000000,
-    DevProp_PciDevice_AcsCompatibleUpHierarchy_SingleFunctionSupported = 0x00000001,
-    DevProp_PciDevice_AcsCompatibleUpHierarchy_NoP2PSupported          = 0x00000002,
-    DevProp_PciDevice_AcsCompatibleUpHierarchy_Supported               = 0x00000003,
-    DevProp_PciDevice_AcsCompatibleUpHierarchy_Enhanced                = 0x00000004,
+    DevProp_PciDevice_AcsCompatibleUpHierarchy_NotSupported            = 0x00000000U,
+    DevProp_PciDevice_AcsCompatibleUpHierarchy_SingleFunctionSupported = 0x00000001U,
+    DevProp_PciDevice_AcsCompatibleUpHierarchy_NoP2PSupported          = 0x00000002U,
+    DevProp_PciDevice_AcsCompatibleUpHierarchy_Supported               = 0x00000003U,
+    DevProp_PciDevice_AcsCompatibleUpHierarchy_Enhanced                = 0x00000004U,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/NativeWiFi/dot11-bss-type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/NativeWiFi/dot11-bss-type
 alias DOT11_BSS_TYPE = int;
 enum : int
 {
@@ -193,7 +211,8 @@ enum : int
     dot11_BSS_type_independent    = 0x00000002,
     dot11_BSS_type_any            = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/NativeWiFi/dot11-auth-algorithm))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/NativeWiFi/dot11-auth-algorithm
 alias DOT11_AUTH_ALGORITHM = int;
 enum : int
 {
@@ -212,7 +231,8 @@ enum : int
     DOT11_AUTH_ALGO_IHV_START        = 0x80000000,
     DOT11_AUTH_ALGO_IHV_END          = 0xffffffff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/NativeWiFi/dot11-cipher-algorithm))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/NativeWiFi/dot11-cipher-algorithm
 alias DOT11_CIPHER_ALGORITHM = int;
 enum : int
 {
@@ -234,7 +254,8 @@ enum : int
     DOT11_CIPHER_ALGO_IHV_START     = 0x80000000,
     DOT11_CIPHER_ALGO_IHV_END       = 0xffffffff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/NativeWiFi/dot11-phy-type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/NativeWiFi/dot11-phy-type
 alias DOT11_PHY_TYPE = int;
 enum : int
 {
@@ -254,6 +275,7 @@ enum : int
     dot11_phy_type_IHV_start  = 0x80000000,
     dot11_phy_type_IHV_end    = 0xffffffff,
 }
+
 alias RSNA_AKM_SUITE = int;
 enum : int
 {
@@ -284,6 +306,7 @@ enum : int
     rsna_akm_ft_sae_pmk384        = 0x19ac0f00,
     rsna_akm_max                  = 0x19ac0f00,
 }
+
 alias WPA_AKM_SUITE = int;
 enum : int
 {
@@ -292,6 +315,7 @@ enum : int
     wpa_akm_psk  = 0x02f25000,
     wpa_akm_max  = 0x02f25000,
 }
+
 alias RSNA_CIPHER_SUITE = int;
 enum : int
 {
@@ -311,6 +335,7 @@ enum : int
     rsna_cipher_bip_cmac_256     = 0x0dac0f00,
     rsna_cipher_max              = 0x0dac0f00,
 }
+
 alias WPA_CIPHER_SUITE = int;
 enum : int
 {
@@ -322,12 +347,14 @@ enum : int
     wpa_cipher_bip_cmac_128 = 0x06f25000,
     wpa_cipher_max          = 0x06f25000,
 }
+
 alias DOT11_OFFLOAD_TYPE = int;
 enum : int
 {
     dot11_offload_type_wep  = 0x00000001,
     dot11_offload_type_auth = 0x00000002,
 }
+
 alias DOT11_KEY_DIRECTION = int;
 enum : int
 {
@@ -335,6 +362,7 @@ enum : int
     dot11_key_direction_inbound  = 0x00000002,
     dot11_key_direction_outbound = 0x00000003,
 }
+
 alias DOT11_SCAN_TYPE = int;
 enum : int
 {
@@ -343,6 +371,7 @@ enum : int
     dot11_scan_type_auto    = 0x00000003,
     dot11_scan_type_forced  = 0x80000000,
 }
+
 alias CH_DESCRIPTION_TYPE = int;
 enum : int
 {
@@ -350,12 +379,14 @@ enum : int
     ch_description_type_center_frequency = 0x00000002,
     ch_description_type_phy_specific     = 0x00000003,
 }
+
 alias DOT11_UPDATE_IE_OP = int;
 enum : int
 {
     dot11_update_ie_op_create_replace = 0x00000001,
     dot11_update_ie_op_delete         = 0x00000002,
 }
+
 alias DOT11_RESET_TYPE = int;
 enum : int
 {
@@ -363,6 +394,7 @@ enum : int
     dot11_reset_type_mac         = 0x00000002,
     dot11_reset_type_phy_and_mac = 0x00000003,
 }
+
 alias DOT11_POWER_MODE = int;
 enum : int
 {
@@ -370,6 +402,7 @@ enum : int
     dot11_power_mode_active    = 0x00000001,
     dot11_power_mode_powersave = 0x00000002,
 }
+
 alias DOT11_TEMP_TYPE = int;
 enum : int
 {
@@ -377,6 +410,7 @@ enum : int
     dot11_temp_type_1       = 0x00000001,
     dot11_temp_type_2       = 0x00000002,
 }
+
 alias DOT11_DIVERSITY_SUPPORT = int;
 enum : int
 {
@@ -385,6 +419,7 @@ enum : int
     dot11_diversity_support_notsupported = 0x00000002,
     dot11_diversity_support_dynamic      = 0x00000003,
 }
+
 alias DOT11_HOP_ALGO_ADOPTED = int;
 enum : int
 {
@@ -392,6 +427,7 @@ enum : int
     dot11_hop_algo_hop_index = 0x00000001,
     dot11_hop_algo_hcc       = 0x00000002,
 }
+
 alias DOT11_AC_PARAM = int;
 enum : int
 {
@@ -401,6 +437,7 @@ enum : int
     dot11_AC_param_VO  = 0x00000003,
     dot11_AC_param_max = 0x00000004,
 }
+
 alias DOT11_DIRECTION = int;
 enum : int
 {
@@ -408,6 +445,7 @@ enum : int
     DOT11_DIR_OUTBOUND = 0x00000002,
     DOT11_DIR_BOTH     = 0x00000003,
 }
+
 alias DOT11_ASSOCIATION_STATE = int;
 enum : int
 {
@@ -416,6 +454,7 @@ enum : int
     dot11_assoc_state_auth_unassoc   = 0x00000002,
     dot11_assoc_state_auth_assoc     = 0x00000003,
 }
+
 alias DOT11_DS_INFO = int;
 enum : int
 {
@@ -423,6 +462,7 @@ enum : int
     DOT11_DS_UNCHANGED = 0x00000001,
     DOT11_DS_UNKNOWN   = 0x00000002,
 }
+
 alias DOT11_WPS_CONFIG_METHOD = int;
 enum : int
 {
@@ -434,6 +474,7 @@ enum : int
     DOT11_WPS_CONFIG_METHOD_KEYPAD        = 0x00000100,
     DOT11_WPS_CONFIG_METHOD_WFDS_DEFAULT  = 0x00001000,
 }
+
 alias DOT11_WPS_DEVICE_PASSWORD_ID = int;
 enum : int
 {
@@ -448,6 +489,7 @@ enum : int
     DOT11_WPS_PASSWORD_ID_OOB_RANGE_MIN           = 0x00000010,
     DOT11_WPS_PASSWORD_ID_OOB_RANGE_MAX           = 0x0000ffff,
 }
+
 alias DOT11_ANQP_QUERY_RESULT = int;
 enum : int
 {
@@ -460,6 +502,7 @@ enum : int
     dot11_ANQP_query_result_advertisement_server_not_responding            = 0x00000006,
     dot11_ANQP_query_result_access_issues                                  = 0x00000007,
 }
+
 alias DOT11_WFD_DISCOVER_TYPE = int;
 enum : int
 {
@@ -469,6 +512,7 @@ enum : int
     dot11_wfd_discover_type_scan_social_channels = 0x00000004,
     dot11_wfd_discover_type_forced               = 0x80000000,
 }
+
 alias DOT11_WFD_SCAN_TYPE = int;
 enum : int
 {
@@ -476,6 +520,7 @@ enum : int
     dot11_wfd_scan_type_passive = 0x00000002,
     dot11_wfd_scan_type_auto    = 0x00000003,
 }
+
 alias DOT11_POWER_MODE_REASON = int;
 enum : int
 {
@@ -486,6 +531,7 @@ enum : int
     dot11_power_mode_reason_compliant_WFD_device = 0x00000004,
     dot11_power_mode_reason_others               = 0x00000005,
 }
+
 alias DOT11_MANUFACTURING_TEST_TYPE = int;
 enum : int
 {
@@ -502,6 +548,7 @@ enum : int
     dot11_manufacturing_test_IHV_start         = 0x80000000,
     dot11_manufacturing_test_IHV_end           = 0xffffffff,
 }
+
 alias DOT11_MANUFACTURING_SELF_TEST_TYPE = int;
 enum : int
 {
@@ -509,6 +556,7 @@ enum : int
     DOT11_MANUFACTURING_SELF_TEST_TYPE_RF_INTERFACE   = 0x00000002,
     DOT11_MANUFACTURING_SELF_TEST_TYPE_BT_COEXISTENCE = 0x00000003,
 }
+
 alias DOT11_BAND = int;
 enum : int
 {
@@ -516,6 +564,7 @@ enum : int
     dot11_band_4p9g = 0x00000002,
     dot11_band_5g   = 0x00000003,
 }
+
 alias DOT11_MANUFACTURING_CALLBACK_TYPE = int;
 enum : int
 {
@@ -525,7 +574,8 @@ enum : int
     dot11_manufacturing_callback_IHV_start          = 0x80000000,
     dot11_manufacturing_callback_IHV_end            = 0xffffffff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-wlan_connection_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-wlan_connection_mode
 alias WLAN_CONNECTION_MODE = int;
 enum : int
 {
@@ -536,7 +586,8 @@ enum : int
     wlan_connection_mode_auto               = 0x00000004,
     wlan_connection_mode_invalid            = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-wlan_interface_state~r1))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-wlan_interface_state~r1
 alias WLAN_INTERFACE_STATE = int;
 enum : int
 {
@@ -549,14 +600,16 @@ enum : int
     wlan_interface_state_discovering           = 0x00000006,
     wlan_interface_state_authenticating        = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-wlan_adhoc_network_state~r1))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-wlan_adhoc_network_state~r1
 alias WLAN_ADHOC_NETWORK_STATE = int;
 enum : int
 {
     wlan_adhoc_network_state_formed    = 0x00000000,
     wlan_adhoc_network_state_connected = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-dot11_radio_state~r1))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-dot11_radio_state~r1
 alias DOT11_RADIO_STATE = int;
 enum : int
 {
@@ -564,6 +617,7 @@ enum : int
     dot11_radio_state_on      = 0x00000001,
     dot11_radio_state_off     = 0x00000002,
 }
+
 alias WLAN_OPERATIONAL_STATE = int;
 enum : int
 {
@@ -573,7 +627,8 @@ enum : int
     wlan_operational_state_going_off = 0x00000003,
     wlan_operational_state_going_on  = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-wlan_interface_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-wlan_interface_type
 alias WLAN_INTERFACE_TYPE = int;
 enum : int
 {
@@ -581,7 +636,8 @@ enum : int
     wlan_interface_type_native_802_11   = 0x00000001,
     wlan_interface_type_invalid         = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-wlan_power_setting~r1))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-wlan_power_setting~r1
 alias WLAN_POWER_SETTING = int;
 enum : int
 {
@@ -591,7 +647,8 @@ enum : int
     wlan_power_setting_maximum_saving = 0x00000003,
     wlan_power_setting_invalid        = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-wlan_notification_acm~r1))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-wlan_notification_acm~r1
 alias WLAN_NOTIFICATION_ACM = int;
 enum : int
 {
@@ -625,7 +682,8 @@ enum : int
     wlan_notification_acm_operational_state_change   = 0x0000001b,
     wlan_notification_acm_end                        = 0x0000001c,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-wlan_notification_msm~r1))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-wlan_notification_msm~r1
 alias WLAN_NOTIFICATION_MSM = int;
 enum : int
 {
@@ -648,13 +706,15 @@ enum : int
     wlan_notification_msm_link_improved                 = 0x00000010,
     wlan_notification_msm_end                           = 0x00000011,
 }
+
 alias WLAN_NOTIFICATION_SECURITY = int;
 enum : int
 {
     wlan_notification_security_start = 0x00000000,
     wlan_notification_security_end   = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-wlan_opcode_value_type~r1))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-wlan_opcode_value_type~r1
 alias WLAN_OPCODE_VALUE_TYPE = int;
 enum : int
 {
@@ -663,7 +723,8 @@ enum : int
     wlan_opcode_value_type_set_by_user         = 0x00000002,
     wlan_opcode_value_type_invalid             = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-wlan_intf_opcode~r1))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-wlan_intf_opcode~r1
 alias WLAN_INTF_OPCODE = int;
 enum : int
 {
@@ -698,7 +759,8 @@ enum : int
     wlan_intf_opcode_ihv_start                                  = 0x30000000,
     wlan_intf_opcode_ihv_end                                    = 0x3fffffff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-wlan_autoconf_opcode~r1))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-wlan_autoconf_opcode~r1
 alias WLAN_AUTOCONF_OPCODE = int;
 enum : int
 {
@@ -711,14 +773,16 @@ enum : int
     wlan_autoconf_opcode_allow_virtual_station_extensibility       = 0x00000006,
     wlan_autoconf_opcode_end                                       = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-wlan_ihv_control_type~r1))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-wlan_ihv_control_type~r1
 alias WLAN_IHV_CONTROL_TYPE = int;
 enum : int
 {
     wlan_ihv_control_type_service = 0x00000000,
     wlan_ihv_control_type_driver  = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-wlan_filter_list_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-wlan_filter_list_type
 alias WLAN_FILTER_LIST_TYPE = int;
 enum : int
 {
@@ -727,7 +791,8 @@ enum : int
     wlan_filter_list_type_user_permit = 0x00000002,
     wlan_filter_list_type_user_deny   = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-wlan_securable_object))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-wlan_securable_object
 alias WLAN_SECURABLE_OBJECT = int;
 enum : int
 {
@@ -750,6 +815,7 @@ enum : int
     wlan_secure_wfd_elevated_access            = 0x00000010,
     WLAN_SECURABLE_OBJECT_COUNT                = 0x00000011,
 }
+
 alias WFD_ROLE_TYPE = int;
 enum : int
 {
@@ -759,7 +825,8 @@ enum : int
     WFD_ROLE_TYPE_CLIENT      = 0x00000004,
     WFD_ROLE_TYPE_MAX         = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-wl_display_pages))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-wl_display_pages
 alias WL_DISPLAY_PAGES = int;
 enum : int
 {
@@ -767,7 +834,8 @@ enum : int
     WLSecurityPage   = 0x00000001,
     WLAdvPage        = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-wlan_hosted_network_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-wlan_hosted_network_state
 alias WLAN_HOSTED_NETWORK_STATE = int;
 enum : int
 {
@@ -775,7 +843,8 @@ enum : int
     wlan_hosted_network_idle        = 0x00000001,
     wlan_hosted_network_active      = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-wlan_hosted_network_reason))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-wlan_hosted_network_reason
 alias WLAN_HOSTED_NETWORK_REASON = int;
 enum : int
 {
@@ -809,14 +878,16 @@ enum : int
     wlan_hosted_network_reason_virtual_station_blocking_use         = 0x0000001b,
     wlan_hosted_network_reason_service_available_on_virtual_station = 0x0000001c,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-wlan_hosted_network_peer_auth_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-wlan_hosted_network_peer_auth_state
 alias WLAN_HOSTED_NETWORK_PEER_AUTH_STATE = int;
 enum : int
 {
     wlan_hosted_network_peer_state_invalid       = 0x00000000,
     wlan_hosted_network_peer_state_authenticated = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-wlan_hosted_network_notification_code))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-wlan_hosted_network_notification_code
 alias WLAN_HOSTED_NETWORK_NOTIFICATION_CODE = int;
 enum : int
 {
@@ -824,7 +895,8 @@ enum : int
     wlan_hosted_network_peer_state_change  = 0x00001001,
     wlan_hosted_network_radio_state_change = 0x00001002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-wlan_hosted_network_opcode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ne-wlanapi-wlan_hosted_network_opcode
 alias WLAN_HOSTED_NETWORK_OPCODE = int;
 enum : int
 {
@@ -833,7 +905,8 @@ enum : int
     wlan_hosted_network_opcode_station_profile     = 0x00000002,
     wlan_hosted_network_opcode_enable              = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dot1x/ne-dot1x-onex_auth_identity))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dot1x/ne-dot1x-onex_auth_identity
 alias ONEX_AUTH_IDENTITY = int;
 enum : int
 {
@@ -844,7 +917,8 @@ enum : int
     OneXAuthIdentityGuest        = 0x00000004,
     OneXAuthIdentityInvalid      = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dot1x/ne-dot1x-onex_auth_status))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dot1x/ne-dot1x-onex_auth_status
 alias ONEX_AUTH_STATUS = int;
 enum : int
 {
@@ -855,7 +929,8 @@ enum : int
     OneXAuthFailure              = 0x00000004,
     OneXAuthInvalid              = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dot1x/ne-dot1x-onex_reason_code))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dot1x/ne-dot1x-onex_reason_code
 alias ONEX_REASON_CODE = int;
 enum : int
 {
@@ -882,7 +957,8 @@ enum : int
     ONEX_PROFILE_EXPIRED_EXPLICIT_CREDENTIALS      = 0x00050013,
     ONEX_UI_NOT_PERMITTED                          = 0x00050014,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dot1x/ne-dot1x-onex_notification_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dot1x/ne-dot1x-onex_notification_type
 alias ONEX_NOTIFICATION_TYPE = int;
 enum : int
 {
@@ -892,7 +968,8 @@ enum : int
     OneXNotificationTypeEventInvalid  = 0x00000003,
     OneXNumNotifications              = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dot1x/ne-dot1x-onex_auth_restart_reason))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dot1x/ne-dot1x-onex_auth_restart_reason
 alias ONEX_AUTH_RESTART_REASON = int;
 enum : int
 {
@@ -906,7 +983,8 @@ enum : int
     OneXRestartReasonAltCredsTrial            = 0x00000007,
     OneXRestartReasonInvalid                  = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dot1x/ne-dot1x-onex_eap_method_backend_support))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dot1x/ne-dot1x-onex_eap_method_backend_support
 alias ONEX_EAP_METHOD_BACKEND_SUPPORT = int;
 enum : int
 {
@@ -914,7 +992,8 @@ enum : int
     OneXEapMethodBackendSupported      = 0x00000001,
     OneXEapMethodBackendUnsupported    = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/ne-adhoc-dot11_adhoc_cipher_algorithm))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/ne-adhoc-dot11_adhoc_cipher_algorithm
 alias DOT11_ADHOC_CIPHER_ALGORITHM = int;
 enum : int
 {
@@ -923,7 +1002,8 @@ enum : int
     DOT11_ADHOC_CIPHER_ALGO_CCMP    = 0x00000004,
     DOT11_ADHOC_CIPHER_ALGO_WEP     = 0x00000101,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/ne-adhoc-dot11_adhoc_auth_algorithm))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/ne-adhoc-dot11_adhoc_auth_algorithm
 alias DOT11_ADHOC_AUTH_ALGORITHM = int;
 enum : int
 {
@@ -931,7 +1011,8 @@ enum : int
     DOT11_ADHOC_AUTH_ALGO_80211_OPEN = 0x00000001,
     DOT11_ADHOC_AUTH_ALGO_RSNA_PSK   = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/ne-adhoc-dot11_adhoc_network_connection_status))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/ne-adhoc-dot11_adhoc_network_connection_status
 alias DOT11_ADHOC_NETWORK_CONNECTION_STATUS = int;
 enum : int
 {
@@ -941,7 +1022,8 @@ enum : int
     DOT11_ADHOC_NETWORK_CONNECTION_STATUS_CONNECTED    = 0x0000000d,
     DOT11_ADHOC_NETWORK_CONNECTION_STATUS_FORMED       = 0x0000000e,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/ne-adhoc-dot11_adhoc_connect_fail_reason))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/ne-adhoc-dot11_adhoc_connect_fail_reason
 alias DOT11_ADHOC_CONNECT_FAIL_REASON = int;
 enum : int
 {
@@ -949,6 +1031,7 @@ enum : int
     DOT11_ADHOC_CONNECT_FAIL_PASSPHRASE_MISMATCH = 0x00000001,
     DOT11_ADHOC_CONNECT_FAIL_OTHER               = 0x00000002,
 }
+
 alias DOT11EXT_IHV_CONNECTION_PHASE = int;
 enum : int
 {
@@ -956,6 +1039,7 @@ enum : int
     connection_phase_initial_connection = 0x00000001,
     connection_phase_post_l3_connection = 0x00000002,
 }
+
 alias DOT11_MSONEX_RESULT = int;
 enum : int
 {
@@ -963,6 +1047,7 @@ enum : int
     DOT11_MSONEX_FAILURE     = 0x00000001,
     DOT11_MSONEX_IN_PROGRESS = 0x00000002,
 }
+
 alias DOT11EXT_IHV_INDICATION_TYPE = int;
 enum : int
 {
@@ -978,885 +1063,885 @@ enum : int
 
 enum : uint
 {
-    L2_REASON_CODE_DOT11_AC_BASE       = 0x00020000,
-    L2_REASON_CODE_DOT11_MSM_BASE      = 0x00030000,
-    L2_REASON_CODE_DOT11_SECURITY_BASE = 0x00040000,
-    L2_REASON_CODE_ONEX_BASE           = 0x00050000,
-    L2_REASON_CODE_DOT3_AC_BASE        = 0x00060000,
-    L2_REASON_CODE_DOT3_MSM_BASE       = 0x00070000,
-    L2_REASON_CODE_PROFILE_BASE        = 0x00080000,
-    L2_REASON_CODE_IHV_BASE            = 0x00090000,
-    L2_REASON_CODE_WIMAX_BASE          = 0x000a0000,
-    L2_REASON_CODE_RESERVED_BASE       = 0x000b0000,
+    L2_REASON_CODE_DOT11_AC_BASE       = 0x00020000U,
+    L2_REASON_CODE_DOT11_MSM_BASE      = 0x00030000U,
+    L2_REASON_CODE_DOT11_SECURITY_BASE = 0x00040000U,
+    L2_REASON_CODE_ONEX_BASE           = 0x00050000U,
+    L2_REASON_CODE_DOT3_AC_BASE        = 0x00060000U,
+    L2_REASON_CODE_DOT3_MSM_BASE       = 0x00070000U,
+    L2_REASON_CODE_PROFILE_BASE        = 0x00080000U,
+    L2_REASON_CODE_IHV_BASE            = 0x00090000U,
+    L2_REASON_CODE_WIMAX_BASE          = 0x000a0000U,
+    L2_REASON_CODE_RESERVED_BASE       = 0x000b0000U,
 }
 
 enum : uint
 {
-    WLAN_REASON_CODE_SUCCESS              = 0x00000000,
-    WLAN_REASON_CODE_UNKNOWN              = 0x00010001,
-    WLAN_REASON_CODE_RANGE_SIZE           = 0x00010000,
-    WLAN_REASON_CODE_BASE                 = 0x00020000,
-    WLAN_REASON_CODE_AC_BASE              = 0x00020000,
-    WLAN_REASON_CODE_AC_CONNECT_BASE      = 0x00028000,
-    WLAN_REASON_CODE_AC_END               = 0x0002ffff,
-    WLAN_REASON_CODE_PROFILE_BASE         = 0x00080000,
-    WLAN_REASON_CODE_PROFILE_CONNECT_BASE = 0x00088000,
-    WLAN_REASON_CODE_PROFILE_END          = 0x0008ffff,
-    WLAN_REASON_CODE_MSM_BASE             = 0x00030000,
-    WLAN_REASON_CODE_MSM_CONNECT_BASE     = 0x00038000,
-    WLAN_REASON_CODE_MSM_END              = 0x0003ffff,
-    WLAN_REASON_CODE_MSMSEC_BASE          = 0x00040000,
-    WLAN_REASON_CODE_MSMSEC_CONNECT_BASE  = 0x00048000,
-    WLAN_REASON_CODE_MSMSEC_END           = 0x0004ffff,
-    WLAN_REASON_CODE_RESERVED_BASE        = 0x000b0000,
-    WLAN_REASON_CODE_RESERVED_END         = 0x000bffff,
+    WLAN_REASON_CODE_SUCCESS              = 0x00000000U,
+    WLAN_REASON_CODE_UNKNOWN              = 0x00010001U,
+    WLAN_REASON_CODE_RANGE_SIZE           = 0x00010000U,
+    WLAN_REASON_CODE_BASE                 = 0x00020000U,
+    WLAN_REASON_CODE_AC_BASE              = 0x00020000U,
+    WLAN_REASON_CODE_AC_CONNECT_BASE      = 0x00028000U,
+    WLAN_REASON_CODE_AC_END               = 0x0002ffffU,
+    WLAN_REASON_CODE_PROFILE_BASE         = 0x00080000U,
+    WLAN_REASON_CODE_PROFILE_CONNECT_BASE = 0x00088000U,
+    WLAN_REASON_CODE_PROFILE_END          = 0x0008ffffU,
+    WLAN_REASON_CODE_MSM_BASE             = 0x00030000U,
+    WLAN_REASON_CODE_MSM_CONNECT_BASE     = 0x00038000U,
+    WLAN_REASON_CODE_MSM_END              = 0x0003ffffU,
+    WLAN_REASON_CODE_MSMSEC_BASE          = 0x00040000U,
+    WLAN_REASON_CODE_MSMSEC_CONNECT_BASE  = 0x00048000U,
+    WLAN_REASON_CODE_MSMSEC_END           = 0x0004ffffU,
+    WLAN_REASON_CODE_RESERVED_BASE        = 0x000b0000U,
+    WLAN_REASON_CODE_RESERVED_END         = 0x000bffffU,
 }
 
-enum uint L2_PROFILE_MAX_NAME_LENGTH = 0x00000100;
+enum uint L2_PROFILE_MAX_NAME_LENGTH = 0x00000100U;
 
 enum : uint
 {
-    L2_NOTIFICATION_SOURCE_NONE                = 0x00000000,
-    L2_NOTIFICATION_SOURCE_DOT3_AUTO_CONFIG    = 0x00000001,
-    L2_NOTIFICATION_SOURCE_SECURITY            = 0x00000002,
-    L2_NOTIFICATION_SOURCE_ONEX                = 0x00000004,
-    L2_NOTIFICATION_SOURCE_WLAN_ACM            = 0x00000008,
-    L2_NOTIFICATION_SOURCE_WLAN_MSM            = 0x00000010,
-    L2_NOTIFICATION_SOURCE_WLAN_SECURITY       = 0x00000020,
-    L2_NOTIFICATION_SOURCE_WLAN_IHV            = 0x00000040,
-    L2_NOTIFICATION_SOURCE_WLAN_HNWK           = 0x00000080,
-    L2_NOTIFICATION_SOURCE_WCM                 = 0x00000100,
-    L2_NOTIFICATION_SOURCE_WCM_CSP             = 0x00000200,
-    L2_NOTIFICATION_SOURCE_WFD                 = 0x00000400,
-    L2_NOTIFICATION_SOURCE_WLAN_DEVICE_SERVICE = 0x00000800,
-    L2_NOTIFICATION_SOURCE_ALL                 = 0x0000ffff,
-    L2_NOTIFICATION_CODE_PUBLIC_BEGIN          = 0x00000000,
-    L2_NOTIFICATION_CODE_GROUP_SIZE            = 0x00001000,
+    L2_NOTIFICATION_SOURCE_NONE                = 0x00000000U,
+    L2_NOTIFICATION_SOURCE_DOT3_AUTO_CONFIG    = 0x00000001U,
+    L2_NOTIFICATION_SOURCE_SECURITY            = 0x00000002U,
+    L2_NOTIFICATION_SOURCE_ONEX                = 0x00000004U,
+    L2_NOTIFICATION_SOURCE_WLAN_ACM            = 0x00000008U,
+    L2_NOTIFICATION_SOURCE_WLAN_MSM            = 0x00000010U,
+    L2_NOTIFICATION_SOURCE_WLAN_SECURITY       = 0x00000020U,
+    L2_NOTIFICATION_SOURCE_WLAN_IHV            = 0x00000040U,
+    L2_NOTIFICATION_SOURCE_WLAN_HNWK           = 0x00000080U,
+    L2_NOTIFICATION_SOURCE_WCM                 = 0x00000100U,
+    L2_NOTIFICATION_SOURCE_WCM_CSP             = 0x00000200U,
+    L2_NOTIFICATION_SOURCE_WFD                 = 0x00000400U,
+    L2_NOTIFICATION_SOURCE_WLAN_DEVICE_SERVICE = 0x00000800U,
+    L2_NOTIFICATION_SOURCE_ALL                 = 0x0000ffffU,
+    L2_NOTIFICATION_CODE_PUBLIC_BEGIN          = 0x00000000U,
+    L2_NOTIFICATION_CODE_GROUP_SIZE            = 0x00001000U,
 }
 
 enum : uint
 {
-    L2_REASON_CODE_GROUP_SIZE      = 0x00010000,
-    L2_REASON_CODE_GEN_BASE        = 0x00010000,
-    L2_REASON_CODE_SUCCESS         = 0x00000000,
-    L2_REASON_CODE_UNKNOWN         = 0x00010001,
-    L2_REASON_CODE_PROFILE_MISSING = 0x00000001,
+    L2_REASON_CODE_GROUP_SIZE      = 0x00010000U,
+    L2_REASON_CODE_GEN_BASE        = 0x00010000U,
+    L2_REASON_CODE_SUCCESS         = 0x00000000U,
+    L2_REASON_CODE_UNKNOWN         = 0x00010001U,
+    L2_REASON_CODE_PROFILE_MISSING = 0x00000001U,
 }
 
-enum uint DOT11_BSSID_LIST_REVISION_1 = 0x00000001;
-enum uint DOT11_HESSID_LENGTH = 0x00000006;
-enum uint RSNA_OUI_PREFIX = 0x00ac0f00;
-enum uint WPA_OUI_PREFIX = 0x00f25000;
-enum uint DOT11_RATE_SET_MAX_LENGTH = 0x0000007e;
-enum uint DOT11_WFD_SERVICE_NAME_MAX_LENGTH = 0x000000ff;
-enum uint DOT11_WFD_APS2_SERVICE_TYPE_MAX_LENGTH = 0x00000015;
-enum uint DOT11_WFD_ASP2_INSTANCE_NAME_MAX_LENGTH = 0x0000003f;
-enum uint DOT11_WFD_SERVICE_INFORMATION_MAX_LENGTH = 0x0000ffff;
-enum uint DOT11_MAX_REQUESTED_SERVICE_INFORMATION_LENGTH = 0x000000ff;
-enum uint DOT11_WFD_SESSION_INFO_MAX_LENGTH = 0x00000090;
+enum uint DOT11_BSSID_LIST_REVISION_1 = 0x00000001U;
+enum uint DOT11_HESSID_LENGTH = 0x00000006U;
+enum uint RSNA_OUI_PREFIX = 0x00ac0f00U;
+enum uint WPA_OUI_PREFIX = 0x00f25000U;
+enum uint DOT11_RATE_SET_MAX_LENGTH = 0x0000007eU;
+enum uint DOT11_WFD_SERVICE_NAME_MAX_LENGTH = 0x000000ffU;
+enum uint DOT11_WFD_APS2_SERVICE_TYPE_MAX_LENGTH = 0x00000015U;
+enum uint DOT11_WFD_ASP2_INSTANCE_NAME_MAX_LENGTH = 0x0000003fU;
+enum uint DOT11_WFD_SERVICE_INFORMATION_MAX_LENGTH = 0x0000ffffU;
+enum uint DOT11_MAX_REQUESTED_SERVICE_INFORMATION_LENGTH = 0x000000ffU;
+enum uint DOT11_WFD_SESSION_INFO_MAX_LENGTH = 0x00000090U;
 
 enum : uint
 {
-    NDIS_PACKET_TYPE_802_11_DIRECTED_DATA      = 0x00000001,
-    NDIS_PACKET_TYPE_802_11_BROADCAST_DATA     = 0x00000008,
-    NDIS_PACKET_TYPE_802_11_MULTICAST_DATA     = 0x00000002,
-    NDIS_PACKET_TYPE_802_11_ALL_MULTICAST_DATA = 0x00000004,
-    NDIS_PACKET_TYPE_802_11_PROMISCUOUS_DATA   = 0x00000020,
+    NDIS_PACKET_TYPE_802_11_DIRECTED_DATA      = 0x00000001U,
+    NDIS_PACKET_TYPE_802_11_BROADCAST_DATA     = 0x00000008U,
+    NDIS_PACKET_TYPE_802_11_MULTICAST_DATA     = 0x00000002U,
+    NDIS_PACKET_TYPE_802_11_ALL_MULTICAST_DATA = 0x00000004U,
+    NDIS_PACKET_TYPE_802_11_PROMISCUOUS_DATA   = 0x00000020U,
 }
 
-enum uint DOT11_MAX_PDU_SIZE = 0x0000092a;
-enum uint DOT11_MIN_PDU_SIZE = 0x00000100;
+enum uint DOT11_MAX_PDU_SIZE = 0x0000092aU;
+enum uint DOT11_MIN_PDU_SIZE = 0x00000100U;
 
 enum : uint
 {
-    DOT11_MAX_NUM_DEFAULT_KEY     = 0x00000004,
-    DOT11_MAX_NUM_DEFAULT_KEY_MFP = 0x00000006,
+    DOT11_MAX_NUM_DEFAULT_KEY     = 0x00000004U,
+    DOT11_MAX_NUM_DEFAULT_KEY_MFP = 0x00000006U,
 }
 
 enum : uint
 {
-    OID_DOT11_NDIS_START         = 0x0d010300,
-    OID_DOT11_OFFLOAD_CAPABILITY = 0x0d010300,
+    OID_DOT11_NDIS_START         = 0x0d010300U,
+    OID_DOT11_OFFLOAD_CAPABILITY = 0x0d010300U,
 }
 
 enum : uint
 {
-    DOT11_HW_WEP_SUPPORTED_TX = 0x00000001,
-    DOT11_HW_WEP_SUPPORTED_RX = 0x00000002,
+    DOT11_HW_WEP_SUPPORTED_TX = 0x00000001U,
+    DOT11_HW_WEP_SUPPORTED_RX = 0x00000002U,
 }
 
-enum uint DOT11_HW_FRAGMENTATION_SUPPORTED = 0x00000004;
-enum uint DOT11_HW_DEFRAGMENTATION_SUPPORTED = 0x00000008;
+enum uint DOT11_HW_FRAGMENTATION_SUPPORTED = 0x00000004U;
+enum uint DOT11_HW_DEFRAGMENTATION_SUPPORTED = 0x00000008U;
 
 enum : uint
 {
-    DOT11_HW_MSDU_AUTH_SUPPORTED_TX = 0x00000010,
-    DOT11_HW_MSDU_AUTH_SUPPORTED_RX = 0x00000020,
+    DOT11_HW_MSDU_AUTH_SUPPORTED_TX = 0x00000010U,
+    DOT11_HW_MSDU_AUTH_SUPPORTED_RX = 0x00000020U,
 }
 
 enum : uint
 {
-    DOT11_CONF_ALGO_WEP_RC4 = 0x00000001,
-    DOT11_CONF_ALGO_TKIP    = 0x00000002,
+    DOT11_CONF_ALGO_WEP_RC4 = 0x00000001U,
+    DOT11_CONF_ALGO_TKIP    = 0x00000002U,
 }
 
-enum uint DOT11_AUTH_ALGO_MICHAEL = 0x00000001;
-enum uint OID_DOT11_CURRENT_OFFLOAD_CAPABILITY = 0x0d010301;
+enum uint DOT11_AUTH_ALGO_MICHAEL = 0x00000001U;
+enum uint OID_DOT11_CURRENT_OFFLOAD_CAPABILITY = 0x0d010301U;
 
 enum : uint
 {
-    OID_DOT11_WEP_OFFLOAD         = 0x0d010302,
-    OID_DOT11_WEP_UPLOAD          = 0x0d010303,
-    OID_DOT11_DEFAULT_WEP_OFFLOAD = 0x0d010304,
-    OID_DOT11_DEFAULT_WEP_UPLOAD  = 0x0d010305,
+    OID_DOT11_WEP_OFFLOAD         = 0x0d010302U,
+    OID_DOT11_WEP_UPLOAD          = 0x0d010303U,
+    OID_DOT11_DEFAULT_WEP_OFFLOAD = 0x0d010304U,
+    OID_DOT11_DEFAULT_WEP_UPLOAD  = 0x0d010305U,
 }
 
-enum uint OID_DOT11_MPDU_MAX_LENGTH = 0x0d010306;
-enum uint OID_DOT11_OPERATION_MODE_CAPABILITY = 0x0d010307;
+enum uint OID_DOT11_MPDU_MAX_LENGTH = 0x0d010306U;
+enum uint OID_DOT11_OPERATION_MODE_CAPABILITY = 0x0d010307U;
 
 enum : uint
 {
-    DOT11_OPERATION_MODE_UNKNOWN            = 0x00000000,
-    DOT11_OPERATION_MODE_STATION            = 0x00000001,
-    DOT11_OPERATION_MODE_AP                 = 0x00000002,
-    DOT11_OPERATION_MODE_EXTENSIBLE_STATION = 0x00000004,
-    DOT11_OPERATION_MODE_EXTENSIBLE_AP      = 0x00000008,
-    DOT11_OPERATION_MODE_WFD_DEVICE         = 0x00000010,
-    DOT11_OPERATION_MODE_WFD_GROUP_OWNER    = 0x00000020,
-    DOT11_OPERATION_MODE_WFD_CLIENT         = 0x00000040,
-    DOT11_OPERATION_MODE_MANUFACTURING      = 0x40000000,
-    DOT11_OPERATION_MODE_NETWORK_MONITOR    = 0x80000000,
+    DOT11_OPERATION_MODE_UNKNOWN            = 0x00000000U,
+    DOT11_OPERATION_MODE_STATION            = 0x00000001U,
+    DOT11_OPERATION_MODE_AP                 = 0x00000002U,
+    DOT11_OPERATION_MODE_EXTENSIBLE_STATION = 0x00000004U,
+    DOT11_OPERATION_MODE_EXTENSIBLE_AP      = 0x00000008U,
+    DOT11_OPERATION_MODE_WFD_DEVICE         = 0x00000010U,
+    DOT11_OPERATION_MODE_WFD_GROUP_OWNER    = 0x00000020U,
+    DOT11_OPERATION_MODE_WFD_CLIENT         = 0x00000040U,
+    DOT11_OPERATION_MODE_MANUFACTURING      = 0x40000000U,
+    DOT11_OPERATION_MODE_NETWORK_MONITOR    = 0x80000000U,
 }
 
 enum : uint
 {
-    OID_DOT11_CURRENT_OPERATION_MODE = 0x0d010308,
-    OID_DOT11_CURRENT_PACKET_FILTER  = 0x0d010309,
+    OID_DOT11_CURRENT_OPERATION_MODE = 0x0d010308U,
+    OID_DOT11_CURRENT_PACKET_FILTER  = 0x0d010309U,
 }
 
 enum : uint
 {
-    DOT11_PACKET_TYPE_DIRECTED_CTRL      = 0x00000001,
-    DOT11_PACKET_TYPE_DIRECTED_MGMT      = 0x00000002,
-    DOT11_PACKET_TYPE_DIRECTED_DATA      = 0x00000004,
-    DOT11_PACKET_TYPE_MULTICAST_CTRL     = 0x00000008,
-    DOT11_PACKET_TYPE_MULTICAST_MGMT     = 0x00000010,
-    DOT11_PACKET_TYPE_MULTICAST_DATA     = 0x00000020,
-    DOT11_PACKET_TYPE_BROADCAST_CTRL     = 0x00000040,
-    DOT11_PACKET_TYPE_BROADCAST_MGMT     = 0x00000080,
-    DOT11_PACKET_TYPE_BROADCAST_DATA     = 0x00000100,
-    DOT11_PACKET_TYPE_PROMISCUOUS_CTRL   = 0x00000200,
-    DOT11_PACKET_TYPE_PROMISCUOUS_MGMT   = 0x00000400,
-    DOT11_PACKET_TYPE_PROMISCUOUS_DATA   = 0x00000800,
-    DOT11_PACKET_TYPE_ALL_MULTICAST_CTRL = 0x00001000,
-    DOT11_PACKET_TYPE_ALL_MULTICAST_MGMT = 0x00002000,
-    DOT11_PACKET_TYPE_ALL_MULTICAST_DATA = 0x00004000,
+    DOT11_PACKET_TYPE_DIRECTED_CTRL      = 0x00000001U,
+    DOT11_PACKET_TYPE_DIRECTED_MGMT      = 0x00000002U,
+    DOT11_PACKET_TYPE_DIRECTED_DATA      = 0x00000004U,
+    DOT11_PACKET_TYPE_MULTICAST_CTRL     = 0x00000008U,
+    DOT11_PACKET_TYPE_MULTICAST_MGMT     = 0x00000010U,
+    DOT11_PACKET_TYPE_MULTICAST_DATA     = 0x00000020U,
+    DOT11_PACKET_TYPE_BROADCAST_CTRL     = 0x00000040U,
+    DOT11_PACKET_TYPE_BROADCAST_MGMT     = 0x00000080U,
+    DOT11_PACKET_TYPE_BROADCAST_DATA     = 0x00000100U,
+    DOT11_PACKET_TYPE_PROMISCUOUS_CTRL   = 0x00000200U,
+    DOT11_PACKET_TYPE_PROMISCUOUS_MGMT   = 0x00000400U,
+    DOT11_PACKET_TYPE_PROMISCUOUS_DATA   = 0x00000800U,
+    DOT11_PACKET_TYPE_ALL_MULTICAST_CTRL = 0x00001000U,
+    DOT11_PACKET_TYPE_ALL_MULTICAST_MGMT = 0x00002000U,
+    DOT11_PACKET_TYPE_ALL_MULTICAST_DATA = 0x00004000U,
 }
 
 enum : uint
 {
-    OID_DOT11_ATIM_WINDOW      = 0x0d01030a,
-    OID_DOT11_SCAN_REQUEST     = 0x0d01030b,
-    OID_DOT11_CURRENT_PHY_TYPE = 0x0d01030c,
+    OID_DOT11_ATIM_WINDOW      = 0x0d01030aU,
+    OID_DOT11_SCAN_REQUEST     = 0x0d01030bU,
+    OID_DOT11_CURRENT_PHY_TYPE = 0x0d01030cU,
 }
 
-enum uint DOT11_PHY_TYPE_LIST_REVISION_1 = 0x00000001;
-enum uint OID_DOT11_JOIN_REQUEST = 0x0d01030d;
+enum uint DOT11_PHY_TYPE_LIST_REVISION_1 = 0x00000001U;
+enum uint OID_DOT11_JOIN_REQUEST = 0x0d01030dU;
 
 enum : uint
 {
-    DOT11_CAPABILITY_INFO_ESS         = 0x00000001,
-    DOT11_CAPABILITY_INFO_IBSS        = 0x00000002,
-    DOT11_CAPABILITY_INFO_CF_POLLABLE = 0x00000004,
-    DOT11_CAPABILITY_INFO_CF_POLL_REQ = 0x00000008,
-    DOT11_CAPABILITY_INFO_PRIVACY     = 0x00000010,
-    DOT11_CAPABILITY_SHORT_PREAMBLE   = 0x00000020,
-    DOT11_CAPABILITY_PBCC             = 0x00000040,
-    DOT11_CAPABILITY_CHANNEL_AGILITY  = 0x00000080,
-    DOT11_CAPABILITY_SHORT_SLOT_TIME  = 0x00000400,
-    DOT11_CAPABILITY_DSSSOFDM         = 0x00002000,
+    DOT11_CAPABILITY_INFO_ESS         = 0x00000001U,
+    DOT11_CAPABILITY_INFO_IBSS        = 0x00000002U,
+    DOT11_CAPABILITY_INFO_CF_POLLABLE = 0x00000004U,
+    DOT11_CAPABILITY_INFO_CF_POLL_REQ = 0x00000008U,
+    DOT11_CAPABILITY_INFO_PRIVACY     = 0x00000010U,
+    DOT11_CAPABILITY_SHORT_PREAMBLE   = 0x00000020U,
+    DOT11_CAPABILITY_PBCC             = 0x00000040U,
+    DOT11_CAPABILITY_CHANNEL_AGILITY  = 0x00000080U,
+    DOT11_CAPABILITY_SHORT_SLOT_TIME  = 0x00000400U,
+    DOT11_CAPABILITY_DSSSOFDM         = 0x00002000U,
 }
 
 enum : uint
 {
-    OID_DOT11_START_REQUEST   = 0x0d01030e,
-    OID_DOT11_UPDATE_IE       = 0x0d01030f,
-    OID_DOT11_RESET_REQUEST   = 0x0d010310,
-    OID_DOT11_NIC_POWER_STATE = 0x0d010311,
+    OID_DOT11_START_REQUEST   = 0x0d01030eU,
+    OID_DOT11_UPDATE_IE       = 0x0d01030fU,
+    OID_DOT11_RESET_REQUEST   = 0x0d010310U,
+    OID_DOT11_NIC_POWER_STATE = 0x0d010311U,
 }
 
-enum uint OID_DOT11_OPTIONAL_CAPABILITY = 0x0d010312;
-enum uint OID_DOT11_CURRENT_OPTIONAL_CAPABILITY = 0x0d010313;
+enum uint OID_DOT11_OPTIONAL_CAPABILITY = 0x0d010312U;
+enum uint OID_DOT11_CURRENT_OPTIONAL_CAPABILITY = 0x0d010313U;
 
 enum : uint
 {
-    OID_DOT11_STATION_ID             = 0x0d010314,
-    OID_DOT11_MEDIUM_OCCUPANCY_LIMIT = 0x0d010315,
+    OID_DOT11_STATION_ID             = 0x0d010314U,
+    OID_DOT11_MEDIUM_OCCUPANCY_LIMIT = 0x0d010315U,
 }
 
 enum : uint
 {
-    OID_DOT11_CF_POLLABLE      = 0x0d010316,
-    OID_DOT11_CFP_PERIOD       = 0x0d010317,
-    OID_DOT11_CFP_MAX_DURATION = 0x0d010318,
+    OID_DOT11_CF_POLLABLE      = 0x0d010316U,
+    OID_DOT11_CFP_PERIOD       = 0x0d010317U,
+    OID_DOT11_CFP_MAX_DURATION = 0x0d010318U,
 }
 
-enum uint OID_DOT11_POWER_MGMT_MODE = 0x0d010319;
+enum uint OID_DOT11_POWER_MGMT_MODE = 0x0d010319U;
 
 enum : uint
 {
-    DOT11_POWER_SAVE_LEVEL_MAX_PSP  = 0x00000001,
-    DOT11_POWER_SAVE_LEVEL_FAST_PSP = 0x00000002,
+    DOT11_POWER_SAVE_LEVEL_MAX_PSP  = 0x00000001U,
+    DOT11_POWER_SAVE_LEVEL_FAST_PSP = 0x00000002U,
 }
 
-enum uint OID_DOT11_OPERATIONAL_RATE_SET = 0x0d01031a;
+enum uint OID_DOT11_OPERATIONAL_RATE_SET = 0x0d01031aU;
 
 enum : uint
 {
-    OID_DOT11_BEACON_PERIOD       = 0x0d01031b,
-    OID_DOT11_DTIM_PERIOD         = 0x0d01031c,
-    OID_DOT11_WEP_ICV_ERROR_COUNT = 0x0d01031d,
+    OID_DOT11_BEACON_PERIOD       = 0x0d01031bU,
+    OID_DOT11_DTIM_PERIOD         = 0x0d01031cU,
+    OID_DOT11_WEP_ICV_ERROR_COUNT = 0x0d01031dU,
 }
 
 enum : uint
 {
-    OID_DOT11_MAC_ADDRESS       = 0x0d01031e,
-    OID_DOT11_RTS_THRESHOLD     = 0x0d01031f,
-    OID_DOT11_SHORT_RETRY_LIMIT = 0x0d010320,
+    OID_DOT11_MAC_ADDRESS       = 0x0d01031eU,
+    OID_DOT11_RTS_THRESHOLD     = 0x0d01031fU,
+    OID_DOT11_SHORT_RETRY_LIMIT = 0x0d010320U,
 }
 
-enum uint OID_DOT11_LONG_RETRY_LIMIT = 0x0d010321;
-enum uint OID_DOT11_FRAGMENTATION_THRESHOLD = 0x0d010322;
-enum uint OID_DOT11_MAX_TRANSMIT_MSDU_LIFETIME = 0x0d010323;
-enum uint OID_DOT11_MAX_RECEIVE_LIFETIME = 0x0d010324;
+enum uint OID_DOT11_LONG_RETRY_LIMIT = 0x0d010321U;
+enum uint OID_DOT11_FRAGMENTATION_THRESHOLD = 0x0d010322U;
+enum uint OID_DOT11_MAX_TRANSMIT_MSDU_LIFETIME = 0x0d010323U;
+enum uint OID_DOT11_MAX_RECEIVE_LIFETIME = 0x0d010324U;
 
 enum : uint
 {
-    OID_DOT11_COUNTERS_ENTRY      = 0x0d010325,
-    OID_DOT11_SUPPORTED_PHY_TYPES = 0x0d010326,
+    OID_DOT11_COUNTERS_ENTRY      = 0x0d010325U,
+    OID_DOT11_SUPPORTED_PHY_TYPES = 0x0d010326U,
 }
 
-enum uint OID_DOT11_CURRENT_REG_DOMAIN = 0x0d010327;
+enum uint OID_DOT11_CURRENT_REG_DOMAIN = 0x0d010327U;
 
 enum : uint
 {
-    DOT11_REG_DOMAIN_OTHER  = 0x00000000,
-    DOT11_REG_DOMAIN_FCC    = 0x00000010,
-    DOT11_REG_DOMAIN_DOC    = 0x00000020,
-    DOT11_REG_DOMAIN_ETSI   = 0x00000030,
-    DOT11_REG_DOMAIN_SPAIN  = 0x00000031,
-    DOT11_REG_DOMAIN_FRANCE = 0x00000032,
-    DOT11_REG_DOMAIN_MKK    = 0x00000040,
+    DOT11_REG_DOMAIN_OTHER  = 0x00000000U,
+    DOT11_REG_DOMAIN_FCC    = 0x00000010U,
+    DOT11_REG_DOMAIN_DOC    = 0x00000020U,
+    DOT11_REG_DOMAIN_ETSI   = 0x00000030U,
+    DOT11_REG_DOMAIN_SPAIN  = 0x00000031U,
+    DOT11_REG_DOMAIN_FRANCE = 0x00000032U,
+    DOT11_REG_DOMAIN_MKK    = 0x00000040U,
 }
 
 enum : uint
 {
-    OID_DOT11_TEMP_TYPE          = 0x0d010328,
-    OID_DOT11_CURRENT_TX_ANTENNA = 0x0d010329,
+    OID_DOT11_TEMP_TYPE          = 0x0d010328U,
+    OID_DOT11_CURRENT_TX_ANTENNA = 0x0d010329U,
 }
 
-enum uint OID_DOT11_DIVERSITY_SUPPORT = 0x0d01032a;
-enum uint OID_DOT11_CURRENT_RX_ANTENNA = 0x0d01032b;
-enum uint OID_DOT11_SUPPORTED_POWER_LEVELS = 0x0d01032c;
-enum uint OID_DOT11_CURRENT_TX_POWER_LEVEL = 0x0d01032d;
+enum uint OID_DOT11_DIVERSITY_SUPPORT = 0x0d01032aU;
+enum uint OID_DOT11_CURRENT_RX_ANTENNA = 0x0d01032bU;
+enum uint OID_DOT11_SUPPORTED_POWER_LEVELS = 0x0d01032cU;
+enum uint OID_DOT11_CURRENT_TX_POWER_LEVEL = 0x0d01032dU;
 
 enum : uint
 {
-    OID_DOT11_HOP_TIME               = 0x0d01032e,
-    OID_DOT11_CURRENT_CHANNEL_NUMBER = 0x0d01032f,
+    OID_DOT11_HOP_TIME               = 0x0d01032eU,
+    OID_DOT11_CURRENT_CHANNEL_NUMBER = 0x0d01032fU,
 }
 
 enum : uint
 {
-    OID_DOT11_MAX_DWELL_TIME     = 0x0d010330,
-    OID_DOT11_CURRENT_DWELL_TIME = 0x0d010331,
-    OID_DOT11_CURRENT_SET        = 0x0d010332,
-    OID_DOT11_CURRENT_PATTERN    = 0x0d010333,
-    OID_DOT11_CURRENT_INDEX      = 0x0d010334,
-    OID_DOT11_CURRENT_CHANNEL    = 0x0d010335,
-    OID_DOT11_CCA_MODE_SUPPORTED = 0x0d010336,
+    OID_DOT11_MAX_DWELL_TIME     = 0x0d010330U,
+    OID_DOT11_CURRENT_DWELL_TIME = 0x0d010331U,
+    OID_DOT11_CURRENT_SET        = 0x0d010332U,
+    OID_DOT11_CURRENT_PATTERN    = 0x0d010333U,
+    OID_DOT11_CURRENT_INDEX      = 0x0d010334U,
+    OID_DOT11_CURRENT_CHANNEL    = 0x0d010335U,
+    OID_DOT11_CCA_MODE_SUPPORTED = 0x0d010336U,
 }
 
 enum : uint
 {
-    DOT11_CCA_MODE_ED_ONLY       = 0x00000001,
-    DOT11_CCA_MODE_CS_ONLY       = 0x00000002,
-    DOT11_CCA_MODE_ED_and_CS     = 0x00000004,
-    DOT11_CCA_MODE_CS_WITH_TIMER = 0x00000008,
-    DOT11_CCA_MODE_HRCS_AND_ED   = 0x00000010,
+    DOT11_CCA_MODE_ED_ONLY       = 0x00000001U,
+    DOT11_CCA_MODE_CS_ONLY       = 0x00000002U,
+    DOT11_CCA_MODE_ED_and_CS     = 0x00000004U,
+    DOT11_CCA_MODE_CS_WITH_TIMER = 0x00000008U,
+    DOT11_CCA_MODE_HRCS_AND_ED   = 0x00000010U,
 }
 
-enum uint OID_DOT11_CURRENT_CCA_MODE = 0x0d010337;
+enum uint OID_DOT11_CURRENT_CCA_MODE = 0x0d010337U;
 
 enum : uint
 {
-    OID_DOT11_ED_THRESHOLD           = 0x0d010338,
-    OID_DOT11_CCA_WATCHDOG_TIMER_MAX = 0x0d010339,
-    OID_DOT11_CCA_WATCHDOG_COUNT_MAX = 0x0d01033a,
-    OID_DOT11_CCA_WATCHDOG_TIMER_MIN = 0x0d01033b,
-    OID_DOT11_CCA_WATCHDOG_COUNT_MIN = 0x0d01033c,
+    OID_DOT11_ED_THRESHOLD           = 0x0d010338U,
+    OID_DOT11_CCA_WATCHDOG_TIMER_MAX = 0x0d010339U,
+    OID_DOT11_CCA_WATCHDOG_COUNT_MAX = 0x0d01033aU,
+    OID_DOT11_CCA_WATCHDOG_TIMER_MIN = 0x0d01033bU,
+    OID_DOT11_CCA_WATCHDOG_COUNT_MIN = 0x0d01033cU,
 }
 
-enum uint OID_DOT11_REG_DOMAINS_SUPPORT_VALUE = 0x0d01033d;
+enum uint OID_DOT11_REG_DOMAINS_SUPPORT_VALUE = 0x0d01033dU;
 
 enum : uint
 {
-    OID_DOT11_SUPPORTED_TX_ANTENNA = 0x0d01033e,
-    OID_DOT11_SUPPORTED_RX_ANTENNA = 0x0d01033f,
+    OID_DOT11_SUPPORTED_TX_ANTENNA = 0x0d01033eU,
+    OID_DOT11_SUPPORTED_RX_ANTENNA = 0x0d01033fU,
 }
 
-enum uint OID_DOT11_DIVERSITY_SELECTION_RX = 0x0d010340;
-enum uint OID_DOT11_SUPPORTED_DATA_RATES_VALUE = 0x0d010341;
+enum uint OID_DOT11_DIVERSITY_SELECTION_RX = 0x0d010340U;
+enum uint OID_DOT11_SUPPORTED_DATA_RATES_VALUE = 0x0d010341U;
 
 enum : uint
 {
-    MAX_NUM_SUPPORTED_RATES    = 0x00000008,
-    MAX_NUM_SUPPORTED_RATES_V2 = 0x000000ff,
+    MAX_NUM_SUPPORTED_RATES    = 0x00000008U,
+    MAX_NUM_SUPPORTED_RATES_V2 = 0x000000ffU,
 }
 
-enum uint OID_DOT11_CURRENT_FREQUENCY = 0x0d010342;
+enum uint OID_DOT11_CURRENT_FREQUENCY = 0x0d010342U;
 
 enum : uint
 {
-    OID_DOT11_TI_THRESHOLD              = 0x0d010343,
-    OID_DOT11_FREQUENCY_BANDS_SUPPORTED = 0x0d010344,
+    OID_DOT11_TI_THRESHOLD              = 0x0d010343U,
+    OID_DOT11_FREQUENCY_BANDS_SUPPORTED = 0x0d010344U,
 }
 
 enum : uint
 {
-    DOT11_FREQUENCY_BANDS_LOWER  = 0x00000001,
-    DOT11_FREQUENCY_BANDS_MIDDLE = 0x00000002,
-    DOT11_FREQUENCY_BANDS_UPPER  = 0x00000004,
+    DOT11_FREQUENCY_BANDS_LOWER  = 0x00000001U,
+    DOT11_FREQUENCY_BANDS_MIDDLE = 0x00000002U,
+    DOT11_FREQUENCY_BANDS_UPPER  = 0x00000004U,
 }
 
-enum uint OID_DOT11_SHORT_PREAMBLE_OPTION_IMPLEMENTED = 0x0d010345;
-enum uint OID_DOT11_PBCC_OPTION_IMPLEMENTED = 0x0d010346;
+enum uint OID_DOT11_SHORT_PREAMBLE_OPTION_IMPLEMENTED = 0x0d010345U;
+enum uint OID_DOT11_PBCC_OPTION_IMPLEMENTED = 0x0d010346U;
 
 enum : uint
 {
-    OID_DOT11_CHANNEL_AGILITY_PRESENT = 0x0d010347,
-    OID_DOT11_CHANNEL_AGILITY_ENABLED = 0x0d010348,
+    OID_DOT11_CHANNEL_AGILITY_PRESENT = 0x0d010347U,
+    OID_DOT11_CHANNEL_AGILITY_ENABLED = 0x0d010348U,
 }
 
-enum uint OID_DOT11_HR_CCA_MODE_SUPPORTED = 0x0d010349;
+enum uint OID_DOT11_HR_CCA_MODE_SUPPORTED = 0x0d010349U;
 
 enum : uint
 {
-    DOT11_HR_CCA_MODE_ED_ONLY       = 0x00000001,
-    DOT11_HR_CCA_MODE_CS_ONLY       = 0x00000002,
-    DOT11_HR_CCA_MODE_CS_AND_ED     = 0x00000004,
-    DOT11_HR_CCA_MODE_CS_WITH_TIMER = 0x00000008,
-    DOT11_HR_CCA_MODE_HRCS_AND_ED   = 0x00000010,
+    DOT11_HR_CCA_MODE_ED_ONLY       = 0x00000001U,
+    DOT11_HR_CCA_MODE_CS_ONLY       = 0x00000002U,
+    DOT11_HR_CCA_MODE_CS_AND_ED     = 0x00000004U,
+    DOT11_HR_CCA_MODE_CS_WITH_TIMER = 0x00000008U,
+    DOT11_HR_CCA_MODE_HRCS_AND_ED   = 0x00000010U,
 }
 
 enum : uint
 {
-    OID_DOT11_MULTI_DOMAIN_CAPABILITY_IMPLEMENTED = 0x0d01034a,
-    OID_DOT11_MULTI_DOMAIN_CAPABILITY_ENABLED     = 0x0d01034b,
+    OID_DOT11_MULTI_DOMAIN_CAPABILITY_IMPLEMENTED = 0x0d01034aU,
+    OID_DOT11_MULTI_DOMAIN_CAPABILITY_ENABLED     = 0x0d01034bU,
 }
 
 enum : uint
 {
-    OID_DOT11_COUNTRY_STRING          = 0x0d01034c,
-    OID_DOT11_MULTI_DOMAIN_CAPABILITY = 0x0d01034d,
+    OID_DOT11_COUNTRY_STRING          = 0x0d01034cU,
+    OID_DOT11_MULTI_DOMAIN_CAPABILITY = 0x0d01034dU,
 }
 
 enum : uint
 {
-    OID_DOT11_EHCC_PRIME_RADIX                     = 0x0d01034e,
-    OID_DOT11_EHCC_NUMBER_OF_CHANNELS_FAMILY_INDEX = 0x0d01034f,
+    OID_DOT11_EHCC_PRIME_RADIX                     = 0x0d01034eU,
+    OID_DOT11_EHCC_NUMBER_OF_CHANNELS_FAMILY_INDEX = 0x0d01034fU,
 }
 
 enum : uint
 {
-    OID_DOT11_EHCC_CAPABILITY_IMPLEMENTED = 0x0d010350,
-    OID_DOT11_EHCC_CAPABILITY_ENABLED     = 0x0d010351,
+    OID_DOT11_EHCC_CAPABILITY_IMPLEMENTED = 0x0d010350U,
+    OID_DOT11_EHCC_CAPABILITY_ENABLED     = 0x0d010351U,
 }
 
-enum uint OID_DOT11_HOP_ALGORITHM_ADOPTED = 0x0d010352;
-enum uint OID_DOT11_RANDOM_TABLE_FLAG = 0x0d010353;
-enum uint OID_DOT11_NUMBER_OF_HOPPING_SETS = 0x0d010354;
+enum uint OID_DOT11_HOP_ALGORITHM_ADOPTED = 0x0d010352U;
+enum uint OID_DOT11_RANDOM_TABLE_FLAG = 0x0d010353U;
+enum uint OID_DOT11_NUMBER_OF_HOPPING_SETS = 0x0d010354U;
 
 enum : uint
 {
-    OID_DOT11_HOP_MODULUS     = 0x0d010355,
-    OID_DOT11_HOP_OFFSET      = 0x0d010356,
-    OID_DOT11_HOPPING_PATTERN = 0x0d010357,
+    OID_DOT11_HOP_MODULUS     = 0x0d010355U,
+    OID_DOT11_HOP_OFFSET      = 0x0d010356U,
+    OID_DOT11_HOPPING_PATTERN = 0x0d010357U,
 }
 
-enum uint OID_DOT11_RANDOM_TABLE_FIELD_NUMBER = 0x0d010358;
+enum uint OID_DOT11_RANDOM_TABLE_FIELD_NUMBER = 0x0d010358U;
 
 enum : uint
 {
-    OID_DOT11_WPA_TSC                = 0x0d010359,
-    OID_DOT11_RSSI_RANGE             = 0x0d01035a,
-    OID_DOT11_RF_USAGE               = 0x0d01035b,
-    OID_DOT11_NIC_SPECIFIC_EXTENSION = 0x0d01035c,
+    OID_DOT11_WPA_TSC                = 0x0d010359U,
+    OID_DOT11_RSSI_RANGE             = 0x0d01035aU,
+    OID_DOT11_RF_USAGE               = 0x0d01035bU,
+    OID_DOT11_NIC_SPECIFIC_EXTENSION = 0x0d01035cU,
 }
 
-enum uint OID_DOT11_AP_JOIN_REQUEST = 0x0d01035d;
+enum uint OID_DOT11_AP_JOIN_REQUEST = 0x0d01035dU;
 
 enum : uint
 {
-    OID_DOT11_ERP_PBCC_OPTION_IMPLEMENTED = 0x0d01035e,
-    OID_DOT11_ERP_PBCC_OPTION_ENABLED     = 0x0d01035f,
+    OID_DOT11_ERP_PBCC_OPTION_IMPLEMENTED = 0x0d01035eU,
+    OID_DOT11_ERP_PBCC_OPTION_ENABLED     = 0x0d01035fU,
 }
 
 enum : uint
 {
-    OID_DOT11_DSSS_OFDM_OPTION_IMPLEMENTED = 0x0d010360,
-    OID_DOT11_DSSS_OFDM_OPTION_ENABLED     = 0x0d010361,
+    OID_DOT11_DSSS_OFDM_OPTION_IMPLEMENTED = 0x0d010360U,
+    OID_DOT11_DSSS_OFDM_OPTION_ENABLED     = 0x0d010361U,
 }
 
 enum : uint
 {
-    OID_DOT11_SHORT_SLOT_TIME_OPTION_IMPLEMENTED = 0x0d010362,
-    OID_DOT11_SHORT_SLOT_TIME_OPTION_ENABLED     = 0x0d010363,
+    OID_DOT11_SHORT_SLOT_TIME_OPTION_IMPLEMENTED = 0x0d010362U,
+    OID_DOT11_SHORT_SLOT_TIME_OPTION_ENABLED     = 0x0d010363U,
 }
 
-enum uint OID_DOT11_MAX_MAC_ADDRESS_STATES = 0x0d010364;
-enum uint OID_DOT11_RECV_SENSITIVITY_LIST = 0x0d010365;
+enum uint OID_DOT11_MAX_MAC_ADDRESS_STATES = 0x0d010364U;
+enum uint OID_DOT11_RECV_SENSITIVITY_LIST = 0x0d010365U;
 
 enum : uint
 {
-    OID_DOT11_WME_IMPLEMENTED         = 0x0d010366,
-    OID_DOT11_WME_ENABLED             = 0x0d010367,
-    OID_DOT11_WME_AC_PARAMETERS       = 0x0d010368,
-    OID_DOT11_WME_UPDATE_IE           = 0x0d010369,
-    OID_DOT11_QOS_TX_QUEUES_SUPPORTED = 0x0d01036a,
-    OID_DOT11_QOS_TX_DURATION         = 0x0d01036b,
-    OID_DOT11_QOS_TX_MEDIUM_TIME      = 0x0d01036c,
+    OID_DOT11_WME_IMPLEMENTED         = 0x0d010366U,
+    OID_DOT11_WME_ENABLED             = 0x0d010367U,
+    OID_DOT11_WME_AC_PARAMETERS       = 0x0d010368U,
+    OID_DOT11_WME_UPDATE_IE           = 0x0d010369U,
+    OID_DOT11_QOS_TX_QUEUES_SUPPORTED = 0x0d01036aU,
+    OID_DOT11_QOS_TX_DURATION         = 0x0d01036bU,
+    OID_DOT11_QOS_TX_MEDIUM_TIME      = 0x0d01036cU,
 }
 
 enum : uint
 {
-    OID_DOT11_SUPPORTED_OFDM_FREQUENCY_LIST = 0x0d01036d,
-    OID_DOT11_SUPPORTED_DSSS_CHANNEL_LIST   = 0x0d01036e,
+    OID_DOT11_SUPPORTED_OFDM_FREQUENCY_LIST = 0x0d01036dU,
+    OID_DOT11_SUPPORTED_DSSS_CHANNEL_LIST   = 0x0d01036eU,
 }
 
-enum uint DOT11_BSS_ENTRY_BYTE_ARRAY_REVISION_1 = 0x00000001;
+enum uint DOT11_BSS_ENTRY_BYTE_ARRAY_REVISION_1 = 0x00000001U;
 
 enum : uint
 {
-    DOT11_POWER_SAVING_NO_POWER_SAVING = 0x00000000,
-    DOT11_POWER_SAVING_FAST_PSP        = 0x00000008,
-    DOT11_POWER_SAVING_MAX_PSP         = 0x00000010,
-    DOT11_POWER_SAVING_MAXIMUM_LEVEL   = 0x00000018,
+    DOT11_POWER_SAVING_NO_POWER_SAVING = 0x00000000U,
+    DOT11_POWER_SAVING_FAST_PSP        = 0x00000008U,
+    DOT11_POWER_SAVING_MAX_PSP         = 0x00000010U,
+    DOT11_POWER_SAVING_MAXIMUM_LEVEL   = 0x00000018U,
 }
 
-enum uint DOT11_SSID_LIST_REVISION_1 = 0x00000001;
-enum uint DOT11_MAC_ADDRESS_LIST_REVISION_1 = 0x00000001;
-enum uint DOT11_PMKID_LIST_REVISION_1 = 0x00000001;
-enum uint DOT11_STATISTICS_REVISION_1 = 0x00000001;
+enum uint DOT11_SSID_LIST_REVISION_1 = 0x00000001U;
+enum uint DOT11_MAC_ADDRESS_LIST_REVISION_1 = 0x00000001U;
+enum uint DOT11_PMKID_LIST_REVISION_1 = 0x00000001U;
+enum uint DOT11_STATISTICS_REVISION_1 = 0x00000001U;
 
 enum : uint
 {
-    DOT11_EXEMPT_NO_EXEMPTION                   = 0x00000000,
-    DOT11_EXEMPT_ALWAYS                         = 0x00000001,
-    DOT11_EXEMPT_ON_KEY_MAPPING_KEY_UNAVAILABLE = 0x00000002,
+    DOT11_EXEMPT_NO_EXEMPTION                   = 0x00000000U,
+    DOT11_EXEMPT_ALWAYS                         = 0x00000001U,
+    DOT11_EXEMPT_ON_KEY_MAPPING_KEY_UNAVAILABLE = 0x00000002U,
 }
 
 enum : uint
 {
-    DOT11_EXEMPT_UNICAST   = 0x00000001,
-    DOT11_EXEMPT_MULTICAST = 0x00000002,
-    DOT11_EXEMPT_BOTH      = 0x00000003,
+    DOT11_EXEMPT_UNICAST   = 0x00000001U,
+    DOT11_EXEMPT_MULTICAST = 0x00000002U,
+    DOT11_EXEMPT_BOTH      = 0x00000003U,
 }
 
-enum uint DOT11_PRIVACY_EXEMPTION_LIST_REVISION_1 = 0x00000001;
-enum uint DOT11_AUTH_ALGORITHM_LIST_REVISION_1 = 0x00000001;
-enum uint DOT11_AUTH_CIPHER_PAIR_LIST_REVISION_1 = 0x00000001;
-enum uint DOT11_CIPHER_ALGORITHM_LIST_REVISION_1 = 0x00000001;
-enum uint DOT11_CIPHER_DEFAULT_KEY_VALUE_REVISION_1 = 0x00000001;
-enum uint DOT11_CIPHER_KEY_MAPPING_KEY_VALUE_BYTE_ARRAY_REVISION_1 = 0x00000001;
-enum uint DOT11_ASSOCIATION_INFO_LIST_REVISION_1 = 0x00000001;
-enum uint DOT11_PHY_ID_LIST_REVISION_1 = 0x00000001;
-enum uint DOT11_EXTSTA_CAPABILITY_REVISION_1 = 0x00000001;
-enum uint DOT11_DATA_RATE_MAPPING_TABLE_REVISION_1 = 0x00000001;
-enum uint DOT11_COUNTRY_OR_REGION_STRING_LIST_REVISION_1 = 0x00000001;
-enum uint DOT11_PORT_STATE_NOTIFICATION_REVISION_1 = 0x00000001;
-enum uint DOT11_IBSS_PARAMS_REVISION_1 = 0x00000001;
-enum uint DOT11_QOS_PARAMS_REVISION_1 = 0x00000001;
-enum uint DOT11_ASSOCIATION_PARAMS_REVISION_1 = 0x00000001;
-enum uint DOT11_MAX_NUM_OF_FRAGMENTS = 0x00000010;
+enum uint DOT11_PRIVACY_EXEMPTION_LIST_REVISION_1 = 0x00000001U;
+enum uint DOT11_AUTH_ALGORITHM_LIST_REVISION_1 = 0x00000001U;
+enum uint DOT11_AUTH_CIPHER_PAIR_LIST_REVISION_1 = 0x00000001U;
+enum uint DOT11_CIPHER_ALGORITHM_LIST_REVISION_1 = 0x00000001U;
+enum uint DOT11_CIPHER_DEFAULT_KEY_VALUE_REVISION_1 = 0x00000001U;
+enum uint DOT11_CIPHER_KEY_MAPPING_KEY_VALUE_BYTE_ARRAY_REVISION_1 = 0x00000001U;
+enum uint DOT11_ASSOCIATION_INFO_LIST_REVISION_1 = 0x00000001U;
+enum uint DOT11_PHY_ID_LIST_REVISION_1 = 0x00000001U;
+enum uint DOT11_EXTSTA_CAPABILITY_REVISION_1 = 0x00000001U;
+enum uint DOT11_DATA_RATE_MAPPING_TABLE_REVISION_1 = 0x00000001U;
+enum uint DOT11_COUNTRY_OR_REGION_STRING_LIST_REVISION_1 = 0x00000001U;
+enum uint DOT11_PORT_STATE_NOTIFICATION_REVISION_1 = 0x00000001U;
+enum uint DOT11_IBSS_PARAMS_REVISION_1 = 0x00000001U;
+enum uint DOT11_QOS_PARAMS_REVISION_1 = 0x00000001U;
+enum uint DOT11_ASSOCIATION_PARAMS_REVISION_1 = 0x00000001U;
+enum uint DOT11_MAX_NUM_OF_FRAGMENTS = 0x00000010U;
 
 enum : uint
 {
-    DOT11_PRIORITY_CONTENTION      = 0x00000000,
-    DOT11_PRIORITY_CONTENTION_FREE = 0x00000001,
+    DOT11_PRIORITY_CONTENTION      = 0x00000000U,
+    DOT11_PRIORITY_CONTENTION_FREE = 0x00000001U,
 }
 
 enum : uint
 {
-    DOT11_SERVICE_CLASS_REORDERABLE_MULTICAST = 0x00000000,
-    DOT11_SERVICE_CLASS_STRICTLY_ORDERED      = 0x00000001,
+    DOT11_SERVICE_CLASS_REORDERABLE_MULTICAST = 0x00000000U,
+    DOT11_SERVICE_CLASS_STRICTLY_ORDERED      = 0x00000001U,
 }
 
 enum : uint
 {
-    DOT11_FLAGS_80211B_SHORT_PREAMBLE  = 0x00000001,
-    DOT11_FLAGS_80211B_PBCC            = 0x00000002,
-    DOT11_FLAGS_80211B_CHANNEL_AGILITY = 0x00000004,
+    DOT11_FLAGS_80211B_SHORT_PREAMBLE  = 0x00000001U,
+    DOT11_FLAGS_80211B_PBCC            = 0x00000002U,
+    DOT11_FLAGS_80211B_CHANNEL_AGILITY = 0x00000004U,
 }
 
 enum : uint
 {
-    DOT11_FLAGS_PS_ON                       = 0x00000008,
-    DOT11_FLAGS_80211G_DSSS_OFDM            = 0x00000010,
-    DOT11_FLAGS_80211G_USE_PROTECTION       = 0x00000020,
-    DOT11_FLAGS_80211G_NON_ERP_PRESENT      = 0x00000040,
-    DOT11_FLAGS_80211G_BARKER_PREAMBLE_MODE = 0x00000080,
+    DOT11_FLAGS_PS_ON                       = 0x00000008U,
+    DOT11_FLAGS_80211G_DSSS_OFDM            = 0x00000010U,
+    DOT11_FLAGS_80211G_USE_PROTECTION       = 0x00000020U,
+    DOT11_FLAGS_80211G_NON_ERP_PRESENT      = 0x00000040U,
+    DOT11_FLAGS_80211G_BARKER_PREAMBLE_MODE = 0x00000080U,
 }
 
-enum uint DOT11_WME_PACKET = 0x00000100;
-enum uint DOT11_PHY_ATTRIBUTES_REVISION_1 = 0x00000001;
+enum uint DOT11_WME_PACKET = 0x00000100U;
+enum uint DOT11_PHY_ATTRIBUTES_REVISION_1 = 0x00000001U;
 
 enum : uint
 {
-    DOT11_EXTSTA_ATTRIBUTES_SAFEMODE_OID_SUPPORTED = 0x00000001,
-    DOT11_EXTSTA_ATTRIBUTES_SAFEMODE_CERTIFIED     = 0x00000002,
-    DOT11_EXTSTA_ATTRIBUTES_SAFEMODE_RESERVED      = 0x0000000c,
-    DOT11_EXTSTA_ATTRIBUTES_REVISION_1             = 0x00000001,
-    DOT11_EXTSTA_ATTRIBUTES_REVISION_2             = 0x00000002,
-    DOT11_EXTSTA_ATTRIBUTES_REVISION_3             = 0x00000003,
-    DOT11_EXTSTA_ATTRIBUTES_REVISION_4             = 0x00000004,
+    DOT11_EXTSTA_ATTRIBUTES_SAFEMODE_OID_SUPPORTED = 0x00000001U,
+    DOT11_EXTSTA_ATTRIBUTES_SAFEMODE_CERTIFIED     = 0x00000002U,
+    DOT11_EXTSTA_ATTRIBUTES_SAFEMODE_RESERVED      = 0x0000000cU,
+    DOT11_EXTSTA_ATTRIBUTES_REVISION_1             = 0x00000001U,
+    DOT11_EXTSTA_ATTRIBUTES_REVISION_2             = 0x00000002U,
+    DOT11_EXTSTA_ATTRIBUTES_REVISION_3             = 0x00000003U,
+    DOT11_EXTSTA_ATTRIBUTES_REVISION_4             = 0x00000004U,
 }
 
-enum uint DOT11_SEND_CONTEXT_REVISION_1 = 0x00000001;
-enum uint DOT11_RECV_CONTEXT_REVISION_1 = 0x00000001;
+enum uint DOT11_SEND_CONTEXT_REVISION_1 = 0x00000001U;
+enum uint DOT11_RECV_CONTEXT_REVISION_1 = 0x00000001U;
 
 enum : uint
 {
-    DOT11_STATUS_SUCCESS              = 0x00000001,
-    DOT11_STATUS_RETRY_LIMIT_EXCEEDED = 0x00000002,
+    DOT11_STATUS_SUCCESS              = 0x00000001U,
+    DOT11_STATUS_RETRY_LIMIT_EXCEEDED = 0x00000002U,
 }
 
 enum : uint
 {
-    DOT11_STATUS_UNSUPPORTED_PRIORITY      = 0x00000004,
-    DOT11_STATUS_UNSUPPORTED_SERVICE_CLASS = 0x00000008,
+    DOT11_STATUS_UNSUPPORTED_PRIORITY      = 0x00000004U,
+    DOT11_STATUS_UNSUPPORTED_SERVICE_CLASS = 0x00000008U,
 }
 
 enum : uint
 {
-    DOT11_STATUS_UNAVAILABLE_PRIORITY      = 0x00000010,
-    DOT11_STATUS_UNAVAILABLE_SERVICE_CLASS = 0x00000020,
+    DOT11_STATUS_UNAVAILABLE_PRIORITY      = 0x00000010U,
+    DOT11_STATUS_UNAVAILABLE_SERVICE_CLASS = 0x00000020U,
 }
 
-enum uint DOT11_STATUS_XMIT_MSDU_TIMER_EXPIRED = 0x00000040;
+enum uint DOT11_STATUS_XMIT_MSDU_TIMER_EXPIRED = 0x00000040U;
 
 enum : uint
 {
-    DOT11_STATUS_UNAVAILABLE_BSS        = 0x00000080,
-    DOT11_STATUS_EXCESSIVE_DATA_LENGTH  = 0x00000100,
-    DOT11_STATUS_ENCRYPTION_FAILED      = 0x00000200,
-    DOT11_STATUS_WEP_KEY_UNAVAILABLE    = 0x00000400,
-    DOT11_STATUS_ICV_VERIFIED           = 0x00000800,
-    DOT11_STATUS_PACKET_REASSEMBLED     = 0x00001000,
-    DOT11_STATUS_PACKET_NOT_REASSEMBLED = 0x00002000,
+    DOT11_STATUS_UNAVAILABLE_BSS        = 0x00000080U,
+    DOT11_STATUS_EXCESSIVE_DATA_LENGTH  = 0x00000100U,
+    DOT11_STATUS_ENCRYPTION_FAILED      = 0x00000200U,
+    DOT11_STATUS_WEP_KEY_UNAVAILABLE    = 0x00000400U,
+    DOT11_STATUS_ICV_VERIFIED           = 0x00000800U,
+    DOT11_STATUS_PACKET_REASSEMBLED     = 0x00001000U,
+    DOT11_STATUS_PACKET_NOT_REASSEMBLED = 0x00002000U,
 }
 
-enum uint DOT11_STATUS_GENERATE_AUTH_FAILED = 0x00004000;
+enum uint DOT11_STATUS_GENERATE_AUTH_FAILED = 0x00004000U;
 
 enum : uint
 {
-    DOT11_STATUS_AUTH_NOT_VERIFIED       = 0x00008000,
-    DOT11_STATUS_AUTH_VERIFIED           = 0x00010000,
-    DOT11_STATUS_AUTH_FAILED             = 0x00020000,
-    DOT11_STATUS_PS_LIFETIME_EXPIRED     = 0x00040000,
-    DOT11_STATUS_RESET_CONFIRM           = 0x00000004,
-    DOT11_STATUS_SCAN_CONFIRM            = 0x00000001,
-    DOT11_STATUS_JOIN_CONFIRM            = 0x00000002,
-    DOT11_STATUS_START_CONFIRM           = 0x00000003,
-    DOT11_STATUS_AP_JOIN_CONFIRM         = 0x00000005,
-    DOT11_STATUS_MPDU_MAX_LENGTH_CHANGED = 0x00000006,
+    DOT11_STATUS_AUTH_NOT_VERIFIED       = 0x00008000U,
+    DOT11_STATUS_AUTH_VERIFIED           = 0x00010000U,
+    DOT11_STATUS_AUTH_FAILED             = 0x00020000U,
+    DOT11_STATUS_PS_LIFETIME_EXPIRED     = 0x00040000U,
+    DOT11_STATUS_RESET_CONFIRM           = 0x00000004U,
+    DOT11_STATUS_SCAN_CONFIRM            = 0x00000001U,
+    DOT11_STATUS_JOIN_CONFIRM            = 0x00000002U,
+    DOT11_STATUS_START_CONFIRM           = 0x00000003U,
+    DOT11_STATUS_AP_JOIN_CONFIRM         = 0x00000005U,
+    DOT11_STATUS_MPDU_MAX_LENGTH_CHANGED = 0x00000006U,
 }
 
-enum uint DOT11_MPDU_MAX_LENGTH_INDICATION_REVISION_1 = 0x00000001;
-enum uint DOT11_ASSOCIATION_START_PARAMETERS_REVISION_1 = 0x00000001;
+enum uint DOT11_MPDU_MAX_LENGTH_INDICATION_REVISION_1 = 0x00000001U;
+enum uint DOT11_ASSOCIATION_START_PARAMETERS_REVISION_1 = 0x00000001U;
 
 enum : uint
 {
-    DOT11_ENCAP_RFC_1042 = 0x00000001,
-    DOT11_ENCAP_802_1H   = 0x00000002,
+    DOT11_ENCAP_RFC_1042 = 0x00000001U,
+    DOT11_ENCAP_802_1H   = 0x00000002U,
 }
 
 enum : uint
 {
-    DOT11_ASSOC_STATUS_SUCCESS                         = 0x00000000,
-    DOT11_ASSOCIATION_COMPLETION_PARAMETERS_REVISION_1 = 0x00000001,
-    DOT11_ASSOCIATION_COMPLETION_PARAMETERS_REVISION_2 = 0x00000002,
+    DOT11_ASSOC_STATUS_SUCCESS                         = 0x00000000U,
+    DOT11_ASSOCIATION_COMPLETION_PARAMETERS_REVISION_1 = 0x00000001U,
+    DOT11_ASSOCIATION_COMPLETION_PARAMETERS_REVISION_2 = 0x00000002U,
 }
 
 enum : uint
 {
-    DOT11_CONNECTION_START_PARAMETERS_REVISION_1      = 0x00000001,
-    DOT11_CONNECTION_STATUS_SUCCESS                   = 0x00000000,
-    DOT11_CONNECTION_COMPLETION_PARAMETERS_REVISION_1 = 0x00000001,
+    DOT11_CONNECTION_START_PARAMETERS_REVISION_1      = 0x00000001U,
+    DOT11_CONNECTION_STATUS_SUCCESS                   = 0x00000000U,
+    DOT11_CONNECTION_COMPLETION_PARAMETERS_REVISION_1 = 0x00000001U,
 }
 
-enum uint DOT11_ROAMING_START_PARAMETERS_REVISION_1 = 0x00000001;
-enum uint DOT11_ROAMING_COMPLETION_PARAMETERS_REVISION_1 = 0x00000001;
-enum uint DOT11_DISASSOCIATION_PARAMETERS_REVISION_1 = 0x00000001;
-enum uint DOT11_TKIPMIC_FAILURE_PARAMETERS_REVISION_1 = 0x00000001;
-enum uint DOT11_PMKID_CANDIDATE_LIST_PARAMETERS_REVISION_1 = 0x00000001;
-enum uint DOT11_PHY_STATE_PARAMETERS_REVISION_1 = 0x00000001;
-enum uint DOT11_LINK_QUALITY_PARAMETERS_REVISION_1 = 0x00000001;
-enum uint DOT11_EXTSTA_SEND_CONTEXT_REVISION_1 = 0x00000001;
-enum uint DOT11_EXTSTA_RECV_CONTEXT_REVISION_1 = 0x00000001;
-enum uint OID_DOT11_PRIVATE_OIDS_START = 0x0d010700;
-enum uint OID_DOT11_CURRENT_ADDRESS = 0x0d010702;
-enum uint OID_DOT11_PERMANENT_ADDRESS = 0x0d010703;
+enum uint DOT11_ROAMING_START_PARAMETERS_REVISION_1 = 0x00000001U;
+enum uint DOT11_ROAMING_COMPLETION_PARAMETERS_REVISION_1 = 0x00000001U;
+enum uint DOT11_DISASSOCIATION_PARAMETERS_REVISION_1 = 0x00000001U;
+enum uint DOT11_TKIPMIC_FAILURE_PARAMETERS_REVISION_1 = 0x00000001U;
+enum uint DOT11_PMKID_CANDIDATE_LIST_PARAMETERS_REVISION_1 = 0x00000001U;
+enum uint DOT11_PHY_STATE_PARAMETERS_REVISION_1 = 0x00000001U;
+enum uint DOT11_LINK_QUALITY_PARAMETERS_REVISION_1 = 0x00000001U;
+enum uint DOT11_EXTSTA_SEND_CONTEXT_REVISION_1 = 0x00000001U;
+enum uint DOT11_EXTSTA_RECV_CONTEXT_REVISION_1 = 0x00000001U;
+enum uint OID_DOT11_PRIVATE_OIDS_START = 0x0d010700U;
+enum uint OID_DOT11_CURRENT_ADDRESS = 0x0d010702U;
+enum uint OID_DOT11_PERMANENT_ADDRESS = 0x0d010703U;
 
 enum : uint
 {
-    OID_DOT11_MULTICAST_LIST    = 0x0d010704,
-    OID_DOT11_MAXIMUM_LIST_SIZE = 0x0d010705,
+    OID_DOT11_MULTICAST_LIST    = 0x0d010704U,
+    OID_DOT11_MAXIMUM_LIST_SIZE = 0x0d010705U,
 }
 
-enum uint DOT11_EXTAP_ATTRIBUTES_REVISION_1 = 0x00000001;
+enum uint DOT11_EXTAP_ATTRIBUTES_REVISION_1 = 0x00000001U;
 
 enum : uint
 {
-    DOT11_INCOMING_ASSOC_STARTED_PARAMETERS_REVISION_1          = 0x00000001,
-    DOT11_INCOMING_ASSOC_REQUEST_RECEIVED_PARAMETERS_REVISION_1 = 0x00000001,
+    DOT11_INCOMING_ASSOC_STARTED_PARAMETERS_REVISION_1          = 0x00000001U,
+    DOT11_INCOMING_ASSOC_REQUEST_RECEIVED_PARAMETERS_REVISION_1 = 0x00000001U,
 }
 
 enum : uint
 {
-    DOT11_ASSOC_ERROR_SOURCE_OS     = 0x00000000,
-    DOT11_ASSOC_ERROR_SOURCE_REMOTE = 0x00000001,
-    DOT11_ASSOC_ERROR_SOURCE_OTHER  = 0x000000ff,
+    DOT11_ASSOC_ERROR_SOURCE_OS     = 0x00000000U,
+    DOT11_ASSOC_ERROR_SOURCE_REMOTE = 0x00000001U,
+    DOT11_ASSOC_ERROR_SOURCE_OTHER  = 0x000000ffU,
 }
 
-enum uint DOT11_INCOMING_ASSOC_COMPLETION_PARAMETERS_REVISION_1 = 0x00000001;
-enum uint DOT11_STOP_AP_PARAMETERS_REVISION_1 = 0x00000001;
+enum uint DOT11_INCOMING_ASSOC_COMPLETION_PARAMETERS_REVISION_1 = 0x00000001U;
+enum uint DOT11_STOP_AP_PARAMETERS_REVISION_1 = 0x00000001U;
 
 enum : uint
 {
-    DOT11_STOP_AP_REASON_FREQUENCY_NOT_AVAILABLE = 0x00000001,
-    DOT11_STOP_AP_REASON_CHANNEL_NOT_AVAILABLE   = 0x00000002,
-    DOT11_STOP_AP_REASON_AP_ACTIVE               = 0x00000003,
-    DOT11_STOP_AP_REASON_IHV_START               = 0xff000000,
-    DOT11_STOP_AP_REASON_IHV_END                 = 0xffffffff,
+    DOT11_STOP_AP_REASON_FREQUENCY_NOT_AVAILABLE = 0x00000001U,
+    DOT11_STOP_AP_REASON_CHANNEL_NOT_AVAILABLE   = 0x00000002U,
+    DOT11_STOP_AP_REASON_AP_ACTIVE               = 0x00000003U,
+    DOT11_STOP_AP_REASON_IHV_START               = 0xff000000U,
+    DOT11_STOP_AP_REASON_IHV_END                 = 0xffffffffU,
 }
 
-enum uint DOT11_PHY_FREQUENCY_ADOPTED_PARAMETERS_REVISION_1 = 0x00000001;
+enum uint DOT11_PHY_FREQUENCY_ADOPTED_PARAMETERS_REVISION_1 = 0x00000001U;
 
 enum : uint
 {
-    DOT11_CAN_SUSTAIN_AP_PARAMETERS_REVISION_1 = 0x00000001,
-    DOT11_CAN_SUSTAIN_AP_REASON_IHV_START      = 0xff000000,
-    DOT11_CAN_SUSTAIN_AP_REASON_IHV_END        = 0xffffffff,
+    DOT11_CAN_SUSTAIN_AP_PARAMETERS_REVISION_1 = 0x00000001U,
+    DOT11_CAN_SUSTAIN_AP_REASON_IHV_START      = 0xff000000U,
+    DOT11_CAN_SUSTAIN_AP_REASON_IHV_END        = 0xffffffffU,
 }
 
 enum : uint
 {
-    DOT11_AVAILABLE_CHANNEL_LIST_REVISION_1   = 0x00000001,
-    DOT11_AVAILABLE_FREQUENCY_LIST_REVISION_1 = 0x00000001,
+    DOT11_AVAILABLE_CHANNEL_LIST_REVISION_1   = 0x00000001U,
+    DOT11_AVAILABLE_FREQUENCY_LIST_REVISION_1 = 0x00000001U,
 }
 
-enum uint DOT11_DISASSOCIATE_PEER_REQUEST_REVISION_1 = 0x00000001;
+enum uint DOT11_DISASSOCIATE_PEER_REQUEST_REVISION_1 = 0x00000001U;
 
 enum : uint
 {
-    DOT11_INCOMING_ASSOC_DECISION_REVISION_1 = 0x00000001,
-    DOT11_INCOMING_ASSOC_DECISION_REVISION_2 = 0x00000002,
+    DOT11_INCOMING_ASSOC_DECISION_REVISION_1 = 0x00000001U,
+    DOT11_INCOMING_ASSOC_DECISION_REVISION_2 = 0x00000002U,
 }
 
-enum uint DOT11_ADDITIONAL_IE_REVISION_1 = 0x00000001;
-enum uint DOT11_EXTAP_SEND_CONTEXT_REVISION_1 = 0x00000001;
-enum uint DOT11_EXTAP_RECV_CONTEXT_REVISION_1 = 0x00000001;
-enum uint DOT11_PEER_INFO_LIST_REVISION_1 = 0x00000001;
+enum uint DOT11_ADDITIONAL_IE_REVISION_1 = 0x00000001U;
+enum uint DOT11_EXTAP_SEND_CONTEXT_REVISION_1 = 0x00000001U;
+enum uint DOT11_EXTAP_RECV_CONTEXT_REVISION_1 = 0x00000001U;
+enum uint DOT11_PEER_INFO_LIST_REVISION_1 = 0x00000001U;
 
 enum : uint
 {
-    DOT11_VWIFI_COMBINATION_REVISION_1 = 0x00000001,
-    DOT11_VWIFI_COMBINATION_REVISION_2 = 0x00000002,
-    DOT11_VWIFI_COMBINATION_REVISION_3 = 0x00000003,
+    DOT11_VWIFI_COMBINATION_REVISION_1 = 0x00000001U,
+    DOT11_VWIFI_COMBINATION_REVISION_2 = 0x00000002U,
+    DOT11_VWIFI_COMBINATION_REVISION_3 = 0x00000003U,
 }
 
-enum uint DOT11_VWIFI_ATTRIBUTES_REVISION_1 = 0x00000001;
-enum uint DOT11_MAC_PARAMETERS_REVISION_1 = 0x00000001;
-enum uint DOT11_WFD_ATTRIBUTES_REVISION_1 = 0x00000001;
+enum uint DOT11_VWIFI_ATTRIBUTES_REVISION_1 = 0x00000001U;
+enum uint DOT11_MAC_PARAMETERS_REVISION_1 = 0x00000001U;
+enum uint DOT11_WFD_ATTRIBUTES_REVISION_1 = 0x00000001U;
 
 enum : uint
 {
-    DOT11_WFD_STATUS_SUCCESS                                 = 0x00000000,
-    DOT11_WFD_STATUS_FAILED_INFORMATION_IS_UNAVAILABLE       = 0x00000001,
-    DOT11_WFD_STATUS_FAILED_INCOMPATIBLE_PARAMETERS          = 0x00000002,
-    DOT11_WFD_STATUS_FAILED_LIMIT_REACHED                    = 0x00000003,
-    DOT11_WFD_STATUS_FAILED_INVALID_PARAMETERS               = 0x00000004,
-    DOT11_WFD_STATUS_FAILED_UNABLE_TO_ACCOMODATE_REQUEST     = 0x00000005,
-    DOT11_WFD_STATUS_FAILED_PREVIOUS_PROTOCOL_ERROR          = 0x00000006,
-    DOT11_WFD_STATUS_FAILED_NO_COMMON_CHANNELS               = 0x00000007,
-    DOT11_WFD_STATUS_FAILED_UNKNOWN_WFD_GROUP                = 0x00000008,
-    DOT11_WFD_STATUS_FAILED_MATCHING_MAX_INTENT              = 0x00000009,
-    DOT11_WFD_STATUS_FAILED_INCOMPATIBLE_PROVISIONING_METHOD = 0x0000000a,
-    DOT11_WFD_STATUS_FAILED_REJECTED_BY_USER                 = 0x0000000b,
-    DOT11_WFD_STATUS_SUCCESS_ACCEPTED_BY_USER                = 0x0000000c,
+    DOT11_WFD_STATUS_SUCCESS                                 = 0x00000000U,
+    DOT11_WFD_STATUS_FAILED_INFORMATION_IS_UNAVAILABLE       = 0x00000001U,
+    DOT11_WFD_STATUS_FAILED_INCOMPATIBLE_PARAMETERS          = 0x00000002U,
+    DOT11_WFD_STATUS_FAILED_LIMIT_REACHED                    = 0x00000003U,
+    DOT11_WFD_STATUS_FAILED_INVALID_PARAMETERS               = 0x00000004U,
+    DOT11_WFD_STATUS_FAILED_UNABLE_TO_ACCOMODATE_REQUEST     = 0x00000005U,
+    DOT11_WFD_STATUS_FAILED_PREVIOUS_PROTOCOL_ERROR          = 0x00000006U,
+    DOT11_WFD_STATUS_FAILED_NO_COMMON_CHANNELS               = 0x00000007U,
+    DOT11_WFD_STATUS_FAILED_UNKNOWN_WFD_GROUP                = 0x00000008U,
+    DOT11_WFD_STATUS_FAILED_MATCHING_MAX_INTENT              = 0x00000009U,
+    DOT11_WFD_STATUS_FAILED_INCOMPATIBLE_PROVISIONING_METHOD = 0x0000000aU,
+    DOT11_WFD_STATUS_FAILED_REJECTED_BY_USER                 = 0x0000000bU,
+    DOT11_WFD_STATUS_SUCCESS_ACCEPTED_BY_USER                = 0x0000000cU,
 }
 
 enum : uint
 {
-    DOT11_WFD_MINOR_REASON_SUCCESS                                          = 0x00000000,
-    DOT11_WFD_MINOR_REASON_DISASSOCIATED_FROM_WLAN_CROSS_CONNECTION_POLICY  = 0x00000001,
-    DOT11_WFD_MINOR_REASON_DISASSOCIATED_NOT_MANAGED_INFRASTRUCTURE_CAPABLE = 0x00000002,
-    DOT11_WFD_MINOR_REASON_DISASSOCIATED_WFD_COEXISTENCE_POLICY             = 0x00000003,
-    DOT11_WFD_MINOR_REASON_DISASSOCIATED_INFRASTRUCTURE_MANAGED_POLICY      = 0x00000004,
+    DOT11_WFD_MINOR_REASON_SUCCESS                                          = 0x00000000U,
+    DOT11_WFD_MINOR_REASON_DISASSOCIATED_FROM_WLAN_CROSS_CONNECTION_POLICY  = 0x00000001U,
+    DOT11_WFD_MINOR_REASON_DISASSOCIATED_NOT_MANAGED_INFRASTRUCTURE_CAPABLE = 0x00000002U,
+    DOT11_WFD_MINOR_REASON_DISASSOCIATED_WFD_COEXISTENCE_POLICY             = 0x00000003U,
+    DOT11_WFD_MINOR_REASON_DISASSOCIATED_INFRASTRUCTURE_MANAGED_POLICY      = 0x00000004U,
 }
 
 enum : uint
 {
-    DOT11_WPS_VERSION_1_0 = 0x00000001,
-    DOT11_WPS_VERSION_2_0 = 0x00000002,
+    DOT11_WPS_VERSION_1_0 = 0x00000001U,
+    DOT11_WPS_VERSION_2_0 = 0x00000002U,
 }
 
 enum : uint
 {
-    DOT11_WFD_DEVICE_CAPABILITY_SERVICE_DISCOVERY          = 0x00000001,
-    DOT11_WFD_DEVICE_CAPABILITY_P2P_CLIENT_DISCOVERABILITY = 0x00000002,
-    DOT11_WFD_DEVICE_CAPABILITY_CONCURRENT_OPERATION       = 0x00000004,
-    DOT11_WFD_DEVICE_CAPABILITY_P2P_INFRASTRUCTURE_MANAGED = 0x00000008,
-    DOT11_WFD_DEVICE_CAPABILITY_P2P_DEVICE_LIMIT           = 0x00000010,
-    DOT11_WFD_DEVICE_CAPABILITY_P2P_INVITATION_PROCEDURE   = 0x00000020,
-    DOT11_WFD_DEVICE_CAPABILITY_RESERVED_6                 = 0x00000040,
-    DOT11_WFD_DEVICE_CAPABILITY_RESERVED_7                 = 0x00000080,
+    DOT11_WFD_DEVICE_CAPABILITY_SERVICE_DISCOVERY          = 0x00000001U,
+    DOT11_WFD_DEVICE_CAPABILITY_P2P_CLIENT_DISCOVERABILITY = 0x00000002U,
+    DOT11_WFD_DEVICE_CAPABILITY_CONCURRENT_OPERATION       = 0x00000004U,
+    DOT11_WFD_DEVICE_CAPABILITY_P2P_INFRASTRUCTURE_MANAGED = 0x00000008U,
+    DOT11_WFD_DEVICE_CAPABILITY_P2P_DEVICE_LIMIT           = 0x00000010U,
+    DOT11_WFD_DEVICE_CAPABILITY_P2P_INVITATION_PROCEDURE   = 0x00000020U,
+    DOT11_WFD_DEVICE_CAPABILITY_RESERVED_6                 = 0x00000040U,
+    DOT11_WFD_DEVICE_CAPABILITY_RESERVED_7                 = 0x00000080U,
 }
 
 enum : uint
 {
-    DOT11_WFD_GROUP_CAPABILITY_NONE                                      = 0x00000000,
-    DOT11_WFD_GROUP_CAPABILITY_GROUP_OWNER                               = 0x00000001,
-    DOT11_WFD_GROUP_CAPABILITY_PERSISTENT_GROUP                          = 0x00000002,
-    DOT11_WFD_GROUP_CAPABILITY_GROUP_LIMIT_REACHED                       = 0x00000004,
-    DOT11_WFD_GROUP_CAPABILITY_INTRABSS_DISTRIBUTION_SUPPORTED           = 0x00000008,
-    DOT11_WFD_GROUP_CAPABILITY_CROSS_CONNECTION_SUPPORTED                = 0x00000010,
-    DOT11_WFD_GROUP_CAPABILITY_PERSISTENT_RECONNECT_SUPPORTED            = 0x00000020,
-    DOT11_WFD_GROUP_CAPABILITY_IN_GROUP_FORMATION                        = 0x00000040,
-    DOT11_WFD_GROUP_CAPABILITY_RESERVED_7                                = 0x00000080,
-    DOT11_WFD_GROUP_CAPABILITY_EAPOL_KEY_IP_ADDRESS_ALLOCATION_SUPPORTED = 0x00000080,
+    DOT11_WFD_GROUP_CAPABILITY_NONE                                      = 0x00000000U,
+    DOT11_WFD_GROUP_CAPABILITY_GROUP_OWNER                               = 0x00000001U,
+    DOT11_WFD_GROUP_CAPABILITY_PERSISTENT_GROUP                          = 0x00000002U,
+    DOT11_WFD_GROUP_CAPABILITY_GROUP_LIMIT_REACHED                       = 0x00000004U,
+    DOT11_WFD_GROUP_CAPABILITY_INTRABSS_DISTRIBUTION_SUPPORTED           = 0x00000008U,
+    DOT11_WFD_GROUP_CAPABILITY_CROSS_CONNECTION_SUPPORTED                = 0x00000010U,
+    DOT11_WFD_GROUP_CAPABILITY_PERSISTENT_RECONNECT_SUPPORTED            = 0x00000020U,
+    DOT11_WFD_GROUP_CAPABILITY_IN_GROUP_FORMATION                        = 0x00000040U,
+    DOT11_WFD_GROUP_CAPABILITY_RESERVED_7                                = 0x00000080U,
+    DOT11_WFD_GROUP_CAPABILITY_EAPOL_KEY_IP_ADDRESS_ALLOCATION_SUPPORTED = 0x00000080U,
 }
 
-enum uint DOT11_WPS_DEVICE_NAME_MAX_LENGTH = 0x00000020;
+enum uint DOT11_WPS_DEVICE_NAME_MAX_LENGTH = 0x00000020U;
 
 enum : uint
 {
-    DOT11_WPS_MAX_PASSKEY_LENGTH      = 0x00000008,
-    DOT11_WPS_MAX_MODEL_NAME_LENGTH   = 0x00000020,
-    DOT11_WPS_MAX_MODEL_NUMBER_LENGTH = 0x00000020,
+    DOT11_WPS_MAX_PASSKEY_LENGTH      = 0x00000008U,
+    DOT11_WPS_MAX_MODEL_NAME_LENGTH   = 0x00000020U,
+    DOT11_WPS_MAX_MODEL_NUMBER_LENGTH = 0x00000020U,
 }
 
 enum : uint
 {
-    WFDSVC_CONNECTION_CAPABILITY_NEW    = 0x00000001,
-    WFDSVC_CONNECTION_CAPABILITY_CLIENT = 0x00000002,
-    WFDSVC_CONNECTION_CAPABILITY_GO     = 0x00000004,
+    WFDSVC_CONNECTION_CAPABILITY_NEW    = 0x00000001U,
+    WFDSVC_CONNECTION_CAPABILITY_CLIENT = 0x00000002U,
+    WFDSVC_CONNECTION_CAPABILITY_GO     = 0x00000004U,
 }
 
 enum : uint
 {
-    DOT11_WFD_DISCOVER_COMPLETE_PARAMETERS_REVISION_1 = 0x00000001,
-    DOT11_WFD_DISCOVER_COMPLETE_MAX_LIST_SIZE         = 0x00000080,
+    DOT11_WFD_DISCOVER_COMPLETE_PARAMETERS_REVISION_1 = 0x00000001U,
+    DOT11_WFD_DISCOVER_COMPLETE_MAX_LIST_SIZE         = 0x00000080U,
 }
 
-enum uint DOT11_GO_NEGOTIATION_REQUEST_SEND_COMPLETE_PARAMETERS_REVISION_1 = 0x00000001;
-enum uint DOT11_RECEIVED_GO_NEGOTIATION_REQUEST_PARAMETERS_REVISION_1 = 0x00000001;
-enum uint DOT11_GO_NEGOTIATION_RESPONSE_SEND_COMPLETE_PARAMETERS_REVISION_1 = 0x00000001;
-enum uint DOT11_RECEIVED_GO_NEGOTIATION_RESPONSE_PARAMETERS_REVISION_1 = 0x00000001;
-enum uint DOT11_GO_NEGOTIATION_CONFIRMATION_SEND_COMPLETE_PARAMETERS_REVISION_1 = 0x00000001;
-enum uint DOT11_RECEIVED_GO_NEGOTIATION_CONFIRMATION_PARAMETERS_REVISION_1 = 0x00000001;
-enum uint DOT11_INVITATION_REQUEST_SEND_COMPLETE_PARAMETERS_REVISION_1 = 0x00000001;
-enum uint DOT11_RECEIVED_INVITATION_REQUEST_PARAMETERS_REVISION_1 = 0x00000001;
-enum uint DOT11_INVITATION_RESPONSE_SEND_COMPLETE_PARAMETERS_REVISION_1 = 0x00000001;
-enum uint DOT11_RECEIVED_INVITATION_RESPONSE_PARAMETERS_REVISION_1 = 0x00000001;
-enum uint DOT11_PROVISION_DISCOVERY_REQUEST_SEND_COMPLETE_PARAMETERS_REVISION_1 = 0x00000001;
-enum uint DOT11_RECEIVED_PROVISION_DISCOVERY_REQUEST_PARAMETERS_REVISION_1 = 0x00000001;
-enum uint DOT11_PROVISION_DISCOVERY_RESPONSE_SEND_COMPLETE_PARAMETERS_REVISION_1 = 0x00000001;
-enum uint DOT11_RECEIVED_PROVISION_DISCOVERY_RESPONSE_PARAMETERS_REVISION_1 = 0x00000001;
-enum uint DOT11_ANQP_QUERY_COMPLETE_PARAMETERS_REVISION_1 = 0x00000001;
-enum uint DOT11_WFD_DEVICE_CAPABILITY_CONFIG_REVISION_1 = 0x00000001;
+enum uint DOT11_GO_NEGOTIATION_REQUEST_SEND_COMPLETE_PARAMETERS_REVISION_1 = 0x00000001U;
+enum uint DOT11_RECEIVED_GO_NEGOTIATION_REQUEST_PARAMETERS_REVISION_1 = 0x00000001U;
+enum uint DOT11_GO_NEGOTIATION_RESPONSE_SEND_COMPLETE_PARAMETERS_REVISION_1 = 0x00000001U;
+enum uint DOT11_RECEIVED_GO_NEGOTIATION_RESPONSE_PARAMETERS_REVISION_1 = 0x00000001U;
+enum uint DOT11_GO_NEGOTIATION_CONFIRMATION_SEND_COMPLETE_PARAMETERS_REVISION_1 = 0x00000001U;
+enum uint DOT11_RECEIVED_GO_NEGOTIATION_CONFIRMATION_PARAMETERS_REVISION_1 = 0x00000001U;
+enum uint DOT11_INVITATION_REQUEST_SEND_COMPLETE_PARAMETERS_REVISION_1 = 0x00000001U;
+enum uint DOT11_RECEIVED_INVITATION_REQUEST_PARAMETERS_REVISION_1 = 0x00000001U;
+enum uint DOT11_INVITATION_RESPONSE_SEND_COMPLETE_PARAMETERS_REVISION_1 = 0x00000001U;
+enum uint DOT11_RECEIVED_INVITATION_RESPONSE_PARAMETERS_REVISION_1 = 0x00000001U;
+enum uint DOT11_PROVISION_DISCOVERY_REQUEST_SEND_COMPLETE_PARAMETERS_REVISION_1 = 0x00000001U;
+enum uint DOT11_RECEIVED_PROVISION_DISCOVERY_REQUEST_PARAMETERS_REVISION_1 = 0x00000001U;
+enum uint DOT11_PROVISION_DISCOVERY_RESPONSE_SEND_COMPLETE_PARAMETERS_REVISION_1 = 0x00000001U;
+enum uint DOT11_RECEIVED_PROVISION_DISCOVERY_RESPONSE_PARAMETERS_REVISION_1 = 0x00000001U;
+enum uint DOT11_ANQP_QUERY_COMPLETE_PARAMETERS_REVISION_1 = 0x00000001U;
+enum uint DOT11_WFD_DEVICE_CAPABILITY_CONFIG_REVISION_1 = 0x00000001U;
 
 enum : uint
 {
-    DOT11_WFD_GROUP_OWNER_CAPABILITY_CONFIG_REVISION_1 = 0x00000001,
-    DOT11_WFD_GROUP_OWNER_CAPABILITY_CONFIG_REVISION_2 = 0x00000002,
+    DOT11_WFD_GROUP_OWNER_CAPABILITY_CONFIG_REVISION_1 = 0x00000001U,
+    DOT11_WFD_GROUP_OWNER_CAPABILITY_CONFIG_REVISION_2 = 0x00000002U,
 }
 
-enum uint DOT11_WFD_DEVICE_INFO_REVISION_1 = 0x00000001;
-enum uint DOT11_WFD_SECONDARY_DEVICE_TYPE_LIST_REVISION_1 = 0x00000001;
+enum uint DOT11_WFD_DEVICE_INFO_REVISION_1 = 0x00000001U;
+enum uint DOT11_WFD_SECONDARY_DEVICE_TYPE_LIST_REVISION_1 = 0x00000001U;
 
 enum : uint
 {
-    DISCOVERY_FILTER_BITMASK_DEVICE = 0x00000001,
-    DISCOVERY_FILTER_BITMASK_GO     = 0x00000002,
-    DISCOVERY_FILTER_BITMASK_ANY    = 0x0000000f,
+    DISCOVERY_FILTER_BITMASK_DEVICE = 0x00000001U,
+    DISCOVERY_FILTER_BITMASK_GO     = 0x00000002U,
+    DISCOVERY_FILTER_BITMASK_ANY    = 0x0000000fU,
 }
 
-enum uint DOT11_WFD_DISCOVER_REQUEST_REVISION_1 = 0x00000001;
-enum uint DOT11_DEVICE_ENTRY_BYTE_ARRAY_REVISION_1 = 0x00000001;
+enum uint DOT11_WFD_DISCOVER_REQUEST_REVISION_1 = 0x00000001U;
+enum uint DOT11_DEVICE_ENTRY_BYTE_ARRAY_REVISION_1 = 0x00000001U;
 
 enum : uint
 {
-    DOT11_WFD_DEVICE_NOT_DISCOVERABLE  = 0x00000000,
-    DOT11_WFD_DEVICE_AUTO_AVAILABILITY = 0x00000010,
-    DOT11_WFD_DEVICE_HIGH_AVAILABILITY = 0x00000018,
+    DOT11_WFD_DEVICE_NOT_DISCOVERABLE  = 0x00000000U,
+    DOT11_WFD_DEVICE_AUTO_AVAILABILITY = 0x00000010U,
+    DOT11_WFD_DEVICE_HIGH_AVAILABILITY = 0x00000018U,
 }
 
-enum uint DOT11_WFD_ADDITIONAL_IE_REVISION_1 = 0x00000001;
+enum uint DOT11_WFD_ADDITIONAL_IE_REVISION_1 = 0x00000001U;
 
 enum : uint
 {
-    DOT11_SEND_GO_NEGOTIATION_REQUEST_PARAMETERS_REVISION_1      = 0x00000001,
-    DOT11_SEND_GO_NEGOTIATION_RESPONSE_PARAMETERS_REVISION_1     = 0x00000001,
-    DOT11_SEND_GO_NEGOTIATION_CONFIRMATION_PARAMETERS_REVISION_1 = 0x00000001,
+    DOT11_SEND_GO_NEGOTIATION_REQUEST_PARAMETERS_REVISION_1      = 0x00000001U,
+    DOT11_SEND_GO_NEGOTIATION_RESPONSE_PARAMETERS_REVISION_1     = 0x00000001U,
+    DOT11_SEND_GO_NEGOTIATION_CONFIRMATION_PARAMETERS_REVISION_1 = 0x00000001U,
 }
 
 enum : uint
 {
-    DOT11_SEND_INVITATION_REQUEST_PARAMETERS_REVISION_1  = 0x00000001,
-    DOT11_SEND_INVITATION_RESPONSE_PARAMETERS_REVISION_1 = 0x00000001,
+    DOT11_SEND_INVITATION_REQUEST_PARAMETERS_REVISION_1  = 0x00000001U,
+    DOT11_SEND_INVITATION_RESPONSE_PARAMETERS_REVISION_1 = 0x00000001U,
 }
 
 enum : uint
 {
-    DOT11_SEND_PROVISION_DISCOVERY_REQUEST_PARAMETERS_REVISION_1  = 0x00000001,
-    DOT11_SEND_PROVISION_DISCOVERY_RESPONSE_PARAMETERS_REVISION_1 = 0x00000001,
+    DOT11_SEND_PROVISION_DISCOVERY_REQUEST_PARAMETERS_REVISION_1  = 0x00000001U,
+    DOT11_SEND_PROVISION_DISCOVERY_RESPONSE_PARAMETERS_REVISION_1 = 0x00000001U,
 }
 
-enum uint DOT11_WFD_DEVICE_LISTEN_CHANNEL_REVISION_1 = 0x00000001;
-enum uint DOT11_WFD_GROUP_START_PARAMETERS_REVISION_1 = 0x00000001;
-enum uint DOT11_WFD_GROUP_JOIN_PARAMETERS_REVISION_1 = 0x00000001;
-enum uint DOT11_POWER_MGMT_AUTO_MODE_ENABLED_REVISION_1 = 0x00000001;
-enum uint DOT11_POWER_MGMT_MODE_STATUS_INFO_REVISION_1 = 0x00000001;
-enum uint DOT11_MAX_CHANNEL_HINTS = 0x00000004;
-enum uint DOT11_INVALID_CHANNEL_NUMBER = 0x00000000;
+enum uint DOT11_WFD_DEVICE_LISTEN_CHANNEL_REVISION_1 = 0x00000001U;
+enum uint DOT11_WFD_GROUP_START_PARAMETERS_REVISION_1 = 0x00000001U;
+enum uint DOT11_WFD_GROUP_JOIN_PARAMETERS_REVISION_1 = 0x00000001U;
+enum uint DOT11_POWER_MGMT_AUTO_MODE_ENABLED_REVISION_1 = 0x00000001U;
+enum uint DOT11_POWER_MGMT_MODE_STATUS_INFO_REVISION_1 = 0x00000001U;
+enum uint DOT11_MAX_CHANNEL_HINTS = 0x00000004U;
+enum uint DOT11_INVALID_CHANNEL_NUMBER = 0x00000000U;
 
 enum : uint
 {
-    DOT11_NLO_FLAG_STOP_NLO_INDICATION   = 0x00000001,
-    DOT11_NLO_FLAG_SCAN_ON_AOAC_PLATFORM = 0x00000002,
-    DOT11_NLO_FLAG_SCAN_AT_SYSTEM_RESUME = 0x00000004,
+    DOT11_NLO_FLAG_STOP_NLO_INDICATION   = 0x00000001U,
+    DOT11_NLO_FLAG_SCAN_ON_AOAC_PLATFORM = 0x00000002U,
+    DOT11_NLO_FLAG_SCAN_AT_SYSTEM_RESUME = 0x00000004U,
 }
 
 enum : uint
 {
-    DOT11_OFFLOAD_NETWORK_LIST_REVISION_1              = 0x00000001,
-    DOT11_OFFLOAD_NETWORK_STATUS_PARAMETERS_REVISION_1 = 0x00000001,
+    DOT11_OFFLOAD_NETWORK_LIST_REVISION_1              = 0x00000001U,
+    DOT11_OFFLOAD_NETWORK_STATUS_PARAMETERS_REVISION_1 = 0x00000001U,
 }
 
 enum : uint
 {
-    DOT11_MANUFACTURING_TEST_REVISION_1     = 0x00000001,
-    DOT11_MANUFACTURING_CALLBACK_REVISION_1 = 0x00000001,
+    DOT11_MANUFACTURING_TEST_REVISION_1     = 0x00000001U,
+    DOT11_MANUFACTURING_CALLBACK_REVISION_1 = 0x00000001U,
 }
 
-enum uint DOT11_SSID_MAX_LENGTH = 0x00000020;
+enum uint DOT11_SSID_MAX_LENGTH = 0x00000020U;
 
 enum : uint
 {
-    DOT11_OI_MAX_LENGTH = 0x00000005,
-    DOT11_OI_MIN_LENGTH = 0x00000003,
+    DOT11_OI_MAX_LENGTH = 0x00000005U,
+    DOT11_OI_MIN_LENGTH = 0x00000003U,
 }
 
 enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3625450536, 31038, 19358, 153, 112, 70, 157, 139, 230, 48, 115}, 1))], [])*/DEVPROPKEY
@@ -1955,242 +2040,242 @@ enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSi
 
 enum : uint
 {
-    WLAN_API_VERSION_1_0 = 0x00000001,
-    WLAN_API_VERSION_2_0 = 0x00000002,
-    WLAN_API_VERSION     = 0x00000002,
+    WLAN_API_VERSION_1_0 = 0x00000001U,
+    WLAN_API_VERSION_2_0 = 0x00000002U,
+    WLAN_API_VERSION     = 0x00000002U,
 }
 
-enum uint WLAN_MAX_NAME_LENGTH = 0x00000100;
+enum uint WLAN_MAX_NAME_LENGTH = 0x00000100U;
 
 enum : uint
 {
-    WLAN_PROFILE_GROUP_POLICY                  = 0x00000001,
-    WLAN_PROFILE_USER                          = 0x00000002,
-    WLAN_PROFILE_GET_PLAINTEXT_KEY             = 0x00000004,
-    WLAN_PROFILE_CONNECTION_MODE_SET_BY_CLIENT = 0x00010000,
-    WLAN_PROFILE_CONNECTION_MODE_AUTO          = 0x00020000,
-}
-
-enum : uint
-{
-    DOT11_PSD_IE_MAX_DATA_SIZE    = 0x000000f0,
-    DOT11_PSD_IE_MAX_ENTRY_NUMBER = 0x00000005,
+    WLAN_PROFILE_GROUP_POLICY                  = 0x00000001U,
+    WLAN_PROFILE_USER                          = 0x00000002U,
+    WLAN_PROFILE_GET_PLAINTEXT_KEY             = 0x00000004U,
+    WLAN_PROFILE_CONNECTION_MODE_SET_BY_CLIENT = 0x00010000U,
+    WLAN_PROFILE_CONNECTION_MODE_AUTO          = 0x00020000U,
 }
 
 enum : uint
 {
-    WLAN_REASON_CODE_NETWORK_NOT_COMPATIBLE     = 0x00020001,
-    WLAN_REASON_CODE_PROFILE_NOT_COMPATIBLE     = 0x00020002,
-    WLAN_REASON_CODE_NO_AUTO_CONNECTION         = 0x00028001,
-    WLAN_REASON_CODE_NOT_VISIBLE                = 0x00028002,
-    WLAN_REASON_CODE_GP_DENIED                  = 0x00028003,
-    WLAN_REASON_CODE_USER_DENIED                = 0x00028004,
-    WLAN_REASON_CODE_BSS_TYPE_NOT_ALLOWED       = 0x00028005,
-    WLAN_REASON_CODE_IN_FAILED_LIST             = 0x00028006,
-    WLAN_REASON_CODE_IN_BLOCKED_LIST            = 0x00028007,
-    WLAN_REASON_CODE_SSID_LIST_TOO_LONG         = 0x00028008,
-    WLAN_REASON_CODE_CONNECT_CALL_FAIL          = 0x00028009,
-    WLAN_REASON_CODE_SCAN_CALL_FAIL             = 0x0002800a,
-    WLAN_REASON_CODE_NETWORK_NOT_AVAILABLE      = 0x0002800b,
-    WLAN_REASON_CODE_PROFILE_CHANGED_OR_DELETED = 0x0002800c,
+    DOT11_PSD_IE_MAX_DATA_SIZE    = 0x000000f0U,
+    DOT11_PSD_IE_MAX_ENTRY_NUMBER = 0x00000005U,
 }
 
 enum : uint
 {
-    WLAN_REASON_CODE_KEY_MISMATCH                      = 0x0002800d,
-    WLAN_REASON_CODE_USER_NOT_RESPOND                  = 0x0002800e,
-    WLAN_REASON_CODE_AP_PROFILE_NOT_ALLOWED_FOR_CLIENT = 0x0002800f,
-    WLAN_REASON_CODE_AP_PROFILE_NOT_ALLOWED            = 0x00028010,
-    WLAN_REASON_CODE_HOTSPOT2_PROFILE_DENIED           = 0x00028011,
-    WLAN_REASON_CODE_INVALID_PROFILE_SCHEMA            = 0x00080001,
-    WLAN_REASON_CODE_PROFILE_MISSING                   = 0x00080002,
-    WLAN_REASON_CODE_INVALID_PROFILE_NAME              = 0x00080003,
-    WLAN_REASON_CODE_INVALID_PROFILE_TYPE              = 0x00080004,
-    WLAN_REASON_CODE_INVALID_PHY_TYPE                  = 0x00080005,
-    WLAN_REASON_CODE_MSM_SECURITY_MISSING              = 0x00080006,
-    WLAN_REASON_CODE_IHV_SECURITY_NOT_SUPPORTED        = 0x00080007,
-    WLAN_REASON_CODE_IHV_OUI_MISMATCH                  = 0x00080008,
-    WLAN_REASON_CODE_IHV_OUI_MISSING                   = 0x00080009,
-    WLAN_REASON_CODE_IHV_SETTINGS_MISSING              = 0x0008000a,
-    WLAN_REASON_CODE_CONFLICT_SECURITY                 = 0x0008000b,
-    WLAN_REASON_CODE_SECURITY_MISSING                  = 0x0008000c,
-    WLAN_REASON_CODE_INVALID_BSS_TYPE                  = 0x0008000d,
-    WLAN_REASON_CODE_INVALID_ADHOC_CONNECTION_MODE     = 0x0008000e,
-}
-
-enum uint WLAN_REASON_CODE_NON_BROADCAST_SET_FOR_ADHOC = 0x0008000f;
-
-enum : uint
-{
-    WLAN_REASON_CODE_AUTO_SWITCH_SET_FOR_ADHOC             = 0x00080010,
-    WLAN_REASON_CODE_AUTO_SWITCH_SET_FOR_MANUAL_CONNECTION = 0x00080011,
+    WLAN_REASON_CODE_NETWORK_NOT_COMPATIBLE     = 0x00020001U,
+    WLAN_REASON_CODE_PROFILE_NOT_COMPATIBLE     = 0x00020002U,
+    WLAN_REASON_CODE_NO_AUTO_CONNECTION         = 0x00028001U,
+    WLAN_REASON_CODE_NOT_VISIBLE                = 0x00028002U,
+    WLAN_REASON_CODE_GP_DENIED                  = 0x00028003U,
+    WLAN_REASON_CODE_USER_DENIED                = 0x00028004U,
+    WLAN_REASON_CODE_BSS_TYPE_NOT_ALLOWED       = 0x00028005U,
+    WLAN_REASON_CODE_IN_FAILED_LIST             = 0x00028006U,
+    WLAN_REASON_CODE_IN_BLOCKED_LIST            = 0x00028007U,
+    WLAN_REASON_CODE_SSID_LIST_TOO_LONG         = 0x00028008U,
+    WLAN_REASON_CODE_CONNECT_CALL_FAIL          = 0x00028009U,
+    WLAN_REASON_CODE_SCAN_CALL_FAIL             = 0x0002800aU,
+    WLAN_REASON_CODE_NETWORK_NOT_AVAILABLE      = 0x0002800bU,
+    WLAN_REASON_CODE_PROFILE_CHANGED_OR_DELETED = 0x0002800cU,
 }
 
 enum : uint
 {
-    WLAN_REASON_CODE_IHV_SECURITY_ONEX_MISSING      = 0x00080012,
-    WLAN_REASON_CODE_PROFILE_SSID_INVALID           = 0x00080013,
-    WLAN_REASON_CODE_TOO_MANY_SSID                  = 0x00080014,
-    WLAN_REASON_CODE_IHV_CONNECTIVITY_NOT_SUPPORTED = 0x00080015,
+    WLAN_REASON_CODE_KEY_MISMATCH                      = 0x0002800dU,
+    WLAN_REASON_CODE_USER_NOT_RESPOND                  = 0x0002800eU,
+    WLAN_REASON_CODE_AP_PROFILE_NOT_ALLOWED_FOR_CLIENT = 0x0002800fU,
+    WLAN_REASON_CODE_AP_PROFILE_NOT_ALLOWED            = 0x00028010U,
+    WLAN_REASON_CODE_HOTSPOT2_PROFILE_DENIED           = 0x00028011U,
+    WLAN_REASON_CODE_INVALID_PROFILE_SCHEMA            = 0x00080001U,
+    WLAN_REASON_CODE_PROFILE_MISSING                   = 0x00080002U,
+    WLAN_REASON_CODE_INVALID_PROFILE_NAME              = 0x00080003U,
+    WLAN_REASON_CODE_INVALID_PROFILE_TYPE              = 0x00080004U,
+    WLAN_REASON_CODE_INVALID_PHY_TYPE                  = 0x00080005U,
+    WLAN_REASON_CODE_MSM_SECURITY_MISSING              = 0x00080006U,
+    WLAN_REASON_CODE_IHV_SECURITY_NOT_SUPPORTED        = 0x00080007U,
+    WLAN_REASON_CODE_IHV_OUI_MISMATCH                  = 0x00080008U,
+    WLAN_REASON_CODE_IHV_OUI_MISSING                   = 0x00080009U,
+    WLAN_REASON_CODE_IHV_SETTINGS_MISSING              = 0x0008000aU,
+    WLAN_REASON_CODE_CONFLICT_SECURITY                 = 0x0008000bU,
+    WLAN_REASON_CODE_SECURITY_MISSING                  = 0x0008000cU,
+    WLAN_REASON_CODE_INVALID_BSS_TYPE                  = 0x0008000dU,
+    WLAN_REASON_CODE_INVALID_ADHOC_CONNECTION_MODE     = 0x0008000eU,
 }
 
-enum uint WLAN_REASON_CODE_BAD_MAX_NUMBER_OF_CLIENTS_FOR_AP = 0x00080016;
+enum uint WLAN_REASON_CODE_NON_BROADCAST_SET_FOR_ADHOC = 0x0008000fU;
 
 enum : uint
 {
-    WLAN_REASON_CODE_INVALID_CHANNEL              = 0x00080017,
-    WLAN_REASON_CODE_OPERATION_MODE_NOT_SUPPORTED = 0x00080018,
-}
-
-enum : uint
-{
-    WLAN_REASON_CODE_AUTO_AP_PROFILE_NOT_ALLOWED = 0x00080019,
-    WLAN_REASON_CODE_AUTO_CONNECTION_NOT_ALLOWED = 0x0008001a,
-}
-
-enum uint WLAN_REASON_CODE_HOTSPOT2_PROFILE_NOT_ALLOWED = 0x0008001b;
-
-enum : uint
-{
-    WLAN_REASON_CODE_UNSUPPORTED_SECURITY_SET_BY_OS = 0x00030001,
-    WLAN_REASON_CODE_UNSUPPORTED_SECURITY_SET       = 0x00030002,
-    WLAN_REASON_CODE_BSS_TYPE_UNMATCH               = 0x00030003,
-    WLAN_REASON_CODE_PHY_TYPE_UNMATCH               = 0x00030004,
-    WLAN_REASON_CODE_DATARATE_UNMATCH               = 0x00030005,
-    WLAN_REASON_CODE_USER_CANCELLED                 = 0x00038001,
-    WLAN_REASON_CODE_ASSOCIATION_FAILURE            = 0x00038002,
-    WLAN_REASON_CODE_ASSOCIATION_TIMEOUT            = 0x00038003,
-    WLAN_REASON_CODE_PRE_SECURITY_FAILURE           = 0x00038004,
-    WLAN_REASON_CODE_START_SECURITY_FAILURE         = 0x00038005,
-    WLAN_REASON_CODE_SECURITY_FAILURE               = 0x00038006,
-    WLAN_REASON_CODE_SECURITY_TIMEOUT               = 0x00038007,
-    WLAN_REASON_CODE_ROAMING_FAILURE                = 0x00038008,
-    WLAN_REASON_CODE_ROAMING_SECURITY_FAILURE       = 0x00038009,
-    WLAN_REASON_CODE_ADHOC_SECURITY_FAILURE         = 0x0003800a,
-    WLAN_REASON_CODE_DRIVER_DISCONNECTED            = 0x0003800b,
-    WLAN_REASON_CODE_DRIVER_OPERATION_FAILURE       = 0x0003800c,
-    WLAN_REASON_CODE_IHV_NOT_AVAILABLE              = 0x0003800d,
-    WLAN_REASON_CODE_IHV_NOT_RESPONDING             = 0x0003800e,
-    WLAN_REASON_CODE_DISCONNECT_TIMEOUT             = 0x0003800f,
-    WLAN_REASON_CODE_INTERNAL_FAILURE               = 0x00038010,
-    WLAN_REASON_CODE_UI_REQUEST_TIMEOUT             = 0x00038011,
-    WLAN_REASON_CODE_TOO_MANY_SECURITY_ATTEMPTS     = 0x00038012,
+    WLAN_REASON_CODE_AUTO_SWITCH_SET_FOR_ADHOC             = 0x00080010U,
+    WLAN_REASON_CODE_AUTO_SWITCH_SET_FOR_MANUAL_CONNECTION = 0x00080011U,
 }
 
 enum : uint
 {
-    WLAN_REASON_CODE_AP_STARTING_FAILURE                           = 0x00038013,
-    WLAN_REASON_CODE_NO_VISIBLE_AP                                 = 0x00038014,
-    WLAN_REASON_CODE_MSMSEC_MIN                                    = 0x00040000,
-    WLAN_REASON_CODE_MSMSEC_PROFILE_INVALID_KEY_INDEX              = 0x00040001,
-    WLAN_REASON_CODE_MSMSEC_PROFILE_PSK_PRESENT                    = 0x00040002,
-    WLAN_REASON_CODE_MSMSEC_PROFILE_KEY_LENGTH                     = 0x00040003,
-    WLAN_REASON_CODE_MSMSEC_PROFILE_PSK_LENGTH                     = 0x00040004,
-    WLAN_REASON_CODE_MSMSEC_PROFILE_NO_AUTH_CIPHER_SPECIFIED       = 0x00040005,
-    WLAN_REASON_CODE_MSMSEC_PROFILE_TOO_MANY_AUTH_CIPHER_SPECIFIED = 0x00040006,
-    WLAN_REASON_CODE_MSMSEC_PROFILE_DUPLICATE_AUTH_CIPHER          = 0x00040007,
-    WLAN_REASON_CODE_MSMSEC_PROFILE_RAWDATA_INVALID                = 0x00040008,
-    WLAN_REASON_CODE_MSMSEC_PROFILE_INVALID_AUTH_CIPHER            = 0x00040009,
-    WLAN_REASON_CODE_MSMSEC_PROFILE_ONEX_DISABLED                  = 0x0004000a,
-    WLAN_REASON_CODE_MSMSEC_PROFILE_ONEX_ENABLED                   = 0x0004000b,
-    WLAN_REASON_CODE_MSMSEC_PROFILE_INVALID_PMKCACHE_MODE          = 0x0004000c,
-    WLAN_REASON_CODE_MSMSEC_PROFILE_INVALID_PMKCACHE_SIZE          = 0x0004000d,
-    WLAN_REASON_CODE_MSMSEC_PROFILE_INVALID_PMKCACHE_TTL           = 0x0004000e,
-    WLAN_REASON_CODE_MSMSEC_PROFILE_INVALID_PREAUTH_MODE           = 0x0004000f,
-    WLAN_REASON_CODE_MSMSEC_PROFILE_INVALID_PREAUTH_THROTTLE       = 0x00040010,
-    WLAN_REASON_CODE_MSMSEC_PROFILE_PREAUTH_ONLY_ENABLED           = 0x00040011,
-    WLAN_REASON_CODE_MSMSEC_CAPABILITY_NETWORK                     = 0x00040012,
-    WLAN_REASON_CODE_MSMSEC_CAPABILITY_NIC                         = 0x00040013,
-    WLAN_REASON_CODE_MSMSEC_CAPABILITY_PROFILE                     = 0x00040014,
-    WLAN_REASON_CODE_MSMSEC_CAPABILITY_DISCOVERY                   = 0x00040015,
-    WLAN_REASON_CODE_MSMSEC_PROFILE_PASSPHRASE_CHAR                = 0x00040016,
-    WLAN_REASON_CODE_MSMSEC_PROFILE_KEYMATERIAL_CHAR               = 0x00040017,
-    WLAN_REASON_CODE_MSMSEC_PROFILE_WRONG_KEYTYPE                  = 0x00040018,
-    WLAN_REASON_CODE_MSMSEC_MIXED_CELL                             = 0x00040019,
-    WLAN_REASON_CODE_MSMSEC_PROFILE_AUTH_TIMERS_INVALID            = 0x0004001a,
-    WLAN_REASON_CODE_MSMSEC_PROFILE_INVALID_GKEY_INTV              = 0x0004001b,
-    WLAN_REASON_CODE_MSMSEC_TRANSITION_NETWORK                     = 0x0004001c,
-    WLAN_REASON_CODE_MSMSEC_PROFILE_KEY_UNMAPPED_CHAR              = 0x0004001d,
-    WLAN_REASON_CODE_MSMSEC_CAPABILITY_PROFILE_AUTH                = 0x0004001e,
-    WLAN_REASON_CODE_MSMSEC_CAPABILITY_PROFILE_CIPHER              = 0x0004001f,
-    WLAN_REASON_CODE_MSMSEC_PROFILE_SAFE_MODE                      = 0x00040020,
-    WLAN_REASON_CODE_MSMSEC_CAPABILITY_PROFILE_SAFE_MODE_NIC       = 0x00040021,
-    WLAN_REASON_CODE_MSMSEC_CAPABILITY_PROFILE_SAFE_MODE_NW        = 0x00040022,
-    WLAN_REASON_CODE_MSMSEC_PROFILE_UNSUPPORTED_AUTH               = 0x00040023,
-    WLAN_REASON_CODE_MSMSEC_PROFILE_UNSUPPORTED_CIPHER             = 0x00040024,
-    WLAN_REASON_CODE_MSMSEC_CAPABILITY_MFP_NW_NIC                  = 0x00040025,
-    WLAN_REASON_CODE_MSMSEC_UI_REQUEST_FAILURE                     = 0x00048001,
-    WLAN_REASON_CODE_MSMSEC_AUTH_START_TIMEOUT                     = 0x00048002,
-    WLAN_REASON_CODE_MSMSEC_AUTH_SUCCESS_TIMEOUT                   = 0x00048003,
-    WLAN_REASON_CODE_MSMSEC_KEY_START_TIMEOUT                      = 0x00048004,
-    WLAN_REASON_CODE_MSMSEC_KEY_SUCCESS_TIMEOUT                    = 0x00048005,
-    WLAN_REASON_CODE_MSMSEC_M3_MISSING_KEY_DATA                    = 0x00048006,
-    WLAN_REASON_CODE_MSMSEC_M3_MISSING_IE                          = 0x00048007,
-    WLAN_REASON_CODE_MSMSEC_M3_MISSING_GRP_KEY                     = 0x00048008,
-    WLAN_REASON_CODE_MSMSEC_PR_IE_MATCHING                         = 0x00048009,
-    WLAN_REASON_CODE_MSMSEC_SEC_IE_MATCHING                        = 0x0004800a,
-    WLAN_REASON_CODE_MSMSEC_NO_PAIRWISE_KEY                        = 0x0004800b,
-    WLAN_REASON_CODE_MSMSEC_G1_MISSING_KEY_DATA                    = 0x0004800c,
-    WLAN_REASON_CODE_MSMSEC_G1_MISSING_GRP_KEY                     = 0x0004800d,
-    WLAN_REASON_CODE_MSMSEC_PEER_INDICATED_INSECURE                = 0x0004800e,
-    WLAN_REASON_CODE_MSMSEC_NO_AUTHENTICATOR                       = 0x0004800f,
-    WLAN_REASON_CODE_MSMSEC_NIC_FAILURE                            = 0x00048010,
-    WLAN_REASON_CODE_MSMSEC_CANCELLED                              = 0x00048011,
-    WLAN_REASON_CODE_MSMSEC_KEY_FORMAT                             = 0x00048012,
-    WLAN_REASON_CODE_MSMSEC_DOWNGRADE_DETECTED                     = 0x00048013,
-    WLAN_REASON_CODE_MSMSEC_PSK_MISMATCH_SUSPECTED                 = 0x00048014,
-    WLAN_REASON_CODE_MSMSEC_FORCED_FAILURE                         = 0x00048015,
-    WLAN_REASON_CODE_MSMSEC_M3_TOO_MANY_RSNIE                      = 0x00048016,
-    WLAN_REASON_CODE_MSMSEC_M2_MISSING_KEY_DATA                    = 0x00048017,
-    WLAN_REASON_CODE_MSMSEC_M2_MISSING_IE                          = 0x00048018,
-    WLAN_REASON_CODE_MSMSEC_AUTH_WCN_COMPLETED                     = 0x00048019,
-    WLAN_REASON_CODE_MSMSEC_M3_MISSING_MGMT_GRP_KEY                = 0x0004801a,
-    WLAN_REASON_CODE_MSMSEC_G1_MISSING_MGMT_GRP_KEY                = 0x0004801b,
-    WLAN_REASON_CODE_MSMSEC_MAX                                    = 0x0004ffff,
+    WLAN_REASON_CODE_IHV_SECURITY_ONEX_MISSING      = 0x00080012U,
+    WLAN_REASON_CODE_PROFILE_SSID_INVALID           = 0x00080013U,
+    WLAN_REASON_CODE_TOO_MANY_SSID                  = 0x00080014U,
+    WLAN_REASON_CODE_IHV_CONNECTIVITY_NOT_SUPPORTED = 0x00080015U,
+}
+
+enum uint WLAN_REASON_CODE_BAD_MAX_NUMBER_OF_CLIENTS_FOR_AP = 0x00080016U;
+
+enum : uint
+{
+    WLAN_REASON_CODE_INVALID_CHANNEL              = 0x00080017U,
+    WLAN_REASON_CODE_OPERATION_MODE_NOT_SUPPORTED = 0x00080018U,
 }
 
 enum : uint
 {
-    WLAN_AVAILABLE_NETWORK_CONNECTED                          = 0x00000001,
-    WLAN_AVAILABLE_NETWORK_HAS_PROFILE                        = 0x00000002,
-    WLAN_AVAILABLE_NETWORK_CONSOLE_USER_PROFILE               = 0x00000004,
-    WLAN_AVAILABLE_NETWORK_INTERWORKING_SUPPORTED             = 0x00000008,
-    WLAN_AVAILABLE_NETWORK_HOTSPOT2_ENABLED                   = 0x00000010,
-    WLAN_AVAILABLE_NETWORK_ANQP_SUPPORTED                     = 0x00000020,
-    WLAN_AVAILABLE_NETWORK_HOTSPOT2_DOMAIN                    = 0x00000040,
-    WLAN_AVAILABLE_NETWORK_HOTSPOT2_ROAMING                   = 0x00000080,
-    WLAN_AVAILABLE_NETWORK_AUTO_CONNECT_FAILED                = 0x00000100,
-    WLAN_AVAILABLE_NETWORK_INCLUDE_ALL_ADHOC_PROFILES         = 0x00000001,
-    WLAN_AVAILABLE_NETWORK_INCLUDE_ALL_MANUAL_HIDDEN_PROFILES = 0x00000002,
+    WLAN_REASON_CODE_AUTO_AP_PROFILE_NOT_ALLOWED = 0x00080019U,
+    WLAN_REASON_CODE_AUTO_CONNECTION_NOT_ALLOWED = 0x0008001aU,
+}
+
+enum uint WLAN_REASON_CODE_HOTSPOT2_PROFILE_NOT_ALLOWED = 0x0008001bU;
+
+enum : uint
+{
+    WLAN_REASON_CODE_UNSUPPORTED_SECURITY_SET_BY_OS = 0x00030001U,
+    WLAN_REASON_CODE_UNSUPPORTED_SECURITY_SET       = 0x00030002U,
+    WLAN_REASON_CODE_BSS_TYPE_UNMATCH               = 0x00030003U,
+    WLAN_REASON_CODE_PHY_TYPE_UNMATCH               = 0x00030004U,
+    WLAN_REASON_CODE_DATARATE_UNMATCH               = 0x00030005U,
+    WLAN_REASON_CODE_USER_CANCELLED                 = 0x00038001U,
+    WLAN_REASON_CODE_ASSOCIATION_FAILURE            = 0x00038002U,
+    WLAN_REASON_CODE_ASSOCIATION_TIMEOUT            = 0x00038003U,
+    WLAN_REASON_CODE_PRE_SECURITY_FAILURE           = 0x00038004U,
+    WLAN_REASON_CODE_START_SECURITY_FAILURE         = 0x00038005U,
+    WLAN_REASON_CODE_SECURITY_FAILURE               = 0x00038006U,
+    WLAN_REASON_CODE_SECURITY_TIMEOUT               = 0x00038007U,
+    WLAN_REASON_CODE_ROAMING_FAILURE                = 0x00038008U,
+    WLAN_REASON_CODE_ROAMING_SECURITY_FAILURE       = 0x00038009U,
+    WLAN_REASON_CODE_ADHOC_SECURITY_FAILURE         = 0x0003800aU,
+    WLAN_REASON_CODE_DRIVER_DISCONNECTED            = 0x0003800bU,
+    WLAN_REASON_CODE_DRIVER_OPERATION_FAILURE       = 0x0003800cU,
+    WLAN_REASON_CODE_IHV_NOT_AVAILABLE              = 0x0003800dU,
+    WLAN_REASON_CODE_IHV_NOT_RESPONDING             = 0x0003800eU,
+    WLAN_REASON_CODE_DISCONNECT_TIMEOUT             = 0x0003800fU,
+    WLAN_REASON_CODE_INTERNAL_FAILURE               = 0x00038010U,
+    WLAN_REASON_CODE_UI_REQUEST_TIMEOUT             = 0x00038011U,
+    WLAN_REASON_CODE_TOO_MANY_SECURITY_ATTEMPTS     = 0x00038012U,
 }
 
 enum : uint
 {
-    WLAN_MAX_PHY_TYPE_NUMBER = 0x00000008,
-    WLAN_MAX_PHY_INDEX       = 0x00000040,
+    WLAN_REASON_CODE_AP_STARTING_FAILURE                           = 0x00038013U,
+    WLAN_REASON_CODE_NO_VISIBLE_AP                                 = 0x00038014U,
+    WLAN_REASON_CODE_MSMSEC_MIN                                    = 0x00040000U,
+    WLAN_REASON_CODE_MSMSEC_PROFILE_INVALID_KEY_INDEX              = 0x00040001U,
+    WLAN_REASON_CODE_MSMSEC_PROFILE_PSK_PRESENT                    = 0x00040002U,
+    WLAN_REASON_CODE_MSMSEC_PROFILE_KEY_LENGTH                     = 0x00040003U,
+    WLAN_REASON_CODE_MSMSEC_PROFILE_PSK_LENGTH                     = 0x00040004U,
+    WLAN_REASON_CODE_MSMSEC_PROFILE_NO_AUTH_CIPHER_SPECIFIED       = 0x00040005U,
+    WLAN_REASON_CODE_MSMSEC_PROFILE_TOO_MANY_AUTH_CIPHER_SPECIFIED = 0x00040006U,
+    WLAN_REASON_CODE_MSMSEC_PROFILE_DUPLICATE_AUTH_CIPHER          = 0x00040007U,
+    WLAN_REASON_CODE_MSMSEC_PROFILE_RAWDATA_INVALID                = 0x00040008U,
+    WLAN_REASON_CODE_MSMSEC_PROFILE_INVALID_AUTH_CIPHER            = 0x00040009U,
+    WLAN_REASON_CODE_MSMSEC_PROFILE_ONEX_DISABLED                  = 0x0004000aU,
+    WLAN_REASON_CODE_MSMSEC_PROFILE_ONEX_ENABLED                   = 0x0004000bU,
+    WLAN_REASON_CODE_MSMSEC_PROFILE_INVALID_PMKCACHE_MODE          = 0x0004000cU,
+    WLAN_REASON_CODE_MSMSEC_PROFILE_INVALID_PMKCACHE_SIZE          = 0x0004000dU,
+    WLAN_REASON_CODE_MSMSEC_PROFILE_INVALID_PMKCACHE_TTL           = 0x0004000eU,
+    WLAN_REASON_CODE_MSMSEC_PROFILE_INVALID_PREAUTH_MODE           = 0x0004000fU,
+    WLAN_REASON_CODE_MSMSEC_PROFILE_INVALID_PREAUTH_THROTTLE       = 0x00040010U,
+    WLAN_REASON_CODE_MSMSEC_PROFILE_PREAUTH_ONLY_ENABLED           = 0x00040011U,
+    WLAN_REASON_CODE_MSMSEC_CAPABILITY_NETWORK                     = 0x00040012U,
+    WLAN_REASON_CODE_MSMSEC_CAPABILITY_NIC                         = 0x00040013U,
+    WLAN_REASON_CODE_MSMSEC_CAPABILITY_PROFILE                     = 0x00040014U,
+    WLAN_REASON_CODE_MSMSEC_CAPABILITY_DISCOVERY                   = 0x00040015U,
+    WLAN_REASON_CODE_MSMSEC_PROFILE_PASSPHRASE_CHAR                = 0x00040016U,
+    WLAN_REASON_CODE_MSMSEC_PROFILE_KEYMATERIAL_CHAR               = 0x00040017U,
+    WLAN_REASON_CODE_MSMSEC_PROFILE_WRONG_KEYTYPE                  = 0x00040018U,
+    WLAN_REASON_CODE_MSMSEC_MIXED_CELL                             = 0x00040019U,
+    WLAN_REASON_CODE_MSMSEC_PROFILE_AUTH_TIMERS_INVALID            = 0x0004001aU,
+    WLAN_REASON_CODE_MSMSEC_PROFILE_INVALID_GKEY_INTV              = 0x0004001bU,
+    WLAN_REASON_CODE_MSMSEC_TRANSITION_NETWORK                     = 0x0004001cU,
+    WLAN_REASON_CODE_MSMSEC_PROFILE_KEY_UNMAPPED_CHAR              = 0x0004001dU,
+    WLAN_REASON_CODE_MSMSEC_CAPABILITY_PROFILE_AUTH                = 0x0004001eU,
+    WLAN_REASON_CODE_MSMSEC_CAPABILITY_PROFILE_CIPHER              = 0x0004001fU,
+    WLAN_REASON_CODE_MSMSEC_PROFILE_SAFE_MODE                      = 0x00040020U,
+    WLAN_REASON_CODE_MSMSEC_CAPABILITY_PROFILE_SAFE_MODE_NIC       = 0x00040021U,
+    WLAN_REASON_CODE_MSMSEC_CAPABILITY_PROFILE_SAFE_MODE_NW        = 0x00040022U,
+    WLAN_REASON_CODE_MSMSEC_PROFILE_UNSUPPORTED_AUTH               = 0x00040023U,
+    WLAN_REASON_CODE_MSMSEC_PROFILE_UNSUPPORTED_CIPHER             = 0x00040024U,
+    WLAN_REASON_CODE_MSMSEC_CAPABILITY_MFP_NW_NIC                  = 0x00040025U,
+    WLAN_REASON_CODE_MSMSEC_UI_REQUEST_FAILURE                     = 0x00048001U,
+    WLAN_REASON_CODE_MSMSEC_AUTH_START_TIMEOUT                     = 0x00048002U,
+    WLAN_REASON_CODE_MSMSEC_AUTH_SUCCESS_TIMEOUT                   = 0x00048003U,
+    WLAN_REASON_CODE_MSMSEC_KEY_START_TIMEOUT                      = 0x00048004U,
+    WLAN_REASON_CODE_MSMSEC_KEY_SUCCESS_TIMEOUT                    = 0x00048005U,
+    WLAN_REASON_CODE_MSMSEC_M3_MISSING_KEY_DATA                    = 0x00048006U,
+    WLAN_REASON_CODE_MSMSEC_M3_MISSING_IE                          = 0x00048007U,
+    WLAN_REASON_CODE_MSMSEC_M3_MISSING_GRP_KEY                     = 0x00048008U,
+    WLAN_REASON_CODE_MSMSEC_PR_IE_MATCHING                         = 0x00048009U,
+    WLAN_REASON_CODE_MSMSEC_SEC_IE_MATCHING                        = 0x0004800aU,
+    WLAN_REASON_CODE_MSMSEC_NO_PAIRWISE_KEY                        = 0x0004800bU,
+    WLAN_REASON_CODE_MSMSEC_G1_MISSING_KEY_DATA                    = 0x0004800cU,
+    WLAN_REASON_CODE_MSMSEC_G1_MISSING_GRP_KEY                     = 0x0004800dU,
+    WLAN_REASON_CODE_MSMSEC_PEER_INDICATED_INSECURE                = 0x0004800eU,
+    WLAN_REASON_CODE_MSMSEC_NO_AUTHENTICATOR                       = 0x0004800fU,
+    WLAN_REASON_CODE_MSMSEC_NIC_FAILURE                            = 0x00048010U,
+    WLAN_REASON_CODE_MSMSEC_CANCELLED                              = 0x00048011U,
+    WLAN_REASON_CODE_MSMSEC_KEY_FORMAT                             = 0x00048012U,
+    WLAN_REASON_CODE_MSMSEC_DOWNGRADE_DETECTED                     = 0x00048013U,
+    WLAN_REASON_CODE_MSMSEC_PSK_MISMATCH_SUSPECTED                 = 0x00048014U,
+    WLAN_REASON_CODE_MSMSEC_FORCED_FAILURE                         = 0x00048015U,
+    WLAN_REASON_CODE_MSMSEC_M3_TOO_MANY_RSNIE                      = 0x00048016U,
+    WLAN_REASON_CODE_MSMSEC_M2_MISSING_KEY_DATA                    = 0x00048017U,
+    WLAN_REASON_CODE_MSMSEC_M2_MISSING_IE                          = 0x00048018U,
+    WLAN_REASON_CODE_MSMSEC_AUTH_WCN_COMPLETED                     = 0x00048019U,
+    WLAN_REASON_CODE_MSMSEC_M3_MISSING_MGMT_GRP_KEY                = 0x0004801aU,
+    WLAN_REASON_CODE_MSMSEC_G1_MISSING_MGMT_GRP_KEY                = 0x0004801bU,
+    WLAN_REASON_CODE_MSMSEC_MAX                                    = 0x0004ffffU,
 }
 
 enum : uint
 {
-    WLAN_CONNECTION_HIDDEN_NETWORK                                 = 0x00000001,
-    WLAN_CONNECTION_ADHOC_JOIN_ONLY                                = 0x00000002,
-    WLAN_CONNECTION_IGNORE_PRIVACY_BIT                             = 0x00000004,
-    WLAN_CONNECTION_EAPOL_PASSTHROUGH                              = 0x00000008,
-    WLAN_CONNECTION_PERSIST_DISCOVERY_PROFILE                      = 0x00000010,
-    WLAN_CONNECTION_PERSIST_DISCOVERY_PROFILE_CONNECTION_MODE_AUTO = 0x00000020,
-    WLAN_CONNECTION_PERSIST_DISCOVERY_PROFILE_OVERWRITE_EXISTING   = 0x00000040,
+    WLAN_AVAILABLE_NETWORK_CONNECTED                          = 0x00000001U,
+    WLAN_AVAILABLE_NETWORK_HAS_PROFILE                        = 0x00000002U,
+    WLAN_AVAILABLE_NETWORK_CONSOLE_USER_PROFILE               = 0x00000004U,
+    WLAN_AVAILABLE_NETWORK_INTERWORKING_SUPPORTED             = 0x00000008U,
+    WLAN_AVAILABLE_NETWORK_HOTSPOT2_ENABLED                   = 0x00000010U,
+    WLAN_AVAILABLE_NETWORK_ANQP_SUPPORTED                     = 0x00000020U,
+    WLAN_AVAILABLE_NETWORK_HOTSPOT2_DOMAIN                    = 0x00000040U,
+    WLAN_AVAILABLE_NETWORK_HOTSPOT2_ROAMING                   = 0x00000080U,
+    WLAN_AVAILABLE_NETWORK_AUTO_CONNECT_FAILED                = 0x00000100U,
+    WLAN_AVAILABLE_NETWORK_INCLUDE_ALL_ADHOC_PROFILES         = 0x00000001U,
+    WLAN_AVAILABLE_NETWORK_INCLUDE_ALL_MANUAL_HIDDEN_PROFILES = 0x00000002U,
 }
 
 enum : uint
 {
-    WFD_API_VERSION_1_0 = 0x00000001,
-    WFD_API_VERSION     = 0x00000001,
+    WLAN_MAX_PHY_TYPE_NUMBER = 0x00000008U,
+    WLAN_MAX_PHY_INDEX       = 0x00000040U,
 }
 
 enum : uint
 {
-    WLAN_UI_API_VERSION         = 0x00000001,
-    WLAN_UI_API_INITIAL_VERSION = 0x00000001,
+    WLAN_CONNECTION_HIDDEN_NETWORK                                 = 0x00000001U,
+    WLAN_CONNECTION_ADHOC_JOIN_ONLY                                = 0x00000002U,
+    WLAN_CONNECTION_IGNORE_PRIVACY_BIT                             = 0x00000004U,
+    WLAN_CONNECTION_EAPOL_PASSTHROUGH                              = 0x00000008U,
+    WLAN_CONNECTION_PERSIST_DISCOVERY_PROFILE                      = 0x00000010U,
+    WLAN_CONNECTION_PERSIST_DISCOVERY_PROFILE_CONNECTION_MODE_AUTO = 0x00000020U,
+    WLAN_CONNECTION_PERSIST_DISCOVERY_PROFILE_OVERWRITE_EXISTING   = 0x00000040U,
+}
+
+enum : uint
+{
+    WFD_API_VERSION_1_0 = 0x00000001U,
+    WFD_API_VERSION     = 0x00000001U,
+}
+
+enum : uint
+{
+    WLAN_UI_API_VERSION         = 0x00000001U,
+    WLAN_UI_API_INITIAL_VERSION = 0x00000001U,
 }
 
 enum GUID GUID_DEVINTERFACE_WIFIDIRECT_DEVICE = GUID("439b20af-8955-405b-99f0-a62af0c68d43");
@@ -2262,8 +2347,8 @@ enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(Element
 }
 
 enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({4010895339, 52220, 17217, 165, 104, 167, 201, 26, 104, 152, 44}, 2))], [])*/DEVPROPKEY DEVPKEY_WiFi_InterfaceGuid = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({4010895339, 52220, 17217, 165, 104, 167, 201, 26, 104, 152, 44}, 2))], [])*/DEVPROPKEY(GUID("EF1167EB-CBFC-4341-A568-A7C91A68982C"), 2);
-enum uint DOT11EXT_PSK_MAX_LENGTH = 0x00000040;
-enum uint WDIAG_IHV_WLAN_ID_FLAG_SECURITY_ENABLED = 0x00000001;
+enum uint DOT11EXT_PSK_MAX_LENGTH = 0x00000040U;
+enum uint WDIAG_IHV_WLAN_ID_FLAG_SECURITY_ENABLED = 0x00000001U;
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* IHV_VERSION_FUNCTION_NAME = "Dot11ExtIhvGetVersionInfo";
 
 enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
@@ -2272,12 +2357,12 @@ enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(E
     IHV_INIT_VS_FUNCTION_NAME = "Dot11ExtIhvInitVirtualStation",
 }
 
-enum uint MS_MAX_PROFILE_NAME_LENGTH = 0x00000100;
+enum uint MS_MAX_PROFILE_NAME_LENGTH = 0x00000100U;
 
 enum : uint
 {
-    MS_PROFILE_GROUP_POLICY = 0x00000001,
-    MS_PROFILE_USER         = 0x00000002,
+    MS_PROFILE_GROUP_POLICY = 0x00000001U,
+    MS_PROFILE_USER         = 0x00000002U,
 }
 
 // Callbacks
@@ -2395,14 +2480,14 @@ alias DOT11EXTIHV_CONTROL = uint function(HANDLE hIhvExtAdapter, uint dwInBuffer
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/NativeWiFi/dot11-ssid))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/NativeWiFi/dot11-ssid
 struct DOT11_SSID
 {
     uint      uSSIDLength;
     ubyte[32] ucSSID;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/NativeWiFi/dot11-auth-cipher-pair))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/NativeWiFi/dot11-auth-cipher-pair
 struct DOT11_AUTH_CIPHER_PAIR
 {
     DOT11_AUTH_ALGORITHM AuthAlgoId;
@@ -2430,7 +2515,7 @@ struct DOT11_VENUEINFO
     ubyte VenueType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/NativeWiFi/dot11-bssid-list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/NativeWiFi/dot11-bssid-list
 struct DOT11_BSSID_LIST
 {
     NDIS_OBJECT_HEADER Header;
@@ -2830,9 +2915,13 @@ struct DOT11_RECV_SENSITIVITY
 
 struct DOT11_RECV_SENSITIVITY_LIST
 {
-    _Anonymous_e__Union Anonymous;
-    uint                uNumOfEntries;
-    uint                uTotalNumOfEntries;
+    union
+    {
+        DOT11_PHY_TYPE dot11PhyType;
+        uint           uPhyId;
+    }
+    uint uNumOfEntries;
+    uint uTotalNumOfEntries;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DOT11_RECV_SENSITIVITY[1] dot11RecvSensitivity;
 }
 
@@ -2910,8 +2999,13 @@ struct DOT11_BYTE_ARRAY
 
 union DOT11_BSS_ENTRY_PHY_SPECIFIC_INFO
 {
-    uint            uChCenterFrequency;
-    _FHSS_e__Struct FHSS;
+    uint uChCenterFrequency;
+    struct FHSS
+    {
+        uint uHopPattern;
+        uint uHopSet;
+        uint uDwellTime;
+    }
 }
 
 struct DOT11_BSS_ENTRY
@@ -3263,7 +3357,12 @@ struct DOT11_PHY_ATTRIBUTES
     uint               uMPDUMaxLength;
     DOT11_TEMP_TYPE    TempType;
     DOT11_DIVERSITY_SUPPORT DiversitySupport;
-    _PhySpecificAttributes_e__Union PhySpecificAttributes;
+    union PhySpecificAttributes
+    {
+        DOT11_HRDSSS_PHY_ATTRIBUTES HRDSSSAttributes;
+        DOT11_OFDM_PHY_ATTRIBUTES OFDMAttributes;
+        DOT11_ERP_PHY_ATTRIBUTES ERPAttributes;
+    }
     uint               uNumberSupportedPowerLevels;
     uint[8]            TxPowerLevels;
     uint               uNumDataRateMappingEntries;
@@ -3584,9 +3683,13 @@ struct DOT11_STOP_AP_PARAMETERS
 
 struct DOT11_PHY_FREQUENCY_ADOPTED_PARAMETERS
 {
-    NDIS_OBJECT_HEADER  Header;
-    uint                ulPhyId;
-    _Anonymous_e__Union Anonymous;
+    NDIS_OBJECT_HEADER Header;
+    uint               ulPhyId;
+    union
+    {
+        uint ulChannel;
+        uint ulFrequency;
+    }
 }
 
 struct DOT11_CAN_SUSTAIN_AP_PARAMETERS
@@ -3776,7 +3879,7 @@ struct DOT11_WFD_GROUP_ID
 
 struct DOT11_WFD_GO_INTENT
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Intent)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield58;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Intent)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield136;
 }
 
 struct DOT11_WFD_CHANNEL
@@ -4138,7 +4241,7 @@ struct DOT11_SEND_GO_NEGOTIATION_CONFIRMATION_PARAMETERS
 
 struct DOT11_WFD_INVITATION_FLAGS
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield59;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(7))], [])*/ubyte _bitfield137;
 }
 
 struct DOT11_SEND_INVITATION_REQUEST_PARAMETERS
@@ -4350,7 +4453,7 @@ struct DOT11_MANUFACTURING_CALLBACK_PARAMETERS
     void*              pvContext;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/l2cmn/ns-l2cmn-l2_notification_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/l2cmn/ns-l2cmn-l2_notification_data
 struct L2_NOTIFICATION_DATA
 {
     WLAN_NOTIFICATION_SOURCES NotificationSource;
@@ -4360,43 +4463,47 @@ struct L2_NOTIFICATION_DATA
     void* pData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_profile_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_profile_info
 struct WLAN_PROFILE_INFO
 {
     wchar[256] strProfileName;
     uint       dwFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-dot11_network))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-dot11_network
 struct DOT11_NETWORK
 {
     DOT11_SSID     dot11Ssid;
     DOT11_BSS_TYPE dot11BssType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_raw_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_raw_data
 struct WLAN_RAW_DATA
 {
     uint dwDataSize;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] DataBlob;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_raw_data_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_raw_data_list
 struct WLAN_RAW_DATA_LIST
 {
     uint dwTotalSize;
     uint dwNumberOfItems;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/_Anonymous_e__Struct[1] DataList;
+    struct
+    {
+        uint dwDataOffset;
+        uint dwDataSize;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_rate_set))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_rate_set
 struct WLAN_RATE_SET
 {
     uint        uRateSetLength;
     ushort[126] usRateSet;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_available_network))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_available_network
 struct WLAN_AVAILABLE_NETWORK
 {
     wchar[256]           strProfileName;
@@ -4438,7 +4545,7 @@ struct WLAN_AVAILABLE_NETWORK_V2
     uint                 dwReserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_bss_entry))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_bss_entry
 struct WLAN_BSS_ENTRY
 {
     DOT11_SSID     dot11Ssid;
@@ -4459,7 +4566,7 @@ struct WLAN_BSS_ENTRY
     uint           ulIeSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_bss_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_bss_list
 struct WLAN_BSS_LIST
 {
     uint dwTotalSize;
@@ -4467,7 +4574,7 @@ struct WLAN_BSS_LIST
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/WLAN_BSS_ENTRY[1] wlanBssEntries;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_interface_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_interface_info
 struct WLAN_INTERFACE_INFO
 {
     GUID                 InterfaceGuid;
@@ -4475,7 +4582,7 @@ struct WLAN_INTERFACE_INFO
     WLAN_INTERFACE_STATE isState;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_association_attributes))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_association_attributes
 struct WLAN_ASSOCIATION_ATTRIBUTES
 {
     DOT11_SSID     dot11Ssid;
@@ -4488,7 +4595,7 @@ struct WLAN_ASSOCIATION_ATTRIBUTES
     uint           ulTxRate;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_security_attributes))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_security_attributes
 struct WLAN_SECURITY_ATTRIBUTES
 {
     BOOL                 bSecurityEnabled;
@@ -4521,7 +4628,7 @@ struct WLAN_QOS_INFO
     WLAN_CONNECTION_QOS_INFO connectionQoSInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_connection_attributes))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_connection_attributes
 struct WLAN_CONNECTION_ATTRIBUTES
 {
     WLAN_INTERFACE_STATE isState;
@@ -4551,7 +4658,7 @@ struct WLAN_REALTIME_CONNECTION_QUALITY
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/WLAN_REALTIME_CONNECTION_QUALITY_LINK_INFO[1] linksInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_phy_radio_state))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_phy_radio_state
 struct WLAN_PHY_RADIO_STATE
 {
     uint              dwPhyIndex;
@@ -4559,14 +4666,14 @@ struct WLAN_PHY_RADIO_STATE
     DOT11_RADIO_STATE dot11HardwareRadioState;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_radio_state))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_radio_state
 struct WLAN_RADIO_STATE
 {
     uint dwNumberOfPhys;
     WLAN_PHY_RADIO_STATE[64] PhyRadioState;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_interface_capability))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_interface_capability
 struct WLAN_INTERFACE_CAPABILITY
 {
     WLAN_INTERFACE_TYPE interfaceType;
@@ -4577,21 +4684,21 @@ struct WLAN_INTERFACE_CAPABILITY
     DOT11_PHY_TYPE[64]  dot11PhyTypes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_auth_cipher_pair_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_auth_cipher_pair_list
 struct WLAN_AUTH_CIPHER_PAIR_LIST
 {
     uint dwNumberOfItems;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DOT11_AUTH_CIPHER_PAIR[1] pAuthCipherPairList;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_country_or_region_string_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_country_or_region_string_list
 struct WLAN_COUNTRY_OR_REGION_STRING_LIST
 {
     uint dwNumberOfItems;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[3] pCountryOrRegionStringList;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_profile_info_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_profile_info_list
 struct WLAN_PROFILE_INFO_LIST
 {
     uint dwNumberOfItems;
@@ -4599,7 +4706,7 @@ struct WLAN_PROFILE_INFO_LIST
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/WLAN_PROFILE_INFO[1] ProfileInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_available_network_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_available_network_list
 struct WLAN_AVAILABLE_NETWORK_LIST
 {
     uint dwNumberOfItems;
@@ -4614,7 +4721,7 @@ struct WLAN_AVAILABLE_NETWORK_LIST_V2
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/WLAN_AVAILABLE_NETWORK_V2[1] Network;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_interface_info_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_interface_info_list
 struct WLAN_INTERFACE_INFO_LIST
 {
     uint dwNumberOfItems;
@@ -4622,7 +4729,7 @@ struct WLAN_INTERFACE_INFO_LIST
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/WLAN_INTERFACE_INFO[1] InterfaceInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-dot11_network_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-dot11_network_list
 struct DOT11_NETWORK_LIST
 {
     uint dwNumberOfItems;
@@ -4630,7 +4737,7 @@ struct DOT11_NETWORK_LIST
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DOT11_NETWORK[1] Network;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_connection_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_connection_parameters
 struct WLAN_CONNECTION_PARAMETERS
 {
     WLAN_CONNECTION_MODE wlanConnectionMode;
@@ -4653,7 +4760,7 @@ struct WLAN_CONNECTION_PARAMETERS_V2
     DOT11_ACCESSNETWORKOPTIONS* pDot11AccessNetworkOptions;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_msm_notification_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_msm_notification_data
 struct WLAN_MSM_NOTIFICATION_DATA
 {
     WLAN_CONNECTION_MODE wlanConnectionMode;
@@ -4667,7 +4774,7 @@ struct WLAN_MSM_NOTIFICATION_DATA
     uint                 wlanReasonCode;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_connection_notification_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_connection_notification_data
 struct WLAN_CONNECTION_NOTIFICATION_DATA
 {
     WLAN_CONNECTION_MODE wlanConnectionMode;
@@ -4680,7 +4787,7 @@ struct WLAN_CONNECTION_NOTIFICATION_DATA
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] strProfileXml;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_device_service_notification_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_device_service_notification_data
 struct WLAN_DEVICE_SERVICE_NOTIFICATION_DATA
 {
     GUID DeviceService;
@@ -4689,7 +4796,7 @@ struct WLAN_DEVICE_SERVICE_NOTIFICATION_DATA
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] DataBlob;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_phy_frame_statistics))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_phy_frame_statistics
 struct WLAN_PHY_FRAME_STATISTICS
 {
     ulong ullTransmittedFrameCount;
@@ -4712,7 +4819,7 @@ struct WLAN_PHY_FRAME_STATISTICS
     ulong ullFCSErrorCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_mac_frame_statistics))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_mac_frame_statistics
 struct WLAN_MAC_FRAME_STATISTICS
 {
     ulong ullTransmittedFrameCount;
@@ -4729,7 +4836,7 @@ struct WLAN_MAC_FRAME_STATISTICS
     ulong ullDecryptFailureCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_statistics))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_statistics
 struct WLAN_STATISTICS
 {
     ulong ullFourWayHandshakeFailures;
@@ -4741,7 +4848,7 @@ struct WLAN_STATISTICS
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/WLAN_PHY_FRAME_STATISTICS[1] PhyCounters;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_device_service_guid_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_device_service_guid_list
 struct WLAN_DEVICE_SERVICE_GUID_LIST
 {
     uint dwNumberOfItems;
@@ -4755,21 +4862,21 @@ struct WFD_GROUP_ID
     DOT11_SSID GroupSSID;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_hosted_network_peer_state))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_hosted_network_peer_state
 struct WLAN_HOSTED_NETWORK_PEER_STATE
 {
     ubyte[6] PeerMacAddress;
     WLAN_HOSTED_NETWORK_PEER_AUTH_STATE PeerAuthState;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_hosted_network_radio_state))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_hosted_network_radio_state
 struct WLAN_HOSTED_NETWORK_RADIO_STATE
 {
     DOT11_RADIO_STATE dot11SoftwareRadioState;
     DOT11_RADIO_STATE dot11HardwareRadioState;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_hosted_network_state_change))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_hosted_network_state_change
 struct WLAN_HOSTED_NETWORK_STATE_CHANGE
 {
     WLAN_HOSTED_NETWORK_STATE OldState;
@@ -4777,7 +4884,7 @@ struct WLAN_HOSTED_NETWORK_STATE_CHANGE
     WLAN_HOSTED_NETWORK_REASON StateChangeReason;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_hosted_network_data_peer_state_change))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_hosted_network_data_peer_state_change
 struct WLAN_HOSTED_NETWORK_DATA_PEER_STATE_CHANGE
 {
     WLAN_HOSTED_NETWORK_PEER_STATE OldState;
@@ -4785,21 +4892,21 @@ struct WLAN_HOSTED_NETWORK_DATA_PEER_STATE_CHANGE
     WLAN_HOSTED_NETWORK_REASON PeerStateChangeReason;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_hosted_network_connection_settings))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_hosted_network_connection_settings
 struct WLAN_HOSTED_NETWORK_CONNECTION_SETTINGS
 {
     DOT11_SSID hostedNetworkSSID;
     uint       dwMaxNumberOfPeers;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_hosted_network_security_settings))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_hosted_network_security_settings
 struct WLAN_HOSTED_NETWORK_SECURITY_SETTINGS
 {
     DOT11_AUTH_ALGORITHM dot11AuthAlgo;
     DOT11_CIPHER_ALGORITHM dot11CipherAlgo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_hosted_network_status))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/ns-wlanapi-wlan_hosted_network_status
 struct WLAN_HOSTED_NETWORK_STATUS
 {
     WLAN_HOSTED_NETWORK_STATE HostedNetworkState;
@@ -4811,21 +4918,21 @@ struct WLAN_HOSTED_NETWORK_STATUS
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/WLAN_HOSTED_NETWORK_PEER_STATE[1] PeerList;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dot1x/ns-dot1x-onex_variable_blob))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dot1x/ns-dot1x-onex_variable_blob
 struct ONEX_VARIABLE_BLOB
 {
     uint dwSize;
     uint dwOffset;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dot1x/ns-dot1x-onex_auth_params))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dot1x/ns-dot1x-onex_auth_params
 struct ONEX_AUTH_PARAMS
 {
     BOOL               fUpdatePending;
     ONEX_VARIABLE_BLOB oneXConnProfile;
     ONEX_AUTH_IDENTITY authIdentity;
     uint               dwQuarantineState;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fDomain)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield60;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fDomain)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield138;
     uint               dwSessionId;
     HANDLE             hUserToken;
     ONEX_VARIABLE_BLOB OneXUserProfile;
@@ -4834,7 +4941,7 @@ struct ONEX_AUTH_PARAMS
     ONEX_VARIABLE_BLOB Domain;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dot1x/ns-dot1x-onex_eap_error))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dot1x/ns-dot1x-onex_eap_error
 struct ONEX_EAP_ERROR
 {
     uint               dwWinError;
@@ -4843,12 +4950,12 @@ struct ONEX_EAP_ERROR
     GUID               rootCauseGuid;
     GUID               repairGuid;
     GUID               helpLinkGuid;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fRepairString)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield61;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fRepairString)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield139;
     ONEX_VARIABLE_BLOB RootCauseString;
     ONEX_VARIABLE_BLOB RepairString;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dot1x/ns-dot1x-onex_status))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dot1x/ns-dot1x-onex_status
 struct ONEX_STATUS
 {
     ONEX_AUTH_STATUS authStatus;
@@ -4856,13 +4963,13 @@ struct ONEX_STATUS
     uint             dwError;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dot1x/ns-dot1x-onex_result_update_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dot1x/ns-dot1x-onex_result_update_data
 struct ONEX_RESULT_UPDATE_DATA
 {
     ONEX_STATUS        oneXStatus;
     ONEX_EAP_METHOD_BACKEND_SUPPORT BackendSupport;
     BOOL               fBackendEngaged;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fEapError)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield62;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fEapError)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield140;
     ONEX_VARIABLE_BLOB authParams;
     ONEX_VARIABLE_BLOB eapError;
 }
@@ -4870,7 +4977,7 @@ struct ONEX_RESULT_UPDATE_DATA
 struct ONEX_USER_INFO
 {
     ONEX_AUTH_IDENTITY authIdentity;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fDomainName)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield63;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fDomainName)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield141;
     ONEX_VARIABLE_BLOB UserName;
     ONEX_VARIABLE_BLOB DomainName;
 }
@@ -5263,7 +5370,7 @@ uint WlanSaveTemporaryProfile(HANDLE hClientHandle, const(GUID)* pInterfaceGuid,
                               const(PWSTR) strAllUserProfileSecurity, uint dwFlags, BOOL bOverWrite, 
                               /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* pReserved);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/nf-wlanapi-wlandeviceservicecommand))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/nf-wlanapi-wlandeviceservicecommand
 @DllImport("wlanapi.dll")
 uint WlanDeviceServiceCommand(HANDLE hClientHandle, const(GUID)* pInterfaceGuid, GUID* pDeviceServiceGuid, 
                               uint dwOpCode, uint dwInBufferSize, 
@@ -5272,12 +5379,12 @@ uint WlanDeviceServiceCommand(HANDLE hClientHandle, const(GUID)* pInterfaceGuid,
                               /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(6)))])*/void* pOutBuffer, 
                               uint* pdwBytesReturned);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/nf-wlanapi-wlangetsupporteddeviceservices))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/nf-wlanapi-wlangetsupporteddeviceservices
 @DllImport("wlanapi.dll")
 uint WlanGetSupportedDeviceServices(HANDLE hClientHandle, const(GUID)* pInterfaceGuid, 
                                     WLAN_DEVICE_SERVICE_GUID_LIST** ppDevSvcGuidList);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wlanapi/nf-wlanapi-wlanregisterdeviceservicenotification))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wlanapi/nf-wlanapi-wlanregisterdeviceservicenotification
 @DllImport("wlanapi.dll")
 uint WlanRegisterDeviceServiceNotification(HANDLE hClientHandle, 
                                            const(WLAN_DEVICE_SERVICE_GUID_LIST)* pDevSvcGuidList);
@@ -5426,169 +5533,169 @@ struct Dot11AdHocManager;
 
 @GUID("8f10cc26-cf0d-42a0-acbe-e2de7007384d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nn-adhoc-idot11adhocmanager))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nn-adhoc-idot11adhocmanager
 interface IDot11AdHocManager : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocmanager-createnetwork))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocmanager-createnetwork
     HRESULT CreateNetwork(const(PWSTR) Name, const(PWSTR) Password, int GeographicalId, 
                           IDot11AdHocInterface pInterface, IDot11AdHocSecuritySettings pSecurity, GUID* pContextGuid, 
                           IDot11AdHocNetwork* pIAdHoc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocmanager-commitcreatednetwork))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocmanager-commitcreatednetwork
     HRESULT CommitCreatedNetwork(IDot11AdHocNetwork pIAdHoc, BOOLEAN fSaveProfile, 
                                  BOOLEAN fMakeSavedProfileUserSpecific);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocmanager-getienumdot11adhocnetworks))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocmanager-getienumdot11adhocnetworks
     HRESULT GetIEnumDot11AdHocNetworks(GUID* pContextGuid, IEnumDot11AdHocNetworks* ppEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocmanager-getienumdot11adhocinterfaces))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocmanager-getienumdot11adhocinterfaces
     HRESULT GetIEnumDot11AdHocInterfaces(IEnumDot11AdHocInterfaces* ppEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocmanager-getnetwork))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocmanager-getnetwork
     HRESULT GetNetwork(GUID* NetworkSignature, IDot11AdHocNetwork* pNetwork);
 }
 
 @GUID("8f10cc27-cf0d-42a0-acbe-e2de7007384d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nn-adhoc-idot11adhocmanagernotificationsink))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nn-adhoc-idot11adhocmanagernotificationsink
 interface IDot11AdHocManagerNotificationSink : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocmanagernotificationsink-onnetworkadd))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocmanagernotificationsink-onnetworkadd
     HRESULT OnNetworkAdd(IDot11AdHocNetwork pIAdHocNetwork);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocmanagernotificationsink-onnetworkremove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocmanagernotificationsink-onnetworkremove
     HRESULT OnNetworkRemove(GUID* Signature);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocmanagernotificationsink-oninterfaceadd))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocmanagernotificationsink-oninterfaceadd
     HRESULT OnInterfaceAdd(IDot11AdHocInterface pIAdHocInterface);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocmanagernotificationsink-oninterfaceremove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocmanagernotificationsink-oninterfaceremove
     HRESULT OnInterfaceRemove(GUID* Signature);
 }
 
 @GUID("8f10cc28-cf0d-42a0-acbe-e2de7007384d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nn-adhoc-ienumdot11adhocnetworks))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nn-adhoc-ienumdot11adhocnetworks
 interface IEnumDot11AdHocNetworks : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-ienumdot11adhocnetworks-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-ienumdot11adhocnetworks-next
     HRESULT Next(uint cElt, IDot11AdHocNetwork* rgElt, uint* pcEltFetched);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-ienumdot11adhocnetworks-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-ienumdot11adhocnetworks-skip
     HRESULT Skip(uint cElt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-ienumdot11adhocnetworks-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-ienumdot11adhocnetworks-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-ienumdot11adhocnetworks-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-ienumdot11adhocnetworks-clone
     HRESULT Clone(IEnumDot11AdHocNetworks* ppEnum);
 }
 
 @GUID("8f10cc29-cf0d-42a0-acbe-e2de7007384d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nn-adhoc-idot11adhocnetwork))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nn-adhoc-idot11adhocnetwork
 interface IDot11AdHocNetwork : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocnetwork-getstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocnetwork-getstatus
     HRESULT GetStatus(DOT11_ADHOC_NETWORK_CONNECTION_STATUS* eStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocnetwork-getssid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocnetwork-getssid
     HRESULT GetSSID(PWSTR* ppszwSSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocnetwork-hasprofile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocnetwork-hasprofile
     HRESULT HasProfile(ubyte* pf11d);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocnetwork-getprofilename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocnetwork-getprofilename
     HRESULT GetProfileName(PWSTR* ppszwProfileName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocnetwork-deleteprofile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocnetwork-deleteprofile
     HRESULT DeleteProfile();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocnetwork-getsignalquality))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocnetwork-getsignalquality
     HRESULT GetSignalQuality(uint* puStrengthValue, uint* puStrengthMax);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocnetwork-getsecuritysetting))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocnetwork-getsecuritysetting
     HRESULT GetSecuritySetting(IDot11AdHocSecuritySettings* pAdHocSecuritySetting);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocnetwork-getcontextguid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocnetwork-getcontextguid
     HRESULT GetContextGuid(GUID* pContextGuid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocnetwork-getsignature))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocnetwork-getsignature
     HRESULT GetSignature(GUID* pSignature);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocnetwork-getinterface))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocnetwork-getinterface
     HRESULT GetInterface(IDot11AdHocInterface* pAdHocInterface);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocnetwork-connect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocnetwork-connect
     HRESULT Connect(const(PWSTR) Passphrase, int GeographicalId, BOOLEAN fSaveProfile, 
                     BOOLEAN fMakeSavedProfileUserSpecific);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocnetwork-disconnect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocnetwork-disconnect
     HRESULT Disconnect();
 }
 
 @GUID("8f10cc2a-cf0d-42a0-acbe-e2de7007384d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nn-adhoc-idot11adhocnetworknotificationsink))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nn-adhoc-idot11adhocnetworknotificationsink
 interface IDot11AdHocNetworkNotificationSink : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocnetworknotificationsink-onstatuschange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocnetworknotificationsink-onstatuschange
     HRESULT OnStatusChange(DOT11_ADHOC_NETWORK_CONNECTION_STATUS eStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocnetworknotificationsink-onconnectfail))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocnetworknotificationsink-onconnectfail
     HRESULT OnConnectFail(DOT11_ADHOC_CONNECT_FAIL_REASON eFailReason);
 }
 
 @GUID("8f10cc2b-cf0d-42a0-acbe-e2de7007384d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nn-adhoc-idot11adhocinterface))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nn-adhoc-idot11adhocinterface
 interface IDot11AdHocInterface : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocinterface-getdevicesignature))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocinterface-getdevicesignature
     HRESULT GetDeviceSignature(GUID* pSignature);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocinterface-getfriendlyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocinterface-getfriendlyname
     HRESULT GetFriendlyName(PWSTR* ppszName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocinterface-isdot11d))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocinterface-isdot11d
     HRESULT IsDot11d(ubyte* pf11d);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocinterface-isadhoccapable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocinterface-isadhoccapable
     HRESULT IsAdHocCapable(ubyte* pfAdHocCapable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocinterface-isradioon))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocinterface-isradioon
     HRESULT IsRadioOn(ubyte* pfIsRadioOn);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocinterface-getactivenetwork))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocinterface-getactivenetwork
     HRESULT GetActiveNetwork(IDot11AdHocNetwork* ppNetwork);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocinterface-getienumsecuritysettings))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocinterface-getienumsecuritysettings
     HRESULT GetIEnumSecuritySettings(IEnumDot11AdHocSecuritySettings* ppEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocinterface-getienumdot11adhocnetworks))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocinterface-getienumdot11adhocnetworks
     HRESULT GetIEnumDot11AdHocNetworks(GUID* pFilterGuid, IEnumDot11AdHocNetworks* ppEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocinterface-getstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocinterface-getstatus
     HRESULT GetStatus(DOT11_ADHOC_NETWORK_CONNECTION_STATUS* pState);
 }
 
 @GUID("8f10cc2c-cf0d-42a0-acbe-e2de7007384d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nn-adhoc-ienumdot11adhocinterfaces))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nn-adhoc-ienumdot11adhocinterfaces
 interface IEnumDot11AdHocInterfaces : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-ienumdot11adhocinterfaces-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-ienumdot11adhocinterfaces-next
     HRESULT Next(uint cElt, IDot11AdHocInterface* rgElt, uint* pcEltFetched);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-ienumdot11adhocinterfaces-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-ienumdot11adhocinterfaces-skip
     HRESULT Skip(uint cElt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-ienumdot11adhocinterfaces-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-ienumdot11adhocinterfaces-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-ienumdot11adhocinterfaces-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-ienumdot11adhocinterfaces-clone
     HRESULT Clone(IEnumDot11AdHocInterfaces* ppEnum);
 }
 
 @GUID("8f10cc2d-cf0d-42a0-acbe-e2de7007384d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nn-adhoc-ienumdot11adhocsecuritysettings))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nn-adhoc-ienumdot11adhocsecuritysettings
 interface IEnumDot11AdHocSecuritySettings : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-ienumdot11adhocsecuritysettings-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-ienumdot11adhocsecuritysettings-next
     HRESULT Next(uint cElt, IDot11AdHocSecuritySettings* rgElt, uint* pcEltFetched);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-ienumdot11adhocsecuritysettings-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-ienumdot11adhocsecuritysettings-skip
     HRESULT Skip(uint cElt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-ienumdot11adhocsecuritysettings-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-ienumdot11adhocsecuritysettings-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-ienumdot11adhocsecuritysettings-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-ienumdot11adhocsecuritysettings-clone
     HRESULT Clone(IEnumDot11AdHocSecuritySettings* ppEnum);
 }
 
 @GUID("8f10cc2e-cf0d-42a0-acbe-e2de7007384d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nn-adhoc-idot11adhocsecuritysettings))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nn-adhoc-idot11adhocsecuritysettings
 interface IDot11AdHocSecuritySettings : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocsecuritysettings-getdot11authalgorithm))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocsecuritysettings-getdot11authalgorithm
     HRESULT GetDot11AuthAlgorithm(DOT11_ADHOC_AUTH_ALGORITHM* pAuth);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocsecuritysettings-getdot11cipheralgorithm))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocsecuritysettings-getdot11cipheralgorithm
     HRESULT GetDot11CipherAlgorithm(DOT11_ADHOC_CIPHER_ALGORITHM* pCipher);
 }
 
 @GUID("8f10cc2f-cf0d-42a0-acbe-e2de7007384d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nn-adhoc-idot11adhocinterfacenotificationsink))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nn-adhoc-idot11adhocinterfacenotificationsink
 interface IDot11AdHocInterfaceNotificationSink : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocinterfacenotificationsink-onconnectionstatuschange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adhoc/nf-adhoc-idot11adhocinterfacenotificationsink-onconnectionstatuschange
     HRESULT OnConnectionStatusChange(DOT11_ADHOC_NETWORK_CONNECTION_STATUS eStatus);
 }
 

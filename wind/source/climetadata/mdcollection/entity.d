@@ -288,7 +288,7 @@ private mixin template typeRefFieldGettersExtra()
                 return parent;
             }
             
-            foreach(n; parent.get.getAllNestedClassByNested())
+            foreach(n; parent.get.getAllNestedClassByEnclosing())
             {
                 if (n.getNestedClass().getTypeName() == this.getTypeName())
                 {
@@ -328,6 +328,9 @@ private mixin template typeDefFieldGettersExtra()
     
     // All nestedClass entities referencing typeDef NestedClass column
     mixin DeclAllProp!(MDTableType.typeDef, "AllNestedClassByNested", MDTableType.nestedClass, "NestedClass"); 
+
+    // All nestedClass entities referencing typeDef NestedClass column
+    mixin DeclAllProp!(MDTableType.typeDef, "AllNestedClassByEnclosing", MDTableType.nestedClass, "EnclosingClass"); 
 
     // First classLayout entity referencing typeDef in NestedClass column
     mixin DeclFindFirstProp!(MDTableType.typeDef, "Layout", MDTableType.classLayout, "Parent");

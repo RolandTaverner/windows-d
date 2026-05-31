@@ -3,11 +3,12 @@
 module windows.win32.ui.input.ime;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BSTR, CHAR, HRESULT, HWND, LPARAM,
-                                         LRESULT, POINT, PSTR, PWSTR, RECT, WPARAM;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, HRESULT, HWND, LPARAM,
+                                                    LRESULT, POINT, PSTR, PWSTR, RECT,
+                                                    WPARAM;
 public import windows.win32.graphics.gdi : HBITMAP, LOGFONTA, LOGFONTW;
-public import windows.win32.system.com : IClassFactory, IUnknown, SAFEARRAY;
+public import windows.win32.system.com.com : IClassFactory, IUnknown, SAFEARRAY;
 public import windows.win32.ui.input.keyboardandmouse : HKL;
 public import windows.win32.ui.windowsandmessaging : HICON, MSG;
 
@@ -16,160 +17,172 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias SET_COMPOSITION_STRING_TYPE = uint;
 enum : uint
 {
-    SCS_SETSTR               = 0x00000009,
-    SCS_CHANGEATTR           = 0x00000012,
-    SCS_CHANGECLAUSE         = 0x00000024,
-    SCS_SETRECONVERTSTRING   = 0x00010000,
-    SCS_QUERYRECONVERTSTRING = 0x00020000,
+    SCS_SETSTR               = 0x00000009U,
+    SCS_CHANGEATTR           = 0x00000012U,
+    SCS_CHANGECLAUSE         = 0x00000024U,
+    SCS_SETRECONVERTSTRING   = 0x00010000U,
+    SCS_QUERYRECONVERTSTRING = 0x00020000U,
 }
+
 alias GET_GUIDE_LINE_TYPE = uint;
 enum : uint
 {
-    GGL_LEVEL   = 0x00000001,
-    GGL_INDEX   = 0x00000002,
-    GGL_STRING  = 0x00000003,
-    GGL_PRIVATE = 0x00000004,
+    GGL_LEVEL   = 0x00000001U,
+    GGL_INDEX   = 0x00000002U,
+    GGL_STRING  = 0x00000003U,
+    GGL_PRIVATE = 0x00000004U,
 }
+
 alias NOTIFY_IME_INDEX = uint;
 enum : uint
 {
-    CPS_CANCEL   = 0x00000004,
-    CPS_COMPLETE = 0x00000001,
-    CPS_CONVERT  = 0x00000002,
-    CPS_REVERT   = 0x00000003,
+    CPS_CANCEL   = 0x00000004U,
+    CPS_COMPLETE = 0x00000001U,
+    CPS_CONVERT  = 0x00000002U,
+    CPS_REVERT   = 0x00000003U,
 }
+
 alias NOTIFY_IME_ACTION = uint;
 enum : uint
 {
-    NI_CHANGECANDIDATELIST    = 0x00000013,
-    NI_CLOSECANDIDATE         = 0x00000011,
-    NI_COMPOSITIONSTR         = 0x00000015,
-    NI_IMEMENUSELECTED        = 0x00000018,
-    NI_OPENCANDIDATE          = 0x00000010,
-    NI_SELECTCANDIDATESTR     = 0x00000012,
-    NI_SETCANDIDATE_PAGESIZE  = 0x00000017,
-    NI_SETCANDIDATE_PAGESTART = 0x00000016,
+    NI_CHANGECANDIDATELIST    = 0x00000013U,
+    NI_CLOSECANDIDATE         = 0x00000011U,
+    NI_COMPOSITIONSTR         = 0x00000015U,
+    NI_IMEMENUSELECTED        = 0x00000018U,
+    NI_OPENCANDIDATE          = 0x00000010U,
+    NI_SELECTCANDIDATESTR     = 0x00000012U,
+    NI_SETCANDIDATE_PAGESIZE  = 0x00000017U,
+    NI_SETCANDIDATE_PAGESTART = 0x00000016U,
 }
+
 alias GET_CONVERSION_LIST_FLAG = uint;
 enum : uint
 {
-    GCL_CONVERSION        = 0x00000001,
-    GCL_REVERSECONVERSION = 0x00000002,
-    GCL_REVERSE_LENGTH    = 0x00000003,
+    GCL_CONVERSION        = 0x00000001U,
+    GCL_REVERSECONVERSION = 0x00000002U,
+    GCL_REVERSE_LENGTH    = 0x00000003U,
 }
+
 alias IME_PAD_REQUEST_FLAGS = uint;
 enum : uint
 {
-    IMEPADREQ_INSERTSTRING             = 0x00001001,
-    IMEPADREQ_SENDCONTROL              = 0x00001004,
-    IMEPADREQ_SETAPPLETSIZE            = 0x00001008,
-    IMEPADREQ_GETCOMPOSITIONSTRING     = 0x00001006,
-    IMEPADREQ_GETCOMPOSITIONSTRINGINFO = 0x0000100c,
-    IMEPADREQ_DELETESTRING             = 0x00001010,
-    IMEPADREQ_CHANGESTRING             = 0x00001011,
-    IMEPADREQ_GETAPPLHWND              = 0x00001014,
-    IMEPADREQ_FORCEIMEPADWINDOWSHOW    = 0x00001015,
-    IMEPADREQ_POSTMODALNOTIFY          = 0x00001016,
-    IMEPADREQ_GETDEFAULTUILANGID       = 0x00001017,
-    IMEPADREQ_GETAPPLETUISTYLE         = 0x00001019,
-    IMEPADREQ_SETAPPLETUISTYLE         = 0x0000101a,
-    IMEPADREQ_ISAPPLETACTIVE           = 0x0000101b,
-    IMEPADREQ_ISIMEPADWINDOWVISIBLE    = 0x0000101c,
-    IMEPADREQ_SETAPPLETMINMAXSIZE      = 0x0000101d,
-    IMEPADREQ_GETCONVERSIONSTATUS      = 0x0000101e,
-    IMEPADREQ_GETVERSION               = 0x0000101f,
-    IMEPADREQ_GETCURRENTIMEINFO        = 0x00001020,
+    IMEPADREQ_INSERTSTRING             = 0x00001001U,
+    IMEPADREQ_SENDCONTROL              = 0x00001004U,
+    IMEPADREQ_SETAPPLETSIZE            = 0x00001008U,
+    IMEPADREQ_GETCOMPOSITIONSTRING     = 0x00001006U,
+    IMEPADREQ_GETCOMPOSITIONSTRINGINFO = 0x0000100cU,
+    IMEPADREQ_DELETESTRING             = 0x00001010U,
+    IMEPADREQ_CHANGESTRING             = 0x00001011U,
+    IMEPADREQ_GETAPPLHWND              = 0x00001014U,
+    IMEPADREQ_FORCEIMEPADWINDOWSHOW    = 0x00001015U,
+    IMEPADREQ_POSTMODALNOTIFY          = 0x00001016U,
+    IMEPADREQ_GETDEFAULTUILANGID       = 0x00001017U,
+    IMEPADREQ_GETAPPLETUISTYLE         = 0x00001019U,
+    IMEPADREQ_SETAPPLETUISTYLE         = 0x0000101aU,
+    IMEPADREQ_ISAPPLETACTIVE           = 0x0000101bU,
+    IMEPADREQ_ISIMEPADWINDOWVISIBLE    = 0x0000101cU,
+    IMEPADREQ_SETAPPLETMINMAXSIZE      = 0x0000101dU,
+    IMEPADREQ_GETCONVERSIONSTATUS      = 0x0000101eU,
+    IMEPADREQ_GETVERSION               = 0x0000101fU,
+    IMEPADREQ_GETCURRENTIMEINFO        = 0x00001020U,
 }
+
 alias IME_CONVERSION_MODE = uint;
 enum : uint
 {
-    IME_CMODE_ALPHANUMERIC = 0x00000000,
-    IME_CMODE_NATIVE       = 0x00000001,
-    IME_CMODE_CHINESE      = 0x00000001,
-    IME_CMODE_HANGUL       = 0x00000001,
-    IME_CMODE_JAPANESE     = 0x00000001,
-    IME_CMODE_KATAKANA     = 0x00000002,
-    IME_CMODE_LANGUAGE     = 0x00000003,
-    IME_CMODE_FULLSHAPE    = 0x00000008,
-    IME_CMODE_ROMAN        = 0x00000010,
-    IME_CMODE_CHARCODE     = 0x00000020,
-    IME_CMODE_HANJACONVERT = 0x00000040,
-    IME_CMODE_NATIVESYMBOL = 0x00000080,
-    IME_CMODE_HANGEUL      = 0x00000001,
-    IME_CMODE_SOFTKBD      = 0x00000080,
-    IME_CMODE_NOCONVERSION = 0x00000100,
-    IME_CMODE_EUDC         = 0x00000200,
-    IME_CMODE_SYMBOL       = 0x00000400,
-    IME_CMODE_FIXED        = 0x00000800,
-    IME_CMODE_RESERVED     = 0xf0000000,
+    IME_CMODE_ALPHANUMERIC = 0x00000000U,
+    IME_CMODE_NATIVE       = 0x00000001U,
+    IME_CMODE_CHINESE      = 0x00000001U,
+    IME_CMODE_HANGUL       = 0x00000001U,
+    IME_CMODE_JAPANESE     = 0x00000001U,
+    IME_CMODE_KATAKANA     = 0x00000002U,
+    IME_CMODE_LANGUAGE     = 0x00000003U,
+    IME_CMODE_FULLSHAPE    = 0x00000008U,
+    IME_CMODE_ROMAN        = 0x00000010U,
+    IME_CMODE_CHARCODE     = 0x00000020U,
+    IME_CMODE_HANJACONVERT = 0x00000040U,
+    IME_CMODE_NATIVESYMBOL = 0x00000080U,
+    IME_CMODE_HANGEUL      = 0x00000001U,
+    IME_CMODE_SOFTKBD      = 0x00000080U,
+    IME_CMODE_NOCONVERSION = 0x00000100U,
+    IME_CMODE_EUDC         = 0x00000200U,
+    IME_CMODE_SYMBOL       = 0x00000400U,
+    IME_CMODE_FIXED        = 0x00000800U,
+    IME_CMODE_RESERVED     = 0xf0000000U,
 }
+
 alias IME_SENTENCE_MODE = uint;
 enum : uint
 {
-    IME_SMODE_NONE          = 0x00000000,
-    IME_SMODE_PLAURALCLAUSE = 0x00000001,
-    IME_SMODE_SINGLECONVERT = 0x00000002,
-    IME_SMODE_AUTOMATIC     = 0x00000004,
-    IME_SMODE_PHRASEPREDICT = 0x00000008,
-    IME_SMODE_CONVERSATION  = 0x00000010,
-    IME_SMODE_RESERVED      = 0x0000f000,
+    IME_SMODE_NONE          = 0x00000000U,
+    IME_SMODE_PLAURALCLAUSE = 0x00000001U,
+    IME_SMODE_SINGLECONVERT = 0x00000002U,
+    IME_SMODE_AUTOMATIC     = 0x00000004U,
+    IME_SMODE_PHRASEPREDICT = 0x00000008U,
+    IME_SMODE_CONVERSATION  = 0x00000010U,
+    IME_SMODE_RESERVED      = 0x0000f000U,
 }
+
 alias IME_COMPOSITION_STRING = uint;
 enum : uint
 {
-    GCS_COMPREADSTR      = 0x00000001,
-    GCS_COMPREADATTR     = 0x00000002,
-    GCS_COMPREADCLAUSE   = 0x00000004,
-    GCS_COMPSTR          = 0x00000008,
-    GCS_COMPATTR         = 0x00000010,
-    GCS_COMPCLAUSE       = 0x00000020,
-    GCS_CURSORPOS        = 0x00000080,
-    GCS_DELTASTART       = 0x00000100,
-    GCS_RESULTREADSTR    = 0x00000200,
-    GCS_RESULTREADCLAUSE = 0x00000400,
-    GCS_RESULTSTR        = 0x00000800,
-    GCS_RESULTCLAUSE     = 0x00001000,
+    GCS_COMPREADSTR      = 0x00000001U,
+    GCS_COMPREADATTR     = 0x00000002U,
+    GCS_COMPREADCLAUSE   = 0x00000004U,
+    GCS_COMPSTR          = 0x00000008U,
+    GCS_COMPATTR         = 0x00000010U,
+    GCS_COMPCLAUSE       = 0x00000020U,
+    GCS_CURSORPOS        = 0x00000080U,
+    GCS_DELTASTART       = 0x00000100U,
+    GCS_RESULTREADSTR    = 0x00000200U,
+    GCS_RESULTREADCLAUSE = 0x00000400U,
+    GCS_RESULTSTR        = 0x00000800U,
+    GCS_RESULTCLAUSE     = 0x00001000U,
 }
+
 alias IME_ESCAPE = uint;
 enum : uint
 {
-    IME_ESC_QUERY_SUPPORT        = 0x00000003,
-    IME_ESC_RESERVED_FIRST       = 0x00000004,
-    IME_ESC_RESERVED_LAST        = 0x000007ff,
-    IME_ESC_PRIVATE_FIRST        = 0x00000800,
-    IME_ESC_PRIVATE_LAST         = 0x00000fff,
-    IME_ESC_SEQUENCE_TO_INTERNAL = 0x00001001,
-    IME_ESC_GET_EUDC_DICTIONARY  = 0x00001003,
-    IME_ESC_SET_EUDC_DICTIONARY  = 0x00001004,
-    IME_ESC_MAX_KEY              = 0x00001005,
-    IME_ESC_IME_NAME             = 0x00001006,
-    IME_ESC_SYNC_HOTKEY          = 0x00001007,
-    IME_ESC_HANJA_MODE           = 0x00001008,
-    IME_ESC_AUTOMATA             = 0x00001009,
-    IME_ESC_PRIVATE_HOTKEY       = 0x0000100a,
-    IME_ESC_GETHELPFILENAME      = 0x0000100b,
+    IME_ESC_QUERY_SUPPORT        = 0x00000003U,
+    IME_ESC_RESERVED_FIRST       = 0x00000004U,
+    IME_ESC_RESERVED_LAST        = 0x000007ffU,
+    IME_ESC_PRIVATE_FIRST        = 0x00000800U,
+    IME_ESC_PRIVATE_LAST         = 0x00000fffU,
+    IME_ESC_SEQUENCE_TO_INTERNAL = 0x00001001U,
+    IME_ESC_GET_EUDC_DICTIONARY  = 0x00001003U,
+    IME_ESC_SET_EUDC_DICTIONARY  = 0x00001004U,
+    IME_ESC_MAX_KEY              = 0x00001005U,
+    IME_ESC_IME_NAME             = 0x00001006U,
+    IME_ESC_SYNC_HOTKEY          = 0x00001007U,
+    IME_ESC_HANJA_MODE           = 0x00001008U,
+    IME_ESC_AUTOMATA             = 0x00001009U,
+    IME_ESC_PRIVATE_HOTKEY       = 0x0000100aU,
+    IME_ESC_GETHELPFILENAME      = 0x0000100bU,
 }
+
 alias IME_HOTKEY_IDENTIFIER = uint;
 enum : uint
 {
-    IME_CHOTKEY_IME_NONIME_TOGGLE     = 0x00000010,
-    IME_CHOTKEY_SHAPE_TOGGLE          = 0x00000011,
-    IME_CHOTKEY_SYMBOL_TOGGLE         = 0x00000012,
-    IME_JHOTKEY_CLOSE_OPEN            = 0x00000030,
-    IME_KHOTKEY_SHAPE_TOGGLE          = 0x00000050,
-    IME_KHOTKEY_HANJACONVERT          = 0x00000051,
-    IME_KHOTKEY_ENGLISH               = 0x00000052,
-    IME_THOTKEY_IME_NONIME_TOGGLE     = 0x00000070,
-    IME_THOTKEY_SHAPE_TOGGLE          = 0x00000071,
-    IME_THOTKEY_SYMBOL_TOGGLE         = 0x00000072,
-    IME_ITHOTKEY_RESEND_RESULTSTR     = 0x00000200,
-    IME_ITHOTKEY_PREVIOUS_COMPOSITION = 0x00000201,
-    IME_ITHOTKEY_UISTYLE_TOGGLE       = 0x00000202,
-    IME_ITHOTKEY_RECONVERTSTRING      = 0x00000203,
+    IME_CHOTKEY_IME_NONIME_TOGGLE     = 0x00000010U,
+    IME_CHOTKEY_SHAPE_TOGGLE          = 0x00000011U,
+    IME_CHOTKEY_SYMBOL_TOGGLE         = 0x00000012U,
+    IME_JHOTKEY_CLOSE_OPEN            = 0x00000030U,
+    IME_KHOTKEY_SHAPE_TOGGLE          = 0x00000050U,
+    IME_KHOTKEY_HANJACONVERT          = 0x00000051U,
+    IME_KHOTKEY_ENGLISH               = 0x00000052U,
+    IME_THOTKEY_IME_NONIME_TOGGLE     = 0x00000070U,
+    IME_THOTKEY_SHAPE_TOGGLE          = 0x00000071U,
+    IME_THOTKEY_SYMBOL_TOGGLE         = 0x00000072U,
+    IME_ITHOTKEY_RESEND_RESULTSTR     = 0x00000200U,
+    IME_ITHOTKEY_PREVIOUS_COMPOSITION = 0x00000201U,
+    IME_ITHOTKEY_UISTYLE_TOGGLE       = 0x00000202U,
+    IME_ITHOTKEY_RECONVERTSTRING      = 0x00000203U,
 }
+
 alias IMEREG = int;
 enum : int
 {
@@ -177,6 +190,7 @@ enum : int
     IFED_REG_TAIL = 0x00000001,
     IFED_REG_DEL  = 0x00000002,
 }
+
 alias IMEFMT = int;
 enum : int
 {
@@ -208,7 +222,8 @@ enum : int
     IFED_PIME2_BIN_SYSTEM          = 0x00000019,
     IFED_PIME2_BIN_STANDARD_SYSTEM = 0x0000001a,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/ne-msime-imeuct))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msime/ne-msime-imeuct
 alias IMEUCT = int;
 enum : int
 {
@@ -218,6 +233,7 @@ enum : int
     IFED_UCT_USER_DEFINED   = 0x00000003,
     IFED_UCT_MAX            = 0x00000004,
 }
+
 alias IMEREL = int;
 enum : int
 {
@@ -264,49 +280,49 @@ enum : GUID
 
 enum : uint
 {
-    FEID_NONE                = 0x00000000,
-    FEID_CHINESE_TRADITIONAL = 0x00000001,
-    FEID_CHINESE_SIMPLIFIED  = 0x00000002,
-    FEID_CHINESE_HONGKONG    = 0x00000003,
-    FEID_CHINESE_SINGAPORE   = 0x00000004,
+    FEID_NONE                = 0x00000000U,
+    FEID_CHINESE_TRADITIONAL = 0x00000001U,
+    FEID_CHINESE_SIMPLIFIED  = 0x00000002U,
+    FEID_CHINESE_HONGKONG    = 0x00000003U,
+    FEID_CHINESE_SINGAPORE   = 0x00000004U,
 }
 
-enum uint FEID_JAPANESE = 0x00000005;
+enum uint FEID_JAPANESE = 0x00000005U;
 
 enum : uint
 {
-    FEID_KOREAN       = 0x00000006,
-    FEID_KOREAN_JOHAB = 0x00000007,
-}
-
-enum : uint
-{
-    INFOMASK_NONE          = 0x00000000,
-    INFOMASK_QUERY_CAND    = 0x00000001,
-    INFOMASK_APPLY_CAND    = 0x00000002,
-    INFOMASK_APPLY_CAND_EX = 0x00000004,
-    INFOMASK_STRING_FIX    = 0x00010000,
-    INFOMASK_HIDE_CAND     = 0x00020000,
-    INFOMASK_BLOCK_CAND    = 0x00040000,
+    FEID_KOREAN       = 0x00000006U,
+    FEID_KOREAN_JOHAB = 0x00000007U,
 }
 
 enum : uint
 {
-    IMEFAREASTINFO_TYPE_DEFAULT  = 0x00000000,
-    IMEFAREASTINFO_TYPE_READING  = 0x00000001,
-    IMEFAREASTINFO_TYPE_COMMENT  = 0x00000002,
-    IMEFAREASTINFO_TYPE_COSTTIME = 0x00000003,
+    INFOMASK_NONE          = 0x00000000U,
+    INFOMASK_QUERY_CAND    = 0x00000001U,
+    INFOMASK_APPLY_CAND    = 0x00000002U,
+    INFOMASK_APPLY_CAND_EX = 0x00000004U,
+    INFOMASK_STRING_FIX    = 0x00010000U,
+    INFOMASK_HIDE_CAND     = 0x00020000U,
+    INFOMASK_BLOCK_CAND    = 0x00040000U,
 }
 
 enum : uint
 {
-    CHARINFO_APPLETID_MASK = 0xff000000,
-    CHARINFO_FEID_MASK     = 0x00f00000,
-    CHARINFO_CHARID_MASK   = 0x0000ffff,
+    IMEFAREASTINFO_TYPE_DEFAULT  = 0x00000000U,
+    IMEFAREASTINFO_TYPE_READING  = 0x00000001U,
+    IMEFAREASTINFO_TYPE_COMMENT  = 0x00000002U,
+    IMEFAREASTINFO_TYPE_COSTTIME = 0x00000003U,
 }
 
-enum uint MAX_APPLETTITLE = 0x00000040;
-enum uint MAX_FONTFACE = 0x00000020;
+enum : uint
+{
+    CHARINFO_APPLETID_MASK = 0xff000000U,
+    CHARINFO_FEID_MASK     = 0x00f00000U,
+    CHARINFO_CHARID_MASK   = 0x0000ffffU,
+}
+
+enum uint MAX_APPLETTITLE = 0x00000040U;
+enum uint MAX_FONTFACE = 0x00000020U;
 
 enum : int
 {
@@ -325,114 +341,114 @@ enum : int
 
 enum : uint
 {
-    IPACID_NONE        = 0x00000000,
-    IPACID_SOFTKEY     = 0x00000001,
-    IPACID_HANDWRITING = 0x00000002,
+    IPACID_NONE        = 0x00000000U,
+    IPACID_SOFTKEY     = 0x00000001U,
+    IPACID_HANDWRITING = 0x00000002U,
 }
 
-enum uint IPACID_STROKESEARCH = 0x00000003;
-enum uint IPACID_RADICALSEARCH = 0x00000004;
-enum uint IPACID_SYMBOLSEARCH = 0x00000005;
+enum uint IPACID_STROKESEARCH = 0x00000003U;
+enum uint IPACID_RADICALSEARCH = 0x00000004U;
+enum uint IPACID_SYMBOLSEARCH = 0x00000005U;
 
 enum : uint
 {
-    IPACID_VOICE    = 0x00000006,
-    IPACID_EPWING   = 0x00000007,
-    IPACID_OCR      = 0x00000008,
-    IPACID_CHARLIST = 0x00000009,
-    IPACID_USER     = 0x00000100,
-}
-
-enum : uint
-{
-    IMEPADREQ_FIRST                 = 0x00001000,
-    IMEPADREQ_INSERTSTRINGCANDIDATE = 0x00001002,
-    IMEPADREQ_INSERTITEMCANDIDATE   = 0x00001003,
+    IPACID_VOICE    = 0x00000006U,
+    IPACID_EPWING   = 0x00000007U,
+    IPACID_OCR      = 0x00000008U,
+    IPACID_CHARLIST = 0x00000009U,
+    IPACID_USER     = 0x00000100U,
 }
 
 enum : uint
 {
-    IMEPADREQ_SENDKEYCONTROL    = 0x00001005,
-    IMEPADREQ_GETSELECTEDSTRING = 0x00001007,
+    IMEPADREQ_FIRST                 = 0x00001000U,
+    IMEPADREQ_INSERTSTRINGCANDIDATE = 0x00001002U,
+    IMEPADREQ_INSERTITEMCANDIDATE   = 0x00001003U,
 }
 
 enum : uint
 {
-    IMEPADREQ_SETAPPLETDATA          = 0x00001009,
-    IMEPADREQ_GETAPPLETDATA          = 0x0000100a,
-    IMEPADREQ_SETTITLEFONT           = 0x0000100b,
-    IMEPADREQ_GETCOMPOSITIONSTRINGID = 0x0000100d,
-}
-
-enum uint IMEPADREQ_INSERTSTRINGCANDIDATEINFO = 0x0000100e;
-enum uint IMEPADREQ_CHANGESTRINGCANDIDATEINFO = 0x0000100f;
-enum uint IMEPADREQ_INSERTSTRINGINFO = 0x00001012;
-enum uint IMEPADREQ_CHANGESTRINGINFO = 0x00001013;
-enum uint IMEPADREQ_GETCURRENTUILANGID = 0x00001018;
-
-enum : uint
-{
-    IMEPADCTRL_CONVERTALL        = 0x00000001,
-    IMEPADCTRL_DETERMINALL       = 0x00000002,
-    IMEPADCTRL_DETERMINCHAR      = 0x00000003,
-    IMEPADCTRL_CLEARALL          = 0x00000004,
-    IMEPADCTRL_CARETSET          = 0x00000005,
-    IMEPADCTRL_CARETLEFT         = 0x00000006,
-    IMEPADCTRL_CARETRIGHT        = 0x00000007,
-    IMEPADCTRL_CARETTOP          = 0x00000008,
-    IMEPADCTRL_CARETBOTTOM       = 0x00000009,
-    IMEPADCTRL_CARETBACKSPACE    = 0x0000000a,
-    IMEPADCTRL_CARETDELETE       = 0x0000000b,
-    IMEPADCTRL_PHRASEDELETE      = 0x0000000c,
-    IMEPADCTRL_INSERTSPACE       = 0x0000000d,
-    IMEPADCTRL_INSERTFULLSPACE   = 0x0000000e,
-    IMEPADCTRL_INSERTHALFSPACE   = 0x0000000f,
-    IMEPADCTRL_ONIME             = 0x00000010,
-    IMEPADCTRL_OFFIME            = 0x00000011,
-    IMEPADCTRL_ONPRECONVERSION   = 0x00000012,
-    IMEPADCTRL_OFFPRECONVERSION  = 0x00000013,
-    IMEPADCTRL_PHONETICCANDIDATE = 0x00000014,
+    IMEPADREQ_SENDKEYCONTROL    = 0x00001005U,
+    IMEPADREQ_GETSELECTEDSTRING = 0x00001007U,
 }
 
 enum : uint
 {
-    IMEKEYCTRLMASK_ALT   = 0x00000001,
-    IMEKEYCTRLMASK_CTRL  = 0x00000002,
-    IMEKEYCTRLMASK_SHIFT = 0x00000004,
-    IMEKEYCTRL_UP        = 0x00000001,
-    IMEKEYCTRL_DOWN      = 0x00000000,
+    IMEPADREQ_SETAPPLETDATA          = 0x00001009U,
+    IMEPADREQ_GETAPPLETDATA          = 0x0000100aU,
+    IMEPADREQ_SETTITLEFONT           = 0x0000100bU,
+    IMEPADREQ_GETCOMPOSITIONSTRINGID = 0x0000100dU,
+}
+
+enum uint IMEPADREQ_INSERTSTRINGCANDIDATEINFO = 0x0000100eU;
+enum uint IMEPADREQ_CHANGESTRINGCANDIDATEINFO = 0x0000100fU;
+enum uint IMEPADREQ_INSERTSTRINGINFO = 0x00001012U;
+enum uint IMEPADREQ_CHANGESTRINGINFO = 0x00001013U;
+enum uint IMEPADREQ_GETCURRENTUILANGID = 0x00001018U;
+
+enum : uint
+{
+    IMEPADCTRL_CONVERTALL        = 0x00000001U,
+    IMEPADCTRL_DETERMINALL       = 0x00000002U,
+    IMEPADCTRL_DETERMINCHAR      = 0x00000003U,
+    IMEPADCTRL_CLEARALL          = 0x00000004U,
+    IMEPADCTRL_CARETSET          = 0x00000005U,
+    IMEPADCTRL_CARETLEFT         = 0x00000006U,
+    IMEPADCTRL_CARETRIGHT        = 0x00000007U,
+    IMEPADCTRL_CARETTOP          = 0x00000008U,
+    IMEPADCTRL_CARETBOTTOM       = 0x00000009U,
+    IMEPADCTRL_CARETBACKSPACE    = 0x0000000aU,
+    IMEPADCTRL_CARETDELETE       = 0x0000000bU,
+    IMEPADCTRL_PHRASEDELETE      = 0x0000000cU,
+    IMEPADCTRL_INSERTSPACE       = 0x0000000dU,
+    IMEPADCTRL_INSERTFULLSPACE   = 0x0000000eU,
+    IMEPADCTRL_INSERTHALFSPACE   = 0x0000000fU,
+    IMEPADCTRL_ONIME             = 0x00000010U,
+    IMEPADCTRL_OFFIME            = 0x00000011U,
+    IMEPADCTRL_ONPRECONVERSION   = 0x00000012U,
+    IMEPADCTRL_OFFPRECONVERSION  = 0x00000013U,
+    IMEPADCTRL_PHONETICCANDIDATE = 0x00000014U,
 }
 
 enum : uint
 {
-    IMEPN_FIRST      = 0x00000100,
-    IMEPN_ACTIVATE   = 0x00000101,
-    IMEPN_INACTIVATE = 0x00000102,
+    IMEKEYCTRLMASK_ALT   = 0x00000001U,
+    IMEKEYCTRLMASK_CTRL  = 0x00000002U,
+    IMEKEYCTRLMASK_SHIFT = 0x00000004U,
+    IMEKEYCTRL_UP        = 0x00000001U,
+    IMEKEYCTRL_DOWN      = 0x00000000U,
 }
 
 enum : uint
 {
-    IMEPN_SHOW         = 0x00000104,
-    IMEPN_HIDE         = 0x00000105,
-    IMEPN_SIZECHANGING = 0x00000106,
-    IMEPN_SIZECHANGED  = 0x00000107,
+    IMEPN_FIRST      = 0x00000100U,
+    IMEPN_ACTIVATE   = 0x00000101U,
+    IMEPN_INACTIVATE = 0x00000102U,
 }
 
 enum : uint
 {
-    IMEPN_CONFIG    = 0x00000108,
-    IMEPN_HELP      = 0x00000109,
-    IMEPN_QUERYCAND = 0x0000010a,
+    IMEPN_SHOW         = 0x00000104U,
+    IMEPN_HIDE         = 0x00000105U,
+    IMEPN_SIZECHANGING = 0x00000106U,
+    IMEPN_SIZECHANGED  = 0x00000107U,
 }
 
 enum : uint
 {
-    IMEPN_APPLYCAND   = 0x0000010b,
-    IMEPN_APPLYCANDEX = 0x0000010c,
+    IMEPN_CONFIG    = 0x00000108U,
+    IMEPN_HELP      = 0x00000109U,
+    IMEPN_QUERYCAND = 0x0000010aU,
 }
 
-enum uint IMEPN_SETTINGCHANGED = 0x0000010d;
-enum uint IMEPN_USER = 0x00000164;
+enum : uint
+{
+    IMEPN_APPLYCAND   = 0x0000010bU,
+    IMEPN_APPLYCANDEX = 0x0000010cU,
+}
+
+enum uint IMEPN_SETTINGCHANGED = 0x0000010dU;
+enum uint IMEPN_USER = 0x00000164U;
 
 enum : int
 {
@@ -458,194 +474,194 @@ enum : int
     IPAWS_MINSIZEFIXED   = 0x00030000,
 }
 
-enum uint STYLE_DESCRIPTION_SIZE = 0x00000020;
-enum uint IMEMENUITEM_STRING_SIZE = 0x00000050;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-getcandidatepos))], [])*/uint IMC_GETCANDIDATEPOS = 0x00000007;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-setcandidatepos))], [])*/uint IMC_SETCANDIDATEPOS = 0x00000008;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-getcompositionfont))], [])*/uint IMC_GETCOMPOSITIONFONT = 0x00000009;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-setcompositionfont))], [])*/uint IMC_SETCOMPOSITIONFONT = 0x0000000a;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-getcompositionwindow))], [])*/uint IMC_GETCOMPOSITIONWINDOW = 0x0000000b;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-setcompositionwindow))], [])*/uint IMC_SETCOMPOSITIONWINDOW = 0x0000000c;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-getstatuswindowpos))], [])*/uint IMC_GETSTATUSWINDOWPOS = 0x0000000f;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-setstatuswindowpos))], [])*/uint IMC_SETSTATUSWINDOWPOS = 0x00000010;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-closestatuswindow))], [])*/uint IMC_CLOSESTATUSWINDOW = 0x00000021;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-openstatuswindow))], [])*/uint IMC_OPENSTATUSWINDOW = 0x00000022;
-enum uint NI_FINALIZECONVERSIONRESULT = 0x00000014;
+enum uint STYLE_DESCRIPTION_SIZE = 0x00000020U;
+enum uint IMEMENUITEM_STRING_SIZE = 0x00000050U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-getcandidatepos))], [])*/uint IMC_GETCANDIDATEPOS = 0x00000007U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-setcandidatepos))], [])*/uint IMC_SETCANDIDATEPOS = 0x00000008U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-getcompositionfont))], [])*/uint IMC_GETCOMPOSITIONFONT = 0x00000009U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-setcompositionfont))], [])*/uint IMC_SETCOMPOSITIONFONT = 0x0000000aU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-getcompositionwindow))], [])*/uint IMC_GETCOMPOSITIONWINDOW = 0x0000000bU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-setcompositionwindow))], [])*/uint IMC_SETCOMPOSITIONWINDOW = 0x0000000cU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-getstatuswindowpos))], [])*/uint IMC_GETSTATUSWINDOWPOS = 0x0000000fU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-setstatuswindowpos))], [])*/uint IMC_SETSTATUSWINDOWPOS = 0x00000010U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-closestatuswindow))], [])*/uint IMC_CLOSESTATUSWINDOW = 0x00000021U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imc-openstatuswindow))], [])*/uint IMC_OPENSTATUSWINDOW = 0x00000022U;
+enum uint NI_FINALIZECONVERSIONRESULT = 0x00000014U;
 
 enum : uint
 {
-    ISC_SHOWUICANDIDATEWINDOW   = 0x00000001,
-    ISC_SHOWUICOMPOSITIONWINDOW = 0x80000000,
+    ISC_SHOWUICANDIDATEWINDOW   = 0x00000001U,
+    ISC_SHOWUICOMPOSITIONWINDOW = 0x80000000U,
 }
 
 enum : uint
 {
-    ISC_SHOWUIGUIDELINE          = 0x40000000,
-    ISC_SHOWUIALLCANDIDATEWINDOW = 0x0000000f,
-    ISC_SHOWUIALL                = 0xc000000f,
+    ISC_SHOWUIGUIDELINE          = 0x40000000U,
+    ISC_SHOWUIALLCANDIDATEWINDOW = 0x0000000fU,
+    ISC_SHOWUIALL                = 0xc000000fU,
 }
 
 enum : uint
 {
-    MOD_LEFT     = 0x00008000,
-    MOD_RIGHT    = 0x00004000,
-    MOD_ON_KEYUP = 0x00000800,
+    MOD_LEFT     = 0x00008000U,
+    MOD_RIGHT    = 0x00004000U,
+    MOD_ON_KEYUP = 0x00000800U,
 }
 
-enum uint MOD_IGNORE_ALL_MODIFIER = 0x00000400;
+enum uint MOD_IGNORE_ALL_MODIFIER = 0x00000400U;
 
 enum : uint
 {
-    IME_HOTKEY_DSWITCH_FIRST = 0x00000100,
-    IME_HOTKEY_DSWITCH_LAST  = 0x0000011f,
-    IME_HOTKEY_PRIVATE_FIRST = 0x00000200,
-    IME_HOTKEY_PRIVATE_LAST  = 0x0000021f,
+    IME_HOTKEY_DSWITCH_FIRST = 0x00000100U,
+    IME_HOTKEY_DSWITCH_LAST  = 0x0000011fU,
+    IME_HOTKEY_PRIVATE_FIRST = 0x00000200U,
+    IME_HOTKEY_PRIVATE_LAST  = 0x0000021fU,
 }
 
-enum uint CS_INSERTCHAR = 0x00002000;
-enum uint CS_NOMOVECARET = 0x00004000;
+enum uint CS_INSERTCHAR = 0x00002000U;
+enum uint CS_NOMOVECARET = 0x00004000U;
 
 enum : uint
 {
-    IMEVER_0310 = 0x0003000a,
-    IMEVER_0400 = 0x00040000,
-}
-
-enum : uint
-{
-    IME_PROP_AT_CARET              = 0x00010000,
-    IME_PROP_SPECIAL_UI            = 0x00020000,
-    IME_PROP_CANDLIST_START_FROM_1 = 0x00040000,
+    IMEVER_0310 = 0x0003000aU,
+    IMEVER_0400 = 0x00040000U,
 }
 
 enum : uint
 {
-    IME_PROP_UNICODE              = 0x00080000,
-    IME_PROP_COMPLETE_ON_UNSELECT = 0x00100000,
+    IME_PROP_AT_CARET              = 0x00010000U,
+    IME_PROP_SPECIAL_UI            = 0x00020000U,
+    IME_PROP_CANDLIST_START_FROM_1 = 0x00040000U,
 }
 
 enum : uint
 {
-    UI_CAP_2700   = 0x00000001,
-    UI_CAP_ROT90  = 0x00000002,
-    UI_CAP_ROTANY = 0x00000004,
+    IME_PROP_UNICODE              = 0x00080000U,
+    IME_PROP_COMPLETE_ON_UNSELECT = 0x00100000U,
 }
 
 enum : uint
 {
-    SCS_CAP_COMPSTR            = 0x00000001,
-    SCS_CAP_MAKEREAD           = 0x00000002,
-    SCS_CAP_SETRECONVERTSTRING = 0x00000004,
+    UI_CAP_2700   = 0x00000001U,
+    UI_CAP_ROT90  = 0x00000002U,
+    UI_CAP_ROTANY = 0x00000004U,
 }
 
 enum : uint
 {
-    SELECT_CAP_CONVERSION = 0x00000001,
-    SELECT_CAP_SENTENCE   = 0x00000002,
+    SCS_CAP_COMPSTR            = 0x00000001U,
+    SCS_CAP_MAKEREAD           = 0x00000002U,
+    SCS_CAP_SETRECONVERTSTRING = 0x00000004U,
 }
 
 enum : uint
 {
-    GL_LEVEL_NOGUIDELINE = 0x00000000,
-    GL_LEVEL_FATAL       = 0x00000001,
-    GL_LEVEL_ERROR       = 0x00000002,
-    GL_LEVEL_WARNING     = 0x00000003,
-    GL_LEVEL_INFORMATION = 0x00000004,
+    SELECT_CAP_CONVERSION = 0x00000001U,
+    SELECT_CAP_SENTENCE   = 0x00000002U,
 }
 
 enum : uint
 {
-    GL_ID_UNKNOWN      = 0x00000000,
-    GL_ID_NOMODULE     = 0x00000001,
-    GL_ID_NODICTIONARY = 0x00000010,
-}
-
-enum uint GL_ID_CANNOTSAVE = 0x00000011;
-enum uint GL_ID_NOCONVERT = 0x00000020;
-
-enum : uint
-{
-    GL_ID_TYPINGERROR   = 0x00000021,
-    GL_ID_TOOMANYSTROKE = 0x00000022,
-}
-
-enum uint GL_ID_READINGCONFLICT = 0x00000023;
-
-enum : uint
-{
-    GL_ID_INPUTREADING = 0x00000024,
-    GL_ID_INPUTRADICAL = 0x00000025,
-    GL_ID_INPUTCODE    = 0x00000026,
-    GL_ID_INPUTSYMBOL  = 0x00000027,
-}
-
-enum uint GL_ID_CHOOSECANDIDATE = 0x00000028;
-enum uint GL_ID_REVERSECONVERSION = 0x00000029;
-
-enum : uint
-{
-    GL_ID_PRIVATE_FIRST = 0x00008000,
-    GL_ID_PRIVATE_LAST  = 0x0000ffff,
+    GL_LEVEL_NOGUIDELINE = 0x00000000U,
+    GL_LEVEL_FATAL       = 0x00000001U,
+    GL_LEVEL_ERROR       = 0x00000002U,
+    GL_LEVEL_WARNING     = 0x00000003U,
+    GL_LEVEL_INFORMATION = 0x00000004U,
 }
 
 enum : uint
 {
-    ATTR_INPUT            = 0x00000000,
-    ATTR_TARGET_CONVERTED = 0x00000001,
+    GL_ID_UNKNOWN      = 0x00000000U,
+    GL_ID_NOMODULE     = 0x00000001U,
+    GL_ID_NODICTIONARY = 0x00000010U,
 }
 
-enum uint ATTR_CONVERTED = 0x00000002;
-enum uint ATTR_TARGET_NOTCONVERTED = 0x00000003;
-enum uint ATTR_INPUT_ERROR = 0x00000004;
-enum uint ATTR_FIXEDCONVERTED = 0x00000005;
-enum uint CFS_DEFAULT = 0x00000000;
+enum uint GL_ID_CANNOTSAVE = 0x00000011U;
+enum uint GL_ID_NOCONVERT = 0x00000020U;
 
 enum : uint
 {
-    CFS_RECT           = 0x00000001,
-    CFS_POINT          = 0x00000002,
-    CFS_FORCE_POSITION = 0x00000020,
+    GL_ID_TYPINGERROR   = 0x00000021U,
+    GL_ID_TOOMANYSTROKE = 0x00000022U,
 }
 
-enum uint CFS_CANDIDATEPOS = 0x00000040;
-enum uint CFS_EXCLUDE = 0x00000080;
+enum uint GL_ID_READINGCONFLICT = 0x00000023U;
 
 enum : uint
 {
-    IME_CAND_UNKNOWN = 0x00000000,
-    IME_CAND_READ    = 0x00000001,
-    IME_CAND_CODE    = 0x00000002,
-    IME_CAND_MEANING = 0x00000003,
-    IME_CAND_RADICAL = 0x00000004,
-    IME_CAND_STROKE  = 0x00000005,
+    GL_ID_INPUTREADING = 0x00000024U,
+    GL_ID_INPUTRADICAL = 0x00000025U,
+    GL_ID_INPUTCODE    = 0x00000026U,
+    GL_ID_INPUTSYMBOL  = 0x00000027U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-closestatuswindow))], [])*/uint IMN_CLOSESTATUSWINDOW = 0x00000001;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-openstatuswindow))], [])*/uint IMN_OPENSTATUSWINDOW = 0x00000002;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-changecandidate))], [])*/uint IMN_CHANGECANDIDATE = 0x00000003;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-closecandidate))], [])*/uint IMN_CLOSECANDIDATE = 0x00000004;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-opencandidate))], [])*/uint IMN_OPENCANDIDATE = 0x00000005;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-setconversionmode))], [])*/uint IMN_SETCONVERSIONMODE = 0x00000006;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-setsentencemode))], [])*/uint IMN_SETSENTENCEMODE = 0x00000007;
+enum uint GL_ID_CHOOSECANDIDATE = 0x00000028U;
+enum uint GL_ID_REVERSECONVERSION = 0x00000029U;
+
+enum : uint
+{
+    GL_ID_PRIVATE_FIRST = 0x00008000U,
+    GL_ID_PRIVATE_LAST  = 0x0000ffffU,
+}
+
+enum : uint
+{
+    ATTR_INPUT            = 0x00000000U,
+    ATTR_TARGET_CONVERTED = 0x00000001U,
+}
+
+enum uint ATTR_CONVERTED = 0x00000002U;
+enum uint ATTR_TARGET_NOTCONVERTED = 0x00000003U;
+enum uint ATTR_INPUT_ERROR = 0x00000004U;
+enum uint ATTR_FIXEDCONVERTED = 0x00000005U;
+enum uint CFS_DEFAULT = 0x00000000U;
+
+enum : uint
+{
+    CFS_RECT           = 0x00000001U,
+    CFS_POINT          = 0x00000002U,
+    CFS_FORCE_POSITION = 0x00000020U,
+}
+
+enum uint CFS_CANDIDATEPOS = 0x00000040U;
+enum uint CFS_EXCLUDE = 0x00000080U;
+
+enum : uint
+{
+    IME_CAND_UNKNOWN = 0x00000000U,
+    IME_CAND_READ    = 0x00000001U,
+    IME_CAND_CODE    = 0x00000002U,
+    IME_CAND_MEANING = 0x00000003U,
+    IME_CAND_RADICAL = 0x00000004U,
+    IME_CAND_STROKE  = 0x00000005U,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-closestatuswindow))], [])*/uint IMN_CLOSESTATUSWINDOW = 0x00000001U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-openstatuswindow))], [])*/uint IMN_OPENSTATUSWINDOW = 0x00000002U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-changecandidate))], [])*/uint IMN_CHANGECANDIDATE = 0x00000003U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-closecandidate))], [])*/uint IMN_CLOSECANDIDATE = 0x00000004U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-opencandidate))], [])*/uint IMN_OPENCANDIDATE = 0x00000005U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-setconversionmode))], [])*/uint IMN_SETCONVERSIONMODE = 0x00000006U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-setsentencemode))], [])*/uint IMN_SETSENTENCEMODE = 0x00000007U;
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-setopenstatus))], [])*/uint
 {
-    IMN_SETOPENSTATUS        = 0x00000008,
-    IMN_SETCANDIDATEPOS      = 0x00000009,
-    IMN_SETCOMPOSITIONFONT   = 0x0000000a,
-    IMN_SETCOMPOSITIONWINDOW = 0x0000000b,
+    IMN_SETOPENSTATUS        = 0x00000008U,
+    IMN_SETCANDIDATEPOS      = 0x00000009U,
+    IMN_SETCOMPOSITIONFONT   = 0x0000000aU,
+    IMN_SETCOMPOSITIONWINDOW = 0x0000000bU,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-setstatuswindowpos))], [])*/uint IMN_SETSTATUSWINDOWPOS = 0x0000000c;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-guideline))], [])*/uint IMN_GUIDELINE = 0x0000000d;
-enum uint IMN_PRIVATE = 0x0000000e;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imr-compositionwindow))], [])*/uint IMR_COMPOSITIONWINDOW = 0x00000001;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imr-candidatewindow))], [])*/uint IMR_CANDIDATEWINDOW = 0x00000002;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imr-compositionfont))], [])*/uint IMR_COMPOSITIONFONT = 0x00000003;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imr-reconvertstring))], [])*/uint IMR_RECONVERTSTRING = 0x00000004;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imr-confirmreconvertstring))], [])*/uint IMR_CONFIRMRECONVERTSTRING = 0x00000005;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imr-querycharposition))], [])*/uint IMR_QUERYCHARPOSITION = 0x00000006;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imr-documentfeed))], [])*/uint IMR_DOCUMENTFEED = 0x00000007;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-setstatuswindowpos))], [])*/uint IMN_SETSTATUSWINDOWPOS = 0x0000000cU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imn-guideline))], [])*/uint IMN_GUIDELINE = 0x0000000dU;
+enum uint IMN_PRIVATE = 0x0000000eU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imr-compositionwindow))], [])*/uint IMR_COMPOSITIONWINDOW = 0x00000001U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imr-candidatewindow))], [])*/uint IMR_CANDIDATEWINDOW = 0x00000002U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imr-compositionfont))], [])*/uint IMR_COMPOSITIONFONT = 0x00000003U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imr-reconvertstring))], [])*/uint IMR_RECONVERTSTRING = 0x00000004U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imr-confirmreconvertstring))], [])*/uint IMR_CONFIRMRECONVERTSTRING = 0x00000005U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imr-querycharposition))], [])*/uint IMR_QUERYCHARPOSITION = 0x00000006U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Intl/imr-documentfeed))], [])*/uint IMR_DOCUMENTFEED = 0x00000007U;
 
 enum : int
 {
@@ -655,106 +671,106 @@ enum : int
 
 enum : uint
 {
-    IME_CONFIG_GENERAL          = 0x00000001,
-    IME_CONFIG_REGISTERWORD     = 0x00000002,
-    IME_CONFIG_SELECTDICTIONARY = 0x00000003,
+    IME_CONFIG_GENERAL          = 0x00000001U,
+    IME_CONFIG_REGISTERWORD     = 0x00000002U,
+    IME_CONFIG_SELECTDICTIONARY = 0x00000003U,
 }
 
 enum : uint
 {
-    IME_REGWORD_STYLE_EUDC       = 0x00000001,
-    IME_REGWORD_STYLE_USER_FIRST = 0x80000000,
-    IME_REGWORD_STYLE_USER_LAST  = 0xffffffff,
+    IME_REGWORD_STYLE_EUDC       = 0x00000001U,
+    IME_REGWORD_STYLE_USER_FIRST = 0x80000000U,
+    IME_REGWORD_STYLE_USER_LAST  = 0xffffffffU,
 }
 
-enum uint IACE_CHILDREN = 0x00000001;
+enum uint IACE_CHILDREN = 0x00000001U;
 
 enum : uint
 {
-    IACE_DEFAULT         = 0x00000010,
-    IACE_IGNORENOCONTEXT = 0x00000020,
+    IACE_DEFAULT         = 0x00000010U,
+    IACE_IGNORENOCONTEXT = 0x00000020U,
 }
 
-enum uint IGIMIF_RIGHTMENU = 0x00000001;
+enum uint IGIMIF_RIGHTMENU = 0x00000001U;
 
 enum : uint
 {
-    IGIMII_CMODE      = 0x00000001,
-    IGIMII_SMODE      = 0x00000002,
-    IGIMII_CONFIGURE  = 0x00000004,
-    IGIMII_TOOLS      = 0x00000008,
-    IGIMII_HELP       = 0x00000010,
-    IGIMII_OTHER      = 0x00000020,
-    IGIMII_INPUTTOOLS = 0x00000040,
+    IGIMII_CMODE      = 0x00000001U,
+    IGIMII_SMODE      = 0x00000002U,
+    IGIMII_CONFIGURE  = 0x00000004U,
+    IGIMII_TOOLS      = 0x00000008U,
+    IGIMII_HELP       = 0x00000010U,
+    IGIMII_OTHER      = 0x00000020U,
+    IGIMII_INPUTTOOLS = 0x00000040U,
 }
 
-enum uint IMFT_RADIOCHECK = 0x00000001;
+enum uint IMFT_RADIOCHECK = 0x00000001U;
 
 enum : uint
 {
-    IMFT_SEPARATOR = 0x00000002,
-    IMFT_SUBMENU   = 0x00000004,
-}
-
-enum : uint
-{
-    SOFTKEYBOARD_TYPE_T1 = 0x00000001,
-    SOFTKEYBOARD_TYPE_C1 = 0x00000002,
+    IMFT_SEPARATOR = 0x00000002U,
+    IMFT_SUBMENU   = 0x00000004U,
 }
 
 enum : uint
 {
-    IMMGWL_IMC  = 0x00000000,
-    IMMGWLP_IMC = 0x00000000,
-}
-
-enum uint IMC_SETCONVERSIONMODE = 0x00000002;
-enum uint IMC_SETSENTENCEMODE = 0x00000004;
-enum uint IMC_SETOPENSTATUS = 0x00000006;
-enum uint IMC_GETSOFTKBDFONT = 0x00000011;
-enum uint IMC_SETSOFTKBDFONT = 0x00000012;
-enum uint IMC_GETSOFTKBDPOS = 0x00000013;
-enum uint IMC_SETSOFTKBDPOS = 0x00000014;
-enum uint IMC_GETSOFTKBDSUBTYPE = 0x00000015;
-
-enum : uint
-{
-    IMC_SETSOFTKBDSUBTYPE = 0x00000016,
-    IMC_SETSOFTKBDDATA    = 0x00000018,
-}
-
-enum uint NI_CONTEXTUPDATED = 0x00000003;
-enum uint IME_SYSINFO_WINLOGON = 0x00000001;
-enum uint INIT_STATUSWNDPOS = 0x00000001;
-enum uint INIT_CONVERSION = 0x00000002;
-enum uint INIT_SENTENCE = 0x00000004;
-
-enum : uint
-{
-    INIT_LOGFONT  = 0x00000008,
-    INIT_COMPFORM = 0x00000010,
-}
-
-enum uint INIT_SOFTKBDPOS = 0x00000020;
-
-enum : uint
-{
-    IME_PROP_END_UNLOAD     = 0x00000001,
-    IME_PROP_KBD_CHAR_FIRST = 0x00000002,
+    SOFTKEYBOARD_TYPE_T1 = 0x00000001U,
+    SOFTKEYBOARD_TYPE_C1 = 0x00000002U,
 }
 
 enum : uint
 {
-    IME_PROP_IGNORE_UPKEYS    = 0x00000004,
-    IME_PROP_NEED_ALTKEY      = 0x00000008,
-    IME_PROP_NO_KEYS_ON_CLOSE = 0x00000010,
+    IMMGWL_IMC  = 0x00000000U,
+    IMMGWLP_IMC = 0x00000000U,
 }
 
-enum uint IME_PROP_ACCEPT_WIDE_VKEY = 0x00000020;
-enum uint UI_CAP_SOFTKBD = 0x00010000;
-enum uint IMN_SOFTKBDDESTROYED = 0x00000011;
-enum uint IME_UI_CLASS_NAME_SIZE = 0x00000010;
-enum uint IME_ESC_STRING_BUFFER_SIZE = 0x00000050;
+enum uint IMC_SETCONVERSIONMODE = 0x00000002U;
+enum uint IMC_SETSENTENCEMODE = 0x00000004U;
+enum uint IMC_SETOPENSTATUS = 0x00000006U;
+enum uint IMC_GETSOFTKBDFONT = 0x00000011U;
+enum uint IMC_SETSOFTKBDFONT = 0x00000012U;
+enum uint IMC_GETSOFTKBDPOS = 0x00000013U;
+enum uint IMC_SETSOFTKBDPOS = 0x00000014U;
+enum uint IMC_GETSOFTKBDSUBTYPE = 0x00000015U;
+
+enum : uint
+{
+    IMC_SETSOFTKBDSUBTYPE = 0x00000016U,
+    IMC_SETSOFTKBDDATA    = 0x00000018U,
+}
+
+enum uint NI_CONTEXTUPDATED = 0x00000003U;
+enum uint IME_SYSINFO_WINLOGON = 0x00000001U;
+enum uint INIT_STATUSWNDPOS = 0x00000001U;
+enum uint INIT_CONVERSION = 0x00000002U;
+enum uint INIT_SENTENCE = 0x00000004U;
+
+enum : uint
+{
+    INIT_LOGFONT  = 0x00000008U,
+    INIT_COMPFORM = 0x00000010U,
+}
+
+enum uint INIT_SOFTKBDPOS = 0x00000020U;
+
+enum : uint
+{
+    IME_PROP_END_UNLOAD     = 0x00000001U,
+    IME_PROP_KBD_CHAR_FIRST = 0x00000002U,
+}
+
+enum : uint
+{
+    IME_PROP_IGNORE_UPKEYS    = 0x00000004U,
+    IME_PROP_NEED_ALTKEY      = 0x00000008U,
+    IME_PROP_NO_KEYS_ON_CLOSE = 0x00000010U,
+}
+
+enum uint IME_PROP_ACCEPT_WIDE_VKEY = 0x00000020U;
+enum uint UI_CAP_SOFTKBD = 0x00010000U;
+enum uint IMN_SOFTKBDDESTROYED = 0x00000011U;
+enum uint IME_UI_CLASS_NAME_SIZE = 0x00000010U;
+enum uint IME_ESC_STRING_BUFFER_SIZE = 0x00000050U;
 
 enum : const(wchar)*
 {
@@ -769,109 +785,109 @@ enum HRESULT IFEC_S_ALREADY_DEFAULT = HRESULT(0x00047400);
 
 enum : uint
 {
-    FELANG_REQ_CONV              = 0x00010000,
-    FELANG_REQ_RECONV            = 0x00020000,
-    FELANG_REQ_REV               = 0x00030000,
-    FELANG_CMODE_MONORUBY        = 0x00000002,
-    FELANG_CMODE_NOPRUNING       = 0x00000004,
-    FELANG_CMODE_KATAKANAOUT     = 0x00000008,
-    FELANG_CMODE_HIRAGANAOUT     = 0x00000000,
-    FELANG_CMODE_HALFWIDTHOUT    = 0x00000010,
-    FELANG_CMODE_FULLWIDTHOUT    = 0x00000020,
-    FELANG_CMODE_BOPOMOFO        = 0x00000040,
-    FELANG_CMODE_HANGUL          = 0x00000080,
-    FELANG_CMODE_PINYIN          = 0x00000100,
-    FELANG_CMODE_PRECONV         = 0x00000200,
-    FELANG_CMODE_RADICAL         = 0x00000400,
-    FELANG_CMODE_UNKNOWNREADING  = 0x00000800,
-    FELANG_CMODE_MERGECAND       = 0x00001000,
-    FELANG_CMODE_ROMAN           = 0x00002000,
-    FELANG_CMODE_BESTFIRST       = 0x00004000,
-    FELANG_CMODE_USENOREVWORDS   = 0x00008000,
-    FELANG_CMODE_NONE            = 0x01000000,
-    FELANG_CMODE_PLAURALCLAUSE   = 0x02000000,
-    FELANG_CMODE_SINGLECONVERT   = 0x04000000,
-    FELANG_CMODE_AUTOMATIC       = 0x08000000,
-    FELANG_CMODE_PHRASEPREDICT   = 0x10000000,
-    FELANG_CMODE_CONVERSATION    = 0x20000000,
-    FELANG_CMODE_NAME            = 0x10000000,
-    FELANG_CMODE_NOINVISIBLECHAR = 0x40000000,
+    FELANG_REQ_CONV              = 0x00010000U,
+    FELANG_REQ_RECONV            = 0x00020000U,
+    FELANG_REQ_REV               = 0x00030000U,
+    FELANG_CMODE_MONORUBY        = 0x00000002U,
+    FELANG_CMODE_NOPRUNING       = 0x00000004U,
+    FELANG_CMODE_KATAKANAOUT     = 0x00000008U,
+    FELANG_CMODE_HIRAGANAOUT     = 0x00000000U,
+    FELANG_CMODE_HALFWIDTHOUT    = 0x00000010U,
+    FELANG_CMODE_FULLWIDTHOUT    = 0x00000020U,
+    FELANG_CMODE_BOPOMOFO        = 0x00000040U,
+    FELANG_CMODE_HANGUL          = 0x00000080U,
+    FELANG_CMODE_PINYIN          = 0x00000100U,
+    FELANG_CMODE_PRECONV         = 0x00000200U,
+    FELANG_CMODE_RADICAL         = 0x00000400U,
+    FELANG_CMODE_UNKNOWNREADING  = 0x00000800U,
+    FELANG_CMODE_MERGECAND       = 0x00001000U,
+    FELANG_CMODE_ROMAN           = 0x00002000U,
+    FELANG_CMODE_BESTFIRST       = 0x00004000U,
+    FELANG_CMODE_USENOREVWORDS   = 0x00008000U,
+    FELANG_CMODE_NONE            = 0x01000000U,
+    FELANG_CMODE_PLAURALCLAUSE   = 0x02000000U,
+    FELANG_CMODE_SINGLECONVERT   = 0x04000000U,
+    FELANG_CMODE_AUTOMATIC       = 0x08000000U,
+    FELANG_CMODE_PHRASEPREDICT   = 0x10000000U,
+    FELANG_CMODE_CONVERSATION    = 0x20000000U,
+    FELANG_CMODE_NAME            = 0x10000000U,
+    FELANG_CMODE_NOINVISIBLECHAR = 0x40000000U,
 }
 
 enum : uint
 {
-    E_NOCAND           = 0x00000030,
-    E_NOTENOUGH_BUFFER = 0x00000031,
-    E_NOTENOUGH_WDD    = 0x00000032,
+    E_NOCAND           = 0x00000030U,
+    E_NOTENOUGH_BUFFER = 0x00000031U,
+    E_NOTENOUGH_WDD    = 0x00000032U,
 }
 
-enum uint E_LARGEINPUT = 0x00000033;
+enum uint E_LARGEINPUT = 0x00000033U;
 
 enum : uint
 {
-    FELANG_CLMN_WBREAK   = 0x00000001,
-    FELANG_CLMN_NOWBREAK = 0x00000002,
-    FELANG_CLMN_PBREAK   = 0x00000004,
-    FELANG_CLMN_NOPBREAK = 0x00000008,
-    FELANG_CLMN_FIXR     = 0x00000010,
-    FELANG_CLMN_FIXD     = 0x00000020,
-    FELANG_INVALD_PO     = 0x0000ffff,
-}
-
-enum : uint
-{
-    IFED_POS_NONE               = 0x00000000,
-    IFED_POS_NOUN               = 0x00000001,
-    IFED_POS_VERB               = 0x00000002,
-    IFED_POS_ADJECTIVE          = 0x00000004,
-    IFED_POS_ADJECTIVE_VERB     = 0x00000008,
-    IFED_POS_ADVERB             = 0x00000010,
-    IFED_POS_ADNOUN             = 0x00000020,
-    IFED_POS_CONJUNCTION        = 0x00000040,
-    IFED_POS_INTERJECTION       = 0x00000080,
-    IFED_POS_INDEPENDENT        = 0x000000ff,
-    IFED_POS_INFLECTIONALSUFFIX = 0x00000100,
+    FELANG_CLMN_WBREAK   = 0x00000001U,
+    FELANG_CLMN_NOWBREAK = 0x00000002U,
+    FELANG_CLMN_PBREAK   = 0x00000004U,
+    FELANG_CLMN_NOPBREAK = 0x00000008U,
+    FELANG_CLMN_FIXR     = 0x00000010U,
+    FELANG_CLMN_FIXD     = 0x00000020U,
+    FELANG_INVALD_PO     = 0x0000ffffU,
 }
 
 enum : uint
 {
-    IFED_POS_PREFIX         = 0x00000200,
-    IFED_POS_SUFFIX         = 0x00000400,
-    IFED_POS_AFFIX          = 0x00000600,
-    IFED_POS_TANKANJI       = 0x00000800,
-    IFED_POS_IDIOMS         = 0x00001000,
-    IFED_POS_SYMBOLS        = 0x00002000,
-    IFED_POS_PARTICLE       = 0x00004000,
-    IFED_POS_AUXILIARY_VERB = 0x00008000,
+    IFED_POS_NONE               = 0x00000000U,
+    IFED_POS_NOUN               = 0x00000001U,
+    IFED_POS_VERB               = 0x00000002U,
+    IFED_POS_ADJECTIVE          = 0x00000004U,
+    IFED_POS_ADJECTIVE_VERB     = 0x00000008U,
+    IFED_POS_ADVERB             = 0x00000010U,
+    IFED_POS_ADNOUN             = 0x00000020U,
+    IFED_POS_CONJUNCTION        = 0x00000040U,
+    IFED_POS_INTERJECTION       = 0x00000080U,
+    IFED_POS_INDEPENDENT        = 0x000000ffU,
+    IFED_POS_INFLECTIONALSUFFIX = 0x00000100U,
 }
 
 enum : uint
 {
-    IFED_POS_SUB_VERB   = 0x00010000,
-    IFED_POS_DEPENDENT  = 0x0001c000,
-    IFED_POS_ALL        = 0x0001ffff,
-    IFED_SELECT_NONE    = 0x00000000,
-    IFED_SELECT_READING = 0x00000001,
-    IFED_SELECT_DISPLAY = 0x00000002,
-    IFED_SELECT_POS     = 0x00000004,
-    IFED_SELECT_COMMENT = 0x00000008,
-    IFED_SELECT_ALL     = 0x0000000f,
+    IFED_POS_PREFIX         = 0x00000200U,
+    IFED_POS_SUFFIX         = 0x00000400U,
+    IFED_POS_AFFIX          = 0x00000600U,
+    IFED_POS_TANKANJI       = 0x00000800U,
+    IFED_POS_IDIOMS         = 0x00001000U,
+    IFED_POS_SYMBOLS        = 0x00002000U,
+    IFED_POS_PARTICLE       = 0x00004000U,
+    IFED_POS_AUXILIARY_VERB = 0x00008000U,
 }
 
 enum : uint
 {
-    IFED_REG_NONE       = 0x00000000,
-    IFED_REG_USER       = 0x00000001,
-    IFED_REG_AUTO       = 0x00000002,
-    IFED_REG_GRAMMAR    = 0x00000004,
-    IFED_REG_ALL        = 0x00000007,
-    IFED_TYPE_NONE      = 0x00000000,
-    IFED_TYPE_GENERAL   = 0x00000001,
-    IFED_TYPE_NAMEPLACE = 0x00000002,
-    IFED_TYPE_SPEECH    = 0x00000004,
-    IFED_TYPE_REVERSE   = 0x00000008,
-    IFED_TYPE_ENGLISH   = 0x00000010,
-    IFED_TYPE_ALL       = 0x0000001f,
+    IFED_POS_SUB_VERB   = 0x00010000U,
+    IFED_POS_DEPENDENT  = 0x0001c000U,
+    IFED_POS_ALL        = 0x0001ffffU,
+    IFED_SELECT_NONE    = 0x00000000U,
+    IFED_SELECT_READING = 0x00000001U,
+    IFED_SELECT_DISPLAY = 0x00000002U,
+    IFED_SELECT_POS     = 0x00000004U,
+    IFED_SELECT_COMMENT = 0x00000008U,
+    IFED_SELECT_ALL     = 0x0000000fU,
+}
+
+enum : uint
+{
+    IFED_REG_NONE       = 0x00000000U,
+    IFED_REG_USER       = 0x00000001U,
+    IFED_REG_AUTO       = 0x00000002U,
+    IFED_REG_GRAMMAR    = 0x00000004U,
+    IFED_REG_ALL        = 0x00000007U,
+    IFED_TYPE_NONE      = 0x00000000U,
+    IFED_TYPE_GENERAL   = 0x00000001U,
+    IFED_TYPE_NAMEPLACE = 0x00000002U,
+    IFED_TYPE_SPEECH    = 0x00000004U,
+    IFED_TYPE_REVERSE   = 0x00000008U,
+    IFED_TYPE_ENGLISH   = 0x00000010U,
+    IFED_TYPE_ALL       = 0x0000001fU,
 }
 
 enum HRESULT IFED_S_MORE_ENTRIES = HRESULT(0x00047200);
@@ -909,306 +925,306 @@ enum : HRESULT
     IFED_E_REGISTER_DISCONNECTED  = HRESULT(0x8004730b),
 }
 
-enum uint cbCommentMax = 0x00000100;
-enum uint wchPrivate1 = 0x0000e000;
-enum uint POS_UNDEFINED = 0x00000000;
-enum uint JPOS_UNDEFINED = 0x00000000;
+enum uint cbCommentMax = 0x00000100U;
+enum uint wchPrivate1 = 0x0000e000U;
+enum uint POS_UNDEFINED = 0x00000000U;
+enum uint JPOS_UNDEFINED = 0x00000000U;
 
 enum : uint
 {
-    JPOS_MEISHI_FUTSU        = 0x00000064,
-    JPOS_MEISHI_SAHEN        = 0x00000065,
-    JPOS_MEISHI_ZAHEN        = 0x00000066,
-    JPOS_MEISHI_KEIYOUDOUSHI = 0x00000067,
+    JPOS_MEISHI_FUTSU        = 0x00000064U,
+    JPOS_MEISHI_SAHEN        = 0x00000065U,
+    JPOS_MEISHI_ZAHEN        = 0x00000066U,
+    JPOS_MEISHI_KEIYOUDOUSHI = 0x00000067U,
 }
 
-enum uint JPOS_HUKUSIMEISHI = 0x00000068;
-enum uint JPOS_MEISA_KEIDOU = 0x00000069;
+enum uint JPOS_HUKUSIMEISHI = 0x00000068U;
+enum uint JPOS_MEISA_KEIDOU = 0x00000069U;
 
 enum : uint
 {
-    JPOS_JINMEI     = 0x0000006a,
-    JPOS_JINMEI_SEI = 0x0000006b,
-    JPOS_JINMEI_MEI = 0x0000006c,
-}
-
-enum : uint
-{
-    JPOS_CHIMEI       = 0x0000006d,
-    JPOS_CHIMEI_KUNI  = 0x0000006e,
-    JPOS_CHIMEI_KEN   = 0x0000006f,
-    JPOS_CHIMEI_GUN   = 0x00000070,
-    JPOS_CHIMEI_KU    = 0x00000071,
-    JPOS_CHIMEI_SHI   = 0x00000072,
-    JPOS_CHIMEI_MACHI = 0x00000073,
-    JPOS_CHIMEI_MURA  = 0x00000074,
-    JPOS_CHIMEI_EKI   = 0x00000075,
+    JPOS_JINMEI     = 0x0000006aU,
+    JPOS_JINMEI_SEI = 0x0000006bU,
+    JPOS_JINMEI_MEI = 0x0000006cU,
 }
 
 enum : uint
 {
-    JPOS_SONOTA   = 0x00000076,
-    JPOS_SHAMEI   = 0x00000077,
-    JPOS_SOSHIKI  = 0x00000078,
-    JPOS_KENCHIKU = 0x00000079,
+    JPOS_CHIMEI       = 0x0000006dU,
+    JPOS_CHIMEI_KUNI  = 0x0000006eU,
+    JPOS_CHIMEI_KEN   = 0x0000006fU,
+    JPOS_CHIMEI_GUN   = 0x00000070U,
+    JPOS_CHIMEI_KU    = 0x00000071U,
+    JPOS_CHIMEI_SHI   = 0x00000072U,
+    JPOS_CHIMEI_MACHI = 0x00000073U,
+    JPOS_CHIMEI_MURA  = 0x00000074U,
+    JPOS_CHIMEI_EKI   = 0x00000075U,
 }
 
 enum : uint
 {
-    JPOS_BUPPIN            = 0x0000007a,
-    JPOS_DAIMEISHI         = 0x0000007b,
-    JPOS_DAIMEISHI_NINSHOU = 0x0000007c,
-    JPOS_DAIMEISHI_SHIJI   = 0x0000007d,
+    JPOS_SONOTA   = 0x00000076U,
+    JPOS_SHAMEI   = 0x00000077U,
+    JPOS_SOSHIKI  = 0x00000078U,
+    JPOS_KENCHIKU = 0x00000079U,
 }
 
 enum : uint
 {
-    JPOS_KAZU        = 0x0000007e,
-    JPOS_KAZU_SURYOU = 0x0000007f,
-    JPOS_KAZU_SUSHI  = 0x00000080,
+    JPOS_BUPPIN            = 0x0000007aU,
+    JPOS_DAIMEISHI         = 0x0000007bU,
+    JPOS_DAIMEISHI_NINSHOU = 0x0000007cU,
+    JPOS_DAIMEISHI_SHIJI   = 0x0000007dU,
 }
 
 enum : uint
 {
-    JPOS_5DAN_AWA      = 0x000000c8,
-    JPOS_5DAN_KA       = 0x000000c9,
-    JPOS_5DAN_GA       = 0x000000ca,
-    JPOS_5DAN_SA       = 0x000000cb,
-    JPOS_5DAN_TA       = 0x000000cc,
-    JPOS_5DAN_NA       = 0x000000cd,
-    JPOS_5DAN_BA       = 0x000000ce,
-    JPOS_5DAN_MA       = 0x000000cf,
-    JPOS_5DAN_RA       = 0x000000d0,
-    JPOS_5DAN_AWAUON   = 0x000000d1,
-    JPOS_5DAN_KASOKUON = 0x000000d2,
-    JPOS_5DAN_RAHEN    = 0x000000d3,
+    JPOS_KAZU        = 0x0000007eU,
+    JPOS_KAZU_SURYOU = 0x0000007fU,
+    JPOS_KAZU_SUSHI  = 0x00000080U,
 }
 
 enum : uint
 {
-    JPOS_4DAN_HA           = 0x000000d4,
-    JPOS_1DAN              = 0x000000d5,
-    JPOS_TOKUSHU_KAHEN     = 0x000000d6,
-    JPOS_TOKUSHU_SAHENSURU = 0x000000d7,
-    JPOS_TOKUSHU_SAHEN     = 0x000000d8,
-    JPOS_TOKUSHU_ZAHEN     = 0x000000d9,
-    JPOS_TOKUSHU_NAHEN     = 0x000000da,
+    JPOS_5DAN_AWA      = 0x000000c8U,
+    JPOS_5DAN_KA       = 0x000000c9U,
+    JPOS_5DAN_GA       = 0x000000caU,
+    JPOS_5DAN_SA       = 0x000000cbU,
+    JPOS_5DAN_TA       = 0x000000ccU,
+    JPOS_5DAN_NA       = 0x000000cdU,
+    JPOS_5DAN_BA       = 0x000000ceU,
+    JPOS_5DAN_MA       = 0x000000cfU,
+    JPOS_5DAN_RA       = 0x000000d0U,
+    JPOS_5DAN_AWAUON   = 0x000000d1U,
+    JPOS_5DAN_KASOKUON = 0x000000d2U,
+    JPOS_5DAN_RAHEN    = 0x000000d3U,
 }
 
 enum : uint
 {
-    JPOS_KURU_KI      = 0x000000db,
-    JPOS_KURU_KITA    = 0x000000dc,
-    JPOS_KURU_KITARA  = 0x000000dd,
-    JPOS_KURU_KITARI  = 0x000000de,
-    JPOS_KURU_KITAROU = 0x000000df,
-    JPOS_KURU_KITE    = 0x000000e0,
-    JPOS_KURU_KUREBA  = 0x000000e1,
-    JPOS_KURU_KO      = 0x000000e2,
-    JPOS_KURU_KOI     = 0x000000e3,
-    JPOS_KURU_KOYOU   = 0x000000e4,
+    JPOS_4DAN_HA           = 0x000000d4U,
+    JPOS_1DAN              = 0x000000d5U,
+    JPOS_TOKUSHU_KAHEN     = 0x000000d6U,
+    JPOS_TOKUSHU_SAHENSURU = 0x000000d7U,
+    JPOS_TOKUSHU_SAHEN     = 0x000000d8U,
+    JPOS_TOKUSHU_ZAHEN     = 0x000000d9U,
+    JPOS_TOKUSHU_NAHEN     = 0x000000daU,
 }
 
 enum : uint
 {
-    JPOS_SURU_SA      = 0x000000e5,
-    JPOS_SURU_SI      = 0x000000e6,
-    JPOS_SURU_SITA    = 0x000000e7,
-    JPOS_SURU_SITARA  = 0x000000e8,
-    JPOS_SURU_SIATRI  = 0x000000e9,
-    JPOS_SURU_SITAROU = 0x000000ea,
-    JPOS_SURU_SITE    = 0x000000eb,
-    JPOS_SURU_SIYOU   = 0x000000ec,
-    JPOS_SURU_SUREBA  = 0x000000ed,
-    JPOS_SURU_SE      = 0x000000ee,
-    JPOS_SURU_SEYO    = 0x000000ef,
+    JPOS_KURU_KI      = 0x000000dbU,
+    JPOS_KURU_KITA    = 0x000000dcU,
+    JPOS_KURU_KITARA  = 0x000000ddU,
+    JPOS_KURU_KITARI  = 0x000000deU,
+    JPOS_KURU_KITAROU = 0x000000dfU,
+    JPOS_KURU_KITE    = 0x000000e0U,
+    JPOS_KURU_KUREBA  = 0x000000e1U,
+    JPOS_KURU_KO      = 0x000000e2U,
+    JPOS_KURU_KOI     = 0x000000e3U,
+    JPOS_KURU_KOYOU   = 0x000000e4U,
 }
 
 enum : uint
 {
-    JPOS_KEIYOU      = 0x0000012c,
-    JPOS_KEIYOU_GARU = 0x0000012d,
-    JPOS_KEIYOU_GE   = 0x0000012e,
-    JPOS_KEIYOU_ME   = 0x0000012f,
-    JPOS_KEIYOU_YUU  = 0x00000130,
-    JPOS_KEIYOU_U    = 0x00000131,
-    JPOS_KEIDOU      = 0x00000190,
-    JPOS_KEIDOU_NO   = 0x00000191,
-    JPOS_KEIDOU_TARU = 0x00000192,
-    JPOS_KEIDOU_GARU = 0x00000193,
+    JPOS_SURU_SA      = 0x000000e5U,
+    JPOS_SURU_SI      = 0x000000e6U,
+    JPOS_SURU_SITA    = 0x000000e7U,
+    JPOS_SURU_SITARA  = 0x000000e8U,
+    JPOS_SURU_SIATRI  = 0x000000e9U,
+    JPOS_SURU_SITAROU = 0x000000eaU,
+    JPOS_SURU_SITE    = 0x000000ebU,
+    JPOS_SURU_SIYOU   = 0x000000ecU,
+    JPOS_SURU_SUREBA  = 0x000000edU,
+    JPOS_SURU_SE      = 0x000000eeU,
+    JPOS_SURU_SEYO    = 0x000000efU,
 }
 
 enum : uint
 {
-    JPOS_FUKUSHI        = 0x000001f4,
-    JPOS_FUKUSHI_SAHEN  = 0x000001f5,
-    JPOS_FUKUSHI_NI     = 0x000001f6,
-    JPOS_FUKUSHI_NANO   = 0x000001f7,
-    JPOS_FUKUSHI_DA     = 0x000001f8,
-    JPOS_FUKUSHI_TO     = 0x000001f9,
-    JPOS_FUKUSHI_TOSURU = 0x000001fa,
+    JPOS_KEIYOU      = 0x0000012cU,
+    JPOS_KEIYOU_GARU = 0x0000012dU,
+    JPOS_KEIYOU_GE   = 0x0000012eU,
+    JPOS_KEIYOU_ME   = 0x0000012fU,
+    JPOS_KEIYOU_YUU  = 0x00000130U,
+    JPOS_KEIYOU_U    = 0x00000131U,
+    JPOS_KEIDOU      = 0x00000190U,
+    JPOS_KEIDOU_NO   = 0x00000191U,
+    JPOS_KEIDOU_TARU = 0x00000192U,
+    JPOS_KEIDOU_GARU = 0x00000193U,
 }
 
 enum : uint
 {
-    JPOS_RENTAISHI       = 0x00000258,
-    JPOS_RENTAISHI_SHIJI = 0x00000259,
-}
-
-enum uint JPOS_SETSUZOKUSHI = 0x0000028a;
-enum uint JPOS_KANDOUSHI = 0x0000029e;
-
-enum : uint
-{
-    JPOS_SETTOU           = 0x000002bc,
-    JPOS_SETTOU_KAKU      = 0x000002bd,
-    JPOS_SETTOU_SAI       = 0x000002be,
-    JPOS_SETTOU_FUKU      = 0x000002bf,
-    JPOS_SETTOU_MI        = 0x000002c0,
-    JPOS_SETTOU_DAISHOU   = 0x000002c1,
-    JPOS_SETTOU_KOUTEI    = 0x000002c2,
-    JPOS_SETTOU_CHOUTAN   = 0x000002c3,
-    JPOS_SETTOU_SHINKYU   = 0x000002c4,
-    JPOS_SETTOU_JINMEI    = 0x000002c5,
-    JPOS_SETTOU_CHIMEI    = 0x000002c6,
-    JPOS_SETTOU_SONOTA    = 0x000002c7,
-    JPOS_SETTOU_JOSUSHI   = 0x000002c8,
-    JPOS_SETTOU_TEINEI_O  = 0x000002c9,
-    JPOS_SETTOU_TEINEI_GO = 0x000002ca,
-    JPOS_SETTOU_TEINEI_ON = 0x000002cb,
+    JPOS_FUKUSHI        = 0x000001f4U,
+    JPOS_FUKUSHI_SAHEN  = 0x000001f5U,
+    JPOS_FUKUSHI_NI     = 0x000001f6U,
+    JPOS_FUKUSHI_NANO   = 0x000001f7U,
+    JPOS_FUKUSHI_DA     = 0x000001f8U,
+    JPOS_FUKUSHI_TO     = 0x000001f9U,
+    JPOS_FUKUSHI_TOSURU = 0x000001faU,
 }
 
 enum : uint
 {
-    JPOS_SETSUBI               = 0x00000320,
-    JPOS_SETSUBI_TEKI          = 0x00000321,
-    JPOS_SETSUBI_SEI           = 0x00000322,
-    JPOS_SETSUBI_KA            = 0x00000323,
-    JPOS_SETSUBI_CHU           = 0x00000324,
-    JPOS_SETSUBI_FU            = 0x00000325,
-    JPOS_SETSUBI_RYU           = 0x00000326,
-    JPOS_SETSUBI_YOU           = 0x00000327,
-    JPOS_SETSUBI_KATA          = 0x00000328,
-    JPOS_SETSUBI_MEISHIRENDAKU = 0x00000329,
-    JPOS_SETSUBI_JINMEI        = 0x0000032a,
-    JPOS_SETSUBI_CHIMEI        = 0x0000032b,
-    JPOS_SETSUBI_KUNI          = 0x0000032c,
-    JPOS_SETSUBI_KEN           = 0x0000032d,
-    JPOS_SETSUBI_GUN           = 0x0000032e,
-    JPOS_SETSUBI_KU            = 0x0000032f,
-    JPOS_SETSUBI_SHI           = 0x00000330,
-    JPOS_SETSUBI_MACHI         = 0x00000331,
-    JPOS_SETSUBI_CHOU          = 0x00000332,
-    JPOS_SETSUBI_MURA          = 0x00000333,
-    JPOS_SETSUBI_SON           = 0x00000334,
-    JPOS_SETSUBI_EKI           = 0x00000335,
-    JPOS_SETSUBI_SONOTA        = 0x00000336,
-    JPOS_SETSUBI_SHAMEI        = 0x00000337,
-    JPOS_SETSUBI_SOSHIKI       = 0x00000338,
-    JPOS_SETSUBI_KENCHIKU      = 0x00000339,
+    JPOS_RENTAISHI       = 0x00000258U,
+    JPOS_RENTAISHI_SHIJI = 0x00000259U,
 }
 
-enum uint JPOS_RENYOU_SETSUBI = 0x0000033a;
+enum uint JPOS_SETSUZOKUSHI = 0x0000028aU;
+enum uint JPOS_KANDOUSHI = 0x0000029eU;
 
 enum : uint
 {
-    JPOS_SETSUBI_JOSUSHI     = 0x0000033b,
-    JPOS_SETSUBI_JOSUSHIPLUS = 0x0000033c,
-    JPOS_SETSUBI_JIKAN       = 0x0000033d,
-    JPOS_SETSUBI_JIKANPLUS   = 0x0000033e,
-    JPOS_SETSUBI_TEINEI      = 0x0000033f,
-    JPOS_SETSUBI_SAN         = 0x00000340,
-    JPOS_SETSUBI_KUN         = 0x00000341,
-    JPOS_SETSUBI_SAMA        = 0x00000342,
-    JPOS_SETSUBI_DONO        = 0x00000343,
-    JPOS_SETSUBI_FUKUSU      = 0x00000344,
-    JPOS_SETSUBI_TACHI       = 0x00000345,
-    JPOS_SETSUBI_RA          = 0x00000346,
+    JPOS_SETTOU           = 0x000002bcU,
+    JPOS_SETTOU_KAKU      = 0x000002bdU,
+    JPOS_SETTOU_SAI       = 0x000002beU,
+    JPOS_SETTOU_FUKU      = 0x000002bfU,
+    JPOS_SETTOU_MI        = 0x000002c0U,
+    JPOS_SETTOU_DAISHOU   = 0x000002c1U,
+    JPOS_SETTOU_KOUTEI    = 0x000002c2U,
+    JPOS_SETTOU_CHOUTAN   = 0x000002c3U,
+    JPOS_SETTOU_SHINKYU   = 0x000002c4U,
+    JPOS_SETTOU_JINMEI    = 0x000002c5U,
+    JPOS_SETTOU_CHIMEI    = 0x000002c6U,
+    JPOS_SETTOU_SONOTA    = 0x000002c7U,
+    JPOS_SETTOU_JOSUSHI   = 0x000002c8U,
+    JPOS_SETTOU_TEINEI_O  = 0x000002c9U,
+    JPOS_SETTOU_TEINEI_GO = 0x000002caU,
+    JPOS_SETTOU_TEINEI_ON = 0x000002cbU,
 }
 
 enum : uint
 {
-    JPOS_TANKANJI     = 0x00000384,
-    JPOS_TANKANJI_KAO = 0x00000385,
+    JPOS_SETSUBI               = 0x00000320U,
+    JPOS_SETSUBI_TEKI          = 0x00000321U,
+    JPOS_SETSUBI_SEI           = 0x00000322U,
+    JPOS_SETSUBI_KA            = 0x00000323U,
+    JPOS_SETSUBI_CHU           = 0x00000324U,
+    JPOS_SETSUBI_FU            = 0x00000325U,
+    JPOS_SETSUBI_RYU           = 0x00000326U,
+    JPOS_SETSUBI_YOU           = 0x00000327U,
+    JPOS_SETSUBI_KATA          = 0x00000328U,
+    JPOS_SETSUBI_MEISHIRENDAKU = 0x00000329U,
+    JPOS_SETSUBI_JINMEI        = 0x0000032aU,
+    JPOS_SETSUBI_CHIMEI        = 0x0000032bU,
+    JPOS_SETSUBI_KUNI          = 0x0000032cU,
+    JPOS_SETSUBI_KEN           = 0x0000032dU,
+    JPOS_SETSUBI_GUN           = 0x0000032eU,
+    JPOS_SETSUBI_KU            = 0x0000032fU,
+    JPOS_SETSUBI_SHI           = 0x00000330U,
+    JPOS_SETSUBI_MACHI         = 0x00000331U,
+    JPOS_SETSUBI_CHOU          = 0x00000332U,
+    JPOS_SETSUBI_MURA          = 0x00000333U,
+    JPOS_SETSUBI_SON           = 0x00000334U,
+    JPOS_SETSUBI_EKI           = 0x00000335U,
+    JPOS_SETSUBI_SONOTA        = 0x00000336U,
+    JPOS_SETSUBI_SHAMEI        = 0x00000337U,
+    JPOS_SETSUBI_SOSHIKI       = 0x00000338U,
+    JPOS_SETSUBI_KENCHIKU      = 0x00000339U,
 }
 
-enum uint JPOS_KANYOUKU = 0x00000386;
-enum uint JPOS_DOKURITSUGO = 0x00000387;
+enum uint JPOS_RENYOU_SETSUBI = 0x0000033aU;
 
 enum : uint
 {
-    JPOS_FUTEIGO   = 0x00000388,
-    JPOS_KIGOU     = 0x00000389,
-    JPOS_EIJI      = 0x0000038a,
-    JPOS_KUTEN     = 0x0000038b,
-    JPOS_TOUTEN    = 0x0000038c,
-    JPOS_KANJI     = 0x0000038d,
-    JPOS_OPENBRACE = 0x0000038e,
-}
-
-enum uint JPOS_CLOSEBRACE = 0x0000038f;
-
-enum : uint
-{
-    JPOS_YOKUSEI  = 0x00000390,
-    JPOS_TANSHUKU = 0x00000391,
+    JPOS_SETSUBI_JOSUSHI     = 0x0000033bU,
+    JPOS_SETSUBI_JOSUSHIPLUS = 0x0000033cU,
+    JPOS_SETSUBI_JIKAN       = 0x0000033dU,
+    JPOS_SETSUBI_JIKANPLUS   = 0x0000033eU,
+    JPOS_SETSUBI_TEINEI      = 0x0000033fU,
+    JPOS_SETSUBI_SAN         = 0x00000340U,
+    JPOS_SETSUBI_KUN         = 0x00000341U,
+    JPOS_SETSUBI_SAMA        = 0x00000342U,
+    JPOS_SETSUBI_DONO        = 0x00000343U,
+    JPOS_SETSUBI_FUKUSU      = 0x00000344U,
+    JPOS_SETSUBI_TACHI       = 0x00000345U,
+    JPOS_SETSUBI_RA          = 0x00000346U,
 }
 
 enum : uint
 {
-    VERSION_ID_JAPANESE            = 0x01000000,
-    VERSION_ID_KOREAN              = 0x02000000,
-    VERSION_ID_CHINESE_TRADITIONAL = 0x04000000,
-    VERSION_ID_CHINESE_SIMPLIFIED  = 0x08000000,
+    JPOS_TANKANJI     = 0x00000384U,
+    JPOS_TANKANJI_KAO = 0x00000385U,
+}
+
+enum uint JPOS_KANYOUKU = 0x00000386U;
+enum uint JPOS_DOKURITSUGO = 0x00000387U;
+
+enum : uint
+{
+    JPOS_FUTEIGO   = 0x00000388U,
+    JPOS_KIGOU     = 0x00000389U,
+    JPOS_EIJI      = 0x0000038aU,
+    JPOS_KUTEN     = 0x0000038bU,
+    JPOS_TOUTEN    = 0x0000038cU,
+    JPOS_KANJI     = 0x0000038dU,
+    JPOS_OPENBRACE = 0x0000038eU,
+}
+
+enum uint JPOS_CLOSEBRACE = 0x0000038fU;
+
+enum : uint
+{
+    JPOS_YOKUSEI  = 0x00000390U,
+    JPOS_TANSHUKU = 0x00000391U,
+}
+
+enum : uint
+{
+    VERSION_ID_JAPANESE            = 0x01000000U,
+    VERSION_ID_KOREAN              = 0x02000000U,
+    VERSION_ID_CHINESE_TRADITIONAL = 0x04000000U,
+    VERSION_ID_CHINESE_SIMPLIFIED  = 0x08000000U,
 }
 
 enum const(wchar)* RWM_SERVICE = "MSIMEService";
-enum uint FID_MSIME_VERSION = 0x00000000;
+enum uint FID_MSIME_VERSION = 0x00000000U;
 enum const(wchar)* RWM_UIREADY = "MSIMEUIReady";
 enum const(wchar)* RWM_MOUSE = "MSIMEMouseOperation";
-enum uint VERSION_MOUSE_OPERATION = 0x00000001;
+enum uint VERSION_MOUSE_OPERATION = 0x00000001U;
 enum int IMEMOUSERET_NOTHANDLED = 0xffffffff;
 
 enum : uint
 {
-    IMEMOUSE_VERSION = 0x000000ff,
-    IMEMOUSE_NONE    = 0x00000000,
-    IMEMOUSE_LDOWN   = 0x00000001,
-    IMEMOUSE_RDOWN   = 0x00000002,
-    IMEMOUSE_MDOWN   = 0x00000004,
-    IMEMOUSE_WUP     = 0x00000010,
-    IMEMOUSE_WDOWN   = 0x00000020,
+    IMEMOUSE_VERSION = 0x000000ffU,
+    IMEMOUSE_NONE    = 0x00000000U,
+    IMEMOUSE_LDOWN   = 0x00000001U,
+    IMEMOUSE_RDOWN   = 0x00000002U,
+    IMEMOUSE_MDOWN   = 0x00000004U,
+    IMEMOUSE_WUP     = 0x00000010U,
+    IMEMOUSE_WDOWN   = 0x00000020U,
 }
 
 enum const(wchar)* RWM_RECONVERT = "MSIMEReconvert";
-enum uint FID_RECONVERT_VERSION = 0x10000000;
-enum uint VERSION_RECONVERSION = 0x00000001;
+enum uint FID_RECONVERT_VERSION = 0x10000000U;
+enum uint VERSION_RECONVERSION = 0x00000001U;
 enum const(wchar)* RWM_RECONVERTREQUEST = "MSIMEReconvertRequest";
-enum uint VERSION_DOCUMENTFEED = 0x00000001;
+enum uint VERSION_DOCUMENTFEED = 0x00000001U;
 enum const(wchar)* RWM_DOCUMENTFEED = "MSIMEDocumentFeed";
-enum uint VERSION_QUERYPOSITION = 0x00000001;
+enum uint VERSION_QUERYPOSITION = 0x00000001U;
 enum const(wchar)* RWM_QUERYPOSITION = "MSIMEQueryPosition";
 enum const(wchar)* RWM_MODEBIAS = "MSIMEModeBias";
-enum uint VERSION_MODEBIAS = 0x00000001;
+enum uint VERSION_MODEBIAS = 0x00000001U;
 
 enum : uint
 {
-    MODEBIAS_GETVERSION   = 0x00000000,
-    MODEBIAS_SETVALUE     = 0x00000001,
-    MODEBIAS_GETVALUE     = 0x00000002,
-    MODEBIASMODE_DEFAULT  = 0x00000000,
-    MODEBIASMODE_FILENAME = 0x00000001,
-    MODEBIASMODE_READING  = 0x00000002,
-    MODEBIASMODE_DIGIT    = 0x00000004,
+    MODEBIAS_GETVERSION   = 0x00000000U,
+    MODEBIAS_SETVALUE     = 0x00000001U,
+    MODEBIAS_GETVALUE     = 0x00000002U,
+    MODEBIASMODE_DEFAULT  = 0x00000000U,
+    MODEBIASMODE_FILENAME = 0x00000001U,
+    MODEBIASMODE_READING  = 0x00000002U,
+    MODEBIASMODE_DIGIT    = 0x00000004U,
 }
 
 enum const(wchar)* RWM_SHOWIMEPAD = "MSIMEShowImePad";
 
 enum : uint
 {
-    SHOWIMEPAD_DEFAULT  = 0x00000000,
-    SHOWIMEPAD_CATEGORY = 0x00000001,
-    SHOWIMEPAD_GUID     = 0x00000002,
+    SHOWIMEPAD_DEFAULT  = 0x00000000U,
+    SHOWIMEPAD_CATEGORY = 0x00000001U,
+    SHOWIMEPAD_GUID     = 0x00000002U,
 }
 
 enum const(wchar)* RWM_KEYMAP = "MSIMEKeyMap";
@@ -1217,41 +1233,41 @@ enum const(wchar)* RWM_NTFYKEYMAP = "MSIMENotifyKeyMap";
 
 enum : uint
 {
-    FID_MSIME_KMS_VERSION        = 0x00000001,
-    FID_MSIME_KMS_INIT           = 0x00000002,
-    FID_MSIME_KMS_TERM           = 0x00000003,
-    FID_MSIME_KMS_DEL_KEYLIST    = 0x00000004,
-    FID_MSIME_KMS_NOTIFY         = 0x00000005,
-    FID_MSIME_KMS_GETMAP         = 0x00000006,
-    FID_MSIME_KMS_INVOKE         = 0x00000007,
-    FID_MSIME_KMS_SETMAP         = 0x00000008,
-    FID_MSIME_KMS_FUNCDESC       = 0x00000009,
-    FID_MSIME_KMS_GETMAPSEAMLESS = 0x0000000a,
-    FID_MSIME_KMS_GETMAPFAST     = 0x0000000b,
+    FID_MSIME_KMS_VERSION        = 0x00000001U,
+    FID_MSIME_KMS_INIT           = 0x00000002U,
+    FID_MSIME_KMS_TERM           = 0x00000003U,
+    FID_MSIME_KMS_DEL_KEYLIST    = 0x00000004U,
+    FID_MSIME_KMS_NOTIFY         = 0x00000005U,
+    FID_MSIME_KMS_GETMAP         = 0x00000006U,
+    FID_MSIME_KMS_INVOKE         = 0x00000007U,
+    FID_MSIME_KMS_SETMAP         = 0x00000008U,
+    FID_MSIME_KMS_FUNCDESC       = 0x00000009U,
+    FID_MSIME_KMS_GETMAPSEAMLESS = 0x0000000aU,
+    FID_MSIME_KMS_GETMAPFAST     = 0x0000000bU,
 }
 
-enum uint IMEKMS_NOCOMPOSITION = 0x00000000;
-enum uint IMEKMS_COMPOSITION = 0x00000001;
+enum uint IMEKMS_NOCOMPOSITION = 0x00000000U;
+enum uint IMEKMS_COMPOSITION = 0x00000001U;
 
 enum : uint
 {
-    IMEKMS_SELECTION = 0x00000002,
-    IMEKMS_IMEOFF    = 0x00000003,
-    IMEKMS_2NDLEVEL  = 0x00000004,
-    IMEKMS_INPTGL    = 0x00000005,
-    IMEKMS_CANDIDATE = 0x00000006,
-    IMEKMS_TYPECAND  = 0x00000007,
+    IMEKMS_SELECTION = 0x00000002U,
+    IMEKMS_IMEOFF    = 0x00000003U,
+    IMEKMS_2NDLEVEL  = 0x00000004U,
+    IMEKMS_INPTGL    = 0x00000005U,
+    IMEKMS_CANDIDATE = 0x00000006U,
+    IMEKMS_TYPECAND  = 0x00000007U,
 }
 
 enum const(wchar)* RWM_RECONVERTOPTIONS = "MSIMEReconvertOptions";
 
 enum : uint
 {
-    RECONVOPT_NONE            = 0x00000000,
-    RECONVOPT_USECANCELNOTIFY = 0x00000001,
+    RECONVOPT_NONE            = 0x00000000U,
+    RECONVOPT_USECANCELNOTIFY = 0x00000001U,
 }
 
-enum uint GCSEX_CANCELRECONVERT = 0x10000000;
+enum uint GCSEX_CANCELRECONVERT = 0x10000000U;
 
 enum : GUID
 {
@@ -1291,7 +1307,7 @@ struct HIMCC
     void* Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-compositionform))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-compositionform
 struct COMPOSITIONFORM
 {
     uint  dwStyle;
@@ -1299,7 +1315,7 @@ struct COMPOSITIONFORM
     RECT  rcArea;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-candidateform))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-candidateform
 struct CANDIDATEFORM
 {
     uint  dwIndex;
@@ -1308,7 +1324,7 @@ struct CANDIDATEFORM
     RECT  rcArea;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-candidatelist))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-candidatelist
 struct CANDIDATELIST
 {
     uint dwSize;
@@ -1321,7 +1337,7 @@ struct CANDIDATELIST
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-registerworda))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-registerworda
 struct REGISTERWORDA
 {
     PSTR lpReading;
@@ -1329,14 +1345,14 @@ struct REGISTERWORDA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-registerwordw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-registerwordw
 struct REGISTERWORDW
 {
     PWSTR lpReading;
     PWSTR lpWord;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-reconvertstring))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-reconvertstring
 struct RECONVERTSTRING
 {
     uint dwSize;
@@ -1350,7 +1366,7 @@ struct RECONVERTSTRING
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-stylebufa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-stylebufa
 struct STYLEBUFA
 {
     uint     dwStyle;
@@ -1358,7 +1374,7 @@ struct STYLEBUFA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-stylebufw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-stylebufw
 struct STYLEBUFW
 {
     uint      dwStyle;
@@ -1367,7 +1383,7 @@ struct STYLEBUFW
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-imemenuiteminfoa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-imemenuiteminfoa
 struct IMEMENUITEMINFOA
 {
     uint     cbSize;
@@ -1383,7 +1399,7 @@ struct IMEMENUITEMINFOA
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-imemenuiteminfow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-imemenuiteminfow
 struct IMEMENUITEMINFOW
 {
     uint      cbSize;
@@ -1397,7 +1413,7 @@ struct IMEMENUITEMINFOW
     HBITMAP   hbmpItem;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-imecharposition))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/immdev/ns-immdev-imecharposition
 struct IMECHARPOSITION
 {
     uint  dwSize;
@@ -1407,7 +1423,7 @@ struct IMECHARPOSITION
     RECT  rcDocument;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/ns-msime-imedlg))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msime/ns-msime-imedlg
 struct IMEDLG
 {
 align (1):
@@ -1420,48 +1436,83 @@ align (1):
 struct WDD
 {
 align (1):
-    ushort               wDispPos;
-    _Anonymous1_e__Union Anonymous1;
-    ushort               cchDisp;
-    _Anonymous2_e__Union Anonymous2;
-    uint                 WDD_nReserve1;
-    ushort               nPos;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Anonymous3)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(10))], [])*/ushort _bitfield150;
-    void*                pReserved;
+    ushort wDispPos;
+    union
+    {
+    align (1):
+        ushort wReadPos;
+        ushort wCompPos;
+    }
+    ushort cchDisp;
+    union
+    {
+    align (1):
+        ushort cchRead;
+        ushort cchComp;
+    }
+    uint   WDD_nReserve1;
+    ushort nPos;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Anonymous3)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(10))], [])*/ushort _bitfield542;
+    void*  pReserved;
 }
 
 struct MORRSLT
 {
 align (1):
-    uint                 dwSize;
-    PWSTR                pwchOutput;
-    ushort               cchOutput;
-    _Anonymous1_e__Union Anonymous1;
-    _Anonymous2_e__Union Anonymous2;
-    ushort*              pchInputPos;
-    ushort*              pchOutputIdxWDD;
-    _Anonymous3_e__Union Anonymous3;
-    ushort*              paMonoRubyPos;
-    WDD*                 pWDD;
-    int                  cWDD;
-    void*                pPrivate;
-    wchar[1]             BLKBuff;
+    uint     dwSize;
+    PWSTR    pwchOutput;
+    ushort   cchOutput;
+    union
+    {
+    align (1):
+        PWSTR pwchRead;
+        PWSTR pwchComp;
+    }
+    union
+    {
+    align (1):
+        ushort cchRead;
+        ushort cchComp;
+    }
+    ushort*  pchInputPos;
+    ushort*  pchOutputIdxWDD;
+    union
+    {
+    align (1):
+        ushort* pchReadIdxWDD;
+        ushort* pchCompIdxWDD;
+    }
+    ushort*  paMonoRubyPos;
+    WDD*     pWDD;
+    int      cWDD;
+    void*    pPrivate;
+    wchar[1] BLKBuff;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/ns-msime-imewrd))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msime/ns-msime-imewrd
 struct IMEWRD
 {
 align (1):
-    PWSTR               pwchReading;
-    PWSTR               pwchDisplay;
-    _Anonymous_e__Union Anonymous;
-    uint[2]             rgulAttrs;
-    int                 cbComment;
-    IMEUCT              uct;
-    void*               pvComment;
+    PWSTR   pwchReading;
+    PWSTR   pwchDisplay;
+    union
+    {
+    align (1):
+        uint ulPos;
+        struct
+        {
+        align (1):
+            ushort nPos1;
+            ushort nPos2;
+        }
+    }
+    uint[2] rgulAttrs;
+    int     cbComment;
+    IMEUCT  uct;
+    void*   pvComment;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/ns-msime-imeshf))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msime/ns-msime-imeshf
 struct IMESHF
 {
 align (1):
@@ -1472,7 +1523,7 @@ align (1):
     CHAR[128] szCopyright;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/ns-msime-postbl))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msime/ns-msime-postbl
 struct POSTBL
 {
 align (1):
@@ -1499,11 +1550,21 @@ align (1):
 struct IMEKMSKEY
 {
 align (1):
-    uint                 dwStatus;
-    uint                 dwCompStatus;
-    uint                 dwVKEY;
-    _Anonymous1_e__Union Anonymous1;
-    _Anonymous2_e__Union Anonymous2;
+    uint dwStatus;
+    uint dwCompStatus;
+    uint dwVKEY;
+    union
+    {
+    align (1):
+        uint dwControl;
+        uint dwNotUsed;
+    }
+    union
+    {
+    align (1):
+        wchar[31] pwszDscr;
+        wchar[31] pwszNoUse;
+    }
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
@@ -1627,7 +1688,11 @@ struct INPUTCONTEXT
     POINT            ptSoftKbdPos;
     uint             fdwConversion;
     uint             fdwSentence;
-    _lfFont_e__Union lfFont;
+    union lfFont
+    {
+        LOGFONTA A;
+        LOGFONTW W;
+    }
     COMPOSITIONFORM  cfCompForm;
     CANDIDATEFORM[4] cfCandForm;
     HIMCC            hCompStr;
@@ -1657,7 +1722,7 @@ struct SOFTKBDDATA
     ushort[256] wCode;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/imepad/ns-imepad-appletidlist))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imepad/ns-imepad-appletidlist
 struct APPLETIDLIST
 {
     int   count;
@@ -1707,7 +1772,7 @@ struct IMESTRINGCANDIDATEINFO
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/PWSTR[1] lpwstr;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/imepad/ns-imepad-imecompositionstringinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imepad/ns-imepad-imecompositionstringinfo
 struct IMECOMPOSITIONSTRINGINFO
 {
     int iCompStrLen;
@@ -1724,7 +1789,7 @@ struct IMECHARINFO
     uint  dwCharInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/imepad/ns-imepad-imeappletcfg))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imepad/ns-imepad-imeappletcfg
 struct IMEAPPLETCFG
 {
     uint      dwConfig;
@@ -1738,7 +1803,7 @@ struct IMEAPPLETCFG
     LPARAM    lReserved1;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/imepad/ns-imepad-imeappletui))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imepad/ns-imepad-imeappletui
 struct IMEAPPLETUI
 {
     HWND   hwnd;
@@ -2116,64 +2181,64 @@ interface IFEClassFactory : IClassFactory
 }
 
 @GUID("019f7151-e6db-11d0-83c3-00c04fddb82e")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nn-msime-ifecommon))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msime/nn-msime-ifecommon
 interface IFECommon : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifecommon-isdefaultime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifecommon-isdefaultime
     HRESULT IsDefaultIME(const(PSTR) szName, int cszName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifecommon-setdefaultime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifecommon-setdefaultime
     HRESULT SetDefaultIME();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifecommon-invokewordregdialog))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifecommon-invokewordregdialog
     HRESULT InvokeWordRegDialog(IMEDLG* pimedlg);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifecommon-invokedicttooldialog))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifecommon-invokedicttooldialog
     HRESULT InvokeDictToolDialog(IMEDLG* pimedlg);
 }
 
 @GUID("019f7152-e6db-11d0-83c3-00c04fddb82e")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nn-msime-ifelanguage))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msime/nn-msime-ifelanguage
 interface IFELanguage : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifelanguage-open))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifelanguage-open
     HRESULT Open();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifelanguage-close))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifelanguage-close
     HRESULT Close();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifelanguage-getjmorphresult))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifelanguage-getjmorphresult
     HRESULT GetJMorphResult(uint dwRequest, uint dwCMode, int cwchInput, const(PWSTR) pwchInput, uint* pfCInfo, 
                             MORRSLT** ppResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifelanguage-getconversionmodecaps))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifelanguage-getconversionmodecaps
     HRESULT GetConversionModeCaps(uint* pdwCaps);
     HRESULT GetPhonetic(BSTR string, int start, int length, BSTR* phonetic);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifelanguage-getconversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifelanguage-getconversion
     HRESULT GetConversion(BSTR string, int start, int length, BSTR* result);
 }
 
 @GUID("019f7153-e6db-11d0-83c3-00c04fddb82e")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nn-msime-ifedictionary))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msime/nn-msime-ifedictionary
 interface IFEDictionary : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifedictionary-open))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifedictionary-open
     HRESULT Open(PSTR pchDictPath, IMESHF* pshf);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifedictionary-close))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifedictionary-close
     HRESULT Close();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifedictionary-getheader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifedictionary-getheader
     HRESULT GetHeader(PSTR pchDictPath, IMESHF* pshf, IMEFMT* pjfmt, uint* pulType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifedictionary-displayproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifedictionary-displayproperty
     HRESULT DisplayProperty(HWND hwnd);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifedictionary-getpostable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifedictionary-getpostable
     HRESULT GetPosTable(POSTBL** prgPosTbl, int* pcPosTbl);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifedictionary-getwords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifedictionary-getwords
     HRESULT GetWords(const(PWSTR) pwchFirst, const(PWSTR) pwchLast, const(PWSTR) pwchDisplay, uint ulPos, 
                      uint ulSelect, uint ulWordSrc, ubyte* pchBuffer, uint cbBuffer, uint* pcWrd);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifedictionary-nextwords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifedictionary-nextwords
     HRESULT NextWords(ubyte* pchBuffer, uint cbBuffer, uint* pcWrd);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifedictionary-create))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifedictionary-create
     HRESULT Create(const(PSTR) pchDictPath, IMESHF* pshf);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifedictionary-setheader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifedictionary-setheader
     HRESULT SetHeader(IMESHF* pshf);
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
     HRESULT ExistWord(IMEWRD* pwrd);
     HRESULT ExistDependency(IMEDP* pdp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifedictionary-registerword))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msime/nf-msime-ifedictionary-registerword
     HRESULT RegisterWord(IMEREG reg, IMEWRD* pwrd);
     HRESULT RegisterDependency(IMEREG reg, IMEDP* pdp);
     HRESULT GetDependencies(const(PWSTR) pwchKakariReading, const(PWSTR) pwchKakariDisplay, uint ulKakariPos, 
@@ -2185,33 +2250,33 @@ interface IFEDictionary : IUnknown
 }
 
 @GUID("5d8e643c-c3a9-11d1-afef-00805f0c8b6d")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/imepad/nn-imepad-iimespecifyapplets))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imepad/nn-imepad-iimespecifyapplets
 interface IImeSpecifyApplets : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/imepad/nf-imepad-iimespecifyapplets-getappletiidlist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imepad/nf-imepad-iimespecifyapplets-getappletiidlist
     HRESULT GetAppletIIDList(const(GUID)* refiid, APPLETIDLIST* lpIIDList);
 }
 
 @GUID("5d8e643b-c3a9-11d1-afef-00805f0c8b6d")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/imepad/nn-imepad-iimepadapplet))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imepad/nn-imepad-iimepadapplet
 interface IImePadApplet : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/imepad/nf-imepad-iimepadapplet-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imepad/nf-imepad-iimepadapplet-initialize
     HRESULT Initialize(IUnknown lpIImePad);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/imepad/nf-imepad-iimepadapplet-terminate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imepad/nf-imepad-iimepadapplet-terminate
     HRESULT Terminate();
     HRESULT GetAppletConfig(IMEAPPLETCFG* lpAppletCfg);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/imepad/nf-imepad-iimepadapplet-createui))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imepad/nf-imepad-iimepadapplet-createui
     HRESULT CreateUI(HWND hwndParent, IMEAPPLETUI* lpImeAppletUI);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/imepad/nf-imepad-iimepadapplet-notify))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imepad/nf-imepad-iimepadapplet-notify
     HRESULT Notify(IUnknown lpImePad, int notify, WPARAM wParam, LPARAM lParam);
 }
 
 @GUID("5d8e643a-c3a9-11d1-afef-00805f0c8b6d")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/imepad/nn-imepad-iimepad))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imepad/nn-imepad-iimepad
 interface IImePad : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/imepad/nf-imepad-iimepad-request))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/imepad/nf-imepad-iimepad-request
     HRESULT Request(IImePadApplet pIImePadApplet, 
                     /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(IME_PAD_REQUEST_FLAGS))], [])*/int reqId, 
                     WPARAM wParam, LPARAM lParam);
@@ -2219,13 +2284,13 @@ interface IImePad : IUnknown
 
 @GUID("98752974-b0a6-489b-8f6f-bff3769c8eeb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msimeapi/nn-msimeapi-iimeplugindictdictionarylist))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msimeapi/nn-msimeapi-iimeplugindictdictionarylist
 interface IImePlugInDictDictionaryList : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msimeapi/nf-msimeapi-iimeplugindictdictionarylist-getdictionariesinuse))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msimeapi/nf-msimeapi-iimeplugindictdictionarylist-getdictionariesinuse
     HRESULT GetDictionariesInUse(SAFEARRAY** prgDictionaryGUID, SAFEARRAY** prgDateCreated, 
                                  SAFEARRAY** prgfEncrypted);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msimeapi/nf-msimeapi-iimeplugindictdictionarylist-deletedictionary))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msimeapi/nf-msimeapi-iimeplugindictdictionarylist-deletedictionary
     HRESULT DeleteDictionary(BSTR bstrDictionaryGUID);
 }
 

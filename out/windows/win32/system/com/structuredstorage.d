@@ -3,15 +3,15 @@
 module windows.win32.system.com.structuredstorage;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BOOLEAN, BSTR, CHAR, DECIMAL, FILETIME,
-                                         HGLOBAL, HINSTANCE, HRESULT, PSTR, PWSTR,
-                                         VARIANT_BOOL;
-public import windows.win32.security : PSECURITY_DESCRIPTOR;
-public import windows.win32.system.com : BLOB, CLSCTX, COSERVERINFO, CY, DVTARGETDEVICE,
-                                         IDispatch, IErrorLog, IPersist, IStream,
-                                         IUnknown, MULTI_QI, SAFEARRAY, STATSTG,
-                                         STGM, STGMEDIUM, StorageLayout;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BOOLEAN, BSTR, CHAR, DECIMAL,
+                                                    FILETIME, HGLOBAL, HINSTANCE,
+                                                    HRESULT, PSTR, PWSTR, VARIANT_BOOL;
+public import windows.win32.security.security : PSECURITY_DESCRIPTOR;
+public import windows.win32.system.com.com : BLOB, CLSCTX, COSERVERINFO, CY, DVTARGETDEVICE,
+                                             IDispatch, IErrorLog, IPersist, IStream,
+                                             IUnknown, MULTI_QI, SAFEARRAY, STATSTG,
+                                             STGM, STGMEDIUM, StorageLayout;
 public import windows.win32.system.variant : PSTIME_FLAGS, VARENUM, VARIANT;
 
 extern(Windows) @nogc nothrow:
@@ -19,23 +19,26 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias PROPSPEC_KIND = uint;
 enum : uint
 {
-    PRSPEC_LPWSTR = 0x00000000,
-    PRSPEC_PROPID = 0x00000001,
+    PRSPEC_LPWSTR = 0x00000000U,
+    PRSPEC_PROPID = 0x00000001U,
 }
+
 alias STGFMT = uint;
 enum : uint
 {
-    STGFMT_STORAGE  = 0x00000000,
-    STGFMT_NATIVE   = 0x00000001,
-    STGFMT_FILE     = 0x00000003,
-    STGFMT_ANY      = 0x00000004,
-    STGFMT_DOCFILE  = 0x00000005,
-    STGFMT_DOCUMENT = 0x00000000,
+    STGFMT_STORAGE  = 0x00000000U,
+    STGFMT_NATIVE   = 0x00000001U,
+    STGFMT_FILE     = 0x00000003U,
+    STGFMT_ANY      = 0x00000004U,
+    STGFMT_DOCFILE  = 0x00000005U,
+    STGFMT_DOCUMENT = 0x00000000U,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wtypes/ne-wtypes-stgmove))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtypes/ne-wtypes-stgmove
 alias STGMOVE = int;
 enum : int
 {
@@ -43,6 +46,7 @@ enum : int
     STGMOVE_COPY        = 0x00000001,
     STGMOVE_SHALLOWCOPY = 0x00000002,
 }
+
 alias PIDMSI_STATUS_VALUE = int;
 enum : int
 {
@@ -57,7 +61,8 @@ enum : int
     PIDMSI_STATUS_FINAL      = 0x00000008,
     PIDMSI_STATUS_OTHER      = 0x00007fff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propvarutil/ne-propvarutil-propvar_compare_unit))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propvarutil/ne-propvarutil-propvar_compare_unit
 alias PROPVAR_COMPARE_UNIT = int;
 enum : int
 {
@@ -69,6 +74,7 @@ enum : int
     PVCU_MONTH   = 0x00000005,
     PVCU_YEAR    = 0x00000006,
 }
+
 alias PROPVAR_COMPARE_FLAGS = int;
 enum : int
 {
@@ -80,6 +86,7 @@ enum : int
     PVCF_USESTRCMPIC                   = 0x00000010,
     PVCF_DIGITSASNUMBERS_CASESENSITIVE = 0x00000020,
 }
+
 alias PROPVAR_CHANGE_FLAGS = int;
 enum : int
 {
@@ -96,32 +103,32 @@ enum : int
 
 enum : uint
 {
-    PROPSETFLAG_DEFAULT        = 0x00000000,
-    PROPSETFLAG_NONSIMPLE      = 0x00000001,
-    PROPSETFLAG_ANSI           = 0x00000002,
-    PROPSETFLAG_UNBUFFERED     = 0x00000004,
-    PROPSETFLAG_CASE_SENSITIVE = 0x00000008,
+    PROPSETFLAG_DEFAULT        = 0x00000000U,
+    PROPSETFLAG_NONSIMPLE      = 0x00000001U,
+    PROPSETFLAG_ANSI           = 0x00000002U,
+    PROPSETFLAG_UNBUFFERED     = 0x00000004U,
+    PROPSETFLAG_CASE_SENSITIVE = 0x00000008U,
 }
 
-enum uint PROPSET_BEHAVIOR_CASE_SENSITIVE = 0x00000001;
-enum uint PID_DICTIONARY = 0x00000000;
-enum uint PID_CODEPAGE = 0x00000001;
+enum uint PROPSET_BEHAVIOR_CASE_SENSITIVE = 0x00000001U;
+enum uint PID_DICTIONARY = 0x00000000U;
+enum uint PID_CODEPAGE = 0x00000001U;
 
 enum : uint
 {
-    PID_FIRST_USABLE       = 0x00000002,
-    PID_FIRST_NAME_DEFAULT = 0x00000fff,
+    PID_FIRST_USABLE       = 0x00000002U,
+    PID_FIRST_NAME_DEFAULT = 0x00000fffU,
 }
 
-enum uint PID_LOCALE = 0x80000000;
-enum uint PID_MODIFY_TIME = 0x80000001;
-enum uint PID_SECURITY = 0x80000002;
-enum uint PID_BEHAVIOR = 0x80000003;
-enum uint PID_ILLEGAL = 0xffffffff;
-enum uint PID_MIN_READONLY = 0x80000000;
-enum uint PID_MAX_READONLY = 0xbfffffff;
-enum uint PRSPEC_INVALID = 0xffffffff;
-enum uint PROPSETHDR_OSVERSION_UNKNOWN = 0xffffffff;
+enum uint PID_LOCALE = 0x80000000U;
+enum uint PID_MODIFY_TIME = 0x80000001U;
+enum uint PID_SECURITY = 0x80000002U;
+enum uint PID_BEHAVIOR = 0x80000003U;
+enum uint PID_ILLEGAL = 0xffffffffU;
+enum uint PID_MIN_READONLY = 0x80000000U;
+enum uint PID_MAX_READONLY = 0xbfffffffU;
+enum uint PRSPEC_INVALID = 0xffffffffU;
+enum uint PROPSETHDR_OSVERSION_UNKNOWN = 0xffffffffU;
 enum int PIDDI_THUMBNAIL = 0x00000002;
 
 enum : int
@@ -158,30 +165,30 @@ enum : int
 
 enum : uint
 {
-    PIDDSI_CATEGORY    = 0x00000002,
-    PIDDSI_PRESFORMAT  = 0x00000003,
-    PIDDSI_BYTECOUNT   = 0x00000004,
-    PIDDSI_LINECOUNT   = 0x00000005,
-    PIDDSI_PARCOUNT    = 0x00000006,
-    PIDDSI_SLIDECOUNT  = 0x00000007,
-    PIDDSI_NOTECOUNT   = 0x00000008,
-    PIDDSI_HIDDENCOUNT = 0x00000009,
+    PIDDSI_CATEGORY    = 0x00000002U,
+    PIDDSI_PRESFORMAT  = 0x00000003U,
+    PIDDSI_BYTECOUNT   = 0x00000004U,
+    PIDDSI_LINECOUNT   = 0x00000005U,
+    PIDDSI_PARCOUNT    = 0x00000006U,
+    PIDDSI_SLIDECOUNT  = 0x00000007U,
+    PIDDSI_NOTECOUNT   = 0x00000008U,
+    PIDDSI_HIDDENCOUNT = 0x00000009U,
 }
 
-enum uint PIDDSI_MMCLIPCOUNT = 0x0000000a;
+enum uint PIDDSI_MMCLIPCOUNT = 0x0000000aU;
 
 enum : uint
 {
-    PIDDSI_SCALE       = 0x0000000b,
-    PIDDSI_HEADINGPAIR = 0x0000000c,
+    PIDDSI_SCALE       = 0x0000000bU,
+    PIDDSI_HEADINGPAIR = 0x0000000cU,
 }
 
 enum : uint
 {
-    PIDDSI_DOCPARTS   = 0x0000000d,
-    PIDDSI_MANAGER    = 0x0000000e,
-    PIDDSI_COMPANY    = 0x0000000f,
-    PIDDSI_LINKSDIRTY = 0x00000010,
+    PIDDSI_DOCPARTS   = 0x0000000dU,
+    PIDDSI_MANAGER    = 0x0000000eU,
+    PIDDSI_COMPANY    = 0x0000000fU,
+    PIDDSI_LINKSDIRTY = 0x00000010U,
 }
 
 enum : int
@@ -202,9 +209,9 @@ enum : int
     PIDMSI_COPYRIGHT  = 0x0000000b,
 }
 
-enum uint CWCSTORAGENAME = 0x00000020;
-enum uint STGOPTIONS_VERSION = 0x00000001;
-enum uint CCH_MAX_PROPSTG_NAME = 0x0000001f;
+enum uint CWCSTORAGENAME = 0x00000020U;
+enum uint STGOPTIONS_VERSION = 0x00000001U;
+enum uint CCH_MAX_PROPSTG_NAME = 0x0000001fU;
 
 // Structs
 
@@ -223,7 +230,7 @@ struct CLIPDATA
     ubyte* pClipData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/ns-objidl-remsnb))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/ns-objidl-remsnb
 struct RemSNB
 {
     uint ulCntStr;
@@ -369,20 +376,110 @@ struct CACLSID
     GUID* pElems;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propidlbase/ns-propidlbase-propvariant))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propidlbase/ns-propidlbase-propvariant
 struct PROPVARIANT
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct
+        {
+            VARENUM vt;
+            ushort  wReserved1;
+            ushort  wReserved2;
+            ushort  wReserved3;
+            union
+            {
+                CHAR             cVal;
+                ubyte            bVal;
+                short            iVal;
+                ushort           uiVal;
+                int              lVal;
+                uint             ulVal;
+                int              intVal;
+                uint             uintVal;
+                long             hVal;
+                ulong            uhVal;
+                float            fltVal;
+                double           dblVal;
+                VARIANT_BOOL     boolVal;
+                VARIANT_BOOL     __OBSOLETE__VARIANT_BOOL;
+                int              scode;
+                CY               cyVal;
+                double           date;
+                FILETIME         filetime;
+                GUID*            puuid;
+                CLIPDATA*        pclipdata;
+                BSTR             bstrVal;
+                BSTRBLOB         bstrblobVal;
+                BLOB             blob;
+                PSTR             pszVal;
+                PWSTR            pwszVal;
+                IUnknown         punkVal;
+                IDispatch        pdispVal;
+                IStream          pStream;
+                IStorage         pStorage;
+                VERSIONEDSTREAM* pVersionedStream;
+                SAFEARRAY*       parray;
+                CAC              cac;
+                CAUB             caub;
+                CAI              cai;
+                CAUI             caui;
+                CAL              cal;
+                CAUL             caul;
+                CAH              cah;
+                CAUH             cauh;
+                CAFLT            caflt;
+                CADBL            cadbl;
+                CABOOL           cabool;
+                CASCODE          cascode;
+                CACY             cacy;
+                CADATE           cadate;
+                CAFILETIME       cafiletime;
+                CACLSID          cauuid;
+                CACLIPDATA       caclipdata;
+                CABSTR           cabstr;
+                CABSTRBLOB       cabstrblob;
+                CALPSTR          calpstr;
+                CALPWSTR         calpwstr;
+                CAPROPVARIANT    capropvar;
+                PSTR             pcVal;
+                ubyte*           pbVal;
+                short*           piVal;
+                ushort*          puiVal;
+                int*             plVal;
+                uint*            pulVal;
+                int*             pintVal;
+                uint*            puintVal;
+                float*           pfltVal;
+                double*          pdblVal;
+                VARIANT_BOOL*    pboolVal;
+                DECIMAL*         pdecVal;
+                int*             pscode;
+                CY*              pcyVal;
+                double*          pdate;
+                BSTR*            pbstrVal;
+                IUnknown*        ppunkVal;
+                IDispatch*       ppdispVal;
+                SAFEARRAY**      pparray;
+                PROPVARIANT*     pvarVal;
+            }
+        }
+        DECIMAL decVal;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propidlbase/ns-propidlbase-propspec))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propidlbase/ns-propidlbase-propspec
 struct PROPSPEC
 {
-    PROPSPEC_KIND       ulKind;
-    _Anonymous_e__Union Anonymous;
+    PROPSPEC_KIND ulKind;
+    union
+    {
+        uint  propid;
+        PWSTR lpwstr;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propidlbase/ns-propidlbase-statpropstg))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propidlbase/ns-propidlbase-statpropstg
 struct STATPROPSTG
 {
     PWSTR   lpwstrName;
@@ -390,7 +487,7 @@ struct STATPROPSTG
     VARENUM vt;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propidlbase/ns-propidlbase-statpropsetstg))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propidlbase/ns-propidlbase-statpropsetstg
 struct STATPROPSETSTG
 {
     GUID     fmtid;
@@ -402,7 +499,7 @@ struct STATPROPSETSTG
     uint     dwOSVersion;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/coml2api/ns-coml2api-stgoptions))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/coml2api/ns-coml2api-stgoptions
 struct STGOPTIONS
 {
     ushort       usVersion;
@@ -411,7 +508,7 @@ struct STGOPTIONS
     const(PWSTR) pwcsTemplateFile;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propidl/ns-propidl-serializedpropertyvalue))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propidl/ns-propidl-serializedpropertyvalue
 struct SERIALIZEDPROPERTYVALUE
 {
     uint dwType;
@@ -451,20 +548,20 @@ HRESULT CoGetInstanceFromFile(COSERVERINFO* pServerInfo, GUID* pClsid, IUnknown 
 HRESULT CoGetInstanceFromIStorage(COSERVERINFO* pServerInfo, GUID* pClsid, IUnknown punkOuter, CLSCTX dwClsCtx, 
                                   IStorage pstg, uint dwCount, MULTI_QI* pResults);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objbase/nf-objbase-stgopenasyncdocfileonifilllockbytes))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objbase/nf-objbase-stgopenasyncdocfileonifilllockbytes
 @DllImport("ole32.dll")
 HRESULT StgOpenAsyncDocfileOnIFillLockBytes(IFillLockBytes pflb, uint grfMode, uint asyncFlags, 
                                             IStorage* ppstgOpen);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objbase/nf-objbase-stggetifilllockbytesonilockbytes))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objbase/nf-objbase-stggetifilllockbytesonilockbytes
 @DllImport("ole32.dll")
 HRESULT StgGetIFillLockBytesOnILockBytes(ILockBytes pilb, IFillLockBytes* ppflb);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objbase/nf-objbase-stggetifilllockbytesonfile))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objbase/nf-objbase-stggetifilllockbytesonfile
 @DllImport("ole32.dll")
 HRESULT StgGetIFillLockBytesOnFile(const(PWSTR) pwcsName, IFillLockBytes* ppflb);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objbase/nf-objbase-stgopenlayoutdocfile))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objbase/nf-objbase-stgopenlayoutdocfile
 @DllImport("dflayout.dll")
 HRESULT StgOpenLayoutDocfile(const(PWSTR) pwcsDfName, uint grfMode, uint reserved, IStorage* ppstgOpen);
 
@@ -975,260 +1072,260 @@ HRESULT StgDeserializePropVariant(const(SERIALIZEDPROPERTYVALUE)* pprop, uint cb
 
 @GUID("0000000d-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nn-objidl-ienumstatstg))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nn-objidl-ienumstatstg
 interface IEnumSTATSTG : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ienumstatstg-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ienumstatstg-next
     HRESULT Next(uint celt, STATSTG* rgelt, uint* pceltFetched);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ienumstatstg-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ienumstatstg-skip
     HRESULT Skip(uint celt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ienumstatstg-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ienumstatstg-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ienumstatstg-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ienumstatstg-clone
     HRESULT Clone(IEnumSTATSTG* ppenum);
 }
 
 @GUID("0000000b-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nn-objidl-istorage))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nn-objidl-istorage
 interface IStorage : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-istorage-createstream))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-istorage-createstream
     HRESULT CreateStream(const(PWSTR) pwcsName, STGM grfMode, uint reserved1, uint reserved2, IStream* ppstm);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-istorage-openstream))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-istorage-openstream
     HRESULT OpenStream(const(PWSTR) pwcsName, 
                        /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* reserved1, STGM grfMode, 
                        uint reserved2, IStream* ppstm);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-istorage-createstorage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-istorage-createstorage
     HRESULT CreateStorage(const(PWSTR) pwcsName, STGM grfMode, uint reserved1, uint reserved2, IStorage* ppstg);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-istorage-openstorage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-istorage-openstorage
     HRESULT OpenStorage(const(PWSTR) pwcsName, IStorage pstgPriority, STGM grfMode, ushort** snbExclude, 
                         uint reserved, IStorage* ppstg);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-istorage-copyto))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-istorage-copyto
     HRESULT CopyTo(uint ciidExclude, const(GUID)* rgiidExclude, ushort** snbExclude, IStorage pstgDest);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-istorage-moveelementto))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-istorage-moveelementto
     HRESULT MoveElementTo(const(PWSTR) pwcsName, IStorage pstgDest, const(PWSTR) pwcsNewName, 
                           /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(STGMOVE))], [])*/uint grfFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-istorage-commit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-istorage-commit
     HRESULT Commit(uint grfCommitFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-istorage-revert))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-istorage-revert
     HRESULT Revert();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-istorage-enumelements))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-istorage-enumelements
     HRESULT EnumElements(/*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint reserved1, 
                          /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* reserved2, 
                          /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint reserved3, 
                          IEnumSTATSTG* ppenum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-istorage-destroyelement))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-istorage-destroyelement
     HRESULT DestroyElement(const(PWSTR) pwcsName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-istorage-renameelement))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-istorage-renameelement
     HRESULT RenameElement(const(PWSTR) pwcsOldName, const(PWSTR) pwcsNewName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-istorage-setelementtimes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-istorage-setelementtimes
     HRESULT SetElementTimes(const(PWSTR) pwcsName, const(FILETIME)* pctime, const(FILETIME)* patime, 
                             const(FILETIME)* pmtime);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-istorage-setclass))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-istorage-setclass
     HRESULT SetClass(const(GUID)* clsid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-istorage-setstatebits))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-istorage-setstatebits
     HRESULT SetStateBits(uint grfStateBits, uint grfMask);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-istorage-stat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-istorage-stat
     HRESULT Stat(STATSTG* pstatstg, uint grfStatFlag);
 }
 
 @GUID("0000010a-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nn-objidl-ipersiststorage))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nn-objidl-ipersiststorage
 interface IPersistStorage : IPersist
 {
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
     HRESULT IsDirty();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ipersiststorage-initnew))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ipersiststorage-initnew
     HRESULT InitNew(IStorage pStg);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ipersiststorage-load))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ipersiststorage-load
     HRESULT Load(IStorage pStg);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ipersiststorage-save))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ipersiststorage-save
     HRESULT Save(IStorage pStgSave, BOOL fSameAsLoad);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ipersiststorage-savecompleted))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ipersiststorage-savecompleted
     HRESULT SaveCompleted(IStorage pStgNew);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ipersiststorage-handsoffstorage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ipersiststorage-handsoffstorage
     HRESULT HandsOffStorage();
 }
 
 @GUID("0000000a-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nn-objidl-ilockbytes))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nn-objidl-ilockbytes
 interface ILockBytes : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ilockbytes-readat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ilockbytes-readat
     HRESULT ReadAt(ulong ulOffset, 
                    /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* pv, 
                    uint cb, uint* pcbRead);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ilockbytes-writeat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ilockbytes-writeat
     HRESULT WriteAt(ulong ulOffset, 
                     /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/const(void)* pv, 
                     uint cb, uint* pcbWritten);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ilockbytes-flush))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ilockbytes-flush
     HRESULT Flush();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ilockbytes-setsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ilockbytes-setsize
     HRESULT SetSize(ulong cb);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ilockbytes-lockregion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ilockbytes-lockregion
     HRESULT LockRegion(ulong libOffset, ulong cb, uint dwLockType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ilockbytes-unlockregion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ilockbytes-unlockregion
     HRESULT UnlockRegion(ulong libOffset, ulong cb, uint dwLockType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ilockbytes-stat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ilockbytes-stat
     HRESULT Stat(STATSTG* pstatstg, uint grfStatFlag);
 }
 
 @GUID("00000012-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nn-objidl-irootstorage))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nn-objidl-irootstorage
 interface IRootStorage : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-irootstorage-switchtofile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-irootstorage-switchtofile
     HRESULT SwitchToFile(PWSTR pszFile);
 }
 
 @GUID("99caf010-415e-11cf-8814-00aa00b569f5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nn-objidl-ifilllockbytes))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nn-objidl-ifilllockbytes
 interface IFillLockBytes : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ifilllockbytes-fillappend))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ifilllockbytes-fillappend
     HRESULT FillAppend(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(void)* pv, 
                        uint cb, uint* pcbWritten);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ifilllockbytes-fillat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ifilllockbytes-fillat
     HRESULT FillAt(ulong ulOffset, 
                    /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/const(void)* pv, 
                    uint cb, uint* pcbWritten);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ifilllockbytes-setfillsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ifilllockbytes-setfillsize
     HRESULT SetFillSize(ulong ulSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ifilllockbytes-terminate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ifilllockbytes-terminate
     HRESULT Terminate(BOOL bCanceled);
 }
 
 @GUID("0e6d4d90-6738-11cf-9608-00aa00680db4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nn-objidl-ilayoutstorage))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nn-objidl-ilayoutstorage
 interface ILayoutStorage : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ilayoutstorage-layoutscript))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ilayoutstorage-layoutscript
     HRESULT LayoutScript(StorageLayout* pStorageLayout, uint nEntries, 
                          /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint glfInterleavedFlag);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ilayoutstorage-beginmonitor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ilayoutstorage-beginmonitor
     HRESULT BeginMonitor();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ilayoutstorage-endmonitor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ilayoutstorage-endmonitor
     HRESULT EndMonitor();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ilayoutstorage-relayoutdocfile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ilayoutstorage-relayoutdocfile
     HRESULT ReLayoutDocfile(PWSTR pwcsNewDfName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ilayoutstorage-relayoutdocfileonilockbytes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-ilayoutstorage-relayoutdocfileonilockbytes
     HRESULT ReLayoutDocfileOnILockBytes(ILockBytes pILockBytes);
 }
 
 @GUID("0e6d4d92-6738-11cf-9608-00aa00680db4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nn-objidl-idirectwriterlock))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nn-objidl-idirectwriterlock
 interface IDirectWriterLock : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-idirectwriterlock-waitforwriteaccess))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-idirectwriterlock-waitforwriteaccess
     HRESULT WaitForWriteAccess(uint dwTimeout);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-idirectwriterlock-releasewriteaccess))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-idirectwriterlock-releasewriteaccess
     HRESULT ReleaseWriteAccess();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-idirectwriterlock-havewriteaccess))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/objidl/nf-objidl-idirectwriterlock-havewriteaccess
     HRESULT HaveWriteAccess();
 }
 
 @GUID("00000138-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propidlbase/nn-propidlbase-ipropertystorage))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propidlbase/nn-propidlbase-ipropertystorage
 interface IPropertyStorage : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propidlbase/nf-propidlbase-ipropertystorage-readmultiple))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propidlbase/nf-propidlbase-ipropertystorage-readmultiple
     HRESULT ReadMultiple(uint cpspec, const(PROPSPEC)* rgpspec, PROPVARIANT* rgpropvar);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propidlbase/nf-propidlbase-ipropertystorage-writemultiple))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propidlbase/nf-propidlbase-ipropertystorage-writemultiple
     HRESULT WriteMultiple(uint cpspec, const(PROPSPEC)* rgpspec, const(PROPVARIANT)* rgpropvar, 
                           uint propidNameFirst);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propidlbase/nf-propidlbase-ipropertystorage-deletemultiple))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propidlbase/nf-propidlbase-ipropertystorage-deletemultiple
     HRESULT DeleteMultiple(uint cpspec, const(PROPSPEC)* rgpspec);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propidlbase/nf-propidlbase-ipropertystorage-readpropertynames))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propidlbase/nf-propidlbase-ipropertystorage-readpropertynames
     HRESULT ReadPropertyNames(uint cpropid, const(uint)* rgpropid, PWSTR* rglpwstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propidlbase/nf-propidlbase-ipropertystorage-writepropertynames))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propidlbase/nf-propidlbase-ipropertystorage-writepropertynames
     HRESULT WritePropertyNames(uint cpropid, const(uint)* rgpropid, const(PWSTR)* rglpwstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propidlbase/nf-propidlbase-ipropertystorage-deletepropertynames))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propidlbase/nf-propidlbase-ipropertystorage-deletepropertynames
     HRESULT DeletePropertyNames(uint cpropid, const(uint)* rgpropid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propidlbase/nf-propidlbase-ipropertystorage-commit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propidlbase/nf-propidlbase-ipropertystorage-commit
     HRESULT Commit(uint grfCommitFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propidlbase/nf-propidlbase-ipropertystorage-revert))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propidlbase/nf-propidlbase-ipropertystorage-revert
     HRESULT Revert();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propidlbase/nf-propidlbase-ipropertystorage-enum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propidlbase/nf-propidlbase-ipropertystorage-enum
     HRESULT Enum(IEnumSTATPROPSTG* ppenum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propidlbase/nf-propidlbase-ipropertystorage-settimes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propidlbase/nf-propidlbase-ipropertystorage-settimes
     HRESULT SetTimes(const(FILETIME)* pctime, const(FILETIME)* patime, const(FILETIME)* pmtime);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propidlbase/nf-propidlbase-ipropertystorage-setclass))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propidlbase/nf-propidlbase-ipropertystorage-setclass
     HRESULT SetClass(const(GUID)* clsid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propidlbase/nf-propidlbase-ipropertystorage-stat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propidlbase/nf-propidlbase-ipropertystorage-stat
     HRESULT Stat(STATPROPSETSTG* pstatpsstg);
 }
 
 @GUID("0000013a-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propidl/nn-propidl-ipropertysetstorage))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propidl/nn-propidl-ipropertysetstorage
 interface IPropertySetStorage : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propidl/nf-propidl-ipropertysetstorage-create))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propidl/nf-propidl-ipropertysetstorage-create
     HRESULT Create(const(GUID)* rfmtid, const(GUID)* pclsid, uint grfFlags, uint grfMode, 
                    IPropertyStorage* ppprstg);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propidl/nf-propidl-ipropertysetstorage-open))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propidl/nf-propidl-ipropertysetstorage-open
     HRESULT Open(const(GUID)* rfmtid, uint grfMode, IPropertyStorage* ppprstg);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propidl/nf-propidl-ipropertysetstorage-delete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propidl/nf-propidl-ipropertysetstorage-delete
     HRESULT Delete(const(GUID)* rfmtid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propidl/nf-propidl-ipropertysetstorage-enum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propidl/nf-propidl-ipropertysetstorage-enum
     HRESULT Enum(IEnumSTATPROPSETSTG* ppenum);
 }
 
 @GUID("00000139-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propidlbase/nn-propidlbase-ienumstatpropstg))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propidlbase/nn-propidlbase-ienumstatpropstg
 interface IEnumSTATPROPSTG : IUnknown
 {
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
     HRESULT Next(uint celt, STATPROPSTG* rgelt, uint* pceltFetched);
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
     HRESULT Skip(uint celt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propidlbase/nf-propidlbase-ienumstatpropstg-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propidlbase/nf-propidlbase-ienumstatpropstg-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propidlbase/nf-propidlbase-ienumstatpropstg-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propidlbase/nf-propidlbase-ienumstatpropstg-clone
     HRESULT Clone(IEnumSTATPROPSTG* ppenum);
 }
 
 @GUID("0000013b-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propidlbase/nn-propidlbase-ienumstatpropsetstg))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propidlbase/nn-propidlbase-ienumstatpropsetstg
 interface IEnumSTATPROPSETSTG : IUnknown
 {
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
     HRESULT Next(uint celt, STATPROPSETSTG* rgelt, uint* pceltFetched);
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
     HRESULT Skip(uint celt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propidlbase/nf-propidlbase-ienumstatpropsetstg-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propidlbase/nf-propidlbase-ienumstatpropsetstg-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propidlbase/nf-propidlbase-ienumstatpropsetstg-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propidlbase/nf-propidlbase-ienumstatpropsetstg-clone
     HRESULT Clone(IEnumSTATPROPSETSTG* ppenum);
 }
 
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Stg/imemoryallocator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Stg/imemoryallocator
 interface IMemoryAllocator
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Stg/imemoryallocator-allocate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Stg/imemoryallocator-allocate
     void* Allocate(uint cbSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Stg/imemoryallocator-free))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Stg/imemoryallocator-free
     void  Free(void* pv);
 }
 
 @GUID("55272a00-42cb-11ce-8135-00aa004bb851")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nn-oaidl-ipropertybag))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nn-oaidl-ipropertybag
 interface IPropertyBag : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-ipropertybag-read))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-ipropertybag-read
     HRESULT Read(const(PWSTR) pszPropName, VARIANT* pVar, IErrorLog pErrorLog);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-ipropertybag-write))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-ipropertybag-write
     HRESULT Write(const(PWSTR) pszPropName, VARIANT* pVar);
 }
 

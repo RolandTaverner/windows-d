@@ -3,34 +3,36 @@
 module windows.win32.system.ole;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BSTR, CHAR, COLORREF, DECIMAL, FILETIME,
-                                         HANDLE, HGLOBAL, HINSTANCE, HRESULT,
-                                         HRSRC, HTASK, HWND, LPARAM, LRESULT,
-                                         POINT, POINTL, PSTR, PWSTR, RECT, RECTL,
-                                         SIZE, SYSTEMTIME, VARIANT_BOOL, WPARAM;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, COLORREF, DECIMAL,
+                                                    FILETIME, HANDLE, HGLOBAL, HINSTANCE,
+                                                    HRESULT, HRSRC, HTASK, HWND, LPARAM,
+                                                    LRESULT, POINT, POINTL, PSTR, PWSTR,
+                                                    RECT, RECTL, SIZE, SYSTEMTIME,
+                                                    VARIANT_BOOL, WPARAM;
 public import windows.win32.graphics.gdi : HBITMAP, HDC, HENHMETAFILE, HFONT, HMETAFILE,
                                            HPALETTE, HRGN, LOGPALETTE, TEXTMETRICW;
-public import windows.win32.system.com : BYTE_SIZEDARR, CALLCONV, CUSTDATA, CY, DISPPARAMS,
-                                         DVASPECT, DVTARGETDEVICE, DWORD_SIZEDARR,
-                                         EXCEPINFO, FLAGGED_WORD_BLOB, FORMATETC,
-                                         FUNCDESC, HYPER_SIZEDARR, IAdviseSink,
-                                         IBindCtx, IBindHost, IClassFactory,
-                                         IDLDESC, IDataObject, IDispatch,
-                                         IEnumFORMATETC, IEnumSTATDATA, IEnumUnknown,
-                                         IErrorLog, IMPLTYPEFLAGS, IMoniker,
-                                         INVOKEKIND, IPersist, IPersistStream,
-                                         IServiceProvider, IStream, ITypeInfo,
-                                         ITypeLib, IUnknown, SAFEARRAY, SAFEARRAYBOUND,
-                                         STGMEDIUM, SYSKIND;
+public import windows.win32.system.com.com : BYTE_SIZEDARR, CALLCONV, CUSTDATA, CY, DISPPARAMS,
+                                             DVASPECT, DVTARGETDEVICE, DWORD_SIZEDARR,
+                                             EXCEPINFO, FLAGGED_WORD_BLOB, FORMATETC,
+                                             FUNCDESC, HYPER_SIZEDARR, IAdviseSink,
+                                             IBindCtx, IBindHost, IClassFactory,
+                                             IDLDESC, IDataObject, IDispatch,
+                                             IEnumFORMATETC, IEnumSTATDATA,
+                                             IEnumUnknown, IErrorLog, IMPLTYPEFLAGS,
+                                             IMoniker, INVOKEKIND, IPersist,
+                                             IPersistStream, IServiceProvider,
+                                             IStream, ITypeInfo, ITypeLib, IUnknown,
+                                             SAFEARRAY, SAFEARRAYBOUND, STGMEDIUM,
+                                             SYSKIND;
 public import windows.win32.system.com.structuredstorage : IPersistStorage, IPropertyBag, IPropertyBag2,
                                                            IStorage, OLESTREAM;
-public import windows.win32.system.com : TYPEDESC, TYPEKIND, VARDESC, WORD_SIZEDARR;
-public import windows.win32.system.memory : GLOBAL_ALLOC_FLAGS;
+public import windows.win32.system.com.com : TYPEDESC, TYPEKIND, VARDESC, WORD_SIZEDARR;
+public import windows.win32.system.memory.memory : GLOBAL_ALLOC_FLAGS;
 public import windows.win32.system.systemservices : MODIFIERKEYS_FLAGS;
 public import windows.win32.system.variant : VARENUM, VARIANT;
 public import windows.win32.ui.controls.dialogs : OPENFILENAMEA, OPENFILENAMEW;
-public import windows.win32.ui.controls : PROPSHEETHEADERA_V2, PROPSHEETHEADERW_V2;
+public import windows.win32.ui.controls.controls : PROPSHEETHEADERA_V2, PROPSHEETHEADERW_V2;
 public import windows.win32.ui.windowsandmessaging : HACCEL, HCURSOR, HICON, HMENU,
                                                      MENU_ITEM_FLAGS, MSG;
 
@@ -39,37 +41,39 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias CLIPBOARD_FORMAT = ushort;
 enum : ushort
 {
-    CF_TEXT            = 0x0001,
-    CF_BITMAP          = 0x0002,
-    CF_METAFILEPICT    = 0x0003,
-    CF_SYLK            = 0x0004,
-    CF_DIF             = 0x0005,
-    CF_TIFF            = 0x0006,
-    CF_OEMTEXT         = 0x0007,
-    CF_DIB             = 0x0008,
-    CF_PALETTE         = 0x0009,
-    CF_PENDATA         = 0x000a,
-    CF_RIFF            = 0x000b,
-    CF_WAVE            = 0x000c,
-    CF_UNICODETEXT     = 0x000d,
-    CF_ENHMETAFILE     = 0x000e,
-    CF_HDROP           = 0x000f,
-    CF_LOCALE          = 0x0010,
-    CF_DIBV5           = 0x0011,
-    CF_MAX             = 0x0012,
-    CF_OWNERDISPLAY    = 0x0080,
-    CF_DSPTEXT         = 0x0081,
-    CF_DSPBITMAP       = 0x0082,
-    CF_DSPMETAFILEPICT = 0x0083,
-    CF_DSPENHMETAFILE  = 0x008e,
-    CF_PRIVATEFIRST    = 0x0200,
-    CF_PRIVATELAST     = 0x02ff,
-    CF_GDIOBJFIRST     = 0x0300,
-    CF_GDIOBJLAST      = 0x03ff,
+    CF_TEXT            = cast(ushort) 0x0001,
+    CF_BITMAP          = cast(ushort) 0x0002,
+    CF_METAFILEPICT    = cast(ushort) 0x0003,
+    CF_SYLK            = cast(ushort) 0x0004,
+    CF_DIF             = cast(ushort) 0x0005,
+    CF_TIFF            = cast(ushort) 0x0006,
+    CF_OEMTEXT         = cast(ushort) 0x0007,
+    CF_DIB             = cast(ushort) 0x0008,
+    CF_PALETTE         = cast(ushort) 0x0009,
+    CF_PENDATA         = cast(ushort) 0x000a,
+    CF_RIFF            = cast(ushort) 0x000b,
+    CF_WAVE            = cast(ushort) 0x000c,
+    CF_UNICODETEXT     = cast(ushort) 0x000d,
+    CF_ENHMETAFILE     = cast(ushort) 0x000e,
+    CF_HDROP           = cast(ushort) 0x000f,
+    CF_LOCALE          = cast(ushort) 0x0010,
+    CF_DIBV5           = cast(ushort) 0x0011,
+    CF_MAX             = cast(ushort) 0x0012,
+    CF_OWNERDISPLAY    = cast(ushort) 0x0080,
+    CF_DSPTEXT         = cast(ushort) 0x0081,
+    CF_DSPBITMAP       = cast(ushort) 0x0082,
+    CF_DSPMETAFILEPICT = cast(ushort) 0x0083,
+    CF_DSPENHMETAFILE  = cast(ushort) 0x008e,
+    CF_PRIVATEFIRST    = cast(ushort) 0x0200,
+    CF_PRIVATELAST     = cast(ushort) 0x02ff,
+    CF_GDIOBJFIRST     = cast(ushort) 0x0300,
+    CF_GDIOBJLAST      = cast(ushort) 0x03ff,
 }
+
 alias OLEIVERB = int;
 enum : int
 {
@@ -81,245 +85,269 @@ enum : int
     OLEIVERB_INPLACEACTIVATE  = 0xfffffffb,
     OLEIVERB_DISCARDUNDOSTATE = 0xfffffffa,
 }
+
 alias UPDFCACHE_FLAGS = uint;
 enum : uint
 {
-    UPDFCACHE_ALL                  = 0x7fffffff,
-    UPDFCACHE_ALLBUTNODATACACHE    = 0x7ffffffe,
-    UPDFCACHE_NORMALCACHE          = 0x00000008,
-    UPDFCACHE_IFBLANK              = 0x00000010,
-    UPDFCACHE_ONLYIFBLANK          = 0x80000000,
-    UPDFCACHE_NODATACACHE          = 0x00000001,
-    UPDFCACHE_ONSAVECACHE          = 0x00000002,
-    UPDFCACHE_ONSTOPCACHE          = 0x00000004,
-    UPDFCACHE_IFBLANKORONSAVECACHE = 0x00000012,
+    UPDFCACHE_ALL                  = 0x7fffffffU,
+    UPDFCACHE_ALLBUTNODATACACHE    = 0x7ffffffeU,
+    UPDFCACHE_NORMALCACHE          = 0x00000008U,
+    UPDFCACHE_IFBLANK              = 0x00000010U,
+    UPDFCACHE_ONLYIFBLANK          = 0x80000000U,
+    UPDFCACHE_NODATACACHE          = 0x00000001U,
+    UPDFCACHE_ONSAVECACHE          = 0x00000002U,
+    UPDFCACHE_ONSTOPCACHE          = 0x00000004U,
+    UPDFCACHE_IFBLANKORONSAVECACHE = 0x00000012U,
 }
+
 alias ENUM_CONTROLS_WHICH_FLAGS = uint;
 enum : uint
 {
-    GCW_WCH_SIBLING    = 0x00000001,
-    GC_WCH_CONTAINER   = 0x00000002,
-    GC_WCH_CONTAINED   = 0x00000003,
-    GC_WCH_ALL         = 0x00000004,
-    GC_WCH_FREVERSEDIR = 0x08000000,
-    GC_WCH_FONLYAFTER  = 0x10000000,
-    GC_WCH_FONLYBEFORE = 0x20000000,
-    GC_WCH_FSELECTED   = 0x40000000,
+    GCW_WCH_SIBLING    = 0x00000001U,
+    GC_WCH_CONTAINER   = 0x00000002U,
+    GC_WCH_CONTAINED   = 0x00000003U,
+    GC_WCH_ALL         = 0x00000004U,
+    GC_WCH_FREVERSEDIR = 0x08000000U,
+    GC_WCH_FONLYAFTER  = 0x10000000U,
+    GC_WCH_FONLYBEFORE = 0x20000000U,
+    GC_WCH_FSELECTED   = 0x40000000U,
 }
+
 alias MULTICLASSINFO_FLAGS = uint;
 enum : uint
 {
-    MULTICLASSINFO_GETTYPEINFO           = 0x00000001,
-    MULTICLASSINFO_GETNUMRESERVEDDISPIDS = 0x00000002,
-    MULTICLASSINFO_GETIIDPRIMARY         = 0x00000004,
-    MULTICLASSINFO_GETIIDSOURCE          = 0x00000008,
+    MULTICLASSINFO_GETTYPEINFO           = 0x00000001U,
+    MULTICLASSINFO_GETNUMRESERVEDDISPIDS = 0x00000002U,
+    MULTICLASSINFO_GETIIDPRIMARY         = 0x00000004U,
+    MULTICLASSINFO_GETIIDSOURCE          = 0x00000008U,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/com/dropeffect-constants))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/com/dropeffect-constants
 alias DROPEFFECT = uint;
 enum : uint
 {
-    DROPEFFECT_NONE   = 0x00000000,
-    DROPEFFECT_COPY   = 0x00000001,
-    DROPEFFECT_MOVE   = 0x00000002,
-    DROPEFFECT_LINK   = 0x00000004,
-    DROPEFFECT_SCROLL = 0x80000000,
+    DROPEFFECT_NONE   = 0x00000000U,
+    DROPEFFECT_COPY   = 0x00000001U,
+    DROPEFFECT_MOVE   = 0x00000002U,
+    DROPEFFECT_LINK   = 0x00000004U,
+    DROPEFFECT_SCROLL = 0x80000000U,
 }
+
 alias KEYMODIFIERS = uint;
 enum : uint
 {
-    KEYMOD_SHIFT   = 0x00000001,
-    KEYMOD_CONTROL = 0x00000002,
-    KEYMOD_ALT     = 0x00000004,
+    KEYMOD_SHIFT   = 0x00000001U,
+    KEYMOD_CONTROL = 0x00000002U,
+    KEYMOD_ALT     = 0x00000004U,
 }
+
 alias ACTIVEOBJECT_FLAGS = uint;
 enum : uint
 {
-    ACTIVEOBJECT_STRONG = 0x00000000,
-    ACTIVEOBJECT_WEAK   = 0x00000001,
+    ACTIVEOBJECT_STRONG = 0x00000000U,
+    ACTIVEOBJECT_WEAK   = 0x00000001U,
 }
+
 alias BUSY_DIALOG_FLAGS = uint;
 enum : uint
 {
-    BZ_DISABLECANCELBUTTON   = 0x00000001,
-    BZ_DISABLESWITCHTOBUTTON = 0x00000002,
-    BZ_DISABLERETRYBUTTON    = 0x00000004,
-    BZ_NOTRESPONDINGDIALOG   = 0x00000008,
+    BZ_DISABLECANCELBUTTON   = 0x00000001U,
+    BZ_DISABLESWITCHTOBUTTON = 0x00000002U,
+    BZ_DISABLERETRYBUTTON    = 0x00000004U,
+    BZ_NOTRESPONDINGDIALOG   = 0x00000008U,
 }
+
 alias UI_CONVERT_FLAGS = uint;
 enum : uint
 {
-    CF_SHOWHELPBUTTON       = 0x00000001,
-    CF_SETCONVERTDEFAULT    = 0x00000002,
-    CF_SETACTIVATEDEFAULT   = 0x00000004,
-    CF_SELECTCONVERTTO      = 0x00000008,
-    CF_SELECTACTIVATEAS     = 0x00000010,
-    CF_DISABLEDISPLAYASICON = 0x00000020,
-    CF_DISABLEACTIVATEAS    = 0x00000040,
-    CF_HIDECHANGEICON       = 0x00000080,
-    CF_CONVERTONLY          = 0x00000100,
+    CF_SHOWHELPBUTTON       = 0x00000001U,
+    CF_SETCONVERTDEFAULT    = 0x00000002U,
+    CF_SETACTIVATEDEFAULT   = 0x00000004U,
+    CF_SELECTCONVERTTO      = 0x00000008U,
+    CF_SELECTACTIVATEAS     = 0x00000010U,
+    CF_DISABLEDISPLAYASICON = 0x00000020U,
+    CF_DISABLEACTIVATEAS    = 0x00000040U,
+    CF_HIDECHANGEICON       = 0x00000080U,
+    CF_CONVERTONLY          = 0x00000100U,
 }
+
 alias CHANGE_ICON_FLAGS = uint;
 enum : uint
 {
-    CIF_SHOWHELP       = 0x00000001,
-    CIF_SELECTCURRENT  = 0x00000002,
-    CIF_SELECTDEFAULT  = 0x00000004,
-    CIF_SELECTFROMFILE = 0x00000008,
-    CIF_USEICONEXE     = 0x00000010,
+    CIF_SHOWHELP       = 0x00000001U,
+    CIF_SELECTCURRENT  = 0x00000002U,
+    CIF_SELECTDEFAULT  = 0x00000004U,
+    CIF_SELECTFROMFILE = 0x00000008U,
+    CIF_USEICONEXE     = 0x00000010U,
 }
+
 alias CHANGE_SOURCE_FLAGS = uint;
 enum : uint
 {
-    CSF_SHOWHELP      = 0x00000001,
-    CSF_VALIDSOURCE   = 0x00000002,
-    CSF_ONLYGETSOURCE = 0x00000004,
-    CSF_EXPLORER      = 0x00000008,
+    CSF_SHOWHELP      = 0x00000001U,
+    CSF_VALIDSOURCE   = 0x00000002U,
+    CSF_ONLYGETSOURCE = 0x00000004U,
+    CSF_EXPLORER      = 0x00000008U,
 }
+
 alias EDIT_LINKS_FLAGS = uint;
 enum : uint
 {
-    ELF_SHOWHELP            = 0x00000001,
-    ELF_DISABLEUPDATENOW    = 0x00000002,
-    ELF_DISABLEOPENSOURCE   = 0x00000004,
-    ELF_DISABLECHANGESOURCE = 0x00000008,
-    ELF_DISABLECANCELLINK   = 0x00000010,
+    ELF_SHOWHELP            = 0x00000001U,
+    ELF_DISABLEUPDATENOW    = 0x00000002U,
+    ELF_DISABLEOPENSOURCE   = 0x00000004U,
+    ELF_DISABLECHANGESOURCE = 0x00000008U,
+    ELF_DISABLECANCELLINK   = 0x00000010U,
 }
+
 alias INSERT_OBJECT_FLAGS = uint;
 enum : uint
 {
-    IOF_SHOWHELP             = 0x00000001,
-    IOF_SELECTCREATENEW      = 0x00000002,
-    IOF_SELECTCREATEFROMFILE = 0x00000004,
-    IOF_CHECKLINK            = 0x00000008,
-    IOF_CHECKDISPLAYASICON   = 0x00000010,
-    IOF_CREATENEWOBJECT      = 0x00000020,
-    IOF_CREATEFILEOBJECT     = 0x00000040,
-    IOF_CREATELINKOBJECT     = 0x00000080,
-    IOF_DISABLELINK          = 0x00000100,
-    IOF_VERIFYSERVERSEXIST   = 0x00000200,
-    IOF_DISABLEDISPLAYASICON = 0x00000400,
-    IOF_HIDECHANGEICON       = 0x00000800,
-    IOF_SHOWINSERTCONTROL    = 0x00001000,
-    IOF_SELECTCREATECONTROL  = 0x00002000,
+    IOF_SHOWHELP             = 0x00000001U,
+    IOF_SELECTCREATENEW      = 0x00000002U,
+    IOF_SELECTCREATEFROMFILE = 0x00000004U,
+    IOF_CHECKLINK            = 0x00000008U,
+    IOF_CHECKDISPLAYASICON   = 0x00000010U,
+    IOF_CREATENEWOBJECT      = 0x00000020U,
+    IOF_CREATEFILEOBJECT     = 0x00000040U,
+    IOF_CREATELINKOBJECT     = 0x00000080U,
+    IOF_DISABLELINK          = 0x00000100U,
+    IOF_VERIFYSERVERSEXIST   = 0x00000200U,
+    IOF_DISABLEDISPLAYASICON = 0x00000400U,
+    IOF_HIDECHANGEICON       = 0x00000800U,
+    IOF_SHOWINSERTCONTROL    = 0x00001000U,
+    IOF_SELECTCREATECONTROL  = 0x00002000U,
 }
+
 alias OBJECT_PROPERTIES_FLAGS = uint;
 enum : uint
 {
-    OPF_OBJECTISLINK   = 0x00000001,
-    OPF_NOFILLDEFAULT  = 0x00000002,
-    OPF_SHOWHELP       = 0x00000004,
-    OPF_DISABLECONVERT = 0x00000008,
+    OPF_OBJECTISLINK   = 0x00000001U,
+    OPF_NOFILLDEFAULT  = 0x00000002U,
+    OPF_SHOWHELP       = 0x00000004U,
+    OPF_DISABLECONVERT = 0x00000008U,
 }
+
 alias VIEW_OBJECT_PROPERTIES_FLAGS = uint;
 enum : uint
 {
-    VPF_SELECTRELATIVE  = 0x00000001,
-    VPF_DISABLERELATIVE = 0x00000002,
-    VPF_DISABLESCALE    = 0x00000004,
+    VPF_SELECTRELATIVE  = 0x00000001U,
+    VPF_DISABLERELATIVE = 0x00000002U,
+    VPF_DISABLESCALE    = 0x00000004U,
 }
+
 alias PARAMFLAGS = ushort;
 enum : ushort
 {
-    PARAMFLAG_NONE         = 0x0000,
-    PARAMFLAG_FIN          = 0x0001,
-    PARAMFLAG_FOUT         = 0x0002,
-    PARAMFLAG_FLCID        = 0x0004,
-    PARAMFLAG_FRETVAL      = 0x0008,
-    PARAMFLAG_FOPT         = 0x0010,
-    PARAMFLAG_FHASDEFAULT  = 0x0020,
-    PARAMFLAG_FHASCUSTDATA = 0x0040,
+    PARAMFLAG_NONE         = cast(ushort) 0x0000,
+    PARAMFLAG_FIN          = cast(ushort) 0x0001,
+    PARAMFLAG_FOUT         = cast(ushort) 0x0002,
+    PARAMFLAG_FLCID        = cast(ushort) 0x0004,
+    PARAMFLAG_FRETVAL      = cast(ushort) 0x0008,
+    PARAMFLAG_FOPT         = cast(ushort) 0x0010,
+    PARAMFLAG_FHASDEFAULT  = cast(ushort) 0x0020,
+    PARAMFLAG_FHASCUSTDATA = cast(ushort) 0x0040,
 }
+
 alias NUMPARSE_FLAGS = uint;
 enum : uint
 {
-    NUMPRS_LEADING_WHITE  = 0x00000001,
-    NUMPRS_TRAILING_WHITE = 0x00000002,
-    NUMPRS_LEADING_PLUS   = 0x00000004,
-    NUMPRS_TRAILING_PLUS  = 0x00000008,
-    NUMPRS_LEADING_MINUS  = 0x00000010,
-    NUMPRS_TRAILING_MINUS = 0x00000020,
-    NUMPRS_HEX_OCT        = 0x00000040,
-    NUMPRS_PARENS         = 0x00000080,
-    NUMPRS_DECIMAL        = 0x00000100,
-    NUMPRS_THOUSANDS      = 0x00000200,
-    NUMPRS_CURRENCY       = 0x00000400,
-    NUMPRS_EXPONENT       = 0x00000800,
-    NUMPRS_USE_ALL        = 0x00001000,
-    NUMPRS_STD            = 0x00001fff,
-    NUMPRS_NEG            = 0x00010000,
-    NUMPRS_INEXACT        = 0x00020000,
+    NUMPRS_LEADING_WHITE  = 0x00000001U,
+    NUMPRS_TRAILING_WHITE = 0x00000002U,
+    NUMPRS_LEADING_PLUS   = 0x00000004U,
+    NUMPRS_TRAILING_PLUS  = 0x00000008U,
+    NUMPRS_LEADING_MINUS  = 0x00000010U,
+    NUMPRS_TRAILING_MINUS = 0x00000020U,
+    NUMPRS_HEX_OCT        = 0x00000040U,
+    NUMPRS_PARENS         = 0x00000080U,
+    NUMPRS_DECIMAL        = 0x00000100U,
+    NUMPRS_THOUSANDS      = 0x00000200U,
+    NUMPRS_CURRENCY       = 0x00000400U,
+    NUMPRS_EXPONENT       = 0x00000800U,
+    NUMPRS_USE_ALL        = 0x00001000U,
+    NUMPRS_STD            = 0x00001fffU,
+    NUMPRS_NEG            = 0x00010000U,
+    NUMPRS_INEXACT        = 0x00020000U,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/com/pictype-constants))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/com/pictype-constants
 alias PICTYPE = short;
 enum : short
 {
-    PICTYPE_UNINITIALIZED = 0xffff,
-    PICTYPE_NONE          = 0x0000,
-    PICTYPE_BITMAP        = 0x0001,
-    PICTYPE_METAFILE      = 0x0002,
-    PICTYPE_ICON          = 0x0003,
-    PICTYPE_ENHMETAFILE   = 0x0004,
+    PICTYPE_UNINITIALIZED = cast(short) 0xffff,
+    PICTYPE_NONE          = cast(short) 0x0000,
+    PICTYPE_BITMAP        = cast(short) 0x0001,
+    PICTYPE_METAFILE      = cast(short) 0x0002,
+    PICTYPE_ICON          = cast(short) 0x0003,
+    PICTYPE_ENHMETAFILE   = cast(short) 0x0004,
 }
+
 alias VARCMP = uint;
 enum : uint
 {
-    VARCMP_LT   = 0x00000000,
-    VARCMP_EQ   = 0x00000001,
-    VARCMP_GT   = 0x00000002,
-    VARCMP_NULL = 0x00000003,
+    VARCMP_LT   = 0x00000000U,
+    VARCMP_EQ   = 0x00000001U,
+    VARCMP_GT   = 0x00000002U,
+    VARCMP_NULL = 0x00000003U,
 }
+
 alias PASTE_SPECIAL_FLAGS = uint;
 enum : uint
 {
-    PSF_SHOWHELP              = 0x00000001,
-    PSF_SELECTPASTE           = 0x00000002,
-    PSF_SELECTPASTELINK       = 0x00000004,
-    PSF_CHECKDISPLAYASICON    = 0x00000008,
-    PSF_DISABLEDISPLAYASICON  = 0x00000010,
-    PSF_HIDECHANGEICON        = 0x00000020,
-    PSF_STAYONCLIPBOARDCHANGE = 0x00000040,
-    PSF_NOREFRESHDATAOBJECT   = 0x00000080,
+    PSF_SHOWHELP              = 0x00000001U,
+    PSF_SELECTPASTE           = 0x00000002U,
+    PSF_SELECTPASTELINK       = 0x00000004U,
+    PSF_CHECKDISPLAYASICON    = 0x00000008U,
+    PSF_DISABLEDISPLAYASICON  = 0x00000010U,
+    PSF_HIDECHANGEICON        = 0x00000020U,
+    PSF_STAYONCLIPBOARDCHANGE = 0x00000040U,
+    PSF_NOREFRESHDATAOBJECT   = 0x00000080U,
 }
+
 alias EMBDHLP_FLAGS = uint;
 enum : uint
 {
-    EMBDHLP_INPROC_HANDLER = 0x00000000,
-    EMBDHLP_INPROC_SERVER  = 0x00000001,
-    EMBDHLP_CREATENOW      = 0x00000000,
-    EMBDHLP_DELAYCREATE    = 0x00010000,
+    EMBDHLP_INPROC_HANDLER = 0x00000000U,
+    EMBDHLP_INPROC_SERVER  = 0x00000001U,
+    EMBDHLP_CREATENOW      = 0x00000000U,
+    EMBDHLP_DELAYCREATE    = 0x00010000U,
 }
+
 alias FDEX_PROP_FLAGS = uint;
 enum : uint
 {
-    fdexPropCanGet             = 0x00000001,
-    fdexPropCannotGet          = 0x00000002,
-    fdexPropCanPut             = 0x00000004,
-    fdexPropCannotPut          = 0x00000008,
-    fdexPropCanPutRef          = 0x00000010,
-    fdexPropCannotPutRef       = 0x00000020,
-    fdexPropNoSideEffects      = 0x00000040,
-    fdexPropDynamicType        = 0x00000080,
-    fdexPropCanCall            = 0x00000100,
-    fdexPropCannotCall         = 0x00000200,
-    fdexPropCanConstruct       = 0x00000400,
-    fdexPropCannotConstruct    = 0x00000800,
-    fdexPropCanSourceEvents    = 0x00001000,
-    fdexPropCannotSourceEvents = 0x00002000,
+    fdexPropCanGet             = 0x00000001U,
+    fdexPropCannotGet          = 0x00000002U,
+    fdexPropCanPut             = 0x00000004U,
+    fdexPropCannotPut          = 0x00000008U,
+    fdexPropCanPutRef          = 0x00000010U,
+    fdexPropCannotPutRef       = 0x00000020U,
+    fdexPropNoSideEffects      = 0x00000040U,
+    fdexPropDynamicType        = 0x00000080U,
+    fdexPropCanCall            = 0x00000100U,
+    fdexPropCannotCall         = 0x00000200U,
+    fdexPropCanConstruct       = 0x00000400U,
+    fdexPropCannotConstruct    = 0x00000800U,
+    fdexPropCanSourceEvents    = 0x00001000U,
+    fdexPropCannotSourceEvents = 0x00002000U,
 }
+
 alias LOAD_PICTURE_FLAGS = uint;
 enum : uint
 {
-    LP_DEFAULT    = 0x00000000,
-    LP_MONOCHROME = 0x00000001,
-    LP_VGACOLOR   = 0x00000002,
-    LP_COLOR      = 0x00000004,
+    LP_DEFAULT    = 0x00000000U,
+    LP_MONOCHROME = 0x00000001U,
+    LP_VGACOLOR   = 0x00000002U,
+    LP_COLOR      = 0x00000004U,
 }
+
 alias OLECREATE = uint;
 enum : uint
 {
-    OLECREATE_ZERO         = 0x00000000,
-    OLECREATE_LEAVERUNNING = 0x00000001,
+    OLECREATE_ZERO         = 0x00000000U,
+    OLECREATE_LEAVERUNNING = 0x00000001U,
 }
+
 alias VARFORMAT_FIRST_DAY = int;
 enum : int
 {
@@ -332,6 +360,7 @@ enum : int
     VARFORMAT_FIRST_DAY_SATURDAY      = 0x00000006,
     VARFORMAT_FIRST_DAY_SUNDAY        = 0x00000007,
 }
+
 alias VARFORMAT_FIRST_WEEK = int;
 enum : int
 {
@@ -340,6 +369,7 @@ enum : int
     VARFORMAT_FIRST_WEEK_LARGER_HALF_IN_CURRENT_YEAR = 0x00000002,
     VARFORMAT_FIRST_WEEK_HAS_SEVEN_DAYS              = 0x00000003,
 }
+
 alias VARFORMAT_NAMED_FORMAT = int;
 enum : int
 {
@@ -349,6 +379,7 @@ enum : int
     VARFORMAT_NAMED_FORMAT_LONGTIME    = 0x00000003,
     VARFORMAT_NAMED_FORMAT_SHORTTIME   = 0x00000004,
 }
+
 alias VARFORMAT_LEADING_DIGIT = int;
 enum : int
 {
@@ -356,6 +387,7 @@ enum : int
     VARFORMAT_LEADING_DIGIT_INCLUDED      = 0xffffffff,
     VARFORMAT_LEADING_DIGIT_NOTINCLUDED   = 0x00000000,
 }
+
 alias VARFORMAT_PARENTHESES = int;
 enum : int
 {
@@ -363,6 +395,7 @@ enum : int
     VARFORMAT_PARENTHESES_USED          = 0xffffffff,
     VARFORMAT_PARENTHESES_NOTUSED       = 0x00000000,
 }
+
 alias VARFORMAT_GROUP = int;
 enum : int
 {
@@ -370,6 +403,7 @@ enum : int
     VARFORMAT_GROUP_THOUSANDS     = 0xffffffff,
     VARFORMAT_GROUP_NOTTHOUSANDS  = 0x00000000,
 }
+
 alias SF_TYPE = int;
 enum : int
 {
@@ -385,7 +419,8 @@ enum : int
     SF_RECORD   = 0x00000024,
     SF_HAVEIID  = 0x0000800d,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/ne-oaidl-typeflags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/ne-oaidl-typeflags
 alias TYPEFLAGS = int;
 enum : int
 {
@@ -405,7 +440,8 @@ enum : int
     TYPEFLAG_FREVERSEBIND   = 0x00002000,
     TYPEFLAG_FPROXY         = 0x00004000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/ne-oaidl-libflags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/ne-oaidl-libflags
 alias LIBFLAGS = int;
 enum : int
 {
@@ -414,6 +450,7 @@ enum : int
     LIBFLAG_FHIDDEN       = 0x00000004,
     LIBFLAG_FHASDISKIMAGE = 0x00000008,
 }
+
 alias CHANGEKIND = int;
 enum : int
 {
@@ -426,14 +463,16 @@ enum : int
     CHANGEKIND_CHANGEFAILED     = 0x00000006,
     CHANGEKIND_MAX              = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/ne-oleidl-discardcache))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/ne-oleidl-discardcache
 alias DISCARDCACHE = int;
 enum : int
 {
     DISCARDCACHE_SAVEIFDIRTY = 0x00000000,
     DISCARDCACHE_NOSAVE      = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/ne-oleidl-olegetmoniker))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/ne-oleidl-olegetmoniker
 alias OLEGETMONIKER = int;
 enum : int
 {
@@ -442,7 +481,8 @@ enum : int
     OLEGETMONIKER_UNASSIGN    = 0x00000003,
     OLEGETMONIKER_TEMPFORUSER = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/ne-oleidl-olewhichmk))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/ne-oleidl-olewhichmk
 alias OLEWHICHMK = int;
 enum : int
 {
@@ -450,7 +490,8 @@ enum : int
     OLEWHICHMK_OBJREL    = 0x00000002,
     OLEWHICHMK_OBJFULL   = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/ne-oleidl-userclasstype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/ne-oleidl-userclasstype
 alias USERCLASSTYPE = int;
 enum : int
 {
@@ -458,7 +499,8 @@ enum : int
     USERCLASSTYPE_SHORT   = 0x00000002,
     USERCLASSTYPE_APPNAME = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/ne-oleidl-olemisc))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/ne-oleidl-olemisc
 alias OLEMISC = int;
 enum : int
 {
@@ -485,7 +527,8 @@ enum : int
     OLEMISC_WANTSTOMENUMERGE             = 0x00100000,
     OLEMISC_SUPPORTSMULTILEVELUNDO       = 0x00200000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/ne-oleidl-oleclose))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/ne-oleidl-oleclose
 alias OLECLOSE = int;
 enum : int
 {
@@ -493,7 +536,8 @@ enum : int
     OLECLOSE_NOSAVE      = 0x00000001,
     OLECLOSE_PROMPTSAVE  = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/ne-oleidl-olerender))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/ne-oleidl-olerender
 alias OLERENDER = int;
 enum : int
 {
@@ -502,20 +546,23 @@ enum : int
     OLERENDER_FORMAT = 0x00000002,
     OLERENDER_ASIS   = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/ne-oleidl-oleupdate))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/ne-oleidl-oleupdate
 alias OLEUPDATE = int;
 enum : int
 {
     OLEUPDATE_ALWAYS = 0x00000001,
     OLEUPDATE_ONCALL = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/ne-oleidl-olelinkbind))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/ne-oleidl-olelinkbind
 alias OLELINKBIND = int;
 enum : int
 {
     OLELINKBIND_EVENIFCLASSDIFF = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/ne-oleidl-bindspeed))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/ne-oleidl-bindspeed
 alias BINDSPEED = int;
 enum : int
 {
@@ -523,7 +570,8 @@ enum : int
     BINDSPEED_MODERATE   = 0x00000002,
     BINDSPEED_IMMEDIATE  = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/ne-oleidl-olecontf))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/ne-oleidl-olecontf
 alias OLECONTF = int;
 enum : int
 {
@@ -533,14 +581,16 @@ enum : int
     OLECONTF_ONLYUSER      = 0x00000008,
     OLECONTF_ONLYIFRUNNING = 0x00000010,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/ne-oleidl-oleverbattrib))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/ne-oleidl-oleverbattrib
 alias OLEVERBATTRIB = int;
 enum : int
 {
     OLEVERBATTRIB_NEVERDIRTIES    = 0x00000001,
     OLEVERBATTRIB_ONCONTAINERMENU = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/ne-oleauto-regkind))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/ne-oleauto-regkind
 alias REGKIND = int;
 enum : int
 {
@@ -548,7 +598,8 @@ enum : int
     REGKIND_REGISTER = 0x00000001,
     REGKIND_NONE     = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/ne-ocidl-uasflags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/ne-ocidl-uasflags
 alias UASFLAGS = int;
 enum : int
 {
@@ -557,7 +608,8 @@ enum : int
     UAS_NOPARENTENABLE = 0x00000002,
     UAS_MASK           = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/ne-ocidl-readystate))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/ne-ocidl-readystate
 alias READYSTATE = int;
 enum : int
 {
@@ -567,18 +619,21 @@ enum : int
     READYSTATE_INTERACTIVE   = 0x00000003,
     READYSTATE_COMPLETE      = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/ne-ocidl-guidkind))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/ne-ocidl-guidkind
 alias GUIDKIND = int;
 enum : int
 {
     GUIDKIND_DEFAULT_SOURCE_DISP_IID = 0x00000001,
 }
+
 alias CTRLINFO = int;
 enum : int
 {
     CTRLINFO_EATS_RETURN = 0x00000001,
     CTRLINFO_EATS_ESCAPE = 0x00000002,
 }
+
 alias XFORMCOORDS = int;
 enum : int
 {
@@ -588,6 +643,7 @@ enum : int
     XFORMCOORDS_CONTAINERTOHIMETRIC = 0x00000008,
     XFORMCOORDS_EVENTCOMPAT         = 0x00000010,
 }
+
 alias PROPPAGESTATUS = int;
 enum : int
 {
@@ -595,20 +651,23 @@ enum : int
     PROPPAGESTATUS_VALIDATE = 0x00000002,
     PROPPAGESTATUS_CLEAN    = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/ne-ocidl-pictureattributes))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/ne-ocidl-pictureattributes
 alias PICTUREATTRIBUTES = int;
 enum : int
 {
     PICTURE_SCALABLE    = 0x00000001,
     PICTURE_TRANSPARENT = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/ne-ocidl-activateflags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/ne-ocidl-activateflags
 alias ACTIVATEFLAGS = int;
 enum : int
 {
     ACTIVATE_WINDOWLESS = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/ne-ocidl-oledcflags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/ne-ocidl-oledcflags
 alias OLEDCFLAGS = int;
 enum : int
 {
@@ -616,7 +675,8 @@ enum : int
     OLEDC_PAINTBKGND = 0x00000002,
     OLEDC_OFFSCREEN  = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/ne-ocidl-viewstatus))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/ne-ocidl-viewstatus
 alias VIEWSTATUS = int;
 enum : int
 {
@@ -627,7 +687,8 @@ enum : int
     VIEWSTATUS_SURFACE             = 0x00000010,
     VIEWSTATUS_3DSURFACE           = 0x00000020,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/ne-ocidl-hitresult))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/ne-ocidl-hitresult
 alias HITRESULT = int;
 enum : int
 {
@@ -636,20 +697,23 @@ enum : int
     HITRESULT_CLOSE       = 0x00000002,
     HITRESULT_HIT         = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/ne-ocidl-dvextentmode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/ne-ocidl-dvextentmode
 alias DVEXTENTMODE = int;
 enum : int
 {
     DVEXTENT_CONTENT  = 0x00000000,
     DVEXTENT_INTEGRAL = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/ne-ocidl-dvaspectinfoflag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/ne-ocidl-dvaspectinfoflag
 alias DVASPECTINFOFLAG = int;
 enum : int
 {
     DVASPECTINFOFLAG_CANOPTIMIZE = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/ne-ocidl-pointerinactive))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/ne-ocidl-pointerinactive
 alias POINTERINACTIVE = int;
 enum : int
 {
@@ -657,6 +721,7 @@ enum : int
     POINTERINACTIVE_DEACTIVATEONLEAVE = 0x00000002,
     POINTERINACTIVE_ACTIVATEONDRAG    = 0x00000004,
 }
+
 alias PROPBAG2_TYPE = int;
 enum : int
 {
@@ -668,7 +733,8 @@ enum : int
     PROPBAG2_TYPE_STORAGE   = 0x00000005,
     PROPBAG2_TYPE_MONIKER   = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/ne-ocidl-qacontainerflags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/ne-ocidl-qacontainerflags
 alias QACONTAINERFLAGS = int;
 enum : int
 {
@@ -681,6 +747,7 @@ enum : int
     QACONTAINER_MESSAGEREFLECT    = 0x00000040,
     QACONTAINER_SUPPORTSMNEMONICS = 0x00000080,
 }
+
 alias OLE_TRISTATE = int;
 enum : int
 {
@@ -688,7 +755,8 @@ enum : int
     triChecked   = 0x00000001,
     triGray      = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/ne-docobj-docmisc))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/ne-docobj-docmisc
 alias DOCMISC = int;
 enum : int
 {
@@ -697,6 +765,7 @@ enum : int
     DOCMISC_CANTOPENEDIT             = 0x00000004,
     DOCMISC_NOFILESUPPORT            = 0x00000008,
 }
+
 alias PRINTFLAG = int;
 enum : int
 {
@@ -708,7 +777,8 @@ enum : int
     PRINTFLAG_FORCEPROPERTIES      = 0x00000020,
     PRINTFLAG_PRINTTOFILE          = 0x00000040,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/ne-docobj-olecmdf))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/ne-docobj-olecmdf
 alias OLECMDF = int;
 enum : int
 {
@@ -719,7 +789,8 @@ enum : int
     OLECMDF_INVISIBLE         = 0x00000010,
     OLECMDF_DEFHIDEONCTXTMENU = 0x00000020,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/ne-docobj-olecmdtextf))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/ne-docobj-olecmdtextf
 alias OLECMDTEXTF = int;
 enum : int
 {
@@ -727,7 +798,8 @@ enum : int
     OLECMDTEXTF_NAME   = 0x00000001,
     OLECMDTEXTF_STATUS = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/ne-docobj-olecmdexecopt))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/ne-docobj-olecmdexecopt
 alias OLECMDEXECOPT = int;
 enum : int
 {
@@ -736,7 +808,8 @@ enum : int
     OLECMDEXECOPT_DONTPROMPTUSER = 0x00000002,
     OLECMDEXECOPT_SHOWHELP       = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/ne-docobj-olecmdid))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/ne-docobj-olecmdid
 alias OLECMDID = int;
 enum : int
 {
@@ -824,6 +897,7 @@ enum : int
     OLECMDID_SHOWMESSAGE_BLOCKABLE          = 0x00000054,
     OLECMDID_SHOWTASKDLG_BLOCKABLE          = 0x00000055,
 }
+
 alias MEDIAPLAYBACK_STATE = int;
 enum : int
 {
@@ -832,18 +906,21 @@ enum : int
     MEDIAPLAYBACK_PAUSE_AND_SUSPEND   = 0x00000002,
     MEDIAPLAYBACK_RESUME_FROM_SUSPEND = 0x00000003,
 }
+
 alias IGNOREMIME = int;
 enum : int
 {
     IGNOREMIME_PROMPT = 0x00000001,
     IGNOREMIME_TEXT   = 0x00000002,
 }
+
 alias WPCSETTING = int;
 enum : int
 {
     WPCSETTING_LOGGING_ENABLED      = 0x00000001,
     WPCSETTING_FILEDOWNLOAD_BLOCKED = 0x00000002,
 }
+
 alias OLECMDID_REFRESHFLAG = int;
 enum : int
 {
@@ -871,6 +948,7 @@ enum : int
     OLECMDIDF_REFRESH_PAGEACTION_INVALID_CERT             = 0x04000000,
     OLECMDIDF_REFRESH_PAGEACTION_ALLOW_VERSION            = 0x08000000,
 }
+
 alias OLECMDID_PAGEACTIONFLAG = int;
 enum : int
 {
@@ -908,6 +986,7 @@ enum : int
     OLECMDIDF_PAGEACTION_GENERIC_STATE                      = 0x40000000,
     OLECMDIDF_PAGEACTION_RESET                              = 0x80000000,
 }
+
 alias OLECMDID_BROWSERSTATEFLAG = int;
 enum : int
 {
@@ -919,6 +998,7 @@ enum : int
     OLECMDIDF_BROWSERSTATE_DESKTOPHTMLDIALOG = 0x00000020,
     OLECMDIDF_BROWSERSTATE_BLOCKEDVERSION    = 0x00000040,
 }
+
 alias OLECMDID_OPTICAL_ZOOMFLAG = int;
 enum : int
 {
@@ -927,6 +1007,7 @@ enum : int
     OLECMDIDF_OPTICAL_ZOOM_NOTRANSIENT     = 0x00000020,
     OLECMDIDF_OPTICAL_ZOOM_RELOADFORNEWTAB = 0x00000040,
 }
+
 alias PAGEACTION_UI = int;
 enum : int
 {
@@ -935,7 +1016,8 @@ enum : int
     PAGEACTION_UI_MODELESS = 0x00000002,
     PAGEACTION_UI_SILENT   = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/ne-docobj-olecmdid_windowstate_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/ne-docobj-olecmdid_windowstate_flag
 alias OLECMDID_WINDOWSTATE_FLAG = int;
 enum : int
 {
@@ -944,6 +1026,7 @@ enum : int
     OLECMDIDF_WINDOWSTATE_USERVISIBLE_VALID = 0x00010000,
     OLECMDIDF_WINDOWSTATE_ENABLED_VALID     = 0x00020000,
 }
+
 alias OLECMDID_VIEWPORT_MODE_FLAG = int;
 enum : int
 {
@@ -952,7 +1035,8 @@ enum : int
     OLECMDIDF_VIEWPORTMODE_FIXED_LAYOUT_WIDTH_VALID    = 0x00010000,
     OLECMDIDF_VIEWPORTMODE_EXCLUDE_VISUAL_BOTTOM_VALID = 0x00020000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/ne-oledlg-oleuipasteflag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ne-oledlg-oleuipasteflag
 alias OLEUIPASTEFLAG = int;
 enum : int
 {
@@ -1072,11 +1156,11 @@ enum : HRESULT
 }
 
 enum int OLEIVERB_PROPERTIES = 0xfffffff9;
-enum uint VT_STREAMED_PROPSET = 0x00000049;
-enum uint VT_STORED_PROPSET = 0x0000004a;
-enum uint VT_BLOB_PROPSET = 0x0000004b;
-enum uint VT_VERBOSE_ENUM = 0x0000004c;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/ocm--base))], [])*/uint OCM__BASE = 0x00002000;
+enum uint VT_STREAMED_PROPSET = 0x00000049U;
+enum uint VT_STORED_PROPSET = 0x0000004aU;
+enum uint VT_BLOB_PROPSET = 0x0000004bU;
+enum uint VT_VERBOSE_ENUM = 0x0000004cU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/winmsg/ocm--base))], [])*/uint OCM__BASE = 0x00002000U;
 
 enum : int
 {
@@ -1208,31 +1292,31 @@ enum : int
 
 enum : uint
 {
-    DISPID_FONT_NAME    = 0x00000000,
-    DISPID_FONT_SIZE    = 0x00000002,
-    DISPID_FONT_BOLD    = 0x00000003,
-    DISPID_FONT_ITALIC  = 0x00000004,
-    DISPID_FONT_UNDER   = 0x00000005,
-    DISPID_FONT_STRIKE  = 0x00000006,
-    DISPID_FONT_WEIGHT  = 0x00000007,
-    DISPID_FONT_CHARSET = 0x00000008,
-    DISPID_FONT_CHANGED = 0x00000009,
+    DISPID_FONT_NAME    = 0x00000000U,
+    DISPID_FONT_SIZE    = 0x00000002U,
+    DISPID_FONT_BOLD    = 0x00000003U,
+    DISPID_FONT_ITALIC  = 0x00000004U,
+    DISPID_FONT_UNDER   = 0x00000005U,
+    DISPID_FONT_STRIKE  = 0x00000006U,
+    DISPID_FONT_WEIGHT  = 0x00000007U,
+    DISPID_FONT_CHARSET = 0x00000008U,
+    DISPID_FONT_CHANGED = 0x00000009U,
 }
 
 enum : uint
 {
-    DISPID_PICT_HANDLE = 0x00000000,
-    DISPID_PICT_HPAL   = 0x00000002,
-    DISPID_PICT_TYPE   = 0x00000003,
-    DISPID_PICT_WIDTH  = 0x00000004,
-    DISPID_PICT_HEIGHT = 0x00000005,
-    DISPID_PICT_RENDER = 0x00000006,
+    DISPID_PICT_HANDLE = 0x00000000U,
+    DISPID_PICT_HPAL   = 0x00000002U,
+    DISPID_PICT_TYPE   = 0x00000003U,
+    DISPID_PICT_WIDTH  = 0x00000004U,
+    DISPID_PICT_HEIGHT = 0x00000005U,
+    DISPID_PICT_RENDER = 0x00000006U,
 }
 
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* STDOLE_TLB = "stdole2.tlb";
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* STDTYPE_TLB = "stdole2.tlb";
 enum int GC_WCH_SIBLING = 0x00000001;
-enum uint TIFLAGS_EXTENDDISPATCHONLY = 0x00000001;
+enum uint TIFLAGS_EXTENDDISPATCHONLY = 0x00000001U;
 enum int OLECMDERR_E_NOTSUPPORTED = 0x80040100;
 
 enum : int
@@ -1245,40 +1329,40 @@ enum : int
     MSOCMDERR_E_UNKNOWNGROUP = 0x80040104,
 }
 
-enum uint OLECMD_TASKDLGID_ONBEFOREUNLOAD = 0x00000001;
+enum uint OLECMD_TASKDLGID_ONBEFOREUNLOAD = 0x00000001U;
 
 enum : uint
 {
-    OLECMDARGINDEX_SHOWPAGEACTIONMENU_HWND     = 0x00000000,
-    OLECMDARGINDEX_SHOWPAGEACTIONMENU_X        = 0x00000001,
-    OLECMDARGINDEX_SHOWPAGEACTIONMENU_Y        = 0x00000002,
-    OLECMDARGINDEX_ACTIVEXINSTALL_PUBLISHER    = 0x00000000,
-    OLECMDARGINDEX_ACTIVEXINSTALL_DISPLAYNAME  = 0x00000001,
-    OLECMDARGINDEX_ACTIVEXINSTALL_CLSID        = 0x00000002,
-    OLECMDARGINDEX_ACTIVEXINSTALL_INSTALLSCOPE = 0x00000003,
-    OLECMDARGINDEX_ACTIVEXINSTALL_SOURCEURL    = 0x00000004,
+    OLECMDARGINDEX_SHOWPAGEACTIONMENU_HWND     = 0x00000000U,
+    OLECMDARGINDEX_SHOWPAGEACTIONMENU_X        = 0x00000001U,
+    OLECMDARGINDEX_SHOWPAGEACTIONMENU_Y        = 0x00000002U,
+    OLECMDARGINDEX_ACTIVEXINSTALL_PUBLISHER    = 0x00000000U,
+    OLECMDARGINDEX_ACTIVEXINSTALL_DISPLAYNAME  = 0x00000001U,
+    OLECMDARGINDEX_ACTIVEXINSTALL_CLSID        = 0x00000002U,
+    OLECMDARGINDEX_ACTIVEXINSTALL_INSTALLSCOPE = 0x00000003U,
+    OLECMDARGINDEX_ACTIVEXINSTALL_SOURCEURL    = 0x00000004U,
 }
 
 enum : uint
 {
-    INSTALL_SCOPE_INVALID = 0x00000000,
-    INSTALL_SCOPE_MACHINE = 0x00000001,
-    INSTALL_SCOPE_USER    = 0x00000002,
+    INSTALL_SCOPE_INVALID = 0x00000000U,
+    INSTALL_SCOPE_MACHINE = 0x00000001U,
+    INSTALL_SCOPE_USER    = 0x00000002U,
 }
 
-enum uint MK_ALT = 0x00000020;
+enum uint MK_ALT = 0x00000020U;
 
 enum : uint
 {
-    DD_DEFSCROLLINSET    = 0x0000000b,
-    DD_DEFSCROLLDELAY    = 0x00000032,
-    DD_DEFSCROLLINTERVAL = 0x00000032,
+    DD_DEFSCROLLINSET    = 0x0000000bU,
+    DD_DEFSCROLLDELAY    = 0x00000032U,
+    DD_DEFSCROLLINTERVAL = 0x00000032U,
 }
 
 enum : uint
 {
-    DD_DEFDRAGDELAY   = 0x000000c8,
-    DD_DEFDRAGMINDIST = 0x00000002,
+    DD_DEFDRAGDELAY   = 0x000000c8U,
+    DD_DEFDRAGMINDIST = 0x00000002U,
 }
 
 enum : int
@@ -1288,16 +1372,16 @@ enum : int
 }
 
 enum int OT_STATIC = 0x00000003;
-enum uint OLEVERB_PRIMARY = 0x00000000;
+enum uint OLEVERB_PRIMARY = 0x00000000U;
 
 enum : uint
 {
-    OF_SET     = 0x00000001,
-    OF_GET     = 0x00000002,
-    OF_HANDLER = 0x00000004,
+    OF_SET     = 0x00000001U,
+    OF_GET     = 0x00000002U,
+    OF_HANDLER = 0x00000004U,
 }
 
-enum uint WIN32 = 0x00000064;
+enum uint WIN32 = 0x00000064U;
 
 enum : int
 {
@@ -1305,251 +1389,251 @@ enum : int
     OLESTREAM_CONVERSION_DISABLEOLELINK = 0x00000001,
 }
 
-enum uint IDC_OLEUIHELP = 0x00000063;
+enum uint IDC_OLEUIHELP = 0x00000063U;
 
 enum : uint
 {
-    IDC_IO_CREATENEW      = 0x00000834,
-    IDC_IO_CREATEFROMFILE = 0x00000835,
+    IDC_IO_CREATENEW      = 0x00000834U,
+    IDC_IO_CREATEFROMFILE = 0x00000835U,
 }
 
 enum : uint
 {
-    IDC_IO_LINKFILE       = 0x00000836,
-    IDC_IO_OBJECTTYPELIST = 0x00000837,
+    IDC_IO_LINKFILE       = 0x00000836U,
+    IDC_IO_OBJECTTYPELIST = 0x00000837U,
 }
 
-enum uint IDC_IO_DISPLAYASICON = 0x00000838;
+enum uint IDC_IO_DISPLAYASICON = 0x00000838U;
 
 enum : uint
 {
-    IDC_IO_CHANGEICON  = 0x00000839,
-    IDC_IO_FILE        = 0x0000083a,
-    IDC_IO_FILEDISPLAY = 0x0000083b,
-}
-
-enum : uint
-{
-    IDC_IO_RESULTIMAGE = 0x0000083c,
-    IDC_IO_RESULTTEXT  = 0x0000083d,
-    IDC_IO_ICONDISPLAY = 0x0000083e,
-}
-
-enum uint IDC_IO_OBJECTTYPETEXT = 0x0000083f;
-
-enum : uint
-{
-    IDC_IO_FILETEXT      = 0x00000840,
-    IDC_IO_FILETYPE      = 0x00000841,
-    IDC_IO_INSERTCONTROL = 0x00000842,
+    IDC_IO_CHANGEICON  = 0x00000839U,
+    IDC_IO_FILE        = 0x0000083aU,
+    IDC_IO_FILEDISPLAY = 0x0000083bU,
 }
 
 enum : uint
 {
-    IDC_IO_ADDCONTROL      = 0x00000843,
-    IDC_IO_CONTROLTYPELIST = 0x00000844,
+    IDC_IO_RESULTIMAGE = 0x0000083cU,
+    IDC_IO_RESULTTEXT  = 0x0000083dU,
+    IDC_IO_ICONDISPLAY = 0x0000083eU,
+}
+
+enum uint IDC_IO_OBJECTTYPETEXT = 0x0000083fU;
+
+enum : uint
+{
+    IDC_IO_FILETEXT      = 0x00000840U,
+    IDC_IO_FILETYPE      = 0x00000841U,
+    IDC_IO_INSERTCONTROL = 0x00000842U,
 }
 
 enum : uint
 {
-    IDC_PS_PASTE         = 0x000001f4,
-    IDC_PS_PASTELINK     = 0x000001f5,
-    IDC_PS_SOURCETEXT    = 0x000001f6,
-    IDC_PS_PASTELIST     = 0x000001f7,
-    IDC_PS_PASTELINKLIST = 0x000001f8,
+    IDC_IO_ADDCONTROL      = 0x00000843U,
+    IDC_IO_CONTROLTYPELIST = 0x00000844U,
 }
 
 enum : uint
 {
-    IDC_PS_DISPLAYLIST   = 0x000001f9,
-    IDC_PS_DISPLAYASICON = 0x000001fa,
-}
-
-enum uint IDC_PS_ICONDISPLAY = 0x000001fb;
-
-enum : uint
-{
-    IDC_PS_CHANGEICON  = 0x000001fc,
-    IDC_PS_RESULTIMAGE = 0x000001fd,
-    IDC_PS_RESULTTEXT  = 0x000001fe,
+    IDC_PS_PASTE         = 0x000001f4U,
+    IDC_PS_PASTELINK     = 0x000001f5U,
+    IDC_PS_SOURCETEXT    = 0x000001f6U,
+    IDC_PS_PASTELIST     = 0x000001f7U,
+    IDC_PS_PASTELINKLIST = 0x000001f8U,
 }
 
 enum : uint
 {
-    IDC_CI_GROUP       = 0x00000078,
-    IDC_CI_CURRENT     = 0x00000079,
-    IDC_CI_CURRENTICON = 0x0000007a,
+    IDC_PS_DISPLAYLIST   = 0x000001f9U,
+    IDC_PS_DISPLAYASICON = 0x000001faU,
+}
+
+enum uint IDC_PS_ICONDISPLAY = 0x000001fbU;
+
+enum : uint
+{
+    IDC_PS_CHANGEICON  = 0x000001fcU,
+    IDC_PS_RESULTIMAGE = 0x000001fdU,
+    IDC_PS_RESULTTEXT  = 0x000001feU,
 }
 
 enum : uint
 {
-    IDC_CI_DEFAULT     = 0x0000007b,
-    IDC_CI_DEFAULTICON = 0x0000007c,
+    IDC_CI_GROUP       = 0x00000078U,
+    IDC_CI_CURRENT     = 0x00000079U,
+    IDC_CI_CURRENTICON = 0x0000007aU,
 }
 
 enum : uint
 {
-    IDC_CI_FROMFILE     = 0x0000007d,
-    IDC_CI_FROMFILEEDIT = 0x0000007e,
+    IDC_CI_DEFAULT     = 0x0000007bU,
+    IDC_CI_DEFAULTICON = 0x0000007cU,
 }
 
 enum : uint
 {
-    IDC_CI_ICONLIST    = 0x0000007f,
-    IDC_CI_LABEL       = 0x00000080,
-    IDC_CI_LABELEDIT   = 0x00000081,
-    IDC_CI_BROWSE      = 0x00000082,
-    IDC_CI_ICONDISPLAY = 0x00000083,
+    IDC_CI_FROMFILE     = 0x0000007dU,
+    IDC_CI_FROMFILEEDIT = 0x0000007eU,
 }
 
 enum : uint
 {
-    IDC_CV_OBJECTTYPE    = 0x00000096,
-    IDC_CV_DISPLAYASICON = 0x00000098,
+    IDC_CI_ICONLIST    = 0x0000007fU,
+    IDC_CI_LABEL       = 0x00000080U,
+    IDC_CI_LABELEDIT   = 0x00000081U,
+    IDC_CI_BROWSE      = 0x00000082U,
+    IDC_CI_ICONDISPLAY = 0x00000083U,
 }
 
 enum : uint
 {
-    IDC_CV_CHANGEICON   = 0x00000099,
-    IDC_CV_ACTIVATELIST = 0x0000009a,
+    IDC_CV_OBJECTTYPE    = 0x00000096U,
+    IDC_CV_DISPLAYASICON = 0x00000098U,
 }
 
 enum : uint
 {
-    IDC_CV_CONVERTTO   = 0x0000009b,
-    IDC_CV_ACTIVATEAS  = 0x0000009c,
-    IDC_CV_RESULTTEXT  = 0x0000009d,
-    IDC_CV_CONVERTLIST = 0x0000009e,
-}
-
-enum uint IDC_CV_ICONDISPLAY = 0x000000a5;
-enum uint IDC_EL_CHANGESOURCE = 0x000000c9;
-
-enum : uint
-{
-    IDC_EL_AUTOMATIC    = 0x000000ca,
-    IDC_EL_CANCELLINK   = 0x000000d1,
-    IDC_EL_UPDATENOW    = 0x000000d2,
-    IDC_EL_OPENSOURCE   = 0x000000d3,
-    IDC_EL_MANUAL       = 0x000000d4,
-    IDC_EL_LINKSOURCE   = 0x000000d8,
-    IDC_EL_LINKTYPE     = 0x000000d9,
-    IDC_EL_LINKSLISTBOX = 0x000000ce,
+    IDC_CV_CHANGEICON   = 0x00000099U,
+    IDC_CV_ACTIVATELIST = 0x0000009aU,
 }
 
 enum : uint
 {
-    IDC_EL_COL1 = 0x000000dc,
-    IDC_EL_COL2 = 0x000000dd,
-    IDC_EL_COL3 = 0x000000de,
+    IDC_CV_CONVERTTO   = 0x0000009bU,
+    IDC_CV_ACTIVATEAS  = 0x0000009cU,
+    IDC_CV_RESULTTEXT  = 0x0000009dU,
+    IDC_CV_CONVERTLIST = 0x0000009eU,
+}
+
+enum uint IDC_CV_ICONDISPLAY = 0x000000a5U;
+enum uint IDC_EL_CHANGESOURCE = 0x000000c9U;
+
+enum : uint
+{
+    IDC_EL_AUTOMATIC    = 0x000000caU,
+    IDC_EL_CANCELLINK   = 0x000000d1U,
+    IDC_EL_UPDATENOW    = 0x000000d2U,
+    IDC_EL_OPENSOURCE   = 0x000000d3U,
+    IDC_EL_MANUAL       = 0x000000d4U,
+    IDC_EL_LINKSOURCE   = 0x000000d8U,
+    IDC_EL_LINKTYPE     = 0x000000d9U,
+    IDC_EL_LINKSLISTBOX = 0x000000ceU,
 }
 
 enum : uint
 {
-    IDC_BZ_RETRY    = 0x00000258,
-    IDC_BZ_ICON     = 0x00000259,
-    IDC_BZ_MESSAGE1 = 0x0000025a,
-    IDC_BZ_SWITCHTO = 0x0000025c,
+    IDC_EL_COL1 = 0x000000dcU,
+    IDC_EL_COL2 = 0x000000ddU,
+    IDC_EL_COL3 = 0x000000deU,
 }
 
 enum : uint
 {
-    IDC_UL_METER    = 0x00000405,
-    IDC_UL_STOP     = 0x00000406,
-    IDC_UL_PERCENT  = 0x00000407,
-    IDC_UL_PROGRESS = 0x00000408,
+    IDC_BZ_RETRY    = 0x00000258U,
+    IDC_BZ_ICON     = 0x00000259U,
+    IDC_BZ_MESSAGE1 = 0x0000025aU,
+    IDC_BZ_SWITCHTO = 0x0000025cU,
 }
 
 enum : uint
 {
-    IDC_PU_LINKS   = 0x00000384,
-    IDC_PU_TEXT    = 0x00000385,
-    IDC_PU_CONVERT = 0x00000386,
-    IDC_PU_ICON    = 0x0000038c,
+    IDC_UL_METER    = 0x00000405U,
+    IDC_UL_STOP     = 0x00000406U,
+    IDC_UL_PERCENT  = 0x00000407U,
+    IDC_UL_PROGRESS = 0x00000408U,
 }
 
 enum : uint
 {
-    IDC_GP_OBJECTNAME     = 0x000003f1,
-    IDC_GP_OBJECTTYPE     = 0x000003f2,
-    IDC_GP_OBJECTSIZE     = 0x000003f3,
-    IDC_GP_CONVERT        = 0x000003f5,
-    IDC_GP_OBJECTICON     = 0x000003f6,
-    IDC_GP_OBJECTLOCATION = 0x000003fe,
+    IDC_PU_LINKS   = 0x00000384U,
+    IDC_PU_TEXT    = 0x00000385U,
+    IDC_PU_CONVERT = 0x00000386U,
+    IDC_PU_ICON    = 0x0000038cU,
 }
 
 enum : uint
 {
-    IDC_VP_PERCENT     = 0x000003e8,
-    IDC_VP_CHANGEICON  = 0x000003e9,
-    IDC_VP_EDITABLE    = 0x000003ea,
-    IDC_VP_ASICON      = 0x000003eb,
-    IDC_VP_RELATIVE    = 0x000003ed,
-    IDC_VP_SPIN        = 0x000003ee,
-    IDC_VP_SCALETXT    = 0x0000040a,
-    IDC_VP_ICONDISPLAY = 0x000003fd,
-}
-
-enum uint IDC_VP_RESULTIMAGE = 0x00000409;
-
-enum : uint
-{
-    IDC_LP_OPENSOURCE   = 0x000003ee,
-    IDC_LP_UPDATENOW    = 0x000003ef,
-    IDC_LP_BREAKLINK    = 0x000003f0,
-    IDC_LP_LINKSOURCE   = 0x000003f4,
-    IDC_LP_CHANGESOURCE = 0x000003f7,
+    IDC_GP_OBJECTNAME     = 0x000003f1U,
+    IDC_GP_OBJECTTYPE     = 0x000003f2U,
+    IDC_GP_OBJECTSIZE     = 0x000003f3U,
+    IDC_GP_CONVERT        = 0x000003f5U,
+    IDC_GP_OBJECTICON     = 0x000003f6U,
+    IDC_GP_OBJECTLOCATION = 0x000003feU,
 }
 
 enum : uint
 {
-    IDC_LP_AUTOMATIC = 0x000003f8,
-    IDC_LP_MANUAL    = 0x000003f9,
-    IDC_LP_DATE      = 0x000003fa,
-    IDC_LP_TIME      = 0x000003fb,
+    IDC_VP_PERCENT     = 0x000003e8U,
+    IDC_VP_CHANGEICON  = 0x000003e9U,
+    IDC_VP_EDITABLE    = 0x000003eaU,
+    IDC_VP_ASICON      = 0x000003ebU,
+    IDC_VP_RELATIVE    = 0x000003edU,
+    IDC_VP_SPIN        = 0x000003eeU,
+    IDC_VP_SCALETXT    = 0x0000040aU,
+    IDC_VP_ICONDISPLAY = 0x000003fdU,
 }
 
-enum uint IDD_INSERTOBJECT = 0x000003e8;
-enum uint IDD_CHANGEICON = 0x000003e9;
-enum uint IDD_CONVERT = 0x000003ea;
-enum uint IDD_PASTESPECIAL = 0x000003eb;
-enum uint IDD_EDITLINKS = 0x000003ec;
+enum uint IDC_VP_RESULTIMAGE = 0x00000409U;
 
 enum : uint
 {
-    IDD_BUSY        = 0x000003ee,
-    IDD_UPDATELINKS = 0x000003ef,
+    IDC_LP_OPENSOURCE   = 0x000003eeU,
+    IDC_LP_UPDATENOW    = 0x000003efU,
+    IDC_LP_BREAKLINK    = 0x000003f0U,
+    IDC_LP_LINKSOURCE   = 0x000003f4U,
+    IDC_LP_CHANGESOURCE = 0x000003f7U,
 }
-
-enum uint IDD_CHANGESOURCE = 0x000003f1;
-enum uint IDD_INSERTFILEBROWSE = 0x000003f2;
-enum uint IDD_CHANGEICONBROWSE = 0x000003f3;
-enum uint IDD_CONVERTONLY = 0x000003f4;
-enum uint IDD_CHANGESOURCE4 = 0x000003f5;
-enum uint IDD_GNRLPROPS = 0x0000044c;
-enum uint IDD_VIEWPROPS = 0x0000044d;
-enum uint IDD_LINKPROPS = 0x0000044e;
 
 enum : uint
 {
-    IDD_CONVERT4     = 0x0000044f,
-    IDD_CONVERTONLY4 = 0x00000450,
+    IDC_LP_AUTOMATIC = 0x000003f8U,
+    IDC_LP_MANUAL    = 0x000003f9U,
+    IDC_LP_DATE      = 0x000003faU,
+    IDC_LP_TIME      = 0x000003fbU,
 }
 
-enum uint IDD_EDITLINKS4 = 0x00000451;
-enum uint IDD_GNRLPROPS4 = 0x00000452;
-enum uint IDD_LINKPROPS4 = 0x00000453;
-enum uint IDD_PASTESPECIAL4 = 0x00000454;
-enum uint IDD_CANNOTUPDATELINK = 0x000003f0;
-enum uint IDD_LINKSOURCEUNAVAILABLE = 0x000003fc;
-enum uint IDD_SERVERNOTFOUND = 0x000003ff;
-enum uint IDD_OUTOFMEMORY = 0x00000400;
-enum uint IDD_SERVERNOTREGW = 0x000003fd;
-enum uint IDD_LINKTYPECHANGEDW = 0x000003fe;
-enum uint IDD_SERVERNOTREGA = 0x00000401;
-enum uint IDD_LINKTYPECHANGEDA = 0x00000402;
-enum uint IDD_SERVERNOTREG = 0x000003fd;
-enum uint IDD_LINKTYPECHANGED = 0x000003fe;
+enum uint IDD_INSERTOBJECT = 0x000003e8U;
+enum uint IDD_CHANGEICON = 0x000003e9U;
+enum uint IDD_CONVERT = 0x000003eaU;
+enum uint IDD_PASTESPECIAL = 0x000003ebU;
+enum uint IDD_EDITLINKS = 0x000003ecU;
+
+enum : uint
+{
+    IDD_BUSY        = 0x000003eeU,
+    IDD_UPDATELINKS = 0x000003efU,
+}
+
+enum uint IDD_CHANGESOURCE = 0x000003f1U;
+enum uint IDD_INSERTFILEBROWSE = 0x000003f2U;
+enum uint IDD_CHANGEICONBROWSE = 0x000003f3U;
+enum uint IDD_CONVERTONLY = 0x000003f4U;
+enum uint IDD_CHANGESOURCE4 = 0x000003f5U;
+enum uint IDD_GNRLPROPS = 0x0000044cU;
+enum uint IDD_VIEWPROPS = 0x0000044dU;
+enum uint IDD_LINKPROPS = 0x0000044eU;
+
+enum : uint
+{
+    IDD_CONVERT4     = 0x0000044fU,
+    IDD_CONVERTONLY4 = 0x00000450U,
+}
+
+enum uint IDD_EDITLINKS4 = 0x00000451U;
+enum uint IDD_GNRLPROPS4 = 0x00000452U;
+enum uint IDD_LINKPROPS4 = 0x00000453U;
+enum uint IDD_PASTESPECIAL4 = 0x00000454U;
+enum uint IDD_CANNOTUPDATELINK = 0x000003f0U;
+enum uint IDD_LINKSOURCEUNAVAILABLE = 0x000003fcU;
+enum uint IDD_SERVERNOTFOUND = 0x000003ffU;
+enum uint IDD_OUTOFMEMORY = 0x00000400U;
+enum uint IDD_SERVERNOTREGW = 0x000003fdU;
+enum uint IDD_LINKTYPECHANGEDW = 0x000003feU;
+enum uint IDD_SERVERNOTREGA = 0x00000401U;
+enum uint IDD_LINKTYPECHANGEDA = 0x00000402U;
+enum uint IDD_SERVERNOTREG = 0x000003fdU;
+enum uint IDD_LINKTYPECHANGED = 0x000003feU;
 enum const(wchar)* OLESTDDELIM = "\\";
 
 enum : const(wchar)*
@@ -1567,177 +1651,177 @@ enum : const(wchar)*
 
 enum : uint
 {
-    ID_BROWSE_CHANGEICON   = 0x00000001,
-    ID_BROWSE_INSERTFILE   = 0x00000002,
-    ID_BROWSE_ADDCONTROL   = 0x00000003,
-    ID_BROWSE_CHANGESOURCE = 0x00000004,
+    ID_BROWSE_CHANGEICON   = 0x00000001U,
+    ID_BROWSE_INSERTFILE   = 0x00000002U,
+    ID_BROWSE_ADDCONTROL   = 0x00000003U,
+    ID_BROWSE_CHANGESOURCE = 0x00000004U,
 }
 
 enum : uint
 {
-    OLEUI_FALSE                = 0x00000000,
-    OLEUI_SUCCESS              = 0x00000001,
-    OLEUI_OK                   = 0x00000001,
-    OLEUI_CANCEL               = 0x00000002,
-    OLEUI_ERR_STANDARDMIN      = 0x00000064,
-    OLEUI_ERR_OLEMEMALLOC      = 0x00000064,
-    OLEUI_ERR_STRUCTURENULL    = 0x00000065,
-    OLEUI_ERR_STRUCTUREINVALID = 0x00000066,
+    OLEUI_FALSE                = 0x00000000U,
+    OLEUI_SUCCESS              = 0x00000001U,
+    OLEUI_OK                   = 0x00000001U,
+    OLEUI_CANCEL               = 0x00000002U,
+    OLEUI_ERR_STANDARDMIN      = 0x00000064U,
+    OLEUI_ERR_OLEMEMALLOC      = 0x00000064U,
+    OLEUI_ERR_STRUCTURENULL    = 0x00000065U,
+    OLEUI_ERR_STRUCTUREINVALID = 0x00000066U,
 }
 
-enum uint OLEUI_ERR_CBSTRUCTINCORRECT = 0x00000067;
-enum uint OLEUI_ERR_HWNDOWNERINVALID = 0x00000068;
+enum uint OLEUI_ERR_CBSTRUCTINCORRECT = 0x00000067U;
+enum uint OLEUI_ERR_HWNDOWNERINVALID = 0x00000068U;
 
 enum : uint
 {
-    OLEUI_ERR_LPSZCAPTIONINVALID = 0x00000069,
-    OLEUI_ERR_LPFNHOOKINVALID    = 0x0000006a,
+    OLEUI_ERR_LPSZCAPTIONINVALID = 0x00000069U,
+    OLEUI_ERR_LPFNHOOKINVALID    = 0x0000006aU,
 }
 
-enum uint OLEUI_ERR_HINSTANCEINVALID = 0x0000006b;
-enum uint OLEUI_ERR_LPSZTEMPLATEINVALID = 0x0000006c;
-enum uint OLEUI_ERR_HRESOURCEINVALID = 0x0000006d;
-enum uint OLEUI_ERR_FINDTEMPLATEFAILURE = 0x0000006e;
-enum uint OLEUI_ERR_LOADTEMPLATEFAILURE = 0x0000006f;
+enum uint OLEUI_ERR_HINSTANCEINVALID = 0x0000006bU;
+enum uint OLEUI_ERR_LPSZTEMPLATEINVALID = 0x0000006cU;
+enum uint OLEUI_ERR_HRESOURCEINVALID = 0x0000006dU;
+enum uint OLEUI_ERR_FINDTEMPLATEFAILURE = 0x0000006eU;
+enum uint OLEUI_ERR_LOADTEMPLATEFAILURE = 0x0000006fU;
 
 enum : uint
 {
-    OLEUI_ERR_DIALOGFAILURE  = 0x00000070,
-    OLEUI_ERR_LOCALMEMALLOC  = 0x00000071,
-    OLEUI_ERR_GLOBALMEMALLOC = 0x00000072,
-    OLEUI_ERR_LOADSTRING     = 0x00000073,
-    OLEUI_ERR_STANDARDMAX    = 0x00000074,
-}
-
-enum : uint
-{
-    OLEUI_IOERR_LPSZFILEINVALID    = 0x00000074,
-    OLEUI_IOERR_LPSZLABELINVALID   = 0x00000075,
-    OLEUI_IOERR_HICONINVALID       = 0x00000076,
-    OLEUI_IOERR_LPFORMATETCINVALID = 0x00000077,
+    OLEUI_ERR_DIALOGFAILURE  = 0x00000070U,
+    OLEUI_ERR_LOCALMEMALLOC  = 0x00000071U,
+    OLEUI_ERR_GLOBALMEMALLOC = 0x00000072U,
+    OLEUI_ERR_LOADSTRING     = 0x00000073U,
+    OLEUI_ERR_STANDARDMAX    = 0x00000074U,
 }
 
 enum : uint
 {
-    OLEUI_IOERR_PPVOBJINVALID           = 0x00000078,
-    OLEUI_IOERR_LPIOLECLIENTSITEINVALID = 0x00000079,
-    OLEUI_IOERR_LPISTORAGEINVALID       = 0x0000007a,
-    OLEUI_IOERR_SCODEHASERROR           = 0x0000007b,
-    OLEUI_IOERR_LPCLSIDEXCLUDEINVALID   = 0x0000007c,
-}
-
-enum uint OLEUI_IOERR_CCHFILEINVALID = 0x0000007d;
-enum uint PS_MAXLINKTYPES = 0x00000008;
-enum uint OLEUI_IOERR_SRCDATAOBJECTINVALID = 0x00000074;
-
-enum : uint
-{
-    OLEUI_IOERR_ARRPASTEENTRIESINVALID = 0x00000075,
-    OLEUI_IOERR_ARRLINKTYPESINVALID    = 0x00000076,
+    OLEUI_IOERR_LPSZFILEINVALID    = 0x00000074U,
+    OLEUI_IOERR_LPSZLABELINVALID   = 0x00000075U,
+    OLEUI_IOERR_HICONINVALID       = 0x00000076U,
+    OLEUI_IOERR_LPFORMATETCINVALID = 0x00000077U,
 }
 
 enum : uint
 {
-    OLEUI_PSERR_CLIPBOARDCHANGED   = 0x00000077,
-    OLEUI_PSERR_GETCLIPBOARDFAILED = 0x00000078,
+    OLEUI_IOERR_PPVOBJINVALID           = 0x00000078U,
+    OLEUI_IOERR_LPIOLECLIENTSITEINVALID = 0x00000079U,
+    OLEUI_IOERR_LPISTORAGEINVALID       = 0x0000007aU,
+    OLEUI_IOERR_SCODEHASERROR           = 0x0000007bU,
+    OLEUI_IOERR_LPCLSIDEXCLUDEINVALID   = 0x0000007cU,
+}
+
+enum uint OLEUI_IOERR_CCHFILEINVALID = 0x0000007dU;
+enum uint PS_MAXLINKTYPES = 0x00000008U;
+enum uint OLEUI_IOERR_SRCDATAOBJECTINVALID = 0x00000074U;
+
+enum : uint
+{
+    OLEUI_IOERR_ARRPASTEENTRIESINVALID = 0x00000075U,
+    OLEUI_IOERR_ARRLINKTYPESINVALID    = 0x00000076U,
 }
 
 enum : uint
 {
-    OLEUI_ELERR_LINKCNTRNULL    = 0x00000074,
-    OLEUI_ELERR_LINKCNTRINVALID = 0x00000075,
+    OLEUI_PSERR_CLIPBOARDCHANGED   = 0x00000077U,
+    OLEUI_PSERR_GETCLIPBOARDFAILED = 0x00000078U,
 }
 
 enum : uint
 {
-    OLEUI_CIERR_MUSTHAVECLSID           = 0x00000074,
-    OLEUI_CIERR_MUSTHAVECURRENTMETAFILE = 0x00000075,
+    OLEUI_ELERR_LINKCNTRNULL    = 0x00000074U,
+    OLEUI_ELERR_LINKCNTRINVALID = 0x00000075U,
 }
 
-enum uint OLEUI_CIERR_SZICONEXEINVALID = 0x00000076;
+enum : uint
+{
+    OLEUI_CIERR_MUSTHAVECLSID           = 0x00000074U,
+    OLEUI_CIERR_MUSTHAVECURRENTMETAFILE = 0x00000075U,
+}
+
+enum uint OLEUI_CIERR_SZICONEXEINVALID = 0x00000076U;
 enum const(wchar)* PROP_HWND_CHGICONDLG = "HWND_CIDLG";
 
 enum : uint
 {
-    OLEUI_CTERR_CLASSIDINVALID   = 0x00000075,
-    OLEUI_CTERR_DVASPECTINVALID  = 0x00000076,
-    OLEUI_CTERR_CBFORMATINVALID  = 0x00000077,
-    OLEUI_CTERR_HMETAPICTINVALID = 0x00000078,
-    OLEUI_CTERR_STRINGINVALID    = 0x00000079,
+    OLEUI_CTERR_CLASSIDINVALID   = 0x00000075U,
+    OLEUI_CTERR_DVASPECTINVALID  = 0x00000076U,
+    OLEUI_CTERR_CBFORMATINVALID  = 0x00000077U,
+    OLEUI_CTERR_HMETAPICTINVALID = 0x00000078U,
+    OLEUI_CTERR_STRINGINVALID    = 0x00000079U,
 }
 
-enum uint OLEUI_BZERR_HTASKINVALID = 0x00000074;
-enum uint OLEUI_BZ_SWITCHTOSELECTED = 0x00000075;
+enum uint OLEUI_BZERR_HTASKINVALID = 0x00000074U;
+enum uint OLEUI_BZ_SWITCHTOSELECTED = 0x00000075U;
 
 enum : uint
 {
-    OLEUI_BZ_RETRYSELECTED = 0x00000076,
-    OLEUI_BZ_CALLUNBLOCKED = 0x00000077,
-}
-
-enum : uint
-{
-    OLEUI_CSERR_LINKCNTRNULL     = 0x00000074,
-    OLEUI_CSERR_LINKCNTRINVALID  = 0x00000075,
-    OLEUI_CSERR_FROMNOTNULL      = 0x00000076,
-    OLEUI_CSERR_TONOTNULL        = 0x00000077,
-    OLEUI_CSERR_SOURCENULL       = 0x00000078,
-    OLEUI_CSERR_SOURCEINVALID    = 0x00000079,
-    OLEUI_CSERR_SOURCEPARSERROR  = 0x0000007a,
-    OLEUI_CSERR_SOURCEPARSEERROR = 0x0000007a,
+    OLEUI_BZ_RETRYSELECTED = 0x00000076U,
+    OLEUI_BZ_CALLUNBLOCKED = 0x00000077U,
 }
 
 enum : uint
 {
-    OLEUI_OPERR_SUBPROPNULL      = 0x00000074,
-    OLEUI_OPERR_SUBPROPINVALID   = 0x00000075,
-    OLEUI_OPERR_PROPSHEETNULL    = 0x00000076,
-    OLEUI_OPERR_PROPSHEETINVALID = 0x00000077,
-    OLEUI_OPERR_SUPPROP          = 0x00000078,
-    OLEUI_OPERR_PROPSINVALID     = 0x00000079,
-    OLEUI_OPERR_PAGESINCORRECT   = 0x0000007a,
-    OLEUI_OPERR_INVALIDPAGES     = 0x0000007b,
-    OLEUI_OPERR_NOTSUPPORTED     = 0x0000007c,
-    OLEUI_OPERR_DLGPROCNOTNULL   = 0x0000007d,
-    OLEUI_OPERR_LPARAMNOTZERO    = 0x0000007e,
+    OLEUI_CSERR_LINKCNTRNULL     = 0x00000074U,
+    OLEUI_CSERR_LINKCNTRINVALID  = 0x00000075U,
+    OLEUI_CSERR_FROMNOTNULL      = 0x00000076U,
+    OLEUI_CSERR_TONOTNULL        = 0x00000077U,
+    OLEUI_CSERR_SOURCENULL       = 0x00000078U,
+    OLEUI_CSERR_SOURCEINVALID    = 0x00000079U,
+    OLEUI_CSERR_SOURCEPARSERROR  = 0x0000007aU,
+    OLEUI_CSERR_SOURCEPARSEERROR = 0x0000007aU,
 }
 
 enum : uint
 {
-    OLEUI_GPERR_STRINGINVALID         = 0x0000007f,
-    OLEUI_GPERR_CLASSIDINVALID        = 0x00000080,
-    OLEUI_GPERR_LPCLSIDEXCLUDEINVALID = 0x00000081,
-}
-
-enum uint OLEUI_GPERR_CBFORMATINVALID = 0x00000082;
-
-enum : uint
-{
-    OLEUI_VPERR_METAPICTINVALID = 0x00000083,
-    OLEUI_VPERR_DVASPECTINVALID = 0x00000084,
-}
-
-enum : uint
-{
-    OLEUI_LPERR_LINKCNTRNULL    = 0x00000085,
-    OLEUI_LPERR_LINKCNTRINVALID = 0x00000086,
+    OLEUI_OPERR_SUBPROPNULL      = 0x00000074U,
+    OLEUI_OPERR_SUBPROPINVALID   = 0x00000075U,
+    OLEUI_OPERR_PROPSHEETNULL    = 0x00000076U,
+    OLEUI_OPERR_PROPSHEETINVALID = 0x00000077U,
+    OLEUI_OPERR_SUPPROP          = 0x00000078U,
+    OLEUI_OPERR_PROPSINVALID     = 0x00000079U,
+    OLEUI_OPERR_PAGESINCORRECT   = 0x0000007aU,
+    OLEUI_OPERR_INVALIDPAGES     = 0x0000007bU,
+    OLEUI_OPERR_NOTSUPPORTED     = 0x0000007cU,
+    OLEUI_OPERR_DLGPROCNOTNULL   = 0x0000007dU,
+    OLEUI_OPERR_LPARAMNOTZERO    = 0x0000007eU,
 }
 
 enum : uint
 {
-    OLEUI_OPERR_PROPERTYSHEET   = 0x00000087,
-    OLEUI_OPERR_OBJINFOINVALID  = 0x00000088,
-    OLEUI_OPERR_LINKINFOINVALID = 0x00000089,
+    OLEUI_GPERR_STRINGINVALID         = 0x0000007fU,
+    OLEUI_GPERR_CLASSIDINVALID        = 0x00000080U,
+    OLEUI_GPERR_LPCLSIDEXCLUDEINVALID = 0x00000081U,
+}
+
+enum uint OLEUI_GPERR_CBFORMATINVALID = 0x00000082U;
+
+enum : uint
+{
+    OLEUI_VPERR_METAPICTINVALID = 0x00000083U,
+    OLEUI_VPERR_DVASPECTINVALID = 0x00000084U,
 }
 
 enum : uint
 {
-    OLEUI_QUERY_GETCLASSID = 0x0000ff00,
-    OLEUI_QUERY_LINKBROKEN = 0x0000ff01,
+    OLEUI_LPERR_LINKCNTRNULL    = 0x00000085U,
+    OLEUI_LPERR_LINKCNTRINVALID = 0x00000086U,
+}
+
+enum : uint
+{
+    OLEUI_OPERR_PROPERTYSHEET   = 0x00000087U,
+    OLEUI_OPERR_OBJINFOINVALID  = 0x00000088U,
+    OLEUI_OPERR_LINKINFOINVALID = 0x00000089U,
+}
+
+enum : uint
+{
+    OLEUI_QUERY_GETCLASSID = 0x0000ff00U,
+    OLEUI_QUERY_LINKBROKEN = 0x0000ff01U,
 }
 
 enum int DISPID_UNKNOWN = 0xffffffff;
-enum uint DISPID_VALUE = 0x00000000;
+enum uint DISPID_VALUE = 0x00000000U;
 enum int DISPID_PROPERTYPUT = 0xfffffffd;
 
 enum : int
@@ -1755,42 +1839,42 @@ enum : int
 
 enum : uint
 {
-    STDOLE_MAJORVERNUM = 0x00000001,
-    STDOLE_MINORVERNUM = 0x00000000,
+    STDOLE_MAJORVERNUM = 0x00000001U,
+    STDOLE_MINORVERNUM = 0x00000000U,
 }
 
 enum : uint
 {
-    STDOLE_LCID         = 0x00000000,
-    STDOLE2_MAJORVERNUM = 0x00000002,
-    STDOLE2_MINORVERNUM = 0x00000000,
-    STDOLE2_LCID        = 0x00000000,
+    STDOLE_LCID         = 0x00000000U,
+    STDOLE2_MAJORVERNUM = 0x00000002U,
+    STDOLE2_MINORVERNUM = 0x00000000U,
+    STDOLE2_LCID        = 0x00000000U,
 }
 
-enum uint VAR_TIMEVALUEONLY = 0x00000001;
-enum uint VAR_DATEVALUEONLY = 0x00000002;
-enum uint VAR_VALIDDATE = 0x00000004;
-enum uint VAR_CALENDAR_HIJRI = 0x00000008;
-enum uint VAR_LOCALBOOL = 0x00000010;
-enum uint VAR_FORMAT_NOSUBSTITUTE = 0x00000020;
-enum uint VAR_FOURDIGITYEARS = 0x00000040;
-enum uint LOCALE_USE_NLS = 0x10000000;
+enum uint VAR_TIMEVALUEONLY = 0x00000001U;
+enum uint VAR_DATEVALUEONLY = 0x00000002U;
+enum uint VAR_VALIDDATE = 0x00000004U;
+enum uint VAR_CALENDAR_HIJRI = 0x00000008U;
+enum uint VAR_LOCALBOOL = 0x00000010U;
+enum uint VAR_FORMAT_NOSUBSTITUTE = 0x00000020U;
+enum uint VAR_FOURDIGITYEARS = 0x00000040U;
+enum uint LOCALE_USE_NLS = 0x10000000U;
 
 enum : uint
 {
-    VAR_CALENDAR_THAI      = 0x00000080,
-    VAR_CALENDAR_GREGORIAN = 0x00000100,
+    VAR_CALENDAR_THAI      = 0x00000080U,
+    VAR_CALENDAR_GREGORIAN = 0x00000100U,
 }
 
-enum uint VTDATEGRE_MAX = 0x002d2481;
+enum uint VTDATEGRE_MAX = 0x002d2481U;
 enum int VTDATEGRE_MIN = 0xfff5f7e6;
 enum int MEMBERID_NIL = 0xffffffff;
 enum int ID_DEFAULTINST = 0xfffffffe;
 
 enum : uint
 {
-    LOAD_TLB_AS_32BIT = 0x00000020,
-    LOAD_TLB_AS_64BIT = 0x00000040,
+    LOAD_TLB_AS_32BIT = 0x00000020U,
+    LOAD_TLB_AS_64BIT = 0x00000040U,
 }
 
 enum int fdexNameCaseSensitive = 0x00000001;
@@ -1814,7 +1898,7 @@ enum : int
     fdexEnumAll     = 0x00000002,
 }
 
-enum uint DISPATCH_CONSTRUCT = 0x00004000;
+enum uint DISPATCH_CONSTRUCT = 0x00004000U;
 enum int DISPID_STARTENUM = 0xffffffff;
 enum GUID SID_VariantConversion = GUID("1f101481-bccd-11d0-9336-00a0c90dcaa9");
 enum GUID SID_GetCaller = GUID("4717cc40-bcb9-11d0-9336-00a0c90dcaa9");
@@ -1875,8 +1959,20 @@ struct SAFEARR_HAVEIID
 
 struct SAFEARRAYUNION
 {
-    uint         sfType;
-    _u_e__Struct u;
+    uint sfType;
+    union u
+    {
+        SAFEARR_BSTR     BstrStr;
+        SAFEARR_UNKNOWN  UnknownStr;
+        SAFEARR_DISPATCH DispatchStr;
+        SAFEARR_VARIANT  VariantStr;
+        SAFEARR_BRECORD  RecordStr;
+        SAFEARR_HAVEIID  HaveIidStr;
+        BYTE_SIZEDARR    ByteStr;
+        WORD_SIZEDARR    WordStr;
+        DWORD_SIZEDARR   LongStr;
+        HYPER_SIZEDARR   HyperStr;
+    }
 }
 
 struct _wireSAFEARRAY
@@ -1899,16 +1995,62 @@ struct _wireBRECORD
 
 struct _wireVARIANT
 {
-    uint                clSize;
-    uint                rpcReserved;
-    ushort              vt;
-    ushort              wReserved1;
-    ushort              wReserved2;
-    ushort              wReserved3;
-    _Anonymous_e__Union Anonymous;
+    uint   clSize;
+    uint   rpcReserved;
+    ushort vt;
+    ushort wReserved1;
+    ushort wReserved2;
+    ushort wReserved3;
+    union
+    {
+        long                llVal;
+        int                 lVal;
+        ubyte               bVal;
+        short               iVal;
+        float               fltVal;
+        double              dblVal;
+        VARIANT_BOOL        boolVal;
+        int                 scode;
+        CY                  cyVal;
+        double              date;
+        FLAGGED_WORD_BLOB*  bstrVal;
+        IUnknown            punkVal;
+        IDispatch           pdispVal;
+        _wireSAFEARRAY**    parray;
+        _wireBRECORD*       brecVal;
+        ubyte*              pbVal;
+        short*              piVal;
+        int*                plVal;
+        long*               pllVal;
+        float*              pfltVal;
+        double*             pdblVal;
+        VARIANT_BOOL*       pboolVal;
+        int*                pscode;
+        CY*                 pcyVal;
+        double*             pdate;
+        FLAGGED_WORD_BLOB** pbstrVal;
+        IUnknown*           ppunkVal;
+        IDispatch*          ppdispVal;
+        _wireSAFEARRAY***   pparray;
+        _wireVARIANT**      pvarVal;
+        CHAR                cVal;
+        ushort              uiVal;
+        uint                ulVal;
+        ulong               ullVal;
+        int                 intVal;
+        uint                uintVal;
+        DECIMAL             decVal;
+        DECIMAL*            pdecVal;
+        PSTR                pcVal;
+        ushort*             puiVal;
+        uint*               pulVal;
+        ulong*              pullVal;
+        int*                pintVal;
+        uint*               puintVal;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/ns-oaidl-arraydesc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/ns-oaidl-arraydesc
 struct ARRAYDESC
 {
     TYPEDESC tdescElem;
@@ -1916,14 +2058,14 @@ struct ARRAYDESC
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SAFEARRAYBOUND[1] rgbounds;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/ns-oaidl-paramdescex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/ns-oaidl-paramdescex
 struct PARAMDESCEX
 {
     uint    cBytes;
     VARIANT varDefaultValue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/ns-oaidl-paramdesc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/ns-oaidl-paramdesc
 struct PARAMDESC
 {
     PARAMDESCEX* pparamdescex;
@@ -1938,7 +2080,7 @@ struct CLEANLOCALSTORAGE
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/ns-oleidl-objectdescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/ns-oleidl-objectdescriptor
 struct OBJECTDESCRIPTOR
 {
     uint   cbSize;
@@ -1951,7 +2093,7 @@ struct OBJECTDESCRIPTOR
     uint   dwSrcOfCopy;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/ns-oleidl-oleinplaceframeinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/ns-oleidl-oleinplaceframeinfo
 struct OLEINPLACEFRAMEINFO
 {
     uint   cb;
@@ -1961,13 +2103,13 @@ struct OLEINPLACEFRAMEINFO
     uint   cAccelEntries;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/ns-oleidl-olemenugroupwidths))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/ns-oleidl-olemenugroupwidths
 struct OLEMENUGROUPWIDTHS
 {
     int[6] width;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/ns-oleidl-oleverb))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/ns-oleidl-oleverb
 struct OLEVERB
 {
     OLEIVERB        lVerb;
@@ -1976,7 +2118,7 @@ struct OLEVERB
     /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(OLEVERBATTRIB))], [])*/uint grfAttribs;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/ns-oleauto-numparse))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/ns-oleauto-numparse
 struct NUMPARSE
 {
     int            cDig;
@@ -1993,14 +2135,14 @@ struct UDATE
     ushort     wDayOfYear;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/ns-oleauto-paramdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/ns-oleauto-paramdata
 struct PARAMDATA
 {
     PWSTR   szName;
     VARENUM vt;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/ns-oleauto-methoddata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/ns-oleauto-methoddata
 struct METHODDATA
 {
     PWSTR      szName;
@@ -2013,14 +2155,14 @@ struct METHODDATA
     VARENUM    vtReturn;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/ns-oleauto-interfacedata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/ns-oleauto-interfacedata
 struct INTERFACEDATA
 {
     METHODDATA* pmethdata;
     uint        cMembers;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/ns-ocidl-licinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/ns-ocidl-licinfo
 struct LICINFO
 {
     int  cbLicInfo;
@@ -2028,7 +2170,7 @@ struct LICINFO
     BOOL fLicVerified;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/ns-ocidl-controlinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/ns-ocidl-controlinfo
 struct CONTROLINFO
 {
     uint   cb;
@@ -2037,14 +2179,14 @@ struct CONTROLINFO
     /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CTRLINFO))], [])*/uint dwFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/ns-ocidl-pointf))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/ns-ocidl-pointf
 struct POINTF
 {
     float x;
     float y;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/ns-ocidl-proppageinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/ns-ocidl-proppageinfo
 struct PROPPAGEINFO
 {
     uint  cb;
@@ -2055,14 +2197,14 @@ struct PROPPAGEINFO
     uint  dwHelpContext;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/ns-ocidl-cauuid))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/ns-ocidl-cauuid
 struct CAUUID
 {
     uint  cElems;
     GUID* pElems;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/ns-ocidl-dvextentinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/ns-ocidl-dvextentinfo
 struct DVEXTENTINFO
 {
     uint cb;
@@ -2070,21 +2212,21 @@ struct DVEXTENTINFO
     SIZE sizelProposed;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/ns-ocidl-dvaspectinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/ns-ocidl-dvaspectinfo
 struct DVASPECTINFO
 {
     uint cb;
     uint dwFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/ns-ocidl-calpolestr))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/ns-ocidl-calpolestr
 struct CALPOLESTR
 {
     uint   cElems;
     PWSTR* pElems;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/ns-ocidl-cadword))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/ns-ocidl-cadword
 struct CADWORD
 {
     uint  cElems;
@@ -2092,7 +2234,7 @@ struct CADWORD
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/ns-ocidl-qacontainer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/ns-ocidl-qacontainer
 struct QACONTAINER
 {
     uint                cbSize;
@@ -2114,7 +2256,7 @@ struct QACONTAINER
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/ns-ocidl-qacontrol))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/ns-ocidl-qacontrol
 struct QACONTROL
 {
     uint cbSize;
@@ -2125,7 +2267,7 @@ struct QACONTROL
     /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(POINTERINACTIVE))], [])*/uint dwPointerActivationPolicy;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/olectl/ns-olectl-ocpfiparams))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/olectl/ns-olectl-ocpfiparams
 struct OCPFIPARAMS
 {
     uint         cbStructSize;
@@ -2141,7 +2283,7 @@ struct OCPFIPARAMS
     int          dispidInitialProperty;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/olectl/ns-olectl-fontdesc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/olectl/ns-olectl-fontdesc
 struct FONTDESC
 {
     uint  cbSizeofstruct;
@@ -2154,22 +2296,43 @@ struct FONTDESC
     BOOL  fStrikethrough;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/olectl/ns-olectl-pictdesc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/olectl/ns-olectl-pictdesc
 struct PICTDESC
 {
-    uint                cbSizeofstruct;
+    uint cbSizeofstruct;
     /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(PICTYPE))], [])*/uint picType;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct bmp
+        {
+            HBITMAP  hbitmap;
+            HPALETTE hpal;
+        }
+        struct wmf
+        {
+            HMETAFILE hmeta;
+            int       xExt;
+            int       yExt;
+        }
+        struct icon
+        {
+            HICON hicon;
+        }
+        struct emf
+        {
+            HENHMETAFILE hemf;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/ns-docobj-pagerange))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/ns-docobj-pagerange
 struct PAGERANGE
 {
     int nFromPage;
     int nToPage;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/ns-docobj-pageset))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/ns-docobj-pageset
 struct PAGESET
 {
     uint cbStruct;
@@ -2179,14 +2342,14 @@ struct PAGESET
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/PAGERANGE[1] rgPages;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/ns-docobj-olecmd))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/ns-docobj-olecmd
 struct OLECMD
 {
     /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(OLECMDID))], [])*/uint cmdID;
     /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(OLECMDF))], [])*/uint cmdf;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/ns-docobj-olecmdtext))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/ns-docobj-olecmdtext
 struct OLECMDTEXT
 {
     uint cmdtextf;
@@ -2196,7 +2359,7 @@ struct OLECMDTEXT
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuiinsertobjectw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuiinsertobjectw
 struct OLEUIINSERTOBJECTW
 {
     uint                cbStruct;
@@ -2224,7 +2387,7 @@ struct OLEUIINSERTOBJECTW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuiinsertobjecta))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuiinsertobjecta
 struct OLEUIINSERTOBJECTA
 {
     uint                cbStruct;
@@ -2252,7 +2415,7 @@ struct OLEUIINSERTOBJECTA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuipasteentryw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuipasteentryw
 struct OLEUIPASTEENTRYW
 {
     FORMATETC    fmtetc;
@@ -2263,7 +2426,7 @@ struct OLEUIPASTEENTRYW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuipasteentrya))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuipasteentrya
 struct OLEUIPASTEENTRYA
 {
     FORMATETC   fmtetc;
@@ -2274,7 +2437,7 @@ struct OLEUIPASTEENTRYA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuipastespecialw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuipastespecialw
 struct OLEUIPASTESPECIALW
 {
     uint                cbStruct;
@@ -2300,7 +2463,7 @@ struct OLEUIPASTESPECIALW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuipastespeciala))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuipastespeciala
 struct OLEUIPASTESPECIALA
 {
     uint                cbStruct;
@@ -2326,7 +2489,7 @@ struct OLEUIPASTESPECIALA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuieditlinksw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuieditlinksw
 struct OLEUIEDITLINKSW
 {
     uint                 cbStruct;
@@ -2342,7 +2505,7 @@ struct OLEUIEDITLINKSW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuieditlinksa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuieditlinksa
 struct OLEUIEDITLINKSA
 {
     uint                 cbStruct;
@@ -2358,7 +2521,7 @@ struct OLEUIEDITLINKSA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuichangeiconw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuichangeiconw
 struct OLEUICHANGEICONW
 {
     uint              cbStruct;
@@ -2377,7 +2540,7 @@ struct OLEUICHANGEICONW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuichangeicona))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuichangeicona
 struct OLEUICHANGEICONA
 {
     uint              cbStruct;
@@ -2396,7 +2559,7 @@ struct OLEUICHANGEICONA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuiconvertw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuiconvertw
 struct OLEUICONVERTW
 {
     uint             cbStruct;
@@ -2424,7 +2587,7 @@ struct OLEUICONVERTW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuiconverta))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuiconverta
 struct OLEUICONVERTA
 {
     uint             cbStruct;
@@ -2452,7 +2615,7 @@ struct OLEUICONVERTA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuibusyw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuibusyw
 struct OLEUIBUSYW
 {
     uint              cbStruct;
@@ -2469,7 +2632,7 @@ struct OLEUIBUSYW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuibusya))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuibusya
 struct OLEUIBUSYA
 {
     uint              cbStruct;
@@ -2486,7 +2649,7 @@ struct OLEUIBUSYA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuichangesourcew))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuichangesourcew
 struct OLEUICHANGESOURCEW
 {
     uint                 cbStruct;
@@ -2509,7 +2672,7 @@ struct OLEUICHANGESOURCEW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuichangesourcea))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuichangesourcea
 struct OLEUICHANGESOURCEA
 {
     uint                 cbStruct;
@@ -2532,7 +2695,7 @@ struct OLEUICHANGESOURCEA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuignrlpropsw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuignrlpropsw
 struct OLEUIGNRLPROPSW
 {
     uint               cbStruct;
@@ -2545,7 +2708,7 @@ struct OLEUIGNRLPROPSW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuignrlpropsa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuignrlpropsa
 struct OLEUIGNRLPROPSA
 {
     uint               cbStruct;
@@ -2558,7 +2721,7 @@ struct OLEUIGNRLPROPSA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuiviewpropsw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuiviewpropsw
 struct OLEUIVIEWPROPSW
 {
     uint               cbStruct;
@@ -2573,7 +2736,7 @@ struct OLEUIVIEWPROPSW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuiviewpropsa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuiviewpropsa
 struct OLEUIVIEWPROPSA
 {
     uint               cbStruct;
@@ -2588,7 +2751,7 @@ struct OLEUIVIEWPROPSA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuilinkpropsw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuilinkpropsw
 struct OLEUILINKPROPSW
 {
     uint               cbStruct;
@@ -2601,7 +2764,7 @@ struct OLEUILINKPROPSW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuilinkpropsa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuilinkpropsa
 struct OLEUILINKPROPSA
 {
     uint               cbStruct;
@@ -2614,7 +2777,7 @@ struct OLEUILINKPROPSA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuiobjectpropsw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuiobjectpropsw
 struct OLEUIOBJECTPROPSW
 {
     uint                 cbStruct;
@@ -2630,7 +2793,7 @@ struct OLEUIOBJECTPROPSW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuiobjectpropsa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/ns-oledlg-oleuiobjectpropsa
 struct OLEUIOBJECTPROPSA
 {
     uint                 cbStruct;
@@ -2647,27 +2810,27 @@ struct OLEUIOBJECTPROPSA
 
 // Functions
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearrayallocdescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearrayallocdescriptor
 @DllImport("OLEAUT32.dll")
 HRESULT SafeArrayAllocDescriptor(uint cDims, SAFEARRAY** ppsaOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearrayallocdescriptorex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearrayallocdescriptorex
 @DllImport("OLEAUT32.dll")
 HRESULT SafeArrayAllocDescriptorEx(VARENUM vt, uint cDims, SAFEARRAY** ppsaOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearrayallocdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearrayallocdata
 @DllImport("OLEAUT32.dll")
 HRESULT SafeArrayAllocData(SAFEARRAY* psa);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraycreate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraycreate
 @DllImport("OLEAUT32.dll")
 SAFEARRAY* SafeArrayCreate(VARENUM vt, uint cDims, SAFEARRAYBOUND* rgsabound);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraycreateex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraycreateex
 @DllImport("OLEAUT32.dll")
 SAFEARRAY* SafeArrayCreateEx(VARENUM vt, uint cDims, SAFEARRAYBOUND* rgsabound, void* pvExtra);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraycopydata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraycopydata
 @DllImport("OLEAUT32.dll")
 HRESULT SafeArrayCopyData(SAFEARRAY* psaSource, SAFEARRAY* psaTarget);
 
@@ -2675,7 +2838,7 @@ HRESULT SafeArrayCopyData(SAFEARRAY* psaSource, SAFEARRAY* psaTarget);
 @DllImport("OLEAUT32.dll")
 void SafeArrayReleaseDescriptor(SAFEARRAY* psa);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraydestroydescriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraydestroydescriptor
 @DllImport("OLEAUT32.dll")
 HRESULT SafeArrayDestroyDescriptor(SAFEARRAY* psa);
 
@@ -2683,7 +2846,7 @@ HRESULT SafeArrayDestroyDescriptor(SAFEARRAY* psa);
 @DllImport("OLEAUT32.dll")
 void SafeArrayReleaseData(void* pData);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraydestroydata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraydestroydata
 @DllImport("OLEAUT32.dll")
 HRESULT SafeArrayDestroyData(SAFEARRAY* psa);
 
@@ -2691,1364 +2854,1364 @@ HRESULT SafeArrayDestroyData(SAFEARRAY* psa);
 @DllImport("OLEAUT32.dll")
 HRESULT SafeArrayAddRef(SAFEARRAY* psa, void** ppDataToRelease);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraydestroy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraydestroy
 @DllImport("OLEAUT32.dll")
 HRESULT SafeArrayDestroy(SAFEARRAY* psa);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearrayredim))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearrayredim
 @DllImport("OLEAUT32.dll")
 HRESULT SafeArrayRedim(SAFEARRAY* psa, SAFEARRAYBOUND* psaboundNew);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraygetdim))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraygetdim
 @DllImport("OLEAUT32.dll")
 uint SafeArrayGetDim(SAFEARRAY* psa);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraygetelemsize))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraygetelemsize
 @DllImport("OLEAUT32.dll")
 uint SafeArrayGetElemsize(SAFEARRAY* psa);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraygetubound))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraygetubound
 @DllImport("OLEAUT32.dll")
 HRESULT SafeArrayGetUBound(SAFEARRAY* psa, uint nDim, int* plUbound);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraygetlbound))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraygetlbound
 @DllImport("OLEAUT32.dll")
 HRESULT SafeArrayGetLBound(SAFEARRAY* psa, uint nDim, int* plLbound);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraylock))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraylock
 @DllImport("OLEAUT32.dll")
 HRESULT SafeArrayLock(SAFEARRAY* psa);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearrayunlock))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearrayunlock
 @DllImport("OLEAUT32.dll")
 HRESULT SafeArrayUnlock(SAFEARRAY* psa);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearrayaccessdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearrayaccessdata
 @DllImport("OLEAUT32.dll")
 HRESULT SafeArrayAccessData(SAFEARRAY* psa, void** ppvData);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearrayunaccessdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearrayunaccessdata
 @DllImport("OLEAUT32.dll")
 HRESULT SafeArrayUnaccessData(SAFEARRAY* psa);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraygetelement))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraygetelement
 @DllImport("OLEAUT32.dll")
 HRESULT SafeArrayGetElement(SAFEARRAY* psa, int* rgIndices, void* pv);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearrayputelement))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearrayputelement
 @DllImport("OLEAUT32.dll")
 HRESULT SafeArrayPutElement(SAFEARRAY* psa, int* rgIndices, void* pv);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraycopy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraycopy
 @DllImport("OLEAUT32.dll")
 HRESULT SafeArrayCopy(SAFEARRAY* psa, SAFEARRAY** ppsaOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearrayptrofindex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearrayptrofindex
 @DllImport("OLEAUT32.dll")
 HRESULT SafeArrayPtrOfIndex(SAFEARRAY* psa, int* rgIndices, void** ppvData);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraysetrecordinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraysetrecordinfo
 @DllImport("OLEAUT32.dll")
 HRESULT SafeArraySetRecordInfo(SAFEARRAY* psa, IRecordInfo prinfo);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraygetrecordinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraygetrecordinfo
 @DllImport("OLEAUT32.dll")
 HRESULT SafeArrayGetRecordInfo(SAFEARRAY* psa, IRecordInfo* prinfo);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraysetiid))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraysetiid
 @DllImport("OLEAUT32.dll")
 HRESULT SafeArraySetIID(SAFEARRAY* psa, const(GUID)* guid);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraygetiid))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraygetiid
 @DllImport("OLEAUT32.dll")
 HRESULT SafeArrayGetIID(SAFEARRAY* psa, GUID* pguid);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraygetvartype))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraygetvartype
 @DllImport("OLEAUT32.dll")
 HRESULT SafeArrayGetVartype(SAFEARRAY* psa, VARENUM* pvt);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraycreatevector))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraycreatevector
 @DllImport("OLEAUT32.dll")
 SAFEARRAY* SafeArrayCreateVector(VARENUM vt, int lLbound, uint cElements);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraycreatevectorex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-safearraycreatevectorex
 @DllImport("OLEAUT32.dll")
 SAFEARRAY* SafeArrayCreateVectorEx(VARENUM vt, int lLbound, uint cElements, void* pvExtra);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vectorfrombstr))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vectorfrombstr
 @DllImport("OLEAUT32.dll")
 HRESULT VectorFromBstr(BSTR bstr, SAFEARRAY** ppsa);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-bstrfromvector))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-bstrfromvector
 @DllImport("OLEAUT32.dll")
 HRESULT BstrFromVector(SAFEARRAY* psa, BSTR* pbstr);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui1fromi2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui1fromi2
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI1FromI2(short sIn, ubyte* pbOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui1fromi4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui1fromi4
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI1FromI4(int lIn, ubyte* pbOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui1fromi8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui1fromi8
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI1FromI8(long i64In, ubyte* pbOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui1fromr4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui1fromr4
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI1FromR4(float fltIn, ubyte* pbOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui1fromr8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui1fromr8
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI1FromR8(double dblIn, ubyte* pbOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui1fromcy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui1fromcy
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI1FromCy(CY cyIn, ubyte* pbOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui1fromdate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui1fromdate
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI1FromDate(double dateIn, ubyte* pbOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui1fromstr))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui1fromstr
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI1FromStr(const(PWSTR) strIn, uint lcid, uint dwFlags, ubyte* pbOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui1fromdisp))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui1fromdisp
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI1FromDisp(IDispatch pdispIn, uint lcid, ubyte* pbOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui1frombool))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui1frombool
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI1FromBool(VARIANT_BOOL boolIn, ubyte* pbOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui1fromi1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui1fromi1
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI1FromI1(CHAR cIn, ubyte* pbOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui1fromui2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui1fromui2
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI1FromUI2(ushort uiIn, ubyte* pbOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui1fromui4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui1fromui4
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI1FromUI4(uint ulIn, ubyte* pbOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui1fromui8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui1fromui8
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI1FromUI8(ulong ui64In, ubyte* pbOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui1fromdec))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui1fromdec
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI1FromDec(const(DECIMAL)* pdecIn, ubyte* pbOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari2fromui1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari2fromui1
 @DllImport("OLEAUT32.dll")
 HRESULT VarI2FromUI1(ubyte bIn, short* psOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari2fromi4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari2fromi4
 @DllImport("OLEAUT32.dll")
 HRESULT VarI2FromI4(int lIn, short* psOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari2fromi8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari2fromi8
 @DllImport("OLEAUT32.dll")
 HRESULT VarI2FromI8(long i64In, short* psOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari2fromr4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari2fromr4
 @DllImport("OLEAUT32.dll")
 HRESULT VarI2FromR4(float fltIn, short* psOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari2fromr8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari2fromr8
 @DllImport("OLEAUT32.dll")
 HRESULT VarI2FromR8(double dblIn, short* psOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari2fromcy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari2fromcy
 @DllImport("OLEAUT32.dll")
 HRESULT VarI2FromCy(CY cyIn, short* psOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari2fromdate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari2fromdate
 @DllImport("OLEAUT32.dll")
 HRESULT VarI2FromDate(double dateIn, short* psOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari2fromstr))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari2fromstr
 @DllImport("OLEAUT32.dll")
 HRESULT VarI2FromStr(const(PWSTR) strIn, uint lcid, uint dwFlags, short* psOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari2fromdisp))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari2fromdisp
 @DllImport("OLEAUT32.dll")
 HRESULT VarI2FromDisp(IDispatch pdispIn, uint lcid, short* psOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari2frombool))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari2frombool
 @DllImport("OLEAUT32.dll")
 HRESULT VarI2FromBool(VARIANT_BOOL boolIn, short* psOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari2fromi1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari2fromi1
 @DllImport("OLEAUT32.dll")
 HRESULT VarI2FromI1(CHAR cIn, short* psOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari2fromui2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari2fromui2
 @DllImport("OLEAUT32.dll")
 HRESULT VarI2FromUI2(ushort uiIn, short* psOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari2fromui4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari2fromui4
 @DllImport("OLEAUT32.dll")
 HRESULT VarI2FromUI4(uint ulIn, short* psOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari2fromui8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari2fromui8
 @DllImport("OLEAUT32.dll")
 HRESULT VarI2FromUI8(ulong ui64In, short* psOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari2fromdec))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari2fromdec
 @DllImport("OLEAUT32.dll")
 HRESULT VarI2FromDec(const(DECIMAL)* pdecIn, short* psOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari4fromui1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari4fromui1
 @DllImport("OLEAUT32.dll")
 HRESULT VarI4FromUI1(ubyte bIn, int* plOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari4fromi2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari4fromi2
 @DllImport("OLEAUT32.dll")
 HRESULT VarI4FromI2(short sIn, int* plOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari4fromi8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari4fromi8
 @DllImport("OLEAUT32.dll")
 HRESULT VarI4FromI8(long i64In, int* plOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari4fromr4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari4fromr4
 @DllImport("OLEAUT32.dll")
 HRESULT VarI4FromR4(float fltIn, int* plOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari4fromr8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari4fromr8
 @DllImport("OLEAUT32.dll")
 HRESULT VarI4FromR8(double dblIn, int* plOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari4fromcy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari4fromcy
 @DllImport("OLEAUT32.dll")
 HRESULT VarI4FromCy(CY cyIn, int* plOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari4fromdate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari4fromdate
 @DllImport("OLEAUT32.dll")
 HRESULT VarI4FromDate(double dateIn, int* plOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari4fromstr))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari4fromstr
 @DllImport("OLEAUT32.dll")
 HRESULT VarI4FromStr(const(PWSTR) strIn, uint lcid, uint dwFlags, int* plOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari4fromdisp))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari4fromdisp
 @DllImport("OLEAUT32.dll")
 HRESULT VarI4FromDisp(IDispatch pdispIn, uint lcid, int* plOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari4frombool))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari4frombool
 @DllImport("OLEAUT32.dll")
 HRESULT VarI4FromBool(VARIANT_BOOL boolIn, int* plOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari4fromi1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari4fromi1
 @DllImport("OLEAUT32.dll")
 HRESULT VarI4FromI1(CHAR cIn, int* plOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari4fromui2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari4fromui2
 @DllImport("OLEAUT32.dll")
 HRESULT VarI4FromUI2(ushort uiIn, int* plOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari4fromui4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari4fromui4
 @DllImport("OLEAUT32.dll")
 HRESULT VarI4FromUI4(uint ulIn, int* plOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari4fromui8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari4fromui8
 @DllImport("OLEAUT32.dll")
 HRESULT VarI4FromUI8(ulong ui64In, int* plOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari4fromdec))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari4fromdec
 @DllImport("OLEAUT32.dll")
 HRESULT VarI4FromDec(const(DECIMAL)* pdecIn, int* plOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari8fromui1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari8fromui1
 @DllImport("OLEAUT32.dll")
 HRESULT VarI8FromUI1(ubyte bIn, long* pi64Out);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari8fromi2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari8fromi2
 @DllImport("OLEAUT32.dll")
 HRESULT VarI8FromI2(short sIn, long* pi64Out);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari8fromr4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari8fromr4
 @DllImport("OLEAUT32.dll")
 HRESULT VarI8FromR4(float fltIn, long* pi64Out);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari8fromr8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari8fromr8
 @DllImport("OLEAUT32.dll")
 HRESULT VarI8FromR8(double dblIn, long* pi64Out);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari8fromcy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari8fromcy
 @DllImport("OLEAUT32.dll")
 HRESULT VarI8FromCy(CY cyIn, long* pi64Out);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari8fromdate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari8fromdate
 @DllImport("OLEAUT32.dll")
 HRESULT VarI8FromDate(double dateIn, long* pi64Out);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari8fromstr))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari8fromstr
 @DllImport("OLEAUT32.dll")
 HRESULT VarI8FromStr(const(PWSTR) strIn, uint lcid, uint dwFlags, long* pi64Out);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari8fromdisp))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari8fromdisp
 @DllImport("OLEAUT32.dll")
 HRESULT VarI8FromDisp(IDispatch pdispIn, uint lcid, long* pi64Out);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari8frombool))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari8frombool
 @DllImport("OLEAUT32.dll")
 HRESULT VarI8FromBool(VARIANT_BOOL boolIn, long* pi64Out);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari8fromi1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari8fromi1
 @DllImport("OLEAUT32.dll")
 HRESULT VarI8FromI1(CHAR cIn, long* pi64Out);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari8fromui2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari8fromui2
 @DllImport("OLEAUT32.dll")
 HRESULT VarI8FromUI2(ushort uiIn, long* pi64Out);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari8fromui4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari8fromui4
 @DllImport("OLEAUT32.dll")
 HRESULT VarI8FromUI4(uint ulIn, long* pi64Out);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari8fromui8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari8fromui8
 @DllImport("OLEAUT32.dll")
 HRESULT VarI8FromUI8(ulong ui64In, long* pi64Out);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari8fromdec))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari8fromdec
 @DllImport("OLEAUT32.dll")
 HRESULT VarI8FromDec(const(DECIMAL)* pdecIn, long* pi64Out);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr4fromui1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr4fromui1
 @DllImport("OLEAUT32.dll")
 HRESULT VarR4FromUI1(ubyte bIn, float* pfltOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr4fromi2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr4fromi2
 @DllImport("OLEAUT32.dll")
 HRESULT VarR4FromI2(short sIn, float* pfltOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr4fromi4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr4fromi4
 @DllImport("OLEAUT32.dll")
 HRESULT VarR4FromI4(int lIn, float* pfltOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr4fromi8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr4fromi8
 @DllImport("OLEAUT32.dll")
 HRESULT VarR4FromI8(long i64In, float* pfltOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr4fromr8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr4fromr8
 @DllImport("OLEAUT32.dll")
 HRESULT VarR4FromR8(double dblIn, float* pfltOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr4fromcy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr4fromcy
 @DllImport("OLEAUT32.dll")
 HRESULT VarR4FromCy(CY cyIn, float* pfltOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr4fromdate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr4fromdate
 @DllImport("OLEAUT32.dll")
 HRESULT VarR4FromDate(double dateIn, float* pfltOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr4fromstr))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr4fromstr
 @DllImport("OLEAUT32.dll")
 HRESULT VarR4FromStr(const(PWSTR) strIn, uint lcid, uint dwFlags, float* pfltOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr4fromdisp))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr4fromdisp
 @DllImport("OLEAUT32.dll")
 HRESULT VarR4FromDisp(IDispatch pdispIn, uint lcid, float* pfltOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr4frombool))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr4frombool
 @DllImport("OLEAUT32.dll")
 HRESULT VarR4FromBool(VARIANT_BOOL boolIn, float* pfltOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr4fromi1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr4fromi1
 @DllImport("OLEAUT32.dll")
 HRESULT VarR4FromI1(CHAR cIn, float* pfltOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr4fromui2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr4fromui2
 @DllImport("OLEAUT32.dll")
 HRESULT VarR4FromUI2(ushort uiIn, float* pfltOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr4fromui4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr4fromui4
 @DllImport("OLEAUT32.dll")
 HRESULT VarR4FromUI4(uint ulIn, float* pfltOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr4fromui8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr4fromui8
 @DllImport("OLEAUT32.dll")
 HRESULT VarR4FromUI8(ulong ui64In, float* pfltOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr4fromdec))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr4fromdec
 @DllImport("OLEAUT32.dll")
 HRESULT VarR4FromDec(const(DECIMAL)* pdecIn, float* pfltOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr8fromui1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr8fromui1
 @DllImport("OLEAUT32.dll")
 HRESULT VarR8FromUI1(ubyte bIn, double* pdblOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr8fromi2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr8fromi2
 @DllImport("OLEAUT32.dll")
 HRESULT VarR8FromI2(short sIn, double* pdblOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr8fromi4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr8fromi4
 @DllImport("OLEAUT32.dll")
 HRESULT VarR8FromI4(int lIn, double* pdblOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr8fromi8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr8fromi8
 @DllImport("OLEAUT32.dll")
 HRESULT VarR8FromI8(long i64In, double* pdblOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr8fromr4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr8fromr4
 @DllImport("OLEAUT32.dll")
 HRESULT VarR8FromR4(float fltIn, double* pdblOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr8fromcy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr8fromcy
 @DllImport("OLEAUT32.dll")
 HRESULT VarR8FromCy(CY cyIn, double* pdblOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr8fromdate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr8fromdate
 @DllImport("OLEAUT32.dll")
 HRESULT VarR8FromDate(double dateIn, double* pdblOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr8fromstr))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr8fromstr
 @DllImport("OLEAUT32.dll")
 HRESULT VarR8FromStr(const(PWSTR) strIn, uint lcid, uint dwFlags, double* pdblOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr8fromdisp))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr8fromdisp
 @DllImport("OLEAUT32.dll")
 HRESULT VarR8FromDisp(IDispatch pdispIn, uint lcid, double* pdblOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr8frombool))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr8frombool
 @DllImport("OLEAUT32.dll")
 HRESULT VarR8FromBool(VARIANT_BOOL boolIn, double* pdblOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr8fromi1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr8fromi1
 @DllImport("OLEAUT32.dll")
 HRESULT VarR8FromI1(CHAR cIn, double* pdblOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr8fromui2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr8fromui2
 @DllImport("OLEAUT32.dll")
 HRESULT VarR8FromUI2(ushort uiIn, double* pdblOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr8fromui4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr8fromui4
 @DllImport("OLEAUT32.dll")
 HRESULT VarR8FromUI4(uint ulIn, double* pdblOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr8fromui8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr8fromui8
 @DllImport("OLEAUT32.dll")
 HRESULT VarR8FromUI8(ulong ui64In, double* pdblOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr8fromdec))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr8fromdec
 @DllImport("OLEAUT32.dll")
 HRESULT VarR8FromDec(const(DECIMAL)* pdecIn, double* pdblOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardatefromui1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardatefromui1
 @DllImport("OLEAUT32.dll")
 HRESULT VarDateFromUI1(ubyte bIn, double* pdateOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardatefromi2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardatefromi2
 @DllImport("OLEAUT32.dll")
 HRESULT VarDateFromI2(short sIn, double* pdateOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardatefromi4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardatefromi4
 @DllImport("OLEAUT32.dll")
 HRESULT VarDateFromI4(int lIn, double* pdateOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardatefromi8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardatefromi8
 @DllImport("OLEAUT32.dll")
 HRESULT VarDateFromI8(long i64In, double* pdateOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardatefromr4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardatefromr4
 @DllImport("OLEAUT32.dll")
 HRESULT VarDateFromR4(float fltIn, double* pdateOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardatefromr8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardatefromr8
 @DllImport("OLEAUT32.dll")
 HRESULT VarDateFromR8(double dblIn, double* pdateOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardatefromcy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardatefromcy
 @DllImport("OLEAUT32.dll")
 HRESULT VarDateFromCy(CY cyIn, double* pdateOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardatefromstr))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardatefromstr
 @DllImport("OLEAUT32.dll")
 HRESULT VarDateFromStr(const(PWSTR) strIn, uint lcid, uint dwFlags, double* pdateOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardatefromdisp))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardatefromdisp
 @DllImport("OLEAUT32.dll")
 HRESULT VarDateFromDisp(IDispatch pdispIn, uint lcid, double* pdateOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardatefrombool))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardatefrombool
 @DllImport("OLEAUT32.dll")
 HRESULT VarDateFromBool(VARIANT_BOOL boolIn, double* pdateOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardatefromi1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardatefromi1
 @DllImport("OLEAUT32.dll")
 HRESULT VarDateFromI1(CHAR cIn, double* pdateOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardatefromui2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardatefromui2
 @DllImport("OLEAUT32.dll")
 HRESULT VarDateFromUI2(ushort uiIn, double* pdateOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardatefromui4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardatefromui4
 @DllImport("OLEAUT32.dll")
 HRESULT VarDateFromUI4(uint ulIn, double* pdateOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardatefromui8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardatefromui8
 @DllImport("OLEAUT32.dll")
 HRESULT VarDateFromUI8(ulong ui64In, double* pdateOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardatefromdec))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardatefromdec
 @DllImport("OLEAUT32.dll")
 HRESULT VarDateFromDec(const(DECIMAL)* pdecIn, double* pdateOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyfromui1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyfromui1
 @DllImport("OLEAUT32.dll")
 HRESULT VarCyFromUI1(ubyte bIn, CY* pcyOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyfromi2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyfromi2
 @DllImport("OLEAUT32.dll")
 HRESULT VarCyFromI2(short sIn, CY* pcyOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyfromi4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyfromi4
 @DllImport("OLEAUT32.dll")
 HRESULT VarCyFromI4(int lIn, CY* pcyOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyfromi8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyfromi8
 @DllImport("OLEAUT32.dll")
 HRESULT VarCyFromI8(long i64In, CY* pcyOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyfromr4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyfromr4
 @DllImport("OLEAUT32.dll")
 HRESULT VarCyFromR4(float fltIn, CY* pcyOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyfromr8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyfromr8
 @DllImport("OLEAUT32.dll")
 HRESULT VarCyFromR8(double dblIn, CY* pcyOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyfromdate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyfromdate
 @DllImport("OLEAUT32.dll")
 HRESULT VarCyFromDate(double dateIn, CY* pcyOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyfromstr))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyfromstr
 @DllImport("OLEAUT32.dll")
 HRESULT VarCyFromStr(const(PWSTR) strIn, uint lcid, uint dwFlags, CY* pcyOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyfromdisp))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyfromdisp
 @DllImport("OLEAUT32.dll")
 HRESULT VarCyFromDisp(IDispatch pdispIn, uint lcid, CY* pcyOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyfrombool))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyfrombool
 @DllImport("OLEAUT32.dll")
 HRESULT VarCyFromBool(VARIANT_BOOL boolIn, CY* pcyOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyfromi1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyfromi1
 @DllImport("OLEAUT32.dll")
 HRESULT VarCyFromI1(CHAR cIn, CY* pcyOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyfromui2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyfromui2
 @DllImport("OLEAUT32.dll")
 HRESULT VarCyFromUI2(ushort uiIn, CY* pcyOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyfromui4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyfromui4
 @DllImport("OLEAUT32.dll")
 HRESULT VarCyFromUI4(uint ulIn, CY* pcyOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyfromui8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyfromui8
 @DllImport("OLEAUT32.dll")
 HRESULT VarCyFromUI8(ulong ui64In, CY* pcyOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyfromdec))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyfromdec
 @DllImport("OLEAUT32.dll")
 HRESULT VarCyFromDec(const(DECIMAL)* pdecIn, CY* pcyOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varbstrfromui1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varbstrfromui1
 @DllImport("OLEAUT32.dll")
 HRESULT VarBstrFromUI1(ubyte bVal, uint lcid, uint dwFlags, BSTR* pbstrOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varbstrfromi2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varbstrfromi2
 @DllImport("OLEAUT32.dll")
 HRESULT VarBstrFromI2(short iVal, uint lcid, uint dwFlags, BSTR* pbstrOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varbstrfromi4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varbstrfromi4
 @DllImport("OLEAUT32.dll")
 HRESULT VarBstrFromI4(int lIn, uint lcid, uint dwFlags, BSTR* pbstrOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varbstrfromi8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varbstrfromi8
 @DllImport("OLEAUT32.dll")
 HRESULT VarBstrFromI8(long i64In, uint lcid, uint dwFlags, BSTR* pbstrOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varbstrfromr4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varbstrfromr4
 @DllImport("OLEAUT32.dll")
 HRESULT VarBstrFromR4(float fltIn, uint lcid, uint dwFlags, BSTR* pbstrOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varbstrfromr8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varbstrfromr8
 @DllImport("OLEAUT32.dll")
 HRESULT VarBstrFromR8(double dblIn, uint lcid, uint dwFlags, BSTR* pbstrOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varbstrfromcy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varbstrfromcy
 @DllImport("OLEAUT32.dll")
 HRESULT VarBstrFromCy(CY cyIn, uint lcid, uint dwFlags, BSTR* pbstrOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varbstrfromdate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varbstrfromdate
 @DllImport("OLEAUT32.dll")
 HRESULT VarBstrFromDate(double dateIn, uint lcid, uint dwFlags, BSTR* pbstrOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varbstrfromdisp))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varbstrfromdisp
 @DllImport("OLEAUT32.dll")
 HRESULT VarBstrFromDisp(IDispatch pdispIn, uint lcid, uint dwFlags, BSTR* pbstrOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varbstrfrombool))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varbstrfrombool
 @DllImport("OLEAUT32.dll")
 HRESULT VarBstrFromBool(VARIANT_BOOL boolIn, uint lcid, uint dwFlags, BSTR* pbstrOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varbstrfromi1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varbstrfromi1
 @DllImport("OLEAUT32.dll")
 HRESULT VarBstrFromI1(CHAR cIn, uint lcid, uint dwFlags, BSTR* pbstrOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varbstrfromui2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varbstrfromui2
 @DllImport("OLEAUT32.dll")
 HRESULT VarBstrFromUI2(ushort uiIn, uint lcid, uint dwFlags, BSTR* pbstrOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varbstrfromui4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varbstrfromui4
 @DllImport("OLEAUT32.dll")
 HRESULT VarBstrFromUI4(uint ulIn, uint lcid, uint dwFlags, BSTR* pbstrOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varbstrfromui8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varbstrfromui8
 @DllImport("OLEAUT32.dll")
 HRESULT VarBstrFromUI8(ulong ui64In, uint lcid, uint dwFlags, BSTR* pbstrOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varbstrfromdec))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varbstrfromdec
 @DllImport("OLEAUT32.dll")
 HRESULT VarBstrFromDec(const(DECIMAL)* pdecIn, uint lcid, uint dwFlags, BSTR* pbstrOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varboolfromui1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varboolfromui1
 @DllImport("OLEAUT32.dll")
 HRESULT VarBoolFromUI1(ubyte bIn, VARIANT_BOOL* pboolOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varboolfromi2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varboolfromi2
 @DllImport("OLEAUT32.dll")
 HRESULT VarBoolFromI2(short sIn, VARIANT_BOOL* pboolOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varboolfromi4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varboolfromi4
 @DllImport("OLEAUT32.dll")
 HRESULT VarBoolFromI4(int lIn, VARIANT_BOOL* pboolOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varboolfromi8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varboolfromi8
 @DllImport("OLEAUT32.dll")
 HRESULT VarBoolFromI8(long i64In, VARIANT_BOOL* pboolOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varboolfromr4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varboolfromr4
 @DllImport("OLEAUT32.dll")
 HRESULT VarBoolFromR4(float fltIn, VARIANT_BOOL* pboolOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varboolfromr8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varboolfromr8
 @DllImport("OLEAUT32.dll")
 HRESULT VarBoolFromR8(double dblIn, VARIANT_BOOL* pboolOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varboolfromdate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varboolfromdate
 @DllImport("OLEAUT32.dll")
 HRESULT VarBoolFromDate(double dateIn, VARIANT_BOOL* pboolOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varboolfromcy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varboolfromcy
 @DllImport("OLEAUT32.dll")
 HRESULT VarBoolFromCy(CY cyIn, VARIANT_BOOL* pboolOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varboolfromstr))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varboolfromstr
 @DllImport("OLEAUT32.dll")
 HRESULT VarBoolFromStr(const(PWSTR) strIn, uint lcid, uint dwFlags, VARIANT_BOOL* pboolOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varboolfromdisp))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varboolfromdisp
 @DllImport("OLEAUT32.dll")
 HRESULT VarBoolFromDisp(IDispatch pdispIn, uint lcid, VARIANT_BOOL* pboolOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varboolfromi1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varboolfromi1
 @DllImport("OLEAUT32.dll")
 HRESULT VarBoolFromI1(CHAR cIn, VARIANT_BOOL* pboolOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varboolfromui2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varboolfromui2
 @DllImport("OLEAUT32.dll")
 HRESULT VarBoolFromUI2(ushort uiIn, VARIANT_BOOL* pboolOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varboolfromui4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varboolfromui4
 @DllImport("OLEAUT32.dll")
 HRESULT VarBoolFromUI4(uint ulIn, VARIANT_BOOL* pboolOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varboolfromui8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varboolfromui8
 @DllImport("OLEAUT32.dll")
 HRESULT VarBoolFromUI8(ulong i64In, VARIANT_BOOL* pboolOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varboolfromdec))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varboolfromdec
 @DllImport("OLEAUT32.dll")
 HRESULT VarBoolFromDec(const(DECIMAL)* pdecIn, VARIANT_BOOL* pboolOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari1fromui1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari1fromui1
 @DllImport("OLEAUT32.dll")
 HRESULT VarI1FromUI1(ubyte bIn, PSTR pcOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari1fromi2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari1fromi2
 @DllImport("OLEAUT32.dll")
 HRESULT VarI1FromI2(short uiIn, PSTR pcOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari1fromi4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari1fromi4
 @DllImport("OLEAUT32.dll")
 HRESULT VarI1FromI4(int lIn, PSTR pcOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari1fromi8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari1fromi8
 @DllImport("OLEAUT32.dll")
 HRESULT VarI1FromI8(long i64In, PSTR pcOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari1fromr4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari1fromr4
 @DllImport("OLEAUT32.dll")
 HRESULT VarI1FromR4(float fltIn, PSTR pcOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari1fromr8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari1fromr8
 @DllImport("OLEAUT32.dll")
 HRESULT VarI1FromR8(double dblIn, PSTR pcOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari1fromdate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari1fromdate
 @DllImport("OLEAUT32.dll")
 HRESULT VarI1FromDate(double dateIn, PSTR pcOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari1fromcy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari1fromcy
 @DllImport("OLEAUT32.dll")
 HRESULT VarI1FromCy(CY cyIn, PSTR pcOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari1fromstr))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari1fromstr
 @DllImport("OLEAUT32.dll")
 HRESULT VarI1FromStr(const(PWSTR) strIn, uint lcid, uint dwFlags, PSTR pcOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari1fromdisp))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari1fromdisp
 @DllImport("OLEAUT32.dll")
 HRESULT VarI1FromDisp(IDispatch pdispIn, uint lcid, PSTR pcOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari1frombool))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari1frombool
 @DllImport("OLEAUT32.dll")
 HRESULT VarI1FromBool(VARIANT_BOOL boolIn, PSTR pcOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari1fromui2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari1fromui2
 @DllImport("OLEAUT32.dll")
 HRESULT VarI1FromUI2(ushort uiIn, PSTR pcOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari1fromui4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari1fromui4
 @DllImport("OLEAUT32.dll")
 HRESULT VarI1FromUI4(uint ulIn, PSTR pcOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari1fromui8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari1fromui8
 @DllImport("OLEAUT32.dll")
 HRESULT VarI1FromUI8(ulong i64In, PSTR pcOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari1fromdec))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vari1fromdec
 @DllImport("OLEAUT32.dll")
 HRESULT VarI1FromDec(const(DECIMAL)* pdecIn, PSTR pcOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui2fromui1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui2fromui1
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI2FromUI1(ubyte bIn, ushort* puiOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui2fromi2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui2fromi2
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI2FromI2(short uiIn, ushort* puiOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui2fromi4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui2fromi4
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI2FromI4(int lIn, ushort* puiOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui2fromi8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui2fromi8
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI2FromI8(long i64In, ushort* puiOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui2fromr4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui2fromr4
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI2FromR4(float fltIn, ushort* puiOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui2fromr8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui2fromr8
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI2FromR8(double dblIn, ushort* puiOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui2fromdate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui2fromdate
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI2FromDate(double dateIn, ushort* puiOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui2fromcy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui2fromcy
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI2FromCy(CY cyIn, ushort* puiOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui2fromstr))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui2fromstr
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI2FromStr(const(PWSTR) strIn, uint lcid, uint dwFlags, ushort* puiOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui2fromdisp))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui2fromdisp
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI2FromDisp(IDispatch pdispIn, uint lcid, ushort* puiOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui2frombool))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui2frombool
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI2FromBool(VARIANT_BOOL boolIn, ushort* puiOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui2fromi1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui2fromi1
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI2FromI1(CHAR cIn, ushort* puiOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui2fromui4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui2fromui4
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI2FromUI4(uint ulIn, ushort* puiOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui2fromui8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui2fromui8
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI2FromUI8(ulong i64In, ushort* puiOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui2fromdec))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui2fromdec
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI2FromDec(const(DECIMAL)* pdecIn, ushort* puiOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui4fromui1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui4fromui1
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI4FromUI1(ubyte bIn, uint* pulOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui4fromi2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui4fromi2
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI4FromI2(short uiIn, uint* pulOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui4fromi4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui4fromi4
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI4FromI4(int lIn, uint* pulOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui4fromi8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui4fromi8
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI4FromI8(long i64In, uint* plOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui4fromr4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui4fromr4
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI4FromR4(float fltIn, uint* pulOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui4fromr8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui4fromr8
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI4FromR8(double dblIn, uint* pulOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui4fromdate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui4fromdate
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI4FromDate(double dateIn, uint* pulOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui4fromcy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui4fromcy
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI4FromCy(CY cyIn, uint* pulOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui4fromstr))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui4fromstr
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI4FromStr(const(PWSTR) strIn, uint lcid, uint dwFlags, uint* pulOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui4fromdisp))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui4fromdisp
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI4FromDisp(IDispatch pdispIn, uint lcid, uint* pulOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui4frombool))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui4frombool
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI4FromBool(VARIANT_BOOL boolIn, uint* pulOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui4fromi1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui4fromi1
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI4FromI1(CHAR cIn, uint* pulOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui4fromui2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui4fromui2
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI4FromUI2(ushort uiIn, uint* pulOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui4fromui8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui4fromui8
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI4FromUI8(ulong ui64In, uint* plOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui4fromdec))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui4fromdec
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI4FromDec(const(DECIMAL)* pdecIn, uint* pulOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui8fromui1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui8fromui1
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI8FromUI1(ubyte bIn, ulong* pi64Out);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui8fromi2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui8fromi2
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI8FromI2(short sIn, ulong* pi64Out);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui8fromi8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui8fromi8
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI8FromI8(long ui64In, ulong* pi64Out);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui8fromr4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui8fromr4
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI8FromR4(float fltIn, ulong* pi64Out);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui8fromr8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui8fromr8
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI8FromR8(double dblIn, ulong* pi64Out);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui8fromcy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui8fromcy
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI8FromCy(CY cyIn, ulong* pi64Out);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui8fromdate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui8fromdate
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI8FromDate(double dateIn, ulong* pi64Out);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui8fromstr))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui8fromstr
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI8FromStr(const(PWSTR) strIn, uint lcid, uint dwFlags, ulong* pi64Out);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui8fromdisp))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui8fromdisp
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI8FromDisp(IDispatch pdispIn, uint lcid, ulong* pi64Out);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui8frombool))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui8frombool
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI8FromBool(VARIANT_BOOL boolIn, ulong* pi64Out);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui8fromi1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui8fromi1
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI8FromI1(CHAR cIn, ulong* pi64Out);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui8fromui2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui8fromui2
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI8FromUI2(ushort uiIn, ulong* pi64Out);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui8fromui4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui8fromui4
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI8FromUI4(uint ulIn, ulong* pi64Out);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui8fromdec))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varui8fromdec
 @DllImport("OLEAUT32.dll")
 HRESULT VarUI8FromDec(const(DECIMAL)* pdecIn, ulong* pi64Out);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecfromui1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecfromui1
 @DllImport("OLEAUT32.dll")
 HRESULT VarDecFromUI1(ubyte bIn, DECIMAL* pdecOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecfromi2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecfromi2
 @DllImport("OLEAUT32.dll")
 HRESULT VarDecFromI2(short uiIn, DECIMAL* pdecOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecfromi4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecfromi4
 @DllImport("OLEAUT32.dll")
 HRESULT VarDecFromI4(int lIn, DECIMAL* pdecOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecfromi8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecfromi8
 @DllImport("OLEAUT32.dll")
 HRESULT VarDecFromI8(long i64In, DECIMAL* pdecOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecfromr4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecfromr4
 @DllImport("OLEAUT32.dll")
 HRESULT VarDecFromR4(float fltIn, DECIMAL* pdecOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecfromr8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecfromr8
 @DllImport("OLEAUT32.dll")
 HRESULT VarDecFromR8(double dblIn, DECIMAL* pdecOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecfromdate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecfromdate
 @DllImport("OLEAUT32.dll")
 HRESULT VarDecFromDate(double dateIn, DECIMAL* pdecOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecfromcy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecfromcy
 @DllImport("OLEAUT32.dll")
 HRESULT VarDecFromCy(CY cyIn, DECIMAL* pdecOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecfromstr))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecfromstr
 @DllImport("OLEAUT32.dll")
 HRESULT VarDecFromStr(const(PWSTR) strIn, uint lcid, uint dwFlags, DECIMAL* pdecOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecfromdisp))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecfromdisp
 @DllImport("OLEAUT32.dll")
 HRESULT VarDecFromDisp(IDispatch pdispIn, uint lcid, DECIMAL* pdecOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecfrombool))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecfrombool
 @DllImport("OLEAUT32.dll")
 HRESULT VarDecFromBool(VARIANT_BOOL boolIn, DECIMAL* pdecOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecfromi1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecfromi1
 @DllImport("OLEAUT32.dll")
 HRESULT VarDecFromI1(CHAR cIn, DECIMAL* pdecOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecfromui2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecfromui2
 @DllImport("OLEAUT32.dll")
 HRESULT VarDecFromUI2(ushort uiIn, DECIMAL* pdecOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecfromui4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecfromui4
 @DllImport("OLEAUT32.dll")
 HRESULT VarDecFromUI4(uint ulIn, DECIMAL* pdecOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecfromui8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecfromui8
 @DllImport("OLEAUT32.dll")
 HRESULT VarDecFromUI8(ulong ui64In, DECIMAL* pdecOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varparsenumfromstr))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varparsenumfromstr
 @DllImport("OLEAUT32.dll")
 HRESULT VarParseNumFromStr(const(PWSTR) strIn, uint lcid, uint dwFlags, NUMPARSE* pnumprs, ubyte* rgbDig);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varnumfromparsenum))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varnumfromparsenum
 @DllImport("OLEAUT32.dll")
 HRESULT VarNumFromParseNum(NUMPARSE* pnumprs, ubyte* rgbDig, uint dwVtBits, VARIANT* pvar);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varadd))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varadd
 @DllImport("OLEAUT32.dll")
 HRESULT VarAdd(VARIANT* pvarLeft, VARIANT* pvarRight, VARIANT* pvarResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varand))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varand
 @DllImport("OLEAUT32.dll")
 HRESULT VarAnd(VARIANT* pvarLeft, VARIANT* pvarRight, VARIANT* pvarResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcat))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcat
 @DllImport("OLEAUT32.dll")
 HRESULT VarCat(VARIANT* pvarLeft, VARIANT* pvarRight, VARIANT* pvarResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardiv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardiv
 @DllImport("OLEAUT32.dll")
 HRESULT VarDiv(VARIANT* pvarLeft, VARIANT* pvarRight, VARIANT* pvarResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vareqv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vareqv
 @DllImport("OLEAUT32.dll")
 HRESULT VarEqv(VARIANT* pvarLeft, VARIANT* pvarRight, VARIANT* pvarResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varidiv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varidiv
 @DllImport("OLEAUT32.dll")
 HRESULT VarIdiv(VARIANT* pvarLeft, VARIANT* pvarRight, VARIANT* pvarResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varimp))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varimp
 @DllImport("OLEAUT32.dll")
 HRESULT VarImp(VARIANT* pvarLeft, VARIANT* pvarRight, VARIANT* pvarResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varmod))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varmod
 @DllImport("OLEAUT32.dll")
 HRESULT VarMod(VARIANT* pvarLeft, VARIANT* pvarRight, VARIANT* pvarResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varmul))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varmul
 @DllImport("OLEAUT32.dll")
 HRESULT VarMul(VARIANT* pvarLeft, VARIANT* pvarRight, VARIANT* pvarResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varor
 @DllImport("OLEAUT32.dll")
 HRESULT VarOr(VARIANT* pvarLeft, VARIANT* pvarRight, VARIANT* pvarResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varpow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varpow
 @DllImport("OLEAUT32.dll")
 HRESULT VarPow(VARIANT* pvarLeft, VARIANT* pvarRight, VARIANT* pvarResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varsub))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varsub
 @DllImport("OLEAUT32.dll")
 HRESULT VarSub(VARIANT* pvarLeft, VARIANT* pvarRight, VARIANT* pvarResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varxor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varxor
 @DllImport("OLEAUT32.dll")
 HRESULT VarXor(VARIANT* pvarLeft, VARIANT* pvarRight, VARIANT* pvarResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varabs))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varabs
 @DllImport("OLEAUT32.dll")
 HRESULT VarAbs(VARIANT* pvarIn, VARIANT* pvarResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varfix))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varfix
 @DllImport("OLEAUT32.dll")
 HRESULT VarFix(VARIANT* pvarIn, VARIANT* pvarResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varint))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varint
 @DllImport("OLEAUT32.dll")
 HRESULT VarInt(VARIANT* pvarIn, VARIANT* pvarResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varneg))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varneg
 @DllImport("OLEAUT32.dll")
 HRESULT VarNeg(VARIANT* pvarIn, VARIANT* pvarResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varnot))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varnot
 @DllImport("OLEAUT32.dll")
 HRESULT VarNot(VARIANT* pvarIn, VARIANT* pvarResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varround))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varround
 @DllImport("OLEAUT32.dll")
 HRESULT VarRound(VARIANT* pvarIn, int cDecimals, VARIANT* pvarResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcmp))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcmp
 @DllImport("OLEAUT32.dll")
 VARCMP VarCmp(VARIANT* pvarLeft, VARIANT* pvarRight, uint lcid, uint dwFlags);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecadd))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecadd
 @DllImport("OLEAUT32.dll")
 HRESULT VarDecAdd(DECIMAL* pdecLeft, DECIMAL* pdecRight, DECIMAL* pdecResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecdiv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecdiv
 @DllImport("OLEAUT32.dll")
 HRESULT VarDecDiv(DECIMAL* pdecLeft, DECIMAL* pdecRight, DECIMAL* pdecResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecmul))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecmul
 @DllImport("OLEAUT32.dll")
 HRESULT VarDecMul(DECIMAL* pdecLeft, DECIMAL* pdecRight, DECIMAL* pdecResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecsub))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecsub
 @DllImport("OLEAUT32.dll")
 HRESULT VarDecSub(DECIMAL* pdecLeft, DECIMAL* pdecRight, DECIMAL* pdecResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecabs))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecabs
 @DllImport("OLEAUT32.dll")
 HRESULT VarDecAbs(DECIMAL* pdecIn, DECIMAL* pdecResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecfix))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecfix
 @DllImport("OLEAUT32.dll")
 HRESULT VarDecFix(DECIMAL* pdecIn, DECIMAL* pdecResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecint))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecint
 @DllImport("OLEAUT32.dll")
 HRESULT VarDecInt(DECIMAL* pdecIn, DECIMAL* pdecResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecneg))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecneg
 @DllImport("OLEAUT32.dll")
 HRESULT VarDecNeg(DECIMAL* pdecIn, DECIMAL* pdecResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecround))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardecround
 @DllImport("OLEAUT32.dll")
 HRESULT VarDecRound(DECIMAL* pdecIn, int cDecimals, DECIMAL* pdecResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardeccmp))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardeccmp
 @DllImport("OLEAUT32.dll")
 VARCMP VarDecCmp(DECIMAL* pdecLeft, DECIMAL* pdecRight);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardeccmpr8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardeccmpr8
 @DllImport("OLEAUT32.dll")
 VARCMP VarDecCmpR8(DECIMAL* pdecLeft, double dblRight);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyadd))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyadd
 @DllImport("OLEAUT32.dll")
 HRESULT VarCyAdd(CY cyLeft, CY cyRight, CY* pcyResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcymul))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcymul
 @DllImport("OLEAUT32.dll")
 HRESULT VarCyMul(CY cyLeft, CY cyRight, CY* pcyResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcymuli4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcymuli4
 @DllImport("OLEAUT32.dll")
 HRESULT VarCyMulI4(CY cyLeft, int lRight, CY* pcyResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcymuli8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcymuli8
 @DllImport("OLEAUT32.dll")
 HRESULT VarCyMulI8(CY cyLeft, long lRight, CY* pcyResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcysub))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcysub
 @DllImport("OLEAUT32.dll")
 HRESULT VarCySub(CY cyLeft, CY cyRight, CY* pcyResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyabs))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyabs
 @DllImport("OLEAUT32.dll")
 HRESULT VarCyAbs(CY cyIn, CY* pcyResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyfix))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyfix
 @DllImport("OLEAUT32.dll")
 HRESULT VarCyFix(CY cyIn, CY* pcyResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyint))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyint
 @DllImport("OLEAUT32.dll")
 HRESULT VarCyInt(CY cyIn, CY* pcyResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyneg))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyneg
 @DllImport("OLEAUT32.dll")
 HRESULT VarCyNeg(CY cyIn, CY* pcyResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyround))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcyround
 @DllImport("OLEAUT32.dll")
 HRESULT VarCyRound(CY cyIn, int cDecimals, CY* pcyResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcycmp))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcycmp
 @DllImport("OLEAUT32.dll")
 VARCMP VarCyCmp(CY cyLeft, CY cyRight);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcycmpr8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varcycmpr8
 @DllImport("OLEAUT32.dll")
 VARCMP VarCyCmpR8(CY cyLeft, double dblRight);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varbstrcat))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varbstrcat
 @DllImport("OLEAUT32.dll")
 HRESULT VarBstrCat(BSTR bstrLeft, BSTR bstrRight, BSTR* pbstrResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varbstrcmp))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varbstrcmp
 @DllImport("OLEAUT32.dll")
 HRESULT VarBstrCmp(BSTR bstrLeft, BSTR bstrRight, uint lcid, uint dwFlags);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr8pow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr8pow
 @DllImport("OLEAUT32.dll")
 HRESULT VarR8Pow(double dblLeft, double dblRight, double* pdblResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr4cmpr8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr4cmpr8
 @DllImport("OLEAUT32.dll")
 VARCMP VarR4CmpR8(float fltLeft, double dblRight);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr8round))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varr8round
 @DllImport("OLEAUT32.dll")
 HRESULT VarR8Round(double dblIn, int cDecimals, double* pdblResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardatefromudate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardatefromudate
 @DllImport("OLEAUT32.dll")
 HRESULT VarDateFromUdate(UDATE* pudateIn, uint dwFlags, double* pdateOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardatefromudateex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vardatefromudateex
 @DllImport("OLEAUT32.dll")
 HRESULT VarDateFromUdateEx(UDATE* pudateIn, uint lcid, uint dwFlags, double* pdateOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varudatefromdate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varudatefromdate
 @DllImport("OLEAUT32.dll")
 HRESULT VarUdateFromDate(double dateIn, uint dwFlags, UDATE* pudateOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-getaltmonthnames))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-getaltmonthnames
 @DllImport("OLEAUT32.dll")
 HRESULT GetAltMonthNames(uint lcid, PWSTR** prgp);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varformat))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varformat
 @DllImport("OLEAUT32.dll")
 HRESULT VarFormat(VARIANT* pvarIn, PWSTR pstrFormat, VARFORMAT_FIRST_DAY iFirstDay, 
                   VARFORMAT_FIRST_WEEK iFirstWeek, uint dwFlags, BSTR* pbstrOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varformatdatetime))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varformatdatetime
 @DllImport("OLEAUT32.dll")
 HRESULT VarFormatDateTime(VARIANT* pvarIn, VARFORMAT_NAMED_FORMAT iNamedFormat, uint dwFlags, BSTR* pbstrOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varformatnumber))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varformatnumber
 @DllImport("OLEAUT32.dll")
 HRESULT VarFormatNumber(VARIANT* pvarIn, int iNumDig, VARFORMAT_LEADING_DIGIT iIncLead, 
                         VARFORMAT_PARENTHESES iUseParens, VARFORMAT_GROUP iGroup, uint dwFlags, BSTR* pbstrOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varformatpercent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varformatpercent
 @DllImport("OLEAUT32.dll")
 HRESULT VarFormatPercent(VARIANT* pvarIn, int iNumDig, VARFORMAT_LEADING_DIGIT iIncLead, 
                          VARFORMAT_PARENTHESES iUseParens, VARFORMAT_GROUP iGroup, uint dwFlags, BSTR* pbstrOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varformatcurrency))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varformatcurrency
 @DllImport("OLEAUT32.dll")
 HRESULT VarFormatCurrency(VARIANT* pvarIn, int iNumDig, int iIncLead, int iUseParens, int iGroup, uint dwFlags, 
                           BSTR* pbstrOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varweekdayname))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varweekdayname
 @DllImport("OLEAUT32.dll")
 HRESULT VarWeekdayName(int iWeekday, int fAbbrev, int iFirstDay, uint dwFlags, BSTR* pbstrOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varmonthname))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varmonthname
 @DllImport("OLEAUT32.dll")
 HRESULT VarMonthName(int iMonth, int fAbbrev, uint dwFlags, BSTR* pbstrOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varformatfromtokens))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varformatfromtokens
 @DllImport("OLEAUT32.dll")
 HRESULT VarFormatFromTokens(VARIANT* pvarIn, PWSTR pstrFormat, ubyte* pbTokCur, uint dwFlags, BSTR* pbstrOut, 
                             uint lcid);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vartokenizeformatstring))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-vartokenizeformatstring
 @DllImport("OLEAUT32.dll")
 HRESULT VarTokenizeFormatString(PWSTR pstrFormat, ubyte* rgbTok, int cbTok, VARFORMAT_FIRST_DAY iFirstDay, 
                                 VARFORMAT_FIRST_WEEK iFirstWeek, uint lcid, int* pcbActual);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-lhashvalofnamesysa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-lhashvalofnamesysa
 @DllImport("OLEAUT32.dll")
 uint LHashValOfNameSysA(SYSKIND syskind, uint lcid, const(PSTR) szName);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-lhashvalofnamesys))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-lhashvalofnamesys
 @DllImport("OLEAUT32.dll")
 uint LHashValOfNameSys(SYSKIND syskind, uint lcid, const(PWSTR) szName);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-loadtypelib))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-loadtypelib
 @DllImport("OLEAUT32.dll")
 HRESULT LoadTypeLib(const(PWSTR) szFile, ITypeLib* pptlib);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-loadtypelibex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-loadtypelibex
 @DllImport("OLEAUT32.dll")
 HRESULT LoadTypeLibEx(const(PWSTR) szFile, REGKIND regkind, ITypeLib* pptlib);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-loadregtypelib))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-loadregtypelib
 @DllImport("OLEAUT32.dll")
 HRESULT LoadRegTypeLib(const(GUID)* rguid, ushort wVerMajor, ushort wVerMinor, uint lcid, ITypeLib* pptlib);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-querypathofregtypelib))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-querypathofregtypelib
 @DllImport("OLEAUT32.dll")
 HRESULT QueryPathOfRegTypeLib(const(GUID)* guid, ushort wMaj, ushort wMin, uint lcid, BSTR* lpbstrPathName);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-registertypelib))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-registertypelib
 @DllImport("OLEAUT32.dll")
 HRESULT RegisterTypeLib(ITypeLib ptlib, const(PWSTR) szFullPath, const(PWSTR) szHelpDir);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-unregistertypelib))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-unregistertypelib
 @DllImport("OLEAUT32.dll")
 HRESULT UnRegisterTypeLib(const(GUID)* libID, ushort wVerMajor, ushort wVerMinor, uint lcid, SYSKIND syskind);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-registertypelibforuser))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-registertypelibforuser
 @DllImport("OLEAUT32.dll")
 HRESULT RegisterTypeLibForUser(ITypeLib ptlib, PWSTR szFullPath, PWSTR szHelpDir);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-unregistertypelibforuser))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-unregistertypelibforuser
 @DllImport("OLEAUT32.dll")
 HRESULT UnRegisterTypeLibForUser(const(GUID)* libID, ushort wMajorVerNum, ushort wMinorVerNum, uint lcid, 
                                  SYSKIND syskind);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-createtypelib))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-createtypelib
 @DllImport("OLEAUT32.dll")
 HRESULT CreateTypeLib(SYSKIND syskind, const(PWSTR) szFile, ICreateTypeLib* ppctlib);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-createtypelib2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-createtypelib2
 @DllImport("OLEAUT32.dll")
 HRESULT CreateTypeLib2(SYSKIND syskind, const(PWSTR) szFile, ICreateTypeLib2* ppctlib);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-dispgetparam))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-dispgetparam
 @DllImport("OLEAUT32.dll")
 HRESULT DispGetParam(DISPPARAMS* pdispparams, uint position, VARENUM vtTarg, VARIANT* pvarResult, uint* puArgErr);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-dispgetidsofnames))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-dispgetidsofnames
 @DllImport("OLEAUT32.dll")
 HRESULT DispGetIDsOfNames(ITypeInfo ptinfo, PWSTR* rgszNames, uint cNames, int* rgdispid);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-dispinvoke))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-dispinvoke
 @DllImport("OLEAUT32.dll")
 HRESULT DispInvoke(void* _this, ITypeInfo ptinfo, int dispidMember, ushort wFlags, DISPPARAMS* pparams, 
                    VARIANT* pvarResult, EXCEPINFO* pexcepinfo, uint* puArgErr);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-createdisptypeinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-createdisptypeinfo
 @DllImport("OLEAUT32.dll")
 HRESULT CreateDispTypeInfo(INTERFACEDATA* pidata, uint lcid, ITypeInfo* pptinfo);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-createstddispatch))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-createstddispatch
 @DllImport("OLEAUT32.dll")
 HRESULT CreateStdDispatch(IUnknown punkOuter, void* pvThis, ITypeInfo ptinfo, IUnknown* ppunkStdDisp);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-dispcallfunc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-dispcallfunc
 @DllImport("OLEAUT32.dll")
 HRESULT DispCallFunc(void* pvInstance, size_t oVft, CALLCONV cc, VARENUM vtReturn, uint cActuals, ushort* prgvt, 
                      VARIANT** prgpvarg, VARIANT* pvargResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-registeractiveobject))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-registeractiveobject
 @DllImport("OLEAUT32.dll")
 HRESULT RegisterActiveObject(IUnknown punk, const(GUID)* rclsid, ACTIVEOBJECT_FLAGS dwFlags, uint* pdwRegister);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-revokeactiveobject))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-revokeactiveobject
 @DllImport("OLEAUT32.dll")
 HRESULT RevokeActiveObject(uint dwRegister, 
                            /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* pvReserved);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-getactiveobject))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-getactiveobject
 @DllImport("OLEAUT32.dll")
 HRESULT GetActiveObject(const(GUID)* rclsid, 
                         /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* pvReserved, 
                         IUnknown* ppunk);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-createerrorinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-createerrorinfo
 @DllImport("OLEAUT32.dll")
 HRESULT CreateErrorInfo(ICreateErrorInfo* pperrinfo);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-getrecordinfofromtypeinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-getrecordinfofromtypeinfo
 @DllImport("OLEAUT32.dll")
 HRESULT GetRecordInfoFromTypeInfo(ITypeInfo pTypeInfo, IRecordInfo* ppRecInfo);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-getrecordinfofromguids))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-getrecordinfofromguids
 @DllImport("OLEAUT32.dll")
 HRESULT GetRecordInfoFromGuids(const(GUID)* rGuidTypeLib, uint uVerMajor, uint uVerMinor, uint lcid, 
                                const(GUID)* rGuidTypeInfo, IRecordInfo* ppRecInfo);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-oabuildversion))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-oabuildversion
 @DllImport("OLEAUT32.dll")
 uint OaBuildVersion();
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-clearcustdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-clearcustdata
 @DllImport("OLEAUT32.dll")
 void ClearCustData(CUSTDATA* pCustData);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-oaenableperusertlibregistration))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-oaenableperusertlibregistration
 @DllImport("OLEAUT32.dll")
 void OaEnablePerUserTLibRegistration();
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ole2/nf-ole2-olebuildversion))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ole2/nf-ole2-olebuildversion
 @DllImport("ole32.dll")
 uint OleBuildVersion();
 
@@ -4382,16 +4545,16 @@ HRESULT OleLoadPicturePath(PWSTR szURLorPath, IUnknown punkCaller,
                            /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint dwReserved, 
                            uint clrReserved, const(GUID)* riid, void** ppvRet);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/olectl/nf-olectl-oleloadpicturefile))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/olectl/nf-olectl-oleloadpicturefile
 @DllImport("OLEAUT32.dll")
 HRESULT OleLoadPictureFile(VARIANT varFileName, IDispatch* lplpdispPicture);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/olectl/nf-olectl-oleloadpicturefileex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/olectl/nf-olectl-oleloadpicturefileex
 @DllImport("OLEAUT32.dll")
 HRESULT OleLoadPictureFileEx(VARIANT varFileName, uint xSizeDesired, uint ySizeDesired, LOAD_PICTURE_FLAGS dwFlags, 
                              IDispatch* lplpdispPicture);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/olectl/nf-olectl-olesavepicturefile))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/olectl/nf-olectl-olesavepicturefile
 @DllImport("OLEAUT32.dll")
 HRESULT OleSavePictureFile(IDispatch lpdispPicture, BSTR bstrFileName);
 
@@ -4497,167 +4660,167 @@ BOOL OleUIUpdateLinksA(IOleUILinkContainerA lpOleUILinkCntr, HWND hwndParent, PS
 // Interfaces
 
 @GUID("00020405-0000-0000-c000-000000000046")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nn-oaidl-icreatetypeinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nn-oaidl-icreatetypeinfo
 interface ICreateTypeInfo : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-setguid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-setguid
     HRESULT SetGuid(const(GUID)* guid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-settypeflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-settypeflags
     HRESULT SetTypeFlags(uint uTypeFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-setdocstring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-setdocstring
     HRESULT SetDocString(PWSTR pStrDoc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-sethelpcontext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-sethelpcontext
     HRESULT SetHelpContext(uint dwHelpContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-setversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-setversion
     HRESULT SetVersion(ushort wMajorVerNum, ushort wMinorVerNum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-addreftypeinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-addreftypeinfo
     HRESULT AddRefTypeInfo(ITypeInfo pTInfo, uint* phRefType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-addfuncdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-addfuncdesc
     HRESULT AddFuncDesc(uint index, FUNCDESC* pFuncDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-addimpltype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-addimpltype
     HRESULT AddImplType(uint index, uint hRefType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-setimpltypeflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-setimpltypeflags
     HRESULT SetImplTypeFlags(uint index, IMPLTYPEFLAGS implTypeFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-setalignment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-setalignment
     HRESULT SetAlignment(ushort cbAlignment);
     HRESULT SetSchema(PWSTR pStrSchema);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-addvardesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-addvardesc
     HRESULT AddVarDesc(uint index, VARDESC* pVarDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-setfuncandparamnames))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-setfuncandparamnames
     HRESULT SetFuncAndParamNames(uint index, PWSTR* rgszNames, uint cNames);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-setvarname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-setvarname
     HRESULT SetVarName(uint index, PWSTR szName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-settypedescalias))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-settypedescalias
     HRESULT SetTypeDescAlias(TYPEDESC* pTDescAlias);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-definefuncasdllentry))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-definefuncasdllentry
     HRESULT DefineFuncAsDllEntry(uint index, PWSTR szDllName, PWSTR szProcName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-setfuncdocstring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-setfuncdocstring
     HRESULT SetFuncDocString(uint index, PWSTR szDocString);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-setvardocstring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-setvardocstring
     HRESULT SetVarDocString(uint index, PWSTR szDocString);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-setfunchelpcontext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-setfunchelpcontext
     HRESULT SetFuncHelpContext(uint index, uint dwHelpContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-setvarhelpcontext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-setvarhelpcontext
     HRESULT SetVarHelpContext(uint index, uint dwHelpContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-setmops))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-setmops
     HRESULT SetMops(uint index, BSTR bstrMops);
     HRESULT SetTypeIdldesc(IDLDESC* pIdlDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-layout))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo-layout
     HRESULT LayOut();
 }
 
 @GUID("0002040e-0000-0000-c000-000000000046")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nn-oaidl-icreatetypeinfo2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nn-oaidl-icreatetypeinfo2
 interface ICreateTypeInfo2 : ICreateTypeInfo
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo2-deletefuncdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo2-deletefuncdesc
     HRESULT DeleteFuncDesc(uint index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo2-deletefuncdescbymemid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo2-deletefuncdescbymemid
     HRESULT DeleteFuncDescByMemId(int memid, INVOKEKIND invKind);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo2-deletevardesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo2-deletevardesc
     HRESULT DeleteVarDesc(uint index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo2-deletevardescbymemid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo2-deletevardescbymemid
     HRESULT DeleteVarDescByMemId(int memid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo2-deleteimpltype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo2-deleteimpltype
     HRESULT DeleteImplType(uint index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo2-setcustdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo2-setcustdata
     HRESULT SetCustData(const(GUID)* guid, VARIANT* pVarVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo2-setfunccustdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo2-setfunccustdata
     HRESULT SetFuncCustData(uint index, const(GUID)* guid, VARIANT* pVarVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo2-setparamcustdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo2-setparamcustdata
     HRESULT SetParamCustData(uint indexFunc, uint indexParam, const(GUID)* guid, VARIANT* pVarVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo2-setvarcustdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo2-setvarcustdata
     HRESULT SetVarCustData(uint index, const(GUID)* guid, VARIANT* pVarVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo2-setimpltypecustdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo2-setimpltypecustdata
     HRESULT SetImplTypeCustData(uint index, const(GUID)* guid, VARIANT* pVarVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo2-sethelpstringcontext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo2-sethelpstringcontext
     HRESULT SetHelpStringContext(uint dwHelpStringContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo2-setfunchelpstringcontext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo2-setfunchelpstringcontext
     HRESULT SetFuncHelpStringContext(uint index, uint dwHelpStringContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo2-setvarhelpstringcontext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo2-setvarhelpstringcontext
     HRESULT SetVarHelpStringContext(uint index, uint dwHelpStringContext);
     HRESULT Invalidate();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo2-setname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypeinfo2-setname
     HRESULT SetName(PWSTR szName);
 }
 
 @GUID("00020406-0000-0000-c000-000000000046")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nn-oaidl-icreatetypelib))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nn-oaidl-icreatetypelib
 interface ICreateTypeLib : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypelib-createtypeinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypelib-createtypeinfo
     HRESULT CreateTypeInfo(PWSTR szName, TYPEKIND tkind, ICreateTypeInfo* ppCTInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypelib-setname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypelib-setname
     HRESULT SetName(PWSTR szName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypelib-setversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypelib-setversion
     HRESULT SetVersion(ushort wMajorVerNum, ushort wMinorVerNum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypelib-setguid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypelib-setguid
     HRESULT SetGuid(const(GUID)* guid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypelib-setdocstring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypelib-setdocstring
     HRESULT SetDocString(PWSTR szDoc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypelib-sethelpfilename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypelib-sethelpfilename
     HRESULT SetHelpFileName(PWSTR szHelpFileName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypelib-sethelpcontext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypelib-sethelpcontext
     HRESULT SetHelpContext(uint dwHelpContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypelib-setlcid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypelib-setlcid
     HRESULT SetLcid(uint lcid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypelib-setlibflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypelib-setlibflags
     HRESULT SetLibFlags(uint uLibFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypelib-saveallchanges))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypelib-saveallchanges
     HRESULT SaveAllChanges();
 }
 
 @GUID("0002040f-0000-0000-c000-000000000046")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nn-oaidl-icreatetypelib2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nn-oaidl-icreatetypelib2
 interface ICreateTypeLib2 : ICreateTypeLib
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypelib2-deletetypeinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypelib2-deletetypeinfo
     HRESULT DeleteTypeInfo(PWSTR szName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypelib2-setcustdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypelib2-setcustdata
     HRESULT SetCustData(const(GUID)* guid, VARIANT* pVarVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypelib2-sethelpstringcontext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypelib2-sethelpstringcontext
     HRESULT SetHelpStringContext(uint dwHelpStringContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypelib2-sethelpstringdll))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreatetypelib2-sethelpstringdll
     HRESULT SetHelpStringDll(PWSTR szFileName);
 }
 
 @GUID("00020404-0000-0000-c000-000000000046")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nn-oaidl-ienumvariant))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nn-oaidl-ienumvariant
 interface IEnumVARIANT : IUnknown
 {
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
     HRESULT Next(uint celt, VARIANT* rgVar, uint* pCeltFetched);
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
     HRESULT Skip(uint celt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-ienumvariant-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-ienumvariant-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-ienumvariant-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-ienumvariant-clone
     HRESULT Clone(IEnumVARIANT* ppEnum);
 }
 
 @GUID("00020410-0000-0000-c000-000000000046")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nn-oaidl-itypechangeevents))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nn-oaidl-itypechangeevents
 interface ITypeChangeEvents : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-itypechangeevents-requesttypechange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-itypechangeevents-requesttypechange
     HRESULT RequestTypeChange(CHANGEKIND changeKind, ITypeInfo pTInfoBefore, PWSTR pStrName, int* pfCancel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-itypechangeevents-aftertypechange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-itypechangeevents-aftertypechange
     HRESULT AfterTypeChange(CHANGEKIND changeKind, ITypeInfo pTInfoAfter, PWSTR pStrName);
 }
 
 @GUID("22f03340-547d-101b-8e65-08002b2bd119")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nn-oaidl-icreateerrorinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nn-oaidl-icreateerrorinfo
 interface ICreateErrorInfo : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreateerrorinfo-setguid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreateerrorinfo-setguid
     HRESULT SetGUID(const(GUID)* rguid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreateerrorinfo-setsource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreateerrorinfo-setsource
     HRESULT SetSource(PWSTR szSource);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreateerrorinfo-setdescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreateerrorinfo-setdescription
     HRESULT SetDescription(PWSTR szDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreateerrorinfo-sethelpfile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreateerrorinfo-sethelpfile
     HRESULT SetHelpFile(PWSTR szHelpFile);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreateerrorinfo-sethelpcontext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-icreateerrorinfo-sethelpcontext
     HRESULT SetHelpContext(uint dwHelpContext);
 }
 
@@ -4679,342 +4842,342 @@ interface ITypeMarshal : IUnknown
 }
 
 @GUID("0000002f-0000-0000-c000-000000000046")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nn-oaidl-irecordinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nn-oaidl-irecordinfo
 interface IRecordInfo : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-irecordinfo-recordinit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-irecordinfo-recordinit
     HRESULT RecordInit(void* pvNew);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-irecordinfo-recordclear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-irecordinfo-recordclear
     HRESULT RecordClear(void* pvExisting);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-irecordinfo-recordcopy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-irecordinfo-recordcopy
     HRESULT RecordCopy(void* pvExisting, void* pvNew);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-irecordinfo-getguid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-irecordinfo-getguid
     HRESULT GetGuid(GUID* pguid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-irecordinfo-getname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-irecordinfo-getname
     HRESULT GetName(BSTR* pbstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-irecordinfo-getsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-irecordinfo-getsize
     HRESULT GetSize(uint* pcbSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-irecordinfo-gettypeinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-irecordinfo-gettypeinfo
     HRESULT GetTypeInfo(ITypeInfo* ppTypeInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-irecordinfo-getfield))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-irecordinfo-getfield
     HRESULT GetField(void* pvData, const(PWSTR) szFieldName, VARIANT* pvarField);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-irecordinfo-getfieldnocopy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-irecordinfo-getfieldnocopy
     HRESULT GetFieldNoCopy(void* pvData, const(PWSTR) szFieldName, VARIANT* pvarField, void** ppvDataCArray);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-irecordinfo-putfield))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-irecordinfo-putfield
     HRESULT PutField(uint wFlags, void* pvData, const(PWSTR) szFieldName, VARIANT* pvarField);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-irecordinfo-putfieldnocopy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-irecordinfo-putfieldnocopy
     HRESULT PutFieldNoCopy(uint wFlags, void* pvData, const(PWSTR) szFieldName, VARIANT* pvarField);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-irecordinfo-getfieldnames))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-irecordinfo-getfieldnames
     HRESULT GetFieldNames(uint* pcNames, BSTR* rgBstrNames);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-irecordinfo-ismatchingtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-irecordinfo-ismatchingtype
     BOOL    IsMatchingType(IRecordInfo pRecordInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-irecordinfo-recordcreate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-irecordinfo-recordcreate
     void*   RecordCreate();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-irecordinfo-recordcreatecopy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-irecordinfo-recordcreatecopy
     HRESULT RecordCreateCopy(void* pvSource, void** ppvDest);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-irecordinfo-recorddestroy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-irecordinfo-recorddestroy
     HRESULT RecordDestroy(void* pvRecord);
 }
 
 @GUID("00000111-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-ioleadviseholder))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-ioleadviseholder
 interface IOleAdviseHolder : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleadviseholder-advise))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleadviseholder-advise
     HRESULT Advise(IAdviseSink pAdvise, uint* pdwConnection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleadviseholder-unadvise))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleadviseholder-unadvise
     HRESULT Unadvise(uint dwConnection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleadviseholder-enumadvise))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleadviseholder-enumadvise
     HRESULT EnumAdvise(IEnumSTATDATA* ppenumAdvise);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleadviseholder-sendonrename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleadviseholder-sendonrename
     HRESULT SendOnRename(IMoniker pmk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleadviseholder-sendonsave))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleadviseholder-sendonsave
     HRESULT SendOnSave();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleadviseholder-sendonclose))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleadviseholder-sendonclose
     HRESULT SendOnClose();
 }
 
 @GUID("0000011e-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-iolecache))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-iolecache
 interface IOleCache : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolecache-cache))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolecache-cache
     HRESULT Cache(FORMATETC* pformatetc, uint advf, uint* pdwConnection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolecache-uncache))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolecache-uncache
     HRESULT Uncache(uint dwConnection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolecache-enumcache))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolecache-enumcache
     HRESULT EnumCache(IEnumSTATDATA* ppenumSTATDATA);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolecache-initcache))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolecache-initcache
     HRESULT InitCache(IDataObject pDataObject);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolecache-setdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolecache-setdata
     HRESULT SetData(FORMATETC* pformatetc, STGMEDIUM* pmedium, BOOL fRelease);
 }
 
 @GUID("00000128-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-iolecache2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-iolecache2
 interface IOleCache2 : IOleCache
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolecache2-updatecache))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolecache2-updatecache
     HRESULT UpdateCache(IDataObject pDataObject, UPDFCACHE_FLAGS grfUpdf, 
                         /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* pReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolecache2-discardcache))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolecache2-discardcache
     HRESULT DiscardCache(uint dwDiscardOptions);
 }
 
 @GUID("00000129-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-iolecachecontrol))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-iolecachecontrol
 interface IOleCacheControl : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolecachecontrol-onrun))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolecachecontrol-onrun
     HRESULT OnRun(IDataObject pDataObject);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolecachecontrol-onstop))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolecachecontrol-onstop
     HRESULT OnStop();
 }
 
 @GUID("0000011a-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-iparsedisplayname))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-iparsedisplayname
 interface IParseDisplayName : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iparsedisplayname-parsedisplayname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iparsedisplayname-parsedisplayname
     HRESULT ParseDisplayName(IBindCtx pbc, PWSTR pszDisplayName, uint* pchEaten, IMoniker* ppmkOut);
 }
 
 @GUID("0000011b-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-iolecontainer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-iolecontainer
 interface IOleContainer : IParseDisplayName
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolecontainer-enumobjects))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolecontainer-enumobjects
     HRESULT EnumObjects(/*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(OLECONTF))], [])*/uint grfFlags, 
                         IEnumUnknown* ppenum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolecontainer-lockcontainer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolecontainer-lockcontainer
     HRESULT LockContainer(BOOL fLock);
 }
 
 @GUID("00000118-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-ioleclientsite))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-ioleclientsite
 interface IOleClientSite : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleclientsite-saveobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleclientsite-saveobject
     HRESULT SaveObject();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleclientsite-getmoniker))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleclientsite-getmoniker
     HRESULT GetMoniker(/*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(OLEGETMONIKER))], [])*/uint dwAssign, 
                        /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(OLEWHICHMK))], [])*/uint dwWhichMoniker, 
                        IMoniker* ppmk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleclientsite-getcontainer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleclientsite-getcontainer
     HRESULT GetContainer(IOleContainer* ppContainer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleclientsite-showobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleclientsite-showobject
     HRESULT ShowObject();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleclientsite-onshowwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleclientsite-onshowwindow
     HRESULT OnShowWindow(BOOL fShow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleclientsite-requestnewobjectlayout))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleclientsite-requestnewobjectlayout
     HRESULT RequestNewObjectLayout();
 }
 
 @GUID("00000112-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-ioleobject))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-ioleobject
 interface IOleObject : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-setclientsite))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-setclientsite
     HRESULT SetClientSite(IOleClientSite pClientSite);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-getclientsite))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-getclientsite
     HRESULT GetClientSite(IOleClientSite* ppClientSite);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-sethostnames))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-sethostnames
     HRESULT SetHostNames(const(PWSTR) szContainerApp, const(PWSTR) szContainerObj);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-close))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-close
     HRESULT Close(/*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(OLECLOSE))], [])*/uint dwSaveOption);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-setmoniker))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-setmoniker
     HRESULT SetMoniker(/*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(OLEWHICHMK))], [])*/uint dwWhichMoniker, 
                        IMoniker pmk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-getmoniker))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-getmoniker
     HRESULT GetMoniker(/*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(OLEGETMONIKER))], [])*/uint dwAssign, 
                        /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(OLEWHICHMK))], [])*/uint dwWhichMoniker, 
                        IMoniker* ppmk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-initfromdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-initfromdata
     HRESULT InitFromData(IDataObject pDataObject, BOOL fCreation, uint dwReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-getclipboarddata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-getclipboarddata
     HRESULT GetClipboardData(uint dwReserved, IDataObject* ppDataObject);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-doverb))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-doverb
     HRESULT DoVerb(int iVerb, MSG* lpmsg, IOleClientSite pActiveSite, int lindex, HWND hwndParent, 
                    RECT* lprcPosRect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-enumverbs))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-enumverbs
     HRESULT EnumVerbs(IEnumOLEVERB* ppEnumOleVerb);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-update))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-update
     HRESULT Update();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-isuptodate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-isuptodate
     HRESULT IsUpToDate();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-getuserclassid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-getuserclassid
     HRESULT GetUserClassID(GUID* pClsid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-getusertype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-getusertype
     HRESULT GetUserType(/*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(USERCLASSTYPE))], [])*/uint dwFormOfType, 
                         PWSTR* pszUserType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-setextent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-setextent
     HRESULT SetExtent(DVASPECT dwDrawAspect, SIZE* psizel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-getextent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-getextent
     HRESULT GetExtent(DVASPECT dwDrawAspect, SIZE* psizel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-advise))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-advise
     HRESULT Advise(IAdviseSink pAdvSink, uint* pdwConnection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-unadvise))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-unadvise
     HRESULT Unadvise(uint dwConnection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-enumadvise))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-enumadvise
     HRESULT EnumAdvise(IEnumSTATDATA* ppenumAdvise);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-getmiscstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-getmiscstatus
     HRESULT GetMiscStatus(DVASPECT dwAspect, OLEMISC* pdwStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-setcolorscheme))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleobject-setcolorscheme
     HRESULT SetColorScheme(LOGPALETTE* pLogpal);
 }
 
 @GUID("00000114-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-iolewindow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-iolewindow
 interface IOleWindow : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolewindow-getwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolewindow-getwindow
     HRESULT GetWindow(HWND* phwnd);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolewindow-contextsensitivehelp))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolewindow-contextsensitivehelp
     HRESULT ContextSensitiveHelp(BOOL fEnterMode);
 }
 
 @GUID("0000011d-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-iolelink))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-iolelink
 interface IOleLink : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolelink-setupdateoptions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolelink-setupdateoptions
     HRESULT SetUpdateOptions(uint dwUpdateOpt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolelink-getupdateoptions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolelink-getupdateoptions
     HRESULT GetUpdateOptions(uint* pdwUpdateOpt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolelink-setsourcemoniker))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolelink-setsourcemoniker
     HRESULT SetSourceMoniker(IMoniker pmk, const(GUID)* rclsid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolelink-getsourcemoniker))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolelink-getsourcemoniker
     HRESULT GetSourceMoniker(IMoniker* ppmk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolelink-setsourcedisplayname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolelink-setsourcedisplayname
     HRESULT SetSourceDisplayName(const(PWSTR) pszStatusText);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolelink-getsourcedisplayname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolelink-getsourcedisplayname
     HRESULT GetSourceDisplayName(PWSTR* ppszDisplayName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolelink-bindtosource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolelink-bindtosource
     HRESULT BindToSource(uint bindflags, IBindCtx pbc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolelink-bindifrunning))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolelink-bindifrunning
     HRESULT BindIfRunning();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolelink-getboundsource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolelink-getboundsource
     HRESULT GetBoundSource(IUnknown* ppunk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolelink-unbindsource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolelink-unbindsource
     HRESULT UnbindSource();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolelink-update))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iolelink-update
     HRESULT Update(IBindCtx pbc);
 }
 
 @GUID("0000011c-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-ioleitemcontainer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-ioleitemcontainer
 interface IOleItemContainer : IOleContainer
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleitemcontainer-getobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleitemcontainer-getobject
     HRESULT GetObject(PWSTR pszItem, uint dwSpeedNeeded, IBindCtx pbc, const(GUID)* riid, void** ppvObject);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleitemcontainer-getobjectstorage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleitemcontainer-getobjectstorage
     HRESULT GetObjectStorage(PWSTR pszItem, IBindCtx pbc, const(GUID)* riid, void** ppvStorage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleitemcontainer-isrunning))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleitemcontainer-isrunning
     HRESULT IsRunning(PWSTR pszItem);
 }
 
 @GUID("00000115-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-ioleinplaceuiwindow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-ioleinplaceuiwindow
 interface IOleInPlaceUIWindow : IOleWindow
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceuiwindow-getborder))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceuiwindow-getborder
     HRESULT GetBorder(RECT* lprectBorder);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceuiwindow-requestborderspace))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceuiwindow-requestborderspace
     HRESULT RequestBorderSpace(RECT* pborderwidths);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceuiwindow-setborderspace))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceuiwindow-setborderspace
     HRESULT SetBorderSpace(RECT* pborderwidths);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceuiwindow-setactiveobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceuiwindow-setactiveobject
     HRESULT SetActiveObject(IOleInPlaceActiveObject pActiveObject, const(PWSTR) pszObjName);
 }
 
 @GUID("00000117-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-ioleinplaceactiveobject))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-ioleinplaceactiveobject
 interface IOleInPlaceActiveObject : IOleWindow
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceactiveobject-translateaccelerator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceactiveobject-translateaccelerator
     HRESULT TranslateAccelerator(MSG* lpmsg);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceactiveobject-onframewindowactivate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceactiveobject-onframewindowactivate
     HRESULT OnFrameWindowActivate(BOOL fActivate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceactiveobject-ondocwindowactivate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceactiveobject-ondocwindowactivate
     HRESULT OnDocWindowActivate(BOOL fActivate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceactiveobject-resizeborder))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceactiveobject-resizeborder
     HRESULT ResizeBorder(RECT* prcBorder, IOleInPlaceUIWindow pUIWindow, BOOL fFrameWindow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceactiveobject-enablemodeless))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceactiveobject-enablemodeless
     HRESULT EnableModeless(BOOL fEnable);
 }
 
 @GUID("00000116-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-ioleinplaceframe))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-ioleinplaceframe
 interface IOleInPlaceFrame : IOleInPlaceUIWindow
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceframe-insertmenus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceframe-insertmenus
     HRESULT InsertMenus(HMENU hmenuShared, OLEMENUGROUPWIDTHS* lpMenuWidths);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceframe-setmenu))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceframe-setmenu
     HRESULT SetMenu(HMENU hmenuShared, ptrdiff_t holemenu, HWND hwndActiveObject);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceframe-removemenus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceframe-removemenus
     HRESULT RemoveMenus(HMENU hmenuShared);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceframe-setstatustext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceframe-setstatustext
     HRESULT SetStatusText(const(PWSTR) pszStatusText);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceframe-enablemodeless))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceframe-enablemodeless
     HRESULT EnableModeless(BOOL fEnable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceframe-translateaccelerator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceframe-translateaccelerator
     HRESULT TranslateAccelerator(MSG* lpmsg, ushort wID);
 }
 
 @GUID("00000113-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-ioleinplaceobject))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-ioleinplaceobject
 interface IOleInPlaceObject : IOleWindow
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceobject-inplacedeactivate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceobject-inplacedeactivate
     HRESULT InPlaceDeactivate();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceobject-uideactivate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceobject-uideactivate
     HRESULT UIDeactivate();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceobject-setobjectrects))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceobject-setobjectrects
     HRESULT SetObjectRects(RECT* lprcPosRect, RECT* lprcClipRect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceobject-reactivateandundo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplaceobject-reactivateandundo
     HRESULT ReactivateAndUndo();
 }
 
 @GUID("00000119-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-ioleinplacesite))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-ioleinplacesite
 interface IOleInPlaceSite : IOleWindow
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplacesite-caninplaceactivate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplacesite-caninplaceactivate
     HRESULT CanInPlaceActivate();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplacesite-oninplaceactivate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplacesite-oninplaceactivate
     HRESULT OnInPlaceActivate();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplacesite-onuiactivate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplacesite-onuiactivate
     HRESULT OnUIActivate();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplacesite-getwindowcontext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplacesite-getwindowcontext
     HRESULT GetWindowContext(IOleInPlaceFrame* ppFrame, IOleInPlaceUIWindow* ppDoc, RECT* lprcPosRect, 
                              RECT* lprcClipRect, OLEINPLACEFRAMEINFO* lpFrameInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplacesite-scroll))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplacesite-scroll
     HRESULT Scroll(SIZE scrollExtant);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplacesite-onuideactivate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplacesite-onuideactivate
     HRESULT OnUIDeactivate(BOOL fUndoable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplacesite-oninplacedeactivate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplacesite-oninplacedeactivate
     HRESULT OnInPlaceDeactivate();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplacesite-discardundostate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplacesite-discardundostate
     HRESULT DiscardUndoState();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplacesite-deactivateandundo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplacesite-deactivateandundo
     HRESULT DeactivateAndUndo();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplacesite-onposrectchange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ioleinplacesite-onposrectchange
     HRESULT OnPosRectChange(RECT* lprcPosRect);
 }
 
@@ -5026,37 +5189,37 @@ interface IContinue : IUnknown
 
 @GUID("0000010d-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-iviewobject))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-iviewobject
 interface IViewObject : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iviewobject-draw))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iviewobject-draw
     HRESULT Draw(DVASPECT dwDrawAspect, int lindex, void* pvAspect, DVTARGETDEVICE* ptd, HDC hdcTargetDev, 
                  HDC hdcDraw, RECTL* lprcBounds, RECTL* lprcWBounds, ptrdiff_t pfnContinue, size_t dwContinue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iviewobject-getcolorset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iviewobject-getcolorset
     HRESULT GetColorSet(DVASPECT dwDrawAspect, int lindex, void* pvAspect, DVTARGETDEVICE* ptd, HDC hicTargetDev, 
                         LOGPALETTE** ppColorSet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iviewobject-freeze))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iviewobject-freeze
     HRESULT Freeze(DVASPECT dwDrawAspect, int lindex, void* pvAspect, uint* pdwFreeze);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iviewobject-unfreeze))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iviewobject-unfreeze
     HRESULT Unfreeze(uint dwFreeze);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iviewobject-setadvise))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iviewobject-setadvise
     HRESULT SetAdvise(DVASPECT aspects, uint advf, IAdviseSink pAdvSink);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iviewobject-getadvise))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iviewobject-getadvise
     HRESULT GetAdvise(uint* pAspects, uint* pAdvf, IAdviseSink* ppAdvSink);
 }
 
 @GUID("00000127-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-iviewobject2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-iviewobject2
 interface IViewObject2 : IViewObject
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iviewobject2-getextent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-iviewobject2-getextent
     HRESULT GetExtent(DVASPECT dwDrawAspect, int lindex, DVTARGETDEVICE* ptd, SIZE* lpsizel);
 }
 
 @GUID("00000121-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-idropsource))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-idropsource
 interface IDropSource : IUnknown
 {
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
@@ -5067,66 +5230,66 @@ interface IDropSource : IUnknown
 
 @GUID("00000122-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-idroptarget))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-idroptarget
 interface IDropTarget : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-idroptarget-dragenter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-idroptarget-dragenter
     HRESULT DragEnter(IDataObject pDataObj, MODIFIERKEYS_FLAGS grfKeyState, POINTL pt, DROPEFFECT* pdwEffect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-idroptarget-dragover))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-idroptarget-dragover
     HRESULT DragOver(MODIFIERKEYS_FLAGS grfKeyState, POINTL pt, DROPEFFECT* pdwEffect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-idroptarget-dragleave))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-idroptarget-dragleave
     HRESULT DragLeave();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-idroptarget-drop))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-idroptarget-drop
     HRESULT Drop(IDataObject pDataObj, MODIFIERKEYS_FLAGS grfKeyState, POINTL pt, DROPEFFECT* pdwEffect);
 }
 
 @GUID("0000012b-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-idropsourcenotify))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-idropsourcenotify
 interface IDropSourceNotify : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-idropsourcenotify-dragentertarget))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-idropsourcenotify-dragentertarget
     HRESULT DragEnterTarget(HWND hwndTarget);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-idropsourcenotify-dragleavetarget))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-idropsourcenotify-dragleavetarget
     HRESULT DragLeaveTarget();
 }
 
 @GUID("390e3878-fd55-4e18-819d-4682081c0cfd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-ienterprisedroptarget))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-ienterprisedroptarget
 interface IEnterpriseDropTarget : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ienterprisedroptarget-setdropsourceenterpriseid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ienterprisedroptarget-setdropsourceenterpriseid
     HRESULT SetDropSourceEnterpriseId(const(PWSTR) identity);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ienterprisedroptarget-isevaluatingedppolicy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ienterprisedroptarget-isevaluatingedppolicy
     HRESULT IsEvaluatingEdpPolicy(BOOL* value);
 }
 
 @GUID("00000104-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-ienumoleverb))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nn-oleidl-ienumoleverb
 interface IEnumOLEVERB : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ienumoleverb-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ienumoleverb-next
     HRESULT Next(uint celt, OLEVERB* rgelt, uint* pceltFetched);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ienumoleverb-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ienumoleverb-skip
     HRESULT Skip(uint celt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ienumoleverb-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ienumoleverb-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ienumoleverb-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleidl/nf-oleidl-ienumoleverb-clone
     HRESULT Clone(IEnumOLEVERB* ppenum);
 }
 
 @GUID("b196b28f-bab4-101a-b69c-00aa00341d07")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-iclassfactory2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-iclassfactory2
 interface IClassFactory2 : IClassFactory
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iclassfactory2-getlicinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iclassfactory2-getlicinfo
     HRESULT GetLicInfo(LICINFO* pLicInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iclassfactory2-requestlickey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iclassfactory2-requestlickey
     HRESULT RequestLicKey(uint dwReserved, BSTR* pBstrKey);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iclassfactory2-createinstancelic))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iclassfactory2-createinstancelic
     HRESULT CreateInstanceLic(IUnknown pUnkOuter, 
                               /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/IUnknown pUnkReserved, 
                               const(GUID)* riid, BSTR bstrKey, void** ppvObj);
@@ -5134,255 +5297,255 @@ interface IClassFactory2 : IClassFactory
 
 @GUID("b196b283-bab4-101a-b69c-00aa00341d07")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-iprovideclassinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-iprovideclassinfo
 interface IProvideClassInfo : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iprovideclassinfo-getclassinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iprovideclassinfo-getclassinfo
     HRESULT GetClassInfo(ITypeInfo* ppTI);
 }
 
 @GUID("a6bc3ac0-dbaa-11ce-9de3-00aa004bb851")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-iprovideclassinfo2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-iprovideclassinfo2
 interface IProvideClassInfo2 : IProvideClassInfo
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iprovideclassinfo2-getguid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iprovideclassinfo2-getguid
     HRESULT GetGUID(uint dwGuidKind, GUID* pGUID);
 }
 
 @GUID("a7aba9c1-8983-11cf-8f20-00805f2cd064")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-iprovidemultipleclassinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-iprovidemultipleclassinfo
 interface IProvideMultipleClassInfo : IProvideClassInfo2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iprovidemultipleclassinfo-getmultitypeinfocount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iprovidemultipleclassinfo-getmultitypeinfocount
     HRESULT GetMultiTypeInfoCount(uint* pcti);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iprovidemultipleclassinfo-getinfoofindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iprovidemultipleclassinfo-getinfoofindex
     HRESULT GetInfoOfIndex(uint iti, MULTICLASSINFO_FLAGS dwFlags, ITypeInfo* pptiCoClass, uint* pdwTIFlags, 
                            uint* pcdispidReserved, GUID* piidPrimary, GUID* piidSource);
 }
 
 @GUID("b196b288-bab4-101a-b69c-00aa00341d07")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-iolecontrol))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-iolecontrol
 interface IOleControl : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iolecontrol-getcontrolinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iolecontrol-getcontrolinfo
     HRESULT GetControlInfo(CONTROLINFO* pCI);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iolecontrol-onmnemonic))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iolecontrol-onmnemonic
     HRESULT OnMnemonic(MSG* pMsg);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iolecontrol-onambientpropertychange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iolecontrol-onambientpropertychange
     HRESULT OnAmbientPropertyChange(int dispID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iolecontrol-freezeevents))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iolecontrol-freezeevents
     HRESULT FreezeEvents(BOOL bFreeze);
 }
 
 @GUID("b196b289-bab4-101a-b69c-00aa00341d07")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-iolecontrolsite))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-iolecontrolsite
 interface IOleControlSite : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iolecontrolsite-oncontrolinfochanged))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iolecontrolsite-oncontrolinfochanged
     HRESULT OnControlInfoChanged();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iolecontrolsite-lockinplaceactive))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iolecontrolsite-lockinplaceactive
     HRESULT LockInPlaceActive(BOOL fLock);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iolecontrolsite-getextendedcontrol))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iolecontrolsite-getextendedcontrol
     HRESULT GetExtendedControl(IDispatch* ppDisp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iolecontrolsite-transformcoords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iolecontrolsite-transformcoords
     HRESULT TransformCoords(POINTL* pPtlHimetric, POINTF* pPtfContainer, 
                             /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(XFORMCOORDS))], [])*/uint dwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iolecontrolsite-translateaccelerator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iolecontrolsite-translateaccelerator
     HRESULT TranslateAccelerator(MSG* pMsg, KEYMODIFIERS grfModifiers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iolecontrolsite-onfocus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iolecontrolsite-onfocus
     HRESULT OnFocus(BOOL fGotFocus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iolecontrolsite-showpropertyframe))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iolecontrolsite-showpropertyframe
     HRESULT ShowPropertyFrame();
 }
 
 @GUID("b196b28d-bab4-101a-b69c-00aa00341d07")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ipropertypage))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ipropertypage
 interface IPropertyPage : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertypage-setpagesite))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertypage-setpagesite
     HRESULT SetPageSite(IPropertyPageSite pPageSite);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertypage-activate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertypage-activate
     HRESULT Activate(HWND hWndParent, RECT* pRect, BOOL bModal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertypage-deactivate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertypage-deactivate
     HRESULT Deactivate();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertypage-getpageinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertypage-getpageinfo
     HRESULT GetPageInfo(PROPPAGEINFO* pPageInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertypage-setobjects))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertypage-setobjects
     HRESULT SetObjects(uint cObjects, IUnknown* ppUnk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertypage-show))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertypage-show
     HRESULT Show(uint nCmdShow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertypage-move))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertypage-move
     HRESULT Move(RECT* pRect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertypage-ispagedirty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertypage-ispagedirty
     HRESULT IsPageDirty();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertypage-apply))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertypage-apply
     HRESULT Apply();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertypage-help))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertypage-help
     HRESULT Help(const(PWSTR) pszHelpDir);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertypage-translateaccelerator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertypage-translateaccelerator
     HRESULT TranslateAccelerator(MSG* pMsg);
 }
 
 @GUID("01e44665-24ac-101b-84ed-08002b2ec713")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ipropertypage2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ipropertypage2
 interface IPropertyPage2 : IPropertyPage
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertypage2-editproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertypage2-editproperty
     HRESULT EditProperty(int dispID);
 }
 
 @GUID("b196b28c-bab4-101a-b69c-00aa00341d07")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ipropertypagesite))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ipropertypagesite
 interface IPropertyPageSite : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertypagesite-onstatuschange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertypagesite-onstatuschange
     HRESULT OnStatusChange(/*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(PROPPAGESTATUS))], [])*/uint dwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertypagesite-getlocaleid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertypagesite-getlocaleid
     HRESULT GetLocaleID(uint* pLocaleID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertypagesite-getpagecontainer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertypagesite-getpagecontainer
     HRESULT GetPageContainer(IUnknown* ppUnk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertypagesite-translateaccelerator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertypagesite-translateaccelerator
     HRESULT TranslateAccelerator(MSG* pMsg);
 }
 
 @GUID("9bfbbc02-eff1-101a-84ed-00aa00341d07")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ipropertynotifysink))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ipropertynotifysink
 interface IPropertyNotifySink : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertynotifysink-onchanged))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertynotifysink-onchanged
     HRESULT OnChanged(int dispID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertynotifysink-onrequestedit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipropertynotifysink-onrequestedit
     HRESULT OnRequestEdit(int dispID);
 }
 
 @GUID("b196b28b-bab4-101a-b69c-00aa00341d07")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ispecifypropertypages))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ispecifypropertypages
 interface ISpecifyPropertyPages : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ispecifypropertypages-getpages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ispecifypropertypages-getpages
     HRESULT GetPages(CAUUID* pPages);
 }
 
 @GUID("37d84f60-42cb-11ce-8135-00aa004bb851")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ipersistpropertybag))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ipersistpropertybag
 interface IPersistPropertyBag : IPersist
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipersistpropertybag-initnew))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipersistpropertybag-initnew
     HRESULT InitNew();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipersistpropertybag-load))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipersistpropertybag-load
     HRESULT Load(IPropertyBag pPropBag, IErrorLog pErrorLog);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipersistpropertybag-save))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipersistpropertybag-save
     HRESULT Save(IPropertyBag pPropBag, BOOL fClearDirty, BOOL fSaveAllProperties);
 }
 
 @GUID("742b0e01-14e6-101b-914e-00aa00300cab")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-isimpleframesite))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-isimpleframesite
 interface ISimpleFrameSite : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-isimpleframesite-premessagefilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-isimpleframesite-premessagefilter
     HRESULT PreMessageFilter(HWND hWnd, uint msg, WPARAM wp, LPARAM lp, LRESULT* plResult, uint* pdwCookie);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-isimpleframesite-postmessagefilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-isimpleframesite-postmessagefilter
     HRESULT PostMessageFilter(HWND hWnd, uint msg, WPARAM wp, LPARAM lp, LRESULT* plResult, uint dwCookie);
 }
 
 @GUID("bef6e002-a874-101a-8bba-00aa00300cab")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ifont))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ifont
 interface IFont : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-get_name
     HRESULT get_Name(BSTR* pName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-put_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-put_name
     HRESULT put_Name(BSTR name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-get_size))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-get_size
     HRESULT get_Size(CY* pSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-put_size))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-put_size
     HRESULT put_Size(CY size);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-get_bold))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-get_bold
     HRESULT get_Bold(BOOL* pBold);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-put_bold))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-put_bold
     HRESULT put_Bold(BOOL bold);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-get_italic))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-get_italic
     HRESULT get_Italic(BOOL* pItalic);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-put_italic))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-put_italic
     HRESULT put_Italic(BOOL italic);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-get_underline))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-get_underline
     HRESULT get_Underline(BOOL* pUnderline);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-put_underline))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-put_underline
     HRESULT put_Underline(BOOL underline);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-get_strikethrough))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-get_strikethrough
     HRESULT get_Strikethrough(BOOL* pStrikethrough);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-put_strikethrough))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-put_strikethrough
     HRESULT put_Strikethrough(BOOL strikethrough);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-get_weight))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-get_weight
     HRESULT get_Weight(short* pWeight);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-put_weight))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-put_weight
     HRESULT put_Weight(short weight);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-get_charset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-get_charset
     HRESULT get_Charset(short* pCharset);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-put_charset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-put_charset
     HRESULT put_Charset(short charset);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-get_hfont))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-get_hfont
     HRESULT get_hFont(HFONT* phFont);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-clone
     HRESULT Clone(IFont* ppFont);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-isequal))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-isequal
     HRESULT IsEqual(IFont pFontOther);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-setratio))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-setratio
     HRESULT SetRatio(int cyLogical, int cyHimetric);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-querytextmetrics))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-querytextmetrics
     HRESULT QueryTextMetrics(TEXTMETRICW* pTM);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-addrefhfont))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-addrefhfont
     HRESULT AddRefHfont(HFONT hFont);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-releasehfont))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-releasehfont
     HRESULT ReleaseHfont(HFONT hFont);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-sethdc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ifont-sethdc
     HRESULT SetHdc(HDC hDC);
 }
 
 @GUID("7bf80980-bf32-101a-8bbb-00aa00300cab")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ipicture))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ipicture
 interface IPicture : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipicture-get_handle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipicture-get_handle
     HRESULT get_Handle(OLE_HANDLE* pHandle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipicture-get_hpal))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipicture-get_hpal
     HRESULT get_hPal(OLE_HANDLE* phPal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipicture-get_type))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipicture-get_type
     HRESULT get_Type(PICTYPE* pType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipicture-get_width))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipicture-get_width
     HRESULT get_Width(int* pWidth);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipicture-get_height))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipicture-get_height
     HRESULT get_Height(int* pHeight);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipicture-render))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipicture-render
     HRESULT Render(HDC hDC, int x, int y, int cx, int cy, int xSrc, int ySrc, int cxSrc, int cySrc, 
                    RECT* pRcWBounds);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipicture-set_hpal))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipicture-set_hpal
     HRESULT set_hPal(OLE_HANDLE hPal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipicture-get_curdc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipicture-get_curdc
     HRESULT get_CurDC(HDC* phDC);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipicture-selectpicture))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipicture-selectpicture
     HRESULT SelectPicture(HDC hDCIn, HDC* phDCOut, OLE_HANDLE* phBmpOut);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipicture-get_keeporiginalformat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipicture-get_keeporiginalformat
     HRESULT get_KeepOriginalFormat(BOOL* pKeep);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipicture-put_keeporiginalformat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipicture-put_keeporiginalformat
     HRESULT put_KeepOriginalFormat(BOOL keep);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipicture-picturechanged))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipicture-picturechanged
     HRESULT PictureChanged();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipicture-saveasfile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipicture-saveasfile
     HRESULT SaveAsFile(IStream pStream, BOOL fSaveMemCopy, int* pCbSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipicture-get_attributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipicture-get_attributes
     HRESULT get_Attributes(uint* pDwAttr);
 }
 
@@ -5413,205 +5576,205 @@ interface IFontEventsDisp : IDispatch
 
 @GUID("bef6e003-a874-101a-8bba-00aa00300cab")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ifontdisp))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ifontdisp
 interface IFontDisp : IDispatch
 {
 }
 
 @GUID("7bf80981-bf32-101a-8bbb-00aa00300cab")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ipicturedisp))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ipicturedisp
 interface IPictureDisp : IDispatch
 {
 }
 
 @GUID("1c2056cc-5ef4-101b-8bc8-00aa003e3b29")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ioleinplaceobjectwindowless))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ioleinplaceobjectwindowless
 interface IOleInPlaceObjectWindowless : IOleInPlaceObject
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleinplaceobjectwindowless-onwindowmessage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleinplaceobjectwindowless-onwindowmessage
     HRESULT OnWindowMessage(uint msg, WPARAM wParam, LPARAM lParam, LRESULT* plResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleinplaceobjectwindowless-getdroptarget))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleinplaceobjectwindowless-getdroptarget
     HRESULT GetDropTarget(IDropTarget* ppDropTarget);
 }
 
 @GUID("9c2cad80-3424-11cf-b670-00aa004cd6d8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ioleinplacesiteex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ioleinplacesiteex
 interface IOleInPlaceSiteEx : IOleInPlaceSite
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleinplacesiteex-oninplaceactivateex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleinplacesiteex-oninplaceactivateex
     HRESULT OnInPlaceActivateEx(BOOL* pfNoRedraw, uint dwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleinplacesiteex-oninplacedeactivateex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleinplacesiteex-oninplacedeactivateex
     HRESULT OnInPlaceDeactivateEx(BOOL fNoRedraw);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleinplacesiteex-requestuiactivate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleinplacesiteex-requestuiactivate
     HRESULT RequestUIActivate();
 }
 
 @GUID("922eada0-3424-11cf-b670-00aa004cd6d8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ioleinplacesitewindowless))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ioleinplacesitewindowless
 interface IOleInPlaceSiteWindowless : IOleInPlaceSiteEx
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleinplacesitewindowless-canwindowlessactivate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleinplacesitewindowless-canwindowlessactivate
     HRESULT CanWindowlessActivate();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleinplacesitewindowless-getcapture))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleinplacesitewindowless-getcapture
     HRESULT GetCapture();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleinplacesitewindowless-setcapture))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleinplacesitewindowless-setcapture
     HRESULT SetCapture(BOOL fCapture);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleinplacesitewindowless-getfocus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleinplacesitewindowless-getfocus
     HRESULT GetFocus();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleinplacesitewindowless-setfocus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleinplacesitewindowless-setfocus
     HRESULT SetFocus(BOOL fFocus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleinplacesitewindowless-getdc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleinplacesitewindowless-getdc
     HRESULT GetDC(RECT* pRect, uint grfFlags, HDC* phDC);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleinplacesitewindowless-releasedc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleinplacesitewindowless-releasedc
     HRESULT ReleaseDC(HDC hDC);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleinplacesitewindowless-invalidaterect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleinplacesitewindowless-invalidaterect
     HRESULT InvalidateRect(RECT* pRect, BOOL fErase);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleinplacesitewindowless-invalidatergn))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleinplacesitewindowless-invalidatergn
     HRESULT InvalidateRgn(HRGN hRGN, BOOL fErase);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleinplacesitewindowless-scrollrect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleinplacesitewindowless-scrollrect
     HRESULT ScrollRect(int dx, int dy, RECT* pRectScroll, RECT* pRectClip);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleinplacesitewindowless-adjustrect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleinplacesitewindowless-adjustrect
     HRESULT AdjustRect(RECT* prc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleinplacesitewindowless-ondefwindowmessage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleinplacesitewindowless-ondefwindowmessage
     HRESULT OnDefWindowMessage(uint msg, WPARAM wParam, LPARAM lParam, LRESULT* plResult);
 }
 
 @GUID("3af24292-0c96-11ce-a0cf-00aa00600ab8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-iviewobjectex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-iviewobjectex
 interface IViewObjectEx : IViewObject2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iviewobjectex-getrect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iviewobjectex-getrect
     HRESULT GetRect(uint dwAspect, RECTL* pRect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iviewobjectex-getviewstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iviewobjectex-getviewstatus
     HRESULT GetViewStatus(uint* pdwStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iviewobjectex-queryhitpoint))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iviewobjectex-queryhitpoint
     HRESULT QueryHitPoint(uint dwAspect, RECT* pRectBounds, POINT ptlLoc, int lCloseHint, uint* pHitResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iviewobjectex-queryhitrect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iviewobjectex-queryhitrect
     HRESULT QueryHitRect(uint dwAspect, RECT* pRectBounds, RECT* pRectLoc, int lCloseHint, uint* pHitResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iviewobjectex-getnaturalextent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iviewobjectex-getnaturalextent
     HRESULT GetNaturalExtent(DVASPECT dwAspect, int lindex, DVTARGETDEVICE* ptd, HDC hicTargetDev, 
                              DVEXTENTINFO* pExtentInfo, SIZE* pSizel);
 }
 
 @GUID("894ad3b0-ef97-11ce-9bc9-00aa00608e01")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ioleundounit))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ioleundounit
 interface IOleUndoUnit : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleundounit-do))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleundounit-do
     HRESULT Do(IOleUndoManager pUndoManager);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleundounit-getdescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleundounit-getdescription
     HRESULT GetDescription(BSTR* pBstr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleundounit-getunittype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleundounit-getunittype
     HRESULT GetUnitType(GUID* pClsid, int* plID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleundounit-onnextadd))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleundounit-onnextadd
     HRESULT OnNextAdd();
 }
 
 @GUID("a1faf330-ef97-11ce-9bc9-00aa00608e01")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ioleparentundounit))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ioleparentundounit
 interface IOleParentUndoUnit : IOleUndoUnit
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleparentundounit-open))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleparentundounit-open
     HRESULT Open(IOleParentUndoUnit pPUU);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleparentundounit-close))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleparentundounit-close
     HRESULT Close(IOleParentUndoUnit pPUU, BOOL fCommit);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleparentundounit-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleparentundounit-add
     HRESULT Add(IOleUndoUnit pUU);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleparentundounit-findunit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleparentundounit-findunit
     HRESULT FindUnit(IOleUndoUnit pUU);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleparentundounit-getparentstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleparentundounit-getparentstate
     HRESULT GetParentState(uint* pdwState);
 }
 
 @GUID("b3e7c340-ef97-11ce-9bc9-00aa00608e01")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ienumoleundounits))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ienumoleundounits
 interface IEnumOleUndoUnits : IUnknown
 {
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
     HRESULT Next(uint cElt, IOleUndoUnit* rgElt, uint* pcEltFetched);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ienumoleundounits-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ienumoleundounits-skip
     HRESULT Skip(uint cElt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ienumoleundounits-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ienumoleundounits-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ienumoleundounits-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ienumoleundounits-clone
     HRESULT Clone(IEnumOleUndoUnits* ppEnum);
 }
 
 @GUID("d001f200-ef97-11ce-9bc9-00aa00608e01")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ioleundomanager))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ioleundomanager
 interface IOleUndoManager : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleundomanager-open))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleundomanager-open
     HRESULT Open(IOleParentUndoUnit pPUU);
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
     HRESULT Close(IOleParentUndoUnit pPUU, BOOL fCommit);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleundomanager-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleundomanager-add
     HRESULT Add(IOleUndoUnit pUU);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleundomanager-getopenparentstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleundomanager-getopenparentstate
     HRESULT GetOpenParentState(uint* pdwState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleundomanager-discardfrom))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleundomanager-discardfrom
     HRESULT DiscardFrom(IOleUndoUnit pUU);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleundomanager-undoto))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleundomanager-undoto
     HRESULT UndoTo(IOleUndoUnit pUU);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleundomanager-redoto))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleundomanager-redoto
     HRESULT RedoTo(IOleUndoUnit pUU);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleundomanager-enumundoable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleundomanager-enumundoable
     HRESULT EnumUndoable(IEnumOleUndoUnits* ppEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleundomanager-enumredoable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleundomanager-enumredoable
     HRESULT EnumRedoable(IEnumOleUndoUnits* ppEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleundomanager-getlastundodescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleundomanager-getlastundodescription
     HRESULT GetLastUndoDescription(BSTR* pBstr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleundomanager-getlastredodescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleundomanager-getlastredodescription
     HRESULT GetLastRedoDescription(BSTR* pBstr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleundomanager-enable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ioleundomanager-enable
     HRESULT Enable(BOOL fEnable);
 }
 
 @GUID("55980ba0-35aa-11cf-b671-00aa004cd6d8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ipointerinactive))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-ipointerinactive
 interface IPointerInactive : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipointerinactive-getactivationpolicy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipointerinactive-getactivationpolicy
     HRESULT GetActivationPolicy(POINTERINACTIVE* pdwPolicy);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipointerinactive-oninactivemousemove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipointerinactive-oninactivemousemove
     HRESULT OnInactiveMouseMove(RECT* pRectBounds, int x, int y, uint grfKeyState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipointerinactive-oninactivesetcursor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-ipointerinactive-oninactivesetcursor
     HRESULT OnInactiveSetCursor(RECT* pRectBounds, int x, int y, uint dwMouseMsg, BOOL fSetAlways);
 }
 
 @GUID("fc4801a3-2ba9-11cf-a229-00aa003d7352")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-iobjectwithsite))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-iobjectwithsite
 interface IObjectWithSite : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iobjectwithsite-setsite))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iobjectwithsite-setsite
     HRESULT SetSite(IUnknown pUnkSite);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iobjectwithsite-getsite))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iobjectwithsite-getsite
     HRESULT GetSite(const(GUID)* riid, void** ppvSite);
 }
 
 @GUID("376bd3aa-3845-101b-84ed-08002b2ec713")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-iperpropertybrowsing))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-iperpropertybrowsing
 interface IPerPropertyBrowsing : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iperpropertybrowsing-getdisplaystring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iperpropertybrowsing-getdisplaystring
     HRESULT GetDisplayString(int dispID, BSTR* pBstr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iperpropertybrowsing-mappropertytopage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iperpropertybrowsing-mappropertytopage
     HRESULT MapPropertyToPage(int dispID, GUID* pClsid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iperpropertybrowsing-getpredefinedstrings))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iperpropertybrowsing-getpredefinedstrings
     HRESULT GetPredefinedStrings(int dispID, CALPOLESTR* pCaStringsOut, CADWORD* pCaCookiesOut);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iperpropertybrowsing-getpredefinedvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iperpropertybrowsing-getpredefinedvalue
     HRESULT GetPredefinedValue(int dispID, uint dwCookie, VARIANT* pVarOut);
 }
 
@@ -5627,163 +5790,163 @@ interface IPersistPropertyBag2 : IPersist
 
 @GUID("3af24290-0c96-11ce-a0cf-00aa00600ab8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-iadvisesinkex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-iadvisesinkex
 interface IAdviseSinkEx : IAdviseSink
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iadvisesinkex-onviewstatuschange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iadvisesinkex-onviewstatuschange
     void OnViewStatusChange(uint dwViewStatus);
 }
 
 @GUID("cf51ed10-62fe-11cf-bf86-00a0c9034836")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-iquickactivate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nn-ocidl-iquickactivate
 interface IQuickActivate : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iquickactivate-quickactivate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iquickactivate-quickactivate
     HRESULT QuickActivate(QACONTAINER* pQaContainer, QACONTROL* pQaControl);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iquickactivate-setcontentextent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iquickactivate-setcontentextent
     HRESULT SetContentExtent(SIZE* pSizel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iquickactivate-getcontentextent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ocidl/nf-ocidl-iquickactivate-getcontentextent
     HRESULT GetContentExtent(SIZE* pSizel);
 }
 
 @GUID("40a050a0-3c31-101b-a82e-08002b2b2337")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vbinterf/nn-vbinterf-ivbgetcontrol))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vbinterf/nn-vbinterf-ivbgetcontrol
 interface IVBGetControl : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vbinterf/nf-vbinterf-ivbgetcontrol-enumcontrols))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vbinterf/nf-vbinterf-ivbgetcontrol-enumcontrols
     HRESULT EnumControls(/*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(OLECONTF))], [])*/uint dwOleContF, 
                          ENUM_CONTROLS_WHICH_FLAGS dwWhich, IEnumUnknown* ppenumUnk);
 }
 
 @GUID("8a701da0-4feb-101b-a82e-08002b2b2337")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vbinterf/nn-vbinterf-igetoleobject))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vbinterf/nn-vbinterf-igetoleobject
 interface IGetOleObject : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vbinterf/nf-vbinterf-igetoleobject-getoleobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vbinterf/nf-vbinterf-igetoleobject-getoleobject
     HRESULT GetOleObject(const(GUID)* riid, void** ppvObj);
 }
 
 @GUID("9849fd60-3768-101b-8d72-ae6164ffe3cf")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vbinterf/nn-vbinterf-ivbformat))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vbinterf/nn-vbinterf-ivbformat
 interface IVBFormat : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vbinterf/nf-vbinterf-ivbformat-format))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vbinterf/nf-vbinterf-ivbformat-format
     HRESULT Format(VARIANT* vData, BSTR bstrFormat, void* lpBuffer, ushort cb, int lcid, short sFirstDayOfWeek, 
                    ushort sFirstWeekOfYear, ushort* rcb);
 }
 
 @GUID("91733a60-3f4c-101b-a3f6-00aa0034e4e9")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vbinterf/nn-vbinterf-igetvbaobject))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vbinterf/nn-vbinterf-igetvbaobject
 interface IGetVBAObject : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vbinterf/nf-vbinterf-igetvbaobject-getobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vbinterf/nf-vbinterf-igetvbaobject-getobject
     HRESULT GetObject(const(GUID)* riid, void** ppvObj, uint dwReserved);
 }
 
 @GUID("b722bcc5-4e68-101b-a2bc-00aa00404770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/nn-docobj-ioledocument))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nn-docobj-ioledocument
 interface IOleDocument : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ioledocument-createview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ioledocument-createview
     HRESULT CreateView(IOleInPlaceSite pIPSite, IStream pstm, uint dwReserved, IOleDocumentView* ppView);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ioledocument-getdocmiscstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ioledocument-getdocmiscstatus
     HRESULT GetDocMiscStatus(uint* pdwStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ioledocument-enumviews))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ioledocument-enumviews
     HRESULT EnumViews(IEnumOleDocumentViews* ppEnum, IOleDocumentView* ppView);
 }
 
 @GUID("b722bcc7-4e68-101b-a2bc-00aa00404770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/nn-docobj-ioledocumentsite))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nn-docobj-ioledocumentsite
 interface IOleDocumentSite : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ioledocumentsite-activateme))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ioledocumentsite-activateme
     HRESULT ActivateMe(IOleDocumentView pViewToActivate);
 }
 
 @GUID("b722bcc6-4e68-101b-a2bc-00aa00404770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/nn-docobj-ioledocumentview))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nn-docobj-ioledocumentview
 interface IOleDocumentView : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ioledocumentview-setinplacesite))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ioledocumentview-setinplacesite
     HRESULT SetInPlaceSite(IOleInPlaceSite pIPSite);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ioledocumentview-getinplacesite))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ioledocumentview-getinplacesite
     HRESULT GetInPlaceSite(IOleInPlaceSite* ppIPSite);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ioledocumentview-getdocument))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ioledocumentview-getdocument
     HRESULT GetDocument(IUnknown* ppunk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ioledocumentview-setrect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ioledocumentview-setrect
     HRESULT SetRect(RECT* prcView);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ioledocumentview-getrect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ioledocumentview-getrect
     HRESULT GetRect(RECT* prcView);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ioledocumentview-setrectcomplex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ioledocumentview-setrectcomplex
     HRESULT SetRectComplex(RECT* prcView, RECT* prcHScroll, RECT* prcVScroll, RECT* prcSizeBox);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ioledocumentview-show))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ioledocumentview-show
     HRESULT Show(BOOL fShow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ioledocumentview-uiactivate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ioledocumentview-uiactivate
     HRESULT UIActivate(BOOL fUIActivate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ioledocumentview-open))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ioledocumentview-open
     HRESULT Open();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ioledocumentview-closeview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ioledocumentview-closeview
     HRESULT CloseView(uint dwReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ioledocumentview-saveviewstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ioledocumentview-saveviewstate
     HRESULT SaveViewState(IStream pstm);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ioledocumentview-applyviewstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ioledocumentview-applyviewstate
     HRESULT ApplyViewState(IStream pstm);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ioledocumentview-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ioledocumentview-clone
     HRESULT Clone(IOleInPlaceSite pIPSiteNew, IOleDocumentView* ppViewNew);
 }
 
 @GUID("b722bcc8-4e68-101b-a2bc-00aa00404770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/nn-docobj-ienumoledocumentviews))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nn-docobj-ienumoledocumentviews
 interface IEnumOleDocumentViews : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ienumoledocumentviews-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ienumoledocumentviews-next
     HRESULT Next(uint cViews, IOleDocumentView* rgpView, uint* pcFetched);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ienumoledocumentviews-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ienumoledocumentviews-skip
     HRESULT Skip(uint cViews);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ienumoledocumentviews-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ienumoledocumentviews-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ienumoledocumentviews-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-ienumoledocumentviews-clone
     HRESULT Clone(IEnumOleDocumentViews* ppEnum);
 }
 
 @GUID("b722bcca-4e68-101b-a2bc-00aa00404770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/nn-docobj-icontinuecallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nn-docobj-icontinuecallback
 interface IContinueCallback : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-icontinuecallback-fcontinue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-icontinuecallback-fcontinue
     HRESULT FContinue();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-icontinuecallback-fcontinueprinting))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-icontinuecallback-fcontinueprinting
     HRESULT FContinuePrinting(int nCntPrinted, int nCurPage, PWSTR pwszPrintStatus);
 }
 
 @GUID("b722bcc9-4e68-101b-a2bc-00aa00404770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/nn-docobj-iprint))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nn-docobj-iprint
 interface IPrint : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-iprint-setinitialpagenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-iprint-setinitialpagenum
     HRESULT SetInitialPageNum(int nFirstPage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-iprint-getpageinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-iprint-getpageinfo
     HRESULT GetPageInfo(int* pnFirstPage, int* pcPages);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-iprint-print))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-iprint-print
     HRESULT Print(uint grfFlags, DVTARGETDEVICE** pptd, PAGESET** ppPageSet, STGMEDIUM* pstgmOptions, 
                   IContinueCallback pcallback, int nFirstPage, int* pcPagesPrinted, int* pnLastPage);
 }
 
 @GUID("b722bccb-4e68-101b-a2bc-00aa00404770")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/nn-docobj-iolecommandtarget))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nn-docobj-iolecommandtarget
 interface IOleCommandTarget : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-iolecommandtarget-querystatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-iolecommandtarget-querystatus
     HRESULT QueryStatus(const(GUID)* pguidCmdGroup, uint cCmds, OLECMD* prgCmds, OLECMDTEXT* pCmdText);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-iolecommandtarget-exec))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/docobj/nf-docobj-iolecommandtarget-exec
     HRESULT Exec(const(GUID)* pguidCmdGroup, uint nCmdID, uint nCmdexecopt, VARIANT* pvaIn, VARIANT* pvaOut);
 }
 
@@ -5809,107 +5972,107 @@ interface IProtectedModeMenuServices : IUnknown
 
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 //INTERFACEF ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/nn-oledlg-ioleuilinkcontainerw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nn-oledlg-ioleuilinkcontainerw
 interface IOleUILinkContainerW : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuilinkcontainerw-getnextlink))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuilinkcontainerw-getnextlink
     uint    GetNextLink(uint dwLink);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuilinkcontainerw-setlinkupdateoptions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuilinkcontainerw-setlinkupdateoptions
     HRESULT SetLinkUpdateOptions(uint dwLink, uint dwUpdateOpt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuilinkcontainerw-getlinkupdateoptions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuilinkcontainerw-getlinkupdateoptions
     HRESULT GetLinkUpdateOptions(uint dwLink, uint* lpdwUpdateOpt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuilinkcontainerw-setlinksource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuilinkcontainerw-setlinksource
     HRESULT SetLinkSource(uint dwLink, PWSTR lpszDisplayName, uint lenFileName, uint* pchEaten, 
                           BOOL fValidateSource);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuilinkcontainerw-getlinksource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuilinkcontainerw-getlinksource
     HRESULT GetLinkSource(uint dwLink, PWSTR* lplpszDisplayName, uint* lplenFileName, PWSTR* lplpszFullLinkType, 
                           PWSTR* lplpszShortLinkType, BOOL* lpfSourceAvailable, BOOL* lpfIsSelected);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuilinkcontainerw-openlinksource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuilinkcontainerw-openlinksource
     HRESULT OpenLinkSource(uint dwLink);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuilinkcontainerw-updatelink))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuilinkcontainerw-updatelink
     HRESULT UpdateLink(uint dwLink, BOOL fErrorMessage, BOOL fReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuilinkcontainerw-cancellink))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuilinkcontainerw-cancellink
     HRESULT CancelLink(uint dwLink);
 }
 
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 //INTERFACEF ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/nn-oledlg-ioleuilinkcontainera))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nn-oledlg-ioleuilinkcontainera
 interface IOleUILinkContainerA : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuilinkcontainera-getnextlink))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuilinkcontainera-getnextlink
     uint    GetNextLink(uint dwLink);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuilinkcontainera-setlinkupdateoptions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuilinkcontainera-setlinkupdateoptions
     HRESULT SetLinkUpdateOptions(uint dwLink, uint dwUpdateOpt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuilinkcontainera-getlinkupdateoptions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuilinkcontainera-getlinkupdateoptions
     HRESULT GetLinkUpdateOptions(uint dwLink, uint* lpdwUpdateOpt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuilinkcontainera-setlinksource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuilinkcontainera-setlinksource
     HRESULT SetLinkSource(uint dwLink, PSTR lpszDisplayName, uint lenFileName, uint* pchEaten, 
                           BOOL fValidateSource);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuilinkcontainera-getlinksource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuilinkcontainera-getlinksource
     HRESULT GetLinkSource(uint dwLink, PSTR* lplpszDisplayName, uint* lplenFileName, PSTR* lplpszFullLinkType, 
                           PSTR* lplpszShortLinkType, BOOL* lpfSourceAvailable, BOOL* lpfIsSelected);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuilinkcontainera-openlinksource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuilinkcontainera-openlinksource
     HRESULT OpenLinkSource(uint dwLink);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuilinkcontainera-updatelink))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuilinkcontainera-updatelink
     HRESULT UpdateLink(uint dwLink, BOOL fErrorMessage, BOOL fReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuilinkcontainera-cancellink))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuilinkcontainera-cancellink
     HRESULT CancelLink(uint dwLink);
 }
 
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 //INTERFACEF ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/nn-oledlg-ioleuiobjinfow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nn-oledlg-ioleuiobjinfow
 interface IOleUIObjInfoW : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuiobjinfow-getobjectinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuiobjinfow-getobjectinfo
     HRESULT GetObjectInfo(uint dwObject, uint* lpdwObjSize, PWSTR* lplpszLabel, PWSTR* lplpszType, 
                           PWSTR* lplpszShortType, PWSTR* lplpszLocation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuiobjinfow-getconvertinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuiobjinfow-getconvertinfo
     HRESULT GetConvertInfo(uint dwObject, GUID* lpClassID, ushort* lpwFormat, GUID* lpConvertDefaultClassID, 
                            GUID** lplpClsidExclude, uint* lpcClsidExclude);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuiobjinfow-convertobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuiobjinfow-convertobject
     HRESULT ConvertObject(uint dwObject, const(GUID)* clsidNew);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuiobjinfow-getviewinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuiobjinfow-getviewinfo
     HRESULT GetViewInfo(uint dwObject, HGLOBAL* phMetaPict, uint* pdvAspect, int* pnCurrentScale);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuiobjinfow-setviewinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuiobjinfow-setviewinfo
     HRESULT SetViewInfo(uint dwObject, HGLOBAL hMetaPict, uint dvAspect, int nCurrentScale, BOOL bRelativeToOrig);
 }
 
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 //INTERFACEF ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/nn-oledlg-ioleuiobjinfoa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nn-oledlg-ioleuiobjinfoa
 interface IOleUIObjInfoA : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuiobjinfoa-getobjectinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuiobjinfoa-getobjectinfo
     HRESULT GetObjectInfo(uint dwObject, uint* lpdwObjSize, PSTR* lplpszLabel, PSTR* lplpszType, 
                           PSTR* lplpszShortType, PSTR* lplpszLocation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuiobjinfoa-getconvertinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuiobjinfoa-getconvertinfo
     HRESULT GetConvertInfo(uint dwObject, GUID* lpClassID, ushort* lpwFormat, GUID* lpConvertDefaultClassID, 
                            GUID** lplpClsidExclude, uint* lpcClsidExclude);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuiobjinfoa-convertobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuiobjinfoa-convertobject
     HRESULT ConvertObject(uint dwObject, const(GUID)* clsidNew);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuiobjinfoa-getviewinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuiobjinfoa-getviewinfo
     HRESULT GetViewInfo(uint dwObject, HGLOBAL* phMetaPict, uint* pdvAspect, int* pnCurrentScale);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuiobjinfoa-setviewinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuiobjinfoa-setviewinfo
     HRESULT SetViewInfo(uint dwObject, HGLOBAL hMetaPict, uint dvAspect, int nCurrentScale, BOOL bRelativeToOrig);
 }
 
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 //INTERFACEF ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/nn-oledlg-ioleuilinkinfow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nn-oledlg-ioleuilinkinfow
 interface IOleUILinkInfoW : IOleUILinkContainerW
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuilinkinfow-getlastupdate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuilinkinfow-getlastupdate
     HRESULT GetLastUpdate(uint dwLink, FILETIME* lpLastUpdate);
 }
 
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
 //INTERFACEF ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/nn-oledlg-ioleuilinkinfoa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nn-oledlg-ioleuilinkinfoa
 interface IOleUILinkInfoA : IOleUILinkContainerA
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuilinkinfoa-getlastupdate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledlg/nf-oledlg-ioleuilinkinfoa-getlastupdate
     HRESULT GetLastUpdate(uint dwLink, FILETIME* lpLastUpdate);
 }
 

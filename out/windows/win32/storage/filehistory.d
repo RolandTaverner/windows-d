@@ -3,15 +3,16 @@
 module windows.win32.storage.filehistory;
 
 public import windows.core;
-public import windows.win32.foundation : BOOL, BSTR, FILETIME, HRESULT;
-public import windows.win32.system.com : IUnknown;
+public import windows.win32.foundation.foundation : BOOL, BSTR, FILETIME, HRESULT;
+public import windows.win32.system.com.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fhcfg/ne-fhcfg-fh_target_property_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/ne-fhcfg-fh_target_property_type
 alias FH_TARGET_PROPERTY_TYPE = int;
 enum : int
 {
@@ -20,7 +21,8 @@ enum : int
     FH_TARGET_DRIVE_TYPE = 0x00000002,
     MAX_TARGET_PROPERTY  = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fhcfg/ne-fhcfg-fh_target_drive_types))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/ne-fhcfg-fh_target_drive_types
 alias FH_TARGET_DRIVE_TYPES = int;
 enum : int
 {
@@ -29,7 +31,8 @@ enum : int
     FH_DRIVE_FIXED     = 0x00000003,
     FH_DRIVE_REMOTE    = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fhcfg/ne-fhcfg-fh_protected_item_category))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/ne-fhcfg-fh_protected_item_category
 alias FH_PROTECTED_ITEM_CATEGORY = int;
 enum : int
 {
@@ -37,7 +40,8 @@ enum : int
     FH_LIBRARY                  = 0x00000001,
     MAX_PROTECTED_ITEM_CATEGORY = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fhcfg/ne-fhcfg-fh_local_policy_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/ne-fhcfg-fh_local_policy_type
 alias FH_LOCAL_POLICY_TYPE = int;
 enum : int
 {
@@ -46,7 +50,8 @@ enum : int
     FH_RETENTION_AGE  = 0x00000002,
     MAX_LOCAL_POLICY  = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fhcfg/ne-fhcfg-fh_retention_types))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/ne-fhcfg-fh_retention_types
 alias FH_RETENTION_TYPES = int;
 enum : int
 {
@@ -55,7 +60,8 @@ enum : int
     FH_RETENTION_AGE_BASED = 0x00000002,
     MAX_RETENTION_TYPE     = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fhcfg/ne-fhcfg-fh_backup_status))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/ne-fhcfg-fh_backup_status
 alias FH_BACKUP_STATUS = int;
 enum : int
 {
@@ -65,7 +71,8 @@ enum : int
     FH_STATUS_REHYDRATING    = 0x00000003,
     MAX_BACKUP_STATUS        = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fhcfg/ne-fhcfg-fh_device_validation_result))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/ne-fhcfg-fh_device_validation_result
 alias FH_DEVICE_VALIDATION_RESULT = int;
 enum : int
 {
@@ -78,6 +85,7 @@ enum : int
     FH_VALID_TARGET           = 0x00000006,
     MAX_VALIDATION_RESULT     = 0x00000007,
 }
+
 enum FhBackupStopReason : int
 {
     BackupInvalidStopReason        = 0x00000000,
@@ -140,36 +148,36 @@ enum HRESULT FHSVC_E_CONFIG_REHYDRATING = HRESULT(0x80040605);
 
 enum : uint
 {
-    FH_STATE_NOT_TRACKED    = 0x00000000,
-    FH_STATE_OFF            = 0x00000001,
-    FH_STATE_DISABLED_BY_GP = 0x00000002,
+    FH_STATE_NOT_TRACKED    = 0x00000000U,
+    FH_STATE_OFF            = 0x00000001U,
+    FH_STATE_DISABLED_BY_GP = 0x00000002U,
 }
 
-enum uint FH_STATE_FATAL_CONFIG_ERROR = 0x00000003;
+enum uint FH_STATE_FATAL_CONFIG_ERROR = 0x00000003U;
 
 enum : uint
 {
-    FH_STATE_MIGRATING                      = 0x00000004,
-    FH_STATE_REHYDRATING                    = 0x00000005,
-    FH_STATE_TARGET_FS_LIMITATION           = 0x0000000d,
-    FH_STATE_TARGET_ACCESS_DENIED           = 0x0000000e,
-    FH_STATE_TARGET_VOLUME_DIRTY            = 0x0000000f,
-    FH_STATE_TARGET_FULL_RETENTION_MAX      = 0x00000010,
-    FH_STATE_TARGET_FULL                    = 0x00000011,
-    FH_STATE_STAGING_FULL                   = 0x00000012,
-    FH_STATE_TARGET_LOW_SPACE_RETENTION_MAX = 0x00000013,
-    FH_STATE_TARGET_LOW_SPACE               = 0x00000014,
-    FH_STATE_TARGET_ABSENT                  = 0x00000015,
-    FH_STATE_TOO_MUCH_BEHIND                = 0x000000f0,
+    FH_STATE_MIGRATING                      = 0x00000004U,
+    FH_STATE_REHYDRATING                    = 0x00000005U,
+    FH_STATE_TARGET_FS_LIMITATION           = 0x0000000dU,
+    FH_STATE_TARGET_ACCESS_DENIED           = 0x0000000eU,
+    FH_STATE_TARGET_VOLUME_DIRTY            = 0x0000000fU,
+    FH_STATE_TARGET_FULL_RETENTION_MAX      = 0x00000010U,
+    FH_STATE_TARGET_FULL                    = 0x00000011U,
+    FH_STATE_STAGING_FULL                   = 0x00000012U,
+    FH_STATE_TARGET_LOW_SPACE_RETENTION_MAX = 0x00000013U,
+    FH_STATE_TARGET_LOW_SPACE               = 0x00000014U,
+    FH_STATE_TARGET_ABSENT                  = 0x00000015U,
+    FH_STATE_TOO_MUCH_BEHIND                = 0x000000f0U,
 }
 
 enum : uint
 {
-    FH_STATE_NO_ERROR             = 0x000000ff,
-    FH_STATE_BACKUP_NOT_SUPPORTED = 0x00000810,
+    FH_STATE_NO_ERROR             = 0x000000ffU,
+    FH_STATE_BACKUP_NOT_SUPPORTED = 0x00000810U,
 }
 
-enum uint FH_STATE_RUNNING = 0x00000100;
+enum uint FH_STATE_RUNNING = 0x00000100U;
 
 // Structs
 
@@ -223,75 +231,75 @@ struct FhReassociation;
 
 @GUID("d87965fd-2bad-4657-bd3b-9567eb300ced")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fhcfg/nn-fhcfg-ifhtarget))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/nn-fhcfg-ifhtarget
 interface IFhTarget : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhtarget-getstringproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhtarget-getstringproperty
     HRESULT GetStringProperty(FH_TARGET_PROPERTY_TYPE PropertyType, BSTR* PropertyValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhtarget-getnumericalproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhtarget-getnumericalproperty
     HRESULT GetNumericalProperty(FH_TARGET_PROPERTY_TYPE PropertyType, ulong* PropertyValue);
 }
 
 @GUID("3197abce-532a-44c6-8615-f3666566a720")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fhcfg/nn-fhcfg-ifhscopeiterator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/nn-fhcfg-ifhscopeiterator
 interface IFhScopeIterator : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhscopeiterator-movetonextitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhscopeiterator-movetonextitem
     HRESULT MoveToNextItem();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhscopeiterator-getitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhscopeiterator-getitem
     HRESULT GetItem(BSTR* Item);
 }
 
 @GUID("6a5fea5b-bf8f-4ee5-b8c3-44d8a0d7331c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fhcfg/nn-fhcfg-ifhconfigmgr))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/nn-fhcfg-ifhconfigmgr
 interface IFhConfigMgr : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhconfigmgr-loadconfiguration))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhconfigmgr-loadconfiguration
     HRESULT LoadConfiguration();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhconfigmgr-createdefaultconfiguration))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhconfigmgr-createdefaultconfiguration
     HRESULT CreateDefaultConfiguration(BOOL OverwriteIfExists);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhconfigmgr-saveconfiguration))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhconfigmgr-saveconfiguration
     HRESULT SaveConfiguration();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhconfigmgr-addremoveexcluderule))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhconfigmgr-addremoveexcluderule
     HRESULT AddRemoveExcludeRule(BOOL Add, FH_PROTECTED_ITEM_CATEGORY Category, BSTR Item);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhconfigmgr-getincludeexcluderules))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhconfigmgr-getincludeexcluderules
     HRESULT GetIncludeExcludeRules(BOOL Include, FH_PROTECTED_ITEM_CATEGORY Category, IFhScopeIterator* Iterator);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhconfigmgr-getlocalpolicy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhconfigmgr-getlocalpolicy
     HRESULT GetLocalPolicy(FH_LOCAL_POLICY_TYPE LocalPolicyType, ulong* PolicyValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhconfigmgr-setlocalpolicy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhconfigmgr-setlocalpolicy
     HRESULT SetLocalPolicy(FH_LOCAL_POLICY_TYPE LocalPolicyType, ulong PolicyValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhconfigmgr-getbackupstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhconfigmgr-getbackupstatus
     HRESULT GetBackupStatus(FH_BACKUP_STATUS* BackupStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhconfigmgr-setbackupstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhconfigmgr-setbackupstatus
     HRESULT SetBackupStatus(FH_BACKUP_STATUS BackupStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhconfigmgr-getdefaulttarget))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhconfigmgr-getdefaulttarget
     HRESULT GetDefaultTarget(IFhTarget* DefaultTarget);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhconfigmgr-validatetarget))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhconfigmgr-validatetarget
     HRESULT ValidateTarget(BSTR TargetUrl, FH_DEVICE_VALIDATION_RESULT* ValidationResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhconfigmgr-provisionandsetnewtarget))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhconfigmgr-provisionandsetnewtarget
     HRESULT ProvisionAndSetNewTarget(BSTR TargetUrl, BSTR TargetName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhconfigmgr-changedefaulttargetrecommendation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhconfigmgr-changedefaulttargetrecommendation
     HRESULT ChangeDefaultTargetRecommendation(BOOL Recommend);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhconfigmgr-queryprotectionstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhconfigmgr-queryprotectionstatus
     HRESULT QueryProtectionStatus(uint* ProtectionState, BSTR* ProtectedUntilTime);
 }
 
 @GUID("6544a28a-f68d-47ac-91ef-16b2b36aa3ee")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fhcfg/nn-fhcfg-ifhreassociation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/nn-fhcfg-ifhreassociation
 interface IFhReassociation : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhreassociation-validatetarget))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhreassociation-validatetarget
     HRESULT ValidateTarget(BSTR TargetUrl, FH_DEVICE_VALIDATION_RESULT* ValidationResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhreassociation-scantargetforconfigurations))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhreassociation-scantargetforconfigurations
     HRESULT ScanTargetForConfigurations(BSTR TargetUrl);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhreassociation-getconfigurationdetails))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhreassociation-getconfigurationdetails
     HRESULT GetConfigurationDetails(uint Index, BSTR* UserName, BSTR* PcName, FILETIME* BackupTime);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhreassociation-selectconfiguration))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhreassociation-selectconfiguration
     HRESULT SelectConfiguration(uint Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhreassociation-performreassociation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fhcfg/nf-fhcfg-ifhreassociation-performreassociation
     HRESULT PerformReassociation(BOOL OverwriteIfExists);
 }
 

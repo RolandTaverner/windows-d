@@ -16,12 +16,12 @@ enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(E
     DD_BEEP_DEVICE_NAME_U = "\\Device\\Beep",
 }
 
-enum uint IOCTL_BEEP_SET = 0x00010000;
+enum uint IOCTL_BEEP_SET = 0x00010000U;
 
 enum : uint
 {
-    BEEP_FREQUENCY_MINIMUM = 0x00000025,
-    BEEP_FREQUENCY_MAXIMUM = 0x00007fff,
+    BEEP_FREQUENCY_MINIMUM = 0x00000025U,
+    BEEP_FREQUENCY_MAXIMUM = 0x00007fffU,
 }
 
 // Structs

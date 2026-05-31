@@ -3,34 +3,38 @@
 module windows.win32.system.eventlog;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, FILETIME, HANDLE, PSTR, PWSTR, SYSTEMTIME;
-public import windows.win32.security : PSID;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, FILETIME, HANDLE, PSTR, PWSTR,
+                                                    SYSTEMTIME;
+public import windows.win32.security.security : PSID;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
+
 alias REPORT_EVENT_TYPE = ushort;
 enum : ushort
 {
-    EVENTLOG_SUCCESS          = 0x0000,
-    EVENTLOG_AUDIT_FAILURE    = 0x0010,
-    EVENTLOG_AUDIT_SUCCESS    = 0x0008,
-    EVENTLOG_ERROR_TYPE       = 0x0001,
-    EVENTLOG_INFORMATION_TYPE = 0x0004,
-    EVENTLOG_WARNING_TYPE     = 0x0002,
+    EVENTLOG_SUCCESS          = cast(ushort) 0x0000,
+    EVENTLOG_AUDIT_FAILURE    = cast(ushort) 0x0010,
+    EVENTLOG_AUDIT_SUCCESS    = cast(ushort) 0x0008,
+    EVENTLOG_ERROR_TYPE       = cast(ushort) 0x0001,
+    EVENTLOG_INFORMATION_TYPE = cast(ushort) 0x0004,
+    EVENTLOG_WARNING_TYPE     = cast(ushort) 0x0002,
 }
+
 alias READ_EVENT_LOG_READ_FLAGS = uint;
 enum : uint
 {
-    EVENTLOG_SEEK_READ       = 0x00000002,
-    EVENTLOG_SEQUENTIAL_READ = 0x00000001,
-    EVENTLOG_FORWARDS_READ   = 0x00000004,
-    EVENTLOG_BACKWARDS_READ  = 0x00000008,
+    EVENTLOG_SEEK_READ       = 0x00000002U,
+    EVENTLOG_SEQUENTIAL_READ = 0x00000001U,
+    EVENTLOG_FORWARDS_READ   = 0x00000004U,
+    EVENTLOG_BACKWARDS_READ  = 0x00000008U,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_variant_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_variant_type
 alias EVT_VARIANT_TYPE = int;
 enum : int
 {
@@ -59,61 +63,68 @@ enum : int
     EvtVarTypeEvtHandle  = 0x00000020,
     EvtVarTypeEvtXml     = 0x00000023,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_login_class))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_login_class
 alias EVT_LOGIN_CLASS = int;
 enum : int
 {
     EvtRpcLogin = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_rpc_login_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_rpc_login_flags
 alias EVT_RPC_LOGIN_FLAGS = uint;
 enum : uint
 {
-    EvtRpcLoginAuthDefault   = 0x00000000,
-    EvtRpcLoginAuthNegotiate = 0x00000001,
-    EvtRpcLoginAuthKerberos  = 0x00000002,
-    EvtRpcLoginAuthNTLM      = 0x00000003,
+    EvtRpcLoginAuthDefault   = 0x00000000U,
+    EvtRpcLoginAuthNegotiate = 0x00000001U,
+    EvtRpcLoginAuthKerberos  = 0x00000002U,
+    EvtRpcLoginAuthNTLM      = 0x00000003U,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_query_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_query_flags
 alias EVT_QUERY_FLAGS = uint;
 enum : uint
 {
-    EvtQueryChannelPath         = 0x00000001,
-    EvtQueryFilePath            = 0x00000002,
-    EvtQueryForwardDirection    = 0x00000100,
-    EvtQueryReverseDirection    = 0x00000200,
-    EvtQueryTolerateQueryErrors = 0x00001000,
+    EvtQueryChannelPath         = 0x00000001U,
+    EvtQueryFilePath            = 0x00000002U,
+    EvtQueryForwardDirection    = 0x00000100U,
+    EvtQueryReverseDirection    = 0x00000200U,
+    EvtQueryTolerateQueryErrors = 0x00001000U,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_seek_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_seek_flags
 alias EVT_SEEK_FLAGS = uint;
 enum : uint
 {
-    EvtSeekRelativeToFirst    = 0x00000001,
-    EvtSeekRelativeToLast     = 0x00000002,
-    EvtSeekRelativeToCurrent  = 0x00000003,
-    EvtSeekRelativeToBookmark = 0x00000004,
-    EvtSeekOriginMask         = 0x00000007,
-    EvtSeekStrict             = 0x00010000,
+    EvtSeekRelativeToFirst    = 0x00000001U,
+    EvtSeekRelativeToLast     = 0x00000002U,
+    EvtSeekRelativeToCurrent  = 0x00000003U,
+    EvtSeekRelativeToBookmark = 0x00000004U,
+    EvtSeekOriginMask         = 0x00000007U,
+    EvtSeekStrict             = 0x00010000U,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_subscribe_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_subscribe_flags
 alias EVT_SUBSCRIBE_FLAGS = uint;
 enum : uint
 {
-    EvtSubscribeToFutureEvents      = 0x00000001,
-    EvtSubscribeStartAtOldestRecord = 0x00000002,
-    EvtSubscribeStartAfterBookmark  = 0x00000003,
-    EvtSubscribeOriginMask          = 0x00000003,
-    EvtSubscribeTolerateQueryErrors = 0x00001000,
-    EvtSubscribeStrict              = 0x00010000,
+    EvtSubscribeToFutureEvents      = 0x00000001U,
+    EvtSubscribeStartAtOldestRecord = 0x00000002U,
+    EvtSubscribeStartAfterBookmark  = 0x00000003U,
+    EvtSubscribeOriginMask          = 0x00000003U,
+    EvtSubscribeTolerateQueryErrors = 0x00001000U,
+    EvtSubscribeStrict              = 0x00010000U,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_subscribe_notify_action))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_subscribe_notify_action
 alias EVT_SUBSCRIBE_NOTIFY_ACTION = int;
 enum : int
 {
     EvtSubscribeActionError   = 0x00000000,
     EvtSubscribeActionDeliver = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_system_property_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_system_property_id
 alias EVT_SYSTEM_PROPERTY_ID = int;
 enum : int
 {
@@ -137,44 +148,49 @@ enum : int
     EvtSystemVersion           = 0x00000011,
     EvtSystemPropertyIdEND     = 0x00000012,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_render_context_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_render_context_flags
 alias EVT_RENDER_CONTEXT_FLAGS = uint;
 enum : uint
 {
-    EvtRenderContextValues = 0x00000000,
-    EvtRenderContextSystem = 0x00000001,
-    EvtRenderContextUser   = 0x00000002,
+    EvtRenderContextValues = 0x00000000U,
+    EvtRenderContextSystem = 0x00000001U,
+    EvtRenderContextUser   = 0x00000002U,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_render_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_render_flags
 alias EVT_RENDER_FLAGS = uint;
 enum : uint
 {
-    EvtRenderEventValues = 0x00000000,
-    EvtRenderEventXml    = 0x00000001,
-    EvtRenderBookmark    = 0x00000002,
+    EvtRenderEventValues = 0x00000000U,
+    EvtRenderEventXml    = 0x00000001U,
+    EvtRenderBookmark    = 0x00000002U,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_format_message_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_format_message_flags
 alias EVT_FORMAT_MESSAGE_FLAGS = uint;
 enum : uint
 {
-    EvtFormatMessageEvent    = 0x00000001,
-    EvtFormatMessageLevel    = 0x00000002,
-    EvtFormatMessageTask     = 0x00000003,
-    EvtFormatMessageOpcode   = 0x00000004,
-    EvtFormatMessageKeyword  = 0x00000005,
-    EvtFormatMessageChannel  = 0x00000006,
-    EvtFormatMessageProvider = 0x00000007,
-    EvtFormatMessageId       = 0x00000008,
-    EvtFormatMessageXml      = 0x00000009,
+    EvtFormatMessageEvent    = 0x00000001U,
+    EvtFormatMessageLevel    = 0x00000002U,
+    EvtFormatMessageTask     = 0x00000003U,
+    EvtFormatMessageOpcode   = 0x00000004U,
+    EvtFormatMessageKeyword  = 0x00000005U,
+    EvtFormatMessageChannel  = 0x00000006U,
+    EvtFormatMessageProvider = 0x00000007U,
+    EvtFormatMessageId       = 0x00000008U,
+    EvtFormatMessageXml      = 0x00000009U,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_open_log_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_open_log_flags
 alias EVT_OPEN_LOG_FLAGS = uint;
 enum : uint
 {
-    EvtOpenChannelPath = 0x00000001,
-    EvtOpenFilePath    = 0x00000002,
+    EvtOpenChannelPath = 0x00000001U,
+    EvtOpenFilePath    = 0x00000002U,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_log_property_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_log_property_id
 alias EVT_LOG_PROPERTY_ID = int;
 enum : int
 {
@@ -187,16 +203,18 @@ enum : int
     EvtLogOldestRecordNumber = 0x00000006,
     EvtLogFull               = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_exportlog_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_exportlog_flags
 alias EVT_EXPORTLOG_FLAGS = uint;
 enum : uint
 {
-    EvtExportLogChannelPath         = 0x00000001,
-    EvtExportLogFilePath            = 0x00000002,
-    EvtExportLogTolerateQueryErrors = 0x00001000,
-    EvtExportLogOverwrite           = 0x00002000,
+    EvtExportLogChannelPath         = 0x00000001U,
+    EvtExportLogFilePath            = 0x00000002U,
+    EvtExportLogTolerateQueryErrors = 0x00001000U,
+    EvtExportLogOverwrite           = 0x00002000U,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_channel_config_property_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_channel_config_property_id
 alias EVT_CHANNEL_CONFIG_PROPERTY_ID = int;
 enum : int
 {
@@ -223,7 +241,8 @@ enum : int
     EvtChannelPublishingConfigFileMax     = 0x00000014,
     EvtChannelConfigPropertyIdEND         = 0x00000015,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_channel_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_channel_type
 alias EVT_CHANNEL_TYPE = int;
 enum : int
 {
@@ -232,7 +251,8 @@ enum : int
     EvtChannelTypeAnalytic    = 0x00000002,
     EvtChannelTypeDebug       = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_channel_isolation_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_channel_isolation_type
 alias EVT_CHANNEL_ISOLATION_TYPE = int;
 enum : int
 {
@@ -240,27 +260,31 @@ enum : int
     EvtChannelIsolationTypeSystem      = 0x00000001,
     EvtChannelIsolationTypeCustom      = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_channel_clock_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_channel_clock_type
 alias EVT_CHANNEL_CLOCK_TYPE = int;
 enum : int
 {
     EvtChannelClockTypeSystemTime = 0x00000000,
     EvtChannelClockTypeQPC        = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_channel_sid_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_channel_sid_type
 alias EVT_CHANNEL_SID_TYPE = int;
 enum : int
 {
     EvtChannelSidTypeNone       = 0x00000000,
     EvtChannelSidTypePublishing = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_channel_reference_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_channel_reference_flags
 alias EVT_CHANNEL_REFERENCE_FLAGS = uint;
 enum : uint
 {
-    EvtChannelReferenceImported = 0x00000001,
+    EvtChannelReferenceImported = 0x00000001U,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_publisher_metadata_property_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_publisher_metadata_property_id
 alias EVT_PUBLISHER_METADATA_PROPERTY_ID = int;
 enum : int
 {
@@ -295,7 +319,8 @@ enum : int
     EvtPublisherMetadataKeywordMessageID          = 0x0000001c,
     EvtPublisherMetadataPropertyIdEND             = 0x0000001d,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_event_metadata_property_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_event_metadata_property_id
 alias EVT_EVENT_METADATA_PROPERTY_ID = int;
 enum : int
 {
@@ -310,7 +335,8 @@ enum : int
     EventMetadataEventTemplate    = 0x00000008,
     EvtEventMetadataPropertyIdEND = 0x00000009,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_query_property_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_query_property_id
 alias EVT_QUERY_PROPERTY_ID = int;
 enum : int
 {
@@ -318,7 +344,8 @@ enum : int
     EvtQueryStatuses      = 0x00000001,
     EvtQueryPropertyIdEND = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_event_property_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winevt/ne-winevt-evt_event_property_id
 alias EVT_EVENT_PROPERTY_ID = int;
 enum : int
 {
@@ -332,14 +359,14 @@ enum : int
 
 enum : uint
 {
-    EVT_VARIANT_TYPE_MASK  = 0x0000007f,
-    EVT_VARIANT_TYPE_ARRAY = 0x00000080,
+    EVT_VARIANT_TYPE_MASK  = 0x0000007fU,
+    EVT_VARIANT_TYPE_ARRAY = 0x00000080U,
 }
 
-enum uint EVT_READ_ACCESS = 0x00000001;
-enum uint EVT_WRITE_ACCESS = 0x00000002;
-enum uint EVT_CLEAR_ACCESS = 0x00000004;
-enum uint EVT_ALL_ACCESS = 0x00000007;
+enum uint EVT_READ_ACCESS = 0x00000001U;
+enum uint EVT_WRITE_ACCESS = 0x00000002U;
+enum uint EVT_CLEAR_ACCESS = 0x00000004U;
+enum uint EVT_ALL_ACCESS = 0x00000007U;
 
 // Callbacks
 
@@ -356,15 +383,57 @@ struct EVT_HANDLE
     ptrdiff_t Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winevt/ns-winevt-evt_variant))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winevt/ns-winevt-evt_variant
 struct EVT_VARIANT
 {
-    _Anonymous_e__Union Anonymous;
-    uint                Count;
-    uint                Type;
+    union
+    {
+        BOOL          BooleanVal;
+        byte          SByteVal;
+        short         Int16Val;
+        int           Int32Val;
+        long          Int64Val;
+        ubyte         ByteVal;
+        ushort        UInt16Val;
+        uint          UInt32Val;
+        ulong         UInt64Val;
+        float         SingleVal;
+        double        DoubleVal;
+        ulong         FileTimeVal;
+        SYSTEMTIME*   SysTimeVal;
+        GUID*         GuidVal;
+        const(PWSTR)  StringVal;
+        const(PSTR)   AnsiStringVal;
+        ubyte*        BinaryVal;
+        PSID          SidVal;
+        size_t        SizeTVal;
+        BOOL*         BooleanArr;
+        byte*         SByteArr;
+        short*        Int16Arr;
+        int*          Int32Arr;
+        long*         Int64Arr;
+        ubyte*        ByteArr;
+        ushort*       UInt16Arr;
+        uint*         UInt32Arr;
+        ulong*        UInt64Arr;
+        float*        SingleArr;
+        double*       DoubleArr;
+        FILETIME*     FileTimeArr;
+        SYSTEMTIME*   SysTimeArr;
+        GUID*         GuidArr;
+        PWSTR*        StringArr;
+        PSTR*         AnsiStringArr;
+        PSID*         SidArr;
+        size_t*       SizeTArr;
+        EVT_HANDLE    EvtHandleVal;
+        const(PWSTR)  XmlVal;
+        const(PWSTR)* XmlValArr;
+    }
+    uint Count;
+    uint Type;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winevt/ns-winevt-evt_rpc_login))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winevt/ns-winevt-evt_rpc_login
 struct EVT_RPC_LOGIN
 {
     PWSTR Server;
@@ -374,7 +443,7 @@ struct EVT_RPC_LOGIN
     uint  Flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-eventlogrecord))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-eventlogrecord
 struct EVENTLOGRECORD
 {
     uint              Length;
@@ -404,7 +473,7 @@ struct EVENTSFORLOGFILE
     EVENTLOGRECORD[1] pEventLogRecords;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winbase/ns-winbase-eventlog_full_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winbase/ns-winbase-eventlog_full_information
 struct EVENTLOG_FULL_INFORMATION
 {
     uint dwFull;

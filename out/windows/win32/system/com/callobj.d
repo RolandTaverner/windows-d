@@ -3,9 +3,9 @@
 module windows.win32.system.com.callobj;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BOOLEAN, HRESULT, PWSTR;
-public import windows.win32.system.com : ITypeInfo, IUnknown, MSHLFLAGS;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BOOLEAN, HRESULT, PWSTR;
+public import windows.win32.system.com.com : ITypeInfo, IUnknown, MSHLFLAGS;
 public import windows.win32.system.variant : VARIANT;
 
 extern(Windows) @nogc nothrow:
@@ -13,14 +13,16 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/ne-callobj-callframe_copy))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/ne-callobj-callframe_copy
 alias CALLFRAME_COPY = int;
 enum : int
 {
     CALLFRAME_COPY_NESTED      = 0x00000001,
     CALLFRAME_COPY_INDEPENDENT = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/ne-callobj-callframe_free))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/ne-callobj-callframe_free
 alias CALLFRAME_FREE = int;
 enum : int
 {
@@ -32,7 +34,8 @@ enum : int
     CALLFRAME_FREE_TOP_OUT   = 0x00000010,
     CALLFRAME_FREE_ALL       = 0x0000001f,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/ne-callobj-callframe_null))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/ne-callobj-callframe_null
 alias CALLFRAME_NULL = int;
 enum : int
 {
@@ -41,7 +44,8 @@ enum : int
     CALLFRAME_NULL_OUT   = 0x00000004,
     CALLFRAME_NULL_ALL   = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/ne-callobj-callframe_walk))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/ne-callobj-callframe_walk
 alias CALLFRAME_WALK = int;
 enum : int
 {
@@ -53,7 +57,7 @@ enum : int
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/ns-callobj-callframeinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/ns-callobj-callframeinfo
 struct CALLFRAMEINFO
 {
     uint iMethod;
@@ -70,7 +74,7 @@ struct CALLFRAMEINFO
     uint cParams;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/ns-callobj-callframeparaminfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/ns-callobj-callframeparaminfo
 struct CALLFRAMEPARAMINFO
 {
     BOOLEAN fIn;
@@ -79,7 +83,7 @@ struct CALLFRAMEPARAMINFO
     uint    cbParam;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/ns-callobj-callframe_marshalcontext))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/ns-callobj-callframe_marshalcontext
 struct CALLFRAME_MARSHALCONTEXT
 {
     BOOLEAN  fIn;
@@ -104,107 +108,107 @@ HRESULT CoGetInterceptorFromTypeInfo(const(GUID)* iidIntercepted, IUnknown punkO
 
 @GUID("d573b4b0-894e-11d2-b8b6-00c04fb9618a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/nn-callobj-icallframe))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nn-callobj-icallframe
 interface ICallFrame : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-getinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-getinfo
     HRESULT GetInfo(CALLFRAMEINFO* pInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-getiidandmethod))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-getiidandmethod
     HRESULT GetIIDAndMethod(GUID* pIID, uint* piMethod);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-getnames))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-getnames
     HRESULT GetNames(PWSTR* pwszInterface, PWSTR* pwszMethod);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-getstacklocation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-getstacklocation
     void*   GetStackLocation();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-setstacklocation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-setstacklocation
     void    SetStackLocation(void* pvStack);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-setreturnvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-setreturnvalue
     void    SetReturnValue(HRESULT hr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-getreturnvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-getreturnvalue
     HRESULT GetReturnValue();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-getparaminfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-getparaminfo
     HRESULT GetParamInfo(uint iparam, CALLFRAMEPARAMINFO* pInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-setparam))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-setparam
     HRESULT SetParam(uint iparam, VARIANT* pvar);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-getparam))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-getparam
     HRESULT GetParam(uint iparam, VARIANT* pvar);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-copy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-copy
     HRESULT Copy(CALLFRAME_COPY copyControl, ICallFrameWalker pWalker, ICallFrame* ppFrame);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-free))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-free
     HRESULT Free(ICallFrame pframeArgsDest, ICallFrameWalker pWalkerDestFree, ICallFrameWalker pWalkerCopy, 
                  uint freeFlags, ICallFrameWalker pWalkerFree, uint nullFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-freeparam))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-freeparam
     HRESULT FreeParam(uint iparam, uint freeFlags, ICallFrameWalker pWalkerFree, uint nullFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-walkframe))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-walkframe
     HRESULT WalkFrame(uint walkWhat, ICallFrameWalker pWalker);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-getmarshalsizemax))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-getmarshalsizemax
     HRESULT GetMarshalSizeMax(CALLFRAME_MARSHALCONTEXT* pmshlContext, MSHLFLAGS mshlflags, uint* pcbBufferNeeded);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-marshal))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-marshal
     HRESULT Marshal(CALLFRAME_MARSHALCONTEXT* pmshlContext, MSHLFLAGS mshlflags, void* pBuffer, uint cbBuffer, 
                     uint* pcbBufferUsed, uint* pdataRep, uint* prpcFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-unmarshal))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-unmarshal
     HRESULT Unmarshal(void* pBuffer, uint cbBuffer, uint dataRep, CALLFRAME_MARSHALCONTEXT* pcontext, 
                       uint* pcbUnmarshalled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-releasemarshaldata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-releasemarshaldata
     HRESULT ReleaseMarshalData(void* pBuffer, uint cbBuffer, uint ibFirstRelease, uint dataRep, 
                                CALLFRAME_MARSHALCONTEXT* pcontext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-invoke))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframe-invoke
     HRESULT Invoke(void* pvReceiver);
 }
 
 @GUID("d573b4b1-894e-11d2-b8b6-00c04fb9618a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/nn-callobj-icallindirect))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nn-callobj-icallindirect
 interface ICallIndirect : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallindirect-callindirect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallindirect-callindirect
     HRESULT CallIndirect(HRESULT* phrReturn, uint iMethod, void* pvArgs, uint* cbArgs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallindirect-getmethodinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallindirect-getmethodinfo
     HRESULT GetMethodInfo(uint iMethod, CALLFRAMEINFO* pInfo, PWSTR* pwszMethod);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallindirect-getstacksize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallindirect-getstacksize
     HRESULT GetStackSize(uint iMethod, uint* cbArgs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallindirect-getiid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallindirect-getiid
     HRESULT GetIID(GUID* piid, BOOL* pfDerivesFromIDispatch, uint* pcMethod, PWSTR* pwszInterface);
 }
 
 @GUID("60c7ca75-896d-11d2-b8b6-00c04fb9618a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/nn-callobj-icallinterceptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nn-callobj-icallinterceptor
 interface ICallInterceptor : ICallIndirect
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallinterceptor-registersink))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallinterceptor-registersink
     HRESULT RegisterSink(ICallFrameEvents psink);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallinterceptor-getregisteredsink))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallinterceptor-getregisteredsink
     HRESULT GetRegisteredSink(ICallFrameEvents* ppsink);
 }
 
 @GUID("fd5e0843-fc91-11d0-97d7-00c04fb9618a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/nn-callobj-icallframeevents))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nn-callobj-icallframeevents
 interface ICallFrameEvents : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframeevents-oncall))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframeevents-oncall
     HRESULT OnCall(ICallFrame pFrame);
 }
 
 @GUID("5333b003-2e42-11d2-b89d-00c04fb9618a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/nn-callobj-icallunmarshal))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nn-callobj-icallunmarshal
 interface ICallUnmarshal : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallunmarshal-unmarshal))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallunmarshal-unmarshal
     HRESULT Unmarshal(uint iMethod, void* pBuffer, uint cbBuffer, BOOL fForceBufferCopy, uint dataRep, 
                       CALLFRAME_MARSHALCONTEXT* pcontext, uint* pcbUnmarshalled, ICallFrame* ppFrame);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallunmarshal-releasemarshaldata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallunmarshal-releasemarshaldata
     HRESULT ReleaseMarshalData(uint iMethod, void* pBuffer, uint cbBuffer, uint ibFirstRelease, uint dataRep, 
                                CALLFRAME_MARSHALCONTEXT* pcontext);
 }
 
 @GUID("08b23919-392d-11d2-b8a4-00c04fb9618a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/nn-callobj-icallframewalker))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nn-callobj-icallframewalker
 interface ICallFrameWalker : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframewalker-onwalkinterface))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/callobj/nf-callobj-icallframewalker-onwalkinterface
     HRESULT OnWalkInterface(const(GUID)* iid, void** ppvInterface, BOOL fIn, BOOL fOut);
 }
 

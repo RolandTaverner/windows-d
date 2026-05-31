@@ -3,14 +3,15 @@
 module windows.win32.graphics.dxgi.common;
 
 public import windows.core;
-public import windows.win32.foundation : BOOL;
+public import windows.win32.foundation.foundation : BOOL;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxgicommon/ne-dxgicommon-dxgi_color_space_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgicommon/ne-dxgicommon-dxgi_color_space_type
 alias DXGI_COLOR_SPACE_TYPE = int;
 enum : int
 {
@@ -41,7 +42,8 @@ enum : int
     DXGI_COLOR_SPACE_YCBCR_STUDIO_G24_TOPLEFT_P2020   = 0x00000018,
     DXGI_COLOR_SPACE_CUSTOM                           = 0xffffffff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxgiformat/ne-dxgiformat-dxgi_format))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgiformat/ne-dxgiformat-dxgi_format
 alias DXGI_FORMAT = int;
 enum : int
 {
@@ -168,6 +170,7 @@ enum : int
     DXGI_FORMAT_SAMPLER_FEEDBACK_MIP_REGION_USED_OPAQUE = 0x000000be,
     DXGI_FORMAT_A4B4G4R4_UNORM                          = 0x000000bf,
 }
+
 alias DXGI_MODE_SCANLINE_ORDER = int;
 enum : int
 {
@@ -176,6 +179,7 @@ enum : int
     DXGI_MODE_SCANLINE_ORDER_UPPER_FIELD_FIRST = 0x00000002,
     DXGI_MODE_SCANLINE_ORDER_LOWER_FIELD_FIRST = 0x00000003,
 }
+
 alias DXGI_MODE_SCALING = int;
 enum : int
 {
@@ -183,6 +187,7 @@ enum : int
     DXGI_MODE_SCALING_CENTERED    = 0x00000001,
     DXGI_MODE_SCALING_STRETCHED   = 0x00000002,
 }
+
 alias DXGI_MODE_ROTATION = int;
 enum : int
 {
@@ -192,7 +197,8 @@ enum : int
     DXGI_MODE_ROTATION_ROTATE180   = 0x00000003,
     DXGI_MODE_ROTATION_ROTATE270   = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxgi1_2/ne-dxgi1_2-dxgi_alpha_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgi1_2/ne-dxgi1_2-dxgi_alpha_mode
 alias DXGI_ALPHA_MODE = int;
 enum : int
 {
@@ -205,32 +211,32 @@ enum : int
 // Constants
 
 
-enum uint _FACDXGI = 0x0000087a;
+enum uint _FACDXGI = 0x0000087aU;
 
 enum : uint
 {
-    DXGI_CPU_ACCESS_NONE       = 0x00000000,
-    DXGI_CPU_ACCESS_DYNAMIC    = 0x00000001,
-    DXGI_CPU_ACCESS_READ_WRITE = 0x00000002,
-    DXGI_CPU_ACCESS_SCRATCH    = 0x00000003,
-    DXGI_CPU_ACCESS_FIELD      = 0x0000000f,
+    DXGI_CPU_ACCESS_NONE       = 0x00000000U,
+    DXGI_CPU_ACCESS_DYNAMIC    = 0x00000001U,
+    DXGI_CPU_ACCESS_READ_WRITE = 0x00000002U,
+    DXGI_CPU_ACCESS_SCRATCH    = 0x00000003U,
+    DXGI_CPU_ACCESS_FIELD      = 0x0000000fU,
 }
 
-enum uint DXGI_FORMAT_DEFINED = 0x00000001;
-enum uint DXGI_STANDARD_MULTISAMPLE_QUALITY_PATTERN = 0xffffffff;
-enum uint DXGI_CENTER_MULTISAMPLE_QUALITY_PATTERN = 0xfffffffe;
+enum uint DXGI_FORMAT_DEFINED = 0x00000001U;
+enum uint DXGI_STANDARD_MULTISAMPLE_QUALITY_PATTERN = 0xffffffffU;
+enum uint DXGI_CENTER_MULTISAMPLE_QUALITY_PATTERN = 0xfffffffeU;
 
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxgicommon/ns-dxgicommon-dxgi_rational))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgicommon/ns-dxgicommon-dxgi_rational
 struct DXGI_RATIONAL
 {
     uint Numerator;
     uint Denominator;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxgicommon/ns-dxgicommon-dxgi_sample_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxgicommon/ns-dxgicommon-dxgi_sample_desc
 struct DXGI_SAMPLE_DESC
 {
     uint Count;
@@ -270,21 +276,21 @@ struct DXGI_MODE_DESC
     DXGI_MODE_SCALING Scaling;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/direct3ddxgi/dxgi-jpeg-dc-huffman-table))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/direct3ddxgi/dxgi-jpeg-dc-huffman-table
 struct DXGI_JPEG_DC_HUFFMAN_TABLE
 {
     ubyte[12] CodeCounts;
     ubyte[12] CodeValues;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/direct3ddxgi/dxgi-jpeg-ac-huffman-table))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/direct3ddxgi/dxgi-jpeg-ac-huffman-table
 struct DXGI_JPEG_AC_HUFFMAN_TABLE
 {
     ubyte[16]  CodeCounts;
     ubyte[162] CodeValues;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/direct3ddxgi/dxgi-jpeg-quantization-table))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/direct3ddxgi/dxgi-jpeg-quantization-table
 struct DXGI_JPEG_QUANTIZATION_TABLE
 {
     ubyte[64] Elements;

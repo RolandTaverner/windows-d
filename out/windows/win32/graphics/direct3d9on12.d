@@ -3,11 +3,11 @@
 module windows.win32.graphics.direct3d9on12;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, HRESULT;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, HRESULT;
 public import windows.win32.graphics.direct3d12 : ID3D12CommandQueue, ID3D12Fence;
 public import windows.win32.graphics.direct3d9 : IDirect3D9, IDirect3D9Ex, IDirect3DResource9;
-public import windows.win32.system.com : IUnknown;
+public import windows.win32.system.com.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
@@ -15,7 +15,7 @@ extern(Windows) @nogc nothrow:
 // Constants
 
 
-enum uint MAX_D3D9ON12_QUEUES = 0x00000002;
+enum uint MAX_D3D9ON12_QUEUES = 0x00000002U;
 
 // Callbacks
 

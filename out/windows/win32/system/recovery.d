@@ -3,7 +3,7 @@
 module windows.win32.system.recovery;
 
 public import windows.core;
-public import windows.win32.foundation : BOOL, HANDLE, HRESULT, PWSTR;
+public import windows.win32.foundation.foundation : BOOL, HANDLE, HRESULT, PWSTR;
 public import windows.win32.system.windowsprogramming : APPLICATION_RECOVERY_CALLBACK;
 
 extern(Windows) @nogc nothrow:
@@ -11,13 +11,14 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias REGISTER_APPLICATION_RESTART_FLAGS = uint;
 enum : uint
 {
-    RESTART_NO_CRASH  = 0x00000001,
-    RESTART_NO_HANG   = 0x00000002,
-    RESTART_NO_PATCH  = 0x00000004,
-    RESTART_NO_REBOOT = 0x00000008,
+    RESTART_NO_CRASH  = 0x00000001U,
+    RESTART_NO_HANG   = 0x00000002U,
+    RESTART_NO_PATCH  = 0x00000004U,
+    RESTART_NO_REBOOT = 0x00000008U,
 }
 
 // Functions

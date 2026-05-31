@@ -3,10 +3,10 @@
 module windows.win32.system.realtimecommunications;
 
 public import windows.core;
-public import windows.win32.foundation : BSTR, HRESULT, VARIANT_BOOL;
-public import windows.win32.media.directshow : IVideoWindow;
+public import windows.win32.foundation.foundation : BSTR, HRESULT, VARIANT_BOOL;
+public import windows.win32.media.directshow.directshow : IVideoWindow;
 public import windows.win32.networking.winsock : TRANSPORT_SETTING_ID;
-public import windows.win32.system.com : IDispatch, IUnknown;
+public import windows.win32.system.com.com : IDispatch, IUnknown;
 public import windows.win32.system.variant : VARIANT;
 
 extern(Windows) @nogc nothrow:
@@ -14,18 +14,21 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias RTC_AUDIO_DEVICE = int;
 enum : int
 {
     RTCAD_SPEAKER    = 0x00000000,
     RTCAD_MICROPHONE = 0x00000001,
 }
+
 alias RTC_VIDEO_DEVICE = int;
 enum : int
 {
     RTCVD_RECEIVE = 0x00000000,
     RTCVD_PREVIEW = 0x00000001,
 }
+
 alias RTC_EVENT = int;
 enum : int
 {
@@ -52,6 +55,7 @@ enum : int
     RTCE_SESSION_REFERRED           = 0x00000014,
     RTCE_REINVITE                   = 0x00000015,
 }
+
 alias RTC_LISTEN_MODE = int;
 enum : int
 {
@@ -59,6 +63,7 @@ enum : int
     RTCLM_DYNAMIC = 0x00000001,
     RTCLM_BOTH    = 0x00000002,
 }
+
 alias RTC_CLIENT_EVENT_TYPE = int;
 enum : int
 {
@@ -67,6 +72,7 @@ enum : int
     RTCCET_NETWORK_QUALITY_CHANGE = 0x00000002,
     RTCCET_ASYNC_CLEANUP_DONE     = 0x00000003,
 }
+
 alias RTC_BUDDY_EVENT_TYPE = int;
 enum : int
 {
@@ -77,6 +83,7 @@ enum : int
     RTCBET_BUDDY_ROAMED       = 0x00000004,
     RTCBET_BUDDY_SUBSCRIBED   = 0x00000005,
 }
+
 alias RTC_WATCHER_EVENT_TYPE = int;
 enum : int
 {
@@ -86,6 +93,7 @@ enum : int
     RTCWET_WATCHER_OFFERING = 0x00000003,
     RTCWET_WATCHER_ROAMED   = 0x00000004,
 }
+
 alias RTC_GROUP_EVENT_TYPE = int;
 enum : int
 {
@@ -96,6 +104,7 @@ enum : int
     RTCGET_GROUP_BUDDY_REMOVE = 0x00000004,
     RTCGET_GROUP_ROAMED       = 0x00000005,
 }
+
 alias RTC_TERMINATE_REASON = int;
 enum : int
 {
@@ -108,6 +117,7 @@ enum : int
     RTCTR_INSUFFICIENT_SECURITY_LEVEL = 0x00000006,
     RTCTR_NOT_SUPPORTED               = 0x00000007,
 }
+
 alias RTC_REGISTRATION_STATE = int;
 enum : int
 {
@@ -121,6 +131,7 @@ enum : int
     RTCRS_LOCAL_PA_LOGGED_OFF  = 0x00000007,
     RTCRS_REMOTE_PA_LOGGED_OFF = 0x00000008,
 }
+
 alias RTC_SESSION_STATE = int;
 enum : int
 {
@@ -133,6 +144,7 @@ enum : int
     RTCSS_HOLD         = 0x00000006,
     RTCSS_REFER        = 0x00000007,
 }
+
 alias RTC_PARTICIPANT_STATE = int;
 enum : int
 {
@@ -146,6 +158,7 @@ enum : int
     RTCPS_DISCONNECTING = 0x00000007,
     RTCPS_DISCONNECTED  = 0x00000008,
 }
+
 alias RTC_WATCHER_STATE = int;
 enum : int
 {
@@ -156,6 +169,7 @@ enum : int
     RTCWS_DENIED   = 0x00000004,
     RTCWS_PROMPT   = 0x00000005,
 }
+
 alias RTC_ACE_SCOPE = int;
 enum : int
 {
@@ -163,24 +177,28 @@ enum : int
     RTCAS_SCOPE_DOMAIN = 0x00000001,
     RTCAS_SCOPE_ALL    = 0x00000002,
 }
+
 alias RTC_OFFER_WATCHER_MODE = int;
 enum : int
 {
     RTCOWM_OFFER_WATCHER_EVENT       = 0x00000000,
     RTCOWM_AUTOMATICALLY_ADD_WATCHER = 0x00000001,
 }
+
 alias RTC_WATCHER_MATCH_MODE = int;
 enum : int
 {
     RTCWMM_EXACT_MATCH    = 0x00000000,
     RTCWMM_BEST_ACE_MATCH = 0x00000001,
 }
+
 alias RTC_PRIVACY_MODE = int;
 enum : int
 {
     RTCPM_BLOCK_LIST_EXCLUDED = 0x00000000,
     RTCPM_ALLOW_LIST_ONLY     = 0x00000001,
 }
+
 alias RTC_SESSION_TYPE = int;
 enum : int
 {
@@ -191,6 +209,7 @@ enum : int
     RTCST_MULTIPARTY_IM  = 0x00000004,
     RTCST_APPLICATION    = 0x00000005,
 }
+
 alias RTC_PRESENCE_STATUS = int;
 enum : int
 {
@@ -203,6 +222,7 @@ enum : int
     RTCXS_PRESENCE_ON_THE_PHONE  = 0x00000006,
     RTCXS_PRESENCE_OUT_TO_LUNCH  = 0x00000007,
 }
+
 alias RTC_BUDDY_SUBSCRIPTION_TYPE = int;
 enum : int
 {
@@ -211,6 +231,7 @@ enum : int
     RTCBT_ALWAYS_ONLINE  = 0x00000002,
     RTCBT_POLL           = 0x00000003,
 }
+
 alias RTC_MEDIA_EVENT_TYPE = int;
 enum : int
 {
@@ -218,6 +239,7 @@ enum : int
     RTCMET_STARTED = 0x00000001,
     RTCMET_FAILED  = 0x00000002,
 }
+
 alias RTC_MEDIA_EVENT_REASON = int;
 enum : int
 {
@@ -229,18 +251,21 @@ enum : int
     RTCMER_PORT_MAPPING_FAILED = 0x00000005,
     RTCMER_REMOTE_REQUEST      = 0x00000006,
 }
+
 alias RTC_MESSAGING_EVENT_TYPE = int;
 enum : int
 {
     RTCMSET_MESSAGE = 0x00000000,
     RTCMSET_STATUS  = 0x00000001,
 }
+
 alias RTC_MESSAGING_USER_STATUS = int;
 enum : int
 {
     RTCMUS_IDLE   = 0x00000000,
     RTCMUS_TYPING = 0x00000001,
 }
+
 alias RTC_DTMF = int;
 enum : int
 {
@@ -262,6 +287,7 @@ enum : int
     RTC_DTMF_D     = 0x0000000f,
     RTC_DTMF_FLASH = 0x00000010,
 }
+
 alias RTC_PROVIDER_URI = int;
 enum : int
 {
@@ -271,6 +297,7 @@ enum : int
     RTCPU_URIDISPLAYDURINGCALL = 0x00000003,
     RTCPU_URIDISPLAYDURINGIDLE = 0x00000004,
 }
+
 alias RTC_RING_TYPE = int;
 enum : int
 {
@@ -278,12 +305,14 @@ enum : int
     RTCRT_MESSAGE  = 0x00000001,
     RTCRT_RINGBACK = 0x00000002,
 }
+
 alias RTC_T120_APPLET = int;
 enum : int
 {
     RTCTA_WHITEBOARD = 0x00000000,
     RTCTA_APPSHARING = 0x00000001,
 }
+
 alias RTC_PORT_TYPE = int;
 enum : int
 {
@@ -293,6 +322,7 @@ enum : int
     RTCPT_VIDEO_RTCP = 0x00000003,
     RTCPT_SIP        = 0x00000004,
 }
+
 alias RTC_USER_SEARCH_COLUMN = int;
 enum : int
 {
@@ -307,12 +337,14 @@ enum : int
     RTCUSC_COUNTRY     = 0x00000008,
     RTCUSC_EMAIL       = 0x00000009,
 }
+
 alias RTC_USER_SEARCH_PREFERENCE = int;
 enum : int
 {
     RTCUSP_MAX_MATCHES = 0x00000000,
     RTCUSP_TIME_LIMIT  = 0x00000001,
 }
+
 alias RTC_ROAMING_EVENT_TYPE = int;
 enum : int
 {
@@ -322,12 +354,14 @@ enum : int
     RTCRET_PROFILE_ROAMING  = 0x00000003,
     RTCRET_WPENDING_ROAMING = 0x00000004,
 }
+
 alias RTC_PROFILE_EVENT_TYPE = int;
 enum : int
 {
     RTCPFET_PROFILE_GET    = 0x00000000,
     RTCPFET_PROFILE_UPDATE = 0x00000001,
 }
+
 alias RTC_ANSWER_MODE = int;
 enum : int
 {
@@ -336,6 +370,7 @@ enum : int
     RTCAM_AUTOMATICALLY_REJECT = 0x00000002,
     RTCAM_NOT_SUPPORTED        = 0x00000003,
 }
+
 alias RTC_SESSION_REFER_STATUS = int;
 enum : int
 {
@@ -346,6 +381,7 @@ enum : int
     RTCSRS_DROPPED   = 0x00000004,
     RTCSRS_DONE      = 0x00000005,
 }
+
 alias RTC_PRESENCE_PROPERTY = int;
 enum : int
 {
@@ -355,12 +391,14 @@ enum : int
     RTCPP_DEVICE_NAME = 0x00000003,
     RTCPP_MULTIPLE    = 0x00000004,
 }
+
 alias RTC_SECURITY_TYPE = int;
 enum : int
 {
     RTCSECT_AUDIO_VIDEO_MEDIA_ENCRYPTION = 0x00000000,
     RTCSECT_T120_MEDIA_ENCRYPTION        = 0x00000001,
 }
+
 alias RTC_SECURITY_LEVEL = int;
 enum : int
 {
@@ -368,6 +406,7 @@ enum : int
     RTCSECL_SUPPORTED   = 0x00000002,
     RTCSECL_REQUIRED    = 0x00000003,
 }
+
 alias RTC_REINVITE_STATE = int;
 enum : int
 {
@@ -379,146 +418,146 @@ enum : int
 // Constants
 
 
-enum uint RTCCS_FORCE_PROFILE = 0x00000001;
-enum uint RTCCS_FAIL_ON_REDIRECT = 0x00000002;
+enum uint RTCCS_FORCE_PROFILE = 0x00000001U;
+enum uint RTCCS_FAIL_ON_REDIRECT = 0x00000002U;
 
 enum : uint
 {
-    RTCMT_AUDIO_SEND    = 0x00000001,
-    RTCMT_AUDIO_RECEIVE = 0x00000002,
+    RTCMT_AUDIO_SEND    = 0x00000001U,
+    RTCMT_AUDIO_RECEIVE = 0x00000002U,
 }
 
 enum : uint
 {
-    RTCMT_VIDEO_SEND    = 0x00000004,
-    RTCMT_VIDEO_RECEIVE = 0x00000008,
+    RTCMT_VIDEO_SEND    = 0x00000004U,
+    RTCMT_VIDEO_RECEIVE = 0x00000008U,
 }
 
-enum uint RTCMT_T120_SENDRECV = 0x00000010;
+enum uint RTCMT_T120_SENDRECV = 0x00000010U;
 
 enum : uint
 {
-    RTCSI_PC_TO_PC       = 0x00000001,
-    RTCSI_PC_TO_PHONE    = 0x00000002,
-    RTCSI_PHONE_TO_PHONE = 0x00000004,
-}
-
-enum : uint
-{
-    RTCSI_IM            = 0x00000008,
-    RTCSI_MULTIPARTY_IM = 0x00000010,
-}
-
-enum uint RTCSI_APPLICATION = 0x00000020;
-
-enum : uint
-{
-    RTCTR_UDP = 0x00000001,
-    RTCTR_TCP = 0x00000002,
-    RTCTR_TLS = 0x00000004,
+    RTCSI_PC_TO_PC       = 0x00000001U,
+    RTCSI_PC_TO_PHONE    = 0x00000002U,
+    RTCSI_PHONE_TO_PHONE = 0x00000004U,
 }
 
 enum : uint
 {
-    RTCAU_BASIC          = 0x00000001,
-    RTCAU_DIGEST         = 0x00000002,
-    RTCAU_NTLM           = 0x00000004,
-    RTCAU_KERBEROS       = 0x00000008,
-    RTCAU_USE_LOGON_CRED = 0x00010000,
+    RTCSI_IM            = 0x00000008U,
+    RTCSI_MULTIPARTY_IM = 0x00000010U,
+}
+
+enum uint RTCSI_APPLICATION = 0x00000020U;
+
+enum : uint
+{
+    RTCTR_UDP = 0x00000001U,
+    RTCTR_TCP = 0x00000002U,
+    RTCTR_TLS = 0x00000004U,
 }
 
 enum : uint
 {
-    RTCRF_REGISTER_INVITE_SESSIONS  = 0x00000001,
-    RTCRF_REGISTER_MESSAGE_SESSIONS = 0x00000002,
-    RTCRF_REGISTER_PRESENCE         = 0x00000004,
-    RTCRF_REGISTER_NOTIFY           = 0x00000008,
-    RTCRF_REGISTER_ALL              = 0x0000000f,
-}
-
-enum uint RTCRMF_BUDDY_ROAMING = 0x00000001;
-enum uint RTCRMF_WATCHER_ROAMING = 0x00000002;
-enum uint RTCRMF_PRESENCE_ROAMING = 0x00000004;
-enum uint RTCRMF_PROFILE_ROAMING = 0x00000008;
-enum uint RTCRMF_ALL_ROAMING = 0x0000000f;
-
-enum : uint
-{
-    RTCEF_CLIENT                    = 0x00000001,
-    RTCEF_REGISTRATION_STATE_CHANGE = 0x00000002,
+    RTCAU_BASIC          = 0x00000001U,
+    RTCAU_DIGEST         = 0x00000002U,
+    RTCAU_NTLM           = 0x00000004U,
+    RTCAU_KERBEROS       = 0x00000008U,
+    RTCAU_USE_LOGON_CRED = 0x00010000U,
 }
 
 enum : uint
 {
-    RTCEF_SESSION_STATE_CHANGE       = 0x00000004,
-    RTCEF_SESSION_OPERATION_COMPLETE = 0x00000008,
+    RTCRF_REGISTER_INVITE_SESSIONS  = 0x00000001U,
+    RTCRF_REGISTER_MESSAGE_SESSIONS = 0x00000002U,
+    RTCRF_REGISTER_PRESENCE         = 0x00000004U,
+    RTCRF_REGISTER_NOTIFY           = 0x00000008U,
+    RTCRF_REGISTER_ALL              = 0x0000000fU,
 }
 
-enum uint RTCEF_PARTICIPANT_STATE_CHANGE = 0x00000010;
+enum uint RTCRMF_BUDDY_ROAMING = 0x00000001U;
+enum uint RTCRMF_WATCHER_ROAMING = 0x00000002U;
+enum uint RTCRMF_PRESENCE_ROAMING = 0x00000004U;
+enum uint RTCRMF_PROFILE_ROAMING = 0x00000008U;
+enum uint RTCRMF_ALL_ROAMING = 0x0000000fU;
 
 enum : uint
 {
-    RTCEF_MEDIA     = 0x00000020,
-    RTCEF_INTENSITY = 0x00000040,
-}
-
-enum uint RTCEF_MESSAGING = 0x00000080;
-
-enum : uint
-{
-    RTCEF_BUDDY      = 0x00000100,
-    RTCEF_WATCHER    = 0x00000200,
-    RTCEF_PROFILE    = 0x00000400,
-    RTCEF_USERSEARCH = 0x00000800,
+    RTCEF_CLIENT                    = 0x00000001U,
+    RTCEF_REGISTRATION_STATE_CHANGE = 0x00000002U,
 }
 
 enum : uint
 {
-    RTCEF_INFO          = 0x00001000,
-    RTCEF_GROUP         = 0x00002000,
-    RTCEF_MEDIA_REQUEST = 0x00004000,
+    RTCEF_SESSION_STATE_CHANGE       = 0x00000004U,
+    RTCEF_SESSION_OPERATION_COMPLETE = 0x00000008U,
+}
+
+enum uint RTCEF_PARTICIPANT_STATE_CHANGE = 0x00000010U;
+
+enum : uint
+{
+    RTCEF_MEDIA     = 0x00000020U,
+    RTCEF_INTENSITY = 0x00000040U,
+}
+
+enum uint RTCEF_MESSAGING = 0x00000080U;
+
+enum : uint
+{
+    RTCEF_BUDDY      = 0x00000100U,
+    RTCEF_WATCHER    = 0x00000200U,
+    RTCEF_PROFILE    = 0x00000400U,
+    RTCEF_USERSEARCH = 0x00000800U,
 }
 
 enum : uint
 {
-    RTCEF_ROAMING           = 0x00010000,
-    RTCEF_PRESENCE_PROPERTY = 0x00020000,
+    RTCEF_INFO          = 0x00001000U,
+    RTCEF_GROUP         = 0x00002000U,
+    RTCEF_MEDIA_REQUEST = 0x00004000U,
 }
 
 enum : uint
 {
-    RTCEF_BUDDY2               = 0x00040000,
-    RTCEF_WATCHER2             = 0x00080000,
-    RTCEF_SESSION_REFER_STATUS = 0x00100000,
-    RTCEF_SESSION_REFERRED     = 0x00200000,
+    RTCEF_ROAMING           = 0x00010000U,
+    RTCEF_PRESENCE_PROPERTY = 0x00020000U,
 }
 
 enum : uint
 {
-    RTCEF_REINVITE        = 0x00400000,
-    RTCEF_PRESENCE_DATA   = 0x00800000,
-    RTCEF_PRESENCE_STATUS = 0x01000000,
+    RTCEF_BUDDY2               = 0x00040000U,
+    RTCEF_WATCHER2             = 0x00080000U,
+    RTCEF_SESSION_REFER_STATUS = 0x00100000U,
+    RTCEF_SESSION_REFERRED     = 0x00200000U,
 }
-
-enum uint RTCEF_ALL = 0x01ffffff;
 
 enum : uint
 {
-    RTCIF_DISABLE_MEDIA = 0x00000001,
-    RTCIF_DISABLE_UPNP  = 0x00000002,
+    RTCEF_REINVITE        = 0x00400000U,
+    RTCEF_PRESENCE_DATA   = 0x00800000U,
+    RTCEF_PRESENCE_STATUS = 0x01000000U,
 }
 
-enum uint RTCIF_ENABLE_SERVER_CLASS = 0x00000004;
-enum uint RTCIF_DISABLE_STRICT_DNS = 0x00000008;
+enum uint RTCEF_ALL = 0x01ffffffU;
 
 enum : uint
 {
-    FACILITY_RTC_INTERFACE   = 0x000000ee,
-    FACILITY_SIP_STATUS_CODE = 0x000000ef,
+    RTCIF_DISABLE_MEDIA = 0x00000001U,
+    RTCIF_DISABLE_UPNP  = 0x00000002U,
 }
 
-enum uint FACILITY_PINT_STATUS_CODE = 0x000000f0;
-enum uint STATUS_SEVERITY_RTC_ERROR = 0x00000002;
+enum uint RTCIF_ENABLE_SERVER_CLASS = 0x00000004U;
+enum uint RTCIF_DISABLE_STRICT_DNS = 0x00000008U;
+
+enum : uint
+{
+    FACILITY_RTC_INTERFACE   = 0x000000eeU,
+    FACILITY_SIP_STATUS_CODE = 0x000000efU,
+}
+
+enum uint FACILITY_PINT_STATUS_CODE = 0x000000f0U;
+enum uint STATUS_SEVERITY_RTC_ERROR = 0x00000002U;
 enum HRESULT RTC_E_SIP_CODECS_DO_NOT_MATCH = HRESULT(0x80ee0000);
 
 enum : HRESULT

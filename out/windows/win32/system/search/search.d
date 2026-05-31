@@ -1,20 +1,20 @@
 // Written in the D programming language.
 
-module windows.win32.system.search;
+module windows.win32.system.search.search;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BSTR, FILETIME, HANDLE, HRESULT, HWND,
-                                         PROPERTYKEY, PSTR, PWSTR, SYSTEMTIME,
-                                         VARIANT_BOOL;
-public import windows.win32.security.authorization : EXPLICIT_ACCESS_W, TRUSTEE_W;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BSTR, FILETIME, HANDLE, HRESULT,
+                                                    HWND, PROPERTYKEY, PSTR, PWSTR,
+                                                    SYSTEMTIME, VARIANT_BOOL;
+public import windows.win32.security.authorization.authorization : EXPLICIT_ACCESS_W, TRUSTEE_W;
 public import windows.win32.storage.indexserver : DBID, FILTERREGION, FULLPROPSPEC, IFilter,
                                                   IPhraseSink, WORDREP_BREAK_TYPE;
-public import windows.win32.system.com : BLOB, COSERVERINFO, CY, DISPPARAMS,
-                                         IAuthenticate, IDispatch, IEnumString,
-                                         IEnumUnknown, IErrorInfo, IMoniker,
-                                         IPersistStream, ISequentialStream,
-                                         IStream, ITypeInfo, IUnknown, MULTI_QI;
+public import windows.win32.system.com.com : BLOB, COSERVERINFO, CY, DISPPARAMS,
+                                             IAuthenticate, IDispatch, IEnumString,
+                                             IEnumUnknown, IErrorInfo, IMoniker,
+                                             IPersistStream, ISequentialStream,
+                                             IStream, ITypeInfo, IUnknown, MULTI_QI;
 public import windows.win32.system.com.structuredstorage : IStorage, PROPSPEC, PROPVARIANT;
 public import windows.win32.system.distributedtransactioncoordinator : ITransaction, ITransactionOptions;
 public import windows.win32.system.variant : VARENUM, VARIANT;
@@ -24,6 +24,7 @@ extern(Windows) @nogc nothrow:
 
 
 // Enums
+
 
 alias DBTYPEENUM = int;
 enum : int
@@ -63,11 +64,13 @@ enum : int
     DBTYPE_DBTIME      = 0x00000086,
     DBTYPE_DBTIMESTAMP = 0x00000087,
 }
+
 alias DBTYPEENUM15 = int;
 enum : int
 {
     DBTYPE_HCHAPTER = 0x00000088,
 }
+
 alias DBTYPEENUM20 = int;
 enum : int
 {
@@ -75,6 +78,7 @@ enum : int
     DBTYPE_PROPVARIANT = 0x0000008a,
     DBTYPE_VARNUMERIC  = 0x0000008b,
 }
+
 alias DBPARTENUM = int;
 enum : int
 {
@@ -83,6 +87,7 @@ enum : int
     DBPART_LENGTH  = 0x00000002,
     DBPART_STATUS  = 0x00000004,
 }
+
 alias DBPARAMIOENUM = int;
 enum : int
 {
@@ -90,17 +95,20 @@ enum : int
     DBPARAMIO_INPUT    = 0x00000001,
     DBPARAMIO_OUTPUT   = 0x00000002,
 }
+
 alias DBBINDFLAGENUM = int;
 enum : int
 {
     DBBINDFLAG_HTML = 0x00000001,
 }
+
 alias DBMEMOWNERENUM = int;
 enum : int
 {
     DBMEMOWNER_CLIENTOWNED   = 0x00000000,
     DBMEMOWNER_PROVIDEROWNED = 0x00000001,
 }
+
 alias DBSTATUSENUM = int;
 enum : int
 {
@@ -119,12 +127,14 @@ enum : int
     DBSTATUS_E_BADSTATUS          = 0x0000000c,
     DBSTATUS_S_DEFAULT            = 0x0000000d,
 }
+
 alias DBSTATUSENUM20 = int;
 enum : int
 {
     MDSTATUS_S_CELLEMPTY = 0x0000000e,
     DBSTATUS_S_IGNORE    = 0x0000000f,
 }
+
 alias DBSTATUSENUM21 = int;
 enum : int
 {
@@ -140,6 +150,7 @@ enum : int
     DBSTATUS_E_RESOURCEOUTOFSCOPE = 0x00000019,
     DBSTATUS_S_ALREADYEXISTS      = 0x0000001a,
 }
+
 alias DBBINDURLFLAGENUM = int;
 enum : int
 {
@@ -161,6 +172,7 @@ enum : int
     DBBINDURLFLAG_OVERWRITE            = 0x04000000,
     DBBINDURLFLAG_ISSTRUCTUREDDOCUMENT = 0x08000000,
 }
+
 alias DBBINDURLSTATUSENUM = int;
 enum : int
 {
@@ -169,12 +181,14 @@ enum : int
     DBBINDURLSTATUS_S_DENYTYPENOTSUPPORTED = 0x00000004,
     DBBINDURLSTATUS_S_REDIRECTED           = 0x00000008,
 }
+
 alias DBSTATUSENUM25 = int;
 enum : int
 {
     DBSTATUS_E_CANCELED      = 0x0000001b,
     DBSTATUS_E_NOTCOLLECTION = 0x0000001c,
 }
+
 alias DBROWSTATUSENUM = int;
 enum : int
 {
@@ -197,16 +211,19 @@ enum : int
     DBROWSTATUS_E_SCHEMAVIOLATION        = 0x00000012,
     DBROWSTATUS_E_FAIL                   = 0x00000013,
 }
+
 alias DBROWSTATUSENUM20 = int;
 enum : int
 {
     DBROWSTATUS_S_NOCHANGE = 0x00000014,
 }
+
 alias DBSTATUSENUM26 = int;
 enum : int
 {
     DBSTATUS_S_ROWSETCOLUMN = 0x0000001d,
 }
+
 alias DBCOLUMNFLAGSENUM = int;
 enum : int
 {
@@ -222,22 +239,26 @@ enum : int
     DBCOLUMNFLAGS_ISROWVER      = 0x00000200,
     DBCOLUMNFLAGS_CACHEDEFERRED = 0x00001000,
 }
+
 alias DBCOLUMNFLAGSENUM20 = int;
 enum : int
 {
     DBCOLUMNFLAGS_SCALEISNEGATIVE = 0x00004000,
     DBCOLUMNFLAGS_RESERVED        = 0x00008000,
 }
+
 alias DBCOLUMNFLAGSDEPRECATED = int;
 enum : int
 {
     DBCOLUMNFLAGS_KEYCOLUMN = 0x00008000,
 }
+
 alias DBCOLUMNFLAGS15ENUM = int;
 enum : int
 {
     DBCOLUMNFLAGS_ISCHAPTER = 0x00002000,
 }
+
 alias DBCOLUMNFLAGSENUM21 = int;
 enum : int
 {
@@ -245,6 +266,7 @@ enum : int
     DBCOLUMNFLAGS_ISDEFAULTSTREAM = 0x00020000,
     DBCOLUMNFLAGS_ISCOLLECTION    = 0x00040000,
 }
+
 alias DBCOLUMNFLAGSENUM26 = int;
 enum : int
 {
@@ -253,6 +275,7 @@ enum : int
     DBCOLUMNFLAGS_ISROW             = 0x00200000,
     DBCOLUMNFLAGS_ROWSPECIFICCOLUMN = 0x00400000,
 }
+
 alias DBTABLESTATISTICSTYPE26 = int;
 enum : int
 {
@@ -260,6 +283,7 @@ enum : int
     DBSTAT_COLUMN_CARDINALITY = 0x00000002,
     DBSTAT_TUPLE_CARDINALITY  = 0x00000004,
 }
+
 alias DBBOOKMARK = int;
 enum : int
 {
@@ -267,6 +291,7 @@ enum : int
     DBBMK_FIRST   = 0x00000001,
     DBBMK_LAST    = 0x00000002,
 }
+
 alias DBPROPENUM = int;
 enum : int
 {
@@ -431,6 +456,7 @@ enum : int
     DBPROP_UPDATABILITY                    = 0x00000075,
     DBPROP_USERNAME                        = 0x00000076,
 }
+
 alias DBPROPENUM15 = int;
 enum : int
 {
@@ -451,6 +477,7 @@ enum : int
     DBPROP_ROWSET_ASYNCH    = 0x000000c9,
     DBPROP_SORTONINDEX      = 0x000000cf,
 }
+
 alias DBPROPENUM20 = int;
 enum : int
 {
@@ -498,6 +525,7 @@ enum : int
     DBPROP_PROVIDERMEMORY             = 0x00000103,
     DBPROP_CLIENTCURSOR               = 0x00000104,
 }
+
 alias DBPROPENUM21 = int;
 enum : int
 {
@@ -523,6 +551,7 @@ enum : int
     DBPROP_OPENROWSETSUPPORT         = 0x00000118,
     DBPROP_COL_ISLONG                = 0x00000119,
 }
+
 alias DBPROPENUM25 = int;
 enum : int
 {
@@ -531,6 +560,7 @@ enum : int
     DBPROP_INIT_GENERALTIMEOUT = 0x0000011c,
     DBPROP_COMSERVICES         = 0x0000011d,
 }
+
 alias DBPROPENUM26 = int;
 enum : int
 {
@@ -541,6 +571,7 @@ enum : int
     DBPROP_IRowsetBookmark     = 0x00000124,
     MDPROP_VISUALMODE          = 0x00000125,
 }
+
 alias DBPROPENUMDEPRECATED = int;
 enum : int
 {
@@ -548,6 +579,7 @@ enum : int
     DBPROP_MARSHALLABLE       = 0x000000c5,
     DBPROP_FILTEROPS          = 0x000000d0,
 }
+
 alias DBPARAMFLAGSENUM = int;
 enum : int
 {
@@ -557,11 +589,13 @@ enum : int
     DBPARAMFLAGS_ISNULLABLE = 0x00000040,
     DBPARAMFLAGS_ISLONG     = 0x00000080,
 }
+
 alias DBPARAMFLAGSENUM20 = int;
 enum : int
 {
     DBPARAMFLAGS_SCALEISNEGATIVE = 0x00000100,
 }
+
 alias DBPROPFLAGSENUM = int;
 enum : int
 {
@@ -580,21 +614,25 @@ enum : int
     DBPROPFLAGS_REQUIRED         = 0x00000800,
     DBPROPFLAGS_SESSION          = 0x00001000,
 }
+
 alias DBPROPFLAGSENUM21 = int;
 enum : int
 {
     DBPROPFLAGS_TRUSTEE = 0x00002000,
 }
+
 alias DBPROPFLAGSENUM25 = int;
 enum : int
 {
     DBPROPFLAGS_VIEW = 0x00004000,
 }
+
 alias DBPROPFLAGSENUM26 = int;
 enum : int
 {
     DBPROPFLAGS_STREAM = 0x00008000,
 }
+
 alias DBPROPOPTIONSENUM = int;
 enum : int
 {
@@ -602,6 +640,7 @@ enum : int
     DBPROPOPTIONS_SETIFCHEAP = 0x00000001,
     DBPROPOPTIONS_OPTIONAL   = 0x00000001,
 }
+
 alias DBPROPSTATUSENUM = int;
 enum : int
 {
@@ -615,17 +654,20 @@ enum : int
     DBPROPSTATUS_NOTSET         = 0x00000007,
     DBPROPSTATUS_CONFLICTING    = 0x00000008,
 }
+
 alias DBPROPSTATUSENUM21 = int;
 enum : int
 {
     DBPROPSTATUS_NOTAVAILABLE = 0x00000009,
 }
+
 alias DBINDEX_COL_ORDERENUM = int;
 enum : int
 {
     DBINDEX_COL_ORDER_ASC  = 0x00000000,
     DBINDEX_COL_ORDER_DESC = 0x00000001,
 }
+
 alias DBCOLUMNDESCFLAGSENUM = int;
 enum : int
 {
@@ -639,6 +681,7 @@ enum : int
     DBCOLUMNDESCFLAGS_PRECISION  = 0x00000080,
     DBCOLUMNDESCFLAGS_SCALE      = 0x00000100,
 }
+
 alias DBEVENTPHASEENUM = int;
 enum : int
 {
@@ -648,6 +691,7 @@ enum : int
     DBEVENTPHASE_FAILEDTODO = 0x00000003,
     DBEVENTPHASE_DIDEVENT   = 0x00000004,
 }
+
 alias DBREASONENUM = int;
 enum : int
 {
@@ -667,6 +711,7 @@ enum : int
     DBREASON_ROW_UPDATE                 = 0x0000000d,
     DBREASON_ROWSET_CHANGED             = 0x0000000e,
 }
+
 alias DBREASONENUM15 = int;
 enum : int
 {
@@ -675,6 +720,7 @@ enum : int
     DBREASON_ROWPOSITION_CLEARED        = 0x00000011,
     DBREASON_ROW_ASYNCHINSERT           = 0x00000012,
 }
+
 alias DBCOMPAREOPSENUM = int;
 enum : int
 {
@@ -690,17 +736,20 @@ enum : int
     DBCOMPAREOPS_CASESENSITIVE   = 0x00001000,
     DBCOMPAREOPS_CASEINSENSITIVE = 0x00002000,
 }
+
 alias DBCOMPAREOPSENUM20 = int;
 enum : int
 {
     DBCOMPAREOPS_NOTBEGINSWITH = 0x00000009,
     DBCOMPAREOPS_NOTCONTAINS   = 0x0000000a,
 }
+
 alias DBASYNCHOPENUM = int;
 enum : int
 {
     DBASYNCHOP_OPEN = 0x00000000,
 }
+
 alias DBASYNCHPHASEENUM = int;
 enum : int
 {
@@ -709,17 +758,20 @@ enum : int
     DBASYNCHPHASE_COMPLETE       = 0x00000002,
     DBASYNCHPHASE_CANCELED       = 0x00000003,
 }
+
 alias DBSORTENUM = int;
 enum : int
 {
     DBSORT_ASCENDING  = 0x00000000,
     DBSORT_DESCENDING = 0x00000001,
 }
+
 alias DBCOMMANDPERSISTFLAGENUM = int;
 enum : int
 {
     DBCOMMANDPERSISTFLAG_NOSAVE = 0x00000001,
 }
+
 alias DBCOMMANDPERSISTFLAGENUM21 = int;
 enum : int
 {
@@ -727,6 +779,7 @@ enum : int
     DBCOMMANDPERSISTFLAG_PERSISTVIEW      = 0x00000002,
     DBCOMMANDPERSISTFLAG_PERSISTPROCEDURE = 0x00000004,
 }
+
 alias DBCONSTRAINTTYPEENUM = int;
 enum : int
 {
@@ -735,6 +788,7 @@ enum : int
     DBCONSTRAINTTYPE_PRIMARYKEY = 0x00000002,
     DBCONSTRAINTTYPE_CHECK      = 0x00000003,
 }
+
 alias DBUPDELRULEENUM = int;
 enum : int
 {
@@ -743,6 +797,7 @@ enum : int
     DBUPDELRULE_SETNULL    = 0x00000002,
     DBUPDELRULE_SETDEFAULT = 0x00000003,
 }
+
 alias DBMATCHTYPEENUM = int;
 enum : int
 {
@@ -750,12 +805,14 @@ enum : int
     DBMATCHTYPE_NONE    = 0x00000001,
     DBMATCHTYPE_PARTIAL = 0x00000002,
 }
+
 alias DBDEFERRABILITYENUM = int;
 enum : int
 {
     DBDEFERRABILITY_DEFERRED   = 0x00000001,
     DBDEFERRABILITY_DEFERRABLE = 0x00000002,
 }
+
 alias DBACCESSORFLAGSENUM = int;
 enum : int
 {
@@ -766,6 +823,7 @@ enum : int
     DBACCESSOR_OPTIMIZED     = 0x00000008,
     DBACCESSOR_INHERITED     = 0x00000010,
 }
+
 alias DBBINDSTATUSENUM = int;
 enum : int
 {
@@ -777,6 +835,7 @@ enum : int
     DBBINDSTATUS_NOINTERFACE           = 0x00000005,
     DBBINDSTATUS_MULTIPLESTORAGE       = 0x00000006,
 }
+
 alias DBCOMPAREENUM = int;
 enum : int
 {
@@ -786,6 +845,7 @@ enum : int
     DBCOMPARE_NE            = 0x00000003,
     DBCOMPARE_NOTCOMPARABLE = 0x00000004,
 }
+
 alias DBPOSITIONFLAGSENUM = int;
 enum : int
 {
@@ -794,6 +854,7 @@ enum : int
     DBPOSITION_BOF   = 0x00000002,
     DBPOSITION_EOF   = 0x00000003,
 }
+
 alias DBPENDINGSTATUSENUM = int;
 enum : int
 {
@@ -803,6 +864,7 @@ enum : int
     DBPENDINGSTATUS_UNCHANGED  = 0x00000008,
     DBPENDINGSTATUS_INVALIDROW = 0x00000010,
 }
+
 alias DBSEEKENUM = int;
 enum : int
 {
@@ -814,6 +876,7 @@ enum : int
     DBSEEK_BEFOREEQ = 0x00000010,
     DBSEEK_BEFORE   = 0x00000020,
 }
+
 alias DBRANGEENUM = int;
 enum : int
 {
@@ -825,12 +888,14 @@ enum : int
     DBRANGE_PREFIX         = 0x00000008,
     DBRANGE_MATCH          = 0x00000010,
 }
+
 alias DBRANGEENUM20 = int;
 enum : int
 {
     DBRANGE_MATCH_N_SHIFT = 0x00000018,
     DBRANGE_MATCH_N_MASK  = 0x000000ff,
 }
+
 alias DBRESULTFLAGENUM = int;
 enum : int
 {
@@ -838,12 +903,14 @@ enum : int
     DBRESULTFLAG_ROWSET  = 0x00000001,
     DBRESULTFLAG_ROW     = 0x00000002,
 }
+
 alias DBCONVERTFLAGSENUM = int;
 enum : int
 {
     DBCONVERTFLAGS_COLUMN    = 0x00000000,
     DBCONVERTFLAGS_PARAMETER = 0x00000001,
 }
+
 alias DBCONVERTFLAGSENUM20 = int;
 enum : int
 {
@@ -851,23 +918,27 @@ enum : int
     DBCONVERTFLAGS_ISFIXEDLENGTH = 0x00000004,
     DBCONVERTFLAGS_FROMVARIANT   = 0x00000008,
 }
+
 alias DBSOURCETYPEENUM = int;
 enum : int
 {
     DBSOURCETYPE_DATASOURCE = 0x00000001,
     DBSOURCETYPE_ENUMERATOR = 0x00000002,
 }
+
 alias DBSOURCETYPEENUM20 = int;
 enum : int
 {
     DBSOURCETYPE_DATASOURCE_TDP = 0x00000001,
     DBSOURCETYPE_DATASOURCE_MDP = 0x00000003,
 }
+
 alias DBSOURCETYPEENUM25 = int;
 enum : int
 {
     DBSOURCETYPE_BINDER = 0x00000004,
 }
+
 alias DBLITERALENUM = int;
 enum : int
 {
@@ -893,6 +964,7 @@ enum : int
     DBLITERAL_USER_NAME         = 0x00000013,
     DBLITERAL_VIEW_NAME         = 0x00000014,
 }
+
 alias DBLITERALENUM20 = int;
 enum : int
 {
@@ -905,12 +977,14 @@ enum : int
     DBLITERAL_SCHEMA_SEPARATOR = 0x0000001b,
     DBLITERAL_QUOTE_SUFFIX     = 0x0000001c,
 }
+
 alias DBLITERALENUM21 = int;
 enum : int
 {
     DBLITERAL_ESCAPE_PERCENT_SUFFIX    = 0x0000001d,
     DBLITERAL_ESCAPE_UNDERSCORE_SUFFIX = 0x0000001e,
 }
+
 alias ACCESS_MASKENUM = int;
 enum : int
 {
@@ -932,6 +1006,7 @@ enum : int
     PERM_UPDATE           = 0x40000000,
     PERM_DROP             = 0x00000100,
 }
+
 alias DBCOPYFLAGSENUM = int;
 enum : int
 {
@@ -941,6 +1016,7 @@ enum : int
     DBCOPY_NON_RECURSIVE    = 0x00000800,
     DBCOPY_ATOMIC           = 0x00001000,
 }
+
 alias DBMOVEFLAGSENUM = int;
 enum : int
 {
@@ -950,13 +1026,15 @@ enum : int
     DBMOVE_ALLOW_EMULATION   = 0x00000400,
     DBMOVE_ATOMIC            = 0x00001000,
 }
+
 alias DBDELETEFLAGSENUM = int;
 enum : int
 {
     DBDELETE_ASYNC  = 0x00000100,
     DBDELETE_ATOMIC = 0x00001000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/ne-structuredquery-structured_query_syntax))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/ne-structuredquery-structured_query_syntax
 alias STRUCTURED_QUERY_SYNTAX = int;
 enum : int
 {
@@ -964,7 +1042,8 @@ enum : int
     SQS_ADVANCED_QUERY_SYNTAX = 0x00000001,
     SQS_NATURAL_QUERY_SYNTAX  = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/ne-structuredquery-structured_query_single_option))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/ne-structuredquery-structured_query_single_option
 alias STRUCTURED_QUERY_SINGLE_OPTION = int;
 enum : int
 {
@@ -980,7 +1059,8 @@ enum : int
     SQSO_IMPLICIT_CONNECTOR   = 0x00000009,
     SQSO_CONNECTOR_CASE       = 0x0000000a,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/ne-structuredquery-structured_query_multioption))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/ne-structuredquery-structured_query_multioption
 alias STRUCTURED_QUERY_MULTIOPTION = int;
 enum : int
 {
@@ -989,7 +1069,8 @@ enum : int
     SQMO_GENERATOR_FOR_TYPE = 0x00000002,
     SQMO_MAP_PROPERTY       = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/ne-structuredquery-structured_query_parse_error))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/ne-structuredquery-structured_query_parse_error
 alias STRUCTURED_QUERY_PARSE_ERROR = int;
 enum : int
 {
@@ -1001,7 +1082,8 @@ enum : int
     SQPE_IGNORED_KEYWORD           = 0x00000005,
     SQPE_UNHANDLED                 = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/ne-structuredquery-structured_query_resolve_option))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/ne-structuredquery-structured_query_resolve_option
 alias STRUCTURED_QUERY_RESOLVE_OPTION = int;
 enum : int
 {
@@ -1017,14 +1099,16 @@ enum : int
     SQRO_ADD_VALUE_TYPE_FOR_PLAIN_VALUES   = 0x00000100,
     SQRO_ADD_ROBUST_ITEM_NAME              = 0x00000200,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/ne-structuredquery-case_requirement))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/ne-structuredquery-case_requirement
 alias CASE_REQUIREMENT = int;
 enum : int
 {
     CASE_REQUIREMENT_ANY          = 0x00000000,
     CASE_REQUIREMENT_UPPER_IF_AQS = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/ne-structuredquery-interval_limit_kind))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/ne-structuredquery-interval_limit_kind
 alias INTERVAL_LIMIT_KIND = int;
 enum : int
 {
@@ -1033,7 +1117,8 @@ enum : int
     ILK_NEGATIVE_INFINITY = 0x00000002,
     ILK_POSITIVE_INFINITY = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/ne-structuredquery-query_parser_manager_option))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/ne-structuredquery-query_parser_manager_option
 alias QUERY_PARSER_MANAGER_OPTION = int;
 enum : int
 {
@@ -1044,7 +1129,8 @@ enum : int
     QPMO_APPEND_LCID_TO_LOCALIZED_PATH   = 0x00000004,
     QPMO_LOCALIZER_SUPPORT               = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/ne-structuredquery-condition_creation_options))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/ne-structuredquery-condition_creation_options
 alias CONDITION_CREATION_OPTIONS = int;
 enum : int
 {
@@ -1056,7 +1142,8 @@ enum : int
     CONDITION_CREATION_VECTOR_LEAF        = 0x00000008,
     CONDITION_CREATION_USE_CONTENT_LOCALE = 0x00000010,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/ne-structuredquery-named_entity_certainty))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/ne-structuredquery-named_entity_certainty
 alias NAMED_ENTITY_CERTAINTY = int;
 enum : int
 {
@@ -1064,7 +1151,8 @@ enum : int
     NEC_MEDIUM = 0x00000001,
     NEC_HIGH   = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/ne-searchapi-proxy_access))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/ne-searchapi-proxy_access
 alias PROXY_ACCESS = int;
 enum : int
 {
@@ -1072,7 +1160,8 @@ enum : int
     PROXY_ACCESS_DIRECT    = 0x00000001,
     PROXY_ACCESS_PROXY     = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/ne-searchapi-auth_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/ne-searchapi-auth_type
 alias AUTH_TYPE = int;
 enum : int
 {
@@ -1080,14 +1169,16 @@ enum : int
     eAUTH_TYPE_NTLM      = 0x00000001,
     eAUTH_TYPE_BASIC     = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/ne-searchapi-follow_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/ne-searchapi-follow_flags
 alias FOLLOW_FLAGS = int;
 enum : int
 {
     FF_INDEXCOMPLEXURLS = 0x00000001,
     FF_SUPPRESSINDEXING = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/ne-searchapi-clusion_reason))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/ne-searchapi-clusion_reason
 alias CLUSION_REASON = int;
 enum : int
 {
@@ -1096,7 +1187,8 @@ enum : int
     CLUSIONREASON_USER         = 0x00000002,
     CLUSIONREASON_GROUPPOLICY  = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/ne-searchapi-search_kind_of_change))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/ne-searchapi-search_kind_of_change
 alias SEARCH_KIND_OF_CHANGE = int;
 enum : int
 {
@@ -1108,14 +1200,16 @@ enum : int
     SEARCH_CHANGE_SEMANTICS_SHALLOW         = 0x00080000,
     SEARCH_CHANGE_SEMANTICS_UPDATE_SECURITY = 0x00400000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/ne-searchapi-search_notification_priority))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/ne-searchapi-search_notification_priority
 alias SEARCH_NOTIFICATION_PRIORITY = int;
 enum : int
 {
     SEARCH_NORMAL_PRIORITY = 0x00000000,
     SEARCH_HIGH_PRIORITY   = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/ne-searchapi-search_indexing_phase))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/ne-searchapi-search_indexing_phase
 alias SEARCH_INDEXING_PHASE = int;
 enum : int
 {
@@ -1123,7 +1217,8 @@ enum : int
     SEARCH_INDEXING_PHASE_QUERYABLE = 0x00000001,
     SEARCH_INDEXING_PHASE_PERSISTED = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/ne-searchapi-catalogstatus))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/ne-searchapi-catalogstatus
 enum CatalogStatus : int
 {
     CATALOG_STATUS_IDLE                     = 0x00000000,
@@ -1134,7 +1229,8 @@ enum CatalogStatus : int
     CATALOG_STATUS_PROCESSING_NOTIFICATIONS = 0x00000005,
     CATALOG_STATUS_SHUTTING_DOWN            = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/ne-searchapi-catalogpausedreason))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/ne-searchapi-catalogpausedreason
 enum CatalogPausedReason : int
 {
     CATALOG_PAUSED_REASON_NONE             = 0x00000000,
@@ -1149,13 +1245,15 @@ enum CatalogPausedReason : int
     CATALOG_PAUSED_REASON_EXTERNAL         = 0x00000009,
     CATALOG_PAUSED_REASON_UPGRADING        = 0x0000000a,
 }
+
 alias PRIORITIZE_FLAGS = int;
 enum : int
 {
     PRIORITIZE_FLAG_RETRYFAILEDITEMS   = 0x00000001,
     PRIORITIZE_FLAG_IGNOREFAILURECOUNT = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/ne-searchapi-search_term_expansion))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/ne-searchapi-search_term_expansion
 alias SEARCH_TERM_EXPANSION = int;
 enum : int
 {
@@ -1163,7 +1261,8 @@ enum : int
     SEARCH_TERM_PREFIX_ALL   = 0x00000001,
     SEARCH_TERM_STEM_ALL     = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/ne-searchapi-search_query_syntax))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/ne-searchapi-search_query_syntax
 alias SEARCH_QUERY_SYNTAX = int;
 enum : int
 {
@@ -1171,7 +1270,8 @@ enum : int
     SEARCH_ADVANCED_QUERY_SYNTAX = 0x00000001,
     SEARCH_NATURAL_QUERY_SYNTAX  = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/ne-searchapi-priority_level))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/ne-searchapi-priority_level
 alias PRIORITY_LEVEL = int;
 enum : int
 {
@@ -1180,7 +1280,8 @@ enum : int
     PRIORITY_LEVEL_LOW        = 0x00000002,
     PRIORITY_LEVEL_DEFAULT    = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/ne-searchapi-rowsetevent_itemstate))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/ne-searchapi-rowsetevent_itemstate
 alias ROWSETEVENT_ITEMSTATE = int;
 enum : int
 {
@@ -1188,7 +1289,8 @@ enum : int
     ROWSETEVENT_ITEMSTATE_INROWSET    = 0x00000001,
     ROWSETEVENT_ITEMSTATE_UNKNOWN     = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/ne-searchapi-rowsetevent_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/ne-searchapi-rowsetevent_type
 alias ROWSETEVENT_TYPE = int;
 enum : int
 {
@@ -1196,6 +1298,7 @@ enum : int
     ROWSETEVENT_TYPE_FOREGROUNDLOST  = 0x00000001,
     ROWSETEVENT_TYPE_SCOPESTATISTICS = 0x00000002,
 }
+
 alias SUBSCRIPTIONTYPE = int;
 enum : int
 {
@@ -1205,6 +1308,7 @@ enum : int
     SUBSTYPE_EXTERNAL       = 0x00000003,
     SUBSTYPE_DESKTOPCHANNEL = 0x00000004,
 }
+
 alias SUBSCRIPTIONINFOFLAGS = int;
 enum : int
 {
@@ -1223,6 +1327,7 @@ enum : int
     SUBSINFO_NEEDPASSWORD = 0x00004000,
     SUBSINFO_TYPE         = 0x00008000,
 }
+
 alias CREATESUBSCRIPTIONFLAGS = int;
 enum : int
 {
@@ -1232,6 +1337,7 @@ enum : int
     CREATESUBS_NOSAVE         = 0x00000008,
     CREATESUBS_SOFTWAREUPDATE = 0x00000010,
 }
+
 alias SUBSCRIPTIONSCHEDULE = int;
 enum : int
 {
@@ -1241,6 +1347,7 @@ enum : int
     SUBSSCHED_CUSTOM = 0x00000003,
     SUBSSCHED_MANUAL = 0x00000004,
 }
+
 alias DELIVERY_AGENT_FLAGS = int;
 enum : int
 {
@@ -1248,6 +1355,7 @@ enum : int
     DELIVERY_AGENT_FLAG_NO_RESTRICTIONS = 0x00000008,
     DELIVERY_AGENT_FLAG_SILENT_DIAL     = 0x00000010,
 }
+
 alias WEBCRAWL_RECURSEFLAGS = int;
 enum : int
 {
@@ -1260,6 +1368,7 @@ enum : int
     WEBCRAWL_IGNORE_ROBOTSTXT   = 0x00000080,
     WEBCRAWL_ONLY_LINKS_TO_HTML = 0x00000100,
 }
+
 alias CHANNEL_AGENT_FLAGS = int;
 enum : int
 {
@@ -1268,6 +1377,7 @@ enum : int
     CHANNEL_AGENT_PRECACHE_ALL       = 0x00000004,
     CHANNEL_AGENT_PRECACHE_SCRNSAVER = 0x00000008,
 }
+
 alias DBDATACONVERTENUM = int;
 enum : int
 {
@@ -1277,11 +1387,13 @@ enum : int
     DBDATACONVERT_DSTISFIXEDLENGTH = 0x00000004,
     DBDATACONVERT_DECIMALSCALE     = 0x00000008,
 }
+
 alias DCINFOTYPEENUM = int;
 enum : int
 {
     DCINFOTYPE_VERSION = 0x00000001,
 }
+
 alias OSPFORMAT = int;
 enum : int
 {
@@ -1290,6 +1402,7 @@ enum : int
     OSPFORMAT_FORMATTED = 0x00000001,
     OSPFORMAT_HTML      = 0x00000002,
 }
+
 alias OSPRW = int;
 enum : int
 {
@@ -1298,6 +1411,7 @@ enum : int
     OSPRW_READWRITE = 0x00000001,
     OSPRW_MIXED     = 0x00000002,
 }
+
 alias OSPFIND = int;
 enum : int
 {
@@ -1306,6 +1420,7 @@ enum : int
     OSPFIND_CASESENSITIVE   = 0x00000002,
     OSPFIND_UPCASESENSITIVE = 0x00000003,
 }
+
 alias OSPCOMP = int;
 enum : int
 {
@@ -1317,6 +1432,7 @@ enum : int
     OSPCOMP_GT      = 0x00000005,
     OSPCOMP_NE      = 0x00000006,
 }
+
 alias OSPXFER = int;
 enum : int
 {
@@ -1324,10 +1440,12 @@ enum : int
     OSPXFER_ABORT    = 0x00000001,
     OSPXFER_ERROR    = 0x00000002,
 }
+
 enum EBindInfoOptions : int
 {
     BIO_BINDER = 0x00000001,
 }
+
 alias DBPROMPTOPTIONSENUM = int;
 enum : int
 {
@@ -1338,22 +1456,26 @@ enum : int
     DBPROMPTOPTIONS_DISABLE_PROVIDER_SELECTION = 0x00000010,
     DBPROMPTOPTIONS_DISABLESAVEPASSWORD        = 0x00000020,
 }
+
 alias KAGREQDIAGFLAGSENUM = int;
 enum : int
 {
     KAGREQDIAGFLAGS_HEADER = 0x00000001,
     KAGREQDIAGFLAGS_RECORD = 0x00000002,
 }
+
 alias MSDSDBINITPROPENUM = int;
 enum : int
 {
     DBPROP_MSDS_DBINIT_DATAPROVIDER = 0x00000002,
 }
+
 alias MSDSSESSIONPROPENUM = int;
 enum : int
 {
     DBPROP_MSDS_SESS_UNIQUENAMES = 0x00000002,
 }
+
 alias SQLINTERVAL = int;
 enum : int
 {
@@ -1371,6 +1493,7 @@ enum : int
     SQL_IS_HOUR_TO_SECOND   = 0x0000000c,
     SQL_IS_MINUTE_TO_SECOND = 0x0000000d,
 }
+
 alias DBPROPENUM25_DEPRECATED = int;
 enum : int
 {
@@ -1391,6 +1514,7 @@ enum : int
     DBPROP_IRowsetWatchRegion    = 0x0000009d,
     DBPROP_IRowsetWithParameters = 0x0000009e,
 }
+
 alias DBREASONENUM25 = int;
 enum : int
 {
@@ -1398,6 +1522,7 @@ enum : int
     DBREASON_ROWSET_POPULATIONCOMPLETE = 0x00000014,
     DBREASON_ROWSET_POPULATIONSTOPPED  = 0x00000015,
 }
+
 alias DBWATCHNOTIFYENUM = int;
 enum : int
 {
@@ -1405,6 +1530,7 @@ enum : int
     DBWATCHNOTIFY_QUERYDONE       = 0x00000002,
     DBWATCHNOTIFY_QUERYREEXECUTED = 0x00000003,
 }
+
 alias DBWATCHMODEENUM = int;
 enum : int
 {
@@ -1413,6 +1539,7 @@ enum : int
     DBWATCHMODE_MOVE   = 0x00000004,
     DBWATCHMODE_COUNT  = 0x00000008,
 }
+
 alias DBROWCHANGEKINDENUM = int;
 enum : int
 {
@@ -1421,6 +1548,7 @@ enum : int
     DBROWCHANGEKIND_UPDATE = 0x00000002,
     DBROWCHANGEKIND_COUNT  = 0x00000003,
 }
+
 alias DBRESOURCEKINDENUM = int;
 enum : int
 {
@@ -1434,6 +1562,7 @@ enum : int
     DBRESOURCE_ROWS     = 0x00000007,
     DBRESOURCE_OTHER    = 0x00000008,
 }
+
 alias DBCOSTUNITENUM = int;
 enum : int
 {
@@ -1456,6 +1585,7 @@ enum : int
     DBUNIT_NUM_ROWS     = 0x00008000,
     DBUNIT_OTHER        = 0x00010000,
 }
+
 alias DBEXECLIMITSENUM = int;
 enum : int
 {
@@ -1463,6 +1593,7 @@ enum : int
     DBEXECLIMITS_STOP    = 0x00000002,
     DBEXECLIMITS_SUSPEND = 0x00000003,
 }
+
 alias SQLVARENUM = int;
 enum : int
 {
@@ -1490,6 +1621,7 @@ enum : int
     VT_SS_VARBINARY     = 0x000000d0,
     VT_SS_UNKNOWN       = 0x000000d1,
 }
+
 alias LOCKMODEENUM = int;
 enum : int
 {
@@ -1501,25 +1633,25 @@ enum : int
 // Constants
 
 
-enum uint SI_TEMPORARY = 0x80000000;
-enum uint SUBSINFO_ALLFLAGS = 0x0000ef7f;
-enum uint RS_READY = 0x00000001;
-enum uint RS_SUSPENDED = 0x00000002;
-enum uint RS_UPDATING = 0x00000004;
-enum uint RS_SUSPENDONIDLE = 0x00010000;
-enum uint RS_MAYBOTHERUSER = 0x00020000;
-enum uint RS_COMPLETED = 0x80000000;
+enum uint SI_TEMPORARY = 0x80000000U;
+enum uint SUBSINFO_ALLFLAGS = 0x0000ef7fU;
+enum uint RS_READY = 0x00000001U;
+enum uint RS_SUSPENDED = 0x00000002U;
+enum uint RS_UPDATING = 0x00000004U;
+enum uint RS_SUSPENDONIDLE = 0x00010000U;
+enum uint RS_MAYBOTHERUSER = 0x00020000U;
+enum uint RS_COMPLETED = 0x80000000U;
 
 enum : uint
 {
-    SUBSMGRUPDATE_MINIMIZE = 0x00000001,
-    SUBSMGRUPDATE_MASK     = 0x00000001,
+    SUBSMGRUPDATE_MINIMIZE = 0x00000001U,
+    SUBSMGRUPDATE_MASK     = 0x00000001U,
 }
 
 enum : uint
 {
-    SUBSMGRENUM_TEMP = 0x00000001,
-    SUBSMGRENUM_MASK = 0x00000001,
+    SUBSMGRENUM_TEMP = 0x00000001U,
+    SUBSMGRENUM_MASK = 0x00000001U,
 }
 
 enum HRESULT INET_E_AGENT_MAX_SIZE_EXCEEDED = HRESULT(0x800c0f80);
@@ -1541,18 +1673,18 @@ enum : HRESULT
 
 enum HRESULT INET_E_AGENT_EXCEEDING_CACHE_SIZE = HRESULT(0x800c0f90);
 enum HRESULT INET_S_AGENT_INCREASED_CACHE_SIZE = HRESULT(0x000c0f90);
-enum uint OLEDBVER = 0x00000270;
-enum uint DB_NULL_HACCESSOR = 0x00000000;
-enum uint DB_INVALID_HACCESSOR = 0x00000000;
+enum uint OLEDBVER = 0x00000270U;
+enum uint DB_NULL_HACCESSOR = 0x00000000U;
+enum uint DB_INVALID_HACCESSOR = 0x00000000U;
 
 enum : uint
 {
-    DB_NULL_HROW     = 0x00000000,
-    DB_NULL_HCHAPTER = 0x00000000,
+    DB_NULL_HROW     = 0x00000000U,
+    DB_NULL_HCHAPTER = 0x00000000U,
 }
 
-enum uint DB_INVALID_HCHAPTER = 0x00000000;
-enum uint STD_BOOKMARKLENGTH = 0x00000001;
+enum uint DB_INVALID_HCHAPTER = 0x00000000U;
+enum uint STD_BOOKMARKLENGTH = 0x00000001U;
 enum GUID DBCIDGUID = GUID("0c733a81-2a1c-11ce-ade5-00aa0044773d");
 enum GUID DB_NULLGUID = GUID("00000000-0000-0000-0000-000000000000");
 
@@ -1888,12 +2020,12 @@ enum : int
 
 enum : uint
 {
-    DBPROPVAL_STGM_DIRECT          = 0x00010000,
-    DBPROPVAL_STGM_TRANSACTED      = 0x00020000,
-    DBPROPVAL_STGM_CONVERT         = 0x00040000,
-    DBPROPVAL_STGM_FAILIFTHERE     = 0x00080000,
-    DBPROPVAL_STGM_PRIORITY        = 0x00100000,
-    DBPROPVAL_STGM_DELETEONRELEASE = 0x00200000,
+    DBPROPVAL_STGM_DIRECT          = 0x00010000U,
+    DBPROPVAL_STGM_TRANSACTED      = 0x00020000U,
+    DBPROPVAL_STGM_CONVERT         = 0x00040000U,
+    DBPROPVAL_STGM_FAILIFTHERE     = 0x00080000U,
+    DBPROPVAL_STGM_PRIORITY        = 0x00100000U,
+    DBPROPVAL_STGM_DELETEONRELEASE = 0x00200000U,
 }
 
 enum : int
@@ -1973,257 +2105,257 @@ enum : int
 
 enum : uint
 {
-    DB_IMP_LEVEL_ANONYMOUS   = 0x00000000,
-    DB_IMP_LEVEL_IDENTIFY    = 0x00000001,
-    DB_IMP_LEVEL_IMPERSONATE = 0x00000002,
-    DB_IMP_LEVEL_DELEGATE    = 0x00000003,
+    DB_IMP_LEVEL_ANONYMOUS   = 0x00000000U,
+    DB_IMP_LEVEL_IDENTIFY    = 0x00000001U,
+    DB_IMP_LEVEL_IMPERSONATE = 0x00000002U,
+    DB_IMP_LEVEL_DELEGATE    = 0x00000003U,
 }
 
 enum : uint
 {
-    DBPROMPT_PROMPT           = 0x00000001,
-    DBPROMPT_COMPLETE         = 0x00000002,
-    DBPROMPT_COMPLETEREQUIRED = 0x00000003,
+    DBPROMPT_PROMPT           = 0x00000001U,
+    DBPROMPT_COMPLETE         = 0x00000002U,
+    DBPROMPT_COMPLETEREQUIRED = 0x00000003U,
 }
 
-enum uint DBPROMPT_NOPROMPT = 0x00000004;
+enum uint DBPROMPT_NOPROMPT = 0x00000004U;
 
 enum : uint
 {
-    DB_PROT_LEVEL_NONE          = 0x00000000,
-    DB_PROT_LEVEL_CONNECT       = 0x00000001,
-    DB_PROT_LEVEL_CALL          = 0x00000002,
-    DB_PROT_LEVEL_PKT           = 0x00000003,
-    DB_PROT_LEVEL_PKT_INTEGRITY = 0x00000004,
-    DB_PROT_LEVEL_PKT_PRIVACY   = 0x00000005,
-}
-
-enum : uint
-{
-    DB_MODE_READ             = 0x00000001,
-    DB_MODE_WRITE            = 0x00000002,
-    DB_MODE_READWRITE        = 0x00000003,
-    DB_MODE_SHARE_DENY_READ  = 0x00000004,
-    DB_MODE_SHARE_DENY_WRITE = 0x00000008,
-    DB_MODE_SHARE_EXCLUSIVE  = 0x0000000c,
-    DB_MODE_SHARE_DENY_NONE  = 0x00000010,
+    DB_PROT_LEVEL_NONE          = 0x00000000U,
+    DB_PROT_LEVEL_CONNECT       = 0x00000001U,
+    DB_PROT_LEVEL_CALL          = 0x00000002U,
+    DB_PROT_LEVEL_PKT           = 0x00000003U,
+    DB_PROT_LEVEL_PKT_INTEGRITY = 0x00000004U,
+    DB_PROT_LEVEL_PKT_PRIVACY   = 0x00000005U,
 }
 
 enum : uint
 {
-    DBCOMPUTEMODE_COMPUTED    = 0x00000001,
-    DBCOMPUTEMODE_DYNAMIC     = 0x00000002,
-    DBCOMPUTEMODE_NOTCOMPUTED = 0x00000003,
+    DB_MODE_READ             = 0x00000001U,
+    DB_MODE_WRITE            = 0x00000002U,
+    DB_MODE_READWRITE        = 0x00000003U,
+    DB_MODE_SHARE_DENY_READ  = 0x00000004U,
+    DB_MODE_SHARE_DENY_WRITE = 0x00000008U,
+    DB_MODE_SHARE_EXCLUSIVE  = 0x0000000cU,
+    DB_MODE_SHARE_DENY_NONE  = 0x00000010U,
 }
 
 enum : uint
 {
-    DBPROPVAL_DF_INITIALLY_DEFERRED  = 0x00000001,
-    DBPROPVAL_DF_INITIALLY_IMMEDIATE = 0x00000002,
-    DBPROPVAL_DF_NOT_DEFERRABLE      = 0x00000003,
+    DBCOMPUTEMODE_COMPUTED    = 0x00000001U,
+    DBCOMPUTEMODE_DYNAMIC     = 0x00000002U,
+    DBCOMPUTEMODE_NOTCOMPUTED = 0x00000003U,
 }
 
 enum : uint
 {
-    DBPARAMTYPE_INPUT       = 0x00000001,
-    DBPARAMTYPE_INPUTOUTPUT = 0x00000002,
-    DBPARAMTYPE_OUTPUT      = 0x00000003,
-    DBPARAMTYPE_RETURNVALUE = 0x00000004,
+    DBPROPVAL_DF_INITIALLY_DEFERRED  = 0x00000001U,
+    DBPROPVAL_DF_INITIALLY_IMMEDIATE = 0x00000002U,
+    DBPROPVAL_DF_NOT_DEFERRABLE      = 0x00000003U,
 }
 
 enum : uint
 {
-    DB_PT_UNKNOWN   = 0x00000001,
-    DB_PT_PROCEDURE = 0x00000002,
-}
-
-enum uint DB_PT_FUNCTION = 0x00000003;
-enum uint DB_REMOTE = 0x00000001;
-
-enum : uint
-{
-    DB_LOCAL_SHARED    = 0x00000002,
-    DB_LOCAL_EXCLUSIVE = 0x00000003,
+    DBPARAMTYPE_INPUT       = 0x00000001U,
+    DBPARAMTYPE_INPUTOUTPUT = 0x00000002U,
+    DBPARAMTYPE_OUTPUT      = 0x00000003U,
+    DBPARAMTYPE_RETURNVALUE = 0x00000004U,
 }
 
 enum : uint
 {
-    DB_COLLATION_ASC  = 0x00000001,
-    DB_COLLATION_DESC = 0x00000002,
+    DB_PT_UNKNOWN   = 0x00000001U,
+    DB_PT_PROCEDURE = 0x00000002U,
 }
 
-enum uint DB_UNSEARCHABLE = 0x00000001;
-enum uint DB_LIKE_ONLY = 0x00000002;
-enum uint DB_ALL_EXCEPT_LIKE = 0x00000003;
-enum uint DB_SEARCHABLE = 0x00000004;
+enum uint DB_PT_FUNCTION = 0x00000003U;
+enum uint DB_REMOTE = 0x00000001U;
 
 enum : uint
 {
-    MDTREEOP_CHILDREN    = 0x00000001,
-    MDTREEOP_SIBLINGS    = 0x00000002,
-    MDTREEOP_PARENT      = 0x00000004,
-    MDTREEOP_SELF        = 0x00000008,
-    MDTREEOP_DESCENDANTS = 0x00000010,
-    MDTREEOP_ANCESTORS   = 0x00000020,
+    DB_LOCAL_SHARED    = 0x00000002U,
+    DB_LOCAL_EXCLUSIVE = 0x00000003U,
 }
 
 enum : uint
 {
-    MD_DIMTYPE_UNKNOWN = 0x00000000,
-    MD_DIMTYPE_TIME    = 0x00000001,
-    MD_DIMTYPE_MEASURE = 0x00000002,
-    MD_DIMTYPE_OTHER   = 0x00000003,
+    DB_COLLATION_ASC  = 0x00000001U,
+    DB_COLLATION_DESC = 0x00000002U,
+}
+
+enum uint DB_UNSEARCHABLE = 0x00000001U;
+enum uint DB_LIKE_ONLY = 0x00000002U;
+enum uint DB_ALL_EXCEPT_LIKE = 0x00000003U;
+enum uint DB_SEARCHABLE = 0x00000004U;
+
+enum : uint
+{
+    MDTREEOP_CHILDREN    = 0x00000001U,
+    MDTREEOP_SIBLINGS    = 0x00000002U,
+    MDTREEOP_PARENT      = 0x00000004U,
+    MDTREEOP_SELF        = 0x00000008U,
+    MDTREEOP_DESCENDANTS = 0x00000010U,
+    MDTREEOP_ANCESTORS   = 0x00000020U,
 }
 
 enum : uint
 {
-    MDLEVEL_TYPE_UNKNOWN        = 0x00000000,
-    MDLEVEL_TYPE_REGULAR        = 0x00000000,
-    MDLEVEL_TYPE_ALL            = 0x00000001,
-    MDLEVEL_TYPE_CALCULATED     = 0x00000002,
-    MDLEVEL_TYPE_TIME           = 0x00000004,
-    MDLEVEL_TYPE_RESERVED1      = 0x00000008,
-    MDLEVEL_TYPE_TIME_YEARS     = 0x00000014,
-    MDLEVEL_TYPE_TIME_HALF_YEAR = 0x00000024,
-    MDLEVEL_TYPE_TIME_QUARTERS  = 0x00000044,
-    MDLEVEL_TYPE_TIME_MONTHS    = 0x00000084,
-    MDLEVEL_TYPE_TIME_WEEKS     = 0x00000104,
-    MDLEVEL_TYPE_TIME_DAYS      = 0x00000204,
-    MDLEVEL_TYPE_TIME_HOURS     = 0x00000304,
-    MDLEVEL_TYPE_TIME_MINUTES   = 0x00000404,
-    MDLEVEL_TYPE_TIME_SECONDS   = 0x00000804,
-    MDLEVEL_TYPE_TIME_UNDEFINED = 0x00001004,
+    MD_DIMTYPE_UNKNOWN = 0x00000000U,
+    MD_DIMTYPE_TIME    = 0x00000001U,
+    MD_DIMTYPE_MEASURE = 0x00000002U,
+    MD_DIMTYPE_OTHER   = 0x00000003U,
 }
 
 enum : uint
 {
-    MDMEASURE_AGGR_UNKNOWN    = 0x00000000,
-    MDMEASURE_AGGR_SUM        = 0x00000001,
-    MDMEASURE_AGGR_COUNT      = 0x00000002,
-    MDMEASURE_AGGR_MIN        = 0x00000003,
-    MDMEASURE_AGGR_MAX        = 0x00000004,
-    MDMEASURE_AGGR_AVG        = 0x00000005,
-    MDMEASURE_AGGR_VAR        = 0x00000006,
-    MDMEASURE_AGGR_STD        = 0x00000007,
-    MDMEASURE_AGGR_CALCULATED = 0x0000007f,
+    MDLEVEL_TYPE_UNKNOWN        = 0x00000000U,
+    MDLEVEL_TYPE_REGULAR        = 0x00000000U,
+    MDLEVEL_TYPE_ALL            = 0x00000001U,
+    MDLEVEL_TYPE_CALCULATED     = 0x00000002U,
+    MDLEVEL_TYPE_TIME           = 0x00000004U,
+    MDLEVEL_TYPE_RESERVED1      = 0x00000008U,
+    MDLEVEL_TYPE_TIME_YEARS     = 0x00000014U,
+    MDLEVEL_TYPE_TIME_HALF_YEAR = 0x00000024U,
+    MDLEVEL_TYPE_TIME_QUARTERS  = 0x00000044U,
+    MDLEVEL_TYPE_TIME_MONTHS    = 0x00000084U,
+    MDLEVEL_TYPE_TIME_WEEKS     = 0x00000104U,
+    MDLEVEL_TYPE_TIME_DAYS      = 0x00000204U,
+    MDLEVEL_TYPE_TIME_HOURS     = 0x00000304U,
+    MDLEVEL_TYPE_TIME_MINUTES   = 0x00000404U,
+    MDLEVEL_TYPE_TIME_SECONDS   = 0x00000804U,
+    MDLEVEL_TYPE_TIME_UNDEFINED = 0x00001004U,
 }
 
 enum : uint
 {
-    MDPROP_MEMBER = 0x00000001,
-    MDPROP_CELL   = 0x00000002,
+    MDMEASURE_AGGR_UNKNOWN    = 0x00000000U,
+    MDMEASURE_AGGR_SUM        = 0x00000001U,
+    MDMEASURE_AGGR_COUNT      = 0x00000002U,
+    MDMEASURE_AGGR_MIN        = 0x00000003U,
+    MDMEASURE_AGGR_MAX        = 0x00000004U,
+    MDMEASURE_AGGR_AVG        = 0x00000005U,
+    MDMEASURE_AGGR_VAR        = 0x00000006U,
+    MDMEASURE_AGGR_STD        = 0x00000007U,
+    MDMEASURE_AGGR_CALCULATED = 0x0000007fU,
 }
 
 enum : uint
 {
-    MDMEMBER_TYPE_UNKNOWN  = 0x00000000,
-    MDMEMBER_TYPE_REGULAR  = 0x00000001,
-    MDMEMBER_TYPE_ALL      = 0x00000002,
-    MDMEMBER_TYPE_MEASURE  = 0x00000003,
-    MDMEMBER_TYPE_FORMULA  = 0x00000004,
-    MDMEMBER_TYPE_RESERVE1 = 0x00000005,
-    MDMEMBER_TYPE_RESERVE2 = 0x00000006,
-    MDMEMBER_TYPE_RESERVE3 = 0x00000007,
-    MDMEMBER_TYPE_RESERVE4 = 0x00000008,
+    MDPROP_MEMBER = 0x00000001U,
+    MDPROP_CELL   = 0x00000002U,
 }
 
 enum : uint
 {
-    MDDISPINFO_DRILLED_DOWN        = 0x00010000,
-    MDDISPINFO_PARENT_SAME_AS_PREV = 0x00020000,
+    MDMEMBER_TYPE_UNKNOWN  = 0x00000000U,
+    MDMEMBER_TYPE_REGULAR  = 0x00000001U,
+    MDMEMBER_TYPE_ALL      = 0x00000002U,
+    MDMEMBER_TYPE_MEASURE  = 0x00000003U,
+    MDMEMBER_TYPE_FORMULA  = 0x00000004U,
+    MDMEMBER_TYPE_RESERVE1 = 0x00000005U,
+    MDMEMBER_TYPE_RESERVE2 = 0x00000006U,
+    MDMEMBER_TYPE_RESERVE3 = 0x00000007U,
+    MDMEMBER_TYPE_RESERVE4 = 0x00000008U,
+}
+
+enum : uint
+{
+    MDDISPINFO_DRILLED_DOWN        = 0x00010000U,
+    MDDISPINFO_PARENT_SAME_AS_PREV = 0x00020000U,
 }
 
 enum int DB_COUNTUNAVAILABLE = 0xffffffff;
 
 enum : uint
 {
-    MDFF_BOLD      = 0x00000001,
-    MDFF_ITALIC    = 0x00000002,
-    MDFF_UNDERLINE = 0x00000004,
+    MDFF_BOLD      = 0x00000001U,
+    MDFF_ITALIC    = 0x00000002U,
+    MDFF_UNDERLINE = 0x00000004U,
 }
 
-enum uint MDFF_STRIKEOUT = 0x00000008;
+enum uint MDFF_STRIKEOUT = 0x00000008U;
 
 enum : uint
 {
-    MDAXIS_COLUMNS  = 0x00000000,
-    MDAXIS_ROWS     = 0x00000001,
-    MDAXIS_PAGES    = 0x00000002,
-    MDAXIS_SECTIONS = 0x00000003,
-    MDAXIS_CHAPTERS = 0x00000004,
-    MDAXIS_SLICERS  = 0xffffffff,
-}
-
-enum : uint
-{
-    CRESTRICTIONS_DBSCHEMA_ASSERTIONS                 = 0x00000003,
-    CRESTRICTIONS_DBSCHEMA_CATALOGS                   = 0x00000001,
-    CRESTRICTIONS_DBSCHEMA_CHARACTER_SETS             = 0x00000003,
-    CRESTRICTIONS_DBSCHEMA_COLLATIONS                 = 0x00000003,
-    CRESTRICTIONS_DBSCHEMA_COLUMNS                    = 0x00000004,
-    CRESTRICTIONS_DBSCHEMA_CHECK_CONSTRAINTS          = 0x00000003,
-    CRESTRICTIONS_DBSCHEMA_CONSTRAINT_COLUMN_USAGE    = 0x00000004,
-    CRESTRICTIONS_DBSCHEMA_CONSTRAINT_TABLE_USAGE     = 0x00000003,
-    CRESTRICTIONS_DBSCHEMA_KEY_COLUMN_USAGE           = 0x00000007,
-    CRESTRICTIONS_DBSCHEMA_REFERENTIAL_CONSTRAINTS    = 0x00000003,
-    CRESTRICTIONS_DBSCHEMA_TABLE_CONSTRAINTS          = 0x00000007,
-    CRESTRICTIONS_DBSCHEMA_COLUMN_DOMAIN_USAGE        = 0x00000004,
-    CRESTRICTIONS_DBSCHEMA_INDEXES                    = 0x00000005,
-    CRESTRICTIONS_DBSCHEMA_OBJECT_ACTIONS             = 0x00000001,
-    CRESTRICTIONS_DBSCHEMA_OBJECTS                    = 0x00000001,
-    CRESTRICTIONS_DBSCHEMA_COLUMN_PRIVILEGES          = 0x00000006,
-    CRESTRICTIONS_DBSCHEMA_TABLE_PRIVILEGES           = 0x00000005,
-    CRESTRICTIONS_DBSCHEMA_USAGE_PRIVILEGES           = 0x00000006,
-    CRESTRICTIONS_DBSCHEMA_PROCEDURES                 = 0x00000004,
-    CRESTRICTIONS_DBSCHEMA_SCHEMATA                   = 0x00000003,
-    CRESTRICTIONS_DBSCHEMA_SQL_LANGUAGES              = 0x00000000,
-    CRESTRICTIONS_DBSCHEMA_STATISTICS                 = 0x00000003,
-    CRESTRICTIONS_DBSCHEMA_TABLES                     = 0x00000004,
-    CRESTRICTIONS_DBSCHEMA_TRANSLATIONS               = 0x00000003,
-    CRESTRICTIONS_DBSCHEMA_PROVIDER_TYPES             = 0x00000002,
-    CRESTRICTIONS_DBSCHEMA_VIEWS                      = 0x00000003,
-    CRESTRICTIONS_DBSCHEMA_VIEW_COLUMN_USAGE          = 0x00000003,
-    CRESTRICTIONS_DBSCHEMA_VIEW_TABLE_USAGE           = 0x00000003,
-    CRESTRICTIONS_DBSCHEMA_PROCEDURE_PARAMETERS       = 0x00000004,
-    CRESTRICTIONS_DBSCHEMA_FOREIGN_KEYS               = 0x00000006,
-    CRESTRICTIONS_DBSCHEMA_PRIMARY_KEYS               = 0x00000003,
-    CRESTRICTIONS_DBSCHEMA_PROCEDURE_COLUMNS          = 0x00000004,
-    CRESTRICTIONS_DBSCHEMA_TABLES_INFO                = 0x00000004,
-    CRESTRICTIONS_MDSCHEMA_CUBES                      = 0x00000003,
-    CRESTRICTIONS_MDSCHEMA_DIMENSIONS                 = 0x00000005,
-    CRESTRICTIONS_MDSCHEMA_HIERARCHIES                = 0x00000006,
-    CRESTRICTIONS_MDSCHEMA_LEVELS                     = 0x00000007,
-    CRESTRICTIONS_MDSCHEMA_MEASURES                   = 0x00000005,
-    CRESTRICTIONS_MDSCHEMA_PROPERTIES                 = 0x00000009,
-    CRESTRICTIONS_MDSCHEMA_MEMBERS                    = 0x0000000c,
-    CRESTRICTIONS_DBSCHEMA_TRUSTEE                    = 0x00000004,
-    CRESTRICTIONS_DBSCHEMA_TABLE_STATISTICS           = 0x00000007,
-    CRESTRICTIONS_DBSCHEMA_CHECK_CONSTRAINTS_BY_TABLE = 0x00000006,
+    MDAXIS_COLUMNS  = 0x00000000U,
+    MDAXIS_ROWS     = 0x00000001U,
+    MDAXIS_PAGES    = 0x00000002U,
+    MDAXIS_SECTIONS = 0x00000003U,
+    MDAXIS_CHAPTERS = 0x00000004U,
+    MDAXIS_SLICERS  = 0xffffffffU,
 }
 
 enum : uint
 {
-    CRESTRICTIONS_MDSCHEMA_FUNCTIONS = 0x00000004,
-    CRESTRICTIONS_MDSCHEMA_ACTIONS   = 0x00000008,
-    CRESTRICTIONS_MDSCHEMA_COMMANDS  = 0x00000005,
-    CRESTRICTIONS_MDSCHEMA_SETS      = 0x00000005,
+    CRESTRICTIONS_DBSCHEMA_ASSERTIONS                 = 0x00000003U,
+    CRESTRICTIONS_DBSCHEMA_CATALOGS                   = 0x00000001U,
+    CRESTRICTIONS_DBSCHEMA_CHARACTER_SETS             = 0x00000003U,
+    CRESTRICTIONS_DBSCHEMA_COLLATIONS                 = 0x00000003U,
+    CRESTRICTIONS_DBSCHEMA_COLUMNS                    = 0x00000004U,
+    CRESTRICTIONS_DBSCHEMA_CHECK_CONSTRAINTS          = 0x00000003U,
+    CRESTRICTIONS_DBSCHEMA_CONSTRAINT_COLUMN_USAGE    = 0x00000004U,
+    CRESTRICTIONS_DBSCHEMA_CONSTRAINT_TABLE_USAGE     = 0x00000003U,
+    CRESTRICTIONS_DBSCHEMA_KEY_COLUMN_USAGE           = 0x00000007U,
+    CRESTRICTIONS_DBSCHEMA_REFERENTIAL_CONSTRAINTS    = 0x00000003U,
+    CRESTRICTIONS_DBSCHEMA_TABLE_CONSTRAINTS          = 0x00000007U,
+    CRESTRICTIONS_DBSCHEMA_COLUMN_DOMAIN_USAGE        = 0x00000004U,
+    CRESTRICTIONS_DBSCHEMA_INDEXES                    = 0x00000005U,
+    CRESTRICTIONS_DBSCHEMA_OBJECT_ACTIONS             = 0x00000001U,
+    CRESTRICTIONS_DBSCHEMA_OBJECTS                    = 0x00000001U,
+    CRESTRICTIONS_DBSCHEMA_COLUMN_PRIVILEGES          = 0x00000006U,
+    CRESTRICTIONS_DBSCHEMA_TABLE_PRIVILEGES           = 0x00000005U,
+    CRESTRICTIONS_DBSCHEMA_USAGE_PRIVILEGES           = 0x00000006U,
+    CRESTRICTIONS_DBSCHEMA_PROCEDURES                 = 0x00000004U,
+    CRESTRICTIONS_DBSCHEMA_SCHEMATA                   = 0x00000003U,
+    CRESTRICTIONS_DBSCHEMA_SQL_LANGUAGES              = 0x00000000U,
+    CRESTRICTIONS_DBSCHEMA_STATISTICS                 = 0x00000003U,
+    CRESTRICTIONS_DBSCHEMA_TABLES                     = 0x00000004U,
+    CRESTRICTIONS_DBSCHEMA_TRANSLATIONS               = 0x00000003U,
+    CRESTRICTIONS_DBSCHEMA_PROVIDER_TYPES             = 0x00000002U,
+    CRESTRICTIONS_DBSCHEMA_VIEWS                      = 0x00000003U,
+    CRESTRICTIONS_DBSCHEMA_VIEW_COLUMN_USAGE          = 0x00000003U,
+    CRESTRICTIONS_DBSCHEMA_VIEW_TABLE_USAGE           = 0x00000003U,
+    CRESTRICTIONS_DBSCHEMA_PROCEDURE_PARAMETERS       = 0x00000004U,
+    CRESTRICTIONS_DBSCHEMA_FOREIGN_KEYS               = 0x00000006U,
+    CRESTRICTIONS_DBSCHEMA_PRIMARY_KEYS               = 0x00000003U,
+    CRESTRICTIONS_DBSCHEMA_PROCEDURE_COLUMNS          = 0x00000004U,
+    CRESTRICTIONS_DBSCHEMA_TABLES_INFO                = 0x00000004U,
+    CRESTRICTIONS_MDSCHEMA_CUBES                      = 0x00000003U,
+    CRESTRICTIONS_MDSCHEMA_DIMENSIONS                 = 0x00000005U,
+    CRESTRICTIONS_MDSCHEMA_HIERARCHIES                = 0x00000006U,
+    CRESTRICTIONS_MDSCHEMA_LEVELS                     = 0x00000007U,
+    CRESTRICTIONS_MDSCHEMA_MEASURES                   = 0x00000005U,
+    CRESTRICTIONS_MDSCHEMA_PROPERTIES                 = 0x00000009U,
+    CRESTRICTIONS_MDSCHEMA_MEMBERS                    = 0x0000000cU,
+    CRESTRICTIONS_DBSCHEMA_TRUSTEE                    = 0x00000004U,
+    CRESTRICTIONS_DBSCHEMA_TABLE_STATISTICS           = 0x00000007U,
+    CRESTRICTIONS_DBSCHEMA_CHECK_CONSTRAINTS_BY_TABLE = 0x00000006U,
 }
 
 enum : uint
 {
-    IDENTIFIER_SDK_MASK  = 0xf0000000,
-    IDENTIFIER_SDK_ERROR = 0x10000000,
+    CRESTRICTIONS_MDSCHEMA_FUNCTIONS = 0x00000004U,
+    CRESTRICTIONS_MDSCHEMA_ACTIONS   = 0x00000008U,
+    CRESTRICTIONS_MDSCHEMA_COMMANDS  = 0x00000005U,
+    CRESTRICTIONS_MDSCHEMA_SETS      = 0x00000005U,
+}
+
+enum : uint
+{
+    IDENTIFIER_SDK_MASK  = 0xf0000000U,
+    IDENTIFIER_SDK_ERROR = 0x10000000U,
 }
 
 enum GUID CLSID_CISimpleCommandCreator = GUID("c7b6c04a-cbb5-11d0-bb4c-00c04fc2f410");
 
 enum : uint
 {
-    DBPROP_MSDAORA_DETERMINEKEYCOLUMNS  = 0x00000001,
-    DBPROP_MSDAORA8_DETERMINEKEYCOLUMNS = 0x00000002,
+    DBPROP_MSDAORA_DETERMINEKEYCOLUMNS  = 0x00000001U,
+    DBPROP_MSDAORA8_DETERMINEKEYCOLUMNS = 0x00000002U,
 }
 
-enum uint PWPROP_OSPVALUE = 0x00000002;
+enum uint PWPROP_OSPVALUE = 0x00000002U;
 enum int STGM_COLLECTION = 0x00002000;
 
 enum : int
@@ -2234,225 +2366,225 @@ enum : int
 }
 
 enum int STGM_STRICTOPEN = 0x40000000;
-enum uint KAGPROP_QUERYBASEDUPDATES = 0x00000002;
-enum uint KAGPROP_MARSHALLABLE = 0x00000003;
-enum uint KAGPROP_POSITIONONNEWROW = 0x00000004;
-enum uint KAGPROP_IRowsetChangeExtInfo = 0x00000005;
+enum uint KAGPROP_QUERYBASEDUPDATES = 0x00000002U;
+enum uint KAGPROP_MARSHALLABLE = 0x00000003U;
+enum uint KAGPROP_POSITIONONNEWROW = 0x00000004U;
+enum uint KAGPROP_IRowsetChangeExtInfo = 0x00000005U;
 
 enum : uint
 {
-    KAGPROP_CURSOR          = 0x00000006,
-    KAGPROP_CONCURRENCY     = 0x00000007,
-    KAGPROP_BLOBSONFOCURSOR = 0x00000008,
+    KAGPROP_CURSOR          = 0x00000006U,
+    KAGPROP_CONCURRENCY     = 0x00000007U,
+    KAGPROP_BLOBSONFOCURSOR = 0x00000008U,
 }
 
-enum uint KAGPROP_INCLUDENONEXACT = 0x00000009;
+enum uint KAGPROP_INCLUDENONEXACT = 0x00000009U;
 
 enum : uint
 {
-    KAGPROP_FORCESSFIREHOSEMODE    = 0x0000000a,
-    KAGPROP_FORCENOPARAMETERREBIND = 0x0000000b,
-    KAGPROP_FORCENOPREPARE         = 0x0000000c,
-    KAGPROP_FORCENOREEXECUTE       = 0x0000000d,
-}
-
-enum : uint
-{
-    KAGPROP_ACCESSIBLEPROCEDURES = 0x00000002,
-    KAGPROP_ACCESSIBLETABLES     = 0x00000003,
+    KAGPROP_FORCESSFIREHOSEMODE    = 0x0000000aU,
+    KAGPROP_FORCENOPARAMETERREBIND = 0x0000000bU,
+    KAGPROP_FORCENOPREPARE         = 0x0000000cU,
+    KAGPROP_FORCENOREEXECUTE       = 0x0000000dU,
 }
 
 enum : uint
 {
-    KAGPROP_ODBCSQLOPTIEF = 0x00000004,
-    KAGPROP_OJCAPABILITY  = 0x00000005,
+    KAGPROP_ACCESSIBLEPROCEDURES = 0x00000002U,
+    KAGPROP_ACCESSIBLETABLES     = 0x00000003U,
 }
 
 enum : uint
 {
-    KAGPROP_PROCEDURES    = 0x00000006,
-    KAGPROP_DRIVERNAME    = 0x00000007,
-    KAGPROP_DRIVERVER     = 0x00000008,
-    KAGPROP_DRIVERODBCVER = 0x00000009,
-}
-
-enum uint KAGPROP_LIKEESCAPECLAUSE = 0x0000000a;
-enum uint KAGPROP_SPECIALCHARACTERS = 0x0000000b;
-
-enum : uint
-{
-    KAGPROP_MAXCOLUMNSINGROUPBY = 0x0000000c,
-    KAGPROP_MAXCOLUMNSININDEX   = 0x0000000d,
-    KAGPROP_MAXCOLUMNSINORDERBY = 0x0000000e,
-    KAGPROP_MAXCOLUMNSINSELECT  = 0x0000000f,
-    KAGPROP_MAXCOLUMNSINTABLE   = 0x00000010,
-}
-
-enum uint KAGPROP_NUMERICFUNCTIONS = 0x00000011;
-enum uint KAGPROP_ODBCSQLCONFORMANCE = 0x00000012;
-
-enum : uint
-{
-    KAGPROP_OUTERJOINS      = 0x00000013,
-    KAGPROP_STRINGFUNCTIONS = 0x00000014,
-}
-
-enum uint KAGPROP_SYSTEMFUNCTIONS = 0x00000015;
-enum uint KAGPROP_TIMEDATEFUNCTIONS = 0x00000016;
-
-enum : uint
-{
-    KAGPROP_FILEUSAGE        = 0x00000017,
-    KAGPROP_ACTIVESTATEMENTS = 0x00000018,
+    KAGPROP_ODBCSQLOPTIEF = 0x00000004U,
+    KAGPROP_OJCAPABILITY  = 0x00000005U,
 }
 
 enum : uint
 {
-    KAGPROP_AUTH_TRUSTEDCONNECTION = 0x00000002,
-    KAGPROP_AUTH_SERVERINTEGRATED  = 0x00000003,
+    KAGPROP_PROCEDURES    = 0x00000006U,
+    KAGPROP_DRIVERNAME    = 0x00000007U,
+    KAGPROP_DRIVERVER     = 0x00000008U,
+    KAGPROP_DRIVERODBCVER = 0x00000009U,
+}
+
+enum uint KAGPROP_LIKEESCAPECLAUSE = 0x0000000aU;
+enum uint KAGPROP_SPECIALCHARACTERS = 0x0000000bU;
+
+enum : uint
+{
+    KAGPROP_MAXCOLUMNSINGROUPBY = 0x0000000cU,
+    KAGPROP_MAXCOLUMNSININDEX   = 0x0000000dU,
+    KAGPROP_MAXCOLUMNSINORDERBY = 0x0000000eU,
+    KAGPROP_MAXCOLUMNSINSELECT  = 0x0000000fU,
+    KAGPROP_MAXCOLUMNSINTABLE   = 0x00000010U,
+}
+
+enum uint KAGPROP_NUMERICFUNCTIONS = 0x00000011U;
+enum uint KAGPROP_ODBCSQLCONFORMANCE = 0x00000012U;
+
+enum : uint
+{
+    KAGPROP_OUTERJOINS      = 0x00000013U,
+    KAGPROP_STRINGFUNCTIONS = 0x00000014U,
+}
+
+enum uint KAGPROP_SYSTEMFUNCTIONS = 0x00000015U;
+enum uint KAGPROP_TIMEDATEFUNCTIONS = 0x00000016U;
+
+enum : uint
+{
+    KAGPROP_FILEUSAGE        = 0x00000017U,
+    KAGPROP_ACTIVESTATEMENTS = 0x00000018U,
 }
 
 enum : uint
 {
-    KAGPROPVAL_CONCUR_ROWVER    = 0x00000001,
-    KAGPROPVAL_CONCUR_VALUES    = 0x00000002,
-    KAGPROPVAL_CONCUR_LOCK      = 0x00000004,
-    KAGPROPVAL_CONCUR_READ_ONLY = 0x00000008,
+    KAGPROP_AUTH_TRUSTEDCONNECTION = 0x00000002U,
+    KAGPROP_AUTH_SERVERINTEGRATED  = 0x00000003U,
 }
 
 enum : uint
 {
-    ODBCVER         = 0x00000380,
-    ODBC_ADD_DSN    = 0x00000001,
-    ODBC_CONFIG_DSN = 0x00000002,
-}
-
-enum uint ODBC_REMOVE_DSN = 0x00000003;
-enum uint ODBC_ADD_SYS_DSN = 0x00000004;
-enum uint ODBC_CONFIG_SYS_DSN = 0x00000005;
-
-enum : uint
-{
-    ODBC_REMOVE_SYS_DSN     = 0x00000006,
-    ODBC_REMOVE_DEFAULT_DSN = 0x00000007,
+    KAGPROPVAL_CONCUR_ROWVER    = 0x00000001U,
+    KAGPROPVAL_CONCUR_VALUES    = 0x00000002U,
+    KAGPROPVAL_CONCUR_LOCK      = 0x00000004U,
+    KAGPROPVAL_CONCUR_READ_ONLY = 0x00000008U,
 }
 
 enum : uint
 {
-    ODBC_INSTALL_INQUIRY  = 0x00000001,
-    ODBC_INSTALL_COMPLETE = 0x00000002,
-    ODBC_INSTALL_DRIVER   = 0x00000001,
+    ODBCVER         = 0x00000380U,
+    ODBC_ADD_DSN    = 0x00000001U,
+    ODBC_CONFIG_DSN = 0x00000002U,
 }
 
-enum uint ODBC_REMOVE_DRIVER = 0x00000002;
+enum uint ODBC_REMOVE_DSN = 0x00000003U;
+enum uint ODBC_ADD_SYS_DSN = 0x00000004U;
+enum uint ODBC_CONFIG_SYS_DSN = 0x00000005U;
 
 enum : uint
 {
-    ODBC_CONFIG_DRIVER     = 0x00000003,
-    ODBC_CONFIG_DRIVER_MAX = 0x00000064,
-}
-
-enum uint ODBC_BOTH_DSN = 0x00000000;
-enum uint ODBC_USER_DSN = 0x00000001;
-enum uint ODBC_SYSTEM_DSN = 0x00000002;
-
-enum : uint
-{
-    ODBC_ERROR_GENERAL_ERR          = 0x00000001,
-    ODBC_ERROR_INVALID_BUFF_LEN     = 0x00000002,
-    ODBC_ERROR_INVALID_HWND         = 0x00000003,
-    ODBC_ERROR_INVALID_STR          = 0x00000004,
-    ODBC_ERROR_INVALID_REQUEST_TYPE = 0x00000005,
-}
-
-enum uint ODBC_ERROR_COMPONENT_NOT_FOUND = 0x00000006;
-
-enum : uint
-{
-    ODBC_ERROR_INVALID_NAME           = 0x00000007,
-    ODBC_ERROR_INVALID_KEYWORD_VALUE  = 0x00000008,
-    ODBC_ERROR_INVALID_DSN            = 0x00000009,
-    ODBC_ERROR_INVALID_INF            = 0x0000000a,
-    ODBC_ERROR_REQUEST_FAILED         = 0x0000000b,
-    ODBC_ERROR_INVALID_PATH           = 0x0000000c,
-    ODBC_ERROR_LOAD_LIB_FAILED        = 0x0000000d,
-    ODBC_ERROR_INVALID_PARAM_SEQUENCE = 0x0000000e,
-    ODBC_ERROR_INVALID_LOG_FILE       = 0x0000000f,
-    ODBC_ERROR_USER_CANCELED          = 0x00000010,
-    ODBC_ERROR_USAGE_UPDATE_FAILED    = 0x00000011,
-}
-
-enum uint ODBC_ERROR_CREATE_DSN_FAILED = 0x00000012;
-enum uint ODBC_ERROR_WRITING_SYSINFO_FAILED = 0x00000013;
-enum uint ODBC_ERROR_REMOVE_DSN_FAILED = 0x00000014;
-
-enum : uint
-{
-    ODBC_ERROR_OUT_OF_MEM              = 0x00000015,
-    ODBC_ERROR_OUTPUT_STRING_TRUNCATED = 0x00000016,
+    ODBC_REMOVE_SYS_DSN     = 0x00000006U,
+    ODBC_REMOVE_DEFAULT_DSN = 0x00000007U,
 }
 
 enum : uint
 {
-    ODBC_ERROR_NOTRANINFO = 0x00000017,
-    ODBC_ERROR_MAX        = 0x00000017,
+    ODBC_INSTALL_INQUIRY  = 0x00000001U,
+    ODBC_INSTALL_COMPLETE = 0x00000002U,
+    ODBC_INSTALL_DRIVER   = 0x00000001U,
 }
 
-enum uint SQL_MAX_SQLSERVERNAME = 0x00000080;
+enum uint ODBC_REMOVE_DRIVER = 0x00000002U;
 
 enum : uint
 {
-    SQL_COPT_SS_BASE                = 0x000004b0,
-    SQL_COPT_SS_REMOTE_PWD          = 0x000004b1,
-    SQL_COPT_SS_USE_PROC_FOR_PREP   = 0x000004b2,
-    SQL_COPT_SS_INTEGRATED_SECURITY = 0x000004b3,
+    ODBC_CONFIG_DRIVER     = 0x00000003U,
+    ODBC_CONFIG_DRIVER_MAX = 0x00000064U,
+}
+
+enum uint ODBC_BOTH_DSN = 0x00000000U;
+enum uint ODBC_USER_DSN = 0x00000001U;
+enum uint ODBC_SYSTEM_DSN = 0x00000002U;
+
+enum : uint
+{
+    ODBC_ERROR_GENERAL_ERR          = 0x00000001U,
+    ODBC_ERROR_INVALID_BUFF_LEN     = 0x00000002U,
+    ODBC_ERROR_INVALID_HWND         = 0x00000003U,
+    ODBC_ERROR_INVALID_STR          = 0x00000004U,
+    ODBC_ERROR_INVALID_REQUEST_TYPE = 0x00000005U,
+}
+
+enum uint ODBC_ERROR_COMPONENT_NOT_FOUND = 0x00000006U;
+
+enum : uint
+{
+    ODBC_ERROR_INVALID_NAME           = 0x00000007U,
+    ODBC_ERROR_INVALID_KEYWORD_VALUE  = 0x00000008U,
+    ODBC_ERROR_INVALID_DSN            = 0x00000009U,
+    ODBC_ERROR_INVALID_INF            = 0x0000000aU,
+    ODBC_ERROR_REQUEST_FAILED         = 0x0000000bU,
+    ODBC_ERROR_INVALID_PATH           = 0x0000000cU,
+    ODBC_ERROR_LOAD_LIB_FAILED        = 0x0000000dU,
+    ODBC_ERROR_INVALID_PARAM_SEQUENCE = 0x0000000eU,
+    ODBC_ERROR_INVALID_LOG_FILE       = 0x0000000fU,
+    ODBC_ERROR_USER_CANCELED          = 0x00000010U,
+    ODBC_ERROR_USAGE_UPDATE_FAILED    = 0x00000011U,
+}
+
+enum uint ODBC_ERROR_CREATE_DSN_FAILED = 0x00000012U;
+enum uint ODBC_ERROR_WRITING_SYSINFO_FAILED = 0x00000013U;
+enum uint ODBC_ERROR_REMOVE_DSN_FAILED = 0x00000014U;
+
+enum : uint
+{
+    ODBC_ERROR_OUT_OF_MEM              = 0x00000015U,
+    ODBC_ERROR_OUTPUT_STRING_TRUNCATED = 0x00000016U,
 }
 
 enum : uint
 {
-    SQL_COPT_SS_PRESERVE_CURSORS    = 0x000004b4,
-    SQL_COPT_SS_USER_DATA           = 0x000004b5,
-    SQL_COPT_SS_FALLBACK_CONNECT    = 0x000004ba,
-    SQL_COPT_SS_PERF_DATA           = 0x000004bb,
-    SQL_COPT_SS_PERF_DATA_LOG       = 0x000004bc,
-    SQL_COPT_SS_PERF_QUERY_INTERVAL = 0x000004bd,
-    SQL_COPT_SS_PERF_QUERY_LOG      = 0x000004be,
-    SQL_COPT_SS_PERF_QUERY          = 0x000004bf,
-    SQL_COPT_SS_PERF_DATA_LOG_NOW   = 0x000004c0,
-    SQL_COPT_SS_QUOTED_IDENT        = 0x000004c1,
-    SQL_COPT_SS_ANSI_NPW            = 0x000004c2,
-    SQL_COPT_SS_BCP                 = 0x000004c3,
-    SQL_COPT_SS_TRANSLATE           = 0x000004c4,
-    SQL_COPT_SS_ATTACHDBFILENAME    = 0x000004c5,
-    SQL_COPT_SS_CONCAT_NULL         = 0x000004c6,
-    SQL_COPT_SS_ENCRYPT             = 0x000004c7,
-    SQL_COPT_SS_MAX_USED            = 0x000004c7,
+    ODBC_ERROR_NOTRANINFO = 0x00000017U,
+    ODBC_ERROR_MAX        = 0x00000017U,
+}
+
+enum uint SQL_MAX_SQLSERVERNAME = 0x00000080U;
+
+enum : uint
+{
+    SQL_COPT_SS_BASE                = 0x000004b0U,
+    SQL_COPT_SS_REMOTE_PWD          = 0x000004b1U,
+    SQL_COPT_SS_USE_PROC_FOR_PREP   = 0x000004b2U,
+    SQL_COPT_SS_INTEGRATED_SECURITY = 0x000004b3U,
 }
 
 enum : uint
 {
-    SQL_SOPT_SS_BASE            = 0x000004c9,
-    SQL_SOPT_SS_TEXTPTR_LOGGING = 0x000004c9,
-    SQL_SOPT_SS_CURRENT_COMMAND = 0x000004ca,
-    SQL_SOPT_SS_HIDDEN_COLUMNS  = 0x000004cb,
-    SQL_SOPT_SS_NOBROWSETABLE   = 0x000004cc,
-    SQL_SOPT_SS_REGIONALIZE     = 0x000004cd,
-    SQL_SOPT_SS_CURSOR_OPTIONS  = 0x000004ce,
-    SQL_SOPT_SS_NOCOUNT_STATUS  = 0x000004cf,
-    SQL_SOPT_SS_DEFER_PREPARE   = 0x000004d0,
-    SQL_SOPT_SS_MAX_USED        = 0x000004d0,
+    SQL_COPT_SS_PRESERVE_CURSORS    = 0x000004b4U,
+    SQL_COPT_SS_USER_DATA           = 0x000004b5U,
+    SQL_COPT_SS_FALLBACK_CONNECT    = 0x000004baU,
+    SQL_COPT_SS_PERF_DATA           = 0x000004bbU,
+    SQL_COPT_SS_PERF_DATA_LOG       = 0x000004bcU,
+    SQL_COPT_SS_PERF_QUERY_INTERVAL = 0x000004bdU,
+    SQL_COPT_SS_PERF_QUERY_LOG      = 0x000004beU,
+    SQL_COPT_SS_PERF_QUERY          = 0x000004bfU,
+    SQL_COPT_SS_PERF_DATA_LOG_NOW   = 0x000004c0U,
+    SQL_COPT_SS_QUOTED_IDENT        = 0x000004c1U,
+    SQL_COPT_SS_ANSI_NPW            = 0x000004c2U,
+    SQL_COPT_SS_BCP                 = 0x000004c3U,
+    SQL_COPT_SS_TRANSLATE           = 0x000004c4U,
+    SQL_COPT_SS_ATTACHDBFILENAME    = 0x000004c5U,
+    SQL_COPT_SS_CONCAT_NULL         = 0x000004c6U,
+    SQL_COPT_SS_ENCRYPT             = 0x000004c7U,
+    SQL_COPT_SS_MAX_USED            = 0x000004c7U,
 }
 
 enum : uint
 {
-    SQL_COPT_SS_BASE_EX           = 0x000004d8,
-    SQL_COPT_SS_BROWSE_CONNECT    = 0x000004d9,
-    SQL_COPT_SS_BROWSE_SERVER     = 0x000004da,
-    SQL_COPT_SS_WARN_ON_CP_ERROR  = 0x000004db,
-    SQL_COPT_SS_CONNECTION_DEAD   = 0x000004dc,
-    SQL_COPT_SS_BROWSE_CACHE_DATA = 0x000004dd,
-    SQL_COPT_SS_RESET_CONNECTION  = 0x000004de,
-    SQL_COPT_SS_EX_MAX_USED       = 0x000004de,
+    SQL_SOPT_SS_BASE            = 0x000004c9U,
+    SQL_SOPT_SS_TEXTPTR_LOGGING = 0x000004c9U,
+    SQL_SOPT_SS_CURRENT_COMMAND = 0x000004caU,
+    SQL_SOPT_SS_HIDDEN_COLUMNS  = 0x000004cbU,
+    SQL_SOPT_SS_NOBROWSETABLE   = 0x000004ccU,
+    SQL_SOPT_SS_REGIONALIZE     = 0x000004cdU,
+    SQL_SOPT_SS_CURSOR_OPTIONS  = 0x000004ceU,
+    SQL_SOPT_SS_NOCOUNT_STATUS  = 0x000004cfU,
+    SQL_SOPT_SS_DEFER_PREPARE   = 0x000004d0U,
+    SQL_SOPT_SS_MAX_USED        = 0x000004d0U,
+}
+
+enum : uint
+{
+    SQL_COPT_SS_BASE_EX           = 0x000004d8U,
+    SQL_COPT_SS_BROWSE_CONNECT    = 0x000004d9U,
+    SQL_COPT_SS_BROWSE_SERVER     = 0x000004daU,
+    SQL_COPT_SS_WARN_ON_CP_ERROR  = 0x000004dbU,
+    SQL_COPT_SS_CONNECTION_DEAD   = 0x000004dcU,
+    SQL_COPT_SS_BROWSE_CACHE_DATA = 0x000004ddU,
+    SQL_COPT_SS_RESET_CONNECTION  = 0x000004deU,
+    SQL_COPT_SS_EX_MAX_USED       = 0x000004deU,
 }
 
 enum : int
@@ -2583,167 +2715,167 @@ enum : int
     SQL_WARN_YES = 0x00000001,
 }
 
-enum uint SQL_CURSOR_FAST_FORWARD_ONLY = 0x00000008;
+enum uint SQL_CURSOR_FAST_FORWARD_ONLY = 0x00000008U;
 
 enum : uint
 {
-    SQL_CA_SS_BASE             = 0x000004b0,
-    SQL_CA_SS_COLUMN_SSTYPE    = 0x000004b0,
-    SQL_CA_SS_COLUMN_UTYPE     = 0x000004b1,
-    SQL_CA_SS_NUM_ORDERS       = 0x000004b2,
-    SQL_CA_SS_COLUMN_ORDER     = 0x000004b3,
-    SQL_CA_SS_COLUMN_VARYLEN   = 0x000004b4,
-    SQL_CA_SS_NUM_COMPUTES     = 0x000004b5,
-    SQL_CA_SS_COMPUTE_ID       = 0x000004b6,
-    SQL_CA_SS_COMPUTE_BYLIST   = 0x000004b7,
-    SQL_CA_SS_COLUMN_ID        = 0x000004b8,
-    SQL_CA_SS_COLUMN_OP        = 0x000004b9,
-    SQL_CA_SS_COLUMN_SIZE      = 0x000004ba,
-    SQL_CA_SS_COLUMN_HIDDEN    = 0x000004bb,
-    SQL_CA_SS_COLUMN_KEY       = 0x000004bc,
-    SQL_CA_SS_COLUMN_COLLATION = 0x000004be,
+    SQL_CA_SS_BASE             = 0x000004b0U,
+    SQL_CA_SS_COLUMN_SSTYPE    = 0x000004b0U,
+    SQL_CA_SS_COLUMN_UTYPE     = 0x000004b1U,
+    SQL_CA_SS_NUM_ORDERS       = 0x000004b2U,
+    SQL_CA_SS_COLUMN_ORDER     = 0x000004b3U,
+    SQL_CA_SS_COLUMN_VARYLEN   = 0x000004b4U,
+    SQL_CA_SS_NUM_COMPUTES     = 0x000004b5U,
+    SQL_CA_SS_COMPUTE_ID       = 0x000004b6U,
+    SQL_CA_SS_COMPUTE_BYLIST   = 0x000004b7U,
+    SQL_CA_SS_COLUMN_ID        = 0x000004b8U,
+    SQL_CA_SS_COLUMN_OP        = 0x000004b9U,
+    SQL_CA_SS_COLUMN_SIZE      = 0x000004baU,
+    SQL_CA_SS_COLUMN_HIDDEN    = 0x000004bbU,
+    SQL_CA_SS_COLUMN_KEY       = 0x000004bcU,
+    SQL_CA_SS_COLUMN_COLLATION = 0x000004beU,
 }
 
 enum : uint
 {
-    SQL_CA_SS_VARIANT_TYPE        = 0x000004bf,
-    SQL_CA_SS_VARIANT_SQL_TYPE    = 0x000004c0,
-    SQL_CA_SS_VARIANT_SERVER_TYPE = 0x000004c1,
+    SQL_CA_SS_VARIANT_TYPE        = 0x000004bfU,
+    SQL_CA_SS_VARIANT_SQL_TYPE    = 0x000004c0U,
+    SQL_CA_SS_VARIANT_SERVER_TYPE = 0x000004c1U,
 }
 
-enum uint SQL_CA_SS_MAX_USED = 0x000004c2;
+enum uint SQL_CA_SS_MAX_USED = 0x000004c2U;
 
 enum : uint
 {
-    SQLTEXT      = 0x00000023,
-    SQLVARBINARY = 0x00000025,
-}
-
-enum : uint
-{
-    SQLINTN    = 0x00000026,
-    SQLVARCHAR = 0x00000027,
-}
-
-enum uint SQLBINARY = 0x0000002d;
-enum uint SQLIMAGE = 0x00000022;
-enum uint SQLCHARACTER = 0x0000002f;
-
-enum : uint
-{
-    SQLINT1  = 0x00000030,
-    SQLBIT   = 0x00000032,
-    SQLINT2  = 0x00000034,
-    SQLINT4  = 0x00000038,
-    SQLMONEY = 0x0000003c,
-}
-
-enum uint SQLDATETIME = 0x0000003d;
-
-enum : uint
-{
-    SQLFLT8   = 0x0000003e,
-    SQLFLTN   = 0x0000006d,
-    SQLMONEYN = 0x0000006e,
-}
-
-enum uint SQLDATETIMN = 0x0000006f;
-
-enum : uint
-{
-    SQLFLT4   = 0x0000003b,
-    SQLMONEY4 = 0x0000007a,
-}
-
-enum uint SQLDATETIM4 = 0x0000003a;
-enum uint SQLDECIMAL = 0x0000006a;
-enum uint SQLNUMERIC = 0x0000006c;
-enum uint SQLUNIQUEID = 0x00000024;
-
-enum : uint
-{
-    SQLBIGCHAR      = 0x000000af,
-    SQLBIGVARCHAR   = 0x000000a7,
-    SQLBIGBINARY    = 0x000000ad,
-    SQLBIGVARBINARY = 0x000000a5,
+    SQLTEXT      = 0x00000023U,
+    SQLVARBINARY = 0x00000025U,
 }
 
 enum : uint
 {
-    SQLBITN     = 0x00000068,
-    SQLNCHAR    = 0x000000ef,
-    SQLNVARCHAR = 0x000000e7,
+    SQLINTN    = 0x00000026U,
+    SQLVARCHAR = 0x00000027U,
 }
 
-enum uint SQLNTEXT = 0x00000063;
+enum uint SQLBINARY = 0x0000002dU;
+enum uint SQLIMAGE = 0x00000022U;
+enum uint SQLCHARACTER = 0x0000002fU;
 
 enum : uint
 {
-    SQLINT8    = 0x0000007f,
-    SQLVARIANT = 0x00000062,
+    SQLINT1  = 0x00000030U,
+    SQLBIT   = 0x00000032U,
+    SQLINT2  = 0x00000034U,
+    SQLINT4  = 0x00000038U,
+    SQLMONEY = 0x0000003cU,
 }
+
+enum uint SQLDATETIME = 0x0000003dU;
 
 enum : uint
 {
-    SQLudtBINARY    = 0x00000003,
-    SQLudtBIT       = 0x00000010,
-    SQLudtBITN      = 0x00000000,
-    SQLudtCHAR      = 0x00000001,
-    SQLudtDATETIM4  = 0x00000016,
-    SQLudtDATETIME  = 0x0000000c,
-    SQLudtDATETIMN  = 0x0000000f,
-    SQLudtDECML     = 0x00000018,
-    SQLudtDECMLN    = 0x0000001a,
-    SQLudtFLT4      = 0x00000017,
-    SQLudtFLT8      = 0x00000008,
-    SQLudtFLTN      = 0x0000000e,
-    SQLudtIMAGE     = 0x00000014,
-    SQLudtINT1      = 0x00000005,
-    SQLudtINT2      = 0x00000006,
-    SQLudtINT4      = 0x00000007,
-    SQLudtINTN      = 0x0000000d,
-    SQLudtMONEY     = 0x0000000b,
-    SQLudtMONEY4    = 0x00000015,
-    SQLudtMONEYN    = 0x00000011,
-    SQLudtNUM       = 0x0000000a,
-    SQLudtNUMN      = 0x00000019,
-    SQLudtSYSNAME   = 0x00000012,
-    SQLudtTEXT      = 0x00000013,
-    SQLudtTIMESTAMP = 0x00000050,
+    SQLFLT8   = 0x0000003eU,
+    SQLFLTN   = 0x0000006dU,
+    SQLMONEYN = 0x0000006eU,
 }
 
-enum uint SQLudtUNIQUEIDENTIFIER = 0x00000000;
+enum uint SQLDATETIMN = 0x0000006fU;
 
 enum : uint
 {
-    SQLudtVARBINARY = 0x00000004,
-    SQLudtVARCHAR   = 0x00000002,
+    SQLFLT4   = 0x0000003bU,
+    SQLMONEY4 = 0x0000007aU,
 }
 
-enum uint MIN_USER_DATATYPE = 0x00000100;
+enum uint SQLDATETIM4 = 0x0000003aU;
+enum uint SQLDECIMAL = 0x0000006aU;
+enum uint SQLNUMERIC = 0x0000006cU;
+enum uint SQLUNIQUEID = 0x00000024U;
 
 enum : uint
 {
-    SQLAOPSTDEV  = 0x00000030,
-    SQLAOPSTDEVP = 0x00000031,
-    SQLAOPVAR    = 0x00000032,
-    SQLAOPVARP   = 0x00000033,
-    SQLAOPCNT    = 0x0000004b,
-    SQLAOPSUM    = 0x0000004d,
-    SQLAOPAVG    = 0x0000004f,
-    SQLAOPMIN    = 0x00000051,
-    SQLAOPMAX    = 0x00000052,
-    SQLAOPANY    = 0x00000053,
-    SQLAOPNOOP   = 0x00000056,
+    SQLBIGCHAR      = 0x000000afU,
+    SQLBIGVARCHAR   = 0x000000a7U,
+    SQLBIGBINARY    = 0x000000adU,
+    SQLBIGVARBINARY = 0x000000a5U,
 }
 
 enum : uint
 {
-    SQL_INFO_SS_FIRST        = 0x000004af,
-    SQL_INFO_SS_NETLIB_NAMEW = 0x000004af,
-    SQL_INFO_SS_NETLIB_NAMEA = 0x000004b0,
-    SQL_INFO_SS_MAX_USED     = 0x000004b0,
-    SQL_INFO_SS_NETLIB_NAME  = 0x000004af,
+    SQLBITN     = 0x00000068U,
+    SQLNCHAR    = 0x000000efU,
+    SQLNVARCHAR = 0x000000e7U,
+}
+
+enum uint SQLNTEXT = 0x00000063U;
+
+enum : uint
+{
+    SQLINT8    = 0x0000007fU,
+    SQLVARIANT = 0x00000062U,
+}
+
+enum : uint
+{
+    SQLudtBINARY    = 0x00000003U,
+    SQLudtBIT       = 0x00000010U,
+    SQLudtBITN      = 0x00000000U,
+    SQLudtCHAR      = 0x00000001U,
+    SQLudtDATETIM4  = 0x00000016U,
+    SQLudtDATETIME  = 0x0000000cU,
+    SQLudtDATETIMN  = 0x0000000fU,
+    SQLudtDECML     = 0x00000018U,
+    SQLudtDECMLN    = 0x0000001aU,
+    SQLudtFLT4      = 0x00000017U,
+    SQLudtFLT8      = 0x00000008U,
+    SQLudtFLTN      = 0x0000000eU,
+    SQLudtIMAGE     = 0x00000014U,
+    SQLudtINT1      = 0x00000005U,
+    SQLudtINT2      = 0x00000006U,
+    SQLudtINT4      = 0x00000007U,
+    SQLudtINTN      = 0x0000000dU,
+    SQLudtMONEY     = 0x0000000bU,
+    SQLudtMONEY4    = 0x00000015U,
+    SQLudtMONEYN    = 0x00000011U,
+    SQLudtNUM       = 0x0000000aU,
+    SQLudtNUMN      = 0x00000019U,
+    SQLudtSYSNAME   = 0x00000012U,
+    SQLudtTEXT      = 0x00000013U,
+    SQLudtTIMESTAMP = 0x00000050U,
+}
+
+enum uint SQLudtUNIQUEIDENTIFIER = 0x00000000U;
+
+enum : uint
+{
+    SQLudtVARBINARY = 0x00000004U,
+    SQLudtVARCHAR   = 0x00000002U,
+}
+
+enum uint MIN_USER_DATATYPE = 0x00000100U;
+
+enum : uint
+{
+    SQLAOPSTDEV  = 0x00000030U,
+    SQLAOPSTDEVP = 0x00000031U,
+    SQLAOPVAR    = 0x00000032U,
+    SQLAOPVARP   = 0x00000033U,
+    SQLAOPCNT    = 0x0000004bU,
+    SQLAOPSUM    = 0x0000004dU,
+    SQLAOPAVG    = 0x0000004fU,
+    SQLAOPMIN    = 0x00000051U,
+    SQLAOPMAX    = 0x00000052U,
+    SQLAOPANY    = 0x00000053U,
+    SQLAOPNOOP   = 0x00000056U,
+}
+
+enum : uint
+{
+    SQL_INFO_SS_FIRST        = 0x000004afU,
+    SQL_INFO_SS_NETLIB_NAMEW = 0x000004afU,
+    SQL_INFO_SS_NETLIB_NAMEA = 0x000004b0U,
+    SQL_INFO_SS_MAX_USED     = 0x000004b0U,
+    SQL_INFO_SS_NETLIB_NAME  = 0x000004afU,
 }
 
 enum int SQL_SS_VARIANT = 0xffffff6a;
@@ -2817,50 +2949,50 @@ enum : int
 
 enum : uint
 {
-    EX_ANY          = 0x00000000,
-    EX_INFO         = 0x0000000a,
-    EX_MAXISEVERITY = 0x0000000a,
+    EX_ANY          = 0x00000000U,
+    EX_INFO         = 0x0000000aU,
+    EX_MAXISEVERITY = 0x0000000aU,
 }
 
-enum uint EX_MISSING = 0x0000000b;
+enum uint EX_MISSING = 0x0000000bU;
 
 enum : uint
 {
-    EX_TYPE     = 0x0000000c,
-    EX_DEADLOCK = 0x0000000d,
+    EX_TYPE     = 0x0000000cU,
+    EX_DEADLOCK = 0x0000000dU,
 }
 
-enum uint EX_PERMIT = 0x0000000e;
-enum uint EX_SYNTAX = 0x0000000f;
+enum uint EX_PERMIT = 0x0000000eU;
+enum uint EX_SYNTAX = 0x0000000fU;
 
 enum : uint
 {
-    EX_USER     = 0x00000010,
-    EX_RESOURCE = 0x00000011,
+    EX_USER     = 0x00000010U,
+    EX_RESOURCE = 0x00000011U,
 }
 
-enum uint EX_INTOK = 0x00000012;
-enum uint MAXUSEVERITY = 0x00000012;
-enum uint EX_LIMIT = 0x00000013;
-enum uint EX_CMDFATAL = 0x00000014;
-enum uint MINFATALERR = 0x00000014;
-enum uint EX_DBFATAL = 0x00000015;
-enum uint EX_TABCORRUPT = 0x00000016;
-enum uint EX_DBCORRUPT = 0x00000017;
-enum uint EX_HARDWARE = 0x00000018;
-enum uint EX_CONTROL = 0x00000019;
-enum uint DBMAXCHAR = 0x00001f41;
+enum uint EX_INTOK = 0x00000012U;
+enum uint MAXUSEVERITY = 0x00000012U;
+enum uint EX_LIMIT = 0x00000013U;
+enum uint EX_CMDFATAL = 0x00000014U;
+enum uint MINFATALERR = 0x00000014U;
+enum uint EX_DBFATAL = 0x00000015U;
+enum uint EX_TABCORRUPT = 0x00000016U;
+enum uint EX_DBCORRUPT = 0x00000017U;
+enum uint EX_HARDWARE = 0x00000018U;
+enum uint EX_CONTROL = 0x00000019U;
+enum uint DBMAXCHAR = 0x00001f41U;
 
 enum : uint
 {
-    MAXNAME       = 0x00000081,
-    MAXNUMERICLEN = 0x00000010,
+    MAXNAME       = 0x00000081U,
+    MAXNUMERICLEN = 0x00000010U,
 }
 
 enum : uint
 {
-    SQL_PERF_START = 0x00000001,
-    SQL_PERF_STOP  = 0x00000002,
+    SQL_PERF_START = 0x00000001U,
+    SQL_PERF_STOP  = 0x00000002U,
 }
 
 enum : const(wchar)*
@@ -2869,79 +3001,79 @@ enum : const(wchar)*
     SQL_SS_QL_DEFAULT = "QUERY.LOG",
 }
 
-enum uint SQL_SS_QI_DEFAULT = 0x00007530;
-enum uint SUCCEED = 0x00000001;
-enum uint FAIL = 0x00000000;
+enum uint SQL_SS_QI_DEFAULT = 0x00007530U;
+enum uint SUCCEED = 0x00000001U;
+enum uint FAIL = 0x00000000U;
 
 enum : uint
 {
-    SUCCEED_ABORT = 0x00000002,
-    SUCCEED_ASYNC = 0x00000003,
+    SUCCEED_ABORT = 0x00000002U,
+    SUCCEED_ASYNC = 0x00000003U,
 }
 
 enum : uint
 {
-    DB_IN  = 0x00000001,
-    DB_OUT = 0x00000002,
+    DB_IN  = 0x00000001U,
+    DB_OUT = 0x00000002U,
 }
 
-enum uint BCPMAXERRS = 0x00000001;
-enum uint BCPFIRST = 0x00000002;
+enum uint BCPMAXERRS = 0x00000001U;
+enum uint BCPFIRST = 0x00000002U;
 
 enum : uint
 {
-    BCPLAST  = 0x00000003,
-    BCPBATCH = 0x00000004,
+    BCPLAST  = 0x00000003U,
+    BCPBATCH = 0x00000004U,
 }
 
-enum uint BCPKEEPNULLS = 0x00000005;
-enum uint BCPABORT = 0x00000006;
+enum uint BCPKEEPNULLS = 0x00000005U;
+enum uint BCPABORT = 0x00000006U;
 
 enum : uint
 {
-    BCPODBC         = 0x00000007,
-    BCPKEEPIDENTITY = 0x00000008,
+    BCPODBC         = 0x00000007U,
+    BCPKEEPIDENTITY = 0x00000008U,
 }
 
-enum uint BCP6xFILEFMT = 0x00000009;
+enum uint BCP6xFILEFMT = 0x00000009U;
 
 enum : uint
 {
-    BCPHINTSA = 0x0000000a,
-    BCPHINTSW = 0x0000000b,
+    BCPHINTSA = 0x0000000aU,
+    BCPHINTSW = 0x0000000bU,
 }
 
-enum uint BCPFILECP = 0x0000000c;
-enum uint BCPUNICODEFILE = 0x0000000d;
-enum uint BCPTEXTFILE = 0x0000000e;
+enum uint BCPFILECP = 0x0000000cU;
+enum uint BCPUNICODEFILE = 0x0000000dU;
+enum uint BCPTEXTFILE = 0x0000000eU;
 
 enum : uint
 {
-    BCPFILEFMT      = 0x0000000f,
-    BCPFILECP_ACP   = 0x00000000,
-    BCPFILECP_OEMCP = 0x00000001,
+    BCPFILEFMT      = 0x0000000fU,
+    BCPFILECP_ACP   = 0x00000000U,
+    BCPFILECP_OEMCP = 0x00000001U,
 }
 
 enum int BCPFILECP_RAW = 0xffffffff;
 enum int SQL_VARLEN_DATA = 0xfffffff6;
-enum uint BCPHINTS = 0x0000000b;
+enum uint BCPHINTS = 0x0000000bU;
 
 enum : uint
 {
-    BCP_FMT_TYPE          = 0x00000001,
-    BCP_FMT_INDICATOR_LEN = 0x00000002,
+    BCP_FMT_TYPE          = 0x00000001U,
+    BCP_FMT_INDICATOR_LEN = 0x00000002U,
 }
 
 enum : uint
 {
-    BCP_FMT_DATA_LEN     = 0x00000003,
-    BCP_FMT_TERMINATOR   = 0x00000004,
-    BCP_FMT_SERVER_COL   = 0x00000005,
-    BCP_FMT_COLLATION    = 0x00000006,
-    BCP_FMT_COLLATION_ID = 0x00000007,
+    BCP_FMT_DATA_LEN     = 0x00000003U,
+    BCP_FMT_TERMINATOR   = 0x00000004U,
+    BCP_FMT_SERVER_COL   = 0x00000005U,
+    BCP_FMT_COLLATION    = 0x00000006U,
+    BCP_FMT_COLLATION_ID = 0x00000007U,
 }
 
-enum uint SQL_FAST_CONNECT = 0x000004b0;
+enum uint SQL_FAST_CONNECT = 0x000004b0U;
 
 enum : int
 {
@@ -2950,7 +3082,7 @@ enum : int
     SQL_FC_DEFAULT = 0x00000000,
 }
 
-enum uint SQL_COPT_SS_ANSI_OEM = 0x000004b6;
+enum uint SQL_COPT_SS_ANSI_OEM = 0x000004b6U;
 
 enum : int
 {
@@ -2959,13 +3091,13 @@ enum : int
     SQL_AO_DEFAULT = 0x00000000,
 }
 
-enum uint SQL_REMOTE_PWD = 0x000004b1;
-enum uint SQL_USE_PROCEDURE_FOR_PREPARE = 0x000004b2;
-enum uint SQL_INTEGRATED_SECURITY = 0x000004b3;
-enum uint SQL_PRESERVE_CURSORS = 0x000004b4;
-enum uint SQL_TEXTPTR_LOGGING = 0x000004c9;
-enum uint SQLDECIMALN = 0x0000006a;
-enum uint SQLNUMERICN = 0x0000006c;
+enum uint SQL_REMOTE_PWD = 0x000004b1U;
+enum uint SQL_USE_PROCEDURE_FOR_PREPARE = 0x000004b2U;
+enum uint SQL_INTEGRATED_SECURITY = 0x000004b3U;
+enum uint SQL_PRESERVE_CURSORS = 0x000004b4U;
+enum uint SQL_TEXTPTR_LOGGING = 0x000004c9U;
+enum uint SQLDECIMALN = 0x0000006aU;
+enum uint SQLNUMERICN = 0x0000006cU;
 
 enum : HRESULT
 {
@@ -3266,30 +3398,30 @@ enum : HRESULT
     DB_S_NOROWSPECIFICCOLUMNS = HRESULT(0x00040edd),
 }
 
-enum uint DBPROPFLAGS_PERSIST = 0x00002000;
+enum uint DBPROPFLAGS_PERSIST = 0x00002000U;
 
 enum : uint
 {
-    DBPROPVAL_PERSIST_ADTG = 0x00000000,
-    DBPROPVAL_PERSIST_XML  = 0x00000001,
+    DBPROPVAL_PERSIST_ADTG = 0x00000000U,
+    DBPROPVAL_PERSIST_XML  = 0x00000001U,
 }
 
 enum : uint
 {
-    DBPROP_PersistFormat = 0x00000002,
-    DBPROP_PersistSchema = 0x00000003,
+    DBPROP_PersistFormat = 0x00000002U,
+    DBPROP_PersistSchema = 0x00000003U,
 }
 
 enum : uint
 {
-    DBPROP_HCHAPTER      = 0x00000004,
-    DBPROP_MAINTAINPROPS = 0x00000005,
+    DBPROP_HCHAPTER      = 0x00000004U,
+    DBPROP_MAINTAINPROPS = 0x00000005U,
 }
 
 enum : uint
 {
-    DBPROP_Unicode         = 0x00000006,
-    DBPROP_INTERLEAVEDROWS = 0x00000008,
+    DBPROP_Unicode         = 0x00000006U,
+    DBPROP_INTERLEAVEDROWS = 0x00000008U,
 }
 
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* MS_PERSIST_PROGID = "MSPersist";
@@ -3297,126 +3429,126 @@ enum GUID DBQUERYGUID = GUID("49691c90-7e17-101a-a91c-08002b2ecda9");
 
 enum : uint
 {
-    DISPID_QUERY_RANKVECTOR   = 0x00000002,
-    DISPID_QUERY_RANK         = 0x00000003,
-    DISPID_QUERY_HITCOUNT     = 0x00000004,
-    DISPID_QUERY_WORKID       = 0x00000005,
-    DISPID_QUERY_ALL          = 0x00000006,
-    DISPID_QUERY_UNFILTERED   = 0x00000007,
-    DISPID_QUERY_REVNAME      = 0x00000008,
-    DISPID_QUERY_VIRTUALPATH  = 0x00000009,
-    DISPID_QUERY_LASTSEENTIME = 0x0000000a,
+    DISPID_QUERY_RANKVECTOR   = 0x00000002U,
+    DISPID_QUERY_RANK         = 0x00000003U,
+    DISPID_QUERY_HITCOUNT     = 0x00000004U,
+    DISPID_QUERY_WORKID       = 0x00000005U,
+    DISPID_QUERY_ALL          = 0x00000006U,
+    DISPID_QUERY_UNFILTERED   = 0x00000007U,
+    DISPID_QUERY_REVNAME      = 0x00000008U,
+    DISPID_QUERY_VIRTUALPATH  = 0x00000009U,
+    DISPID_QUERY_LASTSEENTIME = 0x0000000aU,
 }
 
-enum uint CQUERYDISPIDS = 0x0000000b;
+enum uint CQUERYDISPIDS = 0x0000000bU;
 enum GUID PSGUID_QUERY_METADATA = GUID("624c9360-93d0-11cf-a787-00004c752752");
 
 enum : uint
 {
-    DISPID_QUERY_METADATA_VROOTUSED      = 0x00000002,
-    DISPID_QUERY_METADATA_VROOTAUTOMATIC = 0x00000003,
-    DISPID_QUERY_METADATA_VROOTMANUAL    = 0x00000004,
-    DISPID_QUERY_METADATA_PROPGUID       = 0x00000005,
-    DISPID_QUERY_METADATA_PROPDISPID     = 0x00000006,
-    DISPID_QUERY_METADATA_PROPNAME       = 0x00000007,
-    DISPID_QUERY_METADATA_STORELEVEL     = 0x00000008,
-    DISPID_QUERY_METADATA_PROPMODIFIABLE = 0x00000009,
+    DISPID_QUERY_METADATA_VROOTUSED      = 0x00000002U,
+    DISPID_QUERY_METADATA_VROOTAUTOMATIC = 0x00000003U,
+    DISPID_QUERY_METADATA_VROOTMANUAL    = 0x00000004U,
+    DISPID_QUERY_METADATA_PROPGUID       = 0x00000005U,
+    DISPID_QUERY_METADATA_PROPDISPID     = 0x00000006U,
+    DISPID_QUERY_METADATA_PROPNAME       = 0x00000007U,
+    DISPID_QUERY_METADATA_STORELEVEL     = 0x00000008U,
+    DISPID_QUERY_METADATA_PROPMODIFIABLE = 0x00000009U,
 }
 
-enum uint CQUERYMETADISPIDS = 0x0000000a;
+enum uint CQUERYMETADISPIDS = 0x0000000aU;
 enum GUID DBBMKGUID = GUID("c8b52232-5cf3-11ce-ade5-00aa0044773d");
 
 enum : uint
 {
-    PROPID_DBBMK_BOOKMARK = 0x00000002,
-    PROPID_DBBMK_CHAPTER  = 0x00000003,
+    PROPID_DBBMK_BOOKMARK = 0x00000002U,
+    PROPID_DBBMK_CHAPTER  = 0x00000003U,
 }
 
-enum uint CDBBMKDISPIDS = 0x00000008;
+enum uint CDBBMKDISPIDS = 0x00000008U;
 enum GUID DBSELFGUID = GUID("c8b52231-5cf3-11ce-ade5-00aa0044773d");
-enum uint PROPID_DBSELF_SELF = 0x00000002;
-enum uint CDBSELFDISPIDS = 0x00000008;
-enum uint CDBCOLDISPIDS = 0x0000001c;
-enum uint CQUERYPROPERTY = 0x00000040;
+enum uint PROPID_DBSELF_SELF = 0x00000002U;
+enum uint CDBSELFDISPIDS = 0x00000008U;
+enum uint CDBCOLDISPIDS = 0x0000001cU;
+enum uint CQUERYPROPERTY = 0x00000040U;
 enum GUID PSGUID_CHARACTERIZATION = GUID("560c36c0-503a-11cf-baa1-00004c752a9a");
-enum uint QUERY_VALIDBITS = 0x00000003;
-enum uint RTNone = 0x00000000;
-enum uint RTAnd = 0x00000001;
+enum uint QUERY_VALIDBITS = 0x00000003U;
+enum uint RTNone = 0x00000000U;
+enum uint RTAnd = 0x00000001U;
 
 enum : uint
 {
-    RTOr  = 0x00000002,
-    RTNot = 0x00000003,
+    RTOr  = 0x00000002U,
+    RTNot = 0x00000003U,
 }
 
-enum uint RTContent = 0x00000004;
+enum uint RTContent = 0x00000004U;
 
 enum : uint
 {
-    RTProperty  = 0x00000005,
-    RTProximity = 0x00000006,
+    RTProperty  = 0x00000005U,
+    RTProximity = 0x00000006U,
 }
 
-enum uint RTVector = 0x00000007;
-enum uint RTNatLanguage = 0x00000008;
+enum uint RTVector = 0x00000007U;
+enum uint RTNatLanguage = 0x00000008U;
 
 enum : uint
 {
-    GENERATE_METHOD_PREFIXMATCH   = 0x00000001,
-    GENERATE_METHOD_STEMMED       = 0x00000002,
-    GENERATE_METHOD_WITH_BM25     = 0x00000005,
-    GENERATE_METHOD_WITH_TFDOCLEN = 0x00000006,
-}
-
-enum : uint
-{
-    PRRE      = 0x00000006,
-    PRAllBits = 0x00000007,
-}
-
-enum uint PRSomeBits = 0x00000008;
-
-enum : uint
-{
-    PRAll = 0x00000100,
-    PRAny = 0x00000200,
+    GENERATE_METHOD_PREFIXMATCH   = 0x00000001U,
+    GENERATE_METHOD_STEMMED       = 0x00000002U,
+    GENERATE_METHOD_WITH_BM25     = 0x00000005U,
+    GENERATE_METHOD_WITH_TFDOCLEN = 0x00000006U,
 }
 
 enum : uint
 {
-    QUERY_SORTXASCEND  = 0x00000002,
-    QUERY_SORTXDESCEND = 0x00000003,
-    QUERY_SORTDEFAULT  = 0x00000004,
+    PRRE      = 0x00000006U,
+    PRAllBits = 0x00000007U,
+}
+
+enum uint PRSomeBits = 0x00000008U;
+
+enum : uint
+{
+    PRAll = 0x00000100U,
+    PRAny = 0x00000200U,
 }
 
 enum : uint
 {
-    CATEGORIZE_UNIQUE  = 0x00000000,
-    CATEGORIZE_CLUSTER = 0x00000001,
-    CATEGORIZE_BUCKETS = 0x00000002,
+    QUERY_SORTXASCEND  = 0x00000002U,
+    QUERY_SORTXDESCEND = 0x00000003U,
+    QUERY_SORTDEFAULT  = 0x00000004U,
 }
 
 enum : uint
 {
-    BUCKET_LINEAR      = 0x00000000,
-    BUCKET_EXPONENTIAL = 0x00000001,
+    CATEGORIZE_UNIQUE  = 0x00000000U,
+    CATEGORIZE_CLUSTER = 0x00000001U,
+    CATEGORIZE_BUCKETS = 0x00000002U,
 }
 
-enum uint CATEGORIZE_RANGE = 0x00000003;
-enum uint OCC_INVALID = 0xffffffff;
-enum uint MAX_QUERY_RANK = 0x000003e8;
-enum uint OSP_IndexLabel = 0x00000000;
+enum : uint
+{
+    BUCKET_LINEAR      = 0x00000000U,
+    BUCKET_EXPONENTIAL = 0x00000001U,
+}
+
+enum uint CATEGORIZE_RANGE = 0x00000003U;
+enum uint OCC_INVALID = 0xffffffffU;
+enum uint MAX_QUERY_RANK = 0x000003e8U;
+enum uint OSP_IndexLabel = 0x00000000U;
 enum int SQL_NULL_DATA = 0xffffffff;
 enum int SQL_DATA_AT_EXEC = 0xfffffffe;
 
 enum : uint
 {
-    SQL_SUCCESS           = 0x00000000,
-    SQL_SUCCESS_WITH_INFO = 0x00000001,
+    SQL_SUCCESS           = 0x00000000U,
+    SQL_SUCCESS_WITH_INFO = 0x00000001U,
 }
 
-enum uint SQL_NO_DATA = 0x00000064;
-enum uint SQL_PARAM_DATA_AVAILABLE = 0x00000065;
+enum uint SQL_NO_DATA = 0x00000064U;
+enum uint SQL_PARAM_DATA_AVAILABLE = 0x00000065U;
 
 enum : int
 {
@@ -3424,8 +3556,8 @@ enum : int
     SQL_INVALID_HANDLE = 0xfffffffe,
 }
 
-enum uint SQL_STILL_EXECUTING = 0x00000002;
-enum uint SQL_NEED_DATA = 0x00000063;
+enum uint SQL_STILL_EXECUTING = 0x00000002U;
+enum uint SQL_NEED_DATA = 0x00000063U;
 
 enum : int
 {
@@ -3433,36 +3565,36 @@ enum : int
     SQL_NTSL = 0xfffffffd,
 }
 
-enum uint SQL_MAX_MESSAGE_LENGTH = 0x00000200;
-enum uint SQL_DATE_LEN = 0x0000000a;
+enum uint SQL_MAX_MESSAGE_LENGTH = 0x00000200U;
+enum uint SQL_DATE_LEN = 0x0000000aU;
 
 enum : uint
 {
-    SQL_TIME_LEN      = 0x00000008,
-    SQL_TIMESTAMP_LEN = 0x00000013,
+    SQL_TIME_LEN      = 0x00000008U,
+    SQL_TIMESTAMP_LEN = 0x00000013U,
 }
 
 enum : uint
 {
-    SQL_HANDLE_ENV  = 0x00000001,
-    SQL_HANDLE_DBC  = 0x00000002,
-    SQL_HANDLE_STMT = 0x00000003,
-    SQL_HANDLE_DESC = 0x00000004,
+    SQL_HANDLE_ENV  = 0x00000001U,
+    SQL_HANDLE_DBC  = 0x00000002U,
+    SQL_HANDLE_STMT = 0x00000003U,
+    SQL_HANDLE_DESC = 0x00000004U,
 }
 
 enum : uint
 {
-    SQL_ATTR_OUTPUT_NTS     = 0x00002711,
-    SQL_ATTR_AUTO_IPD       = 0x00002711,
-    SQL_ATTR_METADATA_ID    = 0x0000271e,
-    SQL_ATTR_APP_ROW_DESC   = 0x0000271a,
-    SQL_ATTR_APP_PARAM_DESC = 0x0000271b,
+    SQL_ATTR_OUTPUT_NTS     = 0x00002711U,
+    SQL_ATTR_AUTO_IPD       = 0x00002711U,
+    SQL_ATTR_METADATA_ID    = 0x0000271eU,
+    SQL_ATTR_APP_ROW_DESC   = 0x0000271aU,
+    SQL_ATTR_APP_PARAM_DESC = 0x0000271bU,
 }
 
 enum : uint
 {
-    SQL_ATTR_IMP_ROW_DESC   = 0x0000271c,
-    SQL_ATTR_IMP_PARAM_DESC = 0x0000271d,
+    SQL_ATTR_IMP_ROW_DESC   = 0x0000271cU,
+    SQL_ATTR_IMP_PARAM_DESC = 0x0000271dU,
 }
 
 enum : int
@@ -3471,142 +3603,142 @@ enum : int
     SQL_ATTR_CURSOR_SENSITIVITY = 0xfffffffe,
 }
 
-enum uint SQL_NONSCROLLABLE = 0x00000000;
-enum uint SQL_SCROLLABLE = 0x00000001;
+enum uint SQL_NONSCROLLABLE = 0x00000000U;
+enum uint SQL_SCROLLABLE = 0x00000001U;
 
 enum : uint
 {
-    SQL_DESC_COUNT            = 0x000003e9,
-    SQL_DESC_TYPE             = 0x000003ea,
-    SQL_DESC_LENGTH           = 0x000003eb,
-    SQL_DESC_OCTET_LENGTH_PTR = 0x000003ec,
+    SQL_DESC_COUNT            = 0x000003e9U,
+    SQL_DESC_TYPE             = 0x000003eaU,
+    SQL_DESC_LENGTH           = 0x000003ebU,
+    SQL_DESC_OCTET_LENGTH_PTR = 0x000003ecU,
 }
 
 enum : uint
 {
-    SQL_DESC_PRECISION              = 0x000003ed,
-    SQL_DESC_SCALE                  = 0x000003ee,
-    SQL_DESC_DATETIME_INTERVAL_CODE = 0x000003ef,
+    SQL_DESC_PRECISION              = 0x000003edU,
+    SQL_DESC_SCALE                  = 0x000003eeU,
+    SQL_DESC_DATETIME_INTERVAL_CODE = 0x000003efU,
 }
 
 enum : uint
 {
-    SQL_DESC_NULLABLE      = 0x000003f0,
-    SQL_DESC_INDICATOR_PTR = 0x000003f1,
-    SQL_DESC_DATA_PTR      = 0x000003f2,
-    SQL_DESC_NAME          = 0x000003f3,
-    SQL_DESC_UNNAMED       = 0x000003f4,
-    SQL_DESC_OCTET_LENGTH  = 0x000003f5,
-    SQL_DESC_ALLOC_TYPE    = 0x0000044b,
+    SQL_DESC_NULLABLE      = 0x000003f0U,
+    SQL_DESC_INDICATOR_PTR = 0x000003f1U,
+    SQL_DESC_DATA_PTR      = 0x000003f2U,
+    SQL_DESC_NAME          = 0x000003f3U,
+    SQL_DESC_UNNAMED       = 0x000003f4U,
+    SQL_DESC_OCTET_LENGTH  = 0x000003f5U,
+    SQL_DESC_ALLOC_TYPE    = 0x0000044bU,
 }
 
 enum : uint
 {
-    SQL_DIAG_RETURNCODE       = 0x00000001,
-    SQL_DIAG_NUMBER           = 0x00000002,
-    SQL_DIAG_ROW_COUNT        = 0x00000003,
-    SQL_DIAG_SQLSTATE         = 0x00000004,
-    SQL_DIAG_NATIVE           = 0x00000005,
-    SQL_DIAG_MESSAGE_TEXT     = 0x00000006,
-    SQL_DIAG_DYNAMIC_FUNCTION = 0x00000007,
+    SQL_DIAG_RETURNCODE       = 0x00000001U,
+    SQL_DIAG_NUMBER           = 0x00000002U,
+    SQL_DIAG_ROW_COUNT        = 0x00000003U,
+    SQL_DIAG_SQLSTATE         = 0x00000004U,
+    SQL_DIAG_NATIVE           = 0x00000005U,
+    SQL_DIAG_MESSAGE_TEXT     = 0x00000006U,
+    SQL_DIAG_DYNAMIC_FUNCTION = 0x00000007U,
 }
 
 enum : uint
 {
-    SQL_DIAG_CLASS_ORIGIN    = 0x00000008,
-    SQL_DIAG_SUBCLASS_ORIGIN = 0x00000009,
+    SQL_DIAG_CLASS_ORIGIN    = 0x00000008U,
+    SQL_DIAG_SUBCLASS_ORIGIN = 0x00000009U,
 }
 
-enum uint SQL_DIAG_CONNECTION_NAME = 0x0000000a;
+enum uint SQL_DIAG_CONNECTION_NAME = 0x0000000aU;
 
 enum : uint
 {
-    SQL_DIAG_SERVER_NAME           = 0x0000000b,
-    SQL_DIAG_DYNAMIC_FUNCTION_CODE = 0x0000000c,
+    SQL_DIAG_SERVER_NAME           = 0x0000000bU,
+    SQL_DIAG_DYNAMIC_FUNCTION_CODE = 0x0000000cU,
 }
 
 enum : uint
 {
-    SQL_DIAG_ALTER_DOMAIN         = 0x00000003,
-    SQL_DIAG_ALTER_TABLE          = 0x00000004,
-    SQL_DIAG_CALL                 = 0x00000007,
-    SQL_DIAG_CREATE_ASSERTION     = 0x00000006,
-    SQL_DIAG_CREATE_CHARACTER_SET = 0x00000008,
-    SQL_DIAG_CREATE_COLLATION     = 0x0000000a,
-    SQL_DIAG_CREATE_DOMAIN        = 0x00000017,
+    SQL_DIAG_ALTER_DOMAIN         = 0x00000003U,
+    SQL_DIAG_ALTER_TABLE          = 0x00000004U,
+    SQL_DIAG_CALL                 = 0x00000007U,
+    SQL_DIAG_CREATE_ASSERTION     = 0x00000006U,
+    SQL_DIAG_CREATE_CHARACTER_SET = 0x00000008U,
+    SQL_DIAG_CREATE_COLLATION     = 0x0000000aU,
+    SQL_DIAG_CREATE_DOMAIN        = 0x00000017U,
 }
 
 enum int SQL_DIAG_CREATE_INDEX = 0xffffffff;
 
 enum : uint
 {
-    SQL_DIAG_CREATE_SCHEMA      = 0x00000040,
-    SQL_DIAG_CREATE_TABLE       = 0x0000004d,
-    SQL_DIAG_CREATE_TRANSLATION = 0x0000004f,
-    SQL_DIAG_CREATE_VIEW        = 0x00000054,
-    SQL_DIAG_DELETE_WHERE       = 0x00000013,
-    SQL_DIAG_DROP_ASSERTION     = 0x00000018,
-    SQL_DIAG_DROP_CHARACTER_SET = 0x00000019,
-    SQL_DIAG_DROP_COLLATION     = 0x0000001a,
-    SQL_DIAG_DROP_DOMAIN        = 0x0000001b,
+    SQL_DIAG_CREATE_SCHEMA      = 0x00000040U,
+    SQL_DIAG_CREATE_TABLE       = 0x0000004dU,
+    SQL_DIAG_CREATE_TRANSLATION = 0x0000004fU,
+    SQL_DIAG_CREATE_VIEW        = 0x00000054U,
+    SQL_DIAG_DELETE_WHERE       = 0x00000013U,
+    SQL_DIAG_DROP_ASSERTION     = 0x00000018U,
+    SQL_DIAG_DROP_CHARACTER_SET = 0x00000019U,
+    SQL_DIAG_DROP_COLLATION     = 0x0000001aU,
+    SQL_DIAG_DROP_DOMAIN        = 0x0000001bU,
 }
 
 enum int SQL_DIAG_DROP_INDEX = 0xfffffffe;
 
 enum : uint
 {
-    SQL_DIAG_DROP_SCHEMA           = 0x0000001f,
-    SQL_DIAG_DROP_TABLE            = 0x00000020,
-    SQL_DIAG_DROP_TRANSLATION      = 0x00000021,
-    SQL_DIAG_DROP_VIEW             = 0x00000024,
-    SQL_DIAG_DYNAMIC_DELETE_CURSOR = 0x00000026,
-    SQL_DIAG_DYNAMIC_UPDATE_CURSOR = 0x00000051,
+    SQL_DIAG_DROP_SCHEMA           = 0x0000001fU,
+    SQL_DIAG_DROP_TABLE            = 0x00000020U,
+    SQL_DIAG_DROP_TRANSLATION      = 0x00000021U,
+    SQL_DIAG_DROP_VIEW             = 0x00000024U,
+    SQL_DIAG_DYNAMIC_DELETE_CURSOR = 0x00000026U,
+    SQL_DIAG_DYNAMIC_UPDATE_CURSOR = 0x00000051U,
 }
 
 enum : uint
 {
-    SQL_DIAG_GRANT             = 0x00000030,
-    SQL_DIAG_INSERT            = 0x00000032,
-    SQL_DIAG_REVOKE            = 0x0000003b,
-    SQL_DIAG_SELECT_CURSOR     = 0x00000055,
-    SQL_DIAG_UNKNOWN_STATEMENT = 0x00000000,
+    SQL_DIAG_GRANT             = 0x00000030U,
+    SQL_DIAG_INSERT            = 0x00000032U,
+    SQL_DIAG_REVOKE            = 0x0000003bU,
+    SQL_DIAG_SELECT_CURSOR     = 0x00000055U,
+    SQL_DIAG_UNKNOWN_STATEMENT = 0x00000000U,
 }
 
-enum uint SQL_DIAG_UPDATE_WHERE = 0x00000052;
-enum uint SQL_UNKNOWN_TYPE = 0x00000000;
+enum uint SQL_DIAG_UPDATE_WHERE = 0x00000052U;
+enum uint SQL_UNKNOWN_TYPE = 0x00000000U;
 
 enum : uint
 {
-    SQL_CHAR    = 0x00000001,
-    SQL_NUMERIC = 0x00000002,
+    SQL_CHAR    = 0x00000001U,
+    SQL_NUMERIC = 0x00000002U,
 }
 
-enum uint SQL_DECIMAL = 0x00000003;
-enum uint SQL_INTEGER = 0x00000004;
-enum uint SQL_SMALLINT = 0x00000005;
+enum uint SQL_DECIMAL = 0x00000003U;
+enum uint SQL_INTEGER = 0x00000004U;
+enum uint SQL_SMALLINT = 0x00000005U;
 
 enum : uint
 {
-    SQL_FLOAT    = 0x00000006,
-    SQL_REAL     = 0x00000007,
-    SQL_DOUBLE   = 0x00000008,
-    SQL_DATETIME = 0x00000009,
+    SQL_FLOAT    = 0x00000006U,
+    SQL_REAL     = 0x00000007U,
+    SQL_DOUBLE   = 0x00000008U,
+    SQL_DATETIME = 0x00000009U,
 }
 
-enum uint SQL_VARCHAR = 0x0000000c;
+enum uint SQL_VARCHAR = 0x0000000cU;
 
 enum : uint
 {
-    SQL_TYPE_DATE      = 0x0000005b,
-    SQL_TYPE_TIME      = 0x0000005c,
-    SQL_TYPE_TIMESTAMP = 0x0000005d,
+    SQL_TYPE_DATE      = 0x0000005bU,
+    SQL_TYPE_TIME      = 0x0000005cU,
+    SQL_TYPE_TIMESTAMP = 0x0000005dU,
 }
 
-enum uint SQL_UNSPECIFIED = 0x00000000;
-enum uint SQL_INSENSITIVE = 0x00000001;
-enum uint SQL_SENSITIVE = 0x00000002;
-enum uint SQL_ALL_TYPES = 0x00000000;
-enum uint SQL_DEFAULT = 0x00000063;
+enum uint SQL_UNSPECIFIED = 0x00000000U;
+enum uint SQL_INSENSITIVE = 0x00000001U;
+enum uint SQL_SENSITIVE = 0x00000002U;
+enum uint SQL_ALL_TYPES = 0x00000000U;
+enum uint SQL_DEFAULT = 0x00000063U;
 
 enum : int
 {
@@ -3616,244 +3748,244 @@ enum : int
 
 enum : uint
 {
-    SQL_CODE_DATE      = 0x00000001,
-    SQL_CODE_TIME      = 0x00000002,
-    SQL_CODE_TIMESTAMP = 0x00000003,
+    SQL_CODE_DATE      = 0x00000001U,
+    SQL_CODE_TIME      = 0x00000002U,
+    SQL_CODE_TIMESTAMP = 0x00000003U,
 }
 
 enum : uint
 {
-    SQL_FALSE            = 0x00000000,
-    SQL_TRUE             = 0x00000001,
-    SQL_NO_NULLS         = 0x00000000,
-    SQL_NULLABLE         = 0x00000001,
-    SQL_NULLABLE_UNKNOWN = 0x00000002,
+    SQL_FALSE            = 0x00000000U,
+    SQL_TRUE             = 0x00000001U,
+    SQL_NO_NULLS         = 0x00000000U,
+    SQL_NULLABLE         = 0x00000001U,
+    SQL_NULLABLE_UNKNOWN = 0x00000002U,
 }
 
 enum : uint
 {
-    SQL_PRED_NONE  = 0x00000000,
-    SQL_PRED_CHAR  = 0x00000001,
-    SQL_PRED_BASIC = 0x00000002,
+    SQL_PRED_NONE  = 0x00000000U,
+    SQL_PRED_CHAR  = 0x00000001U,
+    SQL_PRED_BASIC = 0x00000002U,
 }
 
 enum : uint
 {
-    SQL_NAMED   = 0x00000000,
-    SQL_UNNAMED = 0x00000001,
+    SQL_NAMED   = 0x00000000U,
+    SQL_UNNAMED = 0x00000001U,
 }
 
 enum : uint
 {
-    SQL_DESC_ALLOC_AUTO = 0x00000001,
-    SQL_DESC_ALLOC_USER = 0x00000002,
+    SQL_DESC_ALLOC_AUTO = 0x00000001U,
+    SQL_DESC_ALLOC_USER = 0x00000002U,
 }
 
 enum : uint
 {
-    SQL_CLOSE  = 0x00000000,
-    SQL_DROP   = 0x00000001,
-    SQL_UNBIND = 0x00000002,
+    SQL_CLOSE  = 0x00000000U,
+    SQL_DROP   = 0x00000001U,
+    SQL_UNBIND = 0x00000002U,
 }
 
-enum uint SQL_RESET_PARAMS = 0x00000003;
+enum uint SQL_RESET_PARAMS = 0x00000003U;
 
 enum : uint
 {
-    SQL_FETCH_NEXT     = 0x00000001,
-    SQL_FETCH_FIRST    = 0x00000002,
-    SQL_FETCH_LAST     = 0x00000003,
-    SQL_FETCH_PRIOR    = 0x00000004,
-    SQL_FETCH_ABSOLUTE = 0x00000005,
-    SQL_FETCH_RELATIVE = 0x00000006,
+    SQL_FETCH_NEXT     = 0x00000001U,
+    SQL_FETCH_FIRST    = 0x00000002U,
+    SQL_FETCH_LAST     = 0x00000003U,
+    SQL_FETCH_PRIOR    = 0x00000004U,
+    SQL_FETCH_ABSOLUTE = 0x00000005U,
+    SQL_FETCH_RELATIVE = 0x00000006U,
 }
 
-enum uint SQL_COMMIT = 0x00000000;
-enum uint SQL_ROLLBACK = 0x00000001;
+enum uint SQL_COMMIT = 0x00000000U;
+enum uint SQL_ROLLBACK = 0x00000001U;
 
 enum : uint
 {
-    SQL_NULL_HENV  = 0x00000000,
-    SQL_NULL_HDBC  = 0x00000000,
-    SQL_NULL_HSTMT = 0x00000000,
-    SQL_NULL_HDESC = 0x00000000,
+    SQL_NULL_HENV  = 0x00000000U,
+    SQL_NULL_HDBC  = 0x00000000U,
+    SQL_NULL_HSTMT = 0x00000000U,
+    SQL_NULL_HDESC = 0x00000000U,
 }
 
 enum int SQL_NULL_HANDLE = 0x00000000;
 
 enum : uint
 {
-    SQL_SCOPE_CURROW      = 0x00000000,
-    SQL_SCOPE_TRANSACTION = 0x00000001,
-    SQL_SCOPE_SESSION     = 0x00000002,
+    SQL_SCOPE_CURROW      = 0x00000000U,
+    SQL_SCOPE_TRANSACTION = 0x00000001U,
+    SQL_SCOPE_SESSION     = 0x00000002U,
 }
 
 enum : uint
 {
-    SQL_PC_UNKNOWN    = 0x00000000,
-    SQL_PC_NON_PSEUDO = 0x00000001,
-    SQL_PC_PSEUDO     = 0x00000002,
+    SQL_PC_UNKNOWN    = 0x00000000U,
+    SQL_PC_NON_PSEUDO = 0x00000001U,
+    SQL_PC_PSEUDO     = 0x00000002U,
 }
 
-enum uint SQL_ROW_IDENTIFIER = 0x00000001;
+enum uint SQL_ROW_IDENTIFIER = 0x00000001U;
 
 enum : uint
 {
-    SQL_INDEX_UNIQUE    = 0x00000000,
-    SQL_INDEX_ALL       = 0x00000001,
-    SQL_INDEX_CLUSTERED = 0x00000001,
-    SQL_INDEX_HASHED    = 0x00000002,
-    SQL_INDEX_OTHER     = 0x00000003,
-}
-
-enum : uint
-{
-    SQL_API_SQLALLOCCONNECT     = 0x00000001,
-    SQL_API_SQLALLOCENV         = 0x00000002,
-    SQL_API_SQLALLOCHANDLE      = 0x000003e9,
-    SQL_API_SQLALLOCSTMT        = 0x00000003,
-    SQL_API_SQLBINDCOL          = 0x00000004,
-    SQL_API_SQLBINDPARAM        = 0x000003ea,
-    SQL_API_SQLCANCEL           = 0x00000005,
-    SQL_API_SQLCLOSECURSOR      = 0x000003eb,
-    SQL_API_SQLCOLATTRIBUTE     = 0x00000006,
-    SQL_API_SQLCOLUMNS          = 0x00000028,
-    SQL_API_SQLCONNECT          = 0x00000007,
-    SQL_API_SQLCOPYDESC         = 0x000003ec,
-    SQL_API_SQLDATASOURCES      = 0x00000039,
-    SQL_API_SQLDESCRIBECOL      = 0x00000008,
-    SQL_API_SQLDISCONNECT       = 0x00000009,
-    SQL_API_SQLENDTRAN          = 0x000003ed,
-    SQL_API_SQLERROR            = 0x0000000a,
-    SQL_API_SQLEXECDIRECT       = 0x0000000b,
-    SQL_API_SQLEXECUTE          = 0x0000000c,
-    SQL_API_SQLFETCH            = 0x0000000d,
-    SQL_API_SQLFETCHSCROLL      = 0x000003fd,
-    SQL_API_SQLFREECONNECT      = 0x0000000e,
-    SQL_API_SQLFREEENV          = 0x0000000f,
-    SQL_API_SQLFREEHANDLE       = 0x000003ee,
-    SQL_API_SQLFREESTMT         = 0x00000010,
-    SQL_API_SQLGETCONNECTATTR   = 0x000003ef,
-    SQL_API_SQLGETCONNECTOPTION = 0x0000002a,
-    SQL_API_SQLGETCURSORNAME    = 0x00000011,
-    SQL_API_SQLGETDATA          = 0x0000002b,
-    SQL_API_SQLGETDESCFIELD     = 0x000003f0,
-    SQL_API_SQLGETDESCREC       = 0x000003f1,
-    SQL_API_SQLGETDIAGFIELD     = 0x000003f2,
-    SQL_API_SQLGETDIAGREC       = 0x000003f3,
-    SQL_API_SQLGETENVATTR       = 0x000003f4,
-    SQL_API_SQLGETFUNCTIONS     = 0x0000002c,
-    SQL_API_SQLGETINFO          = 0x0000002d,
-    SQL_API_SQLGETSTMTATTR      = 0x000003f6,
-    SQL_API_SQLGETSTMTOPTION    = 0x0000002e,
-    SQL_API_SQLGETTYPEINFO      = 0x0000002f,
-    SQL_API_SQLNUMRESULTCOLS    = 0x00000012,
-    SQL_API_SQLPARAMDATA        = 0x00000030,
-    SQL_API_SQLPREPARE          = 0x00000013,
-    SQL_API_SQLPUTDATA          = 0x00000031,
-    SQL_API_SQLROWCOUNT         = 0x00000014,
-    SQL_API_SQLSETCONNECTATTR   = 0x000003f8,
-    SQL_API_SQLSETCONNECTOPTION = 0x00000032,
-    SQL_API_SQLSETCURSORNAME    = 0x00000015,
-    SQL_API_SQLSETDESCFIELD     = 0x000003f9,
-    SQL_API_SQLSETDESCREC       = 0x000003fa,
-    SQL_API_SQLSETENVATTR       = 0x000003fb,
-    SQL_API_SQLSETPARAM         = 0x00000016,
-    SQL_API_SQLSETSTMTATTR      = 0x000003fc,
-    SQL_API_SQLSETSTMTOPTION    = 0x00000033,
-    SQL_API_SQLSPECIALCOLUMNS   = 0x00000034,
-    SQL_API_SQLSTATISTICS       = 0x00000035,
-    SQL_API_SQLTABLES           = 0x00000036,
-    SQL_API_SQLTRANSACT         = 0x00000017,
-    SQL_API_SQLCANCELHANDLE     = 0x0000060e,
-    SQL_API_SQLCOMPLETEASYNC    = 0x0000060f,
-}
-
-enum uint SQL_MAX_DRIVER_CONNECTIONS = 0x00000000;
-enum uint SQL_MAXIMUM_DRIVER_CONNECTIONS = 0x00000000;
-enum uint SQL_MAX_CONCURRENT_ACTIVITIES = 0x00000001;
-enum uint SQL_MAXIMUM_CONCURRENT_ACTIVITIES = 0x00000001;
-enum uint SQL_DATA_SOURCE_NAME = 0x00000002;
-enum uint SQL_FETCH_DIRECTION = 0x00000008;
-enum uint SQL_SERVER_NAME = 0x0000000d;
-enum uint SQL_SEARCH_PATTERN_ESCAPE = 0x0000000e;
-
-enum : uint
-{
-    SQL_DBMS_NAME = 0x00000011,
-    SQL_DBMS_VER  = 0x00000012,
+    SQL_INDEX_UNIQUE    = 0x00000000U,
+    SQL_INDEX_ALL       = 0x00000001U,
+    SQL_INDEX_CLUSTERED = 0x00000001U,
+    SQL_INDEX_HASHED    = 0x00000002U,
+    SQL_INDEX_OTHER     = 0x00000003U,
 }
 
 enum : uint
 {
-    SQL_ACCESSIBLE_TABLES     = 0x00000013,
-    SQL_ACCESSIBLE_PROCEDURES = 0x00000014,
+    SQL_API_SQLALLOCCONNECT     = 0x00000001U,
+    SQL_API_SQLALLOCENV         = 0x00000002U,
+    SQL_API_SQLALLOCHANDLE      = 0x000003e9U,
+    SQL_API_SQLALLOCSTMT        = 0x00000003U,
+    SQL_API_SQLBINDCOL          = 0x00000004U,
+    SQL_API_SQLBINDPARAM        = 0x000003eaU,
+    SQL_API_SQLCANCEL           = 0x00000005U,
+    SQL_API_SQLCLOSECURSOR      = 0x000003ebU,
+    SQL_API_SQLCOLATTRIBUTE     = 0x00000006U,
+    SQL_API_SQLCOLUMNS          = 0x00000028U,
+    SQL_API_SQLCONNECT          = 0x00000007U,
+    SQL_API_SQLCOPYDESC         = 0x000003ecU,
+    SQL_API_SQLDATASOURCES      = 0x00000039U,
+    SQL_API_SQLDESCRIBECOL      = 0x00000008U,
+    SQL_API_SQLDISCONNECT       = 0x00000009U,
+    SQL_API_SQLENDTRAN          = 0x000003edU,
+    SQL_API_SQLERROR            = 0x0000000aU,
+    SQL_API_SQLEXECDIRECT       = 0x0000000bU,
+    SQL_API_SQLEXECUTE          = 0x0000000cU,
+    SQL_API_SQLFETCH            = 0x0000000dU,
+    SQL_API_SQLFETCHSCROLL      = 0x000003fdU,
+    SQL_API_SQLFREECONNECT      = 0x0000000eU,
+    SQL_API_SQLFREEENV          = 0x0000000fU,
+    SQL_API_SQLFREEHANDLE       = 0x000003eeU,
+    SQL_API_SQLFREESTMT         = 0x00000010U,
+    SQL_API_SQLGETCONNECTATTR   = 0x000003efU,
+    SQL_API_SQLGETCONNECTOPTION = 0x0000002aU,
+    SQL_API_SQLGETCURSORNAME    = 0x00000011U,
+    SQL_API_SQLGETDATA          = 0x0000002bU,
+    SQL_API_SQLGETDESCFIELD     = 0x000003f0U,
+    SQL_API_SQLGETDESCREC       = 0x000003f1U,
+    SQL_API_SQLGETDIAGFIELD     = 0x000003f2U,
+    SQL_API_SQLGETDIAGREC       = 0x000003f3U,
+    SQL_API_SQLGETENVATTR       = 0x000003f4U,
+    SQL_API_SQLGETFUNCTIONS     = 0x0000002cU,
+    SQL_API_SQLGETINFO          = 0x0000002dU,
+    SQL_API_SQLGETSTMTATTR      = 0x000003f6U,
+    SQL_API_SQLGETSTMTOPTION    = 0x0000002eU,
+    SQL_API_SQLGETTYPEINFO      = 0x0000002fU,
+    SQL_API_SQLNUMRESULTCOLS    = 0x00000012U,
+    SQL_API_SQLPARAMDATA        = 0x00000030U,
+    SQL_API_SQLPREPARE          = 0x00000013U,
+    SQL_API_SQLPUTDATA          = 0x00000031U,
+    SQL_API_SQLROWCOUNT         = 0x00000014U,
+    SQL_API_SQLSETCONNECTATTR   = 0x000003f8U,
+    SQL_API_SQLSETCONNECTOPTION = 0x00000032U,
+    SQL_API_SQLSETCURSORNAME    = 0x00000015U,
+    SQL_API_SQLSETDESCFIELD     = 0x000003f9U,
+    SQL_API_SQLSETDESCREC       = 0x000003faU,
+    SQL_API_SQLSETENVATTR       = 0x000003fbU,
+    SQL_API_SQLSETPARAM         = 0x00000016U,
+    SQL_API_SQLSETSTMTATTR      = 0x000003fcU,
+    SQL_API_SQLSETSTMTOPTION    = 0x00000033U,
+    SQL_API_SQLSPECIALCOLUMNS   = 0x00000034U,
+    SQL_API_SQLSTATISTICS       = 0x00000035U,
+    SQL_API_SQLTABLES           = 0x00000036U,
+    SQL_API_SQLTRANSACT         = 0x00000017U,
+    SQL_API_SQLCANCELHANDLE     = 0x0000060eU,
+    SQL_API_SQLCOMPLETEASYNC    = 0x0000060fU,
 }
 
-enum uint SQL_CURSOR_COMMIT_BEHAVIOR = 0x00000017;
-enum uint SQL_DATA_SOURCE_READ_ONLY = 0x00000019;
-enum uint SQL_DEFAULT_TXN_ISOLATION = 0x0000001a;
+enum uint SQL_MAX_DRIVER_CONNECTIONS = 0x00000000U;
+enum uint SQL_MAXIMUM_DRIVER_CONNECTIONS = 0x00000000U;
+enum uint SQL_MAX_CONCURRENT_ACTIVITIES = 0x00000001U;
+enum uint SQL_MAXIMUM_CONCURRENT_ACTIVITIES = 0x00000001U;
+enum uint SQL_DATA_SOURCE_NAME = 0x00000002U;
+enum uint SQL_FETCH_DIRECTION = 0x00000008U;
+enum uint SQL_SERVER_NAME = 0x0000000dU;
+enum uint SQL_SEARCH_PATTERN_ESCAPE = 0x0000000eU;
 
 enum : uint
 {
-    SQL_IDENTIFIER_CASE       = 0x0000001c,
-    SQL_IDENTIFIER_QUOTE_CHAR = 0x0000001d,
+    SQL_DBMS_NAME = 0x00000011U,
+    SQL_DBMS_VER  = 0x00000012U,
 }
-
-enum uint SQL_MAX_COLUMN_NAME_LEN = 0x0000001e;
-enum uint SQL_MAXIMUM_COLUMN_NAME_LENGTH = 0x0000001e;
-enum uint SQL_MAX_CURSOR_NAME_LEN = 0x0000001f;
-enum uint SQL_MAXIMUM_CURSOR_NAME_LENGTH = 0x0000001f;
-enum uint SQL_MAX_SCHEMA_NAME_LEN = 0x00000020;
-enum uint SQL_MAXIMUM_SCHEMA_NAME_LENGTH = 0x00000020;
-enum uint SQL_MAX_CATALOG_NAME_LEN = 0x00000022;
-enum uint SQL_MAXIMUM_CATALOG_NAME_LENGTH = 0x00000022;
-enum uint SQL_MAX_TABLE_NAME_LEN = 0x00000023;
-enum uint SQL_SCROLL_CONCURRENCY = 0x0000002b;
-enum uint SQL_TXN_CAPABLE = 0x0000002e;
-enum uint SQL_TRANSACTION_CAPABLE = 0x0000002e;
-enum uint SQL_USER_NAME = 0x0000002f;
-enum uint SQL_TXN_ISOLATION_OPTION = 0x00000048;
-enum uint SQL_TRANSACTION_ISOLATION_OPTION = 0x00000048;
-enum uint SQL_INTEGRITY = 0x00000049;
-enum uint SQL_GETDATA_EXTENSIONS = 0x00000051;
-enum uint SQL_NULL_COLLATION = 0x00000055;
-enum uint SQL_ALTER_TABLE = 0x00000056;
-enum uint SQL_ORDER_BY_COLUMNS_IN_SELECT = 0x0000005a;
-enum uint SQL_SPECIAL_CHARACTERS = 0x0000005e;
-enum uint SQL_MAX_COLUMNS_IN_GROUP_BY = 0x00000061;
-enum uint SQL_MAXIMUM_COLUMNS_IN_GROUP_BY = 0x00000061;
-enum uint SQL_MAX_COLUMNS_IN_INDEX = 0x00000062;
-enum uint SQL_MAXIMUM_COLUMNS_IN_INDEX = 0x00000062;
-enum uint SQL_MAX_COLUMNS_IN_ORDER_BY = 0x00000063;
-enum uint SQL_MAXIMUM_COLUMNS_IN_ORDER_BY = 0x00000063;
-enum uint SQL_MAX_COLUMNS_IN_SELECT = 0x00000064;
-enum uint SQL_MAXIMUM_COLUMNS_IN_SELECT = 0x00000064;
-enum uint SQL_MAX_COLUMNS_IN_TABLE = 0x00000065;
-enum uint SQL_MAX_INDEX_SIZE = 0x00000066;
-enum uint SQL_MAXIMUM_INDEX_SIZE = 0x00000066;
 
 enum : uint
 {
-    SQL_MAX_ROW_SIZE     = 0x00000068,
-    SQL_MAXIMUM_ROW_SIZE = 0x00000068,
+    SQL_ACCESSIBLE_TABLES     = 0x00000013U,
+    SQL_ACCESSIBLE_PROCEDURES = 0x00000014U,
 }
 
-enum uint SQL_MAX_STATEMENT_LEN = 0x00000069;
-enum uint SQL_MAXIMUM_STATEMENT_LENGTH = 0x00000069;
-enum uint SQL_MAX_TABLES_IN_SELECT = 0x0000006a;
-enum uint SQL_MAXIMUM_TABLES_IN_SELECT = 0x0000006a;
-enum uint SQL_MAX_USER_NAME_LEN = 0x0000006b;
-enum uint SQL_MAXIMUM_USER_NAME_LENGTH = 0x0000006b;
-enum uint SQL_OJ_CAPABILITIES = 0x00000073;
-enum uint SQL_OUTER_JOIN_CAPABILITIES = 0x00000073;
-enum uint SQL_XOPEN_CLI_YEAR = 0x00002710;
-enum uint SQL_CURSOR_SENSITIVITY = 0x00002711;
-enum uint SQL_DESCRIBE_PARAMETER = 0x00002712;
-enum uint SQL_CATALOG_NAME = 0x00002713;
-enum uint SQL_COLLATION_SEQ = 0x00002714;
-enum uint SQL_MAX_IDENTIFIER_LEN = 0x00002715;
-enum uint SQL_MAXIMUM_IDENTIFIER_LENGTH = 0x00002715;
+enum uint SQL_CURSOR_COMMIT_BEHAVIOR = 0x00000017U;
+enum uint SQL_DATA_SOURCE_READ_ONLY = 0x00000019U;
+enum uint SQL_DEFAULT_TXN_ISOLATION = 0x0000001aU;
+
+enum : uint
+{
+    SQL_IDENTIFIER_CASE       = 0x0000001cU,
+    SQL_IDENTIFIER_QUOTE_CHAR = 0x0000001dU,
+}
+
+enum uint SQL_MAX_COLUMN_NAME_LEN = 0x0000001eU;
+enum uint SQL_MAXIMUM_COLUMN_NAME_LENGTH = 0x0000001eU;
+enum uint SQL_MAX_CURSOR_NAME_LEN = 0x0000001fU;
+enum uint SQL_MAXIMUM_CURSOR_NAME_LENGTH = 0x0000001fU;
+enum uint SQL_MAX_SCHEMA_NAME_LEN = 0x00000020U;
+enum uint SQL_MAXIMUM_SCHEMA_NAME_LENGTH = 0x00000020U;
+enum uint SQL_MAX_CATALOG_NAME_LEN = 0x00000022U;
+enum uint SQL_MAXIMUM_CATALOG_NAME_LENGTH = 0x00000022U;
+enum uint SQL_MAX_TABLE_NAME_LEN = 0x00000023U;
+enum uint SQL_SCROLL_CONCURRENCY = 0x0000002bU;
+enum uint SQL_TXN_CAPABLE = 0x0000002eU;
+enum uint SQL_TRANSACTION_CAPABLE = 0x0000002eU;
+enum uint SQL_USER_NAME = 0x0000002fU;
+enum uint SQL_TXN_ISOLATION_OPTION = 0x00000048U;
+enum uint SQL_TRANSACTION_ISOLATION_OPTION = 0x00000048U;
+enum uint SQL_INTEGRITY = 0x00000049U;
+enum uint SQL_GETDATA_EXTENSIONS = 0x00000051U;
+enum uint SQL_NULL_COLLATION = 0x00000055U;
+enum uint SQL_ALTER_TABLE = 0x00000056U;
+enum uint SQL_ORDER_BY_COLUMNS_IN_SELECT = 0x0000005aU;
+enum uint SQL_SPECIAL_CHARACTERS = 0x0000005eU;
+enum uint SQL_MAX_COLUMNS_IN_GROUP_BY = 0x00000061U;
+enum uint SQL_MAXIMUM_COLUMNS_IN_GROUP_BY = 0x00000061U;
+enum uint SQL_MAX_COLUMNS_IN_INDEX = 0x00000062U;
+enum uint SQL_MAXIMUM_COLUMNS_IN_INDEX = 0x00000062U;
+enum uint SQL_MAX_COLUMNS_IN_ORDER_BY = 0x00000063U;
+enum uint SQL_MAXIMUM_COLUMNS_IN_ORDER_BY = 0x00000063U;
+enum uint SQL_MAX_COLUMNS_IN_SELECT = 0x00000064U;
+enum uint SQL_MAXIMUM_COLUMNS_IN_SELECT = 0x00000064U;
+enum uint SQL_MAX_COLUMNS_IN_TABLE = 0x00000065U;
+enum uint SQL_MAX_INDEX_SIZE = 0x00000066U;
+enum uint SQL_MAXIMUM_INDEX_SIZE = 0x00000066U;
+
+enum : uint
+{
+    SQL_MAX_ROW_SIZE     = 0x00000068U,
+    SQL_MAXIMUM_ROW_SIZE = 0x00000068U,
+}
+
+enum uint SQL_MAX_STATEMENT_LEN = 0x00000069U;
+enum uint SQL_MAXIMUM_STATEMENT_LENGTH = 0x00000069U;
+enum uint SQL_MAX_TABLES_IN_SELECT = 0x0000006aU;
+enum uint SQL_MAXIMUM_TABLES_IN_SELECT = 0x0000006aU;
+enum uint SQL_MAX_USER_NAME_LEN = 0x0000006bU;
+enum uint SQL_MAXIMUM_USER_NAME_LENGTH = 0x0000006bU;
+enum uint SQL_OJ_CAPABILITIES = 0x00000073U;
+enum uint SQL_OUTER_JOIN_CAPABILITIES = 0x00000073U;
+enum uint SQL_XOPEN_CLI_YEAR = 0x00002710U;
+enum uint SQL_CURSOR_SENSITIVITY = 0x00002711U;
+enum uint SQL_DESCRIBE_PARAMETER = 0x00002712U;
+enum uint SQL_CATALOG_NAME = 0x00002713U;
+enum uint SQL_COLLATION_SEQ = 0x00002714U;
+enum uint SQL_MAX_IDENTIFIER_LEN = 0x00002715U;
+enum uint SQL_MAXIMUM_IDENTIFIER_LENGTH = 0x00002715U;
 
 enum : int
 {
@@ -3865,16 +3997,16 @@ enum int SQL_AT_ADD_CONSTRAINT = 0x00000008;
 
 enum : uint
 {
-    SQL_AM_NONE       = 0x00000000,
-    SQL_AM_CONNECTION = 0x00000001,
-    SQL_AM_STATEMENT  = 0x00000002,
+    SQL_AM_NONE       = 0x00000000U,
+    SQL_AM_CONNECTION = 0x00000001U,
+    SQL_AM_STATEMENT  = 0x00000002U,
 }
 
 enum : uint
 {
-    SQL_CB_DELETE   = 0x00000000,
-    SQL_CB_CLOSE    = 0x00000001,
-    SQL_CB_PRESERVE = 0x00000002,
+    SQL_CB_DELETE   = 0x00000000U,
+    SQL_CB_CLOSE    = 0x00000001U,
+    SQL_CB_PRESERVE = 0x00000002U,
 }
 
 enum : int
@@ -3895,10 +4027,10 @@ enum : int
 
 enum : uint
 {
-    SQL_IC_UPPER     = 0x00000001,
-    SQL_IC_LOWER     = 0x00000002,
-    SQL_IC_SENSITIVE = 0x00000003,
-    SQL_IC_MIXED     = 0x00000004,
+    SQL_IC_UPPER     = 0x00000001U,
+    SQL_IC_LOWER     = 0x00000002U,
+    SQL_IC_SENSITIVE = 0x00000003U,
+    SQL_IC_MIXED     = 0x00000004U,
 }
 
 enum : int
@@ -3926,11 +4058,11 @@ enum : int
 
 enum : uint
 {
-    SQL_TC_NONE       = 0x00000000,
-    SQL_TC_DML        = 0x00000001,
-    SQL_TC_ALL        = 0x00000002,
-    SQL_TC_DDL_COMMIT = 0x00000003,
-    SQL_TC_DDL_IGNORE = 0x00000004,
+    SQL_TC_NONE       = 0x00000000U,
+    SQL_TC_DML        = 0x00000001U,
+    SQL_TC_ALL        = 0x00000002U,
+    SQL_TC_DDL_COMMIT = 0x00000003U,
+    SQL_TC_DDL_IGNORE = 0x00000004U,
 }
 
 enum int SQL_TXN_READ_UNCOMMITTED = 0x00000001;
@@ -3944,175 +4076,175 @@ enum int SQL_TRANSACTION_SERIALIZABLE = 0x00000008;
 
 enum : uint
 {
-    SQL_NC_HIGH = 0x00000000,
-    SQL_NC_LOW  = 0x00000001,
+    SQL_NC_HIGH = 0x00000000U,
+    SQL_NC_LOW  = 0x00000001U,
 }
 
 enum : uint
 {
-    SQL_SPEC_MAJOR = 0x00000003,
-    SQL_SPEC_MINOR = 0x00000050,
+    SQL_SPEC_MAJOR = 0x00000003U,
+    SQL_SPEC_MINOR = 0x00000050U,
 }
 
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SQL_SPEC_STRING = "03.80";
-enum uint SQL_SQLSTATE_SIZE = 0x00000005;
+enum uint SQL_SQLSTATE_SIZE = 0x00000005U;
 
 enum : uint
 {
-    SQL_MAX_DSN_LENGTH           = 0x00000020,
-    SQL_MAX_OPTION_STRING_LENGTH = 0x00000100,
+    SQL_MAX_DSN_LENGTH           = 0x00000020U,
+    SQL_MAX_OPTION_STRING_LENGTH = 0x00000100U,
 }
 
-enum uint SQL_NO_DATA_FOUND = 0x00000064;
-enum uint SQL_HANDLE_SENV = 0x00000005;
+enum uint SQL_NO_DATA_FOUND = 0x00000064U;
+enum uint SQL_HANDLE_SENV = 0x00000005U;
 
 enum : uint
 {
-    SQL_ATTR_ODBC_VERSION       = 0x000000c8,
-    SQL_ATTR_CONNECTION_POOLING = 0x000000c9,
-}
-
-enum : uint
-{
-    SQL_ATTR_CP_MATCH        = 0x000000ca,
-    SQL_ATTR_APPLICATION_KEY = 0x000000cb,
+    SQL_ATTR_ODBC_VERSION       = 0x000000c8U,
+    SQL_ATTR_CONNECTION_POOLING = 0x000000c9U,
 }
 
 enum : uint
 {
-    SQL_CP_OFF            = 0x00000000,
-    SQL_CP_ONE_PER_DRIVER = 0x00000001,
-    SQL_CP_ONE_PER_HENV   = 0x00000002,
+    SQL_ATTR_CP_MATCH        = 0x000000caU,
+    SQL_ATTR_APPLICATION_KEY = 0x000000cbU,
 }
 
 enum : uint
 {
-    SQL_CP_DRIVER_AWARE = 0x00000003,
-    SQL_CP_DEFAULT      = 0x00000000,
-    SQL_CP_STRICT_MATCH = 0x00000000,
-}
-
-enum uint SQL_CP_RELAXED_MATCH = 0x00000001;
-enum uint SQL_CP_MATCH_DEFAULT = 0x00000000;
-
-enum : uint
-{
-    SQL_OV_ODBC2    = 0x00000002,
-    SQL_OV_ODBC3    = 0x00000003,
-    SQL_OV_ODBC3_80 = 0x0000017c,
-}
-
-enum uint SQL_ACCESS_MODE = 0x00000065;
-enum uint SQL_AUTOCOMMIT = 0x00000066;
-enum uint SQL_LOGIN_TIMEOUT = 0x00000067;
-
-enum : uint
-{
-    SQL_OPT_TRACE     = 0x00000068,
-    SQL_OPT_TRACEFILE = 0x00000069,
+    SQL_CP_OFF            = 0x00000000U,
+    SQL_CP_ONE_PER_DRIVER = 0x00000001U,
+    SQL_CP_ONE_PER_HENV   = 0x00000002U,
 }
 
 enum : uint
 {
-    SQL_TRANSLATE_DLL    = 0x0000006a,
-    SQL_TRANSLATE_OPTION = 0x0000006b,
+    SQL_CP_DRIVER_AWARE = 0x00000003U,
+    SQL_CP_DEFAULT      = 0x00000000U,
+    SQL_CP_STRICT_MATCH = 0x00000000U,
 }
 
-enum uint SQL_TXN_ISOLATION = 0x0000006c;
-enum uint SQL_CURRENT_QUALIFIER = 0x0000006d;
-enum uint SQL_ODBC_CURSORS = 0x0000006e;
-enum uint SQL_QUIET_MODE = 0x0000006f;
-enum uint SQL_PACKET_SIZE = 0x00000070;
+enum uint SQL_CP_RELAXED_MATCH = 0x00000001U;
+enum uint SQL_CP_MATCH_DEFAULT = 0x00000000U;
 
 enum : uint
 {
-    SQL_ATTR_ACCESS_MODE        = 0x00000065,
-    SQL_ATTR_AUTOCOMMIT         = 0x00000066,
-    SQL_ATTR_CONNECTION_TIMEOUT = 0x00000071,
+    SQL_OV_ODBC2    = 0x00000002U,
+    SQL_OV_ODBC3    = 0x00000003U,
+    SQL_OV_ODBC3_80 = 0x0000017cU,
 }
 
-enum uint SQL_ATTR_CURRENT_CATALOG = 0x0000006d;
-enum uint SQL_ATTR_DISCONNECT_BEHAVIOR = 0x00000072;
+enum uint SQL_ACCESS_MODE = 0x00000065U;
+enum uint SQL_AUTOCOMMIT = 0x00000066U;
+enum uint SQL_LOGIN_TIMEOUT = 0x00000067U;
 
 enum : uint
 {
-    SQL_ATTR_ENLIST_IN_DTC    = 0x000004b7,
-    SQL_ATTR_ENLIST_IN_XA     = 0x000004b8,
-    SQL_ATTR_LOGIN_TIMEOUT    = 0x00000067,
-    SQL_ATTR_ODBC_CURSORS     = 0x0000006e,
-    SQL_ATTR_PACKET_SIZE      = 0x00000070,
-    SQL_ATTR_QUIET_MODE       = 0x0000006f,
-    SQL_ATTR_TRACE            = 0x00000068,
-    SQL_ATTR_TRACEFILE        = 0x00000069,
-    SQL_ATTR_TRANSLATE_LIB    = 0x0000006a,
-    SQL_ATTR_TRANSLATE_OPTION = 0x0000006b,
+    SQL_OPT_TRACE     = 0x00000068U,
+    SQL_OPT_TRACEFILE = 0x00000069U,
 }
 
 enum : uint
 {
-    SQL_ATTR_TXN_ISOLATION   = 0x0000006c,
-    SQL_ATTR_CONNECTION_DEAD = 0x000004b9,
+    SQL_TRANSLATE_DLL    = 0x0000006aU,
+    SQL_TRANSLATE_OPTION = 0x0000006bU,
+}
+
+enum uint SQL_TXN_ISOLATION = 0x0000006cU;
+enum uint SQL_CURRENT_QUALIFIER = 0x0000006dU;
+enum uint SQL_ODBC_CURSORS = 0x0000006eU;
+enum uint SQL_QUIET_MODE = 0x0000006fU;
+enum uint SQL_PACKET_SIZE = 0x00000070U;
+
+enum : uint
+{
+    SQL_ATTR_ACCESS_MODE        = 0x00000065U,
+    SQL_ATTR_AUTOCOMMIT         = 0x00000066U,
+    SQL_ATTR_CONNECTION_TIMEOUT = 0x00000071U,
+}
+
+enum uint SQL_ATTR_CURRENT_CATALOG = 0x0000006dU;
+enum uint SQL_ATTR_DISCONNECT_BEHAVIOR = 0x00000072U;
+
+enum : uint
+{
+    SQL_ATTR_ENLIST_IN_DTC    = 0x000004b7U,
+    SQL_ATTR_ENLIST_IN_XA     = 0x000004b8U,
+    SQL_ATTR_LOGIN_TIMEOUT    = 0x00000067U,
+    SQL_ATTR_ODBC_CURSORS     = 0x0000006eU,
+    SQL_ATTR_PACKET_SIZE      = 0x00000070U,
+    SQL_ATTR_QUIET_MODE       = 0x0000006fU,
+    SQL_ATTR_TRACE            = 0x00000068U,
+    SQL_ATTR_TRACEFILE        = 0x00000069U,
+    SQL_ATTR_TRANSLATE_LIB    = 0x0000006aU,
+    SQL_ATTR_TRANSLATE_OPTION = 0x0000006bU,
 }
 
 enum : uint
 {
-    SQL_ATTR_ANSI_APP         = 0x00000073,
-    SQL_ATTR_RESET_CONNECTION = 0x00000074,
+    SQL_ATTR_TXN_ISOLATION   = 0x0000006cU,
+    SQL_ATTR_CONNECTION_DEAD = 0x000004b9U,
 }
 
 enum : uint
 {
-    SQL_ATTR_ASYNC_DBC_FUNCTIONS_ENABLE = 0x00000075,
-    SQL_ATTR_ASYNC_DBC_EVENT            = 0x00000077,
-}
-
-enum uint SQL_CONNECT_OPT_DRVR_START = 0x000003e8;
-
-enum : uint
-{
-    SQL_CONN_OPT_MAX = 0x00000070,
-    SQL_CONN_OPT_MIN = 0x00000065,
+    SQL_ATTR_ANSI_APP         = 0x00000073U,
+    SQL_ATTR_RESET_CONNECTION = 0x00000074U,
 }
 
 enum : uint
 {
-    SQL_MODE_READ_WRITE = 0x00000000,
-    SQL_MODE_READ_ONLY  = 0x00000001,
-    SQL_MODE_DEFAULT    = 0x00000000,
+    SQL_ATTR_ASYNC_DBC_FUNCTIONS_ENABLE = 0x00000075U,
+    SQL_ATTR_ASYNC_DBC_EVENT            = 0x00000077U,
+}
+
+enum uint SQL_CONNECT_OPT_DRVR_START = 0x000003e8U;
+
+enum : uint
+{
+    SQL_CONN_OPT_MAX = 0x00000070U,
+    SQL_CONN_OPT_MIN = 0x00000065U,
 }
 
 enum : uint
 {
-    SQL_AUTOCOMMIT_OFF     = 0x00000000,
-    SQL_AUTOCOMMIT_ON      = 0x00000001,
-    SQL_AUTOCOMMIT_DEFAULT = 0x00000001,
+    SQL_MODE_READ_WRITE = 0x00000000U,
+    SQL_MODE_READ_ONLY  = 0x00000001U,
+    SQL_MODE_DEFAULT    = 0x00000000U,
 }
-
-enum uint SQL_LOGIN_TIMEOUT_DEFAULT = 0x0000000f;
 
 enum : uint
 {
-    SQL_OPT_TRACE_OFF     = 0x00000000,
-    SQL_OPT_TRACE_ON      = 0x00000001,
-    SQL_OPT_TRACE_DEFAULT = 0x00000000,
+    SQL_AUTOCOMMIT_OFF     = 0x00000000U,
+    SQL_AUTOCOMMIT_ON      = 0x00000001U,
+    SQL_AUTOCOMMIT_DEFAULT = 0x00000001U,
+}
+
+enum uint SQL_LOGIN_TIMEOUT_DEFAULT = 0x0000000fU;
+
+enum : uint
+{
+    SQL_OPT_TRACE_OFF     = 0x00000000U,
+    SQL_OPT_TRACE_ON      = 0x00000001U,
+    SQL_OPT_TRACE_DEFAULT = 0x00000000U,
 }
 
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SQL_OPT_TRACE_FILE_DEFAULT = "\\SQL.LOG";
 
 enum : uint
 {
-    SQL_CUR_USE_IF_NEEDED = 0x00000000,
-    SQL_CUR_USE_ODBC      = 0x00000001,
-    SQL_CUR_USE_DRIVER    = 0x00000002,
-    SQL_CUR_DEFAULT       = 0x00000002,
+    SQL_CUR_USE_IF_NEEDED = 0x00000000U,
+    SQL_CUR_USE_ODBC      = 0x00000001U,
+    SQL_CUR_USE_DRIVER    = 0x00000002U,
+    SQL_CUR_DEFAULT       = 0x00000002U,
 }
 
-enum uint SQL_DB_RETURN_TO_POOL = 0x00000000;
+enum uint SQL_DB_RETURN_TO_POOL = 0x00000000U;
 
 enum : uint
 {
-    SQL_DB_DISCONNECT = 0x00000001,
-    SQL_DB_DEFAULT    = 0x00000000,
+    SQL_DB_DISCONNECT = 0x00000001U,
+    SQL_DB_DEFAULT    = 0x00000000U,
 }
 
 enum int SQL_DTC_DONE = 0x00000000;
@@ -4129,76 +4261,76 @@ enum : int
     SQL_AA_FALSE = 0x00000000,
 }
 
-enum uint SQL_RESET_CONNECTION_YES = 0x00000001;
+enum uint SQL_RESET_CONNECTION_YES = 0x00000001U;
 
 enum : uint
 {
-    SQL_ASYNC_DBC_ENABLE_ON      = 0x00000001,
-    SQL_ASYNC_DBC_ENABLE_OFF     = 0x00000000,
-    SQL_ASYNC_DBC_ENABLE_DEFAULT = 0x00000000,
+    SQL_ASYNC_DBC_ENABLE_ON      = 0x00000001U,
+    SQL_ASYNC_DBC_ENABLE_OFF     = 0x00000000U,
+    SQL_ASYNC_DBC_ENABLE_DEFAULT = 0x00000000U,
 }
 
-enum uint SQL_QUERY_TIMEOUT = 0x00000000;
-enum uint SQL_MAX_ROWS = 0x00000001;
-enum uint SQL_NOSCAN = 0x00000002;
-enum uint SQL_MAX_LENGTH = 0x00000003;
-enum uint SQL_ASYNC_ENABLE = 0x00000004;
-enum uint SQL_BIND_TYPE = 0x00000005;
-enum uint SQL_CURSOR_TYPE = 0x00000006;
-enum uint SQL_CONCURRENCY = 0x00000007;
-enum uint SQL_KEYSET_SIZE = 0x00000008;
-enum uint SQL_ROWSET_SIZE = 0x00000009;
-enum uint SQL_SIMULATE_CURSOR = 0x0000000a;
-enum uint SQL_RETRIEVE_DATA = 0x0000000b;
-enum uint SQL_USE_BOOKMARKS = 0x0000000c;
-enum uint SQL_GET_BOOKMARK = 0x0000000d;
-enum uint SQL_ROW_NUMBER = 0x0000000e;
+enum uint SQL_QUERY_TIMEOUT = 0x00000000U;
+enum uint SQL_MAX_ROWS = 0x00000001U;
+enum uint SQL_NOSCAN = 0x00000002U;
+enum uint SQL_MAX_LENGTH = 0x00000003U;
+enum uint SQL_ASYNC_ENABLE = 0x00000004U;
+enum uint SQL_BIND_TYPE = 0x00000005U;
+enum uint SQL_CURSOR_TYPE = 0x00000006U;
+enum uint SQL_CONCURRENCY = 0x00000007U;
+enum uint SQL_KEYSET_SIZE = 0x00000008U;
+enum uint SQL_ROWSET_SIZE = 0x00000009U;
+enum uint SQL_SIMULATE_CURSOR = 0x0000000aU;
+enum uint SQL_RETRIEVE_DATA = 0x0000000bU;
+enum uint SQL_USE_BOOKMARKS = 0x0000000cU;
+enum uint SQL_GET_BOOKMARK = 0x0000000dU;
+enum uint SQL_ROW_NUMBER = 0x0000000eU;
 
 enum : uint
 {
-    SQL_ATTR_ASYNC_ENABLE    = 0x00000004,
-    SQL_ATTR_CONCURRENCY     = 0x00000007,
-    SQL_ATTR_CURSOR_TYPE     = 0x00000006,
-    SQL_ATTR_ENABLE_AUTO_IPD = 0x0000000f,
+    SQL_ATTR_ASYNC_ENABLE    = 0x00000004U,
+    SQL_ATTR_CONCURRENCY     = 0x00000007U,
+    SQL_ATTR_CURSOR_TYPE     = 0x00000006U,
+    SQL_ATTR_ENABLE_AUTO_IPD = 0x0000000fU,
 }
 
-enum uint SQL_ATTR_FETCH_BOOKMARK_PTR = 0x00000010;
+enum uint SQL_ATTR_FETCH_BOOKMARK_PTR = 0x00000010U;
 
 enum : uint
 {
-    SQL_ATTR_KEYSET_SIZE           = 0x00000008,
-    SQL_ATTR_MAX_LENGTH            = 0x00000003,
-    SQL_ATTR_MAX_ROWS              = 0x00000001,
-    SQL_ATTR_NOSCAN                = 0x00000002,
-    SQL_ATTR_PARAM_BIND_OFFSET_PTR = 0x00000011,
-    SQL_ATTR_PARAM_BIND_TYPE       = 0x00000012,
-    SQL_ATTR_PARAM_OPERATION_PTR   = 0x00000013,
-    SQL_ATTR_PARAM_STATUS_PTR      = 0x00000014,
-    SQL_ATTR_PARAMS_PROCESSED_PTR  = 0x00000015,
-    SQL_ATTR_PARAMSET_SIZE         = 0x00000016,
-    SQL_ATTR_QUERY_TIMEOUT         = 0x00000000,
-    SQL_ATTR_RETRIEVE_DATA         = 0x0000000b,
-    SQL_ATTR_ROW_BIND_OFFSET_PTR   = 0x00000017,
-    SQL_ATTR_ROW_BIND_TYPE         = 0x00000005,
-    SQL_ATTR_ROW_NUMBER            = 0x0000000e,
-    SQL_ATTR_ROW_OPERATION_PTR     = 0x00000018,
-    SQL_ATTR_ROW_STATUS_PTR        = 0x00000019,
-    SQL_ATTR_ROWS_FETCHED_PTR      = 0x0000001a,
-    SQL_ATTR_ROW_ARRAY_SIZE        = 0x0000001b,
+    SQL_ATTR_KEYSET_SIZE           = 0x00000008U,
+    SQL_ATTR_MAX_LENGTH            = 0x00000003U,
+    SQL_ATTR_MAX_ROWS              = 0x00000001U,
+    SQL_ATTR_NOSCAN                = 0x00000002U,
+    SQL_ATTR_PARAM_BIND_OFFSET_PTR = 0x00000011U,
+    SQL_ATTR_PARAM_BIND_TYPE       = 0x00000012U,
+    SQL_ATTR_PARAM_OPERATION_PTR   = 0x00000013U,
+    SQL_ATTR_PARAM_STATUS_PTR      = 0x00000014U,
+    SQL_ATTR_PARAMS_PROCESSED_PTR  = 0x00000015U,
+    SQL_ATTR_PARAMSET_SIZE         = 0x00000016U,
+    SQL_ATTR_QUERY_TIMEOUT         = 0x00000000U,
+    SQL_ATTR_RETRIEVE_DATA         = 0x0000000bU,
+    SQL_ATTR_ROW_BIND_OFFSET_PTR   = 0x00000017U,
+    SQL_ATTR_ROW_BIND_TYPE         = 0x00000005U,
+    SQL_ATTR_ROW_NUMBER            = 0x0000000eU,
+    SQL_ATTR_ROW_OPERATION_PTR     = 0x00000018U,
+    SQL_ATTR_ROW_STATUS_PTR        = 0x00000019U,
+    SQL_ATTR_ROWS_FETCHED_PTR      = 0x0000001aU,
+    SQL_ATTR_ROW_ARRAY_SIZE        = 0x0000001bU,
 }
 
-enum uint SQL_ATTR_SIMULATE_CURSOR = 0x0000000a;
+enum uint SQL_ATTR_SIMULATE_CURSOR = 0x0000000aU;
 
 enum : uint
 {
-    SQL_ATTR_USE_BOOKMARKS    = 0x0000000c,
-    SQL_ATTR_ASYNC_STMT_EVENT = 0x0000001d,
+    SQL_ATTR_USE_BOOKMARKS    = 0x0000000cU,
+    SQL_ATTR_ASYNC_STMT_EVENT = 0x0000001dU,
 }
 
 enum : uint
 {
-    SQL_STMT_OPT_MAX = 0x0000000e,
-    SQL_STMT_OPT_MIN = 0x00000000,
+    SQL_STMT_OPT_MAX = 0x0000000eU,
+    SQL_STMT_OPT_MIN = 0x00000000U,
 }
 
 enum : int
@@ -4212,114 +4344,114 @@ enum : int
 
 enum : uint
 {
-    SQL_PARAM_BIND_BY_COLUMN    = 0x00000000,
-    SQL_PARAM_BIND_TYPE_DEFAULT = 0x00000000,
+    SQL_PARAM_BIND_BY_COLUMN    = 0x00000000U,
+    SQL_PARAM_BIND_TYPE_DEFAULT = 0x00000000U,
 }
 
-enum uint SQL_QUERY_TIMEOUT_DEFAULT = 0x00000000;
-enum uint SQL_MAX_ROWS_DEFAULT = 0x00000000;
+enum uint SQL_QUERY_TIMEOUT_DEFAULT = 0x00000000U;
+enum uint SQL_MAX_ROWS_DEFAULT = 0x00000000U;
 
 enum : uint
 {
-    SQL_NOSCAN_OFF     = 0x00000000,
-    SQL_NOSCAN_ON      = 0x00000001,
-    SQL_NOSCAN_DEFAULT = 0x00000000,
+    SQL_NOSCAN_OFF     = 0x00000000U,
+    SQL_NOSCAN_ON      = 0x00000001U,
+    SQL_NOSCAN_DEFAULT = 0x00000000U,
 }
 
-enum uint SQL_MAX_LENGTH_DEFAULT = 0x00000000;
+enum uint SQL_MAX_LENGTH_DEFAULT = 0x00000000U;
 
 enum : uint
 {
-    SQL_ASYNC_ENABLE_OFF     = 0x00000000,
-    SQL_ASYNC_ENABLE_ON      = 0x00000001,
-    SQL_ASYNC_ENABLE_DEFAULT = 0x00000000,
-}
-
-enum : uint
-{
-    SQL_BIND_BY_COLUMN    = 0x00000000,
-    SQL_BIND_TYPE_DEFAULT = 0x00000000,
+    SQL_ASYNC_ENABLE_OFF     = 0x00000000U,
+    SQL_ASYNC_ENABLE_ON      = 0x00000001U,
+    SQL_ASYNC_ENABLE_DEFAULT = 0x00000000U,
 }
 
 enum : uint
 {
-    SQL_CONCUR_READ_ONLY = 0x00000001,
-    SQL_CONCUR_LOCK      = 0x00000002,
-    SQL_CONCUR_ROWVER    = 0x00000003,
-    SQL_CONCUR_VALUES    = 0x00000004,
-    SQL_CONCUR_DEFAULT   = 0x00000001,
+    SQL_BIND_BY_COLUMN    = 0x00000000U,
+    SQL_BIND_TYPE_DEFAULT = 0x00000000U,
 }
 
 enum : uint
 {
-    SQL_CURSOR_FORWARD_ONLY  = 0x00000000,
-    SQL_CURSOR_KEYSET_DRIVEN = 0x00000001,
-    SQL_CURSOR_DYNAMIC       = 0x00000002,
-    SQL_CURSOR_STATIC        = 0x00000003,
-    SQL_CURSOR_TYPE_DEFAULT  = 0x00000000,
-}
-
-enum uint SQL_ROWSET_SIZE_DEFAULT = 0x00000001;
-enum uint SQL_KEYSET_SIZE_DEFAULT = 0x00000000;
-
-enum : uint
-{
-    SQL_SC_NON_UNIQUE = 0x00000000,
-    SQL_SC_TRY_UNIQUE = 0x00000001,
-    SQL_SC_UNIQUE     = 0x00000002,
+    SQL_CONCUR_READ_ONLY = 0x00000001U,
+    SQL_CONCUR_LOCK      = 0x00000002U,
+    SQL_CONCUR_ROWVER    = 0x00000003U,
+    SQL_CONCUR_VALUES    = 0x00000004U,
+    SQL_CONCUR_DEFAULT   = 0x00000001U,
 }
 
 enum : uint
 {
-    SQL_RD_OFF     = 0x00000000,
-    SQL_RD_ON      = 0x00000001,
-    SQL_RD_DEFAULT = 0x00000001,
+    SQL_CURSOR_FORWARD_ONLY  = 0x00000000U,
+    SQL_CURSOR_KEYSET_DRIVEN = 0x00000001U,
+    SQL_CURSOR_DYNAMIC       = 0x00000002U,
+    SQL_CURSOR_STATIC        = 0x00000003U,
+    SQL_CURSOR_TYPE_DEFAULT  = 0x00000000U,
+}
+
+enum uint SQL_ROWSET_SIZE_DEFAULT = 0x00000001U;
+enum uint SQL_KEYSET_SIZE_DEFAULT = 0x00000000U;
+
+enum : uint
+{
+    SQL_SC_NON_UNIQUE = 0x00000000U,
+    SQL_SC_TRY_UNIQUE = 0x00000001U,
+    SQL_SC_UNIQUE     = 0x00000002U,
 }
 
 enum : uint
 {
-    SQL_UB_OFF      = 0x00000000,
-    SQL_UB_ON       = 0x00000001,
-    SQL_UB_DEFAULT  = 0x00000000,
-    SQL_UB_FIXED    = 0x00000001,
-    SQL_UB_VARIABLE = 0x00000002,
+    SQL_RD_OFF     = 0x00000000U,
+    SQL_RD_ON      = 0x00000001U,
+    SQL_RD_DEFAULT = 0x00000001U,
 }
 
 enum : uint
 {
-    SQL_DESC_ARRAY_SIZE       = 0x00000014,
-    SQL_DESC_ARRAY_STATUS_PTR = 0x00000015,
+    SQL_UB_OFF      = 0x00000000U,
+    SQL_UB_ON       = 0x00000001U,
+    SQL_UB_DEFAULT  = 0x00000000U,
+    SQL_UB_FIXED    = 0x00000001U,
+    SQL_UB_VARIABLE = 0x00000002U,
 }
 
 enum : uint
 {
-    SQL_DESC_BASE_COLUMN_NAME            = 0x00000016,
-    SQL_DESC_BASE_TABLE_NAME             = 0x00000017,
-    SQL_DESC_BIND_OFFSET_PTR             = 0x00000018,
-    SQL_DESC_BIND_TYPE                   = 0x00000019,
-    SQL_DESC_DATETIME_INTERVAL_PRECISION = 0x0000001a,
+    SQL_DESC_ARRAY_SIZE       = 0x00000014U,
+    SQL_DESC_ARRAY_STATUS_PTR = 0x00000015U,
 }
 
 enum : uint
 {
-    SQL_DESC_LITERAL_PREFIX  = 0x0000001b,
-    SQL_DESC_LITERAL_SUFFIX  = 0x0000001c,
-    SQL_DESC_LOCAL_TYPE_NAME = 0x0000001d,
+    SQL_DESC_BASE_COLUMN_NAME            = 0x00000016U,
+    SQL_DESC_BASE_TABLE_NAME             = 0x00000017U,
+    SQL_DESC_BIND_OFFSET_PTR             = 0x00000018U,
+    SQL_DESC_BIND_TYPE                   = 0x00000019U,
+    SQL_DESC_DATETIME_INTERVAL_PRECISION = 0x0000001aU,
 }
 
 enum : uint
 {
-    SQL_DESC_MAXIMUM_SCALE  = 0x0000001e,
-    SQL_DESC_MINIMUM_SCALE  = 0x0000001f,
-    SQL_DESC_NUM_PREC_RADIX = 0x00000020,
+    SQL_DESC_LITERAL_PREFIX  = 0x0000001bU,
+    SQL_DESC_LITERAL_SUFFIX  = 0x0000001cU,
+    SQL_DESC_LOCAL_TYPE_NAME = 0x0000001dU,
 }
-
-enum uint SQL_DESC_PARAMETER_TYPE = 0x00000021;
 
 enum : uint
 {
-    SQL_DESC_ROWS_PROCESSED_PTR = 0x00000022,
-    SQL_DESC_ROWVER             = 0x00000023,
+    SQL_DESC_MAXIMUM_SCALE  = 0x0000001eU,
+    SQL_DESC_MINIMUM_SCALE  = 0x0000001fU,
+    SQL_DESC_NUM_PREC_RADIX = 0x00000020U,
+}
+
+enum uint SQL_DESC_PARAMETER_TYPE = 0x00000021U;
+
+enum : uint
+{
+    SQL_DESC_ROWS_PROCESSED_PTR = 0x00000022U,
+    SQL_DESC_ROWVER             = 0x00000023U,
 }
 
 enum int SQL_DIAG_CURSOR_ROW_COUNT = 0xfffffb1f;
@@ -4332,14 +4464,14 @@ enum : int
 
 enum : uint
 {
-    SQL_DATE     = 0x00000009,
-    SQL_INTERVAL = 0x0000000a,
+    SQL_DATE     = 0x00000009U,
+    SQL_INTERVAL = 0x0000000aU,
 }
 
 enum : uint
 {
-    SQL_TIME      = 0x0000000a,
-    SQL_TIMESTAMP = 0x0000000b,
+    SQL_TIME      = 0x0000000aU,
+    SQL_TIMESTAMP = 0x0000000bU,
 }
 
 enum int SQL_LONGVARCHAR = 0xffffffff;
@@ -4357,21 +4489,21 @@ enum : int
 
 enum : uint
 {
-    SQL_CODE_YEAR           = 0x00000001,
-    SQL_CODE_MONTH          = 0x00000002,
-    SQL_CODE_DAY            = 0x00000003,
-    SQL_CODE_HOUR           = 0x00000004,
-    SQL_CODE_MINUTE         = 0x00000005,
-    SQL_CODE_SECOND         = 0x00000006,
-    SQL_CODE_YEAR_TO_MONTH  = 0x00000007,
-    SQL_CODE_DAY_TO_HOUR    = 0x00000008,
-    SQL_CODE_DAY_TO_MINUTE  = 0x00000009,
-    SQL_CODE_DAY_TO_SECOND  = 0x0000000a,
-    SQL_CODE_HOUR_TO_MINUTE = 0x0000000b,
-    SQL_CODE_HOUR_TO_SECOND = 0x0000000c,
+    SQL_CODE_YEAR           = 0x00000001U,
+    SQL_CODE_MONTH          = 0x00000002U,
+    SQL_CODE_DAY            = 0x00000003U,
+    SQL_CODE_HOUR           = 0x00000004U,
+    SQL_CODE_MINUTE         = 0x00000005U,
+    SQL_CODE_SECOND         = 0x00000006U,
+    SQL_CODE_YEAR_TO_MONTH  = 0x00000007U,
+    SQL_CODE_DAY_TO_HOUR    = 0x00000008U,
+    SQL_CODE_DAY_TO_MINUTE  = 0x00000009U,
+    SQL_CODE_DAY_TO_SECOND  = 0x0000000aU,
+    SQL_CODE_HOUR_TO_MINUTE = 0x0000000bU,
+    SQL_CODE_HOUR_TO_SECOND = 0x0000000cU,
 }
 
-enum uint SQL_CODE_MINUTE_TO_SECOND = 0x0000000d;
+enum uint SQL_CODE_MINUTE_TO_SECOND = 0x0000000dU;
 
 enum : int
 {
@@ -4406,13 +4538,13 @@ enum : int
 
 enum : uint
 {
-    SQL_C_CHAR    = 0x00000001,
-    SQL_C_LONG    = 0x00000004,
-    SQL_C_SHORT   = 0x00000005,
-    SQL_C_FLOAT   = 0x00000007,
-    SQL_C_DOUBLE  = 0x00000008,
-    SQL_C_NUMERIC = 0x00000002,
-    SQL_C_DEFAULT = 0x00000063,
+    SQL_C_CHAR    = 0x00000001U,
+    SQL_C_LONG    = 0x00000004U,
+    SQL_C_SHORT   = 0x00000005U,
+    SQL_C_FLOAT   = 0x00000007U,
+    SQL_C_DOUBLE  = 0x00000008U,
+    SQL_C_NUMERIC = 0x00000002U,
+    SQL_C_DEFAULT = 0x00000063U,
 }
 
 enum int SQL_SIGNED_OFFSET = 0xffffffec;
@@ -4420,12 +4552,12 @@ enum int SQL_UNSIGNED_OFFSET = 0xffffffea;
 
 enum : uint
 {
-    SQL_C_DATE           = 0x00000009,
-    SQL_C_TIME           = 0x0000000a,
-    SQL_C_TIMESTAMP      = 0x0000000b,
-    SQL_C_TYPE_DATE      = 0x0000005b,
-    SQL_C_TYPE_TIME      = 0x0000005c,
-    SQL_C_TYPE_TIMESTAMP = 0x0000005d,
+    SQL_C_DATE           = 0x00000009U,
+    SQL_C_TIME           = 0x0000000aU,
+    SQL_C_TIMESTAMP      = 0x0000000bU,
+    SQL_C_TYPE_DATE      = 0x0000005bU,
+    SQL_C_TYPE_TIME      = 0x0000005cU,
+    SQL_C_TYPE_TIMESTAMP = 0x0000005dU,
 }
 
 enum : int
@@ -4453,19 +4585,19 @@ enum : int
     SQL_C_GUID    = 0xfffffff5,
 }
 
-enum uint SQL_TYPE_NULL = 0x00000000;
+enum uint SQL_TYPE_NULL = 0x00000000U;
 enum int SQL_TYPE_MIN = 0xfffffff9;
-enum uint SQL_TYPE_MAX = 0x0000000c;
+enum uint SQL_TYPE_MAX = 0x0000000cU;
 
 enum : uint
 {
-    SQL_DRIVER_C_TYPE_BASE     = 0x00004000,
-    SQL_DRIVER_SQL_TYPE_BASE   = 0x00004000,
-    SQL_DRIVER_DESC_FIELD_BASE = 0x00004000,
-    SQL_DRIVER_DIAG_FIELD_BASE = 0x00004000,
-    SQL_DRIVER_INFO_TYPE_BASE  = 0x00004000,
-    SQL_DRIVER_CONN_ATTR_BASE  = 0x00004000,
-    SQL_DRIVER_STMT_ATTR_BASE  = 0x00004000,
+    SQL_DRIVER_C_TYPE_BASE     = 0x00004000U,
+    SQL_DRIVER_SQL_TYPE_BASE   = 0x00004000U,
+    SQL_DRIVER_DESC_FIELD_BASE = 0x00004000U,
+    SQL_DRIVER_DIAG_FIELD_BASE = 0x00004000U,
+    SQL_DRIVER_INFO_TYPE_BASE  = 0x00004000U,
+    SQL_DRIVER_CONN_ATTR_BASE  = 0x00004000U,
+    SQL_DRIVER_STMT_ATTR_BASE  = 0x00004000U,
 }
 
 enum int SQL_C_VARBOOKMARK = 0xfffffffe;
@@ -4487,344 +4619,344 @@ enum int SQL_SETPARAM_VALUE_MAX = 0xffffffff;
 
 enum : uint
 {
-    SQL_COLUMN_COUNT          = 0x00000000,
-    SQL_COLUMN_NAME           = 0x00000001,
-    SQL_COLUMN_TYPE           = 0x00000002,
-    SQL_COLUMN_LENGTH         = 0x00000003,
-    SQL_COLUMN_PRECISION      = 0x00000004,
-    SQL_COLUMN_SCALE          = 0x00000005,
-    SQL_COLUMN_DISPLAY_SIZE   = 0x00000006,
-    SQL_COLUMN_NULLABLE       = 0x00000007,
-    SQL_COLUMN_UNSIGNED       = 0x00000008,
-    SQL_COLUMN_MONEY          = 0x00000009,
-    SQL_COLUMN_UPDATABLE      = 0x0000000a,
-    SQL_COLUMN_AUTO_INCREMENT = 0x0000000b,
-    SQL_COLUMN_CASE_SENSITIVE = 0x0000000c,
-    SQL_COLUMN_SEARCHABLE     = 0x0000000d,
-    SQL_COLUMN_TYPE_NAME      = 0x0000000e,
-    SQL_COLUMN_TABLE_NAME     = 0x0000000f,
-    SQL_COLUMN_OWNER_NAME     = 0x00000010,
-    SQL_COLUMN_QUALIFIER_NAME = 0x00000011,
-    SQL_COLUMN_LABEL          = 0x00000012,
-    SQL_COLATT_OPT_MAX        = 0x00000012,
+    SQL_COLUMN_COUNT          = 0x00000000U,
+    SQL_COLUMN_NAME           = 0x00000001U,
+    SQL_COLUMN_TYPE           = 0x00000002U,
+    SQL_COLUMN_LENGTH         = 0x00000003U,
+    SQL_COLUMN_PRECISION      = 0x00000004U,
+    SQL_COLUMN_SCALE          = 0x00000005U,
+    SQL_COLUMN_DISPLAY_SIZE   = 0x00000006U,
+    SQL_COLUMN_NULLABLE       = 0x00000007U,
+    SQL_COLUMN_UNSIGNED       = 0x00000008U,
+    SQL_COLUMN_MONEY          = 0x00000009U,
+    SQL_COLUMN_UPDATABLE      = 0x0000000aU,
+    SQL_COLUMN_AUTO_INCREMENT = 0x0000000bU,
+    SQL_COLUMN_CASE_SENSITIVE = 0x0000000cU,
+    SQL_COLUMN_SEARCHABLE     = 0x0000000dU,
+    SQL_COLUMN_TYPE_NAME      = 0x0000000eU,
+    SQL_COLUMN_TABLE_NAME     = 0x0000000fU,
+    SQL_COLUMN_OWNER_NAME     = 0x00000010U,
+    SQL_COLUMN_QUALIFIER_NAME = 0x00000011U,
+    SQL_COLUMN_LABEL          = 0x00000012U,
+    SQL_COLATT_OPT_MAX        = 0x00000012U,
 }
 
-enum uint SQL_COLUMN_DRIVER_START = 0x000003e8;
-enum uint SQL_COLATT_OPT_MIN = 0x00000000;
+enum uint SQL_COLUMN_DRIVER_START = 0x000003e8U;
+enum uint SQL_COLATT_OPT_MIN = 0x00000000U;
 
 enum : uint
 {
-    SQL_ATTR_READONLY          = 0x00000000,
-    SQL_ATTR_WRITE             = 0x00000001,
-    SQL_ATTR_READWRITE_UNKNOWN = 0x00000002,
+    SQL_ATTR_READONLY          = 0x00000000U,
+    SQL_ATTR_WRITE             = 0x00000001U,
+    SQL_ATTR_READWRITE_UNKNOWN = 0x00000002U,
 }
 
-enum uint SQL_UNSEARCHABLE = 0x00000000;
-enum uint SQL_LIKE_ONLY = 0x00000001;
-enum uint SQL_ALL_EXCEPT_LIKE = 0x00000002;
-enum uint SQL_SEARCHABLE = 0x00000003;
-enum uint SQL_PRED_SEARCHABLE = 0x00000003;
+enum uint SQL_UNSEARCHABLE = 0x00000000U;
+enum uint SQL_LIKE_ONLY = 0x00000001U;
+enum uint SQL_ALL_EXCEPT_LIKE = 0x00000002U;
+enum uint SQL_SEARCHABLE = 0x00000003U;
+enum uint SQL_PRED_SEARCHABLE = 0x00000003U;
 enum int SQL_NO_TOTAL = 0xfffffffc;
 
 enum : uint
 {
-    SQL_API_SQLALLOCHANDLESTD   = 0x00000049,
-    SQL_API_SQLBULKOPERATIONS   = 0x00000018,
-    SQL_API_SQLBINDPARAMETER    = 0x00000048,
-    SQL_API_SQLBROWSECONNECT    = 0x00000037,
-    SQL_API_SQLCOLATTRIBUTES    = 0x00000006,
-    SQL_API_SQLCOLUMNPRIVILEGES = 0x00000038,
-    SQL_API_SQLDESCRIBEPARAM    = 0x0000003a,
-    SQL_API_SQLDRIVERCONNECT    = 0x00000029,
-    SQL_API_SQLDRIVERS          = 0x00000047,
-    SQL_API_SQLPRIVATEDRIVERS   = 0x0000004f,
-    SQL_API_SQLEXTENDEDFETCH    = 0x0000003b,
-    SQL_API_SQLFOREIGNKEYS      = 0x0000003c,
-    SQL_API_SQLMORERESULTS      = 0x0000003d,
-    SQL_API_SQLNATIVESQL        = 0x0000003e,
-    SQL_API_SQLNUMPARAMS        = 0x0000003f,
-    SQL_API_SQLPARAMOPTIONS     = 0x00000040,
-    SQL_API_SQLPRIMARYKEYS      = 0x00000041,
-    SQL_API_SQLPROCEDURECOLUMNS = 0x00000042,
-    SQL_API_SQLPROCEDURES       = 0x00000043,
-    SQL_API_SQLSETPOS           = 0x00000044,
-    SQL_API_SQLSETSCROLLOPTIONS = 0x00000045,
-    SQL_API_SQLTABLEPRIVILEGES  = 0x00000046,
+    SQL_API_SQLALLOCHANDLESTD   = 0x00000049U,
+    SQL_API_SQLBULKOPERATIONS   = 0x00000018U,
+    SQL_API_SQLBINDPARAMETER    = 0x00000048U,
+    SQL_API_SQLBROWSECONNECT    = 0x00000037U,
+    SQL_API_SQLCOLATTRIBUTES    = 0x00000006U,
+    SQL_API_SQLCOLUMNPRIVILEGES = 0x00000038U,
+    SQL_API_SQLDESCRIBEPARAM    = 0x0000003aU,
+    SQL_API_SQLDRIVERCONNECT    = 0x00000029U,
+    SQL_API_SQLDRIVERS          = 0x00000047U,
+    SQL_API_SQLPRIVATEDRIVERS   = 0x0000004fU,
+    SQL_API_SQLEXTENDEDFETCH    = 0x0000003bU,
+    SQL_API_SQLFOREIGNKEYS      = 0x0000003cU,
+    SQL_API_SQLMORERESULTS      = 0x0000003dU,
+    SQL_API_SQLNATIVESQL        = 0x0000003eU,
+    SQL_API_SQLNUMPARAMS        = 0x0000003fU,
+    SQL_API_SQLPARAMOPTIONS     = 0x00000040U,
+    SQL_API_SQLPRIMARYKEYS      = 0x00000041U,
+    SQL_API_SQLPROCEDURECOLUMNS = 0x00000042U,
+    SQL_API_SQLPROCEDURES       = 0x00000043U,
+    SQL_API_SQLSETPOS           = 0x00000044U,
+    SQL_API_SQLSETSCROLLOPTIONS = 0x00000045U,
+    SQL_API_SQLTABLEPRIVILEGES  = 0x00000046U,
 }
 
-enum uint SQL_EXT_API_LAST = 0x00000048;
-enum uint SQL_NUM_FUNCTIONS = 0x00000017;
-enum uint SQL_EXT_API_START = 0x00000028;
-enum uint SQL_API_ALL_FUNCTIONS = 0x00000000;
-enum uint SQL_API_LOADBYORDINAL = 0x000000c7;
+enum uint SQL_EXT_API_LAST = 0x00000048U;
+enum uint SQL_NUM_FUNCTIONS = 0x00000017U;
+enum uint SQL_EXT_API_START = 0x00000028U;
+enum uint SQL_API_ALL_FUNCTIONS = 0x00000000U;
+enum uint SQL_API_LOADBYORDINAL = 0x000000c7U;
 
 enum : uint
 {
-    SQL_API_ODBC3_ALL_FUNCTIONS      = 0x000003e7,
-    SQL_API_ODBC3_ALL_FUNCTIONS_SIZE = 0x000000fa,
+    SQL_API_ODBC3_ALL_FUNCTIONS      = 0x000003e7U,
+    SQL_API_ODBC3_ALL_FUNCTIONS_SIZE = 0x000000faU,
 }
 
-enum uint SQL_INFO_FIRST = 0x00000000;
+enum uint SQL_INFO_FIRST = 0x00000000U;
 
 enum : uint
 {
-    SQL_ACTIVE_CONNECTIONS = 0x00000000,
-    SQL_ACTIVE_STATEMENTS  = 0x00000001,
-}
-
-enum : uint
-{
-    SQL_DRIVER_HDBC  = 0x00000003,
-    SQL_DRIVER_HENV  = 0x00000004,
-    SQL_DRIVER_HSTMT = 0x00000005,
-    SQL_DRIVER_NAME  = 0x00000006,
-    SQL_DRIVER_VER   = 0x00000007,
-}
-
-enum uint SQL_ODBC_API_CONFORMANCE = 0x00000009;
-enum uint SQL_ODBC_VER = 0x0000000a;
-enum uint SQL_ROW_UPDATES = 0x0000000b;
-enum uint SQL_ODBC_SAG_CLI_CONFORMANCE = 0x0000000c;
-enum uint SQL_ODBC_SQL_CONFORMANCE = 0x0000000f;
-enum uint SQL_PROCEDURES = 0x00000015;
-enum uint SQL_CONCAT_NULL_BEHAVIOR = 0x00000016;
-enum uint SQL_CURSOR_ROLLBACK_BEHAVIOR = 0x00000018;
-enum uint SQL_EXPRESSIONS_IN_ORDERBY = 0x0000001b;
-enum uint SQL_MAX_OWNER_NAME_LEN = 0x00000020;
-enum uint SQL_MAX_PROCEDURE_NAME_LEN = 0x00000021;
-enum uint SQL_MAX_QUALIFIER_NAME_LEN = 0x00000022;
-enum uint SQL_MULT_RESULT_SETS = 0x00000024;
-enum uint SQL_MULTIPLE_ACTIVE_TXN = 0x00000025;
-enum uint SQL_OUTER_JOINS = 0x00000026;
-enum uint SQL_OWNER_TERM = 0x00000027;
-enum uint SQL_PROCEDURE_TERM = 0x00000028;
-
-enum : uint
-{
-    SQL_QUALIFIER_NAME_SEPARATOR = 0x00000029,
-    SQL_QUALIFIER_TERM           = 0x0000002a,
-}
-
-enum uint SQL_SCROLL_OPTIONS = 0x0000002c;
-enum uint SQL_TABLE_TERM = 0x0000002d;
-enum uint SQL_CONVERT_FUNCTIONS = 0x00000030;
-enum uint SQL_NUMERIC_FUNCTIONS = 0x00000031;
-enum uint SQL_STRING_FUNCTIONS = 0x00000032;
-enum uint SQL_SYSTEM_FUNCTIONS = 0x00000033;
-enum uint SQL_TIMEDATE_FUNCTIONS = 0x00000034;
-
-enum : uint
-{
-    SQL_CONVERT_BIGINT        = 0x00000035,
-    SQL_CONVERT_BINARY        = 0x00000036,
-    SQL_CONVERT_BIT           = 0x00000037,
-    SQL_CONVERT_CHAR          = 0x00000038,
-    SQL_CONVERT_DATE          = 0x00000039,
-    SQL_CONVERT_DECIMAL       = 0x0000003a,
-    SQL_CONVERT_DOUBLE        = 0x0000003b,
-    SQL_CONVERT_FLOAT         = 0x0000003c,
-    SQL_CONVERT_INTEGER       = 0x0000003d,
-    SQL_CONVERT_LONGVARCHAR   = 0x0000003e,
-    SQL_CONVERT_NUMERIC       = 0x0000003f,
-    SQL_CONVERT_REAL          = 0x00000040,
-    SQL_CONVERT_SMALLINT      = 0x00000041,
-    SQL_CONVERT_TIME          = 0x00000042,
-    SQL_CONVERT_TIMESTAMP     = 0x00000043,
-    SQL_CONVERT_TINYINT       = 0x00000044,
-    SQL_CONVERT_VARBINARY     = 0x00000045,
-    SQL_CONVERT_VARCHAR       = 0x00000046,
-    SQL_CONVERT_LONGVARBINARY = 0x00000047,
-}
-
-enum uint SQL_ODBC_SQL_OPT_IEF = 0x00000049;
-enum uint SQL_CORRELATION_NAME = 0x0000004a;
-enum uint SQL_NON_NULLABLE_COLUMNS = 0x0000004b;
-
-enum : uint
-{
-    SQL_DRIVER_HLIB     = 0x0000004c,
-    SQL_DRIVER_ODBC_VER = 0x0000004d,
-}
-
-enum uint SQL_LOCK_TYPES = 0x0000004e;
-enum uint SQL_POS_OPERATIONS = 0x0000004f;
-enum uint SQL_POSITIONED_STATEMENTS = 0x00000050;
-enum uint SQL_BOOKMARK_PERSISTENCE = 0x00000052;
-enum uint SQL_STATIC_SENSITIVITY = 0x00000053;
-enum uint SQL_FILE_USAGE = 0x00000054;
-enum uint SQL_COLUMN_ALIAS = 0x00000057;
-enum uint SQL_GROUP_BY = 0x00000058;
-enum uint SQL_KEYWORDS = 0x00000059;
-enum uint SQL_OWNER_USAGE = 0x0000005b;
-enum uint SQL_QUALIFIER_USAGE = 0x0000005c;
-enum uint SQL_QUOTED_IDENTIFIER_CASE = 0x0000005d;
-enum uint SQL_SUBQUERIES = 0x0000005f;
-
-enum : uint
-{
-    SQL_UNION                      = 0x00000060,
-    SQL_MAX_ROW_SIZE_INCLUDES_LONG = 0x00000067,
-}
-
-enum uint SQL_MAX_CHAR_LITERAL_LEN = 0x0000006c;
-
-enum : uint
-{
-    SQL_TIMEDATE_ADD_INTERVALS  = 0x0000006d,
-    SQL_TIMEDATE_DIFF_INTERVALS = 0x0000006e,
-}
-
-enum uint SQL_NEED_LONG_DATA_LEN = 0x0000006f;
-enum uint SQL_MAX_BINARY_LITERAL_LEN = 0x00000070;
-enum uint SQL_LIKE_ESCAPE_CLAUSE = 0x00000071;
-enum uint SQL_QUALIFIER_LOCATION = 0x00000072;
-
-enum : uint
-{
-    SQL_INFO_LAST         = 0x00000072,
-    SQL_INFO_DRIVER_START = 0x000003e8,
-}
-
-enum uint SQL_ACTIVE_ENVIRONMENTS = 0x00000074;
-enum uint SQL_ALTER_DOMAIN = 0x00000075;
-enum uint SQL_SQL_CONFORMANCE = 0x00000076;
-enum uint SQL_DATETIME_LITERALS = 0x00000077;
-enum uint SQL_ASYNC_MODE = 0x00002725;
-
-enum : uint
-{
-    SQL_BATCH_ROW_COUNT = 0x00000078,
-    SQL_BATCH_SUPPORT   = 0x00000079,
+    SQL_ACTIVE_CONNECTIONS = 0x00000000U,
+    SQL_ACTIVE_STATEMENTS  = 0x00000001U,
 }
 
 enum : uint
 {
-    SQL_CATALOG_LOCATION       = 0x00000072,
-    SQL_CATALOG_NAME_SEPARATOR = 0x00000029,
-    SQL_CATALOG_TERM           = 0x0000002a,
-    SQL_CATALOG_USAGE          = 0x0000005c,
+    SQL_DRIVER_HDBC  = 0x00000003U,
+    SQL_DRIVER_HENV  = 0x00000004U,
+    SQL_DRIVER_HSTMT = 0x00000005U,
+    SQL_DRIVER_NAME  = 0x00000006U,
+    SQL_DRIVER_VER   = 0x00000007U,
+}
+
+enum uint SQL_ODBC_API_CONFORMANCE = 0x00000009U;
+enum uint SQL_ODBC_VER = 0x0000000aU;
+enum uint SQL_ROW_UPDATES = 0x0000000bU;
+enum uint SQL_ODBC_SAG_CLI_CONFORMANCE = 0x0000000cU;
+enum uint SQL_ODBC_SQL_CONFORMANCE = 0x0000000fU;
+enum uint SQL_PROCEDURES = 0x00000015U;
+enum uint SQL_CONCAT_NULL_BEHAVIOR = 0x00000016U;
+enum uint SQL_CURSOR_ROLLBACK_BEHAVIOR = 0x00000018U;
+enum uint SQL_EXPRESSIONS_IN_ORDERBY = 0x0000001bU;
+enum uint SQL_MAX_OWNER_NAME_LEN = 0x00000020U;
+enum uint SQL_MAX_PROCEDURE_NAME_LEN = 0x00000021U;
+enum uint SQL_MAX_QUALIFIER_NAME_LEN = 0x00000022U;
+enum uint SQL_MULT_RESULT_SETS = 0x00000024U;
+enum uint SQL_MULTIPLE_ACTIVE_TXN = 0x00000025U;
+enum uint SQL_OUTER_JOINS = 0x00000026U;
+enum uint SQL_OWNER_TERM = 0x00000027U;
+enum uint SQL_PROCEDURE_TERM = 0x00000028U;
+
+enum : uint
+{
+    SQL_QUALIFIER_NAME_SEPARATOR = 0x00000029U,
+    SQL_QUALIFIER_TERM           = 0x0000002aU,
+}
+
+enum uint SQL_SCROLL_OPTIONS = 0x0000002cU;
+enum uint SQL_TABLE_TERM = 0x0000002dU;
+enum uint SQL_CONVERT_FUNCTIONS = 0x00000030U;
+enum uint SQL_NUMERIC_FUNCTIONS = 0x00000031U;
+enum uint SQL_STRING_FUNCTIONS = 0x00000032U;
+enum uint SQL_SYSTEM_FUNCTIONS = 0x00000033U;
+enum uint SQL_TIMEDATE_FUNCTIONS = 0x00000034U;
+
+enum : uint
+{
+    SQL_CONVERT_BIGINT        = 0x00000035U,
+    SQL_CONVERT_BINARY        = 0x00000036U,
+    SQL_CONVERT_BIT           = 0x00000037U,
+    SQL_CONVERT_CHAR          = 0x00000038U,
+    SQL_CONVERT_DATE          = 0x00000039U,
+    SQL_CONVERT_DECIMAL       = 0x0000003aU,
+    SQL_CONVERT_DOUBLE        = 0x0000003bU,
+    SQL_CONVERT_FLOAT         = 0x0000003cU,
+    SQL_CONVERT_INTEGER       = 0x0000003dU,
+    SQL_CONVERT_LONGVARCHAR   = 0x0000003eU,
+    SQL_CONVERT_NUMERIC       = 0x0000003fU,
+    SQL_CONVERT_REAL          = 0x00000040U,
+    SQL_CONVERT_SMALLINT      = 0x00000041U,
+    SQL_CONVERT_TIME          = 0x00000042U,
+    SQL_CONVERT_TIMESTAMP     = 0x00000043U,
+    SQL_CONVERT_TINYINT       = 0x00000044U,
+    SQL_CONVERT_VARBINARY     = 0x00000045U,
+    SQL_CONVERT_VARCHAR       = 0x00000046U,
+    SQL_CONVERT_LONGVARBINARY = 0x00000047U,
+}
+
+enum uint SQL_ODBC_SQL_OPT_IEF = 0x00000049U;
+enum uint SQL_CORRELATION_NAME = 0x0000004aU;
+enum uint SQL_NON_NULLABLE_COLUMNS = 0x0000004bU;
+
+enum : uint
+{
+    SQL_DRIVER_HLIB     = 0x0000004cU,
+    SQL_DRIVER_ODBC_VER = 0x0000004dU,
+}
+
+enum uint SQL_LOCK_TYPES = 0x0000004eU;
+enum uint SQL_POS_OPERATIONS = 0x0000004fU;
+enum uint SQL_POSITIONED_STATEMENTS = 0x00000050U;
+enum uint SQL_BOOKMARK_PERSISTENCE = 0x00000052U;
+enum uint SQL_STATIC_SENSITIVITY = 0x00000053U;
+enum uint SQL_FILE_USAGE = 0x00000054U;
+enum uint SQL_COLUMN_ALIAS = 0x00000057U;
+enum uint SQL_GROUP_BY = 0x00000058U;
+enum uint SQL_KEYWORDS = 0x00000059U;
+enum uint SQL_OWNER_USAGE = 0x0000005bU;
+enum uint SQL_QUALIFIER_USAGE = 0x0000005cU;
+enum uint SQL_QUOTED_IDENTIFIER_CASE = 0x0000005dU;
+enum uint SQL_SUBQUERIES = 0x0000005fU;
+
+enum : uint
+{
+    SQL_UNION                      = 0x00000060U,
+    SQL_MAX_ROW_SIZE_INCLUDES_LONG = 0x00000067U,
+}
+
+enum uint SQL_MAX_CHAR_LITERAL_LEN = 0x0000006cU;
+
+enum : uint
+{
+    SQL_TIMEDATE_ADD_INTERVALS  = 0x0000006dU,
+    SQL_TIMEDATE_DIFF_INTERVALS = 0x0000006eU,
+}
+
+enum uint SQL_NEED_LONG_DATA_LEN = 0x0000006fU;
+enum uint SQL_MAX_BINARY_LITERAL_LEN = 0x00000070U;
+enum uint SQL_LIKE_ESCAPE_CLAUSE = 0x00000071U;
+enum uint SQL_QUALIFIER_LOCATION = 0x00000072U;
+
+enum : uint
+{
+    SQL_INFO_LAST         = 0x00000072U,
+    SQL_INFO_DRIVER_START = 0x000003e8U,
+}
+
+enum uint SQL_ACTIVE_ENVIRONMENTS = 0x00000074U;
+enum uint SQL_ALTER_DOMAIN = 0x00000075U;
+enum uint SQL_SQL_CONFORMANCE = 0x00000076U;
+enum uint SQL_DATETIME_LITERALS = 0x00000077U;
+enum uint SQL_ASYNC_MODE = 0x00002725U;
+
+enum : uint
+{
+    SQL_BATCH_ROW_COUNT = 0x00000078U,
+    SQL_BATCH_SUPPORT   = 0x00000079U,
 }
 
 enum : uint
 {
-    SQL_CONVERT_WCHAR               = 0x0000007a,
-    SQL_CONVERT_INTERVAL_DAY_TIME   = 0x0000007b,
-    SQL_CONVERT_INTERVAL_YEAR_MONTH = 0x0000007c,
+    SQL_CATALOG_LOCATION       = 0x00000072U,
+    SQL_CATALOG_NAME_SEPARATOR = 0x00000029U,
+    SQL_CATALOG_TERM           = 0x0000002aU,
+    SQL_CATALOG_USAGE          = 0x0000005cU,
 }
 
 enum : uint
 {
-    SQL_CONVERT_WLONGVARCHAR = 0x0000007d,
-    SQL_CONVERT_WVARCHAR     = 0x0000007e,
+    SQL_CONVERT_WCHAR               = 0x0000007aU,
+    SQL_CONVERT_INTERVAL_DAY_TIME   = 0x0000007bU,
+    SQL_CONVERT_INTERVAL_YEAR_MONTH = 0x0000007cU,
 }
 
 enum : uint
 {
-    SQL_CREATE_ASSERTION     = 0x0000007f,
-    SQL_CREATE_CHARACTER_SET = 0x00000080,
-    SQL_CREATE_COLLATION     = 0x00000081,
-    SQL_CREATE_DOMAIN        = 0x00000082,
-    SQL_CREATE_SCHEMA        = 0x00000083,
-    SQL_CREATE_TABLE         = 0x00000084,
-    SQL_CREATE_TRANSLATION   = 0x00000085,
-    SQL_CREATE_VIEW          = 0x00000086,
-}
-
-enum uint SQL_DRIVER_HDESC = 0x00000087;
-
-enum : uint
-{
-    SQL_DROP_ASSERTION     = 0x00000088,
-    SQL_DROP_CHARACTER_SET = 0x00000089,
-    SQL_DROP_COLLATION     = 0x0000008a,
-    SQL_DROP_DOMAIN        = 0x0000008b,
-    SQL_DROP_SCHEMA        = 0x0000008c,
-    SQL_DROP_TABLE         = 0x0000008d,
-    SQL_DROP_TRANSLATION   = 0x0000008e,
-    SQL_DROP_VIEW          = 0x0000008f,
+    SQL_CONVERT_WLONGVARCHAR = 0x0000007dU,
+    SQL_CONVERT_WVARCHAR     = 0x0000007eU,
 }
 
 enum : uint
 {
-    SQL_DYNAMIC_CURSOR_ATTRIBUTES1 = 0x00000090,
-    SQL_DYNAMIC_CURSOR_ATTRIBUTES2 = 0x00000091,
+    SQL_CREATE_ASSERTION     = 0x0000007fU,
+    SQL_CREATE_CHARACTER_SET = 0x00000080U,
+    SQL_CREATE_COLLATION     = 0x00000081U,
+    SQL_CREATE_DOMAIN        = 0x00000082U,
+    SQL_CREATE_SCHEMA        = 0x00000083U,
+    SQL_CREATE_TABLE         = 0x00000084U,
+    SQL_CREATE_TRANSLATION   = 0x00000085U,
+    SQL_CREATE_VIEW          = 0x00000086U,
+}
+
+enum uint SQL_DRIVER_HDESC = 0x00000087U;
+
+enum : uint
+{
+    SQL_DROP_ASSERTION     = 0x00000088U,
+    SQL_DROP_CHARACTER_SET = 0x00000089U,
+    SQL_DROP_COLLATION     = 0x0000008aU,
+    SQL_DROP_DOMAIN        = 0x0000008bU,
+    SQL_DROP_SCHEMA        = 0x0000008cU,
+    SQL_DROP_TABLE         = 0x0000008dU,
+    SQL_DROP_TRANSLATION   = 0x0000008eU,
+    SQL_DROP_VIEW          = 0x0000008fU,
 }
 
 enum : uint
 {
-    SQL_FORWARD_ONLY_CURSOR_ATTRIBUTES1 = 0x00000092,
-    SQL_FORWARD_ONLY_CURSOR_ATTRIBUTES2 = 0x00000093,
-}
-
-enum uint SQL_INDEX_KEYWORDS = 0x00000094;
-enum uint SQL_INFO_SCHEMA_VIEWS = 0x00000095;
-
-enum : uint
-{
-    SQL_KEYSET_CURSOR_ATTRIBUTES1 = 0x00000096,
-    SQL_KEYSET_CURSOR_ATTRIBUTES2 = 0x00000097,
-}
-
-enum uint SQL_MAX_ASYNC_CONCURRENT_STATEMENTS = 0x00002726;
-enum uint SQL_ODBC_INTERFACE_CONFORMANCE = 0x00000098;
-
-enum : uint
-{
-    SQL_PARAM_ARRAY_ROW_COUNTS = 0x00000099,
-    SQL_PARAM_ARRAY_SELECTS    = 0x0000009a,
+    SQL_DYNAMIC_CURSOR_ATTRIBUTES1 = 0x00000090U,
+    SQL_DYNAMIC_CURSOR_ATTRIBUTES2 = 0x00000091U,
 }
 
 enum : uint
 {
-    SQL_SCHEMA_TERM  = 0x00000027,
-    SQL_SCHEMA_USAGE = 0x0000005b,
+    SQL_FORWARD_ONLY_CURSOR_ATTRIBUTES1 = 0x00000092U,
+    SQL_FORWARD_ONLY_CURSOR_ATTRIBUTES2 = 0x00000093U,
 }
 
-enum uint SQL_SQL92_DATETIME_FUNCTIONS = 0x0000009b;
+enum uint SQL_INDEX_KEYWORDS = 0x00000094U;
+enum uint SQL_INFO_SCHEMA_VIEWS = 0x00000095U;
 
 enum : uint
 {
-    SQL_SQL92_FOREIGN_KEY_DELETE_RULE = 0x0000009c,
-    SQL_SQL92_FOREIGN_KEY_UPDATE_RULE = 0x0000009d,
+    SQL_KEYSET_CURSOR_ATTRIBUTES1 = 0x00000096U,
+    SQL_KEYSET_CURSOR_ATTRIBUTES2 = 0x00000097U,
+}
+
+enum uint SQL_MAX_ASYNC_CONCURRENT_STATEMENTS = 0x00002726U;
+enum uint SQL_ODBC_INTERFACE_CONFORMANCE = 0x00000098U;
+
+enum : uint
+{
+    SQL_PARAM_ARRAY_ROW_COUNTS = 0x00000099U,
+    SQL_PARAM_ARRAY_SELECTS    = 0x0000009aU,
 }
 
 enum : uint
 {
-    SQL_SQL92_GRANT                   = 0x0000009e,
-    SQL_SQL92_NUMERIC_VALUE_FUNCTIONS = 0x0000009f,
+    SQL_SCHEMA_TERM  = 0x00000027U,
+    SQL_SCHEMA_USAGE = 0x0000005bU,
+}
+
+enum uint SQL_SQL92_DATETIME_FUNCTIONS = 0x0000009bU;
+
+enum : uint
+{
+    SQL_SQL92_FOREIGN_KEY_DELETE_RULE = 0x0000009cU,
+    SQL_SQL92_FOREIGN_KEY_UPDATE_RULE = 0x0000009dU,
 }
 
 enum : uint
 {
-    SQL_SQL92_PREDICATES                = 0x000000a0,
-    SQL_SQL92_RELATIONAL_JOIN_OPERATORS = 0x000000a1,
+    SQL_SQL92_GRANT                   = 0x0000009eU,
+    SQL_SQL92_NUMERIC_VALUE_FUNCTIONS = 0x0000009fU,
 }
 
 enum : uint
 {
-    SQL_SQL92_REVOKE                = 0x000000a2,
-    SQL_SQL92_ROW_VALUE_CONSTRUCTOR = 0x000000a3,
+    SQL_SQL92_PREDICATES                = 0x000000a0U,
+    SQL_SQL92_RELATIONAL_JOIN_OPERATORS = 0x000000a1U,
 }
-
-enum uint SQL_SQL92_STRING_FUNCTIONS = 0x000000a4;
-enum uint SQL_SQL92_VALUE_EXPRESSIONS = 0x000000a5;
-enum uint SQL_STANDARD_CLI_CONFORMANCE = 0x000000a6;
 
 enum : uint
 {
-    SQL_STATIC_CURSOR_ATTRIBUTES1 = 0x000000a7,
-    SQL_STATIC_CURSOR_ATTRIBUTES2 = 0x000000a8,
+    SQL_SQL92_REVOKE                = 0x000000a2U,
+    SQL_SQL92_ROW_VALUE_CONSTRUCTOR = 0x000000a3U,
 }
 
-enum uint SQL_AGGREGATE_FUNCTIONS = 0x000000a9;
-enum uint SQL_DDL_INDEX = 0x000000aa;
-enum uint SQL_DM_VER = 0x000000ab;
-enum uint SQL_INSERT_STATEMENT = 0x000000ac;
-enum uint SQL_CONVERT_GUID = 0x000000ad;
-enum uint SQL_UNION_STATEMENT = 0x00000060;
-enum uint SQL_ASYNC_DBC_FUNCTIONS = 0x00002727;
-enum uint SQL_DRIVER_AWARE_POOLING_SUPPORTED = 0x00002728;
-enum uint SQL_ASYNC_NOTIFICATION = 0x00002729;
+enum uint SQL_SQL92_STRING_FUNCTIONS = 0x000000a4U;
+enum uint SQL_SQL92_VALUE_EXPRESSIONS = 0x000000a5U;
+enum uint SQL_STANDARD_CLI_CONFORMANCE = 0x000000a6U;
+
+enum : uint
+{
+    SQL_STATIC_CURSOR_ATTRIBUTES1 = 0x000000a7U,
+    SQL_STATIC_CURSOR_ATTRIBUTES2 = 0x000000a8U,
+}
+
+enum uint SQL_AGGREGATE_FUNCTIONS = 0x000000a9U;
+enum uint SQL_DDL_INDEX = 0x000000aaU;
+enum uint SQL_DM_VER = 0x000000abU;
+enum uint SQL_INSERT_STATEMENT = 0x000000acU;
+enum uint SQL_CONVERT_GUID = 0x000000adU;
+enum uint SQL_UNION_STATEMENT = 0x00000060U;
+enum uint SQL_ASYNC_DBC_FUNCTIONS = 0x00002727U;
+enum uint SQL_DRIVER_AWARE_POOLING_SUPPORTED = 0x00002728U;
+enum uint SQL_ASYNC_NOTIFICATION = 0x00002729U;
 
 enum : int
 {
@@ -4832,7 +4964,7 @@ enum : int
     SQL_ASYNC_NOTIFICATION_CAPABLE     = 0x00000001,
 }
 
-enum uint SQL_DTC_TRANSITION_COST = 0x000006d6;
+enum uint SQL_DTC_TRANSITION_COST = 0x000006d6U;
 
 enum : int
 {
@@ -5100,28 +5232,28 @@ enum : int
 
 enum : uint
 {
-    SQL_OAC_NONE   = 0x00000000,
-    SQL_OAC_LEVEL1 = 0x00000001,
-    SQL_OAC_LEVEL2 = 0x00000002,
+    SQL_OAC_NONE   = 0x00000000U,
+    SQL_OAC_LEVEL1 = 0x00000001U,
+    SQL_OAC_LEVEL2 = 0x00000002U,
 }
 
 enum : uint
 {
-    SQL_OSCC_NOT_COMPLIANT = 0x00000000,
-    SQL_OSCC_COMPLIANT     = 0x00000001,
+    SQL_OSCC_NOT_COMPLIANT = 0x00000000U,
+    SQL_OSCC_COMPLIANT     = 0x00000001U,
 }
 
 enum : uint
 {
-    SQL_OSC_MINIMUM  = 0x00000000,
-    SQL_OSC_CORE     = 0x00000001,
-    SQL_OSC_EXTENDED = 0x00000002,
+    SQL_OSC_MINIMUM  = 0x00000000U,
+    SQL_OSC_CORE     = 0x00000001U,
+    SQL_OSC_EXTENDED = 0x00000002U,
 }
 
 enum : uint
 {
-    SQL_CB_NULL     = 0x00000000,
-    SQL_CB_NON_NULL = 0x00000001,
+    SQL_CB_NULL     = 0x00000000U,
+    SQL_CB_NON_NULL = 0x00000001U,
 }
 
 enum int SQL_SO_FORWARD_ONLY = 0x00000001;
@@ -5144,29 +5276,29 @@ enum int SQL_TXN_VERSIONING = 0x00000010;
 
 enum : uint
 {
-    SQL_CN_NONE      = 0x00000000,
-    SQL_CN_DIFFERENT = 0x00000001,
-    SQL_CN_ANY       = 0x00000002,
+    SQL_CN_NONE      = 0x00000000U,
+    SQL_CN_DIFFERENT = 0x00000001U,
+    SQL_CN_ANY       = 0x00000002U,
 }
 
 enum : uint
 {
-    SQL_NNC_NULL     = 0x00000000,
-    SQL_NNC_NON_NULL = 0x00000001,
+    SQL_NNC_NULL     = 0x00000000U,
+    SQL_NNC_NON_NULL = 0x00000001U,
 }
 
 enum : uint
 {
-    SQL_NC_START = 0x00000002,
-    SQL_NC_END   = 0x00000004,
+    SQL_NC_START = 0x00000002U,
+    SQL_NC_END   = 0x00000004U,
 }
 
 enum : uint
 {
-    SQL_FILE_NOT_SUPPORTED = 0x00000000,
-    SQL_FILE_TABLE         = 0x00000001,
-    SQL_FILE_QUALIFIER     = 0x00000002,
-    SQL_FILE_CATALOG       = 0x00000002,
+    SQL_FILE_NOT_SUPPORTED = 0x00000000U,
+    SQL_FILE_TABLE         = 0x00000001U,
+    SQL_FILE_QUALIFIER     = 0x00000002U,
+    SQL_FILE_CATALOG       = 0x00000002U,
 }
 
 enum : int
@@ -5183,16 +5315,16 @@ enum : int
 }
 
 enum int SQL_PS_SELECT_FOR_UPDATE = 0x00000004;
-enum uint SQL_GB_NOT_SUPPORTED = 0x00000000;
+enum uint SQL_GB_NOT_SUPPORTED = 0x00000000U;
 
 enum : uint
 {
-    SQL_GB_GROUP_BY_EQUALS_SELECT   = 0x00000001,
-    SQL_GB_GROUP_BY_CONTAINS_SELECT = 0x00000002,
+    SQL_GB_GROUP_BY_EQUALS_SELECT   = 0x00000001U,
+    SQL_GB_GROUP_BY_CONTAINS_SELECT = 0x00000002U,
 }
 
-enum uint SQL_GB_NO_RELATION = 0x00000003;
-enum uint SQL_GB_COLLATE = 0x00000004;
+enum uint SQL_GB_NO_RELATION = 0x00000003U;
+enum uint SQL_GB_COLLATE = 0x00000004U;
 enum int SQL_OU_DML_STATEMENTS = 0x00000001;
 enum int SQL_OU_PROCEDURE_INVOCATION = 0x00000002;
 enum int SQL_OU_TABLE_DEFINITION = 0x00000004;
@@ -5278,8 +5410,8 @@ enum : int
 
 enum : uint
 {
-    SQL_QL_START = 0x00000001,
-    SQL_QL_END   = 0x00000002,
+    SQL_QL_START = 0x00000001U,
+    SQL_QL_END   = 0x00000002U,
 }
 
 enum : int
@@ -5324,15 +5456,15 @@ enum : int
 
 enum : uint
 {
-    SQL_CL_START = 0x00000001,
-    SQL_CL_END   = 0x00000002,
+    SQL_CL_START = 0x00000001U,
+    SQL_CL_END   = 0x00000002U,
 }
 
 enum : uint
 {
-    SQL_BRC_PROCEDURES = 0x00000001,
-    SQL_BRC_EXPLICIT   = 0x00000002,
-    SQL_BRC_ROLLED_UP  = 0x00000004,
+    SQL_BRC_PROCEDURES = 0x00000001U,
+    SQL_BRC_EXPLICIT   = 0x00000002U,
+    SQL_BRC_ROLLED_UP  = 0x00000004U,
 }
 
 enum int SQL_BS_SELECT_EXPLICIT = 0x00000001;
@@ -5342,15 +5474,15 @@ enum int SQL_BS_ROW_COUNT_PROC = 0x00000008;
 
 enum : uint
 {
-    SQL_PARC_BATCH    = 0x00000001,
-    SQL_PARC_NO_BATCH = 0x00000002,
+    SQL_PARC_BATCH    = 0x00000001U,
+    SQL_PARC_NO_BATCH = 0x00000002U,
 }
 
 enum : uint
 {
-    SQL_PAS_BATCH     = 0x00000001,
-    SQL_PAS_NO_BATCH  = 0x00000002,
-    SQL_PAS_NO_SELECT = 0x00000003,
+    SQL_PAS_BATCH     = 0x00000001U,
+    SQL_PAS_NO_BATCH  = 0x00000002U,
+    SQL_PAS_NO_SELECT = 0x00000003U,
 }
 
 enum : int
@@ -5525,9 +5657,9 @@ enum int SQL_IS_SELECT_INTO = 0x00000004;
 
 enum : uint
 {
-    SQL_OIC_CORE   = 0x00000001,
-    SQL_OIC_LEVEL1 = 0x00000002,
-    SQL_OIC_LEVEL2 = 0x00000003,
+    SQL_OIC_CORE   = 0x00000001U,
+    SQL_OIC_LEVEL1 = 0x00000002U,
+    SQL_OIC_LEVEL2 = 0x00000003U,
 }
 
 enum : int
@@ -5700,45 +5832,45 @@ enum : int
 
 enum : uint
 {
-    SQL_FETCH_FIRST_USER   = 0x0000001f,
-    SQL_FETCH_FIRST_SYSTEM = 0x00000020,
+    SQL_FETCH_FIRST_USER   = 0x0000001fU,
+    SQL_FETCH_FIRST_SYSTEM = 0x00000020U,
 }
 
-enum uint SQL_ENTIRE_ROWSET = 0x00000000;
-enum uint SQL_POSITION = 0x00000000;
-enum uint SQL_REFRESH = 0x00000001;
-enum uint SQL_UPDATE = 0x00000002;
-enum uint SQL_DELETE = 0x00000003;
+enum uint SQL_ENTIRE_ROWSET = 0x00000000U;
+enum uint SQL_POSITION = 0x00000000U;
+enum uint SQL_REFRESH = 0x00000001U;
+enum uint SQL_UPDATE = 0x00000002U;
+enum uint SQL_DELETE = 0x00000003U;
 
 enum : uint
 {
-    SQL_ADD                     = 0x00000004,
-    SQL_SETPOS_MAX_OPTION_VALUE = 0x00000004,
+    SQL_ADD                     = 0x00000004U,
+    SQL_SETPOS_MAX_OPTION_VALUE = 0x00000004U,
 }
 
-enum uint SQL_UPDATE_BY_BOOKMARK = 0x00000005;
-enum uint SQL_DELETE_BY_BOOKMARK = 0x00000006;
-enum uint SQL_FETCH_BY_BOOKMARK = 0x00000007;
+enum uint SQL_UPDATE_BY_BOOKMARK = 0x00000005U;
+enum uint SQL_DELETE_BY_BOOKMARK = 0x00000006U;
+enum uint SQL_FETCH_BY_BOOKMARK = 0x00000007U;
 
 enum : uint
 {
-    SQL_LOCK_NO_CHANGE = 0x00000000,
-    SQL_LOCK_EXCLUSIVE = 0x00000001,
-    SQL_LOCK_UNLOCK    = 0x00000002,
+    SQL_LOCK_NO_CHANGE = 0x00000000U,
+    SQL_LOCK_EXCLUSIVE = 0x00000001U,
+    SQL_LOCK_UNLOCK    = 0x00000002U,
 }
 
-enum uint SQL_SETPOS_MAX_LOCK_VALUE = 0x00000002;
-enum uint SQL_BEST_ROWID = 0x00000001;
-enum uint SQL_ROWVER = 0x00000002;
-enum uint SQL_PC_NOT_PSEUDO = 0x00000001;
+enum uint SQL_SETPOS_MAX_LOCK_VALUE = 0x00000002U;
+enum uint SQL_BEST_ROWID = 0x00000001U;
+enum uint SQL_ROWVER = 0x00000002U;
+enum uint SQL_PC_NOT_PSEUDO = 0x00000001U;
 
 enum : uint
 {
-    SQL_QUICK  = 0x00000000,
-    SQL_ENSURE = 0x00000001,
+    SQL_QUICK  = 0x00000000U,
+    SQL_ENSURE = 0x00000001U,
 }
 
-enum uint SQL_TABLE_STAT = 0x00000000;
+enum uint SQL_TABLE_STAT = 0x00000000U;
 
 enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
 {
@@ -5749,129 +5881,129 @@ enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(E
 
 enum : uint
 {
-    SQL_DRIVER_NOPROMPT          = 0x00000000,
-    SQL_DRIVER_COMPLETE          = 0x00000001,
-    SQL_DRIVER_PROMPT            = 0x00000002,
-    SQL_DRIVER_COMPLETE_REQUIRED = 0x00000003,
+    SQL_DRIVER_NOPROMPT          = 0x00000000U,
+    SQL_DRIVER_COMPLETE          = 0x00000001U,
+    SQL_DRIVER_PROMPT            = 0x00000002U,
+    SQL_DRIVER_COMPLETE_REQUIRED = 0x00000003U,
 }
 
-enum uint SQL_FETCH_BOOKMARK = 0x00000008;
+enum uint SQL_FETCH_BOOKMARK = 0x00000008U;
 
 enum : uint
 {
-    SQL_ROW_SUCCESS           = 0x00000000,
-    SQL_ROW_DELETED           = 0x00000001,
-    SQL_ROW_UPDATED           = 0x00000002,
-    SQL_ROW_NOROW             = 0x00000003,
-    SQL_ROW_ADDED             = 0x00000004,
-    SQL_ROW_ERROR             = 0x00000005,
-    SQL_ROW_SUCCESS_WITH_INFO = 0x00000006,
-}
-
-enum : uint
-{
-    SQL_ROW_PROCEED = 0x00000000,
-    SQL_ROW_IGNORE  = 0x00000001,
+    SQL_ROW_SUCCESS           = 0x00000000U,
+    SQL_ROW_DELETED           = 0x00000001U,
+    SQL_ROW_UPDATED           = 0x00000002U,
+    SQL_ROW_NOROW             = 0x00000003U,
+    SQL_ROW_ADDED             = 0x00000004U,
+    SQL_ROW_ERROR             = 0x00000005U,
+    SQL_ROW_SUCCESS_WITH_INFO = 0x00000006U,
 }
 
 enum : uint
 {
-    SQL_PARAM_SUCCESS           = 0x00000000,
-    SQL_PARAM_SUCCESS_WITH_INFO = 0x00000006,
+    SQL_ROW_PROCEED = 0x00000000U,
+    SQL_ROW_IGNORE  = 0x00000001U,
 }
 
 enum : uint
 {
-    SQL_PARAM_ERROR            = 0x00000005,
-    SQL_PARAM_UNUSED           = 0x00000007,
-    SQL_PARAM_DIAG_UNAVAILABLE = 0x00000001,
+    SQL_PARAM_SUCCESS           = 0x00000000U,
+    SQL_PARAM_SUCCESS_WITH_INFO = 0x00000006U,
 }
 
 enum : uint
 {
-    SQL_PARAM_PROCEED = 0x00000000,
-    SQL_PARAM_IGNORE  = 0x00000001,
+    SQL_PARAM_ERROR            = 0x00000005U,
+    SQL_PARAM_UNUSED           = 0x00000007U,
+    SQL_PARAM_DIAG_UNAVAILABLE = 0x00000001U,
 }
-
-enum uint SQL_CASCADE = 0x00000000;
-enum uint SQL_RESTRICT = 0x00000001;
-enum uint SQL_SET_NULL = 0x00000002;
-enum uint SQL_NO_ACTION = 0x00000003;
-enum uint SQL_SET_DEFAULT = 0x00000004;
 
 enum : uint
 {
-    SQL_INITIALLY_DEFERRED  = 0x00000005,
-    SQL_INITIALLY_IMMEDIATE = 0x00000006,
+    SQL_PARAM_PROCEED = 0x00000000U,
+    SQL_PARAM_IGNORE  = 0x00000001U,
 }
 
-enum uint SQL_NOT_DEFERRABLE = 0x00000007;
+enum uint SQL_CASCADE = 0x00000000U;
+enum uint SQL_RESTRICT = 0x00000001U;
+enum uint SQL_SET_NULL = 0x00000002U;
+enum uint SQL_NO_ACTION = 0x00000003U;
+enum uint SQL_SET_DEFAULT = 0x00000004U;
 
 enum : uint
 {
-    SQL_PARAM_TYPE_UNKNOWN = 0x00000000,
-    SQL_PARAM_INPUT        = 0x00000001,
-    SQL_PARAM_INPUT_OUTPUT = 0x00000002,
+    SQL_INITIALLY_DEFERRED  = 0x00000005U,
+    SQL_INITIALLY_IMMEDIATE = 0x00000006U,
 }
 
-enum uint SQL_RESULT_COL = 0x00000003;
-enum uint SQL_PARAM_OUTPUT = 0x00000004;
-enum uint SQL_RETURN_VALUE = 0x00000005;
-enum uint SQL_PARAM_INPUT_OUTPUT_STREAM = 0x00000008;
-enum uint SQL_PARAM_OUTPUT_STREAM = 0x00000010;
+enum uint SQL_NOT_DEFERRABLE = 0x00000007U;
 
 enum : uint
 {
-    SQL_PT_UNKNOWN   = 0x00000000,
-    SQL_PT_PROCEDURE = 0x00000001,
-    SQL_PT_FUNCTION  = 0x00000002,
+    SQL_PARAM_TYPE_UNKNOWN = 0x00000000U,
+    SQL_PARAM_INPUT        = 0x00000001U,
+    SQL_PARAM_INPUT_OUTPUT = 0x00000002U,
+}
+
+enum uint SQL_RESULT_COL = 0x00000003U;
+enum uint SQL_PARAM_OUTPUT = 0x00000004U;
+enum uint SQL_RETURN_VALUE = 0x00000005U;
+enum uint SQL_PARAM_INPUT_OUTPUT_STREAM = 0x00000008U;
+enum uint SQL_PARAM_OUTPUT_STREAM = 0x00000010U;
+
+enum : uint
+{
+    SQL_PT_UNKNOWN   = 0x00000000U,
+    SQL_PT_PROCEDURE = 0x00000001U,
+    SQL_PT_FUNCTION  = 0x00000002U,
 }
 
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SQL_ODBC_KEYWORDS = "ABSOLUTE,ACTION,ADA,ADD,ALL,ALLOCATE,ALTER,AND,ANY,ARE,AS,ASC,ASSERTION,AT,AUTHORIZATION,AVG,BEGIN,BETWEEN,BIT,BIT_LENGTH,BOTH,BY,CASCADE,CASCADED,CASE,CAST,CATALOG,CHAR,CHAR_LENGTH,CHARACTER,CHARACTER_LENGTH,CHECK,CLOSE,COALESCE,COLLATE,COLLATION,COLUMN,COMMIT,CONNECT,CONNECTION,CONSTRAINT,CONSTRAINTS,CONTINUE,CONVERT,CORRESPONDING,COUNT,CREATE,CROSS,CURRENT,CURRENT_DATE,CURRENT_TIME,CURRENT_TIMESTAMP,CURRENT_USER,CURSOR,DATE,DAY,DEALLOCATE,DEC,DECIMAL,DECLARE,DEFAULT,DEFERRABLE,DEFERRED,DELETE,DESC,DESCRIBE,DESCRIPTOR,DIAGNOSTICS,DISCONNECT,DISTINCT,DOMAIN,DOUBLE,DROP,ELSE,END,END-EXEC,ESCAPE,EXCEPT,EXCEPTION,EXEC,EXECUTE,EXISTS,EXTERNAL,EXTRACT,FALSE,FETCH,FIRST,FLOAT,FOR,FOREIGN,FORTRAN,FOUND,FROM,FULL,GET,GLOBAL,GO,GOTO,GRANT,GROUP,HAVING,HOUR,IDENTITY,IMMEDIATE,IN,INCLUDE,INDEX,INDICATOR,INITIALLY,INNER,INPUT,INSENSITIVE,INSERT,INT,INTEGER,INTERSECT,INTERVAL,INTO,IS,ISOLATION,JOIN,KEY,LANGUAGE,LAST,LEADING,LEFT,LEVEL,LIKE,LOCAL,LOWER,MATCH,MAX,MIN,MINUTE,MODULE,MONTH,NAMES,NATIONAL,NATURAL,NCHAR,NEXT,NO,NONE,NOT,NULL,NULLIF,NUMERIC,OCTET_LENGTH,OF,ON,ONLY,OPEN,OPTION,OR,ORDER,OUTER,OUTPUT,OVERLAPS,PAD,PARTIAL,PASCAL,PLI,POSITION,PRECISION,PREPARE,PRESERVE,PRIMARY,PRIOR,PRIVILEGES,PROCEDURE,PUBLIC,READ,REAL,REFERENCES,RELATIVE,RESTRICT,REVOKE,RIGHT,ROLLBACK,ROWSSCHEMA,SCROLL,SECOND,SECTION,SELECT,SESSION,SESSION_USER,SET,SIZE,SMALLINT,SOME,SPACE,SQL,SQLCA,SQLCODE,SQLERROR,SQLSTATE,SQLWARNING,SUBSTRING,SUM,SYSTEM_USER,TABLE,TEMPORARY,THEN,TIME,TIMESTAMP,TIMEZONE_HOUR,TIMEZONE_MINUTE,TO,TRAILING,TRANSACTION,TRANSLATE,TRANSLATION,TRIM,TRUE,UNION,UNIQUE,UNKNOWN,UPDATE,UPPER,USAGE,USER,USING,VALUE,VALUES,VARCHAR,VARYING,VIEW,WHEN,WHENEVER,WHERE,WITH,WORK,WRITE,YEAR,ZONE";
 
 enum : uint
 {
-    SQL_YEAR   = 0x00000001,
-    SQL_MONTH  = 0x00000002,
-    SQL_DAY    = 0x00000003,
-    SQL_HOUR   = 0x00000004,
-    SQL_MINUTE = 0x00000005,
+    SQL_YEAR   = 0x00000001U,
+    SQL_MONTH  = 0x00000002U,
+    SQL_DAY    = 0x00000003U,
+    SQL_HOUR   = 0x00000004U,
+    SQL_MINUTE = 0x00000005U,
 }
 
-enum uint SQL_SECOND = 0x00000006;
-enum uint SQL_YEAR_TO_MONTH = 0x00000007;
+enum uint SQL_SECOND = 0x00000006U;
+enum uint SQL_YEAR_TO_MONTH = 0x00000007U;
 
 enum : uint
 {
-    SQL_DAY_TO_HOUR   = 0x00000008,
-    SQL_DAY_TO_MINUTE = 0x00000009,
-    SQL_DAY_TO_SECOND = 0x0000000a,
+    SQL_DAY_TO_HOUR   = 0x00000008U,
+    SQL_DAY_TO_MINUTE = 0x00000009U,
+    SQL_DAY_TO_SECOND = 0x0000000aU,
 }
 
 enum : uint
 {
-    SQL_HOUR_TO_MINUTE = 0x0000000b,
-    SQL_HOUR_TO_SECOND = 0x0000000c,
+    SQL_HOUR_TO_MINUTE = 0x0000000bU,
+    SQL_HOUR_TO_SECOND = 0x0000000cU,
 }
 
-enum uint SQL_MINUTE_TO_SECOND = 0x0000000d;
-enum uint SQL_DATABASE_NAME = 0x00000010;
+enum uint SQL_MINUTE_TO_SECOND = 0x0000000dU;
+enum uint SQL_DATABASE_NAME = 0x00000010U;
 enum int SQL_FD_FETCH_PREV = 0x00000008;
-enum uint SQL_FETCH_PREV = 0x00000004;
-enum uint SQL_CONCUR_TIMESTAMP = 0x00000003;
+enum uint SQL_FETCH_PREV = 0x00000004U;
+enum uint SQL_CONCUR_TIMESTAMP = 0x00000003U;
 enum int SQL_SCCO_OPT_TIMESTAMP = 0x00000004;
-enum uint SQL_CC_DELETE = 0x00000000;
-enum uint SQL_CR_DELETE = 0x00000000;
+enum uint SQL_CC_DELETE = 0x00000000U;
+enum uint SQL_CR_DELETE = 0x00000000U;
 
 enum : uint
 {
-    SQL_CC_CLOSE    = 0x00000001,
-    SQL_CR_CLOSE    = 0x00000001,
-    SQL_CC_PRESERVE = 0x00000002,
+    SQL_CC_CLOSE    = 0x00000001U,
+    SQL_CR_CLOSE    = 0x00000001U,
+    SQL_CC_PRESERVE = 0x00000002U,
 }
 
-enum uint SQL_CR_PRESERVE = 0x00000002;
-enum uint SQL_FETCH_RESUME = 0x00000007;
+enum uint SQL_CR_PRESERVE = 0x00000002U;
+enum uint SQL_FETCH_RESUME = 0x00000007U;
 
 enum : int
 {
@@ -5881,7 +6013,7 @@ enum : int
     SQL_SCROLL_STATIC        = 0xfffffffd,
 }
 
-enum uint TRACE_VERSION = 0x000003e8;
+enum uint TRACE_VERSION = 0x000003e8U;
 
 enum : int
 {
@@ -5897,120 +6029,120 @@ enum : int
     ODBC_VS_FLAG_STOP        = 0x00000008,
 }
 
-enum uint CRESTRICTIONS_DBSCHEMA_LINKEDSERVERS = 0x00000001;
-enum uint SSPROP_ENABLEFASTLOAD = 0x00000002;
+enum uint CRESTRICTIONS_DBSCHEMA_LINKEDSERVERS = 0x00000001U;
+enum uint SSPROP_ENABLEFASTLOAD = 0x00000002U;
 
 enum : uint
 {
-    SSPROP_UNICODELCID            = 0x00000002,
-    SSPROP_UNICODECOMPARISONSTYLE = 0x00000003,
+    SSPROP_UNICODELCID            = 0x00000002U,
+    SSPROP_UNICODECOMPARISONSTYLE = 0x00000003U,
 }
 
-enum uint SSPROP_COLUMNLEVELCOLLATION = 0x00000004;
-enum uint SSPROP_CHARACTERSET = 0x00000005;
+enum uint SSPROP_COLUMNLEVELCOLLATION = 0x00000004U;
+enum uint SSPROP_CHARACTERSET = 0x00000005U;
 
 enum : uint
 {
-    SSPROP_SORTORDER        = 0x00000006,
-    SSPROP_CURRENTCOLLATION = 0x00000007,
-}
-
-enum : uint
-{
-    SSPROP_INIT_CURRENTLANGUAGE = 0x00000004,
-    SSPROP_INIT_NETWORKADDRESS  = 0x00000005,
-    SSPROP_INIT_NETWORKLIBRARY  = 0x00000006,
-    SSPROP_INIT_USEPROCFORPREP  = 0x00000007,
-    SSPROP_INIT_AUTOTRANSLATE   = 0x00000008,
-    SSPROP_INIT_PACKETSIZE      = 0x00000009,
-    SSPROP_INIT_APPNAME         = 0x0000000a,
-    SSPROP_INIT_WSID            = 0x0000000b,
-    SSPROP_INIT_FILENAME        = 0x0000000c,
-    SSPROP_INIT_ENCRYPT         = 0x0000000d,
-}
-
-enum uint SSPROP_AUTH_REPL_SERVER_NAME = 0x0000000e;
-enum uint SSPROP_INIT_TAGCOLUMNCOLLATION = 0x0000000f;
-
-enum : uint
-{
-    SSPROPVAL_USEPROCFORPREP_OFF     = 0x00000000,
-    SSPROPVAL_USEPROCFORPREP_ON      = 0x00000001,
-    SSPROPVAL_USEPROCFORPREP_ON_DROP = 0x00000002,
-}
-
-enum uint SSPROP_QUOTEDCATALOGNAMES = 0x00000002;
-enum uint SSPROP_ALLOWNATIVEVARIANT = 0x00000003;
-enum uint SSPROP_SQLXMLXPROGID = 0x00000004;
-enum uint SSPROP_MAXBLOBLENGTH = 0x00000008;
-
-enum : uint
-{
-    SSPROP_FASTLOADOPTIONS      = 0x00000009,
-    SSPROP_FASTLOADKEEPNULLS    = 0x0000000a,
-    SSPROP_FASTLOADKEEPIDENTITY = 0x0000000b,
-}
-
-enum uint SSPROP_CURSORAUTOFETCH = 0x0000000c;
-enum uint SSPROP_DEFERPREPARE = 0x0000000d;
-enum uint SSPROP_IRowsetFastLoad = 0x0000000e;
-enum uint SSPROP_COL_COLLATIONNAME = 0x0000000e;
-
-enum : uint
-{
-    SSPROP_STREAM_MAPPINGSCHEMA = 0x0000000f,
-    SSPROP_STREAM_XSL           = 0x00000010,
-    SSPROP_STREAM_BASEPATH      = 0x00000011,
-    SSPROP_STREAM_COMMANDTYPE   = 0x00000012,
-    SSPROP_STREAM_XMLROOT       = 0x00000013,
-    SSPROP_STREAM_FLAGS         = 0x00000014,
-    SSPROP_STREAM_CONTENTTYPE   = 0x00000017,
+    SSPROP_SORTORDER        = 0x00000006U,
+    SSPROP_CURRENTCOLLATION = 0x00000007U,
 }
 
 enum : uint
 {
-    STREAM_FLAGS_DISALLOW_URL           = 0x00000001,
-    STREAM_FLAGS_DISALLOW_ABSOLUTE_PATH = 0x00000002,
-    STREAM_FLAGS_DISALLOW_QUERY         = 0x00000004,
-    STREAM_FLAGS_DONTCACHEMAPPINGSCHEMA = 0x00000008,
-    STREAM_FLAGS_DONTCACHETEMPLATE      = 0x00000010,
-    STREAM_FLAGS_DONTCACHEXSL           = 0x00000020,
-    STREAM_FLAGS_DISALLOW_UPDATEGRAMS   = 0x00000040,
+    SSPROP_INIT_CURRENTLANGUAGE = 0x00000004U,
+    SSPROP_INIT_NETWORKADDRESS  = 0x00000005U,
+    SSPROP_INIT_NETWORKLIBRARY  = 0x00000006U,
+    SSPROP_INIT_USEPROCFORPREP  = 0x00000007U,
+    SSPROP_INIT_AUTOTRANSLATE   = 0x00000008U,
+    SSPROP_INIT_PACKETSIZE      = 0x00000009U,
+    SSPROP_INIT_APPNAME         = 0x0000000aU,
+    SSPROP_INIT_WSID            = 0x0000000bU,
+    SSPROP_INIT_FILENAME        = 0x0000000cU,
+    SSPROP_INIT_ENCRYPT         = 0x0000000dU,
 }
 
-enum uint STREAM_FLAGS_RESERVED = 0xffff0000;
+enum uint SSPROP_AUTH_REPL_SERVER_NAME = 0x0000000eU;
+enum uint SSPROP_INIT_TAGCOLUMNCOLLATION = 0x0000000fU;
 
 enum : uint
 {
-    SSPROPVAL_COMMANDTYPE_REGULAR  = 0x00000015,
-    SSPROPVAL_COMMANDTYPE_BULKLOAD = 0x00000016,
+    SSPROPVAL_USEPROCFORPREP_OFF     = 0x00000000U,
+    SSPROPVAL_USEPROCFORPREP_ON      = 0x00000001U,
+    SSPROPVAL_USEPROCFORPREP_ON_DROP = 0x00000002U,
 }
 
-enum uint DBTYPE_SQLVARIANT = 0x00000090;
-enum uint SQL_HANDLE_DBC_INFO_TOKEN = 0x00000006;
+enum uint SSPROP_QUOTEDCATALOGNAMES = 0x00000002U;
+enum uint SSPROP_ALLOWNATIVEVARIANT = 0x00000003U;
+enum uint SSPROP_SQLXMLXPROGID = 0x00000004U;
+enum uint SSPROP_MAXBLOBLENGTH = 0x00000008U;
 
 enum : uint
 {
-    SQL_CONN_POOL_RATING_BEST        = 0x00000064,
-    SQL_CONN_POOL_RATING_GOOD_ENOUGH = 0x00000063,
-    SQL_CONN_POOL_RATING_USELESS     = 0x00000000,
+    SSPROP_FASTLOADOPTIONS      = 0x00000009U,
+    SSPROP_FASTLOADKEEPNULLS    = 0x0000000aU,
+    SSPROP_FASTLOADKEEPIDENTITY = 0x0000000bU,
 }
 
-enum uint SQL_ATTR_DBC_INFO_TOKEN = 0x00000076;
+enum uint SSPROP_CURSORAUTOFETCH = 0x0000000cU;
+enum uint SSPROP_DEFERPREPARE = 0x0000000dU;
+enum uint SSPROP_IRowsetFastLoad = 0x0000000eU;
+enum uint SSPROP_COL_COLLATIONNAME = 0x0000000eU;
 
 enum : uint
 {
-    SQL_ATTR_ASYNC_DBC_NOTIFICATION_CALLBACK = 0x00000078,
-    SQL_ATTR_ASYNC_DBC_NOTIFICATION_CONTEXT  = 0x00000079,
+    SSPROP_STREAM_MAPPINGSCHEMA = 0x0000000fU,
+    SSPROP_STREAM_XSL           = 0x00000010U,
+    SSPROP_STREAM_BASEPATH      = 0x00000011U,
+    SSPROP_STREAM_COMMANDTYPE   = 0x00000012U,
+    SSPROP_STREAM_XMLROOT       = 0x00000013U,
+    SSPROP_STREAM_FLAGS         = 0x00000014U,
+    SSPROP_STREAM_CONTENTTYPE   = 0x00000017U,
 }
 
 enum : uint
 {
-    SQL_ATTR_ASYNC_STMT_NOTIFICATION_CALLBACK = 0x0000001e,
-    SQL_ATTR_ASYNC_STMT_NOTIFICATION_CONTEXT  = 0x0000001f,
+    STREAM_FLAGS_DISALLOW_URL           = 0x00000001U,
+    STREAM_FLAGS_DISALLOW_ABSOLUTE_PATH = 0x00000002U,
+    STREAM_FLAGS_DISALLOW_QUERY         = 0x00000004U,
+    STREAM_FLAGS_DONTCACHEMAPPINGSCHEMA = 0x00000008U,
+    STREAM_FLAGS_DONTCACHETEMPLATE      = 0x00000010U,
+    STREAM_FLAGS_DONTCACHEXSL           = 0x00000020U,
+    STREAM_FLAGS_DISALLOW_UPDATEGRAMS   = 0x00000040U,
 }
 
-enum uint SQL_MAX_NUMERIC_LEN = 0x00000010;
+enum uint STREAM_FLAGS_RESERVED = 0xffff0000U;
+
+enum : uint
+{
+    SSPROPVAL_COMMANDTYPE_REGULAR  = 0x00000015U,
+    SSPROPVAL_COMMANDTYPE_BULKLOAD = 0x00000016U,
+}
+
+enum uint DBTYPE_SQLVARIANT = 0x00000090U;
+enum uint SQL_HANDLE_DBC_INFO_TOKEN = 0x00000006U;
+
+enum : uint
+{
+    SQL_CONN_POOL_RATING_BEST        = 0x00000064U,
+    SQL_CONN_POOL_RATING_GOOD_ENOUGH = 0x00000063U,
+    SQL_CONN_POOL_RATING_USELESS     = 0x00000000U,
+}
+
+enum uint SQL_ATTR_DBC_INFO_TOKEN = 0x00000076U;
+
+enum : uint
+{
+    SQL_ATTR_ASYNC_DBC_NOTIFICATION_CALLBACK = 0x00000078U,
+    SQL_ATTR_ASYNC_DBC_NOTIFICATION_CONTEXT  = 0x00000079U,
+}
+
+enum : uint
+{
+    SQL_ATTR_ASYNC_STMT_NOTIFICATION_CALLBACK = 0x0000001eU,
+    SQL_ATTR_ASYNC_STMT_NOTIFICATION_CONTEXT  = 0x0000001fU,
+}
+
+enum uint SQL_MAX_NUMERIC_LEN = 0x00000010U;
 
 enum : int
 {
@@ -6025,9 +6157,9 @@ enum : int
     SQL_C_TCHAR = 0xfffffff8,
 }
 
-enum uint SQL_SQLSTATE_SIZEW = 0x0000000a;
+enum uint SQL_SQLSTATE_SIZEW = 0x0000000aU;
 enum GUID PSGUID_STORAGE = GUID("b725f130-47ef-101a-a5f1-02608c9eebac");
-enum uint CSTORAGEPROPERTY = 0x00000017;
+enum uint CSTORAGEPROPERTY = 0x00000017U;
 
 enum : int
 {
@@ -6344,37 +6476,37 @@ enum : int
 
 enum : uint
 {
-    ERROR_SOURCE_NETWORKING        = 0x00000300,
-    ERROR_SOURCE_DATASOURCE        = 0x00000400,
-    ERROR_SOURCE_COLLATOR          = 0x00000500,
-    ERROR_SOURCE_CONNMGR           = 0x00000600,
-    ERROR_SOURCE_QUERY             = 0x00000700,
-    ERROR_SOURCE_SCHEMA            = 0x00000c00,
-    ERROR_SOURCE_GATHERER          = 0x00000d00,
-    ERROR_SOURCE_INDEXER           = 0x00001100,
-    ERROR_SOURCE_SETUP             = 0x00001300,
-    ERROR_SOURCE_SECURITY          = 0x00001400,
-    ERROR_SOURCE_CMDLINE           = 0x00001500,
-    ERROR_SOURCE_NLADMIN           = 0x00001900,
-    ERROR_SOURCE_SCRIPTPI          = 0x00002000,
-    ERROR_SOURCE_MSS               = 0x00002100,
-    ERROR_SOURCE_XML               = 0x00002200,
-    ERROR_SOURCE_DAV               = 0x00002300,
-    ERROR_SOURCE_FLTRDMN           = 0x00002400,
-    ERROR_SOURCE_OLEDB_BINDER      = 0x00002500,
-    ERROR_SOURCE_NOTESPH           = 0x00002600,
-    ERROR_SOURCE_EXSTOREPH         = 0x00002700,
-    ERROR_SOURCE_SRCH_SCHEMA_CACHE = 0x00003300,
-    ERROR_SOURCE_CONTENT_SOURCE    = 0x00003400,
-    ERROR_SOURCE_REMOTE_EXSTOREPH  = 0x00003500,
-    ERROR_SOURCE_PEOPLE_IMPORT     = 0x00004000,
+    ERROR_SOURCE_NETWORKING        = 0x00000300U,
+    ERROR_SOURCE_DATASOURCE        = 0x00000400U,
+    ERROR_SOURCE_COLLATOR          = 0x00000500U,
+    ERROR_SOURCE_CONNMGR           = 0x00000600U,
+    ERROR_SOURCE_QUERY             = 0x00000700U,
+    ERROR_SOURCE_SCHEMA            = 0x00000c00U,
+    ERROR_SOURCE_GATHERER          = 0x00000d00U,
+    ERROR_SOURCE_INDEXER           = 0x00001100U,
+    ERROR_SOURCE_SETUP             = 0x00001300U,
+    ERROR_SOURCE_SECURITY          = 0x00001400U,
+    ERROR_SOURCE_CMDLINE           = 0x00001500U,
+    ERROR_SOURCE_NLADMIN           = 0x00001900U,
+    ERROR_SOURCE_SCRIPTPI          = 0x00002000U,
+    ERROR_SOURCE_MSS               = 0x00002100U,
+    ERROR_SOURCE_XML               = 0x00002200U,
+    ERROR_SOURCE_DAV               = 0x00002300U,
+    ERROR_SOURCE_FLTRDMN           = 0x00002400U,
+    ERROR_SOURCE_OLEDB_BINDER      = 0x00002500U,
+    ERROR_SOURCE_NOTESPH           = 0x00002600U,
+    ERROR_SOURCE_EXSTOREPH         = 0x00002700U,
+    ERROR_SOURCE_SRCH_SCHEMA_CACHE = 0x00003300U,
+    ERROR_SOURCE_CONTENT_SOURCE    = 0x00003400U,
+    ERROR_SOURCE_REMOTE_EXSTOREPH  = 0x00003500U,
+    ERROR_SOURCE_PEOPLE_IMPORT     = 0x00004000U,
 }
 
 enum : uint
 {
-    ERROR_FTE    = 0x00003600,
-    ERROR_FTE_CB = 0x0000cb00,
-    ERROR_FTE_FD = 0x0000fd00,
+    ERROR_FTE    = 0x00003600U,
+    ERROR_FTE_CB = 0x0000cb00U,
+    ERROR_FTE_FD = 0x0000fd00U,
 }
 
 enum int XML_E_NODEFAULTNS = 0x80042200;
@@ -7255,30 +7387,30 @@ enum : int
 
 enum int FTE_E_FD_OCCURRENCE_OVERFLOW = 0x8004fd0a;
 enum int FTE_E_FD_FILTER_CAUSED_SHARING_VIOLATION = 0x8004fd0b;
-enum uint ERROR_SOURCE_PROTHNDLR = 0x00001200;
+enum uint ERROR_SOURCE_PROTHNDLR = 0x00001200U;
 
 enum : uint
 {
-    PRTH_E_COMM_ERROR    = 0x80041200,
-    PRTH_E_OBJ_NOT_FOUND = 0x80041201,
+    PRTH_E_COMM_ERROR    = 0x80041200U,
+    PRTH_E_OBJ_NOT_FOUND = 0x80041201U,
 }
 
-enum uint PRTH_E_REQUEST_ERROR = 0x80041202;
-enum uint PRTH_S_NOT_MODIFIED = 0x00041203;
-enum uint PRTH_E_ACCESS_DENIED = 0x80041205;
-enum uint PRTH_E_SERVER_ERROR = 0x80041206;
-enum uint PRTH_E_NOT_REDIRECTED = 0x80041207;
-enum uint PRTH_E_BAD_REQUEST = 0x80041208;
-enum uint PRTH_E_HTTP_CANNOT_CONNECT = 0x80041209;
-enum uint PRTH_S_ACL_IS_READ_EVERYONE = 0x00041210;
+enum uint PRTH_E_REQUEST_ERROR = 0x80041202U;
+enum uint PRTH_S_NOT_MODIFIED = 0x00041203U;
+enum uint PRTH_E_ACCESS_DENIED = 0x80041205U;
+enum uint PRTH_E_SERVER_ERROR = 0x80041206U;
+enum uint PRTH_E_NOT_REDIRECTED = 0x80041207U;
+enum uint PRTH_E_BAD_REQUEST = 0x80041208U;
+enum uint PRTH_E_HTTP_CANNOT_CONNECT = 0x80041209U;
+enum uint PRTH_S_ACL_IS_READ_EVERYONE = 0x00041210U;
 
 enum : uint
 {
-    PRTH_E_ACL_IS_READ_NONE = 0x80041211,
-    PRTH_E_ACL_TOO_BIG      = 0x80041212,
+    PRTH_E_ACL_IS_READ_NONE = 0x80041211U,
+    PRTH_E_ACL_TOO_BIG      = 0x80041212U,
 }
 
-enum uint PRTH_S_NOT_ALL_PARTS = 0x0004121b;
+enum uint PRTH_S_NOT_ALL_PARTS = 0x0004121bU;
 enum HRESULT QUERY_E_ALLNOISE_AND_NO_RELDOC = HRESULT(0x8004160d);
 
 enum : HRESULT
@@ -7487,304 +7619,713 @@ struct HACCESSOR
     size_t Value;
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct DBVECTOR
+version(X86_64)
 {
-    size_t size;
-    void*  ptr;
+    struct DBVECTOR
+    {
+        size_t size;
+        void*  ptr;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct DBTIMESTAMP
+version(AArch64)
 {
-    short  year;
-    ushort month;
-    ushort day;
-    ushort hour;
-    ushort minute;
-    ushort second;
-    uint   fraction;
+    struct DBVECTOR
+    {
+        size_t size;
+        void*  ptr;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct SEC_OBJECT_ELEMENT
+version(X86_64)
 {
-    GUID guidObjectType;
-    DBID ObjectID;
+    struct DBTIMESTAMP
+    {
+        short  year;
+        ushort month;
+        ushort day;
+        ushort hour;
+        ushort minute;
+        ushort second;
+        uint   fraction;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct SEC_OBJECT
+version(AArch64)
 {
-    uint                cObjects;
-    SEC_OBJECT_ELEMENT* prgObjects;
+    struct DBTIMESTAMP
+    {
+        short  year;
+        ushort month;
+        ushort day;
+        ushort hour;
+        ushort minute;
+        ushort second;
+        uint   fraction;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct DBIMPLICITSESSION
+version(X86_64)
 {
-    IUnknown pUnkOuter;
-    GUID*    piid;
-    IUnknown pSession;
+    struct SEC_OBJECT_ELEMENT
+    {
+        GUID guidObjectType;
+        DBID ObjectID;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct DBOBJECT
+version(AArch64)
 {
-    uint dwFlags;
-    GUID iid;
+    struct SEC_OBJECT_ELEMENT
+    {
+        GUID guidObjectType;
+        DBID ObjectID;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct DBBINDEXT
+version(X86_64)
 {
-    ubyte* pExtension;
-    size_t ulExtension;
+    struct SEC_OBJECT
+    {
+        uint                cObjects;
+        SEC_OBJECT_ELEMENT* prgObjects;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct DBBINDING
+version(AArch64)
 {
-    size_t     iOrdinal;
-    size_t     obValue;
-    size_t     obLength;
-    size_t     obStatus;
-    ITypeInfo  pTypeInfo;
-    DBOBJECT*  pObject;
-    DBBINDEXT* pBindExt;
-    uint       dwPart;
-    uint       dwMemOwner;
-    uint       eParamIO;
-    size_t     cbMaxLen;
-    uint       dwFlags;
-    ushort     wType;
-    ubyte      bPrecision;
-    ubyte      bScale;
+    struct SEC_OBJECT
+    {
+        uint                cObjects;
+        SEC_OBJECT_ELEMENT* prgObjects;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct DBFAILUREINFO
+version(X86_64)
 {
-    size_t  hRow;
-    size_t  iColumn;
-    HRESULT failure;
+    struct DBIMPLICITSESSION
+    {
+        IUnknown pUnkOuter;
+        GUID*    piid;
+        IUnknown pSession;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct DBCOLUMNINFO
+version(AArch64)
 {
-    PWSTR     pwszName;
-    ITypeInfo pTypeInfo;
-    size_t    iOrdinal;
-    uint      dwFlags;
-    size_t    ulColumnSize;
-    ushort    wType;
-    ubyte     bPrecision;
-    ubyte     bScale;
-    DBID      columnid;
+    struct DBIMPLICITSESSION
+    {
+        IUnknown pUnkOuter;
+        GUID*    piid;
+        IUnknown pSession;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct DBPARAMS
+version(X86_64)
 {
-    void*     pData;
-    size_t    cParamSets;
-    HACCESSOR hAccessor;
+    struct DBOBJECT
+    {
+        uint dwFlags;
+        GUID iid;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct DBPARAMINFO
+version(AArch64)
 {
-    uint      dwFlags;
-    size_t    iOrdinal;
-    PWSTR     pwszName;
-    ITypeInfo pTypeInfo;
-    size_t    ulParamSize;
-    ushort    wType;
-    ubyte     bPrecision;
-    ubyte     bScale;
+    struct DBOBJECT
+    {
+        uint dwFlags;
+        GUID iid;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct DBPROPIDSET
+version(X86_64)
 {
-    uint* rgPropertyIDs;
-    uint  cPropertyIDs;
-    GUID  guidPropertySet;
+    struct DBBINDEXT
+    {
+        ubyte* pExtension;
+        size_t ulExtension;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct DBPROPINFO
+version(AArch64)
 {
-    PWSTR   pwszDescription;
-    uint    dwPropertyID;
-    uint    dwFlags;
-    VARENUM vtType;
-    VARIANT vValues;
+    struct DBBINDEXT
+    {
+        ubyte* pExtension;
+        size_t ulExtension;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct DBPROPINFOSET
+version(X86_64)
 {
-    DBPROPINFO* rgPropertyInfos;
-    uint        cPropertyInfos;
-    GUID        guidPropertySet;
+    struct DBBINDING
+    {
+        size_t     iOrdinal;
+        size_t     obValue;
+        size_t     obLength;
+        size_t     obStatus;
+        ITypeInfo  pTypeInfo;
+        DBOBJECT*  pObject;
+        DBBINDEXT* pBindExt;
+        uint       dwPart;
+        uint       dwMemOwner;
+        uint       eParamIO;
+        size_t     cbMaxLen;
+        uint       dwFlags;
+        ushort     wType;
+        ubyte      bPrecision;
+        ubyte      bScale;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct DBPROP
+version(AArch64)
 {
-    uint    dwPropertyID;
-    uint    dwOptions;
-    uint    dwStatus;
-    DBID    colid;
-    VARIANT vValue;
+    struct DBBINDING
+    {
+        size_t     iOrdinal;
+        size_t     obValue;
+        size_t     obLength;
+        size_t     obStatus;
+        ITypeInfo  pTypeInfo;
+        DBOBJECT*  pObject;
+        DBBINDEXT* pBindExt;
+        uint       dwPart;
+        uint       dwMemOwner;
+        uint       eParamIO;
+        size_t     cbMaxLen;
+        uint       dwFlags;
+        ushort     wType;
+        ubyte      bPrecision;
+        ubyte      bScale;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct DBPROPSET
+version(X86_64)
 {
-    DBPROP* rgProperties;
-    uint    cProperties;
-    GUID    guidPropertySet;
+    struct DBFAILUREINFO
+    {
+        size_t  hRow;
+        size_t  iColumn;
+        HRESULT failure;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct DBINDEXCOLUMNDESC
+version(AArch64)
 {
-    DBID* pColumnID;
-    uint  eIndexColOrder;
+    struct DBFAILUREINFO
+    {
+        size_t  hRow;
+        size_t  iColumn;
+        HRESULT failure;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct DBCOLUMNDESC
+version(X86_64)
 {
-    PWSTR      pwszTypeName;
-    ITypeInfo  pTypeInfo;
-    DBPROPSET* rgPropertySets;
-    GUID*      pclsid;
-    uint       cPropertySets;
-    size_t     ulColumnSize;
-    DBID       dbcid;
-    ushort     wType;
-    ubyte      bPrecision;
-    ubyte      bScale;
+    struct DBCOLUMNINFO
+    {
+        PWSTR     pwszName;
+        ITypeInfo pTypeInfo;
+        size_t    iOrdinal;
+        uint      dwFlags;
+        size_t    ulColumnSize;
+        ushort    wType;
+        ubyte     bPrecision;
+        ubyte     bScale;
+        DBID      columnid;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct DBCOLUMNACCESS
+version(AArch64)
 {
-    void*  pData;
-    DBID   columnid;
-    size_t cbDataLen;
-    uint   dwStatus;
-    size_t cbMaxLen;
-    size_t dwReserved;
-    ushort wType;
-    ubyte  bPrecision;
-    ubyte  bScale;
+    struct DBCOLUMNINFO
+    {
+        PWSTR     pwszName;
+        ITypeInfo pTypeInfo;
+        size_t    iOrdinal;
+        uint      dwFlags;
+        size_t    ulColumnSize;
+        ushort    wType;
+        ubyte     bPrecision;
+        ubyte     bScale;
+        DBID      columnid;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct DBCONSTRAINTDESC
+version(X86_64)
 {
-    DBID*      pConstraintID;
-    uint       ConstraintType;
-    size_t     cColumns;
-    DBID*      rgColumnList;
-    DBID*      pReferencedTableID;
-    size_t     cForeignKeyColumns;
-    DBID*      rgForeignKeyColumnList;
-    PWSTR      pwszConstraintText;
-    uint       UpdateRule;
-    uint       DeleteRule;
-    uint       MatchType;
-    uint       Deferrability;
-    size_t     cReserved;
-    DBPROPSET* rgReserved;
+    struct DBPARAMS
+    {
+        void*     pData;
+        size_t    cParamSets;
+        HACCESSOR hAccessor;
+    }
 }
 
-//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct MDAXISINFO
+version(AArch64)
 {
-    size_t  cbSize;
-    size_t  iAxis;
-    size_t  cDimensions;
-    size_t  cCoordinates;
-    size_t* rgcColumns;
-    PWSTR*  rgpwszDimensionNames;
+    struct DBPARAMS
+    {
+        void*     pData;
+        size_t    cParamSets;
+        HACCESSOR hAccessor;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct RMTPACK
+version(X86_64)
 {
-    ISequentialStream pISeqStream;
-    uint              cbData;
-    uint              cBSTR;
-    BSTR*             rgBSTR;
-    uint              cVARIANT;
-    VARIANT*          rgVARIANT;
-    uint              cIDISPATCH;
-    IDispatch*        rgIDISPATCH;
-    uint              cIUNKNOWN;
-    IUnknown*         rgIUNKNOWN;
-    uint              cPROPVARIANT;
-    PROPVARIANT*      rgPROPVARIANT;
-    uint              cArray;
-    VARIANT*          rgArray;
+    struct DBPARAMINFO
+    {
+        uint      dwFlags;
+        size_t    iOrdinal;
+        PWSTR     pwszName;
+        ITypeInfo pTypeInfo;
+        size_t    ulParamSize;
+        ushort    wType;
+        ubyte     bPrecision;
+        ubyte     bScale;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct DBPARAMBINDINFO
+version(AArch64)
 {
-    PWSTR  pwszDataSourceType;
-    PWSTR  pwszName;
-    size_t ulParamSize;
-    uint   dwFlags;
-    ubyte  bPrecision;
-    ubyte  bScale;
+    struct DBPARAMINFO
+    {
+        uint      dwFlags;
+        size_t    iOrdinal;
+        PWSTR     pwszName;
+        ITypeInfo pTypeInfo;
+        size_t    ulParamSize;
+        ushort    wType;
+        ubyte     bPrecision;
+        ubyte     bScale;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct DBLITERALINFO
+version(X86_64)
 {
-    PWSTR pwszLiteralValue;
-    PWSTR pwszInvalidChars;
-    PWSTR pwszInvalidStartingChars;
-    uint  lt;
-    BOOL  fSupported;
-    uint  cchMaxLen;
+    struct DBPROPIDSET
+    {
+        uint* rgPropertyIDs;
+        uint  cPropertyIDs;
+        GUID  guidPropertySet;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct ERRORINFO
+version(AArch64)
 {
-    HRESULT hrError;
-    uint    dwMinor;
-    GUID    clsid;
-    GUID    iid;
-    int     dispid;
+    struct DBPROPIDSET
+    {
+        uint* rgPropertyIDs;
+        uint  cPropertyIDs;
+        GUID  guidPropertySet;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct DBROWWATCHCHANGE
+version(X86_64)
 {
-    size_t hRegion;
-    uint   eChangeKind;
-    size_t hRow;
-    size_t iRow;
+    struct DBPROPINFO
+    {
+        PWSTR   pwszDescription;
+        uint    dwPropertyID;
+        uint    dwFlags;
+        VARENUM vtType;
+        VARIANT vValues;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct DBCOST
+version(AArch64)
 {
-    uint eKind;
-    uint dwUnits;
-    int  lValue;
+    struct DBPROPINFO
+    {
+        PWSTR   pwszDescription;
+        uint    dwPropertyID;
+        uint    dwFlags;
+        VARENUM vtType;
+        VARIANT vValues;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/indexsrv/ns-indexsrv-text_source))], [])
+version(X86_64)
+{
+    struct DBPROPINFOSET
+    {
+        DBPROPINFO* rgPropertyInfos;
+        uint        cPropertyInfos;
+        GUID        guidPropertySet;
+    }
+}
+
+version(AArch64)
+{
+    struct DBPROPINFOSET
+    {
+        DBPROPINFO* rgPropertyInfos;
+        uint        cPropertyInfos;
+        GUID        guidPropertySet;
+    }
+}
+
+version(X86_64)
+{
+    struct DBPROP
+    {
+        uint    dwPropertyID;
+        uint    dwOptions;
+        uint    dwStatus;
+        DBID    colid;
+        VARIANT vValue;
+    }
+}
+
+version(AArch64)
+{
+    struct DBPROP
+    {
+        uint    dwPropertyID;
+        uint    dwOptions;
+        uint    dwStatus;
+        DBID    colid;
+        VARIANT vValue;
+    }
+}
+
+version(X86_64)
+{
+    struct DBPROPSET
+    {
+        DBPROP* rgProperties;
+        uint    cProperties;
+        GUID    guidPropertySet;
+    }
+}
+
+version(AArch64)
+{
+    struct DBPROPSET
+    {
+        DBPROP* rgProperties;
+        uint    cProperties;
+        GUID    guidPropertySet;
+    }
+}
+
+version(X86_64)
+{
+    struct DBINDEXCOLUMNDESC
+    {
+        DBID* pColumnID;
+        uint  eIndexColOrder;
+    }
+}
+
+version(AArch64)
+{
+    struct DBINDEXCOLUMNDESC
+    {
+        DBID* pColumnID;
+        uint  eIndexColOrder;
+    }
+}
+
+version(X86_64)
+{
+    struct DBCOLUMNDESC
+    {
+        PWSTR      pwszTypeName;
+        ITypeInfo  pTypeInfo;
+        DBPROPSET* rgPropertySets;
+        GUID*      pclsid;
+        uint       cPropertySets;
+        size_t     ulColumnSize;
+        DBID       dbcid;
+        ushort     wType;
+        ubyte      bPrecision;
+        ubyte      bScale;
+    }
+}
+
+version(AArch64)
+{
+    struct DBCOLUMNDESC
+    {
+        PWSTR      pwszTypeName;
+        ITypeInfo  pTypeInfo;
+        DBPROPSET* rgPropertySets;
+        GUID*      pclsid;
+        uint       cPropertySets;
+        size_t     ulColumnSize;
+        DBID       dbcid;
+        ushort     wType;
+        ubyte      bPrecision;
+        ubyte      bScale;
+    }
+}
+
+version(X86_64)
+{
+    struct DBCOLUMNACCESS
+    {
+        void*  pData;
+        DBID   columnid;
+        size_t cbDataLen;
+        uint   dwStatus;
+        size_t cbMaxLen;
+        size_t dwReserved;
+        ushort wType;
+        ubyte  bPrecision;
+        ubyte  bScale;
+    }
+}
+
+version(AArch64)
+{
+    struct DBCOLUMNACCESS
+    {
+        void*  pData;
+        DBID   columnid;
+        size_t cbDataLen;
+        uint   dwStatus;
+        size_t cbMaxLen;
+        size_t dwReserved;
+        ushort wType;
+        ubyte  bPrecision;
+        ubyte  bScale;
+    }
+}
+
+version(X86_64)
+{
+    struct DBCONSTRAINTDESC
+    {
+        DBID*      pConstraintID;
+        uint       ConstraintType;
+        size_t     cColumns;
+        DBID*      rgColumnList;
+        DBID*      pReferencedTableID;
+        size_t     cForeignKeyColumns;
+        DBID*      rgForeignKeyColumnList;
+        PWSTR      pwszConstraintText;
+        uint       UpdateRule;
+        uint       DeleteRule;
+        uint       MatchType;
+        uint       Deferrability;
+        size_t     cReserved;
+        DBPROPSET* rgReserved;
+    }
+}
+
+version(AArch64)
+{
+    struct DBCONSTRAINTDESC
+    {
+        DBID*      pConstraintID;
+        uint       ConstraintType;
+        size_t     cColumns;
+        DBID*      rgColumnList;
+        DBID*      pReferencedTableID;
+        size_t     cForeignKeyColumns;
+        DBID*      rgForeignKeyColumnList;
+        PWSTR      pwszConstraintText;
+        uint       UpdateRule;
+        uint       DeleteRule;
+        uint       MatchType;
+        uint       Deferrability;
+        size_t     cReserved;
+        DBPROPSET* rgReserved;
+    }
+}
+
+version(X86_64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    struct MDAXISINFO
+    {
+        size_t  cbSize;
+        size_t  iAxis;
+        size_t  cDimensions;
+        size_t  cCoordinates;
+        size_t* rgcColumns;
+        PWSTR*  rgpwszDimensionNames;
+    }
+}
+
+version(AArch64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    struct MDAXISINFO
+    {
+        size_t  cbSize;
+        size_t  iAxis;
+        size_t  cDimensions;
+        size_t  cCoordinates;
+        size_t* rgcColumns;
+        PWSTR*  rgpwszDimensionNames;
+    }
+}
+
+version(X86_64)
+{
+    struct RMTPACK
+    {
+        ISequentialStream pISeqStream;
+        uint              cbData;
+        uint              cBSTR;
+        BSTR*             rgBSTR;
+        uint              cVARIANT;
+        VARIANT*          rgVARIANT;
+        uint              cIDISPATCH;
+        IDispatch*        rgIDISPATCH;
+        uint              cIUNKNOWN;
+        IUnknown*         rgIUNKNOWN;
+        uint              cPROPVARIANT;
+        PROPVARIANT*      rgPROPVARIANT;
+        uint              cArray;
+        VARIANT*          rgArray;
+    }
+}
+
+version(AArch64)
+{
+    struct RMTPACK
+    {
+        ISequentialStream pISeqStream;
+        uint              cbData;
+        uint              cBSTR;
+        BSTR*             rgBSTR;
+        uint              cVARIANT;
+        VARIANT*          rgVARIANT;
+        uint              cIDISPATCH;
+        IDispatch*        rgIDISPATCH;
+        uint              cIUNKNOWN;
+        IUnknown*         rgIUNKNOWN;
+        uint              cPROPVARIANT;
+        PROPVARIANT*      rgPROPVARIANT;
+        uint              cArray;
+        VARIANT*          rgArray;
+    }
+}
+
+version(X86_64)
+{
+    struct DBPARAMBINDINFO
+    {
+        PWSTR  pwszDataSourceType;
+        PWSTR  pwszName;
+        size_t ulParamSize;
+        uint   dwFlags;
+        ubyte  bPrecision;
+        ubyte  bScale;
+    }
+}
+
+version(AArch64)
+{
+    struct DBPARAMBINDINFO
+    {
+        PWSTR  pwszDataSourceType;
+        PWSTR  pwszName;
+        size_t ulParamSize;
+        uint   dwFlags;
+        ubyte  bPrecision;
+        ubyte  bScale;
+    }
+}
+
+version(X86_64)
+{
+    struct DBLITERALINFO
+    {
+        PWSTR pwszLiteralValue;
+        PWSTR pwszInvalidChars;
+        PWSTR pwszInvalidStartingChars;
+        uint  lt;
+        BOOL  fSupported;
+        uint  cchMaxLen;
+    }
+}
+
+version(AArch64)
+{
+    struct DBLITERALINFO
+    {
+        PWSTR pwszLiteralValue;
+        PWSTR pwszInvalidChars;
+        PWSTR pwszInvalidStartingChars;
+        uint  lt;
+        BOOL  fSupported;
+        uint  cchMaxLen;
+    }
+}
+
+version(X86_64)
+{
+    struct ERRORINFO
+    {
+        HRESULT hrError;
+        uint    dwMinor;
+        GUID    clsid;
+        GUID    iid;
+        int     dispid;
+    }
+}
+
+version(AArch64)
+{
+    struct ERRORINFO
+    {
+        HRESULT hrError;
+        uint    dwMinor;
+        GUID    clsid;
+        GUID    iid;
+        int     dispid;
+    }
+}
+
+version(X86_64)
+{
+    struct DBROWWATCHCHANGE
+    {
+        size_t hRegion;
+        uint   eChangeKind;
+        size_t hRow;
+        size_t iRow;
+    }
+}
+
+version(AArch64)
+{
+    struct DBROWWATCHCHANGE
+    {
+        size_t hRegion;
+        uint   eChangeKind;
+        size_t hRow;
+        size_t iRow;
+    }
+}
+
+version(X86_64)
+{
+    struct DBCOST
+    {
+        uint eKind;
+        uint dwUnits;
+        int  lValue;
+    }
+}
+
+version(AArch64)
+{
+    struct DBCOST
+    {
+        uint eKind;
+        uint dwUnits;
+        int  lValue;
+    }
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/ns-indexsrv-text_source
 struct TEXT_SOURCE
 {
     PFNFILLTEXTBUFFER pfnFillTextBuffer;
@@ -7793,7 +8334,7 @@ struct TEXT_SOURCE
     uint              iCur;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/filtereg/ns-filtereg-filtered_data_sources))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/filtereg/ns-filtereg-filtered_data_sources
 struct FILTERED_DATA_SOURCES
 {
     const(PWSTR) pwcsExtension;
@@ -7810,12 +8351,14 @@ struct DB_NUMERIC
     ubyte[16] val;
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct DBVECTOR
+version(X86)
 {
-align (2):
-    size_t size;
-    void*  ptr;
+    struct DBVECTOR
+    {
+    align (2):
+        size_t size;
+        void*  ptr;
+    }
 }
 
 struct DBDATE
@@ -7832,17 +8375,19 @@ struct DBTIME
     ushort second;
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct DBTIMESTAMP
+version(X86)
 {
-align (2):
-    short  year;
-    ushort month;
-    ushort day;
-    ushort hour;
-    ushort minute;
-    ushort second;
-    uint   fraction;
+    struct DBTIMESTAMP
+    {
+    align (2):
+        short  year;
+        ushort month;
+        ushort day;
+        ushort hour;
+        ushort minute;
+        ushort second;
+        uint   fraction;
+    }
 }
 
 struct DB_VARNUMERIC
@@ -7853,299 +8398,347 @@ struct DB_VARNUMERIC
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] val;
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct SEC_OBJECT_ELEMENT
+version(X86)
 {
-align (2):
-    GUID guidObjectType;
-    DBID ObjectID;
+    struct SEC_OBJECT_ELEMENT
+    {
+    align (2):
+        GUID guidObjectType;
+        DBID ObjectID;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct SEC_OBJECT
+version(X86)
 {
-align (2):
-    uint                cObjects;
-    SEC_OBJECT_ELEMENT* prgObjects;
+    struct SEC_OBJECT
+    {
+    align (2):
+        uint                cObjects;
+        SEC_OBJECT_ELEMENT* prgObjects;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct DBIMPLICITSESSION
+version(X86)
 {
-align (2):
-    IUnknown pUnkOuter;
-    GUID*    piid;
-    IUnknown pSession;
+    struct DBIMPLICITSESSION
+    {
+    align (2):
+        IUnknown pUnkOuter;
+        GUID*    piid;
+        IUnknown pSession;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct DBOBJECT
+version(X86)
 {
-align (2):
-    uint dwFlags;
-    GUID iid;
+    struct DBOBJECT
+    {
+    align (2):
+        uint dwFlags;
+        GUID iid;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct DBBINDEXT
+version(X86)
 {
-align (2):
-    ubyte* pExtension;
-    size_t ulExtension;
+    struct DBBINDEXT
+    {
+    align (2):
+        ubyte* pExtension;
+        size_t ulExtension;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct DBBINDING
+version(X86)
 {
-align (2):
-    size_t     iOrdinal;
-    size_t     obValue;
-    size_t     obLength;
-    size_t     obStatus;
-    ITypeInfo  pTypeInfo;
-    DBOBJECT*  pObject;
-    DBBINDEXT* pBindExt;
-    uint       dwPart;
-    uint       dwMemOwner;
-    uint       eParamIO;
-    size_t     cbMaxLen;
-    uint       dwFlags;
-    ushort     wType;
-    ubyte      bPrecision;
-    ubyte      bScale;
+    struct DBBINDING
+    {
+    align (2):
+        size_t     iOrdinal;
+        size_t     obValue;
+        size_t     obLength;
+        size_t     obStatus;
+        ITypeInfo  pTypeInfo;
+        DBOBJECT*  pObject;
+        DBBINDEXT* pBindExt;
+        uint       dwPart;
+        uint       dwMemOwner;
+        uint       eParamIO;
+        size_t     cbMaxLen;
+        uint       dwFlags;
+        ushort     wType;
+        ubyte      bPrecision;
+        ubyte      bScale;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct DBFAILUREINFO
+version(X86)
 {
-align (2):
-    size_t  hRow;
-    size_t  iColumn;
-    HRESULT failure;
+    struct DBFAILUREINFO
+    {
+    align (2):
+        size_t  hRow;
+        size_t  iColumn;
+        HRESULT failure;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct DBCOLUMNINFO
+version(X86)
 {
-align (2):
-    PWSTR     pwszName;
-    ITypeInfo pTypeInfo;
-    size_t    iOrdinal;
-    uint      dwFlags;
-    size_t    ulColumnSize;
-    ushort    wType;
-    ubyte     bPrecision;
-    ubyte     bScale;
-    DBID      columnid;
+    struct DBCOLUMNINFO
+    {
+    align (2):
+        PWSTR     pwszName;
+        ITypeInfo pTypeInfo;
+        size_t    iOrdinal;
+        uint      dwFlags;
+        size_t    ulColumnSize;
+        ushort    wType;
+        ubyte     bPrecision;
+        ubyte     bScale;
+        DBID      columnid;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct DBPARAMS
+version(X86)
 {
-align (2):
-    void*     pData;
-    size_t    cParamSets;
-    HACCESSOR hAccessor;
+    struct DBPARAMS
+    {
+    align (2):
+        void*     pData;
+        size_t    cParamSets;
+        HACCESSOR hAccessor;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct DBPARAMINFO
+version(X86)
 {
-align (2):
-    uint      dwFlags;
-    size_t    iOrdinal;
-    PWSTR     pwszName;
-    ITypeInfo pTypeInfo;
-    size_t    ulParamSize;
-    ushort    wType;
-    ubyte     bPrecision;
-    ubyte     bScale;
+    struct DBPARAMINFO
+    {
+    align (2):
+        uint      dwFlags;
+        size_t    iOrdinal;
+        PWSTR     pwszName;
+        ITypeInfo pTypeInfo;
+        size_t    ulParamSize;
+        ushort    wType;
+        ubyte     bPrecision;
+        ubyte     bScale;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct DBPROPIDSET
+version(X86)
 {
-align (2):
-    uint* rgPropertyIDs;
-    uint  cPropertyIDs;
-    GUID  guidPropertySet;
+    struct DBPROPIDSET
+    {
+    align (2):
+        uint* rgPropertyIDs;
+        uint  cPropertyIDs;
+        GUID  guidPropertySet;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct DBPROPINFO
+version(X86)
 {
-align (2):
-    PWSTR   pwszDescription;
-    uint    dwPropertyID;
-    uint    dwFlags;
-    VARENUM vtType;
-    VARIANT vValues;
+    struct DBPROPINFO
+    {
+    align (2):
+        PWSTR   pwszDescription;
+        uint    dwPropertyID;
+        uint    dwFlags;
+        VARENUM vtType;
+        VARIANT vValues;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct DBPROPINFOSET
+version(X86)
 {
-align (2):
-    DBPROPINFO* rgPropertyInfos;
-    uint        cPropertyInfos;
-    GUID        guidPropertySet;
+    struct DBPROPINFOSET
+    {
+    align (2):
+        DBPROPINFO* rgPropertyInfos;
+        uint        cPropertyInfos;
+        GUID        guidPropertySet;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct DBPROP
+version(X86)
 {
-align (2):
-    uint    dwPropertyID;
-    uint    dwOptions;
-    uint    dwStatus;
-    DBID    colid;
-    VARIANT vValue;
+    struct DBPROP
+    {
+    align (2):
+        uint    dwPropertyID;
+        uint    dwOptions;
+        uint    dwStatus;
+        DBID    colid;
+        VARIANT vValue;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct DBPROPSET
+version(X86)
 {
-align (2):
-    DBPROP* rgProperties;
-    uint    cProperties;
-    GUID    guidPropertySet;
+    struct DBPROPSET
+    {
+    align (2):
+        DBPROP* rgProperties;
+        uint    cProperties;
+        GUID    guidPropertySet;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct DBINDEXCOLUMNDESC
+version(X86)
 {
-align (2):
-    DBID* pColumnID;
-    uint  eIndexColOrder;
+    struct DBINDEXCOLUMNDESC
+    {
+    align (2):
+        DBID* pColumnID;
+        uint  eIndexColOrder;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct DBCOLUMNDESC
+version(X86)
 {
-align (2):
-    PWSTR      pwszTypeName;
-    ITypeInfo  pTypeInfo;
-    DBPROPSET* rgPropertySets;
-    GUID*      pclsid;
-    uint       cPropertySets;
-    size_t     ulColumnSize;
-    DBID       dbcid;
-    ushort     wType;
-    ubyte      bPrecision;
-    ubyte      bScale;
+    struct DBCOLUMNDESC
+    {
+    align (2):
+        PWSTR      pwszTypeName;
+        ITypeInfo  pTypeInfo;
+        DBPROPSET* rgPropertySets;
+        GUID*      pclsid;
+        uint       cPropertySets;
+        size_t     ulColumnSize;
+        DBID       dbcid;
+        ushort     wType;
+        ubyte      bPrecision;
+        ubyte      bScale;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct DBCOLUMNACCESS
+version(X86)
 {
-align (2):
-    void*  pData;
-    DBID   columnid;
-    size_t cbDataLen;
-    uint   dwStatus;
-    size_t cbMaxLen;
-    size_t dwReserved;
-    ushort wType;
-    ubyte  bPrecision;
-    ubyte  bScale;
+    struct DBCOLUMNACCESS
+    {
+    align (2):
+        void*  pData;
+        DBID   columnid;
+        size_t cbDataLen;
+        uint   dwStatus;
+        size_t cbMaxLen;
+        size_t dwReserved;
+        ushort wType;
+        ubyte  bPrecision;
+        ubyte  bScale;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct DBCONSTRAINTDESC
+version(X86)
 {
-align (2):
-    DBID*      pConstraintID;
-    uint       ConstraintType;
-    size_t     cColumns;
-    DBID*      rgColumnList;
-    DBID*      pReferencedTableID;
-    size_t     cForeignKeyColumns;
-    DBID*      rgForeignKeyColumnList;
-    PWSTR      pwszConstraintText;
-    uint       UpdateRule;
-    uint       DeleteRule;
-    uint       MatchType;
-    uint       Deferrability;
-    size_t     cReserved;
-    DBPROPSET* rgReserved;
+    struct DBCONSTRAINTDESC
+    {
+    align (2):
+        DBID*      pConstraintID;
+        uint       ConstraintType;
+        size_t     cColumns;
+        DBID*      rgColumnList;
+        DBID*      pReferencedTableID;
+        size_t     cForeignKeyColumns;
+        DBID*      rgForeignKeyColumnList;
+        PWSTR      pwszConstraintText;
+        uint       UpdateRule;
+        uint       DeleteRule;
+        uint       MatchType;
+        uint       Deferrability;
+        size_t     cReserved;
+        DBPROPSET* rgReserved;
+    }
 }
 
-//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct MDAXISINFO
+version(X86)
 {
-align (2):
-    size_t  cbSize;
-    size_t  iAxis;
-    size_t  cDimensions;
-    size_t  cCoordinates;
-    size_t* rgcColumns;
-    PWSTR*  rgpwszDimensionNames;
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    struct MDAXISINFO
+    {
+    align (2):
+        size_t  cbSize;
+        size_t  iAxis;
+        size_t  cDimensions;
+        size_t  cCoordinates;
+        size_t* rgcColumns;
+        PWSTR*  rgpwszDimensionNames;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct RMTPACK
+version(X86)
 {
-align (2):
-    ISequentialStream pISeqStream;
-    uint              cbData;
-    uint              cBSTR;
-    BSTR*             rgBSTR;
-    uint              cVARIANT;
-    VARIANT*          rgVARIANT;
-    uint              cIDISPATCH;
-    IDispatch*        rgIDISPATCH;
-    uint              cIUNKNOWN;
-    IUnknown*         rgIUNKNOWN;
-    uint              cPROPVARIANT;
-    PROPVARIANT*      rgPROPVARIANT;
-    uint              cArray;
-    VARIANT*          rgArray;
+    struct RMTPACK
+    {
+    align (2):
+        ISequentialStream pISeqStream;
+        uint              cbData;
+        uint              cBSTR;
+        BSTR*             rgBSTR;
+        uint              cVARIANT;
+        VARIANT*          rgVARIANT;
+        uint              cIDISPATCH;
+        IDispatch*        rgIDISPATCH;
+        uint              cIUNKNOWN;
+        IUnknown*         rgIUNKNOWN;
+        uint              cPROPVARIANT;
+        PROPVARIANT*      rgPROPVARIANT;
+        uint              cArray;
+        VARIANT*          rgArray;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct DBPARAMBINDINFO
+version(X86)
 {
-align (2):
-    PWSTR  pwszDataSourceType;
-    PWSTR  pwszName;
-    size_t ulParamSize;
-    uint   dwFlags;
-    ubyte  bPrecision;
-    ubyte  bScale;
+    struct DBPARAMBINDINFO
+    {
+    align (2):
+        PWSTR  pwszDataSourceType;
+        PWSTR  pwszName;
+        size_t ulParamSize;
+        uint   dwFlags;
+        ubyte  bPrecision;
+        ubyte  bScale;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct DBLITERALINFO
+version(X86)
 {
-align (2):
-    PWSTR pwszLiteralValue;
-    PWSTR pwszInvalidChars;
-    PWSTR pwszInvalidStartingChars;
-    uint  lt;
-    BOOL  fSupported;
-    uint  cchMaxLen;
+    struct DBLITERALINFO
+    {
+    align (2):
+        PWSTR pwszLiteralValue;
+        PWSTR pwszInvalidChars;
+        PWSTR pwszInvalidStartingChars;
+        uint  lt;
+        BOOL  fSupported;
+        uint  cchMaxLen;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct ERRORINFO
+version(X86)
 {
-align (2):
-    HRESULT hrError;
-    uint    dwMinor;
-    GUID    clsid;
-    GUID    iid;
-    int     dispid;
+    struct ERRORINFO
+    {
+    align (2):
+        HRESULT hrError;
+        uint    dwMinor;
+        GUID    clsid;
+        GUID    iid;
+        int     dispid;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/ns-structuredquery-hitrange))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/ns-structuredquery-hitrange
 struct HITRANGE
 {
     uint iPosition;
     uint cLength;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/ns-searchapi-timeout_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/ns-searchapi-timeout_info
 struct TIMEOUT_INFO
 {
     uint dwSize;
@@ -8153,7 +8746,7 @@ struct TIMEOUT_INFO
     uint dwDataTimeout;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/ns-searchapi-proxy_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/ns-searchapi-proxy_info
 struct PROXY_INFO
 {
     uint         dwSize;
@@ -8165,7 +8758,7 @@ struct PROXY_INFO
     const(PWSTR) pcwszBypassList;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/ns-searchapi-authentication_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/ns-searchapi-authentication_info
 struct AUTHENTICATION_INFO
 {
     uint         dwSize;
@@ -8174,14 +8767,14 @@ struct AUTHENTICATION_INFO
     const(PWSTR) pcwszPassword;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/ns-searchapi-incremental_access_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/ns-searchapi-incremental_access_info
 struct INCREMENTAL_ACCESS_INFO
 {
     uint     dwSize;
     FILETIME ftLastModifiedTime;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/ns-searchapi-item_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/ns-searchapi-item_info
 struct ITEM_INFO
 {
     uint         dwSize;
@@ -8191,7 +8784,7 @@ struct ITEM_INFO
     const(PWSTR) pcwszContentClass;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/ns-searchapi-search_item_change))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/ns-searchapi-search_item_change
 struct SEARCH_ITEM_CHANGE
 {
     SEARCH_KIND_OF_CHANGE Change;
@@ -8201,7 +8794,7 @@ struct SEARCH_ITEM_CHANGE
     PWSTR lpwszOldURL;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/ns-searchapi-search_item_persistent_change))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/ns-searchapi-search_item_persistent_change
 struct SEARCH_ITEM_PERSISTENT_CHANGE
 {
     SEARCH_KIND_OF_CHANGE Change;
@@ -8210,21 +8803,21 @@ struct SEARCH_ITEM_PERSISTENT_CHANGE
     SEARCH_NOTIFICATION_PRIORITY Priority;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/ns-searchapi-search_item_indexing_status))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/ns-searchapi-search_item_indexing_status
 struct SEARCH_ITEM_INDEXING_STATUS
 {
     uint    dwDocID;
     HRESULT hrIndexingStatus;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/ns-searchapi-search_column_properties))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/ns-searchapi-search_column_properties
 struct SEARCH_COLUMN_PROPERTIES
 {
     PROPVARIANT Value;
     uint        lcid;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/subsmgr/ns-subsmgr-itemprop))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/subsmgr/ns-subsmgr-itemprop
 struct ITEMPROP
 {
     VARIANT variantValue;
@@ -8327,9 +8920,13 @@ struct SQL_DAY_SECOND_STRUCT
 
 struct SQL_INTERVAL_STRUCT
 {
-    SQLINTERVAL      interval_type;
-    short            interval_sign;
-    _intval_e__Union intval;
+    SQLINTERVAL interval_type;
+    short       interval_sign;
+    union intval
+    {
+        SQL_YEAR_MONTH_STRUCT year_month;
+        SQL_DAY_SECOND_STRUCT day_second;
+    }
 }
 
 struct SQL_NUMERIC_STRUCT
@@ -8407,23 +9004,27 @@ struct SQLPERF
     uint   msNetWorkServerTime;
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct DBROWWATCHCHANGE
+version(X86)
 {
-align (2):
-    size_t hRegion;
-    uint   eChangeKind;
-    size_t hRow;
-    size_t iRow;
+    struct DBROWWATCHCHANGE
+    {
+    align (2):
+        size_t hRegion;
+        uint   eChangeKind;
+        size_t hRow;
+        size_t iRow;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct DBCOST
+version(X86)
 {
-align (2):
-    uint eKind;
-    uint dwUnits;
-    int  lValue;
+    struct DBCOST
+    {
+    align (2):
+        uint eKind;
+        uint dwUnits;
+        int  lValue;
+    }
 }
 
 struct NOTRESTRICTION
@@ -8468,9 +9069,19 @@ struct PROPERTYRESTRICTION
 
 struct RESTRICTION
 {
-    uint  rt;
-    uint  weight;
-    _URes res;
+    uint rt;
+    uint weight;
+    union res
+    {
+        NODERESTRICTION     ar;
+        NODERESTRICTION     orRestriction;
+        NODERESTRICTION     pxr;
+        VECTORRESTRICTION   vr;
+        NOTRESTRICTION      nr;
+        CONTENTRESTRICTION  cr;
+        NATLANGUAGERESTRICTION nlr;
+        PROPERTYRESTRICTION pr;
+    }
 }
 
 struct COLUMNSET
@@ -8506,9 +9117,14 @@ struct RANGECATEGORIZE
 
 struct CATEGORIZATION
 {
-    uint                ulCatType;
-    _Anonymous_e__Union Anonymous;
-    COLUMNSET           csColumns;
+    uint      ulCatType;
+    union
+    {
+        uint             cClusters;
+        BUCKETCATEGORIZE bucket;
+        RANGECATEGORIZE  range;
+    }
+    COLUMNSET csColumns;
 }
 
 struct CATEGORIZATIONSET
@@ -8519,19 +9135,76 @@ struct CATEGORIZATIONSET
 
 struct ODBC_VS_ARGS
 {
-    const(GUID)*         pguidEvent;
-    uint                 dwFlags;
-    _Anonymous1_e__Union Anonymous1;
-    _Anonymous2_e__Union Anonymous2;
-    short                RetCode;
+    const(GUID)* pguidEvent;
+    uint         dwFlags;
+    union
+    {
+        PWSTR wszArg;
+        PSTR  szArg;
+    }
+    union
+    {
+        PWSTR wszCorrelation;
+        PSTR  szCorrelation;
+    }
+    short        RetCode;
 }
 
 struct SSVARIANT
 {
-    ushort              vt;
-    uint                dwReserved1;
-    uint                dwReserved2;
-    _Anonymous_e__Union Anonymous;
+    ushort vt;
+    uint   dwReserved1;
+    uint   dwReserved2;
+    union
+    {
+        ubyte        bTinyIntVal;
+        short        sShortIntVal;
+        int          lIntVal;
+        long         llBigIntVal;
+        float        fltRealVal;
+        double       dblFloatVal;
+        CY           cyMoneyVal;
+        struct NCharVal
+        {
+            short    sActualLength;
+            short    sMaxLength;
+            PWSTR    pwchNCharVal;
+            ubyte[5] rgbReserved;
+            uint     dwReserved;
+            PWSTR    pwchReserved;
+        }
+        struct CharVal
+        {
+            short    sActualLength;
+            short    sMaxLength;
+            PSTR     pchCharVal;
+            ubyte[5] rgbReserved;
+            uint     dwReserved;
+            PWSTR    pwchReserved;
+        }
+        VARIANT_BOOL fBitVal;
+        ubyte[16]    rgbGuidVal;
+        DB_NUMERIC   numNumericVal;
+        struct BinaryVal
+        {
+            short  sActualLength;
+            short  sMaxLength;
+            ubyte* prgbBinaryVal;
+            uint   dwReserved;
+        }
+        DBTIMESTAMP  tsDateTimeVal;
+        struct UnknownType
+        {
+            uint      dwActualLength;
+            ubyte[16] rgMetadata;
+            ubyte*    pUnknownData;
+        }
+        struct BLOBType
+        {
+            DBOBJECT dbobj;
+            IUnknown pUnk;
+        }
+    }
 }
 
 struct SSERRORINFO
@@ -8547,7 +9220,7 @@ struct SSERRORINFO
 
 // Functions
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlbindcol-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlbindcol-function
 @DllImport("ODBC32.dll")
 short SQLBindCol(void* StatementHandle, ushort ColumnNumber, short TargetType, void* TargetValue, 
                  long BufferLength, long* StrLen_or_Ind);
@@ -8568,11 +9241,11 @@ short SQLColAttribute(void* StatementHandle, ushort ColumnNumber, ushort FieldId
 short SQLDescribeCol(void* StatementHandle, ushort ColumnNumber, ubyte* ColumnName, short BufferLength, 
                      short* NameLength, short* DataType, ulong* ColumnSize, short* DecimalDigits, short* Nullable);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlfetchscroll-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlfetchscroll-function
 @DllImport("ODBC32.dll")
 short SQLFetchScroll(void* StatementHandle, short FetchOrientation, long FetchOffset);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlgetdata-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlgetdata-function
 @DllImport("ODBC32.dll")
 short SQLGetData(void* StatementHandle, ushort ColumnNumber, short TargetType, void* TargetValue, 
                  long BufferLength, long* StrLen_or_IndPtr);
@@ -8583,11 +9256,11 @@ short SQLGetDescRec(void* DescriptorHandle, short RecNumber, ubyte* Name, short 
                     short* StringLengthPtr, short* TypePtr, short* SubTypePtr, long* LengthPtr, short* PrecisionPtr, 
                     short* ScalePtr, short* NullablePtr);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlputdata-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlputdata-function
 @DllImport("ODBC32.dll")
 short SQLPutData(void* StatementHandle, void* Data, long StrLen_or_Ind);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlrowcount-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlrowcount-function
 @DllImport("ODBC32.dll")
 short SQLRowCount(void* StatementHandle, long* RowCount);
 
@@ -8595,7 +9268,7 @@ short SQLRowCount(void* StatementHandle, long* RowCount);
 @DllImport("ODBC32.dll")
 short SQLSetConnectOption(void* ConnectionHandle, ushort Option, ulong Value);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlsetdescrec-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlsetdescrec-function
 @DllImport("ODBC32.dll")
 short SQLSetDescRec(void* DescriptorHandle, short RecNumber, short Type, short SubType, long Length, 
                     short Precision, short Scale, 
@@ -8616,29 +9289,29 @@ short SQLSetStmtOption(void* StatementHandle, ushort Option, ulong Value);
 short SQLColAttributes(void* hstmt, ushort icol, ushort fDescType, void* rgbDesc, short cbDescMax, short* pcbDesc, 
                        long* pfDesc);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqldescribeparam-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqldescribeparam-function
 @DllImport("ODBC32.dll")
 short SQLDescribeParam(void* hstmt, ushort ipar, short* pfSqlType, ulong* pcbParamDef, short* pibScale, 
                        short* pfNullable);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlextendedfetch-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlextendedfetch-function
 @DllImport("ODBC32.dll")
 short SQLExtendedFetch(void* hstmt, ushort fFetchType, long irow, ulong* pcrow, ushort* rgfRowStatus);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlparamoptions-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlparamoptions-function
 @DllImport("ODBC32.dll")
 short SQLParamOptions(void* hstmt, ulong crow, ulong* pirow);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlsetpos-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlsetpos-function
 @DllImport("ODBC32.dll")
 short SQLSetPos(void* hstmt, ulong irow, ushort fOption, ushort fLock);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlbindparameter-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlbindparameter-function
 @DllImport("ODBC32.dll")
 short SQLBindParameter(void* hstmt, ushort ipar, short fParamType, short fCType, short fSqlType, ulong cbColDef, 
                        short ibScale, void* rgbValue, long cbValueMax, long* pcbValue);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlsetscrolloptions-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlsetscrolloptions-function
 @DllImport("ODBC32.dll")
 short SQLSetScrollOptions(void* hstmt, ushort fConcurrency, long crowKeyset, ushort crowRowset);
 
@@ -8694,23 +9367,23 @@ short SQLGetDescRecA(void* hdesc, short iRecord, ubyte* szName, short cbNameMax,
 @DllImport("ODBC32.dll")
 short SQLSetConnectOptionA(void* hdbc, ushort fOption, ulong vParam);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlallocconnect-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlallocconnect-function
 @DllImport("ODBC32.dll")
 short SQLAllocConnect(void* EnvironmentHandle, void** ConnectionHandle);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlallocenv-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlallocenv-function
 @DllImport("ODBC32.dll")
 short SQLAllocEnv(void** EnvironmentHandle);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlallochandle-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlallochandle-function
 @DllImport("ODBC32.dll")
 short SQLAllocHandle(short HandleType, void* InputHandle, void** OutputHandle);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlallocstmt-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlallocstmt-function
 @DllImport("ODBC32.dll")
 short SQLAllocStmt(void* ConnectionHandle, void** StatementHandle);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlbindcol-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlbindcol-function
 @DllImport("ODBC32.dll")
 short SQLBindCol(void* StatementHandle, ushort ColumnNumber, short TargetType, void* TargetValue, int BufferLength, 
                  int* StrLen_or_Ind);
@@ -8720,15 +9393,15 @@ short SQLBindCol(void* StatementHandle, ushort ColumnNumber, short TargetType, v
 short SQLBindParam(void* StatementHandle, ushort ParameterNumber, short ValueType, short ParameterType, 
                    uint LengthPrecision, short ParameterScale, void* ParameterValue, int* StrLen_or_Ind);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlcancel-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlcancel-function
 @DllImport("ODBC32.dll")
 short SQLCancel(void* StatementHandle);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlcancelhandle-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlcancelhandle-function
 @DllImport("ODBC32.dll")
 short SQLCancelHandle(short HandleType, void* InputHandle);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlclosecursor-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlclosecursor-function
 @DllImport("ODBC32.dll")
 short SQLCloseCursor(void* StatementHandle);
 
@@ -8743,7 +9416,7 @@ short SQLColAttribute(void* StatementHandle, ushort ColumnNumber, ushort FieldId
 short SQLColumns(void* StatementHandle, ubyte* CatalogName, short NameLength1, ubyte* SchemaName, 
                  short NameLength2, ubyte* TableName, short NameLength3, ubyte* ColumnName, short NameLength4);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlcompleteasync-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlcompleteasync-function
 @DllImport("ODBC32.dll")
 short SQLCompleteAsync(short HandleType, void* Handle, short* AsyncRetCodePtr);
 
@@ -8752,7 +9425,7 @@ short SQLCompleteAsync(short HandleType, void* Handle, short* AsyncRetCodePtr);
 short SQLConnect(void* ConnectionHandle, ubyte* ServerName, short NameLength1, ubyte* UserName, short NameLength2, 
                  ubyte* Authentication, short NameLength3);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlcopydesc-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlcopydesc-function
 @DllImport("ODBC32.dll")
 short SQLCopyDesc(void* SourceDescHandle, void* TargetDescHandle);
 
@@ -8766,11 +9439,11 @@ short SQLDataSources(void* EnvironmentHandle, ushort Direction, ubyte* ServerNam
 short SQLDescribeCol(void* StatementHandle, ushort ColumnNumber, ubyte* ColumnName, short BufferLength, 
                      short* NameLength, short* DataType, uint* ColumnSize, short* DecimalDigits, short* Nullable);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqldisconnect-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqldisconnect-function
 @DllImport("ODBC32.dll")
 short SQLDisconnect(void* ConnectionHandle);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlendtran-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlendtran-function
 @DllImport("ODBC32.dll")
 short SQLEndTran(short HandleType, void* Handle, short CompletionType);
 
@@ -8783,31 +9456,31 @@ short SQLError(void* EnvironmentHandle, void* ConnectionHandle, void* StatementH
 @DllImport("ODBC32.dll")
 short SQLExecDirect(void* StatementHandle, ubyte* StatementText, int TextLength);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlexecute-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlexecute-function
 @DllImport("ODBC32.dll")
 short SQLExecute(void* StatementHandle);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlfetch-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlfetch-function
 @DllImport("ODBC32.dll")
 short SQLFetch(void* StatementHandle);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlfetchscroll-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlfetchscroll-function
 @DllImport("ODBC32.dll")
 short SQLFetchScroll(void* StatementHandle, short FetchOrientation, int FetchOffset);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlfreeconnect-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlfreeconnect-function
 @DllImport("ODBC32.dll")
 short SQLFreeConnect(void* ConnectionHandle);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlfreeenv-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlfreeenv-function
 @DllImport("ODBC32.dll")
 short SQLFreeEnv(void* EnvironmentHandle);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlfreehandle-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlfreehandle-function
 @DllImport("ODBC32.dll")
 short SQLFreeHandle(short HandleType, void* Handle);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlfreestmt-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlfreestmt-function
 @DllImport("ODBC32.dll")
 short SQLFreeStmt(void* StatementHandle, ushort Option);
 
@@ -8823,7 +9496,7 @@ short SQLGetConnectOption(void* ConnectionHandle, ushort Option, void* Value);
 @DllImport("ODBC32.dll")
 short SQLGetCursorName(void* StatementHandle, ubyte* CursorName, short BufferLength, short* NameLengthPtr);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlgetdata-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlgetdata-function
 @DllImport("ODBC32.dll")
 short SQLGetData(void* StatementHandle, ushort ColumnNumber, short TargetType, void* TargetValue, int BufferLength, 
                  int* StrLen_or_IndPtr);
@@ -8849,11 +9522,11 @@ short SQLGetDiagField(short HandleType, void* Handle, short RecNumber, short Dia
 short SQLGetDiagRec(short HandleType, void* Handle, short RecNumber, ubyte* Sqlstate, int* NativeError, 
                     ubyte* MessageText, short BufferLength, short* TextLength);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlgetenvattr-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlgetenvattr-function
 @DllImport("ODBC32.dll")
 short SQLGetEnvAttr(void* EnvironmentHandle, int Attribute, void* Value, int BufferLength, int* StringLength);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlgetfunctions-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlgetfunctions-function
 @DllImport("ODBC32.dll")
 short SQLGetFunctions(void* ConnectionHandle, ushort FunctionId, ushort* Supported);
 
@@ -8875,11 +9548,11 @@ short SQLGetStmtOption(void* StatementHandle, ushort Option, void* Value);
 @DllImport("ODBC32.dll")
 short SQLGetTypeInfo(void* StatementHandle, short DataType);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlnumresultcols-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlnumresultcols-function
 @DllImport("ODBC32.dll")
 short SQLNumResultCols(void* StatementHandle, short* ColumnCount);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlparamdata-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlparamdata-function
 @DllImport("ODBC32.dll")
 short SQLParamData(void* StatementHandle, void** Value);
 
@@ -8887,11 +9560,11 @@ short SQLParamData(void* StatementHandle, void** Value);
 @DllImport("ODBC32.dll")
 short SQLPrepare(void* StatementHandle, ubyte* StatementText, int TextLength);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlputdata-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlputdata-function
 @DllImport("ODBC32.dll")
 short SQLPutData(void* StatementHandle, void* Data, int StrLen_or_Ind);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlrowcount-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlrowcount-function
 @DllImport("ODBC32.dll")
 short SQLRowCount(void* StatementHandle, int* RowCount);
 
@@ -8914,14 +9587,14 @@ short SQLSetCursorName(void* StatementHandle, ubyte* CursorName, short NameLengt
 short SQLSetDescField(void* DescriptorHandle, short RecNumber, short FieldIdentifier, void* Value, 
                       int BufferLength);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlsetdescrec-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlsetdescrec-function
 @DllImport("ODBC32.dll")
 short SQLSetDescRec(void* DescriptorHandle, short RecNumber, short Type, short SubType, int Length, 
                     short Precision, short Scale, 
                     /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* Data, 
                     int* StringLength, int* Indicator);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlsetenvattr-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlsetenvattr-function
 @DllImport("ODBC32.dll")
 short SQLSetEnvAttr(void* EnvironmentHandle, int Attribute, 
                     /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* Value, 
@@ -8956,49 +9629,49 @@ short SQLStatistics(void* StatementHandle, ubyte* CatalogName, short NameLength1
 short SQLTables(void* StatementHandle, ubyte* CatalogName, short NameLength1, ubyte* SchemaName, short NameLength2, 
                 ubyte* TableName, short NameLength3, ubyte* TableType, short NameLength4);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqltransact-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqltransact-function
 @DllImport("ODBC32.dll")
 short SQLTransact(void* EnvironmentHandle, void* ConnectionHandle, ushort CompletionType);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/relational-databases/native-client-odbc-extensions-bulk-copy-functions/bcp-batch))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/relational-databases/native-client-odbc-extensions-bulk-copy-functions/bcp-batch
 @DllImport("odbcbcp.dll")
 int bcp_batch(void* param0);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/relational-databases/native-client-odbc-extensions-bulk-copy-functions/bcp-bind))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/relational-databases/native-client-odbc-extensions-bulk-copy-functions/bcp-bind
 @DllImport("odbcbcp.dll")
 short bcp_bind(void* param0, ubyte* param1, int param2, int param3, ubyte* param4, int param5, int param6, 
                int param7);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/relational-databases/native-client-odbc-extensions-bulk-copy-functions/bcp-colfmt))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/relational-databases/native-client-odbc-extensions-bulk-copy-functions/bcp-colfmt
 @DllImport("odbcbcp.dll")
 short bcp_colfmt(void* param0, int param1, ubyte param2, int param3, int param4, ubyte* param5, int param6, 
                  int param7);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/relational-databases/native-client-odbc-extensions-bulk-copy-functions/bcp-collen))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/relational-databases/native-client-odbc-extensions-bulk-copy-functions/bcp-collen
 @DllImport("odbcbcp.dll")
 short bcp_collen(void* param0, int param1, int param2);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/relational-databases/native-client-odbc-extensions-bulk-copy-functions/bcp-colptr))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/relational-databases/native-client-odbc-extensions-bulk-copy-functions/bcp-colptr
 @DllImport("odbcbcp.dll")
 short bcp_colptr(void* param0, ubyte* param1, int param2);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/relational-databases/native-client-odbc-extensions-bulk-copy-functions/bcp-columns))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/relational-databases/native-client-odbc-extensions-bulk-copy-functions/bcp-columns
 @DllImport("odbcbcp.dll")
 short bcp_columns(void* param0, int param1);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/relational-databases/native-client-odbc-extensions-bulk-copy-functions/bcp-control))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/relational-databases/native-client-odbc-extensions-bulk-copy-functions/bcp-control
 @DllImport("odbcbcp.dll")
 short bcp_control(void* param0, int param1, void* param2);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/relational-databases/native-client-odbc-extensions-bulk-copy-functions/bcp-done))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/relational-databases/native-client-odbc-extensions-bulk-copy-functions/bcp-done
 @DllImport("odbcbcp.dll")
 int bcp_done(void* param0);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/relational-databases/native-client-odbc-extensions-bulk-copy-functions/bcp-exec))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/relational-databases/native-client-odbc-extensions-bulk-copy-functions/bcp-exec
 @DllImport("odbcbcp.dll")
 short bcp_exec(void* param0, int* param1);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/relational-databases/native-client-odbc-extensions-bulk-copy-functions/bcp-getcolfmt))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/relational-databases/native-client-odbc-extensions-bulk-copy-functions/bcp-getcolfmt
 @DllImport("odbcbcp.dll")
 short bcp_getcolfmt(void* param0, int param1, int param2, void* param3, int param4, int* param5);
 
@@ -9010,7 +9683,7 @@ short bcp_initA(void* param0, const(PSTR) param1, const(PSTR) param2, const(PSTR
 @DllImport("odbcbcp.dll")
 short bcp_initW(void* param0, const(PWSTR) param1, const(PWSTR) param2, const(PWSTR) param3, int param4);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/relational-databases/native-client-odbc-extensions-bulk-copy-functions/bcp-moretext))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/relational-databases/native-client-odbc-extensions-bulk-copy-functions/bcp-moretext
 @DllImport("odbcbcp.dll")
 short bcp_moretext(void* param0, int param1, ubyte* param2);
 
@@ -9022,11 +9695,11 @@ short bcp_readfmtA(void* param0, const(PSTR) param1);
 @DllImport("odbcbcp.dll")
 short bcp_readfmtW(void* param0, const(PWSTR) param1);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/relational-databases/native-client-odbc-extensions-bulk-copy-functions/bcp-sendrow))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/relational-databases/native-client-odbc-extensions-bulk-copy-functions/bcp-sendrow
 @DllImport("odbcbcp.dll")
 short bcp_sendrow(void* param0);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/relational-databases/native-client-odbc-extensions-bulk-copy-functions/bcp-setcolfmt))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/relational-databases/native-client-odbc-extensions-bulk-copy-functions/bcp-setcolfmt
 @DllImport("odbcbcp.dll")
 short bcp_setcolfmt(void* param0, int param1, int param2, void* param3, int param4);
 
@@ -9076,7 +9749,7 @@ short SQLDriverConnect(void* hdbc, ptrdiff_t hwnd, ubyte* szConnStrIn, short cch
 short SQLBrowseConnect(void* hdbc, ubyte* szConnStrIn, short cchConnStrIn, ubyte* szConnStrOut, 
                        short cchConnStrOutMax, short* pcchConnStrOut);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlbulkoperations-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlbulkoperations-function
 @DllImport("ODBC32.dll")
 short SQLBulkOperations(void* StatementHandle, short Operation);
 
@@ -9091,12 +9764,12 @@ short SQLColumnPrivileges(void* hstmt, ubyte* szCatalogName, short cchCatalogNam
                           short cchSchemaName, ubyte* szTableName, short cchTableName, ubyte* szColumnName, 
                           short cchColumnName);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqldescribeparam-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqldescribeparam-function
 @DllImport("ODBC32.dll")
 short SQLDescribeParam(void* hstmt, ushort ipar, short* pfSqlType, uint* pcbParamDef, short* pibScale, 
                        short* pfNullable);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlextendedfetch-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlextendedfetch-function
 @DllImport("ODBC32.dll")
 short SQLExtendedFetch(void* hstmt, ushort fFetchType, int irow, uint* pcrow, ushort* rgfRowStatus);
 
@@ -9107,7 +9780,7 @@ short SQLForeignKeys(void* hstmt, ubyte* szPkCatalogName, short cchPkCatalogName
                      short cchFkCatalogName, ubyte* szFkSchemaName, short cchFkSchemaName, ubyte* szFkTableName, 
                      short cchFkTableName);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlmoreresults-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlmoreresults-function
 @DllImport("ODBC32.dll")
 short SQLMoreResults(void* hstmt);
 
@@ -9116,11 +9789,11 @@ short SQLMoreResults(void* hstmt);
 short SQLNativeSql(void* hdbc, ubyte* szSqlStrIn, int cchSqlStrIn, ubyte* szSqlStr, int cchSqlStrMax, 
                    int* pcbSqlStr);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlnumparams-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlnumparams-function
 @DllImport("ODBC32.dll")
 short SQLNumParams(void* hstmt, short* pcpar);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlparamoptions-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlparamoptions-function
 @DllImport("ODBC32.dll")
 short SQLParamOptions(void* hstmt, uint crow, uint* pirow);
 
@@ -9140,7 +9813,7 @@ short SQLProcedureColumns(void* hstmt, ubyte* szCatalogName, short cchCatalogNam
 short SQLProcedures(void* hstmt, ubyte* szCatalogName, short cchCatalogName, ubyte* szSchemaName, 
                     short cchSchemaName, ubyte* szProcName, short cchProcName);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlsetpos-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlsetpos-function
 @DllImport("ODBC32.dll")
 short SQLSetPos(void* hstmt, ushort irow, ushort fOption, ushort fLock);
 
@@ -9154,7 +9827,7 @@ short SQLTablePrivileges(void* hstmt, ubyte* szCatalogName, short cchCatalogName
 short SQLDrivers(void* henv, ushort fDirection, ubyte* szDriverDesc, short cchDriverDescMax, short* pcchDriverDesc, 
                  ubyte* szDriverAttributes, short cchDrvrAttrMax, short* pcchDrvrAttr);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlbindparameter-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlbindparameter-function
 @DllImport("ODBC32.dll")
 short SQLBindParameter(void* hstmt, ushort ipar, short fParamType, short fCType, short fSqlType, uint cbColDef, 
                        short ibScale, void* rgbValue, int cbValueMax, int* pcbValue);
@@ -9162,7 +9835,7 @@ short SQLBindParameter(void* hstmt, ushort ipar, short fParamType, short fCType,
 @DllImport("ODBC32.dll")
 short SQLAllocHandleStd(short fHandleType, void* hInput, void** phOutput);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/sql/odbc/reference/syntax/sqlsetscrolloptions-function))], [])
+// Microsoft documentation: https://learn.microsoft.com/sql/odbc/reference/syntax/sqlsetscrolloptions-function
 @DllImport("ODBC32.dll")
 short SQLSetScrollOptions(void* hstmt, ushort fConcurrency, int crowKeyset, ushort crowRowset);
 
@@ -9600,109 +10273,109 @@ struct PDPO;
 struct RootBinder;
 
 @GUID("cc907054-c058-101a-b554-08002b33b0e6")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/search/iwordsink))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/search/iwordsink
 interface IWordSink : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/search/iwordsink-putword))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/search/iwordsink-putword
     HRESULT PutWord(uint cwc, const(PWSTR) pwcInBuf, uint cwcSrcLen, uint cwcSrcPos);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/search/iwordsink-putaltword))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/search/iwordsink-putaltword
     HRESULT PutAltWord(uint cwc, const(PWSTR) pwcInBuf, uint cwcSrcLen, uint cwcSrcPos);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/search/iwordsink-startaltphrase))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/search/iwordsink-startaltphrase
     HRESULT StartAltPhrase();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/search/iwordsink-endaltphrase))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/search/iwordsink-endaltphrase
     HRESULT EndAltPhrase();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/search/iwordsink-putbreak))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/search/iwordsink-putbreak
     HRESULT PutBreak(WORDREP_BREAK_TYPE breakType);
 }
 
 @GUID("d53552c8-77e3-101a-b552-08002b33b0e6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/indexsrv/nn-indexsrv-iwordbreaker))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/nn-indexsrv-iwordbreaker
 interface IWordBreaker : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-iwordbreaker-init))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-iwordbreaker-init
     HRESULT Init(BOOL fQuery, uint ulMaxTokenSize, BOOL* pfLicense);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-iwordbreaker-breaktext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-iwordbreaker-breaktext
     HRESULT BreakText(TEXT_SOURCE* pTextSource, IWordSink pWordSink, IPhraseSink pPhraseSink);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-iwordbreaker-composephrase))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-iwordbreaker-composephrase
     HRESULT ComposePhrase(const(PWSTR) pwcNoun, uint cwcNoun, const(PWSTR) pwcModifier, uint cwcModifier, 
                           uint ulAttachmentType, PWSTR pwcPhrase, uint* pcwcPhrase);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-iwordbreaker-getlicensetouse))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-iwordbreaker-getlicensetouse
     HRESULT GetLicenseToUse(const(ushort)** ppwcsLicense);
 }
 
 @GUID("fe77c330-7f42-11ce-be57-00aa0051fe20")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/indexsrv/nn-indexsrv-iwordformsink))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/nn-indexsrv-iwordformsink
 interface IWordFormSink : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/search/iwordformsink-putphrase))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/search/iwordformsink-putphrase
     HRESULT PutAltWord(const(PWSTR) pwcInBuf, uint cwc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/search/iwordformsink-putword))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/search/iwordformsink-putword
     HRESULT PutWord(const(PWSTR) pwcInBuf, uint cwc);
 }
 
 @GUID("efbaf140-7f42-11ce-be57-00aa0051fe20")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/indexsrv/nn-indexsrv-istemmer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/nn-indexsrv-istemmer
 interface IStemmer : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-istemmer-init))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-istemmer-init
     HRESULT Init(uint ulMaxTokenSize, BOOL* pfLicense);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-istemmer-generatewordforms))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-istemmer-generatewordforms
     HRESULT GenerateWordForms(const(PWSTR) pwcInBuf, uint cwc, IWordFormSink pStemSink);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-istemmer-getlicensetouse))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-istemmer-getlicensetouse
     HRESULT GetLicenseToUse(const(ushort)** ppwcsLicense);
 }
 
 @GUID("5e341ab7-02d0-11d1-900c-00a0c9063796")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/indexsrv/nn-indexsrv-isimplecommandcreator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/nn-indexsrv-isimplecommandcreator
 interface ISimpleCommandCreator : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-isimplecommandcreator-createicommand))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-isimplecommandcreator-createicommand
     HRESULT CreateICommand(IUnknown* ppIUnknown, IUnknown pOuterUnk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-isimplecommandcreator-verifycatalog))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-isimplecommandcreator-verifycatalog
     HRESULT VerifyCatalog(const(PWSTR) pwszMachine, const(PWSTR) pwszCatalogName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-isimplecommandcreator-getdefaultcatalog))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-isimplecommandcreator-getdefaultcatalog
     HRESULT GetDefaultCatalog(PWSTR pwszCatalogName, uint cwcIn, uint* pcwcOut);
 }
 
 @GUID("0b63e37a-9ccc-11d0-bcdb-00805fccce04")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/indexsrv/nn-indexsrv-icolumnmapper))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/nn-indexsrv-icolumnmapper
 interface IColumnMapper : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-icolumnmapper-getpropinfofromname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-icolumnmapper-getpropinfofromname
     HRESULT GetPropInfoFromName(const(PWSTR) wcsPropName, DBID** ppPropId, ushort* pPropType, uint* puiWidth);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-icolumnmapper-getpropinfofromid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-icolumnmapper-getpropinfofromid
     HRESULT GetPropInfoFromId(const(DBID)* pPropId, ushort** pwcsName, ushort* pPropType, uint* puiWidth);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-icolumnmapper-enumpropinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-icolumnmapper-enumpropinfo
     HRESULT EnumPropInfo(uint iEntry, const(ushort)** pwcsName, DBID** ppPropId, ushort* pPropType, uint* puiWidth);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-icolumnmapper-ismapuptodate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-icolumnmapper-ismapuptodate
     HRESULT IsMapUpToDate();
 }
 
 @GUID("0b63e37b-9ccc-11d0-bcdb-00805fccce04")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/indexsrv/nn-indexsrv-icolumnmappercreator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/nn-indexsrv-icolumnmappercreator
 interface IColumnMapperCreator : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-icolumnmappercreator-getcolumnmapper))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-icolumnmappercreator-getcolumnmapper
     HRESULT GetColumnMapper(const(PWSTR) wcsMachineName, const(PWSTR) wcsCatalogName, 
                             IColumnMapper* ppColumnMapper);
 }
 
 @GUID("c7310722-ac80-11d1-8df3-00c04fb6ef4f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/filtereg/nn-filtereg-iloadfilter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/filtereg/nn-filtereg-iloadfilter
 interface ILoadFilter : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/filtereg/nf-filtereg-iloadfilter-loadifilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/filtereg/nf-filtereg-iloadfilter-loadifilter
     HRESULT LoadIFilter(const(PWSTR) pwcsPath, FILTERED_DATA_SOURCES* pFilteredSources, IUnknown pUnkOuter, 
                         BOOL fUseDefault, GUID* pFilterClsid, int* SearchDecSize, ushort** pwcsSearchDesc, 
                         IFilter* ppIFilt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/filtereg/nf-filtereg-iloadfilter-loadifilterfromstorage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/filtereg/nf-filtereg-iloadfilter-loadifilterfromstorage
     HRESULT LoadIFilterFromStorage(IStorage pStg, IUnknown pUnkOuter, const(PWSTR) pwcsOverride, BOOL fUseDefault, 
                                    GUID* pFilterClsid, int* SearchDecSize, ushort** pwcsSearchDesc, IFilter* ppIFilt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/filtereg/nf-filtereg-iloadfilter-loadifilterfromstream))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/filtereg/nf-filtereg-iloadfilter-loadifilterfromstream
     HRESULT LoadIFilterFromStream(IStream pStm, FILTERED_DATA_SOURCES* pFilteredSources, IUnknown pUnkOuter, 
                                   BOOL fUseDefault, GUID* pFilterClsid, int* SearchDecSize, ushort** pwcsSearchDesc, 
                                   IFilter* ppIFilt);
@@ -9718,42 +10391,42 @@ interface ILoadFilterWithPrivateComActivation : ILoadFilter
 
 @GUID("4fdef69c-dbc9-454e-9910-b34f3c64b510")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquerycondition/nn-structuredquerycondition-irichchunk))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquerycondition/nn-structuredquerycondition-irichchunk
 interface IRichChunk : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquerycondition/nf-structuredquerycondition-irichchunk-getdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquerycondition/nf-structuredquerycondition-irichchunk-getdata
     HRESULT GetData(uint* pFirstPos, uint* pLength, PWSTR* ppsz, PROPVARIANT* pValue);
 }
 
 @GUID("0fc988d4-c935-4b97-a973-46282ea175c8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquerycondition/nn-structuredquerycondition-icondition))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquerycondition/nn-structuredquerycondition-icondition
 interface ICondition : IPersistStream
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquerycondition/nf-structuredquerycondition-icondition-getconditiontype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquerycondition/nf-structuredquerycondition-icondition-getconditiontype
     HRESULT GetConditionType(CONDITION_TYPE* pNodeType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquerycondition/nf-structuredquerycondition-icondition-getsubconditions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquerycondition/nf-structuredquerycondition-icondition-getsubconditions
     HRESULT GetSubConditions(const(GUID)* riid, void** ppv);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquerycondition/nf-structuredquerycondition-icondition-getcomparisoninfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquerycondition/nf-structuredquerycondition-icondition-getcomparisoninfo
     HRESULT GetComparisonInfo(PWSTR* ppszPropertyName, CONDITION_OPERATION* pcop, PROPVARIANT* ppropvar);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquerycondition/nf-structuredquerycondition-icondition-getvaluetype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquerycondition/nf-structuredquerycondition-icondition-getvaluetype
     HRESULT GetValueType(PWSTR* ppszValueTypeName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquerycondition/nf-structuredquerycondition-icondition-getvaluenormalization))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquerycondition/nf-structuredquerycondition-icondition-getvaluenormalization
     HRESULT GetValueNormalization(PWSTR* ppszNormalization);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquerycondition/nf-structuredquerycondition-icondition-getinputterms))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquerycondition/nf-structuredquerycondition-icondition-getinputterms
     HRESULT GetInputTerms(IRichChunk* ppPropertyTerm, IRichChunk* ppOperationTerm, IRichChunk* ppValueTerm);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquerycondition/nf-structuredquerycondition-icondition-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquerycondition/nf-structuredquerycondition-icondition-clone
     HRESULT Clone(ICondition* ppc);
 }
 
 @GUID("0db8851d-2e5b-47eb-9208-d28c325a01d7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquerycondition/nn-structuredquerycondition-icondition2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquerycondition/nn-structuredquerycondition-icondition2
 interface ICondition2 : ICondition
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquerycondition/nf-structuredquerycondition-icondition2-getlocale))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquerycondition/nf-structuredquerycondition-icondition2-getlocale
     HRESULT GetLocale(PWSTR* ppszLocaleName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquerycondition/nf-structuredquerycondition-icondition2-getleafconditioninfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquerycondition/nf-structuredquerycondition-icondition2-getleafconditioninfo
     HRESULT GetLeafConditionInfo(PROPERTYKEY* ppropkey, CONDITION_OPERATION* pcop, PROPVARIANT* ppropvar);
 }
 
@@ -10421,206 +11094,206 @@ interface IRowsetBookmark : IUnknown
 
 @GUID("2ebdee67-3505-43f8-9946-ea44abc8e5b0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-iqueryparser))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-iqueryparser
 interface IQueryParser : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iqueryparser-parse))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iqueryparser-parse
     HRESULT Parse(const(PWSTR) pszInputString, IEnumUnknown pCustomProperties, IQuerySolution* ppSolution);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iqueryparser-setoption))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iqueryparser-setoption
     HRESULT SetOption(STRUCTURED_QUERY_SINGLE_OPTION option, const(PROPVARIANT)* pOptionValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iqueryparser-getoption))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iqueryparser-getoption
     HRESULT GetOption(STRUCTURED_QUERY_SINGLE_OPTION option, PROPVARIANT* pOptionValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iqueryparser-setmultioption))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iqueryparser-setmultioption
     HRESULT SetMultiOption(STRUCTURED_QUERY_MULTIOPTION option, const(PWSTR) pszOptionKey, 
                            const(PROPVARIANT)* pOptionValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iqueryparser-getschemaprovider))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iqueryparser-getschemaprovider
     HRESULT GetSchemaProvider(ISchemaProvider* ppSchemaProvider);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iqueryparser-restatetostring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iqueryparser-restatetostring
     HRESULT RestateToString(ICondition pCondition, BOOL fUseEnglish, PWSTR* ppszQueryString);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iqueryparser-parsepropertyvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iqueryparser-parsepropertyvalue
     HRESULT ParsePropertyValue(const(PWSTR) pszPropertyName, const(PWSTR) pszInputString, 
                                IQuerySolution* ppSolution);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iqueryparser-restatepropertyvaluetostring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iqueryparser-restatepropertyvaluetostring
     HRESULT RestatePropertyValueToString(ICondition pCondition, BOOL fUseEnglish, PWSTR* ppszPropertyName, 
                                          PWSTR* ppszQueryString);
 }
 
 @GUID("a5efe073-b16f-474f-9f3e-9f8b497a3e08")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-iconditionfactory))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-iconditionfactory
 interface IConditionFactory : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iconditionfactory-makenot))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iconditionfactory-makenot
     HRESULT MakeNot(ICondition pcSub, BOOL fSimplify, ICondition* ppcResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iconditionfactory-makeandor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iconditionfactory-makeandor
     HRESULT MakeAndOr(CONDITION_TYPE ct, IEnumUnknown peuSubs, BOOL fSimplify, ICondition* ppcResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iconditionfactory-makeleaf))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iconditionfactory-makeleaf
     HRESULT MakeLeaf(const(PWSTR) pszPropertyName, CONDITION_OPERATION cop, const(PWSTR) pszValueType, 
                      const(PROPVARIANT)* ppropvar, IRichChunk pPropertyNameTerm, IRichChunk pOperationTerm, 
                      IRichChunk pValueTerm, BOOL fExpand, ICondition* ppcResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iconditionfactory-resolve))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iconditionfactory-resolve
     HRESULT Resolve(ICondition pc, STRUCTURED_QUERY_RESOLVE_OPTION sqro, const(SYSTEMTIME)* pstReferenceTime, 
                     ICondition* ppcResolved);
 }
 
 @GUID("d6ebc66b-8921-4193-afdd-a1789fb7ff57")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-iquerysolution))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-iquerysolution
 interface IQuerySolution : IConditionFactory
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iquerysolution-getquery))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iquerysolution-getquery
     HRESULT GetQuery(ICondition* ppQueryNode, IEntity* ppMainType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iquerysolution-geterrors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iquerysolution-geterrors
     HRESULT GetErrors(const(GUID)* riid, void** ppParseErrors);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iquerysolution-getlexicaldata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iquerysolution-getlexicaldata
     HRESULT GetLexicalData(PWSTR* ppszInputString, ITokenCollection* ppTokens, uint* plcid, 
                            IUnknown* ppWordBreaker);
 }
 
 @GUID("71d222e1-432f-429e-8c13-b6dafde5077a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-iconditionfactory2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-iconditionfactory2
 interface IConditionFactory2 : IConditionFactory
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iconditionfactory2-createtruefalse))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iconditionfactory2-createtruefalse
     HRESULT CreateTrueFalse(BOOL fVal, CONDITION_CREATION_OPTIONS cco, const(GUID)* riid, void** ppv);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iconditionfactory2-createnegation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iconditionfactory2-createnegation
     HRESULT CreateNegation(ICondition pcSub, CONDITION_CREATION_OPTIONS cco, const(GUID)* riid, void** ppv);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iconditionfactory2-createcompoundfromobjectarray))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iconditionfactory2-createcompoundfromobjectarray
     HRESULT CreateCompoundFromObjectArray(CONDITION_TYPE ct, IObjectArray poaSubs, CONDITION_CREATION_OPTIONS cco, 
                                           const(GUID)* riid, void** ppv);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iconditionfactory2-createcompoundfromarray))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iconditionfactory2-createcompoundfromarray
     HRESULT CreateCompoundFromArray(CONDITION_TYPE ct, ICondition* ppcondSubs, uint cSubs, 
                                     CONDITION_CREATION_OPTIONS cco, const(GUID)* riid, void** ppv);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iconditionfactory2-createstringleaf))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iconditionfactory2-createstringleaf
     HRESULT CreateStringLeaf(const(PROPERTYKEY)* propkey, CONDITION_OPERATION cop, const(PWSTR) pszValue, 
                              const(PWSTR) pszLocaleName, CONDITION_CREATION_OPTIONS cco, const(GUID)* riid, 
                              void** ppv);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iconditionfactory2-createintegerleaf))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iconditionfactory2-createintegerleaf
     HRESULT CreateIntegerLeaf(const(PROPERTYKEY)* propkey, CONDITION_OPERATION cop, int lValue, 
                               CONDITION_CREATION_OPTIONS cco, const(GUID)* riid, void** ppv);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iconditionfactory2-createbooleanleaf))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iconditionfactory2-createbooleanleaf
     HRESULT CreateBooleanLeaf(const(PROPERTYKEY)* propkey, CONDITION_OPERATION cop, BOOL fValue, 
                               CONDITION_CREATION_OPTIONS cco, const(GUID)* riid, void** ppv);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iconditionfactory2-createleaf))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iconditionfactory2-createleaf
     HRESULT CreateLeaf(const(PROPERTYKEY)* propkey, CONDITION_OPERATION cop, const(PROPVARIANT)* propvar, 
                        const(PWSTR) pszSemanticType, const(PWSTR) pszLocaleName, IRichChunk pPropertyNameTerm, 
                        IRichChunk pOperationTerm, IRichChunk pValueTerm, CONDITION_CREATION_OPTIONS cco, 
                        const(GUID)* riid, void** ppv);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iconditionfactory2-resolvecondition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iconditionfactory2-resolvecondition
     HRESULT ResolveCondition(ICondition pc, STRUCTURED_QUERY_RESOLVE_OPTION sqro, 
                              const(SYSTEMTIME)* pstReferenceTime, const(GUID)* riid, void** ppv);
 }
 
 @GUID("92d2cc58-4386-45a3-b98c-7e0ce64a4117")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-iconditiongenerator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-iconditiongenerator
 interface IConditionGenerator : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iconditiongenerator-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iconditiongenerator-initialize
     HRESULT Initialize(ISchemaProvider pSchemaProvider);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iconditiongenerator-recognizenamedentities))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iconditiongenerator-recognizenamedentities
     HRESULT RecognizeNamedEntities(const(PWSTR) pszInputString, uint lcidUserLocale, 
                                    ITokenCollection pTokenCollection, INamedEntityCollector pNamedEntities);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iconditiongenerator-generateforleaf))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iconditiongenerator-generateforleaf
     HRESULT GenerateForLeaf(IConditionFactory pConditionFactory, const(PWSTR) pszPropertyName, 
                             CONDITION_OPERATION cop, const(PWSTR) pszValueType, const(PWSTR) pszValue, 
                             const(PWSTR) pszValue2, IRichChunk pPropertyNameTerm, IRichChunk pOperationTerm, 
                             IRichChunk pValueTerm, BOOL automaticWildcard, BOOL* pNoStringQuery, 
                             ICondition* ppQueryExpression);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iconditiongenerator-defaultphrase))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iconditiongenerator-defaultphrase
     HRESULT DefaultPhrase(const(PWSTR) pszValueType, const(PROPVARIANT)* ppropvar, BOOL fUseEnglish, 
                           PWSTR* ppszPhrase);
 }
 
 @GUID("6bf0a714-3c18-430b-8b5d-83b1c234d3db")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-iinterval))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-iinterval
 interface IInterval : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iinterval-getlimits))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iinterval-getlimits
     HRESULT GetLimits(INTERVAL_LIMIT_KIND* pilkLower, PROPVARIANT* ppropvarLower, INTERVAL_LIMIT_KIND* pilkUpper, 
                       PROPVARIANT* ppropvarUpper);
 }
 
 @GUID("780102b0-c43b-4876-bc7b-5e9ba5c88794")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-imetadata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-imetadata
 interface IMetaData : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-imetadata-getdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-imetadata-getdata
     HRESULT GetData(PWSTR* ppszKey, PWSTR* ppszValue);
 }
 
 @GUID("24264891-e80b-4fd3-b7ce-4ff2fae8931f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-ientity))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-ientity
 interface IEntity : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-ientity-name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-ientity-name
     HRESULT Name(PWSTR* ppszName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-ientity-base))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-ientity-base
     HRESULT Base(IEntity* pBaseEntity);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-ientity-relationships))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-ientity-relationships
     HRESULT Relationships(const(GUID)* riid, void** pRelationships);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-ientity-getrelationship))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-ientity-getrelationship
     HRESULT GetRelationship(const(PWSTR) pszRelationName, IRelationship* pRelationship);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-ientity-metadata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-ientity-metadata
     HRESULT MetaData(const(GUID)* riid, void** pMetaData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-ientity-namedentities))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-ientity-namedentities
     HRESULT NamedEntities(const(GUID)* riid, void** pNamedEntities);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-ientity-getnamedentity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-ientity-getnamedentity
     HRESULT GetNamedEntity(const(PWSTR) pszValue, INamedEntity* ppNamedEntity);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-ientity-defaultphrase))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-ientity-defaultphrase
     HRESULT DefaultPhrase(PWSTR* ppszPhrase);
 }
 
 @GUID("2769280b-5108-498c-9c7f-a51239b63147")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-irelationship))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-irelationship
 interface IRelationship : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-irelationship-name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-irelationship-name
     HRESULT Name(PWSTR* ppszName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-irelationship-isreal))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-irelationship-isreal
     HRESULT IsReal(BOOL* pIsReal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-irelationship-destination))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-irelationship-destination
     HRESULT Destination(IEntity* pDestinationEntity);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-irelationship-metadata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-irelationship-metadata
     HRESULT MetaData(const(GUID)* riid, void** pMetaData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-irelationship-defaultphrase))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-irelationship-defaultphrase
     HRESULT DefaultPhrase(PWSTR* ppszPhrase);
 }
 
 @GUID("abdbd0b1-7d54-49fb-ab5c-bff4130004cd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-inamedentity))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-inamedentity
 interface INamedEntity : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-inamedentity-getvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-inamedentity-getvalue
     HRESULT GetValue(PWSTR* ppszValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-inamedentity-defaultphrase))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-inamedentity-defaultphrase
     HRESULT DefaultPhrase(PWSTR* ppszPhrase);
 }
 
 @GUID("8cf89bcb-394c-49b2-ae28-a59dd4ed7f68")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-ischemaprovider))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-ischemaprovider
 interface ISchemaProvider : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-ischemaprovider-entities))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-ischemaprovider-entities
     HRESULT Entities(const(GUID)* riid, void** pEntities);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-ischemaprovider-rootentity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-ischemaprovider-rootentity
     HRESULT RootEntity(IEntity* pRootEntity);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-ischemaprovider-getentity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-ischemaprovider-getentity
     HRESULT GetEntity(const(PWSTR) pszEntityName, IEntity* pEntity);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-ischemaprovider-metadata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-ischemaprovider-metadata
     HRESULT MetaData(const(GUID)* riid, void** pMetaData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-ischemaprovider-localize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-ischemaprovider-localize
     HRESULT Localize(uint lcid, ISchemaLocalizerSupport pSchemaLocalizerSupport);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-ischemaprovider-savebinary))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-ischemaprovider-savebinary
     HRESULT SaveBinary(const(PWSTR) pszSchemaBinaryPath);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-ischemaprovider-lookupauthorednamedentity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-ischemaprovider-lookupauthorednamedentity
     HRESULT LookupAuthoredNamedEntity(IEntity pEntity, const(PWSTR) pszInputString, 
                                       ITokenCollection pTokenCollection, uint cTokensBegin, uint* pcTokensLength, 
                                       PWSTR* ppszValue);
@@ -10628,163 +11301,163 @@ interface ISchemaProvider : IUnknown
 
 @GUID("22d8b4f2-f577-4adb-a335-c2ae88416fab")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-itokencollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-itokencollection
 interface ITokenCollection : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-itokencollection-numberoftokens))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-itokencollection-numberoftokens
     HRESULT NumberOfTokens(uint* pCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-itokencollection-gettoken))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-itokencollection-gettoken
     HRESULT GetToken(uint i, uint* pBegin, uint* pLength, PWSTR* ppsz);
 }
 
 @GUID("af2440f6-8afc-47d0-9a7f-396a0acfb43d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-inamedentitycollector))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-inamedentitycollector
 interface INamedEntityCollector : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-inamedentitycollector-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-inamedentitycollector-add
     HRESULT Add(uint beginSpan, uint endSpan, uint beginActual, uint endActual, IEntity pType, 
                 const(PWSTR) pszValue, NAMED_ENTITY_CERTAINTY certainty);
 }
 
 @GUID("ca3fdca2-bfbe-4eed-90d7-0caef0a1bda1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-ischemalocalizersupport))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-ischemalocalizersupport
 interface ISchemaLocalizerSupport : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-ischemalocalizersupport-localize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-ischemalocalizersupport-localize
     HRESULT Localize(const(PWSTR) pszGlobalString, PWSTR* ppszLocalString);
 }
 
 @GUID("a879e3c4-af77-44fb-8f37-ebd1487cf920")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-iqueryparsermanager))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nn-structuredquery-iqueryparsermanager
 interface IQueryParserManager : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iqueryparsermanager-createloadedparser))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iqueryparsermanager-createloadedparser
     HRESULT CreateLoadedParser(const(PWSTR) pszCatalog, ushort langidForKeywords, const(GUID)* riid, 
                                void** ppQueryParser);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iqueryparsermanager-initializeoptions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iqueryparsermanager-initializeoptions
     HRESULT InitializeOptions(BOOL fUnderstandNQS, BOOL fAutoWildCard, IQueryParser pQueryParser);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iqueryparsermanager-setoption))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquery/nf-structuredquery-iqueryparsermanager-setoption
     HRESULT SetOption(QUERY_PARSER_MANAGER_OPTION option, const(PROPVARIANT)* pOptionValue);
 }
 
 @GUID("0b63e318-9ccc-11d0-bcdb-00805fccce04")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-iurlaccessor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-iurlaccessor
 interface IUrlAccessor : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor-addrequestparameter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor-addrequestparameter
     HRESULT AddRequestParameter(PROPSPEC* pSpec, PROPVARIANT* pVar);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor-getdocformat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor-getdocformat
     HRESULT GetDocFormat(PWSTR wszDocFormat, uint dwSize, uint* pdwLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor-getclsid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor-getclsid
     HRESULT GetCLSID(GUID* pClsid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor-gethost))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor-gethost
     HRESULT GetHost(PWSTR wszHost, uint dwSize, uint* pdwLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor-isdirectory))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor-isdirectory
     HRESULT IsDirectory();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor-getsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor-getsize
     HRESULT GetSize(ulong* pllSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor-getlastmodified))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor-getlastmodified
     HRESULT GetLastModified(FILETIME* pftLastModified);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor-getfilename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor-getfilename
     HRESULT GetFileName(PWSTR wszFileName, uint dwSize, uint* pdwLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor-getsecuritydescriptor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor-getsecuritydescriptor
     HRESULT GetSecurityDescriptor(ubyte* pSD, uint dwSize, uint* pdwLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor-getredirectedurl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor-getredirectedurl
     HRESULT GetRedirectedURL(PWSTR wszRedirectedURL, uint dwSize, uint* pdwLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor-getsecurityprovider))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor-getsecurityprovider
     HRESULT GetSecurityProvider(GUID* pSPClsid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor-bindtostream))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor-bindtostream
     HRESULT BindToStream(IStream* ppStream);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor-bindtofilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor-bindtofilter
     HRESULT BindToFilter(IFilter* ppFilter);
 }
 
 @GUID("c7310734-ac80-11d1-8df3-00c04fb6ef4f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-iurlaccessor2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-iurlaccessor2
 interface IUrlAccessor2 : IUrlAccessor
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor2-getdisplayurl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor2-getdisplayurl
     HRESULT GetDisplayUrl(PWSTR wszDocUrl, uint dwSize, uint* pdwLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor2-isdocument))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor2-isdocument
     HRESULT IsDocument();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor2-getcodepage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor2-getcodepage
     HRESULT GetCodePage(PWSTR wszCodePage, uint dwSize, uint* pdwLength);
 }
 
 @GUID("6fbc7005-0455-4874-b8ff-7439450241a3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-iurlaccessor3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-iurlaccessor3
 interface IUrlAccessor3 : IUrlAccessor2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor3-getimpersonationsidblobs))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor3-getimpersonationsidblobs
     HRESULT GetImpersonationSidBlobs(const(PWSTR) pcwszURL, uint* pcSidCount, BLOB** ppSidBlobs);
 }
 
 @GUID("5cc51041-c8d2-41d7-bca3-9e9e286297dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-iurlaccessor4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-iurlaccessor4
 interface IUrlAccessor4 : IUrlAccessor3
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor4-shouldindexitemcontent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor4-shouldindexitemcontent
     HRESULT ShouldIndexItemContent(BOOL* pfIndexContent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor4-shouldindexproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iurlaccessor4-shouldindexproperty
     HRESULT ShouldIndexProperty(const(PROPERTYKEY)* key, BOOL* pfIndexProperty);
 }
 
 @GUID("c731065d-ac80-11d1-8df3-00c04fb6ef4f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-ioplockstatus))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-ioplockstatus
 interface IOpLockStatus : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-ioplockstatus-isoplockvalid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-ioplockstatus-isoplockvalid
     HRESULT IsOplockValid(BOOL* pfIsOplockValid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-ioplockstatus-isoplockbroken))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-ioplockstatus-isoplockbroken
     HRESULT IsOplockBroken(BOOL* pfIsOplockBroken);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-ioplockstatus-getoplockeventhandle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-ioplockstatus-getoplockeventhandle
     HRESULT GetOplockEventHandle(HANDLE* phOplockEv);
 }
 
 @GUID("c73106e1-ac80-11d1-8df3-00c04fb6ef4f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchprotocolthreadcontext))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchprotocolthreadcontext
 interface ISearchProtocolThreadContext : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchprotocolthreadcontext-threadinit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchprotocolthreadcontext-threadinit
     HRESULT ThreadInit();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchprotocolthreadcontext-threadshutdown))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchprotocolthreadcontext-threadshutdown
     HRESULT ThreadShutdown();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchprotocolthreadcontext-threadidle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchprotocolthreadcontext-threadidle
     HRESULT ThreadIdle(uint dwTimeElaspedSinceLastCallInMS);
 }
 
 @GUID("c73106ba-ac80-11d1-8df3-00c04fb6ef4f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchprotocol))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchprotocol
 interface ISearchProtocol : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchprotocol-init))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchprotocol-init
     HRESULT Init(TIMEOUT_INFO* pTimeoutInfo, IProtocolHandlerSite pProtocolHandlerSite, PROXY_INFO* pProxyInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchprotocol-createaccessor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchprotocol-createaccessor
     HRESULT CreateAccessor(const(PWSTR) pcwszURL, AUTHENTICATION_INFO* pAuthenticationInfo, 
                            INCREMENTAL_ACCESS_INFO* pIncrementalAccessInfo, ITEM_INFO* pItemInfo, 
                            IUrlAccessor* ppAccessor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchprotocol-closeaccessor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchprotocol-closeaccessor
     HRESULT CloseAccessor(IUrlAccessor pAccessor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchprotocol-shutdown))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchprotocol-shutdown
     HRESULT ShutDown();
 }
 
 @GUID("7789f0b2-b5b2-4722-8b65-5dbd150697a9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchprotocol2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchprotocol2
 interface ISearchProtocol2 : ISearchProtocol
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchprotocol2-createaccessorex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchprotocol2-createaccessorex
     HRESULT CreateAccessorEx(const(PWSTR) pcwszURL, AUTHENTICATION_INFO* pAuthenticationInfo, 
                              INCREMENTAL_ACCESS_INFO* pIncrementalAccessInfo, ITEM_INFO* pItemInfo, 
                              const(BLOB)* pUserData, IUrlAccessor* ppAccessor);
@@ -10792,276 +11465,276 @@ interface ISearchProtocol2 : ISearchProtocol
 
 @GUID("0b63e385-9ccc-11d0-bcdb-00805fccce04")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-iprotocolhandlersite))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-iprotocolhandlersite
 interface IProtocolHandlerSite : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iprotocolhandlersite-getfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-iprotocolhandlersite-getfilter
     HRESULT GetFilter(GUID* pclsidObj, const(PWSTR) pcwszContentType, const(PWSTR) pcwszExtension, 
                       IFilter* ppFilter);
 }
 
 @GUID("04c18ccf-1f57-4cbd-88cc-3900f5195ce3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchroot))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchroot
 interface ISearchRoot : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-put_schedule))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-put_schedule
     HRESULT put_Schedule(const(PWSTR) pszTaskArg);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-get_schedule))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-get_schedule
     HRESULT get_Schedule(PWSTR* ppszTaskArg);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-put_rooturl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-put_rooturl
     HRESULT put_RootURL(const(PWSTR) pszURL);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-get_rooturl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-get_rooturl
     HRESULT get_RootURL(PWSTR* ppszURL);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-put_ishierarchical))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-put_ishierarchical
     HRESULT put_IsHierarchical(BOOL fIsHierarchical);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-get_ishierarchical))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-get_ishierarchical
     HRESULT get_IsHierarchical(BOOL* pfIsHierarchical);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-put_providesnotifications))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-put_providesnotifications
     HRESULT put_ProvidesNotifications(BOOL fProvidesNotifications);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-get_providesnotifications))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-get_providesnotifications
     HRESULT get_ProvidesNotifications(BOOL* pfProvidesNotifications);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-put_usenotificationsonly))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-put_usenotificationsonly
     HRESULT put_UseNotificationsOnly(BOOL fUseNotificationsOnly);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-get_usenotificationsonly))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-get_usenotificationsonly
     HRESULT get_UseNotificationsOnly(BOOL* pfUseNotificationsOnly);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-put_enumerationdepth))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-put_enumerationdepth
     HRESULT put_EnumerationDepth(uint dwDepth);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-get_enumerationdepth))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-get_enumerationdepth
     HRESULT get_EnumerationDepth(uint* pdwDepth);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-put_hostdepth))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-put_hostdepth
     HRESULT put_HostDepth(uint dwDepth);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-get_hostdepth))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-get_hostdepth
     HRESULT get_HostDepth(uint* pdwDepth);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-put_followdirectories))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-put_followdirectories
     HRESULT put_FollowDirectories(BOOL fFollowDirectories);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-get_followdirectories))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-get_followdirectories
     HRESULT get_FollowDirectories(BOOL* pfFollowDirectories);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-put_authenticationtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-put_authenticationtype
     HRESULT put_AuthenticationType(AUTH_TYPE authType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-get_authenticationtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-get_authenticationtype
     HRESULT get_AuthenticationType(AUTH_TYPE* pAuthType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-put_user))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-put_user
     HRESULT put_User(const(PWSTR) pszUser);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-get_user))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-get_user
     HRESULT get_User(PWSTR* ppszUser);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-put_password))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-put_password
     HRESULT put_Password(const(PWSTR) pszPassword);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-get_password))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchroot-get_password
     HRESULT get_Password(PWSTR* ppszPassword);
 }
 
 @GUID("ab310581-ac80-11d1-8df3-00c04fb6ef52")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-ienumsearchroots))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-ienumsearchroots
 interface IEnumSearchRoots : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-ienumsearchroots-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-ienumsearchroots-next
     HRESULT Next(uint celt, ISearchRoot* rgelt, uint* pceltFetched);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-ienumsearchroots-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-ienumsearchroots-skip
     HRESULT Skip(uint celt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-ienumsearchroots-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-ienumsearchroots-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-ienumsearchroots-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-ienumsearchroots-clone
     HRESULT Clone(IEnumSearchRoots* ppenum);
 }
 
 @GUID("ab310581-ac80-11d1-8df3-00c04fb6ef53")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchscoperule))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchscoperule
 interface ISearchScopeRule : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchscoperule-get_patternorurl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchscoperule-get_patternorurl
     HRESULT get_PatternOrURL(PWSTR* ppszPatternOrURL);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchscoperule-get_isincluded))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchscoperule-get_isincluded
     HRESULT get_IsIncluded(BOOL* pfIsIncluded);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchscoperule-get_isdefault))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchscoperule-get_isdefault
     HRESULT get_IsDefault(BOOL* pfIsDefault);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchscoperule-get_followflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchscoperule-get_followflags
     HRESULT get_FollowFlags(uint* pFollowFlags);
 }
 
 @GUID("ab310581-ac80-11d1-8df3-00c04fb6ef54")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-ienumsearchscoperules))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-ienumsearchscoperules
 interface IEnumSearchScopeRules : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-ienumsearchscoperules-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-ienumsearchscoperules-next
     HRESULT Next(uint celt, ISearchScopeRule* pprgelt, uint* pceltFetched);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-ienumsearchscoperules-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-ienumsearchscoperules-skip
     HRESULT Skip(uint celt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-ienumsearchscoperules-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-ienumsearchscoperules-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-ienumsearchscoperules-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-ienumsearchscoperules-clone
     HRESULT Clone(IEnumSearchScopeRules* ppenum);
 }
 
 @GUID("ab310581-ac80-11d1-8df3-00c04fb6ef55")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchcrawlscopemanager))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchcrawlscopemanager
 interface ISearchCrawlScopeManager : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcrawlscopemanager-adddefaultscoperule))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcrawlscopemanager-adddefaultscoperule
     HRESULT AddDefaultScopeRule(const(PWSTR) pszURL, BOOL fInclude, uint fFollowFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcrawlscopemanager-addroot))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcrawlscopemanager-addroot
     HRESULT AddRoot(ISearchRoot pSearchRoot);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcrawlscopemanager-removeroot))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcrawlscopemanager-removeroot
     HRESULT RemoveRoot(const(PWSTR) pszURL);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcrawlscopemanager-enumerateroots))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcrawlscopemanager-enumerateroots
     HRESULT EnumerateRoots(IEnumSearchRoots* ppSearchRoots);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcrawlscopemanager-addhierarchicalscope))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcrawlscopemanager-addhierarchicalscope
     HRESULT AddHierarchicalScope(const(PWSTR) pszURL, BOOL fInclude, BOOL fDefault, BOOL fOverrideChildren);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcrawlscopemanager-adduserscoperule))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcrawlscopemanager-adduserscoperule
     HRESULT AddUserScopeRule(const(PWSTR) pszURL, BOOL fInclude, BOOL fOverrideChildren, uint fFollowFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcrawlscopemanager-removescoperule))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcrawlscopemanager-removescoperule
     HRESULT RemoveScopeRule(const(PWSTR) pszRule);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcrawlscopemanager-enumeratescoperules))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcrawlscopemanager-enumeratescoperules
     HRESULT EnumerateScopeRules(IEnumSearchScopeRules* ppSearchScopeRules);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcrawlscopemanager-hasparentscoperule))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcrawlscopemanager-hasparentscoperule
     HRESULT HasParentScopeRule(const(PWSTR) pszURL, BOOL* pfHasParentRule);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcrawlscopemanager-haschildscoperule))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcrawlscopemanager-haschildscoperule
     HRESULT HasChildScopeRule(const(PWSTR) pszURL, BOOL* pfHasChildRule);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcrawlscopemanager-includedincrawlscope))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcrawlscopemanager-includedincrawlscope
     HRESULT IncludedInCrawlScope(const(PWSTR) pszURL, BOOL* pfIsIncluded);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcrawlscopemanager-includedincrawlscopeex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcrawlscopemanager-includedincrawlscopeex
     HRESULT IncludedInCrawlScopeEx(const(PWSTR) pszURL, BOOL* pfIsIncluded, CLUSION_REASON* pReason);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcrawlscopemanager-reverttodefaultscopes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcrawlscopemanager-reverttodefaultscopes
     HRESULT RevertToDefaultScopes();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcrawlscopemanager-saveall))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcrawlscopemanager-saveall
     HRESULT SaveAll();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcrawlscopemanager-getparentscopeversionid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcrawlscopemanager-getparentscopeversionid
     HRESULT GetParentScopeVersionId(const(PWSTR) pszURL, int* plScopeId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcrawlscopemanager-removedefaultscoperule))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcrawlscopemanager-removedefaultscoperule
     HRESULT RemoveDefaultScopeRule(const(PWSTR) pszURL);
 }
 
 @GUID("6292f7ad-4e19-4717-a534-8fc22bcd5ccd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchcrawlscopemanager2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchcrawlscopemanager2
 interface ISearchCrawlScopeManager2 : ISearchCrawlScopeManager
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcrawlscopemanager2-getversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcrawlscopemanager2-getversion
     HRESULT GetVersion(int** plVersion, HANDLE* phFileMapping);
 }
 
 @GUID("ab310581-ac80-11d1-8df3-00c04fb6ef58")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchitemschangedsink))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchitemschangedsink
 interface ISearchItemsChangedSink : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchitemschangedsink-startedmonitoringscope))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchitemschangedsink-startedmonitoringscope
     HRESULT StartedMonitoringScope(const(PWSTR) pszURL);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchitemschangedsink-stoppedmonitoringscope))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchitemschangedsink-stoppedmonitoringscope
     HRESULT StoppedMonitoringScope(const(PWSTR) pszURL);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchitemschangedsink-onitemschanged))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchitemschangedsink-onitemschanged
     HRESULT OnItemsChanged(uint dwNumberOfChanges, SEARCH_ITEM_CHANGE* rgDataChangeEntries, uint* rgdwDocIds, 
                            HRESULT* rghrCompletionCodes);
 }
 
 @GUID("a2ffdf9b-4758-4f84-b729-df81a1a0612f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchpersistentitemschangedsink))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchpersistentitemschangedsink
 interface ISearchPersistentItemsChangedSink : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchpersistentitemschangedsink-startedmonitoringscope))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchpersistentitemschangedsink-startedmonitoringscope
     HRESULT StartedMonitoringScope(const(PWSTR) pszURL);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchpersistentitemschangedsink-stoppedmonitoringscope))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchpersistentitemschangedsink-stoppedmonitoringscope
     HRESULT StoppedMonitoringScope(const(PWSTR) pszURL);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchpersistentitemschangedsink-onitemschanged))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchpersistentitemschangedsink-onitemschanged
     HRESULT OnItemsChanged(uint dwNumberOfChanges, SEARCH_ITEM_PERSISTENT_CHANGE* DataChangeEntries, 
                            HRESULT* hrCompletionCodes);
 }
 
 @GUID("ab310581-ac80-11d1-8df3-00c04fb6ef65")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchviewchangedsink))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchviewchangedsink
 interface ISearchViewChangedSink : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchviewchangedsink-onchange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchviewchangedsink-onchange
     HRESULT OnChange(int* pdwDocID, SEARCH_ITEM_CHANGE* pChange, BOOL* pfInView);
 }
 
 @GUID("b5702e61-e75c-4b64-82a1-6cb4f832fccf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchnotifyinlinesite))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchnotifyinlinesite
 interface ISearchNotifyInlineSite : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchnotifyinlinesite-onitemindexedstatuschange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchnotifyinlinesite-onitemindexedstatuschange
     HRESULT OnItemIndexedStatusChange(SEARCH_INDEXING_PHASE sipStatus, uint dwNumEntries, 
                                       SEARCH_ITEM_INDEXING_STATUS* rgItemStatusEntries);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchnotifyinlinesite-oncatalogstatuschange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchnotifyinlinesite-oncatalogstatuschange
     HRESULT OnCatalogStatusChange(const(GUID)* guidCatalogResetSignature, const(GUID)* guidCheckPointSignature, 
                                   uint dwLastCheckPointNumber);
 }
 
 @GUID("ab310581-ac80-11d1-8df3-00c04fb6ef50")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchcatalogmanager))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchcatalogmanager
 interface ISearchCatalogManager : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-get_name
     HRESULT get_Name(PWSTR* pszName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-getparameter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-getparameter
     HRESULT GetParameter(const(PWSTR) pszName, PROPVARIANT** ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-setparameter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-setparameter
     HRESULT SetParameter(const(PWSTR) pszName, PROPVARIANT* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-getcatalogstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-getcatalogstatus
     HRESULT GetCatalogStatus(CatalogStatus* pStatus, CatalogPausedReason* pPausedReason);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-reindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-reindex
     HRESULT Reindex();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-reindexmatchingurls))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-reindexmatchingurls
     HRESULT ReindexMatchingURLs(const(PWSTR) pszPattern);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-reindexsearchroot))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-reindexsearchroot
     HRESULT ReindexSearchRoot(const(PWSTR) pszRootURL);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-put_connecttimeout))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-put_connecttimeout
     HRESULT put_ConnectTimeout(uint dwConnectTimeout);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-get_connecttimeout))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-get_connecttimeout
     HRESULT get_ConnectTimeout(uint* pdwConnectTimeout);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-put_datatimeout))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-put_datatimeout
     HRESULT put_DataTimeout(uint dwDataTimeout);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-get_datatimeout))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-get_datatimeout
     HRESULT get_DataTimeout(uint* pdwDataTimeout);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-numberofitems))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-numberofitems
     HRESULT NumberOfItems(int* plCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-numberofitemstoindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-numberofitemstoindex
     HRESULT NumberOfItemsToIndex(int* plIncrementalCount, int* plNotificationQueue, int* plHighPriorityQueue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-urlbeingindexed))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-urlbeingindexed
     HRESULT URLBeingIndexed(PWSTR* pszUrl);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-geturlindexingstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-geturlindexingstate
     HRESULT GetURLIndexingState(const(PWSTR) pszURL, uint* pdwState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-getpersistentitemschangedsink))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-getpersistentitemschangedsink
     HRESULT GetPersistentItemsChangedSink(ISearchPersistentItemsChangedSink* ppISearchPersistentItemsChangedSink);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-registerviewfornotification))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-registerviewfornotification
     HRESULT RegisterViewForNotification(const(PWSTR) pszView, ISearchViewChangedSink pViewChangedSink, 
                                         uint* pdwCookie);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-getitemschangedsink))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-getitemschangedsink
     HRESULT GetItemsChangedSink(ISearchNotifyInlineSite pISearchNotifyInlineSite, const(GUID)* riid, void** ppv, 
                                 GUID* pGUIDCatalogResetSignature, GUID* pGUIDCheckPointSignature, 
                                 uint* pdwLastCheckPointNumber);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-unregisterviewfornotification))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-unregisterviewfornotification
     HRESULT UnregisterViewForNotification(uint dwCookie);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-setextensionclusion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-setextensionclusion
     HRESULT SetExtensionClusion(const(PWSTR) pszExtension, BOOL fExclude);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-enumerateexcludedextensions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-enumerateexcludedextensions
     HRESULT EnumerateExcludedExtensions(IEnumString* ppExtensions);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-getqueryhelper))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-getqueryhelper
     HRESULT GetQueryHelper(ISearchQueryHelper* ppSearchQueryHelper);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-put_diacriticsensitivity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-put_diacriticsensitivity
     HRESULT put_DiacriticSensitivity(BOOL fDiacriticSensitive);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-get_diacriticsensitivity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-get_diacriticsensitivity
     HRESULT get_DiacriticSensitivity(BOOL* pfDiacriticSensitive);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-getcrawlscopemanager))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager-getcrawlscopemanager
     HRESULT GetCrawlScopeManager(ISearchCrawlScopeManager* ppCrawlScopeManager);
 }
 
 @GUID("7ac3286d-4d1d-4817-84fc-c1c85e3af0d9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchcatalogmanager2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchcatalogmanager2
 interface ISearchCatalogManager2 : ISearchCatalogManager
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager2-prioritizematchingurls))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchcatalogmanager2-prioritizematchingurls
     HRESULT PrioritizeMatchingURLs(const(PWSTR) pszPattern, PRIORITIZE_FLAGS dwPrioritizeFlags);
 }
 
@@ -11073,142 +11746,142 @@ interface ISearchCatalogManager3 : ISearchCatalogManager2
 
 @GUID("ab310581-ac80-11d1-8df3-00c04fb6ef63")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchqueryhelper))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchqueryhelper
 interface ISearchQueryHelper : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-get_connectionstring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-get_connectionstring
     HRESULT get_ConnectionString(PWSTR* pszConnectionString);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-put_querycontentlocale))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-put_querycontentlocale
     HRESULT put_QueryContentLocale(uint lcid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-get_querycontentlocale))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-get_querycontentlocale
     HRESULT get_QueryContentLocale(uint* plcid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-put_querykeywordlocale))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-put_querykeywordlocale
     HRESULT put_QueryKeywordLocale(uint lcid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-get_querykeywordlocale))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-get_querykeywordlocale
     HRESULT get_QueryKeywordLocale(uint* plcid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-put_querytermexpansion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-put_querytermexpansion
     HRESULT put_QueryTermExpansion(SEARCH_TERM_EXPANSION expandTerms);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-get_querytermexpansion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-get_querytermexpansion
     HRESULT get_QueryTermExpansion(SEARCH_TERM_EXPANSION* pExpandTerms);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-put_querysyntax))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-put_querysyntax
     HRESULT put_QuerySyntax(SEARCH_QUERY_SYNTAX querySyntax);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-get_querysyntax))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-get_querysyntax
     HRESULT get_QuerySyntax(SEARCH_QUERY_SYNTAX* pQuerySyntax);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-put_querycontentproperties))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-put_querycontentproperties
     HRESULT put_QueryContentProperties(const(PWSTR) pszContentProperties);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-get_querycontentproperties))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-get_querycontentproperties
     HRESULT get_QueryContentProperties(PWSTR* ppszContentProperties);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-put_queryselectcolumns))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-put_queryselectcolumns
     HRESULT put_QuerySelectColumns(const(PWSTR) pszSelectColumns);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-get_queryselectcolumns))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-get_queryselectcolumns
     HRESULT get_QuerySelectColumns(PWSTR* ppszSelectColumns);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-put_querywhererestrictions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-put_querywhererestrictions
     HRESULT put_QueryWhereRestrictions(const(PWSTR) pszRestrictions);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-get_querywhererestrictions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-get_querywhererestrictions
     HRESULT get_QueryWhereRestrictions(PWSTR* ppszRestrictions);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-put_querysorting))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-put_querysorting
     HRESULT put_QuerySorting(const(PWSTR) pszSorting);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-get_querysorting))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-get_querysorting
     HRESULT get_QuerySorting(PWSTR* ppszSorting);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-generatesqlfromuserquery))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-generatesqlfromuserquery
     HRESULT GenerateSQLFromUserQuery(const(PWSTR) pszQuery, PWSTR* ppszSQL);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-writeproperties))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-writeproperties
     HRESULT WriteProperties(int itemID, uint dwNumberOfColumns, PROPERTYKEY* pColumns, 
                             SEARCH_COLUMN_PROPERTIES* pValues, FILETIME* pftGatherModifiedTime);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-put_querymaxresults))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-put_querymaxresults
     HRESULT put_QueryMaxResults(int cMaxResults);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-get_querymaxresults))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchqueryhelper-get_querymaxresults
     HRESULT get_QueryMaxResults(int* pcMaxResults);
 }
 
 @GUID("42811652-079d-481b-87a2-09a69ecc5f44")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-irowsetprioritization))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-irowsetprioritization
 interface IRowsetPrioritization : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-irowsetprioritization-setscopepriority))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-irowsetprioritization-setscopepriority
     HRESULT SetScopePriority(PRIORITY_LEVEL priority, uint scopeStatisticsEventFrequency);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-irowsetprioritization-getscopepriority))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-irowsetprioritization-getscopepriority
     HRESULT GetScopePriority(PRIORITY_LEVEL* priority, uint* scopeStatisticsEventFrequency);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-irowsetprioritization-getscopestatistics))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-irowsetprioritization-getscopestatistics
     HRESULT GetScopeStatistics(uint* indexedDocumentCount, uint* oustandingAddCount, uint* oustandingModifyCount);
 }
 
 @GUID("1551aea5-5d66-4b11-86f5-d5634cb211b9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-irowsetevents))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-irowsetevents
 interface IRowsetEvents : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-irowsetevents-onnewitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-irowsetevents-onnewitem
     HRESULT OnNewItem(const(PROPVARIANT)* itemID, ROWSETEVENT_ITEMSTATE newItemState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-irowsetevents-onchangeditem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-irowsetevents-onchangeditem
     HRESULT OnChangedItem(const(PROPVARIANT)* itemID, ROWSETEVENT_ITEMSTATE rowsetItemState, 
                           ROWSETEVENT_ITEMSTATE changedItemState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-irowsetevents-ondeleteditem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-irowsetevents-ondeleteditem
     HRESULT OnDeletedItem(const(PROPVARIANT)* itemID, ROWSETEVENT_ITEMSTATE deletedItemState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-irowsetevents-onrowsetevent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-irowsetevents-onrowsetevent
     HRESULT OnRowsetEvent(ROWSETEVENT_TYPE eventType, const(PROPVARIANT)* eventData);
 }
 
 @GUID("ab310581-ac80-11d1-8df3-00c04fb6ef69")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchmanager))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchmanager
 interface ISearchManager : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchmanager-getindexerversionstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchmanager-getindexerversionstr
     HRESULT GetIndexerVersionStr(PWSTR* ppszVersionString);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchmanager-getindexerversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchmanager-getindexerversion
     HRESULT GetIndexerVersion(uint* pdwMajor, uint* pdwMinor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchmanager-getparameter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchmanager-getparameter
     HRESULT GetParameter(const(PWSTR) pszName, PROPVARIANT** ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchmanager-setparameter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchmanager-setparameter
     HRESULT SetParameter(const(PWSTR) pszName, const(PROPVARIANT)* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchmanager-get_proxyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchmanager-get_proxyname
     HRESULT get_ProxyName(PWSTR* ppszProxyName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchmanager-get_bypasslist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchmanager-get_bypasslist
     HRESULT get_BypassList(PWSTR* ppszBypassList);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchmanager-setproxy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchmanager-setproxy
     HRESULT SetProxy(PROXY_ACCESS sUseProxy, BOOL fLocalByPassProxy, uint dwPortNumber, const(PWSTR) pszProxyName, 
                      const(PWSTR) pszByPassList);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchmanager-getcatalog))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchmanager-getcatalog
     HRESULT GetCatalog(const(PWSTR) pszCatalog, ISearchCatalogManager* ppCatalogManager);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchmanager-get_useragent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchmanager-get_useragent
     HRESULT get_UserAgent(PWSTR* ppszUserAgent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchmanager-put_useragent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchmanager-put_useragent
     HRESULT put_UserAgent(const(PWSTR) pszUserAgent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchmanager-get_useproxy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchmanager-get_useproxy
     HRESULT get_UseProxy(PROXY_ACCESS* pUseProxy);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchmanager-get_localbypass))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchmanager-get_localbypass
     HRESULT get_LocalBypass(BOOL* pfLocalBypass);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchmanager-get_portnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchmanager-get_portnumber
     HRESULT get_PortNumber(uint* pdwPortNumber);
 }
 
 @GUID("dbab3f73-db19-4a79-bfc0-a61a93886ddf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchmanager2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchmanager2
 interface ISearchManager2 : ISearchManager
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchmanager2-createcatalog))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchmanager2-createcatalog
     HRESULT CreateCatalog(const(PWSTR) pszCatalog, ISearchCatalogManager* ppCatalogManager);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchmanager2-deletecatalog))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchmanager2-deletecatalog
     HRESULT DeleteCatalog(const(PWSTR) pszCatalog);
 }
 
 @GUID("24c3cbaa-ebc1-491a-9ef1-9f6d8deb1b8f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchlanguagesupport))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nn-searchapi-isearchlanguagesupport
 interface ISearchLanguageSupport : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchlanguagesupport-setdiacriticsensitivity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchlanguagesupport-setdiacriticsensitivity
     HRESULT SetDiacriticSensitivity(BOOL fDiacriticSensitive);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchlanguagesupport-getdiacriticsensitivity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchlanguagesupport-getdiacriticsensitivity
     HRESULT GetDiacriticSensitivity(BOOL* pfDiacriticSensitive);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchlanguagesupport-loadwordbreaker))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchlanguagesupport-loadwordbreaker
     HRESULT LoadWordBreaker(uint lcid, const(GUID)* riid, void** ppWordBreaker, uint* pLcidUsed);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchlanguagesupport-loadstemmer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchlanguagesupport-loadstemmer
     HRESULT LoadStemmer(uint lcid, const(GUID)* riid, void** ppStemmer, uint* pLcidUsed);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchlanguagesupport-isprefixnormalized))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/searchapi/nf-searchapi-isearchlanguagesupport-isprefixnormalized
     HRESULT IsPrefixNormalized(const(PWSTR) pwcsQueryToken, uint cwcQueryToken, const(PWSTR) pwcsDocumentToken, 
                                uint cwcDocumentToken, uint* pulPrefixLength);
 }

@@ -3,384 +3,393 @@
 module windows.win32.ui.input.keyboardandmouse;
 
 public import windows.core;
-public import windows.win32.foundation : BOOL, CHAR, HWND, POINT, PSTR, PWSTR;
+public import windows.win32.foundation.foundation : BOOL, CHAR, HWND, POINT, PSTR, PWSTR;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
+
 alias HOT_KEY_MODIFIERS = uint;
 enum : uint
 {
-    MOD_ALT      = 0x00000001,
-    MOD_CONTROL  = 0x00000002,
-    MOD_NOREPEAT = 0x00004000,
-    MOD_SHIFT    = 0x00000004,
-    MOD_WIN      = 0x00000008,
+    MOD_ALT      = 0x00000001U,
+    MOD_CONTROL  = 0x00000002U,
+    MOD_NOREPEAT = 0x00004000U,
+    MOD_SHIFT    = 0x00000004U,
+    MOD_WIN      = 0x00000008U,
 }
+
 alias ACTIVATE_KEYBOARD_LAYOUT_FLAGS = uint;
 enum : uint
 {
-    KLF_REORDER       = 0x00000008,
-    KLF_RESET         = 0x40000000,
-    KLF_SETFORPROCESS = 0x00000100,
-    KLF_SHIFTLOCK     = 0x00010000,
-    KLF_ACTIVATE      = 0x00000001,
-    KLF_NOTELLSHELL   = 0x00000080,
-    KLF_REPLACELANG   = 0x00000010,
-    KLF_SUBSTITUTE_OK = 0x00000002,
+    KLF_REORDER       = 0x00000008U,
+    KLF_RESET         = 0x40000000U,
+    KLF_SETFORPROCESS = 0x00000100U,
+    KLF_SHIFTLOCK     = 0x00010000U,
+    KLF_ACTIVATE      = 0x00000001U,
+    KLF_NOTELLSHELL   = 0x00000080U,
+    KLF_REPLACELANG   = 0x00000010U,
+    KLF_SUBSTITUTE_OK = 0x00000002U,
 }
+
 alias GET_MOUSE_MOVE_POINTS_EX_RESOLUTION = uint;
 enum : uint
 {
-    GMMP_USE_DISPLAY_POINTS         = 0x00000001,
-    GMMP_USE_HIGH_RESOLUTION_POINTS = 0x00000002,
+    GMMP_USE_DISPLAY_POINTS         = 0x00000001U,
+    GMMP_USE_HIGH_RESOLUTION_POINTS = 0x00000002U,
 }
+
 alias KEYBD_EVENT_FLAGS = uint;
 enum : uint
 {
-    KEYEVENTF_EXTENDEDKEY = 0x00000001,
-    KEYEVENTF_KEYUP       = 0x00000002,
-    KEYEVENTF_SCANCODE    = 0x00000008,
-    KEYEVENTF_UNICODE     = 0x00000004,
+    KEYEVENTF_EXTENDEDKEY = 0x00000001U,
+    KEYEVENTF_KEYUP       = 0x00000002U,
+    KEYEVENTF_SCANCODE    = 0x00000008U,
+    KEYEVENTF_UNICODE     = 0x00000004U,
 }
+
 alias MOUSE_EVENT_FLAGS = uint;
 enum : uint
 {
-    MOUSEEVENTF_ABSOLUTE        = 0x00008000,
-    MOUSEEVENTF_LEFTDOWN        = 0x00000002,
-    MOUSEEVENTF_LEFTUP          = 0x00000004,
-    MOUSEEVENTF_MIDDLEDOWN      = 0x00000020,
-    MOUSEEVENTF_MIDDLEUP        = 0x00000040,
-    MOUSEEVENTF_MOVE            = 0x00000001,
-    MOUSEEVENTF_RIGHTDOWN       = 0x00000008,
-    MOUSEEVENTF_RIGHTUP         = 0x00000010,
-    MOUSEEVENTF_WHEEL           = 0x00000800,
-    MOUSEEVENTF_XDOWN           = 0x00000080,
-    MOUSEEVENTF_XUP             = 0x00000100,
-    MOUSEEVENTF_HWHEEL          = 0x00001000,
-    MOUSEEVENTF_MOVE_NOCOALESCE = 0x00002000,
-    MOUSEEVENTF_VIRTUALDESK     = 0x00004000,
+    MOUSEEVENTF_ABSOLUTE        = 0x00008000U,
+    MOUSEEVENTF_LEFTDOWN        = 0x00000002U,
+    MOUSEEVENTF_LEFTUP          = 0x00000004U,
+    MOUSEEVENTF_MIDDLEDOWN      = 0x00000020U,
+    MOUSEEVENTF_MIDDLEUP        = 0x00000040U,
+    MOUSEEVENTF_MOVE            = 0x00000001U,
+    MOUSEEVENTF_RIGHTDOWN       = 0x00000008U,
+    MOUSEEVENTF_RIGHTUP         = 0x00000010U,
+    MOUSEEVENTF_WHEEL           = 0x00000800U,
+    MOUSEEVENTF_XDOWN           = 0x00000080U,
+    MOUSEEVENTF_XUP             = 0x00000100U,
+    MOUSEEVENTF_HWHEEL          = 0x00001000U,
+    MOUSEEVENTF_MOVE_NOCOALESCE = 0x00002000U,
+    MOUSEEVENTF_VIRTUALDESK     = 0x00004000U,
 }
+
 alias INPUT_TYPE = uint;
 enum : uint
 {
-    INPUT_MOUSE    = 0x00000000,
-    INPUT_KEYBOARD = 0x00000001,
-    INPUT_HARDWARE = 0x00000002,
+    INPUT_MOUSE    = 0x00000000U,
+    INPUT_KEYBOARD = 0x00000001U,
+    INPUT_HARDWARE = 0x00000002U,
 }
+
 alias TRACKMOUSEEVENT_FLAGS = uint;
 enum : uint
 {
-    TME_CANCEL    = 0x80000000,
-    TME_HOVER     = 0x00000001,
-    TME_LEAVE     = 0x00000002,
-    TME_NONCLIENT = 0x00000010,
-    TME_QUERY     = 0x40000000,
+    TME_CANCEL    = 0x80000000U,
+    TME_HOVER     = 0x00000001U,
+    TME_LEAVE     = 0x00000002U,
+    TME_NONCLIENT = 0x00000010U,
+    TME_QUERY     = 0x40000000U,
 }
+
 alias VIRTUAL_KEY = ushort;
 enum : ushort
 {
-    VK_0                               = 0x0030,
-    VK_1                               = 0x0031,
-    VK_2                               = 0x0032,
-    VK_3                               = 0x0033,
-    VK_4                               = 0x0034,
-    VK_5                               = 0x0035,
-    VK_6                               = 0x0036,
-    VK_7                               = 0x0037,
-    VK_8                               = 0x0038,
-    VK_9                               = 0x0039,
-    VK_A                               = 0x0041,
-    VK_B                               = 0x0042,
-    VK_C                               = 0x0043,
-    VK_D                               = 0x0044,
-    VK_E                               = 0x0045,
-    VK_F                               = 0x0046,
-    VK_G                               = 0x0047,
-    VK_H                               = 0x0048,
-    VK_I                               = 0x0049,
-    VK_J                               = 0x004a,
-    VK_K                               = 0x004b,
-    VK_L                               = 0x004c,
-    VK_M                               = 0x004d,
-    VK_N                               = 0x004e,
-    VK_O                               = 0x004f,
-    VK_P                               = 0x0050,
-    VK_Q                               = 0x0051,
-    VK_R                               = 0x0052,
-    VK_S                               = 0x0053,
-    VK_T                               = 0x0054,
-    VK_U                               = 0x0055,
-    VK_V                               = 0x0056,
-    VK_W                               = 0x0057,
-    VK_X                               = 0x0058,
-    VK_Y                               = 0x0059,
-    VK_Z                               = 0x005a,
-    VK_ABNT_C1                         = 0x00c1,
-    VK_ABNT_C2                         = 0x00c2,
-    VK_DBE_ALPHANUMERIC                = 0x00f0,
-    VK_DBE_CODEINPUT                   = 0x00fa,
-    VK_DBE_DBCSCHAR                    = 0x00f4,
-    VK_DBE_DETERMINESTRING             = 0x00fc,
-    VK_DBE_ENTERDLGCONVERSIONMODE      = 0x00fd,
-    VK_DBE_ENTERIMECONFIGMODE          = 0x00f8,
-    VK_DBE_ENTERWORDREGISTERMODE       = 0x00f7,
-    VK_DBE_FLUSHSTRING                 = 0x00f9,
-    VK_DBE_HIRAGANA                    = 0x00f2,
-    VK_DBE_KATAKANA                    = 0x00f1,
-    VK_DBE_NOCODEINPUT                 = 0x00fb,
-    VK_DBE_NOROMAN                     = 0x00f6,
-    VK_DBE_ROMAN                       = 0x00f5,
-    VK_DBE_SBCSCHAR                    = 0x00f3,
-    VK__none_                          = 0x00ff,
-    VK_LBUTTON                         = 0x0001,
-    VK_RBUTTON                         = 0x0002,
-    VK_CANCEL                          = 0x0003,
-    VK_MBUTTON                         = 0x0004,
-    VK_XBUTTON1                        = 0x0005,
-    VK_XBUTTON2                        = 0x0006,
-    VK_BACK                            = 0x0008,
-    VK_TAB                             = 0x0009,
-    VK_CLEAR                           = 0x000c,
-    VK_RETURN                          = 0x000d,
-    VK_SHIFT                           = 0x0010,
-    VK_CONTROL                         = 0x0011,
-    VK_MENU                            = 0x0012,
-    VK_PAUSE                           = 0x0013,
-    VK_CAPITAL                         = 0x0014,
-    VK_KANA                            = 0x0015,
-    VK_HANGEUL                         = 0x0015,
-    VK_HANGUL                          = 0x0015,
-    VK_IME_ON                          = 0x0016,
-    VK_JUNJA                           = 0x0017,
-    VK_FINAL                           = 0x0018,
-    VK_HANJA                           = 0x0019,
-    VK_KANJI                           = 0x0019,
-    VK_IME_OFF                         = 0x001a,
-    VK_ESCAPE                          = 0x001b,
-    VK_CONVERT                         = 0x001c,
-    VK_NONCONVERT                      = 0x001d,
-    VK_ACCEPT                          = 0x001e,
-    VK_MODECHANGE                      = 0x001f,
-    VK_SPACE                           = 0x0020,
-    VK_PRIOR                           = 0x0021,
-    VK_NEXT                            = 0x0022,
-    VK_END                             = 0x0023,
-    VK_HOME                            = 0x0024,
-    VK_LEFT                            = 0x0025,
-    VK_UP                              = 0x0026,
-    VK_RIGHT                           = 0x0027,
-    VK_DOWN                            = 0x0028,
-    VK_SELECT                          = 0x0029,
-    VK_PRINT                           = 0x002a,
-    VK_EXECUTE                         = 0x002b,
-    VK_SNAPSHOT                        = 0x002c,
-    VK_INSERT                          = 0x002d,
-    VK_DELETE                          = 0x002e,
-    VK_HELP                            = 0x002f,
-    VK_LWIN                            = 0x005b,
-    VK_RWIN                            = 0x005c,
-    VK_APPS                            = 0x005d,
-    VK_SLEEP                           = 0x005f,
-    VK_NUMPAD0                         = 0x0060,
-    VK_NUMPAD1                         = 0x0061,
-    VK_NUMPAD2                         = 0x0062,
-    VK_NUMPAD3                         = 0x0063,
-    VK_NUMPAD4                         = 0x0064,
-    VK_NUMPAD5                         = 0x0065,
-    VK_NUMPAD6                         = 0x0066,
-    VK_NUMPAD7                         = 0x0067,
-    VK_NUMPAD8                         = 0x0068,
-    VK_NUMPAD9                         = 0x0069,
-    VK_MULTIPLY                        = 0x006a,
-    VK_ADD                             = 0x006b,
-    VK_SEPARATOR                       = 0x006c,
-    VK_SUBTRACT                        = 0x006d,
-    VK_DECIMAL                         = 0x006e,
-    VK_DIVIDE                          = 0x006f,
-    VK_F1                              = 0x0070,
-    VK_F2                              = 0x0071,
-    VK_F3                              = 0x0072,
-    VK_F4                              = 0x0073,
-    VK_F5                              = 0x0074,
-    VK_F6                              = 0x0075,
-    VK_F7                              = 0x0076,
-    VK_F8                              = 0x0077,
-    VK_F9                              = 0x0078,
-    VK_F10                             = 0x0079,
-    VK_F11                             = 0x007a,
-    VK_F12                             = 0x007b,
-    VK_F13                             = 0x007c,
-    VK_F14                             = 0x007d,
-    VK_F15                             = 0x007e,
-    VK_F16                             = 0x007f,
-    VK_F17                             = 0x0080,
-    VK_F18                             = 0x0081,
-    VK_F19                             = 0x0082,
-    VK_F20                             = 0x0083,
-    VK_F21                             = 0x0084,
-    VK_F22                             = 0x0085,
-    VK_F23                             = 0x0086,
-    VK_F24                             = 0x0087,
-    VK_NAVIGATION_VIEW                 = 0x0088,
-    VK_NAVIGATION_MENU                 = 0x0089,
-    VK_NAVIGATION_UP                   = 0x008a,
-    VK_NAVIGATION_DOWN                 = 0x008b,
-    VK_NAVIGATION_LEFT                 = 0x008c,
-    VK_NAVIGATION_RIGHT                = 0x008d,
-    VK_NAVIGATION_ACCEPT               = 0x008e,
-    VK_NAVIGATION_CANCEL               = 0x008f,
-    VK_NUMLOCK                         = 0x0090,
-    VK_SCROLL                          = 0x0091,
-    VK_OEM_NEC_EQUAL                   = 0x0092,
-    VK_OEM_FJ_JISHO                    = 0x0092,
-    VK_OEM_FJ_MASSHOU                  = 0x0093,
-    VK_OEM_FJ_TOUROKU                  = 0x0094,
-    VK_OEM_FJ_LOYA                     = 0x0095,
-    VK_OEM_FJ_ROYA                     = 0x0096,
-    VK_LSHIFT                          = 0x00a0,
-    VK_RSHIFT                          = 0x00a1,
-    VK_LCONTROL                        = 0x00a2,
-    VK_RCONTROL                        = 0x00a3,
-    VK_LMENU                           = 0x00a4,
-    VK_RMENU                           = 0x00a5,
-    VK_BROWSER_BACK                    = 0x00a6,
-    VK_BROWSER_FORWARD                 = 0x00a7,
-    VK_BROWSER_REFRESH                 = 0x00a8,
-    VK_BROWSER_STOP                    = 0x00a9,
-    VK_BROWSER_SEARCH                  = 0x00aa,
-    VK_BROWSER_FAVORITES               = 0x00ab,
-    VK_BROWSER_HOME                    = 0x00ac,
-    VK_VOLUME_MUTE                     = 0x00ad,
-    VK_VOLUME_DOWN                     = 0x00ae,
-    VK_VOLUME_UP                       = 0x00af,
-    VK_MEDIA_NEXT_TRACK                = 0x00b0,
-    VK_MEDIA_PREV_TRACK                = 0x00b1,
-    VK_MEDIA_STOP                      = 0x00b2,
-    VK_MEDIA_PLAY_PAUSE                = 0x00b3,
-    VK_LAUNCH_MAIL                     = 0x00b4,
-    VK_LAUNCH_MEDIA_SELECT             = 0x00b5,
-    VK_LAUNCH_APP1                     = 0x00b6,
-    VK_LAUNCH_APP2                     = 0x00b7,
-    VK_OEM_1                           = 0x00ba,
-    VK_OEM_PLUS                        = 0x00bb,
-    VK_OEM_COMMA                       = 0x00bc,
-    VK_OEM_MINUS                       = 0x00bd,
-    VK_OEM_PERIOD                      = 0x00be,
-    VK_OEM_2                           = 0x00bf,
-    VK_OEM_3                           = 0x00c0,
-    VK_GAMEPAD_A                       = 0x00c3,
-    VK_GAMEPAD_B                       = 0x00c4,
-    VK_GAMEPAD_X                       = 0x00c5,
-    VK_GAMEPAD_Y                       = 0x00c6,
-    VK_GAMEPAD_RIGHT_SHOULDER          = 0x00c7,
-    VK_GAMEPAD_LEFT_SHOULDER           = 0x00c8,
-    VK_GAMEPAD_LEFT_TRIGGER            = 0x00c9,
-    VK_GAMEPAD_RIGHT_TRIGGER           = 0x00ca,
-    VK_GAMEPAD_DPAD_UP                 = 0x00cb,
-    VK_GAMEPAD_DPAD_DOWN               = 0x00cc,
-    VK_GAMEPAD_DPAD_LEFT               = 0x00cd,
-    VK_GAMEPAD_DPAD_RIGHT              = 0x00ce,
-    VK_GAMEPAD_MENU                    = 0x00cf,
-    VK_GAMEPAD_VIEW                    = 0x00d0,
-    VK_GAMEPAD_LEFT_THUMBSTICK_BUTTON  = 0x00d1,
-    VK_GAMEPAD_RIGHT_THUMBSTICK_BUTTON = 0x00d2,
-    VK_GAMEPAD_LEFT_THUMBSTICK_UP      = 0x00d3,
-    VK_GAMEPAD_LEFT_THUMBSTICK_DOWN    = 0x00d4,
-    VK_GAMEPAD_LEFT_THUMBSTICK_RIGHT   = 0x00d5,
-    VK_GAMEPAD_LEFT_THUMBSTICK_LEFT    = 0x00d6,
-    VK_GAMEPAD_RIGHT_THUMBSTICK_UP     = 0x00d7,
-    VK_GAMEPAD_RIGHT_THUMBSTICK_DOWN   = 0x00d8,
-    VK_GAMEPAD_RIGHT_THUMBSTICK_RIGHT  = 0x00d9,
-    VK_GAMEPAD_RIGHT_THUMBSTICK_LEFT   = 0x00da,
-    VK_OEM_4                           = 0x00db,
-    VK_OEM_5                           = 0x00dc,
-    VK_OEM_6                           = 0x00dd,
-    VK_OEM_7                           = 0x00de,
-    VK_OEM_8                           = 0x00df,
-    VK_OEM_AX                          = 0x00e1,
-    VK_OEM_102                         = 0x00e2,
-    VK_ICO_HELP                        = 0x00e3,
-    VK_ICO_00                          = 0x00e4,
-    VK_PROCESSKEY                      = 0x00e5,
-    VK_ICO_CLEAR                       = 0x00e6,
-    VK_PACKET                          = 0x00e7,
-    VK_OEM_RESET                       = 0x00e9,
-    VK_OEM_JUMP                        = 0x00ea,
-    VK_OEM_PA1                         = 0x00eb,
-    VK_OEM_PA2                         = 0x00ec,
-    VK_OEM_PA3                         = 0x00ed,
-    VK_OEM_WSCTRL                      = 0x00ee,
-    VK_OEM_CUSEL                       = 0x00ef,
-    VK_OEM_ATTN                        = 0x00f0,
-    VK_OEM_FINISH                      = 0x00f1,
-    VK_OEM_COPY                        = 0x00f2,
-    VK_OEM_AUTO                        = 0x00f3,
-    VK_OEM_ENLW                        = 0x00f4,
-    VK_OEM_BACKTAB                     = 0x00f5,
-    VK_ATTN                            = 0x00f6,
-    VK_CRSEL                           = 0x00f7,
-    VK_EXSEL                           = 0x00f8,
-    VK_EREOF                           = 0x00f9,
-    VK_PLAY                            = 0x00fa,
-    VK_ZOOM                            = 0x00fb,
-    VK_NONAME                          = 0x00fc,
-    VK_PA1                             = 0x00fd,
-    VK_OEM_CLEAR                       = 0x00fe,
+    VK_0                               = cast(ushort) 0x0030,
+    VK_1                               = cast(ushort) 0x0031,
+    VK_2                               = cast(ushort) 0x0032,
+    VK_3                               = cast(ushort) 0x0033,
+    VK_4                               = cast(ushort) 0x0034,
+    VK_5                               = cast(ushort) 0x0035,
+    VK_6                               = cast(ushort) 0x0036,
+    VK_7                               = cast(ushort) 0x0037,
+    VK_8                               = cast(ushort) 0x0038,
+    VK_9                               = cast(ushort) 0x0039,
+    VK_A                               = cast(ushort) 0x0041,
+    VK_B                               = cast(ushort) 0x0042,
+    VK_C                               = cast(ushort) 0x0043,
+    VK_D                               = cast(ushort) 0x0044,
+    VK_E                               = cast(ushort) 0x0045,
+    VK_F_                              = cast(ushort) 0x0046,
+    VK_G                               = cast(ushort) 0x0047,
+    VK_H                               = cast(ushort) 0x0048,
+    VK_I                               = cast(ushort) 0x0049,
+    VK_J                               = cast(ushort) 0x004a,
+    VK_K                               = cast(ushort) 0x004b,
+    VK_L                               = cast(ushort) 0x004c,
+    VK_M                               = cast(ushort) 0x004d,
+    VK_N                               = cast(ushort) 0x004e,
+    VK_O                               = cast(ushort) 0x004f,
+    VK_P                               = cast(ushort) 0x0050,
+    VK_Q                               = cast(ushort) 0x0051,
+    VK_R                               = cast(ushort) 0x0052,
+    VK_S                               = cast(ushort) 0x0053,
+    VK_T                               = cast(ushort) 0x0054,
+    VK_U                               = cast(ushort) 0x0055,
+    VK_V                               = cast(ushort) 0x0056,
+    VK_W                               = cast(ushort) 0x0057,
+    VK_X                               = cast(ushort) 0x0058,
+    VK_Y                               = cast(ushort) 0x0059,
+    VK_Z                               = cast(ushort) 0x005a,
+    VK_ABNT_C1                         = cast(ushort) 0x00c1,
+    VK_ABNT_C2                         = cast(ushort) 0x00c2,
+    VK_DBE_ALPHANUMERIC                = cast(ushort) 0x00f0,
+    VK_DBE_CODEINPUT                   = cast(ushort) 0x00fa,
+    VK_DBE_DBCSCHAR                    = cast(ushort) 0x00f4,
+    VK_DBE_DETERMINESTRING             = cast(ushort) 0x00fc,
+    VK_DBE_ENTERDLGCONVERSIONMODE      = cast(ushort) 0x00fd,
+    VK_DBE_ENTERIMECONFIGMODE          = cast(ushort) 0x00f8,
+    VK_DBE_ENTERWORDREGISTERMODE       = cast(ushort) 0x00f7,
+    VK_DBE_FLUSHSTRING                 = cast(ushort) 0x00f9,
+    VK_DBE_HIRAGANA                    = cast(ushort) 0x00f2,
+    VK_DBE_KATAKANA                    = cast(ushort) 0x00f1,
+    VK_DBE_NOCODEINPUT                 = cast(ushort) 0x00fb,
+    VK_DBE_NOROMAN                     = cast(ushort) 0x00f6,
+    VK_DBE_ROMAN                       = cast(ushort) 0x00f5,
+    VK_DBE_SBCSCHAR                    = cast(ushort) 0x00f3,
+    VK__none_                          = cast(ushort) 0x00ff,
+    VK_LBUTTON                         = cast(ushort) 0x0001,
+    VK_RBUTTON                         = cast(ushort) 0x0002,
+    VK_CANCEL                          = cast(ushort) 0x0003,
+    VK_MBUTTON                         = cast(ushort) 0x0004,
+    VK_XBUTTON1                        = cast(ushort) 0x0005,
+    VK_XBUTTON2                        = cast(ushort) 0x0006,
+    VK_BACK                            = cast(ushort) 0x0008,
+    VK_TAB                             = cast(ushort) 0x0009,
+    VK_CLEAR                           = cast(ushort) 0x000c,
+    VK_RETURN                          = cast(ushort) 0x000d,
+    VK_SHIFT                           = cast(ushort) 0x0010,
+    VK_CONTROL                         = cast(ushort) 0x0011,
+    VK_MENU                            = cast(ushort) 0x0012,
+    VK_PAUSE                           = cast(ushort) 0x0013,
+    VK_CAPITAL                         = cast(ushort) 0x0014,
+    VK_KANA                            = cast(ushort) 0x0015,
+    VK_HANGEUL                         = cast(ushort) 0x0015,
+    VK_HANGUL                          = cast(ushort) 0x0015,
+    VK_IME_ON                          = cast(ushort) 0x0016,
+    VK_JUNJA                           = cast(ushort) 0x0017,
+    VK_FINAL                           = cast(ushort) 0x0018,
+    VK_HANJA                           = cast(ushort) 0x0019,
+    VK_KANJI                           = cast(ushort) 0x0019,
+    VK_IME_OFF                         = cast(ushort) 0x001a,
+    VK_ESCAPE                          = cast(ushort) 0x001b,
+    VK_CONVERT                         = cast(ushort) 0x001c,
+    VK_NONCONVERT                      = cast(ushort) 0x001d,
+    VK_ACCEPT                          = cast(ushort) 0x001e,
+    VK_MODECHANGE                      = cast(ushort) 0x001f,
+    VK_SPACE                           = cast(ushort) 0x0020,
+    VK_PRIOR                           = cast(ushort) 0x0021,
+    VK_NEXT                            = cast(ushort) 0x0022,
+    VK_END                             = cast(ushort) 0x0023,
+    VK_HOME                            = cast(ushort) 0x0024,
+    VK_LEFT                            = cast(ushort) 0x0025,
+    VK_UP                              = cast(ushort) 0x0026,
+    VK_RIGHT                           = cast(ushort) 0x0027,
+    VK_DOWN                            = cast(ushort) 0x0028,
+    VK_SELECT                          = cast(ushort) 0x0029,
+    VK_PRINT                           = cast(ushort) 0x002a,
+    VK_EXECUTE                         = cast(ushort) 0x002b,
+    VK_SNAPSHOT                        = cast(ushort) 0x002c,
+    VK_INSERT                          = cast(ushort) 0x002d,
+    VK_DELETE                          = cast(ushort) 0x002e,
+    VK_HELP                            = cast(ushort) 0x002f,
+    VK_LWIN                            = cast(ushort) 0x005b,
+    VK_RWIN                            = cast(ushort) 0x005c,
+    VK_APPS                            = cast(ushort) 0x005d,
+    VK_SLEEP                           = cast(ushort) 0x005f,
+    VK_NUMPAD0                         = cast(ushort) 0x0060,
+    VK_NUMPAD1                         = cast(ushort) 0x0061,
+    VK_NUMPAD2                         = cast(ushort) 0x0062,
+    VK_NUMPAD3                         = cast(ushort) 0x0063,
+    VK_NUMPAD4                         = cast(ushort) 0x0064,
+    VK_NUMPAD5                         = cast(ushort) 0x0065,
+    VK_NUMPAD6                         = cast(ushort) 0x0066,
+    VK_NUMPAD7                         = cast(ushort) 0x0067,
+    VK_NUMPAD8                         = cast(ushort) 0x0068,
+    VK_NUMPAD9                         = cast(ushort) 0x0069,
+    VK_MULTIPLY                        = cast(ushort) 0x006a,
+    VK_ADD                             = cast(ushort) 0x006b,
+    VK_SEPARATOR                       = cast(ushort) 0x006c,
+    VK_SUBTRACT                        = cast(ushort) 0x006d,
+    VK_DECIMAL                         = cast(ushort) 0x006e,
+    VK_DIVIDE                          = cast(ushort) 0x006f,
+    VK_F1                              = cast(ushort) 0x0070,
+    VK_F2                              = cast(ushort) 0x0071,
+    VK_F3                              = cast(ushort) 0x0072,
+    VK_F4                              = cast(ushort) 0x0073,
+    VK_F5                              = cast(ushort) 0x0074,
+    VK_F6                              = cast(ushort) 0x0075,
+    VK_F7                              = cast(ushort) 0x0076,
+    VK_F8                              = cast(ushort) 0x0077,
+    VK_F9                              = cast(ushort) 0x0078,
+    VK_F10                             = cast(ushort) 0x0079,
+    VK_F11                             = cast(ushort) 0x007a,
+    VK_F12                             = cast(ushort) 0x007b,
+    VK_F13                             = cast(ushort) 0x007c,
+    VK_F14                             = cast(ushort) 0x007d,
+    VK_F15                             = cast(ushort) 0x007e,
+    VK_F16                             = cast(ushort) 0x007f,
+    VK_F17                             = cast(ushort) 0x0080,
+    VK_F18                             = cast(ushort) 0x0081,
+    VK_F19                             = cast(ushort) 0x0082,
+    VK_F20                             = cast(ushort) 0x0083,
+    VK_F21                             = cast(ushort) 0x0084,
+    VK_F22                             = cast(ushort) 0x0085,
+    VK_F23                             = cast(ushort) 0x0086,
+    VK_F24                             = cast(ushort) 0x0087,
+    VK_NAVIGATION_VIEW                 = cast(ushort) 0x0088,
+    VK_NAVIGATION_MENU                 = cast(ushort) 0x0089,
+    VK_NAVIGATION_UP                   = cast(ushort) 0x008a,
+    VK_NAVIGATION_DOWN                 = cast(ushort) 0x008b,
+    VK_NAVIGATION_LEFT                 = cast(ushort) 0x008c,
+    VK_NAVIGATION_RIGHT                = cast(ushort) 0x008d,
+    VK_NAVIGATION_ACCEPT               = cast(ushort) 0x008e,
+    VK_NAVIGATION_CANCEL               = cast(ushort) 0x008f,
+    VK_NUMLOCK                         = cast(ushort) 0x0090,
+    VK_SCROLL                          = cast(ushort) 0x0091,
+    VK_OEM_NEC_EQUAL                   = cast(ushort) 0x0092,
+    VK_OEM_FJ_JISHO                    = cast(ushort) 0x0092,
+    VK_OEM_FJ_MASSHOU                  = cast(ushort) 0x0093,
+    VK_OEM_FJ_TOUROKU                  = cast(ushort) 0x0094,
+    VK_OEM_FJ_LOYA                     = cast(ushort) 0x0095,
+    VK_OEM_FJ_ROYA                     = cast(ushort) 0x0096,
+    VK_LSHIFT                          = cast(ushort) 0x00a0,
+    VK_RSHIFT                          = cast(ushort) 0x00a1,
+    VK_LCONTROL                        = cast(ushort) 0x00a2,
+    VK_RCONTROL                        = cast(ushort) 0x00a3,
+    VK_LMENU                           = cast(ushort) 0x00a4,
+    VK_RMENU                           = cast(ushort) 0x00a5,
+    VK_BROWSER_BACK                    = cast(ushort) 0x00a6,
+    VK_BROWSER_FORWARD                 = cast(ushort) 0x00a7,
+    VK_BROWSER_REFRESH                 = cast(ushort) 0x00a8,
+    VK_BROWSER_STOP                    = cast(ushort) 0x00a9,
+    VK_BROWSER_SEARCH                  = cast(ushort) 0x00aa,
+    VK_BROWSER_FAVORITES               = cast(ushort) 0x00ab,
+    VK_BROWSER_HOME                    = cast(ushort) 0x00ac,
+    VK_VOLUME_MUTE                     = cast(ushort) 0x00ad,
+    VK_VOLUME_DOWN                     = cast(ushort) 0x00ae,
+    VK_VOLUME_UP                       = cast(ushort) 0x00af,
+    VK_MEDIA_NEXT_TRACK                = cast(ushort) 0x00b0,
+    VK_MEDIA_PREV_TRACK                = cast(ushort) 0x00b1,
+    VK_MEDIA_STOP                      = cast(ushort) 0x00b2,
+    VK_MEDIA_PLAY_PAUSE                = cast(ushort) 0x00b3,
+    VK_LAUNCH_MAIL                     = cast(ushort) 0x00b4,
+    VK_LAUNCH_MEDIA_SELECT             = cast(ushort) 0x00b5,
+    VK_LAUNCH_APP1                     = cast(ushort) 0x00b6,
+    VK_LAUNCH_APP2                     = cast(ushort) 0x00b7,
+    VK_OEM_1                           = cast(ushort) 0x00ba,
+    VK_OEM_PLUS                        = cast(ushort) 0x00bb,
+    VK_OEM_COMMA                       = cast(ushort) 0x00bc,
+    VK_OEM_MINUS                       = cast(ushort) 0x00bd,
+    VK_OEM_PERIOD                      = cast(ushort) 0x00be,
+    VK_OEM_2                           = cast(ushort) 0x00bf,
+    VK_OEM_3                           = cast(ushort) 0x00c0,
+    VK_GAMEPAD_A                       = cast(ushort) 0x00c3,
+    VK_GAMEPAD_B                       = cast(ushort) 0x00c4,
+    VK_GAMEPAD_X                       = cast(ushort) 0x00c5,
+    VK_GAMEPAD_Y                       = cast(ushort) 0x00c6,
+    VK_GAMEPAD_RIGHT_SHOULDER          = cast(ushort) 0x00c7,
+    VK_GAMEPAD_LEFT_SHOULDER           = cast(ushort) 0x00c8,
+    VK_GAMEPAD_LEFT_TRIGGER            = cast(ushort) 0x00c9,
+    VK_GAMEPAD_RIGHT_TRIGGER           = cast(ushort) 0x00ca,
+    VK_GAMEPAD_DPAD_UP                 = cast(ushort) 0x00cb,
+    VK_GAMEPAD_DPAD_DOWN               = cast(ushort) 0x00cc,
+    VK_GAMEPAD_DPAD_LEFT               = cast(ushort) 0x00cd,
+    VK_GAMEPAD_DPAD_RIGHT              = cast(ushort) 0x00ce,
+    VK_GAMEPAD_MENU                    = cast(ushort) 0x00cf,
+    VK_GAMEPAD_VIEW                    = cast(ushort) 0x00d0,
+    VK_GAMEPAD_LEFT_THUMBSTICK_BUTTON  = cast(ushort) 0x00d1,
+    VK_GAMEPAD_RIGHT_THUMBSTICK_BUTTON = cast(ushort) 0x00d2,
+    VK_GAMEPAD_LEFT_THUMBSTICK_UP      = cast(ushort) 0x00d3,
+    VK_GAMEPAD_LEFT_THUMBSTICK_DOWN    = cast(ushort) 0x00d4,
+    VK_GAMEPAD_LEFT_THUMBSTICK_RIGHT   = cast(ushort) 0x00d5,
+    VK_GAMEPAD_LEFT_THUMBSTICK_LEFT    = cast(ushort) 0x00d6,
+    VK_GAMEPAD_RIGHT_THUMBSTICK_UP     = cast(ushort) 0x00d7,
+    VK_GAMEPAD_RIGHT_THUMBSTICK_DOWN   = cast(ushort) 0x00d8,
+    VK_GAMEPAD_RIGHT_THUMBSTICK_RIGHT  = cast(ushort) 0x00d9,
+    VK_GAMEPAD_RIGHT_THUMBSTICK_LEFT   = cast(ushort) 0x00da,
+    VK_OEM_4                           = cast(ushort) 0x00db,
+    VK_OEM_5                           = cast(ushort) 0x00dc,
+    VK_OEM_6                           = cast(ushort) 0x00dd,
+    VK_OEM_7                           = cast(ushort) 0x00de,
+    VK_OEM_8                           = cast(ushort) 0x00df,
+    VK_OEM_AX                          = cast(ushort) 0x00e1,
+    VK_OEM_102                         = cast(ushort) 0x00e2,
+    VK_ICO_HELP                        = cast(ushort) 0x00e3,
+    VK_ICO_00                          = cast(ushort) 0x00e4,
+    VK_PROCESSKEY                      = cast(ushort) 0x00e5,
+    VK_ICO_CLEAR                       = cast(ushort) 0x00e6,
+    VK_PACKET                          = cast(ushort) 0x00e7,
+    VK_OEM_RESET                       = cast(ushort) 0x00e9,
+    VK_OEM_JUMP                        = cast(ushort) 0x00ea,
+    VK_OEM_PA1                         = cast(ushort) 0x00eb,
+    VK_OEM_PA2                         = cast(ushort) 0x00ec,
+    VK_OEM_PA3                         = cast(ushort) 0x00ed,
+    VK_OEM_WSCTRL                      = cast(ushort) 0x00ee,
+    VK_OEM_CUSEL                       = cast(ushort) 0x00ef,
+    VK_OEM_ATTN                        = cast(ushort) 0x00f0,
+    VK_OEM_FINISH                      = cast(ushort) 0x00f1,
+    VK_OEM_COPY                        = cast(ushort) 0x00f2,
+    VK_OEM_AUTO                        = cast(ushort) 0x00f3,
+    VK_OEM_ENLW                        = cast(ushort) 0x00f4,
+    VK_OEM_BACKTAB                     = cast(ushort) 0x00f5,
+    VK_ATTN                            = cast(ushort) 0x00f6,
+    VK_CRSEL                           = cast(ushort) 0x00f7,
+    VK_EXSEL                           = cast(ushort) 0x00f8,
+    VK_EREOF                           = cast(ushort) 0x00f9,
+    VK_PLAY                            = cast(ushort) 0x00fa,
+    VK_ZOOM                            = cast(ushort) 0x00fb,
+    VK_NONAME                          = cast(ushort) 0x00fc,
+    VK_PA1                             = cast(ushort) 0x00fd,
+    VK_OEM_CLEAR                       = cast(ushort) 0x00fe,
 }
+
 alias MAP_VIRTUAL_KEY_TYPE = uint;
 enum : uint
 {
-    MAPVK_VK_TO_VSC    = 0x00000000,
-    MAPVK_VSC_TO_VK    = 0x00000001,
-    MAPVK_VK_TO_CHAR   = 0x00000002,
-    MAPVK_VSC_TO_VK_EX = 0x00000003,
-    MAPVK_VK_TO_VSC_EX = 0x00000004,
+    MAPVK_VK_TO_VSC    = 0x00000000U,
+    MAPVK_VSC_TO_VK    = 0x00000001U,
+    MAPVK_VK_TO_CHAR   = 0x00000002U,
+    MAPVK_VSC_TO_VK_EX = 0x00000003U,
+    MAPVK_VK_TO_VSC_EX = 0x00000004U,
 }
 
 // Constants
 
 
-enum uint EXTENDED_BIT = 0x01000000;
-enum uint DONTCARE_BIT = 0x02000000;
-enum uint FAKE_KEYSTROKE = 0x02000000;
+enum uint EXTENDED_BIT = 0x01000000U;
+enum uint DONTCARE_BIT = 0x02000000U;
+enum uint FAKE_KEYSTROKE = 0x02000000U;
 
 enum : uint
 {
-    KBDBASE  = 0x00000000,
-    KBDSHIFT = 0x00000001,
+    KBDBASE  = 0x00000000U,
+    KBDSHIFT = 0x00000001U,
 }
 
 enum : uint
 {
-    KBDCTRL      = 0x00000002,
-    KBDALT       = 0x00000004,
-    KBDKANA      = 0x00000008,
-    KBDROYA      = 0x00000010,
-    KBDLOYA      = 0x00000020,
-    KBDGRPSELTAP = 0x00000080,
+    KBDCTRL      = 0x00000002U,
+    KBDALT       = 0x00000004U,
+    KBDKANA      = 0x00000008U,
+    KBDROYA      = 0x00000010U,
+    KBDLOYA      = 0x00000020U,
+    KBDGRPSELTAP = 0x00000080U,
 }
 
-enum uint GRAVE = 0x00000300;
-enum uint ACUTE = 0x00000301;
-enum uint CIRCUMFLEX = 0x00000302;
-enum uint TILDE = 0x00000303;
-enum uint MACRON = 0x00000304;
-enum uint OVERSCORE = 0x00000305;
-enum uint BREVE = 0x00000306;
-enum uint DOT_ABOVE = 0x00000307;
-enum uint UMLAUT = 0x00000308;
-enum uint DIARESIS = 0x00000308;
-enum uint HOOK_ABOVE = 0x00000309;
-enum uint RING = 0x0000030a;
-enum uint DOUBLE_ACUTE = 0x0000030b;
-enum uint HACEK = 0x0000030c;
-enum uint CEDILLA = 0x00000327;
-enum uint OGONEK = 0x00000328;
-enum uint TONOS = 0x00000384;
-enum uint DIARESIS_TONOS = 0x00000385;
+enum uint GRAVE = 0x00000300U;
+enum uint ACUTE = 0x00000301U;
+enum uint CIRCUMFLEX = 0x00000302U;
+enum uint TILDE = 0x00000303U;
+enum uint MACRON = 0x00000304U;
+enum uint OVERSCORE = 0x00000305U;
+enum uint BREVE = 0x00000306U;
+enum uint DOT_ABOVE = 0x00000307U;
+enum uint UMLAUT = 0x00000308U;
+enum uint DIARESIS = 0x00000308U;
+enum uint HOOK_ABOVE = 0x00000309U;
+enum uint RING = 0x0000030aU;
+enum uint DOUBLE_ACUTE = 0x0000030bU;
+enum uint HACEK = 0x0000030cU;
+enum uint CEDILLA = 0x00000327U;
+enum uint OGONEK = 0x00000328U;
+enum uint TONOS = 0x00000384U;
+enum uint DIARESIS_TONOS = 0x00000385U;
 enum const(wchar)* wszGRAVE = "̀";
 enum const(wchar)* wszACUTE = "́";
 enum const(wchar)* wszCIRCUMFLEX = "̂";
@@ -403,163 +412,163 @@ enum const(wchar)* wszCEDILLA = "̧";
 enum const(wchar)* wszOGONEK = "̨";
 enum const(wchar)* wszTONOS = "΄";
 enum const(wchar)* wszDIARESIS_TONOS = "΅";
-enum uint SHFT_INVALID = 0x0000000f;
+enum uint SHFT_INVALID = 0x0000000fU;
 
 enum : uint
 {
-    WCH_NONE = 0x0000f000,
-    WCH_DEAD = 0x0000f001,
-    WCH_LGTR = 0x0000f002,
+    WCH_NONE = 0x0000f000U,
+    WCH_DEAD = 0x0000f001U,
+    WCH_LGTR = 0x0000f002U,
 }
 
-enum uint CAPLOK = 0x00000001;
-enum uint SGCAPS = 0x00000002;
-enum uint CAPLOKALTGR = 0x00000004;
-enum uint KANALOK = 0x00000008;
-enum uint GRPSELTAP = 0x00000080;
-enum uint DKF_DEAD = 0x00000001;
-enum uint KBD_VERSION = 0x00000001;
+enum uint CAPLOK = 0x00000001U;
+enum uint SGCAPS = 0x00000002U;
+enum uint CAPLOKALTGR = 0x00000004U;
+enum uint KANALOK = 0x00000008U;
+enum uint GRPSELTAP = 0x00000080U;
+enum uint DKF_DEAD = 0x00000001U;
+enum uint KBD_VERSION = 0x00000001U;
 
 enum : uint
 {
-    KLLF_ALTGR     = 0x00000001,
-    KLLF_SHIFTLOCK = 0x00000002,
-}
-
-enum : uint
-{
-    KLLF_LRM_RLM      = 0x00000004,
-    KLLF_GLOBAL_ATTRS = 0x00000002,
-}
-
-enum uint KBDTABLE_MULTI_MAX = 0x00000008;
-
-enum : uint
-{
-    KEYBOARD_TYPE_GENERIC_101 = 0x00000004,
-    KEYBOARD_TYPE_JAPAN       = 0x00000007,
-    KEYBOARD_TYPE_KOREA       = 0x00000008,
-    KEYBOARD_TYPE_UNKNOWN     = 0x00000051,
+    KLLF_ALTGR     = 0x00000001U,
+    KLLF_SHIFTLOCK = 0x00000002U,
 }
 
 enum : uint
 {
-    NLSKBD_OEM_MICROSOFT  = 0x00000000,
-    NLSKBD_OEM_AX         = 0x00000001,
-    NLSKBD_OEM_EPSON      = 0x00000004,
-    NLSKBD_OEM_FUJITSU    = 0x00000005,
-    NLSKBD_OEM_IBM        = 0x00000007,
-    NLSKBD_OEM_MATSUSHITA = 0x0000000a,
-    NLSKBD_OEM_NEC        = 0x0000000d,
-    NLSKBD_OEM_TOSHIBA    = 0x00000012,
-    NLSKBD_OEM_DEC        = 0x00000018,
+    KLLF_LRM_RLM      = 0x00000004U,
+    KLLF_GLOBAL_ATTRS = 0x00000002U,
+}
+
+enum uint KBDTABLE_MULTI_MAX = 0x00000008U;
+
+enum : uint
+{
+    KEYBOARD_TYPE_GENERIC_101 = 0x00000004U,
+    KEYBOARD_TYPE_JAPAN       = 0x00000007U,
+    KEYBOARD_TYPE_KOREA       = 0x00000008U,
+    KEYBOARD_TYPE_UNKNOWN     = 0x00000051U,
 }
 
 enum : uint
 {
-    MICROSOFT_KBD_101_TYPE = 0x00000000,
-    MICROSOFT_KBD_AX_TYPE  = 0x00000001,
-    MICROSOFT_KBD_106_TYPE = 0x00000002,
-    MICROSOFT_KBD_002_TYPE = 0x00000003,
-    MICROSOFT_KBD_001_TYPE = 0x00000004,
-    MICROSOFT_KBD_FUNC     = 0x0000000c,
-}
-
-enum uint AX_KBD_DESKTOP_TYPE = 0x00000001;
-
-enum : uint
-{
-    FMR_KBD_JIS_TYPE   = 0x00000000,
-    FMR_KBD_OASYS_TYPE = 0x00000001,
-}
-
-enum uint FMV_KBD_OASYS_TYPE = 0x00000002;
-
-enum : uint
-{
-    NEC_KBD_NORMAL_TYPE = 0x00000001,
-    NEC_KBD_N_MODE_TYPE = 0x00000002,
-    NEC_KBD_H_MODE_TYPE = 0x00000003,
-    NEC_KBD_LAPTOP_TYPE = 0x00000004,
-    NEC_KBD_106_TYPE    = 0x00000005,
+    NLSKBD_OEM_MICROSOFT  = 0x00000000U,
+    NLSKBD_OEM_AX         = 0x00000001U,
+    NLSKBD_OEM_EPSON      = 0x00000004U,
+    NLSKBD_OEM_FUJITSU    = 0x00000005U,
+    NLSKBD_OEM_IBM        = 0x00000007U,
+    NLSKBD_OEM_MATSUSHITA = 0x0000000aU,
+    NLSKBD_OEM_NEC        = 0x0000000dU,
+    NLSKBD_OEM_TOSHIBA    = 0x00000012U,
+    NLSKBD_OEM_DEC        = 0x00000018U,
 }
 
 enum : uint
 {
-    TOSHIBA_KBD_DESKTOP_TYPE = 0x0000000d,
-    TOSHIBA_KBD_LAPTOP_TYPE  = 0x0000000f,
+    MICROSOFT_KBD_101_TYPE = 0x00000000U,
+    MICROSOFT_KBD_AX_TYPE  = 0x00000001U,
+    MICROSOFT_KBD_106_TYPE = 0x00000002U,
+    MICROSOFT_KBD_002_TYPE = 0x00000003U,
+    MICROSOFT_KBD_001_TYPE = 0x00000004U,
+    MICROSOFT_KBD_FUNC     = 0x0000000cU,
 }
 
-enum uint DEC_KBD_ANSI_LAYOUT_TYPE = 0x00000001;
-enum uint DEC_KBD_JIS_LAYOUT_TYPE = 0x00000002;
+enum uint AX_KBD_DESKTOP_TYPE = 0x00000001U;
 
 enum : uint
 {
-    MICROSOFT_KBD_101A_TYPE = 0x00000000,
-    MICROSOFT_KBD_101B_TYPE = 0x00000004,
-    MICROSOFT_KBD_101C_TYPE = 0x00000005,
-    MICROSOFT_KBD_103_TYPE  = 0x00000006,
+    FMR_KBD_JIS_TYPE   = 0x00000000U,
+    FMR_KBD_OASYS_TYPE = 0x00000001U,
 }
 
-enum uint NLSKBD_INFO_SEND_IME_NOTIFICATION = 0x00000001;
-enum uint NLSKBD_INFO_ACCESSIBILITY_KEYMAP = 0x00000002;
+enum uint FMV_KBD_OASYS_TYPE = 0x00000002U;
 
 enum : uint
 {
-    NLSKBD_INFO_EMURATE_101_KEYBOARD = 0x00000010,
-    NLSKBD_INFO_EMURATE_106_KEYBOARD = 0x00000020,
-}
-
-enum : uint
-{
-    KBDNLS_TYPE_NULL   = 0x00000000,
-    KBDNLS_TYPE_NORMAL = 0x00000001,
-    KBDNLS_TYPE_TOGGLE = 0x00000002,
+    NEC_KBD_NORMAL_TYPE = 0x00000001U,
+    NEC_KBD_N_MODE_TYPE = 0x00000002U,
+    NEC_KBD_H_MODE_TYPE = 0x00000003U,
+    NEC_KBD_LAPTOP_TYPE = 0x00000004U,
+    NEC_KBD_106_TYPE    = 0x00000005U,
 }
 
 enum : uint
 {
-    KBDNLS_INDEX_NORMAL  = 0x00000001,
-    KBDNLS_INDEX_ALT     = 0x00000002,
-    KBDNLS_NULL          = 0x00000000,
-    KBDNLS_NOEVENT       = 0x00000001,
-    KBDNLS_SEND_BASE_VK  = 0x00000002,
-    KBDNLS_SEND_PARAM_VK = 0x00000003,
+    TOSHIBA_KBD_DESKTOP_TYPE = 0x0000000dU,
+    TOSHIBA_KBD_LAPTOP_TYPE  = 0x0000000fU,
+}
+
+enum uint DEC_KBD_ANSI_LAYOUT_TYPE = 0x00000001U;
+enum uint DEC_KBD_JIS_LAYOUT_TYPE = 0x00000002U;
+
+enum : uint
+{
+    MICROSOFT_KBD_101A_TYPE = 0x00000000U,
+    MICROSOFT_KBD_101B_TYPE = 0x00000004U,
+    MICROSOFT_KBD_101C_TYPE = 0x00000005U,
+    MICROSOFT_KBD_103_TYPE  = 0x00000006U,
+}
+
+enum uint NLSKBD_INFO_SEND_IME_NOTIFICATION = 0x00000001U;
+enum uint NLSKBD_INFO_ACCESSIBILITY_KEYMAP = 0x00000002U;
+
+enum : uint
+{
+    NLSKBD_INFO_EMURATE_101_KEYBOARD = 0x00000010U,
+    NLSKBD_INFO_EMURATE_106_KEYBOARD = 0x00000020U,
 }
 
 enum : uint
 {
-    KBDNLS_KANALOCK      = 0x00000004,
-    KBDNLS_ALPHANUM      = 0x00000005,
-    KBDNLS_HIRAGANA      = 0x00000006,
-    KBDNLS_KATAKANA      = 0x00000007,
-    KBDNLS_SBCSDBCS      = 0x00000008,
-    KBDNLS_ROMAN         = 0x00000009,
-    KBDNLS_CODEINPUT     = 0x0000000a,
-    KBDNLS_HELP_OR_END   = 0x0000000b,
-    KBDNLS_HOME_OR_CLEAR = 0x0000000c,
+    KBDNLS_TYPE_NULL   = 0x00000000U,
+    KBDNLS_TYPE_NORMAL = 0x00000001U,
+    KBDNLS_TYPE_TOGGLE = 0x00000002U,
 }
 
 enum : uint
 {
-    KBDNLS_NUMPAD          = 0x0000000d,
-    KBDNLS_KANAEVENT       = 0x0000000e,
-    KBDNLS_CONV_OR_NONCONV = 0x0000000f,
+    KBDNLS_INDEX_NORMAL  = 0x00000001U,
+    KBDNLS_INDEX_ALT     = 0x00000002U,
+    KBDNLS_NULL          = 0x00000000U,
+    KBDNLS_NOEVENT       = 0x00000001U,
+    KBDNLS_SEND_BASE_VK  = 0x00000002U,
+    KBDNLS_SEND_PARAM_VK = 0x00000003U,
 }
-
-enum uint KBD_TYPE = 0x00000004;
 
 enum : uint
 {
-    SCANCODE_LSHIFT             = 0x0000002a,
-    SCANCODE_RSHIFT             = 0x00000036,
-    SCANCODE_CTRL               = 0x0000001d,
-    SCANCODE_ALT                = 0x00000038,
-    SCANCODE_NUMPAD_FIRST       = 0x00000047,
-    SCANCODE_NUMPAD_LAST        = 0x00000052,
-    SCANCODE_LWIN               = 0x0000005b,
-    SCANCODE_RWIN               = 0x0000005c,
-    SCANCODE_THAI_LAYOUT_TOGGLE = 0x00000029,
+    KBDNLS_KANALOCK      = 0x00000004U,
+    KBDNLS_ALPHANUM      = 0x00000005U,
+    KBDNLS_HIRAGANA      = 0x00000006U,
+    KBDNLS_KATAKANA      = 0x00000007U,
+    KBDNLS_SBCSDBCS      = 0x00000008U,
+    KBDNLS_ROMAN         = 0x00000009U,
+    KBDNLS_CODEINPUT     = 0x0000000aU,
+    KBDNLS_HELP_OR_END   = 0x0000000bU,
+    KBDNLS_HOME_OR_CLEAR = 0x0000000cU,
+}
+
+enum : uint
+{
+    KBDNLS_NUMPAD          = 0x0000000dU,
+    KBDNLS_KANAEVENT       = 0x0000000eU,
+    KBDNLS_CONV_OR_NONCONV = 0x0000000fU,
+}
+
+enum uint KBD_TYPE = 0x00000004U;
+
+enum : uint
+{
+    SCANCODE_LSHIFT             = 0x0000002aU,
+    SCANCODE_RSHIFT             = 0x00000036U,
+    SCANCODE_CTRL               = 0x0000001dU,
+    SCANCODE_ALT                = 0x00000038U,
+    SCANCODE_NUMPAD_FIRST       = 0x00000047U,
+    SCANCODE_NUMPAD_LAST        = 0x00000052U,
+    SCANCODE_LWIN               = 0x0000005bU,
+    SCANCODE_RWIN               = 0x0000005cU,
+    SCANCODE_THAI_LAYOUT_TOGGLE = 0x00000029U,
 }
 
 // Structs
@@ -790,7 +799,7 @@ struct KBD_TYPE_INFO
     uint dwSubType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-mousemovepoint))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-mousemovepoint
 struct MOUSEMOVEPOINT
 {
     int    x;
@@ -800,7 +809,7 @@ struct MOUSEMOVEPOINT
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-trackmouseevent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-trackmouseevent
 struct TRACKMOUSEEVENT
 {
     uint cbSize;
@@ -809,7 +818,7 @@ struct TRACKMOUSEEVENT
     uint dwHoverTime;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-mouseinput))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-mouseinput
 struct MOUSEINPUT
 {
     int               dx;
@@ -820,7 +829,7 @@ struct MOUSEINPUT
     size_t            dwExtraInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-keybdinput))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-keybdinput
 struct KEYBDINPUT
 {
     VIRTUAL_KEY       wVk;
@@ -830,7 +839,7 @@ struct KEYBDINPUT
     size_t            dwExtraInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-hardwareinput))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-hardwareinput
 struct HARDWAREINPUT
 {
     uint   uMsg;
@@ -838,15 +847,20 @@ struct HARDWAREINPUT
     ushort wParamH;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-input))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-input
 struct INPUT
 {
-    INPUT_TYPE          type;
-    _Anonymous_e__Union Anonymous;
+    INPUT_TYPE type;
+    union
+    {
+        MOUSEINPUT    mi;
+        KEYBDINPUT    ki;
+        HARDWAREINPUT hi;
+    }
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-lastinputinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-lastinputinfo
 struct LASTINPUTINFO
 {
     uint cbSize;

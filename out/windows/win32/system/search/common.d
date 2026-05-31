@@ -9,7 +9,8 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquerycondition/ne-structuredquerycondition-condition_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquerycondition/ne-structuredquerycondition-condition_type
 alias CONDITION_TYPE = int;
 enum : int
 {
@@ -18,7 +19,8 @@ enum : int
     CT_NOT_CONDITION  = 0x00000002,
     CT_LEAF_CONDITION = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/structuredquerycondition/ne-structuredquerycondition-condition_operation))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/structuredquerycondition/ne-structuredquerycondition-condition_operation
 alias CONDITION_OPERATION = int;
 enum : int
 {

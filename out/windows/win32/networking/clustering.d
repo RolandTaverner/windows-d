@@ -3,13 +3,14 @@
 module windows.win32.networking.clustering;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BOOLEAN, BSTR, FILETIME, HANDLE,
-                                         HRESULT, NTSTATUS, PWSTR, SYSTEMTIME;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BOOLEAN, BSTR, FILETIME, HANDLE,
+                                                    HRESULT, NTSTATUS, PWSTR, SYSTEMTIME;
 public import windows.win32.graphics.gdi : HFONT;
-public import windows.win32.security : OBJECT_SECURITY_INFORMATION, PSECURITY_DESCRIPTOR,
-                                       SECURITY_ATTRIBUTES, SECURITY_DESCRIPTOR_RELATIVE;
-public import windows.win32.system.com : IDispatch, IUnknown;
+public import windows.win32.security.security : OBJECT_SECURITY_INFORMATION, PSECURITY_DESCRIPTOR,
+                                                SECURITY_ATTRIBUTES,
+                                                SECURITY_DESCRIPTOR_RELATIVE;
+public import windows.win32.system.com.com : IDispatch, IUnknown;
 public import windows.win32.system.registry : HKEY;
 public import windows.win32.system.services : SC_HANDLE;
 public import windows.win32.system.variant : VARIANT;
@@ -20,13 +21,15 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias CLUSTER_QUORUM_TYPE = int;
 enum : int
 {
     OperationalQuorum = 0x00000000,
     ModifyQuorum      = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-node_cluster_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-node_cluster_state
 alias NODE_CLUSTER_STATE = int;
 enum : int
 {
@@ -35,7 +38,8 @@ enum : int
     ClusterStateNotRunning    = 0x00000003,
     ClusterStateRunning       = 0x00000013,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_resource_state_change_reason))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_resource_state_change_reason
 alias CLUSTER_RESOURCE_STATE_CHANGE_REASON = int;
 enum : int
 {
@@ -46,7 +50,8 @@ enum : int
     eResourceStateChangeReasonShutdown   = 0x00000004,
     eResourceStateChangeReasonRundown    = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_reg_command))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_reg_command
 alias CLUSTER_REG_COMMAND = int;
 enum : int
 {
@@ -71,7 +76,8 @@ enum : int
     CLUSREG_CONDITION_KEY_NOT_EXISTS  = 0x00000012,
     CLUSREG_LAST_COMMAND              = 0x00000013,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-clusgroup_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-clusgroup_type
 alias CLUSGROUP_TYPE = int;
 enum : int
 {
@@ -110,7 +116,8 @@ enum : int
     ClusGroupTypeMetaVirtualMachine       = 0x0000007f,
     ClusGroupTypeUnknown                  = 0x0000270f,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_mgmt_point_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_mgmt_point_type
 alias CLUSTER_MGMT_POINT_TYPE = int;
 enum : int
 {
@@ -119,6 +126,7 @@ enum : int
     CLUSTER_MGMT_POINT_TYPE_DNS_ONLY = 0x00000002,
     CLUSTER_MGMT_POINT_TYPE_CNO_ONLY = 0x00000003,
 }
+
 alias CLUSTER_MGMT_POINT_RESTYPE = int;
 enum : int
 {
@@ -126,6 +134,7 @@ enum : int
     CLUSTER_MGMT_POINT_RESTYPE_SNN  = 0x00000001,
     CLUSTER_MGMT_POINT_RESTYPE_DNN  = 0x00000002,
 }
+
 alias CLUSTER_CLOUD_TYPE = int;
 enum : int
 {
@@ -134,7 +143,8 @@ enum : int
     CLUSTER_CLOUD_TYPE_MIXED   = 0x00000080,
     CLUSTER_CLOUD_TYPE_UNKNOWN = 0xffffffff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-clus_group_start_setting))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-clus_group_start_setting
 alias CLUS_GROUP_START_SETTING = int;
 enum : int
 {
@@ -142,6 +152,7 @@ enum : int
     CLUS_GROUP_DO_NOT_START  = 0x00000001,
     CLUS_GROUP_START_ALLOWED = 0x00000002,
 }
+
 alias CLUS_AFFINITY_RULE_TYPE = int;
 enum : int
 {
@@ -153,6 +164,7 @@ enum : int
     CLUS_AFFINITY_RULE_MIN                    = 0x00000000,
     CLUS_AFFINITY_RULE_MAX                    = 0x00000004,
 }
+
 alias CLUS_ADAPTER_EXCLUSION_TYPE = int;
 enum : int
 {
@@ -160,14 +172,16 @@ enum : int
     CLUS_ADAPTER_EXCLUSION_TYPE_DESCRIPTION  = 0x00000001,
     CLUS_ADAPTER_EXCLUSION_TYPE_FRIENDLYNAME = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_quorum_value))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_quorum_value
 alias CLUSTER_QUORUM_VALUE = int;
 enum : int
 {
     CLUSTER_QUORUM_MAINTAINED = 0x00000000,
     CLUSTER_QUORUM_LOST       = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ne-clusapi-cluster_upgrade_phase))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ne-clusapi-cluster_upgrade_phase
 alias CLUSTER_UPGRADE_PHASE = int;
 enum : int
 {
@@ -177,7 +191,8 @@ enum : int
     ClusterUpgradePhaseInstallingNewComponents = 0x00000004,
     ClusterUpgradePhaseUpgradeComplete         = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_change))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_change
 alias CLUSTER_CHANGE = int;
 enum : int
 {
@@ -215,14 +230,16 @@ enum : int
     CLUSTER_CHANGE_HANDLE_CLOSE           = 0x80000000,
     CLUSTER_CHANGE_ALL                    = 0xffffffff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_notifications_version))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_notifications_version
 alias CLUSTER_NOTIFICATIONS_VERSION = int;
 enum : int
 {
     CLUSTER_NOTIFICATIONS_V1 = 0x00000001,
     CLUSTER_NOTIFICATIONS_V2 = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_change_cluster_v2))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_change_cluster_v2
 alias CLUSTER_CHANGE_CLUSTER_V2 = int;
 enum : int
 {
@@ -241,7 +258,8 @@ enum : int
     CLUSTER_CHANGE_CLUSTER_UPGRADED_V2            = 0x00001000,
     CLUSTER_CHANGE_CLUSTER_ALL_V2                 = 0x00001fff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_change_group_v2))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_change_group_v2
 alias CLUSTER_CHANGE_GROUP_V2 = int;
 enum : int
 {
@@ -257,7 +275,8 @@ enum : int
     CLUSTER_CHANGE_GROUP_HANDLE_CLOSE_V2     = 0x00000200,
     CLUSTER_CHANGE_GROUP_ALL_V2              = 0x000003ff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_change_groupset_v2))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_change_groupset_v2
 alias CLUSTER_CHANGE_GROUPSET_V2 = int;
 enum : int
 {
@@ -272,6 +291,7 @@ enum : int
     CLUSTER_CHANGE_GROUPSET_HANDLE_CLOSE_v2     = 0x00000100,
     CLUSTER_CHANGE_GROUPSET_ALL_V2              = 0x000001ff,
 }
+
 alias CLUSTER_CHANGE_RESOURCE_V2 = int;
 enum : int
 {
@@ -288,7 +308,8 @@ enum : int
     CLUSTER_CHANGE_RESOURCE_TERMINAL_STATE_V2   = 0x00000400,
     CLUSTER_CHANGE_RESOURCE_ALL_V2              = 0x000007ff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_change_resource_type_v2))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_change_resource_type_v2
 alias CLUSTER_CHANGE_RESOURCE_TYPE_V2 = int;
 enum : int
 {
@@ -300,7 +321,8 @@ enum : int
     CLUSTER_RESOURCE_TYPE_SPECIFIC_V2                = 0x00000020,
     CLUSTER_CHANGE_RESOURCE_TYPE_ALL_V2              = 0x0000003f,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_change_netinterface_v2))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_change_netinterface_v2
 alias CLUSTER_CHANGE_NETINTERFACE_V2 = int;
 enum : int
 {
@@ -311,7 +333,8 @@ enum : int
     CLUSTER_CHANGE_NETINTERFACE_HANDLE_CLOSE_V2     = 0x00000010,
     CLUSTER_CHANGE_NETINTERFACE_ALL_V2              = 0x0000001f,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_change_network_v2))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_change_network_v2
 alias CLUSTER_CHANGE_NETWORK_V2 = int;
 enum : int
 {
@@ -322,7 +345,8 @@ enum : int
     CLUSTER_CHANGE_NETWORK_HANDLE_CLOSE_V2     = 0x00000010,
     CLUSTER_CHANGE_NETWORK_ALL_V2              = 0x0000001f,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_change_node_v2))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_change_node_v2
 alias CLUSTER_CHANGE_NODE_V2 = int;
 enum : int
 {
@@ -336,7 +360,8 @@ enum : int
     CLUSTER_CHANGE_NODE_HANDLE_CLOSE_V2       = 0x00000080,
     CLUSTER_CHANGE_NODE_ALL_V2                = 0x000000ff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_change_registry_v2))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_change_registry_v2
 alias CLUSTER_CHANGE_REGISTRY_V2 = int;
 enum : int
 {
@@ -347,14 +372,16 @@ enum : int
     CLUSTER_CHANGE_REGISTRY_HANDLE_CLOSE_V2 = 0x00000010,
     CLUSTER_CHANGE_REGISTRY_ALL_V2          = 0x0000001f,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_change_quorum_v2))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_change_quorum_v2
 alias CLUSTER_CHANGE_QUORUM_V2 = int;
 enum : int
 {
     CLUSTER_CHANGE_QUORUM_STATE_V2 = 0x00000001,
     CLUSTER_CHANGE_QUORUM_ALL_V2   = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_change_shared_volume_v2))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_change_shared_volume_v2
 alias CLUSTER_CHANGE_SHARED_VOLUME_V2 = int;
 enum : int
 {
@@ -363,12 +390,14 @@ enum : int
     CLUSTER_CHANGE_SHARED_VOLUME_REMOVED_V2 = 0x00000004,
     CLUSTER_CHANGE_SHARED_VOLUME_ALL_V2     = 0x00000007,
 }
+
 alias CLUSTER_CHANGE_SPACEPORT_V2 = int;
 enum : int
 {
     CLUSTER_CHANGE_SPACEPORT_CUSTOM_PNP_V2 = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_change_node_upgrade_phase_v2))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_change_node_upgrade_phase_v2
 alias CLUSTER_CHANGE_NODE_UPGRADE_PHASE_V2 = int;
 enum : int
 {
@@ -377,7 +406,8 @@ enum : int
     CLUSTER_CHANGE_UPGRADE_NODE_POSTCOMMIT = 0x00000004,
     CLUSTER_CHANGE_UPGRADE_ALL             = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_object_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_object_type
 alias CLUSTER_OBJECT_TYPE = int;
 enum : int
 {
@@ -396,6 +426,7 @@ enum : int
     CLUSTER_OBJECT_TYPE_AFFINITYRULE      = 0x00000010,
     CLUSTER_OBJECT_TYPE_FAULTDOMAIN       = 0x00000011,
 }
+
 alias CLUSTERSET_OBJECT_TYPE = int;
 enum : int
 {
@@ -404,7 +435,8 @@ enum : int
     CLUSTERSET_OBJECT_TYPE_WORKLOAD = 0x00000002,
     CLUSTERSET_OBJECT_TYPE_DATABASE = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_enum
 alias CLUSTER_ENUM = int;
 enum : int
 {
@@ -420,7 +452,8 @@ enum : int
     CLUSTER_ENUM_INTERNAL_NETWORK       = 0x80000000,
     CLUSTER_ENUM_ALL                    = 0x0000003f,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_node_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_node_enum
 alias CLUSTER_NODE_ENUM = int;
 enum : int
 {
@@ -429,7 +462,8 @@ enum : int
     CLUSTER_NODE_ENUM_PREFERRED_GROUPS = 0x00000004,
     CLUSTER_NODE_ENUM_ALL              = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_node_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_node_state
 alias CLUSTER_NODE_STATE = int;
 enum : int
 {
@@ -439,6 +473,7 @@ enum : int
     ClusterNodePaused       = 0x00000002,
     ClusterNodeJoining      = 0x00000003,
 }
+
 alias CLUSTER_STORAGENODE_STATE = int;
 enum : int
 {
@@ -449,7 +484,8 @@ enum : int
     ClusterStorageNodeStarting     = 0x00000004,
     ClusterStorageNodeStopping     = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_node_drain_status))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_node_drain_status
 alias CLUSTER_NODE_DRAIN_STATUS = int;
 enum : int
 {
@@ -459,7 +495,8 @@ enum : int
     NodeDrainStatusFailed       = 0x00000003,
     ClusterNodeDrainStatusCount = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_node_status))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_node_status
 alias CLUSTER_NODE_STATUS = int;
 enum : int
 {
@@ -472,6 +509,7 @@ enum : int
     NodeStatusAvoidPlacement  = 0x00000020,
     NodeStatusMax             = 0x00000033,
 }
+
 alias CLUSTER_NODE_FAILBACK_STATUS = int;
 enum : int
 {
@@ -481,7 +519,8 @@ enum : int
     NodeFailbackStatusFailed       = 0x00000003,
     ClusterNodeFailbackStatusCount = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_group_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_group_enum
 alias CLUSTER_GROUP_ENUM = int;
 enum : int
 {
@@ -489,7 +528,8 @@ enum : int
     CLUSTER_GROUP_ENUM_NODES    = 0x00000002,
     CLUSTER_GROUP_ENUM_ALL      = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_group_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_group_state
 alias CLUSTER_GROUP_STATE = int;
 enum : int
 {
@@ -500,7 +540,8 @@ enum : int
     ClusterGroupPartialOnline = 0x00000003,
     ClusterGroupPending       = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_group_priority))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_group_priority
 alias CLUSTER_GROUP_PRIORITY = int;
 enum : int
 {
@@ -509,7 +550,8 @@ enum : int
     PriorityMedium   = 0x000007d0,
     PriorityHigh     = 0x00000bb8,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_group_autofailback_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_group_autofailback_type
 alias CLUSTER_GROUP_AUTOFAILBACK_TYPE = int;
 enum : int
 {
@@ -517,7 +559,8 @@ enum : int
     ClusterGroupAllowFailback     = 0x00000001,
     ClusterGroupFailbackTypeCount = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ne-clusapi-cluster_node_resume_failback_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ne-clusapi-cluster_node_resume_failback_type
 alias CLUSTER_NODE_RESUME_FAILBACK_TYPE = int;
 enum : int
 {
@@ -526,7 +569,8 @@ enum : int
     FailbackGroupsPerPolicy            = 0x00000002,
     ClusterNodeResumeFailbackTypeCount = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_resource_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_resource_state
 alias CLUSTER_RESOURCE_STATE = int;
 enum : int
 {
@@ -540,7 +584,8 @@ enum : int
     ClusterResourceOnlinePending  = 0x00000081,
     ClusterResourceOfflinePending = 0x00000082,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_resource_restart_action))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_resource_restart_action
 alias CLUSTER_RESOURCE_RESTART_ACTION = int;
 enum : int
 {
@@ -549,7 +594,8 @@ enum : int
     ClusterResourceRestartNotify      = 0x00000002,
     ClusterResourceRestartActionCount = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_resource_embedded_failure_action))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_resource_embedded_failure_action
 alias CLUSTER_RESOURCE_EMBEDDED_FAILURE_ACTION = int;
 enum : int
 {
@@ -557,7 +603,8 @@ enum : int
     ClusterResourceEmbeddedFailureActionLogOnly = 0x00000001,
     ClusterResourceEmbeddedFailureActionRecover = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_resource_create_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_resource_create_flags
 alias CLUSTER_RESOURCE_CREATE_FLAGS = int;
 enum : int
 {
@@ -565,6 +612,7 @@ enum : int
     CLUSTER_RESOURCE_SEPARATE_MONITOR = 0x00000001,
     CLUSTER_RESOURCE_VALID_FLAGS      = 0x00000001,
 }
+
 alias CLUSTER_SHARED_VOLUME_SNAPSHOT_STATE = int;
 enum : int
 {
@@ -573,7 +621,8 @@ enum : int
     ClusterSharedVolumeHWSnapshotCompleted  = 0x00000002,
     ClusterSharedVolumePrepareForFreeze     = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_property_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_property_type
 alias CLUSTER_PROPERTY_TYPE = int;
 enum : int
 {
@@ -596,7 +645,8 @@ enum : int
     CLUSPROP_TYPE_STORAGE_DEVICE_ID_DESCRIPTOR = 0x0000000f,
     CLUSPROP_TYPE_USER                         = 0x00008000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_property_format))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_property_format
 alias CLUSTER_PROPERTY_FORMAT = int;
 enum : int
 {
@@ -617,39 +667,41 @@ enum : int
     CLUSPROP_FORMAT_PROPERTY_LIST       = 0x0000000e,
     CLUSPROP_FORMAT_USER                = 0x00008000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_property_syntax))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_property_syntax
 alias CLUSTER_PROPERTY_SYNTAX = uint;
 enum : uint
 {
-    CLUSPROP_SYNTAX_ENDMARK                        = 0x00000000,
-    CLUSPROP_SYNTAX_NAME                           = 0x00040003,
-    CLUSPROP_SYNTAX_RESCLASS                       = 0x00020002,
-    CLUSPROP_SYNTAX_LIST_VALUE_SZ                  = 0x00010003,
-    CLUSPROP_SYNTAX_LIST_VALUE_EXPAND_SZ           = 0x00010004,
-    CLUSPROP_SYNTAX_LIST_VALUE_DWORD               = 0x00010002,
-    CLUSPROP_SYNTAX_LIST_VALUE_BINARY              = 0x00010001,
-    CLUSPROP_SYNTAX_LIST_VALUE_MULTI_SZ            = 0x00010005,
-    CLUSPROP_SYNTAX_LIST_VALUE_LONG                = 0x00010007,
-    CLUSPROP_SYNTAX_LIST_VALUE_EXPANDED_SZ         = 0x00010008,
-    CLUSPROP_SYNTAX_LIST_VALUE_SECURITY_DESCRIPTOR = 0x00010009,
-    CLUSPROP_SYNTAX_LIST_VALUE_LARGE_INTEGER       = 0x0001000a,
-    CLUSPROP_SYNTAX_LIST_VALUE_ULARGE_INTEGER      = 0x00010006,
-    CLUSPROP_SYNTAX_LIST_VALUE_WORD                = 0x0001000b,
-    CLUSPROP_SYNTAX_LIST_VALUE_PROPERTY_LIST       = 0x0001000e,
-    CLUSPROP_SYNTAX_LIST_VALUE_FILETIME            = 0x0001000c,
-    CLUSPROP_SYNTAX_DISK_SIGNATURE                 = 0x00050002,
-    CLUSPROP_SYNTAX_SCSI_ADDRESS                   = 0x00060002,
-    CLUSPROP_SYNTAX_DISK_NUMBER                    = 0x00070002,
-    CLUSPROP_SYNTAX_PARTITION_INFO                 = 0x00080001,
-    CLUSPROP_SYNTAX_FTSET_INFO                     = 0x00090001,
-    CLUSPROP_SYNTAX_DISK_SERIALNUMBER              = 0x000a0003,
-    CLUSPROP_SYNTAX_DISK_GUID                      = 0x000b0003,
-    CLUSPROP_SYNTAX_DISK_SIZE                      = 0x000c0006,
-    CLUSPROP_SYNTAX_PARTITION_INFO_EX              = 0x000d0001,
-    CLUSPROP_SYNTAX_PARTITION_INFO_EX2             = 0x000e0001,
-    CLUSPROP_SYNTAX_STORAGE_DEVICE_ID_DESCRIPTOR   = 0x000f0001,
+    CLUSPROP_SYNTAX_ENDMARK                        = 0x00000000U,
+    CLUSPROP_SYNTAX_NAME                           = 0x00040003U,
+    CLUSPROP_SYNTAX_RESCLASS                       = 0x00020002U,
+    CLUSPROP_SYNTAX_LIST_VALUE_SZ                  = 0x00010003U,
+    CLUSPROP_SYNTAX_LIST_VALUE_EXPAND_SZ           = 0x00010004U,
+    CLUSPROP_SYNTAX_LIST_VALUE_DWORD               = 0x00010002U,
+    CLUSPROP_SYNTAX_LIST_VALUE_BINARY              = 0x00010001U,
+    CLUSPROP_SYNTAX_LIST_VALUE_MULTI_SZ            = 0x00010005U,
+    CLUSPROP_SYNTAX_LIST_VALUE_LONG                = 0x00010007U,
+    CLUSPROP_SYNTAX_LIST_VALUE_EXPANDED_SZ         = 0x00010008U,
+    CLUSPROP_SYNTAX_LIST_VALUE_SECURITY_DESCRIPTOR = 0x00010009U,
+    CLUSPROP_SYNTAX_LIST_VALUE_LARGE_INTEGER       = 0x0001000aU,
+    CLUSPROP_SYNTAX_LIST_VALUE_ULARGE_INTEGER      = 0x00010006U,
+    CLUSPROP_SYNTAX_LIST_VALUE_WORD                = 0x0001000bU,
+    CLUSPROP_SYNTAX_LIST_VALUE_PROPERTY_LIST       = 0x0001000eU,
+    CLUSPROP_SYNTAX_LIST_VALUE_FILETIME            = 0x0001000cU,
+    CLUSPROP_SYNTAX_DISK_SIGNATURE                 = 0x00050002U,
+    CLUSPROP_SYNTAX_SCSI_ADDRESS                   = 0x00060002U,
+    CLUSPROP_SYNTAX_DISK_NUMBER                    = 0x00070002U,
+    CLUSPROP_SYNTAX_PARTITION_INFO                 = 0x00080001U,
+    CLUSPROP_SYNTAX_FTSET_INFO                     = 0x00090001U,
+    CLUSPROP_SYNTAX_DISK_SERIALNUMBER              = 0x000a0003U,
+    CLUSPROP_SYNTAX_DISK_GUID                      = 0x000b0003U,
+    CLUSPROP_SYNTAX_DISK_SIZE                      = 0x000c0006U,
+    CLUSPROP_SYNTAX_PARTITION_INFO_EX              = 0x000d0001U,
+    CLUSPROP_SYNTAX_PARTITION_INFO_EX2             = 0x000e0001U,
+    CLUSPROP_SYNTAX_STORAGE_DEVICE_ID_DESCRIPTOR   = 0x000f0001U,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_control_object))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_control_object
 alias CLUSTER_CONTROL_OBJECT = int;
 enum : int
 {
@@ -665,6 +717,7 @@ enum : int
     CLUS_OBJECT_AFFINITYRULE  = 0x00000009,
     CLUS_OBJECT_USER          = 0x00000080,
 }
+
 alias CLCTL_CODES = int;
 enum : int
 {
@@ -865,7 +918,8 @@ enum : int
     CLCTL_CHECK_DRAIN_VETO                                          = 0x0010212d,
     CLCTL_NOTIFY_DRAIN_COMPLETE                                     = 0x00102131,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-clusctl_resource_codes))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-clusctl_resource_codes
 alias CLUSCTL_RESOURCE_CODES = int;
 enum : int
 {
@@ -980,7 +1034,8 @@ enum : int
     CLUSCTL_RESOURCE_NOTIFY_DRAIN_COMPLETE                     = 0x01102131,
     CLUSCTL_RESOURCE_GET_NODES_IN_FD                           = 0x01002de1,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-clusctl_resource_type_codes))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-clusctl_resource_type_codes
 alias CLUSCTL_RESOURCE_TYPE_CODES = int;
 enum : int
 {
@@ -1050,7 +1105,8 @@ enum : int
     CLUSCTL_RESOURCE_TYPE_CHECK_DRAIN_VETO                            = 0x0210212d,
     CLUSCTL_RESOURCE_TYPE_NOTIFY_DRAIN_COMPLETE                       = 0x02102131,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-clusctl_group_codes))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-clusctl_group_codes
 alias CLUSCTL_GROUP_CODES = int;
 enum : int
 {
@@ -1076,7 +1132,8 @@ enum : int
     CLUSCTL_GROUP_GET_LAST_MOVE_TIME          = 0x030002d9,
     CLUSCTL_GROUP_SET_CCF_FROM_MASTER         = 0x03402d86,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-clusctl_node_codes))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-clusctl_node_codes
 alias CLUSCTL_NODE_CODES = int;
 enum : int
 {
@@ -1105,7 +1162,8 @@ enum : int
     CLUSCTL_NODE_BLOCK_GEM_SEND_RECV              = 0x040002cd,
     CLUSCTL_NODE_GET_GEMID_VECTOR                 = 0x040002d1,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-clusctl_network_codes))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-clusctl_network_codes
 alias CLUSCTL_NETWORK_CODES = int;
 enum : int
 {
@@ -1127,7 +1185,8 @@ enum : int
     CLUSCTL_NETWORK_GET_COMMON_PROPERTY_FMTS    = 0x05000065,
     CLUSCTL_NETWORK_GET_PRIVATE_PROPERTY_FMTS   = 0x0500008d,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-clusctl_netinterface_codes))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-clusctl_netinterface_codes
 alias CLUSCTL_NETINTERFACE_CODES = int;
 enum : int
 {
@@ -1151,7 +1210,8 @@ enum : int
     CLUSCTL_NETINTERFACE_GET_COMMON_PROPERTY_FMTS    = 0x06000065,
     CLUSCTL_NETINTERFACE_GET_PRIVATE_PROPERTY_FMTS   = 0x0600008d,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-clusctl_cluster_codes))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-clusctl_cluster_codes
 alias CLUSCTL_CLUSTER_CODES = int;
 enum : int
 {
@@ -1196,7 +1256,8 @@ enum : int
     CLUSCTL_CLUSTER_CHECK_VOTER_EVICT_WITNESS                    = 0x0700006d,
     CLUSCTL_CLUSTER_CHECK_VOTER_DOWN_WITNESS                     = 0x07000071,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-clusctl_groupset_codes))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-clusctl_groupset_codes
 alias CLUSCTL_GROUPSET_CODES = int;
 enum : int
 {
@@ -1210,6 +1271,7 @@ enum : int
     CLUSCTL_GROUP_GET_PROVIDER_GROUPSETS      = 0x08002d81,
     CLUSCTL_GROUPSET_GET_ID                   = 0x08000039,
 }
+
 alias CLUSCTL_AFFINITYRULE_CODES = int;
 enum : int
 {
@@ -1219,7 +1281,8 @@ enum : int
     CLUSCTL_AFFINITYRULE_GET_ID                   = 0x09000039,
     CLUSCTL_AFFINITYRULE_GET_GROUPNAMES           = 0x09002d71,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_resource_class))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_resource_class
 alias CLUSTER_RESOURCE_CLASS = int;
 enum : int
 {
@@ -1228,13 +1291,15 @@ enum : int
     CLUS_RESCLASS_NETWORK = 0x00000002,
     CLUS_RESCLASS_USER    = 0x00008000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-clus_ressubclass))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-clus_ressubclass
 alias CLUS_RESSUBCLASS = int;
 enum : int
 {
     CLUS_RESSUBCLASS_SHARED = 0x80000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-clus_ressubclass_storage))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-clus_ressubclass_storage
 alias CLUS_RESSUBCLASS_STORAGE = int;
 enum : int
 {
@@ -1242,13 +1307,15 @@ enum : int
     CLUS_RESSUBCLASS_STORAGE_DISK        = 0x40000000,
     CLUS_RESSUBCLASS_STORAGE_REPLICATION = 0x10000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-clus_ressubclass_network))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-clus_ressubclass_network
 alias CLUS_RESSUBCLASS_NETWORK = int;
 enum : int
 {
     CLUS_RESSUBCLASS_NETWORK_INTERNET_PROTOCOL = 0x80000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-clus_characteristics))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-clus_characteristics
 alias CLUS_CHARACTERISTICS = int;
 enum : int
 {
@@ -1274,13 +1341,15 @@ enum : int
     CLUS_CHAR_VETO_DRAIN                     = 0x00040000,
     CLUS_CHAR_DRAIN_LOCAL_OFFLINE            = 0x00080000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-clus_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-clus_flags
 alias CLUS_FLAGS = int;
 enum : int
 {
     CLUS_FLAG_CORE = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-clusprop_piflags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-clusprop_piflags
 alias CLUSPROP_PIFLAGS = int;
 enum : int
 {
@@ -1293,7 +1362,8 @@ enum : int
     CLUSPROP_PIFLAG_RAW                = 0x00000040,
     CLUSPROP_PIFLAG_UNKNOWN            = 0x80000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ne-clusapi-cluster_csv_volume_fault_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ne-clusapi-cluster_csv_volume_fault_state
 alias CLUSTER_CSV_VOLUME_FAULT_STATE = int;
 enum : int
 {
@@ -1303,14 +1373,16 @@ enum : int
     VolumeStateInMaintenance = 0x00000004,
     VolumeStateDismounted    = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ne-clusapi-cluster_shared_volume_backup_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ne-clusapi-cluster_shared_volume_backup_state
 alias CLUSTER_SHARED_VOLUME_BACKUP_STATE = int;
 enum : int
 {
     VolumeBackupNone       = 0x00000000,
     VolumeBackupInProgress = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ne-clusapi-cluster_shared_volume_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ne-clusapi-cluster_shared_volume_state
 alias CLUSTER_SHARED_VOLUME_STATE = int;
 enum : int
 {
@@ -1320,6 +1392,7 @@ enum : int
     SharedVolumeStateActiveRedirected       = 0x00000003,
     SharedVolumeStateActiveVolumeRedirected = 0x00000004,
 }
+
 alias CLUSTER_SHARED_VOLUME_RENAME_INPUT_TYPE = int;
 enum : int
 {
@@ -1329,7 +1402,8 @@ enum : int
     ClusterSharedVolumeRenameInputTypeVolumeName   = 0x00000003,
     ClusterSharedVolumeRenameInputTypeVolumeGuid   = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ne-clusapi-maintenance_mode_type_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ne-clusapi-maintenance_mode_type_enum
 alias MAINTENANCE_MODE_TYPE_ENUM = int;
 enum : int
 {
@@ -1337,7 +1411,8 @@ enum : int
     MaintenanceModeTypeOfflineResource     = 0x00000002,
     MaintenanceModeTypeUnclusterResource   = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ne-clusapi-clusprop_ipaddr_enablenetbios))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ne-clusapi-clusprop_ipaddr_enablenetbios
 alias CLUSPROP_IPADDR_ENABLENETBIOS = int;
 enum : int
 {
@@ -1345,7 +1420,8 @@ enum : int
     CLUSPROP_IPADDR_ENABLENETBIOS_ENABLED   = 0x00000001,
     CLUSPROP_IPADDR_ENABLENETBIOS_TRACK_NIC = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ne-clusapi-fileshare_change_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ne-clusapi-fileshare_change_enum
 alias FILESHARE_CHANGE_ENUM = int;
 enum : int
 {
@@ -1354,7 +1430,8 @@ enum : int
     FILESHARE_CHANGE_DEL    = 0x00000002,
     FILESHARE_CHANGE_MODIFY = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_resource_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_resource_enum
 alias CLUSTER_RESOURCE_ENUM = int;
 enum : int
 {
@@ -1363,7 +1440,8 @@ enum : int
     CLUSTER_RESOURCE_ENUM_NODES    = 0x00000004,
     CLUSTER_RESOURCE_ENUM_ALL      = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_resource_type_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_resource_type_enum
 alias CLUSTER_RESOURCE_TYPE_ENUM = int;
 enum : int
 {
@@ -1371,14 +1449,16 @@ enum : int
     CLUSTER_RESOURCE_TYPE_ENUM_RESOURCES = 0x00000002,
     CLUSTER_RESOURCE_TYPE_ENUM_ALL       = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_network_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_network_enum
 alias CLUSTER_NETWORK_ENUM = int;
 enum : int
 {
     CLUSTER_NETWORK_ENUM_NETINTERFACES = 0x00000001,
     CLUSTER_NETWORK_ENUM_ALL           = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_network_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_network_state
 alias CLUSTER_NETWORK_STATE = int;
 enum : int
 {
@@ -1388,7 +1468,8 @@ enum : int
     ClusterNetworkPartitioned  = 0x00000002,
     ClusterNetworkUp           = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_network_role))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_network_role
 alias CLUSTER_NETWORK_ROLE = int;
 enum : int
 {
@@ -1397,7 +1478,8 @@ enum : int
     ClusterNetworkRoleClientAccess      = 0x00000002,
     ClusterNetworkRoleInternalAndClient = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_netinterface_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ne-msclus-cluster_netinterface_state
 alias CLUSTER_NETINTERFACE_STATE = int;
 enum : int
 {
@@ -1407,7 +1489,8 @@ enum : int
     ClusterNetInterfaceUnreachable  = 0x00000002,
     ClusterNetInterfaceUp           = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ne-clusapi-cluster_setup_phase))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ne-clusapi-cluster_setup_phase
 alias CLUSTER_SETUP_PHASE = int;
 enum : int
 {
@@ -1443,7 +1526,8 @@ enum : int
     ClusterSetupPhaseRepairDNSPermissions       = 0x000001f5,
     ClusterSetupPhaseFailureCleanup             = 0x000003e7,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ne-clusapi-cluster_setup_phase_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ne-clusapi-cluster_setup_phase_type
 alias CLUSTER_SETUP_PHASE_TYPE = int;
 enum : int
 {
@@ -1452,7 +1536,8 @@ enum : int
     ClusterSetupPhaseEnd      = 0x00000003,
     ClusterSetupPhaseReport   = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ne-clusapi-cluster_setup_phase_severity))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ne-clusapi-cluster_setup_phase_severity
 alias CLUSTER_SETUP_PHASE_SEVERITY = int;
 enum : int
 {
@@ -1460,7 +1545,8 @@ enum : int
     ClusterSetupPhaseWarning       = 0x00000002,
     ClusterSetupPhaseFatal         = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ne-clusapi-placement_options))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ne-clusapi-placement_options
 alias PLACEMENT_OPTIONS = int;
 enum : int
 {
@@ -1478,6 +1564,7 @@ enum : int
     PLACEMENT_OPTIONS_AVAILABILITY_SET_DOMAIN_AFFINITY                            = 0x00000200,
     PLACEMENT_OPTIONS_ALL                                                         = 0x000003ff,
 }
+
 alias GRP_PLACEMENT_OPTIONS = int;
 enum : int
 {
@@ -1486,7 +1573,8 @@ enum : int
     GRP_PLACEMENT_OPTIONS_DISABLE_AUTOBALANCING = 0x00000001,
     GRP_PLACEMENT_OPTIONS_ALL                   = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ne-clusapi-sr_replicated_disk_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ne-clusapi-sr_replicated_disk_type
 alias SR_REPLICATED_DISK_TYPE = int;
 enum : int
 {
@@ -1499,7 +1587,8 @@ enum : int
     SrReplicatedDiskTypeLogNotInParthership = 0x00000006,
     SrReplicatedDiskTypeOther               = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ne-clusapi-sr_disk_replication_eligible))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ne-clusapi-sr_disk_replication_eligible
 alias SR_DISK_REPLICATION_ELIGIBLE = int;
 enum : int
 {
@@ -1516,7 +1605,8 @@ enum : int
     SrDiskReplicationEligibleSameAsSpecifiedDisk     = 0x0000000a,
     SrDiskReplicationEligibleOther                   = 0x0000270f,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/resapi/ne-resapi-vm_resdll_context))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/resapi/ne-resapi-vm_resdll_context
 alias VM_RESDLL_CONTEXT = int;
 enum : int
 {
@@ -1526,7 +1616,8 @@ enum : int
     VmResdllContextShutdownForce = 0x00000003,
     VmResdllContextLiveMigration = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/resapi/ne-resapi-resdll_context_operation_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/resapi/ne-resapi-resdll_context_operation_type
 alias RESDLL_CONTEXT_OPERATION_TYPE = int;
 enum : int
 {
@@ -1538,7 +1629,8 @@ enum : int
     ResdllContextOperationTypeNetworkDisconnect          = 0x00000005,
     ResdllContextOperationTypeNetworkDisconnectMoveRetry = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/resapi/ne-resapi-log_level))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/resapi/ne-resapi-log_level
 alias LOG_LEVEL = int;
 enum : int
 {
@@ -1547,7 +1639,8 @@ enum : int
     LOG_ERROR       = 0x00000002,
     LOG_SEVERE      = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/resapi/ne-resapi-resource_exit_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/resapi/ne-resapi-resource_exit_state
 alias RESOURCE_EXIT_STATE = int;
 enum : int
 {
@@ -1555,7 +1648,8 @@ enum : int
     ResourceExitStateTerminate = 0x00000001,
     ResourceExitStateMax       = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/resapi/ne-resapi-failure_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/resapi/ne-resapi-failure_type
 alias FAILURE_TYPE = int;
 enum : int
 {
@@ -1563,7 +1657,8 @@ enum : int
     FAILURE_TYPE_EMBEDDED     = 0x00000001,
     FAILURE_TYPE_NETWORK_LOSS = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/resapi/ne-resapi-cluster_resource_application_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/resapi/ne-resapi-cluster_resource_application_state
 alias CLUSTER_RESOURCE_APPLICATION_STATE = int;
 enum : int
 {
@@ -1571,7 +1666,8 @@ enum : int
     ClusterResourceApplicationOSHeartBeat  = 0x00000002,
     ClusterResourceApplicationReady        = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/resapi/ne-resapi-resource_monitor_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/resapi/ne-resapi-resource_monitor_state
 alias RESOURCE_MONITOR_STATE = int;
 enum : int
 {
@@ -1592,7 +1688,8 @@ enum : int
     RmonTerminateResource    = 0x0000000e,
     RmonDeadlocked           = 0x0000000f,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/resapi/ne-resapi-cluster_role))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/resapi/ne-resapi-cluster_role
 alias CLUSTER_ROLE = int;
 enum : int
 {
@@ -1630,7 +1727,8 @@ enum : int
     ClusterRoleVirtualMachineReplicaBroker = 0x0000001f,
     ClusterRoleKeyValueStore               = 0x00000020,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/resapi/ne-resapi-cluster_role_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/resapi/ne-resapi-cluster_role_state
 alias CLUSTER_ROLE_STATE = int;
 enum : int
 {
@@ -1638,6 +1736,7 @@ enum : int
     ClusterRoleClustered   = 0x00000000,
     ClusterRoleUnclustered = 0x00000001,
 }
+
 alias CLUADMEX_OBJECT_TYPE = int;
 enum : int
 {
@@ -1656,106 +1755,106 @@ enum : int
 
 enum : uint
 {
-    CLUSTER_VERSION_FLAG_MIXED_MODE = 0x00000001,
-    CLUSTER_VERSION_UNKNOWN         = 0xffffffff,
+    CLUSTER_VERSION_FLAG_MIXED_MODE = 0x00000001U,
+    CLUSTER_VERSION_UNKNOWN         = 0xffffffffU,
 }
 
-enum uint NT4_MAJOR_VERSION = 0x00000001;
-enum uint NT4SP4_MAJOR_VERSION = 0x00000002;
-enum uint NT5_MAJOR_VERSION = 0x00000003;
-enum uint NT51_MAJOR_VERSION = 0x00000004;
-enum uint NT6_MAJOR_VERSION = 0x00000005;
-enum uint NT7_MAJOR_VERSION = 0x00000006;
-enum uint NT8_MAJOR_VERSION = 0x00000007;
-enum uint NT9_MAJOR_VERSION = 0x00000008;
-enum uint NT10_MAJOR_VERSION = 0x00000009;
-enum uint NT11_MAJOR_VERSION = 0x0000000a;
-enum uint NT12_MAJOR_VERSION = 0x0000000b;
-enum uint NT13_MAJOR_VERSION = 0x0000000c;
-enum uint WS2016_TP4_UPGRADE_VERSION = 0x00000006;
-enum uint WS2016_TP5_UPGRADE_VERSION = 0x00000007;
-enum uint WS2016_RTM_UPGRADE_VERSION = 0x00000008;
-enum uint RS3_UPGRADE_VERSION = 0x00000001;
-enum uint RS4_UPGRADE_VERSION = 0x00000002;
-enum uint RS5_UPGRADE_VERSION = 0x00000003;
-enum uint NINETEEN_H1_UPGRADE_VERSION = 0x00000001;
-enum uint NINETEEN_H2_UPGRADE_VERSION = 0x00000002;
-enum uint MN_UPGRADE_VERSION = 0x00000003;
-enum uint FE_UPGRADE_VERSION = 0x00000004;
-enum uint FE_22H2_UPGRADE_VERSION = 0x00000005;
-enum uint CA_UPGRADE_VERSION = 0x00000001;
-enum uint NI_UPGRADE_VERSION = 0x00000002;
-enum uint CU_UPGRADE_VERSION = 0x00000003;
-enum uint ZN_UPGRADE_VERSION = 0x00000004;
-enum uint GA_UPGRADE_VERSION = 0x00000005;
-enum uint GE_UPGRADE_VERSION = 0x00000006;
-enum uint HCI_UPGRADE_BIT = 0x00008000;
+enum uint NT4_MAJOR_VERSION = 0x00000001U;
+enum uint NT4SP4_MAJOR_VERSION = 0x00000002U;
+enum uint NT5_MAJOR_VERSION = 0x00000003U;
+enum uint NT51_MAJOR_VERSION = 0x00000004U;
+enum uint NT6_MAJOR_VERSION = 0x00000005U;
+enum uint NT7_MAJOR_VERSION = 0x00000006U;
+enum uint NT8_MAJOR_VERSION = 0x00000007U;
+enum uint NT9_MAJOR_VERSION = 0x00000008U;
+enum uint NT10_MAJOR_VERSION = 0x00000009U;
+enum uint NT11_MAJOR_VERSION = 0x0000000aU;
+enum uint NT12_MAJOR_VERSION = 0x0000000bU;
+enum uint NT13_MAJOR_VERSION = 0x0000000cU;
+enum uint WS2016_TP4_UPGRADE_VERSION = 0x00000006U;
+enum uint WS2016_TP5_UPGRADE_VERSION = 0x00000007U;
+enum uint WS2016_RTM_UPGRADE_VERSION = 0x00000008U;
+enum uint RS3_UPGRADE_VERSION = 0x00000001U;
+enum uint RS4_UPGRADE_VERSION = 0x00000002U;
+enum uint RS5_UPGRADE_VERSION = 0x00000003U;
+enum uint NINETEEN_H1_UPGRADE_VERSION = 0x00000001U;
+enum uint NINETEEN_H2_UPGRADE_VERSION = 0x00000002U;
+enum uint MN_UPGRADE_VERSION = 0x00000003U;
+enum uint FE_UPGRADE_VERSION = 0x00000004U;
+enum uint FE_22H2_UPGRADE_VERSION = 0x00000005U;
+enum uint CA_UPGRADE_VERSION = 0x00000001U;
+enum uint NI_UPGRADE_VERSION = 0x00000002U;
+enum uint CU_UPGRADE_VERSION = 0x00000003U;
+enum uint ZN_UPGRADE_VERSION = 0x00000004U;
+enum uint GA_UPGRADE_VERSION = 0x00000005U;
+enum uint GE_UPGRADE_VERSION = 0x00000006U;
+enum uint HCI_UPGRADE_BIT = 0x00008000U;
 enum const(wchar)* CLUSREG_NAME_MIXED_MODE = "MixedMode";
 
 enum : uint
 {
-    CLUSAPI_VERSION_SERVER2008   = 0x00000600,
-    CLUSAPI_VERSION_SERVER2008R2 = 0x00000700,
-    CLUSAPI_VERSION_WINDOWS8     = 0x00000701,
-    CLUSAPI_VERSION_WINDOWSBLUE  = 0x00000702,
-    CLUSAPI_VERSION_WINTHRESHOLD = 0x00000703,
-    CLUSAPI_VERSION_RS3          = 0x00000a00,
-    CLUSAPI_VERSION_NI           = 0x00000a0c,
-    CLUSAPI_VERSION_CU           = 0x00000c03,
-    CLUSAPI_VERSION_ZN           = 0x00000c04,
-    CLUSAPI_VERSION_GA           = 0x00000c05,
-    CLUSAPI_VERSION              = 0x00000c05,
+    CLUSAPI_VERSION_SERVER2008   = 0x00000600U,
+    CLUSAPI_VERSION_SERVER2008R2 = 0x00000700U,
+    CLUSAPI_VERSION_WINDOWS8     = 0x00000701U,
+    CLUSAPI_VERSION_WINDOWSBLUE  = 0x00000702U,
+    CLUSAPI_VERSION_WINTHRESHOLD = 0x00000703U,
+    CLUSAPI_VERSION_RS3          = 0x00000a00U,
+    CLUSAPI_VERSION_NI           = 0x00000a0cU,
+    CLUSAPI_VERSION_CU           = 0x00000c03U,
+    CLUSAPI_VERSION_ZN           = 0x00000c04U,
+    CLUSAPI_VERSION_GA           = 0x00000c05U,
+    CLUSAPI_VERSION              = 0x00000c05U,
 }
 
 enum : uint
 {
-    CREATE_CLUSTER_VERSION            = 0x00000600,
-    CREATE_CLUSTER_MAJOR_VERSION_MASK = 0xffffff00,
+    CREATE_CLUSTER_VERSION            = 0x00000600U,
+    CREATE_CLUSTER_MAJOR_VERSION_MASK = 0xffffff00U,
 }
 
-enum uint MAX_CLUSTERNAME_LENGTH = 0x0000003f;
+enum uint MAX_CLUSTERNAME_LENGTH = 0x0000003fU;
 
 enum : uint
 {
-    CLUSTER_INSTALLED  = 0x00000001,
-    CLUSTER_CONFIGURED = 0x00000002,
-    CLUSTER_RUNNING    = 0x00000010,
+    CLUSTER_INSTALLED  = 0x00000001U,
+    CLUSTER_CONFIGURED = 0x00000002U,
+    CLUSTER_RUNNING    = 0x00000010U,
 }
 
-enum uint CLUS_HYBRID_QUORUM = 0x00000400;
-enum uint CLUS_NODE_MAJORITY_QUORUM = 0x00000000;
-enum uint CLUSCTL_RESOURCE_STATE_CHANGE_REASON_VERSION_1 = 0x00000001;
+enum uint CLUS_HYBRID_QUORUM = 0x00000400U;
+enum uint CLUS_NODE_MAJORITY_QUORUM = 0x00000000U;
+enum uint CLUSCTL_RESOURCE_STATE_CHANGE_REASON_VERSION_1 = 0x00000001U;
 
 enum : uint
 {
-    CLUSREG_DATABASE_SYNC_WRITE_TO_ALL_NODES = 0x00000001,
-    CLUSREG_DATABASE_ISOLATE_READ            = 0x00000002,
-}
-
-enum : uint
-{
-    CLUSTER_ENUM_ITEM_VERSION_1 = 0x00000001,
-    CLUSTER_ENUM_ITEM_VERSION   = 0x00000001,
+    CLUSREG_DATABASE_SYNC_WRITE_TO_ALL_NODES = 0x00000001U,
+    CLUSREG_DATABASE_ISOLATE_READ            = 0x00000002U,
 }
 
 enum : uint
 {
-    CLUSTER_CREATE_GROUP_INFO_VERSION_1 = 0x00000001,
-    CLUSTER_CREATE_GROUP_INFO_VERSION   = 0x00000001,
+    CLUSTER_ENUM_ITEM_VERSION_1 = 0x00000001U,
+    CLUSTER_ENUM_ITEM_VERSION   = 0x00000001U,
 }
 
 enum : uint
 {
-    GROUPSET_READY_SETTING_DELAY             = 0x00000001,
-    GROUPSET_READY_SETTING_ONLINE            = 0x00000002,
-    GROUPSET_READY_SETTING_OS_HEARTBEAT      = 0x00000003,
-    GROUPSET_READY_SETTING_APPLICATION_READY = 0x00000004,
+    CLUSTER_CREATE_GROUP_INFO_VERSION_1 = 0x00000001U,
+    CLUSTER_CREATE_GROUP_INFO_VERSION   = 0x00000001U,
 }
 
 enum : uint
 {
-    CLUS_GRP_MOVE_ALLOWED = 0x00000000,
-    CLUS_GRP_MOVE_LOCKED  = 0x00000001,
+    GROUPSET_READY_SETTING_DELAY             = 0x00000001U,
+    GROUPSET_READY_SETTING_ONLINE            = 0x00000002U,
+    GROUPSET_READY_SETTING_OS_HEARTBEAT      = 0x00000003U,
+    GROUPSET_READY_SETTING_APPLICATION_READY = 0x00000004U,
+}
+
+enum : uint
+{
+    CLUS_GRP_MOVE_ALLOWED = 0x00000000U,
+    CLUS_GRP_MOVE_LOCKED  = 0x00000001U,
 }
 
 enum : int
@@ -1768,176 +1867,176 @@ enum int CLUSAPI_NO_ACCESS = 0x00000004;
 
 enum : uint
 {
-    CLUSTER_SET_ACCESS_TYPE_ALLOWED = 0x00000000,
-    CLUSTER_SET_ACCESS_TYPE_DENIED  = 0x00000001,
+    CLUSTER_SET_ACCESS_TYPE_ALLOWED = 0x00000000U,
+    CLUSTER_SET_ACCESS_TYPE_DENIED  = 0x00000001U,
 }
 
-enum uint CLUSTER_DELETE_ACCESS_CONTROL_ENTRY = 0x00000002;
+enum uint CLUSTER_DELETE_ACCESS_CONTROL_ENTRY = 0x00000002U;
 
 enum : ulong
 {
-    CLUSGROUPSET_STATUS_GROUPS_PENDING    = 0x0000000000000001,
-    CLUSGROUPSET_STATUS_GROUPS_ONLINE     = 0x0000000000000002,
-    CLUSGROUPSET_STATUS_OS_HEARTBEAT      = 0x0000000000000004,
-    CLUSGROUPSET_STATUS_APPLICATION_READY = 0x0000000000000008,
+    CLUSGROUPSET_STATUS_GROUPS_PENDING    = 0x0000000000000001UL,
+    CLUSGROUPSET_STATUS_GROUPS_ONLINE     = 0x0000000000000002UL,
+    CLUSGROUPSET_STATUS_OS_HEARTBEAT      = 0x0000000000000004UL,
+    CLUSGROUPSET_STATUS_APPLICATION_READY = 0x0000000000000008UL,
 }
 
-enum uint CLUSTER_AVAILABILITY_SET_CONFIG_V1 = 0x00000001;
+enum uint CLUSTER_AVAILABILITY_SET_CONFIG_V1 = 0x00000001U;
 
 enum : uint
 {
-    CLUSTER_GROUP_ENUM_ITEM_VERSION_1 = 0x00000001,
-    CLUSTER_GROUP_ENUM_ITEM_VERSION   = 0x00000001,
-}
-
-enum : uint
-{
-    CLUSTER_RESOURCE_ENUM_ITEM_VERSION_1 = 0x00000001,
-    CLUSTER_RESOURCE_ENUM_ITEM_VERSION   = 0x00000001,
-}
-
-enum uint CLUSAPI_NODE_PAUSE_REMAIN_ON_PAUSED_NODE_ON_MOVE_ERROR = 0x00000001;
-
-enum : uint
-{
-    CLUSAPI_NODE_AVOID_PLACEMENT              = 0x00000002,
-    CLUSAPI_NODE_PAUSE_RETRY_DRAIN_ON_FAILURE = 0x00000004,
+    CLUSTER_GROUP_ENUM_ITEM_VERSION_1 = 0x00000001U,
+    CLUSTER_GROUP_ENUM_ITEM_VERSION   = 0x00000001U,
 }
 
 enum : uint
 {
-    CLUSAPI_NODE_RESUME_FAILBACK_STORAGE         = 0x00000001,
-    CLUSAPI_NODE_RESUME_FAILBACK_VMS             = 0x00000002,
-    CLUSAPI_NODE_RESUME_FAILBACK_PINNED_VMS_ONLY = 0x00000004,
-    CLUSAPI_NODE_RESUME_FAILBACK_VMS_FORCEFULLY  = 0x00000008,
+    CLUSTER_RESOURCE_ENUM_ITEM_VERSION_1 = 0x00000001U,
+    CLUSTER_RESOURCE_ENUM_ITEM_VERSION   = 0x00000001U,
 }
 
-enum : ulong
+enum uint CLUSAPI_NODE_PAUSE_REMAIN_ON_PAUSED_NODE_ON_MOVE_ERROR = 0x00000001U;
+
+enum : uint
 {
-    CLUSGRP_STATUS_LOCKED_MODE               = 0x0000000000000001,
-    CLUSGRP_STATUS_PREEMPTED                 = 0x0000000000000002,
-    CLUSGRP_STATUS_WAITING_IN_QUEUE_FOR_MOVE = 0x0000000000000004,
+    CLUSAPI_NODE_AVOID_PLACEMENT              = 0x00000002U,
+    CLUSAPI_NODE_PAUSE_RETRY_DRAIN_ON_FAILURE = 0x00000004U,
 }
 
-enum ulong CLUSGRP_STATUS_PHYSICAL_RESOURCES_LACKING = 0x0000000000000008;
-
-enum : ulong
+enum : uint
 {
-    CLUSGRP_STATUS_WAITING_TO_START                     = 0x0000000000000010,
-    CLUSGRP_STATUS_EMBEDDED_FAILURE                     = 0x0000000000000020,
-    CLUSGRP_STATUS_OFFLINE_DUE_TO_ANTIAFFINITY_CONFLICT = 0x0000000000000040,
+    CLUSAPI_NODE_RESUME_FAILBACK_STORAGE         = 0x00000001U,
+    CLUSAPI_NODE_RESUME_FAILBACK_VMS             = 0x00000002U,
+    CLUSAPI_NODE_RESUME_FAILBACK_PINNED_VMS_ONLY = 0x00000004U,
+    CLUSAPI_NODE_RESUME_FAILBACK_VMS_FORCEFULLY  = 0x00000008U,
 }
 
 enum : ulong
 {
-    CLUSGRP_STATUS_NETWORK_FAILURE              = 0x0000000000000080,
-    CLUSGRP_STATUS_UNMONITORED                  = 0x0000000000000100,
-    CLUSGRP_STATUS_OS_HEARTBEAT                 = 0x0000000000000200,
-    CLUSGRP_STATUS_APPLICATION_READY            = 0x0000000000000400,
-    CLUSGRP_STATUS_OFFLINE_NOT_LOCAL_DISK_OWNER = 0x0000000000000800,
+    CLUSGRP_STATUS_LOCKED_MODE               = 0x0000000000000001UL,
+    CLUSGRP_STATUS_PREEMPTED                 = 0x0000000000000002UL,
+    CLUSGRP_STATUS_WAITING_IN_QUEUE_FOR_MOVE = 0x0000000000000004UL,
 }
 
-enum ulong CLUSGRP_STATUS_WAITING_FOR_DEPENDENCIES = 0x0000000000001000;
+enum ulong CLUSGRP_STATUS_PHYSICAL_RESOURCES_LACKING = 0x0000000000000008UL;
 
 enum : ulong
 {
-    CLUSRES_STATUS_LOCKED_MODE                                  = 0x0000000000000001,
-    CLUSRES_STATUS_EMBEDDED_FAILURE                             = 0x0000000000000002,
-    CLUSRES_STATUS_FAILED_DUE_TO_INSUFFICIENT_CPU               = 0x0000000000000004,
-    CLUSRES_STATUS_FAILED_DUE_TO_INSUFFICIENT_MEMORY            = 0x0000000000000008,
-    CLUSRES_STATUS_FAILED_DUE_TO_INSUFFICIENT_GENERIC_RESOURCES = 0x0000000000000010,
+    CLUSGRP_STATUS_WAITING_TO_START                     = 0x0000000000000010UL,
+    CLUSGRP_STATUS_EMBEDDED_FAILURE                     = 0x0000000000000020UL,
+    CLUSGRP_STATUS_OFFLINE_DUE_TO_ANTIAFFINITY_CONFLICT = 0x0000000000000040UL,
 }
 
 enum : ulong
 {
-    CLUSRES_STATUS_NETWORK_FAILURE              = 0x0000000000000020,
-    CLUSRES_STATUS_UNMONITORED                  = 0x0000000000000040,
-    CLUSRES_STATUS_OS_HEARTBEAT                 = 0x0000000000000080,
-    CLUSRES_STATUS_APPLICATION_READY            = 0x0000000000000100,
-    CLUSRES_STATUS_OFFLINE_NOT_LOCAL_DISK_OWNER = 0x0000000000000200,
+    CLUSGRP_STATUS_NETWORK_FAILURE              = 0x0000000000000080UL,
+    CLUSGRP_STATUS_UNMONITORED                  = 0x0000000000000100UL,
+    CLUSGRP_STATUS_OS_HEARTBEAT                 = 0x0000000000000200UL,
+    CLUSGRP_STATUS_APPLICATION_READY            = 0x0000000000000400UL,
+    CLUSGRP_STATUS_OFFLINE_NOT_LOCAL_DISK_OWNER = 0x0000000000000800UL,
+}
+
+enum ulong CLUSGRP_STATUS_WAITING_FOR_DEPENDENCIES = 0x0000000000001000UL;
+
+enum : ulong
+{
+    CLUSRES_STATUS_LOCKED_MODE                                  = 0x0000000000000001UL,
+    CLUSRES_STATUS_EMBEDDED_FAILURE                             = 0x0000000000000002UL,
+    CLUSRES_STATUS_FAILED_DUE_TO_INSUFFICIENT_CPU               = 0x0000000000000004UL,
+    CLUSRES_STATUS_FAILED_DUE_TO_INSUFFICIENT_MEMORY            = 0x0000000000000008UL,
+    CLUSRES_STATUS_FAILED_DUE_TO_INSUFFICIENT_GENERIC_RESOURCES = 0x0000000000000010UL,
+}
+
+enum : ulong
+{
+    CLUSRES_STATUS_NETWORK_FAILURE              = 0x0000000000000020UL,
+    CLUSRES_STATUS_UNMONITORED                  = 0x0000000000000040UL,
+    CLUSRES_STATUS_OS_HEARTBEAT                 = 0x0000000000000080UL,
+    CLUSRES_STATUS_APPLICATION_READY            = 0x0000000000000100UL,
+    CLUSRES_STATUS_OFFLINE_NOT_LOCAL_DISK_OWNER = 0x0000000000000200UL,
 }
 
 enum : uint
 {
-    CLUSAPI_GROUP_ONLINE_IGNORE_RESOURCE_STATUS = 0x00000001,
-    CLUSAPI_GROUP_ONLINE_SYNCHRONOUS            = 0x00000002,
-    CLUSAPI_GROUP_ONLINE_BEST_POSSIBLE_NODE     = 0x00000004,
-    CLUSAPI_GROUP_ONLINE_IGNORE_AFFINITY_RULE   = 0x00000008,
+    CLUSAPI_GROUP_ONLINE_IGNORE_RESOURCE_STATUS = 0x00000001U,
+    CLUSAPI_GROUP_ONLINE_SYNCHRONOUS            = 0x00000002U,
+    CLUSAPI_GROUP_ONLINE_BEST_POSSIBLE_NODE     = 0x00000004U,
+    CLUSAPI_GROUP_ONLINE_IGNORE_AFFINITY_RULE   = 0x00000008U,
 }
 
-enum uint CLUSAPI_GROUP_OFFLINE_IGNORE_RESOURCE_STATUS = 0x00000001;
+enum uint CLUSAPI_GROUP_OFFLINE_IGNORE_RESOURCE_STATUS = 0x00000001U;
 
 enum : uint
 {
-    CLUSAPI_RESOURCE_ONLINE_IGNORE_RESOURCE_STATUS          = 0x00000001,
-    CLUSAPI_RESOURCE_ONLINE_DO_NOT_UPDATE_PERSISTENT_STATE  = 0x00000002,
-    CLUSAPI_RESOURCE_ONLINE_NECESSARY_FOR_QUORUM            = 0x00000004,
-    CLUSAPI_RESOURCE_ONLINE_BEST_POSSIBLE_NODE              = 0x00000008,
-    CLUSAPI_RESOURCE_ONLINE_IGNORE_AFFINITY_RULE            = 0x00000020,
-    CLUSAPI_RESOURCE_OFFLINE_IGNORE_RESOURCE_STATUS         = 0x00000001,
-    CLUSAPI_RESOURCE_OFFLINE_FORCE_WITH_TERMINATION         = 0x00000002,
-    CLUSAPI_RESOURCE_OFFLINE_DO_NOT_UPDATE_PERSISTENT_STATE = 0x00000004,
-    CLUSAPI_RESOURCE_OFFLINE_REASON_NONE                    = 0x00000000,
-    CLUSAPI_RESOURCE_OFFLINE_REASON_UNKNOWN                 = 0x00000001,
-    CLUSAPI_RESOURCE_OFFLINE_REASON_MOVING                  = 0x00000002,
-    CLUSAPI_RESOURCE_OFFLINE_REASON_USER_REQUESTED          = 0x00000004,
-    CLUSAPI_RESOURCE_OFFLINE_REASON_BEING_DELETED           = 0x00000008,
-    CLUSAPI_RESOURCE_OFFLINE_REASON_BEING_RESTARTED         = 0x00000010,
-    CLUSAPI_RESOURCE_OFFLINE_REASON_PREEMPTED               = 0x00000020,
-    CLUSAPI_RESOURCE_OFFLINE_REASON_SHUTTING_DOWN           = 0x00000040,
-}
-
-enum : uint
-{
-    CLUSAPI_GROUP_MOVE_IGNORE_RESOURCE_STATUS         = 0x00000001,
-    CLUSAPI_GROUP_MOVE_RETURN_TO_SOURCE_NODE_ON_ERROR = 0x00000002,
+    CLUSAPI_RESOURCE_ONLINE_IGNORE_RESOURCE_STATUS          = 0x00000001U,
+    CLUSAPI_RESOURCE_ONLINE_DO_NOT_UPDATE_PERSISTENT_STATE  = 0x00000002U,
+    CLUSAPI_RESOURCE_ONLINE_NECESSARY_FOR_QUORUM            = 0x00000004U,
+    CLUSAPI_RESOURCE_ONLINE_BEST_POSSIBLE_NODE              = 0x00000008U,
+    CLUSAPI_RESOURCE_ONLINE_IGNORE_AFFINITY_RULE            = 0x00000020U,
+    CLUSAPI_RESOURCE_OFFLINE_IGNORE_RESOURCE_STATUS         = 0x00000001U,
+    CLUSAPI_RESOURCE_OFFLINE_FORCE_WITH_TERMINATION         = 0x00000002U,
+    CLUSAPI_RESOURCE_OFFLINE_DO_NOT_UPDATE_PERSISTENT_STATE = 0x00000004U,
+    CLUSAPI_RESOURCE_OFFLINE_REASON_NONE                    = 0x00000000U,
+    CLUSAPI_RESOURCE_OFFLINE_REASON_UNKNOWN                 = 0x00000001U,
+    CLUSAPI_RESOURCE_OFFLINE_REASON_MOVING                  = 0x00000002U,
+    CLUSAPI_RESOURCE_OFFLINE_REASON_USER_REQUESTED          = 0x00000004U,
+    CLUSAPI_RESOURCE_OFFLINE_REASON_BEING_DELETED           = 0x00000008U,
+    CLUSAPI_RESOURCE_OFFLINE_REASON_BEING_RESTARTED         = 0x00000010U,
+    CLUSAPI_RESOURCE_OFFLINE_REASON_PREEMPTED               = 0x00000020U,
+    CLUSAPI_RESOURCE_OFFLINE_REASON_SHUTTING_DOWN           = 0x00000040U,
 }
 
 enum : uint
 {
-    CLUSAPI_GROUP_MOVE_QUEUE_ENABLED        = 0x00000004,
-    CLUSAPI_GROUP_MOVE_HIGH_PRIORITY_START  = 0x00000008,
-    CLUSAPI_GROUP_MOVE_FAILBACK             = 0x00000010,
-    CLUSAPI_GROUP_MOVE_IGNORE_AFFINITY_RULE = 0x00000020,
+    CLUSAPI_GROUP_MOVE_IGNORE_RESOURCE_STATUS         = 0x00000001U,
+    CLUSAPI_GROUP_MOVE_RETURN_TO_SOURCE_NODE_ON_ERROR = 0x00000002U,
 }
-
-enum ulong CLUSAPI_CHANGE_RESOURCE_GROUP_FORCE_MOVE_TO_CSV = 0x0000000000000001;
-enum ulong CLUSAPI_VALID_CHANGE_RESOURCE_GROUP_FLAGS = 0x0000000000000001;
-enum uint GROUP_FAILURE_INFO_VERSION_1 = 0x00000001;
-enum uint RESOURCE_FAILURE_INFO_VERSION_1 = 0x00000001;
 
 enum : uint
 {
-    CLUS_ACCESS_ANY   = 0x00000000,
-    CLUS_ACCESS_READ  = 0x00000001,
-    CLUS_ACCESS_WRITE = 0x00000002,
+    CLUSAPI_GROUP_MOVE_QUEUE_ENABLED        = 0x00000004U,
+    CLUSAPI_GROUP_MOVE_HIGH_PRIORITY_START  = 0x00000008U,
+    CLUSAPI_GROUP_MOVE_FAILBACK             = 0x00000010U,
+    CLUSAPI_GROUP_MOVE_IGNORE_AFFINITY_RULE = 0x00000020U,
 }
 
-enum uint CLUS_NO_MODIFY = 0x00000000;
+enum ulong CLUSAPI_CHANGE_RESOURCE_GROUP_FORCE_MOVE_TO_CSV = 0x0000000000000001UL;
+enum ulong CLUSAPI_VALID_CHANGE_RESOURCE_GROUP_FLAGS = 0x0000000000000001UL;
+enum uint GROUP_FAILURE_INFO_VERSION_1 = 0x00000001U;
+enum uint RESOURCE_FAILURE_INFO_VERSION_1 = 0x00000001U;
 
 enum : uint
 {
-    CLUS_MODIFY     = 0x00000001,
-    CLUS_NOT_GLOBAL = 0x00000000,
+    CLUS_ACCESS_ANY   = 0x00000000U,
+    CLUS_ACCESS_READ  = 0x00000001U,
+    CLUS_ACCESS_WRITE = 0x00000002U,
 }
 
-enum uint CLUS_GLOBAL = 0x00000001;
-enum uint CLUSCTL_ACCESS_SHIFT = 0x00000000;
-enum uint CLUSCTL_FUNCTION_SHIFT = 0x00000002;
-enum uint CLCTL_INTERNAL_SHIFT = 0x00000014;
-enum uint CLCTL_USER_SHIFT = 0x00000015;
-enum uint CLCTL_MODIFY_SHIFT = 0x00000016;
-enum uint CLCTL_GLOBAL_SHIFT = 0x00000017;
-enum uint CLUSCTL_OBJECT_SHIFT = 0x00000018;
-enum uint CLUSCTL_CONTROL_CODE_MASK = 0x003fffff;
+enum uint CLUS_NO_MODIFY = 0x00000000U;
 
 enum : uint
 {
-    CLUSCTL_OBJECT_MASK      = 0x000000ff,
-    CLUSCTL_ACCESS_MODE_MASK = 0x00000003,
+    CLUS_MODIFY     = 0x00000001U,
+    CLUS_NOT_GLOBAL = 0x00000000U,
 }
 
-enum uint CLCTL_CLUSTER_BASE = 0x00000000;
+enum uint CLUS_GLOBAL = 0x00000001U;
+enum uint CLUSCTL_ACCESS_SHIFT = 0x00000000U;
+enum uint CLUSCTL_FUNCTION_SHIFT = 0x00000002U;
+enum uint CLCTL_INTERNAL_SHIFT = 0x00000014U;
+enum uint CLCTL_USER_SHIFT = 0x00000015U;
+enum uint CLCTL_MODIFY_SHIFT = 0x00000016U;
+enum uint CLCTL_GLOBAL_SHIFT = 0x00000017U;
+enum uint CLUSCTL_OBJECT_SHIFT = 0x00000018U;
+enum uint CLUSCTL_CONTROL_CODE_MASK = 0x003fffffU;
+
+enum : uint
+{
+    CLUSCTL_OBJECT_MASK      = 0x000000ffU,
+    CLUSCTL_ACCESS_MODE_MASK = 0x00000003U,
+}
+
+enum uint CLCTL_CLUSTER_BASE = 0x00000000U;
 
 enum : int
 {
@@ -1957,38 +2056,38 @@ enum : int
 
 enum : ulong
 {
-    RedirectedIOReasonUserRequest            = 0x0000000000000001,
-    RedirectedIOReasonUnsafeFileSystemFilter = 0x0000000000000002,
-    RedirectedIOReasonUnsafeVolumeFilter     = 0x0000000000000004,
-    RedirectedIOReasonFileSystemTiering      = 0x0000000000000008,
-    RedirectedIOReasonBitLockerInitializing  = 0x0000000000000010,
-    RedirectedIOReasonReFs                   = 0x0000000000000020,
-    RedirectedIOReasonMax                    = 0x8000000000000000,
+    RedirectedIOReasonUserRequest            = 0x0000000000000001UL,
+    RedirectedIOReasonUnsafeFileSystemFilter = 0x0000000000000002UL,
+    RedirectedIOReasonUnsafeVolumeFilter     = 0x0000000000000004UL,
+    RedirectedIOReasonFileSystemTiering      = 0x0000000000000008UL,
+    RedirectedIOReasonBitLockerInitializing  = 0x0000000000000010UL,
+    RedirectedIOReasonReFs                   = 0x0000000000000020UL,
+    RedirectedIOReasonMax                    = 0x8000000000000000UL,
 }
 
 enum : ulong
 {
-    VolumeRedirectedIOReasonNoDiskConnectivity       = 0x0000000000000001,
-    VolumeRedirectedIOReasonStorageSpaceNotAttached  = 0x0000000000000002,
-    VolumeRedirectedIOReasonVolumeReplicationEnabled = 0x0000000000000004,
-    VolumeRedirectedIOReasonMax                      = 0x8000000000000000,
+    VolumeRedirectedIOReasonNoDiskConnectivity       = 0x0000000000000001UL,
+    VolumeRedirectedIOReasonStorageSpaceNotAttached  = 0x0000000000000002UL,
+    VolumeRedirectedIOReasonVolumeReplicationEnabled = 0x0000000000000004UL,
+    VolumeRedirectedIOReasonMax                      = 0x8000000000000000UL,
 }
 
-enum uint MAX_OBJECTID = 0x00000040;
-enum uint MAX_CO_PASSWORD_LENGTH = 0x00000010;
-enum uint GUID_PRESENT = 0x00000001;
-enum uint CREATEDC_PRESENT = 0x00000002;
+enum uint MAX_OBJECTID = 0x00000040U;
+enum uint MAX_CO_PASSWORD_LENGTH = 0x00000010U;
+enum uint GUID_PRESENT = 0x00000001U;
+enum uint CREATEDC_PRESENT = 0x00000002U;
 
 enum : uint
 {
-    MAX_CO_PASSWORD_LENGTHEX  = 0x0000007f,
-    MAX_CO_PASSWORD_STORAGEEX = 0x00000080,
+    MAX_CO_PASSWORD_LENGTHEX  = 0x0000007fU,
+    MAX_CO_PASSWORD_STORAGEEX = 0x00000080U,
 }
 
-enum uint MAX_CREATINGDC_LENGTH = 0x00000100;
-enum uint DNS_LENGTH = 0x00000040;
-enum uint MAINTENANCE_MODE_V2_SIG = 0xabbaf00f;
-enum uint NNLEN = 0x00000050;
+enum uint MAX_CREATINGDC_LENGTH = 0x00000100U;
+enum uint DNS_LENGTH = 0x00000040U;
+enum uint MAINTENANCE_MODE_V2_SIG = 0xabbaf00fU;
+enum uint NNLEN = 0x00000050U;
 
 enum : const(wchar)*
 {
@@ -2563,114 +2662,114 @@ enum : const(wchar)*
     CLUSREG_NAME_KEYVALUESTORE_MANAGERPATH = "ManagerPath",
 }
 
-enum uint SR_REPLICATED_PARTITION_DISALLOW_MULTINODE_IO = 0x00000001;
+enum uint SR_REPLICATED_PARTITION_DISALLOW_MULTINODE_IO = 0x00000001U;
 
 enum : uint
 {
-    CLUSCTL_RESOURCE_TYPE_STORAGE_GET_AVAILABLE_DISKS_EX2_FLAG_ADD_VOLUME_INFO          = 0x00000001,
-    CLUSCTL_RESOURCE_TYPE_STORAGE_GET_AVAILABLE_DISKS_EX2_FLAG_FILTER_BY_POOL           = 0x00000002,
-    CLUSCTL_RESOURCE_TYPE_STORAGE_GET_AVAILABLE_DISKS_EX2_FLAG_INCLUDE_NON_SHARED_DISKS = 0x00000004,
+    CLUSCTL_RESOURCE_TYPE_STORAGE_GET_AVAILABLE_DISKS_EX2_FLAG_ADD_VOLUME_INFO          = 0x00000001U,
+    CLUSCTL_RESOURCE_TYPE_STORAGE_GET_AVAILABLE_DISKS_EX2_FLAG_FILTER_BY_POOL           = 0x00000002U,
+    CLUSCTL_RESOURCE_TYPE_STORAGE_GET_AVAILABLE_DISKS_EX2_FLAG_INCLUDE_NON_SHARED_DISKS = 0x00000004U,
 }
 
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* STARTUP_ROUTINE = "Startup";
-enum uint CLRES_VERSION_V1_00 = 0x00000100;
+enum uint CLRES_VERSION_V1_00 = 0x00000100U;
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* STARTUP_EX_ROUTINE = "StartupEx";
 
 enum : uint
 {
-    CLRES_VERSION_V2_00 = 0x00000200,
-    CLRES_VERSION_V3_00 = 0x00000300,
-    CLRES_VERSION_V4_00 = 0x00000400,
+    CLRES_VERSION_V2_00 = 0x00000200U,
+    CLRES_VERSION_V3_00 = 0x00000300U,
+    CLRES_VERSION_V4_00 = 0x00000400U,
 }
 
-enum uint CLUSCTL_GET_OPERATION_CONTEXT_PARAMS_VERSION_1 = 0x00000001;
+enum uint CLUSCTL_GET_OPERATION_CONTEXT_PARAMS_VERSION_1 = 0x00000001U;
 enum const(wchar)* CLUSRES_NAME_GET_OPERATION_CONTEXT_FLAGS = "Flags";
 
 enum : uint
 {
-    CLUSRESDLL_STATUS_OFFLINE_BUSY                  = 0x00000001,
-    CLUSRESDLL_STATUS_OFFLINE_SOURCE_THROTTLED      = 0x00000002,
-    CLUSRESDLL_STATUS_OFFLINE_DESTINATION_THROTTLED = 0x00000004,
-    CLUSRESDLL_STATUS_OFFLINE_DESTINATION_REJECTED  = 0x00000008,
+    CLUSRESDLL_STATUS_OFFLINE_BUSY                  = 0x00000001U,
+    CLUSRESDLL_STATUS_OFFLINE_SOURCE_THROTTLED      = 0x00000002U,
+    CLUSRESDLL_STATUS_OFFLINE_DESTINATION_THROTTLED = 0x00000004U,
+    CLUSRESDLL_STATUS_OFFLINE_DESTINATION_REJECTED  = 0x00000008U,
 }
 
 enum : uint
 {
-    CLUSRESDLL_STATUS_INSUFFICIENT_MEMORY          = 0x00000010,
-    CLUSRESDLL_STATUS_INSUFFICIENT_PROCESSOR       = 0x00000020,
-    CLUSRESDLL_STATUS_INSUFFICIENT_OTHER_RESOURCES = 0x00000040,
-    CLUSRESDLL_STATUS_INVALID_PARAMETERS           = 0x00000080,
-    CLUSRESDLL_STATUS_NETWORK_NOT_AVAILABLE        = 0x00000100,
-    CLUSRESDLL_STATUS_DO_NOT_COLLECT_WER_REPORT    = 0x40000000,
-    CLUSRESDLL_STATUS_DUMP_NOW                     = 0x80000000,
+    CLUSRESDLL_STATUS_INSUFFICIENT_MEMORY          = 0x00000010U,
+    CLUSRESDLL_STATUS_INSUFFICIENT_PROCESSOR       = 0x00000020U,
+    CLUSRESDLL_STATUS_INSUFFICIENT_OTHER_RESOURCES = 0x00000040U,
+    CLUSRESDLL_STATUS_INVALID_PARAMETERS           = 0x00000080U,
+    CLUSRESDLL_STATUS_NETWORK_NOT_AVAILABLE        = 0x00000100U,
+    CLUSRESDLL_STATUS_DO_NOT_COLLECT_WER_REPORT    = 0x40000000U,
+    CLUSRESDLL_STATUS_DUMP_NOW                     = 0x80000000U,
 }
 
-enum uint CLUS_RESDLL_OPEN_RECOVER_MONITOR_STATE = 0x00000001;
+enum uint CLUS_RESDLL_OPEN_RECOVER_MONITOR_STATE = 0x00000001U;
 
 enum : uint
 {
-    CLUS_RESDLL_ONLINE_RECOVER_MONITOR_STATE          = 0x00000001,
-    CLUS_RESDLL_ONLINE_IGNORE_RESOURCE_STATUS         = 0x00000002,
-    CLUS_RESDLL_ONLINE_RETURN_TO_SOURCE_NODE_ON_ERROR = 0x00000004,
-    CLUS_RESDLL_ONLINE_RESTORE_ONLINE_STATE           = 0x00000008,
-    CLUS_RESDLL_ONLINE_IGNORE_NETWORK_CONNECTIVITY    = 0x00000010,
-}
-
-enum : uint
-{
-    CLUS_RESDLL_OFFLINE_IGNORE_RESOURCE_STATUS         = 0x00000001,
-    CLUS_RESDLL_OFFLINE_RETURN_TO_SOURCE_NODE_ON_ERROR = 0x00000002,
+    CLUS_RESDLL_ONLINE_RECOVER_MONITOR_STATE          = 0x00000001U,
+    CLUS_RESDLL_ONLINE_IGNORE_RESOURCE_STATUS         = 0x00000002U,
+    CLUS_RESDLL_ONLINE_RETURN_TO_SOURCE_NODE_ON_ERROR = 0x00000004U,
+    CLUS_RESDLL_ONLINE_RESTORE_ONLINE_STATE           = 0x00000008U,
+    CLUS_RESDLL_ONLINE_IGNORE_NETWORK_CONNECTIVITY    = 0x00000010U,
 }
 
 enum : uint
 {
-    CLUS_RESDLL_OFFLINE_QUEUE_ENABLED                             = 0x00000004,
-    CLUS_RESDLL_OFFLINE_RETURNING_TO_SOURCE_NODE_BECAUSE_OF_ERROR = 0x00000008,
+    CLUS_RESDLL_OFFLINE_IGNORE_RESOURCE_STATUS         = 0x00000001U,
+    CLUS_RESDLL_OFFLINE_RETURN_TO_SOURCE_NODE_ON_ERROR = 0x00000002U,
 }
 
 enum : uint
 {
-    CLUS_RESDLL_OFFLINE_DUE_TO_EMBEDDED_FAILURE        = 0x00000010,
-    CLUS_RESDLL_OFFLINE_IGNORE_NETWORK_CONNECTIVITY    = 0x00000020,
-    CLUS_RESDLL_OFFLINE_DO_NOT_UPDATE_PERSISTENT_STATE = 0x00000040,
-}
-
-enum uint CLUS_RESDLL_OPEN_DONT_DELETE_TEMP_DISK = 0x00000002;
-
-enum : uint
-{
-    RESTYPE_MONITOR_SHUTTING_DOWN_NODE_STOP     = 0x00000001,
-    RESTYPE_MONITOR_SHUTTING_DOWN_CLUSSVC_CRASH = 0x00000002,
+    CLUS_RESDLL_OFFLINE_QUEUE_ENABLED                             = 0x00000004U,
+    CLUS_RESDLL_OFFLINE_RETURNING_TO_SOURCE_NODE_BECAUSE_OF_ERROR = 0x00000008U,
 }
 
 enum : uint
 {
-    RESUTIL_PROPITEM_READ_ONLY = 0x00000001,
-    RESUTIL_PROPITEM_REQUIRED  = 0x00000002,
-    RESUTIL_PROPITEM_SIGNED    = 0x00000004,
-    RESUTIL_PROPITEM_IN_MEMORY = 0x00000008,
+    CLUS_RESDLL_OFFLINE_DUE_TO_EMBEDDED_FAILURE        = 0x00000010U,
+    CLUS_RESDLL_OFFLINE_IGNORE_NETWORK_CONNECTIVITY    = 0x00000020U,
+    CLUS_RESDLL_OFFLINE_DO_NOT_UPDATE_PERSISTENT_STATE = 0x00000040U,
 }
 
-enum uint LOCKED_MODE_FLAGS_DONT_REMOVE_FROM_MOVE_QUEUE = 0x00000001;
+enum uint CLUS_RESDLL_OPEN_DONT_DELETE_TEMP_DISK = 0x00000002U;
 
 enum : uint
 {
-    CLUSRES_DISABLE_WPR_WATCHDOG_FOR_ONLINE_CALLS  = 0x00000001,
-    CLUSRES_DISABLE_WPR_WATCHDOG_FOR_OFFLINE_CALLS = 0x00000002,
+    RESTYPE_MONITOR_SHUTTING_DOWN_NODE_STOP     = 0x00000001U,
+    RESTYPE_MONITOR_SHUTTING_DOWN_CLUSSVC_CRASH = 0x00000002U,
+}
+
+enum : uint
+{
+    RESUTIL_PROPITEM_READ_ONLY = 0x00000001U,
+    RESUTIL_PROPITEM_REQUIRED  = 0x00000002U,
+    RESUTIL_PROPITEM_SIGNED    = 0x00000004U,
+    RESUTIL_PROPITEM_IN_MEMORY = 0x00000008U,
+}
+
+enum uint LOCKED_MODE_FLAGS_DONT_REMOVE_FROM_MOVE_QUEUE = 0x00000001U;
+
+enum : uint
+{
+    CLUSRES_DISABLE_WPR_WATCHDOG_FOR_ONLINE_CALLS  = 0x00000001U,
+    CLUSRES_DISABLE_WPR_WATCHDOG_FOR_OFFLINE_CALLS = 0x00000002U,
 }
 
 enum const(wchar)* CLUSTER_HEALTH_FAULT_PROPERTY_NAME = "ClusterHealth";
 
 enum : uint
 {
-    CLUSTER_HEALTH_FAULT_ARGS        = 0x00000007,
-    CLUSTER_HEALTH_FAULT_ID          = 0x00000000,
-    CLUSTER_HEALTH_FAULT_ERRORTYPE   = 0x00000001,
-    CLUSTER_HEALTH_FAULT_ERRORCODE   = 0x00000002,
-    CLUSTER_HEALTH_FAULT_DESCRIPTION = 0x00000003,
-    CLUSTER_HEALTH_FAULT_PROVIDER    = 0x00000004,
-    CLUSTER_HEALTH_FAULT_FLAGS       = 0x00000005,
-    CLUSTER_HEALTH_FAULT_RESERVED    = 0x00000006,
+    CLUSTER_HEALTH_FAULT_ARGS        = 0x00000007U,
+    CLUSTER_HEALTH_FAULT_ID          = 0x00000000U,
+    CLUSTER_HEALTH_FAULT_ERRORTYPE   = 0x00000001U,
+    CLUSTER_HEALTH_FAULT_ERRORCODE   = 0x00000002U,
+    CLUSTER_HEALTH_FAULT_DESCRIPTION = 0x00000003U,
+    CLUSTER_HEALTH_FAULT_PROVIDER    = 0x00000004U,
+    CLUSTER_HEALTH_FAULT_FLAGS       = 0x00000005U,
+    CLUSTER_HEALTH_FAULT_RESERVED    = 0x00000006U,
 }
 
 enum : const(wchar)*
@@ -2684,8 +2783,8 @@ enum : const(wchar)*
     CLUSTER_HEALTH_FAULT_RESERVED_LABEL    = "Reserved",
 }
 
-enum uint CLUS_CREATE_CRYPT_CONTAINER_NOT_FOUND = 0x00000001;
-enum uint SET_APPINSTANCE_CSV_FLAGS_VALID_ONLY_IF_CSV_COORDINATOR = 0x00000001;
+enum uint CLUS_CREATE_CRYPT_CONTAINER_NOT_FOUND = 0x00000001U;
+enum uint SET_APPINSTANCE_CSV_FLAGS_VALID_ONLY_IF_CSV_COORDINATOR = 0x00000001U;
 
 // Callbacks
 
@@ -3565,7 +3664,7 @@ alias SET_APP_INSTANCE_CSV_FLAGS = uint function(HANDLE ProcessHandle, uint Mask
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_resource_class_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_resource_class_info
 struct CLUSPROP_RESOURCE_CLASS_INFO
 {
     CLUSPROP_VALUE Base;
@@ -3584,35 +3683,35 @@ struct CLUSTER_SHARED_VOLUME_RENAME_GUID_INPUT
     CLUSTER_SHARED_VOLUME_RENAME_INPUT_GUID_NAME Base2;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_partition_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_partition_info
 struct CLUSPROP_PARTITION_INFO
 {
     CLUSPROP_VALUE      Base;
     CLUS_PARTITION_INFO Base2;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_partition_info_ex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_partition_info_ex
 struct CLUSPROP_PARTITION_INFO_EX
 {
     CLUSPROP_VALUE Base;
     CLUS_PARTITION_INFO_EX Base2;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_partition_info_ex2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_partition_info_ex2
 struct CLUSPROP_PARTITION_INFO_EX2
 {
     CLUSPROP_PARTITION_INFO_EX Base;
     CLUS_PARTITION_INFO_EX2 Base2;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_ftset_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_ftset_info
 struct CLUSPROP_FTSET_INFO
 {
     CLUSPROP_VALUE  Base;
     CLUS_FTSET_INFO Base2;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_scsi_address))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_scsi_address
 struct CLUSPROP_SCSI_ADDRESS
 {
     CLUSPROP_VALUE    Base;
@@ -3749,7 +3848,7 @@ struct HRESTYPEENUM
     ptrdiff_t Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusterversioninfo_nt4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusterversioninfo_nt4
 struct CLUSTERVERSIONINFO_NT4
 {
     uint      dwVersionInfoSize;
@@ -3760,7 +3859,7 @@ struct CLUSTERVERSIONINFO_NT4
     wchar[64] szCSDVersion;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusterversioninfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusterversioninfo
 struct CLUSTERVERSIONINFO
 {
     uint      dwVersionInfoSize;
@@ -3775,7 +3874,7 @@ struct CLUSTERVERSIONINFO
     uint      dwReserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_starting_params))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_starting_params
 struct CLUS_STARTING_PARAMS
 {
     uint dwSize;
@@ -3783,7 +3882,7 @@ struct CLUS_STARTING_PARAMS
     BOOL bFirst;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusctl_resource_state_change_reason_struct))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusctl_resource_state_change_reason_struct
 struct CLUSCTL_RESOURCE_STATE_CHANGE_REASON_STRUCT
 {
     uint dwSize;
@@ -3791,7 +3890,7 @@ struct CLUSCTL_RESOURCE_STATE_CHANGE_REASON_STRUCT
     CLUSTER_RESOURCE_STATE_CHANGE_REASON eReason;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-cluster_batch_command))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-cluster_batch_command
 struct CLUSTER_BATCH_COMMAND
 {
     CLUSTER_REG_COMMAND Command;
@@ -3801,7 +3900,7 @@ struct CLUSTER_BATCH_COMMAND
     uint                cbData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-cluster_read_batch_command))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-cluster_read_batch_command
 struct CLUSTER_READ_BATCH_COMMAND
 {
     CLUSTER_REG_COMMAND Command;
@@ -3812,7 +3911,7 @@ struct CLUSTER_READ_BATCH_COMMAND
     uint                cbData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ns-msclus-cluster_enum_item))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ns-msclus-cluster_enum_item
 struct CLUSTER_ENUM_ITEM
 {
     uint  dwVersion;
@@ -3823,38 +3922,38 @@ struct CLUSTER_ENUM_ITEM
     PWSTR lpszName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ns-msclus-cluster_create_group_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ns-msclus-cluster_create_group_info
 struct CLUSTER_CREATE_GROUP_INFO
 {
     uint           dwVersion;
     CLUSGROUP_TYPE groupType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-cluster_validate_path))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-cluster_validate_path
 struct CLUSTER_VALIDATE_PATH
 {
     wchar[1] szPath;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-cluster_validate_directory))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-cluster_validate_directory
 struct CLUSTER_VALIDATE_DIRECTORY
 {
     wchar[1] szPath;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-cluster_validate_netname))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-cluster_validate_netname
 struct CLUSTER_VALIDATE_NETNAME
 {
     wchar[1] szNetworkName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-cluster_validate_csv_filename))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-cluster_validate_csv_filename
 struct CLUSTER_VALIDATE_CSV_FILENAME
 {
     wchar[1] szFileName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-cluster_set_password_status))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-cluster_set_password_status
 struct CLUSTER_SET_PASSWORD_STATUS
 {
     uint    NodeId;
@@ -3862,14 +3961,14 @@ struct CLUSTER_SET_PASSWORD_STATUS
     uint    ReturnStatus;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-cluster_ip_entry))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-cluster_ip_entry
 struct CLUSTER_IP_ENTRY
 {
     const(PWSTR) lpszIpAddress;
     uint         dwPrefixLength;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-create_cluster_config))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-create_cluster_config
 struct CREATE_CLUSTER_CONFIG
 {
     uint              dwVersion;
@@ -3886,7 +3985,7 @@ struct CREATE_CLUSTER_CONFIG
     const(PWSTR)      pszDomain;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-create_cluster_name_account))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-create_cluster_name_account
 struct CREATE_CLUSTER_NAME_ACCOUNT
 {
     uint         dwVersion;
@@ -3915,14 +4014,14 @@ struct CLUSAPI_REASON_HANDLER
     PCLUSAPI_PFN_REASON_HANDLER pfnHandler;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ns-msclus-notify_filter_and_type))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ns-msclus-notify_filter_and_type
 struct NOTIFY_FILTER_AND_TYPE
 {
     uint dwObjectType;
     long FilterFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ns-msclus-cluster_membership_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ns-msclus-cluster_membership_info
 struct CLUSTER_MEMBERSHIP_INFO
 {
     BOOL HasQuorum;
@@ -3938,7 +4037,7 @@ struct CLUSTER_AVAILABILITY_SET_CONFIG
     BOOL bReserveSpareNode;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ns-msclus-cluster_group_enum_item))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ns-msclus-cluster_group_enum_item
 struct CLUSTER_GROUP_ENUM_ITEM
 {
     uint                dwVersion;
@@ -3956,7 +4055,7 @@ struct CLUSTER_GROUP_ENUM_ITEM
     void*               pRoProperties;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ns-msclus-cluster_resource_enum_item))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ns-msclus-cluster_resource_enum_item
 struct CLUSTER_RESOURCE_ENUM_ITEM
 {
     uint  dwVersion;
@@ -3974,28 +4073,28 @@ struct CLUSTER_RESOURCE_ENUM_ITEM
     void* pRoProperties;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ns-msclus-group_failure_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ns-msclus-group_failure_info
 struct GROUP_FAILURE_INFO
 {
     uint dwFailoverAttemptsRemaining;
     uint dwFailoverPeriodRemaining;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ns-msclus-group_failure_info_buffer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ns-msclus-group_failure_info_buffer
 struct GROUP_FAILURE_INFO_BUFFER
 {
     uint               dwVersion;
     GROUP_FAILURE_INFO Info;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ns-msclus-resource_failure_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ns-msclus-resource_failure_info
 struct RESOURCE_FAILURE_INFO
 {
     uint dwRestartAttemptsRemaining;
     uint dwRestartPeriodRemaining;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/ns-msclus-resource_failure_info_buffer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/ns-msclus-resource_failure_info_buffer
 struct RESOURCE_FAILURE_INFO_BUFFER
 {
     uint dwVersion;
@@ -4016,97 +4115,117 @@ struct NodeSriovInfo
     uint QPUsed;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_syntax))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_syntax
 union CLUSPROP_SYNTAX
 {
-    uint                 dw;
-    _Anonymous_e__Struct Anonymous;
+    uint dw;
+    struct
+    {
+        ushort wFormat;
+        ushort wType;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_value))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_value
 struct CLUSPROP_VALUE
 {
     CLUSPROP_SYNTAX Syntax;
     uint            cbLength;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_binary))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_binary
 struct CLUSPROP_BINARY
 {
     CLUSPROP_VALUE Base;
     ubyte[1]       rgb;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_word))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_word
 struct CLUSPROP_WORD
 {
     CLUSPROP_VALUE Base;
     ushort         w;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_dword))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_dword
 struct CLUSPROP_DWORD
 {
     CLUSPROP_VALUE Base;
     uint           dw;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_long))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_long
 struct CLUSPROP_LONG
 {
     CLUSPROP_VALUE Base;
     int            l;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_sz))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_sz
 struct CLUSPROP_SZ
 {
     CLUSPROP_VALUE Base;
     wchar[1]       sz;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_ularge_integer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_ularge_integer
 struct CLUSPROP_ULARGE_INTEGER
 {
     CLUSPROP_VALUE Base;
     ulong          li;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_large_integer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_large_integer
 struct CLUSPROP_LARGE_INTEGER
 {
     CLUSPROP_VALUE Base;
     long           li;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_security_descriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_security_descriptor
 struct CLUSPROP_SECURITY_DESCRIPTOR
 {
-    CLUSPROP_VALUE      Base;
-    _Anonymous_e__Union Anonymous;
+    CLUSPROP_VALUE Base;
+    union
+    {
+        SECURITY_DESCRIPTOR_RELATIVE sd;
+        ubyte[1] rgbSecurityDescriptor;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_filetime))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_filetime
 struct CLUSPROP_FILETIME
 {
     CLUSPROP_VALUE Base;
     FILETIME       ft;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_resource_class_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_resource_class_info
 struct CLUS_RESOURCE_CLASS_INFO
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct
+        {
+            union
+            {
+                uint dw;
+                CLUSTER_RESOURCE_CLASS rc;
+            }
+            uint SubClass;
+        }
+        ulong li;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_resource_class))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_resource_class
 struct CLUSPROP_RESOURCE_CLASS
 {
     CLUSPROP_VALUE Base;
     CLUSTER_RESOURCE_CLASS rc;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_required_dependency))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_required_dependency
 union CLUSPROP_REQUIRED_DEPENDENCY
 {
     CLUSPROP_VALUE Value;
@@ -4114,7 +4233,7 @@ union CLUSPROP_REQUIRED_DEPENDENCY
     CLUSPROP_SZ    ResTypeName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_force_quorum_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_force_quorum_info
 struct CLUS_FORCE_QUORUM_INFO
 {
     uint dwSize;
@@ -4123,7 +4242,7 @@ struct CLUS_FORCE_QUORUM_INFO
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] multiszNodeList;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_partition_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_partition_info
 struct CLUS_PARTITION_INFO
 {
     uint       dwFlags;
@@ -4135,7 +4254,7 @@ struct CLUS_PARTITION_INFO
     wchar[32]  szFileSystem;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_partition_info_ex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_partition_info_ex
 struct CLUS_PARTITION_INFO_EX
 {
     uint       dwFlags;
@@ -4152,7 +4271,7 @@ struct CLUS_PARTITION_INFO_EX
     GUID       VolumeGuid;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_partition_info_ex2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_partition_info_ex2
 struct CLUS_PARTITION_INFO_EX2
 {
     GUID       GptPartitionId;
@@ -4160,7 +4279,7 @@ struct CLUS_PARTITION_INFO_EX2
     uint       EncryptionFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_csv_volume_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_csv_volume_info
 struct CLUS_CSV_VOLUME_INFO
 {
     ulong      VolumeOffset;
@@ -4171,7 +4290,7 @@ struct CLUS_CSV_VOLUME_INFO
     wchar[50]  szVolumeName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_csv_volume_name))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_csv_volume_name
 struct CLUS_CSV_VOLUME_NAME
 {
     long       VolumeOffset;
@@ -4179,7 +4298,7 @@ struct CLUS_CSV_VOLUME_NAME
     wchar[263] szRootPath;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-cluster_shared_volume_state_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-cluster_shared_volume_state_info
 struct CLUSTER_SHARED_VOLUME_STATE_INFO
 {
     wchar[260] szVolumeName;
@@ -4200,7 +4319,13 @@ struct CLUSTER_SHARED_VOLUME_STATE_INFO_EX
 struct CLUSTER_SHARED_VOLUME_RENAME_INPUT_VOLUME
 {
     CLUSTER_SHARED_VOLUME_RENAME_INPUT_TYPE InputType;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        ulong      VolumeOffset;
+        wchar[260] VolumeId;
+        wchar[260] VolumeName;
+        wchar[50]  VolumeGuid;
+    }
 }
 
 struct CLUSTER_SHARED_VOLUME_RENAME_INPUT_NAME
@@ -4214,7 +4339,7 @@ struct CLUSTER_SHARED_VOLUME_RENAME_INPUT_GUID_NAME
     wchar[50]  NewVolumeGuid;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_chkdsk_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_chkdsk_info
 struct CLUS_CHKDSK_INFO
 {
     uint PartitionNumber;
@@ -4223,14 +4348,14 @@ struct CLUS_CHKDSK_INFO
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ulong[1] FileIdList;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_disk_number_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_disk_number_info
 struct CLUS_DISK_NUMBER_INFO
 {
     uint DiskNumber;
     uint BytesPerSector;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_shared_volume_backup_mode))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_shared_volume_backup_mode
 struct CLUS_SHARED_VOLUME_BACKUP_MODE
 {
     CLUSTER_SHARED_VOLUME_BACKUP_STATE BackupState;
@@ -4238,20 +4363,30 @@ struct CLUS_SHARED_VOLUME_BACKUP_MODE
     wchar[260] VolumeName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_ftset_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_ftset_info
 struct CLUS_FTSET_INFO
 {
     uint dwRootSignature;
     uint dwFtType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_scsi_address))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_scsi_address
 struct CLUS_SCSI_ADDRESS
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct
+        {
+            ubyte PortNumber;
+            ubyte PathId;
+            ubyte TargetId;
+            ubyte Lun;
+        }
+        uint dw;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_netname_vs_token_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_netname_vs_token_info
 struct CLUS_NETNAME_VS_TOKEN_INFO
 {
     uint ProcessID;
@@ -4259,7 +4394,7 @@ struct CLUS_NETNAME_VS_TOKEN_INFO
     BOOL InheritHandle;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_netname_pwd_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_netname_pwd_info
 struct CLUS_NETNAME_PWD_INFO
 {
     uint       Flags;
@@ -4276,21 +4411,21 @@ struct CLUS_NETNAME_PWD_INFOEX
     wchar[64]  ObjectGuid;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_dnn_leader_status))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_dnn_leader_status
 struct CLUS_DNN_LEADER_STATUS
 {
     BOOL IsOnline;
     BOOL IsFileServerPresent;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_dnn_sodafs_clone_status))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_dnn_sodafs_clone_status
 struct CLUS_DNN_SODAFS_CLONE_STATUS
 {
     uint NodeId;
     CLUSTER_RESOURCE_STATE Status;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_netname_ip_info_entry))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_netname_ip_info_entry
 struct CLUS_NETNAME_IP_INFO_ENTRY
 {
     uint NodeId;
@@ -4298,7 +4433,7 @@ struct CLUS_NETNAME_IP_INFO_ENTRY
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Address;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_netname_ip_info_for_multichannel))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_netname_ip_info_for_multichannel
 struct CLUS_NETNAME_IP_INFO_FOR_MULTICHANNEL
 {
     wchar[64] szName;
@@ -4306,20 +4441,20 @@ struct CLUS_NETNAME_IP_INFO_FOR_MULTICHANNEL
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/CLUS_NETNAME_IP_INFO_ENTRY[1] IpInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_maintenance_mode_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_maintenance_mode_info
 struct CLUS_MAINTENANCE_MODE_INFO
 {
     BOOL InMaintenance;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_csv_maintenance_mode_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_csv_maintenance_mode_info
 struct CLUS_CSV_MAINTENANCE_MODE_INFO
 {
     BOOL       InMaintenance;
     wchar[260] VolumeName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_maintenance_mode_infoex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_maintenance_mode_infoex
 struct CLUS_MAINTENANCE_MODE_INFOEX
 {
     BOOL InMaintenance;
@@ -4335,27 +4470,27 @@ struct CLUS_SET_MAINTENANCE_MODE_INPUT
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] ExtraParameter;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_storage_set_driveletter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_storage_set_driveletter
 struct CLUS_STORAGE_SET_DRIVELETTER
 {
     uint PartitionNumber;
     uint DriveLetterMask;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_storage_get_available_driveletters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_storage_get_available_driveletters
 struct CLUS_STORAGE_GET_AVAILABLE_DRIVELETTERS
 {
     uint AvailDrivelettersMask;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_storage_remap_driveletter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_storage_remap_driveletter
 struct CLUS_STORAGE_REMAP_DRIVELETTER
 {
     uint CurrentDriveLetterMask;
     uint TargetDriveLetterMask;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_provider_state_change_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clus_provider_state_change_info
 struct CLUS_PROVIDER_STATE_CHANGE_INFO
 {
     uint dwSize;
@@ -4373,28 +4508,28 @@ struct CLUS_CREATE_INFRASTRUCTURE_FILESERVER_OUTPUT
     wchar[260] FileServerName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_list
 struct CLUSPROP_LIST
 {
     uint        nPropertyCount;
     CLUSPROP_SZ PropertyName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-fileshare_change))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-fileshare_change
 struct FILESHARE_CHANGE
 {
     FILESHARE_CHANGE_ENUM Change;
     wchar[84] ShareName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-fileshare_change_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-fileshare_change_list
 struct FILESHARE_CHANGE_LIST
 {
     uint NumEntries;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/FILESHARE_CHANGE[1] ChangeEntry;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusctl_group_get_last_move_time_output))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusctl_group_get_last_move_time_output
 struct CLUSCTL_GROUP_GET_LAST_MOVE_TIME_OUTPUT
 {
     ulong      GetTickCount64;
@@ -4402,7 +4537,7 @@ struct CLUSCTL_GROUP_GET_LAST_MOVE_TIME_OUTPUT
     uint       NodeId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_buffer_helper))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-clusprop_buffer_helper
 union CLUSPROP_BUFFER_HELPER
 {
     ubyte*             pb;
@@ -4435,28 +4570,28 @@ union CLUSPROP_BUFFER_HELPER
     CLUSPROP_FILETIME* pFileTimeValue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-sr_resource_type_replicated_partition_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-sr_resource_type_replicated_partition_info
 struct SR_RESOURCE_TYPE_REPLICATED_PARTITION_INFO
 {
     ulong PartitionOffset;
     uint  Capabilities;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-sr_resource_type_replicated_partition_array))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-sr_resource_type_replicated_partition_array
 struct SR_RESOURCE_TYPE_REPLICATED_PARTITION_ARRAY
 {
     uint Count;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SR_RESOURCE_TYPE_REPLICATED_PARTITION_INFO[1] PartitionArray;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-sr_resource_type_query_eligible_logdisks))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-sr_resource_type_query_eligible_logdisks
 struct SR_RESOURCE_TYPE_QUERY_ELIGIBLE_LOGDISKS
 {
     GUID    DataDiskGuid;
     BOOLEAN IncludeOfflineDisks;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-sr_resource_type_query_eligible_target_datadisks))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-sr_resource_type_query_eligible_target_datadisks
 struct SR_RESOURCE_TYPE_QUERY_ELIGIBLE_TARGET_DATADISKS
 {
     GUID    SourceDataDiskGuid;
@@ -4465,28 +4600,28 @@ struct SR_RESOURCE_TYPE_QUERY_ELIGIBLE_TARGET_DATADISKS
     BOOLEAN IncludeOfflineDisks;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-sr_resource_type_query_eligible_source_datadisks))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-sr_resource_type_query_eligible_source_datadisks
 struct SR_RESOURCE_TYPE_QUERY_ELIGIBLE_SOURCE_DATADISKS
 {
     GUID    DataDiskGuid;
     BOOLEAN IncludeAvailableStoargeDisks;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-sr_resource_type_disk_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-sr_resource_type_disk_info
 struct SR_RESOURCE_TYPE_DISK_INFO
 {
     SR_DISK_REPLICATION_ELIGIBLE Reason;
     GUID DiskGuid;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-sr_resource_type_eligible_disks_result))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-sr_resource_type_eligible_disks_result
 struct SR_RESOURCE_TYPE_ELIGIBLE_DISKS_RESULT
 {
     ushort Count;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SR_RESOURCE_TYPE_DISK_INFO[1] DiskInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-sr_resource_type_replicated_disk))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-sr_resource_type_replicated_disk
 struct SR_RESOURCE_TYPE_REPLICATED_DISK
 {
     SR_REPLICATED_DISK_TYPE Type;
@@ -4495,7 +4630,7 @@ struct SR_RESOURCE_TYPE_REPLICATED_DISK
     wchar[260] ReplicationGroupName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-sr_resource_type_replicated_disks_result))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/clusapi/ns-clusapi-sr_resource_type_replicated_disks_result
 struct SR_RESOURCE_TYPE_REPLICATED_DISKS_RESULT
 {
     ushort Count;
@@ -4531,7 +4666,7 @@ struct CLUSCTL_RESOURCE_TYPE_STORAGE_GET_AVAILABLE_DISKS_EX2_INPUT
     GUID guidPoolFilter;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/resapi/ns-resapi-resource_status))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/resapi/ns-resapi-resource_status
 struct RESOURCE_STATUS
 {
     CLUSTER_RESOURCE_STATE ResourceState;
@@ -4571,7 +4706,7 @@ struct RESOURCE_STATUS_EX
     uint   WaitHint;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/resapi/ns-resapi-clres_v1_functions))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/resapi/ns-resapi-clres_v1_functions
 struct CLRES_V1_FUNCTIONS
 {
     POPEN_ROUTINE        Open;
@@ -4587,7 +4722,7 @@ struct CLRES_V1_FUNCTIONS
     PRESOURCE_TYPE_CONTROL_ROUTINE ResourceTypeControl;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/resapi/ns-resapi-clres_v2_functions))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/resapi/ns-resapi-clres_v2_functions
 struct CLRES_V2_FUNCTIONS
 {
     POPEN_V2_ROUTINE     Open;
@@ -4604,7 +4739,7 @@ struct CLRES_V2_FUNCTIONS
     PCANCEL_ROUTINE      Cancel;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/resapi/ns-resapi-clres_v3_functions))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/resapi/ns-resapi-clres_v3_functions
 struct CLRES_V3_FUNCTIONS
 {
     POPEN_V2_ROUTINE     Open;
@@ -4621,7 +4756,7 @@ struct CLRES_V3_FUNCTIONS
     PCANCEL_ROUTINE      Cancel;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/resapi/ns-resapi-clres_v4_functions))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/resapi/ns-resapi-clres_v4_functions
 struct CLRES_V4_FUNCTIONS
 {
     POPEN_V2_ROUTINE     Open;
@@ -4640,15 +4775,21 @@ struct CLRES_V4_FUNCTIONS
     PBEGIN_RESTYPECALL_AS_USER_ROUTINE BeginResourceTypeControlAsUser;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/resapi/ns-resapi-clres_function_table))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/resapi/ns-resapi-clres_function_table
 struct CLRES_FUNCTION_TABLE
 {
-    uint                TableSize;
-    uint                Version;
-    _Anonymous_e__Union Anonymous;
+    uint TableSize;
+    uint Version;
+    union
+    {
+        CLRES_V1_FUNCTIONS V1Functions;
+        CLRES_V2_FUNCTIONS V2Functions;
+        CLRES_V3_FUNCTIONS V3Functions;
+        CLRES_V4_FUNCTIONS V4Functions;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/resapi/ns-resapi-resutil_largeint_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/resapi/ns-resapi-resutil_largeint_data
 struct RESUTIL_LARGEINT_DATA
 {
     long Default;
@@ -4656,7 +4797,7 @@ struct RESUTIL_LARGEINT_DATA
     long Maximum;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/resapi/ns-resapi-resutil_ulargeint_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/resapi/ns-resapi-resutil_ulargeint_data
 struct RESUTIL_ULARGEINT_DATA
 {
     ulong Default;
@@ -4664,7 +4805,7 @@ struct RESUTIL_ULARGEINT_DATA
     ulong Maximum;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/resapi/ns-resapi-resutil_filetime_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/resapi/ns-resapi-resutil_filetime_data
 struct RESUTIL_FILETIME_DATA
 {
     FILETIME Default;
@@ -4672,20 +4813,28 @@ struct RESUTIL_FILETIME_DATA
     FILETIME Maximum;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/resapi/ns-resapi-resutil_property_item))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/resapi/ns-resapi-resutil_property_item
 struct RESUTIL_PROPERTY_ITEM
 {
-    PWSTR               Name;
-    PWSTR               KeyName;
-    uint                Format;
-    _Anonymous_e__Union Anonymous;
-    uint                Minimum;
-    uint                Maximum;
-    uint                Flags;
-    uint                Offset;
+    PWSTR Name;
+    PWSTR KeyName;
+    uint  Format;
+    union
+    {
+        size_t DefaultPtr;
+        uint   Default;
+        void*  lpDefault;
+        RESUTIL_LARGEINT_DATA* LargeIntData;
+        RESUTIL_ULARGEINT_DATA* ULargeIntData;
+        RESUTIL_FILETIME_DATA* FileTimeData;
+    }
+    uint  Minimum;
+    uint  Maximum;
+    uint  Flags;
+    uint  Offset;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/resapi/ns-resapi-clres_callback_function_table))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/resapi/ns-resapi-clres_callback_function_table
 struct CLRES_CALLBACK_FUNCTION_TABLE
 {
     PLOG_EVENT_ROUTINE  LogEvent;
@@ -4707,7 +4856,7 @@ struct CLRES_CALLBACK_FUNCTION_TABLE
     PARM_WPR_WATCHDOG_FOR_CURRENT_RESOURCE_CALL_ROUTINE ArmWprWatchdogForCurrentResourceCall;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/resapi/ns-resapi-monitor_state))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/resapi/ns-resapi-monitor_state
 struct MONITOR_STATE
 {
     long   LastUpdate;
@@ -4716,7 +4865,7 @@ struct MONITOR_STATE
     BOOL   ResmonStop;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/resapi/ns-resapi-post_upgrade_version_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/resapi/ns-resapi-post_upgrade_version_info
 struct POST_UPGRADE_VERSION_INFO
 {
     uint newMajorVersion;
@@ -4737,14 +4886,14 @@ struct CLUSTER_HEALTH_FAULT
     uint  Reserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/resapi/ns-resapi-cluster_health_fault_array))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/resapi/ns-resapi-cluster_health_fault_array
 struct CLUSTER_HEALTH_FAULT_ARRAY
 {
     uint numFaults;
     CLUSTER_HEALTH_FAULT* faults;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/resapi/ns-resapi-clus_worker))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/resapi/ns-resapi-clus_worker
 struct CLUS_WORKER
 {
     HANDLE hThread;
@@ -4768,7 +4917,7 @@ struct PaxosTagCStruct
     uint  __padding__BoundrySequence;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/resapi/ns-resapi-witnesstagupdatehelper))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/resapi/ns-resapi-witnesstagupdatehelper
 struct WitnessTagUpdateHelper
 {
     int             Version;
@@ -4776,7 +4925,7 @@ struct WitnessTagUpdateHelper
     PaxosTagCStruct paxosToValidate;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/resapi/ns-resapi-witnesstaghelper))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/resapi/ns-resapi-witnesstaghelper
 struct WitnessTagHelper
 {
     int             Version;
@@ -6376,7 +6525,7 @@ uint ClusWorkerCreate(CLUS_WORKER* lpWorker, PWORKER_START_ROUTINE lpStartAddres
 @DllImport("RESUTILS.dll")
 BOOL ClusWorkerCheckTerminate(CLUS_WORKER* lpWorker);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/resapi/nf-resapi-clusworkerterminate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/resapi/nf-resapi-clusworkerterminate
 @DllImport("RESUTILS.dll")
 void ClusWorkerTerminate(CLUS_WORKER* lpWorker);
 
@@ -6736,175 +6885,175 @@ struct ClusResDependents;
 
 @GUID("97dede50-fc6b-11cf-b5f5-00a0c90ab505")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-igetclusteruiinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-igetclusteruiinfo
 interface IGetClusterUIInfo : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclusteruiinfo-getclustername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclusteruiinfo-getclustername
     HRESULT GetClusterName(BSTR lpszName, int* pcchName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclusteruiinfo-getlocale))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclusteruiinfo-getlocale
     uint    GetLocale();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclusteruiinfo-getfont))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclusteruiinfo-getfont
     HFONT   GetFont();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclusteruiinfo-geticon))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclusteruiinfo-geticon
     HICON   GetIcon();
 }
 
 @GUID("97dede51-fc6b-11cf-b5f5-00a0c90ab505")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-igetclusterdatainfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-igetclusterdatainfo
 interface IGetClusterDataInfo : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclusterdatainfo-getclustername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclusterdatainfo-getclustername
     HRESULT  GetClusterName(BSTR lpszName, int* pcchName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclusterdatainfo-getclusterhandle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclusterdatainfo-getclusterhandle
     HCLUSTER GetClusterHandle();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclusterdatainfo-getobjectcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclusterdatainfo-getobjectcount
     int      GetObjectCount();
 }
 
 @GUID("97dede52-fc6b-11cf-b5f5-00a0c90ab505")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-igetclusterobjectinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-igetclusterobjectinfo
 interface IGetClusterObjectInfo : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclusterobjectinfo-getobjectname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclusterobjectinfo-getobjectname
     HRESULT GetObjectName(int lObjIndex, BSTR lpszName, int* pcchName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclusterobjectinfo-getobjecttype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclusterobjectinfo-getobjecttype
     CLUADMEX_OBJECT_TYPE GetObjectType(int lObjIndex);
 }
 
 @GUID("97dede53-fc6b-11cf-b5f5-00a0c90ab505")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-igetclusternodeinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-igetclusternodeinfo
 interface IGetClusterNodeInfo : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclusternodeinfo-getnodehandle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclusternodeinfo-getnodehandle
     HNODE GetNodeHandle(int lObjIndex);
 }
 
 @GUID("97dede54-fc6b-11cf-b5f5-00a0c90ab505")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-igetclustergroupinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-igetclustergroupinfo
 interface IGetClusterGroupInfo : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclustergroupinfo-getgrouphandle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclustergroupinfo-getgrouphandle
     HGROUP GetGroupHandle(int lObjIndex);
 }
 
 @GUID("97dede55-fc6b-11cf-b5f5-00a0c90ab505")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-igetclusterresourceinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-igetclusterresourceinfo
 interface IGetClusterResourceInfo : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclusterresourceinfo-getresourcehandle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclusterresourceinfo-getresourcehandle
     HRESOURCE GetResourceHandle(int lObjIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclusterresourceinfo-getresourcetypename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclusterresourceinfo-getresourcetypename
     HRESULT GetResourceTypeName(int lObjIndex, BSTR lpszResTypeName, int* pcchResTypeName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclusterresourceinfo-getresourcenetworkname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclusterresourceinfo-getresourcenetworkname
     BOOL    GetResourceNetworkName(int lObjIndex, BSTR lpszNetName, uint* pcchNetName);
 }
 
 @GUID("97dede56-fc6b-11cf-b5f5-00a0c90ab505")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-igetclusternetworkinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-igetclusternetworkinfo
 interface IGetClusterNetworkInfo : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclusternetworkinfo-getnetworkhandle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclusternetworkinfo-getnetworkhandle
     HNETWORK GetNetworkHandle(int lObjIndex);
 }
 
 @GUID("97dede57-fc6b-11cf-b5f5-00a0c90ab505")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-igetclusternetinterfaceinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-igetclusternetinterfaceinfo
 interface IGetClusterNetInterfaceInfo : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclusternetinterfaceinfo-getnetinterfacehandle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-igetclusternetinterfaceinfo-getnetinterfacehandle
     HNETINTERFACE GetNetInterfaceHandle(int lObjIndex);
 }
 
 @GUID("97dede60-fc6b-11cf-b5f5-00a0c90ab505")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-iwcpropertysheetcallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-iwcpropertysheetcallback
 interface IWCPropertySheetCallback : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-iwcpropertysheetcallback-addpropertysheetpage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-iwcpropertysheetcallback-addpropertysheetpage
     HRESULT AddPropertySheetPage(int* hpage);
 }
 
 @GUID("97dede61-fc6b-11cf-b5f5-00a0c90ab505")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-iweextendpropertysheet))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-iweextendpropertysheet
 interface IWEExtendPropertySheet : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-iweextendpropertysheet-createpropertysheetpages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-iweextendpropertysheet-createpropertysheetpages
     HRESULT CreatePropertySheetPages(IUnknown piData, IWCPropertySheetCallback piCallback);
 }
 
 @GUID("97dede62-fc6b-11cf-b5f5-00a0c90ab505")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-iwcwizardcallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-iwcwizardcallback
 interface IWCWizardCallback : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-iwcwizardcallback-addwizardpage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-iwcwizardcallback-addwizardpage
     HRESULT AddWizardPage(int* hpage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-iwcwizardcallback-enablenext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-iwcwizardcallback-enablenext
     HRESULT EnableNext(int* hpage, BOOL bEnable);
 }
 
 @GUID("97dede63-fc6b-11cf-b5f5-00a0c90ab505")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-iweextendwizard))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-iweextendwizard
 interface IWEExtendWizard : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-iweextendwizard-createwizardpages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-iweextendwizard-createwizardpages
     HRESULT CreateWizardPages(IUnknown piData, IWCWizardCallback piCallback);
 }
 
 @GUID("97dede64-fc6b-11cf-b5f5-00a0c90ab505")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-iwccontextmenucallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-iwccontextmenucallback
 interface IWCContextMenuCallback : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-iwccontextmenucallback-addextensionmenuitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-iwccontextmenucallback-addextensionmenuitem
     HRESULT AddExtensionMenuItem(BSTR lpszName, BSTR lpszStatusBarText, uint nCommandID, uint nSubmenuCommandID, 
                                  uint uFlags);
 }
 
 @GUID("97dede65-fc6b-11cf-b5f5-00a0c90ab505")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-iweextendcontextmenu))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-iweextendcontextmenu
 interface IWEExtendContextMenu : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-iweextendcontextmenu-addcontextmenuitems))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-iweextendcontextmenu-addcontextmenuitems
     HRESULT AddContextMenuItems(IUnknown piData, IWCContextMenuCallback piCallback);
 }
 
 @GUID("97dede66-fc6b-11cf-b5f5-00a0c90ab505")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-iweinvokecommand))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-iweinvokecommand
 interface IWEInvokeCommand : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-iweinvokecommand-invokecommand))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-iweinvokecommand-invokecommand
     HRESULT InvokeCommand(uint nCommandID, IUnknown piData);
 }
 
 @GUID("97dede67-fc6b-11cf-b5f5-00a0c90ab505")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-iwcwizard97callback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-iwcwizard97callback
 interface IWCWizard97Callback : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-iwcwizard97callback-addwizard97page))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-iwcwizard97callback-addwizard97page
     HRESULT AddWizard97Page(int* hpage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-iwcwizard97callback-enablenext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-iwcwizard97callback-enablenext
     HRESULT EnableNext(int* hpage, BOOL bEnable);
 }
 
 @GUID("97dede68-fc6b-11cf-b5f5-00a0c90ab505")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-iweextendwizard97))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nn-cluadmex-iweextendwizard97
 interface IWEExtendWizard97 : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-iweextendwizard97-createwizard97pages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/cluadmex/nf-cluadmex-iweextendwizard97-createwizard97pages
     HRESULT CreateWizard97Pages(IUnknown piData, IWCWizard97Callback piCallback);
 }
 
@@ -7340,7 +7489,7 @@ interface ISClusPartition : IDispatch
 
 @GUID("8802d4fe-b32e-4ad1-9dbd-64f18e1166ce")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msclus/nn-msclus-iscluspartitionex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msclus/nn-msclus-iscluspartitionex
 interface ISClusPartitionEx : ISClusPartition
 {
     HRESULT get_TotalSize(int* plTotalSize);

@@ -3,14 +3,15 @@
 module windows.win32.management.mobiledevicemanagementregistration;
 
 public import windows.core;
-public import windows.win32.foundation : BOOL, HANDLE, HRESULT, PWSTR;
+public import windows.win32.foundation.foundation : BOOL, HANDLE, HRESULT, PWSTR;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mdmregistration/ne-mdmregistration-registration_information_class))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mdmregistration/ne-mdmregistration-registration_information_class
 alias REGISTRATION_INFORMATION_CLASS = int;
 enum : int
 {
@@ -94,8 +95,8 @@ enum : HRESULT
 
 enum HRESULT MENROLL_E_CUSTOMSERVERERROR = HRESULT(0x80180032);
 enum HRESULT MENROLL_E_SERVER429 = HRESULT(0x80180033);
-enum uint MDM_REGISTRATION_FACILITY_CODE = 0x00000019;
-enum uint DEVICE_ENROLLER_FACILITY_CODE = 0x00000018;
+enum uint MDM_REGISTRATION_FACILITY_CODE = 0x00000019U;
+enum uint DEVICE_ENROLLER_FACILITY_CODE = 0x00000018U;
 
 enum : HRESULT
 {
@@ -142,16 +143,16 @@ enum : HRESULT
 
 enum : uint
 {
-    DEVICEREGISTRATIONTYPE_MDM_ONLY                  = 0x00000000,
-    DEVICEREGISTRATIONTYPE_MAM                       = 0x00000005,
-    DEVICEREGISTRATIONTYPE_MDM_DEVICEWIDE_WITH_AAD   = 0x00000006,
-    DEVICEREGISTRATIONTYPE_MDM_USERSPECIFIC_WITH_AAD = 0x0000000d,
+    DEVICEREGISTRATIONTYPE_MDM_ONLY                  = 0x00000000U,
+    DEVICEREGISTRATIONTYPE_MAM                       = 0x00000005U,
+    DEVICEREGISTRATIONTYPE_MDM_DEVICEWIDE_WITH_AAD   = 0x00000006U,
+    DEVICEREGISTRATIONTYPE_MDM_USERSPECIFIC_WITH_AAD = 0x0000000dU,
 }
 
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mdmregistration/ns-mdmregistration-management_service_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mdmregistration/ns-mdmregistration-management_service_info
 struct MANAGEMENT_SERVICE_INFO
 {
     PWSTR pszMDMServiceUri;
@@ -212,11 +213,11 @@ HRESULT RegisterDeviceWithManagement(const(PWSTR) pszUPN, const(PWSTR) ppszMDMSe
 @DllImport("MDMRegistration.dll")
 HRESULT UnregisterDeviceWithManagement(const(PWSTR) enrollmentID);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mdmregistration/nf-mdmregistration-getdevicemanagementconfiginfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mdmregistration/nf-mdmregistration-getdevicemanagementconfiginfo
 @DllImport("MDMRegistration.dll")
 HRESULT GetDeviceManagementConfigInfo(const(PWSTR) providerID, uint* configStringBufferLength, PWSTR configString);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mdmregistration/nf-mdmregistration-setdevicemanagementconfiginfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mdmregistration/nf-mdmregistration-setdevicemanagementconfiginfo
 @DllImport("MDMRegistration.dll")
 HRESULT SetDeviceManagementConfigInfo(const(PWSTR) providerID, const(PWSTR) configString);
 

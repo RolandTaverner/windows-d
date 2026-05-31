@@ -1,170 +1,183 @@
 // Written in the D programming language.
 
-module windows.win32.system.memory;
+module windows.win32.system.memory.memory;
 
 public import windows.core;
-public import windows.win32.foundation : BOOL, BOOLEAN, FARPROC, HANDLE, HGLOBAL,
-                                         HLOCAL, PSTR, PWSTR;
-public import windows.win32.security : SECURITY_ATTRIBUTES;
+public import windows.win32.foundation.foundation : BOOL, BOOLEAN, FARPROC, HANDLE, HGLOBAL,
+                                                    HLOCAL, PSTR, PWSTR;
+public import windows.win32.security.security : SECURITY_ATTRIBUTES;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
+
 alias SECTION_FLAGS = uint;
 enum : uint
 {
-    SECTION_ALL_ACCESS           = 0x000f001f,
-    SECTION_QUERY                = 0x00000001,
-    SECTION_MAP_WRITE            = 0x00000002,
-    SECTION_MAP_READ             = 0x00000004,
-    SECTION_MAP_EXECUTE          = 0x00000008,
-    SECTION_EXTEND_SIZE          = 0x00000010,
-    SECTION_MAP_EXECUTE_EXPLICIT = 0x00000020,
+    SECTION_ALL_ACCESS           = 0x000f001fU,
+    SECTION_QUERY                = 0x00000001U,
+    SECTION_MAP_WRITE            = 0x00000002U,
+    SECTION_MAP_READ             = 0x00000004U,
+    SECTION_MAP_EXECUTE          = 0x00000008U,
+    SECTION_EXTEND_SIZE          = 0x00000010U,
+    SECTION_MAP_EXECUTE_EXPLICIT = 0x00000020U,
 }
+
 alias FILE_MAP = uint;
 enum : uint
 {
-    FILE_MAP_WRITE           = 0x00000002,
-    FILE_MAP_READ            = 0x00000004,
-    FILE_MAP_ALL_ACCESS      = 0x000f001f,
-    FILE_MAP_EXECUTE         = 0x00000020,
-    FILE_MAP_COPY            = 0x00000001,
-    FILE_MAP_RESERVE         = 0x80000000,
-    FILE_MAP_TARGETS_INVALID = 0x40000000,
-    FILE_MAP_LARGE_PAGES     = 0x20000000,
+    FILE_MAP_WRITE           = 0x00000002U,
+    FILE_MAP_READ            = 0x00000004U,
+    FILE_MAP_ALL_ACCESS      = 0x000f001fU,
+    FILE_MAP_EXECUTE         = 0x00000020U,
+    FILE_MAP_COPY            = 0x00000001U,
+    FILE_MAP_RESERVE         = 0x80000000U,
+    FILE_MAP_TARGETS_INVALID = 0x40000000U,
+    FILE_MAP_LARGE_PAGES     = 0x20000000U,
 }
+
 alias HEAP_FLAGS = uint;
 enum : uint
 {
-    HEAP_NONE                     = 0x00000000,
-    HEAP_NO_SERIALIZE             = 0x00000001,
-    HEAP_GROWABLE                 = 0x00000002,
-    HEAP_GENERATE_EXCEPTIONS      = 0x00000004,
-    HEAP_ZERO_MEMORY              = 0x00000008,
-    HEAP_REALLOC_IN_PLACE_ONLY    = 0x00000010,
-    HEAP_TAIL_CHECKING_ENABLED    = 0x00000020,
-    HEAP_FREE_CHECKING_ENABLED    = 0x00000040,
-    HEAP_DISABLE_COALESCE_ON_FREE = 0x00000080,
-    HEAP_CREATE_ALIGN_16          = 0x00010000,
-    HEAP_CREATE_ENABLE_TRACING    = 0x00020000,
-    HEAP_CREATE_ENABLE_EXECUTE    = 0x00040000,
-    HEAP_MAXIMUM_TAG              = 0x00000fff,
-    HEAP_PSEUDO_TAG_FLAG          = 0x00008000,
-    HEAP_TAG_SHIFT                = 0x00000012,
-    HEAP_CREATE_SEGMENT_HEAP      = 0x00000100,
-    HEAP_CREATE_HARDENED          = 0x00000200,
+    HEAP_NONE                     = 0x00000000U,
+    HEAP_NO_SERIALIZE             = 0x00000001U,
+    HEAP_GROWABLE                 = 0x00000002U,
+    HEAP_GENERATE_EXCEPTIONS      = 0x00000004U,
+    HEAP_ZERO_MEMORY              = 0x00000008U,
+    HEAP_REALLOC_IN_PLACE_ONLY    = 0x00000010U,
+    HEAP_TAIL_CHECKING_ENABLED    = 0x00000020U,
+    HEAP_FREE_CHECKING_ENABLED    = 0x00000040U,
+    HEAP_DISABLE_COALESCE_ON_FREE = 0x00000080U,
+    HEAP_CREATE_ALIGN_16          = 0x00010000U,
+    HEAP_CREATE_ENABLE_TRACING    = 0x00020000U,
+    HEAP_CREATE_ENABLE_EXECUTE    = 0x00040000U,
+    HEAP_MAXIMUM_TAG              = 0x00000fffU,
+    HEAP_PSEUDO_TAG_FLAG          = 0x00008000U,
+    HEAP_TAG_SHIFT                = 0x00000012U,
+    HEAP_CREATE_SEGMENT_HEAP      = 0x00000100U,
+    HEAP_CREATE_HARDENED          = 0x00000200U,
 }
+
 alias PAGE_PROTECTION_FLAGS = uint;
 enum : uint
 {
-    PAGE_NOACCESS                   = 0x00000001,
-    PAGE_READONLY                   = 0x00000002,
-    PAGE_READWRITE                  = 0x00000004,
-    PAGE_WRITECOPY                  = 0x00000008,
-    PAGE_EXECUTE                    = 0x00000010,
-    PAGE_EXECUTE_READ               = 0x00000020,
-    PAGE_EXECUTE_READWRITE          = 0x00000040,
-    PAGE_EXECUTE_WRITECOPY          = 0x00000080,
-    PAGE_GUARD                      = 0x00000100,
-    PAGE_NOCACHE                    = 0x00000200,
-    PAGE_WRITECOMBINE               = 0x00000400,
-    PAGE_GRAPHICS_NOACCESS          = 0x00000800,
-    PAGE_GRAPHICS_READONLY          = 0x00001000,
-    PAGE_GRAPHICS_READWRITE         = 0x00002000,
-    PAGE_GRAPHICS_EXECUTE           = 0x00004000,
-    PAGE_GRAPHICS_EXECUTE_READ      = 0x00008000,
-    PAGE_GRAPHICS_EXECUTE_READWRITE = 0x00010000,
-    PAGE_GRAPHICS_COHERENT          = 0x00020000,
-    PAGE_GRAPHICS_NOCACHE           = 0x00040000,
-    PAGE_ENCLAVE_THREAD_CONTROL     = 0x80000000,
-    PAGE_REVERT_TO_FILE_MAP         = 0x80000000,
-    PAGE_TARGETS_NO_UPDATE          = 0x40000000,
-    PAGE_TARGETS_INVALID            = 0x40000000,
-    PAGE_ENCLAVE_UNVALIDATED        = 0x20000000,
-    PAGE_ENCLAVE_MASK               = 0x10000000,
-    PAGE_ENCLAVE_DECOMMIT           = 0x10000000,
-    PAGE_ENCLAVE_SS_FIRST           = 0x10000001,
-    PAGE_ENCLAVE_SS_REST            = 0x10000002,
-    SEC_PARTITION_OWNER_HANDLE      = 0x00040000,
-    SEC_64K_PAGES                   = 0x00080000,
-    SEC_FILE                        = 0x00800000,
-    SEC_IMAGE                       = 0x01000000,
-    SEC_PROTECTED_IMAGE             = 0x02000000,
-    SEC_RESERVE                     = 0x04000000,
-    SEC_COMMIT                      = 0x08000000,
-    SEC_NOCACHE                     = 0x10000000,
-    SEC_WRITECOMBINE                = 0x40000000,
-    SEC_LARGE_PAGES                 = 0x80000000,
-    SEC_IMAGE_NO_EXECUTE            = 0x11000000,
+    PAGE_NOACCESS                   = 0x00000001U,
+    PAGE_READONLY                   = 0x00000002U,
+    PAGE_READWRITE                  = 0x00000004U,
+    PAGE_WRITECOPY                  = 0x00000008U,
+    PAGE_EXECUTE                    = 0x00000010U,
+    PAGE_EXECUTE_READ               = 0x00000020U,
+    PAGE_EXECUTE_READWRITE          = 0x00000040U,
+    PAGE_EXECUTE_WRITECOPY          = 0x00000080U,
+    PAGE_GUARD                      = 0x00000100U,
+    PAGE_NOCACHE                    = 0x00000200U,
+    PAGE_WRITECOMBINE               = 0x00000400U,
+    PAGE_GRAPHICS_NOACCESS          = 0x00000800U,
+    PAGE_GRAPHICS_READONLY          = 0x00001000U,
+    PAGE_GRAPHICS_READWRITE         = 0x00002000U,
+    PAGE_GRAPHICS_EXECUTE           = 0x00004000U,
+    PAGE_GRAPHICS_EXECUTE_READ      = 0x00008000U,
+    PAGE_GRAPHICS_EXECUTE_READWRITE = 0x00010000U,
+    PAGE_GRAPHICS_COHERENT          = 0x00020000U,
+    PAGE_GRAPHICS_NOCACHE           = 0x00040000U,
+    PAGE_ENCLAVE_THREAD_CONTROL     = 0x80000000U,
+    PAGE_REVERT_TO_FILE_MAP         = 0x80000000U,
+    PAGE_TARGETS_NO_UPDATE          = 0x40000000U,
+    PAGE_TARGETS_INVALID            = 0x40000000U,
+    PAGE_ENCLAVE_UNVALIDATED        = 0x20000000U,
+    PAGE_ENCLAVE_MASK               = 0x10000000U,
+    PAGE_ENCLAVE_DECOMMIT           = 0x10000000U,
+    PAGE_ENCLAVE_SS_FIRST           = 0x10000001U,
+    PAGE_ENCLAVE_SS_REST            = 0x10000002U,
+    SEC_PARTITION_OWNER_HANDLE      = 0x00040000U,
+    SEC_64K_PAGES                   = 0x00080000U,
+    SEC_FILE                        = 0x00800000U,
+    SEC_IMAGE                       = 0x01000000U,
+    SEC_PROTECTED_IMAGE             = 0x02000000U,
+    SEC_RESERVE                     = 0x04000000U,
+    SEC_COMMIT                      = 0x08000000U,
+    SEC_NOCACHE                     = 0x10000000U,
+    SEC_WRITECOMBINE                = 0x40000000U,
+    SEC_LARGE_PAGES                 = 0x80000000U,
+    SEC_IMAGE_NO_EXECUTE            = 0x11000000U,
 }
+
 alias UNMAP_VIEW_OF_FILE_FLAGS = uint;
 enum : uint
 {
-    MEM_UNMAP_NONE                 = 0x00000000,
-    MEM_UNMAP_WITH_TRANSIENT_BOOST = 0x00000001,
-    MEM_PRESERVE_PLACEHOLDER       = 0x00000002,
+    MEM_UNMAP_NONE                 = 0x00000000U,
+    MEM_UNMAP_WITH_TRANSIENT_BOOST = 0x00000001U,
+    MEM_PRESERVE_PLACEHOLDER       = 0x00000002U,
 }
+
 alias VIRTUAL_FREE_TYPE = uint;
 enum : uint
 {
-    MEM_DECOMMIT = 0x00004000,
-    MEM_RELEASE  = 0x00008000,
+    MEM_DECOMMIT = 0x00004000U,
+    MEM_RELEASE  = 0x00008000U,
 }
+
 alias VIRTUAL_ALLOCATION_TYPE = uint;
 enum : uint
 {
-    MEM_COMMIT              = 0x00001000,
-    MEM_RESERVE             = 0x00002000,
-    MEM_RESET               = 0x00080000,
-    MEM_RESET_UNDO          = 0x01000000,
-    MEM_REPLACE_PLACEHOLDER = 0x00004000,
-    MEM_LARGE_PAGES         = 0x20000000,
-    MEM_RESERVE_PLACEHOLDER = 0x00040000,
-    MEM_FREE                = 0x00010000,
+    MEM_COMMIT              = 0x00001000U,
+    MEM_RESERVE             = 0x00002000U,
+    MEM_RESET               = 0x00080000U,
+    MEM_RESET_UNDO          = 0x01000000U,
+    MEM_REPLACE_PLACEHOLDER = 0x00004000U,
+    MEM_LARGE_PAGES         = 0x20000000U,
+    MEM_RESERVE_PLACEHOLDER = 0x00040000U,
+    MEM_FREE                = 0x00010000U,
 }
+
 alias LOCAL_ALLOC_FLAGS = uint;
 enum : uint
 {
-    LHND          = 0x00000042,
-    LMEM_FIXED    = 0x00000000,
-    LMEM_MOVEABLE = 0x00000002,
-    LMEM_ZEROINIT = 0x00000040,
-    LPTR          = 0x00000040,
-    NONZEROLHND   = 0x00000002,
-    NONZEROLPTR   = 0x00000000,
+    LHND          = 0x00000042U,
+    LMEM_FIXED    = 0x00000000U,
+    LMEM_MOVEABLE = 0x00000002U,
+    LMEM_ZEROINIT = 0x00000040U,
+    LPTR          = 0x00000040U,
+    NONZEROLHND   = 0x00000002U,
+    NONZEROLPTR   = 0x00000000U,
 }
+
 alias GLOBAL_ALLOC_FLAGS = uint;
 enum : uint
 {
-    GHND          = 0x00000042,
-    GMEM_FIXED    = 0x00000000,
-    GMEM_MOVEABLE = 0x00000002,
-    GMEM_ZEROINIT = 0x00000040,
-    GPTR          = 0x00000040,
+    GHND          = 0x00000042U,
+    GMEM_FIXED    = 0x00000000U,
+    GMEM_MOVEABLE = 0x00000002U,
+    GMEM_ZEROINIT = 0x00000040U,
+    GPTR          = 0x00000040U,
 }
+
 alias PAGE_TYPE = uint;
 enum : uint
 {
-    MEM_PRIVATE = 0x00020000,
-    MEM_MAPPED  = 0x00040000,
-    MEM_IMAGE   = 0x01000000,
+    MEM_PRIVATE = 0x00020000U,
+    MEM_MAPPED  = 0x00040000U,
+    MEM_IMAGE   = 0x01000000U,
 }
+
 alias SETPROCESSWORKINGSETSIZEEX_FLAGS = uint;
 enum : uint
 {
-    QUOTA_LIMITS_HARDWS_MIN_ENABLE  = 0x00000001,
-    QUOTA_LIMITS_HARDWS_MIN_DISABLE = 0x00000002,
-    QUOTA_LIMITS_HARDWS_MAX_ENABLE  = 0x00000004,
-    QUOTA_LIMITS_HARDWS_MAX_DISABLE = 0x00000008,
+    QUOTA_LIMITS_HARDWS_MIN_ENABLE  = 0x00000001U,
+    QUOTA_LIMITS_HARDWS_MIN_DISABLE = 0x00000002U,
+    QUOTA_LIMITS_HARDWS_MAX_ENABLE  = 0x00000004U,
+    QUOTA_LIMITS_HARDWS_MAX_DISABLE = 0x00000008U,
 }
+
 alias MEMORY_RESOURCE_NOTIFICATION_TYPE = int;
 enum : int
 {
     LowMemoryResourceNotification  = 0x00000000,
     HighMemoryResourceNotification = 0x00000001,
 }
+
 alias OFFER_PRIORITY = int;
 enum : int
 {
@@ -173,18 +186,21 @@ enum : int
     VmOfferPriorityBelowNormal = 0x00000003,
     VmOfferPriorityNormal      = 0x00000004,
 }
+
 alias WIN32_MEMORY_INFORMATION_CLASS = int;
 enum : int
 {
     MemoryRegionInfo = 0x00000000,
 }
+
 alias WIN32_MEMORY_PARTITION_INFORMATION_CLASS = int;
 enum : int
 {
     MemoryPartitionInfo                = 0x00000000,
     MemoryPartitionDedicatedMemoryInfo = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-mem_extended_parameter_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-mem_extended_parameter_type
 alias MEM_EXTENDED_PARAMETER_TYPE = int;
 enum : int
 {
@@ -197,6 +213,7 @@ enum : int
     MemExtendedParameterImageMachine        = 0x00000006,
     MemExtendedParameterMax                 = 0x00000007,
 }
+
 alias MEM_DEDICATED_ATTRIBUTE_TYPE = int;
 enum : int
 {
@@ -206,6 +223,7 @@ enum : int
     MemDedicatedAttributeWriteLatency   = 0x00000003,
     MemDedicatedAttributeMax            = 0x00000004,
 }
+
 alias MEM_SECTION_EXTENDED_PARAMETER_TYPE = int;
 enum : int
 {
@@ -215,7 +233,8 @@ enum : int
     MemSectionExtendedParameterSigningLevel      = 0x00000003,
     MemSectionExtendedParameterMax               = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-heap_information_class))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-heap_information_class
 alias HEAP_INFORMATION_CLASS = int;
 enum : int
 {
@@ -230,21 +249,21 @@ enum : int
 
 enum : uint
 {
-    FILE_CACHE_MAX_HARD_ENABLE  = 0x00000001,
-    FILE_CACHE_MAX_HARD_DISABLE = 0x00000002,
-    FILE_CACHE_MIN_HARD_ENABLE  = 0x00000004,
-    FILE_CACHE_MIN_HARD_DISABLE = 0x00000008,
+    FILE_CACHE_MAX_HARD_ENABLE  = 0x00000001U,
+    FILE_CACHE_MAX_HARD_DISABLE = 0x00000002U,
+    FILE_CACHE_MIN_HARD_ENABLE  = 0x00000004U,
+    FILE_CACHE_MIN_HARD_DISABLE = 0x00000008U,
 }
 
-enum uint MEHC_PATROL_SCRUBBER_PRESENT = 0x00000001;
+enum uint MEHC_PATROL_SCRUBBER_PRESENT = 0x00000001U;
 
 enum : uint
 {
-    WIN32_MEMORY_NUMA_PERFORMANCE_ALL_TARGET_NODE = 0xffffffff,
-    WIN32_MEMORY_NUMA_PERFORMANCE_READ_LATENCY    = 0x00000001,
-    WIN32_MEMORY_NUMA_PERFORMANCE_READ_BANDWIDTH  = 0x00000002,
-    WIN32_MEMORY_NUMA_PERFORMANCE_WRITE_LATENCY   = 0x00000004,
-    WIN32_MEMORY_NUMA_PERFORMANCE_WRITE_BANDWIDTH = 0x00000008,
+    WIN32_MEMORY_NUMA_PERFORMANCE_ALL_TARGET_NODE = 0xffffffffU,
+    WIN32_MEMORY_NUMA_PERFORMANCE_READ_LATENCY    = 0x00000001U,
+    WIN32_MEMORY_NUMA_PERFORMANCE_READ_BANDWIDTH  = 0x00000002U,
+    WIN32_MEMORY_NUMA_PERFORMANCE_WRITE_LATENCY   = 0x00000004U,
+    WIN32_MEMORY_NUMA_PERFORMANCE_WRITE_BANDWIDTH = 0x00000008U,
 }
 
 // Callbacks
@@ -268,18 +287,32 @@ struct AtlThunkData_t
     ptrdiff_t Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minwinbase/ns-minwinbase-process_heap_entry))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minwinbase/ns-minwinbase-process_heap_entry
 struct PROCESS_HEAP_ENTRY
 {
-    void*               lpData;
-    uint                cbData;
-    ubyte               cbOverhead;
-    ubyte               iRegionIndex;
-    ushort              wFlags;
-    _Anonymous_e__Union Anonymous;
+    void*  lpData;
+    uint   cbData;
+    ubyte  cbOverhead;
+    ubyte  iRegionIndex;
+    ushort wFlags;
+    union
+    {
+        struct Block
+        {
+            HANDLE  hMem;
+            uint[3] dwReserved;
+        }
+        struct Region
+        {
+            uint  dwCommittedSize;
+            uint  dwUnCommittedSize;
+            void* lpFirstBlock;
+            void* lpLastBlock;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/heapapi/ns-heapapi-heap_summary))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/heapapi/ns-heapapi-heap_summary
 struct HEAP_SUMMARY
 {
     uint   cb;
@@ -289,21 +322,28 @@ struct HEAP_SUMMARY
     size_t cbMaxReserve;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/memoryapi/ns-memoryapi-win32_memory_range_entry))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/memoryapi/ns-memoryapi-win32_memory_range_entry
 struct WIN32_MEMORY_RANGE_ENTRY
 {
     void*  VirtualAddress;
     size_t NumberOfBytes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/memoryapi/ns-memoryapi-win32_memory_region_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/memoryapi/ns-memoryapi-win32_memory_region_information
 struct WIN32_MEMORY_REGION_INFORMATION
 {
-    void*               AllocationBase;
-    uint                AllocationProtect;
-    _Anonymous_e__Union Anonymous;
-    size_t              RegionSize;
-    size_t              CommitSize;
+    void*  AllocationBase;
+    uint   AllocationProtect;
+    union
+    {
+        uint Flags;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(26))], [])*/uint _bitfield455;
+        }
+    }
+    size_t RegionSize;
+    size_t CommitSize;
 }
 
 struct WIN32_MEMORY_PARTITION_INFORMATION
@@ -329,12 +369,15 @@ struct WIN32_MEMORY_PARTITION_INFORMATION
 
 struct WIN32_MEMORY_NUMA_PERFORMANCE_ENTRY
 {
-    uint             InitiatorNodeNumber;
-    uint             TargetNodeNumber;
-    ubyte            DataType;
-    _Flags_e__Struct Flags;
-    ulong            MinTransferSizeInBytes;
-    ulong            EntryValue;
+    uint  InitiatorNodeNumber;
+    uint  TargetNodeNumber;
+    ubyte DataType;
+    struct Flags
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(6))], [])*/ubyte _bitfield456;
+    }
+    ulong MinTransferSizeInBytes;
+    ulong EntryValue;
 }
 
 struct WIN32_MEMORY_NUMA_PERFORMANCE_INFORMATION_OUTPUT
@@ -343,31 +386,51 @@ struct WIN32_MEMORY_NUMA_PERFORMANCE_INFORMATION_OUTPUT
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/WIN32_MEMORY_NUMA_PERFORMANCE_ENTRY[1] PerformanceEntries;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-memory_basic_information))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct MEMORY_BASIC_INFORMATION
+version(X86_64)
 {
-    void*     BaseAddress;
-    void*     AllocationBase;
-    PAGE_PROTECTION_FLAGS AllocationProtect;
-    ushort    PartitionId;
-    size_t    RegionSize;
-    VIRTUAL_ALLOCATION_TYPE State;
-    PAGE_PROTECTION_FLAGS Protect;
-    PAGE_TYPE Type;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-memory_basic_information
+    struct MEMORY_BASIC_INFORMATION
+    {
+        void*     BaseAddress;
+        void*     AllocationBase;
+        PAGE_PROTECTION_FLAGS AllocationProtect;
+        ushort    PartitionId;
+        size_t    RegionSize;
+        VIRTUAL_ALLOCATION_TYPE State;
+        PAGE_PROTECTION_FLAGS Protect;
+        PAGE_TYPE Type;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-memory_basic_information))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct MEMORY_BASIC_INFORMATION
+version(AArch64)
 {
-    void*     BaseAddress;
-    void*     AllocationBase;
-    PAGE_PROTECTION_FLAGS AllocationProtect;
-    size_t    RegionSize;
-    VIRTUAL_ALLOCATION_TYPE State;
-    PAGE_PROTECTION_FLAGS Protect;
-    PAGE_TYPE Type;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-memory_basic_information
+    struct MEMORY_BASIC_INFORMATION
+    {
+        void*     BaseAddress;
+        void*     AllocationBase;
+        PAGE_PROTECTION_FLAGS AllocationProtect;
+        ushort    PartitionId;
+        size_t    RegionSize;
+        VIRTUAL_ALLOCATION_TYPE State;
+        PAGE_PROTECTION_FLAGS Protect;
+        PAGE_TYPE Type;
+    }
+}
+
+version(X86)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-memory_basic_information
+    struct MEMORY_BASIC_INFORMATION
+    {
+        void*     BaseAddress;
+        void*     AllocationBase;
+        PAGE_PROTECTION_FLAGS AllocationProtect;
+        size_t    RegionSize;
+        VIRTUAL_ALLOCATION_TYPE State;
+        PAGE_PROTECTION_FLAGS Protect;
+        PAGE_TYPE Type;
+    }
 }
 
 struct MEMORY_BASIC_INFORMATION32
@@ -394,21 +457,31 @@ struct MEMORY_BASIC_INFORMATION64
     uint      __alignment2;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Memory/-cfg-call-target-info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Memory/-cfg-call-target-info
 struct CFG_CALL_TARGET_INFO
 {
     size_t Offset;
     size_t Flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-mem_extended_parameter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-mem_extended_parameter
 struct MEM_EXTENDED_PARAMETER
 {
-    _Anonymous1_e__Struct Anonymous1;
-    _Anonymous2_e__Union Anonymous2;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(8)), FixedArgSig(ElementSig(56))], [])*/ulong _bitfield457;
+    }
+    union
+    {
+        ulong  ULong64;
+        void*  Pointer;
+        size_t Size;
+        HANDLE Handle;
+        uint   ULong;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-mem_address_requirements))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-mem_address_requirements
 struct MEM_ADDRESS_REQUIREMENTS
 {
     void*  LowestStartingAddress;
@@ -478,7 +551,7 @@ BOOL HeapSetInformation(HANDLE HeapHandle, HEAP_INFORMATION_CLASS HeapInformatio
 @DllImport("KERNEL32.dll")
 BOOL HeapValidate(HANDLE hHeap, HEAP_FLAGS dwFlags, const(void)* lpMem);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/heapapi/nf-heapapi-heapsummary))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/heapapi/nf-heapapi-heapsummary
 @DllImport("KERNEL32.dll")
 BOOL HeapSummary(HANDLE hHeap, uint dwFlags, HEAP_SUMMARY* lpSummary);
 
@@ -757,7 +830,7 @@ MEMORY_MAPPED_VIEW_ADDRESS MapViewOfFile3FromApp(HANDLE FileMapping, HANDLE Proc
                                                  VIRTUAL_ALLOCATION_TYPE AllocationType, uint PageProtection, 
                                                  MEM_EXTENDED_PARAMETER* ExtendedParameters, uint ParameterCount);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/memoryapi/nf-memoryapi-createfilemapping2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/memoryapi/nf-memoryapi-createfilemapping2
 @DllImport("api-ms-win-core-memory-l1-1-7.dll")
 HANDLE CreateFileMapping2(HANDLE File, SECURITY_ATTRIBUTES* SecurityAttributes, uint DesiredAccess, 
                           PAGE_PROTECTION_FLAGS PageProtection, uint AllocationAttributes, ulong MaximumSize, 

@@ -3,13 +3,13 @@
 module windows.win32.media.audio.apo;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, HANDLE, HRESULT, LPARAM, PROPERTYKEY,
-                                         PWSTR;
-public import windows.win32.media.audio : AUDIO_SYSTEMEFFECTS_PROPERTYSTORE_TYPE, AUDIO_VOLUME_NOTIFICATION_DATA,
-                                          IMMDevice, IMMDeviceCollection,
-                                          WAVEFORMATEX;
-public import windows.win32.system.com : IServiceProvider, IUnknown;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, HANDLE, HRESULT, LPARAM, PROPERTYKEY,
+                                                    PWSTR;
+public import windows.win32.media.audio.audio : AUDIO_SYSTEMEFFECTS_PROPERTYSTORE_TYPE, AUDIO_VOLUME_NOTIFICATION_DATA,
+                                                IMMDevice, IMMDeviceCollection,
+                                                WAVEFORMATEX;
+public import windows.win32.system.com.com : IServiceProvider, IUnknown;
 public import windows.win32.ui.shell.propertiessystem : IPropertyStore;
 
 extern(Windows) @nogc nothrow:
@@ -17,7 +17,8 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioapotypes/ne-audioapotypes-apo_buffer_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioapotypes/ne-audioapotypes-apo_buffer_flags
 alias APO_BUFFER_FLAGS = int;
 enum : int
 {
@@ -25,6 +26,7 @@ enum : int
     BUFFER_VALID   = 0x00000001,
     BUFFER_SILENT  = 0x00000002,
 }
+
 alias APO_CONNECTION_BUFFER_TYPE = int;
 enum : int
 {
@@ -32,7 +34,8 @@ enum : int
     APO_CONNECTION_BUFFER_TYPE_EXTERNAL  = 0x00000001,
     APO_CONNECTION_BUFFER_TYPE_DEPENDANT = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/ne-audioenginebaseapo-apo_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/ne-audioenginebaseapo-apo_flag
 alias APO_FLAG = int;
 enum : int
 {
@@ -44,12 +47,14 @@ enum : int
     APO_FLAG_MIXER                      = 0x00000010,
     APO_FLAG_DEFAULT                    = 0x0000000e,
 }
+
 alias AUDIO_FLOW_TYPE = int;
 enum : int
 {
     AUDIO_FLOW_PULL = 0x00000000,
     AUDIO_FLOW_PUSH = 0x00000001,
 }
+
 enum EAudioConstriction : int
 {
     eAudioConstrictionOff   = 0x00000000,
@@ -58,20 +63,23 @@ enum EAudioConstriction : int
     eAudioConstriction14_14 = 0x00000003,
     eAudioConstrictionMute  = 0x00000004,
 }
+
 alias APO_REFERENCE_STREAM_PROPERTIES = int;
 enum : int
 {
     APO_REFERENCE_STREAM_PROPERTIES_NONE                 = 0x00000000,
     APO_REFERENCE_STREAM_PROPERTIES_POST_VOLUME_LOOPBACK = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/ne-audioengineextensionapo-audio_systemeffect_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/ne-audioengineextensionapo-audio_systemeffect_state
 alias AUDIO_SYSTEMEFFECT_STATE = int;
 enum : int
 {
     AUDIO_SYSTEMEFFECT_STATE_OFF = 0x00000000,
     AUDIO_SYSTEMEFFECT_STATE_ON  = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/ne-audioengineextensionapo-apo_log_level))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/ne-audioengineextensionapo-apo_log_level
 alias APO_LOG_LEVEL = int;
 enum : int
 {
@@ -82,7 +90,8 @@ enum : int
     APO_LOG_LEVEL_INFO     = 0x00000004,
     APO_LOG_LEVEL_VERBOSE  = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/ne-audioengineextensionapo-apo_notification_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/ne-audioengineextensionapo-apo_notification_type
 alias APO_NOTIFICATION_TYPE = int;
 enum : int
 {
@@ -95,7 +104,8 @@ enum : int
     APO_NOTIFICATION_TYPE_MICROPHONE_BOOST               = 0x00000006,
     APO_NOTIFICATION_TYPE_AUDIO_ENVIRONMENT_STATE_CHANGE = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/ne-audioengineextensionapo-device_orientation_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/ne-audioengineextensionapo-device_orientation_type
 alias DEVICE_ORIENTATION_TYPE = int;
 enum : int
 {
@@ -133,8 +143,8 @@ enum : HRESULT
 
 enum double AUDIO_MIN_FRAMERATE = 0x1.4p+3;
 enum double AUDIO_MAX_FRAMERATE = 0x1.77p+18;
-enum uint AUDIO_MIN_CHANNELS = 0x00000001;
-enum uint AUDIO_MAX_CHANNELS = 0x00001000;
+enum uint AUDIO_MIN_CHANNELS = 0x00000001U;
+enum uint AUDIO_MAX_CHANNELS = 0x00001000U;
 
 enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({3494774182, 22859, 20406, 168, 13, 1, 175, 94, 237, 125, 29}, 0))], [])*/PROPERTYKEY
 {
@@ -235,9 +245,9 @@ enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSi
 
 enum : uint
 {
-    AUDIOMEDIATYPE_EQUAL_FORMAT_TYPES     = 0x00000002,
-    AUDIOMEDIATYPE_EQUAL_FORMAT_DATA      = 0x00000004,
-    AUDIOMEDIATYPE_EQUAL_FORMAT_USER_DATA = 0x00000008,
+    AUDIOMEDIATYPE_EQUAL_FORMAT_TYPES     = 0x00000002U,
+    AUDIOMEDIATYPE_EQUAL_FORMAT_DATA      = 0x00000004U,
+    AUDIOMEDIATYPE_EQUAL_FORMAT_USER_DATA = 0x00000008U,
 }
 
 // Callbacks
@@ -247,7 +257,7 @@ alias FNAPONOTIFICATIONCALLBACK = HRESULT function(APO_REG_PROPERTIES* pProperti
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audiomediatype/ns-audiomediatype-uncompressedaudioformat))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audiomediatype/ns-audiomediatype-uncompressedaudioformat
 struct UNCOMPRESSEDAUDIOFORMAT
 {
     GUID  guidFormatType;
@@ -258,7 +268,7 @@ struct UNCOMPRESSEDAUDIOFORMAT
     uint  dwChannelMask;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioapotypes/ns-audioapotypes-apo_connection_property))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioapotypes/ns-audioapotypes-apo_connection_property
 struct APO_CONNECTION_PROPERTY
 {
     size_t           pBuffer;
@@ -267,7 +277,7 @@ struct APO_CONNECTION_PROPERTY
     uint             u32Signature;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioapotypes/ns-audioapotypes-apo_connection_property_v2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioapotypes/ns-audioapotypes-apo_connection_property_v2
 struct APO_CONNECTION_PROPERTY_V2
 {
     APO_CONNECTION_PROPERTY property;
@@ -283,7 +293,7 @@ struct APO_CONNECTION_DESCRIPTOR
     uint            u32Signature;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/ns-audioenginebaseapo-apo_reg_properties))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/ns-audioenginebaseapo-apo_reg_properties
 struct APO_REG_PROPERTIES
 {
     GUID       clsid;
@@ -302,14 +312,14 @@ struct APO_REG_PROPERTIES
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/ns-audioenginebaseapo-apoinitbasestruct))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/ns-audioenginebaseapo-apoinitbasestruct
 struct APOInitBaseStruct
 {
     uint cbSize;
     GUID clsid;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/ns-audioenginebaseapo-apoinitsystemeffects))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/ns-audioenginebaseapo-apoinitsystemeffects
 struct APOInitSystemEffects
 {
     APOInitBaseStruct   APOInit;
@@ -319,7 +329,7 @@ struct APOInitSystemEffects
     IMMDeviceCollection pDeviceCollection;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/ns-audioenginebaseapo-apoinitsystemeffects2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/ns-audioenginebaseapo-apoinitsystemeffects2
 struct APOInitSystemEffects2
 {
     APOInitBaseStruct   APOInit;
@@ -333,7 +343,7 @@ struct APOInitSystemEffects2
     BOOL                InitializeForDiscoveryOnly;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/ns-audioenginebaseapo-audiofxextensionparams))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/ns-audioenginebaseapo-audiofxextensionparams
 struct AudioFXExtensionParams
 {
     LPARAM         AddPageParam;
@@ -341,7 +351,7 @@ struct AudioFXExtensionParams
     IPropertyStore pFxProperties;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/ns-audioengineextensionapo-audio_systemeffect))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/ns-audioengineextensionapo-audio_systemeffect
 struct AUDIO_SYSTEMEFFECT
 {
     GUID id;
@@ -349,7 +359,7 @@ struct AUDIO_SYSTEMEFFECT
     AUDIO_SYSTEMEFFECT_STATE state;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/ns-audioengineextensionapo-apoinitsystemeffects3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/ns-audioengineextensionapo-apoinitsystemeffects3
 struct APOInitSystemEffects3
 {
     APOInitBaseStruct   APOInit;
@@ -368,14 +378,14 @@ struct AcousticEchoCanceller_Reference_Input
     APO_REFERENCE_STREAM_PROPERTIES streamProperties;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/ns-audioengineextensionapo-audio_endpoint_volume_change_notification))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/ns-audioengineextensionapo-audio_endpoint_volume_change_notification
 struct AUDIO_ENDPOINT_VOLUME_CHANGE_NOTIFICATION
 {
     IMMDevice endpoint;
     AUDIO_VOLUME_NOTIFICATION_DATA* volume;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/ns-audioengineextensionapo-audio_endpoint_property_change_notification))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/ns-audioengineextensionapo-audio_endpoint_property_change_notification
 struct AUDIO_ENDPOINT_PROPERTY_CHANGE_NOTIFICATION
 {
     IMMDevice      endpoint;
@@ -383,7 +393,7 @@ struct AUDIO_ENDPOINT_PROPERTY_CHANGE_NOTIFICATION
     PROPERTYKEY    propertyKey;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/ns-audioengineextensionapo-audio_systemeffects_property_change_notification))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/ns-audioengineextensionapo-audio_systemeffects_property_change_notification
 struct AUDIO_SYSTEMEFFECTS_PROPERTY_CHANGE_NOTIFICATION
 {
     IMMDevice      endpoint;
@@ -393,7 +403,7 @@ struct AUDIO_SYSTEMEFFECTS_PROPERTY_CHANGE_NOTIFICATION
     PROPERTYKEY    propertyKey;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/ns-audioengineextensionapo-audio_volume_notification_data2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/ns-audioengineextensionapo-audio_volume_notification_data2
 struct AUDIO_VOLUME_NOTIFICATION_DATA2
 {
     AUDIO_VOLUME_NOTIFICATION_DATA* notificationData;
@@ -406,14 +416,14 @@ struct AUDIO_VOLUME_NOTIFICATION_DATA2
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/float[1] channelVolumesInDb;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/ns-audioengineextensionapo-audio_endpoint_volume_change_notification2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/ns-audioengineextensionapo-audio_endpoint_volume_change_notification2
 struct AUDIO_ENDPOINT_VOLUME_CHANGE_NOTIFICATION2
 {
     IMMDevice endpoint;
     AUDIO_VOLUME_NOTIFICATION_DATA2* volume;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/ns-audioengineextensionapo-audio_microphone_boost_notification))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/ns-audioengineextensionapo-audio_microphone_boost_notification
 struct AUDIO_MICROPHONE_BOOST_NOTIFICATION
 {
     IMMDevice endpoint;
@@ -433,71 +443,86 @@ struct AUDIO_ENVIRONMENT_STATE_CHANGE_NOTIFICATION
     PROPERTYKEY    propertyKey;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/ns-audioengineextensionapo-apo_notification))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/ns-audioengineextensionapo-apo_notification
 struct APO_NOTIFICATION
 {
     APO_NOTIFICATION_TYPE type;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        AUDIO_ENDPOINT_VOLUME_CHANGE_NOTIFICATION audioEndpointVolumeChange;
+        AUDIO_ENDPOINT_PROPERTY_CHANGE_NOTIFICATION audioEndpointPropertyChange;
+        AUDIO_SYSTEMEFFECTS_PROPERTY_CHANGE_NOTIFICATION audioSystemEffectsPropertyChange;
+        AUDIO_ENDPOINT_VOLUME_CHANGE_NOTIFICATION2 audioEndpointVolumeChange2;
+        DEVICE_ORIENTATION_TYPE deviceOrientation;
+        AUDIO_MICROPHONE_BOOST_NOTIFICATION audioMicrophoneBoostChange;
+        AUDIO_ENVIRONMENT_STATE_CHANGE_NOTIFICATION audioEnvironmentChange;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/ns-audioengineextensionapo-audio_endpoint_volume_apo_notification_descriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/ns-audioengineextensionapo-audio_endpoint_volume_apo_notification_descriptor
 struct AUDIO_ENDPOINT_VOLUME_APO_NOTIFICATION_DESCRIPTOR
 {
     IMMDevice device;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/ns-audioengineextensionapo-audio_endpoint_property_change_apo_notification_descriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/ns-audioengineextensionapo-audio_endpoint_property_change_apo_notification_descriptor
 struct AUDIO_ENDPOINT_PROPERTY_CHANGE_APO_NOTIFICATION_DESCRIPTOR
 {
     IMMDevice device;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/ns-audioengineextensionapo-audio_systemeffects_property_change_apo_notification_descriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/ns-audioengineextensionapo-audio_systemeffects_property_change_apo_notification_descriptor
 struct AUDIO_SYSTEMEFFECTS_PROPERTY_CHANGE_APO_NOTIFICATION_DESCRIPTOR
 {
     IMMDevice device;
     GUID      propertyStoreContext;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/ns-audioengineextensionapo-audio_microphone_boost_apo_notification_descriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/ns-audioengineextensionapo-audio_microphone_boost_apo_notification_descriptor
 struct AUDIO_MICROPHONE_BOOST_APO_NOTIFICATION_DESCRIPTOR
 {
     IMMDevice device;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/ns-audioengineextensionapo-apo_notification_descriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/ns-audioengineextensionapo-apo_notification_descriptor
 struct APO_NOTIFICATION_DESCRIPTOR
 {
     APO_NOTIFICATION_TYPE type;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        AUDIO_ENDPOINT_VOLUME_APO_NOTIFICATION_DESCRIPTOR audioEndpointVolume;
+        AUDIO_ENDPOINT_PROPERTY_CHANGE_APO_NOTIFICATION_DESCRIPTOR audioEndpointPropertyChange;
+        AUDIO_SYSTEMEFFECTS_PROPERTY_CHANGE_APO_NOTIFICATION_DESCRIPTOR audioSystemEffectsPropertyChange;
+        AUDIO_MICROPHONE_BOOST_APO_NOTIFICATION_DESCRIPTOR audioMicrophoneBoost;
+    }
 }
 
 // Interfaces
 
 @GUID("4e997f73-b71f-4798-873b-ed7dfcf15b4d")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audiomediatype/nn-audiomediatype-iaudiomediatype))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audiomediatype/nn-audiomediatype-iaudiomediatype
 interface IAudioMediaType : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audiomediatype/nf-audiomediatype-iaudiomediatype-iscompressedformat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audiomediatype/nf-audiomediatype-iaudiomediatype-iscompressedformat
     HRESULT IsCompressedFormat(BOOL* pfCompressed);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audiomediatype/nf-audiomediatype-iaudiomediatype-isequal))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audiomediatype/nf-audiomediatype-iaudiomediatype-isequal
     HRESULT IsEqual(IAudioMediaType pIAudioType, uint* pdwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audiomediatype/nf-audiomediatype-iaudiomediatype-getaudioformat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audiomediatype/nf-audiomediatype-iaudiomediatype-getaudioformat
     WAVEFORMATEX* GetAudioFormat();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audiomediatype/nf-audiomediatype-iaudiomediatype-getuncompressedaudioformat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audiomediatype/nf-audiomediatype-iaudiomediatype-getuncompressedaudioformat
     HRESULT GetUncompressedAudioFormat(UNCOMPRESSEDAUDIOFORMAT* pUncompressedAudioFormat);
 }
 
 @GUID("9e1d6a6d-ddbc-4e95-a4c7-ad64ba37846c")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nn-audioenginebaseapo-iaudioprocessingobjectrt))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nn-audioenginebaseapo-iaudioprocessingobjectrt
 interface IAudioProcessingObjectRT : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudioprocessingobjectrt-apoprocess))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudioprocessingobjectrt-apoprocess
     void APOProcess(uint u32NumInputConnections, APO_CONNECTION_PROPERTY** ppInputConnections, 
                     uint u32NumOutputConnections, APO_CONNECTION_PROPERTY** ppOutputConnections);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudioprocessingobjectrt-calcinputframes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudioprocessingobjectrt-calcinputframes
     uint CalcInputFrames(uint u32OutputFrameCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudioprocessingobjectrt-calcoutputframes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudioprocessingobjectrt-calcoutputframes
     uint CalcOutputFrames(uint u32InputFrameCount);
 }
 
@@ -509,95 +534,95 @@ interface IAudioProcessingObjectVBR : IUnknown
 }
 
 @GUID("0e5ed805-aba6-49c3-8f9a-2b8c889c4fa8")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nn-audioenginebaseapo-iaudioprocessingobjectconfiguration))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nn-audioenginebaseapo-iaudioprocessingobjectconfiguration
 interface IAudioProcessingObjectConfiguration : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudioprocessingobjectconfiguration-lockforprocess))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudioprocessingobjectconfiguration-lockforprocess
     HRESULT LockForProcess(uint u32NumInputConnections, APO_CONNECTION_DESCRIPTOR** ppInputConnections, 
                            uint u32NumOutputConnections, APO_CONNECTION_DESCRIPTOR** ppOutputConnections);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudioprocessingobjectconfiguration-unlockforprocess))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudioprocessingobjectconfiguration-unlockforprocess
     HRESULT UnlockForProcess();
 }
 
 @GUID("fd7f2b29-24d0-4b5c-b177-592c39f9ca10")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nn-audioenginebaseapo-iaudioprocessingobject))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nn-audioenginebaseapo-iaudioprocessingobject
 interface IAudioProcessingObject : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudioprocessingobject-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudioprocessingobject-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudioprocessingobject-getlatency))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudioprocessingobject-getlatency
     HRESULT GetLatency(long* pTime);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudioprocessingobject-getregistrationproperties))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudioprocessingobject-getregistrationproperties
     HRESULT GetRegistrationProperties(APO_REG_PROPERTIES** ppRegProps);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudioprocessingobject-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudioprocessingobject-initialize
     HRESULT Initialize(uint cbDataSize, ubyte* pbyData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudioprocessingobject-isinputformatsupported))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudioprocessingobject-isinputformatsupported
     HRESULT IsInputFormatSupported(IAudioMediaType pOppositeFormat, IAudioMediaType pRequestedInputFormat, 
                                    IAudioMediaType* ppSupportedInputFormat);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudioprocessingobject-isoutputformatsupported))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudioprocessingobject-isoutputformatsupported
     HRESULT IsOutputFormatSupported(IAudioMediaType pOppositeFormat, IAudioMediaType pRequestedOutputFormat, 
                                     IAudioMediaType* ppSupportedOutputFormat);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudioprocessingobject-getinputchannelcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudioprocessingobject-getinputchannelcount
     HRESULT GetInputChannelCount(uint* pu32ChannelCount);
 }
 
 @GUID("98f37dac-d0b6-49f5-896a-aa4d169a4c48")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nn-audioenginebaseapo-iaudiodevicemodulesclient))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nn-audioenginebaseapo-iaudiodevicemodulesclient
 interface IAudioDeviceModulesClient : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudiodevicemodulesclient-setaudiodevicemodulesmanager))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudiodevicemodulesclient-setaudiodevicemodulesmanager
     HRESULT SetAudioDeviceModulesManager(IUnknown pAudioDeviceModulesManager);
 }
 
 @GUID("5fa00f27-add6-499a-8a9d-6b98521fa75b")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nn-audioenginebaseapo-iaudiosystemeffects))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nn-audioenginebaseapo-iaudiosystemeffects
 interface IAudioSystemEffects : IUnknown
 {
 }
 
 @GUID("bafe99d2-7436-44ce-9e0e-4d89afbfff56")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nn-audioenginebaseapo-iaudiosystemeffects2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nn-audioenginebaseapo-iaudiosystemeffects2
 interface IAudioSystemEffects2 : IAudioSystemEffects
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudiosystemeffects2-geteffectslist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudiosystemeffects2-geteffectslist
     HRESULT GetEffectsList(GUID** ppEffectsIds, uint* pcEffects, HANDLE Event);
 }
 
 @GUID("b1176e34-bb7f-4f05-bebd-1b18a534e097")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nn-audioenginebaseapo-iaudiosystemeffectscustomformats))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nn-audioenginebaseapo-iaudiosystemeffectscustomformats
 interface IAudioSystemEffectsCustomFormats : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudiosystemeffectscustomformats-getformatcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudiosystemeffectscustomformats-getformatcount
     HRESULT GetFormatCount(uint* pcFormats);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudiosystemeffectscustomformats-getformat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudiosystemeffectscustomformats-getformat
     HRESULT GetFormat(uint nFormat, IAudioMediaType* ppFormat);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudiosystemeffectscustomformats-getformatrepresentation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iaudiosystemeffectscustomformats-getformatrepresentation
     HRESULT GetFormatRepresentation(uint nFormat, PWSTR* ppwstrFormatRep);
 }
 
 @GUID("4ceb0aab-fa19-48ed-a857-87771ae1b768")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nn-audioenginebaseapo-iapoauxiliaryinputconfiguration))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nn-audioenginebaseapo-iapoauxiliaryinputconfiguration
 interface IApoAuxiliaryInputConfiguration : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iapoauxiliaryinputconfiguration-addauxiliaryinput))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iapoauxiliaryinputconfiguration-addauxiliaryinput
     HRESULT AddAuxiliaryInput(uint dwInputId, uint cbDataSize, ubyte* pbyData, 
                               APO_CONNECTION_DESCRIPTOR* pInputConnection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iapoauxiliaryinputconfiguration-removeauxiliaryinput))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iapoauxiliaryinputconfiguration-removeauxiliaryinput
     HRESULT RemoveAuxiliaryInput(uint dwInputId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iapoauxiliaryinputconfiguration-isinputformatsupported))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iapoauxiliaryinputconfiguration-isinputformatsupported
     HRESULT IsInputFormatSupported(IAudioMediaType pRequestedInputFormat, IAudioMediaType* ppSupportedInputFormat);
 }
 
 @GUID("f851809c-c177-49a0-b1b2-b66f017943ab")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nn-audioenginebaseapo-iapoauxiliaryinputrt))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nn-audioenginebaseapo-iapoauxiliaryinputrt
 interface IApoAuxiliaryInputRT : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iapoauxiliaryinputrt-acceptinput))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nf-audioenginebaseapo-iapoauxiliaryinputrt-acceptinput
     void AcceptInput(uint dwInputId, const(APO_CONNECTION_PROPERTY)* pInputConnection);
 }
 
 @GUID("25385759-3236-4101-a943-25693dfb5d2d")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nn-audioenginebaseapo-iapoacousticechocancellation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioenginebaseapo/nn-audioenginebaseapo-iapoacousticechocancellation
 interface IApoAcousticEchoCancellation : IUnknown
 {
 }
@@ -609,28 +634,28 @@ interface IApoAcousticEchoCancellation2 : IApoAcousticEchoCancellation
 }
 
 @GUID("c58b31cd-fc6a-4255-bc1f-ad29bb0a4a17")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/nn-audioengineextensionapo-iaudiosystemeffects3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/nn-audioengineextensionapo-iaudiosystemeffects3
 interface IAudioSystemEffects3 : IAudioSystemEffects2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/nf-audioengineextensionapo-iaudiosystemeffects3-getcontrollablesystemeffectslist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/nf-audioengineextensionapo-iaudiosystemeffects3-getcontrollablesystemeffectslist
     HRESULT GetControllableSystemEffectsList(AUDIO_SYSTEMEFFECT** effects, uint* numEffects, HANDLE event);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/nf-audioengineextensionapo-iaudiosystemeffects3-setaudiosystemeffectstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/nf-audioengineextensionapo-iaudiosystemeffects3-setaudiosystemeffectstate
     HRESULT SetAudioSystemEffectState(GUID effectId, AUDIO_SYSTEMEFFECT_STATE state);
 }
 
 @GUID("acd65e2f-955b-4b57-b9bf-ac297bb752c9")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/nn-audioengineextensionapo-iaudioprocessingobjectrtqueueservice))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/nn-audioengineextensionapo-iaudioprocessingobjectrtqueueservice
 interface IAudioProcessingObjectRTQueueService : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/nf-audioengineextensionapo-iaudioprocessingobjectrtqueueservice-getrealtimeworkqueue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/nf-audioengineextensionapo-iaudioprocessingobjectrtqueueservice-getrealtimeworkqueue
     HRESULT GetRealTimeWorkQueue(uint* workQueueId);
 }
 
 @GUID("698f0107-1745-4708-95a5-d84478a62a65")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/nn-audioengineextensionapo-iaudioprocessingobjectloggingservice))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/nn-audioengineextensionapo-iaudioprocessingobjectloggingservice
 interface IAudioProcessingObjectLoggingService : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/nf-audioengineextensionapo-iaudioprocessingobjectloggingservice-apolog))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/nf-audioengineextensionapo-iaudioprocessingobjectloggingservice-apolog
     void ApoLog(APO_LOG_LEVEL level, const(PWSTR) format);
 }
 
@@ -642,20 +667,20 @@ interface IAudioProcessingObjectPreferredFormatSupport : IUnknown
 }
 
 @GUID("56b0c76f-02fd-4b21-a52e-9f8219fc86e4")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/nn-audioengineextensionapo-iaudioprocessingobjectnotifications))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/nn-audioengineextensionapo-iaudioprocessingobjectnotifications
 interface IAudioProcessingObjectNotifications : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/nf-audioengineextensionapo-iaudioprocessingobjectnotifications-getaponotificationregistrationinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/nf-audioengineextensionapo-iaudioprocessingobjectnotifications-getaponotificationregistrationinfo
     HRESULT GetApoNotificationRegistrationInfo(APO_NOTIFICATION_DESCRIPTOR** apoNotifications, uint* count);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/nf-audioengineextensionapo-iaudioprocessingobjectnotifications-handlenotification))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/nf-audioengineextensionapo-iaudioprocessingobjectnotifications-handlenotification
     void    HandleNotification(APO_NOTIFICATION* apoNotification);
 }
 
 @GUID("ca2cfbde-a9d6-4eb0-bc95-c4d026b380f0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/nn-audioengineextensionapo-iaudioprocessingobjectnotifications2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/nn-audioengineextensionapo-iaudioprocessingobjectnotifications2
 interface IAudioProcessingObjectNotifications2 : IAudioProcessingObjectNotifications
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/nf-audioengineextensionapo-iaudioprocessingobjectnotifications2-getaponotificationregistrationinfo2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/audioengineextensionapo/nf-audioengineextensionapo-iaudioprocessingobjectnotifications2-getaponotificationregistrationinfo2
     HRESULT GetApoNotificationRegistrationInfo2(APO_NOTIFICATION_TYPE maxApoNotificationTypeSupported, 
                                                 APO_NOTIFICATION_DESCRIPTOR** apoNotifications, uint* count);
 }

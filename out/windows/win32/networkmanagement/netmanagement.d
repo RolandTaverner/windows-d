@@ -3,13 +3,14 @@
 module windows.win32.networkmanagement.netmanagement;
 
 public import windows.core;
-public import system : Guid;
+public import system.system : Guid;
 public import windows.win32.data.xml.msxml : IXMLDOMNodeList;
-public import windows.win32.foundation : BOOL, BOOLEAN, BSTR, CHAR, FILETIME, HANDLE,
-                                         HRESULT, HWND, NTSTATUS, PSTR, PWSTR;
-public import windows.win32.security.cryptography : CERT_CONTEXT;
-public import windows.win32.security : PSID, SID_NAME_USE;
-public import windows.win32.system.com : IUnknown;
+public import windows.win32.foundation.foundation : BOOL, BOOLEAN, BSTR, CHAR, FILETIME,
+                                                    HANDLE, HRESULT, HWND, NTSTATUS,
+                                                    PSTR, PWSTR;
+public import windows.win32.security.cryptography.cryptography : CERT_CONTEXT;
+public import windows.win32.security.security : PSID, SID_NAME_USE;
+public import windows.win32.system.com.com : IUnknown;
 public import windows.win32.system.registry : HKEY;
 
 extern(Windows) @nogc nothrow:
@@ -17,166 +18,181 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias NET_REQUEST_PROVISION_OPTIONS = uint;
 enum : uint
 {
-    NETSETUP_PROVISION_ONLINE_CALLER = 0x40000000,
+    NETSETUP_PROVISION_ONLINE_CALLER = 0x40000000U,
 }
+
 alias NET_JOIN_DOMAIN_JOIN_OPTIONS = uint;
 enum : uint
 {
-    NETSETUP_JOIN_DOMAIN              = 0x00000001,
-    NETSETUP_ACCT_CREATE              = 0x00000002,
-    NETSETUP_WIN9X_UPGRADE            = 0x00000010,
-    NETSETUP_DOMAIN_JOIN_IF_JOINED    = 0x00000020,
-    NETSETUP_JOIN_UNSECURE            = 0x00000040,
-    NETSETUP_MACHINE_PWD_PASSED       = 0x00000080,
-    NETSETUP_DEFER_SPN_SET            = 0x00000100,
-    NETSETUP_JOIN_DC_ACCOUNT          = 0x00000200,
-    NETSETUP_JOIN_WITH_NEW_NAME       = 0x00000400,
-    NETSETUP_JOIN_READONLY            = 0x00000800,
-    NETSETUP_AMBIGUOUS_DC             = 0x00001000,
-    NETSETUP_NO_NETLOGON_CACHE        = 0x00002000,
-    NETSETUP_DONT_CONTROL_SERVICES    = 0x00004000,
-    NETSETUP_SET_MACHINE_NAME         = 0x00008000,
-    NETSETUP_FORCE_SPN_SET            = 0x00010000,
-    NETSETUP_NO_ACCT_REUSE            = 0x00020000,
-    NETSETUP_IGNORE_UNSUPPORTED_FLAGS = 0x10000000,
+    NETSETUP_JOIN_DOMAIN              = 0x00000001U,
+    NETSETUP_ACCT_CREATE              = 0x00000002U,
+    NETSETUP_WIN9X_UPGRADE            = 0x00000010U,
+    NETSETUP_DOMAIN_JOIN_IF_JOINED    = 0x00000020U,
+    NETSETUP_JOIN_UNSECURE            = 0x00000040U,
+    NETSETUP_MACHINE_PWD_PASSED       = 0x00000080U,
+    NETSETUP_DEFER_SPN_SET            = 0x00000100U,
+    NETSETUP_JOIN_DC_ACCOUNT          = 0x00000200U,
+    NETSETUP_JOIN_WITH_NEW_NAME       = 0x00000400U,
+    NETSETUP_JOIN_READONLY            = 0x00000800U,
+    NETSETUP_AMBIGUOUS_DC             = 0x00001000U,
+    NETSETUP_NO_NETLOGON_CACHE        = 0x00002000U,
+    NETSETUP_DONT_CONTROL_SERVICES    = 0x00004000U,
+    NETSETUP_SET_MACHINE_NAME         = 0x00008000U,
+    NETSETUP_FORCE_SPN_SET            = 0x00010000U,
+    NETSETUP_NO_ACCT_REUSE            = 0x00020000U,
+    NETSETUP_IGNORE_UNSUPPORTED_FLAGS = 0x10000000U,
 }
+
 alias NET_REMOTE_COMPUTER_SUPPORTS_OPTIONS = uint;
 enum : uint
 {
-    SUPPORTS_REMOTE_ADMIN_PROTOCOL = 0x00000002,
-    SUPPORTS_RPC                   = 0x00000004,
-    SUPPORTS_SAM_PROTOCOL          = 0x00000008,
-    SUPPORTS_UNICODE               = 0x00000010,
-    SUPPORTS_LOCAL                 = 0x00000020,
+    SUPPORTS_REMOTE_ADMIN_PROTOCOL = 0x00000002U,
+    SUPPORTS_RPC                   = 0x00000004U,
+    SUPPORTS_SAM_PROTOCOL          = 0x00000008U,
+    SUPPORTS_UNICODE               = 0x00000010U,
+    SUPPORTS_LOCAL                 = 0x00000020U,
 }
+
 alias FORCE_LEVEL_FLAGS = uint;
 enum : uint
 {
-    USE_NOFORCE       = 0x00000000,
-    USE_FORCE         = 0x00000001,
-    USE_LOTS_OF_FORCE = 0x00000002,
+    USE_NOFORCE       = 0x00000000U,
+    USE_FORCE         = 0x00000001U,
+    USE_LOTS_OF_FORCE = 0x00000002U,
 }
+
 alias NET_SERVER_TYPE = uint;
 enum : uint
 {
-    SV_TYPE_WORKSTATION       = 0x00000001,
-    SV_TYPE_SERVER            = 0x00000002,
-    SV_TYPE_SQLSERVER         = 0x00000004,
-    SV_TYPE_DOMAIN_CTRL       = 0x00000008,
-    SV_TYPE_DOMAIN_BAKCTRL    = 0x00000010,
-    SV_TYPE_TIME_SOURCE       = 0x00000020,
-    SV_TYPE_AFP               = 0x00000040,
-    SV_TYPE_NOVELL            = 0x00000080,
-    SV_TYPE_DOMAIN_MEMBER     = 0x00000100,
-    SV_TYPE_PRINTQ_SERVER     = 0x00000200,
-    SV_TYPE_DIALIN_SERVER     = 0x00000400,
-    SV_TYPE_XENIX_SERVER      = 0x00000800,
-    SV_TYPE_SERVER_UNIX       = 0x00000800,
-    SV_TYPE_NT                = 0x00001000,
-    SV_TYPE_WFW               = 0x00002000,
-    SV_TYPE_SERVER_MFPN       = 0x00004000,
-    SV_TYPE_SERVER_NT         = 0x00008000,
-    SV_TYPE_POTENTIAL_BROWSER = 0x00010000,
-    SV_TYPE_BACKUP_BROWSER    = 0x00020000,
-    SV_TYPE_MASTER_BROWSER    = 0x00040000,
-    SV_TYPE_DOMAIN_MASTER     = 0x00080000,
-    SV_TYPE_SERVER_OSF        = 0x00100000,
-    SV_TYPE_SERVER_VMS        = 0x00200000,
-    SV_TYPE_WINDOWS           = 0x00400000,
-    SV_TYPE_DFS               = 0x00800000,
-    SV_TYPE_CLUSTER_NT        = 0x01000000,
-    SV_TYPE_TERMINALSERVER    = 0x02000000,
-    SV_TYPE_CLUSTER_VS_NT     = 0x04000000,
-    SV_TYPE_DCE               = 0x10000000,
-    SV_TYPE_ALTERNATE_XPORT   = 0x20000000,
-    SV_TYPE_LOCAL_LIST_ONLY   = 0x40000000,
-    SV_TYPE_DOMAIN_ENUM       = 0x80000000,
-    SV_TYPE_ALL               = 0xffffffff,
+    SV_TYPE_WORKSTATION       = 0x00000001U,
+    SV_TYPE_SERVER            = 0x00000002U,
+    SV_TYPE_SQLSERVER         = 0x00000004U,
+    SV_TYPE_DOMAIN_CTRL       = 0x00000008U,
+    SV_TYPE_DOMAIN_BAKCTRL    = 0x00000010U,
+    SV_TYPE_TIME_SOURCE       = 0x00000020U,
+    SV_TYPE_AFP               = 0x00000040U,
+    SV_TYPE_NOVELL            = 0x00000080U,
+    SV_TYPE_DOMAIN_MEMBER     = 0x00000100U,
+    SV_TYPE_PRINTQ_SERVER     = 0x00000200U,
+    SV_TYPE_DIALIN_SERVER     = 0x00000400U,
+    SV_TYPE_XENIX_SERVER      = 0x00000800U,
+    SV_TYPE_SERVER_UNIX       = 0x00000800U,
+    SV_TYPE_NT                = 0x00001000U,
+    SV_TYPE_WFW               = 0x00002000U,
+    SV_TYPE_SERVER_MFPN       = 0x00004000U,
+    SV_TYPE_SERVER_NT         = 0x00008000U,
+    SV_TYPE_POTENTIAL_BROWSER = 0x00010000U,
+    SV_TYPE_BACKUP_BROWSER    = 0x00020000U,
+    SV_TYPE_MASTER_BROWSER    = 0x00040000U,
+    SV_TYPE_DOMAIN_MASTER     = 0x00080000U,
+    SV_TYPE_SERVER_OSF        = 0x00100000U,
+    SV_TYPE_SERVER_VMS        = 0x00200000U,
+    SV_TYPE_WINDOWS           = 0x00400000U,
+    SV_TYPE_DFS               = 0x00800000U,
+    SV_TYPE_CLUSTER_NT        = 0x01000000U,
+    SV_TYPE_TERMINALSERVER    = 0x02000000U,
+    SV_TYPE_CLUSTER_VS_NT     = 0x04000000U,
+    SV_TYPE_DCE               = 0x10000000U,
+    SV_TYPE_ALTERNATE_XPORT   = 0x20000000U,
+    SV_TYPE_LOCAL_LIST_ONLY   = 0x40000000U,
+    SV_TYPE_DOMAIN_ENUM       = 0x80000000U,
+    SV_TYPE_ALL               = 0xffffffffU,
 }
+
 alias NET_USER_ENUM_FILTER_FLAGS = uint;
 enum : uint
 {
-    FILTER_TEMP_DUPLICATE_ACCOUNT    = 0x00000001,
-    FILTER_NORMAL_ACCOUNT            = 0x00000002,
-    FILTER_INTERDOMAIN_TRUST_ACCOUNT = 0x00000008,
-    FILTER_WORKSTATION_TRUST_ACCOUNT = 0x00000010,
-    FILTER_SERVER_TRUST_ACCOUNT      = 0x00000020,
+    FILTER_TEMP_DUPLICATE_ACCOUNT    = 0x00000001U,
+    FILTER_NORMAL_ACCOUNT            = 0x00000002U,
+    FILTER_INTERDOMAIN_TRUST_ACCOUNT = 0x00000008U,
+    FILTER_WORKSTATION_TRUST_ACCOUNT = 0x00000010U,
+    FILTER_SERVER_TRUST_ACCOUNT      = 0x00000020U,
 }
+
 alias NETSETUP_PROVISION = uint;
 enum : uint
 {
-    NETSETUP_PROVISION_DOWNLEVEL_PRIV_SUPPORT = 0x00000001,
-    NETSETUP_PROVISION_REUSE_ACCOUNT          = 0x00000002,
-    NETSETUP_PROVISION_USE_DEFAULT_PASSWORD   = 0x00000004,
-    NETSETUP_PROVISION_SKIP_ACCOUNT_SEARCH    = 0x00000008,
-    NETSETUP_PROVISION_ROOT_CA_CERTS          = 0x00000010,
+    NETSETUP_PROVISION_DOWNLEVEL_PRIV_SUPPORT = 0x00000001U,
+    NETSETUP_PROVISION_REUSE_ACCOUNT          = 0x00000002U,
+    NETSETUP_PROVISION_USE_DEFAULT_PASSWORD   = 0x00000004U,
+    NETSETUP_PROVISION_SKIP_ACCOUNT_SEARCH    = 0x00000008U,
+    NETSETUP_PROVISION_ROOT_CA_CERTS          = 0x00000010U,
 }
+
 alias USER_ACCOUNT_FLAGS = uint;
 enum : uint
 {
-    UF_SCRIPT                                 = 0x00000001,
-    UF_ACCOUNTDISABLE                         = 0x00000002,
-    UF_HOMEDIR_REQUIRED                       = 0x00000008,
-    UF_PASSWD_NOTREQD                         = 0x00000020,
-    UF_PASSWD_CANT_CHANGE                     = 0x00000040,
-    UF_LOCKOUT                                = 0x00000010,
-    UF_DONT_EXPIRE_PASSWD                     = 0x00010000,
-    UF_ENCRYPTED_TEXT_PASSWORD_ALLOWED        = 0x00000080,
-    UF_NOT_DELEGATED                          = 0x00100000,
-    UF_SMARTCARD_REQUIRED                     = 0x00040000,
-    UF_USE_DES_KEY_ONLY                       = 0x00200000,
-    UF_DONT_REQUIRE_PREAUTH                   = 0x00400000,
-    UF_TRUSTED_FOR_DELEGATION                 = 0x00080000,
-    UF_PASSWORD_EXPIRED                       = 0x00800000,
-    UF_TRUSTED_TO_AUTHENTICATE_FOR_DELEGATION = 0x01000000,
+    UF_SCRIPT                                 = 0x00000001U,
+    UF_ACCOUNTDISABLE                         = 0x00000002U,
+    UF_HOMEDIR_REQUIRED                       = 0x00000008U,
+    UF_PASSWD_NOTREQD                         = 0x00000020U,
+    UF_PASSWD_CANT_CHANGE                     = 0x00000040U,
+    UF_LOCKOUT                                = 0x00000010U,
+    UF_DONT_EXPIRE_PASSWD                     = 0x00010000U,
+    UF_ENCRYPTED_TEXT_PASSWORD_ALLOWED        = 0x00000080U,
+    UF_NOT_DELEGATED                          = 0x00100000U,
+    UF_SMARTCARD_REQUIRED                     = 0x00040000U,
+    UF_USE_DES_KEY_ONLY                       = 0x00200000U,
+    UF_DONT_REQUIRE_PREAUTH                   = 0x00400000U,
+    UF_TRUSTED_FOR_DELEGATION                 = 0x00080000U,
+    UF_PASSWORD_EXPIRED                       = 0x00800000U,
+    UF_TRUSTED_TO_AUTHENTICATE_FOR_DELEGATION = 0x01000000U,
 }
+
 alias AF_OP = uint;
 enum : uint
 {
-    AF_OP_PRINT    = 0x00000001,
-    AF_OP_COMM     = 0x00000002,
-    AF_OP_SERVER   = 0x00000004,
-    AF_OP_ACCOUNTS = 0x00000008,
+    AF_OP_PRINT    = 0x00000001U,
+    AF_OP_COMM     = 0x00000002U,
+    AF_OP_SERVER   = 0x00000004U,
+    AF_OP_ACCOUNTS = 0x00000008U,
 }
+
 alias SERVER_INFO_SECURITY = uint;
 enum : uint
 {
-    SV_SHARESECURITY = 0x00000000,
-    SV_USERSECURITY  = 0x00000001,
+    SV_SHARESECURITY = 0x00000000U,
+    SV_USERSECURITY  = 0x00000001U,
 }
+
 alias USER_PRIV = uint;
 enum : uint
 {
-    USER_PRIV_GUEST = 0x00000000,
-    USER_PRIV_USER  = 0x00000001,
-    USER_PRIV_ADMIN = 0x00000002,
+    USER_PRIV_GUEST = 0x00000000U,
+    USER_PRIV_USER  = 0x00000001U,
+    USER_PRIV_ADMIN = 0x00000002U,
 }
+
 alias USE_INFO_ASG_TYPE = uint;
 enum : uint
 {
-    USE_WILDCARD = 0xffffffff,
-    USE_DISKDEV  = 0x00000000,
-    USE_SPOOLDEV = 0x00000001,
-    USE_IPC      = 0x00000003,
+    USE_WILDCARD = 0xffffffffU,
+    USE_DISKDEV  = 0x00000000U,
+    USE_SPOOLDEV = 0x00000001U,
+    USE_IPC      = 0x00000003U,
 }
+
 alias SERVER_INFO_HIDDEN = int;
 enum : int
 {
     SV_VISIBLE = 0x00000000,
     SV_HIDDEN  = 0x00000001,
 }
+
 alias USER_MODALS_ROLES = uint;
 enum : uint
 {
-    UAS_ROLE_STANDALONE = 0x00000000,
-    UAS_ROLE_MEMBER     = 0x00000001,
-    UAS_ROLE_BACKUP     = 0x00000002,
-    UAS_ROLE_PRIMARY    = 0x00000003,
+    UAS_ROLE_STANDALONE = 0x00000000U,
+    UAS_ROLE_MEMBER     = 0x00000001U,
+    UAS_ROLE_BACKUP     = 0x00000002U,
+    UAS_ROLE_PRIMARY    = 0x00000003U,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ne-lmaccess-msa_info_level))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ne-lmaccess-msa_info_level
 alias MSA_INFO_LEVEL = int;
 enum : int
 {
@@ -184,6 +200,7 @@ enum : int
     MsaInfoLevel1   = 0x00000001,
     MsaInfoLevelMax = 0x00000002,
 }
+
 alias MSA_INFO_ACCOUNT_TYPE = int;
 enum : int
 {
@@ -192,7 +209,8 @@ enum : int
     GroupManagedServiceAccount      = 0x00000002,
     DelegatedManagedServiceAccount  = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ne-lmaccess-msa_info_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ne-lmaccess-msa_info_state
 alias MSA_INFO_STATE = int;
 enum : int
 {
@@ -202,6 +220,7 @@ enum : int
     MsaInfoCanInstall    = 0x00000004,
     MsaInfoInstalled     = 0x00000005,
 }
+
 alias NET_VALIDATE_PASSWORD_TYPE = int;
 enum : int
 {
@@ -209,6 +228,7 @@ enum : int
     NetValidatePasswordChange = 0x00000002,
     NetValidatePasswordReset  = 0x00000003,
 }
+
 alias TRANSPORT_TYPE = int;
 enum : int
 {
@@ -216,6 +236,7 @@ enum : int
     UseTransportType_Wsk  = 0x00000001,
     UseTransportType_Quic = 0x00000002,
 }
+
 alias TRANSPORT_INFO_FLAG = int;
 enum : int
 {
@@ -224,6 +245,7 @@ enum : int
     QuicPortSetFlag = 0x00000002,
     RdmaPortSetFlag = 0x00000004,
 }
+
 alias NETSETUP_NAME_TYPE = int;
 enum : int
 {
@@ -234,7 +256,8 @@ enum : int
     NetSetupNonExistentDomain = 0x00000004,
     NetSetupDnsMachine        = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmjoin/ne-lmjoin-dsreg_join_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmjoin/ne-lmjoin-dsreg_join_type
 alias DSREG_JOIN_TYPE = int;
 enum : int
 {
@@ -242,6 +265,7 @@ enum : int
     DSREG_DEVICE_JOIN    = 0x00000001,
     DSREG_WORKPLACE_JOIN = 0x00000002,
 }
+
 alias NET_COMPUTER_NAME_TYPE = int;
 enum : int
 {
@@ -250,6 +274,7 @@ enum : int
     NetAllComputerNames       = 0x00000002,
     NetComputerNameTypeMax    = 0x00000003,
 }
+
 alias NETSETUP_JOIN_STATUS = int;
 enum : int
 {
@@ -258,6 +283,7 @@ enum : int
     NetSetupWorkgroupName = 0x00000002,
     NetSetupDomainName    = 0x00000003,
 }
+
 alias OBO_TOKEN_TYPE = int;
 enum : int
 {
@@ -265,6 +291,7 @@ enum : int
     OBO_COMPONENT = 0x00000002,
     OBO_SOFTWARE  = 0x00000003,
 }
+
 alias COMPONENT_CHARACTERISTICS = int;
 enum : int
 {
@@ -284,36 +311,42 @@ enum : int
     NCF_FIXED_BINDING               = 0x00020000,
     NCF_LW_FILTER                   = 0x00040000,
 }
+
 alias NCRP_FLAGS = int;
 enum : int
 {
     NCRP_QUERY_PROPERTY_UI = 0x00000001,
     NCRP_SHOW_PROPERTY_UI  = 0x00000002,
 }
+
 alias SUPPORTS_BINDING_INTERFACE_FLAGS = int;
 enum : int
 {
     NCF_LOWER = 0x00000001,
     NCF_UPPER = 0x00000002,
 }
+
 alias ENUM_BINDING_PATHS_FLAGS = int;
 enum : int
 {
     EBP_ABOVE = 0x00000001,
     EBP_BELOW = 0x00000002,
 }
+
 alias NCPNP_RECONFIG_LAYER = int;
 enum : int
 {
     NCRL_NDIS = 0x00000001,
     NCRL_TDI  = 0x00000002,
 }
+
 alias NETWORK_INSTALL_TIME = int;
 enum : int
 {
     NSF_PRIMARYINSTALL = 0x00000001,
     NSF_POSTSYSINSTALL = 0x00000002,
 }
+
 alias NETWORK_UPGRADE_TYPE = int;
 enum : int
 {
@@ -324,11 +357,13 @@ enum : int
     NSF_WINNT_SBS_UPGRADE = 0x00000100,
     NSF_COMPONENT_UPDATE  = 0x00000200,
 }
+
 alias DEFAULT_PAGES = int;
 enum : int
 {
     DPP_ADVANCED = 0x00000001,
 }
+
 alias BIND_FLAGS1 = int;
 enum : int
 {
@@ -344,6 +379,7 @@ enum : int
     NCN_NETCLIENT      = 0x00040000,
     NCN_NETSERVICE     = 0x00080000,
 }
+
 alias RASCON_UIINFO_FLAGS = int;
 enum : int
 {
@@ -370,71 +406,71 @@ enum : int
 
 enum : uint
 {
-    NERR_BASE            = 0x00000834,
-    NERR_PasswordExpired = 0x000008c2,
+    NERR_BASE            = 0x00000834U,
+    NERR_PasswordExpired = 0x000008c2U,
 }
 
-enum uint CNLEN = 0x0000000f;
-enum uint LM20_CNLEN = 0x0000000f;
-enum uint DNLEN = 0x0000000f;
-enum uint LM20_DNLEN = 0x0000000f;
-enum uint UNCLEN = 0x00000011;
+enum uint CNLEN = 0x0000000fU;
+enum uint LM20_CNLEN = 0x0000000fU;
+enum uint DNLEN = 0x0000000fU;
+enum uint LM20_DNLEN = 0x0000000fU;
+enum uint UNCLEN = 0x00000011U;
 
 enum : uint
 {
-    LM20_UNCLEN = 0x00000011,
-    LM20_NNLEN  = 0x0000000c,
+    LM20_UNCLEN = 0x00000011U,
+    LM20_NNLEN  = 0x0000000cU,
 }
 
-enum uint SNLEN = 0x00000050;
-enum uint LM20_SNLEN = 0x0000000f;
-enum uint STXTLEN = 0x00000100;
-enum uint LM20_STXTLEN = 0x0000003f;
-enum uint PATHLEN = 0x00000100;
-enum uint LM20_PATHLEN = 0x00000100;
-enum uint DEVLEN = 0x00000050;
-enum uint LM20_DEVLEN = 0x00000008;
-enum uint EVLEN = 0x00000010;
-enum uint UNLEN = 0x00000100;
-enum uint LM20_UNLEN = 0x00000014;
-enum uint GNLEN = 0x00000100;
-enum uint LM20_GNLEN = 0x00000014;
-enum uint PWLEN = 0x00000100;
-enum uint LM20_PWLEN = 0x0000000e;
-enum uint SHPWLEN = 0x00000008;
-enum uint CLTYPE_LEN = 0x0000000c;
-enum uint MAXCOMMENTSZ = 0x00000100;
-enum uint LM20_MAXCOMMENTSZ = 0x00000030;
-enum uint QNLEN = 0x00000050;
-enum uint LM20_QNLEN = 0x0000000c;
-enum uint ALERTSZ = 0x00000080;
-enum uint NETBIOS_NAME_LEN = 0x00000010;
-enum uint MAX_PREFERRED_LENGTH = 0xffffffff;
-enum uint LM_DNS_MAX_NAME_LENGTH = 0x000000ff;
+enum uint SNLEN = 0x00000050U;
+enum uint LM20_SNLEN = 0x0000000fU;
+enum uint STXTLEN = 0x00000100U;
+enum uint LM20_STXTLEN = 0x0000003fU;
+enum uint PATHLEN = 0x00000100U;
+enum uint LM20_PATHLEN = 0x00000100U;
+enum uint DEVLEN = 0x00000050U;
+enum uint LM20_DEVLEN = 0x00000008U;
+enum uint EVLEN = 0x00000010U;
+enum uint UNLEN = 0x00000100U;
+enum uint LM20_UNLEN = 0x00000014U;
+enum uint GNLEN = 0x00000100U;
+enum uint LM20_GNLEN = 0x00000014U;
+enum uint PWLEN = 0x00000100U;
+enum uint LM20_PWLEN = 0x0000000eU;
+enum uint SHPWLEN = 0x00000008U;
+enum uint CLTYPE_LEN = 0x0000000cU;
+enum uint MAXCOMMENTSZ = 0x00000100U;
+enum uint LM20_MAXCOMMENTSZ = 0x00000030U;
+enum uint QNLEN = 0x00000050U;
+enum uint LM20_QNLEN = 0x0000000cU;
+enum uint ALERTSZ = 0x00000080U;
+enum uint NETBIOS_NAME_LEN = 0x00000010U;
+enum uint MAX_PREFERRED_LENGTH = 0xffffffffU;
+enum uint LM_DNS_MAX_NAME_LENGTH = 0x000000ffU;
 
 enum : uint
 {
-    CRYPT_KEY_LEN = 0x00000007,
-    CRYPT_TXT_LEN = 0x00000008,
+    CRYPT_KEY_LEN = 0x00000007U,
+    CRYPT_TXT_LEN = 0x00000008U,
 }
 
-enum uint ENCRYPTED_PWLEN = 0x00000010;
+enum uint ENCRYPTED_PWLEN = 0x00000010U;
 
 enum : uint
 {
-    SESSION_PWLEN      = 0x00000018,
-    SESSION_CRYPT_KLEN = 0x00000015,
+    SESSION_PWLEN      = 0x00000018U,
+    SESSION_CRYPT_KLEN = 0x00000015U,
 }
 
-enum uint PARMNUM_ALL = 0x00000000;
+enum uint PARMNUM_ALL = 0x00000000U;
 
 enum : uint
 {
-    PARM_ERROR_UNKNOWN = 0xffffffff,
-    PARM_ERROR_NONE    = 0x00000000,
+    PARM_ERROR_UNKNOWN = 0xffffffffU,
+    PARM_ERROR_NONE    = 0x00000000U,
 }
 
-enum uint PARMNUM_BASE_INFOLEVEL = 0x000003e8;
+enum uint PARMNUM_BASE_INFOLEVEL = 0x000003e8U;
 enum const(wchar)* MESSAGE_FILENAME = "NETMSG";
 enum const(wchar)* OS2MSG_FILENAME = "BASE";
 enum const(wchar)* HELP_MSG_FILENAME = "NETH";
@@ -442,655 +478,655 @@ enum const(wchar)* BACKUP_MSG_FILENAME = "BAK.MSG";
 
 enum : uint
 {
-    PLATFORM_ID_DOS = 0x0000012c,
-    PLATFORM_ID_OS2 = 0x00000190,
-    PLATFORM_ID_NT  = 0x000001f4,
-    PLATFORM_ID_OSF = 0x00000258,
-    PLATFORM_ID_VMS = 0x000002bc,
+    PLATFORM_ID_DOS = 0x0000012cU,
+    PLATFORM_ID_OS2 = 0x00000190U,
+    PLATFORM_ID_NT  = 0x000001f4U,
+    PLATFORM_ID_OSF = 0x00000258U,
+    PLATFORM_ID_VMS = 0x000002bcU,
 }
 
-enum uint MIN_LANMAN_MESSAGE_ID = 0x00000834;
-enum uint MAX_LANMAN_MESSAGE_ID = 0x0000170b;
+enum uint MIN_LANMAN_MESSAGE_ID = 0x00000834U;
+enum uint MAX_LANMAN_MESSAGE_ID = 0x0000170bU;
 
 enum : uint
 {
-    NERR_Success       = 0x00000000,
-    NERR_NetNotStarted = 0x00000836,
+    NERR_Success       = 0x00000000U,
+    NERR_NetNotStarted = 0x00000836U,
 }
 
-enum uint NERR_UnknownServer = 0x00000837;
-enum uint NERR_ShareMem = 0x00000838;
-enum uint NERR_NoNetworkResource = 0x00000839;
-enum uint NERR_RemoteOnly = 0x0000083a;
-enum uint NERR_DevNotRedirected = 0x0000083b;
-enum uint NERR_ServerNotStarted = 0x00000842;
-enum uint NERR_ItemNotFound = 0x00000843;
-enum uint NERR_UnknownDevDir = 0x00000844;
-enum uint NERR_RedirectedPath = 0x00000845;
-enum uint NERR_DuplicateShare = 0x00000846;
+enum uint NERR_UnknownServer = 0x00000837U;
+enum uint NERR_ShareMem = 0x00000838U;
+enum uint NERR_NoNetworkResource = 0x00000839U;
+enum uint NERR_RemoteOnly = 0x0000083aU;
+enum uint NERR_DevNotRedirected = 0x0000083bU;
+enum uint NERR_ServerNotStarted = 0x00000842U;
+enum uint NERR_ItemNotFound = 0x00000843U;
+enum uint NERR_UnknownDevDir = 0x00000844U;
+enum uint NERR_RedirectedPath = 0x00000845U;
+enum uint NERR_DuplicateShare = 0x00000846U;
 
 enum : uint
 {
-    NERR_NoRoom       = 0x00000847,
-    NERR_TooManyItems = 0x00000849,
+    NERR_NoRoom       = 0x00000847U,
+    NERR_TooManyItems = 0x00000849U,
 }
 
-enum uint NERR_InvalidMaxUsers = 0x0000084a;
-enum uint NERR_BufTooSmall = 0x0000084b;
-enum uint NERR_RemoteErr = 0x0000084f;
-enum uint NERR_LanmanIniError = 0x00000853;
-enum uint NERR_NetworkError = 0x00000858;
-enum uint NERR_WkstaInconsistentState = 0x00000859;
-enum uint NERR_WkstaNotStarted = 0x0000085a;
-enum uint NERR_BrowserNotStarted = 0x0000085b;
-enum uint NERR_InternalError = 0x0000085c;
-enum uint NERR_BadTransactConfig = 0x0000085d;
-enum uint NERR_InvalidAPI = 0x0000085e;
-enum uint NERR_BadEventName = 0x0000085f;
-enum uint NERR_DupNameReboot = 0x00000860;
-enum uint NERR_CfgCompNotFound = 0x00000862;
-enum uint NERR_CfgParamNotFound = 0x00000863;
-enum uint NERR_LineTooLong = 0x00000865;
-enum uint NERR_QNotFound = 0x00000866;
-enum uint NERR_JobNotFound = 0x00000867;
+enum uint NERR_InvalidMaxUsers = 0x0000084aU;
+enum uint NERR_BufTooSmall = 0x0000084bU;
+enum uint NERR_RemoteErr = 0x0000084fU;
+enum uint NERR_LanmanIniError = 0x00000853U;
+enum uint NERR_NetworkError = 0x00000858U;
+enum uint NERR_WkstaInconsistentState = 0x00000859U;
+enum uint NERR_WkstaNotStarted = 0x0000085aU;
+enum uint NERR_BrowserNotStarted = 0x0000085bU;
+enum uint NERR_InternalError = 0x0000085cU;
+enum uint NERR_BadTransactConfig = 0x0000085dU;
+enum uint NERR_InvalidAPI = 0x0000085eU;
+enum uint NERR_BadEventName = 0x0000085fU;
+enum uint NERR_DupNameReboot = 0x00000860U;
+enum uint NERR_CfgCompNotFound = 0x00000862U;
+enum uint NERR_CfgParamNotFound = 0x00000863U;
+enum uint NERR_LineTooLong = 0x00000865U;
+enum uint NERR_QNotFound = 0x00000866U;
+enum uint NERR_JobNotFound = 0x00000867U;
 
 enum : uint
 {
-    NERR_DestNotFound = 0x00000868,
-    NERR_DestExists   = 0x00000869,
-}
-
-enum : uint
-{
-    NERR_QExists   = 0x0000086a,
-    NERR_QNoRoom   = 0x0000086b,
-    NERR_JobNoRoom = 0x0000086c,
+    NERR_DestNotFound = 0x00000868U,
+    NERR_DestExists   = 0x00000869U,
 }
 
 enum : uint
 {
-    NERR_DestNoRoom    = 0x0000086d,
-    NERR_DestIdle      = 0x0000086e,
-    NERR_DestInvalidOp = 0x0000086f,
-}
-
-enum uint NERR_ProcNoRespond = 0x00000870;
-enum uint NERR_SpoolerNotLoaded = 0x00000871;
-enum uint NERR_DestInvalidState = 0x00000872;
-enum uint NERR_QInvalidState = 0x00000873;
-enum uint NERR_JobInvalidState = 0x00000874;
-enum uint NERR_SpoolNoMemory = 0x00000875;
-enum uint NERR_DriverNotFound = 0x00000876;
-enum uint NERR_DataTypeInvalid = 0x00000877;
-enum uint NERR_ProcNotFound = 0x00000878;
-
-enum : uint
-{
-    NERR_ServiceTableLocked  = 0x00000884,
-    NERR_ServiceTableFull    = 0x00000885,
-    NERR_ServiceInstalled    = 0x00000886,
-    NERR_ServiceEntryLocked  = 0x00000887,
-    NERR_ServiceNotInstalled = 0x00000888,
-}
-
-enum uint NERR_BadServiceName = 0x00000889;
-
-enum : uint
-{
-    NERR_ServiceCtlTimeout = 0x0000088a,
-    NERR_ServiceCtlBusy    = 0x0000088b,
-}
-
-enum uint NERR_BadServiceProgName = 0x0000088c;
-
-enum : uint
-{
-    NERR_ServiceNotCtrl     = 0x0000088d,
-    NERR_ServiceKillProc    = 0x0000088e,
-    NERR_ServiceCtlNotValid = 0x0000088f,
-}
-
-enum uint NERR_NotInDispatchTbl = 0x00000890;
-enum uint NERR_BadControlRecv = 0x00000891;
-enum uint NERR_ServiceNotStarting = 0x00000892;
-enum uint NERR_AlreadyLoggedOn = 0x00000898;
-enum uint NERR_NotLoggedOn = 0x00000899;
-
-enum : uint
-{
-    NERR_BadUsername = 0x0000089a,
-    NERR_BadPassword = 0x0000089b,
+    NERR_QExists   = 0x0000086aU,
+    NERR_QNoRoom   = 0x0000086bU,
+    NERR_JobNoRoom = 0x0000086cU,
 }
 
 enum : uint
 {
-    NERR_UnableToAddName_W = 0x0000089c,
-    NERR_UnableToAddName_F = 0x0000089d,
-    NERR_UnableToDelName_W = 0x0000089e,
-    NERR_UnableToDelName_F = 0x0000089f,
+    NERR_DestNoRoom    = 0x0000086dU,
+    NERR_DestIdle      = 0x0000086eU,
+    NERR_DestInvalidOp = 0x0000086fU,
+}
+
+enum uint NERR_ProcNoRespond = 0x00000870U;
+enum uint NERR_SpoolerNotLoaded = 0x00000871U;
+enum uint NERR_DestInvalidState = 0x00000872U;
+enum uint NERR_QInvalidState = 0x00000873U;
+enum uint NERR_JobInvalidState = 0x00000874U;
+enum uint NERR_SpoolNoMemory = 0x00000875U;
+enum uint NERR_DriverNotFound = 0x00000876U;
+enum uint NERR_DataTypeInvalid = 0x00000877U;
+enum uint NERR_ProcNotFound = 0x00000878U;
+
+enum : uint
+{
+    NERR_ServiceTableLocked  = 0x00000884U,
+    NERR_ServiceTableFull    = 0x00000885U,
+    NERR_ServiceInstalled    = 0x00000886U,
+    NERR_ServiceEntryLocked  = 0x00000887U,
+    NERR_ServiceNotInstalled = 0x00000888U,
+}
+
+enum uint NERR_BadServiceName = 0x00000889U;
+
+enum : uint
+{
+    NERR_ServiceCtlTimeout = 0x0000088aU,
+    NERR_ServiceCtlBusy    = 0x0000088bU,
+}
+
+enum uint NERR_BadServiceProgName = 0x0000088cU;
+
+enum : uint
+{
+    NERR_ServiceNotCtrl     = 0x0000088dU,
+    NERR_ServiceKillProc    = 0x0000088eU,
+    NERR_ServiceCtlNotValid = 0x0000088fU,
+}
+
+enum uint NERR_NotInDispatchTbl = 0x00000890U;
+enum uint NERR_BadControlRecv = 0x00000891U;
+enum uint NERR_ServiceNotStarting = 0x00000892U;
+enum uint NERR_AlreadyLoggedOn = 0x00000898U;
+enum uint NERR_NotLoggedOn = 0x00000899U;
+
+enum : uint
+{
+    NERR_BadUsername = 0x0000089aU,
+    NERR_BadPassword = 0x0000089bU,
 }
 
 enum : uint
 {
-    NERR_LogonsPaused        = 0x000008a1,
-    NERR_LogonServerConflict = 0x000008a2,
-    NERR_LogonNoUserPath     = 0x000008a3,
-    NERR_LogonScriptError    = 0x000008a4,
-}
-
-enum uint NERR_StandaloneLogon = 0x000008a6;
-
-enum : uint
-{
-    NERR_LogonServerNotFound = 0x000008a7,
-    NERR_LogonDomainExists   = 0x000008a8,
-}
-
-enum uint NERR_NonValidatedLogon = 0x000008a9;
-enum uint NERR_ACFNotFound = 0x000008ab;
-enum uint NERR_GroupNotFound = 0x000008ac;
-enum uint NERR_UserNotFound = 0x000008ad;
-enum uint NERR_ResourceNotFound = 0x000008ae;
-enum uint NERR_GroupExists = 0x000008af;
-enum uint NERR_UserExists = 0x000008b0;
-enum uint NERR_ResourceExists = 0x000008b1;
-enum uint NERR_NotPrimary = 0x000008b2;
-
-enum : uint
-{
-    NERR_ACFNotLoaded    = 0x000008b3,
-    NERR_ACFNoRoom       = 0x000008b4,
-    NERR_ACFFileIOFail   = 0x000008b5,
-    NERR_ACFTooManyLists = 0x000008b6,
-}
-
-enum uint NERR_UserLogon = 0x000008b7;
-enum uint NERR_ACFNoParent = 0x000008b8;
-enum uint NERR_CanNotGrowSegment = 0x000008b9;
-enum uint NERR_SpeGroupOp = 0x000008ba;
-enum uint NERR_NotInCache = 0x000008bb;
-
-enum : uint
-{
-    NERR_UserInGroup    = 0x000008bc,
-    NERR_UserNotInGroup = 0x000008bd,
+    NERR_UnableToAddName_W = 0x0000089cU,
+    NERR_UnableToAddName_F = 0x0000089dU,
+    NERR_UnableToDelName_W = 0x0000089eU,
+    NERR_UnableToDelName_F = 0x0000089fU,
 }
 
 enum : uint
 {
-    NERR_AccountUndefined = 0x000008be,
-    NERR_AccountExpired   = 0x000008bf,
+    NERR_LogonsPaused        = 0x000008a1U,
+    NERR_LogonServerConflict = 0x000008a2U,
+    NERR_LogonNoUserPath     = 0x000008a3U,
+    NERR_LogonScriptError    = 0x000008a4U,
+}
+
+enum uint NERR_StandaloneLogon = 0x000008a6U;
+
+enum : uint
+{
+    NERR_LogonServerNotFound = 0x000008a7U,
+    NERR_LogonDomainExists   = 0x000008a8U,
+}
+
+enum uint NERR_NonValidatedLogon = 0x000008a9U;
+enum uint NERR_ACFNotFound = 0x000008abU;
+enum uint NERR_GroupNotFound = 0x000008acU;
+enum uint NERR_UserNotFound = 0x000008adU;
+enum uint NERR_ResourceNotFound = 0x000008aeU;
+enum uint NERR_GroupExists = 0x000008afU;
+enum uint NERR_UserExists = 0x000008b0U;
+enum uint NERR_ResourceExists = 0x000008b1U;
+enum uint NERR_NotPrimary = 0x000008b2U;
+
+enum : uint
+{
+    NERR_ACFNotLoaded    = 0x000008b3U,
+    NERR_ACFNoRoom       = 0x000008b4U,
+    NERR_ACFFileIOFail   = 0x000008b5U,
+    NERR_ACFTooManyLists = 0x000008b6U,
+}
+
+enum uint NERR_UserLogon = 0x000008b7U;
+enum uint NERR_ACFNoParent = 0x000008b8U;
+enum uint NERR_CanNotGrowSegment = 0x000008b9U;
+enum uint NERR_SpeGroupOp = 0x000008baU;
+enum uint NERR_NotInCache = 0x000008bbU;
+
+enum : uint
+{
+    NERR_UserInGroup    = 0x000008bcU,
+    NERR_UserNotInGroup = 0x000008bdU,
 }
 
 enum : uint
 {
-    NERR_InvalidWorkstation = 0x000008c0,
-    NERR_InvalidLogonHours  = 0x000008c1,
+    NERR_AccountUndefined = 0x000008beU,
+    NERR_AccountExpired   = 0x000008bfU,
 }
 
 enum : uint
 {
-    NERR_PasswordCantChange   = 0x000008c3,
-    NERR_PasswordHistConflict = 0x000008c4,
-    NERR_PasswordTooShort     = 0x000008c5,
-    NERR_PasswordTooRecent    = 0x000008c6,
-}
-
-enum uint NERR_InvalidDatabase = 0x000008c7;
-enum uint NERR_DatabaseUpToDate = 0x000008c8;
-enum uint NERR_SyncRequired = 0x000008c9;
-enum uint NERR_UseNotFound = 0x000008ca;
-enum uint NERR_BadAsgType = 0x000008cb;
-enum uint NERR_DeviceIsShared = 0x000008cc;
-enum uint NERR_SameAsComputerName = 0x000008cd;
-enum uint NERR_NoComputerName = 0x000008de;
-enum uint NERR_MsgAlreadyStarted = 0x000008df;
-enum uint NERR_MsgInitFailed = 0x000008e0;
-enum uint NERR_NameNotFound = 0x000008e1;
-enum uint NERR_AlreadyForwarded = 0x000008e2;
-enum uint NERR_AddForwarded = 0x000008e3;
-enum uint NERR_AlreadyExists = 0x000008e4;
-enum uint NERR_TooManyNames = 0x000008e5;
-enum uint NERR_DelComputerName = 0x000008e6;
-enum uint NERR_LocalForward = 0x000008e7;
-enum uint NERR_GrpMsgProcessor = 0x000008e8;
-enum uint NERR_PausedRemote = 0x000008e9;
-enum uint NERR_BadReceive = 0x000008ea;
-enum uint NERR_NameInUse = 0x000008eb;
-enum uint NERR_MsgNotStarted = 0x000008ec;
-
-enum : uint
-{
-    NERR_NotLocalName  = 0x000008ed,
-    NERR_NoForwardName = 0x000008ee,
-}
-
-enum uint NERR_RemoteFull = 0x000008ef;
-enum uint NERR_NameNotForwarded = 0x000008f0;
-enum uint NERR_TruncatedBroadcast = 0x000008f1;
-enum uint NERR_InvalidDevice = 0x000008f6;
-enum uint NERR_WriteFault = 0x000008f7;
-enum uint NERR_DuplicateName = 0x000008f9;
-enum uint NERR_DeleteLater = 0x000008fa;
-enum uint NERR_IncompleteDel = 0x000008fb;
-enum uint NERR_MultipleNets = 0x000008fc;
-enum uint NERR_NetNameNotFound = 0x00000906;
-enum uint NERR_DeviceNotShared = 0x00000907;
-enum uint NERR_ClientNameNotFound = 0x00000908;
-enum uint NERR_FileIdNotFound = 0x0000090a;
-enum uint NERR_ExecFailure = 0x0000090b;
-
-enum : uint
-{
-    NERR_TmpFile     = 0x0000090c,
-    NERR_TooMuchData = 0x0000090d,
-}
-
-enum uint NERR_DeviceShareConflict = 0x0000090e;
-enum uint NERR_BrowserTableIncomplete = 0x0000090f;
-enum uint NERR_NotLocalDomain = 0x00000910;
-enum uint NERR_IsDfsShare = 0x00000911;
-enum uint NERR_DevInvalidOpCode = 0x0000091b;
-
-enum : uint
-{
-    NERR_DevNotFound = 0x0000091c,
-    NERR_DevNotOpen  = 0x0000091d,
+    NERR_InvalidWorkstation = 0x000008c0U,
+    NERR_InvalidLogonHours  = 0x000008c1U,
 }
 
 enum : uint
 {
-    NERR_BadQueueDevString = 0x0000091e,
-    NERR_BadQueuePriority  = 0x0000091f,
+    NERR_PasswordCantChange   = 0x000008c3U,
+    NERR_PasswordHistConflict = 0x000008c4U,
+    NERR_PasswordTooShort     = 0x000008c5U,
+    NERR_PasswordTooRecent    = 0x000008c6U,
 }
 
-enum uint NERR_NoCommDevs = 0x00000921;
-enum uint NERR_QueueNotFound = 0x00000922;
+enum uint NERR_InvalidDatabase = 0x000008c7U;
+enum uint NERR_DatabaseUpToDate = 0x000008c8U;
+enum uint NERR_SyncRequired = 0x000008c9U;
+enum uint NERR_UseNotFound = 0x000008caU;
+enum uint NERR_BadAsgType = 0x000008cbU;
+enum uint NERR_DeviceIsShared = 0x000008ccU;
+enum uint NERR_SameAsComputerName = 0x000008cdU;
+enum uint NERR_NoComputerName = 0x000008deU;
+enum uint NERR_MsgAlreadyStarted = 0x000008dfU;
+enum uint NERR_MsgInitFailed = 0x000008e0U;
+enum uint NERR_NameNotFound = 0x000008e1U;
+enum uint NERR_AlreadyForwarded = 0x000008e2U;
+enum uint NERR_AddForwarded = 0x000008e3U;
+enum uint NERR_AlreadyExists = 0x000008e4U;
+enum uint NERR_TooManyNames = 0x000008e5U;
+enum uint NERR_DelComputerName = 0x000008e6U;
+enum uint NERR_LocalForward = 0x000008e7U;
+enum uint NERR_GrpMsgProcessor = 0x000008e8U;
+enum uint NERR_PausedRemote = 0x000008e9U;
+enum uint NERR_BadReceive = 0x000008eaU;
+enum uint NERR_NameInUse = 0x000008ebU;
+enum uint NERR_MsgNotStarted = 0x000008ecU;
 
 enum : uint
 {
-    NERR_BadDevString   = 0x00000924,
-    NERR_BadDev         = 0x00000925,
-    NERR_InUseBySpooler = 0x00000926,
+    NERR_NotLocalName  = 0x000008edU,
+    NERR_NoForwardName = 0x000008eeU,
 }
 
-enum uint NERR_CommDevInUse = 0x00000927;
-enum uint NERR_InvalidComputer = 0x0000092f;
-enum uint NERR_MaxLenExceeded = 0x00000932;
-enum uint NERR_BadComponent = 0x00000934;
-enum uint NERR_CantType = 0x00000935;
-enum uint NERR_TooManyEntries = 0x0000093a;
+enum uint NERR_RemoteFull = 0x000008efU;
+enum uint NERR_NameNotForwarded = 0x000008f0U;
+enum uint NERR_TruncatedBroadcast = 0x000008f1U;
+enum uint NERR_InvalidDevice = 0x000008f6U;
+enum uint NERR_WriteFault = 0x000008f7U;
+enum uint NERR_DuplicateName = 0x000008f9U;
+enum uint NERR_DeleteLater = 0x000008faU;
+enum uint NERR_IncompleteDel = 0x000008fbU;
+enum uint NERR_MultipleNets = 0x000008fcU;
+enum uint NERR_NetNameNotFound = 0x00000906U;
+enum uint NERR_DeviceNotShared = 0x00000907U;
+enum uint NERR_ClientNameNotFound = 0x00000908U;
+enum uint NERR_FileIdNotFound = 0x0000090aU;
+enum uint NERR_ExecFailure = 0x0000090bU;
 
 enum : uint
 {
-    NERR_ProfileFileTooBig = 0x00000942,
-    NERR_ProfileOffset     = 0x00000943,
-    NERR_ProfileCleanup    = 0x00000944,
-    NERR_ProfileUnknownCmd = 0x00000945,
-    NERR_ProfileLoadErr    = 0x00000946,
-    NERR_ProfileSaveErr    = 0x00000947,
+    NERR_TmpFile     = 0x0000090cU,
+    NERR_TooMuchData = 0x0000090dU,
 }
+
+enum uint NERR_DeviceShareConflict = 0x0000090eU;
+enum uint NERR_BrowserTableIncomplete = 0x0000090fU;
+enum uint NERR_NotLocalDomain = 0x00000910U;
+enum uint NERR_IsDfsShare = 0x00000911U;
+enum uint NERR_DevInvalidOpCode = 0x0000091bU;
 
 enum : uint
 {
-    NERR_LogOverflow    = 0x00000949,
-    NERR_LogFileChanged = 0x0000094a,
-    NERR_LogFileCorrupt = 0x0000094b,
-}
-
-enum uint NERR_SourceIsDir = 0x0000094c;
-
-enum : uint
-{
-    NERR_BadSource        = 0x0000094d,
-    NERR_BadDest          = 0x0000094e,
-    NERR_DifferentServers = 0x0000094f,
-}
-
-enum uint NERR_RunSrvPaused = 0x00000951;
-
-enum : uint
-{
-    NERR_ErrCommRunSrv     = 0x00000955,
-    NERR_ErrorExecingGhost = 0x00000957,
-}
-
-enum uint NERR_ShareNotFound = 0x00000958;
-enum uint NERR_InvalidLana = 0x00000960;
-enum uint NERR_OpenFiles = 0x00000961;
-enum uint NERR_ActiveConns = 0x00000962;
-enum uint NERR_BadPasswordCore = 0x00000963;
-enum uint NERR_DevInUse = 0x00000964;
-enum uint NERR_LocalDrive = 0x00000965;
-enum uint NERR_AlertExists = 0x0000097e;
-enum uint NERR_TooManyAlerts = 0x0000097f;
-enum uint NERR_NoSuchAlert = 0x00000980;
-enum uint NERR_BadRecipient = 0x00000981;
-enum uint NERR_AcctLimitExceeded = 0x00000982;
-enum uint NERR_InvalidLogSeek = 0x00000988;
-enum uint NERR_BadUasConfig = 0x00000992;
-enum uint NERR_InvalidUASOp = 0x00000993;
-enum uint NERR_LastAdmin = 0x00000994;
-enum uint NERR_DCNotFound = 0x00000995;
-enum uint NERR_LogonTrackingError = 0x00000996;
-enum uint NERR_NetlogonNotStarted = 0x00000997;
-enum uint NERR_CanNotGrowUASFile = 0x00000998;
-enum uint NERR_TimeDiffAtDC = 0x00000999;
-enum uint NERR_PasswordMismatch = 0x0000099a;
-
-enum : uint
-{
-    NERR_NoSuchServer     = 0x0000099c,
-    NERR_NoSuchSession    = 0x0000099d,
-    NERR_NoSuchConnection = 0x0000099e,
+    NERR_DevNotFound = 0x0000091cU,
+    NERR_DevNotOpen  = 0x0000091dU,
 }
 
 enum : uint
 {
-    NERR_TooManyServers     = 0x0000099f,
-    NERR_TooManySessions    = 0x000009a0,
-    NERR_TooManyConnections = 0x000009a1,
-    NERR_TooManyFiles       = 0x000009a2,
+    NERR_BadQueueDevString = 0x0000091eU,
+    NERR_BadQueuePriority  = 0x0000091fU,
 }
 
-enum uint NERR_NoAlternateServers = 0x000009a3;
-enum uint NERR_TryDownLevel = 0x000009a6;
-enum uint NERR_UPSDriverNotStarted = 0x000009b0;
+enum uint NERR_NoCommDevs = 0x00000921U;
+enum uint NERR_QueueNotFound = 0x00000922U;
 
 enum : uint
 {
-    NERR_UPSInvalidConfig   = 0x000009b1,
-    NERR_UPSInvalidCommPort = 0x000009b2,
+    NERR_BadDevString   = 0x00000924U,
+    NERR_BadDev         = 0x00000925U,
+    NERR_InUseBySpooler = 0x00000926U,
 }
+
+enum uint NERR_CommDevInUse = 0x00000927U;
+enum uint NERR_InvalidComputer = 0x0000092fU;
+enum uint NERR_MaxLenExceeded = 0x00000932U;
+enum uint NERR_BadComponent = 0x00000934U;
+enum uint NERR_CantType = 0x00000935U;
+enum uint NERR_TooManyEntries = 0x0000093aU;
 
 enum : uint
 {
-    NERR_UPSSignalAsserted = 0x000009b3,
-    NERR_UPSShutdownFailed = 0x000009b4,
-}
-
-enum uint NERR_BadDosRetCode = 0x000009c4;
-enum uint NERR_ProgNeedsExtraMem = 0x000009c5;
-enum uint NERR_BadDosFunction = 0x000009c6;
-enum uint NERR_RemoteBootFailed = 0x000009c7;
-enum uint NERR_BadFileCheckSum = 0x000009c8;
-enum uint NERR_NoRplBootSystem = 0x000009c9;
-
-enum : uint
-{
-    NERR_RplLoadrNetBiosErr = 0x000009ca,
-    NERR_RplLoadrDiskErr    = 0x000009cb,
-}
-
-enum uint NERR_ImageParamErr = 0x000009cc;
-enum uint NERR_TooManyImageParams = 0x000009cd;
-enum uint NERR_NonDosFloppyUsed = 0x000009ce;
-
-enum : uint
-{
-    NERR_RplBootRestart    = 0x000009cf,
-    NERR_RplSrvrCallFailed = 0x000009d0,
-}
-
-enum uint NERR_CantConnectRplSrvr = 0x000009d1;
-enum uint NERR_CantOpenImageFile = 0x000009d2;
-enum uint NERR_CallingRplSrvr = 0x000009d3;
-enum uint NERR_StartingRplBoot = 0x000009d4;
-
-enum : uint
-{
-    NERR_RplBootServiceTerm = 0x000009d5,
-    NERR_RplBootStartFailed = 0x000009d6,
-}
-
-enum uint NERR_RPL_CONNECTED = 0x000009d7;
-enum uint NERR_BrowserConfiguredToNotRun = 0x000009f6;
-enum uint NERR_RplNoAdaptersStarted = 0x00000a32;
-
-enum : uint
-{
-    NERR_RplBadRegistry   = 0x00000a33,
-    NERR_RplBadDatabase   = 0x00000a34,
-    NERR_RplRplfilesShare = 0x00000a35,
-}
-
-enum uint NERR_RplNotRplServer = 0x00000a36;
-
-enum : uint
-{
-    NERR_RplCannotEnum           = 0x00000a37,
-    NERR_RplWkstaInfoCorrupted   = 0x00000a38,
-    NERR_RplWkstaNotFound        = 0x00000a39,
-    NERR_RplWkstaNameUnavailable = 0x00000a3a,
+    NERR_ProfileFileTooBig = 0x00000942U,
+    NERR_ProfileOffset     = 0x00000943U,
+    NERR_ProfileCleanup    = 0x00000944U,
+    NERR_ProfileUnknownCmd = 0x00000945U,
+    NERR_ProfileLoadErr    = 0x00000946U,
+    NERR_ProfileSaveErr    = 0x00000947U,
 }
 
 enum : uint
 {
-    NERR_RplProfileInfoCorrupted   = 0x00000a3b,
-    NERR_RplProfileNotFound        = 0x00000a3c,
-    NERR_RplProfileNameUnavailable = 0x00000a3d,
-    NERR_RplProfileNotEmpty        = 0x00000a3e,
+    NERR_LogOverflow    = 0x00000949U,
+    NERR_LogFileChanged = 0x0000094aU,
+    NERR_LogFileCorrupt = 0x0000094bU,
+}
+
+enum uint NERR_SourceIsDir = 0x0000094cU;
+
+enum : uint
+{
+    NERR_BadSource        = 0x0000094dU,
+    NERR_BadDest          = 0x0000094eU,
+    NERR_DifferentServers = 0x0000094fU,
+}
+
+enum uint NERR_RunSrvPaused = 0x00000951U;
+
+enum : uint
+{
+    NERR_ErrCommRunSrv     = 0x00000955U,
+    NERR_ErrorExecingGhost = 0x00000957U,
+}
+
+enum uint NERR_ShareNotFound = 0x00000958U;
+enum uint NERR_InvalidLana = 0x00000960U;
+enum uint NERR_OpenFiles = 0x00000961U;
+enum uint NERR_ActiveConns = 0x00000962U;
+enum uint NERR_BadPasswordCore = 0x00000963U;
+enum uint NERR_DevInUse = 0x00000964U;
+enum uint NERR_LocalDrive = 0x00000965U;
+enum uint NERR_AlertExists = 0x0000097eU;
+enum uint NERR_TooManyAlerts = 0x0000097fU;
+enum uint NERR_NoSuchAlert = 0x00000980U;
+enum uint NERR_BadRecipient = 0x00000981U;
+enum uint NERR_AcctLimitExceeded = 0x00000982U;
+enum uint NERR_InvalidLogSeek = 0x00000988U;
+enum uint NERR_BadUasConfig = 0x00000992U;
+enum uint NERR_InvalidUASOp = 0x00000993U;
+enum uint NERR_LastAdmin = 0x00000994U;
+enum uint NERR_DCNotFound = 0x00000995U;
+enum uint NERR_LogonTrackingError = 0x00000996U;
+enum uint NERR_NetlogonNotStarted = 0x00000997U;
+enum uint NERR_CanNotGrowUASFile = 0x00000998U;
+enum uint NERR_TimeDiffAtDC = 0x00000999U;
+enum uint NERR_PasswordMismatch = 0x0000099aU;
+
+enum : uint
+{
+    NERR_NoSuchServer     = 0x0000099cU,
+    NERR_NoSuchSession    = 0x0000099dU,
+    NERR_NoSuchConnection = 0x0000099eU,
 }
 
 enum : uint
 {
-    NERR_RplConfigInfoCorrupted = 0x00000a3f,
-    NERR_RplConfigNotFound      = 0x00000a40,
+    NERR_TooManyServers     = 0x0000099fU,
+    NERR_TooManySessions    = 0x000009a0U,
+    NERR_TooManyConnections = 0x000009a1U,
+    NERR_TooManyFiles       = 0x000009a2U,
 }
 
-enum uint NERR_RplAdapterInfoCorrupted = 0x00000a41;
+enum uint NERR_NoAlternateServers = 0x000009a3U;
+enum uint NERR_TryDownLevel = 0x000009a6U;
+enum uint NERR_UPSDriverNotStarted = 0x000009b0U;
 
 enum : uint
 {
-    NERR_RplInternal            = 0x00000a42,
-    NERR_RplVendorInfoCorrupted = 0x00000a43,
-}
-
-enum uint NERR_RplBootInfoCorrupted = 0x00000a44;
-enum uint NERR_RplWkstaNeedsUserAcct = 0x00000a45;
-enum uint NERR_RplNeedsRPLUSERAcct = 0x00000a46;
-enum uint NERR_RplBootNotFound = 0x00000a47;
-enum uint NERR_RplIncompatibleProfile = 0x00000a48;
-enum uint NERR_RplAdapterNameUnavailable = 0x00000a49;
-enum uint NERR_RplConfigNotEmpty = 0x00000a4a;
-
-enum : uint
-{
-    NERR_RplBootInUse      = 0x00000a4b,
-    NERR_RplBackupDatabase = 0x00000a4c,
-}
-
-enum uint NERR_RplAdapterNotFound = 0x00000a4d;
-
-enum : uint
-{
-    NERR_RplVendorNotFound        = 0x00000a4e,
-    NERR_RplVendorNameUnavailable = 0x00000a4f,
-}
-
-enum uint NERR_RplBootNameUnavailable = 0x00000a50;
-enum uint NERR_RplConfigNameUnavailable = 0x00000a51;
-enum uint NERR_DfsInternalCorruption = 0x00000a64;
-enum uint NERR_DfsVolumeDataCorrupt = 0x00000a65;
-enum uint NERR_DfsNoSuchVolume = 0x00000a66;
-enum uint NERR_DfsVolumeAlreadyExists = 0x00000a67;
-enum uint NERR_DfsAlreadyShared = 0x00000a68;
-
-enum : uint
-{
-    NERR_DfsNoSuchShare    = 0x00000a69,
-    NERR_DfsNotALeafVolume = 0x00000a6a,
+    NERR_UPSInvalidConfig   = 0x000009b1U,
+    NERR_UPSInvalidCommPort = 0x000009b2U,
 }
 
 enum : uint
 {
-    NERR_DfsLeafVolume               = 0x00000a6b,
-    NERR_DfsVolumeHasMultipleServers = 0x00000a6c,
+    NERR_UPSSignalAsserted = 0x000009b3U,
+    NERR_UPSShutdownFailed = 0x000009b4U,
 }
 
-enum uint NERR_DfsCantCreateJunctionPoint = 0x00000a6d;
-enum uint NERR_DfsServerNotDfsAware = 0x00000a6e;
-enum uint NERR_DfsBadRenamePath = 0x00000a6f;
-enum uint NERR_DfsVolumeIsOffline = 0x00000a70;
-enum uint NERR_DfsNoSuchServer = 0x00000a71;
-enum uint NERR_DfsCyclicalName = 0x00000a72;
-enum uint NERR_DfsNotSupportedInServerDfs = 0x00000a73;
-enum uint NERR_DfsDuplicateService = 0x00000a74;
-enum uint NERR_DfsCantRemoveLastServerShare = 0x00000a75;
-enum uint NERR_DfsVolumeIsInterDfs = 0x00000a76;
-enum uint NERR_DfsInconsistent = 0x00000a77;
-enum uint NERR_DfsServerUpgraded = 0x00000a78;
-enum uint NERR_DfsDataIsIdentical = 0x00000a79;
-enum uint NERR_DfsCantRemoveDfsRoot = 0x00000a7a;
-enum uint NERR_DfsChildOrParentInDfs = 0x00000a7b;
-enum uint NERR_DfsInternalError = 0x00000a82;
+enum uint NERR_BadDosRetCode = 0x000009c4U;
+enum uint NERR_ProgNeedsExtraMem = 0x000009c5U;
+enum uint NERR_BadDosFunction = 0x000009c6U;
+enum uint NERR_RemoteBootFailed = 0x000009c7U;
+enum uint NERR_BadFileCheckSum = 0x000009c8U;
+enum uint NERR_NoRplBootSystem = 0x000009c9U;
 
 enum : uint
 {
-    NERR_SetupAlreadyJoined    = 0x00000a83,
-    NERR_SetupNotJoined        = 0x00000a84,
-    NERR_SetupDomainController = 0x00000a85,
+    NERR_RplLoadrNetBiosErr = 0x000009caU,
+    NERR_RplLoadrDiskErr    = 0x000009cbU,
 }
 
-enum uint NERR_DefaultJoinRequired = 0x00000a86;
-enum uint NERR_InvalidWorkgroupName = 0x00000a87;
-enum uint NERR_NameUsesIncompatibleCodePage = 0x00000a88;
-enum uint NERR_ComputerAccountNotFound = 0x00000a89;
-enum uint NERR_PersonalSku = 0x00000a8a;
-enum uint NERR_SetupCheckDNSConfig = 0x00000a8b;
-enum uint NERR_AlreadyCloudDomainJoined = 0x00000a8c;
-enum uint NERR_PasswordMustChange = 0x00000a8d;
-enum uint NERR_AccountLockedOut = 0x00000a8e;
+enum uint NERR_ImageParamErr = 0x000009ccU;
+enum uint NERR_TooManyImageParams = 0x000009cdU;
+enum uint NERR_NonDosFloppyUsed = 0x000009ceU;
 
 enum : uint
 {
-    NERR_PasswordTooLong          = 0x00000a8f,
-    NERR_PasswordNotComplexEnough = 0x00000a90,
-    NERR_PasswordFilterError      = 0x00000a91,
+    NERR_RplBootRestart    = 0x000009cfU,
+    NERR_RplSrvrCallFailed = 0x000009d0U,
 }
 
-enum uint NERR_NoOfflineJoinInfo = 0x00000a95;
-enum uint NERR_BadOfflineJoinInfo = 0x00000a96;
-enum uint NERR_CantCreateJoinInfo = 0x00000a97;
-enum uint NERR_BadDomainJoinInfo = 0x00000a98;
-enum uint NERR_JoinPerformedMustRestart = 0x00000a99;
-enum uint NERR_NoJoinPending = 0x00000a9a;
-enum uint NERR_ValuesNotSet = 0x00000a9b;
-enum uint NERR_CantVerifyHostname = 0x00000a9c;
-enum uint NERR_CantLoadOfflineHive = 0x00000a9d;
-enum uint NERR_ConnectionInsecure = 0x00000a9e;
-enum uint NERR_ProvisioningBlobUnsupported = 0x00000a9f;
-enum uint NERR_DS8DCRequired = 0x00000aa0;
-enum uint NERR_LDAPCapableDCRequired = 0x00000aa1;
-enum uint NERR_DS8DCNotFound = 0x00000aa2;
-enum uint NERR_TargetVersionUnsupported = 0x00000aa3;
-enum uint NERR_InvalidMachineNameForJoin = 0x00000aa4;
-enum uint NERR_DS9DCNotFound = 0x00000aa5;
-enum uint NERR_PlainTextSecretsRequired = 0x00000aa6;
+enum uint NERR_CantConnectRplSrvr = 0x000009d1U;
+enum uint NERR_CantOpenImageFile = 0x000009d2U;
+enum uint NERR_CallingRplSrvr = 0x000009d3U;
+enum uint NERR_StartingRplBoot = 0x000009d4U;
 
 enum : uint
 {
-    NERR_CannotUnjoinAadDomain   = 0x00000aa7,
-    NERR_CannotUpdateAadHostName = 0x00000aa8,
+    NERR_RplBootServiceTerm = 0x000009d5U,
+    NERR_RplBootStartFailed = 0x000009d6U,
 }
 
-enum uint NERR_DuplicateHostName = 0x00000aa9;
-enum uint NERR_HostNameTooLong = 0x00000aaa;
-enum uint NERR_TooManyHostNames = 0x00000aab;
-enum uint NERR_AccountReuseBlockedByPolicy = 0x00000aac;
-enum uint MAX_NERR = 0x00000bb7;
-enum uint UF_TEMP_DUPLICATE_ACCOUNT = 0x00000100;
-enum uint UF_NORMAL_ACCOUNT = 0x00000200;
-enum uint UF_INTERDOMAIN_TRUST_ACCOUNT = 0x00000800;
-enum uint UF_WORKSTATION_TRUST_ACCOUNT = 0x00001000;
-enum uint UF_SERVER_TRUST_ACCOUNT = 0x00002000;
-enum uint UF_MNS_LOGON_ACCOUNT = 0x00020000;
-enum uint UF_NO_AUTH_DATA_REQUIRED = 0x02000000;
-enum uint UF_PARTIAL_SECRETS_ACCOUNT = 0x04000000;
-enum uint UF_USE_AES_KEYS = 0x08000000;
-enum uint LG_INCLUDE_INDIRECT = 0x00000001;
-enum uint USER_NAME_PARMNUM = 0x00000001;
+enum uint NERR_RPL_CONNECTED = 0x000009d7U;
+enum uint NERR_BrowserConfiguredToNotRun = 0x000009f6U;
+enum uint NERR_RplNoAdaptersStarted = 0x00000a32U;
 
 enum : uint
 {
-    USER_PASSWORD_PARMNUM     = 0x00000003,
-    USER_PASSWORD_AGE_PARMNUM = 0x00000004,
+    NERR_RplBadRegistry   = 0x00000a33U,
+    NERR_RplBadDatabase   = 0x00000a34U,
+    NERR_RplRplfilesShare = 0x00000a35U,
 }
 
-enum uint USER_PRIV_PARMNUM = 0x00000005;
-enum uint USER_HOME_DIR_PARMNUM = 0x00000006;
-enum uint USER_COMMENT_PARMNUM = 0x00000007;
-enum uint USER_FLAGS_PARMNUM = 0x00000008;
-enum uint USER_SCRIPT_PATH_PARMNUM = 0x00000009;
-enum uint USER_AUTH_FLAGS_PARMNUM = 0x0000000a;
-enum uint USER_FULL_NAME_PARMNUM = 0x0000000b;
-enum uint USER_USR_COMMENT_PARMNUM = 0x0000000c;
-enum uint USER_PARMS_PARMNUM = 0x0000000d;
-enum uint USER_WORKSTATIONS_PARMNUM = 0x0000000e;
+enum uint NERR_RplNotRplServer = 0x00000a36U;
 
 enum : uint
 {
-    USER_LAST_LOGON_PARMNUM  = 0x0000000f,
-    USER_LAST_LOGOFF_PARMNUM = 0x00000010,
+    NERR_RplCannotEnum           = 0x00000a37U,
+    NERR_RplWkstaInfoCorrupted   = 0x00000a38U,
+    NERR_RplWkstaNotFound        = 0x00000a39U,
+    NERR_RplWkstaNameUnavailable = 0x00000a3aU,
 }
-
-enum uint USER_ACCT_EXPIRES_PARMNUM = 0x00000011;
-enum uint USER_MAX_STORAGE_PARMNUM = 0x00000012;
-enum uint USER_UNITS_PER_WEEK_PARMNUM = 0x00000013;
-enum uint USER_LOGON_HOURS_PARMNUM = 0x00000014;
-enum uint USER_PAD_PW_COUNT_PARMNUM = 0x00000015;
-enum uint USER_NUM_LOGONS_PARMNUM = 0x00000016;
-enum uint USER_LOGON_SERVER_PARMNUM = 0x00000017;
-enum uint USER_COUNTRY_CODE_PARMNUM = 0x00000018;
-enum uint USER_CODE_PAGE_PARMNUM = 0x00000019;
-enum uint USER_PRIMARY_GROUP_PARMNUM = 0x00000033;
 
 enum : uint
 {
-    USER_PROFILE         = 0x00000034,
-    USER_PROFILE_PARMNUM = 0x00000034,
+    NERR_RplProfileInfoCorrupted   = 0x00000a3bU,
+    NERR_RplProfileNotFound        = 0x00000a3cU,
+    NERR_RplProfileNameUnavailable = 0x00000a3dU,
+    NERR_RplProfileNotEmpty        = 0x00000a3eU,
 }
 
-enum uint USER_HOME_DIR_DRIVE_PARMNUM = 0x00000035;
+enum : uint
+{
+    NERR_RplConfigInfoCorrupted = 0x00000a3fU,
+    NERR_RplConfigNotFound      = 0x00000a40U,
+}
+
+enum uint NERR_RplAdapterInfoCorrupted = 0x00000a41U;
+
+enum : uint
+{
+    NERR_RplInternal            = 0x00000a42U,
+    NERR_RplVendorInfoCorrupted = 0x00000a43U,
+}
+
+enum uint NERR_RplBootInfoCorrupted = 0x00000a44U;
+enum uint NERR_RplWkstaNeedsUserAcct = 0x00000a45U;
+enum uint NERR_RplNeedsRPLUSERAcct = 0x00000a46U;
+enum uint NERR_RplBootNotFound = 0x00000a47U;
+enum uint NERR_RplIncompatibleProfile = 0x00000a48U;
+enum uint NERR_RplAdapterNameUnavailable = 0x00000a49U;
+enum uint NERR_RplConfigNotEmpty = 0x00000a4aU;
+
+enum : uint
+{
+    NERR_RplBootInUse      = 0x00000a4bU,
+    NERR_RplBackupDatabase = 0x00000a4cU,
+}
+
+enum uint NERR_RplAdapterNotFound = 0x00000a4dU;
+
+enum : uint
+{
+    NERR_RplVendorNotFound        = 0x00000a4eU,
+    NERR_RplVendorNameUnavailable = 0x00000a4fU,
+}
+
+enum uint NERR_RplBootNameUnavailable = 0x00000a50U;
+enum uint NERR_RplConfigNameUnavailable = 0x00000a51U;
+enum uint NERR_DfsInternalCorruption = 0x00000a64U;
+enum uint NERR_DfsVolumeDataCorrupt = 0x00000a65U;
+enum uint NERR_DfsNoSuchVolume = 0x00000a66U;
+enum uint NERR_DfsVolumeAlreadyExists = 0x00000a67U;
+enum uint NERR_DfsAlreadyShared = 0x00000a68U;
+
+enum : uint
+{
+    NERR_DfsNoSuchShare    = 0x00000a69U,
+    NERR_DfsNotALeafVolume = 0x00000a6aU,
+}
+
+enum : uint
+{
+    NERR_DfsLeafVolume               = 0x00000a6bU,
+    NERR_DfsVolumeHasMultipleServers = 0x00000a6cU,
+}
+
+enum uint NERR_DfsCantCreateJunctionPoint = 0x00000a6dU;
+enum uint NERR_DfsServerNotDfsAware = 0x00000a6eU;
+enum uint NERR_DfsBadRenamePath = 0x00000a6fU;
+enum uint NERR_DfsVolumeIsOffline = 0x00000a70U;
+enum uint NERR_DfsNoSuchServer = 0x00000a71U;
+enum uint NERR_DfsCyclicalName = 0x00000a72U;
+enum uint NERR_DfsNotSupportedInServerDfs = 0x00000a73U;
+enum uint NERR_DfsDuplicateService = 0x00000a74U;
+enum uint NERR_DfsCantRemoveLastServerShare = 0x00000a75U;
+enum uint NERR_DfsVolumeIsInterDfs = 0x00000a76U;
+enum uint NERR_DfsInconsistent = 0x00000a77U;
+enum uint NERR_DfsServerUpgraded = 0x00000a78U;
+enum uint NERR_DfsDataIsIdentical = 0x00000a79U;
+enum uint NERR_DfsCantRemoveDfsRoot = 0x00000a7aU;
+enum uint NERR_DfsChildOrParentInDfs = 0x00000a7bU;
+enum uint NERR_DfsInternalError = 0x00000a82U;
+
+enum : uint
+{
+    NERR_SetupAlreadyJoined    = 0x00000a83U,
+    NERR_SetupNotJoined        = 0x00000a84U,
+    NERR_SetupDomainController = 0x00000a85U,
+}
+
+enum uint NERR_DefaultJoinRequired = 0x00000a86U;
+enum uint NERR_InvalidWorkgroupName = 0x00000a87U;
+enum uint NERR_NameUsesIncompatibleCodePage = 0x00000a88U;
+enum uint NERR_ComputerAccountNotFound = 0x00000a89U;
+enum uint NERR_PersonalSku = 0x00000a8aU;
+enum uint NERR_SetupCheckDNSConfig = 0x00000a8bU;
+enum uint NERR_AlreadyCloudDomainJoined = 0x00000a8cU;
+enum uint NERR_PasswordMustChange = 0x00000a8dU;
+enum uint NERR_AccountLockedOut = 0x00000a8eU;
+
+enum : uint
+{
+    NERR_PasswordTooLong          = 0x00000a8fU,
+    NERR_PasswordNotComplexEnough = 0x00000a90U,
+    NERR_PasswordFilterError      = 0x00000a91U,
+}
+
+enum uint NERR_NoOfflineJoinInfo = 0x00000a95U;
+enum uint NERR_BadOfflineJoinInfo = 0x00000a96U;
+enum uint NERR_CantCreateJoinInfo = 0x00000a97U;
+enum uint NERR_BadDomainJoinInfo = 0x00000a98U;
+enum uint NERR_JoinPerformedMustRestart = 0x00000a99U;
+enum uint NERR_NoJoinPending = 0x00000a9aU;
+enum uint NERR_ValuesNotSet = 0x00000a9bU;
+enum uint NERR_CantVerifyHostname = 0x00000a9cU;
+enum uint NERR_CantLoadOfflineHive = 0x00000a9dU;
+enum uint NERR_ConnectionInsecure = 0x00000a9eU;
+enum uint NERR_ProvisioningBlobUnsupported = 0x00000a9fU;
+enum uint NERR_DS8DCRequired = 0x00000aa0U;
+enum uint NERR_LDAPCapableDCRequired = 0x00000aa1U;
+enum uint NERR_DS8DCNotFound = 0x00000aa2U;
+enum uint NERR_TargetVersionUnsupported = 0x00000aa3U;
+enum uint NERR_InvalidMachineNameForJoin = 0x00000aa4U;
+enum uint NERR_DS9DCNotFound = 0x00000aa5U;
+enum uint NERR_PlainTextSecretsRequired = 0x00000aa6U;
+
+enum : uint
+{
+    NERR_CannotUnjoinAadDomain   = 0x00000aa7U,
+    NERR_CannotUpdateAadHostName = 0x00000aa8U,
+}
+
+enum uint NERR_DuplicateHostName = 0x00000aa9U;
+enum uint NERR_HostNameTooLong = 0x00000aaaU;
+enum uint NERR_TooManyHostNames = 0x00000aabU;
+enum uint NERR_AccountReuseBlockedByPolicy = 0x00000aacU;
+enum uint MAX_NERR = 0x00000bb7U;
+enum uint UF_TEMP_DUPLICATE_ACCOUNT = 0x00000100U;
+enum uint UF_NORMAL_ACCOUNT = 0x00000200U;
+enum uint UF_INTERDOMAIN_TRUST_ACCOUNT = 0x00000800U;
+enum uint UF_WORKSTATION_TRUST_ACCOUNT = 0x00001000U;
+enum uint UF_SERVER_TRUST_ACCOUNT = 0x00002000U;
+enum uint UF_MNS_LOGON_ACCOUNT = 0x00020000U;
+enum uint UF_NO_AUTH_DATA_REQUIRED = 0x02000000U;
+enum uint UF_PARTIAL_SECRETS_ACCOUNT = 0x04000000U;
+enum uint UF_USE_AES_KEYS = 0x08000000U;
+enum uint LG_INCLUDE_INDIRECT = 0x00000001U;
+enum uint USER_NAME_PARMNUM = 0x00000001U;
+
+enum : uint
+{
+    USER_PASSWORD_PARMNUM     = 0x00000003U,
+    USER_PASSWORD_AGE_PARMNUM = 0x00000004U,
+}
+
+enum uint USER_PRIV_PARMNUM = 0x00000005U;
+enum uint USER_HOME_DIR_PARMNUM = 0x00000006U;
+enum uint USER_COMMENT_PARMNUM = 0x00000007U;
+enum uint USER_FLAGS_PARMNUM = 0x00000008U;
+enum uint USER_SCRIPT_PATH_PARMNUM = 0x00000009U;
+enum uint USER_AUTH_FLAGS_PARMNUM = 0x0000000aU;
+enum uint USER_FULL_NAME_PARMNUM = 0x0000000bU;
+enum uint USER_USR_COMMENT_PARMNUM = 0x0000000cU;
+enum uint USER_PARMS_PARMNUM = 0x0000000dU;
+enum uint USER_WORKSTATIONS_PARMNUM = 0x0000000eU;
+
+enum : uint
+{
+    USER_LAST_LOGON_PARMNUM  = 0x0000000fU,
+    USER_LAST_LOGOFF_PARMNUM = 0x00000010U,
+}
+
+enum uint USER_ACCT_EXPIRES_PARMNUM = 0x00000011U;
+enum uint USER_MAX_STORAGE_PARMNUM = 0x00000012U;
+enum uint USER_UNITS_PER_WEEK_PARMNUM = 0x00000013U;
+enum uint USER_LOGON_HOURS_PARMNUM = 0x00000014U;
+enum uint USER_PAD_PW_COUNT_PARMNUM = 0x00000015U;
+enum uint USER_NUM_LOGONS_PARMNUM = 0x00000016U;
+enum uint USER_LOGON_SERVER_PARMNUM = 0x00000017U;
+enum uint USER_COUNTRY_CODE_PARMNUM = 0x00000018U;
+enum uint USER_CODE_PAGE_PARMNUM = 0x00000019U;
+enum uint USER_PRIMARY_GROUP_PARMNUM = 0x00000033U;
+
+enum : uint
+{
+    USER_PROFILE         = 0x00000034U,
+    USER_PROFILE_PARMNUM = 0x00000034U,
+}
+
+enum uint USER_HOME_DIR_DRIVE_PARMNUM = 0x00000035U;
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* NULL_USERSETINFO_PASSWD = "              ";
-enum uint UNITS_PER_DAY = 0x00000018;
-enum uint USER_PRIV_MASK = 0x00000003;
-enum uint MAX_PASSWD_LEN = 0x00000100;
-enum uint DEF_MIN_PWLEN = 0x00000006;
-enum uint DEF_PWUNIQUENESS = 0x00000005;
+enum uint UNITS_PER_DAY = 0x00000018U;
+enum uint USER_PRIV_MASK = 0x00000003U;
+enum uint MAX_PASSWD_LEN = 0x00000100U;
+enum uint DEF_MIN_PWLEN = 0x00000006U;
+enum uint DEF_PWUNIQUENESS = 0x00000005U;
 
 enum : uint
 {
-    DEF_MAX_PWHIST = 0x00000008,
-    DEF_MAX_BADPW  = 0x00000000,
+    DEF_MAX_PWHIST = 0x00000008U,
+    DEF_MAX_BADPW  = 0x00000000U,
 }
 
-enum uint VALIDATED_LOGON = 0x00000000;
-enum uint PASSWORD_EXPIRED = 0x00000002;
-enum uint NON_VALIDATED_LOGON = 0x00000003;
-enum uint VALID_LOGOFF = 0x00000001;
-enum uint MODALS_MIN_PASSWD_LEN_PARMNUM = 0x00000001;
-enum uint MODALS_MAX_PASSWD_AGE_PARMNUM = 0x00000002;
-enum uint MODALS_MIN_PASSWD_AGE_PARMNUM = 0x00000003;
-enum uint MODALS_FORCE_LOGOFF_PARMNUM = 0x00000004;
-enum uint MODALS_PASSWD_HIST_LEN_PARMNUM = 0x00000005;
-enum uint MODALS_ROLE_PARMNUM = 0x00000006;
-enum uint MODALS_PRIMARY_PARMNUM = 0x00000007;
+enum uint VALIDATED_LOGON = 0x00000000U;
+enum uint PASSWORD_EXPIRED = 0x00000002U;
+enum uint NON_VALIDATED_LOGON = 0x00000003U;
+enum uint VALID_LOGOFF = 0x00000001U;
+enum uint MODALS_MIN_PASSWD_LEN_PARMNUM = 0x00000001U;
+enum uint MODALS_MAX_PASSWD_AGE_PARMNUM = 0x00000002U;
+enum uint MODALS_MIN_PASSWD_AGE_PARMNUM = 0x00000003U;
+enum uint MODALS_FORCE_LOGOFF_PARMNUM = 0x00000004U;
+enum uint MODALS_PASSWD_HIST_LEN_PARMNUM = 0x00000005U;
+enum uint MODALS_ROLE_PARMNUM = 0x00000006U;
+enum uint MODALS_PRIMARY_PARMNUM = 0x00000007U;
 
 enum : uint
 {
-    MODALS_DOMAIN_NAME_PARMNUM = 0x00000008,
-    MODALS_DOMAIN_ID_PARMNUM   = 0x00000009,
+    MODALS_DOMAIN_NAME_PARMNUM = 0x00000008U,
+    MODALS_DOMAIN_ID_PARMNUM   = 0x00000009U,
 }
 
 enum : uint
 {
-    MODALS_LOCKOUT_DURATION_PARMNUM           = 0x0000000a,
-    MODALS_LOCKOUT_OBSERVATION_WINDOW_PARMNUM = 0x0000000b,
+    MODALS_LOCKOUT_DURATION_PARMNUM           = 0x0000000aU,
+    MODALS_LOCKOUT_OBSERVATION_WINDOW_PARMNUM = 0x0000000bU,
 }
 
-enum uint MODALS_LOCKOUT_THRESHOLD_PARMNUM = 0x0000000c;
-enum uint GROUPIDMASK = 0x00008000;
+enum uint MODALS_LOCKOUT_THRESHOLD_PARMNUM = 0x0000000cU;
+enum uint GROUPIDMASK = 0x00008000U;
 
 enum : const(wchar)*
 {
@@ -1100,96 +1136,96 @@ enum : const(wchar)*
     GROUP_SPECIALGRP_LOCAL  = "LOCAL",
 }
 
-enum uint GROUP_ALL_PARMNUM = 0x00000000;
-enum uint GROUP_NAME_PARMNUM = 0x00000001;
-enum uint GROUP_COMMENT_PARMNUM = 0x00000002;
-enum uint GROUP_ATTRIBUTES_PARMNUM = 0x00000003;
+enum uint GROUP_ALL_PARMNUM = 0x00000000U;
+enum uint GROUP_NAME_PARMNUM = 0x00000001U;
+enum uint GROUP_COMMENT_PARMNUM = 0x00000002U;
+enum uint GROUP_ATTRIBUTES_PARMNUM = 0x00000003U;
 
 enum : uint
 {
-    LOCALGROUP_NAME_PARMNUM    = 0x00000001,
-    LOCALGROUP_COMMENT_PARMNUM = 0x00000002,
+    LOCALGROUP_NAME_PARMNUM    = 0x00000001U,
+    LOCALGROUP_COMMENT_PARMNUM = 0x00000002U,
 }
 
-enum uint MAXPERMENTRIES = 0x00000040;
+enum uint MAXPERMENTRIES = 0x00000040U;
 
 enum : uint
 {
-    ACCESS_NONE           = 0x00000000,
-    ACCESS_GROUP          = 0x00008000,
-    ACCESS_AUDIT          = 0x00000001,
-    ACCESS_SUCCESS_OPEN   = 0x00000010,
-    ACCESS_SUCCESS_WRITE  = 0x00000020,
-    ACCESS_SUCCESS_DELETE = 0x00000040,
-    ACCESS_SUCCESS_ACL    = 0x00000080,
-    ACCESS_SUCCESS_MASK   = 0x000000f0,
+    ACCESS_NONE           = 0x00000000U,
+    ACCESS_GROUP          = 0x00008000U,
+    ACCESS_AUDIT          = 0x00000001U,
+    ACCESS_SUCCESS_OPEN   = 0x00000010U,
+    ACCESS_SUCCESS_WRITE  = 0x00000020U,
+    ACCESS_SUCCESS_DELETE = 0x00000040U,
+    ACCESS_SUCCESS_ACL    = 0x00000080U,
+    ACCESS_SUCCESS_MASK   = 0x000000f0U,
 }
 
 enum : uint
 {
-    ACCESS_FAIL_OPEN             = 0x00000100,
-    ACCESS_FAIL_WRITE            = 0x00000200,
-    ACCESS_FAIL_DELETE           = 0x00000400,
-    ACCESS_FAIL_ACL              = 0x00000800,
-    ACCESS_FAIL_MASK             = 0x00000f00,
-    ACCESS_FAIL_SHIFT            = 0x00000004,
-    ACCESS_RESOURCE_NAME_PARMNUM = 0x00000001,
+    ACCESS_FAIL_OPEN             = 0x00000100U,
+    ACCESS_FAIL_WRITE            = 0x00000200U,
+    ACCESS_FAIL_DELETE           = 0x00000400U,
+    ACCESS_FAIL_ACL              = 0x00000800U,
+    ACCESS_FAIL_MASK             = 0x00000f00U,
+    ACCESS_FAIL_SHIFT            = 0x00000004U,
+    ACCESS_RESOURCE_NAME_PARMNUM = 0x00000001U,
 }
 
-enum uint ACCESS_ATTR_PARMNUM = 0x00000002;
-enum uint ACCESS_COUNT_PARMNUM = 0x00000003;
-enum uint ACCESS_ACCESS_LIST_PARMNUM = 0x00000004;
+enum uint ACCESS_ATTR_PARMNUM = 0x00000002U;
+enum uint ACCESS_COUNT_PARMNUM = 0x00000003U;
+enum uint ACCESS_ACCESS_LIST_PARMNUM = 0x00000004U;
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* ACCESS_LETTERS = "RWCXDAP         ";
 
 enum : uint
 {
-    NET_VALIDATE_PASSWORD_LAST_SET       = 0x00000001,
-    NET_VALIDATE_BAD_PASSWORD_TIME       = 0x00000002,
-    NET_VALIDATE_LOCKOUT_TIME            = 0x00000004,
-    NET_VALIDATE_BAD_PASSWORD_COUNT      = 0x00000008,
-    NET_VALIDATE_PASSWORD_HISTORY_LENGTH = 0x00000010,
-    NET_VALIDATE_PASSWORD_HISTORY        = 0x00000020,
+    NET_VALIDATE_PASSWORD_LAST_SET       = 0x00000001U,
+    NET_VALIDATE_BAD_PASSWORD_TIME       = 0x00000002U,
+    NET_VALIDATE_LOCKOUT_TIME            = 0x00000004U,
+    NET_VALIDATE_BAD_PASSWORD_COUNT      = 0x00000008U,
+    NET_VALIDATE_PASSWORD_HISTORY_LENGTH = 0x00000010U,
+    NET_VALIDATE_PASSWORD_HISTORY        = 0x00000020U,
 }
 
 enum : uint
 {
-    NETLOGON_CONTROL_QUERY               = 0x00000001,
-    NETLOGON_CONTROL_REPLICATE           = 0x00000002,
-    NETLOGON_CONTROL_SYNCHRONIZE         = 0x00000003,
-    NETLOGON_CONTROL_PDC_REPLICATE       = 0x00000004,
-    NETLOGON_CONTROL_REDISCOVER          = 0x00000005,
-    NETLOGON_CONTROL_TC_QUERY            = 0x00000006,
-    NETLOGON_CONTROL_TRANSPORT_NOTIFY    = 0x00000007,
-    NETLOGON_CONTROL_FIND_USER           = 0x00000008,
-    NETLOGON_CONTROL_CHANGE_PASSWORD     = 0x00000009,
-    NETLOGON_CONTROL_TC_VERIFY           = 0x0000000a,
-    NETLOGON_CONTROL_FORCE_DNS_REG       = 0x0000000b,
-    NETLOGON_CONTROL_QUERY_DNS_REG       = 0x0000000c,
-    NETLOGON_CONTROL_QUERY_ENC_TYPES     = 0x0000000d,
-    NETLOGON_CONTROL_UNLOAD_NETLOGON_DLL = 0x0000fffb,
-    NETLOGON_CONTROL_BACKUP_CHANGE_LOG   = 0x0000fffc,
-    NETLOGON_CONTROL_TRUNCATE_LOG        = 0x0000fffd,
-    NETLOGON_CONTROL_SET_DBFLAG          = 0x0000fffe,
-    NETLOGON_CONTROL_BREAKPOINT          = 0x0000ffff,
+    NETLOGON_CONTROL_QUERY               = 0x00000001U,
+    NETLOGON_CONTROL_REPLICATE           = 0x00000002U,
+    NETLOGON_CONTROL_SYNCHRONIZE         = 0x00000003U,
+    NETLOGON_CONTROL_PDC_REPLICATE       = 0x00000004U,
+    NETLOGON_CONTROL_REDISCOVER          = 0x00000005U,
+    NETLOGON_CONTROL_TC_QUERY            = 0x00000006U,
+    NETLOGON_CONTROL_TRANSPORT_NOTIFY    = 0x00000007U,
+    NETLOGON_CONTROL_FIND_USER           = 0x00000008U,
+    NETLOGON_CONTROL_CHANGE_PASSWORD     = 0x00000009U,
+    NETLOGON_CONTROL_TC_VERIFY           = 0x0000000aU,
+    NETLOGON_CONTROL_FORCE_DNS_REG       = 0x0000000bU,
+    NETLOGON_CONTROL_QUERY_DNS_REG       = 0x0000000cU,
+    NETLOGON_CONTROL_QUERY_ENC_TYPES     = 0x0000000dU,
+    NETLOGON_CONTROL_UNLOAD_NETLOGON_DLL = 0x0000fffbU,
+    NETLOGON_CONTROL_BACKUP_CHANGE_LOG   = 0x0000fffcU,
+    NETLOGON_CONTROL_TRUNCATE_LOG        = 0x0000fffdU,
+    NETLOGON_CONTROL_SET_DBFLAG          = 0x0000fffeU,
+    NETLOGON_CONTROL_BREAKPOINT          = 0x0000ffffU,
 }
 
 enum : uint
 {
-    NETLOGON_REPLICATION_NEEDED      = 0x00000001,
-    NETLOGON_REPLICATION_IN_PROGRESS = 0x00000002,
+    NETLOGON_REPLICATION_NEEDED      = 0x00000001U,
+    NETLOGON_REPLICATION_IN_PROGRESS = 0x00000002U,
 }
 
-enum uint NETLOGON_FULL_SYNC_REPLICATION = 0x00000004;
+enum uint NETLOGON_FULL_SYNC_REPLICATION = 0x00000004U;
 
 enum : uint
 {
-    NETLOGON_REDO_NEEDED        = 0x00000008,
-    NETLOGON_HAS_IP             = 0x00000010,
-    NETLOGON_HAS_TIMESERV       = 0x00000020,
-    NETLOGON_DNS_UPDATE_FAILURE = 0x00000040,
+    NETLOGON_REDO_NEEDED        = 0x00000008U,
+    NETLOGON_HAS_IP             = 0x00000010U,
+    NETLOGON_HAS_TIMESERV       = 0x00000020U,
+    NETLOGON_DNS_UPDATE_FAILURE = 0x00000040U,
 }
 
-enum uint NETLOGON_VERIFY_STATUS_RETURNED = 0x00000080;
+enum uint NETLOGON_VERIFY_STATUS_RETURNED = 0x00000080U;
 
 enum : const(wchar)*
 {
@@ -1217,1171 +1253,1171 @@ enum const(wchar)* ALERT_USER_EVENT = "USER";
 
 enum : uint
 {
-    PRJOB_QSTATUS   = 0x00000003,
-    PRJOB_DEVSTATUS = 0x000001fc,
+    PRJOB_QSTATUS   = 0x00000003U,
+    PRJOB_DEVSTATUS = 0x000001fcU,
 }
 
 enum : uint
 {
-    PRJOB_COMPLETE    = 0x00000004,
-    PRJOB_INTERV      = 0x00000008,
-    PRJOB_ERROR       = 0x00000010,
-    PRJOB_DESTOFFLINE = 0x00000020,
-    PRJOB_DESTPAUSED  = 0x00000040,
+    PRJOB_COMPLETE    = 0x00000004U,
+    PRJOB_INTERV      = 0x00000008U,
+    PRJOB_ERROR       = 0x00000010U,
+    PRJOB_DESTOFFLINE = 0x00000020U,
+    PRJOB_DESTPAUSED  = 0x00000040U,
 }
 
 enum : uint
 {
-    PRJOB_NOTIFY      = 0x00000080,
-    PRJOB_DESTNOPAPER = 0x00000100,
-    PRJOB_DELETED     = 0x00008000,
-    PRJOB_QS_QUEUED   = 0x00000000,
-    PRJOB_QS_PAUSED   = 0x00000001,
-    PRJOB_QS_SPOOLING = 0x00000002,
-    PRJOB_QS_PRINTING = 0x00000003,
+    PRJOB_NOTIFY      = 0x00000080U,
+    PRJOB_DESTNOPAPER = 0x00000100U,
+    PRJOB_DELETED     = 0x00008000U,
+    PRJOB_QS_QUEUED   = 0x00000000U,
+    PRJOB_QS_PAUSED   = 0x00000001U,
+    PRJOB_QS_SPOOLING = 0x00000002U,
+    PRJOB_QS_PRINTING = 0x00000003U,
 }
 
-enum uint JOB_RUN_PERIODICALLY = 0x00000001;
-enum uint JOB_EXEC_ERROR = 0x00000002;
-enum uint JOB_RUNS_TODAY = 0x00000004;
-enum uint JOB_ADD_CURRENT_DATE = 0x00000008;
-enum uint JOB_NONINTERACTIVE = 0x00000010;
+enum uint JOB_RUN_PERIODICALLY = 0x00000001U;
+enum uint JOB_EXEC_ERROR = 0x00000002U;
+enum uint JOB_RUNS_TODAY = 0x00000004U;
+enum uint JOB_ADD_CURRENT_DATE = 0x00000008U;
+enum uint JOB_NONINTERACTIVE = 0x00000010U;
 
 enum : uint
 {
-    LOGFLAGS_FORWARD  = 0x00000000,
-    LOGFLAGS_BACKWARD = 0x00000001,
-    LOGFLAGS_SEEK     = 0x00000002,
+    LOGFLAGS_FORWARD  = 0x00000000U,
+    LOGFLAGS_BACKWARD = 0x00000001U,
+    LOGFLAGS_SEEK     = 0x00000002U,
 }
 
 enum : uint
 {
-    ACTION_LOCKOUT     = 0x00000000,
-    ACTION_ADMINUNLOCK = 0x00000001,
+    ACTION_LOCKOUT     = 0x00000000U,
+    ACTION_ADMINUNLOCK = 0x00000001U,
 }
 
-enum uint AE_SRVSTATUS = 0x00000000;
+enum uint AE_SRVSTATUS_ = 0x00000000U;
 
 enum : uint
 {
-    AE_SESSLOGON  = 0x00000001,
-    AE_SESSLOGOFF = 0x00000002,
-    AE_SESSPWERR  = 0x00000003,
+    AE_SESSLOGON_ = 0x00000001U,
+    AE_SESSLOGOFF_ = 0x00000002U,
+    AE_SESSPWERR_ = 0x00000003U,
 }
 
 enum : uint
 {
-    AE_CONNSTART = 0x00000004,
-    AE_CONNSTOP  = 0x00000005,
-    AE_CONNREJ   = 0x00000006,
+    AE_CONNSTART_ = 0x00000004U,
+    AE_CONNSTOP_ = 0x00000005U,
+    AE_CONNREJ_  = 0x00000006U,
 }
 
 enum : uint
 {
-    AE_RESACCESS    = 0x00000007,
-    AE_RESACCESSREJ = 0x00000008,
+    AE_RESACCESS_   = 0x00000007U,
+    AE_RESACCESSREJ_ = 0x00000008U,
 }
 
-enum uint AE_CLOSEFILE = 0x00000009;
-enum uint AE_SERVICESTAT = 0x0000000b;
-enum uint AE_ACLMOD = 0x0000000c;
-enum uint AE_UASMOD = 0x0000000d;
+enum uint AE_CLOSEFILE_ = 0x00000009U;
+enum uint AE_SERVICESTAT_ = 0x0000000bU;
+enum uint AE_ACLMOD_ = 0x0000000cU;
+enum uint AE_UASMOD_ = 0x0000000dU;
 
 enum : uint
 {
-    AE_NETLOGON     = 0x0000000e,
-    AE_NETLOGOFF    = 0x0000000f,
-    AE_NETLOGDENIED = 0x00000010,
+    AE_NETLOGON_    = 0x0000000eU,
+    AE_NETLOGOFF_   = 0x0000000fU,
+    AE_NETLOGDENIED = 0x00000010U,
 }
 
-enum uint AE_ACCLIMITEXCD = 0x00000011;
-enum uint AE_RESACCESS2 = 0x00000012;
-enum uint AE_ACLMODFAIL = 0x00000013;
-enum uint AE_LOCKOUT = 0x00000014;
-enum uint AE_GENERIC_TYPE = 0x00000015;
+enum uint AE_ACCLIMITEXCD = 0x00000011U;
+enum uint AE_RESACCESS2 = 0x00000012U;
+enum uint AE_ACLMODFAIL = 0x00000013U;
+enum uint AE_LOCKOUT_ = 0x00000014U;
+enum uint AE_GENERIC_TYPE = 0x00000015U;
 
 enum : uint
 {
-    AE_SRVSTART  = 0x00000000,
-    AE_SRVPAUSED = 0x00000001,
-    AE_SRVCONT   = 0x00000002,
-    AE_SRVSTOP   = 0x00000003,
+    AE_SRVSTART  = 0x00000000U,
+    AE_SRVPAUSED = 0x00000001U,
+    AE_SRVCONT   = 0x00000002U,
+    AE_SRVSTOP   = 0x00000003U,
 }
 
-enum uint AE_GUEST = 0x00000000;
+enum uint AE_GUEST = 0x00000000U;
 
 enum : uint
 {
-    AE_USER  = 0x00000001,
-    AE_ADMIN = 0x00000002,
+    AE_USER  = 0x00000001U,
+    AE_ADMIN = 0x00000002U,
 }
 
-enum uint AE_NORMAL = 0x00000000;
-enum uint AE_USERLIMIT = 0x00000000;
-enum uint AE_GENERAL = 0x00000000;
-enum uint AE_ERROR = 0x00000001;
-enum uint AE_SESSDIS = 0x00000001;
-enum uint AE_BADPW = 0x00000001;
-enum uint AE_AUTODIS = 0x00000002;
-enum uint AE_UNSHARE = 0x00000002;
+enum uint AE_NORMAL = 0x00000000U;
+enum uint AE_USERLIMIT = 0x00000000U;
+enum uint AE_GENERAL = 0x00000000U;
+enum uint AE_ERROR = 0x00000001U;
+enum uint AE_SESSDIS = 0x00000001U;
+enum uint AE_BADPW = 0x00000001U;
+enum uint AE_AUTODIS = 0x00000002U;
+enum uint AE_UNSHARE = 0x00000002U;
 
 enum : uint
 {
-    AE_ADMINPRIVREQD = 0x00000002,
-    AE_ADMINDIS      = 0x00000003,
+    AE_ADMINPRIVREQD = 0x00000002U,
+    AE_ADMINDIS      = 0x00000003U,
 }
 
-enum uint AE_NOACCESSPERM = 0x00000003;
-enum uint AE_ACCRESTRICT = 0x00000004;
-enum uint AE_NORMAL_CLOSE = 0x00000000;
-enum uint AE_SES_CLOSE = 0x00000001;
-enum uint AE_ADMIN_CLOSE = 0x00000002;
+enum uint AE_NOACCESSPERM = 0x00000003U;
+enum uint AE_ACCRESTRICT = 0x00000004U;
+enum uint AE_NORMAL_CLOSE = 0x00000000U;
+enum uint AE_SES_CLOSE = 0x00000001U;
+enum uint AE_ADMIN_CLOSE = 0x00000002U;
 
 enum : uint
 {
-    AE_LIM_UNKNOWN     = 0x00000000,
-    AE_LIM_LOGONHOURS  = 0x00000001,
-    AE_LIM_EXPIRED     = 0x00000002,
-    AE_LIM_INVAL_WKSTA = 0x00000003,
+    AE_LIM_UNKNOWN     = 0x00000000U,
+    AE_LIM_LOGONHOURS  = 0x00000001U,
+    AE_LIM_EXPIRED     = 0x00000002U,
+    AE_LIM_INVAL_WKSTA = 0x00000003U,
 }
 
 enum : uint
 {
-    AE_LIM_DISABLED = 0x00000004,
-    AE_LIM_DELETED  = 0x00000005,
+    AE_LIM_DISABLED = 0x00000004U,
+    AE_LIM_DELETED  = 0x00000005U,
 }
 
 enum : uint
 {
-    AE_MOD    = 0x00000000,
-    AE_DELETE = 0x00000001,
+    AE_MOD    = 0x00000000U,
+    AE_DELETE = 0x00000001U,
 }
 
 enum : uint
 {
-    AE_ADD        = 0x00000002,
-    AE_UAS_USER   = 0x00000000,
-    AE_UAS_GROUP  = 0x00000001,
-    AE_UAS_MODALS = 0x00000002,
+    AE_ADD        = 0x00000002U,
+    AE_UAS_USER   = 0x00000000U,
+    AE_UAS_GROUP  = 0x00000001U,
+    AE_UAS_MODALS = 0x00000002U,
 }
 
 enum : uint
 {
-    SVAUD_SERVICE       = 0x00000001,
-    SVAUD_GOODSESSLOGON = 0x00000006,
+    SVAUD_SERVICE       = 0x00000001U,
+    SVAUD_GOODSESSLOGON = 0x00000006U,
 }
 
-enum uint SVAUD_BADSESSLOGON = 0x00000018;
-enum uint SVAUD_GOODNETLOGON = 0x00000060;
-enum uint SVAUD_BADNETLOGON = 0x00000180;
+enum uint SVAUD_BADSESSLOGON = 0x00000018U;
+enum uint SVAUD_GOODNETLOGON = 0x00000060U;
+enum uint SVAUD_BADNETLOGON = 0x00000180U;
 
 enum : uint
 {
-    SVAUD_GOODUSE     = 0x00000600,
-    SVAUD_BADUSE      = 0x00001800,
-    SVAUD_USERLIST    = 0x00002000,
-    SVAUD_PERMISSIONS = 0x00004000,
+    SVAUD_GOODUSE     = 0x00000600U,
+    SVAUD_BADUSE      = 0x00001800U,
+    SVAUD_USERLIST    = 0x00002000U,
+    SVAUD_PERMISSIONS = 0x00004000U,
 }
 
 enum : uint
 {
-    SVAUD_RESOURCE = 0x00008000,
-    SVAUD_LOGONLIM = 0x00010000,
+    SVAUD_RESOURCE = 0x00008000U,
+    SVAUD_LOGONLIM = 0x00010000U,
 }
 
-enum uint AA_AUDIT_ALL = 0x00000001;
-enum uint AA_A_OWNER = 0x00000004;
-enum uint AA_CLOSE = 0x00000008;
+enum uint AA_AUDIT_ALL = 0x00000001U;
+enum uint AA_A_OWNER = 0x00000004U;
+enum uint AA_CLOSE = 0x00000008U;
 
 enum : uint
 {
-    AA_S_OPEN   = 0x00000010,
-    AA_S_WRITE  = 0x00000020,
-    AA_S_CREATE = 0x00000020,
-    AA_S_DELETE = 0x00000040,
-    AA_S_ACL    = 0x00000080,
+    AA_S_OPEN   = 0x00000010U,
+    AA_S_WRITE  = 0x00000020U,
+    AA_S_CREATE = 0x00000020U,
+    AA_S_DELETE = 0x00000040U,
+    AA_S_ACL    = 0x00000080U,
 }
 
 enum : uint
 {
-    AA_F_OPEN   = 0x00000100,
-    AA_F_WRITE  = 0x00000200,
-    AA_F_CREATE = 0x00000200,
-    AA_F_DELETE = 0x00000400,
-    AA_F_ACL    = 0x00000800,
+    AA_F_OPEN   = 0x00000100U,
+    AA_F_WRITE  = 0x00000200U,
+    AA_F_CREATE = 0x00000200U,
+    AA_F_DELETE = 0x00000400U,
+    AA_F_ACL    = 0x00000800U,
 }
 
 enum : uint
 {
-    AA_A_OPEN   = 0x00001000,
-    AA_A_WRITE  = 0x00002000,
-    AA_A_CREATE = 0x00002000,
-    AA_A_DELETE = 0x00004000,
-    AA_A_ACL    = 0x00008000,
+    AA_A_OPEN   = 0x00001000U,
+    AA_A_WRITE  = 0x00002000U,
+    AA_A_CREATE = 0x00002000U,
+    AA_A_DELETE = 0x00004000U,
+    AA_A_ACL    = 0x00008000U,
 }
 
-enum uint ERRLOG_BASE = 0x00000c1c;
-enum uint NELOG_Internal_Error = 0x00000c1c;
-enum uint NELOG_Resource_Shortage = 0x00000c1d;
+enum uint ERRLOG_BASE = 0x00000c1cU;
+enum uint NELOG_Internal_Error = 0x00000c1cU;
+enum uint NELOG_Resource_Shortage = 0x00000c1dU;
 
 enum : uint
 {
-    NELOG_Unable_To_Lock_Segment   = 0x00000c1e,
-    NELOG_Unable_To_Unlock_Segment = 0x00000c1f,
+    NELOG_Unable_To_Lock_Segment   = 0x00000c1eU,
+    NELOG_Unable_To_Unlock_Segment = 0x00000c1fU,
 }
 
-enum uint NELOG_Uninstall_Service = 0x00000c20;
-enum uint NELOG_Init_Exec_Fail = 0x00000c21;
+enum uint NELOG_Uninstall_Service = 0x00000c20U;
+enum uint NELOG_Init_Exec_Fail = 0x00000c21U;
 
 enum : uint
 {
-    NELOG_Ncb_Error       = 0x00000c22,
-    NELOG_Net_Not_Started = 0x00000c23,
+    NELOG_Ncb_Error       = 0x00000c22U,
+    NELOG_Net_Not_Started = 0x00000c23U,
 }
 
-enum uint NELOG_Ioctl_Error = 0x00000c24;
-enum uint NELOG_System_Semaphore = 0x00000c25;
-enum uint NELOG_Init_OpenCreate_Err = 0x00000c26;
+enum uint NELOG_Ioctl_Error = 0x00000c24U;
+enum uint NELOG_System_Semaphore = 0x00000c25U;
+enum uint NELOG_Init_OpenCreate_Err = 0x00000c26U;
 
 enum : uint
 {
-    NELOG_NetBios      = 0x00000c27,
-    NELOG_SMB_Illegal  = 0x00000c28,
-    NELOG_Service_Fail = 0x00000c29,
+    NELOG_NetBios      = 0x00000c27U,
+    NELOG_SMB_Illegal  = 0x00000c28U,
+    NELOG_Service_Fail = 0x00000c29U,
 }
 
-enum uint NELOG_Entries_Lost = 0x00000c2a;
-enum uint NELOG_Init_Seg_Overflow = 0x00000c30;
-enum uint NELOG_Srv_No_Mem_Grow = 0x00000c31;
-enum uint NELOG_Access_File_Bad = 0x00000c32;
-enum uint NELOG_Srvnet_Not_Started = 0x00000c33;
-enum uint NELOG_Init_Chardev_Err = 0x00000c34;
-enum uint NELOG_Remote_API = 0x00000c35;
-enum uint NELOG_Ncb_TooManyErr = 0x00000c36;
-enum uint NELOG_Mailslot_err = 0x00000c37;
-enum uint NELOG_ReleaseMem_Alert = 0x00000c38;
-enum uint NELOG_AT_cannot_write = 0x00000c39;
-enum uint NELOG_Cant_Make_Msg_File = 0x00000c3a;
-enum uint NELOG_Exec_Netservr_NoMem = 0x00000c3b;
-enum uint NELOG_Server_Lock_Failure = 0x00000c3c;
+enum uint NELOG_Entries_Lost = 0x00000c2aU;
+enum uint NELOG_Init_Seg_Overflow = 0x00000c30U;
+enum uint NELOG_Srv_No_Mem_Grow = 0x00000c31U;
+enum uint NELOG_Access_File_Bad = 0x00000c32U;
+enum uint NELOG_Srvnet_Not_Started = 0x00000c33U;
+enum uint NELOG_Init_Chardev_Err = 0x00000c34U;
+enum uint NELOG_Remote_API = 0x00000c35U;
+enum uint NELOG_Ncb_TooManyErr = 0x00000c36U;
+enum uint NELOG_Mailslot_err = 0x00000c37U;
+enum uint NELOG_ReleaseMem_Alert = 0x00000c38U;
+enum uint NELOG_AT_cannot_write = 0x00000c39U;
+enum uint NELOG_Cant_Make_Msg_File = 0x00000c3aU;
+enum uint NELOG_Exec_Netservr_NoMem = 0x00000c3bU;
+enum uint NELOG_Server_Lock_Failure = 0x00000c3cU;
 
 enum : uint
 {
-    NELOG_Msg_Shutdown     = 0x00000c44,
-    NELOG_Msg_Sem_Shutdown = 0x00000c45,
-    NELOG_Msg_Log_Err      = 0x00000c4e,
+    NELOG_Msg_Shutdown     = 0x00000c44U,
+    NELOG_Msg_Sem_Shutdown = 0x00000c45U,
+    NELOG_Msg_Log_Err      = 0x00000c4eU,
 }
 
-enum uint NELOG_VIO_POPUP_ERR = 0x00000c4f;
-enum uint NELOG_Msg_Unexpected_SMB_Type = 0x00000c50;
+enum uint NELOG_VIO_POPUP_ERR = 0x00000c4fU;
+enum uint NELOG_Msg_Unexpected_SMB_Type = 0x00000c50U;
 
 enum : uint
 {
-    NELOG_Wksta_Infoseg           = 0x00000c58,
-    NELOG_Wksta_Compname          = 0x00000c59,
-    NELOG_Wksta_BiosThreadFailure = 0x00000c5a,
-    NELOG_Wksta_IniSeg            = 0x00000c5b,
-    NELOG_Wksta_HostTab_Full      = 0x00000c5c,
-    NELOG_Wksta_Bad_Mailslot_SMB  = 0x00000c5d,
-    NELOG_Wksta_UASInit           = 0x00000c5e,
-    NELOG_Wksta_SSIRelogon        = 0x00000c5f,
+    NELOG_Wksta_Infoseg           = 0x00000c58U,
+    NELOG_Wksta_Compname          = 0x00000c59U,
+    NELOG_Wksta_BiosThreadFailure = 0x00000c5aU,
+    NELOG_Wksta_IniSeg            = 0x00000c5bU,
+    NELOG_Wksta_HostTab_Full      = 0x00000c5cU,
+    NELOG_Wksta_Bad_Mailslot_SMB  = 0x00000c5dU,
+    NELOG_Wksta_UASInit           = 0x00000c5eU,
+    NELOG_Wksta_SSIRelogon        = 0x00000c5fU,
 }
 
-enum uint NELOG_Build_Name = 0x00000c62;
-enum uint NELOG_Name_Expansion = 0x00000c63;
-enum uint NELOG_Message_Send = 0x00000c64;
-enum uint NELOG_Mail_Slt_Err = 0x00000c65;
+enum uint NELOG_Build_Name = 0x00000c62U;
+enum uint NELOG_Name_Expansion = 0x00000c63U;
+enum uint NELOG_Message_Send = 0x00000c64U;
+enum uint NELOG_Mail_Slt_Err = 0x00000c65U;
 
 enum : uint
 {
-    NELOG_AT_cannot_read           = 0x00000c66,
-    NELOG_AT_sched_err             = 0x00000c67,
-    NELOG_AT_schedule_file_created = 0x00000c68,
+    NELOG_AT_cannot_read           = 0x00000c66U,
+    NELOG_AT_sched_err             = 0x00000c67U,
+    NELOG_AT_schedule_file_created = 0x00000c68U,
 }
 
-enum uint NELOG_Srvnet_NB_Open = 0x00000c69;
-enum uint NELOG_AT_Exec_Err = 0x00000c6a;
-enum uint NELOG_Lazy_Write_Err = 0x00000c6c;
+enum uint NELOG_Srvnet_NB_Open = 0x00000c69U;
+enum uint NELOG_AT_Exec_Err = 0x00000c6aU;
+enum uint NELOG_Lazy_Write_Err = 0x00000c6cU;
 
 enum : uint
 {
-    NELOG_HotFix              = 0x00000c6d,
-    NELOG_HardErr_From_Server = 0x00000c6e,
+    NELOG_HotFix              = 0x00000c6dU,
+    NELOG_HardErr_From_Server = 0x00000c6eU,
 }
 
 enum : uint
 {
-    NELOG_LocalSecFail1       = 0x00000c6f,
-    NELOG_LocalSecFail2       = 0x00000c70,
-    NELOG_LocalSecFail3       = 0x00000c71,
-    NELOG_LocalSecGeneralFail = 0x00000c72,
+    NELOG_LocalSecFail1       = 0x00000c6fU,
+    NELOG_LocalSecFail2       = 0x00000c70U,
+    NELOG_LocalSecFail3       = 0x00000c71U,
+    NELOG_LocalSecGeneralFail = 0x00000c72U,
 }
 
 enum : uint
 {
-    NELOG_NetWkSta_Internal_Error   = 0x00000c76,
-    NELOG_NetWkSta_No_Resource      = 0x00000c77,
-    NELOG_NetWkSta_SMB_Err          = 0x00000c78,
-    NELOG_NetWkSta_VC_Err           = 0x00000c79,
-    NELOG_NetWkSta_Stuck_VC_Err     = 0x00000c7a,
-    NELOG_NetWkSta_NCB_Err          = 0x00000c7b,
-    NELOG_NetWkSta_Write_Behind_Err = 0x00000c7c,
-    NELOG_NetWkSta_Reset_Err        = 0x00000c7d,
-    NELOG_NetWkSta_Too_Many         = 0x00000c7e,
+    NELOG_NetWkSta_Internal_Error   = 0x00000c76U,
+    NELOG_NetWkSta_No_Resource      = 0x00000c77U,
+    NELOG_NetWkSta_SMB_Err          = 0x00000c78U,
+    NELOG_NetWkSta_VC_Err           = 0x00000c79U,
+    NELOG_NetWkSta_Stuck_VC_Err     = 0x00000c7aU,
+    NELOG_NetWkSta_NCB_Err          = 0x00000c7bU,
+    NELOG_NetWkSta_Write_Behind_Err = 0x00000c7cU,
+    NELOG_NetWkSta_Reset_Err        = 0x00000c7dU,
+    NELOG_NetWkSta_Too_Many         = 0x00000c7eU,
 }
 
 enum : uint
 {
-    NELOG_Srv_Thread_Failure = 0x00000c84,
-    NELOG_Srv_Close_Failure  = 0x00000c85,
+    NELOG_Srv_Thread_Failure = 0x00000c84U,
+    NELOG_Srv_Close_Failure  = 0x00000c85U,
 }
 
 enum : uint
 {
-    NELOG_ReplUserCurDir      = 0x00000c86,
-    NELOG_ReplCannotMasterDir = 0x00000c87,
+    NELOG_ReplUserCurDir      = 0x00000c86U,
+    NELOG_ReplCannotMasterDir = 0x00000c87U,
 }
 
 enum : uint
 {
-    NELOG_ReplUpdateError = 0x00000c88,
-    NELOG_ReplLostMaster  = 0x00000c89,
+    NELOG_ReplUpdateError = 0x00000c88U,
+    NELOG_ReplLostMaster  = 0x00000c89U,
 }
 
-enum uint NELOG_NetlogonAuthDCFail = 0x00000c8a;
+enum uint NELOG_NetlogonAuthDCFail = 0x00000c8aU;
 
 enum : uint
 {
-    NELOG_ReplLogonFailed   = 0x00000c8b,
-    NELOG_ReplNetErr        = 0x00000c8c,
-    NELOG_ReplMaxFiles      = 0x00000c8d,
-    NELOG_ReplMaxTreeDepth  = 0x00000c8e,
-    NELOG_ReplBadMsg        = 0x00000c8f,
-    NELOG_ReplSysErr        = 0x00000c90,
-    NELOG_ReplUserLoged     = 0x00000c91,
-    NELOG_ReplBadImport     = 0x00000c92,
-    NELOG_ReplBadExport     = 0x00000c93,
-    NELOG_ReplSignalFileErr = 0x00000c94,
+    NELOG_ReplLogonFailed   = 0x00000c8bU,
+    NELOG_ReplNetErr        = 0x00000c8cU,
+    NELOG_ReplMaxFiles      = 0x00000c8dU,
+    NELOG_ReplMaxTreeDepth  = 0x00000c8eU,
+    NELOG_ReplBadMsg        = 0x00000c8fU,
+    NELOG_ReplSysErr        = 0x00000c90U,
+    NELOG_ReplUserLoged     = 0x00000c91U,
+    NELOG_ReplBadImport     = 0x00000c92U,
+    NELOG_ReplBadExport     = 0x00000c93U,
+    NELOG_ReplSignalFileErr = 0x00000c94U,
 }
 
 enum : uint
 {
-    NELOG_DiskFT           = 0x00000c95,
-    NELOG_ReplAccessDenied = 0x00000c96,
+    NELOG_DiskFT           = 0x00000c95U,
+    NELOG_ReplAccessDenied = 0x00000c96U,
 }
 
 enum : uint
 {
-    NELOG_NetlogonFailedPrimary          = 0x00000c97,
-    NELOG_NetlogonPasswdSetFailed        = 0x00000c98,
-    NELOG_NetlogonTrackingError          = 0x00000c99,
-    NELOG_NetlogonSyncError              = 0x00000c9a,
-    NELOG_NetlogonRequireSignOrSealError = 0x00000c9b,
+    NELOG_NetlogonFailedPrimary          = 0x00000c97U,
+    NELOG_NetlogonPasswdSetFailed        = 0x00000c98U,
+    NELOG_NetlogonTrackingError          = 0x00000c99U,
+    NELOG_NetlogonSyncError              = 0x00000c9aU,
+    NELOG_NetlogonRequireSignOrSealError = 0x00000c9bU,
 }
 
 enum : uint
 {
-    NELOG_UPS_PowerOut         = 0x00000c9e,
-    NELOG_UPS_Shutdown         = 0x00000c9f,
-    NELOG_UPS_CmdFileError     = 0x00000ca0,
-    NELOG_UPS_CannotOpenDriver = 0x00000ca1,
+    NELOG_UPS_PowerOut         = 0x00000c9eU,
+    NELOG_UPS_Shutdown         = 0x00000c9fU,
+    NELOG_UPS_CmdFileError     = 0x00000ca0U,
+    NELOG_UPS_CannotOpenDriver = 0x00000ca1U,
 }
 
 enum : uint
 {
-    NELOG_UPS_PowerBack     = 0x00000ca2,
-    NELOG_UPS_CmdFileConfig = 0x00000ca3,
-    NELOG_UPS_CmdFileExec   = 0x00000ca4,
+    NELOG_UPS_PowerBack     = 0x00000ca2U,
+    NELOG_UPS_CmdFileConfig = 0x00000ca3U,
+    NELOG_UPS_CmdFileExec   = 0x00000ca4U,
 }
 
-enum uint NELOG_Missing_Parameter = 0x00000cb2;
+enum uint NELOG_Missing_Parameter = 0x00000cb2U;
 
 enum : uint
 {
-    NELOG_Invalid_Config_Line = 0x00000cb3,
-    NELOG_Invalid_Config_File = 0x00000cb4,
+    NELOG_Invalid_Config_Line = 0x00000cb3U,
+    NELOG_Invalid_Config_File = 0x00000cb4U,
 }
 
 enum : uint
 {
-    NELOG_File_Changed   = 0x00000cb5,
-    NELOG_Files_Dont_Fit = 0x00000cb6,
+    NELOG_File_Changed   = 0x00000cb5U,
+    NELOG_Files_Dont_Fit = 0x00000cb6U,
 }
 
-enum uint NELOG_Wrong_DLL_Version = 0x00000cb7;
-enum uint NELOG_Error_in_DLL = 0x00000cb8;
-enum uint NELOG_System_Error = 0x00000cb9;
-enum uint NELOG_FT_ErrLog_Too_Large = 0x00000cba;
-enum uint NELOG_FT_Update_In_Progress = 0x00000cbb;
+enum uint NELOG_Wrong_DLL_Version = 0x00000cb7U;
+enum uint NELOG_Error_in_DLL = 0x00000cb8U;
+enum uint NELOG_System_Error = 0x00000cb9U;
+enum uint NELOG_FT_ErrLog_Too_Large = 0x00000cbaU;
+enum uint NELOG_FT_Update_In_Progress = 0x00000cbbU;
 
 enum : uint
 {
-    NELOG_Joined_Domain    = 0x00000cbc,
-    NELOG_Joined_Workgroup = 0x00000cbd,
+    NELOG_Joined_Domain    = 0x00000cbcU,
+    NELOG_Joined_Workgroup = 0x00000cbdU,
 }
 
-enum uint NELOG_OEM_Code = 0x00000ce3;
-enum uint ERRLOG2_BASE = 0x00001644;
+enum uint NELOG_OEM_Code = 0x00000ce3U;
+enum uint ERRLOG2_BASE = 0x00001644U;
 
 enum : uint
 {
-    NELOG_NetlogonSSIInitError            = 0x00001644,
-    NELOG_NetlogonFailedToUpdateTrustList = 0x00001645,
-    NELOG_NetlogonFailedToAddRpcInterface = 0x00001646,
-    NELOG_NetlogonFailedToReadMailslot    = 0x00001647,
-    NELOG_NetlogonFailedToRegisterSC      = 0x00001648,
-    NELOG_NetlogonChangeLogCorrupt        = 0x00001649,
-    NELOG_NetlogonFailedToCreateShare     = 0x0000164a,
-    NELOG_NetlogonDownLevelLogonFailed    = 0x0000164b,
-    NELOG_NetlogonDownLevelLogoffFailed   = 0x0000164c,
+    NELOG_NetlogonSSIInitError            = 0x00001644U,
+    NELOG_NetlogonFailedToUpdateTrustList = 0x00001645U,
+    NELOG_NetlogonFailedToAddRpcInterface = 0x00001646U,
+    NELOG_NetlogonFailedToReadMailslot    = 0x00001647U,
+    NELOG_NetlogonFailedToRegisterSC      = 0x00001648U,
+    NELOG_NetlogonChangeLogCorrupt        = 0x00001649U,
+    NELOG_NetlogonFailedToCreateShare     = 0x0000164aU,
+    NELOG_NetlogonDownLevelLogonFailed    = 0x0000164bU,
+    NELOG_NetlogonDownLevelLogoffFailed   = 0x0000164cU,
 }
 
 enum : uint
 {
-    NELOG_NetlogonNTLogonFailed          = 0x0000164d,
-    NELOG_NetlogonNTLogoffFailed         = 0x0000164e,
-    NELOG_NetlogonPartialSyncCallSuccess = 0x0000164f,
-    NELOG_NetlogonPartialSyncCallFailed  = 0x00001650,
+    NELOG_NetlogonNTLogonFailed          = 0x0000164dU,
+    NELOG_NetlogonNTLogoffFailed         = 0x0000164eU,
+    NELOG_NetlogonPartialSyncCallSuccess = 0x0000164fU,
+    NELOG_NetlogonPartialSyncCallFailed  = 0x00001650U,
 }
 
 enum : uint
 {
-    NELOG_NetlogonFullSyncCallSuccess    = 0x00001651,
-    NELOG_NetlogonFullSyncCallFailed     = 0x00001652,
-    NELOG_NetlogonPartialSyncSuccess     = 0x00001653,
-    NELOG_NetlogonPartialSyncFailed      = 0x00001654,
-    NELOG_NetlogonFullSyncSuccess        = 0x00001655,
-    NELOG_NetlogonFullSyncFailed         = 0x00001656,
-    NELOG_NetlogonAuthNoDomainController = 0x00001657,
-    NELOG_NetlogonAuthNoTrustLsaSecret   = 0x00001658,
-    NELOG_NetlogonAuthNoTrustSamAccount  = 0x00001659,
+    NELOG_NetlogonFullSyncCallSuccess    = 0x00001651U,
+    NELOG_NetlogonFullSyncCallFailed     = 0x00001652U,
+    NELOG_NetlogonPartialSyncSuccess     = 0x00001653U,
+    NELOG_NetlogonPartialSyncFailed      = 0x00001654U,
+    NELOG_NetlogonFullSyncSuccess        = 0x00001655U,
+    NELOG_NetlogonFullSyncFailed         = 0x00001656U,
+    NELOG_NetlogonAuthNoDomainController = 0x00001657U,
+    NELOG_NetlogonAuthNoTrustLsaSecret   = 0x00001658U,
+    NELOG_NetlogonAuthNoTrustSamAccount  = 0x00001659U,
 }
 
 enum : uint
 {
-    NELOG_NetlogonServerAuthFailed            = 0x0000165a,
-    NELOG_NetlogonServerAuthNoTrustSamAccount = 0x0000165b,
+    NELOG_NetlogonServerAuthFailed            = 0x0000165aU,
+    NELOG_NetlogonServerAuthNoTrustSamAccount = 0x0000165bU,
 }
 
 enum : uint
 {
-    NELOG_FailedToRegisterSC       = 0x0000165c,
-    NELOG_FailedToSetServiceStatus = 0x0000165d,
-    NELOG_FailedToGetComputerName  = 0x0000165e,
+    NELOG_FailedToRegisterSC       = 0x0000165cU,
+    NELOG_FailedToSetServiceStatus = 0x0000165dU,
+    NELOG_FailedToGetComputerName  = 0x0000165eU,
 }
 
-enum uint NELOG_DriverNotLoaded = 0x0000165f;
-enum uint NELOG_NoTranportLoaded = 0x00001660;
+enum uint NELOG_DriverNotLoaded = 0x0000165fU;
+enum uint NELOG_NoTranportLoaded = 0x00001660U;
 
 enum : uint
 {
-    NELOG_NetlogonFailedDomainDelta        = 0x00001661,
-    NELOG_NetlogonFailedGlobalGroupDelta   = 0x00001662,
-    NELOG_NetlogonFailedLocalGroupDelta    = 0x00001663,
-    NELOG_NetlogonFailedUserDelta          = 0x00001664,
-    NELOG_NetlogonFailedPolicyDelta        = 0x00001665,
-    NELOG_NetlogonFailedTrustedDomainDelta = 0x00001666,
-    NELOG_NetlogonFailedAccountDelta       = 0x00001667,
-    NELOG_NetlogonFailedSecretDelta        = 0x00001668,
-    NELOG_NetlogonSystemError              = 0x00001669,
-    NELOG_NetlogonDuplicateMachineAccounts = 0x0000166a,
+    NELOG_NetlogonFailedDomainDelta        = 0x00001661U,
+    NELOG_NetlogonFailedGlobalGroupDelta   = 0x00001662U,
+    NELOG_NetlogonFailedLocalGroupDelta    = 0x00001663U,
+    NELOG_NetlogonFailedUserDelta          = 0x00001664U,
+    NELOG_NetlogonFailedPolicyDelta        = 0x00001665U,
+    NELOG_NetlogonFailedTrustedDomainDelta = 0x00001666U,
+    NELOG_NetlogonFailedAccountDelta       = 0x00001667U,
+    NELOG_NetlogonFailedSecretDelta        = 0x00001668U,
+    NELOG_NetlogonSystemError              = 0x00001669U,
+    NELOG_NetlogonDuplicateMachineAccounts = 0x0000166aU,
 }
 
 enum : uint
 {
-    NELOG_NetlogonTooManyGlobalGroups = 0x0000166b,
-    NELOG_NetlogonBrowserDriver       = 0x0000166c,
-    NELOG_NetlogonAddNameFailure      = 0x0000166d,
+    NELOG_NetlogonTooManyGlobalGroups = 0x0000166bU,
+    NELOG_NetlogonBrowserDriver       = 0x0000166cU,
+    NELOG_NetlogonAddNameFailure      = 0x0000166dU,
 }
 
 enum : uint
 {
-    NELOG_RplMessages           = 0x0000166e,
-    NELOG_RplXnsBoot            = 0x0000166f,
-    NELOG_RplSystem             = 0x00001670,
-    NELOG_RplWkstaTimeout       = 0x00001671,
-    NELOG_RplWkstaFileOpen      = 0x00001672,
-    NELOG_RplWkstaFileRead      = 0x00001673,
-    NELOG_RplWkstaMemory        = 0x00001674,
-    NELOG_RplWkstaFileChecksum  = 0x00001675,
-    NELOG_RplWkstaFileLineCount = 0x00001676,
-    NELOG_RplWkstaBbcFile       = 0x00001677,
-    NELOG_RplWkstaFileSize      = 0x00001678,
-    NELOG_RplWkstaInternal      = 0x00001679,
-    NELOG_RplWkstaWrongVersion  = 0x0000167a,
-    NELOG_RplWkstaNetwork       = 0x0000167b,
-    NELOG_RplAdapterResource    = 0x0000167c,
+    NELOG_RplMessages           = 0x0000166eU,
+    NELOG_RplXnsBoot            = 0x0000166fU,
+    NELOG_RplSystem             = 0x00001670U,
+    NELOG_RplWkstaTimeout       = 0x00001671U,
+    NELOG_RplWkstaFileOpen      = 0x00001672U,
+    NELOG_RplWkstaFileRead      = 0x00001673U,
+    NELOG_RplWkstaMemory        = 0x00001674U,
+    NELOG_RplWkstaFileChecksum  = 0x00001675U,
+    NELOG_RplWkstaFileLineCount = 0x00001676U,
+    NELOG_RplWkstaBbcFile       = 0x00001677U,
+    NELOG_RplWkstaFileSize      = 0x00001678U,
+    NELOG_RplWkstaInternal      = 0x00001679U,
+    NELOG_RplWkstaWrongVersion  = 0x0000167aU,
+    NELOG_RplWkstaNetwork       = 0x0000167bU,
+    NELOG_RplAdapterResource    = 0x0000167cU,
 }
 
 enum : uint
 {
-    NELOG_RplFileCopy       = 0x0000167d,
-    NELOG_RplFileDelete     = 0x0000167e,
-    NELOG_RplFilePerms      = 0x0000167f,
-    NELOG_RplCheckConfigs   = 0x00001680,
-    NELOG_RplCreateProfiles = 0x00001681,
+    NELOG_RplFileCopy       = 0x0000167dU,
+    NELOG_RplFileDelete     = 0x0000167eU,
+    NELOG_RplFilePerms      = 0x0000167fU,
+    NELOG_RplCheckConfigs   = 0x00001680U,
+    NELOG_RplCreateProfiles = 0x00001681U,
 }
 
 enum : uint
 {
-    NELOG_RplRegistry       = 0x00001682,
-    NELOG_RplReplaceRPLDISK = 0x00001683,
+    NELOG_RplRegistry       = 0x00001682U,
+    NELOG_RplReplaceRPLDISK = 0x00001683U,
 }
 
 enum : uint
 {
-    NELOG_RplCheckSecurity  = 0x00001684,
-    NELOG_RplBackupDatabase = 0x00001685,
+    NELOG_RplCheckSecurity  = 0x00001684U,
+    NELOG_RplBackupDatabase = 0x00001685U,
 }
 
 enum : uint
 {
-    NELOG_RplInitDatabase           = 0x00001686,
-    NELOG_RplRestoreDatabaseFailure = 0x00001687,
-    NELOG_RplRestoreDatabaseSuccess = 0x00001688,
+    NELOG_RplInitDatabase           = 0x00001686U,
+    NELOG_RplRestoreDatabaseFailure = 0x00001687U,
+    NELOG_RplRestoreDatabaseSuccess = 0x00001688U,
 }
 
-enum uint NELOG_RplInitRestoredDatabase = 0x00001689;
-enum uint NELOG_NetlogonSessionTypeWrong = 0x0000168a;
-enum uint NELOG_RplUpgradeDBTo40 = 0x0000168b;
+enum uint NELOG_RplInitRestoredDatabase = 0x00001689U;
+enum uint NELOG_NetlogonSessionTypeWrong = 0x0000168aU;
+enum uint NELOG_RplUpgradeDBTo40 = 0x0000168bU;
 
 enum : uint
 {
-    NELOG_NetlogonLanmanBdcsNotAllowed        = 0x0000168c,
-    NELOG_NetlogonNoDynamicDns                = 0x0000168d,
-    NELOG_NetlogonDynamicDnsRegisterFailure   = 0x0000168e,
-    NELOG_NetlogonDynamicDnsDeregisterFailure = 0x0000168f,
+    NELOG_NetlogonLanmanBdcsNotAllowed        = 0x0000168cU,
+    NELOG_NetlogonNoDynamicDns                = 0x0000168dU,
+    NELOG_NetlogonDynamicDnsRegisterFailure   = 0x0000168eU,
+    NELOG_NetlogonDynamicDnsDeregisterFailure = 0x0000168fU,
 }
 
 enum : uint
 {
-    NELOG_NetlogonFailedFileCreate        = 0x00001690,
-    NELOG_NetlogonGetSubnetToSite         = 0x00001691,
-    NELOG_NetlogonNoSiteForClient         = 0x00001692,
-    NELOG_NetlogonBadSiteName             = 0x00001693,
-    NELOG_NetlogonBadSubnetName           = 0x00001694,
-    NELOG_NetlogonDynamicDnsServerFailure = 0x00001695,
-    NELOG_NetlogonDynamicDnsFailure       = 0x00001696,
-    NELOG_NetlogonRpcCallCancelled        = 0x00001697,
-    NELOG_NetlogonDcSiteCovered           = 0x00001698,
-    NELOG_NetlogonDcSiteNotCovered        = 0x00001699,
-    NELOG_NetlogonGcSiteCovered           = 0x0000169a,
-    NELOG_NetlogonGcSiteNotCovered        = 0x0000169b,
-    NELOG_NetlogonFailedSpnUpdate         = 0x0000169c,
-    NELOG_NetlogonFailedDnsHostNameUpdate = 0x0000169d,
+    NELOG_NetlogonFailedFileCreate        = 0x00001690U,
+    NELOG_NetlogonGetSubnetToSite         = 0x00001691U,
+    NELOG_NetlogonNoSiteForClient         = 0x00001692U,
+    NELOG_NetlogonBadSiteName             = 0x00001693U,
+    NELOG_NetlogonBadSubnetName           = 0x00001694U,
+    NELOG_NetlogonDynamicDnsServerFailure = 0x00001695U,
+    NELOG_NetlogonDynamicDnsFailure       = 0x00001696U,
+    NELOG_NetlogonRpcCallCancelled        = 0x00001697U,
+    NELOG_NetlogonDcSiteCovered           = 0x00001698U,
+    NELOG_NetlogonDcSiteNotCovered        = 0x00001699U,
+    NELOG_NetlogonGcSiteCovered           = 0x0000169aU,
+    NELOG_NetlogonGcSiteNotCovered        = 0x0000169bU,
+    NELOG_NetlogonFailedSpnUpdate         = 0x0000169cU,
+    NELOG_NetlogonFailedDnsHostNameUpdate = 0x0000169dU,
 }
 
 enum : uint
 {
-    NELOG_NetlogonAuthNoUplevelDomainController = 0x0000169e,
-    NELOG_NetlogonAuthDomainDowngraded          = 0x0000169f,
-    NELOG_NetlogonNdncSiteCovered               = 0x000016a0,
-    NELOG_NetlogonNdncSiteNotCovered            = 0x000016a1,
-    NELOG_NetlogonDcOldSiteCovered              = 0x000016a2,
-    NELOG_NetlogonDcSiteNotCoveredAuto          = 0x000016a3,
-    NELOG_NetlogonGcOldSiteCovered              = 0x000016a4,
-    NELOG_NetlogonGcSiteNotCoveredAuto          = 0x000016a5,
-    NELOG_NetlogonNdncOldSiteCovered            = 0x000016a6,
-    NELOG_NetlogonNdncSiteNotCoveredAuto        = 0x000016a7,
+    NELOG_NetlogonAuthNoUplevelDomainController = 0x0000169eU,
+    NELOG_NetlogonAuthDomainDowngraded          = 0x0000169fU,
+    NELOG_NetlogonNdncSiteCovered               = 0x000016a0U,
+    NELOG_NetlogonNdncSiteNotCovered            = 0x000016a1U,
+    NELOG_NetlogonDcOldSiteCovered              = 0x000016a2U,
+    NELOG_NetlogonDcSiteNotCoveredAuto          = 0x000016a3U,
+    NELOG_NetlogonGcOldSiteCovered              = 0x000016a4U,
+    NELOG_NetlogonGcSiteNotCoveredAuto          = 0x000016a5U,
+    NELOG_NetlogonNdncOldSiteCovered            = 0x000016a6U,
+    NELOG_NetlogonNdncSiteNotCoveredAuto        = 0x000016a7U,
 }
 
 enum : uint
 {
-    NELOG_NetlogonSpnMultipleSamAccountNames = 0x000016a8,
-    NELOG_NetlogonSpnCrackNamesFailure       = 0x000016a9,
-    NELOG_NetlogonNoAddressToSiteMapping     = 0x000016aa,
+    NELOG_NetlogonSpnMultipleSamAccountNames = 0x000016a8U,
+    NELOG_NetlogonSpnCrackNamesFailure       = 0x000016a9U,
+    NELOG_NetlogonNoAddressToSiteMapping     = 0x000016aaU,
 }
 
 enum : uint
 {
-    NELOG_NetlogonInvalidGenericParameterValue = 0x000016ab,
-    NELOG_NetlogonInvalidDwordParameterValue   = 0x000016ac,
+    NELOG_NetlogonInvalidGenericParameterValue = 0x000016abU,
+    NELOG_NetlogonInvalidDwordParameterValue   = 0x000016acU,
 }
 
-enum uint NELOG_NetlogonServerAuthFailedNoAccount = 0x000016ad;
+enum uint NELOG_NetlogonServerAuthFailedNoAccount = 0x000016adU;
 
 enum : uint
 {
-    NELOG_NetlogonNoDynamicDnsManual    = 0x000016ae,
-    NELOG_NetlogonNoSiteForClients      = 0x000016af,
-    NELOG_NetlogonDnsDeregAborted       = 0x000016b0,
-    NELOG_NetlogonRpcPortRequestFailure = 0x000016b1,
+    NELOG_NetlogonNoDynamicDnsManual    = 0x000016aeU,
+    NELOG_NetlogonNoSiteForClients      = 0x000016afU,
+    NELOG_NetlogonDnsDeregAborted       = 0x000016b0U,
+    NELOG_NetlogonRpcPortRequestFailure = 0x000016b1U,
 }
 
-enum uint NELOG_NetlogonPartialSiteMappingForClients = 0x000016b2;
+enum uint NELOG_NetlogonPartialSiteMappingForClients = 0x000016b2U;
 
 enum : uint
 {
-    NELOG_NetlogonRemoteDynamicDnsRegisterFailure   = 0x000016b3,
-    NELOG_NetlogonRemoteDynamicDnsDeregisterFailure = 0x000016b4,
+    NELOG_NetlogonRemoteDynamicDnsRegisterFailure   = 0x000016b3U,
+    NELOG_NetlogonRemoteDynamicDnsDeregisterFailure = 0x000016b4U,
 }
 
 enum : uint
 {
-    NELOG_NetlogonRejectedRemoteDynamicDnsRegister   = 0x000016b5,
-    NELOG_NetlogonRejectedRemoteDynamicDnsDeregister = 0x000016b6,
+    NELOG_NetlogonRejectedRemoteDynamicDnsRegister   = 0x000016b5U,
+    NELOG_NetlogonRejectedRemoteDynamicDnsDeregister = 0x000016b6U,
 }
 
-enum uint NELOG_NetlogonRemoteDynamicDnsUpdateRequestFailure = 0x000016b7;
+enum uint NELOG_NetlogonRemoteDynamicDnsUpdateRequestFailure = 0x000016b7U;
 
 enum : uint
 {
-    NELOG_NetlogonUserValidationReqInitialTimeOut       = 0x000016b8,
-    NELOG_NetlogonUserValidationReqRecurringTimeOut     = 0x000016b9,
-    NELOG_NetlogonUserValidationReqWaitInitialWarning   = 0x000016ba,
-    NELOG_NetlogonUserValidationReqWaitRecurringWarning = 0x000016bb,
+    NELOG_NetlogonUserValidationReqInitialTimeOut       = 0x000016b8U,
+    NELOG_NetlogonUserValidationReqRecurringTimeOut     = 0x000016b9U,
+    NELOG_NetlogonUserValidationReqWaitInitialWarning   = 0x000016baU,
+    NELOG_NetlogonUserValidationReqWaitRecurringWarning = 0x000016bbU,
 }
 
-enum uint NELOG_NetlogonFailedToAddAuthzRpcInterface = 0x000016bc;
+enum uint NELOG_NetlogonFailedToAddAuthzRpcInterface = 0x000016bcU;
 
 enum : uint
 {
-    NELOG_NetLogonFailedToInitializeAuthzRm = 0x000016bd,
-    NELOG_NetLogonFailedToInitializeRPCSD   = 0x000016be,
+    NELOG_NetLogonFailedToInitializeAuthzRm = 0x000016bdU,
+    NELOG_NetLogonFailedToInitializeRPCSD   = 0x000016beU,
 }
 
-enum uint NELOG_NetlogonMachinePasswdSetSucceeded = 0x000016bf;
-enum uint NELOG_NetlogonMsaPasswdSetSucceeded = 0x000016c0;
-enum uint NELOG_NetlogonDnsHostNameLowerCasingFailed = 0x000016c1;
-enum uint NETLOG_NetlogonNonWindowsSupportsSecureRpc = 0x000016c2;
+enum uint NELOG_NetlogonMachinePasswdSetSucceeded = 0x000016bfU;
+enum uint NELOG_NetlogonMsaPasswdSetSucceeded = 0x000016c0U;
+enum uint NELOG_NetlogonDnsHostNameLowerCasingFailed = 0x000016c1U;
+enum uint NETLOG_NetlogonNonWindowsSupportsSecureRpc = 0x000016c2U;
 
 enum : uint
 {
-    NETLOG_NetlogonUnsecureRpcClient                     = 0x000016c3,
-    NETLOG_NetlogonUnsecureRpcTrust                      = 0x000016c4,
-    NETLOG_NetlogonUnsecuredRpcMachineTemporarilyAllowed = 0x000016c5,
-    NETLOG_NetlogonUnsecureRpcMachineAllowedBySsdl       = 0x000016c6,
-    NETLOG_NetlogonUnsecureRpcTrustAllowedBySsdl         = 0x000016c7,
+    NETLOG_NetlogonUnsecureRpcClient                     = 0x000016c3U,
+    NETLOG_NetlogonUnsecureRpcTrust                      = 0x000016c4U,
+    NETLOG_NetlogonUnsecuredRpcMachineTemporarilyAllowed = 0x000016c5U,
+    NETLOG_NetlogonUnsecureRpcMachineAllowedBySsdl       = 0x000016c6U,
+    NETLOG_NetlogonUnsecureRpcTrustAllowedBySsdl         = 0x000016c7U,
 }
 
 enum : uint
 {
-    NETLOG_PassThruFilterError_Summary_AdminOverride = 0x000016c8,
-    NETLOG_PassThruFilterError_Summary_Blocked       = 0x000016c9,
-    NETLOG_PassThruFilterError_Request_AdminOverride = 0x000016ca,
-    NETLOG_PassThruFilterError_Request_Blocked       = 0x000016cb,
+    NETLOG_PassThruFilterError_Summary_AdminOverride = 0x000016c8U,
+    NETLOG_PassThruFilterError_Summary_Blocked       = 0x000016c9U,
+    NETLOG_PassThruFilterError_Request_AdminOverride = 0x000016caU,
+    NETLOG_PassThruFilterError_Request_Blocked       = 0x000016cbU,
 }
 
 enum : uint
 {
-    NETLOG_NetlogonRpcBacklogLimitSet     = 0x000016cc,
-    NETLOG_NetlogonRpcBacklogLimitFailure = 0x000016cd,
+    NETLOG_NetlogonRpcBacklogLimitSet     = 0x000016ccU,
+    NETLOG_NetlogonRpcBacklogLimitFailure = 0x000016cdU,
 }
 
 enum : uint
 {
-    NETSETUP_ACCT_DELETE           = 0x00000004,
-    NETSETUP_DNS_NAME_CHANGES_ONLY = 0x00001000,
+    NETSETUP_ACCT_DELETE           = 0x00000004U,
+    NETSETUP_DNS_NAME_CHANGES_ONLY = 0x00001000U,
 }
 
-enum uint NETSETUP_INSTALL_INVOCATION = 0x00040000;
-enum uint NETSETUP_ALT_SAMACCOUNTNAME = 0x00020000;
-enum uint NET_IGNORE_UNSUPPORTED_FLAGS = 0x00000001;
+enum uint NETSETUP_INSTALL_INVOCATION = 0x00040000U;
+enum uint NETSETUP_ALT_SAMACCOUNTNAME = 0x00020000U;
+enum uint NET_IGNORE_UNSUPPORTED_FLAGS = 0x00000001U;
 
 enum : uint
 {
-    NETSETUP_PROVISION_PERSISTENTSITE            = 0x00000020,
-    NETSETUP_PROVISION_CHECK_PWD_ONLY            = 0x80000000,
-    NETSETUP_PROVISIONING_PARAMS_WIN8_VERSION    = 0x00000001,
-    NETSETUP_PROVISIONING_PARAMS_CURRENT_VERSION = 0x00000002,
+    NETSETUP_PROVISION_PERSISTENTSITE            = 0x00000020U,
+    NETSETUP_PROVISION_CHECK_PWD_ONLY            = 0x80000000U,
+    NETSETUP_PROVISIONING_PARAMS_WIN8_VERSION    = 0x00000001U,
+    NETSETUP_PROVISIONING_PARAMS_CURRENT_VERSION = 0x00000002U,
 }
 
-enum uint MSGNAME_NOT_FORWARDED = 0x00000000;
+enum uint MSGNAME_NOT_FORWARDED = 0x00000000U;
 
 enum : uint
 {
-    MSGNAME_FORWARDED_TO   = 0x00000004,
-    MSGNAME_FORWARDED_FROM = 0x00000010,
+    MSGNAME_FORWARDED_TO   = 0x00000004U,
+    MSGNAME_FORWARDED_FROM = 0x00000010U,
 }
 
 enum int SUPPORTS_ANY = 0xffffffff;
-enum uint NO_PERMISSION_REQUIRED = 0x00000001;
-enum uint ALLOCATE_RESPONSE = 0x00000002;
-enum uint USE_SPECIFIC_TRANSPORT = 0x80000000;
+enum uint NO_PERMISSION_REQUIRED = 0x00000001U;
+enum uint ALLOCATE_RESPONSE = 0x00000002U;
+enum uint USE_SPECIFIC_TRANSPORT = 0x80000000U;
 
 enum : uint
 {
-    SV_PLATFORM_ID_OS2 = 0x00000190,
-    SV_PLATFORM_ID_NT  = 0x000001f4,
+    SV_PLATFORM_ID_OS2 = 0x00000190U,
+    SV_PLATFORM_ID_NT  = 0x000001f4U,
 }
 
-enum uint MAJOR_VERSION_MASK = 0x0000000f;
+enum uint MAJOR_VERSION_MASK = 0x0000000fU;
 enum int SV_NODISC = 0xffffffff;
-enum uint SV_PLATFORM_ID_PARMNUM = 0x00000065;
-enum uint SV_NAME_PARMNUM = 0x00000066;
+enum uint SV_PLATFORM_ID_PARMNUM = 0x00000065U;
+enum uint SV_NAME_PARMNUM = 0x00000066U;
 
 enum : uint
 {
-    SV_VERSION_MAJOR_PARMNUM = 0x00000067,
-    SV_VERSION_MINOR_PARMNUM = 0x00000068,
+    SV_VERSION_MAJOR_PARMNUM = 0x00000067U,
+    SV_VERSION_MINOR_PARMNUM = 0x00000068U,
 }
 
-enum uint SV_TYPE_PARMNUM = 0x00000069;
-enum uint SV_COMMENT_PARMNUM = 0x00000005;
-enum uint SV_USERS_PARMNUM = 0x0000006b;
-enum uint SV_DISC_PARMNUM = 0x0000000a;
-enum uint SV_HIDDEN_PARMNUM = 0x00000010;
-enum uint SV_ANNOUNCE_PARMNUM = 0x00000011;
-enum uint SV_ANNDELTA_PARMNUM = 0x00000012;
-enum uint SV_USERPATH_PARMNUM = 0x00000070;
-enum uint SV_ULIST_MTIME_PARMNUM = 0x00000191;
-enum uint SV_GLIST_MTIME_PARMNUM = 0x00000192;
-enum uint SV_ALIST_MTIME_PARMNUM = 0x00000193;
-enum uint SV_ALERTS_PARMNUM = 0x0000000b;
-enum uint SV_SECURITY_PARMNUM = 0x00000195;
-enum uint SV_NUMADMIN_PARMNUM = 0x00000196;
-enum uint SV_LANMASK_PARMNUM = 0x00000197;
-enum uint SV_GUESTACC_PARMNUM = 0x00000198;
+enum uint SV_TYPE_PARMNUM = 0x00000069U;
+enum uint SV_COMMENT_PARMNUM = 0x00000005U;
+enum uint SV_USERS_PARMNUM = 0x0000006bU;
+enum uint SV_DISC_PARMNUM = 0x0000000aU;
+enum uint SV_HIDDEN_PARMNUM = 0x00000010U;
+enum uint SV_ANNOUNCE_PARMNUM = 0x00000011U;
+enum uint SV_ANNDELTA_PARMNUM = 0x00000012U;
+enum uint SV_USERPATH_PARMNUM = 0x00000070U;
+enum uint SV_ULIST_MTIME_PARMNUM = 0x00000191U;
+enum uint SV_GLIST_MTIME_PARMNUM = 0x00000192U;
+enum uint SV_ALIST_MTIME_PARMNUM = 0x00000193U;
+enum uint SV_ALERTS_PARMNUM = 0x0000000bU;
+enum uint SV_SECURITY_PARMNUM = 0x00000195U;
+enum uint SV_NUMADMIN_PARMNUM = 0x00000196U;
+enum uint SV_LANMASK_PARMNUM = 0x00000197U;
+enum uint SV_GUESTACC_PARMNUM = 0x00000198U;
 
 enum : uint
 {
-    SV_CHDEVQ_PARMNUM    = 0x0000019a,
-    SV_CHDEVJOBS_PARMNUM = 0x0000019b,
+    SV_CHDEVQ_PARMNUM    = 0x0000019aU,
+    SV_CHDEVJOBS_PARMNUM = 0x0000019bU,
 }
 
-enum uint SV_CONNECTIONS_PARMNUM = 0x0000019c;
-enum uint SV_SHARES_PARMNUM = 0x0000019d;
-enum uint SV_OPENFILES_PARMNUM = 0x0000019e;
-enum uint SV_SESSREQS_PARMNUM = 0x000001a1;
-enum uint SV_ACTIVELOCKS_PARMNUM = 0x000001a3;
-enum uint SV_NUMREQBUF_PARMNUM = 0x000001a4;
-enum uint SV_NUMBIGBUF_PARMNUM = 0x000001a6;
-enum uint SV_NUMFILETASKS_PARMNUM = 0x000001a7;
-enum uint SV_ALERTSCHED_PARMNUM = 0x00000025;
-enum uint SV_ERRORALERT_PARMNUM = 0x00000026;
-enum uint SV_LOGONALERT_PARMNUM = 0x00000027;
-enum uint SV_ACCESSALERT_PARMNUM = 0x00000028;
-enum uint SV_DISKALERT_PARMNUM = 0x00000029;
-enum uint SV_NETIOALERT_PARMNUM = 0x0000002a;
-enum uint SV_MAXAUDITSZ_PARMNUM = 0x0000002b;
-enum uint SV_SRVHEURISTICS_PARMNUM = 0x000001af;
-enum uint SV_SESSOPENS_PARMNUM = 0x000001f5;
-enum uint SV_SESSVCS_PARMNUM = 0x000001f6;
-enum uint SV_OPENSEARCH_PARMNUM = 0x000001f7;
-enum uint SV_SIZREQBUF_PARMNUM = 0x000001f8;
-enum uint SV_INITWORKITEMS_PARMNUM = 0x000001f9;
-enum uint SV_MAXWORKITEMS_PARMNUM = 0x000001fa;
-enum uint SV_RAWWORKITEMS_PARMNUM = 0x000001fb;
-enum uint SV_IRPSTACKSIZE_PARMNUM = 0x000001fc;
-enum uint SV_MAXRAWBUFLEN_PARMNUM = 0x000001fd;
-enum uint SV_SESSUSERS_PARMNUM = 0x000001fe;
-enum uint SV_SESSCONNS_PARMNUM = 0x000001ff;
-enum uint SV_MAXNONPAGEDMEMORYUSAGE_PARMNUM = 0x00000200;
-enum uint SV_MAXPAGEDMEMORYUSAGE_PARMNUM = 0x00000201;
-enum uint SV_ENABLESOFTCOMPAT_PARMNUM = 0x00000202;
-enum uint SV_ENABLEFORCEDLOGOFF_PARMNUM = 0x00000203;
-enum uint SV_TIMESOURCE_PARMNUM = 0x00000204;
-enum uint SV_ACCEPTDOWNLEVELAPIS_PARMNUM = 0x00000205;
-enum uint SV_LMANNOUNCE_PARMNUM = 0x00000206;
-enum uint SV_DOMAIN_PARMNUM = 0x00000207;
-enum uint SV_MAXCOPYREADLEN_PARMNUM = 0x00000208;
-enum uint SV_MAXCOPYWRITELEN_PARMNUM = 0x00000209;
-enum uint SV_MINKEEPSEARCH_PARMNUM = 0x0000020a;
-enum uint SV_MAXKEEPSEARCH_PARMNUM = 0x0000020b;
-enum uint SV_MINKEEPCOMPLSEARCH_PARMNUM = 0x0000020c;
-enum uint SV_MAXKEEPCOMPLSEARCH_PARMNUM = 0x0000020d;
-enum uint SV_THREADCOUNTADD_PARMNUM = 0x0000020e;
-enum uint SV_NUMBLOCKTHREADS_PARMNUM = 0x0000020f;
-enum uint SV_SCAVTIMEOUT_PARMNUM = 0x00000210;
-enum uint SV_MINRCVQUEUE_PARMNUM = 0x00000211;
-enum uint SV_MINFREEWORKITEMS_PARMNUM = 0x00000212;
-enum uint SV_XACTMEMSIZE_PARMNUM = 0x00000213;
-enum uint SV_THREADPRIORITY_PARMNUM = 0x00000214;
-enum uint SV_MAXMPXCT_PARMNUM = 0x00000215;
+enum uint SV_CONNECTIONS_PARMNUM = 0x0000019cU;
+enum uint SV_SHARES_PARMNUM = 0x0000019dU;
+enum uint SV_OPENFILES_PARMNUM = 0x0000019eU;
+enum uint SV_SESSREQS_PARMNUM = 0x000001a1U;
+enum uint SV_ACTIVELOCKS_PARMNUM = 0x000001a3U;
+enum uint SV_NUMREQBUF_PARMNUM = 0x000001a4U;
+enum uint SV_NUMBIGBUF_PARMNUM = 0x000001a6U;
+enum uint SV_NUMFILETASKS_PARMNUM = 0x000001a7U;
+enum uint SV_ALERTSCHED_PARMNUM = 0x00000025U;
+enum uint SV_ERRORALERT_PARMNUM = 0x00000026U;
+enum uint SV_LOGONALERT_PARMNUM = 0x00000027U;
+enum uint SV_ACCESSALERT_PARMNUM = 0x00000028U;
+enum uint SV_DISKALERT_PARMNUM = 0x00000029U;
+enum uint SV_NETIOALERT_PARMNUM = 0x0000002aU;
+enum uint SV_MAXAUDITSZ_PARMNUM = 0x0000002bU;
+enum uint SV_SRVHEURISTICS_PARMNUM = 0x000001afU;
+enum uint SV_SESSOPENS_PARMNUM = 0x000001f5U;
+enum uint SV_SESSVCS_PARMNUM = 0x000001f6U;
+enum uint SV_OPENSEARCH_PARMNUM = 0x000001f7U;
+enum uint SV_SIZREQBUF_PARMNUM = 0x000001f8U;
+enum uint SV_INITWORKITEMS_PARMNUM = 0x000001f9U;
+enum uint SV_MAXWORKITEMS_PARMNUM = 0x000001faU;
+enum uint SV_RAWWORKITEMS_PARMNUM = 0x000001fbU;
+enum uint SV_IRPSTACKSIZE_PARMNUM = 0x000001fcU;
+enum uint SV_MAXRAWBUFLEN_PARMNUM = 0x000001fdU;
+enum uint SV_SESSUSERS_PARMNUM = 0x000001feU;
+enum uint SV_SESSCONNS_PARMNUM = 0x000001ffU;
+enum uint SV_MAXNONPAGEDMEMORYUSAGE_PARMNUM = 0x00000200U;
+enum uint SV_MAXPAGEDMEMORYUSAGE_PARMNUM = 0x00000201U;
+enum uint SV_ENABLESOFTCOMPAT_PARMNUM = 0x00000202U;
+enum uint SV_ENABLEFORCEDLOGOFF_PARMNUM = 0x00000203U;
+enum uint SV_TIMESOURCE_PARMNUM = 0x00000204U;
+enum uint SV_ACCEPTDOWNLEVELAPIS_PARMNUM = 0x00000205U;
+enum uint SV_LMANNOUNCE_PARMNUM = 0x00000206U;
+enum uint SV_DOMAIN_PARMNUM = 0x00000207U;
+enum uint SV_MAXCOPYREADLEN_PARMNUM = 0x00000208U;
+enum uint SV_MAXCOPYWRITELEN_PARMNUM = 0x00000209U;
+enum uint SV_MINKEEPSEARCH_PARMNUM = 0x0000020aU;
+enum uint SV_MAXKEEPSEARCH_PARMNUM = 0x0000020bU;
+enum uint SV_MINKEEPCOMPLSEARCH_PARMNUM = 0x0000020cU;
+enum uint SV_MAXKEEPCOMPLSEARCH_PARMNUM = 0x0000020dU;
+enum uint SV_THREADCOUNTADD_PARMNUM = 0x0000020eU;
+enum uint SV_NUMBLOCKTHREADS_PARMNUM = 0x0000020fU;
+enum uint SV_SCAVTIMEOUT_PARMNUM = 0x00000210U;
+enum uint SV_MINRCVQUEUE_PARMNUM = 0x00000211U;
+enum uint SV_MINFREEWORKITEMS_PARMNUM = 0x00000212U;
+enum uint SV_XACTMEMSIZE_PARMNUM = 0x00000213U;
+enum uint SV_THREADPRIORITY_PARMNUM = 0x00000214U;
+enum uint SV_MAXMPXCT_PARMNUM = 0x00000215U;
 
 enum : uint
 {
-    SV_OPLOCKBREAKWAIT_PARMNUM         = 0x00000216,
-    SV_OPLOCKBREAKRESPONSEWAIT_PARMNUM = 0x00000217,
-}
-
-enum : uint
-{
-    SV_ENABLEOPLOCKS_PARMNUM          = 0x00000218,
-    SV_ENABLEOPLOCKFORCECLOSE_PARMNUM = 0x00000219,
-}
-
-enum uint SV_ENABLEFCBOPENS_PARMNUM = 0x0000021a;
-
-enum : uint
-{
-    SV_ENABLERAW_PARMNUM             = 0x0000021b,
-    SV_ENABLESHAREDNETDRIVES_PARMNUM = 0x0000021c,
-}
-
-enum uint SV_MINFREECONNECTIONS_PARMNUM = 0x0000021d;
-enum uint SV_MAXFREECONNECTIONS_PARMNUM = 0x0000021e;
-enum uint SV_INITSESSTABLE_PARMNUM = 0x0000021f;
-enum uint SV_INITCONNTABLE_PARMNUM = 0x00000220;
-enum uint SV_INITFILETABLE_PARMNUM = 0x00000221;
-enum uint SV_INITSEARCHTABLE_PARMNUM = 0x00000222;
-enum uint SV_ALERTSCHEDULE_PARMNUM = 0x00000223;
-enum uint SV_ERRORTHRESHOLD_PARMNUM = 0x00000224;
-enum uint SV_NETWORKERRORTHRESHOLD_PARMNUM = 0x00000225;
-enum uint SV_DISKSPACETHRESHOLD_PARMNUM = 0x00000226;
-enum uint SV_MAXLINKDELAY_PARMNUM = 0x00000228;
-enum uint SV_MINLINKTHROUGHPUT_PARMNUM = 0x00000229;
-enum uint SV_LINKINFOVALIDTIME_PARMNUM = 0x0000022a;
-enum uint SV_SCAVQOSINFOUPDATETIME_PARMNUM = 0x0000022b;
-enum uint SV_MAXWORKITEMIDLETIME_PARMNUM = 0x0000022c;
-enum uint SV_MAXRAWWORKITEMS_PARMNUM = 0x0000022d;
-enum uint SV_PRODUCTTYPE_PARMNUM = 0x00000230;
-enum uint SV_SERVERSIZE_PARMNUM = 0x00000231;
-enum uint SV_CONNECTIONLESSAUTODISC_PARMNUM = 0x00000232;
-
-enum : uint
-{
-    SV_SHARINGVIOLATIONRETRIES_PARMNUM = 0x00000233,
-    SV_SHARINGVIOLATIONDELAY_PARMNUM   = 0x00000234,
-}
-
-enum uint SV_MAXGLOBALOPENSEARCH_PARMNUM = 0x00000235;
-enum uint SV_REMOVEDUPLICATESEARCHES_PARMNUM = 0x00000236;
-
-enum : uint
-{
-    SV_LOCKVIOLATIONRETRIES_PARMNUM = 0x00000237,
-    SV_LOCKVIOLATIONOFFSET_PARMNUM  = 0x00000238,
-    SV_LOCKVIOLATIONDELAY_PARMNUM   = 0x00000239,
-}
-
-enum uint SV_MDLREADSWITCHOVER_PARMNUM = 0x0000023a;
-enum uint SV_CACHEDOPENLIMIT_PARMNUM = 0x0000023b;
-enum uint SV_CRITICALTHREADS_PARMNUM = 0x0000023c;
-enum uint SV_RESTRICTNULLSESSACCESS_PARMNUM = 0x0000023d;
-enum uint SV_ENABLEWFW311DIRECTIPX_PARMNUM = 0x0000023e;
-enum uint SV_OTHERQUEUEAFFINITY_PARMNUM = 0x0000023f;
-enum uint SV_QUEUESAMPLESECS_PARMNUM = 0x00000240;
-enum uint SV_BALANCECOUNT_PARMNUM = 0x00000241;
-enum uint SV_PREFERREDAFFINITY_PARMNUM = 0x00000242;
-
-enum : uint
-{
-    SV_MAXFREERFCBS_PARMNUM           = 0x00000243,
-    SV_MAXFREEMFCBS_PARMNUM           = 0x00000244,
-    SV_MAXFREELFCBS_PARMNUM           = 0x00000245,
-    SV_MAXFREEPAGEDPOOLCHUNKS_PARMNUM = 0x00000246,
-}
-
-enum uint SV_MINPAGEDPOOLCHUNKSIZE_PARMNUM = 0x00000247;
-enum uint SV_MAXPAGEDPOOLCHUNKSIZE_PARMNUM = 0x00000248;
-enum uint SV_SENDSFROMPREFERREDPROCESSOR_PARMNUM = 0x00000249;
-enum uint SV_MAXTHREADSPERQUEUE_PARMNUM = 0x0000024a;
-enum uint SV_CACHEDDIRECTORYLIMIT_PARMNUM = 0x0000024b;
-enum uint SV_MAXCOPYLENGTH_PARMNUM = 0x0000024c;
-enum uint SV_ENABLECOMPRESSION_PARMNUM = 0x0000024e;
-
-enum : uint
-{
-    SV_AUTOSHAREWKS_PARMNUM    = 0x0000024f,
-    SV_AUTOSHARESERVER_PARMNUM = 0x00000250,
-}
-
-enum uint SV_ENABLESECURITYSIGNATURE_PARMNUM = 0x00000251;
-enum uint SV_REQUIRESECURITYSIGNATURE_PARMNUM = 0x00000252;
-enum uint SV_MINCLIENTBUFFERSIZE_PARMNUM = 0x00000253;
-enum uint SV_CONNECTIONNOSESSIONSTIMEOUT_PARMNUM = 0x00000254;
-enum uint SV_IDLETHREADTIMEOUT_PARMNUM = 0x00000255;
-enum uint SV_ENABLEW9XSECURITYSIGNATURE_PARMNUM = 0x00000256;
-enum uint SV_ENFORCEKERBEROSREAUTHENTICATION_PARMNUM = 0x00000257;
-enum uint SV_DISABLEDOS_PARMNUM = 0x00000258;
-enum uint SV_LOWDISKSPACEMINIMUM_PARMNUM = 0x00000259;
-enum uint SV_DISABLESTRICTNAMECHECKING_PARMNUM = 0x0000025a;
-enum uint SV_ENABLEAUTHENTICATEUSERSHARING_PARMNUM = 0x0000025b;
-enum uint SVI1_NUM_ELEMENTS = 0x00000005;
-enum uint SVI2_NUM_ELEMENTS = 0x00000028;
-enum uint SVI3_NUM_ELEMENTS = 0x0000002c;
-enum uint SV_MAX_CMD_LEN = 0x00000100;
-
-enum : uint
-{
-    SW_AUTOPROF_LOAD_MASK = 0x00000001,
-    SW_AUTOPROF_SAVE_MASK = 0x00000002,
-}
-
-enum uint SV_MAX_SRV_HEUR_LEN = 0x00000020;
-enum uint SV_USERS_PER_LICENSE = 0x00000005;
-enum uint SVTI2_REMAP_PIPE_NAMES = 0x00000002;
-enum uint SVTI2_SCOPED_NAME = 0x00000004;
-
-enum : uint
-{
-    SVTI2_CLUSTER_NAME     = 0x00000008,
-    SVTI2_CLUSTER_DNN_NAME = 0x00000010,
-}
-
-enum uint SVTI2_UNICODE_TRANSPORT_ADDRESS = 0x00000020;
-
-enum : uint
-{
-    SVTI2_RESERVED1 = 0x00001000,
-    SVTI2_RESERVED2 = 0x00002000,
-    SVTI2_RESERVED3 = 0x00004000,
-}
-
-enum uint SRV_SUPPORT_HASH_GENERATION = 0x00000001;
-enum uint SRV_HASH_GENERATION_ACTIVE = 0x00000002;
-enum uint SERVICE_INSTALL_STATE = 0x00000003;
-
-enum : uint
-{
-    SERVICE_UNINSTALLED     = 0x00000000,
-    SERVICE_INSTALL_PENDING = 0x00000001,
-}
-
-enum uint SERVICE_UNINSTALL_PENDING = 0x00000002;
-
-enum : uint
-{
-    SERVICE_INSTALLED   = 0x00000003,
-    SERVICE_PAUSE_STATE = 0x0000000c,
+    SV_OPLOCKBREAKWAIT_PARMNUM         = 0x00000216U,
+    SV_OPLOCKBREAKRESPONSEWAIT_PARMNUM = 0x00000217U,
 }
 
 enum : uint
 {
-    LM20_SERVICE_ACTIVE           = 0x00000000,
-    LM20_SERVICE_CONTINUE_PENDING = 0x00000004,
-    LM20_SERVICE_PAUSE_PENDING    = 0x00000008,
-    LM20_SERVICE_PAUSED           = 0x0000000c,
+    SV_ENABLEOPLOCKS_PARMNUM          = 0x00000218U,
+    SV_ENABLEOPLOCKFORCECLOSE_PARMNUM = 0x00000219U,
 }
 
-enum uint SERVICE_NOT_UNINSTALLABLE = 0x00000000;
-enum uint SERVICE_UNINSTALLABLE = 0x00000010;
-enum uint SERVICE_NOT_PAUSABLE = 0x00000000;
+enum uint SV_ENABLEFCBOPENS_PARMNUM = 0x0000021aU;
 
 enum : uint
 {
-    SERVICE_PAUSABLE           = 0x00000020,
-    SERVICE_REDIR_PAUSED       = 0x00000700,
-    SERVICE_REDIR_DISK_PAUSED  = 0x00000100,
-    SERVICE_REDIR_PRINT_PAUSED = 0x00000200,
-    SERVICE_REDIR_COMM_PAUSED  = 0x00000400,
+    SV_ENABLERAW_PARMNUM             = 0x0000021bU,
+    SV_ENABLESHAREDNETDRIVES_PARMNUM = 0x0000021cU,
+}
+
+enum uint SV_MINFREECONNECTIONS_PARMNUM = 0x0000021dU;
+enum uint SV_MAXFREECONNECTIONS_PARMNUM = 0x0000021eU;
+enum uint SV_INITSESSTABLE_PARMNUM = 0x0000021fU;
+enum uint SV_INITCONNTABLE_PARMNUM = 0x00000220U;
+enum uint SV_INITFILETABLE_PARMNUM = 0x00000221U;
+enum uint SV_INITSEARCHTABLE_PARMNUM = 0x00000222U;
+enum uint SV_ALERTSCHEDULE_PARMNUM = 0x00000223U;
+enum uint SV_ERRORTHRESHOLD_PARMNUM = 0x00000224U;
+enum uint SV_NETWORKERRORTHRESHOLD_PARMNUM = 0x00000225U;
+enum uint SV_DISKSPACETHRESHOLD_PARMNUM = 0x00000226U;
+enum uint SV_MAXLINKDELAY_PARMNUM = 0x00000228U;
+enum uint SV_MINLINKTHROUGHPUT_PARMNUM = 0x00000229U;
+enum uint SV_LINKINFOVALIDTIME_PARMNUM = 0x0000022aU;
+enum uint SV_SCAVQOSINFOUPDATETIME_PARMNUM = 0x0000022bU;
+enum uint SV_MAXWORKITEMIDLETIME_PARMNUM = 0x0000022cU;
+enum uint SV_MAXRAWWORKITEMS_PARMNUM = 0x0000022dU;
+enum uint SV_PRODUCTTYPE_PARMNUM = 0x00000230U;
+enum uint SV_SERVERSIZE_PARMNUM = 0x00000231U;
+enum uint SV_CONNECTIONLESSAUTODISC_PARMNUM = 0x00000232U;
+
+enum : uint
+{
+    SV_SHARINGVIOLATIONRETRIES_PARMNUM = 0x00000233U,
+    SV_SHARINGVIOLATIONDELAY_PARMNUM   = 0x00000234U,
+}
+
+enum uint SV_MAXGLOBALOPENSEARCH_PARMNUM = 0x00000235U;
+enum uint SV_REMOVEDUPLICATESEARCHES_PARMNUM = 0x00000236U;
+
+enum : uint
+{
+    SV_LOCKVIOLATIONRETRIES_PARMNUM = 0x00000237U,
+    SV_LOCKVIOLATIONOFFSET_PARMNUM  = 0x00000238U,
+    SV_LOCKVIOLATIONDELAY_PARMNUM   = 0x00000239U,
+}
+
+enum uint SV_MDLREADSWITCHOVER_PARMNUM = 0x0000023aU;
+enum uint SV_CACHEDOPENLIMIT_PARMNUM = 0x0000023bU;
+enum uint SV_CRITICALTHREADS_PARMNUM = 0x0000023cU;
+enum uint SV_RESTRICTNULLSESSACCESS_PARMNUM = 0x0000023dU;
+enum uint SV_ENABLEWFW311DIRECTIPX_PARMNUM = 0x0000023eU;
+enum uint SV_OTHERQUEUEAFFINITY_PARMNUM = 0x0000023fU;
+enum uint SV_QUEUESAMPLESECS_PARMNUM = 0x00000240U;
+enum uint SV_BALANCECOUNT_PARMNUM = 0x00000241U;
+enum uint SV_PREFERREDAFFINITY_PARMNUM = 0x00000242U;
+
+enum : uint
+{
+    SV_MAXFREERFCBS_PARMNUM           = 0x00000243U,
+    SV_MAXFREEMFCBS_PARMNUM           = 0x00000244U,
+    SV_MAXFREELFCBS_PARMNUM           = 0x00000245U,
+    SV_MAXFREEPAGEDPOOLCHUNKS_PARMNUM = 0x00000246U,
+}
+
+enum uint SV_MINPAGEDPOOLCHUNKSIZE_PARMNUM = 0x00000247U;
+enum uint SV_MAXPAGEDPOOLCHUNKSIZE_PARMNUM = 0x00000248U;
+enum uint SV_SENDSFROMPREFERREDPROCESSOR_PARMNUM = 0x00000249U;
+enum uint SV_MAXTHREADSPERQUEUE_PARMNUM = 0x0000024aU;
+enum uint SV_CACHEDDIRECTORYLIMIT_PARMNUM = 0x0000024bU;
+enum uint SV_MAXCOPYLENGTH_PARMNUM = 0x0000024cU;
+enum uint SV_ENABLECOMPRESSION_PARMNUM = 0x0000024eU;
+
+enum : uint
+{
+    SV_AUTOSHAREWKS_PARMNUM    = 0x0000024fU,
+    SV_AUTOSHARESERVER_PARMNUM = 0x00000250U,
+}
+
+enum uint SV_ENABLESECURITYSIGNATURE_PARMNUM = 0x00000251U;
+enum uint SV_REQUIRESECURITYSIGNATURE_PARMNUM = 0x00000252U;
+enum uint SV_MINCLIENTBUFFERSIZE_PARMNUM = 0x00000253U;
+enum uint SV_CONNECTIONNOSESSIONSTIMEOUT_PARMNUM = 0x00000254U;
+enum uint SV_IDLETHREADTIMEOUT_PARMNUM = 0x00000255U;
+enum uint SV_ENABLEW9XSECURITYSIGNATURE_PARMNUM = 0x00000256U;
+enum uint SV_ENFORCEKERBEROSREAUTHENTICATION_PARMNUM = 0x00000257U;
+enum uint SV_DISABLEDOS_PARMNUM = 0x00000258U;
+enum uint SV_LOWDISKSPACEMINIMUM_PARMNUM = 0x00000259U;
+enum uint SV_DISABLESTRICTNAMECHECKING_PARMNUM = 0x0000025aU;
+enum uint SV_ENABLEAUTHENTICATEUSERSHARING_PARMNUM = 0x0000025bU;
+enum uint SVI1_NUM_ELEMENTS = 0x00000005U;
+enum uint SVI2_NUM_ELEMENTS = 0x00000028U;
+enum uint SVI3_NUM_ELEMENTS = 0x0000002cU;
+enum uint SV_MAX_CMD_LEN = 0x00000100U;
+
+enum : uint
+{
+    SW_AUTOPROF_LOAD_MASK = 0x00000001U,
+    SW_AUTOPROF_SAVE_MASK = 0x00000002U,
+}
+
+enum uint SV_MAX_SRV_HEUR_LEN = 0x00000020U;
+enum uint SV_USERS_PER_LICENSE = 0x00000005U;
+enum uint SVTI2_REMAP_PIPE_NAMES = 0x00000002U;
+enum uint SVTI2_SCOPED_NAME = 0x00000004U;
+
+enum : uint
+{
+    SVTI2_CLUSTER_NAME     = 0x00000008U,
+    SVTI2_CLUSTER_DNN_NAME = 0x00000010U,
+}
+
+enum uint SVTI2_UNICODE_TRANSPORT_ADDRESS = 0x00000020U;
+
+enum : uint
+{
+    SVTI2_RESERVED1 = 0x00001000U,
+    SVTI2_RESERVED2 = 0x00002000U,
+    SVTI2_RESERVED3 = 0x00004000U,
+}
+
+enum uint SRV_SUPPORT_HASH_GENERATION = 0x00000001U;
+enum uint SRV_HASH_GENERATION_ACTIVE = 0x00000002U;
+enum uint SERVICE_INSTALL_STATE = 0x00000003U;
+
+enum : uint
+{
+    SERVICE_UNINSTALLED     = 0x00000000U,
+    SERVICE_INSTALL_PENDING = 0x00000001U,
+}
+
+enum uint SERVICE_UNINSTALL_PENDING = 0x00000002U;
+
+enum : uint
+{
+    SERVICE_INSTALLED   = 0x00000003U,
+    SERVICE_PAUSE_STATE = 0x0000000cU,
+}
+
+enum : uint
+{
+    LM20_SERVICE_ACTIVE           = 0x00000000U,
+    LM20_SERVICE_CONTINUE_PENDING = 0x00000004U,
+    LM20_SERVICE_PAUSE_PENDING    = 0x00000008U,
+    LM20_SERVICE_PAUSED           = 0x0000000cU,
+}
+
+enum uint SERVICE_NOT_UNINSTALLABLE = 0x00000000U;
+enum uint SERVICE_UNINSTALLABLE = 0x00000010U;
+enum uint SERVICE_NOT_PAUSABLE = 0x00000000U;
+
+enum : uint
+{
+    SERVICE_PAUSABLE           = 0x00000020U,
+    SERVICE_REDIR_PAUSED       = 0x00000700U,
+    SERVICE_REDIR_DISK_PAUSED  = 0x00000100U,
+    SERVICE_REDIR_PRINT_PAUSED = 0x00000200U,
+    SERVICE_REDIR_COMM_PAUSED  = 0x00000400U,
 }
 
 enum const(wchar)* SERVICE_DOS_ENCRYPTION = "ENCRYPT";
 
 enum : uint
 {
-    SERVICE_CTRL_INTERROGATE = 0x00000000,
-    SERVICE_CTRL_PAUSE       = 0x00000001,
-    SERVICE_CTRL_CONTINUE    = 0x00000002,
-    SERVICE_CTRL_UNINSTALL   = 0x00000003,
-    SERVICE_CTRL_REDIR_DISK  = 0x00000001,
-    SERVICE_CTRL_REDIR_PRINT = 0x00000002,
-    SERVICE_CTRL_REDIR_COMM  = 0x00000004,
+    SERVICE_CTRL_INTERROGATE = 0x00000000U,
+    SERVICE_CTRL_PAUSE       = 0x00000001U,
+    SERVICE_CTRL_CONTINUE    = 0x00000002U,
+    SERVICE_CTRL_UNINSTALL   = 0x00000003U,
+    SERVICE_CTRL_REDIR_DISK  = 0x00000001U,
+    SERVICE_CTRL_REDIR_PRINT = 0x00000002U,
+    SERVICE_CTRL_REDIR_COMM  = 0x00000004U,
 }
 
 enum : uint
 {
-    SERVICE_IP_NO_HINT    = 0x00000000,
-    SERVICE_CCP_NO_HINT   = 0x00000000,
-    SERVICE_IP_QUERY_HINT = 0x00010000,
+    SERVICE_IP_NO_HINT    = 0x00000000U,
+    SERVICE_CCP_NO_HINT   = 0x00000000U,
+    SERVICE_IP_QUERY_HINT = 0x00010000U,
 }
 
-enum uint SERVICE_CCP_QUERY_HINT = 0x00010000;
-enum uint SERVICE_IP_CHKPT_NUM = 0x000000ff;
-enum uint SERVICE_CCP_CHKPT_NUM = 0x000000ff;
-enum uint SERVICE_IP_WAIT_TIME = 0x0000ff00;
-enum uint SERVICE_CCP_WAIT_TIME = 0x0000ff00;
-enum uint SERVICE_IP_WAITTIME_SHIFT = 0x00000008;
-enum uint SERVICE_NTIP_WAITTIME_SHIFT = 0x0000000c;
-enum uint UPPER_HINT_MASK = 0x0000ff00;
-enum uint LOWER_HINT_MASK = 0x000000ff;
-enum uint UPPER_GET_HINT_MASK = 0x0ff00000;
-enum uint LOWER_GET_HINT_MASK = 0x0000ff00;
+enum uint SERVICE_CCP_QUERY_HINT = 0x00010000U;
+enum uint SERVICE_IP_CHKPT_NUM = 0x000000ffU;
+enum uint SERVICE_CCP_CHKPT_NUM = 0x000000ffU;
+enum uint SERVICE_IP_WAIT_TIME = 0x0000ff00U;
+enum uint SERVICE_CCP_WAIT_TIME = 0x0000ff00U;
+enum uint SERVICE_IP_WAITTIME_SHIFT = 0x00000008U;
+enum uint SERVICE_NTIP_WAITTIME_SHIFT = 0x0000000cU;
+enum uint UPPER_HINT_MASK = 0x0000ff00U;
+enum uint LOWER_HINT_MASK = 0x000000ffU;
+enum uint UPPER_GET_HINT_MASK = 0x0ff00000U;
+enum uint LOWER_GET_HINT_MASK = 0x0000ff00U;
 
 enum : uint
 {
-    SERVICE_NT_MAXTIME              = 0x0000ffff,
-    SERVICE_RESRV_MASK              = 0x0001ffff,
-    SERVICE_MAXTIME                 = 0x000000ff,
-    SERVICE_BASE                    = 0x00000bea,
-    SERVICE_UIC_NORMAL              = 0x00000000,
-    SERVICE_UIC_BADPARMVAL          = 0x00000beb,
-    SERVICE_UIC_MISSPARM            = 0x00000bec,
-    SERVICE_UIC_UNKPARM             = 0x00000bed,
-    SERVICE_UIC_RESOURCE            = 0x00000bee,
-    SERVICE_UIC_CONFIG              = 0x00000bef,
-    SERVICE_UIC_SYSTEM              = 0x00000bf0,
-    SERVICE_UIC_INTERNAL            = 0x00000bf1,
-    SERVICE_UIC_AMBIGPARM           = 0x00000bf2,
-    SERVICE_UIC_DUPPARM             = 0x00000bf3,
-    SERVICE_UIC_KILL                = 0x00000bf4,
-    SERVICE_UIC_EXEC                = 0x00000bf5,
-    SERVICE_UIC_SUBSERV             = 0x00000bf6,
-    SERVICE_UIC_CONFLPARM           = 0x00000bf7,
-    SERVICE_UIC_FILE                = 0x00000bf8,
-    SERVICE_UIC_M_NULL              = 0x00000000,
-    SERVICE_UIC_M_MEMORY            = 0x00000bfe,
-    SERVICE_UIC_M_DISK              = 0x00000bff,
-    SERVICE_UIC_M_THREADS           = 0x00000c00,
-    SERVICE_UIC_M_PROCESSES         = 0x00000c01,
-    SERVICE_UIC_M_SECURITY          = 0x00000c02,
-    SERVICE_UIC_M_LANROOT           = 0x00000c03,
-    SERVICE_UIC_M_REDIR             = 0x00000c04,
-    SERVICE_UIC_M_SERVER            = 0x00000c05,
-    SERVICE_UIC_M_SEC_FILE_ERR      = 0x00000c06,
-    SERVICE_UIC_M_FILES             = 0x00000c07,
-    SERVICE_UIC_M_LOGS              = 0x00000c08,
-    SERVICE_UIC_M_LANGROUP          = 0x00000c09,
-    SERVICE_UIC_M_MSGNAME           = 0x00000c0a,
-    SERVICE_UIC_M_ANNOUNCE          = 0x00000c0b,
-    SERVICE_UIC_M_UAS               = 0x00000c0c,
-    SERVICE_UIC_M_SERVER_SEC_ERR    = 0x00000c0d,
-    SERVICE_UIC_M_WKSTA             = 0x00000c0f,
-    SERVICE_UIC_M_ERRLOG            = 0x00000c10,
-    SERVICE_UIC_M_FILE_UW           = 0x00000c11,
-    SERVICE_UIC_M_ADDPAK            = 0x00000c12,
-    SERVICE_UIC_M_LAZY              = 0x00000c13,
-    SERVICE_UIC_M_UAS_MACHINE_ACCT  = 0x00000c14,
-    SERVICE_UIC_M_UAS_SERVERS_NMEMB = 0x00000c15,
-    SERVICE_UIC_M_UAS_SERVERS_NOGRP = 0x00000c16,
-    SERVICE_UIC_M_UAS_INVALID_ROLE  = 0x00000c17,
-    SERVICE_UIC_M_NETLOGON_NO_DC    = 0x00000c18,
-    SERVICE_UIC_M_NETLOGON_DC_CFLCT = 0x00000c19,
-    SERVICE_UIC_M_NETLOGON_AUTH     = 0x00000c1a,
-    SERVICE_UIC_M_UAS_PROLOG        = 0x00000c1b,
-}
-
-enum : uint
-{
-    SERVICE2_BASE                  = 0x000015e0,
-    SERVICE_UIC_M_NETLOGON_MPATH   = 0x000015e0,
-    SERVICE_UIC_M_LSA_MACHINE_ACCT = 0x000015e1,
-    SERVICE_UIC_M_DATABASE_ERROR   = 0x000015e2,
-}
-
-enum uint USE_FLAG_GLOBAL_MAPPING = 0x00010000;
-enum uint USE_LOCAL_PARMNUM = 0x00000001;
-enum uint USE_REMOTE_PARMNUM = 0x00000002;
-enum uint USE_PASSWORD_PARMNUM = 0x00000003;
-enum uint USE_ASGTYPE_PARMNUM = 0x00000004;
-enum uint USE_USERNAME_PARMNUM = 0x00000005;
-enum uint USE_DOMAINNAME_PARMNUM = 0x00000006;
-enum uint USE_FLAGS_PARMNUM = 0x00000007;
-enum uint USE_AUTHIDENTITY_PARMNUM = 0x00000008;
-enum uint USE_SD_PARMNUM = 0x00000009;
-enum uint USE_OPTIONS_PARMNUM = 0x0000000a;
-
-enum : uint
-{
-    USE_OK     = 0x00000000,
-    USE_PAUSED = 0x00000001,
-}
-
-enum uint USE_SESSLOST = 0x00000002;
-enum uint USE_DISCONN = 0x00000002;
-enum uint USE_NETERR = 0x00000003;
-
-enum : uint
-{
-    USE_CONN   = 0x00000004,
-    USE_RECONN = 0x00000005,
-}
-
-enum uint USE_CHARDEV = 0x00000002;
-
-enum : uint
-{
-    CREATE_NO_CONNECT = 0x00000001,
-    CREATE_BYPASS_CSC = 0x00000002,
-    CREATE_CRED_RESET = 0x00000004,
-}
-
-enum uint USE_DEFAULT_CREDENTIALS = 0x00000004;
-
-enum : uint
-{
-    CREATE_REQUIRE_CONNECTION_INTEGRITY = 0x00000008,
-    CREATE_REQUIRE_CONNECTION_PRIVACY   = 0x00000010,
-}
-
-enum uint CREATE_PERSIST_MAPPING = 0x00000020;
-enum uint CREATE_WRITE_THROUGH_SEMANTICS = 0x00000040;
-enum uint CREATE_GLOBAL_MAPPING = 0x00000100;
-enum uint WKSTA_PLATFORM_ID_PARMNUM = 0x00000064;
-enum uint WKSTA_COMPUTERNAME_PARMNUM = 0x00000001;
-enum uint WKSTA_LANGROUP_PARMNUM = 0x00000002;
-
-enum : uint
-{
-    WKSTA_VER_MAJOR_PARMNUM = 0x00000004,
-    WKSTA_VER_MINOR_PARMNUM = 0x00000005,
-}
-
-enum uint WKSTA_LOGGED_ON_USERS_PARMNUM = 0x00000006;
-enum uint WKSTA_LANROOT_PARMNUM = 0x00000007;
-
-enum : uint
-{
-    WKSTA_LOGON_DOMAIN_PARMNUM = 0x00000008,
-    WKSTA_LOGON_SERVER_PARMNUM = 0x00000009,
+    SERVICE_NT_MAXTIME              = 0x0000ffffU,
+    SERVICE_RESRV_MASK              = 0x0001ffffU,
+    SERVICE_MAXTIME                 = 0x000000ffU,
+    SERVICE_BASE                    = 0x00000beaU,
+    SERVICE_UIC_NORMAL              = 0x00000000U,
+    SERVICE_UIC_BADPARMVAL          = 0x00000bebU,
+    SERVICE_UIC_MISSPARM            = 0x00000becU,
+    SERVICE_UIC_UNKPARM             = 0x00000bedU,
+    SERVICE_UIC_RESOURCE            = 0x00000beeU,
+    SERVICE_UIC_CONFIG              = 0x00000befU,
+    SERVICE_UIC_SYSTEM              = 0x00000bf0U,
+    SERVICE_UIC_INTERNAL            = 0x00000bf1U,
+    SERVICE_UIC_AMBIGPARM           = 0x00000bf2U,
+    SERVICE_UIC_DUPPARM             = 0x00000bf3U,
+    SERVICE_UIC_KILL                = 0x00000bf4U,
+    SERVICE_UIC_EXEC                = 0x00000bf5U,
+    SERVICE_UIC_SUBSERV             = 0x00000bf6U,
+    SERVICE_UIC_CONFLPARM           = 0x00000bf7U,
+    SERVICE_UIC_FILE                = 0x00000bf8U,
+    SERVICE_UIC_M_NULL              = 0x00000000U,
+    SERVICE_UIC_M_MEMORY            = 0x00000bfeU,
+    SERVICE_UIC_M_DISK              = 0x00000bffU,
+    SERVICE_UIC_M_THREADS           = 0x00000c00U,
+    SERVICE_UIC_M_PROCESSES         = 0x00000c01U,
+    SERVICE_UIC_M_SECURITY          = 0x00000c02U,
+    SERVICE_UIC_M_LANROOT           = 0x00000c03U,
+    SERVICE_UIC_M_REDIR             = 0x00000c04U,
+    SERVICE_UIC_M_SERVER            = 0x00000c05U,
+    SERVICE_UIC_M_SEC_FILE_ERR      = 0x00000c06U,
+    SERVICE_UIC_M_FILES             = 0x00000c07U,
+    SERVICE_UIC_M_LOGS              = 0x00000c08U,
+    SERVICE_UIC_M_LANGROUP          = 0x00000c09U,
+    SERVICE_UIC_M_MSGNAME           = 0x00000c0aU,
+    SERVICE_UIC_M_ANNOUNCE          = 0x00000c0bU,
+    SERVICE_UIC_M_UAS               = 0x00000c0cU,
+    SERVICE_UIC_M_SERVER_SEC_ERR    = 0x00000c0dU,
+    SERVICE_UIC_M_WKSTA             = 0x00000c0fU,
+    SERVICE_UIC_M_ERRLOG            = 0x00000c10U,
+    SERVICE_UIC_M_FILE_UW           = 0x00000c11U,
+    SERVICE_UIC_M_ADDPAK            = 0x00000c12U,
+    SERVICE_UIC_M_LAZY              = 0x00000c13U,
+    SERVICE_UIC_M_UAS_MACHINE_ACCT  = 0x00000c14U,
+    SERVICE_UIC_M_UAS_SERVERS_NMEMB = 0x00000c15U,
+    SERVICE_UIC_M_UAS_SERVERS_NOGRP = 0x00000c16U,
+    SERVICE_UIC_M_UAS_INVALID_ROLE  = 0x00000c17U,
+    SERVICE_UIC_M_NETLOGON_NO_DC    = 0x00000c18U,
+    SERVICE_UIC_M_NETLOGON_DC_CFLCT = 0x00000c19U,
+    SERVICE_UIC_M_NETLOGON_AUTH     = 0x00000c1aU,
+    SERVICE_UIC_M_UAS_PROLOG        = 0x00000c1bU,
 }
 
 enum : uint
 {
-    WKSTA_CHARWAIT_PARMNUM  = 0x0000000a,
-    WKSTA_CHARTIME_PARMNUM  = 0x0000000b,
-    WKSTA_CHARCOUNT_PARMNUM = 0x0000000c,
+    SERVICE2_BASE                  = 0x000015e0U,
+    SERVICE_UIC_M_NETLOGON_MPATH   = 0x000015e0U,
+    SERVICE_UIC_M_LSA_MACHINE_ACCT = 0x000015e1U,
+    SERVICE_UIC_M_DATABASE_ERROR   = 0x000015e2U,
+}
+
+enum uint USE_FLAG_GLOBAL_MAPPING = 0x00010000U;
+enum uint USE_LOCAL_PARMNUM = 0x00000001U;
+enum uint USE_REMOTE_PARMNUM = 0x00000002U;
+enum uint USE_PASSWORD_PARMNUM = 0x00000003U;
+enum uint USE_ASGTYPE_PARMNUM = 0x00000004U;
+enum uint USE_USERNAME_PARMNUM = 0x00000005U;
+enum uint USE_DOMAINNAME_PARMNUM = 0x00000006U;
+enum uint USE_FLAGS_PARMNUM = 0x00000007U;
+enum uint USE_AUTHIDENTITY_PARMNUM = 0x00000008U;
+enum uint USE_SD_PARMNUM = 0x00000009U;
+enum uint USE_OPTIONS_PARMNUM = 0x0000000aU;
+
+enum : uint
+{
+    USE_OK     = 0x00000000U,
+    USE_PAUSED = 0x00000001U,
+}
+
+enum uint USE_SESSLOST = 0x00000002U;
+enum uint USE_DISCONN = 0x00000002U;
+enum uint USE_NETERR = 0x00000003U;
+
+enum : uint
+{
+    USE_CONN   = 0x00000004U,
+    USE_RECONN = 0x00000005U,
+}
+
+enum uint USE_CHARDEV = 0x00000002U;
+
+enum : uint
+{
+    CREATE_NO_CONNECT = 0x00000001U,
+    CREATE_BYPASS_CSC = 0x00000002U,
+    CREATE_CRED_RESET = 0x00000004U,
+}
+
+enum uint USE_DEFAULT_CREDENTIALS = 0x00000004U;
+
+enum : uint
+{
+    CREATE_REQUIRE_CONNECTION_INTEGRITY = 0x00000008U,
+    CREATE_REQUIRE_CONNECTION_PRIVACY   = 0x00000010U,
+}
+
+enum uint CREATE_PERSIST_MAPPING = 0x00000020U;
+enum uint CREATE_WRITE_THROUGH_SEMANTICS = 0x00000040U;
+enum uint CREATE_GLOBAL_MAPPING = 0x00000100U;
+enum uint WKSTA_PLATFORM_ID_PARMNUM = 0x00000064U;
+enum uint WKSTA_COMPUTERNAME_PARMNUM = 0x00000001U;
+enum uint WKSTA_LANGROUP_PARMNUM = 0x00000002U;
+
+enum : uint
+{
+    WKSTA_VER_MAJOR_PARMNUM = 0x00000004U,
+    WKSTA_VER_MINOR_PARMNUM = 0x00000005U,
+}
+
+enum uint WKSTA_LOGGED_ON_USERS_PARMNUM = 0x00000006U;
+enum uint WKSTA_LANROOT_PARMNUM = 0x00000007U;
+
+enum : uint
+{
+    WKSTA_LOGON_DOMAIN_PARMNUM = 0x00000008U,
+    WKSTA_LOGON_SERVER_PARMNUM = 0x00000009U,
 }
 
 enum : uint
 {
-    WKSTA_KEEPCONN_PARMNUM   = 0x0000000d,
-    WKSTA_KEEPSEARCH_PARMNUM = 0x0000000e,
+    WKSTA_CHARWAIT_PARMNUM  = 0x0000000aU,
+    WKSTA_CHARTIME_PARMNUM  = 0x0000000bU,
+    WKSTA_CHARCOUNT_PARMNUM = 0x0000000cU,
 }
-
-enum uint WKSTA_MAXCMDS_PARMNUM = 0x0000000f;
-enum uint WKSTA_NUMWORKBUF_PARMNUM = 0x00000010;
-enum uint WKSTA_MAXWRKCACHE_PARMNUM = 0x00000011;
-enum uint WKSTA_SESSTIMEOUT_PARMNUM = 0x00000012;
-enum uint WKSTA_SIZERROR_PARMNUM = 0x00000013;
-enum uint WKSTA_NUMALERTS_PARMNUM = 0x00000014;
-enum uint WKSTA_NUMSERVICES_PARMNUM = 0x00000015;
-enum uint WKSTA_NUMCHARBUF_PARMNUM = 0x00000016;
-enum uint WKSTA_SIZCHARBUF_PARMNUM = 0x00000017;
-enum uint WKSTA_ERRLOGSZ_PARMNUM = 0x0000001b;
-enum uint WKSTA_PRINTBUFTIME_PARMNUM = 0x0000001c;
-enum uint WKSTA_SIZWORKBUF_PARMNUM = 0x0000001d;
-enum uint WKSTA_MAILSLOTS_PARMNUM = 0x0000001e;
-enum uint WKSTA_NUMDGRAMBUF_PARMNUM = 0x0000001f;
-enum uint WKSTA_WRKHEURISTICS_PARMNUM = 0x00000020;
-enum uint WKSTA_MAXTHREADS_PARMNUM = 0x00000021;
 
 enum : uint
 {
-    WKSTA_LOCKQUOTA_PARMNUM     = 0x00000029,
-    WKSTA_LOCKINCREMENT_PARMNUM = 0x0000002a,
+    WKSTA_KEEPCONN_PARMNUM   = 0x0000000dU,
+    WKSTA_KEEPSEARCH_PARMNUM = 0x0000000eU,
 }
 
-enum uint WKSTA_LOCKMAXIMUM_PARMNUM = 0x0000002b;
-enum uint WKSTA_PIPEINCREMENT_PARMNUM = 0x0000002c;
-enum uint WKSTA_PIPEMAXIMUM_PARMNUM = 0x0000002d;
-enum uint WKSTA_DORMANTFILELIMIT_PARMNUM = 0x0000002e;
-enum uint WKSTA_CACHEFILETIMEOUT_PARMNUM = 0x0000002f;
-enum uint WKSTA_USEOPPORTUNISTICLOCKING_PARMNUM = 0x00000030;
-enum uint WKSTA_USEUNLOCKBEHIND_PARMNUM = 0x00000031;
-enum uint WKSTA_USECLOSEBEHIND_PARMNUM = 0x00000032;
-enum uint WKSTA_BUFFERNAMEDPIPES_PARMNUM = 0x00000033;
-enum uint WKSTA_USELOCKANDREADANDUNLOCK_PARMNUM = 0x00000034;
-enum uint WKSTA_UTILIZENTCACHING_PARMNUM = 0x00000035;
+enum uint WKSTA_MAXCMDS_PARMNUM = 0x0000000fU;
+enum uint WKSTA_NUMWORKBUF_PARMNUM = 0x00000010U;
+enum uint WKSTA_MAXWRKCACHE_PARMNUM = 0x00000011U;
+enum uint WKSTA_SESSTIMEOUT_PARMNUM = 0x00000012U;
+enum uint WKSTA_SIZERROR_PARMNUM = 0x00000013U;
+enum uint WKSTA_NUMALERTS_PARMNUM = 0x00000014U;
+enum uint WKSTA_NUMSERVICES_PARMNUM = 0x00000015U;
+enum uint WKSTA_NUMCHARBUF_PARMNUM = 0x00000016U;
+enum uint WKSTA_SIZCHARBUF_PARMNUM = 0x00000017U;
+enum uint WKSTA_ERRLOGSZ_PARMNUM = 0x0000001bU;
+enum uint WKSTA_PRINTBUFTIME_PARMNUM = 0x0000001cU;
+enum uint WKSTA_SIZWORKBUF_PARMNUM = 0x0000001dU;
+enum uint WKSTA_MAILSLOTS_PARMNUM = 0x0000001eU;
+enum uint WKSTA_NUMDGRAMBUF_PARMNUM = 0x0000001fU;
+enum uint WKSTA_WRKHEURISTICS_PARMNUM = 0x00000020U;
+enum uint WKSTA_MAXTHREADS_PARMNUM = 0x00000021U;
 
 enum : uint
 {
-    WKSTA_USERAWREAD_PARMNUM  = 0x00000036,
-    WKSTA_USERAWWRITE_PARMNUM = 0x00000037,
+    WKSTA_LOCKQUOTA_PARMNUM     = 0x00000029U,
+    WKSTA_LOCKINCREMENT_PARMNUM = 0x0000002aU,
 }
 
-enum uint WKSTA_USEWRITERAWWITHDATA_PARMNUM = 0x00000038;
-enum uint WKSTA_USEENCRYPTION_PARMNUM = 0x00000039;
-enum uint WKSTA_BUFFILESWITHDENYWRITE_PARMNUM = 0x0000003a;
-enum uint WKSTA_BUFFERREADONLYFILES_PARMNUM = 0x0000003b;
-enum uint WKSTA_FORCECORECREATEMODE_PARMNUM = 0x0000003c;
-enum uint WKSTA_USE512BYTESMAXTRANSFER_PARMNUM = 0x0000003d;
-enum uint WKSTA_READAHEADTHRUPUT_PARMNUM = 0x0000003e;
-enum uint WKSTA_OTH_DOMAINS_PARMNUM = 0x00000065;
-enum uint TRANSPORT_QUALITYOFSERVICE_PARMNUM = 0x000000c9;
-enum uint TRANSPORT_NAME_PARMNUM = 0x000000ca;
+enum uint WKSTA_LOCKMAXIMUM_PARMNUM = 0x0000002bU;
+enum uint WKSTA_PIPEINCREMENT_PARMNUM = 0x0000002cU;
+enum uint WKSTA_PIPEMAXIMUM_PARMNUM = 0x0000002dU;
+enum uint WKSTA_DORMANTFILELIMIT_PARMNUM = 0x0000002eU;
+enum uint WKSTA_CACHEFILETIMEOUT_PARMNUM = 0x0000002fU;
+enum uint WKSTA_USEOPPORTUNISTICLOCKING_PARMNUM = 0x00000030U;
+enum uint WKSTA_USEUNLOCKBEHIND_PARMNUM = 0x00000031U;
+enum uint WKSTA_USECLOSEBEHIND_PARMNUM = 0x00000032U;
+enum uint WKSTA_BUFFERNAMEDPIPES_PARMNUM = 0x00000033U;
+enum uint WKSTA_USELOCKANDREADANDUNLOCK_PARMNUM = 0x00000034U;
+enum uint WKSTA_UTILIZENTCACHING_PARMNUM = 0x00000035U;
+
+enum : uint
+{
+    WKSTA_USERAWREAD_PARMNUM  = 0x00000036U,
+    WKSTA_USERAWWRITE_PARMNUM = 0x00000037U,
+}
+
+enum uint WKSTA_USEWRITERAWWITHDATA_PARMNUM = 0x00000038U;
+enum uint WKSTA_USEENCRYPTION_PARMNUM = 0x00000039U;
+enum uint WKSTA_BUFFILESWITHDENYWRITE_PARMNUM = 0x0000003aU;
+enum uint WKSTA_BUFFERREADONLYFILES_PARMNUM = 0x0000003bU;
+enum uint WKSTA_FORCECORECREATEMODE_PARMNUM = 0x0000003cU;
+enum uint WKSTA_USE512BYTESMAXTRANSFER_PARMNUM = 0x0000003dU;
+enum uint WKSTA_READAHEADTHRUPUT_PARMNUM = 0x0000003eU;
+enum uint WKSTA_OTH_DOMAINS_PARMNUM = 0x00000065U;
+enum uint TRANSPORT_QUALITYOFSERVICE_PARMNUM = 0x000000c9U;
+enum uint TRANSPORT_NAME_PARMNUM = 0x000000caU;
 
 enum : int
 {
@@ -3588,54 +3624,54 @@ enum : int
 }
 
 enum int EVENT_WINNAT_SESSION_LIMIT_REACHED = 0x80004268;
-enum uint HARDWARE_ADDRESS_LENGTH = 0x00000006;
+enum uint HARDWARE_ADDRESS_LENGTH = 0x00000006U;
 
 enum : uint
 {
-    NETMAN_VARTYPE_ULONG            = 0x00000000,
-    NETMAN_VARTYPE_HARDWARE_ADDRESS = 0x00000001,
-    NETMAN_VARTYPE_STRING           = 0x00000002,
+    NETMAN_VARTYPE_ULONG            = 0x00000000U,
+    NETMAN_VARTYPE_HARDWARE_ADDRESS = 0x00000001U,
+    NETMAN_VARTYPE_STRING           = 0x00000002U,
 }
 
 enum : uint
 {
-    REPL_ROLE_EXPORT = 0x00000001,
-    REPL_ROLE_IMPORT = 0x00000002,
-    REPL_ROLE_BOTH   = 0x00000003,
+    REPL_ROLE_EXPORT = 0x00000001U,
+    REPL_ROLE_IMPORT = 0x00000002U,
+    REPL_ROLE_BOTH   = 0x00000003U,
 }
 
-enum uint REPL_INTERVAL_INFOLEVEL = 0x000003e8;
-enum uint REPL_PULSE_INFOLEVEL = 0x000003e9;
-enum uint REPL_GUARDTIME_INFOLEVEL = 0x000003ea;
-enum uint REPL_RANDOM_INFOLEVEL = 0x000003eb;
+enum uint REPL_INTERVAL_INFOLEVEL = 0x000003e8U;
+enum uint REPL_PULSE_INFOLEVEL = 0x000003e9U;
+enum uint REPL_GUARDTIME_INFOLEVEL = 0x000003eaU;
+enum uint REPL_RANDOM_INFOLEVEL = 0x000003ebU;
 
 enum : uint
 {
-    REPL_INTEGRITY_FILE = 0x00000001,
-    REPL_INTEGRITY_TREE = 0x00000002,
-}
-
-enum : uint
-{
-    REPL_EXTENT_FILE                = 0x00000001,
-    REPL_EXTENT_TREE                = 0x00000002,
-    REPL_EXPORT_INTEGRITY_INFOLEVEL = 0x000003e8,
-}
-
-enum uint REPL_EXPORT_EXTENT_INFOLEVEL = 0x000003e9;
-
-enum : uint
-{
-    REPL_UNLOCK_NOFORCE = 0x00000000,
-    REPL_UNLOCK_FORCE   = 0x00000001,
+    REPL_INTEGRITY_FILE = 0x00000001U,
+    REPL_INTEGRITY_TREE = 0x00000002U,
 }
 
 enum : uint
 {
-    REPL_STATE_OK               = 0x00000000,
-    REPL_STATE_NO_MASTER        = 0x00000001,
-    REPL_STATE_NO_SYNC          = 0x00000002,
-    REPL_STATE_NEVER_REPLICATED = 0x00000003,
+    REPL_EXTENT_FILE                = 0x00000001U,
+    REPL_EXTENT_TREE                = 0x00000002U,
+    REPL_EXPORT_INTEGRITY_INFOLEVEL = 0x000003e8U,
+}
+
+enum uint REPL_EXPORT_EXTENT_INFOLEVEL = 0x000003e9U;
+
+enum : uint
+{
+    REPL_UNLOCK_NOFORCE = 0x00000000U,
+    REPL_UNLOCK_FORCE   = 0x00000001U,
+}
+
+enum : uint
+{
+    REPL_STATE_OK               = 0x00000000U,
+    REPL_STATE_NO_MASTER        = 0x00000001U,
+    REPL_STATE_NO_SYNC          = 0x00000002U,
+    REPL_STATE_NEVER_REPLICATED = 0x00000003U,
 }
 
 enum : const(wchar)*
@@ -3839,193 +3875,193 @@ enum : const(wchar)*
 
 enum : uint
 {
-    WZC_PROFILE_SUCCESS                              = 0x00000000,
-    WZC_PROFILE_XML_ERROR_NO_VERSION                 = 0x00000001,
-    WZC_PROFILE_XML_ERROR_BAD_VERSION                = 0x00000002,
-    WZC_PROFILE_XML_ERROR_UNSUPPORTED_VERSION        = 0x00000003,
-    WZC_PROFILE_XML_ERROR_SSID_NOT_FOUND             = 0x00000004,
-    WZC_PROFILE_XML_ERROR_BAD_SSID                   = 0x00000005,
-    WZC_PROFILE_XML_ERROR_CONNECTION_TYPE            = 0x00000006,
-    WZC_PROFILE_XML_ERROR_AUTHENTICATION             = 0x00000007,
-    WZC_PROFILE_XML_ERROR_ENCRYPTION                 = 0x00000008,
-    WZC_PROFILE_XML_ERROR_KEY_PROVIDED_AUTOMATICALLY = 0x00000009,
-    WZC_PROFILE_XML_ERROR_1X_ENABLED                 = 0x0000000a,
-    WZC_PROFILE_XML_ERROR_EAP_METHOD                 = 0x0000000b,
-    WZC_PROFILE_XML_ERROR_BAD_KEY_INDEX              = 0x0000000c,
-    WZC_PROFILE_XML_ERROR_KEY_INDEX_RANGE            = 0x0000000d,
-    WZC_PROFILE_XML_ERROR_BAD_NETWORK_KEY            = 0x0000000e,
+    WZC_PROFILE_SUCCESS                              = 0x00000000U,
+    WZC_PROFILE_XML_ERROR_NO_VERSION                 = 0x00000001U,
+    WZC_PROFILE_XML_ERROR_BAD_VERSION                = 0x00000002U,
+    WZC_PROFILE_XML_ERROR_UNSUPPORTED_VERSION        = 0x00000003U,
+    WZC_PROFILE_XML_ERROR_SSID_NOT_FOUND             = 0x00000004U,
+    WZC_PROFILE_XML_ERROR_BAD_SSID                   = 0x00000005U,
+    WZC_PROFILE_XML_ERROR_CONNECTION_TYPE            = 0x00000006U,
+    WZC_PROFILE_XML_ERROR_AUTHENTICATION             = 0x00000007U,
+    WZC_PROFILE_XML_ERROR_ENCRYPTION                 = 0x00000008U,
+    WZC_PROFILE_XML_ERROR_KEY_PROVIDED_AUTOMATICALLY = 0x00000009U,
+    WZC_PROFILE_XML_ERROR_1X_ENABLED                 = 0x0000000aU,
+    WZC_PROFILE_XML_ERROR_EAP_METHOD                 = 0x0000000bU,
+    WZC_PROFILE_XML_ERROR_BAD_KEY_INDEX              = 0x0000000cU,
+    WZC_PROFILE_XML_ERROR_KEY_INDEX_RANGE            = 0x0000000dU,
+    WZC_PROFILE_XML_ERROR_BAD_NETWORK_KEY            = 0x0000000eU,
 }
 
 enum : uint
 {
-    WZC_PROFILE_CONFIG_ERROR_INVALID_AUTH_FOR_CONNECTION_TYPE = 0x0000000f,
-    WZC_PROFILE_CONFIG_ERROR_INVALID_ENCRYPTION_FOR_AUTHMODE  = 0x00000010,
-    WZC_PROFILE_CONFIG_ERROR_KEY_REQUIRED                     = 0x00000011,
-    WZC_PROFILE_CONFIG_ERROR_KEY_INDEX_REQUIRED               = 0x00000012,
-    WZC_PROFILE_CONFIG_ERROR_KEY_INDEX_NOT_APPLICABLE         = 0x00000013,
-    WZC_PROFILE_CONFIG_ERROR_1X_NOT_ALLOWED                   = 0x00000014,
-    WZC_PROFILE_CONFIG_ERROR_1X_NOT_ALLOWED_KEY_REQUIRED      = 0x00000015,
-    WZC_PROFILE_CONFIG_ERROR_1X_NOT_ENABLED_KEY_PROVIDED      = 0x00000016,
-    WZC_PROFILE_CONFIG_ERROR_EAP_METHOD_REQUIRED              = 0x00000017,
-    WZC_PROFILE_CONFIG_ERROR_EAP_METHOD_NOT_APPLICABLE        = 0x00000018,
-    WZC_PROFILE_CONFIG_ERROR_WPA_NOT_SUPPORTED                = 0x00000019,
-    WZC_PROFILE_CONFIG_ERROR_WPA_ENCRYPTION_NOT_SUPPORTED     = 0x0000001a,
+    WZC_PROFILE_CONFIG_ERROR_INVALID_AUTH_FOR_CONNECTION_TYPE = 0x0000000fU,
+    WZC_PROFILE_CONFIG_ERROR_INVALID_ENCRYPTION_FOR_AUTHMODE  = 0x00000010U,
+    WZC_PROFILE_CONFIG_ERROR_KEY_REQUIRED                     = 0x00000011U,
+    WZC_PROFILE_CONFIG_ERROR_KEY_INDEX_REQUIRED               = 0x00000012U,
+    WZC_PROFILE_CONFIG_ERROR_KEY_INDEX_NOT_APPLICABLE         = 0x00000013U,
+    WZC_PROFILE_CONFIG_ERROR_1X_NOT_ALLOWED                   = 0x00000014U,
+    WZC_PROFILE_CONFIG_ERROR_1X_NOT_ALLOWED_KEY_REQUIRED      = 0x00000015U,
+    WZC_PROFILE_CONFIG_ERROR_1X_NOT_ENABLED_KEY_PROVIDED      = 0x00000016U,
+    WZC_PROFILE_CONFIG_ERROR_EAP_METHOD_REQUIRED              = 0x00000017U,
+    WZC_PROFILE_CONFIG_ERROR_EAP_METHOD_NOT_APPLICABLE        = 0x00000018U,
+    WZC_PROFILE_CONFIG_ERROR_WPA_NOT_SUPPORTED                = 0x00000019U,
+    WZC_PROFILE_CONFIG_ERROR_WPA_ENCRYPTION_NOT_SUPPORTED     = 0x0000001aU,
 }
 
 enum : uint
 {
-    WZC_PROFILE_SET_ERROR_DUPLICATE_NETWORK = 0x0000001b,
-    WZC_PROFILE_SET_ERROR_MEMORY_ALLOCATION = 0x0000001c,
-    WZC_PROFILE_SET_ERROR_READING_1X_CONFIG = 0x0000001d,
-    WZC_PROFILE_SET_ERROR_WRITING_1X_CONFIG = 0x0000001e,
-    WZC_PROFILE_SET_ERROR_WRITING_WZC_CFG   = 0x0000001f,
+    WZC_PROFILE_SET_ERROR_DUPLICATE_NETWORK = 0x0000001bU,
+    WZC_PROFILE_SET_ERROR_MEMORY_ALLOCATION = 0x0000001cU,
+    WZC_PROFILE_SET_ERROR_READING_1X_CONFIG = 0x0000001dU,
+    WZC_PROFILE_SET_ERROR_WRITING_1X_CONFIG = 0x0000001eU,
+    WZC_PROFILE_SET_ERROR_WRITING_WZC_CFG   = 0x0000001fU,
 }
 
 enum : uint
 {
-    WZC_PROFILE_API_ERROR_NOT_SUPPORTED         = 0x00000020,
-    WZC_PROFILE_API_ERROR_FAILED_TO_LOAD_XML    = 0x00000021,
-    WZC_PROFILE_API_ERROR_FAILED_TO_LOAD_SCHEMA = 0x00000022,
-    WZC_PROFILE_API_ERROR_XML_VALIDATION_FAILED = 0x00000023,
-    WZC_PROFILE_API_ERROR_INTERNAL              = 0x00000024,
+    WZC_PROFILE_API_ERROR_NOT_SUPPORTED         = 0x00000020U,
+    WZC_PROFILE_API_ERROR_FAILED_TO_LOAD_XML    = 0x00000021U,
+    WZC_PROFILE_API_ERROR_FAILED_TO_LOAD_SCHEMA = 0x00000022U,
+    WZC_PROFILE_API_ERROR_XML_VALIDATION_FAILED = 0x00000023U,
+    WZC_PROFILE_API_ERROR_INTERNAL              = 0x00000024U,
 }
 
 enum : uint
 {
-    RF_ROUTING   = 0x00000001,
-    RF_ROUTINGV6 = 0x00000002,
+    RF_ROUTING   = 0x00000001U,
+    RF_ROUTINGV6 = 0x00000002U,
 }
 
-enum uint RF_DEMAND_UPDATE_ROUTES = 0x00000004;
-enum uint RF_ADD_ALL_INTERFACES = 0x00000010;
-enum uint RF_MULTICAST = 0x00000020;
-enum uint RF_POWER = 0x00000040;
-enum uint MS_ROUTER_VERSION = 0x00000600;
-enum uint ROUTING_DOMAIN_INFO_REVISION_1 = 0x00000001;
-enum uint INTERFACE_INFO_REVISION_1 = 0x00000001;
+enum uint RF_DEMAND_UPDATE_ROUTES = 0x00000004U;
+enum uint RF_ADD_ALL_INTERFACES = 0x00000010U;
+enum uint RF_MULTICAST = 0x00000020U;
+enum uint RF_POWER = 0x00000040U;
+enum uint MS_ROUTER_VERSION = 0x00000600U;
+enum uint ROUTING_DOMAIN_INFO_REVISION_1 = 0x00000001U;
+enum uint INTERFACE_INFO_REVISION_1 = 0x00000001U;
 
 enum : uint
 {
-    IR_PROMISCUOUS           = 0x00000000,
-    IR_PROMISCUOUS_MULTICAST = 0x00000001,
-}
-
-enum : uint
-{
-    PROTO_IP_MSDP           = 0x00000009,
-    PROTO_IP_IGMP           = 0x0000000a,
-    PROTO_IP_BGMP           = 0x0000000b,
-    PROTO_IP_VRRP           = 0x00000070,
-    PROTO_IP_BOOTP          = 0x0000270f,
-    PROTO_IPV6_DHCP         = 0x000003e7,
-    PROTO_IP_DNS_PROXY      = 0x00002713,
-    PROTO_IP_DHCP_ALLOCATOR = 0x00002714,
+    IR_PROMISCUOUS           = 0x00000000U,
+    IR_PROMISCUOUS_MULTICAST = 0x00000001U,
 }
 
 enum : uint
 {
-    PROTO_IP_NAT      = 0x00002715,
-    PROTO_IP_DIFFSERV = 0x00002718,
-    PROTO_IP_MGM      = 0x00002719,
-    PROTO_IP_ALG      = 0x0000271a,
-    PROTO_IP_H323     = 0x0000271b,
-    PROTO_IP_FTP      = 0x0000271c,
-    PROTO_IP_DTP      = 0x0000271d,
-    PROTO_TYPE_UCAST  = 0x00000000,
-    PROTO_TYPE_MCAST  = 0x00000001,
-    PROTO_TYPE_MS0    = 0x00000002,
-    PROTO_TYPE_MS1    = 0x00000003,
-    PROTO_VENDOR_MS0  = 0x00000000,
-    PROTO_VENDOR_MS1  = 0x00000137,
-    PROTO_VENDOR_MS2  = 0x00003fff,
+    PROTO_IP_MSDP           = 0x00000009U,
+    PROTO_IP_IGMP           = 0x0000000aU,
+    PROTO_IP_BGMP           = 0x0000000bU,
+    PROTO_IP_VRRP           = 0x00000070U,
+    PROTO_IP_BOOTP          = 0x0000270fU,
+    PROTO_IPV6_DHCP         = 0x000003e7U,
+    PROTO_IP_DNS_PROXY      = 0x00002713U,
+    PROTO_IP_DHCP_ALLOCATOR = 0x00002714U,
 }
 
 enum : uint
 {
-    IPX_PROTOCOL_BASE = 0x0001ffff,
-    IPX_PROTOCOL_RIP  = 0x00020000,
+    PROTO_IP_NAT      = 0x00002715U,
+    PROTO_IP_DIFFSERV = 0x00002718U,
+    PROTO_IP_MGM      = 0x00002719U,
+    PROTO_IP_ALG      = 0x0000271aU,
+    PROTO_IP_H323     = 0x0000271bU,
+    PROTO_IP_FTP      = 0x0000271cU,
+    PROTO_IP_DTP      = 0x0000271dU,
+    PROTO_TYPE_UCAST  = 0x00000000U,
+    PROTO_TYPE_MCAST  = 0x00000001U,
+    PROTO_TYPE_MS0    = 0x00000002U,
+    PROTO_TYPE_MS1    = 0x00000003U,
+    PROTO_VENDOR_MS0  = 0x00000000U,
+    PROTO_VENDOR_MS1  = 0x00000137U,
+    PROTO_VENDOR_MS2  = 0x00003fffU,
 }
 
 enum : uint
 {
-    RIS_INTERFACE_ADDRESS_CHANGE = 0x00000000,
-    RIS_INTERFACE_ENABLED        = 0x00000001,
-    RIS_INTERFACE_DISABLED       = 0x00000002,
-    RIS_INTERFACE_MEDIA_PRESENT  = 0x00000003,
-    RIS_INTERFACE_MEDIA_ABSENT   = 0x00000004,
+    IPX_PROTOCOL_BASE = 0x0001ffffU,
+    IPX_PROTOCOL_RIP  = 0x00020000U,
 }
-
-enum uint MRINFO_TUNNEL_FLAG = 0x00000001;
 
 enum : uint
 {
-    MRINFO_PIM_FLAG      = 0x00000004,
-    MRINFO_DOWN_FLAG     = 0x00000010,
-    MRINFO_DISABLED_FLAG = 0x00000020,
+    RIS_INTERFACE_ADDRESS_CHANGE = 0x00000000U,
+    RIS_INTERFACE_ENABLED        = 0x00000001U,
+    RIS_INTERFACE_DISABLED       = 0x00000002U,
+    RIS_INTERFACE_MEDIA_PRESENT  = 0x00000003U,
+    RIS_INTERFACE_MEDIA_ABSENT   = 0x00000004U,
 }
 
-enum uint MRINFO_QUERIER_FLAG = 0x00000040;
-enum uint MRINFO_LEAF_FLAG = 0x00000080;
-enum uint MFE_NO_ERROR = 0x00000000;
-enum uint MFE_REACHED_CORE = 0x00000001;
-enum uint MFE_OIF_PRUNED = 0x00000005;
-enum uint MFE_PRUNED_UPSTREAM = 0x00000004;
-enum uint MFE_OLD_ROUTER = 0x0000000b;
-enum uint MFE_NOT_FORWARDING = 0x00000002;
-enum uint MFE_WRONG_IF = 0x00000003;
-enum uint MFE_BOUNDARY_REACHED = 0x00000006;
-enum uint MFE_NO_MULTICAST = 0x00000007;
+enum uint MRINFO_TUNNEL_FLAG = 0x00000001U;
 
 enum : uint
 {
-    MFE_IIF          = 0x00000008,
-    MFE_NO_ROUTE     = 0x00000009,
-    MFE_NOT_LAST_HOP = 0x0000000a,
+    MRINFO_PIM_FLAG      = 0x00000004U,
+    MRINFO_DOWN_FLAG     = 0x00000010U,
+    MRINFO_DISABLED_FLAG = 0x00000020U,
 }
 
-enum uint MFE_PROHIBITED = 0x0000000c;
-enum uint MFE_NO_SPACE = 0x0000000d;
+enum uint MRINFO_QUERIER_FLAG = 0x00000040U;
+enum uint MRINFO_LEAF_FLAG = 0x00000080U;
+enum uint MFE_NO_ERROR = 0x00000000U;
+enum uint MFE_REACHED_CORE = 0x00000001U;
+enum uint MFE_OIF_PRUNED = 0x00000005U;
+enum uint MFE_PRUNED_UPSTREAM = 0x00000004U;
+enum uint MFE_OLD_ROUTER = 0x0000000bU;
+enum uint MFE_NOT_FORWARDING = 0x00000002U;
+enum uint MFE_WRONG_IF = 0x00000003U;
+enum uint MFE_BOUNDARY_REACHED = 0x00000006U;
+enum uint MFE_NO_MULTICAST = 0x00000007U;
+
+enum : uint
+{
+    MFE_IIF          = 0x00000008U,
+    MFE_NO_ROUTE     = 0x00000009U,
+    MFE_NOT_LAST_HOP = 0x0000000aU,
+}
+
+enum uint MFE_PROHIBITED = 0x0000000cU;
+enum uint MFE_NO_SPACE = 0x0000000dU;
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* REGISTER_PROTOCOL_ENTRY_POINT_STRING = "RegisterProtocol";
 
 enum : uint
 {
-    ALIGN_SIZE  = 0x00000008,
-    ALIGN_SHIFT = 0x00000007,
+    ALIGN_SIZE  = 0x00000008U,
+    ALIGN_SHIFT = 0x00000007U,
 }
 
-enum uint RTR_INFO_BLOCK_VERSION = 0x00000001;
+enum uint RTR_INFO_BLOCK_VERSION = 0x00000001U;
 
 enum : uint
 {
-    TRACE_USE_FILE    = 0x00000001,
-    TRACE_USE_CONSOLE = 0x00000002,
-}
-
-enum : uint
-{
-    TRACE_NO_SYNCH   = 0x00000004,
-    TRACE_NO_STDINFO = 0x00000001,
+    TRACE_USE_FILE    = 0x00000001U,
+    TRACE_USE_CONSOLE = 0x00000002U,
 }
 
 enum : uint
 {
-    TRACE_USE_MASK = 0x00000002,
-    TRACE_USE_MSEC = 0x00000004,
-    TRACE_USE_DATE = 0x00000008,
-}
-
-enum uint INVALID_TRACEID = 0xffffffff;
-
-enum : uint
-{
-    RTUTILS_MAX_PROTOCOL_NAME_LEN = 0x00000028,
-    RTUTILS_MAX_PROTOCOL_DLL_LEN  = 0x00000030,
+    TRACE_NO_SYNCH   = 0x00000004U,
+    TRACE_NO_STDINFO = 0x00000001U,
 }
 
 enum : uint
 {
-    MAX_PROTOCOL_NAME_LEN = 0x00000028,
-    MAX_PROTOCOL_DLL_LEN  = 0x00000030,
+    TRACE_USE_MASK = 0x00000002U,
+    TRACE_USE_MSEC = 0x00000004U,
+    TRACE_USE_DATE = 0x00000008U,
+}
+
+enum uint INVALID_TRACEID = 0xffffffffU;
+
+enum : uint
+{
+    RTUTILS_MAX_PROTOCOL_NAME_LEN = 0x00000028U,
+    RTUTILS_MAX_PROTOCOL_DLL_LEN  = 0x00000030U,
+}
+
+enum : uint
+{
+    MAX_PROTOCOL_NAME_LEN = 0x00000028U,
+    MAX_PROTOCOL_DLL_LEN  = 0x00000030U,
 }
 
 // Callbacks
@@ -4035,13 +4071,13 @@ alias WORKERFUNCTION = void function(void* param0);
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_0))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_0
 struct USER_INFO_0
 {
     PWSTR usri0_name;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1
 struct USER_INFO_1
 {
     PWSTR              usri1_name;
@@ -4054,7 +4090,7 @@ struct USER_INFO_1
     PWSTR              usri1_script_path;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_2
 struct USER_INFO_2
 {
     PWSTR              usri2_name;
@@ -4083,7 +4119,7 @@ struct USER_INFO_2
     uint               usri2_code_page;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_3
 struct USER_INFO_3
 {
     PWSTR              usri3_name;
@@ -4117,7 +4153,7 @@ struct USER_INFO_3
     uint               usri3_password_expired;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_4
 struct USER_INFO_4
 {
     PWSTR              usri4_name;
@@ -4151,7 +4187,7 @@ struct USER_INFO_4
     uint               usri4_password_expired;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_10))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_10
 struct USER_INFO_10
 {
     PWSTR usri10_name;
@@ -4160,7 +4196,7 @@ struct USER_INFO_10
     PWSTR usri10_full_name;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_11))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_11
 struct USER_INFO_11
 {
     PWSTR     usri11_name;
@@ -4185,7 +4221,7 @@ struct USER_INFO_11
     uint      usri11_code_page;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_20))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_20
 struct USER_INFO_20
 {
     PWSTR              usri20_name;
@@ -4195,13 +4231,13 @@ struct USER_INFO_20
     uint               usri20_user_id;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_21))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_21
 struct USER_INFO_21
 {
     ubyte[16] usri21_password;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_22))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_22
 struct USER_INFO_22
 {
     PWSTR              usri22_name;
@@ -4230,7 +4266,7 @@ struct USER_INFO_22
     uint               usri22_code_page;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_23))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_23
 struct USER_INFO_23
 {
     PWSTR              usri23_name;
@@ -4240,7 +4276,7 @@ struct USER_INFO_23
     PSID               usri23_user_sid;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_24))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_24
 struct USER_INFO_24
 {
     BOOL  usri24_internet_identity;
@@ -4250,128 +4286,128 @@ struct USER_INFO_24
     PSID  usri24_user_sid;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1003))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1003
 struct USER_INFO_1003
 {
     PWSTR usri1003_password;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1005))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1005
 struct USER_INFO_1005
 {
     USER_PRIV usri1005_priv;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1006))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1006
 struct USER_INFO_1006
 {
     PWSTR usri1006_home_dir;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1007))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1007
 struct USER_INFO_1007
 {
     PWSTR usri1007_comment;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1008))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1008
 struct USER_INFO_1008
 {
     USER_ACCOUNT_FLAGS usri1008_flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1009))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1009
 struct USER_INFO_1009
 {
     PWSTR usri1009_script_path;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1010))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1010
 struct USER_INFO_1010
 {
     AF_OP usri1010_auth_flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1011))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1011
 struct USER_INFO_1011
 {
     PWSTR usri1011_full_name;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1012))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1012
 struct USER_INFO_1012
 {
     PWSTR usri1012_usr_comment;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1013))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1013
 struct USER_INFO_1013
 {
     PWSTR usri1013_parms;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1014))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1014
 struct USER_INFO_1014
 {
     PWSTR usri1014_workstations;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1017))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1017
 struct USER_INFO_1017
 {
     uint usri1017_acct_expires;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1018))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1018
 struct USER_INFO_1018
 {
     uint usri1018_max_storage;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1020))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1020
 struct USER_INFO_1020
 {
     uint   usri1020_units_per_week;
     ubyte* usri1020_logon_hours;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1023))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1023
 struct USER_INFO_1023
 {
     PWSTR usri1023_logon_server;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1024))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1024
 struct USER_INFO_1024
 {
     uint usri1024_country_code;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1025))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1025
 struct USER_INFO_1025
 {
     uint usri1025_code_page;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1051))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1051
 struct USER_INFO_1051
 {
     uint usri1051_primary_group_id;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1052))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1052
 struct USER_INFO_1052
 {
     PWSTR usri1052_profile;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1053))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_info_1053
 struct USER_INFO_1053
 {
     PWSTR usri1053_home_dir_drive;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_modals_info_0))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_modals_info_0
 struct USER_MODALS_INFO_0
 {
     uint usrmod0_min_passwd_len;
@@ -4381,21 +4417,21 @@ struct USER_MODALS_INFO_0
     uint usrmod0_password_hist_len;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_modals_info_1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_modals_info_1
 struct USER_MODALS_INFO_1
 {
     uint  usrmod1_role;
     PWSTR usrmod1_primary;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_modals_info_2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_modals_info_2
 struct USER_MODALS_INFO_2
 {
     PWSTR usrmod2_domain_name;
     PSID  usrmod2_domain_id;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_modals_info_3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_modals_info_3
 struct USER_MODALS_INFO_3
 {
     uint usrmod3_lockout_duration;
@@ -4403,49 +4439,49 @@ struct USER_MODALS_INFO_3
     uint usrmod3_lockout_threshold;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_modals_info_1001))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_modals_info_1001
 struct USER_MODALS_INFO_1001
 {
     uint usrmod1001_min_passwd_len;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_modals_info_1002))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_modals_info_1002
 struct USER_MODALS_INFO_1002
 {
     uint usrmod1002_max_passwd_age;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_modals_info_1003))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_modals_info_1003
 struct USER_MODALS_INFO_1003
 {
     uint usrmod1003_min_passwd_age;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_modals_info_1004))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_modals_info_1004
 struct USER_MODALS_INFO_1004
 {
     uint usrmod1004_force_logoff;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_modals_info_1005))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_modals_info_1005
 struct USER_MODALS_INFO_1005
 {
     uint usrmod1005_password_hist_len;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_modals_info_1006))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_modals_info_1006
 struct USER_MODALS_INFO_1006
 {
     USER_MODALS_ROLES usrmod1006_role;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_modals_info_1007))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-user_modals_info_1007
 struct USER_MODALS_INFO_1007
 {
     PWSTR usrmod1007_primary;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-msa_info_0))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-msa_info_0
 struct MSA_INFO_0
 {
     MSA_INFO_STATE State;
@@ -4457,20 +4493,20 @@ struct MSA_INFO_1
     MSA_INFO_ACCOUNT_TYPE AccountType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-group_info_0))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-group_info_0
 struct GROUP_INFO_0
 {
     PWSTR grpi0_name;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-group_info_1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-group_info_1
 struct GROUP_INFO_1
 {
     PWSTR grpi1_name;
     PWSTR grpi1_comment;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-group_info_2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-group_info_2
 struct GROUP_INFO_2
 {
     PWSTR grpi2_name;
@@ -4479,7 +4515,7 @@ struct GROUP_INFO_2
     uint  grpi2_attributes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-group_info_3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-group_info_3
 struct GROUP_INFO_3
 {
     PWSTR grpi3_name;
@@ -4488,57 +4524,57 @@ struct GROUP_INFO_3
     uint  grpi3_attributes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-group_info_1002))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-group_info_1002
 struct GROUP_INFO_1002
 {
     PWSTR grpi1002_comment;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-group_info_1005))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-group_info_1005
 struct GROUP_INFO_1005
 {
     uint grpi1005_attributes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-group_users_info_0))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-group_users_info_0
 struct GROUP_USERS_INFO_0
 {
     PWSTR grui0_name;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-group_users_info_1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-group_users_info_1
 struct GROUP_USERS_INFO_1
 {
     PWSTR grui1_name;
     uint  grui1_attributes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-localgroup_info_0))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-localgroup_info_0
 struct LOCALGROUP_INFO_0
 {
     PWSTR lgrpi0_name;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-localgroup_info_1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-localgroup_info_1
 struct LOCALGROUP_INFO_1
 {
     PWSTR lgrpi1_name;
     PWSTR lgrpi1_comment;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-localgroup_info_1002))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-localgroup_info_1002
 struct LOCALGROUP_INFO_1002
 {
     PWSTR lgrpi1002_comment;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-localgroup_members_info_0))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-localgroup_members_info_0
 struct LOCALGROUP_MEMBERS_INFO_0
 {
     PSID lgrmi0_sid;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-localgroup_members_info_1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-localgroup_members_info_1
 struct LOCALGROUP_MEMBERS_INFO_1
 {
     PSID         lgrmi1_sid;
@@ -4546,7 +4582,7 @@ struct LOCALGROUP_MEMBERS_INFO_1
     PWSTR        lgrmi1_name;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-localgroup_members_info_2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-localgroup_members_info_2
 struct LOCALGROUP_MEMBERS_INFO_2
 {
     PSID         lgrmi2_sid;
@@ -4554,19 +4590,19 @@ struct LOCALGROUP_MEMBERS_INFO_2
     PWSTR        lgrmi2_domainandname;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-localgroup_members_info_3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-localgroup_members_info_3
 struct LOCALGROUP_MEMBERS_INFO_3
 {
     PWSTR lgrmi3_domainandname;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-localgroup_users_info_0))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-localgroup_users_info_0
 struct LOCALGROUP_USERS_INFO_0
 {
     PWSTR lgrui0_name;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-net_display_user))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-net_display_user
 struct NET_DISPLAY_USER
 {
     PWSTR              usri1_name;
@@ -4577,7 +4613,7 @@ struct NET_DISPLAY_USER
     uint               usri1_next_index;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-net_display_machine))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-net_display_machine
 struct NET_DISPLAY_MACHINE
 {
     PWSTR              usri2_name;
@@ -4587,7 +4623,7 @@ struct NET_DISPLAY_MACHINE
     uint               usri2_next_index;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-net_display_group))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-net_display_group
 struct NET_DISPLAY_GROUP
 {
     PWSTR grpi3_name;
@@ -4620,14 +4656,14 @@ struct ACCESS_LIST
     uint  acl_access;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-net_validate_password_hash))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-net_validate_password_hash
 struct NET_VALIDATE_PASSWORD_HASH
 {
     uint   Length;
     ubyte* Hash;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-net_validate_persisted_fields))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-net_validate_persisted_fields
 struct NET_VALIDATE_PERSISTED_FIELDS
 {
     uint     PresentFields;
@@ -4639,21 +4675,21 @@ struct NET_VALIDATE_PERSISTED_FIELDS
     NET_VALIDATE_PASSWORD_HASH* PasswordHistory;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-net_validate_output_arg))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-net_validate_output_arg
 struct NET_VALIDATE_OUTPUT_ARG
 {
     NET_VALIDATE_PERSISTED_FIELDS ChangedPersistedFields;
     uint ValidationStatus;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-net_validate_authentication_input_arg))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-net_validate_authentication_input_arg
 struct NET_VALIDATE_AUTHENTICATION_INPUT_ARG
 {
     NET_VALIDATE_PERSISTED_FIELDS InputPersistedFields;
     BOOLEAN PasswordMatched;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-net_validate_password_change_input_arg))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-net_validate_password_change_input_arg
 struct NET_VALIDATE_PASSWORD_CHANGE_INPUT_ARG
 {
     NET_VALIDATE_PERSISTED_FIELDS InputPersistedFields;
@@ -4663,7 +4699,7 @@ struct NET_VALIDATE_PASSWORD_CHANGE_INPUT_ARG
     BOOLEAN PasswordMatch;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-net_validate_password_reset_input_arg))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-net_validate_password_reset_input_arg
 struct NET_VALIDATE_PASSWORD_RESET_INPUT_ARG
 {
     NET_VALIDATE_PERSISTED_FIELDS InputPersistedFields;
@@ -4674,14 +4710,14 @@ struct NET_VALIDATE_PASSWORD_RESET_INPUT_ARG
     BOOLEAN ClearLockout;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-netlogon_info_1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-netlogon_info_1
 struct NETLOGON_INFO_1
 {
     uint netlog1_flags;
     uint netlog1_pdc_connection_status;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-netlogon_info_2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-netlogon_info_2
 struct NETLOGON_INFO_2
 {
     uint  netlog2_flags;
@@ -4690,7 +4726,7 @@ struct NETLOGON_INFO_2
     uint  netlog2_tc_connection_status;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-netlogon_info_3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-netlogon_info_3
 struct NETLOGON_INFO_3
 {
     uint netlog3_flags;
@@ -4702,14 +4738,14 @@ struct NETLOGON_INFO_3
     uint netlog3_reserved5;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-netlogon_info_4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/ns-lmaccess-netlogon_info_4
 struct NETLOGON_INFO_4
 {
     PWSTR netlog4_trusted_dc_name;
     PWSTR netlog4_trusted_domain_name;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmalert/ns-lmalert-std_alert))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmalert/ns-lmalert-std_alert
 struct STD_ALERT
 {
     uint      alrt_timestamp;
@@ -4717,21 +4753,21 @@ struct STD_ALERT
     wchar[81] alrt_servicename;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmalert/ns-lmalert-admin_other_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmalert/ns-lmalert-admin_other_info
 struct ADMIN_OTHER_INFO
 {
     uint alrtad_errcode;
     uint alrtad_numstrings;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmalert/ns-lmalert-errlog_other_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmalert/ns-lmalert-errlog_other_info
 struct ERRLOG_OTHER_INFO
 {
     uint alrter_errcode;
     uint alrter_offset;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmalert/ns-lmalert-print_other_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmalert/ns-lmalert-print_other_info
 struct PRINT_OTHER_INFO
 {
     uint alrtpr_jobid;
@@ -4740,20 +4776,20 @@ struct PRINT_OTHER_INFO
     uint alrtpr_size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmalert/ns-lmalert-user_other_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmalert/ns-lmalert-user_other_info
 struct USER_OTHER_INFO
 {
     uint alrtus_errcode;
     uint alrtus_numstrings;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmmsg/ns-lmmsg-msg_info_0))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmmsg/ns-lmmsg-msg_info_0
 struct MSG_INFO_0
 {
     PWSTR msgi0_name;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmmsg/ns-lmmsg-msg_info_1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmmsg/ns-lmmsg-msg_info_1
 struct MSG_INFO_1
 {
     PWSTR msgi1_name;
@@ -4761,7 +4797,7 @@ struct MSG_INFO_1
     PWSTR msgi1_forward;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmremutl/ns-lmremutl-time_of_day_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmremutl/ns-lmremutl-time_of_day_info
 struct TIME_OF_DAY_INFO
 {
     uint tod_elapsedt;
@@ -4858,14 +4894,14 @@ struct REPL_IDIR_INFO_1
     uint  rpid1_locktime;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_100))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_100
 struct SERVER_INFO_100
 {
     uint  sv100_platform_id;
     PWSTR sv100_name;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_101))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_101
 struct SERVER_INFO_101
 {
     uint            sv101_platform_id;
@@ -4876,7 +4912,7 @@ struct SERVER_INFO_101
     PWSTR           sv101_comment;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_102))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_102
 struct SERVER_INFO_102
 {
     uint               sv102_platform_id;
@@ -4912,7 +4948,7 @@ struct SERVER_INFO_103
     uint  sv103_capabilities;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_402))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_402
 struct SERVER_INFO_402
 {
     uint                 sv402_ulist_mtime;
@@ -4948,7 +4984,7 @@ struct SERVER_INFO_402
     PWSTR                sv402_srvheuristics;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_403))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_403
 struct SERVER_INFO_403
 {
     uint                 sv403_ulist_mtime;
@@ -4987,7 +5023,7 @@ struct SERVER_INFO_403
     PWSTR                sv403_autopath;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_502))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_502
 struct SERVER_INFO_502
 {
     uint sv502_sessopens;
@@ -5010,7 +5046,7 @@ struct SERVER_INFO_502
     BOOL sv502_lmannounce;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_503))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_503
 struct SERVER_INFO_503
 {
     uint  sv503_sessopens;
@@ -5164,91 +5200,91 @@ struct SERVER_INFO_598
     BOOL sv598_enableauthenticateusersharing;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1005))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1005
 struct SERVER_INFO_1005
 {
     PWSTR sv1005_comment;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1107))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1107
 struct SERVER_INFO_1107
 {
     uint sv1107_users;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1010))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1010
 struct SERVER_INFO_1010
 {
     int sv1010_disc;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1016))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1016
 struct SERVER_INFO_1016
 {
     SERVER_INFO_HIDDEN sv1016_hidden;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1017))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1017
 struct SERVER_INFO_1017
 {
     uint sv1017_announce;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1018))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1018
 struct SERVER_INFO_1018
 {
     uint sv1018_anndelta;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1501))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1501
 struct SERVER_INFO_1501
 {
     uint sv1501_sessopens;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1502))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1502
 struct SERVER_INFO_1502
 {
     uint sv1502_sessvcs;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1503))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1503
 struct SERVER_INFO_1503
 {
     uint sv1503_opensearch;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1506))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1506
 struct SERVER_INFO_1506
 {
     uint sv1506_maxworkitems;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1509))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1509
 struct SERVER_INFO_1509
 {
     uint sv1509_maxrawbuflen;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1510))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1510
 struct SERVER_INFO_1510
 {
     uint sv1510_sessusers;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1511))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1511
 struct SERVER_INFO_1511
 {
     uint sv1511_sessconns;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1512))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1512
 struct SERVER_INFO_1512
 {
     uint sv1512_maxnonpagedmemoryusage;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1513))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1513
 struct SERVER_INFO_1513
 {
     uint sv1513_maxpagedmemoryusage;
@@ -5259,19 +5295,19 @@ struct SERVER_INFO_1514
     BOOL sv1514_enablesoftcompat;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1515))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1515
 struct SERVER_INFO_1515
 {
     BOOL sv1515_enableforcedlogoff;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1516))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1516
 struct SERVER_INFO_1516
 {
     BOOL sv1516_timesource;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1518))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1518
 struct SERVER_INFO_1518
 {
     BOOL sv1518_lmannounce;
@@ -5292,7 +5328,7 @@ struct SERVER_INFO_1522
     uint sv1522_minkeepsearch;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1523))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1523
 struct SERVER_INFO_1523
 {
     uint sv1523_maxkeepsearch;
@@ -5308,25 +5344,25 @@ struct SERVER_INFO_1525
     uint sv1525_maxkeepcomplsearch;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1528))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1528
 struct SERVER_INFO_1528
 {
     uint sv1528_scavtimeout;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1529))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1529
 struct SERVER_INFO_1529
 {
     uint sv1529_minrcvqueue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1530))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1530
 struct SERVER_INFO_1530
 {
     uint sv1530_minfreeworkitems;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1533))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1533
 struct SERVER_INFO_1533
 {
     uint sv1533_maxmpxct;
@@ -5342,7 +5378,7 @@ struct SERVER_INFO_1535
     uint sv1535_oplockbreakresponsewait;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1536))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1536
 struct SERVER_INFO_1536
 {
     BOOL sv1536_enableoplocks;
@@ -5353,31 +5389,31 @@ struct SERVER_INFO_1537
     BOOL sv1537_enableoplockforceclose;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1538))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1538
 struct SERVER_INFO_1538
 {
     BOOL sv1538_enablefcbopens;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1539))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1539
 struct SERVER_INFO_1539
 {
     BOOL sv1539_enableraw;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1540))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1540
 struct SERVER_INFO_1540
 {
     BOOL sv1540_enablesharednetdrives;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1541))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1541
 struct SERVER_INFO_1541
 {
     BOOL sv1541_minfreeconnections;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1542))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1542
 struct SERVER_INFO_1542
 {
     BOOL sv1542_maxfreeconnections;
@@ -5388,7 +5424,7 @@ struct SERVER_INFO_1543
     uint sv1543_initsesstable;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1544))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1544
 struct SERVER_INFO_1544
 {
     uint sv1544_initconntable;
@@ -5419,13 +5455,13 @@ struct SERVER_INFO_1549
     uint sv1549_networkerrorthreshold;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1550))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1550
 struct SERVER_INFO_1550
 {
     uint sv1550_diskspacethreshold;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1552))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_info_1552
 struct SERVER_INFO_1552
 {
     uint sv1552_maxlinkdelay;
@@ -5666,7 +5702,7 @@ struct SERVER_INFO_1602
     BOOL sv_1598_disablestrictnamechecking;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_transport_info_0))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_transport_info_0
 struct SERVER_TRANSPORT_INFO_0
 {
     uint   svti0_numberofvcs;
@@ -5676,7 +5712,7 @@ struct SERVER_TRANSPORT_INFO_0
     PWSTR  svti0_networkaddress;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_transport_info_1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_transport_info_1
 struct SERVER_TRANSPORT_INFO_1
 {
     uint   svti1_numberofvcs;
@@ -5687,7 +5723,7 @@ struct SERVER_TRANSPORT_INFO_1
     PWSTR  svti1_domain;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_transport_info_2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_transport_info_2
 struct SERVER_TRANSPORT_INFO_2
 {
     uint   svti2_numberofvcs;
@@ -5699,7 +5735,7 @@ struct SERVER_TRANSPORT_INFO_2
     uint   svti2_flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_transport_info_3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmserver/ns-lmserver-server_transport_info_3
 struct SERVER_TRANSPORT_INFO_3
 {
     uint       svti3_numberofvcs;
@@ -5737,14 +5773,14 @@ struct SERVICE_INFO_2
     PWSTR svci2_display_name;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmuse/ns-lmuse-use_info_0))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmuse/ns-lmuse-use_info_0
 struct USE_INFO_0
 {
     PWSTR ui0_local;
     PWSTR ui0_remote;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmuse/ns-lmuse-use_info_1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmuse/ns-lmuse-use_info_1
 struct USE_INFO_1
 {
     PWSTR             ui1_local;
@@ -5756,7 +5792,7 @@ struct USE_INFO_1
     uint              ui1_usecount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmuse/ns-lmuse-use_info_2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmuse/ns-lmuse-use_info_2
 struct USE_INFO_2
 {
     PWSTR             ui2_local;
@@ -5770,7 +5806,7 @@ struct USE_INFO_2
     PWSTR             ui2_domainname;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmuse/ns-lmuse-use_info_3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmuse/ns-lmuse-use_info_3
 struct USE_INFO_3
 {
     USE_INFO_2 ui3_ui2;
@@ -5871,7 +5907,7 @@ struct USE_OPTION_PROPERTIES
     size_t Length;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmwksta/ns-lmwksta-wksta_info_100))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmwksta/ns-lmwksta-wksta_info_100
 struct WKSTA_INFO_100
 {
     uint  wki100_platform_id;
@@ -5881,7 +5917,7 @@ struct WKSTA_INFO_100
     uint  wki100_ver_minor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmwksta/ns-lmwksta-wksta_info_101))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmwksta/ns-lmwksta-wksta_info_101
 struct WKSTA_INFO_101
 {
     uint  wki101_platform_id;
@@ -5892,7 +5928,7 @@ struct WKSTA_INFO_101
     PWSTR wki101_lanroot;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmwksta/ns-lmwksta-wksta_info_102))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmwksta/ns-lmwksta-wksta_info_102
 struct WKSTA_INFO_102
 {
     uint  wki102_platform_id;
@@ -5953,7 +5989,7 @@ struct WKSTA_INFO_402
     uint  wki402_max_threads;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmwksta/ns-lmwksta-wksta_info_502))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmwksta/ns-lmwksta-wksta_info_502
 struct WKSTA_INFO_502
 {
     uint wki502_char_wait;
@@ -6153,13 +6189,13 @@ struct WKSTA_INFO_1062
     uint wki1062_read_ahead_throughput;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmwksta/ns-lmwksta-wksta_user_info_0))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmwksta/ns-lmwksta-wksta_user_info_0
 struct WKSTA_USER_INFO_0
 {
     PWSTR wkui0_username;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmwksta/ns-lmwksta-wksta_user_info_1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmwksta/ns-lmwksta-wksta_user_info_1
 struct WKSTA_USER_INFO_1
 {
     PWSTR wkui1_username;
@@ -6168,13 +6204,13 @@ struct WKSTA_USER_INFO_1
     PWSTR wkui1_logon_server;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmwksta/ns-lmwksta-wksta_user_info_1101))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmwksta/ns-lmwksta-wksta_user_info_1101
 struct WKSTA_USER_INFO_1101
 {
     PWSTR wkui1101_oth_domains;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmwksta/ns-lmwksta-wksta_transport_info_0))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmwksta/ns-lmwksta-wksta_transport_info_0
 struct WKSTA_TRANSPORT_INFO_0
 {
     uint  wkti0_quality_of_service;
@@ -6378,7 +6414,7 @@ struct AE_GENERIC
     uint ae_ge_param9;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmjoin/ns-lmjoin-dsreg_user_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmjoin/ns-lmjoin-dsreg_user_info
 struct DSREG_USER_INFO
 {
     PWSTR pszUserEmail;
@@ -6386,7 +6422,7 @@ struct DSREG_USER_INFO
     PWSTR pszUserKeyName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmjoin/ns-lmjoin-dsreg_join_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmjoin/ns-lmjoin-dsreg_join_info
 struct DSREG_JOIN_INFO
 {
     DSREG_JOIN_TYPE      joinType;
@@ -6403,7 +6439,7 @@ struct DSREG_JOIN_INFO
     DSREG_USER_INFO*     pUserInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmjoin/ns-lmjoin-netsetup_provisioning_params))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmjoin/ns-lmjoin-netsetup_provisioning_params
 struct NETSETUP_PROVISIONING_PARAMS
 {
     uint               dwVersion;
@@ -6423,7 +6459,7 @@ struct NETSETUP_PROVISIONING_PARAMS
     PWSTR              lpPrimaryDNSDomain;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmat/ns-lmat-at_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmat/ns-lmat-at_info
 struct AT_INFO
 {
     size_t JobTime;
@@ -6433,7 +6469,7 @@ struct AT_INFO
     PWSTR  Command;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmat/ns-lmat-at_enum))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmat/ns-lmat-at_enum
 struct AT_ENUM
 {
     uint   JobId;
@@ -6605,7 +6641,7 @@ uint NetGroupSetUsers(const(PWSTR) servername, const(PWSTR) groupname, uint leve
 @DllImport("NETAPI32.dll")
 uint NetLocalGroupAdd(const(PWSTR) servername, uint level, ubyte* buf, uint* parm_err);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/nf-lmaccess-netlocalgroupaddmember))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/nf-lmaccess-netlocalgroupaddmember
 @DllImport("NETAPI32.dll")
 uint NetLocalGroupAddMember(const(PWSTR) servername, const(PWSTR) groupname, PSID membersid);
 
@@ -6626,7 +6662,7 @@ uint NetLocalGroupSetInfo(const(PWSTR) servername, const(PWSTR) groupname, uint 
 @DllImport("NETAPI32.dll")
 uint NetLocalGroupDel(const(PWSTR) servername, const(PWSTR) groupname);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/nf-lmaccess-netlocalgroupdelmember))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/nf-lmaccess-netlocalgroupdelmember
 @DllImport("NETAPI32.dll")
 uint NetLocalGroupDelMember(const(PWSTR) servername, const(PWSTR) groupname, PSID membersid);
 
@@ -6701,7 +6737,7 @@ uint NetGetDCName(const(PWSTR) ServerName, const(PWSTR) DomainName, ubyte** Buff
 @DllImport("NETAPI32.dll")
 uint NetGetAnyDCName(const(PWSTR) ServerName, const(PWSTR) DomainName, ubyte** Buffer);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmaccess/nf-lmaccess-i_netlogoncontrol2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmaccess/nf-lmaccess-i_netlogoncontrol2
 @DllImport("NETAPI32.dll")
 uint I_NetLogonControl2(const(PWSTR) ServerName, uint FunctionCode, uint QueryLevel, ubyte* Data, ubyte** Buffer);
 
@@ -6859,20 +6895,20 @@ uint NetServerTransportDel(PWSTR servername, uint level, ubyte* bufptr);
 uint NetServerTransportEnum(PWSTR servername, uint level, ubyte** bufptr, uint prefmaxlen, uint* entriesread, 
                             uint* totalentries, uint* resume_handle);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/NetMgmt/netservicecontrol))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/NetMgmt/netservicecontrol
 @DllImport("NETAPI32.dll")
 uint NetServiceControl(const(PWSTR) servername, const(PWSTR) service, uint opcode, uint arg, ubyte** bufptr);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/NetMgmt/netserviceenum))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/NetMgmt/netserviceenum
 @DllImport("NETAPI32.dll")
 uint NetServiceEnum(const(PWSTR) servername, uint level, ubyte** bufptr, uint prefmaxlen, uint* entriesread, 
                     uint* totalentries, uint* resume_handle);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/NetMgmt/netservicegetinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/NetMgmt/netservicegetinfo
 @DllImport("NETAPI32.dll")
 uint NetServiceGetInfo(const(PWSTR) servername, const(PWSTR) service, uint level, ubyte** bufptr);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/NetMgmt/netserviceinstall))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/NetMgmt/netserviceinstall
 @DllImport("NETAPI32.dll")
 uint NetServiceInstall(const(PWSTR) servername, const(PWSTR) service, uint argc, const(PWSTR)* argv, 
                        ubyte** bufptr);
@@ -6915,11 +6951,11 @@ uint NetWkstaUserSetInfo(PWSTR reserved, uint level, ubyte* buf, uint* parm_err)
 uint NetWkstaUserEnum(PWSTR servername, uint level, ubyte** bufptr, uint prefmaxlen, uint* entriesread, 
                       uint* totalentries, uint* resumehandle);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmwksta/nf-lmwksta-netwkstatransportadd))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmwksta/nf-lmwksta-netwkstatransportadd
 @DllImport("NETAPI32.dll")
 uint NetWkstaTransportAdd(byte* servername, uint level, ubyte* buf, uint* parm_err);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmwksta/nf-lmwksta-netwkstatransportdel))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmwksta/nf-lmwksta-netwkstatransportdel
 @DllImport("NETAPI32.dll")
 uint NetWkstaTransportDel(PWSTR servername, PWSTR transportname, FORCE_LEVEL_FLAGS ucond);
 
@@ -6944,45 +6980,45 @@ uint NetApiBufferReallocate(void* OldBuffer, uint NewByteCount, void** NewBuffer
 @DllImport("NETAPI32.dll")
 uint NetApiBufferSize(void* Buffer, uint* ByteCount);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmerrlog/nf-lmerrlog-neterrorlogclear))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmerrlog/nf-lmerrlog-neterrorlogclear
 @DllImport("NETAPI32.dll")
 uint NetErrorLogClear(const(PWSTR) UncServerName, const(PWSTR) BackupFile, ubyte* Reserved);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmerrlog/nf-lmerrlog-neterrorlogread))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmerrlog/nf-lmerrlog-neterrorlogread
 @DllImport("NETAPI32.dll")
 uint NetErrorLogRead(const(PWSTR) UncServerName, PWSTR Reserved1, HLOG* ErrorLogHandle, uint Offset, 
                      uint* Reserved2, uint Reserved3, uint OffsetFlag, ubyte** BufPtr, uint PrefMaxSize, 
                      uint* BytesRead, uint* TotalAvailable);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmerrlog/nf-lmerrlog-neterrorlogwrite))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmerrlog/nf-lmerrlog-neterrorlogwrite
 @DllImport("NETAPI32.dll")
 uint NetErrorLogWrite(ubyte* Reserved1, uint Code, const(PWSTR) Component, ubyte* Buffer, uint NumBytes, 
                       ubyte* MsgBuf, uint StrCount, ubyte* Reserved2);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmconfig/nf-lmconfig-netconfigget))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmconfig/nf-lmconfig-netconfigget
 @DllImport("NETAPI32.dll")
 uint NetConfigGet(const(PWSTR) server, const(PWSTR) component, const(PWSTR) parameter, ubyte** bufptr);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmconfig/nf-lmconfig-netconfiggetall))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmconfig/nf-lmconfig-netconfiggetall
 @DllImport("NETAPI32.dll")
 uint NetConfigGetAll(const(PWSTR) server, const(PWSTR) component, ubyte** bufptr);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/lmconfig/nf-lmconfig-netconfigset))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/lmconfig/nf-lmconfig-netconfigset
 @DllImport("NETAPI32.dll")
 uint NetConfigSet(const(PWSTR) server, const(PWSTR) reserved1, const(PWSTR) component, uint level, uint reserved2, 
                   ubyte* buf, uint reserved3);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/NetMgmt/netauditclear))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/NetMgmt/netauditclear
 @DllImport("NETAPI32.dll")
 uint NetAuditClear(const(PWSTR) server, const(PWSTR) backupfile, const(PWSTR) service);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/NetMgmt/netauditread))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/NetMgmt/netauditread
 @DllImport("NETAPI32.dll")
 uint NetAuditRead(const(PWSTR) server, const(PWSTR) service, HLOG* auditloghandle, uint offset, uint* reserved1, 
                   uint reserved2, uint offsetflag, ubyte** bufptr, uint prefmaxlen, uint* bytesread, 
                   uint* totalavailable);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/NetMgmt/netauditwrite))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/NetMgmt/netauditwrite
 @DllImport("NETAPI32.dll")
 uint NetAuditWrite(uint type, ubyte* buf, uint numbytes, const(PWSTR) service, ubyte* reserved);
 

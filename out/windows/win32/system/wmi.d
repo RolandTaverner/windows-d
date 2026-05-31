@@ -3,9 +3,9 @@
 module windows.win32.system.wmi;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BSTR, HRESULT, PWSTR, VARIANT_BOOL;
-public import windows.win32.system.com : IDispatch, IUnknown, SAFEARRAY;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BSTR, HRESULT, PWSTR, VARIANT_BOOL;
+public import windows.win32.system.com.com : IDispatch, IUnknown, SAFEARRAY;
 public import windows.win32.system.variant : VARIANT;
 
 extern(Windows) @nogc nothrow:
@@ -13,7 +13,8 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ne-mi-mi_result))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ne-mi-mi_result
 alias MI_Result = int;
 enum : int
 {
@@ -45,7 +46,8 @@ enum : int
     MI_RESULT_SERVER_LIMITS_EXCEEDED              = 0x0000001b,
     MI_RESULT_SERVER_IS_SHUTTING_DOWN             = 0x0000001c,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ne-mi-mi_errorcategory))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ne-mi-mi_errorcategory
 alias MI_ErrorCategory = int;
 enum : int
 {
@@ -82,14 +84,16 @@ enum : int
     MI_ERRORCATEGORY_QUOTA_EXCEEDED       = 0x0000001e,
     MI_ERRORCATEGORY_NOT_ENABLED          = 0x0000001f,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ne-mi-mi_prompttype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ne-mi-mi_prompttype
 alias MI_PromptType = int;
 enum : int
 {
     MI_PROMPTTYPE_NORMAL   = 0x00000000,
     MI_PROMPTTYPE_CRITICAL = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ne-mi-mi_callbackmode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ne-mi-mi_callbackmode
 alias MI_CallbackMode = int;
 enum : int
 {
@@ -97,14 +101,16 @@ enum : int
     MI_CALLBACKMODE_INQUIRE = 0x00000001,
     MI_CALLBACKMODE_IGNORE  = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ne-mi-mi_providerarchitecture))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ne-mi-mi_providerarchitecture
 alias MI_ProviderArchitecture = int;
 enum : int
 {
     MI_PROVIDER_ARCHITECTURE_32BIT = 0x00000000,
     MI_PROVIDER_ARCHITECTURE_64BIT = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ne-mi-mi_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ne-mi-mi_type
 alias MI_Type = int;
 enum : int
 {
@@ -142,7 +148,8 @@ enum : int
     MI_INSTANCEA  = 0x0000001f,
     MI_ARRAY      = 0x00000010,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ne-mi-mi_localetype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ne-mi-mi_localetype
 alias MI_LocaleType = int;
 enum : int
 {
@@ -151,7 +158,8 @@ enum : int
     MI_LOCALE_TYPE_CLOSEST_UI     = 0x00000002,
     MI_LOCALE_TYPE_CLOSEST_DATA   = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ne-mi-mi_cancellationreason))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ne-mi-mi_cancellationreason
 alias MI_CancellationReason = int;
 enum : int
 {
@@ -160,7 +168,8 @@ enum : int
     MI_REASON_SHUTDOWN    = 0x00000002,
     MI_REASON_SERVICESTOP = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ne-mi-mi_operationcallback_responsetype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ne-mi-mi_operationcallback_responsetype
 alias MI_OperationCallback_ResponseType = int;
 enum : int
 {
@@ -169,14 +178,16 @@ enum : int
     MI_OperationCallback_ResponseType_NoToAll  = 0x00000002,
     MI_OperationCallback_ResponseType_YesToAll = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ne-mi-mi_subscriptiondeliverytype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ne-mi-mi_subscriptiondeliverytype
 alias MI_SubscriptionDeliveryType = int;
 enum : int
 {
     MI_SubscriptionDeliveryType_Pull = 0x00000001,
     MI_SubscriptionDeliveryType_Push = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ne-mi-mi_destinationoptions_impersonationtype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ne-mi-mi_destinationoptions_impersonationtype
 alias MI_DestinationOptions_ImpersonationType = int;
 enum : int
 {
@@ -186,6 +197,7 @@ enum : int
     MI_DestinationOptions_ImpersonationType_Impersonate = 0x00000003,
     MI_DestinationOptions_ImpersonationType_Delegate    = 0x00000004,
 }
+
 alias WBEM_PATH_STATUS_FLAG = int;
 enum : int
 {
@@ -208,6 +220,7 @@ enum : int
     WBEMPATH_INFO_WMI_PATH              = 0x00010000,
     WBEMPATH_INFO_PATH_HAD_SERVER       = 0x00020000,
 }
+
 alias WBEM_PATH_CREATE_FLAG = int;
 enum : int
 {
@@ -216,6 +229,7 @@ enum : int
     WBEMPATH_CREATE_ACCEPT_ALL        = 0x00000004,
     WBEMPATH_TREAT_SINGLE_IDENT_AS_NS = 0x00000008,
 }
+
 alias WBEM_GET_TEXT_FLAGS = int;
 enum : int
 {
@@ -226,13 +240,15 @@ enum : int
     WBEMPATH_GET_NAMESPACE_ONLY            = 0x00000010,
     WBEMPATH_GET_ORIGINAL                  = 0x00000020,
 }
+
 alias WBEM_GET_KEY_FLAGS = int;
 enum : int
 {
     WBEMPATH_TEXT       = 0x00000001,
     WBEMPATH_QUOTEDTEXT = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/ne-wmiutils-wmiq_analysis_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/ne-wmiutils-wmiq_analysis_type
 alias WMIQ_ANALYSIS_TYPE = int;
 enum : int
 {
@@ -242,7 +258,8 @@ enum : int
     WMIQ_ANALYSIS_QUERY_TEXT           = 0x00000004,
     WMIQ_ANALYSIS_RESERVED             = 0x08000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/ne-wmiutils-wmiq_rpn_token_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/ne-wmiutils-wmiq_rpn_token_flags
 alias WMIQ_RPN_TOKEN_FLAGS = int;
 enum : int
 {
@@ -280,7 +297,8 @@ enum : int
     WMIQ_RPN_FROM_CLASS_LIST     = 0x00000004,
     WMIQ_RPN_FROM_MULTIPLE       = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/ne-wmiutils-wmiq_assocq_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/ne-wmiutils-wmiq_assocq_flags
 alias WMIQ_ASSOCQ_FLAGS = int;
 enum : int
 {
@@ -297,6 +315,7 @@ enum : int
     WMIQ_ASSOCQ_SCHEMAONLY             = 0x00000400,
     WMIQ_ASSOCQ_CLASSREFSONLY          = 0x00000800,
 }
+
 alias WMIQ_LANGUAGE_FEATURES = int;
 enum : int
 {
@@ -342,6 +361,7 @@ enum : int
     WMIQ_LF40_BETWEEN                    = 0x00000028,
     WMIQ_LF_LAST                         = 0x00000028,
 }
+
 alias WMIQ_RPNF_FEATURE = int;
 enum : int
 {
@@ -360,14 +380,16 @@ enum : int
     WMIQ_RPNF_GROUP_BY_HAVING      = 0x00001000,
     WMIQ_RPNF_ARRAY_ACCESS_USED    = 0x00002000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/ne-wbemcli-wbem_genus_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/ne-wbemcli-wbem_genus_type
 alias WBEM_GENUS_TYPE = int;
 enum : int
 {
     WBEM_GENUS_CLASS    = 0x00000001,
     WBEM_GENUS_INSTANCE = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/ne-wbemcli-wbem_change_flag_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/ne-wbemcli-wbem_change_flag_type
 alias WBEM_CHANGE_FLAG_TYPE = int;
 enum : int
 {
@@ -380,7 +402,8 @@ enum : int
     WBEM_MASK_UPDATE_MODE       = 0x00000060,
     WBEM_FLAG_ADVISORY          = 0x00010000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/ne-wbemcli-wbem_generic_flag_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/ne-wbemcli-wbem_generic_flag_type
 alias WBEM_GENERIC_FLAG_TYPE = int;
 enum : int
 {
@@ -401,7 +424,8 @@ enum : int
     WBEM_FLAG_USE_AMENDED_QUALIFIERS = 0x00020000,
     WBEM_FLAG_STRONG_VALIDATION      = 0x00100000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/ne-wbemcli-wbem_status_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/ne-wbemcli-wbem_status_type
 alias WBEM_STATUS_TYPE = int;
 enum : int
 {
@@ -414,7 +438,8 @@ enum : int
     WBEM_STATUS_LOGGING_INFORMATION_REPOSITORY = 0x00000800,
     WBEM_STATUS_LOGGING_INFORMATION_ESS        = 0x00001000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/ne-wbemcli-wbem_condition_flag_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/ne-wbemcli-wbem_condition_flag_type
 alias WBEM_CONDITION_FLAG_TYPE = int;
 enum : int
 {
@@ -434,7 +459,8 @@ enum : int
     WBEM_FLAG_CLASS_LOCAL_AND_OVERRIDES = 0x00000200,
     WBEM_MASK_CLASS_CONDITION           = 0x00000300,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/ne-wbemcli-wbem_flavor_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/ne-wbemcli-wbem_flavor_type
 alias WBEM_FLAVOR_TYPE = int;
 enum : int
 {
@@ -453,7 +479,8 @@ enum : int
     WBEM_FLAVOR_AMENDED                         = 0x00000080,
     WBEM_FLAVOR_MASK_AMENDED                    = 0x00000080,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/ne-wbemcli-wbem_query_flag_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/ne-wbemcli-wbem_query_flag_type
 alias WBEM_QUERY_FLAG_TYPE = int;
 enum : int
 {
@@ -461,7 +488,8 @@ enum : int
     WBEM_FLAG_SHALLOW   = 0x00000001,
     WBEM_FLAG_PROTOTYPE = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/ne-wbemcli-wbem_security_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/ne-wbemcli-wbem_security_flags
 alias WBEM_SECURITY_FLAGS = int;
 enum : int
 {
@@ -474,19 +502,22 @@ enum : int
     WBEM_RIGHT_SUBSCRIBE   = 0x00000040,
     WBEM_RIGHT_PUBLISH     = 0x00000080,
 }
+
 alias WBEM_LIMITATION_FLAG_TYPE = int;
 enum : int
 {
     WBEM_FLAG_EXCLUDE_OBJECT_QUALIFIERS   = 0x00000010,
     WBEM_FLAG_EXCLUDE_PROPERTY_QUALIFIERS = 0x00000020,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/ne-wbemcli-wbem_text_flag_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/ne-wbemcli-wbem_text_flag_type
 alias WBEM_TEXT_FLAG_TYPE = int;
 enum : int
 {
     WBEM_FLAG_NO_FLAVORS = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/ne-wbemcli-wbem_comparison_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/ne-wbemcli-wbem_comparison_flag
 alias WBEM_COMPARISON_FLAG = int;
 enum : int
 {
@@ -498,12 +529,14 @@ enum : int
     WBEM_FLAG_IGNORE_CASE           = 0x00000010,
     WBEM_FLAG_IGNORE_FLAVOR         = 0x00000020,
 }
+
 alias WBEM_LOCKING_FLAG_TYPE = int;
 enum : int
 {
     WBEM_FLAG_ALLOW_READ = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/ne-wbemcli-cimtype_enumeration))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/ne-wbemcli-cimtype_enumeration
 alias CIMTYPE_ENUMERATION = int;
 enum : int
 {
@@ -527,20 +560,23 @@ enum : int
     CIM_OBJECT     = 0x0000000d,
     CIM_FLAG_ARRAY = 0x00002000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/ne-wbemcli-wbem_backup_restore_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/ne-wbemcli-wbem_backup_restore_flags
 alias WBEM_BACKUP_RESTORE_FLAGS = int;
 enum : int
 {
     WBEM_FLAG_BACKUP_RESTORE_DEFAULT        = 0x00000000,
     WBEM_FLAG_BACKUP_RESTORE_FORCE_SHUTDOWN = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/ne-wbemcli-wbem_refresher_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/ne-wbemcli-wbem_refresher_flags
 alias WBEM_REFRESHER_FLAGS = int;
 enum : int
 {
     WBEM_FLAG_REFRESH_AUTO_RECONNECT    = 0x00000000,
     WBEM_FLAG_REFRESH_NO_AUTO_RECONNECT = 0x00000001,
 }
+
 alias WBEM_SHUTDOWN_FLAGS = int;
 enum : int
 {
@@ -548,13 +584,15 @@ enum : int
     WBEM_SHUTDOWN_WMI              = 0x00000002,
     WBEM_SHUTDOWN_OS               = 0x00000003,
 }
+
 alias WBEMSTATUS_FORMAT = int;
 enum : int
 {
     WBEMSTATUS_FORMAT_NEWLINE    = 0x00000000,
     WBEMSTATUS_FORMAT_NO_NEWLINE = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/ne-wbemcli-wbem_limits))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/ne-wbemcli-wbem_limits
 alias WBEM_LIMITS = int;
 enum : int
 {
@@ -564,7 +602,8 @@ enum : int
     WBEM_MAX_OBJECT_NESTING  = 0x00000040,
     WBEM_MAX_USER_PROPERTIES = 0x00000400,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/ne-wbemcli-wbemstatus))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/ne-wbemcli-wbemstatus
 alias WBEMSTATUS = int;
 enum : int
 {
@@ -762,7 +801,8 @@ enum : int
     WBEMMOF_E_ERROR_INVALID_INCLUDE_FILE      = 0x80044030,
     WBEMMOF_E_INVALID_DELETECLASS_SYNTAX      = 0x80044031,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/ne-wbemcli-wmi_obj_text))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/ne-wbemcli-wmi_obj_text
 alias WMI_OBJ_TEXT = int;
 enum : int
 {
@@ -780,7 +820,8 @@ enum : int
     WMI_OBJ_TEXT_WMI_EXT10   = 0x0000000c,
     WMI_OBJ_TEXT_LAST        = 0x0000000d,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/ne-wbemcli-wbem_compiler_options))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/ne-wbemcli-wbem_compiler_options
 alias WBEM_COMPILER_OPTIONS = int;
 enum : int
 {
@@ -792,6 +833,7 @@ enum : int
     WBEM_FLAG_SPLIT_FILES      = 0x00000020,
     WBEM_FLAG_STORE_FILE       = 0x00000100,
 }
+
 alias WBEM_CONNECT_OPTIONS = int;
 enum : int
 {
@@ -799,7 +841,8 @@ enum : int
     WBEM_FLAG_CONNECT_USE_MAX_WAIT    = 0x00000080,
     WBEM_FLAG_CONNECT_PROVIDERS       = 0x00000100,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/ne-wbemcli-wbem_unsecapp_flag_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/ne-wbemcli-wbem_unsecapp_flag_type
 alias WBEM_UNSECAPP_FLAG_TYPE = int;
 enum : int
 {
@@ -807,12 +850,14 @@ enum : int
     WBEM_FLAG_UNSECAPP_CHECK_ACCESS         = 0x00000001,
     WBEM_FLAG_UNSECAPP_DONT_CHECK_ACCESS    = 0x00000002,
 }
+
 alias WBEM_INFORMATION_FLAG_TYPE = int;
 enum : int
 {
     WBEM_FLAG_SHORT_NAME = 0x00000001,
     WBEM_FLAG_LONG_NAME  = 0x00000002,
 }
+
 alias WBEM_PROVIDER_REQUIREMENTS_TYPE = int;
 enum : int
 {
@@ -820,6 +865,7 @@ enum : int
     WBEM_REQUIREMENTS_STOP_POSTFILTER       = 0x00000001,
     WBEM_REQUIREMENTS_RECHECK_SUBSCRIPTIONS = 0x00000002,
 }
+
 alias WBEM_EXTRA_RETURN_CODES = int;
 enum : int
 {
@@ -830,11 +876,13 @@ enum : int
     WBEM_E_RETRY_LATER         = 0x80043001,
     WBEM_E_RESOURCE_CONTENTION = 0x80043002,
 }
+
 alias WBEM_PROVIDER_FLAGS = int;
 enum : int
 {
     WBEM_FLAG_OWNER_UPDATE = 0x00010000,
 }
+
 alias WBEM_BATCH_TYPE = int;
 enum : int
 {
@@ -842,7 +890,8 @@ enum : int
     WBEM_FLAG_MUST_BATCH      = 0x00000001,
     WBEM_FLAG_MUST_NOT_BATCH  = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemdisp/ne-wbemdisp-wbemchangeflagenum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemdisp/ne-wbemdisp-wbemchangeflagenum
 enum WbemChangeFlagEnum : int
 {
     wbemChangeFlagCreateOrUpdate   = 0x00000000,
@@ -854,7 +903,8 @@ enum WbemChangeFlagEnum : int
     wbemChangeFlagStrongValidation = 0x00000080,
     wbemChangeFlagAdvisory         = 0x00010000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemdisp/ne-wbemdisp-wbemflagenum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemdisp/ne-wbemdisp-wbemflagenum
 enum WbemFlagEnum : int
 {
     wbemFlagReturnImmediately    = 0x00000010,
@@ -873,24 +923,28 @@ enum WbemFlagEnum : int
     wbemFlagSpawnInstance        = 0x00000001,
     wbemFlagUseCurrentTime       = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemdisp/ne-wbemdisp-wbemqueryflagenum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemdisp/ne-wbemdisp-wbemqueryflagenum
 enum WbemQueryFlagEnum : int
 {
     wbemQueryFlagDeep      = 0x00000000,
     wbemQueryFlagShallow   = 0x00000001,
     wbemQueryFlagPrototype = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemdisp/ne-wbemdisp-wbemtextflagenum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemdisp/ne-wbemdisp-wbemtextflagenum
 enum WbemTextFlagEnum : int
 {
     wbemTextFlagNoFlavors = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemdisp/ne-wbemdisp-wbemtimeout))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemdisp/ne-wbemdisp-wbemtimeout
 enum WbemTimeout : int
 {
     wbemTimeoutInfinite = 0xffffffff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemdisp/ne-wbemdisp-wbemcomparisonflagenum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemdisp/ne-wbemdisp-wbemcomparisonflagenum
 enum WbemComparisonFlagEnum : int
 {
     wbemComparisonFlagIncludeAll          = 0x00000000,
@@ -901,7 +955,8 @@ enum WbemComparisonFlagEnum : int
     wbemComparisonFlagIgnoreCase          = 0x00000010,
     wbemComparisonFlagIgnoreFlavor        = 0x00000020,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemdisp/ne-wbemdisp-wbemcimtypeenum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemdisp/ne-wbemdisp-wbemcimtypeenum
 enum WbemCimtypeEnum : int
 {
     wbemCimtypeSint8     = 0x00000010,
@@ -921,7 +976,8 @@ enum WbemCimtypeEnum : int
     wbemCimtypeChar16    = 0x00000067,
     wbemCimtypeObject    = 0x0000000d,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemdisp/ne-wbemdisp-wbemerrorenum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemdisp/ne-wbemdisp-wbemerrorenum
 enum WbemErrorEnum : int
 {
     wbemNoErr                           = 0x00000000,
@@ -1053,7 +1109,8 @@ enum WbemErrorEnum : int
     wbemErrTimedout                     = 0x80043001,
     wbemErrResetToDefault               = 0x80043002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemdisp/ne-wbemdisp-wbemauthenticationlevelenum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemdisp/ne-wbemdisp-wbemauthenticationlevelenum
 enum WbemAuthenticationLevelEnum : int
 {
     wbemAuthenticationLevelDefault      = 0x00000000,
@@ -1064,7 +1121,8 @@ enum WbemAuthenticationLevelEnum : int
     wbemAuthenticationLevelPktIntegrity = 0x00000005,
     wbemAuthenticationLevelPktPrivacy   = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemdisp/ne-wbemdisp-wbemimpersonationlevelenum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemdisp/ne-wbemdisp-wbemimpersonationlevelenum
 enum WbemImpersonationLevelEnum : int
 {
     wbemImpersonationLevelAnonymous   = 0x00000001,
@@ -1072,7 +1130,8 @@ enum WbemImpersonationLevelEnum : int
     wbemImpersonationLevelImpersonate = 0x00000003,
     wbemImpersonationLevelDelegate    = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemdisp/ne-wbemdisp-wbemprivilegeenum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemdisp/ne-wbemdisp-wbemprivilegeenum
 enum WbemPrivilegeEnum : int
 {
     wbemPrivilegeCreateToken          = 0x00000001,
@@ -1103,17 +1162,20 @@ enum WbemPrivilegeEnum : int
     wbemPrivilegeEnableDelegation     = 0x0000001a,
     wbemPrivilegeManageVolume         = 0x0000001b,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemdisp/ne-wbemdisp-wbemobjecttextformatenum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemdisp/ne-wbemdisp-wbemobjecttextformatenum
 enum WbemObjectTextFormatEnum : int
 {
     wbemObjectTextFormatCIMDTD20 = 0x00000001,
     wbemObjectTextFormatWMIDTD20 = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemdisp/ne-wbemdisp-wbemconnectoptionsenum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemdisp/ne-wbemdisp-wbemconnectoptionsenum
 enum WbemConnectOptionsEnum : int
 {
     wbemConnectFlagUseMaxWait = 0x00000080,
 }
+
 alias WBEM_LOGIN_TYPE = int;
 enum : int
 {
@@ -1129,90 +1191,90 @@ enum : int
 
 enum : uint
 {
-    MI_FLAG_ANY     = 0x0000007f,
-    MI_FLAG_VERSION = 0x1c000000,
-    MI_FLAG_ADOPT   = 0x80000000,
+    MI_FLAG_ANY     = 0x0000007fU,
+    MI_FLAG_VERSION = 0x1c000000U,
+    MI_FLAG_ADOPT   = 0x80000000U,
 }
 
-enum uint MI_CHAR_TYPE = 0x00000002;
+enum uint MI_CHAR_TYPE = 0x00000002U;
 
 enum : uint
 {
-    MI_FLAG_CLASS          = 0x00000001,
-    MI_FLAG_METHOD         = 0x00000002,
-    MI_FLAG_PROPERTY       = 0x00000004,
-    MI_FLAG_PARAMETER      = 0x00000008,
-    MI_FLAG_ASSOCIATION    = 0x00000010,
-    MI_FLAG_INDICATION     = 0x00000020,
-    MI_FLAG_REFERENCE      = 0x00000040,
-    MI_FLAG_ENABLEOVERRIDE = 0x00000080,
+    MI_FLAG_CLASS          = 0x00000001U,
+    MI_FLAG_METHOD         = 0x00000002U,
+    MI_FLAG_PROPERTY       = 0x00000004U,
+    MI_FLAG_PARAMETER      = 0x00000008U,
+    MI_FLAG_ASSOCIATION    = 0x00000010U,
+    MI_FLAG_INDICATION     = 0x00000020U,
+    MI_FLAG_REFERENCE      = 0x00000040U,
+    MI_FLAG_ENABLEOVERRIDE = 0x00000080U,
 }
 
-enum uint MI_FLAG_DISABLEOVERRIDE = 0x00000100;
+enum uint MI_FLAG_DISABLEOVERRIDE = 0x00000100U;
 
 enum : uint
 {
-    MI_FLAG_RESTRICTED   = 0x00000200,
-    MI_FLAG_TOSUBCLASS   = 0x00000400,
-    MI_FLAG_TRANSLATABLE = 0x00000800,
-}
-
-enum : uint
-{
-    MI_FLAG_KEY          = 0x00001000,
-    MI_FLAG_IN           = 0x00002000,
-    MI_FLAG_OUT          = 0x00004000,
-    MI_FLAG_REQUIRED     = 0x00008000,
-    MI_FLAG_STATIC       = 0x00010000,
-    MI_FLAG_ABSTRACT     = 0x00020000,
-    MI_FLAG_TERMINAL     = 0x00040000,
-    MI_FLAG_EXPENSIVE    = 0x00080000,
-    MI_FLAG_STREAM       = 0x00100000,
-    MI_FLAG_READONLY     = 0x00200000,
-    MI_FLAG_EXTENDED     = 0x00001000,
-    MI_FLAG_NOT_MODIFIED = 0x02000000,
-    MI_FLAG_NULL         = 0x20000000,
-    MI_FLAG_BORROW       = 0x40000000,
+    MI_FLAG_RESTRICTED   = 0x00000200U,
+    MI_FLAG_TOSUBCLASS   = 0x00000400U,
+    MI_FLAG_TRANSLATABLE = 0x00000800U,
 }
 
 enum : uint
 {
-    MI_MODULE_FLAG_STANDARD_QUALIFIERS = 0x00000001,
-    MI_MODULE_FLAG_DESCRIPTIONS        = 0x00000002,
-    MI_MODULE_FLAG_VALUES              = 0x00000004,
-    MI_MODULE_FLAG_MAPPING_STRINGS     = 0x00000008,
-    MI_MODULE_FLAG_BOOLEANS            = 0x00000010,
-    MI_MODULE_FLAG_CPLUSPLUS           = 0x00000020,
-    MI_MODULE_FLAG_LOCALIZED           = 0x00000040,
-    MI_MODULE_FLAG_FILTER_SUPPORT      = 0x00000080,
+    MI_FLAG_KEY          = 0x00001000U,
+    MI_FLAG_IN           = 0x00002000U,
+    MI_FLAG_OUT          = 0x00004000U,
+    MI_FLAG_REQUIRED     = 0x00008000U,
+    MI_FLAG_STATIC       = 0x00010000U,
+    MI_FLAG_ABSTRACT     = 0x00020000U,
+    MI_FLAG_TERMINAL     = 0x00040000U,
+    MI_FLAG_EXPENSIVE    = 0x00080000U,
+    MI_FLAG_STREAM       = 0x00100000U,
+    MI_FLAG_READONLY     = 0x00200000U,
+    MI_FLAG_EXTENDED     = 0x00001000U,
+    MI_FLAG_NOT_MODIFIED = 0x02000000U,
+    MI_FLAG_NULL         = 0x20000000U,
+    MI_FLAG_BORROW       = 0x40000000U,
 }
-
-enum uint MI_MAX_LOCALE_SIZE = 0x00000080;
 
 enum : uint
 {
-    MI_WRITEMESSAGE_CHANNEL_WARNING = 0x00000000,
-    MI_WRITEMESSAGE_CHANNEL_VERBOSE = 0x00000001,
-    MI_WRITEMESSAGE_CHANNEL_DEBUG   = 0x00000002,
+    MI_MODULE_FLAG_STANDARD_QUALIFIERS = 0x00000001U,
+    MI_MODULE_FLAG_DESCRIPTIONS        = 0x00000002U,
+    MI_MODULE_FLAG_VALUES              = 0x00000004U,
+    MI_MODULE_FLAG_MAPPING_STRINGS     = 0x00000008U,
+    MI_MODULE_FLAG_BOOLEANS            = 0x00000010U,
+    MI_MODULE_FLAG_CPLUSPLUS           = 0x00000020U,
+    MI_MODULE_FLAG_LOCALIZED           = 0x00000040U,
+    MI_MODULE_FLAG_FILTER_SUPPORT      = 0x00000080U,
 }
 
-enum uint MI_CALL_VERSION = 0x00000001;
+enum uint MI_MAX_LOCALE_SIZE = 0x00000080U;
 
 enum : uint
 {
-    MI_OPERATIONFLAGS_MANUAL_ACK_RESULTS                = 0x00000001,
-    MI_OPERATIONFLAGS_NO_RTTI                           = 0x00000400,
-    MI_OPERATIONFLAGS_BASIC_RTTI                        = 0x00000002,
-    MI_OPERATIONFLAGS_STANDARD_RTTI                     = 0x00000800,
-    MI_OPERATIONFLAGS_FULL_RTTI                         = 0x00000004,
-    MI_OPERATIONFLAGS_DEFAULT_RTTI                      = 0x00000000,
-    MI_OPERATIONFLAGS_LOCALIZED_QUALIFIERS              = 0x00000008,
-    MI_OPERATIONFLAGS_EXPENSIVE_PROPERTIES              = 0x00000040,
-    MI_OPERATIONFLAGS_POLYMORPHISM_SHALLOW              = 0x00000080,
-    MI_OPERATIONFLAGS_POLYMORPHISM_DEEP_BASE_PROPS_ONLY = 0x00000180,
+    MI_WRITEMESSAGE_CHANNEL_WARNING = 0x00000000U,
+    MI_WRITEMESSAGE_CHANNEL_VERBOSE = 0x00000001U,
+    MI_WRITEMESSAGE_CHANNEL_DEBUG   = 0x00000002U,
 }
 
-enum uint MI_OPERATIONFLAGS_REPORT_OPERATION_STARTED = 0x00000200;
+enum uint MI_CALL_VERSION = 0x00000001U;
+
+enum : uint
+{
+    MI_OPERATIONFLAGS_MANUAL_ACK_RESULTS                = 0x00000001U,
+    MI_OPERATIONFLAGS_NO_RTTI                           = 0x00000400U,
+    MI_OPERATIONFLAGS_BASIC_RTTI                        = 0x00000002U,
+    MI_OPERATIONFLAGS_STANDARD_RTTI                     = 0x00000800U,
+    MI_OPERATIONFLAGS_FULL_RTTI                         = 0x00000004U,
+    MI_OPERATIONFLAGS_DEFAULT_RTTI                      = 0x00000000U,
+    MI_OPERATIONFLAGS_LOCALIZED_QUALIFIERS              = 0x00000008U,
+    MI_OPERATIONFLAGS_EXPENSIVE_PROPERTIES              = 0x00000040U,
+    MI_OPERATIONFLAGS_POLYMORPHISM_SHALLOW              = 0x00000080U,
+    MI_OPERATIONFLAGS_POLYMORPHISM_DEEP_BASE_PROPS_ONLY = 0x00000180U,
+}
+
+enum uint MI_OPERATIONFLAGS_REPORT_OPERATION_STARTED = 0x00000200U;
 
 enum : const(wchar)*
 {
@@ -1222,18 +1284,18 @@ enum : const(wchar)*
 
 enum : uint
 {
-    MI_SERIALIZER_FLAGS_CLASS_DEEP          = 0x00000001,
-    MI_SERIALIZER_FLAGS_INSTANCE_WITH_CLASS = 0x00000001,
+    MI_SERIALIZER_FLAGS_CLASS_DEEP          = 0x00000001U,
+    MI_SERIALIZER_FLAGS_INSTANCE_WITH_CLASS = 0x00000001U,
 }
 
 enum : uint
 {
-    WBEMS_DISPID_DERIVATION       = 0x00000017,
-    WBEMS_DISPID_OBJECT_READY     = 0x00000001,
-    WBEMS_DISPID_COMPLETED        = 0x00000002,
-    WBEMS_DISPID_PROGRESS         = 0x00000003,
-    WBEMS_DISPID_OBJECT_PUT       = 0x00000004,
-    WBEMS_DISPID_CONNECTION_READY = 0x00000005,
+    WBEMS_DISPID_DERIVATION       = 0x00000017U,
+    WBEMS_DISPID_OBJECT_READY     = 0x00000001U,
+    WBEMS_DISPID_COMPLETED        = 0x00000002U,
+    WBEMS_DISPID_PROGRESS         = 0x00000003U,
+    WBEMS_DISPID_OBJECT_PUT       = 0x00000004U,
+    WBEMS_DISPID_CONNECTION_READY = 0x00000005U,
 }
 
 enum : int
@@ -1331,7 +1393,7 @@ struct MI_Module_Self
     ptrdiff_t Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_timestamp))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_timestamp
 struct MI_Timestamp
 {
     uint year;
@@ -1344,7 +1406,7 @@ struct MI_Timestamp
     int  utc;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_interval))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_interval
 struct MI_Interval
 {
     uint days;
@@ -1357,245 +1419,249 @@ struct MI_Interval
     uint __padding3;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_datetime))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_datetime
 struct MI_Datetime
 {
-    uint        isTimestamp;
-    _u_e__Union u;
+    uint isTimestamp;
+    union u
+    {
+        MI_Timestamp timestamp;
+        MI_Interval  interval;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_booleana))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_booleana
 struct MI_BooleanA
 {
     ubyte* data;
     uint   size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_uint8a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_uint8a
 struct MI_Uint8A
 {
     ubyte* data;
     uint   size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_sint8a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_sint8a
 struct MI_Sint8A
 {
     byte* data;
     uint  size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_uint16a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_uint16a
 struct MI_Uint16A
 {
     ushort* data;
     uint    size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_sint16a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_sint16a
 struct MI_Sint16A
 {
     short* data;
     uint   size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_uint32a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_uint32a
 struct MI_Uint32A
 {
     uint* data;
     uint  size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_sint32a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_sint32a
 struct MI_Sint32A
 {
     int* data;
     uint size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_uint64a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_uint64a
 struct MI_Uint64A
 {
     ulong* data;
     uint   size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_sint64a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_sint64a
 struct MI_Sint64A
 {
     long* data;
     uint  size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_real32a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_real32a
 struct MI_Real32A
 {
     float* data;
     uint   size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_real64a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_real64a
 struct MI_Real64A
 {
     double* data;
     uint    size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_char16a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_char16a
 struct MI_Char16A
 {
     ushort* data;
     uint    size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_datetimea))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_datetimea
 struct MI_DatetimeA
 {
     MI_Datetime* data;
     uint         size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_stringa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_stringa
 struct MI_StringA
 {
     ushort** data;
     uint     size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_referencea))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_referencea
 struct MI_ReferenceA
 {
     MI_Instance** data;
     uint          size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_instancea))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_instancea
 struct MI_InstanceA
 {
     MI_Instance** data;
     uint          size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_array))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_array
 struct MI_Array
 {
     void* data;
     uint  size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constbooleana))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constbooleana
 struct MI_ConstBooleanA
 {
     const(ubyte)* data;
     uint          size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constuint8a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constuint8a
 struct MI_ConstUint8A
 {
     const(ubyte)* data;
     uint          size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constsint8a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constsint8a
 struct MI_ConstSint8A
 {
     const(byte)* data;
     uint         size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constuint16a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constuint16a
 struct MI_ConstUint16A
 {
     const(ushort)* data;
     uint           size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constsint16a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constsint16a
 struct MI_ConstSint16A
 {
     const(short)* data;
     uint          size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constuint32a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constuint32a
 struct MI_ConstUint32A
 {
     const(uint)* data;
     uint         size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constsint32a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constsint32a
 struct MI_ConstSint32A
 {
     const(int)* data;
     uint        size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constuint64a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constuint64a
 struct MI_ConstUint64A
 {
     const(ulong)* data;
     uint          size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constsint64a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constsint64a
 struct MI_ConstSint64A
 {
     const(long)* data;
     uint         size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constreal32a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constreal32a
 struct MI_ConstReal32A
 {
     const(float)* data;
     uint          size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constreal64a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constreal64a
 struct MI_ConstReal64A
 {
     const(double)* data;
     uint           size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constchar16a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constchar16a
 struct MI_ConstChar16A
 {
     const(ushort)* data;
     uint           size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constdatetimea))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constdatetimea
 struct MI_ConstDatetimeA
 {
     const(MI_Datetime)* data;
     uint                size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_conststringa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_conststringa
 struct MI_ConstStringA
 {
     const(ushort)** data;
     uint            size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constreferencea))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constreferencea
 struct MI_ConstReferenceA
 {
     const(MI_Instance)** data;
     uint                 size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constinstancea))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constinstancea
 struct MI_ConstInstanceA
 {
     const(MI_Instance)** data;
     uint                 size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_value))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_value
 union MI_Value
 {
     ubyte         boolean;
@@ -1633,7 +1699,7 @@ union MI_Value
     MI_Array      array;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_booleanfield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_booleanfield
 struct MI_BooleanField
 {
     ubyte value;
@@ -1641,7 +1707,7 @@ struct MI_BooleanField
     ubyte flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_sint8field))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_sint8field
 struct MI_Sint8Field
 {
     byte  value;
@@ -1649,7 +1715,7 @@ struct MI_Sint8Field
     ubyte flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_uint8field))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_uint8field
 struct MI_Uint8Field
 {
     ubyte value;
@@ -1657,7 +1723,7 @@ struct MI_Uint8Field
     ubyte flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_sint16field))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_sint16field
 struct MI_Sint16Field
 {
     short value;
@@ -1665,7 +1731,7 @@ struct MI_Sint16Field
     ubyte flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_uint16field))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_uint16field
 struct MI_Uint16Field
 {
     ushort value;
@@ -1673,7 +1739,7 @@ struct MI_Uint16Field
     ubyte  flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_sint32field))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_sint32field
 struct MI_Sint32Field
 {
     int   value;
@@ -1681,7 +1747,7 @@ struct MI_Sint32Field
     ubyte flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_uint32field))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_uint32field
 struct MI_Uint32Field
 {
     uint  value;
@@ -1689,7 +1755,7 @@ struct MI_Uint32Field
     ubyte flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_sint64field))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_sint64field
 struct MI_Sint64Field
 {
     long  value;
@@ -1697,7 +1763,7 @@ struct MI_Sint64Field
     ubyte flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_uint64field))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_uint64field
 struct MI_Uint64Field
 {
     ulong value;
@@ -1705,7 +1771,7 @@ struct MI_Uint64Field
     ubyte flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_real32field))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_real32field
 struct MI_Real32Field
 {
     float value;
@@ -1713,7 +1779,7 @@ struct MI_Real32Field
     ubyte flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_real64field))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_real64field
 struct MI_Real64Field
 {
     double value;
@@ -1721,7 +1787,7 @@ struct MI_Real64Field
     ubyte  flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_char16field))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_char16field
 struct MI_Char16Field
 {
     ushort value;
@@ -1729,7 +1795,7 @@ struct MI_Char16Field
     ubyte  flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_datetimefield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_datetimefield
 struct MI_DatetimeField
 {
     MI_Datetime value;
@@ -1737,7 +1803,7 @@ struct MI_DatetimeField
     ubyte       flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_stringfield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_stringfield
 struct MI_StringField
 {
     ushort* value;
@@ -1745,7 +1811,7 @@ struct MI_StringField
     ubyte   flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_referencefield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_referencefield
 struct MI_ReferenceField
 {
     MI_Instance* value;
@@ -1753,7 +1819,7 @@ struct MI_ReferenceField
     ubyte        flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_instancefield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_instancefield
 struct MI_InstanceField
 {
     MI_Instance* value;
@@ -1761,7 +1827,7 @@ struct MI_InstanceField
     ubyte        flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_booleanafield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_booleanafield
 struct MI_BooleanAField
 {
     MI_BooleanA value;
@@ -1769,7 +1835,7 @@ struct MI_BooleanAField
     ubyte       flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_uint8afield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_uint8afield
 struct MI_Uint8AField
 {
     MI_Uint8A value;
@@ -1777,7 +1843,7 @@ struct MI_Uint8AField
     ubyte     flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_sint8afield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_sint8afield
 struct MI_Sint8AField
 {
     MI_Sint8A value;
@@ -1785,7 +1851,7 @@ struct MI_Sint8AField
     ubyte     flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_uint16afield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_uint16afield
 struct MI_Uint16AField
 {
     MI_Uint16A value;
@@ -1793,7 +1859,7 @@ struct MI_Uint16AField
     ubyte      flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_sint16afield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_sint16afield
 struct MI_Sint16AField
 {
     MI_Sint16A value;
@@ -1801,7 +1867,7 @@ struct MI_Sint16AField
     ubyte      flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_uint32afield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_uint32afield
 struct MI_Uint32AField
 {
     MI_Uint32A value;
@@ -1809,7 +1875,7 @@ struct MI_Uint32AField
     ubyte      flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_sint32afield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_sint32afield
 struct MI_Sint32AField
 {
     MI_Sint32A value;
@@ -1817,7 +1883,7 @@ struct MI_Sint32AField
     ubyte      flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_uint64afield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_uint64afield
 struct MI_Uint64AField
 {
     MI_Uint64A value;
@@ -1825,7 +1891,7 @@ struct MI_Uint64AField
     ubyte      flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_sint64afield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_sint64afield
 struct MI_Sint64AField
 {
     MI_Sint64A value;
@@ -1833,7 +1899,7 @@ struct MI_Sint64AField
     ubyte      flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_real32afield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_real32afield
 struct MI_Real32AField
 {
     MI_Real32A value;
@@ -1841,7 +1907,7 @@ struct MI_Real32AField
     ubyte      flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_real64afield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_real64afield
 struct MI_Real64AField
 {
     MI_Real64A value;
@@ -1849,7 +1915,7 @@ struct MI_Real64AField
     ubyte      flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_char16afield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_char16afield
 struct MI_Char16AField
 {
     MI_Char16A value;
@@ -1857,7 +1923,7 @@ struct MI_Char16AField
     ubyte      flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_datetimeafield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_datetimeafield
 struct MI_DatetimeAField
 {
     MI_DatetimeA value;
@@ -1865,7 +1931,7 @@ struct MI_DatetimeAField
     ubyte        flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_stringafield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_stringafield
 struct MI_StringAField
 {
     MI_StringA value;
@@ -1873,7 +1939,7 @@ struct MI_StringAField
     ubyte      flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_referenceafield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_referenceafield
 struct MI_ReferenceAField
 {
     MI_ReferenceA value;
@@ -1881,7 +1947,7 @@ struct MI_ReferenceAField
     ubyte         flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_instanceafield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_instanceafield
 struct MI_InstanceAField
 {
     MI_InstanceA value;
@@ -1889,7 +1955,7 @@ struct MI_InstanceAField
     ubyte        flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_arrayfield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_arrayfield
 struct MI_ArrayField
 {
     MI_Array value;
@@ -1897,7 +1963,7 @@ struct MI_ArrayField
     ubyte    flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constbooleanfield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constbooleanfield
 struct MI_ConstBooleanField
 {
     ubyte value;
@@ -1905,7 +1971,7 @@ struct MI_ConstBooleanField
     ubyte flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constsint8field))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constsint8field
 struct MI_ConstSint8Field
 {
     byte  value;
@@ -1913,7 +1979,7 @@ struct MI_ConstSint8Field
     ubyte flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constuint8field))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constuint8field
 struct MI_ConstUint8Field
 {
     ubyte value;
@@ -1921,7 +1987,7 @@ struct MI_ConstUint8Field
     ubyte flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constsint16field))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constsint16field
 struct MI_ConstSint16Field
 {
     short value;
@@ -1929,7 +1995,7 @@ struct MI_ConstSint16Field
     ubyte flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constuint16field))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constuint16field
 struct MI_ConstUint16Field
 {
     ushort value;
@@ -1937,7 +2003,7 @@ struct MI_ConstUint16Field
     ubyte  flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constsint32field))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constsint32field
 struct MI_ConstSint32Field
 {
     int   value;
@@ -1945,7 +2011,7 @@ struct MI_ConstSint32Field
     ubyte flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constuint32field))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constuint32field
 struct MI_ConstUint32Field
 {
     uint  value;
@@ -1953,7 +2019,7 @@ struct MI_ConstUint32Field
     ubyte flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constsint64field))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constsint64field
 struct MI_ConstSint64Field
 {
     long  value;
@@ -1961,7 +2027,7 @@ struct MI_ConstSint64Field
     ubyte flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constuint64field))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constuint64field
 struct MI_ConstUint64Field
 {
     ulong value;
@@ -1969,7 +2035,7 @@ struct MI_ConstUint64Field
     ubyte flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constreal32field))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constreal32field
 struct MI_ConstReal32Field
 {
     float value;
@@ -1977,7 +2043,7 @@ struct MI_ConstReal32Field
     ubyte flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constreal64field))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constreal64field
 struct MI_ConstReal64Field
 {
     double value;
@@ -1985,7 +2051,7 @@ struct MI_ConstReal64Field
     ubyte  flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constchar16field))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constchar16field
 struct MI_ConstChar16Field
 {
     ushort value;
@@ -1993,7 +2059,7 @@ struct MI_ConstChar16Field
     ubyte  flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constdatetimefield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constdatetimefield
 struct MI_ConstDatetimeField
 {
     MI_Datetime value;
@@ -2001,7 +2067,7 @@ struct MI_ConstDatetimeField
     ubyte       flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_conststringfield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_conststringfield
 struct MI_ConstStringField
 {
     const(ushort)* value;
@@ -2009,7 +2075,7 @@ struct MI_ConstStringField
     ubyte          flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constreferencefield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constreferencefield
 struct MI_ConstReferenceField
 {
     const(MI_Instance)* value;
@@ -2017,7 +2083,7 @@ struct MI_ConstReferenceField
     ubyte               flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constinstancefield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constinstancefield
 struct MI_ConstInstanceField
 {
     const(MI_Instance)* value;
@@ -2025,7 +2091,7 @@ struct MI_ConstInstanceField
     ubyte               flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constbooleanafield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constbooleanafield
 struct MI_ConstBooleanAField
 {
     MI_ConstBooleanA value;
@@ -2033,7 +2099,7 @@ struct MI_ConstBooleanAField
     ubyte            flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constuint8afield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constuint8afield
 struct MI_ConstUint8AField
 {
     MI_ConstUint8A value;
@@ -2041,7 +2107,7 @@ struct MI_ConstUint8AField
     ubyte          flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constsint8afield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constsint8afield
 struct MI_ConstSint8AField
 {
     MI_ConstSint8A value;
@@ -2049,7 +2115,7 @@ struct MI_ConstSint8AField
     ubyte          flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constuint16afield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constuint16afield
 struct MI_ConstUint16AField
 {
     MI_ConstUint16A value;
@@ -2057,7 +2123,7 @@ struct MI_ConstUint16AField
     ubyte           flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constsint16afield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constsint16afield
 struct MI_ConstSint16AField
 {
     MI_ConstSint16A value;
@@ -2065,7 +2131,7 @@ struct MI_ConstSint16AField
     ubyte           flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constuint32afield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constuint32afield
 struct MI_ConstUint32AField
 {
     MI_ConstUint32A value;
@@ -2073,7 +2139,7 @@ struct MI_ConstUint32AField
     ubyte           flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constsint32afield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constsint32afield
 struct MI_ConstSint32AField
 {
     MI_ConstSint32A value;
@@ -2081,7 +2147,7 @@ struct MI_ConstSint32AField
     ubyte           flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constuint64afield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constuint64afield
 struct MI_ConstUint64AField
 {
     MI_ConstUint64A value;
@@ -2089,7 +2155,7 @@ struct MI_ConstUint64AField
     ubyte           flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constsint64afield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constsint64afield
 struct MI_ConstSint64AField
 {
     MI_ConstSint64A value;
@@ -2097,7 +2163,7 @@ struct MI_ConstSint64AField
     ubyte           flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constreal32afield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constreal32afield
 struct MI_ConstReal32AField
 {
     MI_ConstReal32A value;
@@ -2105,7 +2171,7 @@ struct MI_ConstReal32AField
     ubyte           flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constreal64afield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constreal64afield
 struct MI_ConstReal64AField
 {
     MI_ConstReal64A value;
@@ -2113,7 +2179,7 @@ struct MI_ConstReal64AField
     ubyte           flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constchar16afield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constchar16afield
 struct MI_ConstChar16AField
 {
     MI_ConstChar16A value;
@@ -2121,7 +2187,7 @@ struct MI_ConstChar16AField
     ubyte           flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constdatetimeafield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constdatetimeafield
 struct MI_ConstDatetimeAField
 {
     MI_ConstDatetimeA value;
@@ -2129,7 +2195,7 @@ struct MI_ConstDatetimeAField
     ubyte             flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_conststringafield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_conststringafield
 struct MI_ConstStringAField
 {
     MI_ConstStringA value;
@@ -2137,7 +2203,7 @@ struct MI_ConstStringAField
     ubyte           flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constreferenceafield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constreferenceafield
 struct MI_ConstReferenceAField
 {
     MI_ConstReferenceA value;
@@ -2145,7 +2211,7 @@ struct MI_ConstReferenceAField
     ubyte              flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constinstanceafield))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_constinstanceafield
 struct MI_ConstInstanceAField
 {
     MI_ConstInstanceA value;
@@ -2153,14 +2219,14 @@ struct MI_ConstInstanceAField
     ubyte             flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_serverft))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_serverft
 struct MI_ServerFT
 {
     ptrdiff_t GetVersion;
     ptrdiff_t GetSystemName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_server))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_server
 struct MI_Server
 {
     const(MI_ServerFT)*  serverFT;
@@ -2170,21 +2236,21 @@ struct MI_Server
     const(MI_FilterFT)*  filterFT;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_filterft))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_filterft
 struct MI_FilterFT
 {
     ptrdiff_t Evaluate;
     ptrdiff_t GetExpression;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_filter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_filter
 struct MI_Filter
 {
     const(MI_FilterFT)* ft;
     ptrdiff_t[3]        reserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_propertysetft))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_propertysetft
 struct MI_PropertySetFT
 {
     ptrdiff_t GetElementCount;
@@ -2197,14 +2263,14 @@ struct MI_PropertySetFT
     ptrdiff_t Clone;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_propertyset))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_propertyset
 struct MI_PropertySet
 {
     const(MI_PropertySetFT)* ft;
     ptrdiff_t[3] reserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_objectdecl))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_objectdecl
 struct MI_ObjectDecl
 {
     uint           flags;
@@ -2217,7 +2283,7 @@ struct MI_ObjectDecl
     uint           size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_classdecl))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_classdecl
 struct MI_ClassDecl
 {
     uint                 flags;
@@ -2237,7 +2303,7 @@ struct MI_ClassDecl
     MI_Class*            owningClass;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_featuredecl))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_featuredecl
 struct MI_FeatureDecl
 {
     uint           flags;
@@ -2247,7 +2313,7 @@ struct MI_FeatureDecl
     uint           numQualifiers;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_parameterdecl))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_parameterdecl
 struct MI_ParameterDecl
 {
     uint           flags;
@@ -2261,7 +2327,7 @@ struct MI_ParameterDecl
     uint           offset;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_propertydecl))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_propertydecl
 struct MI_PropertyDecl
 {
     uint           flags;
@@ -2278,7 +2344,7 @@ struct MI_PropertyDecl
     const(void)*   value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_methoddecl))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_methoddecl
 struct MI_MethodDecl
 {
     uint                 flags;
@@ -2296,7 +2362,7 @@ struct MI_MethodDecl
     MI_MethodDecl_Invoke function_;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_qualifierdecl))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_qualifierdecl
 struct MI_QualifierDecl
 {
     const(ushort)* name;
@@ -2307,7 +2373,7 @@ struct MI_QualifierDecl
     const(void)*   value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_qualifier))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_qualifier
 struct MI_Qualifier
 {
     const(ushort)* name;
@@ -2316,7 +2382,7 @@ struct MI_Qualifier
     const(void)*   value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_schemadecl))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_schemadecl
 struct MI_SchemaDecl
 {
     const(MI_QualifierDecl)** qualifierDecls;
@@ -2325,7 +2391,7 @@ struct MI_SchemaDecl
     uint numClassDecls;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_providerft))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_providerft
 struct MI_ProviderFT
 {
     MI_ProviderFT_Load   Load;
@@ -2344,7 +2410,7 @@ struct MI_ProviderFT
     MI_ProviderFT_Invoke Invoke;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_module))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_module
 struct MI_Module
 {
     uint             version_;
@@ -2357,7 +2423,7 @@ struct MI_Module
     const(MI_ProviderFT)* dynamicProviderFT;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_instanceft))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_instanceft
 struct MI_InstanceFT
 {
     ptrdiff_t Clone;
@@ -2380,14 +2446,14 @@ struct MI_InstanceFT
     ptrdiff_t GetClass;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_instanceexft))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_instanceexft
 struct MI_InstanceExFT
 {
     MI_InstanceFT parent;
     ptrdiff_t     Normalize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_instance))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_instance
 struct MI_Instance
 {
     const(MI_InstanceFT)* ft;
@@ -2397,7 +2463,7 @@ struct MI_Instance
     ptrdiff_t[4]         reserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_contextft))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_contextft
 struct MI_ContextFT
 {
     ptrdiff_t PostResult;
@@ -2432,14 +2498,14 @@ struct MI_ContextFT
     ptrdiff_t WriteError;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_context))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_context
 struct MI_Context
 {
     const(MI_ContextFT)* ft;
     ptrdiff_t[3]         reserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_qualifiersetft))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_qualifiersetft
 struct MI_QualifierSetFT
 {
     ptrdiff_t GetQualifierCount;
@@ -2447,7 +2513,7 @@ struct MI_QualifierSetFT
     ptrdiff_t GetQualifier;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_qualifierset))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_qualifierset
 struct MI_QualifierSet
 {
     ulong     reserved1;
@@ -2455,7 +2521,7 @@ struct MI_QualifierSet
     const(MI_QualifierSetFT)* ft;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_parametersetft))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_parametersetft
 struct MI_ParameterSetFT
 {
     ptrdiff_t GetMethodReturnType;
@@ -2464,7 +2530,7 @@ struct MI_ParameterSetFT
     ptrdiff_t GetParameter;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_parameterset))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_parameterset
 struct MI_ParameterSet
 {
     ulong     reserved1;
@@ -2472,7 +2538,7 @@ struct MI_ParameterSet
     const(MI_ParameterSetFT)* ft;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_classft))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_classft
 struct MI_ClassFT
 {
     ptrdiff_t GetClassNameA;
@@ -2491,7 +2557,7 @@ struct MI_ClassFT
     ptrdiff_t Clone;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_class))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_class
 struct MI_Class
 {
     const(MI_ClassFT)*   ft;
@@ -2501,7 +2567,7 @@ struct MI_Class
     ptrdiff_t[4]         reserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_operationcallbacks))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_operationcallbacks
 struct MI_OperationCallbacks
 {
     void* callbackContext;
@@ -2515,7 +2581,7 @@ struct MI_OperationCallbacks
     MI_OperationCallback_StreamedParameter streamedParameterResult;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_sessioncallbacks))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_sessioncallbacks
 struct MI_SessionCallbacks
 {
     void*     callbackContext;
@@ -2523,7 +2589,7 @@ struct MI_SessionCallbacks
     ptrdiff_t writeError;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_usernamepasswordcreds))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_usernamepasswordcreds
 struct MI_UsernamePasswordCreds
 {
     const(ushort)* domain;
@@ -2531,14 +2597,18 @@ struct MI_UsernamePasswordCreds
     const(ushort)* password;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_usercredentials))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_usercredentials
 struct MI_UserCredentials
 {
     const(ushort)* authenticationType;
-    _credentials_e__Union credentials;
+    union credentials
+    {
+        MI_UsernamePasswordCreds usernamePassword;
+        const(ushort)* certificateThumbprint;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_subscriptiondeliveryoptionsft))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_subscriptiondeliveryoptionsft
 struct MI_SubscriptionDeliveryOptionsFT
 {
     ptrdiff_t SetString;
@@ -2560,7 +2630,7 @@ struct MI_SubscriptionDeliveryOptionsFT
     ptrdiff_t Clone;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_subscriptiondeliveryoptions))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_subscriptiondeliveryoptions
 struct MI_SubscriptionDeliveryOptions
 {
     ulong     reserved1;
@@ -2568,21 +2638,21 @@ struct MI_SubscriptionDeliveryOptions
     const(MI_SubscriptionDeliveryOptionsFT)* ft;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_serializer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_serializer
 struct MI_Serializer
 {
     ulong     reserved1;
     ptrdiff_t reserved2;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_deserializer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_deserializer
 struct MI_Deserializer
 {
     ulong     reserved1;
     ptrdiff_t reserved2;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_serializerft))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_serializerft
 struct MI_SerializerFT
 {
     ptrdiff_t Close;
@@ -2590,7 +2660,7 @@ struct MI_SerializerFT
     ptrdiff_t SerializeInstance;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_deserializerft))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_deserializerft
 struct MI_DeserializerFT
 {
     ptrdiff_t Close;
@@ -2601,7 +2671,7 @@ struct MI_DeserializerFT
     ptrdiff_t Instance_GetClassName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_applicationft))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_applicationft
 struct MI_ApplicationFT
 {
     ptrdiff_t Close;
@@ -2617,14 +2687,14 @@ struct MI_ApplicationFT
     ptrdiff_t NewClass;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_hostedproviderft))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_hostedproviderft
 struct MI_HostedProviderFT
 {
     ptrdiff_t Close;
     ptrdiff_t GetApplication;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_sessionft))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_sessionft
 struct MI_SessionFT
 {
     ptrdiff_t Close;
@@ -2644,7 +2714,7 @@ struct MI_SessionFT
     ptrdiff_t TestConnection;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_operationft))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_operationft
 struct MI_OperationFT
 {
     ptrdiff_t Close;
@@ -2655,7 +2725,7 @@ struct MI_OperationFT
     ptrdiff_t GetClass;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_destinationoptionsft))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_destinationoptionsft
 struct MI_DestinationOptionsFT
 {
     ptrdiff_t Delete;
@@ -2675,7 +2745,7 @@ struct MI_DestinationOptionsFT
     ptrdiff_t GetInterval;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_operationoptionsft))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_operationoptionsft
 struct MI_OperationOptionsFT
 {
     ptrdiff_t Delete;
@@ -2693,7 +2763,7 @@ struct MI_OperationOptionsFT
     ptrdiff_t GetInterval;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_application))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_application
 struct MI_Application
 {
     ulong     reserved1;
@@ -2701,7 +2771,7 @@ struct MI_Application
     const(MI_ApplicationFT)* ft;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_session))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_session
 struct MI_Session
 {
     ulong                reserved1;
@@ -2709,7 +2779,7 @@ struct MI_Session
     const(MI_SessionFT)* ft;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_operation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_operation
 struct MI_Operation
 {
     ulong     reserved1;
@@ -2717,7 +2787,7 @@ struct MI_Operation
     const(MI_OperationFT)* ft;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_hostedprovider))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_hostedprovider
 struct MI_HostedProvider
 {
     ulong     reserved1;
@@ -2725,7 +2795,7 @@ struct MI_HostedProvider
     const(MI_HostedProviderFT)* ft;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_destinationoptions))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_destinationoptions
 struct MI_DestinationOptions
 {
     ulong     reserved1;
@@ -2733,7 +2803,7 @@ struct MI_DestinationOptions
     const(MI_DestinationOptionsFT)* ft;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_operationoptions))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_operationoptions
 struct MI_OperationOptions
 {
     ulong     reserved1;
@@ -2741,14 +2811,14 @@ struct MI_OperationOptions
     const(MI_OperationOptionsFT)* ft;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_utilitiesft))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_utilitiesft
 struct MI_UtilitiesFT
 {
     ptrdiff_t MapErrorToMiErrorCategory;
     ptrdiff_t CimErrorFromErrorCode;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_clientft_v1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mi/ns-mi-mi_clientft_v1
 struct MI_ClientFT_V1
 {
     const(MI_ApplicationFT)* applicationFT;
@@ -2763,7 +2833,7 @@ struct MI_ClientFT_V1
     const(MI_UtilitiesFT)* utilitiesFT;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/ns-wmiutils-swbemqueryqualifiedname))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/ns-wmiutils-swbemqueryqualifiedname
 struct SWbemQueryQualifiedName
 {
     uint          m_uVersion;
@@ -2786,7 +2856,7 @@ union SWbemRpnConst
     long         m_uVal64;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/ns-wmiutils-swbemrpnquerytoken))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/ns-wmiutils-swbemrpnquerytoken
 struct SWbemRpnQueryToken
 {
     uint          m_uVersion;
@@ -2810,7 +2880,7 @@ struct SWbemRpnTokenList
     uint m_uNumTokens;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/ns-wmiutils-swbemrpnencodedquery))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/ns-wmiutils-swbemrpnencodedquery
 struct SWbemRpnEncodedQuery
 {
     uint                 m_uVersion;
@@ -2852,7 +2922,7 @@ struct SWbemAnalysisMatrixList
     SWbemAnalysisMatrix* m_pMatrices;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/ns-wmiutils-swbemassocqueryinf))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/ns-wmiutils-swbemassocqueryinf
 struct SWbemAssocQueryInf
 {
     uint      m_uVersion;
@@ -3026,302 +3096,302 @@ struct WbemDCOMTransport;
 
 @GUID("9ae62877-7544-4bb0-aa26-a13824659ed6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nn-wmiutils-iwbempathkeylist))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nn-wmiutils-iwbempathkeylist
 interface IWbemPathKeyList : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempathkeylist-getcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempathkeylist-getcount
     HRESULT GetCount(uint* puKeyCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempathkeylist-setkey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempathkeylist-setkey
     HRESULT SetKey(const(PWSTR) wszName, uint uFlags, uint uCimType, void* pKeyVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempathkeylist-setkey2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempathkeylist-setkey2
     HRESULT SetKey2(const(PWSTR) wszName, uint uFlags, uint uCimType, VARIANT* pKeyVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempathkeylist-getkey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempathkeylist-getkey
     HRESULT GetKey(uint uKeyIx, uint uFlags, uint* puNameBufSize, PWSTR pszKeyName, uint* puKeyValBufSize, 
                    void* pKeyVal, uint* puApparentCimType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempathkeylist-getkey2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempathkeylist-getkey2
     HRESULT GetKey2(uint uKeyIx, uint uFlags, uint* puNameBufSize, PWSTR pszKeyName, VARIANT* pKeyValue, 
                     uint* puApparentCimType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempathkeylist-removekey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempathkeylist-removekey
     HRESULT RemoveKey(const(PWSTR) wszName, uint uFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempathkeylist-removeallkeys))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempathkeylist-removeallkeys
     HRESULT RemoveAllKeys(uint uFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempathkeylist-makesingleton))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempathkeylist-makesingleton
     HRESULT MakeSingleton(ubyte bSet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempathkeylist-getinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempathkeylist-getinfo
     HRESULT GetInfo(uint uRequestedInfo, ulong* puResponse);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempathkeylist-gettext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempathkeylist-gettext
     HRESULT GetText(int lFlags, uint* puBuffLength, PWSTR pszText);
 }
 
 @GUID("3bc15af2-736c-477e-9e51-238af8667dcc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nn-wmiutils-iwbempath))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nn-wmiutils-iwbempath
 interface IWbemPath : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-settext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-settext
     HRESULT SetText(uint uMode, const(PWSTR) pszPath);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-gettext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-gettext
     HRESULT GetText(int lFlags, uint* puBuffLength, PWSTR pszText);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-getinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-getinfo
     HRESULT GetInfo(uint uRequestedInfo, ulong* puResponse);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-setserver))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-setserver
     HRESULT SetServer(const(PWSTR) Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-getserver))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-getserver
     HRESULT GetServer(uint* puNameBufLength, PWSTR pName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-getnamespacecount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-getnamespacecount
     HRESULT GetNamespaceCount(uint* puCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-setnamespaceat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-setnamespaceat
     HRESULT SetNamespaceAt(uint uIndex, const(PWSTR) pszName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-getnamespaceat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-getnamespaceat
     HRESULT GetNamespaceAt(uint uIndex, uint* puNameBufLength, PWSTR pName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-removenamespaceat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-removenamespaceat
     HRESULT RemoveNamespaceAt(uint uIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-removeallnamespaces))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-removeallnamespaces
     HRESULT RemoveAllNamespaces();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-getscopecount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-getscopecount
     HRESULT GetScopeCount(uint* puCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-setscope))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-setscope
     HRESULT SetScope(uint uIndex, PWSTR pszClass);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nn-wmiutils-iwbempath))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nn-wmiutils-iwbempath
     HRESULT SetScopeFromText(uint uIndex, PWSTR pszText);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-getscope))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-getscope
     HRESULT GetScope(uint uIndex, uint* puClassNameBufSize, PWSTR pszClass, IWbemPathKeyList* pKeyList);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-getscopeastext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-getscopeastext
     HRESULT GetScopeAsText(uint uIndex, uint* puTextBufSize, PWSTR pszText);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-removescope))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-removescope
     HRESULT RemoveScope(uint uIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-removeallscopes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-removeallscopes
     HRESULT RemoveAllScopes();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-setclassname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-setclassname
     HRESULT SetClassName(const(PWSTR) Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-getclassname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-getclassname
     HRESULT GetClassName(uint* puBuffLength, PWSTR pszName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-getkeylist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-getkeylist
     HRESULT GetKeyList(IWbemPathKeyList* pOut);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-createclasspart))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-createclasspart
     HRESULT CreateClassPart(int lFlags, const(PWSTR) Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-deleteclasspart))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-deleteclasspart
     HRESULT DeleteClassPart(int lFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-isrelative))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-isrelative
     BOOL    IsRelative(PWSTR wszMachine, PWSTR wszNamespace);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-isrelativeorchild))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-isrelativeorchild
     BOOL    IsRelativeOrChild(PWSTR wszMachine, PWSTR wszNamespace, int lFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-islocal))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-islocal
     BOOL    IsLocal(const(PWSTR) wszMachine);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-issameclassname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbempath-issameclassname
     BOOL    IsSameClassName(const(PWSTR) wszClass);
 }
 
 @GUID("81166f58-dd98-11d3-a120-00105a1f515a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nn-wmiutils-iwbemquery))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nn-wmiutils-iwbemquery
 interface IWbemQuery : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbemquery-empty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbemquery-empty
     HRESULT Empty();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nn-wmiutils-iwbemquery))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nn-wmiutils-iwbemquery
     HRESULT SetLanguageFeatures(uint uFlags, uint uArraySize, uint* puFeatures);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nn-wmiutils-iwbemquery))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nn-wmiutils-iwbemquery
     HRESULT TestLanguageFeatures(uint uFlags, uint* uArraySize, uint* puFeatures);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbemquery-parse))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbemquery-parse
     HRESULT Parse(const(PWSTR) pszLang, const(PWSTR) pszQuery, uint uFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbemquery-getanalysis))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbemquery-getanalysis
     HRESULT GetAnalysis(uint uAnalysisType, uint uFlags, void** pAnalysis);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbemquery-freememory))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nf-wmiutils-iwbemquery-freememory
     HRESULT FreeMemory(void* pMem);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmiutils/nn-wmiutils-iwbemquery))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmiutils/nn-wmiutils-iwbemquery
     HRESULT GetQueryInfo(uint uAnalysisType, uint uInfoId, uint uBufSize, void* pDestBuf);
 }
 
 @GUID("dc12a681-737f-11cf-884d-00aa004b2e24")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemclassobject))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemclassobject
 interface IWbemClassObject : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-getqualifierset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-getqualifierset
     HRESULT GetQualifierSet(IWbemQualifierSet* ppQualSet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-get))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-get
     HRESULT Get(const(PWSTR) wszName, int lFlags, VARIANT* pVal, int* pType, int* plFlavor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-put))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-put
     HRESULT Put(const(PWSTR) wszName, int lFlags, VARIANT* pVal, int Type);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-delete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-delete
     HRESULT Delete(const(PWSTR) wszName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-getnames))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-getnames
     HRESULT GetNames(const(PWSTR) wszQualifierName, WBEM_CONDITION_FLAG_TYPE lFlags, VARIANT* pQualifierVal, 
                      SAFEARRAY** pNames);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-beginenumeration))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-beginenumeration
     HRESULT BeginEnumeration(int lEnumFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-next
     HRESULT Next(int lFlags, BSTR* strName, VARIANT* pVal, int* pType, int* plFlavor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-endenumeration))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-endenumeration
     HRESULT EndEnumeration();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-getpropertyqualifierset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-getpropertyqualifierset
     HRESULT GetPropertyQualifierSet(const(PWSTR) wszProperty, IWbemQualifierSet* ppQualSet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-clone
     HRESULT Clone(IWbemClassObject* ppCopy);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-getobjecttext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-getobjecttext
     HRESULT GetObjectText(int lFlags, BSTR* pstrObjectText);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-spawnderivedclass))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-spawnderivedclass
     HRESULT SpawnDerivedClass(int lFlags, IWbemClassObject* ppNewClass);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-spawninstance))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-spawninstance
     HRESULT SpawnInstance(int lFlags, IWbemClassObject* ppNewInstance);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-compareto))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-compareto
     HRESULT CompareTo(WBEM_COMPARISON_FLAG lFlags, IWbemClassObject pCompareTo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-getpropertyorigin))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-getpropertyorigin
     HRESULT GetPropertyOrigin(const(PWSTR) wszName, BSTR* pstrClassName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-inheritsfrom))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-inheritsfrom
     HRESULT InheritsFrom(const(PWSTR) strAncestor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-getmethod))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-getmethod
     HRESULT GetMethod(const(PWSTR) wszName, int lFlags, IWbemClassObject* ppInSignature, 
                       IWbemClassObject* ppOutSignature);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-putmethod))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-putmethod
     HRESULT PutMethod(const(PWSTR) wszName, int lFlags, IWbemClassObject pInSignature, 
                       IWbemClassObject pOutSignature);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-deletemethod))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-deletemethod
     HRESULT DeleteMethod(const(PWSTR) wszName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-beginmethodenumeration))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-beginmethodenumeration
     HRESULT BeginMethodEnumeration(int lEnumFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-nextmethod))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-nextmethod
     HRESULT NextMethod(int lFlags, BSTR* pstrName, IWbemClassObject* ppInSignature, 
                        IWbemClassObject* ppOutSignature);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-endmethodenumeration))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-endmethodenumeration
     HRESULT EndMethodEnumeration();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-getmethodqualifierset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-getmethodqualifierset
     HRESULT GetMethodQualifierSet(const(PWSTR) wszMethod, IWbemQualifierSet* ppQualSet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-getmethodorigin))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemclassobject-getmethodorigin
     HRESULT GetMethodOrigin(const(PWSTR) wszMethodName, BSTR* pstrClassName);
 }
 
 @GUID("49353c9a-516b-11d1-aea6-00c04fb68820")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemobjectaccess))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemobjectaccess
 interface IWbemObjectAccess : IWbemClassObject
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjectaccess-getpropertyhandle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjectaccess-getpropertyhandle
     HRESULT GetPropertyHandle(const(PWSTR) wszPropertyName, int* pType, int* plHandle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjectaccess-writepropertyvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjectaccess-writepropertyvalue
     HRESULT WritePropertyValue(int lHandle, int lNumBytes, const(ubyte)* aData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjectaccess-readpropertyvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjectaccess-readpropertyvalue
     HRESULT ReadPropertyValue(int lHandle, int lBufferSize, int* plNumBytes, ubyte* aData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjectaccess-readdword))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjectaccess-readdword
     HRESULT ReadDWORD(int lHandle, uint* pdw);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjectaccess-writedword))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjectaccess-writedword
     HRESULT WriteDWORD(int lHandle, uint dw);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjectaccess-readqword))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjectaccess-readqword
     HRESULT ReadQWORD(int lHandle, ulong* pqw);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjectaccess-writeqword))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjectaccess-writeqword
     HRESULT WriteQWORD(int lHandle, ulong pw);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjectaccess-getpropertyinfobyhandle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjectaccess-getpropertyinfobyhandle
     HRESULT GetPropertyInfoByHandle(int lHandle, BSTR* pstrName, int* pType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjectaccess-lock))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjectaccess-lock
     HRESULT Lock(int lFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjectaccess-unlock))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjectaccess-unlock
     HRESULT Unlock(int lFlags);
 }
 
 @GUID("dc12a680-737f-11cf-884d-00aa004b2e24")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemqualifierset))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemqualifierset
 interface IWbemQualifierSet : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemqualifierset-get))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemqualifierset-get
     HRESULT Get(const(PWSTR) wszName, int lFlags, VARIANT* pVal, int* plFlavor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemqualifierset-put))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemqualifierset-put
     HRESULT Put(const(PWSTR) wszName, VARIANT* pVal, int lFlavor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemqualifierset-delete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemqualifierset-delete
     HRESULT Delete(const(PWSTR) wszName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemqualifierset-getnames))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemqualifierset-getnames
     HRESULT GetNames(int lFlags, SAFEARRAY** pNames);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemqualifierset-beginenumeration))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemqualifierset-beginenumeration
     HRESULT BeginEnumeration(int lFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemqualifierset-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemqualifierset-next
     HRESULT Next(int lFlags, BSTR* pstrName, VARIANT* pVal, int* plFlavor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemqualifierset-endenumeration))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemqualifierset-endenumeration
     HRESULT EndEnumeration();
 }
 
 @GUID("9556dc99-828c-11cf-a37e-00aa003240c7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemservices))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemservices
 interface IWbemServices : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-opennamespace))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-opennamespace
     HRESULT OpenNamespace(const(BSTR) strNamespace, WBEM_GENERIC_FLAG_TYPE lFlags, IWbemContext pCtx, 
                           IWbemServices* ppWorkingNamespace, IWbemCallResult* ppResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-cancelasynccall))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-cancelasynccall
     HRESULT CancelAsyncCall(IWbemObjectSink pSink);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-queryobjectsink))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-queryobjectsink
     HRESULT QueryObjectSink(WBEM_GENERIC_FLAG_TYPE lFlags, IWbemObjectSink* ppResponseHandler);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-getobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-getobject
     HRESULT GetObject(const(BSTR) strObjectPath, WBEM_GENERIC_FLAG_TYPE lFlags, IWbemContext pCtx, 
                       IWbemClassObject* ppObject, IWbemCallResult* ppCallResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-getobjectasync))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-getobjectasync
     HRESULT GetObjectAsync(const(BSTR) strObjectPath, WBEM_GENERIC_FLAG_TYPE lFlags, IWbemContext pCtx, 
                            IWbemObjectSink pResponseHandler);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-putclass))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-putclass
     HRESULT PutClass(IWbemClassObject pObject, WBEM_GENERIC_FLAG_TYPE lFlags, IWbemContext pCtx, 
                      IWbemCallResult* ppCallResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-putclassasync))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-putclassasync
     HRESULT PutClassAsync(IWbemClassObject pObject, WBEM_GENERIC_FLAG_TYPE lFlags, IWbemContext pCtx, 
                           IWbemObjectSink pResponseHandler);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-deleteclass))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-deleteclass
     HRESULT DeleteClass(const(BSTR) strClass, WBEM_GENERIC_FLAG_TYPE lFlags, IWbemContext pCtx, 
                         IWbemCallResult* ppCallResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-deleteclassasync))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-deleteclassasync
     HRESULT DeleteClassAsync(const(BSTR) strClass, WBEM_GENERIC_FLAG_TYPE lFlags, IWbemContext pCtx, 
                              IWbemObjectSink pResponseHandler);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-createclassenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-createclassenum
     HRESULT CreateClassEnum(const(BSTR) strSuperclass, WBEM_GENERIC_FLAG_TYPE lFlags, IWbemContext pCtx, 
                             IEnumWbemClassObject* ppEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-createclassenumasync))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-createclassenumasync
     HRESULT CreateClassEnumAsync(const(BSTR) strSuperclass, WBEM_GENERIC_FLAG_TYPE lFlags, IWbemContext pCtx, 
                                  IWbemObjectSink pResponseHandler);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-putinstance))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-putinstance
     HRESULT PutInstance(IWbemClassObject pInst, WBEM_GENERIC_FLAG_TYPE lFlags, IWbemContext pCtx, 
                         IWbemCallResult* ppCallResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-putinstanceasync))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-putinstanceasync
     HRESULT PutInstanceAsync(IWbemClassObject pInst, WBEM_GENERIC_FLAG_TYPE lFlags, IWbemContext pCtx, 
                              IWbemObjectSink pResponseHandler);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-deleteinstance))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-deleteinstance
     HRESULT DeleteInstance(const(BSTR) strObjectPath, WBEM_GENERIC_FLAG_TYPE lFlags, IWbemContext pCtx, 
                            IWbemCallResult* ppCallResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-deleteinstanceasync))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-deleteinstanceasync
     HRESULT DeleteInstanceAsync(const(BSTR) strObjectPath, WBEM_GENERIC_FLAG_TYPE lFlags, IWbemContext pCtx, 
                                 IWbemObjectSink pResponseHandler);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-createinstanceenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-createinstanceenum
     HRESULT CreateInstanceEnum(const(BSTR) strFilter, WBEM_GENERIC_FLAG_TYPE lFlags, IWbemContext pCtx, 
                                IEnumWbemClassObject* ppEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-createinstanceenumasync))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-createinstanceenumasync
     HRESULT CreateInstanceEnumAsync(const(BSTR) strFilter, WBEM_GENERIC_FLAG_TYPE lFlags, IWbemContext pCtx, 
                                     IWbemObjectSink pResponseHandler);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-execquery))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-execquery
     HRESULT ExecQuery(const(BSTR) strQueryLanguage, const(BSTR) strQuery, WBEM_GENERIC_FLAG_TYPE lFlags, 
                       IWbemContext pCtx, IEnumWbemClassObject* ppEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-execqueryasync))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-execqueryasync
     HRESULT ExecQueryAsync(const(BSTR) strQueryLanguage, const(BSTR) strQuery, WBEM_GENERIC_FLAG_TYPE lFlags, 
                            IWbemContext pCtx, IWbemObjectSink pResponseHandler);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-execnotificationquery))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-execnotificationquery
     HRESULT ExecNotificationQuery(const(BSTR) strQueryLanguage, const(BSTR) strQuery, 
                                   WBEM_GENERIC_FLAG_TYPE lFlags, IWbemContext pCtx, IEnumWbemClassObject* ppEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-execnotificationqueryasync))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-execnotificationqueryasync
     HRESULT ExecNotificationQueryAsync(const(BSTR) strQueryLanguage, const(BSTR) strQuery, 
                                        WBEM_GENERIC_FLAG_TYPE lFlags, IWbemContext pCtx, 
                                        IWbemObjectSink pResponseHandler);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-execmethod))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-execmethod
     HRESULT ExecMethod(const(BSTR) strObjectPath, const(BSTR) strMethodName, WBEM_GENERIC_FLAG_TYPE lFlags, 
                        IWbemContext pCtx, IWbemClassObject pInParams, IWbemClassObject* ppOutParams, 
                        IWbemCallResult* ppCallResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-execmethodasync))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemservices-execmethodasync
     HRESULT ExecMethodAsync(const(BSTR) strObjectPath, const(BSTR) strMethodName, WBEM_GENERIC_FLAG_TYPE lFlags, 
                             IWbemContext pCtx, IWbemClassObject pInParams, IWbemObjectSink pResponseHandler);
 }
 
 @GUID("dc12a687-737f-11cf-884d-00aa004b2e24")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemlocator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemlocator
 interface IWbemLocator : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemlocator-connectserver))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemlocator-connectserver
     HRESULT ConnectServer(const(BSTR) strNetworkResource, const(BSTR) strUser, const(BSTR) strPassword, 
                           const(BSTR) strLocale, int lSecurityFlags, const(BSTR) strAuthority, IWbemContext pCtx, 
                           IWbemServices* ppNamespace);
@@ -3329,27 +3399,27 @@ interface IWbemLocator : IUnknown
 
 @GUID("7c857801-7381-11cf-884d-00aa004b2e24")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemobjectsink))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemobjectsink
 interface IWbemObjectSink : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjectsink-indicate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjectsink-indicate
     HRESULT Indicate(int lObjectCount, IWbemClassObject* apObjArray);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjectsink-setstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjectsink-setstatus
     HRESULT SetStatus(int lFlags, HRESULT hResult, BSTR strParam, IWbemClassObject pObjParam);
 }
 
 @GUID("027947e1-d731-11ce-a357-000000000001")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-ienumwbemclassobject))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-ienumwbemclassobject
 interface IEnumWbemClassObject : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-ienumwbemclassobject-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-ienumwbemclassobject-reset
     HRESULT Reset();
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
     HRESULT Next(int lTimeout, uint uCount, IWbemClassObject* apObjects, uint* puReturned);
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
     HRESULT NextAsync(uint uCount, IWbemObjectSink pSink);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-ienumwbemclassobject-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-ienumwbemclassobject-clone
     HRESULT Clone(IEnumWbemClassObject* ppEnum);
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
     HRESULT Skip(int lTimeout, uint nCount);
@@ -3357,135 +3427,135 @@ interface IEnumWbemClassObject : IUnknown
 
 @GUID("44aca675-e8fc-11d0-a07c-00c04fb68820")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemcallresult))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemcallresult
 interface IWbemCallResult : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemcallresult-getresultobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemcallresult-getresultobject
     HRESULT GetResultObject(int lTimeout, IWbemClassObject* ppResultObject);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemcallresult-getresultstring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemcallresult-getresultstring
     HRESULT GetResultString(int lTimeout, BSTR* pstrResultString);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemcallresult-getresultservices))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemcallresult-getresultservices
     HRESULT GetResultServices(int lTimeout, IWbemServices* ppServices);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemcallresult-getcallstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemcallresult-getcallstatus
     HRESULT GetCallStatus(int lTimeout, int* plStatus);
 }
 
 @GUID("44aca674-e8fc-11d0-a07c-00c04fb68820")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemcontext))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemcontext
 interface IWbemContext : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemcontext-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemcontext-clone
     HRESULT Clone(IWbemContext* ppNewCopy);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemcontext-getnames))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemcontext-getnames
     HRESULT GetNames(int lFlags, SAFEARRAY** pNames);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemcontext-beginenumeration))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemcontext-beginenumeration
     HRESULT BeginEnumeration(int lFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemcontext-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemcontext-next
     HRESULT Next(int lFlags, BSTR* pstrName, VARIANT* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemcontext-endenumeration))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemcontext-endenumeration
     HRESULT EndEnumeration();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemcontext-setvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemcontext-setvalue
     HRESULT SetValue(const(PWSTR) wszName, int lFlags, VARIANT* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemcontext-getvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemcontext-getvalue
     HRESULT GetValue(const(PWSTR) wszName, int lFlags, VARIANT* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemcontext-deletevalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemcontext-deletevalue
     HRESULT DeleteValue(const(PWSTR) wszName, int lFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemcontext-deleteall))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemcontext-deleteall
     HRESULT DeleteAll();
 }
 
 @GUID("1cfaba8c-1523-11d1-ad79-00c04fd8fdff")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iunsecuredapartment))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iunsecuredapartment
 interface IUnsecuredApartment : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iunsecuredapartment-createobjectstub))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iunsecuredapartment-createobjectstub
     HRESULT CreateObjectStub(IUnknown pObject, IUnknown* ppStub);
 }
 
 @GUID("31739d04-3471-4cf4-9a7c-57a44ae71956")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemunsecuredapartment))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemunsecuredapartment
 interface IWbemUnsecuredApartment : IUnsecuredApartment
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemunsecuredapartment-createsinkstub))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemunsecuredapartment-createsinkstub
     HRESULT CreateSinkStub(IWbemObjectSink pSink, uint dwFlags, const(PWSTR) wszReserved, IWbemObjectSink* ppStub);
 }
 
 @GUID("eb87e1bc-3233-11d2-aec9-00c04fb68820")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemstatuscodetext))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemstatuscodetext
 interface IWbemStatusCodeText : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemstatuscodetext-geterrorcodetext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemstatuscodetext-geterrorcodetext
     HRESULT GetErrorCodeText(HRESULT hRes, uint LocaleId, int lFlags, BSTR* MessageText);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemstatuscodetext-getfacilitycodetext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemstatuscodetext-getfacilitycodetext
     HRESULT GetFacilityCodeText(HRESULT hRes, uint LocaleId, int lFlags, BSTR* MessageText);
 }
 
 @GUID("c49e32c7-bc8b-11d2-85d4-00105a1f8304")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbembackuprestore))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbembackuprestore
 interface IWbemBackupRestore : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbembackuprestore-backup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbembackuprestore-backup
     HRESULT Backup(const(PWSTR) strBackupToFile, int lFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbembackuprestore-restore))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbembackuprestore-restore
     HRESULT Restore(const(PWSTR) strRestoreFromFile, int lFlags);
 }
 
 @GUID("a359dec5-e813-4834-8a2a-ba7f1d777d76")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbembackuprestoreex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbembackuprestoreex
 interface IWbemBackupRestoreEx : IWbemBackupRestore
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbembackuprestoreex-pause))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbembackuprestoreex-pause
     HRESULT Pause();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbembackuprestoreex-resume))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbembackuprestoreex-resume
     HRESULT Resume();
 }
 
 @GUID("49353c99-516b-11d1-aea6-00c04fb68820")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemrefresher))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemrefresher
 interface IWbemRefresher : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemrefresher-refresh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemrefresher-refresh
     HRESULT Refresh(int lFlags);
 }
 
 @GUID("2705c288-79ae-11d2-b348-00105a1f8177")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemhiperfenum))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemhiperfenum
 interface IWbemHiPerfEnum : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemhiperfenum-addobjects))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemhiperfenum-addobjects
     HRESULT AddObjects(int lFlags, uint uNumObjects, int* apIds, IWbemObjectAccess* apObj);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemhiperfenum-removeobjects))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemhiperfenum-removeobjects
     HRESULT RemoveObjects(int lFlags, uint uNumObjects, int* apIds);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemhiperfenum-getobjects))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemhiperfenum-getobjects
     HRESULT GetObjects(int lFlags, uint uNumObjects, IWbemObjectAccess* apObj, uint* puReturned);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemhiperfenum-removeall))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemhiperfenum-removeall
     HRESULT RemoveAll(int lFlags);
 }
 
 @GUID("49353c92-516b-11d1-aea6-00c04fb68820")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemconfigurerefresher))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemconfigurerefresher
 interface IWbemConfigureRefresher : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemconfigurerefresher-addobjectbypath))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemconfigurerefresher-addobjectbypath
     HRESULT AddObjectByPath(IWbemServices pNamespace, const(PWSTR) wszPath, int lFlags, IWbemContext pContext, 
                             IWbemClassObject* ppRefreshable, int* plId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemconfigurerefresher-addobjectbytemplate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemconfigurerefresher-addobjectbytemplate
     HRESULT AddObjectByTemplate(IWbemServices pNamespace, IWbemClassObject pTemplate, int lFlags, 
                                 IWbemContext pContext, IWbemClassObject* ppRefreshable, int* plId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemconfigurerefresher-addrefresher))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemconfigurerefresher-addrefresher
     HRESULT AddRefresher(IWbemRefresher pRefresher, int lFlags, int* plId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemconfigurerefresher-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemconfigurerefresher-remove
     HRESULT Remove(int lId, int lFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemconfigurerefresher-addenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemconfigurerefresher-addenum
     HRESULT AddEnum(IWbemServices pNamespace, const(PWSTR) wszClassName, int lFlags, IWbemContext pContext, 
                     IWbemHiPerfEnum* ppEnum, int* plId);
 }
@@ -3494,206 +3564,206 @@ interface IWbemConfigureRefresher : IUnknown
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
 interface IWbemObjectSinkEx : IWbemObjectSink
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjectsinkex-writemessage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjectsinkex-writemessage
     HRESULT WriteMessage(uint uChannel, const(BSTR) strMessage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjectsinkex-writeerror))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjectsinkex-writeerror
     HRESULT WriteError(IWbemClassObject pObjError, ubyte* puReturned);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjectsinkex-promptuser))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjectsinkex-promptuser
     HRESULT PromptUser(const(BSTR) strMessage, ubyte uPromptType, ubyte* puReturned);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjectsinkex-writeprogress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjectsinkex-writeprogress
     HRESULT WriteProgress(const(BSTR) strActivity, const(BSTR) strCurrentOperation, 
                           const(BSTR) strStatusDescription, uint uPercentComplete, uint uSecondsRemaining);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjectsinkex-writestreamparameter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjectsinkex-writestreamparameter
     HRESULT WriteStreamParameter(const(BSTR) strName, VARIANT* vtValue, uint ulType, uint ulFlags);
 }
 
 @GUID("b7b31df9-d515-11d3-a11c-00105a1f515a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemshutdown))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemshutdown
 interface IWbemShutdown : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemshutdown-shutdown))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemshutdown-shutdown
     HRESULT Shutdown(int uReason, uint uMaxMilliseconds, IWbemContext pCtx);
 }
 
 @GUID("bfbf883a-cad7-11d3-a11b-00105a1f515a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemobjecttextsrc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemobjecttextsrc
 interface IWbemObjectTextSrc : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjecttextsrc-gettext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-iwbemobjecttextsrc-gettext
     HRESULT GetText(int lFlags, IWbemClassObject pObj, uint uObjTextFormat, IWbemContext pCtx, BSTR* strText);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemobjecttextsrc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-iwbemobjecttextsrc
     HRESULT CreateFromText(int lFlags, BSTR strText, uint uObjTextFormat, IWbemContext pCtx, 
                            IWbemClassObject* pNewObj);
 }
 
 @GUID("6daf974e-2e37-11d2-aec9-00c04fb68820")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-imofcompiler))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nn-wbemcli-imofcompiler
 interface IMofCompiler : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-imofcompiler-compilefile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-imofcompiler-compilefile
     HRESULT CompileFile(PWSTR FileName, PWSTR ServerAndNamespace, PWSTR User, PWSTR Authority, PWSTR Password, 
                         int lOptionFlags, int lClassFlags, int lInstanceFlags, WBEM_COMPILE_STATUS_INFO* pInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-imofcompiler-compilebuffer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-imofcompiler-compilebuffer
     HRESULT CompileBuffer(int BuffSize, 
                           /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(0)))])*/ubyte* pBuffer, 
                           PWSTR ServerAndNamespace, PWSTR User, PWSTR Authority, PWSTR Password, int lOptionFlags, 
                           int lClassFlags, int lInstanceFlags, WBEM_COMPILE_STATUS_INFO* pInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-imofcompiler-createbmof))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemcli/nf-wbemcli-imofcompiler-createbmof
     HRESULT CreateBMOF(PWSTR TextFileName, PWSTR BMOFFileName, PWSTR ServerAndNamespace, int lOptionFlags, 
                        int lClassFlags, int lInstanceFlags, WBEM_COMPILE_STATUS_INFO* pInfo);
 }
 
 @GUID("ce61e841-65bc-11d0-b6bd-00aa003240c7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbempropertyprovider))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbempropertyprovider
 interface IWbemPropertyProvider : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbempropertyprovider-getproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbempropertyprovider-getproperty
     HRESULT GetProperty(int lFlags, const(BSTR) strLocale, const(BSTR) strClassMapping, const(BSTR) strInstMapping, 
                         const(BSTR) strPropMapping, VARIANT* pvValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbempropertyprovider-putproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbempropertyprovider-putproperty
     HRESULT PutProperty(int lFlags, const(BSTR) strLocale, const(BSTR) strClassMapping, const(BSTR) strInstMapping, 
                         const(BSTR) strPropMapping, const(VARIANT)* pvValue);
 }
 
 @GUID("e246107b-b06e-11d0-ad61-00c04fd8fdff")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbemunboundobjectsink))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbemunboundobjectsink
 interface IWbemUnboundObjectSink : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemunboundobjectsink-indicatetoconsumer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemunboundobjectsink-indicatetoconsumer
     HRESULT IndicateToConsumer(IWbemClassObject pLogicalConsumer, int lNumObjects, IWbemClassObject* apObjects);
 }
 
 @GUID("e245105b-b06e-11d0-ad61-00c04fd8fdff")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbemeventprovider))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbemeventprovider
 interface IWbemEventProvider : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemeventprovider-provideevents))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemeventprovider-provideevents
     HRESULT ProvideEvents(IWbemObjectSink pSink, int lFlags);
 }
 
 @GUID("580acaf8-fa1c-11d0-ad72-00c04fd8fdff")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbemeventproviderquerysink))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbemeventproviderquerysink
 interface IWbemEventProviderQuerySink : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemeventproviderquerysink-newquery))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemeventproviderquerysink-newquery
     HRESULT NewQuery(uint dwId, ushort* wszQueryLanguage, ushort* wszQuery);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemeventproviderquerysink-cancelquery))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemeventproviderquerysink-cancelquery
     HRESULT CancelQuery(uint dwId);
 }
 
 @GUID("631f7d96-d993-11d2-b339-00105a1f4aaf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbemeventprovidersecurity))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbemeventprovidersecurity
 interface IWbemEventProviderSecurity : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemeventprovidersecurity-accesscheck))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemeventprovidersecurity-accesscheck
     HRESULT AccessCheck(ushort* wszQueryLanguage, ushort* wszQuery, int lSidLength, const(ubyte)* pSid);
 }
 
 @GUID("e246107a-b06e-11d0-ad61-00c04fd8fdff")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbemeventconsumerprovider))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbemeventconsumerprovider
 interface IWbemEventConsumerProvider : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemeventconsumerprovider-findconsumer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemeventconsumerprovider-findconsumer
     HRESULT FindConsumer(IWbemClassObject pLogicalConsumer, IWbemUnboundObjectSink* ppConsumer);
 }
 
 @GUID("1be41571-91dd-11d1-aeb2-00c04fb68820")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbemproviderinitsink))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbemproviderinitsink
 interface IWbemProviderInitSink : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemproviderinitsink-setstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemproviderinitsink-setstatus
     HRESULT SetStatus(int lStatus, int lFlags);
 }
 
 @GUID("1be41572-91dd-11d1-aeb2-00c04fb68820")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbemproviderinit))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbemproviderinit
 interface IWbemProviderInit : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemproviderinit-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemproviderinit-initialize
     HRESULT Initialize(PWSTR wszUser, int lFlags, PWSTR wszNamespace, PWSTR wszLocale, IWbemServices pNamespace, 
                        IWbemContext pCtx, IWbemProviderInitSink pInitSink);
 }
 
 @GUID("49353c93-516b-11d1-aea6-00c04fb68820")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbemhiperfprovider))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbemhiperfprovider
 interface IWbemHiPerfProvider : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemhiperfprovider-queryinstances))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemhiperfprovider-queryinstances
     HRESULT QueryInstances(IWbemServices pNamespace, PWSTR wszClass, int lFlags, IWbemContext pCtx, 
                            IWbemObjectSink pSink);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemhiperfprovider-createrefresher))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemhiperfprovider-createrefresher
     HRESULT CreateRefresher(IWbemServices pNamespace, int lFlags, IWbemRefresher* ppRefresher);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemhiperfprovider-createrefreshableobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemhiperfprovider-createrefreshableobject
     HRESULT CreateRefreshableObject(IWbemServices pNamespace, IWbemObjectAccess pTemplate, 
                                     IWbemRefresher pRefresher, int lFlags, IWbemContext pContext, 
                                     IWbemObjectAccess* ppRefreshable, int* plId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemhiperfprovider-stoprefreshing))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemhiperfprovider-stoprefreshing
     HRESULT StopRefreshing(IWbemRefresher pRefresher, int lId, int lFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemhiperfprovider-createrefreshableenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemhiperfprovider-createrefreshableenum
     HRESULT CreateRefreshableEnum(IWbemServices pNamespace, const(PWSTR) wszClass, IWbemRefresher pRefresher, 
                                   int lFlags, IWbemContext pContext, IWbemHiPerfEnum pHiPerfEnum, int* plId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemhiperfprovider-getobjects))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemhiperfprovider-getobjects
     HRESULT GetObjects(IWbemServices pNamespace, int lNumObjects, IWbemObjectAccess* apObj, int lFlags, 
                        IWbemContext pContext);
 }
 
 @GUID("1005cbcf-e64f-4646-bcd3-3a089d8a84b4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbemdecoupledregistrar))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbemdecoupledregistrar
 interface IWbemDecoupledRegistrar : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemdecoupledregistrar-register))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemdecoupledregistrar-register
     HRESULT Register(int a_Flags, IWbemContext a_Context, const(PWSTR) a_User, const(PWSTR) a_Locale, 
                      const(PWSTR) a_Scope, const(PWSTR) a_Registration, IUnknown pIUnknown);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemdecoupledregistrar-unregister))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemdecoupledregistrar-unregister
     HRESULT UnRegister();
 }
 
 @GUID("631f7d97-d993-11d2-b339-00105a1f4aaf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbemprovideridentity))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbemprovideridentity
 interface IWbemProviderIdentity : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemprovideridentity-setregistrationobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemprovideridentity-setregistrationobject
     HRESULT SetRegistrationObject(int lFlags, IWbemClassObject pProvReg);
 }
 
 @GUID("86336d20-ca11-4786-9ef1-bc8a946b42fc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbemdecoupledbasiceventprovider))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbemdecoupledbasiceventprovider
 interface IWbemDecoupledBasicEventProvider : IWbemDecoupledRegistrar
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemdecoupledbasiceventprovider-getsink))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemdecoupledbasiceventprovider-getsink
     HRESULT GetSink(int a_Flags, IWbemContext a_Context, IWbemObjectSink* a_Sink);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemdecoupledbasiceventprovider-getservice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemdecoupledbasiceventprovider-getservice
     HRESULT GetService(int a_Flags, IWbemContext a_Context, IWbemServices* a_Service);
 }
 
 @GUID("3ae0080a-7e3a-4366-bf89-0feedc931659")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbemeventsink))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nn-wbemprov-iwbemeventsink
 interface IWbemEventSink : IWbemObjectSink
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemeventsink-setsinksecurity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemeventsink-setsinksecurity
     HRESULT SetSinkSecurity(int lSDLength, ubyte* pSD);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemeventsink-isactive))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemeventsink-isactive
     HRESULT IsActive();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemeventsink-getrestrictedsink))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemeventsink-getrestrictedsink
     HRESULT GetRestrictedSink(int lNumQueries, const(PWSTR)* awszQueries, IUnknown pCallback, 
                               IWbemEventSink* ppSink);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemeventsink-setbatchingparameters))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wbemprov/nf-wbemprov-iwbemeventsink-setbatchingparameters
     HRESULT SetBatchingParameters(int lFlags, uint dwMaxBufferSize, uint dwMaxSendLatency);
 }
 

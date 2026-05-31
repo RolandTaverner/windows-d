@@ -3,12 +3,12 @@
 module windows.win32.system.js;
 
 public import windows.core;
-public import windows.win32.foundation : HRESULT, PWSTR;
-public import windows.win32.system.diagnostics.debug.activescript : IActiveScriptProfilerCallback,
-                                                                    IActiveScriptProfilerHeapEnum,
-                                                                    IDebugApplication32,
-                                                                    IDebugApplication64,
-                                                                    PROFILER_EVENT_MASK;
+public import windows.win32.foundation.foundation : HRESULT, PWSTR;
+public import windows.win32.system.diagnostics.debug_.activescript : IActiveScriptProfilerCallback,
+                                                                     IActiveScriptProfilerHeapEnum,
+                                                                     IDebugApplication32,
+                                                                     IDebugApplication64,
+                                                                     PROFILER_EVENT_MASK;
 public import windows.win32.system.variant : VARIANT;
 
 extern(Windows) @nogc nothrow:
@@ -16,44 +16,47 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 enum JsRuntimeVersion : int
 {
     JsRuntimeVersion10   = 0x00000000,
     JsRuntimeVersion11   = 0x00000001,
     JsRuntimeVersionEdge = 0xffffffff,
 }
+
 enum JsErrorCode : uint
 {
-    JsNoError                         = 0x00000000,
-    JsErrorCategoryUsage              = 0x00010000,
-    JsErrorInvalidArgument            = 0x00010001,
-    JsErrorNullArgument               = 0x00010002,
-    JsErrorNoCurrentContext           = 0x00010003,
-    JsErrorInExceptionState           = 0x00010004,
-    JsErrorNotImplemented             = 0x00010005,
-    JsErrorWrongThread                = 0x00010006,
-    JsErrorRuntimeInUse               = 0x00010007,
-    JsErrorBadSerializedScript        = 0x00010008,
-    JsErrorInDisabledState            = 0x00010009,
-    JsErrorCannotDisableExecution     = 0x0001000a,
-    JsErrorHeapEnumInProgress         = 0x0001000b,
-    JsErrorArgumentNotObject          = 0x0001000c,
-    JsErrorInProfileCallback          = 0x0001000d,
-    JsErrorInThreadServiceCallback    = 0x0001000e,
-    JsErrorCannotSerializeDebugScript = 0x0001000f,
-    JsErrorAlreadyDebuggingContext    = 0x00010010,
-    JsErrorAlreadyProfilingContext    = 0x00010011,
-    JsErrorIdleNotEnabled             = 0x00010012,
-    JsErrorCategoryEngine             = 0x00020000,
-    JsErrorOutOfMemory                = 0x00020001,
-    JsErrorCategoryScript             = 0x00030000,
-    JsErrorScriptException            = 0x00030001,
-    JsErrorScriptCompile              = 0x00030002,
-    JsErrorScriptTerminated           = 0x00030003,
-    JsErrorScriptEvalDisabled         = 0x00030004,
-    JsErrorCategoryFatal              = 0x00040000,
-    JsErrorFatal                      = 0x00040001,
+    JsNoError                         = 0x00000000U,
+    JsErrorCategoryUsage              = 0x00010000U,
+    JsErrorInvalidArgument            = 0x00010001U,
+    JsErrorNullArgument               = 0x00010002U,
+    JsErrorNoCurrentContext           = 0x00010003U,
+    JsErrorInExceptionState           = 0x00010004U,
+    JsErrorNotImplemented             = 0x00010005U,
+    JsErrorWrongThread                = 0x00010006U,
+    JsErrorRuntimeInUse               = 0x00010007U,
+    JsErrorBadSerializedScript        = 0x00010008U,
+    JsErrorInDisabledState            = 0x00010009U,
+    JsErrorCannotDisableExecution     = 0x0001000aU,
+    JsErrorHeapEnumInProgress         = 0x0001000bU,
+    JsErrorArgumentNotObject          = 0x0001000cU,
+    JsErrorInProfileCallback          = 0x0001000dU,
+    JsErrorInThreadServiceCallback    = 0x0001000eU,
+    JsErrorCannotSerializeDebugScript = 0x0001000fU,
+    JsErrorAlreadyDebuggingContext    = 0x00010010U,
+    JsErrorAlreadyProfilingContext    = 0x00010011U,
+    JsErrorIdleNotEnabled             = 0x00010012U,
+    JsErrorCategoryEngine             = 0x00020000U,
+    JsErrorOutOfMemory                = 0x00020001U,
+    JsErrorCategoryScript             = 0x00030000U,
+    JsErrorScriptException            = 0x00030001U,
+    JsErrorScriptCompile              = 0x00030002U,
+    JsErrorScriptTerminated           = 0x00030003U,
+    JsErrorScriptEvalDisabled         = 0x00030004U,
+    JsErrorCategoryFatal              = 0x00040000U,
+    JsErrorFatal                      = 0x00040001U,
 }
+
 enum JsRuntimeAttributes : int
 {
     JsRuntimeAttributeNone                        = 0x00000000,
@@ -63,12 +66,14 @@ enum JsRuntimeAttributes : int
     JsRuntimeAttributeDisableNativeCodeGeneration = 0x00000008,
     JsRuntimeAttributeDisableEval                 = 0x00000010,
 }
+
 enum JsMemoryEventType : int
 {
     JsMemoryAllocate = 0x00000000,
     JsMemoryFree     = 0x00000001,
     JsMemoryFailure  = 0x00000002,
 }
+
 enum JsValueType : int
 {
     JsUndefined = 0x00000000,
@@ -85,7 +90,7 @@ enum JsValueType : int
 // Constants
 
 
-enum ulong JS_SOURCE_CONTEXT_NONE = 0xffffffffffffffff;
+enum ulong JS_SOURCE_CONTEXT_NONE = 0xffffffffffffffffUL;
 
 // Callbacks
 
@@ -100,14 +105,30 @@ alias JsNativeFunction = void* function(void* callee, bool isConstructCall, void
 
 // Functions
 
-//METH ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-@DllImport("chakra.dll")
+
+version(X86_64)
+{
+    @DllImport("chakra.dll")
 JsErrorCode JsCreateContext(void* runtime, IDebugApplication64 debugApplication, void** newContext);
+}
 
-//METH ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-@DllImport("chakra.dll")
+version(AArch64)
+{
+    @DllImport("chakra.dll")
+JsErrorCode JsCreateContext(void* runtime, IDebugApplication64 debugApplication, void** newContext);
+}
+
+version(X86_64)
+{
+    @DllImport("chakra.dll")
 JsErrorCode JsStartDebugging(IDebugApplication64 debugApplication);
+}
 
+version(AArch64)
+{
+    @DllImport("chakra.dll")
+JsErrorCode JsStartDebugging(IDebugApplication64 debugApplication);
+}
 @DllImport("chakra.dll")
 JsErrorCode JsCreateRuntime(JsRuntimeAttributes attributes, JsRuntimeVersion runtimeVersion, 
                             JsThreadServiceCallback threadService, void** runtime);
@@ -141,10 +162,12 @@ JsErrorCode JsAddRef(void* ref_, uint* count);
 @DllImport("chakra.dll")
 JsErrorCode JsRelease(void* ref_, uint* count);
 
-//METH ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-@DllImport("chakra.dll")
-JsErrorCode JsCreateContext(void* runtime, IDebugApplication32 debugApplication, void** newContext);
 
+version(X86)
+{
+    @DllImport("chakra.dll")
+JsErrorCode JsCreateContext(void* runtime, IDebugApplication32 debugApplication, void** newContext);
+}
 @DllImport("chakra.dll")
 JsErrorCode JsGetCurrentContext(void** currentContext);
 
@@ -154,10 +177,12 @@ JsErrorCode JsSetCurrentContext(void* context);
 @DllImport("chakra.dll")
 JsErrorCode JsGetRuntime(void* context, void** runtime);
 
-//METH ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-@DllImport("chakra.dll")
-JsErrorCode JsStartDebugging(IDebugApplication32 debugApplication);
 
+version(X86)
+{
+    @DllImport("chakra.dll")
+JsErrorCode JsStartDebugging(IDebugApplication32 debugApplication);
+}
 @DllImport("chakra.dll")
 JsErrorCode JsIdle(uint* nextIdleTick);
 

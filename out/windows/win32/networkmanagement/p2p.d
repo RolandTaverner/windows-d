@@ -3,12 +3,13 @@
 module windows.win32.networkmanagement.p2p;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, FILETIME, HANDLE, HRESULT, HWND, PWSTR;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, FILETIME, HANDLE, HRESULT, HWND,
+                                                    PWSTR;
 public import windows.win32.networking.winsock : SOCKADDR, SOCKADDR_IN6, SOCKADDR_STORAGE,
                                                  SOCKET_ADDRESS, SOCKET_ADDRESS_LIST;
-public import windows.win32.security.cryptography : CERT_CONTEXT, CERT_PUBLIC_KEY_INFO;
-public import windows.win32.system.com : BLOB;
+public import windows.win32.security.cryptography.cryptography : CERT_CONTEXT, CERT_PUBLIC_KEY_INFO;
+public import windows.win32.system.com.com : BLOB;
 public import windows.win32.system.io : OVERLAPPED;
 
 extern(Windows) @nogc nothrow:
@@ -16,13 +17,15 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias PEERDIST_RETRIEVAL_OPTIONS_CONTENTINFO_VERSION_VALUE = uint;
 enum : uint
 {
-    PEERDIST_RETRIEVAL_OPTIONS_CONTENTINFO_VERSION_1 = 0x00000001,
-    PEERDIST_RETRIEVAL_OPTIONS_CONTENTINFO_VERSION_2 = 0x00000002,
-    PEERDIST_RETRIEVAL_OPTIONS_CONTENTINFO_VERSION   = 0x00000002,
+    PEERDIST_RETRIEVAL_OPTIONS_CONTENTINFO_VERSION_1 = 0x00000001U,
+    PEERDIST_RETRIEVAL_OPTIONS_CONTENTINFO_VERSION_2 = 0x00000002U,
+    PEERDIST_RETRIEVAL_OPTIONS_CONTENTINFO_VERSION   = 0x00000002U,
 }
+
 alias PNRP_SCOPE = int;
 enum : int
 {
@@ -31,7 +34,8 @@ enum : int
     PNRP_SITE_LOCAL_SCOPE = 0x00000002,
     PNRP_LINK_LOCAL_SCOPE = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pnrpdef/ne-pnrpdef-pnrp_cloud_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pnrpdef/ne-pnrpdef-pnrp_cloud_state
 alias PNRP_CLOUD_STATE = int;
 enum : int
 {
@@ -43,7 +47,8 @@ enum : int
     PNRP_CLOUD_STATE_NO_NET        = 0x00000005,
     PNRP_CLOUD_STATE_ALONE         = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pnrpdef/ne-pnrpdef-pnrp_cloud_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pnrpdef/ne-pnrpdef-pnrp_cloud_flags
 alias PNRP_CLOUD_FLAGS = int;
 enum : int
 {
@@ -52,13 +57,15 @@ enum : int
     PNRP_CLOUD_RESOLVE_ONLY     = 0x00000002,
     PNRP_CLOUD_FULL_PARTICIPANT = 0x00000004,
 }
+
 alias PNRP_REGISTERED_ID_STATE = int;
 enum : int
 {
     PNRP_REGISTERED_ID_STATE_OK      = 0x00000001,
     PNRP_REGISTERED_ID_STATE_PROBLEM = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pnrpdef/ne-pnrpdef-pnrp_resolve_criteria))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pnrpdef/ne-pnrpdef-pnrp_resolve_criteria
 alias PNRP_RESOLVE_CRITERIA = int;
 enum : int
 {
@@ -70,6 +77,7 @@ enum : int
     PNRP_RESOLVE_CRITERIA_ANY_PEER_NAME                         = 0x00000005,
     PNRP_RESOLVE_CRITERIA_NEAREST_PEER_NAME                     = 0x00000006,
 }
+
 alias PNRP_EXTENDED_PAYLOAD_TYPE = int;
 enum : int
 {
@@ -77,7 +85,8 @@ enum : int
     PNRP_EXTENDED_PAYLOAD_TYPE_BINARY = 0x00000001,
     PNRP_EXTENDED_PAYLOAD_TYPE_STRING = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_record_change_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_record_change_type
 alias PEER_RECORD_CHANGE_TYPE = int;
 enum : int
 {
@@ -86,7 +95,8 @@ enum : int
     PEER_RECORD_DELETED = 0x00000003,
     PEER_RECORD_EXPIRED = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_connection_status))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_connection_status
 alias PEER_CONNECTION_STATUS = int;
 enum : int
 {
@@ -94,21 +104,24 @@ enum : int
     PEER_DISCONNECTED      = 0x00000002,
     PEER_CONNECTION_FAILED = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_connection_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_connection_flags
 alias PEER_CONNECTION_FLAGS = int;
 enum : int
 {
     PEER_CONNECTION_NEIGHBOR = 0x00000001,
     PEER_CONNECTION_DIRECT   = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_record_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_record_flags
 alias PEER_RECORD_FLAGS = int;
 enum : int
 {
     PEER_RECORD_FLAG_AUTOREFRESH = 0x00000001,
     PEER_RECORD_FLAG_DELETED     = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_graph_event_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_graph_event_type
 alias PEER_GRAPH_EVENT_TYPE = int;
 enum : int
 {
@@ -122,7 +135,8 @@ enum : int
     PEER_GRAPH_EVENT_NODE_CHANGED        = 0x00000008,
     PEER_GRAPH_EVENT_SYNCHRONIZED        = 0x00000009,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_node_change_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_node_change_type
 alias PEER_NODE_CHANGE_TYPE = int;
 enum : int
 {
@@ -130,7 +144,8 @@ enum : int
     PEER_NODE_CHANGE_DISCONNECTED = 0x00000002,
     PEER_NODE_CHANGE_UPDATED      = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_graph_status_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_graph_status_flags
 alias PEER_GRAPH_STATUS_FLAGS = int;
 enum : int
 {
@@ -138,14 +153,16 @@ enum : int
     PEER_GRAPH_STATUS_HAS_CONNECTIONS = 0x00000002,
     PEER_GRAPH_STATUS_SYNCHRONIZED    = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_graph_property_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_graph_property_flags
 alias PEER_GRAPH_PROPERTY_FLAGS = int;
 enum : int
 {
     PEER_GRAPH_PROPERTY_HEARTBEATS       = 0x00000001,
     PEER_GRAPH_PROPERTY_DEFER_EXPIRATION = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_graph_scope))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_graph_scope
 alias PEER_GRAPH_SCOPE = int;
 enum : int
 {
@@ -155,7 +172,8 @@ enum : int
     PEER_GRAPH_SCOPE_LINKLOCAL = 0x00000003,
     PEER_GRAPH_SCOPE_LOOPBACK  = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_group_event_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_group_event_type
 alias PEER_GROUP_EVENT_TYPE = int;
 enum : int
 {
@@ -169,14 +187,16 @@ enum : int
     PEER_GROUP_EVENT_CONNECTION_FAILED     = 0x0000000a,
     PEER_GROUP_EVENT_AUTHENTICATION_FAILED = 0x0000000b,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_group_status))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_group_status
 alias PEER_GROUP_STATUS = int;
 enum : int
 {
     PEER_GROUP_STATUS_LISTENING       = 0x00000001,
     PEER_GROUP_STATUS_HAS_CONNECTIONS = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_group_property_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_group_property_flags
 alias PEER_GROUP_PROPERTY_FLAGS = int;
 enum : int
 {
@@ -184,20 +204,23 @@ enum : int
     PEER_DISABLE_PRESENCE     = 0x00000002,
     PEER_DEFER_EXPIRATION     = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_group_authentication_scheme))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_group_authentication_scheme
 alias PEER_GROUP_AUTHENTICATION_SCHEME = int;
 enum : int
 {
     PEER_GROUP_GMC_AUTHENTICATION      = 0x00000001,
     PEER_GROUP_PASSWORD_AUTHENTICATION = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_member_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_member_flags
 alias PEER_MEMBER_FLAGS = int;
 enum : int
 {
     PEER_MEMBER_PRESENT = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_member_change_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_member_change_type
 alias PEER_MEMBER_CHANGE_TYPE = int;
 enum : int
 {
@@ -207,13 +230,15 @@ enum : int
     PEER_MEMBER_JOINED       = 0x00000004,
     PEER_MEMBER_LEFT         = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_group_issue_credential_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_group_issue_credential_flags
 alias PEER_GROUP_ISSUE_CREDENTIAL_FLAGS = int;
 enum : int
 {
     PEER_GROUP_STORE_CREDENTIALS = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_signin_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_signin_flags
 alias PEER_SIGNIN_FLAGS = int;
 enum : int
 {
@@ -222,14 +247,16 @@ enum : int
     PEER_SIGNIN_INTERNET = 0x00000002,
     PEER_SIGNIN_ALL      = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_watch_permission))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_watch_permission
 alias PEER_WATCH_PERMISSION = int;
 enum : int
 {
     PEER_WATCH_BLOCKED = 0x00000000,
     PEER_WATCH_ALLOWED = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_publication_scope))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_publication_scope
 alias PEER_PUBLICATION_SCOPE = int;
 enum : int
 {
@@ -238,7 +265,8 @@ enum : int
     PEER_PUBLICATION_SCOPE_INTERNET = 0x00000002,
     PEER_PUBLICATION_SCOPE_ALL      = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_invitation_response_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_invitation_response_type
 alias PEER_INVITATION_RESPONSE_TYPE = int;
 enum : int
 {
@@ -247,14 +275,16 @@ enum : int
     PEER_INVITATION_RESPONSE_EXPIRED  = 0x00000002,
     PEER_INVITATION_RESPONSE_ERROR    = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_application_registration_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_application_registration_type
 alias PEER_APPLICATION_REGISTRATION_TYPE = int;
 enum : int
 {
     PEER_APPLICATION_CURRENT_USER = 0x00000000,
     PEER_APPLICATION_ALL_USERS    = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_presence_status))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_presence_status
 alias PEER_PRESENCE_STATUS = int;
 enum : int
 {
@@ -267,7 +297,8 @@ enum : int
     PEER_PRESENCE_ON_THE_PHONE  = 0x00000006,
     PEER_PRESENCE_ONLINE        = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_change_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_change_type
 alias PEER_CHANGE_TYPE = int;
 enum : int
 {
@@ -275,7 +306,8 @@ enum : int
     PEER_CHANGE_DELETED = 0x00000001,
     PEER_CHANGE_UPDATED = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_collab_event_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ne-p2p-peer_collab_event_type
 alias PEER_COLLAB_EVENT_TYPE = int;
 enum : int
 {
@@ -291,7 +323,8 @@ enum : int
     PEER_EVENT_PEOPLE_NEAR_ME_CHANGED       = 0x0000000a,
     PEER_EVENT_REQUEST_STATUS_CHANGED       = 0x0000000b,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/drt/ne-drt-drt_scope))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/drt/ne-drt-drt_scope
 alias DRT_SCOPE = int;
 enum : int
 {
@@ -299,7 +332,8 @@ enum : int
     DRT_SITE_LOCAL_SCOPE = 0x00000002,
     DRT_LINK_LOCAL_SCOPE = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/drt/ne-drt-drt_status))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/drt/ne-drt-drt_status
 alias DRT_STATUS = int;
 enum : int
 {
@@ -308,7 +342,8 @@ enum : int
     DRT_NO_NETWORK = 0x0000000a,
     DRT_FAULTED    = 0x00000014,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/drt/ne-drt-drt_match_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/drt/ne-drt-drt_match_type
 alias DRT_MATCH_TYPE = int;
 enum : int
 {
@@ -316,14 +351,16 @@ enum : int
     DRT_MATCH_NEAR         = 0x00000001,
     DRT_MATCH_INTERMEDIATE = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/drt/ne-drt-drt_leafset_key_change_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/drt/ne-drt-drt_leafset_key_change_type
 alias DRT_LEAFSET_KEY_CHANGE_TYPE = int;
 enum : int
 {
     DRT_LEAFSET_KEY_ADDED   = 0x00000000,
     DRT_LEAFSET_KEY_DELETED = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/drt/ne-drt-drt_event_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/drt/ne-drt-drt_event_type
 alias DRT_EVENT_TYPE = int;
 enum : int
 {
@@ -331,7 +368,8 @@ enum : int
     DRT_EVENT_LEAFSET_KEY_CHANGED        = 0x00000001,
     DRT_EVENT_REGISTRATION_STATE_CHANGED = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/drt/ne-drt-drt_security_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/drt/ne-drt-drt_security_mode
 alias DRT_SECURITY_MODE = int;
 enum : int
 {
@@ -339,13 +377,15 @@ enum : int
     DRT_SECURE_MEMBERSHIP          = 0x00000001,
     DRT_SECURE_CONFIDENTIALPAYLOAD = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/drt/ne-drt-drt_registration_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/drt/ne-drt-drt_registration_state
 alias DRT_REGISTRATION_STATE = int;
 enum : int
 {
     DRT_REGISTRATION_STATE_UNRESOLVEABLE = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/drt/ne-drt-drt_address_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/drt/ne-drt-drt_address_flags
 alias DRT_ADDRESS_FLAGS = int;
 enum : int
 {
@@ -358,7 +398,8 @@ enum : int
     DRT_ADDRESS_FLAG_SUSPECT_UNREGISTERED_ID = 0x00000040,
     DRT_ADDRESS_FLAG_INQUIRE                 = 0x00000080,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peerdist/ne-peerdist-peerdist_status))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peerdist/ne-peerdist-peerdist_status
 alias PEERDIST_STATUS = int;
 enum : int
 {
@@ -366,7 +407,8 @@ enum : int
     PEERDIST_STATUS_UNAVAILABLE = 0x00000001,
     PEERDIST_STATUS_AVAILABLE   = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peerdist/ne-peerdist-peerdist_client_info_by_handle_class))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peerdist/ne-peerdist-peerdist_client_info_by_handle_class
 alias PEERDIST_CLIENT_INFO_BY_HANDLE_CLASS = int;
 enum : int
 {
@@ -379,11 +421,11 @@ enum : int
 
 enum : uint
 {
-    NS_PNRPNAME  = 0x00000026,
-    NS_PNRPCLOUD = 0x00000027,
+    NS_PNRPNAME  = 0x00000026U,
+    NS_PNRPCLOUD = 0x00000027U,
 }
 
-enum uint PNRPINFO_HINT = 0x00000001;
+enum uint PNRPINFO_HINT = 0x00000001U;
 
 enum : GUID
 {
@@ -398,7 +440,7 @@ enum : GUID
     SVCID_PNRPNAME_V2 = GUID("c2239ce7-00c0-4fbf-bad6-18139385a49a"),
 }
 
-enum uint PNRP_MAX_ENDPOINT_ADDRESSES = 0x0000000a;
+enum uint PNRP_MAX_ENDPOINT_ADDRESSES = 0x0000000aU;
 
 enum : const(wchar)*
 {
@@ -407,27 +449,27 @@ enum : const(wchar)*
     WSZ_SCOPE_LINKLOCAL = "LINKLOCAL",
 }
 
-enum uint PNRP_MAX_EXTENDED_PAYLOAD_BYTES = 0x00001000;
+enum uint PNRP_MAX_EXTENDED_PAYLOAD_BYTES = 0x00001000U;
 enum const(wchar)* PEER_PNRP_ALL_LINK_CLOUDS = "PEER_PNRP_ALL_LINKS";
 
 enum : uint
 {
-    WSA_PNRP_ERROR_BASE      = 0x00002cec,
-    WSA_PNRP_CLOUD_NOT_FOUND = 0x00002ced,
-    WSA_PNRP_CLOUD_DISABLED  = 0x00002cee,
+    WSA_PNRP_ERROR_BASE      = 0x00002cecU,
+    WSA_PNRP_CLOUD_NOT_FOUND = 0x00002cedU,
+    WSA_PNRP_CLOUD_DISABLED  = 0x00002ceeU,
 }
 
-enum uint WSA_PNRP_INVALID_IDENTITY = 0x00002cef;
+enum uint WSA_PNRP_INVALID_IDENTITY = 0x00002cefU;
 
 enum : uint
 {
-    WSA_PNRP_TOO_MUCH_LOAD        = 0x00002cf0,
-    WSA_PNRP_CLOUD_IS_SEARCH_ONLY = 0x00002cf1,
+    WSA_PNRP_TOO_MUCH_LOAD        = 0x00002cf0U,
+    WSA_PNRP_CLOUD_IS_SEARCH_ONLY = 0x00002cf1U,
 }
 
-enum uint WSA_PNRP_CLIENT_INVALID_COMPARTMENT_ID = 0x00002cf2;
-enum uint WSA_PNRP_DUPLICATE_PEER_NAME = 0x00002cf4;
-enum uint WSA_PNRP_CLOUD_IS_DEAD = 0x00002cf5;
+enum uint WSA_PNRP_CLIENT_INVALID_COMPARTMENT_ID = 0x00002cf2U;
+enum uint WSA_PNRP_DUPLICATE_PEER_NAME = 0x00002cf4U;
+enum uint WSA_PNRP_CLOUD_IS_DEAD = 0x00002cf5U;
 
 enum : HRESULT
 {
@@ -457,7 +499,7 @@ enum : GUID
 }
 
 enum GUID PEER_COLLAB_OBJECTID_USER_PICTURE = GUID("dd15f41f-fc4e-4922-b035-4c06a754d01d");
-enum uint FACILITY_DRT = 0x00000062;
+enum uint FACILITY_DRT = 0x00000062U;
 
 enum : HRESULT
 {
@@ -549,12 +591,12 @@ enum : HRESULT
 }
 
 enum HRESULT DRT_E_CAPABILITY_MISMATCH = HRESULT(0x8062210f);
-enum uint DRT_PAYLOAD_REVOKED = 0x00000001;
-enum uint DRT_MIN_ROUTING_ADDRESSES = 0x00000001;
-enum uint DRT_MAX_ROUTING_ADDRESSES = 0x00000014;
-enum uint DRT_MAX_PAYLOAD_SIZE = 0x00001400;
-enum uint DRT_MAX_INSTANCE_PREFIX_LEN = 0x00000080;
-enum uint DRT_LINK_LOCAL_ISATAP_SCOPEID = 0xffffffff;
+enum uint DRT_PAYLOAD_REVOKED = 0x00000001U;
+enum uint DRT_MIN_ROUTING_ADDRESSES = 0x00000001U;
+enum uint DRT_MAX_ROUTING_ADDRESSES = 0x00000014U;
+enum uint DRT_MAX_PAYLOAD_SIZE = 0x00001400U;
+enum uint DRT_MAX_INSTANCE_PREFIX_LEN = 0x00000080U;
+enum uint DRT_LINK_LOCAL_ISATAP_SCOPEID = 0xffffffffU;
 
 enum : int
 {
@@ -565,8 +607,8 @@ enum : int
 
 enum : uint
 {
-    PEERDIST_READ_TIMEOUT_LOCAL_CACHE_ONLY = 0x00000000,
-    PEERDIST_READ_TIMEOUT_DEFAULT          = 0xfffffffe,
+    PEERDIST_READ_TIMEOUT_LOCAL_CACHE_ONLY = 0x00000000U,
+    PEERDIST_READ_TIMEOUT_DEFAULT          = 0xfffffffeU,
 }
 
 // Callbacks
@@ -587,7 +629,7 @@ alias DRT_BOOTSTRAP_RESOLVE_CALLBACK = void function(HRESULT hr, void* pvContext
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pnrpdef/ns-pnrpdef-pnrp_cloud_id))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pnrpdef/ns-pnrpdef-pnrp_cloud_id
 struct PNRP_CLOUD_ID
 {
     int        AddressFamily;
@@ -595,7 +637,7 @@ struct PNRP_CLOUD_ID
     uint       ScopeId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pnrpns/ns-pnrpns-pnrpinfo_v1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pnrpns/ns-pnrpns-pnrpinfo_v1
 struct PNRPINFO_V1
 {
     uint           dwSize;
@@ -609,23 +651,27 @@ struct PNRPINFO_V1
     PNRP_REGISTERED_ID_STATE enNameState;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pnrpns/ns-pnrpns-pnrpinfo_v2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pnrpns/ns-pnrpns-pnrpinfo_v2
 struct PNRPINFO_V2
 {
-    uint                dwSize;
-    PWSTR               lpwszIdentity;
-    uint                nMaxResolve;
-    uint                dwTimeout;
-    uint                dwLifetime;
+    uint           dwSize;
+    PWSTR          lpwszIdentity;
+    uint           nMaxResolve;
+    uint           dwTimeout;
+    uint           dwLifetime;
     PNRP_RESOLVE_CRITERIA enResolveCriteria;
-    uint                dwFlags;
-    SOCKET_ADDRESS      saHint;
+    uint           dwFlags;
+    SOCKET_ADDRESS saHint;
     PNRP_REGISTERED_ID_STATE enNameState;
     PNRP_EXTENDED_PAYLOAD_TYPE enExtendedPayloadType;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        BLOB  blobPayload;
+        PWSTR pwszPayload;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pnrpns/ns-pnrpns-pnrpcloudinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pnrpns/ns-pnrpns-pnrpcloudinfo
 struct PNRPCLOUDINFO
 {
     uint             dwSize;
@@ -634,21 +680,21 @@ struct PNRPCLOUDINFO
     PNRP_CLOUD_FLAGS enCloudFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_version_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_version_data
 struct PEER_VERSION_DATA
 {
     ushort wVersion;
     ushort wHighestVersion;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_data
 struct PEER_DATA
 {
     uint   cbData;
     ubyte* pbData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_record))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_record
 struct PEER_RECORD
 {
     uint      dwSize;
@@ -666,14 +712,14 @@ struct PEER_RECORD
     PEER_DATA data;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_address))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_address
 struct PEER_ADDRESS
 {
     uint         dwSize;
     SOCKADDR_IN6 sin6;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_connection_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_connection_info
 struct PEER_CONNECTION_INFO
 {
     uint         dwSize;
@@ -684,7 +730,7 @@ struct PEER_CONNECTION_INFO
     PEER_ADDRESS address;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_event_incoming_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_event_incoming_data
 struct PEER_EVENT_INCOMING_DATA
 {
     uint      dwSize;
@@ -693,7 +739,7 @@ struct PEER_EVENT_INCOMING_DATA
     PEER_DATA data;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_event_record_change_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_event_record_change_data
 struct PEER_EVENT_RECORD_CHANGE_DATA
 {
     uint dwSize;
@@ -702,7 +748,7 @@ struct PEER_EVENT_RECORD_CHANGE_DATA
     GUID recordType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_event_connection_change_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_event_connection_change_data
 struct PEER_EVENT_CONNECTION_CHANGE_DATA
 {
     uint    dwSize;
@@ -713,14 +759,14 @@ struct PEER_EVENT_CONNECTION_CHANGE_DATA
     HRESULT hrConnectionFailedReason;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_event_synchronized_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_event_synchronized_data
 struct PEER_EVENT_SYNCHRONIZED_DATA
 {
     uint dwSize;
     GUID recordType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_graph_properties))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_graph_properties
 struct PEER_GRAPH_PROPERTIES
 {
     uint  dwSize;
@@ -735,7 +781,7 @@ struct PEER_GRAPH_PROPERTIES
     uint  cPresenceMax;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_node_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_node_info
 struct PEER_NODE_INFO
 {
     uint          dwSize;
@@ -746,7 +792,7 @@ struct PEER_NODE_INFO
     PWSTR         pwzAttributes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_event_node_change_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_event_node_change_data
 struct PEER_EVENT_NODE_CHANGE_DATA
 {
     uint  dwSize;
@@ -755,21 +801,29 @@ struct PEER_EVENT_NODE_CHANGE_DATA
     PWSTR pwzPeerId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_graph_event_registration))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_graph_event_registration
 struct PEER_GRAPH_EVENT_REGISTRATION
 {
     PEER_GRAPH_EVENT_TYPE eventType;
     GUID* pType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_graph_event_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_graph_event_data
 struct PEER_GRAPH_EVENT_DATA
 {
     PEER_GRAPH_EVENT_TYPE eventType;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        PEER_GRAPH_STATUS_FLAGS dwStatus;
+        PEER_EVENT_INCOMING_DATA incomingData;
+        PEER_EVENT_RECORD_CHANGE_DATA recordChangeData;
+        PEER_EVENT_CONNECTION_CHANGE_DATA connectionChangeData;
+        PEER_EVENT_NODE_CHANGE_DATA nodeChangeData;
+        PEER_EVENT_SYNCHRONIZED_DATA synchronizedData;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_security_interface))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_security_interface
 struct PEER_SECURITY_INTERFACE
 {
     uint   dwSize;
@@ -784,7 +838,7 @@ struct PEER_SECURITY_INTERFACE
     PFNPEER_ON_PASSWORD_AUTH_FAILED pfnAuthFailed;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_credential_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_credential_info
 struct PEER_CREDENTIAL_INFO
 {
     uint     dwSize;
@@ -799,7 +853,7 @@ struct PEER_CREDENTIAL_INFO
     GUID*    pRoles;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_member))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_member
 struct PEER_MEMBER
 {
     uint          dwSize;
@@ -812,7 +866,7 @@ struct PEER_MEMBER
     PEER_CREDENTIAL_INFO* pCredentialInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_invitation_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_invitation_info
 struct PEER_INVITATION_INFO
 {
     uint     dwSize;
@@ -836,7 +890,7 @@ struct PEER_INVITATION_INFO
     PEER_GROUP_AUTHENTICATION_SCHEME authScheme;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_group_properties))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_group_properties
 struct PEER_GROUP_PROPERTIES
 {
     uint  dwSize;
@@ -854,7 +908,7 @@ struct PEER_GROUP_PROPERTIES
     GUID  groupPasswordRole;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_event_member_change_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_event_member_change_data
 struct PEER_EVENT_MEMBER_CHANGE_DATA
 {
     uint  dwSize;
@@ -862,21 +916,29 @@ struct PEER_EVENT_MEMBER_CHANGE_DATA
     PWSTR pwzIdentity;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_group_event_registration))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_group_event_registration
 struct PEER_GROUP_EVENT_REGISTRATION
 {
     PEER_GROUP_EVENT_TYPE eventType;
     GUID* pType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_group_event_data~r1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_group_event_data~r1
 struct PEER_GROUP_EVENT_DATA
 {
     PEER_GROUP_EVENT_TYPE eventType;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        PEER_GROUP_STATUS dwStatus;
+        PEER_EVENT_INCOMING_DATA incomingData;
+        PEER_EVENT_RECORD_CHANGE_DATA recordChangeData;
+        PEER_EVENT_CONNECTION_CHANGE_DATA connectionChangeData;
+        PEER_EVENT_MEMBER_CHANGE_DATA memberChangeData;
+        HRESULT           hrConnectionFailedReason;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_name_pair))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_name_pair
 struct PEER_NAME_PAIR
 {
     uint  dwSize;
@@ -884,7 +946,7 @@ struct PEER_NAME_PAIR
     PWSTR pwzFriendlyName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_application))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_application
 struct PEER_APPLICATION
 {
     GUID      id;
@@ -892,7 +954,7 @@ struct PEER_APPLICATION
     PWSTR     pwzDescription;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_object))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_object
 struct PEER_OBJECT
 {
     GUID      id;
@@ -900,7 +962,7 @@ struct PEER_OBJECT
     uint      dwPublicationScope;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_contact))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_contact
 struct PEER_CONTACT
 {
     PWSTR     pwzPeerName;
@@ -912,14 +974,14 @@ struct PEER_CONTACT
     PEER_DATA credentials;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_endpoint))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_endpoint
 struct PEER_ENDPOINT
 {
     PEER_ADDRESS address;
     PWSTR        pwzEndpointName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_people_near_me))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_people_near_me
 struct PEER_PEOPLE_NEAR_ME
 {
     PWSTR         pwzNickName;
@@ -927,7 +989,7 @@ struct PEER_PEOPLE_NEAR_ME
     GUID          id;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_invitation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_invitation
 struct PEER_INVITATION
 {
     GUID      applicationId;
@@ -935,7 +997,7 @@ struct PEER_INVITATION
     PWSTR     pwzMessage;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_invitation_response))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_invitation_response
 struct PEER_INVITATION_RESPONSE
 {
     PEER_INVITATION_RESPONSE_TYPE action;
@@ -943,7 +1005,7 @@ struct PEER_INVITATION_RESPONSE
     HRESULT hrExtendedInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_app_launch_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_app_launch_info
 struct PEER_APP_LAUNCH_INFO
 {
     PEER_CONTACT*    pContact;
@@ -951,7 +1013,7 @@ struct PEER_APP_LAUNCH_INFO
     PEER_INVITATION* pInvitation;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_application_registration_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_application_registration_info
 struct PEER_APPLICATION_REGISTRATION_INFO
 {
     PEER_APPLICATION application;
@@ -960,28 +1022,28 @@ struct PEER_APPLICATION_REGISTRATION_INFO
     uint             dwPublicationScope;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_presence_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_presence_info
 struct PEER_PRESENCE_INFO
 {
     PEER_PRESENCE_STATUS status;
     PWSTR                pwzDescriptiveText;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_collab_event_registration))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_collab_event_registration
 struct PEER_COLLAB_EVENT_REGISTRATION
 {
     PEER_COLLAB_EVENT_TYPE eventType;
     GUID* pInstance;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_event_watchlist_changed_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_event_watchlist_changed_data
 struct PEER_EVENT_WATCHLIST_CHANGED_DATA
 {
     PEER_CONTACT*    pContact;
     PEER_CHANGE_TYPE changeType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_event_presence_changed_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_event_presence_changed_data
 struct PEER_EVENT_PRESENCE_CHANGED_DATA
 {
     PEER_CONTACT*       pContact;
@@ -990,7 +1052,7 @@ struct PEER_EVENT_PRESENCE_CHANGED_DATA
     PEER_PRESENCE_INFO* pPresenceInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_event_application_changed_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_event_application_changed_data
 struct PEER_EVENT_APPLICATION_CHANGED_DATA
 {
     PEER_CONTACT*     pContact;
@@ -999,7 +1061,7 @@ struct PEER_EVENT_APPLICATION_CHANGED_DATA
     PEER_APPLICATION* pApplication;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_event_object_changed_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_event_object_changed_data
 struct PEER_EVENT_OBJECT_CHANGED_DATA
 {
     PEER_CONTACT*    pContact;
@@ -1008,35 +1070,44 @@ struct PEER_EVENT_OBJECT_CHANGED_DATA
     PEER_OBJECT*     pObject;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_event_endpoint_changed_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_event_endpoint_changed_data
 struct PEER_EVENT_ENDPOINT_CHANGED_DATA
 {
     PEER_CONTACT*  pContact;
     PEER_ENDPOINT* pEndpoint;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_event_people_near_me_changed_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_event_people_near_me_changed_data
 struct PEER_EVENT_PEOPLE_NEAR_ME_CHANGED_DATA
 {
     PEER_CHANGE_TYPE     changeType;
     PEER_PEOPLE_NEAR_ME* pPeopleNearMe;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_event_request_status_changed_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_event_request_status_changed_data
 struct PEER_EVENT_REQUEST_STATUS_CHANGED_DATA
 {
     PEER_ENDPOINT* pEndpoint;
     HRESULT        hrChange;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_collab_event_data~r1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_collab_event_data~r1
 struct PEER_COLLAB_EVENT_DATA
 {
     PEER_COLLAB_EVENT_TYPE eventType;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        PEER_EVENT_WATCHLIST_CHANGED_DATA watchListChangedData;
+        PEER_EVENT_PRESENCE_CHANGED_DATA presenceChangedData;
+        PEER_EVENT_APPLICATION_CHANGED_DATA applicationChangedData;
+        PEER_EVENT_OBJECT_CHANGED_DATA objectChangedData;
+        PEER_EVENT_ENDPOINT_CHANGED_DATA endpointChangedData;
+        PEER_EVENT_PEOPLE_NEAR_ME_CHANGED_DATA peopleNearMeChangedData;
+        PEER_EVENT_REQUEST_STATUS_CHANGED_DATA requestStatusChangedData;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_pnrp_endpoint_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_pnrp_endpoint_info
 struct PEER_PNRP_ENDPOINT_INFO
 {
     PWSTR      pwzPeerName;
@@ -1046,7 +1117,7 @@ struct PEER_PNRP_ENDPOINT_INFO
     PEER_DATA  payload;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_pnrp_cloud_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_pnrp_cloud_info
 struct PEER_PNRP_CLOUD_INFO
 {
     PWSTR      pwzCloudName;
@@ -1054,7 +1125,7 @@ struct PEER_PNRP_CLOUD_INFO
     uint       dwScopeId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_pnrp_registration_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/p2p/ns-p2p-peer_pnrp_registration_info
 struct PEER_PNRP_REGISTRATION_INFO
 {
     PWSTR      pwzCloudName;
@@ -1066,21 +1137,21 @@ struct PEER_PNRP_REGISTRATION_INFO
     PEER_DATA  payload;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/drt/ns-drt-drt_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/drt/ns-drt-drt_data
 struct DRT_DATA
 {
     uint   cb;
     ubyte* pb;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/drt/ns-drt-drt_registration))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/drt/ns-drt-drt_registration
 struct DRT_REGISTRATION
 {
     DRT_DATA key;
     DRT_DATA appData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/drt/ns-drt-drt_security_provider))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/drt/ns-drt-drt_security_provider
 struct DRT_SECURITY_PROVIDER
 {
     void*     pvContext;
@@ -1099,7 +1170,7 @@ struct DRT_SECURITY_PROVIDER
     ptrdiff_t VerifyData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/drt/ns-drt-drt_bootstrap_provider))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/drt/ns-drt-drt_bootstrap_provider
 struct DRT_BOOTSTRAP_PROVIDER
 {
     void*     pvContext;
@@ -1112,7 +1183,7 @@ struct DRT_BOOTSTRAP_PROVIDER
     ptrdiff_t Unregister;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/drt/ns-drt-drt_settings))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/drt/ns-drt-drt_settings
 struct DRT_SETTINGS
 {
     uint              dwSize;
@@ -1127,7 +1198,7 @@ struct DRT_SETTINGS
     DRT_SECURITY_MODE eSecurityMode;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/drt/ns-drt-drt_search_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/drt/ns-drt-drt_search_info
 struct DRT_SEARCH_INFO
 {
     uint      dwSize;
@@ -1139,7 +1210,7 @@ struct DRT_SEARCH_INFO
     DRT_DATA* pMinimumKey;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/drt/ns-drt-drt_address))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/drt/ns-drt-drt_address
 struct DRT_ADDRESS
 {
     SOCKADDR_STORAGE socketAddress;
@@ -1148,14 +1219,14 @@ struct DRT_ADDRESS
     uint             latency;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/drt/ns-drt-drt_address_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/drt/ns-drt-drt_address_list
 struct DRT_ADDRESS_LIST
 {
     uint AddressCount;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DRT_ADDRESS[1] AddressList;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/drt/ns-drt-drt_search_result))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/drt/ns-drt-drt_search_result
 struct DRT_SEARCH_RESULT
 {
     uint             dwSize;
@@ -1164,30 +1235,52 @@ struct DRT_SEARCH_RESULT
     DRT_REGISTRATION registration;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/drt/ns-drt-drt_event_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/drt/ns-drt-drt_event_data
 struct DRT_EVENT_DATA
 {
-    DRT_EVENT_TYPE      type;
-    HRESULT             hr;
-    void*               pvContext;
-    _Anonymous_e__Union Anonymous;
+    DRT_EVENT_TYPE type;
+    HRESULT        hr;
+    void*          pvContext;
+    union
+    {
+        struct leafsetKeyChange
+        {
+            DRT_LEAFSET_KEY_CHANGE_TYPE change;
+            DRT_DATA localKey;
+            DRT_DATA remoteKey;
+        }
+        struct registrationStateChange
+        {
+            DRT_REGISTRATION_STATE state;
+            DRT_DATA localKey;
+        }
+        struct statusChange
+        {
+            DRT_STATUS status;
+            struct bootstrapAddresses
+            {
+                uint              cntAddress;
+                SOCKADDR_STORAGE* pAddresses;
+            }
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peerdist/ns-peerdist-peerdist_publication_options))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peerdist/ns-peerdist-peerdist_publication_options
 struct PEERDIST_PUBLICATION_OPTIONS
 {
     uint dwVersion;
     uint dwFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peerdist/ns-peerdist-peerdist_content_tag))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peerdist/ns-peerdist-peerdist_content_tag
 struct PEERDIST_CONTENT_TAG
 {
     ubyte[16] Data;
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peerdist/ns-peerdist-peerdist_retrieval_options))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peerdist/ns-peerdist-peerdist_retrieval_options
 struct PEERDIST_RETRIEVAL_OPTIONS
 {
     uint cbSize;
@@ -1197,7 +1290,7 @@ struct PEERDIST_RETRIEVAL_OPTIONS
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peerdist/ns-peerdist-peerdist_status_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peerdist/ns-peerdist-peerdist_status_info
 struct PEERDIST_STATUS_INFO
 {
     uint            cbSize;
@@ -1206,7 +1299,7 @@ struct PEERDIST_STATUS_INFO
     PEERDIST_RETRIEVAL_OPTIONS_CONTENTINFO_VERSION_VALUE dwMaxVer;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peerdist/ns-peerdist-peerdist_client_basic_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peerdist/ns-peerdist-peerdist_client_basic_info
 struct PEERDIST_CLIENT_BASIC_INFO
 {
     BOOL fFlashCrowd;

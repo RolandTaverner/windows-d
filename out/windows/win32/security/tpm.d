@@ -3,13 +3,14 @@
 module windows.win32.security.tpm;
 
 public import windows.core;
-public import windows.win32.foundation : BOOL, HRESULT, PWSTR;
-public import windows.win32.system.com : IUnknown;
+public import windows.win32.foundation.foundation : BOOL, HRESULT, PWSTR;
+public import windows.win32.system.com.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
+
 
 alias TPMVSC_ATTESTATION_TYPE = int;
 enum : int
@@ -18,7 +19,8 @@ enum : int
     TPMVSC_ATTESTATION_AIK_ONLY            = 0x00000001,
     TPMVSC_ATTESTATION_AIK_AND_CERTIFICATE = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tpmvscmgr/ne-tpmvscmgr-tpmvscmgr_status))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tpmvscmgr/ne-tpmvscmgr-tpmvscmgr_status
 alias TPMVSCMGR_STATUS = int;
 enum : int
 {
@@ -37,7 +39,8 @@ enum : int
     TPMVSCMGR_STATUS_CARD_CREATED                = 0x0000000c,
     TPMVSCMGR_STATUS_CARD_DESTROYED              = 0x0000000d,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tpmvscmgr/ne-tpmvscmgr-tpmvscmgr_error))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tpmvscmgr/ne-tpmvscmgr-tpmvscmgr_error
 alias TPMVSCMGR_ERROR = int;
 enum : int
 {
@@ -65,7 +68,7 @@ enum : int
 // Constants
 
 
-enum uint TPMVSC_DEFAULT_ADMIN_ALGORITHM_ID = 0x00000082;
+enum uint TPMVSC_DEFAULT_ADMIN_ALGORITHM_ID = 0x00000082U;
 
 // Interfaces
 
@@ -77,27 +80,27 @@ struct RemoteTpmVirtualSmartCardManager;
 
 @GUID("1a1bb35f-abb8-451c-a1ae-33d98f1bef4a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tpmvscmgr/nn-tpmvscmgr-itpmvirtualsmartcardmanagerstatuscallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tpmvscmgr/nn-tpmvscmgr-itpmvirtualsmartcardmanagerstatuscallback
 interface ITpmVirtualSmartCardManagerStatusCallback : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tpmvscmgr/nf-tpmvscmgr-itpmvirtualsmartcardmanagerstatuscallback-reportprogress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tpmvscmgr/nf-tpmvscmgr-itpmvirtualsmartcardmanagerstatuscallback-reportprogress
     HRESULT ReportProgress(TPMVSCMGR_STATUS Status);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tpmvscmgr/nf-tpmvscmgr-itpmvirtualsmartcardmanagerstatuscallback-reporterror))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tpmvscmgr/nf-tpmvscmgr-itpmvirtualsmartcardmanagerstatuscallback-reporterror
     HRESULT ReportError(TPMVSCMGR_ERROR Error);
 }
 
 @GUID("112b1dff-d9dc-41f7-869f-d67fee7cb591")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tpmvscmgr/nn-tpmvscmgr-itpmvirtualsmartcardmanager))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tpmvscmgr/nn-tpmvscmgr-itpmvirtualsmartcardmanager
 interface ITpmVirtualSmartCardManager : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tpmvscmgr/nf-tpmvscmgr-itpmvirtualsmartcardmanager-createvirtualsmartcard))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tpmvscmgr/nf-tpmvscmgr-itpmvirtualsmartcardmanager-createvirtualsmartcard
     HRESULT CreateVirtualSmartCard(const(PWSTR) pszFriendlyName, ubyte bAdminAlgId, const(ubyte)* pbAdminKey, 
                                    uint cbAdminKey, const(ubyte)* pbAdminKcv, uint cbAdminKcv, const(ubyte)* pbPuk, 
                                    uint cbPuk, const(ubyte)* pbPin, uint cbPin, BOOL fGenerate, 
                                    ITpmVirtualSmartCardManagerStatusCallback pStatusCallback, PWSTR* ppszInstanceId, 
                                    BOOL* pfNeedReboot);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tpmvscmgr/nf-tpmvscmgr-itpmvirtualsmartcardmanager-destroyvirtualsmartcard))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tpmvscmgr/nf-tpmvscmgr-itpmvirtualsmartcardmanager-destroyvirtualsmartcard
     HRESULT DestroyVirtualSmartCard(const(PWSTR) pszInstanceId, 
                                     ITpmVirtualSmartCardManagerStatusCallback pStatusCallback, BOOL* pfNeedReboot);
 }

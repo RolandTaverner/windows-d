@@ -3,9 +3,10 @@
 module windows.win32.system.sideshow;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, HRESULT, PROPERTYKEY, PWSTR, SYSTEMTIME;
-public import windows.win32.system.com : IUnknown;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, HRESULT, PROPERTYKEY, PWSTR,
+                                                    SYSTEMTIME;
+public import windows.win32.system.com.com : IUnknown;
 public import windows.win32.system.com.structuredstorage : PROPVARIANT;
 public import windows.win32.ui.windowsandmessaging : HICON;
 
@@ -14,12 +15,14 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias SIDESHOW_SCREEN_TYPE = int;
 enum : int
 {
     SIDESHOW_SCREEN_TYPE_BITMAP = 0x00000000,
     SIDESHOW_SCREEN_TYPE_TEXT   = 0x00000001,
 }
+
 alias SIDESHOW_COLOR_TYPE = int;
 enum : int
 {
@@ -27,6 +30,7 @@ enum : int
     SIDESHOW_COLOR_TYPE_GREYSCALE       = 0x00000001,
     SIDESHOW_COLOR_TYPE_BLACK_AND_WHITE = 0x00000002,
 }
+
 alias SCF_EVENT_IDS = int;
 enum : int
 {
@@ -34,6 +38,7 @@ enum : int
     SCF_EVENT_MENUACTION  = 0x00000002,
     SCF_EVENT_CONTEXTMENU = 0x00000003,
 }
+
 alias SCF_BUTTON_IDS = int;
 enum : int
 {
@@ -83,16 +88,16 @@ enum GUID SIDESHOW_CONTENT_MISSING_EVENT = GUID("5007fba8-d313-439f-bea2-a50201d
 enum GUID SIDESHOW_APPLICATION_EVENT = GUID("4cb572fa-1d3b-49b3-a17a-2e6bff052854");
 enum GUID SIDESHOW_USER_CHANGE_REQUEST_EVENT = GUID("5009673c-3f7d-4c7e-9971-eaa2e91f1575");
 enum GUID SIDESHOW_NEW_EVENT_DATA_AVAILABLE = GUID("57813854-2fc1-411c-a59f-f24927608804");
-enum uint CONTENT_ID_GLANCE = 0x00000000;
+enum uint CONTENT_ID_GLANCE = 0x00000000U;
 
 enum : uint
 {
-    SIDESHOW_EVENTID_APPLICATION_ENTER = 0xffff0000,
-    SIDESHOW_EVENTID_APPLICATION_EXIT  = 0xffff0001,
+    SIDESHOW_EVENTID_APPLICATION_ENTER = 0xffff0000U,
+    SIDESHOW_EVENTID_APPLICATION_EXIT  = 0xffff0001U,
 }
 
-enum uint CONTENT_ID_HOME = 0x00000001;
-enum uint VERSION_1_WINDOWS_7 = 0x00000000;
+enum uint CONTENT_ID_HOME = 0x00000001U;
+enum uint VERSION_1_WINDOWS_7 = 0x00000000U;
 
 // Structs
 

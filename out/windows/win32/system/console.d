@@ -3,10 +3,10 @@
 module windows.win32.system.console;
 
 public import windows.core;
-public import windows.win32.foundation : BOOL, CHAR, COLORREF, HANDLE, HRESULT, HWND,
-                                         NTSTATUS, PSTR, PWSTR, RECT;
+public import windows.win32.foundation.foundation : BOOL, CHAR, COLORREF, HANDLE, HRESULT,
+                                                    HWND, NTSTATUS, PSTR, PWSTR, RECT;
 public import windows.win32.graphics.gdi : BITMAPINFO, HPALETTE;
-public import windows.win32.security : SECURITY_ATTRIBUTES;
+public import windows.win32.security.security : SECURITY_ATTRIBUTES;
 public import windows.win32.ui.windowsandmessaging : HCURSOR, HICON, HMENU;
 
 extern(Windows) @nogc nothrow:
@@ -14,52 +14,56 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias CONSOLE_MODE = uint;
 enum : uint
 {
-    ENABLE_PROCESSED_INPUT             = 0x00000001,
-    ENABLE_LINE_INPUT                  = 0x00000002,
-    ENABLE_ECHO_INPUT                  = 0x00000004,
-    ENABLE_WINDOW_INPUT                = 0x00000008,
-    ENABLE_MOUSE_INPUT                 = 0x00000010,
-    ENABLE_INSERT_MODE                 = 0x00000020,
-    ENABLE_QUICK_EDIT_MODE             = 0x00000040,
-    ENABLE_EXTENDED_FLAGS              = 0x00000080,
-    ENABLE_AUTO_POSITION               = 0x00000100,
-    ENABLE_VIRTUAL_TERMINAL_INPUT      = 0x00000200,
-    ENABLE_PROCESSED_OUTPUT            = 0x00000001,
-    ENABLE_WRAP_AT_EOL_OUTPUT          = 0x00000002,
-    ENABLE_VIRTUAL_TERMINAL_PROCESSING = 0x00000004,
-    DISABLE_NEWLINE_AUTO_RETURN        = 0x00000008,
-    ENABLE_LVB_GRID_WORLDWIDE          = 0x00000010,
+    ENABLE_PROCESSED_INPUT             = 0x00000001U,
+    ENABLE_LINE_INPUT                  = 0x00000002U,
+    ENABLE_ECHO_INPUT                  = 0x00000004U,
+    ENABLE_WINDOW_INPUT                = 0x00000008U,
+    ENABLE_MOUSE_INPUT                 = 0x00000010U,
+    ENABLE_INSERT_MODE                 = 0x00000020U,
+    ENABLE_QUICK_EDIT_MODE             = 0x00000040U,
+    ENABLE_EXTENDED_FLAGS              = 0x00000080U,
+    ENABLE_AUTO_POSITION               = 0x00000100U,
+    ENABLE_VIRTUAL_TERMINAL_INPUT      = 0x00000200U,
+    ENABLE_PROCESSED_OUTPUT            = 0x00000001U,
+    ENABLE_WRAP_AT_EOL_OUTPUT          = 0x00000002U,
+    ENABLE_VIRTUAL_TERMINAL_PROCESSING = 0x00000004U,
+    DISABLE_NEWLINE_AUTO_RETURN        = 0x00000008U,
+    ENABLE_LVB_GRID_WORLDWIDE          = 0x00000010U,
 }
+
 alias STD_HANDLE = uint;
 enum : uint
 {
-    STD_INPUT_HANDLE  = 0xfffffff6,
-    STD_OUTPUT_HANDLE = 0xfffffff5,
-    STD_ERROR_HANDLE  = 0xfffffff4,
+    STD_INPUT_HANDLE  = 0xfffffff6U,
+    STD_OUTPUT_HANDLE = 0xfffffff5U,
+    STD_ERROR_HANDLE  = 0xfffffff4U,
 }
+
 alias CONSOLE_CHARACTER_ATTRIBUTES = ushort;
 enum : ushort
 {
-    FOREGROUND_BLUE            = 0x0001,
-    FOREGROUND_GREEN           = 0x0002,
-    FOREGROUND_RED             = 0x0004,
-    FOREGROUND_INTENSITY       = 0x0008,
-    BACKGROUND_BLUE            = 0x0010,
-    BACKGROUND_GREEN           = 0x0020,
-    BACKGROUND_RED             = 0x0040,
-    BACKGROUND_INTENSITY       = 0x0080,
-    COMMON_LVB_LEADING_BYTE    = 0x0100,
-    COMMON_LVB_TRAILING_BYTE   = 0x0200,
-    COMMON_LVB_GRID_HORIZONTAL = 0x0400,
-    COMMON_LVB_GRID_LVERTICAL  = 0x0800,
-    COMMON_LVB_GRID_RVERTICAL  = 0x1000,
-    COMMON_LVB_REVERSE_VIDEO   = 0x4000,
-    COMMON_LVB_UNDERSCORE      = 0x8000,
-    COMMON_LVB_SBCSDBCS        = 0x0300,
+    FOREGROUND_BLUE            = cast(ushort) 0x0001,
+    FOREGROUND_GREEN           = cast(ushort) 0x0002,
+    FOREGROUND_RED             = cast(ushort) 0x0004,
+    FOREGROUND_INTENSITY       = cast(ushort) 0x0008,
+    BACKGROUND_BLUE            = cast(ushort) 0x0010,
+    BACKGROUND_GREEN           = cast(ushort) 0x0020,
+    BACKGROUND_RED             = cast(ushort) 0x0040,
+    BACKGROUND_INTENSITY       = cast(ushort) 0x0080,
+    COMMON_LVB_LEADING_BYTE    = cast(ushort) 0x0100,
+    COMMON_LVB_TRAILING_BYTE   = cast(ushort) 0x0200,
+    COMMON_LVB_GRID_HORIZONTAL = cast(ushort) 0x0400,
+    COMMON_LVB_GRID_LVERTICAL  = cast(ushort) 0x0800,
+    COMMON_LVB_GRID_RVERTICAL  = cast(ushort) 0x1000,
+    COMMON_LVB_REVERSE_VIDEO   = cast(ushort) 0x4000,
+    COMMON_LVB_UNDERSCORE      = cast(ushort) 0x8000,
+    COMMON_LVB_SBCSDBCS        = cast(ushort) 0x0300,
 }
+
 alias ALLOC_CONSOLE_MODE = int;
 enum : int
 {
@@ -67,6 +71,7 @@ enum : int
     ALLOC_CONSOLE_MODE_NEW_WINDOW = 0x00000001,
     ALLOC_CONSOLE_MODE_NO_WINDOW  = 0x00000002,
 }
+
 alias ALLOC_CONSOLE_RESULT = int;
 enum : int
 {
@@ -74,6 +79,7 @@ enum : int
     ALLOC_CONSOLE_RESULT_NEW_CONSOLE      = 0x00000001,
     ALLOC_CONSOLE_RESULT_EXISTING_CONSOLE = 0x00000002,
 }
+
 alias CONSOLECONTROL = int;
 enum : int
 {
@@ -90,56 +96,56 @@ enum : int
 // Constants
 
 
-enum uint CONSOLE_TEXTMODE_BUFFER = 0x00000001;
-enum uint CONSOLE_SELECTION_INVERTED = 0x00000010;
-enum uint VDM_HIDE_WINDOW = 0x00000001;
-enum uint VDM_IS_ICONIC = 0x00000002;
+enum uint CONSOLE_TEXTMODE_BUFFER = 0x00000001U;
+enum uint CONSOLE_SELECTION_INVERTED = 0x00000010U;
+enum uint VDM_HIDE_WINDOW = 0x00000001U;
+enum uint VDM_IS_ICONIC = 0x00000002U;
 
 enum : uint
 {
-    VDM_CLIENT_RECT      = 0x00000003,
-    VDM_CLIENT_TO_SCREEN = 0x00000004,
+    VDM_CLIENT_RECT      = 0x00000003U,
+    VDM_CLIENT_TO_SCREEN = 0x00000004U,
 }
 
-enum uint VDM_SCREEN_TO_CLIENT = 0x00000005;
-enum uint VDM_IS_HIDDEN = 0x00000006;
-enum uint VDM_FULLSCREEN_NOPAINT = 0x00000007;
-enum uint VDM_SET_VIDEO_MODE = 0x00000008;
-enum uint CONSOLE_UNREGISTER_VDM = 0x00000000;
+enum uint VDM_SCREEN_TO_CLIENT = 0x00000005U;
+enum uint VDM_IS_HIDDEN = 0x00000006U;
+enum uint VDM_FULLSCREEN_NOPAINT = 0x00000007U;
+enum uint VDM_SET_VIDEO_MODE = 0x00000008U;
+enum uint CONSOLE_UNREGISTER_VDM = 0x00000000U;
 
 enum : uint
 {
-    CONSOLE_REGISTER_VDM = 0x00000001,
-    CONSOLE_REGISTER_WOW = 0x00000002,
+    CONSOLE_REGISTER_VDM = 0x00000001U,
+    CONSOLE_REGISTER_WOW = 0x00000002U,
 }
 
-enum uint CONSOLE_NOSHORTCUTKEY = 0x00000000;
+enum uint CONSOLE_NOSHORTCUTKEY = 0x00000000U;
 
 enum : uint
 {
-    CONSOLE_ALTTAB           = 0x00000001,
-    CONSOLE_ALTESC           = 0x00000002,
-    CONSOLE_ALTSPACE         = 0x00000004,
-    CONSOLE_ALTENTER         = 0x00000008,
-    CONSOLE_ALTPRTSC         = 0x00000010,
-    CONSOLE_PRTSC            = 0x00000020,
-    CONSOLE_CTRLESC          = 0x00000040,
-    CONSOLE_MODIFIER_SHIFT   = 0x00000003,
-    CONSOLE_MODIFIER_CONTROL = 0x00000004,
-    CONSOLE_MODIFIER_ALT     = 0x00000008,
-}
-
-enum : uint
-{
-    CHAR_TYPE_SBCS     = 0x00000000,
-    CHAR_TYPE_LEADING  = 0x00000002,
-    CHAR_TYPE_TRAILING = 0x00000003,
+    CONSOLE_ALTTAB           = 0x00000001U,
+    CONSOLE_ALTESC           = 0x00000002U,
+    CONSOLE_ALTSPACE         = 0x00000004U,
+    CONSOLE_ALTENTER         = 0x00000008U,
+    CONSOLE_ALTPRTSC         = 0x00000010U,
+    CONSOLE_PRTSC            = 0x00000020U,
+    CONSOLE_CTRLESC          = 0x00000040U,
+    CONSOLE_MODIFIER_SHIFT   = 0x00000003U,
+    CONSOLE_MODIFIER_CONTROL = 0x00000004U,
+    CONSOLE_MODIFIER_ALT     = 0x00000008U,
 }
 
 enum : uint
 {
-    CONSOLE_HANDLE_SIGNATURE = 0x00000003,
-    CONSOLE_HANDLE_NEVERSET  = 0x10000000,
+    CHAR_TYPE_SBCS     = 0x00000000U,
+    CHAR_TYPE_LEADING  = 0x00000002U,
+    CHAR_TYPE_TRAILING = 0x00000003U,
+}
+
+enum : uint
+{
+    CONSOLE_HANDLE_SIGNATURE = 0x00000003U,
+    CONSOLE_HANDLE_NEVERSET  = 0x10000000U,
 }
 
 enum const(wchar)* CONSOLE_INPUT_STRING = "CONIN$";
@@ -148,102 +154,102 @@ enum const(wchar)* CONSOLE_GENERIC = "CON";
 
 enum : uint
 {
-    PID_CONSOLE_FORCEV2              = 0x00000001,
-    PID_CONSOLE_WRAPTEXT             = 0x00000002,
-    PID_CONSOLE_FILTERONPASTE        = 0x00000003,
-    PID_CONSOLE_CTRLKEYSDISABLED     = 0x00000004,
-    PID_CONSOLE_LINESELECTION        = 0x00000005,
-    PID_CONSOLE_WINDOWTRANSPARENCY   = 0x00000006,
-    PID_CONSOLE_WINDOWMAXIMIZED      = 0x00000007,
-    PID_CONSOLE_CURSOR_TYPE          = 0x00000008,
-    PID_CONSOLE_CURSOR_COLOR         = 0x00000009,
-    PID_CONSOLE_INTERCEPT_COPY_PASTE = 0x0000000a,
+    PID_CONSOLE_FORCEV2              = 0x00000001U,
+    PID_CONSOLE_WRAPTEXT             = 0x00000002U,
+    PID_CONSOLE_FILTERONPASTE        = 0x00000003U,
+    PID_CONSOLE_CTRLKEYSDISABLED     = 0x00000004U,
+    PID_CONSOLE_LINESELECTION        = 0x00000005U,
+    PID_CONSOLE_WINDOWTRANSPARENCY   = 0x00000006U,
+    PID_CONSOLE_WINDOWMAXIMIZED      = 0x00000007U,
+    PID_CONSOLE_CURSOR_TYPE          = 0x00000008U,
+    PID_CONSOLE_CURSOR_COLOR         = 0x00000009U,
+    PID_CONSOLE_INTERCEPT_COPY_PASTE = 0x0000000aU,
 }
 
 enum : uint
 {
-    PID_CONSOLE_DEFAULTFOREGROUND = 0x0000000b,
-    PID_CONSOLE_DEFAULTBACKGROUND = 0x0000000c,
-    PID_CONSOLE_TERMINALSCROLLING = 0x0000000d,
+    PID_CONSOLE_DEFAULTFOREGROUND = 0x0000000bU,
+    PID_CONSOLE_DEFAULTBACKGROUND = 0x0000000cU,
+    PID_CONSOLE_TERMINALSCROLLING = 0x0000000dU,
 }
 
-enum uint ATTACH_PARENT_PROCESS = 0xffffffff;
+enum uint ATTACH_PARENT_PROCESS = 0xffffffffU;
 
 enum : uint
 {
-    CTRL_C_EVENT     = 0x00000000,
-    CTRL_BREAK_EVENT = 0x00000001,
+    CTRL_C_EVENT     = 0x00000000U,
+    CTRL_BREAK_EVENT = 0x00000001U,
 }
 
-enum uint CTRL_CLOSE_EVENT = 0x00000002;
-enum uint CTRL_LOGOFF_EVENT = 0x00000005;
-enum uint CTRL_SHUTDOWN_EVENT = 0x00000006;
-enum uint PSEUDOCONSOLE_INHERIT_CURSOR = 0x00000001;
-enum uint CONSOLE_NO_SELECTION = 0x00000000;
+enum uint CTRL_CLOSE_EVENT = 0x00000002U;
+enum uint CTRL_LOGOFF_EVENT = 0x00000005U;
+enum uint CTRL_SHUTDOWN_EVENT = 0x00000006U;
+enum uint PSEUDOCONSOLE_INHERIT_CURSOR = 0x00000001U;
+enum uint CONSOLE_NO_SELECTION = 0x00000000U;
 
 enum : uint
 {
-    CONSOLE_SELECTION_IN_PROGRESS = 0x00000001,
-    CONSOLE_SELECTION_NOT_EMPTY   = 0x00000002,
+    CONSOLE_SELECTION_IN_PROGRESS = 0x00000001U,
+    CONSOLE_SELECTION_NOT_EMPTY   = 0x00000002U,
 }
 
 enum : uint
 {
-    CONSOLE_MOUSE_SELECTION = 0x00000004,
-    CONSOLE_MOUSE_DOWN      = 0x00000008,
+    CONSOLE_MOUSE_SELECTION = 0x00000004U,
+    CONSOLE_MOUSE_DOWN      = 0x00000008U,
 }
 
-enum uint HISTORY_NO_DUP_FLAG = 0x00000001;
+enum uint HISTORY_NO_DUP_FLAG = 0x00000001U;
 
 enum : uint
 {
-    CONSOLE_FULLSCREEN          = 0x00000001,
-    CONSOLE_FULLSCREEN_HARDWARE = 0x00000002,
-    CONSOLE_FULLSCREEN_MODE     = 0x00000001,
+    CONSOLE_FULLSCREEN          = 0x00000001U,
+    CONSOLE_FULLSCREEN_HARDWARE = 0x00000002U,
+    CONSOLE_FULLSCREEN_MODE     = 0x00000001U,
 }
 
-enum uint CONSOLE_WINDOWED_MODE = 0x00000002;
-enum uint RIGHT_ALT_PRESSED = 0x00000001;
-enum uint LEFT_ALT_PRESSED = 0x00000002;
-enum uint RIGHT_CTRL_PRESSED = 0x00000004;
-enum uint LEFT_CTRL_PRESSED = 0x00000008;
-enum uint SHIFT_PRESSED = 0x00000010;
-enum uint NUMLOCK_ON = 0x00000020;
-enum uint SCROLLLOCK_ON = 0x00000040;
-enum uint CAPSLOCK_ON = 0x00000080;
-enum uint ENHANCED_KEY = 0x00000100;
-enum uint NLS_DBCSCHAR = 0x00010000;
-enum uint NLS_ALPHANUMERIC = 0x00000000;
-enum uint NLS_KATAKANA = 0x00020000;
-enum uint NLS_HIRAGANA = 0x00040000;
+enum uint CONSOLE_WINDOWED_MODE = 0x00000002U;
+enum uint RIGHT_ALT_PRESSED = 0x00000001U;
+enum uint LEFT_ALT_PRESSED = 0x00000002U;
+enum uint RIGHT_CTRL_PRESSED = 0x00000004U;
+enum uint LEFT_CTRL_PRESSED = 0x00000008U;
+enum uint SHIFT_PRESSED = 0x00000010U;
+enum uint NUMLOCK_ON = 0x00000020U;
+enum uint SCROLLLOCK_ON = 0x00000040U;
+enum uint CAPSLOCK_ON = 0x00000080U;
+enum uint ENHANCED_KEY = 0x00000100U;
+enum uint NLS_DBCSCHAR = 0x00010000U;
+enum uint NLS_ALPHANUMERIC = 0x00000000U;
+enum uint NLS_KATAKANA = 0x00020000U;
+enum uint NLS_HIRAGANA = 0x00040000U;
 
 enum : uint
 {
-    NLS_ROMAN          = 0x00400000,
-    NLS_IME_CONVERSION = 0x00800000,
+    NLS_ROMAN          = 0x00400000U,
+    NLS_IME_CONVERSION = 0x00800000U,
 }
 
-enum uint ALTNUMPAD_BIT = 0x04000000;
-enum uint NLS_IME_DISABLE = 0x20000000;
-enum uint FROM_LEFT_1ST_BUTTON_PRESSED = 0x00000001;
-enum uint RIGHTMOST_BUTTON_PRESSED = 0x00000002;
-enum uint FROM_LEFT_2ND_BUTTON_PRESSED = 0x00000004;
-enum uint FROM_LEFT_3RD_BUTTON_PRESSED = 0x00000008;
-enum uint FROM_LEFT_4TH_BUTTON_PRESSED = 0x00000010;
-enum uint MOUSE_MOVED = 0x00000001;
-enum uint DOUBLE_CLICK = 0x00000002;
+enum uint ALTNUMPAD_BIT = 0x04000000U;
+enum uint NLS_IME_DISABLE = 0x20000000U;
+enum uint FROM_LEFT_1ST_BUTTON_PRESSED = 0x00000001U;
+enum uint RIGHTMOST_BUTTON_PRESSED = 0x00000002U;
+enum uint FROM_LEFT_2ND_BUTTON_PRESSED = 0x00000004U;
+enum uint FROM_LEFT_3RD_BUTTON_PRESSED = 0x00000008U;
+enum uint FROM_LEFT_4TH_BUTTON_PRESSED = 0x00000010U;
+enum uint MOUSE_MOVED = 0x00000001U;
+enum uint DOUBLE_CLICK = 0x00000002U;
 
 enum : uint
 {
-    MOUSE_WHEELED  = 0x00000004,
-    MOUSE_HWHEELED = 0x00000008,
+    MOUSE_WHEELED  = 0x00000004U,
+    MOUSE_HWHEELED = 0x00000008U,
 }
 
-enum uint KEY_EVENT = 0x00000001;
-enum uint MOUSE_EVENT = 0x00000002;
-enum uint WINDOW_BUFFER_SIZE_EVENT = 0x00000004;
-enum uint MENU_EVENT = 0x00000008;
-enum uint FOCUS_EVENT = 0x00000010;
+enum uint KEY_EVENT = 0x00000001U;
+enum uint MOUSE_EVENT = 0x00000002U;
+enum uint WINDOW_BUFFER_SIZE_EVENT = 0x00000004U;
+enum uint MENU_EVENT = 0x00000008U;
+enum uint FOCUS_EVENT = 0x00000010U;
 
 // Callbacks
 
@@ -260,14 +266,14 @@ struct HPCON
     ptrdiff_t Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/coord-str))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/coord-str
 struct COORD
 {
     short X;
     short Y;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/small-rect-str))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/small-rect-str
 struct SMALL_RECT
 {
     short Left;
@@ -276,18 +282,22 @@ struct SMALL_RECT
     short Bottom;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/key-event-record-str))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/key-event-record-str
 struct KEY_EVENT_RECORD
 {
-    BOOL            bKeyDown;
-    ushort          wRepeatCount;
-    ushort          wVirtualKeyCode;
-    ushort          wVirtualScanCode;
-    _uChar_e__Union uChar;
-    uint            dwControlKeyState;
+    BOOL   bKeyDown;
+    ushort wRepeatCount;
+    ushort wVirtualKeyCode;
+    ushort wVirtualScanCode;
+    union uChar
+    {
+        wchar UnicodeChar;
+        CHAR  AsciiChar;
+    }
+    uint   dwControlKeyState;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/mouse-event-record-str))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/mouse-event-record-str
 struct MOUSE_EVENT_RECORD
 {
     COORD dwMousePosition;
@@ -296,39 +306,50 @@ struct MOUSE_EVENT_RECORD
     uint  dwEventFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/window-buffer-size-record-str))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/window-buffer-size-record-str
 struct WINDOW_BUFFER_SIZE_RECORD
 {
     COORD dwSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/menu-event-record-str))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/menu-event-record-str
 struct MENU_EVENT_RECORD
 {
     uint dwCommandId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/focus-event-record-str))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/focus-event-record-str
 struct FOCUS_EVENT_RECORD
 {
     BOOL bSetFocus;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/input-record-str))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/input-record-str
 struct INPUT_RECORD
 {
-    ushort          EventType;
-    _Event_e__Union Event;
+    ushort EventType;
+    union Event
+    {
+        KEY_EVENT_RECORD   KeyEvent;
+        MOUSE_EVENT_RECORD MouseEvent;
+        WINDOW_BUFFER_SIZE_RECORD WindowBufferSizeEvent;
+        MENU_EVENT_RECORD  MenuEvent;
+        FOCUS_EVENT_RECORD FocusEvent;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/char-info-str))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/char-info-str
 struct CHAR_INFO
 {
-    _Char_e__Union Char;
-    ushort         Attributes;
+    union Char
+    {
+        wchar UnicodeChar;
+        CHAR  AsciiChar;
+    }
+    ushort Attributes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/console-font-info-str))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/console-font-info-str
 struct CONSOLE_FONT_INFO
 {
     uint  nFont;
@@ -342,7 +363,7 @@ struct ALLOC_CONSOLE_OPTIONS
     ushort             showWindow;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/console-readconsole-control))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/console-readconsole-control
 struct CONSOLE_READCONSOLE_CONTROL
 {
     uint nLength;
@@ -351,14 +372,14 @@ struct CONSOLE_READCONSOLE_CONTROL
     uint dwControlKeyState;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/console-cursor-info-str))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/console-cursor-info-str
 struct CONSOLE_CURSOR_INFO
 {
     uint dwSize;
     BOOL bVisible;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/console-screen-buffer-info-str))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/console-screen-buffer-info-str
 struct CONSOLE_SCREEN_BUFFER_INFO
 {
     COORD      dwSize;
@@ -369,7 +390,7 @@ struct CONSOLE_SCREEN_BUFFER_INFO
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/console-screen-buffer-infoex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/console-screen-buffer-infoex
 struct CONSOLE_SCREEN_BUFFER_INFOEX
 {
     uint         cbSize;
@@ -384,7 +405,7 @@ struct CONSOLE_SCREEN_BUFFER_INFOEX
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/console-font-infoex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/console-font-infoex
 struct CONSOLE_FONT_INFOEX
 {
     uint      cbSize;
@@ -395,7 +416,7 @@ struct CONSOLE_FONT_INFOEX
     wchar[32] FaceName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/console-selection-info-str))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/console-selection-info-str
 struct CONSOLE_SELECTION_INFO
 {
     uint       dwFlags;
@@ -404,7 +425,7 @@ struct CONSOLE_SELECTION_INFO
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/console-history-info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/console-history-info
 struct CONSOLE_HISTORY_INFO
 {
     uint cbSize;
@@ -483,38 +504,38 @@ struct CONSOLE_CARET_INFO
 
 // Functions
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/allocconsole))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/allocconsole
 @DllImport("KERNEL32.dll")
 BOOL AllocConsole();
 
 @DllImport("KERNEL32.dll")
 HRESULT AllocConsoleWithOptions(ALLOC_CONSOLE_OPTIONS* options, ALLOC_CONSOLE_RESULT* result);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/freeconsole))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/freeconsole
 @DllImport("KERNEL32.dll")
 BOOL FreeConsole();
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/attachconsole))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/attachconsole
 @DllImport("KERNEL32.dll")
 BOOL AttachConsole(uint dwProcessId);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/getconsolecp))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/getconsolecp
 @DllImport("KERNEL32.dll")
 uint GetConsoleCP();
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/getconsoleoutputcp))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/getconsoleoutputcp
 @DllImport("KERNEL32.dll")
 uint GetConsoleOutputCP();
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/getconsolemode))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/getconsolemode
 @DllImport("KERNEL32.dll")
 BOOL GetConsoleMode(HANDLE hConsoleHandle, CONSOLE_MODE* lpMode);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/setconsolemode))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/setconsolemode
 @DllImport("KERNEL32.dll")
 BOOL SetConsoleMode(HANDLE hConsoleHandle, CONSOLE_MODE dwMode);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/getnumberofconsoleinputevents))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/getnumberofconsoleinputevents
 @DllImport("KERNEL32.dll")
 BOOL GetNumberOfConsoleInputEvents(HANDLE hConsoleInput, uint* lpNumberOfEvents);
 
@@ -556,19 +577,19 @@ BOOL WriteConsoleW(HANDLE hConsoleOutput, const(PWSTR) lpBuffer, uint nNumberOfC
                    uint* lpNumberOfCharsWritten, 
                    /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* lpReserved);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/setconsolectrlhandler))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/setconsolectrlhandler
 @DllImport("KERNEL32.dll")
 BOOL SetConsoleCtrlHandler(PHANDLER_ROUTINE HandlerRoutine, BOOL Add);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/createpseudoconsole))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/createpseudoconsole
 @DllImport("KERNEL32.dll")
 HRESULT CreatePseudoConsole(COORD size, HANDLE hInput, HANDLE hOutput, uint dwFlags, HPCON* phPC);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/resizepseudoconsole))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/resizepseudoconsole
 @DllImport("KERNEL32.dll")
 HRESULT ResizePseudoConsole(HPCON hPC, COORD size);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/closepseudoconsole))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/closepseudoconsole
 @DllImport("KERNEL32.dll")
 void ClosePseudoConsole(HPCON hPC);
 
@@ -585,74 +606,74 @@ BOOL FillConsoleOutputCharacterA(HANDLE hConsoleOutput, CHAR cCharacter, uint nL
 BOOL FillConsoleOutputCharacterW(HANDLE hConsoleOutput, wchar cCharacter, uint nLength, COORD dwWriteCoord, 
                                  uint* lpNumberOfCharsWritten);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/fillconsoleoutputattribute))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/fillconsoleoutputattribute
 @DllImport("KERNEL32.dll")
 BOOL FillConsoleOutputAttribute(HANDLE hConsoleOutput, ushort wAttribute, uint nLength, COORD dwWriteCoord, 
                                 uint* lpNumberOfAttrsWritten);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/generateconsolectrlevent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/generateconsolectrlevent
 @DllImport("KERNEL32.dll")
 BOOL GenerateConsoleCtrlEvent(uint dwCtrlEvent, uint dwProcessGroupId);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/createconsolescreenbuffer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/createconsolescreenbuffer
 @DllImport("KERNEL32.dll")
 HANDLE CreateConsoleScreenBuffer(uint dwDesiredAccess, uint dwShareMode, 
                                  const(SECURITY_ATTRIBUTES)* lpSecurityAttributes, uint dwFlags, 
                                  /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* lpScreenBufferData);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/setconsoleactivescreenbuffer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/setconsoleactivescreenbuffer
 @DllImport("KERNEL32.dll")
 BOOL SetConsoleActiveScreenBuffer(HANDLE hConsoleOutput);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/flushconsoleinputbuffer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/flushconsoleinputbuffer
 @DllImport("KERNEL32.dll")
 BOOL FlushConsoleInputBuffer(HANDLE hConsoleInput);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/setconsolecp))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/setconsolecp
 @DllImport("KERNEL32.dll")
 BOOL SetConsoleCP(uint wCodePageID);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/setconsoleoutputcp))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/setconsoleoutputcp
 @DllImport("KERNEL32.dll")
 BOOL SetConsoleOutputCP(uint wCodePageID);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/getconsolecursorinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/getconsolecursorinfo
 @DllImport("KERNEL32.dll")
 BOOL GetConsoleCursorInfo(HANDLE hConsoleOutput, CONSOLE_CURSOR_INFO* lpConsoleCursorInfo);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/setconsolecursorinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/setconsolecursorinfo
 @DllImport("KERNEL32.dll")
 BOOL SetConsoleCursorInfo(HANDLE hConsoleOutput, const(CONSOLE_CURSOR_INFO)* lpConsoleCursorInfo);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/getconsolescreenbufferinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/getconsolescreenbufferinfo
 @DllImport("KERNEL32.dll")
 BOOL GetConsoleScreenBufferInfo(HANDLE hConsoleOutput, CONSOLE_SCREEN_BUFFER_INFO* lpConsoleScreenBufferInfo);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/getconsolescreenbufferinfoex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/getconsolescreenbufferinfoex
 @DllImport("KERNEL32.dll")
 BOOL GetConsoleScreenBufferInfoEx(HANDLE hConsoleOutput, CONSOLE_SCREEN_BUFFER_INFOEX* lpConsoleScreenBufferInfoEx);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/setconsolescreenbufferinfoex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/setconsolescreenbufferinfoex
 @DllImport("KERNEL32.dll")
 BOOL SetConsoleScreenBufferInfoEx(HANDLE hConsoleOutput, CONSOLE_SCREEN_BUFFER_INFOEX* lpConsoleScreenBufferInfoEx);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/setconsolescreenbuffersize))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/setconsolescreenbuffersize
 @DllImport("KERNEL32.dll")
 BOOL SetConsoleScreenBufferSize(HANDLE hConsoleOutput, COORD dwSize);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/setconsolecursorposition))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/setconsolecursorposition
 @DllImport("KERNEL32.dll")
 BOOL SetConsoleCursorPosition(HANDLE hConsoleOutput, COORD dwCursorPosition);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/getlargestconsolewindowsize))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/getlargestconsolewindowsize
 @DllImport("KERNEL32.dll")
 COORD GetLargestConsoleWindowSize(HANDLE hConsoleOutput);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/setconsoletextattribute))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/setconsoletextattribute
 @DllImport("KERNEL32.dll")
 BOOL SetConsoleTextAttribute(HANDLE hConsoleOutput, CONSOLE_CHARACTER_ATTRIBUTES wAttributes);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/setconsolewindowinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/setconsolewindowinfo
 @DllImport("KERNEL32.dll")
 BOOL SetConsoleWindowInfo(HANDLE hConsoleOutput, BOOL bAbsolute, const(SMALL_RECT)* lpConsoleWindow);
 
@@ -666,7 +687,7 @@ BOOL WriteConsoleOutputCharacterA(HANDLE hConsoleOutput, const(PSTR) lpCharacter
 BOOL WriteConsoleOutputCharacterW(HANDLE hConsoleOutput, const(PWSTR) lpCharacter, uint nLength, 
                                   COORD dwWriteCoord, uint* lpNumberOfCharsWritten);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/writeconsoleoutputattribute))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/writeconsoleoutputattribute
 @DllImport("KERNEL32.dll")
 BOOL WriteConsoleOutputAttribute(HANDLE hConsoleOutput, const(ushort)* lpAttribute, uint nLength, 
                                  COORD dwWriteCoord, uint* lpNumberOfAttrsWritten);
@@ -681,7 +702,7 @@ BOOL ReadConsoleOutputCharacterA(HANDLE hConsoleOutput, PSTR lpCharacter, uint n
 BOOL ReadConsoleOutputCharacterW(HANDLE hConsoleOutput, PWSTR lpCharacter, uint nLength, COORD dwReadCoord, 
                                  uint* lpNumberOfCharsRead);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/readconsoleoutputattribute))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/readconsoleoutputattribute
 @DllImport("KERNEL32.dll")
 BOOL ReadConsoleOutputAttribute(HANDLE hConsoleOutput, ushort* lpAttribute, uint nLength, COORD dwReadCoord, 
                                 uint* lpNumberOfAttrsRead);
@@ -752,49 +773,49 @@ BOOL SetConsoleTitleA(const(PSTR) lpConsoleTitle);
 @DllImport("KERNEL32.dll")
 BOOL SetConsoleTitleW(const(PWSTR) lpConsoleTitle);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/getnumberofconsolemousebuttons))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/getnumberofconsolemousebuttons
 @DllImport("KERNEL32.dll")
 BOOL GetNumberOfConsoleMouseButtons(uint* lpNumberOfMouseButtons);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/getconsolefontsize))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/getconsolefontsize
 @DllImport("KERNEL32.dll")
 COORD GetConsoleFontSize(HANDLE hConsoleOutput, uint nFont);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/getcurrentconsolefont))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/getcurrentconsolefont
 @DllImport("KERNEL32.dll")
 BOOL GetCurrentConsoleFont(HANDLE hConsoleOutput, BOOL bMaximumWindow, CONSOLE_FONT_INFO* lpConsoleCurrentFont);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/getcurrentconsolefontex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/getcurrentconsolefontex
 @DllImport("KERNEL32.dll")
 BOOL GetCurrentConsoleFontEx(HANDLE hConsoleOutput, BOOL bMaximumWindow, 
                              CONSOLE_FONT_INFOEX* lpConsoleCurrentFontEx);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/setcurrentconsolefontex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/setcurrentconsolefontex
 @DllImport("KERNEL32.dll")
 BOOL SetCurrentConsoleFontEx(HANDLE hConsoleOutput, BOOL bMaximumWindow, 
                              CONSOLE_FONT_INFOEX* lpConsoleCurrentFontEx);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/getconsoleselectioninfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/getconsoleselectioninfo
 @DllImport("KERNEL32.dll")
 BOOL GetConsoleSelectionInfo(CONSOLE_SELECTION_INFO* lpConsoleSelectionInfo);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/getconsolehistoryinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/getconsolehistoryinfo
 @DllImport("KERNEL32.dll")
 BOOL GetConsoleHistoryInfo(CONSOLE_HISTORY_INFO* lpConsoleHistoryInfo);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/setconsolehistoryinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/setconsolehistoryinfo
 @DllImport("KERNEL32.dll")
 BOOL SetConsoleHistoryInfo(CONSOLE_HISTORY_INFO* lpConsoleHistoryInfo);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/getconsoledisplaymode))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/getconsoledisplaymode
 @DllImport("KERNEL32.dll")
 BOOL GetConsoleDisplayMode(uint* lpModeFlags);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/setconsoledisplaymode))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/setconsoledisplaymode
 @DllImport("KERNEL32.dll")
 BOOL SetConsoleDisplayMode(HANDLE hConsoleOutput, uint dwFlags, COORD* lpNewScreenBufferDimensions);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/getconsolewindow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/getconsolewindow
 @DllImport("KERNEL32.dll")
 HWND GetConsoleWindow();
 
@@ -880,7 +901,7 @@ uint GetConsoleCommandHistoryA(/*PARAM ATTR: MemorySizeAttribute : CustomAttribu
 uint GetConsoleCommandHistoryW(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/PWSTR Commands, 
                                uint CommandBufferLength, PWSTR ExeName);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/getconsoleprocesslist))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/getconsoleprocesslist
 @DllImport("KERNEL32.dll")
 uint GetConsoleProcessList(uint* lpdwProcessList, uint dwProcessCount);
 
@@ -1031,15 +1052,15 @@ NTSTATUS ConsoleControl(CONSOLECONTROL Command,
                         /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* ConsoleInformation, 
                         uint ConsoleInformationLength);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/getstdhandle))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/getstdhandle
 @DllImport("KERNEL32.dll")
 HANDLE GetStdHandle(STD_HANDLE nStdHandle);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/console/setstdhandle))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/console/setstdhandle
 @DllImport("KERNEL32.dll")
 BOOL SetStdHandle(STD_HANDLE nStdHandle, HANDLE hHandle);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/processenv/nf-processenv-setstdhandleex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/processenv/nf-processenv-setstdhandleex
 @DllImport("KERNEL32.dll")
 BOOL SetStdHandleEx(STD_HANDLE nStdHandle, HANDLE hHandle, HANDLE* phPrevValue);
 

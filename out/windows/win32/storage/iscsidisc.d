@@ -3,14 +3,15 @@
 module windows.win32.storage.iscsidisc;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOLEAN, CHAR, PSTR, PWSTR;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOLEAN, CHAR, PSTR, PWSTR;
 public import windows.win32.system.ioctl : STORAGE_DEVICE_NUMBER;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
+
 
 alias NV_SEP_WRITE_CACHE_TYPE = int;
 enum : int
@@ -20,12 +21,14 @@ enum : int
     NVSEPWriteCacheTypeWriteBack    = 0x00000002,
     NVSEPWriteCacheTypeWriteThrough = 0x00000003,
 }
+
 alias MP_STORAGE_DIAGNOSTIC_LEVEL = int;
 enum : int
 {
     MpStorageDiagnosticLevelDefault = 0x00000000,
     MpStorageDiagnosticLevelMax     = 0x00000001,
 }
+
 alias MP_STORAGE_DIAGNOSTIC_TARGET_TYPE = int;
 enum : int
 {
@@ -34,6 +37,7 @@ enum : int
     MpStorageDiagnosticTargetTypeHbaFirmware = 0x00000003,
     MpStorageDiagnosticTargetTypeMax         = 0x00000004,
 }
+
 alias NVCACHE_TYPE = int;
 enum : int
 {
@@ -42,6 +46,7 @@ enum : int
     NvCacheTypeWriteBack    = 0x00000002,
     NvCacheTypeWriteThrough = 0x00000003,
 }
+
 alias NVCACHE_STATUS = int;
 enum : int
 {
@@ -50,14 +55,16 @@ enum : int
     NvCacheStatusDisabled  = 0x00000002,
     NvCacheStatusEnabled   = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iscsidsc/ne-iscsidsc-iscsi_digest_types))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ne-iscsidsc-iscsi_digest_types
 alias ISCSI_DIGEST_TYPES = int;
 enum : int
 {
     ISCSI_DIGEST_TYPE_NONE   = 0x00000000,
     ISCSI_DIGEST_TYPE_CRC32C = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iscsidsc/ne-iscsidsc-iscsi_auth_types))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ne-iscsidsc-iscsi_auth_types
 alias ISCSI_AUTH_TYPES = int;
 enum : int
 {
@@ -65,19 +72,22 @@ enum : int
     ISCSI_CHAP_AUTH_TYPE        = 0x00000001,
     ISCSI_MUTUAL_CHAP_AUTH_TYPE = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iscsidsc/ne-iscsidsc-ike_authentication_method))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ne-iscsidsc-ike_authentication_method
 alias IKE_AUTHENTICATION_METHOD = int;
 enum : int
 {
     IKE_AUTHENTICATION_PRESHARED_KEY_METHOD = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iscsidsc/ne-iscsidsc-targetprotocoltype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ne-iscsidsc-targetprotocoltype
 alias TARGETPROTOCOLTYPE = int;
 enum : int
 {
     ISCSI_TCP_PROTOCOL_TYPE = 0x00000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iscsidsc/ne-iscsidsc-target_information_class))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ne-iscsidsc-target_information_class
 alias TARGET_INFORMATION_CLASS = int;
 enum : int
 {
@@ -94,66 +104,66 @@ enum : int
 // Constants
 
 
-enum uint IOCTL_SCSI_BASE = 0x00000004;
+enum uint IOCTL_SCSI_BASE = 0x00000004U;
 enum GUID ScsiRawInterfaceGuid = GUID("53f56309-b6bf-11d0-94f2-00a0c91efb8b");
 enum GUID WmiScsiAddressGuid = GUID("53f5630f-b6bf-11d0-94f2-00a0c91efb8b");
-enum uint FILE_DEVICE_SCSI = 0x0000001b;
+enum uint FILE_DEVICE_SCSI = 0x0000001bU;
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* DD_SCSI_DEVICE_NAME = "\\Device\\ScsiPort";
 
 enum : uint
 {
-    IOCTL_SCSI_PASS_THROUGH        = 0x0004d004,
-    IOCTL_SCSI_MINIPORT            = 0x0004d008,
-    IOCTL_SCSI_GET_INQUIRY_DATA    = 0x0004100c,
-    IOCTL_SCSI_GET_CAPABILITIES    = 0x00041010,
-    IOCTL_SCSI_PASS_THROUGH_DIRECT = 0x0004d014,
+    IOCTL_SCSI_PASS_THROUGH        = 0x0004d004U,
+    IOCTL_SCSI_MINIPORT            = 0x0004d008U,
+    IOCTL_SCSI_GET_INQUIRY_DATA    = 0x0004100cU,
+    IOCTL_SCSI_GET_CAPABILITIES    = 0x00041010U,
+    IOCTL_SCSI_PASS_THROUGH_DIRECT = 0x0004d014U,
 }
 
 enum : uint
 {
-    IOCTL_SCSI_GET_ADDRESS       = 0x00041018,
-    IOCTL_SCSI_RESCAN_BUS        = 0x0004101c,
-    IOCTL_SCSI_GET_DUMP_POINTERS = 0x00041020,
+    IOCTL_SCSI_GET_ADDRESS       = 0x00041018U,
+    IOCTL_SCSI_RESCAN_BUS        = 0x0004101cU,
+    IOCTL_SCSI_GET_DUMP_POINTERS = 0x00041020U,
 }
 
-enum uint IOCTL_SCSI_FREE_DUMP_POINTERS = 0x00041024;
-enum uint IOCTL_IDE_PASS_THROUGH = 0x0004d028;
+enum uint IOCTL_SCSI_FREE_DUMP_POINTERS = 0x00041024U;
+enum uint IOCTL_IDE_PASS_THROUGH = 0x0004d028U;
 
 enum : uint
 {
-    IOCTL_ATA_PASS_THROUGH        = 0x0004d02c,
-    IOCTL_ATA_PASS_THROUGH_DIRECT = 0x0004d030,
+    IOCTL_ATA_PASS_THROUGH        = 0x0004d02cU,
+    IOCTL_ATA_PASS_THROUGH_DIRECT = 0x0004d030U,
 }
 
-enum uint IOCTL_ATA_MINIPORT = 0x0004d034;
-enum uint IOCTL_MINIPORT_PROCESS_SERVICE_IRP = 0x0004d038;
+enum uint IOCTL_ATA_MINIPORT = 0x0004d034U;
+enum uint IOCTL_MINIPORT_PROCESS_SERVICE_IRP = 0x0004d038U;
 
 enum : uint
 {
-    IOCTL_MPIO_PASS_THROUGH_PATH        = 0x0004d03c,
-    IOCTL_MPIO_PASS_THROUGH_PATH_DIRECT = 0x0004d040,
-}
-
-enum : uint
-{
-    IOCTL_SCSI_PASS_THROUGH_EX        = 0x0004d044,
-    IOCTL_SCSI_PASS_THROUGH_DIRECT_EX = 0x0004d048,
+    IOCTL_MPIO_PASS_THROUGH_PATH        = 0x0004d03cU,
+    IOCTL_MPIO_PASS_THROUGH_PATH_DIRECT = 0x0004d040U,
 }
 
 enum : uint
 {
-    IOCTL_MPIO_PASS_THROUGH_PATH_EX        = 0x0004d04c,
-    IOCTL_MPIO_PASS_THROUGH_PATH_DIRECT_EX = 0x0004d050,
+    IOCTL_SCSI_PASS_THROUGH_EX        = 0x0004d044U,
+    IOCTL_SCSI_PASS_THROUGH_DIRECT_EX = 0x0004d048U,
 }
 
 enum : uint
 {
-    ATA_FLAGS_DRDY_REQUIRED = 0x00000001,
-    ATA_FLAGS_DATA_IN       = 0x00000002,
-    ATA_FLAGS_DATA_OUT      = 0x00000004,
-    ATA_FLAGS_48BIT_COMMAND = 0x00000008,
-    ATA_FLAGS_USE_DMA       = 0x00000010,
-    ATA_FLAGS_NO_MULTIPLE   = 0x00000020,
+    IOCTL_MPIO_PASS_THROUGH_PATH_EX        = 0x0004d04cU,
+    IOCTL_MPIO_PASS_THROUGH_PATH_DIRECT_EX = 0x0004d050U,
+}
+
+enum : uint
+{
+    ATA_FLAGS_DRDY_REQUIRED = 0x00000001U,
+    ATA_FLAGS_DATA_IN       = 0x00000002U,
+    ATA_FLAGS_DATA_OUT      = 0x00000004U,
+    ATA_FLAGS_48BIT_COMMAND = 0x00000008U,
+    ATA_FLAGS_USE_DMA       = 0x00000010U,
+    ATA_FLAGS_NO_MULTIPLE   = 0x00000020U,
 }
 
 enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
@@ -173,222 +183,222 @@ enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(E
 
 enum : uint
 {
-    NRB_FUNCTION_NVCACHE_INFO              = 0x000000ec,
-    NRB_FUNCTION_SPINDLE_STATUS            = 0x000000e5,
-    NRB_FUNCTION_NVCACHE_POWER_MODE_SET    = 0x00000000,
-    NRB_FUNCTION_NVCACHE_POWER_MODE_RETURN = 0x00000001,
+    NRB_FUNCTION_NVCACHE_INFO              = 0x000000ecU,
+    NRB_FUNCTION_SPINDLE_STATUS            = 0x000000e5U,
+    NRB_FUNCTION_NVCACHE_POWER_MODE_SET    = 0x00000000U,
+    NRB_FUNCTION_NVCACHE_POWER_MODE_RETURN = 0x00000001U,
 }
 
 enum : uint
 {
-    NRB_FUNCTION_FLUSH_NVCACHE          = 0x00000014,
-    NRB_FUNCTION_QUERY_PINNED_SET       = 0x00000012,
-    NRB_FUNCTION_QUERY_CACHE_MISS       = 0x00000013,
-    NRB_FUNCTION_ADD_LBAS_PINNED_SET    = 0x00000010,
-    NRB_FUNCTION_REMOVE_LBAS_PINNED_SET = 0x00000011,
+    NRB_FUNCTION_FLUSH_NVCACHE          = 0x00000014U,
+    NRB_FUNCTION_QUERY_PINNED_SET       = 0x00000012U,
+    NRB_FUNCTION_QUERY_CACHE_MISS       = 0x00000013U,
+    NRB_FUNCTION_ADD_LBAS_PINNED_SET    = 0x00000010U,
+    NRB_FUNCTION_REMOVE_LBAS_PINNED_SET = 0x00000011U,
 }
 
 enum : uint
 {
-    NRB_FUNCTION_QUERY_ASCENDER_STATUS    = 0x000000d0,
-    NRB_FUNCTION_QUERY_HYBRID_DISK_STATUS = 0x000000d1,
+    NRB_FUNCTION_QUERY_ASCENDER_STATUS    = 0x000000d0U,
+    NRB_FUNCTION_QUERY_HYBRID_DISK_STATUS = 0x000000d1U,
 }
 
 enum : uint
 {
-    NRB_FUNCTION_PASS_HINT_PAYLOAD             = 0x000000e0,
-    NRB_FUNCTION_NVSEPARATED_INFO              = 0x000000c0,
-    NRB_FUNCTION_NVSEPARATED_FLUSH             = 0x000000c1,
-    NRB_FUNCTION_NVSEPARATED_WB_DISABLE        = 0x000000c2,
-    NRB_FUNCTION_NVSEPARATED_WB_REVERT_DEFAULT = 0x000000c3,
+    NRB_FUNCTION_PASS_HINT_PAYLOAD             = 0x000000e0U,
+    NRB_FUNCTION_NVSEPARATED_INFO              = 0x000000c0U,
+    NRB_FUNCTION_NVSEPARATED_FLUSH             = 0x000000c1U,
+    NRB_FUNCTION_NVSEPARATED_WB_DISABLE        = 0x000000c2U,
+    NRB_FUNCTION_NVSEPARATED_WB_REVERT_DEFAULT = 0x000000c3U,
 }
 
-enum uint NRB_SUCCESS = 0x00000000;
-enum uint NRB_ILLEGAL_REQUEST = 0x00000001;
-enum uint NRB_INVALID_PARAMETER = 0x00000002;
+enum uint NRB_SUCCESS = 0x00000000U;
+enum uint NRB_ILLEGAL_REQUEST = 0x00000001U;
+enum uint NRB_INVALID_PARAMETER = 0x00000002U;
 
 enum : uint
 {
-    NRB_INPUT_DATA_OVERRUN  = 0x00000003,
-    NRB_INPUT_DATA_UNDERRUN = 0x00000004,
-}
-
-enum : uint
-{
-    NRB_OUTPUT_DATA_OVERRUN  = 0x00000005,
-    NRB_OUTPUT_DATA_UNDERRUN = 0x00000006,
+    NRB_INPUT_DATA_OVERRUN  = 0x00000003U,
+    NRB_INPUT_DATA_UNDERRUN = 0x00000004U,
 }
 
 enum : uint
 {
-    NV_SEP_CACHE_PARAMETER_VERSION_1 = 0x00000001,
-    NV_SEP_CACHE_PARAMETER_VERSION   = 0x00000001,
+    NRB_OUTPUT_DATA_OVERRUN  = 0x00000005U,
+    NRB_OUTPUT_DATA_UNDERRUN = 0x00000006U,
 }
 
 enum : uint
 {
-    STORAGE_DIAGNOSTIC_STATUS_SUCCESS             = 0x00000000,
-    STORAGE_DIAGNOSTIC_STATUS_BUFFER_TOO_SMALL    = 0x00000001,
-    STORAGE_DIAGNOSTIC_STATUS_UNSUPPORTED_VERSION = 0x00000002,
-    STORAGE_DIAGNOSTIC_STATUS_INVALID_PARAMETER   = 0x00000003,
-    STORAGE_DIAGNOSTIC_STATUS_INVALID_SIGNATURE   = 0x00000004,
-    STORAGE_DIAGNOSTIC_STATUS_INVALID_TARGET_TYPE = 0x00000005,
-    STORAGE_DIAGNOSTIC_STATUS_MORE_DATA           = 0x00000006,
+    NV_SEP_CACHE_PARAMETER_VERSION_1 = 0x00000001U,
+    NV_SEP_CACHE_PARAMETER_VERSION   = 0x00000001U,
 }
 
 enum : uint
 {
-    MINIPORT_DSM_NOTIFICATION_VERSION_1 = 0x00000001,
-    MINIPORT_DSM_NOTIFICATION_VERSION   = 0x00000001,
+    STORAGE_DIAGNOSTIC_STATUS_SUCCESS             = 0x00000000U,
+    STORAGE_DIAGNOSTIC_STATUS_BUFFER_TOO_SMALL    = 0x00000001U,
+    STORAGE_DIAGNOSTIC_STATUS_UNSUPPORTED_VERSION = 0x00000002U,
+    STORAGE_DIAGNOSTIC_STATUS_INVALID_PARAMETER   = 0x00000003U,
+    STORAGE_DIAGNOSTIC_STATUS_INVALID_SIGNATURE   = 0x00000004U,
+    STORAGE_DIAGNOSTIC_STATUS_INVALID_TARGET_TYPE = 0x00000005U,
+    STORAGE_DIAGNOSTIC_STATUS_MORE_DATA           = 0x00000006U,
 }
 
 enum : uint
 {
-    MINIPORT_DSM_PROFILE_UNKNOWN          = 0x00000000,
-    MINIPORT_DSM_PROFILE_PAGE_FILE        = 0x00000001,
-    MINIPORT_DSM_PROFILE_HIBERNATION_FILE = 0x00000002,
-    MINIPORT_DSM_PROFILE_CRASHDUMP_FILE   = 0x00000003,
+    MINIPORT_DSM_NOTIFICATION_VERSION_1 = 0x00000001U,
+    MINIPORT_DSM_NOTIFICATION_VERSION   = 0x00000001U,
 }
 
 enum : uint
 {
-    MINIPORT_DSM_NOTIFY_FLAG_BEGIN = 0x00000001,
-    MINIPORT_DSM_NOTIFY_FLAG_END   = 0x00000002,
+    MINIPORT_DSM_PROFILE_UNKNOWN          = 0x00000000U,
+    MINIPORT_DSM_PROFILE_PAGE_FILE        = 0x00000001U,
+    MINIPORT_DSM_PROFILE_HIBERNATION_FILE = 0x00000002U,
+    MINIPORT_DSM_PROFILE_CRASHDUMP_FILE   = 0x00000003U,
 }
 
 enum : uint
 {
-    HYBRID_FUNCTION_GET_INFO               = 0x00000001,
-    HYBRID_FUNCTION_DISABLE_CACHING_MEDIUM = 0x00000010,
-    HYBRID_FUNCTION_ENABLE_CACHING_MEDIUM  = 0x00000011,
-    HYBRID_FUNCTION_SET_DIRTY_THRESHOLD    = 0x00000012,
-    HYBRID_FUNCTION_DEMOTE_BY_SIZE         = 0x00000013,
+    MINIPORT_DSM_NOTIFY_FLAG_BEGIN = 0x00000001U,
+    MINIPORT_DSM_NOTIFY_FLAG_END   = 0x00000002U,
 }
 
 enum : uint
 {
-    HYBRID_STATUS_SUCCESS                 = 0x00000000,
-    HYBRID_STATUS_ILLEGAL_REQUEST         = 0x00000001,
-    HYBRID_STATUS_INVALID_PARAMETER       = 0x00000002,
-    HYBRID_STATUS_OUTPUT_BUFFER_TOO_SMALL = 0x00000003,
-}
-
-enum uint HYBRID_STATUS_ENABLE_REFCOUNT_HOLD = 0x00000010;
-enum uint HYBRID_REQUEST_BLOCK_STRUCTURE_VERSION = 0x00000001;
-enum uint HYBRID_REQUEST_INFO_STRUCTURE_VERSION = 0x00000001;
-
-enum : uint
-{
-    FIRMWARE_FUNCTION_GET_INFO = 0x00000001,
-    FIRMWARE_FUNCTION_DOWNLOAD = 0x00000002,
-    FIRMWARE_FUNCTION_ACTIVATE = 0x00000003,
+    HYBRID_FUNCTION_GET_INFO               = 0x00000001U,
+    HYBRID_FUNCTION_DISABLE_CACHING_MEDIUM = 0x00000010U,
+    HYBRID_FUNCTION_ENABLE_CACHING_MEDIUM  = 0x00000011U,
+    HYBRID_FUNCTION_SET_DIRTY_THRESHOLD    = 0x00000012U,
+    HYBRID_FUNCTION_DEMOTE_BY_SIZE         = 0x00000013U,
 }
 
 enum : uint
 {
-    FIRMWARE_STATUS_SUCCESS                  = 0x00000000,
-    FIRMWARE_STATUS_ERROR                    = 0x00000001,
-    FIRMWARE_STATUS_ILLEGAL_REQUEST          = 0x00000002,
-    FIRMWARE_STATUS_INVALID_PARAMETER        = 0x00000003,
-    FIRMWARE_STATUS_INPUT_BUFFER_TOO_BIG     = 0x00000004,
-    FIRMWARE_STATUS_OUTPUT_BUFFER_TOO_SMALL  = 0x00000005,
-    FIRMWARE_STATUS_INVALID_SLOT             = 0x00000006,
-    FIRMWARE_STATUS_INVALID_IMAGE            = 0x00000007,
-    FIRMWARE_STATUS_CONTROLLER_ERROR         = 0x00000010,
-    FIRMWARE_STATUS_POWER_CYCLE_REQUIRED     = 0x00000020,
-    FIRMWARE_STATUS_DEVICE_ERROR             = 0x00000040,
-    FIRMWARE_STATUS_INTERFACE_CRC_ERROR      = 0x00000080,
-    FIRMWARE_STATUS_UNCORRECTABLE_DATA_ERROR = 0x00000081,
+    HYBRID_STATUS_SUCCESS                 = 0x00000000U,
+    HYBRID_STATUS_ILLEGAL_REQUEST         = 0x00000001U,
+    HYBRID_STATUS_INVALID_PARAMETER       = 0x00000002U,
+    HYBRID_STATUS_OUTPUT_BUFFER_TOO_SMALL = 0x00000003U,
+}
+
+enum uint HYBRID_STATUS_ENABLE_REFCOUNT_HOLD = 0x00000010U;
+enum uint HYBRID_REQUEST_BLOCK_STRUCTURE_VERSION = 0x00000001U;
+enum uint HYBRID_REQUEST_INFO_STRUCTURE_VERSION = 0x00000001U;
+
+enum : uint
+{
+    FIRMWARE_FUNCTION_GET_INFO = 0x00000001U,
+    FIRMWARE_FUNCTION_DOWNLOAD = 0x00000002U,
+    FIRMWARE_FUNCTION_ACTIVATE = 0x00000003U,
 }
 
 enum : uint
 {
-    FIRMWARE_STATUS_MEDIA_CHANGE         = 0x00000082,
-    FIRMWARE_STATUS_ID_NOT_FOUND         = 0x00000083,
-    FIRMWARE_STATUS_MEDIA_CHANGE_REQUEST = 0x00000084,
-    FIRMWARE_STATUS_COMMAND_ABORT        = 0x00000085,
-    FIRMWARE_STATUS_END_OF_MEDIA         = 0x00000086,
-    FIRMWARE_STATUS_ILLEGAL_LENGTH       = 0x00000087,
+    FIRMWARE_STATUS_SUCCESS                  = 0x00000000U,
+    FIRMWARE_STATUS_ERROR                    = 0x00000001U,
+    FIRMWARE_STATUS_ILLEGAL_REQUEST          = 0x00000002U,
+    FIRMWARE_STATUS_INVALID_PARAMETER        = 0x00000003U,
+    FIRMWARE_STATUS_INPUT_BUFFER_TOO_BIG     = 0x00000004U,
+    FIRMWARE_STATUS_OUTPUT_BUFFER_TOO_SMALL  = 0x00000005U,
+    FIRMWARE_STATUS_INVALID_SLOT             = 0x00000006U,
+    FIRMWARE_STATUS_INVALID_IMAGE            = 0x00000007U,
+    FIRMWARE_STATUS_CONTROLLER_ERROR         = 0x00000010U,
+    FIRMWARE_STATUS_POWER_CYCLE_REQUIRED     = 0x00000020U,
+    FIRMWARE_STATUS_DEVICE_ERROR             = 0x00000040U,
+    FIRMWARE_STATUS_INTERFACE_CRC_ERROR      = 0x00000080U,
+    FIRMWARE_STATUS_UNCORRECTABLE_DATA_ERROR = 0x00000081U,
 }
 
 enum : uint
 {
-    FIRMWARE_REQUEST_BLOCK_STRUCTURE_VERSION               = 0x00000001,
-    FIRMWARE_REQUEST_FLAG_CONTROLLER                       = 0x00000001,
-    FIRMWARE_REQUEST_FLAG_LAST_SEGMENT                     = 0x00000002,
-    FIRMWARE_REQUEST_FLAG_FIRST_SEGMENT                    = 0x00000004,
-    FIRMWARE_REQUEST_FLAG_SWITCH_TO_FIRMWARE_WITHOUT_RESET = 0x10000000,
-    FIRMWARE_REQUEST_FLAG_REPLACE_AND_SWITCH_UPON_RESET    = 0x20000000,
-    FIRMWARE_REQUEST_FLAG_REPLACE_EXISTING_IMAGE           = 0x40000000,
-    FIRMWARE_REQUEST_FLAG_SWITCH_TO_EXISTING_FIRMWARE      = 0x80000000,
+    FIRMWARE_STATUS_MEDIA_CHANGE         = 0x00000082U,
+    FIRMWARE_STATUS_ID_NOT_FOUND         = 0x00000083U,
+    FIRMWARE_STATUS_MEDIA_CHANGE_REQUEST = 0x00000084U,
+    FIRMWARE_STATUS_COMMAND_ABORT        = 0x00000085U,
+    FIRMWARE_STATUS_END_OF_MEDIA         = 0x00000086U,
+    FIRMWARE_STATUS_ILLEGAL_LENGTH       = 0x00000087U,
 }
 
 enum : uint
 {
-    STORAGE_FIRMWARE_INFO_STRUCTURE_VERSION       = 0x00000001,
-    STORAGE_FIRMWARE_INFO_STRUCTURE_VERSION_V2    = 0x00000002,
-    STORAGE_FIRMWARE_INFO_INVALID_SLOT            = 0x000000ff,
-    STORAGE_FIRMWARE_SLOT_INFO_V2_REVISION_LENGTH = 0x00000010,
+    FIRMWARE_REQUEST_BLOCK_STRUCTURE_VERSION               = 0x00000001U,
+    FIRMWARE_REQUEST_FLAG_CONTROLLER                       = 0x00000001U,
+    FIRMWARE_REQUEST_FLAG_LAST_SEGMENT                     = 0x00000002U,
+    FIRMWARE_REQUEST_FLAG_FIRST_SEGMENT                    = 0x00000004U,
+    FIRMWARE_REQUEST_FLAG_SWITCH_TO_FIRMWARE_WITHOUT_RESET = 0x10000000U,
+    FIRMWARE_REQUEST_FLAG_REPLACE_AND_SWITCH_UPON_RESET    = 0x20000000U,
+    FIRMWARE_REQUEST_FLAG_REPLACE_EXISTING_IMAGE           = 0x40000000U,
+    FIRMWARE_REQUEST_FLAG_SWITCH_TO_EXISTING_FIRMWARE      = 0x80000000U,
 }
 
 enum : uint
 {
-    STORAGE_FIRMWARE_DOWNLOAD_STRUCTURE_VERSION    = 0x00000001,
-    STORAGE_FIRMWARE_DOWNLOAD_STRUCTURE_VERSION_V2 = 0x00000002,
-}
-
-enum uint STORAGE_FIRMWARE_ACTIVATE_STRUCTURE_VERSION = 0x00000001;
-
-enum : uint
-{
-    DUMP_POINTERS_VERSION_1 = 0x00000001,
-    DUMP_POINTERS_VERSION_2 = 0x00000002,
-    DUMP_POINTERS_VERSION_3 = 0x00000003,
-    DUMP_POINTERS_VERSION_4 = 0x00000004,
-}
-
-enum uint DUMP_DRIVER_NAME_LENGTH = 0x0000000f;
-
-enum : uint
-{
-    DUMP_EX_FLAG_SUPPORT_64BITMEMORY  = 0x00000001,
-    DUMP_EX_FLAG_SUPPORT_DD_TELEMETRY = 0x00000002,
+    STORAGE_FIRMWARE_INFO_STRUCTURE_VERSION       = 0x00000001U,
+    STORAGE_FIRMWARE_INFO_STRUCTURE_VERSION_V2    = 0x00000002U,
+    STORAGE_FIRMWARE_INFO_INVALID_SLOT            = 0x000000ffU,
+    STORAGE_FIRMWARE_SLOT_INFO_V2_REVISION_LENGTH = 0x00000010U,
 }
 
 enum : uint
 {
-    DUMP_EX_FLAG_RESUME_SUPPORT           = 0x00000004,
-    DUMP_EX_FLAG_DRIVER_FULL_PATH_SUPPORT = 0x00000008,
+    STORAGE_FIRMWARE_DOWNLOAD_STRUCTURE_VERSION    = 0x00000001U,
+    STORAGE_FIRMWARE_DOWNLOAD_STRUCTURE_VERSION_V2 = 0x00000002U,
+}
+
+enum uint STORAGE_FIRMWARE_ACTIVATE_STRUCTURE_VERSION = 0x00000001U;
+
+enum : uint
+{
+    DUMP_POINTERS_VERSION_1 = 0x00000001U,
+    DUMP_POINTERS_VERSION_2 = 0x00000002U,
+    DUMP_POINTERS_VERSION_3 = 0x00000003U,
+    DUMP_POINTERS_VERSION_4 = 0x00000004U,
+}
+
+enum uint DUMP_DRIVER_NAME_LENGTH = 0x0000000fU;
+
+enum : uint
+{
+    DUMP_EX_FLAG_SUPPORT_64BITMEMORY  = 0x00000001U,
+    DUMP_EX_FLAG_SUPPORT_DD_TELEMETRY = 0x00000002U,
 }
 
 enum : uint
 {
-    SCSI_IOCTL_DATA_OUT           = 0x00000000,
-    SCSI_IOCTL_DATA_IN            = 0x00000001,
-    SCSI_IOCTL_DATA_UNSPECIFIED   = 0x00000002,
-    SCSI_IOCTL_DATA_BIDIRECTIONAL = 0x00000003,
+    DUMP_EX_FLAG_RESUME_SUPPORT           = 0x00000004U,
+    DUMP_EX_FLAG_DRIVER_FULL_PATH_SUPPORT = 0x00000008U,
 }
 
 enum : uint
 {
-    MPIO_IOCTL_FLAG_USE_PATHID      = 0x00000001,
-    MPIO_IOCTL_FLAG_USE_SCSIADDRESS = 0x00000002,
-    MPIO_IOCTL_FLAG_INVOLVE_DSM     = 0x00000004,
+    SCSI_IOCTL_DATA_OUT           = 0x00000000U,
+    SCSI_IOCTL_DATA_IN            = 0x00000001U,
+    SCSI_IOCTL_DATA_UNSPECIFIED   = 0x00000002U,
+    SCSI_IOCTL_DATA_BIDIRECTIONAL = 0x00000003U,
 }
 
 enum : uint
 {
-    MAX_ISCSI_HBANAME_LEN      = 0x00000100,
-    MAX_ISCSI_NAME_LEN         = 0x000000df,
-    MAX_ISCSI_ALIAS_LEN        = 0x000000ff,
-    MAX_ISCSI_PORTAL_NAME_LEN  = 0x00000100,
-    MAX_ISCSI_PORTAL_ALIAS_LEN = 0x00000100,
+    MPIO_IOCTL_FLAG_USE_PATHID      = 0x00000001U,
+    MPIO_IOCTL_FLAG_USE_SCSIADDRESS = 0x00000002U,
+    MPIO_IOCTL_FLAG_INVOLVE_DSM     = 0x00000004U,
 }
 
-enum uint MAX_ISCSI_TEXT_ADDRESS_LEN = 0x00000100;
-enum uint MAX_ISCSI_PORTAL_ADDRESS_LEN = 0x00000100;
-enum uint MAX_ISCSI_DISCOVERY_DOMAIN_LEN = 0x00000100;
-enum uint MAX_RADIUS_ADDRESS_LEN = 0x00000029;
+enum : uint
+{
+    MAX_ISCSI_HBANAME_LEN      = 0x00000100U,
+    MAX_ISCSI_NAME_LEN         = 0x000000dfU,
+    MAX_ISCSI_ALIAS_LEN        = 0x000000ffU,
+    MAX_ISCSI_PORTAL_NAME_LEN  = 0x00000100U,
+    MAX_ISCSI_PORTAL_ALIAS_LEN = 0x00000100U,
+}
+
+enum uint MAX_ISCSI_TEXT_ADDRESS_LEN = 0x00000100U;
+enum uint MAX_ISCSI_PORTAL_ADDRESS_LEN = 0x00000100U;
+enum uint MAX_ISCSI_DISCOVERY_DOMAIN_LEN = 0x00000100U;
+enum uint MAX_RADIUS_ADDRESS_LEN = 0x00000029U;
 
 enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
 {
@@ -425,20 +435,20 @@ enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(Ele
 
 enum : uint
 {
-    ISCSI_LOGIN_FLAG_REQUIRE_IPSEC           = 0x00000001,
-    ISCSI_LOGIN_FLAG_MULTIPATH_ENABLED       = 0x00000002,
-    ISCSI_LOGIN_FLAG_RESERVED1               = 0x00000004,
-    ISCSI_LOGIN_FLAG_ALLOW_PORTAL_HOPPING    = 0x00000008,
-    ISCSI_LOGIN_FLAG_USE_RADIUS_RESPONSE     = 0x00000010,
-    ISCSI_LOGIN_FLAG_USE_RADIUS_VERIFICATION = 0x00000020,
+    ISCSI_LOGIN_FLAG_REQUIRE_IPSEC           = 0x00000001U,
+    ISCSI_LOGIN_FLAG_MULTIPATH_ENABLED       = 0x00000002U,
+    ISCSI_LOGIN_FLAG_RESERVED1               = 0x00000004U,
+    ISCSI_LOGIN_FLAG_ALLOW_PORTAL_HOPPING    = 0x00000008U,
+    ISCSI_LOGIN_FLAG_USE_RADIUS_RESPONSE     = 0x00000010U,
+    ISCSI_LOGIN_FLAG_USE_RADIUS_VERIFICATION = 0x00000020U,
 }
 
-enum uint ISCSI_LOGIN_OPTIONS_VERSION = 0x00000000;
+enum uint ISCSI_LOGIN_OPTIONS_VERSION = 0x00000000U;
 
 enum : uint
 {
-    ISCSI_TARGET_FLAG_HIDE_STATIC_TARGET       = 0x00000002,
-    ISCSI_TARGET_FLAG_MERGE_TARGET_INFORMATION = 0x00000004,
+    ISCSI_TARGET_FLAG_HIDE_STATIC_TARGET       = 0x00000002U,
+    ISCSI_TARGET_FLAG_MERGE_TARGET_INFORMATION = 0x00000004U,
 }
 
 // Callbacks
@@ -453,160 +463,356 @@ struct _ADAPTER_OBJECT
     ptrdiff_t Value;
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct SCSI_PASS_THROUGH32
+version(X86_64)
 {
-    ushort    Length;
-    ubyte     ScsiStatus;
-    ubyte     PathId;
-    ubyte     TargetId;
-    ubyte     Lun;
-    ubyte     CdbLength;
-    ubyte     SenseInfoLength;
-    ubyte     DataIn;
-    uint      DataTransferLength;
-    uint      TimeOutValue;
-    uint      DataBufferOffset;
-    uint      SenseInfoOffset;
-    ubyte[16] Cdb;
+    struct SCSI_PASS_THROUGH32
+    {
+        ushort    Length;
+        ubyte     ScsiStatus;
+        ubyte     PathId;
+        ubyte     TargetId;
+        ubyte     Lun;
+        ubyte     CdbLength;
+        ubyte     SenseInfoLength;
+        ubyte     DataIn;
+        uint      DataTransferLength;
+        uint      TimeOutValue;
+        uint      DataBufferOffset;
+        uint      SenseInfoOffset;
+        ubyte[16] Cdb;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct SCSI_PASS_THROUGH_DIRECT32
+version(AArch64)
 {
-    ushort    Length;
-    ubyte     ScsiStatus;
-    ubyte     PathId;
-    ubyte     TargetId;
-    ubyte     Lun;
-    ubyte     CdbLength;
-    ubyte     SenseInfoLength;
-    ubyte     DataIn;
-    uint      DataTransferLength;
-    uint      TimeOutValue;
-    void*     DataBuffer;
-    uint      SenseInfoOffset;
-    ubyte[16] Cdb;
+    struct SCSI_PASS_THROUGH32
+    {
+        ushort    Length;
+        ubyte     ScsiStatus;
+        ubyte     PathId;
+        ubyte     TargetId;
+        ubyte     Lun;
+        ubyte     CdbLength;
+        ubyte     SenseInfoLength;
+        ubyte     DataIn;
+        uint      DataTransferLength;
+        uint      TimeOutValue;
+        uint      DataBufferOffset;
+        uint      SenseInfoOffset;
+        ubyte[16] Cdb;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct SCSI_PASS_THROUGH32_EX
+version(X86_64)
 {
-    uint  Version;
-    uint  Length;
-    uint  CdbLength;
-    uint  StorAddressLength;
-    ubyte ScsiStatus;
-    ubyte SenseInfoLength;
-    ubyte DataDirection;
-    ubyte Reserved;
-    uint  TimeOutValue;
-    uint  StorAddressOffset;
-    uint  SenseInfoOffset;
-    uint  DataOutTransferLength;
-    uint  DataInTransferLength;
-    uint  DataOutBufferOffset;
-    uint  DataInBufferOffset;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Cdb;
+    struct SCSI_PASS_THROUGH_DIRECT32
+    {
+        ushort    Length;
+        ubyte     ScsiStatus;
+        ubyte     PathId;
+        ubyte     TargetId;
+        ubyte     Lun;
+        ubyte     CdbLength;
+        ubyte     SenseInfoLength;
+        ubyte     DataIn;
+        uint      DataTransferLength;
+        uint      TimeOutValue;
+        void*     DataBuffer;
+        uint      SenseInfoOffset;
+        ubyte[16] Cdb;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct SCSI_PASS_THROUGH_DIRECT32_EX
+version(AArch64)
 {
-    uint  Version;
-    uint  Length;
-    uint  CdbLength;
-    uint  StorAddressLength;
-    ubyte ScsiStatus;
-    ubyte SenseInfoLength;
-    ubyte DataDirection;
-    ubyte Reserved;
-    uint  TimeOutValue;
-    uint  StorAddressOffset;
-    uint  SenseInfoOffset;
-    uint  DataOutTransferLength;
-    uint  DataInTransferLength;
-    void* DataOutBuffer;
-    void* DataInBuffer;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Cdb;
+    struct SCSI_PASS_THROUGH_DIRECT32
+    {
+        ushort    Length;
+        ubyte     ScsiStatus;
+        ubyte     PathId;
+        ubyte     TargetId;
+        ubyte     Lun;
+        ubyte     CdbLength;
+        ubyte     SenseInfoLength;
+        ubyte     DataIn;
+        uint      DataTransferLength;
+        uint      TimeOutValue;
+        void*     DataBuffer;
+        uint      SenseInfoOffset;
+        ubyte[16] Cdb;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct ATA_PASS_THROUGH_EX32
+version(X86_64)
 {
-    ushort   Length;
-    ushort   AtaFlags;
-    ubyte    PathId;
-    ubyte    TargetId;
-    ubyte    Lun;
-    ubyte    ReservedAsUchar;
-    uint     DataTransferLength;
-    uint     TimeOutValue;
-    uint     ReservedAsUlong;
-    uint     DataBufferOffset;
-    ubyte[8] PreviousTaskFile;
-    ubyte[8] CurrentTaskFile;
+    struct SCSI_PASS_THROUGH32_EX
+    {
+        uint  Version;
+        uint  Length;
+        uint  CdbLength;
+        uint  StorAddressLength;
+        ubyte ScsiStatus;
+        ubyte SenseInfoLength;
+        ubyte DataDirection;
+        ubyte Reserved;
+        uint  TimeOutValue;
+        uint  StorAddressOffset;
+        uint  SenseInfoOffset;
+        uint  DataOutTransferLength;
+        uint  DataInTransferLength;
+        uint  DataOutBufferOffset;
+        uint  DataInBufferOffset;
+        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Cdb;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct ATA_PASS_THROUGH_DIRECT32
+version(AArch64)
 {
-    ushort   Length;
-    ushort   AtaFlags;
-    ubyte    PathId;
-    ubyte    TargetId;
-    ubyte    Lun;
-    ubyte    ReservedAsUchar;
-    uint     DataTransferLength;
-    uint     TimeOutValue;
-    uint     ReservedAsUlong;
-    void*    DataBuffer;
-    ubyte[8] PreviousTaskFile;
-    ubyte[8] CurrentTaskFile;
+    struct SCSI_PASS_THROUGH32_EX
+    {
+        uint  Version;
+        uint  Length;
+        uint  CdbLength;
+        uint  StorAddressLength;
+        ubyte ScsiStatus;
+        ubyte SenseInfoLength;
+        ubyte DataDirection;
+        ubyte Reserved;
+        uint  TimeOutValue;
+        uint  StorAddressOffset;
+        uint  SenseInfoOffset;
+        uint  DataOutTransferLength;
+        uint  DataInTransferLength;
+        uint  DataOutBufferOffset;
+        uint  DataInBufferOffset;
+        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Cdb;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct MPIO_PASS_THROUGH_PATH32
+version(X86_64)
 {
-    SCSI_PASS_THROUGH32 PassThrough;
-    uint                Version;
-    ushort              Length;
-    ubyte               Flags;
-    ubyte               PortNumber;
-    ulong               MpioPathId;
+    struct SCSI_PASS_THROUGH_DIRECT32_EX
+    {
+        uint  Version;
+        uint  Length;
+        uint  CdbLength;
+        uint  StorAddressLength;
+        ubyte ScsiStatus;
+        ubyte SenseInfoLength;
+        ubyte DataDirection;
+        ubyte Reserved;
+        uint  TimeOutValue;
+        uint  StorAddressOffset;
+        uint  SenseInfoOffset;
+        uint  DataOutTransferLength;
+        uint  DataInTransferLength;
+        void* DataOutBuffer;
+        void* DataInBuffer;
+        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Cdb;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct MPIO_PASS_THROUGH_PATH_DIRECT32
+version(AArch64)
 {
-    SCSI_PASS_THROUGH_DIRECT32 PassThrough;
-    uint   Version;
-    ushort Length;
-    ubyte  Flags;
-    ubyte  PortNumber;
-    ulong  MpioPathId;
+    struct SCSI_PASS_THROUGH_DIRECT32_EX
+    {
+        uint  Version;
+        uint  Length;
+        uint  CdbLength;
+        uint  StorAddressLength;
+        ubyte ScsiStatus;
+        ubyte SenseInfoLength;
+        ubyte DataDirection;
+        ubyte Reserved;
+        uint  TimeOutValue;
+        uint  StorAddressOffset;
+        uint  SenseInfoOffset;
+        uint  DataOutTransferLength;
+        uint  DataInTransferLength;
+        void* DataOutBuffer;
+        void* DataInBuffer;
+        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Cdb;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct MPIO_PASS_THROUGH_PATH32_EX
+version(X86_64)
 {
-    uint   PassThroughOffset;
-    uint   Version;
-    ushort Length;
-    ubyte  Flags;
-    ubyte  PortNumber;
-    ulong  MpioPathId;
+    struct ATA_PASS_THROUGH_EX32
+    {
+        ushort   Length;
+        ushort   AtaFlags;
+        ubyte    PathId;
+        ubyte    TargetId;
+        ubyte    Lun;
+        ubyte    ReservedAsUchar;
+        uint     DataTransferLength;
+        uint     TimeOutValue;
+        uint     ReservedAsUlong;
+        uint     DataBufferOffset;
+        ubyte[8] PreviousTaskFile;
+        ubyte[8] CurrentTaskFile;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct MPIO_PASS_THROUGH_PATH_DIRECT32_EX
+version(AArch64)
 {
-    uint   PassThroughOffset;
-    uint   Version;
-    ushort Length;
-    ubyte  Flags;
-    ubyte  PortNumber;
-    ulong  MpioPathId;
+    struct ATA_PASS_THROUGH_EX32
+    {
+        ushort   Length;
+        ushort   AtaFlags;
+        ubyte    PathId;
+        ubyte    TargetId;
+        ubyte    Lun;
+        ubyte    ReservedAsUchar;
+        uint     DataTransferLength;
+        uint     TimeOutValue;
+        uint     ReservedAsUlong;
+        uint     DataBufferOffset;
+        ubyte[8] PreviousTaskFile;
+        ubyte[8] CurrentTaskFile;
+    }
+}
+
+version(X86_64)
+{
+    struct ATA_PASS_THROUGH_DIRECT32
+    {
+        ushort   Length;
+        ushort   AtaFlags;
+        ubyte    PathId;
+        ubyte    TargetId;
+        ubyte    Lun;
+        ubyte    ReservedAsUchar;
+        uint     DataTransferLength;
+        uint     TimeOutValue;
+        uint     ReservedAsUlong;
+        void*    DataBuffer;
+        ubyte[8] PreviousTaskFile;
+        ubyte[8] CurrentTaskFile;
+    }
+}
+
+version(AArch64)
+{
+    struct ATA_PASS_THROUGH_DIRECT32
+    {
+        ushort   Length;
+        ushort   AtaFlags;
+        ubyte    PathId;
+        ubyte    TargetId;
+        ubyte    Lun;
+        ubyte    ReservedAsUchar;
+        uint     DataTransferLength;
+        uint     TimeOutValue;
+        uint     ReservedAsUlong;
+        void*    DataBuffer;
+        ubyte[8] PreviousTaskFile;
+        ubyte[8] CurrentTaskFile;
+    }
+}
+
+version(X86_64)
+{
+    struct MPIO_PASS_THROUGH_PATH32
+    {
+        SCSI_PASS_THROUGH32 PassThrough;
+        uint                Version;
+        ushort              Length;
+        ubyte               Flags;
+        ubyte               PortNumber;
+        ulong               MpioPathId;
+    }
+}
+
+version(AArch64)
+{
+    struct MPIO_PASS_THROUGH_PATH32
+    {
+        SCSI_PASS_THROUGH32 PassThrough;
+        uint                Version;
+        ushort              Length;
+        ubyte               Flags;
+        ubyte               PortNumber;
+        ulong               MpioPathId;
+    }
+}
+
+version(X86_64)
+{
+    struct MPIO_PASS_THROUGH_PATH_DIRECT32
+    {
+        SCSI_PASS_THROUGH_DIRECT32 PassThrough;
+        uint   Version;
+        ushort Length;
+        ubyte  Flags;
+        ubyte  PortNumber;
+        ulong  MpioPathId;
+    }
+}
+
+version(AArch64)
+{
+    struct MPIO_PASS_THROUGH_PATH_DIRECT32
+    {
+        SCSI_PASS_THROUGH_DIRECT32 PassThrough;
+        uint   Version;
+        ushort Length;
+        ubyte  Flags;
+        ubyte  PortNumber;
+        ulong  MpioPathId;
+    }
+}
+
+version(X86_64)
+{
+    struct MPIO_PASS_THROUGH_PATH32_EX
+    {
+        uint   PassThroughOffset;
+        uint   Version;
+        ushort Length;
+        ubyte  Flags;
+        ubyte  PortNumber;
+        ulong  MpioPathId;
+    }
+}
+
+version(AArch64)
+{
+    struct MPIO_PASS_THROUGH_PATH32_EX
+    {
+        uint   PassThroughOffset;
+        uint   Version;
+        ushort Length;
+        ubyte  Flags;
+        ubyte  PortNumber;
+        ulong  MpioPathId;
+    }
+}
+
+version(X86_64)
+{
+    struct MPIO_PASS_THROUGH_PATH_DIRECT32_EX
+    {
+        uint   PassThroughOffset;
+        uint   Version;
+        ushort Length;
+        ubyte  Flags;
+        ubyte  PortNumber;
+        ulong  MpioPathId;
+    }
+}
+
+version(AArch64)
+{
+    struct MPIO_PASS_THROUGH_PATH_DIRECT32_EX
+    {
+        uint   PassThroughOffset;
+        uint   Version;
+        ushort Length;
+        ubyte  Flags;
+        ubyte  PortNumber;
+        ulong  MpioPathId;
+    }
 }
 
 struct SCSI_PASS_THROUGH
@@ -845,12 +1051,19 @@ struct NVCACHE_HINT_PAYLOAD
 
 struct NV_SEP_CACHE_PARAMETER
 {
-    uint            Version;
-    uint            Size;
-    _Flags_e__Union Flags;
-    ubyte           WriteCacheType;
-    ubyte           WriteCacheTypeEffective;
-    ubyte[3]        ParameterReserve1;
+    uint     Version;
+    uint     Size;
+    union Flags
+    {
+        struct CacheFlags
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedBits)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield170;
+        }
+        ubyte CacheFlagsSet;
+    }
+    ubyte    WriteCacheType;
+    ubyte    WriteCacheTypeEffective;
+    ubyte[3] ParameterReserve1;
 }
 
 struct STORAGE_DIAGNOSTIC_MP_REQUEST
@@ -913,8 +1126,27 @@ struct HYBRID_INFORMATION
     NVCACHE_TYPE   CacheTypeDefault;
     uint           FractionBase;
     ulong          CacheSize;
-    _Attributes_e__Struct Attributes;
-    _Priorities_e__Struct Priorities;
+    struct Attributes
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedBits)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(28))], [])*/uint _bitfield171;
+    }
+    struct Priorities
+    {
+        ubyte   PriorityLevelCount;
+        BOOLEAN MaxPriorityBehavior;
+        ubyte   OptimalWriteGranularity;
+        ubyte   Reserved;
+        uint    DirtyThresholdLow;
+        uint    DirtyThresholdHigh;
+        struct SupportedCommands
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedBits)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(27))], [])*/uint _bitfield172;
+            uint MaxEvictCommands;
+            uint MaxLbaRangeCountForEvict;
+            uint MaxLbaRangeCountForChangeLba;
+        }
+        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/NVCACHE_PRIORITY_LEVEL_DESCRIPTOR[1] Priority;
+    }
 }
 
 struct HYBRID_DIRTY_THRESHOLDS
@@ -948,10 +1180,14 @@ struct FIRMWARE_REQUEST_BLOCK
 
 struct STORAGE_FIRMWARE_SLOT_INFO
 {
-    ubyte              SlotNumber;
-    BOOLEAN            ReadOnly;
-    ubyte[6]           Reserved;
-    _Revision_e__Union Revision;
+    ubyte    SlotNumber;
+    BOOLEAN  ReadOnly;
+    ubyte[6] Reserved;
+    union Revision
+    {
+        ubyte[8] Info;
+        ulong    AsUlonglong;
+    }
 }
 
 struct STORAGE_FIRMWARE_SLOT_INFO_V2
@@ -1103,12 +1339,15 @@ struct DUMP_DRIVER_EX
 
 struct STORAGE_ENDURANCE_INFO
 {
-    uint             ValidFields;
-    uint             GroupId;
-    _Flags_e__Struct Flags;
-    uint             LifePercentage;
-    ubyte[16]        BytesReadCount;
-    ubyte[16]        ByteWriteCount;
+    uint      ValidFields;
+    uint      GroupId;
+    struct Flags
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield173;
+    }
+    uint      LifePercentage;
+    ubyte[16] BytesReadCount;
+    ubyte[16] ByteWriteCount;
 }
 
 struct STORAGE_ENDURANCE_DATA_DESCRIPTOR
@@ -1118,7 +1357,7 @@ struct STORAGE_ENDURANCE_DATA_DESCRIPTOR
     STORAGE_ENDURANCE_INFO EnduranceInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_login_options))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_login_options
 struct ISCSI_LOGIN_OPTIONS
 {
     uint               Version;
@@ -1136,7 +1375,7 @@ struct ISCSI_LOGIN_OPTIONS
     ubyte*             Password;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-ike_authentication_preshared_key))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-ike_authentication_preshared_key
 struct IKE_AUTHENTICATION_PRESHARED_KEY
 {
     ulong  SecurityFlags;
@@ -1147,21 +1386,24 @@ struct IKE_AUTHENTICATION_PRESHARED_KEY
     ubyte* Key;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-ike_authentication_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-ike_authentication_information
 struct IKE_AUTHENTICATION_INFORMATION
 {
     IKE_AUTHENTICATION_METHOD AuthMethod;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        IKE_AUTHENTICATION_PRESHARED_KEY PsKey;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_unique_session_id))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_unique_session_id
 struct ISCSI_UNIQUE_SESSION_ID
 {
     ulong AdapterUnique;
     ulong AdapterSpecific;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-scsi_lun_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-scsi_lun_list
 struct SCSI_LUN_LIST
 {
     uint  OSLUN;
@@ -1169,7 +1411,7 @@ struct SCSI_LUN_LIST
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_target_mappingw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_target_mappingw
 struct ISCSI_TARGET_MAPPINGW
 {
     wchar[256]     InitiatorName;
@@ -1183,7 +1425,7 @@ struct ISCSI_TARGET_MAPPINGW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_target_mappinga))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_target_mappinga
 struct ISCSI_TARGET_MAPPINGA
 {
     CHAR[256]      InitiatorName;
@@ -1197,7 +1439,7 @@ struct ISCSI_TARGET_MAPPINGA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_target_portalw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_target_portalw
 struct ISCSI_TARGET_PORTALW
 {
     wchar[256] SymbolicName;
@@ -1206,7 +1448,7 @@ struct ISCSI_TARGET_PORTALW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_target_portala))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_target_portala
 struct ISCSI_TARGET_PORTALA
 {
     CHAR[256] SymbolicName;
@@ -1215,7 +1457,7 @@ struct ISCSI_TARGET_PORTALA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_target_portal_infow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_target_portal_infow
 struct ISCSI_TARGET_PORTAL_INFOW
 {
     wchar[256] InitiatorName;
@@ -1226,7 +1468,7 @@ struct ISCSI_TARGET_PORTAL_INFOW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_target_portal_infoa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_target_portal_infoa
 struct ISCSI_TARGET_PORTAL_INFOA
 {
     CHAR[256] InitiatorName;
@@ -1237,7 +1479,7 @@ struct ISCSI_TARGET_PORTAL_INFOA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_target_portal_info_exw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_target_portal_info_exw
 struct ISCSI_TARGET_PORTAL_INFO_EXW
 {
     wchar[256]          InitiatorName;
@@ -1250,7 +1492,7 @@ struct ISCSI_TARGET_PORTAL_INFO_EXW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_target_portal_info_exa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_target_portal_info_exa
 struct ISCSI_TARGET_PORTAL_INFO_EXA
 {
     CHAR[256]           InitiatorName;
@@ -1263,7 +1505,7 @@ struct ISCSI_TARGET_PORTAL_INFO_EXA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_target_portal_groupw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_target_portal_groupw
 struct ISCSI_TARGET_PORTAL_GROUPW
 {
     uint Count;
@@ -1271,7 +1513,7 @@ struct ISCSI_TARGET_PORTAL_GROUPW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_target_portal_groupa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_target_portal_groupa
 struct ISCSI_TARGET_PORTAL_GROUPA
 {
     uint Count;
@@ -1279,7 +1521,7 @@ struct ISCSI_TARGET_PORTAL_GROUPA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_connection_infow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_connection_infow
 struct ISCSI_CONNECTION_INFOW
 {
     ISCSI_UNIQUE_SESSION_ID ConnectionId;
@@ -1291,7 +1533,7 @@ struct ISCSI_CONNECTION_INFOW
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_session_infow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_session_infow
 struct ISCSI_SESSION_INFOW
 {
     ISCSI_UNIQUE_SESSION_ID SessionId;
@@ -1305,7 +1547,7 @@ struct ISCSI_SESSION_INFOW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_connection_infoa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_connection_infoa
 struct ISCSI_CONNECTION_INFOA
 {
     ISCSI_UNIQUE_SESSION_ID ConnectionId;
@@ -1317,7 +1559,7 @@ struct ISCSI_CONNECTION_INFOA
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_session_infoa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_session_infoa
 struct ISCSI_SESSION_INFOA
 {
     ISCSI_UNIQUE_SESSION_ID SessionId;
@@ -1361,7 +1603,7 @@ struct ISCSI_SESSION_INFO_EX
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_device_on_sessionw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_device_on_sessionw
 struct ISCSI_DEVICE_ON_SESSIONW
 {
     wchar[256]   InitiatorName;
@@ -1375,7 +1617,7 @@ struct ISCSI_DEVICE_ON_SESSIONW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_device_on_sessiona))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_device_on_sessiona
 struct ISCSI_DEVICE_ON_SESSIONA
 {
     CHAR[256]    InitiatorName;
@@ -1389,7 +1631,7 @@ struct ISCSI_DEVICE_ON_SESSIONA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-persistent_iscsi_login_infow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-persistent_iscsi_login_infow
 struct PERSISTENT_ISCSI_LOGIN_INFOW
 {
     wchar[224]           TargetName;
@@ -1403,7 +1645,7 @@ struct PERSISTENT_ISCSI_LOGIN_INFOW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-persistent_iscsi_login_infoa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-persistent_iscsi_login_infoa
 struct PERSISTENT_ISCSI_LOGIN_INFOA
 {
     CHAR[224]            TargetName;
@@ -1416,7 +1658,7 @@ struct PERSISTENT_ISCSI_LOGIN_INFOA
     ISCSI_LOGIN_OPTIONS  LoginOptions;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_version_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/iscsidsc/ns-iscsidsc-iscsi_version_info
 struct ISCSI_VERSION_INFO
 {
     uint MajorVersion;

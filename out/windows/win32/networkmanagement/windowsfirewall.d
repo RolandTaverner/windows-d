@@ -3,11 +3,11 @@
 module windows.win32.networkmanagement.windowsfirewall;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BSTR, HANDLE, HRESULT, HWND, PWSTR,
-                                         VARIANT_BOOL;
-public import windows.win32.security : PSID, SID, SID_AND_ATTRIBUTES;
-public import windows.win32.system.com : IDispatch, IUnknown;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BSTR, HANDLE, HRESULT, HWND,
+                                                    PWSTR, VARIANT_BOOL;
+public import windows.win32.security.security : PSID, SID, SID_AND_ATTRIBUTES;
+public import windows.win32.system.com.com : IDispatch, IUnknown;
 public import windows.win32.system.ole : IEnumVARIANT;
 public import windows.win32.system.variant : VARIANT;
 
@@ -16,7 +16,8 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/ne-netcon-netcon_characteristic_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/ne-netcon-netcon_characteristic_flags
 alias NETCON_CHARACTERISTIC_FLAGS = int;
 enum : int
 {
@@ -42,7 +43,8 @@ enum : int
     NCCF_BLUETOOTH_MASK    = 0x000f0000,
     NCCF_LAN_MASK          = 0x00f00000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/ne-netcon-netcon_status))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/ne-netcon-netcon_status
 alias NETCON_STATUS = int;
 enum : int
 {
@@ -63,7 +65,8 @@ enum : int
     NCS_ACTION_REQUIRED_RETRY    = 0x0000000e,
     NCS_CONNECT_FAILED           = 0x0000000f,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/ne-netcon-netcon_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/ne-netcon-netcon_type
 alias NETCON_TYPE = int;
 enum : int
 {
@@ -75,7 +78,8 @@ enum : int
     NCT_TUNNEL         = 0x00000005,
     NCT_BRIDGE         = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/ne-netcon-netcon_mediatype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/ne-netcon-netcon_mediatype
 alias NETCON_MEDIATYPE = int;
 enum : int
 {
@@ -90,12 +94,14 @@ enum : int
     NCM_SHAREDACCESSHOST_LAN = 0x00000008,
     NCM_SHAREDACCESSHOST_RAS = 0x00000009,
 }
+
 alias NETCONMGR_ENUM_FLAGS = int;
 enum : int
 {
     NCME_DEFAULT = 0x00000000,
     NCME_HIDDEN  = 0x00000001,
 }
+
 alias NETCONUI_CONNECT_FLAGS = int;
 enum : int
 {
@@ -103,26 +109,30 @@ enum : int
     NCUC_NO_UI          = 0x00000001,
     NCUC_ENABLE_DISABLE = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/ne-netcon-sharingconnectiontype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/ne-netcon-sharingconnectiontype
 alias SHARINGCONNECTIONTYPE = int;
 enum : int
 {
     ICSSHARINGTYPE_PUBLIC  = 0x00000000,
     ICSSHARINGTYPE_PRIVATE = 0x00000001,
 }
+
 alias SHARINGCONNECTION_ENUM_FLAGS = int;
 enum : int
 {
     ICSSC_DEFAULT = 0x00000000,
     ICSSC_ENABLED = 0x00000001,
 }
+
 alias ICS_TARGETTYPE = int;
 enum : int
 {
     ICSTT_NAME      = 0x00000000,
     ICSTT_IPADDRESS = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icftypes/ne-icftypes-net_fw_policy_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icftypes/ne-icftypes-net_fw_policy_type
 alias NET_FW_POLICY_TYPE = int;
 enum : int
 {
@@ -131,7 +141,8 @@ enum : int
     NET_FW_POLICY_EFFECTIVE = 0x00000002,
     NET_FW_POLICY_TYPE_MAX  = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icftypes/ne-icftypes-net_fw_profile_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icftypes/ne-icftypes-net_fw_profile_type
 alias NET_FW_PROFILE_TYPE = int;
 enum : int
 {
@@ -140,7 +151,8 @@ enum : int
     NET_FW_PROFILE_CURRENT  = 0x00000002,
     NET_FW_PROFILE_TYPE_MAX = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icftypes/ne-icftypes-net_fw_profile_type2))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icftypes/ne-icftypes-net_fw_profile_type2
 alias NET_FW_PROFILE_TYPE2 = int;
 enum : int
 {
@@ -149,7 +161,8 @@ enum : int
     NET_FW_PROFILE2_PUBLIC  = 0x00000004,
     NET_FW_PROFILE2_ALL     = 0x7fffffff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icftypes/ne-icftypes-net_fw_ip_version))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icftypes/ne-icftypes-net_fw_ip_version
 alias NET_FW_IP_VERSION = int;
 enum : int
 {
@@ -158,7 +171,8 @@ enum : int
     NET_FW_IP_VERSION_ANY = 0x00000002,
     NET_FW_IP_VERSION_MAX = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icftypes/ne-icftypes-net_fw_scope))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icftypes/ne-icftypes-net_fw_scope
 alias NET_FW_SCOPE = int;
 enum : int
 {
@@ -167,7 +181,8 @@ enum : int
     NET_FW_SCOPE_CUSTOM       = 0x00000002,
     NET_FW_SCOPE_MAX          = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icftypes/ne-icftypes-net_fw_ip_protocol))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icftypes/ne-icftypes-net_fw_ip_protocol
 alias NET_FW_IP_PROTOCOL = int;
 enum : int
 {
@@ -175,7 +190,8 @@ enum : int
     NET_FW_IP_PROTOCOL_UDP = 0x00000011,
     NET_FW_IP_PROTOCOL_ANY = 0x00000100,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icftypes/ne-icftypes-net_fw_service_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icftypes/ne-icftypes-net_fw_service_type
 alias NET_FW_SERVICE_TYPE = int;
 enum : int
 {
@@ -185,7 +201,8 @@ enum : int
     NET_FW_SERVICE_NONE           = 0x00000003,
     NET_FW_SERVICE_TYPE_MAX       = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icftypes/ne-icftypes-net_fw_rule_direction))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icftypes/ne-icftypes-net_fw_rule_direction
 alias NET_FW_RULE_DIRECTION = int;
 enum : int
 {
@@ -193,7 +210,8 @@ enum : int
     NET_FW_RULE_DIR_OUT = 0x00000002,
     NET_FW_RULE_DIR_MAX = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icftypes/ne-icftypes-net_fw_action))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icftypes/ne-icftypes-net_fw_action
 alias NET_FW_ACTION = int;
 enum : int
 {
@@ -201,7 +219,8 @@ enum : int
     NET_FW_ACTION_ALLOW = 0x00000001,
     NET_FW_ACTION_MAX   = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icftypes/ne-icftypes-net_fw_modify_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icftypes/ne-icftypes-net_fw_modify_state
 alias NET_FW_MODIFY_STATE = int;
 enum : int
 {
@@ -209,7 +228,8 @@ enum : int
     NET_FW_MODIFY_STATE_GP_OVERRIDE     = 0x00000001,
     NET_FW_MODIFY_STATE_INBOUND_BLOCKED = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icftypes/ne-icftypes-net_fw_rule_category))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icftypes/ne-icftypes-net_fw_rule_category
 alias NET_FW_RULE_CATEGORY = int;
 enum : int
 {
@@ -219,7 +239,8 @@ enum : int
     NET_FW_RULE_CATEGORY_CONSEC   = 0x00000003,
     NET_FW_RULE_CATEGORY_MAX      = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icftypes/ne-icftypes-net_fw_edge_traversal_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icftypes/ne-icftypes-net_fw_edge_traversal_type
 alias NET_FW_EDGE_TRAVERSAL_TYPE = int;
 enum : int
 {
@@ -228,7 +249,8 @@ enum : int
     NET_FW_EDGE_TRAVERSAL_TYPE_DEFER_TO_APP  = 0x00000002,
     NET_FW_EDGE_TRAVERSAL_TYPE_DEFER_TO_USER = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icftypes/ne-icftypes-net_fw_authenticate_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icftypes/ne-icftypes-net_fw_authenticate_type
 alias NET_FW_AUTHENTICATE_TYPE = int;
 enum : int
 {
@@ -238,14 +260,16 @@ enum : int
     NET_FW_AUTHENTICATE_AND_NEGOTIATE_ENCRYPTION = 0x00000003,
     NET_FW_AUTHENTICATE_AND_ENCRYPT              = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/ne-netfw-netiso_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/ne-netfw-netiso_flag
 alias NETISO_FLAG = int;
 enum : int
 {
     NETISO_FLAG_FORCE_COMPUTE_BINARIES = 0x00000001,
     NETISO_FLAG_MAX                    = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/ne-netfw-inet_firewall_ac_creation_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/ne-netfw-inet_firewall_ac_creation_type
 alias INET_FIREWALL_AC_CREATION_TYPE = int;
 enum : int
 {
@@ -254,7 +278,8 @@ enum : int
     INET_FIREWALL_AC_BINARY          = 0x00000002,
     INET_FIREWALL_AC_MAX             = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/ne-netfw-inet_firewall_ac_change_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/ne-netfw-inet_firewall_ac_change_type
 alias INET_FIREWALL_AC_CHANGE_TYPE = int;
 enum : int
 {
@@ -263,7 +288,8 @@ enum : int
     INET_FIREWALL_AC_CHANGE_DELETE  = 0x00000002,
     INET_FIREWALL_AC_CHANGE_MAX     = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/ne-netfw-netiso_error_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/ne-netfw-netiso_error_type
 alias NETISO_ERROR_TYPE = int;
 enum : int
 {
@@ -273,7 +299,8 @@ enum : int
     NETISO_ERROR_TYPE_INTERNET_CLIENT_SERVER = 0x00000003,
     NETISO_ERROR_TYPE_MAX                    = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/ne-netfw-fw_dynamic_keyword_origin_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/ne-netfw-fw_dynamic_keyword_origin_type
 alias FW_DYNAMIC_KEYWORD_ORIGIN_TYPE = int;
 enum : int
 {
@@ -281,13 +308,15 @@ enum : int
     FW_DYNAMIC_KEYWORD_ORIGIN_LOCAL   = 0x00000001,
     FW_DYNAMIC_KEYWORD_ORIGIN_MDM     = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/ne-netfw-fw_dynamic_keyword_address_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/ne-netfw-fw_dynamic_keyword_address_flags
 alias FW_DYNAMIC_KEYWORD_ADDRESS_FLAGS = int;
 enum : int
 {
     FW_DYNAMIC_KEYWORD_ADDRESS_FLAGS_AUTO_RESOLVE = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/ne-netfw-fw_dynamic_keyword_address_enum_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/ne-netfw-fw_dynamic_keyword_address_enum_flags
 alias FW_DYNAMIC_KEYWORD_ADDRESS_ENUM_FLAGS = int;
 enum : int
 {
@@ -299,13 +328,13 @@ enum : int
 // Constants
 
 
-enum uint NETCON_MAX_NAME_LEN = 0x00000100;
+enum uint NETCON_MAX_NAME_LEN = 0x00000100U;
 enum HRESULT S_OBJECT_NO_LONGER_VALID = HRESULT(0x00000002);
 
 enum : uint
 {
-    NETISO_GEID_FOR_WDAG          = 0x00000001,
-    NETISO_GEID_FOR_NEUTRAL_AWARE = 0x00000002,
+    NETISO_GEID_FOR_WDAG          = 0x00000001U,
+    NETISO_GEID_FOR_NEUTRAL_AWARE = 0x00000002U,
 }
 
 // Callbacks
@@ -325,7 +354,7 @@ alias PFN_FWUPDATEDYNAMICKEYWORDADDRESS0 = uint function(GUID dynamicKeywordAddr
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/ns-netcon-netcon_properties))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/ns-netcon-netcon_properties
 struct NETCON_PROPERTIES
 {
     GUID             guidId;
@@ -338,32 +367,36 @@ struct NETCON_PROPERTIES
     GUID             clsidUiObject;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/ns-netfw-inet_firewall_ac_capabilities))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/ns-netfw-inet_firewall_ac_capabilities
 struct INET_FIREWALL_AC_CAPABILITIES
 {
     uint                count;
     SID_AND_ATTRIBUTES* capabilities;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/ns-netfw-inet_firewall_ac_binaries))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/ns-netfw-inet_firewall_ac_binaries
 struct INET_FIREWALL_AC_BINARIES
 {
     uint   count;
     PWSTR* binaries;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/ns-netfw-inet_firewall_ac_change))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/ns-netfw-inet_firewall_ac_change
 struct INET_FIREWALL_AC_CHANGE
 {
     INET_FIREWALL_AC_CHANGE_TYPE changeType;
     INET_FIREWALL_AC_CREATION_TYPE createType;
-    SID*                appContainerSid;
-    SID*                userSid;
-    PWSTR               displayName;
-    _Anonymous_e__Union Anonymous;
+    SID*  appContainerSid;
+    SID*  userSid;
+    PWSTR displayName;
+    union
+    {
+        INET_FIREWALL_AC_CAPABILITIES capabilities;
+        INET_FIREWALL_AC_BINARIES binaries;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/ns-netfw-inet_firewall_app_container))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/ns-netfw-inet_firewall_app_container
 struct INET_FIREWALL_APP_CONTAINER
 {
     SID*  appContainerSid;
@@ -377,7 +410,7 @@ struct INET_FIREWALL_APP_CONTAINER
     PWSTR packageFullName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/ns-netfw-fw_dynamic_keyword_address0))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/ns-netfw-fw_dynamic_keyword_address0
 struct FW_DYNAMIC_KEYWORD_ADDRESS0
 {
     GUID         id;
@@ -386,7 +419,7 @@ struct FW_DYNAMIC_KEYWORD_ADDRESS0
     const(PWSTR) addresses;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/ns-netfw-fw_dynamic_keyword_address_data0))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/ns-netfw-fw_dynamic_keyword_address_data0
 struct FW_DYNAMIC_KEYWORD_ADDRESS_DATA0
 {
     FW_DYNAMIC_KEYWORD_ADDRESS0 dynamicKeywordAddress;
@@ -487,43 +520,43 @@ struct NetFwMgr;
 
 @GUID("b171c812-cc76-485a-94d8-b6b3a2794e99")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/natupnp/nn-natupnp-iupnpnat))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nn-natupnp-iupnpnat
 interface IUPnPNAT : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-iupnpnat-get_staticportmappingcollection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-iupnpnat-get_staticportmappingcollection
     HRESULT get_StaticPortMappingCollection(IStaticPortMappingCollection* ppSPMs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/natupnp/nn-natupnp-iupnpnat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nn-natupnp-iupnpnat
     HRESULT get_DynamicPortMappingCollection(IDynamicPortMappingCollection* ppDPMs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-iupnpnat-get_nateventmanager))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-iupnpnat-get_nateventmanager
     HRESULT get_NATEventManager(INATEventManager* ppNEM);
 }
 
 @GUID("624bd588-9060-4109-b0b0-1adbbcac32df")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/natupnp/nn-natupnp-inateventmanager))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nn-natupnp-inateventmanager
 interface INATEventManager : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-inateventmanager-put_externalipaddresscallback))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-inateventmanager-put_externalipaddresscallback
     HRESULT put_ExternalIPAddressCallback(IUnknown pUnk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-inateventmanager-put_numberofentriescallback))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-inateventmanager-put_numberofentriescallback
     HRESULT put_NumberOfEntriesCallback(IUnknown pUnk);
 }
 
 @GUID("9c416740-a34e-446f-ba06-abd04c3149ae")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/natupnp/nn-natupnp-inatexternalipaddresscallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nn-natupnp-inatexternalipaddresscallback
 interface INATExternalIPAddressCallback : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-inatexternalipaddresscallback-newexternalipaddress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-inatexternalipaddresscallback-newexternalipaddress
     HRESULT NewExternalIPAddress(BSTR bstrNewExternalIPAddress);
 }
 
 @GUID("c83a0a74-91ee-41b6-b67a-67e0f00bbd78")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/natupnp/nn-natupnp-inatnumberofentriescallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nn-natupnp-inatnumberofentriescallback
 interface INATNumberOfEntriesCallback : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-inatnumberofentriescallback-newnumberofentries))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-inatnumberofentriescallback-newnumberofentries
     HRESULT NewNumberOfEntries(int lNewNumberOfEntries);
 }
 
@@ -560,48 +593,48 @@ interface IDynamicPortMapping : IDispatch
 
 @GUID("cd1f3e77-66d6-4664-82c7-36dbb641d0f1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/natupnp/nn-natupnp-istaticportmappingcollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nn-natupnp-istaticportmappingcollection
 interface IStaticPortMappingCollection : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-istaticportmappingcollection-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-istaticportmappingcollection-get__newenum
     HRESULT get__NewEnum(IUnknown* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-istaticportmappingcollection-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-istaticportmappingcollection-get_item
     HRESULT get_Item(int lExternalPort, BSTR bstrProtocol, IStaticPortMapping* ppSPM);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-istaticportmappingcollection-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-istaticportmappingcollection-get_count
     HRESULT get_Count(int* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-istaticportmappingcollection-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-istaticportmappingcollection-remove
     HRESULT Remove(int lExternalPort, BSTR bstrProtocol);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-istaticportmappingcollection-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-istaticportmappingcollection-add
     HRESULT Add(int lExternalPort, BSTR bstrProtocol, int lInternalPort, BSTR bstrInternalClient, 
                 VARIANT_BOOL bEnabled, BSTR bstrDescription, IStaticPortMapping* ppSPM);
 }
 
 @GUID("6f10711f-729b-41e5-93b8-f21d0f818df1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/natupnp/nn-natupnp-istaticportmapping))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nn-natupnp-istaticportmapping
 interface IStaticPortMapping : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-istaticportmapping-get_externalipaddress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-istaticportmapping-get_externalipaddress
     HRESULT get_ExternalIPAddress(BSTR* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-istaticportmapping-get_externalport))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-istaticportmapping-get_externalport
     HRESULT get_ExternalPort(int* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-istaticportmapping-get_internalport))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-istaticportmapping-get_internalport
     HRESULT get_InternalPort(int* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-istaticportmapping-get_protocol))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-istaticportmapping-get_protocol
     HRESULT get_Protocol(BSTR* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-istaticportmapping-get_internalclient))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-istaticportmapping-get_internalclient
     HRESULT get_InternalClient(BSTR* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-istaticportmapping-get_enabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-istaticportmapping-get_enabled
     HRESULT get_Enabled(VARIANT_BOOL* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-istaticportmapping-get_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-istaticportmapping-get_description
     HRESULT get_Description(BSTR* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-istaticportmapping-editinternalclient))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-istaticportmapping-editinternalclient
     HRESULT EditInternalClient(BSTR bstrInternalClient);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-istaticportmapping-enable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-istaticportmapping-enable
     HRESULT Enable(VARIANT_BOOL vb);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-istaticportmapping-editdescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-istaticportmapping-editdescription
     HRESULT EditDescription(BSTR bstrDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-istaticportmapping-editinternalport))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/natupnp/nf-natupnp-istaticportmapping-editinternalport
     HRESULT EditInternalPort(int lInternalPort);
 }
 
@@ -616,22 +649,22 @@ interface IEnumNetConnection : IUnknown
 
 @GUID("c08956a1-1cd3-11d1-b1c5-00805fc1270e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-inetconnection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-inetconnection
 interface INetConnection : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetconnection-connect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetconnection-connect
     HRESULT Connect();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetconnection-disconnect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetconnection-disconnect
     HRESULT Disconnect();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetconnection-delete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetconnection-delete
     HRESULT Delete();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetconnection-duplicate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetconnection-duplicate
     HRESULT Duplicate(const(PWSTR) pszwDuplicateName, INetConnection* ppCon);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetconnection-getproperties))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetconnection-getproperties
     HRESULT GetProperties(NETCON_PROPERTIES** ppProps);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetconnection-getuiobjectclassid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetconnection-getuiobjectclassid
     HRESULT GetUiObjectClassId(GUID* pclsid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetconnection-rename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetconnection-rename
     HRESULT Rename(const(PWSTR) pszwNewName);
 }
 
@@ -651,731 +684,731 @@ interface INetConnectionConnectUi : IUnknown
 
 @GUID("c08956b0-1cd3-11d1-b1c5-00805fc1270e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-ienumnetsharingportmapping))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-ienumnetsharingportmapping
 interface IEnumNetSharingPortMapping : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-ienumnetsharingportmapping-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-ienumnetsharingportmapping-next
     HRESULT Next(uint celt, VARIANT* rgVar, uint* pceltFetched);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-ienumnetsharingportmapping-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-ienumnetsharingportmapping-skip
     HRESULT Skip(uint celt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-ienumnetsharingportmapping-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-ienumnetsharingportmapping-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-ienumnetsharingportmapping-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-ienumnetsharingportmapping-clone
     HRESULT Clone(IEnumNetSharingPortMapping* ppenum);
 }
 
 @GUID("24b7e9b5-e38f-4685-851b-00892cf5f940")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-inetsharingportmappingprops))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-inetsharingportmappingprops
 interface INetSharingPortMappingProps : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingportmappingprops-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingportmappingprops-get_name
     HRESULT get_Name(BSTR* pbstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingportmappingprops-get_ipprotocol))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingportmappingprops-get_ipprotocol
     HRESULT get_IPProtocol(ubyte* pucIPProt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingportmappingprops-get_externalport))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingportmappingprops-get_externalport
     HRESULT get_ExternalPort(int* pusPort);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingportmappingprops-get_internalport))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingportmappingprops-get_internalport
     HRESULT get_InternalPort(int* pusPort);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingportmappingprops-get_options))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingportmappingprops-get_options
     HRESULT get_Options(int* pdwOptions);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingportmappingprops-get_targetname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingportmappingprops-get_targetname
     HRESULT get_TargetName(BSTR* pbstrTargetName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingportmappingprops-get_targetipaddress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingportmappingprops-get_targetipaddress
     HRESULT get_TargetIPAddress(BSTR* pbstrTargetIPAddress);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingportmappingprops-get_enabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingportmappingprops-get_enabled
     HRESULT get_Enabled(VARIANT_BOOL* pbool);
 }
 
 @GUID("c08956b1-1cd3-11d1-b1c5-00805fc1270e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-inetsharingportmapping))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-inetsharingportmapping
 interface INetSharingPortMapping : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingportmapping-disable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingportmapping-disable
     HRESULT Disable();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingportmapping-enable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingportmapping-enable
     HRESULT Enable();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingportmapping-get_properties))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingportmapping-get_properties
     HRESULT get_Properties(INetSharingPortMappingProps* ppNSPMP);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingportmapping-delete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingportmapping-delete
     HRESULT Delete();
 }
 
 @GUID("c08956b8-1cd3-11d1-b1c5-00805fc1270e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-ienumnetsharingeveryconnection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-ienumnetsharingeveryconnection
 interface IEnumNetSharingEveryConnection : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-ienumnetsharingeveryconnection-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-ienumnetsharingeveryconnection-next
     HRESULT Next(uint celt, VARIANT* rgVar, uint* pceltFetched);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-ienumnetsharingeveryconnection-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-ienumnetsharingeveryconnection-skip
     HRESULT Skip(uint celt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-ienumnetsharingeveryconnection-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-ienumnetsharingeveryconnection-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-ienumnetsharingeveryconnection-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-ienumnetsharingeveryconnection-clone
     HRESULT Clone(IEnumNetSharingEveryConnection* ppenum);
 }
 
 @GUID("c08956b4-1cd3-11d1-b1c5-00805fc1270e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-ienumnetsharingpublicconnection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-ienumnetsharingpublicconnection
 interface IEnumNetSharingPublicConnection : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-ienumnetsharingpublicconnection-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-ienumnetsharingpublicconnection-next
     HRESULT Next(uint celt, VARIANT* rgVar, uint* pceltFetched);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-ienumnetsharingpublicconnection-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-ienumnetsharingpublicconnection-skip
     HRESULT Skip(uint celt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-ienumnetsharingpublicconnection-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-ienumnetsharingpublicconnection-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-ienumnetsharingpublicconnection-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-ienumnetsharingpublicconnection-clone
     HRESULT Clone(IEnumNetSharingPublicConnection* ppenum);
 }
 
 @GUID("c08956b5-1cd3-11d1-b1c5-00805fc1270e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-ienumnetsharingprivateconnection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-ienumnetsharingprivateconnection
 interface IEnumNetSharingPrivateConnection : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-ienumnetsharingprivateconnection-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-ienumnetsharingprivateconnection-next
     HRESULT Next(uint celt, VARIANT* rgVar, uint* pCeltFetched);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-ienumnetsharingprivateconnection-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-ienumnetsharingprivateconnection-skip
     HRESULT Skip(uint celt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-ienumnetsharingprivateconnection-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-ienumnetsharingprivateconnection-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-ienumnetsharingprivateconnection-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-ienumnetsharingprivateconnection-clone
     HRESULT Clone(IEnumNetSharingPrivateConnection* ppenum);
 }
 
 @GUID("02e4a2de-da20-4e34-89c8-ac22275a010b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-inetsharingportmappingcollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-inetsharingportmappingcollection
 interface INetSharingPortMappingCollection : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingportmappingcollection-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingportmappingcollection-get__newenum
     HRESULT get__NewEnum(IUnknown* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingportmappingcollection-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingportmappingcollection-get_count
     HRESULT get_Count(int* pVal);
 }
 
 @GUID("f4277c95-ce5b-463d-8167-5662d9bcaa72")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-inetconnectionprops))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-inetconnectionprops
 interface INetConnectionProps : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetconnectionprops-get_guid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetconnectionprops-get_guid
     HRESULT get_Guid(BSTR* pbstrGuid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetconnectionprops-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetconnectionprops-get_name
     HRESULT get_Name(BSTR* pbstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetconnectionprops-get_devicename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetconnectionprops-get_devicename
     HRESULT get_DeviceName(BSTR* pbstrDeviceName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetconnectionprops-get_status))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetconnectionprops-get_status
     HRESULT get_Status(NETCON_STATUS* pStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetconnectionprops-get_mediatype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetconnectionprops-get_mediatype
     HRESULT get_MediaType(NETCON_MEDIATYPE* pMediaType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetconnectionprops-get_characteristics))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetconnectionprops-get_characteristics
     HRESULT get_Characteristics(uint* pdwFlags);
 }
 
 @GUID("c08956b6-1cd3-11d1-b1c5-00805fc1270e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-inetsharingconfiguration))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-inetsharingconfiguration
 interface INetSharingConfiguration : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingconfiguration-get_sharingenabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingconfiguration-get_sharingenabled
     HRESULT get_SharingEnabled(VARIANT_BOOL* pbEnabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingconfiguration-get_sharingconnectiontype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingconfiguration-get_sharingconnectiontype
     HRESULT get_SharingConnectionType(SHARINGCONNECTIONTYPE* pType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingconfiguration-disablesharing))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingconfiguration-disablesharing
     HRESULT DisableSharing();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingconfiguration-enablesharing))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingconfiguration-enablesharing
     HRESULT EnableSharing(SHARINGCONNECTIONTYPE Type);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingconfiguration-get_internetfirewallenabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingconfiguration-get_internetfirewallenabled
     HRESULT get_InternetFirewallEnabled(VARIANT_BOOL* pbEnabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingconfiguration-disableinternetfirewall))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingconfiguration-disableinternetfirewall
     HRESULT DisableInternetFirewall();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingconfiguration-enableinternetfirewall))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingconfiguration-enableinternetfirewall
     HRESULT EnableInternetFirewall();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingconfiguration-get_enumportmappings))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingconfiguration-get_enumportmappings
     HRESULT get_EnumPortMappings(SHARINGCONNECTION_ENUM_FLAGS Flags, INetSharingPortMappingCollection* ppColl);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingconfiguration-addportmapping))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingconfiguration-addportmapping
     HRESULT AddPortMapping(BSTR bstrName, ubyte ucIPProtocol, ushort usExternalPort, ushort usInternalPort, 
                            uint dwOptions, BSTR bstrTargetNameOrIPAddress, ICS_TARGETTYPE eTargetType, 
                            INetSharingPortMapping* ppMapping);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingconfiguration-removeportmapping))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingconfiguration-removeportmapping
     HRESULT RemovePortMapping(INetSharingPortMapping pMapping);
 }
 
 @GUID("33c4643c-7811-46fa-a89a-768597bd7223")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-inetsharingeveryconnectioncollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-inetsharingeveryconnectioncollection
 interface INetSharingEveryConnectionCollection : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingeveryconnectioncollection-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingeveryconnectioncollection-get__newenum
     HRESULT get__NewEnum(IUnknown* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingeveryconnectioncollection-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingeveryconnectioncollection-get_count
     HRESULT get_Count(int* pVal);
 }
 
 @GUID("7d7a6355-f372-4971-a149-bfc927be762a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-inetsharingpublicconnectioncollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-inetsharingpublicconnectioncollection
 interface INetSharingPublicConnectionCollection : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingpublicconnectioncollection-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingpublicconnectioncollection-get__newenum
     HRESULT get__NewEnum(IUnknown* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingpublicconnectioncollection-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingpublicconnectioncollection-get_count
     HRESULT get_Count(int* pVal);
 }
 
 @GUID("38ae69e0-4409-402a-a2cb-e965c727f840")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-inetsharingprivateconnectioncollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-inetsharingprivateconnectioncollection
 interface INetSharingPrivateConnectionCollection : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingprivateconnectioncollection-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingprivateconnectioncollection-get__newenum
     HRESULT get__NewEnum(IUnknown* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingprivateconnectioncollection-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingprivateconnectioncollection-get_count
     HRESULT get_Count(int* pVal);
 }
 
 @GUID("c08956b7-1cd3-11d1-b1c5-00805fc1270e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-inetsharingmanager))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nn-netcon-inetsharingmanager
 interface INetSharingManager : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingmanager-get_sharinginstalled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingmanager-get_sharinginstalled
     HRESULT get_SharingInstalled(VARIANT_BOOL* pbInstalled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingmanager-get_enumpublicconnections))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingmanager-get_enumpublicconnections
     HRESULT get_EnumPublicConnections(SHARINGCONNECTION_ENUM_FLAGS Flags, 
                                       INetSharingPublicConnectionCollection* ppColl);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingmanager-get_enumprivateconnections))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingmanager-get_enumprivateconnections
     HRESULT get_EnumPrivateConnections(SHARINGCONNECTION_ENUM_FLAGS Flags, 
                                        INetSharingPrivateConnectionCollection* ppColl);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingmanager-get_inetsharingconfigurationforinetconnection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingmanager-get_inetsharingconfigurationforinetconnection
     HRESULT get_INetSharingConfigurationForINetConnection(INetConnection pNetConnection, 
                                                           INetSharingConfiguration* ppNetSharingConfiguration);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingmanager-get_enumeveryconnection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingmanager-get_enumeveryconnection
     HRESULT get_EnumEveryConnection(INetSharingEveryConnectionCollection* ppColl);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingmanager-get_netconnectionprops))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netcon/nf-netcon-inetsharingmanager-get_netconnectionprops
     HRESULT get_NetConnectionProps(INetConnection pNetConnection, INetConnectionProps* ppProps);
 }
 
 @GUID("d4becddf-6f73-4a83-b832-9c66874cd20e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwremoteadminsettings))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwremoteadminsettings
 interface INetFwRemoteAdminSettings : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwremoteadminsettings-get_ipversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwremoteadminsettings-get_ipversion
     HRESULT get_IpVersion(NET_FW_IP_VERSION* ipVersion);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwremoteadminsettings-put_ipversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwremoteadminsettings-put_ipversion
     HRESULT put_IpVersion(NET_FW_IP_VERSION ipVersion);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwremoteadminsettings-get_scope))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwremoteadminsettings-get_scope
     HRESULT get_Scope(NET_FW_SCOPE* scope_);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwremoteadminsettings-put_scope))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwremoteadminsettings-put_scope
     HRESULT put_Scope(NET_FW_SCOPE scope_);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwremoteadminsettings-get_remoteaddresses))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwremoteadminsettings-get_remoteaddresses
     HRESULT get_RemoteAddresses(BSTR* remoteAddrs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwremoteadminsettings-put_remoteaddresses))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwremoteadminsettings-put_remoteaddresses
     HRESULT put_RemoteAddresses(BSTR remoteAddrs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwremoteadminsettings-get_enabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwremoteadminsettings-get_enabled
     HRESULT get_Enabled(VARIANT_BOOL* enabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwremoteadminsettings-put_enabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwremoteadminsettings-put_enabled
     HRESULT put_Enabled(VARIANT_BOOL enabled);
 }
 
 @GUID("a6207b2e-7cdd-426a-951e-5e1cbc5afead")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwicmpsettings))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwicmpsettings
 interface INetFwIcmpSettings : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-get_allowoutbounddestinationunreachable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-get_allowoutbounddestinationunreachable
     HRESULT get_AllowOutboundDestinationUnreachable(VARIANT_BOOL* allow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-put_allowoutbounddestinationunreachable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-put_allowoutbounddestinationunreachable
     HRESULT put_AllowOutboundDestinationUnreachable(VARIANT_BOOL allow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-get_allowredirect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-get_allowredirect
     HRESULT get_AllowRedirect(VARIANT_BOOL* allow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-put_allowredirect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-put_allowredirect
     HRESULT put_AllowRedirect(VARIANT_BOOL allow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-get_allowinboundechorequest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-get_allowinboundechorequest
     HRESULT get_AllowInboundEchoRequest(VARIANT_BOOL* allow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-put_allowinboundechorequest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-put_allowinboundechorequest
     HRESULT put_AllowInboundEchoRequest(VARIANT_BOOL allow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-get_allowoutboundtimeexceeded))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-get_allowoutboundtimeexceeded
     HRESULT get_AllowOutboundTimeExceeded(VARIANT_BOOL* allow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-put_allowoutboundtimeexceeded))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-put_allowoutboundtimeexceeded
     HRESULT put_AllowOutboundTimeExceeded(VARIANT_BOOL allow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-get_allowoutboundparameterproblem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-get_allowoutboundparameterproblem
     HRESULT get_AllowOutboundParameterProblem(VARIANT_BOOL* allow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-put_allowoutboundparameterproblem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-put_allowoutboundparameterproblem
     HRESULT put_AllowOutboundParameterProblem(VARIANT_BOOL allow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-get_allowoutboundsourcequench))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-get_allowoutboundsourcequench
     HRESULT get_AllowOutboundSourceQuench(VARIANT_BOOL* allow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-put_allowoutboundsourcequench))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-put_allowoutboundsourcequench
     HRESULT put_AllowOutboundSourceQuench(VARIANT_BOOL allow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-get_allowinboundrouterrequest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-get_allowinboundrouterrequest
     HRESULT get_AllowInboundRouterRequest(VARIANT_BOOL* allow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-put_allowinboundrouterrequest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-put_allowinboundrouterrequest
     HRESULT put_AllowInboundRouterRequest(VARIANT_BOOL allow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-get_allowinboundtimestamprequest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-get_allowinboundtimestamprequest
     HRESULT get_AllowInboundTimestampRequest(VARIANT_BOOL* allow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-put_allowinboundtimestamprequest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-put_allowinboundtimestamprequest
     HRESULT put_AllowInboundTimestampRequest(VARIANT_BOOL allow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-get_allowinboundmaskrequest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-get_allowinboundmaskrequest
     HRESULT get_AllowInboundMaskRequest(VARIANT_BOOL* allow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-put_allowinboundmaskrequest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-put_allowinboundmaskrequest
     HRESULT put_AllowInboundMaskRequest(VARIANT_BOOL allow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-get_allowoutboundpackettoobig))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-get_allowoutboundpackettoobig
     HRESULT get_AllowOutboundPacketTooBig(VARIANT_BOOL* allow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-put_allowoutboundpackettoobig))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwicmpsettings-put_allowoutboundpackettoobig
     HRESULT put_AllowOutboundPacketTooBig(VARIANT_BOOL allow);
 }
 
 @GUID("e0483ba0-47ff-4d9c-a6d6-7741d0b195f7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwopenport))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwopenport
 interface INetFwOpenPort : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenport-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenport-get_name
     HRESULT get_Name(BSTR* name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenport-put_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenport-put_name
     HRESULT put_Name(BSTR name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenport-get_ipversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenport-get_ipversion
     HRESULT get_IpVersion(NET_FW_IP_VERSION* ipVersion);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenport-put_ipversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenport-put_ipversion
     HRESULT put_IpVersion(NET_FW_IP_VERSION ipVersion);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenport-get_protocol))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenport-get_protocol
     HRESULT get_Protocol(NET_FW_IP_PROTOCOL* ipProtocol);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenport-put_protocol))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenport-put_protocol
     HRESULT put_Protocol(NET_FW_IP_PROTOCOL ipProtocol);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenport-get_port))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenport-get_port
     HRESULT get_Port(int* portNumber);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenport-put_port))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenport-put_port
     HRESULT put_Port(int portNumber);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenport-get_scope))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenport-get_scope
     HRESULT get_Scope(NET_FW_SCOPE* scope_);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenport-put_scope))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenport-put_scope
     HRESULT put_Scope(NET_FW_SCOPE scope_);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenport-get_remoteaddresses))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenport-get_remoteaddresses
     HRESULT get_RemoteAddresses(BSTR* remoteAddrs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenport-put_remoteaddresses))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenport-put_remoteaddresses
     HRESULT put_RemoteAddresses(BSTR remoteAddrs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenport-get_enabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenport-get_enabled
     HRESULT get_Enabled(VARIANT_BOOL* enabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenport-put_enabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenport-put_enabled
     HRESULT put_Enabled(VARIANT_BOOL enabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenport-get_builtin))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenport-get_builtin
     HRESULT get_BuiltIn(VARIANT_BOOL* builtIn);
 }
 
 @GUID("c0e9d7fa-e07e-430a-b19a-090ce82d92e2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwopenports))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwopenports
 interface INetFwOpenPorts : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenports-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenports-get_count
     HRESULT get_Count(int* count);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenports-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenports-add
     HRESULT Add(INetFwOpenPort port);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenports-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenports-remove
     HRESULT Remove(int portNumber, NET_FW_IP_PROTOCOL ipProtocol);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenports-item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenports-item
     HRESULT Item(int portNumber, NET_FW_IP_PROTOCOL ipProtocol, INetFwOpenPort* openPort);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenports-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwopenports-get__newenum
     HRESULT get__NewEnum(IUnknown* newEnum);
 }
 
 @GUID("79fd57c8-908e-4a36-9888-d5b3f0a444cf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwservice))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwservice
 interface INetFwService : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservice-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservice-get_name
     HRESULT get_Name(BSTR* name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservice-get_type))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservice-get_type
     HRESULT get_Type(NET_FW_SERVICE_TYPE* type);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservice-get_customized))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservice-get_customized
     HRESULT get_Customized(VARIANT_BOOL* customized);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservice-get_ipversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservice-get_ipversion
     HRESULT get_IpVersion(NET_FW_IP_VERSION* ipVersion);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservice-put_ipversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservice-put_ipversion
     HRESULT put_IpVersion(NET_FW_IP_VERSION ipVersion);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservice-get_scope))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservice-get_scope
     HRESULT get_Scope(NET_FW_SCOPE* scope_);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservice-put_scope))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservice-put_scope
     HRESULT put_Scope(NET_FW_SCOPE scope_);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservice-get_remoteaddresses))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservice-get_remoteaddresses
     HRESULT get_RemoteAddresses(BSTR* remoteAddrs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservice-put_remoteaddresses))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservice-put_remoteaddresses
     HRESULT put_RemoteAddresses(BSTR remoteAddrs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservice-get_enabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservice-get_enabled
     HRESULT get_Enabled(VARIANT_BOOL* enabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservice-put_enabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservice-put_enabled
     HRESULT put_Enabled(VARIANT_BOOL enabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservice-get_globallyopenports))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservice-get_globallyopenports
     HRESULT get_GloballyOpenPorts(INetFwOpenPorts* openPorts);
 }
 
 @GUID("79649bb4-903e-421b-94c9-79848e79f6ee")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwservices))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwservices
 interface INetFwServices : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservices-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservices-get_count
     HRESULT get_Count(int* count);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservices-item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservices-item
     HRESULT Item(NET_FW_SERVICE_TYPE svcType, INetFwService* service);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservices-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservices-get__newenum
     HRESULT get__NewEnum(IUnknown* newEnum);
 }
 
 @GUID("b5e64ffa-c2c5-444e-a301-fb5e00018050")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwauthorizedapplication))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwauthorizedapplication
 interface INetFwAuthorizedApplication : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwauthorizedapplication-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwauthorizedapplication-get_name
     HRESULT get_Name(BSTR* name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwauthorizedapplication-put_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwauthorizedapplication-put_name
     HRESULT put_Name(BSTR name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwauthorizedapplication-get_processimagefilename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwauthorizedapplication-get_processimagefilename
     HRESULT get_ProcessImageFileName(BSTR* imageFileName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwauthorizedapplication-put_processimagefilename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwauthorizedapplication-put_processimagefilename
     HRESULT put_ProcessImageFileName(BSTR imageFileName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwauthorizedapplication-get_ipversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwauthorizedapplication-get_ipversion
     HRESULT get_IpVersion(NET_FW_IP_VERSION* ipVersion);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwauthorizedapplication-put_ipversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwauthorizedapplication-put_ipversion
     HRESULT put_IpVersion(NET_FW_IP_VERSION ipVersion);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwauthorizedapplication-get_scope))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwauthorizedapplication-get_scope
     HRESULT get_Scope(NET_FW_SCOPE* scope_);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwauthorizedapplication-put_scope))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwauthorizedapplication-put_scope
     HRESULT put_Scope(NET_FW_SCOPE scope_);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwauthorizedapplication-get_remoteaddresses))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwauthorizedapplication-get_remoteaddresses
     HRESULT get_RemoteAddresses(BSTR* remoteAddrs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwauthorizedapplication-put_remoteaddresses))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwauthorizedapplication-put_remoteaddresses
     HRESULT put_RemoteAddresses(BSTR remoteAddrs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwauthorizedapplication-get_enabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwauthorizedapplication-get_enabled
     HRESULT get_Enabled(VARIANT_BOOL* enabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwauthorizedapplication-put_enabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwauthorizedapplication-put_enabled
     HRESULT put_Enabled(VARIANT_BOOL enabled);
 }
 
 @GUID("644efd52-ccf9-486c-97a2-39f352570b30")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwauthorizedapplications))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwauthorizedapplications
 interface INetFwAuthorizedApplications : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwauthorizedapplications-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwauthorizedapplications-get_count
     HRESULT get_Count(int* count);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwauthorizedapplications-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwauthorizedapplications-add
     HRESULT Add(INetFwAuthorizedApplication app);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwauthorizedapplications-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwauthorizedapplications-remove
     HRESULT Remove(BSTR imageFileName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwauthorizedapplications-item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwauthorizedapplications-item
     HRESULT Item(BSTR imageFileName, INetFwAuthorizedApplication* app);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwauthorizedapplications-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwauthorizedapplications-get__newenum
     HRESULT get__NewEnum(IUnknown* newEnum);
 }
 
 @GUID("af230d27-baba-4e42-aced-f524f22cfce2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwrule))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwrule
 interface INetFwRule : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-get_name
     HRESULT get_Name(BSTR* name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-put_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-put_name
     HRESULT put_Name(BSTR name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-get_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-get_description
     HRESULT get_Description(BSTR* desc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-put_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-put_description
     HRESULT put_Description(BSTR desc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-get_applicationname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-get_applicationname
     HRESULT get_ApplicationName(BSTR* imageFileName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-put_applicationname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-put_applicationname
     HRESULT put_ApplicationName(BSTR imageFileName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-get_servicename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-get_servicename
     HRESULT get_ServiceName(BSTR* serviceName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-put_servicename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-put_servicename
     HRESULT put_ServiceName(BSTR serviceName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-get_protocol))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-get_protocol
     HRESULT get_Protocol(int* protocol);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-put_protocol))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-put_protocol
     HRESULT put_Protocol(int protocol);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-get_localports))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-get_localports
     HRESULT get_LocalPorts(BSTR* portNumbers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-put_localports))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-put_localports
     HRESULT put_LocalPorts(BSTR portNumbers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-get_remoteports))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-get_remoteports
     HRESULT get_RemotePorts(BSTR* portNumbers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-put_remoteports))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-put_remoteports
     HRESULT put_RemotePorts(BSTR portNumbers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-get_localaddresses))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-get_localaddresses
     HRESULT get_LocalAddresses(BSTR* localAddrs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-put_localaddresses))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-put_localaddresses
     HRESULT put_LocalAddresses(BSTR localAddrs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-get_remoteaddresses))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-get_remoteaddresses
     HRESULT get_RemoteAddresses(BSTR* remoteAddrs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-put_remoteaddresses))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-put_remoteaddresses
     HRESULT put_RemoteAddresses(BSTR remoteAddrs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-get_icmptypesandcodes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-get_icmptypesandcodes
     HRESULT get_IcmpTypesAndCodes(BSTR* icmpTypesAndCodes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-put_icmptypesandcodes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-put_icmptypesandcodes
     HRESULT put_IcmpTypesAndCodes(BSTR icmpTypesAndCodes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-get_direction))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-get_direction
     HRESULT get_Direction(NET_FW_RULE_DIRECTION* dir);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-put_direction))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-put_direction
     HRESULT put_Direction(NET_FW_RULE_DIRECTION dir);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-get_interfaces))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-get_interfaces
     HRESULT get_Interfaces(VARIANT* interfaces);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-put_interfaces))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-put_interfaces
     HRESULT put_Interfaces(VARIANT interfaces);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-get_interfacetypes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-get_interfacetypes
     HRESULT get_InterfaceTypes(BSTR* interfaceTypes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-put_interfacetypes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-put_interfacetypes
     HRESULT put_InterfaceTypes(BSTR interfaceTypes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-get_enabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-get_enabled
     HRESULT get_Enabled(VARIANT_BOOL* enabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-put_enabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-put_enabled
     HRESULT put_Enabled(VARIANT_BOOL enabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-get_grouping))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-get_grouping
     HRESULT get_Grouping(BSTR* context);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-put_grouping))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-put_grouping
     HRESULT put_Grouping(BSTR context);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-get_profiles))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-get_profiles
     HRESULT get_Profiles(int* profileTypesBitmask);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-put_profiles))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-put_profiles
     HRESULT put_Profiles(int profileTypesBitmask);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-get_edgetraversal))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-get_edgetraversal
     HRESULT get_EdgeTraversal(VARIANT_BOOL* enabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-put_edgetraversal))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-put_edgetraversal
     HRESULT put_EdgeTraversal(VARIANT_BOOL enabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-get_action))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-get_action
     HRESULT get_Action(NET_FW_ACTION* action);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-put_action))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule-put_action
     HRESULT put_Action(NET_FW_ACTION action);
 }
 
 @GUID("9c27c8da-189b-4dde-89f7-8b39a316782c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwrule2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwrule2
 interface INetFwRule2 : INetFwRule
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule2-get_edgetraversaloptions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule2-get_edgetraversaloptions
     HRESULT get_EdgeTraversalOptions(int* lOptions);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule2-put_edgetraversaloptions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule2-put_edgetraversaloptions
     HRESULT put_EdgeTraversalOptions(int lOptions);
 }
 
 @GUID("b21563ff-d696-4222-ab46-4e89b73ab34a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwrule3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwrule3
 interface INetFwRule3 : INetFwRule2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule3-get_localapppackageid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule3-get_localapppackageid
     HRESULT get_LocalAppPackageId(BSTR* wszPackageId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule3-put_localapppackageid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule3-put_localapppackageid
     HRESULT put_LocalAppPackageId(BSTR wszPackageId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule3-get_localuserowner))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule3-get_localuserowner
     HRESULT get_LocalUserOwner(BSTR* wszUserOwner);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule3-put_localuserowner))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule3-put_localuserowner
     HRESULT put_LocalUserOwner(BSTR wszUserOwner);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule3-get_localuserauthorizedlist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule3-get_localuserauthorizedlist
     HRESULT get_LocalUserAuthorizedList(BSTR* wszUserAuthList);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule3-put_localuserauthorizedlist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule3-put_localuserauthorizedlist
     HRESULT put_LocalUserAuthorizedList(BSTR wszUserAuthList);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule3-get_remoteuserauthorizedlist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule3-get_remoteuserauthorizedlist
     HRESULT get_RemoteUserAuthorizedList(BSTR* wszUserAuthList);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule3-put_remoteuserauthorizedlist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule3-put_remoteuserauthorizedlist
     HRESULT put_RemoteUserAuthorizedList(BSTR wszUserAuthList);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule3-get_remotemachineauthorizedlist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule3-get_remotemachineauthorizedlist
     HRESULT get_RemoteMachineAuthorizedList(BSTR* wszUserAuthList);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule3-put_remotemachineauthorizedlist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule3-put_remotemachineauthorizedlist
     HRESULT put_RemoteMachineAuthorizedList(BSTR wszUserAuthList);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule3-get_secureflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule3-get_secureflags
     HRESULT get_SecureFlags(int* lOptions);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule3-put_secureflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrule3-put_secureflags
     HRESULT put_SecureFlags(int lOptions);
 }
 
 @GUID("9c4c6277-5027-441e-afae-ca1f542da009")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwrules))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwrules
 interface INetFwRules : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrules-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrules-get_count
     HRESULT get_Count(int* count);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrules-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrules-add
     HRESULT Add(INetFwRule rule);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrules-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrules-remove
     HRESULT Remove(BSTR name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrules-item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrules-item
     HRESULT Item(BSTR name, INetFwRule* rule);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrules-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwrules-get__newenum
     HRESULT get__NewEnum(IUnknown* newEnum);
 }
 
 @GUID("8267bbe3-f890-491c-b7b6-2db1ef0e5d2b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwservicerestriction))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwservicerestriction
 interface INetFwServiceRestriction : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservicerestriction-restrictservice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservicerestriction-restrictservice
     HRESULT RestrictService(BSTR serviceName, BSTR appName, VARIANT_BOOL restrictService, 
                             VARIANT_BOOL serviceSidRestricted);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservicerestriction-servicerestricted))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservicerestriction-servicerestricted
     HRESULT ServiceRestricted(BSTR serviceName, BSTR appName, VARIANT_BOOL* serviceRestricted);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservicerestriction-get_rules))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwservicerestriction-get_rules
     HRESULT get_Rules(INetFwRules* rules);
 }
 
 @GUID("174a0dda-e9f9-449d-993b-21ab667ca456")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwprofile))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwprofile
 interface INetFwProfile : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwprofile-get_type))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwprofile-get_type
     HRESULT get_Type(NET_FW_PROFILE_TYPE* type);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwprofile-get_firewallenabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwprofile-get_firewallenabled
     HRESULT get_FirewallEnabled(VARIANT_BOOL* enabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwprofile-put_firewallenabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwprofile-put_firewallenabled
     HRESULT put_FirewallEnabled(VARIANT_BOOL enabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwprofile-get_exceptionsnotallowed))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwprofile-get_exceptionsnotallowed
     HRESULT get_ExceptionsNotAllowed(VARIANT_BOOL* notAllowed);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwprofile-put_exceptionsnotallowed))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwprofile-put_exceptionsnotallowed
     HRESULT put_ExceptionsNotAllowed(VARIANT_BOOL notAllowed);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwprofile-get_notificationsdisabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwprofile-get_notificationsdisabled
     HRESULT get_NotificationsDisabled(VARIANT_BOOL* disabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwprofile-put_notificationsdisabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwprofile-put_notificationsdisabled
     HRESULT put_NotificationsDisabled(VARIANT_BOOL disabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwprofile-get_unicastresponsestomulticastbroadcastdisabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwprofile-get_unicastresponsestomulticastbroadcastdisabled
     HRESULT get_UnicastResponsesToMulticastBroadcastDisabled(VARIANT_BOOL* disabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwprofile-put_unicastresponsestomulticastbroadcastdisabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwprofile-put_unicastresponsestomulticastbroadcastdisabled
     HRESULT put_UnicastResponsesToMulticastBroadcastDisabled(VARIANT_BOOL disabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwprofile-get_remoteadminsettings))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwprofile-get_remoteadminsettings
     HRESULT get_RemoteAdminSettings(INetFwRemoteAdminSettings* remoteAdminSettings);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwprofile-get_icmpsettings))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwprofile-get_icmpsettings
     HRESULT get_IcmpSettings(INetFwIcmpSettings* icmpSettings);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwprofile-get_globallyopenports))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwprofile-get_globallyopenports
     HRESULT get_GloballyOpenPorts(INetFwOpenPorts* openPorts);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwprofile-get_services))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwprofile-get_services
     HRESULT get_Services(INetFwServices* services);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwprofile-get_authorizedapplications))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwprofile-get_authorizedapplications
     HRESULT get_AuthorizedApplications(INetFwAuthorizedApplications* apps);
 }
 
 @GUID("d46d2478-9ac9-4008-9dc7-5563ce5536cc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwpolicy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwpolicy
 interface INetFwPolicy : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy-get_currentprofile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy-get_currentprofile
     HRESULT get_CurrentProfile(INetFwProfile* profile);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy-getprofilebytype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy-getprofilebytype
     HRESULT GetProfileByType(NET_FW_PROFILE_TYPE profileType, INetFwProfile* profile);
 }
 
 @GUID("98325047-c671-4174-8d81-defcd3f03186")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwpolicy2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwpolicy2
 interface INetFwPolicy2 : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-get_currentprofiletypes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-get_currentprofiletypes
     HRESULT get_CurrentProfileTypes(int* profileTypesBitmask);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-get_firewallenabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-get_firewallenabled
     HRESULT get_FirewallEnabled(NET_FW_PROFILE_TYPE2 profileType, VARIANT_BOOL* enabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-put_firewallenabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-put_firewallenabled
     HRESULT put_FirewallEnabled(NET_FW_PROFILE_TYPE2 profileType, VARIANT_BOOL enabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-get_excludedinterfaces))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-get_excludedinterfaces
     HRESULT get_ExcludedInterfaces(NET_FW_PROFILE_TYPE2 profileType, VARIANT* interfaces);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-put_excludedinterfaces))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-put_excludedinterfaces
     HRESULT put_ExcludedInterfaces(NET_FW_PROFILE_TYPE2 profileType, VARIANT interfaces);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-get_blockallinboundtraffic))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-get_blockallinboundtraffic
     HRESULT get_BlockAllInboundTraffic(NET_FW_PROFILE_TYPE2 profileType, VARIANT_BOOL* Block);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-put_blockallinboundtraffic))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-put_blockallinboundtraffic
     HRESULT put_BlockAllInboundTraffic(NET_FW_PROFILE_TYPE2 profileType, VARIANT_BOOL Block);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-get_notificationsdisabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-get_notificationsdisabled
     HRESULT get_NotificationsDisabled(NET_FW_PROFILE_TYPE2 profileType, VARIANT_BOOL* disabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-put_notificationsdisabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-put_notificationsdisabled
     HRESULT put_NotificationsDisabled(NET_FW_PROFILE_TYPE2 profileType, VARIANT_BOOL disabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-get_unicastresponsestomulticastbroadcastdisabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-get_unicastresponsestomulticastbroadcastdisabled
     HRESULT get_UnicastResponsesToMulticastBroadcastDisabled(NET_FW_PROFILE_TYPE2 profileType, 
                                                              VARIANT_BOOL* disabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-put_unicastresponsestomulticastbroadcastdisabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-put_unicastresponsestomulticastbroadcastdisabled
     HRESULT put_UnicastResponsesToMulticastBroadcastDisabled(NET_FW_PROFILE_TYPE2 profileType, 
                                                              VARIANT_BOOL disabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-get_rules))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-get_rules
     HRESULT get_Rules(INetFwRules* rules);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-get_servicerestriction))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-get_servicerestriction
     HRESULT get_ServiceRestriction(INetFwServiceRestriction* ServiceRestriction);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-enablerulegroup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-enablerulegroup
     HRESULT EnableRuleGroup(int profileTypesBitmask, BSTR group, VARIANT_BOOL enable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-isrulegroupenabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-isrulegroupenabled
     HRESULT IsRuleGroupEnabled(int profileTypesBitmask, BSTR group, VARIANT_BOOL* enabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-restorelocalfirewalldefaults))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-restorelocalfirewalldefaults
     HRESULT RestoreLocalFirewallDefaults();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-get_defaultinboundaction))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-get_defaultinboundaction
     HRESULT get_DefaultInboundAction(NET_FW_PROFILE_TYPE2 profileType, NET_FW_ACTION* action);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-put_defaultinboundaction))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-put_defaultinboundaction
     HRESULT put_DefaultInboundAction(NET_FW_PROFILE_TYPE2 profileType, NET_FW_ACTION action);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-get_defaultoutboundaction))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-get_defaultoutboundaction
     HRESULT get_DefaultOutboundAction(NET_FW_PROFILE_TYPE2 profileType, NET_FW_ACTION* action);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-put_defaultoutboundaction))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-put_defaultoutboundaction
     HRESULT put_DefaultOutboundAction(NET_FW_PROFILE_TYPE2 profileType, NET_FW_ACTION action);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-get_isrulegroupcurrentlyenabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-get_isrulegroupcurrentlyenabled
     HRESULT get_IsRuleGroupCurrentlyEnabled(BSTR group, VARIANT_BOOL* enabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-get_localpolicymodifystate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwpolicy2-get_localpolicymodifystate
     HRESULT get_LocalPolicyModifyState(NET_FW_MODIFY_STATE* modifyState);
 }
 
 @GUID("f7898af5-cac4-4632-a2ec-da06e5111af2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwmgr))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwmgr
 interface INetFwMgr : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwmgr-get_localpolicy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwmgr-get_localpolicy
     HRESULT get_LocalPolicy(INetFwPolicy* localPolicy);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwmgr-get_currentprofiletype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwmgr-get_currentprofiletype
     HRESULT get_CurrentProfileType(NET_FW_PROFILE_TYPE* profileType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwmgr-restoredefaults))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwmgr-restoredefaults
     HRESULT RestoreDefaults();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwmgr-isportallowed))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwmgr-isportallowed
     HRESULT IsPortAllowed(BSTR imageFileName, NET_FW_IP_VERSION ipVersion, int portNumber, BSTR localAddress, 
                           NET_FW_IP_PROTOCOL ipProtocol, VARIANT* allowed, VARIANT* restricted);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwmgr-isicmptypeallowed))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwmgr-isicmptypeallowed
     HRESULT IsIcmpTypeAllowed(NET_FW_IP_VERSION ipVersion, BSTR localAddress, ubyte type, VARIANT* allowed, 
                               VARIANT* restricted);
 }
 
 @GUID("71881699-18f4-458b-b892-3ffce5e07f75")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwproduct))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwproduct
 interface INetFwProduct : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwproduct-get_rulecategories))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwproduct-get_rulecategories
     HRESULT get_RuleCategories(VARIANT* ruleCategories);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwproduct-put_rulecategories))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwproduct-put_rulecategories
     HRESULT put_RuleCategories(VARIANT ruleCategories);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwproduct-get_displayname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwproduct-get_displayname
     HRESULT get_DisplayName(BSTR* displayName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwproduct-put_displayname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwproduct-put_displayname
     HRESULT put_DisplayName(BSTR displayName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwproduct-get_pathtosignedproductexe))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwproduct-get_pathtosignedproductexe
     HRESULT get_PathToSignedProductExe(BSTR* path);
 }
 
 @GUID("39eb36e0-2097-40bd-8af2-63a13b525362")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwproducts))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nn-netfw-inetfwproducts
 interface INetFwProducts : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwproducts-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwproducts-get_count
     HRESULT get_Count(int* count);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwproducts-register))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwproducts-register
     HRESULT Register(INetFwProduct product, IUnknown* registration);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwproducts-item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwproducts-item
     HRESULT Item(int index, INetFwProduct* product);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwproducts-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netfw/nf-netfw-inetfwproducts-get__newenum
     HRESULT get__NewEnum(IUnknown* newEnum);
 }
 

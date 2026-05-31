@@ -3,9 +3,9 @@
 module windows.win32.system.diagnostics.clrprofiling;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, HANDLE, HRESULT, PWSTR;
-public import windows.win32.system.com : IUnknown;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, HANDLE, HRESULT, PWSTR;
+public import windows.win32.system.com.com : IUnknown;
 public import windows.win32.system.winrt.metadata : ASSEMBLYMETADATA, COR_FIELD_OFFSET,
                                                     CorElementType;
 
@@ -14,12 +14,14 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 enum CorDebugIlToNativeMappingTypes : int
 {
     NO_MAPPING = 0xffffffff,
     PROLOG     = 0xfffffffe,
     EPILOG     = 0xfffffffd,
 }
+
 alias COR_PRF_SNAPSHOT_INFO = int;
 enum : int
 {
@@ -27,6 +29,7 @@ enum : int
     COR_PRF_SNAPSHOT_REGISTER_CONTEXT = 0x00000001,
     COR_PRF_SNAPSHOT_X86_OPTIMIZED    = 0x00000002,
 }
+
 alias COR_PRF_STATIC_TYPE = int;
 enum : int
 {
@@ -36,6 +39,7 @@ enum : int
     COR_PRF_FIELD_CONTEXT_STATIC    = 0x00000004,
     COR_PRF_FIELD_RVA_STATIC        = 0x00000008,
 }
+
 alias COR_PRF_MONITOR = int;
 enum : int
 {
@@ -79,6 +83,7 @@ enum : int
     COR_PRF_ALLOWABLE_NOTIFICATION_PROFILER              = 0xb1e32b7f,
     COR_PRF_MONITOR_IMMUTABLE                            = 0xeef8cc00,
 }
+
 alias COR_PRF_HIGH_MONITOR = int;
 enum : int
 {
@@ -97,6 +102,7 @@ enum : int
     COR_PRF_HIGH_ALLOWABLE_NOTIFICATION_PROFILER  = 0x000000fe,
     COR_PRF_HIGH_MONITOR_IMMUTABLE                = 0x00000008,
 }
+
 alias COR_PRF_MISC = int;
 enum : int
 {
@@ -104,18 +110,21 @@ enum : int
     PROFILER_GLOBAL_CLASS   = 0xfffffffe,
     PROFILER_GLOBAL_MODULE  = 0xffffffff,
 }
+
 alias COR_PRF_JIT_CACHE = int;
 enum : int
 {
     COR_PRF_CACHED_FUNCTION_FOUND     = 0x00000000,
     COR_PRF_CACHED_FUNCTION_NOT_FOUND = 0x00000001,
 }
+
 alias COR_PRF_TRANSITION_REASON = int;
 enum : int
 {
     COR_PRF_TRANSITION_CALL   = 0x00000000,
     COR_PRF_TRANSITION_RETURN = 0x00000001,
 }
+
 alias COR_PRF_SUSPEND_REASON = int;
 enum : int
 {
@@ -129,18 +138,21 @@ enum : int
     COR_PRF_SUSPEND_FOR_REJIT              = 0x00000008,
     COR_PRF_SUSPEND_FOR_PROFILER           = 0x00000009,
 }
+
 alias COR_PRF_RUNTIME_TYPE = int;
 enum : int
 {
     COR_PRF_DESKTOP_CLR = 0x00000001,
     COR_PRF_CORE_CLR    = 0x00000002,
 }
+
 alias COR_PRF_REJIT_FLAGS = int;
 enum : int
 {
     COR_PRF_REJIT_BLOCK_INLINING     = 0x00000001,
     COR_PRF_REJIT_INLINING_CALLBACKS = 0x00000002,
 }
+
 alias COR_PRF_EVENTPIPE_PARAM_TYPE = int;
 enum : int
 {
@@ -163,6 +175,7 @@ enum : int
     COR_PRF_EVENTPIPE_STRING   = 0x00000012,
     COR_PRF_EVENTPIPE_ARRAY    = 0x00000013,
 }
+
 alias COR_PRF_EVENTPIPE_LEVEL = int;
 enum : int
 {
@@ -173,6 +186,7 @@ enum : int
     COR_PRF_EVENTPIPE_INFORMATIONAL = 0x00000004,
     COR_PRF_EVENTPIPE_VERBOSE       = 0x00000005,
 }
+
 alias COR_PRF_HANDLE_TYPE = int;
 enum : int
 {
@@ -180,6 +194,7 @@ enum : int
     COR_PRF_HANDLE_TYPE_STRONG = 0x00000002,
     COR_PRF_HANDLE_TYPE_PINNED = 0x00000003,
 }
+
 alias COR_PRF_GC_ROOT_KIND = int;
 enum : int
 {
@@ -188,6 +203,7 @@ enum : int
     COR_PRF_GC_ROOT_HANDLE    = 0x00000003,
     COR_PRF_GC_ROOT_OTHER     = 0x00000000,
 }
+
 alias COR_PRF_GC_ROOT_FLAGS = int;
 enum : int
 {
@@ -196,11 +212,13 @@ enum : int
     COR_PRF_GC_ROOT_INTERIOR   = 0x00000004,
     COR_PRF_GC_ROOT_REFCOUNTED = 0x00000008,
 }
+
 alias COR_PRF_FINALIZER_FLAGS = int;
 enum : int
 {
     COR_PRF_FINALIZER_CRITICAL = 0x00000001,
 }
+
 alias COR_PRF_GC_GENERATION = int;
 enum : int
 {
@@ -210,6 +228,7 @@ enum : int
     COR_PRF_GC_LARGE_OBJECT_HEAP  = 0x00000003,
     COR_PRF_GC_PINNED_OBJECT_HEAP = 0x00000004,
 }
+
 alias COR_PRF_CLAUSE_TYPE = int;
 enum : int
 {
@@ -218,12 +237,14 @@ enum : int
     COR_PRF_CLAUSE_CATCH   = 0x00000002,
     COR_PRF_CLAUSE_FINALLY = 0x00000003,
 }
+
 alias COR_PRF_GC_REASON = int;
 enum : int
 {
     COR_PRF_GC_INDUCED = 0x00000001,
     COR_PRF_GC_OTHER   = 0x00000000,
 }
+
 alias COR_PRF_MODULE_FLAGS = int;
 enum : int
 {
@@ -235,6 +256,7 @@ enum : int
     COR_PRF_MODULE_FLAT_LAYOUT     = 0x00000020,
     COR_PRF_MODULE_WINDOWS_RUNTIME = 0x00000040,
 }
+
 alias COR_PRF_CODEGEN_FLAGS = int;
 enum : int
 {

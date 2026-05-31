@@ -3,14 +3,15 @@
 module windows.win32.system.restartmanager;
 
 public import windows.core;
-public import windows.win32.foundation : BOOL, FILETIME, PWSTR, WIN32_ERROR;
+public import windows.win32.foundation.foundation : BOOL, FILETIME, PWSTR, WIN32_ERROR;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/restartmanager/ne-restartmanager-rm_app_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/restartmanager/ne-restartmanager-rm_app_type
 alias RM_APP_TYPE = int;
 enum : int
 {
@@ -22,14 +23,16 @@ enum : int
     RmConsole     = 0x00000005,
     RmCritical    = 0x000003e8,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/restartmanager/ne-restartmanager-rm_shutdown_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/restartmanager/ne-restartmanager-rm_shutdown_type
 alias RM_SHUTDOWN_TYPE = int;
 enum : int
 {
     RmForceShutdown          = 0x00000001,
     RmShutdownOnlyRegistered = 0x00000010,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/restartmanager/ne-restartmanager-rm_app_status))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/restartmanager/ne-restartmanager-rm_app_status
 alias RM_APP_STATUS = int;
 enum : int
 {
@@ -43,7 +46,8 @@ enum : int
     RmStatusShutdownMasked = 0x00000040,
     RmStatusRestartMasked  = 0x00000080,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/restartmanager/ne-restartmanager-rm_reboot_reason))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/restartmanager/ne-restartmanager-rm_reboot_reason
 alias RM_REBOOT_REASON = int;
 enum : int
 {
@@ -54,7 +58,8 @@ enum : int
     RmRebootReasonCriticalService  = 0x00000008,
     RmRebootReasonDetectedSelf     = 0x00000010,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/restartmanager/ne-restartmanager-rm_filter_trigger))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/restartmanager/ne-restartmanager-rm_filter_trigger
 alias RM_FILTER_TRIGGER = int;
 enum : int
 {
@@ -63,7 +68,8 @@ enum : int
     RmFilterTriggerProcess = 0x00000002,
     RmFilterTriggerService = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/restartmanager/ne-restartmanager-rm_filter_action))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/restartmanager/ne-restartmanager-rm_filter_action
 alias RM_FILTER_ACTION = int;
 enum : int
 {
@@ -75,12 +81,12 @@ enum : int
 // Constants
 
 
-enum uint CCH_RM_SESSION_KEY = 0x00000020;
+enum uint CCH_RM_SESSION_KEY = 0x00000020U;
 
 enum : uint
 {
-    CCH_RM_MAX_APP_NAME = 0x000000ff,
-    CCH_RM_MAX_SVC_NAME = 0x0000003f,
+    CCH_RM_MAX_APP_NAME = 0x000000ffU,
+    CCH_RM_MAX_SVC_NAME = 0x0000003fU,
 }
 
 enum : int
@@ -96,14 +102,14 @@ alias RM_WRITE_STATUS_CALLBACK = void function(uint nPercentComplete);
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/restartmanager/ns-restartmanager-rm_unique_process))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/restartmanager/ns-restartmanager-rm_unique_process
 struct RM_UNIQUE_PROCESS
 {
     uint     dwProcessId;
     FILETIME ProcessStartTime;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/restartmanager/ns-restartmanager-rm_process_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/restartmanager/ns-restartmanager-rm_process_info
 struct RM_PROCESS_INFO
 {
     RM_UNIQUE_PROCESS Process;
@@ -115,13 +121,18 @@ struct RM_PROCESS_INFO
     BOOL              bRestartable;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/restartmanager/ns-restartmanager-rm_filter_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/restartmanager/ns-restartmanager-rm_filter_info
 struct RM_FILTER_INFO
 {
-    RM_FILTER_ACTION    FilterAction;
-    RM_FILTER_TRIGGER   FilterTrigger;
-    uint                cbNextOffset;
-    _Anonymous_e__Union Anonymous;
+    RM_FILTER_ACTION  FilterAction;
+    RM_FILTER_TRIGGER FilterTrigger;
+    uint              cbNextOffset;
+    union
+    {
+        PWSTR             strFilename;
+        RM_UNIQUE_PROCESS Process;
+        PWSTR             strServiceShortName;
+    }
 }
 
 // Functions

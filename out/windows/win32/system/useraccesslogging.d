@@ -3,8 +3,8 @@
 module windows.win32.system.useraccesslogging;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : HRESULT, PWSTR;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : HRESULT, PWSTR;
 public import windows.win32.networking.winsock : SOCKADDR_STORAGE;
 
 extern(Windows) @nogc nothrow:
@@ -13,7 +13,7 @@ extern(Windows) @nogc nothrow:
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ual/ns-ual-ual_data_blob))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ual/ns-ual-ual_data_blob
 struct UAL_DATA_BLOB
 {
     uint             Size;

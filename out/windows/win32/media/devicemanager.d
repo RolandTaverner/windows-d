@@ -3,11 +3,11 @@
 module windows.win32.media.devicemanager;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, HRESULT, PSTR, PWSTR;
-public import windows.win32.media.audio : WAVEFORMATEX;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, HRESULT, PSTR, PWSTR;
+public import windows.win32.media.audio.audio : WAVEFORMATEX;
 public import windows.win32.media.mediafoundation : VIDEOINFOHEADER;
-public import windows.win32.system.com : IUnknown;
+public import windows.win32.system.com.com : IUnknown;
 public import windows.win32.system.com.structuredstorage : PROPVARIANT;
 public import windows.win32.system.ole : ISpecifyPropertyPages;
 
@@ -16,7 +16,8 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WMDM/wmdm-tag-datatype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WMDM/wmdm-tag-datatype
 alias WMDM_TAG_DATATYPE = int;
 enum : int
 {
@@ -29,7 +30,8 @@ enum : int
     WMDM_TYPE_GUID   = 0x00000006,
     WMDM_TYPE_DATE   = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WMDM/wmdm-session-type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WMDM/wmdm-session-type
 alias WMDM_SESSION_TYPE = int;
 enum : int
 {
@@ -39,7 +41,8 @@ enum : int
     WMDM_SESSION_DELETE               = 0x00000100,
     WMDM_SESSION_CUSTOM               = 0x00001000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WMDM/wmdm-storage-enum-mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WMDM/wmdm-storage-enum-mode
 alias WMDM_STORAGE_ENUM_MODE = int;
 enum : int
 {
@@ -47,7 +50,8 @@ enum : int
     ENUM_MODE_USE_DEVICE_PREF = 0x00000001,
     ENUM_MODE_METADATA_VIEWS  = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WMDM/wmdm-formatcode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WMDM/wmdm-formatcode
 alias WMDM_FORMATCODE = int;
 enum : int
 {
@@ -147,7 +151,8 @@ enum : int
     WMDM_FORMATCODE_3G2A                        = 0x33473241,
     WMDM_FORMATCODE_SECTION                     = 0x0000be82,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WMDM/wmdm-enum-prop-valid-values-form))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WMDM/wmdm-enum-prop-valid-values-form
 alias WMDM_ENUM_PROP_VALID_VALUES_FORM = int;
 enum : int
 {
@@ -155,14 +160,16 @@ enum : int
     WMDM_ENUM_PROP_VALID_VALUES_RANGE = 0x00000001,
     WMDM_ENUM_PROP_VALID_VALUES_ENUM  = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WMDM/wmdm-find-scope))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WMDM/wmdm-find-scope
 alias WMDM_FIND_SCOPE = int;
 enum : int
 {
     WMDM_FIND_SCOPE_GLOBAL             = 0x00000000,
     WMDM_FIND_SCOPE_IMMEDIATE_CHILDREN = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WMDM/wmdmmessage))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WMDM/wmdmmessage
 enum WMDMMessage : int
 {
     WMDM_MSG_DEVICE_ARRIVAL = 0x00000000,
@@ -174,28 +181,28 @@ enum WMDMMessage : int
 // Constants
 
 
-enum uint IOCTL_MTP_CUSTOM_COMMAND = 0x3150544d;
+enum uint IOCTL_MTP_CUSTOM_COMMAND = 0x3150544dU;
 
 enum : uint
 {
-    MTP_NEXTPHASE_READ_DATA  = 0x00000001,
-    MTP_NEXTPHASE_WRITE_DATA = 0x00000002,
-    MTP_NEXTPHASE_NO_DATA    = 0x00000003,
+    MTP_NEXTPHASE_READ_DATA  = 0x00000001U,
+    MTP_NEXTPHASE_WRITE_DATA = 0x00000002U,
+    MTP_NEXTPHASE_NO_DATA    = 0x00000003U,
 }
 
-enum uint RSA_KEY_LEN = 0x00000040;
-enum uint SAC_SESSION_KEYLEN = 0x00000008;
+enum uint RSA_KEY_LEN = 0x00000040U;
+enum uint SAC_SESSION_KEYLEN = 0x00000008U;
 
 enum : uint
 {
-    SAC_PROTOCOL_WMDM = 0x00000001,
-    SAC_PROTOCOL_V1   = 0x00000002,
+    SAC_PROTOCOL_WMDM = 0x00000001U,
+    SAC_PROTOCOL_V1   = 0x00000002U,
 }
 
 enum : uint
 {
-    SAC_CERT_X509 = 0x00000001,
-    SAC_CERT_V1   = 0x00000002,
+    SAC_CERT_X509 = 0x00000001U,
+    SAC_CERT_V1   = 0x00000002U,
 }
 
 enum : GUID
@@ -206,8 +213,8 @@ enum : GUID
 }
 
 enum GUID WMDM_SERVICE_PROVIDER_VENDOR_MICROSOFT = GUID("7de8686d-78ee-43ea-a496-c625ac91cc5d");
-enum uint WMDMID_LENGTH = 0x00000080;
-enum uint WMDM_MAC_LENGTH = 0x00000008;
+enum uint WMDMID_LENGTH = 0x00000080U;
+enum uint WMDM_MAC_LENGTH = 0x00000008U;
 
 enum : int
 {
@@ -263,209 +270,209 @@ enum : int
 enum int WMDM_E_LICENSE_EXPIRED = 0x80045012;
 enum int WMDM_E_CANTOPEN_PMSN_SERVICE_PIPE = 0x80045013;
 enum int WMDM_E_TOO_MANY_SESSIONS = 0x80045013;
-enum uint WMDM_WMDM_REVOKED = 0x00000001;
-enum uint WMDM_APP_REVOKED = 0x00000002;
-enum uint WMDM_SP_REVOKED = 0x00000004;
-enum uint WMDM_SCP_REVOKED = 0x00000008;
+enum uint WMDM_WMDM_REVOKED = 0x00000001U;
+enum uint WMDM_APP_REVOKED = 0x00000002U;
+enum uint WMDM_SP_REVOKED = 0x00000004U;
+enum uint WMDM_SCP_REVOKED = 0x00000008U;
 
 enum : uint
 {
-    WMDM_GET_FORMAT_SUPPORT_AUDIO = 0x00000001,
-    WMDM_GET_FORMAT_SUPPORT_VIDEO = 0x00000002,
-    WMDM_GET_FORMAT_SUPPORT_FILE  = 0x00000004,
+    WMDM_GET_FORMAT_SUPPORT_AUDIO = 0x00000001U,
+    WMDM_GET_FORMAT_SUPPORT_VIDEO = 0x00000002U,
+    WMDM_GET_FORMAT_SUPPORT_FILE  = 0x00000004U,
 }
 
 enum : uint
 {
-    WMDM_RIGHTS_PLAYBACKCOUNT  = 0x00000001,
-    WMDM_RIGHTS_EXPIRATIONDATE = 0x00000002,
-    WMDM_RIGHTS_GROUPID        = 0x00000004,
-    WMDM_RIGHTS_FREESERIALIDS  = 0x00000008,
-    WMDM_RIGHTS_NAMEDSERIALIDS = 0x00000010,
+    WMDM_RIGHTS_PLAYBACKCOUNT  = 0x00000001U,
+    WMDM_RIGHTS_EXPIRATIONDATE = 0x00000002U,
+    WMDM_RIGHTS_GROUPID        = 0x00000004U,
+    WMDM_RIGHTS_FREESERIALIDS  = 0x00000008U,
+    WMDM_RIGHTS_NAMEDSERIALIDS = 0x00000010U,
 }
 
 enum : uint
 {
-    WMDM_DEVICE_TYPE_PLAYBACK               = 0x00000001,
-    WMDM_DEVICE_TYPE_RECORD                 = 0x00000002,
-    WMDM_DEVICE_TYPE_DECODE                 = 0x00000004,
-    WMDM_DEVICE_TYPE_ENCODE                 = 0x00000008,
-    WMDM_DEVICE_TYPE_STORAGE                = 0x00000010,
-    WMDM_DEVICE_TYPE_VIRTUAL                = 0x00000020,
-    WMDM_DEVICE_TYPE_SDMI                   = 0x00000040,
-    WMDM_DEVICE_TYPE_NONSDMI                = 0x00000080,
-    WMDM_DEVICE_TYPE_NONREENTRANT           = 0x00000100,
-    WMDM_DEVICE_TYPE_FILELISTRESYNC         = 0x00000200,
-    WMDM_DEVICE_TYPE_VIEW_PREF_METADATAVIEW = 0x00000400,
+    WMDM_DEVICE_TYPE_PLAYBACK               = 0x00000001U,
+    WMDM_DEVICE_TYPE_RECORD                 = 0x00000002U,
+    WMDM_DEVICE_TYPE_DECODE                 = 0x00000004U,
+    WMDM_DEVICE_TYPE_ENCODE                 = 0x00000008U,
+    WMDM_DEVICE_TYPE_STORAGE                = 0x00000010U,
+    WMDM_DEVICE_TYPE_VIRTUAL                = 0x00000020U,
+    WMDM_DEVICE_TYPE_SDMI                   = 0x00000040U,
+    WMDM_DEVICE_TYPE_NONSDMI                = 0x00000080U,
+    WMDM_DEVICE_TYPE_NONREENTRANT           = 0x00000100U,
+    WMDM_DEVICE_TYPE_FILELISTRESYNC         = 0x00000200U,
+    WMDM_DEVICE_TYPE_VIEW_PREF_METADATAVIEW = 0x00000400U,
 }
 
 enum : uint
 {
-    WMDM_POWER_CAP_BATTERY       = 0x00000001,
-    WMDM_POWER_CAP_EXTERNAL      = 0x00000002,
-    WMDM_POWER_IS_BATTERY        = 0x00000004,
-    WMDM_POWER_IS_EXTERNAL       = 0x00000008,
-    WMDM_POWER_PERCENT_AVAILABLE = 0x00000010,
+    WMDM_POWER_CAP_BATTERY       = 0x00000001U,
+    WMDM_POWER_CAP_EXTERNAL      = 0x00000002U,
+    WMDM_POWER_IS_BATTERY        = 0x00000004U,
+    WMDM_POWER_IS_EXTERNAL       = 0x00000008U,
+    WMDM_POWER_PERCENT_AVAILABLE = 0x00000010U,
 }
 
 enum : uint
 {
-    WMDM_STATUS_READY                   = 0x00000001,
-    WMDM_STATUS_BUSY                    = 0x00000002,
-    WMDM_STATUS_DEVICE_NOTPRESENT       = 0x00000004,
-    WMDM_STATUS_DEVICECONTROL_PLAYING   = 0x00000008,
-    WMDM_STATUS_DEVICECONTROL_RECORDING = 0x00000010,
-    WMDM_STATUS_DEVICECONTROL_PAUSED    = 0x00000020,
-    WMDM_STATUS_DEVICECONTROL_REMOTE    = 0x00000040,
-    WMDM_STATUS_DEVICECONTROL_STREAM    = 0x00000080,
+    WMDM_STATUS_READY                   = 0x00000001U,
+    WMDM_STATUS_BUSY                    = 0x00000002U,
+    WMDM_STATUS_DEVICE_NOTPRESENT       = 0x00000004U,
+    WMDM_STATUS_DEVICECONTROL_PLAYING   = 0x00000008U,
+    WMDM_STATUS_DEVICECONTROL_RECORDING = 0x00000010U,
+    WMDM_STATUS_DEVICECONTROL_PAUSED    = 0x00000020U,
+    WMDM_STATUS_DEVICECONTROL_REMOTE    = 0x00000040U,
+    WMDM_STATUS_DEVICECONTROL_STREAM    = 0x00000080U,
 }
 
 enum : uint
 {
-    WMDM_STATUS_STORAGE_NOTPRESENT       = 0x00000100,
-    WMDM_STATUS_STORAGE_INITIALIZING     = 0x00000200,
-    WMDM_STATUS_STORAGE_BROKEN           = 0x00000400,
-    WMDM_STATUS_STORAGE_NOTSUPPORTED     = 0x00000800,
-    WMDM_STATUS_STORAGE_UNFORMATTED      = 0x00001000,
-    WMDM_STATUS_STORAGECONTROL_INSERTING = 0x00002000,
-    WMDM_STATUS_STORAGECONTROL_DELETING  = 0x00004000,
-    WMDM_STATUS_STORAGECONTROL_APPENDING = 0x00008000,
-    WMDM_STATUS_STORAGECONTROL_MOVING    = 0x00010000,
-    WMDM_STATUS_STORAGECONTROL_READING   = 0x00020000,
+    WMDM_STATUS_STORAGE_NOTPRESENT       = 0x00000100U,
+    WMDM_STATUS_STORAGE_INITIALIZING     = 0x00000200U,
+    WMDM_STATUS_STORAGE_BROKEN           = 0x00000400U,
+    WMDM_STATUS_STORAGE_NOTSUPPORTED     = 0x00000800U,
+    WMDM_STATUS_STORAGE_UNFORMATTED      = 0x00001000U,
+    WMDM_STATUS_STORAGECONTROL_INSERTING = 0x00002000U,
+    WMDM_STATUS_STORAGECONTROL_DELETING  = 0x00004000U,
+    WMDM_STATUS_STORAGECONTROL_APPENDING = 0x00008000U,
+    WMDM_STATUS_STORAGECONTROL_MOVING    = 0x00010000U,
+    WMDM_STATUS_STORAGECONTROL_READING   = 0x00020000U,
 }
 
 enum : uint
 {
-    WMDM_DEVICECAP_CANPLAY         = 0x00000001,
-    WMDM_DEVICECAP_CANSTREAMPLAY   = 0x00000002,
-    WMDM_DEVICECAP_CANRECORD       = 0x00000004,
-    WMDM_DEVICECAP_CANSTREAMRECORD = 0x00000008,
-    WMDM_DEVICECAP_CANPAUSE        = 0x00000010,
-    WMDM_DEVICECAP_CANRESUME       = 0x00000020,
-    WMDM_DEVICECAP_CANSTOP         = 0x00000040,
-    WMDM_DEVICECAP_CANSEEK         = 0x00000080,
-    WMDM_DEVICECAP_HASSECURECLOCK  = 0x00000100,
+    WMDM_DEVICECAP_CANPLAY         = 0x00000001U,
+    WMDM_DEVICECAP_CANSTREAMPLAY   = 0x00000002U,
+    WMDM_DEVICECAP_CANRECORD       = 0x00000004U,
+    WMDM_DEVICECAP_CANSTREAMRECORD = 0x00000008U,
+    WMDM_DEVICECAP_CANPAUSE        = 0x00000010U,
+    WMDM_DEVICECAP_CANRESUME       = 0x00000020U,
+    WMDM_DEVICECAP_CANSTOP         = 0x00000040U,
+    WMDM_DEVICECAP_CANSEEK         = 0x00000080U,
+    WMDM_DEVICECAP_HASSECURECLOCK  = 0x00000100U,
 }
 
 enum : uint
 {
-    WMDM_SEEK_REMOTECONTROL  = 0x00000001,
-    WMDM_SEEK_STREAMINGAUDIO = 0x00000002,
+    WMDM_SEEK_REMOTECONTROL  = 0x00000001U,
+    WMDM_SEEK_STREAMINGAUDIO = 0x00000002U,
 }
 
 enum : uint
 {
-    WMDM_STORAGE_ATTR_FILESYSTEM   = 0x00000001,
-    WMDM_STORAGE_ATTR_REMOVABLE    = 0x00000002,
-    WMDM_STORAGE_ATTR_NONREMOVABLE = 0x00000004,
+    WMDM_STORAGE_ATTR_FILESYSTEM   = 0x00000001U,
+    WMDM_STORAGE_ATTR_REMOVABLE    = 0x00000002U,
+    WMDM_STORAGE_ATTR_NONREMOVABLE = 0x00000004U,
 }
 
 enum : uint
 {
-    WMDM_FILE_ATTR_FOLDER = 0x00000008,
-    WMDM_FILE_ATTR_LINK   = 0x00000010,
-    WMDM_FILE_ATTR_FILE   = 0x00000020,
-    WMDM_FILE_ATTR_VIDEO  = 0x00000040,
+    WMDM_FILE_ATTR_FOLDER = 0x00000008U,
+    WMDM_FILE_ATTR_LINK   = 0x00000010U,
+    WMDM_FILE_ATTR_FILE   = 0x00000020U,
+    WMDM_FILE_ATTR_VIDEO  = 0x00000040U,
 }
 
 enum : uint
 {
-    WMDM_STORAGE_ATTR_CANEDITMETADATA = 0x00000080,
-    WMDM_STORAGE_ATTR_FOLDERS         = 0x00000100,
+    WMDM_STORAGE_ATTR_CANEDITMETADATA = 0x00000080U,
+    WMDM_STORAGE_ATTR_FOLDERS         = 0x00000100U,
 }
 
 enum : uint
 {
-    WMDM_FILE_ATTR_AUDIO       = 0x00001000,
-    WMDM_FILE_ATTR_DATA        = 0x00002000,
-    WMDM_FILE_ATTR_CANPLAY     = 0x00004000,
-    WMDM_FILE_ATTR_CANDELETE   = 0x00008000,
-    WMDM_FILE_ATTR_CANMOVE     = 0x00010000,
-    WMDM_FILE_ATTR_CANRENAME   = 0x00020000,
-    WMDM_FILE_ATTR_CANREAD     = 0x00040000,
-    WMDM_FILE_ATTR_MUSIC       = 0x00080000,
-    WMDM_FILE_CREATE_OVERWRITE = 0x00100000,
+    WMDM_FILE_ATTR_AUDIO       = 0x00001000U,
+    WMDM_FILE_ATTR_DATA        = 0x00002000U,
+    WMDM_FILE_ATTR_CANPLAY     = 0x00004000U,
+    WMDM_FILE_ATTR_CANDELETE   = 0x00008000U,
+    WMDM_FILE_ATTR_CANMOVE     = 0x00010000U,
+    WMDM_FILE_ATTR_CANRENAME   = 0x00020000U,
+    WMDM_FILE_ATTR_CANREAD     = 0x00040000U,
+    WMDM_FILE_ATTR_MUSIC       = 0x00080000U,
+    WMDM_FILE_CREATE_OVERWRITE = 0x00100000U,
 }
 
 enum : uint
 {
-    WMDM_FILE_ATTR_AUDIOBOOK = 0x00200000,
-    WMDM_FILE_ATTR_HIDDEN    = 0x00400000,
-    WMDM_FILE_ATTR_SYSTEM    = 0x00800000,
-    WMDM_FILE_ATTR_READONLY  = 0x01000000,
+    WMDM_FILE_ATTR_AUDIOBOOK = 0x00200000U,
+    WMDM_FILE_ATTR_HIDDEN    = 0x00400000U,
+    WMDM_FILE_ATTR_SYSTEM    = 0x00800000U,
+    WMDM_FILE_ATTR_READONLY  = 0x01000000U,
 }
 
 enum : uint
 {
-    WMDM_STORAGE_ATTR_HAS_FOLDERS     = 0x02000000,
-    WMDM_STORAGE_ATTR_HAS_FILES       = 0x04000000,
-    WMDM_STORAGE_IS_DEFAULT           = 0x08000000,
-    WMDM_STORAGE_CONTAINS_DEFAULT     = 0x10000000,
-    WMDM_STORAGE_ATTR_VIRTUAL         = 0x20000000,
-    WMDM_STORAGECAP_FOLDERSINROOT     = 0x00000001,
-    WMDM_STORAGECAP_FILESINROOT       = 0x00000002,
-    WMDM_STORAGECAP_FOLDERSINFOLDERS  = 0x00000004,
-    WMDM_STORAGECAP_FILESINFOLDERS    = 0x00000008,
-    WMDM_STORAGECAP_FOLDERLIMITEXISTS = 0x00000010,
-    WMDM_STORAGECAP_FILELIMITEXISTS   = 0x00000020,
-    WMDM_STORAGECAP_NOT_INITIALIZABLE = 0x00000040,
+    WMDM_STORAGE_ATTR_HAS_FOLDERS     = 0x02000000U,
+    WMDM_STORAGE_ATTR_HAS_FILES       = 0x04000000U,
+    WMDM_STORAGE_IS_DEFAULT           = 0x08000000U,
+    WMDM_STORAGE_CONTAINS_DEFAULT     = 0x10000000U,
+    WMDM_STORAGE_ATTR_VIRTUAL         = 0x20000000U,
+    WMDM_STORAGECAP_FOLDERSINROOT     = 0x00000001U,
+    WMDM_STORAGECAP_FILESINROOT       = 0x00000002U,
+    WMDM_STORAGECAP_FOLDERSINFOLDERS  = 0x00000004U,
+    WMDM_STORAGECAP_FILESINFOLDERS    = 0x00000008U,
+    WMDM_STORAGECAP_FOLDERLIMITEXISTS = 0x00000010U,
+    WMDM_STORAGECAP_FILELIMITEXISTS   = 0x00000020U,
+    WMDM_STORAGECAP_NOT_INITIALIZABLE = 0x00000040U,
 }
 
 enum : uint
 {
-    WMDM_MODE_BLOCK  = 0x00000001,
-    WMDM_MODE_THREAD = 0x00000002,
+    WMDM_MODE_BLOCK  = 0x00000001U,
+    WMDM_MODE_THREAD = 0x00000002U,
 }
 
 enum : uint
 {
-    WMDM_CONTENT_FILE               = 0x00000004,
-    WMDM_CONTENT_FOLDER             = 0x00000008,
-    WMDM_CONTENT_OPERATIONINTERFACE = 0x00000010,
+    WMDM_CONTENT_FILE               = 0x00000004U,
+    WMDM_CONTENT_FOLDER             = 0x00000008U,
+    WMDM_CONTENT_OPERATIONINTERFACE = 0x00000010U,
 }
 
 enum : uint
 {
-    WMDM_MODE_QUERY                = 0x00000020,
-    WMDM_MODE_PROGRESS             = 0x00000040,
-    WMDM_MODE_TRANSFER_PROTECTED   = 0x00000080,
-    WMDM_MODE_TRANSFER_UNPROTECTED = 0x00000100,
+    WMDM_MODE_QUERY                = 0x00000020U,
+    WMDM_MODE_PROGRESS             = 0x00000040U,
+    WMDM_MODE_TRANSFER_PROTECTED   = 0x00000080U,
+    WMDM_MODE_TRANSFER_UNPROTECTED = 0x00000100U,
 }
 
 enum : uint
 {
-    WMDM_STORAGECONTROL_INSERTBEFORE = 0x00000200,
-    WMDM_STORAGECONTROL_INSERTAFTER  = 0x00000400,
-    WMDM_STORAGECONTROL_INSERTINTO   = 0x00000800,
+    WMDM_STORAGECONTROL_INSERTBEFORE = 0x00000200U,
+    WMDM_STORAGECONTROL_INSERTAFTER  = 0x00000400U,
+    WMDM_STORAGECONTROL_INSERTINTO   = 0x00000800U,
 }
 
-enum uint WMDM_MODE_RECURSIVE = 0x00001000;
+enum uint WMDM_MODE_RECURSIVE = 0x00001000U;
 
 enum : uint
 {
-    WMDM_RIGHTS_PLAY_ON_PC              = 0x00000001,
-    WMDM_RIGHTS_COPY_TO_NON_SDMI_DEVICE = 0x00000002,
-    WMDM_RIGHTS_COPY_TO_CD              = 0x00000008,
-    WMDM_RIGHTS_COPY_TO_SDMI_DEVICE     = 0x00000010,
+    WMDM_RIGHTS_PLAY_ON_PC              = 0x00000001U,
+    WMDM_RIGHTS_COPY_TO_NON_SDMI_DEVICE = 0x00000002U,
+    WMDM_RIGHTS_COPY_TO_CD              = 0x00000008U,
+    WMDM_RIGHTS_COPY_TO_SDMI_DEVICE     = 0x00000010U,
 }
 
 enum : uint
 {
-    WMDM_SEEK_BEGIN   = 0x00000001,
-    WMDM_SEEK_CURRENT = 0x00000002,
-    WMDM_SEEK_END     = 0x00000008,
+    WMDM_SEEK_BEGIN   = 0x00000001U,
+    WMDM_SEEK_CURRENT = 0x00000002U,
+    WMDM_SEEK_END     = 0x00000008U,
 }
 
-enum uint DO_NOT_VIRTUALIZE_STORAGES_AS_DEVICES = 0x00000001;
-enum uint ALLOW_OUTOFBAND_NOTIFICATION = 0x00000002;
+enum uint DO_NOT_VIRTUALIZE_STORAGES_AS_DEVICES = 0x00000001U;
+enum uint ALLOW_OUTOFBAND_NOTIFICATION = 0x00000002U;
 
 enum : uint
 {
-    MDSP_READ     = 0x00000001,
-    MDSP_WRITE    = 0x00000002,
-    MDSP_SEEK_BOF = 0x00000001,
-    MDSP_SEEK_CUR = 0x00000002,
-    MDSP_SEEK_EOF = 0x00000004,
+    MDSP_READ     = 0x00000001U,
+    MDSP_WRITE    = 0x00000002U,
+    MDSP_SEEK_BOF = 0x00000001U,
+    MDSP_SEEK_CUR = 0x00000002U,
+    MDSP_SEEK_EOF = 0x00000004U,
 }
 
 enum : int
@@ -501,14 +508,14 @@ enum : GUID
 }
 
 enum GUID SCP_PARAMID_DRMVERSION = GUID("41d0155d-7cc7-4217-ada9-005074624da4");
-enum uint SAC_MAC_LEN = 0x00000008;
+enum uint SAC_MAC_LEN = 0x00000008U;
 
 enum : uint
 {
-    WMDM_LOG_SEV_INFO    = 0x00000001,
-    WMDM_LOG_SEV_WARN    = 0x00000002,
-    WMDM_LOG_SEV_ERROR   = 0x00000004,
-    WMDM_LOG_NOTIMESTAMP = 0x00000010,
+    WMDM_LOG_SEV_INFO    = 0x00000001U,
+    WMDM_LOG_SEV_WARN    = 0x00000002U,
+    WMDM_LOG_SEV_ERROR   = 0x00000004U,
+    WMDM_LOG_NOTIMESTAMP = 0x00000010U,
 }
 
 enum : const(wchar)*
@@ -694,9 +701,9 @@ enum : const(wchar)*
 
 enum const(wchar)* g_wszWPDPassthroughPropertyValues = "WPD/PassthroughPropertyValues";
 enum GUID EVENT_WMDM_CONTENT_TRANSFER = GUID("339c9bf4-bcfe-4ed8-94df-eaf8c26ab61b");
-enum uint MTP_COMMAND_MAX_PARAMS = 0x00000005;
-enum uint MTP_RESPONSE_MAX_PARAMS = 0x00000005;
-enum ushort MTP_RESPONSE_OK = 0x2001;
+enum uint MTP_COMMAND_MAX_PARAMS = 0x00000005U;
+enum uint MTP_RESPONSE_MAX_PARAMS = 0x00000005U;
+enum ushort MTP_RESPONSE_OK = cast(ushort) 0x2001;
 
 // Structs
 
@@ -707,14 +714,14 @@ struct MACINFO
     ubyte[36] abMacState;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WMDM/wmfilecapabilities))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WMDM/wmfilecapabilities
 struct WMFILECAPABILITIES
 {
     PWSTR pwszMimeType;
     uint  dwReserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WMDM/opaquecommand))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WMDM/opaquecommand
 struct OPAQUECOMMAND
 {
     GUID      guidCommand;
@@ -724,7 +731,7 @@ struct OPAQUECOMMAND
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WMDM/wmdmid))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WMDM/wmdmid
 struct WMDMID
 {
     uint       cbSize;
@@ -733,7 +740,7 @@ struct WMDMID
     uint       SerialNumberLength;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WMDM/wmdmdatetime))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WMDM/wmdmdatetime
 struct WMDMDATETIME
 {
     ushort wYear;
@@ -745,7 +752,7 @@ struct WMDMDATETIME
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WMDM/wmdmrights))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WMDM/wmdmrights
 struct WMDMRIGHTS
 {
     uint         cbSize;
@@ -757,7 +764,7 @@ struct WMDMRIGHTS
     WMDMDATETIME ExpirationDate;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WMDM/wmdmmetadataview))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WMDM/wmdmmetadataview
 struct WMDMMetadataView
 {
     PWSTR    pwszViewName;
@@ -765,7 +772,7 @@ struct WMDMMetadataView
     ushort** ppwszTags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WMDM/wmdm-prop-values-range))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WMDM/wmdm-prop-values-range
 struct WMDM_PROP_VALUES_RANGE
 {
     PROPVARIANT rangeMin;
@@ -773,22 +780,26 @@ struct WMDM_PROP_VALUES_RANGE
     PROPVARIANT rangeStep;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WMDM/wmdm-prop-values-enum))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WMDM/wmdm-prop-values-enum
 struct WMDM_PROP_VALUES_ENUM
 {
     uint         cEnumValues;
     PROPVARIANT* pValues;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WMDM/wmdm-prop-desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WMDM/wmdm-prop-desc
 struct WMDM_PROP_DESC
 {
     PWSTR pwszPropName;
     WMDM_ENUM_PROP_VALID_VALUES_FORM ValidValuesForm;
-    _ValidValues_e__Union ValidValues;
+    union ValidValues
+    {
+        WMDM_PROP_VALUES_RANGE ValidValuesRange;
+        WMDM_PROP_VALUES_ENUM EnumeratedValidValues;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WMDM/wmdm-prop-config))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WMDM/wmdm-prop-config
 struct WMDM_PROP_CONFIG
 {
     uint            nPreference;
@@ -796,7 +807,7 @@ struct WMDM_PROP_CONFIG
     WMDM_PROP_DESC* pPropDesc;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WMDM/wmdm-format-capability))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WMDM/wmdm-format-capability
 struct WMDM_FORMAT_CAPABILITY
 {
     uint              nPropConfig;
@@ -889,7 +900,7 @@ union WMDMDetermineMaxPropStringLen
     wchar[30] sz086;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mtpext/ns-mtpext-mtp_command_data_in))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mtpext/ns-mtpext-mtp_command_data_in
 struct MTP_COMMAND_DATA_IN
 {
 align (1):
@@ -901,7 +912,7 @@ align (1):
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] CommandWriteData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mtpext/ns-mtpext-mtp_command_data_out))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mtpext/ns-mtpext-mtp_command_data_out
 struct MTP_COMMAND_DATA_OUT
 {
 align (1):
@@ -939,759 +950,759 @@ struct WMDMStorageEnum;
 struct WMDMLogger;
 
 @GUID("ec3b0663-0951-460a-9a80-0dceed3c043c")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmmetadata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmmetadata
 interface IWMDMMetaData : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmmetadata-additem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmmetadata-additem
     HRESULT AddItem(WMDM_TAG_DATATYPE Type, const(PWSTR) pwszTagName, ubyte* pValue, uint iLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmmetadata-querybyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmmetadata-querybyname
     HRESULT QueryByName(const(PWSTR) pwszTagName, WMDM_TAG_DATATYPE* pType, ubyte** pValue, uint* pcbLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmmetadata-querybyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmmetadata-querybyindex
     HRESULT QueryByIndex(uint iIndex, ushort** ppwszName, WMDM_TAG_DATATYPE* pType, ubyte** ppValue, 
                          uint* pcbLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmmetadata-getitemcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmmetadata-getitemcount
     HRESULT GetItemCount(uint* iCount);
 }
 
 @GUID("1dcb3a00-33ed-11d3-8470-00c04f79dbc0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdevicemanager))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdevicemanager
 interface IWMDeviceManager : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdevicemanager-getrevision))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdevicemanager-getrevision
     HRESULT GetRevision(uint* pdwRevision);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdevicemanager-getdevicecount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdevicemanager-getdevicecount
     HRESULT GetDeviceCount(uint* pdwCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdevicemanager-enumdevices))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdevicemanager-enumdevices
     HRESULT EnumDevices(IWMDMEnumDevice* ppEnumDevice);
 }
 
 @GUID("923e5249-8731-4c5b-9b1c-b8b60b6e46af")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdevicemanager2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdevicemanager2
 interface IWMDeviceManager2 : IWMDeviceManager
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdevicemanager2-getdevicefromcanonicalname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdevicemanager2-getdevicefromcanonicalname
     HRESULT GetDeviceFromCanonicalName(const(PWSTR) pwszCanonicalName, IWMDMDevice* ppDevice);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdevicemanager2-enumdevices2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdevicemanager2-enumdevices2
     HRESULT EnumDevices2(IWMDMEnumDevice* ppEnumDevice);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdevicemanager2-reinitialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdevicemanager2-reinitialize
     HRESULT Reinitialize();
 }
 
 @GUID("af185c41-100d-46ed-be2e-9ce8c44594ef")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdevicemanager3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdevicemanager3
 interface IWMDeviceManager3 : IWMDeviceManager2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdevicemanager3-setdeviceenumpreference))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdevicemanager3-setdeviceenumpreference
     HRESULT SetDeviceEnumPreference(uint dwEnumPref);
 }
 
 @GUID("1dcb3a07-33ed-11d3-8470-00c04f79dbc0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmstorageglobals))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmstorageglobals
 interface IWMDMStorageGlobals : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorageglobals-getcapabilities))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorageglobals-getcapabilities
     HRESULT GetCapabilities(uint* pdwCapabilities);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorageglobals-getserialnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorageglobals-getserialnumber
     HRESULT GetSerialNumber(WMDMID* pSerialNum, ubyte* abMac);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorageglobals-gettotalsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorageglobals-gettotalsize
     HRESULT GetTotalSize(uint* pdwTotalSizeLow, uint* pdwTotalSizeHigh);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorageglobals-gettotalfree))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorageglobals-gettotalfree
     HRESULT GetTotalFree(uint* pdwFreeLow, uint* pdwFreeHigh);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorageglobals-gettotalbad))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorageglobals-gettotalbad
     HRESULT GetTotalBad(uint* pdwBadLow, uint* pdwBadHigh);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorageglobals-getstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorageglobals-getstatus
     HRESULT GetStatus(uint* pdwStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorageglobals-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorageglobals-initialize
     HRESULT Initialize(uint fuMode, IWMDMProgress pProgress);
 }
 
 @GUID("1dcb3a06-33ed-11d3-8470-00c04f79dbc0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmstorage))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmstorage
 interface IWMDMStorage : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage-setattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage-setattributes
     HRESULT SetAttributes(uint dwAttributes, WAVEFORMATEX* pFormat);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage-getstorageglobals))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage-getstorageglobals
     HRESULT GetStorageGlobals(IWMDMStorageGlobals* ppStorageGlobals);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage-getattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage-getattributes
     HRESULT GetAttributes(uint* pdwAttributes, WAVEFORMATEX* pFormat);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage-getname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage-getname
     HRESULT GetName(PWSTR pwszName, uint nMaxChars);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage-getdate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage-getdate
     HRESULT GetDate(WMDMDATETIME* pDateTimeUTC);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage-getsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage-getsize
     HRESULT GetSize(uint* pdwSizeLow, uint* pdwSizeHigh);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage-getrights))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage-getrights
     HRESULT GetRights(WMDMRIGHTS** ppRights, uint* pnRightsCount, ubyte* abMac);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage-enumstorage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage-enumstorage
     HRESULT EnumStorage(IWMDMEnumStorage* pEnumStorage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage-sendopaquecommand))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage-sendopaquecommand
     HRESULT SendOpaqueCommand(OPAQUECOMMAND* pCommand);
 }
 
 @GUID("1ed5a144-5cd5-4683-9eff-72cbdb2d9533")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmstorage2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmstorage2
 interface IWMDMStorage2 : IWMDMStorage
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage2-getstorage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage2-getstorage
     HRESULT GetStorage(const(PWSTR) pszStorageName, IWMDMStorage* ppStorage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage2-setattributes2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage2-setattributes2
     HRESULT SetAttributes2(uint dwAttributes, uint dwAttributesEx, WAVEFORMATEX* pFormat, 
                            VIDEOINFOHEADER* pVideoFormat);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage2-getattributes2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage2-getattributes2
     HRESULT GetAttributes2(uint* pdwAttributes, uint* pdwAttributesEx, WAVEFORMATEX* pAudioFormat, 
                            VIDEOINFOHEADER* pVideoFormat);
 }
 
 @GUID("97717eea-926a-464e-96a4-247b0216026e")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmstorage3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmstorage3
 interface IWMDMStorage3 : IWMDMStorage2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage3-getmetadata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage3-getmetadata
     HRESULT GetMetadata(IWMDMMetaData* ppMetadata);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage3-setmetadata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage3-setmetadata
     HRESULT SetMetadata(IWMDMMetaData pMetadata);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage3-createemptymetadataobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage3-createemptymetadataobject
     HRESULT CreateEmptyMetadataObject(IWMDMMetaData* ppMetadata);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage3-setenumpreference))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage3-setenumpreference
     HRESULT SetEnumPreference(WMDM_STORAGE_ENUM_MODE* pMode, uint nViews, WMDMMetadataView* pViews);
 }
 
 @GUID("c225bac5-a03a-40b8-9a23-91cf478c64a6")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmstorage4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmstorage4
 interface IWMDMStorage4 : IWMDMStorage3
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage4-setreferences))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage4-setreferences
     HRESULT SetReferences(uint dwRefs, IWMDMStorage* ppIWMDMStorage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage4-getreferences))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage4-getreferences
     HRESULT GetReferences(uint* pdwRefs, IWMDMStorage** pppIWMDMStorage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage4-getrightswithprogress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage4-getrightswithprogress
     HRESULT GetRightsWithProgress(IWMDMProgress3 pIProgressCallback, WMDMRIGHTS** ppRights, uint* pnRightsCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage4-getspecifiedmetadata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage4-getspecifiedmetadata
     HRESULT GetSpecifiedMetadata(uint cProperties, const(PWSTR)* ppwszPropNames, IWMDMMetaData* ppMetadata);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage4-findstorage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage4-findstorage
     HRESULT FindStorage(WMDM_FIND_SCOPE findScope, const(PWSTR) pwszUniqueID, IWMDMStorage* ppStorage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage4-getparent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstorage4-getparent
     HRESULT GetParent(IWMDMStorage* ppStorage);
 }
 
 @GUID("1dcb3a0b-33ed-11d3-8470-00c04f79dbc0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmoperation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmoperation
 interface IWMDMOperation : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmoperation-beginread))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmoperation-beginread
     HRESULT BeginRead();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmoperation-beginwrite))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmoperation-beginwrite
     HRESULT BeginWrite();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmoperation-getobjectname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmoperation-getobjectname
     HRESULT GetObjectName(PWSTR pwszName, uint nMaxChars);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmoperation-setobjectname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmoperation-setobjectname
     HRESULT SetObjectName(PWSTR pwszName, uint nMaxChars);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmoperation-getobjectattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmoperation-getobjectattributes
     HRESULT GetObjectAttributes(uint* pdwAttributes, WAVEFORMATEX* pFormat);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmoperation-setobjectattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmoperation-setobjectattributes
     HRESULT SetObjectAttributes(uint dwAttributes, WAVEFORMATEX* pFormat);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmoperation-getobjecttotalsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmoperation-getobjecttotalsize
     HRESULT GetObjectTotalSize(uint* pdwSize, uint* pdwSizeHigh);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmoperation-setobjecttotalsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmoperation-setobjecttotalsize
     HRESULT SetObjectTotalSize(uint dwSize, uint dwSizeHigh);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmoperation-transferobjectdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmoperation-transferobjectdata
     HRESULT TransferObjectData(ubyte* pData, uint* pdwSize, ubyte* abMac);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmoperation-end))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmoperation-end
     HRESULT End(HRESULT* phCompletionCode, IUnknown pNewObject);
 }
 
 @GUID("33445b48-7df7-425c-ad8f-0fc6d82f9f75")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmoperation2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmoperation2
 interface IWMDMOperation2 : IWMDMOperation
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmoperation2-setobjectattributes2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmoperation2-setobjectattributes2
     HRESULT SetObjectAttributes2(uint dwAttributes, uint dwAttributesEx, WAVEFORMATEX* pFormat, 
                                  VIDEOINFOHEADER* pVideoFormat);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmoperation2-getobjectattributes2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmoperation2-getobjectattributes2
     HRESULT GetObjectAttributes2(uint* pdwAttributes, uint* pdwAttributesEx, WAVEFORMATEX* pAudioFormat, 
                                  VIDEOINFOHEADER* pVideoFormat);
 }
 
 @GUID("d1f9b46a-9ca8-46d8-9d0f-1ec9bae54919")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmoperation3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmoperation3
 interface IWMDMOperation3 : IWMDMOperation
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmoperation3-transferobjectdataonclearchannel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmoperation3-transferobjectdataonclearchannel
     HRESULT TransferObjectDataOnClearChannel(ubyte* pData, uint* pdwSize);
 }
 
 @GUID("1dcb3a0c-33ed-11d3-8470-00c04f79dbc0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmprogress))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmprogress
 interface IWMDMProgress : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmprogress-begin))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmprogress-begin
     HRESULT Begin(uint dwEstimatedTicks);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmprogress-progress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmprogress-progress
     HRESULT Progress(uint dwTranspiredTicks);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmprogress-end))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmprogress-end
     HRESULT End();
 }
 
 @GUID("3a43f550-b383-4e92-b04a-e6bbc660fefc")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmprogress2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmprogress2
 interface IWMDMProgress2 : IWMDMProgress
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmprogress2-end2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmprogress2-end2
     HRESULT End2(HRESULT hrCompletionCode);
 }
 
 @GUID("21de01cb-3bb4-4929-b21a-17af3f80f658")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmprogress3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmprogress3
 interface IWMDMProgress3 : IWMDMProgress2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmprogress3-begin3))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmprogress3-begin3
     HRESULT Begin3(GUID EventId, uint dwEstimatedTicks, OPAQUECOMMAND* pContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmprogress3-progress3))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmprogress3-progress3
     HRESULT Progress3(GUID EventId, uint dwTranspiredTicks, OPAQUECOMMAND* pContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmprogress3-end3))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmprogress3-end3
     HRESULT End3(GUID EventId, HRESULT hrCompletionCode, OPAQUECOMMAND* pContext);
 }
 
 @GUID("1dcb3a02-33ed-11d3-8470-00c04f79dbc0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmdevice))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmdevice
 interface IWMDMDevice : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice-getname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice-getname
     HRESULT GetName(PWSTR pwszName, uint nMaxChars);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice-getmanufacturer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice-getmanufacturer
     HRESULT GetManufacturer(PWSTR pwszName, uint nMaxChars);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice-getversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice-getversion
     HRESULT GetVersion(uint* pdwVersion);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice-gettype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice-gettype
     HRESULT GetType(uint* pdwType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice-getserialnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice-getserialnumber
     HRESULT GetSerialNumber(WMDMID* pSerialNumber, ubyte* abMac);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice-getpowersource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice-getpowersource
     HRESULT GetPowerSource(uint* pdwPowerSource, uint* pdwPercentRemaining);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice-getstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice-getstatus
     HRESULT GetStatus(uint* pdwStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice-getdeviceicon))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice-getdeviceicon
     HRESULT GetDeviceIcon(uint* hIcon);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice-enumstorage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice-enumstorage
     HRESULT EnumStorage(IWMDMEnumStorage* ppEnumStorage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice-getformatsupport))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice-getformatsupport
     HRESULT GetFormatSupport(WAVEFORMATEX** ppFormatEx, uint* pnFormatCount, PWSTR** pppwszMimeType, 
                              uint* pnMimeTypeCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice-sendopaquecommand))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice-sendopaquecommand
     HRESULT SendOpaqueCommand(OPAQUECOMMAND* pCommand);
 }
 
 @GUID("e34f3d37-9d67-4fc1-9252-62d28b2f8b55")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmdevice2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmdevice2
 interface IWMDMDevice2 : IWMDMDevice
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice2-getstorage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice2-getstorage
     HRESULT GetStorage(const(PWSTR) pszStorageName, IWMDMStorage* ppStorage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice2-getformatsupport2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice2-getformatsupport2
     HRESULT GetFormatSupport2(uint dwFlags, WAVEFORMATEX** ppAudioFormatEx, uint* pnAudioFormatCount, 
                               VIDEOINFOHEADER** ppVideoFormatEx, uint* pnVideoFormatCount, 
                               WMFILECAPABILITIES** ppFileType, uint* pnFileTypeCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice2-getspecifypropertypages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice2-getspecifypropertypages
     HRESULT GetSpecifyPropertyPages(ISpecifyPropertyPages* ppSpecifyPropPages, IUnknown** pppUnknowns, 
                                     uint* pcUnks);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice2-getcanonicalname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice2-getcanonicalname
     HRESULT GetCanonicalName(PWSTR pwszPnPName, uint nMaxChars);
 }
 
 @GUID("6c03e4fe-05db-4dda-9e3c-06233a6d5d65")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmdevice3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmdevice3
 interface IWMDMDevice3 : IWMDMDevice2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice3-getproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice3-getproperty
     HRESULT GetProperty(const(PWSTR) pwszPropName, PROPVARIANT* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice3-setproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice3-setproperty
     HRESULT SetProperty(const(PWSTR) pwszPropName, const(PROPVARIANT)* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice3-getformatcapability))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice3-getformatcapability
     HRESULT GetFormatCapability(WMDM_FORMATCODE format, WMDM_FORMAT_CAPABILITY* pFormatSupport);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice3-deviceiocontrol))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice3-deviceiocontrol
     HRESULT DeviceIoControl(uint dwIoControlCode, ubyte* lpInBuffer, uint nInBufferSize, ubyte* lpOutBuffer, 
                             uint* pnOutBufferSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice3-findstorage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevice3-findstorage
     HRESULT FindStorage(WMDM_FIND_SCOPE findScope, const(PWSTR) pwszUniqueID, IWMDMStorage* ppStorage);
 }
 
 @GUID("82af0a65-9d96-412c-83e5-3c43e4b06cc7")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmdevicesession))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmdevicesession
 interface IWMDMDeviceSession : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevicesession-beginsession))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevicesession-beginsession
     HRESULT BeginSession(WMDM_SESSION_TYPE type, ubyte* pCtx, uint dwSizeCtx);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevicesession-endsession))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevicesession-endsession
     HRESULT EndSession(WMDM_SESSION_TYPE type, ubyte* pCtx, uint dwSizeCtx);
 }
 
 @GUID("1dcb3a01-33ed-11d3-8470-00c04f79dbc0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmenumdevice))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmenumdevice
 interface IWMDMEnumDevice : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmenumdevice-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmenumdevice-next
     HRESULT Next(uint celt, IWMDMDevice* ppDevice, uint* pceltFetched);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmenumdevice-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmenumdevice-skip
     HRESULT Skip(uint celt, uint* pceltFetched);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmenumdevice-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmenumdevice-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmenumdevice-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmenumdevice-clone
     HRESULT Clone(IWMDMEnumDevice* ppEnumDevice);
 }
 
 @GUID("1dcb3a04-33ed-11d3-8470-00c04f79dbc0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmdevicecontrol))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmdevicecontrol
 interface IWMDMDeviceControl : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevicecontrol-getstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevicecontrol-getstatus
     HRESULT GetStatus(uint* pdwStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevicecontrol-getcapabilities))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevicecontrol-getcapabilities
     HRESULT GetCapabilities(uint* pdwCapabilitiesMask);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevicecontrol-play))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevicecontrol-play
     HRESULT Play();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevicecontrol-record))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevicecontrol-record
     HRESULT Record(WAVEFORMATEX* pFormat);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevicecontrol-pause))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevicecontrol-pause
     HRESULT Pause();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevicecontrol-resume))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevicecontrol-resume
     HRESULT Resume();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevicecontrol-stop))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevicecontrol-stop
     HRESULT Stop();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevicecontrol-seek))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmdevicecontrol-seek
     HRESULT Seek(uint fuMode, int nOffset);
 }
 
 @GUID("1dcb3a05-33ed-11d3-8470-00c04f79dbc0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmenumstorage))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmenumstorage
 interface IWMDMEnumStorage : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmenumstorage-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmenumstorage-next
     HRESULT Next(uint celt, IWMDMStorage* ppStorage, uint* pceltFetched);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmenumstorage-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmenumstorage-skip
     HRESULT Skip(uint celt, uint* pceltFetched);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmenumstorage-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmenumstorage-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmenumstorage-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmenumstorage-clone
     HRESULT Clone(IWMDMEnumStorage* ppEnumStorage);
 }
 
 @GUID("1dcb3a08-33ed-11d3-8470-00c04f79dbc0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmstoragecontrol))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmstoragecontrol
 interface IWMDMStorageControl : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstoragecontrol-insert))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstoragecontrol-insert
     HRESULT Insert(uint fuMode, PWSTR pwszFile, IWMDMOperation pOperation, IWMDMProgress pProgress, 
                    IWMDMStorage* ppNewObject);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstoragecontrol-delete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstoragecontrol-delete
     HRESULT Delete(uint fuMode, IWMDMProgress pProgress);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstoragecontrol-rename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstoragecontrol-rename
     HRESULT Rename(uint fuMode, PWSTR pwszNewName, IWMDMProgress pProgress);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstoragecontrol-read))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstoragecontrol-read
     HRESULT Read(uint fuMode, PWSTR pwszFile, IWMDMProgress pProgress, IWMDMOperation pOperation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstoragecontrol-move))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstoragecontrol-move
     HRESULT Move(uint fuMode, IWMDMStorage pTargetObject, IWMDMProgress pProgress);
 }
 
 @GUID("972c2e88-bd6c-4125-8e09-84f837e637b6")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmstoragecontrol2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmstoragecontrol2
 interface IWMDMStorageControl2 : IWMDMStorageControl
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstoragecontrol2-insert2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstoragecontrol2-insert2
     HRESULT Insert2(uint fuMode, PWSTR pwszFileSource, PWSTR pwszFileDest, IWMDMOperation pOperation, 
                     IWMDMProgress pProgress, IUnknown pUnknown, IWMDMStorage* ppNewObject);
 }
 
 @GUID("b3266365-d4f3-4696-8d53-bd27ec60993a")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmstoragecontrol3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmstoragecontrol3
 interface IWMDMStorageControl3 : IWMDMStorageControl2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstoragecontrol3-insert3))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmstoragecontrol3-insert3
     HRESULT Insert3(uint fuMode, uint fuType, PWSTR pwszFileSource, PWSTR pwszFileDest, IWMDMOperation pOperation, 
                     IWMDMProgress pProgress, IWMDMMetaData pMetaData, IUnknown pUnknown, IWMDMStorage* ppNewObject);
 }
 
 @GUID("1dcb3a09-33ed-11d3-8470-00c04f79dbc0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmobjectinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmobjectinfo
 interface IWMDMObjectInfo : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmobjectinfo-getplaylength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmobjectinfo-getplaylength
     HRESULT GetPlayLength(uint* pdwLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmobjectinfo-setplaylength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmobjectinfo-setplaylength
     HRESULT SetPlayLength(uint dwLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmobjectinfo-getplayoffset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmobjectinfo-getplayoffset
     HRESULT GetPlayOffset(uint* pdwOffset);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmobjectinfo-setplayoffset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmobjectinfo-setplayoffset
     HRESULT SetPlayOffset(uint dwOffset);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmobjectinfo-gettotallength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmobjectinfo-gettotallength
     HRESULT GetTotalLength(uint* pdwLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmobjectinfo-getlastplayposition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmobjectinfo-getlastplayposition
     HRESULT GetLastPlayPosition(uint* pdwLastPos);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmobjectinfo-getlongestplayposition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmobjectinfo-getlongestplayposition
     HRESULT GetLongestPlayPosition(uint* pdwLongestPos);
 }
 
 @GUID("ebeccedb-88ee-4e55-b6a4-8d9f07d696aa")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmrevoked))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmrevoked
 interface IWMDMRevoked : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmrevoked-getrevocationurl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmrevoked-getrevocationurl
     HRESULT GetRevocationURL(PWSTR* ppwszRevocationURL, uint* pdwBufferLen, uint* pdwRevokedBitFlag);
 }
 
 @GUID("3f5e95c0-0f43-4ed4-93d2-c89a45d59b81")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmnotification))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iwmdmnotification
 interface IWMDMNotification : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmnotification-wmdmmessage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iwmdmnotification-wmdmmessage
     HRESULT WMDMMessage(uint dwMessageType, const(PWSTR) pwszCanonicalName);
 }
 
 @GUID("1dcb3a10-33ed-11d3-8470-00c04f79dbc0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdserviceprovider))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdserviceprovider
 interface IMDServiceProvider : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdserviceprovider-getdevicecount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdserviceprovider-getdevicecount
     HRESULT GetDeviceCount(uint* pdwCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdserviceprovider-enumdevices))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdserviceprovider-enumdevices
     HRESULT EnumDevices(IMDSPEnumDevice* ppEnumDevice);
 }
 
 @GUID("b2fa24b7-cda3-4694-9862-413ae1a34819")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdserviceprovider2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdserviceprovider2
 interface IMDServiceProvider2 : IMDServiceProvider
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdserviceprovider2-createdevice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdserviceprovider2-createdevice
     HRESULT CreateDevice(const(PWSTR) pwszDevicePath, uint* pdwCount, IMDSPDevice** pppDeviceArray);
 }
 
 @GUID("4ed13ef3-a971-4d19-9f51-0e1826b2da57")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdserviceprovider3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdserviceprovider3
 interface IMDServiceProvider3 : IMDServiceProvider2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdserviceprovider3-setdeviceenumpreference))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdserviceprovider3-setdeviceenumpreference
     HRESULT SetDeviceEnumPreference(uint dwEnumPref);
 }
 
 @GUID("1dcb3a11-33ed-11d3-8470-00c04f79dbc0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspenumdevice))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspenumdevice
 interface IMDSPEnumDevice : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspenumdevice-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspenumdevice-next
     HRESULT Next(uint celt, IMDSPDevice* ppDevice, uint* pceltFetched);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspenumdevice-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspenumdevice-skip
     HRESULT Skip(uint celt, uint* pceltFetched);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspenumdevice-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspenumdevice-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspenumdevice-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspenumdevice-clone
     HRESULT Clone(IMDSPEnumDevice* ppEnumDevice);
 }
 
 @GUID("1dcb3a12-33ed-11d3-8470-00c04f79dbc0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspdevice))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspdevice
 interface IMDSPDevice : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice-getname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice-getname
     HRESULT GetName(PWSTR pwszName, uint nMaxChars);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice-getmanufacturer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice-getmanufacturer
     HRESULT GetManufacturer(PWSTR pwszName, uint nMaxChars);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice-getversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice-getversion
     HRESULT GetVersion(uint* pdwVersion);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice-gettype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice-gettype
     HRESULT GetType(uint* pdwType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice-getserialnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice-getserialnumber
     HRESULT GetSerialNumber(WMDMID* pSerialNumber, ubyte* abMac);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice-getpowersource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice-getpowersource
     HRESULT GetPowerSource(uint* pdwPowerSource, uint* pdwPercentRemaining);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice-getstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice-getstatus
     HRESULT GetStatus(uint* pdwStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice-getdeviceicon))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice-getdeviceicon
     HRESULT GetDeviceIcon(uint* hIcon);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice-enumstorage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice-enumstorage
     HRESULT EnumStorage(IMDSPEnumStorage* ppEnumStorage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice-getformatsupport))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice-getformatsupport
     HRESULT GetFormatSupport(WAVEFORMATEX** pFormatEx, uint* pnFormatCount, PWSTR** pppwszMimeType, 
                              uint* pnMimeTypeCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice-sendopaquecommand))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice-sendopaquecommand
     HRESULT SendOpaqueCommand(OPAQUECOMMAND* pCommand);
 }
 
 @GUID("420d16ad-c97d-4e00-82aa-00e9f4335ddd")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspdevice2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspdevice2
 interface IMDSPDevice2 : IMDSPDevice
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice2-getstorage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice2-getstorage
     HRESULT GetStorage(const(PWSTR) pszStorageName, IMDSPStorage* ppStorage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice2-getformatsupport2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice2-getformatsupport2
     HRESULT GetFormatSupport2(uint dwFlags, WAVEFORMATEX** ppAudioFormatEx, uint* pnAudioFormatCount, 
                               VIDEOINFOHEADER** ppVideoFormatEx, uint* pnVideoFormatCount, 
                               WMFILECAPABILITIES** ppFileType, uint* pnFileTypeCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice2-getspecifypropertypages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice2-getspecifypropertypages
     HRESULT GetSpecifyPropertyPages(ISpecifyPropertyPages* ppSpecifyPropPages, IUnknown** pppUnknowns, 
                                     uint* pcUnks);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice2-getcanonicalname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice2-getcanonicalname
     HRESULT GetCanonicalName(PWSTR pwszPnPName, uint nMaxChars);
 }
 
 @GUID("1a839845-fc55-487c-976f-ee38ac0e8c4e")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspdevice3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspdevice3
 interface IMDSPDevice3 : IMDSPDevice2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice3-getproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice3-getproperty
     HRESULT GetProperty(const(PWSTR) pwszPropName, PROPVARIANT* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice3-setproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice3-setproperty
     HRESULT SetProperty(const(PWSTR) pwszPropName, const(PROPVARIANT)* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice3-getformatcapability))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice3-getformatcapability
     HRESULT GetFormatCapability(WMDM_FORMATCODE format, WMDM_FORMAT_CAPABILITY* pFormatSupport);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice3-deviceiocontrol))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice3-deviceiocontrol
     HRESULT DeviceIoControl(uint dwIoControlCode, ubyte* lpInBuffer, uint nInBufferSize, ubyte* lpOutBuffer, 
                             uint* pnOutBufferSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice3-findstorage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevice3-findstorage
     HRESULT FindStorage(WMDM_FIND_SCOPE findScope, const(PWSTR) pwszUniqueID, IMDSPStorage* ppStorage);
 }
 
 @GUID("1dcb3a14-33ed-11d3-8470-00c04f79dbc0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspdevicecontrol))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspdevicecontrol
 interface IMDSPDeviceControl : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevicecontrol-getdcstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevicecontrol-getdcstatus
     HRESULT GetDCStatus(uint* pdwStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevicecontrol-getcapabilities))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevicecontrol-getcapabilities
     HRESULT GetCapabilities(uint* pdwCapabilitiesMask);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevicecontrol-play))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevicecontrol-play
     HRESULT Play();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevicecontrol-record))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevicecontrol-record
     HRESULT Record(WAVEFORMATEX* pFormat);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevicecontrol-pause))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevicecontrol-pause
     HRESULT Pause();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevicecontrol-resume))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevicecontrol-resume
     HRESULT Resume();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevicecontrol-stop))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevicecontrol-stop
     HRESULT Stop();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevicecontrol-seek))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdevicecontrol-seek
     HRESULT Seek(uint fuMode, int nOffset);
 }
 
 @GUID("1dcb3a15-33ed-11d3-8470-00c04f79dbc0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspenumstorage))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspenumstorage
 interface IMDSPEnumStorage : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspenumstorage-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspenumstorage-next
     HRESULT Next(uint celt, IMDSPStorage* ppStorage, uint* pceltFetched);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspenumstorage-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspenumstorage-skip
     HRESULT Skip(uint celt, uint* pceltFetched);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspenumstorage-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspenumstorage-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspenumstorage-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspenumstorage-clone
     HRESULT Clone(IMDSPEnumStorage* ppEnumStorage);
 }
 
 @GUID("1dcb3a16-33ed-11d3-8470-00c04f79dbc0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspstorage))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspstorage
 interface IMDSPStorage : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage-setattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage-setattributes
     HRESULT SetAttributes(uint dwAttributes, WAVEFORMATEX* pFormat);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage-getstorageglobals))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage-getstorageglobals
     HRESULT GetStorageGlobals(IMDSPStorageGlobals* ppStorageGlobals);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage-getattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage-getattributes
     HRESULT GetAttributes(uint* pdwAttributes, WAVEFORMATEX* pFormat);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage-getname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage-getname
     HRESULT GetName(PWSTR pwszName, uint nMaxChars);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage-getdate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage-getdate
     HRESULT GetDate(WMDMDATETIME* pDateTimeUTC);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage-getsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage-getsize
     HRESULT GetSize(uint* pdwSizeLow, uint* pdwSizeHigh);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage-getrights))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage-getrights
     HRESULT GetRights(WMDMRIGHTS** ppRights, uint* pnRightsCount, ubyte* abMac);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage-createstorage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage-createstorage
     HRESULT CreateStorage(uint dwAttributes, WAVEFORMATEX* pFormat, PWSTR pwszName, IMDSPStorage* ppNewStorage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage-enumstorage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage-enumstorage
     HRESULT EnumStorage(IMDSPEnumStorage* ppEnumStorage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage-sendopaquecommand))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage-sendopaquecommand
     HRESULT SendOpaqueCommand(OPAQUECOMMAND* pCommand);
 }
 
 @GUID("0a5e07a5-6454-4451-9c36-1c6ae7e2b1d6")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspstorage2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspstorage2
 interface IMDSPStorage2 : IMDSPStorage
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage2-getstorage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage2-getstorage
     HRESULT GetStorage(const(PWSTR) pszStorageName, IMDSPStorage* ppStorage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage2-createstorage2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage2-createstorage2
     HRESULT CreateStorage2(uint dwAttributes, uint dwAttributesEx, WAVEFORMATEX* pAudioFormat, 
                            VIDEOINFOHEADER* pVideoFormat, PWSTR pwszName, ulong qwFileSize, 
                            IMDSPStorage* ppNewStorage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage2-setattributes2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage2-setattributes2
     HRESULT SetAttributes2(uint dwAttributes, uint dwAttributesEx, WAVEFORMATEX* pAudioFormat, 
                            VIDEOINFOHEADER* pVideoFormat);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage2-getattributes2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage2-getattributes2
     HRESULT GetAttributes2(uint* pdwAttributes, uint* pdwAttributesEx, WAVEFORMATEX* pAudioFormat, 
                            VIDEOINFOHEADER* pVideoFormat);
 }
 
 @GUID("6c669867-97ed-4a67-9706-1c5529d2a414")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspstorage3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspstorage3
 interface IMDSPStorage3 : IMDSPStorage2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage3-getmetadata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage3-getmetadata
     HRESULT GetMetadata(IWMDMMetaData pMetadata);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage3-setmetadata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage3-setmetadata
     HRESULT SetMetadata(IWMDMMetaData pMetadata);
 }
 
 @GUID("3133b2c4-515c-481b-b1ce-39327ecb4f74")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspstorage4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspstorage4
 interface IMDSPStorage4 : IMDSPStorage3
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage4-setreferences))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage4-setreferences
     HRESULT SetReferences(uint dwRefs, IMDSPStorage* ppISPStorage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage4-getreferences))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage4-getreferences
     HRESULT GetReferences(uint* pdwRefs, IMDSPStorage** pppISPStorage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage4-createstoragewithmetadata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage4-createstoragewithmetadata
     HRESULT CreateStorageWithMetadata(uint dwAttributes, const(PWSTR) pwszName, IWMDMMetaData pMetadata, 
                                       ulong qwFileSize, IMDSPStorage* ppNewStorage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage4-getspecifiedmetadata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage4-getspecifiedmetadata
     HRESULT GetSpecifiedMetadata(uint cProperties, const(PWSTR)* ppwszPropNames, IWMDMMetaData pMetadata);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage4-findstorage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage4-findstorage
     HRESULT FindStorage(WMDM_FIND_SCOPE findScope, const(PWSTR) pwszUniqueID, IMDSPStorage* ppStorage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage4-getparent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorage4-getparent
     HRESULT GetParent(IMDSPStorage* ppStorage);
 }
 
 @GUID("1dcb3a17-33ed-11d3-8470-00c04f79dbc0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspstorageglobals))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspstorageglobals
 interface IMDSPStorageGlobals : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorageglobals-getcapabilities))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorageglobals-getcapabilities
     HRESULT GetCapabilities(uint* pdwCapabilities);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorageglobals-getserialnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorageglobals-getserialnumber
     HRESULT GetSerialNumber(WMDMID* pSerialNum, ubyte* abMac);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorageglobals-gettotalsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorageglobals-gettotalsize
     HRESULT GetTotalSize(uint* pdwTotalSizeLow, uint* pdwTotalSizeHigh);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorageglobals-gettotalfree))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorageglobals-gettotalfree
     HRESULT GetTotalFree(uint* pdwFreeLow, uint* pdwFreeHigh);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorageglobals-gettotalbad))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorageglobals-gettotalbad
     HRESULT GetTotalBad(uint* pdwBadLow, uint* pdwBadHigh);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorageglobals-getstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorageglobals-getstatus
     HRESULT GetStatus(uint* pdwStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorageglobals-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorageglobals-initialize
     HRESULT Initialize(uint fuMode, IWMDMProgress pProgress);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorageglobals-getdevice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorageglobals-getdevice
     HRESULT GetDevice(IMDSPDevice* ppDevice);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorageglobals-getrootstorage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspstorageglobals-getrootstorage
     HRESULT GetRootStorage(IMDSPStorage* ppRoot);
 }
 
 @GUID("1dcb3a19-33ed-11d3-8470-00c04f79dbc0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspobjectinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspobjectinfo
 interface IMDSPObjectInfo : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspobjectinfo-getplaylength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspobjectinfo-getplaylength
     HRESULT GetPlayLength(uint* pdwLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspobjectinfo-setplaylength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspobjectinfo-setplaylength
     HRESULT SetPlayLength(uint dwLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspobjectinfo-getplayoffset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspobjectinfo-getplayoffset
     HRESULT GetPlayOffset(uint* pdwOffset);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspobjectinfo-setplayoffset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspobjectinfo-setplayoffset
     HRESULT SetPlayOffset(uint dwOffset);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspobjectinfo-gettotallength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspobjectinfo-gettotallength
     HRESULT GetTotalLength(uint* pdwLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspobjectinfo-getlastplayposition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspobjectinfo-getlastplayposition
     HRESULT GetLastPlayPosition(uint* pdwLastPos);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspobjectinfo-getlongestplayposition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspobjectinfo-getlongestplayposition
     HRESULT GetLongestPlayPosition(uint* pdwLongestPos);
 }
 
 @GUID("1dcb3a18-33ed-11d3-8470-00c04f79dbc0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspobject))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspobject
 interface IMDSPObject : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspobject-open))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspobject-open
     HRESULT Open(uint fuMode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspobject-read))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspobject-read
     HRESULT Read(ubyte* pData, uint* pdwSize, ubyte* abMac);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspobject-write))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspobject-write
     HRESULT Write(ubyte* pData, uint* pdwSize, ubyte* abMac);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspobject-delete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspobject-delete
     HRESULT Delete(uint fuMode, IWMDMProgress pProgress);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspobject-seek))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspobject-seek
     HRESULT Seek(uint fuFlags, uint dwOffset);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspobject-rename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspobject-rename
     HRESULT Rename(PWSTR pwszNewName, IWMDMProgress pProgress);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspobject-move))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspobject-move
     HRESULT Move(uint fuMode, IWMDMProgress pProgress, IMDSPStorage pTarget);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspobject-close))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspobject-close
     HRESULT Close();
 }
 
 @GUID("3f34cd3e-5907-4341-9af9-97f4187c3aa5")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspobject2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspobject2
 interface IMDSPObject2 : IMDSPObject
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspobject2-readonclearchannel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspobject2-readonclearchannel
     HRESULT ReadOnClearChannel(ubyte* pData, uint* pdwSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspobject2-writeonclearchannel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspobject2-writeonclearchannel
     HRESULT WriteOnClearChannel(ubyte* pData, uint* pdwSize);
 }
 
 @GUID("c2fe57a8-9304-478c-9ee4-47e397b912d7")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspdirecttransfer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdspdirecttransfer
 interface IMDSPDirectTransfer : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdirecttransfer-transfertodevice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdspdirecttransfer-transfertodevice
     HRESULT TransferToDevice(const(PWSTR) pwszSourceFilePath, IWMDMOperation pSourceOperation, uint fuFlags, 
                              PWSTR pwszDestinationName, IWMDMMetaData pSourceMetaData, 
                              IWMDMProgress pTransferProgress, IMDSPStorage* ppNewObject);
 }
 
 @GUID("a4e8f2d4-3f31-464d-b53d-4fc335998184")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdsprevoked))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-imdsprevoked
 interface IMDSPRevoked : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdsprevoked-getrevocationurl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-imdsprevoked-getrevocationurl
     HRESULT GetRevocationURL(PWSTR* ppwszRevocationURL, uint* pdwBufferLen);
 }
 
 @GUID("1dcb3a0f-33ed-11d3-8470-00c04f79dbc0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iscpsecureauthenticate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iscpsecureauthenticate
 interface ISCPSecureAuthenticate : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsecureauthenticate-getsecurequery))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsecureauthenticate-getsecurequery
     HRESULT GetSecureQuery(ISCPSecureQuery* ppSecureQuery);
 }
 
 @GUID("b580cfae-1672-47e2-acaa-44bbecbcae5b")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iscpsecureauthenticate2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iscpsecureauthenticate2
 interface ISCPSecureAuthenticate2 : ISCPSecureAuthenticate
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsecureauthenticate2-getscpsession))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsecureauthenticate2-getscpsession
     HRESULT GetSCPSession(ISCPSession* ppSCPSession);
 }
 
 @GUID("1dcb3a0d-33ed-11d3-8470-00c04f79dbc0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iscpsecurequery))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iscpsecurequery
 interface ISCPSecureQuery : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsecurequery-getdatademands))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsecurequery-getdatademands
     HRESULT GetDataDemands(uint* pfuFlags, uint* pdwMinRightsData, uint* pdwMinExamineData, uint* pdwMinDecideData, 
                            ubyte* abMac);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsecurequery-examinedata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsecurequery-examinedata
     HRESULT ExamineData(uint fuFlags, PWSTR pwszExtension, ubyte* pData, uint dwSize, ubyte* abMac);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsecurequery-makedecision))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsecurequery-makedecision
     HRESULT MakeDecision(uint fuFlags, ubyte* pData, uint dwSize, uint dwAppSec, ubyte* pbSPSessionKey, 
                          uint dwSessionKeyLen, IMDSPStorageGlobals pStorageGlobals, ISCPSecureExchange* ppExchange, 
                          ubyte* abMac);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsecurequery-getrights))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsecurequery-getrights
     HRESULT GetRights(ubyte* pData, uint dwSize, ubyte* pbSPSessionKey, uint dwSessionKeyLen, 
                       IMDSPStorageGlobals pStgGlobals, WMDMRIGHTS** ppRights, uint* pnRightsCount, ubyte* abMac);
 }
 
 @GUID("ebe17e25-4fd7-4632-af46-6d93d4fcc72e")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iscpsecurequery2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iscpsecurequery2
 interface ISCPSecureQuery2 : ISCPSecureQuery
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsecurequery2-makedecision2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsecurequery2-makedecision2
     HRESULT MakeDecision2(uint fuFlags, ubyte* pData, uint dwSize, uint dwAppSec, ubyte* pbSPSessionKey, 
                           uint dwSessionKeyLen, IMDSPStorageGlobals pStorageGlobals, ubyte* pAppCertApp, 
                           uint dwAppCertAppLen, ubyte* pAppCertSP, uint dwAppCertSPLen, PWSTR* pszRevocationURL, 
@@ -1700,59 +1711,59 @@ interface ISCPSecureQuery2 : ISCPSecureQuery
 }
 
 @GUID("1dcb3a0e-33ed-11d3-8470-00c04f79dbc0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iscpsecureexchange))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iscpsecureexchange
 interface ISCPSecureExchange : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsecureexchange-transfercontainerdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsecureexchange-transfercontainerdata
     HRESULT TransferContainerData(ubyte* pData, uint dwSize, uint* pfuReadyFlags, ubyte* abMac);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsecureexchange-objectdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsecureexchange-objectdata
     HRESULT ObjectData(ubyte* pData, uint* pdwSize, ubyte* abMac);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsecureexchange-transfercomplete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsecureexchange-transfercomplete
     HRESULT TransferComplete();
 }
 
 @GUID("6c62fc7b-2690-483f-9d44-0a20cb35577c")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iscpsecureexchange2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iscpsecureexchange2
 interface ISCPSecureExchange2 : ISCPSecureExchange
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsecureexchange2-transfercontainerdata2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsecureexchange2-transfercontainerdata2
     HRESULT TransferContainerData2(ubyte* pData, uint dwSize, IWMDMProgress3 pProgressCallback, 
                                    uint* pfuReadyFlags, ubyte* abMac);
 }
 
 @GUID("ab4e77e4-8908-4b17-bd2a-b1dbe6dd69e1")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iscpsecureexchange3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iscpsecureexchange3
 interface ISCPSecureExchange3 : ISCPSecureExchange2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsecureexchange3-transfercontainerdataonclearchannel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsecureexchange3-transfercontainerdataonclearchannel
     HRESULT TransferContainerDataOnClearChannel(IMDSPDevice pDevice, ubyte* pData, uint dwSize, 
                                                 IWMDMProgress3 pProgressCallback, uint* pfuReadyFlags);
     HRESULT GetObjectDataOnClearChannel(IMDSPDevice pDevice, ubyte* pData, uint* pdwSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsecureexchange3-transfercompletefordevice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsecureexchange3-transfercompletefordevice
     HRESULT TransferCompleteForDevice(IMDSPDevice pDevice);
 }
 
 @GUID("88a3e6ed-eee4-4619-bbb3-fd4fb62715d1")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iscpsession))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iscpsession
 interface ISCPSession : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsession-beginsession))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsession-beginsession
     HRESULT BeginSession(IMDSPDevice pIDevice, ubyte* pCtx, uint dwSizeCtx);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsession-endsession))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsession-endsession
     HRESULT EndSession(ubyte* pCtx, uint dwSizeCtx);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsession-getsecurequery))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsession-getsecurequery
     HRESULT GetSecureQuery(ISCPSecureQuery* ppSecureQuery);
 }
 
 @GUID("b7edd1a2-4dab-484b-b3c5-ad39b8b4c0b1")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iscpsecurequery3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-iscpsecurequery3
 interface ISCPSecureQuery3 : ISCPSecureQuery2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsecurequery3-getrightsonclearchannel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsecurequery3-getrightsonclearchannel
     HRESULT GetRightsOnClearChannel(ubyte* pData, uint dwSize, ubyte* pbSPSessionKey, uint dwSessionKeyLen, 
                                     IMDSPStorageGlobals pStgGlobals, IWMDMProgress3 pProgressCallback, 
                                     WMDMRIGHTS** ppRights, uint* pnRightsCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsecurequery3-makedecisiononclearchannel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-iscpsecurequery3-makedecisiononclearchannel
     HRESULT MakeDecisionOnClearChannel(uint fuFlags, ubyte* pData, uint dwSize, uint dwAppSec, 
                                        ubyte* pbSPSessionKey, uint dwSessionKeyLen, 
                                        IMDSPStorageGlobals pStorageGlobals, IWMDMProgress3 pProgressCallback, 
@@ -1763,37 +1774,37 @@ interface ISCPSecureQuery3 : ISCPSecureQuery2
 }
 
 @GUID("a9889c00-6d2b-11d3-8496-00c04f79dbc0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-icomponentauthenticate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nn-mswmdm-icomponentauthenticate
 interface IComponentAuthenticate : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-icomponentauthenticate-sacauth))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-icomponentauthenticate-sacauth
     HRESULT SACAuth(uint dwProtocolID, uint dwPass, ubyte* pbDataIn, uint dwDataInLen, ubyte** ppbDataOut, 
                     uint* pdwDataOutLen);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-icomponentauthenticate-sacgetprotocols))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mswmdm/nf-mswmdm-icomponentauthenticate-sacgetprotocols
     HRESULT SACGetProtocols(uint** ppdwProtocols, uint* pdwProtocolCount);
 }
 
 @GUID("110a3200-5a79-11d3-8d78-444553540000")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmdmlog/nn-wmdmlog-iwmdmlogger))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmdmlog/nn-wmdmlog-iwmdmlogger
 interface IWMDMLogger : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmdmlog/nf-wmdmlog-iwmdmlogger-isenabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmdmlog/nf-wmdmlog-iwmdmlogger-isenabled
     HRESULT IsEnabled(BOOL* pfEnabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmdmlog/nf-wmdmlog-iwmdmlogger-enable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmdmlog/nf-wmdmlog-iwmdmlogger-enable
     HRESULT Enable(BOOL fEnable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmdmlog/nf-wmdmlog-iwmdmlogger-getlogfilename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmdmlog/nf-wmdmlog-iwmdmlogger-getlogfilename
     HRESULT GetLogFileName(PSTR pszFilename, uint nMaxChars);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmdmlog/nf-wmdmlog-iwmdmlogger-setlogfilename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmdmlog/nf-wmdmlog-iwmdmlogger-setlogfilename
     HRESULT SetLogFileName(PSTR pszFilename);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmdmlog/nf-wmdmlog-iwmdmlogger-logstring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmdmlog/nf-wmdmlog-iwmdmlogger-logstring
     HRESULT LogString(uint dwFlags, PSTR pszSrcName, PSTR pszLog);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmdmlog/nf-wmdmlog-iwmdmlogger-logdword))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmdmlog/nf-wmdmlog-iwmdmlogger-logdword
     HRESULT LogDword(uint dwFlags, PSTR pszSrcName, PSTR pszLogFormat, uint dwLog);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmdmlog/nf-wmdmlog-iwmdmlogger-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmdmlog/nf-wmdmlog-iwmdmlogger-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmdmlog/nf-wmdmlog-iwmdmlogger-getsizeparams))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmdmlog/nf-wmdmlog-iwmdmlogger-getsizeparams
     HRESULT GetSizeParams(uint* pdwMaxSize, uint* pdwShrinkToSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmdmlog/nf-wmdmlog-iwmdmlogger-setsizeparams))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmdmlog/nf-wmdmlog-iwmdmlogger-setsizeparams
     HRESULT SetSizeParams(uint dwMaxSize, uint dwShrinkToSize);
 }
 

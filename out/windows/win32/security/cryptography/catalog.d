@@ -3,9 +3,9 @@
 module windows.win32.security.cryptography.catalog;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, HANDLE, PWSTR;
-public import windows.win32.security.cryptography : CERT_STRONG_SIGN_PARA, CRYPT_INTEGER_BLOB;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, HANDLE, PWSTR;
+public import windows.win32.security.cryptography.cryptography : CERT_STRONG_SIGN_PARA, CRYPT_INTEGER_BLOB;
 public import windows.win32.security.cryptography.sip : SIP_INDIRECT_DATA;
 
 extern(Windows) @nogc nothrow:
@@ -13,36 +13,39 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias CRYPTCAT_VERSION = uint;
 enum : uint
 {
-    CRYPTCAT_VERSION_1 = 0x00000100,
-    CRYPTCAT_VERSION_2 = 0x00000200,
+    CRYPTCAT_VERSION_1 = 0x00000100U,
+    CRYPTCAT_VERSION_2 = 0x00000200U,
 }
+
 alias CRYPTCAT_OPEN_FLAGS = uint;
 enum : uint
 {
-    CRYPTCAT_OPEN_ALWAYS               = 0x00000002,
-    CRYPTCAT_OPEN_CREATENEW            = 0x00000001,
-    CRYPTCAT_OPEN_EXISTING             = 0x00000004,
-    CRYPTCAT_OPEN_EXCLUDE_PAGE_HASHES  = 0x00010000,
-    CRYPTCAT_OPEN_INCLUDE_PAGE_HASHES  = 0x00020000,
-    CRYPTCAT_OPEN_VERIFYSIGHASH        = 0x10000000,
-    CRYPTCAT_OPEN_NO_CONTENT_HCRYPTMSG = 0x20000000,
-    CRYPTCAT_OPEN_SORTED               = 0x40000000,
-    CRYPTCAT_OPEN_FLAGS_MASK           = 0xffff0000,
+    CRYPTCAT_OPEN_ALWAYS               = 0x00000002U,
+    CRYPTCAT_OPEN_CREATENEW            = 0x00000001U,
+    CRYPTCAT_OPEN_EXISTING             = 0x00000004U,
+    CRYPTCAT_OPEN_EXCLUDE_PAGE_HASHES  = 0x00010000U,
+    CRYPTCAT_OPEN_INCLUDE_PAGE_HASHES  = 0x00020000U,
+    CRYPTCAT_OPEN_VERIFYSIGHASH        = 0x10000000U,
+    CRYPTCAT_OPEN_NO_CONTENT_HCRYPTMSG = 0x20000000U,
+    CRYPTCAT_OPEN_SORTED               = 0x40000000U,
+    CRYPTCAT_OPEN_FLAGS_MASK           = 0xffff0000U,
 }
+
 alias CRYPTCATATTRIBUTE_FLAGS = uint;
 enum : uint
 {
-    CRYPTCAT_ATTR_AUTHENTICATED        = 0x10000000,
-    CRYPTCAT_ATTR_UNAUTHENTICATED      = 0x20000000,
-    CRYPTCAT_ATTR_NAMEASCII            = 0x00000001,
-    CRYPTCAT_ATTR_NAMEOBJID            = 0x00000002,
-    CRYPTCAT_ATTR_DATAASCII            = 0x00010000,
-    CRYPTCAT_ATTR_DATABASE64           = 0x00020000,
-    CRYPTCAT_ATTR_DATAREPLACE          = 0x00040000,
-    CRYPTCAT_ATTR_NO_AUTO_COMPAT_ENTRY = 0x01000000,
+    CRYPTCAT_ATTR_AUTHENTICATED        = 0x10000000U,
+    CRYPTCAT_ATTR_UNAUTHENTICATED      = 0x20000000U,
+    CRYPTCAT_ATTR_NAMEASCII            = 0x00000001U,
+    CRYPTCAT_ATTR_NAMEOBJID            = 0x00000002U,
+    CRYPTCAT_ATTR_DATAASCII            = 0x00010000U,
+    CRYPTCAT_ATTR_DATABASE64           = 0x00020000U,
+    CRYPTCAT_ATTR_DATAREPLACE          = 0x00040000U,
+    CRYPTCAT_ATTR_NO_AUTO_COMPAT_ENTRY = 0x01000000U,
 }
 
 // Constants
@@ -59,26 +62,26 @@ enum const(wchar)* CRYPTCAT_FILEEXT = "CAT";
 
 enum : uint
 {
-    CRYPTCAT_MAX_MEMBERTAG             = 0x00000040,
-    CRYPTCAT_MEMBER_SORTED             = 0x40000000,
-    CRYPTCAT_E_AREA_HEADER             = 0x00000000,
-    CRYPTCAT_E_AREA_MEMBER             = 0x00010000,
-    CRYPTCAT_E_AREA_ATTRIBUTE          = 0x00020000,
-    CRYPTCAT_E_CDF_UNSUPPORTED         = 0x00000001,
-    CRYPTCAT_E_CDF_DUPLICATE           = 0x00000002,
-    CRYPTCAT_E_CDF_TAGNOTFOUND         = 0x00000004,
-    CRYPTCAT_E_CDF_MEMBER_FILE_PATH    = 0x00010001,
-    CRYPTCAT_E_CDF_MEMBER_INDIRECTDATA = 0x00010002,
-    CRYPTCAT_E_CDF_MEMBER_FILENOTFOUND = 0x00010004,
-    CRYPTCAT_E_CDF_BAD_GUID_CONV       = 0x00020001,
-    CRYPTCAT_E_CDF_ATTR_TOOFEWVALUES   = 0x00020002,
-    CRYPTCAT_E_CDF_ATTR_TYPECOMBO      = 0x00020004,
+    CRYPTCAT_MAX_MEMBERTAG             = 0x00000040U,
+    CRYPTCAT_MEMBER_SORTED             = 0x40000000U,
+    CRYPTCAT_E_AREA_HEADER             = 0x00000000U,
+    CRYPTCAT_E_AREA_MEMBER             = 0x00010000U,
+    CRYPTCAT_E_AREA_ATTRIBUTE          = 0x00020000U,
+    CRYPTCAT_E_CDF_UNSUPPORTED         = 0x00000001U,
+    CRYPTCAT_E_CDF_DUPLICATE           = 0x00000002U,
+    CRYPTCAT_E_CDF_TAGNOTFOUND         = 0x00000004U,
+    CRYPTCAT_E_CDF_MEMBER_FILE_PATH    = 0x00010001U,
+    CRYPTCAT_E_CDF_MEMBER_INDIRECTDATA = 0x00010002U,
+    CRYPTCAT_E_CDF_MEMBER_FILENOTFOUND = 0x00010004U,
+    CRYPTCAT_E_CDF_BAD_GUID_CONV       = 0x00020001U,
+    CRYPTCAT_E_CDF_ATTR_TOOFEWVALUES   = 0x00020002U,
+    CRYPTCAT_E_CDF_ATTR_TYPECOMBO      = 0x00020004U,
 }
 
 enum : uint
 {
-    CRYPTCAT_ADDCATALOG_NONE     = 0x00000000,
-    CRYPTCAT_ADDCATALOG_HARDLINK = 0x00000001,
+    CRYPTCAT_ADDCATALOG_NONE     = 0x00000000U,
+    CRYPTCAT_ADDCATALOG_HARDLINK = 0x00000001U,
 }
 
 // Callbacks
@@ -88,7 +91,7 @@ alias PFN_CDF_PARSE_ERROR_CALLBACK = void function(uint dwErrorArea, uint dwLoca
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mscat/ns-mscat-cryptcatstore))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mscat/ns-mscat-cryptcatstore
 struct CRYPTCATSTORE
 {
     uint                cbStruct;
@@ -103,7 +106,7 @@ struct CRYPTCATSTORE
     HANDLE              hSorted;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mscat/ns-mscat-cryptcatmember))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mscat/ns-mscat-cryptcatmember
 struct CRYPTCATMEMBER
 {
     uint               cbStruct;
@@ -119,7 +122,7 @@ struct CRYPTCATMEMBER
     CRYPT_INTEGER_BLOB sEncodedMemberInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mscat/ns-mscat-cryptcatattribute))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mscat/ns-mscat-cryptcatattribute
 struct CRYPTCATATTRIBUTE
 {
     uint   cbStruct;
@@ -130,7 +133,7 @@ struct CRYPTCATATTRIBUTE
     uint   dwReserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mscat/ns-mscat-cryptcatcdf))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mscat/ns-mscat-cryptcatcdf
 struct CRYPTCATCDF
 {
     uint   cbStruct;
@@ -142,14 +145,14 @@ struct CRYPTCATCDF
     HANDLE hCATStore;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mscat/ns-mscat-catalog_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mscat/ns-mscat-catalog_info
 struct CATALOG_INFO
 {
     uint       cbStruct;
     wchar[260] wszCatalogFile;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mssip/ns-mssip-ms_addinfo_catalogmember))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mssip/ns-mssip-ms_addinfo_catalogmember
 struct MS_ADDINFO_CATALOGMEMBER
 {
     uint            cbStruct;
@@ -311,13 +314,13 @@ BOOL CryptCATAdminResolveCatalogPath(ptrdiff_t hCatAdmin, PWSTR pwszCatalogFile,
 @DllImport("WINTRUST.dll")
 BOOL CryptCATAdminPauseServiceForBackup(uint dwFlags, BOOL fResume);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SecCrypto/cryptcatcdfenummembersbycdftagex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SecCrypto/cryptcatcdfenummembersbycdftagex
 @DllImport("WINTRUST.dll")
 PWSTR CryptCATCDFEnumMembersByCDFTagEx(CRYPTCATCDF* pCDF, PWSTR pwszPrevCDFTag, 
                                        PFN_CDF_PARSE_ERROR_CALLBACK pfnParseError, CRYPTCATMEMBER** ppMember, 
                                        BOOL fContinueOnError, void* pvReserved);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SecCrypto/cryptcatcdfenumattributeswithcdftag))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SecCrypto/cryptcatcdfenumattributeswithcdftag
 @DllImport("WINTRUST.dll")
 CRYPTCATATTRIBUTE* CryptCATCDFEnumAttributesWithCDFTag(CRYPTCATCDF* pCDF, PWSTR pwszMemberTag, 
                                                        CRYPTCATMEMBER* pMember, CRYPTCATATTRIBUTE* pPrevAttr, 

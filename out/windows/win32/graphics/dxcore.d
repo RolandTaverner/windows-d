@@ -3,112 +3,121 @@
 module windows.win32.graphics.dxcore;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : HRESULT, LUID, PWSTR;
-public import windows.win32.system.com : IUnknown;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : HRESULT, LUID, PWSTR;
+public import windows.win32.system.com.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
+
 //ENUM ATTR: ScopedEnumAttribute : CustomAttributeSig([], [])
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxcore_interface/ne-dxcore_interface-dxcoreadapterproperty))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxcore_interface/ne-dxcore_interface-dxcoreadapterproperty
 enum DXCoreAdapterProperty : uint
 {
-    InstanceLuid                  = 0x00000000,
-    DriverVersion                 = 0x00000001,
-    DriverDescription             = 0x00000002,
-    HardwareID                    = 0x00000003,
-    KmdModelVersion               = 0x00000004,
-    ComputePreemptionGranularity  = 0x00000005,
-    GraphicsPreemptionGranularity = 0x00000006,
-    DedicatedAdapterMemory        = 0x00000007,
-    DedicatedSystemMemory         = 0x00000008,
-    SharedSystemMemory            = 0x00000009,
-    AcgCompatible                 = 0x0000000a,
-    IsHardware                    = 0x0000000b,
-    IsIntegrated                  = 0x0000000c,
-    IsDetachable                  = 0x0000000d,
-    HardwareIDParts               = 0x0000000e,
-    PhysicalAdapterCount          = 0x0000000f,
-    AdapterEngineCount            = 0x00000010,
-    AdapterEngineName             = 0x00000011,
+    InstanceLuid                  = 0x00000000U,
+    DriverVersion                 = 0x00000001U,
+    DriverDescription             = 0x00000002U,
+    HardwareID                    = 0x00000003U,
+    KmdModelVersion               = 0x00000004U,
+    ComputePreemptionGranularity  = 0x00000005U,
+    GraphicsPreemptionGranularity = 0x00000006U,
+    DedicatedAdapterMemory        = 0x00000007U,
+    DedicatedSystemMemory         = 0x00000008U,
+    SharedSystemMemory            = 0x00000009U,
+    AcgCompatible                 = 0x0000000aU,
+    IsHardware                    = 0x0000000bU,
+    IsIntegrated                  = 0x0000000cU,
+    IsDetachable                  = 0x0000000dU,
+    HardwareIDParts               = 0x0000000eU,
+    PhysicalAdapterCount          = 0x0000000fU,
+    AdapterEngineCount            = 0x00000010U,
+    AdapterEngineName             = 0x00000011U,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxcore_interface/ne-dxcore_interface-dxcoreadapterstate))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxcore_interface/ne-dxcore_interface-dxcoreadapterstate
 enum DXCoreAdapterState : uint
 {
-    IsDriverUpdateInProgress                      = 0x00000000,
-    AdapterMemoryBudget                           = 0x00000001,
-    AdapterMemoryUsageBytes                       = 0x00000002,
-    AdapterMemoryUsageByProcessBytes              = 0x00000003,
-    AdapterEngineRunningTimeMicroseconds          = 0x00000004,
-    AdapterEngineRunningTimeByProcessMicroseconds = 0x00000005,
-    AdapterTemperatureCelsius                     = 0x00000006,
-    AdapterInUseProcessCount                      = 0x00000007,
-    AdapterInUseProcessSet                        = 0x00000008,
-    AdapterEngineFrequencyHertz                   = 0x00000009,
-    AdapterMemoryFrequencyHertz                   = 0x0000000a,
+    IsDriverUpdateInProgress                      = 0x00000000U,
+    AdapterMemoryBudget                           = 0x00000001U,
+    AdapterMemoryUsageBytes                       = 0x00000002U,
+    AdapterMemoryUsageByProcessBytes              = 0x00000003U,
+    AdapterEngineRunningTimeMicroseconds          = 0x00000004U,
+    AdapterEngineRunningTimeByProcessMicroseconds = 0x00000005U,
+    AdapterTemperatureCelsius                     = 0x00000006U,
+    AdapterInUseProcessCount                      = 0x00000007U,
+    AdapterInUseProcessSet                        = 0x00000008U,
+    AdapterEngineFrequencyHertz                   = 0x00000009U,
+    AdapterMemoryFrequencyHertz                   = 0x0000000aU,
 }
+
 //ENUM ATTR: ScopedEnumAttribute : CustomAttributeSig([], [])
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxcore_interface/ne-dxcore_interface-dxcoresegmentgroup))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxcore_interface/ne-dxcore_interface-dxcoresegmentgroup
 enum DXCoreSegmentGroup : uint
 {
-    Local    = 0x00000000,
-    NonLocal = 0x00000001,
+    Local    = 0x00000000U,
+    NonLocal = 0x00000001U,
 }
+
 //ENUM ATTR: ScopedEnumAttribute : CustomAttributeSig([], [])
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxcore_interface/ne-dxcore_interface-dxcorenotificationtype))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxcore_interface/ne-dxcore_interface-dxcorenotificationtype
 enum DXCoreNotificationType : uint
 {
-    AdapterListStale                         = 0x00000000,
-    AdapterNoLongerValid                     = 0x00000001,
-    AdapterBudgetChange                      = 0x00000002,
-    AdapterHardwareContentProtectionTeardown = 0x00000003,
+    AdapterListStale                         = 0x00000000U,
+    AdapterNoLongerValid                     = 0x00000001U,
+    AdapterBudgetChange                      = 0x00000002U,
+    AdapterHardwareContentProtectionTeardown = 0x00000003U,
 }
+
 //ENUM ATTR: ScopedEnumAttribute : CustomAttributeSig([], [])
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxcore_interface/ne-dxcore_interface-dxcoreadapterpreference))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxcore_interface/ne-dxcore_interface-dxcoreadapterpreference
 enum DXCoreAdapterPreference : uint
 {
-    Hardware        = 0x00000000,
-    MinimumPower    = 0x00000001,
-    HighPerformance = 0x00000002,
+    Hardware        = 0x00000000U,
+    MinimumPower    = 0x00000001U,
+    HighPerformance = 0x00000002U,
 }
+
 //ENUM ATTR: ScopedEnumAttribute : CustomAttributeSig([], [])
 enum DXCoreWorkload : uint
 {
-    Graphics        = 0x00000000,
-    Compute         = 0x00000001,
-    Media           = 0x00000002,
-    MachineLearning = 0x00000003,
+    Graphics        = 0x00000000U,
+    Compute         = 0x00000001U,
+    Media           = 0x00000002U,
+    MachineLearning = 0x00000003U,
 }
+
 //ENUM ATTR: ScopedEnumAttribute : CustomAttributeSig([], [])
 enum DXCoreRuntimeFilterFlags : uint
 {
-    None    = 0x00000000,
-    D3D11   = 0x00000001,
-    D3D12   = 0x00000002,
+    None    = 0x00000000U,
+    D3D11   = 0x00000001U,
+    D3D12   = 0x00000002U,
 }
+
 //ENUM ATTR: ScopedEnumAttribute : CustomAttributeSig([], [])
 enum DXCoreHardwareTypeFilterFlags : uint
 {
-    None               = 0x00000000,
-    GPU                = 0x00000001,
-    ComputeAccelerator = 0x00000002,
-    NPU                = 0x00000004,
-    MediaAccelerator   = 0x00000008,
+    None               = 0x00000000U,
+    GPU                = 0x00000001U,
+    ComputeAccelerator = 0x00000002U,
+    NPU                = 0x00000004U,
+    MediaAccelerator   = 0x00000008U,
 }
+
 //ENUM ATTR: ScopedEnumAttribute : CustomAttributeSig([], [])
 enum DXCoreMemoryType : uint
 {
-    Dedicated = 0x00000000,
-    Shared    = 0x00000001,
+    Dedicated = 0x00000000U,
+    Shared    = 0x00000001U,
 }
 
 // Constants
 
 
-enum uint _FACDXCORE = 0x00000880;
+enum uint _FACDXCORE = 0x00000880U;
 
 enum : GUID
 {
@@ -135,7 +144,7 @@ alias PFN_DXCORE_NOTIFICATION_CALLBACK = void function(DXCoreNotificationType no
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxcore_interface/ns-dxcore_interface-dxcorehardwareid))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxcore_interface/ns-dxcore_interface-dxcorehardwareid
 struct DXCoreHardwareID
 {
     uint vendorID;
@@ -153,14 +162,14 @@ struct DXCoreHardwareIDParts
     uint revisionID;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxcore_interface/ns-dxcore_interface-dxcoreadaptermemorybudgetnodesegmentgroup))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxcore_interface/ns-dxcore_interface-dxcoreadaptermemorybudgetnodesegmentgroup
 struct DXCoreAdapterMemoryBudgetNodeSegmentGroup
 {
     uint               nodeIndex;
     DXCoreSegmentGroup segmentGroup;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxcore_interface/ns-dxcore_interface-dxcoreadaptermemorybudget))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxcore_interface/ns-dxcore_interface-dxcoreadaptermemorybudget
 struct DXCoreAdapterMemoryBudget
 {
     ulong budget;
@@ -245,7 +254,7 @@ struct DXCoreFrequencyQueryOutput
 
 // Functions
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/dxcore/dxcore/nf-dxcore-dxcorecreateadapterfactory))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/dxcore/dxcore/nf-dxcore-dxcorecreateadapterfactory
 @DllImport("DXCORE.dll")
 HRESULT DXCoreCreateAdapterFactory(const(GUID)* riid, void** ppvFactory);
 
@@ -253,35 +262,35 @@ HRESULT DXCoreCreateAdapterFactory(const(GUID)* riid, void** ppvFactory);
 // Interfaces
 
 @GUID("f0db4c7f-fe5a-42a2-bd62-f2a6cf6fc83e")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxcore_interface/nn-dxcore_interface-idxcoreadapter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxcore_interface/nn-dxcore_interface-idxcoreadapter
 interface IDXCoreAdapter : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapter-isvalid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapter-isvalid
     bool    IsValid();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapter-isattributesupported))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapter-isattributesupported
     bool    IsAttributeSupported(const(GUID)* attributeGUID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapter-ispropertysupported))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapter-ispropertysupported
     bool    IsPropertySupported(DXCoreAdapterProperty property);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapter-getproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapter-getproperty
     HRESULT GetProperty(DXCoreAdapterProperty property, size_t bufferSize, 
                         /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/void* propertyData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapter-getpropertysize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapter-getpropertysize
     HRESULT GetPropertySize(DXCoreAdapterProperty property, size_t* bufferSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapter-isquerystatesupported))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapter-isquerystatesupported
     bool    IsQueryStateSupported(DXCoreAdapterState property);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapter-querystate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapter-querystate
     HRESULT QueryState(DXCoreAdapterState state, size_t inputStateDetailsSize, 
                        /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(void)* inputStateDetails, 
                        size_t outputBufferSize, 
                        /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* outputBuffer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapter-issetstatesupported))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapter-issetstatesupported
     bool    IsSetStateSupported(DXCoreAdapterState property);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapter-setstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapter-setstate
     HRESULT SetState(DXCoreAdapterState state, size_t inputStateDetailsSize, 
                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(void)* inputStateDetails, 
                      size_t inputDataSize, 
                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/const(void)* inputData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapter-getfactory))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapter-getfactory
     HRESULT GetFactory(const(GUID)* riid, void** ppvFactory);
 }
 
@@ -295,39 +304,39 @@ interface IDXCoreAdapter1 : IDXCoreAdapter
 }
 
 @GUID("526c7776-40e9-459b-b711-f32ad76dfc28")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxcore_interface/nn-dxcore_interface-idxcoreadapterlist))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxcore_interface/nn-dxcore_interface-idxcoreadapterlist
 interface IDXCoreAdapterList : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapterlist-getadapter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapterlist-getadapter
     HRESULT GetAdapter(uint index, const(GUID)* riid, void** ppvAdapter);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapterlist-getadaptercount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapterlist-getadaptercount
     uint    GetAdapterCount();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapterlist-isstale))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapterlist-isstale
     bool    IsStale();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapterlist-getfactory))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapterlist-getfactory
     HRESULT GetFactory(const(GUID)* riid, void** ppvFactory);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapterlist-sort))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapterlist-sort
     HRESULT Sort(uint numPreferences, const(DXCoreAdapterPreference)* preferences);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapterlist-isadapterpreferencesupported))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapterlist-isadapterpreferencesupported
     bool    IsAdapterPreferenceSupported(DXCoreAdapterPreference preference);
 }
 
 @GUID("78ee5945-c36e-4b13-a669-005dd11c0f06")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxcore_interface/nn-dxcore_interface-idxcoreadapterfactory))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxcore_interface/nn-dxcore_interface-idxcoreadapterfactory
 interface IDXCoreAdapterFactory : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapterfactory-createadapterlist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapterfactory-createadapterlist
     HRESULT CreateAdapterList(uint numAttributes, const(GUID)* filterAttributes, const(GUID)* riid, 
                               void** ppvAdapterList);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapterfactory-getadapterbyluid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapterfactory-getadapterbyluid
     HRESULT GetAdapterByLuid(const(LUID)* adapterLUID, const(GUID)* riid, void** ppvAdapter);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapterfactory-isnotificationtypesupported))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapterfactory-isnotificationtypesupported
     bool    IsNotificationTypeSupported(DXCoreNotificationType notificationType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapterfactory-registereventnotification))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapterfactory-registereventnotification
     HRESULT RegisterEventNotification(IUnknown dxCoreObject, DXCoreNotificationType notificationType, 
                                       PFN_DXCORE_NOTIFICATION_CALLBACK callbackFunction, void* callbackContext, 
                                       uint* eventCookie);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapterfactory-unregistereventnotification))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dxcore_interface/nf-dxcore_interface-idxcoreadapterfactory-unregistereventnotification
     HRESULT UnregisterEventNotification(uint eventCookie);
 }
 

@@ -1,184 +1,200 @@
 // Written in the D programming language.
 
-module windows.win32.security;
+module windows.win32.security.security;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BOOLEAN, CHAR, FILETIME, HANDLE, LUID,
-                                         NTSTATUS, PSTR, PWSTR, UNICODE_STRING;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BOOLEAN, CHAR, FILETIME, HANDLE,
+                                                    LUID, NTSTATUS, PSTR, PWSTR,
+                                                    UNICODE_STRING;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
+
 alias TOKEN_PRIVILEGES_ATTRIBUTES = uint;
 enum : uint
 {
-    SE_PRIVILEGE_ENABLED            = 0x00000002,
-    SE_PRIVILEGE_ENABLED_BY_DEFAULT = 0x00000001,
-    SE_PRIVILEGE_REMOVED            = 0x00000004,
-    SE_PRIVILEGE_USED_FOR_ACCESS    = 0x80000000,
+    SE_PRIVILEGE_ENABLED            = 0x00000002U,
+    SE_PRIVILEGE_ENABLED_BY_DEFAULT = 0x00000001U,
+    SE_PRIVILEGE_REMOVED            = 0x00000004U,
+    SE_PRIVILEGE_USED_FOR_ACCESS    = 0x80000000U,
 }
+
 alias LOGON32_PROVIDER = uint;
 enum : uint
 {
-    LOGON32_PROVIDER_DEFAULT = 0x00000000,
-    LOGON32_PROVIDER_WINNT50 = 0x00000003,
-    LOGON32_PROVIDER_WINNT40 = 0x00000002,
+    LOGON32_PROVIDER_DEFAULT = 0x00000000U,
+    LOGON32_PROVIDER_WINNT50 = 0x00000003U,
+    LOGON32_PROVIDER_WINNT40 = 0x00000002U,
 }
+
 alias CREATE_RESTRICTED_TOKEN_FLAGS = uint;
 enum : uint
 {
-    DISABLE_MAX_PRIVILEGE = 0x00000001,
-    SANDBOX_INERT         = 0x00000002,
-    LUA_TOKEN             = 0x00000004,
-    WRITE_RESTRICTED      = 0x00000008,
+    DISABLE_MAX_PRIVILEGE = 0x00000001U,
+    SANDBOX_INERT         = 0x00000002U,
+    LUA_TOKEN             = 0x00000004U,
+    WRITE_RESTRICTED      = 0x00000008U,
 }
+
 alias LOGON32_LOGON = uint;
 enum : uint
 {
-    LOGON32_LOGON_BATCH             = 0x00000004,
-    LOGON32_LOGON_INTERACTIVE       = 0x00000002,
-    LOGON32_LOGON_NETWORK           = 0x00000003,
-    LOGON32_LOGON_NETWORK_CLEARTEXT = 0x00000008,
-    LOGON32_LOGON_NEW_CREDENTIALS   = 0x00000009,
-    LOGON32_LOGON_SERVICE           = 0x00000005,
-    LOGON32_LOGON_UNLOCK            = 0x00000007,
+    LOGON32_LOGON_BATCH             = 0x00000004U,
+    LOGON32_LOGON_INTERACTIVE       = 0x00000002U,
+    LOGON32_LOGON_NETWORK           = 0x00000003U,
+    LOGON32_LOGON_NETWORK_CLEARTEXT = 0x00000008U,
+    LOGON32_LOGON_NEW_CREDENTIALS   = 0x00000009U,
+    LOGON32_LOGON_SERVICE           = 0x00000005U,
+    LOGON32_LOGON_UNLOCK            = 0x00000007U,
 }
+
 alias ACE_FLAGS = uint;
 enum : uint
 {
-    CONTAINER_INHERIT_ACE              = 0x00000002,
-    FAILED_ACCESS_ACE_FLAG             = 0x00000080,
-    INHERIT_ONLY_ACE                   = 0x00000008,
-    INHERITED_ACE                      = 0x00000010,
-    NO_PROPAGATE_INHERIT_ACE           = 0x00000004,
-    OBJECT_INHERIT_ACE                 = 0x00000001,
-    SUCCESSFUL_ACCESS_ACE_FLAG         = 0x00000040,
-    SUB_CONTAINERS_AND_OBJECTS_INHERIT = 0x00000003,
-    SUB_CONTAINERS_ONLY_INHERIT        = 0x00000002,
-    SUB_OBJECTS_ONLY_INHERIT           = 0x00000001,
-    INHERIT_NO_PROPAGATE               = 0x00000004,
-    INHERIT_ONLY                       = 0x00000008,
-    NO_INHERITANCE                     = 0x00000000,
+    CONTAINER_INHERIT_ACE              = 0x00000002U,
+    FAILED_ACCESS_ACE_FLAG             = 0x00000080U,
+    INHERIT_ONLY_ACE                   = 0x00000008U,
+    INHERITED_ACE                      = 0x00000010U,
+    NO_PROPAGATE_INHERIT_ACE           = 0x00000004U,
+    OBJECT_INHERIT_ACE                 = 0x00000001U,
+    SUCCESSFUL_ACCESS_ACE_FLAG         = 0x00000040U,
+    SUB_CONTAINERS_AND_OBJECTS_INHERIT = 0x00000003U,
+    SUB_CONTAINERS_ONLY_INHERIT        = 0x00000002U,
+    SUB_OBJECTS_ONLY_INHERIT           = 0x00000001U,
+    INHERIT_NO_PROPAGATE               = 0x00000004U,
+    INHERIT_ONLY                       = 0x00000008U,
+    NO_INHERITANCE                     = 0x00000000U,
 }
+
 alias OBJECT_SECURITY_INFORMATION = uint;
 enum : uint
 {
-    ATTRIBUTE_SECURITY_INFORMATION        = 0x00000020,
-    BACKUP_SECURITY_INFORMATION           = 0x00010000,
-    DACL_SECURITY_INFORMATION             = 0x00000004,
-    GROUP_SECURITY_INFORMATION            = 0x00000002,
-    LABEL_SECURITY_INFORMATION            = 0x00000010,
-    OWNER_SECURITY_INFORMATION            = 0x00000001,
-    PROTECTED_DACL_SECURITY_INFORMATION   = 0x80000000,
-    PROTECTED_SACL_SECURITY_INFORMATION   = 0x40000000,
-    SACL_SECURITY_INFORMATION             = 0x00000008,
-    SCOPE_SECURITY_INFORMATION            = 0x00000040,
-    UNPROTECTED_DACL_SECURITY_INFORMATION = 0x20000000,
-    UNPROTECTED_SACL_SECURITY_INFORMATION = 0x10000000,
+    ATTRIBUTE_SECURITY_INFORMATION        = 0x00000020U,
+    BACKUP_SECURITY_INFORMATION           = 0x00010000U,
+    DACL_SECURITY_INFORMATION             = 0x00000004U,
+    GROUP_SECURITY_INFORMATION            = 0x00000002U,
+    LABEL_SECURITY_INFORMATION            = 0x00000010U,
+    OWNER_SECURITY_INFORMATION            = 0x00000001U,
+    PROTECTED_DACL_SECURITY_INFORMATION   = 0x80000000U,
+    PROTECTED_SACL_SECURITY_INFORMATION   = 0x40000000U,
+    SACL_SECURITY_INFORMATION             = 0x00000008U,
+    SCOPE_SECURITY_INFORMATION            = 0x00000040U,
+    UNPROTECTED_DACL_SECURITY_INFORMATION = 0x20000000U,
+    UNPROTECTED_SACL_SECURITY_INFORMATION = 0x10000000U,
 }
+
 alias SECURITY_AUTO_INHERIT_FLAGS = uint;
 enum : uint
 {
-    SEF_AVOID_OWNER_CHECK             = 0x00000010,
-    SEF_AVOID_OWNER_RESTRICTION       = 0x00001000,
-    SEF_AVOID_PRIVILEGE_CHECK         = 0x00000008,
-    SEF_DACL_AUTO_INHERIT             = 0x00000001,
-    SEF_DEFAULT_DESCRIPTOR_FOR_OBJECT = 0x00000004,
-    SEF_DEFAULT_GROUP_FROM_PARENT     = 0x00000040,
-    SEF_DEFAULT_OWNER_FROM_PARENT     = 0x00000020,
-    SEF_MACL_NO_EXECUTE_UP            = 0x00000400,
-    SEF_MACL_NO_READ_UP               = 0x00000200,
-    SEF_MACL_NO_WRITE_UP              = 0x00000100,
-    SEF_SACL_AUTO_INHERIT             = 0x00000002,
+    SEF_AVOID_OWNER_CHECK             = 0x00000010U,
+    SEF_AVOID_OWNER_RESTRICTION       = 0x00001000U,
+    SEF_AVOID_PRIVILEGE_CHECK         = 0x00000008U,
+    SEF_DACL_AUTO_INHERIT             = 0x00000001U,
+    SEF_DEFAULT_DESCRIPTOR_FOR_OBJECT = 0x00000004U,
+    SEF_DEFAULT_GROUP_FROM_PARENT     = 0x00000040U,
+    SEF_DEFAULT_OWNER_FROM_PARENT     = 0x00000020U,
+    SEF_MACL_NO_EXECUTE_UP            = 0x00000400U,
+    SEF_MACL_NO_READ_UP               = 0x00000200U,
+    SEF_MACL_NO_WRITE_UP              = 0x00000100U,
+    SEF_SACL_AUTO_INHERIT             = 0x00000002U,
 }
+
 alias ACE_REVISION = uint;
 enum : uint
 {
-    ACL_REVISION    = 0x00000002,
-    ACL_REVISION_DS = 0x00000004,
+    ACL_REVISION    = 0x00000002U,
+    ACL_REVISION_DS = 0x00000004U,
 }
+
 alias TOKEN_MANDATORY_POLICY_ID = uint;
 enum : uint
 {
-    TOKEN_MANDATORY_POLICY_OFF             = 0x00000000,
-    TOKEN_MANDATORY_POLICY_NO_WRITE_UP     = 0x00000001,
-    TOKEN_MANDATORY_POLICY_NEW_PROCESS_MIN = 0x00000002,
-    TOKEN_MANDATORY_POLICY_VALID_MASK      = 0x00000003,
+    TOKEN_MANDATORY_POLICY_OFF             = 0x00000000U,
+    TOKEN_MANDATORY_POLICY_NO_WRITE_UP     = 0x00000001U,
+    TOKEN_MANDATORY_POLICY_NEW_PROCESS_MIN = 0x00000002U,
+    TOKEN_MANDATORY_POLICY_VALID_MASK      = 0x00000003U,
 }
+
 alias SYSTEM_AUDIT_OBJECT_ACE_FLAGS = uint;
 enum : uint
 {
-    ACE_OBJECT_TYPE_PRESENT           = 0x00000001,
-    ACE_INHERITED_OBJECT_TYPE_PRESENT = 0x00000002,
+    ACE_OBJECT_TYPE_PRESENT           = 0x00000001U,
+    ACE_INHERITED_OBJECT_TYPE_PRESENT = 0x00000002U,
 }
+
 alias CLAIM_SECURITY_ATTRIBUTE_FLAGS = uint;
 enum : uint
 {
-    CLAIM_SECURITY_ATTRIBUTE_NON_INHERITABLE      = 0x00000001,
-    CLAIM_SECURITY_ATTRIBUTE_VALUE_CASE_SENSITIVE = 0x00000002,
-    CLAIM_SECURITY_ATTRIBUTE_USE_FOR_DENY_ONLY    = 0x00000004,
-    CLAIM_SECURITY_ATTRIBUTE_DISABLED_BY_DEFAULT  = 0x00000008,
-    CLAIM_SECURITY_ATTRIBUTE_DISABLED             = 0x00000010,
-    CLAIM_SECURITY_ATTRIBUTE_MANDATORY            = 0x00000020,
+    CLAIM_SECURITY_ATTRIBUTE_NON_INHERITABLE      = 0x00000001U,
+    CLAIM_SECURITY_ATTRIBUTE_VALUE_CASE_SENSITIVE = 0x00000002U,
+    CLAIM_SECURITY_ATTRIBUTE_USE_FOR_DENY_ONLY    = 0x00000004U,
+    CLAIM_SECURITY_ATTRIBUTE_DISABLED_BY_DEFAULT  = 0x00000008U,
+    CLAIM_SECURITY_ATTRIBUTE_DISABLED             = 0x00000010U,
+    CLAIM_SECURITY_ATTRIBUTE_MANDATORY            = 0x00000020U,
 }
+
 alias CLAIM_SECURITY_ATTRIBUTE_VALUE_TYPE = ushort;
 enum : ushort
 {
-    CLAIM_SECURITY_ATTRIBUTE_TYPE_INT64        = 0x0001,
-    CLAIM_SECURITY_ATTRIBUTE_TYPE_UINT64       = 0x0002,
-    CLAIM_SECURITY_ATTRIBUTE_TYPE_STRING       = 0x0003,
-    CLAIM_SECURITY_ATTRIBUTE_TYPE_OCTET_STRING = 0x0010,
-    CLAIM_SECURITY_ATTRIBUTE_TYPE_FQBN         = 0x0004,
-    CLAIM_SECURITY_ATTRIBUTE_TYPE_SID          = 0x0005,
-    CLAIM_SECURITY_ATTRIBUTE_TYPE_BOOLEAN      = 0x0006,
+    CLAIM_SECURITY_ATTRIBUTE_TYPE_INT64        = cast(ushort) 0x0001,
+    CLAIM_SECURITY_ATTRIBUTE_TYPE_UINT64       = cast(ushort) 0x0002,
+    CLAIM_SECURITY_ATTRIBUTE_TYPE_STRING       = cast(ushort) 0x0003,
+    CLAIM_SECURITY_ATTRIBUTE_TYPE_OCTET_STRING = cast(ushort) 0x0010,
+    CLAIM_SECURITY_ATTRIBUTE_TYPE_FQBN         = cast(ushort) 0x0004,
+    CLAIM_SECURITY_ATTRIBUTE_TYPE_SID          = cast(ushort) 0x0005,
+    CLAIM_SECURITY_ATTRIBUTE_TYPE_BOOLEAN      = cast(ushort) 0x0006,
 }
+
 alias SECURITY_DESCRIPTOR_CONTROL = ushort;
 enum : ushort
 {
-    SE_OWNER_DEFAULTED       = 0x0001,
-    SE_GROUP_DEFAULTED       = 0x0002,
-    SE_DACL_PRESENT          = 0x0004,
-    SE_DACL_DEFAULTED        = 0x0008,
-    SE_SACL_PRESENT          = 0x0010,
-    SE_SACL_DEFAULTED        = 0x0020,
-    SE_DACL_AUTO_INHERIT_REQ = 0x0100,
-    SE_SACL_AUTO_INHERIT_REQ = 0x0200,
-    SE_DACL_AUTO_INHERITED   = 0x0400,
-    SE_SACL_AUTO_INHERITED   = 0x0800,
-    SE_DACL_PROTECTED        = 0x1000,
-    SE_SACL_PROTECTED        = 0x2000,
-    SE_RM_CONTROL_VALID      = 0x4000,
-    SE_SELF_RELATIVE         = 0x8000,
+    SE_OWNER_DEFAULTED       = cast(ushort) 0x0001,
+    SE_GROUP_DEFAULTED       = cast(ushort) 0x0002,
+    SE_DACL_PRESENT          = cast(ushort) 0x0004,
+    SE_DACL_DEFAULTED        = cast(ushort) 0x0008,
+    SE_SACL_PRESENT          = cast(ushort) 0x0010,
+    SE_SACL_DEFAULTED        = cast(ushort) 0x0020,
+    SE_DACL_AUTO_INHERIT_REQ = cast(ushort) 0x0100,
+    SE_SACL_AUTO_INHERIT_REQ = cast(ushort) 0x0200,
+    SE_DACL_AUTO_INHERITED   = cast(ushort) 0x0400,
+    SE_SACL_AUTO_INHERITED   = cast(ushort) 0x0800,
+    SE_DACL_PROTECTED        = cast(ushort) 0x1000,
+    SE_SACL_PROTECTED        = cast(ushort) 0x2000,
+    SE_RM_CONTROL_VALID      = cast(ushort) 0x4000,
+    SE_SELF_RELATIVE         = cast(ushort) 0x8000,
 }
+
 alias TOKEN_ACCESS_MASK = uint;
 enum : uint
 {
-    TOKEN_DELETE                    = 0x00010000,
-    TOKEN_READ_CONTROL              = 0x00020000,
-    TOKEN_WRITE_DAC                 = 0x00040000,
-    TOKEN_WRITE_OWNER               = 0x00080000,
-    TOKEN_ACCESS_SYSTEM_SECURITY    = 0x01000000,
-    TOKEN_ASSIGN_PRIMARY            = 0x00000001,
-    TOKEN_DUPLICATE                 = 0x00000002,
-    TOKEN_IMPERSONATE               = 0x00000004,
-    TOKEN_QUERY                     = 0x00000008,
-    TOKEN_QUERY_SOURCE              = 0x00000010,
-    TOKEN_ADJUST_PRIVILEGES         = 0x00000020,
-    TOKEN_ADJUST_GROUPS             = 0x00000040,
-    TOKEN_ADJUST_DEFAULT            = 0x00000080,
-    TOKEN_ADJUST_SESSIONID          = 0x00000100,
-    TOKEN_READ                      = 0x00020008,
-    TOKEN_WRITE                     = 0x000200e0,
-    TOKEN_EXECUTE                   = 0x00020000,
-    TOKEN_TRUST_CONSTRAINT_MASK     = 0x00020018,
-    TOKEN_ACCESS_PSEUDO_HANDLE_WIN8 = 0x00000018,
-    TOKEN_ACCESS_PSEUDO_HANDLE      = 0x00000018,
-    TOKEN_ALL_ACCESS                = 0x000f01ff,
+    TOKEN_DELETE                    = 0x00010000U,
+    TOKEN_READ_CONTROL              = 0x00020000U,
+    TOKEN_WRITE_DAC                 = 0x00040000U,
+    TOKEN_WRITE_OWNER               = 0x00080000U,
+    TOKEN_ACCESS_SYSTEM_SECURITY    = 0x01000000U,
+    TOKEN_ASSIGN_PRIMARY            = 0x00000001U,
+    TOKEN_DUPLICATE                 = 0x00000002U,
+    TOKEN_IMPERSONATE               = 0x00000004U,
+    TOKEN_QUERY                     = 0x00000008U,
+    TOKEN_QUERY_SOURCE              = 0x00000010U,
+    TOKEN_ADJUST_PRIVILEGES         = 0x00000020U,
+    TOKEN_ADJUST_GROUPS             = 0x00000040U,
+    TOKEN_ADJUST_DEFAULT            = 0x00000080U,
+    TOKEN_ADJUST_SESSIONID          = 0x00000100U,
+    TOKEN_READ                      = 0x00020008U,
+    TOKEN_WRITE                     = 0x000200e0U,
+    TOKEN_EXECUTE                   = 0x00020000U,
+    TOKEN_TRUST_CONSTRAINT_MASK     = 0x00020018U,
+    TOKEN_ACCESS_PSEUDO_HANDLE_WIN8 = 0x00000018U,
+    TOKEN_ACCESS_PSEUDO_HANDLE      = 0x00000018U,
+    TOKEN_ALL_ACCESS                = 0x000f01ffU,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/celib/ne-celib-enum_period))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/celib/ne-celib-enum_period
 alias ENUM_PERIOD = int;
 enum : int
 {
@@ -191,7 +207,8 @@ enum : int
     ENUM_PERIOD_MONTHS  = 0x00000005,
     ENUM_PERIOD_YEARS   = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-sid_name_use))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-sid_name_use
 alias SID_NAME_USE = int;
 enum : int
 {
@@ -207,7 +224,8 @@ enum : int
     SidTypeLabel          = 0x0000000a,
     SidTypeLogonSession   = 0x0000000b,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-well_known_sid_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-well_known_sid_type
 alias WELL_KNOWN_SID_TYPE = int;
 enum : int
 {
@@ -334,21 +352,24 @@ enum : int
     WinBuiltinUserModeHardwareOperatorsSid        = 0x00000078,
     WinBuiltinOpenSSHUsersSid                     = 0x00000079,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-acl_information_class))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-acl_information_class
 alias ACL_INFORMATION_CLASS = int;
 enum : int
 {
     AclRevisionInformation = 0x00000001,
     AclSizeInformation     = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-audit_event_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-audit_event_type
 alias AUDIT_EVENT_TYPE = int;
 enum : int
 {
     AuditEventObjectAccess           = 0x00000000,
     AuditEventDirectoryServiceAccess = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-security_impersonation_level))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-security_impersonation_level
 alias SECURITY_IMPERSONATION_LEVEL = int;
 enum : int
 {
@@ -357,14 +378,16 @@ enum : int
     SecurityImpersonation  = 0x00000002,
     SecurityDelegation     = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-token_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-token_type
 alias TOKEN_TYPE = int;
 enum : int
 {
     TokenPrimary       = 0x00000001,
     TokenImpersonation = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-token_elevation_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-token_elevation_type
 alias TOKEN_ELEVATION_TYPE = int;
 enum : int
 {
@@ -372,7 +395,8 @@ enum : int
     TokenElevationTypeFull    = 0x00000002,
     TokenElevationTypeLimited = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-token_information_class))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-token_information_class
 alias TOKEN_INFORMATION_CLASS = int;
 enum : int
 {
@@ -428,7 +452,8 @@ enum : int
     TokenLearningMode                    = 0x00000032,
     MaxTokenInfoClass                    = 0x00000033,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-mandatory_level))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-mandatory_level
 alias MANDATORY_LEVEL = int;
 enum : int
 {
@@ -446,24 +471,24 @@ enum : int
 
 enum BOOLEAN SECURITY_DYNAMIC_TRACKING = BOOLEAN(0x01);
 enum BOOLEAN SECURITY_STATIC_TRACKING = BOOLEAN(0x00);
-enum uint SECURITY_MAX_SID_SIZE = 0x00000044;
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 0}))], [])*/SID_IDENTIFIER_AUTHORITY SECURITY_NULL_SID_AUTHORITY = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 0}))], [])*/SID_IDENTIFIER_AUTHORITY("string {0, 0, 0, 0, 0, 0}");
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 1}))], [])*/SID_IDENTIFIER_AUTHORITY SECURITY_WORLD_SID_AUTHORITY = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 1}))], [])*/SID_IDENTIFIER_AUTHORITY("string {0, 0, 0, 0, 0, 1}");
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 2}))], [])*/SID_IDENTIFIER_AUTHORITY SECURITY_LOCAL_SID_AUTHORITY = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 2}))], [])*/SID_IDENTIFIER_AUTHORITY("string {0, 0, 0, 0, 0, 2}");
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 3}))], [])*/SID_IDENTIFIER_AUTHORITY SECURITY_CREATOR_SID_AUTHORITY = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 3}))], [])*/SID_IDENTIFIER_AUTHORITY("string {0, 0, 0, 0, 0, 3}");
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 4}))], [])*/SID_IDENTIFIER_AUTHORITY SECURITY_NON_UNIQUE_AUTHORITY = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 4}))], [])*/SID_IDENTIFIER_AUTHORITY("string {0, 0, 0, 0, 0, 4}");
+enum uint SECURITY_MAX_SID_SIZE = 0x00000044U;
+enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 0}))], [])*/SID_IDENTIFIER_AUTHORITY SECURITY_NULL_SID_AUTHORITY = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 0}))], [])*/SID_IDENTIFIER_AUTHORITY([0, 0, 0, 0, 0, 0]);
+enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 1}))], [])*/SID_IDENTIFIER_AUTHORITY SECURITY_WORLD_SID_AUTHORITY = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 1}))], [])*/SID_IDENTIFIER_AUTHORITY([0, 0, 0, 0, 0, 1]);
+enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 2}))], [])*/SID_IDENTIFIER_AUTHORITY SECURITY_LOCAL_SID_AUTHORITY = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 2}))], [])*/SID_IDENTIFIER_AUTHORITY([0, 0, 0, 0, 0, 2]);
+enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 3}))], [])*/SID_IDENTIFIER_AUTHORITY SECURITY_CREATOR_SID_AUTHORITY = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 3}))], [])*/SID_IDENTIFIER_AUTHORITY([0, 0, 0, 0, 0, 3]);
+enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 4}))], [])*/SID_IDENTIFIER_AUTHORITY SECURITY_NON_UNIQUE_AUTHORITY = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 4}))], [])*/SID_IDENTIFIER_AUTHORITY([0, 0, 0, 0, 0, 4]);
 
 enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 5}))], [])*/SID_IDENTIFIER_AUTHORITY
 {
-    SECURITY_NT_AUTHORITY               = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 5}))], [])*/SID_IDENTIFIER_AUTHORITY("string {0, 0, 0, 0, 0, 5}"),
-    SECURITY_RESOURCE_MANAGER_AUTHORITY = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 5}))], [])*/SID_IDENTIFIER_AUTHORITY("string {0, 0, 0, 0, 0, 9}"),
+    SECURITY_NT_AUTHORITY               = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 5}))], [])*/SID_IDENTIFIER_AUTHORITY([0, 0, 0, 0, 0, 5]),
+    SECURITY_RESOURCE_MANAGER_AUTHORITY = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 5}))], [])*/SID_IDENTIFIER_AUTHORITY([0, 0, 0, 0, 0, 9]),
 }
 
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 15}))], [])*/SID_IDENTIFIER_AUTHORITY SECURITY_APP_PACKAGE_AUTHORITY = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 15}))], [])*/SID_IDENTIFIER_AUTHORITY("string {0, 0, 0, 0, 0, 15}");
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 16}))], [])*/SID_IDENTIFIER_AUTHORITY SECURITY_MANDATORY_LABEL_AUTHORITY = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 16}))], [])*/SID_IDENTIFIER_AUTHORITY("string {0, 0, 0, 0, 0, 16}");
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 17}))], [])*/SID_IDENTIFIER_AUTHORITY SECURITY_SCOPED_POLICY_ID_AUTHORITY = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 17}))], [])*/SID_IDENTIFIER_AUTHORITY("string {0, 0, 0, 0, 0, 17}");
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 18}))], [])*/SID_IDENTIFIER_AUTHORITY SECURITY_AUTHENTICATION_AUTHORITY = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 18}))], [])*/SID_IDENTIFIER_AUTHORITY("string {0, 0, 0, 0, 0, 18}");
-enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 19}))], [])*/SID_IDENTIFIER_AUTHORITY SECURITY_PROCESS_TRUST_AUTHORITY = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 19}))], [])*/SID_IDENTIFIER_AUTHORITY("string {0, 0, 0, 0, 0, 19}");
+enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 15}))], [])*/SID_IDENTIFIER_AUTHORITY SECURITY_APP_PACKAGE_AUTHORITY = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 15}))], [])*/SID_IDENTIFIER_AUTHORITY([0, 0, 0, 0, 0, 15]);
+enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 16}))], [])*/SID_IDENTIFIER_AUTHORITY SECURITY_MANDATORY_LABEL_AUTHORITY = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 16}))], [])*/SID_IDENTIFIER_AUTHORITY([0, 0, 0, 0, 0, 16]);
+enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 17}))], [])*/SID_IDENTIFIER_AUTHORITY SECURITY_SCOPED_POLICY_ID_AUTHORITY = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 17}))], [])*/SID_IDENTIFIER_AUTHORITY([0, 0, 0, 0, 0, 17]);
+enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 18}))], [])*/SID_IDENTIFIER_AUTHORITY SECURITY_AUTHENTICATION_AUTHORITY = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 18}))], [])*/SID_IDENTIFIER_AUTHORITY([0, 0, 0, 0, 0, 18]);
+enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 19}))], [])*/SID_IDENTIFIER_AUTHORITY SECURITY_PROCESS_TRUST_AUTHORITY = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({0, 0, 0, 0, 0, 19}))], [])*/SID_IDENTIFIER_AUTHORITY([0, 0, 0, 0, 0, 19]);
 enum const(wchar)* SE_CREATE_TOKEN_NAME = "SeCreateTokenPrivilege";
 enum const(wchar)* SE_ASSIGNPRIMARYTOKEN_NAME = "SeAssignPrimaryTokenPrivilege";
 enum const(wchar)* SE_LOCK_MEMORY_NAME = "SeLockMemoryPrivilege";
@@ -511,7 +536,7 @@ enum const(wchar)* SE_TIME_ZONE_NAME = "SeTimeZonePrivilege";
 enum const(wchar)* SE_CREATE_SYMBOLIC_LINK_NAME = "SeCreateSymbolicLinkPrivilege";
 enum const(wchar)* SE_DELEGATE_SESSION_USER_IMPERSONATE_NAME = "SeDelegateSessionUserImpersonatePrivilege";
 enum const(wchar)* wszCERTENROLLSHAREPATH = "CertSrv\\CertEnroll";
-enum uint cwcHRESULTSTRING = 0x00000028;
+enum uint cwcHRESULTSTRING = 0x00000028U;
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* szLBRACE = "{";
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* szRBRACE = "}";
 enum const(wchar)* wszLBRACE = "{";
@@ -520,8 +545,8 @@ enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(Ele
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* szRPAREN = ")";
 enum const(wchar)* wszLPAREN = "(";
 enum const(wchar)* wszRPAREN = ")";
-enum uint CVT_SECONDS = 0x00000001;
-enum uint cwcFILENAMESUFFIXMAX = 0x00000014;
+enum uint CVT_SECONDS = 0x00000001U;
+enum uint cwcFILENAMESUFFIXMAX = 0x00000014U;
 
 enum : const(wchar)*
 {
@@ -555,11 +580,11 @@ enum : const(wchar)*
 
 enum : uint
 {
-    SIGNING_LEVEL_FILE_CACHE_FLAG_NOT_VALIDATED = 0x00000001,
-    SIGNING_LEVEL_FILE_CACHE_FLAG_VALIDATE_ONLY = 0x00000004,
+    SIGNING_LEVEL_FILE_CACHE_FLAG_NOT_VALIDATED = 0x00000001U,
+    SIGNING_LEVEL_FILE_CACHE_FLAG_VALIDATE_ONLY = 0x00000004U,
 }
 
-enum uint SIGNING_LEVEL_MICROSOFT = 0x00000008;
+enum uint SIGNING_LEVEL_MICROSOFT = 0x00000008U;
 
 // Callbacks
 
@@ -606,7 +631,7 @@ struct PSECURITY_DESCRIPTOR
     void* Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wtypesbase/ns-wtypesbase-security_attributes))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtypesbase/ns-wtypesbase-security_attributes
 struct SECURITY_ATTRIBUTES
 {
     uint  nLength;
@@ -616,10 +641,14 @@ struct SECURITY_ATTRIBUTES
 
 struct LLFILETIME
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        long     ll;
+        FILETIME ft;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-generic_mapping))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-generic_mapping
 struct GENERIC_MAPPING
 {
     uint GenericRead;
@@ -628,20 +657,20 @@ struct GENERIC_MAPPING
     uint GenericAll;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-luid_and_attributes))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-luid_and_attributes
 struct LUID_AND_ATTRIBUTES
 {
     LUID Luid;
     TOKEN_PRIVILEGES_ATTRIBUTES Attributes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/NetMgmt/odj-sid_identifier_authority))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/NetMgmt/odj-sid_identifier_authority
 struct SID_IDENTIFIER_AUTHORITY
 {
     ubyte[6] Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-sid))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-sid
 struct SID
 {
     ubyte Revision;
@@ -656,14 +685,14 @@ union SE_SID
     ubyte[68] Buffer;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-sid_and_attributes))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-sid_and_attributes
 struct SID_AND_ATTRIBUTES
 {
     PSID Sid;
     uint Attributes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-sid_and_attributes_hash))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-sid_and_attributes_hash
 struct SID_AND_ATTRIBUTES_HASH
 {
     uint                SidCount;
@@ -671,7 +700,7 @@ struct SID_AND_ATTRIBUTES_HASH
     size_t[32]          Hash;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-acl))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-acl
 struct ACL
 {
     ubyte  AclRevision;
@@ -681,7 +710,7 @@ struct ACL
     ushort Sbz2;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-ace_header))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-ace_header
 struct ACE_HEADER
 {
     ubyte  AceType;
@@ -689,7 +718,7 @@ struct ACE_HEADER
     ushort AceSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-access_allowed_ace))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-access_allowed_ace
 struct ACCESS_ALLOWED_ACE
 {
     ACE_HEADER Header;
@@ -697,7 +726,7 @@ struct ACCESS_ALLOWED_ACE
     uint       SidStart;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-access_denied_ace))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-access_denied_ace
 struct ACCESS_DENIED_ACE
 {
     ACE_HEADER Header;
@@ -705,7 +734,7 @@ struct ACCESS_DENIED_ACE
     uint       SidStart;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-system_audit_ace))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-system_audit_ace
 struct SYSTEM_AUDIT_ACE
 {
     ACE_HEADER Header;
@@ -713,7 +742,7 @@ struct SYSTEM_AUDIT_ACE
     uint       SidStart;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-system_alarm_ace))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-system_alarm_ace
 struct SYSTEM_ALARM_ACE
 {
     ACE_HEADER Header;
@@ -721,7 +750,7 @@ struct SYSTEM_ALARM_ACE
     uint       SidStart;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-system_resource_attribute_ace))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-system_resource_attribute_ace
 struct SYSTEM_RESOURCE_ATTRIBUTE_ACE
 {
     ACE_HEADER Header;
@@ -729,7 +758,7 @@ struct SYSTEM_RESOURCE_ATTRIBUTE_ACE
     uint       SidStart;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-system_scoped_policy_id_ace))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-system_scoped_policy_id_ace
 struct SYSTEM_SCOPED_POLICY_ID_ACE
 {
     ACE_HEADER Header;
@@ -737,7 +766,7 @@ struct SYSTEM_SCOPED_POLICY_ID_ACE
     uint       SidStart;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-system_mandatory_label_ace))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-system_mandatory_label_ace
 struct SYSTEM_MANDATORY_LABEL_ACE
 {
     ACE_HEADER Header;
@@ -759,7 +788,7 @@ struct SYSTEM_ACCESS_FILTER_ACE
     uint       SidStart;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-access_allowed_object_ace))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-access_allowed_object_ace
 struct ACCESS_ALLOWED_OBJECT_ACE
 {
     ACE_HEADER Header;
@@ -770,7 +799,7 @@ struct ACCESS_ALLOWED_OBJECT_ACE
     uint       SidStart;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-access_denied_object_ace))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-access_denied_object_ace
 struct ACCESS_DENIED_OBJECT_ACE
 {
     ACE_HEADER Header;
@@ -781,7 +810,7 @@ struct ACCESS_DENIED_OBJECT_ACE
     uint       SidStart;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-system_audit_object_ace))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-system_audit_object_ace
 struct SYSTEM_AUDIT_OBJECT_ACE
 {
     ACE_HEADER Header;
@@ -792,7 +821,7 @@ struct SYSTEM_AUDIT_OBJECT_ACE
     uint       SidStart;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-system_alarm_object_ace))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-system_alarm_object_ace
 struct SYSTEM_ALARM_OBJECT_ACE
 {
     ACE_HEADER Header;
@@ -803,7 +832,7 @@ struct SYSTEM_ALARM_OBJECT_ACE
     uint       SidStart;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-access_allowed_callback_ace))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-access_allowed_callback_ace
 struct ACCESS_ALLOWED_CALLBACK_ACE
 {
     ACE_HEADER Header;
@@ -811,7 +840,7 @@ struct ACCESS_ALLOWED_CALLBACK_ACE
     uint       SidStart;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-access_denied_callback_ace))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-access_denied_callback_ace
 struct ACCESS_DENIED_CALLBACK_ACE
 {
     ACE_HEADER Header;
@@ -819,7 +848,7 @@ struct ACCESS_DENIED_CALLBACK_ACE
     uint       SidStart;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-system_audit_callback_ace))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-system_audit_callback_ace
 struct SYSTEM_AUDIT_CALLBACK_ACE
 {
     ACE_HEADER Header;
@@ -827,7 +856,7 @@ struct SYSTEM_AUDIT_CALLBACK_ACE
     uint       SidStart;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-system_alarm_callback_ace))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-system_alarm_callback_ace
 struct SYSTEM_ALARM_CALLBACK_ACE
 {
     ACE_HEADER Header;
@@ -835,7 +864,7 @@ struct SYSTEM_ALARM_CALLBACK_ACE
     uint       SidStart;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-access_allowed_callback_object_ace))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-access_allowed_callback_object_ace
 struct ACCESS_ALLOWED_CALLBACK_OBJECT_ACE
 {
     ACE_HEADER Header;
@@ -846,7 +875,7 @@ struct ACCESS_ALLOWED_CALLBACK_OBJECT_ACE
     uint       SidStart;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-access_denied_callback_object_ace))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-access_denied_callback_object_ace
 struct ACCESS_DENIED_CALLBACK_OBJECT_ACE
 {
     ACE_HEADER Header;
@@ -857,7 +886,7 @@ struct ACCESS_DENIED_CALLBACK_OBJECT_ACE
     uint       SidStart;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-system_audit_callback_object_ace))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-system_audit_callback_object_ace
 struct SYSTEM_AUDIT_CALLBACK_OBJECT_ACE
 {
     ACE_HEADER Header;
@@ -868,7 +897,7 @@ struct SYSTEM_AUDIT_CALLBACK_OBJECT_ACE
     uint       SidStart;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-system_alarm_callback_object_ace))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-system_alarm_callback_object_ace
 struct SYSTEM_ALARM_CALLBACK_OBJECT_ACE
 {
     ACE_HEADER Header;
@@ -879,13 +908,13 @@ struct SYSTEM_ALARM_CALLBACK_OBJECT_ACE
     uint       SidStart;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-acl_revision_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-acl_revision_information
 struct ACL_REVISION_INFORMATION
 {
     uint AclRevision;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-acl_size_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-acl_size_information
 struct ACL_SIZE_INFORMATION
 {
     uint AceCount;
@@ -904,7 +933,7 @@ struct SECURITY_DESCRIPTOR_RELATIVE
     uint  Dacl;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-security_descriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-security_descriptor
 struct SECURITY_DESCRIPTOR
 {
     ubyte Revision;
@@ -916,7 +945,7 @@ struct SECURITY_DESCRIPTOR
     ACL*  Dacl;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-object_type_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-object_type_list
 struct OBJECT_TYPE_LIST
 {
     ushort Level;
@@ -924,7 +953,7 @@ struct OBJECT_TYPE_LIST
     GUID*  ObjectType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-privilege_set))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-privilege_set
 struct PRIVILEGE_SET
 {
     uint PrivilegeCount;
@@ -966,57 +995,57 @@ struct SE_ACCESS_REPLY
     PRIVILEGE_SET** Privileges;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_user))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_user
 struct TOKEN_USER
 {
     SID_AND_ATTRIBUTES User;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_groups))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_groups
 struct TOKEN_GROUPS
 {
     uint GroupCount;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SID_AND_ATTRIBUTES[1] Groups;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_privileges))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_privileges
 struct TOKEN_PRIVILEGES
 {
     uint PrivilegeCount;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/LUID_AND_ATTRIBUTES[1] Privileges;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_owner))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_owner
 struct TOKEN_OWNER
 {
     PSID Owner;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_primary_group))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_primary_group
 struct TOKEN_PRIMARY_GROUP
 {
     PSID PrimaryGroup;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_default_dacl))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_default_dacl
 struct TOKEN_DEFAULT_DACL
 {
     ACL* DefaultDacl;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_user_claims))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_user_claims
 struct TOKEN_USER_CLAIMS
 {
     void* UserClaims;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_device_claims))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_device_claims
 struct TOKEN_DEVICE_CLAIMS
 {
     void* DeviceClaims;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_groups_and_privileges))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_groups_and_privileges
 struct TOKEN_GROUPS_AND_PRIVILEGES
 {
     uint                 SidCount;
@@ -1031,31 +1060,31 @@ struct TOKEN_GROUPS_AND_PRIVILEGES
     LUID                 AuthenticationId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_linked_token))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_linked_token
 struct TOKEN_LINKED_TOKEN
 {
     HANDLE LinkedToken;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_elevation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_elevation
 struct TOKEN_ELEVATION
 {
     uint TokenIsElevated;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_mandatory_label))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_mandatory_label
 struct TOKEN_MANDATORY_LABEL
 {
     SID_AND_ATTRIBUTES Label;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_mandatory_policy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_mandatory_policy
 struct TOKEN_MANDATORY_POLICY
 {
     TOKEN_MANDATORY_POLICY_ID Policy;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_access_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_access_information
 struct TOKEN_ACCESS_INFORMATION
 {
     SID_AND_ATTRIBUTES_HASH* SidHash;
@@ -1073,20 +1102,20 @@ struct TOKEN_ACCESS_INFORMATION
     void*             SecurityAttributes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_audit_policy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_audit_policy
 struct TOKEN_AUDIT_POLICY
 {
     ubyte[31] PerUserPolicy;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_source))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_source
 struct TOKEN_SOURCE
 {
     CHAR[8] SourceName;
     LUID    SourceIdentifier;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_statistics))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_statistics
 struct TOKEN_STATISTICS
 {
     LUID       TokenId;
@@ -1101,7 +1130,7 @@ struct TOKEN_STATISTICS
     LUID       ModifiedId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_control))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_control
 struct TOKEN_CONTROL
 {
     LUID         TokenId;
@@ -1110,64 +1139,81 @@ struct TOKEN_CONTROL
     TOKEN_SOURCE TokenSource;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_origin))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_origin
 struct TOKEN_ORIGIN
 {
     LUID OriginatingLogonSession;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_appcontainer_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-token_appcontainer_information
 struct TOKEN_APPCONTAINER_INFORMATION
 {
     PSID TokenAppContainer;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-claim_security_attribute_fqbn_value))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-claim_security_attribute_fqbn_value
 struct CLAIM_SECURITY_ATTRIBUTE_FQBN_VALUE
 {
     ulong Version;
     PWSTR Name;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-claim_security_attribute_octet_string_value))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-claim_security_attribute_octet_string_value
 struct CLAIM_SECURITY_ATTRIBUTE_OCTET_STRING_VALUE
 {
     void* pValue;
     uint  ValueLength;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-claim_security_attribute_v1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-claim_security_attribute_v1
 struct CLAIM_SECURITY_ATTRIBUTE_V1
 {
-    PWSTR            Name;
+    PWSTR  Name;
     CLAIM_SECURITY_ATTRIBUTE_VALUE_TYPE ValueType;
-    ushort           Reserved;
-    uint             Flags;
-    uint             ValueCount;
-    _Values_e__Union Values;
+    ushort Reserved;
+    uint   Flags;
+    uint   ValueCount;
+    union Values
+    {
+        long*  pInt64;
+        ulong* pUint64;
+        PWSTR* ppString;
+        CLAIM_SECURITY_ATTRIBUTE_FQBN_VALUE* pFqbn;
+        CLAIM_SECURITY_ATTRIBUTE_OCTET_STRING_VALUE* pOctetString;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-claim_security_attribute_relative_v1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-claim_security_attribute_relative_v1
 struct CLAIM_SECURITY_ATTRIBUTE_RELATIVE_V1
 {
-    uint             Name;
+    uint   Name;
     CLAIM_SECURITY_ATTRIBUTE_VALUE_TYPE ValueType;
-    ushort           Reserved;
+    ushort Reserved;
     CLAIM_SECURITY_ATTRIBUTE_FLAGS Flags;
-    uint             ValueCount;
-    _Values_e__Union Values;
+    uint   ValueCount;
+    union Values
+    {
+        uint[1] pInt64;
+        uint[1] pUint64;
+        uint[1] ppString;
+        uint[1] pFqbn;
+        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/uint[1] pOctetString;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-claim_security_attributes_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-claim_security_attributes_information
 struct CLAIM_SECURITY_ATTRIBUTES_INFORMATION
 {
-    ushort              Version;
-    ushort              Reserved;
-    uint                AttributeCount;
-    _Attribute_e__Union Attribute;
+    ushort Version;
+    ushort Reserved;
+    uint   AttributeCount;
+    union Attribute
+    {
+        CLAIM_SECURITY_ATTRIBUTE_V1* pAttributeV1;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-security_quality_of_service))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-security_quality_of_service
 struct SECURITY_QUALITY_OF_SERVICE
 {
     uint    Length;
@@ -1184,7 +1230,7 @@ struct SE_IMPERSONATION_STATE
     SECURITY_IMPERSONATION_LEVEL Level;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-security_capabilities))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-security_capabilities
 struct SECURITY_CAPABILITIES
 {
     PSID                AppContainerSid;
@@ -1193,7 +1239,7 @@ struct SECURITY_CAPABILITIES
     uint                Reserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-quota_limits))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-quota_limits
 struct QUOTA_LIMITS
 {
     size_t PagedPoolLimit;
@@ -1371,7 +1417,7 @@ BOOL CheckTokenMembership(HANDLE TokenHandle, PSID SidToCheck, BOOL* IsMember);
 @DllImport("KERNEL32.dll")
 BOOL CheckTokenCapability(HANDLE TokenHandle, PSID CapabilitySidToCheck, BOOL* HasCapability);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/securitybaseapi/nf-securitybaseapi-getappcontainerace))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/securitybaseapi/nf-securitybaseapi-getappcontainerace
 @DllImport("KERNEL32.dll")
 BOOL GetAppContainerAce(ACL* Acl, uint StartingAceIndex, void** AppContainerAce, uint* AppContainerAceIndex);
 
@@ -1732,17 +1778,17 @@ BOOL SetTokenInformation(HANDLE TokenHandle, TOKEN_INFORMATION_CLASS TokenInform
                          /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* TokenInformation, 
                          uint TokenInformationLength);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/securitybaseapi/nf-securitybaseapi-setcachedsigninglevel))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/securitybaseapi/nf-securitybaseapi-setcachedsigninglevel
 @DllImport("KERNEL32.dll")
 BOOL SetCachedSigningLevel(HANDLE* SourceFiles, uint SourceFileCount, uint Flags, HANDLE TargetFile);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/securitybaseapi/nf-securitybaseapi-getcachedsigninglevel))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/securitybaseapi/nf-securitybaseapi-getcachedsigninglevel
 @DllImport("KERNEL32.dll")
 BOOL GetCachedSigningLevel(HANDLE File, uint* Flags, uint* SigningLevel, 
                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* Thumbprint, 
                            uint* ThumbprintSize, uint* ThumbprintAlgorithm);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/securitybaseapi/nf-securitybaseapi-derivecapabilitysidsfromname))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/securitybaseapi/nf-securitybaseapi-derivecapabilitysidsfromname
 @DllImport("api-ms-win-security-base-l1-2-2.dll")
 BOOL DeriveCapabilitySidsFromName(const(PWSTR) CapName, PSID** CapabilityGroupSids, uint* CapabilityGroupSidCount, 
                                   PSID** CapabilitySids, uint* CapabilitySidCount);

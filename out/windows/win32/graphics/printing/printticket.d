@@ -3,22 +3,24 @@
 module windows.win32.graphics.printing.printticket;
 
 public import windows.core;
-public import windows.win32.foundation : BSTR, HRESULT, PWSTR;
+public import windows.win32.foundation.foundation : BSTR, HRESULT, PWSTR;
 public import windows.win32.graphics.gdi : DEVMODEA;
-public import windows.win32.system.com : IStream;
+public import windows.win32.system.com.com : IStream;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/prntvpt/ne-prntvpt-edefaultdevmodetype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/prntvpt/ne-prntvpt-edefaultdevmodetype
 enum EDefaultDevmodeType : int
 {
     kUserDefaultDevmode    = 0x00000000,
     kPrinterDefaultDevmode = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/prntvpt/ne-prntvpt-eprintticketscope))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/prntvpt/ne-prntvpt-eprintticketscope
 enum EPrintTicketScope : int
 {
     kPTPageScope     = 0x00000000,
@@ -29,13 +31,13 @@ enum EPrintTicketScope : int
 // Constants
 
 
-enum uint PRINTTICKET_ISTREAM_APIS = 0x00000001;
-enum uint S_PT_NO_CONFLICT = 0x00040001;
-enum uint S_PT_CONFLICT_RESOLVED = 0x00040002;
-enum uint E_PRINTTICKET_FORMAT = 0x80040003;
-enum uint E_PRINTCAPABILITIES_FORMAT = 0x80040004;
-enum uint E_DELTA_PRINTTICKET_FORMAT = 0x80040005;
-enum uint E_PRINTDEVICECAPABILITIES_FORMAT = 0x80040006;
+enum uint PRINTTICKET_ISTREAM_APIS = 0x00000001U;
+enum uint S_PT_NO_CONFLICT = 0x00040001U;
+enum uint S_PT_CONFLICT_RESOLVED = 0x00040002U;
+enum uint E_PRINTTICKET_FORMAT = 0x80040003U;
+enum uint E_PRINTCAPABILITIES_FORMAT = 0x80040004U;
+enum uint E_DELTA_PRINTTICKET_FORMAT = 0x80040005U;
+enum uint E_PRINTDEVICECAPABILITIES_FORMAT = 0x80040006U;
 
 // Structs
 

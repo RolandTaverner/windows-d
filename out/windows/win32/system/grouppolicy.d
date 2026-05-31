@@ -3,44 +3,48 @@
 module windows.win32.system.grouppolicy;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BSTR, CHAR, HANDLE, HRESULT, HWND,
-                                         LPARAM, PSTR, PWSTR, SYSTEMTIME,
-                                         VARIANT_BOOL;
-public import windows.win32.security : GENERIC_MAPPING, OBJECT_TYPE_LIST, PRIVILEGE_SET,
-                                       PSECURITY_DESCRIPTOR, PSID;
-public import windows.win32.system.com : IDispatch, IUnknown, SAFEARRAY;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, HANDLE, HRESULT,
+                                                    HWND, LPARAM, PSTR, PWSTR, SYSTEMTIME,
+                                                    VARIANT_BOOL;
+public import windows.win32.security.security : GENERIC_MAPPING, OBJECT_TYPE_LIST, PRIVILEGE_SET,
+                                                PSECURITY_DESCRIPTOR, PSID;
+public import windows.win32.system.com.com : IDispatch, IUnknown, SAFEARRAY;
 public import windows.win32.system.ole : IEnumVARIANT;
 public import windows.win32.system.registry : HKEY;
 public import windows.win32.system.variant : VARIANT;
 public import windows.win32.system.wmi : IWbemClassObject, IWbemServices;
-public import windows.win32.ui.controls : HPROPSHEETPAGE;
-public import windows.win32.ui.shell : APPCATEGORYINFOLIST;
+public import windows.win32.ui.controls.controls : HPROPSHEETPAGE;
+public import windows.win32.ui.shell.shell : APPCATEGORYINFOLIST;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
+
 alias GPO_OPEN_FLAGS = uint;
 enum : uint
 {
-    GPO_OPEN_LOAD_REGISTRY = 0x00000001,
-    GPO_OPEN_READ_ONLY     = 0x00000002,
+    GPO_OPEN_LOAD_REGISTRY = 0x00000001U,
+    GPO_OPEN_READ_ONLY     = 0x00000002U,
 }
+
 alias GPO_OPTIONS = uint;
 enum : uint
 {
-    GPO_OPTION_DISABLE_USER    = 0x00000001,
-    GPO_OPTION_DISABLE_MACHINE = 0x00000002,
+    GPO_OPTION_DISABLE_USER    = 0x00000001U,
+    GPO_OPTION_DISABLE_MACHINE = 0x00000002U,
 }
+
 alias GPO_SECTION = uint;
 enum : uint
 {
-    GPO_SECTION_ROOT    = 0x00000000,
-    GPO_SECTION_USER    = 0x00000001,
-    GPO_SECTION_MACHINE = 0x00000002,
+    GPO_SECTION_ROOT    = 0x00000000U,
+    GPO_SECTION_USER    = 0x00000001U,
+    GPO_SECTION_MACHINE = 0x00000002U,
 }
+
 alias GPMRSOPMode = int;
 enum : int
 {
@@ -48,7 +52,8 @@ enum : int
     rsopPlanning = 0x00000001,
     rsopLogging  = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/ne-gpmgmt-gpmpermissiontype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/ne-gpmgmt-gpmpermissiontype
 enum GPMPermissionType : int
 {
     permGPOApply                 = 0x00010000,
@@ -71,7 +76,8 @@ enum GPMPermissionType : int
     permStarterGPOCustom         = 0x00030503,
     permSOMStarterGPOCreate      = 0x00100500,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/ne-gpmgmt-gpmsearchproperty))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/ne-gpmgmt-gpmsearchproperty
 enum GPMSearchProperty : int
 {
     gpoPermissions                 = 0x00000000,
@@ -90,6 +96,7 @@ enum GPMSearchProperty : int
     starterGPOID                   = 0x0000000d,
     starterGPODomain               = 0x0000000e,
 }
+
 enum GPMSearchOperation : int
 {
     opEquals      = 0x00000000,
@@ -97,6 +104,7 @@ enum GPMSearchOperation : int
     opNotContains = 0x00000002,
     opNotEquals   = 0x00000003,
 }
+
 enum GPMReportType : int
 {
     repXML                    = 0x00000000,
@@ -106,6 +114,7 @@ enum GPMReportType : int
     repClientHealthXML        = 0x00000004,
     repClientHealthRefreshXML = 0x00000005,
 }
+
 enum GPMEntryType : int
 {
     typeUser           = 0x00000000,
@@ -116,6 +125,7 @@ enum GPMEntryType : int
     typeUNCPath        = 0x00000005,
     typeUnknown        = 0x00000006,
 }
+
 enum GPMDestinationOption : int
 {
     opDestinationSameAsSource   = 0x00000000,
@@ -123,12 +133,14 @@ enum GPMDestinationOption : int
     opDestinationByRelativeName = 0x00000002,
     opDestinationSet            = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/ne-gpmgmt-gpmreportingoptions))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/ne-gpmgmt-gpmreportingoptions
 enum GPMReportingOptions : int
 {
     opReportLegacy   = 0x00000000,
     opReportComments = 0x00000001,
 }
+
 alias GPMSOMType = int;
 enum : int
 {
@@ -136,18 +148,21 @@ enum : int
     somDomain = 0x00000001,
     somOU     = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/ne-gpmgmt-gpmbackuptype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/ne-gpmgmt-gpmbackuptype
 enum GPMBackupType : int
 {
     typeGPO        = 0x00000000,
     typeStarterGPO = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/ne-gpmgmt-gpmstartergpotype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/ne-gpmgmt-gpmstartergpotype
 enum GPMStarterGPOType : int
 {
     typeSystem = 0x00000000,
     typeCustom = 0x00000001,
 }
+
 alias GPO_LINK = int;
 enum : int
 {
@@ -157,6 +172,7 @@ enum : int
     GPLinkDomain             = 0x00000003,
     GPLinkOrganizationalUnit = 0x00000004,
 }
+
 alias SETTINGSTATUS = int;
 enum : int
 {
@@ -166,7 +182,8 @@ enum : int
     RSOPFailed           = 0x00000003,
     RSOPSubsettingFailed = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmgmt/ne-appmgmt-installspectype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmgmt/ne-appmgmt-installspectype
 alias INSTALLSPECTYPE = int;
 enum : int
 {
@@ -175,6 +192,7 @@ enum : int
     PROGID   = 0x00000003,
     COMCLASS = 0x00000004,
 }
+
 alias APPSTATE = int;
 enum : int
 {
@@ -182,6 +200,7 @@ enum : int
     ASSIGNED  = 0x00000001,
     PUBLISHED = 0x00000002,
 }
+
 alias GROUP_POLICY_OBJECT_TYPE = int;
 enum : int
 {
@@ -191,6 +210,7 @@ enum : int
     GPOTypeLocalUser  = 0x00000003,
     GPOTypeLocalGroup = 0x00000004,
 }
+
 alias GROUP_POLICY_HINT_TYPE = int;
 enum : int
 {
@@ -206,56 +226,56 @@ enum : int
 
 enum : uint
 {
-    GPM_USE_PDC   = 0x00000000,
-    GPM_USE_ANYDC = 0x00000001,
+    GPM_USE_PDC   = 0x00000000U,
+    GPM_USE_ANYDC = 0x00000001U,
 }
 
 enum : uint
 {
-    GPM_DONOTUSE_W2KDC   = 0x00000002,
-    GPM_DONOT_VALIDATEDC = 0x00000001,
+    GPM_DONOTUSE_W2KDC   = 0x00000002U,
+    GPM_DONOT_VALIDATEDC = 0x00000001U,
 }
 
-enum uint GPM_MIGRATIONTABLE_ONLY = 0x00000001;
-enum uint GPM_PROCESS_SECURITY = 0x00000002;
+enum uint GPM_MIGRATIONTABLE_ONLY = 0x00000001U;
+enum uint GPM_PROCESS_SECURITY = 0x00000002U;
 
 enum : uint
 {
-    RSOP_NO_COMPUTER                         = 0x00010000,
-    RSOP_NO_USER                             = 0x00020000,
-    RSOP_PLANNING_ASSUME_SLOW_LINK           = 0x00000001,
-    RSOP_PLANNING_ASSUME_LOOPBACK_MERGE      = 0x00000002,
-    RSOP_PLANNING_ASSUME_LOOPBACK_REPLACE    = 0x00000004,
-    RSOP_PLANNING_ASSUME_USER_WQLFILTER_TRUE = 0x00000008,
-    RSOP_PLANNING_ASSUME_COMP_WQLFILTER_TRUE = 0x00000010,
-}
-
-enum : uint
-{
-    PI_NOUI        = 0x00000001,
-    PI_APPLYPOLICY = 0x00000002,
-}
-
-enum uint PT_TEMPORARY = 0x00000001;
-enum uint PT_ROAMING = 0x00000002;
-enum uint PT_MANDATORY = 0x00000004;
-enum uint PT_ROAMING_PREEXISTING = 0x00000008;
-enum uint RP_FORCE = 0x00000001;
-enum uint RP_SYNC = 0x00000002;
-enum uint GPC_BLOCK_POLICY = 0x00000001;
-
-enum : uint
-{
-    GPO_FLAG_DISABLE = 0x00000001,
-    GPO_FLAG_FORCE   = 0x00000002,
+    RSOP_NO_COMPUTER                         = 0x00010000U,
+    RSOP_NO_USER                             = 0x00020000U,
+    RSOP_PLANNING_ASSUME_SLOW_LINK           = 0x00000001U,
+    RSOP_PLANNING_ASSUME_LOOPBACK_MERGE      = 0x00000002U,
+    RSOP_PLANNING_ASSUME_LOOPBACK_REPLACE    = 0x00000004U,
+    RSOP_PLANNING_ASSUME_USER_WQLFILTER_TRUE = 0x00000008U,
+    RSOP_PLANNING_ASSUME_COMP_WQLFILTER_TRUE = 0x00000010U,
 }
 
 enum : uint
 {
-    GPO_LIST_FLAG_MACHINE            = 0x00000001,
-    GPO_LIST_FLAG_SITEONLY           = 0x00000002,
-    GPO_LIST_FLAG_NO_WMIFILTERS      = 0x00000004,
-    GPO_LIST_FLAG_NO_SECURITYFILTERS = 0x00000008,
+    PI_NOUI        = 0x00000001U,
+    PI_APPLYPOLICY = 0x00000002U,
+}
+
+enum uint PT_TEMPORARY = 0x00000001U;
+enum uint PT_ROAMING = 0x00000002U;
+enum uint PT_MANDATORY = 0x00000004U;
+enum uint PT_ROAMING_PREEXISTING = 0x00000008U;
+enum uint RP_FORCE = 0x00000001U;
+enum uint RP_SYNC = 0x00000002U;
+enum uint GPC_BLOCK_POLICY = 0x00000001U;
+
+enum : uint
+{
+    GPO_FLAG_DISABLE = 0x00000001U,
+    GPO_FLAG_FORCE   = 0x00000002U,
+}
+
+enum : uint
+{
+    GPO_LIST_FLAG_MACHINE            = 0x00000001U,
+    GPO_LIST_FLAG_SITEONLY           = 0x00000002U,
+    GPO_LIST_FLAG_NO_WMIFILTERS      = 0x00000004U,
+    GPO_LIST_FLAG_NO_SECURITYFILTERS = 0x00000008U,
 }
 
 enum const(wchar)* GP_DLLNAME = "DllName";
@@ -273,16 +293,16 @@ enum const(wchar)* GP_REQUIRESSUCCESSFULREGISTRY = "RequiresSuccessfulRegistry";
 
 enum : uint
 {
-    GPO_INFO_FLAG_MACHINE            = 0x00000001,
-    GPO_INFO_FLAG_BACKGROUND         = 0x00000010,
-    GPO_INFO_FLAG_SLOWLINK           = 0x00000020,
-    GPO_INFO_FLAG_VERBOSE            = 0x00000040,
-    GPO_INFO_FLAG_NOCHANGES          = 0x00000080,
-    GPO_INFO_FLAG_LINKTRANSITION     = 0x00000100,
-    GPO_INFO_FLAG_LOGRSOP_TRANSITION = 0x00000200,
-    GPO_INFO_FLAG_FORCED_REFRESH     = 0x00000400,
-    GPO_INFO_FLAG_SAFEMODE_BOOT      = 0x00000800,
-    GPO_INFO_FLAG_ASYNC_FOREGROUND   = 0x00001000,
+    GPO_INFO_FLAG_MACHINE            = 0x00000001U,
+    GPO_INFO_FLAG_BACKGROUND         = 0x00000010U,
+    GPO_INFO_FLAG_SLOWLINK           = 0x00000020U,
+    GPO_INFO_FLAG_VERBOSE            = 0x00000040U,
+    GPO_INFO_FLAG_NOCHANGES          = 0x00000080U,
+    GPO_INFO_FLAG_LINKTRANSITION     = 0x00000100U,
+    GPO_INFO_FLAG_LOGRSOP_TRANSITION = 0x00000200U,
+    GPO_INFO_FLAG_FORCED_REFRESH     = 0x00000400U,
+    GPO_INFO_FLAG_SAFEMODE_BOOT      = 0x00000800U,
+    GPO_INFO_FLAG_ASYNC_FOREGROUND   = 0x00001000U,
 }
 
 enum GUID REGISTRY_EXTENSION_GUID = GUID("35378eac-683f-11d2-a89a-00c04fbbcfa2");
@@ -292,64 +312,64 @@ enum GUID USER_POLICY_PRESENT_TRIGGER_GUID = GUID("54fb46c8-f089-464c-b1fd-59d1b
 
 enum : uint
 {
-    FLAG_NO_GPO_FILTER = 0x80000000,
-    FLAG_NO_CSE_INVOKE = 0x40000000,
+    FLAG_NO_GPO_FILTER = 0x80000000U,
+    FLAG_NO_CSE_INVOKE = 0x40000000U,
 }
 
-enum uint FLAG_ASSUME_SLOW_LINK = 0x20000000;
+enum uint FLAG_ASSUME_SLOW_LINK = 0x20000000U;
 
 enum : uint
 {
-    FLAG_LOOPBACK_MERGE   = 0x10000000,
-    FLAG_LOOPBACK_REPLACE = 0x08000000,
+    FLAG_LOOPBACK_MERGE   = 0x10000000U,
+    FLAG_LOOPBACK_REPLACE = 0x08000000U,
 }
 
-enum uint FLAG_ASSUME_USER_WQLFILTER_TRUE = 0x04000000;
-enum uint FLAG_ASSUME_COMP_WQLFILTER_TRUE = 0x02000000;
-enum uint FLAG_PLANNING_MODE = 0x01000000;
+enum uint FLAG_ASSUME_USER_WQLFILTER_TRUE = 0x04000000U;
+enum uint FLAG_ASSUME_COMP_WQLFILTER_TRUE = 0x02000000U;
+enum uint FLAG_PLANNING_MODE = 0x01000000U;
 
 enum : uint
 {
-    FLAG_NO_USER     = 0x00000001,
-    FLAG_NO_COMPUTER = 0x00000002,
+    FLAG_NO_USER     = 0x00000001U,
+    FLAG_NO_COMPUTER = 0x00000002U,
 }
 
-enum uint FLAG_FORCE_CREATENAMESPACE = 0x00000004;
-enum uint RSOP_USER_ACCESS_DENIED = 0x00000001;
-enum uint RSOP_COMPUTER_ACCESS_DENIED = 0x00000002;
-enum uint RSOP_TEMPNAMESPACE_EXISTS = 0x00000004;
+enum uint FLAG_FORCE_CREATENAMESPACE = 0x00000004U;
+enum uint RSOP_USER_ACCESS_DENIED = 0x00000001U;
+enum uint RSOP_COMPUTER_ACCESS_DENIED = 0x00000002U;
+enum uint RSOP_TEMPNAMESPACE_EXISTS = 0x00000004U;
 
 enum : uint
 {
-    LOCALSTATE_ASSIGNED            = 0x00000001,
-    LOCALSTATE_PUBLISHED           = 0x00000002,
-    LOCALSTATE_UNINSTALL_UNMANAGED = 0x00000004,
-}
-
-enum : uint
-{
-    LOCALSTATE_POLICYREMOVE_ORPHAN    = 0x00000008,
-    LOCALSTATE_POLICYREMOVE_UNINSTALL = 0x00000010,
+    LOCALSTATE_ASSIGNED            = 0x00000001U,
+    LOCALSTATE_PUBLISHED           = 0x00000002U,
+    LOCALSTATE_UNINSTALL_UNMANAGED = 0x00000004U,
 }
 
 enum : uint
 {
-    LOCALSTATE_ORPHANED    = 0x00000020,
-    LOCALSTATE_UNINSTALLED = 0x00000040,
+    LOCALSTATE_POLICYREMOVE_ORPHAN    = 0x00000008U,
+    LOCALSTATE_POLICYREMOVE_UNINSTALL = 0x00000010U,
 }
 
 enum : uint
 {
-    MANAGED_APPS_USERAPPLICATIONS  = 0x00000001,
-    MANAGED_APPS_FROMCATEGORY      = 0x00000002,
-    MANAGED_APPS_INFOLEVEL_DEFAULT = 0x00010000,
+    LOCALSTATE_ORPHANED    = 0x00000020U,
+    LOCALSTATE_UNINSTALLED = 0x00000040U,
 }
 
 enum : uint
 {
-    MANAGED_APPTYPE_WINDOWSINSTALLER = 0x00000001,
-    MANAGED_APPTYPE_SETUPEXE         = 0x00000002,
-    MANAGED_APPTYPE_UNSUPPORTED      = 0x00000003,
+    MANAGED_APPS_USERAPPLICATIONS  = 0x00000001U,
+    MANAGED_APPS_FROMCATEGORY      = 0x00000002U,
+    MANAGED_APPS_INFOLEVEL_DEFAULT = 0x00010000U,
+}
+
+enum : uint
+{
+    MANAGED_APPTYPE_WINDOWSINSTALLER = 0x00000001U,
+    MANAGED_APPTYPE_SETUPEXE         = 0x00000002U,
+    MANAGED_APPTYPE_UNSUPPORTED      = 0x00000003U,
 }
 
 enum GUID CLSID_GPESnapIn = GUID("8fc0b734-a0e1-11d1-a7d3-0000f87571e3");
@@ -382,17 +402,17 @@ enum : GUID
     NODEID_RSOPUserSWSettings = GUID("e52c5ce3-fd27-4402-84de-d9a5f2858910"),
 }
 
-enum uint RSOP_INFO_FLAG_DIAGNOSTIC_MODE = 0x00000001;
+enum uint RSOP_INFO_FLAG_DIAGNOSTIC_MODE = 0x00000001U;
 
 enum : uint
 {
-    GPO_BROWSE_DISABLENEW      = 0x00000001,
-    GPO_BROWSE_NOCOMPUTERS     = 0x00000002,
-    GPO_BROWSE_NODSGPOS        = 0x00000004,
-    GPO_BROWSE_OPENBUTTON      = 0x00000008,
-    GPO_BROWSE_INITTOALL       = 0x00000010,
-    GPO_BROWSE_NOUSERGPOS      = 0x00000020,
-    GPO_BROWSE_SENDAPPLYONEDIT = 0x00000040,
+    GPO_BROWSE_DISABLENEW      = 0x00000001U,
+    GPO_BROWSE_NOCOMPUTERS     = 0x00000002U,
+    GPO_BROWSE_NODSGPOS        = 0x00000004U,
+    GPO_BROWSE_OPENBUTTON      = 0x00000008U,
+    GPO_BROWSE_INITTOALL       = 0x00000010U,
+    GPO_BROWSE_NOUSERGPOS      = 0x00000020U,
+    GPO_BROWSE_SENDAPPLYONEDIT = 0x00000040U,
 }
 
 // Callbacks
@@ -414,7 +434,7 @@ alias PFNGENERATEGROUPPOLICY = uint function(uint dwFlags, BOOL* pbAbort, PWSTR 
 
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/userenv/ns-userenv-group_policy_objecta))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/userenv/ns-userenv-group_policy_objecta
 struct GROUP_POLICY_OBJECTA
 {
     uint     dwOptions;
@@ -433,7 +453,7 @@ struct GROUP_POLICY_OBJECTA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/userenv/ns-userenv-group_policy_objectw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/userenv/ns-userenv-group_policy_objectw
 struct GROUP_POLICY_OBJECTW
 {
     uint      dwOptions;
@@ -451,7 +471,7 @@ struct GROUP_POLICY_OBJECTW
     PWSTR     lpLink;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/userenv/ns-userenv-rsop_target))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/userenv/ns-userenv-rsop_target
 struct RSOP_TARGET
 {
     PWSTR         pwszAccountName;
@@ -462,7 +482,7 @@ struct RSOP_TARGET
     IWbemServices pWbemServices;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/userenv/ns-userenv-policysettingstatusinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/userenv/ns-userenv-policysettingstatusinfo
 struct POLICYSETTINGSTATUSINFO
 {
     PWSTR         szKey;
@@ -474,23 +494,31 @@ struct POLICYSETTINGSTATUSINFO
     SYSTEMTIME    timeLogged;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmgmt/ns-appmgmt-installspec))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmgmt/ns-appmgmt-installspec
 union INSTALLSPEC
 {
-    _AppName_e__Struct  AppName;
-    PWSTR               FileExt;
-    PWSTR               ProgId;
-    _COMClass_e__Struct COMClass;
+    struct AppName
+    {
+        PWSTR Name;
+        GUID  GPOId;
+    }
+    PWSTR FileExt;
+    PWSTR ProgId;
+    struct COMClass
+    {
+        GUID Clsid;
+        uint ClsCtx;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmgmt/ns-appmgmt-installdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmgmt/ns-appmgmt-installdata
 struct INSTALLDATA
 {
     INSTALLSPECTYPE Type;
     INSTALLSPEC     Spec;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmgmt/ns-appmgmt-localmanagedapplication))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmgmt/ns-appmgmt-localmanagedapplication
 struct LOCALMANAGEDAPPLICATION
 {
     PWSTR pszDeploymentName;
@@ -499,7 +527,7 @@ struct LOCALMANAGEDAPPLICATION
     uint  dwState;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmgmt/ns-appmgmt-managedapplication))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmgmt/ns-appmgmt-managedapplication
 struct MANAGEDAPPLICATION
 {
     PWSTR  pszPackageName;
@@ -520,7 +548,7 @@ struct MANAGEDAPPLICATION
     BOOL   bInstalled;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpedit/ns-gpedit-gpobrowseinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/ns-gpedit-gpobrowseinfo
 struct GPOBROWSEINFO
 {
     uint  dwSize;
@@ -782,102 +810,102 @@ struct GPMStarterGPOCollection;
 
 @GUID("f5fae809-3bd6-4da9-a65e-17665b41d763")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpm))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpm
 interface IGPM : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpm-getdomain))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpm-getdomain
     HRESULT GetDomain(BSTR bstrDomain, BSTR bstrDomainController, int lDCFlags, IGPMDomain* pIGPMDomain);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpm-getbackupdir))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpm-getbackupdir
     HRESULT GetBackupDir(BSTR bstrBackupDir, IGPMBackupDir* pIGPMBackupDir);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpm-getsitescontainer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpm-getsitescontainer
     HRESULT GetSitesContainer(BSTR bstrForest, BSTR bstrDomain, BSTR bstrDomainController, int lDCFlags, 
                               IGPMSitesContainer* ppIGPMSitesContainer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpm-getrsop))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpm-getrsop
     HRESULT GetRSOP(GPMRSOPMode gpmRSoPMode, BSTR bstrNamespace, int lFlags, IGPMRSOP* ppIGPMRSOP);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpm-createpermission))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpm-createpermission
     HRESULT CreatePermission(BSTR bstrTrustee, GPMPermissionType perm, VARIANT_BOOL bInheritable, 
                              IGPMPermission* ppPerm);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpm-createsearchcriteria))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpm-createsearchcriteria
     HRESULT CreateSearchCriteria(IGPMSearchCriteria* ppIGPMSearchCriteria);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpm-createtrustee))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpm-createtrustee
     HRESULT CreateTrustee(BSTR bstrTrustee, IGPMTrustee* ppIGPMTrustee);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpm-getclientsideextensions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpm-getclientsideextensions
     HRESULT GetClientSideExtensions(IGPMCSECollection* ppIGPMCSECollection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpm-getconstants))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpm-getconstants
     HRESULT GetConstants(IGPMConstants* ppIGPMConstants);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpm-getmigrationtable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpm-getmigrationtable
     HRESULT GetMigrationTable(BSTR bstrMigrationTablePath, IGPMMigrationTable* ppMigrationTable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpm-createmigrationtable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpm-createmigrationtable
     HRESULT CreateMigrationTable(IGPMMigrationTable* ppMigrationTable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpm-initializereporting))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpm-initializereporting
     HRESULT InitializeReporting(BSTR bstrAdmPath);
 }
 
 @GUID("6b21cc14-5a00-4f44-a738-feec8a94c7e3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmdomain))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmdomain
 interface IGPMDomain : IDispatch
 {
     HRESULT get_DomainController(BSTR* pVal);
     HRESULT get_Domain(BSTR* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmdomain-creategpo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmdomain-creategpo
     HRESULT CreateGPO(IGPMGPO* ppNewGPO);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmdomain-getgpo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmdomain-getgpo
     HRESULT GetGPO(BSTR bstrGuid, IGPMGPO* ppGPO);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmdomain-searchgpos))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmdomain-searchgpos
     HRESULT SearchGPOs(IGPMSearchCriteria pIGPMSearchCriteria, IGPMGPOCollection* ppIGPMGPOCollection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmdomain-restoregpo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmdomain-restoregpo
     HRESULT RestoreGPO(IGPMBackup pIGPMBackup, int lDCFlags, VARIANT* pvarGPMProgress, VARIANT* pvarGPMCancel, 
                        IGPMResult* ppIGPMResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmdomain-getsom))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmdomain-getsom
     HRESULT GetSOM(BSTR bstrPath, IGPMSOM* ppSOM);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmdomain-searchsoms))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmdomain-searchsoms
     HRESULT SearchSOMs(IGPMSearchCriteria pIGPMSearchCriteria, IGPMSOMCollection* ppIGPMSOMCollection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmdomain-getwmifilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmdomain-getwmifilter
     HRESULT GetWMIFilter(BSTR bstrPath, IGPMWMIFilter* ppWMIFilter);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmdomain-searchwmifilters))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmdomain-searchwmifilters
     HRESULT SearchWMIFilters(IGPMSearchCriteria pIGPMSearchCriteria, 
                              IGPMWMIFilterCollection* ppIGPMWMIFilterCollection);
 }
 
 @GUID("b1568bed-0a93-4acc-810f-afe7081019b9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmbackupdir))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmbackupdir
 interface IGPMBackupDir : IDispatch
 {
     HRESULT get_BackupDirectory(BSTR* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmbackupdir-getbackup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmbackupdir-getbackup
     HRESULT GetBackup(BSTR bstrID, IGPMBackup* ppBackup);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmbackupdir-searchbackups))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmbackupdir-searchbackups
     HRESULT SearchBackups(IGPMSearchCriteria pIGPMSearchCriteria, IGPMBackupCollection* ppIGPMBackupCollection);
 }
 
 @GUID("4725a899-2782-4d27-a6bb-d499246ffd72")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmsitescontainer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmsitescontainer
 interface IGPMSitesContainer : IDispatch
 {
     HRESULT get_DomainController(BSTR* pVal);
     HRESULT get_Domain(BSTR* pVal);
     HRESULT get_Forest(BSTR* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmsitescontainer-getsite))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmsitescontainer-getsite
     HRESULT GetSite(BSTR bstrSiteName, IGPMSOM* ppSOM);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmsitescontainer-searchsites))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmsitescontainer-searchsites
     HRESULT SearchSites(IGPMSearchCriteria pIGPMSearchCriteria, IGPMSOMCollection* ppIGPMSOMCollection);
 }
 
 @GUID("d6f11c42-829b-48d4-83f5-3615b67dfc22")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmsearchcriteria))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmsearchcriteria
 interface IGPMSearchCriteria : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmsearchcriteria-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmsearchcriteria-add
     HRESULT Add(GPMSearchProperty searchProperty, GPMSearchOperation searchOperation, VARIANT varValue);
 }
 
 @GUID("3b466da8-c1a4-4b2a-999a-befcdd56cefb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmtrustee))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmtrustee
 interface IGPMTrustee : IDispatch
 {
     HRESULT get_TrusteeSid(BSTR* bstrVal);
@@ -889,7 +917,7 @@ interface IGPMTrustee : IDispatch
 
 @GUID("35ebca40-e1a1-4a02-8905-d79416fb464a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmpermission))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmpermission
 interface IGPMPermission : IDispatch
 {
     HRESULT get_Inherited(VARIANT_BOOL* pVal);
@@ -901,26 +929,26 @@ interface IGPMPermission : IDispatch
 
 @GUID("b6c31ed4-1c93-4d3e-ae84-eb6d61161b60")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmsecurityinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmsecurityinfo
 interface IGPMSecurityInfo : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmsecurityinfo-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmsecurityinfo-get_count
     HRESULT get_Count(int* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmsecurityinfo-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmsecurityinfo-get_item
     HRESULT get_Item(int lIndex, VARIANT* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmsecurityinfo-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmsecurityinfo-get__newenum
     HRESULT get__NewEnum(IEnumVARIANT* ppEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmsecurityinfo-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmsecurityinfo-add
     HRESULT Add(IGPMPermission pPerm);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmsecurityinfo-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmsecurityinfo-remove
     HRESULT Remove(IGPMPermission pPerm);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmsecurityinfo-removetrustee))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmsecurityinfo-removetrustee
     HRESULT RemoveTrustee(BSTR bstrTrustee);
 }
 
 @GUID("d8a16a35-3b0d-416b-8d02-4df6f95a7119")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmbackup))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmbackup
 interface IGPMBackup : IDispatch
 {
     HRESULT get_ID(BSTR* pVal);
@@ -930,66 +958,66 @@ interface IGPMBackup : IDispatch
     HRESULT get_Timestamp(double* pVal);
     HRESULT get_Comment(BSTR* pVal);
     HRESULT get_BackupDir(BSTR* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmbackup-delete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmbackup-delete
     HRESULT Delete();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmbackup-generatereport))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmbackup-generatereport
     HRESULT GenerateReport(GPMReportType gpmReportType, VARIANT* pvarGPMProgress, VARIANT* pvarGPMCancel, 
                            IGPMResult* ppIGPMResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmbackup-generatereporttofile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmbackup-generatereporttofile
     HRESULT GenerateReportToFile(GPMReportType gpmReportType, BSTR bstrTargetFilePath, IGPMResult* ppIGPMResult);
 }
 
 @GUID("c786fc0f-26d8-4bab-a745-39ca7e800cac")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmbackupcollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmbackupcollection
 interface IGPMBackupCollection : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmbackupcollection-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmbackupcollection-get_count
     HRESULT get_Count(int* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmbackupcollection-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmbackupcollection-get_item
     HRESULT get_Item(int lIndex, VARIANT* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmbackupcollection-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmbackupcollection-get__newenum
     HRESULT get__NewEnum(IEnumVARIANT* ppIGPMBackup);
 }
 
 @GUID("c0a7f09e-05a1-4f0c-8158-9e5c33684f6b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmsom))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmsom
 interface IGPMSOM : IDispatch
 {
     HRESULT get_GPOInheritanceBlocked(VARIANT_BOOL* pVal);
     HRESULT put_GPOInheritanceBlocked(VARIANT_BOOL newVal);
     HRESULT get_Name(BSTR* pVal);
     HRESULT get_Path(BSTR* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmsom-creategpolink))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmsom-creategpolink
     HRESULT CreateGPOLink(int lLinkPos, IGPMGPO pGPO, IGPMGPOLink* ppNewGPOLink);
     HRESULT get_Type(GPMSOMType* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmsom-getgpolinks))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmsom-getgpolinks
     HRESULT GetGPOLinks(IGPMGPOLinksCollection* ppGPOLinks);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmsom-getinheritedgpolinks))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmsom-getinheritedgpolinks
     HRESULT GetInheritedGPOLinks(IGPMGPOLinksCollection* ppGPOLinks);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmsom-getsecurityinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmsom-getsecurityinfo
     HRESULT GetSecurityInfo(IGPMSecurityInfo* ppSecurityInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmsom-setsecurityinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmsom-setsecurityinfo
     HRESULT SetSecurityInfo(IGPMSecurityInfo pSecurityInfo);
 }
 
 @GUID("adc1688e-00e4-4495-abba-bed200df0cab")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmsomcollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmsomcollection
 interface IGPMSOMCollection : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmsomcollection-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmsomcollection-get_count
     HRESULT get_Count(int* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmsomcollection-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmsomcollection-get_item
     HRESULT get_Item(int lIndex, VARIANT* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmsomcollection-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmsomcollection-get__newenum
     HRESULT get__NewEnum(IEnumVARIANT* ppIGPMSOM);
 }
 
 @GUID("ef2ff9b4-3c27-459a-b979-038305cec75d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmwmifilter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmwmifilter
 interface IGPMWMIFilter : IDispatch
 {
     HRESULT get_Path(BSTR* pVal);
@@ -997,30 +1025,30 @@ interface IGPMWMIFilter : IDispatch
     HRESULT get_Name(BSTR* pVal);
     HRESULT put_Description(BSTR newVal);
     HRESULT get_Description(BSTR* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmwmifilter-getquerylist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmwmifilter-getquerylist
     HRESULT GetQueryList(VARIANT* pQryList);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmwmifilter-getsecurityinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmwmifilter-getsecurityinfo
     HRESULT GetSecurityInfo(IGPMSecurityInfo* ppSecurityInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmwmifilter-setsecurityinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmwmifilter-setsecurityinfo
     HRESULT SetSecurityInfo(IGPMSecurityInfo pSecurityInfo);
 }
 
 @GUID("5782d582-1a36-4661-8a94-c3c32551945b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmwmifiltercollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmwmifiltercollection
 interface IGPMWMIFilterCollection : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmwmifiltercollection-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmwmifiltercollection-get_count
     HRESULT get_Count(int* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmwmifiltercollection-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmwmifiltercollection-get_item
     HRESULT get_Item(int lIndex, VARIANT* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmwmifiltercollection-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmwmifiltercollection-get__newenum
     HRESULT get__NewEnum(IEnumVARIANT* pVal);
 }
 
 @GUID("49ed785a-3237-4ff2-b1f0-fdf5a8d5a1ee")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmrsop))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmrsop
 interface IGPMRSOP : IDispatch
 {
     HRESULT get_Mode(GPMRSOPMode* pVal);
@@ -1053,22 +1081,22 @@ interface IGPMRSOP : IDispatch
     HRESULT get_PlanningComputerWMIFilters(VARIANT* varVal);
     HRESULT put_PlanningComputerSecurityGroups(VARIANT varVal);
     HRESULT get_PlanningComputerSecurityGroups(VARIANT* varVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmrsop-loggingenumerateusers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmrsop-loggingenumerateusers
     HRESULT LoggingEnumerateUsers(VARIANT* varVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmrsop-createqueryresults))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmrsop-createqueryresults
     HRESULT CreateQueryResults();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmrsop-releasequeryresults))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmrsop-releasequeryresults
     HRESULT ReleaseQueryResults();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmrsop-generatereport))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmrsop-generatereport
     HRESULT GenerateReport(GPMReportType gpmReportType, VARIANT* pvarGPMProgress, VARIANT* pvarGPMCancel, 
                            IGPMResult* ppIGPMResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmrsop-generatereporttofile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmrsop-generatereporttofile
     HRESULT GenerateReportToFile(GPMReportType gpmReportType, BSTR bstrTargetFilePath, IGPMResult* ppIGPMResult);
 }
 
 @GUID("58cc4352-1ca3-48e5-9864-1da4d6e0d60f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmgpo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmgpo
 interface IGPMGPO : IDispatch
 {
     HRESULT get_DisplayName(BSTR* pVal);
@@ -1082,64 +1110,64 @@ interface IGPMGPO : IDispatch
     HRESULT get_ComputerDSVersionNumber(int* pVal);
     HRESULT get_UserSysvolVersionNumber(int* pVal);
     HRESULT get_ComputerSysvolVersionNumber(int* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpo-getwmifilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpo-getwmifilter
     HRESULT GetWMIFilter(IGPMWMIFilter* ppIGPMWMIFilter);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpo-setwmifilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpo-setwmifilter
     HRESULT SetWMIFilter(IGPMWMIFilter pIGPMWMIFilter);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpo-setuserenabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpo-setuserenabled
     HRESULT SetUserEnabled(VARIANT_BOOL vbEnabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpo-setcomputerenabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpo-setcomputerenabled
     HRESULT SetComputerEnabled(VARIANT_BOOL vbEnabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpo-isuserenabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpo-isuserenabled
     HRESULT IsUserEnabled(VARIANT_BOOL* pvbEnabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpo-iscomputerenabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpo-iscomputerenabled
     HRESULT IsComputerEnabled(VARIANT_BOOL* pvbEnabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpo-getsecurityinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpo-getsecurityinfo
     HRESULT GetSecurityInfo(IGPMSecurityInfo* ppSecurityInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpo-setsecurityinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpo-setsecurityinfo
     HRESULT SetSecurityInfo(IGPMSecurityInfo pSecurityInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpo-delete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpo-delete
     HRESULT Delete();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpo-backup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpo-backup
     HRESULT Backup(BSTR bstrBackupDir, BSTR bstrComment, VARIANT* pvarGPMProgress, VARIANT* pvarGPMCancel, 
                    IGPMResult* ppIGPMResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpo-import))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpo-import
     HRESULT Import(int lFlags, IGPMBackup pIGPMBackup, VARIANT* pvarMigrationTable, VARIANT* pvarGPMProgress, 
                    VARIANT* pvarGPMCancel, IGPMResult* ppIGPMResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpo-generatereport))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpo-generatereport
     HRESULT GenerateReport(GPMReportType gpmReportType, VARIANT* pvarGPMProgress, VARIANT* pvarGPMCancel, 
                            IGPMResult* ppIGPMResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpo-generatereporttofile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpo-generatereporttofile
     HRESULT GenerateReportToFile(GPMReportType gpmReportType, BSTR bstrTargetFilePath, IGPMResult* ppIGPMResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpo-copyto))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpo-copyto
     HRESULT CopyTo(int lFlags, IGPMDomain pIGPMDomain, VARIANT* pvarNewDisplayName, VARIANT* pvarMigrationTable, 
                    VARIANT* pvarGPMProgress, VARIANT* pvarGPMCancel, IGPMResult* ppIGPMResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpo-setsecuritydescriptor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpo-setsecuritydescriptor
     HRESULT SetSecurityDescriptor(int lFlags, IDispatch pSD);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpo-getsecuritydescriptor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpo-getsecuritydescriptor
     HRESULT GetSecurityDescriptor(int lFlags, IDispatch* ppSD);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpo-isaclconsistent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpo-isaclconsistent
     HRESULT IsACLConsistent(VARIANT_BOOL* pvbConsistent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpo-makeaclconsistent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpo-makeaclconsistent
     HRESULT MakeACLConsistent();
 }
 
 @GUID("f0f0d5cf-70ca-4c39-9e29-b642f8726c01")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmgpocollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmgpocollection
 interface IGPMGPOCollection : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpocollection-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpocollection-get_count
     HRESULT get_Count(int* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpocollection-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpocollection-get_item
     HRESULT get_Item(int lIndex, VARIANT* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpocollection-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpocollection-get__newenum
     HRESULT get__NewEnum(IEnumVARIANT* ppIGPMGPOs);
 }
 
 @GUID("434b99bd-5de7-478a-809c-c251721df70c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmgpolink))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmgpolink
 interface IGPMGPOLink : IDispatch
 {
     HRESULT get_GPOID(BSTR* pVal);
@@ -1150,99 +1178,99 @@ interface IGPMGPOLink : IDispatch
     HRESULT put_Enforced(VARIANT_BOOL newVal);
     HRESULT get_SOMLinkOrder(int* lVal);
     HRESULT get_SOM(IGPMSOM* ppIGPMSOM);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpolink-delete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpolink-delete
     HRESULT Delete();
 }
 
 @GUID("189d7b68-16bd-4d0d-a2ec-2e6aa2288c7f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmgpolinkscollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmgpolinkscollection
 interface IGPMGPOLinksCollection : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpolinkscollection-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpolinkscollection-get_count
     HRESULT get_Count(int* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpolinkscollection-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpolinkscollection-get_item
     HRESULT get_Item(int lIndex, VARIANT* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpolinkscollection-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmgpolinkscollection-get__newenum
     HRESULT get__NewEnum(IEnumVARIANT* ppIGPMLinks);
 }
 
 @GUID("2e52a97d-0a4a-4a6f-85db-201622455da0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmcsecollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmcsecollection
 interface IGPMCSECollection : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmcsecollection-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmcsecollection-get_count
     HRESULT get_Count(int* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmcsecollection-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmcsecollection-get_item
     HRESULT get_Item(int lIndex, VARIANT* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmcsecollection-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmcsecollection-get__newenum
     HRESULT get__NewEnum(IEnumVARIANT* ppIGPMCSEs);
 }
 
 @GUID("69da7488-b8db-415e-9266-901be4d49928")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmclientsideextension))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmclientsideextension
 interface IGPMClientSideExtension : IDispatch
 {
     HRESULT get_ID(BSTR* pVal);
     HRESULT get_DisplayName(BSTR* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmclientsideextension-isuserenabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmclientsideextension-isuserenabled
     HRESULT IsUserEnabled(VARIANT_BOOL* pvbEnabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmclientsideextension-iscomputerenabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmclientsideextension-iscomputerenabled
     HRESULT IsComputerEnabled(VARIANT_BOOL* pvbEnabled);
 }
 
 @GUID("ddc67754-be67-4541-8166-f48166868c9c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmasynccancel))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmasynccancel
 interface IGPMAsyncCancel : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmasynccancel-cancel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmasynccancel-cancel
     HRESULT Cancel();
 }
 
 @GUID("6aac29f8-5948-4324-bf70-423818942dbc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmasyncprogress))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmasyncprogress
 interface IGPMAsyncProgress : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmasyncprogress-status))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmasyncprogress-status
     HRESULT Status(int lProgressNumerator, int lProgressDenominator, HRESULT hrStatus, VARIANT* pResult, 
                    IGPMStatusMsgCollection ppIGPMStatusMsgCollection);
 }
 
 @GUID("9b6e1af0-1a92-40f3-a59d-f36ac1f728b7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmstatusmsgcollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmstatusmsgcollection
 interface IGPMStatusMsgCollection : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstatusmsgcollection-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstatusmsgcollection-get_count
     HRESULT get_Count(int* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstatusmsgcollection-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstatusmsgcollection-get_item
     HRESULT get_Item(int lIndex, VARIANT* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstatusmsgcollection-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstatusmsgcollection-get__newenum
     HRESULT get__NewEnum(IEnumVARIANT* pVal);
 }
 
 @GUID("8496c22f-f3de-4a1f-8f58-603caaa93d7b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmstatusmessage))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmstatusmessage
 interface IGPMStatusMessage : IDispatch
 {
     HRESULT get_ObjectPath(BSTR* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstatusmessage-errorcode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstatusmessage-errorcode
     HRESULT ErrorCode();
     HRESULT get_ExtensionName(BSTR* pVal);
     HRESULT get_SettingsName(BSTR* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstatusmessage-operationcode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstatusmessage-operationcode
     HRESULT OperationCode();
     HRESULT get_Message(BSTR* pVal);
 }
 
 @GUID("50ef73e6-d35c-4c8d-be63-7ea5d2aac5c4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmconstants))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmconstants
 interface IGPMConstants : IDispatch
 {
     HRESULT get_PermGPOApply(GPMPermissionType* pVal);
@@ -1279,7 +1307,7 @@ interface IGPMConstants : IDispatch
     HRESULT get_SOMSite(GPMSOMType* pVal);
     HRESULT get_SOMDomain(GPMSOMType* pVal);
     HRESULT get_SOMOU(GPMSOMType* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmconstants-get_securityflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmconstants-get_securityflags
     HRESULT get_SecurityFlags(VARIANT_BOOL vbOwner, VARIANT_BOOL vbGroup, VARIANT_BOOL vbDACL, VARIANT_BOOL vbSACL, 
                               int* pVal);
     HRESULT get_DoNotValidateDC(int* pVal);
@@ -1311,31 +1339,31 @@ interface IGPMConstants : IDispatch
 
 @GUID("86dff7e9-f76f-42ab-9570-cebc6be8a52d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmresult))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmresult
 interface IGPMResult : IDispatch
 {
     HRESULT get_Status(IGPMStatusMsgCollection* ppIGPMStatusMsgCollection);
     HRESULT get_Result(VARIANT* pvarResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmresult-overallstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmresult-overallstatus
     HRESULT OverallStatus();
 }
 
 @GUID("bb0bf49b-e53f-443f-b807-8be22bfb6d42")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmmapentrycollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmmapentrycollection
 interface IGPMMapEntryCollection : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmmapentrycollection-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmmapentrycollection-get_count
     HRESULT get_Count(int* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmmapentrycollection-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmmapentrycollection-get_item
     HRESULT get_Item(int lIndex, VARIANT* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmmapentrycollection-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmmapentrycollection-get__newenum
     HRESULT get__NewEnum(IEnumVARIANT* pVal);
 }
 
 @GUID("8e79ad06-2381-4444-be4c-ff693e6e6f2b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmmapentry))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmmapentry
 interface IGPMMapEntry : IDispatch
 {
     HRESULT get_Source(BSTR* pbstrSource);
@@ -1346,56 +1374,56 @@ interface IGPMMapEntry : IDispatch
 
 @GUID("48f823b1-efaf-470b-b6ed-40d14ee1a4ec")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmmigrationtable))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmmigrationtable
 interface IGPMMigrationTable : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmmigrationtable-save))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmmigrationtable-save
     HRESULT Save(BSTR bstrMigrationTablePath);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmmigrationtable-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmmigrationtable-add
     HRESULT Add(int lFlags, VARIANT var);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmmigrationtable-addentry))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmmigrationtable-addentry
     HRESULT AddEntry(BSTR bstrSource, GPMEntryType gpmEntryType, VARIANT* pvarDestination, IGPMMapEntry* ppEntry);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmmigrationtable-getentry))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmmigrationtable-getentry
     HRESULT GetEntry(BSTR bstrSource, IGPMMapEntry* ppEntry);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmmigrationtable-deleteentry))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmmigrationtable-deleteentry
     HRESULT DeleteEntry(BSTR bstrSource);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmmigrationtable-updatedestination))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmmigrationtable-updatedestination
     HRESULT UpdateDestination(BSTR bstrSource, VARIANT* pvarDestination, IGPMMapEntry* ppEntry);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmmigrationtable-validate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmmigrationtable-validate
     HRESULT Validate(IGPMResult* ppResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmmigrationtable-getentries))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmmigrationtable-getentries
     HRESULT GetEntries(IGPMMapEntryCollection* ppEntries);
 }
 
 @GUID("f8dc55ed-3ba0-4864-aad4-d365189ee1d5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmbackupdirex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmbackupdirex
 interface IGPMBackupDirEx : IDispatch
 {
     HRESULT get_BackupDir(BSTR* pbstrBackupDir);
     HRESULT get_BackupType(GPMBackupType* pgpmBackupType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmbackupdirex-getbackup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmbackupdirex-getbackup
     HRESULT GetBackup(BSTR bstrID, VARIANT* pvarBackup);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmbackupdirex-searchbackups))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmbackupdirex-searchbackups
     HRESULT SearchBackups(IGPMSearchCriteria pIGPMSearchCriteria, VARIANT* pvarBackupCollection);
 }
 
 @GUID("c998031d-add0-4bb5-8dea-298505d8423b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmstartergpobackupcollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmstartergpobackupcollection
 interface IGPMStarterGPOBackupCollection : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstartergpobackupcollection-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstartergpobackupcollection-get_count
     HRESULT get_Count(int* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstartergpobackupcollection-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstartergpobackupcollection-get_item
     HRESULT get_Item(int lIndex, VARIANT* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstartergpobackupcollection-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstartergpobackupcollection-get__newenum
     HRESULT get__NewEnum(IEnumVARIANT* ppIGPMTmplBackup);
 }
 
 @GUID("51d98eda-a87e-43dd-b80a-0b66ef1938d6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmstartergpobackup))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmstartergpobackup
 interface IGPMStarterGPOBackup : IDispatch
 {
     HRESULT get_BackupDir(BSTR* pbstrBackupDir);
@@ -1406,29 +1434,29 @@ interface IGPMStarterGPOBackup : IDispatch
     HRESULT get_ID(BSTR* pbstrID);
     HRESULT get_Timestamp(double* pTimestamp);
     HRESULT get_Type(GPMStarterGPOType* pType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstartergpobackup-delete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstartergpobackup-delete
     HRESULT Delete();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstartergpobackup-generatereport))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstartergpobackup-generatereport
     HRESULT GenerateReport(GPMReportType gpmReportType, VARIANT* pvarGPMProgress, VARIANT* pvarGPMCancel, 
                            IGPMResult* ppIGPMResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstartergpobackup-generatereporttofile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstartergpobackup-generatereporttofile
     HRESULT GenerateReportToFile(GPMReportType gpmReportType, BSTR bstrTargetFilePath, IGPMResult* ppIGPMResult);
 }
 
 @GUID("00238f8a-3d86-41ac-8f5e-06a6638a634a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpm2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpm2
 interface IGPM2 : IGPM
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpm2-getbackupdirex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpm2-getbackupdirex
     HRESULT GetBackupDirEx(BSTR bstrBackupDir, GPMBackupType backupDirType, IGPMBackupDirEx* ppIGPMBackupDirEx);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpm2-initializereportingex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpm2-initializereportingex
     HRESULT InitializeReportingEx(BSTR bstrAdmPath, int reportingOptions);
 }
 
 @GUID("dfc3f61b-8880-4490-9337-d29c7ba8c2f0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmstartergpo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmstartergpo
 interface IGPMStarterGPO : IDispatch
 {
     HRESULT get_DisplayName(BSTR* pVal);
@@ -1444,67 +1472,67 @@ interface IGPMStarterGPO : IDispatch
     HRESULT get_ComputerVersion(ushort* pVal);
     HRESULT get_UserVersion(ushort* pVal);
     HRESULT get_StarterGPOVersion(BSTR* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstartergpo-delete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstartergpo-delete
     HRESULT Delete();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstartergpo-save))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstartergpo-save
     HRESULT Save(BSTR bstrSaveFile, VARIANT_BOOL bOverwrite, VARIANT_BOOL bSaveAsSystem, VARIANT* bstrLanguage, 
                  VARIANT* bstrAuthor, VARIANT* bstrProduct, VARIANT* bstrUniqueID, VARIANT* bstrVersion, 
                  VARIANT* pvarGPMProgress, VARIANT* pvarGPMCancel, IGPMResult* ppIGPMResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstartergpo-backup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstartergpo-backup
     HRESULT Backup(BSTR bstrBackupDir, BSTR bstrComment, VARIANT* pvarGPMProgress, VARIANT* pvarGPMCancel, 
                    IGPMResult* ppIGPMResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstartergpo-copyto))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstartergpo-copyto
     HRESULT CopyTo(VARIANT* pvarNewDisplayName, VARIANT* pvarGPMProgress, VARIANT* pvarGPMCancel, 
                    IGPMResult* ppIGPMResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstartergpo-generatereport))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstartergpo-generatereport
     HRESULT GenerateReport(GPMReportType gpmReportType, VARIANT* pvarGPMProgress, VARIANT* pvarGPMCancel, 
                            IGPMResult* ppIGPMResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstartergpo-generatereporttofile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstartergpo-generatereporttofile
     HRESULT GenerateReportToFile(GPMReportType gpmReportType, BSTR bstrTargetFilePath, IGPMResult* ppIGPMResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstartergpo-getsecurityinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstartergpo-getsecurityinfo
     HRESULT GetSecurityInfo(IGPMSecurityInfo* ppSecurityInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstartergpo-setsecurityinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstartergpo-setsecurityinfo
     HRESULT SetSecurityInfo(IGPMSecurityInfo pSecurityInfo);
 }
 
 @GUID("2e522729-2219-44ad-933a-64dfd650c423")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmstartergpocollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmstartergpocollection
 interface IGPMStarterGPOCollection : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstartergpocollection-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstartergpocollection-get_count
     HRESULT get_Count(int* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstartergpocollection-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstartergpocollection-get_item
     HRESULT get_Item(int lIndex, VARIANT* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstartergpocollection-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmstartergpocollection-get__newenum
     HRESULT get__NewEnum(IEnumVARIANT* ppIGPMTemplates);
 }
 
 @GUID("7ca6bb8b-f1eb-490a-938d-3c4e51c768e6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmdomain2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmdomain2
 interface IGPMDomain2 : IGPMDomain
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmdomain2-createstartergpo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmdomain2-createstartergpo
     HRESULT CreateStarterGPO(IGPMStarterGPO* ppnewTemplate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmdomain2-creategpofromstartergpo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmdomain2-creategpofromstartergpo
     HRESULT CreateGPOFromStarterGPO(IGPMStarterGPO pGPOTemplate, IGPMGPO* ppnewGPO);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmdomain2-getstartergpo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmdomain2-getstartergpo
     HRESULT GetStarterGPO(BSTR bstrGuid, IGPMStarterGPO* ppTemplate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmdomain2-searchstartergpos))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmdomain2-searchstartergpos
     HRESULT SearchStarterGPOs(IGPMSearchCriteria pIGPMSearchCriteria, 
                               IGPMStarterGPOCollection* ppIGPMTemplateCollection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmdomain2-loadstartergpo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmdomain2-loadstartergpo
     HRESULT LoadStarterGPO(BSTR bstrLoadFile, VARIANT_BOOL bOverwrite, VARIANT* pvarGPMProgress, 
                            VARIANT* pvarGPMCancel, IGPMResult* ppIGPMResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmdomain2-restorestartergpo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nf-gpmgmt-igpmdomain2-restorestartergpo
     HRESULT RestoreStarterGPO(IGPMStarterGPOBackup pIGPMTmplBackup, VARIANT* pvarGPMProgress, 
                               VARIANT* pvarGPMCancel, IGPMResult* ppIGPMResult);
 }
 
 @GUID("05ae21b0-ac09-4032-a26f-9e7da786dc19")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmconstants2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmconstants2
 interface IGPMConstants2 : IGPMConstants
 {
     HRESULT get_BackupTypeGPO(GPMBackupType* pVal);
@@ -1526,7 +1554,7 @@ interface IGPMConstants2 : IGPMConstants
 
 @GUID("8a66a210-b78b-4d99-88e2-c306a817c925")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmgpo2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpmgmt/nn-gpmgmt-igpmgpo2
 interface IGPMGPO2 : IGPMGPO
 {
     HRESULT get_Description(BSTR* pVal);
@@ -1553,82 +1581,82 @@ interface IGPMGPO3 : IGPMGPO2
 
 @GUID("8fc0b735-a0e1-11d1-a7d3-0000f87571e3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpedit/nn-gpedit-igpeinformation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nn-gpedit-igpeinformation
 interface IGPEInformation : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igpeinformation-getname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igpeinformation-getname
     HRESULT GetName(PWSTR pszName, int cchMaxLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igpeinformation-getdisplayname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igpeinformation-getdisplayname
     HRESULT GetDisplayName(PWSTR pszName, int cchMaxLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igpeinformation-getregistrykey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igpeinformation-getregistrykey
     HRESULT GetRegistryKey(uint dwSection, HKEY* hKey);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igpeinformation-getdspath))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igpeinformation-getdspath
     HRESULT GetDSPath(uint dwSection, PWSTR pszPath, int cchMaxPath);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igpeinformation-getfilesyspath))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igpeinformation-getfilesyspath
     HRESULT GetFileSysPath(uint dwSection, PWSTR pszPath, int cchMaxPath);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igpeinformation-getoptions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igpeinformation-getoptions
     HRESULT GetOptions(uint* dwOptions);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igpeinformation-gettype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igpeinformation-gettype
     HRESULT GetType(GROUP_POLICY_OBJECT_TYPE* gpoType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igpeinformation-gethint))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igpeinformation-gethint
     HRESULT GetHint(GROUP_POLICY_HINT_TYPE* gpHint);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igpeinformation-policychanged))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igpeinformation-policychanged
     HRESULT PolicyChanged(BOOL bMachine, BOOL bAdd, GUID* pGuidExtension, GUID* pGuidSnapin);
 }
 
 @GUID("ea502723-a23d-11d1-a7d3-0000f87571e3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpedit/nn-gpedit-igrouppolicyobject))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nn-gpedit-igrouppolicyobject
 interface IGroupPolicyObject : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igrouppolicyobject-new))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igrouppolicyobject-new
     HRESULT New(PWSTR pszDomainName, PWSTR pszDisplayName, uint dwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igrouppolicyobject-opendsgpo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igrouppolicyobject-opendsgpo
     HRESULT OpenDSGPO(PWSTR pszPath, GPO_OPEN_FLAGS dwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igrouppolicyobject-openlocalmachinegpo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igrouppolicyobject-openlocalmachinegpo
     HRESULT OpenLocalMachineGPO(GPO_OPEN_FLAGS dwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igrouppolicyobject-openremotemachinegpo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igrouppolicyobject-openremotemachinegpo
     HRESULT OpenRemoteMachineGPO(PWSTR pszComputerName, GPO_OPEN_FLAGS dwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igrouppolicyobject-save))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igrouppolicyobject-save
     HRESULT Save(BOOL bMachine, BOOL bAdd, GUID* pGuidExtension, GUID* pGuid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igrouppolicyobject-delete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igrouppolicyobject-delete
     HRESULT Delete();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igrouppolicyobject-getname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igrouppolicyobject-getname
     HRESULT GetName(PWSTR pszName, int cchMaxLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igrouppolicyobject-getdisplayname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igrouppolicyobject-getdisplayname
     HRESULT GetDisplayName(PWSTR pszName, int cchMaxLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igrouppolicyobject-setdisplayname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igrouppolicyobject-setdisplayname
     HRESULT SetDisplayName(PWSTR pszName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igrouppolicyobject-getpath))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igrouppolicyobject-getpath
     HRESULT GetPath(PWSTR pszPath, int cchMaxLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igrouppolicyobject-getdspath))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igrouppolicyobject-getdspath
     HRESULT GetDSPath(uint dwSection, PWSTR pszPath, int cchMaxPath);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igrouppolicyobject-getfilesyspath))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igrouppolicyobject-getfilesyspath
     HRESULT GetFileSysPath(uint dwSection, PWSTR pszPath, int cchMaxPath);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igrouppolicyobject-getregistrykey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igrouppolicyobject-getregistrykey
     HRESULT GetRegistryKey(GPO_SECTION dwSection, HKEY* hKey);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igrouppolicyobject-getoptions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igrouppolicyobject-getoptions
     HRESULT GetOptions(GPO_OPTIONS* dwOptions);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igrouppolicyobject-setoptions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igrouppolicyobject-setoptions
     HRESULT SetOptions(GPO_OPTIONS dwOptions, uint dwMask);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igrouppolicyobject-gettype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igrouppolicyobject-gettype
     HRESULT GetType(GROUP_POLICY_OBJECT_TYPE* gpoType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igrouppolicyobject-getmachinename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igrouppolicyobject-getmachinename
     HRESULT GetMachineName(PWSTR pszName, int cchMaxLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igrouppolicyobject-getpropertysheetpages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-igrouppolicyobject-getpropertysheetpages
     HRESULT GetPropertySheetPages(HPROPSHEETPAGE** hPages, uint* uPageCount);
 }
 
 @GUID("9a5a81b5-d9c7-49ef-9d11-ddf50968c48d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpedit/nn-gpedit-irsopinformation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nn-gpedit-irsopinformation
 interface IRSOPInformation : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-irsopinformation-getnamespace))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-irsopinformation-getnamespace
     HRESULT GetNamespace(uint dwSection, PWSTR pszName, int cchMaxLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-irsopinformation-getflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-irsopinformation-getflags
     HRESULT GetFlags(uint* pdwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-irsopinformation-geteventlogentrytext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/gpedit/nf-gpedit-irsopinformation-geteventlogentrytext
     HRESULT GetEventLogEntryText(PWSTR pszEventSource, PWSTR pszEventLogName, PWSTR pszEventTime, uint dwEventID, 
                                  PWSTR* ppszText);
 }

@@ -3,22 +3,23 @@
 module windows.win32.ui.controls.richedit;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BSTR, CHAR, COLORREF, HANDLE, HGLOBAL,
-                                         HRESULT, HWND, LPARAM, LRESULT, POINT,
-                                         PSTR, PWSTR, RECT, RECTL, SIZE, WPARAM;
-public import windows.win32.graphics.direct2d : ID2D1RenderTarget;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, COLORREF, HANDLE,
+                                                    HGLOBAL, HRESULT, HWND, LPARAM,
+                                                    LRESULT, POINT, PSTR, PWSTR, RECT,
+                                                    RECTL, SIZE, WPARAM;
+public import windows.win32.graphics.direct2d.direct2d : ID2D1RenderTarget;
 public import windows.win32.graphics.gdi : FONT_CHARSET, HBITMAP, HDC, HPALETTE, HRGN,
                                            SYS_COLOR_INDEX;
-public import windows.win32.system.com : DVASPECT, DVTARGETDEVICE, IDataObject, IDispatch,
-                                         IStream, IUnknown;
+public import windows.win32.system.com.com : DVASPECT, DVTARGETDEVICE, IDataObject,
+                                             IDispatch, IStream, IUnknown;
 public import windows.win32.system.com.structuredstorage : IStorage;
 public import windows.win32.system.ole : DROPEFFECT, IDropTarget, IOleClientSite,
                                          IOleInPlaceFrame, IOleInPlaceUIWindow,
                                          IOleObject, OLEINPLACEFRAMEINFO;
 public import windows.win32.system.systemservices : MODIFIERKEYS_FLAGS, RECO_FLAGS;
 public import windows.win32.system.variant : VARIANT;
-public import windows.win32.ui.controls : NMHDR;
+public import windows.win32.ui.controls.controls : NMHDR;
 public import windows.win32.ui.input.ime : HIMC;
 public import windows.win32.ui.windowsandmessaging : HCURSOR, HMENU, SCROLLBAR_CONSTANTS,
                                                      SCROLL_WINDOW_FLAGS;
@@ -28,254 +29,270 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias CFM_MASK = uint;
 enum : uint
 {
-    CFM_SUBSCRIPT     = 0x00030000,
-    CFM_SUPERSCRIPT   = 0x00030000,
-    CFM_EFFECTS       = 0x4000003f,
-    CFM_ALL           = 0xf800003f,
-    CFM_BOLD          = 0x00000001,
-    CFM_CHARSET       = 0x08000000,
-    CFM_COLOR         = 0x40000000,
-    CFM_FACE          = 0x20000000,
-    CFM_ITALIC        = 0x00000002,
-    CFM_OFFSET        = 0x10000000,
-    CFM_PROTECTED     = 0x00000010,
-    CFM_SIZE          = 0x80000000,
-    CFM_STRIKEOUT     = 0x00000008,
-    CFM_UNDERLINE     = 0x00000004,
-    CFM_LINK          = 0x00000020,
-    CFM_SMALLCAPS     = 0x00000040,
-    CFM_ALLCAPS       = 0x00000080,
-    CFM_HIDDEN        = 0x00000100,
-    CFM_OUTLINE       = 0x00000200,
-    CFM_SHADOW        = 0x00000400,
-    CFM_EMBOSS        = 0x00000800,
-    CFM_IMPRINT       = 0x00001000,
-    CFM_DISABLED      = 0x00002000,
-    CFM_REVISED       = 0x00004000,
-    CFM_REVAUTHOR     = 0x00008000,
-    CFM_ANIMATION     = 0x00040000,
-    CFM_STYLE         = 0x00080000,
-    CFM_KERNING       = 0x00100000,
-    CFM_SPACING       = 0x00200000,
-    CFM_WEIGHT        = 0x00400000,
-    CFM_UNDERLINETYPE = 0x00800000,
-    CFM_COOKIE        = 0x01000000,
-    CFM_LCID          = 0x02000000,
-    CFM_BACKCOLOR     = 0x04000000,
-    CFM_EFFECTS2      = 0x44037fff,
-    CFM_ALL2          = 0xffffffff,
-    CFM_FONTBOUND     = 0x00100000,
-    CFM_LINKPROTECTED = 0x00800000,
-    CFM_EXTENDED      = 0x02000000,
-    CFM_MATHNOBUILDUP = 0x08000000,
-    CFM_MATH          = 0x10000000,
-    CFM_MATHORDINARY  = 0x20000000,
-    CFM_ALLEFFECTS    = 0x7e137fff,
+    CFM_SUBSCRIPT     = 0x00030000U,
+    CFM_SUPERSCRIPT   = 0x00030000U,
+    CFM_EFFECTS       = 0x4000003fU,
+    CFM_ALL           = 0xf800003fU,
+    CFM_BOLD          = 0x00000001U,
+    CFM_CHARSET       = 0x08000000U,
+    CFM_COLOR         = 0x40000000U,
+    CFM_FACE          = 0x20000000U,
+    CFM_ITALIC        = 0x00000002U,
+    CFM_OFFSET        = 0x10000000U,
+    CFM_PROTECTED     = 0x00000010U,
+    CFM_SIZE          = 0x80000000U,
+    CFM_STRIKEOUT     = 0x00000008U,
+    CFM_UNDERLINE     = 0x00000004U,
+    CFM_LINK          = 0x00000020U,
+    CFM_SMALLCAPS     = 0x00000040U,
+    CFM_ALLCAPS       = 0x00000080U,
+    CFM_HIDDEN        = 0x00000100U,
+    CFM_OUTLINE       = 0x00000200U,
+    CFM_SHADOW        = 0x00000400U,
+    CFM_EMBOSS        = 0x00000800U,
+    CFM_IMPRINT       = 0x00001000U,
+    CFM_DISABLED      = 0x00002000U,
+    CFM_REVISED       = 0x00004000U,
+    CFM_REVAUTHOR     = 0x00008000U,
+    CFM_ANIMATION     = 0x00040000U,
+    CFM_STYLE         = 0x00080000U,
+    CFM_KERNING       = 0x00100000U,
+    CFM_SPACING       = 0x00200000U,
+    CFM_WEIGHT        = 0x00400000U,
+    CFM_UNDERLINETYPE = 0x00800000U,
+    CFM_COOKIE        = 0x01000000U,
+    CFM_LCID          = 0x02000000U,
+    CFM_BACKCOLOR     = 0x04000000U,
+    CFM_EFFECTS2      = 0x44037fffU,
+    CFM_ALL2          = 0xffffffffU,
+    CFM_FONTBOUND     = 0x00100000U,
+    CFM_LINKPROTECTED = 0x00800000U,
+    CFM_EXTENDED      = 0x02000000U,
+    CFM_MATHNOBUILDUP = 0x08000000U,
+    CFM_MATH          = 0x10000000U,
+    CFM_MATHORDINARY  = 0x20000000U,
+    CFM_ALLEFFECTS    = 0x7e137fffU,
 }
+
 alias CFE_EFFECTS = uint;
 enum : uint
 {
-    CFE_ALLCAPS       = 0x00000080,
-    CFE_AUTOBACKCOLOR = 0x04000000,
-    CFE_DISABLED      = 0x00002000,
-    CFE_EMBOSS        = 0x00000800,
-    CFE_HIDDEN        = 0x00000100,
-    CFE_IMPRINT       = 0x00001000,
-    CFE_OUTLINE       = 0x00000200,
-    CFE_REVISED       = 0x00004000,
-    CFE_SHADOW        = 0x00000400,
-    CFE_SMALLCAPS     = 0x00000040,
-    CFE_AUTOCOLOR     = 0x40000000,
-    CFE_BOLD          = 0x00000001,
-    CFE_ITALIC        = 0x00000002,
-    CFE_STRIKEOUT     = 0x00000008,
-    CFE_UNDERLINE     = 0x00000004,
-    CFE_PROTECTED     = 0x00000010,
-    CFE_LINK          = 0x00000020,
-    CFE_SUBSCRIPT     = 0x00010000,
-    CFE_SUPERSCRIPT   = 0x00020000,
-    CFE_FONTBOUND     = 0x00100000,
-    CFE_LINKPROTECTED = 0x00800000,
-    CFE_EXTENDED      = 0x02000000,
-    CFE_MATHNOBUILDUP = 0x08000000,
-    CFE_MATH          = 0x10000000,
-    CFE_MATHORDINARY  = 0x20000000,
+    CFE_ALLCAPS       = 0x00000080U,
+    CFE_AUTOBACKCOLOR = 0x04000000U,
+    CFE_DISABLED      = 0x00002000U,
+    CFE_EMBOSS        = 0x00000800U,
+    CFE_HIDDEN        = 0x00000100U,
+    CFE_IMPRINT       = 0x00001000U,
+    CFE_OUTLINE       = 0x00000200U,
+    CFE_REVISED       = 0x00004000U,
+    CFE_SHADOW        = 0x00000400U,
+    CFE_SMALLCAPS     = 0x00000040U,
+    CFE_AUTOCOLOR     = 0x40000000U,
+    CFE_BOLD          = 0x00000001U,
+    CFE_ITALIC        = 0x00000002U,
+    CFE_STRIKEOUT     = 0x00000008U,
+    CFE_UNDERLINE     = 0x00000004U,
+    CFE_PROTECTED     = 0x00000010U,
+    CFE_LINK          = 0x00000020U,
+    CFE_SUBSCRIPT     = 0x00010000U,
+    CFE_SUPERSCRIPT   = 0x00020000U,
+    CFE_FONTBOUND     = 0x00100000U,
+    CFE_LINKPROTECTED = 0x00800000U,
+    CFE_EXTENDED      = 0x02000000U,
+    CFE_MATHNOBUILDUP = 0x08000000U,
+    CFE_MATH          = 0x10000000U,
+    CFE_MATHORDINARY  = 0x20000000U,
 }
+
 alias PARAFORMAT_MASK = uint;
 enum : uint
 {
-    PFM_STARTINDENT       = 0x00000001,
-    PFM_RIGHTINDENT       = 0x00000002,
-    PFM_OFFSET            = 0x00000004,
-    PFM_ALIGNMENT         = 0x00000008,
-    PFM_TABSTOPS          = 0x00000010,
-    PFM_NUMBERING         = 0x00000020,
-    PFM_OFFSETINDENT      = 0x80000000,
-    PFM_SPACEBEFORE       = 0x00000040,
-    PFM_SPACEAFTER        = 0x00000080,
-    PFM_LINESPACING       = 0x00000100,
-    PFM_STYLE             = 0x00000400,
-    PFM_BORDER            = 0x00000800,
-    PFM_SHADING           = 0x00001000,
-    PFM_NUMBERINGSTYLE    = 0x00002000,
-    PFM_NUMBERINGTAB      = 0x00004000,
-    PFM_NUMBERINGSTART    = 0x00008000,
-    PFM_RTLPARA           = 0x00010000,
-    PFM_KEEP              = 0x00020000,
-    PFM_KEEPNEXT          = 0x00040000,
-    PFM_PAGEBREAKBEFORE   = 0x00080000,
-    PFM_NOLINENUMBER      = 0x00100000,
-    PFM_NOWIDOWCONTROL    = 0x00200000,
-    PFM_DONOTHYPHEN       = 0x00400000,
-    PFM_SIDEBYSIDE        = 0x00800000,
-    PFM_COLLAPSED         = 0x01000000,
-    PFM_OUTLINELEVEL      = 0x02000000,
-    PFM_BOX               = 0x04000000,
-    PFM_RESERVED2         = 0x08000000,
-    PFM_TABLEROWDELIMITER = 0x10000000,
-    PFM_TEXTWRAPPINGBREAK = 0x20000000,
-    PFM_TABLE             = 0x40000000,
-    PFM_ALL               = 0x8001003f,
-    PFM_EFFECTS           = 0x50ff0000,
-    PFM_ALL2              = 0xd0fffdff,
+    PFM_STARTINDENT       = 0x00000001U,
+    PFM_RIGHTINDENT       = 0x00000002U,
+    PFM_OFFSET            = 0x00000004U,
+    PFM_ALIGNMENT         = 0x00000008U,
+    PFM_TABSTOPS          = 0x00000010U,
+    PFM_NUMBERING         = 0x00000020U,
+    PFM_OFFSETINDENT      = 0x80000000U,
+    PFM_SPACEBEFORE       = 0x00000040U,
+    PFM_SPACEAFTER        = 0x00000080U,
+    PFM_LINESPACING       = 0x00000100U,
+    PFM_STYLE             = 0x00000400U,
+    PFM_BORDER            = 0x00000800U,
+    PFM_SHADING           = 0x00001000U,
+    PFM_NUMBERINGSTYLE    = 0x00002000U,
+    PFM_NUMBERINGTAB      = 0x00004000U,
+    PFM_NUMBERINGSTART    = 0x00008000U,
+    PFM_RTLPARA           = 0x00010000U,
+    PFM_KEEP              = 0x00020000U,
+    PFM_KEEPNEXT          = 0x00040000U,
+    PFM_PAGEBREAKBEFORE   = 0x00080000U,
+    PFM_NOLINENUMBER      = 0x00100000U,
+    PFM_NOWIDOWCONTROL    = 0x00200000U,
+    PFM_DONOTHYPHEN       = 0x00400000U,
+    PFM_SIDEBYSIDE        = 0x00800000U,
+    PFM_COLLAPSED         = 0x01000000U,
+    PFM_OUTLINELEVEL      = 0x02000000U,
+    PFM_BOX               = 0x04000000U,
+    PFM_RESERVED2         = 0x08000000U,
+    PFM_TABLEROWDELIMITER = 0x10000000U,
+    PFM_TEXTWRAPPINGBREAK = 0x20000000U,
+    PFM_TABLE             = 0x40000000U,
+    PFM_ALL               = 0x8001003fU,
+    PFM_EFFECTS           = 0x50ff0000U,
+    PFM_ALL2              = 0xd0fffdffU,
 }
+
 alias RICH_EDIT_GET_CONTEXT_MENU_SEL_TYPE = ushort;
 enum : ushort
 {
-    SEL_EMPTY          = 0x0000,
-    SEL_TEXT           = 0x0001,
-    SEL_OBJECT         = 0x0002,
-    SEL_MULTICHAR      = 0x0004,
-    SEL_MULTIOBJECT    = 0x0008,
-    GCM_RIGHTMOUSEDROP = 0x8000,
+    SEL_EMPTY          = cast(ushort) 0x0000,
+    SEL_TEXT           = cast(ushort) 0x0001,
+    SEL_OBJECT         = cast(ushort) 0x0002,
+    SEL_MULTICHAR      = cast(ushort) 0x0004,
+    SEL_MULTIOBJECT    = cast(ushort) 0x0008,
+    GCM_RIGHTMOUSEDROP = cast(ushort) 0x8000,
 }
+
 alias RICH_EDIT_GET_OBJECT_FLAGS = uint;
 enum : uint
 {
-    REO_GETOBJ_POLEOBJ        = 0x00000001,
-    REO_GETOBJ_PSTG           = 0x00000002,
-    REO_GETOBJ_POLESITE       = 0x00000004,
-    REO_GETOBJ_NO_INTERFACES  = 0x00000000,
-    REO_GETOBJ_ALL_INTERFACES = 0x00000007,
+    REO_GETOBJ_POLEOBJ        = 0x00000001U,
+    REO_GETOBJ_PSTG           = 0x00000002U,
+    REO_GETOBJ_POLESITE       = 0x00000004U,
+    REO_GETOBJ_NO_INTERFACES  = 0x00000000U,
+    REO_GETOBJ_ALL_INTERFACES = 0x00000007U,
 }
+
 alias PARAFORMAT_BORDERS = ushort;
 enum : ushort
 {
-    PARAFORMAT_BORDERS_LEFT      = 0x0001,
-    PARAFORMAT_BORDERS_RIGHT     = 0x0002,
-    PARAFORMAT_BORDERS_TOP       = 0x0004,
-    PARAFORMAT_BORDERS_BOTTOM    = 0x0008,
-    PARAFORMAT_BORDERS_INSIDE    = 0x0010,
-    PARAFORMAT_BORDERS_OUTSIDE   = 0x0020,
-    PARAFORMAT_BORDERS_AUTOCOLOR = 0x0040,
+    PARAFORMAT_BORDERS_LEFT      = cast(ushort) 0x0001,
+    PARAFORMAT_BORDERS_RIGHT     = cast(ushort) 0x0002,
+    PARAFORMAT_BORDERS_TOP       = cast(ushort) 0x0004,
+    PARAFORMAT_BORDERS_BOTTOM    = cast(ushort) 0x0008,
+    PARAFORMAT_BORDERS_INSIDE    = cast(ushort) 0x0010,
+    PARAFORMAT_BORDERS_OUTSIDE   = cast(ushort) 0x0020,
+    PARAFORMAT_BORDERS_AUTOCOLOR = cast(ushort) 0x0040,
 }
+
 alias PARAFORMAT_SHADING_STYLE = ushort;
 enum : ushort
 {
-    PARAFORMAT_SHADING_STYLE_NONE            = 0x0000,
-    PARAFORMAT_SHADING_STYLE_DARK_HORIZ      = 0x0001,
-    PARAFORMAT_SHADING_STYLE_DARK_VERT       = 0x0002,
-    PARAFORMAT_SHADING_STYLE_DARK_DOWN_DIAG  = 0x0003,
-    PARAFORMAT_SHADING_STYLE_DARK_UP_DIAG    = 0x0004,
-    PARAFORMAT_SHADING_STYLE_DARK_GRID       = 0x0005,
-    PARAFORMAT_SHADING_STYLE_DARK_TRELLIS    = 0x0006,
-    PARAFORMAT_SHADING_STYLE_LIGHT_HORZ      = 0x0007,
-    PARAFORMAT_SHADING_STYLE_LIGHT_VERT      = 0x0008,
-    PARAFORMAT_SHADING_STYLE_LIGHT_DOWN_DIAG = 0x0009,
-    PARAFORMAT_SHADING_STYLE_LIGHT_UP_DIAG   = 0x000a,
-    PARAFORMAT_SHADING_STYLE_LIGHT_GRID      = 0x000b,
-    PARAFORMAT_SHADING_STYLE_LIGHT_TRELLIS   = 0x000c,
+    PARAFORMAT_SHADING_STYLE_NONE            = cast(ushort) 0x0000,
+    PARAFORMAT_SHADING_STYLE_DARK_HORIZ      = cast(ushort) 0x0001,
+    PARAFORMAT_SHADING_STYLE_DARK_VERT       = cast(ushort) 0x0002,
+    PARAFORMAT_SHADING_STYLE_DARK_DOWN_DIAG  = cast(ushort) 0x0003,
+    PARAFORMAT_SHADING_STYLE_DARK_UP_DIAG    = cast(ushort) 0x0004,
+    PARAFORMAT_SHADING_STYLE_DARK_GRID       = cast(ushort) 0x0005,
+    PARAFORMAT_SHADING_STYLE_DARK_TRELLIS    = cast(ushort) 0x0006,
+    PARAFORMAT_SHADING_STYLE_LIGHT_HORZ      = cast(ushort) 0x0007,
+    PARAFORMAT_SHADING_STYLE_LIGHT_VERT      = cast(ushort) 0x0008,
+    PARAFORMAT_SHADING_STYLE_LIGHT_DOWN_DIAG = cast(ushort) 0x0009,
+    PARAFORMAT_SHADING_STYLE_LIGHT_UP_DIAG   = cast(ushort) 0x000a,
+    PARAFORMAT_SHADING_STYLE_LIGHT_GRID      = cast(ushort) 0x000b,
+    PARAFORMAT_SHADING_STYLE_LIGHT_TRELLIS   = cast(ushort) 0x000c,
 }
+
 alias GETTEXTEX_FLAGS = uint;
 enum : uint
 {
-    GT_DEFAULT      = 0x00000000,
-    GT_NOHIDDENTEXT = 0x00000008,
-    GT_RAWTEXT      = 0x00000004,
-    GT_SELECTION    = 0x00000002,
-    GT_USECRLF      = 0x00000001,
+    GT_DEFAULT      = 0x00000000U,
+    GT_NOHIDDENTEXT = 0x00000008U,
+    GT_RAWTEXT      = 0x00000004U,
+    GT_SELECTION    = 0x00000002U,
+    GT_USECRLF      = 0x00000001U,
 }
+
 alias ENDCOMPOSITIONNOTIFY_CODE = uint;
 enum : uint
 {
-    ECN_ENDCOMPOSITION = 0x00000001,
-    ECN_NEWTEXT        = 0x00000002,
+    ECN_ENDCOMPOSITION = 0x00000001U,
+    ECN_NEWTEXT        = 0x00000002U,
 }
+
 alias IMECOMPTEXT_FLAGS = uint;
 enum : uint
 {
-    ICT_RESULTREADSTR = 0x00000001,
+    ICT_RESULTREADSTR = 0x00000001U,
 }
+
 alias GETTEXTLENGTHEX_FLAGS = uint;
 enum : uint
 {
-    GTL_DEFAULT  = 0x00000000,
-    GTL_USECRLF  = 0x00000001,
-    GTL_PRECISE  = 0x00000002,
-    GTL_CLOSE    = 0x00000004,
-    GTL_NUMCHARS = 0x00000008,
-    GTL_NUMBYTES = 0x00000010,
+    GTL_DEFAULT  = 0x00000000U,
+    GTL_USECRLF  = 0x00000001U,
+    GTL_PRECISE  = 0x00000002U,
+    GTL_CLOSE    = 0x00000004U,
+    GTL_NUMCHARS = 0x00000008U,
+    GTL_NUMBYTES = 0x00000010U,
 }
+
 alias REOBJECT_FLAGS = uint;
 enum : uint
 {
-    REO_ALIGNTORIGHT    = 0x00000100,
-    REO_BELOWBASELINE   = 0x00000002,
-    REO_BLANK           = 0x00000010,
-    REO_CANROTATE       = 0x00000080,
-    REO_DONTNEEDPALETTE = 0x00000020,
-    REO_DYNAMICSIZE     = 0x00000008,
-    REO_GETMETAFILE     = 0x00400000,
-    REO_HILITED         = 0x01000000,
-    REO_INPLACEACTIVE   = 0x02000000,
-    REO_INVERTEDSELECT  = 0x00000004,
-    REO_LINK            = 0x80000000,
-    REO_LINKAVAILABLE   = 0x00800000,
-    REO_OPEN            = 0x04000000,
-    REO_OWNERDRAWSELECT = 0x00000040,
-    REO_RESIZABLE       = 0x00000001,
-    REO_SELECTED        = 0x08000000,
-    REO_STATIC          = 0x40000000,
-    REO_USEASBACKGROUND = 0x00000400,
-    REO_WRAPTEXTAROUND  = 0x00000200,
+    REO_ALIGNTORIGHT    = 0x00000100U,
+    REO_BELOWBASELINE   = 0x00000002U,
+    REO_BLANK           = 0x00000010U,
+    REO_CANROTATE       = 0x00000080U,
+    REO_DONTNEEDPALETTE = 0x00000020U,
+    REO_DYNAMICSIZE     = 0x00000008U,
+    REO_GETMETAFILE     = 0x00400000U,
+    REO_HILITED         = 0x01000000U,
+    REO_INPLACEACTIVE   = 0x02000000U,
+    REO_INVERTEDSELECT  = 0x00000004U,
+    REO_LINK            = 0x80000000U,
+    REO_LINKAVAILABLE   = 0x00800000U,
+    REO_OPEN            = 0x04000000U,
+    REO_OWNERDRAWSELECT = 0x00000040U,
+    REO_RESIZABLE       = 0x00000001U,
+    REO_SELECTED        = 0x08000000U,
+    REO_STATIC          = 0x40000000U,
+    REO_USEASBACKGROUND = 0x00000400U,
+    REO_WRAPTEXTAROUND  = 0x00000200U,
 }
+
 alias PARAFORMAT_NUMBERING_STYLE = ushort;
 enum : ushort
 {
-    PFNS_PAREN     = 0x0000,
-    PFNS_PARENS    = 0x0100,
-    PFNS_PERIOD    = 0x0200,
-    PFNS_PLAIN     = 0x0300,
-    PFNS_NONUMBER  = 0x0400,
-    PFNS_NEWNUMBER = 0x8000,
+    PFNS_PAREN     = cast(ushort) 0x0000,
+    PFNS_PARENS    = cast(ushort) 0x0100,
+    PFNS_PERIOD    = cast(ushort) 0x0200,
+    PFNS_PLAIN     = cast(ushort) 0x0300,
+    PFNS_NONUMBER  = cast(ushort) 0x0400,
+    PFNS_NEWNUMBER = cast(ushort) 0x8000,
 }
+
 alias PARAFORMAT_ALIGNMENT = ushort;
 enum : ushort
 {
-    PFA_LEFT             = 0x0001,
-    PFA_RIGHT            = 0x0002,
-    PFA_CENTER           = 0x0003,
-    PFA_JUSTIFY          = 0x0004,
-    PFA_FULL_INTERWORD   = 0x0004,
-    PFA_FULL_NEWSPAPER   = 0x0005,
-    PFA_FULL_INTERLETTER = 0x0006,
-    PFA_FULL_SCALED      = 0x0007,
-    PFA_FULL_GLYPHS      = 0x0008,
+    PFA_LEFT             = cast(ushort) 0x0001,
+    PFA_RIGHT            = cast(ushort) 0x0002,
+    PFA_CENTER           = cast(ushort) 0x0003,
+    PFA_JUSTIFY          = cast(ushort) 0x0004,
+    PFA_FULL_INTERWORD   = cast(ushort) 0x0004,
+    PFA_FULL_NEWSPAPER   = cast(ushort) 0x0005,
+    PFA_FULL_INTERLETTER = cast(ushort) 0x0006,
+    PFA_FULL_SCALED      = cast(ushort) 0x0007,
+    PFA_FULL_GLYPHS      = cast(ushort) 0x0008,
 }
+
 alias PARAFORMAT_NUMBERING = ushort;
 enum : ushort
 {
-    PFN_BULLET   = 0x0001,
-    PFN_ARABIC   = 0x0002,
-    PFN_LCLETTER = 0x0003,
-    PFN_UCLETTER = 0x0004,
-    PFN_LCROMAN  = 0x0005,
-    PFN_UCROMAN  = 0x0006,
+    PFN_BULLET   = cast(ushort) 0x0001,
+    PFN_ARABIC   = cast(ushort) 0x0002,
+    PFN_LCLETTER = cast(ushort) 0x0003,
+    PFN_UCLETTER = cast(ushort) 0x0004,
+    PFN_LCROMAN  = cast(ushort) 0x0005,
+    PFN_UCROMAN  = cast(ushort) 0x0006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ne-richedit-textmode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ne-richedit-textmode
 alias TEXTMODE = int;
 enum : int
 {
@@ -286,7 +303,8 @@ enum : int
     TM_SINGLECODEPAGE  = 0x00000010,
     TM_MULTICODEPAGE   = 0x00000020,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ne-richedit-undonameid))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ne-richedit-undonameid
 alias UNDONAMEID = int;
 enum : int
 {
@@ -298,7 +316,8 @@ enum : int
     UID_PASTE     = 0x00000005,
     UID_AUTOTABLE = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ne-richedit-khyph))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ne-richedit-khyph
 alias KHYPH = int;
 enum : int
 {
@@ -310,12 +329,14 @@ enum : int
     khyphChangeAfter  = 0x00000005,
     khyphDelAndChange = 0x00000006,
 }
+
 alias TXTBACKSTYLE = int;
 enum : int
 {
     TXTBACK_TRANSPARENT = 0x00000000,
     TXTBACK_OPAQUE      = 0x00000001,
 }
+
 alias TXTHITRESULT = int;
 enum : int
 {
@@ -324,6 +345,7 @@ enum : int
     TXTHITRESULT_CLOSE       = 0x00000002,
     TXTHITRESULT_HIT         = 0x00000003,
 }
+
 alias TXTNATURALSIZE = int;
 enum : int
 {
@@ -335,12 +357,14 @@ enum : int
     TXTNS_INCLUDELASTLINE = 0x40000000,
     TXTNS_EMU             = 0x80000000,
 }
+
 alias TXTVIEW = int;
 enum : int
 {
     TXTVIEW_ACTIVE   = 0x00000000,
     TXTVIEW_INACTIVE = 0xffffffff,
 }
+
 alias CHANGETYPE = int;
 enum : int
 {
@@ -349,6 +373,7 @@ enum : int
     CN_NEWUNDO     = 0x00000002,
     CN_NEWREDO     = 0x00000004,
 }
+
 alias CARET_FLAGS = int;
 enum : int
 {
@@ -359,7 +384,8 @@ enum : int
     CARET_NULL     = 0x00000040,
     CARET_ROTATE90 = 0x00000080,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/ne-tom-tomconstants))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/ne-tom-tomconstants
 alias tomConstants = int;
 enum : int
 {
@@ -948,7 +974,8 @@ enum : int
     tomCellStructureChangeOnly         = 0x00000001,
     tomRowHeightActual                 = 0x0000080b,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/ne-tom-objecttype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/ne-tom-objecttype
 alias OBJECTTYPE = int;
 enum : int
 {
@@ -984,7 +1011,8 @@ enum : int
     tomUpperLimit       = 0x00000021,
     tomObjectMax        = 0x00000021,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/ne-tom-mancode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/ne-tom-mancode
 alias MANCODE = int;
 enum : int
 {
@@ -1009,7 +1037,7 @@ enum : int
 // Constants
 
 
-enum uint cchTextLimitDefault = 0x00007fff;
+enum uint cchTextLimitDefault = 0x00007fffU;
 enum const(wchar)* MSFTEDIT_CLASS = "RICHEDIT50W";
 
 enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
@@ -1026,557 +1054,557 @@ enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(E
     RICHEDIT_CLASS    = "RichEdit20W",
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-canpaste))], [])*/uint EM_CANPASTE = 0x00000432;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-displayband))], [])*/uint EM_DISPLAYBAND = 0x00000433;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-canpaste))], [])*/uint EM_CANPASTE = 0x00000432U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-displayband))], [])*/uint EM_DISPLAYBAND = 0x00000433U;
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-exgetsel))], [])*/uint
 {
-    EM_EXGETSEL       = 0x00000434,
-    EM_EXLIMITTEXT    = 0x00000435,
-    EM_EXLINEFROMCHAR = 0x00000436,
+    EM_EXGETSEL       = 0x00000434U,
+    EM_EXLIMITTEXT    = 0x00000435U,
+    EM_EXLINEFROMCHAR = 0x00000436U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-exsetsel))], [])*/uint EM_EXSETSEL = 0x00000437;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-findtext))], [])*/uint EM_FINDTEXT = 0x00000438;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-formatrange))], [])*/uint EM_FORMATRANGE = 0x00000439;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getcharformat))], [])*/uint EM_GETCHARFORMAT = 0x0000043a;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-geteventmask))], [])*/uint EM_GETEVENTMASK = 0x0000043b;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getoleinterface))], [])*/uint EM_GETOLEINTERFACE = 0x0000043c;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getparaformat))], [])*/uint EM_GETPARAFORMAT = 0x0000043d;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getseltext))], [])*/uint EM_GETSELTEXT = 0x0000043e;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-hideselection))], [])*/uint EM_HIDESELECTION = 0x0000043f;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-pastespecial))], [])*/uint EM_PASTESPECIAL = 0x00000440;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-requestresize))], [])*/uint EM_REQUESTRESIZE = 0x00000441;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-selectiontype))], [])*/uint EM_SELECTIONTYPE = 0x00000442;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setbkgndcolor))], [])*/uint EM_SETBKGNDCOLOR = 0x00000443;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setcharformat))], [])*/uint EM_SETCHARFORMAT = 0x00000444;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-seteventmask))], [])*/uint EM_SETEVENTMASK = 0x00000445;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setolecallback))], [])*/uint EM_SETOLECALLBACK = 0x00000446;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setparaformat))], [])*/uint EM_SETPARAFORMAT = 0x00000447;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-settargetdevice))], [])*/uint EM_SETTARGETDEVICE = 0x00000448;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-exsetsel))], [])*/uint EM_EXSETSEL = 0x00000437U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-findtext))], [])*/uint EM_FINDTEXT = 0x00000438U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-formatrange))], [])*/uint EM_FORMATRANGE = 0x00000439U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getcharformat))], [])*/uint EM_GETCHARFORMAT = 0x0000043aU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-geteventmask))], [])*/uint EM_GETEVENTMASK = 0x0000043bU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getoleinterface))], [])*/uint EM_GETOLEINTERFACE = 0x0000043cU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getparaformat))], [])*/uint EM_GETPARAFORMAT = 0x0000043dU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getseltext))], [])*/uint EM_GETSELTEXT = 0x0000043eU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-hideselection))], [])*/uint EM_HIDESELECTION = 0x0000043fU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-pastespecial))], [])*/uint EM_PASTESPECIAL = 0x00000440U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-requestresize))], [])*/uint EM_REQUESTRESIZE = 0x00000441U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-selectiontype))], [])*/uint EM_SELECTIONTYPE = 0x00000442U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setbkgndcolor))], [])*/uint EM_SETBKGNDCOLOR = 0x00000443U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setcharformat))], [])*/uint EM_SETCHARFORMAT = 0x00000444U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-seteventmask))], [])*/uint EM_SETEVENTMASK = 0x00000445U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setolecallback))], [])*/uint EM_SETOLECALLBACK = 0x00000446U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setparaformat))], [])*/uint EM_SETPARAFORMAT = 0x00000447U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-settargetdevice))], [])*/uint EM_SETTARGETDEVICE = 0x00000448U;
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-streamin))], [])*/uint
 {
-    EM_STREAMIN  = 0x00000449,
-    EM_STREAMOUT = 0x0000044a,
+    EM_STREAMIN  = 0x00000449U,
+    EM_STREAMOUT = 0x0000044aU,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-gettextrange))], [])*/uint EM_GETTEXTRANGE = 0x0000044b;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-findwordbreak))], [])*/uint EM_FINDWORDBREAK = 0x0000044c;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setoptions))], [])*/uint EM_SETOPTIONS = 0x0000044d;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getoptions))], [])*/uint EM_GETOPTIONS = 0x0000044e;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-findtextex))], [])*/uint EM_FINDTEXTEX = 0x0000044f;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getwordbreakprocex))], [])*/uint EM_GETWORDBREAKPROCEX = 0x00000450;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setwordbreakprocex))], [])*/uint EM_SETWORDBREAKPROCEX = 0x00000451;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setundolimit))], [])*/uint EM_SETUNDOLIMIT = 0x00000452;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-gettextrange))], [])*/uint EM_GETTEXTRANGE = 0x0000044bU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-findwordbreak))], [])*/uint EM_FINDWORDBREAK = 0x0000044cU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setoptions))], [])*/uint EM_SETOPTIONS = 0x0000044dU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getoptions))], [])*/uint EM_GETOPTIONS = 0x0000044eU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-findtextex))], [])*/uint EM_FINDTEXTEX = 0x0000044fU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getwordbreakprocex))], [])*/uint EM_GETWORDBREAKPROCEX = 0x00000450U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setwordbreakprocex))], [])*/uint EM_SETWORDBREAKPROCEX = 0x00000451U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setundolimit))], [])*/uint EM_SETUNDOLIMIT = 0x00000452U;
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-redo))], [])*/uint
 {
-    EM_REDO    = 0x00000454,
-    EM_CANREDO = 0x00000455,
+    EM_REDO    = 0x00000454U,
+    EM_CANREDO = 0x00000455U,
 }
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getundoname))], [])*/uint
 {
-    EM_GETUNDONAME = 0x00000456,
-    EM_GETREDONAME = 0x00000457,
+    EM_GETUNDONAME = 0x00000456U,
+    EM_GETREDONAME = 0x00000457U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-stopgrouptyping))], [])*/uint EM_STOPGROUPTYPING = 0x00000458;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-settextmode))], [])*/uint EM_SETTEXTMODE = 0x00000459;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-gettextmode))], [])*/uint EM_GETTEXTMODE = 0x0000045a;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-autourldetect))], [])*/uint EM_AUTOURLDETECT = 0x0000045b;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-stopgrouptyping))], [])*/uint EM_STOPGROUPTYPING = 0x00000458U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-settextmode))], [])*/uint EM_SETTEXTMODE = 0x00000459U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-gettextmode))], [])*/uint EM_GETTEXTMODE = 0x0000045aU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-autourldetect))], [])*/uint EM_AUTOURLDETECT = 0x0000045bU;
 
 enum : uint
 {
-    AURL_ENABLEURL          = 0x00000001,
-    AURL_ENABLEEMAILADDR    = 0x00000002,
-    AURL_ENABLETELNO        = 0x00000004,
-    AURL_ENABLEEAURLS       = 0x00000008,
-    AURL_ENABLEDRIVELETTERS = 0x00000010,
+    AURL_ENABLEURL          = 0x00000001U,
+    AURL_ENABLEEMAILADDR    = 0x00000002U,
+    AURL_ENABLETELNO        = 0x00000004U,
+    AURL_ENABLEEAURLS       = 0x00000008U,
+    AURL_ENABLEDRIVELETTERS = 0x00000010U,
 }
 
-enum uint AURL_DISABLEMIXEDLGC = 0x00000020;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getautourldetect))], [])*/uint EM_GETAUTOURLDETECT = 0x0000045c;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setpalette))], [])*/uint EM_SETPALETTE = 0x0000045d;
+enum uint AURL_DISABLEMIXEDLGC = 0x00000020U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getautourldetect))], [])*/uint EM_GETAUTOURLDETECT = 0x0000045cU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setpalette))], [])*/uint EM_SETPALETTE = 0x0000045dU;
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-gettextex))], [])*/uint
 {
-    EM_GETTEXTEX       = 0x0000045e,
-    EM_GETTEXTLENGTHEX = 0x0000045f,
+    EM_GETTEXTEX       = 0x0000045eU,
+    EM_GETTEXTLENGTHEX = 0x0000045fU,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-showscrollbar))], [])*/uint EM_SHOWSCROLLBAR = 0x00000460;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-showscrollbar))], [])*/uint EM_SHOWSCROLLBAR = 0x00000460U;
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-settextex))], [])*/uint
 {
-    EM_SETTEXTEX      = 0x00000461,
-    EM_SETPUNCTUATION = 0x00000464,
+    EM_SETTEXTEX      = 0x00000461U,
+    EM_SETPUNCTUATION = 0x00000464U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getpunctuation))], [])*/uint EM_GETPUNCTUATION = 0x00000465;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setwordwrapmode))], [])*/uint EM_SETWORDWRAPMODE = 0x00000466;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getwordwrapmode))], [])*/uint EM_GETWORDWRAPMODE = 0x00000467;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setimecolor))], [])*/uint EM_SETIMECOLOR = 0x00000468;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getimecolor))], [])*/uint EM_GETIMECOLOR = 0x00000469;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setimeoptions))], [])*/uint EM_SETIMEOPTIONS = 0x0000046a;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getimeoptions))], [])*/uint EM_GETIMEOPTIONS = 0x0000046b;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-convposition))], [])*/uint EM_CONVPOSITION = 0x0000046c;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setlangoptions))], [])*/uint EM_SETLANGOPTIONS = 0x00000478;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getlangoptions))], [])*/uint EM_GETLANGOPTIONS = 0x00000479;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getimecompmode))], [])*/uint EM_GETIMECOMPMODE = 0x0000047a;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getpunctuation))], [])*/uint EM_GETPUNCTUATION = 0x00000465U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setwordwrapmode))], [])*/uint EM_SETWORDWRAPMODE = 0x00000466U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getwordwrapmode))], [])*/uint EM_GETWORDWRAPMODE = 0x00000467U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setimecolor))], [])*/uint EM_SETIMECOLOR = 0x00000468U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getimecolor))], [])*/uint EM_GETIMECOLOR = 0x00000469U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setimeoptions))], [])*/uint EM_SETIMEOPTIONS = 0x0000046aU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getimeoptions))], [])*/uint EM_GETIMEOPTIONS = 0x0000046bU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-convposition))], [])*/uint EM_CONVPOSITION = 0x0000046cU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setlangoptions))], [])*/uint EM_SETLANGOPTIONS = 0x00000478U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getlangoptions))], [])*/uint EM_GETLANGOPTIONS = 0x00000479U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getimecompmode))], [])*/uint EM_GETIMECOMPMODE = 0x0000047aU;
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-findtextw))], [])*/uint
 {
-    EM_FINDTEXTW   = 0x0000047b,
-    EM_FINDTEXTEXW = 0x0000047c,
+    EM_FINDTEXTW   = 0x0000047bU,
+    EM_FINDTEXTEXW = 0x0000047cU,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-reconversion))], [])*/uint EM_RECONVERSION = 0x0000047d;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setimemodebias))], [])*/uint EM_SETIMEMODEBIAS = 0x0000047e;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getimemodebias))], [])*/uint EM_GETIMEMODEBIAS = 0x0000047f;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setbidioptions))], [])*/uint EM_SETBIDIOPTIONS = 0x000004c8;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getbidioptions))], [])*/uint EM_GETBIDIOPTIONS = 0x000004c9;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-settypographyoptions))], [])*/uint EM_SETTYPOGRAPHYOPTIONS = 0x000004ca;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-gettypographyoptions))], [])*/uint EM_GETTYPOGRAPHYOPTIONS = 0x000004cb;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-seteditstyle))], [])*/uint EM_SETEDITSTYLE = 0x000004cc;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-geteditstyle))], [])*/uint EM_GETEDITSTYLE = 0x000004cd;
-enum uint SES_EMULATESYSEDIT = 0x00000001;
-enum uint SES_BEEPONMAXTEXT = 0x00000002;
-enum uint SES_EXTENDBACKCOLOR = 0x00000004;
-enum uint SES_MAPCPS = 0x00000008;
-enum uint SES_HYPERLINKTOOLTIPS = 0x00000008;
-enum uint SES_EMULATE10 = 0x00000010;
-enum uint SES_DEFAULTLATINLIGA = 0x00000010;
-enum uint SES_USECRLF = 0x00000020;
-enum uint SES_NOFOCUSLINKNOTIFY = 0x00000020;
-enum uint SES_USEAIMM = 0x00000040;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-reconversion))], [])*/uint EM_RECONVERSION = 0x0000047dU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setimemodebias))], [])*/uint EM_SETIMEMODEBIAS = 0x0000047eU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getimemodebias))], [])*/uint EM_GETIMEMODEBIAS = 0x0000047fU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setbidioptions))], [])*/uint EM_SETBIDIOPTIONS = 0x000004c8U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getbidioptions))], [])*/uint EM_GETBIDIOPTIONS = 0x000004c9U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-settypographyoptions))], [])*/uint EM_SETTYPOGRAPHYOPTIONS = 0x000004caU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-gettypographyoptions))], [])*/uint EM_GETTYPOGRAPHYOPTIONS = 0x000004cbU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-seteditstyle))], [])*/uint EM_SETEDITSTYLE = 0x000004ccU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-geteditstyle))], [])*/uint EM_GETEDITSTYLE = 0x000004cdU;
+enum uint SES_EMULATESYSEDIT = 0x00000001U;
+enum uint SES_BEEPONMAXTEXT = 0x00000002U;
+enum uint SES_EXTENDBACKCOLOR = 0x00000004U;
+enum uint SES_MAPCPS = 0x00000008U;
+enum uint SES_HYPERLINKTOOLTIPS = 0x00000008U;
+enum uint SES_EMULATE10 = 0x00000010U;
+enum uint SES_DEFAULTLATINLIGA = 0x00000010U;
+enum uint SES_USECRLF = 0x00000020U;
+enum uint SES_NOFOCUSLINKNOTIFY = 0x00000020U;
+enum uint SES_USEAIMM = 0x00000040U;
 
 enum : uint
 {
-    SES_NOIME      = 0x00000080,
-    SES_ALLOWBEEPS = 0x00000100,
+    SES_NOIME      = 0x00000080U,
+    SES_ALLOWBEEPS = 0x00000100U,
 }
 
-enum uint SES_UPPERCASE = 0x00000200;
-enum uint SES_LOWERCASE = 0x00000400;
-enum uint SES_NOINPUTSEQUENCECHK = 0x00000800;
+enum uint SES_UPPERCASE = 0x00000200U;
+enum uint SES_LOWERCASE = 0x00000400U;
+enum uint SES_NOINPUTSEQUENCECHK = 0x00000800U;
 
 enum : uint
 {
-    SES_BIDI              = 0x00001000,
-    SES_SCROLLONKILLFOCUS = 0x00002000,
+    SES_BIDI              = 0x00001000U,
+    SES_SCROLLONKILLFOCUS = 0x00002000U,
 }
 
-enum uint SES_XLTCRCRLFTOCR = 0x00004000;
-enum uint SES_DRAFTMODE = 0x00008000;
-enum uint SES_USECTF = 0x00010000;
-enum uint SES_HIDEGRIDLINES = 0x00020000;
-enum uint SES_USEATFONT = 0x00040000;
-enum uint SES_CUSTOMLOOK = 0x00080000;
-enum uint SES_LBSCROLLNOTIFY = 0x00100000;
+enum uint SES_XLTCRCRLFTOCR = 0x00004000U;
+enum uint SES_DRAFTMODE = 0x00008000U;
+enum uint SES_USECTF = 0x00010000U;
+enum uint SES_HIDEGRIDLINES = 0x00020000U;
+enum uint SES_USEATFONT = 0x00040000U;
+enum uint SES_CUSTOMLOOK = 0x00080000U;
+enum uint SES_LBSCROLLNOTIFY = 0x00100000U;
 
 enum : uint
 {
-    SES_CTFALLOWEMBED    = 0x00200000,
-    SES_CTFALLOWSMARTTAG = 0x00400000,
-    SES_CTFALLOWPROOFING = 0x00800000,
+    SES_CTFALLOWEMBED    = 0x00200000U,
+    SES_CTFALLOWSMARTTAG = 0x00400000U,
+    SES_CTFALLOWPROOFING = 0x00800000U,
 }
 
-enum uint SES_LOGICALCARET = 0x01000000;
-enum uint SES_WORDDRAGDROP = 0x02000000;
-enum uint SES_SMARTDRAGDROP = 0x04000000;
-enum uint SES_MULTISELECT = 0x08000000;
-enum uint SES_CTFNOLOCK = 0x10000000;
-enum uint SES_NOEALINEHEIGHTADJUST = 0x20000000;
-enum uint SES_MAX = 0x20000000;
+enum uint SES_LOGICALCARET = 0x01000000U;
+enum uint SES_WORDDRAGDROP = 0x02000000U;
+enum uint SES_SMARTDRAGDROP = 0x04000000U;
+enum uint SES_MULTISELECT = 0x08000000U;
+enum uint SES_CTFNOLOCK = 0x10000000U;
+enum uint SES_NOEALINEHEIGHTADJUST = 0x20000000U;
+enum uint SES_MAX = 0x20000000U;
 
 enum : uint
 {
-    IMF_AUTOKEYBOARD = 0x00000001,
-    IMF_AUTOFONT     = 0x00000002,
+    IMF_AUTOKEYBOARD = 0x00000001U,
+    IMF_AUTOFONT     = 0x00000002U,
 }
 
-enum uint IMF_IMECANCELCOMPLETE = 0x00000004;
-enum uint IMF_IMEALWAYSSENDNOTIFY = 0x00000008;
-enum uint IMF_AUTOFONTSIZEADJUST = 0x00000010;
-enum uint IMF_UIFONTS = 0x00000020;
-enum uint IMF_NOIMPLICITLANG = 0x00000040;
-enum uint IMF_DUALFONT = 0x00000080;
-enum uint IMF_NOKBDLIDFIXUP = 0x00000200;
-enum uint IMF_NORTFFONTSUBSTITUTE = 0x00000400;
-enum uint IMF_SPELLCHECKING = 0x00000800;
-enum uint IMF_TKBPREDICTION = 0x00001000;
-enum uint IMF_IMEUIINTEGRATION = 0x00002000;
-enum uint ICM_NOTOPEN = 0x00000000;
+enum uint IMF_IMECANCELCOMPLETE = 0x00000004U;
+enum uint IMF_IMEALWAYSSENDNOTIFY = 0x00000008U;
+enum uint IMF_AUTOFONTSIZEADJUST = 0x00000010U;
+enum uint IMF_UIFONTS = 0x00000020U;
+enum uint IMF_NOIMPLICITLANG = 0x00000040U;
+enum uint IMF_DUALFONT = 0x00000080U;
+enum uint IMF_NOKBDLIDFIXUP = 0x00000200U;
+enum uint IMF_NORTFFONTSUBSTITUTE = 0x00000400U;
+enum uint IMF_SPELLCHECKING = 0x00000800U;
+enum uint IMF_TKBPREDICTION = 0x00001000U;
+enum uint IMF_IMEUIINTEGRATION = 0x00002000U;
+enum uint ICM_NOTOPEN = 0x00000000U;
 
 enum : uint
 {
-    ICM_LEVEL3     = 0x00000001,
-    ICM_LEVEL2     = 0x00000002,
-    ICM_LEVEL2_5   = 0x00000003,
-    ICM_LEVEL2_SUI = 0x00000004,
+    ICM_LEVEL3     = 0x00000001U,
+    ICM_LEVEL2     = 0x00000002U,
+    ICM_LEVEL2_5   = 0x00000003U,
+    ICM_LEVEL2_SUI = 0x00000004U,
 }
 
-enum uint ICM_CTF = 0x00000005;
-enum uint TO_ADVANCEDTYPOGRAPHY = 0x00000001;
-enum uint TO_SIMPLELINEBREAK = 0x00000002;
-enum uint TO_DISABLECUSTOMTEXTOUT = 0x00000004;
-enum uint TO_ADVANCEDLAYOUT = 0x00000008;
-enum uint EM_OUTLINE = 0x000004dc;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getscrollpos))], [])*/uint EM_GETSCROLLPOS = 0x000004dd;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setscrollpos))], [])*/uint EM_SETSCROLLPOS = 0x000004de;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setfontsize))], [])*/uint EM_SETFONTSIZE = 0x000004df;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getzoom))], [])*/uint EM_GETZOOM = 0x000004e0;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setzoom))], [])*/uint EM_SETZOOM = 0x000004e1;
-enum uint EM_GETVIEWKIND = 0x000004e2;
-enum uint EM_SETVIEWKIND = 0x000004e3;
-enum uint EM_GETPAGE = 0x000004e4;
-enum uint EM_SETPAGE = 0x000004e5;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-gethyphenateinfo))], [])*/uint EM_GETHYPHENATEINFO = 0x000004e6;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-sethyphenateinfo))], [])*/uint EM_SETHYPHENATEINFO = 0x000004e7;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getpagerotate))], [])*/uint EM_GETPAGEROTATE = 0x000004eb;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setpagerotate))], [])*/uint EM_SETPAGEROTATE = 0x000004ec;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getctfmodebias))], [])*/uint EM_GETCTFMODEBIAS = 0x000004ed;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setctfmodebias))], [])*/uint EM_SETCTFMODEBIAS = 0x000004ee;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getctfopenstatus))], [])*/uint EM_GETCTFOPENSTATUS = 0x000004f0;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setctfopenstatus))], [])*/uint EM_SETCTFOPENSTATUS = 0x000004f1;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getimecomptext))], [])*/uint EM_GETIMECOMPTEXT = 0x000004f2;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-isime))], [])*/uint EM_ISIME = 0x000004f3;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getimeproperty))], [])*/uint EM_GETIMEPROPERTY = 0x000004f4;
-enum uint EM_GETQUERYRTFOBJ = 0x0000050d;
+enum uint ICM_CTF = 0x00000005U;
+enum uint TO_ADVANCEDTYPOGRAPHY = 0x00000001U;
+enum uint TO_SIMPLELINEBREAK = 0x00000002U;
+enum uint TO_DISABLECUSTOMTEXTOUT = 0x00000004U;
+enum uint TO_ADVANCEDLAYOUT = 0x00000008U;
+enum uint EM_OUTLINE = 0x000004dcU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getscrollpos))], [])*/uint EM_GETSCROLLPOS = 0x000004ddU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setscrollpos))], [])*/uint EM_SETSCROLLPOS = 0x000004deU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setfontsize))], [])*/uint EM_SETFONTSIZE = 0x000004dfU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getzoom))], [])*/uint EM_GETZOOM = 0x000004e0U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setzoom))], [])*/uint EM_SETZOOM = 0x000004e1U;
+enum uint EM_GETVIEWKIND = 0x000004e2U;
+enum uint EM_SETVIEWKIND = 0x000004e3U;
+enum uint EM_GETPAGE = 0x000004e4U;
+enum uint EM_SETPAGE = 0x000004e5U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-gethyphenateinfo))], [])*/uint EM_GETHYPHENATEINFO = 0x000004e6U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-sethyphenateinfo))], [])*/uint EM_SETHYPHENATEINFO = 0x000004e7U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getpagerotate))], [])*/uint EM_GETPAGEROTATE = 0x000004ebU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setpagerotate))], [])*/uint EM_SETPAGEROTATE = 0x000004ecU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getctfmodebias))], [])*/uint EM_GETCTFMODEBIAS = 0x000004edU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setctfmodebias))], [])*/uint EM_SETCTFMODEBIAS = 0x000004eeU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getctfopenstatus))], [])*/uint EM_GETCTFOPENSTATUS = 0x000004f0U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setctfopenstatus))], [])*/uint EM_SETCTFOPENSTATUS = 0x000004f1U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getimecomptext))], [])*/uint EM_GETIMECOMPTEXT = 0x000004f2U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-isime))], [])*/uint EM_ISIME = 0x000004f3U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getimeproperty))], [])*/uint EM_GETIMEPROPERTY = 0x000004f4U;
+enum uint EM_GETQUERYRTFOBJ = 0x0000050dU;
 
 enum : uint
 {
-    EM_SETQUERYRTFOBJ                 = 0x0000050e,
-    EM_SETQUERYCONVERTOLELINKCALLBACK = 0x00000593,
+    EM_SETQUERYRTFOBJ                 = 0x0000050eU,
+    EM_SETQUERYCONVERTOLELINKCALLBACK = 0x00000593U,
 }
 
-enum uint EM_SETDISABLEOLELINKCONVERSION = 0x00000594;
+enum uint EM_SETDISABLEOLELINKCONVERSION = 0x00000594U;
 
 enum : uint
 {
-    EPR_0   = 0x00000000,
-    EPR_270 = 0x00000001,
-    EPR_180 = 0x00000002,
-    EPR_90  = 0x00000003,
-    EPR_SE  = 0x00000005,
-}
-
-enum : uint
-{
-    CTFMODEBIAS_DEFAULT               = 0x00000000,
-    CTFMODEBIAS_FILENAME              = 0x00000001,
-    CTFMODEBIAS_NAME                  = 0x00000002,
-    CTFMODEBIAS_READING               = 0x00000003,
-    CTFMODEBIAS_DATETIME              = 0x00000004,
-    CTFMODEBIAS_CONVERSATION          = 0x00000005,
-    CTFMODEBIAS_NUMERIC               = 0x00000006,
-    CTFMODEBIAS_HIRAGANA              = 0x00000007,
-    CTFMODEBIAS_KATAKANA              = 0x00000008,
-    CTFMODEBIAS_HANGUL                = 0x00000009,
-    CTFMODEBIAS_HALFWIDTHKATAKANA     = 0x0000000a,
-    CTFMODEBIAS_FULLWIDTHALPHANUMERIC = 0x0000000b,
-}
-
-enum uint CTFMODEBIAS_HALFWIDTHALPHANUMERIC = 0x0000000c;
-
-enum : uint
-{
-    IMF_SMODE_PLAURALCLAUSE = 0x00000001,
-    IMF_SMODE_NONE          = 0x00000002,
+    EPR_0   = 0x00000000U,
+    EPR_270 = 0x00000001U,
+    EPR_180 = 0x00000002U,
+    EPR_90  = 0x00000003U,
+    EPR_SE  = 0x00000005U,
 }
 
 enum : uint
 {
-    EMO_EXIT    = 0x00000000,
-    EMO_ENTER   = 0x00000001,
-    EMO_PROMOTE = 0x00000002,
+    CTFMODEBIAS_DEFAULT               = 0x00000000U,
+    CTFMODEBIAS_FILENAME              = 0x00000001U,
+    CTFMODEBIAS_NAME                  = 0x00000002U,
+    CTFMODEBIAS_READING               = 0x00000003U,
+    CTFMODEBIAS_DATETIME              = 0x00000004U,
+    CTFMODEBIAS_CONVERSATION          = 0x00000005U,
+    CTFMODEBIAS_NUMERIC               = 0x00000006U,
+    CTFMODEBIAS_HIRAGANA              = 0x00000007U,
+    CTFMODEBIAS_KATAKANA              = 0x00000008U,
+    CTFMODEBIAS_HANGUL                = 0x00000009U,
+    CTFMODEBIAS_HALFWIDTHKATAKANA     = 0x0000000aU,
+    CTFMODEBIAS_FULLWIDTHALPHANUMERIC = 0x0000000bU,
 }
 
-enum uint EMO_EXPAND = 0x00000003;
-enum uint EMO_MOVESELECTION = 0x00000004;
-enum uint EMO_GETVIEWMODE = 0x00000005;
+enum uint CTFMODEBIAS_HALFWIDTHALPHANUMERIC = 0x0000000cU;
 
 enum : uint
 {
-    EMO_EXPANDSELECTION = 0x00000000,
-    EMO_EXPANDDOCUMENT  = 0x00000001,
-}
-
-enum uint VM_NORMAL = 0x00000004;
-enum uint VM_OUTLINE = 0x00000002;
-enum uint VM_PAGE = 0x00000009;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-inserttable))], [])*/uint EM_INSERTTABLE = 0x000004e8;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getautocorrectproc))], [])*/uint EM_GETAUTOCORRECTPROC = 0x000004e9;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setautocorrectproc))], [])*/uint EM_SETAUTOCORRECTPROC = 0x000004ea;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-callautocorrectproc))], [])*/uint EM_CALLAUTOCORRECTPROC = 0x000004ff;
-enum uint ATP_NOCHANGE = 0x00000000;
-enum uint ATP_CHANGE = 0x00000001;
-enum uint ATP_NODELIMITER = 0x00000002;
-enum uint ATP_REPLACEALLTEXT = 0x00000004;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-gettableparms))], [])*/uint EM_GETTABLEPARMS = 0x00000509;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-seteditstyleex))], [])*/uint EM_SETEDITSTYLEEX = 0x00000513;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-geteditstyleex))], [])*/uint EM_GETEDITSTYLEEX = 0x00000514;
-
-enum : uint
-{
-    SES_EX_NOTABLE           = 0x00000004,
-    SES_EX_NOMATH            = 0x00000040,
-    SES_EX_HANDLEFRIENDLYURL = 0x00000100,
+    IMF_SMODE_PLAURALCLAUSE = 0x00000001U,
+    IMF_SMODE_NONE          = 0x00000002U,
 }
 
 enum : uint
 {
-    SES_EX_NOTHEMING          = 0x00080000,
-    SES_EX_NOACETATESELECTION = 0x00100000,
+    EMO_EXIT    = 0x00000000U,
+    EMO_ENTER   = 0x00000001U,
+    EMO_PROMOTE = 0x00000002U,
 }
 
-enum uint SES_EX_USESINGLELINE = 0x00200000;
+enum uint EMO_EXPAND = 0x00000003U;
+enum uint EMO_MOVESELECTION = 0x00000004U;
+enum uint EMO_GETVIEWMODE = 0x00000005U;
 
 enum : uint
 {
-    SES_EX_MULTITOUCH     = 0x08000000,
-    SES_EX_HIDETEMPFORMAT = 0x10000000,
+    EMO_EXPANDSELECTION = 0x00000000U,
+    EMO_EXPANDDOCUMENT  = 0x00000001U,
 }
 
-enum uint SES_EX_USEMOUSEWPARAM = 0x20000000;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getstorytype))], [])*/uint EM_GETSTORYTYPE = 0x00000522;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setstorytype))], [])*/uint EM_SETSTORYTYPE = 0x00000523;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getellipsismode))], [])*/uint EM_GETELLIPSISMODE = 0x00000531;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setellipsismode))], [])*/uint EM_SETELLIPSISMODE = 0x00000532;
+enum uint VM_NORMAL = 0x00000004U;
+enum uint VM_OUTLINE = 0x00000002U;
+enum uint VM_PAGE = 0x00000009U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-inserttable))], [])*/uint EM_INSERTTABLE = 0x000004e8U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getautocorrectproc))], [])*/uint EM_GETAUTOCORRECTPROC = 0x000004e9U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setautocorrectproc))], [])*/uint EM_SETAUTOCORRECTPROC = 0x000004eaU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-callautocorrectproc))], [])*/uint EM_CALLAUTOCORRECTPROC = 0x000004ffU;
+enum uint ATP_NOCHANGE = 0x00000000U;
+enum uint ATP_CHANGE = 0x00000001U;
+enum uint ATP_NODELIMITER = 0x00000002U;
+enum uint ATP_REPLACEALLTEXT = 0x00000004U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-gettableparms))], [])*/uint EM_GETTABLEPARMS = 0x00000509U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-seteditstyleex))], [])*/uint EM_SETEDITSTYLEEX = 0x00000513U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-geteditstyleex))], [])*/uint EM_GETEDITSTYLEEX = 0x00000514U;
 
 enum : uint
 {
-    ELLIPSIS_MASK = 0x00000003,
-    ELLIPSIS_NONE = 0x00000000,
-    ELLIPSIS_END  = 0x00000001,
-    ELLIPSIS_WORD = 0x00000003,
+    SES_EX_NOTABLE           = 0x00000004U,
+    SES_EX_NOMATH            = 0x00000040U,
+    SES_EX_HANDLEFRIENDLYURL = 0x00000100U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-settableparms))], [])*/uint EM_SETTABLEPARMS = 0x00000533;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-gettouchoptions))], [])*/uint EM_GETTOUCHOPTIONS = 0x00000536;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-settouchoptions))], [])*/uint EM_SETTOUCHOPTIONS = 0x00000537;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-insertimage))], [])*/uint EM_INSERTIMAGE = 0x0000053a;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setuianame))], [])*/uint EM_SETUIANAME = 0x00000540;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getellipsisstate))], [])*/uint EM_GETELLIPSISSTATE = 0x00000542;
-enum uint RTO_SHOWHANDLES = 0x00000001;
-enum uint RTO_DISABLEHANDLES = 0x00000002;
-enum uint RTO_READINGMODE = 0x00000003;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-msgfilter))], [])*/uint EN_MSGFILTER = 0x00000700;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-requestresize))], [])*/uint EN_REQUESTRESIZE = 0x00000701;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-selchange))], [])*/uint EN_SELCHANGE = 0x00000702;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-dropfiles))], [])*/uint EN_DROPFILES = 0x00000703;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-protected))], [])*/uint EN_PROTECTED = 0x00000704;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-correcttext))], [])*/uint EN_CORRECTTEXT = 0x00000705;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-stopnoundo))], [])*/uint EN_STOPNOUNDO = 0x00000706;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-imechange))], [])*/uint EN_IMECHANGE = 0x00000707;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-saveclipboard))], [])*/uint EN_SAVECLIPBOARD = 0x00000708;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-oleopfailed))], [])*/uint EN_OLEOPFAILED = 0x00000709;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-objectpositions))], [])*/uint EN_OBJECTPOSITIONS = 0x0000070a;
+enum : uint
+{
+    SES_EX_NOTHEMING          = 0x00080000U,
+    SES_EX_NOACETATESELECTION = 0x00100000U,
+}
+
+enum uint SES_EX_USESINGLELINE = 0x00200000U;
+
+enum : uint
+{
+    SES_EX_MULTITOUCH     = 0x08000000U,
+    SES_EX_HIDETEMPFORMAT = 0x10000000U,
+}
+
+enum uint SES_EX_USEMOUSEWPARAM = 0x20000000U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getstorytype))], [])*/uint EM_GETSTORYTYPE = 0x00000522U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setstorytype))], [])*/uint EM_SETSTORYTYPE = 0x00000523U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getellipsismode))], [])*/uint EM_GETELLIPSISMODE = 0x00000531U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setellipsismode))], [])*/uint EM_SETELLIPSISMODE = 0x00000532U;
+
+enum : uint
+{
+    ELLIPSIS_MASK = 0x00000003U,
+    ELLIPSIS_NONE = 0x00000000U,
+    ELLIPSIS_END  = 0x00000001U,
+    ELLIPSIS_WORD = 0x00000003U,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-settableparms))], [])*/uint EM_SETTABLEPARMS = 0x00000533U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-gettouchoptions))], [])*/uint EM_GETTOUCHOPTIONS = 0x00000536U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-settouchoptions))], [])*/uint EM_SETTOUCHOPTIONS = 0x00000537U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-insertimage))], [])*/uint EM_INSERTIMAGE = 0x0000053aU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-setuianame))], [])*/uint EM_SETUIANAME = 0x00000540U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/em-getellipsisstate))], [])*/uint EM_GETELLIPSISSTATE = 0x00000542U;
+enum uint RTO_SHOWHANDLES = 0x00000001U;
+enum uint RTO_DISABLEHANDLES = 0x00000002U;
+enum uint RTO_READINGMODE = 0x00000003U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-msgfilter))], [])*/uint EN_MSGFILTER = 0x00000700U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-requestresize))], [])*/uint EN_REQUESTRESIZE = 0x00000701U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-selchange))], [])*/uint EN_SELCHANGE = 0x00000702U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-dropfiles))], [])*/uint EN_DROPFILES = 0x00000703U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-protected))], [])*/uint EN_PROTECTED = 0x00000704U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-correcttext))], [])*/uint EN_CORRECTTEXT = 0x00000705U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-stopnoundo))], [])*/uint EN_STOPNOUNDO = 0x00000706U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-imechange))], [])*/uint EN_IMECHANGE = 0x00000707U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-saveclipboard))], [])*/uint EN_SAVECLIPBOARD = 0x00000708U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-oleopfailed))], [])*/uint EN_OLEOPFAILED = 0x00000709U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-objectpositions))], [])*/uint EN_OBJECTPOSITIONS = 0x0000070aU;
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-link))], [])*/uint
 {
-    EN_LINK         = 0x0000070b,
-    EN_DRAGDROPDONE = 0x0000070c,
+    EN_LINK         = 0x0000070bU,
+    EN_DRAGDROPDONE = 0x0000070cU,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-paragraphexpanded))], [])*/uint EN_PARAGRAPHEXPANDED = 0x0000070d;
-enum uint EN_PAGECHANGE = 0x0000070e;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-lowfirtf))], [])*/uint EN_LOWFIRTF = 0x0000070f;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-paragraphexpanded))], [])*/uint EN_PARAGRAPHEXPANDED = 0x0000070dU;
+enum uint EN_PAGECHANGE = 0x0000070eU;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-lowfirtf))], [])*/uint EN_LOWFIRTF = 0x0000070fU;
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-alignltr))], [])*/uint
 {
-    EN_ALIGNLTR = 0x00000710,
-    EN_ALIGNRTL = 0x00000711,
+    EN_ALIGNLTR = 0x00000710U,
+    EN_ALIGNRTL = 0x00000711U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-clipformat))], [])*/uint EN_CLIPFORMAT = 0x00000712;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-startcomposition))], [])*/uint EN_STARTCOMPOSITION = 0x00000713;
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-endcomposition))], [])*/uint EN_ENDCOMPOSITION = 0x00000714;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-clipformat))], [])*/uint EN_CLIPFORMAT = 0x00000712U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-startcomposition))], [])*/uint EN_STARTCOMPOSITION = 0x00000713U;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Controls/en-endcomposition))], [])*/uint EN_ENDCOMPOSITION = 0x00000714U;
 
 enum : uint
 {
-    ENM_NONE   = 0x00000000,
-    ENM_CHANGE = 0x00000001,
+    ENM_NONE   = 0x00000000U,
+    ENM_CHANGE = 0x00000001U,
 }
 
-enum uint ENM_UPDATE = 0x00000002;
+enum uint ENM_UPDATE = 0x00000002U;
 
 enum : uint
 {
-    ENM_SCROLL       = 0x00000004,
-    ENM_SCROLLEVENTS = 0x00000008,
+    ENM_SCROLL       = 0x00000004U,
+    ENM_SCROLLEVENTS = 0x00000008U,
 }
 
-enum uint ENM_DRAGDROPDONE = 0x00000010;
-enum uint ENM_PARAGRAPHEXPANDED = 0x00000020;
-enum uint ENM_PAGECHANGE = 0x00000040;
-enum uint ENM_CLIPFORMAT = 0x00000080;
-enum uint ENM_KEYEVENTS = 0x00010000;
-enum uint ENM_MOUSEEVENTS = 0x00020000;
-enum uint ENM_REQUESTRESIZE = 0x00040000;
-enum uint ENM_SELCHANGE = 0x00080000;
-enum uint ENM_DROPFILES = 0x00100000;
-enum uint ENM_PROTECTED = 0x00200000;
-enum uint ENM_CORRECTTEXT = 0x00400000;
-enum uint ENM_IMECHANGE = 0x00800000;
-enum uint ENM_LANGCHANGE = 0x01000000;
-enum uint ENM_OBJECTPOSITIONS = 0x02000000;
+enum uint ENM_DRAGDROPDONE = 0x00000010U;
+enum uint ENM_PARAGRAPHEXPANDED = 0x00000020U;
+enum uint ENM_PAGECHANGE = 0x00000040U;
+enum uint ENM_CLIPFORMAT = 0x00000080U;
+enum uint ENM_KEYEVENTS = 0x00010000U;
+enum uint ENM_MOUSEEVENTS = 0x00020000U;
+enum uint ENM_REQUESTRESIZE = 0x00040000U;
+enum uint ENM_SELCHANGE = 0x00080000U;
+enum uint ENM_DROPFILES = 0x00100000U;
+enum uint ENM_PROTECTED = 0x00200000U;
+enum uint ENM_CORRECTTEXT = 0x00400000U;
+enum uint ENM_IMECHANGE = 0x00800000U;
+enum uint ENM_LANGCHANGE = 0x01000000U;
+enum uint ENM_OBJECTPOSITIONS = 0x02000000U;
 
 enum : uint
 {
-    ENM_LINK     = 0x04000000,
-    ENM_LOWFIRTF = 0x08000000,
+    ENM_LINK     = 0x04000000U,
+    ENM_LOWFIRTF = 0x08000000U,
 }
 
-enum uint ENM_STARTCOMPOSITION = 0x10000000;
-enum uint ENM_ENDCOMPOSITION = 0x20000000;
-enum uint ENM_GROUPTYPINGCHANGE = 0x40000000;
-enum uint ENM_HIDELINKTOOLTIP = 0x80000000;
-enum uint ES_SAVESEL = 0x00008000;
-enum uint ES_SUNKEN = 0x00004000;
-enum uint ES_DISABLENOSCROLL = 0x00002000;
-enum uint ES_SELECTIONBAR = 0x01000000;
-enum uint ES_NOOLEDRAGDROP = 0x00000008;
-enum uint ES_EX_NOCALLOLEINIT = 0x00000000;
-enum uint ES_VERTICAL = 0x00400000;
-enum uint ES_NOIME = 0x00080000;
-enum uint ES_SELFIME = 0x00040000;
-enum uint ECO_AUTOWORDSELECTION = 0x00000001;
+enum uint ENM_STARTCOMPOSITION = 0x10000000U;
+enum uint ENM_ENDCOMPOSITION = 0x20000000U;
+enum uint ENM_GROUPTYPINGCHANGE = 0x40000000U;
+enum uint ENM_HIDELINKTOOLTIP = 0x80000000U;
+enum uint ES_SAVESEL = 0x00008000U;
+enum uint ES_SUNKEN = 0x00004000U;
+enum uint ES_DISABLENOSCROLL = 0x00002000U;
+enum uint ES_SELECTIONBAR = 0x01000000U;
+enum uint ES_NOOLEDRAGDROP = 0x00000008U;
+enum uint ES_EX_NOCALLOLEINIT = 0x00000000U;
+enum uint ES_VERTICAL = 0x00400000U;
+enum uint ES_NOIME = 0x00080000U;
+enum uint ES_SELFIME = 0x00040000U;
+enum uint ECO_AUTOWORDSELECTION = 0x00000001U;
 
 enum : uint
 {
-    ECO_AUTOVSCROLL = 0x00000040,
-    ECO_AUTOHSCROLL = 0x00000080,
+    ECO_AUTOVSCROLL = 0x00000040U,
+    ECO_AUTOHSCROLL = 0x00000080U,
 }
 
-enum uint ECO_NOHIDESEL = 0x00000100;
-enum uint ECO_READONLY = 0x00000800;
-enum uint ECO_WANTRETURN = 0x00001000;
+enum uint ECO_NOHIDESEL = 0x00000100U;
+enum uint ECO_READONLY = 0x00000800U;
+enum uint ECO_WANTRETURN = 0x00001000U;
 
 enum : uint
 {
-    ECO_SAVESEL      = 0x00008000,
-    ECO_SELECTIONBAR = 0x01000000,
+    ECO_SAVESEL      = 0x00008000U,
+    ECO_SELECTIONBAR = 0x01000000U,
 }
 
-enum uint ECO_VERTICAL = 0x00400000;
+enum uint ECO_VERTICAL = 0x00400000U;
 
 enum : uint
 {
-    ECOOP_SET = 0x00000001,
-    ECOOP_OR  = 0x00000002,
-    ECOOP_AND = 0x00000003,
-    ECOOP_XOR = 0x00000004,
-}
-
-enum : uint
-{
-    WB_MOVEWORDPREV = 0x00000004,
-    WB_MOVEWORDNEXT = 0x00000005,
-}
-
-enum uint WB_PREVBREAK = 0x00000006;
-enum uint WB_NEXTBREAK = 0x00000007;
-enum uint PC_FOLLOWING = 0x00000001;
-enum uint PC_LEADING = 0x00000002;
-enum uint PC_OVERFLOW = 0x00000003;
-enum uint PC_DELIMITER = 0x00000004;
-
-enum : uint
-{
-    WBF_WORDWRAP  = 0x00000010,
-    WBF_WORDBREAK = 0x00000020,
-}
-
-enum uint WBF_OVERFLOW = 0x00000040;
-
-enum : uint
-{
-    WBF_LEVEL1 = 0x00000080,
-    WBF_LEVEL2 = 0x00000100,
-}
-
-enum uint WBF_CUSTOM = 0x00000200;
-
-enum : uint
-{
-    IMF_FORCENONE    = 0x00000001,
-    IMF_FORCEENABLE  = 0x00000002,
-    IMF_FORCEDISABLE = 0x00000004,
-}
-
-enum uint IMF_CLOSESTATUSWINDOW = 0x00000008;
-enum uint IMF_VERTICAL = 0x00000020;
-
-enum : uint
-{
-    IMF_FORCEACTIVE   = 0x00000040,
-    IMF_FORCEINACTIVE = 0x00000080,
-    IMF_FORCEREMEMBER = 0x00000100,
-}
-
-enum uint IMF_MULTIPLEEDIT = 0x00000400;
-enum uint yHeightCharPtsMost = 0x00000666;
-enum uint SCF_SELECTION = 0x00000001;
-
-enum : uint
-{
-    SCF_WORD    = 0x00000002,
-    SCF_DEFAULT = 0x00000000,
+    ECOOP_SET = 0x00000001U,
+    ECOOP_OR  = 0x00000002U,
+    ECOOP_AND = 0x00000003U,
+    ECOOP_XOR = 0x00000004U,
 }
 
 enum : uint
 {
-    SCF_ALL        = 0x00000004,
-    SCF_USEUIRULES = 0x00000008,
+    WB_MOVEWORDPREV = 0x00000004U,
+    WB_MOVEWORDNEXT = 0x00000005U,
 }
 
-enum uint SCF_ASSOCIATEFONT = 0x00000010;
-enum uint SCF_NOKBUPDATE = 0x00000020;
-enum uint SCF_ASSOCIATEFONT2 = 0x00000040;
-enum uint SCF_SMARTFONT = 0x00000080;
-enum uint SCF_CHARREPFROMLCID = 0x00000100;
-enum uint SPF_DONTSETDEFAULT = 0x00000002;
-enum uint SPF_SETDEFAULT = 0x00000004;
+enum uint WB_PREVBREAK = 0x00000006U;
+enum uint WB_NEXTBREAK = 0x00000007U;
+enum uint PC_FOLLOWING = 0x00000001U;
+enum uint PC_LEADING = 0x00000002U;
+enum uint PC_OVERFLOW = 0x00000003U;
+enum uint PC_DELIMITER = 0x00000004U;
 
 enum : uint
 {
-    SF_TEXT      = 0x00000001,
-    SF_RTF       = 0x00000002,
-    SF_RTFNOOBJS = 0x00000003,
+    WBF_WORDWRAP  = 0x00000010U,
+    WBF_WORDBREAK = 0x00000020U,
 }
 
-enum uint SF_TEXTIZED = 0x00000004;
-enum uint SF_UNICODE = 0x00000010;
-enum uint SF_USECODEPAGE = 0x00000020;
-enum uint SF_NCRFORNONASCII = 0x00000040;
-enum uint SFF_WRITEXTRAPAR = 0x00000080;
-enum uint SFF_SELECTION = 0x00008000;
+enum uint WBF_OVERFLOW = 0x00000040U;
 
 enum : uint
 {
-    SFF_PLAINRTF         = 0x00004000,
-    SFF_PERSISTVIEWSCALE = 0x00002000,
+    WBF_LEVEL1 = 0x00000080U,
+    WBF_LEVEL2 = 0x00000100U,
 }
 
-enum uint SFF_KEEPDOCINFO = 0x00001000;
-enum uint SFF_PWD = 0x00000800;
-enum uint SF_RTFVAL = 0x00000700;
-enum uint MAX_TAB_STOPS = 0x00000020;
-enum uint lDefaultTab = 0x000002d0;
-enum uint MAX_TABLE_CELLS = 0x0000003f;
+enum uint WBF_CUSTOM = 0x00000200U;
 
 enum : uint
 {
-    GCMF_GRIPPER  = 0x00000001,
-    GCMF_SPELLING = 0x00000002,
+    IMF_FORCENONE    = 0x00000001U,
+    IMF_FORCEENABLE  = 0x00000002U,
+    IMF_FORCEDISABLE = 0x00000004U,
 }
 
-enum uint GCMF_TOUCHMENU = 0x00004000;
-enum uint GCMF_MOUSEMENU = 0x00002000;
-enum uint OLEOP_DOVERB = 0x00000001;
+enum uint IMF_CLOSESTATUSWINDOW = 0x00000008U;
+enum uint IMF_VERTICAL = 0x00000020U;
+
+enum : uint
+{
+    IMF_FORCEACTIVE   = 0x00000040U,
+    IMF_FORCEINACTIVE = 0x00000080U,
+    IMF_FORCEREMEMBER = 0x00000100U,
+}
+
+enum uint IMF_MULTIPLEEDIT = 0x00000400U;
+enum uint yHeightCharPtsMost = 0x00000666U;
+enum uint SCF_SELECTION = 0x00000001U;
+
+enum : uint
+{
+    SCF_WORD    = 0x00000002U,
+    SCF_DEFAULT = 0x00000000U,
+}
+
+enum : uint
+{
+    SCF_ALL        = 0x00000004U,
+    SCF_USEUIRULES = 0x00000008U,
+}
+
+enum uint SCF_ASSOCIATEFONT = 0x00000010U;
+enum uint SCF_NOKBUPDATE = 0x00000020U;
+enum uint SCF_ASSOCIATEFONT2 = 0x00000040U;
+enum uint SCF_SMARTFONT = 0x00000080U;
+enum uint SCF_CHARREPFROMLCID = 0x00000100U;
+enum uint SPF_DONTSETDEFAULT = 0x00000002U;
+enum uint SPF_SETDEFAULT = 0x00000004U;
+
+enum : uint
+{
+    SF_TEXT      = 0x00000001U,
+    SF_RTF       = 0x00000002U,
+    SF_RTFNOOBJS = 0x00000003U,
+}
+
+enum uint SF_TEXTIZED = 0x00000004U;
+enum uint SF_UNICODE = 0x00000010U;
+enum uint SF_USECODEPAGE = 0x00000020U;
+enum uint SF_NCRFORNONASCII = 0x00000040U;
+enum uint SFF_WRITEXTRAPAR = 0x00000080U;
+enum uint SFF_SELECTION = 0x00008000U;
+
+enum : uint
+{
+    SFF_PLAINRTF         = 0x00004000U,
+    SFF_PERSISTVIEWSCALE = 0x00002000U,
+}
+
+enum uint SFF_KEEPDOCINFO = 0x00001000U;
+enum uint SFF_PWD = 0x00000800U;
+enum uint SF_RTFVAL = 0x00000700U;
+enum uint MAX_TAB_STOPS = 0x00000020U;
+enum uint lDefaultTab = 0x000002d0U;
+enum uint MAX_TABLE_CELLS = 0x0000003fU;
+
+enum : uint
+{
+    GCMF_GRIPPER  = 0x00000001U,
+    GCMF_SPELLING = 0x00000002U,
+}
+
+enum uint GCMF_TOUCHMENU = 0x00004000U;
+enum uint GCMF_MOUSEMENU = 0x00002000U;
+enum uint OLEOP_DOVERB = 0x00000001U;
 
 enum : const(wchar)*
 {
@@ -1585,95 +1613,95 @@ enum : const(wchar)*
 }
 
 enum const(wchar)* CF_RETEXTOBJ = "RichEdit Text and Objects";
-enum uint ST_DEFAULT = 0x00000000;
-enum uint ST_KEEPUNDO = 0x00000001;
-enum uint ST_SELECTION = 0x00000002;
-enum uint ST_NEWCHARS = 0x00000004;
-enum uint ST_UNICODE = 0x00000008;
-enum uint BOM_DEFPARADIR = 0x00000001;
-enum uint BOM_PLAINTEXT = 0x00000002;
-enum uint BOM_NEUTRALOVERRIDE = 0x00000004;
+enum uint ST_DEFAULT = 0x00000000U;
+enum uint ST_KEEPUNDO = 0x00000001U;
+enum uint ST_SELECTION = 0x00000002U;
+enum uint ST_NEWCHARS = 0x00000004U;
+enum uint ST_UNICODE = 0x00000008U;
+enum uint BOM_DEFPARADIR = 0x00000001U;
+enum uint BOM_PLAINTEXT = 0x00000002U;
+enum uint BOM_NEUTRALOVERRIDE = 0x00000004U;
 
 enum : uint
 {
-    BOM_CONTEXTREADING   = 0x00000008,
-    BOM_CONTEXTALIGNMENT = 0x00000010,
+    BOM_CONTEXTREADING   = 0x00000008U,
+    BOM_CONTEXTALIGNMENT = 0x00000010U,
 }
 
-enum uint BOM_LEGACYBIDICLASS = 0x00000040;
-enum uint BOM_UNICODEBIDI = 0x00000080;
-enum uint BOE_RTLDIR = 0x00000001;
-enum uint BOE_PLAINTEXT = 0x00000002;
-enum uint BOE_NEUTRALOVERRIDE = 0x00000004;
+enum uint BOM_LEGACYBIDICLASS = 0x00000040U;
+enum uint BOM_UNICODEBIDI = 0x00000080U;
+enum uint BOE_RTLDIR = 0x00000001U;
+enum uint BOE_PLAINTEXT = 0x00000002U;
+enum uint BOE_NEUTRALOVERRIDE = 0x00000004U;
 
 enum : uint
 {
-    BOE_CONTEXTREADING   = 0x00000008,
-    BOE_CONTEXTALIGNMENT = 0x00000010,
+    BOE_CONTEXTREADING   = 0x00000008U,
+    BOE_CONTEXTALIGNMENT = 0x00000010U,
 }
 
-enum uint BOE_FORCERECALC = 0x00000020;
-enum uint BOE_LEGACYBIDICLASS = 0x00000040;
-enum uint BOE_UNICODEBIDI = 0x00000080;
+enum uint BOE_FORCERECALC = 0x00000020U;
+enum uint BOE_LEGACYBIDICLASS = 0x00000040U;
+enum uint BOE_UNICODEBIDI = 0x00000080U;
 enum const(wchar)* RICHEDIT60_CLASS = "RICHEDIT60W";
-enum uint AURL_ENABLEEA = 0x00000001;
-enum uint GCM_TOUCHMENU = 0x00004000;
-enum uint GCM_MOUSEMENU = 0x00002000;
+enum uint AURL_ENABLEEA = 0x00000001U;
+enum uint GCM_TOUCHMENU = 0x00004000U;
+enum uint GCM_MOUSEMENU = 0x00002000U;
 enum HRESULT S_MSG_KEY_IGNORED = HRESULT(0x00040201);
 
 enum : uint
 {
-    TXTBIT_RICHTEXT        = 0x00000001,
-    TXTBIT_MULTILINE       = 0x00000002,
-    TXTBIT_READONLY        = 0x00000004,
-    TXTBIT_SHOWACCELERATOR = 0x00000008,
+    TXTBIT_RICHTEXT        = 0x00000001U,
+    TXTBIT_MULTILINE       = 0x00000002U,
+    TXTBIT_READONLY        = 0x00000004U,
+    TXTBIT_SHOWACCELERATOR = 0x00000008U,
 }
 
-enum uint TXTBIT_USEPASSWORD = 0x00000010;
-enum uint TXTBIT_HIDESELECTION = 0x00000020;
-enum uint TXTBIT_SAVESELECTION = 0x00000040;
-enum uint TXTBIT_AUTOWORDSEL = 0x00000080;
+enum uint TXTBIT_USEPASSWORD = 0x00000010U;
+enum uint TXTBIT_HIDESELECTION = 0x00000020U;
+enum uint TXTBIT_SAVESELECTION = 0x00000040U;
+enum uint TXTBIT_AUTOWORDSEL = 0x00000080U;
 
 enum : uint
 {
-    TXTBIT_VERTICAL     = 0x00000100,
-    TXTBIT_SELBARCHANGE = 0x00000200,
-}
-
-enum : uint
-{
-    TXTBIT_WORDWRAP    = 0x00000400,
-    TXTBIT_ALLOWBEEP   = 0x00000800,
-    TXTBIT_DISABLEDRAG = 0x00001000,
-}
-
-enum uint TXTBIT_VIEWINSETCHANGE = 0x00002000;
-enum uint TXTBIT_BACKSTYLECHANGE = 0x00004000;
-enum uint TXTBIT_MAXLENGTHCHANGE = 0x00008000;
-enum uint TXTBIT_SCROLLBARCHANGE = 0x00010000;
-enum uint TXTBIT_CHARFORMATCHANGE = 0x00020000;
-enum uint TXTBIT_PARAFORMATCHANGE = 0x00040000;
-enum uint TXTBIT_EXTENTCHANGE = 0x00080000;
-enum uint TXTBIT_CLIENTRECTCHANGE = 0x00100000;
-enum uint TXTBIT_USECURRENTBKG = 0x00200000;
-enum uint TXTBIT_NOTHREADREFCOUNT = 0x00400000;
-enum uint TXTBIT_SHOWPASSWORD = 0x00800000;
-
-enum : uint
-{
-    TXTBIT_D2DDWRITE           = 0x01000000,
-    TXTBIT_D2DSIMPLETYPOGRAPHY = 0x02000000,
+    TXTBIT_VERTICAL     = 0x00000100U,
+    TXTBIT_SELBARCHANGE = 0x00000200U,
 }
 
 enum : uint
 {
-    TXTBIT_D2DPIXELSNAPPED  = 0x04000000,
-    TXTBIT_D2DSUBPIXELLINES = 0x08000000,
+    TXTBIT_WORDWRAP    = 0x00000400U,
+    TXTBIT_ALLOWBEEP   = 0x00000800U,
+    TXTBIT_DISABLEDRAG = 0x00001000U,
 }
 
-enum uint TXTBIT_FLASHLASTPASSWORDCHAR = 0x10000000;
-enum uint TXTBIT_ADVANCEDINPUT = 0x20000000;
-enum uint TXES_ISDIALOG = 0x00000001;
+enum uint TXTBIT_VIEWINSETCHANGE = 0x00002000U;
+enum uint TXTBIT_BACKSTYLECHANGE = 0x00004000U;
+enum uint TXTBIT_MAXLENGTHCHANGE = 0x00008000U;
+enum uint TXTBIT_SCROLLBARCHANGE = 0x00010000U;
+enum uint TXTBIT_CHARFORMATCHANGE = 0x00020000U;
+enum uint TXTBIT_PARAFORMATCHANGE = 0x00040000U;
+enum uint TXTBIT_EXTENTCHANGE = 0x00080000U;
+enum uint TXTBIT_CLIENTRECTCHANGE = 0x00100000U;
+enum uint TXTBIT_USECURRENTBKG = 0x00200000U;
+enum uint TXTBIT_NOTHREADREFCOUNT = 0x00400000U;
+enum uint TXTBIT_SHOWPASSWORD = 0x00800000U;
+
+enum : uint
+{
+    TXTBIT_D2DDWRITE           = 0x01000000U,
+    TXTBIT_D2DSIMPLETYPOGRAPHY = 0x02000000U,
+}
+
+enum : uint
+{
+    TXTBIT_D2DPIXELSNAPPED  = 0x04000000U,
+    TXTBIT_D2DSUBPIXELLINES = 0x08000000U,
+}
+
+enum uint TXTBIT_FLASHLASTPASSWORDCHAR = 0x10000000U;
+enum uint TXTBIT_ADVANCEDINPUT = 0x20000000U;
+enum uint TXES_ISDIALOG = 0x00000001U;
 
 enum : int
 {
@@ -1693,296 +1721,686 @@ alias PShutdownTextServices = HRESULT function(IUnknown pTextServices);
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-richedit_image_parameters))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct RICHEDIT_IMAGE_PARAMETERS
+version(X86_64)
 {
-align (4):
-    int          xWidth;
-    int          yHeight;
-    int          Ascent;
-    int          Type;
-    const(PWSTR) pwszAlternateText;
-    IStream      pIStream;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-richedit_image_parameters
+    struct RICHEDIT_IMAGE_PARAMETERS
+    {
+    align (4):
+        int          xWidth;
+        int          yHeight;
+        int          Ascent;
+        int          Type;
+        const(PWSTR) pwszAlternateText;
+        IStream      pIStream;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-endcompositionnotify))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct ENDCOMPOSITIONNOTIFY
+version(AArch64)
 {
-align (4):
-    NMHDR nmhdr;
-    ENDCOMPOSITIONNOTIFY_CODE dwCode;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-richedit_image_parameters
+    struct RICHEDIT_IMAGE_PARAMETERS
+    {
+    align (4):
+        int          xWidth;
+        int          yHeight;
+        int          Ascent;
+        int          Type;
+        const(PWSTR) pwszAlternateText;
+        IStream      pIStream;
+    }
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-textrangea))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct TEXTRANGEA
+version(X86_64)
 {
-align (4):
-    CHARRANGE chrg;
-    PSTR      lpstrText;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-endcompositionnotify
+    struct ENDCOMPOSITIONNOTIFY
+    {
+    align (4):
+        NMHDR nmhdr;
+        ENDCOMPOSITIONNOTIFY_CODE dwCode;
+    }
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-textrangew))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct TEXTRANGEW
+version(AArch64)
 {
-align (4):
-    CHARRANGE chrg;
-    PWSTR     lpstrText;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-endcompositionnotify
+    struct ENDCOMPOSITIONNOTIFY
+    {
+    align (4):
+        NMHDR nmhdr;
+        ENDCOMPOSITIONNOTIFY_CODE dwCode;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-editstream))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct EDITSTREAM
+version(X86_64)
 {
-align (4):
-    size_t             dwCookie;
-    uint               dwError;
-    EDITSTREAMCALLBACK pfnCallback;
+    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-textrangea
+    struct TEXTRANGEA
+    {
+    align (4):
+        CHARRANGE chrg;
+        PSTR      lpstrText;
+    }
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-findtexta))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct FINDTEXTA
+version(AArch64)
 {
-align (4):
-    CHARRANGE   chrg;
-    const(PSTR) lpstrText;
+    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-textrangea
+    struct TEXTRANGEA
+    {
+    align (4):
+        CHARRANGE chrg;
+        PSTR      lpstrText;
+    }
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-findtextw))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct FINDTEXTW
+version(X86_64)
 {
-align (4):
-    CHARRANGE    chrg;
-    const(PWSTR) lpstrText;
+    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-textrangew
+    struct TEXTRANGEW
+    {
+    align (4):
+        CHARRANGE chrg;
+        PWSTR     lpstrText;
+    }
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-findtextexa))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct FINDTEXTEXA
+version(AArch64)
 {
-align (4):
-    CHARRANGE   chrg;
-    const(PSTR) lpstrText;
-    CHARRANGE   chrgText;
+    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-textrangew
+    struct TEXTRANGEW
+    {
+    align (4):
+        CHARRANGE chrg;
+        PWSTR     lpstrText;
+    }
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-findtextexw))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct FINDTEXTEXW
+version(X86_64)
 {
-align (4):
-    CHARRANGE    chrg;
-    const(PWSTR) lpstrText;
-    CHARRANGE    chrgText;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-editstream
+    struct EDITSTREAM
+    {
+    align (4):
+        size_t             dwCookie;
+        uint               dwError;
+        EDITSTREAMCALLBACK pfnCallback;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-formatrange))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct FORMATRANGE
+version(AArch64)
 {
-align (4):
-    HDC       hdc;
-    HDC       hdcTarget;
-    RECT      rc;
-    RECT      rcPage;
-    CHARRANGE chrg;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-editstream
+    struct EDITSTREAM
+    {
+    align (4):
+        size_t             dwCookie;
+        uint               dwError;
+        EDITSTREAMCALLBACK pfnCallback;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-msgfilter))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct MSGFILTER
+version(X86_64)
 {
-align (4):
-    NMHDR  nmhdr;
-    uint   msg;
-    WPARAM wParam;
-    LPARAM lParam;
+    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-findtexta
+    struct FINDTEXTA
+    {
+    align (4):
+        CHARRANGE   chrg;
+        const(PSTR) lpstrText;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-reqresize))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct REQRESIZE
+version(AArch64)
 {
-align (4):
-    NMHDR nmhdr;
-    RECT  rc;
+    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-findtexta
+    struct FINDTEXTA
+    {
+    align (4):
+        CHARRANGE   chrg;
+        const(PSTR) lpstrText;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-selchange))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct SELCHANGE
+version(X86_64)
 {
-align (4):
-    NMHDR     nmhdr;
-    CHARRANGE chrg;
-    RICH_EDIT_GET_CONTEXT_MENU_SEL_TYPE seltyp;
+    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-findtextw
+    struct FINDTEXTW
+    {
+    align (4):
+        CHARRANGE    chrg;
+        const(PWSTR) lpstrText;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-clipboardformat))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct CLIPBOARDFORMAT
+version(AArch64)
 {
-align (4):
-    NMHDR  nmhdr;
-    ushort cf;
+    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-findtextw
+    struct FINDTEXTW
+    {
+    align (4):
+        CHARRANGE    chrg;
+        const(PWSTR) lpstrText;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-getcontextmenuex))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct GETCONTEXTMENUEX
+version(X86_64)
 {
-align (4):
-    CHARRANGE chrg;
-    uint      dwFlags;
-    POINT     pt;
-    void*     pvReserved;
+    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-findtextexa
+    struct FINDTEXTEXA
+    {
+    align (4):
+        CHARRANGE   chrg;
+        const(PSTR) lpstrText;
+        CHARRANGE   chrgText;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-endropfiles))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct ENDROPFILES
+version(AArch64)
 {
-align (4):
-    NMHDR  nmhdr;
-    HANDLE hDrop;
-    int    cp;
-    BOOL   fProtected;
+    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-findtextexa
+    struct FINDTEXTEXA
+    {
+    align (4):
+        CHARRANGE   chrg;
+        const(PSTR) lpstrText;
+        CHARRANGE   chrgText;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-enprotected))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct ENPROTECTED
+version(X86_64)
 {
-align (4):
-    NMHDR     nmhdr;
-    uint      msg;
-    WPARAM    wParam;
-    LPARAM    lParam;
-    CHARRANGE chrg;
+    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-findtextexw
+    struct FINDTEXTEXW
+    {
+    align (4):
+        CHARRANGE    chrg;
+        const(PWSTR) lpstrText;
+        CHARRANGE    chrgText;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-ensaveclipboard))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct ENSAVECLIPBOARD
+version(AArch64)
 {
-align (4):
-    NMHDR nmhdr;
-    int   cObjectCount;
-    int   cch;
+    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-findtextexw
+    struct FINDTEXTEXW
+    {
+    align (4):
+        CHARRANGE    chrg;
+        const(PWSTR) lpstrText;
+        CHARRANGE    chrgText;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-enoleopfailed))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct ENOLEOPFAILED
+version(X86_64)
 {
-align (4):
-    NMHDR   nmhdr;
-    int     iob;
-    int     lOper;
-    HRESULT hr;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-formatrange
+    struct FORMATRANGE
+    {
+    align (4):
+        HDC       hdc;
+        HDC       hdcTarget;
+        RECT      rc;
+        RECT      rcPage;
+        CHARRANGE chrg;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-objectpositions))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct OBJECTPOSITIONS
+version(AArch64)
 {
-align (4):
-    NMHDR nmhdr;
-    int   cObjectCount;
-    int*  pcpPositions;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-formatrange
+    struct FORMATRANGE
+    {
+    align (4):
+        HDC       hdc;
+        HDC       hdcTarget;
+        RECT      rc;
+        RECT      rcPage;
+        CHARRANGE chrg;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-enlink))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct ENLINK
+version(X86_64)
 {
-align (4):
-    NMHDR     nmhdr;
-    uint      msg;
-    WPARAM    wParam;
-    LPARAM    lParam;
-    CHARRANGE chrg;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-msgfilter
+    struct MSGFILTER
+    {
+    align (4):
+        NMHDR  nmhdr;
+        uint   msg;
+        WPARAM wParam;
+        LPARAM lParam;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-enlowfirtf))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct ENLOWFIRTF
+version(AArch64)
 {
-align (4):
-    NMHDR nmhdr;
-    PSTR  szControl;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-msgfilter
+    struct MSGFILTER
+    {
+    align (4):
+        NMHDR  nmhdr;
+        uint   msg;
+        WPARAM wParam;
+        LPARAM lParam;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-encorrecttext))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct ENCORRECTTEXT
+version(X86_64)
 {
-align (4):
-    NMHDR     nmhdr;
-    CHARRANGE chrg;
-    RICH_EDIT_GET_CONTEXT_MENU_SEL_TYPE seltyp;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-reqresize
+    struct REQRESIZE
+    {
+    align (4):
+        NMHDR nmhdr;
+        RECT  rc;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-punctuation))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct PUNCTUATION
+version(AArch64)
 {
-align (4):
-    uint iSize;
-    PSTR szPunctuation;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-reqresize
+    struct REQRESIZE
+    {
+    align (4):
+        NMHDR nmhdr;
+        RECT  rc;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-repastespecial))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct REPASTESPECIAL
+version(X86_64)
 {
-align (4):
-    DVASPECT dwAspect;
-    size_t   dwParam;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-selchange
+    struct SELCHANGE
+    {
+    align (4):
+        NMHDR     nmhdr;
+        CHARRANGE chrg;
+        RICH_EDIT_GET_CONTEXT_MENU_SEL_TYPE seltyp;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-gettextex))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct GETTEXTEX
+version(AArch64)
 {
-align (4):
-    uint            cb;
-    GETTEXTEX_FLAGS flags;
-    uint            codepage;
-    const(PSTR)     lpDefaultChar;
-    BOOL*           lpUsedDefChar;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-selchange
+    struct SELCHANGE
+    {
+    align (4):
+        NMHDR     nmhdr;
+        CHARRANGE chrg;
+        RICH_EDIT_GET_CONTEXT_MENU_SEL_TYPE seltyp;
+    }
 }
 
-//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-hyphenateinfo))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct HYPHENATEINFO
+version(X86_64)
 {
-align (4):
-    short     cbSize;
-    short     dxHyphenateZone;
-    ptrdiff_t pfnHyphenate;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-clipboardformat
+    struct CLIPBOARDFORMAT
+    {
+    align (4):
+        NMHDR  nmhdr;
+        ushort cf;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-imecomptext))], [])
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-clipboardformat
+    struct CLIPBOARDFORMAT
+    {
+    align (4):
+        NMHDR  nmhdr;
+        ushort cf;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-getcontextmenuex
+    struct GETCONTEXTMENUEX
+    {
+    align (4):
+        CHARRANGE chrg;
+        uint      dwFlags;
+        POINT     pt;
+        void*     pvReserved;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-getcontextmenuex
+    struct GETCONTEXTMENUEX
+    {
+    align (4):
+        CHARRANGE chrg;
+        uint      dwFlags;
+        POINT     pt;
+        void*     pvReserved;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-endropfiles
+    struct ENDROPFILES
+    {
+    align (4):
+        NMHDR  nmhdr;
+        HANDLE hDrop;
+        int    cp;
+        BOOL   fProtected;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-endropfiles
+    struct ENDROPFILES
+    {
+    align (4):
+        NMHDR  nmhdr;
+        HANDLE hDrop;
+        int    cp;
+        BOOL   fProtected;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-enprotected
+    struct ENPROTECTED
+    {
+    align (4):
+        NMHDR     nmhdr;
+        uint      msg;
+        WPARAM    wParam;
+        LPARAM    lParam;
+        CHARRANGE chrg;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-enprotected
+    struct ENPROTECTED
+    {
+    align (4):
+        NMHDR     nmhdr;
+        uint      msg;
+        WPARAM    wParam;
+        LPARAM    lParam;
+        CHARRANGE chrg;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-ensaveclipboard
+    struct ENSAVECLIPBOARD
+    {
+    align (4):
+        NMHDR nmhdr;
+        int   cObjectCount;
+        int   cch;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-ensaveclipboard
+    struct ENSAVECLIPBOARD
+    {
+    align (4):
+        NMHDR nmhdr;
+        int   cObjectCount;
+        int   cch;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-enoleopfailed
+    struct ENOLEOPFAILED
+    {
+    align (4):
+        NMHDR   nmhdr;
+        int     iob;
+        int     lOper;
+        HRESULT hr;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-enoleopfailed
+    struct ENOLEOPFAILED
+    {
+    align (4):
+        NMHDR   nmhdr;
+        int     iob;
+        int     lOper;
+        HRESULT hr;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-objectpositions
+    struct OBJECTPOSITIONS
+    {
+    align (4):
+        NMHDR nmhdr;
+        int   cObjectCount;
+        int*  pcpPositions;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-objectpositions
+    struct OBJECTPOSITIONS
+    {
+    align (4):
+        NMHDR nmhdr;
+        int   cObjectCount;
+        int*  pcpPositions;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-enlink
+    struct ENLINK
+    {
+    align (4):
+        NMHDR     nmhdr;
+        uint      msg;
+        WPARAM    wParam;
+        LPARAM    lParam;
+        CHARRANGE chrg;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-enlink
+    struct ENLINK
+    {
+    align (4):
+        NMHDR     nmhdr;
+        uint      msg;
+        WPARAM    wParam;
+        LPARAM    lParam;
+        CHARRANGE chrg;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-enlowfirtf
+    struct ENLOWFIRTF
+    {
+    align (4):
+        NMHDR nmhdr;
+        PSTR  szControl;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-enlowfirtf
+    struct ENLOWFIRTF
+    {
+    align (4):
+        NMHDR nmhdr;
+        PSTR  szControl;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-encorrecttext
+    struct ENCORRECTTEXT
+    {
+    align (4):
+        NMHDR     nmhdr;
+        CHARRANGE chrg;
+        RICH_EDIT_GET_CONTEXT_MENU_SEL_TYPE seltyp;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-encorrecttext
+    struct ENCORRECTTEXT
+    {
+    align (4):
+        NMHDR     nmhdr;
+        CHARRANGE chrg;
+        RICH_EDIT_GET_CONTEXT_MENU_SEL_TYPE seltyp;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-punctuation
+    struct PUNCTUATION
+    {
+    align (4):
+        uint iSize;
+        PSTR szPunctuation;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-punctuation
+    struct PUNCTUATION
+    {
+    align (4):
+        uint iSize;
+        PSTR szPunctuation;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-repastespecial
+    struct REPASTESPECIAL
+    {
+    align (4):
+        DVASPECT dwAspect;
+        size_t   dwParam;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-repastespecial
+    struct REPASTESPECIAL
+    {
+    align (4):
+        DVASPECT dwAspect;
+        size_t   dwParam;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-gettextex
+    struct GETTEXTEX
+    {
+    align (4):
+        uint            cb;
+        GETTEXTEX_FLAGS flags;
+        uint            codepage;
+        const(PSTR)     lpDefaultChar;
+        BOOL*           lpUsedDefChar;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-gettextex
+    struct GETTEXTEX
+    {
+    align (4):
+        uint            cb;
+        GETTEXTEX_FLAGS flags;
+        uint            codepage;
+        const(PSTR)     lpDefaultChar;
+        BOOL*           lpUsedDefChar;
+    }
+}
+
+version(X86_64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-hyphenateinfo
+    struct HYPHENATEINFO
+    {
+    align (4):
+        short     cbSize;
+        short     dxHyphenateZone;
+        ptrdiff_t pfnHyphenate;
+    }
+}
+
+version(AArch64)
+{
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-hyphenateinfo
+    struct HYPHENATEINFO
+    {
+    align (4):
+        short     cbSize;
+        short     dxHyphenateZone;
+        ptrdiff_t pfnHyphenate;
+    }
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-imecomptext
 struct IMECOMPTEXT
 {
     int               cb;
     IMECOMPTEXT_FLAGS flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-tablerowparms))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-tablerowparms
 struct TABLEROWPARMS
 {
     ubyte cbRow;
@@ -1992,17 +2410,17 @@ struct TABLEROWPARMS
     int   dxCellMargin;
     int   dxIndent;
     int   dyHeight;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fIdentCells)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield148;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fIdentCells)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield540;
     int   cpStartRow;
     ubyte bTableLevel;
     ubyte iCell;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-tablecellparms))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-tablecellparms
 struct TABLECELLPARMS
 {
     int      dxWidth;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fMergeCont)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield149;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fMergeCont)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield541;
     ushort   wShading;
     short    dxBrdrLeft;
     short    dyBrdrTop;
@@ -2016,29 +2434,33 @@ struct TABLECELLPARMS
     COLORREF crForePat;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-richedit_image_parameters))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct RICHEDIT_IMAGE_PARAMETERS
+version(X86)
 {
-    int          xWidth;
-    int          yHeight;
-    int          Ascent;
-    int          Type;
-    const(PWSTR) pwszAlternateText;
-    IStream      pIStream;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-richedit_image_parameters
+    struct RICHEDIT_IMAGE_PARAMETERS
+    {
+        int          xWidth;
+        int          yHeight;
+        int          Ascent;
+        int          Type;
+        const(PWSTR) pwszAlternateText;
+        IStream      pIStream;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-endcompositionnotify))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct ENDCOMPOSITIONNOTIFY
+version(X86)
 {
-    NMHDR nmhdr;
-    ENDCOMPOSITIONNOTIFY_CODE dwCode;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-endcompositionnotify
+    struct ENDCOMPOSITIONNOTIFY
+    {
+        NMHDR nmhdr;
+        ENDCOMPOSITIONNOTIFY_CODE dwCode;
+    }
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-charformata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-charformata
 struct CHARFORMATA
 {
     uint         cbSize;
@@ -2054,7 +2476,7 @@ struct CHARFORMATA
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-charformatw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-charformatw
 struct CHARFORMATW
 {
     uint         cbSize;
@@ -2069,132 +2491,160 @@ struct CHARFORMATW
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-charformat2w))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-charformat2w
 struct CHARFORMAT2W
 {
-    CHARFORMATW         Base;
-    ushort              wWeight;
-    short               sSpacing;
-    COLORREF            crBackColor;
-    uint                lcid;
-    _Anonymous_e__Union Anonymous;
-    short               sStyle;
-    ushort              wKerning;
-    ubyte               bUnderlineType;
-    ubyte               bAnimation;
-    ubyte               bRevAuthor;
-    ubyte               bUnderlineColor;
+    CHARFORMATW Base;
+    ushort      wWeight;
+    short       sSpacing;
+    COLORREF    crBackColor;
+    uint        lcid;
+    union
+    {
+        uint dwReserved;
+        uint dwCookie;
+    }
+    short       sStyle;
+    ushort      wKerning;
+    ubyte       bUnderlineType;
+    ubyte       bAnimation;
+    ubyte       bRevAuthor;
+    ubyte       bUnderlineColor;
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-charformat2a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-charformat2a
 struct CHARFORMAT2A
 {
-    CHARFORMATA         Base;
-    ushort              wWeight;
-    short               sSpacing;
-    COLORREF            crBackColor;
-    uint                lcid;
-    _Anonymous_e__Union Anonymous;
-    short               sStyle;
-    ushort              wKerning;
-    ubyte               bUnderlineType;
-    ubyte               bAnimation;
-    ubyte               bRevAuthor;
-    ubyte               bUnderlineColor;
+    CHARFORMATA Base;
+    ushort      wWeight;
+    short       sSpacing;
+    COLORREF    crBackColor;
+    uint        lcid;
+    union
+    {
+        uint dwReserved;
+        uint dwCookie;
+    }
+    short       sStyle;
+    ushort      wKerning;
+    ubyte       bUnderlineType;
+    ubyte       bAnimation;
+    ubyte       bRevAuthor;
+    ubyte       bUnderlineColor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-charrange))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-charrange
 struct CHARRANGE
 {
     int cpMin;
     int cpMax;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-textrangea))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct TEXTRANGEA
+version(X86)
 {
-    CHARRANGE chrg;
-    PSTR      lpstrText;
+    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-textrangea
+    struct TEXTRANGEA
+    {
+        CHARRANGE chrg;
+        PSTR      lpstrText;
+    }
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-textrangew))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct TEXTRANGEW
+version(X86)
 {
-    CHARRANGE chrg;
-    PWSTR     lpstrText;
+    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-textrangew
+    struct TEXTRANGEW
+    {
+        CHARRANGE chrg;
+        PWSTR     lpstrText;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-editstream))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct EDITSTREAM
+version(X86)
 {
-    size_t             dwCookie;
-    uint               dwError;
-    EDITSTREAMCALLBACK pfnCallback;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-editstream
+    struct EDITSTREAM
+    {
+        size_t             dwCookie;
+        uint               dwError;
+        EDITSTREAMCALLBACK pfnCallback;
+    }
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-findtexta))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct FINDTEXTA
+version(X86)
 {
-    CHARRANGE   chrg;
-    const(PSTR) lpstrText;
+    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-findtexta
+    struct FINDTEXTA
+    {
+        CHARRANGE   chrg;
+        const(PSTR) lpstrText;
+    }
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-findtextw))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct FINDTEXTW
+version(X86)
 {
-    CHARRANGE    chrg;
-    const(PWSTR) lpstrText;
+    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-findtextw
+    struct FINDTEXTW
+    {
+        CHARRANGE    chrg;
+        const(PWSTR) lpstrText;
+    }
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-findtextexa))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct FINDTEXTEXA
+version(X86)
 {
-    CHARRANGE   chrg;
-    const(PSTR) lpstrText;
-    CHARRANGE   chrgText;
+    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-findtextexa
+    struct FINDTEXTEXA
+    {
+        CHARRANGE   chrg;
+        const(PSTR) lpstrText;
+        CHARRANGE   chrgText;
+    }
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-findtextexw))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct FINDTEXTEXW
+version(X86)
 {
-    CHARRANGE    chrg;
-    const(PWSTR) lpstrText;
-    CHARRANGE    chrgText;
+    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-findtextexw
+    struct FINDTEXTEXW
+    {
+        CHARRANGE    chrg;
+        const(PWSTR) lpstrText;
+        CHARRANGE    chrgText;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-formatrange))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct FORMATRANGE
+version(X86)
 {
-    HDC       hdc;
-    HDC       hdcTarget;
-    RECT      rc;
-    RECT      rcPage;
-    CHARRANGE chrg;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-formatrange
+    struct FORMATRANGE
+    {
+        HDC       hdc;
+        HDC       hdcTarget;
+        RECT      rc;
+        RECT      rcPage;
+        CHARRANGE chrg;
+    }
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-paraformat))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-paraformat
 struct PARAFORMAT
 {
     uint                 cbSize;
     PARAFORMAT_MASK      dwMask;
     PARAFORMAT_NUMBERING wNumbering;
-    _Anonymous_e__Union  Anonymous;
+    union
+    {
+        ushort wReserved;
+        ushort wEffects;
+    }
     int                  dxStartIndent;
     int                  dxRightIndent;
     int                  dxOffset;
@@ -2203,7 +2653,7 @@ struct PARAFORMAT
     uint[32]             rgxTabs;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-paraformat2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-paraformat2
 struct PARAFORMAT2
 {
     PARAFORMAT         Base;
@@ -2223,31 +2673,37 @@ struct PARAFORMAT2
     PARAFORMAT_BORDERS wBorders;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-msgfilter))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct MSGFILTER
+version(X86)
 {
-    NMHDR  nmhdr;
-    uint   msg;
-    WPARAM wParam;
-    LPARAM lParam;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-msgfilter
+    struct MSGFILTER
+    {
+        NMHDR  nmhdr;
+        uint   msg;
+        WPARAM wParam;
+        LPARAM lParam;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-reqresize))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct REQRESIZE
+version(X86)
 {
-    NMHDR nmhdr;
-    RECT  rc;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-reqresize
+    struct REQRESIZE
+    {
+        NMHDR nmhdr;
+        RECT  rc;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-selchange))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct SELCHANGE
+version(X86)
 {
-    NMHDR     nmhdr;
-    CHARRANGE chrg;
-    RICH_EDIT_GET_CONTEXT_MENU_SEL_TYPE seltyp;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-selchange
+    struct SELCHANGE
+    {
+        NMHDR     nmhdr;
+        CHARRANGE chrg;
+        RICH_EDIT_GET_CONTEXT_MENU_SEL_TYPE seltyp;
+    }
 }
 
 struct GROUPTYPINGCHANGE
@@ -2257,110 +2713,132 @@ align (4):
     BOOL  fGroupTyping;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-clipboardformat))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct CLIPBOARDFORMAT
+version(X86)
 {
-    NMHDR  nmhdr;
-    ushort cf;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-clipboardformat
+    struct CLIPBOARDFORMAT
+    {
+        NMHDR  nmhdr;
+        ushort cf;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-getcontextmenuex))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct GETCONTEXTMENUEX
+version(X86)
 {
-    CHARRANGE chrg;
-    uint      dwFlags;
-    POINT     pt;
-    void*     pvReserved;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-getcontextmenuex
+    struct GETCONTEXTMENUEX
+    {
+        CHARRANGE chrg;
+        uint      dwFlags;
+        POINT     pt;
+        void*     pvReserved;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-endropfiles))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct ENDROPFILES
+version(X86)
 {
-    NMHDR  nmhdr;
-    HANDLE hDrop;
-    int    cp;
-    BOOL   fProtected;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-endropfiles
+    struct ENDROPFILES
+    {
+        NMHDR  nmhdr;
+        HANDLE hDrop;
+        int    cp;
+        BOOL   fProtected;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-enprotected))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct ENPROTECTED
+version(X86)
 {
-    NMHDR     nmhdr;
-    uint      msg;
-    WPARAM    wParam;
-    LPARAM    lParam;
-    CHARRANGE chrg;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-enprotected
+    struct ENPROTECTED
+    {
+        NMHDR     nmhdr;
+        uint      msg;
+        WPARAM    wParam;
+        LPARAM    lParam;
+        CHARRANGE chrg;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-ensaveclipboard))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct ENSAVECLIPBOARD
+version(X86)
 {
-    NMHDR nmhdr;
-    int   cObjectCount;
-    int   cch;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-ensaveclipboard
+    struct ENSAVECLIPBOARD
+    {
+        NMHDR nmhdr;
+        int   cObjectCount;
+        int   cch;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-enoleopfailed))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct ENOLEOPFAILED
+version(X86)
 {
-    NMHDR   nmhdr;
-    int     iob;
-    int     lOper;
-    HRESULT hr;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-enoleopfailed
+    struct ENOLEOPFAILED
+    {
+        NMHDR   nmhdr;
+        int     iob;
+        int     lOper;
+        HRESULT hr;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-objectpositions))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct OBJECTPOSITIONS
+version(X86)
 {
-    NMHDR nmhdr;
-    int   cObjectCount;
-    int*  pcpPositions;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-objectpositions
+    struct OBJECTPOSITIONS
+    {
+        NMHDR nmhdr;
+        int   cObjectCount;
+        int*  pcpPositions;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-enlink))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct ENLINK
+version(X86)
 {
-    NMHDR     nmhdr;
-    uint      msg;
-    WPARAM    wParam;
-    LPARAM    lParam;
-    CHARRANGE chrg;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-enlink
+    struct ENLINK
+    {
+        NMHDR     nmhdr;
+        uint      msg;
+        WPARAM    wParam;
+        LPARAM    lParam;
+        CHARRANGE chrg;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-enlowfirtf))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct ENLOWFIRTF
+version(X86)
 {
-    NMHDR nmhdr;
-    PSTR  szControl;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-enlowfirtf
+    struct ENLOWFIRTF
+    {
+        NMHDR nmhdr;
+        PSTR  szControl;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-encorrecttext))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct ENCORRECTTEXT
+version(X86)
 {
-    NMHDR     nmhdr;
-    CHARRANGE chrg;
-    RICH_EDIT_GET_CONTEXT_MENU_SEL_TYPE seltyp;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-encorrecttext
+    struct ENCORRECTTEXT
+    {
+        NMHDR     nmhdr;
+        CHARRANGE chrg;
+        RICH_EDIT_GET_CONTEXT_MENU_SEL_TYPE seltyp;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-punctuation))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct PUNCTUATION
+version(X86)
 {
-    uint iSize;
-    PSTR szPunctuation;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-punctuation
+    struct PUNCTUATION
+    {
+        uint iSize;
+        PSTR szPunctuation;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-compcolor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-compcolor
 struct COMPCOLOR
 {
     COLORREF crText;
@@ -2368,33 +2846,37 @@ struct COMPCOLOR
     uint     dwEffects;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-repastespecial))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct REPASTESPECIAL
+version(X86)
 {
-    DVASPECT dwAspect;
-    size_t   dwParam;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-repastespecial
+    struct REPASTESPECIAL
+    {
+        DVASPECT dwAspect;
+        size_t   dwParam;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-settextex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-settextex
 struct SETTEXTEX
 {
     uint flags;
     uint codepage;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-gettextex))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct GETTEXTEX
+version(X86)
 {
-    uint            cb;
-    GETTEXTEX_FLAGS flags;
-    uint            codepage;
-    const(PSTR)     lpDefaultChar;
-    BOOL*           lpUsedDefChar;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-gettextex
+    struct GETTEXTEX
+    {
+        uint            cb;
+        GETTEXTEX_FLAGS flags;
+        uint            codepage;
+        const(PSTR)     lpDefaultChar;
+        BOOL*           lpUsedDefChar;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-gettextlengthex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-gettextlengthex
 struct GETTEXTLENGTHEX
 {
     GETTEXTLENGTHEX_FLAGS flags;
@@ -2402,7 +2884,7 @@ struct GETTEXTLENGTHEX
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-bidioptions))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-bidioptions
 struct BIDIOPTIONS
 {
     uint   cbSize;
@@ -2410,7 +2892,7 @@ struct BIDIOPTIONS
     ushort wEffects;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-hyphresult))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-hyphresult
 struct HYPHRESULT
 {
     KHYPH khyph;
@@ -2418,17 +2900,19 @@ struct HYPHRESULT
     wchar chHyph;
 }
 
-//STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-hyphenateinfo))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct HYPHENATEINFO
+version(X86)
 {
-    short     cbSize;
-    short     dxHyphenateZone;
-    ptrdiff_t pfnHyphenate;
+    //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richedit/ns-richedit-hyphenateinfo
+    struct HYPHENATEINFO
+    {
+        short     cbSize;
+        short     dxHyphenateZone;
+        ptrdiff_t pfnHyphenate;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/ns-textserv-changenotify))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/ns-textserv-changenotify
 struct CHANGENOTIFY
 {
     /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CHANGETYPE))], [])*/uint dwChangeType;
@@ -2441,7 +2925,7 @@ union CARET_INFO
     CARET_FLAGS caretFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richole/ns-richole-reobject))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richole/ns-richole-reobject
 struct REOBJECT
 {
     uint           cbStruct;
@@ -2458,1179 +2942,1179 @@ struct REOBJECT
 
 // Interfaces
 
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nl-textserv-itextservices))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nl-textserv-itextservices
 interface ITextServices : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices-txsendmessage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices-txsendmessage
     HRESULT TxSendMessage(uint msg, WPARAM wparam, LPARAM lparam, LRESULT* plresult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices-txdraw))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices-txdraw
     HRESULT TxDraw(DVASPECT dwDrawAspect, int lindex, void* pvAspect, DVTARGETDEVICE* ptd, HDC hdcDraw, 
                    HDC hicTargetDev, RECTL* lprcBounds, RECTL* lprcWBounds, RECT* lprcUpdate, ptrdiff_t pfnContinue, 
                    uint dwContinue, int lViewId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices-txgethscroll))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices-txgethscroll
     HRESULT TxGetHScroll(int* plMin, int* plMax, int* plPos, int* plPage, BOOL* pfEnabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices-txgetvscroll))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices-txgetvscroll
     HRESULT TxGetVScroll(int* plMin, int* plMax, int* plPos, int* plPage, BOOL* pfEnabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices-ontxsetcursor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices-ontxsetcursor
     HRESULT OnTxSetCursor(DVASPECT dwDrawAspect, int lindex, void* pvAspect, DVTARGETDEVICE* ptd, HDC hdcDraw, 
                           HDC hicTargetDev, RECT* lprcClient, int x, int y);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices-txqueryhitpoint))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices-txqueryhitpoint
     HRESULT TxQueryHitPoint(DVASPECT dwDrawAspect, int lindex, void* pvAspect, DVTARGETDEVICE* ptd, HDC hdcDraw, 
                             HDC hicTargetDev, RECT* lprcClient, int x, int y, uint* pHitResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices-ontxinplaceactivate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices-ontxinplaceactivate
     HRESULT OnTxInPlaceActivate(RECT* prcClient);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices-ontxinplacedeactivate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices-ontxinplacedeactivate
     HRESULT OnTxInPlaceDeactivate();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices-ontxuiactivate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices-ontxuiactivate
     HRESULT OnTxUIActivate();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices-ontxuideactivate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices-ontxuideactivate
     HRESULT OnTxUIDeactivate();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices-txgettext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices-txgettext
     HRESULT TxGetText(BSTR* pbstrText);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices-txsettext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices-txsettext
     HRESULT TxSetText(const(PWSTR) pszText);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices-txgetcurtargetx))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices-txgetcurtargetx
     HRESULT TxGetCurTargetX(int* param0);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices-txgetbaselinepos))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices-txgetbaselinepos
     HRESULT TxGetBaseLinePos(int* param0);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices-txgetnaturalsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices-txgetnaturalsize
     HRESULT TxGetNaturalSize(uint dwAspect, HDC hdcDraw, HDC hicTargetDev, DVTARGETDEVICE* ptd, uint dwMode, 
                              const(SIZE)* psizelExtent, int* pwidth, int* pheight);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices-txgetdroptarget))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices-txgetdroptarget
     HRESULT TxGetDropTarget(IDropTarget* ppDropTarget);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices-ontxpropertybitschange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices-ontxpropertybitschange
     HRESULT OnTxPropertyBitsChange(uint dwMask, uint dwBits);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices-txgetcachedsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices-txgetcachedsize
     HRESULT TxGetCachedSize(uint* pdwWidth, uint* pdwHeight);
 }
 
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nl-textserv-itexthost))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nl-textserv-itexthost
 interface ITextHost : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txgetdc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txgetdc
     HDC      TxGetDC();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txreleasedc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txreleasedc
     int      TxReleaseDC(HDC hdc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txshowscrollbar))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txshowscrollbar
     BOOL     TxShowScrollBar(int fnBar, BOOL fShow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txenablescrollbar))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txenablescrollbar
     BOOL     TxEnableScrollBar(SCROLLBAR_CONSTANTS fuSBFlags, int fuArrowflags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txsetscrollrange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txsetscrollrange
     BOOL     TxSetScrollRange(int fnBar, int nMinPos, int nMaxPos, BOOL fRedraw);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txsetscrollpos))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txsetscrollpos
     BOOL     TxSetScrollPos(int fnBar, int nPos, BOOL fRedraw);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txinvalidaterect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txinvalidaterect
     void     TxInvalidateRect(RECT* prc, BOOL fMode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txviewchange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txviewchange
     void     TxViewChange(BOOL fUpdate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txcreatecaret))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txcreatecaret
     BOOL     TxCreateCaret(HBITMAP hbmp, int xWidth, int yHeight);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txshowcaret))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txshowcaret
     BOOL     TxShowCaret(BOOL fShow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txsetcaretpos))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txsetcaretpos
     BOOL     TxSetCaretPos(int x, int y);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txsettimer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txsettimer
     BOOL     TxSetTimer(uint idTimer, uint uTimeout);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txkilltimer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txkilltimer
     void     TxKillTimer(uint idTimer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txscrollwindowex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txscrollwindowex
     void     TxScrollWindowEx(int dx, int dy, RECT* lprcScroll, RECT* lprcClip, HRGN hrgnUpdate, RECT* lprcUpdate, 
                               SCROLL_WINDOW_FLAGS fuScroll);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txsetcapture))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txsetcapture
     void     TxSetCapture(BOOL fCapture);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txsetfocus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txsetfocus
     void     TxSetFocus();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txsetcursor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txsetcursor
     void     TxSetCursor(HCURSOR hcur, BOOL fText);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txscreentoclient))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txscreentoclient
     BOOL     TxScreenToClient(POINT* lppt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txclienttoscreen))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txclienttoscreen
     BOOL     TxClientToScreen(POINT* lppt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txactivate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txactivate
     HRESULT  TxActivate(int* plOldState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txdeactivate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txdeactivate
     HRESULT  TxDeactivate(int lNewState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txgetclientrect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txgetclientrect
     HRESULT  TxGetClientRect(RECT* prc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txgetviewinset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txgetviewinset
     HRESULT  TxGetViewInset(RECT* prc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txgetcharformat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txgetcharformat
     HRESULT  TxGetCharFormat(const(CHARFORMATW)** ppCF);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txgetparaformat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txgetparaformat
     HRESULT  TxGetParaFormat(const(PARAFORMAT)** ppPF);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txgetsyscolor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txgetsyscolor
     COLORREF TxGetSysColor(SYS_COLOR_INDEX nIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txgetbackstyle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txgetbackstyle
     HRESULT  TxGetBackStyle(TXTBACKSTYLE* pstyle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txgetmaxlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txgetmaxlength
     HRESULT  TxGetMaxLength(uint* plength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txgetscrollbars))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txgetscrollbars
     HRESULT  TxGetScrollBars(uint* pdwScrollBar);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txgetpasswordchar))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txgetpasswordchar
     HRESULT  TxGetPasswordChar(byte* pch);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txgetacceleratorpos))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txgetacceleratorpos
     HRESULT  TxGetAcceleratorPos(int* pcp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txgetextent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txgetextent
     HRESULT  TxGetExtent(SIZE* lpExtent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-ontxcharformatchange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-ontxcharformatchange
     HRESULT  OnTxCharFormatChange(const(CHARFORMATW)* pCF);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-ontxparaformatchange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-ontxparaformatchange
     HRESULT  OnTxParaFormatChange(const(PARAFORMAT)* pPF);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txgetpropertybits))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txgetpropertybits
     HRESULT  TxGetPropertyBits(uint dwMask, uint* pdwBits);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txnotify))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txnotify
     HRESULT  TxNotify(uint iNotify, void* pv);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-tximmgetcontext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-tximmgetcontext
     HIMC     TxImmGetContext();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-tximmreleasecontext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-tximmreleasecontext
     void     TxImmReleaseContext(HIMC himc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txgetselectionbarwidth))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost-txgetselectionbarwidth
     HRESULT  TxGetSelectionBarWidth(int* lSelBarWidth);
 }
 
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nn-textserv-irichedituiaoverrides))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nn-textserv-irichedituiaoverrides
 interface IRicheditUiaOverrides : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-irichedituiaoverrides-getpropertyoverridevalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-irichedituiaoverrides-getpropertyoverridevalue
     HRESULT GetPropertyOverrideValue(int propertyId, VARIANT* pRetValue);
 }
 
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nl-textserv-itexthost2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nl-textserv-itexthost2
 interface ITextHost2 : ITextHost
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost2-txisdoubleclickpending))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost2-txisdoubleclickpending
     BOOL     TxIsDoubleClickPending();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost2-txgetwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost2-txgetwindow
     HRESULT  TxGetWindow(HWND* phwnd);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost2-txsetforegroundwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost2-txsetforegroundwindow
     HRESULT  TxSetForegroundWindow();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost2-txgetpalette))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost2-txgetpalette
     HPALETTE TxGetPalette();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost2-txgeteastasianflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost2-txgeteastasianflags
     HRESULT  TxGetEastAsianFlags(int* pFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost2-txsetcursor2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost2-txsetcursor2
     HCURSOR  TxSetCursor2(HCURSOR hcur, BOOL bText);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost2-txfreetextservicesnotification))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost2-txfreetextservicesnotification
     void     TxFreeTextServicesNotification();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost2-txgeteditstyle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost2-txgeteditstyle
     HRESULT  TxGetEditStyle(uint dwItem, uint* pdwData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost2-txgetwindowstyles))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost2-txgetwindowstyles
     HRESULT  TxGetWindowStyles(uint* pdwStyle, uint* pdwExStyle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost2-txshowdropcaret))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost2-txshowdropcaret
     HRESULT  TxShowDropCaret(BOOL fShow, HDC hdc, RECT* prc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost2-txdestroycaret))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost2-txdestroycaret
     HRESULT  TxDestroyCaret();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost2-txgethorzextent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itexthost2-txgethorzextent
     HRESULT  TxGetHorzExtent(int* plHorzExtent);
 }
 
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nl-textserv-itextservices2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nl-textserv-itextservices2
 interface ITextServices2 : ITextServices
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices2-txgetnaturalsize2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices2-txgetnaturalsize2
     HRESULT TxGetNaturalSize2(uint dwAspect, HDC hdcDraw, HDC hicTargetDev, DVTARGETDEVICE* ptd, uint dwMode, 
                               const(SIZE)* psizelExtent, int* pwidth, int* pheight, int* pascent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices2-txdrawd2d))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/textserv/nf-textserv-itextservices2-txdrawd2d
     HRESULT TxDrawD2D(ID2D1RenderTarget pRenderTarget, RECTL* lprcBounds, RECT* lprcUpdate, int lViewId);
 }
 
 @GUID("00020d00-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richole/nn-richole-iricheditole))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richole/nn-richole-iricheditole
 interface IRichEditOle : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditole-getclientsite))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditole-getclientsite
     HRESULT GetClientSite(IOleClientSite* lplpolesite);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditole-getobjectcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditole-getobjectcount
     int     GetObjectCount();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditole-getlinkcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditole-getlinkcount
     int     GetLinkCount();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditole-getobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditole-getobject
     HRESULT GetObject(int iob, REOBJECT* lpreobject, RICH_EDIT_GET_OBJECT_FLAGS dwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditole-insertobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditole-insertobject
     HRESULT InsertObject(REOBJECT* lpreobject);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditole-convertobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditole-convertobject
     HRESULT ConvertObject(int iob, const(GUID)* rclsidNew, const(PSTR) lpstrUserTypeNew);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditole-activateas))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditole-activateas
     HRESULT ActivateAs(const(GUID)* rclsid, const(GUID)* rclsidAs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditole-sethostnames))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditole-sethostnames
     HRESULT SetHostNames(const(PSTR) lpstrContainerApp, const(PSTR) lpstrContainerObj);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditole-setlinkavailable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditole-setlinkavailable
     HRESULT SetLinkAvailable(int iob, BOOL fAvailable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditole-setdvaspect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditole-setdvaspect
     HRESULT SetDvaspect(int iob, uint dvaspect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditole-handsoffstorage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditole-handsoffstorage
     HRESULT HandsOffStorage(int iob);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditole-savecompleted))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditole-savecompleted
     HRESULT SaveCompleted(int iob, IStorage lpstg);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditole-inplacedeactivate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditole-inplacedeactivate
     HRESULT InPlaceDeactivate();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditole-contextsensitivehelp))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditole-contextsensitivehelp
     HRESULT ContextSensitiveHelp(BOOL fEnterMode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditole-getclipboarddata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditole-getclipboarddata
     HRESULT GetClipboardData(CHARRANGE* lpchrg, uint reco, IDataObject* lplpdataobj);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditole-importdataobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditole-importdataobject
     HRESULT ImportDataObject(IDataObject lpdataobj, ushort cf, HGLOBAL hMetaPict);
 }
 
 @GUID("00020d03-0000-0000-c000-000000000046")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richole/nn-richole-iricheditolecallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richole/nn-richole-iricheditolecallback
 interface IRichEditOleCallback : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditolecallback-getnewstorage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditolecallback-getnewstorage
     HRESULT GetNewStorage(IStorage* lplpstg);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditolecallback-getinplacecontext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditolecallback-getinplacecontext
     HRESULT GetInPlaceContext(IOleInPlaceFrame* lplpFrame, IOleInPlaceUIWindow* lplpDoc, 
                               OLEINPLACEFRAMEINFO* lpFrameInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditolecallback-showcontainerui))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditolecallback-showcontainerui
     HRESULT ShowContainerUI(BOOL fShow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditolecallback-queryinsertobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditolecallback-queryinsertobject
     HRESULT QueryInsertObject(GUID* lpclsid, IStorage lpstg, int cp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditolecallback-deleteobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditolecallback-deleteobject
     HRESULT DeleteObject(IOleObject lpoleobj);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditolecallback-queryacceptdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditolecallback-queryacceptdata
     HRESULT QueryAcceptData(IDataObject lpdataobj, ushort* lpcfFormat, RECO_FLAGS reco, BOOL fReally, 
                             HGLOBAL hMetaPict);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditolecallback-contextsensitivehelp))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditolecallback-contextsensitivehelp
     HRESULT ContextSensitiveHelp(BOOL fEnterMode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditolecallback-getclipboarddata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditolecallback-getclipboarddata
     HRESULT GetClipboardData(CHARRANGE* lpchrg, uint reco, IDataObject* lplpdataobj);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditolecallback-getdragdropeffect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditolecallback-getdragdropeffect
     HRESULT GetDragDropEffect(BOOL fDrag, MODIFIERKEYS_FLAGS grfKeyState, DROPEFFECT* pdwEffect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditolecallback-getcontextmenu))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/richole/nf-richole-iricheditolecallback-getcontextmenu
     HRESULT GetContextMenu(RICH_EDIT_GET_CONTEXT_MENU_SEL_TYPE seltype, IOleObject lpoleobj, CHARRANGE* lpchrg, 
                            HMENU* lphmenu);
 }
 
 @GUID("8cc497c0-a1df-11ce-8098-00aa0047be5d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextdocument))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextdocument
 interface ITextDocument : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-getname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-getname
     HRESULT GetName(BSTR* pName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-getselection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-getselection
     HRESULT GetSelection(ITextSelection* ppSel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-getstorycount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-getstorycount
     HRESULT GetStoryCount(int* pCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-getstoryranges))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-getstoryranges
     HRESULT GetStoryRanges(ITextStoryRanges* ppStories);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-getsaved))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-getsaved
     HRESULT GetSaved(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-setsaved))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-setsaved
     HRESULT SetSaved(tomConstants Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-getdefaulttabstop))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-getdefaulttabstop
     HRESULT GetDefaultTabStop(float* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-setdefaulttabstop))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-setdefaulttabstop
     HRESULT SetDefaultTabStop(float Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-new))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-new
     HRESULT New();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-open))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-open
     HRESULT Open(VARIANT* pVar, tomConstants Flags, int CodePage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-save))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-save
     HRESULT Save(VARIANT* pVar, tomConstants Flags, int CodePage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-freeze))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-freeze
     HRESULT Freeze(int* pCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-unfreeze))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-unfreeze
     HRESULT Unfreeze(int* pCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-begineditcollection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-begineditcollection
     HRESULT BeginEditCollection();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-endeditcollection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-endeditcollection
     HRESULT EndEditCollection();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-undo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-undo
     HRESULT Undo(int Count, int* pCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-redo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-redo
     HRESULT Redo(int Count, int* pCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-range))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-range
     HRESULT Range(int cpActive, int cpAnchor, ITextRange* ppRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-rangefrompoint))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument-rangefrompoint
     HRESULT RangeFromPoint(int x, int y, ITextRange* ppRange);
 }
 
 @GUID("8cc497c2-a1df-11ce-8098-00aa0047be5d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextrange))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextrange
 interface ITextRange : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-gettext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-gettext
     HRESULT GetText(BSTR* pbstr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-settext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-settext
     HRESULT SetText(BSTR bstr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-getchar))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-getchar
     HRESULT GetChar(int* pChar);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-setchar))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-setchar
     HRESULT SetChar(int Char);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-getduplicate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-getduplicate
     HRESULT GetDuplicate(ITextRange* ppRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-getformattedtext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-getformattedtext
     HRESULT GetFormattedText(ITextRange* ppRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-setformattedtext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-setformattedtext
     HRESULT SetFormattedText(ITextRange pRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-getstart))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-getstart
     HRESULT GetStart(int* pcpFirst);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-setstart))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-setstart
     HRESULT SetStart(int cpFirst);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-getend))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-getend
     HRESULT GetEnd(int* pcpLim);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-setend))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-setend
     HRESULT SetEnd(int cpLim);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-getfont))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-getfont
     HRESULT GetFont(ITextFont* ppFont);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-setfont))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-setfont
     HRESULT SetFont(ITextFont pFont);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-getpara))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-getpara
     HRESULT GetPara(ITextPara* ppPara);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-setpara))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-setpara
     HRESULT SetPara(ITextPara pPara);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-getstorylength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-getstorylength
     HRESULT GetStoryLength(int* pCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-getstorytype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-getstorytype
     HRESULT GetStoryType(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-collapse))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-collapse
     HRESULT Collapse(int bStart);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-expand))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-expand
     HRESULT Expand(int Unit, int* pDelta);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-getindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-getindex
     HRESULT GetIndex(int Unit, int* pIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-setindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-setindex
     HRESULT SetIndex(int Unit, int Index, int Extend);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-setrange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-setrange
     HRESULT SetRange(int cpAnchor, int cpActive);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-inrange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-inrange
     HRESULT InRange(ITextRange pRange, int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-instory))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-instory
     HRESULT InStory(ITextRange pRange, int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-isequal))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-isequal
     HRESULT IsEqual(ITextRange pRange, int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-select))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-select
     HRESULT Select();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-startof))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-startof
     HRESULT StartOf(int Unit, int Extend, int* pDelta);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-endof))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-endof
     HRESULT EndOf(int Unit, int Extend, int* pDelta);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-move))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-move
     HRESULT Move(int Unit, int Count, int* pDelta);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-movestart))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-movestart
     HRESULT MoveStart(int Unit, int Count, int* pDelta);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-moveend))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-moveend
     HRESULT MoveEnd(int Unit, int Count, int* pDelta);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-movewhile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-movewhile
     HRESULT MoveWhile(VARIANT* Cset, int Count, int* pDelta);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-movestartwhile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-movestartwhile
     HRESULT MoveStartWhile(VARIANT* Cset, int Count, int* pDelta);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-moveendwhile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-moveendwhile
     HRESULT MoveEndWhile(VARIANT* Cset, int Count, int* pDelta);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-moveuntil))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-moveuntil
     HRESULT MoveUntil(VARIANT* Cset, int Count, int* pDelta);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-movestartuntil))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-movestartuntil
     HRESULT MoveStartUntil(VARIANT* Cset, int Count, int* pDelta);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-moveenduntil))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-moveenduntil
     HRESULT MoveEndUntil(VARIANT* Cset, int Count, int* pDelta);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-findtext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-findtext
     HRESULT FindText(BSTR bstr, int Count, tomConstants Flags, int* pLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-findtextstart))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-findtextstart
     HRESULT FindTextStart(BSTR bstr, int Count, tomConstants Flags, int* pLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-findtextend))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-findtextend
     HRESULT FindTextEnd(BSTR bstr, int Count, tomConstants Flags, int* pLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-delete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-delete
     HRESULT Delete(int Unit, int Count, int* pDelta);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-cut))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-cut
     HRESULT Cut(VARIANT* pVar);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-copy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-copy
     HRESULT Copy(VARIANT* pVar);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-paste))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-paste
     HRESULT Paste(VARIANT* pVar, int Format);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-canpaste))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-canpaste
     HRESULT CanPaste(VARIANT* pVar, int Format, int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-canedit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-canedit
     HRESULT CanEdit(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-changecase))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-changecase
     HRESULT ChangeCase(tomConstants Type);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-getpoint))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-getpoint
     HRESULT GetPoint(tomConstants Type, int* px, int* py);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-setpoint))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-setpoint
     HRESULT SetPoint(int x, int y, tomConstants Type, int Extend);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-scrollintoview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-scrollintoview
     HRESULT ScrollIntoView(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-getembeddedobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange-getembeddedobject
     HRESULT GetEmbeddedObject(IUnknown* ppObject);
 }
 
 @GUID("8cc497c1-a1df-11ce-8098-00aa0047be5d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextselection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextselection
 interface ITextSelection : ITextRange
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextselection-getflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextselection-getflags
     HRESULT GetFlags(int* pFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextselection-setflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextselection-setflags
     HRESULT SetFlags(int Flags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextselection-gettype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextselection-gettype
     HRESULT GetType(int* pType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextselection-moveleft))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextselection-moveleft
     HRESULT MoveLeft(int Unit, int Count, int Extend, int* pDelta);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextselection-moveright))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextselection-moveright
     HRESULT MoveRight(int Unit, int Count, int Extend, int* pDelta);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextselection-moveup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextselection-moveup
     HRESULT MoveUp(int Unit, int Count, int Extend, int* pDelta);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextselection-movedown))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextselection-movedown
     HRESULT MoveDown(int Unit, int Count, int Extend, int* pDelta);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextselection-homekey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextselection-homekey
     HRESULT HomeKey(tomConstants Unit, int Extend, int* pDelta);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextselection-endkey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextselection-endkey
     HRESULT EndKey(int Unit, int Extend, int* pDelta);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextselection-typetext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextselection-typetext
     HRESULT TypeText(BSTR bstr);
 }
 
 @GUID("8cc497c3-a1df-11ce-8098-00aa0047be5d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextfont))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextfont
 interface ITextFont : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getduplicate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getduplicate
     HRESULT GetDuplicate(ITextFont* ppFont);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setduplicate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setduplicate
     HRESULT SetDuplicate(ITextFont pFont);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-canchange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-canchange
     HRESULT CanChange(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-isequal))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-isequal
     HRESULT IsEqual(ITextFont pFont, int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-reset
     HRESULT Reset(tomConstants Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getstyle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getstyle
     HRESULT GetStyle(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setstyle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setstyle
     HRESULT SetStyle(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getallcaps))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getallcaps
     HRESULT GetAllCaps(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setallcaps))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setallcaps
     HRESULT SetAllCaps(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getanimation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getanimation
     HRESULT GetAnimation(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setanimation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setanimation
     HRESULT SetAnimation(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getbackcolor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getbackcolor
     HRESULT GetBackColor(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setbackcolor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setbackcolor
     HRESULT SetBackColor(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getbold))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getbold
     HRESULT GetBold(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setbold))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setbold
     HRESULT SetBold(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getemboss))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getemboss
     HRESULT GetEmboss(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setemboss))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setemboss
     HRESULT SetEmboss(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getforecolor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getforecolor
     HRESULT GetForeColor(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setforecolor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setforecolor
     HRESULT SetForeColor(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-gethidden))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-gethidden
     HRESULT GetHidden(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-sethidden))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-sethidden
     HRESULT SetHidden(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getengrave))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getengrave
     HRESULT GetEngrave(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setengrave))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setengrave
     HRESULT SetEngrave(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getitalic))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getitalic
     HRESULT GetItalic(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setitalic))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setitalic
     HRESULT SetItalic(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getkerning))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getkerning
     HRESULT GetKerning(float* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setkerning))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setkerning
     HRESULT SetKerning(float Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getlanguageid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getlanguageid
     HRESULT GetLanguageID(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setlanguageid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setlanguageid
     HRESULT SetLanguageID(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getname
     HRESULT GetName(BSTR* pbstr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setname
     HRESULT SetName(BSTR bstr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getoutline))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getoutline
     HRESULT GetOutline(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setoutline))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setoutline
     HRESULT SetOutline(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getposition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getposition
     HRESULT GetPosition(float* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setposition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setposition
     HRESULT SetPosition(float Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getprotected))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getprotected
     HRESULT GetProtected(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setprotected))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setprotected
     HRESULT SetProtected(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getshadow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getshadow
     HRESULT GetShadow(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setshadow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setshadow
     HRESULT SetShadow(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getsize
     HRESULT GetSize(float* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setsize
     HRESULT SetSize(float Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getsmallcaps))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getsmallcaps
     HRESULT GetSmallCaps(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setsmallcaps))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setsmallcaps
     HRESULT SetSmallCaps(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getspacing))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getspacing
     HRESULT GetSpacing(float* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setspacing))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setspacing
     HRESULT SetSpacing(float Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getstrikethrough))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getstrikethrough
     HRESULT GetStrikeThrough(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setstrikethrough))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setstrikethrough
     HRESULT SetStrikeThrough(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getsubscript))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getsubscript
     HRESULT GetSubscript(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setsubscript))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setsubscript
     HRESULT SetSubscript(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getsuperscript))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getsuperscript
     HRESULT GetSuperscript(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setsuperscript))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setsuperscript
     HRESULT SetSuperscript(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getunderline))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getunderline
     HRESULT GetUnderline(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setunderline))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setunderline
     HRESULT SetUnderline(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getweight))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-getweight
     HRESULT GetWeight(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setweight))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont-setweight
     HRESULT SetWeight(int Value);
 }
 
 @GUID("8cc497c4-a1df-11ce-8098-00aa0047be5d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextpara))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextpara
 interface ITextPara : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getduplicate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getduplicate
     HRESULT GetDuplicate(ITextPara* ppPara);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-setduplicate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-setduplicate
     HRESULT SetDuplicate(ITextPara pPara);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-canchange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-canchange
     HRESULT CanChange(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-isequal))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-isequal
     HRESULT IsEqual(ITextPara pPara, int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-reset
     HRESULT Reset(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getstyle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getstyle
     HRESULT GetStyle(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-setstyle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-setstyle
     HRESULT SetStyle(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getalignment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getalignment
     HRESULT GetAlignment(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-setalignment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-setalignment
     HRESULT SetAlignment(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-gethyphenation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-gethyphenation
     HRESULT GetHyphenation(tomConstants* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-sethyphenation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-sethyphenation
     HRESULT SetHyphenation(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getfirstlineindent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getfirstlineindent
     HRESULT GetFirstLineIndent(float* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getkeeptogether))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getkeeptogether
     HRESULT GetKeepTogether(tomConstants* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-setkeeptogether))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-setkeeptogether
     HRESULT SetKeepTogether(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getkeepwithnext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getkeepwithnext
     HRESULT GetKeepWithNext(tomConstants* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-setkeepwithnext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-setkeepwithnext
     HRESULT SetKeepWithNext(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getleftindent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getleftindent
     HRESULT GetLeftIndent(float* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getlinespacing))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getlinespacing
     HRESULT GetLineSpacing(float* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getlinespacingrule))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getlinespacingrule
     HRESULT GetLineSpacingRule(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getlistalignment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getlistalignment
     HRESULT GetListAlignment(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-setlistalignment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-setlistalignment
     HRESULT SetListAlignment(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getlistlevelindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getlistlevelindex
     HRESULT GetListLevelIndex(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-setlistlevelindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-setlistlevelindex
     HRESULT SetListLevelIndex(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getliststart))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getliststart
     HRESULT GetListStart(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-setliststart))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-setliststart
     HRESULT SetListStart(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getlisttab))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getlisttab
     HRESULT GetListTab(float* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-setlisttab))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-setlisttab
     HRESULT SetListTab(float Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getlisttype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getlisttype
     HRESULT GetListType(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-setlisttype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-setlisttype
     HRESULT SetListType(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getnolinenumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getnolinenumber
     HRESULT GetNoLineNumber(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-setnolinenumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-setnolinenumber
     HRESULT SetNoLineNumber(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getpagebreakbefore))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getpagebreakbefore
     HRESULT GetPageBreakBefore(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-setpagebreakbefore))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-setpagebreakbefore
     HRESULT SetPageBreakBefore(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getrightindent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getrightindent
     HRESULT GetRightIndent(float* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-setrightindent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-setrightindent
     HRESULT SetRightIndent(float Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-setindents))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-setindents
     HRESULT SetIndents(float First, float Left, float Right);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-setlinespacing))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-setlinespacing
     HRESULT SetLineSpacing(int Rule, float Spacing);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getspaceafter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getspaceafter
     HRESULT GetSpaceAfter(float* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-setspaceafter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-setspaceafter
     HRESULT SetSpaceAfter(float Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getspacebefore))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getspacebefore
     HRESULT GetSpaceBefore(float* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-setspacebefore))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-setspacebefore
     HRESULT SetSpaceBefore(float Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getwidowcontrol))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-getwidowcontrol
     HRESULT GetWidowControl(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-setwidowcontrol))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-setwidowcontrol
     HRESULT SetWidowControl(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-gettabcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-gettabcount
     HRESULT GetTabCount(int* pCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-addtab))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-addtab
     HRESULT AddTab(float tbPos, int tbAlign, int tbLeader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-clearalltabs))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-clearalltabs
     HRESULT ClearAllTabs();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-deletetab))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-deletetab
     HRESULT DeleteTab(float tbPos);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-gettab))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara-gettab
     HRESULT GetTab(int iTab, float* ptbPos, int* ptbAlign, int* ptbLeader);
 }
 
 @GUID("8cc497c5-a1df-11ce-8098-00aa0047be5d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextstoryranges))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextstoryranges
 interface ITextStoryRanges : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstoryranges-_newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstoryranges-_newenum
     HRESULT _NewEnum(IUnknown* ppunkEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstoryranges-item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstoryranges-item
     HRESULT Item(int Index, ITextRange* ppRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstoryranges-getcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstoryranges-getcount
     HRESULT GetCount(int* pCount);
 }
 
 @GUID("c241f5e0-7206-11d8-a2c7-00a0d1d6c6b3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextdocument2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextdocument2
 interface ITextDocument2 : ITextDocument
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getcarettype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getcarettype
     HRESULT GetCaretType(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-setcarettype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-setcarettype
     HRESULT SetCaretType(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getdisplays))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getdisplays
     HRESULT GetDisplays(ITextDisplays* ppDisplays);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getdocumentfont))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getdocumentfont
     HRESULT GetDocumentFont(ITextFont2* ppFont);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-setdocumentfont))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-setdocumentfont
     HRESULT SetDocumentFont(ITextFont2 pFont);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getdocumentpara))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getdocumentpara
     HRESULT GetDocumentPara(ITextPara2* ppPara);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-setdocumentpara))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-setdocumentpara
     HRESULT SetDocumentPara(ITextPara2 pPara);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-geteastasianflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-geteastasianflags
     HRESULT GetEastAsianFlags(tomConstants* pFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getgenerator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getgenerator
     HRESULT GetGenerator(BSTR* pbstr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-setimeinprogress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-setimeinprogress
     HRESULT SetIMEInProgress(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getnotificationmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getnotificationmode
     HRESULT GetNotificationMode(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-setnotificationmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-setnotificationmode
     HRESULT SetNotificationMode(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getselection2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getselection2
     HRESULT GetSelection2(ITextSelection2* ppSel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getstoryranges2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getstoryranges2
     HRESULT GetStoryRanges2(ITextStoryRanges2* ppStories);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-gettypographyoptions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-gettypographyoptions
     HRESULT GetTypographyOptions(int* pOptions);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getversion
     HRESULT GetVersion(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getwindow
     HRESULT GetWindow(long* pHwnd);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-attachmsgfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-attachmsgfilter
     HRESULT AttachMsgFilter(IUnknown pFilter);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-checktextlimit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-checktextlimit
     HRESULT CheckTextLimit(int cch, int* pcch);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getcallmanager))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getcallmanager
     HRESULT GetCallManager(IUnknown* ppVoid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getclientrect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getclientrect
     HRESULT GetClientRect(tomConstants Type, int* pLeft, int* pTop, int* pRight, int* pBottom);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-geteffectcolor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-geteffectcolor
     HRESULT GetEffectColor(int Index, int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getimmcontext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getimmcontext
     HRESULT GetImmContext(long* pContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getpreferredfont))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getpreferredfont
     HRESULT GetPreferredFont(int cp, int CharRep, int Options, int curCharRep, int curFontSize, BSTR* pbstr, 
                              int* pPitchAndFamily, int* pNewFontSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getproperty
     HRESULT GetProperty(int Type, int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getstrings))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getstrings
     HRESULT GetStrings(ITextStrings* ppStrs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-notify))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-notify
     HRESULT Notify(int Notify);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-range2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-range2
     HRESULT Range2(int cpActive, int cpAnchor, ITextRange2* ppRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-rangefrompoint2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-rangefrompoint2
     HRESULT RangeFromPoint2(int x, int y, int Type, ITextRange2* ppRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-releasecallmanager))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-releasecallmanager
     HRESULT ReleaseCallManager(IUnknown pVoid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-releaseimmcontext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-releaseimmcontext
     HRESULT ReleaseImmContext(long Context);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-seteffectcolor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-seteffectcolor
     HRESULT SetEffectColor(int Index, int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-setproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-setproperty
     HRESULT SetProperty(int Type, int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-settypographyoptions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-settypographyoptions
     HRESULT SetTypographyOptions(int Options, int Mask);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-sysbeep))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-sysbeep
     HRESULT SysBeep();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-update))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-update
     HRESULT Update(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-updatewindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-updatewindow
     HRESULT UpdateWindow();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getmathproperties))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getmathproperties
     HRESULT GetMathProperties(int* pOptions);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-setmathproperties))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-setmathproperties
     HRESULT SetMathProperties(int Options, int Mask);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getactivestory))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getactivestory
     HRESULT GetActiveStory(ITextStory* ppStory);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-setactivestory))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-setactivestory
     HRESULT SetActiveStory(ITextStory pStory);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getmainstory))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getmainstory
     HRESULT GetMainStory(ITextStory* ppStory);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getnewstory))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getnewstory
     HRESULT GetNewStory(ITextStory* ppStory);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getstory))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextdocument2-getstory
     HRESULT GetStory(int Index, ITextStory* ppStory);
 }
 
 @GUID("c241f5e2-7206-11d8-a2c7-00a0d1d6c6b3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextrange2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextrange2
 interface ITextRange2 : ITextSelection
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-getcch))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-getcch
     HRESULT GetCch(int* pcch);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-getcells))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-getcells
     HRESULT GetCells(IUnknown* ppCells);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-getcolumn))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-getcolumn
     HRESULT GetColumn(IUnknown* ppColumn);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-getcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-getcount
     HRESULT GetCount(int* pCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-getduplicate2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-getduplicate2
     HRESULT GetDuplicate2(ITextRange2* ppRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-getfont2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-getfont2
     HRESULT GetFont2(ITextFont2* ppFont);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-setfont2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-setfont2
     HRESULT SetFont2(ITextFont2 pFont);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-getformattedtext2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-getformattedtext2
     HRESULT GetFormattedText2(ITextRange2* ppRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-setformattedtext2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-setformattedtext2
     HRESULT SetFormattedText2(ITextRange2 pRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-getgravity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-getgravity
     HRESULT GetGravity(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-setgravity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-setgravity
     HRESULT SetGravity(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-getpara2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-getpara2
     HRESULT GetPara2(ITextPara2* ppPara);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-setpara2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-setpara2
     HRESULT SetPara2(ITextPara2 pPara);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-getrow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-getrow
     HRESULT GetRow(ITextRow* ppRow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-getstartpara))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-getstartpara
     HRESULT GetStartPara(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-gettable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-gettable
     HRESULT GetTable(IUnknown* ppTable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-geturl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-geturl
     HRESULT GetURL(BSTR* pbstr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-seturl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-seturl
     HRESULT SetURL(BSTR bstr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-addsubrange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-addsubrange
     HRESULT AddSubrange(int cp1, int cp2, int Activate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-buildupmath))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-buildupmath
     HRESULT BuildUpMath(int Flags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-deletesubrange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-deletesubrange
     HRESULT DeleteSubrange(int cpFirst, int cpLim);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-find))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-find
     HRESULT Find(ITextRange2 pRange, int Count, int Flags, int* pDelta);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-getchar2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-getchar2
     HRESULT GetChar2(int* pChar, int Offset);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-getdropcap))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-getdropcap
     HRESULT GetDropCap(int* pcLine, int* pPosition);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-getinlineobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-getinlineobject
     HRESULT GetInlineObject(int* pType, int* pAlign, int* pChar, int* pChar1, int* pChar2, int* pCount, 
                             int* pTeXStyle, int* pcCol, int* pLevel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-getproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-getproperty
     HRESULT GetProperty(int Type, int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-getrect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-getrect
     HRESULT GetRect(int Type, int* pLeft, int* pTop, int* pRight, int* pBottom, int* pHit);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-getsubrange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-getsubrange
     HRESULT GetSubrange(int iSubrange, int* pcpFirst, int* pcpLim);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-gettext2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-gettext2
     HRESULT GetText2(int Flags, BSTR* pbstr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-hextounicode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-hextounicode
     HRESULT HexToUnicode();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-inserttable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-inserttable
     HRESULT InsertTable(int cCol, int cRow, int AutoFit);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-linearize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-linearize
     HRESULT Linearize(int Flags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-setactivesubrange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-setactivesubrange
     HRESULT SetActiveSubrange(int cpAnchor, int cpActive);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-setdropcap))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-setdropcap
     HRESULT SetDropCap(int cLine, int Position);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-setproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-setproperty
     HRESULT SetProperty(int Type, int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-settext2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-settext2
     HRESULT SetText2(int Flags, BSTR bstr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-unicodetohex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-unicodetohex
     HRESULT UnicodeToHex();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-setinlineobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-setinlineobject
     HRESULT SetInlineObject(int Type, int Align, int Char, int Char1, int Char2, int Count, int TeXStyle, int cCol);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-getmathfunctiontype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-getmathfunctiontype
     HRESULT GetMathFunctionType(BSTR bstr, int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-insertimage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrange2-insertimage
     HRESULT InsertImage(int width, int height, int ascent, int Type, BSTR bstrAltText, IStream pStream);
 }
 
 @GUID("c241f5e1-7206-11d8-a2c7-00a0d1d6c6b3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextselection2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextselection2
 interface ITextSelection2 : ITextRange2
 {
 }
 
 @GUID("c241f5e3-7206-11d8-a2c7-00a0d1d6c6b3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextfont2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextfont2
 interface ITextFont2 : ITextFont
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getcount
     HRESULT GetCount(int* pCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getautoligatures))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getautoligatures
     HRESULT GetAutoLigatures(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-setautoligatures))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-setautoligatures
     HRESULT SetAutoLigatures(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getautospacealpha))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getautospacealpha
     HRESULT GetAutospaceAlpha(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-setautospacealpha))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-setautospacealpha
     HRESULT SetAutospaceAlpha(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getautospacenumeric))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getautospacenumeric
     HRESULT GetAutospaceNumeric(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-setautospacenumeric))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-setautospacenumeric
     HRESULT SetAutospaceNumeric(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getautospaceparens))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getautospaceparens
     HRESULT GetAutospaceParens(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-setautospaceparens))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-setautospaceparens
     HRESULT SetAutospaceParens(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getcharrep))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getcharrep
     HRESULT GetCharRep(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-setcharrep))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-setcharrep
     HRESULT SetCharRep(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getcompressionmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getcompressionmode
     HRESULT GetCompressionMode(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-setcompressionmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-setcompressionmode
     HRESULT SetCompressionMode(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getcookie))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getcookie
     HRESULT GetCookie(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-setcookie))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-setcookie
     HRESULT SetCookie(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getdoublestrike))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getdoublestrike
     HRESULT GetDoubleStrike(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-setdoublestrike))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-setdoublestrike
     HRESULT SetDoubleStrike(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getduplicate2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getduplicate2
     HRESULT GetDuplicate2(ITextFont2* ppFont);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-setduplicate2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-setduplicate2
     HRESULT SetDuplicate2(ITextFont2 pFont);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getlinktype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getlinktype
     HRESULT GetLinkType(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getmathzone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getmathzone
     HRESULT GetMathZone(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-setmathzone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-setmathzone
     HRESULT SetMathZone(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getmodwidthpairs))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getmodwidthpairs
     HRESULT GetModWidthPairs(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-setmodwidthpairs))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-setmodwidthpairs
     HRESULT SetModWidthPairs(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getmodwidthspace))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getmodwidthspace
     HRESULT GetModWidthSpace(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-setmodwidthspace))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-setmodwidthspace
     HRESULT SetModWidthSpace(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getoldnumbers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getoldnumbers
     HRESULT GetOldNumbers(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-setoldnumbers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-setoldnumbers
     HRESULT SetOldNumbers(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getoverlapping))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getoverlapping
     HRESULT GetOverlapping(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-setoverlapping))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-setoverlapping
     HRESULT SetOverlapping(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getpositionsubsuper))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getpositionsubsuper
     HRESULT GetPositionSubSuper(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-setpositionsubsuper))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-setpositionsubsuper
     HRESULT SetPositionSubSuper(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getscaling))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getscaling
     HRESULT GetScaling(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-setscaling))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-setscaling
     HRESULT SetScaling(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getspaceextension))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getspaceextension
     HRESULT GetSpaceExtension(float* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-setspaceextension))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-setspaceextension
     HRESULT SetSpaceExtension(float Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getunderlinepositionmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getunderlinepositionmode
     HRESULT GetUnderlinePositionMode(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-setunderlinepositionmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-setunderlinepositionmode
     HRESULT SetUnderlinePositionMode(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-geteffects))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-geteffects
     HRESULT GetEffects(int* pValue, int* pMask);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-geteffects2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-geteffects2
     HRESULT GetEffects2(int* pValue, int* pMask);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getproperty
     HRESULT GetProperty(int Type, int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getpropertyinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-getpropertyinfo
     HRESULT GetPropertyInfo(int Index, int* pType, int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-isequal2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-isequal2
     HRESULT IsEqual2(ITextFont2 pFont, int* pB);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-seteffects))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-seteffects
     HRESULT SetEffects(int Value, int Mask);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-seteffects2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-seteffects2
     HRESULT SetEffects2(int Value, int Mask);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-setproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextfont2-setproperty
     HRESULT SetProperty(int Type, int Value);
 }
 
 @GUID("c241f5e4-7206-11d8-a2c7-00a0d1d6c6b3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextpara2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextpara2
 interface ITextPara2 : ITextPara
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara2-getborders))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara2-getborders
     HRESULT GetBorders(IUnknown* ppBorders);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara2-getduplicate2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara2-getduplicate2
     HRESULT GetDuplicate2(ITextPara2* ppPara);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara2-setduplicate2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara2-setduplicate2
     HRESULT SetDuplicate2(ITextPara2 pPara);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara2-getfontalignment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara2-getfontalignment
     HRESULT GetFontAlignment(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara2-setfontalignment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara2-setfontalignment
     HRESULT SetFontAlignment(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara2-gethangingpunctuation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara2-gethangingpunctuation
     HRESULT GetHangingPunctuation(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara2-sethangingpunctuation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara2-sethangingpunctuation
     HRESULT SetHangingPunctuation(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara2-getsnaptogrid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara2-getsnaptogrid
     HRESULT GetSnapToGrid(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara2-setsnaptogrid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara2-setsnaptogrid
     HRESULT SetSnapToGrid(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara2-gettrimpunctuationatstart))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara2-gettrimpunctuationatstart
     HRESULT GetTrimPunctuationAtStart(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara2-settrimpunctuationatstart))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara2-settrimpunctuationatstart
     HRESULT SetTrimPunctuationAtStart(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara2-geteffects))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara2-geteffects
     HRESULT GetEffects(int* pValue, int* pMask);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara2-getproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara2-getproperty
     HRESULT GetProperty(int Type, int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara2-isequal2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara2-isequal2
     HRESULT IsEqual2(ITextPara2 pPara, int* pB);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara2-seteffects))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara2-seteffects
     HRESULT SetEffects(int Value, int Mask);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara2-setproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextpara2-setproperty
     HRESULT SetProperty(int Type, int Value);
 }
 
 @GUID("c241f5e5-7206-11d8-a2c7-00a0d1d6c6b3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextstoryranges2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextstoryranges2
 interface ITextStoryRanges2 : ITextStoryRanges
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstoryranges2-item2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstoryranges2-item2
     HRESULT Item2(int Index, ITextRange2* ppRange);
 }
 
 @GUID("c241f5f3-7206-11d8-a2c7-00a0d1d6c6b3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextstory))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextstory
 interface ITextStory : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstory-getactive))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstory-getactive
     HRESULT GetActive(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstory-setactive))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstory-setactive
     HRESULT SetActive(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstory-getdisplay))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstory-getdisplay
     HRESULT GetDisplay(IUnknown* ppDisplay);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstory-getindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstory-getindex
     HRESULT GetIndex(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstory-gettype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstory-gettype
     HRESULT GetType(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstory-settype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstory-settype
     HRESULT SetType(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstory-getproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstory-getproperty
     HRESULT GetProperty(int Type, int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstory-getrange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstory-getrange
     HRESULT GetRange(int cpActive, int cpAnchor, ITextRange2* ppRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstory-gettext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstory-gettext
     HRESULT GetText(int Flags, BSTR* pbstr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstory-setformattedtext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstory-setformattedtext
     HRESULT SetFormattedText(IUnknown pUnk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstory-setproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstory-setproperty
     HRESULT SetProperty(int Type, int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstory-settext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstory-settext
     HRESULT SetText(int Flags, BSTR bstr);
 }
 
 @GUID("c241f5e7-7206-11d8-a2c7-00a0d1d6c6b3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextstrings))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextstrings
 interface ITextStrings : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstrings-item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstrings-item
     HRESULT Item(int Index, ITextRange2* ppRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstrings-getcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstrings-getcount
     HRESULT GetCount(int* pCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstrings-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstrings-add
     HRESULT Add(BSTR bstr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstrings-append))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstrings-append
     HRESULT Append(ITextRange2 pRange, int iString);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstrings-cat2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstrings-cat2
     HRESULT Cat2(int iString);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstrings-cattop2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstrings-cattop2
     HRESULT CatTop2(BSTR bstr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstrings-deleterange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstrings-deleterange
     HRESULT DeleteRange(ITextRange2 pRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstrings-encodefunction))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstrings-encodefunction
     HRESULT EncodeFunction(int Type, int Align, int Char, int Char1, int Char2, int Count, int TeXStyle, int cCol, 
                            ITextRange2 pRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstrings-getcch))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstrings-getcch
     HRESULT GetCch(int iString, int* pcch);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstrings-insertnullstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstrings-insertnullstr
     HRESULT InsertNullStr(int iString);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstrings-moveboundary))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstrings-moveboundary
     HRESULT MoveBoundary(int iString, int cch);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstrings-prefixtop))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstrings-prefixtop
     HRESULT PrefixTop(BSTR bstr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstrings-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstrings-remove
     HRESULT Remove(int iString, int cString);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstrings-setformattedtext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstrings-setformattedtext
     HRESULT SetFormattedText(ITextRange2 pRangeD, ITextRange2 pRangeS);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstrings-setopcp))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstrings-setopcp
     HRESULT SetOpCp(int iString, int cp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstrings-suffixtop))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstrings-suffixtop
     HRESULT SuffixTop(BSTR bstr, ITextRange2 pRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstrings-swap))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextstrings-swap
     HRESULT Swap();
 }
 
 @GUID("c241f5ef-7206-11d8-a2c7-00a0d1d6c6b3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextrow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextrow
 interface ITextRow : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getalignment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getalignment
     HRESULT GetAlignment(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setalignment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setalignment
     HRESULT SetAlignment(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getcellcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getcellcount
     HRESULT GetCellCount(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setcellcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setcellcount
     HRESULT SetCellCount(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getcellcountcache))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getcellcountcache
     HRESULT GetCellCountCache(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setcellcountcache))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setcellcountcache
     HRESULT SetCellCountCache(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getcellindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getcellindex
     HRESULT GetCellIndex(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setcellindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setcellindex
     HRESULT SetCellIndex(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getcellmargin))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getcellmargin
     HRESULT GetCellMargin(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setcellmargin))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setcellmargin
     HRESULT SetCellMargin(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getheight))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getheight
     HRESULT GetHeight(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setheight))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setheight
     HRESULT SetHeight(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getindent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getindent
     HRESULT GetIndent(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setindent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setindent
     HRESULT SetIndent(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getkeeptogether))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getkeeptogether
     HRESULT GetKeepTogether(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setkeeptogether))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setkeeptogether
     HRESULT SetKeepTogether(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getkeepwithnext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getkeepwithnext
     HRESULT GetKeepWithNext(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setkeepwithnext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setkeepwithnext
     HRESULT SetKeepWithNext(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getnestlevel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getnestlevel
     HRESULT GetNestLevel(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getrtl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getrtl
     HRESULT GetRTL(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setrtl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setrtl
     HRESULT SetRTL(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getcellalignment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getcellalignment
     HRESULT GetCellAlignment(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setcellalignment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setcellalignment
     HRESULT SetCellAlignment(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getcellcolorback))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getcellcolorback
     HRESULT GetCellColorBack(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setcellcolorback))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setcellcolorback
     HRESULT SetCellColorBack(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getcellcolorfore))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getcellcolorfore
     HRESULT GetCellColorFore(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setcellcolorfore))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setcellcolorfore
     HRESULT SetCellColorFore(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getcellmergeflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getcellmergeflags
     HRESULT GetCellMergeFlags(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setcellmergeflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setcellmergeflags
     HRESULT SetCellMergeFlags(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getcellshading))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getcellshading
     HRESULT GetCellShading(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setcellshading))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setcellshading
     HRESULT SetCellShading(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getcellverticaltext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getcellverticaltext
     HRESULT GetCellVerticalText(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setcellverticaltext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setcellverticaltext
     HRESULT SetCellVerticalText(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getcellwidth))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getcellwidth
     HRESULT GetCellWidth(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setcellwidth))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setcellwidth
     HRESULT SetCellWidth(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getcellbordercolors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getcellbordercolors
     HRESULT GetCellBorderColors(int* pcrLeft, int* pcrTop, int* pcrRight, int* pcrBottom);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getcellborderwidths))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getcellborderwidths
     HRESULT GetCellBorderWidths(int* pduLeft, int* pduTop, int* pduRight, int* pduBottom);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setcellbordercolors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setcellbordercolors
     HRESULT SetCellBorderColors(int crLeft, int crTop, int crRight, int crBottom);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setcellborderwidths))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setcellborderwidths
     HRESULT SetCellBorderWidths(int duLeft, int duTop, int duRight, int duBottom);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-apply))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-apply
     HRESULT Apply(int cRow, tomConstants Flags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-canchange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-canchange
     HRESULT CanChange(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-getproperty
     HRESULT GetProperty(int Type, int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-insert))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-insert
     HRESULT Insert(int cRow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-isequal))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-isequal
     HRESULT IsEqual(ITextRow pRow, int* pB);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-reset
     HRESULT Reset(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nf-tom-itextrow-setproperty
     HRESULT SetProperty(int Type, int Value);
 }
 
 @GUID("c241f5f2-7206-11d8-a2c7-00a0d1d6c6b3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextdisplays))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tom/nn-tom-itextdisplays
 interface ITextDisplays : IDispatch
 {
 }

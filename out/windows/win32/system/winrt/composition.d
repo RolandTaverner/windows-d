@@ -3,15 +3,15 @@
 module windows.win32.system.winrt.composition;
 
 public import windows.core;
-public import system : Guid;
-public import windows.ui.composition : CompositionCapabilities, CompositionGraphicsDevice,
-                                       CompositionTexture;
+public import system.system : Guid;
+public import windows.ui.composition.composition : CompositionCapabilities, CompositionGraphicsDevice,
+                                                   CompositionTexture;
 public import windows.ui.composition.desktop : DesktopWindowTarget;
-public import windows.ui.composition : ICompositionSurface;
-public import windows.win32.foundation : BOOL, HANDLE, HRESULT, HWND, POINT, RECT,
-                                         SIZE;
-public import windows.win32.system.com : IUnknown;
-public import windows.win32.system.winrt : IInspectable;
+public import windows.ui.composition.composition : ICompositionSurface;
+public import windows.win32.foundation.foundation : BOOL, HANDLE, HRESULT, HWND, POINT,
+                                                    RECT, SIZE;
+public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.system.winrt.winrt : IInspectable;
 public import windows.win32.ui.input.pointer : POINTER_INFO;
 
 extern(Windows) @nogc nothrow:
@@ -20,38 +20,38 @@ extern(Windows) @nogc nothrow:
 // Interfaces
 
 @GUID("fd04e6e3-fe0c-4c3c-ab19-a07601a576ee")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/windows.ui.composition.interop/nn-windows-ui-composition-interop-icompositiondrawingsurfaceinterop))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.composition.interop/nn-windows-ui-composition-interop-icompositiondrawingsurfaceinterop
 interface ICompositionDrawingSurfaceInterop : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/windows.ui.composition.interop/nf-windows-ui-composition-interop-icompositiondrawingsurfaceinterop-begindraw))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.composition.interop/nf-windows-ui-composition-interop-icompositiondrawingsurfaceinterop-begindraw
     HRESULT BeginDraw(const(RECT)* updateRect, const(GUID)* iid, void** updateObject, POINT* updateOffset);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/windows.ui.composition.interop/nf-windows-ui-composition-interop-icompositiondrawingsurfaceinterop-enddraw))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.composition.interop/nf-windows-ui-composition-interop-icompositiondrawingsurfaceinterop-enddraw
     HRESULT EndDraw();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/windows.ui.composition.interop/nf-windows-ui-composition-interop-icompositiondrawingsurfaceinterop-resize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.composition.interop/nf-windows-ui-composition-interop-icompositiondrawingsurfaceinterop-resize
     HRESULT Resize(SIZE sizePixels);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/windows.ui.composition.interop/nf-windows-ui-composition-interop-icompositiondrawingsurfaceinterop-scroll))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.composition.interop/nf-windows-ui-composition-interop-icompositiondrawingsurfaceinterop-scroll
     HRESULT Scroll(const(RECT)* scrollRect, const(RECT)* clipRect, int offsetX, int offsetY);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/windows.ui.composition.interop/nf-windows-ui-composition-interop-icompositiondrawingsurfaceinterop-resumedraw))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.composition.interop/nf-windows-ui-composition-interop-icompositiondrawingsurfaceinterop-resumedraw
     HRESULT ResumeDraw();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/windows.ui.composition.interop/nf-windows-ui-composition-interop-icompositiondrawingsurfaceinterop-suspenddraw))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.composition.interop/nf-windows-ui-composition-interop-icompositiondrawingsurfaceinterop-suspenddraw
     HRESULT SuspendDraw();
 }
 
 @GUID("41e64aae-98c0-4239-8e95-a330dd6aa18b")
 interface ICompositionDrawingSurfaceInterop2 : ICompositionDrawingSurfaceInterop
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/windows.ui.composition.interop/nf-windows-ui-composition-interop-icompositiondrawingsurfaceinterop2-copysurface))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.composition.interop/nf-windows-ui-composition-interop-icompositiondrawingsurfaceinterop2-copysurface
     HRESULT CopySurface(IUnknown destinationResource, int destinationOffsetX, int destinationOffsetY, 
                         const(RECT)* sourceRectangle);
 }
 
 @GUID("a116ff71-f8bf-4c8a-9c98-70779a32a9c8")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/windows.ui.composition.interop/nn-windows-ui-composition-interop-icompositiongraphicsdeviceinterop))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.composition.interop/nn-windows-ui-composition-interop-icompositiongraphicsdeviceinterop
 interface ICompositionGraphicsDeviceInterop : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/windows.ui.composition.interop/nf-windows-ui-composition-interop-icompositiongraphicsdeviceinterop-getrenderingdevice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.composition.interop/nf-windows-ui-composition-interop-icompositiongraphicsdeviceinterop-getrenderingdevice
     HRESULT GetRenderingDevice(IUnknown* value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/windows.ui.composition.interop/nf-windows-ui-composition-interop-icompositiongraphicsdeviceinterop-setrenderingdevice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.ui.composition.interop/nf-windows-ui-composition-interop-icompositiongraphicsdeviceinterop-setrenderingdevice
     HRESULT SetRenderingDevice(IUnknown value);
 }
 

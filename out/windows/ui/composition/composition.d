@@ -1,6 +1,6 @@
 // Written in the D programming language.
 
-module system;
+module windows.ui.composition.composition;
 
 public import windows.core;
 

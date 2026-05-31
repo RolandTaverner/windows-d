@@ -3,9 +3,9 @@
 module windows.win32.system.services;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BOOLEAN, HANDLE, PSTR, PWSTR;
-public import windows.win32.security : OBJECT_SECURITY_INFORMATION, PSECURITY_DESCRIPTOR;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BOOLEAN, HANDLE, PSTR, PWSTR;
+public import windows.win32.security.security : OBJECT_SECURITY_INFORMATION, PSECURITY_DESCRIPTOR;
 public import windows.win32.system.registry : HKEY;
 
 extern(Windows) @nogc nothrow:
@@ -13,118 +13,130 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias ENUM_SERVICE_STATE = uint;
 enum : uint
 {
-    SERVICE_ACTIVE    = 0x00000001,
-    SERVICE_INACTIVE  = 0x00000002,
-    SERVICE_STATE_ALL = 0x00000003,
+    SERVICE_ACTIVE    = 0x00000001U,
+    SERVICE_INACTIVE  = 0x00000002U,
+    SERVICE_STATE_ALL = 0x00000003U,
 }
+
 //ENUM ATTR: AssociatedConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig(SERVICE_NO_CHANGE))], [])
 alias SERVICE_ERROR = uint;
 enum : uint
 {
-    SERVICE_ERROR_CRITICAL = 0x00000003,
-    SERVICE_ERROR_IGNORE   = 0x00000000,
-    SERVICE_ERROR_NORMAL   = 0x00000001,
-    SERVICE_ERROR_SEVERE   = 0x00000002,
+    SERVICE_ERROR_CRITICAL = 0x00000003U,
+    SERVICE_ERROR_IGNORE   = 0x00000000U,
+    SERVICE_ERROR_NORMAL   = 0x00000001U,
+    SERVICE_ERROR_SEVERE   = 0x00000002U,
 }
+
 alias SERVICE_CONFIG = uint;
 enum : uint
 {
-    SERVICE_CONFIG_DELAYED_AUTO_START_INFO  = 0x00000003,
-    SERVICE_CONFIG_DESCRIPTION              = 0x00000001,
-    SERVICE_CONFIG_FAILURE_ACTIONS          = 0x00000002,
-    SERVICE_CONFIG_FAILURE_ACTIONS_FLAG     = 0x00000004,
-    SERVICE_CONFIG_PREFERRED_NODE           = 0x00000009,
-    SERVICE_CONFIG_PRESHUTDOWN_INFO         = 0x00000007,
-    SERVICE_CONFIG_REQUIRED_PRIVILEGES_INFO = 0x00000006,
-    SERVICE_CONFIG_SERVICE_SID_INFO         = 0x00000005,
-    SERVICE_CONFIG_TRIGGER_INFO             = 0x00000008,
-    SERVICE_CONFIG_LAUNCH_PROTECTED         = 0x0000000c,
+    SERVICE_CONFIG_DELAYED_AUTO_START_INFO  = 0x00000003U,
+    SERVICE_CONFIG_DESCRIPTION              = 0x00000001U,
+    SERVICE_CONFIG_FAILURE_ACTIONS          = 0x00000002U,
+    SERVICE_CONFIG_FAILURE_ACTIONS_FLAG     = 0x00000004U,
+    SERVICE_CONFIG_PREFERRED_NODE           = 0x00000009U,
+    SERVICE_CONFIG_PRESHUTDOWN_INFO         = 0x00000007U,
+    SERVICE_CONFIG_REQUIRED_PRIVILEGES_INFO = 0x00000006U,
+    SERVICE_CONFIG_SERVICE_SID_INFO         = 0x00000005U,
+    SERVICE_CONFIG_TRIGGER_INFO             = 0x00000008U,
+    SERVICE_CONFIG_LAUNCH_PROTECTED         = 0x0000000cU,
 }
+
 //ENUM ATTR: AssociatedConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig(SERVICE_NO_CHANGE))], [])
 alias ENUM_SERVICE_TYPE = uint;
 enum : uint
 {
-    SERVICE_DRIVER              = 0x0000000b,
-    SERVICE_KERNEL_DRIVER       = 0x00000001,
-    SERVICE_WIN32               = 0x00000030,
-    SERVICE_WIN32_SHARE_PROCESS = 0x00000020,
-    SERVICE_ADAPTER             = 0x00000004,
-    SERVICE_FILE_SYSTEM_DRIVER  = 0x00000002,
-    SERVICE_RECOGNIZER_DRIVER   = 0x00000008,
-    SERVICE_WIN32_OWN_PROCESS   = 0x00000010,
-    SERVICE_USER_OWN_PROCESS    = 0x00000050,
-    SERVICE_USER_SHARE_PROCESS  = 0x00000060,
+    SERVICE_DRIVER              = 0x0000000bU,
+    SERVICE_KERNEL_DRIVER       = 0x00000001U,
+    SERVICE_WIN32               = 0x00000030U,
+    SERVICE_WIN32_SHARE_PROCESS = 0x00000020U,
+    SERVICE_ADAPTER             = 0x00000004U,
+    SERVICE_FILE_SYSTEM_DRIVER  = 0x00000002U,
+    SERVICE_RECOGNIZER_DRIVER   = 0x00000008U,
+    SERVICE_WIN32_OWN_PROCESS   = 0x00000010U,
+    SERVICE_USER_OWN_PROCESS    = 0x00000050U,
+    SERVICE_USER_SHARE_PROCESS  = 0x00000060U,
 }
+
 //ENUM ATTR: AssociatedConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig(SERVICE_NO_CHANGE))], [])
 alias SERVICE_START_TYPE = uint;
 enum : uint
 {
-    SERVICE_AUTO_START   = 0x00000002,
-    SERVICE_BOOT_START   = 0x00000000,
-    SERVICE_DEMAND_START = 0x00000003,
-    SERVICE_DISABLED     = 0x00000004,
-    SERVICE_SYSTEM_START = 0x00000001,
+    SERVICE_AUTO_START   = 0x00000002U,
+    SERVICE_BOOT_START   = 0x00000000U,
+    SERVICE_DEMAND_START = 0x00000003U,
+    SERVICE_DISABLED     = 0x00000004U,
+    SERVICE_SYSTEM_START = 0x00000001U,
 }
+
 alias SERVICE_NOTIFY = uint;
 enum : uint
 {
-    SERVICE_NOTIFY_CREATED          = 0x00000080,
-    SERVICE_NOTIFY_CONTINUE_PENDING = 0x00000010,
-    SERVICE_NOTIFY_DELETE_PENDING   = 0x00000200,
-    SERVICE_NOTIFY_DELETED          = 0x00000100,
-    SERVICE_NOTIFY_PAUSE_PENDING    = 0x00000020,
-    SERVICE_NOTIFY_PAUSED           = 0x00000040,
-    SERVICE_NOTIFY_RUNNING          = 0x00000008,
-    SERVICE_NOTIFY_START_PENDING    = 0x00000002,
-    SERVICE_NOTIFY_STOP_PENDING     = 0x00000004,
-    SERVICE_NOTIFY_STOPPED          = 0x00000001,
+    SERVICE_NOTIFY_CREATED          = 0x00000080U,
+    SERVICE_NOTIFY_CONTINUE_PENDING = 0x00000010U,
+    SERVICE_NOTIFY_DELETE_PENDING   = 0x00000200U,
+    SERVICE_NOTIFY_DELETED          = 0x00000100U,
+    SERVICE_NOTIFY_PAUSE_PENDING    = 0x00000020U,
+    SERVICE_NOTIFY_PAUSED           = 0x00000040U,
+    SERVICE_NOTIFY_RUNNING          = 0x00000008U,
+    SERVICE_NOTIFY_START_PENDING    = 0x00000002U,
+    SERVICE_NOTIFY_STOP_PENDING     = 0x00000004U,
+    SERVICE_NOTIFY_STOPPED          = 0x00000001U,
 }
+
 alias SERVICE_RUNS_IN_PROCESS = uint;
 enum : uint
 {
-    SERVICE_RUNS_IN_NON_SYSTEM_OR_NOT_RUNNING = 0x00000000,
-    SERVICE_RUNS_IN_SYSTEM_PROCESS            = 0x00000001,
+    SERVICE_RUNS_IN_NON_SYSTEM_OR_NOT_RUNNING = 0x00000000U,
+    SERVICE_RUNS_IN_SYSTEM_PROCESS            = 0x00000001U,
 }
+
 alias SERVICE_TRIGGER_ACTION = uint;
 enum : uint
 {
-    SERVICE_TRIGGER_ACTION_SERVICE_START = 0x00000001,
-    SERVICE_TRIGGER_ACTION_SERVICE_STOP  = 0x00000002,
+    SERVICE_TRIGGER_ACTION_SERVICE_START = 0x00000001U,
+    SERVICE_TRIGGER_ACTION_SERVICE_STOP  = 0x00000002U,
 }
+
 alias SERVICE_TRIGGER_TYPE = uint;
 enum : uint
 {
-    SERVICE_TRIGGER_TYPE_CUSTOM                   = 0x00000014,
-    SERVICE_TRIGGER_TYPE_DEVICE_INTERFACE_ARRIVAL = 0x00000001,
-    SERVICE_TRIGGER_TYPE_DOMAIN_JOIN              = 0x00000003,
-    SERVICE_TRIGGER_TYPE_FIREWALL_PORT_EVENT      = 0x00000004,
-    SERVICE_TRIGGER_TYPE_GROUP_POLICY             = 0x00000005,
-    SERVICE_TRIGGER_TYPE_IP_ADDRESS_AVAILABILITY  = 0x00000002,
-    SERVICE_TRIGGER_TYPE_NETWORK_ENDPOINT         = 0x00000006,
+    SERVICE_TRIGGER_TYPE_CUSTOM                   = 0x00000014U,
+    SERVICE_TRIGGER_TYPE_DEVICE_INTERFACE_ARRIVAL = 0x00000001U,
+    SERVICE_TRIGGER_TYPE_DOMAIN_JOIN              = 0x00000003U,
+    SERVICE_TRIGGER_TYPE_FIREWALL_PORT_EVENT      = 0x00000004U,
+    SERVICE_TRIGGER_TYPE_GROUP_POLICY             = 0x00000005U,
+    SERVICE_TRIGGER_TYPE_IP_ADDRESS_AVAILABILITY  = 0x00000002U,
+    SERVICE_TRIGGER_TYPE_NETWORK_ENDPOINT         = 0x00000006U,
 }
+
 alias SERVICE_TRIGGER_SPECIFIC_DATA_ITEM_DATA_TYPE = uint;
 enum : uint
 {
-    SERVICE_TRIGGER_DATA_TYPE_BINARY      = 0x00000001,
-    SERVICE_TRIGGER_DATA_TYPE_STRING      = 0x00000002,
-    SERVICE_TRIGGER_DATA_TYPE_LEVEL       = 0x00000003,
-    SERVICE_TRIGGER_DATA_TYPE_KEYWORD_ANY = 0x00000004,
-    SERVICE_TRIGGER_DATA_TYPE_KEYWORD_ALL = 0x00000005,
+    SERVICE_TRIGGER_DATA_TYPE_BINARY      = 0x00000001U,
+    SERVICE_TRIGGER_DATA_TYPE_STRING      = 0x00000002U,
+    SERVICE_TRIGGER_DATA_TYPE_LEVEL       = 0x00000003U,
+    SERVICE_TRIGGER_DATA_TYPE_KEYWORD_ANY = 0x00000004U,
+    SERVICE_TRIGGER_DATA_TYPE_KEYWORD_ALL = 0x00000005U,
 }
+
 alias SERVICE_STATUS_CURRENT_STATE = uint;
 enum : uint
 {
-    SERVICE_CONTINUE_PENDING = 0x00000005,
-    SERVICE_PAUSE_PENDING    = 0x00000006,
-    SERVICE_PAUSED           = 0x00000007,
-    SERVICE_RUNNING          = 0x00000004,
-    SERVICE_START_PENDING    = 0x00000002,
-    SERVICE_STOP_PENDING     = 0x00000003,
-    SERVICE_STOPPED          = 0x00000001,
+    SERVICE_CONTINUE_PENDING = 0x00000005U,
+    SERVICE_PAUSE_PENDING    = 0x00000006U,
+    SERVICE_PAUSED           = 0x00000007U,
+    SERVICE_RUNNING          = 0x00000004U,
+    SERVICE_START_PENDING    = 0x00000002U,
+    SERVICE_STOP_PENDING     = 0x00000003U,
+    SERVICE_STOPPED          = 0x00000001U,
 }
+
 alias SC_ACTION_TYPE = int;
 enum : int
 {
@@ -134,17 +146,20 @@ enum : int
     SC_ACTION_RUN_COMMAND = 0x00000003,
     SC_ACTION_OWN_RESTART = 0x00000004,
 }
+
 alias SC_STATUS_TYPE = int;
 enum : int
 {
     SC_STATUS_PROCESS_INFO = 0x00000000,
 }
+
 alias SC_ENUM_TYPE = int;
 enum : int
 {
     SC_ENUM_PROCESS_INFO = 0x00000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Services/sc-event-type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Services/sc-event-type
 alias SC_EVENT_TYPE = int;
 enum : int
 {
@@ -152,7 +167,8 @@ enum : int
     SC_EVENT_PROPERTY_CHANGE = 0x00000001,
     SC_EVENT_STATUS_CHANGE   = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/ne-winsvc-service_registry_state_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ne-winsvc-service_registry_state_type
 alias SERVICE_REGISTRY_STATE_TYPE = int;
 enum : int
 {
@@ -160,20 +176,23 @@ enum : int
     ServiceRegistryStatePersistent = 0x00000001,
     MaxServiceRegistryStateType    = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/ne-winsvc-service_directory_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ne-winsvc-service_directory_type
 alias SERVICE_DIRECTORY_TYPE = int;
 enum : int
 {
     ServiceDirectoryPersistentState = 0x00000000,
     ServiceDirectoryTypeMax         = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/ne-winsvc-service_shared_registry_state_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ne-winsvc-service_shared_registry_state_type
 alias SERVICE_SHARED_REGISTRY_STATE_TYPE = int;
 enum : int
 {
     ServiceSharedRegistryPersistentState = 0x00000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/ne-winsvc-service_shared_directory_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ne-winsvc-service_shared_directory_type
 alias SERVICE_SHARED_DIRECTORY_TYPE = int;
 enum : int
 {
@@ -183,8 +202,8 @@ enum : int
 // Constants
 
 
-enum uint SERVICE_ALL_ACCESS = 0x000f01ff;
-enum uint SC_MANAGER_ALL_ACCESS = 0x000f003f;
+enum uint SERVICE_ALL_ACCESS = 0x000f01ffU;
+enum uint SC_MANAGER_ALL_ACCESS = 0x000f003fU;
 enum const(wchar)* SERVICES_ACTIVE_DATABASEW = "ServicesActive";
 enum const(wchar)* SERVICES_FAILED_DATABASEW = "ServicesFailed";
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SERVICES_ACTIVE_DATABASEA = "ServicesActive";
@@ -194,163 +213,163 @@ enum const(wchar)* SERVICES_FAILED_DATABASE = "ServicesFailed";
 
 enum : uint
 {
-    SERVICE_NO_CHANGE                     = 0xffffffff,
-    SERVICE_CONTROL_STOP                  = 0x00000001,
-    SERVICE_CONTROL_PAUSE                 = 0x00000002,
-    SERVICE_CONTROL_CONTINUE              = 0x00000003,
-    SERVICE_CONTROL_INTERROGATE           = 0x00000004,
-    SERVICE_CONTROL_SHUTDOWN              = 0x00000005,
-    SERVICE_CONTROL_PARAMCHANGE           = 0x00000006,
-    SERVICE_CONTROL_NETBINDADD            = 0x00000007,
-    SERVICE_CONTROL_NETBINDREMOVE         = 0x00000008,
-    SERVICE_CONTROL_NETBINDENABLE         = 0x00000009,
-    SERVICE_CONTROL_NETBINDDISABLE        = 0x0000000a,
-    SERVICE_CONTROL_DEVICEEVENT           = 0x0000000b,
-    SERVICE_CONTROL_HARDWAREPROFILECHANGE = 0x0000000c,
-    SERVICE_CONTROL_POWEREVENT            = 0x0000000d,
-    SERVICE_CONTROL_SESSIONCHANGE         = 0x0000000e,
-    SERVICE_CONTROL_PRESHUTDOWN           = 0x0000000f,
-    SERVICE_CONTROL_TIMECHANGE            = 0x00000010,
-    SERVICE_CONTROL_TRIGGEREVENT          = 0x00000020,
-    SERVICE_CONTROL_LOWRESOURCES          = 0x00000060,
-    SERVICE_CONTROL_SYSTEMLOWRESOURCES    = 0x00000061,
+    SERVICE_NO_CHANGE                     = 0xffffffffU,
+    SERVICE_CONTROL_STOP                  = 0x00000001U,
+    SERVICE_CONTROL_PAUSE                 = 0x00000002U,
+    SERVICE_CONTROL_CONTINUE              = 0x00000003U,
+    SERVICE_CONTROL_INTERROGATE           = 0x00000004U,
+    SERVICE_CONTROL_SHUTDOWN              = 0x00000005U,
+    SERVICE_CONTROL_PARAMCHANGE           = 0x00000006U,
+    SERVICE_CONTROL_NETBINDADD            = 0x00000007U,
+    SERVICE_CONTROL_NETBINDREMOVE         = 0x00000008U,
+    SERVICE_CONTROL_NETBINDENABLE         = 0x00000009U,
+    SERVICE_CONTROL_NETBINDDISABLE        = 0x0000000aU,
+    SERVICE_CONTROL_DEVICEEVENT           = 0x0000000bU,
+    SERVICE_CONTROL_HARDWAREPROFILECHANGE = 0x0000000cU,
+    SERVICE_CONTROL_POWEREVENT            = 0x0000000dU,
+    SERVICE_CONTROL_SESSIONCHANGE         = 0x0000000eU,
+    SERVICE_CONTROL_PRESHUTDOWN           = 0x0000000fU,
+    SERVICE_CONTROL_TIMECHANGE            = 0x00000010U,
+    SERVICE_CONTROL_TRIGGEREVENT          = 0x00000020U,
+    SERVICE_CONTROL_LOWRESOURCES          = 0x00000060U,
+    SERVICE_CONTROL_SYSTEMLOWRESOURCES    = 0x00000061U,
 }
 
 enum : uint
 {
-    SERVICE_ACCEPT_STOP                  = 0x00000001,
-    SERVICE_ACCEPT_PAUSE_CONTINUE        = 0x00000002,
-    SERVICE_ACCEPT_SHUTDOWN              = 0x00000004,
-    SERVICE_ACCEPT_PARAMCHANGE           = 0x00000008,
-    SERVICE_ACCEPT_NETBINDCHANGE         = 0x00000010,
-    SERVICE_ACCEPT_HARDWAREPROFILECHANGE = 0x00000020,
-    SERVICE_ACCEPT_POWEREVENT            = 0x00000040,
-    SERVICE_ACCEPT_SESSIONCHANGE         = 0x00000080,
-    SERVICE_ACCEPT_PRESHUTDOWN           = 0x00000100,
-    SERVICE_ACCEPT_TIMECHANGE            = 0x00000200,
-    SERVICE_ACCEPT_TRIGGEREVENT          = 0x00000400,
-    SERVICE_ACCEPT_USER_LOGOFF           = 0x00000800,
-    SERVICE_ACCEPT_LOWRESOURCES          = 0x00002000,
-    SERVICE_ACCEPT_SYSTEMLOWRESOURCES    = 0x00004000,
+    SERVICE_ACCEPT_STOP                  = 0x00000001U,
+    SERVICE_ACCEPT_PAUSE_CONTINUE        = 0x00000002U,
+    SERVICE_ACCEPT_SHUTDOWN              = 0x00000004U,
+    SERVICE_ACCEPT_PARAMCHANGE           = 0x00000008U,
+    SERVICE_ACCEPT_NETBINDCHANGE         = 0x00000010U,
+    SERVICE_ACCEPT_HARDWAREPROFILECHANGE = 0x00000020U,
+    SERVICE_ACCEPT_POWEREVENT            = 0x00000040U,
+    SERVICE_ACCEPT_SESSIONCHANGE         = 0x00000080U,
+    SERVICE_ACCEPT_PRESHUTDOWN           = 0x00000100U,
+    SERVICE_ACCEPT_TIMECHANGE            = 0x00000200U,
+    SERVICE_ACCEPT_TRIGGEREVENT          = 0x00000400U,
+    SERVICE_ACCEPT_USER_LOGOFF           = 0x00000800U,
+    SERVICE_ACCEPT_LOWRESOURCES          = 0x00002000U,
+    SERVICE_ACCEPT_SYSTEMLOWRESOURCES    = 0x00004000U,
 }
 
 enum : uint
 {
-    SC_MANAGER_CONNECT           = 0x00000001,
-    SC_MANAGER_CREATE_SERVICE    = 0x00000002,
-    SC_MANAGER_ENUMERATE_SERVICE = 0x00000004,
+    SC_MANAGER_CONNECT           = 0x00000001U,
+    SC_MANAGER_CREATE_SERVICE    = 0x00000002U,
+    SC_MANAGER_ENUMERATE_SERVICE = 0x00000004U,
 }
 
 enum : uint
 {
-    SC_MANAGER_LOCK              = 0x00000008,
-    SC_MANAGER_QUERY_LOCK_STATUS = 0x00000010,
+    SC_MANAGER_LOCK              = 0x00000008U,
+    SC_MANAGER_QUERY_LOCK_STATUS = 0x00000010U,
 }
 
-enum uint SC_MANAGER_MODIFY_BOOT_CONFIG = 0x00000020;
-enum uint SERVICE_QUERY_CONFIG = 0x00000001;
-enum uint SERVICE_CHANGE_CONFIG = 0x00000002;
-enum uint SERVICE_QUERY_STATUS = 0x00000004;
-enum uint SERVICE_ENUMERATE_DEPENDENTS = 0x00000008;
+enum uint SC_MANAGER_MODIFY_BOOT_CONFIG = 0x00000020U;
+enum uint SERVICE_QUERY_CONFIG = 0x00000001U;
+enum uint SERVICE_CHANGE_CONFIG = 0x00000002U;
+enum uint SERVICE_QUERY_STATUS = 0x00000004U;
+enum uint SERVICE_ENUMERATE_DEPENDENTS = 0x00000008U;
 
 enum : uint
 {
-    SERVICE_START          = 0x00000010,
-    SERVICE_STOP           = 0x00000020,
-    SERVICE_PAUSE_CONTINUE = 0x00000040,
-}
-
-enum : uint
-{
-    SERVICE_INTERROGATE          = 0x00000080,
-    SERVICE_USER_DEFINED_CONTROL = 0x00000100,
+    SERVICE_START          = 0x00000010U,
+    SERVICE_STOP           = 0x00000020U,
+    SERVICE_PAUSE_CONTINUE = 0x00000040U,
 }
 
 enum : uint
 {
-    SERVICE_NOTIFY_STATUS_CHANGE_1 = 0x00000001,
-    SERVICE_NOTIFY_STATUS_CHANGE_2 = 0x00000002,
-    SERVICE_NOTIFY_STATUS_CHANGE   = 0x00000002,
+    SERVICE_INTERROGATE          = 0x00000080U,
+    SERVICE_USER_DEFINED_CONTROL = 0x00000100U,
 }
 
 enum : uint
 {
-    SERVICE_STOP_REASON_FLAG_MIN                        = 0x00000000,
-    SERVICE_STOP_REASON_FLAG_UNPLANNED                  = 0x10000000,
-    SERVICE_STOP_REASON_FLAG_CUSTOM                     = 0x20000000,
-    SERVICE_STOP_REASON_FLAG_PLANNED                    = 0x40000000,
-    SERVICE_STOP_REASON_FLAG_MAX                        = 0x80000000,
-    SERVICE_STOP_REASON_MAJOR_MIN                       = 0x00000000,
-    SERVICE_STOP_REASON_MAJOR_OTHER                     = 0x00010000,
-    SERVICE_STOP_REASON_MAJOR_HARDWARE                  = 0x00020000,
-    SERVICE_STOP_REASON_MAJOR_OPERATINGSYSTEM           = 0x00030000,
-    SERVICE_STOP_REASON_MAJOR_SOFTWARE                  = 0x00040000,
-    SERVICE_STOP_REASON_MAJOR_APPLICATION               = 0x00050000,
-    SERVICE_STOP_REASON_MAJOR_NONE                      = 0x00060000,
-    SERVICE_STOP_REASON_MAJOR_MAX                       = 0x00070000,
-    SERVICE_STOP_REASON_MAJOR_MIN_CUSTOM                = 0x00400000,
-    SERVICE_STOP_REASON_MAJOR_MAX_CUSTOM                = 0x00ff0000,
-    SERVICE_STOP_REASON_MINOR_MIN                       = 0x00000000,
-    SERVICE_STOP_REASON_MINOR_OTHER                     = 0x00000001,
-    SERVICE_STOP_REASON_MINOR_MAINTENANCE               = 0x00000002,
-    SERVICE_STOP_REASON_MINOR_INSTALLATION              = 0x00000003,
-    SERVICE_STOP_REASON_MINOR_UPGRADE                   = 0x00000004,
-    SERVICE_STOP_REASON_MINOR_RECONFIG                  = 0x00000005,
-    SERVICE_STOP_REASON_MINOR_HUNG                      = 0x00000006,
-    SERVICE_STOP_REASON_MINOR_UNSTABLE                  = 0x00000007,
-    SERVICE_STOP_REASON_MINOR_DISK                      = 0x00000008,
-    SERVICE_STOP_REASON_MINOR_NETWORKCARD               = 0x00000009,
-    SERVICE_STOP_REASON_MINOR_ENVIRONMENT               = 0x0000000a,
-    SERVICE_STOP_REASON_MINOR_HARDWARE_DRIVER           = 0x0000000b,
-    SERVICE_STOP_REASON_MINOR_OTHERDRIVER               = 0x0000000c,
-    SERVICE_STOP_REASON_MINOR_SERVICEPACK               = 0x0000000d,
-    SERVICE_STOP_REASON_MINOR_SOFTWARE_UPDATE           = 0x0000000e,
-    SERVICE_STOP_REASON_MINOR_SECURITYFIX               = 0x0000000f,
-    SERVICE_STOP_REASON_MINOR_SECURITY                  = 0x00000010,
-    SERVICE_STOP_REASON_MINOR_NETWORK_CONNECTIVITY      = 0x00000011,
-    SERVICE_STOP_REASON_MINOR_WMI                       = 0x00000012,
-    SERVICE_STOP_REASON_MINOR_SERVICEPACK_UNINSTALL     = 0x00000013,
-    SERVICE_STOP_REASON_MINOR_SOFTWARE_UPDATE_UNINSTALL = 0x00000014,
-    SERVICE_STOP_REASON_MINOR_SECURITYFIX_UNINSTALL     = 0x00000015,
-    SERVICE_STOP_REASON_MINOR_MMC                       = 0x00000016,
-    SERVICE_STOP_REASON_MINOR_NONE                      = 0x00000017,
-    SERVICE_STOP_REASON_MINOR_MEMOTYLIMIT               = 0x00000018,
-    SERVICE_STOP_REASON_MINOR_MAX                       = 0x00000019,
-    SERVICE_STOP_REASON_MINOR_MIN_CUSTOM                = 0x00000100,
-    SERVICE_STOP_REASON_MINOR_MAX_CUSTOM                = 0x0000ffff,
-}
-
-enum uint SERVICE_CONTROL_STATUS_REASON_INFO = 0x00000001;
-
-enum : uint
-{
-    SERVICE_SID_TYPE_NONE         = 0x00000000,
-    SERVICE_SID_TYPE_UNRESTRICTED = 0x00000001,
+    SERVICE_NOTIFY_STATUS_CHANGE_1 = 0x00000001U,
+    SERVICE_NOTIFY_STATUS_CHANGE_2 = 0x00000002U,
+    SERVICE_NOTIFY_STATUS_CHANGE   = 0x00000002U,
 }
 
 enum : uint
 {
-    SERVICE_TRIGGER_TYPE_CUSTOM_SYSTEM_STATE_CHANGE = 0x00000007,
-    SERVICE_TRIGGER_TYPE_AGGREGATE                  = 0x0000001e,
+    SERVICE_STOP_REASON_FLAG_MIN                        = 0x00000000U,
+    SERVICE_STOP_REASON_FLAG_UNPLANNED                  = 0x10000000U,
+    SERVICE_STOP_REASON_FLAG_CUSTOM                     = 0x20000000U,
+    SERVICE_STOP_REASON_FLAG_PLANNED                    = 0x40000000U,
+    SERVICE_STOP_REASON_FLAG_MAX                        = 0x80000000U,
+    SERVICE_STOP_REASON_MAJOR_MIN                       = 0x00000000U,
+    SERVICE_STOP_REASON_MAJOR_OTHER                     = 0x00010000U,
+    SERVICE_STOP_REASON_MAJOR_HARDWARE                  = 0x00020000U,
+    SERVICE_STOP_REASON_MAJOR_OPERATINGSYSTEM           = 0x00030000U,
+    SERVICE_STOP_REASON_MAJOR_SOFTWARE                  = 0x00040000U,
+    SERVICE_STOP_REASON_MAJOR_APPLICATION               = 0x00050000U,
+    SERVICE_STOP_REASON_MAJOR_NONE                      = 0x00060000U,
+    SERVICE_STOP_REASON_MAJOR_MAX                       = 0x00070000U,
+    SERVICE_STOP_REASON_MAJOR_MIN_CUSTOM                = 0x00400000U,
+    SERVICE_STOP_REASON_MAJOR_MAX_CUSTOM                = 0x00ff0000U,
+    SERVICE_STOP_REASON_MINOR_MIN                       = 0x00000000U,
+    SERVICE_STOP_REASON_MINOR_OTHER                     = 0x00000001U,
+    SERVICE_STOP_REASON_MINOR_MAINTENANCE               = 0x00000002U,
+    SERVICE_STOP_REASON_MINOR_INSTALLATION              = 0x00000003U,
+    SERVICE_STOP_REASON_MINOR_UPGRADE                   = 0x00000004U,
+    SERVICE_STOP_REASON_MINOR_RECONFIG                  = 0x00000005U,
+    SERVICE_STOP_REASON_MINOR_HUNG                      = 0x00000006U,
+    SERVICE_STOP_REASON_MINOR_UNSTABLE                  = 0x00000007U,
+    SERVICE_STOP_REASON_MINOR_DISK                      = 0x00000008U,
+    SERVICE_STOP_REASON_MINOR_NETWORKCARD               = 0x00000009U,
+    SERVICE_STOP_REASON_MINOR_ENVIRONMENT               = 0x0000000aU,
+    SERVICE_STOP_REASON_MINOR_HARDWARE_DRIVER           = 0x0000000bU,
+    SERVICE_STOP_REASON_MINOR_OTHERDRIVER               = 0x0000000cU,
+    SERVICE_STOP_REASON_MINOR_SERVICEPACK               = 0x0000000dU,
+    SERVICE_STOP_REASON_MINOR_SOFTWARE_UPDATE           = 0x0000000eU,
+    SERVICE_STOP_REASON_MINOR_SECURITYFIX               = 0x0000000fU,
+    SERVICE_STOP_REASON_MINOR_SECURITY                  = 0x00000010U,
+    SERVICE_STOP_REASON_MINOR_NETWORK_CONNECTIVITY      = 0x00000011U,
+    SERVICE_STOP_REASON_MINOR_WMI                       = 0x00000012U,
+    SERVICE_STOP_REASON_MINOR_SERVICEPACK_UNINSTALL     = 0x00000013U,
+    SERVICE_STOP_REASON_MINOR_SOFTWARE_UPDATE_UNINSTALL = 0x00000014U,
+    SERVICE_STOP_REASON_MINOR_SECURITYFIX_UNINSTALL     = 0x00000015U,
+    SERVICE_STOP_REASON_MINOR_MMC                       = 0x00000016U,
+    SERVICE_STOP_REASON_MINOR_NONE                      = 0x00000017U,
+    SERVICE_STOP_REASON_MINOR_MEMOTYLIMIT               = 0x00000018U,
+    SERVICE_STOP_REASON_MINOR_MAX                       = 0x00000019U,
+    SERVICE_STOP_REASON_MINOR_MIN_CUSTOM                = 0x00000100U,
+    SERVICE_STOP_REASON_MINOR_MAX_CUSTOM                = 0x0000ffffU,
+}
+
+enum uint SERVICE_CONTROL_STATUS_REASON_INFO = 0x00000001U;
+
+enum : uint
+{
+    SERVICE_SID_TYPE_NONE         = 0x00000000U,
+    SERVICE_SID_TYPE_UNRESTRICTED = 0x00000001U,
 }
 
 enum : uint
 {
-    SERVICE_START_REASON_DEMAND             = 0x00000001,
-    SERVICE_START_REASON_AUTO               = 0x00000002,
-    SERVICE_START_REASON_TRIGGER            = 0x00000004,
-    SERVICE_START_REASON_RESTART_ON_FAILURE = 0x00000008,
-    SERVICE_START_REASON_DELAYEDAUTO        = 0x00000010,
+    SERVICE_TRIGGER_TYPE_CUSTOM_SYSTEM_STATE_CHANGE = 0x00000007U,
+    SERVICE_TRIGGER_TYPE_AGGREGATE                  = 0x0000001eU,
 }
-
-enum uint SERVICE_DYNAMIC_INFORMATION_LEVEL_START_REASON = 0x00000001;
 
 enum : uint
 {
-    SERVICE_LAUNCH_PROTECTED_NONE              = 0x00000000,
-    SERVICE_LAUNCH_PROTECTED_WINDOWS           = 0x00000001,
-    SERVICE_LAUNCH_PROTECTED_WINDOWS_LIGHT     = 0x00000002,
-    SERVICE_LAUNCH_PROTECTED_ANTIMALWARE_LIGHT = 0x00000003,
+    SERVICE_START_REASON_DEMAND             = 0x00000001U,
+    SERVICE_START_REASON_AUTO               = 0x00000002U,
+    SERVICE_START_REASON_TRIGGER            = 0x00000004U,
+    SERVICE_START_REASON_RESTART_ON_FAILURE = 0x00000008U,
+    SERVICE_START_REASON_DELAYEDAUTO        = 0x00000010U,
+}
+
+enum uint SERVICE_DYNAMIC_INFORMATION_LEVEL_START_REASON = 0x00000001U;
+
+enum : uint
+{
+    SERVICE_LAUNCH_PROTECTED_NONE              = 0x00000000U,
+    SERVICE_LAUNCH_PROTECTED_WINDOWS           = 0x00000001U,
+    SERVICE_LAUNCH_PROTECTED_WINDOWS_LIGHT     = 0x00000002U,
+    SERVICE_LAUNCH_PROTECTED_ANTIMALWARE_LIGHT = 0x00000003U,
 }
 
 enum GUID NETWORK_MANAGER_FIRST_IP_ADDRESS_ARRIVAL_GUID = GUID("4f27f2de-14e2-430b-a549-7cd48cbc8245");
@@ -423,24 +442,32 @@ struct SERVICE_TRIGGER_CUSTOM_STATE_ID
 
 struct SERVICE_CUSTOM_SYSTEM_STATE_CHANGE_DATA_ITEM
 {
-    _u_e__Union u;
+    union u
+    {
+        SERVICE_TRIGGER_CUSTOM_STATE_ID CustomStateId;
+        struct s
+        {
+            uint DataOffset;
+            /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Data;
+        }
+    }
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_descriptiona))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_descriptiona
 struct SERVICE_DESCRIPTIONA
 {
     PSTR lpDescription;
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_descriptionw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_descriptionw
 struct SERVICE_DESCRIPTIONW
 {
     PWSTR lpDescription;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-sc_action))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-sc_action
 struct SC_ACTION
 {
     SC_ACTION_TYPE Type;
@@ -448,7 +475,7 @@ struct SC_ACTION
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_failure_actionsa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_failure_actionsa
 struct SERVICE_FAILURE_ACTIONSA
 {
     uint       dwResetPeriod;
@@ -459,7 +486,7 @@ struct SERVICE_FAILURE_ACTIONSA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_failure_actionsw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_failure_actionsw
 struct SERVICE_FAILURE_ACTIONSW
 {
     uint       dwResetPeriod;
@@ -469,45 +496,45 @@ struct SERVICE_FAILURE_ACTIONSW
     SC_ACTION* lpsaActions;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_delayed_auto_start_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_delayed_auto_start_info
 struct SERVICE_DELAYED_AUTO_START_INFO
 {
     BOOL fDelayedAutostart;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_failure_actions_flag))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_failure_actions_flag
 struct SERVICE_FAILURE_ACTIONS_FLAG
 {
     BOOL fFailureActionsOnNonCrashFailures;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_sid_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_sid_info
 struct SERVICE_SID_INFO
 {
     uint dwServiceSidType;
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_required_privileges_infoa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_required_privileges_infoa
 struct SERVICE_REQUIRED_PRIVILEGES_INFOA
 {
     PSTR pmszRequiredPrivileges;
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_required_privileges_infow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_required_privileges_infow
 struct SERVICE_REQUIRED_PRIVILEGES_INFOW
 {
     PWSTR pmszRequiredPrivileges;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_preshutdown_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_preshutdown_info
 struct SERVICE_PRESHUTDOWN_INFO
 {
     uint dwPreshutdownTimeout;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_trigger_specific_data_item))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_trigger_specific_data_item
 struct SERVICE_TRIGGER_SPECIFIC_DATA_ITEM
 {
     SERVICE_TRIGGER_SPECIFIC_DATA_ITEM_DATA_TYPE dwDataType;
@@ -515,7 +542,7 @@ struct SERVICE_TRIGGER_SPECIFIC_DATA_ITEM
     ubyte* pData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_trigger))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_trigger
 struct SERVICE_TRIGGER
 {
     SERVICE_TRIGGER_TYPE dwTriggerType;
@@ -525,7 +552,7 @@ struct SERVICE_TRIGGER
     SERVICE_TRIGGER_SPECIFIC_DATA_ITEM* pDataItems;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_trigger_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_trigger_info
 struct SERVICE_TRIGGER_INFO
 {
     uint             cTriggers;
@@ -533,27 +560,27 @@ struct SERVICE_TRIGGER_INFO
     ubyte*           pReserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_preferred_node_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_preferred_node_info
 struct SERVICE_PREFERRED_NODE_INFO
 {
     ushort  usPreferredNode;
     BOOLEAN fDelete;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_timechange_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_timechange_info
 struct SERVICE_TIMECHANGE_INFO
 {
     long liNewTime;
     long liOldTime;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_launch_protected_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_launch_protected_info
 struct SERVICE_LAUNCH_PROTECTED_INFO
 {
     uint dwLaunchProtected;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_status))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_status
 struct SERVICE_STATUS
 {
     ENUM_SERVICE_TYPE dwServiceType;
@@ -565,7 +592,7 @@ struct SERVICE_STATUS
     uint              dwWaitHint;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_status_process))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_status_process
 struct SERVICE_STATUS_PROCESS
 {
     ENUM_SERVICE_TYPE dwServiceType;
@@ -580,7 +607,7 @@ struct SERVICE_STATUS_PROCESS
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-enum_service_statusa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-enum_service_statusa
 struct ENUM_SERVICE_STATUSA
 {
     PSTR           lpServiceName;
@@ -589,7 +616,7 @@ struct ENUM_SERVICE_STATUSA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-enum_service_statusw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-enum_service_statusw
 struct ENUM_SERVICE_STATUSW
 {
     PWSTR          lpServiceName;
@@ -598,7 +625,7 @@ struct ENUM_SERVICE_STATUSW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-enum_service_status_processa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-enum_service_status_processa
 struct ENUM_SERVICE_STATUS_PROCESSA
 {
     PSTR lpServiceName;
@@ -607,7 +634,7 @@ struct ENUM_SERVICE_STATUS_PROCESSA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-enum_service_status_processw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-enum_service_status_processw
 struct ENUM_SERVICE_STATUS_PROCESSW
 {
     PWSTR lpServiceName;
@@ -616,7 +643,7 @@ struct ENUM_SERVICE_STATUS_PROCESSW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-query_service_lock_statusa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-query_service_lock_statusa
 struct QUERY_SERVICE_LOCK_STATUSA
 {
     uint fIsLocked;
@@ -625,7 +652,7 @@ struct QUERY_SERVICE_LOCK_STATUSA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-query_service_lock_statusw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-query_service_lock_statusw
 struct QUERY_SERVICE_LOCK_STATUSW
 {
     uint  fIsLocked;
@@ -634,7 +661,7 @@ struct QUERY_SERVICE_LOCK_STATUSW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-query_service_configa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-query_service_configa
 struct QUERY_SERVICE_CONFIGA
 {
     ENUM_SERVICE_TYPE  dwServiceType;
@@ -649,7 +676,7 @@ struct QUERY_SERVICE_CONFIGA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-query_service_configw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-query_service_configw
 struct QUERY_SERVICE_CONFIGW
 {
     ENUM_SERVICE_TYPE  dwServiceType;
@@ -664,7 +691,7 @@ struct QUERY_SERVICE_CONFIGW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_table_entrya))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_table_entrya
 struct SERVICE_TABLE_ENTRYA
 {
     PSTR lpServiceName;
@@ -672,7 +699,7 @@ struct SERVICE_TABLE_ENTRYA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_table_entryw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_table_entryw
 struct SERVICE_TABLE_ENTRYW
 {
     PWSTR lpServiceName;
@@ -689,7 +716,7 @@ struct SERVICE_NOTIFY_1
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_notify_2a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_notify_2a
 struct SERVICE_NOTIFY_2A
 {
     uint  dwVersion;
@@ -702,7 +729,7 @@ struct SERVICE_NOTIFY_2A
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_notify_2w))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_notify_2w
 struct SERVICE_NOTIFY_2W
 {
     uint  dwVersion;
@@ -715,7 +742,7 @@ struct SERVICE_NOTIFY_2W
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_control_status_reason_paramsa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_control_status_reason_paramsa
 struct SERVICE_CONTROL_STATUS_REASON_PARAMSA
 {
     uint dwReason;
@@ -724,7 +751,7 @@ struct SERVICE_CONTROL_STATUS_REASON_PARAMSA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_control_status_reason_paramsw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/ns-winsvc-service_control_status_reason_paramsw
 struct SERVICE_CONTROL_STATUS_REASON_PARAMSW
 {
     uint  dwReason;
@@ -996,13 +1023,13 @@ BOOL ControlServiceExW(SC_HANDLE hService, uint dwControl, uint dwInfoLevel, voi
 @DllImport("ADVAPI32.dll")
 BOOL QueryServiceDynamicInformation(SERVICE_STATUS_HANDLE hServiceStatus, uint dwInfoLevel, void** ppDynamicInfo);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Services/subscribeservicechangenotifications))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Services/subscribeservicechangenotifications
 @DllImport("SecHost.dll")
 uint SubscribeServiceChangeNotifications(SC_HANDLE hService, SC_EVENT_TYPE eEventType, 
                                          PSC_NOTIFICATION_CALLBACK pCallback, void* pCallbackContext, 
                                          PSC_NOTIFICATION_REGISTRATION* pSubscription);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Services/unsubscribeservicechangenotifications))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Services/unsubscribeservicechangenotifications
 @DllImport("SecHost.dll")
 void UnsubscribeServiceChangeNotifications(PSC_NOTIFICATION_REGISTRATION pSubscription);
 
@@ -1020,12 +1047,12 @@ uint GetServiceDirectory(SERVICE_STATUS_HANDLE hServiceStatus, SERVICE_DIRECTORY
                          /*PARAM ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR lpPathBuffer, 
                          uint cchPathBufferLength, uint* lpcchRequiredBufferLength);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/nf-winsvc-getsharedserviceregistrystatekey))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/nf-winsvc-getsharedserviceregistrystatekey
 @DllImport("api-ms-win-service-core-l1-1-5.dll")
 uint GetSharedServiceRegistryStateKey(SC_HANDLE ServiceHandle, SERVICE_SHARED_REGISTRY_STATE_TYPE StateType, 
                                       uint AccessMask, HKEY* ServiceStateKey);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsvc/nf-winsvc-getsharedservicedirectory))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsvc/nf-winsvc-getsharedservicedirectory
 @DllImport("api-ms-win-service-core-l1-1-5.dll")
 uint GetSharedServiceDirectory(SC_HANDLE ServiceHandle, SERVICE_SHARED_DIRECTORY_TYPE DirectoryType, 
                                /*PARAM ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PWSTR PathBuffer, 

@@ -3,14 +3,16 @@
 module windows.win32.web.mshtml;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BSTR, HGLOBAL, HRESULT, HWND, LRESULT,
-                                         POINT, PWSTR, RECT, SIZE, VARIANT_BOOL;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BSTR, HGLOBAL, HRESULT, HWND,
+                                                    LRESULT, POINT, PWSTR, RECT, SIZE,
+                                                    VARIANT_BOOL;
 public import windows.win32.graphics.dxgi.common : DXGI_FORMAT;
 public import windows.win32.graphics.gdi : HDC, HRGN, LOGFONTW;
-public import windows.win32.system.com : IClassFactory, IDataObject, IDispatch, IEnumUnknown,
-                                         IMoniker, IUnknown, SAFEARRAY;
-public import windows.win32.system.diagnostics.debug.activescript : IActiveScriptError;
+public import windows.win32.system.com.com : IClassFactory, IDataObject, IDispatch,
+                                             IEnumUnknown, IMoniker, IUnknown,
+                                             SAFEARRAY;
+public import windows.win32.system.diagnostics.debug_.activescript : IActiveScriptError;
 public import windows.win32.system.ole : IDispatchEx, IDropTarget, IOleCommandTarget,
                                          IOleInPlaceActiveObject, IOleInPlaceFrame,
                                          IOleInPlaceUIWindow;
@@ -23,6 +25,7 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias htmlDesignMode = int;
 enum : int
 {
@@ -31,6 +34,7 @@ enum : int
     htmlDesignModeOff     = 0x00000000,
     htmlDesignMode_Max    = 0x7fffffff,
 }
+
 alias htmlZOrder = int;
 enum : int
 {
@@ -38,6 +42,7 @@ enum : int
     htmlZOrderBack  = 0x00000001,
     htmlZOrder_Max  = 0x7fffffff,
 }
+
 alias htmlClear = int;
 enum : int
 {
@@ -49,6 +54,7 @@ enum : int
     htmlClearNone   = 0x00000005,
     htmlClear_Max   = 0x7fffffff,
 }
+
 alias htmlControlAlign = int;
 enum : int
 {
@@ -65,6 +71,7 @@ enum : int
     htmlControlAlignTop       = 0x0000000a,
     htmlControlAlign_Max      = 0x7fffffff,
 }
+
 alias htmlBlockAlign = int;
 enum : int
 {
@@ -75,6 +82,7 @@ enum : int
     htmlBlockAlignJustify = 0x00000004,
     htmlBlockAlign_Max    = 0x7fffffff,
 }
+
 alias htmlReadyState = int;
 enum : int
 {
@@ -85,12 +93,14 @@ enum : int
     htmlReadyStatecomplete      = 0x00000004,
     htmlReadyState_Max          = 0x7fffffff,
 }
+
 alias htmlLoop = int;
 enum : int
 {
     htmlLoopLoopInfinite = 0xffffffff,
     htmlLoop_Max         = 0x7fffffff,
 }
+
 alias mediaType = int;
 enum : int
 {
@@ -107,6 +117,7 @@ enum : int
     mediaTypeTv         = 0x00000100,
     mediaType_Max       = 0x7fffffff,
 }
+
 enum DomConstructor : int
 {
     DomConstructorObject                      = 0x00000000,
@@ -219,6 +230,7 @@ enum DomConstructor : int
     DomConstructorMax                         = 0x0000006b,
     DomConstructor_Max                        = 0x7fffffff,
 }
+
 alias styleTextTransform = int;
 enum : int
 {
@@ -229,6 +241,7 @@ enum : int
     styleTextTransformNone       = 0x00000004,
     styleTextTransform_Max       = 0x7fffffff,
 }
+
 alias styleDataRepeat = int;
 enum : int
 {
@@ -236,6 +249,7 @@ enum : int
     styleDataRepeatInner = 0x00000001,
     styleDataRepeat_Max  = 0x7fffffff,
 }
+
 alias styleOverflow = int;
 enum : int
 {
@@ -246,6 +260,7 @@ enum : int
     styleOverflowScroll  = 0x00000004,
     styleOverflow_Max    = 0x7fffffff,
 }
+
 alias styleMsOverflowStyle = int;
 enum : int
 {
@@ -256,6 +271,7 @@ enum : int
     styleMsOverflowStyleMsAutoHidingScrollbar = 0x00000004,
     styleMsOverflowStyle_Max                  = 0x7fffffff,
 }
+
 alias styleTableLayout = int;
 enum : int
 {
@@ -264,6 +280,7 @@ enum : int
     styleTableLayoutFixed  = 0x00000002,
     styleTableLayout_Max   = 0x7fffffff,
 }
+
 alias styleBorderCollapse = int;
 enum : int
 {
@@ -272,6 +289,7 @@ enum : int
     styleBorderCollapseCollapse = 0x00000002,
     styleBorderCollapse_Max     = 0x7fffffff,
 }
+
 alias styleCaptionSide = int;
 enum : int
 {
@@ -282,6 +300,7 @@ enum : int
     styleCaptionSideRight  = 0x00000004,
     styleCaptionSide_Max   = 0x7fffffff,
 }
+
 alias styleEmptyCells = int;
 enum : int
 {
@@ -290,6 +309,7 @@ enum : int
     styleEmptyCellsHide   = 0x00000002,
     styleEmptyCells_Max   = 0x7fffffff,
 }
+
 alias styleFontStyle = int;
 enum : int
 {
@@ -299,6 +319,7 @@ enum : int
     styleFontStyleNormal  = 0x00000003,
     styleFontStyle_Max    = 0x7fffffff,
 }
+
 alias styleFontVariant = int;
 enum : int
 {
@@ -307,6 +328,7 @@ enum : int
     styleFontVariantNormal    = 0x00000002,
     styleFontVariant_Max      = 0x7fffffff,
 }
+
 alias styleBackgroundRepeat = int;
 enum : int
 {
@@ -317,6 +339,7 @@ enum : int
     styleBackgroundRepeatNotSet   = 0x00000004,
     styleBackgroundRepeat_Max     = 0x7fffffff,
 }
+
 alias styleBackgroundAttachment = int;
 enum : int
 {
@@ -325,6 +348,7 @@ enum : int
     styleBackgroundAttachmentNotSet = 0x00000002,
     styleBackgroundAttachment_Max   = 0x7fffffff,
 }
+
 alias styleBackgroundAttachment3 = int;
 enum : int
 {
@@ -334,6 +358,7 @@ enum : int
     styleBackgroundAttachment3NotSet = 0x00000003,
     styleBackgroundAttachment3_Max   = 0x7fffffff,
 }
+
 alias styleBackgroundClip = int;
 enum : int
 {
@@ -343,6 +368,7 @@ enum : int
     styleBackgroundClipNotSet     = 0x00000003,
     styleBackgroundClip_Max       = 0x7fffffff,
 }
+
 alias styleBackgroundOrigin = int;
 enum : int
 {
@@ -352,6 +378,7 @@ enum : int
     styleBackgroundOriginNotSet     = 0x00000003,
     styleBackgroundOrigin_Max       = 0x7fffffff,
 }
+
 alias styleVerticalAlign = int;
 enum : int
 {
@@ -368,6 +395,7 @@ enum : int
     styleVerticalAlignNotSet     = 0x0000000a,
     styleVerticalAlign_Max       = 0x7fffffff,
 }
+
 alias styleFontWeight = int;
 enum : int
 {
@@ -387,6 +415,7 @@ enum : int
     styleFontWeightLighter = 0x0000000d,
     styleFontWeight_Max    = 0x7fffffff,
 }
+
 alias styleFontSize = int;
 enum : int
 {
@@ -401,36 +430,42 @@ enum : int
     styleFontSizeLarger  = 0x00000008,
     styleFontSize_Max    = 0x7fffffff,
 }
+
 alias styleZIndex = int;
 enum : int
 {
     styleZIndexAuto = 0x80000001,
     styleZIndex_Max = 0x7fffffff,
 }
+
 alias styleWidowsOrphans = int;
 enum : int
 {
     styleWidowsOrphansNotSet = 0x80000001,
     styleWidowsOrphans_Max   = 0x7fffffff,
 }
+
 alias styleAuto = int;
 enum : int
 {
     styleAutoAuto = 0x00000000,
     styleAuto_Max = 0x7fffffff,
 }
+
 alias styleNone = int;
 enum : int
 {
     styleNoneNone = 0x00000000,
     styleNone_Max = 0x7fffffff,
 }
+
 alias styleNormal = int;
 enum : int
 {
     styleNormalNormal = 0x00000000,
     styleNormal_Max   = 0x7fffffff,
 }
+
 alias styleBorderWidth = int;
 enum : int
 {
@@ -439,6 +474,7 @@ enum : int
     styleBorderWidthThick  = 0x00000002,
     styleBorderWidth_Max   = 0x7fffffff,
 }
+
 alias stylePosition = int;
 enum : int
 {
@@ -451,6 +487,7 @@ enum : int
     stylePositionMsDeviceFixed = 0x00000006,
     stylePosition_Max          = 0x7fffffff,
 }
+
 alias styleBorderStyle = int;
 enum : int
 {
@@ -468,6 +505,7 @@ enum : int
     styleBorderStyleHidden      = 0x0000000b,
     styleBorderStyle_Max        = 0x7fffffff,
 }
+
 alias styleOutlineStyle = int;
 enum : int
 {
@@ -484,6 +522,7 @@ enum : int
     styleOutlineStyleNone        = 0x0000000a,
     styleOutlineStyle_Max        = 0x7fffffff,
 }
+
 alias styleStyleFloat = int;
 enum : int
 {
@@ -493,6 +532,7 @@ enum : int
     styleStyleFloatNone   = 0x00000003,
     styleStyleFloat_Max   = 0x7fffffff,
 }
+
 alias styleDisplay = int;
 enum : int
 {
@@ -528,6 +568,7 @@ enum : int
     styleDisplayWebkitInlineBox   = 0x0000001d,
     styleDisplay_Max              = 0x7fffffff,
 }
+
 alias styleVisibility = int;
 enum : int
 {
@@ -538,6 +579,7 @@ enum : int
     styleVisibilityCollapse = 0x00000004,
     styleVisibility_Max     = 0x7fffffff,
 }
+
 alias styleListStyleType = int;
 enum : int
 {
@@ -560,6 +602,7 @@ enum : int
     styleListStyleTypeLowerGreek         = 0x00000010,
     styleListStyleType_Max               = 0x7fffffff,
 }
+
 alias styleListStylePosition = int;
 enum : int
 {
@@ -568,6 +611,7 @@ enum : int
     styleListStylePositionOutSide = 0x00000002,
     styleListStylePosition_Max    = 0x7fffffff,
 }
+
 alias styleWhiteSpace = int;
 enum : int
 {
@@ -579,6 +623,7 @@ enum : int
     styleWhiteSpacePrewrap = 0x00000005,
     styleWhiteSpace_Max    = 0x7fffffff,
 }
+
 alias stylePageBreak = int;
 enum : int
 {
@@ -590,6 +635,7 @@ enum : int
     stylePageBreakAvoid  = 0x00000005,
     stylePageBreak_Max   = 0x7fffffff,
 }
+
 alias stylePageBreakInside = int;
 enum : int
 {
@@ -598,6 +644,7 @@ enum : int
     stylePageBreakInsideAvoid  = 0x00000002,
     stylePageBreakInside_Max   = 0x7fffffff,
 }
+
 alias styleCursor = int;
 enum : int
 {
@@ -638,6 +685,7 @@ enum : int
     styleCursorNotSet        = 0x00000022,
     styleCursor_Max          = 0x7fffffff,
 }
+
 alias styleDir = int;
 enum : int
 {
@@ -647,6 +695,7 @@ enum : int
     styleDirInherit     = 0x00000003,
     styleDir_Max        = 0x7fffffff,
 }
+
 alias styleBidi = int;
 enum : int
 {
@@ -657,6 +706,7 @@ enum : int
     styleBidiInherit  = 0x00000004,
     styleBidi_Max     = 0x7fffffff,
 }
+
 alias styleImeMode = int;
 enum : int
 {
@@ -667,6 +717,7 @@ enum : int
     styleImeModeNotSet   = 0x00000004,
     styleImeMode_Max     = 0x7fffffff,
 }
+
 alias styleRubyAlign = int;
 enum : int
 {
@@ -680,6 +731,7 @@ enum : int
     styleRubyAlignLineEdge         = 0x00000007,
     styleRubyAlign_Max             = 0x7fffffff,
 }
+
 alias styleRubyPosition = int;
 enum : int
 {
@@ -688,6 +740,7 @@ enum : int
     styleRubyPositionInline = 0x00000002,
     styleRubyPosition_Max   = 0x7fffffff,
 }
+
 alias styleRubyOverhang = int;
 enum : int
 {
@@ -697,6 +750,7 @@ enum : int
     styleRubyOverhangNone       = 0x00000003,
     styleRubyOverhang_Max       = 0x7fffffff,
 }
+
 alias styleLayoutGridChar = int;
 enum : int
 {
@@ -705,6 +759,7 @@ enum : int
     styleLayoutGridCharNone   = 0x00000002,
     styleLayoutGridChar_Max   = 0x7fffffff,
 }
+
 alias styleLayoutGridLine = int;
 enum : int
 {
@@ -713,6 +768,7 @@ enum : int
     styleLayoutGridLineNone   = 0x00000002,
     styleLayoutGridLine_Max   = 0x7fffffff,
 }
+
 alias styleLayoutGridMode = int;
 enum : int
 {
@@ -723,6 +779,7 @@ enum : int
     styleLayoutGridModeNone   = 0x00000004,
     styleLayoutGridMode_Max   = 0x7fffffff,
 }
+
 alias styleLayoutGridType = int;
 enum : int
 {
@@ -732,6 +789,7 @@ enum : int
     styleLayoutGridTypeFixed  = 0x00000003,
     styleLayoutGridType_Max   = 0x7fffffff,
 }
+
 alias styleLineBreak = int;
 enum : int
 {
@@ -740,6 +798,7 @@ enum : int
     styleLineBreakStrict = 0x00000002,
     styleLineBreak_Max   = 0x7fffffff,
 }
+
 alias styleWordBreak = int;
 enum : int
 {
@@ -749,6 +808,7 @@ enum : int
     styleWordBreakKeepAll  = 0x00000003,
     styleWordBreak_Max     = 0x7fffffff,
 }
+
 alias styleWordWrap = int;
 enum : int
 {
@@ -757,6 +817,7 @@ enum : int
     styleWordWrapOn     = 0x00000002,
     styleWordWrap_Max   = 0x7fffffff,
 }
+
 alias styleTextJustify = int;
 enum : int
 {
@@ -771,6 +832,7 @@ enum : int
     styleTextJustifyAuto               = 0x00000008,
     styleTextJustify_Max               = 0x7fffffff,
 }
+
 alias styleTextAlignLast = int;
 enum : int
 {
@@ -782,6 +844,7 @@ enum : int
     styleTextAlignLastAuto    = 0x00000005,
     styleTextAlignLast_Max    = 0x7fffffff,
 }
+
 alias styleTextJustifyTrim = int;
 enum : int
 {
@@ -791,6 +854,7 @@ enum : int
     styleTextJustifyTrimPunctAndKana = 0x00000003,
     styleTextJustifyTrim_Max         = 0x7fffffff,
 }
+
 alias styleAccelerator = int;
 enum : int
 {
@@ -798,6 +862,7 @@ enum : int
     styleAcceleratorTrue  = 0x00000001,
     styleAccelerator_Max  = 0x7fffffff,
 }
+
 alias styleLayoutFlow = int;
 enum : int
 {
@@ -806,6 +871,7 @@ enum : int
     styleLayoutFlowNotSet              = 0x00000002,
     styleLayoutFlow_Max                = 0x7fffffff,
 }
+
 alias styleBlockProgression = int;
 enum : int
 {
@@ -816,6 +882,7 @@ enum : int
     styleBlockProgressionNotSet = 0x00000004,
     styleBlockProgression_Max   = 0x7fffffff,
 }
+
 alias styleWritingMode = int;
 enum : int
 {
@@ -833,6 +900,7 @@ enum : int
     styleWritingModeTb     = 0x0000000b,
     styleWritingMode_Max   = 0x7fffffff,
 }
+
 alias styleBool = int;
 enum : int
 {
@@ -840,6 +908,7 @@ enum : int
     styleBoolTrue  = 0x00000001,
     styleBool_Max  = 0x7fffffff,
 }
+
 alias styleTextUnderlinePosition = int;
 enum : int
 {
@@ -849,6 +918,7 @@ enum : int
     styleTextUnderlinePositionNotSet = 0x00000003,
     styleTextUnderlinePosition_Max   = 0x7fffffff,
 }
+
 alias styleTextOverflow = int;
 enum : int
 {
@@ -857,6 +927,7 @@ enum : int
     styleTextOverflowNotSet   = 0x00000002,
     styleTextOverflow_Max     = 0x7fffffff,
 }
+
 alias styleInterpolation = int;
 enum : int
 {
@@ -865,6 +936,7 @@ enum : int
     styleInterpolationBCH    = 0x00000002,
     styleInterpolation_Max   = 0x7fffffff,
 }
+
 alias styleBoxSizing = int;
 enum : int
 {
@@ -873,6 +945,7 @@ enum : int
     styleBoxSizingBorderBox  = 0x00000002,
     styleBoxSizing_Max       = 0x7fffffff,
 }
+
 alias styleFlex = int;
 enum : int
 {
@@ -880,6 +953,7 @@ enum : int
     styleFlexNotSet = 0x00000001,
     styleFlex_Max   = 0x7fffffff,
 }
+
 alias styleFlexBasis = int;
 enum : int
 {
@@ -887,6 +961,7 @@ enum : int
     styleFlexBasisNotSet = 0x00000001,
     styleFlexBasis_Max   = 0x7fffffff,
 }
+
 alias styleFlexDirection = int;
 enum : int
 {
@@ -897,6 +972,7 @@ enum : int
     styleFlexDirectionNotSet        = 0x00000004,
     styleFlexDirection_Max          = 0x7fffffff,
 }
+
 alias styleWebkitBoxOrient = int;
 enum : int
 {
@@ -907,6 +983,7 @@ enum : int
     styleWebkitBoxOrientNotSet     = 0x00000004,
     styleWebkitBoxOrient_Max       = 0x7fffffff,
 }
+
 alias styleWebkitBoxDirection = int;
 enum : int
 {
@@ -915,6 +992,7 @@ enum : int
     styleWebkitBoxDirectionNotSet  = 0x00000002,
     styleWebkitBoxDirection_Max    = 0x7fffffff,
 }
+
 alias styleFlexWrap = int;
 enum : int
 {
@@ -924,6 +1002,7 @@ enum : int
     styleFlexWrapNotSet      = 0x00000003,
     styleFlexWrap_Max        = 0x7fffffff,
 }
+
 alias styleAlignItems = int;
 enum : int
 {
@@ -935,6 +1014,7 @@ enum : int
     styleAlignItemsNotSet    = 0x00000005,
     styleAlignItems_Max      = 0x7fffffff,
 }
+
 alias styleMsFlexAlign = int;
 enum : int
 {
@@ -946,6 +1026,7 @@ enum : int
     styleMsFlexAlignNotSet   = 0x00000005,
     styleMsFlexAlign_Max     = 0x7fffffff,
 }
+
 alias styleMsFlexItemAlign = int;
 enum : int
 {
@@ -958,6 +1039,7 @@ enum : int
     styleMsFlexItemAlignNotSet   = 0x00000006,
     styleMsFlexItemAlign_Max     = 0x7fffffff,
 }
+
 alias styleAlignSelf = int;
 enum : int
 {
@@ -970,6 +1052,7 @@ enum : int
     styleAlignSelfNotSet    = 0x00000006,
     styleAlignSelf_Max      = 0x7fffffff,
 }
+
 alias styleJustifyContent = int;
 enum : int
 {
@@ -981,6 +1064,7 @@ enum : int
     styleJustifyContentNotSet       = 0x00000005,
     styleJustifyContent_Max         = 0x7fffffff,
 }
+
 alias styleMsFlexPack = int;
 enum : int
 {
@@ -992,6 +1076,7 @@ enum : int
     styleMsFlexPackNotSet     = 0x00000005,
     styleMsFlexPack_Max       = 0x7fffffff,
 }
+
 alias styleWebkitBoxPack = int;
 enum : int
 {
@@ -1002,6 +1087,7 @@ enum : int
     styleWebkitBoxPackNotSet  = 0x00000005,
     styleWebkitBoxPack_Max    = 0x7fffffff,
 }
+
 alias styleMsFlexLinePack = int;
 enum : int
 {
@@ -1014,6 +1100,7 @@ enum : int
     styleMsFlexLinePackNotSet     = 0x00000006,
     styleMsFlexLinePack_Max       = 0x7fffffff,
 }
+
 alias styleAlignContent = int;
 enum : int
 {
@@ -1026,6 +1113,7 @@ enum : int
     styleAlignContentNotSet       = 0x00000006,
     styleAlignContent_Max         = 0x7fffffff,
 }
+
 alias styleColumnFill = int;
 enum : int
 {
@@ -1034,6 +1122,7 @@ enum : int
     styleColumnFillNotSet  = 0x00000002,
     styleColumnFill_Max    = 0x7fffffff,
 }
+
 alias styleColumnSpan = int;
 enum : int
 {
@@ -1043,6 +1132,7 @@ enum : int
     styleColumnSpanNotSet = 0x00000003,
     styleColumnSpan_Max   = 0x7fffffff,
 }
+
 alias styleBreak = int;
 enum : int
 {
@@ -1058,6 +1148,7 @@ enum : int
     styleBreakAvoidColumn = 0x00000009,
     styleBreak_Max        = 0x7fffffff,
 }
+
 alias styleBreakInside = int;
 enum : int
 {
@@ -1068,6 +1159,7 @@ enum : int
     styleBreakInsideAvoidColumn = 0x00000004,
     styleBreakInside_Max        = 0x7fffffff,
 }
+
 alias styleMsScrollChaining = int;
 enum : int
 {
@@ -1076,6 +1168,7 @@ enum : int
     styleMsScrollChainingChained = 0x00000002,
     styleMsScrollChaining_Max    = 0x7fffffff,
 }
+
 alias styleMsContentZooming = int;
 enum : int
 {
@@ -1084,6 +1177,7 @@ enum : int
     styleMsContentZoomingZoom   = 0x00000002,
     styleMsContentZooming_Max   = 0x7fffffff,
 }
+
 alias styleMsContentZoomSnapType = int;
 enum : int
 {
@@ -1093,6 +1187,7 @@ enum : int
     styleMsContentZoomSnapTypeProximity = 0x00000003,
     styleMsContentZoomSnapType_Max      = 0x7fffffff,
 }
+
 alias styleMsScrollRails = int;
 enum : int
 {
@@ -1101,6 +1196,7 @@ enum : int
     styleMsScrollRailsRailed = 0x00000002,
     styleMsScrollRails_Max   = 0x7fffffff,
 }
+
 alias styleMsContentZoomChaining = int;
 enum : int
 {
@@ -1109,6 +1205,7 @@ enum : int
     styleMsContentZoomChainingChained = 0x00000002,
     styleMsContentZoomChaining_Max    = 0x7fffffff,
 }
+
 alias styleMsScrollSnapType = int;
 enum : int
 {
@@ -1118,12 +1215,14 @@ enum : int
     styleMsScrollSnapTypeProximity = 0x00000003,
     styleMsScrollSnapType_Max      = 0x7fffffff,
 }
+
 alias styleGridColumn = int;
 enum : int
 {
     styleGridColumnNotSet = 0x00000000,
     styleGridColumn_Max   = 0x7fffffff,
 }
+
 alias styleGridColumnAlign = int;
 enum : int
 {
@@ -1134,18 +1233,21 @@ enum : int
     styleGridColumnAlignNotSet  = 0x00000004,
     styleGridColumnAlign_Max    = 0x7fffffff,
 }
+
 alias styleGridColumnSpan = int;
 enum : int
 {
     styleGridColumnSpanNotSet = 0x00000000,
     styleGridColumnSpan_Max   = 0x7fffffff,
 }
+
 alias styleGridRow = int;
 enum : int
 {
     styleGridRowNotSet = 0x00000000,
     styleGridRow_Max   = 0x7fffffff,
 }
+
 alias styleGridRowAlign = int;
 enum : int
 {
@@ -1156,12 +1258,14 @@ enum : int
     styleGridRowAlignNotSet  = 0x00000004,
     styleGridRowAlign_Max    = 0x7fffffff,
 }
+
 alias styleGridRowSpan = int;
 enum : int
 {
     styleGridRowSpanNotSet = 0x00000000,
     styleGridRowSpan_Max   = 0x7fffffff,
 }
+
 alias styleWrapThrough = int;
 enum : int
 {
@@ -1170,6 +1274,7 @@ enum : int
     styleWrapThroughNone   = 0x00000002,
     styleWrapThrough_Max   = 0x7fffffff,
 }
+
 alias styleWrapFlow = int;
 enum : int
 {
@@ -1183,6 +1288,7 @@ enum : int
     styleWrapFlowMaximum = 0x00000007,
     styleWrapFlow_Max    = 0x7fffffff,
 }
+
 alias styleAlignmentBaseline = int;
 enum : int
 {
@@ -1201,6 +1307,7 @@ enum : int
     styleAlignmentBaselineIdeographic    = 0x0000000c,
     styleAlignmentBaseline_Max           = 0x7fffffff,
 }
+
 alias styleBaselineShift = int;
 enum : int
 {
@@ -1209,6 +1316,7 @@ enum : int
     styleBaselineShiftSuper    = 0x00000002,
     styleBaselineShift_Max     = 0x7fffffff,
 }
+
 alias styleClipRule = int;
 enum : int
 {
@@ -1217,6 +1325,7 @@ enum : int
     styleClipRuleEvenOdd = 0x00000002,
     styleClipRule_Max    = 0x7fffffff,
 }
+
 alias styleDominantBaseline = int;
 enum : int
 {
@@ -1235,6 +1344,7 @@ enum : int
     styleDominantBaselineUseScript      = 0x0000000c,
     styleDominantBaseline_Max           = 0x7fffffff,
 }
+
 alias styleFillRule = int;
 enum : int
 {
@@ -1243,6 +1353,7 @@ enum : int
     styleFillRuleEvenOdd = 0x00000002,
     styleFillRule_Max    = 0x7fffffff,
 }
+
 alias styleFontStretch = int;
 enum : int
 {
@@ -1260,6 +1371,7 @@ enum : int
     styleFontStretchUltraExpanded  = 0x0000000b,
     styleFontStretch_Max           = 0x7fffffff,
 }
+
 alias stylePointerEvents = int;
 enum : int
 {
@@ -1277,6 +1389,7 @@ enum : int
     stylePointerEventsAuto           = 0x0000000b,
     stylePointerEvents_Max           = 0x7fffffff,
 }
+
 alias styleEnableBackground = int;
 enum : int
 {
@@ -1286,6 +1399,7 @@ enum : int
     styleEnableBackgroundInherit    = 0x00000003,
     styleEnableBackground_Max       = 0x7fffffff,
 }
+
 alias styleStrokeLinecap = int;
 enum : int
 {
@@ -1295,6 +1409,7 @@ enum : int
     styleStrokeLinecapSquare = 0x00000003,
     styleStrokeLinecap_Max   = 0x7fffffff,
 }
+
 alias styleStrokeLinejoin = int;
 enum : int
 {
@@ -1304,6 +1419,7 @@ enum : int
     styleStrokeLinejoinBevel  = 0x00000003,
     styleStrokeLinejoin_Max   = 0x7fffffff,
 }
+
 alias styleTextAnchor = int;
 enum : int
 {
@@ -1313,6 +1429,7 @@ enum : int
     styleTextAnchorEnd    = 0x00000003,
     styleTextAnchor_Max   = 0x7fffffff,
 }
+
 alias styleAttrType = int;
 enum : int
 {
@@ -1345,6 +1462,7 @@ enum : int
     styleAttrTypeMs         = 0x0000001a,
     styleAttrType_Max       = 0x7fffffff,
 }
+
 alias styleInitialColor = int;
 enum : int
 {
@@ -1354,6 +1472,7 @@ enum : int
     styleInitialColorInvert        = 0x00000003,
     styleInitialColor_Max          = 0x7fffffff,
 }
+
 alias styleInitialString = int;
 enum : int
 {
@@ -1363,6 +1482,7 @@ enum : int
     styleInitialStringNormal    = 0x00000003,
     styleInitialString_Max      = 0x7fffffff,
 }
+
 alias styleTransformOriginX = int;
 enum : int
 {
@@ -1372,6 +1492,7 @@ enum : int
     styleTransformOriginXRight  = 0x00000003,
     styleTransformOriginX_Max   = 0x7fffffff,
 }
+
 alias styleTransformOriginY = int;
 enum : int
 {
@@ -1381,6 +1502,7 @@ enum : int
     styleTransformOriginYBottom = 0x00000003,
     styleTransformOriginY_Max   = 0x7fffffff,
 }
+
 alias stylePerspectiveOriginX = int;
 enum : int
 {
@@ -1390,6 +1512,7 @@ enum : int
     stylePerspectiveOriginXRight  = 0x00000003,
     stylePerspectiveOriginX_Max   = 0x7fffffff,
 }
+
 alias stylePerspectiveOriginY = int;
 enum : int
 {
@@ -1399,6 +1522,7 @@ enum : int
     stylePerspectiveOriginYBottom = 0x00000003,
     stylePerspectiveOriginY_Max   = 0x7fffffff,
 }
+
 alias styleTransformStyle = int;
 enum : int
 {
@@ -1407,6 +1531,7 @@ enum : int
     styleTransformStyleNotSet     = 0x00000002,
     styleTransformStyle_Max       = 0x7fffffff,
 }
+
 alias styleBackfaceVisibility = int;
 enum : int
 {
@@ -1415,6 +1540,7 @@ enum : int
     styleBackfaceVisibilityNotSet  = 0x00000002,
     styleBackfaceVisibility_Max    = 0x7fffffff,
 }
+
 alias styleTextSizeAdjust = int;
 enum : int
 {
@@ -1422,6 +1548,7 @@ enum : int
     styleTextSizeAdjustAuto = 0x00000001,
     styleTextSizeAdjust_Max = 0x7fffffff,
 }
+
 alias styleColorInterpolationFilters = int;
 enum : int
 {
@@ -1431,6 +1558,7 @@ enum : int
     styleColorInterpolationFiltersNotSet    = 0x00000003,
     styleColorInterpolationFilters_Max      = 0x7fffffff,
 }
+
 alias styleHyphens = int;
 enum : int
 {
@@ -1440,12 +1568,14 @@ enum : int
     styleHyphensNotSet = 0x00000003,
     styleHyphens_Max   = 0x7fffffff,
 }
+
 alias styleHyphenateLimitLines = int;
 enum : int
 {
     styleHyphenateLimitLinesNoLimit = 0x00000000,
     styleHyphenateLimitLines_Max    = 0x7fffffff,
 }
+
 alias styleMsAnimationPlayState = int;
 enum : int
 {
@@ -1454,6 +1584,7 @@ enum : int
     styleMsAnimationPlayStateNotSet  = 0x00000002,
     styleMsAnimationPlayState_Max    = 0x7fffffff,
 }
+
 alias styleMsAnimationDirection = int;
 enum : int
 {
@@ -1464,6 +1595,7 @@ enum : int
     styleMsAnimationDirectionNotSet           = 0x00000004,
     styleMsAnimationDirection_Max             = 0x7fffffff,
 }
+
 alias styleMsAnimationFillMode = int;
 enum : int
 {
@@ -1474,6 +1606,7 @@ enum : int
     styleMsAnimationFillModeNotSet    = 0x00000004,
     styleMsAnimationFillMode_Max      = 0x7fffffff,
 }
+
 alias styleMsHighContrastAdjust = int;
 enum : int
 {
@@ -1482,6 +1615,7 @@ enum : int
     styleMsHighContrastAdjustNone   = 0x00000002,
     styleMsHighContrastAdjust_Max   = 0x7fffffff,
 }
+
 alias styleMsUserSelect = int;
 enum : int
 {
@@ -1492,6 +1626,7 @@ enum : int
     styleMsUserSelectNotSet  = 0x00000004,
     styleMsUserSelect_Max    = 0x7fffffff,
 }
+
 alias styleMsTouchAction = int;
 enum : int
 {
@@ -1507,6 +1642,7 @@ enum : int
     styleMsTouchActionCrossSlideY   = 0x00000080,
     styleMsTouchAction_Max          = 0x7fffffff,
 }
+
 alias styleMsTouchSelect = int;
 enum : int
 {
@@ -1515,6 +1651,7 @@ enum : int
     styleMsTouchSelectNotSet   = 0x00000002,
     styleMsTouchSelect_Max     = 0x7fffffff,
 }
+
 alias styleMsScrollTranslation = int;
 enum : int
 {
@@ -1523,6 +1660,7 @@ enum : int
     styleMsScrollTranslationVtoH   = 0x00000002,
     styleMsScrollTranslation_Max   = 0x7fffffff,
 }
+
 alias styleBorderImageRepeat = int;
 enum : int
 {
@@ -1533,6 +1671,7 @@ enum : int
     styleBorderImageRepeatNotSet  = 0x00000004,
     styleBorderImageRepeat_Max    = 0x7fffffff,
 }
+
 alias styleBorderImageSliceFill = int;
 enum : int
 {
@@ -1540,6 +1679,7 @@ enum : int
     styleBorderImageSliceFillFill   = 0x00000001,
     styleBorderImageSliceFill_Max   = 0x7fffffff,
 }
+
 alias styleMsImeAlign = int;
 enum : int
 {
@@ -1548,6 +1688,7 @@ enum : int
     styleMsImeAlignNotSet = 0x00000002,
     styleMsImeAlign_Max   = 0x7fffffff,
 }
+
 alias styleMsTextCombineHorizontal = int;
 enum : int
 {
@@ -1557,6 +1698,7 @@ enum : int
     styleMsTextCombineHorizontalNotSet = 0x00000003,
     styleMsTextCombineHorizontal_Max   = 0x7fffffff,
 }
+
 alias styleWebkitAppearance = int;
 enum : int
 {
@@ -1597,6 +1739,7 @@ enum : int
     styleWebkitAppearanceNotSet                       = 0x00000022,
     styleWebkitAppearance_Max                         = 0x7fffffff,
 }
+
 alias styleViewportSize = int;
 enum : int
 {
@@ -1605,6 +1748,7 @@ enum : int
     styleViewportSizeDeviceHeight = 0x00000002,
     styleViewportSize_Max         = 0x7fffffff,
 }
+
 alias styleUserZoom = int;
 enum : int
 {
@@ -1613,6 +1757,7 @@ enum : int
     styleUserZoomFixed  = 0x00000002,
     styleUserZoom_Max   = 0x7fffffff,
 }
+
 alias styleTextLineThroughStyle = int;
 enum : int
 {
@@ -1621,6 +1766,7 @@ enum : int
     styleTextLineThroughStyleDouble    = 0x00000002,
     styleTextLineThroughStyle_Max      = 0x7fffffff,
 }
+
 alias styleTextUnderlineStyle = int;
 enum : int
 {
@@ -1639,6 +1785,7 @@ enum : int
     styleTextUnderlineStyleThickDash        = 0x0000000c,
     styleTextUnderlineStyle_Max             = 0x7fffffff,
 }
+
 alias styleTextEffect = int;
 enum : int
 {
@@ -1648,6 +1795,7 @@ enum : int
     styleTextEffectOutline = 0x00000003,
     styleTextEffect_Max    = 0x7fffffff,
 }
+
 alias styleDefaultTextSelection = int;
 enum : int
 {
@@ -1655,6 +1803,7 @@ enum : int
     styleDefaultTextSelectionTrue  = 0x00000001,
     styleDefaultTextSelection_Max  = 0x7fffffff,
 }
+
 alias styleTextDecoration = int;
 enum : int
 {
@@ -1665,6 +1814,7 @@ enum : int
     styleTextDecorationBlink       = 0x00000004,
     styleTextDecoration_Max        = 0x7fffffff,
 }
+
 alias textDecoration = int;
 enum : int
 {
@@ -1675,6 +1825,7 @@ enum : int
     textDecorationBlink       = 0x00000004,
     textDecoration_Max        = 0x7fffffff,
 }
+
 alias htmlListType = int;
 enum : int
 {
@@ -1689,6 +1840,7 @@ enum : int
     htmlListTypeSquare     = 0x00000008,
     htmlListType_Max       = 0x7fffffff,
 }
+
 alias htmlMethod = int;
 enum : int
 {
@@ -1697,6 +1849,7 @@ enum : int
     htmlMethodPost   = 0x00000002,
     htmlMethod_Max   = 0x7fffffff,
 }
+
 alias htmlWrap = int;
 enum : int
 {
@@ -1705,6 +1858,7 @@ enum : int
     htmlWrapHard = 0x00000003,
     htmlWrap_Max = 0x7fffffff,
 }
+
 alias htmlDir = int;
 enum : int
 {
@@ -1713,6 +1867,7 @@ enum : int
     htmlDirRightToLeft = 0x00000002,
     htmlDir_Max        = 0x7fffffff,
 }
+
 alias htmlEditable = int;
 enum : int
 {
@@ -1721,6 +1876,7 @@ enum : int
     htmlEditableFalse   = 0x00000002,
     htmlEditable_Max    = 0x7fffffff,
 }
+
 alias htmlInput = int;
 enum : int
 {
@@ -1747,6 +1903,7 @@ enum : int
     htmlInputSearch         = 0x00000014,
     htmlInput_Max           = 0x7fffffff,
 }
+
 alias htmlSpellCheck = int;
 enum : int
 {
@@ -1756,6 +1913,7 @@ enum : int
     htmlSpellCheckDefault = 0x00000003,
     htmlSpellCheck_Max    = 0x7fffffff,
 }
+
 alias htmlEncoding = int;
 enum : int
 {
@@ -1764,6 +1922,7 @@ enum : int
     htmlEncodingText      = 0x00000002,
     htmlEncoding_Max      = 0x7fffffff,
 }
+
 alias htmlAdjacency = int;
 enum : int
 {
@@ -1773,12 +1932,14 @@ enum : int
     htmlAdjacencyAfterEnd    = 0x00000004,
     htmlAdjacency_Max        = 0x7fffffff,
 }
+
 alias htmlTabIndex = int;
 enum : int
 {
     htmlTabIndexNotSet = 0xffff8000,
     htmlTabIndex_Max   = 0x7fffffff,
 }
+
 alias htmlComponent = int;
 enum : int
 {
@@ -1814,6 +1975,7 @@ enum : int
     htmlComponentGHBottomRight = 0x0000001d,
     htmlComponent_Max          = 0x7fffffff,
 }
+
 alias htmlApplyLocation = int;
 enum : int
 {
@@ -1821,6 +1983,7 @@ enum : int
     htmlApplyLocationOutside = 0x00000001,
     htmlApplyLocation_Max    = 0x7fffffff,
 }
+
 alias htmlGlyphMode = int;
 enum : int
 {
@@ -1830,6 +1993,7 @@ enum : int
     htmlGlyphModeBoth  = 0x00000003,
     htmlGlyphMode_Max  = 0x7fffffff,
 }
+
 alias htmlDraggable = int;
 enum : int
 {
@@ -1838,6 +2002,7 @@ enum : int
     htmlDraggableFalse = 0x00000002,
     htmlDraggable_Max  = 0x7fffffff,
 }
+
 alias htmlUnit = int;
 enum : int
 {
@@ -1847,6 +2012,7 @@ enum : int
     htmlUnitTextEdit  = 0x00000006,
     htmlUnit_Max      = 0x7fffffff,
 }
+
 alias htmlEndPoints = int;
 enum : int
 {
@@ -1856,6 +2022,7 @@ enum : int
     htmlEndPointsEndToEnd     = 0x00000004,
     htmlEndPoints_Max         = 0x7fffffff,
 }
+
 alias htmlDirection = int;
 enum : int
 {
@@ -1863,6 +2030,7 @@ enum : int
     htmlDirectionBackward = 0xfffe7961,
     htmlDirection_Max     = 0x7fffffff,
 }
+
 alias htmlStart = int;
 enum : int
 {
@@ -1870,6 +2038,7 @@ enum : int
     htmlStartmouseover = 0x00000001,
     htmlStart_Max      = 0x7fffffff,
 }
+
 alias bodyScroll = int;
 enum : int
 {
@@ -1879,6 +2048,7 @@ enum : int
     bodyScrolldefault = 0x00000003,
     bodyScroll_Max    = 0x7fffffff,
 }
+
 alias htmlSelectType = int;
 enum : int
 {
@@ -1886,6 +2056,7 @@ enum : int
     htmlSelectTypeSelectMultiple = 0x00000002,
     htmlSelectType_Max           = 0x7fffffff,
 }
+
 alias htmlSelectExFlag = int;
 enum : int
 {
@@ -1893,6 +2064,7 @@ enum : int
     htmlSelectExFlagHideSelectionInDesign = 0x00000001,
     htmlSelectExFlag_Max                  = 0x7fffffff,
 }
+
 alias htmlSelection = int;
 enum : int
 {
@@ -1902,6 +2074,7 @@ enum : int
     htmlSelectionTable   = 0x00000003,
     htmlSelection_Max    = 0x7fffffff,
 }
+
 alias htmlMarqueeBehavior = int;
 enum : int
 {
@@ -1910,6 +2083,7 @@ enum : int
     htmlMarqueeBehavioralternate = 0x00000003,
     htmlMarqueeBehavior_Max      = 0x7fffffff,
 }
+
 alias htmlMarqueeDirection = int;
 enum : int
 {
@@ -1919,6 +2093,7 @@ enum : int
     htmlMarqueeDirectiondown  = 0x00000007,
     htmlMarqueeDirection_Max  = 0x7fffffff,
 }
+
 alias htmlPersistState = int;
 enum : int
 {
@@ -1929,6 +2104,7 @@ enum : int
     htmlPersistStateUserData = 0x00000004,
     htmlPersistState_Max     = 0x7fffffff,
 }
+
 alias htmlDropEffect = int;
 enum : int
 {
@@ -1938,6 +2114,7 @@ enum : int
     htmlDropEffectNone = 0x00000003,
     htmlDropEffect_Max = 0x7fffffff,
 }
+
 alias htmlEffectAllowed = int;
 enum : int
 {
@@ -1952,6 +2129,7 @@ enum : int
     htmlEffectAllowedUninitialized = 0x00000008,
     htmlEffectAllowed_Max          = 0x7fffffff,
 }
+
 alias htmlCompatMode = int;
 enum : int
 {
@@ -1959,6 +2137,7 @@ enum : int
     htmlCompatModeCSS1Compat = 0x00000001,
     htmlCompatMode_Max       = 0x7fffffff,
 }
+
 alias htmlCaptionAlign = int;
 enum : int
 {
@@ -1971,6 +2150,7 @@ enum : int
     htmlCaptionAlignBottom  = 0x00000006,
     htmlCaptionAlign_Max    = 0x7fffffff,
 }
+
 alias htmlCaptionVAlign = int;
 enum : int
 {
@@ -1979,6 +2159,7 @@ enum : int
     htmlCaptionVAlignBottom = 0x00000002,
     htmlCaptionVAlign_Max   = 0x7fffffff,
 }
+
 alias htmlFrame = int;
 enum : int
 {
@@ -1994,6 +2175,7 @@ enum : int
     htmlFrameborder = 0x00000009,
     htmlFrame_Max   = 0x7fffffff,
 }
+
 alias htmlRules = int;
 enum : int
 {
@@ -2005,6 +2187,7 @@ enum : int
     htmlRulesall    = 0x00000005,
     htmlRules_Max   = 0x7fffffff,
 }
+
 alias htmlCellAlign = int;
 enum : int
 {
@@ -2015,6 +2198,7 @@ enum : int
     htmlCellAlignMiddle = 0x00000002,
     htmlCellAlign_Max   = 0x7fffffff,
 }
+
 alias htmlCellVAlign = int;
 enum : int
 {
@@ -2026,6 +2210,7 @@ enum : int
     htmlCellVAlignCenter   = 0x00000002,
     htmlCellVAlign_Max     = 0x7fffffff,
 }
+
 alias frameScrolling = int;
 enum : int
 {
@@ -2034,6 +2219,7 @@ enum : int
     frameScrollingauto = 0x00000004,
     frameScrolling_Max = 0x7fffffff,
 }
+
 alias sandboxAllow = int;
 enum : int
 {
@@ -2044,6 +2230,7 @@ enum : int
     sandboxAllowPopups        = 0x00000004,
     sandboxAllow_Max          = 0x7fffffff,
 }
+
 alias svgAngleType = int;
 enum : int
 {
@@ -2054,6 +2241,7 @@ enum : int
     SVG_ANGLETYPE_GRAD        = 0x00000004,
     svgAngleType_Max          = 0x7fffffff,
 }
+
 alias svgExternalResourcesRequired = int;
 enum : int
 {
@@ -2061,6 +2249,7 @@ enum : int
     svgExternalResourcesRequiredTrue  = 0x00000001,
     svgExternalResourcesRequired_Max  = 0x7fffffff,
 }
+
 alias svgFocusable = int;
 enum : int
 {
@@ -2070,6 +2259,7 @@ enum : int
     svgFocusableFalse  = 0x00000003,
     svgFocusable_Max   = 0x7fffffff,
 }
+
 alias svgLengthType = int;
 enum : int
 {
@@ -2086,6 +2276,7 @@ enum : int
     SVG_LENGTHTYPE_PC         = 0x0000000a,
     svgLengthType_Max         = 0x7fffffff,
 }
+
 alias svgPathSegType = int;
 enum : int
 {
@@ -2111,6 +2302,7 @@ enum : int
     PATHSEG_CURVETO_QUADRATIC_SMOOTH_REL = 0x00000013,
     svgPathSegType_Max                   = 0x7fffffff,
 }
+
 alias svgTransformType = int;
 enum : int
 {
@@ -2123,6 +2315,7 @@ enum : int
     SVG_TRANSFORM_SKEWY     = 0x00000006,
     svgTransformType_Max    = 0x7fffffff,
 }
+
 alias svgPreserveAspectRatioAlignType = int;
 enum : int
 {
@@ -2139,6 +2332,7 @@ enum : int
     SVG_PRESERVEASPECTRATIO_XMAXYMAX    = 0x0000000a,
     svgPreserveAspectRatioAlignType_Max = 0x7fffffff,
 }
+
 alias svgPreserveAspectMeetOrSliceType = int;
 enum : int
 {
@@ -2147,6 +2341,7 @@ enum : int
     SVG_MEETORSLICE_SLICE                = 0x00000002,
     svgPreserveAspectMeetOrSliceType_Max = 0x7fffffff,
 }
+
 alias svgUnitTypes = int;
 enum : int
 {
@@ -2155,6 +2350,7 @@ enum : int
     SVG_UNITTYPE_OBJECTBOUNDINGBOX = 0x00000002,
     svgUnitTypes_Max               = 0x7fffffff,
 }
+
 alias svgSpreadMethod = int;
 enum : int
 {
@@ -2164,6 +2360,7 @@ enum : int
     SVG_SPREADMETHOD_REPEAT  = 0x00000003,
     svgSpreadMethod_Max      = 0x7fffffff,
 }
+
 alias svgFeblendMode = int;
 enum : int
 {
@@ -2175,6 +2372,7 @@ enum : int
     SVG_FEBLEND_MODE_LIGHTEN  = 0x00000005,
     svgFeblendMode_Max        = 0x7fffffff,
 }
+
 alias svgFecolormatrixType = int;
 enum : int
 {
@@ -2185,6 +2383,7 @@ enum : int
     SVG_FECOLORMATRIX_TYPE_LUMINANCETOALPHA = 0x00000004,
     svgFecolormatrixType_Max                = 0x7fffffff,
 }
+
 alias svgFecomponenttransferType = int;
 enum : int
 {
@@ -2196,6 +2395,7 @@ enum : int
     SVG_FECOMPONENTTRANSFER_TYPE_GAMMA    = 0x00000005,
     svgFecomponenttransferType_Max        = 0x7fffffff,
 }
+
 alias svgFecompositeOperator = int;
 enum : int
 {
@@ -2208,6 +2408,7 @@ enum : int
     SVG_FECOMPOSITE_OPERATOR_ARITHMETIC = 0x00000006,
     svgFecompositeOperator_Max          = 0x7fffffff,
 }
+
 alias svgEdgemode = int;
 enum : int
 {
@@ -2217,6 +2418,7 @@ enum : int
     SVG_EDGEMODE_NONE      = 0x00000003,
     svgEdgemode_Max        = 0x7fffffff,
 }
+
 alias svgPreserveAlpha = int;
 enum : int
 {
@@ -2224,6 +2426,7 @@ enum : int
     SVG_PRESERVEALPHA_TRUE  = 0x00000001,
     svgPreserveAlpha_Max    = 0x7fffffff,
 }
+
 alias svgChannel = int;
 enum : int
 {
@@ -2234,6 +2437,7 @@ enum : int
     SVG_CHANNEL_A       = 0x00000004,
     svgChannel_Max      = 0x7fffffff,
 }
+
 alias svgMorphologyOperator = int;
 enum : int
 {
@@ -2242,6 +2446,7 @@ enum : int
     SVG_MORPHOLOGY_OPERATOR_DILATE  = 0x00000002,
     svgMorphologyOperator_Max       = 0x7fffffff,
 }
+
 alias svgTurbulenceType = int;
 enum : int
 {
@@ -2250,6 +2455,7 @@ enum : int
     SVG_TURBULENCE_TYPE_TURBULENCE  = 0x00000002,
     svgTurbulenceType_Max           = 0x7fffffff,
 }
+
 alias svgStitchtype = int;
 enum : int
 {
@@ -2258,6 +2464,7 @@ enum : int
     SVG_STITCHTYPE_NOSTITCH = 0x00000002,
     svgStitchtype_Max       = 0x7fffffff,
 }
+
 alias svgMarkerUnits = int;
 enum : int
 {
@@ -2266,6 +2473,7 @@ enum : int
     SVG_MARKERUNITS_STROKEWIDTH    = 0x00000002,
     svgMarkerUnits_Max             = 0x7fffffff,
 }
+
 alias svgMarkerOrient = int;
 enum : int
 {
@@ -2274,12 +2482,14 @@ enum : int
     SVG_MARKER_ORIENT_ANGLE   = 0x00000002,
     svgMarkerOrient_Max       = 0x7fffffff,
 }
+
 alias svgMarkerOrientAttribute = int;
 enum : int
 {
     svgMarkerOrientAttributeAuto = 0x00000000,
     svgMarkerOrientAttribute_Max = 0x7fffffff,
 }
+
 alias htmlMediaNetworkState = int;
 enum : int
 {
@@ -2289,6 +2499,7 @@ enum : int
     htmlMediaNetworkStateNoSource = 0x00000003,
     htmlMediaNetworkState_Max     = 0x7fffffff,
 }
+
 alias htmlMediaReadyState = int;
 enum : int
 {
@@ -2299,6 +2510,7 @@ enum : int
     htmlMediaReadyStateHaveEnoughData  = 0x00000004,
     htmlMediaReadyState_Max            = 0x7fffffff,
 }
+
 alias htmlMediaErr = int;
 enum : int
 {
@@ -2308,6 +2520,7 @@ enum : int
     htmlMediaErrSrcNotSupported = 0x00000003,
     htmlMediaErr_Max            = 0x7fffffff,
 }
+
 alias lengthAdjust = int;
 enum : int
 {
@@ -2316,6 +2529,7 @@ enum : int
     LENGTHADJUST_SPACINGANDGLYPHS = 0x00000002,
     lengthAdjust_Max              = 0x7fffffff,
 }
+
 alias textpathMethodtype = int;
 enum : int
 {
@@ -2324,6 +2538,7 @@ enum : int
     TEXTPATH_METHODTYPE_STRETCH = 0x00000002,
     textpathMethodtype_Max      = 0x7fffffff,
 }
+
 alias textpathSpacingtype = int;
 enum : int
 {
@@ -2332,6 +2547,7 @@ enum : int
     TEXTPATH_SPACINGTYPE_EXACT   = 0x00000002,
     textpathSpacingtype_Max      = 0x7fffffff,
 }
+
 alias ELEMENT_CORNER = int;
 enum : int
 {
@@ -2346,6 +2562,7 @@ enum : int
     ELEMENT_CORNER_BOTTOMRIGHT = 0x00000008,
     ELEMENT_CORNER_Max         = 0x7fffffff,
 }
+
 alias SECUREURLHOSTVALIDATE_FLAGS = int;
 enum : int
 {
@@ -2354,6 +2571,7 @@ enum : int
     SUHV_UNSECURESOURCE             = 0x00000004,
     SECUREURLHOSTVALIDATE_FLAGS_Max = 0x7fffffff,
 }
+
 alias POINTER_GRAVITY = int;
 enum : int
 {
@@ -2361,6 +2579,7 @@ enum : int
     POINTER_GRAVITY_Right = 0x00000001,
     POINTER_GRAVITY_Max   = 0x7fffffff,
 }
+
 alias ELEMENT_ADJACENCY = int;
 enum : int
 {
@@ -2370,6 +2589,7 @@ enum : int
     ELEM_ADJ_AfterEnd     = 0x00000003,
     ELEMENT_ADJACENCY_Max = 0x7fffffff,
 }
+
 alias MARKUP_CONTEXT_TYPE = int;
 enum : int
 {
@@ -2380,6 +2600,7 @@ enum : int
     CONTEXT_TYPE_NoScope    = 0x00000004,
     MARKUP_CONTEXT_TYPE_Max = 0x7fffffff,
 }
+
 alias FINDTEXT_FLAGS = int;
 enum : int
 {
@@ -2393,6 +2614,7 @@ enum : int
     FINDTEXT_MATCHALEFHAMZA          = 0x80000000,
     FINDTEXT_FLAGS_Max               = 0x7fffffff,
 }
+
 alias MOVEUNIT_ACTION = int;
 enum : int
 {
@@ -2418,6 +2640,7 @@ enum : int
     MOVEUNIT_NEXTBLOCK        = 0x00000013,
     MOVEUNIT_ACTION_Max       = 0x7fffffff,
 }
+
 alias PARSE_FLAGS = int;
 enum : int
 {
@@ -2425,6 +2648,7 @@ enum : int
     PARSE_DISABLEVML         = 0x00000002,
     PARSE_FLAGS_Max          = 0x7fffffff,
 }
+
 alias ELEMENT_TAG_ID = int;
 enum : int
 {
@@ -2656,6 +2880,7 @@ enum : int
     TAGID_LAST_PREDEFINED         = 0x00002710,
     ELEMENT_TAG_ID_Max            = 0x7fffffff,
 }
+
 alias SELECTION_TYPE = int;
 enum : int
 {
@@ -2665,12 +2890,14 @@ enum : int
     SELECTION_TYPE_Control = 0x00000003,
     SELECTION_TYPE_Max     = 0x7fffffff,
 }
+
 alias SAVE_SEGMENTS_FLAGS = int;
 enum : int
 {
     SAVE_SEGMENTS_NoIE4SelectionCompat = 0x00000001,
     SAVE_SEGMENTS_FLAGS_Max            = 0x7fffffff,
 }
+
 alias CARET_DIRECTION = int;
 enum : int
 {
@@ -2680,6 +2907,7 @@ enum : int
     CARET_DIRECTION_FORWARD       = 0x00000003,
     CARET_DIRECTION_Max           = 0x7fffffff,
 }
+
 alias LINE_DIRECTION = int;
 enum : int
 {
@@ -2687,18 +2915,21 @@ enum : int
     LINE_DIRECTION_LeftToRight = 0x00000002,
     LINE_DIRECTION_Max         = 0x7fffffff,
 }
+
 alias HT_OPTIONS = int;
 enum : int
 {
     HT_OPT_AllowAfterEOL = 0x00000001,
     HT_OPTIONS_Max       = 0x7fffffff,
 }
+
 alias HT_RESULTS = int;
 enum : int
 {
     HT_RESULTS_Glyph = 0x00000001,
     HT_RESULTS_Max   = 0x7fffffff,
 }
+
 alias DISPLAY_MOVEUNIT = int;
 enum : int
 {
@@ -2710,6 +2941,7 @@ enum : int
     DISPLAY_MOVEUNIT_BottomOfWindow   = 0x00000006,
     DISPLAY_MOVEUNIT_Max              = 0x7fffffff,
 }
+
 alias DISPLAY_GRAVITY = int;
 enum : int
 {
@@ -2717,6 +2949,7 @@ enum : int
     DISPLAY_GRAVITY_NextLine     = 0x00000002,
     DISPLAY_GRAVITY_Max          = 0x7fffffff,
 }
+
 alias DISPLAY_BREAK = int;
 enum : int
 {
@@ -2725,6 +2958,7 @@ enum : int
     DISPLAY_BREAK_Break = 0x00000002,
     DISPLAY_BREAK_Max   = 0x7fffffff,
 }
+
 alias COORD_SYSTEM = int;
 enum : int
 {
@@ -2736,6 +2970,7 @@ enum : int
     COORD_SYSTEM_CLIENT    = 0x00000005,
     COORD_SYSTEM_Max       = 0x7fffffff,
 }
+
 alias DEV_CONSOLE_MESSAGE_LEVEL = int;
 enum : int
 {
@@ -2744,6 +2979,7 @@ enum : int
     DCML_ERROR                    = 0x00000002,
     DEV_CONSOLE_MESSAGE_LEVEL_Max = 0x7fffffff,
 }
+
 alias DOM_EVENT_PHASE = int;
 enum : int
 {
@@ -2752,6 +2988,7 @@ enum : int
     DEP_BUBBLING_PHASE  = 0x00000003,
     DOM_EVENT_PHASE_Max = 0x7fffffff,
 }
+
 alias SCRIPT_TIMER_TYPE = int;
 enum : int
 {
@@ -2761,6 +2998,7 @@ enum : int
     STT_ANIMATION_FRAME   = 0x00000003,
     SCRIPT_TIMER_TYPE_Max = 0x7fffffff,
 }
+
 alias HTML_PAINTER = int;
 enum : int
 {
@@ -2781,6 +3019,7 @@ enum : int
     HTMLPAINTER_NOSCROLLBITS   = 0x00020000,
     HTML_PAINTER_Max           = 0x7fffffff,
 }
+
 alias HTML_PAINT_ZORDER = int;
 enum : int
 {
@@ -2795,6 +3034,7 @@ enum : int
     HTMLPAINT_ZORDER_WINDOW_TOP         = 0x00000008,
     HTML_PAINT_ZORDER_Max               = 0x7fffffff,
 }
+
 alias HTML_PAINT_DRAW_FLAGS = int;
 enum : int
 {
@@ -2802,6 +3042,7 @@ enum : int
     HTMLPAINT_DRAW_USE_XFORM    = 0x00000002,
     HTML_PAINT_DRAW_FLAGS_Max   = 0x7fffffff,
 }
+
 alias HTML_PAINT_EVENT_FLAGS = int;
 enum : int
 {
@@ -2809,6 +3050,7 @@ enum : int
     HTMLPAINT_EVENT_SETCURSOR  = 0x00000002,
     HTML_PAINT_EVENT_FLAGS_Max = 0x7fffffff,
 }
+
 alias HTML_PAINT_DRAW_INFO_FLAGS = int;
 enum : int
 {
@@ -2817,6 +3059,7 @@ enum : int
     HTMLPAINT_DRAWINFO_XFORM        = 0x00000004,
     HTML_PAINT_DRAW_INFO_FLAGS_Max  = 0x7fffffff,
 }
+
 alias HTMLDlgFlag = int;
 enum : int
 {
@@ -2829,12 +3072,14 @@ enum : int
     HTMLDlgFlagNotSet = 0xffffffff,
     HTMLDlgFlag_Max   = 0x7fffffff,
 }
+
 enum HTMLDlgBorder : int
 {
     HTMLDlgBorderThin  = 0x00000000,
     HTMLDlgBorderThick = 0x00040000,
     HTMLDlgBorder_Max  = 0x7fffffff,
 }
+
 alias HTMLDlgEdge = int;
 enum : int
 {
@@ -2842,6 +3087,7 @@ enum : int
     HTMLDlgEdgeRaised = 0x00000010,
     HTMLDlgEdge_Max   = 0x7fffffff,
 }
+
 enum HTMLDlgCenter : int
 {
     HTMLDlgCenterNo      = 0x00000000,
@@ -2854,6 +3100,7 @@ enum HTMLDlgCenter : int
     HTMLDlgCenterDesktop = 0x00000002,
     HTMLDlgCenter_Max    = 0x7fffffff,
 }
+
 alias HTMLAppFlag = int;
 enum : int
 {
@@ -2865,30 +3112,35 @@ enum : int
     HTMLAppFlag1    = 0x00000001,
     HTMLAppFlag_Max = 0x7fffffff,
 }
+
 enum HTMLMinimizeFlag : int
 {
     HTMLMinimizeFlagNo   = 0x00000000,
     HTMLMinimizeFlagYes  = 0x00020000,
     HTMLMinimizeFlag_Max = 0x7fffffff,
 }
+
 enum HTMLMaximizeFlag : int
 {
     HTMLMaximizeFlagNo   = 0x00000000,
     HTMLMaximizeFlagYes  = 0x00010000,
     HTMLMaximizeFlag_Max = 0x7fffffff,
 }
+
 enum HTMLCaptionFlag : int
 {
     HTMLCaptionFlagNo   = 0x00000000,
     HTMLCaptionFlagYes  = 0x00c00000,
     HTMLCaptionFlag_Max = 0x7fffffff,
 }
+
 enum HTMLSysMenuFlag : int
 {
     HTMLSysMenuFlagNo   = 0x00000000,
     HTMLSysMenuFlagYes  = 0x00080000,
     HTMLSysMenuFlag_Max = 0x7fffffff,
 }
+
 alias HTMLBorder = int;
 enum : int
 {
@@ -2898,6 +3150,7 @@ enum : int
     HTMLBorderThin   = 0x00800000,
     HTMLBorder_Max   = 0x7fffffff,
 }
+
 enum HTMLBorderStyle : int
 {
     HTMLBorderStyleNormal   = 0x00000000,
@@ -2907,6 +3160,7 @@ enum HTMLBorderStyle : int
     HTMLBorderStyleStatic   = 0x00020000,
     HTMLBorderStyle_Max     = 0x7fffffff,
 }
+
 enum HTMLWindowState : int
 {
     HTMLWindowStateNormal   = 0x00000001,
@@ -2914,6 +3168,7 @@ enum HTMLWindowState : int
     HTMLWindowStateMinimize = 0x00000006,
     HTMLWindowState_Max     = 0x7fffffff,
 }
+
 alias BEHAVIOR_EVENT = int;
 enum : int
 {
@@ -2926,6 +3181,7 @@ enum : int
     BEHAVIOREVENT_LAST                  = 0x00000004,
     BEHAVIOR_EVENT_Max                  = 0x7fffffff,
 }
+
 alias BEHAVIOR_EVENT_FLAGS = int;
 enum : int
 {
@@ -2933,6 +3189,7 @@ enum : int
     BEHAVIOREVENTFLAGS_STANDARDADDITIVE = 0x00000002,
     BEHAVIOR_EVENT_FLAGS_Max            = 0x7fffffff,
 }
+
 alias BEHAVIOR_RENDER_INFO = int;
 enum : int
 {
@@ -2953,6 +3210,7 @@ enum : int
     BEHAVIORRENDERINFO_3DSURFACE         = 0x00200000,
     BEHAVIOR_RENDER_INFO_Max             = 0x7fffffff,
 }
+
 alias BEHAVIOR_RELATION = int;
 enum : int
 {
@@ -2964,6 +3222,7 @@ enum : int
     BEHAVIOR_LASTRELATION  = 0x00000003,
     BEHAVIOR_RELATION_Max  = 0x7fffffff,
 }
+
 alias BEHAVIOR_LAYOUT_INFO = int;
 enum : int
 {
@@ -2972,6 +3231,7 @@ enum : int
     BEHAVIORLAYOUTINFO_MAPSIZE        = 0x00000004,
     BEHAVIOR_LAYOUT_INFO_Max          = 0x7fffffff,
 }
+
 alias BEHAVIOR_LAYOUT_MODE = int;
 enum : int
 {
@@ -2982,6 +3242,7 @@ enum : int
     BEHAVIORLAYOUTMODE_FINAL_PERCENT    = 0x00008000,
     BEHAVIOR_LAYOUT_MODE_Max            = 0x7fffffff,
 }
+
 alias ELEMENTDESCRIPTOR_FLAGS = int;
 enum : int
 {
@@ -2989,6 +3250,7 @@ enum : int
     ELEMENTDESCRIPTORFLAGS_NESTED_LITERAL = 0x00000002,
     ELEMENTDESCRIPTOR_FLAGS_Max           = 0x7fffffff,
 }
+
 alias ELEMENTNAMESPACE_FLAGS = int;
 enum : int
 {
@@ -2996,6 +3258,7 @@ enum : int
     ELEMENTNAMESPACEFLAGS_QUERYFORUNKNOWNTAGS = 0x00000002,
     ELEMENTNAMESPACE_FLAGS_Max                = 0x7fffffff,
 }
+
 alias VIEW_OBJECT_ALPHA_MODE = int;
 enum : int
 {
@@ -3003,6 +3266,7 @@ enum : int
     VIEW_OBJECT_ALPHA_MODE_PREMULTIPLIED = 0x00000001,
     VIEW_OBJECT_ALPHA_MODE_Max           = 0x7fffffff,
 }
+
 alias VIEW_OBJECT_COMPOSITION_MODE = int;
 enum : int
 {
@@ -3010,12 +3274,14 @@ enum : int
     VIEW_OBJECT_COMPOSITION_MODE_SURFACEPRESENTER = 0x00000001,
     VIEW_OBJECT_COMPOSITION_MODE_Max              = 0x7fffffff,
 }
+
 alias DOCHOSTUITYPE = int;
 enum : int
 {
     DOCHOSTUITYPE_BROWSE = 0x00000000,
     DOCHOSTUITYPE_AUTHOR = 0x00000001,
 }
+
 alias DOCHOSTUIDBLCLK = int;
 enum : int
 {
@@ -3023,6 +3289,7 @@ enum : int
     DOCHOSTUIDBLCLK_SHOWPROPERTIES = 0x00000001,
     DOCHOSTUIDBLCLK_SHOWCODE       = 0x00000002,
 }
+
 alias DOCHOSTUIFLAG = int;
 enum : int
 {
@@ -3061,775 +3328,775 @@ enum : int
 // Constants
 
 
-enum uint DISPID_STYLESHEETSCOLLECTION_NAMED_MAX = 0x001e847f;
-enum uint IDM_UNKNOWN = 0x00000000;
+enum uint DISPID_STYLESHEETSCOLLECTION_NAMED_MAX = 0x001e847fU;
+enum uint IDM_UNKNOWN = 0x00000000U;
 
 enum : uint
 {
-    IDM_ALIGNBOTTOM            = 0x00000001,
-    IDM_ALIGNHORIZONTALCENTERS = 0x00000002,
+    IDM_ALIGNBOTTOM            = 0x00000001U,
+    IDM_ALIGNHORIZONTALCENTERS = 0x00000002U,
 }
 
 enum : uint
 {
-    IDM_ALIGNLEFT            = 0x00000003,
-    IDM_ALIGNRIGHT           = 0x00000004,
-    IDM_ALIGNTOGRID          = 0x00000005,
-    IDM_ALIGNTOP             = 0x00000006,
-    IDM_ALIGNVERTICALCENTERS = 0x00000007,
+    IDM_ALIGNLEFT            = 0x00000003U,
+    IDM_ALIGNRIGHT           = 0x00000004U,
+    IDM_ALIGNTOGRID          = 0x00000005U,
+    IDM_ALIGNTOP             = 0x00000006U,
+    IDM_ALIGNVERTICALCENTERS = 0x00000007U,
 }
 
 enum : uint
 {
-    IDM_ARRANGEBOTTOM = 0x00000008,
-    IDM_ARRANGERIGHT  = 0x00000009,
+    IDM_ARRANGEBOTTOM = 0x00000008U,
+    IDM_ARRANGERIGHT  = 0x00000009U,
 }
 
 enum : uint
 {
-    IDM_BRINGFORWARD = 0x0000000a,
-    IDM_BRINGTOFRONT = 0x0000000b,
+    IDM_BRINGFORWARD = 0x0000000aU,
+    IDM_BRINGTOFRONT = 0x0000000bU,
 }
 
 enum : uint
 {
-    IDM_CENTERHORIZONTALLY = 0x0000000c,
-    IDM_CENTERVERTICALLY   = 0x0000000d,
+    IDM_CENTERHORIZONTALLY = 0x0000000cU,
+    IDM_CENTERVERTICALLY   = 0x0000000dU,
 }
 
 enum : uint
 {
-    IDM_CODE   = 0x0000000e,
-    IDM_DELETE = 0x00000011,
+    IDM_CODE   = 0x0000000eU,
+    IDM_DELETE = 0x00000011U,
 }
 
 enum : uint
 {
-    IDM_FONTNAME = 0x00000012,
-    IDM_FONTSIZE = 0x00000013,
+    IDM_FONTNAME = 0x00000012U,
+    IDM_FONTSIZE = 0x00000013U,
 }
 
 enum : uint
 {
-    IDM_GROUP                 = 0x00000014,
-    IDM_HORIZSPACECONCATENATE = 0x00000015,
-    IDM_HORIZSPACEDECREASE    = 0x00000016,
-    IDM_HORIZSPACEINCREASE    = 0x00000017,
-    IDM_HORIZSPACEMAKEEQUAL   = 0x00000018,
+    IDM_GROUP                 = 0x00000014U,
+    IDM_HORIZSPACECONCATENATE = 0x00000015U,
+    IDM_HORIZSPACEDECREASE    = 0x00000016U,
+    IDM_HORIZSPACEINCREASE    = 0x00000017U,
+    IDM_HORIZSPACEMAKEEQUAL   = 0x00000018U,
 }
 
-enum uint IDM_INSERTOBJECT = 0x00000019;
-enum uint IDM_MULTILEVELREDO = 0x0000001e;
+enum uint IDM_INSERTOBJECT = 0x00000019U;
+enum uint IDM_MULTILEVELREDO = 0x0000001eU;
 
 enum : uint
 {
-    IDM_SENDBACKWARD = 0x00000020,
-    IDM_SENDTOBACK   = 0x00000021,
+    IDM_SENDBACKWARD = 0x00000020U,
+    IDM_SENDTOBACK   = 0x00000021U,
 }
 
-enum uint IDM_SHOWTABLE = 0x00000022;
+enum uint IDM_SHOWTABLE = 0x00000022U;
 
 enum : uint
 {
-    IDM_SIZETOCONTROL       = 0x00000023,
-    IDM_SIZETOCONTROLHEIGHT = 0x00000024,
-    IDM_SIZETOCONTROLWIDTH  = 0x00000025,
-    IDM_SIZETOFIT           = 0x00000026,
-    IDM_SIZETOGRID          = 0x00000027,
+    IDM_SIZETOCONTROL       = 0x00000023U,
+    IDM_SIZETOCONTROLHEIGHT = 0x00000024U,
+    IDM_SIZETOCONTROLWIDTH  = 0x00000025U,
+    IDM_SIZETOFIT           = 0x00000026U,
+    IDM_SIZETOGRID          = 0x00000027U,
 }
 
-enum uint IDM_SNAPTOGRID = 0x00000028;
+enum uint IDM_SNAPTOGRID = 0x00000028U;
 
 enum : uint
 {
-    IDM_TABORDER = 0x00000029,
-    IDM_TOOLBOX  = 0x0000002a,
+    IDM_TABORDER = 0x00000029U,
+    IDM_TOOLBOX  = 0x0000002aU,
 }
 
-enum uint IDM_MULTILEVELUNDO = 0x0000002c;
-enum uint IDM_UNGROUP = 0x0000002d;
+enum uint IDM_MULTILEVELUNDO = 0x0000002cU;
+enum uint IDM_UNGROUP = 0x0000002dU;
 
 enum : uint
 {
-    IDM_VERTSPACECONCATENATE = 0x0000002e,
-    IDM_VERTSPACEDECREASE    = 0x0000002f,
-    IDM_VERTSPACEINCREASE    = 0x00000030,
-    IDM_VERTSPACEMAKEEQUAL   = 0x00000031,
+    IDM_VERTSPACECONCATENATE = 0x0000002eU,
+    IDM_VERTSPACEDECREASE    = 0x0000002fU,
+    IDM_VERTSPACEINCREASE    = 0x00000030U,
+    IDM_VERTSPACEMAKEEQUAL   = 0x00000031U,
 }
 
-enum uint IDM_JUSTIFYFULL = 0x00000032;
-enum uint IDM_BACKCOLOR = 0x00000033;
+enum uint IDM_JUSTIFYFULL = 0x00000032U;
+enum uint IDM_BACKCOLOR = 0x00000033U;
 
 enum : uint
 {
-    IDM_BOLD        = 0x00000034,
-    IDM_BORDERCOLOR = 0x00000035,
+    IDM_BOLD        = 0x00000034U,
+    IDM_BORDERCOLOR = 0x00000035U,
 }
 
 enum : uint
 {
-    IDM_FLAT      = 0x00000036,
-    IDM_FORECOLOR = 0x00000037,
+    IDM_FLAT      = 0x00000036U,
+    IDM_FORECOLOR = 0x00000037U,
 }
 
-enum uint IDM_ITALIC = 0x00000038;
+enum uint IDM_ITALIC = 0x00000038U;
 
 enum : uint
 {
-    IDM_JUSTIFYCENTER  = 0x00000039,
-    IDM_JUSTIFYGENERAL = 0x0000003a,
-    IDM_JUSTIFYLEFT    = 0x0000003b,
-    IDM_JUSTIFYRIGHT   = 0x0000003c,
+    IDM_JUSTIFYCENTER  = 0x00000039U,
+    IDM_JUSTIFYGENERAL = 0x0000003aU,
+    IDM_JUSTIFYLEFT    = 0x0000003bU,
+    IDM_JUSTIFYRIGHT   = 0x0000003cU,
 }
 
-enum uint IDM_RAISED = 0x0000003d;
-enum uint IDM_SUNKEN = 0x0000003e;
-enum uint IDM_UNDERLINE = 0x0000003f;
-enum uint IDM_CHISELED = 0x00000040;
-enum uint IDM_ETCHED = 0x00000041;
-enum uint IDM_SHADOWED = 0x00000042;
+enum uint IDM_RAISED = 0x0000003dU;
+enum uint IDM_SUNKEN = 0x0000003eU;
+enum uint IDM_UNDERLINE = 0x0000003fU;
+enum uint IDM_CHISELED = 0x00000040U;
+enum uint IDM_ETCHED = 0x00000041U;
+enum uint IDM_SHADOWED = 0x00000042U;
 
 enum : uint
 {
-    IDM_FIND     = 0x00000043,
-    IDM_SHOWGRID = 0x00000045,
+    IDM_FIND     = 0x00000043U,
+    IDM_SHOWGRID = 0x00000045U,
 }
 
 enum : uint
 {
-    IDM_OBJECTVERBLIST0    = 0x00000048,
-    IDM_OBJECTVERBLIST1    = 0x00000049,
-    IDM_OBJECTVERBLIST2    = 0x0000004a,
-    IDM_OBJECTVERBLIST3    = 0x0000004b,
-    IDM_OBJECTVERBLIST4    = 0x0000004c,
-    IDM_OBJECTVERBLIST5    = 0x0000004d,
-    IDM_OBJECTVERBLIST6    = 0x0000004e,
-    IDM_OBJECTVERBLIST7    = 0x0000004f,
-    IDM_OBJECTVERBLIST8    = 0x00000050,
-    IDM_OBJECTVERBLIST9    = 0x00000051,
-    IDM_OBJECTVERBLISTLAST = 0x00000051,
+    IDM_OBJECTVERBLIST0    = 0x00000048U,
+    IDM_OBJECTVERBLIST1    = 0x00000049U,
+    IDM_OBJECTVERBLIST2    = 0x0000004aU,
+    IDM_OBJECTVERBLIST3    = 0x0000004bU,
+    IDM_OBJECTVERBLIST4    = 0x0000004cU,
+    IDM_OBJECTVERBLIST5    = 0x0000004dU,
+    IDM_OBJECTVERBLIST6    = 0x0000004eU,
+    IDM_OBJECTVERBLIST7    = 0x0000004fU,
+    IDM_OBJECTVERBLIST8    = 0x00000050U,
+    IDM_OBJECTVERBLIST9    = 0x00000051U,
+    IDM_OBJECTVERBLISTLAST = 0x00000051U,
 }
 
-enum uint IDM_CONVERTOBJECT = 0x00000052;
+enum uint IDM_CONVERTOBJECT = 0x00000052U;
 
 enum : uint
 {
-    IDM_CUSTOMCONTROL = 0x00000053,
-    IDM_CUSTOMIZEITEM = 0x00000054,
+    IDM_CUSTOMCONTROL = 0x00000053U,
+    IDM_CUSTOMIZEITEM = 0x00000054U,
 }
 
-enum uint IDM_RENAME = 0x00000055;
-enum uint IDM_IMPORT = 0x00000056;
-enum uint IDM_NEWPAGE = 0x00000057;
+enum uint IDM_RENAME = 0x00000055U;
+enum uint IDM_IMPORT = 0x00000056U;
+enum uint IDM_NEWPAGE = 0x00000057U;
 
 enum : uint
 {
-    IDM_MOVE   = 0x00000058,
-    IDM_CANCEL = 0x00000059,
+    IDM_MOVE   = 0x00000058U,
+    IDM_CANCEL = 0x00000059U,
 }
 
 enum : uint
 {
-    IDM_FONT          = 0x0000005a,
-    IDM_STRIKETHROUGH = 0x0000005b,
+    IDM_FONT          = 0x0000005aU,
+    IDM_STRIKETHROUGH = 0x0000005bU,
 }
 
-enum uint IDM_DELETEWORD = 0x0000005c;
-enum uint IDM_EXECPRINT = 0x0000005d;
-enum uint IDM_JUSTIFYNONE = 0x0000005e;
+enum uint IDM_DELETEWORD = 0x0000005cU;
+enum uint IDM_EXECPRINT = 0x0000005dU;
+enum uint IDM_JUSTIFYNONE = 0x0000005eU;
 
 enum : uint
 {
-    IDM_TRISTATEBOLD      = 0x0000005f,
-    IDM_TRISTATEITALIC    = 0x00000060,
-    IDM_TRISTATEUNDERLINE = 0x00000061,
+    IDM_TRISTATEBOLD      = 0x0000005fU,
+    IDM_TRISTATEITALIC    = 0x00000060U,
+    IDM_TRISTATEUNDERLINE = 0x00000061U,
 }
 
-enum uint IDM_FORWARDDELETE = 0x00000062;
-enum uint IDM_FOLLOW_ANCHOR = 0x000007d8;
+enum uint IDM_FORWARDDELETE = 0x00000062U;
+enum uint IDM_FOLLOW_ANCHOR = 0x000007d8U;
 
 enum : uint
 {
-    IDM_INSINPUTIMAGE  = 0x00000842,
-    IDM_INSINPUTBUTTON = 0x00000843,
-    IDM_INSINPUTRESET  = 0x00000844,
-    IDM_INSINPUTSUBMIT = 0x00000845,
-    IDM_INSINPUTUPLOAD = 0x00000846,
+    IDM_INSINPUTIMAGE  = 0x00000842U,
+    IDM_INSINPUTBUTTON = 0x00000843U,
+    IDM_INSINPUTRESET  = 0x00000844U,
+    IDM_INSINPUTSUBMIT = 0x00000845U,
+    IDM_INSINPUTUPLOAD = 0x00000846U,
 }
 
-enum uint IDM_INSFIELDSET = 0x00000847;
-enum uint IDM_PASTEINSERT = 0x00000848;
-enum uint IDM_REPLACE = 0x00000849;
-enum uint IDM_EDITSOURCE = 0x0000084a;
-enum uint IDM_BOOKMARK = 0x0000084b;
-enum uint IDM_HYPERLINK = 0x0000084c;
-enum uint IDM_UNLINK = 0x0000084d;
-enum uint IDM_BROWSEMODE = 0x0000084e;
-enum uint IDM_EDITMODE = 0x0000084f;
-enum uint IDM_UNBOOKMARK = 0x00000850;
-enum uint IDM_TOOLBARS = 0x00000852;
-enum uint IDM_STATUSBAR = 0x00000853;
-enum uint IDM_FORMATMARK = 0x00000854;
-enum uint IDM_TEXTONLY = 0x00000855;
-enum uint IDM_OPTIONS = 0x00000857;
+enum uint IDM_INSFIELDSET = 0x00000847U;
+enum uint IDM_PASTEINSERT = 0x00000848U;
+enum uint IDM_REPLACE = 0x00000849U;
+enum uint IDM_EDITSOURCE = 0x0000084aU;
+enum uint IDM_BOOKMARK = 0x0000084bU;
+enum uint IDM_HYPERLINK = 0x0000084cU;
+enum uint IDM_UNLINK = 0x0000084dU;
+enum uint IDM_BROWSEMODE = 0x0000084eU;
+enum uint IDM_EDITMODE = 0x0000084fU;
+enum uint IDM_UNBOOKMARK = 0x00000850U;
+enum uint IDM_TOOLBARS = 0x00000852U;
+enum uint IDM_STATUSBAR = 0x00000853U;
+enum uint IDM_FORMATMARK = 0x00000854U;
+enum uint IDM_TEXTONLY = 0x00000855U;
+enum uint IDM_OPTIONS = 0x00000857U;
 
 enum : uint
 {
-    IDM_FOLLOWLINKC = 0x00000858,
-    IDM_FOLLOWLINKN = 0x00000859,
+    IDM_FOLLOWLINKC = 0x00000858U,
+    IDM_FOLLOWLINKN = 0x00000859U,
 }
 
-enum uint IDM_VIEWSOURCE = 0x0000085b;
-enum uint IDM_ZOOMPOPUP = 0x0000085c;
+enum uint IDM_VIEWSOURCE = 0x0000085bU;
+enum uint IDM_ZOOMPOPUP = 0x0000085cU;
 
 enum : uint
 {
-    IDM_BASELINEFONT1 = 0x0000085d,
-    IDM_BASELINEFONT2 = 0x0000085e,
-    IDM_BASELINEFONT3 = 0x0000085f,
-    IDM_BASELINEFONT4 = 0x00000860,
-    IDM_BASELINEFONT5 = 0x00000861,
+    IDM_BASELINEFONT1 = 0x0000085dU,
+    IDM_BASELINEFONT2 = 0x0000085eU,
+    IDM_BASELINEFONT3 = 0x0000085fU,
+    IDM_BASELINEFONT4 = 0x00000860U,
+    IDM_BASELINEFONT5 = 0x00000861U,
 }
 
-enum uint IDM_HORIZONTALLINE = 0x00000866;
+enum uint IDM_HORIZONTALLINE = 0x00000866U;
 
 enum : uint
 {
-    IDM_LINEBREAKNORMAL = 0x00000867,
-    IDM_LINEBREAKLEFT   = 0x00000868,
-    IDM_LINEBREAKRIGHT  = 0x00000869,
-    IDM_LINEBREAKBOTH   = 0x0000086a,
+    IDM_LINEBREAKNORMAL = 0x00000867U,
+    IDM_LINEBREAKLEFT   = 0x00000868U,
+    IDM_LINEBREAKRIGHT  = 0x00000869U,
+    IDM_LINEBREAKBOTH   = 0x0000086aU,
 }
 
-enum uint IDM_NONBREAK = 0x0000086b;
-enum uint IDM_SPECIALCHAR = 0x0000086c;
-enum uint IDM_HTMLSOURCE = 0x0000086d;
-enum uint IDM_IFRAME = 0x0000086e;
-enum uint IDM_HTMLCONTAIN = 0x0000086f;
+enum uint IDM_NONBREAK = 0x0000086bU;
+enum uint IDM_SPECIALCHAR = 0x0000086cU;
+enum uint IDM_HTMLSOURCE = 0x0000086dU;
+enum uint IDM_IFRAME = 0x0000086eU;
+enum uint IDM_HTMLCONTAIN = 0x0000086fU;
 
 enum : uint
 {
-    IDM_TEXTBOX  = 0x00000871,
-    IDM_TEXTAREA = 0x00000872,
+    IDM_TEXTBOX  = 0x00000871U,
+    IDM_TEXTAREA = 0x00000872U,
 }
 
-enum uint IDM_CHECKBOX = 0x00000873;
-enum uint IDM_RADIOBUTTON = 0x00000874;
-enum uint IDM_DROPDOWNBOX = 0x00000875;
-enum uint IDM_LISTBOX = 0x00000876;
-enum uint IDM_BUTTON = 0x00000877;
+enum uint IDM_CHECKBOX = 0x00000873U;
+enum uint IDM_RADIOBUTTON = 0x00000874U;
+enum uint IDM_DROPDOWNBOX = 0x00000875U;
+enum uint IDM_LISTBOX = 0x00000876U;
+enum uint IDM_BUTTON = 0x00000877U;
 
 enum : uint
 {
-    IDM_IMAGE  = 0x00000878,
-    IDM_OBJECT = 0x00000879,
+    IDM_IMAGE  = 0x00000878U,
+    IDM_OBJECT = 0x00000879U,
 }
 
 enum : uint
 {
-    IDM_1D       = 0x0000087a,
-    IDM_IMAGEMAP = 0x0000087b,
+    IDM_1D       = 0x0000087aU,
+    IDM_IMAGEMAP = 0x0000087bU,
 }
 
 enum : uint
 {
-    IDM_FILE    = 0x0000087c,
-    IDM_COMMENT = 0x0000087d,
+    IDM_FILE    = 0x0000087cU,
+    IDM_COMMENT = 0x0000087dU,
 }
 
-enum uint IDM_SCRIPT = 0x0000087e;
-enum uint IDM_JAVAAPPLET = 0x0000087f;
+enum uint IDM_SCRIPT = 0x0000087eU;
+enum uint IDM_JAVAAPPLET = 0x0000087fU;
 
 enum : uint
 {
-    IDM_PLUGIN    = 0x00000880,
-    IDM_PAGEBREAK = 0x00000881,
+    IDM_PLUGIN    = 0x00000880U,
+    IDM_PAGEBREAK = 0x00000881U,
 }
 
-enum uint IDM_HTMLAREA = 0x00000882;
-enum uint IDM_PARAGRAPH = 0x00000884;
+enum uint IDM_HTMLAREA = 0x00000882U;
+enum uint IDM_PARAGRAPH = 0x00000884U;
 
 enum : uint
 {
-    IDM_FORM    = 0x00000885,
-    IDM_MARQUEE = 0x00000886,
+    IDM_FORM    = 0x00000885U,
+    IDM_MARQUEE = 0x00000886U,
 }
 
 enum : uint
 {
-    IDM_LIST      = 0x00000887,
-    IDM_ORDERLIST = 0x00000888,
+    IDM_LIST      = 0x00000887U,
+    IDM_ORDERLIST = 0x00000888U,
 }
 
-enum uint IDM_UNORDERLIST = 0x00000889;
-enum uint IDM_INDENT = 0x0000088a;
-enum uint IDM_OUTDENT = 0x0000088b;
-enum uint IDM_PREFORMATTED = 0x0000088c;
-enum uint IDM_ADDRESS = 0x0000088d;
+enum uint IDM_UNORDERLIST = 0x00000889U;
+enum uint IDM_INDENT = 0x0000088aU;
+enum uint IDM_OUTDENT = 0x0000088bU;
+enum uint IDM_PREFORMATTED = 0x0000088cU;
+enum uint IDM_ADDRESS = 0x0000088dU;
 
 enum : uint
 {
-    IDM_BLINK       = 0x0000088e,
-    IDM_DIV         = 0x0000088f,
-    IDM_TABLEINSERT = 0x00000898,
+    IDM_BLINK       = 0x0000088eU,
+    IDM_DIV         = 0x0000088fU,
+    IDM_TABLEINSERT = 0x00000898U,
 }
 
-enum uint IDM_RCINSERT = 0x00000899;
-enum uint IDM_CELLINSERT = 0x0000089a;
-enum uint IDM_CAPTIONINSERT = 0x0000089b;
+enum uint IDM_RCINSERT = 0x00000899U;
+enum uint IDM_CELLINSERT = 0x0000089aU;
+enum uint IDM_CAPTIONINSERT = 0x0000089bU;
 
 enum : uint
 {
-    IDM_CELLMERGE  = 0x0000089c,
-    IDM_CELLSPLIT  = 0x0000089d,
-    IDM_CELLSELECT = 0x0000089e,
+    IDM_CELLMERGE  = 0x0000089cU,
+    IDM_CELLSPLIT  = 0x0000089dU,
+    IDM_CELLSELECT = 0x0000089eU,
 }
 
-enum uint IDM_ROWSELECT = 0x0000089f;
-enum uint IDM_COLUMNSELECT = 0x000008a0;
+enum uint IDM_ROWSELECT = 0x0000089fU;
+enum uint IDM_COLUMNSELECT = 0x000008a0U;
 
 enum : uint
 {
-    IDM_TABLESELECT     = 0x000008a1,
-    IDM_TABLEPROPERTIES = 0x000008a2,
+    IDM_TABLESELECT     = 0x000008a1U,
+    IDM_TABLEPROPERTIES = 0x000008a2U,
 }
 
-enum uint IDM_CELLPROPERTIES = 0x000008a3;
-enum uint IDM_ROWINSERT = 0x000008a4;
-enum uint IDM_COLUMNINSERT = 0x000008a5;
+enum uint IDM_CELLPROPERTIES = 0x000008a3U;
+enum uint IDM_ROWINSERT = 0x000008a4U;
+enum uint IDM_COLUMNINSERT = 0x000008a5U;
 
 enum : uint
 {
-    IDM_HELP_CONTENT = 0x000008ac,
-    IDM_HELP_ABOUT   = 0x000008ad,
-    IDM_HELP_README  = 0x000008ae,
+    IDM_HELP_CONTENT = 0x000008acU,
+    IDM_HELP_ABOUT   = 0x000008adU,
+    IDM_HELP_README  = 0x000008aeU,
 }
 
-enum uint IDM_REMOVEFORMAT = 0x000008b6;
-enum uint IDM_PAGEINFO = 0x000008b7;
-enum uint IDM_TELETYPE = 0x000008b8;
-enum uint IDM_GETBLOCKFMTS = 0x000008b9;
-enum uint IDM_BLOCKFMT = 0x000008ba;
-enum uint IDM_SHOWHIDE_CODE = 0x000008bb;
+enum uint IDM_REMOVEFORMAT = 0x000008b6U;
+enum uint IDM_PAGEINFO = 0x000008b7U;
+enum uint IDM_TELETYPE = 0x000008b8U;
+enum uint IDM_GETBLOCKFMTS = 0x000008b9U;
+enum uint IDM_BLOCKFMT = 0x000008baU;
+enum uint IDM_SHOWHIDE_CODE = 0x000008bbU;
 
 enum : uint
 {
-    IDM_TABLE      = 0x000008bc,
-    IDM_COPYFORMAT = 0x000008bd,
+    IDM_TABLE      = 0x000008bcU,
+    IDM_COPYFORMAT = 0x000008bdU,
 }
 
-enum uint IDM_PASTEFORMAT = 0x000008be;
+enum uint IDM_PASTEFORMAT = 0x000008beU;
 
 enum : uint
 {
-    IDM_GOTO           = 0x000008bf,
-    IDM_CHANGEFONT     = 0x000008c0,
-    IDM_CHANGEFONTSIZE = 0x000008c1,
-    IDM_CHANGECASE     = 0x000008c6,
+    IDM_GOTO           = 0x000008bfU,
+    IDM_CHANGEFONT     = 0x000008c0U,
+    IDM_CHANGEFONTSIZE = 0x000008c1U,
+    IDM_CHANGECASE     = 0x000008c6U,
 }
 
-enum uint IDM_SHOWSPECIALCHAR = 0x000008c9;
+enum uint IDM_SHOWSPECIALCHAR = 0x000008c9U;
 
 enum : uint
 {
-    IDM_SUBSCRIPT   = 0x000008c7,
-    IDM_SUPERSCRIPT = 0x000008c8,
+    IDM_SUBSCRIPT   = 0x000008c7U,
+    IDM_SUPERSCRIPT = 0x000008c8U,
 }
 
-enum uint IDM_CENTERALIGNPARA = 0x000008ca;
-enum uint IDM_LEFTALIGNPARA = 0x000008cb;
-enum uint IDM_RIGHTALIGNPARA = 0x000008cc;
-enum uint IDM_REMOVEPARAFORMAT = 0x000008cd;
+enum uint IDM_CENTERALIGNPARA = 0x000008caU;
+enum uint IDM_LEFTALIGNPARA = 0x000008cbU;
+enum uint IDM_RIGHTALIGNPARA = 0x000008ccU;
+enum uint IDM_REMOVEPARAFORMAT = 0x000008cdU;
 
 enum : uint
 {
-    IDM_APPLYNORMAL   = 0x000008ce,
-    IDM_APPLYHEADING1 = 0x000008cf,
-    IDM_APPLYHEADING2 = 0x000008d0,
-    IDM_APPLYHEADING3 = 0x000008d1,
+    IDM_APPLYNORMAL   = 0x000008ceU,
+    IDM_APPLYHEADING1 = 0x000008cfU,
+    IDM_APPLYHEADING2 = 0x000008d0U,
+    IDM_APPLYHEADING3 = 0x000008d1U,
 }
 
-enum uint IDM_DOCPROPERTIES = 0x000008d4;
-enum uint IDM_ADDFAVORITES = 0x000008d5;
-enum uint IDM_COPYSHORTCUT = 0x000008d6;
-enum uint IDM_SAVEBACKGROUND = 0x000008d7;
-enum uint IDM_SETWALLPAPER = 0x000008d8;
-enum uint IDM_COPYBACKGROUND = 0x000008d9;
-enum uint IDM_CREATESHORTCUT = 0x000008da;
+enum uint IDM_DOCPROPERTIES = 0x000008d4U;
+enum uint IDM_ADDFAVORITES = 0x000008d5U;
+enum uint IDM_COPYSHORTCUT = 0x000008d6U;
+enum uint IDM_SAVEBACKGROUND = 0x000008d7U;
+enum uint IDM_SETWALLPAPER = 0x000008d8U;
+enum uint IDM_COPYBACKGROUND = 0x000008d9U;
+enum uint IDM_CREATESHORTCUT = 0x000008daU;
 
 enum : uint
 {
-    IDM_PAGE       = 0x000008db,
-    IDM_SAVETARGET = 0x000008dc,
+    IDM_PAGE       = 0x000008dbU,
+    IDM_SAVETARGET = 0x000008dcU,
 }
 
-enum uint IDM_SHOWPICTURE = 0x000008dd;
-enum uint IDM_SAVEPICTURE = 0x000008de;
+enum uint IDM_SHOWPICTURE = 0x000008ddU;
+enum uint IDM_SAVEPICTURE = 0x000008deU;
 
 enum : uint
 {
-    IDM_DYNSRCPLAY = 0x000008df,
-    IDM_DYNSRCSTOP = 0x000008e0,
+    IDM_DYNSRCPLAY = 0x000008dfU,
+    IDM_DYNSRCSTOP = 0x000008e0U,
 }
 
-enum uint IDM_PRINTTARGET = 0x000008e1;
+enum uint IDM_PRINTTARGET = 0x000008e1U;
 
 enum : uint
 {
-    IDM_IMGARTPLAY   = 0x000008e2,
-    IDM_IMGARTSTOP   = 0x000008e3,
-    IDM_IMGARTREWIND = 0x000008e4,
+    IDM_IMGARTPLAY   = 0x000008e2U,
+    IDM_IMGARTSTOP   = 0x000008e3U,
+    IDM_IMGARTREWIND = 0x000008e4U,
 }
 
-enum uint IDM_PRINTQUERYJOBSPENDING = 0x000008e5;
-enum uint IDM_SETDESKTOPITEM = 0x000008e6;
-enum uint IDM_CONTEXTMENU = 0x000008e8;
+enum uint IDM_PRINTQUERYJOBSPENDING = 0x000008e5U;
+enum uint IDM_SETDESKTOPITEM = 0x000008e6U;
+enum uint IDM_CONTEXTMENU = 0x000008e8U;
 
 enum : uint
 {
-    IDM_GOBACKWARD = 0x000008ea,
-    IDM_GOFORWARD  = 0x000008eb,
+    IDM_GOBACKWARD = 0x000008eaU,
+    IDM_GOFORWARD  = 0x000008ebU,
 }
 
-enum uint IDM_PRESTOP = 0x000008ec;
+enum uint IDM_PRESTOP = 0x000008ecU;
 
 enum : uint
 {
-    IDM_GOTOCLIPBOARDADDRESS = 0x000008ed,
-    IDM_GOTOCLIPBOARDTEXT    = 0x000008ee,
+    IDM_GOTOCLIPBOARDADDRESS = 0x000008edU,
+    IDM_GOTOCLIPBOARDTEXT    = 0x000008eeU,
 }
 
 enum : uint
 {
-    IDM_MP_MYPICS       = 0x000008ef,
-    IDM_MP_EMAILPICTURE = 0x000008f0,
+    IDM_MP_MYPICS       = 0x000008efU,
+    IDM_MP_EMAILPICTURE = 0x000008f0U,
 }
 
-enum uint IDM_MP_PRINTPICTURE = 0x000008f1;
-enum uint IDM_CREATELINK = 0x000008f2;
-enum uint IDM_COPYCONTENT = 0x000008f3;
-enum uint IDM_LANGUAGE = 0x000008f4;
-enum uint IDM_GETPRINTTEMPLATE = 0x000008f7;
-enum uint IDM_SETPRINTTEMPLATE = 0x000008f8;
-enum uint IDM_TEMPLATE_PAGESETUP = 0x000008fa;
-enum uint IDM_REFRESH = 0x000008fc;
-enum uint IDM_STOPDOWNLOAD = 0x000008fd;
-enum uint IDM_ENABLE_INTERACTION = 0x000008fe;
-enum uint IDM_LAUNCHDEBUGGER = 0x00000906;
-enum uint IDM_BREAKATNEXT = 0x00000907;
+enum uint IDM_MP_PRINTPICTURE = 0x000008f1U;
+enum uint IDM_CREATELINK = 0x000008f2U;
+enum uint IDM_COPYCONTENT = 0x000008f3U;
+enum uint IDM_LANGUAGE = 0x000008f4U;
+enum uint IDM_GETPRINTTEMPLATE = 0x000008f7U;
+enum uint IDM_SETPRINTTEMPLATE = 0x000008f8U;
+enum uint IDM_TEMPLATE_PAGESETUP = 0x000008faU;
+enum uint IDM_REFRESH = 0x000008fcU;
+enum uint IDM_STOPDOWNLOAD = 0x000008fdU;
+enum uint IDM_ENABLE_INTERACTION = 0x000008feU;
+enum uint IDM_LAUNCHDEBUGGER = 0x00000906U;
+enum uint IDM_BREAKATNEXT = 0x00000907U;
 
 enum : uint
 {
-    IDM_INSINPUTHIDDEN   = 0x00000908,
-    IDM_INSINPUTPASSWORD = 0x00000909,
+    IDM_INSINPUTHIDDEN   = 0x00000908U,
+    IDM_INSINPUTPASSWORD = 0x00000909U,
 }
 
-enum uint IDM_OVERWRITE = 0x0000090a;
-enum uint IDM_PARSECOMPLETE = 0x0000090b;
-enum uint IDM_HTMLEDITMODE = 0x0000090c;
-enum uint IDM_REGISTRYREFRESH = 0x0000090d;
-enum uint IDM_COMPOSESETTINGS = 0x0000090e;
+enum uint IDM_OVERWRITE = 0x0000090aU;
+enum uint IDM_PARSECOMPLETE = 0x0000090bU;
+enum uint IDM_HTMLEDITMODE = 0x0000090cU;
+enum uint IDM_REGISTRYREFRESH = 0x0000090dU;
+enum uint IDM_COMPOSESETTINGS = 0x0000090eU;
 
 enum : uint
 {
-    IDM_SHOWALLTAGS         = 0x00000917,
-    IDM_SHOWALIGNEDSITETAGS = 0x00000911,
+    IDM_SHOWALLTAGS         = 0x00000917U,
+    IDM_SHOWALIGNEDSITETAGS = 0x00000911U,
 }
 
 enum : uint
 {
-    IDM_SHOWSCRIPTTAGS             = 0x00000912,
-    IDM_SHOWSTYLETAGS              = 0x00000913,
-    IDM_SHOWCOMMENTTAGS            = 0x00000914,
-    IDM_SHOWAREATAGS               = 0x00000915,
-    IDM_SHOWUNKNOWNTAGS            = 0x00000916,
-    IDM_SHOWMISCTAGS               = 0x00000910,
-    IDM_SHOWZEROBORDERATDESIGNTIME = 0x00000918,
+    IDM_SHOWSCRIPTTAGS             = 0x00000912U,
+    IDM_SHOWSTYLETAGS              = 0x00000913U,
+    IDM_SHOWCOMMENTTAGS            = 0x00000914U,
+    IDM_SHOWAREATAGS               = 0x00000915U,
+    IDM_SHOWUNKNOWNTAGS            = 0x00000916U,
+    IDM_SHOWMISCTAGS               = 0x00000910U,
+    IDM_SHOWZEROBORDERATDESIGNTIME = 0x00000918U,
 }
 
-enum uint IDM_AUTODETECT = 0x00000919;
-enum uint IDM_SCRIPTDEBUGGER = 0x0000091a;
-enum uint IDM_GETBYTESDOWNLOADED = 0x0000091b;
+enum uint IDM_AUTODETECT = 0x00000919U;
+enum uint IDM_SCRIPTDEBUGGER = 0x0000091aU;
+enum uint IDM_GETBYTESDOWNLOADED = 0x0000091bU;
 
 enum : uint
 {
-    IDM_NOACTIVATENORMALOLECONTROLS  = 0x0000091c,
-    IDM_NOACTIVATEDESIGNTIMECONTROLS = 0x0000091d,
-    IDM_NOACTIVATEJAVAAPPLETS        = 0x0000091e,
+    IDM_NOACTIVATENORMALOLECONTROLS  = 0x0000091cU,
+    IDM_NOACTIVATEDESIGNTIMECONTROLS = 0x0000091dU,
+    IDM_NOACTIVATEJAVAAPPLETS        = 0x0000091eU,
 }
 
-enum uint IDM_NOFIXUPURLSONPASTE = 0x0000091f;
-enum uint IDM_EMPTYGLYPHTABLE = 0x00000920;
-enum uint IDM_ADDTOGLYPHTABLE = 0x00000921;
-enum uint IDM_REMOVEFROMGLYPHTABLE = 0x00000922;
-enum uint IDM_REPLACEGLYPHCONTENTS = 0x00000923;
-enum uint IDM_SHOWWBRTAGS = 0x00000924;
-enum uint IDM_PERSISTSTREAMSYNC = 0x00000925;
-enum uint IDM_SETDIRTY = 0x00000926;
-enum uint IDM_RUNURLSCRIPT = 0x00000927;
-enum uint IDM_ZOOMRATIO = 0x00000928;
+enum uint IDM_NOFIXUPURLSONPASTE = 0x0000091fU;
+enum uint IDM_EMPTYGLYPHTABLE = 0x00000920U;
+enum uint IDM_ADDTOGLYPHTABLE = 0x00000921U;
+enum uint IDM_REMOVEFROMGLYPHTABLE = 0x00000922U;
+enum uint IDM_REPLACEGLYPHCONTENTS = 0x00000923U;
+enum uint IDM_SHOWWBRTAGS = 0x00000924U;
+enum uint IDM_PERSISTSTREAMSYNC = 0x00000925U;
+enum uint IDM_SETDIRTY = 0x00000926U;
+enum uint IDM_RUNURLSCRIPT = 0x00000927U;
+enum uint IDM_ZOOMRATIO = 0x00000928U;
 
 enum : uint
 {
-    IDM_GETZOOMNUMERATOR   = 0x00000929,
-    IDM_GETZOOMDENOMINATOR = 0x0000092a,
+    IDM_GETZOOMNUMERATOR   = 0x00000929U,
+    IDM_GETZOOMDENOMINATOR = 0x0000092aU,
 }
 
 enum : uint
 {
-    IDM_DIRLTR = 0x0000092e,
-    IDM_DIRRTL = 0x0000092f,
+    IDM_DIRLTR = 0x0000092eU,
+    IDM_DIRRTL = 0x0000092fU,
 }
 
 enum : uint
 {
-    IDM_BLOCKDIRLTR = 0x00000930,
-    IDM_BLOCKDIRRTL = 0x00000931,
+    IDM_BLOCKDIRLTR = 0x00000930U,
+    IDM_BLOCKDIRRTL = 0x00000931U,
 }
 
 enum : uint
 {
-    IDM_INLINEDIRLTR = 0x00000932,
-    IDM_INLINEDIRRTL = 0x00000933,
+    IDM_INLINEDIRLTR = 0x00000932U,
+    IDM_INLINEDIRRTL = 0x00000933U,
 }
 
-enum uint IDM_ISTRUSTEDDLG = 0x00000934;
-enum uint IDM_INSERTSPAN = 0x00000935;
-enum uint IDM_LOCALIZEEDITOR = 0x00000936;
-enum uint IDM_SAVEPRETRANSFORMSOURCE = 0x00000942;
-enum uint IDM_VIEWPRETRANSFORMSOURCE = 0x00000943;
+enum uint IDM_ISTRUSTEDDLG = 0x00000934U;
+enum uint IDM_INSERTSPAN = 0x00000935U;
+enum uint IDM_LOCALIZEEDITOR = 0x00000936U;
+enum uint IDM_SAVEPRETRANSFORMSOURCE = 0x00000942U;
+enum uint IDM_VIEWPRETRANSFORMSOURCE = 0x00000943U;
 
 enum : uint
 {
-    IDM_SCROLL_HERE      = 0x0000094c,
-    IDM_SCROLL_TOP       = 0x0000094d,
-    IDM_SCROLL_BOTTOM    = 0x0000094e,
-    IDM_SCROLL_PAGEUP    = 0x0000094f,
-    IDM_SCROLL_PAGEDOWN  = 0x00000950,
-    IDM_SCROLL_UP        = 0x00000951,
-    IDM_SCROLL_DOWN      = 0x00000952,
-    IDM_SCROLL_LEFTEDGE  = 0x00000953,
-    IDM_SCROLL_RIGHTEDGE = 0x00000954,
-    IDM_SCROLL_PAGELEFT  = 0x00000955,
-    IDM_SCROLL_PAGERIGHT = 0x00000956,
-    IDM_SCROLL_LEFT      = 0x00000957,
-    IDM_SCROLL_RIGHT     = 0x00000958,
+    IDM_SCROLL_HERE      = 0x0000094cU,
+    IDM_SCROLL_TOP       = 0x0000094dU,
+    IDM_SCROLL_BOTTOM    = 0x0000094eU,
+    IDM_SCROLL_PAGEUP    = 0x0000094fU,
+    IDM_SCROLL_PAGEDOWN  = 0x00000950U,
+    IDM_SCROLL_UP        = 0x00000951U,
+    IDM_SCROLL_DOWN      = 0x00000952U,
+    IDM_SCROLL_LEFTEDGE  = 0x00000953U,
+    IDM_SCROLL_RIGHTEDGE = 0x00000954U,
+    IDM_SCROLL_PAGELEFT  = 0x00000955U,
+    IDM_SCROLL_PAGERIGHT = 0x00000956U,
+    IDM_SCROLL_LEFT      = 0x00000957U,
+    IDM_SCROLL_RIGHT     = 0x00000958U,
 }
 
-enum uint IDM_MULTIPLESELECTION = 0x00000959;
+enum uint IDM_MULTIPLESELECTION = 0x00000959U;
 
 enum : uint
 {
-    IDM_2D_POSITION = 0x0000095a,
-    IDM_2D_ELEMENT  = 0x0000095b,
+    IDM_2D_POSITION = 0x0000095aU,
+    IDM_2D_ELEMENT  = 0x0000095bU,
 }
 
-enum uint IDM_1D_ELEMENT = 0x0000095c;
-enum uint IDM_ABSOLUTE_POSITION = 0x0000095d;
-enum uint IDM_LIVERESIZE = 0x0000095e;
-enum uint IDM_ATOMICSELECTION = 0x0000095f;
-enum uint IDM_AUTOURLDETECT_MODE = 0x00000960;
+enum uint IDM_1D_ELEMENT = 0x0000095cU;
+enum uint IDM_ABSOLUTE_POSITION = 0x0000095dU;
+enum uint IDM_LIVERESIZE = 0x0000095eU;
+enum uint IDM_ATOMICSELECTION = 0x0000095fU;
+enum uint IDM_AUTOURLDETECT_MODE = 0x00000960U;
 
 enum : uint
 {
-    IDM_IE50_PASTE      = 0x00000961,
-    IDM_IE50_PASTE_MODE = 0x00000962,
+    IDM_IE50_PASTE      = 0x00000961U,
+    IDM_IE50_PASTE_MODE = 0x00000962U,
 }
 
-enum uint IDM_GETIPRINT = 0x00000963;
-enum uint IDM_DISABLE_EDITFOCUS_UI = 0x00000964;
-enum uint IDM_RESPECTVISIBILITY_INDESIGN = 0x00000965;
-enum uint IDM_CSSEDITING_LEVEL = 0x00000966;
-enum uint IDM_UI_OUTDENT = 0x00000967;
-enum uint IDM_UPDATEPAGESTATUS = 0x00000968;
-enum uint IDM_IME_ENABLE_RECONVERSION = 0x00000969;
-enum uint IDM_KEEPSELECTION = 0x0000096a;
-enum uint IDM_UNLOADDOCUMENT = 0x0000096b;
-enum uint IDM_OVERRIDE_CURSOR = 0x00000974;
-enum uint IDM_PEERHITTESTSAMEINEDIT = 0x00000977;
-enum uint IDM_TRUSTAPPCACHE = 0x00000979;
-enum uint IDM_BACKGROUNDIMAGECACHE = 0x0000097e;
-enum uint IDM_GETUSERACTIONTIME = 0x0000097f;
-enum uint IDM_BEGINUSERACTION = 0x00000980;
-enum uint IDM_ENDUSERACTION = 0x00000981;
-enum uint IDM_SETCUSTOMCURSOR = 0x00000982;
-enum uint IDM_FOLLOWLINKT = 0x00000983;
-enum uint IDM_CARETBROWSINGMODE = 0x00000984;
+enum uint IDM_GETIPRINT = 0x00000963U;
+enum uint IDM_DISABLE_EDITFOCUS_UI = 0x00000964U;
+enum uint IDM_RESPECTVISIBILITY_INDESIGN = 0x00000965U;
+enum uint IDM_CSSEDITING_LEVEL = 0x00000966U;
+enum uint IDM_UI_OUTDENT = 0x00000967U;
+enum uint IDM_UPDATEPAGESTATUS = 0x00000968U;
+enum uint IDM_IME_ENABLE_RECONVERSION = 0x00000969U;
+enum uint IDM_KEEPSELECTION = 0x0000096aU;
+enum uint IDM_UNLOADDOCUMENT = 0x0000096bU;
+enum uint IDM_OVERRIDE_CURSOR = 0x00000974U;
+enum uint IDM_PEERHITTESTSAMEINEDIT = 0x00000977U;
+enum uint IDM_TRUSTAPPCACHE = 0x00000979U;
+enum uint IDM_BACKGROUNDIMAGECACHE = 0x0000097eU;
+enum uint IDM_GETUSERACTIONTIME = 0x0000097fU;
+enum uint IDM_BEGINUSERACTION = 0x00000980U;
+enum uint IDM_ENDUSERACTION = 0x00000981U;
+enum uint IDM_SETCUSTOMCURSOR = 0x00000982U;
+enum uint IDM_FOLLOWLINKT = 0x00000983U;
+enum uint IDM_CARETBROWSINGMODE = 0x00000984U;
 
 enum : uint
 {
-    IDM_STYLEMENU_SETNOSTYLE          = 0x00000985,
-    IDM_STYLEMENU_GETNOSTYLE          = 0x00000986,
-    IDM_STYLEMENU_GETPREFSTYLE        = 0x00000987,
-    IDM_STYLEMENU_CHANGESELECTEDSTYLE = 0x00000988,
+    IDM_STYLEMENU_SETNOSTYLE          = 0x00000985U,
+    IDM_STYLEMENU_GETNOSTYLE          = 0x00000986U,
+    IDM_STYLEMENU_GETPREFSTYLE        = 0x00000987U,
+    IDM_STYLEMENU_CHANGESELECTEDSTYLE = 0x00000988U,
 }
 
 enum : uint
 {
-    IDM_MEDIA_PLAYPAUSE         = 0x00000989,
-    IDM_MEDIA_MUTEUNMUTE        = 0x0000098a,
-    IDM_MEDIA_PLAY              = 0x0000098b,
-    IDM_MEDIA_PAUSE             = 0x0000098c,
-    IDM_MEDIA_STOP              = 0x0000098d,
-    IDM_MEDIA_FULLSCREEN_TOGGLE = 0x0000098e,
-    IDM_MEDIA_FULLSCREEN_EXIT   = 0x0000098f,
+    IDM_MEDIA_PLAYPAUSE         = 0x00000989U,
+    IDM_MEDIA_MUTEUNMUTE        = 0x0000098aU,
+    IDM_MEDIA_PLAY              = 0x0000098bU,
+    IDM_MEDIA_PAUSE             = 0x0000098cU,
+    IDM_MEDIA_STOP              = 0x0000098dU,
+    IDM_MEDIA_FULLSCREEN_TOGGLE = 0x0000098eU,
+    IDM_MEDIA_FULLSCREEN_EXIT   = 0x0000098fU,
 }
 
 enum : uint
 {
-    IDM_MEDIA_VOLUME_UP       = 0x00000990,
-    IDM_MEDIA_VOLUME_DOWN     = 0x00000991,
-    IDM_MEDIA_SEEK_TO_START   = 0x00000992,
-    IDM_MEDIA_SEEK_TO_END     = 0x00000993,
-    IDM_MEDIA_SEEK_FWD_SMALL  = 0x00000994,
-    IDM_MEDIA_SEEK_BACK_SMALL = 0x00000995,
-    IDM_MEDIA_SEEK_FWD_LARGE  = 0x00000996,
-    IDM_MEDIA_SEEK_BACK_LARGE = 0x00000997,
+    IDM_MEDIA_VOLUME_UP       = 0x00000990U,
+    IDM_MEDIA_VOLUME_DOWN     = 0x00000991U,
+    IDM_MEDIA_SEEK_TO_START   = 0x00000992U,
+    IDM_MEDIA_SEEK_TO_END     = 0x00000993U,
+    IDM_MEDIA_SEEK_FWD_SMALL  = 0x00000994U,
+    IDM_MEDIA_SEEK_BACK_SMALL = 0x00000995U,
+    IDM_MEDIA_SEEK_FWD_LARGE  = 0x00000996U,
+    IDM_MEDIA_SEEK_BACK_LARGE = 0x00000997U,
 }
 
 enum : uint
 {
-    IDM_MEDIA_RATE_FASTER         = 0x00000998,
-    IDM_MEDIA_RATE_SLOWER         = 0x00000999,
-    IDM_MEDIA_SHOWCONTROLS_TOGGLE = 0x0000099a,
+    IDM_MEDIA_RATE_FASTER         = 0x00000998U,
+    IDM_MEDIA_RATE_SLOWER         = 0x00000999U,
+    IDM_MEDIA_SHOWCONTROLS_TOGGLE = 0x0000099aU,
 }
 
-enum uint IDM_MEDIA_ZOOMMODE_TOGGLE = 0x0000099b;
+enum uint IDM_MEDIA_ZOOMMODE_TOGGLE = 0x0000099bU;
 
 enum : uint
 {
-    IDM_MEDIA_FRAMESTEP_FWD        = 0x0000099c,
-    IDM_MEDIA_FRAMESTEP_BACK       = 0x0000099d,
-    IDM_MEDIA_MUTE                 = 0x0000099e,
-    IDM_MEDIA_UNMUTE               = 0x0000099f,
-    IDM_MEDIA_SHOW_AUDIO_ACCESS    = 0x000009a0,
-    IDM_MEDIA_SHOW_SUBTITLE_ACCESS = 0x000009a1,
+    IDM_MEDIA_FRAMESTEP_FWD        = 0x0000099cU,
+    IDM_MEDIA_FRAMESTEP_BACK       = 0x0000099dU,
+    IDM_MEDIA_MUTE                 = 0x0000099eU,
+    IDM_MEDIA_UNMUTE               = 0x0000099fU,
+    IDM_MEDIA_SHOW_AUDIO_ACCESS    = 0x000009a0U,
+    IDM_MEDIA_SHOW_SUBTITLE_ACCESS = 0x000009a1U,
 }
 
 enum : uint
 {
-    IDM_MEDIA_PLAYRATE0 = 0x000009b0,
-    IDM_MEDIA_PLAYRATE1 = 0x000009b1,
-    IDM_MEDIA_PLAYRATE2 = 0x000009b2,
-    IDM_MEDIA_PLAYRATE3 = 0x000009b3,
-    IDM_MEDIA_PLAYRATE4 = 0x000009b4,
-    IDM_MEDIA_PLAYRATE5 = 0x000009b5,
-    IDM_MEDIA_PLAYRATE6 = 0x000009b6,
-    IDM_MEDIA_PLAYRATE7 = 0x000009b7,
-    IDM_MEDIA_PLAYRATE8 = 0x000009b8,
-    IDM_MEDIA_PLAYRATE9 = 0x000009b9,
+    IDM_MEDIA_PLAYRATE0 = 0x000009b0U,
+    IDM_MEDIA_PLAYRATE1 = 0x000009b1U,
+    IDM_MEDIA_PLAYRATE2 = 0x000009b2U,
+    IDM_MEDIA_PLAYRATE3 = 0x000009b3U,
+    IDM_MEDIA_PLAYRATE4 = 0x000009b4U,
+    IDM_MEDIA_PLAYRATE5 = 0x000009b5U,
+    IDM_MEDIA_PLAYRATE6 = 0x000009b6U,
+    IDM_MEDIA_PLAYRATE7 = 0x000009b7U,
+    IDM_MEDIA_PLAYRATE8 = 0x000009b8U,
+    IDM_MEDIA_PLAYRATE9 = 0x000009b9U,
 }
 
 enum : uint
 {
-    IDM_PASTECONTENTONLY = 0x000009c4,
-    IDM_PASTETEXTONLY    = 0x000009c5,
+    IDM_PASTECONTENTONLY = 0x000009c4U,
+    IDM_PASTETEXTONLY    = 0x000009c5U,
 }
 
-enum uint IDM_INSERTHTML = 0x000009c6;
-enum uint IDM_DEFAULTBLOCK = 0x0000179e;
+enum uint IDM_INSERTHTML = 0x000009c6U;
+enum uint IDM_DEFAULTBLOCK = 0x0000179eU;
 
 enum : uint
 {
-    IDM_MIMECSET__FIRST__ = 0x00000e19,
-    IDM_MIMECSET__LAST__  = 0x00000e73,
+    IDM_MIMECSET__FIRST__ = 0x00000e19U,
+    IDM_MIMECSET__LAST__  = 0x00000e73U,
 }
 
 enum : uint
 {
-    IDM_MENUEXT_FIRST__ = 0x00000e74,
-    IDM_MENUEXT_LAST__  = 0x00000e94,
-    IDM_MENUEXT_COUNT   = 0x00000e95,
+    IDM_MENUEXT_FIRST__ = 0x00000e74U,
+    IDM_MENUEXT_LAST__  = 0x00000e94U,
+    IDM_MENUEXT_COUNT   = 0x00000e95U,
 }
 
-enum uint IDM_ADDCONSOLEMESSAGERECEIVER = 0x00000ed8;
-enum uint IDM_REMOVECONSOLEMESSAGERECEIVER = 0x00000ed9;
-enum uint IDM_STARTDIAGNOSTICSMODE = 0x00000eda;
-enum uint IDM_GETSCRIPTENGINE = 0x00000edb;
-enum uint IDM_ADDDEBUGCALLBACKRECEIVER = 0x00000edc;
-enum uint IDM_REMOVEDEBUGCALLBACKRECEIVER = 0x00000edd;
-enum uint IDM_DEFAULTPARAGRAPHSEPARATOR = 0x00000f3c;
-enum uint IDM_BEGINUNDOUNIT = 0x00000f3d;
-enum uint IDM_ENDUNDOUNIT = 0x00000f3e;
-enum uint IDM_CLEARUNDO = 0x00000f3f;
-enum uint IDM_INSPECTELEMENT = 0x00000f40;
-enum uint IDM_SHAREPICTURE = 0x00000f41;
-enum uint IDM_ENABLE_OBJECT_RESIZING = 0x00000f42;
-enum uint IDM_INSERTTEXT = 0x00000f43;
-enum uint IDM_LAUNCHURICALLBACK = 0x00000f44;
+enum uint IDM_ADDCONSOLEMESSAGERECEIVER = 0x00000ed8U;
+enum uint IDM_REMOVECONSOLEMESSAGERECEIVER = 0x00000ed9U;
+enum uint IDM_STARTDIAGNOSTICSMODE = 0x00000edaU;
+enum uint IDM_GETSCRIPTENGINE = 0x00000edbU;
+enum uint IDM_ADDDEBUGCALLBACKRECEIVER = 0x00000edcU;
+enum uint IDM_REMOVEDEBUGCALLBACKRECEIVER = 0x00000eddU;
+enum uint IDM_DEFAULTPARAGRAPHSEPARATOR = 0x00000f3cU;
+enum uint IDM_BEGINUNDOUNIT = 0x00000f3dU;
+enum uint IDM_ENDUNDOUNIT = 0x00000f3eU;
+enum uint IDM_CLEARUNDO = 0x00000f3fU;
+enum uint IDM_INSPECTELEMENT = 0x00000f40U;
+enum uint IDM_SHAREPICTURE = 0x00000f41U;
+enum uint IDM_ENABLE_OBJECT_RESIZING = 0x00000f42U;
+enum uint IDM_INSERTTEXT = 0x00000f43U;
+enum uint IDM_LAUNCHURICALLBACK = 0x00000f44U;
 
 enum : uint
 {
-    IDM_FOLLOWLINKN_INPRIVATE = 0x00000f45,
-    IDM_FOLLOWLINKT_INPRIVATE = 0x00000f46,
-    IDM_FOLLOWLINKEDGE        = 0x00000f47,
+    IDM_FOLLOWLINKN_INPRIVATE = 0x00000f45U,
+    IDM_FOLLOWLINKT_INPRIVATE = 0x00000f46U,
+    IDM_FOLLOWLINKEDGE        = 0x00000f47U,
 }
 
 enum : uint
 {
-    IDM_OPEN       = 0x000007d0,
-    IDM_NEW        = 0x000007d1,
-    IDM_SAVE       = 0x00000046,
-    IDM_SAVEAS     = 0x00000047,
-    IDM_SAVECOPYAS = 0x000007d2,
+    IDM_OPEN       = 0x000007d0U,
+    IDM_NEW        = 0x000007d1U,
+    IDM_SAVE       = 0x00000046U,
+    IDM_SAVEAS     = 0x00000047U,
+    IDM_SAVECOPYAS = 0x000007d2U,
 }
 
-enum uint IDM_PRINTPREVIEW = 0x000007d3;
+enum uint IDM_PRINTPREVIEW = 0x000007d3U;
 
 enum : uint
 {
-    IDM_SHOWPRINT     = 0x000007da,
-    IDM_SHOWPAGESETUP = 0x000007db,
+    IDM_SHOWPRINT     = 0x000007daU,
+    IDM_SHOWPAGESETUP = 0x000007dbU,
 }
 
 enum : uint
 {
-    IDM_PRINT     = 0x0000001b,
-    IDM_PAGESETUP = 0x000007d4,
+    IDM_PRINT     = 0x0000001bU,
+    IDM_PAGESETUP = 0x000007d4U,
 }
 
 enum : uint
 {
-    IDM_SPELL        = 0x000007d5,
-    IDM_PASTESPECIAL = 0x000007d6,
+    IDM_SPELL        = 0x000007d5U,
+    IDM_PASTESPECIAL = 0x000007d6U,
 }
 
-enum uint IDM_CLEARSELECTION = 0x000007d7;
-enum uint IDM_PROPERTIES = 0x0000001c;
+enum uint IDM_CLEARSELECTION = 0x000007d7U;
+enum uint IDM_PROPERTIES = 0x0000001cU;
 
 enum : uint
 {
-    IDM_REDO      = 0x0000001d,
-    IDM_UNDO      = 0x0000002b,
-    IDM_SELECTALL = 0x0000001f,
+    IDM_REDO      = 0x0000001dU,
+    IDM_UNDO      = 0x0000002bU,
+    IDM_SELECTALL = 0x0000001fU,
 }
 
-enum uint IDM_ZOOMPERCENT = 0x00000032;
-enum uint IDM_GETZOOM = 0x00000044;
+enum uint IDM_ZOOMPERCENT = 0x00000032U;
+enum uint IDM_GETZOOM = 0x00000044U;
 
 enum : uint
 {
-    IDM_STOP    = 0x0000085a,
-    IDM_COPY    = 0x0000000f,
-    IDM_CUT     = 0x00000010,
-    IDM_PASTE   = 0x0000001a,
-    IDM_SAVEPDF = 0x00000063,
+    IDM_STOP    = 0x0000085aU,
+    IDM_COPY    = 0x0000000fU,
+    IDM_CUT     = 0x00000010U,
+    IDM_PASTE   = 0x0000001aU,
+    IDM_SAVEPDF = 0x00000063U,
 }
 
-enum uint IDM_TOGGLEREADINGBAR = 0x00003b69;
-enum uint IDM_ADDPDFHIGHLIGHT = 0x00003b6a;
-enum uint IDM_DELETEPDFHIGHLIGHT = 0x00003b6b;
-enum uint IDM_ADDPDFNOTE = 0x00003b6c;
-enum uint IDM_OPENPDFNOTE = 0x00003b6d;
-enum uint IDM_EDITPDFHIGHLIGHT = 0x00003b6e;
-enum uint IDM_PINKHIGHLIGHT = 0x00003b6f;
-enum uint IDM_BLUEHIGHLIGHT = 0x00003b70;
-enum uint IDM_GREENHIGHLIGHT = 0x00003b71;
-enum uint IDM_YELLOWHIGHLIGHT = 0x00003b72;
-enum uint IDM_NONEHIGHLIGHT = 0x00003b73;
-enum uint IDM_PDFREADALOUD = 0x00003b74;
-enum uint IDM_SHAREPDF = 0x00003b75;
-enum uint IDM_PDFDEFINE = 0x00003b76;
+enum uint IDM_TOGGLEREADINGBAR = 0x00003b69U;
+enum uint IDM_ADDPDFHIGHLIGHT = 0x00003b6aU;
+enum uint IDM_DELETEPDFHIGHLIGHT = 0x00003b6bU;
+enum uint IDM_ADDPDFNOTE = 0x00003b6cU;
+enum uint IDM_OPENPDFNOTE = 0x00003b6dU;
+enum uint IDM_EDITPDFHIGHLIGHT = 0x00003b6eU;
+enum uint IDM_PINKHIGHLIGHT = 0x00003b6fU;
+enum uint IDM_BLUEHIGHLIGHT = 0x00003b70U;
+enum uint IDM_GREENHIGHLIGHT = 0x00003b71U;
+enum uint IDM_YELLOWHIGHLIGHT = 0x00003b72U;
+enum uint IDM_NONEHIGHLIGHT = 0x00003b73U;
+enum uint IDM_PDFREADALOUD = 0x00003b74U;
+enum uint IDM_SHAREPDF = 0x00003b75U;
+enum uint IDM_PDFDEFINE = 0x00003b76U;
 
 enum : int
 {
@@ -3840,154 +4107,154 @@ enum : int
     CMD_ZOOM_FIT       = 0xfffffffb,
 }
 
-enum uint IDM_CONTEXT = 0x00000001;
+enum uint IDM_CONTEXT = 0x00000001U;
 
 enum : uint
 {
-    IDM_HWND               = 0x00000002,
-    IDM_NEW_TOPLEVELWINDOW = 0x00001b8a,
+    IDM_HWND               = 0x00000002U,
+    IDM_NEW_TOPLEVELWINDOW = 0x00001b8aU,
 }
 
-enum uint IDM_PRESERVEUNDOALWAYS = 0x000017a1;
-enum uint IDM_PERSISTDEFAULTVALUES = 0x00001bbc;
-enum uint IDM_PROTECTMETATAGS = 0x00001bbd;
-enum uint IDM_GETFRAMEZONE = 0x00001795;
-enum uint IDM_REFRESH_THIS = 0x0000179a;
-enum uint IDM_MENUEXT_PLACEHOLDER = 0x0000179f;
+enum uint IDM_PRESERVEUNDOALWAYS = 0x000017a1U;
+enum uint IDM_PERSISTDEFAULTVALUES = 0x00001bbcU;
+enum uint IDM_PROTECTMETATAGS = 0x00001bbdU;
+enum uint IDM_GETFRAMEZONE = 0x00001795U;
+enum uint IDM_REFRESH_THIS = 0x0000179aU;
+enum uint IDM_MENUEXT_PLACEHOLDER = 0x0000179fU;
 
 enum : uint
 {
-    IDM_FIRE_PRINTTEMPLATEUP   = 0x00003a98,
-    IDM_FIRE_PRINTTEMPLATEDOWN = 0x00003a99,
+    IDM_FIRE_PRINTTEMPLATEUP   = 0x00003a98U,
+    IDM_FIRE_PRINTTEMPLATEDOWN = 0x00003a99U,
 }
 
-enum uint IDM_SETPRINTHANDLES = 0x00003a9a;
-enum uint IDM_CLEARAUTHENTICATIONCACHE = 0x00003a9b;
-enum uint IDM_GETUSERINITFLAGS = 0x00003a9c;
-enum uint IDM_GETDOCDLGFLAGS = 0x00003a9d;
-enum uint IDM_OLEWINDOWSTATECHANGED = 0x00003a9e;
-enum uint IDM_ACTIVEXINSTALLSCOPE = 0x00003a9f;
-enum uint IDM_SETSESSIONDOCUMENTMODE = 0x00003aa0;
-enum uint IDM_GETSESSIONDOCUMENTMODE = 0x00003aa1;
-enum uint IDM_SETPROFILINGONSTART = 0x00003aa2;
-enum uint IDM_GETPROFILINGONSTART = 0x00003aa3;
-enum uint IDM_SETSCRIPTCONSOLE = 0x00003aa4;
-enum uint IDM_SETNAVIGATEEVENTSINK = 0x00003aa5;
-enum uint IDM_SETDEVTOOLBARCONSOLE = 0x00003aa8;
-enum uint IDM_POPSTATEEVENT = 0x00003aa9;
-enum uint IDM_SETPARTIALLAYOUTSTATUS = 0x00003aad;
-enum uint IDM_GETPARTIALLAYOUTSTATUS = 0x00003aae;
-enum uint IDM_ADDPARTIALTESTSTEPCOUNT = 0x00003aaf;
-enum uint IDM_SETL9QUIRKSEMULATIONENABLED = 0x00003ab0;
-enum uint IDM_GETL9QUIRKSEMULATIONENABLED = 0x00003ab1;
-enum uint IDM_SETPOINTERLOCKCONSENT = 0x00003ab2;
-enum uint IDM_GETDEFAULTZOOMLEVEL = 0x00003ab3;
-enum uint IDM_GETELEMENTBOUNDINGBOX = 0x00003ab4;
-enum uint IDM_SETGEOLOCATIONCONSENT = 0x00003ab5;
-enum uint IDM_ACTIVEXFILTERINGENABLED = 0x00003ab6;
+enum uint IDM_SETPRINTHANDLES = 0x00003a9aU;
+enum uint IDM_CLEARAUTHENTICATIONCACHE = 0x00003a9bU;
+enum uint IDM_GETUSERINITFLAGS = 0x00003a9cU;
+enum uint IDM_GETDOCDLGFLAGS = 0x00003a9dU;
+enum uint IDM_OLEWINDOWSTATECHANGED = 0x00003a9eU;
+enum uint IDM_ACTIVEXINSTALLSCOPE = 0x00003a9fU;
+enum uint IDM_SETSESSIONDOCUMENTMODE = 0x00003aa0U;
+enum uint IDM_GETSESSIONDOCUMENTMODE = 0x00003aa1U;
+enum uint IDM_SETPROFILINGONSTART = 0x00003aa2U;
+enum uint IDM_GETPROFILINGONSTART = 0x00003aa3U;
+enum uint IDM_SETSCRIPTCONSOLE = 0x00003aa4U;
+enum uint IDM_SETNAVIGATEEVENTSINK = 0x00003aa5U;
+enum uint IDM_SETDEVTOOLBARCONSOLE = 0x00003aa8U;
+enum uint IDM_POPSTATEEVENT = 0x00003aa9U;
+enum uint IDM_SETPARTIALLAYOUTSTATUS = 0x00003aadU;
+enum uint IDM_GETPARTIALLAYOUTSTATUS = 0x00003aaeU;
+enum uint IDM_ADDPARTIALTESTSTEPCOUNT = 0x00003aafU;
+enum uint IDM_SETL9QUIRKSEMULATIONENABLED = 0x00003ab0U;
+enum uint IDM_GETL9QUIRKSEMULATIONENABLED = 0x00003ab1U;
+enum uint IDM_SETPOINTERLOCKCONSENT = 0x00003ab2U;
+enum uint IDM_GETDEFAULTZOOMLEVEL = 0x00003ab3U;
+enum uint IDM_GETELEMENTBOUNDINGBOX = 0x00003ab4U;
+enum uint IDM_SETGEOLOCATIONCONSENT = 0x00003ab5U;
+enum uint IDM_ACTIVEXFILTERINGENABLED = 0x00003ab6U;
 
 enum : uint
 {
-    IDM_SHARE              = 0x00003ab7,
-    IDM_SHAREAPPCACHEEVENT = 0x00003ab9,
+    IDM_SHARE              = 0x00003ab7U,
+    IDM_SHAREAPPCACHEEVENT = 0x00003ab9U,
 }
 
-enum uint IDM_GETPRINTMANAGERDOCSOURCE = 0x00003abe;
-enum uint IDM_SETEXTRAHEADERS = 0x00003abf;
-enum uint IDM_SETACCESSIBILITYNAME = 0x00003ac0;
-enum uint IDM_UPDATESETTINGSFROMREGISTRY = 0x00003ac1;
-enum uint IDM_PERFORMEDITACTIVATION = 0x00003ac2;
-enum uint IDM_SETDEFAULTBACKGROUNDCOLOR = 0x00003ac3;
-enum uint IDM_GETDEFAULTBACKGROUNDCOLOR = 0x00003ac4;
-enum uint IDM_NOTIFYZOOMANDSCROLLANIMATIONEND = 0x00003ac5;
-enum uint IDM_NOTIFYCONTEXTMENUDISMISSED = 0x00003ac6;
-enum uint IDM_GETPRINTMANAGERDOCSOURCEASYNC = 0x00003ac7;
-enum uint IDM_SETPAGEACTIONALLOWEDFLAGS = 0x00003afc;
-enum uint IDM_INVOKEFLIPAHEADTARGET = 0x00003b60;
-enum uint IDM_ENABLEFLIPAHEADTARGET = 0x00003b61;
+enum uint IDM_GETPRINTMANAGERDOCSOURCE = 0x00003abeU;
+enum uint IDM_SETEXTRAHEADERS = 0x00003abfU;
+enum uint IDM_SETACCESSIBILITYNAME = 0x00003ac0U;
+enum uint IDM_UPDATESETTINGSFROMREGISTRY = 0x00003ac1U;
+enum uint IDM_PERFORMEDITACTIVATION = 0x00003ac2U;
+enum uint IDM_SETDEFAULTBACKGROUNDCOLOR = 0x00003ac3U;
+enum uint IDM_GETDEFAULTBACKGROUNDCOLOR = 0x00003ac4U;
+enum uint IDM_NOTIFYZOOMANDSCROLLANIMATIONEND = 0x00003ac5U;
+enum uint IDM_NOTIFYCONTEXTMENUDISMISSED = 0x00003ac6U;
+enum uint IDM_GETPRINTMANAGERDOCSOURCEASYNC = 0x00003ac7U;
+enum uint IDM_SETPAGEACTIONALLOWEDFLAGS = 0x00003afcU;
+enum uint IDM_INVOKEFLIPAHEADTARGET = 0x00003b60U;
+enum uint IDM_ENABLEFLIPAHEADTARGET = 0x00003b61U;
 
 enum : uint
 {
-    IDM_DEBUGGERDYNAMICATTACH              = 0x00003b62,
-    IDM_DEBUGGERDYNAMICDETACH              = 0x00003b63,
-    IDM_DEBUGGERDYNAMICATTACHSOURCERUNDOWN = 0x00003b64,
+    IDM_DEBUGGERDYNAMICATTACH              = 0x00003b62U,
+    IDM_DEBUGGERDYNAMICDETACH              = 0x00003b63U,
+    IDM_DEBUGGERDYNAMICATTACHSOURCERUNDOWN = 0x00003b64U,
 }
 
-enum uint IDM_GETDEBUGGERSTATE = 0x00003b65;
-enum uint IDM_SELECTIONSEARCH = 0x00003b66;
-enum uint IDM_SHOWSHAREUI = 0x00003b67;
-enum uint IDM_RUNFLASH = 0x00003b68;
-enum uint DISPID_INTERNAL_CELEMENTCLASSCACHE = 0x80000000;
+enum uint IDM_GETDEBUGGERSTATE = 0x00003b65U;
+enum uint IDM_SELECTIONSEARCH = 0x00003b66U;
+enum uint IDM_SHOWSHAREUI = 0x00003b67U;
+enum uint IDM_RUNFLASH = 0x00003b68U;
+enum uint DISPID_INTERNAL_CELEMENTCLASSCACHE = 0x80000000U;
 
 enum : uint
 {
-    DISPID_HTMLOBJECT   = 0x000101f4,
-    DISPID_ELEMENT      = 0x000103e8,
-    DISPID_SITE         = 0x000107d0,
-    DISPID_OBJECT       = 0x00010bb8,
-    DISPID_STYLE        = 0x00010fa0,
-    DISPID_BASE_STYLE   = 0x00011194,
-    DISPID_ATTRS        = 0x00011388,
-    DISPID_EVENTS       = 0x00011770,
-    DISPID_XOBJ_EXPANDO = 0x00011b58,
-    DISPID_XOBJ_ORDINAL = 0x00011f40,
-}
-
-enum : uint
-{
-    DISPID_ACTIVEX_EXPANDO_BASE = 0x00011b58,
-    DISPID_ACTIVEX_EXPANDO_MAX  = 0x00011f3f,
+    DISPID_HTMLOBJECT   = 0x000101f4U,
+    DISPID_ELEMENT      = 0x000103e8U,
+    DISPID_SITE         = 0x000107d0U,
+    DISPID_OBJECT       = 0x00010bb8U,
+    DISPID_STYLE        = 0x00010fa0U,
+    DISPID_BASE_STYLE   = 0x00011194U,
+    DISPID_ATTRS        = 0x00011388U,
+    DISPID_EVENTS       = 0x00011770U,
+    DISPID_XOBJ_EXPANDO = 0x00011b58U,
+    DISPID_XOBJ_ORDINAL = 0x00011f40U,
 }
 
 enum : uint
 {
-    DISPID_OBJECT_ORDINAL_BASE = 0x00011f40,
-    DISPID_OBJECT_ORDINAL_MAX  = 0x00012327,
+    DISPID_ACTIVEX_EXPANDO_BASE = 0x00011b58U,
+    DISPID_ACTIVEX_EXPANDO_MAX  = 0x00011f3fU,
 }
 
 enum : uint
 {
-    DISPID_COLLECTION_MIN = 0x000f4240,
-    DISPID_COLLECTION_MAX = 0x002dc6bf,
+    DISPID_OBJECT_ORDINAL_BASE = 0x00011f40U,
+    DISPID_OBJECT_ORDINAL_MAX  = 0x00012327U,
 }
 
 enum : uint
 {
-    DISPID_STYLESHEETSCOLLECTION_NAMED_BASE   = 0x000f4240,
-    DISPID_STYLESHEETSCOLLECTION_ORDINAL_BASE = 0x001e8480,
-    DISPID_STYLESHEETSCOLLECTION_ORDINAL_MAX  = 0x002dc6bf,
+    DISPID_COLLECTION_MIN = 0x000f4240U,
+    DISPID_COLLECTION_MAX = 0x002dc6bfU,
 }
 
 enum : uint
 {
-    DISPID_EXPANDO_BASE               = 0x002dc6c0,
-    DISPID_EXPANDO_MAX                = 0x003d08ff,
-    DISPID_EVENTHOOK_SENSITIVE_BASE   = 0x003d0900,
-    DISPID_EVENTHOOK_SENSITIVE_MAX    = 0x0044aa1f,
-    DISPID_EVENTHOOK_INSENSITIVE_BASE = 0x0044aa20,
-    DISPID_EVENTHOOK_INSENSITIVE_MAX  = 0x004c4b3f,
-}
-
-enum uint DISPID_PEER_HOLDER_BASE = 0x004c4b40;
-
-enum : uint
-{
-    DISPID_CANVASPIXELARRAY_BASE = 0x004c4b40,
-    DISPID_CANVASPIXELARRAY_MAX  = 0x77359400,
+    DISPID_STYLESHEETSCOLLECTION_NAMED_BASE   = 0x000f4240U,
+    DISPID_STYLESHEETSCOLLECTION_ORDINAL_BASE = 0x001e8480U,
+    DISPID_STYLESHEETSCOLLECTION_ORDINAL_MAX  = 0x002dc6bfU,
 }
 
 enum : uint
 {
-    DISPID_CommonCtrl_FONTNAME        = 0x00000001,
-    DISPID_CommonCtrl_FONTSIZE        = 0x00000002,
-    DISPID_CommonCtrl_FONTBOLD        = 0x00000003,
-    DISPID_CommonCtrl_FONTITAL        = 0x00000004,
-    DISPID_CommonCtrl_FONTUNDER       = 0x00000005,
-    DISPID_CommonCtrl_FONTSTRIKE      = 0x00000006,
-    DISPID_CommonCtrl_FONTWEIGHT      = 0x00000007,
-    DISPID_CommonCtrl_FONTCHARSET     = 0x00000008,
-    DISPID_CommonCtrl_FONTSUPERSCRIPT = 0x00000009,
-    DISPID_CommonCtrl_FONTSUBSCRIPT   = 0x0000000a,
+    DISPID_EXPANDO_BASE               = 0x002dc6c0U,
+    DISPID_EXPANDO_MAX                = 0x003d08ffU,
+    DISPID_EVENTHOOK_SENSITIVE_BASE   = 0x003d0900U,
+    DISPID_EVENTHOOK_SENSITIVE_MAX    = 0x0044aa1fU,
+    DISPID_EVENTHOOK_INSENSITIVE_BASE = 0x0044aa20U,
+    DISPID_EVENTHOOK_INSENSITIVE_MAX  = 0x004c4b3fU,
+}
+
+enum uint DISPID_PEER_HOLDER_BASE = 0x004c4b40U;
+
+enum : uint
+{
+    DISPID_CANVASPIXELARRAY_BASE = 0x004c4b40U,
+    DISPID_CANVASPIXELARRAY_MAX  = 0x77359400U,
+}
+
+enum : uint
+{
+    DISPID_CommonCtrl_FONTNAME        = 0x00000001U,
+    DISPID_CommonCtrl_FONTSIZE        = 0x00000002U,
+    DISPID_CommonCtrl_FONTBOLD        = 0x00000003U,
+    DISPID_CommonCtrl_FONTITAL        = 0x00000004U,
+    DISPID_CommonCtrl_FONTUNDER       = 0x00000005U,
+    DISPID_CommonCtrl_FONTSTRIKE      = 0x00000006U,
+    DISPID_CommonCtrl_FONTWEIGHT      = 0x00000007U,
+    DISPID_CommonCtrl_FONTCHARSET     = 0x00000008U,
+    DISPID_CommonCtrl_FONTSUPERSCRIPT = 0x00000009U,
+    DISPID_CommonCtrl_FONTSUBSCRIPT   = 0x0000000aU,
 }
 
 enum int DISPID_MSDATASRCINTERFACE = 0xfffff0c4;
@@ -3995,674 +4262,674 @@ enum int DISPID_ADVISEDATASRCCHANGEEVENT = 0xfffff0c3;
 
 enum : uint
 {
-    DISPID_HTMLDLG      = 0x000061a8,
-    DISPID_HTMLDLGMODEL = 0x00006590,
-    DISPID_HTMLPOPUP    = 0x00006978,
-    DISPID_HTMLAPP      = 0x00001388,
+    DISPID_HTMLDLG      = 0x000061a8U,
+    DISPID_HTMLDLGMODEL = 0x00006590U,
+    DISPID_HTMLPOPUP    = 0x00006978U,
+    DISPID_HTMLAPP      = 0x00001388U,
 }
 
 enum : uint
 {
-    STDPROPID_XOBJ_NAME           = 0x00010000,
-    STDPROPID_XOBJ_INDEX          = 0x00010001,
-    STDPROPID_IE3XOBJ_OBJECTALIGN = 0x00010001,
+    STDPROPID_XOBJ_NAME           = 0x00010000U,
+    STDPROPID_XOBJ_INDEX          = 0x00010001U,
+    STDPROPID_IE3XOBJ_OBJECTALIGN = 0x00010001U,
 }
 
 enum : uint
 {
-    STDPROPID_XOBJ_BASEHREF        = 0x00010002,
-    STDPROPID_XOBJ_LEFT            = 0x00010003,
-    STDPROPID_XOBJ_TOP             = 0x00010004,
-    STDPROPID_XOBJ_WIDTH           = 0x00010005,
-    STDPROPID_XOBJ_HEIGHT          = 0x00010006,
-    STDPROPID_XOBJ_VISIBLE         = 0x00010007,
-    STDPROPID_XOBJ_PARENT          = 0x00010008,
-    STDPROPID_XOBJ_DRAGMODE        = 0x00010009,
-    STDPROPID_XOBJ_DRAGICON        = 0x0001000a,
-    STDPROPID_XOBJ_TAG             = 0x0001000b,
-    STDPROPID_XOBJ_TABSTOP         = 0x0001000e,
-    STDPROPID_XOBJ_TABINDEX        = 0x0001000f,
-    STDPROPID_XOBJ_HELPCONTEXTID   = 0x00010032,
-    STDPROPID_XOBJ_DEFAULT         = 0x00010037,
-    STDPROPID_XOBJ_CANCEL          = 0x00010038,
-    STDPROPID_XOBJ_LEFTNORUN       = 0x00010039,
-    STDPROPID_XOBJ_TOPNORUN        = 0x0001003a,
-    STDPROPID_XOBJ_ALIGNPERSIST    = 0x0001003c,
-    STDPROPID_XOBJ_LINKTIMEOUT     = 0x0001003d,
-    STDPROPID_XOBJ_LINKTOPIC       = 0x0001003e,
-    STDPROPID_XOBJ_LINKITEM        = 0x0001003f,
-    STDPROPID_XOBJ_LINKMODE        = 0x00010040,
-    STDPROPID_XOBJ_DATACHANGED     = 0x00010041,
-    STDPROPID_XOBJ_DATAFIELD       = 0x00010042,
-    STDPROPID_XOBJ_DATASOURCE      = 0x00010043,
-    STDPROPID_XOBJ_WHATSTHISHELPID = 0x00010044,
-    STDPROPID_XOBJ_CONTROLTIPTEXT  = 0x00010045,
-    STDPROPID_XOBJ_STATUSBARTEXT   = 0x00010046,
-    STDPROPID_XOBJ_APPLICATION     = 0x00010047,
-    STDPROPID_XOBJ_BLOCKALIGN      = 0x00010048,
-    STDPROPID_XOBJ_CONTROLALIGN    = 0x00010049,
-    STDPROPID_XOBJ_STYLE           = 0x0001004a,
-    STDPROPID_XOBJ_COUNT           = 0x0001004b,
-    STDPROPID_XOBJ_DISABLED        = 0x0001004c,
-    STDPROPID_XOBJ_RIGHT           = 0x0001004d,
-    STDPROPID_XOBJ_BOTTOM          = 0x0001004e,
-    STDPROPID_XOBJ_GETSVGDOCUMENT  = 0x0001004f,
+    STDPROPID_XOBJ_BASEHREF        = 0x00010002U,
+    STDPROPID_XOBJ_LEFT            = 0x00010003U,
+    STDPROPID_XOBJ_TOP             = 0x00010004U,
+    STDPROPID_XOBJ_WIDTH           = 0x00010005U,
+    STDPROPID_XOBJ_HEIGHT          = 0x00010006U,
+    STDPROPID_XOBJ_VISIBLE         = 0x00010007U,
+    STDPROPID_XOBJ_PARENT          = 0x00010008U,
+    STDPROPID_XOBJ_DRAGMODE        = 0x00010009U,
+    STDPROPID_XOBJ_DRAGICON        = 0x0001000aU,
+    STDPROPID_XOBJ_TAG             = 0x0001000bU,
+    STDPROPID_XOBJ_TABSTOP         = 0x0001000eU,
+    STDPROPID_XOBJ_TABINDEX        = 0x0001000fU,
+    STDPROPID_XOBJ_HELPCONTEXTID   = 0x00010032U,
+    STDPROPID_XOBJ_DEFAULT         = 0x00010037U,
+    STDPROPID_XOBJ_CANCEL          = 0x00010038U,
+    STDPROPID_XOBJ_LEFTNORUN       = 0x00010039U,
+    STDPROPID_XOBJ_TOPNORUN        = 0x0001003aU,
+    STDPROPID_XOBJ_ALIGNPERSIST    = 0x0001003cU,
+    STDPROPID_XOBJ_LINKTIMEOUT     = 0x0001003dU,
+    STDPROPID_XOBJ_LINKTOPIC       = 0x0001003eU,
+    STDPROPID_XOBJ_LINKITEM        = 0x0001003fU,
+    STDPROPID_XOBJ_LINKMODE        = 0x00010040U,
+    STDPROPID_XOBJ_DATACHANGED     = 0x00010041U,
+    STDPROPID_XOBJ_DATAFIELD       = 0x00010042U,
+    STDPROPID_XOBJ_DATASOURCE      = 0x00010043U,
+    STDPROPID_XOBJ_WHATSTHISHELPID = 0x00010044U,
+    STDPROPID_XOBJ_CONTROLTIPTEXT  = 0x00010045U,
+    STDPROPID_XOBJ_STATUSBARTEXT   = 0x00010046U,
+    STDPROPID_XOBJ_APPLICATION     = 0x00010047U,
+    STDPROPID_XOBJ_BLOCKALIGN      = 0x00010048U,
+    STDPROPID_XOBJ_CONTROLALIGN    = 0x00010049U,
+    STDPROPID_XOBJ_STYLE           = 0x0001004aU,
+    STDPROPID_XOBJ_COUNT           = 0x0001004bU,
+    STDPROPID_XOBJ_DISABLED        = 0x0001004cU,
+    STDPROPID_XOBJ_RIGHT           = 0x0001004dU,
+    STDPROPID_XOBJ_BOTTOM          = 0x0001004eU,
+    STDPROPID_XOBJ_GETSVGDOCUMENT  = 0x0001004fU,
 }
 
 enum : uint
 {
-    STDDISPID_XOBJ_ONFOCUS           = 0x00010001,
-    STDDISPID_XOBJ_BEFOREUPDATE      = 0x00010004,
-    STDDISPID_XOBJ_AFTERUPDATE       = 0x00010005,
-    STDDISPID_XOBJ_ONROWEXIT         = 0x00010006,
-    STDDISPID_XOBJ_ONROWENTER        = 0x00010007,
-    STDDISPID_XOBJ_ONMOUSEOVER       = 0x00010008,
-    STDDISPID_XOBJ_ONMOUSEOUT        = 0x00010009,
-    STDDISPID_XOBJ_ONHELP            = 0x0001000a,
-    STDDISPID_XOBJ_ONDRAGSTART       = 0x0001000b,
-    STDDISPID_XOBJ_ONSELECTSTART     = 0x0001000c,
-    STDDISPID_XOBJ_ERRORUPDATE       = 0x0001000d,
-    STDDISPID_XOBJ_ONDATASETCHANGED  = 0x0001000e,
-    STDDISPID_XOBJ_ONDATAAVAILABLE   = 0x0001000f,
-    STDDISPID_XOBJ_ONDATASETCOMPLETE = 0x00010010,
-    STDDISPID_XOBJ_ONFILTER          = 0x00010011,
-    STDDISPID_XOBJ_ONLOSECAPTURE     = 0x00010012,
-    STDDISPID_XOBJ_ONPROPERTYCHANGE  = 0x00010013,
-    STDDISPID_XOBJ_ONDRAG            = 0x00010014,
-    STDDISPID_XOBJ_ONDRAGEND         = 0x00010015,
-    STDDISPID_XOBJ_ONDRAGENTER       = 0x00010016,
-    STDDISPID_XOBJ_ONDRAGOVER        = 0x00010017,
-    STDDISPID_XOBJ_ONDRAGLEAVE       = 0x00010018,
-    STDDISPID_XOBJ_ONDROP            = 0x00010019,
-    STDDISPID_XOBJ_ONCUT             = 0x0001001a,
-    STDDISPID_XOBJ_ONCOPY            = 0x0001001b,
-    STDDISPID_XOBJ_ONPASTE           = 0x0001001c,
-    STDDISPID_XOBJ_ONBEFORECUT       = 0x0001001d,
-    STDDISPID_XOBJ_ONBEFORECOPY      = 0x0001001e,
-    STDDISPID_XOBJ_ONBEFOREPASTE     = 0x0001001f,
-    STDDISPID_XOBJ_ONROWSDELETE      = 0x00010020,
-    STDDISPID_XOBJ_ONROWSINSERTED    = 0x00010021,
-    STDDISPID_XOBJ_ONCELLCHANGE      = 0x00010022,
+    STDDISPID_XOBJ_ONFOCUS           = 0x00010001U,
+    STDDISPID_XOBJ_BEFOREUPDATE      = 0x00010004U,
+    STDDISPID_XOBJ_AFTERUPDATE       = 0x00010005U,
+    STDDISPID_XOBJ_ONROWEXIT         = 0x00010006U,
+    STDDISPID_XOBJ_ONROWENTER        = 0x00010007U,
+    STDDISPID_XOBJ_ONMOUSEOVER       = 0x00010008U,
+    STDDISPID_XOBJ_ONMOUSEOUT        = 0x00010009U,
+    STDDISPID_XOBJ_ONHELP            = 0x0001000aU,
+    STDDISPID_XOBJ_ONDRAGSTART       = 0x0001000bU,
+    STDDISPID_XOBJ_ONSELECTSTART     = 0x0001000cU,
+    STDDISPID_XOBJ_ERRORUPDATE       = 0x0001000dU,
+    STDDISPID_XOBJ_ONDATASETCHANGED  = 0x0001000eU,
+    STDDISPID_XOBJ_ONDATAAVAILABLE   = 0x0001000fU,
+    STDDISPID_XOBJ_ONDATASETCOMPLETE = 0x00010010U,
+    STDDISPID_XOBJ_ONFILTER          = 0x00010011U,
+    STDDISPID_XOBJ_ONLOSECAPTURE     = 0x00010012U,
+    STDDISPID_XOBJ_ONPROPERTYCHANGE  = 0x00010013U,
+    STDDISPID_XOBJ_ONDRAG            = 0x00010014U,
+    STDDISPID_XOBJ_ONDRAGEND         = 0x00010015U,
+    STDDISPID_XOBJ_ONDRAGENTER       = 0x00010016U,
+    STDDISPID_XOBJ_ONDRAGOVER        = 0x00010017U,
+    STDDISPID_XOBJ_ONDRAGLEAVE       = 0x00010018U,
+    STDDISPID_XOBJ_ONDROP            = 0x00010019U,
+    STDDISPID_XOBJ_ONCUT             = 0x0001001aU,
+    STDDISPID_XOBJ_ONCOPY            = 0x0001001bU,
+    STDDISPID_XOBJ_ONPASTE           = 0x0001001cU,
+    STDDISPID_XOBJ_ONBEFORECUT       = 0x0001001dU,
+    STDDISPID_XOBJ_ONBEFORECOPY      = 0x0001001eU,
+    STDDISPID_XOBJ_ONBEFOREPASTE     = 0x0001001fU,
+    STDDISPID_XOBJ_ONROWSDELETE      = 0x00010020U,
+    STDDISPID_XOBJ_ONROWSINSERTED    = 0x00010021U,
+    STDDISPID_XOBJ_ONCELLCHANGE      = 0x00010022U,
 }
 
-enum uint DISPID_NORMAL_FIRST = 0x000003e8;
-enum uint DISPID_IE8_NORMAL_FIRST = 0x0000047e;
+enum uint DISPID_NORMAL_FIRST = 0x000003e8U;
+enum uint DISPID_IE8_NORMAL_FIRST = 0x0000047eU;
 
 enum : uint
 {
-    DISPID_ANCHOR         = 0x000003e8,
-    DISPID_BLOCK          = 0x000003e8,
-    DISPID_BODY           = 0x000007d0,
-    DISPID_BR             = 0x000003e8,
-    DISPID_BGSOUND        = 0x000003e8,
-    DISPID_DD             = 0x000003e8,
-    DISPID_DIR            = 0x000003e8,
-    DISPID_DIV            = 0x000003e8,
-    DISPID_DL             = 0x000003e8,
-    DISPID_DT             = 0x000003e8,
-    DISPID_EFONT          = 0x000003e8,
-    DISPID_FORM           = 0x000003e8,
-    DISPID_HEADER         = 0x000003e8,
-    DISPID_HEDELEMS       = 0x000003e8,
-    DISPID_HR             = 0x000003e8,
-    DISPID_LABEL          = 0x000003e8,
-    DISPID_LI             = 0x000003e8,
-    DISPID_IMGBASE        = 0x000003e8,
-    DISPID_IMG            = 0x000007d0,
-    DISPID_INPUTIMAGE     = 0x000007d0,
-    DISPID_INPUT          = 0x000007d0,
-    DISPID_INPUTTEXTBASE  = 0x00000bb8,
-    DISPID_INPUTTEXT      = 0x00000fa0,
-    DISPID_MENU           = 0x000003e8,
-    DISPID_OL             = 0x000003e8,
-    DISPID_PARA           = 0x000003e8,
-    DISPID_SELECT         = 0x000003e8,
-    DISPID_SELECTOBJ      = 0x000003e8,
-    DISPID_TABLE          = 0x000003e8,
-    DISPID_TEXTSITE       = 0x000003e8,
-    DISPID_TEXTAREA       = 0x00001388,
-    DISPID_MARQUEE        = 0x00001770,
-    DISPID_RICHTEXT       = 0x00001b58,
-    DISPID_BUTTON         = 0x00001f40,
-    DISPID_UL             = 0x000003e8,
-    DISPID_PHRASE         = 0x000003e8,
-    DISPID_UNKNOWNPDL     = 0x000003e8,
-    DISPID_COMMENTPDL     = 0x000003e8,
-    DISPID_TABLECELL      = 0x000007d0,
-    DISPID_RANGE          = 0x000003e8,
-    DISPID_SELECTION      = 0x000003e8,
-    DISPID_OPTION         = 0x000003e8,
-    DISPID_1D             = 0x000007d0,
-    DISPID_MAP            = 0x000003e8,
-    DISPID_AREA           = 0x000003e8,
-    DISPID_PARAM          = 0x000003e8,
-    DISPID_TABLESECTION   = 0x000003e8,
-    DISPID_TABLEROW       = 0x000003e8,
-    DISPID_TABLECOL       = 0x000003e8,
-    DISPID_SCRIPT         = 0x000003e8,
-    DISPID_STYLESHEET     = 0x000003e8,
-    DISPID_STYLERULE      = 0x000003e8,
-    DISPID_BASE_STYLERULE = 0x0000044c,
-}
-
-enum : uint
-{
-    DISPID_STYLEPAGE       = 0x000003e8,
-    DISPID_STYLESHEETS_COL = 0x000003e8,
-    DISPID_STYLERULES_COL  = 0x000003e8,
-    DISPID_STYLEPAGES_COL  = 0x000003e8,
+    DISPID_ANCHOR         = 0x000003e8U,
+    DISPID_BLOCK          = 0x000003e8U,
+    DISPID_BODY           = 0x000007d0U,
+    DISPID_BR             = 0x000003e8U,
+    DISPID_BGSOUND        = 0x000003e8U,
+    DISPID_DD             = 0x000003e8U,
+    DISPID_DIR            = 0x000003e8U,
+    DISPID_DIV            = 0x000003e8U,
+    DISPID_DL             = 0x000003e8U,
+    DISPID_DT             = 0x000003e8U,
+    DISPID_EFONT          = 0x000003e8U,
+    DISPID_FORM           = 0x000003e8U,
+    DISPID_HEADER         = 0x000003e8U,
+    DISPID_HEDELEMS       = 0x000003e8U,
+    DISPID_HR             = 0x000003e8U,
+    DISPID_LABEL          = 0x000003e8U,
+    DISPID_LI             = 0x000003e8U,
+    DISPID_IMGBASE        = 0x000003e8U,
+    DISPID_IMG            = 0x000007d0U,
+    DISPID_INPUTIMAGE     = 0x000007d0U,
+    DISPID_INPUT          = 0x000007d0U,
+    DISPID_INPUTTEXTBASE  = 0x00000bb8U,
+    DISPID_INPUTTEXT      = 0x00000fa0U,
+    DISPID_MENU           = 0x000003e8U,
+    DISPID_OL             = 0x000003e8U,
+    DISPID_PARA           = 0x000003e8U,
+    DISPID_SELECT         = 0x000003e8U,
+    DISPID_SELECTOBJ      = 0x000003e8U,
+    DISPID_TABLE          = 0x000003e8U,
+    DISPID_TEXTSITE       = 0x000003e8U,
+    DISPID_TEXTAREA       = 0x00001388U,
+    DISPID_MARQUEE        = 0x00001770U,
+    DISPID_RICHTEXT       = 0x00001b58U,
+    DISPID_BUTTON         = 0x00001f40U,
+    DISPID_UL             = 0x000003e8U,
+    DISPID_PHRASE         = 0x000003e8U,
+    DISPID_UNKNOWNPDL     = 0x000003e8U,
+    DISPID_COMMENTPDL     = 0x000003e8U,
+    DISPID_TABLECELL      = 0x000007d0U,
+    DISPID_RANGE          = 0x000003e8U,
+    DISPID_SELECTION      = 0x000003e8U,
+    DISPID_OPTION         = 0x000003e8U,
+    DISPID_1D             = 0x000007d0U,
+    DISPID_MAP            = 0x000003e8U,
+    DISPID_AREA           = 0x000003e8U,
+    DISPID_PARAM          = 0x000003e8U,
+    DISPID_TABLESECTION   = 0x000003e8U,
+    DISPID_TABLEROW       = 0x000003e8U,
+    DISPID_TABLECOL       = 0x000003e8U,
+    DISPID_SCRIPT         = 0x000003e8U,
+    DISPID_STYLESHEET     = 0x000003e8U,
+    DISPID_STYLERULE      = 0x000003e8U,
+    DISPID_BASE_STYLERULE = 0x0000044cU,
 }
 
 enum : uint
 {
-    DISPID_MEDIALIST     = 0x000003e8,
-    DISPID_MIMETYPES_COL = 0x000003e8,
-}
-
-enum uint DISPID_PLUGINS_COL = 0x000003e8;
-
-enum : uint
-{
-    DISPID_2D          = 0x000003e8,
-    DISPID_OMWINDOW    = 0x000003e8,
-    DISPID_EVENTOBJ    = 0x000003e8,
-    DISPID_PERSISTDATA = 0x000003e8,
+    DISPID_STYLEPAGE       = 0x000003e8U,
+    DISPID_STYLESHEETS_COL = 0x000003e8U,
+    DISPID_STYLERULES_COL  = 0x000003e8U,
+    DISPID_STYLEPAGES_COL  = 0x000003e8U,
 }
 
 enum : uint
 {
-    DISPID_OLESITE      = 0x000003e8,
-    DISPID_FRAMESET     = 0x000003e8,
-    DISPID_LINK         = 0x000003e8,
-    DISPID_STYLEELEMENT = 0x000003e8,
+    DISPID_MEDIALIST     = 0x000003e8U,
+    DISPID_MIMETYPES_COL = 0x000003e8U,
+}
+
+enum uint DISPID_PLUGINS_COL = 0x000003e8U;
+
+enum : uint
+{
+    DISPID_2D          = 0x000003e8U,
+    DISPID_OMWINDOW    = 0x000003e8U,
+    DISPID_EVENTOBJ    = 0x000003e8U,
+    DISPID_PERSISTDATA = 0x000003e8U,
 }
 
 enum : uint
 {
-    DISPID_FILTERS      = 0x000003e8,
-    DISPID_OMRECT       = 0x000003e8,
-    DISPID_DOMATTRIBUTE = 0x000003e8,
-    DISPID_DOMTEXTNODE  = 0x000003e8,
+    DISPID_OLESITE      = 0x000003e8U,
+    DISPID_FRAMESET     = 0x000003e8U,
+    DISPID_LINK         = 0x000003e8U,
+    DISPID_STYLEELEMENT = 0x000003e8U,
 }
 
 enum : uint
 {
-    DISPID_GENERIC              = 0x000003e8,
-    DISPID_URN_COLL             = 0x000003e8,
-    DISPID_NAMESPACE_COLLECTION = 0x000003e8,
-    DISPID_NAMESPACE            = 0x000003e8,
-    DISPID_TAGNAMES_COLLECTION  = 0x000003e8,
+    DISPID_FILTERS      = 0x000003e8U,
+    DISPID_OMRECT       = 0x000003e8U,
+    DISPID_DOMATTRIBUTE = 0x000003e8U,
+    DISPID_DOMTEXTNODE  = 0x000003e8U,
 }
 
 enum : uint
 {
-    DISPID_XMLHTTPREQUEST = 0x000003e8,
-    DISPID_XMLSERIALIZER  = 0x000003e8,
+    DISPID_GENERIC              = 0x000003e8U,
+    DISPID_URN_COLL             = 0x000003e8U,
+    DISPID_NAMESPACE_COLLECTION = 0x000003e8U,
+    DISPID_NAMESPACE            = 0x000003e8U,
+    DISPID_TAGNAMES_COLLECTION  = 0x000003e8U,
 }
 
 enum : uint
 {
-    DISPID_DOMPARSER                         = 0x000003e8,
-    DISPID_DOCUMENTCOMPATIBLEINFO_COLLECTION = 0x000003e8,
-    DISPID_DOCUMENTCOMPATIBLEINFO            = 0x000003e8,
-}
-
-enum uint DISPID_XDOMAINREQUEST = 0x000003e8;
-
-enum : uint
-{
-    DISPID_DOMSTORAGEITEM = 0x000003e8,
-    DISPID_DOMSTORAGE     = 0x000003e8,
-    DISPID_DOMSTORAGELIST = 0x000003e8,
+    DISPID_XMLHTTPREQUEST = 0x000003e8U,
+    DISPID_XMLSERIALIZER  = 0x000003e8U,
 }
 
 enum : uint
 {
-    DISPID_RULESAPPLIED            = 0x000003e8,
-    DISPID_RULESAPPLIED_COLLECTION = 0x000003e8,
+    DISPID_DOMPARSER                         = 0x000003e8U,
+    DISPID_DOCUMENTCOMPATIBLEINFO_COLLECTION = 0x000003e8U,
+    DISPID_DOCUMENTCOMPATIBLEINFO            = 0x000003e8U,
 }
 
-enum uint DISPID_STYLESHEETRULESAPPLIED_COLLECTION = 0x000003e8;
-enum uint DISPID_PROCESSINGINSTRUCTION = 0x000003e8;
-enum uint DISPID_MSPOINTERPOINT = 0x000003e8;
+enum uint DISPID_XDOMAINREQUEST = 0x000003e8U;
 
 enum : uint
 {
-    DISPID_WEBSOCKET        = 0x000003e8,
-    DISPID_APPLICATIONCACHE = 0x000003e8,
-}
-
-enum : uint
-{
-    DISPID_DOMEVENT           = 0x000003e8,
-    DISPID_DOMUIEVENT         = 0x00000401,
-    DISPID_DOMMOUSEEVENT      = 0x0000041a,
-    DISPID_DOMMOUSEWHEELEVENT = 0x00000433,
+    DISPID_DOMSTORAGEITEM = 0x000003e8U,
+    DISPID_DOMSTORAGE     = 0x000003e8U,
+    DISPID_DOMSTORAGELIST = 0x000003e8U,
 }
 
 enum : uint
 {
-    DISPID_DOMWHEELEVENT       = 0x0000044c,
-    DISPID_DOMTEXTEVENT        = 0x00000465,
-    DISPID_DOMKEYBOARDEVENT    = 0x0000047e,
-    DISPID_DOMCOMPOSITIONEVENT = 0x00000497,
-    DISPID_DOMCUSTOMEVENT      = 0x000004b0,
-    DISPID_DOMMUTATIONEVENT    = 0x000004c9,
-    DISPID_DOMFOCUSEVENT       = 0x000004e2,
+    DISPID_RULESAPPLIED            = 0x000003e8U,
+    DISPID_RULESAPPLIED_COLLECTION = 0x000003e8U,
 }
 
-enum uint DISPID_SVGZOOMEVENT = 0x000004fb;
+enum uint DISPID_STYLESHEETRULESAPPLIED_COLLECTION = 0x000003e8U;
+enum uint DISPID_PROCESSINGINSTRUCTION = 0x000003e8U;
+enum uint DISPID_MSPOINTERPOINT = 0x000003e8U;
 
 enum : uint
 {
-    DISPID_DOMSITEMODEEVENT     = 0x00000514,
-    DISPID_DOMMESSAGEEVENT      = 0x0000052d,
-    DISPID_DOMSTORAGEEVENT      = 0x00000546,
-    DISPID_DOMBEFOREUNLOADEVENT = 0x0000055f,
+    DISPID_WEBSOCKET        = 0x000003e8U,
+    DISPID_APPLICATIONCACHE = 0x000003e8U,
 }
 
 enum : uint
 {
-    DISPID_DOMDRAGEVENT           = 0x00000578,
-    DISPID_DOMMSPOINTEREVENT      = 0x00000591,
-    DISPID_DOMMSGESTUREEVENT      = 0x000005aa,
-    DISPID_DOMMSTRANSITIONEVENT   = 0x000005c3,
-    DISPID_DOMMSANIMATIONEVENT    = 0x000005dc,
-    DISPID_DOMMSMANIPULATIONEVENT = 0x000005f5,
+    DISPID_DOMEVENT           = 0x000003e8U,
+    DISPID_DOMUIEVENT         = 0x00000401U,
+    DISPID_DOMMOUSEEVENT      = 0x0000041aU,
+    DISPID_DOMMOUSEWHEELEVENT = 0x00000433U,
 }
 
 enum : uint
 {
-    DISPID_DOMPROGRESSEVENT = 0x0000060e,
-    DISPID_DOMCLOSEEVENT    = 0x000005f5,
+    DISPID_DOMWHEELEVENT       = 0x0000044cU,
+    DISPID_DOMTEXTEVENT        = 0x00000465U,
+    DISPID_DOMKEYBOARDEVENT    = 0x0000047eU,
+    DISPID_DOMCOMPOSITIONEVENT = 0x00000497U,
+    DISPID_DOMCUSTOMEVENT      = 0x000004b0U,
+    DISPID_DOMMUTATIONEVENT    = 0x000004c9U,
+    DISPID_DOMFOCUSEVENT       = 0x000004e2U,
 }
 
-enum uint DISPID_HTMLDOCUMENT = 0x000003e8;
+enum uint DISPID_SVGZOOMEVENT = 0x000004fbU;
 
 enum : uint
 {
-    DISPID_OMDOCUMENT   = 0x000003e8,
-    DISPID_DATATRANSFER = 0x000003e8,
-}
-
-enum : uint
-{
-    DISPID_XMLDECL            = 0x000003e8,
-    DISPID_DOCFRAG            = 0x000003e8,
-    DISPID_ILINEINFO          = 0x000003e8,
-    DISPID_IHTMLCOMPUTEDSTYLE = 0x000003e8,
-}
-
-enum : uint
-{
-    DISPID_DOMRANGE      = 0x000003e8,
-    DISPID_HTMLSELECTION = 0x000003e8,
+    DISPID_DOMSITEMODEEVENT     = 0x00000514U,
+    DISPID_DOMMESSAGEEVENT      = 0x0000052dU,
+    DISPID_DOMSTORAGEEVENT      = 0x00000546U,
+    DISPID_DOMBEFOREUNLOADEVENT = 0x0000055fU,
 }
 
 enum : uint
 {
-    DISPID_DOMTRAVERSAL = 0x000003e8,
-    DISPID_DOMEXCEPTION = 0x000003e8,
-}
-
-enum uint DISPID_SVGEXCEPTION = 0x000003e8;
-enum uint DISPID_RANGEEXCEPTION = 0x000003e8;
-enum uint DISPID_EVENTEXCEPTION = 0x000003e8;
-enum uint DISPID_DOCUMENTTYPE = 0x000003e8;
-
-enum : uint
-{
-    DISPID_MEDIA        = 0x000003e8,
-    DISPID_MEDIAERROR   = 0x000003e8,
-    DISPID_TIMERANGES   = 0x000003e8,
-    DISPID_SOURCE       = 0x000003e8,
-    DISPID_TRACK        = 0x000003e8,
-    DISPID_AUDIO        = 0x0000041a,
-    DISPID_VIDEO        = 0x0000041a,
-    DISPID_STYLEMEDIA   = 0x000003e8,
-    DISPID_PROGRESS     = 0x000003e8,
-    DISPID_PLAYTO       = 0x000003e8,
-    DISPID_PLAYTODEVICE = 0x000003e8,
+    DISPID_DOMDRAGEVENT           = 0x00000578U,
+    DISPID_DOMMSPOINTEREVENT      = 0x00000591U,
+    DISPID_DOMMSGESTUREEVENT      = 0x000005aaU,
+    DISPID_DOMMSTRANSITIONEVENT   = 0x000005c3U,
+    DISPID_DOMMSANIMATIONEVENT    = 0x000005dcU,
+    DISPID_DOMMSMANIPULATIONEVENT = 0x000005f5U,
 }
 
 enum : uint
 {
-    DISPID_WINDOW           = 0x00000001,
-    DISPID_SCREEN           = 0x000003e8,
-    DISPID_FRAMESCOLLECTION = 0x000003e8,
+    DISPID_DOMPROGRESSEVENT = 0x0000060eU,
+    DISPID_DOMCLOSEEVENT    = 0x000005f5U,
+}
+
+enum uint DISPID_HTMLDOCUMENT = 0x000003e8U;
+
+enum : uint
+{
+    DISPID_OMDOCUMENT   = 0x000003e8U,
+    DISPID_DATATRANSFER = 0x000003e8U,
 }
 
 enum : uint
 {
-    DISPID_HISTORY          = 0x00000001,
-    DISPID_LOCATION         = 0x00000001,
-    DISPID_NAVIGATOR        = 0x00000001,
-    DISPID_CLIENTCAPS       = 0x00000001,
-    DISPID_TEMPLATE_PRINTER = 0x00000001,
-}
-
-enum uint DISPID_PRINTMANAGER_TEMPLATE_PRINTER = 0x000001f5;
-
-enum : uint
-{
-    DISPID_COLLECTION  = 0x000005dc,
-    DISPID_OPTIONS_COL = 0x000005dc,
+    DISPID_XMLDECL            = 0x000003e8U,
+    DISPID_DOCFRAG            = 0x000003e8U,
+    DISPID_ILINEINFO          = 0x000003e8U,
+    DISPID_IHTMLCOMPUTEDSTYLE = 0x000003e8U,
 }
 
 enum : uint
 {
-    DISPID_CHECKBOX  = 0x000003e8,
-    DISPID_RADIO     = 0x000007d0,
-    DISPID_FRAMESITE = 0x00010bb8,
-    DISPID_FRAME     = 0x00010fa0,
-    DISPID_IFRAME    = 0x00010fa0,
+    DISPID_DOMRANGE      = 0x000003e8U,
+    DISPID_HTMLSELECTION = 0x000003e8U,
 }
 
 enum : uint
 {
-    WEBOC_DISPIDBASE = 0x00011388,
-    WEBOC_DISPIDMAX  = 0x000113ec,
+    DISPID_DOMTRAVERSAL = 0x000003e8U,
+    DISPID_DOMEXCEPTION = 0x000003e8U,
 }
 
-enum uint DISPID_PROTECTEDELEMENT = 0x000003e8;
+enum uint DISPID_SVGEXCEPTION = 0x000003e8U;
+enum uint DISPID_RANGEEXCEPTION = 0x000003e8U;
+enum uint DISPID_EVENTEXCEPTION = 0x000003e8U;
+enum uint DISPID_DOCUMENTTYPE = 0x000003e8U;
 
 enum : uint
 {
-    DISPID_DEFAULTS          = 0x000003e8,
-    DISPID_MARKUP            = 0x000003e8,
-    DISPID_DOMIMPLEMENTATION = 0x000003e8,
-}
-
-enum : uint
-{
-    DISPID_MEDIAQUERY               = 0x000003e8,
-    DISPID_HTML5ATTRIBUTESELECTORCI = 0x000003e8,
-}
-
-enum : uint
-{
-    DISPID_SVGMIXINS              = 0x000003e8,
-    DISPID_SVGELEMENT             = 0x00000406,
-    DISPID_SVGELEMENT_BASE        = 0x0000041a,
-    DISPID_SVGAELEMENT            = 0x0000041a,
-    DISPID_SVGALTGLYPHDEFELEMENT  = 0x0000041a,
-    DISPID_SVGALTGLYPHELEMENT     = 0x0000041a,
-    DISPID_SVGALTGLYPHITEMELEMENT = 0x0000041a,
+    DISPID_MEDIA        = 0x000003e8U,
+    DISPID_MEDIAERROR   = 0x000003e8U,
+    DISPID_TIMERANGES   = 0x000003e8U,
+    DISPID_SOURCE       = 0x000003e8U,
+    DISPID_TRACK        = 0x000003e8U,
+    DISPID_AUDIO        = 0x0000041aU,
+    DISPID_VIDEO        = 0x0000041aU,
+    DISPID_STYLEMEDIA   = 0x000003e8U,
+    DISPID_PROGRESS     = 0x000003e8U,
+    DISPID_PLAYTO       = 0x000003e8U,
+    DISPID_PLAYTODEVICE = 0x000003e8U,
 }
 
 enum : uint
 {
-    DISPID_SVGANGLE                   = 0x000003e8,
-    DISPID_SVGANIMATECOLORELEMENT     = 0x0000041a,
-    DISPID_SVGANIMATEDANGLE           = 0x000003e8,
-    DISPID_SVGANIMATEDBOOLEAN         = 0x000003e8,
-    DISPID_SVGANIMATEDENUMERATION     = 0x000003e8,
-    DISPID_SVGANIMATEDINTEGER         = 0x000003e8,
-    DISPID_SVGANIMATEDLENGTH          = 0x000003e8,
-    DISPID_SVGANIMATEDLENGTHLIST      = 0x000003e8,
-    DISPID_SVGANIMATEDNUMBER          = 0x000003e8,
-    DISPID_SVGANIMATEDNUMBERLIST      = 0x000003e8,
-    DISPID_SVGANIMATEDPOINTS          = 0x000003e8,
-    DISPID_SVGANIMATEDRECT            = 0x000003e8,
-    DISPID_SVGANIMATEDSTRING          = 0x000003e8,
-    DISPID_SVGANIMATEELEMENT          = 0x0000041a,
-    DISPID_SVGANIMATEMOTIONELEMENT    = 0x0000041a,
-    DISPID_SVGANIMATETRANSFORMELEMENT = 0x0000041a,
+    DISPID_WINDOW           = 0x00000001U,
+    DISPID_SCREEN           = 0x000003e8U,
+    DISPID_FRAMESCOLLECTION = 0x000003e8U,
 }
 
 enum : uint
 {
-    DISPID_SVGCIRCLEELEMENT        = 0x0000041a,
-    DISPID_SVGCLIPPATHELEMENT      = 0x0000041a,
-    DISPID_SVGCOLOR_PROFILEELEMENT = 0x0000041a,
+    DISPID_HISTORY          = 0x00000001U,
+    DISPID_LOCATION         = 0x00000001U,
+    DISPID_NAVIGATOR        = 0x00000001U,
+    DISPID_CLIENTCAPS       = 0x00000001U,
+    DISPID_TEMPLATE_PRINTER = 0x00000001U,
+}
+
+enum uint DISPID_PRINTMANAGER_TEMPLATE_PRINTER = 0x000001f5U;
+
+enum : uint
+{
+    DISPID_COLLECTION  = 0x000005dcU,
+    DISPID_OPTIONS_COL = 0x000005dcU,
 }
 
 enum : uint
 {
-    DISPID_SVGCURSORELEMENT              = 0x0000041a,
-    DISPID_SVGDEFINITION_SRCELEMENT      = 0x0000041a,
-    DISPID_SVGDEFSELEMENT                = 0x0000041a,
-    DISPID_SVGDESCELEMENT                = 0x0000041a,
-    DISPID_SVGELEMENTINSTANCE            = 0x000003e8,
-    DISPID_SVGELEMENTINSTANCELIST        = 0x000003e8,
-    DISPID_SVGELLIPSEELEMENT             = 0x0000041a,
-    DISPID_SVGFEBLENDELEMENT             = 0x0000041a,
-    DISPID_SVGFECOLORMATRIXELEMENT       = 0x0000041a,
-    DISPID_SVGFECOMPONENTTRANSFERELEMENT = 0x0000041a,
-}
-
-enum uint DISPID_SVGCOMPONENTTRANSFERFUNCTIONELEMENT = 0x0000041a;
-
-enum : uint
-{
-    DISPID_SVGFECOMPOSITEELEMENT      = 0x0000041a,
-    DISPID_SVGFECONVOLVEMATRIXELEMENT = 0x0000041a,
+    DISPID_CHECKBOX  = 0x000003e8U,
+    DISPID_RADIO     = 0x000007d0U,
+    DISPID_FRAMESITE = 0x00010bb8U,
+    DISPID_FRAME     = 0x00010fa0U,
+    DISPID_IFRAME    = 0x00010fa0U,
 }
 
 enum : uint
 {
-    DISPID_SVGFEDIFFUSELIGHTINGELEMENT = 0x0000041a,
-    DISPID_SVGFEDISPLACEMENTMAPELEMENT = 0x0000041a,
-    DISPID_SVGFEDISTANTLIGHTELEMENT    = 0x0000041a,
+    WEBOC_DISPIDBASE = 0x00011388U,
+    WEBOC_DISPIDMAX  = 0x000113ecU,
+}
+
+enum uint DISPID_PROTECTEDELEMENT = 0x000003e8U;
+
+enum : uint
+{
+    DISPID_DEFAULTS          = 0x000003e8U,
+    DISPID_MARKUP            = 0x000003e8U,
+    DISPID_DOMIMPLEMENTATION = 0x000003e8U,
 }
 
 enum : uint
 {
-    DISPID_SVGFEFLOODELEMENT        = 0x0000041a,
-    DISPID_SVGFEFUNCAELEMENT        = 0x0000041a,
-    DISPID_SVGFEFUNCBELEMENT        = 0x0000041a,
-    DISPID_SVGFEFUNCGELEMENT        = 0x0000041a,
-    DISPID_SVGFEFUNCRELEMENT        = 0x0000041a,
-    DISPID_SVGFEGAUSSIANBLURELEMENT = 0x0000041a,
+    DISPID_MEDIAQUERY               = 0x000003e8U,
+    DISPID_HTML5ATTRIBUTESELECTORCI = 0x000003e8U,
 }
 
 enum : uint
 {
-    DISPID_SVGFEIMAGEELEMENT            = 0x0000041a,
-    DISPID_SVGFEMERGEELEMENT            = 0x0000041a,
-    DISPID_SVGFEMERGENODEELEMENT        = 0x0000041a,
-    DISPID_SVGFEMORPHOLOGYELEMENT       = 0x0000041a,
-    DISPID_SVGFEOFFSETELEMENT           = 0x0000041a,
-    DISPID_SVGFEPOINTLIGHTELEMENT       = 0x0000041a,
-    DISPID_SVGFESPECULARLIGHTINGELEMENT = 0x0000041a,
+    DISPID_SVGMIXINS              = 0x000003e8U,
+    DISPID_SVGELEMENT             = 0x00000406U,
+    DISPID_SVGELEMENT_BASE        = 0x0000041aU,
+    DISPID_SVGAELEMENT            = 0x0000041aU,
+    DISPID_SVGALTGLYPHDEFELEMENT  = 0x0000041aU,
+    DISPID_SVGALTGLYPHELEMENT     = 0x0000041aU,
+    DISPID_SVGALTGLYPHITEMELEMENT = 0x0000041aU,
 }
 
 enum : uint
 {
-    DISPID_SVGFESPOTLIGHTELEMENT  = 0x0000041a,
-    DISPID_SVGFETILEELEMENT       = 0x0000041a,
-    DISPID_SVGFETURBULENCEELEMENT = 0x0000041a,
+    DISPID_SVGANGLE                   = 0x000003e8U,
+    DISPID_SVGANIMATECOLORELEMENT     = 0x0000041aU,
+    DISPID_SVGANIMATEDANGLE           = 0x000003e8U,
+    DISPID_SVGANIMATEDBOOLEAN         = 0x000003e8U,
+    DISPID_SVGANIMATEDENUMERATION     = 0x000003e8U,
+    DISPID_SVGANIMATEDINTEGER         = 0x000003e8U,
+    DISPID_SVGANIMATEDLENGTH          = 0x000003e8U,
+    DISPID_SVGANIMATEDLENGTHLIST      = 0x000003e8U,
+    DISPID_SVGANIMATEDNUMBER          = 0x000003e8U,
+    DISPID_SVGANIMATEDNUMBERLIST      = 0x000003e8U,
+    DISPID_SVGANIMATEDPOINTS          = 0x000003e8U,
+    DISPID_SVGANIMATEDRECT            = 0x000003e8U,
+    DISPID_SVGANIMATEDSTRING          = 0x000003e8U,
+    DISPID_SVGANIMATEELEMENT          = 0x0000041aU,
+    DISPID_SVGANIMATEMOTIONELEMENT    = 0x0000041aU,
+    DISPID_SVGANIMATETRANSFORMELEMENT = 0x0000041aU,
 }
 
 enum : uint
 {
-    DISPID_SVGFILTERELEMENT           = 0x0000041a,
-    DISPID_SVGFONT_FACE_FORMATELEMENT = 0x0000041a,
-    DISPID_SVGFONT_FACE_NAMEELEMENT   = 0x0000041a,
-    DISPID_SVGFONT_FACE_SRCELEMENT    = 0x0000041a,
-    DISPID_SVGFONT_FACE_URIELEMENT    = 0x0000041a,
-    DISPID_SVGFONT_FACEELEMENT        = 0x0000041a,
-    DISPID_SVGFONTELEMENT             = 0x0000041a,
-    DISPID_SVGFOREIGNOBJECTELEMENT    = 0x0000041a,
+    DISPID_SVGCIRCLEELEMENT        = 0x0000041aU,
+    DISPID_SVGCLIPPATHELEMENT      = 0x0000041aU,
+    DISPID_SVGCOLOR_PROFILEELEMENT = 0x0000041aU,
 }
 
 enum : uint
 {
-    DISPID_SVGGELEMENT        = 0x0000041a,
-    DISPID_SVGGLYPHELEMENT    = 0x0000041a,
-    DISPID_SVGGLYPHREFELEMENT = 0x0000041a,
-    DISPID_SVGGRADIENTELEMENT = 0x0000041a,
+    DISPID_SVGCURSORELEMENT              = 0x0000041aU,
+    DISPID_SVGDEFINITION_SRCELEMENT      = 0x0000041aU,
+    DISPID_SVGDEFSELEMENT                = 0x0000041aU,
+    DISPID_SVGDESCELEMENT                = 0x0000041aU,
+    DISPID_SVGELEMENTINSTANCE            = 0x000003e8U,
+    DISPID_SVGELEMENTINSTANCELIST        = 0x000003e8U,
+    DISPID_SVGELLIPSEELEMENT             = 0x0000041aU,
+    DISPID_SVGFEBLENDELEMENT             = 0x0000041aU,
+    DISPID_SVGFECOLORMATRIXELEMENT       = 0x0000041aU,
+    DISPID_SVGFECOMPONENTTRANSFERELEMENT = 0x0000041aU,
+}
+
+enum uint DISPID_SVGCOMPONENTTRANSFERFUNCTIONELEMENT = 0x0000041aU;
+
+enum : uint
+{
+    DISPID_SVGFECOMPOSITEELEMENT      = 0x0000041aU,
+    DISPID_SVGFECONVOLVEMATRIXELEMENT = 0x0000041aU,
 }
 
 enum : uint
 {
-    DISPID_SVGHKERNELEMENT        = 0x0000041a,
-    DISPID_SVGIMAGEELEMENT        = 0x0000041a,
-    DISPID_SVGLENGTH              = 0x000003e8,
-    DISPID_SVGLENGTHLIST          = 0x000003e8,
-    DISPID_SVGPRESERVEASPECTRATIO = 0x000003e8,
-}
-
-enum uint DISPID_SVGANIMATEDPRESERVEASPECTRATIO = 0x000003e8;
-
-enum : uint
-{
-    DISPID_SVGPOINT                 = 0x000003e8,
-    DISPID_SVGPOINTLIST             = 0x000003e8,
-    DISPID_SVGLINEARGRADIENTELEMENT = 0x0000042e,
-    DISPID_SVGLINEELEMENT           = 0x0000041a,
-    DISPID_SVGMARKERELEMENT         = 0x0000041a,
-    DISPID_SVGMASKELEMENT           = 0x0000041a,
-    DISPID_SVGMETADATAELEMENT       = 0x0000041a,
-    DISPID_SVGMISSING_GLYPHELEMENT  = 0x0000041a,
+    DISPID_SVGFEDIFFUSELIGHTINGELEMENT = 0x0000041aU,
+    DISPID_SVGFEDISPLACEMENTMAPELEMENT = 0x0000041aU,
+    DISPID_SVGFEDISTANTLIGHTELEMENT    = 0x0000041aU,
 }
 
 enum : uint
 {
-    DISPID_SVGMPATHELEMENT    = 0x0000041a,
-    DISPID_SVGNUMBER          = 0x000003e8,
-    DISPID_SVGNUMBERLIST      = 0x000003e8,
-    DISPID_SVGPATHELEMENT     = 0x0000041a,
-    DISPID_SVGPATTERNELEMENT  = 0x0000041a,
-    DISPID_SVGPOLYGONELEMENT  = 0x0000041a,
-    DISPID_SVGPOLYLINEELEMENT = 0x0000041a,
-}
-
-enum uint DISPID_SVGRADIALGRADIENTELEMENT = 0x0000042e;
-
-enum : uint
-{
-    DISPID_SVGRECT                        = 0x000003e8,
-    DISPID_SVGRECTELEMENT                 = 0x0000041a,
-    DISPID_SVGSCRIPTELEMENT               = 0x0000041a,
-    DISPID_SVGSETELEMENT                  = 0x0000041a,
-    DISPID_SVGSTOPELEMENT                 = 0x0000041a,
-    DISPID_SVGSTRINGLIST                  = 0x000003e8,
-    DISPID_SVGSTYLEELEMENT                = 0x0000041a,
-    DISPID_SVGSVGELEMENT                  = 0x0000041a,
-    DISPID_SVGSWITCHELEMENT               = 0x0000041a,
-    DISPID_SVGSYMBOLELEMENT               = 0x0000041a,
-    DISPID_SVGTITLEELEMENT                = 0x0000041a,
-    DISPID_SVGTREFELEMENT                 = 0x0000041a,
-    DISPID_SVGTEXTCONTENTELEMENT          = 0x0000041a,
-    DISPID_SVGTEXTCONTENTELEMENT_BASE     = 0x0000042e,
-    DISPID_SVGTEXTPOSITIONINGELEMENT      = 0x0000042e,
-    DISPID_SVGTEXTPOSITIONINGELEMENT_BASE = 0x00000442,
+    DISPID_SVGFEFLOODELEMENT        = 0x0000041aU,
+    DISPID_SVGFEFUNCAELEMENT        = 0x0000041aU,
+    DISPID_SVGFEFUNCBELEMENT        = 0x0000041aU,
+    DISPID_SVGFEFUNCGELEMENT        = 0x0000041aU,
+    DISPID_SVGFEFUNCRELEMENT        = 0x0000041aU,
+    DISPID_SVGFEGAUSSIANBLURELEMENT = 0x0000041aU,
 }
 
 enum : uint
 {
-    DISPID_SVGTEXTELEMENT     = 0x00000442,
-    DISPID_SVGTSPANELEMENT    = 0x00000442,
-    DISPID_SVGTEXTPATHELEMENT = 0x0000042e,
+    DISPID_SVGFEIMAGEELEMENT            = 0x0000041aU,
+    DISPID_SVGFEMERGEELEMENT            = 0x0000041aU,
+    DISPID_SVGFEMERGENODEELEMENT        = 0x0000041aU,
+    DISPID_SVGFEMORPHOLOGYELEMENT       = 0x0000041aU,
+    DISPID_SVGFEOFFSETELEMENT           = 0x0000041aU,
+    DISPID_SVGFEPOINTLIGHTELEMENT       = 0x0000041aU,
+    DISPID_SVGFESPECULARLIGHTINGELEMENT = 0x0000041aU,
 }
 
 enum : uint
 {
-    DISPID_SVGUSEELEMENT            = 0x0000041a,
-    DISPID_SVGVIEWELEMENT           = 0x0000041a,
-    DISPID_SVGVKERNELEMENT          = 0x0000041a,
-    DISPID_SVGMATRIX                = 0x000003e8,
-    DISPID_SVGTRANSFORM             = 0x000003e8,
-    DISPID_SVGTRANSFORMLIST         = 0x000003e8,
-    DISPID_SVGANIMATEDTRANSFORMLIST = 0x000003e8,
+    DISPID_SVGFESPOTLIGHTELEMENT  = 0x0000041aU,
+    DISPID_SVGFETILEELEMENT       = 0x0000041aU,
+    DISPID_SVGFETURBULENCEELEMENT = 0x0000041aU,
 }
 
 enum : uint
 {
-    DISPID_SVGPATHSEG                          = 0x000003e8,
-    DISPID_SVGPATHSEG_BASE                     = 0x000003fc,
-    DISPID_SVGPATHSEGLIST                      = 0x000003e8,
-    DISPID_SVGPATHSEGARCABS                    = 0x000003fc,
-    DISPID_SVGPATHSEGARCREL                    = 0x000003fc,
-    DISPID_SVGPATHSEGCLOSEPATH                 = 0x000003fc,
-    DISPID_SVGPATHSEGMOVETOABS                 = 0x000003fc,
-    DISPID_SVGPATHSEGMOVETOREL                 = 0x000003fc,
-    DISPID_SVGPATHSEGLINETOABS                 = 0x000003fc,
-    DISPID_SVGPATHSEGLINETOREL                 = 0x000003fc,
-    DISPID_SVGPATHSEGCURVETOCUBICABS           = 0x000003fc,
-    DISPID_SVGPATHSEGCURVETOCUBICREL           = 0x000003fc,
-    DISPID_SVGPATHSEGCURVETOCUBICSMOOTHABS     = 0x000003fc,
-    DISPID_SVGPATHSEGCURVETOCUBICSMOOTHREL     = 0x000003fc,
-    DISPID_SVGPATHSEGCURVETOQUADRATICABS       = 0x000003fc,
-    DISPID_SVGPATHSEGCURVETOQUADRATICREL       = 0x000003fc,
-    DISPID_SVGPATHSEGCURVETOQUADRATICSMOOTHABS = 0x000003fc,
-    DISPID_SVGPATHSEGCURVETOQUADRATICSMOOTHREL = 0x000003fc,
-    DISPID_SVGPATHSEGLINETOHORIZONTALABS       = 0x000003fc,
-    DISPID_SVGPATHSEGLINETOHORIZONTALREL       = 0x000003fc,
-    DISPID_SVGPATHSEGLINETOVERTICALABS         = 0x000003fc,
-    DISPID_SVGPATHSEGLINETOVERTICALREL         = 0x000003fc,
+    DISPID_SVGFILTERELEMENT           = 0x0000041aU,
+    DISPID_SVGFONT_FACE_FORMATELEMENT = 0x0000041aU,
+    DISPID_SVGFONT_FACE_NAMEELEMENT   = 0x0000041aU,
+    DISPID_SVGFONT_FACE_SRCELEMENT    = 0x0000041aU,
+    DISPID_SVGFONT_FACE_URIELEMENT    = 0x0000041aU,
+    DISPID_SVGFONT_FACEELEMENT        = 0x0000041aU,
+    DISPID_SVGFONTELEMENT             = 0x0000041aU,
+    DISPID_SVGFOREIGNOBJECTELEMENT    = 0x0000041aU,
 }
 
 enum : uint
 {
-    DISPID_CANVASELEMENT         = 0x000003e8,
-    DISPID_CANVASRENDERCONTEXT2D = 0x000003e8,
-    DISPID_CANVASGRADIENT        = 0x000003e8,
-    DISPID_CANVASTEXTMETRICS     = 0x000003e8,
-    DISPID_CANVASIMAGEDATA       = 0x000003e8,
-    DISPID_CANVASPIXELARRAY      = 0x000003e8,
+    DISPID_SVGGELEMENT        = 0x0000041aU,
+    DISPID_SVGGLYPHELEMENT    = 0x0000041aU,
+    DISPID_SVGGLYPHREFELEMENT = 0x0000041aU,
+    DISPID_SVGGRADIENTELEMENT = 0x0000041aU,
 }
 
 enum : uint
 {
-    DISPID_PERFORMANCE           = 0x000003e8,
-    DISPID_PERFORMANCENAVIGATION = 0x000003e8,
-    DISPID_PERFORMANCETIMING     = 0x000003e8,
+    DISPID_SVGHKERNELEMENT        = 0x0000041aU,
+    DISPID_SVGIMAGEELEMENT        = 0x0000041aU,
+    DISPID_SVGLENGTH              = 0x000003e8U,
+    DISPID_SVGLENGTHLIST          = 0x000003e8U,
+    DISPID_SVGPRESERVEASPECTRATIO = 0x000003e8U,
 }
 
-enum uint DISPID_MSHTMLWEBVIEWELEMENT = 0x000003e8;
+enum uint DISPID_SVGANIMATEDPRESERVEASPECTRATIO = 0x000003e8U;
 
 enum : uint
 {
-    DISPID_WEBGEOLOCATION       = 0x000003e8,
-    DISPID_WEBGEOPOSITION       = 0x000003e8,
-    DISPID_WEBGEOCOORDINATES    = 0x000003e8,
-    DISPID_WEBGEOPOSITION_ERROR = 0x000003e8,
+    DISPID_SVGPOINT                 = 0x000003e8U,
+    DISPID_SVGPOINTLIST             = 0x000003e8U,
+    DISPID_SVGLINEARGRADIENTELEMENT = 0x0000042eU,
+    DISPID_SVGLINEELEMENT           = 0x0000041aU,
+    DISPID_SVGMARKERELEMENT         = 0x0000041aU,
+    DISPID_SVGMASKELEMENT           = 0x0000041aU,
+    DISPID_SVGMETADATAELEMENT       = 0x0000041aU,
+    DISPID_SVGMISSING_GLYPHELEMENT  = 0x0000041aU,
 }
 
 enum : uint
 {
-    DISPID_DATALIST          = 0x000003e8,
-    DISPID_IE8_ANCHOR        = 0x0000047e,
-    DISPID_IE8_AREA          = 0x0000047e,
-    DISPID_IE8_BASE          = 0x0000047e,
-    DISPID_IE8_BODY          = 0x0000047e,
-    DISPID_IE8_FORM          = 0x0000047e,
-    DISPID_IE8_HEAD          = 0x0000047e,
-    DISPID_IE8_IMG           = 0x0000047e,
-    DISPID_IE8_INPUT         = 0x0000047e,
-    DISPID_IE8_LINK          = 0x0000047e,
-    DISPID_IE8_MOD           = 0x0000047e,
-    DISPID_IE8_SCRIPT        = 0x0000047e,
-    DISPID_IE8_ATTR          = 0x0000047e,
-    DISPID_IE8_NAMEDNODEMAP  = 0x0000047e,
-    DISPID_IE8_COLLECTION    = 0x0000047e,
-    DISPID_IE8_PARAM         = 0x0000047e,
-    DISPID_IE8_EMBED         = 0x0000047e,
-    DISPID_IE8_BLOCK         = 0x0000047e,
-    DISPID_IE8_META          = 0x0000047e,
-    DISPID_IE8_STYLE         = 0x0000047e,
-    DISPID_IE8_SELECT        = 0x0000047e,
-    DISPID_IE8_ELEMENTBASE   = 0x000104b0,
-    DISPID_IE8_ELEMENTMAX    = 0x000104d8,
-    DISPID_IE8_ELEMENT       = 0x000104b0,
-    DISPID_IE8_FRAMESITEBASE = 0x00011018,
-    DISPID_IE8_FRAMEMAX      = 0x00011387,
-    DISPID_IE8_FRAME         = 0x00011018,
-    DISPID_IE8_IFRAME        = 0x00011018,
-    DISPID_IE8_OBJECTBASE    = 0x00010bd6,
-    DISPID_IE8_OBJECTMAX     = 0x00010f9f,
-    DISPID_IE8_OBJECT        = 0x00010bd6,
-    DISPID_IE9_ELEMENTBASE   = 0x000104e2,
-    DISPID_IE9_ELEMENTMAX    = 0x00010505,
-    DISPID_IE9_ELEMENT       = 0x000104e2,
-    DISPID_IE10_ELEMENTBASE  = 0x00010506,
-    DISPID_IE10_ELEMENTMAX   = 0x000107cf,
-    DISPID_IE10_ELEMENT      = 0x00010506,
+    DISPID_SVGMPATHELEMENT    = 0x0000041aU,
+    DISPID_SVGNUMBER          = 0x000003e8U,
+    DISPID_SVGNUMBERLIST      = 0x000003e8U,
+    DISPID_SVGPATHELEMENT     = 0x0000041aU,
+    DISPID_SVGPATTERNELEMENT  = 0x0000041aU,
+    DISPID_SVGPOLYGONELEMENT  = 0x0000041aU,
+    DISPID_SVGPOLYLINEELEMENT = 0x0000041aU,
 }
 
-enum uint DISP10_IE10_XMSARIAFLOWFROM = 0x00010513;
+enum uint DISPID_SVGRADIALGRADIENTELEMENT = 0x0000042eU;
+
+enum : uint
+{
+    DISPID_SVGRECT                        = 0x000003e8U,
+    DISPID_SVGRECTELEMENT                 = 0x0000041aU,
+    DISPID_SVGSCRIPTELEMENT               = 0x0000041aU,
+    DISPID_SVGSETELEMENT                  = 0x0000041aU,
+    DISPID_SVGSTOPELEMENT                 = 0x0000041aU,
+    DISPID_SVGSTRINGLIST                  = 0x000003e8U,
+    DISPID_SVGSTYLEELEMENT                = 0x0000041aU,
+    DISPID_SVGSVGELEMENT                  = 0x0000041aU,
+    DISPID_SVGSWITCHELEMENT               = 0x0000041aU,
+    DISPID_SVGSYMBOLELEMENT               = 0x0000041aU,
+    DISPID_SVGTITLEELEMENT                = 0x0000041aU,
+    DISPID_SVGTREFELEMENT                 = 0x0000041aU,
+    DISPID_SVGTEXTCONTENTELEMENT          = 0x0000041aU,
+    DISPID_SVGTEXTCONTENTELEMENT_BASE     = 0x0000042eU,
+    DISPID_SVGTEXTPOSITIONINGELEMENT      = 0x0000042eU,
+    DISPID_SVGTEXTPOSITIONINGELEMENT_BASE = 0x00000442U,
+}
+
+enum : uint
+{
+    DISPID_SVGTEXTELEMENT     = 0x00000442U,
+    DISPID_SVGTSPANELEMENT    = 0x00000442U,
+    DISPID_SVGTEXTPATHELEMENT = 0x0000042eU,
+}
+
+enum : uint
+{
+    DISPID_SVGUSEELEMENT            = 0x0000041aU,
+    DISPID_SVGVIEWELEMENT           = 0x0000041aU,
+    DISPID_SVGVKERNELEMENT          = 0x0000041aU,
+    DISPID_SVGMATRIX                = 0x000003e8U,
+    DISPID_SVGTRANSFORM             = 0x000003e8U,
+    DISPID_SVGTRANSFORMLIST         = 0x000003e8U,
+    DISPID_SVGANIMATEDTRANSFORMLIST = 0x000003e8U,
+}
+
+enum : uint
+{
+    DISPID_SVGPATHSEG                          = 0x000003e8U,
+    DISPID_SVGPATHSEG_BASE                     = 0x000003fcU,
+    DISPID_SVGPATHSEGLIST                      = 0x000003e8U,
+    DISPID_SVGPATHSEGARCABS                    = 0x000003fcU,
+    DISPID_SVGPATHSEGARCREL                    = 0x000003fcU,
+    DISPID_SVGPATHSEGCLOSEPATH                 = 0x000003fcU,
+    DISPID_SVGPATHSEGMOVETOABS                 = 0x000003fcU,
+    DISPID_SVGPATHSEGMOVETOREL                 = 0x000003fcU,
+    DISPID_SVGPATHSEGLINETOABS                 = 0x000003fcU,
+    DISPID_SVGPATHSEGLINETOREL                 = 0x000003fcU,
+    DISPID_SVGPATHSEGCURVETOCUBICABS           = 0x000003fcU,
+    DISPID_SVGPATHSEGCURVETOCUBICREL           = 0x000003fcU,
+    DISPID_SVGPATHSEGCURVETOCUBICSMOOTHABS     = 0x000003fcU,
+    DISPID_SVGPATHSEGCURVETOCUBICSMOOTHREL     = 0x000003fcU,
+    DISPID_SVGPATHSEGCURVETOQUADRATICABS       = 0x000003fcU,
+    DISPID_SVGPATHSEGCURVETOQUADRATICREL       = 0x000003fcU,
+    DISPID_SVGPATHSEGCURVETOQUADRATICSMOOTHABS = 0x000003fcU,
+    DISPID_SVGPATHSEGCURVETOQUADRATICSMOOTHREL = 0x000003fcU,
+    DISPID_SVGPATHSEGLINETOHORIZONTALABS       = 0x000003fcU,
+    DISPID_SVGPATHSEGLINETOHORIZONTALREL       = 0x000003fcU,
+    DISPID_SVGPATHSEGLINETOVERTICALABS         = 0x000003fcU,
+    DISPID_SVGPATHSEGLINETOVERTICALREL         = 0x000003fcU,
+}
+
+enum : uint
+{
+    DISPID_CANVASELEMENT         = 0x000003e8U,
+    DISPID_CANVASRENDERCONTEXT2D = 0x000003e8U,
+    DISPID_CANVASGRADIENT        = 0x000003e8U,
+    DISPID_CANVASTEXTMETRICS     = 0x000003e8U,
+    DISPID_CANVASIMAGEDATA       = 0x000003e8U,
+    DISPID_CANVASPIXELARRAY      = 0x000003e8U,
+}
+
+enum : uint
+{
+    DISPID_PERFORMANCE           = 0x000003e8U,
+    DISPID_PERFORMANCENAVIGATION = 0x000003e8U,
+    DISPID_PERFORMANCETIMING     = 0x000003e8U,
+}
+
+enum uint DISPID_MSHTMLWEBVIEWELEMENT = 0x000003e8U;
+
+enum : uint
+{
+    DISPID_WEBGEOLOCATION       = 0x000003e8U,
+    DISPID_WEBGEOPOSITION       = 0x000003e8U,
+    DISPID_WEBGEOCOORDINATES    = 0x000003e8U,
+    DISPID_WEBGEOPOSITION_ERROR = 0x000003e8U,
+}
+
+enum : uint
+{
+    DISPID_DATALIST          = 0x000003e8U,
+    DISPID_IE8_ANCHOR        = 0x0000047eU,
+    DISPID_IE8_AREA          = 0x0000047eU,
+    DISPID_IE8_BASE          = 0x0000047eU,
+    DISPID_IE8_BODY          = 0x0000047eU,
+    DISPID_IE8_FORM          = 0x0000047eU,
+    DISPID_IE8_HEAD          = 0x0000047eU,
+    DISPID_IE8_IMG           = 0x0000047eU,
+    DISPID_IE8_INPUT         = 0x0000047eU,
+    DISPID_IE8_LINK          = 0x0000047eU,
+    DISPID_IE8_MOD           = 0x0000047eU,
+    DISPID_IE8_SCRIPT        = 0x0000047eU,
+    DISPID_IE8_ATTR          = 0x0000047eU,
+    DISPID_IE8_NAMEDNODEMAP  = 0x0000047eU,
+    DISPID_IE8_COLLECTION    = 0x0000047eU,
+    DISPID_IE8_PARAM         = 0x0000047eU,
+    DISPID_IE8_EMBED         = 0x0000047eU,
+    DISPID_IE8_BLOCK         = 0x0000047eU,
+    DISPID_IE8_META          = 0x0000047eU,
+    DISPID_IE8_STYLE         = 0x0000047eU,
+    DISPID_IE8_SELECT        = 0x0000047eU,
+    DISPID_IE8_ELEMENTBASE   = 0x000104b0U,
+    DISPID_IE8_ELEMENTMAX    = 0x000104d8U,
+    DISPID_IE8_ELEMENT       = 0x000104b0U,
+    DISPID_IE8_FRAMESITEBASE = 0x00011018U,
+    DISPID_IE8_FRAMEMAX      = 0x00011387U,
+    DISPID_IE8_FRAME         = 0x00011018U,
+    DISPID_IE8_IFRAME        = 0x00011018U,
+    DISPID_IE8_OBJECTBASE    = 0x00010bd6U,
+    DISPID_IE8_OBJECTMAX     = 0x00010f9fU,
+    DISPID_IE8_OBJECT        = 0x00010bd6U,
+    DISPID_IE9_ELEMENTBASE   = 0x000104e2U,
+    DISPID_IE9_ELEMENTMAX    = 0x00010505U,
+    DISPID_IE9_ELEMENT       = 0x000104e2U,
+    DISPID_IE10_ELEMENTBASE  = 0x00010506U,
+    DISPID_IE10_ELEMENTMAX   = 0x000107cfU,
+    DISPID_IE10_ELEMENT      = 0x00010506U,
+}
+
+enum uint DISP10_IE10_XMSARIAFLOWFROM = 0x00010513U;
 enum int DISPID_WINDOWOBJECT = 0xffffea84;
 enum int DISPID_PERFORMANCEOBJECT = 0xffffea7f;
 enum int DISPID_LOCATIONOBJECT = 0xffffea7e;
@@ -4688,2993 +4955,2993 @@ enum : int
 
 enum : uint
 {
-    DLCTL_DLIMAGES          = 0x00000010,
-    DLCTL_VIDEOS            = 0x00000020,
-    DLCTL_BGSOUNDS          = 0x00000040,
-    DLCTL_NO_SCRIPTS        = 0x00000080,
-    DLCTL_NO_JAVA           = 0x00000100,
-    DLCTL_NO_RUNACTIVEXCTLS = 0x00000200,
+    DLCTL_DLIMAGES          = 0x00000010U,
+    DLCTL_VIDEOS            = 0x00000020U,
+    DLCTL_BGSOUNDS          = 0x00000040U,
+    DLCTL_NO_SCRIPTS        = 0x00000080U,
+    DLCTL_NO_JAVA           = 0x00000100U,
+    DLCTL_NO_RUNACTIVEXCTLS = 0x00000200U,
 }
 
-enum uint DLCTL_NO_DLACTIVEXCTLS = 0x00000400;
-enum uint DLCTL_DOWNLOADONLY = 0x00000800;
-enum uint DLCTL_NO_FRAMEDOWNLOAD = 0x00001000;
-enum uint DLCTL_RESYNCHRONIZE = 0x00002000;
-enum uint DLCTL_PRAGMA_NO_CACHE = 0x00004000;
+enum uint DLCTL_NO_DLACTIVEXCTLS = 0x00000400U;
+enum uint DLCTL_DOWNLOADONLY = 0x00000800U;
+enum uint DLCTL_NO_FRAMEDOWNLOAD = 0x00001000U;
+enum uint DLCTL_RESYNCHRONIZE = 0x00002000U;
+enum uint DLCTL_PRAGMA_NO_CACHE = 0x00004000U;
 
 enum : uint
 {
-    DLCTL_NO_BEHAVIORS   = 0x00008000,
-    DLCTL_NO_METACHARSET = 0x00010000,
+    DLCTL_NO_BEHAVIORS   = 0x00008000U,
+    DLCTL_NO_METACHARSET = 0x00010000U,
 }
 
 enum : uint
 {
-    DLCTL_URL_ENCODING_DISABLE_UTF8 = 0x00020000,
-    DLCTL_URL_ENCODING_ENABLE_UTF8  = 0x00040000,
+    DLCTL_URL_ENCODING_DISABLE_UTF8 = 0x00020000U,
+    DLCTL_URL_ENCODING_ENABLE_UTF8  = 0x00040000U,
 }
 
 enum : uint
 {
-    DLCTL_NOFRAMES     = 0x00080000,
-    DLCTL_FORCEOFFLINE = 0x10000000,
+    DLCTL_NOFRAMES     = 0x00080000U,
+    DLCTL_FORCEOFFLINE = 0x10000000U,
 }
 
-enum uint DLCTL_NO_CLIENTPULL = 0x20000000;
+enum uint DLCTL_NO_CLIENTPULL = 0x20000000U;
 
 enum : uint
 {
-    DLCTL_SILENT                = 0x40000000,
-    DLCTL_OFFLINEIFNOTCONNECTED = 0x80000000,
-    DLCTL_OFFLINE               = 0x80000000,
+    DLCTL_SILENT                = 0x40000000U,
+    DLCTL_OFFLINEIFNOTCONNECTED = 0x80000000U,
+    DLCTL_OFFLINE               = 0x80000000U,
 }
 
 enum : uint
 {
-    DISPID_ONABORT           = 0x000003e8,
-    DISPID_ONCHANGE          = 0x000003e9,
-    DISPID_ONERROR           = 0x000003ea,
-    DISPID_ONLOAD            = 0x000003eb,
-    DISPID_ONSELECT          = 0x000003ee,
-    DISPID_ONSUBMIT          = 0x000003ef,
-    DISPID_ONUNLOAD          = 0x000003f0,
-    DISPID_ONBOUNCE          = 0x000003f1,
-    DISPID_ONFINISH          = 0x000003f2,
-    DISPID_ONSTART           = 0x000003f3,
-    DISPID_ONLAYOUT          = 0x000003f5,
-    DISPID_ONSCROLL          = 0x000003f6,
-    DISPID_ONRESET           = 0x000003f7,
-    DISPID_ONRESIZE          = 0x000003f8,
-    DISPID_ONBEFOREUNLOAD    = 0x000003f9,
-    DISPID_ONCHANGEFOCUS     = 0x000003fa,
-    DISPID_ONCHANGEBLUR      = 0x000003fb,
-    DISPID_ONPERSIST         = 0x000003fc,
-    DISPID_ONPERSISTSAVE     = 0x000003fd,
-    DISPID_ONPERSISTLOAD     = 0x000003fe,
-    DISPID_ONCONTEXTMENU     = 0x000003ff,
-    DISPID_ONBEFOREPRINT     = 0x00000400,
-    DISPID_ONAFTERPRINT      = 0x00000401,
-    DISPID_ONSTOP            = 0x00000402,
-    DISPID_ONBEFOREEDITFOCUS = 0x00000403,
+    DISPID_ONABORT           = 0x000003e8U,
+    DISPID_ONCHANGE          = 0x000003e9U,
+    DISPID_ONERROR           = 0x000003eaU,
+    DISPID_ONLOAD            = 0x000003ebU,
+    DISPID_ONSELECT          = 0x000003eeU,
+    DISPID_ONSUBMIT          = 0x000003efU,
+    DISPID_ONUNLOAD          = 0x000003f0U,
+    DISPID_ONBOUNCE          = 0x000003f1U,
+    DISPID_ONFINISH          = 0x000003f2U,
+    DISPID_ONSTART           = 0x000003f3U,
+    DISPID_ONLAYOUT          = 0x000003f5U,
+    DISPID_ONSCROLL          = 0x000003f6U,
+    DISPID_ONRESET           = 0x000003f7U,
+    DISPID_ONRESIZE          = 0x000003f8U,
+    DISPID_ONBEFOREUNLOAD    = 0x000003f9U,
+    DISPID_ONCHANGEFOCUS     = 0x000003faU,
+    DISPID_ONCHANGEBLUR      = 0x000003fbU,
+    DISPID_ONPERSIST         = 0x000003fcU,
+    DISPID_ONPERSISTSAVE     = 0x000003fdU,
+    DISPID_ONPERSISTLOAD     = 0x000003feU,
+    DISPID_ONCONTEXTMENU     = 0x000003ffU,
+    DISPID_ONBEFOREPRINT     = 0x00000400U,
+    DISPID_ONAFTERPRINT      = 0x00000401U,
+    DISPID_ONSTOP            = 0x00000402U,
+    DISPID_ONBEFOREEDITFOCUS = 0x00000403U,
 }
 
 enum : uint
 {
-    DISPID_ONMOUSEHOVER     = 0x00000404,
-    DISPID_ONCONTENTREADY   = 0x00000405,
-    DISPID_ONLAYOUTCOMPLETE = 0x00000406,
+    DISPID_ONMOUSEHOVER     = 0x00000404U,
+    DISPID_ONCONTENTREADY   = 0x00000405U,
+    DISPID_ONLAYOUTCOMPLETE = 0x00000406U,
 }
 
 enum : uint
 {
-    DISPID_ONPAGE           = 0x00000407,
-    DISPID_ONLINKEDOVERFLOW = 0x00000408,
+    DISPID_ONPAGE           = 0x00000407U,
+    DISPID_ONLINKEDOVERFLOW = 0x00000408U,
 }
 
 enum : uint
 {
-    DISPID_ONMOUSEWHEEL       = 0x00000409,
-    DISPID_ONBEFOREDEACTIVATE = 0x0000040a,
+    DISPID_ONMOUSEWHEEL       = 0x00000409U,
+    DISPID_ONBEFOREDEACTIVATE = 0x0000040aU,
 }
 
 enum : uint
 {
-    DISPID_ONMOVE            = 0x0000040b,
-    DISPID_ONCONTROLSELECT   = 0x0000040c,
-    DISPID_ONSELECTIONCHANGE = 0x0000040d,
+    DISPID_ONMOVE            = 0x0000040bU,
+    DISPID_ONCONTROLSELECT   = 0x0000040cU,
+    DISPID_ONSELECTIONCHANGE = 0x0000040dU,
 }
 
 enum : uint
 {
-    DISPID_ONMOVESTART          = 0x0000040e,
-    DISPID_ONMOVEEND            = 0x0000040f,
-    DISPID_ONRESIZESTART        = 0x00000410,
-    DISPID_ONRESIZEEND          = 0x00000411,
-    DISPID_ONMOUSEENTER         = 0x00000412,
-    DISPID_ONMOUSELEAVE         = 0x00000413,
-    DISPID_ONACTIVATE           = 0x00000414,
-    DISPID_ONDEACTIVATE         = 0x00000415,
-    DISPID_ONMULTILAYOUTCLEANUP = 0x00000416,
+    DISPID_ONMOVESTART          = 0x0000040eU,
+    DISPID_ONMOVEEND            = 0x0000040fU,
+    DISPID_ONRESIZESTART        = 0x00000410U,
+    DISPID_ONRESIZEEND          = 0x00000411U,
+    DISPID_ONMOUSEENTER         = 0x00000412U,
+    DISPID_ONMOUSELEAVE         = 0x00000413U,
+    DISPID_ONACTIVATE           = 0x00000414U,
+    DISPID_ONDEACTIVATE         = 0x00000415U,
+    DISPID_ONMULTILAYOUTCLEANUP = 0x00000416U,
 }
 
-enum uint DISPID_ONBEFOREACTIVATE = 0x00000417;
+enum uint DISPID_ONBEFOREACTIVATE = 0x00000417U;
 
 enum : uint
 {
-    DISPID_ONFOCUSIN              = 0x00000418,
-    DISPID_ONFOCUSOUT             = 0x00000419,
-    DISPID_ONVALUECHANGE          = 0x0000041a,
-    DISPID_ONSELECTADD            = 0x0000041b,
-    DISPID_ONSELECTREMOVE         = 0x0000041c,
-    DISPID_ONSELECTWITHIN         = 0x0000041d,
-    DISPID_ONSYSTEMSCROLLINGSTART = 0x0000041e,
-    DISPID_ONSYSTEMSCROLLINGEND   = 0x0000041f,
+    DISPID_ONFOCUSIN              = 0x00000418U,
+    DISPID_ONFOCUSOUT             = 0x00000419U,
+    DISPID_ONVALUECHANGE          = 0x0000041aU,
+    DISPID_ONSELECTADD            = 0x0000041bU,
+    DISPID_ONSELECTREMOVE         = 0x0000041cU,
+    DISPID_ONSELECTWITHIN         = 0x0000041dU,
+    DISPID_ONSYSTEMSCROLLINGSTART = 0x0000041eU,
+    DISPID_ONSYSTEMSCROLLINGEND   = 0x0000041fU,
 }
 
-enum uint DISPID_ONOBJECTCONTENTSCROLLED = 0x00000420;
+enum uint DISPID_ONOBJECTCONTENTSCROLLED = 0x00000420U;
 
 enum : uint
 {
-    DISPID_ONSTORAGE        = 0x00000421,
-    DISPID_ONSTORAGECOMMIT  = 0x00000422,
-    DISPID_ONSHOW           = 0x00000423,
-    DISPID_ONHIDE           = 0x00000424,
-    DISPID_ONALERT          = 0x00000425,
-    DISPID_ONPOPUPMENUSTART = 0x00000426,
-    DISPID_ONPOPUPMENUEND   = 0x00000427,
-    DISPID_ONONLINE         = 0x00000428,
-    DISPID_ONOFFLINE        = 0x00000429,
-    DISPID_ONHASHCHANGE     = 0x0000042a,
-    DISPID_ONMESSAGE        = 0x0000042b,
-    DISPID_ONDOMMUTATION    = 0x0000042c,
+    DISPID_ONSTORAGE        = 0x00000421U,
+    DISPID_ONSTORAGECOMMIT  = 0x00000422U,
+    DISPID_ONSHOW           = 0x00000423U,
+    DISPID_ONHIDE           = 0x00000424U,
+    DISPID_ONALERT          = 0x00000425U,
+    DISPID_ONPOPUPMENUSTART = 0x00000426U,
+    DISPID_ONPOPUPMENUEND   = 0x00000427U,
+    DISPID_ONONLINE         = 0x00000428U,
+    DISPID_ONOFFLINE        = 0x00000429U,
+    DISPID_ONHASHCHANGE     = 0x0000042aU,
+    DISPID_ONMESSAGE        = 0x0000042bU,
+    DISPID_ONDOMMUTATION    = 0x0000042cU,
 }
 
 enum : uint
 {
-    DISPID_SVGLOAD            = 0x0000042d,
-    DISPID_SVGUNLOAD          = 0x0000042e,
-    DISPID_SVGABORT           = 0x0000042f,
-    DISPID_SVGERROR           = 0x00000430,
-    DISPID_SVGRESIZE          = 0x00000431,
-    DISPID_SVGSCROLL          = 0x00000432,
-    DISPID_SVGZOOM            = 0x00000433,
-    DISPID_MSPOINTERDOWN      = 0x00000434,
-    DISPID_MSPOINTERMOVE      = 0x00000435,
-    DISPID_MSPOINTERUP        = 0x00000436,
-    DISPID_MSPOINTEROVER      = 0x00000437,
-    DISPID_MSPOINTEROUT       = 0x00000438,
-    DISPID_MSPOINTERCANCEL    = 0x00000439,
-    DISPID_MSPOINTERHOVER     = 0x0000043a,
-    DISPID_MSGESTURESTART     = 0x0000043b,
-    DISPID_MSGESTURECHANGE    = 0x0000043c,
-    DISPID_MSGESTUREEND       = 0x0000043d,
-    DISPID_MSGESTUREHOLD      = 0x0000043e,
-    DISPID_MSGESTURETAP       = 0x0000043f,
-    DISPID_MSGESTUREDOUBLETAP = 0x00000440,
+    DISPID_SVGLOAD            = 0x0000042dU,
+    DISPID_SVGUNLOAD          = 0x0000042eU,
+    DISPID_SVGABORT           = 0x0000042fU,
+    DISPID_SVGERROR           = 0x00000430U,
+    DISPID_SVGRESIZE          = 0x00000431U,
+    DISPID_SVGSCROLL          = 0x00000432U,
+    DISPID_SVGZOOM            = 0x00000433U,
+    DISPID_MSPOINTERDOWN      = 0x00000434U,
+    DISPID_MSPOINTERMOVE      = 0x00000435U,
+    DISPID_MSPOINTERUP        = 0x00000436U,
+    DISPID_MSPOINTEROVER      = 0x00000437U,
+    DISPID_MSPOINTEROUT       = 0x00000438U,
+    DISPID_MSPOINTERCANCEL    = 0x00000439U,
+    DISPID_MSPOINTERHOVER     = 0x0000043aU,
+    DISPID_MSGESTURESTART     = 0x0000043bU,
+    DISPID_MSGESTURECHANGE    = 0x0000043cU,
+    DISPID_MSGESTUREEND       = 0x0000043dU,
+    DISPID_MSGESTUREHOLD      = 0x0000043eU,
+    DISPID_MSGESTURETAP       = 0x0000043fU,
+    DISPID_MSGESTUREDOUBLETAP = 0x00000440U,
 }
 
 enum : uint
 {
-    DISPID_MSINERTIASTART       = 0x00000441,
-    DISPID_MSLOSTPOINTERCAPTURE = 0x00000442,
+    DISPID_MSINERTIASTART       = 0x00000441U,
+    DISPID_MSLOSTPOINTERCAPTURE = 0x00000442U,
 }
 
-enum uint DISPID_MSGOTPOINTERCAPTURE = 0x00000443;
+enum uint DISPID_MSGOTPOINTERCAPTURE = 0x00000443U;
 
 enum : uint
 {
-    DISPID_MSTRANSITIONSTART    = 0x00000444,
-    DISPID_MSTRANSITIONEND      = 0x00000445,
-    DISPID_MSANIMATIONSTART     = 0x00000446,
-    DISPID_MSANIMATIONEND       = 0x00000447,
-    DISPID_MSANIMATIONITERATION = 0x00000448,
+    DISPID_MSTRANSITIONSTART    = 0x00000444U,
+    DISPID_MSTRANSITIONEND      = 0x00000445U,
+    DISPID_MSANIMATIONSTART     = 0x00000446U,
+    DISPID_MSANIMATIONEND       = 0x00000447U,
+    DISPID_MSANIMATIONITERATION = 0x00000448U,
 }
 
 enum : uint
 {
-    DISPID_MSGESTUREINIT              = 0x00000449,
-    DISPID_MSMANIPULATIONSTATECHANGED = 0x0000044a,
+    DISPID_MSGESTUREINIT              = 0x00000449U,
+    DISPID_MSMANIPULATIONSTATECHANGED = 0x0000044aU,
 }
 
 enum : uint
 {
-    DISPID_ONOPEN              = 0x0000044b,
-    DISPID_ONCLOSE             = 0x0000044c,
-    DISPID_MSPOINTERENTER      = 0x0000044d,
-    DISPID_MSPOINTERLEAVE      = 0x0000044e,
-    DISPID_MSORIENTATIONCHANGE = 0x0000044f,
+    DISPID_ONOPEN              = 0x0000044bU,
+    DISPID_ONCLOSE             = 0x0000044cU,
+    DISPID_MSPOINTERENTER      = 0x0000044dU,
+    DISPID_MSPOINTERLEAVE      = 0x0000044eU,
+    DISPID_MSORIENTATIONCHANGE = 0x0000044fU,
 }
 
 enum : uint
 {
-    DISPID_ONDEVICEORIENTATION       = 0x00000450,
-    DISPID_ONDEVICEMOTION            = 0x00000451,
-    DISPID_ONPAGESHOW                = 0x00000452,
-    DISPID_ONPAGEHIDE                = 0x00000453,
-    DISPID_ONCOMPASSNEEDSCALIBRATION = 0x00000454,
+    DISPID_ONDEVICEORIENTATION       = 0x00000450U,
+    DISPID_ONDEVICEMOTION            = 0x00000451U,
+    DISPID_ONPAGESHOW                = 0x00000452U,
+    DISPID_ONPAGEHIDE                = 0x00000453U,
+    DISPID_ONCOMPASSNEEDSCALIBRATION = 0x00000454U,
 }
 
 enum : uint
 {
-    DISPID_A_FIRST           = 0x00011388,
-    DISPID_A_MIN             = 0x00011388,
-    DISPID_A_MAX             = 0x0001176f,
-    DISPID_A_BACKGROUNDIMAGE = 0x00011389,
+    DISPID_A_FIRST           = 0x00011388U,
+    DISPID_A_MIN             = 0x00011388U,
+    DISPID_A_MAX             = 0x0001176fU,
+    DISPID_A_BACKGROUNDIMAGE = 0x00011389U,
 }
 
 enum : uint
 {
-    DISPID_A_COLOR                     = 0x0001138a,
-    DISPID_A_TEXTTRANSFORM             = 0x0001138c,
-    DISPID_A_NOWRAP                    = 0x0001138d,
-    DISPID_A_LINEHEIGHT                = 0x0001138e,
-    DISPID_A_TEXTINDENT                = 0x0001138f,
-    DISPID_A_LETTERSPACING             = 0x00011390,
-    DISPID_A_LANG                      = 0x00011391,
-    DISPID_A_OVERFLOW                  = 0x00011392,
-    DISPID_A_PADDING                   = 0x00011393,
-    DISPID_A_PADDINGTOP                = 0x00011394,
-    DISPID_A_PADDINGRIGHT              = 0x00011395,
-    DISPID_A_PADDINGBOTTOM             = 0x00011396,
-    DISPID_A_PADDINGLEFT               = 0x00011397,
-    DISPID_A_CLEAR                     = 0x00011398,
-    DISPID_A_LISTTYPE                  = 0x00011399,
-    DISPID_A_FONTFACE                  = 0x0001139a,
-    DISPID_A_FONTSIZE                  = 0x0001139b,
-    DISPID_A_TEXTDECORATIONLINETHROUGH = 0x0001139c,
-    DISPID_A_TEXTDECORATIONUNDERLINE   = 0x0001139d,
-    DISPID_A_TEXTDECORATIONBLINK       = 0x0001139e,
-    DISPID_A_TEXTDECORATIONNONE        = 0x0001139f,
+    DISPID_A_COLOR                     = 0x0001138aU,
+    DISPID_A_TEXTTRANSFORM             = 0x0001138cU,
+    DISPID_A_NOWRAP                    = 0x0001138dU,
+    DISPID_A_LINEHEIGHT                = 0x0001138eU,
+    DISPID_A_TEXTINDENT                = 0x0001138fU,
+    DISPID_A_LETTERSPACING             = 0x00011390U,
+    DISPID_A_LANG                      = 0x00011391U,
+    DISPID_A_OVERFLOW                  = 0x00011392U,
+    DISPID_A_PADDING                   = 0x00011393U,
+    DISPID_A_PADDINGTOP                = 0x00011394U,
+    DISPID_A_PADDINGRIGHT              = 0x00011395U,
+    DISPID_A_PADDINGBOTTOM             = 0x00011396U,
+    DISPID_A_PADDINGLEFT               = 0x00011397U,
+    DISPID_A_CLEAR                     = 0x00011398U,
+    DISPID_A_LISTTYPE                  = 0x00011399U,
+    DISPID_A_FONTFACE                  = 0x0001139aU,
+    DISPID_A_FONTSIZE                  = 0x0001139bU,
+    DISPID_A_TEXTDECORATIONLINETHROUGH = 0x0001139cU,
+    DISPID_A_TEXTDECORATIONUNDERLINE   = 0x0001139dU,
+    DISPID_A_TEXTDECORATIONBLINK       = 0x0001139eU,
+    DISPID_A_TEXTDECORATIONNONE        = 0x0001139fU,
 }
 
 enum : uint
 {
-    DISPID_A_FONTSTYLE             = 0x000113a0,
-    DISPID_A_FONTVARIANT           = 0x000113a1,
-    DISPID_A_BASEFONT              = 0x000113a2,
-    DISPID_A_FONTWEIGHT            = 0x000113a3,
-    DISPID_A_TABLEBORDERCOLOR      = 0x000113a4,
-    DISPID_A_TABLEBORDERCOLORLIGHT = 0x000113a5,
-    DISPID_A_TABLEBORDERCOLORDARK  = 0x000113a6,
-    DISPID_A_TABLEVALIGN           = 0x000113a7,
-    DISPID_A_BACKGROUND            = 0x000113a8,
-    DISPID_A_BACKGROUNDPOSX        = 0x000113a9,
-    DISPID_A_BACKGROUNDPOSY        = 0x000113aa,
+    DISPID_A_FONTSTYLE             = 0x000113a0U,
+    DISPID_A_FONTVARIANT           = 0x000113a1U,
+    DISPID_A_BASEFONT              = 0x000113a2U,
+    DISPID_A_FONTWEIGHT            = 0x000113a3U,
+    DISPID_A_TABLEBORDERCOLOR      = 0x000113a4U,
+    DISPID_A_TABLEBORDERCOLORLIGHT = 0x000113a5U,
+    DISPID_A_TABLEBORDERCOLORDARK  = 0x000113a6U,
+    DISPID_A_TABLEVALIGN           = 0x000113a7U,
+    DISPID_A_BACKGROUND            = 0x000113a8U,
+    DISPID_A_BACKGROUNDPOSX        = 0x000113a9U,
+    DISPID_A_BACKGROUNDPOSY        = 0x000113aaU,
 }
 
-enum uint DISPID_A_TEXTDECORATION = 0x000113ab;
+enum uint DISPID_A_TEXTDECORATION = 0x000113abU;
 
 enum : uint
 {
-    DISPID_A_MARGIN          = 0x000113ac,
-    DISPID_A_MARGINTOP       = 0x000113ad,
-    DISPID_A_MARGINRIGHT     = 0x000113ae,
-    DISPID_A_MARGINBOTTOM    = 0x000113af,
-    DISPID_A_MARGINLEFT      = 0x000113b0,
-    DISPID_A_FONT            = 0x000113b1,
-    DISPID_A_FONTSIZEKEYWORD = 0x000113b2,
-    DISPID_A_FONTSIZECOMBINE = 0x000113b3,
+    DISPID_A_MARGIN          = 0x000113acU,
+    DISPID_A_MARGINTOP       = 0x000113adU,
+    DISPID_A_MARGINRIGHT     = 0x000113aeU,
+    DISPID_A_MARGINBOTTOM    = 0x000113afU,
+    DISPID_A_MARGINLEFT      = 0x000113b0U,
+    DISPID_A_FONT            = 0x000113b1U,
+    DISPID_A_FONTSIZEKEYWORD = 0x000113b2U,
+    DISPID_A_FONTSIZECOMBINE = 0x000113b3U,
 }
 
 enum : uint
 {
-    DISPID_A_BACKGROUNDREPEAT     = 0x000113b4,
-    DISPID_A_BACKGROUNDATTACHMENT = 0x000113b5,
-    DISPID_A_BACKGROUNDPOSITION   = 0x000113b6,
+    DISPID_A_BACKGROUNDREPEAT     = 0x000113b4U,
+    DISPID_A_BACKGROUNDATTACHMENT = 0x000113b5U,
+    DISPID_A_BACKGROUNDPOSITION   = 0x000113b6U,
 }
 
 enum : uint
 {
-    DISPID_A_WORDSPACING       = 0x000113b7,
-    DISPID_A_VERTICALALIGN     = 0x000113b8,
-    DISPID_A_BORDER            = 0x000113b9,
-    DISPID_A_BORDERTOP         = 0x000113ba,
-    DISPID_A_BORDERRIGHT       = 0x000113bb,
-    DISPID_A_BORDERBOTTOM      = 0x000113bc,
-    DISPID_A_BORDERLEFT        = 0x000113bd,
-    DISPID_A_BORDERCOLOR       = 0x000113be,
-    DISPID_A_BORDERTOPCOLOR    = 0x000113bf,
-    DISPID_A_BORDERRIGHTCOLOR  = 0x000113c0,
-    DISPID_A_BORDERBOTTOMCOLOR = 0x000113c1,
-    DISPID_A_BORDERLEFTCOLOR   = 0x000113c2,
-    DISPID_A_BORDERWIDTH       = 0x000113c3,
-    DISPID_A_BORDERTOPWIDTH    = 0x000113c4,
-    DISPID_A_BORDERRIGHTWIDTH  = 0x000113c5,
-    DISPID_A_BORDERBOTTOMWIDTH = 0x000113c6,
-    DISPID_A_BORDERLEFTWIDTH   = 0x000113c7,
-    DISPID_A_BORDERSTYLE       = 0x000113c8,
-    DISPID_A_BORDERTOPSTYLE    = 0x000113c9,
-    DISPID_A_BORDERRIGHTSTYLE  = 0x000113ca,
-    DISPID_A_BORDERBOTTOMSTYLE = 0x000113cb,
-    DISPID_A_BORDERLEFTSTYLE   = 0x000113cc,
+    DISPID_A_WORDSPACING       = 0x000113b7U,
+    DISPID_A_VERTICALALIGN     = 0x000113b8U,
+    DISPID_A_BORDER            = 0x000113b9U,
+    DISPID_A_BORDERTOP         = 0x000113baU,
+    DISPID_A_BORDERRIGHT       = 0x000113bbU,
+    DISPID_A_BORDERBOTTOM      = 0x000113bcU,
+    DISPID_A_BORDERLEFT        = 0x000113bdU,
+    DISPID_A_BORDERCOLOR       = 0x000113beU,
+    DISPID_A_BORDERTOPCOLOR    = 0x000113bfU,
+    DISPID_A_BORDERRIGHTCOLOR  = 0x000113c0U,
+    DISPID_A_BORDERBOTTOMCOLOR = 0x000113c1U,
+    DISPID_A_BORDERLEFTCOLOR   = 0x000113c2U,
+    DISPID_A_BORDERWIDTH       = 0x000113c3U,
+    DISPID_A_BORDERTOPWIDTH    = 0x000113c4U,
+    DISPID_A_BORDERRIGHTWIDTH  = 0x000113c5U,
+    DISPID_A_BORDERBOTTOMWIDTH = 0x000113c6U,
+    DISPID_A_BORDERLEFTWIDTH   = 0x000113c7U,
+    DISPID_A_BORDERSTYLE       = 0x000113c8U,
+    DISPID_A_BORDERTOPSTYLE    = 0x000113c9U,
+    DISPID_A_BORDERRIGHTSTYLE  = 0x000113caU,
+    DISPID_A_BORDERBOTTOMSTYLE = 0x000113cbU,
+    DISPID_A_BORDERLEFTSTYLE   = 0x000113ccU,
 }
 
-enum uint DISPID_A_TEXTDECORATIONOVERLINE = 0x000113cd;
+enum uint DISPID_A_TEXTDECORATIONOVERLINE = 0x000113cdU;
 
 enum : uint
 {
-    DISPID_A_FLOAT             = 0x000113ce,
-    DISPID_A_DISPLAY           = 0x000113cf,
-    DISPID_A_LISTSTYLETYPE     = 0x000113d0,
-    DISPID_A_LISTSTYLEPOSITION = 0x000113d1,
-    DISPID_A_LISTSTYLEIMAGE    = 0x000113d2,
-    DISPID_A_LISTSTYLE         = 0x000113d3,
-    DISPID_A_WHITESPACE        = 0x000113d4,
-    DISPID_A_PAGEBREAKBEFORE   = 0x000113d5,
-    DISPID_A_PAGEBREAKAFTER    = 0x000113d6,
+    DISPID_A_FLOAT             = 0x000113ceU,
+    DISPID_A_DISPLAY           = 0x000113cfU,
+    DISPID_A_LISTSTYLETYPE     = 0x000113d0U,
+    DISPID_A_LISTSTYLEPOSITION = 0x000113d1U,
+    DISPID_A_LISTSTYLEIMAGE    = 0x000113d2U,
+    DISPID_A_LISTSTYLE         = 0x000113d3U,
+    DISPID_A_WHITESPACE        = 0x000113d4U,
+    DISPID_A_PAGEBREAKBEFORE   = 0x000113d5U,
+    DISPID_A_PAGEBREAKAFTER    = 0x000113d6U,
 }
 
 enum : uint
 {
-    DISPID_A_SCROLL     = 0x000113d7,
-    DISPID_A_VISIBILITY = 0x000113d8,
-    DISPID_A_HIDDEN     = 0x000113d9,
-    DISPID_A_FILTER     = 0x000113da,
-    DISPID_DEFAULTVALUE = 0x000113db,
+    DISPID_A_SCROLL     = 0x000113d7U,
+    DISPID_A_VISIBILITY = 0x000113d8U,
+    DISPID_A_HIDDEN     = 0x000113d9U,
+    DISPID_A_FILTER     = 0x000113daU,
+    DISPID_DEFAULTVALUE = 0x000113dbU,
 }
 
-enum uint DISPID_A_BORDERCOLLAPSE = 0x000113dc;
+enum uint DISPID_A_BORDERCOLLAPSE = 0x000113dcU;
 
 enum : uint
 {
-    DISPID_A_POSITION       = 0x000113e2,
-    DISPID_A_ZINDEX         = 0x000113e3,
-    DISPID_A_CLIP           = 0x000113e4,
-    DISPID_A_CLIPRECTTOP    = 0x000113e5,
-    DISPID_A_CLIPRECTRIGHT  = 0x000113e6,
-    DISPID_A_CLIPRECTBOTTOM = 0x000113e7,
-    DISPID_A_CLIPRECTLEFT   = 0x000113e8,
-    DISPID_A_FONTFACESRC    = 0x000113e9,
-    DISPID_A_TABLELAYOUT    = 0x000113ea,
-    DISPID_A_STYLETEXT      = 0x000113eb,
-    DISPID_A_LANGUAGE       = 0x000113ec,
-    DISPID_A_VALUE          = 0x000113ed,
-    DISPID_A_CURSOR         = 0x000113ee,
-    DISPID_A_EVENTSINK      = 0x000113ef,
-    DISPID_A_PROPNOTIFYSINK = 0x000113f0,
+    DISPID_A_POSITION       = 0x000113e2U,
+    DISPID_A_ZINDEX         = 0x000113e3U,
+    DISPID_A_CLIP           = 0x000113e4U,
+    DISPID_A_CLIPRECTTOP    = 0x000113e5U,
+    DISPID_A_CLIPRECTRIGHT  = 0x000113e6U,
+    DISPID_A_CLIPRECTBOTTOM = 0x000113e7U,
+    DISPID_A_CLIPRECTLEFT   = 0x000113e8U,
+    DISPID_A_FONTFACESRC    = 0x000113e9U,
+    DISPID_A_TABLELAYOUT    = 0x000113eaU,
+    DISPID_A_STYLETEXT      = 0x000113ebU,
+    DISPID_A_LANGUAGE       = 0x000113ecU,
+    DISPID_A_VALUE          = 0x000113edU,
+    DISPID_A_CURSOR         = 0x000113eeU,
+    DISPID_A_EVENTSINK      = 0x000113efU,
+    DISPID_A_PROPNOTIFYSINK = 0x000113f0U,
 }
 
-enum uint DISPID_A_ROWSETNOTIFYSINK = 0x000113f1;
+enum uint DISPID_A_ROWSETNOTIFYSINK = 0x000113f1U;
 
 enum : uint
 {
-    DISPID_INTERNAL_INLINESTYLEAA         = 0x000113f2,
-    DISPID_INTERNAL_CSTYLEPTRCACHE        = 0x000113f3,
-    DISPID_INTERNAL_CRUNTIMESTYLEPTRCACHE = 0x000113f4,
-    DISPID_INTERNAL_INVOKECONTEXT         = 0x000113f5,
+    DISPID_INTERNAL_INLINESTYLEAA         = 0x000113f2U,
+    DISPID_INTERNAL_CSTYLEPTRCACHE        = 0x000113f3U,
+    DISPID_INTERNAL_CRUNTIMESTYLEPTRCACHE = 0x000113f4U,
+    DISPID_INTERNAL_INVOKECONTEXT         = 0x000113f5U,
 }
 
-enum uint DISPID_A_BGURLIMGCTXCACHEINDEX = 0x000113f6;
-enum uint DISPID_A_LIURLIMGCTXCACHEINDEX = 0x000113f7;
-enum uint DISPID_A_ROWSETASYNCHNOTIFYSINK = 0x000113f8;
-enum uint DISPID_INTERNAL_FILTERPTRCACHE = 0x000113f9;
-enum uint DISPID_A_ROWPOSITIONCHANGESINK = 0x000113fa;
+enum uint DISPID_A_BGURLIMGCTXCACHEINDEX = 0x000113f6U;
+enum uint DISPID_A_LIURLIMGCTXCACHEINDEX = 0x000113f7U;
+enum uint DISPID_A_ROWSETASYNCHNOTIFYSINK = 0x000113f8U;
+enum uint DISPID_INTERNAL_FILTERPTRCACHE = 0x000113f9U;
+enum uint DISPID_A_ROWPOSITIONCHANGESINK = 0x000113faU;
 
 enum : uint
 {
-    DISPID_A_BEHAVIOR     = 0x000113fb,
-    DISPID_A_READYSTATE   = 0x000113fc,
-    DISPID_A_DIR          = 0x000113fd,
-    DISPID_A_UNICODEBIDI  = 0x000113fe,
-    DISPID_A_DIRECTION    = 0x000113ff,
-    DISPID_A_IMEMODE      = 0x00011400,
-    DISPID_A_RUBYALIGN    = 0x00011401,
-    DISPID_A_RUBYPOSITION = 0x00011402,
-    DISPID_A_RUBYOVERHANG = 0x00011403,
+    DISPID_A_BEHAVIOR     = 0x000113fbU,
+    DISPID_A_READYSTATE   = 0x000113fcU,
+    DISPID_A_DIR          = 0x000113fdU,
+    DISPID_A_UNICODEBIDI  = 0x000113feU,
+    DISPID_A_DIRECTION    = 0x000113ffU,
+    DISPID_A_IMEMODE      = 0x00011400U,
+    DISPID_A_RUBYALIGN    = 0x00011401U,
+    DISPID_A_RUBYPOSITION = 0x00011402U,
+    DISPID_A_RUBYOVERHANG = 0x00011403U,
 }
 
 enum : uint
 {
-    DISPID_INTERNAL_ONBEHAVIOR_CONTENTREADY  = 0x00011404,
-    DISPID_INTERNAL_ONBEHAVIOR_DOCUMENTREADY = 0x00011405,
+    DISPID_INTERNAL_ONBEHAVIOR_CONTENTREADY  = 0x00011404U,
+    DISPID_INTERNAL_ONBEHAVIOR_DOCUMENTREADY = 0x00011405U,
 }
 
-enum uint DISPID_INTERNAL_CDOMCHILDRENPTRCACHE = 0x00011406;
+enum uint DISPID_INTERNAL_CDOMCHILDRENPTRCACHE = 0x00011406U;
 
 enum : uint
 {
-    DISPID_A_LAYOUTGRIDCHAR        = 0x00011407,
-    DISPID_A_LAYOUTGRIDLINE        = 0x00011408,
-    DISPID_A_LAYOUTGRIDMODE        = 0x00011409,
-    DISPID_A_LAYOUTGRIDTYPE        = 0x0001140a,
-    DISPID_A_LAYOUTGRID            = 0x0001140b,
-    DISPID_A_TEXTAUTOSPACE         = 0x0001140c,
-    DISPID_A_LINEBREAK             = 0x0001140d,
-    DISPID_A_WORDBREAK             = 0x0001140e,
-    DISPID_A_TEXTJUSTIFY           = 0x0001140f,
-    DISPID_A_TEXTJUSTIFYTRIM       = 0x00011410,
-    DISPID_A_TEXTKASHIDA           = 0x00011411,
-    DISPID_A_OVERFLOWX             = 0x00011413,
-    DISPID_A_OVERFLOWY             = 0x00011414,
-    DISPID_A_HTCDISPATCHITEM_VALUE = 0x00011415,
+    DISPID_A_LAYOUTGRIDCHAR        = 0x00011407U,
+    DISPID_A_LAYOUTGRIDLINE        = 0x00011408U,
+    DISPID_A_LAYOUTGRIDMODE        = 0x00011409U,
+    DISPID_A_LAYOUTGRIDTYPE        = 0x0001140aU,
+    DISPID_A_LAYOUTGRID            = 0x0001140bU,
+    DISPID_A_TEXTAUTOSPACE         = 0x0001140cU,
+    DISPID_A_LINEBREAK             = 0x0001140dU,
+    DISPID_A_WORDBREAK             = 0x0001140eU,
+    DISPID_A_TEXTJUSTIFY           = 0x0001140fU,
+    DISPID_A_TEXTJUSTIFYTRIM       = 0x00011410U,
+    DISPID_A_TEXTKASHIDA           = 0x00011411U,
+    DISPID_A_OVERFLOWX             = 0x00011413U,
+    DISPID_A_OVERFLOWY             = 0x00011414U,
+    DISPID_A_HTCDISPATCHITEM_VALUE = 0x00011415U,
 }
 
 enum : uint
 {
-    DISPID_A_DOCFRAGMENT             = 0x00011416,
-    DISPID_A_HTCDD_ELEMENT           = 0x00011417,
-    DISPID_A_HTCDD_CREATEEVENTOBJECT = 0x00011418,
+    DISPID_A_DOCFRAGMENT             = 0x00011416U,
+    DISPID_A_HTCDD_ELEMENT           = 0x00011417U,
+    DISPID_A_HTCDD_CREATEEVENTOBJECT = 0x00011418U,
 }
 
 enum : uint
 {
-    DISPID_A_URNATOM          = 0x00011419,
-    DISPID_A_UNIQUEPEERNUMBER = 0x0001141a,
+    DISPID_A_URNATOM          = 0x00011419U,
+    DISPID_A_UNIQUEPEERNUMBER = 0x0001141aU,
 }
 
-enum uint DISPID_A_ACCELERATOR = 0x0001141b;
+enum uint DISPID_A_ACCELERATOR = 0x0001141bU;
 
 enum : uint
 {
-    DISPID_INTERNAL_ONBEHAVIOR_APPLYSTYLE = 0x0001141c,
-    DISPID_INTERNAL_RUNTIMESTYLEAA        = 0x0001141d,
+    DISPID_INTERNAL_ONBEHAVIOR_APPLYSTYLE = 0x0001141cU,
+    DISPID_INTERNAL_RUNTIMESTYLEAA        = 0x0001141dU,
 }
 
-enum uint DISPID_A_HTCDISPATCHITEM_VALUE_SCRIPTSONLY = 0x0001141e;
-enum uint DISPID_A_EXTENDEDTAGDESC = 0x0001141f;
+enum uint DISPID_A_HTCDISPATCHITEM_VALUE_SCRIPTSONLY = 0x0001141eU;
+enum uint DISPID_A_EXTENDEDTAGDESC = 0x0001141fU;
 
 enum : uint
 {
-    DISPID_A_ROTATE                 = 0x00011420,
-    DISPID_A_ZOOM                   = 0x00011421,
-    DISPID_A_HTCDD_PROTECTEDELEMENT = 0x00011422,
+    DISPID_A_ROTATE                 = 0x00011420U,
+    DISPID_A_ZOOM                   = 0x00011421U,
+    DISPID_A_HTCDD_PROTECTEDELEMENT = 0x00011422U,
 }
 
-enum uint DISPID_A_LAYOUTFLOW = 0x00011423;
-enum uint DISPID_INTERNAL_FILTERNATIVEINFOPTRCACHE = 0x00011424;
-enum uint DISPID_A_HTCDD_ISMARKUPSHARED = 0x00011425;
+enum uint DISPID_A_LAYOUTFLOW = 0x00011423U;
+enum uint DISPID_INTERNAL_FILTERNATIVEINFOPTRCACHE = 0x00011424U;
+enum uint DISPID_A_HTCDD_ISMARKUPSHARED = 0x00011425U;
 
 enum : uint
 {
-    DISPID_A_WORDWRAP              = 0x00011426,
-    DISPID_A_TEXTUNDERLINEPOSITION = 0x00011427,
+    DISPID_A_WORDWRAP              = 0x00011426U,
+    DISPID_A_TEXTUNDERLINEPOSITION = 0x00011427U,
 }
 
 enum : uint
 {
-    DISPID_A_HASLAYOUT = 0x00011428,
-    DISPID_A_MEDIA     = 0x00011429,
-    DISPID_A_EDITABLE  = 0x0001142a,
-    DISPID_A_HIDEFOCUS = 0x0001142b,
+    DISPID_A_HASLAYOUT = 0x00011428U,
+    DISPID_A_MEDIA     = 0x00011429U,
+    DISPID_A_EDITABLE  = 0x0001142aU,
+    DISPID_A_HIDEFOCUS = 0x0001142bU,
 }
 
-enum uint DISPID_INTERNAL_LAYOUTRECTREGISTRYPTRCACHE = 0x0001142c;
-enum uint DISPID_A_HTCDD_DEFAULTS = 0x0001142d;
+enum uint DISPID_INTERNAL_LAYOUTRECTREGISTRYPTRCACHE = 0x0001142cU;
+enum uint DISPID_A_HTCDD_DEFAULTS = 0x0001142dU;
 
 enum : uint
 {
-    DISPID_A_TEXTLINETHROUGHSTYLE = 0x0001142e,
-    DISPID_A_TEXTUNDERLINESTYLE   = 0x0001142f,
-    DISPID_A_TEXTEFFECT           = 0x00011430,
-    DISPID_A_TEXTBACKGROUNDCOLOR  = 0x00011431,
+    DISPID_A_TEXTLINETHROUGHSTYLE = 0x0001142eU,
+    DISPID_A_TEXTUNDERLINESTYLE   = 0x0001142fU,
+    DISPID_A_TEXTEFFECT           = 0x00011430U,
+    DISPID_A_TEXTBACKGROUNDCOLOR  = 0x00011431U,
 }
 
-enum uint DISPID_A_RENDERINGPRIORITY = 0x00011432;
+enum uint DISPID_A_RENDERINGPRIORITY = 0x00011432U;
 
 enum : uint
 {
-    DISPID_INTERNAL_DWNPOSTPTRCACHE          = 0x00011433,
-    DISPID_INTERNAL_CODEPAGESETTINGSPTRCACHE = 0x00011434,
+    DISPID_INTERNAL_DWNPOSTPTRCACHE          = 0x00011433U,
+    DISPID_INTERNAL_CODEPAGESETTINGSPTRCACHE = 0x00011434U,
 }
 
 enum : uint
 {
-    DISPID_INTERNAL_DWNDOCPTRCACHE                  = 0x00011435,
-    DISPID_INTERNAL_DATABINDTASKPTRCACHE            = 0x00011436,
-    DISPID_INTERNAL_URLLOCATIONCACHE                = 0x00011437,
-    DISPID_INTERNAL_ARYELEMENTRELEASENOTIFYPTRCACHE = 0x00011438,
+    DISPID_INTERNAL_DWNDOCPTRCACHE                  = 0x00011435U,
+    DISPID_INTERNAL_DATABINDTASKPTRCACHE            = 0x00011436U,
+    DISPID_INTERNAL_URLLOCATIONCACHE                = 0x00011437U,
+    DISPID_INTERNAL_ARYELEMENTRELEASENOTIFYPTRCACHE = 0x00011438U,
 }
 
-enum uint DISPID_INTERNAL_PEERFACTORYURLMAPPTRCACHE = 0x00011439;
+enum uint DISPID_INTERNAL_PEERFACTORYURLMAPPTRCACHE = 0x00011439U;
 
 enum : uint
 {
-    DISPID_INTERNAL_STMDIRTYPTRCACHE        = 0x0001143a,
-    DISPID_INTERNAL_COMPUTEFORMATSTATECACHE = 0x0001143b,
+    DISPID_INTERNAL_STMDIRTYPTRCACHE        = 0x0001143aU,
+    DISPID_INTERNAL_COMPUTEFORMATSTATECACHE = 0x0001143bU,
 }
 
 enum : uint
 {
-    DISPID_A_SCROLLBARBASECOLOR       = 0x0001143c,
-    DISPID_A_SCROLLBARFACECOLOR       = 0x0001143d,
-    DISPID_A_SCROLLBAR3DLIGHTCOLOR    = 0x0001143e,
-    DISPID_A_SCROLLBARSHADOWCOLOR     = 0x0001143f,
-    DISPID_A_SCROLLBARHIGHLIGHTCOLOR  = 0x00011440,
-    DISPID_A_SCROLLBARDARKSHADOWCOLOR = 0x00011441,
-    DISPID_A_SCROLLBARARROWCOLOR      = 0x00011442,
+    DISPID_A_SCROLLBARBASECOLOR       = 0x0001143cU,
+    DISPID_A_SCROLLBARFACECOLOR       = 0x0001143dU,
+    DISPID_A_SCROLLBAR3DLIGHTCOLOR    = 0x0001143eU,
+    DISPID_A_SCROLLBARSHADOWCOLOR     = 0x0001143fU,
+    DISPID_A_SCROLLBARHIGHLIGHTCOLOR  = 0x00011440U,
+    DISPID_A_SCROLLBARDARKSHADOWCOLOR = 0x00011441U,
+    DISPID_A_SCROLLBARARROWCOLOR      = 0x00011442U,
 }
 
-enum uint DISPID_INTERNAL_ONBEHAVIOR_CONTENTSAVE = 0x00011443;
-enum uint DISPID_A_DEFAULTTEXTSELECTION = 0x00011444;
+enum uint DISPID_INTERNAL_ONBEHAVIOR_CONTENTSAVE = 0x00011443U;
+enum uint DISPID_A_DEFAULTTEXTSELECTION = 0x00011444U;
 
 enum : uint
 {
-    DISPID_A_TEXTDECORATIONCOLOR = 0x00011445,
-    DISPID_A_TEXTCOLOR           = 0x00011446,
-    DISPID_A_STYLETEXTDECORATION = 0x00011447,
+    DISPID_A_TEXTDECORATIONCOLOR = 0x00011445U,
+    DISPID_A_TEXTCOLOR           = 0x00011446U,
+    DISPID_A_STYLETEXTDECORATION = 0x00011447U,
 }
 
-enum uint DISPID_A_WRITINGMODE = 0x00011448;
+enum uint DISPID_A_WRITINGMODE = 0x00011448U;
 
 enum : uint
 {
-    DISPID_INTERNAL_MEDIA_REFERENCE   = 0x00011449,
-    DISPID_INTERNAL_GENERICCOMPLUSREF = 0x0001144a,
-    DISPID_INTERNAL_FOCUSITEMS        = 0x0001144b,
+    DISPID_INTERNAL_MEDIA_REFERENCE   = 0x00011449U,
+    DISPID_INTERNAL_GENERICCOMPLUSREF = 0x0001144aU,
+    DISPID_INTERNAL_FOCUSITEMS        = 0x0001144bU,
 }
 
-enum uint DISPID_A_SCROLLBARTRACKCOLOR = 0x0001144c;
-enum uint DISPID_INTERNAL_DWNHEADERCACHE = 0x0001144d;
+enum uint DISPID_A_SCROLLBARTRACKCOLOR = 0x0001144cU;
+enum uint DISPID_INTERNAL_DWNHEADERCACHE = 0x0001144dU;
 
 enum : uint
 {
-    DISPID_A_FROZEN           = 0x0001144e,
-    DISPID_A_VIEWINHERITSTYLE = 0x0001144f,
+    DISPID_A_FROZEN           = 0x0001144eU,
+    DISPID_A_VIEWINHERITSTYLE = 0x0001144fU,
 }
 
-enum uint DISPID_INTERNAL_FRAMESCOLLECTION = 0x00011450;
+enum uint DISPID_INTERNAL_FRAMESCOLLECTION = 0x00011450U;
 
 enum : uint
 {
-    DISPID_A_BGURLIMGCTXCACHEINDEX_FLINE   = 0x00011451,
-    DISPID_A_BGURLIMGCTXCACHEINDEX_FLETTER = 0x00011452,
+    DISPID_A_BGURLIMGCTXCACHEINDEX_FLINE   = 0x00011451U,
+    DISPID_A_BGURLIMGCTXCACHEINDEX_FLETTER = 0x00011452U,
 }
 
 enum : uint
 {
-    DISPID_A_TEXTALIGNLAST    = 0x00011453,
-    DISPID_A_TEXTKASHIDASPACE = 0x00011454,
+    DISPID_A_TEXTALIGNLAST    = 0x00011453U,
+    DISPID_A_TEXTKASHIDASPACE = 0x00011454U,
 }
 
-enum uint DISPID_INTERNAL_FONTHISTORYINDEX = 0x00011455;
-enum uint DISPID_A_ALLOWTRANSPARENCY = 0x00011456;
-enum uint DISPID_INTERNAL_URLSEARCHCACHE = 0x00011457;
+enum uint DISPID_INTERNAL_FONTHISTORYINDEX = 0x00011455U;
+enum uint DISPID_A_ALLOWTRANSPARENCY = 0x00011456U;
+enum uint DISPID_INTERNAL_URLSEARCHCACHE = 0x00011457U;
 
 enum : uint
 {
-    DISPID_A_ISBLOCK      = 0x00011458,
-    DISPID_A_TEXTOVERFLOW = 0x00011459,
+    DISPID_A_ISBLOCK      = 0x00011458U,
+    DISPID_A_TEXTOVERFLOW = 0x00011459U,
 }
 
-enum uint DISPID_INTERNAL_CATTRIBUTECOLLPTRCACHE = 0x0001145a;
-enum uint DISPID_A_MINHEIGHT = 0x0001145b;
-enum uint DISPID_INTERNAL_INVOKECONTEXTDOCUMENT = 0x0001145c;
+enum uint DISPID_INTERNAL_CATTRIBUTECOLLPTRCACHE = 0x0001145aU;
+enum uint DISPID_A_MINHEIGHT = 0x0001145bU;
+enum uint DISPID_INTERNAL_INVOKECONTEXTDOCUMENT = 0x0001145cU;
 
 enum : uint
 {
-    DISPID_A_INTERPOLATION                          = 0x0001145d,
-    DISPID_A_MAXHEIGHT                              = 0x0001145e,
-    DISPID_A_MINWIDTH                               = 0x0001145f,
-    DISPID_A_MAXWIDTH                               = 0x00011460,
-    DISPID_INTERNAL_ARYOBJECTRELEASECLEANUPPTRCACHE = 0x00011461,
+    DISPID_A_INTERPOLATION                          = 0x0001145dU,
+    DISPID_A_MAXHEIGHT                              = 0x0001145eU,
+    DISPID_A_MINWIDTH                               = 0x0001145fU,
+    DISPID_A_MAXWIDTH                               = 0x00011460U,
+    DISPID_INTERNAL_ARYOBJECTRELEASECLEANUPPTRCACHE = 0x00011461U,
 }
 
 enum : uint
 {
-    DISPID_A_CONTENT          = 0x00011462,
-    DISPID_A_CAPTIONSIDE      = 0x00011463,
-    DISPID_A_COUNTERINCREMENT = 0x00011464,
-    DISPID_A_COUNTERRESET     = 0x00011465,
-    DISPID_A_OUTLINE          = 0x00011466,
-    DISPID_A_OUTLINEWIDTH     = 0x00011467,
-    DISPID_A_OUTLINESTYLE     = 0x00011468,
-    DISPID_A_OUTLINECOLOR     = 0x00011469,
-    DISPID_A_BOXSIZING        = 0x0001146a,
-    DISPID_A_BORDERSPACING    = 0x0001146b,
-    DISPID_A_ORPHANS          = 0x0001146c,
-    DISPID_A_WIDOWS           = 0x0001146d,
-    DISPID_A_PAGEBREAKINSIDE  = 0x0001146e,
+    DISPID_A_CONTENT          = 0x00011462U,
+    DISPID_A_CAPTIONSIDE      = 0x00011463U,
+    DISPID_A_COUNTERINCREMENT = 0x00011464U,
+    DISPID_A_COUNTERRESET     = 0x00011465U,
+    DISPID_A_OUTLINE          = 0x00011466U,
+    DISPID_A_OUTLINEWIDTH     = 0x00011467U,
+    DISPID_A_OUTLINESTYLE     = 0x00011468U,
+    DISPID_A_OUTLINECOLOR     = 0x00011469U,
+    DISPID_A_BOXSIZING        = 0x0001146aU,
+    DISPID_A_BORDERSPACING    = 0x0001146bU,
+    DISPID_A_ORPHANS          = 0x0001146cU,
+    DISPID_A_WIDOWS           = 0x0001146dU,
+    DISPID_A_PAGEBREAKINSIDE  = 0x0001146eU,
 }
 
 enum : uint
 {
-    DISPID_A_MS_BEHAVIOR                 = 0x0001146f,
-    DISPID_A_MS_SCROLLBARBASECOLOR       = 0x00011470,
-    DISPID_A_MS_SCROLLBARFACECOLOR       = 0x00011471,
-    DISPID_A_MS_SCROLLBAR3DLIGHTCOLOR    = 0x00011472,
-    DISPID_A_MS_SCROLLBARSHADOWCOLOR     = 0x00011473,
-    DISPID_A_MS_SCROLLBARHIGHLIGHTCOLOR  = 0x00011474,
-    DISPID_A_MS_SCROLLBARDARKSHADOWCOLOR = 0x00011475,
-    DISPID_A_MS_SCROLLBARARROWCOLOR      = 0x00011476,
-    DISPID_A_MS_SCROLLBARTRACKCOLOR      = 0x00011477,
+    DISPID_A_MS_BEHAVIOR                 = 0x0001146fU,
+    DISPID_A_MS_SCROLLBARBASECOLOR       = 0x00011470U,
+    DISPID_A_MS_SCROLLBARFACECOLOR       = 0x00011471U,
+    DISPID_A_MS_SCROLLBAR3DLIGHTCOLOR    = 0x00011472U,
+    DISPID_A_MS_SCROLLBARSHADOWCOLOR     = 0x00011473U,
+    DISPID_A_MS_SCROLLBARHIGHLIGHTCOLOR  = 0x00011474U,
+    DISPID_A_MS_SCROLLBARDARKSHADOWCOLOR = 0x00011475U,
+    DISPID_A_MS_SCROLLBARARROWCOLOR      = 0x00011476U,
+    DISPID_A_MS_SCROLLBARTRACKCOLOR      = 0x00011477U,
 }
 
 enum : uint
 {
-    DISPID_A_MS_TEXTALIGNLAST         = 0x00011478,
-    DISPID_A_MS_TEXTOVERFLOW          = 0x00011479,
-    DISPID_A_MS_TEXTUNDERLINEPOSITION = 0x0001147a,
+    DISPID_A_MS_TEXTALIGNLAST         = 0x00011478U,
+    DISPID_A_MS_TEXTOVERFLOW          = 0x00011479U,
+    DISPID_A_MS_TEXTUNDERLINEPOSITION = 0x0001147aU,
 }
 
 enum : uint
 {
-    DISPID_A_MS_WRITINGMODE      = 0x0001147b,
-    DISPID_A_MS_IMEMODE          = 0x0001147c,
-    DISPID_A_MS_BACKGROUNDPOSX   = 0x0001147d,
-    DISPID_A_MS_BACKGROUNDPOSY   = 0x0001147e,
-    DISPID_A_MS_ACCELERATOR      = 0x0001147f,
-    DISPID_A_MS_LAYOUTFLOW       = 0x00011480,
-    DISPID_A_MS_ZOOM             = 0x00011481,
-    DISPID_A_EMPTYCELLS          = 0x00011482,
-    DISPID_A_MS_BLOCKPROGRESSION = 0x00011483,
+    DISPID_A_MS_WRITINGMODE      = 0x0001147bU,
+    DISPID_A_MS_IMEMODE          = 0x0001147cU,
+    DISPID_A_MS_BACKGROUNDPOSX   = 0x0001147dU,
+    DISPID_A_MS_BACKGROUNDPOSY   = 0x0001147eU,
+    DISPID_A_MS_ACCELERATOR      = 0x0001147fU,
+    DISPID_A_MS_LAYOUTFLOW       = 0x00011480U,
+    DISPID_A_MS_ZOOM             = 0x00011481U,
+    DISPID_A_EMPTYCELLS          = 0x00011482U,
+    DISPID_A_MS_BLOCKPROGRESSION = 0x00011483U,
 }
 
 enum : uint
 {
-    DISPID_A_QUOTES                                 = 0x00011484,
-    DISPID_INTERNAL_BGURLIMGCTXCACHEINDEX_GCBEFORE  = 0x00011485,
-    DISPID_INTERNAL_BGURLIMGCTXCACHEINDEX_GCAFTER   = 0x00011486,
-    DISPID_INTERNAL_BGURLIMGCTXCACHEINDEX_URLBEFORE = 0x00011487,
-    DISPID_INTERNAL_BGURLIMGCTXCACHEINDEX_URLAFTER  = 0x00011488,
+    DISPID_A_QUOTES                                 = 0x00011484U,
+    DISPID_INTERNAL_BGURLIMGCTXCACHEINDEX_GCBEFORE  = 0x00011485U,
+    DISPID_INTERNAL_BGURLIMGCTXCACHEINDEX_GCAFTER   = 0x00011486U,
+    DISPID_INTERNAL_BGURLIMGCTXCACHEINDEX_URLBEFORE = 0x00011487U,
+    DISPID_INTERNAL_BGURLIMGCTXCACHEINDEX_URLAFTER  = 0x00011488U,
 }
 
 enum : uint
 {
-    DISPID_AAHEADER                        = 0x00011489,
-    DISPID_INTERNAL_GETTERSETTERCOLLECTION = 0x0001148a,
+    DISPID_AAHEADER                        = 0x00011489U,
+    DISPID_INTERNAL_GETTERSETTERCOLLECTION = 0x0001148aU,
 }
 
 enum : uint
 {
-    DISPID_A_MS_LAYOUTGRIDCHAR   = 0x0001148b,
-    DISPID_A_MS_LAYOUTGRIDLINE   = 0x0001148c,
-    DISPID_A_MS_LAYOUTGRIDMODE   = 0x0001148d,
-    DISPID_A_MS_LAYOUTGRIDTYPE   = 0x0001148e,
-    DISPID_A_MS_LAYOUTGRID       = 0x0001148f,
-    DISPID_A_MS_LINEBREAK        = 0x00011490,
-    DISPID_A_MS_FILTER           = 0x00011491,
-    DISPID_A_MS_OVERFLOWX        = 0x00011492,
-    DISPID_A_MS_OVERFLOWY        = 0x00011493,
-    DISPID_A_MS_TEXTAUTOSPACE    = 0x00011494,
-    DISPID_A_MS_TEXTJUSTIFY      = 0x00011495,
-    DISPID_A_MS_TEXTKASHIDASPACE = 0x00011496,
-    DISPID_A_MS_WORDBREAK        = 0x00011497,
-    DISPID_A_MS_WORDWRAP         = 0x00011498,
+    DISPID_A_MS_LAYOUTGRIDCHAR   = 0x0001148bU,
+    DISPID_A_MS_LAYOUTGRIDLINE   = 0x0001148cU,
+    DISPID_A_MS_LAYOUTGRIDMODE   = 0x0001148dU,
+    DISPID_A_MS_LAYOUTGRIDTYPE   = 0x0001148eU,
+    DISPID_A_MS_LAYOUTGRID       = 0x0001148fU,
+    DISPID_A_MS_LINEBREAK        = 0x00011490U,
+    DISPID_A_MS_FILTER           = 0x00011491U,
+    DISPID_A_MS_OVERFLOWX        = 0x00011492U,
+    DISPID_A_MS_OVERFLOWY        = 0x00011493U,
+    DISPID_A_MS_TEXTAUTOSPACE    = 0x00011494U,
+    DISPID_A_MS_TEXTJUSTIFY      = 0x00011495U,
+    DISPID_A_MS_TEXTKASHIDASPACE = 0x00011496U,
+    DISPID_A_MS_WORDBREAK        = 0x00011497U,
+    DISPID_A_MS_WORDWRAP         = 0x00011498U,
 }
 
-enum uint DISPID_INTERNAL_URIBEFOREREDIRECT = 0x00011499;
-enum uint DISPID_A_ALIGNMENTBASELINE = 0x0001149e;
+enum uint DISPID_INTERNAL_URIBEFOREREDIRECT = 0x00011499U;
+enum uint DISPID_A_ALIGNMENTBASELINE = 0x0001149eU;
 
 enum : uint
 {
-    DISPID_A_BASELINESHIFT    = 0x0001149f,
-    DISPID_A_DOMINANTBASELINE = 0x000114a0,
+    DISPID_A_BASELINESHIFT    = 0x0001149fU,
+    DISPID_A_DOMINANTBASELINE = 0x000114a0U,
 }
 
 enum : uint
 {
-    DISPID_A_FONTSIZEADJUST             = 0x000114a1,
-    DISPID_A_FONTSTRETCH                = 0x000114a2,
-    DISPID_A_OPACITY                    = 0x000114a3,
-    DISPID_A_CLIPPATH                   = 0x000114a4,
-    DISPID_A_CLIPRULE                   = 0x000114a5,
-    DISPID_A_FILL                       = 0x000114a6,
-    DISPID_A_FILLOPACITY                = 0x000114a7,
-    DISPID_A_FILLRULE                   = 0x000114a8,
-    DISPID_A_KERNING                    = 0x000114a9,
-    DISPID_A_MARKER                     = 0x000114aa,
-    DISPID_A_MARKEREND                  = 0x000114ab,
-    DISPID_A_MARKERMID                  = 0x000114ac,
-    DISPID_A_MARKERSTART                = 0x000114ad,
-    DISPID_A_MASK                       = 0x000114ae,
-    DISPID_A_POINTEREVENTS              = 0x000114af,
-    DISPID_A_STOPCOLOR                  = 0x000114b0,
-    DISPID_A_STOPOPACITY                = 0x000114b1,
-    DISPID_A_STROKE                     = 0x000114b2,
-    DISPID_A_STROKEDASHARRAY            = 0x000114b3,
-    DISPID_A_STROKEDASHOFFSET           = 0x000114b4,
-    DISPID_A_STROKELINECAP              = 0x000114b5,
-    DISPID_A_STROKELINEJOIN             = 0x000114b6,
-    DISPID_A_STROKEMITERLIMIT           = 0x000114b7,
-    DISPID_A_STROKEOPACITY              = 0x000114b8,
-    DISPID_A_STROKEWIDTH                = 0x000114b9,
-    DISPID_A_TEXTANCHOR                 = 0x000114ba,
-    DISPID_A_GLYPHORIENTATIONHORIZONTAL = 0x000114bb,
-    DISPID_A_GLYPHORIENTATIONVERTICAL   = 0x000114bc,
+    DISPID_A_FONTSIZEADJUST             = 0x000114a1U,
+    DISPID_A_FONTSTRETCH                = 0x000114a2U,
+    DISPID_A_OPACITY                    = 0x000114a3U,
+    DISPID_A_CLIPPATH                   = 0x000114a4U,
+    DISPID_A_CLIPRULE                   = 0x000114a5U,
+    DISPID_A_FILL                       = 0x000114a6U,
+    DISPID_A_FILLOPACITY                = 0x000114a7U,
+    DISPID_A_FILLRULE                   = 0x000114a8U,
+    DISPID_A_KERNING                    = 0x000114a9U,
+    DISPID_A_MARKER                     = 0x000114aaU,
+    DISPID_A_MARKEREND                  = 0x000114abU,
+    DISPID_A_MARKERMID                  = 0x000114acU,
+    DISPID_A_MARKERSTART                = 0x000114adU,
+    DISPID_A_MASK                       = 0x000114aeU,
+    DISPID_A_POINTEREVENTS              = 0x000114afU,
+    DISPID_A_STOPCOLOR                  = 0x000114b0U,
+    DISPID_A_STOPOPACITY                = 0x000114b1U,
+    DISPID_A_STROKE                     = 0x000114b2U,
+    DISPID_A_STROKEDASHARRAY            = 0x000114b3U,
+    DISPID_A_STROKEDASHOFFSET           = 0x000114b4U,
+    DISPID_A_STROKELINECAP              = 0x000114b5U,
+    DISPID_A_STROKELINEJOIN             = 0x000114b6U,
+    DISPID_A_STROKEMITERLIMIT           = 0x000114b7U,
+    DISPID_A_STROKEOPACITY              = 0x000114b8U,
+    DISPID_A_STROKEWIDTH                = 0x000114b9U,
+    DISPID_A_TEXTANCHOR                 = 0x000114baU,
+    DISPID_A_GLYPHORIENTATIONHORIZONTAL = 0x000114bbU,
+    DISPID_A_GLYPHORIENTATIONVERTICAL   = 0x000114bcU,
 }
 
 enum : uint
 {
-    DISPID_A_CSSFLOAT                = 0x000114bd,
-    DISPID_A_BORDERRADIUS            = 0x000114be,
-    DISPID_A_BORDERTOPLEFTRADIUS     = 0x000114bf,
-    DISPID_A_BORDERTOPRIGHTRADIUS    = 0x000114c0,
-    DISPID_A_BORDERBOTTOMRIGHTRADIUS = 0x000114c1,
-    DISPID_A_BORDERBOTTOMLEFTRADIUS  = 0x000114c2,
+    DISPID_A_CSSFLOAT                = 0x000114bdU,
+    DISPID_A_BORDERRADIUS            = 0x000114beU,
+    DISPID_A_BORDERTOPLEFTRADIUS     = 0x000114bfU,
+    DISPID_A_BORDERTOPRIGHTRADIUS    = 0x000114c0U,
+    DISPID_A_BORDERBOTTOMRIGHTRADIUS = 0x000114c1U,
+    DISPID_A_BORDERBOTTOMLEFTRADIUS  = 0x000114c2U,
 }
 
 enum : uint
 {
-    DISPID_A_MS_TRANSFORM                = 0x000114c3,
-    DISPID_A_IE9_BACKGROUNDCLIP          = 0x000114c4,
-    DISPID_A_IE9_BACKGROUNDORIGIN        = 0x000114c5,
-    DISPID_A_IE9_BACKGROUNDSIZE          = 0x000114c6,
-    DISPID_A_IE9_BOXSHADOW               = 0x000114c7,
-    DISPID_A_MS_TRANSFORMORIGIN          = 0x000114cd,
-    DISPID_A_MS_TRANSFORMORIGINX         = 0x000114ce,
-    DISPID_A_MS_TRANSFORMORIGINY         = 0x000114cf,
-    DISPID_A_MS_TEXTSIZEADJUST           = 0x000114d0,
-    DISPID_A_MS_TRANSITIONPROPERTY       = 0x000114d2,
-    DISPID_A_MS_TRANSITIONDURATION       = 0x000114d3,
-    DISPID_A_MS_TRANSITIONTIMINGFUNCTION = 0x000114d4,
-    DISPID_A_MS_TRANSITIONDELAY          = 0x000114d5,
-    DISPID_A_MS_TRANSITION               = 0x000114d6,
-    DISPID_A_COLUMNS                     = 0x000114d7,
-    DISPID_A_COLUMNCOUNT                 = 0x000114d8,
-    DISPID_A_COLUMNWIDTH                 = 0x000114d9,
-    DISPID_A_COLUMNGAP                   = 0x000114da,
-    DISPID_A_COLUMNFILL                  = 0x000114db,
-    DISPID_A_COLUMNSPAN                  = 0x000114dc,
-    DISPID_A_COLUMNRULE                  = 0x000114dd,
-    DISPID_A_COLUMNRULESTYLE             = 0x000114de,
-    DISPID_A_COLUMNRULEWIDTH             = 0x000114df,
-    DISPID_A_COLUMNRULECOLOR             = 0x000114e0,
+    DISPID_A_MS_TRANSFORM                = 0x000114c3U,
+    DISPID_A_IE9_BACKGROUNDCLIP          = 0x000114c4U,
+    DISPID_A_IE9_BACKGROUNDORIGIN        = 0x000114c5U,
+    DISPID_A_IE9_BACKGROUNDSIZE          = 0x000114c6U,
+    DISPID_A_IE9_BOXSHADOW               = 0x000114c7U,
+    DISPID_A_MS_TRANSFORMORIGIN          = 0x000114cdU,
+    DISPID_A_MS_TRANSFORMORIGINX         = 0x000114ceU,
+    DISPID_A_MS_TRANSFORMORIGINY         = 0x000114cfU,
+    DISPID_A_MS_TEXTSIZEADJUST           = 0x000114d0U,
+    DISPID_A_MS_TRANSITIONPROPERTY       = 0x000114d2U,
+    DISPID_A_MS_TRANSITIONDURATION       = 0x000114d3U,
+    DISPID_A_MS_TRANSITIONTIMINGFUNCTION = 0x000114d4U,
+    DISPID_A_MS_TRANSITIONDELAY          = 0x000114d5U,
+    DISPID_A_MS_TRANSITION               = 0x000114d6U,
+    DISPID_A_COLUMNS                     = 0x000114d7U,
+    DISPID_A_COLUMNCOUNT                 = 0x000114d8U,
+    DISPID_A_COLUMNWIDTH                 = 0x000114d9U,
+    DISPID_A_COLUMNGAP                   = 0x000114daU,
+    DISPID_A_COLUMNFILL                  = 0x000114dbU,
+    DISPID_A_COLUMNSPAN                  = 0x000114dcU,
+    DISPID_A_COLUMNRULE                  = 0x000114ddU,
+    DISPID_A_COLUMNRULESTYLE             = 0x000114deU,
+    DISPID_A_COLUMNRULEWIDTH             = 0x000114dfU,
+    DISPID_A_COLUMNRULECOLOR             = 0x000114e0U,
 }
 
 enum : uint
 {
-    DISPID_A_BREAKBEFORE           = 0x000114e1,
-    DISPID_A_BREAKAFTER            = 0x000114e2,
-    DISPID_A_BREAKINSIDE           = 0x000114e3,
-    DISPID_A_MS_TRANSFORMORIGINZ   = 0x000114e4,
-    DISPID_A_MS_PERSPECTIVE        = 0x000114e5,
-    DISPID_A_MS_PERSPECTIVEORIGIN  = 0x000114e6,
-    DISPID_A_MS_PERSPECTIVEORIGINX = 0x000114e7,
-    DISPID_A_MS_PERSPECTIVEORIGINY = 0x000114e8,
+    DISPID_A_BREAKBEFORE           = 0x000114e1U,
+    DISPID_A_BREAKAFTER            = 0x000114e2U,
+    DISPID_A_BREAKINSIDE           = 0x000114e3U,
+    DISPID_A_MS_TRANSFORMORIGINZ   = 0x000114e4U,
+    DISPID_A_MS_PERSPECTIVE        = 0x000114e5U,
+    DISPID_A_MS_PERSPECTIVEORIGIN  = 0x000114e6U,
+    DISPID_A_MS_PERSPECTIVEORIGINX = 0x000114e7U,
+    DISPID_A_MS_PERSPECTIVEORIGINY = 0x000114e8U,
 }
 
 enum : uint
 {
-    DISPID_A_MS_TRANSFORMSTYLE     = 0x000114e9,
-    DISPID_A_MS_BACKFACEVISIBILITY = 0x000114ea,
+    DISPID_A_MS_TRANSFORMSTYLE     = 0x000114e9U,
+    DISPID_A_MS_BACKFACEVISIBILITY = 0x000114eaU,
 }
 
 enum : uint
 {
-    DISPID_A_MS_SCROLLCHAINING      = 0x000114eb,
-    DISPID_A_MS_CONTENTZOOMING      = 0x000114ec,
-    DISPID_A_MS_CONTENTZOOMSNAPTYPE = 0x000114ed,
+    DISPID_A_MS_SCROLLCHAINING      = 0x000114ebU,
+    DISPID_A_MS_CONTENTZOOMING      = 0x000114ecU,
+    DISPID_A_MS_CONTENTZOOMSNAPTYPE = 0x000114edU,
 }
 
 enum : uint
 {
-    DISPID_A_MS_SCROLLRAILS         = 0x000114ee,
-    DISPID_A_MS_CONTENTZOOMCHAINING = 0x000114ef,
+    DISPID_A_MS_SCROLLRAILS         = 0x000114eeU,
+    DISPID_A_MS_CONTENTZOOMCHAINING = 0x000114efU,
 }
 
 enum : uint
 {
-    DISPID_A_MS_SCROLLSNAPTYPE        = 0x000114f0,
-    DISPID_A_MS_CONTENTZOOMLIMIT      = 0x000114f1,
-    DISPID_A_MS_CONTENTZOOMSNAP       = 0x000114f2,
-    DISPID_A_MS_CONTENTZOOMSNAPPOINTS = 0x000114f3,
-    DISPID_A_MS_CONTENTZOOMFACTOR     = 0x000114f4,
-    DISPID_A_MS_CONTENTZOOMLIMITMIN   = 0x000114f5,
-    DISPID_A_MS_CONTENTZOOMLIMITMAX   = 0x000114f6,
+    DISPID_A_MS_SCROLLSNAPTYPE        = 0x000114f0U,
+    DISPID_A_MS_CONTENTZOOMLIMIT      = 0x000114f1U,
+    DISPID_A_MS_CONTENTZOOMSNAP       = 0x000114f2U,
+    DISPID_A_MS_CONTENTZOOMSNAPPOINTS = 0x000114f3U,
+    DISPID_A_MS_CONTENTZOOMFACTOR     = 0x000114f4U,
+    DISPID_A_MS_CONTENTZOOMLIMITMIN   = 0x000114f5U,
+    DISPID_A_MS_CONTENTZOOMLIMITMAX   = 0x000114f6U,
 }
 
 enum : uint
 {
-    DISPID_A_MS_SCROLLSNAPX       = 0x000114f7,
-    DISPID_A_MS_SCROLLSNAPY       = 0x000114f8,
-    DISPID_A_MS_SCROLLSNAPPOINTSX = 0x000114f9,
-    DISPID_A_MS_SCROLLSNAPPOINTSY = 0x000114fa,
+    DISPID_A_MS_SCROLLSNAPX       = 0x000114f7U,
+    DISPID_A_MS_SCROLLSNAPY       = 0x000114f8U,
+    DISPID_A_MS_SCROLLSNAPPOINTSX = 0x000114f9U,
+    DISPID_A_MS_SCROLLSNAPPOINTSY = 0x000114faU,
 }
 
 enum : uint
 {
-    DISPID_A_SPELLCHECK                 = 0x000114fb,
-    DISPID_A_MS_GRIDCOLUMN              = 0x000114fc,
-    DISPID_A_MS_GRIDCOLUMNALIGN         = 0x000114fd,
-    DISPID_A_MS_GRIDCOLUMNS             = 0x000114fe,
-    DISPID_A_MS_GRIDCOLUMNSPAN          = 0x000114ff,
-    DISPID_A_MS_GRIDROW                 = 0x00011501,
-    DISPID_A_MS_GRIDROWALIGN            = 0x00011502,
-    DISPID_A_MS_GRIDROWS                = 0x00011503,
-    DISPID_A_MS_GRIDROWSPAN             = 0x00011504,
-    DISPID_A_MS_ANIMATIONNAME           = 0x00011505,
-    DISPID_A_MS_ANIMATIONDURATION       = 0x00011506,
-    DISPID_A_MS_ANIMATIONTIMINGFUNCTION = 0x00011507,
-    DISPID_A_MS_ANIMATIONDELAY          = 0x00011508,
-    DISPID_A_MS_ANIMATIONDIRECTION      = 0x00011509,
-    DISPID_A_MS_ANIMATIONPLAYSTATE      = 0x0001150a,
-    DISPID_A_MS_ANIMATIONITERATIONCOUNT = 0x0001150b,
-    DISPID_A_MS_ANIMATION               = 0x0001150c,
-    DISPID_A_MS_ANIMATIONFILLMODE       = 0x0001150d,
+    DISPID_A_SPELLCHECK                 = 0x000114fbU,
+    DISPID_A_MS_GRIDCOLUMN              = 0x000114fcU,
+    DISPID_A_MS_GRIDCOLUMNALIGN         = 0x000114fdU,
+    DISPID_A_MS_GRIDCOLUMNS             = 0x000114feU,
+    DISPID_A_MS_GRIDCOLUMNSPAN          = 0x000114ffU,
+    DISPID_A_MS_GRIDROW                 = 0x00011501U,
+    DISPID_A_MS_GRIDROWALIGN            = 0x00011502U,
+    DISPID_A_MS_GRIDROWS                = 0x00011503U,
+    DISPID_A_MS_GRIDROWSPAN             = 0x00011504U,
+    DISPID_A_MS_ANIMATIONNAME           = 0x00011505U,
+    DISPID_A_MS_ANIMATIONDURATION       = 0x00011506U,
+    DISPID_A_MS_ANIMATIONTIMINGFUNCTION = 0x00011507U,
+    DISPID_A_MS_ANIMATIONDELAY          = 0x00011508U,
+    DISPID_A_MS_ANIMATIONDIRECTION      = 0x00011509U,
+    DISPID_A_MS_ANIMATIONPLAYSTATE      = 0x0001150aU,
+    DISPID_A_MS_ANIMATIONITERATIONCOUNT = 0x0001150bU,
+    DISPID_A_MS_ANIMATION               = 0x0001150cU,
+    DISPID_A_MS_ANIMATIONFILLMODE       = 0x0001150dU,
 }
 
 enum : uint
 {
-    DISPID_A_FLOODCOLOR                = 0x0001150e,
-    DISPID_A_FLOODOPACITY              = 0x0001150f,
-    DISPID_A_COLORINTERPOLATIONFILTERS = 0x00011510,
+    DISPID_A_FLOODCOLOR                = 0x0001150eU,
+    DISPID_A_FLOODOPACITY              = 0x0001150fU,
+    DISPID_A_COLORINTERPOLATIONFILTERS = 0x00011510U,
 }
 
 enum : uint
 {
-    DISPID_A_LIGHTINGCOLOR      = 0x00011511,
-    DISPID_A_MS_SCROLLLIMITXMIN = 0x00011512,
-    DISPID_A_MS_SCROLLLIMITYMIN = 0x00011513,
-    DISPID_A_MS_SCROLLLIMITXMAX = 0x00011514,
-    DISPID_A_MS_SCROLLLIMITYMAX = 0x00011515,
-    DISPID_A_MS_SCROLLLIMIT     = 0x00011516,
-    DISPID_A_MS_OVERFLOWSTYLE   = 0x00011517,
+    DISPID_A_LIGHTINGCOLOR      = 0x00011511U,
+    DISPID_A_MS_SCROLLLIMITXMIN = 0x00011512U,
+    DISPID_A_MS_SCROLLLIMITYMIN = 0x00011513U,
+    DISPID_A_MS_SCROLLLIMITXMAX = 0x00011514U,
+    DISPID_A_MS_SCROLLLIMITYMAX = 0x00011515U,
+    DISPID_A_MS_SCROLLLIMIT     = 0x00011516U,
+    DISPID_A_MS_OVERFLOWSTYLE   = 0x00011517U,
 }
 
 enum : uint
 {
-    DISPID_A_TEXTSHADOW               = 0x00011518,
-    DISPID_A_MS_WRAPTHROUGH           = 0x00011519,
-    DISPID_A_MS_FLOWFROM              = 0x0001151a,
-    DISPID_A_MS_FLOWINTO              = 0x0001151b,
-    DISPID_A_MS_HYPHENS               = 0x0001151c,
-    DISPID_A_MS_HYPHENATE_LIMIT_ZONE  = 0x0001151d,
-    DISPID_A_MS_HYPHENATE_LIMIT_CHARS = 0x0001151e,
-    DISPID_A_MS_HYPHENATE_LIMIT_LINES = 0x0001151f,
+    DISPID_A_TEXTSHADOW               = 0x00011518U,
+    DISPID_A_MS_WRAPTHROUGH           = 0x00011519U,
+    DISPID_A_MS_FLOWFROM              = 0x0001151aU,
+    DISPID_A_MS_FLOWINTO              = 0x0001151bU,
+    DISPID_A_MS_HYPHENS               = 0x0001151cU,
+    DISPID_A_MS_HYPHENATE_LIMIT_ZONE  = 0x0001151dU,
+    DISPID_A_MS_HYPHENATE_LIMIT_CHARS = 0x0001151eU,
+    DISPID_A_MS_HYPHENATE_LIMIT_LINES = 0x0001151fU,
 }
 
 enum : uint
 {
-    DISPID_A_DRAGGABLE             = 0x00011520,
-    DISPID_A_MS_HIGHCONTRASTADJUST = 0x00011521,
+    DISPID_A_DRAGGABLE             = 0x00011520U,
+    DISPID_A_MS_HIGHCONTRASTADJUST = 0x00011521U,
 }
 
-enum uint DISPID_A_ENABLEBACKGROUND = 0x00011522;
+enum uint DISPID_A_ENABLEBACKGROUND = 0x00011522U;
 
 enum : uint
 {
-    DISPID_A_MS_WRAPMARGIN          = 0x00011523,
-    DISPID_A_MS_WRAPFLOW            = 0x00011525,
-    DISPID_A_MS_FONTFEATURESETTINGS = 0x00011526,
+    DISPID_A_MS_WRAPMARGIN          = 0x00011523U,
+    DISPID_A_MS_WRAPFLOW            = 0x00011525U,
+    DISPID_A_MS_FONTFEATURESETTINGS = 0x00011526U,
 }
 
 enum : uint
 {
-    DISPID_A_MS_USERSELECT  = 0x00011527,
-    DISPID_A_MS_TOUCHACTION = 0x00011528,
+    DISPID_A_MS_USERSELECT  = 0x00011527U,
+    DISPID_A_MS_TOUCHACTION = 0x00011528U,
 }
 
 enum : uint
 {
-    DISPID_A_CLASSLIST                = 0x00011529,
-    DISPID_A_MS_SCROLLTRANSLATION     = 0x0001152a,
-    DISPID_A_MS_FLEX                  = 0x0001152b,
-    DISPID_A_MS_FLEXPOSITIVE          = 0x0001152c,
-    DISPID_A_MS_FLEXNEGATIVE          = 0x0001152d,
-    DISPID_A_MS_FLEXPREFERREDSIZE     = 0x0001152e,
-    DISPID_A_MS_FLEXFLOW              = 0x0001152f,
-    DISPID_A_MS_FLEXDIRECTION         = 0x00011530,
-    DISPID_A_MS_FLEXWRAP              = 0x00011531,
-    DISPID_A_MS_FLEXALIGN             = 0x00011532,
-    DISPID_A_MS_FLEXITEMALIGN         = 0x00011533,
-    DISPID_A_MS_FLEXPACK              = 0x00011534,
-    DISPID_A_MS_FLEXLINEPACK          = 0x00011535,
-    DISPID_A_MS_FLEXORDER             = 0x00011536,
-    DISPID_A_TRANSFORM                = 0x00011537,
-    DISPID_A_TRANSFORMORIGIN          = 0x00011538,
-    DISPID_A_TRANSITIONPROPERTY       = 0x00011539,
-    DISPID_A_TRANSITIONDURATION       = 0x0001153a,
-    DISPID_A_TRANSITIONTIMINGFUNCTION = 0x0001153b,
-    DISPID_A_TRANSITIONDELAY          = 0x0001153c,
-    DISPID_A_TRANSITION               = 0x0001153d,
-    DISPID_A_PERSPECTIVE              = 0x0001153e,
-    DISPID_A_PERSPECTIVEORIGIN        = 0x0001153f,
+    DISPID_A_CLASSLIST                = 0x00011529U,
+    DISPID_A_MS_SCROLLTRANSLATION     = 0x0001152aU,
+    DISPID_A_MS_FLEX                  = 0x0001152bU,
+    DISPID_A_MS_FLEXPOSITIVE          = 0x0001152cU,
+    DISPID_A_MS_FLEXNEGATIVE          = 0x0001152dU,
+    DISPID_A_MS_FLEXPREFERREDSIZE     = 0x0001152eU,
+    DISPID_A_MS_FLEXFLOW              = 0x0001152fU,
+    DISPID_A_MS_FLEXDIRECTION         = 0x00011530U,
+    DISPID_A_MS_FLEXWRAP              = 0x00011531U,
+    DISPID_A_MS_FLEXALIGN             = 0x00011532U,
+    DISPID_A_MS_FLEXITEMALIGN         = 0x00011533U,
+    DISPID_A_MS_FLEXPACK              = 0x00011534U,
+    DISPID_A_MS_FLEXLINEPACK          = 0x00011535U,
+    DISPID_A_MS_FLEXORDER             = 0x00011536U,
+    DISPID_A_TRANSFORM                = 0x00011537U,
+    DISPID_A_TRANSFORMORIGIN          = 0x00011538U,
+    DISPID_A_TRANSITIONPROPERTY       = 0x00011539U,
+    DISPID_A_TRANSITIONDURATION       = 0x0001153aU,
+    DISPID_A_TRANSITIONTIMINGFUNCTION = 0x0001153bU,
+    DISPID_A_TRANSITIONDELAY          = 0x0001153cU,
+    DISPID_A_TRANSITION               = 0x0001153dU,
+    DISPID_A_PERSPECTIVE              = 0x0001153eU,
+    DISPID_A_PERSPECTIVEORIGIN        = 0x0001153fU,
 }
 
-enum uint DISPID_A_TRANSFORMSTYLE = 0x00011540;
-enum uint DISPID_A_BACKFACEVISIBILITY = 0x00011541;
+enum uint DISPID_A_TRANSFORMSTYLE = 0x00011540U;
+enum uint DISPID_A_BACKFACEVISIBILITY = 0x00011541U;
 
 enum : uint
 {
-    DISPID_A_ANIMATIONNAME           = 0x00011542,
-    DISPID_A_ANIMATIONDURATION       = 0x00011543,
-    DISPID_A_ANIMATIONTIMINGFUNCTION = 0x00011544,
-    DISPID_A_ANIMATIONDELAY          = 0x00011545,
-    DISPID_A_ANIMATIONDIRECTION      = 0x00011546,
-    DISPID_A_ANIMATIONPLAYSTATE      = 0x00011547,
-    DISPID_A_ANIMATIONITERATIONCOUNT = 0x00011548,
-    DISPID_A_ANIMATION               = 0x00011549,
-    DISPID_A_ANIMATIONFILLMODE       = 0x0001154a,
+    DISPID_A_ANIMATIONNAME           = 0x00011542U,
+    DISPID_A_ANIMATIONDURATION       = 0x00011543U,
+    DISPID_A_ANIMATIONTIMINGFUNCTION = 0x00011544U,
+    DISPID_A_ANIMATIONDELAY          = 0x00011545U,
+    DISPID_A_ANIMATIONDIRECTION      = 0x00011546U,
+    DISPID_A_ANIMATIONPLAYSTATE      = 0x00011547U,
+    DISPID_A_ANIMATIONITERATIONCOUNT = 0x00011548U,
+    DISPID_A_ANIMATION               = 0x00011549U,
+    DISPID_A_ANIMATIONFILLMODE       = 0x0001154aU,
 }
 
-enum uint DISPID_A_FONTFEATURESETTINGS = 0x0001154b;
+enum uint DISPID_A_FONTFEATURESETTINGS = 0x0001154bU;
 
 enum : uint
 {
-    DISPID_A_TRANSFORMORIGINX = 0x0001154c,
-    DISPID_A_TRANSFORMORIGINY = 0x0001154d,
-    DISPID_A_TRANSFORMORIGINZ = 0x0001154e,
+    DISPID_A_TRANSFORMORIGINX = 0x0001154cU,
+    DISPID_A_TRANSFORMORIGINY = 0x0001154dU,
+    DISPID_A_TRANSFORMORIGINZ = 0x0001154eU,
 }
 
 enum : uint
 {
-    DISPID_A_PERSPECTIVEORIGINX = 0x00011550,
-    DISPID_A_PERSPECTIVEORIGINY = 0x00011551,
+    DISPID_A_PERSPECTIVEORIGINX = 0x00011550U,
+    DISPID_A_PERSPECTIVEORIGINY = 0x00011551U,
 }
 
-enum uint DISPID_A_MS_TOUCHSELECT = 0x00011552;
+enum uint DISPID_A_MS_TOUCHSELECT = 0x00011552U;
 
 enum : uint
 {
-    DISPID_INTERNAL_ERRORPAGEREFRESHURL = 0x00011553,
-    DISPID_INTERNAL_ERRORPAGEREASON     = 0x00011554,
-    DISPID_INTERNAL_ERRORPAGEDWNPOST    = 0x00011555,
+    DISPID_INTERNAL_ERRORPAGEREFRESHURL = 0x00011553U,
+    DISPID_INTERNAL_ERRORPAGEREASON     = 0x00011554U,
+    DISPID_INTERNAL_ERRORPAGEDWNPOST    = 0x00011555U,
 }
 
 enum : uint
 {
-    DISPID_A_FLEXDIRECTION  = 0x00011556,
-    DISPID_A_FLEXWRAP       = 0x00011557,
-    DISPID_A_FLEXFLOW       = 0x00011558,
-    DISPID_A_ORDER          = 0x00011559,
-    DISPID_A_FLEX           = 0x0001155a,
-    DISPID_A_FLEXGROW       = 0x0001155b,
-    DISPID_A_FLEXSHRINK     = 0x0001155c,
-    DISPID_A_FLEXBASIS      = 0x0001155d,
-    DISPID_A_JUSTIFYCONTENT = 0x0001155e,
+    DISPID_A_FLEXDIRECTION  = 0x00011556U,
+    DISPID_A_FLEXWRAP       = 0x00011557U,
+    DISPID_A_FLEXFLOW       = 0x00011558U,
+    DISPID_A_ORDER          = 0x00011559U,
+    DISPID_A_FLEX           = 0x0001155aU,
+    DISPID_A_FLEXGROW       = 0x0001155bU,
+    DISPID_A_FLEXSHRINK     = 0x0001155cU,
+    DISPID_A_FLEXBASIS      = 0x0001155dU,
+    DISPID_A_JUSTIFYCONTENT = 0x0001155eU,
 }
 
 enum : uint
 {
-    DISPID_A_ALIGNITEMS        = 0x0001155f,
-    DISPID_A_ALIGNSELF         = 0x00011560,
-    DISPID_A_ALIGNCONTENT      = 0x00011561,
-    DISPID_A_BORDERIMAGE       = 0x00011562,
-    DISPID_A_BORDERIMAGESOURCE = 0x00011563,
-    DISPID_A_BORDERIMAGESLICE  = 0x00011564,
-    DISPID_A_BORDERIMAGEWIDTH  = 0x00011565,
-    DISPID_A_BORDERIMAGEOUTSET = 0x00011566,
-    DISPID_A_BORDERIMAGEREPEAT = 0x00011567,
+    DISPID_A_ALIGNITEMS        = 0x0001155fU,
+    DISPID_A_ALIGNSELF         = 0x00011560U,
+    DISPID_A_ALIGNCONTENT      = 0x00011561U,
+    DISPID_A_BORDERIMAGE       = 0x00011562U,
+    DISPID_A_BORDERIMAGESOURCE = 0x00011563U,
+    DISPID_A_BORDERIMAGESLICE  = 0x00011564U,
+    DISPID_A_BORDERIMAGEWIDTH  = 0x00011565U,
+    DISPID_A_BORDERIMAGEOUTSET = 0x00011566U,
+    DISPID_A_BORDERIMAGEREPEAT = 0x00011567U,
 }
 
 enum : uint
 {
-    DISPID_A_DATASET                  = 0x00011568,
-    DISPID_A_MS_IMEALIGN              = 0x00011569,
-    DISPID_A_MS_TEXTCOMBINEHORIZONTAL = 0x0001156a,
+    DISPID_A_DATASET                  = 0x00011568U,
+    DISPID_A_MS_IMEALIGN              = 0x00011569U,
+    DISPID_A_MS_TEXTCOMBINEHORIZONTAL = 0x0001156aU,
 }
 
 enum : uint
 {
-    DISPID_A_TOUCHACTION                     = 0x0001156b,
-    DISPID_A_WEBKIT_APPEARANCE               = 0x0001156c,
-    DISPID_A_WEBKIT_BOXALIGN                 = 0x0001156d,
-    DISPID_A_WEBKIT_BOXORDINALGROUP          = 0x0001156e,
-    DISPID_A_WEBKIT_BOXPACK                  = 0x0001156f,
-    DISPID_A_WEBKIT_BOXFLEX                  = 0x00011570,
-    DISPID_A_WEBKIT_BOXORIENT                = 0x00011571,
-    DISPID_A_WEBKIT_BOXDIRECTION             = 0x00011572,
-    DISPID_A_WEBKIT_ANIMATIONFILLMODE        = 0x00011573,
-    DISPID_A_WEBKIT_TRANSFORM                = 0x00011574,
-    DISPID_A_WEBKIT_BACKGROUNDSIZE           = 0x00011575,
-    DISPID_A_WEBKIT_BACKFACEVISIBILITY       = 0x00011576,
-    DISPID_A_WEBKIT_BOXSIZING                = 0x00011577,
-    DISPID_A_WEBKIT_USERSELECT               = 0x00011578,
-    DISPID_A_WEBKIT_ANIMATION                = 0x00011579,
-    DISPID_A_WEBKIT_TRANSITION               = 0x0001157a,
-    DISPID_A_WEBKIT_ANIMATIONNAME            = 0x0001157b,
-    DISPID_A_WEBKIT_ANIMATIONDURATION        = 0x0001157c,
-    DISPID_A_WEBKIT_ANIMATIONTIMINGFUNCTION  = 0x0001157d,
-    DISPID_A_WEBKIT_ANIMATIONDELAY           = 0x0001157e,
-    DISPID_A_WEBKIT_ANIMATIONITERATIONCOUNT  = 0x0001157f,
-    DISPID_A_WEBKIT_ANIMATIONDIRECTION       = 0x00011580,
-    DISPID_A_WEBKIT_ANIMATIONPLAYSTATE       = 0x00011581,
-    DISPID_A_WEBKIT_TRANSITIONPROPERTY       = 0x00011582,
-    DISPID_A_WEBKIT_TRANSITIONDURATION       = 0x00011583,
-    DISPID_A_WEBKIT_TRANSITIONTIMINGFUNCTION = 0x00011584,
-    DISPID_A_WEBKIT_TRANSITIONDELAY          = 0x00011585,
-    DISPID_A_WEBKIT_BACKGROUNDATTACHMENT     = 0x00011586,
-    DISPID_A_WEBKIT_BACKGROUNDCOLOR          = 0x00011587,
-    DISPID_A_WEBKIT_BACKGROUNDCLIP           = 0x00011588,
-    DISPID_A_WEBKIT_BACKGROUNDIMAGE          = 0x00011589,
-    DISPID_A_WEBKIT_BACKGROUNDREPEAT         = 0x0001158a,
-    DISPID_A_WEBKIT_BACKGROUNDORIGIN         = 0x0001158b,
-    DISPID_A_WEBKIT_BACKGROUNDPOSITION       = 0x0001158c,
-    DISPID_A_WEBKIT_BACKGROUNDPOSITIONX      = 0x0001158d,
-    DISPID_A_WEBKIT_BACKGROUNDPOSITIONY      = 0x0001158e,
-    DISPID_A_WEBKIT_BACKGROUND               = 0x0001158f,
-    DISPID_A_WEBKIT_TRANSFORMORIGIN          = 0x00011590,
-    DISPID_A_WEBKIT_TRANSFORMORIGINX         = 0x00011591,
-    DISPID_A_WEBKIT_TRANSFORMORIGINY         = 0x00011592,
-    DISPID_A_WEBKIT_TRANSFORMORIGINZ         = 0x00011593,
-    DISPID_A_WEBKIT_TEXTSIZEADJUST           = 0x00011594,
-    DISPID_A_WEBKIT_BORDERIMAGE              = 0x00011595,
-    DISPID_A_WEBKIT_BORDERIMAGESOURCE        = 0x00011596,
-    DISPID_A_WEBKIT_BORDERIMAGESLICE         = 0x00011597,
-    DISPID_A_WEBKIT_BORDERIMAGEWIDTH         = 0x00011598,
-    DISPID_A_WEBKIT_BORDERIMAGEOUTSET        = 0x00011599,
-    DISPID_A_WEBKIT_BORDERIMAGEREPEAT        = 0x0001159a,
+    DISPID_A_TOUCHACTION                     = 0x0001156bU,
+    DISPID_A_WEBKIT_APPEARANCE               = 0x0001156cU,
+    DISPID_A_WEBKIT_BOXALIGN                 = 0x0001156dU,
+    DISPID_A_WEBKIT_BOXORDINALGROUP          = 0x0001156eU,
+    DISPID_A_WEBKIT_BOXPACK                  = 0x0001156fU,
+    DISPID_A_WEBKIT_BOXFLEX                  = 0x00011570U,
+    DISPID_A_WEBKIT_BOXORIENT                = 0x00011571U,
+    DISPID_A_WEBKIT_BOXDIRECTION             = 0x00011572U,
+    DISPID_A_WEBKIT_ANIMATIONFILLMODE        = 0x00011573U,
+    DISPID_A_WEBKIT_TRANSFORM                = 0x00011574U,
+    DISPID_A_WEBKIT_BACKGROUNDSIZE           = 0x00011575U,
+    DISPID_A_WEBKIT_BACKFACEVISIBILITY       = 0x00011576U,
+    DISPID_A_WEBKIT_BOXSIZING                = 0x00011577U,
+    DISPID_A_WEBKIT_USERSELECT               = 0x00011578U,
+    DISPID_A_WEBKIT_ANIMATION                = 0x00011579U,
+    DISPID_A_WEBKIT_TRANSITION               = 0x0001157aU,
+    DISPID_A_WEBKIT_ANIMATIONNAME            = 0x0001157bU,
+    DISPID_A_WEBKIT_ANIMATIONDURATION        = 0x0001157cU,
+    DISPID_A_WEBKIT_ANIMATIONTIMINGFUNCTION  = 0x0001157dU,
+    DISPID_A_WEBKIT_ANIMATIONDELAY           = 0x0001157eU,
+    DISPID_A_WEBKIT_ANIMATIONITERATIONCOUNT  = 0x0001157fU,
+    DISPID_A_WEBKIT_ANIMATIONDIRECTION       = 0x00011580U,
+    DISPID_A_WEBKIT_ANIMATIONPLAYSTATE       = 0x00011581U,
+    DISPID_A_WEBKIT_TRANSITIONPROPERTY       = 0x00011582U,
+    DISPID_A_WEBKIT_TRANSITIONDURATION       = 0x00011583U,
+    DISPID_A_WEBKIT_TRANSITIONTIMINGFUNCTION = 0x00011584U,
+    DISPID_A_WEBKIT_TRANSITIONDELAY          = 0x00011585U,
+    DISPID_A_WEBKIT_BACKGROUNDATTACHMENT     = 0x00011586U,
+    DISPID_A_WEBKIT_BACKGROUNDCOLOR          = 0x00011587U,
+    DISPID_A_WEBKIT_BACKGROUNDCLIP           = 0x00011588U,
+    DISPID_A_WEBKIT_BACKGROUNDIMAGE          = 0x00011589U,
+    DISPID_A_WEBKIT_BACKGROUNDREPEAT         = 0x0001158aU,
+    DISPID_A_WEBKIT_BACKGROUNDORIGIN         = 0x0001158bU,
+    DISPID_A_WEBKIT_BACKGROUNDPOSITION       = 0x0001158cU,
+    DISPID_A_WEBKIT_BACKGROUNDPOSITIONX      = 0x0001158dU,
+    DISPID_A_WEBKIT_BACKGROUNDPOSITIONY      = 0x0001158eU,
+    DISPID_A_WEBKIT_BACKGROUND               = 0x0001158fU,
+    DISPID_A_WEBKIT_TRANSFORMORIGIN          = 0x00011590U,
+    DISPID_A_WEBKIT_TRANSFORMORIGINX         = 0x00011591U,
+    DISPID_A_WEBKIT_TRANSFORMORIGINY         = 0x00011592U,
+    DISPID_A_WEBKIT_TRANSFORMORIGINZ         = 0x00011593U,
+    DISPID_A_WEBKIT_TEXTSIZEADJUST           = 0x00011594U,
+    DISPID_A_WEBKIT_BORDERIMAGE              = 0x00011595U,
+    DISPID_A_WEBKIT_BORDERIMAGESOURCE        = 0x00011596U,
+    DISPID_A_WEBKIT_BORDERIMAGESLICE         = 0x00011597U,
+    DISPID_A_WEBKIT_BORDERIMAGEWIDTH         = 0x00011598U,
+    DISPID_A_WEBKIT_BORDERIMAGEOUTSET        = 0x00011599U,
+    DISPID_A_WEBKIT_BORDERIMAGEREPEAT        = 0x0001159aU,
 }
 
 enum : uint
 {
-    DISPID_INTERNAL_FIRST                = 0x000115e0,
-    DISPID_INTERNAL_BACKGROUNDDEFINITION = 0x000115e1,
+    DISPID_INTERNAL_FIRST                = 0x000115e0U,
+    DISPID_INTERNAL_BACKGROUNDDEFINITION = 0x000115e1U,
 }
 
 enum : uint
 {
-    DISPID_A_MEDIAORIENTATION          = 0x000115e2,
-    DISPID_A_MEDIAMAXWIDTH             = 0x000115e3,
-    DISPID_A_MEDIAMINWIDTH             = 0x000115e4,
-    DISPID_A_MEDIAWIDTH                = 0x000115e5,
-    DISPID_A_MEDIAMAXHEIGHT            = 0x000115e6,
-    DISPID_A_MEDIAMINHEIGHT            = 0x000115e7,
-    DISPID_A_MEDIAHEIGHT               = 0x000115e8,
-    DISPID_A_MEDIAMAXDEVICEWIDTH       = 0x000115e9,
-    DISPID_A_MEDIAMINDEVICEWIDTH       = 0x000115ea,
-    DISPID_A_MEDIADEVICEWIDTH          = 0x000115eb,
-    DISPID_A_MEDIAMAXDEVICEHEIGHT      = 0x000115ec,
-    DISPID_A_MEDIAMINDEVICEHEIGHT      = 0x000115ed,
-    DISPID_A_MEDIADEVICEHEIGHT         = 0x000115ee,
-    DISPID_A_MEDIAMAXASPECTRATIO       = 0x000115ef,
-    DISPID_A_MEDIAMINASPECTRATIO       = 0x000115f0,
-    DISPID_A_MEDIAASPECTRATIO          = 0x000115f1,
-    DISPID_A_MEDIAMAXDEVICEASPECTRATIO = 0x000115f2,
-    DISPID_A_MEDIAMINDEVICEASPECTRATIO = 0x000115f3,
-    DISPID_A_MEDIADEVICEASPECTRATIO    = 0x000115f4,
-    DISPID_A_MEDIAMAXCOLOR             = 0x000115f5,
-    DISPID_A_MEDIAMINCOLOR             = 0x000115f6,
-    DISPID_A_MEDIACOLOR                = 0x000115f7,
-    DISPID_A_MEDIAMAXCOLORINDEX        = 0x000115f8,
-    DISPID_A_MEDIAMINCOLORINDEX        = 0x000115f9,
-    DISPID_A_MEDIACOLORINDEX           = 0x000115fa,
-    DISPID_A_MEDIAMAXMONOCHROME        = 0x000115fb,
-    DISPID_A_MEDIAMINMONOCHROME        = 0x000115fc,
-    DISPID_A_MEDIAMONOCHROME           = 0x000115fd,
-    DISPID_A_MEDIAMAXRESOLUTION        = 0x000115fe,
-    DISPID_A_MEDIAMINRESOLUTION        = 0x000115ff,
-    DISPID_A_MEDIARESOLUTION           = 0x00011600,
+    DISPID_A_MEDIAORIENTATION          = 0x000115e2U,
+    DISPID_A_MEDIAMAXWIDTH             = 0x000115e3U,
+    DISPID_A_MEDIAMINWIDTH             = 0x000115e4U,
+    DISPID_A_MEDIAWIDTH                = 0x000115e5U,
+    DISPID_A_MEDIAMAXHEIGHT            = 0x000115e6U,
+    DISPID_A_MEDIAMINHEIGHT            = 0x000115e7U,
+    DISPID_A_MEDIAHEIGHT               = 0x000115e8U,
+    DISPID_A_MEDIAMAXDEVICEWIDTH       = 0x000115e9U,
+    DISPID_A_MEDIAMINDEVICEWIDTH       = 0x000115eaU,
+    DISPID_A_MEDIADEVICEWIDTH          = 0x000115ebU,
+    DISPID_A_MEDIAMAXDEVICEHEIGHT      = 0x000115ecU,
+    DISPID_A_MEDIAMINDEVICEHEIGHT      = 0x000115edU,
+    DISPID_A_MEDIADEVICEHEIGHT         = 0x000115eeU,
+    DISPID_A_MEDIAMAXASPECTRATIO       = 0x000115efU,
+    DISPID_A_MEDIAMINASPECTRATIO       = 0x000115f0U,
+    DISPID_A_MEDIAASPECTRATIO          = 0x000115f1U,
+    DISPID_A_MEDIAMAXDEVICEASPECTRATIO = 0x000115f2U,
+    DISPID_A_MEDIAMINDEVICEASPECTRATIO = 0x000115f3U,
+    DISPID_A_MEDIADEVICEASPECTRATIO    = 0x000115f4U,
+    DISPID_A_MEDIAMAXCOLOR             = 0x000115f5U,
+    DISPID_A_MEDIAMINCOLOR             = 0x000115f6U,
+    DISPID_A_MEDIACOLOR                = 0x000115f7U,
+    DISPID_A_MEDIAMAXCOLORINDEX        = 0x000115f8U,
+    DISPID_A_MEDIAMINCOLORINDEX        = 0x000115f9U,
+    DISPID_A_MEDIACOLORINDEX           = 0x000115faU,
+    DISPID_A_MEDIAMAXMONOCHROME        = 0x000115fbU,
+    DISPID_A_MEDIAMINMONOCHROME        = 0x000115fcU,
+    DISPID_A_MEDIAMONOCHROME           = 0x000115fdU,
+    DISPID_A_MEDIAMAXRESOLUTION        = 0x000115feU,
+    DISPID_A_MEDIAMINRESOLUTION        = 0x000115ffU,
+    DISPID_A_MEDIARESOLUTION           = 0x00011600U,
 }
 
 enum : uint
 {
-    DISPID_INTERNAL_CATTRIBUTEPTRCACHE   = 0x00011601,
-    DISPID_INTERNAL_FONTFACEUNICODERANGE = 0x00011602,
-    DISPID_INTERNAL_TOUCHTARGETHANDLER   = 0x00011603,
-    DISPID_INTERNAL_PAGEFLOWCOLLECTION   = 0x00011604,
-    DISPID_INTERNAL_NAMEDFLOWCOLLECTION  = 0x00011605,
+    DISPID_INTERNAL_CATTRIBUTEPTRCACHE   = 0x00011601U,
+    DISPID_INTERNAL_FONTFACEUNICODERANGE = 0x00011602U,
+    DISPID_INTERNAL_TOUCHTARGETHANDLER   = 0x00011603U,
+    DISPID_INTERNAL_PAGEFLOWCOLLECTION   = 0x00011604U,
+    DISPID_INTERNAL_NAMEDFLOWCOLLECTION  = 0x00011605U,
 }
 
-enum uint DISPID_A_MEDIAMSHIGHCONTRAST = 0x00011606;
+enum uint DISPID_A_MEDIAMSHIGHCONTRAST = 0x00011606U;
 
 enum : uint
 {
-    DISPID_INTERNAL_A_MS_HYPHENATE_LIMIT_WORDS  = 0x00011607,
-    DISPID_INTERNAL_A_MS_HYPHENATE_LIMIT_BEFORE = 0x00011608,
-    DISPID_INTERNAL_A_MS_HYPHENATE_LIMIT_AFTER  = 0x00011609,
+    DISPID_INTERNAL_A_MS_HYPHENATE_LIMIT_WORDS  = 0x00011607U,
+    DISPID_INTERNAL_A_MS_HYPHENATE_LIMIT_BEFORE = 0x00011608U,
+    DISPID_INTERNAL_A_MS_HYPHENATE_LIMIT_AFTER  = 0x00011609U,
 }
 
-enum uint DISPID_A_MEDIAMSVIEWSTATE = 0x0001160a;
+enum uint DISPID_A_MEDIAMSVIEWSTATE = 0x0001160aU;
 
 enum : uint
 {
-    DISPID_INTERNAL_ARIAATOMIC       = 0x0001160b,
-    DISPID_INTERNAL_ARIAAUTOCOMPLETE = 0x0001160c,
-    DISPID_INTERNAL_ARIADROPEFFECT   = 0x0001160d,
-    DISPID_INTERNAL_ARIAGRABBED      = 0x0001160e,
-    DISPID_INTERNAL_ARIALABEL        = 0x0001160f,
-    DISPID_INTERNAL_ARIAMULTILINE    = 0x00011610,
-    DISPID_INTERNAL_ARIAORIENTATION  = 0x00011611,
-    DISPID_INTERNAL_ARIASORT         = 0x00011612,
-    DISPID_INTERNAL_ARIAVALUETEXT    = 0x00011613,
+    DISPID_INTERNAL_ARIAATOMIC       = 0x0001160bU,
+    DISPID_INTERNAL_ARIAAUTOCOMPLETE = 0x0001160cU,
+    DISPID_INTERNAL_ARIADROPEFFECT   = 0x0001160dU,
+    DISPID_INTERNAL_ARIAGRABBED      = 0x0001160eU,
+    DISPID_INTERNAL_ARIALABEL        = 0x0001160fU,
+    DISPID_INTERNAL_ARIAMULTILINE    = 0x00011610U,
+    DISPID_INTERNAL_ARIAORIENTATION  = 0x00011611U,
+    DISPID_INTERNAL_ARIASORT         = 0x00011612U,
+    DISPID_INTERNAL_ARIAVALUETEXT    = 0x00011613U,
 }
 
 enum : uint
 {
-    DISPID_A_MEDIAGRID              = 0x00011614,
-    DISPID_A_MEDIASCAN              = 0x00011615,
-    DISPID_A_ACCEVENTRECORDID_START = 0x00011616,
-    DISPID_A_ACCEVENTRECORDID_END   = 0x00011629,
+    DISPID_A_MEDIAGRID              = 0x00011614U,
+    DISPID_A_MEDIASCAN              = 0x00011615U,
+    DISPID_A_ACCEVENTRECORDID_START = 0x00011616U,
+    DISPID_A_ACCEVENTRECORDID_END   = 0x00011629U,
 }
 
 enum : uint
 {
-    DISPID_INTERNAL_REQUIRED         = 0x0001162a,
-    DISPID_INTERNAL_CSS_PARSEDARY    = 0x0001162b,
-    DISPID_INTERNAL_SOURCELOCATION   = 0x0001162c,
-    DISPID_INTERNAL_CSS_TRACEDSTYLES = 0x0001162d,
+    DISPID_INTERNAL_REQUIRED         = 0x0001162aU,
+    DISPID_INTERNAL_CSS_PARSEDARY    = 0x0001162bU,
+    DISPID_INTERNAL_SOURCELOCATION   = 0x0001162cU,
+    DISPID_INTERNAL_CSS_TRACEDSTYLES = 0x0001162dU,
 }
 
-enum uint DISPID_A_BDURLIMGCTXCACHEINDEX = 0x0001162e;
+enum uint DISPID_A_BDURLIMGCTXCACHEINDEX = 0x0001162eU;
 
 enum : uint
 {
-    DISPID_A_MEDIAWEBKITDEVICEPIXELRATIO    = 0x0001162f,
-    DISPID_A_MEDIAWEBKITMAXDEVICEPIXELRATIO = 0x00011630,
-    DISPID_A_MEDIAWEBKITMINDEVICEPIXELRATIO = 0x00011631,
+    DISPID_A_MEDIAWEBKITDEVICEPIXELRATIO    = 0x0001162fU,
+    DISPID_A_MEDIAWEBKITMAXDEVICEPIXELRATIO = 0x00011630U,
+    DISPID_A_MEDIAWEBKITMINDEVICEPIXELRATIO = 0x00011631U,
 }
 
-enum uint DISPID_SVGSTYLABLE_CLASSNAME_PROP = 0x000003e9;
+enum uint DISPID_SVGSTYLABLE_CLASSNAME_PROP = 0x000003e9U;
 
 enum : uint
 {
-    DISPID_SVGLOCATABLE_NEARESTVIEWPORTELEMENT  = 0x000003ea,
-    DISPID_SVGLOCATABLE_FARTHESTVIEWPORTELEMENT = 0x000003eb,
-    DISPID_SVGLOCATABLE_GETBBOX                 = 0x000003ec,
-    DISPID_SVGLOCATABLE_GETCTM                  = 0x000003ed,
-    DISPID_SVGLOCATABLE_GETSCREENCTM            = 0x000003ee,
-    DISPID_SVGLOCATABLE_GETTRANSFORMTOELEMENT   = 0x000003ef,
+    DISPID_SVGLOCATABLE_NEARESTVIEWPORTELEMENT  = 0x000003eaU,
+    DISPID_SVGLOCATABLE_FARTHESTVIEWPORTELEMENT = 0x000003ebU,
+    DISPID_SVGLOCATABLE_GETBBOX                 = 0x000003ecU,
+    DISPID_SVGLOCATABLE_GETCTM                  = 0x000003edU,
+    DISPID_SVGLOCATABLE_GETSCREENCTM            = 0x000003eeU,
+    DISPID_SVGLOCATABLE_GETTRANSFORMTOELEMENT   = 0x000003efU,
 }
 
 enum : uint
 {
-    DISPID_SVGTRANSFORMABLE_TRANSFORM_ATTR = 0x000003f0,
-    DISPID_SVGTRANSFORMABLE_TRANSFORM_PROP = 0x000003f1,
+    DISPID_SVGTRANSFORMABLE_TRANSFORM_ATTR = 0x000003f0U,
+    DISPID_SVGTRANSFORMABLE_TRANSFORM_PROP = 0x000003f1U,
 }
 
 enum : uint
 {
-    DISPID_SVGTESTS_REQUIREDFEATURES_ATTR   = 0x000003f2,
-    DISPID_SVGTESTS_REQUIREDFEATURES_PROP   = 0x000003f3,
-    DISPID_SVGTESTS_REQUIREDEXTENSIONS_ATTR = 0x000003f4,
-    DISPID_SVGTESTS_REQUIREDEXTENSIONS_PROP = 0x000003f5,
-    DISPID_SVGTESTS_SYSTEMLANGUAGE_ATTR     = 0x000003f6,
-    DISPID_SVGTESTS_SYSTEMLANGUAGE_PROP     = 0x000003f7,
-    DISPID_SVGTESTS_HASEXTENSION            = 0x000003f8,
+    DISPID_SVGTESTS_REQUIREDFEATURES_ATTR   = 0x000003f2U,
+    DISPID_SVGTESTS_REQUIREDFEATURES_PROP   = 0x000003f3U,
+    DISPID_SVGTESTS_REQUIREDEXTENSIONS_ATTR = 0x000003f4U,
+    DISPID_SVGTESTS_REQUIREDEXTENSIONS_PROP = 0x000003f5U,
+    DISPID_SVGTESTS_SYSTEMLANGUAGE_ATTR     = 0x000003f6U,
+    DISPID_SVGTESTS_SYSTEMLANGUAGE_PROP     = 0x000003f7U,
+    DISPID_SVGTESTS_HASEXTENSION            = 0x000003f8U,
 }
 
 enum : uint
 {
-    DISPID_SVGLANGSPACE_XMLLANG  = 0x000003f9,
-    DISPID_SVGLANGSPACE_XMLSPACE = 0x000003fa,
+    DISPID_SVGLANGSPACE_XMLLANG  = 0x000003f9U,
+    DISPID_SVGLANGSPACE_XMLSPACE = 0x000003faU,
 }
 
 enum : uint
 {
-    DISPID_SVGEXTERNALRESOURCESREQUIRED_EXTERNALRESOURCESREQUIRED_ATTR = 0x000003fb,
-    DISPID_SVGEXTERNALRESOURCESREQUIRED_EXTERNALRESOURCESREQUIRED_PROP = 0x000003fc,
+    DISPID_SVGEXTERNALRESOURCESREQUIRED_EXTERNALRESOURCESREQUIRED_ATTR = 0x000003fbU,
+    DISPID_SVGEXTERNALRESOURCESREQUIRED_EXTERNALRESOURCESREQUIRED_PROP = 0x000003fcU,
 }
 
 enum : uint
 {
-    DISPID_SVGFITTOVIEWBOX_VIEWBOX_ATTR             = 0x000003fd,
-    DISPID_SVGFITTOVIEWBOX_VIEWBOX_PROP             = 0x000003fe,
-    DISPID_SVGFITTOVIEWBOX_PRESERVEASPECTRATIO_ATTR = 0x000003ff,
-    DISPID_SVGFITTOVIEWBOX_PRESERVEASPECTRATIO_PROP = 0x00000400,
+    DISPID_SVGFITTOVIEWBOX_VIEWBOX_ATTR             = 0x000003fdU,
+    DISPID_SVGFITTOVIEWBOX_VIEWBOX_PROP             = 0x000003feU,
+    DISPID_SVGFITTOVIEWBOX_PRESERVEASPECTRATIO_ATTR = 0x000003ffU,
+    DISPID_SVGFITTOVIEWBOX_PRESERVEASPECTRATIO_PROP = 0x00000400U,
 }
 
-enum uint DISPID_SVGZOOMANDPAN_ZOOMANDPAN = 0x00000401;
-enum uint DISPID_SVGURIREFERENCE_HREF = 0x00000402;
-enum uint DISPID_EVPROP_ONMOUSEOVER = 0x00011770;
-enum uint DISPID_EVMETH_ONMOUSEOVER = 0x00010008;
-enum uint DISPID_EVPROP_ONMOUSEOUT = 0x00011771;
-enum uint DISPID_EVMETH_ONMOUSEOUT = 0x00010009;
-enum uint DISPID_EVPROP_ONMOUSEDOWN = 0x00011772;
+enum uint DISPID_SVGZOOMANDPAN_ZOOMANDPAN = 0x00000401U;
+enum uint DISPID_SVGURIREFERENCE_HREF = 0x00000402U;
+enum uint DISPID_EVPROP_ONMOUSEOVER = 0x00011770U;
+enum uint DISPID_EVMETH_ONMOUSEOVER = 0x00010008U;
+enum uint DISPID_EVPROP_ONMOUSEOUT = 0x00011771U;
+enum uint DISPID_EVMETH_ONMOUSEOUT = 0x00010009U;
+enum uint DISPID_EVPROP_ONMOUSEDOWN = 0x00011772U;
 enum int DISPID_EVMETH_ONMOUSEDOWN = 0xfffffda3;
-enum uint DISPID_EVPROP_ONMOUSEUP = 0x00011773;
+enum uint DISPID_EVPROP_ONMOUSEUP = 0x00011773U;
 enum int DISPID_EVMETH_ONMOUSEUP = 0xfffffda1;
-enum uint DISPID_EVPROP_ONMOUSEMOVE = 0x00011774;
+enum uint DISPID_EVPROP_ONMOUSEMOVE = 0x00011774U;
 enum int DISPID_EVMETH_ONMOUSEMOVE = 0xfffffda2;
-enum uint DISPID_EVPROP_ONKEYDOWN = 0x00011775;
+enum uint DISPID_EVPROP_ONKEYDOWN = 0x00011775U;
 enum int DISPID_EVMETH_ONKEYDOWN = 0xfffffda6;
-enum uint DISPID_EVPROP_ONKEYUP = 0x00011776;
+enum uint DISPID_EVPROP_ONKEYUP = 0x00011776U;
 enum int DISPID_EVMETH_ONKEYUP = 0xfffffda4;
-enum uint DISPID_EVPROP_ONKEYPRESS = 0x00011777;
+enum uint DISPID_EVPROP_ONKEYPRESS = 0x00011777U;
 enum int DISPID_EVMETH_ONKEYPRESS = 0xfffffda5;
-enum uint DISPID_EVPROP_ONCLICK = 0x00011778;
+enum uint DISPID_EVPROP_ONCLICK = 0x00011778U;
 enum int DISPID_EVMETH_ONCLICK = 0xfffffda8;
-enum uint DISPID_EVPROP_ONDBLCLICK = 0x00011779;
+enum uint DISPID_EVPROP_ONDBLCLICK = 0x00011779U;
 enum int DISPID_EVMETH_ONDBLCLICK = 0xfffffda7;
 
 enum : uint
 {
-    DISPID_EVPROP_ONSELECT  = 0x0001177a,
-    DISPID_EVMETH_ONSELECT  = 0x000003ee,
-    DISPID_EVPROP_ONSUBMIT  = 0x0001177b,
-    DISPID_EVMETH_ONSUBMIT  = 0x000003ef,
-    DISPID_EVPROP_ONRESET   = 0x0001177c,
-    DISPID_EVMETH_ONRESET   = 0x000003f7,
-    DISPID_EVPROP_ONHELP    = 0x0001177d,
-    DISPID_EVMETH_ONHELP    = 0x0001000a,
-    DISPID_EVPROP_ONFOCUS   = 0x0001177e,
-    DISPID_EVMETH_ONFOCUS   = 0x00010001,
-    DISPID_EVPROP_ONBLUR    = 0x0001177f,
-    DISPID_EVPROP_ONROWEXIT = 0x00011782,
+    DISPID_EVPROP_ONSELECT  = 0x0001177aU,
+    DISPID_EVMETH_ONSELECT  = 0x000003eeU,
+    DISPID_EVPROP_ONSUBMIT  = 0x0001177bU,
+    DISPID_EVMETH_ONSUBMIT  = 0x000003efU,
+    DISPID_EVPROP_ONRESET   = 0x0001177cU,
+    DISPID_EVMETH_ONRESET   = 0x000003f7U,
+    DISPID_EVPROP_ONHELP    = 0x0001177dU,
+    DISPID_EVMETH_ONHELP    = 0x0001000aU,
+    DISPID_EVPROP_ONFOCUS   = 0x0001177eU,
+    DISPID_EVMETH_ONFOCUS   = 0x00010001U,
+    DISPID_EVPROP_ONBLUR    = 0x0001177fU,
+    DISPID_EVPROP_ONROWEXIT = 0x00011782U,
 }
 
-enum uint DISPID_EVMETH_ONROWEXIT = 0x00010006;
-enum uint DISPID_EVPROP_ONROWENTER = 0x00011783;
-enum uint DISPID_EVMETH_ONROWENTER = 0x00010007;
+enum uint DISPID_EVMETH_ONROWEXIT = 0x00010006U;
+enum uint DISPID_EVPROP_ONROWENTER = 0x00011783U;
+enum uint DISPID_EVMETH_ONROWENTER = 0x00010007U;
 
 enum : uint
 {
-    DISPID_EVPROP_ONBOUNCE       = 0x00011784,
-    DISPID_EVMETH_ONBOUNCE       = 0x000003f1,
-    DISPID_EVPROP_ONBEFOREUPDATE = 0x00011785,
+    DISPID_EVPROP_ONBOUNCE       = 0x00011784U,
+    DISPID_EVMETH_ONBOUNCE       = 0x000003f1U,
+    DISPID_EVPROP_ONBEFOREUPDATE = 0x00011785U,
 }
 
-enum uint DISPID_EVMETH_ONBEFOREUPDATE = 0x00010004;
-enum uint DISPID_EVPROP_ONAFTERUPDATE = 0x00011786;
-enum uint DISPID_EVMETH_ONAFTERUPDATE = 0x00010005;
+enum uint DISPID_EVMETH_ONBEFOREUPDATE = 0x00010004U;
+enum uint DISPID_EVPROP_ONAFTERUPDATE = 0x00011786U;
+enum uint DISPID_EVMETH_ONAFTERUPDATE = 0x00010005U;
 
 enum : uint
 {
-    DISPID_EVPROP_ONBEFOREDRAGOVER    = 0x00011787,
-    DISPID_EVPROP_ONBEFOREDROPORPASTE = 0x00011788,
-    DISPID_EVPROP_ONREADYSTATECHANGE  = 0x00011789,
+    DISPID_EVPROP_ONBEFOREDRAGOVER    = 0x00011787U,
+    DISPID_EVPROP_ONBEFOREDROPORPASTE = 0x00011788U,
+    DISPID_EVPROP_ONREADYSTATECHANGE  = 0x00011789U,
 }
 
 enum int DISPID_EVMETH_ONREADYSTATECHANGE = 0xfffffd9f;
 
 enum : uint
 {
-    DISPID_EVPROP_ONFINISH    = 0x0001178a,
-    DISPID_EVMETH_ONFINISH    = 0x000003f2,
-    DISPID_EVPROP_ONSTART     = 0x0001178b,
-    DISPID_EVMETH_ONSTART     = 0x000003f3,
-    DISPID_EVPROP_ONABORT     = 0x0001178c,
-    DISPID_EVMETH_ONABORT     = 0x000003e8,
-    DISPID_EVPROP_ONERROR     = 0x0001178d,
-    DISPID_EVMETH_ONERROR     = 0x000003ea,
-    DISPID_EVPROP_ONCHANGE    = 0x0001178e,
-    DISPID_EVMETH_ONCHANGE    = 0x000003e9,
-    DISPID_EVPROP_ONSCROLL    = 0x0001178f,
-    DISPID_EVMETH_ONSCROLL    = 0x000003f6,
-    DISPID_EVPROP_ONLOAD      = 0x00011790,
-    DISPID_EVMETH_ONLOAD      = 0x000003eb,
-    DISPID_EVPROP_ONUNLOAD    = 0x00011791,
-    DISPID_EVMETH_ONUNLOAD    = 0x000003f0,
-    DISPID_EVPROP_ONLAYOUT    = 0x00011792,
-    DISPID_EVMETH_ONLAYOUT    = 0x000003f5,
-    DISPID_EVPROP_ONDRAGSTART = 0x00011793,
+    DISPID_EVPROP_ONFINISH    = 0x0001178aU,
+    DISPID_EVMETH_ONFINISH    = 0x000003f2U,
+    DISPID_EVPROP_ONSTART     = 0x0001178bU,
+    DISPID_EVMETH_ONSTART     = 0x000003f3U,
+    DISPID_EVPROP_ONABORT     = 0x0001178cU,
+    DISPID_EVMETH_ONABORT     = 0x000003e8U,
+    DISPID_EVPROP_ONERROR     = 0x0001178dU,
+    DISPID_EVMETH_ONERROR     = 0x000003eaU,
+    DISPID_EVPROP_ONCHANGE    = 0x0001178eU,
+    DISPID_EVMETH_ONCHANGE    = 0x000003e9U,
+    DISPID_EVPROP_ONSCROLL    = 0x0001178fU,
+    DISPID_EVMETH_ONSCROLL    = 0x000003f6U,
+    DISPID_EVPROP_ONLOAD      = 0x00011790U,
+    DISPID_EVMETH_ONLOAD      = 0x000003ebU,
+    DISPID_EVPROP_ONUNLOAD    = 0x00011791U,
+    DISPID_EVMETH_ONUNLOAD    = 0x000003f0U,
+    DISPID_EVPROP_ONLAYOUT    = 0x00011792U,
+    DISPID_EVMETH_ONLAYOUT    = 0x000003f5U,
+    DISPID_EVPROP_ONDRAGSTART = 0x00011793U,
 }
 
-enum uint DISPID_EVMETH_ONDRAGSTART = 0x0001000b;
+enum uint DISPID_EVMETH_ONDRAGSTART = 0x0001000bU;
 
 enum : uint
 {
-    DISPID_EVPROP_ONRESIZE      = 0x00011794,
-    DISPID_EVMETH_ONRESIZE      = 0x000003f8,
-    DISPID_EVPROP_ONSELECTSTART = 0x00011795,
+    DISPID_EVPROP_ONRESIZE      = 0x00011794U,
+    DISPID_EVMETH_ONRESIZE      = 0x000003f8U,
+    DISPID_EVPROP_ONSELECTSTART = 0x00011795U,
 }
 
-enum uint DISPID_EVMETH_ONSELECTSTART = 0x0001000c;
-enum uint DISPID_EVPROP_ONERRORUPDATE = 0x00011796;
-enum uint DISPID_EVMETH_ONERRORUPDATE = 0x0001000d;
-enum uint DISPID_EVPROP_ONBEFOREUNLOAD = 0x00011797;
-enum uint DISPID_EVMETH_ONBEFOREUNLOAD = 0x000003f9;
-enum uint DISPID_EVPROP_ONDATASETCHANGED = 0x00011798;
-enum uint DISPID_EVMETH_ONDATASETCHANGED = 0x0001000e;
-enum uint DISPID_EVPROP_ONDATAAVAILABLE = 0x00011799;
-enum uint DISPID_EVMETH_ONDATAAVAILABLE = 0x0001000f;
-enum uint DISPID_EVPROP_ONDATASETCOMPLETE = 0x0001179a;
-enum uint DISPID_EVMETH_ONDATASETCOMPLETE = 0x00010010;
+enum uint DISPID_EVMETH_ONSELECTSTART = 0x0001000cU;
+enum uint DISPID_EVPROP_ONERRORUPDATE = 0x00011796U;
+enum uint DISPID_EVMETH_ONERRORUPDATE = 0x0001000dU;
+enum uint DISPID_EVPROP_ONBEFOREUNLOAD = 0x00011797U;
+enum uint DISPID_EVMETH_ONBEFOREUNLOAD = 0x000003f9U;
+enum uint DISPID_EVPROP_ONDATASETCHANGED = 0x00011798U;
+enum uint DISPID_EVMETH_ONDATASETCHANGED = 0x0001000eU;
+enum uint DISPID_EVPROP_ONDATAAVAILABLE = 0x00011799U;
+enum uint DISPID_EVMETH_ONDATAAVAILABLE = 0x0001000fU;
+enum uint DISPID_EVPROP_ONDATASETCOMPLETE = 0x0001179aU;
+enum uint DISPID_EVMETH_ONDATASETCOMPLETE = 0x00010010U;
 
 enum : uint
 {
-    DISPID_EVPROP_ONFILTER      = 0x0001179b,
-    DISPID_EVMETH_ONFILTER      = 0x00010011,
-    DISPID_EVPROP_ONCHANGEFOCUS = 0x0001179c,
+    DISPID_EVPROP_ONFILTER      = 0x0001179bU,
+    DISPID_EVMETH_ONFILTER      = 0x00010011U,
+    DISPID_EVPROP_ONCHANGEFOCUS = 0x0001179cU,
 }
 
-enum uint DISPID_EVMETH_ONCHANGEFOCUS = 0x000003fa;
-enum uint DISPID_EVPROP_ONCHANGEBLUR = 0x0001179d;
-enum uint DISPID_EVMETH_ONCHANGEBLUR = 0x000003fb;
-enum uint DISPID_EVPROP_ONLOSECAPTURE = 0x0001179e;
-enum uint DISPID_EVMETH_ONLOSECAPTURE = 0x00010012;
-enum uint DISPID_EVPROP_ONPROPERTYCHANGE = 0x0001179f;
-enum uint DISPID_EVMETH_ONPROPERTYCHANGE = 0x00010013;
-enum uint DISPID_EVPROP_ONPERSISTSAVE = 0x000117a0;
-enum uint DISPID_EVMETH_ONPERSISTSAVE = 0x000003fd;
+enum uint DISPID_EVMETH_ONCHANGEFOCUS = 0x000003faU;
+enum uint DISPID_EVPROP_ONCHANGEBLUR = 0x0001179dU;
+enum uint DISPID_EVMETH_ONCHANGEBLUR = 0x000003fbU;
+enum uint DISPID_EVPROP_ONLOSECAPTURE = 0x0001179eU;
+enum uint DISPID_EVMETH_ONLOSECAPTURE = 0x00010012U;
+enum uint DISPID_EVPROP_ONPROPERTYCHANGE = 0x0001179fU;
+enum uint DISPID_EVMETH_ONPROPERTYCHANGE = 0x00010013U;
+enum uint DISPID_EVPROP_ONPERSISTSAVE = 0x000117a0U;
+enum uint DISPID_EVMETH_ONPERSISTSAVE = 0x000003fdU;
 
 enum : uint
 {
-    DISPID_EVPROP_ONDRAG    = 0x000117a1,
-    DISPID_EVMETH_ONDRAG    = 0x00010014,
-    DISPID_EVPROP_ONDRAGEND = 0x000117a2,
+    DISPID_EVPROP_ONDRAG    = 0x000117a1U,
+    DISPID_EVMETH_ONDRAG    = 0x00010014U,
+    DISPID_EVPROP_ONDRAGEND = 0x000117a2U,
 }
 
-enum uint DISPID_EVMETH_ONDRAGEND = 0x00010015;
-enum uint DISPID_EVPROP_ONDRAGENTER = 0x000117a3;
-enum uint DISPID_EVMETH_ONDRAGENTER = 0x00010016;
-enum uint DISPID_EVPROP_ONDRAGOVER = 0x000117a4;
-enum uint DISPID_EVMETH_ONDRAGOVER = 0x00010017;
-enum uint DISPID_EVPROP_ONDRAGLEAVE = 0x000117a5;
-enum uint DISPID_EVMETH_ONDRAGLEAVE = 0x00010018;
+enum uint DISPID_EVMETH_ONDRAGEND = 0x00010015U;
+enum uint DISPID_EVPROP_ONDRAGENTER = 0x000117a3U;
+enum uint DISPID_EVMETH_ONDRAGENTER = 0x00010016U;
+enum uint DISPID_EVPROP_ONDRAGOVER = 0x000117a4U;
+enum uint DISPID_EVMETH_ONDRAGOVER = 0x00010017U;
+enum uint DISPID_EVPROP_ONDRAGLEAVE = 0x000117a5U;
+enum uint DISPID_EVMETH_ONDRAGLEAVE = 0x00010018U;
 
 enum : uint
 {
-    DISPID_EVPROP_ONDROP      = 0x000117a6,
-    DISPID_EVMETH_ONDROP      = 0x00010019,
-    DISPID_EVPROP_ONCUT       = 0x000117a7,
-    DISPID_EVMETH_ONCUT       = 0x0001001a,
-    DISPID_EVPROP_ONCOPY      = 0x000117a8,
-    DISPID_EVMETH_ONCOPY      = 0x0001001b,
-    DISPID_EVPROP_ONPASTE     = 0x000117a9,
-    DISPID_EVMETH_ONPASTE     = 0x0001001c,
-    DISPID_EVPROP_ONBEFORECUT = 0x000117aa,
+    DISPID_EVPROP_ONDROP      = 0x000117a6U,
+    DISPID_EVMETH_ONDROP      = 0x00010019U,
+    DISPID_EVPROP_ONCUT       = 0x000117a7U,
+    DISPID_EVMETH_ONCUT       = 0x0001001aU,
+    DISPID_EVPROP_ONCOPY      = 0x000117a8U,
+    DISPID_EVMETH_ONCOPY      = 0x0001001bU,
+    DISPID_EVPROP_ONPASTE     = 0x000117a9U,
+    DISPID_EVMETH_ONPASTE     = 0x0001001cU,
+    DISPID_EVPROP_ONBEFORECUT = 0x000117aaU,
 }
 
-enum uint DISPID_EVMETH_ONBEFORECUT = 0x0001001d;
-enum uint DISPID_EVPROP_ONBEFORECOPY = 0x000117ab;
-enum uint DISPID_EVMETH_ONBEFORECOPY = 0x0001001e;
-enum uint DISPID_EVPROP_ONBEFOREPASTE = 0x000117ac;
-enum uint DISPID_EVMETH_ONBEFOREPASTE = 0x0001001f;
-enum uint DISPID_EVPROP_ONPERSISTLOAD = 0x000117ad;
-enum uint DISPID_EVMETH_ONPERSISTLOAD = 0x000003fe;
-enum uint DISPID_EVPROP_ONROWSDELETE = 0x000117ae;
-enum uint DISPID_EVMETH_ONROWSDELETE = 0x00010020;
-enum uint DISPID_EVPROP_ONROWSINSERTED = 0x000117af;
-enum uint DISPID_EVMETH_ONROWSINSERTED = 0x00010021;
-enum uint DISPID_EVPROP_ONCELLCHANGE = 0x000117b0;
-enum uint DISPID_EVMETH_ONCELLCHANGE = 0x00010022;
-enum uint DISPID_EVPROP_ONCONTEXTMENU = 0x000117b1;
-enum uint DISPID_EVMETH_ONCONTEXTMENU = 0x000003ff;
-enum uint DISPID_EVPROP_ONBEFOREPRINT = 0x000117b2;
-enum uint DISPID_EVMETH_ONBEFOREPRINT = 0x00000400;
-enum uint DISPID_EVPROP_ONAFTERPRINT = 0x000117b3;
-enum uint DISPID_EVMETH_ONAFTERPRINT = 0x00000401;
+enum uint DISPID_EVMETH_ONBEFORECUT = 0x0001001dU;
+enum uint DISPID_EVPROP_ONBEFORECOPY = 0x000117abU;
+enum uint DISPID_EVMETH_ONBEFORECOPY = 0x0001001eU;
+enum uint DISPID_EVPROP_ONBEFOREPASTE = 0x000117acU;
+enum uint DISPID_EVMETH_ONBEFOREPASTE = 0x0001001fU;
+enum uint DISPID_EVPROP_ONPERSISTLOAD = 0x000117adU;
+enum uint DISPID_EVMETH_ONPERSISTLOAD = 0x000003feU;
+enum uint DISPID_EVPROP_ONROWSDELETE = 0x000117aeU;
+enum uint DISPID_EVMETH_ONROWSDELETE = 0x00010020U;
+enum uint DISPID_EVPROP_ONROWSINSERTED = 0x000117afU;
+enum uint DISPID_EVMETH_ONROWSINSERTED = 0x00010021U;
+enum uint DISPID_EVPROP_ONCELLCHANGE = 0x000117b0U;
+enum uint DISPID_EVMETH_ONCELLCHANGE = 0x00010022U;
+enum uint DISPID_EVPROP_ONCONTEXTMENU = 0x000117b1U;
+enum uint DISPID_EVMETH_ONCONTEXTMENU = 0x000003ffU;
+enum uint DISPID_EVPROP_ONBEFOREPRINT = 0x000117b2U;
+enum uint DISPID_EVMETH_ONBEFOREPRINT = 0x00000400U;
+enum uint DISPID_EVPROP_ONAFTERPRINT = 0x000117b3U;
+enum uint DISPID_EVMETH_ONAFTERPRINT = 0x00000401U;
 
 enum : uint
 {
-    DISPID_EVPROP_ONSTOP            = 0x000117b4,
-    DISPID_EVMETH_ONSTOP            = 0x00000402,
-    DISPID_EVPROP_ONBEFOREEDITFOCUS = 0x000117b5,
+    DISPID_EVPROP_ONSTOP            = 0x000117b4U,
+    DISPID_EVMETH_ONSTOP            = 0x00000402U,
+    DISPID_EVPROP_ONBEFOREEDITFOCUS = 0x000117b5U,
 }
 
-enum uint DISPID_EVMETH_ONBEFOREEDITFOCUS = 0x00000403;
+enum uint DISPID_EVMETH_ONBEFOREEDITFOCUS = 0x00000403U;
 
 enum : uint
 {
-    DISPID_EVPROP_ONATTACHEVENT = 0x000117b6,
-    DISPID_EVPROP_ONMOUSEHOVER  = 0x000117b7,
+    DISPID_EVPROP_ONATTACHEVENT = 0x000117b6U,
+    DISPID_EVPROP_ONMOUSEHOVER  = 0x000117b7U,
 }
 
-enum uint DISPID_EVMETH_ONMOUSEHOVER = 0x00000404;
-enum uint DISPID_EVPROP_ONCONTENTREADY = 0x000117b8;
-enum uint DISPID_EVMETH_ONCONTENTREADY = 0x00000405;
-enum uint DISPID_EVPROP_ONLAYOUTCOMPLETE = 0x000117b9;
-enum uint DISPID_EVMETH_ONLAYOUTCOMPLETE = 0x00000406;
+enum uint DISPID_EVMETH_ONMOUSEHOVER = 0x00000404U;
+enum uint DISPID_EVPROP_ONCONTENTREADY = 0x000117b8U;
+enum uint DISPID_EVMETH_ONCONTENTREADY = 0x00000405U;
+enum uint DISPID_EVPROP_ONLAYOUTCOMPLETE = 0x000117b9U;
+enum uint DISPID_EVMETH_ONLAYOUTCOMPLETE = 0x00000406U;
 
 enum : uint
 {
-    DISPID_EVPROP_ONPAGE           = 0x000117ba,
-    DISPID_EVMETH_ONPAGE           = 0x00000407,
-    DISPID_EVPROP_ONLINKEDOVERFLOW = 0x000117bb,
+    DISPID_EVPROP_ONPAGE           = 0x000117baU,
+    DISPID_EVMETH_ONPAGE           = 0x00000407U,
+    DISPID_EVPROP_ONLINKEDOVERFLOW = 0x000117bbU,
 }
 
-enum uint DISPID_EVMETH_ONLINKEDOVERFLOW = 0x00000408;
-enum uint DISPID_EVPROP_ONMOUSEWHEEL = 0x000117bc;
-enum uint DISPID_EVMETH_ONMOUSEWHEEL = 0x00000409;
-enum uint DISPID_EVPROP_ONBEFOREDEACTIVATE = 0x000117bd;
-enum uint DISPID_EVMETH_ONBEFOREDEACTIVATE = 0x0000040a;
+enum uint DISPID_EVMETH_ONLINKEDOVERFLOW = 0x00000408U;
+enum uint DISPID_EVPROP_ONMOUSEWHEEL = 0x000117bcU;
+enum uint DISPID_EVMETH_ONMOUSEWHEEL = 0x00000409U;
+enum uint DISPID_EVPROP_ONBEFOREDEACTIVATE = 0x000117bdU;
+enum uint DISPID_EVMETH_ONBEFOREDEACTIVATE = 0x0000040aU;
 
 enum : uint
 {
-    DISPID_EVPROP_ONMOVE          = 0x000117be,
-    DISPID_EVMETH_ONMOVE          = 0x0000040b,
-    DISPID_EVPROP_ONCONTROLSELECT = 0x000117bf,
+    DISPID_EVPROP_ONMOVE          = 0x000117beU,
+    DISPID_EVMETH_ONMOVE          = 0x0000040bU,
+    DISPID_EVPROP_ONCONTROLSELECT = 0x000117bfU,
 }
 
-enum uint DISPID_EVMETH_ONCONTROLSELECT = 0x0000040c;
-enum uint DISPID_EVPROP_ONSELECTIONCHANGE = 0x000117c0;
-enum uint DISPID_EVMETH_ONSELECTIONCHANGE = 0x0000040d;
-enum uint DISPID_EVPROP_ONMOVESTART = 0x000117c1;
-enum uint DISPID_EVMETH_ONMOVESTART = 0x0000040e;
-enum uint DISPID_EVPROP_ONMOVEEND = 0x000117c2;
-enum uint DISPID_EVMETH_ONMOVEEND = 0x0000040f;
-enum uint DISPID_EVPROP_ONRESIZESTART = 0x000117c3;
-enum uint DISPID_EVMETH_ONRESIZESTART = 0x00000410;
-enum uint DISPID_EVPROP_ONRESIZEEND = 0x000117c4;
-enum uint DISPID_EVMETH_ONRESIZEEND = 0x00000411;
-enum uint DISPID_EVPROP_ONMOUSEENTER = 0x000117c5;
-enum uint DISPID_EVMETH_ONMOUSEENTER = 0x00000412;
-enum uint DISPID_EVPROP_ONMOUSELEAVE = 0x000117c6;
-enum uint DISPID_EVMETH_ONMOUSELEAVE = 0x00000413;
-enum uint DISPID_EVPROP_ONACTIVATE = 0x000117c7;
-enum uint DISPID_EVMETH_ONACTIVATE = 0x00000414;
-enum uint DISPID_EVPROP_ONDEACTIVATE = 0x000117c8;
-enum uint DISPID_EVMETH_ONDEACTIVATE = 0x00000415;
-enum uint DISPID_EVPROP_ONMULTILAYOUTCLEANUP = 0x000117c9;
-enum uint DISPID_EVMETH_ONMULTILAYOUTCLEANUP = 0x00000416;
-enum uint DISPID_EVPROP_ONBEFOREACTIVATE = 0x000117ca;
-enum uint DISPID_EVMETH_ONBEFOREACTIVATE = 0x00000417;
-enum uint DISPID_EVPROP_ONFOCUSIN = 0x000117cb;
-enum uint DISPID_EVMETH_ONFOCUSIN = 0x00000418;
-enum uint DISPID_EVPROP_ONFOCUSOUT = 0x000117cc;
-enum uint DISPID_EVMETH_ONFOCUSOUT = 0x00000419;
-enum uint DISPID_EVPROP_ONVALUECHANGE = 0x000117cd;
-enum uint DISPID_EVMETH_ONVALUECHANGE = 0x0000041a;
-enum uint DISPID_EVPROP_ONSELECTADD = 0x000117ce;
-enum uint DISPID_EVMETH_ONSELECTADD = 0x0000041b;
-enum uint DISPID_EVPROP_ONSELECTREMOVE = 0x000117cf;
-enum uint DISPID_EVMETH_ONSELECTREMOVE = 0x0000041c;
-enum uint DISPID_EVPROP_ONSELECTWITHIN = 0x000117d0;
-enum uint DISPID_EVMETH_ONSELECTWITHIN = 0x0000041d;
-enum uint DISPID_EVPROP_ONSYSTEMSCROLLINGSTART = 0x000117d1;
-enum uint DISPID_EVMETH_ONSYSTEMSCROLLINGSTART = 0x0000041e;
-enum uint DISPID_EVPROP_ONSYSTEMSCROLLINGEND = 0x000117d2;
-enum uint DISPID_EVMETH_ONSYSTEMSCROLLINGEND = 0x0000041f;
-enum uint DISPID_EVPROP_ONOBJECTCONTENTSCROLLED = 0x000117d3;
-enum uint DISPID_EVMETH_ONOBJECTCONTENTSCROLLED = 0x00000420;
-enum uint DISPID_EVPROP_ONSTORAGE = 0x000117d4;
-enum uint DISPID_EVMETH_ONSTORAGE = 0x00000421;
-enum uint DISPID_EVPROP_ONSTORAGECOMMIT = 0x000117d5;
-enum uint DISPID_EVMETH_ONSTORAGECOMMIT = 0x00000422;
+enum uint DISPID_EVMETH_ONCONTROLSELECT = 0x0000040cU;
+enum uint DISPID_EVPROP_ONSELECTIONCHANGE = 0x000117c0U;
+enum uint DISPID_EVMETH_ONSELECTIONCHANGE = 0x0000040dU;
+enum uint DISPID_EVPROP_ONMOVESTART = 0x000117c1U;
+enum uint DISPID_EVMETH_ONMOVESTART = 0x0000040eU;
+enum uint DISPID_EVPROP_ONMOVEEND = 0x000117c2U;
+enum uint DISPID_EVMETH_ONMOVEEND = 0x0000040fU;
+enum uint DISPID_EVPROP_ONRESIZESTART = 0x000117c3U;
+enum uint DISPID_EVMETH_ONRESIZESTART = 0x00000410U;
+enum uint DISPID_EVPROP_ONRESIZEEND = 0x000117c4U;
+enum uint DISPID_EVMETH_ONRESIZEEND = 0x00000411U;
+enum uint DISPID_EVPROP_ONMOUSEENTER = 0x000117c5U;
+enum uint DISPID_EVMETH_ONMOUSEENTER = 0x00000412U;
+enum uint DISPID_EVPROP_ONMOUSELEAVE = 0x000117c6U;
+enum uint DISPID_EVMETH_ONMOUSELEAVE = 0x00000413U;
+enum uint DISPID_EVPROP_ONACTIVATE = 0x000117c7U;
+enum uint DISPID_EVMETH_ONACTIVATE = 0x00000414U;
+enum uint DISPID_EVPROP_ONDEACTIVATE = 0x000117c8U;
+enum uint DISPID_EVMETH_ONDEACTIVATE = 0x00000415U;
+enum uint DISPID_EVPROP_ONMULTILAYOUTCLEANUP = 0x000117c9U;
+enum uint DISPID_EVMETH_ONMULTILAYOUTCLEANUP = 0x00000416U;
+enum uint DISPID_EVPROP_ONBEFOREACTIVATE = 0x000117caU;
+enum uint DISPID_EVMETH_ONBEFOREACTIVATE = 0x00000417U;
+enum uint DISPID_EVPROP_ONFOCUSIN = 0x000117cbU;
+enum uint DISPID_EVMETH_ONFOCUSIN = 0x00000418U;
+enum uint DISPID_EVPROP_ONFOCUSOUT = 0x000117ccU;
+enum uint DISPID_EVMETH_ONFOCUSOUT = 0x00000419U;
+enum uint DISPID_EVPROP_ONVALUECHANGE = 0x000117cdU;
+enum uint DISPID_EVMETH_ONVALUECHANGE = 0x0000041aU;
+enum uint DISPID_EVPROP_ONSELECTADD = 0x000117ceU;
+enum uint DISPID_EVMETH_ONSELECTADD = 0x0000041bU;
+enum uint DISPID_EVPROP_ONSELECTREMOVE = 0x000117cfU;
+enum uint DISPID_EVMETH_ONSELECTREMOVE = 0x0000041cU;
+enum uint DISPID_EVPROP_ONSELECTWITHIN = 0x000117d0U;
+enum uint DISPID_EVMETH_ONSELECTWITHIN = 0x0000041dU;
+enum uint DISPID_EVPROP_ONSYSTEMSCROLLINGSTART = 0x000117d1U;
+enum uint DISPID_EVMETH_ONSYSTEMSCROLLINGSTART = 0x0000041eU;
+enum uint DISPID_EVPROP_ONSYSTEMSCROLLINGEND = 0x000117d2U;
+enum uint DISPID_EVMETH_ONSYSTEMSCROLLINGEND = 0x0000041fU;
+enum uint DISPID_EVPROP_ONOBJECTCONTENTSCROLLED = 0x000117d3U;
+enum uint DISPID_EVMETH_ONOBJECTCONTENTSCROLLED = 0x00000420U;
+enum uint DISPID_EVPROP_ONSTORAGE = 0x000117d4U;
+enum uint DISPID_EVMETH_ONSTORAGE = 0x00000421U;
+enum uint DISPID_EVPROP_ONSTORAGECOMMIT = 0x000117d5U;
+enum uint DISPID_EVMETH_ONSTORAGECOMMIT = 0x00000422U;
 
 enum : uint
 {
-    DISPID_EVPROP_ONSHOW           = 0x000117d6,
-    DISPID_EVMETH_ONSHOW           = 0x00000423,
-    DISPID_EVPROP_ONHIDE           = 0x000117d7,
-    DISPID_EVMETH_ONHIDE           = 0x00000424,
-    DISPID_EVPROP_ONALERT          = 0x000117d8,
-    DISPID_EVMETH_ONALERT          = 0x00000425,
-    DISPID_EVPROP_ONPOPUPMENUSTART = 0x000117d9,
+    DISPID_EVPROP_ONSHOW           = 0x000117d6U,
+    DISPID_EVMETH_ONSHOW           = 0x00000423U,
+    DISPID_EVPROP_ONHIDE           = 0x000117d7U,
+    DISPID_EVMETH_ONHIDE           = 0x00000424U,
+    DISPID_EVPROP_ONALERT          = 0x000117d8U,
+    DISPID_EVMETH_ONALERT          = 0x00000425U,
+    DISPID_EVPROP_ONPOPUPMENUSTART = 0x000117d9U,
 }
 
-enum uint DISPID_EVMETH_ONPOPUPMENUSTART = 0x00000426;
-enum uint DISPID_EVPROP_ONPOPUPMENUEND = 0x000117da;
-enum uint DISPID_EVMETH_ONPOPUPMENUEND = 0x00000427;
+enum uint DISPID_EVMETH_ONPOPUPMENUSTART = 0x00000426U;
+enum uint DISPID_EVPROP_ONPOPUPMENUEND = 0x000117daU;
+enum uint DISPID_EVMETH_ONPOPUPMENUEND = 0x00000427U;
 
 enum : uint
 {
-    DISPID_EVPROP_ONONLINE  = 0x000117db,
-    DISPID_EVMETH_ONONLINE  = 0x00000428,
-    DISPID_EVPROP_ONOFFLINE = 0x000117dc,
+    DISPID_EVPROP_ONONLINE  = 0x000117dbU,
+    DISPID_EVMETH_ONONLINE  = 0x00000428U,
+    DISPID_EVPROP_ONOFFLINE = 0x000117dcU,
 }
 
-enum uint DISPID_EVMETH_ONOFFLINE = 0x00000429;
-enum uint DISPID_EVPROP_ONHASHCHANGE = 0x000117dd;
-enum uint DISPID_EVMETH_ONHASHCHANGE = 0x0000042a;
-enum uint DISPID_EVPROP_ONMESSAGE = 0x000117de;
-enum uint DISPID_EVMETH_ONMESSAGE = 0x0000042b;
-enum uint DISPID_EVPROP_ONDOMMUTATION = 0x000117df;
-enum uint DISPID_EVMETH_ONDOMMUTATION = 0x0000042c;
+enum uint DISPID_EVMETH_ONOFFLINE = 0x00000429U;
+enum uint DISPID_EVPROP_ONHASHCHANGE = 0x000117ddU;
+enum uint DISPID_EVMETH_ONHASHCHANGE = 0x0000042aU;
+enum uint DISPID_EVPROP_ONMESSAGE = 0x000117deU;
+enum uint DISPID_EVMETH_ONMESSAGE = 0x0000042bU;
+enum uint DISPID_EVPROP_ONDOMMUTATION = 0x000117dfU;
+enum uint DISPID_EVMETH_ONDOMMUTATION = 0x0000042cU;
 
 enum : uint
 {
-    DISPID_EVPROP_SINKLIMIT                       = 0x000117df,
-    DISPID_EVPROP_TIMEOUT                         = 0x000117e0,
-    DISPID_EVPROP_WHEEL                           = 0x000117e1,
-    DISPID_EVPROP_SVGLOAD                         = 0x000117e2,
-    DISPID_EVPROP_SVGUNLOAD                       = 0x000117e3,
-    DISPID_EVPROP_SVGABORT                        = 0x000117e4,
-    DISPID_EVPROP_SVGERROR                        = 0x000117e5,
-    DISPID_EVPROP_SVGRESIZE                       = 0x000117e6,
-    DISPID_EVPROP_SVGSCROLL                       = 0x000117e7,
-    DISPID_EVPROP_SVGZOOM                         = 0x000117e8,
-    DISPID_EVPROP_ONMSTHUMBNAILCLICK              = 0x000117e9,
-    DISPID_EVPROP_COMPOSITIONSTART                = 0x000117ea,
-    DISPID_EVPROP_COMPOSITIONUPDATE               = 0x000117eb,
-    DISPID_EVPROP_COMPOSITIONEND                  = 0x000117ec,
-    DISPID_EVPROP_DOMATTRMODIFIED                 = 0x000117ed,
-    DISPID_EVPROP_DOMCONTENTLOADED                = 0x000117ee,
-    DISPID_EVPROP_INPUT                           = 0x000117ef,
-    DISPID_EVPROP_DOMCHARDATAMODIFIED             = 0x000117f0,
-    DISPID_EVPROP_TEXTINPUT                       = 0x000117f1,
-    DISPID_EVPROP_ONMSSITEMODEJUMPLISTITEMREMOVED = 0x000117f2,
-}
-
-enum : uint
-{
-    DISPID_EVPROP_DOMNODEINSERTED              = 0x000117f3,
-    DISPID_EVPROP_DOMNODEREMOVED               = 0x000117f4,
-    DISPID_EVPROP_DOMSUBTREEMODIFIED           = 0x000117f5,
-    DISPID_EVPROP_CANPLAY                      = 0x000117f6,
-    DISPID_EVPROP_CANPLAYTHROUGH               = 0x000117f7,
-    DISPID_EVPROP_DURATIONCHANGE               = 0x000117f8,
-    DISPID_EVPROP_EMPTIED                      = 0x000117f9,
-    DISPID_EVPROP_ENDED                        = 0x000117fa,
-    DISPID_EVPROP_LOADEDDATA                   = 0x000117fb,
-    DISPID_EVPROP_LOADEDMETADATA               = 0x000117fc,
-    DISPID_EVPROP_LOADSTART                    = 0x000117fd,
-    DISPID_EVPROP_PAUSE                        = 0x000117fe,
-    DISPID_EVPROP_PLAY                         = 0x000117ff,
-    DISPID_EVPROP_PLAYING                      = 0x00011800,
-    DISPID_EVPROP_PROGRESS                     = 0x00011801,
-    DISPID_EVPROP_RATECHANGE                   = 0x00011802,
-    DISPID_EVPROP_SEEKED                       = 0x00011803,
-    DISPID_EVPROP_SEEKING                      = 0x00011804,
-    DISPID_EVPROP_STALLED                      = 0x00011805,
-    DISPID_EVPROP_SUSPEND                      = 0x00011806,
-    DISPID_EVPROP_TIMEUPDATE                   = 0x00011807,
-    DISPID_EVPROP_VOLUMECHANGE                 = 0x00011808,
-    DISPID_EVPROP_WAITING                      = 0x00011809,
-    DISPID_EVPROP_ONMSPOINTERDOWN              = 0x0001180a,
-    DISPID_EVPROP_ONMSPOINTERMOVE              = 0x0001180b,
-    DISPID_EVPROP_ONMSPOINTERUP                = 0x0001180c,
-    DISPID_EVPROP_ONMSPOINTEROVER              = 0x0001180d,
-    DISPID_EVPROP_ONMSPOINTEROUT               = 0x0001180e,
-    DISPID_EVPROP_ONMSPOINTERCANCEL            = 0x0001180f,
-    DISPID_EVPROP_ONMSPOINTERHOVER             = 0x00011810,
-    DISPID_EVPROP_MSCONNECT                    = 0x00011811,
-    DISPID_EVPROP_MSDISCONNECT                 = 0x00011812,
-    DISPID_EVPROP_ONMSGESTURESTART             = 0x00011813,
-    DISPID_EVPROP_ONMSGESTURECHANGE            = 0x00011814,
-    DISPID_EVPROP_ONMSGESTUREEND               = 0x00011815,
-    DISPID_EVPROP_ONMSGESTUREHOLD              = 0x00011816,
-    DISPID_EVPROP_ONMSGESTURETAP               = 0x00011817,
-    DISPID_EVPROP_ONMSGESTUREDOUBLETAP         = 0x00011818,
-    DISPID_EVPROP_ONMSINERTIASTART             = 0x00011819,
-    DISPID_EVPROP_ONMSLOSTPOINTERCAPTURE       = 0x0001181a,
-    DISPID_EVPROP_ONMSGOTPOINTERCAPTURE        = 0x0001181b,
-    DISPID_EVPROP_ONMSCONTENTZOOM              = 0x0001181c,
-    DISPID_EVPROP_ONTRANSITIONSTART            = 0x0001181d,
-    DISPID_EVPROP_ONTRANSITIONEND              = 0x0001181e,
-    DISPID_EVPROP_ONANIMATIONSTART             = 0x0001181f,
-    DISPID_EVPROP_ONANIMATIONEND               = 0x00011820,
-    DISPID_EVPROP_ONANIMATIONITERATION         = 0x00011821,
-    DISPID_EVPROP_ONMSMANIPULATIONSTATECHANGED = 0x00011822,
+    DISPID_EVPROP_SINKLIMIT                       = 0x000117dfU,
+    DISPID_EVPROP_TIMEOUT                         = 0x000117e0U,
+    DISPID_EVPROP_WHEEL                           = 0x000117e1U,
+    DISPID_EVPROP_SVGLOAD                         = 0x000117e2U,
+    DISPID_EVPROP_SVGUNLOAD                       = 0x000117e3U,
+    DISPID_EVPROP_SVGABORT                        = 0x000117e4U,
+    DISPID_EVPROP_SVGERROR                        = 0x000117e5U,
+    DISPID_EVPROP_SVGRESIZE                       = 0x000117e6U,
+    DISPID_EVPROP_SVGSCROLL                       = 0x000117e7U,
+    DISPID_EVPROP_SVGZOOM                         = 0x000117e8U,
+    DISPID_EVPROP_ONMSTHUMBNAILCLICK              = 0x000117e9U,
+    DISPID_EVPROP_COMPOSITIONSTART                = 0x000117eaU,
+    DISPID_EVPROP_COMPOSITIONUPDATE               = 0x000117ebU,
+    DISPID_EVPROP_COMPOSITIONEND                  = 0x000117ecU,
+    DISPID_EVPROP_DOMATTRMODIFIED                 = 0x000117edU,
+    DISPID_EVPROP_DOMCONTENTLOADED                = 0x000117eeU,
+    DISPID_EVPROP_INPUT                           = 0x000117efU,
+    DISPID_EVPROP_DOMCHARDATAMODIFIED             = 0x000117f0U,
+    DISPID_EVPROP_TEXTINPUT                       = 0x000117f1U,
+    DISPID_EVPROP_ONMSSITEMODEJUMPLISTITEMREMOVED = 0x000117f2U,
 }
 
 enum : uint
 {
-    DISPID_EVPROP_ONOPEN                 = 0x00011823,
-    DISPID_EVPROP_ONCLOSE                = 0x00011824,
-    DISPID_EVPROP_CHECKING               = 0x00011825,
-    DISPID_EVPROP_NOUPDATE               = 0x00011826,
-    DISPID_EVPROP_DOWNLOADING            = 0x00011827,
-    DISPID_EVPROP_UPDATEREADY            = 0x00011828,
-    DISPID_EVPROP_CACHED                 = 0x00011829,
-    DISPID_EVPROP_OBSOLETE               = 0x0001182a,
-    DISPID_EVPROP_LOADEND                = 0x0001182b,
-    DISPID_EVPROP_INVALID                = 0x0001182c,
-    DISPID_EVPROP_ONSUCCESS              = 0x0001182d,
-    DISPID_EVPROP_ONBLOCKED              = 0x0001182e,
-    DISPID_EVPROP_ONCOMPLETE             = 0x0001182f,
-    DISPID_EVPROP_ONPOPSTATE             = 0x00011830,
-    DISPID_EVPROP_ONCUECHANGE            = 0x00011831,
-    DISPID_EVPROP_ONENTER                = 0x00011832,
-    DISPID_EVPROP_ONEXIT                 = 0x00011833,
-    DISPID_EVPROP_VISIBILITYCHANGE       = 0x00011834,
-    DISPID_EVPROP_ONMSREGIONUPDATE       = 0x00011835,
-    DISPID_EVPROP_ONUPGRADENEEDED        = 0x00011836,
-    DISPID_EVPROP_ONMSVIDEOFORMATCHANGED = 0x00011837,
+    DISPID_EVPROP_DOMNODEINSERTED              = 0x000117f3U,
+    DISPID_EVPROP_DOMNODEREMOVED               = 0x000117f4U,
+    DISPID_EVPROP_DOMSUBTREEMODIFIED           = 0x000117f5U,
+    DISPID_EVPROP_CANPLAY                      = 0x000117f6U,
+    DISPID_EVPROP_CANPLAYTHROUGH               = 0x000117f7U,
+    DISPID_EVPROP_DURATIONCHANGE               = 0x000117f8U,
+    DISPID_EVPROP_EMPTIED                      = 0x000117f9U,
+    DISPID_EVPROP_ENDED                        = 0x000117faU,
+    DISPID_EVPROP_LOADEDDATA                   = 0x000117fbU,
+    DISPID_EVPROP_LOADEDMETADATA               = 0x000117fcU,
+    DISPID_EVPROP_LOADSTART                    = 0x000117fdU,
+    DISPID_EVPROP_PAUSE                        = 0x000117feU,
+    DISPID_EVPROP_PLAY                         = 0x000117ffU,
+    DISPID_EVPROP_PLAYING                      = 0x00011800U,
+    DISPID_EVPROP_PROGRESS                     = 0x00011801U,
+    DISPID_EVPROP_RATECHANGE                   = 0x00011802U,
+    DISPID_EVPROP_SEEKED                       = 0x00011803U,
+    DISPID_EVPROP_SEEKING                      = 0x00011804U,
+    DISPID_EVPROP_STALLED                      = 0x00011805U,
+    DISPID_EVPROP_SUSPEND                      = 0x00011806U,
+    DISPID_EVPROP_TIMEUPDATE                   = 0x00011807U,
+    DISPID_EVPROP_VOLUMECHANGE                 = 0x00011808U,
+    DISPID_EVPROP_WAITING                      = 0x00011809U,
+    DISPID_EVPROP_ONMSPOINTERDOWN              = 0x0001180aU,
+    DISPID_EVPROP_ONMSPOINTERMOVE              = 0x0001180bU,
+    DISPID_EVPROP_ONMSPOINTERUP                = 0x0001180cU,
+    DISPID_EVPROP_ONMSPOINTEROVER              = 0x0001180dU,
+    DISPID_EVPROP_ONMSPOINTEROUT               = 0x0001180eU,
+    DISPID_EVPROP_ONMSPOINTERCANCEL            = 0x0001180fU,
+    DISPID_EVPROP_ONMSPOINTERHOVER             = 0x00011810U,
+    DISPID_EVPROP_MSCONNECT                    = 0x00011811U,
+    DISPID_EVPROP_MSDISCONNECT                 = 0x00011812U,
+    DISPID_EVPROP_ONMSGESTURESTART             = 0x00011813U,
+    DISPID_EVPROP_ONMSGESTURECHANGE            = 0x00011814U,
+    DISPID_EVPROP_ONMSGESTUREEND               = 0x00011815U,
+    DISPID_EVPROP_ONMSGESTUREHOLD              = 0x00011816U,
+    DISPID_EVPROP_ONMSGESTURETAP               = 0x00011817U,
+    DISPID_EVPROP_ONMSGESTUREDOUBLETAP         = 0x00011818U,
+    DISPID_EVPROP_ONMSINERTIASTART             = 0x00011819U,
+    DISPID_EVPROP_ONMSLOSTPOINTERCAPTURE       = 0x0001181aU,
+    DISPID_EVPROP_ONMSGOTPOINTERCAPTURE        = 0x0001181bU,
+    DISPID_EVPROP_ONMSCONTENTZOOM              = 0x0001181cU,
+    DISPID_EVPROP_ONTRANSITIONSTART            = 0x0001181dU,
+    DISPID_EVPROP_ONTRANSITIONEND              = 0x0001181eU,
+    DISPID_EVPROP_ONANIMATIONSTART             = 0x0001181fU,
+    DISPID_EVPROP_ONANIMATIONEND               = 0x00011820U,
+    DISPID_EVPROP_ONANIMATIONITERATION         = 0x00011821U,
+    DISPID_EVPROP_ONMSMANIPULATIONSTATECHANGED = 0x00011822U,
 }
 
 enum : uint
 {
-    DISPID_EVPROP_ADDTRACK                                       = 0x00011838,
-    DISPID_EVPROP_ONMSVIDEOFRAMESTEPCOMPLETED                    = 0x00011839,
-    DISPID_EVPROP_ONMSHOLDVISUAL                                 = 0x0001183a,
-    DISPID_EVPROP_ONMSVIDEOOPTIMALLAYOUTCHANGED                  = 0x0001183b,
-    DISPID_EVPROP_ONMSFULLSCREENCHANGE                           = 0x0001183c,
-    DISPID_EVPROP_ONMSFULLSCREENERROR                            = 0x0001183d,
-    DISPID_EVPROP_MSELEMENTRESIZE                                = 0x0001183e,
-    DISPID_EVPROP_ONSOURCEOPEN                                   = 0x0001183f,
-    DISPID_EVPROP_ONSOURCECLOSE                                  = 0x00011840,
-    DISPID_EVPROP_ONSOURCEENDED                                  = 0x00011841,
-    DISPID_EVPROP_ONADDSOURCEBUFFER                              = 0x00011842,
-    DISPID_EVPROP_ONREMOVESOURCEBUFFER                           = 0x00011843,
-    DISPID_EVPROP_ONMSNEEDKEY                                    = 0x00011844,
-    DISPID_EVPROP_ONMSKEYMESSAGE                                 = 0x00011845,
-    DISPID_EVPROP_ONMSKEYERROR                                   = 0x00011846,
-    DISPID_EVPROP_ONMSKEYADDED                                   = 0x00011847,
-    DISPID_EVPROP_MSHTMLWEBVIEW_ONDOMCONTENTLOADED               = 0x00011848,
-    DISPID_EVPROP_MSHTMLWEBVIEW_ONCONTENTLOADING                 = 0x00011849,
-    DISPID_EVPROP_MSHTMLWEBVIEW_ONNAVIGATIONSTARTING             = 0x0001184a,
-    DISPID_EVPROP_MSHTMLWEBVIEW_ONNAVIGATIONCOMPLETED            = 0x0001184b,
-    DISPID_EVPROP_MSHTMLWEBVIEW_ONFRAMEDOMCONTENTLOADED          = 0x0001184c,
-    DISPID_EVPROP_MSHTMLWEBVIEW_ONFRAMECONTENTLOADING            = 0x0001184d,
-    DISPID_EVPROP_MSHTMLWEBVIEW_ONFRAMENAVIGATIONSTARTING        = 0x0001184e,
-    DISPID_EVPROP_MSHTMLWEBVIEW_ONFRAMENAVIGATIONCOMPLETED       = 0x0001184f,
-    DISPID_EVPROP_MSHTMLWEBVIEW_ONSCRIPTNOTIFY                   = 0x00011850,
-    DISPID_EVPROP_MSHTMLWEBVIEW_ONUNVIEWABLECONTENT              = 0x00011851,
-    DISPID_EVPROP_MSHTMLWEBVIEW_ONUNSAFECONTENTWARNINGDISPLAYING = 0x00011852,
-    DISPID_EVPROP_MSHTMLWEBVIEW_ONLONGRUNNINGSCRIPTDETECTED      = 0x00011853,
+    DISPID_EVPROP_ONOPEN                 = 0x00011823U,
+    DISPID_EVPROP_ONCLOSE                = 0x00011824U,
+    DISPID_EVPROP_CHECKING               = 0x00011825U,
+    DISPID_EVPROP_NOUPDATE               = 0x00011826U,
+    DISPID_EVPROP_DOWNLOADING            = 0x00011827U,
+    DISPID_EVPROP_UPDATEREADY            = 0x00011828U,
+    DISPID_EVPROP_CACHED                 = 0x00011829U,
+    DISPID_EVPROP_OBSOLETE               = 0x0001182aU,
+    DISPID_EVPROP_LOADEND                = 0x0001182bU,
+    DISPID_EVPROP_INVALID                = 0x0001182cU,
+    DISPID_EVPROP_ONSUCCESS              = 0x0001182dU,
+    DISPID_EVPROP_ONBLOCKED              = 0x0001182eU,
+    DISPID_EVPROP_ONCOMPLETE             = 0x0001182fU,
+    DISPID_EVPROP_ONPOPSTATE             = 0x00011830U,
+    DISPID_EVPROP_ONCUECHANGE            = 0x00011831U,
+    DISPID_EVPROP_ONENTER                = 0x00011832U,
+    DISPID_EVPROP_ONEXIT                 = 0x00011833U,
+    DISPID_EVPROP_VISIBILITYCHANGE       = 0x00011834U,
+    DISPID_EVPROP_ONMSREGIONUPDATE       = 0x00011835U,
+    DISPID_EVPROP_ONUPGRADENEEDED        = 0x00011836U,
+    DISPID_EVPROP_ONMSVIDEOFORMATCHANGED = 0x00011837U,
 }
 
 enum : uint
 {
-    DISPID_EVPROP_WEBGLCONTEXTLOST          = 0x00011854,
-    DISPID_EVPROP_WEBGLCONTEXTRESTORED      = 0x00011855,
-    DISPID_EVPROP_ONUPDATESTART             = 0x00011856,
-    DISPID_EVPROP_ONUPDATE                  = 0x00011857,
-    DISPID_EVPROP_ONUPDATEEND               = 0x00011858,
-    DISPID_EVPROP_ONMSPOINTERENTER          = 0x00011859,
-    DISPID_EVPROP_ONMSPOINTERLEAVE          = 0x0001185a,
-    DISPID_EVPROP_ONMSSITEPINNED            = 0x0001185b,
-    DISPID_EVPROP_MSORIENTATIONCHANGE       = 0x0001185c,
-    DISPID_EVPROP_ONDEVICEORIENTATION       = 0x0001185d,
-    DISPID_EVPROP_ONDEVICEMOTION            = 0x0001185e,
-    DISPID_EVPROP_ONPAGESHOW                = 0x0001185f,
-    DISPID_EVPROP_ONPAGEHIDE                = 0x00011860,
-    DISPID_EVPROP_ONMSCANDIDATEWINDOWSHOW   = 0x00011861,
-    DISPID_EVPROP_ONMSCANDIDATEWINDOWUPDATE = 0x00011862,
-    DISPID_EVPROP_ONMSCANDIDATEWINDOWHIDE   = 0x00011863,
+    DISPID_EVPROP_ADDTRACK                                       = 0x00011838U,
+    DISPID_EVPROP_ONMSVIDEOFRAMESTEPCOMPLETED                    = 0x00011839U,
+    DISPID_EVPROP_ONMSHOLDVISUAL                                 = 0x0001183aU,
+    DISPID_EVPROP_ONMSVIDEOOPTIMALLAYOUTCHANGED                  = 0x0001183bU,
+    DISPID_EVPROP_ONMSFULLSCREENCHANGE                           = 0x0001183cU,
+    DISPID_EVPROP_ONMSFULLSCREENERROR                            = 0x0001183dU,
+    DISPID_EVPROP_MSELEMENTRESIZE                                = 0x0001183eU,
+    DISPID_EVPROP_ONSOURCEOPEN                                   = 0x0001183fU,
+    DISPID_EVPROP_ONSOURCECLOSE                                  = 0x00011840U,
+    DISPID_EVPROP_ONSOURCEENDED                                  = 0x00011841U,
+    DISPID_EVPROP_ONADDSOURCEBUFFER                              = 0x00011842U,
+    DISPID_EVPROP_ONREMOVESOURCEBUFFER                           = 0x00011843U,
+    DISPID_EVPROP_ONMSNEEDKEY                                    = 0x00011844U,
+    DISPID_EVPROP_ONMSKEYMESSAGE                                 = 0x00011845U,
+    DISPID_EVPROP_ONMSKEYERROR                                   = 0x00011846U,
+    DISPID_EVPROP_ONMSKEYADDED                                   = 0x00011847U,
+    DISPID_EVPROP_MSHTMLWEBVIEW_ONDOMCONTENTLOADED               = 0x00011848U,
+    DISPID_EVPROP_MSHTMLWEBVIEW_ONCONTENTLOADING                 = 0x00011849U,
+    DISPID_EVPROP_MSHTMLWEBVIEW_ONNAVIGATIONSTARTING             = 0x0001184aU,
+    DISPID_EVPROP_MSHTMLWEBVIEW_ONNAVIGATIONCOMPLETED            = 0x0001184bU,
+    DISPID_EVPROP_MSHTMLWEBVIEW_ONFRAMEDOMCONTENTLOADED          = 0x0001184cU,
+    DISPID_EVPROP_MSHTMLWEBVIEW_ONFRAMECONTENTLOADING            = 0x0001184dU,
+    DISPID_EVPROP_MSHTMLWEBVIEW_ONFRAMENAVIGATIONSTARTING        = 0x0001184eU,
+    DISPID_EVPROP_MSHTMLWEBVIEW_ONFRAMENAVIGATIONCOMPLETED       = 0x0001184fU,
+    DISPID_EVPROP_MSHTMLWEBVIEW_ONSCRIPTNOTIFY                   = 0x00011850U,
+    DISPID_EVPROP_MSHTMLWEBVIEW_ONUNVIEWABLECONTENT              = 0x00011851U,
+    DISPID_EVPROP_MSHTMLWEBVIEW_ONUNSAFECONTENTWARNINGDISPLAYING = 0x00011852U,
+    DISPID_EVPROP_MSHTMLWEBVIEW_ONLONGRUNNINGSCRIPTDETECTED      = 0x00011853U,
 }
-
-enum uint DISPID_EVPROP_HTML5ONREADYSTATECHANGE = 0x00011864;
 
 enum : uint
 {
-    DISPID_EVPROP_REMOVETRACK               = 0x00011865,
-    DISPID_EVPROP_ONCOMPASSNEEDSCALIBRATION = 0x00011866,
+    DISPID_EVPROP_WEBGLCONTEXTLOST          = 0x00011854U,
+    DISPID_EVPROP_WEBGLCONTEXTRESTORED      = 0x00011855U,
+    DISPID_EVPROP_ONUPDATESTART             = 0x00011856U,
+    DISPID_EVPROP_ONUPDATE                  = 0x00011857U,
+    DISPID_EVPROP_ONUPDATEEND               = 0x00011858U,
+    DISPID_EVPROP_ONMSPOINTERENTER          = 0x00011859U,
+    DISPID_EVPROP_ONMSPOINTERLEAVE          = 0x0001185aU,
+    DISPID_EVPROP_ONMSSITEPINNED            = 0x0001185bU,
+    DISPID_EVPROP_MSORIENTATIONCHANGE       = 0x0001185cU,
+    DISPID_EVPROP_ONDEVICEORIENTATION       = 0x0001185dU,
+    DISPID_EVPROP_ONDEVICEMOTION            = 0x0001185eU,
+    DISPID_EVPROP_ONPAGESHOW                = 0x0001185fU,
+    DISPID_EVPROP_ONPAGEHIDE                = 0x00011860U,
+    DISPID_EVPROP_ONMSCANDIDATEWINDOWSHOW   = 0x00011861U,
+    DISPID_EVPROP_ONMSCANDIDATEWINDOWUPDATE = 0x00011862U,
+    DISPID_EVPROP_ONMSCANDIDATEWINDOWHIDE   = 0x00011863U,
 }
 
-enum uint DISPID_EVPROP_MSHTMLWEBVIEW_ONCONTAINSFULLSCREENELEMENTCHANGED = 0x00011867;
+enum uint DISPID_EVPROP_HTML5ONREADYSTATECHANGE = 0x00011864U;
 
 enum : uint
 {
-    DISPID_EVPROP_ONTOUCHSTART               = 0x00011868,
-    DISPID_EVPROP_ONTOUCHEND                 = 0x00011869,
-    DISPID_EVPROP_ONTOUCHMOVE                = 0x0001186a,
-    DISPID_EVPROP_ONTOUCHCANCEL              = 0x0001186b,
-    DISPID_EVPROP_ONWEBKITTRANSITIONEND      = 0x0001186c,
-    DISPID_EVPROP_ONWEBKITANIMATIONSTART     = 0x0001186d,
-    DISPID_EVPROP_ONWEBKITANIMATIONEND       = 0x0001186e,
-    DISPID_EVPROP_ONWEBKITANIMATIONITERATION = 0x0001186f,
+    DISPID_EVPROP_REMOVETRACK               = 0x00011865U,
+    DISPID_EVPROP_ONCOMPASSNEEDSCALIBRATION = 0x00011866U,
 }
 
-enum uint DISPID_EVPROP_WEBGLCONTEXTCREATIONERROR = 0x00011870;
+enum uint DISPID_EVPROP_MSHTMLWEBVIEW_ONCONTAINSFULLSCREENELEMENTCHANGED = 0x00011867U;
 
 enum : uint
 {
-    DISPID_EVPROP_ONDOMFOCUSIN      = 0x00011871,
-    DISPID_EVPROP_ONDOMFOCUSOUT     = 0x00011872,
-    DISPID_EVPROP_ORIENTATIONCHANGE = 0x00011873,
-    DISPID_EVPROPS_COUNT            = 0x00000104,
+    DISPID_EVPROP_ONTOUCHSTART               = 0x00011868U,
+    DISPID_EVPROP_ONTOUCHEND                 = 0x00011869U,
+    DISPID_EVPROP_ONTOUCHMOVE                = 0x0001186aU,
+    DISPID_EVPROP_ONTOUCHCANCEL              = 0x0001186bU,
+    DISPID_EVPROP_ONWEBKITTRANSITIONEND      = 0x0001186cU,
+    DISPID_EVPROP_ONWEBKITANIMATIONSTART     = 0x0001186dU,
+    DISPID_EVPROP_ONWEBKITANIMATIONEND       = 0x0001186eU,
+    DISPID_EVPROP_ONWEBKITANIMATIONITERATION = 0x0001186fU,
 }
 
-enum uint DISPID_IHTMLFILTERSCOLLECTION_LENGTH = 0x000003e9;
+enum uint DISPID_EVPROP_WEBGLCONTEXTCREATIONERROR = 0x00011870U;
+
+enum : uint
+{
+    DISPID_EVPROP_ONDOMFOCUSIN      = 0x00011871U,
+    DISPID_EVPROP_ONDOMFOCUSOUT     = 0x00011872U,
+    DISPID_EVPROP_ORIENTATIONCHANGE = 0x00011873U,
+    DISPID_EVPROPS_COUNT            = 0x00000104U,
+}
+
+enum uint DISPID_IHTMLFILTERSCOLLECTION_LENGTH = 0x000003e9U;
 enum int DISPID_IHTMLFILTERSCOLLECTION__NEWENUM = 0xfffffffc;
-enum uint DISPID_IHTMLFILTERSCOLLECTION_ITEM = 0x00000000;
-enum uint DISPID_IHTMLDOMCONSTRUCTOR_CONSTRUCTOR = 0x000101fd;
+enum uint DISPID_IHTMLFILTERSCOLLECTION_ITEM = 0x00000000U;
+enum uint DISPID_IHTMLDOMCONSTRUCTOR_CONSTRUCTOR = 0x000101fdU;
 
 enum : uint
 {
-    DISPID_IHTMLCSSSTYLEDECLARATION_LENGTH              = 0x00011195,
-    DISPID_IHTMLCSSSTYLEDECLARATION_PARENTRULE          = 0x00011196,
-    DISPID_IHTMLCSSSTYLEDECLARATION_GETPROPERTYVALUE    = 0x00011197,
-    DISPID_IHTMLCSSSTYLEDECLARATION_GETPROPERTYPRIORITY = 0x00011198,
-    DISPID_IHTMLCSSSTYLEDECLARATION_REMOVEPROPERTY      = 0x00011199,
-    DISPID_IHTMLCSSSTYLEDECLARATION_SETPROPERTY         = 0x0001119a,
-    DISPID_IHTMLCSSSTYLEDECLARATION_ITEM                = 0x00000000,
-    DISPID_IHTMLCSSSTYLEDECLARATION_FONTFAMILY          = 0x0001139a,
-    DISPID_IHTMLCSSSTYLEDECLARATION_FONTSTYLE           = 0x000113a0,
-    DISPID_IHTMLCSSSTYLEDECLARATION_FONTVARIANT         = 0x000113a1,
-    DISPID_IHTMLCSSSTYLEDECLARATION_FONTWEIGHT          = 0x000113a3,
-    DISPID_IHTMLCSSSTYLEDECLARATION_FONTSIZE            = 0x0001139b,
-    DISPID_IHTMLCSSSTYLEDECLARATION_FONT                = 0x000113b1,
-    DISPID_IHTMLCSSSTYLEDECLARATION_COLOR               = 0x0001138a,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BACKGROUND          = 0x000113a8,
+    DISPID_IHTMLCSSSTYLEDECLARATION_LENGTH              = 0x00011195U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_PARENTRULE          = 0x00011196U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_GETPROPERTYVALUE    = 0x00011197U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_GETPROPERTYPRIORITY = 0x00011198U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_REMOVEPROPERTY      = 0x00011199U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_SETPROPERTY         = 0x0001119aU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_ITEM                = 0x00000000U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_FONTFAMILY          = 0x0001139aU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_FONTSTYLE           = 0x000113a0U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_FONTVARIANT         = 0x000113a1U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_FONTWEIGHT          = 0x000113a3U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_FONTSIZE            = 0x0001139bU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_FONT                = 0x000113b1U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_COLOR               = 0x0001138aU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BACKGROUND          = 0x000113a8U,
 }
 
 enum int DISPID_IHTMLCSSSTYLEDECLARATION_BACKGROUNDCOLOR = 0xfffffe0b;
 
 enum : uint
 {
-    DISPID_IHTMLCSSSTYLEDECLARATION_BACKGROUNDIMAGE                 = 0x00011389,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BACKGROUNDREPEAT                = 0x000113b4,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BACKGROUNDATTACHMENT            = 0x000113b5,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BACKGROUNDPOSITION              = 0x000113b6,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BACKGROUNDPOSITIONX             = 0x000113a9,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BACKGROUNDPOSITIONY             = 0x000113aa,
-    DISPID_IHTMLCSSSTYLEDECLARATION_WORDSPACING                     = 0x000113b7,
-    DISPID_IHTMLCSSSTYLEDECLARATION_LETTERSPACING                   = 0x00011390,
-    DISPID_IHTMLCSSSTYLEDECLARATION_TEXTDECORATION                  = 0x000113ab,
-    DISPID_IHTMLCSSSTYLEDECLARATION_VERTICALALIGN                   = 0x000113b8,
-    DISPID_IHTMLCSSSTYLEDECLARATION_TEXTTRANSFORM                   = 0x0001138c,
-    DISPID_IHTMLCSSSTYLEDECLARATION_TEXTALIGN                       = 0x00010048,
-    DISPID_IHTMLCSSSTYLEDECLARATION_TEXTINDENT                      = 0x0001138f,
-    DISPID_IHTMLCSSSTYLEDECLARATION_LINEHEIGHT                      = 0x0001138e,
-    DISPID_IHTMLCSSSTYLEDECLARATION_MARGINTOP                       = 0x000113ad,
-    DISPID_IHTMLCSSSTYLEDECLARATION_MARGINRIGHT                     = 0x000113ae,
-    DISPID_IHTMLCSSSTYLEDECLARATION_MARGINBOTTOM                    = 0x000113af,
-    DISPID_IHTMLCSSSTYLEDECLARATION_MARGINLEFT                      = 0x000113b0,
-    DISPID_IHTMLCSSSTYLEDECLARATION_MARGIN                          = 0x000113ac,
-    DISPID_IHTMLCSSSTYLEDECLARATION_PADDINGTOP                      = 0x00011394,
-    DISPID_IHTMLCSSSTYLEDECLARATION_PADDINGRIGHT                    = 0x00011395,
-    DISPID_IHTMLCSSSTYLEDECLARATION_PADDINGBOTTOM                   = 0x00011396,
-    DISPID_IHTMLCSSSTYLEDECLARATION_PADDINGLEFT                     = 0x00011397,
-    DISPID_IHTMLCSSSTYLEDECLARATION_PADDING                         = 0x00011393,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BORDER                          = 0x000113b9,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERTOP                       = 0x000113ba,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERRIGHT                     = 0x000113bb,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERBOTTOM                    = 0x000113bc,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERLEFT                      = 0x000113bd,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERCOLOR                     = 0x000113be,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERTOPCOLOR                  = 0x000113bf,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERRIGHTCOLOR                = 0x000113c0,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERBOTTOMCOLOR               = 0x000113c1,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERLEFTCOLOR                 = 0x000113c2,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERWIDTH                     = 0x000113c3,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERTOPWIDTH                  = 0x000113c4,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERRIGHTWIDTH                = 0x000113c5,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERBOTTOMWIDTH               = 0x000113c6,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERLEFTWIDTH                 = 0x000113c7,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERSTYLE                     = 0x000113c8,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERTOPSTYLE                  = 0x000113c9,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERRIGHTSTYLE                = 0x000113ca,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERBOTTOMSTYLE               = 0x000113cb,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERLEFTSTYLE                 = 0x000113cc,
-    DISPID_IHTMLCSSSTYLEDECLARATION_WIDTH                           = 0x00010005,
-    DISPID_IHTMLCSSSTYLEDECLARATION_HEIGHT                          = 0x00010006,
-    DISPID_IHTMLCSSSTYLEDECLARATION_STYLEFLOAT                      = 0x000113ce,
-    DISPID_IHTMLCSSSTYLEDECLARATION_CLEAR                           = 0x00011398,
-    DISPID_IHTMLCSSSTYLEDECLARATION_DISPLAY                         = 0x000113cf,
-    DISPID_IHTMLCSSSTYLEDECLARATION_VISIBILITY                      = 0x000113d8,
-    DISPID_IHTMLCSSSTYLEDECLARATION_LISTSTYLETYPE                   = 0x000113d0,
-    DISPID_IHTMLCSSSTYLEDECLARATION_LISTSTYLEPOSITION               = 0x000113d1,
-    DISPID_IHTMLCSSSTYLEDECLARATION_LISTSTYLEIMAGE                  = 0x000113d2,
-    DISPID_IHTMLCSSSTYLEDECLARATION_LISTSTYLE                       = 0x000113d3,
-    DISPID_IHTMLCSSSTYLEDECLARATION_WHITESPACE                      = 0x000113d4,
-    DISPID_IHTMLCSSSTYLEDECLARATION_TOP                             = 0x00010004,
-    DISPID_IHTMLCSSSTYLEDECLARATION_LEFT                            = 0x00010003,
-    DISPID_IHTMLCSSSTYLEDECLARATION_ZINDEX                          = 0x000113e3,
-    DISPID_IHTMLCSSSTYLEDECLARATION_OVERFLOW                        = 0x00011392,
-    DISPID_IHTMLCSSSTYLEDECLARATION_PAGEBREAKBEFORE                 = 0x000113d5,
-    DISPID_IHTMLCSSSTYLEDECLARATION_PAGEBREAKAFTER                  = 0x000113d6,
-    DISPID_IHTMLCSSSTYLEDECLARATION_CSSTEXT                         = 0x000113eb,
-    DISPID_IHTMLCSSSTYLEDECLARATION_CURSOR                          = 0x000113ee,
-    DISPID_IHTMLCSSSTYLEDECLARATION_CLIP                            = 0x000113e4,
-    DISPID_IHTMLCSSSTYLEDECLARATION_FILTER                          = 0x000113da,
-    DISPID_IHTMLCSSSTYLEDECLARATION_TABLELAYOUT                     = 0x000113ea,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERCOLLAPSE                  = 0x000113dc,
-    DISPID_IHTMLCSSSTYLEDECLARATION_DIRECTION                       = 0x000113ff,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BEHAVIOR                        = 0x000113fb,
-    DISPID_IHTMLCSSSTYLEDECLARATION_POSITION                        = 0x000113e2,
-    DISPID_IHTMLCSSSTYLEDECLARATION_UNICODEBIDI                     = 0x000113fe,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BOTTOM                          = 0x0001004e,
-    DISPID_IHTMLCSSSTYLEDECLARATION_RIGHT                           = 0x0001004d,
-    DISPID_IHTMLCSSSTYLEDECLARATION_IMEMODE                         = 0x00011400,
-    DISPID_IHTMLCSSSTYLEDECLARATION_RUBYALIGN                       = 0x00011401,
-    DISPID_IHTMLCSSSTYLEDECLARATION_RUBYPOSITION                    = 0x00011402,
-    DISPID_IHTMLCSSSTYLEDECLARATION_RUBYOVERHANG                    = 0x00011403,
-    DISPID_IHTMLCSSSTYLEDECLARATION_LAYOUTGRIDCHAR                  = 0x00011407,
-    DISPID_IHTMLCSSSTYLEDECLARATION_LAYOUTGRIDLINE                  = 0x00011408,
-    DISPID_IHTMLCSSSTYLEDECLARATION_LAYOUTGRIDMODE                  = 0x00011409,
-    DISPID_IHTMLCSSSTYLEDECLARATION_LAYOUTGRIDTYPE                  = 0x0001140a,
-    DISPID_IHTMLCSSSTYLEDECLARATION_LAYOUTGRID                      = 0x0001140b,
-    DISPID_IHTMLCSSSTYLEDECLARATION_TEXTAUTOSPACE                   = 0x0001140c,
-    DISPID_IHTMLCSSSTYLEDECLARATION_WORDBREAK                       = 0x0001140e,
-    DISPID_IHTMLCSSSTYLEDECLARATION_LINEBREAK                       = 0x0001140d,
-    DISPID_IHTMLCSSSTYLEDECLARATION_TEXTJUSTIFY                     = 0x0001140f,
-    DISPID_IHTMLCSSSTYLEDECLARATION_TEXTJUSTIFYTRIM                 = 0x00011410,
-    DISPID_IHTMLCSSSTYLEDECLARATION_TEXTKASHIDA                     = 0x00011411,
-    DISPID_IHTMLCSSSTYLEDECLARATION_OVERFLOWX                       = 0x00011413,
-    DISPID_IHTMLCSSSTYLEDECLARATION_OVERFLOWY                       = 0x00011414,
-    DISPID_IHTMLCSSSTYLEDECLARATION_ACCELERATOR                     = 0x0001141b,
-    DISPID_IHTMLCSSSTYLEDECLARATION_LAYOUTFLOW                      = 0x00011423,
-    DISPID_IHTMLCSSSTYLEDECLARATION_ZOOM                            = 0x00011421,
-    DISPID_IHTMLCSSSTYLEDECLARATION_WORDWRAP                        = 0x00011426,
-    DISPID_IHTMLCSSSTYLEDECLARATION_TEXTUNDERLINEPOSITION           = 0x00011427,
-    DISPID_IHTMLCSSSTYLEDECLARATION_SCROLLBARBASECOLOR              = 0x0001143c,
-    DISPID_IHTMLCSSSTYLEDECLARATION_SCROLLBARFACECOLOR              = 0x0001143d,
-    DISPID_IHTMLCSSSTYLEDECLARATION_SCROLLBAR3DLIGHTCOLOR           = 0x0001143e,
-    DISPID_IHTMLCSSSTYLEDECLARATION_SCROLLBARSHADOWCOLOR            = 0x0001143f,
-    DISPID_IHTMLCSSSTYLEDECLARATION_SCROLLBARHIGHLIGHTCOLOR         = 0x00011440,
-    DISPID_IHTMLCSSSTYLEDECLARATION_SCROLLBARDARKSHADOWCOLOR        = 0x00011441,
-    DISPID_IHTMLCSSSTYLEDECLARATION_SCROLLBARARROWCOLOR             = 0x00011442,
-    DISPID_IHTMLCSSSTYLEDECLARATION_SCROLLBARTRACKCOLOR             = 0x0001144c,
-    DISPID_IHTMLCSSSTYLEDECLARATION_WRITINGMODE                     = 0x00011448,
-    DISPID_IHTMLCSSSTYLEDECLARATION_TEXTALIGNLAST                   = 0x00011453,
-    DISPID_IHTMLCSSSTYLEDECLARATION_TEXTKASHIDASPACE                = 0x00011454,
-    DISPID_IHTMLCSSSTYLEDECLARATION_TEXTOVERFLOW                    = 0x00011459,
-    DISPID_IHTMLCSSSTYLEDECLARATION_MINHEIGHT                       = 0x0001145b,
-    DISPID_IHTMLCSSSTYLEDECLARATION_MSINTERPOLATIONMODE             = 0x0001145d,
-    DISPID_IHTMLCSSSTYLEDECLARATION_MAXHEIGHT                       = 0x0001145e,
-    DISPID_IHTMLCSSSTYLEDECLARATION_MINWIDTH                        = 0x0001145f,
-    DISPID_IHTMLCSSSTYLEDECLARATION_MAXWIDTH                        = 0x00011460,
-    DISPID_IHTMLCSSSTYLEDECLARATION_CONTENT                         = 0x00011462,
-    DISPID_IHTMLCSSSTYLEDECLARATION_CAPTIONSIDE                     = 0x00011463,
-    DISPID_IHTMLCSSSTYLEDECLARATION_COUNTERINCREMENT                = 0x00011464,
-    DISPID_IHTMLCSSSTYLEDECLARATION_COUNTERRESET                    = 0x00011465,
-    DISPID_IHTMLCSSSTYLEDECLARATION_OUTLINE                         = 0x00011466,
-    DISPID_IHTMLCSSSTYLEDECLARATION_OUTLINEWIDTH                    = 0x00011467,
-    DISPID_IHTMLCSSSTYLEDECLARATION_OUTLINESTYLE                    = 0x00011468,
-    DISPID_IHTMLCSSSTYLEDECLARATION_OUTLINECOLOR                    = 0x00011469,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BOXSIZING                       = 0x0001146a,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERSPACING                   = 0x0001146b,
-    DISPID_IHTMLCSSSTYLEDECLARATION_ORPHANS                         = 0x0001146c,
-    DISPID_IHTMLCSSSTYLEDECLARATION_WIDOWS                          = 0x0001146d,
-    DISPID_IHTMLCSSSTYLEDECLARATION_PAGEBREAKINSIDE                 = 0x0001146e,
-    DISPID_IHTMLCSSSTYLEDECLARATION_EMPTYCELLS                      = 0x00011482,
-    DISPID_IHTMLCSSSTYLEDECLARATION_MSBLOCKPROGRESSION              = 0x00011483,
-    DISPID_IHTMLCSSSTYLEDECLARATION_QUOTES                          = 0x00011484,
-    DISPID_IHTMLCSSSTYLEDECLARATION_ALIGNMENTBASELINE               = 0x0001149e,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BASELINESHIFT                   = 0x0001149f,
-    DISPID_IHTMLCSSSTYLEDECLARATION_DOMINANTBASELINE                = 0x000114a0,
-    DISPID_IHTMLCSSSTYLEDECLARATION_FONTSIZEADJUST                  = 0x000114a1,
-    DISPID_IHTMLCSSSTYLEDECLARATION_FONTSTRETCH                     = 0x000114a2,
-    DISPID_IHTMLCSSSTYLEDECLARATION_OPACITY                         = 0x000114a3,
-    DISPID_IHTMLCSSSTYLEDECLARATION_CLIPPATH                        = 0x000114a4,
-    DISPID_IHTMLCSSSTYLEDECLARATION_CLIPRULE                        = 0x000114a5,
-    DISPID_IHTMLCSSSTYLEDECLARATION_FILL                            = 0x000114a6,
-    DISPID_IHTMLCSSSTYLEDECLARATION_FILLOPACITY                     = 0x000114a7,
-    DISPID_IHTMLCSSSTYLEDECLARATION_FILLRULE                        = 0x000114a8,
-    DISPID_IHTMLCSSSTYLEDECLARATION_KERNING                         = 0x000114a9,
-    DISPID_IHTMLCSSSTYLEDECLARATION_MARKER                          = 0x000114aa,
-    DISPID_IHTMLCSSSTYLEDECLARATION_MARKEREND                       = 0x000114ab,
-    DISPID_IHTMLCSSSTYLEDECLARATION_MARKERMID                       = 0x000114ac,
-    DISPID_IHTMLCSSSTYLEDECLARATION_MARKERSTART                     = 0x000114ad,
-    DISPID_IHTMLCSSSTYLEDECLARATION_MASK                            = 0x000114ae,
-    DISPID_IHTMLCSSSTYLEDECLARATION_POINTEREVENTS                   = 0x000114af,
-    DISPID_IHTMLCSSSTYLEDECLARATION_STOPCOLOR                       = 0x000114b0,
-    DISPID_IHTMLCSSSTYLEDECLARATION_STOPOPACITY                     = 0x000114b1,
-    DISPID_IHTMLCSSSTYLEDECLARATION_STROKE                          = 0x000114b2,
-    DISPID_IHTMLCSSSTYLEDECLARATION_STROKEDASHARRAY                 = 0x000114b3,
-    DISPID_IHTMLCSSSTYLEDECLARATION_STROKEDASHOFFSET                = 0x000114b4,
-    DISPID_IHTMLCSSSTYLEDECLARATION_STROKELINECAP                   = 0x000114b5,
-    DISPID_IHTMLCSSSTYLEDECLARATION_STROKELINEJOIN                  = 0x000114b6,
-    DISPID_IHTMLCSSSTYLEDECLARATION_STROKEMITERLIMIT                = 0x000114b7,
-    DISPID_IHTMLCSSSTYLEDECLARATION_STROKEOPACITY                   = 0x000114b8,
-    DISPID_IHTMLCSSSTYLEDECLARATION_STROKEWIDTH                     = 0x000114b9,
-    DISPID_IHTMLCSSSTYLEDECLARATION_TEXTANCHOR                      = 0x000114ba,
-    DISPID_IHTMLCSSSTYLEDECLARATION_GLYPHORIENTATIONHORIZONTAL      = 0x000114bb,
-    DISPID_IHTMLCSSSTYLEDECLARATION_GLYPHORIENTATIONVERTICAL        = 0x000114bc,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERRADIUS                    = 0x000114be,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERTOPLEFTRADIUS             = 0x000114bf,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERTOPRIGHTRADIUS            = 0x000114c0,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERBOTTOMRIGHTRADIUS         = 0x000114c1,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERBOTTOMLEFTRADIUS          = 0x000114c2,
-    DISPID_IHTMLCSSSTYLEDECLARATION_CLIPTOP                         = 0x000113e5,
-    DISPID_IHTMLCSSSTYLEDECLARATION_CLIPRIGHT                       = 0x000113e6,
-    DISPID_IHTMLCSSSTYLEDECLARATION_CLIPBOTTOM                      = 0x000113e7,
-    DISPID_IHTMLCSSSTYLEDECLARATION_CLIPLEFT                        = 0x000113e8,
-    DISPID_IHTMLCSSSTYLEDECLARATION_CSSFLOAT                        = 0x000114bd,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BACKGROUNDCLIP                  = 0x000114c4,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BACKGROUNDORIGIN                = 0x000114c5,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BACKGROUNDSIZE                  = 0x000114c6,
-    DISPID_IHTMLCSSSTYLEDECLARATION_BOXSHADOW                       = 0x000114c7,
-    DISPID_IHTMLCSSSTYLEDECLARATION_MSTRANSFORM                     = 0x000114c3,
-    DISPID_IHTMLCSSSTYLEDECLARATION_MSTRANSFORMORIGIN               = 0x000114cd,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSSCROLLCHAINING               = 0x000114eb,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSCONTENTZOOMING               = 0x000114ec,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSCONTENTZOOMSNAPTYPE          = 0x000114ed,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSSCROLLRAILS                  = 0x000114ee,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSCONTENTZOOMCHAINING          = 0x000114ef,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSSCROLLSNAPTYPE               = 0x000114f0,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSCONTENTZOOMLIMIT             = 0x000114f1,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSCONTENTZOOMSNAP              = 0x000114f2,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSCONTENTZOOMSNAPPOINTS        = 0x000114f3,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSCONTENTZOOMLIMITMIN          = 0x000114f5,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSCONTENTZOOMLIMITMAX          = 0x000114f6,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSSCROLLSNAPX                  = 0x000114f7,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSSCROLLSNAPY                  = 0x000114f8,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSSCROLLSNAPPOINTSX            = 0x000114f9,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSSCROLLSNAPPOINTSY            = 0x000114fa,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSGRIDCOLUMN                   = 0x000114fc,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSGRIDCOLUMNALIGN              = 0x000114fd,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSGRIDCOLUMNS                  = 0x000114fe,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSGRIDCOLUMNSPAN               = 0x000114ff,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSGRIDROW                      = 0x00011501,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSGRIDROWALIGN                 = 0x00011502,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSGRIDROWS                     = 0x00011503,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSGRIDROWSPAN                  = 0x00011504,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSWRAPTHROUGH                  = 0x00011519,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSWRAPMARGIN                   = 0x00011523,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSWRAPFLOW                     = 0x00011525,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSANIMATIONNAME                = 0x00011505,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSANIMATIONDURATION            = 0x00011506,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSANIMATIONTIMINGFUNCTION      = 0x00011507,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSANIMATIONDELAY               = 0x00011508,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSANIMATIONDIRECTION           = 0x00011509,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSANIMATIONPLAYSTATE           = 0x0001150a,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSANIMATIONITERATIONCOUNT      = 0x0001150b,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSANIMATION                    = 0x0001150c,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSANIMATIONFILLMODE            = 0x0001150d,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_COLORINTERPOLATIONFILTERS      = 0x00011510,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_COLUMNCOUNT                    = 0x000114d8,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_COLUMNWIDTH                    = 0x000114d9,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_COLUMNGAP                      = 0x000114da,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_COLUMNFILL                     = 0x000114db,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_COLUMNSPAN                     = 0x000114dc,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_COLUMNS                        = 0x000114d7,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_COLUMNRULE                     = 0x000114dd,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_COLUMNRULECOLOR                = 0x000114e0,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_COLUMNRULESTYLE                = 0x000114de,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_COLUMNRULEWIDTH                = 0x000114df,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_BREAKBEFORE                    = 0x000114e1,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_BREAKAFTER                     = 0x000114e2,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_BREAKINSIDE                    = 0x000114e3,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_FLOODCOLOR                     = 0x0001150e,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_FLOODOPACITY                   = 0x0001150f,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_LIGHTINGCOLOR                  = 0x00011511,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSSCROLLLIMITXMIN              = 0x00011512,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSSCROLLLIMITYMIN              = 0x00011513,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSSCROLLLIMITXMAX              = 0x00011514,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSSCROLLLIMITYMAX              = 0x00011515,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSSCROLLLIMIT                  = 0x00011516,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_TEXTSHADOW                     = 0x00011518,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSFLOWFROM                     = 0x0001151a,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSFLOWINTO                     = 0x0001151b,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSHYPHENS                      = 0x0001151c,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSHYPHENATELIMITZONE           = 0x0001151d,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSHYPHENATELIMITCHARS          = 0x0001151e,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSHYPHENATELIMITLINES          = 0x0001151f,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSHIGHCONTRASTADJUST           = 0x00011521,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_ENABLEBACKGROUND               = 0x00011522,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSFONTFEATURESETTINGS          = 0x00011526,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSUSERSELECT                   = 0x00011527,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSOVERFLOWSTYLE                = 0x00011517,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSTRANSFORMSTYLE               = 0x000114e9,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSBACKFACEVISIBILITY           = 0x000114ea,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSPERSPECTIVE                  = 0x000114e5,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSPERSPECTIVEORIGIN            = 0x000114e6,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSTRANSITIONPROPERTY           = 0x000114d2,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSTRANSITIONDURATION           = 0x000114d3,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSTRANSITIONTIMINGFUNCTION     = 0x000114d4,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSTRANSITIONDELAY              = 0x000114d5,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSTRANSITION                   = 0x000114d6,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSTOUCHACTION                  = 0x00011528,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSSCROLLTRANSLATION            = 0x0001152a,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSFLEX                         = 0x0001152b,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSFLEXPOSITIVE                 = 0x0001152c,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSFLEXNEGATIVE                 = 0x0001152d,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSFLEXPREFERREDSIZE            = 0x0001152e,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSFLEXFLOW                     = 0x0001152f,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSFLEXDIRECTION                = 0x00011530,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSFLEXWRAP                     = 0x00011531,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSFLEXALIGN                    = 0x00011532,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSFLEXITEMALIGN                = 0x00011533,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSFLEXPACK                     = 0x00011534,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSFLEXLINEPACK                 = 0x00011535,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSFLEXORDER                    = 0x00011536,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_MSTOUCHSELECT                  = 0x00011552,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_TRANSFORM                      = 0x00011537,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_TRANSFORMORIGIN                = 0x00011538,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_TRANSFORMSTYLE                 = 0x00011540,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_BACKFACEVISIBILITY             = 0x00011541,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_PERSPECTIVE                    = 0x0001153e,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_PERSPECTIVEORIGIN              = 0x0001153f,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_TRANSITIONPROPERTY             = 0x00011539,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_TRANSITIONDURATION             = 0x0001153a,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_TRANSITIONTIMINGFUNCTION       = 0x0001153b,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_TRANSITIONDELAY                = 0x0001153c,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_TRANSITION                     = 0x0001153d,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_FONTFEATURESETTINGS            = 0x0001154b,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_ANIMATIONNAME                  = 0x00011542,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_ANIMATIONDURATION              = 0x00011543,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_ANIMATIONTIMINGFUNCTION        = 0x00011544,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_ANIMATIONDELAY                 = 0x00011545,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_ANIMATIONDIRECTION             = 0x00011546,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_ANIMATIONPLAYSTATE             = 0x00011547,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_ANIMATIONITERATIONCOUNT        = 0x00011548,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_ANIMATION                      = 0x00011549,
-    DISPID_IHTMLCSSSTYLEDECLARATION2_ANIMATIONFILLMODE              = 0x0001154a,
-    DISPID_IHTMLCSSSTYLEDECLARATION3_FLEX                           = 0x0001155a,
-    DISPID_IHTMLCSSSTYLEDECLARATION3_FLEXDIRECTION                  = 0x00011556,
-    DISPID_IHTMLCSSSTYLEDECLARATION3_FLEXWRAP                       = 0x00011557,
-    DISPID_IHTMLCSSSTYLEDECLARATION3_FLEXFLOW                       = 0x00011558,
-    DISPID_IHTMLCSSSTYLEDECLARATION3_FLEXGROW                       = 0x0001155b,
-    DISPID_IHTMLCSSSTYLEDECLARATION3_FLEXSHRINK                     = 0x0001155c,
-    DISPID_IHTMLCSSSTYLEDECLARATION3_FLEXBASIS                      = 0x0001155d,
-    DISPID_IHTMLCSSSTYLEDECLARATION3_JUSTIFYCONTENT                 = 0x0001155e,
-    DISPID_IHTMLCSSSTYLEDECLARATION3_ALIGNITEMS                     = 0x0001155f,
-    DISPID_IHTMLCSSSTYLEDECLARATION3_ALIGNSELF                      = 0x00011560,
-    DISPID_IHTMLCSSSTYLEDECLARATION3_ALIGNCONTENT                   = 0x00011561,
-    DISPID_IHTMLCSSSTYLEDECLARATION3_BORDERIMAGE                    = 0x00011562,
-    DISPID_IHTMLCSSSTYLEDECLARATION3_BORDERIMAGESOURCE              = 0x00011563,
-    DISPID_IHTMLCSSSTYLEDECLARATION3_BORDERIMAGESLICE               = 0x00011564,
-    DISPID_IHTMLCSSSTYLEDECLARATION3_BORDERIMAGEWIDTH               = 0x00011565,
-    DISPID_IHTMLCSSSTYLEDECLARATION3_BORDERIMAGEOUTSET              = 0x00011566,
-    DISPID_IHTMLCSSSTYLEDECLARATION3_BORDERIMAGEREPEAT              = 0x00011567,
-    DISPID_IHTMLCSSSTYLEDECLARATION3_MSIMEALIGN                     = 0x00011569,
-    DISPID_IHTMLCSSSTYLEDECLARATION3_MSTEXTCOMBINEHORIZONTAL        = 0x0001156a,
-    DISPID_IHTMLCSSSTYLEDECLARATION3_TOUCHACTION                    = 0x0001156b,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITAPPEARANCE               = 0x0001156c,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITUSERSELECT               = 0x00011578,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBOXALIGN                 = 0x0001156d,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBOXORDINALGROUP          = 0x0001156e,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBOXPACK                  = 0x0001156f,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBOXFLEX                  = 0x00011570,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBOXORIENT                = 0x00011571,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBOXDIRECTION             = 0x00011572,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITTRANSFORM                = 0x00011574,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBACKGROUNDSIZE           = 0x00011575,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBACKFACEVISIBILITY       = 0x00011576,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITANIMATION                = 0x00011579,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITTRANSITION               = 0x0001157a,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITANIMATIONNAME            = 0x0001157b,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITANIMATIONDURATION        = 0x0001157c,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITANIMATIONTIMINGFUNCTION  = 0x0001157d,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITANIMATIONDELAY           = 0x0001157e,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITANIMATIONITERATIONCOUNT  = 0x0001157f,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITANIMATIONDIRECTION       = 0x00011580,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITANIMATIONPLAYSTATE       = 0x00011581,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITTRANSITIONPROPERTY       = 0x00011582,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITTRANSITIONDURATION       = 0x00011583,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITTRANSITIONTIMINGFUNCTION = 0x00011584,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITTRANSITIONDELAY          = 0x00011585,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBACKGROUNDATTACHMENT     = 0x00011586,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBACKGROUNDCOLOR          = 0x00011587,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBACKGROUNDCLIP           = 0x00011588,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBACKGROUNDIMAGE          = 0x00011589,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBACKGROUNDREPEAT         = 0x0001158a,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBACKGROUNDORIGIN         = 0x0001158b,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBACKGROUNDPOSITION       = 0x0001158c,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBACKGROUNDPOSITIONX      = 0x0001158d,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBACKGROUNDPOSITIONY      = 0x0001158e,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBACKGROUND               = 0x0001158f,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITTRANSFORMORIGIN          = 0x00011590,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_MSTEXTSIZEADJUST               = 0x000114d0,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITTEXTSIZEADJUST           = 0x00011594,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBORDERIMAGE              = 0x00011595,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBORDERIMAGESOURCE        = 0x00011596,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBORDERIMAGESLICE         = 0x00011597,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBORDERIMAGEWIDTH         = 0x00011598,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBORDERIMAGEOUTSET        = 0x00011599,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBORDERIMAGEREPEAT        = 0x0001159a,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBOXSIZING                = 0x00011577,
-    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITANIMATIONFILLMODE        = 0x00011573,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BACKGROUNDIMAGE                 = 0x00011389U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BACKGROUNDREPEAT                = 0x000113b4U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BACKGROUNDATTACHMENT            = 0x000113b5U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BACKGROUNDPOSITION              = 0x000113b6U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BACKGROUNDPOSITIONX             = 0x000113a9U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BACKGROUNDPOSITIONY             = 0x000113aaU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_WORDSPACING                     = 0x000113b7U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_LETTERSPACING                   = 0x00011390U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_TEXTDECORATION                  = 0x000113abU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_VERTICALALIGN                   = 0x000113b8U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_TEXTTRANSFORM                   = 0x0001138cU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_TEXTALIGN                       = 0x00010048U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_TEXTINDENT                      = 0x0001138fU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_LINEHEIGHT                      = 0x0001138eU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_MARGINTOP                       = 0x000113adU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_MARGINRIGHT                     = 0x000113aeU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_MARGINBOTTOM                    = 0x000113afU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_MARGINLEFT                      = 0x000113b0U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_MARGIN                          = 0x000113acU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_PADDINGTOP                      = 0x00011394U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_PADDINGRIGHT                    = 0x00011395U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_PADDINGBOTTOM                   = 0x00011396U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_PADDINGLEFT                     = 0x00011397U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_PADDING                         = 0x00011393U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BORDER                          = 0x000113b9U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERTOP                       = 0x000113baU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERRIGHT                     = 0x000113bbU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERBOTTOM                    = 0x000113bcU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERLEFT                      = 0x000113bdU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERCOLOR                     = 0x000113beU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERTOPCOLOR                  = 0x000113bfU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERRIGHTCOLOR                = 0x000113c0U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERBOTTOMCOLOR               = 0x000113c1U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERLEFTCOLOR                 = 0x000113c2U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERWIDTH                     = 0x000113c3U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERTOPWIDTH                  = 0x000113c4U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERRIGHTWIDTH                = 0x000113c5U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERBOTTOMWIDTH               = 0x000113c6U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERLEFTWIDTH                 = 0x000113c7U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERSTYLE                     = 0x000113c8U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERTOPSTYLE                  = 0x000113c9U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERRIGHTSTYLE                = 0x000113caU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERBOTTOMSTYLE               = 0x000113cbU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERLEFTSTYLE                 = 0x000113ccU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_WIDTH                           = 0x00010005U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_HEIGHT                          = 0x00010006U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_STYLEFLOAT                      = 0x000113ceU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_CLEAR                           = 0x00011398U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_DISPLAY                         = 0x000113cfU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_VISIBILITY                      = 0x000113d8U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_LISTSTYLETYPE                   = 0x000113d0U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_LISTSTYLEPOSITION               = 0x000113d1U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_LISTSTYLEIMAGE                  = 0x000113d2U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_LISTSTYLE                       = 0x000113d3U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_WHITESPACE                      = 0x000113d4U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_TOP                             = 0x00010004U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_LEFT                            = 0x00010003U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_ZINDEX                          = 0x000113e3U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_OVERFLOW                        = 0x00011392U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_PAGEBREAKBEFORE                 = 0x000113d5U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_PAGEBREAKAFTER                  = 0x000113d6U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_CSSTEXT                         = 0x000113ebU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_CURSOR                          = 0x000113eeU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_CLIP                            = 0x000113e4U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_FILTER                          = 0x000113daU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_TABLELAYOUT                     = 0x000113eaU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERCOLLAPSE                  = 0x000113dcU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_DIRECTION                       = 0x000113ffU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BEHAVIOR                        = 0x000113fbU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_POSITION                        = 0x000113e2U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_UNICODEBIDI                     = 0x000113feU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BOTTOM                          = 0x0001004eU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_RIGHT                           = 0x0001004dU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_IMEMODE                         = 0x00011400U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_RUBYALIGN                       = 0x00011401U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_RUBYPOSITION                    = 0x00011402U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_RUBYOVERHANG                    = 0x00011403U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_LAYOUTGRIDCHAR                  = 0x00011407U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_LAYOUTGRIDLINE                  = 0x00011408U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_LAYOUTGRIDMODE                  = 0x00011409U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_LAYOUTGRIDTYPE                  = 0x0001140aU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_LAYOUTGRID                      = 0x0001140bU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_TEXTAUTOSPACE                   = 0x0001140cU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_WORDBREAK                       = 0x0001140eU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_LINEBREAK                       = 0x0001140dU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_TEXTJUSTIFY                     = 0x0001140fU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_TEXTJUSTIFYTRIM                 = 0x00011410U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_TEXTKASHIDA                     = 0x00011411U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_OVERFLOWX                       = 0x00011413U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_OVERFLOWY                       = 0x00011414U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_ACCELERATOR                     = 0x0001141bU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_LAYOUTFLOW                      = 0x00011423U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_ZOOM                            = 0x00011421U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_WORDWRAP                        = 0x00011426U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_TEXTUNDERLINEPOSITION           = 0x00011427U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_SCROLLBARBASECOLOR              = 0x0001143cU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_SCROLLBARFACECOLOR              = 0x0001143dU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_SCROLLBAR3DLIGHTCOLOR           = 0x0001143eU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_SCROLLBARSHADOWCOLOR            = 0x0001143fU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_SCROLLBARHIGHLIGHTCOLOR         = 0x00011440U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_SCROLLBARDARKSHADOWCOLOR        = 0x00011441U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_SCROLLBARARROWCOLOR             = 0x00011442U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_SCROLLBARTRACKCOLOR             = 0x0001144cU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_WRITINGMODE                     = 0x00011448U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_TEXTALIGNLAST                   = 0x00011453U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_TEXTKASHIDASPACE                = 0x00011454U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_TEXTOVERFLOW                    = 0x00011459U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_MINHEIGHT                       = 0x0001145bU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_MSINTERPOLATIONMODE             = 0x0001145dU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_MAXHEIGHT                       = 0x0001145eU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_MINWIDTH                        = 0x0001145fU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_MAXWIDTH                        = 0x00011460U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_CONTENT                         = 0x00011462U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_CAPTIONSIDE                     = 0x00011463U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_COUNTERINCREMENT                = 0x00011464U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_COUNTERRESET                    = 0x00011465U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_OUTLINE                         = 0x00011466U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_OUTLINEWIDTH                    = 0x00011467U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_OUTLINESTYLE                    = 0x00011468U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_OUTLINECOLOR                    = 0x00011469U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BOXSIZING                       = 0x0001146aU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERSPACING                   = 0x0001146bU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_ORPHANS                         = 0x0001146cU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_WIDOWS                          = 0x0001146dU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_PAGEBREAKINSIDE                 = 0x0001146eU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_EMPTYCELLS                      = 0x00011482U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_MSBLOCKPROGRESSION              = 0x00011483U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_QUOTES                          = 0x00011484U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_ALIGNMENTBASELINE               = 0x0001149eU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BASELINESHIFT                   = 0x0001149fU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_DOMINANTBASELINE                = 0x000114a0U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_FONTSIZEADJUST                  = 0x000114a1U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_FONTSTRETCH                     = 0x000114a2U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_OPACITY                         = 0x000114a3U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_CLIPPATH                        = 0x000114a4U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_CLIPRULE                        = 0x000114a5U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_FILL                            = 0x000114a6U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_FILLOPACITY                     = 0x000114a7U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_FILLRULE                        = 0x000114a8U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_KERNING                         = 0x000114a9U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_MARKER                          = 0x000114aaU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_MARKEREND                       = 0x000114abU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_MARKERMID                       = 0x000114acU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_MARKERSTART                     = 0x000114adU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_MASK                            = 0x000114aeU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_POINTEREVENTS                   = 0x000114afU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_STOPCOLOR                       = 0x000114b0U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_STOPOPACITY                     = 0x000114b1U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_STROKE                          = 0x000114b2U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_STROKEDASHARRAY                 = 0x000114b3U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_STROKEDASHOFFSET                = 0x000114b4U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_STROKELINECAP                   = 0x000114b5U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_STROKELINEJOIN                  = 0x000114b6U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_STROKEMITERLIMIT                = 0x000114b7U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_STROKEOPACITY                   = 0x000114b8U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_STROKEWIDTH                     = 0x000114b9U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_TEXTANCHOR                      = 0x000114baU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_GLYPHORIENTATIONHORIZONTAL      = 0x000114bbU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_GLYPHORIENTATIONVERTICAL        = 0x000114bcU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERRADIUS                    = 0x000114beU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERTOPLEFTRADIUS             = 0x000114bfU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERTOPRIGHTRADIUS            = 0x000114c0U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERBOTTOMRIGHTRADIUS         = 0x000114c1U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BORDERBOTTOMLEFTRADIUS          = 0x000114c2U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_CLIPTOP                         = 0x000113e5U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_CLIPRIGHT                       = 0x000113e6U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_CLIPBOTTOM                      = 0x000113e7U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_CLIPLEFT                        = 0x000113e8U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_CSSFLOAT                        = 0x000114bdU,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BACKGROUNDCLIP                  = 0x000114c4U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BACKGROUNDORIGIN                = 0x000114c5U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BACKGROUNDSIZE                  = 0x000114c6U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_BOXSHADOW                       = 0x000114c7U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_MSTRANSFORM                     = 0x000114c3U,
+    DISPID_IHTMLCSSSTYLEDECLARATION_MSTRANSFORMORIGIN               = 0x000114cdU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSSCROLLCHAINING               = 0x000114ebU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSCONTENTZOOMING               = 0x000114ecU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSCONTENTZOOMSNAPTYPE          = 0x000114edU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSSCROLLRAILS                  = 0x000114eeU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSCONTENTZOOMCHAINING          = 0x000114efU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSSCROLLSNAPTYPE               = 0x000114f0U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSCONTENTZOOMLIMIT             = 0x000114f1U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSCONTENTZOOMSNAP              = 0x000114f2U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSCONTENTZOOMSNAPPOINTS        = 0x000114f3U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSCONTENTZOOMLIMITMIN          = 0x000114f5U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSCONTENTZOOMLIMITMAX          = 0x000114f6U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSSCROLLSNAPX                  = 0x000114f7U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSSCROLLSNAPY                  = 0x000114f8U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSSCROLLSNAPPOINTSX            = 0x000114f9U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSSCROLLSNAPPOINTSY            = 0x000114faU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSGRIDCOLUMN                   = 0x000114fcU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSGRIDCOLUMNALIGN              = 0x000114fdU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSGRIDCOLUMNS                  = 0x000114feU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSGRIDCOLUMNSPAN               = 0x000114ffU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSGRIDROW                      = 0x00011501U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSGRIDROWALIGN                 = 0x00011502U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSGRIDROWS                     = 0x00011503U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSGRIDROWSPAN                  = 0x00011504U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSWRAPTHROUGH                  = 0x00011519U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSWRAPMARGIN                   = 0x00011523U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSWRAPFLOW                     = 0x00011525U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSANIMATIONNAME                = 0x00011505U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSANIMATIONDURATION            = 0x00011506U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSANIMATIONTIMINGFUNCTION      = 0x00011507U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSANIMATIONDELAY               = 0x00011508U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSANIMATIONDIRECTION           = 0x00011509U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSANIMATIONPLAYSTATE           = 0x0001150aU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSANIMATIONITERATIONCOUNT      = 0x0001150bU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSANIMATION                    = 0x0001150cU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSANIMATIONFILLMODE            = 0x0001150dU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_COLORINTERPOLATIONFILTERS      = 0x00011510U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_COLUMNCOUNT                    = 0x000114d8U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_COLUMNWIDTH                    = 0x000114d9U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_COLUMNGAP                      = 0x000114daU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_COLUMNFILL                     = 0x000114dbU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_COLUMNSPAN                     = 0x000114dcU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_COLUMNS                        = 0x000114d7U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_COLUMNRULE                     = 0x000114ddU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_COLUMNRULECOLOR                = 0x000114e0U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_COLUMNRULESTYLE                = 0x000114deU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_COLUMNRULEWIDTH                = 0x000114dfU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_BREAKBEFORE                    = 0x000114e1U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_BREAKAFTER                     = 0x000114e2U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_BREAKINSIDE                    = 0x000114e3U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_FLOODCOLOR                     = 0x0001150eU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_FLOODOPACITY                   = 0x0001150fU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_LIGHTINGCOLOR                  = 0x00011511U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSSCROLLLIMITXMIN              = 0x00011512U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSSCROLLLIMITYMIN              = 0x00011513U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSSCROLLLIMITXMAX              = 0x00011514U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSSCROLLLIMITYMAX              = 0x00011515U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSSCROLLLIMIT                  = 0x00011516U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_TEXTSHADOW                     = 0x00011518U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSFLOWFROM                     = 0x0001151aU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSFLOWINTO                     = 0x0001151bU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSHYPHENS                      = 0x0001151cU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSHYPHENATELIMITZONE           = 0x0001151dU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSHYPHENATELIMITCHARS          = 0x0001151eU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSHYPHENATELIMITLINES          = 0x0001151fU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSHIGHCONTRASTADJUST           = 0x00011521U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_ENABLEBACKGROUND               = 0x00011522U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSFONTFEATURESETTINGS          = 0x00011526U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSUSERSELECT                   = 0x00011527U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSOVERFLOWSTYLE                = 0x00011517U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSTRANSFORMSTYLE               = 0x000114e9U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSBACKFACEVISIBILITY           = 0x000114eaU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSPERSPECTIVE                  = 0x000114e5U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSPERSPECTIVEORIGIN            = 0x000114e6U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSTRANSITIONPROPERTY           = 0x000114d2U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSTRANSITIONDURATION           = 0x000114d3U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSTRANSITIONTIMINGFUNCTION     = 0x000114d4U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSTRANSITIONDELAY              = 0x000114d5U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSTRANSITION                   = 0x000114d6U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSTOUCHACTION                  = 0x00011528U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSSCROLLTRANSLATION            = 0x0001152aU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSFLEX                         = 0x0001152bU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSFLEXPOSITIVE                 = 0x0001152cU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSFLEXNEGATIVE                 = 0x0001152dU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSFLEXPREFERREDSIZE            = 0x0001152eU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSFLEXFLOW                     = 0x0001152fU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSFLEXDIRECTION                = 0x00011530U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSFLEXWRAP                     = 0x00011531U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSFLEXALIGN                    = 0x00011532U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSFLEXITEMALIGN                = 0x00011533U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSFLEXPACK                     = 0x00011534U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSFLEXLINEPACK                 = 0x00011535U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSFLEXORDER                    = 0x00011536U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_MSTOUCHSELECT                  = 0x00011552U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_TRANSFORM                      = 0x00011537U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_TRANSFORMORIGIN                = 0x00011538U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_TRANSFORMSTYLE                 = 0x00011540U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_BACKFACEVISIBILITY             = 0x00011541U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_PERSPECTIVE                    = 0x0001153eU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_PERSPECTIVEORIGIN              = 0x0001153fU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_TRANSITIONPROPERTY             = 0x00011539U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_TRANSITIONDURATION             = 0x0001153aU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_TRANSITIONTIMINGFUNCTION       = 0x0001153bU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_TRANSITIONDELAY                = 0x0001153cU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_TRANSITION                     = 0x0001153dU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_FONTFEATURESETTINGS            = 0x0001154bU,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_ANIMATIONNAME                  = 0x00011542U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_ANIMATIONDURATION              = 0x00011543U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_ANIMATIONTIMINGFUNCTION        = 0x00011544U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_ANIMATIONDELAY                 = 0x00011545U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_ANIMATIONDIRECTION             = 0x00011546U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_ANIMATIONPLAYSTATE             = 0x00011547U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_ANIMATIONITERATIONCOUNT        = 0x00011548U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_ANIMATION                      = 0x00011549U,
+    DISPID_IHTMLCSSSTYLEDECLARATION2_ANIMATIONFILLMODE              = 0x0001154aU,
+    DISPID_IHTMLCSSSTYLEDECLARATION3_FLEX                           = 0x0001155aU,
+    DISPID_IHTMLCSSSTYLEDECLARATION3_FLEXDIRECTION                  = 0x00011556U,
+    DISPID_IHTMLCSSSTYLEDECLARATION3_FLEXWRAP                       = 0x00011557U,
+    DISPID_IHTMLCSSSTYLEDECLARATION3_FLEXFLOW                       = 0x00011558U,
+    DISPID_IHTMLCSSSTYLEDECLARATION3_FLEXGROW                       = 0x0001155bU,
+    DISPID_IHTMLCSSSTYLEDECLARATION3_FLEXSHRINK                     = 0x0001155cU,
+    DISPID_IHTMLCSSSTYLEDECLARATION3_FLEXBASIS                      = 0x0001155dU,
+    DISPID_IHTMLCSSSTYLEDECLARATION3_JUSTIFYCONTENT                 = 0x0001155eU,
+    DISPID_IHTMLCSSSTYLEDECLARATION3_ALIGNITEMS                     = 0x0001155fU,
+    DISPID_IHTMLCSSSTYLEDECLARATION3_ALIGNSELF                      = 0x00011560U,
+    DISPID_IHTMLCSSSTYLEDECLARATION3_ALIGNCONTENT                   = 0x00011561U,
+    DISPID_IHTMLCSSSTYLEDECLARATION3_BORDERIMAGE                    = 0x00011562U,
+    DISPID_IHTMLCSSSTYLEDECLARATION3_BORDERIMAGESOURCE              = 0x00011563U,
+    DISPID_IHTMLCSSSTYLEDECLARATION3_BORDERIMAGESLICE               = 0x00011564U,
+    DISPID_IHTMLCSSSTYLEDECLARATION3_BORDERIMAGEWIDTH               = 0x00011565U,
+    DISPID_IHTMLCSSSTYLEDECLARATION3_BORDERIMAGEOUTSET              = 0x00011566U,
+    DISPID_IHTMLCSSSTYLEDECLARATION3_BORDERIMAGEREPEAT              = 0x00011567U,
+    DISPID_IHTMLCSSSTYLEDECLARATION3_MSIMEALIGN                     = 0x00011569U,
+    DISPID_IHTMLCSSSTYLEDECLARATION3_MSTEXTCOMBINEHORIZONTAL        = 0x0001156aU,
+    DISPID_IHTMLCSSSTYLEDECLARATION3_TOUCHACTION                    = 0x0001156bU,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITAPPEARANCE               = 0x0001156cU,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITUSERSELECT               = 0x00011578U,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBOXALIGN                 = 0x0001156dU,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBOXORDINALGROUP          = 0x0001156eU,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBOXPACK                  = 0x0001156fU,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBOXFLEX                  = 0x00011570U,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBOXORIENT                = 0x00011571U,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBOXDIRECTION             = 0x00011572U,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITTRANSFORM                = 0x00011574U,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBACKGROUNDSIZE           = 0x00011575U,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBACKFACEVISIBILITY       = 0x00011576U,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITANIMATION                = 0x00011579U,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITTRANSITION               = 0x0001157aU,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITANIMATIONNAME            = 0x0001157bU,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITANIMATIONDURATION        = 0x0001157cU,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITANIMATIONTIMINGFUNCTION  = 0x0001157dU,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITANIMATIONDELAY           = 0x0001157eU,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITANIMATIONITERATIONCOUNT  = 0x0001157fU,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITANIMATIONDIRECTION       = 0x00011580U,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITANIMATIONPLAYSTATE       = 0x00011581U,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITTRANSITIONPROPERTY       = 0x00011582U,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITTRANSITIONDURATION       = 0x00011583U,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITTRANSITIONTIMINGFUNCTION = 0x00011584U,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITTRANSITIONDELAY          = 0x00011585U,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBACKGROUNDATTACHMENT     = 0x00011586U,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBACKGROUNDCOLOR          = 0x00011587U,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBACKGROUNDCLIP           = 0x00011588U,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBACKGROUNDIMAGE          = 0x00011589U,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBACKGROUNDREPEAT         = 0x0001158aU,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBACKGROUNDORIGIN         = 0x0001158bU,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBACKGROUNDPOSITION       = 0x0001158cU,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBACKGROUNDPOSITIONX      = 0x0001158dU,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBACKGROUNDPOSITIONY      = 0x0001158eU,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBACKGROUND               = 0x0001158fU,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITTRANSFORMORIGIN          = 0x00011590U,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_MSTEXTSIZEADJUST               = 0x000114d0U,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITTEXTSIZEADJUST           = 0x00011594U,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBORDERIMAGE              = 0x00011595U,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBORDERIMAGESOURCE        = 0x00011596U,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBORDERIMAGESLICE         = 0x00011597U,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBORDERIMAGEWIDTH         = 0x00011598U,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBORDERIMAGEOUTSET        = 0x00011599U,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBORDERIMAGEREPEAT        = 0x0001159aU,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITBOXSIZING                = 0x00011577U,
+    DISPID_IHTMLCSSSTYLEDECLARATION4_WEBKITANIMATIONFILLMODE        = 0x00011573U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLSTYLEENABLED_MSGETPROPERTYENABLED = 0x0001119b,
-    DISPID_IHTMLSTYLEENABLED_MSPUTPROPERTYENABLED = 0x0001119c,
+    DISPID_IHTMLSTYLEENABLED_MSGETPROPERTYENABLED = 0x0001119bU,
+    DISPID_IHTMLSTYLEENABLED_MSPUTPROPERTYENABLED = 0x0001119cU,
 }
 
 enum : uint
 {
-    DISPID_IHTMLSTYLE_FONTFAMILY  = 0x0001139a,
-    DISPID_IHTMLSTYLE_FONTSTYLE   = 0x000113a0,
-    DISPID_IHTMLSTYLE_FONTVARIANT = 0x000113a1,
-    DISPID_IHTMLSTYLE_FONTWEIGHT  = 0x000113a3,
-    DISPID_IHTMLSTYLE_FONTSIZE    = 0x0001139b,
-    DISPID_IHTMLSTYLE_FONT        = 0x000113b1,
-    DISPID_IHTMLSTYLE_COLOR       = 0x0001138a,
-    DISPID_IHTMLSTYLE_BACKGROUND  = 0x000113a8,
+    DISPID_IHTMLSTYLE_FONTFAMILY  = 0x0001139aU,
+    DISPID_IHTMLSTYLE_FONTSTYLE   = 0x000113a0U,
+    DISPID_IHTMLSTYLE_FONTVARIANT = 0x000113a1U,
+    DISPID_IHTMLSTYLE_FONTWEIGHT  = 0x000113a3U,
+    DISPID_IHTMLSTYLE_FONTSIZE    = 0x0001139bU,
+    DISPID_IHTMLSTYLE_FONT        = 0x000113b1U,
+    DISPID_IHTMLSTYLE_COLOR       = 0x0001138aU,
+    DISPID_IHTMLSTYLE_BACKGROUND  = 0x000113a8U,
 }
 
 enum int DISPID_IHTMLSTYLE_BACKGROUNDCOLOR = 0xfffffe0b;
 
 enum : uint
 {
-    DISPID_IHTMLSTYLE_BACKGROUNDIMAGE           = 0x00011389,
-    DISPID_IHTMLSTYLE_BACKGROUNDREPEAT          = 0x000113b4,
-    DISPID_IHTMLSTYLE_BACKGROUNDATTACHMENT      = 0x000113b5,
-    DISPID_IHTMLSTYLE_BACKGROUNDPOSITION        = 0x000113b6,
-    DISPID_IHTMLSTYLE_BACKGROUNDPOSITIONX       = 0x000113a9,
-    DISPID_IHTMLSTYLE_BACKGROUNDPOSITIONY       = 0x000113aa,
-    DISPID_IHTMLSTYLE_WORDSPACING               = 0x000113b7,
-    DISPID_IHTMLSTYLE_LETTERSPACING             = 0x00011390,
-    DISPID_IHTMLSTYLE_TEXTDECORATION            = 0x000113ab,
-    DISPID_IHTMLSTYLE_TEXTDECORATIONNONE        = 0x0001139f,
-    DISPID_IHTMLSTYLE_TEXTDECORATIONUNDERLINE   = 0x0001139d,
-    DISPID_IHTMLSTYLE_TEXTDECORATIONOVERLINE    = 0x000113cd,
-    DISPID_IHTMLSTYLE_TEXTDECORATIONLINETHROUGH = 0x0001139c,
-    DISPID_IHTMLSTYLE_TEXTDECORATIONBLINK       = 0x0001139e,
-    DISPID_IHTMLSTYLE_VERTICALALIGN             = 0x000113b8,
-    DISPID_IHTMLSTYLE_TEXTTRANSFORM             = 0x0001138c,
-    DISPID_IHTMLSTYLE_TEXTALIGN                 = 0x00010048,
-    DISPID_IHTMLSTYLE_TEXTINDENT                = 0x0001138f,
-    DISPID_IHTMLSTYLE_LINEHEIGHT                = 0x0001138e,
-    DISPID_IHTMLSTYLE_MARGINTOP                 = 0x000113ad,
-    DISPID_IHTMLSTYLE_MARGINRIGHT               = 0x000113ae,
-    DISPID_IHTMLSTYLE_MARGINBOTTOM              = 0x000113af,
-    DISPID_IHTMLSTYLE_MARGINLEFT                = 0x000113b0,
-    DISPID_IHTMLSTYLE_MARGIN                    = 0x000113ac,
-    DISPID_IHTMLSTYLE_PADDINGTOP                = 0x00011394,
-    DISPID_IHTMLSTYLE_PADDINGRIGHT              = 0x00011395,
-    DISPID_IHTMLSTYLE_PADDINGBOTTOM             = 0x00011396,
-    DISPID_IHTMLSTYLE_PADDINGLEFT               = 0x00011397,
-    DISPID_IHTMLSTYLE_PADDING                   = 0x00011393,
-    DISPID_IHTMLSTYLE_BORDER                    = 0x000113b9,
-    DISPID_IHTMLSTYLE_BORDERTOP                 = 0x000113ba,
-    DISPID_IHTMLSTYLE_BORDERRIGHT               = 0x000113bb,
-    DISPID_IHTMLSTYLE_BORDERBOTTOM              = 0x000113bc,
-    DISPID_IHTMLSTYLE_BORDERLEFT                = 0x000113bd,
-    DISPID_IHTMLSTYLE_BORDERCOLOR               = 0x000113be,
-    DISPID_IHTMLSTYLE_BORDERTOPCOLOR            = 0x000113bf,
-    DISPID_IHTMLSTYLE_BORDERRIGHTCOLOR          = 0x000113c0,
-    DISPID_IHTMLSTYLE_BORDERBOTTOMCOLOR         = 0x000113c1,
-    DISPID_IHTMLSTYLE_BORDERLEFTCOLOR           = 0x000113c2,
-    DISPID_IHTMLSTYLE_BORDERWIDTH               = 0x000113c3,
-    DISPID_IHTMLSTYLE_BORDERTOPWIDTH            = 0x000113c4,
-    DISPID_IHTMLSTYLE_BORDERRIGHTWIDTH          = 0x000113c5,
-    DISPID_IHTMLSTYLE_BORDERBOTTOMWIDTH         = 0x000113c6,
-    DISPID_IHTMLSTYLE_BORDERLEFTWIDTH           = 0x000113c7,
-    DISPID_IHTMLSTYLE_BORDERSTYLE               = 0x000113c8,
-    DISPID_IHTMLSTYLE_BORDERTOPSTYLE            = 0x000113c9,
-    DISPID_IHTMLSTYLE_BORDERRIGHTSTYLE          = 0x000113ca,
-    DISPID_IHTMLSTYLE_BORDERBOTTOMSTYLE         = 0x000113cb,
-    DISPID_IHTMLSTYLE_BORDERLEFTSTYLE           = 0x000113cc,
-    DISPID_IHTMLSTYLE_WIDTH                     = 0x00010005,
-    DISPID_IHTMLSTYLE_HEIGHT                    = 0x00010006,
-    DISPID_IHTMLSTYLE_STYLEFLOAT                = 0x000113ce,
-    DISPID_IHTMLSTYLE_CLEAR                     = 0x00011398,
-    DISPID_IHTMLSTYLE_DISPLAY                   = 0x000113cf,
-    DISPID_IHTMLSTYLE_VISIBILITY                = 0x000113d8,
-    DISPID_IHTMLSTYLE_LISTSTYLETYPE             = 0x000113d0,
-    DISPID_IHTMLSTYLE_LISTSTYLEPOSITION         = 0x000113d1,
-    DISPID_IHTMLSTYLE_LISTSTYLEIMAGE            = 0x000113d2,
-    DISPID_IHTMLSTYLE_LISTSTYLE                 = 0x000113d3,
-    DISPID_IHTMLSTYLE_WHITESPACE                = 0x000113d4,
-    DISPID_IHTMLSTYLE_TOP                       = 0x00010004,
-    DISPID_IHTMLSTYLE_LEFT                      = 0x00010003,
-    DISPID_IHTMLSTYLE_POSITION                  = 0x000113e2,
-    DISPID_IHTMLSTYLE_ZINDEX                    = 0x000113e3,
-    DISPID_IHTMLSTYLE_OVERFLOW                  = 0x00011392,
-    DISPID_IHTMLSTYLE_PAGEBREAKBEFORE           = 0x000113d5,
-    DISPID_IHTMLSTYLE_PAGEBREAKAFTER            = 0x000113d6,
-    DISPID_IHTMLSTYLE_CSSTEXT                   = 0x000113eb,
-    DISPID_IHTMLSTYLE_PIXELTOP                  = 0x00010fa0,
-    DISPID_IHTMLSTYLE_PIXELLEFT                 = 0x00010fa1,
-    DISPID_IHTMLSTYLE_PIXELWIDTH                = 0x00010fa2,
-    DISPID_IHTMLSTYLE_PIXELHEIGHT               = 0x00010fa3,
-    DISPID_IHTMLSTYLE_POSTOP                    = 0x00010fa4,
-    DISPID_IHTMLSTYLE_POSLEFT                   = 0x00010fa5,
-    DISPID_IHTMLSTYLE_POSWIDTH                  = 0x00010fa6,
-    DISPID_IHTMLSTYLE_POSHEIGHT                 = 0x00010fa7,
-    DISPID_IHTMLSTYLE_CURSOR                    = 0x000113ee,
-    DISPID_IHTMLSTYLE_CLIP                      = 0x000113e4,
-    DISPID_IHTMLSTYLE_FILTER                    = 0x000113da,
-    DISPID_IHTMLSTYLE_SETATTRIBUTE              = 0x000101f5,
-    DISPID_IHTMLSTYLE_GETATTRIBUTE              = 0x000101f6,
-    DISPID_IHTMLSTYLE_REMOVEATTRIBUTE           = 0x000101f7,
-    DISPID_IHTMLSTYLE_TOSTRING                  = 0x00010fa8,
-    DISPID_IHTMLSTYLE2_TABLELAYOUT              = 0x000113ea,
-    DISPID_IHTMLSTYLE2_BORDERCOLLAPSE           = 0x000113dc,
-    DISPID_IHTMLSTYLE2_DIRECTION                = 0x000113ff,
-    DISPID_IHTMLSTYLE2_BEHAVIOR                 = 0x000113fb,
-    DISPID_IHTMLSTYLE2_SETEXPRESSION            = 0x000101f8,
-    DISPID_IHTMLSTYLE2_GETEXPRESSION            = 0x000101f9,
-    DISPID_IHTMLSTYLE2_REMOVEEXPRESSION         = 0x000101fa,
-    DISPID_IHTMLSTYLE2_POSITION                 = 0x000113e2,
-    DISPID_IHTMLSTYLE2_UNICODEBIDI              = 0x000113fe,
-    DISPID_IHTMLSTYLE2_BOTTOM                   = 0x0001004e,
-    DISPID_IHTMLSTYLE2_RIGHT                    = 0x0001004d,
-    DISPID_IHTMLSTYLE2_PIXELBOTTOM              = 0x00010fa9,
-    DISPID_IHTMLSTYLE2_PIXELRIGHT               = 0x00010faa,
-    DISPID_IHTMLSTYLE2_POSBOTTOM                = 0x00010fab,
-    DISPID_IHTMLSTYLE2_POSRIGHT                 = 0x00010fac,
-    DISPID_IHTMLSTYLE2_IMEMODE                  = 0x00011400,
-    DISPID_IHTMLSTYLE2_RUBYALIGN                = 0x00011401,
-    DISPID_IHTMLSTYLE2_RUBYPOSITION             = 0x00011402,
-    DISPID_IHTMLSTYLE2_RUBYOVERHANG             = 0x00011403,
-    DISPID_IHTMLSTYLE2_LAYOUTGRIDCHAR           = 0x00011407,
-    DISPID_IHTMLSTYLE2_LAYOUTGRIDLINE           = 0x00011408,
-    DISPID_IHTMLSTYLE2_LAYOUTGRIDMODE           = 0x00011409,
-    DISPID_IHTMLSTYLE2_LAYOUTGRIDTYPE           = 0x0001140a,
-    DISPID_IHTMLSTYLE2_LAYOUTGRID               = 0x0001140b,
-    DISPID_IHTMLSTYLE2_WORDBREAK                = 0x0001140e,
-    DISPID_IHTMLSTYLE2_LINEBREAK                = 0x0001140d,
-    DISPID_IHTMLSTYLE2_TEXTJUSTIFY              = 0x0001140f,
-    DISPID_IHTMLSTYLE2_TEXTJUSTIFYTRIM          = 0x00011410,
-    DISPID_IHTMLSTYLE2_TEXTKASHIDA              = 0x00011411,
-    DISPID_IHTMLSTYLE2_TEXTAUTOSPACE            = 0x0001140c,
-    DISPID_IHTMLSTYLE2_OVERFLOWX                = 0x00011413,
-    DISPID_IHTMLSTYLE2_OVERFLOWY                = 0x00011414,
-    DISPID_IHTMLSTYLE2_ACCELERATOR              = 0x0001141b,
-    DISPID_IHTMLSTYLE3_LAYOUTFLOW               = 0x00011423,
-    DISPID_IHTMLSTYLE3_ZOOM                     = 0x00011421,
-    DISPID_IHTMLSTYLE3_WORDWRAP                 = 0x00011426,
-    DISPID_IHTMLSTYLE3_TEXTUNDERLINEPOSITION    = 0x00011427,
-    DISPID_IHTMLSTYLE3_SCROLLBARBASECOLOR       = 0x0001143c,
-    DISPID_IHTMLSTYLE3_SCROLLBARFACECOLOR       = 0x0001143d,
-    DISPID_IHTMLSTYLE3_SCROLLBAR3DLIGHTCOLOR    = 0x0001143e,
-    DISPID_IHTMLSTYLE3_SCROLLBARSHADOWCOLOR     = 0x0001143f,
-    DISPID_IHTMLSTYLE3_SCROLLBARHIGHLIGHTCOLOR  = 0x00011440,
-    DISPID_IHTMLSTYLE3_SCROLLBARDARKSHADOWCOLOR = 0x00011441,
-    DISPID_IHTMLSTYLE3_SCROLLBARARROWCOLOR      = 0x00011442,
-    DISPID_IHTMLSTYLE3_SCROLLBARTRACKCOLOR      = 0x0001144c,
-    DISPID_IHTMLSTYLE3_WRITINGMODE              = 0x00011448,
-    DISPID_IHTMLSTYLE3_TEXTALIGNLAST            = 0x00011453,
-    DISPID_IHTMLSTYLE3_TEXTKASHIDASPACE         = 0x00011454,
-    DISPID_IHTMLSTYLE4_TEXTOVERFLOW             = 0x00011459,
-    DISPID_IHTMLSTYLE4_MINHEIGHT                = 0x0001145b,
-    DISPID_IHTMLSTYLE5_MSINTERPOLATIONMODE      = 0x0001145d,
-    DISPID_IHTMLSTYLE5_MAXHEIGHT                = 0x0001145e,
-    DISPID_IHTMLSTYLE5_MINWIDTH                 = 0x0001145f,
-    DISPID_IHTMLSTYLE5_MAXWIDTH                 = 0x00011460,
-    DISPID_IHTMLSTYLE6_CONTENT                  = 0x00011462,
-    DISPID_IHTMLSTYLE6_CAPTIONSIDE              = 0x00011463,
-    DISPID_IHTMLSTYLE6_COUNTERINCREMENT         = 0x00011464,
-    DISPID_IHTMLSTYLE6_COUNTERRESET             = 0x00011465,
-    DISPID_IHTMLSTYLE6_OUTLINE                  = 0x00011466,
-    DISPID_IHTMLSTYLE6_OUTLINEWIDTH             = 0x00011467,
-    DISPID_IHTMLSTYLE6_OUTLINESTYLE             = 0x00011468,
-    DISPID_IHTMLSTYLE6_OUTLINECOLOR             = 0x00011469,
-    DISPID_IHTMLSTYLE6_BOXSIZING                = 0x0001146a,
-    DISPID_IHTMLSTYLE6_BORDERSPACING            = 0x0001146b,
-    DISPID_IHTMLSTYLE6_ORPHANS                  = 0x0001146c,
-    DISPID_IHTMLSTYLE6_WIDOWS                   = 0x0001146d,
-    DISPID_IHTMLSTYLE6_PAGEBREAKINSIDE          = 0x0001146e,
-    DISPID_IHTMLSTYLE6_EMPTYCELLS               = 0x00011482,
-    DISPID_IHTMLSTYLE6_MSBLOCKPROGRESSION       = 0x00011483,
-    DISPID_IHTMLSTYLE6_QUOTES                   = 0x00011484,
-    DISPID_IHTMLRULESTYLE_FONTFAMILY            = 0x0001139a,
-    DISPID_IHTMLRULESTYLE_FONTSTYLE             = 0x000113a0,
-    DISPID_IHTMLRULESTYLE_FONTVARIANT           = 0x000113a1,
-    DISPID_IHTMLRULESTYLE_FONTWEIGHT            = 0x000113a3,
-    DISPID_IHTMLRULESTYLE_FONTSIZE              = 0x0001139b,
-    DISPID_IHTMLRULESTYLE_FONT                  = 0x000113b1,
-    DISPID_IHTMLRULESTYLE_COLOR                 = 0x0001138a,
-    DISPID_IHTMLRULESTYLE_BACKGROUND            = 0x000113a8,
+    DISPID_IHTMLSTYLE_BACKGROUNDIMAGE           = 0x00011389U,
+    DISPID_IHTMLSTYLE_BACKGROUNDREPEAT          = 0x000113b4U,
+    DISPID_IHTMLSTYLE_BACKGROUNDATTACHMENT      = 0x000113b5U,
+    DISPID_IHTMLSTYLE_BACKGROUNDPOSITION        = 0x000113b6U,
+    DISPID_IHTMLSTYLE_BACKGROUNDPOSITIONX       = 0x000113a9U,
+    DISPID_IHTMLSTYLE_BACKGROUNDPOSITIONY       = 0x000113aaU,
+    DISPID_IHTMLSTYLE_WORDSPACING               = 0x000113b7U,
+    DISPID_IHTMLSTYLE_LETTERSPACING             = 0x00011390U,
+    DISPID_IHTMLSTYLE_TEXTDECORATION            = 0x000113abU,
+    DISPID_IHTMLSTYLE_TEXTDECORATIONNONE        = 0x0001139fU,
+    DISPID_IHTMLSTYLE_TEXTDECORATIONUNDERLINE   = 0x0001139dU,
+    DISPID_IHTMLSTYLE_TEXTDECORATIONOVERLINE    = 0x000113cdU,
+    DISPID_IHTMLSTYLE_TEXTDECORATIONLINETHROUGH = 0x0001139cU,
+    DISPID_IHTMLSTYLE_TEXTDECORATIONBLINK       = 0x0001139eU,
+    DISPID_IHTMLSTYLE_VERTICALALIGN             = 0x000113b8U,
+    DISPID_IHTMLSTYLE_TEXTTRANSFORM             = 0x0001138cU,
+    DISPID_IHTMLSTYLE_TEXTALIGN                 = 0x00010048U,
+    DISPID_IHTMLSTYLE_TEXTINDENT                = 0x0001138fU,
+    DISPID_IHTMLSTYLE_LINEHEIGHT                = 0x0001138eU,
+    DISPID_IHTMLSTYLE_MARGINTOP                 = 0x000113adU,
+    DISPID_IHTMLSTYLE_MARGINRIGHT               = 0x000113aeU,
+    DISPID_IHTMLSTYLE_MARGINBOTTOM              = 0x000113afU,
+    DISPID_IHTMLSTYLE_MARGINLEFT                = 0x000113b0U,
+    DISPID_IHTMLSTYLE_MARGIN                    = 0x000113acU,
+    DISPID_IHTMLSTYLE_PADDINGTOP                = 0x00011394U,
+    DISPID_IHTMLSTYLE_PADDINGRIGHT              = 0x00011395U,
+    DISPID_IHTMLSTYLE_PADDINGBOTTOM             = 0x00011396U,
+    DISPID_IHTMLSTYLE_PADDINGLEFT               = 0x00011397U,
+    DISPID_IHTMLSTYLE_PADDING                   = 0x00011393U,
+    DISPID_IHTMLSTYLE_BORDER                    = 0x000113b9U,
+    DISPID_IHTMLSTYLE_BORDERTOP                 = 0x000113baU,
+    DISPID_IHTMLSTYLE_BORDERRIGHT               = 0x000113bbU,
+    DISPID_IHTMLSTYLE_BORDERBOTTOM              = 0x000113bcU,
+    DISPID_IHTMLSTYLE_BORDERLEFT                = 0x000113bdU,
+    DISPID_IHTMLSTYLE_BORDERCOLOR               = 0x000113beU,
+    DISPID_IHTMLSTYLE_BORDERTOPCOLOR            = 0x000113bfU,
+    DISPID_IHTMLSTYLE_BORDERRIGHTCOLOR          = 0x000113c0U,
+    DISPID_IHTMLSTYLE_BORDERBOTTOMCOLOR         = 0x000113c1U,
+    DISPID_IHTMLSTYLE_BORDERLEFTCOLOR           = 0x000113c2U,
+    DISPID_IHTMLSTYLE_BORDERWIDTH               = 0x000113c3U,
+    DISPID_IHTMLSTYLE_BORDERTOPWIDTH            = 0x000113c4U,
+    DISPID_IHTMLSTYLE_BORDERRIGHTWIDTH          = 0x000113c5U,
+    DISPID_IHTMLSTYLE_BORDERBOTTOMWIDTH         = 0x000113c6U,
+    DISPID_IHTMLSTYLE_BORDERLEFTWIDTH           = 0x000113c7U,
+    DISPID_IHTMLSTYLE_BORDERSTYLE               = 0x000113c8U,
+    DISPID_IHTMLSTYLE_BORDERTOPSTYLE            = 0x000113c9U,
+    DISPID_IHTMLSTYLE_BORDERRIGHTSTYLE          = 0x000113caU,
+    DISPID_IHTMLSTYLE_BORDERBOTTOMSTYLE         = 0x000113cbU,
+    DISPID_IHTMLSTYLE_BORDERLEFTSTYLE           = 0x000113ccU,
+    DISPID_IHTMLSTYLE_WIDTH                     = 0x00010005U,
+    DISPID_IHTMLSTYLE_HEIGHT                    = 0x00010006U,
+    DISPID_IHTMLSTYLE_STYLEFLOAT                = 0x000113ceU,
+    DISPID_IHTMLSTYLE_CLEAR                     = 0x00011398U,
+    DISPID_IHTMLSTYLE_DISPLAY                   = 0x000113cfU,
+    DISPID_IHTMLSTYLE_VISIBILITY                = 0x000113d8U,
+    DISPID_IHTMLSTYLE_LISTSTYLETYPE             = 0x000113d0U,
+    DISPID_IHTMLSTYLE_LISTSTYLEPOSITION         = 0x000113d1U,
+    DISPID_IHTMLSTYLE_LISTSTYLEIMAGE            = 0x000113d2U,
+    DISPID_IHTMLSTYLE_LISTSTYLE                 = 0x000113d3U,
+    DISPID_IHTMLSTYLE_WHITESPACE                = 0x000113d4U,
+    DISPID_IHTMLSTYLE_TOP                       = 0x00010004U,
+    DISPID_IHTMLSTYLE_LEFT                      = 0x00010003U,
+    DISPID_IHTMLSTYLE_POSITION                  = 0x000113e2U,
+    DISPID_IHTMLSTYLE_ZINDEX                    = 0x000113e3U,
+    DISPID_IHTMLSTYLE_OVERFLOW                  = 0x00011392U,
+    DISPID_IHTMLSTYLE_PAGEBREAKBEFORE           = 0x000113d5U,
+    DISPID_IHTMLSTYLE_PAGEBREAKAFTER            = 0x000113d6U,
+    DISPID_IHTMLSTYLE_CSSTEXT                   = 0x000113ebU,
+    DISPID_IHTMLSTYLE_PIXELTOP                  = 0x00010fa0U,
+    DISPID_IHTMLSTYLE_PIXELLEFT                 = 0x00010fa1U,
+    DISPID_IHTMLSTYLE_PIXELWIDTH                = 0x00010fa2U,
+    DISPID_IHTMLSTYLE_PIXELHEIGHT               = 0x00010fa3U,
+    DISPID_IHTMLSTYLE_POSTOP                    = 0x00010fa4U,
+    DISPID_IHTMLSTYLE_POSLEFT                   = 0x00010fa5U,
+    DISPID_IHTMLSTYLE_POSWIDTH                  = 0x00010fa6U,
+    DISPID_IHTMLSTYLE_POSHEIGHT                 = 0x00010fa7U,
+    DISPID_IHTMLSTYLE_CURSOR                    = 0x000113eeU,
+    DISPID_IHTMLSTYLE_CLIP                      = 0x000113e4U,
+    DISPID_IHTMLSTYLE_FILTER                    = 0x000113daU,
+    DISPID_IHTMLSTYLE_SETATTRIBUTE              = 0x000101f5U,
+    DISPID_IHTMLSTYLE_GETATTRIBUTE              = 0x000101f6U,
+    DISPID_IHTMLSTYLE_REMOVEATTRIBUTE           = 0x000101f7U,
+    DISPID_IHTMLSTYLE_TOSTRING                  = 0x00010fa8U,
+    DISPID_IHTMLSTYLE2_TABLELAYOUT              = 0x000113eaU,
+    DISPID_IHTMLSTYLE2_BORDERCOLLAPSE           = 0x000113dcU,
+    DISPID_IHTMLSTYLE2_DIRECTION                = 0x000113ffU,
+    DISPID_IHTMLSTYLE2_BEHAVIOR                 = 0x000113fbU,
+    DISPID_IHTMLSTYLE2_SETEXPRESSION            = 0x000101f8U,
+    DISPID_IHTMLSTYLE2_GETEXPRESSION            = 0x000101f9U,
+    DISPID_IHTMLSTYLE2_REMOVEEXPRESSION         = 0x000101faU,
+    DISPID_IHTMLSTYLE2_POSITION                 = 0x000113e2U,
+    DISPID_IHTMLSTYLE2_UNICODEBIDI              = 0x000113feU,
+    DISPID_IHTMLSTYLE2_BOTTOM                   = 0x0001004eU,
+    DISPID_IHTMLSTYLE2_RIGHT                    = 0x0001004dU,
+    DISPID_IHTMLSTYLE2_PIXELBOTTOM              = 0x00010fa9U,
+    DISPID_IHTMLSTYLE2_PIXELRIGHT               = 0x00010faaU,
+    DISPID_IHTMLSTYLE2_POSBOTTOM                = 0x00010fabU,
+    DISPID_IHTMLSTYLE2_POSRIGHT                 = 0x00010facU,
+    DISPID_IHTMLSTYLE2_IMEMODE                  = 0x00011400U,
+    DISPID_IHTMLSTYLE2_RUBYALIGN                = 0x00011401U,
+    DISPID_IHTMLSTYLE2_RUBYPOSITION             = 0x00011402U,
+    DISPID_IHTMLSTYLE2_RUBYOVERHANG             = 0x00011403U,
+    DISPID_IHTMLSTYLE2_LAYOUTGRIDCHAR           = 0x00011407U,
+    DISPID_IHTMLSTYLE2_LAYOUTGRIDLINE           = 0x00011408U,
+    DISPID_IHTMLSTYLE2_LAYOUTGRIDMODE           = 0x00011409U,
+    DISPID_IHTMLSTYLE2_LAYOUTGRIDTYPE           = 0x0001140aU,
+    DISPID_IHTMLSTYLE2_LAYOUTGRID               = 0x0001140bU,
+    DISPID_IHTMLSTYLE2_WORDBREAK                = 0x0001140eU,
+    DISPID_IHTMLSTYLE2_LINEBREAK                = 0x0001140dU,
+    DISPID_IHTMLSTYLE2_TEXTJUSTIFY              = 0x0001140fU,
+    DISPID_IHTMLSTYLE2_TEXTJUSTIFYTRIM          = 0x00011410U,
+    DISPID_IHTMLSTYLE2_TEXTKASHIDA              = 0x00011411U,
+    DISPID_IHTMLSTYLE2_TEXTAUTOSPACE            = 0x0001140cU,
+    DISPID_IHTMLSTYLE2_OVERFLOWX                = 0x00011413U,
+    DISPID_IHTMLSTYLE2_OVERFLOWY                = 0x00011414U,
+    DISPID_IHTMLSTYLE2_ACCELERATOR              = 0x0001141bU,
+    DISPID_IHTMLSTYLE3_LAYOUTFLOW               = 0x00011423U,
+    DISPID_IHTMLSTYLE3_ZOOM                     = 0x00011421U,
+    DISPID_IHTMLSTYLE3_WORDWRAP                 = 0x00011426U,
+    DISPID_IHTMLSTYLE3_TEXTUNDERLINEPOSITION    = 0x00011427U,
+    DISPID_IHTMLSTYLE3_SCROLLBARBASECOLOR       = 0x0001143cU,
+    DISPID_IHTMLSTYLE3_SCROLLBARFACECOLOR       = 0x0001143dU,
+    DISPID_IHTMLSTYLE3_SCROLLBAR3DLIGHTCOLOR    = 0x0001143eU,
+    DISPID_IHTMLSTYLE3_SCROLLBARSHADOWCOLOR     = 0x0001143fU,
+    DISPID_IHTMLSTYLE3_SCROLLBARHIGHLIGHTCOLOR  = 0x00011440U,
+    DISPID_IHTMLSTYLE3_SCROLLBARDARKSHADOWCOLOR = 0x00011441U,
+    DISPID_IHTMLSTYLE3_SCROLLBARARROWCOLOR      = 0x00011442U,
+    DISPID_IHTMLSTYLE3_SCROLLBARTRACKCOLOR      = 0x0001144cU,
+    DISPID_IHTMLSTYLE3_WRITINGMODE              = 0x00011448U,
+    DISPID_IHTMLSTYLE3_TEXTALIGNLAST            = 0x00011453U,
+    DISPID_IHTMLSTYLE3_TEXTKASHIDASPACE         = 0x00011454U,
+    DISPID_IHTMLSTYLE4_TEXTOVERFLOW             = 0x00011459U,
+    DISPID_IHTMLSTYLE4_MINHEIGHT                = 0x0001145bU,
+    DISPID_IHTMLSTYLE5_MSINTERPOLATIONMODE      = 0x0001145dU,
+    DISPID_IHTMLSTYLE5_MAXHEIGHT                = 0x0001145eU,
+    DISPID_IHTMLSTYLE5_MINWIDTH                 = 0x0001145fU,
+    DISPID_IHTMLSTYLE5_MAXWIDTH                 = 0x00011460U,
+    DISPID_IHTMLSTYLE6_CONTENT                  = 0x00011462U,
+    DISPID_IHTMLSTYLE6_CAPTIONSIDE              = 0x00011463U,
+    DISPID_IHTMLSTYLE6_COUNTERINCREMENT         = 0x00011464U,
+    DISPID_IHTMLSTYLE6_COUNTERRESET             = 0x00011465U,
+    DISPID_IHTMLSTYLE6_OUTLINE                  = 0x00011466U,
+    DISPID_IHTMLSTYLE6_OUTLINEWIDTH             = 0x00011467U,
+    DISPID_IHTMLSTYLE6_OUTLINESTYLE             = 0x00011468U,
+    DISPID_IHTMLSTYLE6_OUTLINECOLOR             = 0x00011469U,
+    DISPID_IHTMLSTYLE6_BOXSIZING                = 0x0001146aU,
+    DISPID_IHTMLSTYLE6_BORDERSPACING            = 0x0001146bU,
+    DISPID_IHTMLSTYLE6_ORPHANS                  = 0x0001146cU,
+    DISPID_IHTMLSTYLE6_WIDOWS                   = 0x0001146dU,
+    DISPID_IHTMLSTYLE6_PAGEBREAKINSIDE          = 0x0001146eU,
+    DISPID_IHTMLSTYLE6_EMPTYCELLS               = 0x00011482U,
+    DISPID_IHTMLSTYLE6_MSBLOCKPROGRESSION       = 0x00011483U,
+    DISPID_IHTMLSTYLE6_QUOTES                   = 0x00011484U,
+    DISPID_IHTMLRULESTYLE_FONTFAMILY            = 0x0001139aU,
+    DISPID_IHTMLRULESTYLE_FONTSTYLE             = 0x000113a0U,
+    DISPID_IHTMLRULESTYLE_FONTVARIANT           = 0x000113a1U,
+    DISPID_IHTMLRULESTYLE_FONTWEIGHT            = 0x000113a3U,
+    DISPID_IHTMLRULESTYLE_FONTSIZE              = 0x0001139bU,
+    DISPID_IHTMLRULESTYLE_FONT                  = 0x000113b1U,
+    DISPID_IHTMLRULESTYLE_COLOR                 = 0x0001138aU,
+    DISPID_IHTMLRULESTYLE_BACKGROUND            = 0x000113a8U,
 }
 
 enum int DISPID_IHTMLRULESTYLE_BACKGROUNDCOLOR = 0xfffffe0b;
 
 enum : uint
 {
-    DISPID_IHTMLRULESTYLE_BACKGROUNDIMAGE           = 0x00011389,
-    DISPID_IHTMLRULESTYLE_BACKGROUNDREPEAT          = 0x000113b4,
-    DISPID_IHTMLRULESTYLE_BACKGROUNDATTACHMENT      = 0x000113b5,
-    DISPID_IHTMLRULESTYLE_BACKGROUNDPOSITION        = 0x000113b6,
-    DISPID_IHTMLRULESTYLE_BACKGROUNDPOSITIONX       = 0x000113a9,
-    DISPID_IHTMLRULESTYLE_BACKGROUNDPOSITIONY       = 0x000113aa,
-    DISPID_IHTMLRULESTYLE_WORDSPACING               = 0x000113b7,
-    DISPID_IHTMLRULESTYLE_LETTERSPACING             = 0x00011390,
-    DISPID_IHTMLRULESTYLE_TEXTDECORATION            = 0x000113ab,
-    DISPID_IHTMLRULESTYLE_TEXTDECORATIONNONE        = 0x0001139f,
-    DISPID_IHTMLRULESTYLE_TEXTDECORATIONUNDERLINE   = 0x0001139d,
-    DISPID_IHTMLRULESTYLE_TEXTDECORATIONOVERLINE    = 0x000113cd,
-    DISPID_IHTMLRULESTYLE_TEXTDECORATIONLINETHROUGH = 0x0001139c,
-    DISPID_IHTMLRULESTYLE_TEXTDECORATIONBLINK       = 0x0001139e,
-    DISPID_IHTMLRULESTYLE_VERTICALALIGN             = 0x000113b8,
-    DISPID_IHTMLRULESTYLE_TEXTTRANSFORM             = 0x0001138c,
-    DISPID_IHTMLRULESTYLE_TEXTALIGN                 = 0x00010048,
-    DISPID_IHTMLRULESTYLE_TEXTINDENT                = 0x0001138f,
-    DISPID_IHTMLRULESTYLE_LINEHEIGHT                = 0x0001138e,
-    DISPID_IHTMLRULESTYLE_MARGINTOP                 = 0x000113ad,
-    DISPID_IHTMLRULESTYLE_MARGINRIGHT               = 0x000113ae,
-    DISPID_IHTMLRULESTYLE_MARGINBOTTOM              = 0x000113af,
-    DISPID_IHTMLRULESTYLE_MARGINLEFT                = 0x000113b0,
-    DISPID_IHTMLRULESTYLE_MARGIN                    = 0x000113ac,
-    DISPID_IHTMLRULESTYLE_PADDINGTOP                = 0x00011394,
-    DISPID_IHTMLRULESTYLE_PADDINGRIGHT              = 0x00011395,
-    DISPID_IHTMLRULESTYLE_PADDINGBOTTOM             = 0x00011396,
-    DISPID_IHTMLRULESTYLE_PADDINGLEFT               = 0x00011397,
-    DISPID_IHTMLRULESTYLE_PADDING                   = 0x00011393,
-    DISPID_IHTMLRULESTYLE_BORDER                    = 0x000113b9,
-    DISPID_IHTMLRULESTYLE_BORDERTOP                 = 0x000113ba,
-    DISPID_IHTMLRULESTYLE_BORDERRIGHT               = 0x000113bb,
-    DISPID_IHTMLRULESTYLE_BORDERBOTTOM              = 0x000113bc,
-    DISPID_IHTMLRULESTYLE_BORDERLEFT                = 0x000113bd,
-    DISPID_IHTMLRULESTYLE_BORDERCOLOR               = 0x000113be,
-    DISPID_IHTMLRULESTYLE_BORDERTOPCOLOR            = 0x000113bf,
-    DISPID_IHTMLRULESTYLE_BORDERRIGHTCOLOR          = 0x000113c0,
-    DISPID_IHTMLRULESTYLE_BORDERBOTTOMCOLOR         = 0x000113c1,
-    DISPID_IHTMLRULESTYLE_BORDERLEFTCOLOR           = 0x000113c2,
-    DISPID_IHTMLRULESTYLE_BORDERWIDTH               = 0x000113c3,
-    DISPID_IHTMLRULESTYLE_BORDERTOPWIDTH            = 0x000113c4,
-    DISPID_IHTMLRULESTYLE_BORDERRIGHTWIDTH          = 0x000113c5,
-    DISPID_IHTMLRULESTYLE_BORDERBOTTOMWIDTH         = 0x000113c6,
-    DISPID_IHTMLRULESTYLE_BORDERLEFTWIDTH           = 0x000113c7,
-    DISPID_IHTMLRULESTYLE_BORDERSTYLE               = 0x000113c8,
-    DISPID_IHTMLRULESTYLE_BORDERTOPSTYLE            = 0x000113c9,
-    DISPID_IHTMLRULESTYLE_BORDERRIGHTSTYLE          = 0x000113ca,
-    DISPID_IHTMLRULESTYLE_BORDERBOTTOMSTYLE         = 0x000113cb,
-    DISPID_IHTMLRULESTYLE_BORDERLEFTSTYLE           = 0x000113cc,
-    DISPID_IHTMLRULESTYLE_WIDTH                     = 0x00010005,
-    DISPID_IHTMLRULESTYLE_HEIGHT                    = 0x00010006,
-    DISPID_IHTMLRULESTYLE_STYLEFLOAT                = 0x000113ce,
-    DISPID_IHTMLRULESTYLE_CLEAR                     = 0x00011398,
-    DISPID_IHTMLRULESTYLE_DISPLAY                   = 0x000113cf,
-    DISPID_IHTMLRULESTYLE_VISIBILITY                = 0x000113d8,
-    DISPID_IHTMLRULESTYLE_LISTSTYLETYPE             = 0x000113d0,
-    DISPID_IHTMLRULESTYLE_LISTSTYLEPOSITION         = 0x000113d1,
-    DISPID_IHTMLRULESTYLE_LISTSTYLEIMAGE            = 0x000113d2,
-    DISPID_IHTMLRULESTYLE_LISTSTYLE                 = 0x000113d3,
-    DISPID_IHTMLRULESTYLE_WHITESPACE                = 0x000113d4,
-    DISPID_IHTMLRULESTYLE_TOP                       = 0x00010004,
-    DISPID_IHTMLRULESTYLE_LEFT                      = 0x00010003,
-    DISPID_IHTMLRULESTYLE_POSITION                  = 0x000113e2,
-    DISPID_IHTMLRULESTYLE_ZINDEX                    = 0x000113e3,
-    DISPID_IHTMLRULESTYLE_OVERFLOW                  = 0x00011392,
-    DISPID_IHTMLRULESTYLE_PAGEBREAKBEFORE           = 0x000113d5,
-    DISPID_IHTMLRULESTYLE_PAGEBREAKAFTER            = 0x000113d6,
-    DISPID_IHTMLRULESTYLE_CSSTEXT                   = 0x000113eb,
-    DISPID_IHTMLRULESTYLE_CURSOR                    = 0x000113ee,
-    DISPID_IHTMLRULESTYLE_CLIP                      = 0x000113e4,
-    DISPID_IHTMLRULESTYLE_FILTER                    = 0x000113da,
-    DISPID_IHTMLRULESTYLE_SETATTRIBUTE              = 0x000101f5,
-    DISPID_IHTMLRULESTYLE_GETATTRIBUTE              = 0x000101f6,
-    DISPID_IHTMLRULESTYLE_REMOVEATTRIBUTE           = 0x000101f7,
-    DISPID_IHTMLRULESTYLE2_TABLELAYOUT              = 0x000113ea,
-    DISPID_IHTMLRULESTYLE2_BORDERCOLLAPSE           = 0x000113dc,
-    DISPID_IHTMLRULESTYLE2_DIRECTION                = 0x000113ff,
-    DISPID_IHTMLRULESTYLE2_BEHAVIOR                 = 0x000113fb,
-    DISPID_IHTMLRULESTYLE2_POSITION                 = 0x000113e2,
-    DISPID_IHTMLRULESTYLE2_UNICODEBIDI              = 0x000113fe,
-    DISPID_IHTMLRULESTYLE2_BOTTOM                   = 0x0001004e,
-    DISPID_IHTMLRULESTYLE2_RIGHT                    = 0x0001004d,
-    DISPID_IHTMLRULESTYLE2_PIXELBOTTOM              = 0x00010fa9,
-    DISPID_IHTMLRULESTYLE2_PIXELRIGHT               = 0x00010faa,
-    DISPID_IHTMLRULESTYLE2_POSBOTTOM                = 0x00010fab,
-    DISPID_IHTMLRULESTYLE2_POSRIGHT                 = 0x00010fac,
-    DISPID_IHTMLRULESTYLE2_IMEMODE                  = 0x00011400,
-    DISPID_IHTMLRULESTYLE2_RUBYALIGN                = 0x00011401,
-    DISPID_IHTMLRULESTYLE2_RUBYPOSITION             = 0x00011402,
-    DISPID_IHTMLRULESTYLE2_RUBYOVERHANG             = 0x00011403,
-    DISPID_IHTMLRULESTYLE2_LAYOUTGRIDCHAR           = 0x00011407,
-    DISPID_IHTMLRULESTYLE2_LAYOUTGRIDLINE           = 0x00011408,
-    DISPID_IHTMLRULESTYLE2_LAYOUTGRIDMODE           = 0x00011409,
-    DISPID_IHTMLRULESTYLE2_LAYOUTGRIDTYPE           = 0x0001140a,
-    DISPID_IHTMLRULESTYLE2_LAYOUTGRID               = 0x0001140b,
-    DISPID_IHTMLRULESTYLE2_TEXTAUTOSPACE            = 0x0001140c,
-    DISPID_IHTMLRULESTYLE2_WORDBREAK                = 0x0001140e,
-    DISPID_IHTMLRULESTYLE2_LINEBREAK                = 0x0001140d,
-    DISPID_IHTMLRULESTYLE2_TEXTJUSTIFY              = 0x0001140f,
-    DISPID_IHTMLRULESTYLE2_TEXTJUSTIFYTRIM          = 0x00011410,
-    DISPID_IHTMLRULESTYLE2_TEXTKASHIDA              = 0x00011411,
-    DISPID_IHTMLRULESTYLE2_OVERFLOWX                = 0x00011413,
-    DISPID_IHTMLRULESTYLE2_OVERFLOWY                = 0x00011414,
-    DISPID_IHTMLRULESTYLE2_ACCELERATOR              = 0x0001141b,
-    DISPID_IHTMLRULESTYLE3_LAYOUTFLOW               = 0x00011423,
-    DISPID_IHTMLRULESTYLE3_ZOOM                     = 0x00011421,
-    DISPID_IHTMLRULESTYLE3_WORDWRAP                 = 0x00011426,
-    DISPID_IHTMLRULESTYLE3_TEXTUNDERLINEPOSITION    = 0x00011427,
-    DISPID_IHTMLRULESTYLE3_SCROLLBARBASECOLOR       = 0x0001143c,
-    DISPID_IHTMLRULESTYLE3_SCROLLBARFACECOLOR       = 0x0001143d,
-    DISPID_IHTMLRULESTYLE3_SCROLLBAR3DLIGHTCOLOR    = 0x0001143e,
-    DISPID_IHTMLRULESTYLE3_SCROLLBARSHADOWCOLOR     = 0x0001143f,
-    DISPID_IHTMLRULESTYLE3_SCROLLBARHIGHLIGHTCOLOR  = 0x00011440,
-    DISPID_IHTMLRULESTYLE3_SCROLLBARDARKSHADOWCOLOR = 0x00011441,
-    DISPID_IHTMLRULESTYLE3_SCROLLBARARROWCOLOR      = 0x00011442,
-    DISPID_IHTMLRULESTYLE3_SCROLLBARTRACKCOLOR      = 0x0001144c,
-    DISPID_IHTMLRULESTYLE3_WRITINGMODE              = 0x00011448,
-    DISPID_IHTMLRULESTYLE3_TEXTALIGNLAST            = 0x00011453,
-    DISPID_IHTMLRULESTYLE3_TEXTKASHIDASPACE         = 0x00011454,
-    DISPID_IHTMLRULESTYLE4_TEXTOVERFLOW             = 0x00011459,
-    DISPID_IHTMLRULESTYLE4_MINHEIGHT                = 0x0001145b,
-    DISPID_IHTMLRULESTYLE5_MSINTERPOLATIONMODE      = 0x0001145d,
-    DISPID_IHTMLRULESTYLE5_MAXHEIGHT                = 0x0001145e,
-    DISPID_IHTMLRULESTYLE5_MINWIDTH                 = 0x0001145f,
-    DISPID_IHTMLRULESTYLE5_MAXWIDTH                 = 0x00011460,
-    DISPID_IHTMLRULESTYLE6_CONTENT                  = 0x00011462,
-    DISPID_IHTMLRULESTYLE6_CAPTIONSIDE              = 0x00011463,
-    DISPID_IHTMLRULESTYLE6_COUNTERINCREMENT         = 0x00011464,
-    DISPID_IHTMLRULESTYLE6_COUNTERRESET             = 0x00011465,
-    DISPID_IHTMLRULESTYLE6_OUTLINE                  = 0x00011466,
-    DISPID_IHTMLRULESTYLE6_OUTLINEWIDTH             = 0x00011467,
-    DISPID_IHTMLRULESTYLE6_OUTLINESTYLE             = 0x00011468,
-    DISPID_IHTMLRULESTYLE6_OUTLINECOLOR             = 0x00011469,
-    DISPID_IHTMLRULESTYLE6_BOXSIZING                = 0x0001146a,
-    DISPID_IHTMLRULESTYLE6_BORDERSPACING            = 0x0001146b,
-    DISPID_IHTMLRULESTYLE6_ORPHANS                  = 0x0001146c,
-    DISPID_IHTMLRULESTYLE6_WIDOWS                   = 0x0001146d,
-    DISPID_IHTMLRULESTYLE6_PAGEBREAKINSIDE          = 0x0001146e,
-    DISPID_IHTMLRULESTYLE6_EMPTYCELLS               = 0x00011482,
-    DISPID_IHTMLRULESTYLE6_MSBLOCKPROGRESSION       = 0x00011483,
-    DISPID_IHTMLRULESTYLE6_QUOTES                   = 0x00011484,
-    DISPID_IHTMLCSSRULE_TYPE                        = 0x0000044d,
-    DISPID_IHTMLCSSRULE_CSSTEXT                     = 0x0000044e,
-    DISPID_IHTMLCSSRULE_PARENTRULE                  = 0x0000044f,
-    DISPID_IHTMLCSSRULE_PARENTSTYLESHEET            = 0x00000450,
-    DISPID_IHTMLCSSIMPORTRULE_HREF                  = 0x000003e9,
-    DISPID_IHTMLCSSIMPORTRULE_MEDIA                 = 0x000003ea,
-    DISPID_IHTMLCSSIMPORTRULE_STYLESHEET            = 0x000003eb,
-    DISPID_IHTMLCSSMEDIARULE_MEDIA                  = 0x000003e9,
-    DISPID_IHTMLCSSMEDIARULE_CSSRULES               = 0x000003ea,
-    DISPID_IHTMLCSSMEDIARULE_INSERTRULE             = 0x000003eb,
-    DISPID_IHTMLCSSMEDIARULE_DELETERULE             = 0x000003ec,
-    DISPID_IHTMLCSSMEDIALIST_MEDIATEXT              = 0x000003e9,
-    DISPID_IHTMLCSSMEDIALIST_LENGTH                 = 0x000003ea,
-    DISPID_IHTMLCSSMEDIALIST_ITEM                   = 0x000003eb,
-    DISPID_IHTMLCSSMEDIALIST_APPENDMEDIUM           = 0x000003ec,
-    DISPID_IHTMLCSSMEDIALIST_DELETEMEDIUM           = 0x000003ed,
-    DISPID_IHTMLCSSNAMESPACERULE_NAMESPACEURI       = 0x000003e9,
-    DISPID_IHTMLCSSNAMESPACERULE_PREFIX             = 0x000003ea,
+    DISPID_IHTMLRULESTYLE_BACKGROUNDIMAGE           = 0x00011389U,
+    DISPID_IHTMLRULESTYLE_BACKGROUNDREPEAT          = 0x000113b4U,
+    DISPID_IHTMLRULESTYLE_BACKGROUNDATTACHMENT      = 0x000113b5U,
+    DISPID_IHTMLRULESTYLE_BACKGROUNDPOSITION        = 0x000113b6U,
+    DISPID_IHTMLRULESTYLE_BACKGROUNDPOSITIONX       = 0x000113a9U,
+    DISPID_IHTMLRULESTYLE_BACKGROUNDPOSITIONY       = 0x000113aaU,
+    DISPID_IHTMLRULESTYLE_WORDSPACING               = 0x000113b7U,
+    DISPID_IHTMLRULESTYLE_LETTERSPACING             = 0x00011390U,
+    DISPID_IHTMLRULESTYLE_TEXTDECORATION            = 0x000113abU,
+    DISPID_IHTMLRULESTYLE_TEXTDECORATIONNONE        = 0x0001139fU,
+    DISPID_IHTMLRULESTYLE_TEXTDECORATIONUNDERLINE   = 0x0001139dU,
+    DISPID_IHTMLRULESTYLE_TEXTDECORATIONOVERLINE    = 0x000113cdU,
+    DISPID_IHTMLRULESTYLE_TEXTDECORATIONLINETHROUGH = 0x0001139cU,
+    DISPID_IHTMLRULESTYLE_TEXTDECORATIONBLINK       = 0x0001139eU,
+    DISPID_IHTMLRULESTYLE_VERTICALALIGN             = 0x000113b8U,
+    DISPID_IHTMLRULESTYLE_TEXTTRANSFORM             = 0x0001138cU,
+    DISPID_IHTMLRULESTYLE_TEXTALIGN                 = 0x00010048U,
+    DISPID_IHTMLRULESTYLE_TEXTINDENT                = 0x0001138fU,
+    DISPID_IHTMLRULESTYLE_LINEHEIGHT                = 0x0001138eU,
+    DISPID_IHTMLRULESTYLE_MARGINTOP                 = 0x000113adU,
+    DISPID_IHTMLRULESTYLE_MARGINRIGHT               = 0x000113aeU,
+    DISPID_IHTMLRULESTYLE_MARGINBOTTOM              = 0x000113afU,
+    DISPID_IHTMLRULESTYLE_MARGINLEFT                = 0x000113b0U,
+    DISPID_IHTMLRULESTYLE_MARGIN                    = 0x000113acU,
+    DISPID_IHTMLRULESTYLE_PADDINGTOP                = 0x00011394U,
+    DISPID_IHTMLRULESTYLE_PADDINGRIGHT              = 0x00011395U,
+    DISPID_IHTMLRULESTYLE_PADDINGBOTTOM             = 0x00011396U,
+    DISPID_IHTMLRULESTYLE_PADDINGLEFT               = 0x00011397U,
+    DISPID_IHTMLRULESTYLE_PADDING                   = 0x00011393U,
+    DISPID_IHTMLRULESTYLE_BORDER                    = 0x000113b9U,
+    DISPID_IHTMLRULESTYLE_BORDERTOP                 = 0x000113baU,
+    DISPID_IHTMLRULESTYLE_BORDERRIGHT               = 0x000113bbU,
+    DISPID_IHTMLRULESTYLE_BORDERBOTTOM              = 0x000113bcU,
+    DISPID_IHTMLRULESTYLE_BORDERLEFT                = 0x000113bdU,
+    DISPID_IHTMLRULESTYLE_BORDERCOLOR               = 0x000113beU,
+    DISPID_IHTMLRULESTYLE_BORDERTOPCOLOR            = 0x000113bfU,
+    DISPID_IHTMLRULESTYLE_BORDERRIGHTCOLOR          = 0x000113c0U,
+    DISPID_IHTMLRULESTYLE_BORDERBOTTOMCOLOR         = 0x000113c1U,
+    DISPID_IHTMLRULESTYLE_BORDERLEFTCOLOR           = 0x000113c2U,
+    DISPID_IHTMLRULESTYLE_BORDERWIDTH               = 0x000113c3U,
+    DISPID_IHTMLRULESTYLE_BORDERTOPWIDTH            = 0x000113c4U,
+    DISPID_IHTMLRULESTYLE_BORDERRIGHTWIDTH          = 0x000113c5U,
+    DISPID_IHTMLRULESTYLE_BORDERBOTTOMWIDTH         = 0x000113c6U,
+    DISPID_IHTMLRULESTYLE_BORDERLEFTWIDTH           = 0x000113c7U,
+    DISPID_IHTMLRULESTYLE_BORDERSTYLE               = 0x000113c8U,
+    DISPID_IHTMLRULESTYLE_BORDERTOPSTYLE            = 0x000113c9U,
+    DISPID_IHTMLRULESTYLE_BORDERRIGHTSTYLE          = 0x000113caU,
+    DISPID_IHTMLRULESTYLE_BORDERBOTTOMSTYLE         = 0x000113cbU,
+    DISPID_IHTMLRULESTYLE_BORDERLEFTSTYLE           = 0x000113ccU,
+    DISPID_IHTMLRULESTYLE_WIDTH                     = 0x00010005U,
+    DISPID_IHTMLRULESTYLE_HEIGHT                    = 0x00010006U,
+    DISPID_IHTMLRULESTYLE_STYLEFLOAT                = 0x000113ceU,
+    DISPID_IHTMLRULESTYLE_CLEAR                     = 0x00011398U,
+    DISPID_IHTMLRULESTYLE_DISPLAY                   = 0x000113cfU,
+    DISPID_IHTMLRULESTYLE_VISIBILITY                = 0x000113d8U,
+    DISPID_IHTMLRULESTYLE_LISTSTYLETYPE             = 0x000113d0U,
+    DISPID_IHTMLRULESTYLE_LISTSTYLEPOSITION         = 0x000113d1U,
+    DISPID_IHTMLRULESTYLE_LISTSTYLEIMAGE            = 0x000113d2U,
+    DISPID_IHTMLRULESTYLE_LISTSTYLE                 = 0x000113d3U,
+    DISPID_IHTMLRULESTYLE_WHITESPACE                = 0x000113d4U,
+    DISPID_IHTMLRULESTYLE_TOP                       = 0x00010004U,
+    DISPID_IHTMLRULESTYLE_LEFT                      = 0x00010003U,
+    DISPID_IHTMLRULESTYLE_POSITION                  = 0x000113e2U,
+    DISPID_IHTMLRULESTYLE_ZINDEX                    = 0x000113e3U,
+    DISPID_IHTMLRULESTYLE_OVERFLOW                  = 0x00011392U,
+    DISPID_IHTMLRULESTYLE_PAGEBREAKBEFORE           = 0x000113d5U,
+    DISPID_IHTMLRULESTYLE_PAGEBREAKAFTER            = 0x000113d6U,
+    DISPID_IHTMLRULESTYLE_CSSTEXT                   = 0x000113ebU,
+    DISPID_IHTMLRULESTYLE_CURSOR                    = 0x000113eeU,
+    DISPID_IHTMLRULESTYLE_CLIP                      = 0x000113e4U,
+    DISPID_IHTMLRULESTYLE_FILTER                    = 0x000113daU,
+    DISPID_IHTMLRULESTYLE_SETATTRIBUTE              = 0x000101f5U,
+    DISPID_IHTMLRULESTYLE_GETATTRIBUTE              = 0x000101f6U,
+    DISPID_IHTMLRULESTYLE_REMOVEATTRIBUTE           = 0x000101f7U,
+    DISPID_IHTMLRULESTYLE2_TABLELAYOUT              = 0x000113eaU,
+    DISPID_IHTMLRULESTYLE2_BORDERCOLLAPSE           = 0x000113dcU,
+    DISPID_IHTMLRULESTYLE2_DIRECTION                = 0x000113ffU,
+    DISPID_IHTMLRULESTYLE2_BEHAVIOR                 = 0x000113fbU,
+    DISPID_IHTMLRULESTYLE2_POSITION                 = 0x000113e2U,
+    DISPID_IHTMLRULESTYLE2_UNICODEBIDI              = 0x000113feU,
+    DISPID_IHTMLRULESTYLE2_BOTTOM                   = 0x0001004eU,
+    DISPID_IHTMLRULESTYLE2_RIGHT                    = 0x0001004dU,
+    DISPID_IHTMLRULESTYLE2_PIXELBOTTOM              = 0x00010fa9U,
+    DISPID_IHTMLRULESTYLE2_PIXELRIGHT               = 0x00010faaU,
+    DISPID_IHTMLRULESTYLE2_POSBOTTOM                = 0x00010fabU,
+    DISPID_IHTMLRULESTYLE2_POSRIGHT                 = 0x00010facU,
+    DISPID_IHTMLRULESTYLE2_IMEMODE                  = 0x00011400U,
+    DISPID_IHTMLRULESTYLE2_RUBYALIGN                = 0x00011401U,
+    DISPID_IHTMLRULESTYLE2_RUBYPOSITION             = 0x00011402U,
+    DISPID_IHTMLRULESTYLE2_RUBYOVERHANG             = 0x00011403U,
+    DISPID_IHTMLRULESTYLE2_LAYOUTGRIDCHAR           = 0x00011407U,
+    DISPID_IHTMLRULESTYLE2_LAYOUTGRIDLINE           = 0x00011408U,
+    DISPID_IHTMLRULESTYLE2_LAYOUTGRIDMODE           = 0x00011409U,
+    DISPID_IHTMLRULESTYLE2_LAYOUTGRIDTYPE           = 0x0001140aU,
+    DISPID_IHTMLRULESTYLE2_LAYOUTGRID               = 0x0001140bU,
+    DISPID_IHTMLRULESTYLE2_TEXTAUTOSPACE            = 0x0001140cU,
+    DISPID_IHTMLRULESTYLE2_WORDBREAK                = 0x0001140eU,
+    DISPID_IHTMLRULESTYLE2_LINEBREAK                = 0x0001140dU,
+    DISPID_IHTMLRULESTYLE2_TEXTJUSTIFY              = 0x0001140fU,
+    DISPID_IHTMLRULESTYLE2_TEXTJUSTIFYTRIM          = 0x00011410U,
+    DISPID_IHTMLRULESTYLE2_TEXTKASHIDA              = 0x00011411U,
+    DISPID_IHTMLRULESTYLE2_OVERFLOWX                = 0x00011413U,
+    DISPID_IHTMLRULESTYLE2_OVERFLOWY                = 0x00011414U,
+    DISPID_IHTMLRULESTYLE2_ACCELERATOR              = 0x0001141bU,
+    DISPID_IHTMLRULESTYLE3_LAYOUTFLOW               = 0x00011423U,
+    DISPID_IHTMLRULESTYLE3_ZOOM                     = 0x00011421U,
+    DISPID_IHTMLRULESTYLE3_WORDWRAP                 = 0x00011426U,
+    DISPID_IHTMLRULESTYLE3_TEXTUNDERLINEPOSITION    = 0x00011427U,
+    DISPID_IHTMLRULESTYLE3_SCROLLBARBASECOLOR       = 0x0001143cU,
+    DISPID_IHTMLRULESTYLE3_SCROLLBARFACECOLOR       = 0x0001143dU,
+    DISPID_IHTMLRULESTYLE3_SCROLLBAR3DLIGHTCOLOR    = 0x0001143eU,
+    DISPID_IHTMLRULESTYLE3_SCROLLBARSHADOWCOLOR     = 0x0001143fU,
+    DISPID_IHTMLRULESTYLE3_SCROLLBARHIGHLIGHTCOLOR  = 0x00011440U,
+    DISPID_IHTMLRULESTYLE3_SCROLLBARDARKSHADOWCOLOR = 0x00011441U,
+    DISPID_IHTMLRULESTYLE3_SCROLLBARARROWCOLOR      = 0x00011442U,
+    DISPID_IHTMLRULESTYLE3_SCROLLBARTRACKCOLOR      = 0x0001144cU,
+    DISPID_IHTMLRULESTYLE3_WRITINGMODE              = 0x00011448U,
+    DISPID_IHTMLRULESTYLE3_TEXTALIGNLAST            = 0x00011453U,
+    DISPID_IHTMLRULESTYLE3_TEXTKASHIDASPACE         = 0x00011454U,
+    DISPID_IHTMLRULESTYLE4_TEXTOVERFLOW             = 0x00011459U,
+    DISPID_IHTMLRULESTYLE4_MINHEIGHT                = 0x0001145bU,
+    DISPID_IHTMLRULESTYLE5_MSINTERPOLATIONMODE      = 0x0001145dU,
+    DISPID_IHTMLRULESTYLE5_MAXHEIGHT                = 0x0001145eU,
+    DISPID_IHTMLRULESTYLE5_MINWIDTH                 = 0x0001145fU,
+    DISPID_IHTMLRULESTYLE5_MAXWIDTH                 = 0x00011460U,
+    DISPID_IHTMLRULESTYLE6_CONTENT                  = 0x00011462U,
+    DISPID_IHTMLRULESTYLE6_CAPTIONSIDE              = 0x00011463U,
+    DISPID_IHTMLRULESTYLE6_COUNTERINCREMENT         = 0x00011464U,
+    DISPID_IHTMLRULESTYLE6_COUNTERRESET             = 0x00011465U,
+    DISPID_IHTMLRULESTYLE6_OUTLINE                  = 0x00011466U,
+    DISPID_IHTMLRULESTYLE6_OUTLINEWIDTH             = 0x00011467U,
+    DISPID_IHTMLRULESTYLE6_OUTLINESTYLE             = 0x00011468U,
+    DISPID_IHTMLRULESTYLE6_OUTLINECOLOR             = 0x00011469U,
+    DISPID_IHTMLRULESTYLE6_BOXSIZING                = 0x0001146aU,
+    DISPID_IHTMLRULESTYLE6_BORDERSPACING            = 0x0001146bU,
+    DISPID_IHTMLRULESTYLE6_ORPHANS                  = 0x0001146cU,
+    DISPID_IHTMLRULESTYLE6_WIDOWS                   = 0x0001146dU,
+    DISPID_IHTMLRULESTYLE6_PAGEBREAKINSIDE          = 0x0001146eU,
+    DISPID_IHTMLRULESTYLE6_EMPTYCELLS               = 0x00011482U,
+    DISPID_IHTMLRULESTYLE6_MSBLOCKPROGRESSION       = 0x00011483U,
+    DISPID_IHTMLRULESTYLE6_QUOTES                   = 0x00011484U,
+    DISPID_IHTMLCSSRULE_TYPE                        = 0x0000044dU,
+    DISPID_IHTMLCSSRULE_CSSTEXT                     = 0x0000044eU,
+    DISPID_IHTMLCSSRULE_PARENTRULE                  = 0x0000044fU,
+    DISPID_IHTMLCSSRULE_PARENTSTYLESHEET            = 0x00000450U,
+    DISPID_IHTMLCSSIMPORTRULE_HREF                  = 0x000003e9U,
+    DISPID_IHTMLCSSIMPORTRULE_MEDIA                 = 0x000003eaU,
+    DISPID_IHTMLCSSIMPORTRULE_STYLESHEET            = 0x000003ebU,
+    DISPID_IHTMLCSSMEDIARULE_MEDIA                  = 0x000003e9U,
+    DISPID_IHTMLCSSMEDIARULE_CSSRULES               = 0x000003eaU,
+    DISPID_IHTMLCSSMEDIARULE_INSERTRULE             = 0x000003ebU,
+    DISPID_IHTMLCSSMEDIARULE_DELETERULE             = 0x000003ecU,
+    DISPID_IHTMLCSSMEDIALIST_MEDIATEXT              = 0x000003e9U,
+    DISPID_IHTMLCSSMEDIALIST_LENGTH                 = 0x000003eaU,
+    DISPID_IHTMLCSSMEDIALIST_ITEM                   = 0x000003ebU,
+    DISPID_IHTMLCSSMEDIALIST_APPENDMEDIUM           = 0x000003ecU,
+    DISPID_IHTMLCSSMEDIALIST_DELETEMEDIUM           = 0x000003edU,
+    DISPID_IHTMLCSSNAMESPACERULE_NAMESPACEURI       = 0x000003e9U,
+    DISPID_IHTMLCSSNAMESPACERULE_PREFIX             = 0x000003eaU,
 }
 
 enum : uint
 {
-    DISPID_IHTMLMSCSSKEYFRAMERULE_KEYTEXT     = 0x000003e9,
-    DISPID_IHTMLMSCSSKEYFRAMERULE_STYLE       = 0x000003ea,
-    DISPID_IHTMLMSCSSKEYFRAMESRULE_NAME       = 0x000003e9,
-    DISPID_IHTMLMSCSSKEYFRAMESRULE_CSSRULES   = 0x000003ea,
-    DISPID_IHTMLMSCSSKEYFRAMESRULE_APPENDRULE = 0x000003eb,
-    DISPID_IHTMLMSCSSKEYFRAMESRULE_DELETERULE = 0x000003ec,
-    DISPID_IHTMLMSCSSKEYFRAMESRULE_FINDRULE   = 0x000003ed,
+    DISPID_IHTMLMSCSSKEYFRAMERULE_KEYTEXT     = 0x000003e9U,
+    DISPID_IHTMLMSCSSKEYFRAMERULE_STYLE       = 0x000003eaU,
+    DISPID_IHTMLMSCSSKEYFRAMESRULE_NAME       = 0x000003e9U,
+    DISPID_IHTMLMSCSSKEYFRAMESRULE_CSSRULES   = 0x000003eaU,
+    DISPID_IHTMLMSCSSKEYFRAMESRULE_APPENDRULE = 0x000003ebU,
+    DISPID_IHTMLMSCSSKEYFRAMESRULE_DELETERULE = 0x000003ecU,
+    DISPID_IHTMLMSCSSKEYFRAMESRULE_FINDRULE   = 0x000003edU,
 }
 
 enum : uint
 {
-    DISPID_IHTMLRENDERSTYLE_TEXTLINETHROUGHSTYLE = 0x0001142e,
-    DISPID_IHTMLRENDERSTYLE_TEXTUNDERLINESTYLE   = 0x0001142f,
-    DISPID_IHTMLRENDERSTYLE_TEXTEFFECT           = 0x00011430,
-    DISPID_IHTMLRENDERSTYLE_TEXTCOLOR            = 0x00011446,
-    DISPID_IHTMLRENDERSTYLE_TEXTBACKGROUNDCOLOR  = 0x00011431,
-    DISPID_IHTMLRENDERSTYLE_TEXTDECORATIONCOLOR  = 0x00011445,
-    DISPID_IHTMLRENDERSTYLE_RENDERINGPRIORITY    = 0x00011432,
-    DISPID_IHTMLRENDERSTYLE_DEFAULTTEXTSELECTION = 0x00011444,
-    DISPID_IHTMLRENDERSTYLE_TEXTDECORATION       = 0x00011447,
+    DISPID_IHTMLRENDERSTYLE_TEXTLINETHROUGHSTYLE = 0x0001142eU,
+    DISPID_IHTMLRENDERSTYLE_TEXTUNDERLINESTYLE   = 0x0001142fU,
+    DISPID_IHTMLRENDERSTYLE_TEXTEFFECT           = 0x00011430U,
+    DISPID_IHTMLRENDERSTYLE_TEXTCOLOR            = 0x00011446U,
+    DISPID_IHTMLRENDERSTYLE_TEXTBACKGROUNDCOLOR  = 0x00011431U,
+    DISPID_IHTMLRENDERSTYLE_TEXTDECORATIONCOLOR  = 0x00011445U,
+    DISPID_IHTMLRENDERSTYLE_RENDERINGPRIORITY    = 0x00011432U,
+    DISPID_IHTMLRENDERSTYLE_DEFAULTTEXTSELECTION = 0x00011444U,
+    DISPID_IHTMLRENDERSTYLE_TEXTDECORATION       = 0x00011447U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLCURRENTSTYLE_POSITION   = 0x000113e2,
-    DISPID_IHTMLCURRENTSTYLE_STYLEFLOAT = 0x000113ce,
-    DISPID_IHTMLCURRENTSTYLE_COLOR      = 0x0001138a,
+    DISPID_IHTMLCURRENTSTYLE_POSITION   = 0x000113e2U,
+    DISPID_IHTMLCURRENTSTYLE_STYLEFLOAT = 0x000113ceU,
+    DISPID_IHTMLCURRENTSTYLE_COLOR      = 0x0001138aU,
 }
 
 enum int DISPID_IHTMLCURRENTSTYLE_BACKGROUNDCOLOR = 0xfffffe0b;
 
 enum : uint
 {
-    DISPID_IHTMLCURRENTSTYLE_FONTFAMILY                = 0x0001139a,
-    DISPID_IHTMLCURRENTSTYLE_FONTSTYLE                 = 0x000113a0,
-    DISPID_IHTMLCURRENTSTYLE_FONTVARIANT               = 0x000113a1,
-    DISPID_IHTMLCURRENTSTYLE_FONTWEIGHT                = 0x000113a3,
-    DISPID_IHTMLCURRENTSTYLE_FONTSIZE                  = 0x0001139b,
-    DISPID_IHTMLCURRENTSTYLE_BACKGROUNDIMAGE           = 0x00011389,
-    DISPID_IHTMLCURRENTSTYLE_BACKGROUNDPOSITIONX       = 0x000113a9,
-    DISPID_IHTMLCURRENTSTYLE_BACKGROUNDPOSITIONY       = 0x000113aa,
-    DISPID_IHTMLCURRENTSTYLE_BACKGROUNDREPEAT          = 0x000113b4,
-    DISPID_IHTMLCURRENTSTYLE_BORDERLEFTCOLOR           = 0x000113c2,
-    DISPID_IHTMLCURRENTSTYLE_BORDERTOPCOLOR            = 0x000113bf,
-    DISPID_IHTMLCURRENTSTYLE_BORDERRIGHTCOLOR          = 0x000113c0,
-    DISPID_IHTMLCURRENTSTYLE_BORDERBOTTOMCOLOR         = 0x000113c1,
-    DISPID_IHTMLCURRENTSTYLE_BORDERTOPSTYLE            = 0x000113c9,
-    DISPID_IHTMLCURRENTSTYLE_BORDERRIGHTSTYLE          = 0x000113ca,
-    DISPID_IHTMLCURRENTSTYLE_BORDERBOTTOMSTYLE         = 0x000113cb,
-    DISPID_IHTMLCURRENTSTYLE_BORDERLEFTSTYLE           = 0x000113cc,
-    DISPID_IHTMLCURRENTSTYLE_BORDERTOPWIDTH            = 0x000113c4,
-    DISPID_IHTMLCURRENTSTYLE_BORDERRIGHTWIDTH          = 0x000113c5,
-    DISPID_IHTMLCURRENTSTYLE_BORDERBOTTOMWIDTH         = 0x000113c6,
-    DISPID_IHTMLCURRENTSTYLE_BORDERLEFTWIDTH           = 0x000113c7,
-    DISPID_IHTMLCURRENTSTYLE_LEFT                      = 0x00010003,
-    DISPID_IHTMLCURRENTSTYLE_TOP                       = 0x00010004,
-    DISPID_IHTMLCURRENTSTYLE_WIDTH                     = 0x00010005,
-    DISPID_IHTMLCURRENTSTYLE_HEIGHT                    = 0x00010006,
-    DISPID_IHTMLCURRENTSTYLE_PADDINGLEFT               = 0x00011397,
-    DISPID_IHTMLCURRENTSTYLE_PADDINGTOP                = 0x00011394,
-    DISPID_IHTMLCURRENTSTYLE_PADDINGRIGHT              = 0x00011395,
-    DISPID_IHTMLCURRENTSTYLE_PADDINGBOTTOM             = 0x00011396,
-    DISPID_IHTMLCURRENTSTYLE_TEXTALIGN                 = 0x00010048,
-    DISPID_IHTMLCURRENTSTYLE_TEXTDECORATION            = 0x000113ab,
-    DISPID_IHTMLCURRENTSTYLE_DISPLAY                   = 0x000113cf,
-    DISPID_IHTMLCURRENTSTYLE_VISIBILITY                = 0x000113d8,
-    DISPID_IHTMLCURRENTSTYLE_ZINDEX                    = 0x000113e3,
-    DISPID_IHTMLCURRENTSTYLE_LETTERSPACING             = 0x00011390,
-    DISPID_IHTMLCURRENTSTYLE_LINEHEIGHT                = 0x0001138e,
-    DISPID_IHTMLCURRENTSTYLE_TEXTINDENT                = 0x0001138f,
-    DISPID_IHTMLCURRENTSTYLE_VERTICALALIGN             = 0x000113b8,
-    DISPID_IHTMLCURRENTSTYLE_BACKGROUNDATTACHMENT      = 0x000113b5,
-    DISPID_IHTMLCURRENTSTYLE_MARGINTOP                 = 0x000113ad,
-    DISPID_IHTMLCURRENTSTYLE_MARGINRIGHT               = 0x000113ae,
-    DISPID_IHTMLCURRENTSTYLE_MARGINBOTTOM              = 0x000113af,
-    DISPID_IHTMLCURRENTSTYLE_MARGINLEFT                = 0x000113b0,
-    DISPID_IHTMLCURRENTSTYLE_CLEAR                     = 0x00011398,
-    DISPID_IHTMLCURRENTSTYLE_LISTSTYLETYPE             = 0x000113d0,
-    DISPID_IHTMLCURRENTSTYLE_LISTSTYLEPOSITION         = 0x000113d1,
-    DISPID_IHTMLCURRENTSTYLE_LISTSTYLEIMAGE            = 0x000113d2,
-    DISPID_IHTMLCURRENTSTYLE_CLIPTOP                   = 0x000113e5,
-    DISPID_IHTMLCURRENTSTYLE_CLIPRIGHT                 = 0x000113e6,
-    DISPID_IHTMLCURRENTSTYLE_CLIPBOTTOM                = 0x000113e7,
-    DISPID_IHTMLCURRENTSTYLE_CLIPLEFT                  = 0x000113e8,
-    DISPID_IHTMLCURRENTSTYLE_OVERFLOW                  = 0x00011392,
-    DISPID_IHTMLCURRENTSTYLE_PAGEBREAKBEFORE           = 0x000113d5,
-    DISPID_IHTMLCURRENTSTYLE_PAGEBREAKAFTER            = 0x000113d6,
-    DISPID_IHTMLCURRENTSTYLE_CURSOR                    = 0x000113ee,
-    DISPID_IHTMLCURRENTSTYLE_TABLELAYOUT               = 0x000113ea,
-    DISPID_IHTMLCURRENTSTYLE_BORDERCOLLAPSE            = 0x000113dc,
-    DISPID_IHTMLCURRENTSTYLE_DIRECTION                 = 0x000113ff,
-    DISPID_IHTMLCURRENTSTYLE_BEHAVIOR                  = 0x000113fb,
-    DISPID_IHTMLCURRENTSTYLE_GETATTRIBUTE              = 0x000101f6,
-    DISPID_IHTMLCURRENTSTYLE_UNICODEBIDI               = 0x000113fe,
-    DISPID_IHTMLCURRENTSTYLE_RIGHT                     = 0x0001004d,
-    DISPID_IHTMLCURRENTSTYLE_BOTTOM                    = 0x0001004e,
-    DISPID_IHTMLCURRENTSTYLE_IMEMODE                   = 0x00011400,
-    DISPID_IHTMLCURRENTSTYLE_RUBYALIGN                 = 0x00011401,
-    DISPID_IHTMLCURRENTSTYLE_RUBYPOSITION              = 0x00011402,
-    DISPID_IHTMLCURRENTSTYLE_RUBYOVERHANG              = 0x00011403,
-    DISPID_IHTMLCURRENTSTYLE_TEXTAUTOSPACE             = 0x0001140c,
-    DISPID_IHTMLCURRENTSTYLE_LINEBREAK                 = 0x0001140d,
-    DISPID_IHTMLCURRENTSTYLE_WORDBREAK                 = 0x0001140e,
-    DISPID_IHTMLCURRENTSTYLE_TEXTJUSTIFY               = 0x0001140f,
-    DISPID_IHTMLCURRENTSTYLE_TEXTJUSTIFYTRIM           = 0x00011410,
-    DISPID_IHTMLCURRENTSTYLE_TEXTKASHIDA               = 0x00011411,
-    DISPID_IHTMLCURRENTSTYLE_BLOCKDIRECTION            = 0x000113fd,
-    DISPID_IHTMLCURRENTSTYLE_LAYOUTGRIDCHAR            = 0x00011407,
-    DISPID_IHTMLCURRENTSTYLE_LAYOUTGRIDLINE            = 0x00011408,
-    DISPID_IHTMLCURRENTSTYLE_LAYOUTGRIDMODE            = 0x00011409,
-    DISPID_IHTMLCURRENTSTYLE_LAYOUTGRIDTYPE            = 0x0001140a,
-    DISPID_IHTMLCURRENTSTYLE_BORDERSTYLE               = 0x000113c8,
-    DISPID_IHTMLCURRENTSTYLE_BORDERCOLOR               = 0x000113be,
-    DISPID_IHTMLCURRENTSTYLE_BORDERWIDTH               = 0x000113c3,
-    DISPID_IHTMLCURRENTSTYLE_PADDING                   = 0x00011393,
-    DISPID_IHTMLCURRENTSTYLE_MARGIN                    = 0x000113ac,
-    DISPID_IHTMLCURRENTSTYLE_ACCELERATOR               = 0x0001141b,
-    DISPID_IHTMLCURRENTSTYLE_OVERFLOWX                 = 0x00011413,
-    DISPID_IHTMLCURRENTSTYLE_OVERFLOWY                 = 0x00011414,
-    DISPID_IHTMLCURRENTSTYLE_TEXTTRANSFORM             = 0x0001138c,
-    DISPID_IHTMLCURRENTSTYLE2_LAYOUTFLOW               = 0x00011423,
-    DISPID_IHTMLCURRENTSTYLE2_WORDWRAP                 = 0x00011426,
-    DISPID_IHTMLCURRENTSTYLE2_TEXTUNDERLINEPOSITION    = 0x00011427,
-    DISPID_IHTMLCURRENTSTYLE2_HASLAYOUT                = 0x00011428,
-    DISPID_IHTMLCURRENTSTYLE2_SCROLLBARBASECOLOR       = 0x0001143c,
-    DISPID_IHTMLCURRENTSTYLE2_SCROLLBARFACECOLOR       = 0x0001143d,
-    DISPID_IHTMLCURRENTSTYLE2_SCROLLBAR3DLIGHTCOLOR    = 0x0001143e,
-    DISPID_IHTMLCURRENTSTYLE2_SCROLLBARSHADOWCOLOR     = 0x0001143f,
-    DISPID_IHTMLCURRENTSTYLE2_SCROLLBARHIGHLIGHTCOLOR  = 0x00011440,
-    DISPID_IHTMLCURRENTSTYLE2_SCROLLBARDARKSHADOWCOLOR = 0x00011441,
-    DISPID_IHTMLCURRENTSTYLE2_SCROLLBARARROWCOLOR      = 0x00011442,
-    DISPID_IHTMLCURRENTSTYLE2_SCROLLBARTRACKCOLOR      = 0x0001144c,
-    DISPID_IHTMLCURRENTSTYLE2_WRITINGMODE              = 0x00011448,
-    DISPID_IHTMLCURRENTSTYLE2_ZOOM                     = 0x00011421,
-    DISPID_IHTMLCURRENTSTYLE2_FILTER                   = 0x000113da,
-    DISPID_IHTMLCURRENTSTYLE2_TEXTALIGNLAST            = 0x00011453,
-    DISPID_IHTMLCURRENTSTYLE2_TEXTKASHIDASPACE         = 0x00011454,
-    DISPID_IHTMLCURRENTSTYLE2_ISBLOCK                  = 0x00011458,
-    DISPID_IHTMLCURRENTSTYLE3_TEXTOVERFLOW             = 0x00011459,
-    DISPID_IHTMLCURRENTSTYLE3_MINHEIGHT                = 0x0001145b,
-    DISPID_IHTMLCURRENTSTYLE3_WORDSPACING              = 0x000113b7,
-    DISPID_IHTMLCURRENTSTYLE3_WHITESPACE               = 0x000113d4,
-    DISPID_IHTMLCURRENTSTYLE4_MSINTERPOLATIONMODE      = 0x0001145d,
-    DISPID_IHTMLCURRENTSTYLE4_MAXHEIGHT                = 0x0001145e,
-    DISPID_IHTMLCURRENTSTYLE4_MINWIDTH                 = 0x0001145f,
-    DISPID_IHTMLCURRENTSTYLE4_MAXWIDTH                 = 0x00011460,
-    DISPID_IHTMLCURRENTSTYLE5_CAPTIONSIDE              = 0x00011463,
-    DISPID_IHTMLCURRENTSTYLE5_OUTLINE                  = 0x00011466,
-    DISPID_IHTMLCURRENTSTYLE5_OUTLINEWIDTH             = 0x00011467,
-    DISPID_IHTMLCURRENTSTYLE5_OUTLINESTYLE             = 0x00011468,
-    DISPID_IHTMLCURRENTSTYLE5_OUTLINECOLOR             = 0x00011469,
-    DISPID_IHTMLCURRENTSTYLE5_BOXSIZING                = 0x0001146a,
-    DISPID_IHTMLCURRENTSTYLE5_BORDERSPACING            = 0x0001146b,
-    DISPID_IHTMLCURRENTSTYLE5_ORPHANS                  = 0x0001146c,
-    DISPID_IHTMLCURRENTSTYLE5_WIDOWS                   = 0x0001146d,
-    DISPID_IHTMLCURRENTSTYLE5_PAGEBREAKINSIDE          = 0x0001146e,
-    DISPID_IHTMLCURRENTSTYLE5_EMPTYCELLS               = 0x00011482,
-    DISPID_IHTMLCURRENTSTYLE5_MSBLOCKPROGRESSION       = 0x00011483,
-    DISPID_IHTMLCURRENTSTYLE5_QUOTES                   = 0x00011484,
+    DISPID_IHTMLCURRENTSTYLE_FONTFAMILY                = 0x0001139aU,
+    DISPID_IHTMLCURRENTSTYLE_FONTSTYLE                 = 0x000113a0U,
+    DISPID_IHTMLCURRENTSTYLE_FONTVARIANT               = 0x000113a1U,
+    DISPID_IHTMLCURRENTSTYLE_FONTWEIGHT                = 0x000113a3U,
+    DISPID_IHTMLCURRENTSTYLE_FONTSIZE                  = 0x0001139bU,
+    DISPID_IHTMLCURRENTSTYLE_BACKGROUNDIMAGE           = 0x00011389U,
+    DISPID_IHTMLCURRENTSTYLE_BACKGROUNDPOSITIONX       = 0x000113a9U,
+    DISPID_IHTMLCURRENTSTYLE_BACKGROUNDPOSITIONY       = 0x000113aaU,
+    DISPID_IHTMLCURRENTSTYLE_BACKGROUNDREPEAT          = 0x000113b4U,
+    DISPID_IHTMLCURRENTSTYLE_BORDERLEFTCOLOR           = 0x000113c2U,
+    DISPID_IHTMLCURRENTSTYLE_BORDERTOPCOLOR            = 0x000113bfU,
+    DISPID_IHTMLCURRENTSTYLE_BORDERRIGHTCOLOR          = 0x000113c0U,
+    DISPID_IHTMLCURRENTSTYLE_BORDERBOTTOMCOLOR         = 0x000113c1U,
+    DISPID_IHTMLCURRENTSTYLE_BORDERTOPSTYLE            = 0x000113c9U,
+    DISPID_IHTMLCURRENTSTYLE_BORDERRIGHTSTYLE          = 0x000113caU,
+    DISPID_IHTMLCURRENTSTYLE_BORDERBOTTOMSTYLE         = 0x000113cbU,
+    DISPID_IHTMLCURRENTSTYLE_BORDERLEFTSTYLE           = 0x000113ccU,
+    DISPID_IHTMLCURRENTSTYLE_BORDERTOPWIDTH            = 0x000113c4U,
+    DISPID_IHTMLCURRENTSTYLE_BORDERRIGHTWIDTH          = 0x000113c5U,
+    DISPID_IHTMLCURRENTSTYLE_BORDERBOTTOMWIDTH         = 0x000113c6U,
+    DISPID_IHTMLCURRENTSTYLE_BORDERLEFTWIDTH           = 0x000113c7U,
+    DISPID_IHTMLCURRENTSTYLE_LEFT                      = 0x00010003U,
+    DISPID_IHTMLCURRENTSTYLE_TOP                       = 0x00010004U,
+    DISPID_IHTMLCURRENTSTYLE_WIDTH                     = 0x00010005U,
+    DISPID_IHTMLCURRENTSTYLE_HEIGHT                    = 0x00010006U,
+    DISPID_IHTMLCURRENTSTYLE_PADDINGLEFT               = 0x00011397U,
+    DISPID_IHTMLCURRENTSTYLE_PADDINGTOP                = 0x00011394U,
+    DISPID_IHTMLCURRENTSTYLE_PADDINGRIGHT              = 0x00011395U,
+    DISPID_IHTMLCURRENTSTYLE_PADDINGBOTTOM             = 0x00011396U,
+    DISPID_IHTMLCURRENTSTYLE_TEXTALIGN                 = 0x00010048U,
+    DISPID_IHTMLCURRENTSTYLE_TEXTDECORATION            = 0x000113abU,
+    DISPID_IHTMLCURRENTSTYLE_DISPLAY                   = 0x000113cfU,
+    DISPID_IHTMLCURRENTSTYLE_VISIBILITY                = 0x000113d8U,
+    DISPID_IHTMLCURRENTSTYLE_ZINDEX                    = 0x000113e3U,
+    DISPID_IHTMLCURRENTSTYLE_LETTERSPACING             = 0x00011390U,
+    DISPID_IHTMLCURRENTSTYLE_LINEHEIGHT                = 0x0001138eU,
+    DISPID_IHTMLCURRENTSTYLE_TEXTINDENT                = 0x0001138fU,
+    DISPID_IHTMLCURRENTSTYLE_VERTICALALIGN             = 0x000113b8U,
+    DISPID_IHTMLCURRENTSTYLE_BACKGROUNDATTACHMENT      = 0x000113b5U,
+    DISPID_IHTMLCURRENTSTYLE_MARGINTOP                 = 0x000113adU,
+    DISPID_IHTMLCURRENTSTYLE_MARGINRIGHT               = 0x000113aeU,
+    DISPID_IHTMLCURRENTSTYLE_MARGINBOTTOM              = 0x000113afU,
+    DISPID_IHTMLCURRENTSTYLE_MARGINLEFT                = 0x000113b0U,
+    DISPID_IHTMLCURRENTSTYLE_CLEAR                     = 0x00011398U,
+    DISPID_IHTMLCURRENTSTYLE_LISTSTYLETYPE             = 0x000113d0U,
+    DISPID_IHTMLCURRENTSTYLE_LISTSTYLEPOSITION         = 0x000113d1U,
+    DISPID_IHTMLCURRENTSTYLE_LISTSTYLEIMAGE            = 0x000113d2U,
+    DISPID_IHTMLCURRENTSTYLE_CLIPTOP                   = 0x000113e5U,
+    DISPID_IHTMLCURRENTSTYLE_CLIPRIGHT                 = 0x000113e6U,
+    DISPID_IHTMLCURRENTSTYLE_CLIPBOTTOM                = 0x000113e7U,
+    DISPID_IHTMLCURRENTSTYLE_CLIPLEFT                  = 0x000113e8U,
+    DISPID_IHTMLCURRENTSTYLE_OVERFLOW                  = 0x00011392U,
+    DISPID_IHTMLCURRENTSTYLE_PAGEBREAKBEFORE           = 0x000113d5U,
+    DISPID_IHTMLCURRENTSTYLE_PAGEBREAKAFTER            = 0x000113d6U,
+    DISPID_IHTMLCURRENTSTYLE_CURSOR                    = 0x000113eeU,
+    DISPID_IHTMLCURRENTSTYLE_TABLELAYOUT               = 0x000113eaU,
+    DISPID_IHTMLCURRENTSTYLE_BORDERCOLLAPSE            = 0x000113dcU,
+    DISPID_IHTMLCURRENTSTYLE_DIRECTION                 = 0x000113ffU,
+    DISPID_IHTMLCURRENTSTYLE_BEHAVIOR                  = 0x000113fbU,
+    DISPID_IHTMLCURRENTSTYLE_GETATTRIBUTE              = 0x000101f6U,
+    DISPID_IHTMLCURRENTSTYLE_UNICODEBIDI               = 0x000113feU,
+    DISPID_IHTMLCURRENTSTYLE_RIGHT                     = 0x0001004dU,
+    DISPID_IHTMLCURRENTSTYLE_BOTTOM                    = 0x0001004eU,
+    DISPID_IHTMLCURRENTSTYLE_IMEMODE                   = 0x00011400U,
+    DISPID_IHTMLCURRENTSTYLE_RUBYALIGN                 = 0x00011401U,
+    DISPID_IHTMLCURRENTSTYLE_RUBYPOSITION              = 0x00011402U,
+    DISPID_IHTMLCURRENTSTYLE_RUBYOVERHANG              = 0x00011403U,
+    DISPID_IHTMLCURRENTSTYLE_TEXTAUTOSPACE             = 0x0001140cU,
+    DISPID_IHTMLCURRENTSTYLE_LINEBREAK                 = 0x0001140dU,
+    DISPID_IHTMLCURRENTSTYLE_WORDBREAK                 = 0x0001140eU,
+    DISPID_IHTMLCURRENTSTYLE_TEXTJUSTIFY               = 0x0001140fU,
+    DISPID_IHTMLCURRENTSTYLE_TEXTJUSTIFYTRIM           = 0x00011410U,
+    DISPID_IHTMLCURRENTSTYLE_TEXTKASHIDA               = 0x00011411U,
+    DISPID_IHTMLCURRENTSTYLE_BLOCKDIRECTION            = 0x000113fdU,
+    DISPID_IHTMLCURRENTSTYLE_LAYOUTGRIDCHAR            = 0x00011407U,
+    DISPID_IHTMLCURRENTSTYLE_LAYOUTGRIDLINE            = 0x00011408U,
+    DISPID_IHTMLCURRENTSTYLE_LAYOUTGRIDMODE            = 0x00011409U,
+    DISPID_IHTMLCURRENTSTYLE_LAYOUTGRIDTYPE            = 0x0001140aU,
+    DISPID_IHTMLCURRENTSTYLE_BORDERSTYLE               = 0x000113c8U,
+    DISPID_IHTMLCURRENTSTYLE_BORDERCOLOR               = 0x000113beU,
+    DISPID_IHTMLCURRENTSTYLE_BORDERWIDTH               = 0x000113c3U,
+    DISPID_IHTMLCURRENTSTYLE_PADDING                   = 0x00011393U,
+    DISPID_IHTMLCURRENTSTYLE_MARGIN                    = 0x000113acU,
+    DISPID_IHTMLCURRENTSTYLE_ACCELERATOR               = 0x0001141bU,
+    DISPID_IHTMLCURRENTSTYLE_OVERFLOWX                 = 0x00011413U,
+    DISPID_IHTMLCURRENTSTYLE_OVERFLOWY                 = 0x00011414U,
+    DISPID_IHTMLCURRENTSTYLE_TEXTTRANSFORM             = 0x0001138cU,
+    DISPID_IHTMLCURRENTSTYLE2_LAYOUTFLOW               = 0x00011423U,
+    DISPID_IHTMLCURRENTSTYLE2_WORDWRAP                 = 0x00011426U,
+    DISPID_IHTMLCURRENTSTYLE2_TEXTUNDERLINEPOSITION    = 0x00011427U,
+    DISPID_IHTMLCURRENTSTYLE2_HASLAYOUT                = 0x00011428U,
+    DISPID_IHTMLCURRENTSTYLE2_SCROLLBARBASECOLOR       = 0x0001143cU,
+    DISPID_IHTMLCURRENTSTYLE2_SCROLLBARFACECOLOR       = 0x0001143dU,
+    DISPID_IHTMLCURRENTSTYLE2_SCROLLBAR3DLIGHTCOLOR    = 0x0001143eU,
+    DISPID_IHTMLCURRENTSTYLE2_SCROLLBARSHADOWCOLOR     = 0x0001143fU,
+    DISPID_IHTMLCURRENTSTYLE2_SCROLLBARHIGHLIGHTCOLOR  = 0x00011440U,
+    DISPID_IHTMLCURRENTSTYLE2_SCROLLBARDARKSHADOWCOLOR = 0x00011441U,
+    DISPID_IHTMLCURRENTSTYLE2_SCROLLBARARROWCOLOR      = 0x00011442U,
+    DISPID_IHTMLCURRENTSTYLE2_SCROLLBARTRACKCOLOR      = 0x0001144cU,
+    DISPID_IHTMLCURRENTSTYLE2_WRITINGMODE              = 0x00011448U,
+    DISPID_IHTMLCURRENTSTYLE2_ZOOM                     = 0x00011421U,
+    DISPID_IHTMLCURRENTSTYLE2_FILTER                   = 0x000113daU,
+    DISPID_IHTMLCURRENTSTYLE2_TEXTALIGNLAST            = 0x00011453U,
+    DISPID_IHTMLCURRENTSTYLE2_TEXTKASHIDASPACE         = 0x00011454U,
+    DISPID_IHTMLCURRENTSTYLE2_ISBLOCK                  = 0x00011458U,
+    DISPID_IHTMLCURRENTSTYLE3_TEXTOVERFLOW             = 0x00011459U,
+    DISPID_IHTMLCURRENTSTYLE3_MINHEIGHT                = 0x0001145bU,
+    DISPID_IHTMLCURRENTSTYLE3_WORDSPACING              = 0x000113b7U,
+    DISPID_IHTMLCURRENTSTYLE3_WHITESPACE               = 0x000113d4U,
+    DISPID_IHTMLCURRENTSTYLE4_MSINTERPOLATIONMODE      = 0x0001145dU,
+    DISPID_IHTMLCURRENTSTYLE4_MAXHEIGHT                = 0x0001145eU,
+    DISPID_IHTMLCURRENTSTYLE4_MINWIDTH                 = 0x0001145fU,
+    DISPID_IHTMLCURRENTSTYLE4_MAXWIDTH                 = 0x00011460U,
+    DISPID_IHTMLCURRENTSTYLE5_CAPTIONSIDE              = 0x00011463U,
+    DISPID_IHTMLCURRENTSTYLE5_OUTLINE                  = 0x00011466U,
+    DISPID_IHTMLCURRENTSTYLE5_OUTLINEWIDTH             = 0x00011467U,
+    DISPID_IHTMLCURRENTSTYLE5_OUTLINESTYLE             = 0x00011468U,
+    DISPID_IHTMLCURRENTSTYLE5_OUTLINECOLOR             = 0x00011469U,
+    DISPID_IHTMLCURRENTSTYLE5_BOXSIZING                = 0x0001146aU,
+    DISPID_IHTMLCURRENTSTYLE5_BORDERSPACING            = 0x0001146bU,
+    DISPID_IHTMLCURRENTSTYLE5_ORPHANS                  = 0x0001146cU,
+    DISPID_IHTMLCURRENTSTYLE5_WIDOWS                   = 0x0001146dU,
+    DISPID_IHTMLCURRENTSTYLE5_PAGEBREAKINSIDE          = 0x0001146eU,
+    DISPID_IHTMLCURRENTSTYLE5_EMPTYCELLS               = 0x00011482U,
+    DISPID_IHTMLCURRENTSTYLE5_MSBLOCKPROGRESSION       = 0x00011483U,
+    DISPID_IHTMLCURRENTSTYLE5_QUOTES                   = 0x00011484U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLRECT_LEFT             = 0x000003e9,
-    DISPID_IHTMLRECT_TOP              = 0x000003ea,
-    DISPID_IHTMLRECT_RIGHT            = 0x000003eb,
-    DISPID_IHTMLRECT_BOTTOM           = 0x000003ec,
-    DISPID_IHTMLRECT2_WIDTH           = 0x000003ed,
-    DISPID_IHTMLRECT2_HEIGHT          = 0x000003ee,
-    DISPID_IHTMLRECTCOLLECTION_LENGTH = 0x000005dc,
+    DISPID_IHTMLRECT_LEFT             = 0x000003e9U,
+    DISPID_IHTMLRECT_TOP              = 0x000003eaU,
+    DISPID_IHTMLRECT_RIGHT            = 0x000003ebU,
+    DISPID_IHTMLRECT_BOTTOM           = 0x000003ecU,
+    DISPID_IHTMLRECT2_WIDTH           = 0x000003edU,
+    DISPID_IHTMLRECT2_HEIGHT          = 0x000003eeU,
+    DISPID_IHTMLRECTCOLLECTION_LENGTH = 0x000005dcU,
 }
 
 enum int DISPID_IHTMLRECTCOLLECTION__NEWENUM = 0xfffffffc;
-enum uint DISPID_IHTMLRECTCOLLECTION_ITEM = 0x00000000;
+enum uint DISPID_IHTMLRECTCOLLECTION_ITEM = 0x00000000U;
 
 enum : uint
 {
-    DISPID_IHTMLDOMNODE_NODETYPE                 = 0x00010416,
-    DISPID_IHTMLDOMNODE_PARENTNODE               = 0x00010417,
-    DISPID_IHTMLDOMNODE_HASCHILDNODES            = 0x00010418,
-    DISPID_IHTMLDOMNODE_CHILDNODES               = 0x00010419,
-    DISPID_IHTMLDOMNODE_ATTRIBUTES               = 0x0001041a,
-    DISPID_IHTMLDOMNODE_INSERTBEFORE             = 0x0001041b,
-    DISPID_IHTMLDOMNODE_REMOVECHILD              = 0x0001041c,
-    DISPID_IHTMLDOMNODE_REPLACECHILD             = 0x0001041d,
-    DISPID_IHTMLDOMNODE_CLONENODE                = 0x00010425,
-    DISPID_IHTMLDOMNODE_REMOVENODE               = 0x0001042a,
-    DISPID_IHTMLDOMNODE_SWAPNODE                 = 0x0001042c,
-    DISPID_IHTMLDOMNODE_REPLACENODE              = 0x0001042b,
-    DISPID_IHTMLDOMNODE_APPENDCHILD              = 0x00010431,
-    DISPID_IHTMLDOMNODE_NODENAME                 = 0x00010432,
-    DISPID_IHTMLDOMNODE_NODEVALUE                = 0x00010433,
-    DISPID_IHTMLDOMNODE_FIRSTCHILD               = 0x00010434,
-    DISPID_IHTMLDOMNODE_LASTCHILD                = 0x00010435,
-    DISPID_IHTMLDOMNODE_PREVIOUSSIBLING          = 0x00010436,
-    DISPID_IHTMLDOMNODE_NEXTSIBLING              = 0x00010437,
-    DISPID_IHTMLDOMNODE2_OWNERDOCUMENT           = 0x00010459,
-    DISPID_IHTMLDOMNODE3_PREFIX                  = 0x00010460,
-    DISPID_IHTMLDOMNODE3_LOCALNAME               = 0x0001045e,
-    DISPID_IHTMLDOMNODE3_NAMESPACEURI            = 0x0001045f,
-    DISPID_IHTMLDOMNODE3_TEXTCONTENT             = 0x00010467,
-    DISPID_IHTMLDOMNODE3_ISEQUALNODE             = 0x00010461,
-    DISPID_IHTMLDOMNODE3_LOOKUPNAMESPACEURI      = 0x00010462,
-    DISPID_IHTMLDOMNODE3_LOOKUPPREFIX            = 0x00010463,
-    DISPID_IHTMLDOMNODE3_ISDEFAULTNAMESPACE      = 0x00010464,
-    DISPID_IHTMLDOMNODE3_IE9_APPENDCHILD         = 0x000104f4,
-    DISPID_IHTMLDOMNODE3_IE9_INSERTBEFORE        = 0x000104f5,
-    DISPID_IHTMLDOMNODE3_IE9_REMOVECHILD         = 0x000104f6,
-    DISPID_IHTMLDOMNODE3_IE9_REPLACECHILD        = 0x000104f7,
-    DISPID_IHTMLDOMNODE3_ISSAMENODE              = 0x00010465,
-    DISPID_IHTMLDOMNODE3_COMPAREDOCUMENTPOSITION = 0x00010466,
-    DISPID_IHTMLDOMNODE3_ISSUPPORTED             = 0x000104fd,
-    DISPID_IHTMLDOMATTRIBUTE_NODENAME            = 0x000003e8,
-    DISPID_IHTMLDOMATTRIBUTE_NODEVALUE           = 0x000003ea,
-    DISPID_IHTMLDOMATTRIBUTE_SPECIFIED           = 0x000003e9,
-    DISPID_IHTMLDOMATTRIBUTE2_NAME               = 0x000003eb,
-    DISPID_IHTMLDOMATTRIBUTE2_VALUE              = 0x000003ec,
-    DISPID_IHTMLDOMATTRIBUTE2_EXPANDO            = 0x000003ed,
-    DISPID_IHTMLDOMATTRIBUTE2_NODETYPE           = 0x000003ee,
-    DISPID_IHTMLDOMATTRIBUTE2_PARENTNODE         = 0x000003ef,
-    DISPID_IHTMLDOMATTRIBUTE2_CHILDNODES         = 0x000003f0,
-    DISPID_IHTMLDOMATTRIBUTE2_FIRSTCHILD         = 0x000003f1,
-    DISPID_IHTMLDOMATTRIBUTE2_LASTCHILD          = 0x000003f2,
-    DISPID_IHTMLDOMATTRIBUTE2_PREVIOUSSIBLING    = 0x000003f3,
-    DISPID_IHTMLDOMATTRIBUTE2_NEXTSIBLING        = 0x000003f4,
-    DISPID_IHTMLDOMATTRIBUTE2_ATTRIBUTES         = 0x000003f5,
-    DISPID_IHTMLDOMATTRIBUTE2_OWNERDOCUMENT      = 0x000003f6,
-    DISPID_IHTMLDOMATTRIBUTE2_INSERTBEFORE       = 0x000003f7,
-    DISPID_IHTMLDOMATTRIBUTE2_REPLACECHILD       = 0x000003f8,
-    DISPID_IHTMLDOMATTRIBUTE2_REMOVECHILD        = 0x000003f9,
-    DISPID_IHTMLDOMATTRIBUTE2_APPENDCHILD        = 0x000003fa,
-    DISPID_IHTMLDOMATTRIBUTE2_HASCHILDNODES      = 0x000003fb,
-    DISPID_IHTMLDOMATTRIBUTE2_CLONENODE          = 0x000003fc,
-    DISPID_IHTMLDOMATTRIBUTE3_IE8_NODEVALUE      = 0x00000481,
-    DISPID_IHTMLDOMATTRIBUTE3_IE8_VALUE          = 0x00000482,
-    DISPID_IHTMLDOMATTRIBUTE3_IE8_SPECIFIED      = 0x0000047e,
-    DISPID_IHTMLDOMATTRIBUTE3_OWNERELEMENT       = 0x0000047f,
-    DISPID_IHTMLDOMATTRIBUTE4_IE9_NODEVALUE      = 0x00000487,
-    DISPID_IHTMLDOMATTRIBUTE4_IE9_NODENAME       = 0x00000488,
-    DISPID_IHTMLDOMATTRIBUTE4_IE9_NAME           = 0x00000489,
-    DISPID_IHTMLDOMATTRIBUTE4_IE9_VALUE          = 0x0000048a,
-    DISPID_IHTMLDOMATTRIBUTE4_IE9_FIRSTCHILD     = 0x0000048b,
-    DISPID_IHTMLDOMATTRIBUTE4_IE9_LASTCHILD      = 0x0000048c,
-    DISPID_IHTMLDOMATTRIBUTE4_IE9_CHILDNODES     = 0x0000048d,
-    DISPID_IHTMLDOMATTRIBUTE4_HASATTRIBUTES      = 0x0000048e,
-    DISPID_IHTMLDOMATTRIBUTE4_IE9_HASCHILDNODES  = 0x0000048f,
-    DISPID_IHTMLDOMATTRIBUTE4_NORMALIZE          = 0x00000492,
-    DISPID_IHTMLDOMATTRIBUTE4_IE9_SPECIFIED      = 0x00000493,
+    DISPID_IHTMLDOMNODE_NODETYPE                 = 0x00010416U,
+    DISPID_IHTMLDOMNODE_PARENTNODE               = 0x00010417U,
+    DISPID_IHTMLDOMNODE_HASCHILDNODES            = 0x00010418U,
+    DISPID_IHTMLDOMNODE_CHILDNODES               = 0x00010419U,
+    DISPID_IHTMLDOMNODE_ATTRIBUTES               = 0x0001041aU,
+    DISPID_IHTMLDOMNODE_INSERTBEFORE             = 0x0001041bU,
+    DISPID_IHTMLDOMNODE_REMOVECHILD              = 0x0001041cU,
+    DISPID_IHTMLDOMNODE_REPLACECHILD             = 0x0001041dU,
+    DISPID_IHTMLDOMNODE_CLONENODE                = 0x00010425U,
+    DISPID_IHTMLDOMNODE_REMOVENODE               = 0x0001042aU,
+    DISPID_IHTMLDOMNODE_SWAPNODE                 = 0x0001042cU,
+    DISPID_IHTMLDOMNODE_REPLACENODE              = 0x0001042bU,
+    DISPID_IHTMLDOMNODE_APPENDCHILD              = 0x00010431U,
+    DISPID_IHTMLDOMNODE_NODENAME                 = 0x00010432U,
+    DISPID_IHTMLDOMNODE_NODEVALUE                = 0x00010433U,
+    DISPID_IHTMLDOMNODE_FIRSTCHILD               = 0x00010434U,
+    DISPID_IHTMLDOMNODE_LASTCHILD                = 0x00010435U,
+    DISPID_IHTMLDOMNODE_PREVIOUSSIBLING          = 0x00010436U,
+    DISPID_IHTMLDOMNODE_NEXTSIBLING              = 0x00010437U,
+    DISPID_IHTMLDOMNODE2_OWNERDOCUMENT           = 0x00010459U,
+    DISPID_IHTMLDOMNODE3_PREFIX                  = 0x00010460U,
+    DISPID_IHTMLDOMNODE3_LOCALNAME               = 0x0001045eU,
+    DISPID_IHTMLDOMNODE3_NAMESPACEURI            = 0x0001045fU,
+    DISPID_IHTMLDOMNODE3_TEXTCONTENT             = 0x00010467U,
+    DISPID_IHTMLDOMNODE3_ISEQUALNODE             = 0x00010461U,
+    DISPID_IHTMLDOMNODE3_LOOKUPNAMESPACEURI      = 0x00010462U,
+    DISPID_IHTMLDOMNODE3_LOOKUPPREFIX            = 0x00010463U,
+    DISPID_IHTMLDOMNODE3_ISDEFAULTNAMESPACE      = 0x00010464U,
+    DISPID_IHTMLDOMNODE3_IE9_APPENDCHILD         = 0x000104f4U,
+    DISPID_IHTMLDOMNODE3_IE9_INSERTBEFORE        = 0x000104f5U,
+    DISPID_IHTMLDOMNODE3_IE9_REMOVECHILD         = 0x000104f6U,
+    DISPID_IHTMLDOMNODE3_IE9_REPLACECHILD        = 0x000104f7U,
+    DISPID_IHTMLDOMNODE3_ISSAMENODE              = 0x00010465U,
+    DISPID_IHTMLDOMNODE3_COMPAREDOCUMENTPOSITION = 0x00010466U,
+    DISPID_IHTMLDOMNODE3_ISSUPPORTED             = 0x000104fdU,
+    DISPID_IHTMLDOMATTRIBUTE_NODENAME            = 0x000003e8U,
+    DISPID_IHTMLDOMATTRIBUTE_NODEVALUE           = 0x000003eaU,
+    DISPID_IHTMLDOMATTRIBUTE_SPECIFIED           = 0x000003e9U,
+    DISPID_IHTMLDOMATTRIBUTE2_NAME               = 0x000003ebU,
+    DISPID_IHTMLDOMATTRIBUTE2_VALUE              = 0x000003ecU,
+    DISPID_IHTMLDOMATTRIBUTE2_EXPANDO            = 0x000003edU,
+    DISPID_IHTMLDOMATTRIBUTE2_NODETYPE           = 0x000003eeU,
+    DISPID_IHTMLDOMATTRIBUTE2_PARENTNODE         = 0x000003efU,
+    DISPID_IHTMLDOMATTRIBUTE2_CHILDNODES         = 0x000003f0U,
+    DISPID_IHTMLDOMATTRIBUTE2_FIRSTCHILD         = 0x000003f1U,
+    DISPID_IHTMLDOMATTRIBUTE2_LASTCHILD          = 0x000003f2U,
+    DISPID_IHTMLDOMATTRIBUTE2_PREVIOUSSIBLING    = 0x000003f3U,
+    DISPID_IHTMLDOMATTRIBUTE2_NEXTSIBLING        = 0x000003f4U,
+    DISPID_IHTMLDOMATTRIBUTE2_ATTRIBUTES         = 0x000003f5U,
+    DISPID_IHTMLDOMATTRIBUTE2_OWNERDOCUMENT      = 0x000003f6U,
+    DISPID_IHTMLDOMATTRIBUTE2_INSERTBEFORE       = 0x000003f7U,
+    DISPID_IHTMLDOMATTRIBUTE2_REPLACECHILD       = 0x000003f8U,
+    DISPID_IHTMLDOMATTRIBUTE2_REMOVECHILD        = 0x000003f9U,
+    DISPID_IHTMLDOMATTRIBUTE2_APPENDCHILD        = 0x000003faU,
+    DISPID_IHTMLDOMATTRIBUTE2_HASCHILDNODES      = 0x000003fbU,
+    DISPID_IHTMLDOMATTRIBUTE2_CLONENODE          = 0x000003fcU,
+    DISPID_IHTMLDOMATTRIBUTE3_IE8_NODEVALUE      = 0x00000481U,
+    DISPID_IHTMLDOMATTRIBUTE3_IE8_VALUE          = 0x00000482U,
+    DISPID_IHTMLDOMATTRIBUTE3_IE8_SPECIFIED      = 0x0000047eU,
+    DISPID_IHTMLDOMATTRIBUTE3_OWNERELEMENT       = 0x0000047fU,
+    DISPID_IHTMLDOMATTRIBUTE4_IE9_NODEVALUE      = 0x00000487U,
+    DISPID_IHTMLDOMATTRIBUTE4_IE9_NODENAME       = 0x00000488U,
+    DISPID_IHTMLDOMATTRIBUTE4_IE9_NAME           = 0x00000489U,
+    DISPID_IHTMLDOMATTRIBUTE4_IE9_VALUE          = 0x0000048aU,
+    DISPID_IHTMLDOMATTRIBUTE4_IE9_FIRSTCHILD     = 0x0000048bU,
+    DISPID_IHTMLDOMATTRIBUTE4_IE9_LASTCHILD      = 0x0000048cU,
+    DISPID_IHTMLDOMATTRIBUTE4_IE9_CHILDNODES     = 0x0000048dU,
+    DISPID_IHTMLDOMATTRIBUTE4_HASATTRIBUTES      = 0x0000048eU,
+    DISPID_IHTMLDOMATTRIBUTE4_IE9_HASCHILDNODES  = 0x0000048fU,
+    DISPID_IHTMLDOMATTRIBUTE4_NORMALIZE          = 0x00000492U,
+    DISPID_IHTMLDOMATTRIBUTE4_IE9_SPECIFIED      = 0x00000493U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLDOMTEXTNODE_DATA                      = 0x000003e8,
-    DISPID_IHTMLDOMTEXTNODE_TOSTRING                  = 0x000003e9,
-    DISPID_IHTMLDOMTEXTNODE_LENGTH                    = 0x000003ea,
-    DISPID_IHTMLDOMTEXTNODE_SPLITTEXT                 = 0x000003eb,
-    DISPID_IHTMLDOMTEXTNODE2_SUBSTRINGDATA            = 0x000003ec,
-    DISPID_IHTMLDOMTEXTNODE2_APPENDDATA               = 0x000003ed,
-    DISPID_IHTMLDOMTEXTNODE2_INSERTDATA               = 0x000003ee,
-    DISPID_IHTMLDOMTEXTNODE2_DELETEDATA               = 0x000003ef,
-    DISPID_IHTMLDOMTEXTNODE2_REPLACEDATA              = 0x000003f0,
-    DISPID_IHTMLDOMTEXTNODE3_IE9_SUBSTRINGDATA        = 0x000003f2,
-    DISPID_IHTMLDOMTEXTNODE3_IE9_INSERTDATA           = 0x000003f3,
-    DISPID_IHTMLDOMTEXTNODE3_IE9_DELETEDATA           = 0x000003f4,
-    DISPID_IHTMLDOMTEXTNODE3_IE9_REPLACEDATA          = 0x000003f5,
-    DISPID_IHTMLDOMTEXTNODE3_IE9_SPLITTEXT            = 0x000003f1,
-    DISPID_IHTMLDOMTEXTNODE3_WHOLETEXT                = 0x000003f6,
-    DISPID_IHTMLDOMTEXTNODE3_REPLACEWHOLETEXT         = 0x000003f7,
-    DISPID_IHTMLDOMTEXTNODE3_HASATTRIBUTES            = 0x000003f9,
-    DISPID_IHTMLDOMTEXTNODE3_NORMALIZE                = 0x000003fb,
-    DISPID_IHTMLDOMIMPLEMENTATION_HASFEATURE          = 0x000003e8,
-    DISPID_IHTMLDOMIMPLEMENTATION2_CREATEDOCUMENTTYPE = 0x000003e9,
-    DISPID_IHTMLDOMIMPLEMENTATION2_CREATEDOCUMENT     = 0x000003ea,
-    DISPID_IHTMLDOMIMPLEMENTATION2_CREATEHTMLDOCUMENT = 0x000003eb,
-    DISPID_IHTMLDOMIMPLEMENTATION2_IE9_HASFEATURE     = 0x000003ec,
+    DISPID_IHTMLDOMTEXTNODE_DATA                      = 0x000003e8U,
+    DISPID_IHTMLDOMTEXTNODE_TOSTRING                  = 0x000003e9U,
+    DISPID_IHTMLDOMTEXTNODE_LENGTH                    = 0x000003eaU,
+    DISPID_IHTMLDOMTEXTNODE_SPLITTEXT                 = 0x000003ebU,
+    DISPID_IHTMLDOMTEXTNODE2_SUBSTRINGDATA            = 0x000003ecU,
+    DISPID_IHTMLDOMTEXTNODE2_APPENDDATA               = 0x000003edU,
+    DISPID_IHTMLDOMTEXTNODE2_INSERTDATA               = 0x000003eeU,
+    DISPID_IHTMLDOMTEXTNODE2_DELETEDATA               = 0x000003efU,
+    DISPID_IHTMLDOMTEXTNODE2_REPLACEDATA              = 0x000003f0U,
+    DISPID_IHTMLDOMTEXTNODE3_IE9_SUBSTRINGDATA        = 0x000003f2U,
+    DISPID_IHTMLDOMTEXTNODE3_IE9_INSERTDATA           = 0x000003f3U,
+    DISPID_IHTMLDOMTEXTNODE3_IE9_DELETEDATA           = 0x000003f4U,
+    DISPID_IHTMLDOMTEXTNODE3_IE9_REPLACEDATA          = 0x000003f5U,
+    DISPID_IHTMLDOMTEXTNODE3_IE9_SPLITTEXT            = 0x000003f1U,
+    DISPID_IHTMLDOMTEXTNODE3_WHOLETEXT                = 0x000003f6U,
+    DISPID_IHTMLDOMTEXTNODE3_REPLACEWHOLETEXT         = 0x000003f7U,
+    DISPID_IHTMLDOMTEXTNODE3_HASATTRIBUTES            = 0x000003f9U,
+    DISPID_IHTMLDOMTEXTNODE3_NORMALIZE                = 0x000003fbU,
+    DISPID_IHTMLDOMIMPLEMENTATION_HASFEATURE          = 0x000003e8U,
+    DISPID_IHTMLDOMIMPLEMENTATION2_CREATEDOCUMENTTYPE = 0x000003e9U,
+    DISPID_IHTMLDOMIMPLEMENTATION2_CREATEDOCUMENT     = 0x000003eaU,
+    DISPID_IHTMLDOMIMPLEMENTATION2_CREATEHTMLDOCUMENT = 0x000003ebU,
+    DISPID_IHTMLDOMIMPLEMENTATION2_IE9_HASFEATURE     = 0x000003ecU,
 }
 
-enum uint DISPID_IHTMLATTRIBUTECOLLECTION_LENGTH = 0x000005dc;
+enum uint DISPID_IHTMLATTRIBUTECOLLECTION_LENGTH = 0x000005dcU;
 enum int DISPID_IHTMLATTRIBUTECOLLECTION__NEWENUM = 0xfffffffc;
 
 enum : uint
 {
-    DISPID_IHTMLATTRIBUTECOLLECTION_ITEM                 = 0x00000000,
-    DISPID_IHTMLATTRIBUTECOLLECTION2_GETNAMEDITEM        = 0x000005dd,
-    DISPID_IHTMLATTRIBUTECOLLECTION2_SETNAMEDITEM        = 0x000005de,
-    DISPID_IHTMLATTRIBUTECOLLECTION2_REMOVENAMEDITEM     = 0x000005df,
-    DISPID_IHTMLATTRIBUTECOLLECTION3_IE8_GETNAMEDITEM    = 0x0000047e,
-    DISPID_IHTMLATTRIBUTECOLLECTION3_IE8_SETNAMEDITEM    = 0x0000047f,
-    DISPID_IHTMLATTRIBUTECOLLECTION3_IE8_REMOVENAMEDITEM = 0x00000480,
-    DISPID_IHTMLATTRIBUTECOLLECTION3_IE8_ITEM            = 0x00000482,
-    DISPID_IHTMLATTRIBUTECOLLECTION3_IE8_LENGTH          = 0x00000481,
-    DISPID_IHTMLATTRIBUTECOLLECTION4_GETNAMEDITEMNS      = 0x00000483,
-    DISPID_IHTMLATTRIBUTECOLLECTION4_SETNAMEDITEMNS      = 0x00000484,
-    DISPID_IHTMLATTRIBUTECOLLECTION4_REMOVENAMEDITEMNS   = 0x00000485,
-    DISPID_IHTMLATTRIBUTECOLLECTION4_IE9_GETNAMEDITEM    = 0x00000486,
-    DISPID_IHTMLATTRIBUTECOLLECTION4_IE9_SETNAMEDITEM    = 0x00000487,
-    DISPID_IHTMLATTRIBUTECOLLECTION4_IE9_REMOVENAMEDITEM = 0x00000488,
-    DISPID_IHTMLATTRIBUTECOLLECTION4_IE9_ITEM            = 0x00000489,
-    DISPID_IHTMLATTRIBUTECOLLECTION4_IE9_LENGTH          = 0x0000048a,
+    DISPID_IHTMLATTRIBUTECOLLECTION_ITEM                 = 0x00000000U,
+    DISPID_IHTMLATTRIBUTECOLLECTION2_GETNAMEDITEM        = 0x000005ddU,
+    DISPID_IHTMLATTRIBUTECOLLECTION2_SETNAMEDITEM        = 0x000005deU,
+    DISPID_IHTMLATTRIBUTECOLLECTION2_REMOVENAMEDITEM     = 0x000005dfU,
+    DISPID_IHTMLATTRIBUTECOLLECTION3_IE8_GETNAMEDITEM    = 0x0000047eU,
+    DISPID_IHTMLATTRIBUTECOLLECTION3_IE8_SETNAMEDITEM    = 0x0000047fU,
+    DISPID_IHTMLATTRIBUTECOLLECTION3_IE8_REMOVENAMEDITEM = 0x00000480U,
+    DISPID_IHTMLATTRIBUTECOLLECTION3_IE8_ITEM            = 0x00000482U,
+    DISPID_IHTMLATTRIBUTECOLLECTION3_IE8_LENGTH          = 0x00000481U,
+    DISPID_IHTMLATTRIBUTECOLLECTION4_GETNAMEDITEMNS      = 0x00000483U,
+    DISPID_IHTMLATTRIBUTECOLLECTION4_SETNAMEDITEMNS      = 0x00000484U,
+    DISPID_IHTMLATTRIBUTECOLLECTION4_REMOVENAMEDITEMNS   = 0x00000485U,
+    DISPID_IHTMLATTRIBUTECOLLECTION4_IE9_GETNAMEDITEM    = 0x00000486U,
+    DISPID_IHTMLATTRIBUTECOLLECTION4_IE9_SETNAMEDITEM    = 0x00000487U,
+    DISPID_IHTMLATTRIBUTECOLLECTION4_IE9_REMOVENAMEDITEM = 0x00000488U,
+    DISPID_IHTMLATTRIBUTECOLLECTION4_IE9_ITEM            = 0x00000489U,
+    DISPID_IHTMLATTRIBUTECOLLECTION4_IE9_LENGTH          = 0x0000048aU,
 }
 
-enum uint DISPID_IHTMLDOMCHILDRENCOLLECTION_LENGTH = 0x000005dc;
+enum uint DISPID_IHTMLDOMCHILDRENCOLLECTION_LENGTH = 0x000005dcU;
 enum int DISPID_IHTMLDOMCHILDRENCOLLECTION__NEWENUM = 0xfffffffc;
 
 enum : uint
 {
-    DISPID_IHTMLDOMCHILDRENCOLLECTION_ITEM      = 0x00000000,
-    DISPID_IHTMLDOMCHILDRENCOLLECTION2_IE9_ITEM = 0x00000001,
+    DISPID_IHTMLDOMCHILDRENCOLLECTION_ITEM      = 0x00000000U,
+    DISPID_IHTMLDOMCHILDRENCOLLECTION2_IE9_ITEM = 0x00000001U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLELEMENT_SETATTRIBUTE           = 0x000101f5,
-    DISPID_IHTMLELEMENT_GETATTRIBUTE           = 0x000101f6,
-    DISPID_IHTMLELEMENT_REMOVEATTRIBUTE        = 0x000101f7,
-    DISPID_IHTMLELEMENT_CLASSNAME              = 0x000103e9,
-    DISPID_IHTMLELEMENT_ID                     = 0x000103ea,
-    DISPID_IHTMLELEMENT_TAGNAME                = 0x000103ec,
-    DISPID_IHTMLELEMENT_PARENTELEMENT          = 0x00010008,
-    DISPID_IHTMLELEMENT_STYLE                  = 0x0001004a,
-    DISPID_IHTMLELEMENT_ONHELP                 = 0x0001177d,
-    DISPID_IHTMLELEMENT_ONCLICK                = 0x00011778,
-    DISPID_IHTMLELEMENT_ONDBLCLICK             = 0x00011779,
-    DISPID_IHTMLELEMENT_ONKEYDOWN              = 0x00011775,
-    DISPID_IHTMLELEMENT_ONKEYUP                = 0x00011776,
-    DISPID_IHTMLELEMENT_ONKEYPRESS             = 0x00011777,
-    DISPID_IHTMLELEMENT_ONMOUSEOUT             = 0x00011771,
-    DISPID_IHTMLELEMENT_ONMOUSEOVER            = 0x00011770,
-    DISPID_IHTMLELEMENT_ONMOUSEMOVE            = 0x00011774,
-    DISPID_IHTMLELEMENT_ONMOUSEDOWN            = 0x00011772,
-    DISPID_IHTMLELEMENT_ONMOUSEUP              = 0x00011773,
-    DISPID_IHTMLELEMENT_DOCUMENT               = 0x000103fa,
-    DISPID_IHTMLELEMENT_TITLE                  = 0x00010045,
-    DISPID_IHTMLELEMENT_LANGUAGE               = 0x000113ec,
-    DISPID_IHTMLELEMENT_ONSELECTSTART          = 0x00011795,
-    DISPID_IHTMLELEMENT_SCROLLINTOVIEW         = 0x000103fb,
-    DISPID_IHTMLELEMENT_CONTAINS               = 0x000103fc,
-    DISPID_IHTMLELEMENT_SOURCEINDEX            = 0x00010400,
-    DISPID_IHTMLELEMENT_RECORDNUMBER           = 0x00010401,
-    DISPID_IHTMLELEMENT_LANG                   = 0x00011391,
-    DISPID_IHTMLELEMENT_OFFSETLEFT             = 0x000103f0,
-    DISPID_IHTMLELEMENT_OFFSETTOP              = 0x000103f1,
-    DISPID_IHTMLELEMENT_OFFSETWIDTH            = 0x000103f2,
-    DISPID_IHTMLELEMENT_OFFSETHEIGHT           = 0x000103f3,
-    DISPID_IHTMLELEMENT_OFFSETPARENT           = 0x000103f4,
-    DISPID_IHTMLELEMENT_INNERHTML              = 0x00010402,
-    DISPID_IHTMLELEMENT_INNERTEXT              = 0x00010403,
-    DISPID_IHTMLELEMENT_OUTERHTML              = 0x00010404,
-    DISPID_IHTMLELEMENT_OUTERTEXT              = 0x00010405,
-    DISPID_IHTMLELEMENT_INSERTADJACENTHTML     = 0x00010406,
-    DISPID_IHTMLELEMENT_INSERTADJACENTTEXT     = 0x00010407,
-    DISPID_IHTMLELEMENT_PARENTTEXTEDIT         = 0x00010408,
-    DISPID_IHTMLELEMENT_ISTEXTEDIT             = 0x0001040a,
-    DISPID_IHTMLELEMENT_CLICK                  = 0x00010409,
-    DISPID_IHTMLELEMENT_FILTERS                = 0x0001040b,
-    DISPID_IHTMLELEMENT_ONDRAGSTART            = 0x00011793,
-    DISPID_IHTMLELEMENT_TOSTRING               = 0x0001040c,
-    DISPID_IHTMLELEMENT_ONBEFOREUPDATE         = 0x00011785,
-    DISPID_IHTMLELEMENT_ONAFTERUPDATE          = 0x00011786,
-    DISPID_IHTMLELEMENT_ONERRORUPDATE          = 0x00011796,
-    DISPID_IHTMLELEMENT_ONROWEXIT              = 0x00011782,
-    DISPID_IHTMLELEMENT_ONROWENTER             = 0x00011783,
-    DISPID_IHTMLELEMENT_ONDATASETCHANGED       = 0x00011798,
-    DISPID_IHTMLELEMENT_ONDATAAVAILABLE        = 0x00011799,
-    DISPID_IHTMLELEMENT_ONDATASETCOMPLETE      = 0x0001179a,
-    DISPID_IHTMLELEMENT_ONFILTERCHANGE         = 0x0001179b,
-    DISPID_IHTMLELEMENT_CHILDREN               = 0x0001040d,
-    DISPID_IHTMLELEMENT_ALL                    = 0x0001040e,
-    DISPID_IHTMLELEMENT2_SCOPENAME             = 0x0001040f,
-    DISPID_IHTMLELEMENT2_SETCAPTURE            = 0x00010410,
-    DISPID_IHTMLELEMENT2_RELEASECAPTURE        = 0x00010411,
-    DISPID_IHTMLELEMENT2_ONLOSECAPTURE         = 0x0001179e,
-    DISPID_IHTMLELEMENT2_COMPONENTFROMPOINT    = 0x00010412,
-    DISPID_IHTMLELEMENT2_DOSCROLL              = 0x00010413,
-    DISPID_IHTMLELEMENT2_ONSCROLL              = 0x0001178f,
-    DISPID_IHTMLELEMENT2_ONDRAG                = 0x000117a1,
-    DISPID_IHTMLELEMENT2_ONDRAGEND             = 0x000117a2,
-    DISPID_IHTMLELEMENT2_ONDRAGENTER           = 0x000117a3,
-    DISPID_IHTMLELEMENT2_ONDRAGOVER            = 0x000117a4,
-    DISPID_IHTMLELEMENT2_ONDRAGLEAVE           = 0x000117a5,
-    DISPID_IHTMLELEMENT2_ONDROP                = 0x000117a6,
-    DISPID_IHTMLELEMENT2_ONBEFORECUT           = 0x000117aa,
-    DISPID_IHTMLELEMENT2_ONCUT                 = 0x000117a7,
-    DISPID_IHTMLELEMENT2_ONBEFORECOPY          = 0x000117ab,
-    DISPID_IHTMLELEMENT2_ONCOPY                = 0x000117a8,
-    DISPID_IHTMLELEMENT2_ONBEFOREPASTE         = 0x000117ac,
-    DISPID_IHTMLELEMENT2_ONPASTE               = 0x000117a9,
-    DISPID_IHTMLELEMENT2_CURRENTSTYLE          = 0x000103ef,
-    DISPID_IHTMLELEMENT2_ONPROPERTYCHANGE      = 0x0001179f,
-    DISPID_IHTMLELEMENT2_GETCLIENTRECTS        = 0x00010414,
-    DISPID_IHTMLELEMENT2_GETBOUNDINGCLIENTRECT = 0x00010415,
-    DISPID_IHTMLELEMENT2_SETEXPRESSION         = 0x000101f8,
-    DISPID_IHTMLELEMENT2_GETEXPRESSION         = 0x000101f9,
-    DISPID_IHTMLELEMENT2_REMOVEEXPRESSION      = 0x000101fa,
-    DISPID_IHTMLELEMENT2_TABINDEX              = 0x0001000f,
-    DISPID_IHTMLELEMENT2_FOCUS                 = 0x000107d0,
-    DISPID_IHTMLELEMENT2_ACCESSKEY             = 0x000107d5,
-    DISPID_IHTMLELEMENT2_ONBLUR                = 0x0001177f,
-    DISPID_IHTMLELEMENT2_ONFOCUS               = 0x0001177e,
-    DISPID_IHTMLELEMENT2_ONRESIZE              = 0x00011794,
-    DISPID_IHTMLELEMENT2_BLUR                  = 0x000107d2,
-    DISPID_IHTMLELEMENT2_ADDFILTER             = 0x000107e1,
-    DISPID_IHTMLELEMENT2_REMOVEFILTER          = 0x000107e2,
-    DISPID_IHTMLELEMENT2_CLIENTHEIGHT          = 0x000107e3,
-    DISPID_IHTMLELEMENT2_CLIENTWIDTH           = 0x000107e4,
-    DISPID_IHTMLELEMENT2_CLIENTTOP             = 0x000107e5,
-    DISPID_IHTMLELEMENT2_CLIENTLEFT            = 0x000107e6,
-    DISPID_IHTMLELEMENT2_ATTACHEVENT           = 0x000101fb,
-    DISPID_IHTMLELEMENT2_DETACHEVENT           = 0x000101fc,
-    DISPID_IHTMLELEMENT2_READYSTATE            = 0x000113fc,
-    DISPID_IHTMLELEMENT2_ONREADYSTATECHANGE    = 0x00011789,
-    DISPID_IHTMLELEMENT2_ONROWSDELETE          = 0x000117ae,
-    DISPID_IHTMLELEMENT2_ONROWSINSERTED        = 0x000117af,
-    DISPID_IHTMLELEMENT2_ONCELLCHANGE          = 0x000117b0,
-    DISPID_IHTMLELEMENT2_DIR                   = 0x000113fd,
-    DISPID_IHTMLELEMENT2_CREATECONTROLRANGE    = 0x00010420,
-    DISPID_IHTMLELEMENT2_SCROLLHEIGHT          = 0x00010421,
-    DISPID_IHTMLELEMENT2_SCROLLWIDTH           = 0x00010422,
-    DISPID_IHTMLELEMENT2_SCROLLTOP             = 0x00010423,
-    DISPID_IHTMLELEMENT2_SCROLLLEFT            = 0x00010424,
-    DISPID_IHTMLELEMENT2_CLEARATTRIBUTES       = 0x00010426,
-    DISPID_IHTMLELEMENT2_MERGEATTRIBUTES       = 0x00010427,
-    DISPID_IHTMLELEMENT2_ONCONTEXTMENU         = 0x000117b1,
-    DISPID_IHTMLELEMENT2_INSERTADJACENTELEMENT = 0x0001042d,
-    DISPID_IHTMLELEMENT2_APPLYELEMENT          = 0x00010429,
-    DISPID_IHTMLELEMENT2_GETADJACENTTEXT       = 0x0001042e,
-    DISPID_IHTMLELEMENT2_REPLACEADJACENTTEXT   = 0x0001042f,
-    DISPID_IHTMLELEMENT2_CANHAVECHILDREN       = 0x00010430,
-    DISPID_IHTMLELEMENT2_ADDBEHAVIOR           = 0x00010438,
-    DISPID_IHTMLELEMENT2_REMOVEBEHAVIOR        = 0x00010439,
-    DISPID_IHTMLELEMENT2_RUNTIMESTYLE          = 0x00010428,
-    DISPID_IHTMLELEMENT2_BEHAVIORURNS          = 0x0001043a,
-    DISPID_IHTMLELEMENT2_TAGURN                = 0x0001043b,
-    DISPID_IHTMLELEMENT2_ONBEFOREEDITFOCUS     = 0x000117b5,
-    DISPID_IHTMLELEMENT2_READYSTATEVALUE       = 0x0001043c,
-    DISPID_IHTMLELEMENT2_GETELEMENTSBYTAGNAME  = 0x0001043d,
-    DISPID_IHTMLELEMENT3_MERGEATTRIBUTES       = 0x00010448,
-    DISPID_IHTMLELEMENT3_ISMULTILINE           = 0x00010449,
-    DISPID_IHTMLELEMENT3_CANHAVEHTML           = 0x0001044a,
-    DISPID_IHTMLELEMENT3_ONLAYOUTCOMPLETE      = 0x000117b9,
-    DISPID_IHTMLELEMENT3_ONPAGE                = 0x000117ba,
-    DISPID_IHTMLELEMENT3_INFLATEBLOCK          = 0x0001044c,
-    DISPID_IHTMLELEMENT3_ONBEFOREDEACTIVATE    = 0x000117bd,
-    DISPID_IHTMLELEMENT3_SETACTIVE             = 0x0001044d,
-    DISPID_IHTMLELEMENT3_CONTENTEDITABLE       = 0x0001142a,
-    DISPID_IHTMLELEMENT3_ISCONTENTEDITABLE     = 0x0001044e,
-    DISPID_IHTMLELEMENT3_HIDEFOCUS             = 0x0001142b,
-    DISPID_IHTMLELEMENT3_DISABLED              = 0x0001004c,
-    DISPID_IHTMLELEMENT3_ISDISABLED            = 0x00010451,
-    DISPID_IHTMLELEMENT3_ONMOVE                = 0x000117be,
-    DISPID_IHTMLELEMENT3_ONCONTROLSELECT       = 0x000117bf,
-    DISPID_IHTMLELEMENT3_FIREEVENT             = 0x00010452,
-    DISPID_IHTMLELEMENT3_ONRESIZESTART         = 0x000117c3,
-    DISPID_IHTMLELEMENT3_ONRESIZEEND           = 0x000117c4,
-    DISPID_IHTMLELEMENT3_ONMOVESTART           = 0x000117c1,
-    DISPID_IHTMLELEMENT3_ONMOVEEND             = 0x000117c2,
-    DISPID_IHTMLELEMENT3_ONMOUSEENTER          = 0x000117c5,
-    DISPID_IHTMLELEMENT3_ONMOUSELEAVE          = 0x000117c6,
-    DISPID_IHTMLELEMENT3_ONACTIVATE            = 0x000117c7,
-    DISPID_IHTMLELEMENT3_ONDEACTIVATE          = 0x000117c8,
-    DISPID_IHTMLELEMENT3_DRAGDROP              = 0x00010453,
-    DISPID_IHTMLELEMENT3_GLYPHMODE             = 0x00010454,
-    DISPID_IHTMLELEMENT4_ONMOUSEWHEEL          = 0x000117bc,
-    DISPID_IHTMLELEMENT4_NORMALIZE             = 0x00010458,
-    DISPID_IHTMLELEMENT4_GETATTRIBUTENODE      = 0x00010455,
-    DISPID_IHTMLELEMENT4_SETATTRIBUTENODE      = 0x00010456,
-    DISPID_IHTMLELEMENT4_REMOVEATTRIBUTENODE   = 0x00010457,
-    DISPID_IHTMLELEMENT4_ONBEFOREACTIVATE      = 0x000117ca,
-    DISPID_IHTMLELEMENT4_ONFOCUSIN             = 0x000117cb,
-    DISPID_IHTMLELEMENT4_ONFOCUSOUT            = 0x000117cc,
+    DISPID_IHTMLELEMENT_SETATTRIBUTE           = 0x000101f5U,
+    DISPID_IHTMLELEMENT_GETATTRIBUTE           = 0x000101f6U,
+    DISPID_IHTMLELEMENT_REMOVEATTRIBUTE        = 0x000101f7U,
+    DISPID_IHTMLELEMENT_CLASSNAME              = 0x000103e9U,
+    DISPID_IHTMLELEMENT_ID                     = 0x000103eaU,
+    DISPID_IHTMLELEMENT_TAGNAME                = 0x000103ecU,
+    DISPID_IHTMLELEMENT_PARENTELEMENT          = 0x00010008U,
+    DISPID_IHTMLELEMENT_STYLE                  = 0x0001004aU,
+    DISPID_IHTMLELEMENT_ONHELP                 = 0x0001177dU,
+    DISPID_IHTMLELEMENT_ONCLICK                = 0x00011778U,
+    DISPID_IHTMLELEMENT_ONDBLCLICK             = 0x00011779U,
+    DISPID_IHTMLELEMENT_ONKEYDOWN              = 0x00011775U,
+    DISPID_IHTMLELEMENT_ONKEYUP                = 0x00011776U,
+    DISPID_IHTMLELEMENT_ONKEYPRESS             = 0x00011777U,
+    DISPID_IHTMLELEMENT_ONMOUSEOUT             = 0x00011771U,
+    DISPID_IHTMLELEMENT_ONMOUSEOVER            = 0x00011770U,
+    DISPID_IHTMLELEMENT_ONMOUSEMOVE            = 0x00011774U,
+    DISPID_IHTMLELEMENT_ONMOUSEDOWN            = 0x00011772U,
+    DISPID_IHTMLELEMENT_ONMOUSEUP              = 0x00011773U,
+    DISPID_IHTMLELEMENT_DOCUMENT               = 0x000103faU,
+    DISPID_IHTMLELEMENT_TITLE                  = 0x00010045U,
+    DISPID_IHTMLELEMENT_LANGUAGE               = 0x000113ecU,
+    DISPID_IHTMLELEMENT_ONSELECTSTART          = 0x00011795U,
+    DISPID_IHTMLELEMENT_SCROLLINTOVIEW         = 0x000103fbU,
+    DISPID_IHTMLELEMENT_CONTAINS               = 0x000103fcU,
+    DISPID_IHTMLELEMENT_SOURCEINDEX            = 0x00010400U,
+    DISPID_IHTMLELEMENT_RECORDNUMBER           = 0x00010401U,
+    DISPID_IHTMLELEMENT_LANG                   = 0x00011391U,
+    DISPID_IHTMLELEMENT_OFFSETLEFT             = 0x000103f0U,
+    DISPID_IHTMLELEMENT_OFFSETTOP              = 0x000103f1U,
+    DISPID_IHTMLELEMENT_OFFSETWIDTH            = 0x000103f2U,
+    DISPID_IHTMLELEMENT_OFFSETHEIGHT           = 0x000103f3U,
+    DISPID_IHTMLELEMENT_OFFSETPARENT           = 0x000103f4U,
+    DISPID_IHTMLELEMENT_INNERHTML              = 0x00010402U,
+    DISPID_IHTMLELEMENT_INNERTEXT              = 0x00010403U,
+    DISPID_IHTMLELEMENT_OUTERHTML              = 0x00010404U,
+    DISPID_IHTMLELEMENT_OUTERTEXT              = 0x00010405U,
+    DISPID_IHTMLELEMENT_INSERTADJACENTHTML     = 0x00010406U,
+    DISPID_IHTMLELEMENT_INSERTADJACENTTEXT     = 0x00010407U,
+    DISPID_IHTMLELEMENT_PARENTTEXTEDIT         = 0x00010408U,
+    DISPID_IHTMLELEMENT_ISTEXTEDIT             = 0x0001040aU,
+    DISPID_IHTMLELEMENT_CLICK                  = 0x00010409U,
+    DISPID_IHTMLELEMENT_FILTERS                = 0x0001040bU,
+    DISPID_IHTMLELEMENT_ONDRAGSTART            = 0x00011793U,
+    DISPID_IHTMLELEMENT_TOSTRING               = 0x0001040cU,
+    DISPID_IHTMLELEMENT_ONBEFOREUPDATE         = 0x00011785U,
+    DISPID_IHTMLELEMENT_ONAFTERUPDATE          = 0x00011786U,
+    DISPID_IHTMLELEMENT_ONERRORUPDATE          = 0x00011796U,
+    DISPID_IHTMLELEMENT_ONROWEXIT              = 0x00011782U,
+    DISPID_IHTMLELEMENT_ONROWENTER             = 0x00011783U,
+    DISPID_IHTMLELEMENT_ONDATASETCHANGED       = 0x00011798U,
+    DISPID_IHTMLELEMENT_ONDATAAVAILABLE        = 0x00011799U,
+    DISPID_IHTMLELEMENT_ONDATASETCOMPLETE      = 0x0001179aU,
+    DISPID_IHTMLELEMENT_ONFILTERCHANGE         = 0x0001179bU,
+    DISPID_IHTMLELEMENT_CHILDREN               = 0x0001040dU,
+    DISPID_IHTMLELEMENT_ALL                    = 0x0001040eU,
+    DISPID_IHTMLELEMENT2_SCOPENAME             = 0x0001040fU,
+    DISPID_IHTMLELEMENT2_SETCAPTURE            = 0x00010410U,
+    DISPID_IHTMLELEMENT2_RELEASECAPTURE        = 0x00010411U,
+    DISPID_IHTMLELEMENT2_ONLOSECAPTURE         = 0x0001179eU,
+    DISPID_IHTMLELEMENT2_COMPONENTFROMPOINT    = 0x00010412U,
+    DISPID_IHTMLELEMENT2_DOSCROLL              = 0x00010413U,
+    DISPID_IHTMLELEMENT2_ONSCROLL              = 0x0001178fU,
+    DISPID_IHTMLELEMENT2_ONDRAG                = 0x000117a1U,
+    DISPID_IHTMLELEMENT2_ONDRAGEND             = 0x000117a2U,
+    DISPID_IHTMLELEMENT2_ONDRAGENTER           = 0x000117a3U,
+    DISPID_IHTMLELEMENT2_ONDRAGOVER            = 0x000117a4U,
+    DISPID_IHTMLELEMENT2_ONDRAGLEAVE           = 0x000117a5U,
+    DISPID_IHTMLELEMENT2_ONDROP                = 0x000117a6U,
+    DISPID_IHTMLELEMENT2_ONBEFORECUT           = 0x000117aaU,
+    DISPID_IHTMLELEMENT2_ONCUT                 = 0x000117a7U,
+    DISPID_IHTMLELEMENT2_ONBEFORECOPY          = 0x000117abU,
+    DISPID_IHTMLELEMENT2_ONCOPY                = 0x000117a8U,
+    DISPID_IHTMLELEMENT2_ONBEFOREPASTE         = 0x000117acU,
+    DISPID_IHTMLELEMENT2_ONPASTE               = 0x000117a9U,
+    DISPID_IHTMLELEMENT2_CURRENTSTYLE          = 0x000103efU,
+    DISPID_IHTMLELEMENT2_ONPROPERTYCHANGE      = 0x0001179fU,
+    DISPID_IHTMLELEMENT2_GETCLIENTRECTS        = 0x00010414U,
+    DISPID_IHTMLELEMENT2_GETBOUNDINGCLIENTRECT = 0x00010415U,
+    DISPID_IHTMLELEMENT2_SETEXPRESSION         = 0x000101f8U,
+    DISPID_IHTMLELEMENT2_GETEXPRESSION         = 0x000101f9U,
+    DISPID_IHTMLELEMENT2_REMOVEEXPRESSION      = 0x000101faU,
+    DISPID_IHTMLELEMENT2_TABINDEX              = 0x0001000fU,
+    DISPID_IHTMLELEMENT2_FOCUS                 = 0x000107d0U,
+    DISPID_IHTMLELEMENT2_ACCESSKEY             = 0x000107d5U,
+    DISPID_IHTMLELEMENT2_ONBLUR                = 0x0001177fU,
+    DISPID_IHTMLELEMENT2_ONFOCUS               = 0x0001177eU,
+    DISPID_IHTMLELEMENT2_ONRESIZE              = 0x00011794U,
+    DISPID_IHTMLELEMENT2_BLUR                  = 0x000107d2U,
+    DISPID_IHTMLELEMENT2_ADDFILTER             = 0x000107e1U,
+    DISPID_IHTMLELEMENT2_REMOVEFILTER          = 0x000107e2U,
+    DISPID_IHTMLELEMENT2_CLIENTHEIGHT          = 0x000107e3U,
+    DISPID_IHTMLELEMENT2_CLIENTWIDTH           = 0x000107e4U,
+    DISPID_IHTMLELEMENT2_CLIENTTOP             = 0x000107e5U,
+    DISPID_IHTMLELEMENT2_CLIENTLEFT            = 0x000107e6U,
+    DISPID_IHTMLELEMENT2_ATTACHEVENT           = 0x000101fbU,
+    DISPID_IHTMLELEMENT2_DETACHEVENT           = 0x000101fcU,
+    DISPID_IHTMLELEMENT2_READYSTATE            = 0x000113fcU,
+    DISPID_IHTMLELEMENT2_ONREADYSTATECHANGE    = 0x00011789U,
+    DISPID_IHTMLELEMENT2_ONROWSDELETE          = 0x000117aeU,
+    DISPID_IHTMLELEMENT2_ONROWSINSERTED        = 0x000117afU,
+    DISPID_IHTMLELEMENT2_ONCELLCHANGE          = 0x000117b0U,
+    DISPID_IHTMLELEMENT2_DIR                   = 0x000113fdU,
+    DISPID_IHTMLELEMENT2_CREATECONTROLRANGE    = 0x00010420U,
+    DISPID_IHTMLELEMENT2_SCROLLHEIGHT          = 0x00010421U,
+    DISPID_IHTMLELEMENT2_SCROLLWIDTH           = 0x00010422U,
+    DISPID_IHTMLELEMENT2_SCROLLTOP             = 0x00010423U,
+    DISPID_IHTMLELEMENT2_SCROLLLEFT            = 0x00010424U,
+    DISPID_IHTMLELEMENT2_CLEARATTRIBUTES       = 0x00010426U,
+    DISPID_IHTMLELEMENT2_MERGEATTRIBUTES       = 0x00010427U,
+    DISPID_IHTMLELEMENT2_ONCONTEXTMENU         = 0x000117b1U,
+    DISPID_IHTMLELEMENT2_INSERTADJACENTELEMENT = 0x0001042dU,
+    DISPID_IHTMLELEMENT2_APPLYELEMENT          = 0x00010429U,
+    DISPID_IHTMLELEMENT2_GETADJACENTTEXT       = 0x0001042eU,
+    DISPID_IHTMLELEMENT2_REPLACEADJACENTTEXT   = 0x0001042fU,
+    DISPID_IHTMLELEMENT2_CANHAVECHILDREN       = 0x00010430U,
+    DISPID_IHTMLELEMENT2_ADDBEHAVIOR           = 0x00010438U,
+    DISPID_IHTMLELEMENT2_REMOVEBEHAVIOR        = 0x00010439U,
+    DISPID_IHTMLELEMENT2_RUNTIMESTYLE          = 0x00010428U,
+    DISPID_IHTMLELEMENT2_BEHAVIORURNS          = 0x0001043aU,
+    DISPID_IHTMLELEMENT2_TAGURN                = 0x0001043bU,
+    DISPID_IHTMLELEMENT2_ONBEFOREEDITFOCUS     = 0x000117b5U,
+    DISPID_IHTMLELEMENT2_READYSTATEVALUE       = 0x0001043cU,
+    DISPID_IHTMLELEMENT2_GETELEMENTSBYTAGNAME  = 0x0001043dU,
+    DISPID_IHTMLELEMENT3_MERGEATTRIBUTES       = 0x00010448U,
+    DISPID_IHTMLELEMENT3_ISMULTILINE           = 0x00010449U,
+    DISPID_IHTMLELEMENT3_CANHAVEHTML           = 0x0001044aU,
+    DISPID_IHTMLELEMENT3_ONLAYOUTCOMPLETE      = 0x000117b9U,
+    DISPID_IHTMLELEMENT3_ONPAGE                = 0x000117baU,
+    DISPID_IHTMLELEMENT3_INFLATEBLOCK          = 0x0001044cU,
+    DISPID_IHTMLELEMENT3_ONBEFOREDEACTIVATE    = 0x000117bdU,
+    DISPID_IHTMLELEMENT3_SETACTIVE             = 0x0001044dU,
+    DISPID_IHTMLELEMENT3_CONTENTEDITABLE       = 0x0001142aU,
+    DISPID_IHTMLELEMENT3_ISCONTENTEDITABLE     = 0x0001044eU,
+    DISPID_IHTMLELEMENT3_HIDEFOCUS             = 0x0001142bU,
+    DISPID_IHTMLELEMENT3_DISABLED              = 0x0001004cU,
+    DISPID_IHTMLELEMENT3_ISDISABLED            = 0x00010451U,
+    DISPID_IHTMLELEMENT3_ONMOVE                = 0x000117beU,
+    DISPID_IHTMLELEMENT3_ONCONTROLSELECT       = 0x000117bfU,
+    DISPID_IHTMLELEMENT3_FIREEVENT             = 0x00010452U,
+    DISPID_IHTMLELEMENT3_ONRESIZESTART         = 0x000117c3U,
+    DISPID_IHTMLELEMENT3_ONRESIZEEND           = 0x000117c4U,
+    DISPID_IHTMLELEMENT3_ONMOVESTART           = 0x000117c1U,
+    DISPID_IHTMLELEMENT3_ONMOVEEND             = 0x000117c2U,
+    DISPID_IHTMLELEMENT3_ONMOUSEENTER          = 0x000117c5U,
+    DISPID_IHTMLELEMENT3_ONMOUSELEAVE          = 0x000117c6U,
+    DISPID_IHTMLELEMENT3_ONACTIVATE            = 0x000117c7U,
+    DISPID_IHTMLELEMENT3_ONDEACTIVATE          = 0x000117c8U,
+    DISPID_IHTMLELEMENT3_DRAGDROP              = 0x00010453U,
+    DISPID_IHTMLELEMENT3_GLYPHMODE             = 0x00010454U,
+    DISPID_IHTMLELEMENT4_ONMOUSEWHEEL          = 0x000117bcU,
+    DISPID_IHTMLELEMENT4_NORMALIZE             = 0x00010458U,
+    DISPID_IHTMLELEMENT4_GETATTRIBUTENODE      = 0x00010455U,
+    DISPID_IHTMLELEMENT4_SETATTRIBUTENODE      = 0x00010456U,
+    DISPID_IHTMLELEMENT4_REMOVEATTRIBUTENODE   = 0x00010457U,
+    DISPID_IHTMLELEMENT4_ONBEFOREACTIVATE      = 0x000117caU,
+    DISPID_IHTMLELEMENT4_ONFOCUSIN             = 0x000117cbU,
+    DISPID_IHTMLELEMENT4_ONFOCUSOUT            = 0x000117ccU,
 }
 
 enum : uint
 {
-    DISPID_IELEMENTSELECTOR_QUERYSELECTOR    = 0x0001045a,
-    DISPID_IELEMENTSELECTOR_QUERYSELECTORALL = 0x0001045b,
+    DISPID_IELEMENTSELECTOR_QUERYSELECTOR    = 0x0001045aU,
+    DISPID_IELEMENTSELECTOR_QUERYSELECTORALL = 0x0001045bU,
 }
 
 enum : uint
 {
-    DISPID_IHTMLUNIQUENAME_UNIQUENUMBER = 0x0001041e,
-    DISPID_IHTMLUNIQUENAME_UNIQUEID     = 0x0001041f,
+    DISPID_IHTMLUNIQUENAME_UNIQUENUMBER = 0x0001041eU,
+    DISPID_IHTMLUNIQUENAME_UNIQUEID     = 0x0001041fU,
 }
 
 enum : uint
 {
-    DISPID_IHTMLELEMENT5_IE8_GETATTRIBUTENODE                      = 0x000104b0,
-    DISPID_IHTMLELEMENT5_IE8_SETATTRIBUTENODE                      = 0x000104b1,
-    DISPID_IHTMLELEMENT5_IE8_REMOVEATTRIBUTENODE                   = 0x000104b2,
-    DISPID_IHTMLELEMENT5_HASATTRIBUTE                              = 0x000104b3,
-    DISPID_IHTMLELEMENT5_ROLE                                      = 0x000104b4,
-    DISPID_IHTMLELEMENT5_ARIABUSY                                  = 0x000104b5,
-    DISPID_IHTMLELEMENT5_ARIACHECKED                               = 0x000104b6,
-    DISPID_IHTMLELEMENT5_ARIADISABLED                              = 0x000104b7,
-    DISPID_IHTMLELEMENT5_ARIAEXPANDED                              = 0x000104b8,
-    DISPID_IHTMLELEMENT5_ARIAHASPOPUP                              = 0x000104b9,
-    DISPID_IHTMLELEMENT5_ARIAHIDDEN                                = 0x000104ba,
-    DISPID_IHTMLELEMENT5_ARIAINVALID                               = 0x000104bb,
-    DISPID_IHTMLELEMENT5_ARIAMULTISELECTABLE                       = 0x000104bc,
-    DISPID_IHTMLELEMENT5_ARIAPRESSED                               = 0x000104bd,
-    DISPID_IHTMLELEMENT5_ARIAREADONLY                              = 0x000104be,
-    DISPID_IHTMLELEMENT5_ARIAREQUIRED                              = 0x000104bf,
-    DISPID_IHTMLELEMENT5_ARIASECRET                                = 0x000104c0,
-    DISPID_IHTMLELEMENT5_ARIASELECTED                              = 0x000104c1,
-    DISPID_IHTMLELEMENT5_IE8_GETATTRIBUTE                          = 0x000104c2,
-    DISPID_IHTMLELEMENT5_IE8_SETATTRIBUTE                          = 0x000104c3,
-    DISPID_IHTMLELEMENT5_IE8_REMOVEATTRIBUTE                       = 0x000104c4,
-    DISPID_IHTMLELEMENT5_IE8_ATTRIBUTES                            = 0x000104c5,
-    DISPID_IHTMLELEMENT5_ARIAVALUENOW                              = 0x000104c6,
-    DISPID_IHTMLELEMENT5_ARIAPOSINSET                              = 0x000104c7,
-    DISPID_IHTMLELEMENT5_ARIASETSIZE                               = 0x000104c8,
-    DISPID_IHTMLELEMENT5_ARIALEVEL                                 = 0x000104c9,
-    DISPID_IHTMLELEMENT5_ARIAVALUEMIN                              = 0x000104ca,
-    DISPID_IHTMLELEMENT5_ARIAVALUEMAX                              = 0x000104cb,
-    DISPID_IHTMLELEMENT5_ARIACONTROLS                              = 0x000104cc,
-    DISPID_IHTMLELEMENT5_ARIADESCRIBEDBY                           = 0x000104cd,
-    DISPID_IHTMLELEMENT5_ARIAFLOWTO                                = 0x000104ce,
-    DISPID_IHTMLELEMENT5_ARIALABELLEDBY                            = 0x000104cf,
-    DISPID_IHTMLELEMENT5_ARIAACTIVEDESCENDANT                      = 0x000104d0,
-    DISPID_IHTMLELEMENT5_ARIAOWNS                                  = 0x000104d1,
-    DISPID_IHTMLELEMENT5_HASATTRIBUTES                             = 0x000104d2,
-    DISPID_IHTMLELEMENT5_ARIALIVE                                  = 0x000104d3,
-    DISPID_IHTMLELEMENT5_ARIARELEVANT                              = 0x000104d4,
-    DISPID_IHTMLELEMENT6_GETATTRIBUTENS                            = 0x000104e5,
-    DISPID_IHTMLELEMENT6_SETATTRIBUTENS                            = 0x000104e6,
-    DISPID_IHTMLELEMENT6_REMOVEATTRIBUTENS                         = 0x000104e7,
-    DISPID_IHTMLELEMENT6_GETATTRIBUTENODENS                        = 0x000104e2,
-    DISPID_IHTMLELEMENT6_SETATTRIBUTENODENS                        = 0x000104e3,
-    DISPID_IHTMLELEMENT6_HASATTRIBUTENS                            = 0x000104e4,
-    DISPID_IHTMLELEMENT6_IE9_GETATTRIBUTE                          = 0x000104ec,
-    DISPID_IHTMLELEMENT6_IE9_SETATTRIBUTE                          = 0x000104ed,
-    DISPID_IHTMLELEMENT6_IE9_REMOVEATTRIBUTE                       = 0x000104ee,
-    DISPID_IHTMLELEMENT6_IE9_GETATTRIBUTENODE                      = 0x000104e8,
-    DISPID_IHTMLELEMENT6_IE9_SETATTRIBUTENODE                      = 0x000104e9,
-    DISPID_IHTMLELEMENT6_IE9_REMOVEATTRIBUTENODE                   = 0x000104ea,
-    DISPID_IHTMLELEMENT6_IE9_HASATTRIBUTE                          = 0x000104eb,
-    DISPID_IHTMLELEMENT6_GETELEMENTSBYTAGNAMENS                    = 0x000104ef,
-    DISPID_IHTMLELEMENT6_IE9_TAGNAME                               = 0x000104f1,
-    DISPID_IHTMLELEMENT6_IE9_NODENAME                              = 0x000104f2,
-    DISPID_IHTMLELEMENT6_GETELEMENTSBYCLASSNAME                    = 0x000104f3,
-    DISPID_IHTMLELEMENT6_MSMATCHESSELECTOR                         = 0x000104fe,
-    DISPID_IHTMLELEMENT6_ONABORT                                   = 0x0001178c,
-    DISPID_IHTMLELEMENT6_ONCANPLAY                                 = 0x000117f6,
-    DISPID_IHTMLELEMENT6_ONCANPLAYTHROUGH                          = 0x000117f7,
-    DISPID_IHTMLELEMENT6_ONCHANGE                                  = 0x0001178e,
-    DISPID_IHTMLELEMENT6_ONDURATIONCHANGE                          = 0x000117f8,
-    DISPID_IHTMLELEMENT6_ONEMPTIED                                 = 0x000117f9,
-    DISPID_IHTMLELEMENT6_ONENDED                                   = 0x000117fa,
-    DISPID_IHTMLELEMENT6_ONERROR                                   = 0x0001178d,
-    DISPID_IHTMLELEMENT6_ONINPUT                                   = 0x000117ef,
-    DISPID_IHTMLELEMENT6_ONLOAD                                    = 0x00011790,
-    DISPID_IHTMLELEMENT6_ONLOADEDDATA                              = 0x000117fb,
-    DISPID_IHTMLELEMENT6_ONLOADEDMETADATA                          = 0x000117fc,
-    DISPID_IHTMLELEMENT6_ONLOADSTART                               = 0x000117fd,
-    DISPID_IHTMLELEMENT6_ONPAUSE                                   = 0x000117fe,
-    DISPID_IHTMLELEMENT6_ONPLAY                                    = 0x000117ff,
-    DISPID_IHTMLELEMENT6_ONPLAYING                                 = 0x00011800,
-    DISPID_IHTMLELEMENT6_ONPROGRESS                                = 0x00011801,
-    DISPID_IHTMLELEMENT6_ONRATECHANGE                              = 0x00011802,
-    DISPID_IHTMLELEMENT6_ONRESET                                   = 0x0001177c,
-    DISPID_IHTMLELEMENT6_ONSEEKED                                  = 0x00011803,
-    DISPID_IHTMLELEMENT6_ONSEEKING                                 = 0x00011804,
-    DISPID_IHTMLELEMENT6_ONSELECT                                  = 0x0001177a,
-    DISPID_IHTMLELEMENT6_ONSTALLED                                 = 0x00011805,
-    DISPID_IHTMLELEMENT6_ONSUBMIT                                  = 0x0001177b,
-    DISPID_IHTMLELEMENT6_ONSUSPEND                                 = 0x00011806,
-    DISPID_IHTMLELEMENT6_ONTIMEUPDATE                              = 0x00011807,
-    DISPID_IHTMLELEMENT6_ONVOLUMECHANGE                            = 0x00011808,
-    DISPID_IHTMLELEMENT6_ONWAITING                                 = 0x00011809,
-    DISPID_IHTMLELEMENT6_IE9_HASATTRIBUTES                         = 0x000104ff,
-    DISPID_IHTMLELEMENT7_ONMSPOINTERDOWN                           = 0x0001180a,
-    DISPID_IHTMLELEMENT7_ONMSPOINTERMOVE                           = 0x0001180b,
-    DISPID_IHTMLELEMENT7_ONMSPOINTERUP                             = 0x0001180c,
-    DISPID_IHTMLELEMENT7_ONMSPOINTEROVER                           = 0x0001180d,
-    DISPID_IHTMLELEMENT7_ONMSPOINTEROUT                            = 0x0001180e,
-    DISPID_IHTMLELEMENT7_ONMSPOINTERCANCEL                         = 0x0001180f,
-    DISPID_IHTMLELEMENT7_ONMSPOINTERHOVER                          = 0x00011810,
-    DISPID_IHTMLELEMENT7_ONMSLOSTPOINTERCAPTURE                    = 0x0001181a,
-    DISPID_IHTMLELEMENT7_ONMSGOTPOINTERCAPTURE                     = 0x0001181b,
-    DISPID_IHTMLELEMENT7_ONMSGESTURESTART                          = 0x00011813,
-    DISPID_IHTMLELEMENT7_ONMSGESTURECHANGE                         = 0x00011814,
-    DISPID_IHTMLELEMENT7_ONMSGESTUREEND                            = 0x00011815,
-    DISPID_IHTMLELEMENT7_ONMSGESTUREHOLD                           = 0x00011816,
-    DISPID_IHTMLELEMENT7_ONMSGESTURETAP                            = 0x00011817,
-    DISPID_IHTMLELEMENT7_ONMSGESTUREDOUBLETAP                      = 0x00011818,
-    DISPID_IHTMLELEMENT7_ONMSINERTIASTART                          = 0x00011819,
-    DISPID_IHTMLELEMENT7_MSSETPOINTERCAPTURE                       = 0x00010506,
-    DISPID_IHTMLELEMENT7_MSRELEASEPOINTERCAPTURE                   = 0x00010507,
-    DISPID_IHTMLELEMENT7_ONMSTRANSITIONSTART                       = 0x0001181d,
-    DISPID_IHTMLELEMENT7_ONMSTRANSITIONEND                         = 0x0001181e,
-    DISPID_IHTMLELEMENT7_ONMSANIMATIONSTART                        = 0x0001181f,
-    DISPID_IHTMLELEMENT7_ONMSANIMATIONEND                          = 0x00011820,
-    DISPID_IHTMLELEMENT7_ONMSANIMATIONITERATION                    = 0x00011821,
-    DISPID_IHTMLELEMENT7_ONINVALID                                 = 0x0001182c,
-    DISPID_IHTMLELEMENT7_XMSACCELERATORKEY                         = 0x00010512,
-    DISPID_IHTMLELEMENT7_SPELLCHECK                                = 0x000114fb,
-    DISPID_IHTMLELEMENT7_ONMSMANIPULATIONSTATECHANGED              = 0x00011822,
-    DISPID_IHTMLELEMENT7_ONCUECHANGE                               = 0x00011831,
-    DISPID_IHTMLELEMENTAPPLIEDSTYLES_MSGETRULESAPPLIED             = 0x0001045c,
-    DISPID_IHTMLELEMENTAPPLIEDSTYLES_MSGETRULESAPPLIEDWITHANCESTOR = 0x0001045d,
+    DISPID_IHTMLELEMENT5_IE8_GETATTRIBUTENODE                      = 0x000104b0U,
+    DISPID_IHTMLELEMENT5_IE8_SETATTRIBUTENODE                      = 0x000104b1U,
+    DISPID_IHTMLELEMENT5_IE8_REMOVEATTRIBUTENODE                   = 0x000104b2U,
+    DISPID_IHTMLELEMENT5_HASATTRIBUTE                              = 0x000104b3U,
+    DISPID_IHTMLELEMENT5_ROLE                                      = 0x000104b4U,
+    DISPID_IHTMLELEMENT5_ARIABUSY                                  = 0x000104b5U,
+    DISPID_IHTMLELEMENT5_ARIACHECKED                               = 0x000104b6U,
+    DISPID_IHTMLELEMENT5_ARIADISABLED                              = 0x000104b7U,
+    DISPID_IHTMLELEMENT5_ARIAEXPANDED                              = 0x000104b8U,
+    DISPID_IHTMLELEMENT5_ARIAHASPOPUP                              = 0x000104b9U,
+    DISPID_IHTMLELEMENT5_ARIAHIDDEN                                = 0x000104baU,
+    DISPID_IHTMLELEMENT5_ARIAINVALID                               = 0x000104bbU,
+    DISPID_IHTMLELEMENT5_ARIAMULTISELECTABLE                       = 0x000104bcU,
+    DISPID_IHTMLELEMENT5_ARIAPRESSED                               = 0x000104bdU,
+    DISPID_IHTMLELEMENT5_ARIAREADONLY                              = 0x000104beU,
+    DISPID_IHTMLELEMENT5_ARIAREQUIRED                              = 0x000104bfU,
+    DISPID_IHTMLELEMENT5_ARIASECRET                                = 0x000104c0U,
+    DISPID_IHTMLELEMENT5_ARIASELECTED                              = 0x000104c1U,
+    DISPID_IHTMLELEMENT5_IE8_GETATTRIBUTE                          = 0x000104c2U,
+    DISPID_IHTMLELEMENT5_IE8_SETATTRIBUTE                          = 0x000104c3U,
+    DISPID_IHTMLELEMENT5_IE8_REMOVEATTRIBUTE                       = 0x000104c4U,
+    DISPID_IHTMLELEMENT5_IE8_ATTRIBUTES                            = 0x000104c5U,
+    DISPID_IHTMLELEMENT5_ARIAVALUENOW                              = 0x000104c6U,
+    DISPID_IHTMLELEMENT5_ARIAPOSINSET                              = 0x000104c7U,
+    DISPID_IHTMLELEMENT5_ARIASETSIZE                               = 0x000104c8U,
+    DISPID_IHTMLELEMENT5_ARIALEVEL                                 = 0x000104c9U,
+    DISPID_IHTMLELEMENT5_ARIAVALUEMIN                              = 0x000104caU,
+    DISPID_IHTMLELEMENT5_ARIAVALUEMAX                              = 0x000104cbU,
+    DISPID_IHTMLELEMENT5_ARIACONTROLS                              = 0x000104ccU,
+    DISPID_IHTMLELEMENT5_ARIADESCRIBEDBY                           = 0x000104cdU,
+    DISPID_IHTMLELEMENT5_ARIAFLOWTO                                = 0x000104ceU,
+    DISPID_IHTMLELEMENT5_ARIALABELLEDBY                            = 0x000104cfU,
+    DISPID_IHTMLELEMENT5_ARIAACTIVEDESCENDANT                      = 0x000104d0U,
+    DISPID_IHTMLELEMENT5_ARIAOWNS                                  = 0x000104d1U,
+    DISPID_IHTMLELEMENT5_HASATTRIBUTES                             = 0x000104d2U,
+    DISPID_IHTMLELEMENT5_ARIALIVE                                  = 0x000104d3U,
+    DISPID_IHTMLELEMENT5_ARIARELEVANT                              = 0x000104d4U,
+    DISPID_IHTMLELEMENT6_GETATTRIBUTENS                            = 0x000104e5U,
+    DISPID_IHTMLELEMENT6_SETATTRIBUTENS                            = 0x000104e6U,
+    DISPID_IHTMLELEMENT6_REMOVEATTRIBUTENS                         = 0x000104e7U,
+    DISPID_IHTMLELEMENT6_GETATTRIBUTENODENS                        = 0x000104e2U,
+    DISPID_IHTMLELEMENT6_SETATTRIBUTENODENS                        = 0x000104e3U,
+    DISPID_IHTMLELEMENT6_HASATTRIBUTENS                            = 0x000104e4U,
+    DISPID_IHTMLELEMENT6_IE9_GETATTRIBUTE                          = 0x000104ecU,
+    DISPID_IHTMLELEMENT6_IE9_SETATTRIBUTE                          = 0x000104edU,
+    DISPID_IHTMLELEMENT6_IE9_REMOVEATTRIBUTE                       = 0x000104eeU,
+    DISPID_IHTMLELEMENT6_IE9_GETATTRIBUTENODE                      = 0x000104e8U,
+    DISPID_IHTMLELEMENT6_IE9_SETATTRIBUTENODE                      = 0x000104e9U,
+    DISPID_IHTMLELEMENT6_IE9_REMOVEATTRIBUTENODE                   = 0x000104eaU,
+    DISPID_IHTMLELEMENT6_IE9_HASATTRIBUTE                          = 0x000104ebU,
+    DISPID_IHTMLELEMENT6_GETELEMENTSBYTAGNAMENS                    = 0x000104efU,
+    DISPID_IHTMLELEMENT6_IE9_TAGNAME                               = 0x000104f1U,
+    DISPID_IHTMLELEMENT6_IE9_NODENAME                              = 0x000104f2U,
+    DISPID_IHTMLELEMENT6_GETELEMENTSBYCLASSNAME                    = 0x000104f3U,
+    DISPID_IHTMLELEMENT6_MSMATCHESSELECTOR                         = 0x000104feU,
+    DISPID_IHTMLELEMENT6_ONABORT                                   = 0x0001178cU,
+    DISPID_IHTMLELEMENT6_ONCANPLAY                                 = 0x000117f6U,
+    DISPID_IHTMLELEMENT6_ONCANPLAYTHROUGH                          = 0x000117f7U,
+    DISPID_IHTMLELEMENT6_ONCHANGE                                  = 0x0001178eU,
+    DISPID_IHTMLELEMENT6_ONDURATIONCHANGE                          = 0x000117f8U,
+    DISPID_IHTMLELEMENT6_ONEMPTIED                                 = 0x000117f9U,
+    DISPID_IHTMLELEMENT6_ONENDED                                   = 0x000117faU,
+    DISPID_IHTMLELEMENT6_ONERROR                                   = 0x0001178dU,
+    DISPID_IHTMLELEMENT6_ONINPUT                                   = 0x000117efU,
+    DISPID_IHTMLELEMENT6_ONLOAD                                    = 0x00011790U,
+    DISPID_IHTMLELEMENT6_ONLOADEDDATA                              = 0x000117fbU,
+    DISPID_IHTMLELEMENT6_ONLOADEDMETADATA                          = 0x000117fcU,
+    DISPID_IHTMLELEMENT6_ONLOADSTART                               = 0x000117fdU,
+    DISPID_IHTMLELEMENT6_ONPAUSE                                   = 0x000117feU,
+    DISPID_IHTMLELEMENT6_ONPLAY                                    = 0x000117ffU,
+    DISPID_IHTMLELEMENT6_ONPLAYING                                 = 0x00011800U,
+    DISPID_IHTMLELEMENT6_ONPROGRESS                                = 0x00011801U,
+    DISPID_IHTMLELEMENT6_ONRATECHANGE                              = 0x00011802U,
+    DISPID_IHTMLELEMENT6_ONRESET                                   = 0x0001177cU,
+    DISPID_IHTMLELEMENT6_ONSEEKED                                  = 0x00011803U,
+    DISPID_IHTMLELEMENT6_ONSEEKING                                 = 0x00011804U,
+    DISPID_IHTMLELEMENT6_ONSELECT                                  = 0x0001177aU,
+    DISPID_IHTMLELEMENT6_ONSTALLED                                 = 0x00011805U,
+    DISPID_IHTMLELEMENT6_ONSUBMIT                                  = 0x0001177bU,
+    DISPID_IHTMLELEMENT6_ONSUSPEND                                 = 0x00011806U,
+    DISPID_IHTMLELEMENT6_ONTIMEUPDATE                              = 0x00011807U,
+    DISPID_IHTMLELEMENT6_ONVOLUMECHANGE                            = 0x00011808U,
+    DISPID_IHTMLELEMENT6_ONWAITING                                 = 0x00011809U,
+    DISPID_IHTMLELEMENT6_IE9_HASATTRIBUTES                         = 0x000104ffU,
+    DISPID_IHTMLELEMENT7_ONMSPOINTERDOWN                           = 0x0001180aU,
+    DISPID_IHTMLELEMENT7_ONMSPOINTERMOVE                           = 0x0001180bU,
+    DISPID_IHTMLELEMENT7_ONMSPOINTERUP                             = 0x0001180cU,
+    DISPID_IHTMLELEMENT7_ONMSPOINTEROVER                           = 0x0001180dU,
+    DISPID_IHTMLELEMENT7_ONMSPOINTEROUT                            = 0x0001180eU,
+    DISPID_IHTMLELEMENT7_ONMSPOINTERCANCEL                         = 0x0001180fU,
+    DISPID_IHTMLELEMENT7_ONMSPOINTERHOVER                          = 0x00011810U,
+    DISPID_IHTMLELEMENT7_ONMSLOSTPOINTERCAPTURE                    = 0x0001181aU,
+    DISPID_IHTMLELEMENT7_ONMSGOTPOINTERCAPTURE                     = 0x0001181bU,
+    DISPID_IHTMLELEMENT7_ONMSGESTURESTART                          = 0x00011813U,
+    DISPID_IHTMLELEMENT7_ONMSGESTURECHANGE                         = 0x00011814U,
+    DISPID_IHTMLELEMENT7_ONMSGESTUREEND                            = 0x00011815U,
+    DISPID_IHTMLELEMENT7_ONMSGESTUREHOLD                           = 0x00011816U,
+    DISPID_IHTMLELEMENT7_ONMSGESTURETAP                            = 0x00011817U,
+    DISPID_IHTMLELEMENT7_ONMSGESTUREDOUBLETAP                      = 0x00011818U,
+    DISPID_IHTMLELEMENT7_ONMSINERTIASTART                          = 0x00011819U,
+    DISPID_IHTMLELEMENT7_MSSETPOINTERCAPTURE                       = 0x00010506U,
+    DISPID_IHTMLELEMENT7_MSRELEASEPOINTERCAPTURE                   = 0x00010507U,
+    DISPID_IHTMLELEMENT7_ONMSTRANSITIONSTART                       = 0x0001181dU,
+    DISPID_IHTMLELEMENT7_ONMSTRANSITIONEND                         = 0x0001181eU,
+    DISPID_IHTMLELEMENT7_ONMSANIMATIONSTART                        = 0x0001181fU,
+    DISPID_IHTMLELEMENT7_ONMSANIMATIONEND                          = 0x00011820U,
+    DISPID_IHTMLELEMENT7_ONMSANIMATIONITERATION                    = 0x00011821U,
+    DISPID_IHTMLELEMENT7_ONINVALID                                 = 0x0001182cU,
+    DISPID_IHTMLELEMENT7_XMSACCELERATORKEY                         = 0x00010512U,
+    DISPID_IHTMLELEMENT7_SPELLCHECK                                = 0x000114fbU,
+    DISPID_IHTMLELEMENT7_ONMSMANIPULATIONSTATECHANGED              = 0x00011822U,
+    DISPID_IHTMLELEMENT7_ONCUECHANGE                               = 0x00011831U,
+    DISPID_IHTMLELEMENTAPPLIEDSTYLES_MSGETRULESAPPLIED             = 0x0001045cU,
+    DISPID_IHTMLELEMENTAPPLIEDSTYLES_MSGETRULESAPPLIEDWITHANCESTOR = 0x0001045dU,
 }
 
 enum : uint
 {
-    DISPID_IELEMENTTRAVERSAL_FIRSTELEMENTCHILD      = 0x000104f8,
-    DISPID_IELEMENTTRAVERSAL_LASTELEMENTCHILD       = 0x000104f9,
-    DISPID_IELEMENTTRAVERSAL_PREVIOUSELEMENTSIBLING = 0x000104fa,
-    DISPID_IELEMENTTRAVERSAL_NEXTELEMENTSIBLING     = 0x000104fb,
-    DISPID_IELEMENTTRAVERSAL_CHILDELEMENTCOUNT      = 0x000104fc,
+    DISPID_IELEMENTTRAVERSAL_FIRSTELEMENTCHILD      = 0x000104f8U,
+    DISPID_IELEMENTTRAVERSAL_LASTELEMENTCHILD       = 0x000104f9U,
+    DISPID_IELEMENTTRAVERSAL_PREVIOUSELEMENTSIBLING = 0x000104faU,
+    DISPID_IELEMENTTRAVERSAL_NEXTELEMENTSIBLING     = 0x000104fbU,
+    DISPID_IELEMENTTRAVERSAL_CHILDELEMENTCOUNT      = 0x000104fcU,
 }
 
 enum : uint
 {
-    DISPID_IHTMLDATABINDING_DATAFLD      = 0x000103fd,
-    DISPID_IHTMLDATABINDING_DATASRC      = 0x000103fe,
-    DISPID_IHTMLDATABINDING_DATAFORMATAS = 0x000103ff,
+    DISPID_IHTMLDATABINDING_DATAFLD      = 0x000103fdU,
+    DISPID_IHTMLDATABINDING_DATASRC      = 0x000103feU,
+    DISPID_IHTMLDATABINDING_DATAFORMATAS = 0x000103ffU,
 }
 
 enum : uint
 {
-    DISPID_HTMLELEMENTEVENTS4_ONABORT         = 0x000003e8,
-    DISPID_HTMLELEMENTEVENTS4_ONCHANGE        = 0x000003e9,
-    DISPID_HTMLELEMENTEVENTS4_ONERROR         = 0x000003ea,
-    DISPID_HTMLELEMENTEVENTS4_ONLOAD          = 0x000003eb,
-    DISPID_HTMLELEMENTEVENTS4_ONRESET         = 0x000003f7,
-    DISPID_HTMLELEMENTEVENTS4_ONSELECT        = 0x000003ee,
-    DISPID_HTMLELEMENTEVENTS4_ONSUBMIT        = 0x000003ef,
-    DISPID_HTMLELEMENTEVENTS4_ONMSCONTENTZOOM = 0x0001181c,
-    DISPID_HTMLELEMENTEVENTS3_ONONLINE        = 0x00000428,
-    DISPID_HTMLELEMENTEVENTS3_ONOFFLINE       = 0x00000429,
-    DISPID_HTMLELEMENTEVENTS2_ONHELP          = 0x0001000a,
+    DISPID_HTMLELEMENTEVENTS4_ONABORT         = 0x000003e8U,
+    DISPID_HTMLELEMENTEVENTS4_ONCHANGE        = 0x000003e9U,
+    DISPID_HTMLELEMENTEVENTS4_ONERROR         = 0x000003eaU,
+    DISPID_HTMLELEMENTEVENTS4_ONLOAD          = 0x000003ebU,
+    DISPID_HTMLELEMENTEVENTS4_ONRESET         = 0x000003f7U,
+    DISPID_HTMLELEMENTEVENTS4_ONSELECT        = 0x000003eeU,
+    DISPID_HTMLELEMENTEVENTS4_ONSUBMIT        = 0x000003efU,
+    DISPID_HTMLELEMENTEVENTS4_ONMSCONTENTZOOM = 0x0001181cU,
+    DISPID_HTMLELEMENTEVENTS3_ONONLINE        = 0x00000428U,
+    DISPID_HTMLELEMENTEVENTS3_ONOFFLINE       = 0x00000429U,
+    DISPID_HTMLELEMENTEVENTS2_ONHELP          = 0x0001000aU,
 }
 
 enum : int
@@ -7688,8 +7955,8 @@ enum : int
 
 enum : uint
 {
-    DISPID_HTMLELEMENTEVENTS2_ONMOUSEOUT  = 0x00010009,
-    DISPID_HTMLELEMENTEVENTS2_ONMOUSEOVER = 0x00010008,
+    DISPID_HTMLELEMENTEVENTS2_ONMOUSEOUT  = 0x00010009U,
+    DISPID_HTMLELEMENTEVENTS2_ONMOUSEOVER = 0x00010008U,
 }
 
 enum : int
@@ -7701,62 +7968,62 @@ enum : int
 
 enum : uint
 {
-    DISPID_HTMLELEMENTEVENTS2_ONSELECTSTART     = 0x0001000c,
-    DISPID_HTMLELEMENTEVENTS2_ONFILTERCHANGE    = 0x00010011,
-    DISPID_HTMLELEMENTEVENTS2_ONDRAGSTART       = 0x0001000b,
-    DISPID_HTMLELEMENTEVENTS2_ONBEFOREUPDATE    = 0x00010004,
-    DISPID_HTMLELEMENTEVENTS2_ONAFTERUPDATE     = 0x00010005,
-    DISPID_HTMLELEMENTEVENTS2_ONERRORUPDATE     = 0x0001000d,
-    DISPID_HTMLELEMENTEVENTS2_ONROWEXIT         = 0x00010006,
-    DISPID_HTMLELEMENTEVENTS2_ONROWENTER        = 0x00010007,
-    DISPID_HTMLELEMENTEVENTS2_ONDATASETCHANGED  = 0x0001000e,
-    DISPID_HTMLELEMENTEVENTS2_ONDATAAVAILABLE   = 0x0001000f,
-    DISPID_HTMLELEMENTEVENTS2_ONDATASETCOMPLETE = 0x00010010,
-    DISPID_HTMLELEMENTEVENTS2_ONLOSECAPTURE     = 0x00010012,
-    DISPID_HTMLELEMENTEVENTS2_ONPROPERTYCHANGE  = 0x00010013,
-    DISPID_HTMLELEMENTEVENTS2_ONSCROLL          = 0x000003f6,
-    DISPID_HTMLELEMENTEVENTS2_ONFOCUS           = 0x00010001,
-    DISPID_HTMLELEMENTEVENTS2_ONRESIZE          = 0x000003f8,
-    DISPID_HTMLELEMENTEVENTS2_ONDRAG            = 0x00010014,
-    DISPID_HTMLELEMENTEVENTS2_ONDRAGEND         = 0x00010015,
-    DISPID_HTMLELEMENTEVENTS2_ONDRAGENTER       = 0x00010016,
-    DISPID_HTMLELEMENTEVENTS2_ONDRAGOVER        = 0x00010017,
-    DISPID_HTMLELEMENTEVENTS2_ONDRAGLEAVE       = 0x00010018,
-    DISPID_HTMLELEMENTEVENTS2_ONDROP            = 0x00010019,
-    DISPID_HTMLELEMENTEVENTS2_ONBEFORECUT       = 0x0001001d,
-    DISPID_HTMLELEMENTEVENTS2_ONCUT             = 0x0001001a,
-    DISPID_HTMLELEMENTEVENTS2_ONBEFORECOPY      = 0x0001001e,
-    DISPID_HTMLELEMENTEVENTS2_ONCOPY            = 0x0001001b,
-    DISPID_HTMLELEMENTEVENTS2_ONBEFOREPASTE     = 0x0001001f,
-    DISPID_HTMLELEMENTEVENTS2_ONPASTE           = 0x0001001c,
-    DISPID_HTMLELEMENTEVENTS2_ONCONTEXTMENU     = 0x000003ff,
-    DISPID_HTMLELEMENTEVENTS2_ONROWSDELETE      = 0x00010020,
-    DISPID_HTMLELEMENTEVENTS2_ONROWSINSERTED    = 0x00010021,
-    DISPID_HTMLELEMENTEVENTS2_ONCELLCHANGE      = 0x00010022,
+    DISPID_HTMLELEMENTEVENTS2_ONSELECTSTART     = 0x0001000cU,
+    DISPID_HTMLELEMENTEVENTS2_ONFILTERCHANGE    = 0x00010011U,
+    DISPID_HTMLELEMENTEVENTS2_ONDRAGSTART       = 0x0001000bU,
+    DISPID_HTMLELEMENTEVENTS2_ONBEFOREUPDATE    = 0x00010004U,
+    DISPID_HTMLELEMENTEVENTS2_ONAFTERUPDATE     = 0x00010005U,
+    DISPID_HTMLELEMENTEVENTS2_ONERRORUPDATE     = 0x0001000dU,
+    DISPID_HTMLELEMENTEVENTS2_ONROWEXIT         = 0x00010006U,
+    DISPID_HTMLELEMENTEVENTS2_ONROWENTER        = 0x00010007U,
+    DISPID_HTMLELEMENTEVENTS2_ONDATASETCHANGED  = 0x0001000eU,
+    DISPID_HTMLELEMENTEVENTS2_ONDATAAVAILABLE   = 0x0001000fU,
+    DISPID_HTMLELEMENTEVENTS2_ONDATASETCOMPLETE = 0x00010010U,
+    DISPID_HTMLELEMENTEVENTS2_ONLOSECAPTURE     = 0x00010012U,
+    DISPID_HTMLELEMENTEVENTS2_ONPROPERTYCHANGE  = 0x00010013U,
+    DISPID_HTMLELEMENTEVENTS2_ONSCROLL          = 0x000003f6U,
+    DISPID_HTMLELEMENTEVENTS2_ONFOCUS           = 0x00010001U,
+    DISPID_HTMLELEMENTEVENTS2_ONRESIZE          = 0x000003f8U,
+    DISPID_HTMLELEMENTEVENTS2_ONDRAG            = 0x00010014U,
+    DISPID_HTMLELEMENTEVENTS2_ONDRAGEND         = 0x00010015U,
+    DISPID_HTMLELEMENTEVENTS2_ONDRAGENTER       = 0x00010016U,
+    DISPID_HTMLELEMENTEVENTS2_ONDRAGOVER        = 0x00010017U,
+    DISPID_HTMLELEMENTEVENTS2_ONDRAGLEAVE       = 0x00010018U,
+    DISPID_HTMLELEMENTEVENTS2_ONDROP            = 0x00010019U,
+    DISPID_HTMLELEMENTEVENTS2_ONBEFORECUT       = 0x0001001dU,
+    DISPID_HTMLELEMENTEVENTS2_ONCUT             = 0x0001001aU,
+    DISPID_HTMLELEMENTEVENTS2_ONBEFORECOPY      = 0x0001001eU,
+    DISPID_HTMLELEMENTEVENTS2_ONCOPY            = 0x0001001bU,
+    DISPID_HTMLELEMENTEVENTS2_ONBEFOREPASTE     = 0x0001001fU,
+    DISPID_HTMLELEMENTEVENTS2_ONPASTE           = 0x0001001cU,
+    DISPID_HTMLELEMENTEVENTS2_ONCONTEXTMENU     = 0x000003ffU,
+    DISPID_HTMLELEMENTEVENTS2_ONROWSDELETE      = 0x00010020U,
+    DISPID_HTMLELEMENTEVENTS2_ONROWSINSERTED    = 0x00010021U,
+    DISPID_HTMLELEMENTEVENTS2_ONCELLCHANGE      = 0x00010022U,
 }
 
 enum int DISPID_HTMLELEMENTEVENTS2_ONREADYSTATECHANGE = 0xfffffd9f;
 
 enum : uint
 {
-    DISPID_HTMLELEMENTEVENTS2_ONLAYOUTCOMPLETE   = 0x00000406,
-    DISPID_HTMLELEMENTEVENTS2_ONPAGE             = 0x00000407,
-    DISPID_HTMLELEMENTEVENTS2_ONMOUSEENTER       = 0x00000412,
-    DISPID_HTMLELEMENTEVENTS2_ONMOUSELEAVE       = 0x00000413,
-    DISPID_HTMLELEMENTEVENTS2_ONACTIVATE         = 0x00000414,
-    DISPID_HTMLELEMENTEVENTS2_ONDEACTIVATE       = 0x00000415,
-    DISPID_HTMLELEMENTEVENTS2_ONBEFOREDEACTIVATE = 0x0000040a,
-    DISPID_HTMLELEMENTEVENTS2_ONBEFOREACTIVATE   = 0x00000417,
-    DISPID_HTMLELEMENTEVENTS2_ONFOCUSIN          = 0x00000418,
-    DISPID_HTMLELEMENTEVENTS2_ONFOCUSOUT         = 0x00000419,
-    DISPID_HTMLELEMENTEVENTS2_ONMOVE             = 0x0000040b,
-    DISPID_HTMLELEMENTEVENTS2_ONCONTROLSELECT    = 0x0000040c,
-    DISPID_HTMLELEMENTEVENTS2_ONMOVESTART        = 0x0000040e,
-    DISPID_HTMLELEMENTEVENTS2_ONMOVEEND          = 0x0000040f,
-    DISPID_HTMLELEMENTEVENTS2_ONRESIZESTART      = 0x00000410,
-    DISPID_HTMLELEMENTEVENTS2_ONRESIZEEND        = 0x00000411,
-    DISPID_HTMLELEMENTEVENTS2_ONMOUSEWHEEL       = 0x00000409,
-    DISPID_HTMLELEMENTEVENTS_ONHELP              = 0x0001000a,
+    DISPID_HTMLELEMENTEVENTS2_ONLAYOUTCOMPLETE   = 0x00000406U,
+    DISPID_HTMLELEMENTEVENTS2_ONPAGE             = 0x00000407U,
+    DISPID_HTMLELEMENTEVENTS2_ONMOUSEENTER       = 0x00000412U,
+    DISPID_HTMLELEMENTEVENTS2_ONMOUSELEAVE       = 0x00000413U,
+    DISPID_HTMLELEMENTEVENTS2_ONACTIVATE         = 0x00000414U,
+    DISPID_HTMLELEMENTEVENTS2_ONDEACTIVATE       = 0x00000415U,
+    DISPID_HTMLELEMENTEVENTS2_ONBEFOREDEACTIVATE = 0x0000040aU,
+    DISPID_HTMLELEMENTEVENTS2_ONBEFOREACTIVATE   = 0x00000417U,
+    DISPID_HTMLELEMENTEVENTS2_ONFOCUSIN          = 0x00000418U,
+    DISPID_HTMLELEMENTEVENTS2_ONFOCUSOUT         = 0x00000419U,
+    DISPID_HTMLELEMENTEVENTS2_ONMOVE             = 0x0000040bU,
+    DISPID_HTMLELEMENTEVENTS2_ONCONTROLSELECT    = 0x0000040cU,
+    DISPID_HTMLELEMENTEVENTS2_ONMOVESTART        = 0x0000040eU,
+    DISPID_HTMLELEMENTEVENTS2_ONMOVEEND          = 0x0000040fU,
+    DISPID_HTMLELEMENTEVENTS2_ONRESIZESTART      = 0x00000410U,
+    DISPID_HTMLELEMENTEVENTS2_ONRESIZEEND        = 0x00000411U,
+    DISPID_HTMLELEMENTEVENTS2_ONMOUSEWHEEL       = 0x00000409U,
+    DISPID_HTMLELEMENTEVENTS_ONHELP              = 0x0001000aU,
 }
 
 enum : int
@@ -7770,8 +8037,8 @@ enum : int
 
 enum : uint
 {
-    DISPID_HTMLELEMENTEVENTS_ONMOUSEOUT  = 0x00010009,
-    DISPID_HTMLELEMENTEVENTS_ONMOUSEOVER = 0x00010008,
+    DISPID_HTMLELEMENTEVENTS_ONMOUSEOUT  = 0x00010009U,
+    DISPID_HTMLELEMENTEVENTS_ONMOUSEOVER = 0x00010008U,
 }
 
 enum : int
@@ -7783,1566 +8050,1566 @@ enum : int
 
 enum : uint
 {
-    DISPID_HTMLELEMENTEVENTS_ONSELECTSTART     = 0x0001000c,
-    DISPID_HTMLELEMENTEVENTS_ONFILTERCHANGE    = 0x00010011,
-    DISPID_HTMLELEMENTEVENTS_ONDRAGSTART       = 0x0001000b,
-    DISPID_HTMLELEMENTEVENTS_ONBEFOREUPDATE    = 0x00010004,
-    DISPID_HTMLELEMENTEVENTS_ONAFTERUPDATE     = 0x00010005,
-    DISPID_HTMLELEMENTEVENTS_ONERRORUPDATE     = 0x0001000d,
-    DISPID_HTMLELEMENTEVENTS_ONROWEXIT         = 0x00010006,
-    DISPID_HTMLELEMENTEVENTS_ONROWENTER        = 0x00010007,
-    DISPID_HTMLELEMENTEVENTS_ONDATASETCHANGED  = 0x0001000e,
-    DISPID_HTMLELEMENTEVENTS_ONDATAAVAILABLE   = 0x0001000f,
-    DISPID_HTMLELEMENTEVENTS_ONDATASETCOMPLETE = 0x00010010,
-    DISPID_HTMLELEMENTEVENTS_ONLOSECAPTURE     = 0x00010012,
-    DISPID_HTMLELEMENTEVENTS_ONPROPERTYCHANGE  = 0x00010013,
-    DISPID_HTMLELEMENTEVENTS_ONSCROLL          = 0x000003f6,
-    DISPID_HTMLELEMENTEVENTS_ONFOCUS           = 0x00010001,
-    DISPID_HTMLELEMENTEVENTS_ONRESIZE          = 0x000003f8,
-    DISPID_HTMLELEMENTEVENTS_ONDRAG            = 0x00010014,
-    DISPID_HTMLELEMENTEVENTS_ONDRAGEND         = 0x00010015,
-    DISPID_HTMLELEMENTEVENTS_ONDRAGENTER       = 0x00010016,
-    DISPID_HTMLELEMENTEVENTS_ONDRAGOVER        = 0x00010017,
-    DISPID_HTMLELEMENTEVENTS_ONDRAGLEAVE       = 0x00010018,
-    DISPID_HTMLELEMENTEVENTS_ONDROP            = 0x00010019,
-    DISPID_HTMLELEMENTEVENTS_ONBEFORECUT       = 0x0001001d,
-    DISPID_HTMLELEMENTEVENTS_ONCUT             = 0x0001001a,
-    DISPID_HTMLELEMENTEVENTS_ONBEFORECOPY      = 0x0001001e,
-    DISPID_HTMLELEMENTEVENTS_ONCOPY            = 0x0001001b,
-    DISPID_HTMLELEMENTEVENTS_ONBEFOREPASTE     = 0x0001001f,
-    DISPID_HTMLELEMENTEVENTS_ONPASTE           = 0x0001001c,
-    DISPID_HTMLELEMENTEVENTS_ONCONTEXTMENU     = 0x000003ff,
-    DISPID_HTMLELEMENTEVENTS_ONROWSDELETE      = 0x00010020,
-    DISPID_HTMLELEMENTEVENTS_ONROWSINSERTED    = 0x00010021,
-    DISPID_HTMLELEMENTEVENTS_ONCELLCHANGE      = 0x00010022,
+    DISPID_HTMLELEMENTEVENTS_ONSELECTSTART     = 0x0001000cU,
+    DISPID_HTMLELEMENTEVENTS_ONFILTERCHANGE    = 0x00010011U,
+    DISPID_HTMLELEMENTEVENTS_ONDRAGSTART       = 0x0001000bU,
+    DISPID_HTMLELEMENTEVENTS_ONBEFOREUPDATE    = 0x00010004U,
+    DISPID_HTMLELEMENTEVENTS_ONAFTERUPDATE     = 0x00010005U,
+    DISPID_HTMLELEMENTEVENTS_ONERRORUPDATE     = 0x0001000dU,
+    DISPID_HTMLELEMENTEVENTS_ONROWEXIT         = 0x00010006U,
+    DISPID_HTMLELEMENTEVENTS_ONROWENTER        = 0x00010007U,
+    DISPID_HTMLELEMENTEVENTS_ONDATASETCHANGED  = 0x0001000eU,
+    DISPID_HTMLELEMENTEVENTS_ONDATAAVAILABLE   = 0x0001000fU,
+    DISPID_HTMLELEMENTEVENTS_ONDATASETCOMPLETE = 0x00010010U,
+    DISPID_HTMLELEMENTEVENTS_ONLOSECAPTURE     = 0x00010012U,
+    DISPID_HTMLELEMENTEVENTS_ONPROPERTYCHANGE  = 0x00010013U,
+    DISPID_HTMLELEMENTEVENTS_ONSCROLL          = 0x000003f6U,
+    DISPID_HTMLELEMENTEVENTS_ONFOCUS           = 0x00010001U,
+    DISPID_HTMLELEMENTEVENTS_ONRESIZE          = 0x000003f8U,
+    DISPID_HTMLELEMENTEVENTS_ONDRAG            = 0x00010014U,
+    DISPID_HTMLELEMENTEVENTS_ONDRAGEND         = 0x00010015U,
+    DISPID_HTMLELEMENTEVENTS_ONDRAGENTER       = 0x00010016U,
+    DISPID_HTMLELEMENTEVENTS_ONDRAGOVER        = 0x00010017U,
+    DISPID_HTMLELEMENTEVENTS_ONDRAGLEAVE       = 0x00010018U,
+    DISPID_HTMLELEMENTEVENTS_ONDROP            = 0x00010019U,
+    DISPID_HTMLELEMENTEVENTS_ONBEFORECUT       = 0x0001001dU,
+    DISPID_HTMLELEMENTEVENTS_ONCUT             = 0x0001001aU,
+    DISPID_HTMLELEMENTEVENTS_ONBEFORECOPY      = 0x0001001eU,
+    DISPID_HTMLELEMENTEVENTS_ONCOPY            = 0x0001001bU,
+    DISPID_HTMLELEMENTEVENTS_ONBEFOREPASTE     = 0x0001001fU,
+    DISPID_HTMLELEMENTEVENTS_ONPASTE           = 0x0001001cU,
+    DISPID_HTMLELEMENTEVENTS_ONCONTEXTMENU     = 0x000003ffU,
+    DISPID_HTMLELEMENTEVENTS_ONROWSDELETE      = 0x00010020U,
+    DISPID_HTMLELEMENTEVENTS_ONROWSINSERTED    = 0x00010021U,
+    DISPID_HTMLELEMENTEVENTS_ONCELLCHANGE      = 0x00010022U,
 }
 
 enum int DISPID_HTMLELEMENTEVENTS_ONREADYSTATECHANGE = 0xfffffd9f;
 
 enum : uint
 {
-    DISPID_HTMLELEMENTEVENTS_ONBEFOREEDITFOCUS  = 0x00000403,
-    DISPID_HTMLELEMENTEVENTS_ONLAYOUTCOMPLETE   = 0x00000406,
-    DISPID_HTMLELEMENTEVENTS_ONPAGE             = 0x00000407,
-    DISPID_HTMLELEMENTEVENTS_ONBEFOREDEACTIVATE = 0x0000040a,
-    DISPID_HTMLELEMENTEVENTS_ONBEFOREACTIVATE   = 0x00000417,
-    DISPID_HTMLELEMENTEVENTS_ONMOVE             = 0x0000040b,
-    DISPID_HTMLELEMENTEVENTS_ONCONTROLSELECT    = 0x0000040c,
-    DISPID_HTMLELEMENTEVENTS_ONMOVESTART        = 0x0000040e,
-    DISPID_HTMLELEMENTEVENTS_ONMOVEEND          = 0x0000040f,
-    DISPID_HTMLELEMENTEVENTS_ONRESIZESTART      = 0x00000410,
-    DISPID_HTMLELEMENTEVENTS_ONRESIZEEND        = 0x00000411,
-    DISPID_HTMLELEMENTEVENTS_ONMOUSEENTER       = 0x00000412,
-    DISPID_HTMLELEMENTEVENTS_ONMOUSELEAVE       = 0x00000413,
-    DISPID_HTMLELEMENTEVENTS_ONMOUSEWHEEL       = 0x00000409,
-    DISPID_HTMLELEMENTEVENTS_ONACTIVATE         = 0x00000414,
-    DISPID_HTMLELEMENTEVENTS_ONDEACTIVATE       = 0x00000415,
-    DISPID_HTMLELEMENTEVENTS_ONFOCUSIN          = 0x00000418,
-    DISPID_HTMLELEMENTEVENTS_ONFOCUSOUT         = 0x00000419,
+    DISPID_HTMLELEMENTEVENTS_ONBEFOREEDITFOCUS  = 0x00000403U,
+    DISPID_HTMLELEMENTEVENTS_ONLAYOUTCOMPLETE   = 0x00000406U,
+    DISPID_HTMLELEMENTEVENTS_ONPAGE             = 0x00000407U,
+    DISPID_HTMLELEMENTEVENTS_ONBEFOREDEACTIVATE = 0x0000040aU,
+    DISPID_HTMLELEMENTEVENTS_ONBEFOREACTIVATE   = 0x00000417U,
+    DISPID_HTMLELEMENTEVENTS_ONMOVE             = 0x0000040bU,
+    DISPID_HTMLELEMENTEVENTS_ONCONTROLSELECT    = 0x0000040cU,
+    DISPID_HTMLELEMENTEVENTS_ONMOVESTART        = 0x0000040eU,
+    DISPID_HTMLELEMENTEVENTS_ONMOVEEND          = 0x0000040fU,
+    DISPID_HTMLELEMENTEVENTS_ONRESIZESTART      = 0x00000410U,
+    DISPID_HTMLELEMENTEVENTS_ONRESIZEEND        = 0x00000411U,
+    DISPID_HTMLELEMENTEVENTS_ONMOUSEENTER       = 0x00000412U,
+    DISPID_HTMLELEMENTEVENTS_ONMOUSELEAVE       = 0x00000413U,
+    DISPID_HTMLELEMENTEVENTS_ONMOUSEWHEEL       = 0x00000409U,
+    DISPID_HTMLELEMENTEVENTS_ONACTIVATE         = 0x00000414U,
+    DISPID_HTMLELEMENTEVENTS_ONDEACTIVATE       = 0x00000415U,
+    DISPID_HTMLELEMENTEVENTS_ONFOCUSIN          = 0x00000418U,
+    DISPID_HTMLELEMENTEVENTS_ONFOCUSOUT         = 0x00000419U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLELEMENTDEFAULTS_STYLE            = 0x000003e9,
-    DISPID_IHTMLELEMENTDEFAULTS_TABSTOP          = 0x000003ea,
-    DISPID_IHTMLELEMENTDEFAULTS_VIEWINHERITSTYLE = 0x0001144f,
-    DISPID_IHTMLELEMENTDEFAULTS_VIEWMASTERTAB    = 0x000003ee,
-    DISPID_IHTMLELEMENTDEFAULTS_SCROLLSEGMENTX   = 0x000003eb,
-    DISPID_IHTMLELEMENTDEFAULTS_SCROLLSEGMENTY   = 0x000003ec,
-    DISPID_IHTMLELEMENTDEFAULTS_ISMULTILINE      = 0x000003f0,
-    DISPID_IHTMLELEMENTDEFAULTS_CONTENTEDITABLE  = 0x0001142a,
-    DISPID_IHTMLELEMENTDEFAULTS_CANHAVEHTML      = 0x000003f1,
-    DISPID_IHTMLELEMENTDEFAULTS_VIEWLINK         = 0x000003f3,
-    DISPID_IHTMLELEMENTDEFAULTS_FROZEN           = 0x0001144e,
+    DISPID_IHTMLELEMENTDEFAULTS_STYLE            = 0x000003e9U,
+    DISPID_IHTMLELEMENTDEFAULTS_TABSTOP          = 0x000003eaU,
+    DISPID_IHTMLELEMENTDEFAULTS_VIEWINHERITSTYLE = 0x0001144fU,
+    DISPID_IHTMLELEMENTDEFAULTS_VIEWMASTERTAB    = 0x000003eeU,
+    DISPID_IHTMLELEMENTDEFAULTS_SCROLLSEGMENTX   = 0x000003ebU,
+    DISPID_IHTMLELEMENTDEFAULTS_SCROLLSEGMENTY   = 0x000003ecU,
+    DISPID_IHTMLELEMENTDEFAULTS_ISMULTILINE      = 0x000003f0U,
+    DISPID_IHTMLELEMENTDEFAULTS_CONTENTEDITABLE  = 0x0001142aU,
+    DISPID_IHTMLELEMENTDEFAULTS_CANHAVEHTML      = 0x000003f1U,
+    DISPID_IHTMLELEMENTDEFAULTS_VIEWLINK         = 0x000003f3U,
+    DISPID_IHTMLELEMENTDEFAULTS_FROZEN           = 0x0001144eU,
 }
 
 enum : uint
 {
-    DISPID_IHTCDEFAULTDISPATCH_ELEMENT           = 0x00011417,
-    DISPID_IHTCDEFAULTDISPATCH_CREATEEVENTOBJECT = 0x00011418,
-    DISPID_IHTCDEFAULTDISPATCH_DEFAULTS          = 0x0001142d,
-    DISPID_IHTCDEFAULTDISPATCH_DOCUMENT          = 0x00011416,
+    DISPID_IHTCDEFAULTDISPATCH_ELEMENT           = 0x00011417U,
+    DISPID_IHTCDEFAULTDISPATCH_CREATEEVENTOBJECT = 0x00011418U,
+    DISPID_IHTCDEFAULTDISPATCH_DEFAULTS          = 0x0001142dU,
+    DISPID_IHTCDEFAULTDISPATCH_DOCUMENT          = 0x00011416U,
 }
 
 enum : uint
 {
-    DISPID_IHTCPROPERTYBEHAVIOR_FIRECHANGE = 0x000101f4,
-    DISPID_IHTCPROPERTYBEHAVIOR_VALUE      = 0x00011415,
+    DISPID_IHTCPROPERTYBEHAVIOR_FIRECHANGE = 0x000101f4U,
+    DISPID_IHTCPROPERTYBEHAVIOR_VALUE      = 0x00011415U,
 }
 
-enum uint DISPID_IHTCEVENTBEHAVIOR_FIRE = 0x000101f4;
+enum uint DISPID_IHTCEVENTBEHAVIOR_FIRE = 0x000101f4U;
 
 enum : uint
 {
-    DISPID_IHTCATTACHBEHAVIOR_FIREEVENT   = 0x00000000,
-    DISPID_IHTCATTACHBEHAVIOR_DETACHEVENT = 0x000101f4,
-    DISPID_IHTCATTACHBEHAVIOR2_FIREEVENT  = 0x00000000,
-}
-
-enum : uint
-{
-    DISPID_IHTCDESCBEHAVIOR_URN  = 0x000101f4,
-    DISPID_IHTCDESCBEHAVIOR_NAME = 0x000101f5,
+    DISPID_IHTCATTACHBEHAVIOR_FIREEVENT   = 0x00000000U,
+    DISPID_IHTCATTACHBEHAVIOR_DETACHEVENT = 0x000101f4U,
+    DISPID_IHTCATTACHBEHAVIOR2_FIREEVENT  = 0x00000000U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLURNCOLLECTION_LENGTH = 0x000003e9,
-    DISPID_IHTMLURNCOLLECTION_ITEM   = 0x00000000,
+    DISPID_IHTCDESCBEHAVIOR_URN  = 0x000101f4U,
+    DISPID_IHTCDESCBEHAVIOR_NAME = 0x000101f5U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLGENERICELEMENT_RECORDSET      = 0x000003e9,
-    DISPID_IHTMLGENERICELEMENT_NAMEDRECORDSET = 0x000003ea,
+    DISPID_IHTMLURNCOLLECTION_LENGTH = 0x000003e9U,
+    DISPID_IHTMLURNCOLLECTION_ITEM   = 0x00000000U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLSTYLESHEETRULE_SELECTORTEXT            = 0x000003e9,
-    DISPID_IHTMLSTYLESHEETRULE_STYLE                   = 0x0001004a,
-    DISPID_IHTMLSTYLESHEETRULE_READONLY                = 0x000003ea,
-    DISPID_IHTMLSTYLESHEETRULEAPPLIED_MSSPECIFICITY    = 0x000003eb,
-    DISPID_IHTMLSTYLESHEETRULEAPPLIED_MSGETSPECIFICITY = 0x000003ec,
-    DISPID_IHTMLSTYLESHEETRULE2_IE9_SELECTORTEXT       = 0x000003ed,
-    DISPID_IHTMLSTYLESHEETRULESCOLLECTION_LENGTH       = 0x000003e9,
-    DISPID_IHTMLSTYLESHEETRULESCOLLECTION_ITEM         = 0x00000000,
-    DISPID_IHTMLSTYLESHEETRULESCOLLECTION2_IE9_LENGTH  = 0x000003eb,
-    DISPID_IHTMLSTYLESHEETRULESCOLLECTION2_IE9_ITEM    = 0x000003ea,
-    DISPID_IHTMLSTYLESHEETPAGE_SELECTOR                = 0x000003e9,
-    DISPID_IHTMLSTYLESHEETPAGE_PSEUDOCLASS             = 0x000003ea,
-    DISPID_IHTMLSTYLESHEETPAGE2_SELECTORTEXT           = 0x000003eb,
-    DISPID_IHTMLSTYLESHEETPAGE2_STYLE                  = 0x0001004a,
-    DISPID_IHTMLSTYLESHEETPAGESCOLLECTION_LENGTH       = 0x000003e9,
-    DISPID_IHTMLSTYLESHEETPAGESCOLLECTION_ITEM         = 0x00000000,
-    DISPID_IHTMLSTYLESHEET_TITLE                       = 0x000003e9,
-    DISPID_IHTMLSTYLESHEET_PARENTSTYLESHEET            = 0x000003ea,
-    DISPID_IHTMLSTYLESHEET_OWNINGELEMENT               = 0x000003eb,
-    DISPID_IHTMLSTYLESHEET_DISABLED                    = 0x0001004c,
-    DISPID_IHTMLSTYLESHEET_READONLY                    = 0x000003ec,
-    DISPID_IHTMLSTYLESHEET_IMPORTS                     = 0x000003ed,
-    DISPID_IHTMLSTYLESHEET_HREF                        = 0x000003ee,
-    DISPID_IHTMLSTYLESHEET_TYPE                        = 0x000003ef,
-    DISPID_IHTMLSTYLESHEET_ID                          = 0x000003f0,
-    DISPID_IHTMLSTYLESHEET_ADDIMPORT                   = 0x000003f1,
-    DISPID_IHTMLSTYLESHEET_ADDRULE                     = 0x000003f2,
-    DISPID_IHTMLSTYLESHEET_REMOVEIMPORT                = 0x000003f3,
-    DISPID_IHTMLSTYLESHEET_REMOVERULE                  = 0x000003f4,
-    DISPID_IHTMLSTYLESHEET_MEDIA                       = 0x000003f5,
-    DISPID_IHTMLSTYLESHEET_CSSTEXT                     = 0x000003f6,
-    DISPID_IHTMLSTYLESHEET_RULES                       = 0x000003f7,
-    DISPID_IHTMLSTYLESHEET2_PAGES                      = 0x000003f8,
-    DISPID_IHTMLSTYLESHEET2_ADDPAGERULE                = 0x000003f9,
-    DISPID_IHTMLSTYLESHEET3_IE8_HREF                   = 0x0000047e,
-    DISPID_IHTMLSTYLESHEET3_ISALTERNATE                = 0x0000047f,
-    DISPID_IHTMLSTYLESHEET3_ISPREFALTERNATE            = 0x00000480,
-    DISPID_IHTMLSTYLESHEET4_IE9_TYPE                   = 0x00000481,
-    DISPID_IHTMLSTYLESHEET4_IE9_HREF                   = 0x00000482,
-    DISPID_IHTMLSTYLESHEET4_IE9_TITLE                  = 0x00000483,
-    DISPID_IHTMLSTYLESHEET4_OWNERNODE                  = 0x00000484,
-    DISPID_IHTMLSTYLESHEET4_OWNERRULE                  = 0x00000485,
-    DISPID_IHTMLSTYLESHEET4_CSSRULES                   = 0x00000486,
-    DISPID_IHTMLSTYLESHEET4_IE9_MEDIA                  = 0x00000487,
-    DISPID_IHTMLSTYLESHEET4_INSERTRULE                 = 0x00000488,
-    DISPID_IHTMLSTYLESHEET4_DELETERULE                 = 0x00000489,
-    DISPID_IHTMLSTYLESHEETSCOLLECTION_LENGTH           = 0x000003e9,
+    DISPID_IHTMLGENERICELEMENT_RECORDSET      = 0x000003e9U,
+    DISPID_IHTMLGENERICELEMENT_NAMEDRECORDSET = 0x000003eaU,
+}
+
+enum : uint
+{
+    DISPID_IHTMLSTYLESHEETRULE_SELECTORTEXT            = 0x000003e9U,
+    DISPID_IHTMLSTYLESHEETRULE_STYLE                   = 0x0001004aU,
+    DISPID_IHTMLSTYLESHEETRULE_READONLY                = 0x000003eaU,
+    DISPID_IHTMLSTYLESHEETRULEAPPLIED_MSSPECIFICITY    = 0x000003ebU,
+    DISPID_IHTMLSTYLESHEETRULEAPPLIED_MSGETSPECIFICITY = 0x000003ecU,
+    DISPID_IHTMLSTYLESHEETRULE2_IE9_SELECTORTEXT       = 0x000003edU,
+    DISPID_IHTMLSTYLESHEETRULESCOLLECTION_LENGTH       = 0x000003e9U,
+    DISPID_IHTMLSTYLESHEETRULESCOLLECTION_ITEM         = 0x00000000U,
+    DISPID_IHTMLSTYLESHEETRULESCOLLECTION2_IE9_LENGTH  = 0x000003ebU,
+    DISPID_IHTMLSTYLESHEETRULESCOLLECTION2_IE9_ITEM    = 0x000003eaU,
+    DISPID_IHTMLSTYLESHEETPAGE_SELECTOR                = 0x000003e9U,
+    DISPID_IHTMLSTYLESHEETPAGE_PSEUDOCLASS             = 0x000003eaU,
+    DISPID_IHTMLSTYLESHEETPAGE2_SELECTORTEXT           = 0x000003ebU,
+    DISPID_IHTMLSTYLESHEETPAGE2_STYLE                  = 0x0001004aU,
+    DISPID_IHTMLSTYLESHEETPAGESCOLLECTION_LENGTH       = 0x000003e9U,
+    DISPID_IHTMLSTYLESHEETPAGESCOLLECTION_ITEM         = 0x00000000U,
+    DISPID_IHTMLSTYLESHEET_TITLE                       = 0x000003e9U,
+    DISPID_IHTMLSTYLESHEET_PARENTSTYLESHEET            = 0x000003eaU,
+    DISPID_IHTMLSTYLESHEET_OWNINGELEMENT               = 0x000003ebU,
+    DISPID_IHTMLSTYLESHEET_DISABLED                    = 0x0001004cU,
+    DISPID_IHTMLSTYLESHEET_READONLY                    = 0x000003ecU,
+    DISPID_IHTMLSTYLESHEET_IMPORTS                     = 0x000003edU,
+    DISPID_IHTMLSTYLESHEET_HREF                        = 0x000003eeU,
+    DISPID_IHTMLSTYLESHEET_TYPE                        = 0x000003efU,
+    DISPID_IHTMLSTYLESHEET_ID                          = 0x000003f0U,
+    DISPID_IHTMLSTYLESHEET_ADDIMPORT                   = 0x000003f1U,
+    DISPID_IHTMLSTYLESHEET_ADDRULE                     = 0x000003f2U,
+    DISPID_IHTMLSTYLESHEET_REMOVEIMPORT                = 0x000003f3U,
+    DISPID_IHTMLSTYLESHEET_REMOVERULE                  = 0x000003f4U,
+    DISPID_IHTMLSTYLESHEET_MEDIA                       = 0x000003f5U,
+    DISPID_IHTMLSTYLESHEET_CSSTEXT                     = 0x000003f6U,
+    DISPID_IHTMLSTYLESHEET_RULES                       = 0x000003f7U,
+    DISPID_IHTMLSTYLESHEET2_PAGES                      = 0x000003f8U,
+    DISPID_IHTMLSTYLESHEET2_ADDPAGERULE                = 0x000003f9U,
+    DISPID_IHTMLSTYLESHEET3_IE8_HREF                   = 0x0000047eU,
+    DISPID_IHTMLSTYLESHEET3_ISALTERNATE                = 0x0000047fU,
+    DISPID_IHTMLSTYLESHEET3_ISPREFALTERNATE            = 0x00000480U,
+    DISPID_IHTMLSTYLESHEET4_IE9_TYPE                   = 0x00000481U,
+    DISPID_IHTMLSTYLESHEET4_IE9_HREF                   = 0x00000482U,
+    DISPID_IHTMLSTYLESHEET4_IE9_TITLE                  = 0x00000483U,
+    DISPID_IHTMLSTYLESHEET4_OWNERNODE                  = 0x00000484U,
+    DISPID_IHTMLSTYLESHEET4_OWNERRULE                  = 0x00000485U,
+    DISPID_IHTMLSTYLESHEET4_CSSRULES                   = 0x00000486U,
+    DISPID_IHTMLSTYLESHEET4_IE9_MEDIA                  = 0x00000487U,
+    DISPID_IHTMLSTYLESHEET4_INSERTRULE                 = 0x00000488U,
+    DISPID_IHTMLSTYLESHEET4_DELETERULE                 = 0x00000489U,
+    DISPID_IHTMLSTYLESHEETSCOLLECTION_LENGTH           = 0x000003e9U,
 }
 
 enum int DISPID_IHTMLSTYLESHEETSCOLLECTION__NEWENUM = 0xfffffffc;
 
 enum : uint
 {
-    DISPID_IHTMLSTYLESHEETSCOLLECTION_ITEM      = 0x00000000,
-    DISPID_IHTMLSTYLESHEETSCOLLECTION2_IE9_ITEM = 0x000003ea,
+    DISPID_IHTMLSTYLESHEETSCOLLECTION_ITEM      = 0x00000000U,
+    DISPID_IHTMLSTYLESHEETSCOLLECTION2_IE9_ITEM = 0x000003eaU,
 }
 
 enum : uint
 {
-    DISPID_IHTMLLINKELEMENT_HREF               = 0x000003ed,
-    DISPID_IHTMLLINKELEMENT_REL                = 0x000003ee,
-    DISPID_IHTMLLINKELEMENT_REV                = 0x000003ef,
-    DISPID_IHTMLLINKELEMENT_TYPE               = 0x000003f0,
-    DISPID_IHTMLLINKELEMENT_READYSTATE         = 0x000113fc,
-    DISPID_IHTMLLINKELEMENT_ONREADYSTATECHANGE = 0x00011789,
-    DISPID_IHTMLLINKELEMENT_ONLOAD             = 0x00011790,
-    DISPID_IHTMLLINKELEMENT_ONERROR            = 0x0001178d,
-    DISPID_IHTMLLINKELEMENT_STYLESHEET         = 0x000003f6,
-    DISPID_IHTMLLINKELEMENT_DISABLED           = 0x0001004c,
-    DISPID_IHTMLLINKELEMENT_MEDIA              = 0x000003f8,
-    DISPID_IHTMLLINKELEMENT2_TARGET            = 0x000003f9,
-    DISPID_IHTMLLINKELEMENT3_CHARSET           = 0x000003fa,
-    DISPID_IHTMLLINKELEMENT3_HREFLANG          = 0x000003fb,
-    DISPID_IHTMLLINKELEMENT4_IE8_HREF          = 0x0000047e,
-    DISPID_IHTMLLINKELEMENT5_SHEET             = 0x000003fc,
+    DISPID_IHTMLLINKELEMENT_HREF               = 0x000003edU,
+    DISPID_IHTMLLINKELEMENT_REL                = 0x000003eeU,
+    DISPID_IHTMLLINKELEMENT_REV                = 0x000003efU,
+    DISPID_IHTMLLINKELEMENT_TYPE               = 0x000003f0U,
+    DISPID_IHTMLLINKELEMENT_READYSTATE         = 0x000113fcU,
+    DISPID_IHTMLLINKELEMENT_ONREADYSTATECHANGE = 0x00011789U,
+    DISPID_IHTMLLINKELEMENT_ONLOAD             = 0x00011790U,
+    DISPID_IHTMLLINKELEMENT_ONERROR            = 0x0001178dU,
+    DISPID_IHTMLLINKELEMENT_STYLESHEET         = 0x000003f6U,
+    DISPID_IHTMLLINKELEMENT_DISABLED           = 0x0001004cU,
+    DISPID_IHTMLLINKELEMENT_MEDIA              = 0x000003f8U,
+    DISPID_IHTMLLINKELEMENT2_TARGET            = 0x000003f9U,
+    DISPID_IHTMLLINKELEMENT3_CHARSET           = 0x000003faU,
+    DISPID_IHTMLLINKELEMENT3_HREFLANG          = 0x000003fbU,
+    DISPID_IHTMLLINKELEMENT4_IE8_HREF          = 0x0000047eU,
+    DISPID_IHTMLLINKELEMENT5_SHEET             = 0x000003fcU,
 }
 
 enum : uint
 {
-    DISPID_HTMLLINKELEMENTEVENTS2_ONLOAD  = 0x000003eb,
-    DISPID_HTMLLINKELEMENTEVENTS2_ONERROR = 0x000003ea,
-    DISPID_HTMLLINKELEMENTEVENTS_ONLOAD   = 0x000003eb,
-    DISPID_HTMLLINKELEMENTEVENTS_ONERROR  = 0x000003ea,
+    DISPID_HTMLLINKELEMENTEVENTS2_ONLOAD  = 0x000003ebU,
+    DISPID_HTMLLINKELEMENTEVENTS2_ONERROR = 0x000003eaU,
+    DISPID_HTMLLINKELEMENTEVENTS_ONLOAD   = 0x000003ebU,
+    DISPID_HTMLLINKELEMENTEVENTS_ONERROR  = 0x000003eaU,
 }
 
 enum : uint
 {
-    DISPID_IHTMLTXTRANGE_HTMLTEXT              = 0x000003eb,
-    DISPID_IHTMLTXTRANGE_TEXT                  = 0x000003ec,
-    DISPID_IHTMLTXTRANGE_PARENTELEMENT         = 0x000003ee,
-    DISPID_IHTMLTXTRANGE_DUPLICATE             = 0x000003f0,
-    DISPID_IHTMLTXTRANGE_INRANGE               = 0x000003f2,
-    DISPID_IHTMLTXTRANGE_ISEQUAL               = 0x000003f3,
-    DISPID_IHTMLTXTRANGE_SCROLLINTOVIEW        = 0x000003f4,
-    DISPID_IHTMLTXTRANGE_COLLAPSE              = 0x000003f5,
-    DISPID_IHTMLTXTRANGE_EXPAND                = 0x000003f6,
-    DISPID_IHTMLTXTRANGE_MOVE                  = 0x000003f7,
-    DISPID_IHTMLTXTRANGE_MOVESTART             = 0x000003f8,
-    DISPID_IHTMLTXTRANGE_MOVEEND               = 0x000003f9,
-    DISPID_IHTMLTXTRANGE_SELECT                = 0x00000400,
-    DISPID_IHTMLTXTRANGE_PASTEHTML             = 0x00000402,
-    DISPID_IHTMLTXTRANGE_MOVETOELEMENTTEXT     = 0x000003e9,
-    DISPID_IHTMLTXTRANGE_SETENDPOINT           = 0x00000401,
-    DISPID_IHTMLTXTRANGE_COMPAREENDPOINTS      = 0x000003fa,
-    DISPID_IHTMLTXTRANGE_FINDTEXT              = 0x000003fb,
-    DISPID_IHTMLTXTRANGE_MOVETOPOINT           = 0x000003fc,
-    DISPID_IHTMLTXTRANGE_GETBOOKMARK           = 0x000003fd,
-    DISPID_IHTMLTXTRANGE_MOVETOBOOKMARK        = 0x000003f1,
-    DISPID_IHTMLTXTRANGE_QUERYCOMMANDSUPPORTED = 0x00000403,
-    DISPID_IHTMLTXTRANGE_QUERYCOMMANDENABLED   = 0x00000404,
-    DISPID_IHTMLTXTRANGE_QUERYCOMMANDSTATE     = 0x00000405,
-    DISPID_IHTMLTXTRANGE_QUERYCOMMANDINDETERM  = 0x00000406,
-    DISPID_IHTMLTXTRANGE_QUERYCOMMANDTEXT      = 0x00000407,
-    DISPID_IHTMLTXTRANGE_QUERYCOMMANDVALUE     = 0x00000408,
-    DISPID_IHTMLTXTRANGE_EXECCOMMAND           = 0x00000409,
-    DISPID_IHTMLTXTRANGE_EXECCOMMANDSHOWHELP   = 0x0000040a,
+    DISPID_IHTMLTXTRANGE_HTMLTEXT              = 0x000003ebU,
+    DISPID_IHTMLTXTRANGE_TEXT                  = 0x000003ecU,
+    DISPID_IHTMLTXTRANGE_PARENTELEMENT         = 0x000003eeU,
+    DISPID_IHTMLTXTRANGE_DUPLICATE             = 0x000003f0U,
+    DISPID_IHTMLTXTRANGE_INRANGE               = 0x000003f2U,
+    DISPID_IHTMLTXTRANGE_ISEQUAL               = 0x000003f3U,
+    DISPID_IHTMLTXTRANGE_SCROLLINTOVIEW        = 0x000003f4U,
+    DISPID_IHTMLTXTRANGE_COLLAPSE              = 0x000003f5U,
+    DISPID_IHTMLTXTRANGE_EXPAND                = 0x000003f6U,
+    DISPID_IHTMLTXTRANGE_MOVE                  = 0x000003f7U,
+    DISPID_IHTMLTXTRANGE_MOVESTART             = 0x000003f8U,
+    DISPID_IHTMLTXTRANGE_MOVEEND               = 0x000003f9U,
+    DISPID_IHTMLTXTRANGE_SELECT                = 0x00000400U,
+    DISPID_IHTMLTXTRANGE_PASTEHTML             = 0x00000402U,
+    DISPID_IHTMLTXTRANGE_MOVETOELEMENTTEXT     = 0x000003e9U,
+    DISPID_IHTMLTXTRANGE_SETENDPOINT           = 0x00000401U,
+    DISPID_IHTMLTXTRANGE_COMPAREENDPOINTS      = 0x000003faU,
+    DISPID_IHTMLTXTRANGE_FINDTEXT              = 0x000003fbU,
+    DISPID_IHTMLTXTRANGE_MOVETOPOINT           = 0x000003fcU,
+    DISPID_IHTMLTXTRANGE_GETBOOKMARK           = 0x000003fdU,
+    DISPID_IHTMLTXTRANGE_MOVETOBOOKMARK        = 0x000003f1U,
+    DISPID_IHTMLTXTRANGE_QUERYCOMMANDSUPPORTED = 0x00000403U,
+    DISPID_IHTMLTXTRANGE_QUERYCOMMANDENABLED   = 0x00000404U,
+    DISPID_IHTMLTXTRANGE_QUERYCOMMANDSTATE     = 0x00000405U,
+    DISPID_IHTMLTXTRANGE_QUERYCOMMANDINDETERM  = 0x00000406U,
+    DISPID_IHTMLTXTRANGE_QUERYCOMMANDTEXT      = 0x00000407U,
+    DISPID_IHTMLTXTRANGE_QUERYCOMMANDVALUE     = 0x00000408U,
+    DISPID_IHTMLTXTRANGE_EXECCOMMAND           = 0x00000409U,
+    DISPID_IHTMLTXTRANGE_EXECCOMMANDSHOWHELP   = 0x0000040aU,
 }
 
 enum : uint
 {
-    DISPID_IHTMLTEXTRANGEMETRICS_OFFSETTOP              = 0x0000040b,
-    DISPID_IHTMLTEXTRANGEMETRICS_OFFSETLEFT             = 0x0000040c,
-    DISPID_IHTMLTEXTRANGEMETRICS_BOUNDINGTOP            = 0x0000040d,
-    DISPID_IHTMLTEXTRANGEMETRICS_BOUNDINGLEFT           = 0x0000040e,
-    DISPID_IHTMLTEXTRANGEMETRICS_BOUNDINGWIDTH          = 0x0000040f,
-    DISPID_IHTMLTEXTRANGEMETRICS_BOUNDINGHEIGHT         = 0x00000410,
-    DISPID_IHTMLTEXTRANGEMETRICS2_GETCLIENTRECTS        = 0x00000411,
-    DISPID_IHTMLTEXTRANGEMETRICS2_GETBOUNDINGCLIENTRECT = 0x00000412,
+    DISPID_IHTMLTEXTRANGEMETRICS_OFFSETTOP              = 0x0000040bU,
+    DISPID_IHTMLTEXTRANGEMETRICS_OFFSETLEFT             = 0x0000040cU,
+    DISPID_IHTMLTEXTRANGEMETRICS_BOUNDINGTOP            = 0x0000040dU,
+    DISPID_IHTMLTEXTRANGEMETRICS_BOUNDINGLEFT           = 0x0000040eU,
+    DISPID_IHTMLTEXTRANGEMETRICS_BOUNDINGWIDTH          = 0x0000040fU,
+    DISPID_IHTMLTEXTRANGEMETRICS_BOUNDINGHEIGHT         = 0x00000410U,
+    DISPID_IHTMLTEXTRANGEMETRICS2_GETCLIENTRECTS        = 0x00000411U,
+    DISPID_IHTMLTEXTRANGEMETRICS2_GETBOUNDINGCLIENTRECT = 0x00000412U,
 }
 
-enum uint DISPID_IHTMLTXTRANGECOLLECTION_LENGTH = 0x000005dc;
+enum uint DISPID_IHTMLTXTRANGECOLLECTION_LENGTH = 0x000005dcU;
 enum int DISPID_IHTMLTXTRANGECOLLECTION__NEWENUM = 0xfffffffc;
-enum uint DISPID_IHTMLTXTRANGECOLLECTION_ITEM = 0x00000000;
+enum uint DISPID_IHTMLTXTRANGECOLLECTION_ITEM = 0x00000000U;
 
 enum : uint
 {
-    DISPID_IHTMLDOMRANGE_STARTCONTAINER          = 0x000003e9,
-    DISPID_IHTMLDOMRANGE_STARTOFFSET             = 0x000003ea,
-    DISPID_IHTMLDOMRANGE_ENDCONTAINER            = 0x000003eb,
-    DISPID_IHTMLDOMRANGE_ENDOFFSET               = 0x000003ec,
-    DISPID_IHTMLDOMRANGE_COLLAPSED               = 0x000003ed,
-    DISPID_IHTMLDOMRANGE_COMMONANCESTORCONTAINER = 0x000003ee,
-    DISPID_IHTMLDOMRANGE_SETSTART                = 0x000003ef,
-    DISPID_IHTMLDOMRANGE_SETEND                  = 0x000003f0,
-    DISPID_IHTMLDOMRANGE_SETSTARTBEFORE          = 0x000003f1,
-    DISPID_IHTMLDOMRANGE_SETSTARTAFTER           = 0x000003f2,
-    DISPID_IHTMLDOMRANGE_SETENDBEFORE            = 0x000003f3,
-    DISPID_IHTMLDOMRANGE_SETENDAFTER             = 0x000003f4,
-    DISPID_IHTMLDOMRANGE_COLLAPSE                = 0x000003f5,
-    DISPID_IHTMLDOMRANGE_SELECTNODE              = 0x000003f6,
-    DISPID_IHTMLDOMRANGE_SELECTNODECONTENTS      = 0x000003f7,
-    DISPID_IHTMLDOMRANGE_COMPAREBOUNDARYPOINTS   = 0x000003f8,
-    DISPID_IHTMLDOMRANGE_DELETECONTENTS          = 0x000003f9,
-    DISPID_IHTMLDOMRANGE_EXTRACTCONTENTS         = 0x000003fa,
-    DISPID_IHTMLDOMRANGE_CLONECONTENTS           = 0x000003fb,
-    DISPID_IHTMLDOMRANGE_INSERTNODE              = 0x000003fc,
-    DISPID_IHTMLDOMRANGE_SURROUNDCONTENTS        = 0x000003fd,
-    DISPID_IHTMLDOMRANGE_CLONERANGE              = 0x000003fe,
-    DISPID_IHTMLDOMRANGE_TOSTRING                = 0x000003ff,
-    DISPID_IHTMLDOMRANGE_DETACH                  = 0x00000400,
-    DISPID_IHTMLDOMRANGE_GETCLIENTRECTS          = 0x00000401,
-    DISPID_IHTMLDOMRANGE_GETBOUNDINGCLIENTRECT   = 0x00000402,
+    DISPID_IHTMLDOMRANGE_STARTCONTAINER          = 0x000003e9U,
+    DISPID_IHTMLDOMRANGE_STARTOFFSET             = 0x000003eaU,
+    DISPID_IHTMLDOMRANGE_ENDCONTAINER            = 0x000003ebU,
+    DISPID_IHTMLDOMRANGE_ENDOFFSET               = 0x000003ecU,
+    DISPID_IHTMLDOMRANGE_COLLAPSED               = 0x000003edU,
+    DISPID_IHTMLDOMRANGE_COMMONANCESTORCONTAINER = 0x000003eeU,
+    DISPID_IHTMLDOMRANGE_SETSTART                = 0x000003efU,
+    DISPID_IHTMLDOMRANGE_SETEND                  = 0x000003f0U,
+    DISPID_IHTMLDOMRANGE_SETSTARTBEFORE          = 0x000003f1U,
+    DISPID_IHTMLDOMRANGE_SETSTARTAFTER           = 0x000003f2U,
+    DISPID_IHTMLDOMRANGE_SETENDBEFORE            = 0x000003f3U,
+    DISPID_IHTMLDOMRANGE_SETENDAFTER             = 0x000003f4U,
+    DISPID_IHTMLDOMRANGE_COLLAPSE                = 0x000003f5U,
+    DISPID_IHTMLDOMRANGE_SELECTNODE              = 0x000003f6U,
+    DISPID_IHTMLDOMRANGE_SELECTNODECONTENTS      = 0x000003f7U,
+    DISPID_IHTMLDOMRANGE_COMPAREBOUNDARYPOINTS   = 0x000003f8U,
+    DISPID_IHTMLDOMRANGE_DELETECONTENTS          = 0x000003f9U,
+    DISPID_IHTMLDOMRANGE_EXTRACTCONTENTS         = 0x000003faU,
+    DISPID_IHTMLDOMRANGE_CLONECONTENTS           = 0x000003fbU,
+    DISPID_IHTMLDOMRANGE_INSERTNODE              = 0x000003fcU,
+    DISPID_IHTMLDOMRANGE_SURROUNDCONTENTS        = 0x000003fdU,
+    DISPID_IHTMLDOMRANGE_CLONERANGE              = 0x000003feU,
+    DISPID_IHTMLDOMRANGE_TOSTRING                = 0x000003ffU,
+    DISPID_IHTMLDOMRANGE_DETACH                  = 0x00000400U,
+    DISPID_IHTMLDOMRANGE_GETCLIENTRECTS          = 0x00000401U,
+    DISPID_IHTMLDOMRANGE_GETBOUNDINGCLIENTRECT   = 0x00000402U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLFORMELEMENT_ACTION   = 0x000003e9,
-    DISPID_IHTMLFORMELEMENT_DIR      = 0x000113fd,
-    DISPID_IHTMLFORMELEMENT_ENCODING = 0x000003eb,
-    DISPID_IHTMLFORMELEMENT_METHOD   = 0x000003ec,
-    DISPID_IHTMLFORMELEMENT_ELEMENTS = 0x000003ed,
-    DISPID_IHTMLFORMELEMENT_TARGET   = 0x000003ee,
-    DISPID_IHTMLFORMELEMENT_NAME     = 0x00010000,
-    DISPID_IHTMLFORMELEMENT_ONSUBMIT = 0x0001177b,
-    DISPID_IHTMLFORMELEMENT_ONRESET  = 0x0001177c,
-    DISPID_IHTMLFORMELEMENT_SUBMIT   = 0x000003f1,
-    DISPID_IHTMLFORMELEMENT_RESET    = 0x000003f2,
-    DISPID_IHTMLFORMELEMENT_LENGTH   = 0x000005dc,
+    DISPID_IHTMLFORMELEMENT_ACTION   = 0x000003e9U,
+    DISPID_IHTMLFORMELEMENT_DIR      = 0x000113fdU,
+    DISPID_IHTMLFORMELEMENT_ENCODING = 0x000003ebU,
+    DISPID_IHTMLFORMELEMENT_METHOD   = 0x000003ecU,
+    DISPID_IHTMLFORMELEMENT_ELEMENTS = 0x000003edU,
+    DISPID_IHTMLFORMELEMENT_TARGET   = 0x000003eeU,
+    DISPID_IHTMLFORMELEMENT_NAME     = 0x00010000U,
+    DISPID_IHTMLFORMELEMENT_ONSUBMIT = 0x0001177bU,
+    DISPID_IHTMLFORMELEMENT_ONRESET  = 0x0001177cU,
+    DISPID_IHTMLFORMELEMENT_SUBMIT   = 0x000003f1U,
+    DISPID_IHTMLFORMELEMENT_RESET    = 0x000003f2U,
+    DISPID_IHTMLFORMELEMENT_LENGTH   = 0x000005dcU,
 }
 
 enum int DISPID_IHTMLFORMELEMENT__NEWENUM = 0xfffffffc;
 
 enum : uint
 {
-    DISPID_IHTMLFORMELEMENT_ITEM           = 0x00000000,
-    DISPID_IHTMLFORMELEMENT_TAGS           = 0x000005de,
-    DISPID_IHTMLFORMELEMENT2_ACCEPTCHARSET = 0x000003f3,
-    DISPID_IHTMLFORMELEMENT2_URNS          = 0x000005e1,
-    DISPID_IHTMLFORMELEMENT3_NAMEDITEM     = 0x000005e2,
+    DISPID_IHTMLFORMELEMENT_ITEM           = 0x00000000U,
+    DISPID_IHTMLFORMELEMENT_TAGS           = 0x000005deU,
+    DISPID_IHTMLFORMELEMENT2_ACCEPTCHARSET = 0x000003f3U,
+    DISPID_IHTMLFORMELEMENT2_URNS          = 0x000005e1U,
+    DISPID_IHTMLFORMELEMENT3_NAMEDITEM     = 0x000005e2U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLSUBMITDATA_APPENDNAMEVALUEPAIR = 0x000003f4,
-    DISPID_IHTMLSUBMITDATA_APPENDNAMEFILEPAIR  = 0x000003f5,
-    DISPID_IHTMLSUBMITDATA_APPENDITEMSEPARATOR = 0x000003f6,
+    DISPID_IHTMLSUBMITDATA_APPENDNAMEVALUEPAIR = 0x000003f4U,
+    DISPID_IHTMLSUBMITDATA_APPENDNAMEFILEPAIR  = 0x000003f5U,
+    DISPID_IHTMLSUBMITDATA_APPENDITEMSEPARATOR = 0x000003f6U,
 }
 
-enum uint DISPID_IHTMLFORMELEMENT4_IE8_ACTION = 0x0000047e;
+enum uint DISPID_IHTMLFORMELEMENT4_IE8_ACTION = 0x0000047eU;
 
 enum : uint
 {
-    DISPID_HTMLFORMELEMENTEVENTS2_ONSUBMIT = 0x000003ef,
-    DISPID_HTMLFORMELEMENTEVENTS2_ONRESET  = 0x000003f7,
-    DISPID_HTMLFORMELEMENTEVENTS_ONSUBMIT  = 0x000003ef,
-    DISPID_HTMLFORMELEMENTEVENTS_ONRESET   = 0x000003f7,
-}
-
-enum : uint
-{
-    DISPID_IHTMLCONTROLELEMENT_TABINDEX     = 0x0001000f,
-    DISPID_IHTMLCONTROLELEMENT_FOCUS        = 0x000107d0,
-    DISPID_IHTMLCONTROLELEMENT_ACCESSKEY    = 0x000107d5,
-    DISPID_IHTMLCONTROLELEMENT_ONBLUR       = 0x0001177f,
-    DISPID_IHTMLCONTROLELEMENT_ONFOCUS      = 0x0001177e,
-    DISPID_IHTMLCONTROLELEMENT_ONRESIZE     = 0x00011794,
-    DISPID_IHTMLCONTROLELEMENT_BLUR         = 0x000107d2,
-    DISPID_IHTMLCONTROLELEMENT_ADDFILTER    = 0x000107e1,
-    DISPID_IHTMLCONTROLELEMENT_REMOVEFILTER = 0x000107e2,
-    DISPID_IHTMLCONTROLELEMENT_CLIENTHEIGHT = 0x000107e3,
-    DISPID_IHTMLCONTROLELEMENT_CLIENTWIDTH  = 0x000107e4,
-    DISPID_IHTMLCONTROLELEMENT_CLIENTTOP    = 0x000107e5,
-    DISPID_IHTMLCONTROLELEMENT_CLIENTLEFT   = 0x000107e6,
+    DISPID_HTMLFORMELEMENTEVENTS2_ONSUBMIT = 0x000003efU,
+    DISPID_HTMLFORMELEMENTEVENTS2_ONRESET  = 0x000003f7U,
+    DISPID_HTMLFORMELEMENTEVENTS_ONSUBMIT  = 0x000003efU,
+    DISPID_HTMLFORMELEMENTEVENTS_ONRESET   = 0x000003f7U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLTEXTCONTAINER_CREATECONTROLRANGE = 0x000003e9,
-    DISPID_IHTMLTEXTCONTAINER_SCROLLHEIGHT       = 0x000003ea,
-    DISPID_IHTMLTEXTCONTAINER_SCROLLWIDTH        = 0x000003eb,
-    DISPID_IHTMLTEXTCONTAINER_SCROLLTOP          = 0x000003ec,
-    DISPID_IHTMLTEXTCONTAINER_SCROLLLEFT         = 0x000003ed,
-    DISPID_IHTMLTEXTCONTAINER_ONSCROLL           = 0x0001178f,
+    DISPID_IHTMLCONTROLELEMENT_TABINDEX     = 0x0001000fU,
+    DISPID_IHTMLCONTROLELEMENT_FOCUS        = 0x000107d0U,
+    DISPID_IHTMLCONTROLELEMENT_ACCESSKEY    = 0x000107d5U,
+    DISPID_IHTMLCONTROLELEMENT_ONBLUR       = 0x0001177fU,
+    DISPID_IHTMLCONTROLELEMENT_ONFOCUS      = 0x0001177eU,
+    DISPID_IHTMLCONTROLELEMENT_ONRESIZE     = 0x00011794U,
+    DISPID_IHTMLCONTROLELEMENT_BLUR         = 0x000107d2U,
+    DISPID_IHTMLCONTROLELEMENT_ADDFILTER    = 0x000107e1U,
+    DISPID_IHTMLCONTROLELEMENT_REMOVEFILTER = 0x000107e2U,
+    DISPID_IHTMLCONTROLELEMENT_CLIENTHEIGHT = 0x000107e3U,
+    DISPID_IHTMLCONTROLELEMENT_CLIENTWIDTH  = 0x000107e4U,
+    DISPID_IHTMLCONTROLELEMENT_CLIENTTOP    = 0x000107e5U,
+    DISPID_IHTMLCONTROLELEMENT_CLIENTLEFT   = 0x000107e6U,
 }
 
 enum : uint
 {
-    DISPID_HTMLTEXTCONTAINEREVENTS2_ONCHANGE = 0x000003e9,
-    DISPID_HTMLTEXTCONTAINEREVENTS2_ONSELECT = 0x000003ee,
-    DISPID_HTMLTEXTCONTAINEREVENTS_ONCHANGE  = 0x000003e9,
-    DISPID_HTMLTEXTCONTAINEREVENTS_ONSELECT  = 0x000003ee,
+    DISPID_IHTMLTEXTCONTAINER_CREATECONTROLRANGE = 0x000003e9U,
+    DISPID_IHTMLTEXTCONTAINER_SCROLLHEIGHT       = 0x000003eaU,
+    DISPID_IHTMLTEXTCONTAINER_SCROLLWIDTH        = 0x000003ebU,
+    DISPID_IHTMLTEXTCONTAINER_SCROLLTOP          = 0x000003ecU,
+    DISPID_IHTMLTEXTCONTAINER_SCROLLLEFT         = 0x000003edU,
+    DISPID_IHTMLTEXTCONTAINER_ONSCROLL           = 0x0001178fU,
 }
 
 enum : uint
 {
-    DISPID_IHTMLCONTROLRANGE_SELECT                = 0x000003ea,
-    DISPID_IHTMLCONTROLRANGE_ADD                   = 0x000003eb,
-    DISPID_IHTMLCONTROLRANGE_REMOVE                = 0x000003ec,
-    DISPID_IHTMLCONTROLRANGE_ITEM                  = 0x00000000,
-    DISPID_IHTMLCONTROLRANGE_SCROLLINTOVIEW        = 0x000003ee,
-    DISPID_IHTMLCONTROLRANGE_QUERYCOMMANDSUPPORTED = 0x000003ef,
-    DISPID_IHTMLCONTROLRANGE_QUERYCOMMANDENABLED   = 0x000003f0,
-    DISPID_IHTMLCONTROLRANGE_QUERYCOMMANDSTATE     = 0x000003f1,
-    DISPID_IHTMLCONTROLRANGE_QUERYCOMMANDINDETERM  = 0x000003f2,
-    DISPID_IHTMLCONTROLRANGE_QUERYCOMMANDTEXT      = 0x000003f3,
-    DISPID_IHTMLCONTROLRANGE_QUERYCOMMANDVALUE     = 0x000003f4,
-    DISPID_IHTMLCONTROLRANGE_EXECCOMMAND           = 0x000003f5,
-    DISPID_IHTMLCONTROLRANGE_EXECCOMMANDSHOWHELP   = 0x000003f6,
-    DISPID_IHTMLCONTROLRANGE_COMMONPARENTELEMENT   = 0x000003f7,
-    DISPID_IHTMLCONTROLRANGE_LENGTH                = 0x000003ed,
-    DISPID_IHTMLCONTROLRANGE2_ADDELEMENT           = 0x000003f8,
+    DISPID_HTMLTEXTCONTAINEREVENTS2_ONCHANGE = 0x000003e9U,
+    DISPID_HTMLTEXTCONTAINEREVENTS2_ONSELECT = 0x000003eeU,
+    DISPID_HTMLTEXTCONTAINEREVENTS_ONCHANGE  = 0x000003e9U,
+    DISPID_HTMLTEXTCONTAINEREVENTS_ONSELECT  = 0x000003eeU,
 }
 
 enum : uint
 {
-    DISPID_IHTMLIMGELEMENT_ISMAP            = 0x000007d2,
-    DISPID_IHTMLIMGELEMENT_USEMAP           = 0x000007d8,
-    DISPID_IHTMLIMGELEMENT_MIMETYPE         = 0x000007da,
-    DISPID_IHTMLIMGELEMENT_FILESIZE         = 0x000007db,
-    DISPID_IHTMLIMGELEMENT_FILECREATEDDATE  = 0x000007dc,
-    DISPID_IHTMLIMGELEMENT_FILEMODIFIEDDATE = 0x000007dd,
-    DISPID_IHTMLIMGELEMENT_FILEUPDATEDDATE  = 0x000007de,
-    DISPID_IHTMLIMGELEMENT_PROTOCOL         = 0x000007df,
-    DISPID_IHTMLIMGELEMENT_HREF             = 0x000007e0,
-    DISPID_IHTMLIMGELEMENT_NAMEPROP         = 0x000007e1,
-    DISPID_IHTMLIMGELEMENT_BORDER           = 0x000003ec,
-    DISPID_IHTMLIMGELEMENT_VSPACE           = 0x000003ed,
-    DISPID_IHTMLIMGELEMENT_HSPACE           = 0x000003ee,
-    DISPID_IHTMLIMGELEMENT_ALT              = 0x000003ea,
-    DISPID_IHTMLIMGELEMENT_SRC              = 0x000003eb,
-    DISPID_IHTMLIMGELEMENT_LOWSRC           = 0x000003ef,
-    DISPID_IHTMLIMGELEMENT_VRML             = 0x000003f0,
-    DISPID_IHTMLIMGELEMENT_DYNSRC           = 0x000003f1,
-    DISPID_IHTMLIMGELEMENT_READYSTATE       = 0x000113fc,
-    DISPID_IHTMLIMGELEMENT_COMPLETE         = 0x000003f2,
-    DISPID_IHTMLIMGELEMENT_LOOP             = 0x000003f3,
-    DISPID_IHTMLIMGELEMENT_ALIGN            = 0x00010049,
-    DISPID_IHTMLIMGELEMENT_ONLOAD           = 0x00011790,
-    DISPID_IHTMLIMGELEMENT_ONERROR          = 0x0001178d,
-    DISPID_IHTMLIMGELEMENT_ONABORT          = 0x0001178c,
-    DISPID_IHTMLIMGELEMENT_NAME             = 0x00010000,
-    DISPID_IHTMLIMGELEMENT_WIDTH            = 0x00010005,
-    DISPID_IHTMLIMGELEMENT_HEIGHT           = 0x00010006,
-    DISPID_IHTMLIMGELEMENT_START            = 0x000003f5,
-    DISPID_IHTMLIMGELEMENT2_LONGDESC        = 0x000007e3,
-    DISPID_IHTMLIMGELEMENT3_IE8_LONGDESC    = 0x0000047f,
-    DISPID_IHTMLIMGELEMENT3_IE8_VRML        = 0x00000480,
-    DISPID_IHTMLIMGELEMENT3_IE8_LOWSRC      = 0x00000481,
-    DISPID_IHTMLIMGELEMENT3_IE8_DYNSRC      = 0x00000482,
-    DISPID_IHTMLIMGELEMENT4_NATURALWIDTH    = 0x00000483,
-    DISPID_IHTMLIMGELEMENT4_NATURALHEIGHT   = 0x00000484,
+    DISPID_IHTMLCONTROLRANGE_SELECT                = 0x000003eaU,
+    DISPID_IHTMLCONTROLRANGE_ADD                   = 0x000003ebU,
+    DISPID_IHTMLCONTROLRANGE_REMOVE                = 0x000003ecU,
+    DISPID_IHTMLCONTROLRANGE_ITEM                  = 0x00000000U,
+    DISPID_IHTMLCONTROLRANGE_SCROLLINTOVIEW        = 0x000003eeU,
+    DISPID_IHTMLCONTROLRANGE_QUERYCOMMANDSUPPORTED = 0x000003efU,
+    DISPID_IHTMLCONTROLRANGE_QUERYCOMMANDENABLED   = 0x000003f0U,
+    DISPID_IHTMLCONTROLRANGE_QUERYCOMMANDSTATE     = 0x000003f1U,
+    DISPID_IHTMLCONTROLRANGE_QUERYCOMMANDINDETERM  = 0x000003f2U,
+    DISPID_IHTMLCONTROLRANGE_QUERYCOMMANDTEXT      = 0x000003f3U,
+    DISPID_IHTMLCONTROLRANGE_QUERYCOMMANDVALUE     = 0x000003f4U,
+    DISPID_IHTMLCONTROLRANGE_EXECCOMMAND           = 0x000003f5U,
+    DISPID_IHTMLCONTROLRANGE_EXECCOMMANDSHOWHELP   = 0x000003f6U,
+    DISPID_IHTMLCONTROLRANGE_COMMONPARENTELEMENT   = 0x000003f7U,
+    DISPID_IHTMLCONTROLRANGE_LENGTH                = 0x000003edU,
+    DISPID_IHTMLCONTROLRANGE2_ADDELEMENT           = 0x000003f8U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLMSIMGELEMENT_MSPLAYTODISABLED = 0x00000485,
-    DISPID_IHTMLMSIMGELEMENT_MSPLAYTOPRIMARY  = 0x00000486,
+    DISPID_IHTMLIMGELEMENT_ISMAP            = 0x000007d2U,
+    DISPID_IHTMLIMGELEMENT_USEMAP           = 0x000007d8U,
+    DISPID_IHTMLIMGELEMENT_MIMETYPE         = 0x000007daU,
+    DISPID_IHTMLIMGELEMENT_FILESIZE         = 0x000007dbU,
+    DISPID_IHTMLIMGELEMENT_FILECREATEDDATE  = 0x000007dcU,
+    DISPID_IHTMLIMGELEMENT_FILEMODIFIEDDATE = 0x000007ddU,
+    DISPID_IHTMLIMGELEMENT_FILEUPDATEDDATE  = 0x000007deU,
+    DISPID_IHTMLIMGELEMENT_PROTOCOL         = 0x000007dfU,
+    DISPID_IHTMLIMGELEMENT_HREF             = 0x000007e0U,
+    DISPID_IHTMLIMGELEMENT_NAMEPROP         = 0x000007e1U,
+    DISPID_IHTMLIMGELEMENT_BORDER           = 0x000003ecU,
+    DISPID_IHTMLIMGELEMENT_VSPACE           = 0x000003edU,
+    DISPID_IHTMLIMGELEMENT_HSPACE           = 0x000003eeU,
+    DISPID_IHTMLIMGELEMENT_ALT              = 0x000003eaU,
+    DISPID_IHTMLIMGELEMENT_SRC              = 0x000003ebU,
+    DISPID_IHTMLIMGELEMENT_LOWSRC           = 0x000003efU,
+    DISPID_IHTMLIMGELEMENT_VRML             = 0x000003f0U,
+    DISPID_IHTMLIMGELEMENT_DYNSRC           = 0x000003f1U,
+    DISPID_IHTMLIMGELEMENT_READYSTATE       = 0x000113fcU,
+    DISPID_IHTMLIMGELEMENT_COMPLETE         = 0x000003f2U,
+    DISPID_IHTMLIMGELEMENT_LOOP             = 0x000003f3U,
+    DISPID_IHTMLIMGELEMENT_ALIGN            = 0x00010049U,
+    DISPID_IHTMLIMGELEMENT_ONLOAD           = 0x00011790U,
+    DISPID_IHTMLIMGELEMENT_ONERROR          = 0x0001178dU,
+    DISPID_IHTMLIMGELEMENT_ONABORT          = 0x0001178cU,
+    DISPID_IHTMLIMGELEMENT_NAME             = 0x00010000U,
+    DISPID_IHTMLIMGELEMENT_WIDTH            = 0x00010005U,
+    DISPID_IHTMLIMGELEMENT_HEIGHT           = 0x00010006U,
+    DISPID_IHTMLIMGELEMENT_START            = 0x000003f5U,
+    DISPID_IHTMLIMGELEMENT2_LONGDESC        = 0x000007e3U,
+    DISPID_IHTMLIMGELEMENT3_IE8_LONGDESC    = 0x0000047fU,
+    DISPID_IHTMLIMGELEMENT3_IE8_VRML        = 0x00000480U,
+    DISPID_IHTMLIMGELEMENT3_IE8_LOWSRC      = 0x00000481U,
+    DISPID_IHTMLIMGELEMENT3_IE8_DYNSRC      = 0x00000482U,
+    DISPID_IHTMLIMGELEMENT4_NATURALWIDTH    = 0x00000483U,
+    DISPID_IHTMLIMGELEMENT4_NATURALHEIGHT   = 0x00000484U,
 }
-
-enum uint DISPID_IHTMLIMAGEELEMENTFACTORY_CREATE = 0x00000000;
 
 enum : uint
 {
-    DISPID_HTMLIMGEVENTS2_ONLOAD  = 0x000003eb,
-    DISPID_HTMLIMGEVENTS2_ONERROR = 0x000003ea,
-    DISPID_HTMLIMGEVENTS2_ONABORT = 0x000003e8,
-    DISPID_HTMLIMGEVENTS_ONLOAD   = 0x000003eb,
-    DISPID_HTMLIMGEVENTS_ONERROR  = 0x000003ea,
-    DISPID_HTMLIMGEVENTS_ONABORT  = 0x000003e8,
+    DISPID_IHTMLMSIMGELEMENT_MSPLAYTODISABLED = 0x00000485U,
+    DISPID_IHTMLMSIMGELEMENT_MSPLAYTOPRIMARY  = 0x00000486U,
+}
+
+enum uint DISPID_IHTMLIMAGEELEMENTFACTORY_CREATE = 0x00000000U;
+
+enum : uint
+{
+    DISPID_HTMLIMGEVENTS2_ONLOAD  = 0x000003ebU,
+    DISPID_HTMLIMGEVENTS2_ONERROR = 0x000003eaU,
+    DISPID_HTMLIMGEVENTS2_ONABORT = 0x000003e8U,
+    DISPID_HTMLIMGEVENTS_ONLOAD   = 0x000003ebU,
+    DISPID_HTMLIMGEVENTS_ONERROR  = 0x000003eaU,
+    DISPID_HTMLIMGEVENTS_ONABORT  = 0x000003e8U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLBODYELEMENT_BACKGROUND   = 0x00011389,
-    DISPID_IHTMLBODYELEMENT_BGPROPERTIES = 0x000113b5,
-    DISPID_IHTMLBODYELEMENT_LEFTMARGIN   = 0x000113b0,
-    DISPID_IHTMLBODYELEMENT_TOPMARGIN    = 0x000113ad,
-    DISPID_IHTMLBODYELEMENT_RIGHTMARGIN  = 0x000113ae,
-    DISPID_IHTMLBODYELEMENT_BOTTOMMARGIN = 0x000113af,
-    DISPID_IHTMLBODYELEMENT_NOWRAP       = 0x0001138d,
+    DISPID_IHTMLBODYELEMENT_BACKGROUND   = 0x00011389U,
+    DISPID_IHTMLBODYELEMENT_BGPROPERTIES = 0x000113b5U,
+    DISPID_IHTMLBODYELEMENT_LEFTMARGIN   = 0x000113b0U,
+    DISPID_IHTMLBODYELEMENT_TOPMARGIN    = 0x000113adU,
+    DISPID_IHTMLBODYELEMENT_RIGHTMARGIN  = 0x000113aeU,
+    DISPID_IHTMLBODYELEMENT_BOTTOMMARGIN = 0x000113afU,
+    DISPID_IHTMLBODYELEMENT_NOWRAP       = 0x0001138dU,
 }
 
 enum int DISPID_IHTMLBODYELEMENT_BGCOLOR = 0xfffffe0b;
 
 enum : uint
 {
-    DISPID_IHTMLBODYELEMENT_TEXT            = 0x0001138a,
-    DISPID_IHTMLBODYELEMENT_LINK            = 0x000007da,
-    DISPID_IHTMLBODYELEMENT_VLINK           = 0x000007dc,
-    DISPID_IHTMLBODYELEMENT_ALINK           = 0x000007db,
-    DISPID_IHTMLBODYELEMENT_ONLOAD          = 0x00011790,
-    DISPID_IHTMLBODYELEMENT_ONUNLOAD        = 0x00011791,
-    DISPID_IHTMLBODYELEMENT_SCROLL          = 0x000113d7,
-    DISPID_IHTMLBODYELEMENT_ONSELECT        = 0x0001177a,
-    DISPID_IHTMLBODYELEMENT_ONBEFOREUNLOAD  = 0x00011797,
-    DISPID_IHTMLBODYELEMENT_CREATETEXTRANGE = 0x000007dd,
-    DISPID_IHTMLBODYELEMENT2_ONBEFOREPRINT  = 0x000117b2,
-    DISPID_IHTMLBODYELEMENT2_ONAFTERPRINT   = 0x000117b3,
-    DISPID_IHTMLBODYELEMENT3_IE8_BACKGROUND = 0x0000047e,
-    DISPID_IHTMLBODYELEMENT3_ONONLINE       = 0x000117db,
-    DISPID_IHTMLBODYELEMENT3_ONOFFLINE      = 0x000117dc,
-    DISPID_IHTMLBODYELEMENT3_ONHASHCHANGE   = 0x000117dd,
-    DISPID_IHTMLBODYELEMENT4_ONMESSAGE      = 0x000117de,
-    DISPID_IHTMLBODYELEMENT4_ONSTORAGE      = 0x000117d4,
-    DISPID_IHTMLBODYELEMENT5_ONPOPSTATE     = 0x00011830,
+    DISPID_IHTMLBODYELEMENT_TEXT            = 0x0001138aU,
+    DISPID_IHTMLBODYELEMENT_LINK            = 0x000007daU,
+    DISPID_IHTMLBODYELEMENT_VLINK           = 0x000007dcU,
+    DISPID_IHTMLBODYELEMENT_ALINK           = 0x000007dbU,
+    DISPID_IHTMLBODYELEMENT_ONLOAD          = 0x00011790U,
+    DISPID_IHTMLBODYELEMENT_ONUNLOAD        = 0x00011791U,
+    DISPID_IHTMLBODYELEMENT_SCROLL          = 0x000113d7U,
+    DISPID_IHTMLBODYELEMENT_ONSELECT        = 0x0001177aU,
+    DISPID_IHTMLBODYELEMENT_ONBEFOREUNLOAD  = 0x00011797U,
+    DISPID_IHTMLBODYELEMENT_CREATETEXTRANGE = 0x000007ddU,
+    DISPID_IHTMLBODYELEMENT2_ONBEFOREPRINT  = 0x000117b2U,
+    DISPID_IHTMLBODYELEMENT2_ONAFTERPRINT   = 0x000117b3U,
+    DISPID_IHTMLBODYELEMENT3_IE8_BACKGROUND = 0x0000047eU,
+    DISPID_IHTMLBODYELEMENT3_ONONLINE       = 0x000117dbU,
+    DISPID_IHTMLBODYELEMENT3_ONOFFLINE      = 0x000117dcU,
+    DISPID_IHTMLBODYELEMENT3_ONHASHCHANGE   = 0x000117ddU,
+    DISPID_IHTMLBODYELEMENT4_ONMESSAGE      = 0x000117deU,
+    DISPID_IHTMLBODYELEMENT4_ONSTORAGE      = 0x000117d4U,
+    DISPID_IHTMLBODYELEMENT5_ONPOPSTATE     = 0x00011830U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLFONTELEMENT_COLOR          = 0x0001138a,
-    DISPID_IHTMLFONTELEMENT_FACE           = 0x0001139a,
-    DISPID_IHTMLFONTELEMENT_SIZE           = 0x0001139b,
-    DISPID_IHTMLANCHORELEMENT_HREF         = 0x00000000,
-    DISPID_IHTMLANCHORELEMENT_TARGET       = 0x000003eb,
-    DISPID_IHTMLANCHORELEMENT_REL          = 0x000003ed,
-    DISPID_IHTMLANCHORELEMENT_REV          = 0x000003ee,
-    DISPID_IHTMLANCHORELEMENT_URN          = 0x000003ef,
-    DISPID_IHTMLANCHORELEMENT_METHODS      = 0x000003f0,
-    DISPID_IHTMLANCHORELEMENT_NAME         = 0x00010000,
-    DISPID_IHTMLANCHORELEMENT_HOST         = 0x000003f4,
-    DISPID_IHTMLANCHORELEMENT_HOSTNAME     = 0x000003f5,
-    DISPID_IHTMLANCHORELEMENT_PATHNAME     = 0x000003f6,
-    DISPID_IHTMLANCHORELEMENT_PORT         = 0x000003f7,
-    DISPID_IHTMLANCHORELEMENT_PROTOCOL     = 0x000003f8,
-    DISPID_IHTMLANCHORELEMENT_SEARCH       = 0x000003f9,
-    DISPID_IHTMLANCHORELEMENT_HASH         = 0x000003fa,
-    DISPID_IHTMLANCHORELEMENT_ONBLUR       = 0x0001177f,
-    DISPID_IHTMLANCHORELEMENT_ONFOCUS      = 0x0001177e,
-    DISPID_IHTMLANCHORELEMENT_ACCESSKEY    = 0x000107d5,
-    DISPID_IHTMLANCHORELEMENT_PROTOCOLLONG = 0x00000407,
-    DISPID_IHTMLANCHORELEMENT_MIMETYPE     = 0x00000406,
-    DISPID_IHTMLANCHORELEMENT_NAMEPROP     = 0x00000408,
-    DISPID_IHTMLANCHORELEMENT_TABINDEX     = 0x0001000f,
-    DISPID_IHTMLANCHORELEMENT_FOCUS        = 0x000107d0,
-    DISPID_IHTMLANCHORELEMENT_BLUR         = 0x000107d2,
-    DISPID_IHTMLANCHORELEMENT2_CHARSET     = 0x000003ff,
-    DISPID_IHTMLANCHORELEMENT2_COORDS      = 0x00000400,
-    DISPID_IHTMLANCHORELEMENT2_HREFLANG    = 0x00000401,
-    DISPID_IHTMLANCHORELEMENT2_SHAPE       = 0x00000402,
-    DISPID_IHTMLANCHORELEMENT2_TYPE        = 0x00000403,
-    DISPID_IHTMLANCHORELEMENT3_IE8_SHAPE   = 0x0000047f,
-    DISPID_IHTMLANCHORELEMENT3_IE8_COORDS  = 0x00000480,
-    DISPID_IHTMLANCHORELEMENT3_IE8_HREF    = 0x00000481,
+    DISPID_IHTMLFONTELEMENT_COLOR          = 0x0001138aU,
+    DISPID_IHTMLFONTELEMENT_FACE           = 0x0001139aU,
+    DISPID_IHTMLFONTELEMENT_SIZE           = 0x0001139bU,
+    DISPID_IHTMLANCHORELEMENT_HREF         = 0x00000000U,
+    DISPID_IHTMLANCHORELEMENT_TARGET       = 0x000003ebU,
+    DISPID_IHTMLANCHORELEMENT_REL          = 0x000003edU,
+    DISPID_IHTMLANCHORELEMENT_REV          = 0x000003eeU,
+    DISPID_IHTMLANCHORELEMENT_URN          = 0x000003efU,
+    DISPID_IHTMLANCHORELEMENT_METHODS      = 0x000003f0U,
+    DISPID_IHTMLANCHORELEMENT_NAME         = 0x00010000U,
+    DISPID_IHTMLANCHORELEMENT_HOST         = 0x000003f4U,
+    DISPID_IHTMLANCHORELEMENT_HOSTNAME     = 0x000003f5U,
+    DISPID_IHTMLANCHORELEMENT_PATHNAME     = 0x000003f6U,
+    DISPID_IHTMLANCHORELEMENT_PORT         = 0x000003f7U,
+    DISPID_IHTMLANCHORELEMENT_PROTOCOL     = 0x000003f8U,
+    DISPID_IHTMLANCHORELEMENT_SEARCH       = 0x000003f9U,
+    DISPID_IHTMLANCHORELEMENT_HASH         = 0x000003faU,
+    DISPID_IHTMLANCHORELEMENT_ONBLUR       = 0x0001177fU,
+    DISPID_IHTMLANCHORELEMENT_ONFOCUS      = 0x0001177eU,
+    DISPID_IHTMLANCHORELEMENT_ACCESSKEY    = 0x000107d5U,
+    DISPID_IHTMLANCHORELEMENT_PROTOCOLLONG = 0x00000407U,
+    DISPID_IHTMLANCHORELEMENT_MIMETYPE     = 0x00000406U,
+    DISPID_IHTMLANCHORELEMENT_NAMEPROP     = 0x00000408U,
+    DISPID_IHTMLANCHORELEMENT_TABINDEX     = 0x0001000fU,
+    DISPID_IHTMLANCHORELEMENT_FOCUS        = 0x000107d0U,
+    DISPID_IHTMLANCHORELEMENT_BLUR         = 0x000107d2U,
+    DISPID_IHTMLANCHORELEMENT2_CHARSET     = 0x000003ffU,
+    DISPID_IHTMLANCHORELEMENT2_COORDS      = 0x00000400U,
+    DISPID_IHTMLANCHORELEMENT2_HREFLANG    = 0x00000401U,
+    DISPID_IHTMLANCHORELEMENT2_SHAPE       = 0x00000402U,
+    DISPID_IHTMLANCHORELEMENT2_TYPE        = 0x00000403U,
+    DISPID_IHTMLANCHORELEMENT3_IE8_SHAPE   = 0x0000047fU,
+    DISPID_IHTMLANCHORELEMENT3_IE8_COORDS  = 0x00000480U,
+    DISPID_IHTMLANCHORELEMENT3_IE8_HREF    = 0x00000481U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLLABELELEMENT_HTMLFOR   = 0x000003e8,
-    DISPID_IHTMLLABELELEMENT_ACCESSKEY = 0x000107d5,
-    DISPID_IHTMLLABELELEMENT2_FORM     = 0x000003ea,
-    DISPID_IHTMLLISTELEMENT2_COMPACT   = 0x000003e9,
+    DISPID_IHTMLLABELELEMENT_HTMLFOR   = 0x000003e8U,
+    DISPID_IHTMLLABELELEMENT_ACCESSKEY = 0x000107d5U,
+    DISPID_IHTMLLABELELEMENT2_FORM     = 0x000003eaU,
+    DISPID_IHTMLLISTELEMENT2_COMPACT   = 0x000003e9U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLULISTELEMENT_COMPACT   = 0x000003e9,
-    DISPID_IHTMLULISTELEMENT_TYPE      = 0x00011399,
-    DISPID_IHTMLOLISTELEMENT_COMPACT   = 0x000003e9,
-    DISPID_IHTMLOLISTELEMENT_START     = 0x000003eb,
-    DISPID_IHTMLOLISTELEMENT_TYPE      = 0x00011399,
-    DISPID_IHTMLLIELEMENT_TYPE         = 0x00011399,
-    DISPID_IHTMLLIELEMENT_VALUE        = 0x000003e9,
-    DISPID_IHTMLBLOCKELEMENT_CLEAR     = 0x00011398,
-    DISPID_IHTMLBLOCKELEMENT2_CITE     = 0x000003e9,
-    DISPID_IHTMLBLOCKELEMENT2_WIDTH    = 0x000003ea,
-    DISPID_IHTMLBLOCKELEMENT3_IE8_CITE = 0x0000047e,
+    DISPID_IHTMLULISTELEMENT_COMPACT   = 0x000003e9U,
+    DISPID_IHTMLULISTELEMENT_TYPE      = 0x00011399U,
+    DISPID_IHTMLOLISTELEMENT_COMPACT   = 0x000003e9U,
+    DISPID_IHTMLOLISTELEMENT_START     = 0x000003ebU,
+    DISPID_IHTMLOLISTELEMENT_TYPE      = 0x00011399U,
+    DISPID_IHTMLLIELEMENT_TYPE         = 0x00011399U,
+    DISPID_IHTMLLIELEMENT_VALUE        = 0x000003e9U,
+    DISPID_IHTMLBLOCKELEMENT_CLEAR     = 0x00011398U,
+    DISPID_IHTMLBLOCKELEMENT2_CITE     = 0x000003e9U,
+    DISPID_IHTMLBLOCKELEMENT2_WIDTH    = 0x000003eaU,
+    DISPID_IHTMLBLOCKELEMENT3_IE8_CITE = 0x0000047eU,
 }
 
 enum : uint
 {
-    DISPID_IHTMLDIVELEMENT_ALIGN     = 0x00010048,
-    DISPID_IHTMLDIVELEMENT_NOWRAP    = 0x0001138d,
-    DISPID_IHTMLDDELEMENT_NOWRAP     = 0x0001138d,
-    DISPID_IHTMLDTELEMENT_NOWRAP     = 0x0001138d,
-    DISPID_IHTMLBRELEMENT_CLEAR      = 0x00011398,
-    DISPID_IHTMLDLISTELEMENT_COMPACT = 0x000003e9,
+    DISPID_IHTMLDIVELEMENT_ALIGN     = 0x00010048U,
+    DISPID_IHTMLDIVELEMENT_NOWRAP    = 0x0001138dU,
+    DISPID_IHTMLDDELEMENT_NOWRAP     = 0x0001138dU,
+    DISPID_IHTMLDTELEMENT_NOWRAP     = 0x0001138dU,
+    DISPID_IHTMLBRELEMENT_CLEAR      = 0x00011398U,
+    DISPID_IHTMLDLISTELEMENT_COMPACT = 0x000003e9U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLHRELEMENT_ALIGN            = 0x00010048,
-    DISPID_IHTMLHRELEMENT_COLOR            = 0x0001138a,
-    DISPID_IHTMLHRELEMENT_NOSHADE          = 0x000003e9,
-    DISPID_IHTMLHRELEMENT_WIDTH            = 0x00010005,
-    DISPID_IHTMLHRELEMENT_SIZE             = 0x00010006,
-    DISPID_IHTMLPARAELEMENT_ALIGN          = 0x00010048,
-    DISPID_IHTMLELEMENTCOLLECTION_TOSTRING = 0x000005dd,
-    DISPID_IHTMLELEMENTCOLLECTION_LENGTH   = 0x000005dc,
+    DISPID_IHTMLHRELEMENT_ALIGN            = 0x00010048U,
+    DISPID_IHTMLHRELEMENT_COLOR            = 0x0001138aU,
+    DISPID_IHTMLHRELEMENT_NOSHADE          = 0x000003e9U,
+    DISPID_IHTMLHRELEMENT_WIDTH            = 0x00010005U,
+    DISPID_IHTMLHRELEMENT_SIZE             = 0x00010006U,
+    DISPID_IHTMLPARAELEMENT_ALIGN          = 0x00010048U,
+    DISPID_IHTMLELEMENTCOLLECTION_TOSTRING = 0x000005ddU,
+    DISPID_IHTMLELEMENTCOLLECTION_LENGTH   = 0x000005dcU,
 }
 
 enum int DISPID_IHTMLELEMENTCOLLECTION__NEWENUM = 0xfffffffc;
 
 enum : uint
 {
-    DISPID_IHTMLELEMENTCOLLECTION_ITEM           = 0x00000000,
-    DISPID_IHTMLELEMENTCOLLECTION_TAGS           = 0x000005de,
-    DISPID_IHTMLELEMENTCOLLECTION2_URNS          = 0x000005e1,
-    DISPID_IHTMLELEMENTCOLLECTION3_NAMEDITEM     = 0x000005e2,
-    DISPID_IHTMLELEMENTCOLLECTION4_IE8_LENGTH    = 0x0000047e,
-    DISPID_IHTMLELEMENTCOLLECTION4_IE8_ITEM      = 0x00000480,
-    DISPID_IHTMLELEMENTCOLLECTION4_IE8_NAMEDITEM = 0x00000481,
+    DISPID_IHTMLELEMENTCOLLECTION_ITEM           = 0x00000000U,
+    DISPID_IHTMLELEMENTCOLLECTION_TAGS           = 0x000005deU,
+    DISPID_IHTMLELEMENTCOLLECTION2_URNS          = 0x000005e1U,
+    DISPID_IHTMLELEMENTCOLLECTION3_NAMEDITEM     = 0x000005e2U,
+    DISPID_IHTMLELEMENTCOLLECTION4_IE8_LENGTH    = 0x0000047eU,
+    DISPID_IHTMLELEMENTCOLLECTION4_IE8_ITEM      = 0x00000480U,
+    DISPID_IHTMLELEMENTCOLLECTION4_IE8_NAMEDITEM = 0x00000481U,
 }
 
-enum uint DISPID_IHTMLHEADERELEMENT_ALIGN = 0x00010048;
+enum uint DISPID_IHTMLHEADERELEMENT_ALIGN = 0x00010048U;
 
 enum : uint
 {
-    DISPID_IHTMLSELECTELEMENT_SIZE          = 0x000003ea,
-    DISPID_IHTMLSELECTELEMENT_MULTIPLE      = 0x000003eb,
-    DISPID_IHTMLSELECTELEMENT_NAME          = 0x00010000,
-    DISPID_IHTMLSELECTELEMENT_OPTIONS       = 0x000003ed,
-    DISPID_IHTMLSELECTELEMENT_ONCHANGE      = 0x0001178e,
-    DISPID_IHTMLSELECTELEMENT_SELECTEDINDEX = 0x000003f2,
-    DISPID_IHTMLSELECTELEMENT_TYPE          = 0x000003f4,
-    DISPID_IHTMLSELECTELEMENT_VALUE         = 0x000003f3,
-    DISPID_IHTMLSELECTELEMENT_DISABLED      = 0x0001004c,
-    DISPID_IHTMLSELECTELEMENT_FORM          = 0x000107d4,
-    DISPID_IHTMLSELECTELEMENT_ADD           = 0x000005df,
-    DISPID_IHTMLSELECTELEMENT_REMOVE        = 0x000005e0,
-    DISPID_IHTMLSELECTELEMENT_LENGTH        = 0x000005dc,
+    DISPID_IHTMLSELECTELEMENT_SIZE          = 0x000003eaU,
+    DISPID_IHTMLSELECTELEMENT_MULTIPLE      = 0x000003ebU,
+    DISPID_IHTMLSELECTELEMENT_NAME          = 0x00010000U,
+    DISPID_IHTMLSELECTELEMENT_OPTIONS       = 0x000003edU,
+    DISPID_IHTMLSELECTELEMENT_ONCHANGE      = 0x0001178eU,
+    DISPID_IHTMLSELECTELEMENT_SELECTEDINDEX = 0x000003f2U,
+    DISPID_IHTMLSELECTELEMENT_TYPE          = 0x000003f4U,
+    DISPID_IHTMLSELECTELEMENT_VALUE         = 0x000003f3U,
+    DISPID_IHTMLSELECTELEMENT_DISABLED      = 0x0001004cU,
+    DISPID_IHTMLSELECTELEMENT_FORM          = 0x000107d4U,
+    DISPID_IHTMLSELECTELEMENT_ADD           = 0x000005dfU,
+    DISPID_IHTMLSELECTELEMENT_REMOVE        = 0x000005e0U,
+    DISPID_IHTMLSELECTELEMENT_LENGTH        = 0x000005dcU,
 }
 
 enum int DISPID_IHTMLSELECTELEMENT__NEWENUM = 0xfffffffc;
 
 enum : uint
 {
-    DISPID_IHTMLSELECTELEMENT_ITEM       = 0x00000000,
-    DISPID_IHTMLSELECTELEMENT_TAGS       = 0x000005de,
-    DISPID_IHTMLSELECTELEMENT2_URNS      = 0x000005e1,
-    DISPID_IHTMLSELECTELEMENT4_NAMEDITEM = 0x000005e2,
-    DISPID_IHTMLSELECTELEMENT5_IE8_ADD   = 0x0000047e,
-    DISPID_IHTMLSELECTELEMENT6_IE9_ADD   = 0x0000047f,
-    DISPID_IHTMLSELECTELEMENT6_IE9_VALUE = 0x00000480,
+    DISPID_IHTMLSELECTELEMENT_ITEM       = 0x00000000U,
+    DISPID_IHTMLSELECTELEMENT_TAGS       = 0x000005deU,
+    DISPID_IHTMLSELECTELEMENT2_URNS      = 0x000005e1U,
+    DISPID_IHTMLSELECTELEMENT4_NAMEDITEM = 0x000005e2U,
+    DISPID_IHTMLSELECTELEMENT5_IE8_ADD   = 0x0000047eU,
+    DISPID_IHTMLSELECTELEMENT6_IE9_ADD   = 0x0000047fU,
+    DISPID_IHTMLSELECTELEMENT6_IE9_VALUE = 0x00000480U,
 }
 
 enum : uint
 {
-    DISPID_HTMLSELECTELEMENTEVENTS2_ONCHANGE = 0x000003e9,
-    DISPID_HTMLSELECTELEMENTEVENTS_ONCHANGE  = 0x000003e9,
+    DISPID_HTMLSELECTELEMENTEVENTS2_ONCHANGE = 0x000003e9U,
+    DISPID_HTMLSELECTELEMENTEVENTS_ONCHANGE  = 0x000003e9U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLSELECTIONOBJECT_CREATERANGE            = 0x000003e9,
-    DISPID_IHTMLSELECTIONOBJECT_EMPTY                  = 0x000003ea,
-    DISPID_IHTMLSELECTIONOBJECT_CLEAR                  = 0x000003eb,
-    DISPID_IHTMLSELECTIONOBJECT_TYPE                   = 0x000003ec,
-    DISPID_IHTMLSELECTIONOBJECT2_CREATERANGECOLLECTION = 0x000003ed,
-    DISPID_IHTMLSELECTIONOBJECT2_TYPEDETAIL            = 0x000003ee,
-    DISPID_IHTMLSELECTION_ANCHORNODE                   = 0x000003e9,
-    DISPID_IHTMLSELECTION_ANCHOROFFSET                 = 0x000003ea,
-    DISPID_IHTMLSELECTION_FOCUSNODE                    = 0x000003eb,
-    DISPID_IHTMLSELECTION_FOCUSOFFSET                  = 0x000003ec,
-    DISPID_IHTMLSELECTION_ISCOLLAPSED                  = 0x000003ed,
-    DISPID_IHTMLSELECTION_COLLAPSE                     = 0x000003ee,
-    DISPID_IHTMLSELECTION_COLLAPSETOSTART              = 0x000003ef,
-    DISPID_IHTMLSELECTION_COLLAPSETOEND                = 0x000003f0,
-    DISPID_IHTMLSELECTION_SELECTALLCHILDREN            = 0x000003f1,
-    DISPID_IHTMLSELECTION_DELETEFROMDOCUMENT           = 0x000003f2,
-    DISPID_IHTMLSELECTION_RANGECOUNT                   = 0x000003f3,
-    DISPID_IHTMLSELECTION_GETRANGEAT                   = 0x000003f4,
-    DISPID_IHTMLSELECTION_ADDRANGE                     = 0x000003f5,
-    DISPID_IHTMLSELECTION_REMOVERANGE                  = 0x000003f6,
-    DISPID_IHTMLSELECTION_REMOVEALLRANGES              = 0x000003f7,
-    DISPID_IHTMLSELECTION_TOSTRING                     = 0x000003f8,
+    DISPID_IHTMLSELECTIONOBJECT_CREATERANGE            = 0x000003e9U,
+    DISPID_IHTMLSELECTIONOBJECT_EMPTY                  = 0x000003eaU,
+    DISPID_IHTMLSELECTIONOBJECT_CLEAR                  = 0x000003ebU,
+    DISPID_IHTMLSELECTIONOBJECT_TYPE                   = 0x000003ecU,
+    DISPID_IHTMLSELECTIONOBJECT2_CREATERANGECOLLECTION = 0x000003edU,
+    DISPID_IHTMLSELECTIONOBJECT2_TYPEDETAIL            = 0x000003eeU,
+    DISPID_IHTMLSELECTION_ANCHORNODE                   = 0x000003e9U,
+    DISPID_IHTMLSELECTION_ANCHOROFFSET                 = 0x000003eaU,
+    DISPID_IHTMLSELECTION_FOCUSNODE                    = 0x000003ebU,
+    DISPID_IHTMLSELECTION_FOCUSOFFSET                  = 0x000003ecU,
+    DISPID_IHTMLSELECTION_ISCOLLAPSED                  = 0x000003edU,
+    DISPID_IHTMLSELECTION_COLLAPSE                     = 0x000003eeU,
+    DISPID_IHTMLSELECTION_COLLAPSETOSTART              = 0x000003efU,
+    DISPID_IHTMLSELECTION_COLLAPSETOEND                = 0x000003f0U,
+    DISPID_IHTMLSELECTION_SELECTALLCHILDREN            = 0x000003f1U,
+    DISPID_IHTMLSELECTION_DELETEFROMDOCUMENT           = 0x000003f2U,
+    DISPID_IHTMLSELECTION_RANGECOUNT                   = 0x000003f3U,
+    DISPID_IHTMLSELECTION_GETRANGEAT                   = 0x000003f4U,
+    DISPID_IHTMLSELECTION_ADDRANGE                     = 0x000003f5U,
+    DISPID_IHTMLSELECTION_REMOVERANGE                  = 0x000003f6U,
+    DISPID_IHTMLSELECTION_REMOVEALLRANGES              = 0x000003f7U,
+    DISPID_IHTMLSELECTION_TOSTRING                     = 0x000003f8U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLOPTIONELEMENT_SELECTED        = 0x000003e9,
-    DISPID_IHTMLOPTIONELEMENT_VALUE           = 0x000003ea,
-    DISPID_IHTMLOPTIONELEMENT_DEFAULTSELECTED = 0x000003eb,
-    DISPID_IHTMLOPTIONELEMENT_INDEX           = 0x000003ed,
-    DISPID_IHTMLOPTIONELEMENT_TEXT            = 0x000003ec,
-    DISPID_IHTMLOPTIONELEMENT_FORM            = 0x000003ee,
-    DISPID_IHTMLOPTIONELEMENT3_LABEL          = 0x000003ef,
-    DISPID_IHTMLOPTIONELEMENT4_IE9_VALUE      = 0x000003f0,
-    DISPID_IHTMLOPTIONELEMENTFACTORY_CREATE   = 0x00000000,
+    DISPID_IHTMLOPTIONELEMENT_SELECTED        = 0x000003e9U,
+    DISPID_IHTMLOPTIONELEMENT_VALUE           = 0x000003eaU,
+    DISPID_IHTMLOPTIONELEMENT_DEFAULTSELECTED = 0x000003ebU,
+    DISPID_IHTMLOPTIONELEMENT_INDEX           = 0x000003edU,
+    DISPID_IHTMLOPTIONELEMENT_TEXT            = 0x000003ecU,
+    DISPID_IHTMLOPTIONELEMENT_FORM            = 0x000003eeU,
+    DISPID_IHTMLOPTIONELEMENT3_LABEL          = 0x000003efU,
+    DISPID_IHTMLOPTIONELEMENT4_IE9_VALUE      = 0x000003f0U,
+    DISPID_IHTMLOPTIONELEMENTFACTORY_CREATE   = 0x00000000U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLINPUTELEMENT_TYPE                  = 0x000007d0,
-    DISPID_IHTMLINPUTELEMENT_VALUE                 = 0x000113ed,
-    DISPID_IHTMLINPUTELEMENT_NAME                  = 0x00010000,
-    DISPID_IHTMLINPUTELEMENT_STATUS                = 0x000007d1,
-    DISPID_IHTMLINPUTELEMENT_DISABLED              = 0x0001004c,
-    DISPID_IHTMLINPUTELEMENT_FORM                  = 0x000107d4,
-    DISPID_IHTMLINPUTELEMENT_SIZE                  = 0x000007d2,
-    DISPID_IHTMLINPUTELEMENT_MAXLENGTH             = 0x000007d3,
-    DISPID_IHTMLINPUTELEMENT_SELECT                = 0x000007d4,
-    DISPID_IHTMLINPUTELEMENT_ONCHANGE              = 0x0001178e,
-    DISPID_IHTMLINPUTELEMENT_ONSELECT              = 0x0001177a,
-    DISPID_IHTMLINPUTELEMENT_DEFAULTVALUE          = 0x000113db,
-    DISPID_IHTMLINPUTELEMENT_READONLY              = 0x000007d5,
-    DISPID_IHTMLINPUTELEMENT_CREATETEXTRANGE       = 0x000007d6,
-    DISPID_IHTMLINPUTELEMENT_INDETERMINATE         = 0x000007d7,
-    DISPID_IHTMLINPUTELEMENT_DEFAULTCHECKED        = 0x000007d8,
-    DISPID_IHTMLINPUTELEMENT_CHECKED               = 0x000007d9,
-    DISPID_IHTMLINPUTELEMENT_BORDER                = 0x000007dc,
-    DISPID_IHTMLINPUTELEMENT_VSPACE                = 0x000007dd,
-    DISPID_IHTMLINPUTELEMENT_HSPACE                = 0x000007de,
-    DISPID_IHTMLINPUTELEMENT_ALT                   = 0x000007da,
-    DISPID_IHTMLINPUTELEMENT_SRC                   = 0x000007db,
-    DISPID_IHTMLINPUTELEMENT_LOWSRC                = 0x000007df,
-    DISPID_IHTMLINPUTELEMENT_VRML                  = 0x000007e0,
-    DISPID_IHTMLINPUTELEMENT_DYNSRC                = 0x000007e1,
-    DISPID_IHTMLINPUTELEMENT_READYSTATE            = 0x000113fc,
-    DISPID_IHTMLINPUTELEMENT_COMPLETE              = 0x000007e2,
-    DISPID_IHTMLINPUTELEMENT_LOOP                  = 0x000007e3,
-    DISPID_IHTMLINPUTELEMENT_ALIGN                 = 0x00010049,
-    DISPID_IHTMLINPUTELEMENT_ONLOAD                = 0x00011790,
-    DISPID_IHTMLINPUTELEMENT_ONERROR               = 0x0001178d,
-    DISPID_IHTMLINPUTELEMENT_ONABORT               = 0x0001178c,
-    DISPID_IHTMLINPUTELEMENT_WIDTH                 = 0x00010005,
-    DISPID_IHTMLINPUTELEMENT_HEIGHT                = 0x00010006,
-    DISPID_IHTMLINPUTELEMENT_START                 = 0x000007e4,
-    DISPID_IHTMLINPUTELEMENT2_ACCEPT               = 0x000007e6,
-    DISPID_IHTMLINPUTELEMENT2_USEMAP               = 0x000007e7,
-    DISPID_IHTMLINPUTELEMENT3_IE8_SRC              = 0x0000047e,
-    DISPID_IHTMLINPUTELEMENT3_IE8_LOWSRC           = 0x0000047f,
-    DISPID_IHTMLINPUTELEMENT3_IE8_VRML             = 0x00000480,
-    DISPID_IHTMLINPUTELEMENT3_IE8_DYNSRC           = 0x00000481,
-    DISPID_IHTMLINPUTBUTTONELEMENT_TYPE            = 0x000007d0,
-    DISPID_IHTMLINPUTBUTTONELEMENT_VALUE           = 0x000113ed,
-    DISPID_IHTMLINPUTBUTTONELEMENT_NAME            = 0x00010000,
-    DISPID_IHTMLINPUTBUTTONELEMENT_STATUS          = 0x000007e5,
-    DISPID_IHTMLINPUTBUTTONELEMENT_DISABLED        = 0x0001004c,
-    DISPID_IHTMLINPUTBUTTONELEMENT_FORM            = 0x000107d4,
-    DISPID_IHTMLINPUTBUTTONELEMENT_CREATETEXTRANGE = 0x000007d6,
+    DISPID_IHTMLINPUTELEMENT_TYPE                  = 0x000007d0U,
+    DISPID_IHTMLINPUTELEMENT_VALUE                 = 0x000113edU,
+    DISPID_IHTMLINPUTELEMENT_NAME                  = 0x00010000U,
+    DISPID_IHTMLINPUTELEMENT_STATUS                = 0x000007d1U,
+    DISPID_IHTMLINPUTELEMENT_DISABLED              = 0x0001004cU,
+    DISPID_IHTMLINPUTELEMENT_FORM                  = 0x000107d4U,
+    DISPID_IHTMLINPUTELEMENT_SIZE                  = 0x000007d2U,
+    DISPID_IHTMLINPUTELEMENT_MAXLENGTH             = 0x000007d3U,
+    DISPID_IHTMLINPUTELEMENT_SELECT                = 0x000007d4U,
+    DISPID_IHTMLINPUTELEMENT_ONCHANGE              = 0x0001178eU,
+    DISPID_IHTMLINPUTELEMENT_ONSELECT              = 0x0001177aU,
+    DISPID_IHTMLINPUTELEMENT_DEFAULTVALUE          = 0x000113dbU,
+    DISPID_IHTMLINPUTELEMENT_READONLY              = 0x000007d5U,
+    DISPID_IHTMLINPUTELEMENT_CREATETEXTRANGE       = 0x000007d6U,
+    DISPID_IHTMLINPUTELEMENT_INDETERMINATE         = 0x000007d7U,
+    DISPID_IHTMLINPUTELEMENT_DEFAULTCHECKED        = 0x000007d8U,
+    DISPID_IHTMLINPUTELEMENT_CHECKED               = 0x000007d9U,
+    DISPID_IHTMLINPUTELEMENT_BORDER                = 0x000007dcU,
+    DISPID_IHTMLINPUTELEMENT_VSPACE                = 0x000007ddU,
+    DISPID_IHTMLINPUTELEMENT_HSPACE                = 0x000007deU,
+    DISPID_IHTMLINPUTELEMENT_ALT                   = 0x000007daU,
+    DISPID_IHTMLINPUTELEMENT_SRC                   = 0x000007dbU,
+    DISPID_IHTMLINPUTELEMENT_LOWSRC                = 0x000007dfU,
+    DISPID_IHTMLINPUTELEMENT_VRML                  = 0x000007e0U,
+    DISPID_IHTMLINPUTELEMENT_DYNSRC                = 0x000007e1U,
+    DISPID_IHTMLINPUTELEMENT_READYSTATE            = 0x000113fcU,
+    DISPID_IHTMLINPUTELEMENT_COMPLETE              = 0x000007e2U,
+    DISPID_IHTMLINPUTELEMENT_LOOP                  = 0x000007e3U,
+    DISPID_IHTMLINPUTELEMENT_ALIGN                 = 0x00010049U,
+    DISPID_IHTMLINPUTELEMENT_ONLOAD                = 0x00011790U,
+    DISPID_IHTMLINPUTELEMENT_ONERROR               = 0x0001178dU,
+    DISPID_IHTMLINPUTELEMENT_ONABORT               = 0x0001178cU,
+    DISPID_IHTMLINPUTELEMENT_WIDTH                 = 0x00010005U,
+    DISPID_IHTMLINPUTELEMENT_HEIGHT                = 0x00010006U,
+    DISPID_IHTMLINPUTELEMENT_START                 = 0x000007e4U,
+    DISPID_IHTMLINPUTELEMENT2_ACCEPT               = 0x000007e6U,
+    DISPID_IHTMLINPUTELEMENT2_USEMAP               = 0x000007e7U,
+    DISPID_IHTMLINPUTELEMENT3_IE8_SRC              = 0x0000047eU,
+    DISPID_IHTMLINPUTELEMENT3_IE8_LOWSRC           = 0x0000047fU,
+    DISPID_IHTMLINPUTELEMENT3_IE8_VRML             = 0x00000480U,
+    DISPID_IHTMLINPUTELEMENT3_IE8_DYNSRC           = 0x00000481U,
+    DISPID_IHTMLINPUTBUTTONELEMENT_TYPE            = 0x000007d0U,
+    DISPID_IHTMLINPUTBUTTONELEMENT_VALUE           = 0x000113edU,
+    DISPID_IHTMLINPUTBUTTONELEMENT_NAME            = 0x00010000U,
+    DISPID_IHTMLINPUTBUTTONELEMENT_STATUS          = 0x000007e5U,
+    DISPID_IHTMLINPUTBUTTONELEMENT_DISABLED        = 0x0001004cU,
+    DISPID_IHTMLINPUTBUTTONELEMENT_FORM            = 0x000107d4U,
+    DISPID_IHTMLINPUTBUTTONELEMENT_CREATETEXTRANGE = 0x000007d6U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLINPUTHIDDENELEMENT_TYPE            = 0x000007d0,
-    DISPID_IHTMLINPUTHIDDENELEMENT_VALUE           = 0x000113ed,
-    DISPID_IHTMLINPUTHIDDENELEMENT_NAME            = 0x00010000,
-    DISPID_IHTMLINPUTHIDDENELEMENT_STATUS          = 0x000007e5,
-    DISPID_IHTMLINPUTHIDDENELEMENT_DISABLED        = 0x0001004c,
-    DISPID_IHTMLINPUTHIDDENELEMENT_FORM            = 0x000107d4,
-    DISPID_IHTMLINPUTHIDDENELEMENT_CREATETEXTRANGE = 0x000007d6,
+    DISPID_IHTMLINPUTHIDDENELEMENT_TYPE            = 0x000007d0U,
+    DISPID_IHTMLINPUTHIDDENELEMENT_VALUE           = 0x000113edU,
+    DISPID_IHTMLINPUTHIDDENELEMENT_NAME            = 0x00010000U,
+    DISPID_IHTMLINPUTHIDDENELEMENT_STATUS          = 0x000007e5U,
+    DISPID_IHTMLINPUTHIDDENELEMENT_DISABLED        = 0x0001004cU,
+    DISPID_IHTMLINPUTHIDDENELEMENT_FORM            = 0x000107d4U,
+    DISPID_IHTMLINPUTHIDDENELEMENT_CREATETEXTRANGE = 0x000007d6U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLINPUTTEXTELEMENT_TYPE               = 0x000007d0,
-    DISPID_IHTMLINPUTTEXTELEMENT_VALUE              = 0x000113ed,
-    DISPID_IHTMLINPUTTEXTELEMENT_NAME               = 0x00010000,
-    DISPID_IHTMLINPUTTEXTELEMENT_STATUS             = 0x000007e5,
-    DISPID_IHTMLINPUTTEXTELEMENT_DISABLED           = 0x0001004c,
-    DISPID_IHTMLINPUTTEXTELEMENT_FORM               = 0x000107d4,
-    DISPID_IHTMLINPUTTEXTELEMENT_DEFAULTVALUE       = 0x000113db,
-    DISPID_IHTMLINPUTTEXTELEMENT_SIZE               = 0x000007d2,
-    DISPID_IHTMLINPUTTEXTELEMENT_MAXLENGTH          = 0x000007d3,
-    DISPID_IHTMLINPUTTEXTELEMENT_SELECT             = 0x000007d4,
-    DISPID_IHTMLINPUTTEXTELEMENT_ONCHANGE           = 0x0001178e,
-    DISPID_IHTMLINPUTTEXTELEMENT_ONSELECT           = 0x0001177a,
-    DISPID_IHTMLINPUTTEXTELEMENT_READONLY           = 0x000007d5,
-    DISPID_IHTMLINPUTTEXTELEMENT_CREATETEXTRANGE    = 0x000007d6,
-    DISPID_IHTMLINPUTTEXTELEMENT2_SELECTIONSTART    = 0x000007e9,
-    DISPID_IHTMLINPUTTEXTELEMENT2_SELECTIONEND      = 0x000007ea,
-    DISPID_IHTMLINPUTTEXTELEMENT2_SETSELECTIONRANGE = 0x000007eb,
+    DISPID_IHTMLINPUTTEXTELEMENT_TYPE               = 0x000007d0U,
+    DISPID_IHTMLINPUTTEXTELEMENT_VALUE              = 0x000113edU,
+    DISPID_IHTMLINPUTTEXTELEMENT_NAME               = 0x00010000U,
+    DISPID_IHTMLINPUTTEXTELEMENT_STATUS             = 0x000007e5U,
+    DISPID_IHTMLINPUTTEXTELEMENT_DISABLED           = 0x0001004cU,
+    DISPID_IHTMLINPUTTEXTELEMENT_FORM               = 0x000107d4U,
+    DISPID_IHTMLINPUTTEXTELEMENT_DEFAULTVALUE       = 0x000113dbU,
+    DISPID_IHTMLINPUTTEXTELEMENT_SIZE               = 0x000007d2U,
+    DISPID_IHTMLINPUTTEXTELEMENT_MAXLENGTH          = 0x000007d3U,
+    DISPID_IHTMLINPUTTEXTELEMENT_SELECT             = 0x000007d4U,
+    DISPID_IHTMLINPUTTEXTELEMENT_ONCHANGE           = 0x0001178eU,
+    DISPID_IHTMLINPUTTEXTELEMENT_ONSELECT           = 0x0001177aU,
+    DISPID_IHTMLINPUTTEXTELEMENT_READONLY           = 0x000007d5U,
+    DISPID_IHTMLINPUTTEXTELEMENT_CREATETEXTRANGE    = 0x000007d6U,
+    DISPID_IHTMLINPUTTEXTELEMENT2_SELECTIONSTART    = 0x000007e9U,
+    DISPID_IHTMLINPUTTEXTELEMENT2_SELECTIONEND      = 0x000007eaU,
+    DISPID_IHTMLINPUTTEXTELEMENT2_SETSELECTIONRANGE = 0x000007ebU,
 }
 
 enum : uint
 {
-    DISPID_IHTMLINPUTFILEELEMENT_TYPE      = 0x000007d0,
-    DISPID_IHTMLINPUTFILEELEMENT_NAME      = 0x00010000,
-    DISPID_IHTMLINPUTFILEELEMENT_STATUS    = 0x000007e5,
-    DISPID_IHTMLINPUTFILEELEMENT_DISABLED  = 0x0001004c,
-    DISPID_IHTMLINPUTFILEELEMENT_FORM      = 0x000107d4,
-    DISPID_IHTMLINPUTFILEELEMENT_SIZE      = 0x000007d2,
-    DISPID_IHTMLINPUTFILEELEMENT_MAXLENGTH = 0x000007d3,
-    DISPID_IHTMLINPUTFILEELEMENT_SELECT    = 0x000007d4,
-    DISPID_IHTMLINPUTFILEELEMENT_ONCHANGE  = 0x0001178e,
-    DISPID_IHTMLINPUTFILEELEMENT_ONSELECT  = 0x0001177a,
-    DISPID_IHTMLINPUTFILEELEMENT_VALUE     = 0x000113ed,
+    DISPID_IHTMLINPUTFILEELEMENT_TYPE      = 0x000007d0U,
+    DISPID_IHTMLINPUTFILEELEMENT_NAME      = 0x00010000U,
+    DISPID_IHTMLINPUTFILEELEMENT_STATUS    = 0x000007e5U,
+    DISPID_IHTMLINPUTFILEELEMENT_DISABLED  = 0x0001004cU,
+    DISPID_IHTMLINPUTFILEELEMENT_FORM      = 0x000107d4U,
+    DISPID_IHTMLINPUTFILEELEMENT_SIZE      = 0x000007d2U,
+    DISPID_IHTMLINPUTFILEELEMENT_MAXLENGTH = 0x000007d3U,
+    DISPID_IHTMLINPUTFILEELEMENT_SELECT    = 0x000007d4U,
+    DISPID_IHTMLINPUTFILEELEMENT_ONCHANGE  = 0x0001178eU,
+    DISPID_IHTMLINPUTFILEELEMENT_ONSELECT  = 0x0001177aU,
+    DISPID_IHTMLINPUTFILEELEMENT_VALUE     = 0x000113edU,
 }
 
 enum : uint
 {
-    DISPID_IHTMLOPTIONBUTTONELEMENT_VALUE          = 0x000113ed,
-    DISPID_IHTMLOPTIONBUTTONELEMENT_TYPE           = 0x000007d0,
-    DISPID_IHTMLOPTIONBUTTONELEMENT_NAME           = 0x00010000,
-    DISPID_IHTMLOPTIONBUTTONELEMENT_CHECKED        = 0x000007d9,
-    DISPID_IHTMLOPTIONBUTTONELEMENT_DEFAULTCHECKED = 0x000007d8,
-    DISPID_IHTMLOPTIONBUTTONELEMENT_ONCHANGE       = 0x0001178e,
-    DISPID_IHTMLOPTIONBUTTONELEMENT_DISABLED       = 0x0001004c,
-    DISPID_IHTMLOPTIONBUTTONELEMENT_STATUS         = 0x000007d1,
-    DISPID_IHTMLOPTIONBUTTONELEMENT_INDETERMINATE  = 0x000007d7,
-    DISPID_IHTMLOPTIONBUTTONELEMENT_FORM           = 0x000107d4,
+    DISPID_IHTMLOPTIONBUTTONELEMENT_VALUE          = 0x000113edU,
+    DISPID_IHTMLOPTIONBUTTONELEMENT_TYPE           = 0x000007d0U,
+    DISPID_IHTMLOPTIONBUTTONELEMENT_NAME           = 0x00010000U,
+    DISPID_IHTMLOPTIONBUTTONELEMENT_CHECKED        = 0x000007d9U,
+    DISPID_IHTMLOPTIONBUTTONELEMENT_DEFAULTCHECKED = 0x000007d8U,
+    DISPID_IHTMLOPTIONBUTTONELEMENT_ONCHANGE       = 0x0001178eU,
+    DISPID_IHTMLOPTIONBUTTONELEMENT_DISABLED       = 0x0001004cU,
+    DISPID_IHTMLOPTIONBUTTONELEMENT_STATUS         = 0x000007d1U,
+    DISPID_IHTMLOPTIONBUTTONELEMENT_INDETERMINATE  = 0x000007d7U,
+    DISPID_IHTMLOPTIONBUTTONELEMENT_FORM           = 0x000107d4U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLINPUTIMAGE_TYPE                 = 0x000007d0,
-    DISPID_IHTMLINPUTIMAGE_DISABLED             = 0x0001004c,
-    DISPID_IHTMLINPUTIMAGE_BORDER               = 0x000007dc,
-    DISPID_IHTMLINPUTIMAGE_VSPACE               = 0x000007dd,
-    DISPID_IHTMLINPUTIMAGE_HSPACE               = 0x000007de,
-    DISPID_IHTMLINPUTIMAGE_ALT                  = 0x000007da,
-    DISPID_IHTMLINPUTIMAGE_SRC                  = 0x000007db,
-    DISPID_IHTMLINPUTIMAGE_LOWSRC               = 0x000007df,
-    DISPID_IHTMLINPUTIMAGE_VRML                 = 0x000007e0,
-    DISPID_IHTMLINPUTIMAGE_DYNSRC               = 0x000007e1,
-    DISPID_IHTMLINPUTIMAGE_READYSTATE           = 0x000113fc,
-    DISPID_IHTMLINPUTIMAGE_COMPLETE             = 0x000007e2,
-    DISPID_IHTMLINPUTIMAGE_LOOP                 = 0x000007e3,
-    DISPID_IHTMLINPUTIMAGE_ALIGN                = 0x00010049,
-    DISPID_IHTMLINPUTIMAGE_ONLOAD               = 0x00011790,
-    DISPID_IHTMLINPUTIMAGE_ONERROR              = 0x0001178d,
-    DISPID_IHTMLINPUTIMAGE_ONABORT              = 0x0001178c,
-    DISPID_IHTMLINPUTIMAGE_NAME                 = 0x00010000,
-    DISPID_IHTMLINPUTIMAGE_WIDTH                = 0x00010005,
-    DISPID_IHTMLINPUTIMAGE_HEIGHT               = 0x00010006,
-    DISPID_IHTMLINPUTIMAGE_START                = 0x000007e4,
-    DISPID_IHTMLINPUTRANGEELEMENT_DISABLED      = 0x0001004c,
-    DISPID_IHTMLINPUTRANGEELEMENT_TYPE          = 0x000007d0,
-    DISPID_IHTMLINPUTRANGEELEMENT_ALT           = 0x000007da,
-    DISPID_IHTMLINPUTRANGEELEMENT_NAME          = 0x00010000,
-    DISPID_IHTMLINPUTRANGEELEMENT_VALUE         = 0x000113ed,
-    DISPID_IHTMLINPUTRANGEELEMENT_MIN           = 0x000007ec,
-    DISPID_IHTMLINPUTRANGEELEMENT_MAX           = 0x000007ed,
-    DISPID_IHTMLINPUTRANGEELEMENT_STEP          = 0x000007ee,
-    DISPID_IHTMLINPUTRANGEELEMENT_VALUEASNUMBER = 0x000007ef,
-    DISPID_IHTMLINPUTRANGEELEMENT_STEPUP        = 0x000007f1,
-    DISPID_IHTMLINPUTRANGEELEMENT_STEPDOWN      = 0x000007f0,
+    DISPID_IHTMLINPUTIMAGE_TYPE                 = 0x000007d0U,
+    DISPID_IHTMLINPUTIMAGE_DISABLED             = 0x0001004cU,
+    DISPID_IHTMLINPUTIMAGE_BORDER               = 0x000007dcU,
+    DISPID_IHTMLINPUTIMAGE_VSPACE               = 0x000007ddU,
+    DISPID_IHTMLINPUTIMAGE_HSPACE               = 0x000007deU,
+    DISPID_IHTMLINPUTIMAGE_ALT                  = 0x000007daU,
+    DISPID_IHTMLINPUTIMAGE_SRC                  = 0x000007dbU,
+    DISPID_IHTMLINPUTIMAGE_LOWSRC               = 0x000007dfU,
+    DISPID_IHTMLINPUTIMAGE_VRML                 = 0x000007e0U,
+    DISPID_IHTMLINPUTIMAGE_DYNSRC               = 0x000007e1U,
+    DISPID_IHTMLINPUTIMAGE_READYSTATE           = 0x000113fcU,
+    DISPID_IHTMLINPUTIMAGE_COMPLETE             = 0x000007e2U,
+    DISPID_IHTMLINPUTIMAGE_LOOP                 = 0x000007e3U,
+    DISPID_IHTMLINPUTIMAGE_ALIGN                = 0x00010049U,
+    DISPID_IHTMLINPUTIMAGE_ONLOAD               = 0x00011790U,
+    DISPID_IHTMLINPUTIMAGE_ONERROR              = 0x0001178dU,
+    DISPID_IHTMLINPUTIMAGE_ONABORT              = 0x0001178cU,
+    DISPID_IHTMLINPUTIMAGE_NAME                 = 0x00010000U,
+    DISPID_IHTMLINPUTIMAGE_WIDTH                = 0x00010005U,
+    DISPID_IHTMLINPUTIMAGE_HEIGHT               = 0x00010006U,
+    DISPID_IHTMLINPUTIMAGE_START                = 0x000007e4U,
+    DISPID_IHTMLINPUTRANGEELEMENT_DISABLED      = 0x0001004cU,
+    DISPID_IHTMLINPUTRANGEELEMENT_TYPE          = 0x000007d0U,
+    DISPID_IHTMLINPUTRANGEELEMENT_ALT           = 0x000007daU,
+    DISPID_IHTMLINPUTRANGEELEMENT_NAME          = 0x00010000U,
+    DISPID_IHTMLINPUTRANGEELEMENT_VALUE         = 0x000113edU,
+    DISPID_IHTMLINPUTRANGEELEMENT_MIN           = 0x000007ecU,
+    DISPID_IHTMLINPUTRANGEELEMENT_MAX           = 0x000007edU,
+    DISPID_IHTMLINPUTRANGEELEMENT_STEP          = 0x000007eeU,
+    DISPID_IHTMLINPUTRANGEELEMENT_VALUEASNUMBER = 0x000007efU,
+    DISPID_IHTMLINPUTRANGEELEMENT_STEPUP        = 0x000007f1U,
+    DISPID_IHTMLINPUTRANGEELEMENT_STEPDOWN      = 0x000007f0U,
 }
 
 enum : uint
 {
-    DISPID_HTMLINPUTTEXTELEMENTEVENTS2_ONCHANGE = 0x000003e9,
-    DISPID_HTMLINPUTTEXTELEMENTEVENTS2_ONSELECT = 0x000003ee,
-    DISPID_HTMLINPUTTEXTELEMENTEVENTS2_ONLOAD   = 0x000003eb,
-    DISPID_HTMLINPUTTEXTELEMENTEVENTS2_ONERROR  = 0x000003ea,
-    DISPID_HTMLINPUTTEXTELEMENTEVENTS2_ONABORT  = 0x000003e8,
+    DISPID_HTMLINPUTTEXTELEMENTEVENTS2_ONCHANGE = 0x000003e9U,
+    DISPID_HTMLINPUTTEXTELEMENTEVENTS2_ONSELECT = 0x000003eeU,
+    DISPID_HTMLINPUTTEXTELEMENTEVENTS2_ONLOAD   = 0x000003ebU,
+    DISPID_HTMLINPUTTEXTELEMENTEVENTS2_ONERROR  = 0x000003eaU,
+    DISPID_HTMLINPUTTEXTELEMENTEVENTS2_ONABORT  = 0x000003e8U,
 }
 
 enum : uint
 {
-    DISPID_HTMLINPUTIMAGEEVENTS2_ONLOAD        = 0x000003eb,
-    DISPID_HTMLINPUTIMAGEEVENTS2_ONERROR       = 0x000003ea,
-    DISPID_HTMLINPUTIMAGEEVENTS2_ONABORT       = 0x000003e8,
-    DISPID_HTMLINPUTTEXTELEMENTEVENTS_ONCHANGE = 0x000003e9,
-    DISPID_HTMLINPUTTEXTELEMENTEVENTS_ONSELECT = 0x000003ee,
-    DISPID_HTMLINPUTTEXTELEMENTEVENTS_ONLOAD   = 0x000003eb,
-    DISPID_HTMLINPUTTEXTELEMENTEVENTS_ONERROR  = 0x000003ea,
-    DISPID_HTMLINPUTTEXTELEMENTEVENTS_ONABORT  = 0x000003e8,
+    DISPID_HTMLINPUTIMAGEEVENTS2_ONLOAD        = 0x000003ebU,
+    DISPID_HTMLINPUTIMAGEEVENTS2_ONERROR       = 0x000003eaU,
+    DISPID_HTMLINPUTIMAGEEVENTS2_ONABORT       = 0x000003e8U,
+    DISPID_HTMLINPUTTEXTELEMENTEVENTS_ONCHANGE = 0x000003e9U,
+    DISPID_HTMLINPUTTEXTELEMENTEVENTS_ONSELECT = 0x000003eeU,
+    DISPID_HTMLINPUTTEXTELEMENTEVENTS_ONLOAD   = 0x000003ebU,
+    DISPID_HTMLINPUTTEXTELEMENTEVENTS_ONERROR  = 0x000003eaU,
+    DISPID_HTMLINPUTTEXTELEMENTEVENTS_ONABORT  = 0x000003e8U,
 }
 
 enum : uint
 {
-    DISPID_HTMLINPUTIMAGEEVENTS_ONLOAD  = 0x000003eb,
-    DISPID_HTMLINPUTIMAGEEVENTS_ONERROR = 0x000003ea,
-    DISPID_HTMLINPUTIMAGEEVENTS_ONABORT = 0x000003e8,
+    DISPID_HTMLINPUTIMAGEEVENTS_ONLOAD  = 0x000003ebU,
+    DISPID_HTMLINPUTIMAGEEVENTS_ONERROR = 0x000003eaU,
+    DISPID_HTMLINPUTIMAGEEVENTS_ONABORT = 0x000003e8U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLTEXTAREAELEMENT_TYPE               = 0x000007d0,
-    DISPID_IHTMLTEXTAREAELEMENT_VALUE              = 0x000113ed,
-    DISPID_IHTMLTEXTAREAELEMENT_NAME               = 0x00010000,
-    DISPID_IHTMLTEXTAREAELEMENT_STATUS             = 0x000007d1,
-    DISPID_IHTMLTEXTAREAELEMENT_DISABLED           = 0x0001004c,
-    DISPID_IHTMLTEXTAREAELEMENT_FORM               = 0x000107d4,
-    DISPID_IHTMLTEXTAREAELEMENT_DEFAULTVALUE       = 0x000113db,
-    DISPID_IHTMLTEXTAREAELEMENT_SELECT             = 0x00001b5d,
-    DISPID_IHTMLTEXTAREAELEMENT_ONCHANGE           = 0x0001178e,
-    DISPID_IHTMLTEXTAREAELEMENT_ONSELECT           = 0x0001177a,
-    DISPID_IHTMLTEXTAREAELEMENT_READONLY           = 0x00001b5c,
-    DISPID_IHTMLTEXTAREAELEMENT_ROWS               = 0x00001b59,
-    DISPID_IHTMLTEXTAREAELEMENT_COLS               = 0x00001b5a,
-    DISPID_IHTMLTEXTAREAELEMENT_WRAP               = 0x00001b5b,
-    DISPID_IHTMLTEXTAREAELEMENT_CREATETEXTRANGE    = 0x00001b5e,
-    DISPID_IHTMLTEXTAREAELEMENT2_SELECTIONSTART    = 0x00001b5f,
-    DISPID_IHTMLTEXTAREAELEMENT2_SELECTIONEND      = 0x00001b60,
-    DISPID_IHTMLTEXTAREAELEMENT2_SETSELECTIONRANGE = 0x00001b61,
+    DISPID_IHTMLTEXTAREAELEMENT_TYPE               = 0x000007d0U,
+    DISPID_IHTMLTEXTAREAELEMENT_VALUE              = 0x000113edU,
+    DISPID_IHTMLTEXTAREAELEMENT_NAME               = 0x00010000U,
+    DISPID_IHTMLTEXTAREAELEMENT_STATUS             = 0x000007d1U,
+    DISPID_IHTMLTEXTAREAELEMENT_DISABLED           = 0x0001004cU,
+    DISPID_IHTMLTEXTAREAELEMENT_FORM               = 0x000107d4U,
+    DISPID_IHTMLTEXTAREAELEMENT_DEFAULTVALUE       = 0x000113dbU,
+    DISPID_IHTMLTEXTAREAELEMENT_SELECT             = 0x00001b5dU,
+    DISPID_IHTMLTEXTAREAELEMENT_ONCHANGE           = 0x0001178eU,
+    DISPID_IHTMLTEXTAREAELEMENT_ONSELECT           = 0x0001177aU,
+    DISPID_IHTMLTEXTAREAELEMENT_READONLY           = 0x00001b5cU,
+    DISPID_IHTMLTEXTAREAELEMENT_ROWS               = 0x00001b59U,
+    DISPID_IHTMLTEXTAREAELEMENT_COLS               = 0x00001b5aU,
+    DISPID_IHTMLTEXTAREAELEMENT_WRAP               = 0x00001b5bU,
+    DISPID_IHTMLTEXTAREAELEMENT_CREATETEXTRANGE    = 0x00001b5eU,
+    DISPID_IHTMLTEXTAREAELEMENT2_SELECTIONSTART    = 0x00001b5fU,
+    DISPID_IHTMLTEXTAREAELEMENT2_SELECTIONEND      = 0x00001b60U,
+    DISPID_IHTMLTEXTAREAELEMENT2_SETSELECTIONRANGE = 0x00001b61U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLBUTTONELEMENT_TYPE            = 0x000007d0,
-    DISPID_IHTMLBUTTONELEMENT_VALUE           = 0x000113ed,
-    DISPID_IHTMLBUTTONELEMENT_NAME            = 0x00010000,
-    DISPID_IHTMLBUTTONELEMENT_STATUS          = 0x00001f41,
-    DISPID_IHTMLBUTTONELEMENT_DISABLED        = 0x0001004c,
-    DISPID_IHTMLBUTTONELEMENT_FORM            = 0x000107d4,
-    DISPID_IHTMLBUTTONELEMENT_CREATETEXTRANGE = 0x00001f42,
-    DISPID_IHTMLBUTTONELEMENT2_IE9_TYPE       = 0x00001f43,
+    DISPID_IHTMLBUTTONELEMENT_TYPE            = 0x000007d0U,
+    DISPID_IHTMLBUTTONELEMENT_VALUE           = 0x000113edU,
+    DISPID_IHTMLBUTTONELEMENT_NAME            = 0x00010000U,
+    DISPID_IHTMLBUTTONELEMENT_STATUS          = 0x00001f41U,
+    DISPID_IHTMLBUTTONELEMENT_DISABLED        = 0x0001004cU,
+    DISPID_IHTMLBUTTONELEMENT_FORM            = 0x000107d4U,
+    DISPID_IHTMLBUTTONELEMENT_CREATETEXTRANGE = 0x00001f42U,
+    DISPID_IHTMLBUTTONELEMENT2_IE9_TYPE       = 0x00001f43U,
 }
 
 enum int DISPID_IHTMLMARQUEEELEMENT_BGCOLOR = 0xfffffe0b;
 
 enum : uint
 {
-    DISPID_IHTMLMARQUEEELEMENT_SCROLLDELAY  = 0x00001770,
-    DISPID_IHTMLMARQUEEELEMENT_DIRECTION    = 0x00001771,
-    DISPID_IHTMLMARQUEEELEMENT_BEHAVIOR     = 0x00001772,
-    DISPID_IHTMLMARQUEEELEMENT_SCROLLAMOUNT = 0x00001773,
-    DISPID_IHTMLMARQUEEELEMENT_LOOP         = 0x00001774,
-    DISPID_IHTMLMARQUEEELEMENT_VSPACE       = 0x00001775,
-    DISPID_IHTMLMARQUEEELEMENT_HSPACE       = 0x00001776,
-    DISPID_IHTMLMARQUEEELEMENT_ONFINISH     = 0x0001178a,
-    DISPID_IHTMLMARQUEEELEMENT_ONSTART      = 0x0001178b,
-    DISPID_IHTMLMARQUEEELEMENT_ONBOUNCE     = 0x00011784,
-    DISPID_IHTMLMARQUEEELEMENT_WIDTH        = 0x00010005,
-    DISPID_IHTMLMARQUEEELEMENT_HEIGHT       = 0x00010006,
-    DISPID_IHTMLMARQUEEELEMENT_TRUESPEED    = 0x00001777,
-    DISPID_IHTMLMARQUEEELEMENT_START        = 0x0000177a,
-    DISPID_IHTMLMARQUEEELEMENT_STOP         = 0x0000177b,
+    DISPID_IHTMLMARQUEEELEMENT_SCROLLDELAY  = 0x00001770U,
+    DISPID_IHTMLMARQUEEELEMENT_DIRECTION    = 0x00001771U,
+    DISPID_IHTMLMARQUEEELEMENT_BEHAVIOR     = 0x00001772U,
+    DISPID_IHTMLMARQUEEELEMENT_SCROLLAMOUNT = 0x00001773U,
+    DISPID_IHTMLMARQUEEELEMENT_LOOP         = 0x00001774U,
+    DISPID_IHTMLMARQUEEELEMENT_VSPACE       = 0x00001775U,
+    DISPID_IHTMLMARQUEEELEMENT_HSPACE       = 0x00001776U,
+    DISPID_IHTMLMARQUEEELEMENT_ONFINISH     = 0x0001178aU,
+    DISPID_IHTMLMARQUEEELEMENT_ONSTART      = 0x0001178bU,
+    DISPID_IHTMLMARQUEEELEMENT_ONBOUNCE     = 0x00011784U,
+    DISPID_IHTMLMARQUEEELEMENT_WIDTH        = 0x00010005U,
+    DISPID_IHTMLMARQUEEELEMENT_HEIGHT       = 0x00010006U,
+    DISPID_IHTMLMARQUEEELEMENT_TRUESPEED    = 0x00001777U,
+    DISPID_IHTMLMARQUEEELEMENT_START        = 0x0000177aU,
+    DISPID_IHTMLMARQUEEELEMENT_STOP         = 0x0000177bU,
 }
 
 enum : uint
 {
-    DISPID_HTMLMARQUEEELEMENTEVENTS2_ONBOUNCE = 0x000003f1,
-    DISPID_HTMLMARQUEEELEMENTEVENTS2_ONFINISH = 0x000003f2,
-    DISPID_HTMLMARQUEEELEMENTEVENTS2_ONSTART  = 0x000003f3,
-    DISPID_HTMLMARQUEEELEMENTEVENTS_ONBOUNCE  = 0x000003f1,
-    DISPID_HTMLMARQUEEELEMENTEVENTS_ONFINISH  = 0x000003f2,
-    DISPID_HTMLMARQUEEELEMENTEVENTS_ONSTART   = 0x000003f3,
+    DISPID_HTMLMARQUEEELEMENTEVENTS2_ONBOUNCE = 0x000003f1U,
+    DISPID_HTMLMARQUEEELEMENTEVENTS2_ONFINISH = 0x000003f2U,
+    DISPID_HTMLMARQUEEELEMENTEVENTS2_ONSTART  = 0x000003f3U,
+    DISPID_HTMLMARQUEEELEMENTEVENTS_ONBOUNCE  = 0x000003f1U,
+    DISPID_HTMLMARQUEEELEMENTEVENTS_ONFINISH  = 0x000003f2U,
+    DISPID_HTMLMARQUEEELEMENTEVENTS_ONSTART   = 0x000003f3U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLHTMLELEMENT_VERSION      = 0x000003e9,
-    DISPID_IHTMLHEADELEMENT_PROFILE      = 0x000003e9,
-    DISPID_IHTMLHEADELEMENT2_IE8_PROFILE = 0x0000047e,
+    DISPID_IHTMLHTMLELEMENT_VERSION      = 0x000003e9U,
+    DISPID_IHTMLHEADELEMENT_PROFILE      = 0x000003e9U,
+    DISPID_IHTMLHEADELEMENT2_IE8_PROFILE = 0x0000047eU,
 }
 
 enum : uint
 {
-    DISPID_IHTMLTITLEELEMENT_TEXT     = 0x000113ed,
-    DISPID_IHTMLMETAELEMENT_HTTPEQUIV = 0x000003e9,
-    DISPID_IHTMLMETAELEMENT_CONTENT   = 0x000003ea,
-    DISPID_IHTMLMETAELEMENT_NAME      = 0x00010000,
-    DISPID_IHTMLMETAELEMENT_URL       = 0x000003eb,
-    DISPID_IHTMLMETAELEMENT_CHARSET   = 0x000003f5,
-    DISPID_IHTMLMETAELEMENT2_SCHEME   = 0x000003fc,
-    DISPID_IHTMLMETAELEMENT3_IE8_URL  = 0x0000047e,
+    DISPID_IHTMLTITLEELEMENT_TEXT     = 0x000113edU,
+    DISPID_IHTMLMETAELEMENT_HTTPEQUIV = 0x000003e9U,
+    DISPID_IHTMLMETAELEMENT_CONTENT   = 0x000003eaU,
+    DISPID_IHTMLMETAELEMENT_NAME      = 0x00010000U,
+    DISPID_IHTMLMETAELEMENT_URL       = 0x000003ebU,
+    DISPID_IHTMLMETAELEMENT_CHARSET   = 0x000003f5U,
+    DISPID_IHTMLMETAELEMENT2_SCHEME   = 0x000003fcU,
+    DISPID_IHTMLMETAELEMENT3_IE8_URL  = 0x0000047eU,
 }
 
 enum : uint
 {
-    DISPID_IHTMLBASEELEMENT_HREF      = 0x000003eb,
-    DISPID_IHTMLBASEELEMENT_TARGET    = 0x000003ec,
-    DISPID_IHTMLBASEELEMENT2_IE8_HREF = 0x0000047e,
+    DISPID_IHTMLBASEELEMENT_HREF      = 0x000003ebU,
+    DISPID_IHTMLBASEELEMENT_TARGET    = 0x000003ecU,
+    DISPID_IHTMLBASEELEMENT2_IE8_HREF = 0x0000047eU,
 }
 
 enum : uint
 {
-    DISPID_IHTMLISINDEXELEMENT_PROMPT = 0x000003f2,
-    DISPID_IHTMLISINDEXELEMENT_ACTION = 0x000003f3,
-    DISPID_IHTMLISINDEXELEMENT2_FORM  = 0x000003f4,
+    DISPID_IHTMLISINDEXELEMENT_PROMPT = 0x000003f2U,
+    DISPID_IHTMLISINDEXELEMENT_ACTION = 0x000003f3U,
+    DISPID_IHTMLISINDEXELEMENT2_FORM  = 0x000003f4U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLNEXTIDELEMENT_N       = 0x000003f4,
-    DISPID_IHTMLBASEFONTELEMENT_COLOR = 0x0001138a,
-    DISPID_IHTMLBASEFONTELEMENT_FACE  = 0x0001139a,
-    DISPID_IHTMLBASEFONTELEMENT_SIZE  = 0x000113a2,
+    DISPID_IHTMLNEXTIDELEMENT_N       = 0x000003f4U,
+    DISPID_IHTMLBASEFONTELEMENT_COLOR = 0x0001138aU,
+    DISPID_IHTMLBASEFONTELEMENT_FACE  = 0x0001139aU,
+    DISPID_IHTMLBASEFONTELEMENT_SIZE  = 0x000113a2U,
 }
 
 enum : uint
 {
-    DISPID_IOMHISTORY_LENGTH  = 0x00000001,
-    DISPID_IOMHISTORY_BACK    = 0x00000002,
-    DISPID_IOMHISTORY_FORWARD = 0x00000003,
-    DISPID_IOMHISTORY_GO      = 0x00000004,
+    DISPID_IOMHISTORY_LENGTH  = 0x00000001U,
+    DISPID_IOMHISTORY_BACK    = 0x00000002U,
+    DISPID_IOMHISTORY_FORWARD = 0x00000003U,
+    DISPID_IOMHISTORY_GO      = 0x00000004U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLOPSPROFILE_ADDREQUEST     = 0x00000001,
-    DISPID_IHTMLOPSPROFILE_CLEARREQUEST   = 0x00000002,
-    DISPID_IHTMLOPSPROFILE_DOREQUEST      = 0x00000003,
-    DISPID_IHTMLOPSPROFILE_GETATTRIBUTE   = 0x00000004,
-    DISPID_IHTMLOPSPROFILE_SETATTRIBUTE   = 0x00000005,
-    DISPID_IHTMLOPSPROFILE_COMMITCHANGES  = 0x00000006,
-    DISPID_IHTMLOPSPROFILE_ADDREADREQUEST = 0x00000007,
-    DISPID_IHTMLOPSPROFILE_DOREADREQUEST  = 0x00000008,
-    DISPID_IHTMLOPSPROFILE_DOWRITEREQUEST = 0x00000009,
+    DISPID_IHTMLOPSPROFILE_ADDREQUEST     = 0x00000001U,
+    DISPID_IHTMLOPSPROFILE_CLEARREQUEST   = 0x00000002U,
+    DISPID_IHTMLOPSPROFILE_DOREQUEST      = 0x00000003U,
+    DISPID_IHTMLOPSPROFILE_GETATTRIBUTE   = 0x00000004U,
+    DISPID_IHTMLOPSPROFILE_SETATTRIBUTE   = 0x00000005U,
+    DISPID_IHTMLOPSPROFILE_COMMITCHANGES  = 0x00000006U,
+    DISPID_IHTMLOPSPROFILE_ADDREADREQUEST = 0x00000007U,
+    DISPID_IHTMLOPSPROFILE_DOREADREQUEST  = 0x00000008U,
+    DISPID_IHTMLOPSPROFILE_DOWRITEREQUEST = 0x00000009U,
 }
 
 enum : uint
 {
-    DISPID_IOMNAVIGATOR_APPCODENAME     = 0x00000001,
-    DISPID_IOMNAVIGATOR_APPNAME         = 0x00000002,
-    DISPID_IOMNAVIGATOR_APPVERSION      = 0x00000003,
-    DISPID_IOMNAVIGATOR_USERAGENT       = 0x00000004,
-    DISPID_IOMNAVIGATOR_JAVAENABLED     = 0x00000005,
-    DISPID_IOMNAVIGATOR_TAINTENABLED    = 0x00000006,
-    DISPID_IOMNAVIGATOR_MIMETYPES       = 0x00000007,
-    DISPID_IOMNAVIGATOR_PLUGINS         = 0x00000008,
-    DISPID_IOMNAVIGATOR_COOKIEENABLED   = 0x00000009,
-    DISPID_IOMNAVIGATOR_OPSPROFILE      = 0x0000000a,
-    DISPID_IOMNAVIGATOR_TOSTRING        = 0x0000000b,
-    DISPID_IOMNAVIGATOR_CPUCLASS        = 0x0000000c,
-    DISPID_IOMNAVIGATOR_SYSTEMLANGUAGE  = 0x0000000d,
-    DISPID_IOMNAVIGATOR_BROWSERLANGUAGE = 0x0000000e,
-    DISPID_IOMNAVIGATOR_USERLANGUAGE    = 0x0000000f,
-    DISPID_IOMNAVIGATOR_PLATFORM        = 0x00000010,
-    DISPID_IOMNAVIGATOR_APPMINORVERSION = 0x00000011,
-    DISPID_IOMNAVIGATOR_CONNECTIONSPEED = 0x00000012,
-    DISPID_IOMNAVIGATOR_ONLINE          = 0x00000013,
-    DISPID_IOMNAVIGATOR_USERPROFILE     = 0x00000014,
+    DISPID_IOMNAVIGATOR_APPCODENAME     = 0x00000001U,
+    DISPID_IOMNAVIGATOR_APPNAME         = 0x00000002U,
+    DISPID_IOMNAVIGATOR_APPVERSION      = 0x00000003U,
+    DISPID_IOMNAVIGATOR_USERAGENT       = 0x00000004U,
+    DISPID_IOMNAVIGATOR_JAVAENABLED     = 0x00000005U,
+    DISPID_IOMNAVIGATOR_TAINTENABLED    = 0x00000006U,
+    DISPID_IOMNAVIGATOR_MIMETYPES       = 0x00000007U,
+    DISPID_IOMNAVIGATOR_PLUGINS         = 0x00000008U,
+    DISPID_IOMNAVIGATOR_COOKIEENABLED   = 0x00000009U,
+    DISPID_IOMNAVIGATOR_OPSPROFILE      = 0x0000000aU,
+    DISPID_IOMNAVIGATOR_TOSTRING        = 0x0000000bU,
+    DISPID_IOMNAVIGATOR_CPUCLASS        = 0x0000000cU,
+    DISPID_IOMNAVIGATOR_SYSTEMLANGUAGE  = 0x0000000dU,
+    DISPID_IOMNAVIGATOR_BROWSERLANGUAGE = 0x0000000eU,
+    DISPID_IOMNAVIGATOR_USERLANGUAGE    = 0x0000000fU,
+    DISPID_IOMNAVIGATOR_PLATFORM        = 0x00000010U,
+    DISPID_IOMNAVIGATOR_APPMINORVERSION = 0x00000011U,
+    DISPID_IOMNAVIGATOR_CONNECTIONSPEED = 0x00000012U,
+    DISPID_IOMNAVIGATOR_ONLINE          = 0x00000013U,
+    DISPID_IOMNAVIGATOR_USERPROFILE     = 0x00000014U,
 }
 
 enum : uint
 {
-    DISPID_INAVIGATORGEOLOCATION_GEOLOCATION = 0x00000015,
-    DISPID_INAVIGATORDONOTTRACK_MSDONOTTRACK = 0x00000016,
+    DISPID_INAVIGATORGEOLOCATION_GEOLOCATION = 0x00000015U,
+    DISPID_INAVIGATORDONOTTRACK_MSDONOTTRACK = 0x00000016U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLLOCATION_HREF              = 0x00000000,
-    DISPID_IHTMLLOCATION_PROTOCOL          = 0x00000001,
-    DISPID_IHTMLLOCATION_HOST              = 0x00000002,
-    DISPID_IHTMLLOCATION_HOSTNAME          = 0x00000003,
-    DISPID_IHTMLLOCATION_PORT              = 0x00000004,
-    DISPID_IHTMLLOCATION_PATHNAME          = 0x00000005,
-    DISPID_IHTMLLOCATION_SEARCH            = 0x00000006,
-    DISPID_IHTMLLOCATION_HASH              = 0x00000007,
-    DISPID_IHTMLLOCATION_RELOAD            = 0x00000008,
-    DISPID_IHTMLLOCATION_REPLACE           = 0x00000009,
-    DISPID_IHTMLLOCATION_ASSIGN            = 0x0000000a,
-    DISPID_IHTMLLOCATION_TOSTRING          = 0x0000000b,
-    DISPID_IHTMLMIMETYPESCOLLECTION_LENGTH = 0x00000001,
+    DISPID_IHTMLLOCATION_HREF              = 0x00000000U,
+    DISPID_IHTMLLOCATION_PROTOCOL          = 0x00000001U,
+    DISPID_IHTMLLOCATION_HOST              = 0x00000002U,
+    DISPID_IHTMLLOCATION_HOSTNAME          = 0x00000003U,
+    DISPID_IHTMLLOCATION_PORT              = 0x00000004U,
+    DISPID_IHTMLLOCATION_PATHNAME          = 0x00000005U,
+    DISPID_IHTMLLOCATION_SEARCH            = 0x00000006U,
+    DISPID_IHTMLLOCATION_HASH              = 0x00000007U,
+    DISPID_IHTMLLOCATION_RELOAD            = 0x00000008U,
+    DISPID_IHTMLLOCATION_REPLACE           = 0x00000009U,
+    DISPID_IHTMLLOCATION_ASSIGN            = 0x0000000aU,
+    DISPID_IHTMLLOCATION_TOSTRING          = 0x0000000bU,
+    DISPID_IHTMLMIMETYPESCOLLECTION_LENGTH = 0x00000001U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLPLUGINSCOLLECTION_LENGTH  = 0x00000001,
-    DISPID_IHTMLPLUGINSCOLLECTION_REFRESH = 0x00000002,
+    DISPID_IHTMLPLUGINSCOLLECTION_LENGTH  = 0x00000001U,
+    DISPID_IHTMLPLUGINSCOLLECTION_REFRESH = 0x00000002U,
 }
 
-enum uint DISPID_IHTMLBOOKMARKCOLLECTION_LENGTH = 0x000005dd;
+enum uint DISPID_IHTMLBOOKMARKCOLLECTION_LENGTH = 0x000005ddU;
 enum int DISPID_IHTMLBOOKMARKCOLLECTION__NEWENUM = 0xfffffffc;
-enum uint DISPID_IHTMLBOOKMARKCOLLECTION_ITEM = 0x00000000;
+enum uint DISPID_IHTMLBOOKMARKCOLLECTION_ITEM = 0x00000000U;
 
 enum : uint
 {
-    DISPID_IHTMLDATATRANSFER_SETDATA       = 0x000003e9,
-    DISPID_IHTMLDATATRANSFER_GETDATA       = 0x000003ea,
-    DISPID_IHTMLDATATRANSFER_CLEARDATA     = 0x000003eb,
-    DISPID_IHTMLDATATRANSFER_DROPEFFECT    = 0x000003ec,
-    DISPID_IHTMLDATATRANSFER_EFFECTALLOWED = 0x000003ed,
+    DISPID_IHTMLDATATRANSFER_SETDATA       = 0x000003e9U,
+    DISPID_IHTMLDATATRANSFER_GETDATA       = 0x000003eaU,
+    DISPID_IHTMLDATATRANSFER_CLEARDATA     = 0x000003ebU,
+    DISPID_IHTMLDATATRANSFER_DROPEFFECT    = 0x000003ecU,
+    DISPID_IHTMLDATATRANSFER_EFFECTALLOWED = 0x000003edU,
 }
 
 enum : uint
 {
-    DISPID_IHTMLEVENTOBJ_SRCELEMENT            = 0x000003e9,
-    DISPID_IHTMLEVENTOBJ_ALTKEY                = 0x000003ea,
-    DISPID_IHTMLEVENTOBJ_CTRLKEY               = 0x000003eb,
-    DISPID_IHTMLEVENTOBJ_SHIFTKEY              = 0x000003ec,
-    DISPID_IHTMLEVENTOBJ_RETURNVALUE           = 0x000003ef,
-    DISPID_IHTMLEVENTOBJ_CANCELBUBBLE          = 0x000003f0,
-    DISPID_IHTMLEVENTOBJ_FROMELEMENT           = 0x000003f1,
-    DISPID_IHTMLEVENTOBJ_TOELEMENT             = 0x000003f2,
-    DISPID_IHTMLEVENTOBJ_KEYCODE               = 0x000003f3,
-    DISPID_IHTMLEVENTOBJ_BUTTON                = 0x000003f4,
-    DISPID_IHTMLEVENTOBJ_TYPE                  = 0x000003f5,
-    DISPID_IHTMLEVENTOBJ_QUALIFIER             = 0x000003f6,
-    DISPID_IHTMLEVENTOBJ_REASON                = 0x000003f7,
-    DISPID_IHTMLEVENTOBJ_X                     = 0x000003ed,
-    DISPID_IHTMLEVENTOBJ_Y                     = 0x000003ee,
-    DISPID_IHTMLEVENTOBJ_CLIENTX               = 0x000003fc,
-    DISPID_IHTMLEVENTOBJ_CLIENTY               = 0x000003fd,
-    DISPID_IHTMLEVENTOBJ_OFFSETX               = 0x000003fe,
-    DISPID_IHTMLEVENTOBJ_OFFSETY               = 0x000003ff,
-    DISPID_IHTMLEVENTOBJ_SCREENX               = 0x00000400,
-    DISPID_IHTMLEVENTOBJ_SCREENY               = 0x00000401,
-    DISPID_IHTMLEVENTOBJ_SRCFILTER             = 0x00000402,
-    DISPID_IHTMLEVENTOBJ2_SETATTRIBUTE         = 0x000101f5,
-    DISPID_IHTMLEVENTOBJ2_GETATTRIBUTE         = 0x000101f6,
-    DISPID_IHTMLEVENTOBJ2_REMOVEATTRIBUTE      = 0x000101f7,
-    DISPID_IHTMLEVENTOBJ2_PROPERTYNAME         = 0x00000403,
-    DISPID_IHTMLEVENTOBJ2_BOOKMARKS            = 0x00000407,
-    DISPID_IHTMLEVENTOBJ2_RECORDSET            = 0x00000408,
-    DISPID_IHTMLEVENTOBJ2_DATAFLD              = 0x00000409,
-    DISPID_IHTMLEVENTOBJ2_BOUNDELEMENTS        = 0x0000040a,
-    DISPID_IHTMLEVENTOBJ2_REPEAT               = 0x0000040b,
-    DISPID_IHTMLEVENTOBJ2_SRCURN               = 0x0000040c,
-    DISPID_IHTMLEVENTOBJ2_SRCELEMENT           = 0x000003e9,
-    DISPID_IHTMLEVENTOBJ2_ALTKEY               = 0x000003ea,
-    DISPID_IHTMLEVENTOBJ2_CTRLKEY              = 0x000003eb,
-    DISPID_IHTMLEVENTOBJ2_SHIFTKEY             = 0x000003ec,
-    DISPID_IHTMLEVENTOBJ2_FROMELEMENT          = 0x000003f1,
-    DISPID_IHTMLEVENTOBJ2_TOELEMENT            = 0x000003f2,
-    DISPID_IHTMLEVENTOBJ2_BUTTON               = 0x000003f4,
-    DISPID_IHTMLEVENTOBJ2_TYPE                 = 0x000003f5,
-    DISPID_IHTMLEVENTOBJ2_QUALIFIER            = 0x000003f6,
-    DISPID_IHTMLEVENTOBJ2_REASON               = 0x000003f7,
-    DISPID_IHTMLEVENTOBJ2_X                    = 0x000003ed,
-    DISPID_IHTMLEVENTOBJ2_Y                    = 0x000003ee,
-    DISPID_IHTMLEVENTOBJ2_CLIENTX              = 0x000003fc,
-    DISPID_IHTMLEVENTOBJ2_CLIENTY              = 0x000003fd,
-    DISPID_IHTMLEVENTOBJ2_OFFSETX              = 0x000003fe,
-    DISPID_IHTMLEVENTOBJ2_OFFSETY              = 0x000003ff,
-    DISPID_IHTMLEVENTOBJ2_SCREENX              = 0x00000400,
-    DISPID_IHTMLEVENTOBJ2_SCREENY              = 0x00000401,
-    DISPID_IHTMLEVENTOBJ2_SRCFILTER            = 0x00000402,
-    DISPID_IHTMLEVENTOBJ2_DATATRANSFER         = 0x0000040d,
-    DISPID_IHTMLEVENTOBJ3_CONTENTOVERFLOW      = 0x0000040e,
-    DISPID_IHTMLEVENTOBJ3_SHIFTLEFT            = 0x0000040f,
-    DISPID_IHTMLEVENTOBJ3_ALTLEFT              = 0x00000410,
-    DISPID_IHTMLEVENTOBJ3_CTRLLEFT             = 0x00000411,
-    DISPID_IHTMLEVENTOBJ3_IMECOMPOSITIONCHANGE = 0x00000412,
-    DISPID_IHTMLEVENTOBJ3_IMENOTIFYCOMMAND     = 0x00000413,
-    DISPID_IHTMLEVENTOBJ3_IMENOTIFYDATA        = 0x00000414,
-    DISPID_IHTMLEVENTOBJ3_IMEREQUEST           = 0x00000416,
-    DISPID_IHTMLEVENTOBJ3_IMEREQUESTDATA       = 0x00000417,
-    DISPID_IHTMLEVENTOBJ3_KEYBOARDLAYOUT       = 0x00000415,
-    DISPID_IHTMLEVENTOBJ3_BEHAVIORCOOKIE       = 0x00000418,
-    DISPID_IHTMLEVENTOBJ3_BEHAVIORPART         = 0x00000419,
-    DISPID_IHTMLEVENTOBJ3_NEXTPAGE             = 0x0000041a,
-    DISPID_IHTMLEVENTOBJ4_WHEELDELTA           = 0x0000041b,
-    DISPID_IHTMLEVENTOBJ5_URL                  = 0x0000041c,
-    DISPID_IHTMLEVENTOBJ5_DATA                 = 0x0000041e,
-    DISPID_IHTMLEVENTOBJ5_SOURCE               = 0x0000041f,
-    DISPID_IHTMLEVENTOBJ5_ORIGIN               = 0x0000041d,
-    DISPID_IHTMLEVENTOBJ5_ISSESSION            = 0x00000420,
-    DISPID_IHTMLEVENTOBJ6_ACTIONURL            = 0x00000422,
-    DISPID_IHTMLEVENTOBJ6_BUTTONID             = 0x00000421,
+    DISPID_IHTMLEVENTOBJ_SRCELEMENT            = 0x000003e9U,
+    DISPID_IHTMLEVENTOBJ_ALTKEY                = 0x000003eaU,
+    DISPID_IHTMLEVENTOBJ_CTRLKEY               = 0x000003ebU,
+    DISPID_IHTMLEVENTOBJ_SHIFTKEY              = 0x000003ecU,
+    DISPID_IHTMLEVENTOBJ_RETURNVALUE           = 0x000003efU,
+    DISPID_IHTMLEVENTOBJ_CANCELBUBBLE          = 0x000003f0U,
+    DISPID_IHTMLEVENTOBJ_FROMELEMENT           = 0x000003f1U,
+    DISPID_IHTMLEVENTOBJ_TOELEMENT             = 0x000003f2U,
+    DISPID_IHTMLEVENTOBJ_KEYCODE               = 0x000003f3U,
+    DISPID_IHTMLEVENTOBJ_BUTTON                = 0x000003f4U,
+    DISPID_IHTMLEVENTOBJ_TYPE                  = 0x000003f5U,
+    DISPID_IHTMLEVENTOBJ_QUALIFIER             = 0x000003f6U,
+    DISPID_IHTMLEVENTOBJ_REASON                = 0x000003f7U,
+    DISPID_IHTMLEVENTOBJ_X                     = 0x000003edU,
+    DISPID_IHTMLEVENTOBJ_Y                     = 0x000003eeU,
+    DISPID_IHTMLEVENTOBJ_CLIENTX               = 0x000003fcU,
+    DISPID_IHTMLEVENTOBJ_CLIENTY               = 0x000003fdU,
+    DISPID_IHTMLEVENTOBJ_OFFSETX               = 0x000003feU,
+    DISPID_IHTMLEVENTOBJ_OFFSETY               = 0x000003ffU,
+    DISPID_IHTMLEVENTOBJ_SCREENX               = 0x00000400U,
+    DISPID_IHTMLEVENTOBJ_SCREENY               = 0x00000401U,
+    DISPID_IHTMLEVENTOBJ_SRCFILTER             = 0x00000402U,
+    DISPID_IHTMLEVENTOBJ2_SETATTRIBUTE         = 0x000101f5U,
+    DISPID_IHTMLEVENTOBJ2_GETATTRIBUTE         = 0x000101f6U,
+    DISPID_IHTMLEVENTOBJ2_REMOVEATTRIBUTE      = 0x000101f7U,
+    DISPID_IHTMLEVENTOBJ2_PROPERTYNAME         = 0x00000403U,
+    DISPID_IHTMLEVENTOBJ2_BOOKMARKS            = 0x00000407U,
+    DISPID_IHTMLEVENTOBJ2_RECORDSET            = 0x00000408U,
+    DISPID_IHTMLEVENTOBJ2_DATAFLD              = 0x00000409U,
+    DISPID_IHTMLEVENTOBJ2_BOUNDELEMENTS        = 0x0000040aU,
+    DISPID_IHTMLEVENTOBJ2_REPEAT               = 0x0000040bU,
+    DISPID_IHTMLEVENTOBJ2_SRCURN               = 0x0000040cU,
+    DISPID_IHTMLEVENTOBJ2_SRCELEMENT           = 0x000003e9U,
+    DISPID_IHTMLEVENTOBJ2_ALTKEY               = 0x000003eaU,
+    DISPID_IHTMLEVENTOBJ2_CTRLKEY              = 0x000003ebU,
+    DISPID_IHTMLEVENTOBJ2_SHIFTKEY             = 0x000003ecU,
+    DISPID_IHTMLEVENTOBJ2_FROMELEMENT          = 0x000003f1U,
+    DISPID_IHTMLEVENTOBJ2_TOELEMENT            = 0x000003f2U,
+    DISPID_IHTMLEVENTOBJ2_BUTTON               = 0x000003f4U,
+    DISPID_IHTMLEVENTOBJ2_TYPE                 = 0x000003f5U,
+    DISPID_IHTMLEVENTOBJ2_QUALIFIER            = 0x000003f6U,
+    DISPID_IHTMLEVENTOBJ2_REASON               = 0x000003f7U,
+    DISPID_IHTMLEVENTOBJ2_X                    = 0x000003edU,
+    DISPID_IHTMLEVENTOBJ2_Y                    = 0x000003eeU,
+    DISPID_IHTMLEVENTOBJ2_CLIENTX              = 0x000003fcU,
+    DISPID_IHTMLEVENTOBJ2_CLIENTY              = 0x000003fdU,
+    DISPID_IHTMLEVENTOBJ2_OFFSETX              = 0x000003feU,
+    DISPID_IHTMLEVENTOBJ2_OFFSETY              = 0x000003ffU,
+    DISPID_IHTMLEVENTOBJ2_SCREENX              = 0x00000400U,
+    DISPID_IHTMLEVENTOBJ2_SCREENY              = 0x00000401U,
+    DISPID_IHTMLEVENTOBJ2_SRCFILTER            = 0x00000402U,
+    DISPID_IHTMLEVENTOBJ2_DATATRANSFER         = 0x0000040dU,
+    DISPID_IHTMLEVENTOBJ3_CONTENTOVERFLOW      = 0x0000040eU,
+    DISPID_IHTMLEVENTOBJ3_SHIFTLEFT            = 0x0000040fU,
+    DISPID_IHTMLEVENTOBJ3_ALTLEFT              = 0x00000410U,
+    DISPID_IHTMLEVENTOBJ3_CTRLLEFT             = 0x00000411U,
+    DISPID_IHTMLEVENTOBJ3_IMECOMPOSITIONCHANGE = 0x00000412U,
+    DISPID_IHTMLEVENTOBJ3_IMENOTIFYCOMMAND     = 0x00000413U,
+    DISPID_IHTMLEVENTOBJ3_IMENOTIFYDATA        = 0x00000414U,
+    DISPID_IHTMLEVENTOBJ3_IMEREQUEST           = 0x00000416U,
+    DISPID_IHTMLEVENTOBJ3_IMEREQUESTDATA       = 0x00000417U,
+    DISPID_IHTMLEVENTOBJ3_KEYBOARDLAYOUT       = 0x00000415U,
+    DISPID_IHTMLEVENTOBJ3_BEHAVIORCOOKIE       = 0x00000418U,
+    DISPID_IHTMLEVENTOBJ3_BEHAVIORPART         = 0x00000419U,
+    DISPID_IHTMLEVENTOBJ3_NEXTPAGE             = 0x0000041aU,
+    DISPID_IHTMLEVENTOBJ4_WHEELDELTA           = 0x0000041bU,
+    DISPID_IHTMLEVENTOBJ5_URL                  = 0x0000041cU,
+    DISPID_IHTMLEVENTOBJ5_DATA                 = 0x0000041eU,
+    DISPID_IHTMLEVENTOBJ5_SOURCE               = 0x0000041fU,
+    DISPID_IHTMLEVENTOBJ5_ORIGIN               = 0x0000041dU,
+    DISPID_IHTMLEVENTOBJ5_ISSESSION            = 0x00000420U,
+    DISPID_IHTMLEVENTOBJ6_ACTIONURL            = 0x00000422U,
+    DISPID_IHTMLEVENTOBJ6_BUTTONID             = 0x00000421U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLSTYLEMEDIA_TYPE        = 0x000003e9,
-    DISPID_IHTMLSTYLEMEDIA_MATCHMEDIUM = 0x000003ea,
+    DISPID_IHTMLSTYLEMEDIA_TYPE        = 0x000003e9U,
+    DISPID_IHTMLSTYLEMEDIA_MATCHMEDIUM = 0x000003eaU,
 }
 
 enum : uint
 {
-    DISPID_IHTMLFRAMESCOLLECTION2_ITEM   = 0x00000000,
-    DISPID_IHTMLFRAMESCOLLECTION2_LENGTH = 0x000003e9,
+    DISPID_IHTMLFRAMESCOLLECTION2_ITEM   = 0x00000000U,
+    DISPID_IHTMLFRAMESCOLLECTION2_LENGTH = 0x000003e9U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLSCREEN_COLORDEPTH           = 0x000003e9,
-    DISPID_IHTMLSCREEN_BUFFERDEPTH          = 0x000003ea,
-    DISPID_IHTMLSCREEN_WIDTH                = 0x000003eb,
-    DISPID_IHTMLSCREEN_HEIGHT               = 0x000003ec,
-    DISPID_IHTMLSCREEN_UPDATEINTERVAL       = 0x000003ed,
-    DISPID_IHTMLSCREEN_AVAILHEIGHT          = 0x000003ee,
-    DISPID_IHTMLSCREEN_AVAILWIDTH           = 0x000003ef,
-    DISPID_IHTMLSCREEN_FONTSMOOTHINGENABLED = 0x000003f0,
-    DISPID_IHTMLSCREEN2_LOGICALXDPI         = 0x000003f1,
-    DISPID_IHTMLSCREEN2_LOGICALYDPI         = 0x000003f2,
-    DISPID_IHTMLSCREEN2_DEVICEXDPI          = 0x000003f3,
-    DISPID_IHTMLSCREEN2_DEVICEYDPI          = 0x000003f4,
-    DISPID_IHTMLSCREEN3_SYSTEMXDPI          = 0x000003f5,
-    DISPID_IHTMLSCREEN3_SYSTEMYDPI          = 0x000003f6,
-    DISPID_IHTMLSCREEN4_PIXELDEPTH          = 0x000003f7,
+    DISPID_IHTMLSCREEN_COLORDEPTH           = 0x000003e9U,
+    DISPID_IHTMLSCREEN_BUFFERDEPTH          = 0x000003eaU,
+    DISPID_IHTMLSCREEN_WIDTH                = 0x000003ebU,
+    DISPID_IHTMLSCREEN_HEIGHT               = 0x000003ecU,
+    DISPID_IHTMLSCREEN_UPDATEINTERVAL       = 0x000003edU,
+    DISPID_IHTMLSCREEN_AVAILHEIGHT          = 0x000003eeU,
+    DISPID_IHTMLSCREEN_AVAILWIDTH           = 0x000003efU,
+    DISPID_IHTMLSCREEN_FONTSMOOTHINGENABLED = 0x000003f0U,
+    DISPID_IHTMLSCREEN2_LOGICALXDPI         = 0x000003f1U,
+    DISPID_IHTMLSCREEN2_LOGICALYDPI         = 0x000003f2U,
+    DISPID_IHTMLSCREEN2_DEVICEXDPI          = 0x000003f3U,
+    DISPID_IHTMLSCREEN2_DEVICEYDPI          = 0x000003f4U,
+    DISPID_IHTMLSCREEN3_SYSTEMXDPI          = 0x000003f5U,
+    DISPID_IHTMLSCREEN3_SYSTEMYDPI          = 0x000003f6U,
+    DISPID_IHTMLSCREEN4_PIXELDEPTH          = 0x000003f7U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLWINDOW2_FRAMES                  = 0x0000044c,
-    DISPID_IHTMLWINDOW2_DEFAULTSTATUS           = 0x0000044d,
-    DISPID_IHTMLWINDOW2_STATUS                  = 0x0000044e,
-    DISPID_IHTMLWINDOW2_SETTIMEOUT              = 0x00000494,
-    DISPID_IHTMLWINDOW2_CLEARTIMEOUT            = 0x00000450,
-    DISPID_IHTMLWINDOW2_ALERT                   = 0x00000451,
-    DISPID_IHTMLWINDOW2_CONFIRM                 = 0x00000456,
-    DISPID_IHTMLWINDOW2_PROMPT                  = 0x00000457,
-    DISPID_IHTMLWINDOW2_IMAGE                   = 0x00000465,
-    DISPID_IHTMLWINDOW2_LOCATION                = 0x0000000e,
-    DISPID_IHTMLWINDOW2_HISTORY                 = 0x00000002,
-    DISPID_IHTMLWINDOW2_CLOSE                   = 0x00000003,
-    DISPID_IHTMLWINDOW2_OPENER                  = 0x00000004,
-    DISPID_IHTMLWINDOW2_NAVIGATOR               = 0x00000005,
-    DISPID_IHTMLWINDOW2_NAME                    = 0x0000000b,
-    DISPID_IHTMLWINDOW2_PARENT                  = 0x0000000c,
-    DISPID_IHTMLWINDOW2_OPEN                    = 0x0000000d,
-    DISPID_IHTMLWINDOW2_SELF                    = 0x00000014,
-    DISPID_IHTMLWINDOW2_TOP                     = 0x00000015,
-    DISPID_IHTMLWINDOW2_WINDOW                  = 0x00000016,
-    DISPID_IHTMLWINDOW2_NAVIGATE                = 0x00000019,
-    DISPID_IHTMLWINDOW2_ONFOCUS                 = 0x0001177e,
-    DISPID_IHTMLWINDOW2_ONBLUR                  = 0x0001177f,
-    DISPID_IHTMLWINDOW2_ONLOAD                  = 0x00011790,
-    DISPID_IHTMLWINDOW2_ONBEFOREUNLOAD          = 0x00011797,
-    DISPID_IHTMLWINDOW2_ONUNLOAD                = 0x00011791,
-    DISPID_IHTMLWINDOW2_ONHELP                  = 0x0001177d,
-    DISPID_IHTMLWINDOW2_ONERROR                 = 0x0001178d,
-    DISPID_IHTMLWINDOW2_ONRESIZE                = 0x00011794,
-    DISPID_IHTMLWINDOW2_ONSCROLL                = 0x0001178f,
-    DISPID_IHTMLWINDOW2_DOCUMENT                = 0x0000047f,
-    DISPID_IHTMLWINDOW2_EVENT                   = 0x00000480,
-    DISPID_IHTMLWINDOW2__NEWENUM                = 0x00000481,
-    DISPID_IHTMLWINDOW2_SHOWMODALDIALOG         = 0x00000482,
-    DISPID_IHTMLWINDOW2_SHOWHELP                = 0x00000483,
-    DISPID_IHTMLWINDOW2_SCREEN                  = 0x00000484,
-    DISPID_IHTMLWINDOW2_OPTION                  = 0x00000485,
-    DISPID_IHTMLWINDOW2_FOCUS                   = 0x00000486,
-    DISPID_IHTMLWINDOW2_CLOSED                  = 0x00000017,
-    DISPID_IHTMLWINDOW2_BLUR                    = 0x00000487,
-    DISPID_IHTMLWINDOW2_SCROLL                  = 0x00000488,
-    DISPID_IHTMLWINDOW2_CLIENTINFORMATION       = 0x00000489,
-    DISPID_IHTMLWINDOW2_SETINTERVAL             = 0x00000495,
-    DISPID_IHTMLWINDOW2_CLEARINTERVAL           = 0x0000048b,
-    DISPID_IHTMLWINDOW2_OFFSCREENBUFFERING      = 0x0000048c,
-    DISPID_IHTMLWINDOW2_EXECSCRIPT              = 0x0000048d,
-    DISPID_IHTMLWINDOW2_TOSTRING                = 0x0000048e,
-    DISPID_IHTMLWINDOW2_SCROLLBY                = 0x0000048f,
-    DISPID_IHTMLWINDOW2_SCROLLTO                = 0x00000490,
-    DISPID_IHTMLWINDOW2_MOVETO                  = 0x00000006,
-    DISPID_IHTMLWINDOW2_MOVEBY                  = 0x00000007,
-    DISPID_IHTMLWINDOW2_RESIZETO                = 0x00000009,
-    DISPID_IHTMLWINDOW2_RESIZEBY                = 0x00000008,
-    DISPID_IHTMLWINDOW2_EXTERNAL                = 0x00000491,
-    DISPID_IHTMLWINDOW3_SCREENLEFT              = 0x00000492,
-    DISPID_IHTMLWINDOW3_SCREENTOP               = 0x00000493,
-    DISPID_IHTMLWINDOW3_ATTACHEVENT             = 0x000101fb,
-    DISPID_IHTMLWINDOW3_DETACHEVENT             = 0x000101fc,
-    DISPID_IHTMLWINDOW3_SETTIMEOUT              = 0x0000044f,
-    DISPID_IHTMLWINDOW3_SETINTERVAL             = 0x0000048a,
-    DISPID_IHTMLWINDOW3_PRINT                   = 0x00000496,
-    DISPID_IHTMLWINDOW3_ONBEFOREPRINT           = 0x000117b2,
-    DISPID_IHTMLWINDOW3_ONAFTERPRINT            = 0x000117b3,
-    DISPID_IHTMLWINDOW3_CLIPBOARDDATA           = 0x00000497,
-    DISPID_IHTMLWINDOW3_SHOWMODELESSDIALOG      = 0x00000498,
-    DISPID_IHTMLWINDOW4_CREATEPOPUP             = 0x0000049c,
-    DISPID_IHTMLWINDOW4_FRAMEELEMENT            = 0x0000049d,
-    DISPID_IHTMLWINDOW5_XMLHTTPREQUEST          = 0x000004a6,
-    DISPID_IHTMLWINDOW6_XDOMAINREQUEST          = 0x000004a7,
-    DISPID_IHTMLWINDOW6_SESSIONSTORAGE          = 0x000004a8,
-    DISPID_IHTMLWINDOW6_LOCALSTORAGE            = 0x000004a9,
-    DISPID_IHTMLWINDOW6_ONHASHCHANGE            = 0x000117dd,
-    DISPID_IHTMLWINDOW6_MAXCONNECTIONSPERSERVER = 0x000004aa,
-    DISPID_IHTMLWINDOW6_POSTMESSAGE             = 0x000004ac,
-    DISPID_IHTMLWINDOW6_TOSTATICHTML            = 0x000004ad,
-    DISPID_IHTMLWINDOW6_ONMESSAGE               = 0x000117de,
-    DISPID_IHTMLWINDOW6_MSWRITEPROFILERMARK     = 0x000004ae,
-    DISPID_IHTMLWINDOW7_GETSELECTION            = 0x000004af,
-    DISPID_IHTMLWINDOW7_GETCOMPUTEDSTYLE        = 0x000004b0,
-    DISPID_IHTMLWINDOW7_STYLEMEDIA              = 0x000004b2,
-    DISPID_IHTMLWINDOW7_PERFORMANCE             = 0x000004b3,
-    DISPID_IHTMLWINDOW7_INNERWIDTH              = 0x000004b4,
-    DISPID_IHTMLWINDOW7_INNERHEIGHT             = 0x000004b5,
-    DISPID_IHTMLWINDOW7_PAGEXOFFSET             = 0x000004b6,
-    DISPID_IHTMLWINDOW7_PAGEYOFFSET             = 0x000004b7,
-    DISPID_IHTMLWINDOW7_SCREENX                 = 0x000004b8,
-    DISPID_IHTMLWINDOW7_SCREENY                 = 0x000004b9,
-    DISPID_IHTMLWINDOW7_OUTERWIDTH              = 0x000004ba,
-    DISPID_IHTMLWINDOW7_OUTERHEIGHT             = 0x000004bb,
-    DISPID_IHTMLWINDOW7_ONABORT                 = 0x0001178c,
-    DISPID_IHTMLWINDOW7_ONCANPLAY               = 0x000117f6,
-    DISPID_IHTMLWINDOW7_ONCANPLAYTHROUGH        = 0x000117f7,
-    DISPID_IHTMLWINDOW7_ONCHANGE                = 0x0001178e,
-    DISPID_IHTMLWINDOW7_ONCLICK                 = 0x00011778,
-    DISPID_IHTMLWINDOW7_ONCONTEXTMENU           = 0x000117b1,
-    DISPID_IHTMLWINDOW7_ONDBLCLICK              = 0x00011779,
-    DISPID_IHTMLWINDOW7_ONDRAG                  = 0x000117a1,
-    DISPID_IHTMLWINDOW7_ONDRAGEND               = 0x000117a2,
-    DISPID_IHTMLWINDOW7_ONDRAGENTER             = 0x000117a3,
-    DISPID_IHTMLWINDOW7_ONDRAGLEAVE             = 0x000117a5,
-    DISPID_IHTMLWINDOW7_ONDRAGOVER              = 0x000117a4,
-    DISPID_IHTMLWINDOW7_ONDRAGSTART             = 0x00011793,
-    DISPID_IHTMLWINDOW7_ONDROP                  = 0x000117a6,
-    DISPID_IHTMLWINDOW7_ONDURATIONCHANGE        = 0x000117f8,
-    DISPID_IHTMLWINDOW7_ONFOCUSIN               = 0x000117cb,
-    DISPID_IHTMLWINDOW7_ONFOCUSOUT              = 0x000117cc,
-    DISPID_IHTMLWINDOW7_ONINPUT                 = 0x000117ef,
-    DISPID_IHTMLWINDOW7_ONEMPTIED               = 0x000117f9,
-    DISPID_IHTMLWINDOW7_ONENDED                 = 0x000117fa,
-    DISPID_IHTMLWINDOW7_ONKEYDOWN               = 0x00011775,
-    DISPID_IHTMLWINDOW7_ONKEYPRESS              = 0x00011777,
-    DISPID_IHTMLWINDOW7_ONKEYUP                 = 0x00011776,
-    DISPID_IHTMLWINDOW7_ONLOADEDDATA            = 0x000117fb,
-    DISPID_IHTMLWINDOW7_ONLOADEDMETADATA        = 0x000117fc,
-    DISPID_IHTMLWINDOW7_ONLOADSTART             = 0x000117fd,
-    DISPID_IHTMLWINDOW7_ONMOUSEDOWN             = 0x00011772,
-    DISPID_IHTMLWINDOW7_ONMOUSEENTER            = 0x000117c5,
-    DISPID_IHTMLWINDOW7_ONMOUSELEAVE            = 0x000117c6,
-    DISPID_IHTMLWINDOW7_ONMOUSEMOVE             = 0x00011774,
-    DISPID_IHTMLWINDOW7_ONMOUSEOUT              = 0x00011771,
-    DISPID_IHTMLWINDOW7_ONMOUSEOVER             = 0x00011770,
-    DISPID_IHTMLWINDOW7_ONMOUSEUP               = 0x00011773,
-    DISPID_IHTMLWINDOW7_ONMOUSEWHEEL            = 0x000117bc,
-    DISPID_IHTMLWINDOW7_ONOFFLINE               = 0x000117dc,
-    DISPID_IHTMLWINDOW7_ONONLINE                = 0x000117db,
-    DISPID_IHTMLWINDOW7_ONPROGRESS              = 0x00011801,
-    DISPID_IHTMLWINDOW7_ONRATECHANGE            = 0x00011802,
-    DISPID_IHTMLWINDOW7_ONREADYSTATECHANGE      = 0x00011789,
-    DISPID_IHTMLWINDOW7_ONRESET                 = 0x0001177c,
-    DISPID_IHTMLWINDOW7_ONSEEKED                = 0x00011803,
-    DISPID_IHTMLWINDOW7_ONSEEKING               = 0x00011804,
-    DISPID_IHTMLWINDOW7_ONSELECT                = 0x0001177a,
-    DISPID_IHTMLWINDOW7_ONSTALLED               = 0x00011805,
-    DISPID_IHTMLWINDOW7_ONSTORAGE               = 0x000117d4,
-    DISPID_IHTMLWINDOW7_ONSUBMIT                = 0x0001177b,
-    DISPID_IHTMLWINDOW7_ONSUSPEND               = 0x00011806,
-    DISPID_IHTMLWINDOW7_ONTIMEUPDATE            = 0x00011807,
-    DISPID_IHTMLWINDOW7_ONPAUSE                 = 0x000117fe,
-    DISPID_IHTMLWINDOW7_ONPLAY                  = 0x000117ff,
-    DISPID_IHTMLWINDOW7_ONPLAYING               = 0x00011800,
-    DISPID_IHTMLWINDOW7_ONVOLUMECHANGE          = 0x00011808,
-    DISPID_IHTMLWINDOW7_ONWAITING               = 0x00011809,
-    DISPID_IHTMLWINDOW8_ONMSPOINTERDOWN         = 0x0001180a,
-    DISPID_IHTMLWINDOW8_ONMSPOINTERMOVE         = 0x0001180b,
-    DISPID_IHTMLWINDOW8_ONMSPOINTERUP           = 0x0001180c,
-    DISPID_IHTMLWINDOW8_ONMSPOINTEROVER         = 0x0001180d,
-    DISPID_IHTMLWINDOW8_ONMSPOINTEROUT          = 0x0001180e,
-    DISPID_IHTMLWINDOW8_ONMSPOINTERCANCEL       = 0x0001180f,
-    DISPID_IHTMLWINDOW8_ONMSPOINTERHOVER        = 0x00011810,
-    DISPID_IHTMLWINDOW8_ONMSGESTURESTART        = 0x00011813,
-    DISPID_IHTMLWINDOW8_ONMSGESTURECHANGE       = 0x00011814,
-    DISPID_IHTMLWINDOW8_ONMSGESTUREEND          = 0x00011815,
-    DISPID_IHTMLWINDOW8_ONMSGESTUREHOLD         = 0x00011816,
-    DISPID_IHTMLWINDOW8_ONMSGESTURETAP          = 0x00011817,
-    DISPID_IHTMLWINDOW8_ONMSGESTUREDOUBLETAP    = 0x00011818,
-    DISPID_IHTMLWINDOW8_ONMSINERTIASTART        = 0x00011819,
-    DISPID_IHTMLWINDOW8_APPLICATIONCACHE        = 0x000004bd,
-    DISPID_IHTMLWINDOW8_ONPOPSTATE              = 0x00011830,
+    DISPID_IHTMLWINDOW2_FRAMES                  = 0x0000044cU,
+    DISPID_IHTMLWINDOW2_DEFAULTSTATUS           = 0x0000044dU,
+    DISPID_IHTMLWINDOW2_STATUS                  = 0x0000044eU,
+    DISPID_IHTMLWINDOW2_SETTIMEOUT              = 0x00000494U,
+    DISPID_IHTMLWINDOW2_CLEARTIMEOUT            = 0x00000450U,
+    DISPID_IHTMLWINDOW2_ALERT                   = 0x00000451U,
+    DISPID_IHTMLWINDOW2_CONFIRM                 = 0x00000456U,
+    DISPID_IHTMLWINDOW2_PROMPT                  = 0x00000457U,
+    DISPID_IHTMLWINDOW2_IMAGE                   = 0x00000465U,
+    DISPID_IHTMLWINDOW2_LOCATION                = 0x0000000eU,
+    DISPID_IHTMLWINDOW2_HISTORY                 = 0x00000002U,
+    DISPID_IHTMLWINDOW2_CLOSE                   = 0x00000003U,
+    DISPID_IHTMLWINDOW2_OPENER                  = 0x00000004U,
+    DISPID_IHTMLWINDOW2_NAVIGATOR               = 0x00000005U,
+    DISPID_IHTMLWINDOW2_NAME                    = 0x0000000bU,
+    DISPID_IHTMLWINDOW2_PARENT                  = 0x0000000cU,
+    DISPID_IHTMLWINDOW2_OPEN                    = 0x0000000dU,
+    DISPID_IHTMLWINDOW2_SELF                    = 0x00000014U,
+    DISPID_IHTMLWINDOW2_TOP                     = 0x00000015U,
+    DISPID_IHTMLWINDOW2_WINDOW                  = 0x00000016U,
+    DISPID_IHTMLWINDOW2_NAVIGATE                = 0x00000019U,
+    DISPID_IHTMLWINDOW2_ONFOCUS                 = 0x0001177eU,
+    DISPID_IHTMLWINDOW2_ONBLUR                  = 0x0001177fU,
+    DISPID_IHTMLWINDOW2_ONLOAD                  = 0x00011790U,
+    DISPID_IHTMLWINDOW2_ONBEFOREUNLOAD          = 0x00011797U,
+    DISPID_IHTMLWINDOW2_ONUNLOAD                = 0x00011791U,
+    DISPID_IHTMLWINDOW2_ONHELP                  = 0x0001177dU,
+    DISPID_IHTMLWINDOW2_ONERROR                 = 0x0001178dU,
+    DISPID_IHTMLWINDOW2_ONRESIZE                = 0x00011794U,
+    DISPID_IHTMLWINDOW2_ONSCROLL                = 0x0001178fU,
+    DISPID_IHTMLWINDOW2_DOCUMENT                = 0x0000047fU,
+    DISPID_IHTMLWINDOW2_EVENT                   = 0x00000480U,
+    DISPID_IHTMLWINDOW2__NEWENUM                = 0x00000481U,
+    DISPID_IHTMLWINDOW2_SHOWMODALDIALOG         = 0x00000482U,
+    DISPID_IHTMLWINDOW2_SHOWHELP                = 0x00000483U,
+    DISPID_IHTMLWINDOW2_SCREEN                  = 0x00000484U,
+    DISPID_IHTMLWINDOW2_OPTION                  = 0x00000485U,
+    DISPID_IHTMLWINDOW2_FOCUS                   = 0x00000486U,
+    DISPID_IHTMLWINDOW2_CLOSED                  = 0x00000017U,
+    DISPID_IHTMLWINDOW2_BLUR                    = 0x00000487U,
+    DISPID_IHTMLWINDOW2_SCROLL                  = 0x00000488U,
+    DISPID_IHTMLWINDOW2_CLIENTINFORMATION       = 0x00000489U,
+    DISPID_IHTMLWINDOW2_SETINTERVAL             = 0x00000495U,
+    DISPID_IHTMLWINDOW2_CLEARINTERVAL           = 0x0000048bU,
+    DISPID_IHTMLWINDOW2_OFFSCREENBUFFERING      = 0x0000048cU,
+    DISPID_IHTMLWINDOW2_EXECSCRIPT              = 0x0000048dU,
+    DISPID_IHTMLWINDOW2_TOSTRING                = 0x0000048eU,
+    DISPID_IHTMLWINDOW2_SCROLLBY                = 0x0000048fU,
+    DISPID_IHTMLWINDOW2_SCROLLTO                = 0x00000490U,
+    DISPID_IHTMLWINDOW2_MOVETO                  = 0x00000006U,
+    DISPID_IHTMLWINDOW2_MOVEBY                  = 0x00000007U,
+    DISPID_IHTMLWINDOW2_RESIZETO                = 0x00000009U,
+    DISPID_IHTMLWINDOW2_RESIZEBY                = 0x00000008U,
+    DISPID_IHTMLWINDOW2_EXTERNAL                = 0x00000491U,
+    DISPID_IHTMLWINDOW3_SCREENLEFT              = 0x00000492U,
+    DISPID_IHTMLWINDOW3_SCREENTOP               = 0x00000493U,
+    DISPID_IHTMLWINDOW3_ATTACHEVENT             = 0x000101fbU,
+    DISPID_IHTMLWINDOW3_DETACHEVENT             = 0x000101fcU,
+    DISPID_IHTMLWINDOW3_SETTIMEOUT              = 0x0000044fU,
+    DISPID_IHTMLWINDOW3_SETINTERVAL             = 0x0000048aU,
+    DISPID_IHTMLWINDOW3_PRINT                   = 0x00000496U,
+    DISPID_IHTMLWINDOW3_ONBEFOREPRINT           = 0x000117b2U,
+    DISPID_IHTMLWINDOW3_ONAFTERPRINT            = 0x000117b3U,
+    DISPID_IHTMLWINDOW3_CLIPBOARDDATA           = 0x00000497U,
+    DISPID_IHTMLWINDOW3_SHOWMODELESSDIALOG      = 0x00000498U,
+    DISPID_IHTMLWINDOW4_CREATEPOPUP             = 0x0000049cU,
+    DISPID_IHTMLWINDOW4_FRAMEELEMENT            = 0x0000049dU,
+    DISPID_IHTMLWINDOW5_XMLHTTPREQUEST          = 0x000004a6U,
+    DISPID_IHTMLWINDOW6_XDOMAINREQUEST          = 0x000004a7U,
+    DISPID_IHTMLWINDOW6_SESSIONSTORAGE          = 0x000004a8U,
+    DISPID_IHTMLWINDOW6_LOCALSTORAGE            = 0x000004a9U,
+    DISPID_IHTMLWINDOW6_ONHASHCHANGE            = 0x000117ddU,
+    DISPID_IHTMLWINDOW6_MAXCONNECTIONSPERSERVER = 0x000004aaU,
+    DISPID_IHTMLWINDOW6_POSTMESSAGE             = 0x000004acU,
+    DISPID_IHTMLWINDOW6_TOSTATICHTML            = 0x000004adU,
+    DISPID_IHTMLWINDOW6_ONMESSAGE               = 0x000117deU,
+    DISPID_IHTMLWINDOW6_MSWRITEPROFILERMARK     = 0x000004aeU,
+    DISPID_IHTMLWINDOW7_GETSELECTION            = 0x000004afU,
+    DISPID_IHTMLWINDOW7_GETCOMPUTEDSTYLE        = 0x000004b0U,
+    DISPID_IHTMLWINDOW7_STYLEMEDIA              = 0x000004b2U,
+    DISPID_IHTMLWINDOW7_PERFORMANCE             = 0x000004b3U,
+    DISPID_IHTMLWINDOW7_INNERWIDTH              = 0x000004b4U,
+    DISPID_IHTMLWINDOW7_INNERHEIGHT             = 0x000004b5U,
+    DISPID_IHTMLWINDOW7_PAGEXOFFSET             = 0x000004b6U,
+    DISPID_IHTMLWINDOW7_PAGEYOFFSET             = 0x000004b7U,
+    DISPID_IHTMLWINDOW7_SCREENX                 = 0x000004b8U,
+    DISPID_IHTMLWINDOW7_SCREENY                 = 0x000004b9U,
+    DISPID_IHTMLWINDOW7_OUTERWIDTH              = 0x000004baU,
+    DISPID_IHTMLWINDOW7_OUTERHEIGHT             = 0x000004bbU,
+    DISPID_IHTMLWINDOW7_ONABORT                 = 0x0001178cU,
+    DISPID_IHTMLWINDOW7_ONCANPLAY               = 0x000117f6U,
+    DISPID_IHTMLWINDOW7_ONCANPLAYTHROUGH        = 0x000117f7U,
+    DISPID_IHTMLWINDOW7_ONCHANGE                = 0x0001178eU,
+    DISPID_IHTMLWINDOW7_ONCLICK                 = 0x00011778U,
+    DISPID_IHTMLWINDOW7_ONCONTEXTMENU           = 0x000117b1U,
+    DISPID_IHTMLWINDOW7_ONDBLCLICK              = 0x00011779U,
+    DISPID_IHTMLWINDOW7_ONDRAG                  = 0x000117a1U,
+    DISPID_IHTMLWINDOW7_ONDRAGEND               = 0x000117a2U,
+    DISPID_IHTMLWINDOW7_ONDRAGENTER             = 0x000117a3U,
+    DISPID_IHTMLWINDOW7_ONDRAGLEAVE             = 0x000117a5U,
+    DISPID_IHTMLWINDOW7_ONDRAGOVER              = 0x000117a4U,
+    DISPID_IHTMLWINDOW7_ONDRAGSTART             = 0x00011793U,
+    DISPID_IHTMLWINDOW7_ONDROP                  = 0x000117a6U,
+    DISPID_IHTMLWINDOW7_ONDURATIONCHANGE        = 0x000117f8U,
+    DISPID_IHTMLWINDOW7_ONFOCUSIN               = 0x000117cbU,
+    DISPID_IHTMLWINDOW7_ONFOCUSOUT              = 0x000117ccU,
+    DISPID_IHTMLWINDOW7_ONINPUT                 = 0x000117efU,
+    DISPID_IHTMLWINDOW7_ONEMPTIED               = 0x000117f9U,
+    DISPID_IHTMLWINDOW7_ONENDED                 = 0x000117faU,
+    DISPID_IHTMLWINDOW7_ONKEYDOWN               = 0x00011775U,
+    DISPID_IHTMLWINDOW7_ONKEYPRESS              = 0x00011777U,
+    DISPID_IHTMLWINDOW7_ONKEYUP                 = 0x00011776U,
+    DISPID_IHTMLWINDOW7_ONLOADEDDATA            = 0x000117fbU,
+    DISPID_IHTMLWINDOW7_ONLOADEDMETADATA        = 0x000117fcU,
+    DISPID_IHTMLWINDOW7_ONLOADSTART             = 0x000117fdU,
+    DISPID_IHTMLWINDOW7_ONMOUSEDOWN             = 0x00011772U,
+    DISPID_IHTMLWINDOW7_ONMOUSEENTER            = 0x000117c5U,
+    DISPID_IHTMLWINDOW7_ONMOUSELEAVE            = 0x000117c6U,
+    DISPID_IHTMLWINDOW7_ONMOUSEMOVE             = 0x00011774U,
+    DISPID_IHTMLWINDOW7_ONMOUSEOUT              = 0x00011771U,
+    DISPID_IHTMLWINDOW7_ONMOUSEOVER             = 0x00011770U,
+    DISPID_IHTMLWINDOW7_ONMOUSEUP               = 0x00011773U,
+    DISPID_IHTMLWINDOW7_ONMOUSEWHEEL            = 0x000117bcU,
+    DISPID_IHTMLWINDOW7_ONOFFLINE               = 0x000117dcU,
+    DISPID_IHTMLWINDOW7_ONONLINE                = 0x000117dbU,
+    DISPID_IHTMLWINDOW7_ONPROGRESS              = 0x00011801U,
+    DISPID_IHTMLWINDOW7_ONRATECHANGE            = 0x00011802U,
+    DISPID_IHTMLWINDOW7_ONREADYSTATECHANGE      = 0x00011789U,
+    DISPID_IHTMLWINDOW7_ONRESET                 = 0x0001177cU,
+    DISPID_IHTMLWINDOW7_ONSEEKED                = 0x00011803U,
+    DISPID_IHTMLWINDOW7_ONSEEKING               = 0x00011804U,
+    DISPID_IHTMLWINDOW7_ONSELECT                = 0x0001177aU,
+    DISPID_IHTMLWINDOW7_ONSTALLED               = 0x00011805U,
+    DISPID_IHTMLWINDOW7_ONSTORAGE               = 0x000117d4U,
+    DISPID_IHTMLWINDOW7_ONSUBMIT                = 0x0001177bU,
+    DISPID_IHTMLWINDOW7_ONSUSPEND               = 0x00011806U,
+    DISPID_IHTMLWINDOW7_ONTIMEUPDATE            = 0x00011807U,
+    DISPID_IHTMLWINDOW7_ONPAUSE                 = 0x000117feU,
+    DISPID_IHTMLWINDOW7_ONPLAY                  = 0x000117ffU,
+    DISPID_IHTMLWINDOW7_ONPLAYING               = 0x00011800U,
+    DISPID_IHTMLWINDOW7_ONVOLUMECHANGE          = 0x00011808U,
+    DISPID_IHTMLWINDOW7_ONWAITING               = 0x00011809U,
+    DISPID_IHTMLWINDOW8_ONMSPOINTERDOWN         = 0x0001180aU,
+    DISPID_IHTMLWINDOW8_ONMSPOINTERMOVE         = 0x0001180bU,
+    DISPID_IHTMLWINDOW8_ONMSPOINTERUP           = 0x0001180cU,
+    DISPID_IHTMLWINDOW8_ONMSPOINTEROVER         = 0x0001180dU,
+    DISPID_IHTMLWINDOW8_ONMSPOINTEROUT          = 0x0001180eU,
+    DISPID_IHTMLWINDOW8_ONMSPOINTERCANCEL       = 0x0001180fU,
+    DISPID_IHTMLWINDOW8_ONMSPOINTERHOVER        = 0x00011810U,
+    DISPID_IHTMLWINDOW8_ONMSGESTURESTART        = 0x00011813U,
+    DISPID_IHTMLWINDOW8_ONMSGESTURECHANGE       = 0x00011814U,
+    DISPID_IHTMLWINDOW8_ONMSGESTUREEND          = 0x00011815U,
+    DISPID_IHTMLWINDOW8_ONMSGESTUREHOLD         = 0x00011816U,
+    DISPID_IHTMLWINDOW8_ONMSGESTURETAP          = 0x00011817U,
+    DISPID_IHTMLWINDOW8_ONMSGESTUREDOUBLETAP    = 0x00011818U,
+    DISPID_IHTMLWINDOW8_ONMSINERTIASTART        = 0x00011819U,
+    DISPID_IHTMLWINDOW8_APPLICATIONCACHE        = 0x000004bdU,
+    DISPID_IHTMLWINDOW8_ONPOPSTATE              = 0x00011830U,
 }
 
 enum : uint
 {
-    DISPID_HTMLWINDOWEVENTS3_ONHASHCHANGE   = 0x0000042a,
-    DISPID_HTMLWINDOWEVENTS3_ONMESSAGE      = 0x0000042b,
-    DISPID_HTMLWINDOWEVENTS2_ONLOAD         = 0x000003eb,
-    DISPID_HTMLWINDOWEVENTS2_ONUNLOAD       = 0x000003f0,
-    DISPID_HTMLWINDOWEVENTS2_ONHELP         = 0x0001000a,
-    DISPID_HTMLWINDOWEVENTS2_ONFOCUS        = 0x00010001,
-    DISPID_HTMLWINDOWEVENTS2_ONERROR        = 0x000003ea,
-    DISPID_HTMLWINDOWEVENTS2_ONRESIZE       = 0x000003f8,
-    DISPID_HTMLWINDOWEVENTS2_ONSCROLL       = 0x000003f6,
-    DISPID_HTMLWINDOWEVENTS2_ONBEFOREUNLOAD = 0x000003f9,
-    DISPID_HTMLWINDOWEVENTS2_ONBEFOREPRINT  = 0x00000400,
-    DISPID_HTMLWINDOWEVENTS2_ONAFTERPRINT   = 0x00000401,
-    DISPID_HTMLWINDOWEVENTS_ONLOAD          = 0x000003eb,
-    DISPID_HTMLWINDOWEVENTS_ONUNLOAD        = 0x000003f0,
-    DISPID_HTMLWINDOWEVENTS_ONHELP          = 0x0001000a,
-    DISPID_HTMLWINDOWEVENTS_ONFOCUS         = 0x00010001,
-    DISPID_HTMLWINDOWEVENTS_ONERROR         = 0x000003ea,
-    DISPID_HTMLWINDOWEVENTS_ONRESIZE        = 0x000003f8,
-    DISPID_HTMLWINDOWEVENTS_ONSCROLL        = 0x000003f6,
-    DISPID_HTMLWINDOWEVENTS_ONBEFOREUNLOAD  = 0x000003f9,
-    DISPID_HTMLWINDOWEVENTS_ONBEFOREPRINT   = 0x00000400,
-    DISPID_HTMLWINDOWEVENTS_ONAFTERPRINT    = 0x00000401,
+    DISPID_HTMLWINDOWEVENTS3_ONHASHCHANGE   = 0x0000042aU,
+    DISPID_HTMLWINDOWEVENTS3_ONMESSAGE      = 0x0000042bU,
+    DISPID_HTMLWINDOWEVENTS2_ONLOAD         = 0x000003ebU,
+    DISPID_HTMLWINDOWEVENTS2_ONUNLOAD       = 0x000003f0U,
+    DISPID_HTMLWINDOWEVENTS2_ONHELP         = 0x0001000aU,
+    DISPID_HTMLWINDOWEVENTS2_ONFOCUS        = 0x00010001U,
+    DISPID_HTMLWINDOWEVENTS2_ONERROR        = 0x000003eaU,
+    DISPID_HTMLWINDOWEVENTS2_ONRESIZE       = 0x000003f8U,
+    DISPID_HTMLWINDOWEVENTS2_ONSCROLL       = 0x000003f6U,
+    DISPID_HTMLWINDOWEVENTS2_ONBEFOREUNLOAD = 0x000003f9U,
+    DISPID_HTMLWINDOWEVENTS2_ONBEFOREPRINT  = 0x00000400U,
+    DISPID_HTMLWINDOWEVENTS2_ONAFTERPRINT   = 0x00000401U,
+    DISPID_HTMLWINDOWEVENTS_ONLOAD          = 0x000003ebU,
+    DISPID_HTMLWINDOWEVENTS_ONUNLOAD        = 0x000003f0U,
+    DISPID_HTMLWINDOWEVENTS_ONHELP          = 0x0001000aU,
+    DISPID_HTMLWINDOWEVENTS_ONFOCUS         = 0x00010001U,
+    DISPID_HTMLWINDOWEVENTS_ONERROR         = 0x000003eaU,
+    DISPID_HTMLWINDOWEVENTS_ONRESIZE        = 0x000003f8U,
+    DISPID_HTMLWINDOWEVENTS_ONSCROLL        = 0x000003f6U,
+    DISPID_HTMLWINDOWEVENTS_ONBEFOREUNLOAD  = 0x000003f9U,
+    DISPID_HTMLWINDOWEVENTS_ONBEFOREPRINT   = 0x00000400U,
+    DISPID_HTMLWINDOWEVENTS_ONAFTERPRINT    = 0x00000401U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLDOCUMENTCOMPATIBLEINFO_USERAGENT        = 0x000003e9,
-    DISPID_IHTMLDOCUMENTCOMPATIBLEINFO_VERSION          = 0x000003ea,
-    DISPID_IHTMLDOCUMENTCOMPATIBLEINFOCOLLECTION_LENGTH = 0x000003e9,
-    DISPID_IHTMLDOCUMENTCOMPATIBLEINFOCOLLECTION_ITEM   = 0x00000000,
-    DISPID_IHTMLDOCUMENT_SCRIPT                         = 0x000003e9,
-    DISPID_IHTMLDOCUMENT2_ALL                           = 0x000003eb,
-    DISPID_IHTMLDOCUMENT2_BODY                          = 0x000003ec,
-    DISPID_IHTMLDOCUMENT2_ACTIVEELEMENT                 = 0x000003ed,
-    DISPID_IHTMLDOCUMENT2_IMAGES                        = 0x000003f3,
-    DISPID_IHTMLDOCUMENT2_APPLETS                       = 0x000003f0,
-    DISPID_IHTMLDOCUMENT2_LINKS                         = 0x000003f1,
-    DISPID_IHTMLDOCUMENT2_FORMS                         = 0x000003f2,
-    DISPID_IHTMLDOCUMENT2_ANCHORS                       = 0x000003ef,
-    DISPID_IHTMLDOCUMENT2_TITLE                         = 0x000003f4,
-    DISPID_IHTMLDOCUMENT2_SCRIPTS                       = 0x000003f5,
-    DISPID_IHTMLDOCUMENT2_DESIGNMODE                    = 0x000003f6,
-    DISPID_IHTMLDOCUMENT2_SELECTION                     = 0x000003f9,
-    DISPID_IHTMLDOCUMENT2_READYSTATE                    = 0x000003fa,
-    DISPID_IHTMLDOCUMENT2_FRAMES                        = 0x000003fb,
-    DISPID_IHTMLDOCUMENT2_EMBEDS                        = 0x000003f7,
-    DISPID_IHTMLDOCUMENT2_PLUGINS                       = 0x000003fd,
-    DISPID_IHTMLDOCUMENT2_ALINKCOLOR                    = 0x000003fe,
+    DISPID_IHTMLDOCUMENTCOMPATIBLEINFO_USERAGENT        = 0x000003e9U,
+    DISPID_IHTMLDOCUMENTCOMPATIBLEINFO_VERSION          = 0x000003eaU,
+    DISPID_IHTMLDOCUMENTCOMPATIBLEINFOCOLLECTION_LENGTH = 0x000003e9U,
+    DISPID_IHTMLDOCUMENTCOMPATIBLEINFOCOLLECTION_ITEM   = 0x00000000U,
+    DISPID_IHTMLDOCUMENT_SCRIPT                         = 0x000003e9U,
+    DISPID_IHTMLDOCUMENT2_ALL                           = 0x000003ebU,
+    DISPID_IHTMLDOCUMENT2_BODY                          = 0x000003ecU,
+    DISPID_IHTMLDOCUMENT2_ACTIVEELEMENT                 = 0x000003edU,
+    DISPID_IHTMLDOCUMENT2_IMAGES                        = 0x000003f3U,
+    DISPID_IHTMLDOCUMENT2_APPLETS                       = 0x000003f0U,
+    DISPID_IHTMLDOCUMENT2_LINKS                         = 0x000003f1U,
+    DISPID_IHTMLDOCUMENT2_FORMS                         = 0x000003f2U,
+    DISPID_IHTMLDOCUMENT2_ANCHORS                       = 0x000003efU,
+    DISPID_IHTMLDOCUMENT2_TITLE                         = 0x000003f4U,
+    DISPID_IHTMLDOCUMENT2_SCRIPTS                       = 0x000003f5U,
+    DISPID_IHTMLDOCUMENT2_DESIGNMODE                    = 0x000003f6U,
+    DISPID_IHTMLDOCUMENT2_SELECTION                     = 0x000003f9U,
+    DISPID_IHTMLDOCUMENT2_READYSTATE                    = 0x000003faU,
+    DISPID_IHTMLDOCUMENT2_FRAMES                        = 0x000003fbU,
+    DISPID_IHTMLDOCUMENT2_EMBEDS                        = 0x000003f7U,
+    DISPID_IHTMLDOCUMENT2_PLUGINS                       = 0x000003fdU,
+    DISPID_IHTMLDOCUMENT2_ALINKCOLOR                    = 0x000003feU,
 }
 
 enum int DISPID_IHTMLDOCUMENT2_BGCOLOR = 0xfffffe0b;
 
 enum : uint
 {
-    DISPID_IHTMLDOCUMENT2_FGCOLOR                         = 0x0001138a,
-    DISPID_IHTMLDOCUMENT2_LINKCOLOR                       = 0x00000400,
-    DISPID_IHTMLDOCUMENT2_VLINKCOLOR                      = 0x000003ff,
-    DISPID_IHTMLDOCUMENT2_REFERRER                        = 0x00000403,
-    DISPID_IHTMLDOCUMENT2_LOCATION                        = 0x00000402,
-    DISPID_IHTMLDOCUMENT2_LASTMODIFIED                    = 0x00000404,
-    DISPID_IHTMLDOCUMENT2_URL                             = 0x00000401,
-    DISPID_IHTMLDOCUMENT2_DOMAIN                          = 0x00000405,
-    DISPID_IHTMLDOCUMENT2_COOKIE                          = 0x00000406,
-    DISPID_IHTMLDOCUMENT2_EXPANDO                         = 0x00000407,
-    DISPID_IHTMLDOCUMENT2_CHARSET                         = 0x00000408,
-    DISPID_IHTMLDOCUMENT2_DEFAULTCHARSET                  = 0x00000409,
-    DISPID_IHTMLDOCUMENT2_MIMETYPE                        = 0x00000411,
-    DISPID_IHTMLDOCUMENT2_FILESIZE                        = 0x00000412,
-    DISPID_IHTMLDOCUMENT2_FILECREATEDDATE                 = 0x00000413,
-    DISPID_IHTMLDOCUMENT2_FILEMODIFIEDDATE                = 0x00000414,
-    DISPID_IHTMLDOCUMENT2_FILEUPDATEDDATE                 = 0x00000415,
-    DISPID_IHTMLDOCUMENT2_SECURITY                        = 0x00000416,
-    DISPID_IHTMLDOCUMENT2_PROTOCOL                        = 0x00000417,
-    DISPID_IHTMLDOCUMENT2_NAMEPROP                        = 0x00000418,
-    DISPID_IHTMLDOCUMENT2_WRITE                           = 0x0000041e,
-    DISPID_IHTMLDOCUMENT2_WRITELN                         = 0x0000041f,
-    DISPID_IHTMLDOCUMENT2_OPEN                            = 0x00000420,
-    DISPID_IHTMLDOCUMENT2_CLOSE                           = 0x00000421,
-    DISPID_IHTMLDOCUMENT2_CLEAR                           = 0x00000422,
-    DISPID_IHTMLDOCUMENT2_QUERYCOMMANDSUPPORTED           = 0x00000423,
-    DISPID_IHTMLDOCUMENT2_QUERYCOMMANDENABLED             = 0x00000424,
-    DISPID_IHTMLDOCUMENT2_QUERYCOMMANDSTATE               = 0x00000425,
-    DISPID_IHTMLDOCUMENT2_QUERYCOMMANDINDETERM            = 0x00000426,
-    DISPID_IHTMLDOCUMENT2_QUERYCOMMANDTEXT                = 0x00000427,
-    DISPID_IHTMLDOCUMENT2_QUERYCOMMANDVALUE               = 0x00000428,
-    DISPID_IHTMLDOCUMENT2_EXECCOMMAND                     = 0x00000429,
-    DISPID_IHTMLDOCUMENT2_EXECCOMMANDSHOWHELP             = 0x0000042a,
-    DISPID_IHTMLDOCUMENT2_CREATEELEMENT                   = 0x0000042b,
-    DISPID_IHTMLDOCUMENT2_ONHELP                          = 0x0001177d,
-    DISPID_IHTMLDOCUMENT2_ONCLICK                         = 0x00011778,
-    DISPID_IHTMLDOCUMENT2_ONDBLCLICK                      = 0x00011779,
-    DISPID_IHTMLDOCUMENT2_ONKEYUP                         = 0x00011776,
-    DISPID_IHTMLDOCUMENT2_ONKEYDOWN                       = 0x00011775,
-    DISPID_IHTMLDOCUMENT2_ONKEYPRESS                      = 0x00011777,
-    DISPID_IHTMLDOCUMENT2_ONMOUSEUP                       = 0x00011773,
-    DISPID_IHTMLDOCUMENT2_ONMOUSEDOWN                     = 0x00011772,
-    DISPID_IHTMLDOCUMENT2_ONMOUSEMOVE                     = 0x00011774,
-    DISPID_IHTMLDOCUMENT2_ONMOUSEOUT                      = 0x00011771,
-    DISPID_IHTMLDOCUMENT2_ONMOUSEOVER                     = 0x00011770,
-    DISPID_IHTMLDOCUMENT2_ONREADYSTATECHANGE              = 0x00011789,
-    DISPID_IHTMLDOCUMENT2_ONAFTERUPDATE                   = 0x00011786,
-    DISPID_IHTMLDOCUMENT2_ONROWEXIT                       = 0x00011782,
-    DISPID_IHTMLDOCUMENT2_ONROWENTER                      = 0x00011783,
-    DISPID_IHTMLDOCUMENT2_ONDRAGSTART                     = 0x00011793,
-    DISPID_IHTMLDOCUMENT2_ONSELECTSTART                   = 0x00011795,
-    DISPID_IHTMLDOCUMENT2_ELEMENTFROMPOINT                = 0x0000042c,
-    DISPID_IHTMLDOCUMENT2_PARENTWINDOW                    = 0x0000040a,
-    DISPID_IHTMLDOCUMENT2_STYLESHEETS                     = 0x0000042d,
-    DISPID_IHTMLDOCUMENT2_ONBEFOREUPDATE                  = 0x00011785,
-    DISPID_IHTMLDOCUMENT2_ONERRORUPDATE                   = 0x00011796,
-    DISPID_IHTMLDOCUMENT2_TOSTRING                        = 0x0000042e,
-    DISPID_IHTMLDOCUMENT2_CREATESTYLESHEET                = 0x0000042f,
-    DISPID_IHTMLDOCUMENT3_RELEASECAPTURE                  = 0x00000430,
-    DISPID_IHTMLDOCUMENT3_RECALC                          = 0x00000431,
-    DISPID_IHTMLDOCUMENT3_CREATETEXTNODE                  = 0x00000432,
-    DISPID_IHTMLDOCUMENT3_DOCUMENTELEMENT                 = 0x00000433,
-    DISPID_IHTMLDOCUMENT3_UNIQUEID                        = 0x00000435,
-    DISPID_IHTMLDOCUMENT3_ATTACHEVENT                     = 0x000101fb,
-    DISPID_IHTMLDOCUMENT3_DETACHEVENT                     = 0x000101fc,
-    DISPID_IHTMLDOCUMENT3_ONROWSDELETE                    = 0x000117ae,
-    DISPID_IHTMLDOCUMENT3_ONROWSINSERTED                  = 0x000117af,
-    DISPID_IHTMLDOCUMENT3_ONCELLCHANGE                    = 0x000117b0,
-    DISPID_IHTMLDOCUMENT3_ONDATASETCHANGED                = 0x00011798,
-    DISPID_IHTMLDOCUMENT3_ONDATAAVAILABLE                 = 0x00011799,
-    DISPID_IHTMLDOCUMENT3_ONDATASETCOMPLETE               = 0x0001179a,
-    DISPID_IHTMLDOCUMENT3_ONPROPERTYCHANGE                = 0x0001179f,
-    DISPID_IHTMLDOCUMENT3_DIR                             = 0x000113fd,
-    DISPID_IHTMLDOCUMENT3_ONCONTEXTMENU                   = 0x000117b1,
-    DISPID_IHTMLDOCUMENT3_ONSTOP                          = 0x000117b4,
-    DISPID_IHTMLDOCUMENT3_CREATEDOCUMENTFRAGMENT          = 0x00000434,
-    DISPID_IHTMLDOCUMENT3_PARENTDOCUMENT                  = 0x00000436,
-    DISPID_IHTMLDOCUMENT3_ENABLEDOWNLOAD                  = 0x00000437,
-    DISPID_IHTMLDOCUMENT3_BASEURL                         = 0x00000438,
-    DISPID_IHTMLDOCUMENT3_CHILDNODES                      = 0x00010419,
-    DISPID_IHTMLDOCUMENT3_INHERITSTYLESHEETS              = 0x0000043a,
-    DISPID_IHTMLDOCUMENT3_ONBEFOREEDITFOCUS               = 0x000117b5,
-    DISPID_IHTMLDOCUMENT3_GETELEMENTSBYNAME               = 0x0000043e,
-    DISPID_IHTMLDOCUMENT3_GETELEMENTBYID                  = 0x00000440,
-    DISPID_IHTMLDOCUMENT3_GETELEMENTSBYTAGNAME            = 0x0000043f,
-    DISPID_IHTMLDOCUMENT4_FOCUS                           = 0x00000441,
-    DISPID_IHTMLDOCUMENT4_HASFOCUS                        = 0x00000442,
-    DISPID_IHTMLDOCUMENT4_ONSELECTIONCHANGE               = 0x000117c0,
-    DISPID_IHTMLDOCUMENT4_NAMESPACES                      = 0x00000443,
-    DISPID_IHTMLDOCUMENT4_CREATEDOCUMENTFROMURL           = 0x00000444,
-    DISPID_IHTMLDOCUMENT4_MEDIA                           = 0x00000445,
-    DISPID_IHTMLDOCUMENT4_CREATEEVENTOBJECT               = 0x00000446,
-    DISPID_IHTMLDOCUMENT4_FIREEVENT                       = 0x00000447,
-    DISPID_IHTMLDOCUMENT4_CREATERENDERSTYLE               = 0x00000448,
-    DISPID_IHTMLDOCUMENT4_ONCONTROLSELECT                 = 0x000117bf,
-    DISPID_IHTMLDOCUMENT4_URLUNENCODED                    = 0x00000449,
-    DISPID_IHTMLDOCUMENT5_ONMOUSEWHEEL                    = 0x000117bc,
-    DISPID_IHTMLDOCUMENT5_DOCTYPE                         = 0x0000044a,
-    DISPID_IHTMLDOCUMENT5_IMPLEMENTATION                  = 0x0000044b,
-    DISPID_IHTMLDOCUMENT5_CREATEATTRIBUTE                 = 0x0000044c,
-    DISPID_IHTMLDOCUMENT5_CREATECOMMENT                   = 0x0000044d,
-    DISPID_IHTMLDOCUMENT5_ONFOCUSIN                       = 0x000117cb,
-    DISPID_IHTMLDOCUMENT5_ONFOCUSOUT                      = 0x000117cc,
-    DISPID_IHTMLDOCUMENT5_ONACTIVATE                      = 0x000117c7,
-    DISPID_IHTMLDOCUMENT5_ONDEACTIVATE                    = 0x000117c8,
-    DISPID_IHTMLDOCUMENT5_ONBEFOREACTIVATE                = 0x000117ca,
-    DISPID_IHTMLDOCUMENT5_ONBEFOREDEACTIVATE              = 0x000117bd,
-    DISPID_IHTMLDOCUMENT5_COMPATMODE                      = 0x0000044e,
-    DISPID_IHTMLDOCUMENT6_COMPATIBLE                      = 0x0000044f,
-    DISPID_IHTMLDOCUMENT6_DOCUMENTMODE                    = 0x00000450,
-    DISPID_IHTMLDOCUMENT6_ONSTORAGE                       = 0x000117d4,
-    DISPID_IHTMLDOCUMENT6_ONSTORAGECOMMIT                 = 0x000117d5,
-    DISPID_IHTMLDOCUMENT6_IE8_GETELEMENTBYID              = 0x00000453,
-    DISPID_IHTMLDOCUMENT6_UPDATESETTINGS                  = 0x00000455,
-    DISPID_IHTMLDOCUMENT7_DEFAULTVIEW                     = 0x00000456,
-    DISPID_IHTMLDOCUMENT7_CREATECDATASECTION              = 0x00000463,
-    DISPID_IHTMLDOCUMENT7_GETSELECTION                    = 0x00000458,
-    DISPID_IHTMLDOCUMENT7_GETELEMENTSBYTAGNAMENS          = 0x00000459,
-    DISPID_IHTMLDOCUMENT7_CREATEELEMENTNS                 = 0x0000045a,
-    DISPID_IHTMLDOCUMENT7_CREATEATTRIBUTENS               = 0x0000045b,
-    DISPID_IHTMLDOCUMENT7_ONMSTHUMBNAILCLICK              = 0x000117e9,
-    DISPID_IHTMLDOCUMENT7_CHARACTERSET                    = 0x0000045d,
-    DISPID_IHTMLDOCUMENT7_IE9_CREATEELEMENT               = 0x0000045e,
-    DISPID_IHTMLDOCUMENT7_IE9_CREATEATTRIBUTE             = 0x0000045f,
-    DISPID_IHTMLDOCUMENT7_GETELEMENTSBYCLASSNAME          = 0x00000460,
-    DISPID_IHTMLDOCUMENT7_CREATEPROCESSINGINSTRUCTION     = 0x00000464,
-    DISPID_IHTMLDOCUMENT7_ADOPTNODE                       = 0x00000465,
-    DISPID_IHTMLDOCUMENT7_ONMSSITEMODEJUMPLISTITEMREMOVED = 0x000117f2,
-    DISPID_IHTMLDOCUMENT7_IE9_ALL                         = 0x00000466,
-    DISPID_IHTMLDOCUMENT7_INPUTENCODING                   = 0x00000467,
-    DISPID_IHTMLDOCUMENT7_XMLENCODING                     = 0x00000468,
-    DISPID_IHTMLDOCUMENT7_XMLSTANDALONE                   = 0x00000469,
-    DISPID_IHTMLDOCUMENT7_XMLVERSION                      = 0x0000046a,
-    DISPID_IHTMLDOCUMENT7_HASATTRIBUTES                   = 0x0000046c,
-    DISPID_IHTMLDOCUMENT7_ONABORT                         = 0x0001178c,
-    DISPID_IHTMLDOCUMENT7_ONBLUR                          = 0x0001177f,
-    DISPID_IHTMLDOCUMENT7_ONCANPLAY                       = 0x000117f6,
-    DISPID_IHTMLDOCUMENT7_ONCANPLAYTHROUGH                = 0x000117f7,
-    DISPID_IHTMLDOCUMENT7_ONCHANGE                        = 0x0001178e,
-    DISPID_IHTMLDOCUMENT7_ONDRAG                          = 0x000117a1,
-    DISPID_IHTMLDOCUMENT7_ONDRAGEND                       = 0x000117a2,
-    DISPID_IHTMLDOCUMENT7_ONDRAGENTER                     = 0x000117a3,
-    DISPID_IHTMLDOCUMENT7_ONDRAGLEAVE                     = 0x000117a5,
-    DISPID_IHTMLDOCUMENT7_ONDRAGOVER                      = 0x000117a4,
-    DISPID_IHTMLDOCUMENT7_ONDROP                          = 0x000117a6,
-    DISPID_IHTMLDOCUMENT7_ONDURATIONCHANGE                = 0x000117f8,
-    DISPID_IHTMLDOCUMENT7_ONEMPTIED                       = 0x000117f9,
-    DISPID_IHTMLDOCUMENT7_ONENDED                         = 0x000117fa,
-    DISPID_IHTMLDOCUMENT7_ONERROR                         = 0x0001178d,
-    DISPID_IHTMLDOCUMENT7_ONFOCUS                         = 0x0001177e,
-    DISPID_IHTMLDOCUMENT7_ONINPUT                         = 0x000117ef,
-    DISPID_IHTMLDOCUMENT7_ONLOAD                          = 0x00011790,
-    DISPID_IHTMLDOCUMENT7_ONLOADEDDATA                    = 0x000117fb,
-    DISPID_IHTMLDOCUMENT7_ONLOADEDMETADATA                = 0x000117fc,
-    DISPID_IHTMLDOCUMENT7_ONLOADSTART                     = 0x000117fd,
-    DISPID_IHTMLDOCUMENT7_ONPAUSE                         = 0x000117fe,
-    DISPID_IHTMLDOCUMENT7_ONPLAY                          = 0x000117ff,
-    DISPID_IHTMLDOCUMENT7_ONPLAYING                       = 0x00011800,
-    DISPID_IHTMLDOCUMENT7_ONPROGRESS                      = 0x00011801,
-    DISPID_IHTMLDOCUMENT7_ONRATECHANGE                    = 0x00011802,
-    DISPID_IHTMLDOCUMENT7_ONRESET                         = 0x0001177c,
-    DISPID_IHTMLDOCUMENT7_ONSCROLL                        = 0x0001178f,
-    DISPID_IHTMLDOCUMENT7_ONSEEKED                        = 0x00011803,
-    DISPID_IHTMLDOCUMENT7_ONSEEKING                       = 0x00011804,
-    DISPID_IHTMLDOCUMENT7_ONSELECT                        = 0x0001177a,
-    DISPID_IHTMLDOCUMENT7_ONSTALLED                       = 0x00011805,
-    DISPID_IHTMLDOCUMENT7_ONSUBMIT                        = 0x0001177b,
-    DISPID_IHTMLDOCUMENT7_ONSUSPEND                       = 0x00011806,
-    DISPID_IHTMLDOCUMENT7_ONTIMEUPDATE                    = 0x00011807,
-    DISPID_IHTMLDOCUMENT7_ONVOLUMECHANGE                  = 0x00011808,
-    DISPID_IHTMLDOCUMENT7_ONWAITING                       = 0x00011809,
-    DISPID_IHTMLDOCUMENT7_NORMALIZE                       = 0x0000046e,
-    DISPID_IHTMLDOCUMENT7_IMPORTNODE                      = 0x0000046f,
-    DISPID_IHTMLDOCUMENT7_IE9_PARENTWINDOW                = 0x00000470,
-    DISPID_IHTMLDOCUMENT7_IE9_BODY                        = 0x00000471,
-    DISPID_IHTMLDOCUMENT7_HEAD                            = 0x00000472,
-    DISPID_IHTMLDOCUMENT8_ONMSCONTENTZOOM                 = 0x0001181c,
-    DISPID_IHTMLDOCUMENT8_ONMSPOINTERDOWN                 = 0x0001180a,
-    DISPID_IHTMLDOCUMENT8_ONMSPOINTERMOVE                 = 0x0001180b,
-    DISPID_IHTMLDOCUMENT8_ONMSPOINTERUP                   = 0x0001180c,
-    DISPID_IHTMLDOCUMENT8_ONMSPOINTEROVER                 = 0x0001180d,
-    DISPID_IHTMLDOCUMENT8_ONMSPOINTEROUT                  = 0x0001180e,
-    DISPID_IHTMLDOCUMENT8_ONMSPOINTERCANCEL               = 0x0001180f,
-    DISPID_IHTMLDOCUMENT8_ONMSPOINTERHOVER                = 0x00011810,
-    DISPID_IHTMLDOCUMENT8_ONMSGESTURESTART                = 0x00011813,
-    DISPID_IHTMLDOCUMENT8_ONMSGESTURECHANGE               = 0x00011814,
-    DISPID_IHTMLDOCUMENT8_ONMSGESTUREEND                  = 0x00011815,
-    DISPID_IHTMLDOCUMENT8_ONMSGESTUREHOLD                 = 0x00011816,
-    DISPID_IHTMLDOCUMENT8_ONMSGESTURETAP                  = 0x00011817,
-    DISPID_IHTMLDOCUMENT8_ONMSGESTUREDOUBLETAP            = 0x00011818,
-    DISPID_IHTMLDOCUMENT8_ONMSINERTIASTART                = 0x00011819,
-    DISPID_IHTMLDOCUMENT8_ELEMENTSFROMPOINT               = 0x00000473,
-    DISPID_IHTMLDOCUMENT8_ELEMENTSFROMRECT                = 0x00000474,
-    DISPID_IHTMLDOCUMENT8_ONMSMANIPULATIONSTATECHANGED    = 0x00011822,
-    DISPID_IHTMLDOCUMENT8_MSCAPSLOCKWARNINGOFF            = 0x00000475,
+    DISPID_IHTMLDOCUMENT2_FGCOLOR                         = 0x0001138aU,
+    DISPID_IHTMLDOCUMENT2_LINKCOLOR                       = 0x00000400U,
+    DISPID_IHTMLDOCUMENT2_VLINKCOLOR                      = 0x000003ffU,
+    DISPID_IHTMLDOCUMENT2_REFERRER                        = 0x00000403U,
+    DISPID_IHTMLDOCUMENT2_LOCATION                        = 0x00000402U,
+    DISPID_IHTMLDOCUMENT2_LASTMODIFIED                    = 0x00000404U,
+    DISPID_IHTMLDOCUMENT2_URL                             = 0x00000401U,
+    DISPID_IHTMLDOCUMENT2_DOMAIN                          = 0x00000405U,
+    DISPID_IHTMLDOCUMENT2_COOKIE                          = 0x00000406U,
+    DISPID_IHTMLDOCUMENT2_EXPANDO                         = 0x00000407U,
+    DISPID_IHTMLDOCUMENT2_CHARSET                         = 0x00000408U,
+    DISPID_IHTMLDOCUMENT2_DEFAULTCHARSET                  = 0x00000409U,
+    DISPID_IHTMLDOCUMENT2_MIMETYPE                        = 0x00000411U,
+    DISPID_IHTMLDOCUMENT2_FILESIZE                        = 0x00000412U,
+    DISPID_IHTMLDOCUMENT2_FILECREATEDDATE                 = 0x00000413U,
+    DISPID_IHTMLDOCUMENT2_FILEMODIFIEDDATE                = 0x00000414U,
+    DISPID_IHTMLDOCUMENT2_FILEUPDATEDDATE                 = 0x00000415U,
+    DISPID_IHTMLDOCUMENT2_SECURITY                        = 0x00000416U,
+    DISPID_IHTMLDOCUMENT2_PROTOCOL                        = 0x00000417U,
+    DISPID_IHTMLDOCUMENT2_NAMEPROP                        = 0x00000418U,
+    DISPID_IHTMLDOCUMENT2_WRITE                           = 0x0000041eU,
+    DISPID_IHTMLDOCUMENT2_WRITELN                         = 0x0000041fU,
+    DISPID_IHTMLDOCUMENT2_OPEN                            = 0x00000420U,
+    DISPID_IHTMLDOCUMENT2_CLOSE                           = 0x00000421U,
+    DISPID_IHTMLDOCUMENT2_CLEAR                           = 0x00000422U,
+    DISPID_IHTMLDOCUMENT2_QUERYCOMMANDSUPPORTED           = 0x00000423U,
+    DISPID_IHTMLDOCUMENT2_QUERYCOMMANDENABLED             = 0x00000424U,
+    DISPID_IHTMLDOCUMENT2_QUERYCOMMANDSTATE               = 0x00000425U,
+    DISPID_IHTMLDOCUMENT2_QUERYCOMMANDINDETERM            = 0x00000426U,
+    DISPID_IHTMLDOCUMENT2_QUERYCOMMANDTEXT                = 0x00000427U,
+    DISPID_IHTMLDOCUMENT2_QUERYCOMMANDVALUE               = 0x00000428U,
+    DISPID_IHTMLDOCUMENT2_EXECCOMMAND                     = 0x00000429U,
+    DISPID_IHTMLDOCUMENT2_EXECCOMMANDSHOWHELP             = 0x0000042aU,
+    DISPID_IHTMLDOCUMENT2_CREATEELEMENT                   = 0x0000042bU,
+    DISPID_IHTMLDOCUMENT2_ONHELP                          = 0x0001177dU,
+    DISPID_IHTMLDOCUMENT2_ONCLICK                         = 0x00011778U,
+    DISPID_IHTMLDOCUMENT2_ONDBLCLICK                      = 0x00011779U,
+    DISPID_IHTMLDOCUMENT2_ONKEYUP                         = 0x00011776U,
+    DISPID_IHTMLDOCUMENT2_ONKEYDOWN                       = 0x00011775U,
+    DISPID_IHTMLDOCUMENT2_ONKEYPRESS                      = 0x00011777U,
+    DISPID_IHTMLDOCUMENT2_ONMOUSEUP                       = 0x00011773U,
+    DISPID_IHTMLDOCUMENT2_ONMOUSEDOWN                     = 0x00011772U,
+    DISPID_IHTMLDOCUMENT2_ONMOUSEMOVE                     = 0x00011774U,
+    DISPID_IHTMLDOCUMENT2_ONMOUSEOUT                      = 0x00011771U,
+    DISPID_IHTMLDOCUMENT2_ONMOUSEOVER                     = 0x00011770U,
+    DISPID_IHTMLDOCUMENT2_ONREADYSTATECHANGE              = 0x00011789U,
+    DISPID_IHTMLDOCUMENT2_ONAFTERUPDATE                   = 0x00011786U,
+    DISPID_IHTMLDOCUMENT2_ONROWEXIT                       = 0x00011782U,
+    DISPID_IHTMLDOCUMENT2_ONROWENTER                      = 0x00011783U,
+    DISPID_IHTMLDOCUMENT2_ONDRAGSTART                     = 0x00011793U,
+    DISPID_IHTMLDOCUMENT2_ONSELECTSTART                   = 0x00011795U,
+    DISPID_IHTMLDOCUMENT2_ELEMENTFROMPOINT                = 0x0000042cU,
+    DISPID_IHTMLDOCUMENT2_PARENTWINDOW                    = 0x0000040aU,
+    DISPID_IHTMLDOCUMENT2_STYLESHEETS                     = 0x0000042dU,
+    DISPID_IHTMLDOCUMENT2_ONBEFOREUPDATE                  = 0x00011785U,
+    DISPID_IHTMLDOCUMENT2_ONERRORUPDATE                   = 0x00011796U,
+    DISPID_IHTMLDOCUMENT2_TOSTRING                        = 0x0000042eU,
+    DISPID_IHTMLDOCUMENT2_CREATESTYLESHEET                = 0x0000042fU,
+    DISPID_IHTMLDOCUMENT3_RELEASECAPTURE                  = 0x00000430U,
+    DISPID_IHTMLDOCUMENT3_RECALC                          = 0x00000431U,
+    DISPID_IHTMLDOCUMENT3_CREATETEXTNODE                  = 0x00000432U,
+    DISPID_IHTMLDOCUMENT3_DOCUMENTELEMENT                 = 0x00000433U,
+    DISPID_IHTMLDOCUMENT3_UNIQUEID                        = 0x00000435U,
+    DISPID_IHTMLDOCUMENT3_ATTACHEVENT                     = 0x000101fbU,
+    DISPID_IHTMLDOCUMENT3_DETACHEVENT                     = 0x000101fcU,
+    DISPID_IHTMLDOCUMENT3_ONROWSDELETE                    = 0x000117aeU,
+    DISPID_IHTMLDOCUMENT3_ONROWSINSERTED                  = 0x000117afU,
+    DISPID_IHTMLDOCUMENT3_ONCELLCHANGE                    = 0x000117b0U,
+    DISPID_IHTMLDOCUMENT3_ONDATASETCHANGED                = 0x00011798U,
+    DISPID_IHTMLDOCUMENT3_ONDATAAVAILABLE                 = 0x00011799U,
+    DISPID_IHTMLDOCUMENT3_ONDATASETCOMPLETE               = 0x0001179aU,
+    DISPID_IHTMLDOCUMENT3_ONPROPERTYCHANGE                = 0x0001179fU,
+    DISPID_IHTMLDOCUMENT3_DIR                             = 0x000113fdU,
+    DISPID_IHTMLDOCUMENT3_ONCONTEXTMENU                   = 0x000117b1U,
+    DISPID_IHTMLDOCUMENT3_ONSTOP                          = 0x000117b4U,
+    DISPID_IHTMLDOCUMENT3_CREATEDOCUMENTFRAGMENT          = 0x00000434U,
+    DISPID_IHTMLDOCUMENT3_PARENTDOCUMENT                  = 0x00000436U,
+    DISPID_IHTMLDOCUMENT3_ENABLEDOWNLOAD                  = 0x00000437U,
+    DISPID_IHTMLDOCUMENT3_BASEURL                         = 0x00000438U,
+    DISPID_IHTMLDOCUMENT3_CHILDNODES                      = 0x00010419U,
+    DISPID_IHTMLDOCUMENT3_INHERITSTYLESHEETS              = 0x0000043aU,
+    DISPID_IHTMLDOCUMENT3_ONBEFOREEDITFOCUS               = 0x000117b5U,
+    DISPID_IHTMLDOCUMENT3_GETELEMENTSBYNAME               = 0x0000043eU,
+    DISPID_IHTMLDOCUMENT3_GETELEMENTBYID                  = 0x00000440U,
+    DISPID_IHTMLDOCUMENT3_GETELEMENTSBYTAGNAME            = 0x0000043fU,
+    DISPID_IHTMLDOCUMENT4_FOCUS                           = 0x00000441U,
+    DISPID_IHTMLDOCUMENT4_HASFOCUS                        = 0x00000442U,
+    DISPID_IHTMLDOCUMENT4_ONSELECTIONCHANGE               = 0x000117c0U,
+    DISPID_IHTMLDOCUMENT4_NAMESPACES                      = 0x00000443U,
+    DISPID_IHTMLDOCUMENT4_CREATEDOCUMENTFROMURL           = 0x00000444U,
+    DISPID_IHTMLDOCUMENT4_MEDIA                           = 0x00000445U,
+    DISPID_IHTMLDOCUMENT4_CREATEEVENTOBJECT               = 0x00000446U,
+    DISPID_IHTMLDOCUMENT4_FIREEVENT                       = 0x00000447U,
+    DISPID_IHTMLDOCUMENT4_CREATERENDERSTYLE               = 0x00000448U,
+    DISPID_IHTMLDOCUMENT4_ONCONTROLSELECT                 = 0x000117bfU,
+    DISPID_IHTMLDOCUMENT4_URLUNENCODED                    = 0x00000449U,
+    DISPID_IHTMLDOCUMENT5_ONMOUSEWHEEL                    = 0x000117bcU,
+    DISPID_IHTMLDOCUMENT5_DOCTYPE                         = 0x0000044aU,
+    DISPID_IHTMLDOCUMENT5_IMPLEMENTATION                  = 0x0000044bU,
+    DISPID_IHTMLDOCUMENT5_CREATEATTRIBUTE                 = 0x0000044cU,
+    DISPID_IHTMLDOCUMENT5_CREATECOMMENT                   = 0x0000044dU,
+    DISPID_IHTMLDOCUMENT5_ONFOCUSIN                       = 0x000117cbU,
+    DISPID_IHTMLDOCUMENT5_ONFOCUSOUT                      = 0x000117ccU,
+    DISPID_IHTMLDOCUMENT5_ONACTIVATE                      = 0x000117c7U,
+    DISPID_IHTMLDOCUMENT5_ONDEACTIVATE                    = 0x000117c8U,
+    DISPID_IHTMLDOCUMENT5_ONBEFOREACTIVATE                = 0x000117caU,
+    DISPID_IHTMLDOCUMENT5_ONBEFOREDEACTIVATE              = 0x000117bdU,
+    DISPID_IHTMLDOCUMENT5_COMPATMODE                      = 0x0000044eU,
+    DISPID_IHTMLDOCUMENT6_COMPATIBLE                      = 0x0000044fU,
+    DISPID_IHTMLDOCUMENT6_DOCUMENTMODE                    = 0x00000450U,
+    DISPID_IHTMLDOCUMENT6_ONSTORAGE                       = 0x000117d4U,
+    DISPID_IHTMLDOCUMENT6_ONSTORAGECOMMIT                 = 0x000117d5U,
+    DISPID_IHTMLDOCUMENT6_IE8_GETELEMENTBYID              = 0x00000453U,
+    DISPID_IHTMLDOCUMENT6_UPDATESETTINGS                  = 0x00000455U,
+    DISPID_IHTMLDOCUMENT7_DEFAULTVIEW                     = 0x00000456U,
+    DISPID_IHTMLDOCUMENT7_CREATECDATASECTION              = 0x00000463U,
+    DISPID_IHTMLDOCUMENT7_GETSELECTION                    = 0x00000458U,
+    DISPID_IHTMLDOCUMENT7_GETELEMENTSBYTAGNAMENS          = 0x00000459U,
+    DISPID_IHTMLDOCUMENT7_CREATEELEMENTNS                 = 0x0000045aU,
+    DISPID_IHTMLDOCUMENT7_CREATEATTRIBUTENS               = 0x0000045bU,
+    DISPID_IHTMLDOCUMENT7_ONMSTHUMBNAILCLICK              = 0x000117e9U,
+    DISPID_IHTMLDOCUMENT7_CHARACTERSET                    = 0x0000045dU,
+    DISPID_IHTMLDOCUMENT7_IE9_CREATEELEMENT               = 0x0000045eU,
+    DISPID_IHTMLDOCUMENT7_IE9_CREATEATTRIBUTE             = 0x0000045fU,
+    DISPID_IHTMLDOCUMENT7_GETELEMENTSBYCLASSNAME          = 0x00000460U,
+    DISPID_IHTMLDOCUMENT7_CREATEPROCESSINGINSTRUCTION     = 0x00000464U,
+    DISPID_IHTMLDOCUMENT7_ADOPTNODE                       = 0x00000465U,
+    DISPID_IHTMLDOCUMENT7_ONMSSITEMODEJUMPLISTITEMREMOVED = 0x000117f2U,
+    DISPID_IHTMLDOCUMENT7_IE9_ALL                         = 0x00000466U,
+    DISPID_IHTMLDOCUMENT7_INPUTENCODING                   = 0x00000467U,
+    DISPID_IHTMLDOCUMENT7_XMLENCODING                     = 0x00000468U,
+    DISPID_IHTMLDOCUMENT7_XMLSTANDALONE                   = 0x00000469U,
+    DISPID_IHTMLDOCUMENT7_XMLVERSION                      = 0x0000046aU,
+    DISPID_IHTMLDOCUMENT7_HASATTRIBUTES                   = 0x0000046cU,
+    DISPID_IHTMLDOCUMENT7_ONABORT                         = 0x0001178cU,
+    DISPID_IHTMLDOCUMENT7_ONBLUR                          = 0x0001177fU,
+    DISPID_IHTMLDOCUMENT7_ONCANPLAY                       = 0x000117f6U,
+    DISPID_IHTMLDOCUMENT7_ONCANPLAYTHROUGH                = 0x000117f7U,
+    DISPID_IHTMLDOCUMENT7_ONCHANGE                        = 0x0001178eU,
+    DISPID_IHTMLDOCUMENT7_ONDRAG                          = 0x000117a1U,
+    DISPID_IHTMLDOCUMENT7_ONDRAGEND                       = 0x000117a2U,
+    DISPID_IHTMLDOCUMENT7_ONDRAGENTER                     = 0x000117a3U,
+    DISPID_IHTMLDOCUMENT7_ONDRAGLEAVE                     = 0x000117a5U,
+    DISPID_IHTMLDOCUMENT7_ONDRAGOVER                      = 0x000117a4U,
+    DISPID_IHTMLDOCUMENT7_ONDROP                          = 0x000117a6U,
+    DISPID_IHTMLDOCUMENT7_ONDURATIONCHANGE                = 0x000117f8U,
+    DISPID_IHTMLDOCUMENT7_ONEMPTIED                       = 0x000117f9U,
+    DISPID_IHTMLDOCUMENT7_ONENDED                         = 0x000117faU,
+    DISPID_IHTMLDOCUMENT7_ONERROR                         = 0x0001178dU,
+    DISPID_IHTMLDOCUMENT7_ONFOCUS                         = 0x0001177eU,
+    DISPID_IHTMLDOCUMENT7_ONINPUT                         = 0x000117efU,
+    DISPID_IHTMLDOCUMENT7_ONLOAD                          = 0x00011790U,
+    DISPID_IHTMLDOCUMENT7_ONLOADEDDATA                    = 0x000117fbU,
+    DISPID_IHTMLDOCUMENT7_ONLOADEDMETADATA                = 0x000117fcU,
+    DISPID_IHTMLDOCUMENT7_ONLOADSTART                     = 0x000117fdU,
+    DISPID_IHTMLDOCUMENT7_ONPAUSE                         = 0x000117feU,
+    DISPID_IHTMLDOCUMENT7_ONPLAY                          = 0x000117ffU,
+    DISPID_IHTMLDOCUMENT7_ONPLAYING                       = 0x00011800U,
+    DISPID_IHTMLDOCUMENT7_ONPROGRESS                      = 0x00011801U,
+    DISPID_IHTMLDOCUMENT7_ONRATECHANGE                    = 0x00011802U,
+    DISPID_IHTMLDOCUMENT7_ONRESET                         = 0x0001177cU,
+    DISPID_IHTMLDOCUMENT7_ONSCROLL                        = 0x0001178fU,
+    DISPID_IHTMLDOCUMENT7_ONSEEKED                        = 0x00011803U,
+    DISPID_IHTMLDOCUMENT7_ONSEEKING                       = 0x00011804U,
+    DISPID_IHTMLDOCUMENT7_ONSELECT                        = 0x0001177aU,
+    DISPID_IHTMLDOCUMENT7_ONSTALLED                       = 0x00011805U,
+    DISPID_IHTMLDOCUMENT7_ONSUBMIT                        = 0x0001177bU,
+    DISPID_IHTMLDOCUMENT7_ONSUSPEND                       = 0x00011806U,
+    DISPID_IHTMLDOCUMENT7_ONTIMEUPDATE                    = 0x00011807U,
+    DISPID_IHTMLDOCUMENT7_ONVOLUMECHANGE                  = 0x00011808U,
+    DISPID_IHTMLDOCUMENT7_ONWAITING                       = 0x00011809U,
+    DISPID_IHTMLDOCUMENT7_NORMALIZE                       = 0x0000046eU,
+    DISPID_IHTMLDOCUMENT7_IMPORTNODE                      = 0x0000046fU,
+    DISPID_IHTMLDOCUMENT7_IE9_PARENTWINDOW                = 0x00000470U,
+    DISPID_IHTMLDOCUMENT7_IE9_BODY                        = 0x00000471U,
+    DISPID_IHTMLDOCUMENT7_HEAD                            = 0x00000472U,
+    DISPID_IHTMLDOCUMENT8_ONMSCONTENTZOOM                 = 0x0001181cU,
+    DISPID_IHTMLDOCUMENT8_ONMSPOINTERDOWN                 = 0x0001180aU,
+    DISPID_IHTMLDOCUMENT8_ONMSPOINTERMOVE                 = 0x0001180bU,
+    DISPID_IHTMLDOCUMENT8_ONMSPOINTERUP                   = 0x0001180cU,
+    DISPID_IHTMLDOCUMENT8_ONMSPOINTEROVER                 = 0x0001180dU,
+    DISPID_IHTMLDOCUMENT8_ONMSPOINTEROUT                  = 0x0001180eU,
+    DISPID_IHTMLDOCUMENT8_ONMSPOINTERCANCEL               = 0x0001180fU,
+    DISPID_IHTMLDOCUMENT8_ONMSPOINTERHOVER                = 0x00011810U,
+    DISPID_IHTMLDOCUMENT8_ONMSGESTURESTART                = 0x00011813U,
+    DISPID_IHTMLDOCUMENT8_ONMSGESTURECHANGE               = 0x00011814U,
+    DISPID_IHTMLDOCUMENT8_ONMSGESTUREEND                  = 0x00011815U,
+    DISPID_IHTMLDOCUMENT8_ONMSGESTUREHOLD                 = 0x00011816U,
+    DISPID_IHTMLDOCUMENT8_ONMSGESTURETAP                  = 0x00011817U,
+    DISPID_IHTMLDOCUMENT8_ONMSGESTUREDOUBLETAP            = 0x00011818U,
+    DISPID_IHTMLDOCUMENT8_ONMSINERTIASTART                = 0x00011819U,
+    DISPID_IHTMLDOCUMENT8_ELEMENTSFROMPOINT               = 0x00000473U,
+    DISPID_IHTMLDOCUMENT8_ELEMENTSFROMRECT                = 0x00000474U,
+    DISPID_IHTMLDOCUMENT8_ONMSMANIPULATIONSTATECHANGED    = 0x00011822U,
+    DISPID_IHTMLDOCUMENT8_MSCAPSLOCKWARNINGOFF            = 0x00000475U,
 }
 
 enum : uint
 {
-    DISPID_IDOCUMENTEVENT_CREATEEVENT         = 0x00000454,
-    DISPID_IDOCUMENTRANGE_CREATERANGE         = 0x00000457,
-    DISPID_IDOCUMENTSELECTOR_QUERYSELECTOR    = 0x00000451,
-    DISPID_IDOCUMENTSELECTOR_QUERYSELECTORALL = 0x00000452,
+    DISPID_IDOCUMENTEVENT_CREATEEVENT         = 0x00000454U,
+    DISPID_IDOCUMENTRANGE_CREATERANGE         = 0x00000457U,
+    DISPID_IDOCUMENTSELECTOR_QUERYSELECTOR    = 0x00000451U,
+    DISPID_IDOCUMENTSELECTOR_QUERYSELECTORALL = 0x00000452U,
 }
 
 enum : uint
 {
-    DISPID_IDOCUMENTTRAVERSAL_CREATENODEITERATOR = 0x00000461,
-    DISPID_IDOCUMENTTRAVERSAL_CREATETREEWALKER   = 0x00000462,
+    DISPID_IDOCUMENTTRAVERSAL_CREATENODEITERATOR = 0x00000461U,
+    DISPID_IDOCUMENTTRAVERSAL_CREATETREEWALKER   = 0x00000462U,
 }
 
 enum : uint
 {
-    DISPID_HTMLDOCUMENTEVENTS4_ONMSTHUMBNAILCLICK              = 0x000117e9,
-    DISPID_HTMLDOCUMENTEVENTS4_ONMSSITEMODEJUMPLISTITEMREMOVED = 0x000117f2,
-    DISPID_HTMLDOCUMENTEVENTS3_ONSTORAGE                       = 0x00000421,
-    DISPID_HTMLDOCUMENTEVENTS3_ONSTORAGECOMMIT                 = 0x00000422,
-    DISPID_HTMLDOCUMENTEVENTS2_ONHELP                          = 0x0001000a,
+    DISPID_HTMLDOCUMENTEVENTS4_ONMSTHUMBNAILCLICK              = 0x000117e9U,
+    DISPID_HTMLDOCUMENTEVENTS4_ONMSSITEMODEJUMPLISTITEMREMOVED = 0x000117f2U,
+    DISPID_HTMLDOCUMENTEVENTS3_ONSTORAGE                       = 0x00000421U,
+    DISPID_HTMLDOCUMENTEVENTS3_ONSTORAGECOMMIT                 = 0x00000422U,
+    DISPID_HTMLDOCUMENTEVENTS2_ONHELP                          = 0x0001000aU,
 }
 
 enum : int
@@ -9359,41 +9626,41 @@ enum : int
 
 enum : uint
 {
-    DISPID_HTMLDOCUMENTEVENTS2_ONMOUSEOUT  = 0x00010009,
-    DISPID_HTMLDOCUMENTEVENTS2_ONMOUSEOVER = 0x00010008,
+    DISPID_HTMLDOCUMENTEVENTS2_ONMOUSEOUT  = 0x00010009U,
+    DISPID_HTMLDOCUMENTEVENTS2_ONMOUSEOVER = 0x00010008U,
 }
 
 enum int DISPID_HTMLDOCUMENTEVENTS2_ONREADYSTATECHANGE = 0xfffffd9f;
 
 enum : uint
 {
-    DISPID_HTMLDOCUMENTEVENTS2_ONBEFOREUPDATE     = 0x00010004,
-    DISPID_HTMLDOCUMENTEVENTS2_ONAFTERUPDATE      = 0x00010005,
-    DISPID_HTMLDOCUMENTEVENTS2_ONROWEXIT          = 0x00010006,
-    DISPID_HTMLDOCUMENTEVENTS2_ONROWENTER         = 0x00010007,
-    DISPID_HTMLDOCUMENTEVENTS2_ONDRAGSTART        = 0x0001000b,
-    DISPID_HTMLDOCUMENTEVENTS2_ONSELECTSTART      = 0x0001000c,
-    DISPID_HTMLDOCUMENTEVENTS2_ONERRORUPDATE      = 0x0001000d,
-    DISPID_HTMLDOCUMENTEVENTS2_ONCONTEXTMENU      = 0x000003ff,
-    DISPID_HTMLDOCUMENTEVENTS2_ONSTOP             = 0x00000402,
-    DISPID_HTMLDOCUMENTEVENTS2_ONROWSDELETE       = 0x00010020,
-    DISPID_HTMLDOCUMENTEVENTS2_ONROWSINSERTED     = 0x00010021,
-    DISPID_HTMLDOCUMENTEVENTS2_ONCELLCHANGE       = 0x00010022,
-    DISPID_HTMLDOCUMENTEVENTS2_ONPROPERTYCHANGE   = 0x00010013,
-    DISPID_HTMLDOCUMENTEVENTS2_ONDATASETCHANGED   = 0x0001000e,
-    DISPID_HTMLDOCUMENTEVENTS2_ONDATAAVAILABLE    = 0x0001000f,
-    DISPID_HTMLDOCUMENTEVENTS2_ONDATASETCOMPLETE  = 0x00010010,
-    DISPID_HTMLDOCUMENTEVENTS2_ONBEFOREEDITFOCUS  = 0x00000403,
-    DISPID_HTMLDOCUMENTEVENTS2_ONSELECTIONCHANGE  = 0x0000040d,
-    DISPID_HTMLDOCUMENTEVENTS2_ONCONTROLSELECT    = 0x0000040c,
-    DISPID_HTMLDOCUMENTEVENTS2_ONMOUSEWHEEL       = 0x00000409,
-    DISPID_HTMLDOCUMENTEVENTS2_ONFOCUSIN          = 0x00000418,
-    DISPID_HTMLDOCUMENTEVENTS2_ONFOCUSOUT         = 0x00000419,
-    DISPID_HTMLDOCUMENTEVENTS2_ONACTIVATE         = 0x00000414,
-    DISPID_HTMLDOCUMENTEVENTS2_ONDEACTIVATE       = 0x00000415,
-    DISPID_HTMLDOCUMENTEVENTS2_ONBEFOREACTIVATE   = 0x00000417,
-    DISPID_HTMLDOCUMENTEVENTS2_ONBEFOREDEACTIVATE = 0x0000040a,
-    DISPID_HTMLDOCUMENTEVENTS_ONHELP              = 0x0001000a,
+    DISPID_HTMLDOCUMENTEVENTS2_ONBEFOREUPDATE     = 0x00010004U,
+    DISPID_HTMLDOCUMENTEVENTS2_ONAFTERUPDATE      = 0x00010005U,
+    DISPID_HTMLDOCUMENTEVENTS2_ONROWEXIT          = 0x00010006U,
+    DISPID_HTMLDOCUMENTEVENTS2_ONROWENTER         = 0x00010007U,
+    DISPID_HTMLDOCUMENTEVENTS2_ONDRAGSTART        = 0x0001000bU,
+    DISPID_HTMLDOCUMENTEVENTS2_ONSELECTSTART      = 0x0001000cU,
+    DISPID_HTMLDOCUMENTEVENTS2_ONERRORUPDATE      = 0x0001000dU,
+    DISPID_HTMLDOCUMENTEVENTS2_ONCONTEXTMENU      = 0x000003ffU,
+    DISPID_HTMLDOCUMENTEVENTS2_ONSTOP             = 0x00000402U,
+    DISPID_HTMLDOCUMENTEVENTS2_ONROWSDELETE       = 0x00010020U,
+    DISPID_HTMLDOCUMENTEVENTS2_ONROWSINSERTED     = 0x00010021U,
+    DISPID_HTMLDOCUMENTEVENTS2_ONCELLCHANGE       = 0x00010022U,
+    DISPID_HTMLDOCUMENTEVENTS2_ONPROPERTYCHANGE   = 0x00010013U,
+    DISPID_HTMLDOCUMENTEVENTS2_ONDATASETCHANGED   = 0x0001000eU,
+    DISPID_HTMLDOCUMENTEVENTS2_ONDATAAVAILABLE    = 0x0001000fU,
+    DISPID_HTMLDOCUMENTEVENTS2_ONDATASETCOMPLETE  = 0x00010010U,
+    DISPID_HTMLDOCUMENTEVENTS2_ONBEFOREEDITFOCUS  = 0x00000403U,
+    DISPID_HTMLDOCUMENTEVENTS2_ONSELECTIONCHANGE  = 0x0000040dU,
+    DISPID_HTMLDOCUMENTEVENTS2_ONCONTROLSELECT    = 0x0000040cU,
+    DISPID_HTMLDOCUMENTEVENTS2_ONMOUSEWHEEL       = 0x00000409U,
+    DISPID_HTMLDOCUMENTEVENTS2_ONFOCUSIN          = 0x00000418U,
+    DISPID_HTMLDOCUMENTEVENTS2_ONFOCUSOUT         = 0x00000419U,
+    DISPID_HTMLDOCUMENTEVENTS2_ONACTIVATE         = 0x00000414U,
+    DISPID_HTMLDOCUMENTEVENTS2_ONDEACTIVATE       = 0x00000415U,
+    DISPID_HTMLDOCUMENTEVENTS2_ONBEFOREACTIVATE   = 0x00000417U,
+    DISPID_HTMLDOCUMENTEVENTS2_ONBEFOREDEACTIVATE = 0x0000040aU,
+    DISPID_HTMLDOCUMENTEVENTS_ONHELP              = 0x0001000aU,
 }
 
 enum : int
@@ -9410,48 +9677,48 @@ enum : int
 
 enum : uint
 {
-    DISPID_HTMLDOCUMENTEVENTS_ONMOUSEOUT  = 0x00010009,
-    DISPID_HTMLDOCUMENTEVENTS_ONMOUSEOVER = 0x00010008,
+    DISPID_HTMLDOCUMENTEVENTS_ONMOUSEOUT  = 0x00010009U,
+    DISPID_HTMLDOCUMENTEVENTS_ONMOUSEOVER = 0x00010008U,
 }
 
 enum int DISPID_HTMLDOCUMENTEVENTS_ONREADYSTATECHANGE = 0xfffffd9f;
 
 enum : uint
 {
-    DISPID_HTMLDOCUMENTEVENTS_ONBEFOREUPDATE     = 0x00010004,
-    DISPID_HTMLDOCUMENTEVENTS_ONAFTERUPDATE      = 0x00010005,
-    DISPID_HTMLDOCUMENTEVENTS_ONROWEXIT          = 0x00010006,
-    DISPID_HTMLDOCUMENTEVENTS_ONROWENTER         = 0x00010007,
-    DISPID_HTMLDOCUMENTEVENTS_ONDRAGSTART        = 0x0001000b,
-    DISPID_HTMLDOCUMENTEVENTS_ONSELECTSTART      = 0x0001000c,
-    DISPID_HTMLDOCUMENTEVENTS_ONERRORUPDATE      = 0x0001000d,
-    DISPID_HTMLDOCUMENTEVENTS_ONCONTEXTMENU      = 0x000003ff,
-    DISPID_HTMLDOCUMENTEVENTS_ONSTOP             = 0x00000402,
-    DISPID_HTMLDOCUMENTEVENTS_ONROWSDELETE       = 0x00010020,
-    DISPID_HTMLDOCUMENTEVENTS_ONROWSINSERTED     = 0x00010021,
-    DISPID_HTMLDOCUMENTEVENTS_ONCELLCHANGE       = 0x00010022,
-    DISPID_HTMLDOCUMENTEVENTS_ONPROPERTYCHANGE   = 0x00010013,
-    DISPID_HTMLDOCUMENTEVENTS_ONDATASETCHANGED   = 0x0001000e,
-    DISPID_HTMLDOCUMENTEVENTS_ONDATAAVAILABLE    = 0x0001000f,
-    DISPID_HTMLDOCUMENTEVENTS_ONDATASETCOMPLETE  = 0x00010010,
-    DISPID_HTMLDOCUMENTEVENTS_ONBEFOREEDITFOCUS  = 0x00000403,
-    DISPID_HTMLDOCUMENTEVENTS_ONSELECTIONCHANGE  = 0x0000040d,
-    DISPID_HTMLDOCUMENTEVENTS_ONCONTROLSELECT    = 0x0000040c,
-    DISPID_HTMLDOCUMENTEVENTS_ONMOUSEWHEEL       = 0x00000409,
-    DISPID_HTMLDOCUMENTEVENTS_ONFOCUSIN          = 0x00000418,
-    DISPID_HTMLDOCUMENTEVENTS_ONFOCUSOUT         = 0x00000419,
-    DISPID_HTMLDOCUMENTEVENTS_ONACTIVATE         = 0x00000414,
-    DISPID_HTMLDOCUMENTEVENTS_ONDEACTIVATE       = 0x00000415,
-    DISPID_HTMLDOCUMENTEVENTS_ONBEFOREACTIVATE   = 0x00000417,
-    DISPID_HTMLDOCUMENTEVENTS_ONBEFOREDEACTIVATE = 0x0000040a,
+    DISPID_HTMLDOCUMENTEVENTS_ONBEFOREUPDATE     = 0x00010004U,
+    DISPID_HTMLDOCUMENTEVENTS_ONAFTERUPDATE      = 0x00010005U,
+    DISPID_HTMLDOCUMENTEVENTS_ONROWEXIT          = 0x00010006U,
+    DISPID_HTMLDOCUMENTEVENTS_ONROWENTER         = 0x00010007U,
+    DISPID_HTMLDOCUMENTEVENTS_ONDRAGSTART        = 0x0001000bU,
+    DISPID_HTMLDOCUMENTEVENTS_ONSELECTSTART      = 0x0001000cU,
+    DISPID_HTMLDOCUMENTEVENTS_ONERRORUPDATE      = 0x0001000dU,
+    DISPID_HTMLDOCUMENTEVENTS_ONCONTEXTMENU      = 0x000003ffU,
+    DISPID_HTMLDOCUMENTEVENTS_ONSTOP             = 0x00000402U,
+    DISPID_HTMLDOCUMENTEVENTS_ONROWSDELETE       = 0x00010020U,
+    DISPID_HTMLDOCUMENTEVENTS_ONROWSINSERTED     = 0x00010021U,
+    DISPID_HTMLDOCUMENTEVENTS_ONCELLCHANGE       = 0x00010022U,
+    DISPID_HTMLDOCUMENTEVENTS_ONPROPERTYCHANGE   = 0x00010013U,
+    DISPID_HTMLDOCUMENTEVENTS_ONDATASETCHANGED   = 0x0001000eU,
+    DISPID_HTMLDOCUMENTEVENTS_ONDATAAVAILABLE    = 0x0001000fU,
+    DISPID_HTMLDOCUMENTEVENTS_ONDATASETCOMPLETE  = 0x00010010U,
+    DISPID_HTMLDOCUMENTEVENTS_ONBEFOREEDITFOCUS  = 0x00000403U,
+    DISPID_HTMLDOCUMENTEVENTS_ONSELECTIONCHANGE  = 0x0000040dU,
+    DISPID_HTMLDOCUMENTEVENTS_ONCONTROLSELECT    = 0x0000040cU,
+    DISPID_HTMLDOCUMENTEVENTS_ONMOUSEWHEEL       = 0x00000409U,
+    DISPID_HTMLDOCUMENTEVENTS_ONFOCUSIN          = 0x00000418U,
+    DISPID_HTMLDOCUMENTEVENTS_ONFOCUSOUT         = 0x00000419U,
+    DISPID_HTMLDOCUMENTEVENTS_ONACTIVATE         = 0x00000414U,
+    DISPID_HTMLDOCUMENTEVENTS_ONDEACTIVATE       = 0x00000415U,
+    DISPID_HTMLDOCUMENTEVENTS_ONBEFOREACTIVATE   = 0x00000417U,
+    DISPID_HTMLDOCUMENTEVENTS_ONBEFOREDEACTIVATE = 0x0000040aU,
 }
 
 enum : uint
 {
-    DISPID_IWEBBRIDGE_URL       = 0x00000001,
-    DISPID_IWEBBRIDGE_SCROLLBAR = 0x00000002,
-    DISPID_IWEBBRIDGE_EMBED     = 0x00000003,
-    DISPID_IWEBBRIDGE_EVENT     = 0x00000480,
+    DISPID_IWEBBRIDGE_URL       = 0x00000001U,
+    DISPID_IWEBBRIDGE_SCROLLBAR = 0x00000002U,
+    DISPID_IWEBBRIDGE_EMBED     = 0x00000003U,
+    DISPID_IWEBBRIDGE_EVENT     = 0x00000480U,
 }
 
 enum : int
@@ -9462,18 +9729,18 @@ enum : int
 
 enum : uint
 {
-    DISPID_IWBSCRIPTCONTROL_RAISEEVENT         = 0x00000001,
-    DISPID_IWBSCRIPTCONTROL_BUBBLEEVENT        = 0x00000002,
-    DISPID_IWBSCRIPTCONTROL_SETCONTEXTMENU     = 0x00000003,
-    DISPID_IWBSCRIPTCONTROL_SELECTABLECONTENT  = 0x00000004,
-    DISPID_IWBSCRIPTCONTROL_FROZEN             = 0x00000005,
-    DISPID_IWBSCRIPTCONTROL_SCROLLBAR          = 0x00000007,
-    DISPID_IWBSCRIPTCONTROL_VERSION            = 0x00000008,
-    DISPID_IWBSCRIPTCONTROL_VISIBILITY         = 0x00000009,
-    DISPID_IWBSCRIPTCONTROL_ONVISIBILITYCHANGE = 0x0000000a,
+    DISPID_IWBSCRIPTCONTROL_RAISEEVENT         = 0x00000001U,
+    DISPID_IWBSCRIPTCONTROL_BUBBLEEVENT        = 0x00000002U,
+    DISPID_IWBSCRIPTCONTROL_SETCONTEXTMENU     = 0x00000003U,
+    DISPID_IWBSCRIPTCONTROL_SELECTABLECONTENT  = 0x00000004U,
+    DISPID_IWBSCRIPTCONTROL_FROZEN             = 0x00000005U,
+    DISPID_IWBSCRIPTCONTROL_SCROLLBAR          = 0x00000007U,
+    DISPID_IWBSCRIPTCONTROL_VERSION            = 0x00000008U,
+    DISPID_IWBSCRIPTCONTROL_VISIBILITY         = 0x00000009U,
+    DISPID_IWBSCRIPTCONTROL_ONVISIBILITYCHANGE = 0x0000000aU,
 }
 
-enum uint DISPID_DWEBBRIDGEEVENTS_ONSCRIPTLETEVENT = 0x00000001;
+enum uint DISPID_DWEBBRIDGEEVENTS_ONSCRIPTLETEVENT = 0x00000001U;
 
 enum : int
 {
@@ -9490,1805 +9757,1805 @@ enum : int
 
 enum : uint
 {
-    DISPID_IHTMLEMBEDELEMENT_HIDDEN           = 0x00010bc2,
-    DISPID_IHTMLEMBEDELEMENT_PALETTE          = 0x00010bbc,
-    DISPID_IHTMLEMBEDELEMENT_PLUGINSPAGE      = 0x00010bbd,
-    DISPID_IHTMLEMBEDELEMENT_SRC              = 0x00010bbe,
-    DISPID_IHTMLEMBEDELEMENT_UNITS            = 0x00010bc0,
-    DISPID_IHTMLEMBEDELEMENT_NAME             = 0x00010000,
-    DISPID_IHTMLEMBEDELEMENT_WIDTH            = 0x00010005,
-    DISPID_IHTMLEMBEDELEMENT_HEIGHT           = 0x00010006,
-    DISPID_IHTMLEMBEDELEMENT2_IE8_SRC         = 0x0000047e,
-    DISPID_IHTMLEMBEDELEMENT2_IE8_PLUGINSPAGE = 0x0000047f,
+    DISPID_IHTMLEMBEDELEMENT_HIDDEN           = 0x00010bc2U,
+    DISPID_IHTMLEMBEDELEMENT_PALETTE          = 0x00010bbcU,
+    DISPID_IHTMLEMBEDELEMENT_PLUGINSPAGE      = 0x00010bbdU,
+    DISPID_IHTMLEMBEDELEMENT_SRC              = 0x00010bbeU,
+    DISPID_IHTMLEMBEDELEMENT_UNITS            = 0x00010bc0U,
+    DISPID_IHTMLEMBEDELEMENT_NAME             = 0x00010000U,
+    DISPID_IHTMLEMBEDELEMENT_WIDTH            = 0x00010005U,
+    DISPID_IHTMLEMBEDELEMENT_HEIGHT           = 0x00010006U,
+    DISPID_IHTMLEMBEDELEMENT2_IE8_SRC         = 0x0000047eU,
+    DISPID_IHTMLEMBEDELEMENT2_IE8_PLUGINSPAGE = 0x0000047fU,
 }
 
-enum uint DISPID_IHTMLAREASCOLLECTION_LENGTH = 0x000005dc;
+enum uint DISPID_IHTMLAREASCOLLECTION_LENGTH = 0x000005dcU;
 enum int DISPID_IHTMLAREASCOLLECTION__NEWENUM = 0xfffffffc;
 
 enum : uint
 {
-    DISPID_IHTMLAREASCOLLECTION_ITEM           = 0x00000000,
-    DISPID_IHTMLAREASCOLLECTION_TAGS           = 0x000005de,
-    DISPID_IHTMLAREASCOLLECTION_ADD            = 0x000005df,
-    DISPID_IHTMLAREASCOLLECTION_REMOVE         = 0x000005e0,
-    DISPID_IHTMLAREASCOLLECTION2_URNS          = 0x000005e1,
-    DISPID_IHTMLAREASCOLLECTION3_NAMEDITEM     = 0x000005e2,
-    DISPID_IHTMLAREASCOLLECTION4_IE8_LENGTH    = 0x0000047e,
-    DISPID_IHTMLAREASCOLLECTION4_IE8_ITEM      = 0x00000480,
-    DISPID_IHTMLAREASCOLLECTION4_IE8_NAMEDITEM = 0x00000481,
+    DISPID_IHTMLAREASCOLLECTION_ITEM           = 0x00000000U,
+    DISPID_IHTMLAREASCOLLECTION_TAGS           = 0x000005deU,
+    DISPID_IHTMLAREASCOLLECTION_ADD            = 0x000005dfU,
+    DISPID_IHTMLAREASCOLLECTION_REMOVE         = 0x000005e0U,
+    DISPID_IHTMLAREASCOLLECTION2_URNS          = 0x000005e1U,
+    DISPID_IHTMLAREASCOLLECTION3_NAMEDITEM     = 0x000005e2U,
+    DISPID_IHTMLAREASCOLLECTION4_IE8_LENGTH    = 0x0000047eU,
+    DISPID_IHTMLAREASCOLLECTION4_IE8_ITEM      = 0x00000480U,
+    DISPID_IHTMLAREASCOLLECTION4_IE8_NAMEDITEM = 0x00000481U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLMAPELEMENT_AREAS        = 0x000003ea,
-    DISPID_IHTMLMAPELEMENT_NAME         = 0x00010000,
-    DISPID_IHTMLAREAELEMENT_SHAPE       = 0x000003e9,
-    DISPID_IHTMLAREAELEMENT_COORDS      = 0x000003ea,
-    DISPID_IHTMLAREAELEMENT_HREF        = 0x00000000,
-    DISPID_IHTMLAREAELEMENT_TARGET      = 0x000003ec,
-    DISPID_IHTMLAREAELEMENT_ALT         = 0x000003ed,
-    DISPID_IHTMLAREAELEMENT_NOHREF      = 0x000003ee,
-    DISPID_IHTMLAREAELEMENT_HOST        = 0x000003ef,
-    DISPID_IHTMLAREAELEMENT_HOSTNAME    = 0x000003f0,
-    DISPID_IHTMLAREAELEMENT_PATHNAME    = 0x000003f1,
-    DISPID_IHTMLAREAELEMENT_PORT        = 0x000003f2,
-    DISPID_IHTMLAREAELEMENT_PROTOCOL    = 0x000003f3,
-    DISPID_IHTMLAREAELEMENT_SEARCH      = 0x000003f4,
-    DISPID_IHTMLAREAELEMENT_HASH        = 0x000003f5,
-    DISPID_IHTMLAREAELEMENT_ONBLUR      = 0x0001177f,
-    DISPID_IHTMLAREAELEMENT_ONFOCUS     = 0x0001177e,
-    DISPID_IHTMLAREAELEMENT_TABINDEX    = 0x0001000f,
-    DISPID_IHTMLAREAELEMENT_FOCUS       = 0x000107d0,
-    DISPID_IHTMLAREAELEMENT_BLUR        = 0x000107d2,
-    DISPID_IHTMLAREAELEMENT2_IE8_SHAPE  = 0x0000047f,
-    DISPID_IHTMLAREAELEMENT2_IE8_COORDS = 0x00000480,
-    DISPID_IHTMLAREAELEMENT2_IE8_HREF   = 0x00000481,
+    DISPID_IHTMLMAPELEMENT_AREAS        = 0x000003eaU,
+    DISPID_IHTMLMAPELEMENT_NAME         = 0x00010000U,
+    DISPID_IHTMLAREAELEMENT_SHAPE       = 0x000003e9U,
+    DISPID_IHTMLAREAELEMENT_COORDS      = 0x000003eaU,
+    DISPID_IHTMLAREAELEMENT_HREF        = 0x00000000U,
+    DISPID_IHTMLAREAELEMENT_TARGET      = 0x000003ecU,
+    DISPID_IHTMLAREAELEMENT_ALT         = 0x000003edU,
+    DISPID_IHTMLAREAELEMENT_NOHREF      = 0x000003eeU,
+    DISPID_IHTMLAREAELEMENT_HOST        = 0x000003efU,
+    DISPID_IHTMLAREAELEMENT_HOSTNAME    = 0x000003f0U,
+    DISPID_IHTMLAREAELEMENT_PATHNAME    = 0x000003f1U,
+    DISPID_IHTMLAREAELEMENT_PORT        = 0x000003f2U,
+    DISPID_IHTMLAREAELEMENT_PROTOCOL    = 0x000003f3U,
+    DISPID_IHTMLAREAELEMENT_SEARCH      = 0x000003f4U,
+    DISPID_IHTMLAREAELEMENT_HASH        = 0x000003f5U,
+    DISPID_IHTMLAREAELEMENT_ONBLUR      = 0x0001177fU,
+    DISPID_IHTMLAREAELEMENT_ONFOCUS     = 0x0001177eU,
+    DISPID_IHTMLAREAELEMENT_TABINDEX    = 0x0001000fU,
+    DISPID_IHTMLAREAELEMENT_FOCUS       = 0x000107d0U,
+    DISPID_IHTMLAREAELEMENT_BLUR        = 0x000107d2U,
+    DISPID_IHTMLAREAELEMENT2_IE8_SHAPE  = 0x0000047fU,
+    DISPID_IHTMLAREAELEMENT2_IE8_COORDS = 0x00000480U,
+    DISPID_IHTMLAREAELEMENT2_IE8_HREF   = 0x00000481U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLTABLECAPTION_ALIGN  = 0x00010048,
-    DISPID_IHTMLTABLECAPTION_VALIGN = 0x000113a7,
+    DISPID_IHTMLTABLECAPTION_ALIGN  = 0x00010048U,
+    DISPID_IHTMLTABLECAPTION_VALIGN = 0x000113a7U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLCOMMENTELEMENT_TEXT               = 0x000003e9,
-    DISPID_IHTMLCOMMENTELEMENT_ATOMIC             = 0x000003ea,
-    DISPID_IHTMLCOMMENTELEMENT2_DATA              = 0x000003eb,
-    DISPID_IHTMLCOMMENTELEMENT2_LENGTH            = 0x000003ec,
-    DISPID_IHTMLCOMMENTELEMENT2_SUBSTRINGDATA     = 0x000003ed,
-    DISPID_IHTMLCOMMENTELEMENT2_APPENDDATA        = 0x000003ee,
-    DISPID_IHTMLCOMMENTELEMENT2_INSERTDATA        = 0x000003ef,
-    DISPID_IHTMLCOMMENTELEMENT2_DELETEDATA        = 0x000003f0,
-    DISPID_IHTMLCOMMENTELEMENT2_REPLACEDATA       = 0x000003f1,
-    DISPID_IHTMLCOMMENTELEMENT3_IE9_SUBSTRINGDATA = 0x000003f2,
-    DISPID_IHTMLCOMMENTELEMENT3_IE9_INSERTDATA    = 0x000003f3,
-    DISPID_IHTMLCOMMENTELEMENT3_IE9_DELETEDATA    = 0x000003f4,
-    DISPID_IHTMLCOMMENTELEMENT3_IE9_REPLACEDATA   = 0x000003f5,
+    DISPID_IHTMLCOMMENTELEMENT_TEXT               = 0x000003e9U,
+    DISPID_IHTMLCOMMENTELEMENT_ATOMIC             = 0x000003eaU,
+    DISPID_IHTMLCOMMENTELEMENT2_DATA              = 0x000003ebU,
+    DISPID_IHTMLCOMMENTELEMENT2_LENGTH            = 0x000003ecU,
+    DISPID_IHTMLCOMMENTELEMENT2_SUBSTRINGDATA     = 0x000003edU,
+    DISPID_IHTMLCOMMENTELEMENT2_APPENDDATA        = 0x000003eeU,
+    DISPID_IHTMLCOMMENTELEMENT2_INSERTDATA        = 0x000003efU,
+    DISPID_IHTMLCOMMENTELEMENT2_DELETEDATA        = 0x000003f0U,
+    DISPID_IHTMLCOMMENTELEMENT2_REPLACEDATA       = 0x000003f1U,
+    DISPID_IHTMLCOMMENTELEMENT3_IE9_SUBSTRINGDATA = 0x000003f2U,
+    DISPID_IHTMLCOMMENTELEMENT3_IE9_INSERTDATA    = 0x000003f3U,
+    DISPID_IHTMLCOMMENTELEMENT3_IE9_DELETEDATA    = 0x000003f4U,
+    DISPID_IHTMLCOMMENTELEMENT3_IE9_REPLACEDATA   = 0x000003f5U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLPHRASEELEMENT2_CITE     = 0x000003e9,
-    DISPID_IHTMLPHRASEELEMENT2_DATETIME = 0x000003ea,
-    DISPID_IHTMLPHRASEELEMENT3_IE8_CITE = 0x0000047e,
+    DISPID_IHTMLPHRASEELEMENT2_CITE     = 0x000003e9U,
+    DISPID_IHTMLPHRASEELEMENT2_DATETIME = 0x000003eaU,
+    DISPID_IHTMLPHRASEELEMENT3_IE8_CITE = 0x0000047eU,
 }
 
 enum : uint
 {
-    DISPID_IHTMLTABLE_COLS        = 0x000003e9,
-    DISPID_IHTMLTABLE_BORDER      = 0x000003ea,
-    DISPID_IHTMLTABLE_FRAME       = 0x000003ec,
-    DISPID_IHTMLTABLE_RULES       = 0x000003eb,
-    DISPID_IHTMLTABLE_CELLSPACING = 0x000003ed,
-    DISPID_IHTMLTABLE_CELLPADDING = 0x000003ee,
-    DISPID_IHTMLTABLE_BACKGROUND  = 0x00011389,
+    DISPID_IHTMLTABLE_COLS        = 0x000003e9U,
+    DISPID_IHTMLTABLE_BORDER      = 0x000003eaU,
+    DISPID_IHTMLTABLE_FRAME       = 0x000003ecU,
+    DISPID_IHTMLTABLE_RULES       = 0x000003ebU,
+    DISPID_IHTMLTABLE_CELLSPACING = 0x000003edU,
+    DISPID_IHTMLTABLE_CELLPADDING = 0x000003eeU,
+    DISPID_IHTMLTABLE_BACKGROUND  = 0x00011389U,
 }
 
 enum int DISPID_IHTMLTABLE_BGCOLOR = 0xfffffe0b;
 
 enum : uint
 {
-    DISPID_IHTMLTABLE_BORDERCOLOR        = 0x000113a4,
-    DISPID_IHTMLTABLE_BORDERCOLORLIGHT   = 0x000113a5,
-    DISPID_IHTMLTABLE_BORDERCOLORDARK    = 0x000113a6,
-    DISPID_IHTMLTABLE_ALIGN              = 0x00010049,
-    DISPID_IHTMLTABLE_REFRESH            = 0x000003f7,
-    DISPID_IHTMLTABLE_ROWS               = 0x000003f8,
-    DISPID_IHTMLTABLE_WIDTH              = 0x00010005,
-    DISPID_IHTMLTABLE_HEIGHT             = 0x00010006,
-    DISPID_IHTMLTABLE_DATAPAGESIZE       = 0x000003f9,
-    DISPID_IHTMLTABLE_NEXTPAGE           = 0x000003fa,
-    DISPID_IHTMLTABLE_PREVIOUSPAGE       = 0x000003fb,
-    DISPID_IHTMLTABLE_THEAD              = 0x000003fc,
-    DISPID_IHTMLTABLE_TFOOT              = 0x000003fd,
-    DISPID_IHTMLTABLE_TBODIES            = 0x00000400,
-    DISPID_IHTMLTABLE_CAPTION            = 0x00000401,
-    DISPID_IHTMLTABLE_CREATETHEAD        = 0x00000402,
-    DISPID_IHTMLTABLE_DELETETHEAD        = 0x00000403,
-    DISPID_IHTMLTABLE_CREATETFOOT        = 0x00000404,
-    DISPID_IHTMLTABLE_DELETETFOOT        = 0x00000405,
-    DISPID_IHTMLTABLE_CREATECAPTION      = 0x00000406,
-    DISPID_IHTMLTABLE_DELETECAPTION      = 0x00000407,
-    DISPID_IHTMLTABLE_INSERTROW          = 0x00000408,
-    DISPID_IHTMLTABLE_DELETEROW          = 0x00000409,
-    DISPID_IHTMLTABLE_READYSTATE         = 0x000113fc,
-    DISPID_IHTMLTABLE_ONREADYSTATECHANGE = 0x00011789,
-    DISPID_IHTMLTABLE2_FIRSTPAGE         = 0x0000040b,
-    DISPID_IHTMLTABLE2_LASTPAGE          = 0x0000040c,
-    DISPID_IHTMLTABLE2_CELLS             = 0x0000040d,
-    DISPID_IHTMLTABLE2_MOVEROW           = 0x0000040e,
-    DISPID_IHTMLTABLE3_SUMMARY           = 0x0000040f,
-    DISPID_IHTMLTABLE4_IE9_THEAD         = 0x00000410,
-    DISPID_IHTMLTABLE4_IE9_TFOOT         = 0x00000411,
-    DISPID_IHTMLTABLE4_IE9_CAPTION       = 0x00000412,
-    DISPID_IHTMLTABLE4_IE9_INSERTROW     = 0x00000413,
-    DISPID_IHTMLTABLE4_IE9_DELETEROW     = 0x00000414,
-    DISPID_IHTMLTABLE4_CREATETBODY       = 0x00000415,
-    DISPID_IHTMLTABLECOL_SPAN            = 0x000003e9,
-    DISPID_IHTMLTABLECOL_WIDTH           = 0x00010005,
-    DISPID_IHTMLTABLECOL_ALIGN           = 0x00010048,
-    DISPID_IHTMLTABLECOL_VALIGN          = 0x000113a7,
-    DISPID_IHTMLTABLECOL2_CH             = 0x000003ea,
-    DISPID_IHTMLTABLECOL2_CHOFF          = 0x000003eb,
-    DISPID_IHTMLTABLECOL3_IE9_CH         = 0x000003ec,
-    DISPID_IHTMLTABLECOL3_IE9_CHOFF      = 0x000003ed,
-    DISPID_IHTMLTABLESECTION_ALIGN       = 0x00010048,
-    DISPID_IHTMLTABLESECTION_VALIGN      = 0x000113a7,
+    DISPID_IHTMLTABLE_BORDERCOLOR        = 0x000113a4U,
+    DISPID_IHTMLTABLE_BORDERCOLORLIGHT   = 0x000113a5U,
+    DISPID_IHTMLTABLE_BORDERCOLORDARK    = 0x000113a6U,
+    DISPID_IHTMLTABLE_ALIGN              = 0x00010049U,
+    DISPID_IHTMLTABLE_REFRESH            = 0x000003f7U,
+    DISPID_IHTMLTABLE_ROWS               = 0x000003f8U,
+    DISPID_IHTMLTABLE_WIDTH              = 0x00010005U,
+    DISPID_IHTMLTABLE_HEIGHT             = 0x00010006U,
+    DISPID_IHTMLTABLE_DATAPAGESIZE       = 0x000003f9U,
+    DISPID_IHTMLTABLE_NEXTPAGE           = 0x000003faU,
+    DISPID_IHTMLTABLE_PREVIOUSPAGE       = 0x000003fbU,
+    DISPID_IHTMLTABLE_THEAD              = 0x000003fcU,
+    DISPID_IHTMLTABLE_TFOOT              = 0x000003fdU,
+    DISPID_IHTMLTABLE_TBODIES            = 0x00000400U,
+    DISPID_IHTMLTABLE_CAPTION            = 0x00000401U,
+    DISPID_IHTMLTABLE_CREATETHEAD        = 0x00000402U,
+    DISPID_IHTMLTABLE_DELETETHEAD        = 0x00000403U,
+    DISPID_IHTMLTABLE_CREATETFOOT        = 0x00000404U,
+    DISPID_IHTMLTABLE_DELETETFOOT        = 0x00000405U,
+    DISPID_IHTMLTABLE_CREATECAPTION      = 0x00000406U,
+    DISPID_IHTMLTABLE_DELETECAPTION      = 0x00000407U,
+    DISPID_IHTMLTABLE_INSERTROW          = 0x00000408U,
+    DISPID_IHTMLTABLE_DELETEROW          = 0x00000409U,
+    DISPID_IHTMLTABLE_READYSTATE         = 0x000113fcU,
+    DISPID_IHTMLTABLE_ONREADYSTATECHANGE = 0x00011789U,
+    DISPID_IHTMLTABLE2_FIRSTPAGE         = 0x0000040bU,
+    DISPID_IHTMLTABLE2_LASTPAGE          = 0x0000040cU,
+    DISPID_IHTMLTABLE2_CELLS             = 0x0000040dU,
+    DISPID_IHTMLTABLE2_MOVEROW           = 0x0000040eU,
+    DISPID_IHTMLTABLE3_SUMMARY           = 0x0000040fU,
+    DISPID_IHTMLTABLE4_IE9_THEAD         = 0x00000410U,
+    DISPID_IHTMLTABLE4_IE9_TFOOT         = 0x00000411U,
+    DISPID_IHTMLTABLE4_IE9_CAPTION       = 0x00000412U,
+    DISPID_IHTMLTABLE4_IE9_INSERTROW     = 0x00000413U,
+    DISPID_IHTMLTABLE4_IE9_DELETEROW     = 0x00000414U,
+    DISPID_IHTMLTABLE4_CREATETBODY       = 0x00000415U,
+    DISPID_IHTMLTABLECOL_SPAN            = 0x000003e9U,
+    DISPID_IHTMLTABLECOL_WIDTH           = 0x00010005U,
+    DISPID_IHTMLTABLECOL_ALIGN           = 0x00010048U,
+    DISPID_IHTMLTABLECOL_VALIGN          = 0x000113a7U,
+    DISPID_IHTMLTABLECOL2_CH             = 0x000003eaU,
+    DISPID_IHTMLTABLECOL2_CHOFF          = 0x000003ebU,
+    DISPID_IHTMLTABLECOL3_IE9_CH         = 0x000003ecU,
+    DISPID_IHTMLTABLECOL3_IE9_CHOFF      = 0x000003edU,
+    DISPID_IHTMLTABLESECTION_ALIGN       = 0x00010048U,
+    DISPID_IHTMLTABLESECTION_VALIGN      = 0x000113a7U,
 }
 
 enum int DISPID_IHTMLTABLESECTION_BGCOLOR = 0xfffffe0b;
 
 enum : uint
 {
-    DISPID_IHTMLTABLESECTION_ROWS           = 0x000003e8,
-    DISPID_IHTMLTABLESECTION_INSERTROW      = 0x000003e9,
-    DISPID_IHTMLTABLESECTION_DELETEROW      = 0x000003ea,
-    DISPID_IHTMLTABLESECTION2_MOVEROW       = 0x000003eb,
-    DISPID_IHTMLTABLESECTION3_CH            = 0x000003ec,
-    DISPID_IHTMLTABLESECTION3_CHOFF         = 0x000003ed,
-    DISPID_IHTMLTABLESECTION4_IE9_CH        = 0x000003ee,
-    DISPID_IHTMLTABLESECTION4_IE9_CHOFF     = 0x000003ef,
-    DISPID_IHTMLTABLESECTION4_IE9_INSERTROW = 0x000003f0,
-    DISPID_IHTMLTABLESECTION4_IE9_DELETEROW = 0x000003f1,
-    DISPID_IHTMLTABLEROW_ALIGN              = 0x00010048,
-    DISPID_IHTMLTABLEROW_VALIGN             = 0x000113a7,
+    DISPID_IHTMLTABLESECTION_ROWS           = 0x000003e8U,
+    DISPID_IHTMLTABLESECTION_INSERTROW      = 0x000003e9U,
+    DISPID_IHTMLTABLESECTION_DELETEROW      = 0x000003eaU,
+    DISPID_IHTMLTABLESECTION2_MOVEROW       = 0x000003ebU,
+    DISPID_IHTMLTABLESECTION3_CH            = 0x000003ecU,
+    DISPID_IHTMLTABLESECTION3_CHOFF         = 0x000003edU,
+    DISPID_IHTMLTABLESECTION4_IE9_CH        = 0x000003eeU,
+    DISPID_IHTMLTABLESECTION4_IE9_CHOFF     = 0x000003efU,
+    DISPID_IHTMLTABLESECTION4_IE9_INSERTROW = 0x000003f0U,
+    DISPID_IHTMLTABLESECTION4_IE9_DELETEROW = 0x000003f1U,
+    DISPID_IHTMLTABLEROW_ALIGN              = 0x00010048U,
+    DISPID_IHTMLTABLEROW_VALIGN             = 0x000113a7U,
 }
 
 enum int DISPID_IHTMLTABLEROW_BGCOLOR = 0xfffffe0b;
 
 enum : uint
 {
-    DISPID_IHTMLTABLEROW_BORDERCOLOR         = 0x000113a4,
-    DISPID_IHTMLTABLEROW_BORDERCOLORLIGHT    = 0x000113a5,
-    DISPID_IHTMLTABLEROW_BORDERCOLORDARK     = 0x000113a6,
-    DISPID_IHTMLTABLEROW_ROWINDEX            = 0x000003e8,
-    DISPID_IHTMLTABLEROW_SECTIONROWINDEX     = 0x000003e9,
-    DISPID_IHTMLTABLEROW_CELLS               = 0x000003ea,
-    DISPID_IHTMLTABLEROW_INSERTCELL          = 0x000003eb,
-    DISPID_IHTMLTABLEROW_DELETECELL          = 0x000003ec,
-    DISPID_IHTMLTABLEROW2_HEIGHT             = 0x00010006,
-    DISPID_IHTMLTABLEROW3_CH                 = 0x000003f1,
-    DISPID_IHTMLTABLEROW3_CHOFF              = 0x000003f2,
-    DISPID_IHTMLTABLEROW4_IE9_CH             = 0x000003f3,
-    DISPID_IHTMLTABLEROW4_IE9_CHOFF          = 0x000003f4,
-    DISPID_IHTMLTABLEROW4_IE9_INSERTCELL     = 0x000003f5,
-    DISPID_IHTMLTABLEROW4_IE9_DELETECELL     = 0x000003f6,
-    DISPID_IHTMLTABLEROWMETRICS_CLIENTHEIGHT = 0x000107e3,
-    DISPID_IHTMLTABLEROWMETRICS_CLIENTWIDTH  = 0x000107e4,
-    DISPID_IHTMLTABLEROWMETRICS_CLIENTTOP    = 0x000107e5,
-    DISPID_IHTMLTABLEROWMETRICS_CLIENTLEFT   = 0x000107e6,
-    DISPID_IHTMLTABLECELL_ROWSPAN            = 0x000007d1,
-    DISPID_IHTMLTABLECELL_COLSPAN            = 0x000007d2,
-    DISPID_IHTMLTABLECELL_ALIGN              = 0x00010048,
-    DISPID_IHTMLTABLECELL_VALIGN             = 0x000113a7,
+    DISPID_IHTMLTABLEROW_BORDERCOLOR         = 0x000113a4U,
+    DISPID_IHTMLTABLEROW_BORDERCOLORLIGHT    = 0x000113a5U,
+    DISPID_IHTMLTABLEROW_BORDERCOLORDARK     = 0x000113a6U,
+    DISPID_IHTMLTABLEROW_ROWINDEX            = 0x000003e8U,
+    DISPID_IHTMLTABLEROW_SECTIONROWINDEX     = 0x000003e9U,
+    DISPID_IHTMLTABLEROW_CELLS               = 0x000003eaU,
+    DISPID_IHTMLTABLEROW_INSERTCELL          = 0x000003ebU,
+    DISPID_IHTMLTABLEROW_DELETECELL          = 0x000003ecU,
+    DISPID_IHTMLTABLEROW2_HEIGHT             = 0x00010006U,
+    DISPID_IHTMLTABLEROW3_CH                 = 0x000003f1U,
+    DISPID_IHTMLTABLEROW3_CHOFF              = 0x000003f2U,
+    DISPID_IHTMLTABLEROW4_IE9_CH             = 0x000003f3U,
+    DISPID_IHTMLTABLEROW4_IE9_CHOFF          = 0x000003f4U,
+    DISPID_IHTMLTABLEROW4_IE9_INSERTCELL     = 0x000003f5U,
+    DISPID_IHTMLTABLEROW4_IE9_DELETECELL     = 0x000003f6U,
+    DISPID_IHTMLTABLEROWMETRICS_CLIENTHEIGHT = 0x000107e3U,
+    DISPID_IHTMLTABLEROWMETRICS_CLIENTWIDTH  = 0x000107e4U,
+    DISPID_IHTMLTABLEROWMETRICS_CLIENTTOP    = 0x000107e5U,
+    DISPID_IHTMLTABLEROWMETRICS_CLIENTLEFT   = 0x000107e6U,
+    DISPID_IHTMLTABLECELL_ROWSPAN            = 0x000007d1U,
+    DISPID_IHTMLTABLECELL_COLSPAN            = 0x000007d2U,
+    DISPID_IHTMLTABLECELL_ALIGN              = 0x00010048U,
+    DISPID_IHTMLTABLECELL_VALIGN             = 0x000113a7U,
 }
 
 enum int DISPID_IHTMLTABLECELL_BGCOLOR = 0xfffffe0b;
 
 enum : uint
 {
-    DISPID_IHTMLTABLECELL_NOWRAP           = 0x0001138d,
-    DISPID_IHTMLTABLECELL_BACKGROUND       = 0x00011389,
-    DISPID_IHTMLTABLECELL_BORDERCOLOR      = 0x000113a4,
-    DISPID_IHTMLTABLECELL_BORDERCOLORLIGHT = 0x000113a5,
-    DISPID_IHTMLTABLECELL_BORDERCOLORDARK  = 0x000113a6,
-    DISPID_IHTMLTABLECELL_WIDTH            = 0x00010005,
-    DISPID_IHTMLTABLECELL_HEIGHT           = 0x00010006,
-    DISPID_IHTMLTABLECELL_CELLINDEX        = 0x000007d3,
-    DISPID_IHTMLTABLECELL2_ABBR            = 0x000007d4,
-    DISPID_IHTMLTABLECELL2_AXIS            = 0x000007d5,
-    DISPID_IHTMLTABLECELL2_CH              = 0x000007d6,
-    DISPID_IHTMLTABLECELL2_CHOFF           = 0x000007d7,
-    DISPID_IHTMLTABLECELL2_HEADERS         = 0x000007d8,
-    DISPID_IHTMLTABLECELL2_SCOPE           = 0x000007d9,
-    DISPID_IHTMLTABLECELL3_IE9_CH          = 0x000007da,
-    DISPID_IHTMLTABLECELL3_IE9_CHOFF       = 0x000007db,
+    DISPID_IHTMLTABLECELL_NOWRAP           = 0x0001138dU,
+    DISPID_IHTMLTABLECELL_BACKGROUND       = 0x00011389U,
+    DISPID_IHTMLTABLECELL_BORDERCOLOR      = 0x000113a4U,
+    DISPID_IHTMLTABLECELL_BORDERCOLORLIGHT = 0x000113a5U,
+    DISPID_IHTMLTABLECELL_BORDERCOLORDARK  = 0x000113a6U,
+    DISPID_IHTMLTABLECELL_WIDTH            = 0x00010005U,
+    DISPID_IHTMLTABLECELL_HEIGHT           = 0x00010006U,
+    DISPID_IHTMLTABLECELL_CELLINDEX        = 0x000007d3U,
+    DISPID_IHTMLTABLECELL2_ABBR            = 0x000007d4U,
+    DISPID_IHTMLTABLECELL2_AXIS            = 0x000007d5U,
+    DISPID_IHTMLTABLECELL2_CH              = 0x000007d6U,
+    DISPID_IHTMLTABLECELL2_CHOFF           = 0x000007d7U,
+    DISPID_IHTMLTABLECELL2_HEADERS         = 0x000007d8U,
+    DISPID_IHTMLTABLECELL2_SCOPE           = 0x000007d9U,
+    DISPID_IHTMLTABLECELL3_IE9_CH          = 0x000007daU,
+    DISPID_IHTMLTABLECELL3_IE9_CHOFF       = 0x000007dbU,
 }
 
 enum : uint
 {
-    DISPID_IHTMLSCRIPTELEMENT_SRC          = 0x000003e9,
-    DISPID_IHTMLSCRIPTELEMENT_HTMLFOR      = 0x000003ec,
-    DISPID_IHTMLSCRIPTELEMENT_EVENT        = 0x000003ed,
-    DISPID_IHTMLSCRIPTELEMENT_TEXT         = 0x000003ee,
-    DISPID_IHTMLSCRIPTELEMENT_DEFER        = 0x000003ef,
-    DISPID_IHTMLSCRIPTELEMENT_READYSTATE   = 0x000113fc,
-    DISPID_IHTMLSCRIPTELEMENT_ONERROR      = 0x0001178d,
-    DISPID_IHTMLSCRIPTELEMENT_TYPE         = 0x000003f1,
-    DISPID_IHTMLSCRIPTELEMENT2_CHARSET     = 0x000003f2,
-    DISPID_IHTMLSCRIPTELEMENT3_IE8_SRC     = 0x0000047e,
-    DISPID_IHTMLSCRIPTELEMENT4_USEDCHARSET = 0x000003f3,
+    DISPID_IHTMLSCRIPTELEMENT_SRC          = 0x000003e9U,
+    DISPID_IHTMLSCRIPTELEMENT_HTMLFOR      = 0x000003ecU,
+    DISPID_IHTMLSCRIPTELEMENT_EVENT        = 0x000003edU,
+    DISPID_IHTMLSCRIPTELEMENT_TEXT         = 0x000003eeU,
+    DISPID_IHTMLSCRIPTELEMENT_DEFER        = 0x000003efU,
+    DISPID_IHTMLSCRIPTELEMENT_READYSTATE   = 0x000113fcU,
+    DISPID_IHTMLSCRIPTELEMENT_ONERROR      = 0x0001178dU,
+    DISPID_IHTMLSCRIPTELEMENT_TYPE         = 0x000003f1U,
+    DISPID_IHTMLSCRIPTELEMENT2_CHARSET     = 0x000003f2U,
+    DISPID_IHTMLSCRIPTELEMENT3_IE8_SRC     = 0x0000047eU,
+    DISPID_IHTMLSCRIPTELEMENT4_USEDCHARSET = 0x000003f3U,
 }
 
 enum : uint
 {
-    DISPID_HTMLSCRIPTEVENTS2_ONERROR = 0x000003ea,
-    DISPID_HTMLSCRIPTEVENTS_ONERROR  = 0x000003ea,
+    DISPID_HTMLSCRIPTEVENTS2_ONERROR = 0x000003eaU,
+    DISPID_HTMLSCRIPTEVENTS_ONERROR  = 0x000003eaU,
 }
 
 enum : uint
 {
-    DISPID_IHTMLOBJECTELEMENT_OBJECT             = 0x00010bb9,
-    DISPID_IHTMLOBJECTELEMENT_CLASSID            = 0x00010bba,
-    DISPID_IHTMLOBJECTELEMENT_DATA               = 0x00010bbb,
-    DISPID_IHTMLOBJECTELEMENT_RECORDSET          = 0x00010bbd,
-    DISPID_IHTMLOBJECTELEMENT_ALIGN              = 0x00010049,
-    DISPID_IHTMLOBJECTELEMENT_NAME               = 0x00010000,
-    DISPID_IHTMLOBJECTELEMENT_CODEBASE           = 0x00010bbe,
-    DISPID_IHTMLOBJECTELEMENT_CODETYPE           = 0x00010bbf,
-    DISPID_IHTMLOBJECTELEMENT_CODE               = 0x00010bc0,
-    DISPID_IHTMLOBJECTELEMENT_BASEHREF           = 0x00010002,
-    DISPID_IHTMLOBJECTELEMENT_TYPE               = 0x00010bc1,
-    DISPID_IHTMLOBJECTELEMENT_FORM               = 0x000107d4,
-    DISPID_IHTMLOBJECTELEMENT_WIDTH              = 0x00010005,
-    DISPID_IHTMLOBJECTELEMENT_HEIGHT             = 0x00010006,
-    DISPID_IHTMLOBJECTELEMENT_READYSTATE         = 0x00010bc2,
-    DISPID_IHTMLOBJECTELEMENT_ONREADYSTATECHANGE = 0x00011789,
-    DISPID_IHTMLOBJECTELEMENT_ONERROR            = 0x0001178d,
-    DISPID_IHTMLOBJECTELEMENT_ALTHTML            = 0x00010bc3,
-    DISPID_IHTMLOBJECTELEMENT_VSPACE             = 0x00010bc4,
-    DISPID_IHTMLOBJECTELEMENT_HSPACE             = 0x00010bc5,
-    DISPID_IHTMLOBJECTELEMENT2_NAMEDRECORDSET    = 0x00010bc6,
-    DISPID_IHTMLOBJECTELEMENT2_CLASSID           = 0x00010bba,
-    DISPID_IHTMLOBJECTELEMENT2_DATA              = 0x00010bbb,
-    DISPID_IHTMLOBJECTELEMENT3_ARCHIVE           = 0x00010bc7,
-    DISPID_IHTMLOBJECTELEMENT3_ALT               = 0x00010bc8,
-    DISPID_IHTMLOBJECTELEMENT3_DECLARE           = 0x00010bc9,
-    DISPID_IHTMLOBJECTELEMENT3_STANDBY           = 0x00010bca,
-    DISPID_IHTMLOBJECTELEMENT3_BORDER            = 0x00010bcb,
-    DISPID_IHTMLOBJECTELEMENT3_USEMAP            = 0x00010bcc,
-    DISPID_IHTMLOBJECTELEMENT4_CONTENTDOCUMENT   = 0x00010bd6,
-    DISPID_IHTMLOBJECTELEMENT4_IE8_CODEBASE      = 0x00010bd7,
-    DISPID_IHTMLOBJECTELEMENT4_IE8_DATA          = 0x00010bd8,
-    DISPID_IHTMLOBJECTELEMENT5_IE9_OBJECT        = 0x00010bd9,
+    DISPID_IHTMLOBJECTELEMENT_OBJECT             = 0x00010bb9U,
+    DISPID_IHTMLOBJECTELEMENT_CLASSID            = 0x00010bbaU,
+    DISPID_IHTMLOBJECTELEMENT_DATA               = 0x00010bbbU,
+    DISPID_IHTMLOBJECTELEMENT_RECORDSET          = 0x00010bbdU,
+    DISPID_IHTMLOBJECTELEMENT_ALIGN              = 0x00010049U,
+    DISPID_IHTMLOBJECTELEMENT_NAME               = 0x00010000U,
+    DISPID_IHTMLOBJECTELEMENT_CODEBASE           = 0x00010bbeU,
+    DISPID_IHTMLOBJECTELEMENT_CODETYPE           = 0x00010bbfU,
+    DISPID_IHTMLOBJECTELEMENT_CODE               = 0x00010bc0U,
+    DISPID_IHTMLOBJECTELEMENT_BASEHREF           = 0x00010002U,
+    DISPID_IHTMLOBJECTELEMENT_TYPE               = 0x00010bc1U,
+    DISPID_IHTMLOBJECTELEMENT_FORM               = 0x000107d4U,
+    DISPID_IHTMLOBJECTELEMENT_WIDTH              = 0x00010005U,
+    DISPID_IHTMLOBJECTELEMENT_HEIGHT             = 0x00010006U,
+    DISPID_IHTMLOBJECTELEMENT_READYSTATE         = 0x00010bc2U,
+    DISPID_IHTMLOBJECTELEMENT_ONREADYSTATECHANGE = 0x00011789U,
+    DISPID_IHTMLOBJECTELEMENT_ONERROR            = 0x0001178dU,
+    DISPID_IHTMLOBJECTELEMENT_ALTHTML            = 0x00010bc3U,
+    DISPID_IHTMLOBJECTELEMENT_VSPACE             = 0x00010bc4U,
+    DISPID_IHTMLOBJECTELEMENT_HSPACE             = 0x00010bc5U,
+    DISPID_IHTMLOBJECTELEMENT2_NAMEDRECORDSET    = 0x00010bc6U,
+    DISPID_IHTMLOBJECTELEMENT2_CLASSID           = 0x00010bbaU,
+    DISPID_IHTMLOBJECTELEMENT2_DATA              = 0x00010bbbU,
+    DISPID_IHTMLOBJECTELEMENT3_ARCHIVE           = 0x00010bc7U,
+    DISPID_IHTMLOBJECTELEMENT3_ALT               = 0x00010bc8U,
+    DISPID_IHTMLOBJECTELEMENT3_DECLARE           = 0x00010bc9U,
+    DISPID_IHTMLOBJECTELEMENT3_STANDBY           = 0x00010bcaU,
+    DISPID_IHTMLOBJECTELEMENT3_BORDER            = 0x00010bcbU,
+    DISPID_IHTMLOBJECTELEMENT3_USEMAP            = 0x00010bccU,
+    DISPID_IHTMLOBJECTELEMENT4_CONTENTDOCUMENT   = 0x00010bd6U,
+    DISPID_IHTMLOBJECTELEMENT4_IE8_CODEBASE      = 0x00010bd7U,
+    DISPID_IHTMLOBJECTELEMENT4_IE8_DATA          = 0x00010bd8U,
+    DISPID_IHTMLOBJECTELEMENT5_IE9_OBJECT        = 0x00010bd9U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLPARAMELEMENT_NAME           = 0x000003e9,
-    DISPID_IHTMLPARAMELEMENT_VALUE          = 0x000003ea,
-    DISPID_IHTMLPARAMELEMENT_TYPE           = 0x000003eb,
-    DISPID_IHTMLPARAMELEMENT_VALUETYPE      = 0x000003ec,
-    DISPID_IHTMLPARAMELEMENT2_NAME          = 0x000003e9,
-    DISPID_IHTMLPARAMELEMENT2_TYPE          = 0x000003eb,
-    DISPID_IHTMLPARAMELEMENT2_VALUE         = 0x000003ea,
-    DISPID_IHTMLPARAMELEMENT2_IE8_VALUETYPE = 0x0000047e,
+    DISPID_IHTMLPARAMELEMENT_NAME           = 0x000003e9U,
+    DISPID_IHTMLPARAMELEMENT_VALUE          = 0x000003eaU,
+    DISPID_IHTMLPARAMELEMENT_TYPE           = 0x000003ebU,
+    DISPID_IHTMLPARAMELEMENT_VALUETYPE      = 0x000003ecU,
+    DISPID_IHTMLPARAMELEMENT2_NAME          = 0x000003e9U,
+    DISPID_IHTMLPARAMELEMENT2_TYPE          = 0x000003ebU,
+    DISPID_IHTMLPARAMELEMENT2_VALUE         = 0x000003eaU,
+    DISPID_IHTMLPARAMELEMENT2_IE8_VALUETYPE = 0x0000047eU,
 }
 
 enum : uint
 {
-    DISPID_HTMLOBJECTELEMENTEVENTS2_ONBEFOREUPDATE     = 0x00010004,
-    DISPID_HTMLOBJECTELEMENTEVENTS2_ONAFTERUPDATE      = 0x00010005,
-    DISPID_HTMLOBJECTELEMENTEVENTS2_ONERRORUPDATE      = 0x0001000d,
-    DISPID_HTMLOBJECTELEMENTEVENTS2_ONROWEXIT          = 0x00010006,
-    DISPID_HTMLOBJECTELEMENTEVENTS2_ONROWENTER         = 0x00010007,
-    DISPID_HTMLOBJECTELEMENTEVENTS2_ONDATASETCHANGED   = 0x0001000e,
-    DISPID_HTMLOBJECTELEMENTEVENTS2_ONDATAAVAILABLE    = 0x0001000f,
-    DISPID_HTMLOBJECTELEMENTEVENTS2_ONDATASETCOMPLETE  = 0x00010010,
-    DISPID_HTMLOBJECTELEMENTEVENTS2_ONERROR            = 0x00010013,
-    DISPID_HTMLOBJECTELEMENTEVENTS2_ONROWSDELETE       = 0x00010020,
-    DISPID_HTMLOBJECTELEMENTEVENTS2_ONROWSINSERTED     = 0x00010021,
-    DISPID_HTMLOBJECTELEMENTEVENTS2_ONCELLCHANGE       = 0x00010022,
-    DISPID_HTMLOBJECTELEMENTEVENTS2_ONREADYSTATECHANGE = 0x00010014,
-    DISPID_HTMLOBJECTELEMENTEVENTS_ONBEFOREUPDATE      = 0x00010004,
-    DISPID_HTMLOBJECTELEMENTEVENTS_ONAFTERUPDATE       = 0x00010005,
-    DISPID_HTMLOBJECTELEMENTEVENTS_ONERRORUPDATE       = 0x0001000d,
-    DISPID_HTMLOBJECTELEMENTEVENTS_ONROWEXIT           = 0x00010006,
-    DISPID_HTMLOBJECTELEMENTEVENTS_ONROWENTER          = 0x00010007,
-    DISPID_HTMLOBJECTELEMENTEVENTS_ONDATASETCHANGED    = 0x0001000e,
-    DISPID_HTMLOBJECTELEMENTEVENTS_ONDATAAVAILABLE     = 0x0001000f,
-    DISPID_HTMLOBJECTELEMENTEVENTS_ONDATASETCOMPLETE   = 0x00010010,
-    DISPID_HTMLOBJECTELEMENTEVENTS_ONERROR             = 0x00010013,
-    DISPID_HTMLOBJECTELEMENTEVENTS_ONROWSDELETE        = 0x00010020,
-    DISPID_HTMLOBJECTELEMENTEVENTS_ONROWSINSERTED      = 0x00010021,
-    DISPID_HTMLOBJECTELEMENTEVENTS_ONCELLCHANGE        = 0x00010022,
-    DISPID_HTMLOBJECTELEMENTEVENTS_ONREADYSTATECHANGE  = 0x00010014,
+    DISPID_HTMLOBJECTELEMENTEVENTS2_ONBEFOREUPDATE     = 0x00010004U,
+    DISPID_HTMLOBJECTELEMENTEVENTS2_ONAFTERUPDATE      = 0x00010005U,
+    DISPID_HTMLOBJECTELEMENTEVENTS2_ONERRORUPDATE      = 0x0001000dU,
+    DISPID_HTMLOBJECTELEMENTEVENTS2_ONROWEXIT          = 0x00010006U,
+    DISPID_HTMLOBJECTELEMENTEVENTS2_ONROWENTER         = 0x00010007U,
+    DISPID_HTMLOBJECTELEMENTEVENTS2_ONDATASETCHANGED   = 0x0001000eU,
+    DISPID_HTMLOBJECTELEMENTEVENTS2_ONDATAAVAILABLE    = 0x0001000fU,
+    DISPID_HTMLOBJECTELEMENTEVENTS2_ONDATASETCOMPLETE  = 0x00010010U,
+    DISPID_HTMLOBJECTELEMENTEVENTS2_ONERROR            = 0x00010013U,
+    DISPID_HTMLOBJECTELEMENTEVENTS2_ONROWSDELETE       = 0x00010020U,
+    DISPID_HTMLOBJECTELEMENTEVENTS2_ONROWSINSERTED     = 0x00010021U,
+    DISPID_HTMLOBJECTELEMENTEVENTS2_ONCELLCHANGE       = 0x00010022U,
+    DISPID_HTMLOBJECTELEMENTEVENTS2_ONREADYSTATECHANGE = 0x00010014U,
+    DISPID_HTMLOBJECTELEMENTEVENTS_ONBEFOREUPDATE      = 0x00010004U,
+    DISPID_HTMLOBJECTELEMENTEVENTS_ONAFTERUPDATE       = 0x00010005U,
+    DISPID_HTMLOBJECTELEMENTEVENTS_ONERRORUPDATE       = 0x0001000dU,
+    DISPID_HTMLOBJECTELEMENTEVENTS_ONROWEXIT           = 0x00010006U,
+    DISPID_HTMLOBJECTELEMENTEVENTS_ONROWENTER          = 0x00010007U,
+    DISPID_HTMLOBJECTELEMENTEVENTS_ONDATASETCHANGED    = 0x0001000eU,
+    DISPID_HTMLOBJECTELEMENTEVENTS_ONDATAAVAILABLE     = 0x0001000fU,
+    DISPID_HTMLOBJECTELEMENTEVENTS_ONDATASETCOMPLETE   = 0x00010010U,
+    DISPID_HTMLOBJECTELEMENTEVENTS_ONERROR             = 0x00010013U,
+    DISPID_HTMLOBJECTELEMENTEVENTS_ONROWSDELETE        = 0x00010020U,
+    DISPID_HTMLOBJECTELEMENTEVENTS_ONROWSINSERTED      = 0x00010021U,
+    DISPID_HTMLOBJECTELEMENTEVENTS_ONCELLCHANGE        = 0x00010022U,
+    DISPID_HTMLOBJECTELEMENTEVENTS_ONREADYSTATECHANGE  = 0x00010014U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLFRAMEBASE_SRC                 = 0x00010bb8,
-    DISPID_IHTMLFRAMEBASE_NAME                = 0x00010000,
-    DISPID_IHTMLFRAMEBASE_BORDER              = 0x00010bba,
-    DISPID_IHTMLFRAMEBASE_FRAMEBORDER         = 0x00010bbb,
-    DISPID_IHTMLFRAMEBASE_FRAMESPACING        = 0x00010bbc,
-    DISPID_IHTMLFRAMEBASE_MARGINWIDTH         = 0x00010bbd,
-    DISPID_IHTMLFRAMEBASE_MARGINHEIGHT        = 0x00010bbe,
-    DISPID_IHTMLFRAMEBASE_NORESIZE            = 0x00010bbf,
-    DISPID_IHTMLFRAMEBASE_SCROLLING           = 0x00010bc0,
-    DISPID_IHTMLFRAMEBASE2_CONTENTWINDOW      = 0x00010bc1,
-    DISPID_IHTMLFRAMEBASE2_ONLOAD             = 0x00011790,
-    DISPID_IHTMLFRAMEBASE2_ONREADYSTATECHANGE = 0x00011789,
-    DISPID_IHTMLFRAMEBASE2_READYSTATE         = 0x000113fc,
-    DISPID_IHTMLFRAMEBASE2_ALLOWTRANSPARENCY  = 0x00011456,
-    DISPID_IHTMLFRAMEBASE3_LONGDESC           = 0x00010bc2,
+    DISPID_IHTMLFRAMEBASE_SRC                 = 0x00010bb8U,
+    DISPID_IHTMLFRAMEBASE_NAME                = 0x00010000U,
+    DISPID_IHTMLFRAMEBASE_BORDER              = 0x00010bbaU,
+    DISPID_IHTMLFRAMEBASE_FRAMEBORDER         = 0x00010bbbU,
+    DISPID_IHTMLFRAMEBASE_FRAMESPACING        = 0x00010bbcU,
+    DISPID_IHTMLFRAMEBASE_MARGINWIDTH         = 0x00010bbdU,
+    DISPID_IHTMLFRAMEBASE_MARGINHEIGHT        = 0x00010bbeU,
+    DISPID_IHTMLFRAMEBASE_NORESIZE            = 0x00010bbfU,
+    DISPID_IHTMLFRAMEBASE_SCROLLING           = 0x00010bc0U,
+    DISPID_IHTMLFRAMEBASE2_CONTENTWINDOW      = 0x00010bc1U,
+    DISPID_IHTMLFRAMEBASE2_ONLOAD             = 0x00011790U,
+    DISPID_IHTMLFRAMEBASE2_ONREADYSTATECHANGE = 0x00011789U,
+    DISPID_IHTMLFRAMEBASE2_READYSTATE         = 0x000113fcU,
+    DISPID_IHTMLFRAMEBASE2_ALLOWTRANSPARENCY  = 0x00011456U,
+    DISPID_IHTMLFRAMEBASE3_LONGDESC           = 0x00010bc2U,
 }
 
 enum : uint
 {
-    DISPID_HTMLFRAMESITEEVENTS2_ONLOAD = 0x000003eb,
-    DISPID_HTMLFRAMESITEEVENTS_ONLOAD  = 0x000003eb,
+    DISPID_HTMLFRAMESITEEVENTS2_ONLOAD = 0x000003ebU,
+    DISPID_HTMLFRAMESITEEVENTS_ONLOAD  = 0x000003ebU,
 }
 
 enum : uint
 {
-    DISPID_IHTMLFRAMEELEMENT_BORDERCOLOR      = 0x00010fa1,
-    DISPID_IHTMLFRAMEELEMENT2_HEIGHT          = 0x00010006,
-    DISPID_IHTMLFRAMEELEMENT2_WIDTH           = 0x00010005,
-    DISPID_IHTMLFRAMEELEMENT3_CONTENTDOCUMENT = 0x00011018,
-    DISPID_IHTMLFRAMEELEMENT3_IE8_SRC         = 0x00011019,
-    DISPID_IHTMLFRAMEELEMENT3_IE8_LONGDESC    = 0x0001101a,
-    DISPID_IHTMLFRAMEELEMENT3_IE8_FRAMEBORDER = 0x0001101b,
+    DISPID_IHTMLFRAMEELEMENT_BORDERCOLOR      = 0x00010fa1U,
+    DISPID_IHTMLFRAMEELEMENT2_HEIGHT          = 0x00010006U,
+    DISPID_IHTMLFRAMEELEMENT2_WIDTH           = 0x00010005U,
+    DISPID_IHTMLFRAMEELEMENT3_CONTENTDOCUMENT = 0x00011018U,
+    DISPID_IHTMLFRAMEELEMENT3_IE8_SRC         = 0x00011019U,
+    DISPID_IHTMLFRAMEELEMENT3_IE8_LONGDESC    = 0x0001101aU,
+    DISPID_IHTMLFRAMEELEMENT3_IE8_FRAMEBORDER = 0x0001101bU,
 }
 
 enum : uint
 {
-    DISPID_IHTMLIFRAMEELEMENT_VSPACE           = 0x00010fa1,
-    DISPID_IHTMLIFRAMEELEMENT_HSPACE           = 0x00010fa2,
-    DISPID_IHTMLIFRAMEELEMENT_ALIGN            = 0x00010049,
-    DISPID_IHTMLIFRAMEELEMENT2_HEIGHT          = 0x00010006,
-    DISPID_IHTMLIFRAMEELEMENT2_WIDTH           = 0x00010005,
-    DISPID_IHTMLIFRAMEELEMENT3_CONTENTDOCUMENT = 0x00011018,
-    DISPID_IHTMLIFRAMEELEMENT3_IE8_SRC         = 0x00011019,
-    DISPID_IHTMLIFRAMEELEMENT3_IE8_LONGDESC    = 0x0001101a,
-    DISPID_IHTMLIFRAMEELEMENT3_IE8_FRAMEBORDER = 0x0001101b,
+    DISPID_IHTMLIFRAMEELEMENT_VSPACE           = 0x00010fa1U,
+    DISPID_IHTMLIFRAMEELEMENT_HSPACE           = 0x00010fa2U,
+    DISPID_IHTMLIFRAMEELEMENT_ALIGN            = 0x00010049U,
+    DISPID_IHTMLIFRAMEELEMENT2_HEIGHT          = 0x00010006U,
+    DISPID_IHTMLIFRAMEELEMENT2_WIDTH           = 0x00010005U,
+    DISPID_IHTMLIFRAMEELEMENT3_CONTENTDOCUMENT = 0x00011018U,
+    DISPID_IHTMLIFRAMEELEMENT3_IE8_SRC         = 0x00011019U,
+    DISPID_IHTMLIFRAMEELEMENT3_IE8_LONGDESC    = 0x0001101aU,
+    DISPID_IHTMLIFRAMEELEMENT3_IE8_FRAMEBORDER = 0x0001101bU,
 }
 
 enum : uint
 {
-    DISPID_IHTMLDIVPOSITION_ALIGN     = 0x00010049,
-    DISPID_IHTMLFIELDSETELEMENT_ALIGN = 0x00010049,
-    DISPID_IHTMLFIELDSETELEMENT2_FORM = 0x000107d4,
+    DISPID_IHTMLDIVPOSITION_ALIGN     = 0x00010049U,
+    DISPID_IHTMLFIELDSETELEMENT_ALIGN = 0x00010049U,
+    DISPID_IHTMLFIELDSETELEMENT2_FORM = 0x000107d4U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLLEGENDELEMENT_ALIGN = 0x00010049,
-    DISPID_IHTMLLEGENDELEMENT2_FORM = 0x000107d4,
+    DISPID_IHTMLLEGENDELEMENT_ALIGN = 0x00010049U,
+    DISPID_IHTMLLEGENDELEMENT2_FORM = 0x000107d4U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLSPANFLOW_ALIGN                 = 0x00010049,
-    DISPID_IHTMLFRAMESETELEMENT_ROWS           = 0x000003e8,
-    DISPID_IHTMLFRAMESETELEMENT_COLS           = 0x000003e9,
-    DISPID_IHTMLFRAMESETELEMENT_BORDER         = 0x000003ea,
-    DISPID_IHTMLFRAMESETELEMENT_BORDERCOLOR    = 0x000003eb,
-    DISPID_IHTMLFRAMESETELEMENT_FRAMEBORDER    = 0x000003ec,
-    DISPID_IHTMLFRAMESETELEMENT_FRAMESPACING   = 0x000003ed,
-    DISPID_IHTMLFRAMESETELEMENT_NAME           = 0x00010000,
-    DISPID_IHTMLFRAMESETELEMENT_ONLOAD         = 0x00011790,
-    DISPID_IHTMLFRAMESETELEMENT_ONUNLOAD       = 0x00011791,
-    DISPID_IHTMLFRAMESETELEMENT_ONBEFOREUNLOAD = 0x00011797,
-    DISPID_IHTMLFRAMESETELEMENT2_ONBEFOREPRINT = 0x000117b2,
-    DISPID_IHTMLFRAMESETELEMENT2_ONAFTERPRINT  = 0x000117b3,
-    DISPID_IHTMLFRAMESETELEMENT3_ONHASHCHANGE  = 0x000117dd,
-    DISPID_IHTMLFRAMESETELEMENT3_ONMESSAGE     = 0x000117de,
-    DISPID_IHTMLFRAMESETELEMENT3_ONOFFLINE     = 0x000117dc,
-    DISPID_IHTMLFRAMESETELEMENT3_ONONLINE      = 0x000117db,
-    DISPID_IHTMLFRAMESETELEMENT3_ONSTORAGE     = 0x000117d4,
+    DISPID_IHTMLSPANFLOW_ALIGN                 = 0x00010049U,
+    DISPID_IHTMLFRAMESETELEMENT_ROWS           = 0x000003e8U,
+    DISPID_IHTMLFRAMESETELEMENT_COLS           = 0x000003e9U,
+    DISPID_IHTMLFRAMESETELEMENT_BORDER         = 0x000003eaU,
+    DISPID_IHTMLFRAMESETELEMENT_BORDERCOLOR    = 0x000003ebU,
+    DISPID_IHTMLFRAMESETELEMENT_FRAMEBORDER    = 0x000003ecU,
+    DISPID_IHTMLFRAMESETELEMENT_FRAMESPACING   = 0x000003edU,
+    DISPID_IHTMLFRAMESETELEMENT_NAME           = 0x00010000U,
+    DISPID_IHTMLFRAMESETELEMENT_ONLOAD         = 0x00011790U,
+    DISPID_IHTMLFRAMESETELEMENT_ONUNLOAD       = 0x00011791U,
+    DISPID_IHTMLFRAMESETELEMENT_ONBEFOREUNLOAD = 0x00011797U,
+    DISPID_IHTMLFRAMESETELEMENT2_ONBEFOREPRINT = 0x000117b2U,
+    DISPID_IHTMLFRAMESETELEMENT2_ONAFTERPRINT  = 0x000117b3U,
+    DISPID_IHTMLFRAMESETELEMENT3_ONHASHCHANGE  = 0x000117ddU,
+    DISPID_IHTMLFRAMESETELEMENT3_ONMESSAGE     = 0x000117deU,
+    DISPID_IHTMLFRAMESETELEMENT3_ONOFFLINE     = 0x000117dcU,
+    DISPID_IHTMLFRAMESETELEMENT3_ONONLINE      = 0x000117dbU,
+    DISPID_IHTMLFRAMESETELEMENT3_ONSTORAGE     = 0x000117d4U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLBGSOUND_SRC                = 0x000003e9,
-    DISPID_IHTMLBGSOUND_LOOP               = 0x000003ea,
-    DISPID_IHTMLBGSOUND_VOLUME             = 0x000003eb,
-    DISPID_IHTMLBGSOUND_BALANCE            = 0x000003ec,
-    DISPID_IHTMLFONTNAMESCOLLECTION_LENGTH = 0x000005dd,
+    DISPID_IHTMLBGSOUND_SRC                = 0x000003e9U,
+    DISPID_IHTMLBGSOUND_LOOP               = 0x000003eaU,
+    DISPID_IHTMLBGSOUND_VOLUME             = 0x000003ebU,
+    DISPID_IHTMLBGSOUND_BALANCE            = 0x000003ecU,
+    DISPID_IHTMLFONTNAMESCOLLECTION_LENGTH = 0x000005ddU,
 }
 
 enum int DISPID_IHTMLFONTNAMESCOLLECTION__NEWENUM = 0xfffffffc;
 
 enum : uint
 {
-    DISPID_IHTMLFONTNAMESCOLLECTION_ITEM   = 0x00000000,
-    DISPID_IHTMLFONTSIZESCOLLECTION_LENGTH = 0x000005de,
+    DISPID_IHTMLFONTNAMESCOLLECTION_ITEM   = 0x00000000U,
+    DISPID_IHTMLFONTSIZESCOLLECTION_LENGTH = 0x000005deU,
 }
 
 enum int DISPID_IHTMLFONTSIZESCOLLECTION__NEWENUM = 0xfffffffc;
 
 enum : uint
 {
-    DISPID_IHTMLFONTSIZESCOLLECTION_FORFONT = 0x000005df,
-    DISPID_IHTMLFONTSIZESCOLLECTION_ITEM    = 0x00000000,
+    DISPID_IHTMLFONTSIZESCOLLECTION_FORFONT = 0x000005dfU,
+    DISPID_IHTMLFONTSIZESCOLLECTION_ITEM    = 0x00000000U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLOPTIONSHOLDER_DOCUMENT                  = 0x000005df,
-    DISPID_IHTMLOPTIONSHOLDER_FONTS                     = 0x000005e0,
-    DISPID_IHTMLOPTIONSHOLDER_EXECARG                   = 0x000005e1,
-    DISPID_IHTMLOPTIONSHOLDER_ERRORLINE                 = 0x000005e2,
-    DISPID_IHTMLOPTIONSHOLDER_ERRORCHARACTER            = 0x000005e3,
-    DISPID_IHTMLOPTIONSHOLDER_ERRORCODE                 = 0x000005e4,
-    DISPID_IHTMLOPTIONSHOLDER_ERRORMESSAGE              = 0x000005e5,
-    DISPID_IHTMLOPTIONSHOLDER_ERRORDEBUG                = 0x000005e6,
-    DISPID_IHTMLOPTIONSHOLDER_UNSECUREDWINDOWOFDOCUMENT = 0x000005e7,
-    DISPID_IHTMLOPTIONSHOLDER_FINDTEXT                  = 0x000005e8,
-    DISPID_IHTMLOPTIONSHOLDER_ANYTHINGAFTERFRAMESET     = 0x000005e9,
-    DISPID_IHTMLOPTIONSHOLDER_SIZES                     = 0x000005ea,
-    DISPID_IHTMLOPTIONSHOLDER_OPENFILEDLG               = 0x000005eb,
-    DISPID_IHTMLOPTIONSHOLDER_SAVEFILEDLG               = 0x000005ec,
-    DISPID_IHTMLOPTIONSHOLDER_CHOOSECOLORDLG            = 0x000005ed,
-    DISPID_IHTMLOPTIONSHOLDER_SHOWSECURITYINFO          = 0x000005ee,
-    DISPID_IHTMLOPTIONSHOLDER_ISAPARTMENTMODEL          = 0x000005ef,
-    DISPID_IHTMLOPTIONSHOLDER_GETCHARSET                = 0x000005f0,
-    DISPID_IHTMLOPTIONSHOLDER_SECURECONNECTIONINFO      = 0x000005f1,
+    DISPID_IHTMLOPTIONSHOLDER_DOCUMENT                  = 0x000005dfU,
+    DISPID_IHTMLOPTIONSHOLDER_FONTS                     = 0x000005e0U,
+    DISPID_IHTMLOPTIONSHOLDER_EXECARG                   = 0x000005e1U,
+    DISPID_IHTMLOPTIONSHOLDER_ERRORLINE                 = 0x000005e2U,
+    DISPID_IHTMLOPTIONSHOLDER_ERRORCHARACTER            = 0x000005e3U,
+    DISPID_IHTMLOPTIONSHOLDER_ERRORCODE                 = 0x000005e4U,
+    DISPID_IHTMLOPTIONSHOLDER_ERRORMESSAGE              = 0x000005e5U,
+    DISPID_IHTMLOPTIONSHOLDER_ERRORDEBUG                = 0x000005e6U,
+    DISPID_IHTMLOPTIONSHOLDER_UNSECUREDWINDOWOFDOCUMENT = 0x000005e7U,
+    DISPID_IHTMLOPTIONSHOLDER_FINDTEXT                  = 0x000005e8U,
+    DISPID_IHTMLOPTIONSHOLDER_ANYTHINGAFTERFRAMESET     = 0x000005e9U,
+    DISPID_IHTMLOPTIONSHOLDER_SIZES                     = 0x000005eaU,
+    DISPID_IHTMLOPTIONSHOLDER_OPENFILEDLG               = 0x000005ebU,
+    DISPID_IHTMLOPTIONSHOLDER_SAVEFILEDLG               = 0x000005ecU,
+    DISPID_IHTMLOPTIONSHOLDER_CHOOSECOLORDLG            = 0x000005edU,
+    DISPID_IHTMLOPTIONSHOLDER_SHOWSECURITYINFO          = 0x000005eeU,
+    DISPID_IHTMLOPTIONSHOLDER_ISAPARTMENTMODEL          = 0x000005efU,
+    DISPID_IHTMLOPTIONSHOLDER_GETCHARSET                = 0x000005f0U,
+    DISPID_IHTMLOPTIONSHOLDER_SECURECONNECTIONINFO      = 0x000005f1U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLSTYLEELEMENT_TYPE               = 0x000003ea,
-    DISPID_IHTMLSTYLEELEMENT_READYSTATE         = 0x000113fc,
-    DISPID_IHTMLSTYLEELEMENT_ONREADYSTATECHANGE = 0x00011789,
-    DISPID_IHTMLSTYLEELEMENT_ONLOAD             = 0x00011790,
-    DISPID_IHTMLSTYLEELEMENT_ONERROR            = 0x0001178d,
-    DISPID_IHTMLSTYLEELEMENT_STYLESHEET         = 0x000003ec,
-    DISPID_IHTMLSTYLEELEMENT_DISABLED           = 0x0001004c,
-    DISPID_IHTMLSTYLEELEMENT_MEDIA              = 0x000003ee,
-    DISPID_IHTMLSTYLEELEMENT2_SHEET             = 0x000003ef,
+    DISPID_IHTMLSTYLEELEMENT_TYPE               = 0x000003eaU,
+    DISPID_IHTMLSTYLEELEMENT_READYSTATE         = 0x000113fcU,
+    DISPID_IHTMLSTYLEELEMENT_ONREADYSTATECHANGE = 0x00011789U,
+    DISPID_IHTMLSTYLEELEMENT_ONLOAD             = 0x00011790U,
+    DISPID_IHTMLSTYLEELEMENT_ONERROR            = 0x0001178dU,
+    DISPID_IHTMLSTYLEELEMENT_STYLESHEET         = 0x000003ecU,
+    DISPID_IHTMLSTYLEELEMENT_DISABLED           = 0x0001004cU,
+    DISPID_IHTMLSTYLEELEMENT_MEDIA              = 0x000003eeU,
+    DISPID_IHTMLSTYLEELEMENT2_SHEET             = 0x000003efU,
 }
 
 enum : uint
 {
-    DISPID_HTMLSTYLEELEMENTEVENTS2_ONLOAD  = 0x000003eb,
-    DISPID_HTMLSTYLEELEMENTEVENTS2_ONERROR = 0x000003ea,
-    DISPID_HTMLSTYLEELEMENTEVENTS_ONLOAD   = 0x000003eb,
-    DISPID_HTMLSTYLEELEMENTEVENTS_ONERROR  = 0x000003ea,
+    DISPID_HTMLSTYLEELEMENTEVENTS2_ONLOAD  = 0x000003ebU,
+    DISPID_HTMLSTYLEELEMENTEVENTS2_ONERROR = 0x000003eaU,
+    DISPID_HTMLSTYLEELEMENTEVENTS_ONLOAD   = 0x000003ebU,
+    DISPID_HTMLSTYLEELEMENTEVENTS_ONERROR  = 0x000003eaU,
 }
 
 enum : uint
 {
-    DISPID_IHTMLSTYLEFONTFACE_FONTSRC = 0x000113e9,
-    DISPID_IHTMLSTYLEFONTFACE2_STYLE  = 0x0001004a,
+    DISPID_IHTMLSTYLEFONTFACE_FONTSRC = 0x000113e9U,
+    DISPID_IHTMLSTYLEFONTFACE2_STYLE  = 0x0001004aU,
 }
 
 enum : uint
 {
-    DISPID_IHTMLXDOMAINREQUEST_RESPONSETEXT  = 0x000003eb,
-    DISPID_IHTMLXDOMAINREQUEST_TIMEOUT       = 0x000003ec,
-    DISPID_IHTMLXDOMAINREQUEST_CONTENTTYPE   = 0x000003ed,
-    DISPID_IHTMLXDOMAINREQUEST_ONPROGRESS    = 0x000003ee,
-    DISPID_IHTMLXDOMAINREQUEST_ONERROR       = 0x0001178d,
-    DISPID_IHTMLXDOMAINREQUEST_ONTIMEOUT     = 0x000117e0,
-    DISPID_IHTMLXDOMAINREQUEST_ONLOAD        = 0x00011790,
-    DISPID_IHTMLXDOMAINREQUEST_ABORT         = 0x000003f2,
-    DISPID_IHTMLXDOMAINREQUEST_OPEN          = 0x000003f3,
-    DISPID_IHTMLXDOMAINREQUEST_SEND          = 0x000003f4,
-    DISPID_IHTMLXDOMAINREQUESTFACTORY_CREATE = 0x00000000,
+    DISPID_IHTMLXDOMAINREQUEST_RESPONSETEXT  = 0x000003ebU,
+    DISPID_IHTMLXDOMAINREQUEST_TIMEOUT       = 0x000003ecU,
+    DISPID_IHTMLXDOMAINREQUEST_CONTENTTYPE   = 0x000003edU,
+    DISPID_IHTMLXDOMAINREQUEST_ONPROGRESS    = 0x000003eeU,
+    DISPID_IHTMLXDOMAINREQUEST_ONERROR       = 0x0001178dU,
+    DISPID_IHTMLXDOMAINREQUEST_ONTIMEOUT     = 0x000117e0U,
+    DISPID_IHTMLXDOMAINREQUEST_ONLOAD        = 0x00011790U,
+    DISPID_IHTMLXDOMAINREQUEST_ABORT         = 0x000003f2U,
+    DISPID_IHTMLXDOMAINREQUEST_OPEN          = 0x000003f3U,
+    DISPID_IHTMLXDOMAINREQUEST_SEND          = 0x000003f4U,
+    DISPID_IHTMLXDOMAINREQUESTFACTORY_CREATE = 0x00000000U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLSTORAGE_LENGTH         = 0x000003e9,
-    DISPID_IHTMLSTORAGE_REMAININGSPACE = 0x000003ea,
-    DISPID_IHTMLSTORAGE_KEY            = 0x000003ee,
-    DISPID_IHTMLSTORAGE_GETITEM        = 0x000003eb,
-    DISPID_IHTMLSTORAGE_SETITEM        = 0x000003ec,
-    DISPID_IHTMLSTORAGE_REMOVEITEM     = 0x000003ed,
-    DISPID_IHTMLSTORAGE_CLEAR          = 0x000003ef,
-    DISPID_IHTMLSTORAGE2_IE9_SETITEM   = 0x000003f0,
+    DISPID_IHTMLSTORAGE_LENGTH         = 0x000003e9U,
+    DISPID_IHTMLSTORAGE_REMAININGSPACE = 0x000003eaU,
+    DISPID_IHTMLSTORAGE_KEY            = 0x000003eeU,
+    DISPID_IHTMLSTORAGE_GETITEM        = 0x000003ebU,
+    DISPID_IHTMLSTORAGE_SETITEM        = 0x000003ecU,
+    DISPID_IHTMLSTORAGE_REMOVEITEM     = 0x000003edU,
+    DISPID_IHTMLSTORAGE_CLEAR          = 0x000003efU,
+    DISPID_IHTMLSTORAGE2_IE9_SETITEM   = 0x000003f0U,
 }
 
 enum : uint
 {
-    DISPID_IEVENTTARGET_ADDEVENTLISTENER    = 0x000101fe,
-    DISPID_IEVENTTARGET_REMOVEEVENTLISTENER = 0x000101ff,
-    DISPID_IEVENTTARGET_DISPATCHEVENT       = 0x00010200,
+    DISPID_IEVENTTARGET_ADDEVENTLISTENER    = 0x000101feU,
+    DISPID_IEVENTTARGET_REMOVEEVENTLISTENER = 0x000101ffU,
+    DISPID_IEVENTTARGET_DISPATCHEVENT       = 0x00010200U,
 }
 
 enum : uint
 {
-    DISPID_IDOMEVENT_BUBBLES                  = 0x000003e9,
-    DISPID_IDOMEVENT_CANCELABLE               = 0x000003ea,
-    DISPID_IDOMEVENT_CURRENTTARGET            = 0x000003eb,
-    DISPID_IDOMEVENT_DEFAULTPREVENTED         = 0x000003ec,
-    DISPID_IDOMEVENT_EVENTPHASE               = 0x000003ed,
-    DISPID_IDOMEVENT_TARGET                   = 0x000003ee,
-    DISPID_IDOMEVENT_TIMESTAMP                = 0x000003ef,
-    DISPID_IDOMEVENT_TYPE                     = 0x000003f0,
-    DISPID_IDOMEVENT_INITEVENT                = 0x000003f1,
-    DISPID_IDOMEVENT_PREVENTDEFAULT           = 0x000003f2,
-    DISPID_IDOMEVENT_STOPPROPAGATION          = 0x000003f3,
-    DISPID_IDOMEVENT_STOPIMMEDIATEPROPAGATION = 0x000003f4,
-    DISPID_IDOMEVENT_ISTRUSTED                = 0x000003f5,
-    DISPID_IDOMEVENT_CANCELBUBBLE             = 0x000003f6,
-    DISPID_IDOMEVENT_SRCELEMENT               = 0x000003f7,
-    DISPID_IDOMUIEVENT_VIEW                   = 0x00000402,
-    DISPID_IDOMUIEVENT_DETAIL                 = 0x00000403,
-    DISPID_IDOMUIEVENT_INITUIEVENT            = 0x00000404,
+    DISPID_IDOMEVENT_BUBBLES                  = 0x000003e9U,
+    DISPID_IDOMEVENT_CANCELABLE               = 0x000003eaU,
+    DISPID_IDOMEVENT_CURRENTTARGET            = 0x000003ebU,
+    DISPID_IDOMEVENT_DEFAULTPREVENTED         = 0x000003ecU,
+    DISPID_IDOMEVENT_EVENTPHASE               = 0x000003edU,
+    DISPID_IDOMEVENT_TARGET                   = 0x000003eeU,
+    DISPID_IDOMEVENT_TIMESTAMP                = 0x000003efU,
+    DISPID_IDOMEVENT_TYPE                     = 0x000003f0U,
+    DISPID_IDOMEVENT_INITEVENT                = 0x000003f1U,
+    DISPID_IDOMEVENT_PREVENTDEFAULT           = 0x000003f2U,
+    DISPID_IDOMEVENT_STOPPROPAGATION          = 0x000003f3U,
+    DISPID_IDOMEVENT_STOPIMMEDIATEPROPAGATION = 0x000003f4U,
+    DISPID_IDOMEVENT_ISTRUSTED                = 0x000003f5U,
+    DISPID_IDOMEVENT_CANCELBUBBLE             = 0x000003f6U,
+    DISPID_IDOMEVENT_SRCELEMENT               = 0x000003f7U,
+    DISPID_IDOMUIEVENT_VIEW                   = 0x00000402U,
+    DISPID_IDOMUIEVENT_DETAIL                 = 0x00000403U,
+    DISPID_IDOMUIEVENT_INITUIEVENT            = 0x00000404U,
 }
 
 enum : uint
 {
-    DISPID_IDOMMOUSEEVENT_SCREENX          = 0x0000041b,
-    DISPID_IDOMMOUSEEVENT_SCREENY          = 0x0000041c,
-    DISPID_IDOMMOUSEEVENT_CLIENTX          = 0x0000041d,
-    DISPID_IDOMMOUSEEVENT_CLIENTY          = 0x0000041e,
-    DISPID_IDOMMOUSEEVENT_CTRLKEY          = 0x0000041f,
-    DISPID_IDOMMOUSEEVENT_SHIFTKEY         = 0x00000420,
-    DISPID_IDOMMOUSEEVENT_ALTKEY           = 0x00000421,
-    DISPID_IDOMMOUSEEVENT_METAKEY          = 0x00000422,
-    DISPID_IDOMMOUSEEVENT_BUTTON           = 0x00000423,
-    DISPID_IDOMMOUSEEVENT_RELATEDTARGET    = 0x00000424,
-    DISPID_IDOMMOUSEEVENT_INITMOUSEEVENT   = 0x00000425,
-    DISPID_IDOMMOUSEEVENT_GETMODIFIERSTATE = 0x00000426,
-    DISPID_IDOMMOUSEEVENT_BUTTONS          = 0x00000427,
-    DISPID_IDOMMOUSEEVENT_FROMELEMENT      = 0x00000428,
-    DISPID_IDOMMOUSEEVENT_TOELEMENT        = 0x00000429,
-    DISPID_IDOMMOUSEEVENT_X                = 0x0000042a,
-    DISPID_IDOMMOUSEEVENT_Y                = 0x0000042b,
-    DISPID_IDOMMOUSEEVENT_OFFSETX          = 0x0000042c,
-    DISPID_IDOMMOUSEEVENT_OFFSETY          = 0x0000042d,
-    DISPID_IDOMMOUSEEVENT_PAGEX            = 0x0000042e,
-    DISPID_IDOMMOUSEEVENT_PAGEY            = 0x0000042f,
-    DISPID_IDOMMOUSEEVENT_LAYERX           = 0x00000430,
-    DISPID_IDOMMOUSEEVENT_LAYERY           = 0x00000431,
-    DISPID_IDOMMOUSEEVENT_WHICH            = 0x00000432,
-    DISPID_IDOMDRAGEVENT_DATATRANSFER      = 0x00000579,
-    DISPID_IDOMDRAGEVENT_INITDRAGEVENT     = 0x0000057a,
+    DISPID_IDOMMOUSEEVENT_SCREENX          = 0x0000041bU,
+    DISPID_IDOMMOUSEEVENT_SCREENY          = 0x0000041cU,
+    DISPID_IDOMMOUSEEVENT_CLIENTX          = 0x0000041dU,
+    DISPID_IDOMMOUSEEVENT_CLIENTY          = 0x0000041eU,
+    DISPID_IDOMMOUSEEVENT_CTRLKEY          = 0x0000041fU,
+    DISPID_IDOMMOUSEEVENT_SHIFTKEY         = 0x00000420U,
+    DISPID_IDOMMOUSEEVENT_ALTKEY           = 0x00000421U,
+    DISPID_IDOMMOUSEEVENT_METAKEY          = 0x00000422U,
+    DISPID_IDOMMOUSEEVENT_BUTTON           = 0x00000423U,
+    DISPID_IDOMMOUSEEVENT_RELATEDTARGET    = 0x00000424U,
+    DISPID_IDOMMOUSEEVENT_INITMOUSEEVENT   = 0x00000425U,
+    DISPID_IDOMMOUSEEVENT_GETMODIFIERSTATE = 0x00000426U,
+    DISPID_IDOMMOUSEEVENT_BUTTONS          = 0x00000427U,
+    DISPID_IDOMMOUSEEVENT_FROMELEMENT      = 0x00000428U,
+    DISPID_IDOMMOUSEEVENT_TOELEMENT        = 0x00000429U,
+    DISPID_IDOMMOUSEEVENT_X                = 0x0000042aU,
+    DISPID_IDOMMOUSEEVENT_Y                = 0x0000042bU,
+    DISPID_IDOMMOUSEEVENT_OFFSETX          = 0x0000042cU,
+    DISPID_IDOMMOUSEEVENT_OFFSETY          = 0x0000042dU,
+    DISPID_IDOMMOUSEEVENT_PAGEX            = 0x0000042eU,
+    DISPID_IDOMMOUSEEVENT_PAGEY            = 0x0000042fU,
+    DISPID_IDOMMOUSEEVENT_LAYERX           = 0x00000430U,
+    DISPID_IDOMMOUSEEVENT_LAYERY           = 0x00000431U,
+    DISPID_IDOMMOUSEEVENT_WHICH            = 0x00000432U,
+    DISPID_IDOMDRAGEVENT_DATATRANSFER      = 0x00000579U,
+    DISPID_IDOMDRAGEVENT_INITDRAGEVENT     = 0x0000057aU,
 }
 
 enum : uint
 {
-    DISPID_IDOMMOUSEWHEELEVENT_WHEELDELTA          = 0x00000434,
-    DISPID_IDOMMOUSEWHEELEVENT_INITMOUSEWHEELEVENT = 0x00000435,
+    DISPID_IDOMMOUSEWHEELEVENT_WHEELDELTA          = 0x00000434U,
+    DISPID_IDOMMOUSEWHEELEVENT_INITMOUSEWHEELEVENT = 0x00000435U,
 }
 
 enum : uint
 {
-    DISPID_IDOMWHEELEVENT_DELTAX         = 0x0000044d,
-    DISPID_IDOMWHEELEVENT_DELTAY         = 0x0000044e,
-    DISPID_IDOMWHEELEVENT_DELTAZ         = 0x0000044f,
-    DISPID_IDOMWHEELEVENT_DELTAMODE      = 0x00000450,
-    DISPID_IDOMWHEELEVENT_INITWHEELEVENT = 0x00000451,
-}
-
-enum : uint
-{
-    DISPID_IDOMTEXTEVENT_DATA                  = 0x00000466,
-    DISPID_IDOMTEXTEVENT_INPUTMETHOD           = 0x00000467,
-    DISPID_IDOMTEXTEVENT_INITTEXTEVENT         = 0x00000468,
-    DISPID_IDOMTEXTEVENT_LOCALE                = 0x00000469,
-    DISPID_IDOMKEYBOARDEVENT_KEY               = 0x0000047f,
-    DISPID_IDOMKEYBOARDEVENT_LOCATION          = 0x00000480,
-    DISPID_IDOMKEYBOARDEVENT_CTRLKEY           = 0x00000481,
-    DISPID_IDOMKEYBOARDEVENT_SHIFTKEY          = 0x00000482,
-    DISPID_IDOMKEYBOARDEVENT_ALTKEY            = 0x00000483,
-    DISPID_IDOMKEYBOARDEVENT_METAKEY           = 0x00000484,
-    DISPID_IDOMKEYBOARDEVENT_REPEAT            = 0x00000485,
-    DISPID_IDOMKEYBOARDEVENT_GETMODIFIERSTATE  = 0x00000486,
-    DISPID_IDOMKEYBOARDEVENT_INITKEYBOARDEVENT = 0x00000487,
-    DISPID_IDOMKEYBOARDEVENT_KEYCODE           = 0x00000488,
-    DISPID_IDOMKEYBOARDEVENT_CHARCODE          = 0x00000489,
-    DISPID_IDOMKEYBOARDEVENT_WHICH             = 0x0000048a,
-    DISPID_IDOMKEYBOARDEVENT_IE9_CHAR          = 0x0000048b,
-    DISPID_IDOMKEYBOARDEVENT_LOCALE            = 0x0000048c,
-}
+    DISPID_IDOMWHEELEVENT_DELTAX         = 0x0000044dU,
+    DISPID_IDOMWHEELEVENT_DELTAY         = 0x0000044eU,
+    DISPID_IDOMWHEELEVENT_DELTAZ         = 0x0000044fU,
+    DISPID_IDOMWHEELEVENT_DELTAMODE      = 0x00000450U,
+    DISPID_IDOMWHEELEVENT_INITWHEELEVENT = 0x00000451U,
+}
+
+enum : uint
+{
+    DISPID_IDOMTEXTEVENT_DATA                  = 0x00000466U,
+    DISPID_IDOMTEXTEVENT_INPUTMETHOD           = 0x00000467U,
+    DISPID_IDOMTEXTEVENT_INITTEXTEVENT         = 0x00000468U,
+    DISPID_IDOMTEXTEVENT_LOCALE                = 0x00000469U,
+    DISPID_IDOMKEYBOARDEVENT_KEY               = 0x0000047fU,
+    DISPID_IDOMKEYBOARDEVENT_LOCATION          = 0x00000480U,
+    DISPID_IDOMKEYBOARDEVENT_CTRLKEY           = 0x00000481U,
+    DISPID_IDOMKEYBOARDEVENT_SHIFTKEY          = 0x00000482U,
+    DISPID_IDOMKEYBOARDEVENT_ALTKEY            = 0x00000483U,
+    DISPID_IDOMKEYBOARDEVENT_METAKEY           = 0x00000484U,
+    DISPID_IDOMKEYBOARDEVENT_REPEAT            = 0x00000485U,
+    DISPID_IDOMKEYBOARDEVENT_GETMODIFIERSTATE  = 0x00000486U,
+    DISPID_IDOMKEYBOARDEVENT_INITKEYBOARDEVENT = 0x00000487U,
+    DISPID_IDOMKEYBOARDEVENT_KEYCODE           = 0x00000488U,
+    DISPID_IDOMKEYBOARDEVENT_CHARCODE          = 0x00000489U,
+    DISPID_IDOMKEYBOARDEVENT_WHICH             = 0x0000048aU,
+    DISPID_IDOMKEYBOARDEVENT_IE9_CHAR          = 0x0000048bU,
+    DISPID_IDOMKEYBOARDEVENT_LOCALE            = 0x0000048cU,
+}
 
 enum : uint
 {
-    DISPID_IDOMCOMPOSITIONEVENT_DATA                 = 0x00000498,
-    DISPID_IDOMCOMPOSITIONEVENT_INITCOMPOSITIONEVENT = 0x00000499,
-    DISPID_IDOMCOMPOSITIONEVENT_LOCALE               = 0x0000049a,
+    DISPID_IDOMCOMPOSITIONEVENT_DATA                 = 0x00000498U,
+    DISPID_IDOMCOMPOSITIONEVENT_INITCOMPOSITIONEVENT = 0x00000499U,
+    DISPID_IDOMCOMPOSITIONEVENT_LOCALE               = 0x0000049aU,
 }
 
 enum : uint
 {
-    DISPID_IDOMMUTATIONEVENT_RELATEDNODE       = 0x000004ca,
-    DISPID_IDOMMUTATIONEVENT_PREVVALUE         = 0x000004cb,
-    DISPID_IDOMMUTATIONEVENT_NEWVALUE          = 0x000004cc,
-    DISPID_IDOMMUTATIONEVENT_ATTRNAME          = 0x000004cd,
-    DISPID_IDOMMUTATIONEVENT_ATTRCHANGE        = 0x000004ce,
-    DISPID_IDOMMUTATIONEVENT_INITMUTATIONEVENT = 0x000004cf,
+    DISPID_IDOMMUTATIONEVENT_RELATEDNODE       = 0x000004caU,
+    DISPID_IDOMMUTATIONEVENT_PREVVALUE         = 0x000004cbU,
+    DISPID_IDOMMUTATIONEVENT_NEWVALUE          = 0x000004ccU,
+    DISPID_IDOMMUTATIONEVENT_ATTRNAME          = 0x000004cdU,
+    DISPID_IDOMMUTATIONEVENT_ATTRCHANGE        = 0x000004ceU,
+    DISPID_IDOMMUTATIONEVENT_INITMUTATIONEVENT = 0x000004cfU,
 }
 
-enum uint DISPID_IDOMBEFOREUNLOADEVENT_RETURNVALUE = 0x00000560;
+enum uint DISPID_IDOMBEFOREUNLOADEVENT_RETURNVALUE = 0x00000560U;
 
 enum : uint
 {
-    DISPID_IDOMFOCUSEVENT_RELATEDTARGET  = 0x000004e3,
-    DISPID_IDOMFOCUSEVENT_INITFOCUSEVENT = 0x000004e4,
+    DISPID_IDOMFOCUSEVENT_RELATEDTARGET  = 0x000004e3U,
+    DISPID_IDOMFOCUSEVENT_INITFOCUSEVENT = 0x000004e4U,
 }
 
 enum : uint
 {
-    DISPID_IDOMCUSTOMEVENT_DETAIL          = 0x000004b1,
-    DISPID_IDOMCUSTOMEVENT_INITCUSTOMEVENT = 0x000004b2,
+    DISPID_IDOMCUSTOMEVENT_DETAIL          = 0x000004b1U,
+    DISPID_IDOMCUSTOMEVENT_INITCUSTOMEVENT = 0x000004b2U,
 }
 
-enum uint DISPID_ICANVASGRADIENT_ADDCOLORSTOP = 0x000003e8;
+enum uint DISPID_ICANVASGRADIENT_ADDCOLORSTOP = 0x000003e8U;
 
 enum : uint
 {
-    DISPID_ICANVASTEXTMETRICS_WIDTH                           = 0x000003e8,
-    DISPID_ICANVASIMAGEDATA_WIDTH                             = 0x000003e8,
-    DISPID_ICANVASIMAGEDATA_HEIGHT                            = 0x000003e9,
-    DISPID_ICANVASIMAGEDATA_DATA                              = 0x000003ea,
-    DISPID_ICANVASPIXELARRAY_LENGTH                           = 0x000003e8,
-    DISPID_ICANVASRENDERINGCONTEXT2D_CANVAS                   = 0x000003e8,
-    DISPID_ICANVASRENDERINGCONTEXT2D_RESTORE                  = 0x000003e9,
-    DISPID_ICANVASRENDERINGCONTEXT2D_SAVE                     = 0x000003ea,
-    DISPID_ICANVASRENDERINGCONTEXT2D_ROTATE                   = 0x000003eb,
-    DISPID_ICANVASRENDERINGCONTEXT2D_SCALE                    = 0x000003ec,
-    DISPID_ICANVASRENDERINGCONTEXT2D_SETTRANSFORM             = 0x000003ed,
-    DISPID_ICANVASRENDERINGCONTEXT2D_TRANSFORM                = 0x000003ee,
-    DISPID_ICANVASRENDERINGCONTEXT2D_TRANSLATE                = 0x000003ef,
-    DISPID_ICANVASRENDERINGCONTEXT2D_GLOBALALPHA              = 0x000003f0,
-    DISPID_ICANVASRENDERINGCONTEXT2D_GLOBALCOMPOSITEOPERATION = 0x000003f1,
-    DISPID_ICANVASRENDERINGCONTEXT2D_FILLSTYLE                = 0x000003f2,
-    DISPID_ICANVASRENDERINGCONTEXT2D_STROKESTYLE              = 0x000003f3,
-    DISPID_ICANVASRENDERINGCONTEXT2D_CREATELINEARGRADIENT     = 0x000003f4,
-    DISPID_ICANVASRENDERINGCONTEXT2D_CREATERADIALGRADIENT     = 0x000003f5,
-    DISPID_ICANVASRENDERINGCONTEXT2D_CREATEPATTERN            = 0x000003f6,
-    DISPID_ICANVASRENDERINGCONTEXT2D_LINECAP                  = 0x000003f7,
-    DISPID_ICANVASRENDERINGCONTEXT2D_LINEJOIN                 = 0x000003f8,
-    DISPID_ICANVASRENDERINGCONTEXT2D_LINEWIDTH                = 0x000003f9,
-    DISPID_ICANVASRENDERINGCONTEXT2D_MITERLIMIT               = 0x000003fa,
-    DISPID_ICANVASRENDERINGCONTEXT2D_SHADOWBLUR               = 0x000003fb,
-    DISPID_ICANVASRENDERINGCONTEXT2D_SHADOWCOLOR              = 0x000003fc,
-    DISPID_ICANVASRENDERINGCONTEXT2D_SHADOWOFFSETX            = 0x000003fd,
-    DISPID_ICANVASRENDERINGCONTEXT2D_SHADOWOFFSETY            = 0x000003fe,
-    DISPID_ICANVASRENDERINGCONTEXT2D_CLEARRECT                = 0x000003ff,
-    DISPID_ICANVASRENDERINGCONTEXT2D_FILLRECT                 = 0x00000400,
-    DISPID_ICANVASRENDERINGCONTEXT2D_STROKERECT               = 0x00000401,
-    DISPID_ICANVASRENDERINGCONTEXT2D_ARC                      = 0x00000402,
-    DISPID_ICANVASRENDERINGCONTEXT2D_ARCTO                    = 0x00000403,
-    DISPID_ICANVASRENDERINGCONTEXT2D_BEGINPATH                = 0x00000404,
-    DISPID_ICANVASRENDERINGCONTEXT2D_BEZIERCURVETO            = 0x00000405,
-    DISPID_ICANVASRENDERINGCONTEXT2D_CLIP                     = 0x00000406,
-    DISPID_ICANVASRENDERINGCONTEXT2D_CLOSEPATH                = 0x00000407,
-    DISPID_ICANVASRENDERINGCONTEXT2D_FILL                     = 0x00000408,
-    DISPID_ICANVASRENDERINGCONTEXT2D_LINETO                   = 0x00000409,
-    DISPID_ICANVASRENDERINGCONTEXT2D_MOVETO                   = 0x0000040a,
-    DISPID_ICANVASRENDERINGCONTEXT2D_QUADRATICCURVETO         = 0x0000040b,
-    DISPID_ICANVASRENDERINGCONTEXT2D_RECT                     = 0x0000040c,
-    DISPID_ICANVASRENDERINGCONTEXT2D_STROKE                   = 0x0000040d,
-    DISPID_ICANVASRENDERINGCONTEXT2D_ISPOINTINPATH            = 0x0000040e,
-    DISPID_ICANVASRENDERINGCONTEXT2D_FONT                     = 0x0000040f,
-    DISPID_ICANVASRENDERINGCONTEXT2D_TEXTALIGN                = 0x00000410,
-    DISPID_ICANVASRENDERINGCONTEXT2D_TEXTBASELINE             = 0x00000411,
-    DISPID_ICANVASRENDERINGCONTEXT2D_FILLTEXT                 = 0x00000412,
-    DISPID_ICANVASRENDERINGCONTEXT2D_MEASURETEXT              = 0x00000413,
-    DISPID_ICANVASRENDERINGCONTEXT2D_STROKETEXT               = 0x00000414,
-    DISPID_ICANVASRENDERINGCONTEXT2D_DRAWIMAGE                = 0x00000415,
-    DISPID_ICANVASRENDERINGCONTEXT2D_CREATEIMAGEDATA          = 0x00000416,
-    DISPID_ICANVASRENDERINGCONTEXT2D_GETIMAGEDATA             = 0x00000417,
-    DISPID_ICANVASRENDERINGCONTEXT2D_PUTIMAGEDATA             = 0x00000418,
+    DISPID_ICANVASTEXTMETRICS_WIDTH                           = 0x000003e8U,
+    DISPID_ICANVASIMAGEDATA_WIDTH                             = 0x000003e8U,
+    DISPID_ICANVASIMAGEDATA_HEIGHT                            = 0x000003e9U,
+    DISPID_ICANVASIMAGEDATA_DATA                              = 0x000003eaU,
+    DISPID_ICANVASPIXELARRAY_LENGTH                           = 0x000003e8U,
+    DISPID_ICANVASRENDERINGCONTEXT2D_CANVAS                   = 0x000003e8U,
+    DISPID_ICANVASRENDERINGCONTEXT2D_RESTORE                  = 0x000003e9U,
+    DISPID_ICANVASRENDERINGCONTEXT2D_SAVE                     = 0x000003eaU,
+    DISPID_ICANVASRENDERINGCONTEXT2D_ROTATE                   = 0x000003ebU,
+    DISPID_ICANVASRENDERINGCONTEXT2D_SCALE                    = 0x000003ecU,
+    DISPID_ICANVASRENDERINGCONTEXT2D_SETTRANSFORM             = 0x000003edU,
+    DISPID_ICANVASRENDERINGCONTEXT2D_TRANSFORM                = 0x000003eeU,
+    DISPID_ICANVASRENDERINGCONTEXT2D_TRANSLATE                = 0x000003efU,
+    DISPID_ICANVASRENDERINGCONTEXT2D_GLOBALALPHA              = 0x000003f0U,
+    DISPID_ICANVASRENDERINGCONTEXT2D_GLOBALCOMPOSITEOPERATION = 0x000003f1U,
+    DISPID_ICANVASRENDERINGCONTEXT2D_FILLSTYLE                = 0x000003f2U,
+    DISPID_ICANVASRENDERINGCONTEXT2D_STROKESTYLE              = 0x000003f3U,
+    DISPID_ICANVASRENDERINGCONTEXT2D_CREATELINEARGRADIENT     = 0x000003f4U,
+    DISPID_ICANVASRENDERINGCONTEXT2D_CREATERADIALGRADIENT     = 0x000003f5U,
+    DISPID_ICANVASRENDERINGCONTEXT2D_CREATEPATTERN            = 0x000003f6U,
+    DISPID_ICANVASRENDERINGCONTEXT2D_LINECAP                  = 0x000003f7U,
+    DISPID_ICANVASRENDERINGCONTEXT2D_LINEJOIN                 = 0x000003f8U,
+    DISPID_ICANVASRENDERINGCONTEXT2D_LINEWIDTH                = 0x000003f9U,
+    DISPID_ICANVASRENDERINGCONTEXT2D_MITERLIMIT               = 0x000003faU,
+    DISPID_ICANVASRENDERINGCONTEXT2D_SHADOWBLUR               = 0x000003fbU,
+    DISPID_ICANVASRENDERINGCONTEXT2D_SHADOWCOLOR              = 0x000003fcU,
+    DISPID_ICANVASRENDERINGCONTEXT2D_SHADOWOFFSETX            = 0x000003fdU,
+    DISPID_ICANVASRENDERINGCONTEXT2D_SHADOWOFFSETY            = 0x000003feU,
+    DISPID_ICANVASRENDERINGCONTEXT2D_CLEARRECT                = 0x000003ffU,
+    DISPID_ICANVASRENDERINGCONTEXT2D_FILLRECT                 = 0x00000400U,
+    DISPID_ICANVASRENDERINGCONTEXT2D_STROKERECT               = 0x00000401U,
+    DISPID_ICANVASRENDERINGCONTEXT2D_ARC                      = 0x00000402U,
+    DISPID_ICANVASRENDERINGCONTEXT2D_ARCTO                    = 0x00000403U,
+    DISPID_ICANVASRENDERINGCONTEXT2D_BEGINPATH                = 0x00000404U,
+    DISPID_ICANVASRENDERINGCONTEXT2D_BEZIERCURVETO            = 0x00000405U,
+    DISPID_ICANVASRENDERINGCONTEXT2D_CLIP                     = 0x00000406U,
+    DISPID_ICANVASRENDERINGCONTEXT2D_CLOSEPATH                = 0x00000407U,
+    DISPID_ICANVASRENDERINGCONTEXT2D_FILL                     = 0x00000408U,
+    DISPID_ICANVASRENDERINGCONTEXT2D_LINETO                   = 0x00000409U,
+    DISPID_ICANVASRENDERINGCONTEXT2D_MOVETO                   = 0x0000040aU,
+    DISPID_ICANVASRENDERINGCONTEXT2D_QUADRATICCURVETO         = 0x0000040bU,
+    DISPID_ICANVASRENDERINGCONTEXT2D_RECT                     = 0x0000040cU,
+    DISPID_ICANVASRENDERINGCONTEXT2D_STROKE                   = 0x0000040dU,
+    DISPID_ICANVASRENDERINGCONTEXT2D_ISPOINTINPATH            = 0x0000040eU,
+    DISPID_ICANVASRENDERINGCONTEXT2D_FONT                     = 0x0000040fU,
+    DISPID_ICANVASRENDERINGCONTEXT2D_TEXTALIGN                = 0x00000410U,
+    DISPID_ICANVASRENDERINGCONTEXT2D_TEXTBASELINE             = 0x00000411U,
+    DISPID_ICANVASRENDERINGCONTEXT2D_FILLTEXT                 = 0x00000412U,
+    DISPID_ICANVASRENDERINGCONTEXT2D_MEASURETEXT              = 0x00000413U,
+    DISPID_ICANVASRENDERINGCONTEXT2D_STROKETEXT               = 0x00000414U,
+    DISPID_ICANVASRENDERINGCONTEXT2D_DRAWIMAGE                = 0x00000415U,
+    DISPID_ICANVASRENDERINGCONTEXT2D_CREATEIMAGEDATA          = 0x00000416U,
+    DISPID_ICANVASRENDERINGCONTEXT2D_GETIMAGEDATA             = 0x00000417U,
+    DISPID_ICANVASRENDERINGCONTEXT2D_PUTIMAGEDATA             = 0x00000418U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLCANVASELEMENT_WIDTH      = 0x00010005,
-    DISPID_IHTMLCANVASELEMENT_HEIGHT     = 0x00010006,
-    DISPID_IHTMLCANVASELEMENT_GETCONTEXT = 0x000003e9,
-    DISPID_IHTMLCANVASELEMENT_TODATAURL  = 0x000003ea,
+    DISPID_IHTMLCANVASELEMENT_WIDTH      = 0x00010005U,
+    DISPID_IHTMLCANVASELEMENT_HEIGHT     = 0x00010006U,
+    DISPID_IHTMLCANVASELEMENT_GETCONTEXT = 0x000003e9U,
+    DISPID_IHTMLCANVASELEMENT_TODATAURL  = 0x000003eaU,
 }
 
 enum : uint
 {
-    DISPID_IDOMPROGRESSEVENT_LENGTHCOMPUTABLE  = 0x0000060f,
-    DISPID_IDOMPROGRESSEVENT_LOADED            = 0x00000610,
-    DISPID_IDOMPROGRESSEVENT_TOTAL             = 0x00000611,
-    DISPID_IDOMPROGRESSEVENT_INITPROGRESSEVENT = 0x00000612,
+    DISPID_IDOMPROGRESSEVENT_LENGTHCOMPUTABLE  = 0x0000060fU,
+    DISPID_IDOMPROGRESSEVENT_LOADED            = 0x00000610U,
+    DISPID_IDOMPROGRESSEVENT_TOTAL             = 0x00000611U,
+    DISPID_IDOMPROGRESSEVENT_INITPROGRESSEVENT = 0x00000612U,
 }
 
 enum : uint
 {
-    DISPID_IDOMMESSAGEEVENT_DATA             = 0x0000052e,
-    DISPID_IDOMMESSAGEEVENT_ORIGIN           = 0x0000052f,
-    DISPID_IDOMMESSAGEEVENT_SOURCE           = 0x00000530,
-    DISPID_IDOMMESSAGEEVENT_INITMESSAGEEVENT = 0x00000531,
+    DISPID_IDOMMESSAGEEVENT_DATA             = 0x0000052eU,
+    DISPID_IDOMMESSAGEEVENT_ORIGIN           = 0x0000052fU,
+    DISPID_IDOMMESSAGEEVENT_SOURCE           = 0x00000530U,
+    DISPID_IDOMMESSAGEEVENT_INITMESSAGEEVENT = 0x00000531U,
 }
 
 enum : uint
 {
-    DISPID_IDOMSITEMODEEVENT_BUTTONID  = 0x00000515,
-    DISPID_IDOMSITEMODEEVENT_ACTIONURL = 0x00000516,
+    DISPID_IDOMSITEMODEEVENT_BUTTONID  = 0x00000515U,
+    DISPID_IDOMSITEMODEEVENT_ACTIONURL = 0x00000516U,
 }
 
 enum : uint
 {
-    DISPID_IDOMSTORAGEEVENT_KEY              = 0x00000547,
-    DISPID_IDOMSTORAGEEVENT_OLDVALUE         = 0x00000548,
-    DISPID_IDOMSTORAGEEVENT_NEWVALUE         = 0x00000549,
-    DISPID_IDOMSTORAGEEVENT_URL              = 0x0000054a,
-    DISPID_IDOMSTORAGEEVENT_STORAGEAREA      = 0x0000054b,
-    DISPID_IDOMSTORAGEEVENT_INITSTORAGEEVENT = 0x0000054c,
+    DISPID_IDOMSTORAGEEVENT_KEY              = 0x00000547U,
+    DISPID_IDOMSTORAGEEVENT_OLDVALUE         = 0x00000548U,
+    DISPID_IDOMSTORAGEEVENT_NEWVALUE         = 0x00000549U,
+    DISPID_IDOMSTORAGEEVENT_URL              = 0x0000054aU,
+    DISPID_IDOMSTORAGEEVENT_STORAGEAREA      = 0x0000054bU,
+    DISPID_IDOMSTORAGEEVENT_INITSTORAGEEVENT = 0x0000054cU,
 }
 
 enum : uint
 {
-    DISPID_IHTMLXMLHTTPREQUEST_READYSTATE            = 0x000003ea,
-    DISPID_IHTMLXMLHTTPREQUEST_RESPONSEBODY          = 0x000003eb,
-    DISPID_IHTMLXMLHTTPREQUEST_RESPONSETEXT          = 0x000003ec,
-    DISPID_IHTMLXMLHTTPREQUEST_RESPONSEXML           = 0x000003ed,
-    DISPID_IHTMLXMLHTTPREQUEST_STATUS                = 0x000003ee,
-    DISPID_IHTMLXMLHTTPREQUEST_STATUSTEXT            = 0x000003ef,
-    DISPID_IHTMLXMLHTTPREQUEST_ONREADYSTATECHANGE    = 0x00011789,
-    DISPID_IHTMLXMLHTTPREQUEST_ABORT                 = 0x000003f1,
-    DISPID_IHTMLXMLHTTPREQUEST_OPEN                  = 0x000003f2,
-    DISPID_IHTMLXMLHTTPREQUEST_SEND                  = 0x000003f3,
-    DISPID_IHTMLXMLHTTPREQUEST_GETALLRESPONSEHEADERS = 0x000003f4,
-    DISPID_IHTMLXMLHTTPREQUEST_GETRESPONSEHEADER     = 0x000003f5,
-    DISPID_IHTMLXMLHTTPREQUEST_SETREQUESTHEADER      = 0x000003f6,
-    DISPID_IHTMLXMLHTTPREQUEST2_TIMEOUT              = 0x000003f7,
-    DISPID_IHTMLXMLHTTPREQUEST2_ONTIMEOUT            = 0x000117e0,
-    DISPID_IHTMLXMLHTTPREQUESTFACTORY_CREATE         = 0x00000000,
+    DISPID_IHTMLXMLHTTPREQUEST_READYSTATE            = 0x000003eaU,
+    DISPID_IHTMLXMLHTTPREQUEST_RESPONSEBODY          = 0x000003ebU,
+    DISPID_IHTMLXMLHTTPREQUEST_RESPONSETEXT          = 0x000003ecU,
+    DISPID_IHTMLXMLHTTPREQUEST_RESPONSEXML           = 0x000003edU,
+    DISPID_IHTMLXMLHTTPREQUEST_STATUS                = 0x000003eeU,
+    DISPID_IHTMLXMLHTTPREQUEST_STATUSTEXT            = 0x000003efU,
+    DISPID_IHTMLXMLHTTPREQUEST_ONREADYSTATECHANGE    = 0x00011789U,
+    DISPID_IHTMLXMLHTTPREQUEST_ABORT                 = 0x000003f1U,
+    DISPID_IHTMLXMLHTTPREQUEST_OPEN                  = 0x000003f2U,
+    DISPID_IHTMLXMLHTTPREQUEST_SEND                  = 0x000003f3U,
+    DISPID_IHTMLXMLHTTPREQUEST_GETALLRESPONSEHEADERS = 0x000003f4U,
+    DISPID_IHTMLXMLHTTPREQUEST_GETRESPONSEHEADER     = 0x000003f5U,
+    DISPID_IHTMLXMLHTTPREQUEST_SETREQUESTHEADER      = 0x000003f6U,
+    DISPID_IHTMLXMLHTTPREQUEST2_TIMEOUT              = 0x000003f7U,
+    DISPID_IHTMLXMLHTTPREQUEST2_ONTIMEOUT            = 0x000117e0U,
+    DISPID_IHTMLXMLHTTPREQUESTFACTORY_CREATE         = 0x00000000U,
 }
 
 enum : uint
 {
-    DISPID_HTMLXMLHTTPREQUESTEVENTS_ONTIMEOUT          = 0x000003f8,
-    DISPID_HTMLXMLHTTPREQUESTEVENTS_ONREADYSTATECHANGE = 0x000003f0,
+    DISPID_HTMLXMLHTTPREQUESTEVENTS_ONTIMEOUT          = 0x000003f8U,
+    DISPID_HTMLXMLHTTPREQUESTEVENTS_ONREADYSTATECHANGE = 0x000003f0U,
 }
 
 enum : uint
 {
-    DISPID_ISVGANGLE_UNITTYPE                = 0x000003e8,
-    DISPID_ISVGANGLE_VALUE                   = 0x000003e9,
-    DISPID_ISVGANGLE_VALUEINSPECIFIEDUNITS   = 0x000003ea,
-    DISPID_ISVGANGLE_VALUEASSTRING           = 0x000003eb,
-    DISPID_ISVGANGLE_NEWVALUESPECIFIEDUNITS  = 0x000003ec,
-    DISPID_ISVGANGLE_CONVERTTOSPECIFIEDUNITS = 0x000003ed,
+    DISPID_ISVGANGLE_UNITTYPE                = 0x000003e8U,
+    DISPID_ISVGANGLE_VALUE                   = 0x000003e9U,
+    DISPID_ISVGANGLE_VALUEINSPECIFIEDUNITS   = 0x000003eaU,
+    DISPID_ISVGANGLE_VALUEASSTRING           = 0x000003ebU,
+    DISPID_ISVGANGLE_NEWVALUESPECIFIEDUNITS  = 0x000003ecU,
+    DISPID_ISVGANGLE_CONVERTTOSPECIFIEDUNITS = 0x000003edU,
 }
 
-enum uint DISPID_ISVGSTYLABLE_CLASSNAME = 0x000003e9;
+enum uint DISPID_ISVGSTYLABLE_CLASSNAME = 0x000003e9U;
 
 enum : uint
 {
-    DISPID_ISVGLOCATABLE_NEARESTVIEWPORTELEMENT  = 0x000003ea,
-    DISPID_ISVGLOCATABLE_FARTHESTVIEWPORTELEMENT = 0x000003eb,
-    DISPID_ISVGLOCATABLE_GETBBOX                 = 0x000003ec,
-    DISPID_ISVGLOCATABLE_GETCTM                  = 0x000003ed,
-    DISPID_ISVGLOCATABLE_GETSCREENCTM            = 0x000003ee,
-    DISPID_ISVGLOCATABLE_GETTRANSFORMTOELEMENT   = 0x000003ef,
+    DISPID_ISVGLOCATABLE_NEARESTVIEWPORTELEMENT  = 0x000003eaU,
+    DISPID_ISVGLOCATABLE_FARTHESTVIEWPORTELEMENT = 0x000003ebU,
+    DISPID_ISVGLOCATABLE_GETBBOX                 = 0x000003ecU,
+    DISPID_ISVGLOCATABLE_GETCTM                  = 0x000003edU,
+    DISPID_ISVGLOCATABLE_GETSCREENCTM            = 0x000003eeU,
+    DISPID_ISVGLOCATABLE_GETTRANSFORMTOELEMENT   = 0x000003efU,
 }
 
-enum uint DISPID_ISVGTRANSFORMABLE_TRANSFORM = 0x000003f1;
+enum uint DISPID_ISVGTRANSFORMABLE_TRANSFORM = 0x000003f1U;
 
 enum : uint
 {
-    DISPID_ISVGTESTS_REQUIREDFEATURES   = 0x000003f3,
-    DISPID_ISVGTESTS_REQUIREDEXTENSIONS = 0x000003f5,
-    DISPID_ISVGTESTS_SYSTEMLANGUAGE     = 0x000003f7,
-    DISPID_ISVGTESTS_HASEXTENSION       = 0x000003f8,
+    DISPID_ISVGTESTS_REQUIREDFEATURES   = 0x000003f3U,
+    DISPID_ISVGTESTS_REQUIREDEXTENSIONS = 0x000003f5U,
+    DISPID_ISVGTESTS_SYSTEMLANGUAGE     = 0x000003f7U,
+    DISPID_ISVGTESTS_HASEXTENSION       = 0x000003f8U,
 }
 
 enum : uint
 {
-    DISPID_ISVGLANGSPACE_XMLLANG  = 0x000003f9,
-    DISPID_ISVGLANGSPACE_XMLSPACE = 0x000003fa,
+    DISPID_ISVGLANGSPACE_XMLLANG  = 0x000003f9U,
+    DISPID_ISVGLANGSPACE_XMLSPACE = 0x000003faU,
 }
 
-enum uint DISPID_ISVGEXTERNALRESOURCESREQUIRED_EXTERNALRESOURCESREQUIRED = 0x000003fc;
+enum uint DISPID_ISVGEXTERNALRESOURCESREQUIRED_EXTERNALRESOURCESREQUIRED = 0x000003fcU;
 
 enum : uint
 {
-    DISPID_ISVGFITTOVIEWBOX_VIEWBOX             = 0x000003fe,
-    DISPID_ISVGFITTOVIEWBOX_PRESERVEASPECTRATIO = 0x00000400,
+    DISPID_ISVGFITTOVIEWBOX_VIEWBOX             = 0x000003feU,
+    DISPID_ISVGFITTOVIEWBOX_PRESERVEASPECTRATIO = 0x00000400U,
 }
 
-enum uint DISPID_ISVGZOOMANDPAN_ZOOMANDPAN = 0x00000401;
-enum uint DISPID_ISVGURIREFERENCE_HREF = 0x00000402;
+enum uint DISPID_ISVGZOOMANDPAN_ZOOMANDPAN = 0x00000401U;
+enum uint DISPID_ISVGURIREFERENCE_HREF = 0x00000402U;
 
 enum : uint
 {
-    DISPID_ISVGANIMATEDANGLE_BASEVAL         = 0x000003e8,
-    DISPID_ISVGANIMATEDANGLE_ANIMVAL         = 0x000003e9,
-    DISPID_ISVGANIMATEDTRANSFORMLIST_BASEVAL = 0x000003e8,
-    DISPID_ISVGANIMATEDTRANSFORMLIST_ANIMVAL = 0x000003e9,
-    DISPID_ISVGANIMATEDBOOLEAN_BASEVAL       = 0x000003e8,
-    DISPID_ISVGANIMATEDBOOLEAN_ANIMVAL       = 0x000003e9,
-    DISPID_ISVGANIMATEDENUMERATION_BASEVAL   = 0x000003e8,
-    DISPID_ISVGANIMATEDENUMERATION_ANIMVAL   = 0x000003e9,
-    DISPID_ISVGANIMATEDINTEGER_BASEVAL       = 0x000003e8,
-    DISPID_ISVGANIMATEDINTEGER_ANIMVAL       = 0x000003e9,
-    DISPID_ISVGANIMATEDLENGTH_BASEVAL        = 0x000003e8,
-    DISPID_ISVGANIMATEDLENGTH_ANIMVAL        = 0x000003e9,
-    DISPID_ISVGANIMATEDLENGTHLIST_BASEVAL    = 0x000003e8,
-    DISPID_ISVGANIMATEDLENGTHLIST_ANIMVAL    = 0x000003e9,
-    DISPID_ISVGANIMATEDNUMBER_BASEVAL        = 0x000003e8,
-    DISPID_ISVGANIMATEDNUMBER_ANIMVAL        = 0x000003e9,
-    DISPID_ISVGANIMATEDNUMBERLIST_BASEVAL    = 0x000003e8,
-    DISPID_ISVGANIMATEDNUMBERLIST_ANIMVAL    = 0x000003e9,
-    DISPID_ISVGANIMATEDRECT_BASEVAL          = 0x000003e8,
-    DISPID_ISVGANIMATEDRECT_ANIMVAL          = 0x000003e9,
-    DISPID_ISVGANIMATEDSTRING_BASEVAL        = 0x000003e8,
-    DISPID_ISVGANIMATEDSTRING_ANIMVAL        = 0x000003e9,
+    DISPID_ISVGANIMATEDANGLE_BASEVAL         = 0x000003e8U,
+    DISPID_ISVGANIMATEDANGLE_ANIMVAL         = 0x000003e9U,
+    DISPID_ISVGANIMATEDTRANSFORMLIST_BASEVAL = 0x000003e8U,
+    DISPID_ISVGANIMATEDTRANSFORMLIST_ANIMVAL = 0x000003e9U,
+    DISPID_ISVGANIMATEDBOOLEAN_BASEVAL       = 0x000003e8U,
+    DISPID_ISVGANIMATEDBOOLEAN_ANIMVAL       = 0x000003e9U,
+    DISPID_ISVGANIMATEDENUMERATION_BASEVAL   = 0x000003e8U,
+    DISPID_ISVGANIMATEDENUMERATION_ANIMVAL   = 0x000003e9U,
+    DISPID_ISVGANIMATEDINTEGER_BASEVAL       = 0x000003e8U,
+    DISPID_ISVGANIMATEDINTEGER_ANIMVAL       = 0x000003e9U,
+    DISPID_ISVGANIMATEDLENGTH_BASEVAL        = 0x000003e8U,
+    DISPID_ISVGANIMATEDLENGTH_ANIMVAL        = 0x000003e9U,
+    DISPID_ISVGANIMATEDLENGTHLIST_BASEVAL    = 0x000003e8U,
+    DISPID_ISVGANIMATEDLENGTHLIST_ANIMVAL    = 0x000003e9U,
+    DISPID_ISVGANIMATEDNUMBER_BASEVAL        = 0x000003e8U,
+    DISPID_ISVGANIMATEDNUMBER_ANIMVAL        = 0x000003e9U,
+    DISPID_ISVGANIMATEDNUMBERLIST_BASEVAL    = 0x000003e8U,
+    DISPID_ISVGANIMATEDNUMBERLIST_ANIMVAL    = 0x000003e9U,
+    DISPID_ISVGANIMATEDRECT_BASEVAL          = 0x000003e8U,
+    DISPID_ISVGANIMATEDRECT_ANIMVAL          = 0x000003e9U,
+    DISPID_ISVGANIMATEDSTRING_BASEVAL        = 0x000003e8U,
+    DISPID_ISVGANIMATEDSTRING_ANIMVAL        = 0x000003e9U,
 }
 
-enum uint DISPID_ISVGCLIPPATHELEMENT_CLIPPATHUNITS = 0x0000041b;
-enum uint DISPID_ISVGDOCUMENT_ROOTELEMENT = 0x0000045c;
-enum uint DISPID_IGETSVGDOCUMENT_GETSVGDOCUMENT = 0x0001004f;
+enum uint DISPID_ISVGCLIPPATHELEMENT_CLIPPATHUNITS = 0x0000041bU;
+enum uint DISPID_ISVGDOCUMENT_ROOTELEMENT = 0x0000045cU;
+enum uint DISPID_IGETSVGDOCUMENT_GETSVGDOCUMENT = 0x0001004fU;
 
 enum : uint
 {
-    DISPID_ISVGELEMENT_XMLBASE         = 0x00000408,
-    DISPID_ISVGELEMENT_OWNERSVGELEMENT = 0x00000409,
-    DISPID_ISVGELEMENT_VIEWPORTELEMENT = 0x0000040a,
-    DISPID_ISVGELEMENT_FOCUSABLE       = 0x0000040c,
+    DISPID_ISVGELEMENT_XMLBASE         = 0x00000408U,
+    DISPID_ISVGELEMENT_OWNERSVGELEMENT = 0x00000409U,
+    DISPID_ISVGELEMENT_VIEWPORTELEMENT = 0x0000040aU,
+    DISPID_ISVGELEMENT_FOCUSABLE       = 0x0000040cU,
 }
 
 enum : uint
 {
-    DISPID_ISVGLENGTH_UNITTYPE                = 0x000003e8,
-    DISPID_ISVGLENGTH_VALUE                   = 0x000003e9,
-    DISPID_ISVGLENGTH_VALUEINSPECIFIEDUNITS   = 0x000003ea,
-    DISPID_ISVGLENGTH_VALUEASSTRING           = 0x000003eb,
-    DISPID_ISVGLENGTH_NEWVALUESPECIFIEDUNITS  = 0x000003ec,
-    DISPID_ISVGLENGTH_CONVERTTOSPECIFIEDUNITS = 0x000003ed,
-    DISPID_ISVGLENGTHLIST_NUMBEROFITEMS       = 0x000003e8,
-    DISPID_ISVGLENGTHLIST_CLEAR               = 0x000003e9,
-    DISPID_ISVGLENGTHLIST_INITIALIZE          = 0x000003ea,
-    DISPID_ISVGLENGTHLIST_GETITEM             = 0x000003eb,
-    DISPID_ISVGLENGTHLIST_INSERTITEMBEFORE    = 0x000003ec,
-    DISPID_ISVGLENGTHLIST_REPLACEITEM         = 0x000003ed,
-    DISPID_ISVGLENGTHLIST_REMOVEITEM          = 0x000003ee,
-    DISPID_ISVGLENGTHLIST_APPENDITEM          = 0x000003ef,
+    DISPID_ISVGLENGTH_UNITTYPE                = 0x000003e8U,
+    DISPID_ISVGLENGTH_VALUE                   = 0x000003e9U,
+    DISPID_ISVGLENGTH_VALUEINSPECIFIEDUNITS   = 0x000003eaU,
+    DISPID_ISVGLENGTH_VALUEASSTRING           = 0x000003ebU,
+    DISPID_ISVGLENGTH_NEWVALUESPECIFIEDUNITS  = 0x000003ecU,
+    DISPID_ISVGLENGTH_CONVERTTOSPECIFIEDUNITS = 0x000003edU,
+    DISPID_ISVGLENGTHLIST_NUMBEROFITEMS       = 0x000003e8U,
+    DISPID_ISVGLENGTHLIST_CLEAR               = 0x000003e9U,
+    DISPID_ISVGLENGTHLIST_INITIALIZE          = 0x000003eaU,
+    DISPID_ISVGLENGTHLIST_GETITEM             = 0x000003ebU,
+    DISPID_ISVGLENGTHLIST_INSERTITEMBEFORE    = 0x000003ecU,
+    DISPID_ISVGLENGTHLIST_REPLACEITEM         = 0x000003edU,
+    DISPID_ISVGLENGTHLIST_REMOVEITEM          = 0x000003eeU,
+    DISPID_ISVGLENGTHLIST_APPENDITEM          = 0x000003efU,
 }
 
 enum : uint
 {
-    DISPID_ISVGMATRIX_A                    = 0x000003e8,
-    DISPID_ISVGMATRIX_B                    = 0x000003e9,
-    DISPID_ISVGMATRIX_C                    = 0x000003ea,
-    DISPID_ISVGMATRIX_D                    = 0x000003eb,
-    DISPID_ISVGMATRIX_E                    = 0x000003ec,
-    DISPID_ISVGMATRIX_F                    = 0x000003ed,
-    DISPID_ISVGMATRIX_MULTIPLY             = 0x000003ee,
-    DISPID_ISVGMATRIX_INVERSE              = 0x000003ef,
-    DISPID_ISVGMATRIX_TRANSLATE            = 0x000003f0,
-    DISPID_ISVGMATRIX_SCALE                = 0x000003f1,
-    DISPID_ISVGMATRIX_SCALENONUNIFORM      = 0x000003f2,
-    DISPID_ISVGMATRIX_ROTATE               = 0x000003f3,
-    DISPID_ISVGMATRIX_ROTATEFROMVECTOR     = 0x000003f4,
-    DISPID_ISVGMATRIX_FLIPX                = 0x000003f5,
-    DISPID_ISVGMATRIX_FLIPY                = 0x000003f6,
-    DISPID_ISVGMATRIX_SKEWX                = 0x000003f7,
-    DISPID_ISVGMATRIX_SKEWY                = 0x000003f8,
-    DISPID_ISVGNUMBER_VALUE                = 0x000003e8,
-    DISPID_ISVGNUMBERLIST_NUMBEROFITEMS    = 0x000003e8,
-    DISPID_ISVGNUMBERLIST_CLEAR            = 0x000003e9,
-    DISPID_ISVGNUMBERLIST_INITIALIZE       = 0x000003ea,
-    DISPID_ISVGNUMBERLIST_GETITEM          = 0x000003eb,
-    DISPID_ISVGNUMBERLIST_INSERTITEMBEFORE = 0x000003ec,
-    DISPID_ISVGNUMBERLIST_REPLACEITEM      = 0x000003ed,
-    DISPID_ISVGNUMBERLIST_REMOVEITEM       = 0x000003ee,
-    DISPID_ISVGNUMBERLIST_APPENDITEM       = 0x000003ef,
+    DISPID_ISVGMATRIX_A                    = 0x000003e8U,
+    DISPID_ISVGMATRIX_B                    = 0x000003e9U,
+    DISPID_ISVGMATRIX_C                    = 0x000003eaU,
+    DISPID_ISVGMATRIX_D                    = 0x000003ebU,
+    DISPID_ISVGMATRIX_E                    = 0x000003ecU,
+    DISPID_ISVGMATRIX_F                    = 0x000003edU,
+    DISPID_ISVGMATRIX_MULTIPLY             = 0x000003eeU,
+    DISPID_ISVGMATRIX_INVERSE              = 0x000003efU,
+    DISPID_ISVGMATRIX_TRANSLATE            = 0x000003f0U,
+    DISPID_ISVGMATRIX_SCALE                = 0x000003f1U,
+    DISPID_ISVGMATRIX_SCALENONUNIFORM      = 0x000003f2U,
+    DISPID_ISVGMATRIX_ROTATE               = 0x000003f3U,
+    DISPID_ISVGMATRIX_ROTATEFROMVECTOR     = 0x000003f4U,
+    DISPID_ISVGMATRIX_FLIPX                = 0x000003f5U,
+    DISPID_ISVGMATRIX_FLIPY                = 0x000003f6U,
+    DISPID_ISVGMATRIX_SKEWX                = 0x000003f7U,
+    DISPID_ISVGMATRIX_SKEWY                = 0x000003f8U,
+    DISPID_ISVGNUMBER_VALUE                = 0x000003e8U,
+    DISPID_ISVGNUMBERLIST_NUMBEROFITEMS    = 0x000003e8U,
+    DISPID_ISVGNUMBERLIST_CLEAR            = 0x000003e9U,
+    DISPID_ISVGNUMBERLIST_INITIALIZE       = 0x000003eaU,
+    DISPID_ISVGNUMBERLIST_GETITEM          = 0x000003ebU,
+    DISPID_ISVGNUMBERLIST_INSERTITEMBEFORE = 0x000003ecU,
+    DISPID_ISVGNUMBERLIST_REPLACEITEM      = 0x000003edU,
+    DISPID_ISVGNUMBERLIST_REMOVEITEM       = 0x000003eeU,
+    DISPID_ISVGNUMBERLIST_APPENDITEM       = 0x000003efU,
 }
 
 enum : uint
 {
-    DISPID_ISVGPATTERNELEMENT_PATTERNUNITS        = 0x0000041b,
-    DISPID_ISVGPATTERNELEMENT_PATTERNCONTENTUNITS = 0x0000041d,
-    DISPID_ISVGPATTERNELEMENT_PATTERNTRANSFORM    = 0x0000041f,
-    DISPID_ISVGPATTERNELEMENT_X                   = 0x00000421,
-    DISPID_ISVGPATTERNELEMENT_Y                   = 0x00000423,
-    DISPID_ISVGPATTERNELEMENT_WIDTH               = 0x00000425,
-    DISPID_ISVGPATTERNELEMENT_HEIGHT              = 0x00000427,
-    DISPID_ISVGPATHSEG_PATHSEGTYPE                = 0x000003e8,
-    DISPID_ISVGPATHSEG_PATHSEGTYPEASLETTER        = 0x000003e9,
-    DISPID_ISVGPATHSEGARCABS_X                    = 0x000003fc,
-    DISPID_ISVGPATHSEGARCABS_Y                    = 0x000003fd,
-    DISPID_ISVGPATHSEGARCABS_R1                   = 0x000003fe,
-    DISPID_ISVGPATHSEGARCABS_R2                   = 0x000003ff,
-    DISPID_ISVGPATHSEGARCABS_ANGLE                = 0x00000400,
-    DISPID_ISVGPATHSEGARCABS_LARGEARCFLAG         = 0x00000401,
-    DISPID_ISVGPATHSEGARCABS_SWEEPFLAG            = 0x00000402,
-    DISPID_ISVGPATHSEGARCREL_X                    = 0x000003fc,
-    DISPID_ISVGPATHSEGARCREL_Y                    = 0x000003fd,
-    DISPID_ISVGPATHSEGARCREL_R1                   = 0x000003fe,
-    DISPID_ISVGPATHSEGARCREL_R2                   = 0x000003ff,
-    DISPID_ISVGPATHSEGARCREL_ANGLE                = 0x00000400,
-    DISPID_ISVGPATHSEGARCREL_LARGEARCFLAG         = 0x00000401,
-    DISPID_ISVGPATHSEGARCREL_SWEEPFLAG            = 0x00000402,
-    DISPID_ISVGPATHSEGMOVETOABS_X                 = 0x000003fc,
-    DISPID_ISVGPATHSEGMOVETOABS_Y                 = 0x000003fd,
-    DISPID_ISVGPATHSEGMOVETOREL_X                 = 0x000003fc,
-    DISPID_ISVGPATHSEGMOVETOREL_Y                 = 0x000003fd,
-    DISPID_ISVGPATHSEGLINETOABS_X                 = 0x000003fc,
-    DISPID_ISVGPATHSEGLINETOABS_Y                 = 0x000003fd,
-    DISPID_ISVGPATHSEGLINETOREL_X                 = 0x000003fc,
-    DISPID_ISVGPATHSEGLINETOREL_Y                 = 0x000003fd,
-    DISPID_ISVGPATHSEGCURVETOCUBICABS_X           = 0x000003fc,
-    DISPID_ISVGPATHSEGCURVETOCUBICABS_Y           = 0x000003fd,
-    DISPID_ISVGPATHSEGCURVETOCUBICABS_X1          = 0x000003fe,
-    DISPID_ISVGPATHSEGCURVETOCUBICABS_Y1          = 0x000003ff,
-    DISPID_ISVGPATHSEGCURVETOCUBICABS_X2          = 0x00000400,
-    DISPID_ISVGPATHSEGCURVETOCUBICABS_Y2          = 0x00000401,
-    DISPID_ISVGPATHSEGCURVETOCUBICREL_X           = 0x000003fc,
-    DISPID_ISVGPATHSEGCURVETOCUBICREL_Y           = 0x000003fd,
-    DISPID_ISVGPATHSEGCURVETOCUBICREL_X1          = 0x000003fe,
-    DISPID_ISVGPATHSEGCURVETOCUBICREL_Y1          = 0x000003ff,
-    DISPID_ISVGPATHSEGCURVETOCUBICREL_X2          = 0x00000400,
-    DISPID_ISVGPATHSEGCURVETOCUBICREL_Y2          = 0x00000401,
-    DISPID_ISVGPATHSEGCURVETOCUBICSMOOTHABS_X     = 0x000003fc,
-    DISPID_ISVGPATHSEGCURVETOCUBICSMOOTHABS_Y     = 0x000003fd,
-    DISPID_ISVGPATHSEGCURVETOCUBICSMOOTHABS_X2    = 0x000003fe,
-    DISPID_ISVGPATHSEGCURVETOCUBICSMOOTHABS_Y2    = 0x000003ff,
-    DISPID_ISVGPATHSEGCURVETOCUBICSMOOTHREL_X     = 0x000003fc,
-    DISPID_ISVGPATHSEGCURVETOCUBICSMOOTHREL_Y     = 0x000003fd,
-    DISPID_ISVGPATHSEGCURVETOCUBICSMOOTHREL_X2    = 0x000003fe,
-    DISPID_ISVGPATHSEGCURVETOCUBICSMOOTHREL_Y2    = 0x000003ff,
-    DISPID_ISVGPATHSEGCURVETOQUADRATICABS_X       = 0x000003fc,
-    DISPID_ISVGPATHSEGCURVETOQUADRATICABS_Y       = 0x000003fd,
-    DISPID_ISVGPATHSEGCURVETOQUADRATICABS_X1      = 0x000003fe,
-    DISPID_ISVGPATHSEGCURVETOQUADRATICABS_Y1      = 0x000003ff,
-    DISPID_ISVGPATHSEGCURVETOQUADRATICREL_X       = 0x000003fc,
-    DISPID_ISVGPATHSEGCURVETOQUADRATICREL_Y       = 0x000003fd,
-    DISPID_ISVGPATHSEGCURVETOQUADRATICREL_X1      = 0x000003fe,
-    DISPID_ISVGPATHSEGCURVETOQUADRATICREL_Y1      = 0x000003ff,
-    DISPID_ISVGPATHSEGCURVETOQUADRATICSMOOTHABS_X = 0x000003fc,
-    DISPID_ISVGPATHSEGCURVETOQUADRATICSMOOTHABS_Y = 0x000003fd,
-    DISPID_ISVGPATHSEGCURVETOQUADRATICSMOOTHREL_X = 0x000003fc,
-    DISPID_ISVGPATHSEGCURVETOQUADRATICSMOOTHREL_Y = 0x000003fd,
-}
-
-enum : uint
-{
-    DISPID_ISVGPATHSEGLINETOHORIZONTALABS_X = 0x000003fc,
-    DISPID_ISVGPATHSEGLINETOHORIZONTALREL_X = 0x000003fc,
-    DISPID_ISVGPATHSEGLINETOVERTICALABS_Y   = 0x000003fc,
-    DISPID_ISVGPATHSEGLINETOVERTICALREL_Y   = 0x000003fc,
-    DISPID_ISVGPATHSEGLIST_NUMBEROFITEMS    = 0x000003e8,
-    DISPID_ISVGPATHSEGLIST_CLEAR            = 0x000003e9,
-    DISPID_ISVGPATHSEGLIST_INITIALIZE       = 0x000003ea,
-    DISPID_ISVGPATHSEGLIST_GETITEM          = 0x000003eb,
-    DISPID_ISVGPATHSEGLIST_INSERTITEMBEFORE = 0x000003ec,
-    DISPID_ISVGPATHSEGLIST_REPLACEITEM      = 0x000003ed,
-    DISPID_ISVGPATHSEGLIST_REMOVEITEM       = 0x000003ee,
-    DISPID_ISVGPATHSEGLIST_APPENDITEM       = 0x000003ef,
+    DISPID_ISVGPATTERNELEMENT_PATTERNUNITS        = 0x0000041bU,
+    DISPID_ISVGPATTERNELEMENT_PATTERNCONTENTUNITS = 0x0000041dU,
+    DISPID_ISVGPATTERNELEMENT_PATTERNTRANSFORM    = 0x0000041fU,
+    DISPID_ISVGPATTERNELEMENT_X                   = 0x00000421U,
+    DISPID_ISVGPATTERNELEMENT_Y                   = 0x00000423U,
+    DISPID_ISVGPATTERNELEMENT_WIDTH               = 0x00000425U,
+    DISPID_ISVGPATTERNELEMENT_HEIGHT              = 0x00000427U,
+    DISPID_ISVGPATHSEG_PATHSEGTYPE                = 0x000003e8U,
+    DISPID_ISVGPATHSEG_PATHSEGTYPEASLETTER        = 0x000003e9U,
+    DISPID_ISVGPATHSEGARCABS_X                    = 0x000003fcU,
+    DISPID_ISVGPATHSEGARCABS_Y                    = 0x000003fdU,
+    DISPID_ISVGPATHSEGARCABS_R1                   = 0x000003feU,
+    DISPID_ISVGPATHSEGARCABS_R2                   = 0x000003ffU,
+    DISPID_ISVGPATHSEGARCABS_ANGLE                = 0x00000400U,
+    DISPID_ISVGPATHSEGARCABS_LARGEARCFLAG         = 0x00000401U,
+    DISPID_ISVGPATHSEGARCABS_SWEEPFLAG            = 0x00000402U,
+    DISPID_ISVGPATHSEGARCREL_X                    = 0x000003fcU,
+    DISPID_ISVGPATHSEGARCREL_Y                    = 0x000003fdU,
+    DISPID_ISVGPATHSEGARCREL_R1                   = 0x000003feU,
+    DISPID_ISVGPATHSEGARCREL_R2                   = 0x000003ffU,
+    DISPID_ISVGPATHSEGARCREL_ANGLE                = 0x00000400U,
+    DISPID_ISVGPATHSEGARCREL_LARGEARCFLAG         = 0x00000401U,
+    DISPID_ISVGPATHSEGARCREL_SWEEPFLAG            = 0x00000402U,
+    DISPID_ISVGPATHSEGMOVETOABS_X                 = 0x000003fcU,
+    DISPID_ISVGPATHSEGMOVETOABS_Y                 = 0x000003fdU,
+    DISPID_ISVGPATHSEGMOVETOREL_X                 = 0x000003fcU,
+    DISPID_ISVGPATHSEGMOVETOREL_Y                 = 0x000003fdU,
+    DISPID_ISVGPATHSEGLINETOABS_X                 = 0x000003fcU,
+    DISPID_ISVGPATHSEGLINETOABS_Y                 = 0x000003fdU,
+    DISPID_ISVGPATHSEGLINETOREL_X                 = 0x000003fcU,
+    DISPID_ISVGPATHSEGLINETOREL_Y                 = 0x000003fdU,
+    DISPID_ISVGPATHSEGCURVETOCUBICABS_X           = 0x000003fcU,
+    DISPID_ISVGPATHSEGCURVETOCUBICABS_Y           = 0x000003fdU,
+    DISPID_ISVGPATHSEGCURVETOCUBICABS_X1          = 0x000003feU,
+    DISPID_ISVGPATHSEGCURVETOCUBICABS_Y1          = 0x000003ffU,
+    DISPID_ISVGPATHSEGCURVETOCUBICABS_X2          = 0x00000400U,
+    DISPID_ISVGPATHSEGCURVETOCUBICABS_Y2          = 0x00000401U,
+    DISPID_ISVGPATHSEGCURVETOCUBICREL_X           = 0x000003fcU,
+    DISPID_ISVGPATHSEGCURVETOCUBICREL_Y           = 0x000003fdU,
+    DISPID_ISVGPATHSEGCURVETOCUBICREL_X1          = 0x000003feU,
+    DISPID_ISVGPATHSEGCURVETOCUBICREL_Y1          = 0x000003ffU,
+    DISPID_ISVGPATHSEGCURVETOCUBICREL_X2          = 0x00000400U,
+    DISPID_ISVGPATHSEGCURVETOCUBICREL_Y2          = 0x00000401U,
+    DISPID_ISVGPATHSEGCURVETOCUBICSMOOTHABS_X     = 0x000003fcU,
+    DISPID_ISVGPATHSEGCURVETOCUBICSMOOTHABS_Y     = 0x000003fdU,
+    DISPID_ISVGPATHSEGCURVETOCUBICSMOOTHABS_X2    = 0x000003feU,
+    DISPID_ISVGPATHSEGCURVETOCUBICSMOOTHABS_Y2    = 0x000003ffU,
+    DISPID_ISVGPATHSEGCURVETOCUBICSMOOTHREL_X     = 0x000003fcU,
+    DISPID_ISVGPATHSEGCURVETOCUBICSMOOTHREL_Y     = 0x000003fdU,
+    DISPID_ISVGPATHSEGCURVETOCUBICSMOOTHREL_X2    = 0x000003feU,
+    DISPID_ISVGPATHSEGCURVETOCUBICSMOOTHREL_Y2    = 0x000003ffU,
+    DISPID_ISVGPATHSEGCURVETOQUADRATICABS_X       = 0x000003fcU,
+    DISPID_ISVGPATHSEGCURVETOQUADRATICABS_Y       = 0x000003fdU,
+    DISPID_ISVGPATHSEGCURVETOQUADRATICABS_X1      = 0x000003feU,
+    DISPID_ISVGPATHSEGCURVETOQUADRATICABS_Y1      = 0x000003ffU,
+    DISPID_ISVGPATHSEGCURVETOQUADRATICREL_X       = 0x000003fcU,
+    DISPID_ISVGPATHSEGCURVETOQUADRATICREL_Y       = 0x000003fdU,
+    DISPID_ISVGPATHSEGCURVETOQUADRATICREL_X1      = 0x000003feU,
+    DISPID_ISVGPATHSEGCURVETOQUADRATICREL_Y1      = 0x000003ffU,
+    DISPID_ISVGPATHSEGCURVETOQUADRATICSMOOTHABS_X = 0x000003fcU,
+    DISPID_ISVGPATHSEGCURVETOQUADRATICSMOOTHABS_Y = 0x000003fdU,
+    DISPID_ISVGPATHSEGCURVETOQUADRATICSMOOTHREL_X = 0x000003fcU,
+    DISPID_ISVGPATHSEGCURVETOQUADRATICSMOOTHREL_Y = 0x000003fdU,
+}
+
+enum : uint
+{
+    DISPID_ISVGPATHSEGLINETOHORIZONTALABS_X = 0x000003fcU,
+    DISPID_ISVGPATHSEGLINETOHORIZONTALREL_X = 0x000003fcU,
+    DISPID_ISVGPATHSEGLINETOVERTICALABS_Y   = 0x000003fcU,
+    DISPID_ISVGPATHSEGLINETOVERTICALREL_Y   = 0x000003fcU,
+    DISPID_ISVGPATHSEGLIST_NUMBEROFITEMS    = 0x000003e8U,
+    DISPID_ISVGPATHSEGLIST_CLEAR            = 0x000003e9U,
+    DISPID_ISVGPATHSEGLIST_INITIALIZE       = 0x000003eaU,
+    DISPID_ISVGPATHSEGLIST_GETITEM          = 0x000003ebU,
+    DISPID_ISVGPATHSEGLIST_INSERTITEMBEFORE = 0x000003ecU,
+    DISPID_ISVGPATHSEGLIST_REPLACEITEM      = 0x000003edU,
+    DISPID_ISVGPATHSEGLIST_REMOVEITEM       = 0x000003eeU,
+    DISPID_ISVGPATHSEGLIST_APPENDITEM       = 0x000003efU,
 }
 
 enum : uint
 {
-    DISPID_ISVGPOINT_X                    = 0x000003e8,
-    DISPID_ISVGPOINT_Y                    = 0x000003e9,
-    DISPID_ISVGPOINT_MATRIXTRANSFORM      = 0x000003ea,
-    DISPID_ISVGPOINTLIST_NUMBEROFITEMS    = 0x000003e8,
-    DISPID_ISVGPOINTLIST_CLEAR            = 0x000003e9,
-    DISPID_ISVGPOINTLIST_INITIALIZE       = 0x000003ea,
-    DISPID_ISVGPOINTLIST_GETITEM          = 0x000003eb,
-    DISPID_ISVGPOINTLIST_INSERTITEMBEFORE = 0x000003ec,
-    DISPID_ISVGPOINTLIST_REPLACEITEM      = 0x000003ed,
-    DISPID_ISVGPOINTLIST_REMOVEITEM       = 0x000003ee,
-    DISPID_ISVGPOINTLIST_APPENDITEM       = 0x000003ef,
+    DISPID_ISVGPOINT_X                    = 0x000003e8U,
+    DISPID_ISVGPOINT_Y                    = 0x000003e9U,
+    DISPID_ISVGPOINT_MATRIXTRANSFORM      = 0x000003eaU,
+    DISPID_ISVGPOINTLIST_NUMBEROFITEMS    = 0x000003e8U,
+    DISPID_ISVGPOINTLIST_CLEAR            = 0x000003e9U,
+    DISPID_ISVGPOINTLIST_INITIALIZE       = 0x000003eaU,
+    DISPID_ISVGPOINTLIST_GETITEM          = 0x000003ebU,
+    DISPID_ISVGPOINTLIST_INSERTITEMBEFORE = 0x000003ecU,
+    DISPID_ISVGPOINTLIST_REPLACEITEM      = 0x000003edU,
+    DISPID_ISVGPOINTLIST_REMOVEITEM       = 0x000003eeU,
+    DISPID_ISVGPOINTLIST_APPENDITEM       = 0x000003efU,
 }
 
 enum : uint
 {
-    DISPID_ISVGRECT_X                      = 0x000003e8,
-    DISPID_ISVGRECT_Y                      = 0x000003e9,
-    DISPID_ISVGRECT_WIDTH                  = 0x000003ea,
-    DISPID_ISVGRECT_HEIGHT                 = 0x000003eb,
-    DISPID_ISVGSTRINGLIST_NUMBEROFITEMS    = 0x000003e8,
-    DISPID_ISVGSTRINGLIST_CLEAR            = 0x000003e9,
-    DISPID_ISVGSTRINGLIST_INITIALIZE       = 0x000003ea,
-    DISPID_ISVGSTRINGLIST_GETITEM          = 0x000003eb,
-    DISPID_ISVGSTRINGLIST_INSERTITEMBEFORE = 0x000003ec,
-    DISPID_ISVGSTRINGLIST_REPLACEITEM      = 0x000003ed,
-    DISPID_ISVGSTRINGLIST_REMOVEITEM       = 0x000003ee,
-    DISPID_ISVGSTRINGLIST_APPENDITEM       = 0x000003ef,
+    DISPID_ISVGRECT_X                      = 0x000003e8U,
+    DISPID_ISVGRECT_Y                      = 0x000003e9U,
+    DISPID_ISVGRECT_WIDTH                  = 0x000003eaU,
+    DISPID_ISVGRECT_HEIGHT                 = 0x000003ebU,
+    DISPID_ISVGSTRINGLIST_NUMBEROFITEMS    = 0x000003e8U,
+    DISPID_ISVGSTRINGLIST_CLEAR            = 0x000003e9U,
+    DISPID_ISVGSTRINGLIST_INITIALIZE       = 0x000003eaU,
+    DISPID_ISVGSTRINGLIST_GETITEM          = 0x000003ebU,
+    DISPID_ISVGSTRINGLIST_INSERTITEMBEFORE = 0x000003ecU,
+    DISPID_ISVGSTRINGLIST_REPLACEITEM      = 0x000003edU,
+    DISPID_ISVGSTRINGLIST_REMOVEITEM       = 0x000003eeU,
+    DISPID_ISVGSTRINGLIST_APPENDITEM       = 0x000003efU,
 }
 
 enum : uint
 {
-    DISPID_ISVGTRANSFORM_TYPE         = 0x000003e8,
-    DISPID_ISVGTRANSFORM_MATRIX       = 0x000003e9,
-    DISPID_ISVGTRANSFORM_ANGLE        = 0x000003ea,
-    DISPID_ISVGTRANSFORM_SETMATRIX    = 0x000003eb,
-    DISPID_ISVGTRANSFORM_SETTRANSLATE = 0x000003ec,
-    DISPID_ISVGTRANSFORM_SETSCALE     = 0x000003ed,
-    DISPID_ISVGTRANSFORM_SETROTATE    = 0x000003ee,
-    DISPID_ISVGTRANSFORM_SETSKEWX     = 0x000003ef,
-    DISPID_ISVGTRANSFORM_SETSKEWY     = 0x000003f0,
+    DISPID_ISVGTRANSFORM_TYPE         = 0x000003e8U,
+    DISPID_ISVGTRANSFORM_MATRIX       = 0x000003e9U,
+    DISPID_ISVGTRANSFORM_ANGLE        = 0x000003eaU,
+    DISPID_ISVGTRANSFORM_SETMATRIX    = 0x000003ebU,
+    DISPID_ISVGTRANSFORM_SETTRANSLATE = 0x000003ecU,
+    DISPID_ISVGTRANSFORM_SETSCALE     = 0x000003edU,
+    DISPID_ISVGTRANSFORM_SETROTATE    = 0x000003eeU,
+    DISPID_ISVGTRANSFORM_SETSKEWX     = 0x000003efU,
+    DISPID_ISVGTRANSFORM_SETSKEWY     = 0x000003f0U,
 }
 
 enum : uint
 {
-    DISPID_ISVGSVGELEMENT_X                            = 0x0000041c,
-    DISPID_ISVGSVGELEMENT_Y                            = 0x0000041e,
-    DISPID_ISVGSVGELEMENT_WIDTH                        = 0x00000420,
-    DISPID_ISVGSVGELEMENT_HEIGHT                       = 0x00000422,
-    DISPID_ISVGSVGELEMENT_CONTENTSCRIPTTYPE            = 0x00000423,
-    DISPID_ISVGSVGELEMENT_CONTENTSTYLETYPE             = 0x00000424,
-    DISPID_ISVGSVGELEMENT_VIEWPORT                     = 0x00000425,
-    DISPID_ISVGSVGELEMENT_PIXELUNITTOMILLIMETERX       = 0x00000426,
-    DISPID_ISVGSVGELEMENT_PIXELUNITTOMILLIMETERY       = 0x00000427,
-    DISPID_ISVGSVGELEMENT_SCREENPIXELTOMILLIMETERX     = 0x00000428,
-    DISPID_ISVGSVGELEMENT_SCREENPIXELTOMILLIMETERY     = 0x00000429,
-    DISPID_ISVGSVGELEMENT_USECURRENTVIEW               = 0x0000042a,
-    DISPID_ISVGSVGELEMENT_CURRENTVIEW                  = 0x0000042b,
-    DISPID_ISVGSVGELEMENT_CURRENTSCALE                 = 0x0000042c,
-    DISPID_ISVGSVGELEMENT_CURRENTTRANSLATE             = 0x0000042d,
-    DISPID_ISVGSVGELEMENT_SUSPENDREDRAW                = 0x0000042e,
-    DISPID_ISVGSVGELEMENT_UNSUSPENDREDRAW              = 0x0000042f,
-    DISPID_ISVGSVGELEMENT_UNSUSPENDREDRAWALL           = 0x00000430,
-    DISPID_ISVGSVGELEMENT_FORCEREDRAW                  = 0x00000431,
-    DISPID_ISVGSVGELEMENT_PAUSEANIMATIONS              = 0x00000432,
-    DISPID_ISVGSVGELEMENT_UNPAUSEANIMATIONS            = 0x00000433,
-    DISPID_ISVGSVGELEMENT_ANIMATIONSPAUSED             = 0x00000434,
-    DISPID_ISVGSVGELEMENT_GETCURRENTTIME               = 0x00000435,
-    DISPID_ISVGSVGELEMENT_SETCURRENTTIME               = 0x00000436,
-    DISPID_ISVGSVGELEMENT_GETINTERSECTIONLIST          = 0x00000437,
-    DISPID_ISVGSVGELEMENT_GETENCLOSURELIST             = 0x00000438,
-    DISPID_ISVGSVGELEMENT_CHECKINTERSECTION            = 0x00000439,
-    DISPID_ISVGSVGELEMENT_CHECKENCLOSURE               = 0x0000043a,
-    DISPID_ISVGSVGELEMENT_DESELECTALL                  = 0x0000043b,
-    DISPID_ISVGSVGELEMENT_CREATESVGNUMBER              = 0x0000043c,
-    DISPID_ISVGSVGELEMENT_CREATESVGLENGTH              = 0x0000043d,
-    DISPID_ISVGSVGELEMENT_CREATESVGANGLE               = 0x0000043e,
-    DISPID_ISVGSVGELEMENT_CREATESVGPOINT               = 0x0000043f,
-    DISPID_ISVGSVGELEMENT_CREATESVGMATRIX              = 0x00000440,
-    DISPID_ISVGSVGELEMENT_CREATESVGRECT                = 0x00000441,
-    DISPID_ISVGSVGELEMENT_CREATESVGTRANSFORM           = 0x00000442,
-    DISPID_ISVGSVGELEMENT_CREATESVGTRANSFORMFROMMATRIX = 0x00000443,
-    DISPID_ISVGSVGELEMENT_GETELEMENTBYID               = 0x00000444,
+    DISPID_ISVGSVGELEMENT_X                            = 0x0000041cU,
+    DISPID_ISVGSVGELEMENT_Y                            = 0x0000041eU,
+    DISPID_ISVGSVGELEMENT_WIDTH                        = 0x00000420U,
+    DISPID_ISVGSVGELEMENT_HEIGHT                       = 0x00000422U,
+    DISPID_ISVGSVGELEMENT_CONTENTSCRIPTTYPE            = 0x00000423U,
+    DISPID_ISVGSVGELEMENT_CONTENTSTYLETYPE             = 0x00000424U,
+    DISPID_ISVGSVGELEMENT_VIEWPORT                     = 0x00000425U,
+    DISPID_ISVGSVGELEMENT_PIXELUNITTOMILLIMETERX       = 0x00000426U,
+    DISPID_ISVGSVGELEMENT_PIXELUNITTOMILLIMETERY       = 0x00000427U,
+    DISPID_ISVGSVGELEMENT_SCREENPIXELTOMILLIMETERX     = 0x00000428U,
+    DISPID_ISVGSVGELEMENT_SCREENPIXELTOMILLIMETERY     = 0x00000429U,
+    DISPID_ISVGSVGELEMENT_USECURRENTVIEW               = 0x0000042aU,
+    DISPID_ISVGSVGELEMENT_CURRENTVIEW                  = 0x0000042bU,
+    DISPID_ISVGSVGELEMENT_CURRENTSCALE                 = 0x0000042cU,
+    DISPID_ISVGSVGELEMENT_CURRENTTRANSLATE             = 0x0000042dU,
+    DISPID_ISVGSVGELEMENT_SUSPENDREDRAW                = 0x0000042eU,
+    DISPID_ISVGSVGELEMENT_UNSUSPENDREDRAW              = 0x0000042fU,
+    DISPID_ISVGSVGELEMENT_UNSUSPENDREDRAWALL           = 0x00000430U,
+    DISPID_ISVGSVGELEMENT_FORCEREDRAW                  = 0x00000431U,
+    DISPID_ISVGSVGELEMENT_PAUSEANIMATIONS              = 0x00000432U,
+    DISPID_ISVGSVGELEMENT_UNPAUSEANIMATIONS            = 0x00000433U,
+    DISPID_ISVGSVGELEMENT_ANIMATIONSPAUSED             = 0x00000434U,
+    DISPID_ISVGSVGELEMENT_GETCURRENTTIME               = 0x00000435U,
+    DISPID_ISVGSVGELEMENT_SETCURRENTTIME               = 0x00000436U,
+    DISPID_ISVGSVGELEMENT_GETINTERSECTIONLIST          = 0x00000437U,
+    DISPID_ISVGSVGELEMENT_GETENCLOSURELIST             = 0x00000438U,
+    DISPID_ISVGSVGELEMENT_CHECKINTERSECTION            = 0x00000439U,
+    DISPID_ISVGSVGELEMENT_CHECKENCLOSURE               = 0x0000043aU,
+    DISPID_ISVGSVGELEMENT_DESELECTALL                  = 0x0000043bU,
+    DISPID_ISVGSVGELEMENT_CREATESVGNUMBER              = 0x0000043cU,
+    DISPID_ISVGSVGELEMENT_CREATESVGLENGTH              = 0x0000043dU,
+    DISPID_ISVGSVGELEMENT_CREATESVGANGLE               = 0x0000043eU,
+    DISPID_ISVGSVGELEMENT_CREATESVGPOINT               = 0x0000043fU,
+    DISPID_ISVGSVGELEMENT_CREATESVGMATRIX              = 0x00000440U,
+    DISPID_ISVGSVGELEMENT_CREATESVGRECT                = 0x00000441U,
+    DISPID_ISVGSVGELEMENT_CREATESVGTRANSFORM           = 0x00000442U,
+    DISPID_ISVGSVGELEMENT_CREATESVGTRANSFORMFROMMATRIX = 0x00000443U,
+    DISPID_ISVGSVGELEMENT_GETELEMENTBYID               = 0x00000444U,
 }
 
 enum : uint
 {
-    DISPID_ISVGUSEELEMENT_X                    = 0x0000041c,
-    DISPID_ISVGUSEELEMENT_Y                    = 0x0000041e,
-    DISPID_ISVGUSEELEMENT_WIDTH                = 0x00000420,
-    DISPID_ISVGUSEELEMENT_HEIGHT               = 0x00000422,
-    DISPID_ISVGUSEELEMENT_INSTANCEROOT         = 0x00000423,
-    DISPID_ISVGUSEELEMENT_ANIMATEDINSTANCEROOT = 0x00000424,
+    DISPID_ISVGUSEELEMENT_X                    = 0x0000041cU,
+    DISPID_ISVGUSEELEMENT_Y                    = 0x0000041eU,
+    DISPID_ISVGUSEELEMENT_WIDTH                = 0x00000420U,
+    DISPID_ISVGUSEELEMENT_HEIGHT               = 0x00000422U,
+    DISPID_ISVGUSEELEMENT_INSTANCEROOT         = 0x00000423U,
+    DISPID_ISVGUSEELEMENT_ANIMATEDINSTANCEROOT = 0x00000424U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLSTYLESHEETRULESAPPLIEDCOLLECTION_ITEM                       = 0x00000000,
-    DISPID_IHTMLSTYLESHEETRULESAPPLIEDCOLLECTION_LENGTH                     = 0x000003e9,
-    DISPID_IHTMLSTYLESHEETRULESAPPLIEDCOLLECTION_PROPERTYAPPLIEDBY          = 0x000003ea,
-    DISPID_IHTMLSTYLESHEETRULESAPPLIEDCOLLECTION_PROPERTYAPPLIEDTRACE       = 0x000003ec,
-    DISPID_IHTMLSTYLESHEETRULESAPPLIEDCOLLECTION_PROPERTYAPPLIEDTRACELENGTH = 0x000003ed,
+    DISPID_IHTMLSTYLESHEETRULESAPPLIEDCOLLECTION_ITEM                       = 0x00000000U,
+    DISPID_IHTMLSTYLESHEETRULESAPPLIEDCOLLECTION_LENGTH                     = 0x000003e9U,
+    DISPID_IHTMLSTYLESHEETRULESAPPLIEDCOLLECTION_PROPERTYAPPLIEDBY          = 0x000003eaU,
+    DISPID_IHTMLSTYLESHEETRULESAPPLIEDCOLLECTION_PROPERTYAPPLIEDTRACE       = 0x000003ecU,
+    DISPID_IHTMLSTYLESHEETRULESAPPLIEDCOLLECTION_PROPERTYAPPLIEDTRACELENGTH = 0x000003edU,
 }
 
 enum : uint
 {
-    DISPID_IRULESAPPLIED_ELEMENT                                = 0x000003e9,
-    DISPID_IRULESAPPLIED_INLINESTYLES                           = 0x000003ea,
-    DISPID_IRULESAPPLIED_APPLIEDRULES                           = 0x000003eb,
-    DISPID_IRULESAPPLIED_PROPERTYISINLINE                       = 0x000003ec,
-    DISPID_IRULESAPPLIED_PROPERTYISINHERITABLE                  = 0x000003ed,
-    DISPID_IRULESAPPLIED_HASINHERITABLEPROPERTY                 = 0x000003ee,
-    DISPID_IRULESAPPLIEDCOLLECTION_ITEM                         = 0x00000000,
-    DISPID_IRULESAPPLIEDCOLLECTION_LENGTH                       = 0x000003e9,
-    DISPID_IRULESAPPLIEDCOLLECTION_ELEMENT                      = 0x000003ea,
-    DISPID_IRULESAPPLIEDCOLLECTION_PROPERTYINHERITEDFROM        = 0x000003eb,
-    DISPID_IRULESAPPLIEDCOLLECTION_PROPERTYCOUNT                = 0x000003ec,
-    DISPID_IRULESAPPLIEDCOLLECTION_PROPERTY                     = 0x000003ed,
-    DISPID_IRULESAPPLIEDCOLLECTION_PROPERTYINHERITEDTRACE       = 0x000003ee,
-    DISPID_IRULESAPPLIEDCOLLECTION_PROPERTYINHERITEDTRACELENGTH = 0x000003ef,
+    DISPID_IRULESAPPLIED_ELEMENT                                = 0x000003e9U,
+    DISPID_IRULESAPPLIED_INLINESTYLES                           = 0x000003eaU,
+    DISPID_IRULESAPPLIED_APPLIEDRULES                           = 0x000003ebU,
+    DISPID_IRULESAPPLIED_PROPERTYISINLINE                       = 0x000003ecU,
+    DISPID_IRULESAPPLIED_PROPERTYISINHERITABLE                  = 0x000003edU,
+    DISPID_IRULESAPPLIED_HASINHERITABLEPROPERTY                 = 0x000003eeU,
+    DISPID_IRULESAPPLIEDCOLLECTION_ITEM                         = 0x00000000U,
+    DISPID_IRULESAPPLIEDCOLLECTION_LENGTH                       = 0x000003e9U,
+    DISPID_IRULESAPPLIEDCOLLECTION_ELEMENT                      = 0x000003eaU,
+    DISPID_IRULESAPPLIEDCOLLECTION_PROPERTYINHERITEDFROM        = 0x000003ebU,
+    DISPID_IRULESAPPLIEDCOLLECTION_PROPERTYCOUNT                = 0x000003ecU,
+    DISPID_IRULESAPPLIEDCOLLECTION_PROPERTY                     = 0x000003edU,
+    DISPID_IRULESAPPLIEDCOLLECTION_PROPERTYINHERITEDTRACE       = 0x000003eeU,
+    DISPID_IRULESAPPLIEDCOLLECTION_PROPERTYINHERITEDTRACELENGTH = 0x000003efU,
 }
 
 enum : uint
 {
-    DISPID_ISVGTRANSFORMLIST_NUMBEROFITEMS                = 0x000003e8,
-    DISPID_ISVGTRANSFORMLIST_CLEAR                        = 0x000003e9,
-    DISPID_ISVGTRANSFORMLIST_INITIALIZE                   = 0x000003ea,
-    DISPID_ISVGTRANSFORMLIST_GETITEM                      = 0x000003eb,
-    DISPID_ISVGTRANSFORMLIST_INSERTITEMBEFORE             = 0x000003ec,
-    DISPID_ISVGTRANSFORMLIST_REPLACEITEM                  = 0x000003ed,
-    DISPID_ISVGTRANSFORMLIST_REMOVEITEM                   = 0x000003ee,
-    DISPID_ISVGTRANSFORMLIST_APPENDITEM                   = 0x000003ef,
-    DISPID_ISVGTRANSFORMLIST_CREATESVGTRANSFORMFROMMATRIX = 0x000003f0,
-    DISPID_ISVGTRANSFORMLIST_CONSOLIDATE                  = 0x000003f1,
+    DISPID_ISVGTRANSFORMLIST_NUMBEROFITEMS                = 0x000003e8U,
+    DISPID_ISVGTRANSFORMLIST_CLEAR                        = 0x000003e9U,
+    DISPID_ISVGTRANSFORMLIST_INITIALIZE                   = 0x000003eaU,
+    DISPID_ISVGTRANSFORMLIST_GETITEM                      = 0x000003ebU,
+    DISPID_ISVGTRANSFORMLIST_INSERTITEMBEFORE             = 0x000003ecU,
+    DISPID_ISVGTRANSFORMLIST_REPLACEITEM                  = 0x000003edU,
+    DISPID_ISVGTRANSFORMLIST_REMOVEITEM                   = 0x000003eeU,
+    DISPID_ISVGTRANSFORMLIST_APPENDITEM                   = 0x000003efU,
+    DISPID_ISVGTRANSFORMLIST_CREATESVGTRANSFORMFROMMATRIX = 0x000003f0U,
+    DISPID_ISVGTRANSFORMLIST_CONSOLIDATE                  = 0x000003f1U,
 }
 
 enum : uint
 {
-    DISPID_ISVGANIMATEDPOINTS_POINTS         = 0x0000041a,
-    DISPID_ISVGANIMATEDPOINTS_ANIMATEDPOINTS = 0x0000041c,
+    DISPID_ISVGANIMATEDPOINTS_POINTS         = 0x0000041aU,
+    DISPID_ISVGANIMATEDPOINTS_ANIMATEDPOINTS = 0x0000041cU,
 }
 
 enum : uint
 {
-    DISPID_ISVGCIRCLEELEMENT_CX  = 0x0000041c,
-    DISPID_ISVGCIRCLEELEMENT_CY  = 0x0000041e,
-    DISPID_ISVGCIRCLEELEMENT_R   = 0x00000420,
-    DISPID_ISVGELLIPSEELEMENT_CX = 0x0000041c,
-    DISPID_ISVGELLIPSEELEMENT_CY = 0x0000041e,
-    DISPID_ISVGELLIPSEELEMENT_RX = 0x00000420,
-    DISPID_ISVGELLIPSEELEMENT_RY = 0x00000422,
+    DISPID_ISVGCIRCLEELEMENT_CX  = 0x0000041cU,
+    DISPID_ISVGCIRCLEELEMENT_CY  = 0x0000041eU,
+    DISPID_ISVGCIRCLEELEMENT_R   = 0x00000420U,
+    DISPID_ISVGELLIPSEELEMENT_CX = 0x0000041cU,
+    DISPID_ISVGELLIPSEELEMENT_CY = 0x0000041eU,
+    DISPID_ISVGELLIPSEELEMENT_RX = 0x00000420U,
+    DISPID_ISVGELLIPSEELEMENT_RY = 0x00000422U,
 }
 
 enum : uint
 {
-    DISPID_ISVGLINEELEMENT_X1                                 = 0x0000041c,
-    DISPID_ISVGLINEELEMENT_Y1                                 = 0x0000041e,
-    DISPID_ISVGLINEELEMENT_X2                                 = 0x00000420,
-    DISPID_ISVGLINEELEMENT_Y2                                 = 0x00000422,
-    DISPID_ISVGRECTELEMENT_X                                  = 0x0000041c,
-    DISPID_ISVGRECTELEMENT_Y                                  = 0x0000041e,
-    DISPID_ISVGRECTELEMENT_WIDTH                              = 0x00000420,
-    DISPID_ISVGRECTELEMENT_HEIGHT                             = 0x00000422,
-    DISPID_ISVGRECTELEMENT_RX                                 = 0x00000424,
-    DISPID_ISVGRECTELEMENT_RY                                 = 0x00000426,
-    DISPID_ISVGANIMATEDPATHDATA_PATHSEGLIST                   = 0x0000041c,
-    DISPID_ISVGANIMATEDPATHDATA_NORMALIZEDPATHSEGLIST         = 0x00000434,
-    DISPID_ISVGANIMATEDPATHDATA_ANIMATEDPATHSEGLIST           = 0x00000435,
-    DISPID_ISVGANIMATEDPATHDATA_ANIMATEDNORMALIZEDPATHSEGLIST = 0x00000436,
+    DISPID_ISVGLINEELEMENT_X1                                 = 0x0000041cU,
+    DISPID_ISVGLINEELEMENT_Y1                                 = 0x0000041eU,
+    DISPID_ISVGLINEELEMENT_X2                                 = 0x00000420U,
+    DISPID_ISVGLINEELEMENT_Y2                                 = 0x00000422U,
+    DISPID_ISVGRECTELEMENT_X                                  = 0x0000041cU,
+    DISPID_ISVGRECTELEMENT_Y                                  = 0x0000041eU,
+    DISPID_ISVGRECTELEMENT_WIDTH                              = 0x00000420U,
+    DISPID_ISVGRECTELEMENT_HEIGHT                             = 0x00000422U,
+    DISPID_ISVGRECTELEMENT_RX                                 = 0x00000424U,
+    DISPID_ISVGRECTELEMENT_RY                                 = 0x00000426U,
+    DISPID_ISVGANIMATEDPATHDATA_PATHSEGLIST                   = 0x0000041cU,
+    DISPID_ISVGANIMATEDPATHDATA_NORMALIZEDPATHSEGLIST         = 0x00000434U,
+    DISPID_ISVGANIMATEDPATHDATA_ANIMATEDPATHSEGLIST           = 0x00000435U,
+    DISPID_ISVGANIMATEDPATHDATA_ANIMATEDNORMALIZEDPATHSEGLIST = 0x00000436U,
 }
 
 enum : uint
 {
-    DISPID_ISVGPATHELEMENT_PATHLENGTH                                = 0x0000041d,
-    DISPID_ISVGPATHELEMENT_GETTOTALLENGTH                            = 0x00000431,
-    DISPID_ISVGPATHELEMENT_GETPOINTATLENGTH                          = 0x00000432,
-    DISPID_ISVGPATHELEMENT_GETPATHSEGATLENGTH                        = 0x00000433,
-    DISPID_ISVGPATHELEMENT_CREATESVGPATHSEGCLOSEPATH                 = 0x0000041e,
-    DISPID_ISVGPATHELEMENT_CREATESVGPATHSEGMOVETOABS                 = 0x0000041f,
-    DISPID_ISVGPATHELEMENT_CREATESVGPATHSEGMOVETOREL                 = 0x00000420,
-    DISPID_ISVGPATHELEMENT_CREATESVGPATHSEGLINETOABS                 = 0x00000421,
-    DISPID_ISVGPATHELEMENT_CREATESVGPATHSEGLINETOREL                 = 0x00000422,
-    DISPID_ISVGPATHELEMENT_CREATESVGPATHSEGCURVETOCUBICABS           = 0x00000423,
-    DISPID_ISVGPATHELEMENT_CREATESVGPATHSEGCURVETOCUBICREL           = 0x00000424,
-    DISPID_ISVGPATHELEMENT_CREATESVGPATHSEGCURVETOQUADRATICABS       = 0x00000425,
-    DISPID_ISVGPATHELEMENT_CREATESVGPATHSEGCURVETOQUADRATICREL       = 0x00000426,
-    DISPID_ISVGPATHELEMENT_CREATESVGPATHSEGARCABS                    = 0x00000427,
-    DISPID_ISVGPATHELEMENT_CREATESVGPATHSEGARCREL                    = 0x00000428,
-    DISPID_ISVGPATHELEMENT_CREATESVGPATHSEGLINETOHORIZONTALABS       = 0x00000429,
-    DISPID_ISVGPATHELEMENT_CREATESVGPATHSEGLINETOHORIZONTALREL       = 0x0000042a,
-    DISPID_ISVGPATHELEMENT_CREATESVGPATHSEGLINETOVERTICALABS         = 0x0000042b,
-    DISPID_ISVGPATHELEMENT_CREATESVGPATHSEGLINETOVERTICALREL         = 0x0000042c,
-    DISPID_ISVGPATHELEMENT_CREATESVGPATHSEGCURVETOCUBICSMOOTHABS     = 0x0000042d,
-    DISPID_ISVGPATHELEMENT_CREATESVGPATHSEGCURVETOCUBICSMOOTHREL     = 0x0000042e,
-    DISPID_ISVGPATHELEMENT_CREATESVGPATHSEGCURVETOQUADRATICSMOOTHABS = 0x0000042f,
-    DISPID_ISVGPATHELEMENT_CREATESVGPATHSEGCURVETOQUADRATICSMOOTHREL = 0x00000430,
+    DISPID_ISVGPATHELEMENT_PATHLENGTH                                = 0x0000041dU,
+    DISPID_ISVGPATHELEMENT_GETTOTALLENGTH                            = 0x00000431U,
+    DISPID_ISVGPATHELEMENT_GETPOINTATLENGTH                          = 0x00000432U,
+    DISPID_ISVGPATHELEMENT_GETPATHSEGATLENGTH                        = 0x00000433U,
+    DISPID_ISVGPATHELEMENT_CREATESVGPATHSEGCLOSEPATH                 = 0x0000041eU,
+    DISPID_ISVGPATHELEMENT_CREATESVGPATHSEGMOVETOABS                 = 0x0000041fU,
+    DISPID_ISVGPATHELEMENT_CREATESVGPATHSEGMOVETOREL                 = 0x00000420U,
+    DISPID_ISVGPATHELEMENT_CREATESVGPATHSEGLINETOABS                 = 0x00000421U,
+    DISPID_ISVGPATHELEMENT_CREATESVGPATHSEGLINETOREL                 = 0x00000422U,
+    DISPID_ISVGPATHELEMENT_CREATESVGPATHSEGCURVETOCUBICABS           = 0x00000423U,
+    DISPID_ISVGPATHELEMENT_CREATESVGPATHSEGCURVETOCUBICREL           = 0x00000424U,
+    DISPID_ISVGPATHELEMENT_CREATESVGPATHSEGCURVETOQUADRATICABS       = 0x00000425U,
+    DISPID_ISVGPATHELEMENT_CREATESVGPATHSEGCURVETOQUADRATICREL       = 0x00000426U,
+    DISPID_ISVGPATHELEMENT_CREATESVGPATHSEGARCABS                    = 0x00000427U,
+    DISPID_ISVGPATHELEMENT_CREATESVGPATHSEGARCREL                    = 0x00000428U,
+    DISPID_ISVGPATHELEMENT_CREATESVGPATHSEGLINETOHORIZONTALABS       = 0x00000429U,
+    DISPID_ISVGPATHELEMENT_CREATESVGPATHSEGLINETOHORIZONTALREL       = 0x0000042aU,
+    DISPID_ISVGPATHELEMENT_CREATESVGPATHSEGLINETOVERTICALABS         = 0x0000042bU,
+    DISPID_ISVGPATHELEMENT_CREATESVGPATHSEGLINETOVERTICALREL         = 0x0000042cU,
+    DISPID_ISVGPATHELEMENT_CREATESVGPATHSEGCURVETOCUBICSMOOTHABS     = 0x0000042dU,
+    DISPID_ISVGPATHELEMENT_CREATESVGPATHSEGCURVETOCUBICSMOOTHREL     = 0x0000042eU,
+    DISPID_ISVGPATHELEMENT_CREATESVGPATHSEGCURVETOQUADRATICSMOOTHABS = 0x0000042fU,
+    DISPID_ISVGPATHELEMENT_CREATESVGPATHSEGCURVETOQUADRATICSMOOTHREL = 0x00000430U,
 }
 
 enum : uint
 {
-    DISPID_ISVGPRESERVEASPECTRATIO_ALIGN       = 0x000003e8,
-    DISPID_ISVGPRESERVEASPECTRATIO_MEETORSLICE = 0x000003e9,
+    DISPID_ISVGPRESERVEASPECTRATIO_ALIGN       = 0x000003e8U,
+    DISPID_ISVGPRESERVEASPECTRATIO_MEETORSLICE = 0x000003e9U,
 }
 
 enum : uint
 {
-    DISPID_ISVGANIMATEDPRESERVEASPECTRATIO_BASEVAL = 0x000003e8,
-    DISPID_ISVGANIMATEDPRESERVEASPECTRATIO_ANIMVAL = 0x000003e9,
+    DISPID_ISVGANIMATEDPRESERVEASPECTRATIO_BASEVAL = 0x000003e8U,
+    DISPID_ISVGANIMATEDPRESERVEASPECTRATIO_ANIMVAL = 0x000003e9U,
 }
 
 enum : uint
 {
-    DISPID_ISVGIMAGEELEMENT_X      = 0x0000041b,
-    DISPID_ISVGIMAGEELEMENT_Y      = 0x0000041d,
-    DISPID_ISVGIMAGEELEMENT_WIDTH  = 0x0000041f,
-    DISPID_ISVGIMAGEELEMENT_HEIGHT = 0x00000421,
+    DISPID_ISVGIMAGEELEMENT_X      = 0x0000041bU,
+    DISPID_ISVGIMAGEELEMENT_Y      = 0x0000041dU,
+    DISPID_ISVGIMAGEELEMENT_WIDTH  = 0x0000041fU,
+    DISPID_ISVGIMAGEELEMENT_HEIGHT = 0x00000421U,
 }
 
-enum uint DISPID_ISVGSTOPELEMENT_OFFSET = 0x0000041b;
+enum uint DISPID_ISVGSTOPELEMENT_OFFSET = 0x0000041bU;
 
 enum : uint
 {
-    DISPID_ISVGGRADIENTELEMENT_GRADIENTUNITS     = 0x0000041b,
-    DISPID_ISVGGRADIENTELEMENT_GRADIENTTRANSFORM = 0x0000041d,
-    DISPID_ISVGGRADIENTELEMENT_SPREADMETHOD      = 0x0000041f,
+    DISPID_ISVGGRADIENTELEMENT_GRADIENTUNITS     = 0x0000041bU,
+    DISPID_ISVGGRADIENTELEMENT_GRADIENTTRANSFORM = 0x0000041dU,
+    DISPID_ISVGGRADIENTELEMENT_SPREADMETHOD      = 0x0000041fU,
 }
 
 enum : uint
 {
-    DISPID_ISVGLINEARGRADIENTELEMENT_X1 = 0x0000042f,
-    DISPID_ISVGLINEARGRADIENTELEMENT_Y1 = 0x00000431,
-    DISPID_ISVGLINEARGRADIENTELEMENT_X2 = 0x00000433,
-    DISPID_ISVGLINEARGRADIENTELEMENT_Y2 = 0x00000435,
+    DISPID_ISVGLINEARGRADIENTELEMENT_X1 = 0x0000042fU,
+    DISPID_ISVGLINEARGRADIENTELEMENT_Y1 = 0x00000431U,
+    DISPID_ISVGLINEARGRADIENTELEMENT_X2 = 0x00000433U,
+    DISPID_ISVGLINEARGRADIENTELEMENT_Y2 = 0x00000435U,
 }
 
 enum : uint
 {
-    DISPID_ISVGRADIALGRADIENTELEMENT_CX = 0x0000042f,
-    DISPID_ISVGRADIALGRADIENTELEMENT_CY = 0x00000431,
-    DISPID_ISVGRADIALGRADIENTELEMENT_R  = 0x00000433,
-    DISPID_ISVGRADIALGRADIENTELEMENT_FX = 0x00000435,
-    DISPID_ISVGRADIALGRADIENTELEMENT_FY = 0x00000437,
+    DISPID_ISVGRADIALGRADIENTELEMENT_CX = 0x0000042fU,
+    DISPID_ISVGRADIALGRADIENTELEMENT_CY = 0x00000431U,
+    DISPID_ISVGRADIALGRADIENTELEMENT_R  = 0x00000433U,
+    DISPID_ISVGRADIALGRADIENTELEMENT_FX = 0x00000435U,
+    DISPID_ISVGRADIALGRADIENTELEMENT_FY = 0x00000437U,
 }
 
 enum : uint
 {
-    DISPID_ISVGMASKELEMENT_MASKUNITS          = 0x0000041b,
-    DISPID_ISVGMASKELEMENT_MASKCONTENTUNITS   = 0x0000041d,
-    DISPID_ISVGMASKELEMENT_X                  = 0x0000041f,
-    DISPID_ISVGMASKELEMENT_Y                  = 0x00000421,
-    DISPID_ISVGMASKELEMENT_WIDTH              = 0x00000423,
-    DISPID_ISVGMASKELEMENT_HEIGHT             = 0x00000425,
-    DISPID_ISVGMARKERELEMENT_REFX             = 0x0000041b,
-    DISPID_ISVGMARKERELEMENT_REFY             = 0x0000041d,
-    DISPID_ISVGMARKERELEMENT_MARKERUNITS      = 0x0000041f,
-    DISPID_ISVGMARKERELEMENT_MARKERWIDTH      = 0x00000421,
-    DISPID_ISVGMARKERELEMENT_MARKERHEIGHT     = 0x00000423,
-    DISPID_ISVGMARKERELEMENT_ORIENTTYPE       = 0x00000425,
-    DISPID_ISVGMARKERELEMENT_ORIENTANGLE      = 0x00000426,
-    DISPID_ISVGMARKERELEMENT_SETORIENTTOAUTO  = 0x00000427,
-    DISPID_ISVGMARKERELEMENT_SETORIENTTOANGLE = 0x00000428,
+    DISPID_ISVGMASKELEMENT_MASKUNITS          = 0x0000041bU,
+    DISPID_ISVGMASKELEMENT_MASKCONTENTUNITS   = 0x0000041dU,
+    DISPID_ISVGMASKELEMENT_X                  = 0x0000041fU,
+    DISPID_ISVGMASKELEMENT_Y                  = 0x00000421U,
+    DISPID_ISVGMASKELEMENT_WIDTH              = 0x00000423U,
+    DISPID_ISVGMASKELEMENT_HEIGHT             = 0x00000425U,
+    DISPID_ISVGMARKERELEMENT_REFX             = 0x0000041bU,
+    DISPID_ISVGMARKERELEMENT_REFY             = 0x0000041dU,
+    DISPID_ISVGMARKERELEMENT_MARKERUNITS      = 0x0000041fU,
+    DISPID_ISVGMARKERELEMENT_MARKERWIDTH      = 0x00000421U,
+    DISPID_ISVGMARKERELEMENT_MARKERHEIGHT     = 0x00000423U,
+    DISPID_ISVGMARKERELEMENT_ORIENTTYPE       = 0x00000425U,
+    DISPID_ISVGMARKERELEMENT_ORIENTANGLE      = 0x00000426U,
+    DISPID_ISVGMARKERELEMENT_SETORIENTTOAUTO  = 0x00000427U,
+    DISPID_ISVGMARKERELEMENT_SETORIENTTOANGLE = 0x00000428U,
 }
 
 enum : uint
 {
-    DISPID_ISVGZOOMEVENT_ZOOMRECTSCREEN    = 0x000004fc,
-    DISPID_ISVGZOOMEVENT_PREVIOUSSCALE     = 0x000004fd,
-    DISPID_ISVGZOOMEVENT_PREVIOUSTRANSLATE = 0x000004fe,
-    DISPID_ISVGZOOMEVENT_NEWSCALE          = 0x000004ff,
-    DISPID_ISVGZOOMEVENT_NEWTRANSLATE      = 0x00000500,
+    DISPID_ISVGZOOMEVENT_ZOOMRECTSCREEN    = 0x000004fcU,
+    DISPID_ISVGZOOMEVENT_PREVIOUSSCALE     = 0x000004fdU,
+    DISPID_ISVGZOOMEVENT_PREVIOUSTRANSLATE = 0x000004feU,
+    DISPID_ISVGZOOMEVENT_NEWSCALE          = 0x000004ffU,
+    DISPID_ISVGZOOMEVENT_NEWTRANSLATE      = 0x00000500U,
 }
 
 enum : uint
 {
-    DISPID_ISVGAELEMENT_TARGET        = 0x0000041c,
-    DISPID_ISVGVIEWELEMENT_VIEWTARGET = 0x0000041c,
+    DISPID_ISVGAELEMENT_TARGET        = 0x0000041cU,
+    DISPID_ISVGVIEWELEMENT_VIEWTARGET = 0x0000041cU,
 }
 
 enum : uint
 {
-    DISPID_IHTMLMEDIAERROR_CODE         = 0x000003e8,
-    DISPID_IHTMLTIMERANGES_LENGTH       = 0x000003e8,
-    DISPID_IHTMLTIMERANGES_START        = 0x000003e9,
-    DISPID_IHTMLTIMERANGES_END          = 0x000003ea,
-    DISPID_IHTMLTIMERANGES2_STARTDOUBLE = 0x000003eb,
-    DISPID_IHTMLTIMERANGES2_ENDDOUBLE   = 0x000003ec,
+    DISPID_IHTMLMEDIAERROR_CODE         = 0x000003e8U,
+    DISPID_IHTMLTIMERANGES_LENGTH       = 0x000003e8U,
+    DISPID_IHTMLTIMERANGES_START        = 0x000003e9U,
+    DISPID_IHTMLTIMERANGES_END          = 0x000003eaU,
+    DISPID_IHTMLTIMERANGES2_STARTDOUBLE = 0x000003ebU,
+    DISPID_IHTMLTIMERANGES2_ENDDOUBLE   = 0x000003ecU,
 }
 
 enum : uint
 {
-    DISPID_IHTMLMEDIAELEMENT_ERROR                      = 0x000003e8,
-    DISPID_IHTMLMEDIAELEMENT_SRC                        = 0x000003e9,
-    DISPID_IHTMLMEDIAELEMENT_CURRENTSRC                 = 0x000003ea,
-    DISPID_IHTMLMEDIAELEMENT_NETWORKSTATE               = 0x000003eb,
-    DISPID_IHTMLMEDIAELEMENT_PRELOAD                    = 0x000003ec,
-    DISPID_IHTMLMEDIAELEMENT_BUFFERED                   = 0x000003ed,
-    DISPID_IHTMLMEDIAELEMENT_LOAD                       = 0x000003ee,
-    DISPID_IHTMLMEDIAELEMENT_CANPLAYTYPE                = 0x000003ef,
-    DISPID_IHTMLMEDIAELEMENT_SEEKING                    = 0x000003f1,
-    DISPID_IHTMLMEDIAELEMENT_CURRENTTIME                = 0x000003f2,
-    DISPID_IHTMLMEDIAELEMENT_INITIALTIME                = 0x000003f3,
-    DISPID_IHTMLMEDIAELEMENT_DURATION                   = 0x000003f4,
-    DISPID_IHTMLMEDIAELEMENT_PAUSED                     = 0x000003f5,
-    DISPID_IHTMLMEDIAELEMENT_DEFAULTPLAYBACKRATE        = 0x000003f6,
-    DISPID_IHTMLMEDIAELEMENT_PLAYBACKRATE               = 0x000003f7,
-    DISPID_IHTMLMEDIAELEMENT_PLAYED                     = 0x000003f8,
-    DISPID_IHTMLMEDIAELEMENT_SEEKABLE                   = 0x000003f9,
-    DISPID_IHTMLMEDIAELEMENT_ENDED                      = 0x000003fa,
-    DISPID_IHTMLMEDIAELEMENT_AUTOPLAY                   = 0x000003fb,
-    DISPID_IHTMLMEDIAELEMENT_LOOP                       = 0x000003fc,
-    DISPID_IHTMLMEDIAELEMENT_PLAY                       = 0x000003fd,
-    DISPID_IHTMLMEDIAELEMENT_PAUSE                      = 0x000003fe,
-    DISPID_IHTMLMEDIAELEMENT_CONTROLS                   = 0x000003ff,
-    DISPID_IHTMLMEDIAELEMENT_VOLUME                     = 0x00000400,
-    DISPID_IHTMLMEDIAELEMENT_MUTED                      = 0x00000401,
-    DISPID_IHTMLMEDIAELEMENT_AUTOBUFFER                 = 0x00000402,
-    DISPID_IHTMLMEDIAELEMENT2_CURRENTTIMEDOUBLE         = 0x00000403,
-    DISPID_IHTMLMEDIAELEMENT2_INITIALTIMEDOUBLE         = 0x00000404,
-    DISPID_IHTMLMEDIAELEMENT2_DURATIONDOUBLE            = 0x00000405,
-    DISPID_IHTMLMEDIAELEMENT2_DEFAULTPLAYBACKRATEDOUBLE = 0x00000406,
-    DISPID_IHTMLMEDIAELEMENT2_PLAYBACKRATEDOUBLE        = 0x00000407,
-    DISPID_IHTMLMEDIAELEMENT2_VOLUMEDOUBLE              = 0x00000408,
+    DISPID_IHTMLMEDIAELEMENT_ERROR                      = 0x000003e8U,
+    DISPID_IHTMLMEDIAELEMENT_SRC                        = 0x000003e9U,
+    DISPID_IHTMLMEDIAELEMENT_CURRENTSRC                 = 0x000003eaU,
+    DISPID_IHTMLMEDIAELEMENT_NETWORKSTATE               = 0x000003ebU,
+    DISPID_IHTMLMEDIAELEMENT_PRELOAD                    = 0x000003ecU,
+    DISPID_IHTMLMEDIAELEMENT_BUFFERED                   = 0x000003edU,
+    DISPID_IHTMLMEDIAELEMENT_LOAD                       = 0x000003eeU,
+    DISPID_IHTMLMEDIAELEMENT_CANPLAYTYPE                = 0x000003efU,
+    DISPID_IHTMLMEDIAELEMENT_SEEKING                    = 0x000003f1U,
+    DISPID_IHTMLMEDIAELEMENT_CURRENTTIME                = 0x000003f2U,
+    DISPID_IHTMLMEDIAELEMENT_INITIALTIME                = 0x000003f3U,
+    DISPID_IHTMLMEDIAELEMENT_DURATION                   = 0x000003f4U,
+    DISPID_IHTMLMEDIAELEMENT_PAUSED                     = 0x000003f5U,
+    DISPID_IHTMLMEDIAELEMENT_DEFAULTPLAYBACKRATE        = 0x000003f6U,
+    DISPID_IHTMLMEDIAELEMENT_PLAYBACKRATE               = 0x000003f7U,
+    DISPID_IHTMLMEDIAELEMENT_PLAYED                     = 0x000003f8U,
+    DISPID_IHTMLMEDIAELEMENT_SEEKABLE                   = 0x000003f9U,
+    DISPID_IHTMLMEDIAELEMENT_ENDED                      = 0x000003faU,
+    DISPID_IHTMLMEDIAELEMENT_AUTOPLAY                   = 0x000003fbU,
+    DISPID_IHTMLMEDIAELEMENT_LOOP                       = 0x000003fcU,
+    DISPID_IHTMLMEDIAELEMENT_PLAY                       = 0x000003fdU,
+    DISPID_IHTMLMEDIAELEMENT_PAUSE                      = 0x000003feU,
+    DISPID_IHTMLMEDIAELEMENT_CONTROLS                   = 0x000003ffU,
+    DISPID_IHTMLMEDIAELEMENT_VOLUME                     = 0x00000400U,
+    DISPID_IHTMLMEDIAELEMENT_MUTED                      = 0x00000401U,
+    DISPID_IHTMLMEDIAELEMENT_AUTOBUFFER                 = 0x00000402U,
+    DISPID_IHTMLMEDIAELEMENT2_CURRENTTIMEDOUBLE         = 0x00000403U,
+    DISPID_IHTMLMEDIAELEMENT2_INITIALTIMEDOUBLE         = 0x00000404U,
+    DISPID_IHTMLMEDIAELEMENT2_DURATIONDOUBLE            = 0x00000405U,
+    DISPID_IHTMLMEDIAELEMENT2_DEFAULTPLAYBACKRATEDOUBLE = 0x00000406U,
+    DISPID_IHTMLMEDIAELEMENT2_PLAYBACKRATEDOUBLE        = 0x00000407U,
+    DISPID_IHTMLMEDIAELEMENT2_VOLUMEDOUBLE              = 0x00000408U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLMSMEDIAELEMENT_MSPLAYTODISABLED = 0x00000409,
-    DISPID_IHTMLMSMEDIAELEMENT_MSPLAYTOPRIMARY  = 0x0000040a,
+    DISPID_IHTMLMSMEDIAELEMENT_MSPLAYTODISABLED = 0x00000409U,
+    DISPID_IHTMLMSMEDIAELEMENT_MSPLAYTOPRIMARY  = 0x0000040aU,
 }
 
 enum : uint
 {
-    DISPID_IHTMLSOURCEELEMENT_SRC   = 0x000003e8,
-    DISPID_IHTMLSOURCEELEMENT_TYPE  = 0x000003e9,
-    DISPID_IHTMLSOURCEELEMENT_MEDIA = 0x000003ea,
+    DISPID_IHTMLSOURCEELEMENT_SRC   = 0x000003e8U,
+    DISPID_IHTMLSOURCEELEMENT_TYPE  = 0x000003e9U,
+    DISPID_IHTMLSOURCEELEMENT_MEDIA = 0x000003eaU,
 }
 
 enum : uint
 {
-    DISPID_IHTMLVIDEOELEMENT_WIDTH       = 0x00010005,
-    DISPID_IHTMLVIDEOELEMENT_HEIGHT      = 0x00010006,
-    DISPID_IHTMLVIDEOELEMENT_VIDEOWIDTH  = 0x0000041a,
-    DISPID_IHTMLVIDEOELEMENT_VIDEOHEIGHT = 0x0000041b,
-    DISPID_IHTMLVIDEOELEMENT_POSTER      = 0x0000041c,
+    DISPID_IHTMLVIDEOELEMENT_WIDTH       = 0x00010005U,
+    DISPID_IHTMLVIDEOELEMENT_HEIGHT      = 0x00010006U,
+    DISPID_IHTMLVIDEOELEMENT_VIDEOWIDTH  = 0x0000041aU,
+    DISPID_IHTMLVIDEOELEMENT_VIDEOHEIGHT = 0x0000041bU,
+    DISPID_IHTMLVIDEOELEMENT_POSTER      = 0x0000041cU,
 }
 
-enum uint DISPID_IHTMLAUDIOELEMENTFACTORY_CREATE = 0x00000000;
+enum uint DISPID_IHTMLAUDIOELEMENTFACTORY_CREATE = 0x00000000U;
 
 enum : uint
 {
-    DISPID_ISVGELEMENTINSTANCE_CORRESPONDINGELEMENT    = 0x000003e8,
-    DISPID_ISVGELEMENTINSTANCE_CORRESPONDINGUSEELEMENT = 0x000003e9,
-    DISPID_ISVGELEMENTINSTANCE_PARENTNODE              = 0x000003ea,
-    DISPID_ISVGELEMENTINSTANCE_CHILDNODES              = 0x000003eb,
-    DISPID_ISVGELEMENTINSTANCE_FIRSTCHILD              = 0x000003ec,
-    DISPID_ISVGELEMENTINSTANCE_LASTCHILD               = 0x000003ed,
-    DISPID_ISVGELEMENTINSTANCE_PREVIOUSSIBLING         = 0x000003ee,
-    DISPID_ISVGELEMENTINSTANCE_NEXTSIBLING             = 0x000003ef,
-    DISPID_ISVGELEMENTINSTANCELIST_LENGTH              = 0x000003e8,
-    DISPID_ISVGELEMENTINSTANCELIST_ITEM                = 0x000003e9,
+    DISPID_ISVGELEMENTINSTANCE_CORRESPONDINGELEMENT    = 0x000003e8U,
+    DISPID_ISVGELEMENTINSTANCE_CORRESPONDINGUSEELEMENT = 0x000003e9U,
+    DISPID_ISVGELEMENTINSTANCE_PARENTNODE              = 0x000003eaU,
+    DISPID_ISVGELEMENTINSTANCE_CHILDNODES              = 0x000003ebU,
+    DISPID_ISVGELEMENTINSTANCE_FIRSTCHILD              = 0x000003ecU,
+    DISPID_ISVGELEMENTINSTANCE_LASTCHILD               = 0x000003edU,
+    DISPID_ISVGELEMENTINSTANCE_PREVIOUSSIBLING         = 0x000003eeU,
+    DISPID_ISVGELEMENTINSTANCE_NEXTSIBLING             = 0x000003efU,
+    DISPID_ISVGELEMENTINSTANCELIST_LENGTH              = 0x000003e8U,
+    DISPID_ISVGELEMENTINSTANCELIST_ITEM                = 0x000003e9U,
 }
 
 enum : uint
 {
-    DISPID_IDOMEXCEPTION_CODE    = 0x000003e8,
-    DISPID_IDOMEXCEPTION_MESSAGE = 0x000003e9,
+    DISPID_IDOMEXCEPTION_CODE    = 0x000003e8U,
+    DISPID_IDOMEXCEPTION_MESSAGE = 0x000003e9U,
 }
 
 enum : uint
 {
-    DISPID_IRANGEEXCEPTION_CODE    = 0x000003e8,
-    DISPID_IRANGEEXCEPTION_MESSAGE = 0x000003e9,
+    DISPID_IRANGEEXCEPTION_CODE    = 0x000003e8U,
+    DISPID_IRANGEEXCEPTION_MESSAGE = 0x000003e9U,
 }
 
 enum : uint
 {
-    DISPID_ISVGEXCEPTION_CODE    = 0x000003e8,
-    DISPID_ISVGEXCEPTION_MESSAGE = 0x000003e9,
+    DISPID_ISVGEXCEPTION_CODE    = 0x000003e8U,
+    DISPID_ISVGEXCEPTION_MESSAGE = 0x000003e9U,
 }
 
 enum : uint
 {
-    DISPID_IEVENTEXCEPTION_CODE    = 0x000003e8,
-    DISPID_IEVENTEXCEPTION_MESSAGE = 0x000003e9,
+    DISPID_IEVENTEXCEPTION_CODE    = 0x000003e8U,
+    DISPID_IEVENTEXCEPTION_MESSAGE = 0x000003e9U,
 }
 
 enum : uint
 {
-    DISPID_ISVGSCRIPTELEMENT_TYPE = 0x0000041c,
-    DISPID_ISVGSTYLEELEMENT_TYPE  = 0x0000041b,
-    DISPID_ISVGSTYLEELEMENT_MEDIA = 0x0000041c,
+    DISPID_ISVGSCRIPTELEMENT_TYPE = 0x0000041cU,
+    DISPID_ISVGSTYLEELEMENT_TYPE  = 0x0000041bU,
+    DISPID_ISVGSTYLEELEMENT_MEDIA = 0x0000041cU,
 }
 
 enum : uint
 {
-    DISPID_ISVGTEXTCONTENTELEMENT_TEXTLENGTH             = 0x0000041d,
-    DISPID_ISVGTEXTCONTENTELEMENT_LENGTHADJUST           = 0x0000041b,
-    DISPID_ISVGTEXTCONTENTELEMENT_GETNUMBEROFCHARS       = 0x0000041e,
-    DISPID_ISVGTEXTCONTENTELEMENT_GETCOMPUTEDTEXTLENGTH  = 0x0000041f,
-    DISPID_ISVGTEXTCONTENTELEMENT_GETSUBSTRINGLENGTH     = 0x00000420,
-    DISPID_ISVGTEXTCONTENTELEMENT_GETSTARTPOSITIONOFCHAR = 0x00000421,
-    DISPID_ISVGTEXTCONTENTELEMENT_GETENDPOSITIONOFCHAR   = 0x00000422,
-    DISPID_ISVGTEXTCONTENTELEMENT_GETEXTENTOFCHAR        = 0x00000423,
-    DISPID_ISVGTEXTCONTENTELEMENT_GETROTATIONOFCHAR      = 0x00000424,
-    DISPID_ISVGTEXTCONTENTELEMENT_GETCHARNUMATPOSITION   = 0x00000425,
-    DISPID_ISVGTEXTCONTENTELEMENT_SELECTSUBSTRING        = 0x00000426,
+    DISPID_ISVGTEXTCONTENTELEMENT_TEXTLENGTH             = 0x0000041dU,
+    DISPID_ISVGTEXTCONTENTELEMENT_LENGTHADJUST           = 0x0000041bU,
+    DISPID_ISVGTEXTCONTENTELEMENT_GETNUMBEROFCHARS       = 0x0000041eU,
+    DISPID_ISVGTEXTCONTENTELEMENT_GETCOMPUTEDTEXTLENGTH  = 0x0000041fU,
+    DISPID_ISVGTEXTCONTENTELEMENT_GETSUBSTRINGLENGTH     = 0x00000420U,
+    DISPID_ISVGTEXTCONTENTELEMENT_GETSTARTPOSITIONOFCHAR = 0x00000421U,
+    DISPID_ISVGTEXTCONTENTELEMENT_GETENDPOSITIONOFCHAR   = 0x00000422U,
+    DISPID_ISVGTEXTCONTENTELEMENT_GETEXTENTOFCHAR        = 0x00000423U,
+    DISPID_ISVGTEXTCONTENTELEMENT_GETROTATIONOFCHAR      = 0x00000424U,
+    DISPID_ISVGTEXTCONTENTELEMENT_GETCHARNUMATPOSITION   = 0x00000425U,
+    DISPID_ISVGTEXTCONTENTELEMENT_SELECTSUBSTRING        = 0x00000426U,
 }
 
 enum : uint
 {
-    DISPID_ISVGTEXTPOSITIONINGELEMENT_X      = 0x0000042f,
-    DISPID_ISVGTEXTPOSITIONINGELEMENT_Y      = 0x00000431,
-    DISPID_ISVGTEXTPOSITIONINGELEMENT_DX     = 0x00000433,
-    DISPID_ISVGTEXTPOSITIONINGELEMENT_DY     = 0x00000435,
-    DISPID_ISVGTEXTPOSITIONINGELEMENT_ROTATE = 0x00000437,
+    DISPID_ISVGTEXTPOSITIONINGELEMENT_X      = 0x0000042fU,
+    DISPID_ISVGTEXTPOSITIONINGELEMENT_Y      = 0x00000431U,
+    DISPID_ISVGTEXTPOSITIONINGELEMENT_DX     = 0x00000433U,
+    DISPID_ISVGTEXTPOSITIONINGELEMENT_DY     = 0x00000435U,
+    DISPID_ISVGTEXTPOSITIONINGELEMENT_ROTATE = 0x00000437U,
 }
 
 enum : uint
 {
-    DISPID_IDOMDOCUMENTTYPE_NAME           = 0x000003e8,
-    DISPID_IDOMDOCUMENTTYPE_ENTITIES       = 0x000003e9,
-    DISPID_IDOMDOCUMENTTYPE_NOTATIONS      = 0x000003ea,
-    DISPID_IDOMDOCUMENTTYPE_PUBLICID       = 0x000003eb,
-    DISPID_IDOMDOCUMENTTYPE_SYSTEMID       = 0x000003ec,
-    DISPID_IDOMDOCUMENTTYPE_INTERNALSUBSET = 0x000003ed,
+    DISPID_IDOMDOCUMENTTYPE_NAME           = 0x000003e8U,
+    DISPID_IDOMDOCUMENTTYPE_ENTITIES       = 0x000003e9U,
+    DISPID_IDOMDOCUMENTTYPE_NOTATIONS      = 0x000003eaU,
+    DISPID_IDOMDOCUMENTTYPE_PUBLICID       = 0x000003ebU,
+    DISPID_IDOMDOCUMENTTYPE_SYSTEMID       = 0x000003ecU,
+    DISPID_IDOMDOCUMENTTYPE_INTERNALSUBSET = 0x000003edU,
 }
 
 enum : uint
 {
-    DISPID_IDOMNODEITERATOR_ROOT                   = 0x000003e8,
-    DISPID_IDOMNODEITERATOR_WHATTOSHOW             = 0x000003e9,
-    DISPID_IDOMNODEITERATOR_FILTER                 = 0x000003ea,
-    DISPID_IDOMNODEITERATOR_EXPANDENTITYREFERENCES = 0x000003eb,
-    DISPID_IDOMNODEITERATOR_NEXTNODE               = 0x000003f2,
-    DISPID_IDOMNODEITERATOR_PREVIOUSNODE           = 0x000003f3,
-    DISPID_IDOMNODEITERATOR_DETACH                 = 0x000003f4,
+    DISPID_IDOMNODEITERATOR_ROOT                   = 0x000003e8U,
+    DISPID_IDOMNODEITERATOR_WHATTOSHOW             = 0x000003e9U,
+    DISPID_IDOMNODEITERATOR_FILTER                 = 0x000003eaU,
+    DISPID_IDOMNODEITERATOR_EXPANDENTITYREFERENCES = 0x000003ebU,
+    DISPID_IDOMNODEITERATOR_NEXTNODE               = 0x000003f2U,
+    DISPID_IDOMNODEITERATOR_PREVIOUSNODE           = 0x000003f3U,
+    DISPID_IDOMNODEITERATOR_DETACH                 = 0x000003f4U,
 }
 
 enum : uint
 {
-    DISPID_IDOMTREEWALKER_ROOT                   = 0x000003e8,
-    DISPID_IDOMTREEWALKER_WHATTOSHOW             = 0x000003e9,
-    DISPID_IDOMTREEWALKER_FILTER                 = 0x000003ea,
-    DISPID_IDOMTREEWALKER_EXPANDENTITYREFERENCES = 0x000003eb,
-    DISPID_IDOMTREEWALKER_CURRENTNODE            = 0x000003fc,
-    DISPID_IDOMTREEWALKER_PARENTNODE             = 0x000003fd,
-    DISPID_IDOMTREEWALKER_FIRSTCHILD             = 0x000003fe,
-    DISPID_IDOMTREEWALKER_LASTCHILD              = 0x000003ff,
-    DISPID_IDOMTREEWALKER_PREVIOUSSIBLING        = 0x00000400,
-    DISPID_IDOMTREEWALKER_NEXTSIBLING            = 0x00000401,
-    DISPID_IDOMTREEWALKER_PREVIOUSNODE           = 0x00000402,
-    DISPID_IDOMTREEWALKER_NEXTNODE               = 0x00000403,
+    DISPID_IDOMTREEWALKER_ROOT                   = 0x000003e8U,
+    DISPID_IDOMTREEWALKER_WHATTOSHOW             = 0x000003e9U,
+    DISPID_IDOMTREEWALKER_FILTER                 = 0x000003eaU,
+    DISPID_IDOMTREEWALKER_EXPANDENTITYREFERENCES = 0x000003ebU,
+    DISPID_IDOMTREEWALKER_CURRENTNODE            = 0x000003fcU,
+    DISPID_IDOMTREEWALKER_PARENTNODE             = 0x000003fdU,
+    DISPID_IDOMTREEWALKER_FIRSTCHILD             = 0x000003feU,
+    DISPID_IDOMTREEWALKER_LASTCHILD              = 0x000003ffU,
+    DISPID_IDOMTREEWALKER_PREVIOUSSIBLING        = 0x00000400U,
+    DISPID_IDOMTREEWALKER_NEXTSIBLING            = 0x00000401U,
+    DISPID_IDOMTREEWALKER_PREVIOUSNODE           = 0x00000402U,
+    DISPID_IDOMTREEWALKER_NEXTNODE               = 0x00000403U,
 }
 
 enum : uint
 {
-    DISPID_IDOMPROCESSINGINSTRUCTION_TARGET = 0x000003e8,
-    DISPID_IDOMPROCESSINGINSTRUCTION_DATA   = 0x000003e9,
+    DISPID_IDOMPROCESSINGINSTRUCTION_TARGET = 0x000003e8U,
+    DISPID_IDOMPROCESSINGINSTRUCTION_DATA   = 0x000003e9U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLPERFORMANCE_NAVIGATION                       = 0x000003e8,
-    DISPID_IHTMLPERFORMANCE_TIMING                           = 0x000003e9,
-    DISPID_IHTMLPERFORMANCE_TOSTRING                         = 0x000003ea,
-    DISPID_IHTMLPERFORMANCE_TOJSON                           = 0x000003eb,
-    DISPID_IHTMLPERFORMANCENAVIGATION_TYPE                   = 0x000003e8,
-    DISPID_IHTMLPERFORMANCENAVIGATION_REDIRECTCOUNT          = 0x000003e9,
-    DISPID_IHTMLPERFORMANCENAVIGATION_TOSTRING               = 0x000003ea,
-    DISPID_IHTMLPERFORMANCENAVIGATION_TOJSON                 = 0x000003eb,
-    DISPID_IHTMLPERFORMANCETIMING_NAVIGATIONSTART            = 0x000003e8,
-    DISPID_IHTMLPERFORMANCETIMING_UNLOADEVENTSTART           = 0x000003e9,
-    DISPID_IHTMLPERFORMANCETIMING_UNLOADEVENTEND             = 0x000003ea,
-    DISPID_IHTMLPERFORMANCETIMING_REDIRECTSTART              = 0x000003eb,
-    DISPID_IHTMLPERFORMANCETIMING_REDIRECTEND                = 0x000003ec,
-    DISPID_IHTMLPERFORMANCETIMING_FETCHSTART                 = 0x000003ed,
-    DISPID_IHTMLPERFORMANCETIMING_DOMAINLOOKUPSTART          = 0x000003ee,
-    DISPID_IHTMLPERFORMANCETIMING_DOMAINLOOKUPEND            = 0x000003ef,
-    DISPID_IHTMLPERFORMANCETIMING_CONNECTSTART               = 0x000003f0,
-    DISPID_IHTMLPERFORMANCETIMING_CONNECTEND                 = 0x000003f1,
-    DISPID_IHTMLPERFORMANCETIMING_REQUESTSTART               = 0x000003f2,
-    DISPID_IHTMLPERFORMANCETIMING_RESPONSESTART              = 0x000003f3,
-    DISPID_IHTMLPERFORMANCETIMING_RESPONSEEND                = 0x000003f4,
-    DISPID_IHTMLPERFORMANCETIMING_DOMLOADING                 = 0x000003f5,
-    DISPID_IHTMLPERFORMANCETIMING_DOMINTERACTIVE             = 0x000003f6,
-    DISPID_IHTMLPERFORMANCETIMING_DOMCONTENTLOADEDEVENTSTART = 0x000003f7,
-    DISPID_IHTMLPERFORMANCETIMING_DOMCONTENTLOADEDEVENTEND   = 0x000003f8,
-    DISPID_IHTMLPERFORMANCETIMING_DOMCOMPLETE                = 0x000003f9,
-    DISPID_IHTMLPERFORMANCETIMING_LOADEVENTSTART             = 0x000003fa,
-    DISPID_IHTMLPERFORMANCETIMING_LOADEVENTEND               = 0x000003fb,
-    DISPID_IHTMLPERFORMANCETIMING_MSFIRSTPAINT               = 0x000003fc,
-    DISPID_IHTMLPERFORMANCETIMING_TOSTRING                   = 0x000003fd,
-    DISPID_IHTMLPERFORMANCETIMING_TOJSON                     = 0x000003fe,
+    DISPID_IHTMLPERFORMANCE_NAVIGATION                       = 0x000003e8U,
+    DISPID_IHTMLPERFORMANCE_TIMING                           = 0x000003e9U,
+    DISPID_IHTMLPERFORMANCE_TOSTRING                         = 0x000003eaU,
+    DISPID_IHTMLPERFORMANCE_TOJSON                           = 0x000003ebU,
+    DISPID_IHTMLPERFORMANCENAVIGATION_TYPE                   = 0x000003e8U,
+    DISPID_IHTMLPERFORMANCENAVIGATION_REDIRECTCOUNT          = 0x000003e9U,
+    DISPID_IHTMLPERFORMANCENAVIGATION_TOSTRING               = 0x000003eaU,
+    DISPID_IHTMLPERFORMANCENAVIGATION_TOJSON                 = 0x000003ebU,
+    DISPID_IHTMLPERFORMANCETIMING_NAVIGATIONSTART            = 0x000003e8U,
+    DISPID_IHTMLPERFORMANCETIMING_UNLOADEVENTSTART           = 0x000003e9U,
+    DISPID_IHTMLPERFORMANCETIMING_UNLOADEVENTEND             = 0x000003eaU,
+    DISPID_IHTMLPERFORMANCETIMING_REDIRECTSTART              = 0x000003ebU,
+    DISPID_IHTMLPERFORMANCETIMING_REDIRECTEND                = 0x000003ecU,
+    DISPID_IHTMLPERFORMANCETIMING_FETCHSTART                 = 0x000003edU,
+    DISPID_IHTMLPERFORMANCETIMING_DOMAINLOOKUPSTART          = 0x000003eeU,
+    DISPID_IHTMLPERFORMANCETIMING_DOMAINLOOKUPEND            = 0x000003efU,
+    DISPID_IHTMLPERFORMANCETIMING_CONNECTSTART               = 0x000003f0U,
+    DISPID_IHTMLPERFORMANCETIMING_CONNECTEND                 = 0x000003f1U,
+    DISPID_IHTMLPERFORMANCETIMING_REQUESTSTART               = 0x000003f2U,
+    DISPID_IHTMLPERFORMANCETIMING_RESPONSESTART              = 0x000003f3U,
+    DISPID_IHTMLPERFORMANCETIMING_RESPONSEEND                = 0x000003f4U,
+    DISPID_IHTMLPERFORMANCETIMING_DOMLOADING                 = 0x000003f5U,
+    DISPID_IHTMLPERFORMANCETIMING_DOMINTERACTIVE             = 0x000003f6U,
+    DISPID_IHTMLPERFORMANCETIMING_DOMCONTENTLOADEDEVENTSTART = 0x000003f7U,
+    DISPID_IHTMLPERFORMANCETIMING_DOMCONTENTLOADEDEVENTEND   = 0x000003f8U,
+    DISPID_IHTMLPERFORMANCETIMING_DOMCOMPLETE                = 0x000003f9U,
+    DISPID_IHTMLPERFORMANCETIMING_LOADEVENTSTART             = 0x000003faU,
+    DISPID_IHTMLPERFORMANCETIMING_LOADEVENTEND               = 0x000003fbU,
+    DISPID_IHTMLPERFORMANCETIMING_MSFIRSTPAINT               = 0x000003fcU,
+    DISPID_IHTMLPERFORMANCETIMING_TOSTRING                   = 0x000003fdU,
+    DISPID_IHTMLPERFORMANCETIMING_TOJSON                     = 0x000003feU,
 }
 
 enum : uint
 {
-    DISPID_ITEMPLATEPRINTER_STARTDOC                      = 0x00000001,
-    DISPID_ITEMPLATEPRINTER_STOPDOC                       = 0x00000002,
-    DISPID_ITEMPLATEPRINTER_PRINTBLANKPAGE                = 0x00000003,
-    DISPID_ITEMPLATEPRINTER_PRINTPAGE                     = 0x00000004,
-    DISPID_ITEMPLATEPRINTER_ENSUREPRINTDIALOGDEFAULTS     = 0x00000005,
-    DISPID_ITEMPLATEPRINTER_SHOWPRINTDIALOG               = 0x00000006,
-    DISPID_ITEMPLATEPRINTER_SHOWPAGESETUPDIALOG           = 0x00000007,
-    DISPID_ITEMPLATEPRINTER_PRINTNONNATIVE                = 0x00000008,
-    DISPID_ITEMPLATEPRINTER_PRINTNONNATIVEFRAMES          = 0x00000009,
-    DISPID_ITEMPLATEPRINTER_FRAMESETDOCUMENT              = 0x0000000a,
-    DISPID_ITEMPLATEPRINTER_FRAMEACTIVE                   = 0x0000000b,
-    DISPID_ITEMPLATEPRINTER_FRAMEASSHOWN                  = 0x0000000c,
-    DISPID_ITEMPLATEPRINTER_SELECTION                     = 0x0000000d,
-    DISPID_ITEMPLATEPRINTER_SELECTEDPAGES                 = 0x0000000e,
-    DISPID_ITEMPLATEPRINTER_CURRENTPAGE                   = 0x0000000f,
-    DISPID_ITEMPLATEPRINTER_CURRENTPAGEAVAIL              = 0x00000010,
-    DISPID_ITEMPLATEPRINTER_COLLATE                       = 0x00000011,
-    DISPID_ITEMPLATEPRINTER_DUPLEX                        = 0x00000012,
-    DISPID_ITEMPLATEPRINTER_COPIES                        = 0x00000013,
-    DISPID_ITEMPLATEPRINTER_PAGEFROM                      = 0x00000014,
-    DISPID_ITEMPLATEPRINTER_PAGETO                        = 0x00000015,
-    DISPID_ITEMPLATEPRINTER_TABLEOFLINKS                  = 0x00000016,
-    DISPID_ITEMPLATEPRINTER_ALLLINKEDDOCUMENTS            = 0x00000017,
-    DISPID_ITEMPLATEPRINTER_HEADER                        = 0x00000018,
-    DISPID_ITEMPLATEPRINTER_FOOTER                        = 0x00000019,
-    DISPID_ITEMPLATEPRINTER_MARGINLEFT                    = 0x0000001a,
-    DISPID_ITEMPLATEPRINTER_MARGINRIGHT                   = 0x0000001b,
-    DISPID_ITEMPLATEPRINTER_MARGINTOP                     = 0x0000001c,
-    DISPID_ITEMPLATEPRINTER_MARGINBOTTOM                  = 0x0000001d,
-    DISPID_ITEMPLATEPRINTER_PAGEWIDTH                     = 0x0000001e,
-    DISPID_ITEMPLATEPRINTER_PAGEHEIGHT                    = 0x0000001f,
-    DISPID_ITEMPLATEPRINTER_UNPRINTABLELEFT               = 0x00000020,
-    DISPID_ITEMPLATEPRINTER_UNPRINTABLETOP                = 0x00000021,
-    DISPID_ITEMPLATEPRINTER_UNPRINTABLERIGHT              = 0x00000022,
-    DISPID_ITEMPLATEPRINTER_UNPRINTABLEBOTTOM             = 0x00000023,
-    DISPID_ITEMPLATEPRINTER_UPDATEPAGESTATUS              = 0x00000024,
-    DISPID_ITEMPLATEPRINTER2_SELECTIONENABLED             = 0x00000025,
-    DISPID_ITEMPLATEPRINTER2_FRAMEACTIVEENABLED           = 0x00000026,
-    DISPID_ITEMPLATEPRINTER2_ORIENTATION                  = 0x00000027,
-    DISPID_ITEMPLATEPRINTER2_USEPRINTERCOPYCOLLATE        = 0x00000028,
-    DISPID_ITEMPLATEPRINTER2_DEVICESUPPORTS               = 0x00000029,
-    DISPID_ITEMPLATEPRINTER3_HEADERFOOTERFONT             = 0x0000002a,
-    DISPID_ITEMPLATEPRINTER3_GETPAGEMARGINTOP             = 0x0000002b,
-    DISPID_ITEMPLATEPRINTER3_GETPAGEMARGINRIGHT           = 0x0000002c,
-    DISPID_ITEMPLATEPRINTER3_GETPAGEMARGINBOTTOM          = 0x0000002d,
-    DISPID_ITEMPLATEPRINTER3_GETPAGEMARGINLEFT            = 0x0000002e,
-    DISPID_ITEMPLATEPRINTER3_GETPAGEMARGINTOPIMPORTANT    = 0x0000002f,
-    DISPID_ITEMPLATEPRINTER3_GETPAGEMARGINRIGHTIMPORTANT  = 0x00000030,
-    DISPID_ITEMPLATEPRINTER3_GETPAGEMARGINBOTTOMIMPORTANT = 0x00000031,
-    DISPID_ITEMPLATEPRINTER3_GETPAGEMARGINLEFTIMPORTANT   = 0x00000032,
+    DISPID_ITEMPLATEPRINTER_STARTDOC                      = 0x00000001U,
+    DISPID_ITEMPLATEPRINTER_STOPDOC                       = 0x00000002U,
+    DISPID_ITEMPLATEPRINTER_PRINTBLANKPAGE                = 0x00000003U,
+    DISPID_ITEMPLATEPRINTER_PRINTPAGE                     = 0x00000004U,
+    DISPID_ITEMPLATEPRINTER_ENSUREPRINTDIALOGDEFAULTS     = 0x00000005U,
+    DISPID_ITEMPLATEPRINTER_SHOWPRINTDIALOG               = 0x00000006U,
+    DISPID_ITEMPLATEPRINTER_SHOWPAGESETUPDIALOG           = 0x00000007U,
+    DISPID_ITEMPLATEPRINTER_PRINTNONNATIVE                = 0x00000008U,
+    DISPID_ITEMPLATEPRINTER_PRINTNONNATIVEFRAMES          = 0x00000009U,
+    DISPID_ITEMPLATEPRINTER_FRAMESETDOCUMENT              = 0x0000000aU,
+    DISPID_ITEMPLATEPRINTER_FRAMEACTIVE                   = 0x0000000bU,
+    DISPID_ITEMPLATEPRINTER_FRAMEASSHOWN                  = 0x0000000cU,
+    DISPID_ITEMPLATEPRINTER_SELECTION                     = 0x0000000dU,
+    DISPID_ITEMPLATEPRINTER_SELECTEDPAGES                 = 0x0000000eU,
+    DISPID_ITEMPLATEPRINTER_CURRENTPAGE                   = 0x0000000fU,
+    DISPID_ITEMPLATEPRINTER_CURRENTPAGEAVAIL              = 0x00000010U,
+    DISPID_ITEMPLATEPRINTER_COLLATE                       = 0x00000011U,
+    DISPID_ITEMPLATEPRINTER_DUPLEX                        = 0x00000012U,
+    DISPID_ITEMPLATEPRINTER_COPIES                        = 0x00000013U,
+    DISPID_ITEMPLATEPRINTER_PAGEFROM                      = 0x00000014U,
+    DISPID_ITEMPLATEPRINTER_PAGETO                        = 0x00000015U,
+    DISPID_ITEMPLATEPRINTER_TABLEOFLINKS                  = 0x00000016U,
+    DISPID_ITEMPLATEPRINTER_ALLLINKEDDOCUMENTS            = 0x00000017U,
+    DISPID_ITEMPLATEPRINTER_HEADER                        = 0x00000018U,
+    DISPID_ITEMPLATEPRINTER_FOOTER                        = 0x00000019U,
+    DISPID_ITEMPLATEPRINTER_MARGINLEFT                    = 0x0000001aU,
+    DISPID_ITEMPLATEPRINTER_MARGINRIGHT                   = 0x0000001bU,
+    DISPID_ITEMPLATEPRINTER_MARGINTOP                     = 0x0000001cU,
+    DISPID_ITEMPLATEPRINTER_MARGINBOTTOM                  = 0x0000001dU,
+    DISPID_ITEMPLATEPRINTER_PAGEWIDTH                     = 0x0000001eU,
+    DISPID_ITEMPLATEPRINTER_PAGEHEIGHT                    = 0x0000001fU,
+    DISPID_ITEMPLATEPRINTER_UNPRINTABLELEFT               = 0x00000020U,
+    DISPID_ITEMPLATEPRINTER_UNPRINTABLETOP                = 0x00000021U,
+    DISPID_ITEMPLATEPRINTER_UNPRINTABLERIGHT              = 0x00000022U,
+    DISPID_ITEMPLATEPRINTER_UNPRINTABLEBOTTOM             = 0x00000023U,
+    DISPID_ITEMPLATEPRINTER_UPDATEPAGESTATUS              = 0x00000024U,
+    DISPID_ITEMPLATEPRINTER2_SELECTIONENABLED             = 0x00000025U,
+    DISPID_ITEMPLATEPRINTER2_FRAMEACTIVEENABLED           = 0x00000026U,
+    DISPID_ITEMPLATEPRINTER2_ORIENTATION                  = 0x00000027U,
+    DISPID_ITEMPLATEPRINTER2_USEPRINTERCOPYCOLLATE        = 0x00000028U,
+    DISPID_ITEMPLATEPRINTER2_DEVICESUPPORTS               = 0x00000029U,
+    DISPID_ITEMPLATEPRINTER3_HEADERFOOTERFONT             = 0x0000002aU,
+    DISPID_ITEMPLATEPRINTER3_GETPAGEMARGINTOP             = 0x0000002bU,
+    DISPID_ITEMPLATEPRINTER3_GETPAGEMARGINRIGHT           = 0x0000002cU,
+    DISPID_ITEMPLATEPRINTER3_GETPAGEMARGINBOTTOM          = 0x0000002dU,
+    DISPID_ITEMPLATEPRINTER3_GETPAGEMARGINLEFT            = 0x0000002eU,
+    DISPID_ITEMPLATEPRINTER3_GETPAGEMARGINTOPIMPORTANT    = 0x0000002fU,
+    DISPID_ITEMPLATEPRINTER3_GETPAGEMARGINRIGHTIMPORTANT  = 0x00000030U,
+    DISPID_ITEMPLATEPRINTER3_GETPAGEMARGINBOTTOMIMPORTANT = 0x00000031U,
+    DISPID_ITEMPLATEPRINTER3_GETPAGEMARGINLEFTIMPORTANT   = 0x00000032U,
 }
 
 enum : uint
 {
-    DISPID_IPRINTMANAGERTEMPLATEPRINTER_STARTPRINT              = 0x000001f5,
-    DISPID_IPRINTMANAGERTEMPLATEPRINTER_DRAWPREVIEWPAGE         = 0x000001f6,
-    DISPID_IPRINTMANAGERTEMPLATEPRINTER_SETPAGECOUNT            = 0x000001f7,
-    DISPID_IPRINTMANAGERTEMPLATEPRINTER_INVALIDATEPREVIEW       = 0x000001f8,
-    DISPID_IPRINTMANAGERTEMPLATEPRINTER_GETPRINTTASKOPTIONVALUE = 0x000001f9,
-    DISPID_IPRINTMANAGERTEMPLATEPRINTER_ENDPRINT                = 0x000001fa,
-    DISPID_IPRINTMANAGERTEMPLATEPRINTER2_SHOWHEADERFOOTER       = 0x000001fb,
-    DISPID_IPRINTMANAGERTEMPLATEPRINTER2_SHRINKTOFIT            = 0x000001fc,
-    DISPID_IPRINTMANAGERTEMPLATEPRINTER2_PERCENTSCALE           = 0x000001fd,
+    DISPID_IPRINTMANAGERTEMPLATEPRINTER_STARTPRINT              = 0x000001f5U,
+    DISPID_IPRINTMANAGERTEMPLATEPRINTER_DRAWPREVIEWPAGE         = 0x000001f6U,
+    DISPID_IPRINTMANAGERTEMPLATEPRINTER_SETPAGECOUNT            = 0x000001f7U,
+    DISPID_IPRINTMANAGERTEMPLATEPRINTER_INVALIDATEPREVIEW       = 0x000001f8U,
+    DISPID_IPRINTMANAGERTEMPLATEPRINTER_GETPRINTTASKOPTIONVALUE = 0x000001f9U,
+    DISPID_IPRINTMANAGERTEMPLATEPRINTER_ENDPRINT                = 0x000001faU,
+    DISPID_IPRINTMANAGERTEMPLATEPRINTER2_SHOWHEADERFOOTER       = 0x000001fbU,
+    DISPID_IPRINTMANAGERTEMPLATEPRINTER2_SHRINKTOFIT            = 0x000001fcU,
+    DISPID_IPRINTMANAGERTEMPLATEPRINTER2_PERCENTSCALE           = 0x000001fdU,
 }
 
 enum : uint
 {
-    DISPID_ISVGTEXTPATHELEMENT_STARTOFFSET = 0x0000042f,
-    DISPID_ISVGTEXTPATHELEMENT_METHOD      = 0x00000431,
-    DISPID_ISVGTEXTPATHELEMENT_SPACING     = 0x00000433,
+    DISPID_ISVGTEXTPATHELEMENT_STARTOFFSET = 0x0000042fU,
+    DISPID_ISVGTEXTPATHELEMENT_METHOD      = 0x00000431U,
+    DISPID_ISVGTEXTPATHELEMENT_SPACING     = 0x00000433U,
 }
 
-enum uint DISPID_IDOMXMLSERIALIZER_SERIALIZETOSTRING = 0x000003e8;
-enum uint DISPID_IDOMPARSER_PARSEFROMSTRING = 0x000003e8;
-enum uint DISPID_IDOMXMLSERIALIZERFACTORY_CREATE = 0x00000000;
-enum uint DISPID_IDOMPARSERFACTORY_CREATE = 0x00000000;
+enum uint DISPID_IDOMXMLSERIALIZER_SERIALIZETOSTRING = 0x000003e8U;
+enum uint DISPID_IDOMPARSER_PARSEFROMSTRING = 0x000003e8U;
+enum uint DISPID_IDOMXMLSERIALIZERFACTORY_CREATE = 0x00000000U;
+enum uint DISPID_IDOMPARSERFACTORY_CREATE = 0x00000000U;
 
 enum : uint
 {
-    DISPID_IHTMLPROGRESSELEMENT_VALUE    = 0x00000000,
-    DISPID_IHTMLPROGRESSELEMENT_MAX      = 0x000003e8,
-    DISPID_IHTMLPROGRESSELEMENT_POSITION = 0x000003e9,
-    DISPID_IHTMLPROGRESSELEMENT_FORM     = 0x000107d4,
+    DISPID_IHTMLPROGRESSELEMENT_VALUE    = 0x00000000U,
+    DISPID_IHTMLPROGRESSELEMENT_MAX      = 0x000003e8U,
+    DISPID_IHTMLPROGRESSELEMENT_POSITION = 0x000003e9U,
+    DISPID_IHTMLPROGRESSELEMENT_FORM     = 0x000107d4U,
 }
 
 enum : uint
 {
-    DISPID_IDOMMSTRANSITIONEVENT_PROPERTYNAME          = 0x000005c4,
-    DISPID_IDOMMSTRANSITIONEVENT_ELAPSEDTIME           = 0x000005c5,
-    DISPID_IDOMMSTRANSITIONEVENT_INITMSTRANSITIONEVENT = 0x000005c6,
+    DISPID_IDOMMSTRANSITIONEVENT_PROPERTYNAME          = 0x000005c4U,
+    DISPID_IDOMMSTRANSITIONEVENT_ELAPSEDTIME           = 0x000005c5U,
+    DISPID_IDOMMSTRANSITIONEVENT_INITMSTRANSITIONEVENT = 0x000005c6U,
 }
 
 enum : uint
 {
-    DISPID_IDOMMSANIMATIONEVENT_ANIMATIONNAME        = 0x000005dd,
-    DISPID_IDOMMSANIMATIONEVENT_ELAPSEDTIME          = 0x000005de,
-    DISPID_IDOMMSANIMATIONEVENT_INITMSANIMATIONEVENT = 0x000005df,
+    DISPID_IDOMMSANIMATIONEVENT_ANIMATIONNAME        = 0x000005ddU,
+    DISPID_IDOMMSANIMATIONEVENT_ELAPSEDTIME          = 0x000005deU,
+    DISPID_IDOMMSANIMATIONEVENT_INITMSANIMATIONEVENT = 0x000005dfU,
 }
 
 enum : uint
 {
-    DISPID_IWEBGEOLOCATION_GETCURRENTPOSITION  = 0x000003e9,
-    DISPID_IWEBGEOLOCATION_WATCHPOSITION       = 0x000003ea,
-    DISPID_IWEBGEOLOCATION_CLEARWATCH          = 0x000003eb,
-    DISPID_IWEBGEOCOORDINATES_LATITUDE         = 0x000003e9,
-    DISPID_IWEBGEOCOORDINATES_LONGITUDE        = 0x000003ea,
-    DISPID_IWEBGEOCOORDINATES_ALTITUDE         = 0x000003eb,
-    DISPID_IWEBGEOCOORDINATES_ACCURACY         = 0x000003ec,
-    DISPID_IWEBGEOCOORDINATES_ALTITUDEACCURACY = 0x000003ed,
-    DISPID_IWEBGEOCOORDINATES_HEADING          = 0x000003ee,
-    DISPID_IWEBGEOCOORDINATES_SPEED            = 0x000003ef,
-    DISPID_IWEBGEOPOSITIONERROR_CODE           = 0x000003e9,
-    DISPID_IWEBGEOPOSITIONERROR_MESSAGE        = 0x000003ea,
-    DISPID_IWEBGEOPOSITION_COORDS              = 0x000003e9,
-    DISPID_IWEBGEOPOSITION_TIMESTAMP           = 0x000003ea,
+    DISPID_IWEBGEOLOCATION_GETCURRENTPOSITION  = 0x000003e9U,
+    DISPID_IWEBGEOLOCATION_WATCHPOSITION       = 0x000003eaU,
+    DISPID_IWEBGEOLOCATION_CLEARWATCH          = 0x000003ebU,
+    DISPID_IWEBGEOCOORDINATES_LATITUDE         = 0x000003e9U,
+    DISPID_IWEBGEOCOORDINATES_LONGITUDE        = 0x000003eaU,
+    DISPID_IWEBGEOCOORDINATES_ALTITUDE         = 0x000003ebU,
+    DISPID_IWEBGEOCOORDINATES_ACCURACY         = 0x000003ecU,
+    DISPID_IWEBGEOCOORDINATES_ALTITUDEACCURACY = 0x000003edU,
+    DISPID_IWEBGEOCOORDINATES_HEADING          = 0x000003eeU,
+    DISPID_IWEBGEOCOORDINATES_SPEED            = 0x000003efU,
+    DISPID_IWEBGEOPOSITIONERROR_CODE           = 0x000003e9U,
+    DISPID_IWEBGEOPOSITIONERROR_MESSAGE        = 0x000003eaU,
+    DISPID_IWEBGEOPOSITION_COORDS              = 0x000003e9U,
+    DISPID_IWEBGEOPOSITION_TIMESTAMP           = 0x000003eaU,
 }
 
 enum : uint
 {
-    DISPID_ICLIENTCAPS_JAVAENABLED           = 0x00000001,
-    DISPID_ICLIENTCAPS_COOKIEENABLED         = 0x00000002,
-    DISPID_ICLIENTCAPS_CPUCLASS              = 0x00000003,
-    DISPID_ICLIENTCAPS_SYSTEMLANGUAGE        = 0x00000004,
-    DISPID_ICLIENTCAPS_USERLANGUAGE          = 0x00000005,
-    DISPID_ICLIENTCAPS_PLATFORM              = 0x00000006,
-    DISPID_ICLIENTCAPS_CONNECTIONSPEED       = 0x00000007,
-    DISPID_ICLIENTCAPS_ONLINE                = 0x00000008,
-    DISPID_ICLIENTCAPS_COLORDEPTH            = 0x00000009,
-    DISPID_ICLIENTCAPS_BUFFERDEPTH           = 0x0000000a,
-    DISPID_ICLIENTCAPS_WIDTH                 = 0x0000000b,
-    DISPID_ICLIENTCAPS_HEIGHT                = 0x0000000c,
-    DISPID_ICLIENTCAPS_AVAILHEIGHT           = 0x0000000d,
-    DISPID_ICLIENTCAPS_AVAILWIDTH            = 0x0000000e,
-    DISPID_ICLIENTCAPS_CONNECTIONTYPE        = 0x0000000f,
-    DISPID_ICLIENTCAPS_ISCOMPONENTINSTALLED  = 0x00000010,
-    DISPID_ICLIENTCAPS_GETCOMPONENTVERSION   = 0x00000011,
-    DISPID_ICLIENTCAPS_COMPAREVERSIONS       = 0x00000012,
-    DISPID_ICLIENTCAPS_ADDCOMPONENTREQUEST   = 0x00000013,
-    DISPID_ICLIENTCAPS_DOCOMPONENTREQUEST    = 0x00000014,
-    DISPID_ICLIENTCAPS_CLEARCOMPONENTREQUEST = 0x00000015,
+    DISPID_ICLIENTCAPS_JAVAENABLED           = 0x00000001U,
+    DISPID_ICLIENTCAPS_COOKIEENABLED         = 0x00000002U,
+    DISPID_ICLIENTCAPS_CPUCLASS              = 0x00000003U,
+    DISPID_ICLIENTCAPS_SYSTEMLANGUAGE        = 0x00000004U,
+    DISPID_ICLIENTCAPS_USERLANGUAGE          = 0x00000005U,
+    DISPID_ICLIENTCAPS_PLATFORM              = 0x00000006U,
+    DISPID_ICLIENTCAPS_CONNECTIONSPEED       = 0x00000007U,
+    DISPID_ICLIENTCAPS_ONLINE                = 0x00000008U,
+    DISPID_ICLIENTCAPS_COLORDEPTH            = 0x00000009U,
+    DISPID_ICLIENTCAPS_BUFFERDEPTH           = 0x0000000aU,
+    DISPID_ICLIENTCAPS_WIDTH                 = 0x0000000bU,
+    DISPID_ICLIENTCAPS_HEIGHT                = 0x0000000cU,
+    DISPID_ICLIENTCAPS_AVAILHEIGHT           = 0x0000000dU,
+    DISPID_ICLIENTCAPS_AVAILWIDTH            = 0x0000000eU,
+    DISPID_ICLIENTCAPS_CONNECTIONTYPE        = 0x0000000fU,
+    DISPID_ICLIENTCAPS_ISCOMPONENTINSTALLED  = 0x00000010U,
+    DISPID_ICLIENTCAPS_GETCOMPONENTVERSION   = 0x00000011U,
+    DISPID_ICLIENTCAPS_COMPAREVERSIONS       = 0x00000012U,
+    DISPID_ICLIENTCAPS_ADDCOMPONENTREQUEST   = 0x00000013U,
+    DISPID_ICLIENTCAPS_DOCOMPONENTREQUEST    = 0x00000014U,
+    DISPID_ICLIENTCAPS_CLEARCOMPONENTREQUEST = 0x00000015U,
 }
 
 enum : uint
 {
-    DISPID_IDOMMSMANIPULATIONEVENT_LASTSTATE               = 0x000005f6,
-    DISPID_IDOMMSMANIPULATIONEVENT_CURRENTSTATE            = 0x000005f7,
-    DISPID_IDOMMSMANIPULATIONEVENT_INITMSMANIPULATIONEVENT = 0x000005f8,
+    DISPID_IDOMMSMANIPULATIONEVENT_LASTSTATE               = 0x000005f6U,
+    DISPID_IDOMMSMANIPULATIONEVENT_CURRENTSTATE            = 0x000005f7U,
+    DISPID_IDOMMSMANIPULATIONEVENT_INITMSMANIPULATIONEVENT = 0x000005f8U,
 }
 
 enum : uint
 {
-    DISPID_IDOMCLOSEEVENT_WASCLEAN       = 0x000005f6,
-    DISPID_IDOMCLOSEEVENT_INITCLOSEEVENT = 0x000005f9,
+    DISPID_IDOMCLOSEEVENT_WASCLEAN       = 0x000005f6U,
+    DISPID_IDOMCLOSEEVENT_INITCLOSEEVENT = 0x000005f9U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLAPPLICATIONCACHE_STATUS        = 0x000003e9,
-    DISPID_IHTMLAPPLICATIONCACHE_ONCHECKING    = 0x00011825,
-    DISPID_IHTMLAPPLICATIONCACHE_ONERROR       = 0x0001178d,
-    DISPID_IHTMLAPPLICATIONCACHE_ONNOUPDATE    = 0x00011826,
-    DISPID_IHTMLAPPLICATIONCACHE_ONDOWNLOADING = 0x00011827,
-    DISPID_IHTMLAPPLICATIONCACHE_ONPROGRESS    = 0x00011801,
-    DISPID_IHTMLAPPLICATIONCACHE_ONUPDATEREADY = 0x00011828,
-    DISPID_IHTMLAPPLICATIONCACHE_ONCACHED      = 0x00011829,
-    DISPID_IHTMLAPPLICATIONCACHE_ONOBSOLETE    = 0x0001182a,
-    DISPID_IHTMLAPPLICATIONCACHE_UPDATE        = 0x000003ea,
-    DISPID_IHTMLAPPLICATIONCACHE_SWAPCACHE     = 0x000003eb,
-    DISPID_IHTMLAPPLICATIONCACHE_ABORT         = 0x000003ec,
+    DISPID_IHTMLAPPLICATIONCACHE_STATUS        = 0x000003e9U,
+    DISPID_IHTMLAPPLICATIONCACHE_ONCHECKING    = 0x00011825U,
+    DISPID_IHTMLAPPLICATIONCACHE_ONERROR       = 0x0001178dU,
+    DISPID_IHTMLAPPLICATIONCACHE_ONNOUPDATE    = 0x00011826U,
+    DISPID_IHTMLAPPLICATIONCACHE_ONDOWNLOADING = 0x00011827U,
+    DISPID_IHTMLAPPLICATIONCACHE_ONPROGRESS    = 0x00011801U,
+    DISPID_IHTMLAPPLICATIONCACHE_ONUPDATEREADY = 0x00011828U,
+    DISPID_IHTMLAPPLICATIONCACHE_ONCACHED      = 0x00011829U,
+    DISPID_IHTMLAPPLICATIONCACHE_ONOBSOLETE    = 0x0001182aU,
+    DISPID_IHTMLAPPLICATIONCACHE_UPDATE        = 0x000003eaU,
+    DISPID_IHTMLAPPLICATIONCACHE_SWAPCACHE     = 0x000003ebU,
+    DISPID_IHTMLAPPLICATIONCACHE_ABORT         = 0x000003ecU,
 }
 
 enum : uint
 {
-    DISPID_ILINEINFO_X             = 0x000003e9,
-    DISPID_ILINEINFO_BASELINE      = 0x000003ea,
-    DISPID_ILINEINFO_TEXTDESCENT   = 0x000003eb,
-    DISPID_ILINEINFO_TEXTHEIGHT    = 0x000003ec,
-    DISPID_ILINEINFO_LINEDIRECTION = 0x000003ed,
+    DISPID_ILINEINFO_X             = 0x000003e9U,
+    DISPID_ILINEINFO_BASELINE      = 0x000003eaU,
+    DISPID_ILINEINFO_TEXTDESCENT   = 0x000003ebU,
+    DISPID_ILINEINFO_TEXTHEIGHT    = 0x000003ecU,
+    DISPID_ILINEINFO_LINEDIRECTION = 0x000003edU,
 }
 
 enum : uint
 {
-    DISPID_IHTMLCOMPUTEDSTYLE_BOLD            = 0x000003e9,
-    DISPID_IHTMLCOMPUTEDSTYLE_ITALIC          = 0x000003ea,
-    DISPID_IHTMLCOMPUTEDSTYLE_UNDERLINE       = 0x000003eb,
-    DISPID_IHTMLCOMPUTEDSTYLE_OVERLINE        = 0x000003ec,
-    DISPID_IHTMLCOMPUTEDSTYLE_STRIKEOUT       = 0x000003ed,
-    DISPID_IHTMLCOMPUTEDSTYLE_SUBSCRIPT       = 0x000003ee,
-    DISPID_IHTMLCOMPUTEDSTYLE_SUPERSCRIPT     = 0x000003ef,
-    DISPID_IHTMLCOMPUTEDSTYLE_EXPLICITFACE    = 0x000003f0,
-    DISPID_IHTMLCOMPUTEDSTYLE_FONTWEIGHT      = 0x000003f1,
-    DISPID_IHTMLCOMPUTEDSTYLE_FONTSIZE        = 0x000003f2,
-    DISPID_IHTMLCOMPUTEDSTYLE_FONTNAME        = 0x000003f3,
-    DISPID_IHTMLCOMPUTEDSTYLE_HASBGCOLOR      = 0x000003f4,
-    DISPID_IHTMLCOMPUTEDSTYLE_TEXTCOLOR       = 0x000003f5,
-    DISPID_IHTMLCOMPUTEDSTYLE_BACKGROUNDCOLOR = 0x000003f6,
-    DISPID_IHTMLCOMPUTEDSTYLE_PREFORMATTED    = 0x000003f7,
-    DISPID_IHTMLCOMPUTEDSTYLE_DIRECTION       = 0x000003f8,
-    DISPID_IHTMLCOMPUTEDSTYLE_BLOCKDIRECTION  = 0x000003f9,
-    DISPID_IHTMLCOMPUTEDSTYLE_OL              = 0x000003fa,
-    DISPID_IHTMLDLGSAFEHELPER_CHOOSECOLORDLG  = 0x00000001,
-    DISPID_IHTMLDLGSAFEHELPER_GETCHARSET      = 0x00000002,
-    DISPID_IHTMLDLGSAFEHELPER_FONTS           = 0x00000003,
-    DISPID_IHTMLDLGSAFEHELPER_BLOCKFORMATS    = 0x00000004,
+    DISPID_IHTMLCOMPUTEDSTYLE_BOLD            = 0x000003e9U,
+    DISPID_IHTMLCOMPUTEDSTYLE_ITALIC          = 0x000003eaU,
+    DISPID_IHTMLCOMPUTEDSTYLE_UNDERLINE       = 0x000003ebU,
+    DISPID_IHTMLCOMPUTEDSTYLE_OVERLINE        = 0x000003ecU,
+    DISPID_IHTMLCOMPUTEDSTYLE_STRIKEOUT       = 0x000003edU,
+    DISPID_IHTMLCOMPUTEDSTYLE_SUBSCRIPT       = 0x000003eeU,
+    DISPID_IHTMLCOMPUTEDSTYLE_SUPERSCRIPT     = 0x000003efU,
+    DISPID_IHTMLCOMPUTEDSTYLE_EXPLICITFACE    = 0x000003f0U,
+    DISPID_IHTMLCOMPUTEDSTYLE_FONTWEIGHT      = 0x000003f1U,
+    DISPID_IHTMLCOMPUTEDSTYLE_FONTSIZE        = 0x000003f2U,
+    DISPID_IHTMLCOMPUTEDSTYLE_FONTNAME        = 0x000003f3U,
+    DISPID_IHTMLCOMPUTEDSTYLE_HASBGCOLOR      = 0x000003f4U,
+    DISPID_IHTMLCOMPUTEDSTYLE_TEXTCOLOR       = 0x000003f5U,
+    DISPID_IHTMLCOMPUTEDSTYLE_BACKGROUNDCOLOR = 0x000003f6U,
+    DISPID_IHTMLCOMPUTEDSTYLE_PREFORMATTED    = 0x000003f7U,
+    DISPID_IHTMLCOMPUTEDSTYLE_DIRECTION       = 0x000003f8U,
+    DISPID_IHTMLCOMPUTEDSTYLE_BLOCKDIRECTION  = 0x000003f9U,
+    DISPID_IHTMLCOMPUTEDSTYLE_OL              = 0x000003faU,
+    DISPID_IHTMLDLGSAFEHELPER_CHOOSECOLORDLG  = 0x00000001U,
+    DISPID_IHTMLDLGSAFEHELPER_GETCHARSET      = 0x00000002U,
+    DISPID_IHTMLDLGSAFEHELPER_FONTS           = 0x00000003U,
+    DISPID_IHTMLDLGSAFEHELPER_BLOCKFORMATS    = 0x00000004U,
 }
 
 enum int DISPID_IBLOCKFORMATS__NEWENUM = 0xfffffffc;
 
 enum : uint
 {
-    DISPID_IBLOCKFORMATS_COUNT = 0x00000001,
-    DISPID_IBLOCKFORMATS_ITEM  = 0x00000000,
+    DISPID_IBLOCKFORMATS_COUNT = 0x00000001U,
+    DISPID_IBLOCKFORMATS_ITEM  = 0x00000000U,
 }
 
 enum int DISPID_IFONTNAMES__NEWENUM = 0xfffffffc;
 
 enum : uint
 {
-    DISPID_IFONTNAMES_COUNT = 0x00000001,
-    DISPID_IFONTNAMES_ITEM  = 0x00000000,
+    DISPID_IFONTNAMES_COUNT = 0x00000001U,
+    DISPID_IFONTNAMES_ITEM  = 0x00000000U,
 }
 
 enum : uint
 {
-    DISPID_IHTMLNAMESPACE_NAME               = 0x000003e8,
-    DISPID_IHTMLNAMESPACE_URN                = 0x000003e9,
-    DISPID_IHTMLNAMESPACE_TAGNAMES           = 0x000003ea,
-    DISPID_IHTMLNAMESPACE_READYSTATE         = 0x000113fc,
-    DISPID_IHTMLNAMESPACE_ONREADYSTATECHANGE = 0x00011789,
-    DISPID_IHTMLNAMESPACE_DOIMPORT           = 0x000003eb,
-    DISPID_IHTMLNAMESPACE_ATTACHEVENT        = 0x000101fb,
-    DISPID_IHTMLNAMESPACE_DETACHEVENT        = 0x000101fc,
-    DISPID_IHTMLNAMESPACECOLLECTION_LENGTH   = 0x000003e8,
-    DISPID_IHTMLNAMESPACECOLLECTION_ITEM     = 0x00000000,
-    DISPID_IHTMLNAMESPACECOLLECTION_ADD      = 0x000003e9,
+    DISPID_IHTMLNAMESPACE_NAME               = 0x000003e8U,
+    DISPID_IHTMLNAMESPACE_URN                = 0x000003e9U,
+    DISPID_IHTMLNAMESPACE_TAGNAMES           = 0x000003eaU,
+    DISPID_IHTMLNAMESPACE_READYSTATE         = 0x000113fcU,
+    DISPID_IHTMLNAMESPACE_ONREADYSTATECHANGE = 0x00011789U,
+    DISPID_IHTMLNAMESPACE_DOIMPORT           = 0x000003ebU,
+    DISPID_IHTMLNAMESPACE_ATTACHEVENT        = 0x000101fbU,
+    DISPID_IHTMLNAMESPACE_DETACHEVENT        = 0x000101fcU,
+    DISPID_IHTMLNAMESPACECOLLECTION_LENGTH   = 0x000003e8U,
+    DISPID_IHTMLNAMESPACECOLLECTION_ITEM     = 0x00000000U,
+    DISPID_IHTMLNAMESPACECOLLECTION_ADD      = 0x000003e9U,
 }
 
 enum int DISPID_HTMLNAMESPACEEVENTS_ONREADYSTATECHANGE = 0xfffffd9f;
-enum uint DISPID_IHTMLIPRINTCOLLECTION_LENGTH = 0x000005dd;
+enum uint DISPID_IHTMLIPRINTCOLLECTION_LENGTH = 0x000005ddU;
 enum int DISPID_IHTMLIPRINTCOLLECTION__NEWENUM = 0xfffffffc;
-enum uint DISPID_IHTMLIPRINTCOLLECTION_ITEM = 0x00000000;
+enum uint DISPID_IHTMLIPRINTCOLLECTION_ITEM = 0x00000000U;
 
 enum : uint
 {
-    DISPID_IHTMLDIALOG_DIALOGTOP       = 0x00010004,
-    DISPID_IHTMLDIALOG_DIALOGLEFT      = 0x00010003,
-    DISPID_IHTMLDIALOG_DIALOGWIDTH     = 0x00010005,
-    DISPID_IHTMLDIALOG_DIALOGHEIGHT    = 0x00010006,
-    DISPID_IHTMLDIALOG_DIALOGARGUMENTS = 0x000061a8,
-    DISPID_IHTMLDIALOG_MENUARGUMENTS   = 0x000061b5,
-    DISPID_IHTMLDIALOG_RETURNVALUE     = 0x000061a9,
-    DISPID_IHTMLDIALOG_CLOSE           = 0x000061b3,
-    DISPID_IHTMLDIALOG_TOSTRING        = 0x000061b4,
-    DISPID_IHTMLDIALOG2_STATUS         = 0x000061b6,
-    DISPID_IHTMLDIALOG2_RESIZABLE      = 0x000061b7,
-    DISPID_IHTMLDIALOG3_UNADORNED      = 0x000061b8,
-    DISPID_IHTMLDIALOG3_DIALOGHIDE     = 0x000061af,
+    DISPID_IHTMLDIALOG_DIALOGTOP       = 0x00010004U,
+    DISPID_IHTMLDIALOG_DIALOGLEFT      = 0x00010003U,
+    DISPID_IHTMLDIALOG_DIALOGWIDTH     = 0x00010005U,
+    DISPID_IHTMLDIALOG_DIALOGHEIGHT    = 0x00010006U,
+    DISPID_IHTMLDIALOG_DIALOGARGUMENTS = 0x000061a8U,
+    DISPID_IHTMLDIALOG_MENUARGUMENTS   = 0x000061b5U,
+    DISPID_IHTMLDIALOG_RETURNVALUE     = 0x000061a9U,
+    DISPID_IHTMLDIALOG_CLOSE           = 0x000061b3U,
+    DISPID_IHTMLDIALOG_TOSTRING        = 0x000061b4U,
+    DISPID_IHTMLDIALOG2_STATUS         = 0x000061b6U,
+    DISPID_IHTMLDIALOG2_RESIZABLE      = 0x000061b7U,
+    DISPID_IHTMLDIALOG3_UNADORNED      = 0x000061b8U,
+    DISPID_IHTMLDIALOG3_DIALOGHIDE     = 0x000061afU,
 }
 
 enum : uint
 {
-    DISPID_IHTMLMODELESSINIT_PARAMETERS   = 0x000061a8,
-    DISPID_IHTMLMODELESSINIT_OPTIONSTRING = 0x000061a9,
-    DISPID_IHTMLMODELESSINIT_MONIKER      = 0x000061ae,
-    DISPID_IHTMLMODELESSINIT_DOCUMENT     = 0x000061af,
+    DISPID_IHTMLMODELESSINIT_PARAMETERS   = 0x000061a8U,
+    DISPID_IHTMLMODELESSINIT_OPTIONSTRING = 0x000061a9U,
+    DISPID_IHTMLMODELESSINIT_MONIKER      = 0x000061aeU,
+    DISPID_IHTMLMODELESSINIT_DOCUMENT     = 0x000061afU,
 }
 
 enum : uint
 {
-    DISPID_IHTMLPOPUP_SHOW                  = 0x00006979,
-    DISPID_IHTMLPOPUP_HIDE                  = 0x0000697a,
-    DISPID_IHTMLPOPUP_DOCUMENT              = 0x0000697b,
-    DISPID_IHTMLPOPUP_ISOPEN                = 0x0000697c,
-    DISPID_IHTMLAPPBEHAVIOR_APPLICATIONNAME = 0x00001388,
-    DISPID_IHTMLAPPBEHAVIOR_VERSION         = 0x00001389,
-    DISPID_IHTMLAPPBEHAVIOR_ICON            = 0x0000138a,
-    DISPID_IHTMLAPPBEHAVIOR_SINGLEINSTANCE  = 0x0000138b,
-    DISPID_IHTMLAPPBEHAVIOR_MINIMIZEBUTTON  = 0x0000138d,
-    DISPID_IHTMLAPPBEHAVIOR_MAXIMIZEBUTTON  = 0x0000138e,
-    DISPID_IHTMLAPPBEHAVIOR_BORDER          = 0x0000138f,
-    DISPID_IHTMLAPPBEHAVIOR_BORDERSTYLE     = 0x00001390,
-    DISPID_IHTMLAPPBEHAVIOR_SYSMENU         = 0x00001391,
-    DISPID_IHTMLAPPBEHAVIOR_CAPTION         = 0x00001392,
-    DISPID_IHTMLAPPBEHAVIOR_WINDOWSTATE     = 0x00001393,
-    DISPID_IHTMLAPPBEHAVIOR_SHOWINTASKBAR   = 0x00001394,
-    DISPID_IHTMLAPPBEHAVIOR_COMMANDLINE     = 0x00001395,
-    DISPID_IHTMLAPPBEHAVIOR2_CONTEXTMENU    = 0x00001396,
-    DISPID_IHTMLAPPBEHAVIOR2_INNERBORDER    = 0x00001397,
-    DISPID_IHTMLAPPBEHAVIOR2_SCROLL         = 0x00001398,
-    DISPID_IHTMLAPPBEHAVIOR2_SCROLLFLAT     = 0x00001399,
-    DISPID_IHTMLAPPBEHAVIOR2_SELECTION      = 0x0000139a,
-    DISPID_IHTMLAPPBEHAVIOR3_NAVIGABLE      = 0x0000139b,
+    DISPID_IHTMLPOPUP_SHOW                  = 0x00006979U,
+    DISPID_IHTMLPOPUP_HIDE                  = 0x0000697aU,
+    DISPID_IHTMLPOPUP_DOCUMENT              = 0x0000697bU,
+    DISPID_IHTMLPOPUP_ISOPEN                = 0x0000697cU,
+    DISPID_IHTMLAPPBEHAVIOR_APPLICATIONNAME = 0x00001388U,
+    DISPID_IHTMLAPPBEHAVIOR_VERSION         = 0x00001389U,
+    DISPID_IHTMLAPPBEHAVIOR_ICON            = 0x0000138aU,
+    DISPID_IHTMLAPPBEHAVIOR_SINGLEINSTANCE  = 0x0000138bU,
+    DISPID_IHTMLAPPBEHAVIOR_MINIMIZEBUTTON  = 0x0000138dU,
+    DISPID_IHTMLAPPBEHAVIOR_MAXIMIZEBUTTON  = 0x0000138eU,
+    DISPID_IHTMLAPPBEHAVIOR_BORDER          = 0x0000138fU,
+    DISPID_IHTMLAPPBEHAVIOR_BORDERSTYLE     = 0x00001390U,
+    DISPID_IHTMLAPPBEHAVIOR_SYSMENU         = 0x00001391U,
+    DISPID_IHTMLAPPBEHAVIOR_CAPTION         = 0x00001392U,
+    DISPID_IHTMLAPPBEHAVIOR_WINDOWSTATE     = 0x00001393U,
+    DISPID_IHTMLAPPBEHAVIOR_SHOWINTASKBAR   = 0x00001394U,
+    DISPID_IHTMLAPPBEHAVIOR_COMMANDLINE     = 0x00001395U,
+    DISPID_IHTMLAPPBEHAVIOR2_CONTEXTMENU    = 0x00001396U,
+    DISPID_IHTMLAPPBEHAVIOR2_INNERBORDER    = 0x00001397U,
+    DISPID_IHTMLAPPBEHAVIOR2_SCROLL         = 0x00001398U,
+    DISPID_IHTMLAPPBEHAVIOR2_SCROLLFLAT     = 0x00001399U,
+    DISPID_IHTMLAPPBEHAVIOR2_SELECTION      = 0x0000139aU,
+    DISPID_IHTMLAPPBEHAVIOR3_NAVIGABLE      = 0x0000139bU,
 }
 
-enum uint DISPID_IHTMLTXTRANGEINTERNAL_GET_VISIBLETEXT = 0x0000041a;
+enum uint DISPID_IHTMLTXTRANGEINTERNAL_GET_VISIBLETEXT = 0x0000041aU;
 
 enum : uint
 {
-    DISPID_IE9EVENTS_ABORT            = 0x000003e8,
-    DISPID_IE9EVENTS_ACTIVATE         = 0x00000414,
-    DISPID_IE9EVENTS_AFTERPRINT       = 0x00000401,
-    DISPID_IE9EVENTS_BEFOREACTIVATE   = 0x00000417,
-    DISPID_IE9EVENTS_BEFOREDEACTIVATE = 0x0000040a,
-    DISPID_IE9EVENTS_BEFOREUNLOAD     = 0x000003f9,
-    DISPID_IE9EVENTS_BEFOREPRINT      = 0x00000400,
-    DISPID_IE9EVENTS_BOUNCE           = 0x000003f1,
-    DISPID_IE9EVENTS_CHANGE           = 0x000003e9,
+    DISPID_IE9EVENTS_ABORT            = 0x000003e8U,
+    DISPID_IE9EVENTS_ACTIVATE         = 0x00000414U,
+    DISPID_IE9EVENTS_AFTERPRINT       = 0x00000401U,
+    DISPID_IE9EVENTS_BEFOREACTIVATE   = 0x00000417U,
+    DISPID_IE9EVENTS_BEFOREDEACTIVATE = 0x0000040aU,
+    DISPID_IE9EVENTS_BEFOREUNLOAD     = 0x000003f9U,
+    DISPID_IE9EVENTS_BEFOREPRINT      = 0x00000400U,
+    DISPID_IE9EVENTS_BOUNCE           = 0x000003f1U,
+    DISPID_IE9EVENTS_CHANGE           = 0x000003e9U,
 }
 
 enum int DISPID_IE9EVENTS_CLICK = 0xfffffda8;
 
 enum : uint
 {
-    DISPID_IE9EVENTS_COMPLETE         = 0x0001182f,
-    DISPID_IE9EVENTS_CONTEXTMENU      = 0x000003ff,
-    DISPID_IE9EVENTS_DEACTIVATE       = 0x00000415,
-    DISPID_IE9EVENTS_DOMCONTENTLOADED = 0x000117ee,
-    DISPID_IE9EVENTS_SUCCESS          = 0x0001182d,
-    DISPID_IE9EVENTS_ERROR            = 0x000003ea,
-    DISPID_IE9EVENTS_FINISH           = 0x000003f2,
-    DISPID_IE9EVENTS_FOCUS            = 0x00010001,
-    DISPID_IE9EVENTS_FOCUSIN          = 0x00000418,
-    DISPID_IE9EVENTS_FOCUSOUT         = 0x00000419,
-    DISPID_IE9EVENTS_HASHCHANGE       = 0x0000042a,
-    DISPID_IE9EVENTS_HELP             = 0x0001000a,
-    DISPID_IE9EVENTS_INPUT            = 0x000117ef,
-    DISPID_IE9EVENTS_LOAD             = 0x000003eb,
+    DISPID_IE9EVENTS_COMPLETE         = 0x0001182fU,
+    DISPID_IE9EVENTS_CONTEXTMENU      = 0x000003ffU,
+    DISPID_IE9EVENTS_DEACTIVATE       = 0x00000415U,
+    DISPID_IE9EVENTS_DOMCONTENTLOADED = 0x000117eeU,
+    DISPID_IE9EVENTS_SUCCESS          = 0x0001182dU,
+    DISPID_IE9EVENTS_ERROR            = 0x000003eaU,
+    DISPID_IE9EVENTS_FINISH           = 0x000003f2U,
+    DISPID_IE9EVENTS_FOCUS            = 0x00010001U,
+    DISPID_IE9EVENTS_FOCUSIN          = 0x00000418U,
+    DISPID_IE9EVENTS_FOCUSOUT         = 0x00000419U,
+    DISPID_IE9EVENTS_HASHCHANGE       = 0x0000042aU,
+    DISPID_IE9EVENTS_HELP             = 0x0001000aU,
+    DISPID_IE9EVENTS_INPUT            = 0x000117efU,
+    DISPID_IE9EVENTS_LOAD             = 0x000003ebU,
 }
 
 enum : int
@@ -11300,30 +11567,30 @@ enum : int
 
 enum : uint
 {
-    DISPID_IE9EVENTS_MESSAGE = 0x0000042b,
-    DISPID_IE9EVENTS_ONLINE  = 0x00000428,
-    DISPID_IE9EVENTS_OFFLINE = 0x00000429,
+    DISPID_IE9EVENTS_MESSAGE = 0x0000042bU,
+    DISPID_IE9EVENTS_ONLINE  = 0x00000428U,
+    DISPID_IE9EVENTS_OFFLINE = 0x00000429U,
 }
 
 enum int DISPID_IE9EVENTS_READYSTATECHANGE = 0xfffffd9f;
 
 enum : uint
 {
-    DISPID_IE9EVENTS_RESET           = 0x000003f7,
-    DISPID_IE9EVENTS_RESIZE          = 0x000003f8,
-    DISPID_IE9EVENTS_SCROLL          = 0x000003f6,
-    DISPID_IE9EVENTS_SELECT          = 0x000003ee,
-    DISPID_IE9EVENTS_SELECTIONCHANGE = 0x0000040d,
-    DISPID_IE9EVENTS_SELECTSTART     = 0x0001000c,
-    DISPID_IE9EVENTS_START           = 0x000003f3,
-    DISPID_IE9EVENTS_STOP            = 0x00000402,
-    DISPID_IE9EVENTS_STORAGE         = 0x00000421,
-    DISPID_IE9EVENTS_STORAGECOMMIT   = 0x00000422,
-    DISPID_IE9EVENTS_SUBMIT          = 0x000003ef,
-    DISPID_IE9EVENTS_TEXTINPUT       = 0x000117f1,
-    DISPID_IE9EVENTS_TIMEOUT         = 0x00000000,
-    DISPID_IE9EVENTS_UNLOAD          = 0x000003f0,
-    DISPID_IE9EVENTS_WHEEL           = 0x000117e1,
+    DISPID_IE9EVENTS_RESET           = 0x000003f7U,
+    DISPID_IE9EVENTS_RESIZE          = 0x000003f8U,
+    DISPID_IE9EVENTS_SCROLL          = 0x000003f6U,
+    DISPID_IE9EVENTS_SELECT          = 0x000003eeU,
+    DISPID_IE9EVENTS_SELECTIONCHANGE = 0x0000040dU,
+    DISPID_IE9EVENTS_SELECTSTART     = 0x0001000cU,
+    DISPID_IE9EVENTS_START           = 0x000003f3U,
+    DISPID_IE9EVENTS_STOP            = 0x00000402U,
+    DISPID_IE9EVENTS_STORAGE         = 0x00000421U,
+    DISPID_IE9EVENTS_STORAGECOMMIT   = 0x00000422U,
+    DISPID_IE9EVENTS_SUBMIT          = 0x000003efU,
+    DISPID_IE9EVENTS_TEXTINPUT       = 0x000117f1U,
+    DISPID_IE9EVENTS_TIMEOUT         = 0x00000000U,
+    DISPID_IE9EVENTS_UNLOAD          = 0x000003f0U,
+    DISPID_IE9EVENTS_WHEEL           = 0x000117e1U,
 }
 
 enum : int
@@ -11334,242 +11601,242 @@ enum : int
 
 enum : uint
 {
-    DISPID_IE9EVENTS_MOUSEENTER = 0x00000412,
-    DISPID_IE9EVENTS_MOUSELEAVE = 0x00000413,
+    DISPID_IE9EVENTS_MOUSEENTER = 0x00000412U,
+    DISPID_IE9EVENTS_MOUSELEAVE = 0x00000413U,
 }
 
 enum int DISPID_IE9EVENTS_MOUSEMOVE = 0xfffffda2;
 
 enum : uint
 {
-    DISPID_IE9EVENTS_MOUSEOUT  = 0x00010009,
-    DISPID_IE9EVENTS_MOUSEOVER = 0x00010008,
+    DISPID_IE9EVENTS_MOUSEOUT  = 0x00010009U,
+    DISPID_IE9EVENTS_MOUSEOVER = 0x00010008U,
 }
 
 enum int DISPID_IE9EVENTS_MOUSEUP = 0xfffffda1;
 
 enum : uint
 {
-    DISPID_IE9EVENTS_MOUSEWHEEL                    = 0x00000409,
-    DISPID_IE9EVENTS_BEFORECOPY                    = 0x0001001e,
-    DISPID_IE9EVENTS_BEFORECUT                     = 0x0001001d,
-    DISPID_IE9EVENTS_BEFOREPASTE                   = 0x0001001f,
-    DISPID_IE9EVENTS_COPY                          = 0x0001001b,
-    DISPID_IE9EVENTS_CUT                           = 0x0001001a,
-    DISPID_IE9EVENTS_DRAG                          = 0x00010014,
-    DISPID_IE9EVENTS_DRAGEND                       = 0x00010015,
-    DISPID_IE9EVENTS_DRAGENTER                     = 0x00010016,
-    DISPID_IE9EVENTS_DRAGLEAVE                     = 0x00010018,
-    DISPID_IE9EVENTS_DRAGOVER                      = 0x00010017,
-    DISPID_IE9EVENTS_DRAGSTART                     = 0x0001000b,
-    DISPID_IE9EVENTS_DROP                          = 0x00010019,
-    DISPID_IE9EVENTS_PASTE                         = 0x0001001c,
-    DISPID_IE9EVENTS_MSBEFOREEDITFOCUS             = 0x00000403,
-    DISPID_IE9EVENTS_MSCONTROLSELECT               = 0x0000040c,
-    DISPID_IE9EVENTS_MSCONTROLRESIZESTART          = 0x00000410,
-    DISPID_IE9EVENTS_MSCONTROLRESIZEEND            = 0x00000411,
-    DISPID_IE9EVENTS_COMPOSITIONSTART              = 0x000117ea,
-    DISPID_IE9EVENTS_COMPOSITIONUPDATE             = 0x000117eb,
-    DISPID_IE9EVENTS_COMPOSITIONEND                = 0x000117ec,
-    DISPID_IE9EVENTS_DOMATTRMODIFIED               = 0x000117ed,
-    DISPID_IE9EVENTS_DOMCHARACTERDATAMODIFIED      = 0x000117f0,
-    DISPID_IE9EVENTS_DOMNODEINSERTED               = 0x000117f3,
-    DISPID_IE9EVENTS_DOMNODEREMOVED                = 0x000117f4,
-    DISPID_IE9EVENTS_DOMSUBTREEMODIFIED            = 0x000117f5,
-    DISPID_IE9EVENTS_SVGLOAD                       = 0x000117e2,
-    DISPID_IE9EVENTS_SVGUNLOAD                     = 0x000117e3,
-    DISPID_IE9EVENTS_SVGABORT                      = 0x000117e4,
-    DISPID_IE9EVENTS_SVGERROR                      = 0x000117e5,
-    DISPID_IE9EVENTS_SVGRESIZE                     = 0x000117e6,
-    DISPID_IE9EVENTS_SVGSCROLL                     = 0x000117e7,
-    DISPID_IE9EVENTS_SVGZOOM                       = 0x000117e8,
-    DISPID_IE9EVENTS_MSTHUMBNAILCLICK              = 0x000117e9,
-    DISPID_IE9EVENTS_MSSITEMODEJUMPLISTITEMREMOVED = 0x000117f2,
+    DISPID_IE9EVENTS_MOUSEWHEEL                    = 0x00000409U,
+    DISPID_IE9EVENTS_BEFORECOPY                    = 0x0001001eU,
+    DISPID_IE9EVENTS_BEFORECUT                     = 0x0001001dU,
+    DISPID_IE9EVENTS_BEFOREPASTE                   = 0x0001001fU,
+    DISPID_IE9EVENTS_COPY                          = 0x0001001bU,
+    DISPID_IE9EVENTS_CUT                           = 0x0001001aU,
+    DISPID_IE9EVENTS_DRAG                          = 0x00010014U,
+    DISPID_IE9EVENTS_DRAGEND                       = 0x00010015U,
+    DISPID_IE9EVENTS_DRAGENTER                     = 0x00010016U,
+    DISPID_IE9EVENTS_DRAGLEAVE                     = 0x00010018U,
+    DISPID_IE9EVENTS_DRAGOVER                      = 0x00010017U,
+    DISPID_IE9EVENTS_DRAGSTART                     = 0x0001000bU,
+    DISPID_IE9EVENTS_DROP                          = 0x00010019U,
+    DISPID_IE9EVENTS_PASTE                         = 0x0001001cU,
+    DISPID_IE9EVENTS_MSBEFOREEDITFOCUS             = 0x00000403U,
+    DISPID_IE9EVENTS_MSCONTROLSELECT               = 0x0000040cU,
+    DISPID_IE9EVENTS_MSCONTROLRESIZESTART          = 0x00000410U,
+    DISPID_IE9EVENTS_MSCONTROLRESIZEEND            = 0x00000411U,
+    DISPID_IE9EVENTS_COMPOSITIONSTART              = 0x000117eaU,
+    DISPID_IE9EVENTS_COMPOSITIONUPDATE             = 0x000117ebU,
+    DISPID_IE9EVENTS_COMPOSITIONEND                = 0x000117ecU,
+    DISPID_IE9EVENTS_DOMATTRMODIFIED               = 0x000117edU,
+    DISPID_IE9EVENTS_DOMCHARACTERDATAMODIFIED      = 0x000117f0U,
+    DISPID_IE9EVENTS_DOMNODEINSERTED               = 0x000117f3U,
+    DISPID_IE9EVENTS_DOMNODEREMOVED                = 0x000117f4U,
+    DISPID_IE9EVENTS_DOMSUBTREEMODIFIED            = 0x000117f5U,
+    DISPID_IE9EVENTS_SVGLOAD                       = 0x000117e2U,
+    DISPID_IE9EVENTS_SVGUNLOAD                     = 0x000117e3U,
+    DISPID_IE9EVENTS_SVGABORT                      = 0x000117e4U,
+    DISPID_IE9EVENTS_SVGERROR                      = 0x000117e5U,
+    DISPID_IE9EVENTS_SVGRESIZE                     = 0x000117e6U,
+    DISPID_IE9EVENTS_SVGSCROLL                     = 0x000117e7U,
+    DISPID_IE9EVENTS_SVGZOOM                       = 0x000117e8U,
+    DISPID_IE9EVENTS_MSTHUMBNAILCLICK              = 0x000117e9U,
+    DISPID_IE9EVENTS_MSSITEMODEJUMPLISTITEMREMOVED = 0x000117f2U,
 }
 
 enum : uint
 {
-    DISPID_IE9EVENTS_CANPLAY                    = 0x000117f6,
-    DISPID_IE9EVENTS_CANPLAYTHROUGH             = 0x000117f7,
-    DISPID_IE9EVENTS_DURATIONCHANGE             = 0x000117f8,
-    DISPID_IE9EVENTS_EMPTIED                    = 0x000117f9,
-    DISPID_IE9EVENTS_ENDED                      = 0x000117fa,
-    DISPID_IE9EVENTS_LOADEDDATA                 = 0x000117fb,
-    DISPID_IE9EVENTS_LOADEDMETADATA             = 0x000117fc,
-    DISPID_IE9EVENTS_LOADSTART                  = 0x000117fd,
-    DISPID_IE9EVENTS_PAUSE                      = 0x000117fe,
-    DISPID_IE9EVENTS_PLAY                       = 0x000117ff,
-    DISPID_IE9EVENTS_PLAYING                    = 0x00011800,
-    DISPID_IE9EVENTS_PROGRESS                   = 0x00011801,
-    DISPID_IE9EVENTS_RATECHANGE                 = 0x00011802,
-    DISPID_IE9EVENTS_SEEKED                     = 0x00011803,
-    DISPID_IE9EVENTS_SEEKING                    = 0x00011804,
-    DISPID_IE9EVENTS_STALLED                    = 0x00011805,
-    DISPID_IE9EVENTS_SUSPEND                    = 0x00011806,
-    DISPID_IE9EVENTS_TIMEUPDATE                 = 0x00011807,
-    DISPID_IE9EVENTS_VOLUMECHANGE               = 0x00011808,
-    DISPID_IE9EVENTS_WAITING                    = 0x00011809,
-    DISPID_IE9EVENTS_BLOCKED                    = 0x0001182e,
-    DISPID_IE9EVENTS_UPGRADENEEDED              = 0x00011836,
-    DISPID_IE9EVENTS_CUECHANGE                  = 0x00011831,
-    DISPID_IE9EVENTS_ENTER                      = 0x00011832,
-    DISPID_IE9EVENTS_EXIT                       = 0x00011833,
-    DISPID_IE9EVENTS_ADDTRACK                   = 0x00011838,
-    DISPID_IE9EVENTS_REMOVETRACK                = 0x00011865,
-    DISPID_IE9EVENTS_MSPOINTERDOWN              = 0x0001180a,
-    DISPID_IE9EVENTS_MSPOINTERMOVE              = 0x0001180b,
-    DISPID_IE9EVENTS_MSPOINTERUP                = 0x0001180c,
-    DISPID_IE9EVENTS_MSPOINTEROVER              = 0x0001180d,
-    DISPID_IE9EVENTS_MSPOINTEROUT               = 0x0001180e,
-    DISPID_IE9EVENTS_MSPOINTERCANCEL            = 0x0001180f,
-    DISPID_IE9EVENTS_MSPOINTERHOVER             = 0x00011810,
-    DISPID_IE9EVENTS_MSLOSTPOINTERCAPTURE       = 0x0001181a,
-    DISPID_IE9EVENTS_MSGOTPOINTERCAPTURE        = 0x0001181b,
-    DISPID_IE9EVENTS_MSPOINTERENTER             = 0x00011859,
-    DISPID_IE9EVENTS_MSPOINTERLEAVE             = 0x0001185a,
-    DISPID_IE9EVENTS_TOUCHSTART                 = 0x00011868,
-    DISPID_IE9EVENTS_TOUCHEND                   = 0x00011869,
-    DISPID_IE9EVENTS_TOUCHMOVE                  = 0x0001186a,
-    DISPID_IE9EVENTS_TOUCHCANCEL                = 0x0001186b,
-    DISPID_IE9EVENTS_MSGESTURESTART             = 0x00011813,
-    DISPID_IE9EVENTS_MSGESTURECHANGE            = 0x00011814,
-    DISPID_IE9EVENTS_MSGESTUREEND               = 0x00011815,
-    DISPID_IE9EVENTS_MSGESTUREHOLD              = 0x00011816,
-    DISPID_IE9EVENTS_MSGESTURETAP               = 0x00011817,
-    DISPID_IE9EVENTS_MSGESTUREDOUBLETAP         = 0x00011818,
-    DISPID_IE9EVENTS_MSINERTIASTART             = 0x00011819,
-    DISPID_IE9EVENTS_MSCONTENTZOOM              = 0x0001181c,
-    DISPID_IE9EVENTS_MSHOLDVISUAL               = 0x0001183a,
-    DISPID_IE9EVENTS_TRANSITIONSTART            = 0x0001181d,
-    DISPID_IE9EVENTS_TRANSITIONEND              = 0x0001181e,
-    DISPID_IE9EVENTS_ANIMATIONSTART             = 0x0001181f,
-    DISPID_IE9EVENTS_ANIMATIONEND               = 0x00011820,
-    DISPID_IE9EVENTS_ANIMATIONITERATION         = 0x00011821,
-    DISPID_IE9EVENTS_MSMANIPULATIONSTATECHANGED = 0x00011822,
+    DISPID_IE9EVENTS_CANPLAY                    = 0x000117f6U,
+    DISPID_IE9EVENTS_CANPLAYTHROUGH             = 0x000117f7U,
+    DISPID_IE9EVENTS_DURATIONCHANGE             = 0x000117f8U,
+    DISPID_IE9EVENTS_EMPTIED                    = 0x000117f9U,
+    DISPID_IE9EVENTS_ENDED                      = 0x000117faU,
+    DISPID_IE9EVENTS_LOADEDDATA                 = 0x000117fbU,
+    DISPID_IE9EVENTS_LOADEDMETADATA             = 0x000117fcU,
+    DISPID_IE9EVENTS_LOADSTART                  = 0x000117fdU,
+    DISPID_IE9EVENTS_PAUSE                      = 0x000117feU,
+    DISPID_IE9EVENTS_PLAY                       = 0x000117ffU,
+    DISPID_IE9EVENTS_PLAYING                    = 0x00011800U,
+    DISPID_IE9EVENTS_PROGRESS                   = 0x00011801U,
+    DISPID_IE9EVENTS_RATECHANGE                 = 0x00011802U,
+    DISPID_IE9EVENTS_SEEKED                     = 0x00011803U,
+    DISPID_IE9EVENTS_SEEKING                    = 0x00011804U,
+    DISPID_IE9EVENTS_STALLED                    = 0x00011805U,
+    DISPID_IE9EVENTS_SUSPEND                    = 0x00011806U,
+    DISPID_IE9EVENTS_TIMEUPDATE                 = 0x00011807U,
+    DISPID_IE9EVENTS_VOLUMECHANGE               = 0x00011808U,
+    DISPID_IE9EVENTS_WAITING                    = 0x00011809U,
+    DISPID_IE9EVENTS_BLOCKED                    = 0x0001182eU,
+    DISPID_IE9EVENTS_UPGRADENEEDED              = 0x00011836U,
+    DISPID_IE9EVENTS_CUECHANGE                  = 0x00011831U,
+    DISPID_IE9EVENTS_ENTER                      = 0x00011832U,
+    DISPID_IE9EVENTS_EXIT                       = 0x00011833U,
+    DISPID_IE9EVENTS_ADDTRACK                   = 0x00011838U,
+    DISPID_IE9EVENTS_REMOVETRACK                = 0x00011865U,
+    DISPID_IE9EVENTS_MSPOINTERDOWN              = 0x0001180aU,
+    DISPID_IE9EVENTS_MSPOINTERMOVE              = 0x0001180bU,
+    DISPID_IE9EVENTS_MSPOINTERUP                = 0x0001180cU,
+    DISPID_IE9EVENTS_MSPOINTEROVER              = 0x0001180dU,
+    DISPID_IE9EVENTS_MSPOINTEROUT               = 0x0001180eU,
+    DISPID_IE9EVENTS_MSPOINTERCANCEL            = 0x0001180fU,
+    DISPID_IE9EVENTS_MSPOINTERHOVER             = 0x00011810U,
+    DISPID_IE9EVENTS_MSLOSTPOINTERCAPTURE       = 0x0001181aU,
+    DISPID_IE9EVENTS_MSGOTPOINTERCAPTURE        = 0x0001181bU,
+    DISPID_IE9EVENTS_MSPOINTERENTER             = 0x00011859U,
+    DISPID_IE9EVENTS_MSPOINTERLEAVE             = 0x0001185aU,
+    DISPID_IE9EVENTS_TOUCHSTART                 = 0x00011868U,
+    DISPID_IE9EVENTS_TOUCHEND                   = 0x00011869U,
+    DISPID_IE9EVENTS_TOUCHMOVE                  = 0x0001186aU,
+    DISPID_IE9EVENTS_TOUCHCANCEL                = 0x0001186bU,
+    DISPID_IE9EVENTS_MSGESTURESTART             = 0x00011813U,
+    DISPID_IE9EVENTS_MSGESTURECHANGE            = 0x00011814U,
+    DISPID_IE9EVENTS_MSGESTUREEND               = 0x00011815U,
+    DISPID_IE9EVENTS_MSGESTUREHOLD              = 0x00011816U,
+    DISPID_IE9EVENTS_MSGESTURETAP               = 0x00011817U,
+    DISPID_IE9EVENTS_MSGESTUREDOUBLETAP         = 0x00011818U,
+    DISPID_IE9EVENTS_MSINERTIASTART             = 0x00011819U,
+    DISPID_IE9EVENTS_MSCONTENTZOOM              = 0x0001181cU,
+    DISPID_IE9EVENTS_MSHOLDVISUAL               = 0x0001183aU,
+    DISPID_IE9EVENTS_TRANSITIONSTART            = 0x0001181dU,
+    DISPID_IE9EVENTS_TRANSITIONEND              = 0x0001181eU,
+    DISPID_IE9EVENTS_ANIMATIONSTART             = 0x0001181fU,
+    DISPID_IE9EVENTS_ANIMATIONEND               = 0x00011820U,
+    DISPID_IE9EVENTS_ANIMATIONITERATION         = 0x00011821U,
+    DISPID_IE9EVENTS_MSMANIPULATIONSTATECHANGED = 0x00011822U,
 }
 
 enum : uint
 {
-    DISPID_IE9EVENTS_CHECKING                                  = 0x00011825,
-    DISPID_IE9EVENTS_NOUPDATE                                  = 0x00011826,
-    DISPID_IE9EVENTS_DOWNLOADING                               = 0x00011827,
-    DISPID_IE9EVENTS_UPDATEREADY                               = 0x00011828,
-    DISPID_IE9EVENTS_CACHED                                    = 0x00011829,
-    DISPID_IE9EVENTS_OBSOLETE                                  = 0x0001182a,
-    DISPID_IE9EVENTS_INVALID                                   = 0x0001182c,
-    DISPID_IE9EVENTS_OPEN                                      = 0x00011823,
-    DISPID_IE9EVENTS_CLOSE                                     = 0x00011824,
-    DISPID_IE9EVENTS_LOADEND                                   = 0x0001182b,
-    DISPID_IE9EVENTS_POPSTATE                                  = 0x00011830,
-    DISPID_IE9EVENTS_VISIBILITYCHANGE                          = 0x00011834,
-    DISPID_IE9EVENTS_MSREGIONUPDATE                            = 0x00011835,
-    DISPID_IE9EVENTS_MSVIDEOFORMATCHANGED                      = 0x00011837,
-    DISPID_IE9EVENTS_MSVIDEOFRAMESTEPCOMPLETED                 = 0x00011839,
-    DISPID_IE9EVENTS_MSVIDEOOPTIMALLAYOUTCHANGED               = 0x0001183b,
-    DISPID_IE9EVENTS_MSFULLSCREENCHANGE                        = 0x0001183c,
-    DISPID_IE9EVENTS_MSFULLSCREENERROR                         = 0x0001183d,
-    DISPID_IE9EVENTS_MSELEMENTRESIZE                           = 0x0001183e,
-    DISPID_IE9EVENTS_SOURCEOPEN                                = 0x0001183f,
-    DISPID_IE9EVENTS_SOURCEENDED                               = 0x00011841,
-    DISPID_IE9EVENTS_SOURCECLOSE                               = 0x00011840,
-    DISPID_IE9EVENTS_ADDSOURCEBUFFER                           = 0x00011842,
-    DISPID_IE9EVENTS_REMOVESOURCEBUFFER                        = 0x00011843,
-    DISPID_IE9EVENTS_UPDATESTART                               = 0x00011856,
-    DISPID_IE9EVENTS_UPDATE                                    = 0x00011857,
-    DISPID_IE9EVENTS_UPDATEEND                                 = 0x00011858,
-    DISPID_IE9EVENTS_MSNEEDKEY                                 = 0x00011844,
-    DISPID_IE9EVENTS_MSKEYMESSAGE                              = 0x00011845,
-    DISPID_IE9EVENTS_MSKEYERROR                                = 0x00011846,
-    DISPID_IE9EVENTS_MSKEYADDED                                = 0x00011847,
-    DISPID_IE9EVENTS_MSWEBVIEWDOMCONTENTLOADED                 = 0x00011848,
-    DISPID_IE9EVENTS_MSWEBVIEWCONTENTLOADING                   = 0x00011849,
-    DISPID_IE9EVENTS_MSWEBVIEWNAVIGATIONSTARTING               = 0x0001184a,
-    DISPID_IE9EVENTS_MSWEBVIEWNAVIGATIONCOMPLETED              = 0x0001184b,
-    DISPID_IE9EVENTS_MSWEBVIEWFRAMEDOMCONTENTLOADED            = 0x0001184c,
-    DISPID_IE9EVENTS_MSWEBVIEWFRAMECONTENTLOADING              = 0x0001184d,
-    DISPID_IE9EVENTS_MSWEBVIEWFRAMENAVIGATIONSTARTING          = 0x0001184e,
-    DISPID_IE9EVENTS_MSWEBVIEWFRAMENAVIGATIONCOMPLETED         = 0x0001184f,
-    DISPID_IE9EVENTS_MSWEBVIEWSCRIPTNOTIFY                     = 0x00011850,
-    DISPID_IE9EVENTS_MSWEBVIEWLONGRUNNINGSCRIPTDETECTED        = 0x00011853,
-    DISPID_IE9EVENTS_MSWEBVIEWUNVIEWABLECONTENTIDENTIFIED      = 0x00011851,
-    DISPID_IE9EVENTS_MSWEBVIEWUNSAFECONTENTWARNINGDISPLAYING   = 0x00011852,
-    DISPID_IE9EVENTS_MSWEBVIEWCONTAINSFULLSCREENELEMENTCHANGED = 0x00011867,
+    DISPID_IE9EVENTS_CHECKING                                  = 0x00011825U,
+    DISPID_IE9EVENTS_NOUPDATE                                  = 0x00011826U,
+    DISPID_IE9EVENTS_DOWNLOADING                               = 0x00011827U,
+    DISPID_IE9EVENTS_UPDATEREADY                               = 0x00011828U,
+    DISPID_IE9EVENTS_CACHED                                    = 0x00011829U,
+    DISPID_IE9EVENTS_OBSOLETE                                  = 0x0001182aU,
+    DISPID_IE9EVENTS_INVALID                                   = 0x0001182cU,
+    DISPID_IE9EVENTS_OPEN                                      = 0x00011823U,
+    DISPID_IE9EVENTS_CLOSE                                     = 0x00011824U,
+    DISPID_IE9EVENTS_LOADEND                                   = 0x0001182bU,
+    DISPID_IE9EVENTS_POPSTATE                                  = 0x00011830U,
+    DISPID_IE9EVENTS_VISIBILITYCHANGE                          = 0x00011834U,
+    DISPID_IE9EVENTS_MSREGIONUPDATE                            = 0x00011835U,
+    DISPID_IE9EVENTS_MSVIDEOFORMATCHANGED                      = 0x00011837U,
+    DISPID_IE9EVENTS_MSVIDEOFRAMESTEPCOMPLETED                 = 0x00011839U,
+    DISPID_IE9EVENTS_MSVIDEOOPTIMALLAYOUTCHANGED               = 0x0001183bU,
+    DISPID_IE9EVENTS_MSFULLSCREENCHANGE                        = 0x0001183cU,
+    DISPID_IE9EVENTS_MSFULLSCREENERROR                         = 0x0001183dU,
+    DISPID_IE9EVENTS_MSELEMENTRESIZE                           = 0x0001183eU,
+    DISPID_IE9EVENTS_SOURCEOPEN                                = 0x0001183fU,
+    DISPID_IE9EVENTS_SOURCEENDED                               = 0x00011841U,
+    DISPID_IE9EVENTS_SOURCECLOSE                               = 0x00011840U,
+    DISPID_IE9EVENTS_ADDSOURCEBUFFER                           = 0x00011842U,
+    DISPID_IE9EVENTS_REMOVESOURCEBUFFER                        = 0x00011843U,
+    DISPID_IE9EVENTS_UPDATESTART                               = 0x00011856U,
+    DISPID_IE9EVENTS_UPDATE                                    = 0x00011857U,
+    DISPID_IE9EVENTS_UPDATEEND                                 = 0x00011858U,
+    DISPID_IE9EVENTS_MSNEEDKEY                                 = 0x00011844U,
+    DISPID_IE9EVENTS_MSKEYMESSAGE                              = 0x00011845U,
+    DISPID_IE9EVENTS_MSKEYERROR                                = 0x00011846U,
+    DISPID_IE9EVENTS_MSKEYADDED                                = 0x00011847U,
+    DISPID_IE9EVENTS_MSWEBVIEWDOMCONTENTLOADED                 = 0x00011848U,
+    DISPID_IE9EVENTS_MSWEBVIEWCONTENTLOADING                   = 0x00011849U,
+    DISPID_IE9EVENTS_MSWEBVIEWNAVIGATIONSTARTING               = 0x0001184aU,
+    DISPID_IE9EVENTS_MSWEBVIEWNAVIGATIONCOMPLETED              = 0x0001184bU,
+    DISPID_IE9EVENTS_MSWEBVIEWFRAMEDOMCONTENTLOADED            = 0x0001184cU,
+    DISPID_IE9EVENTS_MSWEBVIEWFRAMECONTENTLOADING              = 0x0001184dU,
+    DISPID_IE9EVENTS_MSWEBVIEWFRAMENAVIGATIONSTARTING          = 0x0001184eU,
+    DISPID_IE9EVENTS_MSWEBVIEWFRAMENAVIGATIONCOMPLETED         = 0x0001184fU,
+    DISPID_IE9EVENTS_MSWEBVIEWSCRIPTNOTIFY                     = 0x00011850U,
+    DISPID_IE9EVENTS_MSWEBVIEWLONGRUNNINGSCRIPTDETECTED        = 0x00011853U,
+    DISPID_IE9EVENTS_MSWEBVIEWUNVIEWABLECONTENTIDENTIFIED      = 0x00011851U,
+    DISPID_IE9EVENTS_MSWEBVIEWUNSAFECONTENTWARNINGDISPLAYING   = 0x00011852U,
+    DISPID_IE9EVENTS_MSWEBVIEWCONTAINSFULLSCREENELEMENTCHANGED = 0x00011867U,
 }
 
 enum : uint
 {
-    DISPID_IE9EVENTS_WEBGLCONTEXTLOST          = 0x00011854,
-    DISPID_IE9EVENTS_WEBGLCONTEXTRESTORED      = 0x00011855,
-    DISPID_IE9EVENTS_WEBGLCONTEXTCREATIONERROR = 0x00011870,
-    DISPID_IE9EVENTS_MSSITEPINNED              = 0x0001185b,
-    DISPID_IE9EVENTS_MSORIENTATIONCHANGE       = 0x0001185c,
-    DISPID_IE9EVENTS_ORIENTATIONCHANGE         = 0x00011873,
-    DISPID_IE9EVENTS_DEVICEORIENTATION         = 0x0001185d,
-    DISPID_IE9EVENTS_DEVICEMOTION              = 0x0001185e,
-    DISPID_IE9EVENTS_COMPASSNEEDSCALIBRATION   = 0x00011866,
-    DISPID_IE9EVENTS_PAGESHOW                  = 0x0001185f,
-    DISPID_IE9EVENTS_PAGEHIDE                  = 0x00011860,
-    DISPID_IE9EVENTS_MSCANDIDATEWINDOWSHOW     = 0x00011861,
-    DISPID_IE9EVENTS_MSCANDIDATEWINDOWUPDATE   = 0x00011862,
-    DISPID_IE9EVENTS_MSCANDIDATEWINDOWHIDE     = 0x00011863,
+    DISPID_IE9EVENTS_WEBGLCONTEXTLOST          = 0x00011854U,
+    DISPID_IE9EVENTS_WEBGLCONTEXTRESTORED      = 0x00011855U,
+    DISPID_IE9EVENTS_WEBGLCONTEXTCREATIONERROR = 0x00011870U,
+    DISPID_IE9EVENTS_MSSITEPINNED              = 0x0001185bU,
+    DISPID_IE9EVENTS_MSORIENTATIONCHANGE       = 0x0001185cU,
+    DISPID_IE9EVENTS_ORIENTATIONCHANGE         = 0x00011873U,
+    DISPID_IE9EVENTS_DEVICEORIENTATION         = 0x0001185dU,
+    DISPID_IE9EVENTS_DEVICEMOTION              = 0x0001185eU,
+    DISPID_IE9EVENTS_COMPASSNEEDSCALIBRATION   = 0x00011866U,
+    DISPID_IE9EVENTS_PAGESHOW                  = 0x0001185fU,
+    DISPID_IE9EVENTS_PAGEHIDE                  = 0x00011860U,
+    DISPID_IE9EVENTS_MSCANDIDATEWINDOWSHOW     = 0x00011861U,
+    DISPID_IE9EVENTS_MSCANDIDATEWINDOWUPDATE   = 0x00011862U,
+    DISPID_IE9EVENTS_MSCANDIDATEWINDOWHIDE     = 0x00011863U,
 }
 
 enum : uint
 {
-    CONTEXT_MENU_DEFAULT       = 0x00000000,
-    CONTEXT_MENU_IMAGE         = 0x00000001,
-    CONTEXT_MENU_CONTROL       = 0x00000002,
-    CONTEXT_MENU_TABLE         = 0x00000003,
-    CONTEXT_MENU_TEXTSELECT    = 0x00000004,
-    CONTEXT_MENU_ANCHOR        = 0x00000005,
-    CONTEXT_MENU_UNKNOWN       = 0x00000006,
-    CONTEXT_MENU_IMGDYNSRC     = 0x00000007,
-    CONTEXT_MENU_DEBUG         = 0x00000008,
-    CONTEXT_MENU_VSCROLL       = 0x00000009,
-    CONTEXT_MENU_HSCROLL       = 0x0000000a,
-    CONTEXT_MENU_MEDIA         = 0x0000000b,
-    CONTEXT_MENU_ENTITY        = 0x0000000c,
-    CONTEXT_MENU_PDF           = 0x0000000d,
-    CONTEXT_MENU_DISABLEDFLASH = 0x0000000e,
+    CONTEXT_MENU_DEFAULT       = 0x00000000U,
+    CONTEXT_MENU_IMAGE         = 0x00000001U,
+    CONTEXT_MENU_CONTROL       = 0x00000002U,
+    CONTEXT_MENU_TABLE         = 0x00000003U,
+    CONTEXT_MENU_TEXTSELECT    = 0x00000004U,
+    CONTEXT_MENU_ANCHOR        = 0x00000005U,
+    CONTEXT_MENU_UNKNOWN       = 0x00000006U,
+    CONTEXT_MENU_IMGDYNSRC     = 0x00000007U,
+    CONTEXT_MENU_DEBUG         = 0x00000008U,
+    CONTEXT_MENU_VSCROLL       = 0x00000009U,
+    CONTEXT_MENU_HSCROLL       = 0x0000000aU,
+    CONTEXT_MENU_MEDIA         = 0x0000000bU,
+    CONTEXT_MENU_ENTITY        = 0x0000000cU,
+    CONTEXT_MENU_PDF           = 0x0000000dU,
+    CONTEXT_MENU_DISABLEDFLASH = 0x0000000eU,
 }
 
-enum uint MENUEXT_SHOWDIALOG = 0x00000001;
+enum uint MENUEXT_SHOWDIALOG = 0x00000001U;
 
 enum : uint
 {
-    HTMLDLG_NOUI           = 0x00000010,
-    HTMLDLG_MODAL          = 0x00000020,
-    HTMLDLG_MODELESS       = 0x00000040,
-    HTMLDLG_PRINT_TEMPLATE = 0x00000080,
+    HTMLDLG_NOUI           = 0x00000010U,
+    HTMLDLG_MODAL          = 0x00000020U,
+    HTMLDLG_MODELESS       = 0x00000040U,
+    HTMLDLG_PRINT_TEMPLATE = 0x00000080U,
 }
 
 enum : uint
 {
-    HTMLDLG_VERIFY               = 0x00000100,
-    HTMLDLG_ALLOW_UNKNOWN_THREAD = 0x00000200,
+    HTMLDLG_VERIFY               = 0x00000100U,
+    HTMLDLG_ALLOW_UNKNOWN_THREAD = 0x00000200U,
 }
 
-enum uint PRINT_DONTBOTHERUSER = 0x00000001;
-enum uint PRINT_WAITFORCOMPLETION = 0x00000002;
+enum uint PRINT_DONTBOTHERUSER = 0x00000001U;
+enum uint PRINT_WAITFORCOMPLETION = 0x00000002U;
 
 enum : uint
 {
-    CMDID_SCRIPTSITE_URL             = 0x00000000,
-    CMDID_SCRIPTSITE_HTMLDLGTRUST    = 0x00000001,
-    CMDID_SCRIPTSITE_SECSTATE        = 0x00000002,
-    CMDID_SCRIPTSITE_SID             = 0x00000003,
-    CMDID_SCRIPTSITE_TRUSTEDDOC      = 0x00000004,
-    CMDID_SCRIPTSITE_SECURITY_WINDOW = 0x00000005,
-    CMDID_SCRIPTSITE_NAMESPACE       = 0x00000006,
-    CMDID_SCRIPTSITE_IURI            = 0x00000007,
+    CMDID_SCRIPTSITE_URL             = 0x00000000U,
+    CMDID_SCRIPTSITE_HTMLDLGTRUST    = 0x00000001U,
+    CMDID_SCRIPTSITE_SECSTATE        = 0x00000002U,
+    CMDID_SCRIPTSITE_SID             = 0x00000003U,
+    CMDID_SCRIPTSITE_TRUSTEDDOC      = 0x00000004U,
+    CMDID_SCRIPTSITE_SECURITY_WINDOW = 0x00000005U,
+    CMDID_SCRIPTSITE_NAMESPACE       = 0x00000006U,
+    CMDID_SCRIPTSITE_IURI            = 0x00000007U,
 }
 
-enum uint CMDID_HOSTCONTEXT_URL = 0x00000008;
+enum uint CMDID_HOSTCONTEXT_URL = 0x00000008U;
 
 enum : uint
 {
-    CMDID_SCRIPTSITE_ALLOWRECOVERY = 0x00000009,
-    CMDID_SCRIPTSITE_BASEIURI      = 0x0000000a,
+    CMDID_SCRIPTSITE_ALLOWRECOVERY = 0x00000009U,
+    CMDID_SCRIPTSITE_BASEIURI      = 0x0000000aU,
 }
 
 enum const(wchar)* SZ_HTML_CLIENTSITE_OBJECTPARAM = "{d4db6850-5385-11d0-89e9-00a0c90a90ac}";
@@ -11585,39 +11852,39 @@ enum : GUID
 
 enum : uint
 {
-    COOKIEACTION_NONE      = 0x00000000,
-    COOKIEACTION_ACCEPT    = 0x00000001,
-    COOKIEACTION_REJECT    = 0x00000002,
-    COOKIEACTION_DOWNGRADE = 0x00000004,
-    COOKIEACTION_LEASH     = 0x00000008,
-    COOKIEACTION_SUPPRESS  = 0x00000010,
-    COOKIEACTION_READ      = 0x00000020,
+    COOKIEACTION_NONE      = 0x00000000U,
+    COOKIEACTION_ACCEPT    = 0x00000001U,
+    COOKIEACTION_REJECT    = 0x00000002U,
+    COOKIEACTION_DOWNGRADE = 0x00000004U,
+    COOKIEACTION_LEASH     = 0x00000008U,
+    COOKIEACTION_SUPPRESS  = 0x00000010U,
+    COOKIEACTION_READ      = 0x00000020U,
 }
 
 enum : uint
 {
-    PRIVACY_URLISTOPLEVEL         = 0x00010000,
-    PRIVACY_URLHASCOMPACTPOLICY   = 0x00020000,
-    PRIVACY_URLHASPOSTDATA        = 0x00080000,
-    PRIVACY_URLHASPOLICYREFLINK   = 0x00100000,
-    PRIVACY_URLHASPOLICYREFHEADER = 0x00200000,
-    PRIVACY_URLHASP3PHEADER       = 0x00400000,
+    PRIVACY_URLISTOPLEVEL         = 0x00010000U,
+    PRIVACY_URLHASCOMPACTPOLICY   = 0x00020000U,
+    PRIVACY_URLHASPOSTDATA        = 0x00080000U,
+    PRIVACY_URLHASPOLICYREFLINK   = 0x00100000U,
+    PRIVACY_URLHASPOLICYREFHEADER = 0x00200000U,
+    PRIVACY_URLHASP3PHEADER       = 0x00400000U,
 }
 
 enum : uint
 {
-    DEBUGCALLBACKNOTIFICATION_TIMEOUT        = 0x00000001,
-    DEBUGCALLBACKNOTIFICATION_INTERVAL       = 0x00000002,
-    DEBUGCALLBACKNOTIFICATION_IMMEDIATE      = 0x00000004,
-    DEBUGCALLBACKNOTIFICATION_ANIMATIONFRAME = 0x00000008,
-    DEBUGCALLBACKNOTIFICATION_DOMEVENT       = 0x00000010,
+    DEBUGCALLBACKNOTIFICATION_TIMEOUT        = 0x00000001U,
+    DEBUGCALLBACKNOTIFICATION_INTERVAL       = 0x00000002U,
+    DEBUGCALLBACKNOTIFICATION_IMMEDIATE      = 0x00000004U,
+    DEBUGCALLBACKNOTIFICATION_ANIMATIONFRAME = 0x00000008U,
+    DEBUGCALLBACKNOTIFICATION_DOMEVENT       = 0x00000010U,
 }
 
 enum : uint
 {
-    DEBUGDOMEVENTPROPAGATIONSTATUS_DEFAULTCANCELED          = 0x00000001,
-    DEBUGDOMEVENTPROPAGATIONSTATUS_STOPIMMEDIATEPROPAGATION = 0x00000002,
-    DEBUGDOMEVENTPROPAGATIONSTATUS_STOPPROPAGATION          = 0x00000004,
+    DEBUGDOMEVENTPROPAGATIONSTATUS_DEFAULTCANCELED          = 0x00000001U,
+    DEBUGDOMEVENTPROPAGATIONSTATUS_STOPIMMEDIATEPROPAGATION = 0x00000002U,
+    DEBUGDOMEVENTPROPAGATIONSTATUS_STOPPROPAGATION          = 0x00000004U,
 }
 
 // Callbacks
@@ -21550,7 +21817,7 @@ interface DispDOMException : IDispatch
 
 @GUID("3051072d-98b5-11cf-bb82-00aa00bdce0b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-irangeexception))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winsync/nn-winsync-irangeexception
 interface IRangeException : IDispatch
 {
     HRESULT put_code(int v);

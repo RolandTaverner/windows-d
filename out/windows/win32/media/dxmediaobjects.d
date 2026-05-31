@@ -3,16 +3,17 @@
 module windows.win32.media.dxmediaobjects;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, HRESULT, PWSTR;
-public import windows.win32.system.com : IUnknown;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, HRESULT, PWSTR;
+public import windows.win32.system.com.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/ne-mediaobj-_dmo_input_data_buffer_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/ne-mediaobj-_dmo_input_data_buffer_flags
 alias _DMO_INPUT_DATA_BUFFER_FLAGS = int;
 enum : int
 {
@@ -21,7 +22,8 @@ enum : int
     DMO_INPUT_DATA_BUFFERF_TIMELENGTH    = 0x00000004,
     DMO_INPUT_DATA_BUFFERF_DISCONTINUITY = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/ne-mediaobj-_dmo_output_data_buffer_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/ne-mediaobj-_dmo_output_data_buffer_flags
 alias _DMO_OUTPUT_DATA_BUFFER_FLAGS = int;
 enum : int
 {
@@ -31,12 +33,14 @@ enum : int
     DMO_OUTPUT_DATA_BUFFERF_DISCONTINUITY = 0x00000008,
     DMO_OUTPUT_DATA_BUFFERF_INCOMPLETE    = 0x01000000,
 }
+
 alias _DMO_INPUT_STATUS_FLAGS = int;
 enum : int
 {
     DMO_INPUT_STATUSF_ACCEPT_DATA = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/ne-mediaobj-_dmo_input_stream_info_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/ne-mediaobj-_dmo_input_stream_info_flags
 alias _DMO_INPUT_STREAM_INFO_FLAGS = int;
 enum : int
 {
@@ -45,7 +49,8 @@ enum : int
     DMO_INPUT_STREAMF_FIXED_SAMPLE_SIZE        = 0x00000004,
     DMO_INPUT_STREAMF_HOLDS_BUFFERS            = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/ne-mediaobj-_dmo_output_stream_info_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/ne-mediaobj-_dmo_output_stream_info_flags
 alias _DMO_OUTPUT_STREAM_INFO_FLAGS = int;
 enum : int
 {
@@ -55,43 +60,50 @@ enum : int
     DMO_OUTPUT_STREAMF_DISCARDABLE              = 0x00000008,
     DMO_OUTPUT_STREAMF_OPTIONAL                 = 0x00000010,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/ne-mediaobj-_dmo_set_type_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/ne-mediaobj-_dmo_set_type_flags
 alias _DMO_SET_TYPE_FLAGS = int;
 enum : int
 {
     DMO_SET_TYPEF_TEST_ONLY = 0x00000001,
     DMO_SET_TYPEF_CLEAR     = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/ne-mediaobj-_dmo_process_output_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/ne-mediaobj-_dmo_process_output_flags
 alias _DMO_PROCESS_OUTPUT_FLAGS = int;
 enum : int
 {
     DMO_PROCESS_OUTPUT_DISCARD_WHEN_NO_BUFFER = 0x00000001,
 }
+
 alias _DMO_INPLACE_PROCESS_FLAGS = int;
 enum : int
 {
     DMO_INPLACE_NORMAL = 0x00000000,
     DMO_INPLACE_ZERO   = 0x00000001,
 }
+
 alias _DMO_QUALITY_STATUS_FLAGS = int;
 enum : int
 {
     DMO_QUALITY_STATUS_ENABLED = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/ne-mediaobj-_dmo_video_output_stream_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/ne-mediaobj-_dmo_video_output_stream_flags
 alias _DMO_VIDEO_OUTPUT_STREAM_FLAGS = int;
 enum : int
 {
     DMO_VOSF_NEEDS_PREVIOUS_SAMPLE = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmoreg/ne-dmoreg-dmo_register_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmoreg/ne-dmoreg-dmo_register_flags
 alias DMO_REGISTER_FLAGS = int;
 enum : int
 {
     DMO_REGISTERF_IS_KEYED = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmoreg/ne-dmoreg-dmo_enum_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmoreg/ne-dmoreg-dmo_enum_flags
 alias DMO_ENUM_FLAGS = int;
 enum : int
 {
@@ -129,7 +141,7 @@ enum : GUID
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/ns-mediaobj-dmo_media_type))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/ns-mediaobj-dmo_media_type
 struct DMO_MEDIA_TYPE
 {
     GUID     majortype;
@@ -143,7 +155,7 @@ struct DMO_MEDIA_TYPE
     ubyte*   pbFormat;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/ns-mediaobj-dmo_output_data_buffer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/ns-mediaobj-dmo_output_data_buffer
 struct DMO_OUTPUT_DATA_BUFFER
 {
     IMediaBuffer pBuffer;
@@ -152,7 +164,7 @@ struct DMO_OUTPUT_DATA_BUFFER
     long         rtTimelength;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmoreg/ns-dmoreg-dmo_partial_mediatype))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmoreg/ns-dmoreg-dmo_partial_mediatype
 struct DMO_PARTIAL_MEDIATYPE
 {
     GUID type;
@@ -161,52 +173,52 @@ struct DMO_PARTIAL_MEDIATYPE
 
 // Functions
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmoreg/nf-dmoreg-dmoregister))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmoreg/nf-dmoreg-dmoregister
 @DllImport("msdmo.dll")
 HRESULT DMORegister(const(PWSTR) szName, const(GUID)* clsidDMO, const(GUID)* guidCategory, uint dwFlags, 
                     uint cInTypes, const(DMO_PARTIAL_MEDIATYPE)* pInTypes, uint cOutTypes, 
                     const(DMO_PARTIAL_MEDIATYPE)* pOutTypes);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmoreg/nf-dmoreg-dmounregister))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmoreg/nf-dmoreg-dmounregister
 @DllImport("msdmo.dll")
 HRESULT DMOUnregister(const(GUID)* clsidDMO, const(GUID)* guidCategory);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmoreg/nf-dmoreg-dmoenum))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmoreg/nf-dmoreg-dmoenum
 @DllImport("msdmo.dll")
 HRESULT DMOEnum(const(GUID)* guidCategory, uint dwFlags, uint cInTypes, const(DMO_PARTIAL_MEDIATYPE)* pInTypes, 
                 uint cOutTypes, const(DMO_PARTIAL_MEDIATYPE)* pOutTypes, IEnumDMO* ppEnum);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmoreg/nf-dmoreg-dmogettypes))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmoreg/nf-dmoreg-dmogettypes
 @DllImport("msdmo.dll")
 HRESULT DMOGetTypes(const(GUID)* clsidDMO, uint ulInputTypesRequested, uint* pulInputTypesSupplied, 
                     DMO_PARTIAL_MEDIATYPE* pInputTypes, uint ulOutputTypesRequested, uint* pulOutputTypesSupplied, 
                     DMO_PARTIAL_MEDIATYPE* pOutputTypes);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmoreg/nf-dmoreg-dmogetname))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmoreg/nf-dmoreg-dmogetname
 @DllImport("msdmo.dll")
 HRESULT DMOGetName(const(GUID)* clsidDMO, PWSTR szName);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmort/nf-dmort-moinitmediatype))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmort/nf-dmort-moinitmediatype
 @DllImport("msdmo.dll")
 HRESULT MoInitMediaType(DMO_MEDIA_TYPE* pmt, uint cbFormat);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmort/nf-dmort-mofreemediatype))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmort/nf-dmort-mofreemediatype
 @DllImport("msdmo.dll")
 HRESULT MoFreeMediaType(DMO_MEDIA_TYPE* pmt);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmort/nf-dmort-mocopymediatype))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmort/nf-dmort-mocopymediatype
 @DllImport("msdmo.dll")
 HRESULT MoCopyMediaType(DMO_MEDIA_TYPE* pmtDest, const(DMO_MEDIA_TYPE)* pmtSrc);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmort/nf-dmort-mocreatemediatype))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmort/nf-dmort-mocreatemediatype
 @DllImport("msdmo.dll")
 HRESULT MoCreateMediaType(DMO_MEDIA_TYPE** ppmt, uint cbFormat);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmort/nf-dmort-modeletemediatype))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmort/nf-dmort-modeletemediatype
 @DllImport("msdmo.dll")
 HRESULT MoDeleteMediaType(DMO_MEDIA_TYPE* pmt);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dmort/nf-dmort-moduplicatemediatype))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dmort/nf-dmort-moduplicatemediatype
 @DllImport("msdmo.dll")
 HRESULT MoDuplicateMediaType(DMO_MEDIA_TYPE** ppmtDest, const(DMO_MEDIA_TYPE)* pmtSrc);
 
@@ -214,118 +226,118 @@ HRESULT MoDuplicateMediaType(DMO_MEDIA_TYPE** ppmtDest, const(DMO_MEDIA_TYPE)* p
 // Interfaces
 
 @GUID("59eff8b9-938c-4a26-82f2-95cb84cdc837")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nn-mediaobj-imediabuffer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nn-mediaobj-imediabuffer
 interface IMediaBuffer : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediabuffer-setlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediabuffer-setlength
     HRESULT SetLength(uint cbLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediabuffer-getmaxlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediabuffer-getmaxlength
     HRESULT GetMaxLength(uint* pcbMaxLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediabuffer-getbufferandlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediabuffer-getbufferandlength
     HRESULT GetBufferAndLength(ubyte** ppBuffer, uint* pcbLength);
 }
 
 @GUID("d8ad0f58-5494-4102-97c5-ec798e59bcf4")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nn-mediaobj-imediaobject))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nn-mediaobj-imediaobject
 interface IMediaObject : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-getstreamcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-getstreamcount
     HRESULT GetStreamCount(uint* pcInputStreams, uint* pcOutputStreams);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-getinputstreaminfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-getinputstreaminfo
     HRESULT GetInputStreamInfo(uint dwInputStreamIndex, uint* pdwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-getoutputstreaminfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-getoutputstreaminfo
     HRESULT GetOutputStreamInfo(uint dwOutputStreamIndex, uint* pdwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-getinputtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-getinputtype
     HRESULT GetInputType(uint dwInputStreamIndex, uint dwTypeIndex, DMO_MEDIA_TYPE* pmt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-getoutputtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-getoutputtype
     HRESULT GetOutputType(uint dwOutputStreamIndex, uint dwTypeIndex, DMO_MEDIA_TYPE* pmt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-setinputtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-setinputtype
     HRESULT SetInputType(uint dwInputStreamIndex, const(DMO_MEDIA_TYPE)* pmt, uint dwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-setoutputtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-setoutputtype
     HRESULT SetOutputType(uint dwOutputStreamIndex, const(DMO_MEDIA_TYPE)* pmt, uint dwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-getinputcurrenttype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-getinputcurrenttype
     HRESULT GetInputCurrentType(uint dwInputStreamIndex, DMO_MEDIA_TYPE* pmt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-getoutputcurrenttype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-getoutputcurrenttype
     HRESULT GetOutputCurrentType(uint dwOutputStreamIndex, DMO_MEDIA_TYPE* pmt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-getinputsizeinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-getinputsizeinfo
     HRESULT GetInputSizeInfo(uint dwInputStreamIndex, uint* pcbSize, uint* pcbMaxLookahead, uint* pcbAlignment);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-getoutputsizeinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-getoutputsizeinfo
     HRESULT GetOutputSizeInfo(uint dwOutputStreamIndex, uint* pcbSize, uint* pcbAlignment);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-getinputmaxlatency))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-getinputmaxlatency
     HRESULT GetInputMaxLatency(uint dwInputStreamIndex, long* prtMaxLatency);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-setinputmaxlatency))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-setinputmaxlatency
     HRESULT SetInputMaxLatency(uint dwInputStreamIndex, long rtMaxLatency);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-flush))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-flush
     HRESULT Flush();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-discontinuity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-discontinuity
     HRESULT Discontinuity(uint dwInputStreamIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-allocatestreamingresources))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-allocatestreamingresources
     HRESULT AllocateStreamingResources();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-freestreamingresources))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-freestreamingresources
     HRESULT FreeStreamingResources();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-getinputstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-getinputstatus
     HRESULT GetInputStatus(uint dwInputStreamIndex, uint* dwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-processinput))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-processinput
     HRESULT ProcessInput(uint dwInputStreamIndex, IMediaBuffer pBuffer, uint dwFlags, long rtTimestamp, 
                          long rtTimelength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-processoutput))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-processoutput
     HRESULT ProcessOutput(uint dwFlags, uint cOutputBufferCount, DMO_OUTPUT_DATA_BUFFER* pOutputBuffers, 
                           uint* pdwStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-lock))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobject-lock
     HRESULT Lock(int bLock);
 }
 
 @GUID("2c3cd98a-2bfa-4a53-9c27-5249ba64ba0f")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nn-mediaobj-ienumdmo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nn-mediaobj-ienumdmo
 interface IEnumDMO : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-ienumdmo-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-ienumdmo-next
     HRESULT Next(uint cItemsToFetch, GUID* pCLSID, PWSTR* Names, uint* pcItemsFetched);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-ienumdmo-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-ienumdmo-skip
     HRESULT Skip(uint cItemsToSkip);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-ienumdmo-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-ienumdmo-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-ienumdmo-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-ienumdmo-clone
     HRESULT Clone(IEnumDMO* ppEnum);
 }
 
 @GUID("651b9ad0-0fc7-4aa9-9538-d89931010741")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nn-mediaobj-imediaobjectinplace))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nn-mediaobj-imediaobjectinplace
 interface IMediaObjectInPlace : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobjectinplace-process))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobjectinplace-process
     HRESULT Process(uint ulSize, 
                     /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(0)))])*/ubyte* pData, 
                     long refTimeStart, uint dwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobjectinplace-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobjectinplace-clone
     HRESULT Clone(IMediaObjectInPlace* ppMediaObject);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobjectinplace-getlatency))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-imediaobjectinplace-getlatency
     HRESULT GetLatency(long* pLatencyTime);
 }
 
 @GUID("65abea96-cf36-453f-af8a-705e98f16260")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nn-mediaobj-idmoqualitycontrol))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nn-mediaobj-idmoqualitycontrol
 interface IDMOQualityControl : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-idmoqualitycontrol-setnow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-idmoqualitycontrol-setnow
     HRESULT SetNow(long rtNow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-idmoqualitycontrol-setstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-idmoqualitycontrol-setstatus
     HRESULT SetStatus(uint dwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-idmoqualitycontrol-getstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-idmoqualitycontrol-getstatus
     HRESULT GetStatus(uint* pdwFlags);
 }
 
 @GUID("be8f4f4e-5b16-4d29-b350-7f6b5d9298ac")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nn-mediaobj-idmovideooutputoptimizations))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nn-mediaobj-idmovideooutputoptimizations
 interface IDMOVideoOutputOptimizations : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-idmovideooutputoptimizations-queryoperationmodepreferences))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-idmovideooutputoptimizations-queryoperationmodepreferences
     HRESULT QueryOperationModePreferences(uint ulOutputStreamIndex, uint* pdwRequestedCapabilities);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-idmovideooutputoptimizations-setoperationmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-idmovideooutputoptimizations-setoperationmode
     HRESULT SetOperationMode(uint ulOutputStreamIndex, uint dwEnabledFeatures);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-idmovideooutputoptimizations-getcurrentoperationmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-idmovideooutputoptimizations-getcurrentoperationmode
     HRESULT GetCurrentOperationMode(uint ulOutputStreamIndex, uint* pdwEnabledFeatures);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-idmovideooutputoptimizations-getcurrentsamplerequirements))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mediaobj/nf-mediaobj-idmovideooutputoptimizations-getcurrentsamplerequirements
     HRESULT GetCurrentSampleRequirements(uint ulOutputStreamIndex, uint* pdwRequestedFeatures);
 }
 

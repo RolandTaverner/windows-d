@@ -3,20 +3,23 @@
 module windows.win32.system.parentalcontrols;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BSTR, HRESULT, HWND, PWSTR, SYSTEMTIME;
-public import windows.win32.system.com : IUnknown;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BSTR, HRESULT, HWND, PWSTR,
+                                                    SYSTEMTIME;
+public import windows.win32.system.com.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
+
 alias WPCFLAG_OVERRIDE = int;
 enum : int
 {
     WPCFLAG_APPLICATION = 0x00000001,
 }
+
 alias WPCFLAG_RESTRICTION = int;
 enum : int
 {
@@ -29,19 +32,22 @@ enum : int
     WPCFLAG_TIME_ALLOWANCE_RESTRICTED = 0x00000020,
     WPCFLAG_GAMES_RESTRICTED          = 0x00000040,
 }
+
 alias WPCFLAG_WEB_SETTING = int;
 enum : int
 {
     WPCFLAG_WEB_SETTING_NOTBLOCKED       = 0x00000000,
     WPCFLAG_WEB_SETTING_DOWNLOADSBLOCKED = 0x00000001,
 }
+
 alias WPCFLAG_VISIBILITY = int;
 enum : int
 {
     WPCFLAG_WPC_VISIBLE = 0x00000000,
     WPCFLAG_WPC_HIDDEN  = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpcflag_isblocked))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpcflag_isblocked
 alias WPCFLAG_ISBLOCKED = int;
 enum : int
 {
@@ -73,7 +79,8 @@ enum : int
     WPCFLAG_ISBLOCKED_NOACCESS              = 0x01000000,
     WPCFLAG_ISBLOCKED_INTERNALERROR         = 0xffffffff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpcflag_logoff_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpcflag_logoff_type
 alias WPCFLAG_LOGOFF_TYPE = int;
 enum : int
 {
@@ -83,7 +90,8 @@ enum : int
     WPCFLAG_LOGOFF_TYPE_FUS       = 0x00000004,
     WPCFLAG_LOGOFF_TYPE_FORCEDFUS = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpcflag_im_leave))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpcflag_im_leave
 alias WPCFLAG_IM_LEAVE = int;
 enum : int
 {
@@ -91,7 +99,8 @@ enum : int
     WPCFLAG_IM_LEAVE_FORCED           = 0x00000001,
     WPCFLAG_IM_LEAVE_CONVERSATION_END = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpc_args_settingschangeevent))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpc_args_settingschangeevent
 alias WPC_ARGS_SETTINGSCHANGEEVENT = int;
 enum : int
 {
@@ -104,7 +113,8 @@ enum : int
     WPC_ARGS_SETTINGSCHANGEEVENT_OPTIONAL = 0x00000006,
     WPC_ARGS_SETTINGSCHANGEEVENT_CARGS    = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpc_args_saferappblocked))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpc_args_saferappblocked
 alias WPC_ARGS_SAFERAPPBLOCKED = int;
 enum : int
 {
@@ -114,7 +124,8 @@ enum : int
     WPC_ARGS_SAFERAPPBLOCKED_RULEID    = 0x00000003,
     WPC_ARGS_SAFERAPPBLOCKED_CARGS     = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpc_args_emailreceievedevent))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpc_args_emailreceievedevent
 alias WPC_ARGS_EMAILRECEIEVEDEVENT = int;
 enum : int
 {
@@ -131,7 +142,8 @@ enum : int
     WPC_ARGS_EMAILRECEIEVEDEVENT_EMAILACCOUNT   = 0x0000000a,
     WPC_ARGS_EMAILRECEIEVEDEVENT_CARGS          = 0x0000000b,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpc_args_emailsentevent))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpc_args_emailsentevent
 alias WPC_ARGS_EMAILSENTEVENT = int;
 enum : int
 {
@@ -147,7 +159,8 @@ enum : int
     WPC_ARGS_EMAILSENTEVENT_EMAILACCOUNT   = 0x00000009,
     WPC_ARGS_EMAILSENTEVENT_CARGS          = 0x0000000a,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpc_args_emailcontactevent))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpc_args_emailcontactevent
 alias WPC_ARGS_EMAILCONTACTEVENT = int;
 enum : int
 {
@@ -161,7 +174,8 @@ enum : int
     WPC_ARGS_EMAILCONTACTEVENT_EMAILACCOUNT = 0x00000007,
     WPC_ARGS_EMAILCONTACTEVENT_CARGS        = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpc_media_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpc_media_type
 alias WPC_MEDIA_TYPE = int;
 enum : int
 {
@@ -174,7 +188,8 @@ enum : int
     WPC_MEDIA_TYPE_PICTURE_FILE = 0x00000006,
     WPC_MEDIA_TYPE_MAX          = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpc_media_explicit))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpc_media_explicit
 alias WPC_MEDIA_EXPLICIT = int;
 enum : int
 {
@@ -182,7 +197,8 @@ enum : int
     WPC_MEDIA_EXPLICIT_TRUE    = 0x00000001,
     WPC_MEDIA_EXPLICIT_UNKNOWN = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpc_args_mediaplaybackevent))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpc_args_mediaplaybackevent
 alias WPC_ARGS_MEDIAPLAYBACKEVENT = int;
 enum : int
 {
@@ -197,7 +213,8 @@ enum : int
     WPC_ARGS_MEDIAPLAYBACKEVENT_REASON     = 0x00000008,
     WPC_ARGS_MEDIAPLAYBACKEVENT_CARGS      = 0x00000009,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpc_args_mediadownloadevent))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpc_args_mediadownloadevent
 alias WPC_ARGS_MEDIADOWNLOADEVENT = int;
 enum : int
 {
@@ -212,7 +229,8 @@ enum : int
     WPC_ARGS_MEDIADOWNLOADEVENT_REASON     = 0x00000008,
     WPC_ARGS_MEDIADOWNLOADEVENT_CARGS      = 0x00000009,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpc_args_conversationinitevent))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpc_args_conversationinitevent
 alias WPC_ARGS_CONVERSATIONINITEVENT = int;
 enum : int
 {
@@ -227,7 +245,8 @@ enum : int
     WPC_ARGS_CONVERSATIONINITEVENT_RECIPIENT    = 0x00000008,
     WPC_ARGS_CONVERSATIONINITEVENT_CARGS        = 0x00000009,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpc_args_conversationjoinevent))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpc_args_conversationjoinevent
 alias WPC_ARGS_CONVERSATIONJOINEVENT = int;
 enum : int
 {
@@ -243,7 +262,8 @@ enum : int
     WPC_ARGS_CONVERSATIONJOINEVENT_SENDER      = 0x00000009,
     WPC_ARGS_CONVERSATIONJOINEVENT_CARGS       = 0x0000000a,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpc_args_conversationleaveevent))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpc_args_conversationleaveevent
 alias WPC_ARGS_CONVERSATIONLEAVEEVENT = int;
 enum : int
 {
@@ -259,7 +279,8 @@ enum : int
     WPC_ARGS_CONVERSATIONLEAVEEVENT_FLAGS       = 0x00000009,
     WPC_ARGS_CONVERSATIONLEAVEEVENT_CARGS       = 0x0000000a,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpcflag_im_feature))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpcflag_im_feature
 alias WPCFLAG_IM_FEATURE = int;
 enum : int
 {
@@ -273,7 +294,8 @@ enum : int
     WPCFLAG_IM_FEATURE_SENDING  = 0x80000000,
     WPCFLAG_IM_FEATURE_ALL      = 0xffffffff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpc_args_imfeatureevent))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpc_args_imfeatureevent
 alias WPC_ARGS_IMFEATUREEVENT = int;
 enum : int
 {
@@ -290,7 +312,8 @@ enum : int
     WPC_ARGS_IMFEATUREEVENT_DATA        = 0x0000000a,
     WPC_ARGS_IMFEATUREEVENT_CARGS       = 0x0000000b,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpc_args_imcontactevent))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpc_args_imcontactevent
 alias WPC_ARGS_IMCONTACTEVENT = int;
 enum : int
 {
@@ -304,7 +327,8 @@ enum : int
     WPC_ARGS_IMCONTACTEVENT_REASON      = 0x00000007,
     WPC_ARGS_IMCONTACTEVENT_CARGS       = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpc_args_gamestartevent))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpc_args_gamestartevent
 alias WPC_ARGS_GAMESTARTEVENT = int;
 enum : int
 {
@@ -320,7 +344,8 @@ enum : int
     WPC_ARGS_GAMESTARTEVENT_PID          = 0x00000009,
     WPC_ARGS_GAMESTARTEVENT_CARGS        = 0x0000000a,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpc_args_filedownloadevent))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpc_args_filedownloadevent
 alias WPC_ARGS_FILEDOWNLOADEVENT = int;
 enum : int
 {
@@ -331,7 +356,8 @@ enum : int
     WPC_ARGS_FILEDOWNLOADEVENT_PATH    = 0x00000004,
     WPC_ARGS_FILEDOWNLOADEVENT_CARGS   = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpc_args_urlvisitevent))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpc_args_urlvisitevent
 alias WPC_ARGS_URLVISITEVENT = int;
 enum : int
 {
@@ -344,6 +370,7 @@ enum : int
     WPC_ARGS_URLVISITEVENT_CATEGORY       = 0x00000006,
     WPC_ARGS_URLVISITEVENT_CARGS          = 0x00000007,
 }
+
 alias WPC_ARGS_WEBSITEVISITEVENT = int;
 enum : int
 {
@@ -358,6 +385,7 @@ enum : int
     WPC_ARGS_WEBSITEVISITEVENT_TELEMETRY             = 0x00000008,
     WPC_ARGS_WEBSITEVISITEVENT_CARGS                 = 0x00000009,
 }
+
 alias WPC_ARGS_APPLICATIONEVENT = int;
 enum : int
 {
@@ -368,6 +396,7 @@ enum : int
     WPC_ARGS_APPLICATIONEVENT_TIMEUSED              = 0x00000004,
     WPC_ARGS_APPLICATIONEVENT_CARGS                 = 0x00000005,
 }
+
 alias WPC_ARGS_COMPUTERUSAGEEVENT = int;
 enum : int
 {
@@ -375,6 +404,7 @@ enum : int
     WPC_ARGS_COMPUTERUSAGEEVENT_TIMEUSED = 0x00000001,
     WPC_ARGS_COMPUTERUSAGEEVENT_CARGS    = 0x00000002,
 }
+
 alias WPC_ARGS_CONTENTUSAGEEVENT = int;
 enum : int
 {
@@ -387,7 +417,8 @@ enum : int
     WPC_ARGS_CONTENTUSAGEEVENT_DECISION             = 0x00000006,
     WPC_ARGS_CONTENTUSAGEEVENT_CARGS                = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpc_args_customevent))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcevent/ne-wpcevent-wpc_args_customevent
 alias WPC_ARGS_CUSTOMEVENT = int;
 enum : int
 {
@@ -402,6 +433,7 @@ enum : int
     WPC_ARGS_CUSTOMEVENT_REASON     = 0x00000008,
     WPC_ARGS_CUSTOMEVENT_CARGS      = 0x00000009,
 }
+
 alias WPC_ARGS_WEBOVERRIDEEVENT = int;
 enum : int
 {
@@ -410,6 +442,7 @@ enum : int
     WPC_ARGS_WEBOVERRIDEEVENT_REASON = 0x00000002,
     WPC_ARGS_WEBOVERRIDEEVENT_CARGS  = 0x00000003,
 }
+
 alias WPC_ARGS_APPOVERRIDEEVENT = int;
 enum : int
 {
@@ -418,6 +451,7 @@ enum : int
     WPC_ARGS_APPOVERRIDEEVENT_REASON = 0x00000002,
     WPC_ARGS_APPOVERRIDEEVENT_CARGS  = 0x00000003,
 }
+
 alias WPC_SETTINGS = int;
 enum : int
 {
@@ -464,91 +498,91 @@ enum : int
 // Constants
 
 
-enum uint ARRAY_SEP_CHAR = 0x00000009;
-enum uint WPCCHANNEL = 0x00000010;
+enum uint ARRAY_SEP_CHAR = 0x00000009U;
+enum uint WPCCHANNEL = 0x00000010U;
 
 enum : uint
 {
-    WPC_SETTINGS_LOCATE = 0x00000014,
-    WPC_SETTINGS_MODIFY = 0x00000015,
+    WPC_SETTINGS_LOCATE = 0x00000014U,
+    WPC_SETTINGS_MODIFY = 0x00000015U,
 }
 
-enum uint WPC_APP_LAUNCH = 0x00000016;
-enum uint WPC_SYSTEM = 0x00000017;
+enum uint WPC_APP_LAUNCH = 0x00000016U;
+enum uint WPC_SYSTEM = 0x00000017U;
 
 enum : uint
 {
-    WPC_WEB                    = 0x00000018,
-    WPCPROV_TASK_SettingChange = 0x00000001,
-    WPCPROV_TASK_GameStart     = 0x00000002,
-    WPCPROV_TASK_UrlVisit      = 0x00000003,
-    WPCPROV_TASK_EmailReceived = 0x00000004,
-    WPCPROV_TASK_EmailSent     = 0x00000005,
-    WPCPROV_TASK_MediaPlayback = 0x00000006,
-    WPCPROV_TASK_IMInvitation  = 0x00000007,
-    WPCPROV_TASK_IMJoin        = 0x00000008,
-    WPCPROV_TASK_IMLeave       = 0x00000009,
-    WPCPROV_TASK_FileDownload  = 0x0000000a,
-    WPCPROV_TASK_IMFeature     = 0x0000000b,
-    WPCPROV_TASK_Custom        = 0x0000000d,
-    WPCPROV_TASK_EmailContact  = 0x0000000e,
-    WPCPROV_TASK_IMContact     = 0x0000000f,
-    WPCPROV_TASK_AppBlocked    = 0x00000010,
-    WPCPROV_TASK_AppOverride   = 0x00000011,
-    WPCPROV_TASK_WebOverride   = 0x00000012,
-    WPCPROV_TASK_WebsiteVisit  = 0x00000013,
-    WPCPROV_TASK_Application   = 0x00000014,
-    WPCPROV_TASK_ComputerUsage = 0x00000015,
-    WPCPROV_TASK_ContentUsage  = 0x00000016,
+    WPC_WEB                    = 0x00000018U,
+    WPCPROV_TASK_SettingChange = 0x00000001U,
+    WPCPROV_TASK_GameStart     = 0x00000002U,
+    WPCPROV_TASK_UrlVisit      = 0x00000003U,
+    WPCPROV_TASK_EmailReceived = 0x00000004U,
+    WPCPROV_TASK_EmailSent     = 0x00000005U,
+    WPCPROV_TASK_MediaPlayback = 0x00000006U,
+    WPCPROV_TASK_IMInvitation  = 0x00000007U,
+    WPCPROV_TASK_IMJoin        = 0x00000008U,
+    WPCPROV_TASK_IMLeave       = 0x00000009U,
+    WPCPROV_TASK_FileDownload  = 0x0000000aU,
+    WPCPROV_TASK_IMFeature     = 0x0000000bU,
+    WPCPROV_TASK_Custom        = 0x0000000dU,
+    WPCPROV_TASK_EmailContact  = 0x0000000eU,
+    WPCPROV_TASK_IMContact     = 0x0000000fU,
+    WPCPROV_TASK_AppBlocked    = 0x00000010U,
+    WPCPROV_TASK_AppOverride   = 0x00000011U,
+    WPCPROV_TASK_WebOverride   = 0x00000012U,
+    WPCPROV_TASK_WebsiteVisit  = 0x00000013U,
+    WPCPROV_TASK_Application   = 0x00000014U,
+    WPCPROV_TASK_ComputerUsage = 0x00000015U,
+    WPCPROV_TASK_ContentUsage  = 0x00000016U,
 }
 
 enum : uint
 {
-    WPCPROV_KEYWORD_WPC        = 0x00000010,
-    WPCPROV_KEYWORD_ThirdParty = 0x00000020,
+    WPCPROV_KEYWORD_WPC        = 0x00000010U,
+    WPCPROV_KEYWORD_ThirdParty = 0x00000020U,
 }
 
-enum uint WPCEVENT_SYS_SETTINGCHANGE_value = 0x00000001;
-enum uint WPCEVENT_GAME_START_value = 0x00000002;
-enum uint WPCEVENT_WEB_URLVISIT_value = 0x00000003;
+enum uint WPCEVENT_SYS_SETTINGCHANGE_value = 0x00000001U;
+enum uint WPCEVENT_GAME_START_value = 0x00000002U;
+enum uint WPCEVENT_WEB_URLVISIT_value = 0x00000003U;
 
 enum : uint
 {
-    WPCEVENT_EMAIL_RECEIVED_value = 0x00000004,
-    WPCEVENT_EMAIL_SENT_value     = 0x00000005,
+    WPCEVENT_EMAIL_RECEIVED_value = 0x00000004U,
+    WPCEVENT_EMAIL_SENT_value     = 0x00000005U,
 }
 
-enum uint WPCEVENT_MEDIA_PLAYBACK_value = 0x00000006;
+enum uint WPCEVENT_MEDIA_PLAYBACK_value = 0x00000006U;
 
 enum : uint
 {
-    WPCEVENT_IM_INVITATION_value = 0x00000007,
-    WPCEVENT_IM_JOIN_value       = 0x00000008,
-    WPCEVENT_IM_LEAVE_value      = 0x00000009,
+    WPCEVENT_IM_INVITATION_value = 0x00000007U,
+    WPCEVENT_IM_JOIN_value       = 0x00000008U,
+    WPCEVENT_IM_LEAVE_value      = 0x00000009U,
 }
 
-enum uint WPCEVENT_WEB_FILEDOWNLOAD_value = 0x0000000a;
-enum uint WPCEVENT_IM_FEATURE_value = 0x0000000b;
+enum uint WPCEVENT_WEB_FILEDOWNLOAD_value = 0x0000000aU;
+enum uint WPCEVENT_IM_FEATURE_value = 0x0000000bU;
 
 enum : uint
 {
-    WPCEVENT_CUSTOM_value        = 0x0000000d,
-    WPCEVENT_EMAIL_CONTACT_value = 0x0000000e,
+    WPCEVENT_CUSTOM_value        = 0x0000000dU,
+    WPCEVENT_EMAIL_CONTACT_value = 0x0000000eU,
 }
 
-enum uint WPCEVENT_IM_CONTACT_value = 0x0000000f;
-enum uint WPCEVENT_SYSTEM_APPBLOCKED_value = 0x00000010;
-enum uint WPCEVENT_APPOVERRIDE_value = 0x00000011;
+enum uint WPCEVENT_IM_CONTACT_value = 0x0000000fU;
+enum uint WPCEVENT_SYSTEM_APPBLOCKED_value = 0x00000010U;
+enum uint WPCEVENT_APPOVERRIDE_value = 0x00000011U;
 
 enum : uint
 {
-    WPCEVENT_WEBOVERRIDE_value      = 0x00000012,
-    WPCEVENT_WEB_WEBSITEVISIT_value = 0x00000013,
+    WPCEVENT_WEBOVERRIDE_value      = 0x00000012U,
+    WPCEVENT_WEB_WEBSITEVISIT_value = 0x00000013U,
 }
 
-enum uint WPCEVENT_APPLICATION_value = 0x00000014;
-enum uint WPCEVENT_COMPUTERUSAGE_value = 0x00000015;
-enum uint WPCEVENT_CONTENTUSAGE_value = 0x00000016;
+enum uint WPCEVENT_APPLICATION_value = 0x00000014U;
+enum uint WPCEVENT_COMPUTERUSAGE_value = 0x00000015U;
+enum uint WPCEVENT_CONTENTUSAGE_value = 0x00000016U;
 
 enum : int
 {
@@ -617,7 +651,7 @@ enum : int
     MSG_Event_ContentUsage  = 0xb0000016,
 }
 
-enum uint FACILITY_WPC = 0x00000999;
+enum uint FACILITY_WPC = 0x00000999U;
 enum GUID WPCPROV = GUID("01090065-b467-4503-9b28-533766761087");
 
 // Interfaces
@@ -633,93 +667,93 @@ struct WindowsParentalControls;
 
 @GUID("50b6a267-c4bd-450b-adb5-759073837c9e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcapi/nn-wpcapi-iwpcproviderstate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nn-wpcapi-iwpcproviderstate
 interface IWPCProviderState : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwpcproviderstate-enable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwpcproviderstate-enable
     HRESULT Enable();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwpcproviderstate-disable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwpcproviderstate-disable
     HRESULT Disable();
 }
 
 @GUID("bef54196-2d02-4a26-b6e5-d65af295d0f1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcapi/nn-wpcapi-iwpcproviderconfig))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nn-wpcapi-iwpcproviderconfig
 interface IWPCProviderConfig : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwpcproviderconfig-getusersummary))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwpcproviderconfig-getusersummary
     HRESULT GetUserSummary(BSTR bstrSID, BSTR* pbstrUserSummary);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwpcproviderconfig-configure))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwpcproviderconfig-configure
     HRESULT Configure(HWND hWnd, BSTR bstrSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwpcproviderconfig-requestoverride))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwpcproviderconfig-requestoverride
     HRESULT RequestOverride(HWND hWnd, BSTR bstrPath, 
                             /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(WPCFLAG_RESTRICTION))], [])*/uint dwFlags);
 }
 
 @GUID("8fdf6ca1-0189-47e4-b670-1a8a4636e340")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcapi/nn-wpcapi-iwpcsettings))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nn-wpcapi-iwpcsettings
 interface IWPCSettings : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwpcsettings-isloggingrequired))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwpcsettings-isloggingrequired
     HRESULT IsLoggingRequired(BOOL* pfRequired);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwpcsettings-getlastsettingschangetime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwpcsettings-getlastsettingschangetime
     HRESULT GetLastSettingsChangeTime(SYSTEMTIME* pTime);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwpcsettings-getrestrictions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwpcsettings-getrestrictions
     HRESULT GetRestrictions(WPCFLAG_RESTRICTION* pdwRestrictions);
 }
 
 @GUID("95e87780-e158-489e-b452-bbb850790715")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcapi/nn-wpcapi-iwpcgamessettings))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nn-wpcapi-iwpcgamessettings
 interface IWPCGamesSettings : IWPCSettings
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwpcgamessettings-isblocked))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwpcgamessettings-isblocked
     HRESULT IsBlocked(GUID guidAppID, uint* pdwReasons);
 }
 
 @GUID("ffccbdb8-0992-4c30-b0f1-1cbb09c240aa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcapi/nn-wpcapi-iwpcwebsettings))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nn-wpcapi-iwpcwebsettings
 interface IWPCWebSettings : IWPCSettings
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwpcwebsettings-getsettings))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwpcwebsettings-getsettings
     HRESULT GetSettings(WPCFLAG_WEB_SETTING* pdwSettings);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwpcwebsettings-requesturloverride))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwpcwebsettings-requesturloverride
     HRESULT RequestURLOverride(HWND hWnd, const(PWSTR) pcszURL, uint cURLs, const(PWSTR)* ppcszSubURLs, 
                                BOOL* pfChanged);
 }
 
 @GUID("4ff40a0f-3f3b-4d7c-a41b-4f39d7b44d05")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcapi/nn-wpcapi-iwindowsparentalcontrolscore))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nn-wpcapi-iwindowsparentalcontrolscore
 interface IWindowsParentalControlsCore : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwindowsparentalcontrolscore-getvisibility))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwindowsparentalcontrolscore-getvisibility
     HRESULT GetVisibility(WPCFLAG_VISIBILITY* peVisibility);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwindowsparentalcontrolscore-getusersettings))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwindowsparentalcontrolscore-getusersettings
     HRESULT GetUserSettings(const(PWSTR) pcszSID, IWPCSettings* ppSettings);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwindowsparentalcontrolscore-getwebsettings))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwindowsparentalcontrolscore-getwebsettings
     HRESULT GetWebSettings(const(PWSTR) pcszSID, IWPCWebSettings* ppSettings);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwindowsparentalcontrolscore-getwebfilterinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwindowsparentalcontrolscore-getwebfilterinfo
     HRESULT GetWebFilterInfo(GUID* pguidID, PWSTR* ppszName);
 }
 
 @GUID("28b4d88b-e072-49e6-804d-26edbe21a7b9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcapi/nn-wpcapi-iwindowsparentalcontrols))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nn-wpcapi-iwindowsparentalcontrols
 interface IWindowsParentalControls : IWindowsParentalControlsCore
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwindowsparentalcontrols-getgamessettings))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwindowsparentalcontrols-getgamessettings
     HRESULT GetGamesSettings(const(PWSTR) pcszSID, IWPCGamesSettings* ppSettings);
 }
 
 @GUID("41eba572-23ed-4779-bec1-8df96206c44c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcapi/nn-wpcapi-iwpcprovidersupport))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nn-wpcapi-iwpcprovidersupport
 interface IWPCProviderSupport : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwpcprovidersupport-getcurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wpcapi/nf-wpcapi-iwpcprovidersupport-getcurrent
     HRESULT GetCurrent(GUID* pguidProvider);
 }
 

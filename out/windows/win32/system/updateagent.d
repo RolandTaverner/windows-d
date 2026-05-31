@@ -3,9 +3,9 @@
 module windows.win32.system.updateagent;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BSTR, DECIMAL, HRESULT, HWND, VARIANT_BOOL;
-public import windows.win32.system.com : IDispatch, IUnknown;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BSTR, DECIMAL, HRESULT, HWND, VARIANT_BOOL;
+public import windows.win32.system.com.com : IDispatch, IUnknown;
 public import windows.win32.system.variant : VARIANT;
 
 extern(Windows) @nogc nothrow:
@@ -13,7 +13,8 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-automaticupdatesnotificationlevel))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-automaticupdatesnotificationlevel
 enum AutomaticUpdatesNotificationLevel : int
 {
     aunlNotConfigured            = 0x00000000,
@@ -22,7 +23,8 @@ enum AutomaticUpdatesNotificationLevel : int
     aunlNotifyBeforeInstallation = 0x00000003,
     aunlScheduledInstallation    = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-automaticupdatesscheduledinstallationday))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-automaticupdatesscheduledinstallationday
 enum AutomaticUpdatesScheduledInstallationDay : int
 {
     ausidEveryDay       = 0x00000000,
@@ -34,14 +36,16 @@ enum AutomaticUpdatesScheduledInstallationDay : int
     ausidEveryFriday    = 0x00000006,
     ausidEverySaturday  = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-downloadphase))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-downloadphase
 enum DownloadPhase : int
 {
     dphInitializing = 0x00000001,
     dphDownloading  = 0x00000002,
     dphVerifying    = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-downloadpriority))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-downloadpriority
 enum DownloadPriority : int
 {
     dpLow       = 0x00000001,
@@ -49,7 +53,8 @@ enum DownloadPriority : int
     dpHigh      = 0x00000003,
     dpExtraHigh = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-autoselectionmode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-autoselectionmode
 enum AutoSelectionMode : int
 {
     asLetWindowsUpdateDecide = 0x00000000,
@@ -57,28 +62,32 @@ enum AutoSelectionMode : int
     asNeverAutoSelect        = 0x00000002,
     asAlwaysAutoSelect       = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-autodownloadmode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-autodownloadmode
 enum AutoDownloadMode : int
 {
     adLetWindowsUpdateDecide = 0x00000000,
     adNeverAutoDownload      = 0x00000001,
     adAlwaysAutoDownload     = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-installationimpact))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-installationimpact
 enum InstallationImpact : int
 {
     iiNormal                    = 0x00000000,
     iiMinor                     = 0x00000001,
     iiRequiresExclusiveHandling = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-installationrebootbehavior))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-installationrebootbehavior
 enum InstallationRebootBehavior : int
 {
     irbNeverReboots         = 0x00000000,
     irbAlwaysRequiresReboot = 0x00000001,
     irbCanRequestReboot     = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-operationresultcode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-operationresultcode
 enum OperationResultCode : int
 {
     orcNotStarted          = 0x00000000,
@@ -88,7 +97,8 @@ enum OperationResultCode : int
     orcFailed              = 0x00000004,
     orcAborted             = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapicommon/ne-wuapicommon-serverselection))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapicommon/ne-wuapicommon-serverselection
 enum ServerSelection : int
 {
     ssDefault       = 0x00000000,
@@ -96,19 +106,22 @@ enum ServerSelection : int
     ssWindowsUpdate = 0x00000002,
     ssOthers        = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-updatetype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-updatetype
 enum UpdateType : int
 {
     utSoftware = 0x00000001,
     utDriver   = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-updateoperation))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-updateoperation
 enum UpdateOperation : int
 {
     uoInstallation   = 0x00000001,
     uoUninstallation = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-deploymentaction))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-deploymentaction
 enum DeploymentAction : int
 {
     daNone                 = 0x00000000,
@@ -117,7 +130,8 @@ enum DeploymentAction : int
     daDetection            = 0x00000003,
     daOptionalInstallation = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-updateexceptioncontext))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-updateexceptioncontext
 enum UpdateExceptionContext : int
 {
     uecGeneral          = 0x00000001,
@@ -125,13 +139,15 @@ enum UpdateExceptionContext : int
     uecWindowsInstaller = 0x00000003,
     uecSearchIncomplete = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-automaticupdatesusertype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-automaticupdatesusertype
 enum AutomaticUpdatesUserType : int
 {
     auutCurrentUser        = 0x00000001,
     auutLocalAdministrator = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-automaticupdatespermissiontype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-automaticupdatespermissiontype
 enum AutomaticUpdatesPermissionType : int
 {
     auptSetNotificationLevel         = 0x00000001,
@@ -140,14 +156,16 @@ enum AutomaticUpdatesPermissionType : int
     auptSetFeaturedUpdatesEnabled    = 0x00000004,
     auptSetNonAdministratorsElevated = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-updateserviceregistrationstate))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-updateserviceregistrationstate
 enum UpdateServiceRegistrationState : int
 {
     usrsNotRegistered       = 0x00000001,
     usrsRegistrationPending = 0x00000002,
     usrsRegistered          = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-searchscope))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-searchscope
 enum SearchScope : int
 {
     searchScopeDefault               = 0x00000000,
@@ -157,24 +175,28 @@ enum SearchScope : int
     searchScopeMachineAndAllUsers    = 0x00000004,
     searchScopeAllUsers              = 0x00000005,
 }
+
 enum DownloadType : int
 {
     downloadTypeFull               = 0x00000000,
     downloadTypeUpdateBootstrapper = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-updatelockdownoption))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-updatelockdownoption
 enum UpdateLockdownOption : int
 {
     uloForWebsiteAccess = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-addserviceflag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-addserviceflag
 enum AddServiceFlag : int
 {
     asfAllowPendingRegistration = 0x00000001,
     asfAllowOnlineRegistration  = 0x00000002,
     asfRegisterServiceWithAU    = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-updateserviceoption))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/ne-wuapi-updateserviceoption
 enum UpdateServiceOption : int
 {
     usoNonVolatileService = 0x00000001,
@@ -184,7 +206,7 @@ enum UpdateServiceOption : int
 
 
 enum GUID LIBID_WUApiLib = GUID("b596cc9f-56e5-419e-a622-e01bb457431e");
-enum uint UPDATE_LOCKDOWN_WEBSITE_ACCESS = 0x00000001;
+enum uint UPDATE_LOCKDOWN_WEBSITE_ACCESS = 0x00000001U;
 
 enum : HRESULT
 {
@@ -1008,463 +1030,463 @@ struct InstallationAgent;
 
 @GUID("a976c28d-75a1-42aa-94ae-8af8b872089a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatelockdown))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatelockdown
 interface IUpdateLockdown : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatelockdown-lockdown))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatelockdown-lockdown
     HRESULT LockDown(int flags);
 }
 
 @GUID("eff90582-2ddc-480f-a06d-60f3fbc362c3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-istringcollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-istringcollection
 interface IStringCollection : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-istringcollection-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-istringcollection-get_item
     HRESULT get_Item(int index, BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-istringcollection-put_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-istringcollection-put_item
     HRESULT put_Item(int index, BSTR value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-istringcollection-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-istringcollection-get__newenum
     HRESULT get__NewEnum(IUnknown* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-istringcollection-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-istringcollection-get_count
     HRESULT get_Count(int* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-istringcollection-get_readonly))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-istringcollection-get_readonly
     HRESULT get_ReadOnly(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-istringcollection-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-istringcollection-add
     HRESULT Add(BSTR value, int* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-istringcollection-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-istringcollection-clear
     HRESULT Clear();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-istringcollection-copy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-istringcollection-copy
     HRESULT Copy(IStringCollection* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-istringcollection-insert))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-istringcollection-insert
     HRESULT Insert(int index, BSTR value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-istringcollection-removeat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-istringcollection-removeat
     HRESULT RemoveAt(int index);
 }
 
 @GUID("174c81fe-aecd-4dae-b8a0-2c6318dd86a8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iwebproxy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iwebproxy
 interface IWebProxy : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwebproxy-get_address))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwebproxy-get_address
     HRESULT get_Address(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwebproxy-put_address))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwebproxy-put_address
     HRESULT put_Address(BSTR value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwebproxy-get_bypasslist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwebproxy-get_bypasslist
     HRESULT get_BypassList(IStringCollection* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwebproxy-put_bypasslist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwebproxy-put_bypasslist
     HRESULT put_BypassList(IStringCollection value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwebproxy-get_bypassproxyonlocal))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwebproxy-get_bypassproxyonlocal
     HRESULT get_BypassProxyOnLocal(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwebproxy-put_bypassproxyonlocal))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwebproxy-put_bypassproxyonlocal
     HRESULT put_BypassProxyOnLocal(VARIANT_BOOL value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwebproxy-get_readonly))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwebproxy-get_readonly
     HRESULT get_ReadOnly(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwebproxy-get_username))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwebproxy-get_username
     HRESULT get_UserName(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwebproxy-put_username))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwebproxy-put_username
     HRESULT put_UserName(BSTR value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwebproxy-setpassword))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwebproxy-setpassword
     HRESULT SetPassword(BSTR value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwebproxy-promptforcredentials))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwebproxy-promptforcredentials
     HRESULT PromptForCredentials(IUnknown parentWindow, BSTR title);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwebproxy-promptforcredentialsfromhwnd))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwebproxy-promptforcredentialsfromhwnd
     HRESULT PromptForCredentialsFromHwnd(HWND parentWindow, BSTR title);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwebproxy-get_autodetect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwebproxy-get_autodetect
     HRESULT get_AutoDetect(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwebproxy-put_autodetect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwebproxy-put_autodetect
     HRESULT put_AutoDetect(VARIANT_BOOL value);
 }
 
 @GUID("ade87bf7-7b56-4275-8fab-b9b0e591844b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-isysteminformation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-isysteminformation
 interface ISystemInformation : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-isysteminformation-get_oemhardwaresupportlink))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-isysteminformation-get_oemhardwaresupportlink
     HRESULT get_OemHardwareSupportLink(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-isysteminformation-get_rebootrequired))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-isysteminformation-get_rebootrequired
     HRESULT get_RebootRequired(VARIANT_BOOL* retval);
 }
 
 @GUID("85713fa1-7796-4fa2-be3b-e2d6124dd373")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iwindowsupdateagentinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iwindowsupdateagentinfo
 interface IWindowsUpdateAgentInfo : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsupdateagentinfo-getinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsupdateagentinfo-getinfo
     HRESULT GetInfo(VARIANT varInfoIdentifier, VARIANT* retval);
 }
 
 @GUID("e7a4d634-7942-4dd9-a111-82228ba33901")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iautomaticupdatesresults))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iautomaticupdatesresults
 interface IAutomaticUpdatesResults : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatesresults-get_lastsearchsuccessdate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatesresults-get_lastsearchsuccessdate
     HRESULT get_LastSearchSuccessDate(VARIANT* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatesresults-get_lastinstallationsuccessdate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatesresults-get_lastinstallationsuccessdate
     HRESULT get_LastInstallationSuccessDate(VARIANT* retval);
 }
 
 @GUID("2ee48f22-af3c-405f-8970-f71be12ee9a2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iautomaticupdatessettings))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iautomaticupdatessettings
 interface IAutomaticUpdatesSettings : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatessettings-get_notificationlevel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatessettings-get_notificationlevel
     HRESULT get_NotificationLevel(AutomaticUpdatesNotificationLevel* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatessettings-put_notificationlevel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatessettings-put_notificationlevel
     HRESULT put_NotificationLevel(AutomaticUpdatesNotificationLevel value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatessettings-get_readonly))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatessettings-get_readonly
     HRESULT get_ReadOnly(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatessettings-get_required))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatessettings-get_required
     HRESULT get_Required(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatessettings-get_scheduledinstallationday))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatessettings-get_scheduledinstallationday
     HRESULT get_ScheduledInstallationDay(AutomaticUpdatesScheduledInstallationDay* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatessettings-put_scheduledinstallationday))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatessettings-put_scheduledinstallationday
     HRESULT put_ScheduledInstallationDay(AutomaticUpdatesScheduledInstallationDay value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatessettings-get_scheduledinstallationtime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatessettings-get_scheduledinstallationtime
     HRESULT get_ScheduledInstallationTime(int* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatessettings-put_scheduledinstallationtime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatessettings-put_scheduledinstallationtime
     HRESULT put_ScheduledInstallationTime(int value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatessettings-refresh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatessettings-refresh
     HRESULT Refresh();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatessettings-save))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatessettings-save
     HRESULT Save();
 }
 
 @GUID("6abc136a-c3ca-4384-8171-cb2b1e59b8dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iautomaticupdatessettings2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iautomaticupdatessettings2
 interface IAutomaticUpdatesSettings2 : IAutomaticUpdatesSettings
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatessettings2-get_includerecommendedupdates))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatessettings2-get_includerecommendedupdates
     HRESULT get_IncludeRecommendedUpdates(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatessettings2-put_includerecommendedupdates))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatessettings2-put_includerecommendedupdates
     HRESULT put_IncludeRecommendedUpdates(VARIANT_BOOL value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatessettings2-checkpermission))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatessettings2-checkpermission
     HRESULT CheckPermission(AutomaticUpdatesUserType userType, AutomaticUpdatesPermissionType permissionType, 
                             VARIANT_BOOL* userHasPermission);
 }
 
 @GUID("b587f5c3-f57e-485f-bbf5-0d181c5cd0dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iautomaticupdatessettings3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iautomaticupdatessettings3
 interface IAutomaticUpdatesSettings3 : IAutomaticUpdatesSettings2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatessettings3-get_nonadministratorselevated))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatessettings3-get_nonadministratorselevated
     HRESULT get_NonAdministratorsElevated(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatessettings3-put_nonadministratorselevated))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatessettings3-put_nonadministratorselevated
     HRESULT put_NonAdministratorsElevated(VARIANT_BOOL value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatessettings3-get_featuredupdatesenabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatessettings3-get_featuredupdatesenabled
     HRESULT get_FeaturedUpdatesEnabled(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatessettings3-put_featuredupdatesenabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdatessettings3-put_featuredupdatesenabled
     HRESULT put_FeaturedUpdatesEnabled(VARIANT_BOOL value);
 }
 
 @GUID("673425bf-c082-4c7c-bdfd-569464b8e0ce")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iautomaticupdates))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iautomaticupdates
 interface IAutomaticUpdates : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdates-detectnow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdates-detectnow
     HRESULT DetectNow();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdates-pause))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdates-pause
     HRESULT Pause();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdates-resume))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdates-resume
     HRESULT Resume();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdates-showsettingsdialog))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdates-showsettingsdialog
     HRESULT ShowSettingsDialog();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdates-get_settings))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdates-get_settings
     HRESULT get_Settings(IAutomaticUpdatesSettings* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdates-get_serviceenabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdates-get_serviceenabled
     HRESULT get_ServiceEnabled(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdates-enableservice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdates-enableservice
     HRESULT EnableService();
 }
 
 @GUID("4a2f5c31-cfd9-410e-b7fb-29a653973a0f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iautomaticupdates2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iautomaticupdates2
 interface IAutomaticUpdates2 : IAutomaticUpdates
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdates2-get_results))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iautomaticupdates2-get_results
     HRESULT get_Results(IAutomaticUpdatesResults* retval);
 }
 
 @GUID("46297823-9940-4c09-aed9-cd3ea6d05968")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateidentity))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateidentity
 interface IUpdateIdentity : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateidentity-get_revisionnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateidentity-get_revisionnumber
     HRESULT get_RevisionNumber(int* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateidentity-get_updateid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateidentity-get_updateid
     HRESULT get_UpdateID(BSTR* retval);
 }
 
 @GUID("7c907864-346c-4aeb-8f3f-57da289f969f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iimageinformation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iimageinformation
 interface IImageInformation : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iimageinformation-get_alttext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iimageinformation-get_alttext
     HRESULT get_AltText(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iimageinformation-get_height))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iimageinformation-get_height
     HRESULT get_Height(int* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iimageinformation-get_source))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iimageinformation-get_source
     HRESULT get_Source(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iimageinformation-get_width))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iimageinformation-get_width
     HRESULT get_Width(int* retval);
 }
 
 @GUID("81ddc1b8-9d35-47a6-b471-5b80f519223b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-icategory))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-icategory
 interface ICategory : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-icategory-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-icategory-get_name
     HRESULT get_Name(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-icategory-get_categoryid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-icategory-get_categoryid
     HRESULT get_CategoryID(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-icategory-get_children))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-icategory-get_children
     HRESULT get_Children(ICategoryCollection* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-icategory-get_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-icategory-get_description
     HRESULT get_Description(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-icategory-get_image))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-icategory-get_image
     HRESULT get_Image(IImageInformation* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-icategory-get_order))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-icategory-get_order
     HRESULT get_Order(int* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-icategory-get_parent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-icategory-get_parent
     HRESULT get_Parent(ICategory* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-icategory-get_type))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-icategory-get_type
     HRESULT get_Type(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-icategory-get_updates))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-icategory-get_updates
     HRESULT get_Updates(IUpdateCollection* retval);
 }
 
 @GUID("3a56bfb8-576c-43f7-9335-fe4838fd7e37")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-icategorycollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-icategorycollection
 interface ICategoryCollection : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-icategorycollection-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-icategorycollection-get_item
     HRESULT get_Item(int index, ICategory* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-icategorycollection-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-icategorycollection-get__newenum
     HRESULT get__NewEnum(IUnknown* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-icategorycollection-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-icategorycollection-get_count
     HRESULT get_Count(int* retval);
 }
 
 @GUID("d9a59339-e245-4dbd-9686-4d5763e39624")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iinstallationbehavior))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iinstallationbehavior
 interface IInstallationBehavior : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationbehavior-get_canrequestuserinput))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationbehavior-get_canrequestuserinput
     HRESULT get_CanRequestUserInput(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationbehavior-get_impact))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationbehavior-get_impact
     HRESULT get_Impact(InstallationImpact* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationbehavior-get_rebootbehavior))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationbehavior-get_rebootbehavior
     HRESULT get_RebootBehavior(InstallationRebootBehavior* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationbehavior-get_requiresnetworkconnectivity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationbehavior-get_requiresnetworkconnectivity
     HRESULT get_RequiresNetworkConnectivity(VARIANT_BOOL* retval);
 }
 
 @GUID("54a2cb2d-9a0c-48b6-8a50-9abb69ee2d02")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatedownloadcontent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatedownloadcontent
 interface IUpdateDownloadContent : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloadcontent-get_downloadurl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloadcontent-get_downloadurl
     HRESULT get_DownloadUrl(BSTR* retval);
 }
 
 @GUID("c97ad11b-f257-420b-9d9f-377f733f6f68")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatedownloadcontent2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatedownloadcontent2
 interface IUpdateDownloadContent2 : IUpdateDownloadContent
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloadcontent2-get_isdeltacompressedcontent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloadcontent2-get_isdeltacompressedcontent
     HRESULT get_IsDeltaCompressedContent(VARIANT_BOOL* retval);
 }
 
 @GUID("bc5513c8-b3b8-4bf7-a4d4-361c0d8c88ba")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatedownloadcontentcollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatedownloadcontentcollection
 interface IUpdateDownloadContentCollection : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloadcontentcollection-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloadcontentcollection-get_item
     HRESULT get_Item(int index, IUpdateDownloadContent* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloadcontentcollection-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloadcontentcollection-get__newenum
     HRESULT get__NewEnum(IUnknown* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloadcontentcollection-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloadcontentcollection-get_count
     HRESULT get_Count(int* retval);
 }
 
 @GUID("6a92b07a-d821-4682-b423-5c805022cc4d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdate
 interface IUpdate : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_title))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_title
     HRESULT get_Title(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_autoselectonwebsites))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_autoselectonwebsites
     HRESULT get_AutoSelectOnWebSites(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_bundledupdates))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_bundledupdates
     HRESULT get_BundledUpdates(IUpdateCollection* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_canrequiresource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_canrequiresource
     HRESULT get_CanRequireSource(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_categories))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_categories
     HRESULT get_Categories(ICategoryCollection* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_deadline))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_deadline
     HRESULT get_Deadline(VARIANT* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_deltacompressedcontentavailable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_deltacompressedcontentavailable
     HRESULT get_DeltaCompressedContentAvailable(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_deltacompressedcontentpreferred))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_deltacompressedcontentpreferred
     HRESULT get_DeltaCompressedContentPreferred(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_description
     HRESULT get_Description(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_eulaaccepted))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_eulaaccepted
     HRESULT get_EulaAccepted(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_eulatext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_eulatext
     HRESULT get_EulaText(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_handlerid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_handlerid
     HRESULT get_HandlerID(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_identity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_identity
     HRESULT get_Identity(IUpdateIdentity* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_image))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_image
     HRESULT get_Image(IImageInformation* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_installationbehavior))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_installationbehavior
     HRESULT get_InstallationBehavior(IInstallationBehavior* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_isbeta))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_isbeta
     HRESULT get_IsBeta(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_isdownloaded))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_isdownloaded
     HRESULT get_IsDownloaded(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_ishidden))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_ishidden
     HRESULT get_IsHidden(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-put_ishidden))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-put_ishidden
     HRESULT put_IsHidden(VARIANT_BOOL value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_isinstalled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_isinstalled
     HRESULT get_IsInstalled(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_ismandatory))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_ismandatory
     HRESULT get_IsMandatory(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_isuninstallable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_isuninstallable
     HRESULT get_IsUninstallable(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_languages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_languages
     HRESULT get_Languages(IStringCollection* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_lastdeploymentchangetime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_lastdeploymentchangetime
     HRESULT get_LastDeploymentChangeTime(double* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_maxdownloadsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_maxdownloadsize
     HRESULT get_MaxDownloadSize(DECIMAL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_mindownloadsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_mindownloadsize
     HRESULT get_MinDownloadSize(DECIMAL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_moreinfourls))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_moreinfourls
     HRESULT get_MoreInfoUrls(IStringCollection* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_msrcseverity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_msrcseverity
     HRESULT get_MsrcSeverity(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_recommendedcpuspeed))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_recommendedcpuspeed
     HRESULT get_RecommendedCpuSpeed(int* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_recommendedharddiskspace))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_recommendedharddiskspace
     HRESULT get_RecommendedHardDiskSpace(int* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_recommendedmemory))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_recommendedmemory
     HRESULT get_RecommendedMemory(int* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_releasenotes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_releasenotes
     HRESULT get_ReleaseNotes(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_securitybulletinids))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_securitybulletinids
     HRESULT get_SecurityBulletinIDs(IStringCollection* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_supersededupdateids))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_supersededupdateids
     HRESULT get_SupersededUpdateIDs(IStringCollection* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_supporturl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_supporturl
     HRESULT get_SupportUrl(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_type))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_type
     HRESULT get_Type(UpdateType* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_uninstallationnotes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_uninstallationnotes
     HRESULT get_UninstallationNotes(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_uninstallationbehavior))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_uninstallationbehavior
     HRESULT get_UninstallationBehavior(IInstallationBehavior* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_uninstallationsteps))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_uninstallationsteps
     HRESULT get_UninstallationSteps(IStringCollection* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_kbarticleids))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_kbarticleids
     HRESULT get_KBArticleIDs(IStringCollection* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-accepteula))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-accepteula
     HRESULT AcceptEula();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_deploymentaction))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_deploymentaction
     HRESULT get_DeploymentAction(DeploymentAction* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-copyfromcache))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-copyfromcache
     HRESULT CopyFromCache(BSTR path, VARIANT_BOOL toExtractCabFiles);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_downloadpriority))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_downloadpriority
     HRESULT get_DownloadPriority(DownloadPriority* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_downloadcontents))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate-get_downloadcontents
     HRESULT get_DownloadContents(IUpdateDownloadContentCollection* retval);
 }
 
 @GUID("b383cd1a-5ce9-4504-9f63-764b1236f191")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iwindowsdriverupdate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iwindowsdriverupdate
 interface IWindowsDriverUpdate : IUpdate
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate-get_driverclass))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate-get_driverclass
     HRESULT get_DriverClass(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate-get_driverhardwareid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate-get_driverhardwareid
     HRESULT get_DriverHardwareID(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate-get_drivermanufacturer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate-get_drivermanufacturer
     HRESULT get_DriverManufacturer(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate-get_drivermodel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate-get_drivermodel
     HRESULT get_DriverModel(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate-get_driverprovider))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate-get_driverprovider
     HRESULT get_DriverProvider(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate-get_driververdate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate-get_driververdate
     HRESULT get_DriverVerDate(double* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate-get_deviceproblemnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate-get_deviceproblemnumber
     HRESULT get_DeviceProblemNumber(int* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate-get_devicestatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate-get_devicestatus
     HRESULT get_DeviceStatus(int* retval);
 }
 
 @GUID("144fe9b0-d23d-4a8b-8634-fb4457533b7a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdate2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdate2
 interface IUpdate2 : IUpdate
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate2-get_rebootrequired))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate2-get_rebootrequired
     HRESULT get_RebootRequired(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate2-get_ispresent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate2-get_ispresent
     HRESULT get_IsPresent(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate2-get_cveids))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate2-get_cveids
     HRESULT get_CveIDs(IStringCollection* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate2-copytocache))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate2-copytocache
     HRESULT CopyToCache(IStringCollection pFiles);
 }
 
 @GUID("112eda6b-95b3-476f-9d90-aee82c6b8181")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdate3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdate3
 interface IUpdate3 : IUpdate2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate3-get_browseonly))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate3-get_browseonly
     HRESULT get_BrowseOnly(VARIANT_BOOL* retval);
 }
 
 @GUID("27e94b0d-5139-49a2-9a61-93522dc54652")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdate4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdate4
 interface IUpdate4 : IUpdate3
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate4-get_peruser))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate4-get_peruser
     HRESULT get_PerUser(VARIANT_BOOL* retval);
 }
 
 @GUID("c1c2f21a-d2f4-4902-b5c6-8a081c19a890")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdate5))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdate5
 interface IUpdate5 : IUpdate4
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate5-get_autoselection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate5-get_autoselection
     HRESULT get_AutoSelection(AutoSelectionMode* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate5-get_autodownload))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdate5-get_autodownload
     HRESULT get_AutoDownload(AutoDownloadMode* retval);
 }
 
@@ -1477,308 +1499,308 @@ interface IUpdateEx : IUpdate5
 
 @GUID("615c4269-7a48-43bd-96b7-bf6ca27d6c3e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iwindowsdriverupdate2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iwindowsdriverupdate2
 interface IWindowsDriverUpdate2 : IWindowsDriverUpdate
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate2-get_rebootrequired))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate2-get_rebootrequired
     HRESULT get_RebootRequired(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate2-get_ispresent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate2-get_ispresent
     HRESULT get_IsPresent(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate2-get_cveids))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate2-get_cveids
     HRESULT get_CveIDs(IStringCollection* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate2-copytocache))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate2-copytocache
     HRESULT CopyToCache(IStringCollection pFiles);
 }
 
 @GUID("49ebd502-4a96-41bd-9e3e-4c5057f4250c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iwindowsdriverupdate3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iwindowsdriverupdate3
 interface IWindowsDriverUpdate3 : IWindowsDriverUpdate2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate3-get_browseonly))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate3-get_browseonly
     HRESULT get_BrowseOnly(VARIANT_BOOL* retval);
 }
 
 @GUID("ed8bfe40-a60b-42ea-9652-817dfcfa23ec")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iwindowsdriverupdateentry))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iwindowsdriverupdateentry
 interface IWindowsDriverUpdateEntry : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdateentry-get_driverclass))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdateentry-get_driverclass
     HRESULT get_DriverClass(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdateentry-get_driverhardwareid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdateentry-get_driverhardwareid
     HRESULT get_DriverHardwareID(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdateentry-get_drivermanufacturer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdateentry-get_drivermanufacturer
     HRESULT get_DriverManufacturer(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdateentry-get_drivermodel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdateentry-get_drivermodel
     HRESULT get_DriverModel(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdateentry-get_driverprovider))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdateentry-get_driverprovider
     HRESULT get_DriverProvider(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdateentry-get_driververdate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdateentry-get_driververdate
     HRESULT get_DriverVerDate(double* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdateentry-get_deviceproblemnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdateentry-get_deviceproblemnumber
     HRESULT get_DeviceProblemNumber(int* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdateentry-get_devicestatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdateentry-get_devicestatus
     HRESULT get_DeviceStatus(int* retval);
 }
 
 @GUID("0d521700-a372-4bef-828b-3d00c10adebd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iwindowsdriverupdateentrycollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iwindowsdriverupdateentrycollection
 interface IWindowsDriverUpdateEntryCollection : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdateentrycollection-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdateentrycollection-get_item
     HRESULT get_Item(int index, IWindowsDriverUpdateEntry* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdateentrycollection-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdateentrycollection-get__newenum
     HRESULT get__NewEnum(IUnknown* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdateentrycollection-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdateentrycollection-get_count
     HRESULT get_Count(int* retval);
 }
 
 @GUID("004c6a2b-0c19-4c69-9f5c-a269b2560db9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iwindowsdriverupdate4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iwindowsdriverupdate4
 interface IWindowsDriverUpdate4 : IWindowsDriverUpdate3
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate4-get_windowsdriverupdateentries))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate4-get_windowsdriverupdateentries
     HRESULT get_WindowsDriverUpdateEntries(IWindowsDriverUpdateEntryCollection* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate4-get_peruser))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate4-get_peruser
     HRESULT get_PerUser(VARIANT_BOOL* retval);
 }
 
 @GUID("70cf5c82-8642-42bb-9dbc-0cfd263c6c4f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iwindowsdriverupdate5))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iwindowsdriverupdate5
 interface IWindowsDriverUpdate5 : IWindowsDriverUpdate4
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate5-get_autoselection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate5-get_autoselection
     HRESULT get_AutoSelection(AutoSelectionMode* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate5-get_autodownload))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iwindowsdriverupdate5-get_autodownload
     HRESULT get_AutoDownload(AutoDownloadMode* retval);
 }
 
 @GUID("07f7438c-7709-4ca5-b518-91279288134e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatecollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatecollection
 interface IUpdateCollection : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatecollection-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatecollection-get_item
     HRESULT get_Item(int index, IUpdate* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatecollection-put_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatecollection-put_item
     HRESULT put_Item(int index, IUpdate value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatecollection-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatecollection-get__newenum
     HRESULT get__NewEnum(IUnknown* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatecollection-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatecollection-get_count
     HRESULT get_Count(int* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatecollection-get_readonly))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatecollection-get_readonly
     HRESULT get_ReadOnly(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatecollection-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatecollection-add
     HRESULT Add(IUpdate value, int* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatecollection-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatecollection-clear
     HRESULT Clear();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatecollection-copy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatecollection-copy
     HRESULT Copy(IUpdateCollection* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatecollection-insert))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatecollection-insert
     HRESULT Insert(int index, IUpdate value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatecollection-removeat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatecollection-removeat
     HRESULT RemoveAt(int index);
 }
 
 @GUID("a376dd5e-09d4-427f-af7c-fed5b6e1c1d6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateexception))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateexception
 interface IUpdateException : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateexception-get_message))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateexception-get_message
     HRESULT get_Message(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateexception-get_hresult))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateexception-get_hresult
     HRESULT get_HResult(int* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateexception-get_context))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateexception-get_context
     HRESULT get_Context(UpdateExceptionContext* retval);
 }
 
 @GUID("a37d00f5-7bb0-4953-b414-f9e98326f2e8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iinvalidproductlicenseexception))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iinvalidproductlicenseexception
 interface IInvalidProductLicenseException : IUpdateException
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinvalidproductlicenseexception-get_product))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinvalidproductlicenseexception-get_product
     HRESULT get_Product(BSTR* retval);
 }
 
 @GUID("503626a3-8e14-4729-9355-0fe664bd2321")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateexceptioncollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateexceptioncollection
 interface IUpdateExceptionCollection : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateexceptioncollection-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateexceptioncollection-get_item
     HRESULT get_Item(int index, IUpdateException* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateexceptioncollection-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateexceptioncollection-get__newenum
     HRESULT get__NewEnum(IUnknown* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateexceptioncollection-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateexceptioncollection-get_count
     HRESULT get_Count(int* retval);
 }
 
 @GUID("d40cff62-e08c-4498-941a-01e25f0fd33c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-isearchresult))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-isearchresult
 interface ISearchResult : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-isearchresult-get_resultcode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-isearchresult-get_resultcode
     HRESULT get_ResultCode(OperationResultCode* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-isearchresult-get_rootcategories))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-isearchresult-get_rootcategories
     HRESULT get_RootCategories(ICategoryCollection* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-isearchresult-get_updates))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-isearchresult-get_updates
     HRESULT get_Updates(IUpdateCollection* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-isearchresult-get_warnings))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-isearchresult-get_warnings
     HRESULT get_Warnings(IUpdateExceptionCollection* retval);
 }
 
 @GUID("7366ea16-7a1a-4ea2-b042-973d3e9cd99b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-isearchjob))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-isearchjob
 interface ISearchJob : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-isearchjob-get_asyncstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-isearchjob-get_asyncstate
     HRESULT get_AsyncState(VARIANT* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-isearchjob-get_iscompleted))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-isearchjob-get_iscompleted
     HRESULT get_IsCompleted(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-isearchjob-cleanup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-isearchjob-cleanup
     HRESULT CleanUp();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-isearchjob-requestabort))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-isearchjob-requestabort
     HRESULT RequestAbort();
 }
 
 @GUID("a700a634-2850-4c47-938a-9e4b6e5af9a6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-isearchcompletedcallbackargs))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-isearchcompletedcallbackargs
 interface ISearchCompletedCallbackArgs : IDispatch
 {
 }
 
 @GUID("88aee058-d4b0-4725-a2f1-814a67ae964c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-isearchcompletedcallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-isearchcompletedcallback
 interface ISearchCompletedCallback : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-isearchcompletedcallback-invoke))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-isearchcompletedcallback-invoke
     HRESULT Invoke(ISearchJob searchJob, ISearchCompletedCallbackArgs callbackArgs);
 }
 
 @GUID("be56a644-af0e-4e0e-a311-c1d8e695cbff")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatehistoryentry))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatehistoryentry
 interface IUpdateHistoryEntry : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentry-get_operation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentry-get_operation
     HRESULT get_Operation(UpdateOperation* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentry-get_resultcode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentry-get_resultcode
     HRESULT get_ResultCode(OperationResultCode* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentry-get_hresult))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentry-get_hresult
     HRESULT get_HResult(int* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentry-get_date))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentry-get_date
     HRESULT get_Date(double* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentry-get_updateidentity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentry-get_updateidentity
     HRESULT get_UpdateIdentity(IUpdateIdentity* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentry-get_title))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentry-get_title
     HRESULT get_Title(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentry-get_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentry-get_description
     HRESULT get_Description(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentry-get_unmappedresultcode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentry-get_unmappedresultcode
     HRESULT get_UnmappedResultCode(int* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentry-get_clientapplicationid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentry-get_clientapplicationid
     HRESULT get_ClientApplicationID(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentry-get_serverselection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentry-get_serverselection
     HRESULT get_ServerSelection(ServerSelection* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentry-get_serviceid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentry-get_serviceid
     HRESULT get_ServiceID(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentry-get_uninstallationsteps))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentry-get_uninstallationsteps
     HRESULT get_UninstallationSteps(IStringCollection* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentry-get_uninstallationnotes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentry-get_uninstallationnotes
     HRESULT get_UninstallationNotes(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentry-get_supporturl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentry-get_supporturl
     HRESULT get_SupportUrl(BSTR* retval);
 }
 
 @GUID("c2bfb780-4539-4132-ab8c-0a8772013ab6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatehistoryentry2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatehistoryentry2
 interface IUpdateHistoryEntry2 : IUpdateHistoryEntry
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentry2-get_categories))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentry2-get_categories
     HRESULT get_Categories(ICategoryCollection* retval);
 }
 
 @GUID("a7f04f3c-a290-435b-aadf-a116c3357a5c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatehistoryentrycollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatehistoryentrycollection
 interface IUpdateHistoryEntryCollection : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentrycollection-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentrycollection-get_item
     HRESULT get_Item(int index, IUpdateHistoryEntry* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentrycollection-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentrycollection-get__newenum
     HRESULT get__NewEnum(IUnknown* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentrycollection-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatehistoryentrycollection-get_count
     HRESULT get_Count(int* retval);
 }
 
 @GUID("8f45abf1-f9ae-4b95-a933-f0f66e5056ea")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatesearcher))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatesearcher
 interface IUpdateSearcher : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher-get_canautomaticallyupgradeservice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher-get_canautomaticallyupgradeservice
     HRESULT get_CanAutomaticallyUpgradeService(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher-put_canautomaticallyupgradeservice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher-put_canautomaticallyupgradeservice
     HRESULT put_CanAutomaticallyUpgradeService(VARIANT_BOOL value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher-get_clientapplicationid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher-get_clientapplicationid
     HRESULT get_ClientApplicationID(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher-put_clientapplicationid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher-put_clientapplicationid
     HRESULT put_ClientApplicationID(BSTR value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher-get_includepotentiallysupersededupdates))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher-get_includepotentiallysupersededupdates
     HRESULT get_IncludePotentiallySupersededUpdates(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher-put_includepotentiallysupersededupdates))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher-put_includepotentiallysupersededupdates
     HRESULT put_IncludePotentiallySupersededUpdates(VARIANT_BOOL value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher-get_serverselection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher-get_serverselection
     HRESULT get_ServerSelection(ServerSelection* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher-put_serverselection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher-put_serverselection
     HRESULT put_ServerSelection(ServerSelection value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher-beginsearch))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher-beginsearch
     HRESULT BeginSearch(BSTR criteria, IUnknown onCompleted, VARIANT state, ISearchJob* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher-endsearch))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher-endsearch
     HRESULT EndSearch(ISearchJob searchJob, ISearchResult* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher-escapestring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher-escapestring
     HRESULT EscapeString(BSTR unescaped, BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher-queryhistory))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher-queryhistory
     HRESULT QueryHistory(int startIndex, int count, IUpdateHistoryEntryCollection* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher-search))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher-search
     HRESULT Search(BSTR criteria, ISearchResult* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher-get_online))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher-get_online
     HRESULT get_Online(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher-put_online))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher-put_online
     HRESULT put_Online(VARIANT_BOOL value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher-gettotalhistorycount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher-gettotalhistorycount
     HRESULT GetTotalHistoryCount(int* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher-get_serviceid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher-get_serviceid
     HRESULT get_ServiceID(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher-put_serviceid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher-put_serviceid
     HRESULT put_ServiceID(BSTR value);
 }
 
 @GUID("4cbdcb2d-1589-4beb-bd1c-3e582ff0add0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatesearcher2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatesearcher2
 interface IUpdateSearcher2 : IUpdateSearcher
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher2-get_ignoredownloadpriority))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher2-get_ignoredownloadpriority
     HRESULT get_IgnoreDownloadPriority(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher2-put_ignoredownloadpriority))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesearcher2-put_ignoredownloadpriority
     HRESULT put_IgnoreDownloadPriority(VARIANT_BOOL value);
 }
 
 @GUID("04c6895d-eaf2-4034-97f3-311de9be413a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatesearcher3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatesearcher3
 interface IUpdateSearcher3 : IUpdateSearcher2
 {
     HRESULT get_SearchScope(SearchScope* retval);
@@ -1787,132 +1809,132 @@ interface IUpdateSearcher3 : IUpdateSearcher2
 
 @GUID("bf99af76-b575-42ad-8aa4-33cbb5477af1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatedownloadresult))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatedownloadresult
 interface IUpdateDownloadResult : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloadresult-get_hresult))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloadresult-get_hresult
     HRESULT get_HResult(int* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloadresult-get_resultcode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloadresult-get_resultcode
     HRESULT get_ResultCode(OperationResultCode* retval);
 }
 
 @GUID("daa4fdd0-4727-4dbe-a1e7-745dca317144")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-idownloadresult))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-idownloadresult
 interface IDownloadResult : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadresult-get_hresult))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadresult-get_hresult
     HRESULT get_HResult(int* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadresult-get_resultcode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadresult-get_resultcode
     HRESULT get_ResultCode(OperationResultCode* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadresult-getupdateresult))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadresult-getupdateresult
     HRESULT GetUpdateResult(int updateIndex, IUpdateDownloadResult* retval);
 }
 
 @GUID("d31a5bac-f719-4178-9dbb-5e2cb47fd18a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-idownloadprogress))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-idownloadprogress
 interface IDownloadProgress : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadprogress-get_currentupdatebytesdownloaded))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadprogress-get_currentupdatebytesdownloaded
     HRESULT get_CurrentUpdateBytesDownloaded(DECIMAL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadprogress-get_currentupdatebytestodownload))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadprogress-get_currentupdatebytestodownload
     HRESULT get_CurrentUpdateBytesToDownload(DECIMAL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadprogress-get_currentupdateindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadprogress-get_currentupdateindex
     HRESULT get_CurrentUpdateIndex(int* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadprogress-get_percentcomplete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadprogress-get_percentcomplete
     HRESULT get_PercentComplete(int* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadprogress-get_totalbytesdownloaded))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadprogress-get_totalbytesdownloaded
     HRESULT get_TotalBytesDownloaded(DECIMAL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadprogress-get_totalbytestodownload))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadprogress-get_totalbytestodownload
     HRESULT get_TotalBytesToDownload(DECIMAL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadprogress-getupdateresult))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadprogress-getupdateresult
     HRESULT GetUpdateResult(int updateIndex, IUpdateDownloadResult* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadprogress-get_currentupdatedownloadphase))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadprogress-get_currentupdatedownloadphase
     HRESULT get_CurrentUpdateDownloadPhase(DownloadPhase* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadprogress-get_currentupdatepercentcomplete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadprogress-get_currentupdatepercentcomplete
     HRESULT get_CurrentUpdatePercentComplete(int* retval);
 }
 
 @GUID("c574de85-7358-43f6-aae8-8697e62d8ba7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-idownloadjob))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-idownloadjob
 interface IDownloadJob : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadjob-get_asyncstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadjob-get_asyncstate
     HRESULT get_AsyncState(VARIANT* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadjob-get_iscompleted))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadjob-get_iscompleted
     HRESULT get_IsCompleted(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadjob-get_updates))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadjob-get_updates
     HRESULT get_Updates(IUpdateCollection* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadjob-cleanup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadjob-cleanup
     HRESULT CleanUp();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadjob-getprogress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadjob-getprogress
     HRESULT GetProgress(IDownloadProgress* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadjob-requestabort))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadjob-requestabort
     HRESULT RequestAbort();
 }
 
 @GUID("fa565b23-498c-47a0-979d-e7d5b1813360")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-idownloadcompletedcallbackargs))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-idownloadcompletedcallbackargs
 interface IDownloadCompletedCallbackArgs : IDispatch
 {
 }
 
 @GUID("77254866-9f5b-4c8e-b9e2-c77a8530d64b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-idownloadcompletedcallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-idownloadcompletedcallback
 interface IDownloadCompletedCallback : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadcompletedcallback-invoke))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadcompletedcallback-invoke
     HRESULT Invoke(IDownloadJob downloadJob, IDownloadCompletedCallbackArgs callbackArgs);
 }
 
 @GUID("324ff2c6-4981-4b04-9412-57481745ab24")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-idownloadprogresschangedcallbackargs))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-idownloadprogresschangedcallbackargs
 interface IDownloadProgressChangedCallbackArgs : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadprogresschangedcallbackargs-get_progress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadprogresschangedcallbackargs-get_progress
     HRESULT get_Progress(IDownloadProgress* retval);
 }
 
 @GUID("8c3f1cdd-6173-4591-aebd-a56a53ca77c1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-idownloadprogresschangedcallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-idownloadprogresschangedcallback
 interface IDownloadProgressChangedCallback : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadprogresschangedcallback-invoke))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-idownloadprogresschangedcallback-invoke
     HRESULT Invoke(IDownloadJob downloadJob, IDownloadProgressChangedCallbackArgs callbackArgs);
 }
 
 @GUID("68f1c6f9-7ecc-4666-a464-247fe12496c3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatedownloader))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatedownloader
 interface IUpdateDownloader : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloader-get_clientapplicationid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloader-get_clientapplicationid
     HRESULT get_ClientApplicationID(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloader-put_clientapplicationid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloader-put_clientapplicationid
     HRESULT put_ClientApplicationID(BSTR value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloader-get_isforced))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloader-get_isforced
     HRESULT get_IsForced(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloader-put_isforced))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloader-put_isforced
     HRESULT put_IsForced(VARIANT_BOOL value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloader-get_priority))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloader-get_priority
     HRESULT get_Priority(DownloadPriority* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloader-put_priority))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloader-put_priority
     HRESULT put_Priority(DownloadPriority value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloader-get_updates))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloader-get_updates
     HRESULT get_Updates(IUpdateCollection* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloader-put_updates))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloader-put_updates
     HRESULT put_Updates(IUpdateCollection value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloader-begindownload))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloader-begindownload
     HRESULT BeginDownload(IUnknown onProgressChanged, IUnknown onCompleted, VARIANT state, IDownloadJob* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloader-download))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloader-download
     HRESULT Download(IDownloadResult* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloader-enddownload))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatedownloader-enddownload
     HRESULT EndDownload(IDownloadJob value, IDownloadResult* retval);
 }
 
@@ -1926,337 +1948,337 @@ interface IUpdateDownloaderEx : IUpdateDownloader
 
 @GUID("d940f0f8-3cbb-4fd0-993f-471e7f2328ad")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateinstallationresult))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateinstallationresult
 interface IUpdateInstallationResult : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstallationresult-get_hresult))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstallationresult-get_hresult
     HRESULT get_HResult(int* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstallationresult-get_rebootrequired))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstallationresult-get_rebootrequired
     HRESULT get_RebootRequired(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstallationresult-get_resultcode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstallationresult-get_resultcode
     HRESULT get_ResultCode(OperationResultCode* retval);
 }
 
 @GUID("a43c56d6-7451-48d4-af96-b6cd2d0d9b7a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iinstallationresult))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iinstallationresult
 interface IInstallationResult : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationresult-get_hresult))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationresult-get_hresult
     HRESULT get_HResult(int* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationresult-get_rebootrequired))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationresult-get_rebootrequired
     HRESULT get_RebootRequired(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationresult-get_resultcode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationresult-get_resultcode
     HRESULT get_ResultCode(OperationResultCode* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationresult-getupdateresult))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationresult-getupdateresult
     HRESULT GetUpdateResult(int updateIndex, IUpdateInstallationResult* retval);
 }
 
 @GUID("345c8244-43a3-4e32-a368-65f073b76f36")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iinstallationprogress))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iinstallationprogress
 interface IInstallationProgress : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationprogress-get_currentupdateindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationprogress-get_currentupdateindex
     HRESULT get_CurrentUpdateIndex(int* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationprogress-get_currentupdatepercentcomplete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationprogress-get_currentupdatepercentcomplete
     HRESULT get_CurrentUpdatePercentComplete(int* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationprogress-get_percentcomplete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationprogress-get_percentcomplete
     HRESULT get_PercentComplete(int* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationprogress-getupdateresult))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationprogress-getupdateresult
     HRESULT GetUpdateResult(int updateIndex, IUpdateInstallationResult* retval);
 }
 
 @GUID("5c209f0b-bad5-432a-9556-4699bed2638a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iinstallationjob))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iinstallationjob
 interface IInstallationJob : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationjob-get_asyncstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationjob-get_asyncstate
     HRESULT get_AsyncState(VARIANT* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationjob-get_iscompleted))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationjob-get_iscompleted
     HRESULT get_IsCompleted(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationjob-get_updates))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationjob-get_updates
     HRESULT get_Updates(IUpdateCollection* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationjob-cleanup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationjob-cleanup
     HRESULT CleanUp();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationjob-getprogress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationjob-getprogress
     HRESULT GetProgress(IInstallationProgress* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationjob-requestabort))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationjob-requestabort
     HRESULT RequestAbort();
 }
 
 @GUID("250e2106-8efb-4705-9653-ef13c581b6a1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iinstallationcompletedcallbackargs))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iinstallationcompletedcallbackargs
 interface IInstallationCompletedCallbackArgs : IDispatch
 {
 }
 
 @GUID("45f4f6f3-d602-4f98-9a8a-3efa152ad2d3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iinstallationcompletedcallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iinstallationcompletedcallback
 interface IInstallationCompletedCallback : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationcompletedcallback-invoke))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationcompletedcallback-invoke
     HRESULT Invoke(IInstallationJob installationJob, IInstallationCompletedCallbackArgs callbackArgs);
 }
 
 @GUID("e4f14e1e-689d-4218-a0b9-bc189c484a01")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iinstallationprogresschangedcallbackargs))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iinstallationprogresschangedcallbackargs
 interface IInstallationProgressChangedCallbackArgs : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationprogresschangedcallbackargs-get_progress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationprogresschangedcallbackargs-get_progress
     HRESULT get_Progress(IInstallationProgress* retval);
 }
 
 @GUID("e01402d5-f8da-43ba-a012-38894bd048f1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iinstallationprogresschangedcallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iinstallationprogresschangedcallback
 interface IInstallationProgressChangedCallback : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationprogresschangedcallback-invoke))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationprogresschangedcallback-invoke
     HRESULT Invoke(IInstallationJob installationJob, IInstallationProgressChangedCallbackArgs callbackArgs);
 }
 
 @GUID("7b929c68-ccdc-4226-96b1-8724600b54c2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateinstaller))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateinstaller
 interface IUpdateInstaller : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-get_clientapplicationid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-get_clientapplicationid
     HRESULT get_ClientApplicationID(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-put_clientapplicationid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-put_clientapplicationid
     HRESULT put_ClientApplicationID(BSTR value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-get_isforced))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-get_isforced
     HRESULT get_IsForced(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-put_isforced))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-put_isforced
     HRESULT put_IsForced(VARIANT_BOOL value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-get_parenthwnd))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-get_parenthwnd
     HRESULT get_ParentHwnd(HWND* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-put_parenthwnd))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-put_parenthwnd
     HRESULT put_ParentHwnd(HWND value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-put_parentwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-put_parentwindow
     HRESULT put_ParentWindow(IUnknown value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-get_parentwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-get_parentwindow
     HRESULT get_ParentWindow(IUnknown* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-get_updates))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-get_updates
     HRESULT get_Updates(IUpdateCollection* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-put_updates))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-put_updates
     HRESULT put_Updates(IUpdateCollection value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-begininstall))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-begininstall
     HRESULT BeginInstall(IUnknown onProgressChanged, IUnknown onCompleted, VARIANT state, IInstallationJob* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-beginuninstall))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-beginuninstall
     HRESULT BeginUninstall(IUnknown onProgressChanged, IUnknown onCompleted, VARIANT state, 
                            IInstallationJob* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-endinstall))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-endinstall
     HRESULT EndInstall(IInstallationJob value, IInstallationResult* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-enduninstall))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-enduninstall
     HRESULT EndUninstall(IInstallationJob value, IInstallationResult* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-install))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-install
     HRESULT Install(IInstallationResult* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-runwizard))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-runwizard
     HRESULT RunWizard(BSTR dialogTitle, IInstallationResult* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-get_isbusy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-get_isbusy
     HRESULT get_IsBusy(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-uninstall))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-uninstall
     HRESULT Uninstall(IInstallationResult* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-get_allowsourceprompts))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-get_allowsourceprompts
     HRESULT get_AllowSourcePrompts(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-put_allowsourceprompts))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-put_allowsourceprompts
     HRESULT put_AllowSourcePrompts(VARIANT_BOOL value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-get_rebootrequiredbeforeinstallation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller-get_rebootrequiredbeforeinstallation
     HRESULT get_RebootRequiredBeforeInstallation(VARIANT_BOOL* retval);
 }
 
 @GUID("3442d4fe-224d-4cee-98cf-30e0c4d229e6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateinstaller2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateinstaller2
 interface IUpdateInstaller2 : IUpdateInstaller
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller2-get_forcequiet))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller2-get_forcequiet
     HRESULT get_ForceQuiet(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller2-put_forcequiet))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller2-put_forcequiet
     HRESULT put_ForceQuiet(VARIANT_BOOL value);
 }
 
 @GUID("16d11c35-099a-48d0-8338-5fae64047f8e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.17134))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateinstaller3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateinstaller3
 interface IUpdateInstaller3 : IUpdateInstaller2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller3-get_attemptcloseappsifnecessary))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller3-get_attemptcloseappsifnecessary
     HRESULT get_AttemptCloseAppsIfNecessary(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller3-put_attemptcloseappsifnecessary))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller3-put_attemptcloseappsifnecessary
     HRESULT put_AttemptCloseAppsIfNecessary(VARIANT_BOOL value);
 }
 
 @GUID("ef8208ea-2304-492d-9109-23813b0958e1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateinstaller4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateinstaller4
 interface IUpdateInstaller4 : IUpdateInstaller3
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller4-commit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateinstaller4-commit
     HRESULT Commit(uint dwFlags);
 }
 
 @GUID("816858a4-260d-4260-933a-2585f1abc76b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatesession))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatesession
 interface IUpdateSession : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesession-get_clientapplicationid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesession-get_clientapplicationid
     HRESULT get_ClientApplicationID(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesession-put_clientapplicationid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesession-put_clientapplicationid
     HRESULT put_ClientApplicationID(BSTR value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesession-get_readonly))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesession-get_readonly
     HRESULT get_ReadOnly(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesession-get_webproxy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesession-get_webproxy
     HRESULT get_WebProxy(IWebProxy* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesession-put_webproxy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesession-put_webproxy
     HRESULT put_WebProxy(IWebProxy value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesession-createupdatesearcher))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesession-createupdatesearcher
     HRESULT CreateUpdateSearcher(IUpdateSearcher* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesession-createupdatedownloader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesession-createupdatedownloader
     HRESULT CreateUpdateDownloader(IUpdateDownloader* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesession-createupdateinstaller))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesession-createupdateinstaller
     HRESULT CreateUpdateInstaller(IUpdateInstaller* retval);
 }
 
 @GUID("91caf7b0-eb23-49ed-9937-c52d817f46f7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatesession2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatesession2
 interface IUpdateSession2 : IUpdateSession
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesession2-get_userlocale))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesession2-get_userlocale
     HRESULT get_UserLocale(uint* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesession2-put_userlocale))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesession2-put_userlocale
     HRESULT put_UserLocale(uint lcid);
 }
 
 @GUID("918efd1e-b5d8-4c90-8540-aeb9bdc56f9d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatesession3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdatesession3
 interface IUpdateSession3 : IUpdateSession2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesession3-createupdateservicemanager))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesession3-createupdateservicemanager
     HRESULT CreateUpdateServiceManager(IUpdateServiceManager2* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesession3-queryhistory))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdatesession3-queryhistory
     HRESULT QueryHistory(BSTR criteria, int startIndex, int count, IUpdateHistoryEntryCollection* retval);
 }
 
 @GUID("76b3b17e-aed6-4da5-85f0-83587f81abe3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateservice))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateservice
 interface IUpdateService : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservice-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservice-get_name
     HRESULT get_Name(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservice-get_contentvalidationcert))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservice-get_contentvalidationcert
     HRESULT get_ContentValidationCert(VARIANT* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservice-get_expirationdate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservice-get_expirationdate
     HRESULT get_ExpirationDate(double* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservice-get_ismanaged))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservice-get_ismanaged
     HRESULT get_IsManaged(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservice-get_isregisteredwithau))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservice-get_isregisteredwithau
     HRESULT get_IsRegisteredWithAU(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservice-get_issuedate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservice-get_issuedate
     HRESULT get_IssueDate(double* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservice-get_offerswindowsupdates))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservice-get_offerswindowsupdates
     HRESULT get_OffersWindowsUpdates(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservice-get_redirecturls))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservice-get_redirecturls
     HRESULT get_RedirectUrls(IStringCollection* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservice-get_serviceid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservice-get_serviceid
     HRESULT get_ServiceID(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservice-get_isscanpackageservice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservice-get_isscanpackageservice
     HRESULT get_IsScanPackageService(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservice-get_canregisterwithau))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservice-get_canregisterwithau
     HRESULT get_CanRegisterWithAU(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservice-get_serviceurl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservice-get_serviceurl
     HRESULT get_ServiceUrl(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservice-get_setupprefix))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservice-get_setupprefix
     HRESULT get_SetupPrefix(BSTR* retval);
 }
 
 @GUID("1518b460-6518-4172-940f-c75883b24ceb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateservice2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateservice2
 interface IUpdateService2 : IUpdateService
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservice2-get_isdefaultauservice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservice2-get_isdefaultauservice
     HRESULT get_IsDefaultAUService(VARIANT_BOOL* retval);
 }
 
 @GUID("9b0353aa-0e52-44ff-b8b0-1f7fa0437f88")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateservicecollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateservicecollection
 interface IUpdateServiceCollection : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservicecollection-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservicecollection-get_item
     HRESULT get_Item(int index, IUpdateService* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservicecollection-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservicecollection-get__newenum
     HRESULT get__NewEnum(IUnknown* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservicecollection-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservicecollection-get_count
     HRESULT get_Count(int* retval);
 }
 
 @GUID("dde02280-12b3-4e0b-937b-6747f6acb286")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateserviceregistration))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateserviceregistration
 interface IUpdateServiceRegistration : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateserviceregistration-get_registrationstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateserviceregistration-get_registrationstate
     HRESULT get_RegistrationState(UpdateServiceRegistrationState* retval);
     HRESULT get_ServiceID(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateserviceregistration-get_ispendingregistrationwithau))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateserviceregistration-get_ispendingregistrationwithau
     HRESULT get_IsPendingRegistrationWithAU(VARIANT_BOOL* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateserviceregistration-get_service))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateserviceregistration-get_service
     HRESULT get_Service(IUpdateService2* retval);
 }
 
 @GUID("23857e3c-02ba-44a3-9423-b1c900805f37")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateservicemanager))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateservicemanager
 interface IUpdateServiceManager : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservicemanager-get_services))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservicemanager-get_services
     HRESULT get_Services(IUpdateServiceCollection* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservicemanager-addservice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservicemanager-addservice
     HRESULT AddService(BSTR serviceID, BSTR authorizationCabPath, IUpdateService* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservicemanager-registerservicewithau))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservicemanager-registerservicewithau
     HRESULT RegisterServiceWithAU(BSTR serviceID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservicemanager-removeservice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservicemanager-removeservice
     HRESULT RemoveService(BSTR serviceID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservicemanager-unregisterservicewithau))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservicemanager-unregisterservicewithau
     HRESULT UnregisterServiceWithAU(BSTR serviceID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservicemanager-addscanpackageservice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservicemanager-addscanpackageservice
     HRESULT AddScanPackageService(BSTR serviceName, BSTR scanFileLocation, int flags, IUpdateService* ppService);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservicemanager-setoption))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservicemanager-setoption
     HRESULT SetOption(BSTR optionName, VARIANT optionValue);
 }
 
 @GUID("0bb8531d-7e8d-424f-986c-a0b8f60a3e7b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateservicemanager2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iupdateservicemanager2
 interface IUpdateServiceManager2 : IUpdateServiceManager
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservicemanager2-get_clientapplicationid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservicemanager2-get_clientapplicationid
     HRESULT get_ClientApplicationID(BSTR* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservicemanager2-put_clientapplicationid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservicemanager2-put_clientapplicationid
     HRESULT put_ClientApplicationID(BSTR value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservicemanager2-queryserviceregistration))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservicemanager2-queryserviceregistration
     HRESULT QueryServiceRegistration(BSTR serviceID, IUpdateServiceRegistration* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservicemanager2-addservice2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iupdateservicemanager2-addservice2
     HRESULT AddService2(BSTR serviceID, int flags, BSTR authorizationCabPath, IUpdateServiceRegistration* retval);
 }
 
 @GUID("925cbc18-a2ea-4648-bf1c-ec8badcfe20a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iinstallationagent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nn-wuapi-iinstallationagent
 interface IInstallationAgent : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationagent-recordinstallationresult))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wuapi/nf-wuapi-iinstallationagent-recordinstallationresult
     HRESULT RecordInstallationResult(BSTR installationResultCookie, int hresult, 
                                      IStringCollection extendedReportingData);
 }

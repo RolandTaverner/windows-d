@@ -1,59 +1,65 @@
 // Written in the D programming language.
 
-module windows.win32.ui.input;
+module windows.win32.ui.input.input;
 
 public import windows.core;
-public import windows.win32.foundation : BOOL, HANDLE, HWND, LRESULT, WPARAM;
+public import windows.win32.foundation.foundation : BOOL, HANDLE, HWND, LRESULT, WPARAM;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
+
 alias RAW_INPUT_DATA_COMMAND_FLAGS = uint;
 enum : uint
 {
-    RID_HEADER = 0x10000005,
-    RID_INPUT  = 0x10000003,
+    RID_HEADER = 0x10000005U,
+    RID_INPUT  = 0x10000003U,
 }
+
 alias RAW_INPUT_DEVICE_INFO_COMMAND = uint;
 enum : uint
 {
-    RIDI_PREPARSEDDATA = 0x20000005,
-    RIDI_DEVICENAME    = 0x20000007,
-    RIDI_DEVICEINFO    = 0x2000000b,
+    RIDI_PREPARSEDDATA = 0x20000005U,
+    RIDI_DEVICENAME    = 0x20000007U,
+    RIDI_DEVICEINFO    = 0x2000000bU,
 }
+
 alias RID_DEVICE_INFO_TYPE = uint;
 enum : uint
 {
-    RIM_TYPEMOUSE    = 0x00000000,
-    RIM_TYPEKEYBOARD = 0x00000001,
-    RIM_TYPEHID      = 0x00000002,
+    RIM_TYPEMOUSE    = 0x00000000U,
+    RIM_TYPEKEYBOARD = 0x00000001U,
+    RIM_TYPEHID      = 0x00000002U,
 }
+
 alias RAWINPUTDEVICE_FLAGS = uint;
 enum : uint
 {
-    RIDEV_REMOVE       = 0x00000001,
-    RIDEV_EXCLUDE      = 0x00000010,
-    RIDEV_PAGEONLY     = 0x00000020,
-    RIDEV_NOLEGACY     = 0x00000030,
-    RIDEV_INPUTSINK    = 0x00000100,
-    RIDEV_CAPTUREMOUSE = 0x00000200,
-    RIDEV_NOHOTKEYS    = 0x00000200,
-    RIDEV_APPKEYS      = 0x00000400,
-    RIDEV_EXINPUTSINK  = 0x00001000,
-    RIDEV_DEVNOTIFY    = 0x00002000,
+    RIDEV_REMOVE       = 0x00000001U,
+    RIDEV_EXCLUDE      = 0x00000010U,
+    RIDEV_PAGEONLY     = 0x00000020U,
+    RIDEV_NOLEGACY     = 0x00000030U,
+    RIDEV_INPUTSINK    = 0x00000100U,
+    RIDEV_CAPTUREMOUSE = 0x00000200U,
+    RIDEV_NOHOTKEYS    = 0x00000200U,
+    RIDEV_APPKEYS      = 0x00000400U,
+    RIDEV_EXINPUTSINK  = 0x00001000U,
+    RIDEV_DEVNOTIFY    = 0x00002000U,
 }
+
 alias MOUSE_STATE = ushort;
 enum : ushort
 {
-    MOUSE_MOVE_RELATIVE      = 0x0000,
-    MOUSE_MOVE_ABSOLUTE      = 0x0001,
-    MOUSE_VIRTUAL_DESKTOP    = 0x0002,
-    MOUSE_ATTRIBUTES_CHANGED = 0x0004,
-    MOUSE_MOVE_NOCOALESCE    = 0x0008,
+    MOUSE_MOVE_RELATIVE      = cast(ushort) 0x0000,
+    MOUSE_MOVE_ABSOLUTE      = cast(ushort) 0x0001,
+    MOUSE_VIRTUAL_DESKTOP    = cast(ushort) 0x0002,
+    MOUSE_ATTRIBUTES_CHANGED = cast(ushort) 0x0004,
+    MOUSE_MOVE_NOCOALESCE    = cast(ushort) 0x0008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ne-winuser-input_message_device_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ne-winuser-input_message_device_type
 alias INPUT_MESSAGE_DEVICE_TYPE = int;
 enum : int
 {
@@ -64,7 +70,8 @@ enum : int
     IMDT_PEN         = 0x00000008,
     IMDT_TOUCHPAD    = 0x00000010,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ne-winuser-input_message_origin_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ne-winuser-input_message_origin_id
 alias INPUT_MESSAGE_ORIGIN_ID = int;
 enum : int
 {
@@ -84,7 +91,7 @@ struct HRAWINPUT
     void* Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-rawinputheader))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-rawinputheader
 struct RAWINPUTHEADER
 {
     uint   dwType;
@@ -93,18 +100,26 @@ struct RAWINPUTHEADER
     WPARAM wParam;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-rawmouse))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-rawmouse
 struct RAWMOUSE
 {
-    MOUSE_STATE         usFlags;
-    _Anonymous_e__Union Anonymous;
-    uint                ulRawButtons;
-    int                 lLastX;
-    int                 lLastY;
-    uint                ulExtraInformation;
+    MOUSE_STATE usFlags;
+    union
+    {
+        uint ulButtons;
+        struct
+        {
+            ushort usButtonFlags;
+            ushort usButtonData;
+        }
+    }
+    uint        ulRawButtons;
+    int         lLastX;
+    int         lLastY;
+    uint        ulExtraInformation;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-rawkeyboard))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-rawkeyboard
 struct RAWKEYBOARD
 {
     ushort MakeCode;
@@ -115,7 +130,7 @@ struct RAWKEYBOARD
     uint   ExtraInformation;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-rawhid))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-rawhid
 struct RAWHID
 {
     uint dwSizeHid;
@@ -123,14 +138,19 @@ struct RAWHID
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] bRawData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-rawinput))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-rawinput
 struct RAWINPUT
 {
     RAWINPUTHEADER header;
-    _data_e__Union data;
+    union data
+    {
+        RAWMOUSE    mouse;
+        RAWKEYBOARD keyboard;
+        RAWHID      hid;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-rid_device_info_mouse))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-rid_device_info_mouse
 struct RID_DEVICE_INFO_MOUSE
 {
     uint dwId;
@@ -139,7 +159,7 @@ struct RID_DEVICE_INFO_MOUSE
     BOOL fHasHorizontalWheel;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-rid_device_info_keyboard))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-rid_device_info_keyboard
 struct RID_DEVICE_INFO_KEYBOARD
 {
     uint dwType;
@@ -150,7 +170,7 @@ struct RID_DEVICE_INFO_KEYBOARD
     uint dwNumberOfKeysTotal;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-rid_device_info_hid))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-rid_device_info_hid
 struct RID_DEVICE_INFO_HID
 {
     uint   dwVendorId;
@@ -161,15 +181,20 @@ struct RID_DEVICE_INFO_HID
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-rid_device_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-rid_device_info
 struct RID_DEVICE_INFO
 {
     uint                 cbSize;
     RID_DEVICE_INFO_TYPE dwType;
-    _Anonymous_e__Union  Anonymous;
+    union
+    {
+        RID_DEVICE_INFO_MOUSE mouse;
+        RID_DEVICE_INFO_KEYBOARD keyboard;
+        RID_DEVICE_INFO_HID hid;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-rawinputdevice))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-rawinputdevice
 struct RAWINPUTDEVICE
 {
     ushort               usUsagePage;
@@ -178,14 +203,14 @@ struct RAWINPUTDEVICE
     HWND                 hwndTarget;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-rawinputdevicelist))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-rawinputdevicelist
 struct RAWINPUTDEVICELIST
 {
     HANDLE               hDevice;
     RID_DEVICE_INFO_TYPE dwType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-input_message_source))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-input_message_source
 struct INPUT_MESSAGE_SOURCE
 {
     INPUT_MESSAGE_DEVICE_TYPE deviceType;

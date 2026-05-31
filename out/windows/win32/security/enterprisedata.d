@@ -3,18 +3,20 @@
 module windows.win32.security.enterprisedata;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, HANDLE, HRESULT, HWND, NTSTATUS, PWSTR;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, HANDLE, HRESULT, HWND, NTSTATUS,
+                                                    PWSTR;
 public import windows.win32.storage.packaging.appx : PACKAGE_ID;
-public import windows.win32.system.com : IUnknown;
-public import windows.win32.system.winrt : HSTRING, IInspectable;
+public import windows.win32.system.com.com : IUnknown;
+public import windows.win32.system.winrt.winrt : HSTRING, IInspectable;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/srpapi/ne-srpapi-enterprise_data_policies))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/srpapi/ne-srpapi-enterprise_data_policies
 alias ENTERPRISE_DATA_POLICIES = int;
 enum : int
 {
@@ -23,6 +25,7 @@ enum : int
     ENTERPRISE_POLICY_ENLIGHTENED = 0x00000002,
     ENTERPRISE_POLICY_EXEMPT      = 0x00000004,
 }
+
 alias SRPHOSTING_TYPE = int;
 enum : int
 {
@@ -30,6 +33,7 @@ enum : int
     SRPHOSTING_TYPE_WINHTTP = 0x00000001,
     SRPHOSTING_TYPE_WININET = 0x00000002,
 }
+
 alias SRPHOSTING_VERSION = int;
 enum : int
 {
@@ -115,37 +119,37 @@ HRESULT UnprotectFile(const(PWSTR) fileOrFolderPath, const(FILE_UNPROTECT_OPTION
 // Interfaces
 
 @GUID("4652651d-c1fe-4ba1-9f0a-c0f56596f721")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/efswrtinterop/nn-efswrtinterop-iprotectionpolicymanagerinterop))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/efswrtinterop/nn-efswrtinterop-iprotectionpolicymanagerinterop
 interface IProtectionPolicyManagerInterop : IInspectable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/efswrtinterop/nf-efswrtinterop-iprotectionpolicymanagerinterop-requestaccessforwindowasync))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/efswrtinterop/nf-efswrtinterop-iprotectionpolicymanagerinterop-requestaccessforwindowasync
     HRESULT RequestAccessForWindowAsync(HWND appWindow, HSTRING sourceIdentity, HSTRING targetIdentity, 
                                         const(GUID)* riid, void** asyncOperation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/efswrtinterop/nf-efswrtinterop-iprotectionpolicymanagerinterop-getforwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/efswrtinterop/nf-efswrtinterop-iprotectionpolicymanagerinterop-getforwindow
     HRESULT GetForWindow(HWND appWindow, const(GUID)* riid, void** result);
 }
 
 @GUID("157cfbe4-a78d-4156-b384-61fdac41e686")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/efswrtinterop/nn-efswrtinterop-iprotectionpolicymanagerinterop2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/efswrtinterop/nn-efswrtinterop-iprotectionpolicymanagerinterop2
 interface IProtectionPolicyManagerInterop2 : IInspectable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/efswrtinterop/nf-efswrtinterop-iprotectionpolicymanagerinterop2-requestaccessforappwithwindowasync))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/efswrtinterop/nf-efswrtinterop-iprotectionpolicymanagerinterop2-requestaccessforappwithwindowasync
     HRESULT RequestAccessForAppWithWindowAsync(HWND appWindow, HSTRING sourceIdentity, 
                                                HSTRING appPackageFamilyName, const(GUID)* riid, 
                                                void** asyncOperation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/efswrtinterop/nf-efswrtinterop-iprotectionpolicymanagerinterop2-requestaccesswithauditinginfoforwindowasync))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/efswrtinterop/nf-efswrtinterop-iprotectionpolicymanagerinterop2-requestaccesswithauditinginfoforwindowasync
     HRESULT RequestAccessWithAuditingInfoForWindowAsync(HWND appWindow, HSTRING sourceIdentity, 
                                                         HSTRING targetIdentity, IUnknown auditInfoUnk, 
                                                         const(GUID)* riid, void** asyncOperation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/efswrtinterop/nf-efswrtinterop-iprotectionpolicymanagerinterop2-requestaccesswithmessageforwindowasync))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/efswrtinterop/nf-efswrtinterop-iprotectionpolicymanagerinterop2-requestaccesswithmessageforwindowasync
     HRESULT RequestAccessWithMessageForWindowAsync(HWND appWindow, HSTRING sourceIdentity, HSTRING targetIdentity, 
                                                    IUnknown auditInfoUnk, HSTRING messageFromApp, const(GUID)* riid, 
                                                    void** asyncOperation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/efswrtinterop/nf-efswrtinterop-iprotectionpolicymanagerinterop2-requestaccessforappwithauditinginfoforwindowasync))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/efswrtinterop/nf-efswrtinterop-iprotectionpolicymanagerinterop2-requestaccessforappwithauditinginfoforwindowasync
     HRESULT RequestAccessForAppWithAuditingInfoForWindowAsync(HWND appWindow, HSTRING sourceIdentity, 
                                                               HSTRING appPackageFamilyName, IUnknown auditInfoUnk, 
                                                               const(GUID)* riid, void** asyncOperation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/efswrtinterop/nf-efswrtinterop-iprotectionpolicymanagerinterop2-requestaccessforappwithmessageforwindowasync))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/efswrtinterop/nf-efswrtinterop-iprotectionpolicymanagerinterop2-requestaccessforappwithmessageforwindowasync
     HRESULT RequestAccessForAppWithMessageForWindowAsync(HWND appWindow, HSTRING sourceIdentity, 
                                                          HSTRING appPackageFamilyName, IUnknown auditInfoUnk, 
                                                          HSTRING messageFromApp, const(GUID)* riid, 

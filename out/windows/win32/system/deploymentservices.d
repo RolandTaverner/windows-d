@@ -3,9 +3,10 @@
 module windows.win32.system.deploymentservices;
 
 public import windows.core;
-public import windows.win32.foundation : BOOL, BSTR, HANDLE, HRESULT, LPARAM, PWSTR,
-                                         SYSTEMTIME, VARIANT_BOOL, WPARAM;
-public import windows.win32.system.com : IDispatch, IUnknown;
+public import windows.win32.foundation.foundation : BOOL, BSTR, HANDLE, HRESULT, LPARAM,
+                                                    PWSTR, SYSTEMTIME, VARIANT_BOOL,
+                                                    WPARAM;
+public import windows.win32.system.com.com : IDispatch, IUnknown;
 public import windows.win32.system.registry : HKEY;
 
 extern(Windows) @nogc nothrow:
@@ -13,27 +14,31 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias CPU_ARCHITECTURE = uint;
 enum : uint
 {
-    CPU_ARCHITECTURE_AMD64 = 0x00000009,
-    CPU_ARCHITECTURE_IA64  = 0x00000006,
-    CPU_ARCHITECTURE_INTEL = 0x00000000,
+    CPU_ARCHITECTURE_AMD64 = 0x00000009U,
+    CPU_ARCHITECTURE_IA64  = 0x00000006U,
+    CPU_ARCHITECTURE_INTEL = 0x00000000U,
 }
+
 alias PFN_WDS_CLI_CALLBACK_MESSAGE_ID = uint;
 enum : uint
 {
-    WDS_CLI_MSG_START    = 0x00000000,
-    WDS_CLI_MSG_COMPLETE = 0x00000001,
-    WDS_CLI_MSG_PROGRESS = 0x00000002,
-    WDS_CLI_MSG_TEXT     = 0x00000003,
+    WDS_CLI_MSG_START    = 0x00000000U,
+    WDS_CLI_MSG_COMPLETE = 0x00000001U,
+    WDS_CLI_MSG_PROGRESS = 0x00000002U,
+    WDS_CLI_MSG_TEXT     = 0x00000003U,
 }
+
 alias WDS_TRANSPORTCLIENT_REQUEST_AUTH_LEVEL = uint;
 enum : uint
 {
-    WDS_TRANSPORTCLIENT_AUTH    = 0x00000001,
-    WDS_TRANSPORTCLIENT_NO_AUTH = 0x00000002,
+    WDS_TRANSPORTCLIENT_AUTH    = 0x00000001U,
+    WDS_TRANSPORTCLIENT_NO_AUTH = 0x00000002U,
 }
+
 alias WDS_CLI_IMAGE_TYPE = int;
 enum : int
 {
@@ -42,6 +47,7 @@ enum : int
     WDS_CLI_IMAGE_TYPE_VHD     = 0x00000002,
     WDS_CLI_IMAGE_TYPE_VHDX    = 0x00000003,
 }
+
 alias WDS_CLI_FIRMWARE_TYPE = int;
 enum : int
 {
@@ -49,6 +55,7 @@ enum : int
     WDS_CLI_FIRMWARE_BIOS    = 0x00000001,
     WDS_CLI_FIRMWARE_EFI     = 0x00000002,
 }
+
 alias WDS_CLI_IMAGE_PARAM_TYPE = int;
 enum : int
 {
@@ -56,7 +63,8 @@ enum : int
     WDS_CLI_IMAGE_PARAM_SPARSE_FILE         = 0x00000001,
     WDS_CLI_IMAGE_PARAM_SUPPORTED_FIRMWARES = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstpdi/ne-wdstpdi-transportprovider_callback_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstpdi/ne-wdstpdi-transportprovider_callback_id
 alias TRANSPORTPROVIDER_CALLBACK_ID = int;
 enum : int
 {
@@ -74,7 +82,8 @@ enum : int
     WDS_TRANSPORTPROVIDER_GET_CONTENT_METADATA = 0x0000000b,
     WDS_TRANSPORTPROVIDER_MAX_CALLBACKS        = 0x0000000c,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstci/ne-wdstci-transportclient_callback_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstci/ne-wdstci-transportclient_callback_id
 alias TRANSPORTCLIENT_CALLBACK_ID = int;
 enum : int
 {
@@ -86,7 +95,8 @@ enum : int
     WDS_TRANSPORTCLIENT_SESSION_NEGOTIATE = 0x00000005,
     WDS_TRANSPORTCLIENT_MAX_CALLBACKS     = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/ne-wdstptmgmt-wdstransport_feature_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/ne-wdstptmgmt-wdstransport_feature_flags
 alias WDSTRANSPORT_FEATURE_FLAGS = int;
 enum : int
 {
@@ -94,14 +104,16 @@ enum : int
     WdsTptFeatureTransportServer  = 0x00000002,
     WdsTptFeatureDeploymentServer = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/ne-wdstptmgmt-wdstransport_protocol_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/ne-wdstptmgmt-wdstransport_protocol_flags
 alias WDSTRANSPORT_PROTOCOL_FLAGS = int;
 enum : int
 {
     WdsTptProtocolUnicast   = 0x00000001,
     WdsTptProtocolMulticast = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/ne-wdstptmgmt-wdstransport_namespace_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/ne-wdstptmgmt-wdstransport_namespace_type
 alias WDSTRANSPORT_NAMESPACE_TYPE = int;
 enum : int
 {
@@ -110,7 +122,8 @@ enum : int
     WdsTptNamespaceTypeScheduledCastManualStart = 0x00000002,
     WdsTptNamespaceTypeScheduledCastAutoStart   = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/ne-wdstptmgmt-wdstransport_disconnect_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/ne-wdstptmgmt-wdstransport_disconnect_type
 alias WDSTRANSPORT_DISCONNECT_TYPE = int;
 enum : int
 {
@@ -118,14 +131,16 @@ enum : int
     WdsTptDisconnectFallback = 0x00000001,
     WdsTptDisconnectAbort    = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/ne-wdstptmgmt-wdstransport_service_notification))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/ne-wdstptmgmt-wdstransport_service_notification
 alias WDSTRANSPORT_SERVICE_NOTIFICATION = int;
 enum : int
 {
     WdsTptServiceNotifyUnknown      = 0x00000000,
     WdsTptServiceNotifyReadSettings = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/ne-wdstptmgmt-wdstransport_ip_address_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/ne-wdstptmgmt-wdstransport_ip_address_type
 alias WDSTRANSPORT_IP_ADDRESS_TYPE = int;
 enum : int
 {
@@ -133,7 +148,8 @@ enum : int
     WdsTptIpAddressIpv4    = 0x00000001,
     WdsTptIpAddressIpv6    = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/ne-wdstptmgmt-wdstransport_ip_address_source_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/ne-wdstptmgmt-wdstransport_ip_address_source_type
 alias WDSTRANSPORT_IP_ADDRESS_SOURCE_TYPE = int;
 enum : int
 {
@@ -141,7 +157,8 @@ enum : int
     WdsTptIpAddressSourceDhcp    = 0x00000001,
     WdsTptIpAddressSourceRange   = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/ne-wdstptmgmt-wdstransport_network_profile_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/ne-wdstptmgmt-wdstransport_network_profile_type
 alias WDSTRANSPORT_NETWORK_PROFILE_TYPE = int;
 enum : int
 {
@@ -151,7 +168,8 @@ enum : int
     WdsTptNetworkProfile100Mbps = 0x00000003,
     WdsTptNetworkProfile1Gbps   = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/ne-wdstptmgmt-wdstransport_diagnostics_component_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/ne-wdstptmgmt-wdstransport_diagnostics_component_flags
 alias WDSTRANSPORT_DIAGNOSTICS_COMPONENT_FLAGS = int;
 enum : int
 {
@@ -160,7 +178,8 @@ enum : int
     WdsTptDiagnosticsComponentImageServer = 0x00000004,
     WdsTptDiagnosticsComponentMulticast   = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/ne-wdstptmgmt-wdstransport_slow_client_handling_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/ne-wdstptmgmt-wdstransport_slow_client_handling_type
 alias WDSTRANSPORT_SLOW_CLIENT_HANDLING_TYPE = int;
 enum : int
 {
@@ -169,14 +188,16 @@ enum : int
     WdsTptSlowClientHandlingAutoDisconnect = 0x00000002,
     WdsTptSlowClientHandlingMultistream    = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/ne-wdstptmgmt-wdstransport_udp_port_policy))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/ne-wdstptmgmt-wdstransport_udp_port_policy
 alias WDSTRANSPORT_UDP_PORT_POLICY = int;
 enum : int
 {
     WdsTptUdpPortPolicyDynamic = 0x00000000,
     WdsTptUdpPortPolicyFixed   = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/ne-wdstptmgmt-wdstransport_tftp_capability))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/ne-wdstptmgmt-wdstransport_tftp_capability
 alias WDSTRANSPORT_TFTP_CAPABILITY = int;
 enum : int
 {
@@ -187,146 +208,146 @@ enum : int
 // Constants
 
 
-enum uint WDS_CLI_TRANSFER_ASYNCHRONOUS = 0x00000001;
-enum uint WDS_CLI_NO_SPARSE_FILE = 0x00000002;
+enum uint WDS_CLI_TRANSFER_ASYNCHRONOUS = 0x00000001U;
+enum uint WDS_CLI_NO_SPARSE_FILE = 0x00000002U;
 
 enum : uint
 {
-    PXE_DHCP_SERVER_PORT = 0x00000043,
-    PXE_DHCP_CLIENT_PORT = 0x00000044,
+    PXE_DHCP_SERVER_PORT = 0x00000043U,
+    PXE_DHCP_CLIENT_PORT = 0x00000044U,
 }
 
-enum uint PXE_SERVER_PORT = 0x00000fab;
+enum uint PXE_SERVER_PORT = 0x00000fabU;
 
 enum : uint
 {
-    PXE_DHCPV6_SERVER_PORT = 0x00000223,
-    PXE_DHCPV6_CLIENT_PORT = 0x00000222,
-}
-
-enum : uint
-{
-    PXE_DHCP_FILE_SIZE         = 0x00000080,
-    PXE_DHCP_SERVER_SIZE       = 0x00000040,
-    PXE_DHCP_HWAADR_SIZE       = 0x00000010,
-    PXE_DHCP_MAGIC_COOKIE_SIZE = 0x00000004,
+    PXE_DHCPV6_SERVER_PORT = 0x00000223U,
+    PXE_DHCPV6_CLIENT_PORT = 0x00000222U,
 }
 
 enum : uint
 {
-    PXE_REG_INDEX_TOP    = 0x00000000,
-    PXE_REG_INDEX_BOTTOM = 0xffffffff,
+    PXE_DHCP_FILE_SIZE         = 0x00000080U,
+    PXE_DHCP_SERVER_SIZE       = 0x00000040U,
+    PXE_DHCP_HWAADR_SIZE       = 0x00000010U,
+    PXE_DHCP_MAGIC_COOKIE_SIZE = 0x00000004U,
 }
 
 enum : uint
 {
-    PXE_CALLBACK_RECV_REQUEST    = 0x00000000,
-    PXE_CALLBACK_SHUTDOWN        = 0x00000001,
-    PXE_CALLBACK_SERVICE_CONTROL = 0x00000002,
-    PXE_CALLBACK_MAX             = 0x00000003,
-}
-
-enum uint PXE_GSI_TRACE_ENABLED = 0x00000001;
-enum uint PXE_GSI_SERVER_DUID = 0x00000002;
-enum uint PXE_MAX_ADDRESS = 0x00000010;
-
-enum : uint
-{
-    PXE_ADDR_BROADCAST      = 0x00000001,
-    PXE_ADDR_USE_PORT       = 0x00000002,
-    PXE_ADDR_USE_ADDR       = 0x00000004,
-    PXE_ADDR_USE_DHCP_RULES = 0x00000008,
-}
-
-enum uint PXE_DHCPV6_RELAY_HOP_COUNT_LIMIT = 0x00000020;
-
-enum : uint
-{
-    PXE_BA_NBP      = 0x00000001,
-    PXE_BA_CUSTOM   = 0x00000002,
-    PXE_BA_IGNORE   = 0x00000003,
-    PXE_BA_REJECTED = 0x00000004,
+    PXE_REG_INDEX_TOP    = 0x00000000U,
+    PXE_REG_INDEX_BOTTOM = 0xffffffffU,
 }
 
 enum : uint
 {
-    PXE_TRACE_VERBOSE = 0x00010000,
-    PXE_TRACE_INFO    = 0x00020000,
-    PXE_TRACE_WARNING = 0x00040000,
-    PXE_TRACE_ERROR   = 0x00080000,
-    PXE_TRACE_FATAL   = 0x00100000,
+    PXE_CALLBACK_RECV_REQUEST    = 0x00000000U,
+    PXE_CALLBACK_SHUTDOWN        = 0x00000001U,
+    PXE_CALLBACK_SERVICE_CONTROL = 0x00000002U,
+    PXE_CALLBACK_MAX             = 0x00000003U,
+}
+
+enum uint PXE_GSI_TRACE_ENABLED = 0x00000001U;
+enum uint PXE_GSI_SERVER_DUID = 0x00000002U;
+enum uint PXE_MAX_ADDRESS = 0x00000010U;
+
+enum : uint
+{
+    PXE_ADDR_BROADCAST      = 0x00000001U,
+    PXE_ADDR_USE_PORT       = 0x00000002U,
+    PXE_ADDR_USE_ADDR       = 0x00000004U,
+    PXE_ADDR_USE_DHCP_RULES = 0x00000008U,
+}
+
+enum uint PXE_DHCPV6_RELAY_HOP_COUNT_LIMIT = 0x00000020U;
+
+enum : uint
+{
+    PXE_BA_NBP      = 0x00000001U,
+    PXE_BA_CUSTOM   = 0x00000002U,
+    PXE_BA_IGNORE   = 0x00000003U,
+    PXE_BA_REJECTED = 0x00000004U,
 }
 
 enum : uint
 {
-    PXE_PROV_ATTR_FILTER       = 0x00000000,
-    PXE_PROV_ATTR_FILTER_IPV6  = 0x00000001,
-    PXE_PROV_ATTR_IPV6_CAPABLE = 0x00000002,
+    PXE_TRACE_VERBOSE = 0x00010000U,
+    PXE_TRACE_INFO    = 0x00020000U,
+    PXE_TRACE_WARNING = 0x00040000U,
+    PXE_TRACE_ERROR   = 0x00080000U,
+    PXE_TRACE_FATAL   = 0x00100000U,
 }
 
 enum : uint
 {
-    PXE_PROV_FILTER_ALL       = 0x00000000,
-    PXE_PROV_FILTER_DHCP_ONLY = 0x00000001,
-    PXE_PROV_FILTER_PXE_ONLY  = 0x00000002,
-}
-
-enum uint MC_SERVER_CURRENT_VERSION = 0x00000001;
-enum uint TRANSPORTPROVIDER_CURRENT_VERSION = 0x00000001;
-
-enum : uint
-{
-    WDS_MC_TRACE_VERBOSE = 0x00010000,
-    WDS_MC_TRACE_INFO    = 0x00020000,
-    WDS_MC_TRACE_WARNING = 0x00040000,
-    WDS_MC_TRACE_ERROR   = 0x00080000,
-    WDS_MC_TRACE_FATAL   = 0x00100000,
+    PXE_PROV_ATTR_FILTER       = 0x00000000U,
+    PXE_PROV_ATTR_FILTER_IPV6  = 0x00000001U,
+    PXE_PROV_ATTR_IPV6_CAPABLE = 0x00000002U,
 }
 
 enum : uint
 {
-    WDS_TRANSPORTCLIENT_CURRENT_API_VERSION = 0x00000001,
-    WDS_TRANSPORTCLIENT_PROTOCOL_MULTICAST  = 0x00000001,
-    WDS_TRANSPORTCLIENT_NO_CACHE            = 0x00000000,
-    WDS_TRANSPORTCLIENT_STATUS_IN_PROGRESS  = 0x00000001,
-    WDS_TRANSPORTCLIENT_STATUS_SUCCESS      = 0x00000002,
-    WDS_TRANSPORTCLIENT_STATUS_FAILURE      = 0x00000003,
+    PXE_PROV_FILTER_ALL       = 0x00000000U,
+    PXE_PROV_FILTER_DHCP_ONLY = 0x00000001U,
+    PXE_PROV_FILTER_PXE_ONLY  = 0x00000002U,
 }
 
-enum uint WDSTRANSPORT_RESOURCE_UTILIZATION_UNKNOWN = 0x000000ff;
+enum uint MC_SERVER_CURRENT_VERSION = 0x00000001U;
+enum uint TRANSPORTPROVIDER_CURRENT_VERSION = 0x00000001U;
 
 enum : uint
 {
-    WDSBP_PK_TYPE_DHCP   = 0x00000001,
-    WDSBP_PK_TYPE_WDSNBP = 0x00000002,
-    WDSBP_PK_TYPE_BCD    = 0x00000004,
-    WDSBP_PK_TYPE_DHCPV6 = 0x00000008,
-}
-
-enum : uint
-{
-    WDSBP_OPT_TYPE_NONE              = 0x00000000,
-    WDSBP_OPT_TYPE_BYTE              = 0x00000001,
-    WDSBP_OPT_TYPE_USHORT            = 0x00000002,
-    WDSBP_OPT_TYPE_ULONG             = 0x00000003,
-    WDSBP_OPT_TYPE_WSTR              = 0x00000004,
-    WDSBP_OPT_TYPE_STR               = 0x00000005,
-    WDSBP_OPT_TYPE_IP4               = 0x00000006,
-    WDSBP_OPT_TYPE_IP6               = 0x00000007,
-    WDSBP_OPTVAL_ACTION_APPROVAL     = 0x00000001,
-    WDSBP_OPTVAL_ACTION_REFERRAL     = 0x00000003,
-    WDSBP_OPTVAL_ACTION_ABORT        = 0x00000005,
-    WDSBP_OPTVAL_PXE_PROMPT_OPTIN    = 0x00000001,
-    WDSBP_OPTVAL_PXE_PROMPT_NOPROMPT = 0x00000002,
-    WDSBP_OPTVAL_PXE_PROMPT_OPTOUT   = 0x00000003,
-    WDSBP_OPTVAL_NBP_VER_7           = 0x00000700,
-    WDSBP_OPTVAL_NBP_VER_8           = 0x00000800,
+    WDS_MC_TRACE_VERBOSE = 0x00010000U,
+    WDS_MC_TRACE_INFO    = 0x00020000U,
+    WDS_MC_TRACE_WARNING = 0x00040000U,
+    WDS_MC_TRACE_ERROR   = 0x00080000U,
+    WDS_MC_TRACE_FATAL   = 0x00100000U,
 }
 
 enum : uint
 {
-    FACILITY_WDSMCSERVER = 0x00000121,
-    FACILITY_WDSMCCLIENT = 0x00000122,
+    WDS_TRANSPORTCLIENT_CURRENT_API_VERSION = 0x00000001U,
+    WDS_TRANSPORTCLIENT_PROTOCOL_MULTICAST  = 0x00000001U,
+    WDS_TRANSPORTCLIENT_NO_CACHE            = 0x00000000U,
+    WDS_TRANSPORTCLIENT_STATUS_IN_PROGRESS  = 0x00000001U,
+    WDS_TRANSPORTCLIENT_STATUS_SUCCESS      = 0x00000002U,
+    WDS_TRANSPORTCLIENT_STATUS_FAILURE      = 0x00000003U,
+}
+
+enum uint WDSTRANSPORT_RESOURCE_UTILIZATION_UNKNOWN = 0x000000ffU;
+
+enum : uint
+{
+    WDSBP_PK_TYPE_DHCP   = 0x00000001U,
+    WDSBP_PK_TYPE_WDSNBP = 0x00000002U,
+    WDSBP_PK_TYPE_BCD    = 0x00000004U,
+    WDSBP_PK_TYPE_DHCPV6 = 0x00000008U,
+}
+
+enum : uint
+{
+    WDSBP_OPT_TYPE_NONE              = 0x00000000U,
+    WDSBP_OPT_TYPE_BYTE              = 0x00000001U,
+    WDSBP_OPT_TYPE_USHORT            = 0x00000002U,
+    WDSBP_OPT_TYPE_ULONG             = 0x00000003U,
+    WDSBP_OPT_TYPE_WSTR              = 0x00000004U,
+    WDSBP_OPT_TYPE_STR               = 0x00000005U,
+    WDSBP_OPT_TYPE_IP4               = 0x00000006U,
+    WDSBP_OPT_TYPE_IP6               = 0x00000007U,
+    WDSBP_OPTVAL_ACTION_APPROVAL     = 0x00000001U,
+    WDSBP_OPTVAL_ACTION_REFERRAL     = 0x00000003U,
+    WDSBP_OPTVAL_ACTION_ABORT        = 0x00000005U,
+    WDSBP_OPTVAL_PXE_PROMPT_OPTIN    = 0x00000001U,
+    WDSBP_OPTVAL_PXE_PROMPT_NOPROMPT = 0x00000002U,
+    WDSBP_OPTVAL_PXE_PROMPT_OPTOUT   = 0x00000003U,
+    WDSBP_OPTVAL_NBP_VER_7           = 0x00000700U,
+    WDSBP_OPTVAL_NBP_VER_8           = 0x00000800U,
+}
+
+enum : uint
+{
+    FACILITY_WDSMCSERVER = 0x00000121U,
+    FACILITY_WDSMCCLIENT = 0x00000122U,
 }
 
 enum HRESULT WDSMCSERVER_CATEGORY = HRESULT(0x00000001);
@@ -419,7 +440,7 @@ enum HRESULT WDSTPC_E_ALREADY_IN_LOWEST_SESSION = HRESULT(0xc122030a);
 enum HRESULT WDSTPC_E_CLIENT_DEMOTE_NOT_SUPPORTED = HRESULT(0xc122030b);
 enum HRESULT WDSTPC_E_NO_IP4_INTERFACE = HRESULT(0xc122030c);
 enum HRESULT WDSTPTC_E_WIM_APPLY_REQUIRES_REFERENCE_IMAGE = HRESULT(0xc122030d);
-enum uint FACILITY_WDSTPTMGMT = 0x00000110;
+enum uint FACILITY_WDSTPTMGMT = 0x00000110U;
 
 enum : HRESULT
 {
@@ -563,7 +584,7 @@ alias PFN_WdsTransportClientSessionNegotiate = void function(HANDLE hSessionKey,
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdsclientapi/ns-wdsclientapi-wds_cli_cred))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdsclientapi/ns-wdsclientapi-wds_cli_cred
 struct WDS_CLI_CRED
 {
     const(PWSTR) pwszUserName;
@@ -571,7 +592,7 @@ struct WDS_CLI_CRED
     const(PWSTR) pwszPassword;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdspxe/ns-wdspxe-pxe_dhcp_option))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdspxe/ns-wdspxe-pxe_dhcp_option
 struct PXE_DHCP_OPTION
 {
 align (1):
@@ -580,29 +601,34 @@ align (1):
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] OptionValue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdspxe/ns-wdspxe-pxe_dhcp_message))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdspxe/ns-wdspxe-pxe_dhcp_message
 struct PXE_DHCP_MESSAGE
 {
 align (1):
-    ubyte               Operation;
-    ubyte               HardwareAddressType;
-    ubyte               HardwareAddressLength;
-    ubyte               HopCount;
-    uint                TransactionID;
-    ushort              SecondsSinceBoot;
-    ushort              Reserved;
-    uint                ClientIpAddress;
-    uint                YourIpAddress;
-    uint                BootstrapServerAddress;
-    uint                RelayAgentIpAddress;
-    ubyte[16]           HardwareAddress;
-    ubyte[64]           HostName;
-    ubyte[128]          BootFileName;
-    _Anonymous_e__Union Anonymous;
-    PXE_DHCP_OPTION     Option;
+    ubyte           Operation;
+    ubyte           HardwareAddressType;
+    ubyte           HardwareAddressLength;
+    ubyte           HopCount;
+    uint            TransactionID;
+    ushort          SecondsSinceBoot;
+    ushort          Reserved;
+    uint            ClientIpAddress;
+    uint            YourIpAddress;
+    uint            BootstrapServerAddress;
+    uint            RelayAgentIpAddress;
+    ubyte[16]       HardwareAddress;
+    ubyte[64]       HostName;
+    ubyte[128]      BootFileName;
+    union
+    {
+    align (1):
+        ubyte[4] bMagicCookie;
+        uint     uMagicCookie;
+    }
+    PXE_DHCP_OPTION Option;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdspxe/ns-wdspxe-pxe_dhcpv6_option))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdspxe/ns-wdspxe-pxe_dhcpv6_option
 struct PXE_DHCPV6_OPTION
 {
 align (1):
@@ -611,7 +637,7 @@ align (1):
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Data;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdspxe/ns-wdspxe-pxe_dhcpv6_message_header))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdspxe/ns-wdspxe-pxe_dhcpv6_message_header
 struct PXE_DHCPV6_MESSAGE_HEADER
 {
 align (1):
@@ -619,7 +645,7 @@ align (1):
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Message;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdspxe/ns-wdspxe-pxe_dhcpv6_message))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdspxe/ns-wdspxe-pxe_dhcpv6_message
 struct PXE_DHCPV6_MESSAGE
 {
 align (1):
@@ -630,7 +656,7 @@ align (1):
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/PXE_DHCPV6_OPTION[1] Options;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdspxe/ns-wdspxe-pxe_dhcpv6_relay_message))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdspxe/ns-wdspxe-pxe_dhcpv6_relay_message
 struct PXE_DHCPV6_RELAY_MESSAGE
 {
 align (1):
@@ -641,7 +667,7 @@ align (1):
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/PXE_DHCPV6_OPTION[1] Options;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdspxe/ns-wdspxe-pxe_provider))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdspxe/ns-wdspxe-pxe_provider
 struct PXE_PROVIDER
 {
     uint  uSizeOfStruct;
@@ -651,16 +677,20 @@ struct PXE_PROVIDER
     uint  uIndex;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdspxe/ns-wdspxe-pxe_address))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdspxe/ns-wdspxe-pxe_address
 struct PXE_ADDRESS
 {
-    uint                uFlags;
-    _Anonymous_e__Union Anonymous;
-    uint                uAddrLen;
-    ushort              uPort;
+    uint   uFlags;
+    union
+    {
+        ubyte[16] bAddress;
+        uint      uIpAddress;
+    }
+    uint   uAddrLen;
+    ushort uPort;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdspxe/ns-wdspxe-pxe_dhcpv6_nested_relay_message))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdspxe/ns-wdspxe-pxe_dhcpv6_nested_relay_message
 struct PXE_DHCPV6_NESTED_RELAY_MESSAGE
 {
     PXE_DHCPV6_RELAY_MESSAGE* pRelayMessage;
@@ -669,7 +699,7 @@ struct PXE_DHCPV6_NESTED_RELAY_MESSAGE
     ushort cbInterfaceIdOption;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstpdi/ns-wdstpdi-wds_transportprovider_init_params))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstpdi/ns-wdstpdi-wds_transportprovider_init_params
 struct WDS_TRANSPORTPROVIDER_INIT_PARAMS
 {
     uint   ulLength;
@@ -678,14 +708,14 @@ struct WDS_TRANSPORTPROVIDER_INIT_PARAMS
     HANDLE hProvider;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstpdi/ns-wdstpdi-wds_transportprovider_settings))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstpdi/ns-wdstpdi-wds_transportprovider_settings
 struct WDS_TRANSPORTPROVIDER_SETTINGS
 {
     uint ulLength;
     uint ulProviderVersion;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstci/ns-wdstci-transportclient_session_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstci/ns-wdstci-transportclient_session_info
 struct TRANSPORTCLIENT_SESSION_INFO
 {
     uint  ulStructureLength;
@@ -693,7 +723,7 @@ struct TRANSPORTCLIENT_SESSION_INFO
     uint  ulBlockSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstci/ns-wdstci-wds_transportclient_request))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstci/ns-wdstci-wds_transportclient_request
 struct WDS_TRANSPORTCLIENT_REQUEST
 {
     uint         ulLength;
@@ -1214,436 +1244,436 @@ struct WdsTransportContentProvider;
 
 @GUID("46ad894b-0bab-47dc-84b2-7b553f1d8f80")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportcacheable))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportcacheable
 interface IWdsTransportCacheable : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportcacheable-get_dirty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportcacheable-get_dirty
     HRESULT get_Dirty(VARIANT_BOOL* pbDirty);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportcacheable-discard))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportcacheable-discard
     HRESULT Discard();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportcacheable-refresh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportcacheable-refresh
     HRESULT Refresh();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportcacheable-commit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportcacheable-commit
     HRESULT Commit();
 }
 
 @GUID("b8ba4b1a-2ff4-43ab-996c-b2b10a91a6eb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportcollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportcollection
 interface IWdsTransportCollection : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportcollection-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportcollection-get_count
     HRESULT get_Count(uint* pulCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportcollection-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportcollection-get_item
     HRESULT get_Item(uint ulIndex, IDispatch* ppVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportcollection-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportcollection-get__newenum
     HRESULT get__NewEnum(IUnknown* ppVal);
 }
 
 @GUID("5b0d35f5-1b13-4afd-b878-6526dc340b5d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportmanager))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportmanager
 interface IWdsTransportManager : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportmanager-getwdstransportserver))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportmanager-getwdstransportserver
     HRESULT GetWdsTransportServer(BSTR bszServerName, IWdsTransportServer* ppWdsTransportServer);
 }
 
 @GUID("09ccd093-830d-4344-a30a-73ae8e8fca90")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportserver))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportserver
 interface IWdsTransportServer : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportserver-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportserver-get_name
     HRESULT get_Name(BSTR* pbszName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportserver-get_setupmanager))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportserver-get_setupmanager
     HRESULT get_SetupManager(IWdsTransportSetupManager* ppWdsTransportSetupManager);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportserver-get_configurationmanager))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportserver-get_configurationmanager
     HRESULT get_ConfigurationManager(IWdsTransportConfigurationManager* ppWdsTransportConfigurationManager);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportserver-get_namespacemanager))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportserver-get_namespacemanager
     HRESULT get_NamespaceManager(IWdsTransportNamespaceManager* ppWdsTransportNamespaceManager);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportserver-disconnectclient))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportserver-disconnectclient
     HRESULT DisconnectClient(uint ulClientId, WDSTRANSPORT_DISCONNECT_TYPE DisconnectionType);
 }
 
 @GUID("256e999f-6df4-4538-81b9-857b9ab8fb47")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportserver2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportserver2
 interface IWdsTransportServer2 : IWdsTransportServer
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportserver2-get_tftpmanager))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportserver2-get_tftpmanager
     HRESULT get_TftpManager(IWdsTransportTftpManager* ppWdsTransportTftpManager);
 }
 
 @GUID("f7238425-efa8-40a4-aef9-c98d969c0b75")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportsetupmanager))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportsetupmanager
 interface IWdsTransportSetupManager : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportsetupmanager-get_version))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportsetupmanager-get_version
     HRESULT get_Version(ulong* pullVersion);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportsetupmanager-get_installedfeatures))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportsetupmanager-get_installedfeatures
     HRESULT get_InstalledFeatures(uint* pulInstalledFeatures);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportsetupmanager-get_protocols))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportsetupmanager-get_protocols
     HRESULT get_Protocols(uint* pulProtocols);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportsetupmanager-registercontentprovider))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportsetupmanager-registercontentprovider
     HRESULT RegisterContentProvider(BSTR bszName, BSTR bszDescription, BSTR bszFilePath, 
                                     BSTR bszInitializationRoutine);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportsetupmanager-deregistercontentprovider))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportsetupmanager-deregistercontentprovider
     HRESULT DeregisterContentProvider(BSTR bszName);
 }
 
 @GUID("02be79da-7e9e-4366-8b6e-2aa9a91be47f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportsetupmanager2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportsetupmanager2
 interface IWdsTransportSetupManager2 : IWdsTransportSetupManager
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportsetupmanager2-get_tftpcapabilities))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportsetupmanager2-get_tftpcapabilities
     HRESULT get_TftpCapabilities(uint* pulTftpCapabilities);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportsetupmanager2-get_contentproviders))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportsetupmanager2-get_contentproviders
     HRESULT get_ContentProviders(IWdsTransportCollection* ppProviderCollection);
 }
 
 @GUID("84cc4779-42dd-4792-891e-1321d6d74b44")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportconfigurationmanager))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportconfigurationmanager
 interface IWdsTransportConfigurationManager : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportconfigurationmanager-get_servicepolicy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportconfigurationmanager-get_servicepolicy
     HRESULT get_ServicePolicy(IWdsTransportServicePolicy* ppWdsTransportServicePolicy);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportconfigurationmanager-get_diagnosticspolicy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportconfigurationmanager-get_diagnosticspolicy
     HRESULT get_DiagnosticsPolicy(IWdsTransportDiagnosticsPolicy* ppWdsTransportDiagnosticsPolicy);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportconfigurationmanager-get_wdstransportservicesrunning))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportconfigurationmanager-get_wdstransportservicesrunning
     HRESULT get_WdsTransportServicesRunning(VARIANT_BOOL bRealtimeStatus, VARIANT_BOOL* pbServicesRunning);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportconfigurationmanager-enablewdstransportservices))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportconfigurationmanager-enablewdstransportservices
     HRESULT EnableWdsTransportServices();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportconfigurationmanager-disablewdstransportservices))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportconfigurationmanager-disablewdstransportservices
     HRESULT DisableWdsTransportServices();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportconfigurationmanager-startwdstransportservices))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportconfigurationmanager-startwdstransportservices
     HRESULT StartWdsTransportServices();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportconfigurationmanager-stopwdstransportservices))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportconfigurationmanager-stopwdstransportservices
     HRESULT StopWdsTransportServices();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportconfigurationmanager-restartwdstransportservices))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportconfigurationmanager-restartwdstransportservices
     HRESULT RestartWdsTransportServices();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportconfigurationmanager-notifywdstransportservices))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportconfigurationmanager-notifywdstransportservices
     HRESULT NotifyWdsTransportServices(WDSTRANSPORT_SERVICE_NOTIFICATION ServiceNotification);
 }
 
 @GUID("d0d85caf-a153-4f1d-a9dd-96f431c50717")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportconfigurationmanager2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportconfigurationmanager2
 interface IWdsTransportConfigurationManager2 : IWdsTransportConfigurationManager
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportconfigurationmanager2-get_multicastsessionpolicy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportconfigurationmanager2-get_multicastsessionpolicy
     HRESULT get_MulticastSessionPolicy(IWdsTransportMulticastSessionPolicy* ppWdsTransportMulticastSessionPolicy);
 }
 
 @GUID("3e22d9f6-3777-4d98-83e1-f98696717ba3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportnamespacemanager))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportnamespacemanager
 interface IWdsTransportNamespaceManager : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespacemanager-createnamespace))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespacemanager-createnamespace
     HRESULT CreateNamespace(WDSTRANSPORT_NAMESPACE_TYPE NamespaceType, BSTR bszNamespaceName, 
                             BSTR bszContentProvider, BSTR bszConfiguration, 
                             IWdsTransportNamespace* ppWdsTransportNamespace);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespacemanager-retrievenamespace))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespacemanager-retrievenamespace
     HRESULT RetrieveNamespace(BSTR bszNamespaceName, IWdsTransportNamespace* ppWdsTransportNamespace);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespacemanager-retrievenamespaces))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespacemanager-retrievenamespaces
     HRESULT RetrieveNamespaces(BSTR bszContentProvider, BSTR bszNamespaceName, VARIANT_BOOL bIncludeTombstones, 
                                IWdsTransportCollection* ppWdsTransportNamespaces);
 }
 
 @GUID("1327a7c8-ae8a-4fb3-8150-136227c37e9a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransporttftpmanager))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransporttftpmanager
 interface IWdsTransportTftpManager : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransporttftpmanager-retrievetftpclients))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransporttftpmanager-retrievetftpclients
     HRESULT RetrieveTftpClients(IWdsTransportCollection* ppWdsTransportTftpClients);
 }
 
 @GUID("b9468578-9f2b-48cc-b27a-a60799c2750c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportservicepolicy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportservicepolicy
 interface IWdsTransportServicePolicy : IWdsTransportCacheable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportservicepolicy-get_ipaddresssource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportservicepolicy-get_ipaddresssource
     HRESULT get_IpAddressSource(WDSTRANSPORT_IP_ADDRESS_TYPE AddressType, 
                                 WDSTRANSPORT_IP_ADDRESS_SOURCE_TYPE* pSourceType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportservicepolicy-put_ipaddresssource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportservicepolicy-put_ipaddresssource
     HRESULT put_IpAddressSource(WDSTRANSPORT_IP_ADDRESS_TYPE AddressType, 
                                 WDSTRANSPORT_IP_ADDRESS_SOURCE_TYPE SourceType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportservicepolicy-get_startipaddress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportservicepolicy-get_startipaddress
     HRESULT get_StartIpAddress(WDSTRANSPORT_IP_ADDRESS_TYPE AddressType, BSTR* pbszStartIpAddress);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportservicepolicy-put_startipaddress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportservicepolicy-put_startipaddress
     HRESULT put_StartIpAddress(WDSTRANSPORT_IP_ADDRESS_TYPE AddressType, BSTR bszStartIpAddress);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportservicepolicy-get_endipaddress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportservicepolicy-get_endipaddress
     HRESULT get_EndIpAddress(WDSTRANSPORT_IP_ADDRESS_TYPE AddressType, BSTR* pbszEndIpAddress);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportservicepolicy-put_endipaddress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportservicepolicy-put_endipaddress
     HRESULT put_EndIpAddress(WDSTRANSPORT_IP_ADDRESS_TYPE AddressType, BSTR bszEndIpAddress);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportservicepolicy-get_startport))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportservicepolicy-get_startport
     HRESULT get_StartPort(uint* pulStartPort);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportservicepolicy-put_startport))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportservicepolicy-put_startport
     HRESULT put_StartPort(uint ulStartPort);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportservicepolicy-get_endport))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportservicepolicy-get_endport
     HRESULT get_EndPort(uint* pulEndPort);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportservicepolicy-put_endport))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportservicepolicy-put_endport
     HRESULT put_EndPort(uint ulEndPort);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportservicepolicy-get_networkprofile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportservicepolicy-get_networkprofile
     HRESULT get_NetworkProfile(WDSTRANSPORT_NETWORK_PROFILE_TYPE* pProfileType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportservicepolicy-put_networkprofile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportservicepolicy-put_networkprofile
     HRESULT put_NetworkProfile(WDSTRANSPORT_NETWORK_PROFILE_TYPE ProfileType);
 }
 
 @GUID("65c19e5c-aa7e-4b91-8944-91e0e5572797")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportservicepolicy2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportservicepolicy2
 interface IWdsTransportServicePolicy2 : IWdsTransportServicePolicy
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportservicepolicy2-get_udpportpolicy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportservicepolicy2-get_udpportpolicy
     HRESULT get_UdpPortPolicy(WDSTRANSPORT_UDP_PORT_POLICY* pUdpPortPolicy);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportservicepolicy2-put_udpportpolicy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportservicepolicy2-put_udpportpolicy
     HRESULT put_UdpPortPolicy(WDSTRANSPORT_UDP_PORT_POLICY UdpPortPolicy);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportservicepolicy2-get_tftpmaximumblocksize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportservicepolicy2-get_tftpmaximumblocksize
     HRESULT get_TftpMaximumBlockSize(uint* pulTftpMaximumBlockSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportservicepolicy2-put_tftpmaximumblocksize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportservicepolicy2-put_tftpmaximumblocksize
     HRESULT put_TftpMaximumBlockSize(uint ulTftpMaximumBlockSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportservicepolicy2-get_enabletftpvariablewindowextension))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportservicepolicy2-get_enabletftpvariablewindowextension
     HRESULT get_EnableTftpVariableWindowExtension(VARIANT_BOOL* pbEnableTftpVariableWindowExtension);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportservicepolicy2-put_enabletftpvariablewindowextension))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportservicepolicy2-put_enabletftpvariablewindowextension
     HRESULT put_EnableTftpVariableWindowExtension(VARIANT_BOOL bEnableTftpVariableWindowExtension);
 }
 
 @GUID("13b33efc-7856-4f61-9a59-8de67b6b87b6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportdiagnosticspolicy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportdiagnosticspolicy
 interface IWdsTransportDiagnosticsPolicy : IWdsTransportCacheable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportdiagnosticspolicy-get_enabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportdiagnosticspolicy-get_enabled
     HRESULT get_Enabled(VARIANT_BOOL* pbEnabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportdiagnosticspolicy-put_enabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportdiagnosticspolicy-put_enabled
     HRESULT put_Enabled(VARIANT_BOOL bEnabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportdiagnosticspolicy-get_components))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportdiagnosticspolicy-get_components
     HRESULT get_Components(uint* pulComponents);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportdiagnosticspolicy-put_components))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportdiagnosticspolicy-put_components
     HRESULT put_Components(uint ulComponents);
 }
 
 @GUID("4e5753cf-68ec-4504-a951-4a003266606b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportmulticastsessionpolicy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportmulticastsessionpolicy
 interface IWdsTransportMulticastSessionPolicy : IWdsTransportCacheable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportmulticastsessionpolicy-get_slowclienthandling))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportmulticastsessionpolicy-get_slowclienthandling
     HRESULT get_SlowClientHandling(WDSTRANSPORT_SLOW_CLIENT_HANDLING_TYPE* pSlowClientHandling);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportmulticastsessionpolicy-put_slowclienthandling))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportmulticastsessionpolicy-put_slowclienthandling
     HRESULT put_SlowClientHandling(WDSTRANSPORT_SLOW_CLIENT_HANDLING_TYPE SlowClientHandling);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportmulticastsessionpolicy-get_autodisconnectthreshold))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportmulticastsessionpolicy-get_autodisconnectthreshold
     HRESULT get_AutoDisconnectThreshold(uint* pulThreshold);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportmulticastsessionpolicy-put_autodisconnectthreshold))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportmulticastsessionpolicy-put_autodisconnectthreshold
     HRESULT put_AutoDisconnectThreshold(uint ulThreshold);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportmulticastsessionpolicy-get_multistreamstreamcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportmulticastsessionpolicy-get_multistreamstreamcount
     HRESULT get_MultistreamStreamCount(uint* pulStreamCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportmulticastsessionpolicy-put_multistreamstreamcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportmulticastsessionpolicy-put_multistreamstreamcount
     HRESULT put_MultistreamStreamCount(uint ulStreamCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportmulticastsessionpolicy-get_slowclientfallback))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportmulticastsessionpolicy-get_slowclientfallback
     HRESULT get_SlowClientFallback(VARIANT_BOOL* pbClientFallback);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportmulticastsessionpolicy-put_slowclientfallback))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportmulticastsessionpolicy-put_slowclientfallback
     HRESULT put_SlowClientFallback(VARIANT_BOOL bClientFallback);
 }
 
 @GUID("fa561f57-fbef-4ed3-b056-127cb1b33b84")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportnamespace))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportnamespace
 interface IWdsTransportNamespace : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-get_type))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-get_type
     HRESULT get_Type(WDSTRANSPORT_NAMESPACE_TYPE* pType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-get_id))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-get_id
     HRESULT get_Id(uint* pulId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-get_name
     HRESULT get_Name(BSTR* pbszName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-put_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-put_name
     HRESULT put_Name(BSTR bszName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-get_friendlyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-get_friendlyname
     HRESULT get_FriendlyName(BSTR* pbszFriendlyName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-put_friendlyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-put_friendlyname
     HRESULT put_FriendlyName(BSTR bszFriendlyName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-get_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-get_description
     HRESULT get_Description(BSTR* pbszDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-put_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-put_description
     HRESULT put_Description(BSTR bszDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-get_contentprovider))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-get_contentprovider
     HRESULT get_ContentProvider(BSTR* pbszContentProvider);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-put_contentprovider))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-put_contentprovider
     HRESULT put_ContentProvider(BSTR bszContentProvider);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-get_configuration))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-get_configuration
     HRESULT get_Configuration(BSTR* pbszConfiguration);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-put_configuration))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-put_configuration
     HRESULT put_Configuration(BSTR bszConfiguration);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-get_registered))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-get_registered
     HRESULT get_Registered(VARIANT_BOOL* pbRegistered);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-get_tombstoned))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-get_tombstoned
     HRESULT get_Tombstoned(VARIANT_BOOL* pbTombstoned);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-get_tombstonetime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-get_tombstonetime
     HRESULT get_TombstoneTime(double* pTombstoneTime);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-get_transmissionstarted))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-get_transmissionstarted
     HRESULT get_TransmissionStarted(VARIANT_BOOL* pbTransmissionStarted);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-register))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-register
     HRESULT Register();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-deregister))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-deregister
     HRESULT Deregister(VARIANT_BOOL bTerminateSessions);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-clone
     HRESULT Clone(IWdsTransportNamespace* ppWdsTransportNamespaceClone);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-refresh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-refresh
     HRESULT Refresh();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-retrievecontents))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespace-retrievecontents
     HRESULT RetrieveContents(IWdsTransportCollection* ppWdsTransportContents);
 }
 
 @GUID("ad931a72-c4bd-4c41-8fbc-59c9c748df9e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportnamespaceautocast))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportnamespaceautocast
 interface IWdsTransportNamespaceAutoCast : IWdsTransportNamespace
 {
 }
 
 @GUID("3840cecf-d76c-416e-a4cc-31c741d2874b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportnamespacescheduledcast))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportnamespacescheduledcast
 interface IWdsTransportNamespaceScheduledCast : IWdsTransportNamespace
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespacescheduledcast-starttransmission))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespacescheduledcast-starttransmission
     HRESULT StartTransmission();
 }
 
 @GUID("013e6e4c-e6a7-4fb5-b7ff-d9f5da805c31")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportnamespacescheduledcastmanualstart))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportnamespacescheduledcastmanualstart
 interface IWdsTransportNamespaceScheduledCastManualStart : IWdsTransportNamespaceScheduledCast
 {
 }
 
 @GUID("d606af3d-ea9c-4219-961e-7491d618d9b9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportnamespacescheduledcastautostart))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportnamespacescheduledcastautostart
 interface IWdsTransportNamespaceScheduledCastAutoStart : IWdsTransportNamespaceScheduledCast
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespacescheduledcastautostart-get_minimumclients))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespacescheduledcastautostart-get_minimumclients
     HRESULT get_MinimumClients(uint* pulMinimumClients);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespacescheduledcastautostart-put_minimumclients))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespacescheduledcastautostart-put_minimumclients
     HRESULT put_MinimumClients(uint ulMinimumClients);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespacescheduledcastautostart-get_starttime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespacescheduledcastautostart-get_starttime
     HRESULT get_StartTime(double* pStartTime);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespacescheduledcastautostart-put_starttime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportnamespacescheduledcastautostart-put_starttime
     HRESULT put_StartTime(double StartTime);
 }
 
 @GUID("d405d711-0296-4ab4-a860-ac7d32e65798")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportcontent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportcontent
 interface IWdsTransportContent : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportcontent-get_namespace))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportcontent-get_namespace
     HRESULT get_Namespace(IWdsTransportNamespace* ppWdsTransportNamespace);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportcontent-get_id))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportcontent-get_id
     HRESULT get_Id(uint* pulId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportcontent-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportcontent-get_name
     HRESULT get_Name(BSTR* pbszName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportcontent-retrievesessions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportcontent-retrievesessions
     HRESULT RetrieveSessions(IWdsTransportCollection* ppWdsTransportSessions);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportcontent-terminate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportcontent-terminate
     HRESULT Terminate();
 }
 
 @GUID("f4efea88-65b1-4f30-a4b9-2793987796fb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportsession))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportsession
 interface IWdsTransportSession : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportsession-get_content))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportsession-get_content
     HRESULT get_Content(IWdsTransportContent* ppWdsTransportContent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportsession-get_id))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportsession-get_id
     HRESULT get_Id(uint* pulId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportsession-get_networkinterfacename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportsession-get_networkinterfacename
     HRESULT get_NetworkInterfaceName(BSTR* pbszNetworkInterfaceName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportsession-get_networkinterfaceaddress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportsession-get_networkinterfaceaddress
     HRESULT get_NetworkInterfaceAddress(BSTR* pbszNetworkInterfaceAddress);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportsession-get_transferrate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportsession-get_transferrate
     HRESULT get_TransferRate(uint* pulTransferRate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportsession-get_masterclientid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportsession-get_masterclientid
     HRESULT get_MasterClientId(uint* pulMasterClientId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportsession-retrieveclients))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportsession-retrieveclients
     HRESULT RetrieveClients(IWdsTransportCollection* ppWdsTransportClients);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportsession-terminate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportsession-terminate
     HRESULT Terminate();
 }
 
 @GUID("b5dbc93a-cabe-46ca-837f-3e44e93c6545")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportclient))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportclient
 interface IWdsTransportClient : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportclient-get_session))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportclient-get_session
     HRESULT get_Session(IWdsTransportSession* ppWdsTransportSession);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportclient-get_id))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportclient-get_id
     HRESULT get_Id(uint* pulId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportclient-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportclient-get_name
     HRESULT get_Name(BSTR* pbszName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportclient-get_macaddress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportclient-get_macaddress
     HRESULT get_MacAddress(BSTR* pbszMacAddress);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportclient-get_ipaddress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportclient-get_ipaddress
     HRESULT get_IpAddress(BSTR* pbszIpAddress);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportclient-get_percentcompletion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportclient-get_percentcompletion
     HRESULT get_PercentCompletion(uint* pulPercentCompletion);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportclient-get_joinduration))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportclient-get_joinduration
     HRESULT get_JoinDuration(uint* pulJoinDuration);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportclient-get_cpuutilization))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportclient-get_cpuutilization
     HRESULT get_CpuUtilization(uint* pulCpuUtilization);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportclient-get_memoryutilization))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportclient-get_memoryutilization
     HRESULT get_MemoryUtilization(uint* pulMemoryUtilization);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportclient-get_networkutilization))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportclient-get_networkutilization
     HRESULT get_NetworkUtilization(uint* pulNetworkUtilization);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportclient-get_useridentity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportclient-get_useridentity
     HRESULT get_UserIdentity(BSTR* pbszUserIdentity);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportclient-disconnect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportclient-disconnect
     HRESULT Disconnect(WDSTRANSPORT_DISCONNECT_TYPE DisconnectionType);
 }
 
 @GUID("b022d3ae-884d-4d85-b146-53320e76ef62")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransporttftpclient))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransporttftpclient
 interface IWdsTransportTftpClient : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransporttftpclient-get_filename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransporttftpclient-get_filename
     HRESULT get_FileName(BSTR* pbszFileName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransporttftpclient-get_ipaddress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransporttftpclient-get_ipaddress
     HRESULT get_IpAddress(BSTR* pbszIpAddress);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransporttftpclient-get_timeout))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransporttftpclient-get_timeout
     HRESULT get_Timeout(uint* pulTimeout);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransporttftpclient-get_currentfileoffset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransporttftpclient-get_currentfileoffset
     HRESULT get_CurrentFileOffset(ulong* pul64CurrentOffset);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransporttftpclient-get_filesize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransporttftpclient-get_filesize
     HRESULT get_FileSize(ulong* pul64FileSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransporttftpclient-get_blocksize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransporttftpclient-get_blocksize
     HRESULT get_BlockSize(uint* pulBlockSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransporttftpclient-get_windowsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransporttftpclient-get_windowsize
     HRESULT get_WindowSize(uint* pulWindowSize);
 }
 
 @GUID("b9489f24-f219-4acf-aad7-265c7c08a6ae")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2012))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportcontentprovider))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nn-wdstptmgmt-iwdstransportcontentprovider
 interface IWdsTransportContentProvider : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportcontentprovider-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportcontentprovider-get_name
     HRESULT get_Name(BSTR* pbszName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportcontentprovider-get_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportcontentprovider-get_description
     HRESULT get_Description(BSTR* pbszDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportcontentprovider-get_filepath))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportcontentprovider-get_filepath
     HRESULT get_FilePath(BSTR* pbszFilePath);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportcontentprovider-get_initializationroutine))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wdstptmgmt/nf-wdstptmgmt-iwdstransportcontentprovider-get_initializationroutine
     HRESULT get_InitializationRoutine(BSTR* pbszInitializationRoutine);
 }
 

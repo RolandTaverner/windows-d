@@ -3,14 +3,15 @@
 module windows.win32.system.performance.hardwarecounterprofiling;
 
 public import windows.core;
-public import windows.win32.foundation : BOOLEAN, HANDLE;
+public import windows.win32.foundation.foundation : BOOLEAN, HANDLE;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-hardware_counter_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-hardware_counter_type
 alias HARDWARE_COUNTER_TYPE = int;
 enum : int
 {
@@ -21,7 +22,7 @@ enum : int
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-hardware_counter_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-hardware_counter_data
 struct HARDWARE_COUNTER_DATA
 {
     HARDWARE_COUNTER_TYPE Type;
@@ -29,7 +30,7 @@ struct HARDWARE_COUNTER_DATA
     ulong Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-performance_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-performance_data
 struct PERFORMANCE_DATA
 {
     ushort Size;

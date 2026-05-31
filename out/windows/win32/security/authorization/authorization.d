@@ -1,17 +1,19 @@
 // Written in the D programming language.
 
-module windows.win32.security.authorization;
+module windows.win32.security.authorization.authorization;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BSTR, HANDLE, HRESULT, HWND, LUID,
-                                         PSTR, PWSTR, VARIANT_BOOL, WIN32_ERROR;
-public import windows.win32.security : ACE_FLAGS, ACE_HEADER, ACL, GENERIC_MAPPING,
-                                       OBJECT_SECURITY_INFORMATION, OBJECT_TYPE_LIST,
-                                       PSECURITY_DESCRIPTOR, PSID, SID,
-                                       SID_AND_ATTRIBUTES, SYSTEM_AUDIT_OBJECT_ACE_FLAGS,
-                                       TOKEN_GROUPS;
-public import windows.win32.system.com : IDispatch, IUnknown;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BSTR, HANDLE, HRESULT, HWND,
+                                                    LUID, PSTR, PWSTR, VARIANT_BOOL,
+                                                    WIN32_ERROR;
+public import windows.win32.security.security : ACE_FLAGS, ACE_HEADER, ACL, GENERIC_MAPPING,
+                                                OBJECT_SECURITY_INFORMATION,
+                                                OBJECT_TYPE_LIST, PSECURITY_DESCRIPTOR,
+                                                PSID, SID, SID_AND_ATTRIBUTES,
+                                                SYSTEM_AUDIT_OBJECT_ACE_FLAGS,
+                                                TOKEN_GROUPS;
+public import windows.win32.system.com.com : IDispatch, IUnknown;
 public import windows.win32.system.threading : LPTHREAD_START_ROUTINE;
 public import windows.win32.system.variant : VARIANT;
 
@@ -20,53 +22,61 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias AUTHZ_RESOURCE_MANAGER_FLAGS = uint;
 enum : uint
 {
-    AUTHZ_RM_FLAG_NO_AUDIT                       = 0x00000001,
-    AUTHZ_RM_FLAG_INITIALIZE_UNDER_IMPERSONATION = 0x00000002,
-    AUTHZ_RM_FLAG_NO_CENTRAL_ACCESS_POLICIES     = 0x00000004,
+    AUTHZ_RM_FLAG_NO_AUDIT                       = 0x00000001U,
+    AUTHZ_RM_FLAG_INITIALIZE_UNDER_IMPERSONATION = 0x00000002U,
+    AUTHZ_RM_FLAG_NO_CENTRAL_ACCESS_POLICIES     = 0x00000004U,
 }
+
 alias AUTHZ_ACCESS_CHECK_FLAGS = uint;
 enum : uint
 {
-    AUTHZ_ACCESS_CHECK_NO_DEEP_COPY_SD = 0x00000001,
+    AUTHZ_ACCESS_CHECK_NO_DEEP_COPY_SD = 0x00000001U,
 }
+
 alias AUTHZ_INITIALIZE_OBJECT_ACCESS_AUDIT_EVENT_FLAGS = uint;
 enum : uint
 {
-    AUTHZ_NO_SUCCESS_AUDIT = 0x00000001,
-    AUTHZ_NO_FAILURE_AUDIT = 0x00000002,
-    AUTHZ_NO_ALLOC_STRINGS = 0x00000004,
+    AUTHZ_NO_SUCCESS_AUDIT = 0x00000001U,
+    AUTHZ_NO_FAILURE_AUDIT = 0x00000002U,
+    AUTHZ_NO_ALLOC_STRINGS = 0x00000004U,
 }
+
 alias TREE_SEC_INFO = uint;
 enum : uint
 {
-    TREE_SEC_INFO_SET                 = 0x00000001,
-    TREE_SEC_INFO_RESET               = 0x00000002,
-    TREE_SEC_INFO_RESET_KEEP_EXPLICIT = 0x00000003,
+    TREE_SEC_INFO_SET                 = 0x00000001U,
+    TREE_SEC_INFO_RESET               = 0x00000002U,
+    TREE_SEC_INFO_RESET_KEEP_EXPLICIT = 0x00000003U,
 }
+
 alias AUTHZ_GENERATE_RESULTS = uint;
 enum : uint
 {
-    AUTHZ_GENERATE_SUCCESS_AUDIT = 0x00000001,
-    AUTHZ_GENERATE_FAILURE_AUDIT = 0x00000002,
+    AUTHZ_GENERATE_SUCCESS_AUDIT = 0x00000001U,
+    AUTHZ_GENERATE_FAILURE_AUDIT = 0x00000002U,
 }
+
 alias ACTRL_ACCESS_ENTRY_ACCESS_FLAGS = uint;
 enum : uint
 {
-    ACTRL_ACCESS_ALLOWED = 0x00000001,
-    ACTRL_ACCESS_DENIED  = 0x00000002,
-    ACTRL_AUDIT_SUCCESS  = 0x00000004,
-    ACTRL_AUDIT_FAILURE  = 0x00000008,
+    ACTRL_ACCESS_ALLOWED = 0x00000001U,
+    ACTRL_ACCESS_DENIED  = 0x00000002U,
+    ACTRL_AUDIT_SUCCESS  = 0x00000004U,
+    ACTRL_AUDIT_FAILURE  = 0x00000008U,
 }
+
 alias AUTHZ_SECURITY_ATTRIBUTE_FLAGS = uint;
 enum : uint
 {
-    AUTHZ_SECURITY_ATTRIBUTE_NON_INHERITABLE      = 0x00000001,
-    AUTHZ_SECURITY_ATTRIBUTE_VALUE_CASE_SENSITIVE = 0x00000002,
+    AUTHZ_SECURITY_ATTRIBUTE_NON_INHERITABLE      = 0x00000001U,
+    AUTHZ_SECURITY_ATTRIBUTE_VALUE_CASE_SENSITIVE = 0x00000002U,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/accctrl/ne-accctrl-se_object_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ne-accctrl-se_object_type
 alias SE_OBJECT_TYPE = int;
 enum : int
 {
@@ -85,7 +95,8 @@ enum : int
     SE_REGISTRY_WOW64_32KEY    = 0x0000000c,
     SE_REGISTRY_WOW64_64KEY    = 0x0000000d,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/accctrl/ne-accctrl-trustee_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ne-accctrl-trustee_type
 alias TRUSTEE_TYPE = int;
 enum : int
 {
@@ -99,7 +110,8 @@ enum : int
     TRUSTEE_IS_INVALID          = 0x00000007,
     TRUSTEE_IS_COMPUTER         = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/accctrl/ne-accctrl-trustee_form))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ne-accctrl-trustee_form
 alias TRUSTEE_FORM = int;
 enum : int
 {
@@ -109,14 +121,16 @@ enum : int
     TRUSTEE_IS_OBJECTS_AND_SID  = 0x00000003,
     TRUSTEE_IS_OBJECTS_AND_NAME = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/accctrl/ne-accctrl-multiple_trustee_operation))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ne-accctrl-multiple_trustee_operation
 alias MULTIPLE_TRUSTEE_OPERATION = int;
 enum : int
 {
     NO_MULTIPLE_TRUSTEE    = 0x00000000,
     TRUSTEE_IS_IMPERSONATE = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/accctrl/ne-accctrl-access_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ne-accctrl-access_mode
 alias ACCESS_MODE = int;
 enum : int
 {
@@ -128,7 +142,8 @@ enum : int
     SET_AUDIT_SUCCESS = 0x00000005,
     SET_AUDIT_FAILURE = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/accctrl/ne-accctrl-prog_invoke_setting))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ne-accctrl-prog_invoke_setting
 alias PROG_INVOKE_SETTING = int;
 enum : int
 {
@@ -139,7 +154,8 @@ enum : int
     ProgressRetryOperation     = 0x00000005,
     ProgressInvokePrePostError = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/adtgen/ne-adtgen-audit_param_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/adtgen/ne-adtgen-audit_param_type
 alias AUDIT_PARAM_TYPE = int;
 enum : int
 {
@@ -157,7 +173,8 @@ enum : int
     APT_IpAddress      = 0x0000000c,
     APT_LogonIdWithSid = 0x0000000d,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/authz/ne-authz-authz_security_attribute_operation))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/authz/ne-authz-authz_security_attribute_operation
 alias AUTHZ_SECURITY_ATTRIBUTE_OPERATION = int;
 enum : int
 {
@@ -167,7 +184,8 @@ enum : int
     AUTHZ_SECURITY_ATTRIBUTE_OPERATION_DELETE      = 0x00000003,
     AUTHZ_SECURITY_ATTRIBUTE_OPERATION_REPLACE     = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/authz/ne-authz-authz_sid_operation))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/authz/ne-authz-authz_sid_operation
 alias AUTHZ_SID_OPERATION = int;
 enum : int
 {
@@ -177,7 +195,8 @@ enum : int
     AUTHZ_SID_OPERATION_DELETE      = 0x00000003,
     AUTHZ_SID_OPERATION_REPLACE     = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/authz/ne-authz-authz_context_information_class))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/authz/ne-authz-authz_context_information_class
 alias AUTHZ_CONTEXT_INFORMATION_CLASS = int;
 enum : int
 {
@@ -198,6 +217,7 @@ enum : int
     AuthzContextInfoAppContainerSid    = 0x0000000f,
     AuthzContextInfoCapabilitySids     = 0x00000010,
 }
+
 alias AUTHZ_AUDIT_EVENT_INFORMATION_CLASS = int;
 enum : int
 {
@@ -207,7 +227,8 @@ enum : int
     AuthzAuditEventInfoObjectName     = 0x00000004,
     AuthzAuditEventInfoAdditionalInfo = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/ne-azroles-az_prop_constants))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/ne-azroles-az_prop_constants
 alias AZ_PROP_CONSTANTS = int;
 enum : int
 {
@@ -316,8 +337,8 @@ enum : int
 
 enum : uint
 {
-    SDDL_REVISION_1 = 0x00000001,
-    SDDL_REVISION   = 0x00000001,
+    SDDL_REVISION_1 = 0x00000001U,
+    SDDL_REVISION   = 0x00000001U,
 }
 
 enum : const(wchar)*
@@ -456,7 +477,7 @@ enum : const(wchar)*
     SDDL_NO_EXECUTE_UP = "NX",
 }
 
-enum uint SDDL_ALIAS_SIZE = 0x00000002;
+enum uint SDDL_ALIAS_SIZE = 0x00000002U;
 
 enum : const(wchar)*
 {
@@ -585,9 +606,9 @@ enum const(wchar)* SDDL_ACE_COND_TOKEN_ATTRIBUTE_PREFIX = "@TOKEN.";
 
 enum : uint
 {
-    INHERITED_ACCESS_ENTRY = 0x00000010,
-    INHERITED_PARENT       = 0x10000000,
-    INHERITED_GRANDPARENT  = 0x20000000,
+    INHERITED_ACCESS_ENTRY = 0x00000010U,
+    INHERITED_PARENT       = 0x10000000U,
+    INHERITED_GRANDPARENT  = 0x20000000U,
 }
 
 enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
@@ -608,178 +629,178 @@ enum : int
 
 enum : uint
 {
-    ACTRL_RESERVED         = 0x00000000,
-    ACTRL_PERM_1           = 0x00000001,
-    ACTRL_PERM_2           = 0x00000002,
-    ACTRL_PERM_3           = 0x00000004,
-    ACTRL_PERM_4           = 0x00000008,
-    ACTRL_PERM_5           = 0x00000010,
-    ACTRL_PERM_6           = 0x00000020,
-    ACTRL_PERM_7           = 0x00000040,
-    ACTRL_PERM_8           = 0x00000080,
-    ACTRL_PERM_9           = 0x00000100,
-    ACTRL_PERM_10          = 0x00000200,
-    ACTRL_PERM_11          = 0x00000400,
-    ACTRL_PERM_12          = 0x00000800,
-    ACTRL_PERM_13          = 0x00001000,
-    ACTRL_PERM_14          = 0x00002000,
-    ACTRL_PERM_15          = 0x00004000,
-    ACTRL_PERM_16          = 0x00008000,
-    ACTRL_PERM_17          = 0x00010000,
-    ACTRL_PERM_18          = 0x00020000,
-    ACTRL_PERM_19          = 0x00040000,
-    ACTRL_PERM_20          = 0x00080000,
-    ACTRL_ACCESS_PROTECTED = 0x00000001,
+    ACTRL_RESERVED         = 0x00000000U,
+    ACTRL_PERM_1           = 0x00000001U,
+    ACTRL_PERM_2           = 0x00000002U,
+    ACTRL_PERM_3           = 0x00000004U,
+    ACTRL_PERM_4           = 0x00000008U,
+    ACTRL_PERM_5           = 0x00000010U,
+    ACTRL_PERM_6           = 0x00000020U,
+    ACTRL_PERM_7           = 0x00000040U,
+    ACTRL_PERM_8           = 0x00000080U,
+    ACTRL_PERM_9           = 0x00000100U,
+    ACTRL_PERM_10          = 0x00000200U,
+    ACTRL_PERM_11          = 0x00000400U,
+    ACTRL_PERM_12          = 0x00000800U,
+    ACTRL_PERM_13          = 0x00001000U,
+    ACTRL_PERM_14          = 0x00002000U,
+    ACTRL_PERM_15          = 0x00004000U,
+    ACTRL_PERM_16          = 0x00008000U,
+    ACTRL_PERM_17          = 0x00010000U,
+    ACTRL_PERM_18          = 0x00020000U,
+    ACTRL_PERM_19          = 0x00040000U,
+    ACTRL_PERM_20          = 0x00080000U,
+    ACTRL_ACCESS_PROTECTED = 0x00000001U,
 }
 
-enum uint ACTRL_SYSTEM_ACCESS = 0x04000000;
+enum uint ACTRL_SYSTEM_ACCESS = 0x04000000U;
 
 enum : uint
 {
-    ACTRL_DELETE       = 0x08000000,
-    ACTRL_READ_CONTROL = 0x10000000,
-}
-
-enum : uint
-{
-    ACTRL_CHANGE_ACCESS = 0x20000000,
-    ACTRL_CHANGE_OWNER  = 0x40000000,
+    ACTRL_DELETE       = 0x08000000U,
+    ACTRL_READ_CONTROL = 0x10000000U,
 }
 
 enum : uint
 {
-    ACTRL_SYNCHRONIZE    = 0x80000000,
-    ACTRL_STD_RIGHTS_ALL = 0xf8000000,
+    ACTRL_CHANGE_ACCESS = 0x20000000U,
+    ACTRL_CHANGE_OWNER  = 0x40000000U,
 }
 
 enum : uint
 {
-    ACTRL_FILE_READ         = 0x00000001,
-    ACTRL_FILE_WRITE        = 0x00000002,
-    ACTRL_FILE_APPEND       = 0x00000004,
-    ACTRL_FILE_READ_PROP    = 0x00000008,
-    ACTRL_FILE_WRITE_PROP   = 0x00000010,
-    ACTRL_FILE_EXECUTE      = 0x00000020,
-    ACTRL_FILE_READ_ATTRIB  = 0x00000080,
-    ACTRL_FILE_WRITE_ATTRIB = 0x00000100,
-    ACTRL_FILE_CREATE_PIPE  = 0x00000200,
+    ACTRL_SYNCHRONIZE    = 0x80000000U,
+    ACTRL_STD_RIGHTS_ALL = 0xf8000000U,
 }
 
 enum : uint
 {
-    ACTRL_DIR_LIST          = 0x00000001,
-    ACTRL_DIR_CREATE_OBJECT = 0x00000002,
-    ACTRL_DIR_CREATE_CHILD  = 0x00000004,
-    ACTRL_DIR_DELETE_CHILD  = 0x00000040,
-    ACTRL_DIR_TRAVERSE      = 0x00000020,
+    ACTRL_FILE_READ         = 0x00000001U,
+    ACTRL_FILE_WRITE        = 0x00000002U,
+    ACTRL_FILE_APPEND       = 0x00000004U,
+    ACTRL_FILE_READ_PROP    = 0x00000008U,
+    ACTRL_FILE_WRITE_PROP   = 0x00000010U,
+    ACTRL_FILE_EXECUTE      = 0x00000020U,
+    ACTRL_FILE_READ_ATTRIB  = 0x00000080U,
+    ACTRL_FILE_WRITE_ATTRIB = 0x00000100U,
+    ACTRL_FILE_CREATE_PIPE  = 0x00000200U,
 }
 
 enum : uint
 {
-    ACTRL_KERNEL_TERMINATE    = 0x00000001,
-    ACTRL_KERNEL_THREAD       = 0x00000002,
-    ACTRL_KERNEL_VM           = 0x00000004,
-    ACTRL_KERNEL_VM_READ      = 0x00000008,
-    ACTRL_KERNEL_VM_WRITE     = 0x00000010,
-    ACTRL_KERNEL_DUP_HANDLE   = 0x00000020,
-    ACTRL_KERNEL_PROCESS      = 0x00000040,
-    ACTRL_KERNEL_SET_INFO     = 0x00000080,
-    ACTRL_KERNEL_GET_INFO     = 0x00000100,
-    ACTRL_KERNEL_CONTROL      = 0x00000200,
-    ACTRL_KERNEL_ALERT        = 0x00000400,
-    ACTRL_KERNEL_GET_CONTEXT  = 0x00000800,
-    ACTRL_KERNEL_SET_CONTEXT  = 0x00001000,
-    ACTRL_KERNEL_TOKEN        = 0x00002000,
-    ACTRL_KERNEL_IMPERSONATE  = 0x00004000,
-    ACTRL_KERNEL_DIMPERSONATE = 0x00008000,
+    ACTRL_DIR_LIST          = 0x00000001U,
+    ACTRL_DIR_CREATE_OBJECT = 0x00000002U,
+    ACTRL_DIR_CREATE_CHILD  = 0x00000004U,
+    ACTRL_DIR_DELETE_CHILD  = 0x00000040U,
+    ACTRL_DIR_TRAVERSE      = 0x00000020U,
 }
 
 enum : uint
 {
-    ACTRL_PRINT_SADMIN = 0x00000001,
-    ACTRL_PRINT_SLIST  = 0x00000002,
-    ACTRL_PRINT_PADMIN = 0x00000004,
-    ACTRL_PRINT_PUSE   = 0x00000008,
-    ACTRL_PRINT_JADMIN = 0x00000010,
+    ACTRL_KERNEL_TERMINATE    = 0x00000001U,
+    ACTRL_KERNEL_THREAD       = 0x00000002U,
+    ACTRL_KERNEL_VM           = 0x00000004U,
+    ACTRL_KERNEL_VM_READ      = 0x00000008U,
+    ACTRL_KERNEL_VM_WRITE     = 0x00000010U,
+    ACTRL_KERNEL_DUP_HANDLE   = 0x00000020U,
+    ACTRL_KERNEL_PROCESS      = 0x00000040U,
+    ACTRL_KERNEL_SET_INFO     = 0x00000080U,
+    ACTRL_KERNEL_GET_INFO     = 0x00000100U,
+    ACTRL_KERNEL_CONTROL      = 0x00000200U,
+    ACTRL_KERNEL_ALERT        = 0x00000400U,
+    ACTRL_KERNEL_GET_CONTEXT  = 0x00000800U,
+    ACTRL_KERNEL_SET_CONTEXT  = 0x00001000U,
+    ACTRL_KERNEL_TOKEN        = 0x00002000U,
+    ACTRL_KERNEL_IMPERSONATE  = 0x00004000U,
+    ACTRL_KERNEL_DIMPERSONATE = 0x00008000U,
 }
 
 enum : uint
 {
-    ACTRL_SVC_GET_INFO    = 0x00000001,
-    ACTRL_SVC_SET_INFO    = 0x00000002,
-    ACTRL_SVC_STATUS      = 0x00000004,
-    ACTRL_SVC_LIST        = 0x00000008,
-    ACTRL_SVC_START       = 0x00000010,
-    ACTRL_SVC_STOP        = 0x00000020,
-    ACTRL_SVC_PAUSE       = 0x00000040,
-    ACTRL_SVC_INTERROGATE = 0x00000080,
-    ACTRL_SVC_UCONTROL    = 0x00000100,
+    ACTRL_PRINT_SADMIN = 0x00000001U,
+    ACTRL_PRINT_SLIST  = 0x00000002U,
+    ACTRL_PRINT_PADMIN = 0x00000004U,
+    ACTRL_PRINT_PUSE   = 0x00000008U,
+    ACTRL_PRINT_JADMIN = 0x00000010U,
 }
 
 enum : uint
 {
-    ACTRL_REG_QUERY                      = 0x00000001,
-    ACTRL_REG_SET                        = 0x00000002,
-    ACTRL_REG_CREATE_CHILD               = 0x00000004,
-    ACTRL_REG_LIST                       = 0x00000008,
-    ACTRL_REG_NOTIFY                     = 0x00000010,
-    ACTRL_REG_LINK                       = 0x00000020,
-    ACTRL_WIN_CLIPBRD                    = 0x00000001,
-    ACTRL_WIN_GLOBAL_ATOMS               = 0x00000002,
-    ACTRL_WIN_CREATE                     = 0x00000004,
-    ACTRL_WIN_LIST_DESK                  = 0x00000008,
-    ACTRL_WIN_LIST                       = 0x00000010,
-    ACTRL_WIN_READ_ATTRIBS               = 0x00000020,
-    ACTRL_WIN_WRITE_ATTRIBS              = 0x00000040,
-    ACTRL_WIN_SCREEN                     = 0x00000080,
-    ACTRL_WIN_EXIT                       = 0x00000100,
-    ACTRL_ACCESS_NO_OPTIONS              = 0x00000000,
-    ACTRL_ACCESS_SUPPORTS_OBJECT_ENTRIES = 0x00000001,
+    ACTRL_SVC_GET_INFO    = 0x00000001U,
+    ACTRL_SVC_SET_INFO    = 0x00000002U,
+    ACTRL_SVC_STATUS      = 0x00000004U,
+    ACTRL_SVC_LIST        = 0x00000008U,
+    ACTRL_SVC_START       = 0x00000010U,
+    ACTRL_SVC_STOP        = 0x00000020U,
+    ACTRL_SVC_PAUSE       = 0x00000040U,
+    ACTRL_SVC_INTERROGATE = 0x00000080U,
+    ACTRL_SVC_UCONTROL    = 0x00000100U,
 }
 
 enum : uint
 {
-    AUDIT_TYPE_LEGACY = 0x00000001,
-    AUDIT_TYPE_WMI    = 0x00000002,
+    ACTRL_REG_QUERY                      = 0x00000001U,
+    ACTRL_REG_SET                        = 0x00000002U,
+    ACTRL_REG_CREATE_CHILD               = 0x00000004U,
+    ACTRL_REG_LIST                       = 0x00000008U,
+    ACTRL_REG_NOTIFY                     = 0x00000010U,
+    ACTRL_REG_LINK                       = 0x00000020U,
+    ACTRL_WIN_CLIPBRD                    = 0x00000001U,
+    ACTRL_WIN_GLOBAL_ATOMS               = 0x00000002U,
+    ACTRL_WIN_CREATE                     = 0x00000004U,
+    ACTRL_WIN_LIST_DESK                  = 0x00000008U,
+    ACTRL_WIN_LIST                       = 0x00000010U,
+    ACTRL_WIN_READ_ATTRIBS               = 0x00000020U,
+    ACTRL_WIN_WRITE_ATTRIBS              = 0x00000040U,
+    ACTRL_WIN_SCREEN                     = 0x00000080U,
+    ACTRL_WIN_EXIT                       = 0x00000100U,
+    ACTRL_ACCESS_NO_OPTIONS              = 0x00000000U,
+    ACTRL_ACCESS_SUPPORTS_OBJECT_ENTRIES = 0x00000001U,
 }
 
-enum uint AP_ParamTypeBits = 0x00000008;
+enum : uint
+{
+    AUDIT_TYPE_LEGACY = 0x00000001U,
+    AUDIT_TYPE_WMI    = 0x00000002U,
+}
+
+enum uint AP_ParamTypeBits = 0x00000008U;
 enum int AP_ParamTypeMask = 0x000000ff;
-enum uint _AUTHZ_SS_MAXSIZE = 0x00000080;
+enum uint _AUTHZ_SS_MAXSIZE = 0x00000080U;
 
 enum : uint
 {
-    APF_AuditFailure = 0x00000000,
-    APF_AuditSuccess = 0x00000001,
+    APF_AuditFailure = 0x00000000U,
+    APF_AuditSuccess = 0x00000001U,
 }
 
-enum uint APF_ValidFlags = 0x00000001;
-enum uint AUTHZP_WPD_EVENT = 0x00000010;
-enum uint AUTHZ_ALLOW_MULTIPLE_SOURCE_INSTANCES = 0x00000001;
-enum uint AUTHZ_MIGRATED_LEGACY_PUBLISHER = 0x00000002;
-enum uint AUTHZ_AUDIT_INSTANCE_INFORMATION = 0x00000002;
-enum uint AUTHZ_SKIP_TOKEN_GROUPS = 0x00000002;
-enum uint AUTHZ_REQUIRE_S4U_LOGON = 0x00000004;
-enum uint AUTHZ_COMPUTE_PRIVILEGES = 0x00000008;
+enum uint APF_ValidFlags = 0x00000001U;
+enum uint AUTHZP_WPD_EVENT = 0x00000010U;
+enum uint AUTHZ_ALLOW_MULTIPLE_SOURCE_INSTANCES = 0x00000001U;
+enum uint AUTHZ_MIGRATED_LEGACY_PUBLISHER = 0x00000002U;
+enum uint AUTHZ_AUDIT_INSTANCE_INFORMATION = 0x00000002U;
+enum uint AUTHZ_SKIP_TOKEN_GROUPS = 0x00000002U;
+enum uint AUTHZ_REQUIRE_S4U_LOGON = 0x00000004U;
+enum uint AUTHZ_COMPUTE_PRIVILEGES = 0x00000008U;
 
 enum : uint
 {
-    AUTHZ_SECURITY_ATTRIBUTE_TYPE_INVALID            = 0x00000000,
-    AUTHZ_SECURITY_ATTRIBUTE_TYPE_INT64              = 0x00000001,
-    AUTHZ_SECURITY_ATTRIBUTE_TYPE_UINT64             = 0x00000002,
-    AUTHZ_SECURITY_ATTRIBUTE_TYPE_STRING             = 0x00000003,
-    AUTHZ_SECURITY_ATTRIBUTE_TYPE_FQBN               = 0x00000004,
-    AUTHZ_SECURITY_ATTRIBUTE_TYPE_SID                = 0x00000005,
-    AUTHZ_SECURITY_ATTRIBUTE_TYPE_BOOLEAN            = 0x00000006,
-    AUTHZ_SECURITY_ATTRIBUTE_TYPE_OCTET_STRING       = 0x00000010,
-    AUTHZ_SECURITY_ATTRIBUTES_INFORMATION_VERSION_V1 = 0x00000001,
-    AUTHZ_SECURITY_ATTRIBUTES_INFORMATION_VERSION    = 0x00000001,
+    AUTHZ_SECURITY_ATTRIBUTE_TYPE_INVALID            = 0x00000000U,
+    AUTHZ_SECURITY_ATTRIBUTE_TYPE_INT64              = 0x00000001U,
+    AUTHZ_SECURITY_ATTRIBUTE_TYPE_UINT64             = 0x00000002U,
+    AUTHZ_SECURITY_ATTRIBUTE_TYPE_STRING             = 0x00000003U,
+    AUTHZ_SECURITY_ATTRIBUTE_TYPE_FQBN               = 0x00000004U,
+    AUTHZ_SECURITY_ATTRIBUTE_TYPE_SID                = 0x00000005U,
+    AUTHZ_SECURITY_ATTRIBUTE_TYPE_BOOLEAN            = 0x00000006U,
+    AUTHZ_SECURITY_ATTRIBUTE_TYPE_OCTET_STRING       = 0x00000010U,
+    AUTHZ_SECURITY_ATTRIBUTES_INFORMATION_VERSION_V1 = 0x00000001U,
+    AUTHZ_SECURITY_ATTRIBUTES_INFORMATION_VERSION    = 0x00000001U,
 }
 
-enum uint AUTHZ_RPC_INIT_INFO_CLIENT_VERSION_V1 = 0x00000001;
-enum uint AUTHZ_INIT_INFO_VERSION_V1 = 0x00000001;
-enum uint AUTHZ_WPD_CATEGORY_FLAG = 0x00000010;
-enum uint AUTHZ_FLAG_ALLOW_MULTIPLE_SOURCE_INSTANCES = 0x00000001;
+enum uint AUTHZ_RPC_INIT_INFO_CLIENT_VERSION_V1 = 0x00000001U;
+enum uint AUTHZ_INIT_INFO_VERSION_V1 = 0x00000001U;
+enum uint AUTHZ_WPD_CATEGORY_FLAG = 0x00000010U;
+enum uint AUTHZ_FLAG_ALLOW_MULTIPLE_SOURCE_INSTANCES = 0x00000001U;
 enum HRESULT OLESCRIPT_E_SYNTAX = HRESULT(0x80020101);
 
 // Callbacks
@@ -802,7 +823,7 @@ alias FN_PROGRESS = void function(PWSTR pObjectName, uint Status, PROG_INVOKE_SE
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-objects_and_sid))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-objects_and_sid
 struct OBJECTS_AND_SID
 {
     SYSTEM_AUDIT_OBJECT_ACE_FLAGS ObjectsPresent;
@@ -812,7 +833,7 @@ struct OBJECTS_AND_SID
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-objects_and_name_a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-objects_and_name_a
 struct OBJECTS_AND_NAME_A
 {
     SYSTEM_AUDIT_OBJECT_ACE_FLAGS ObjectsPresent;
@@ -823,7 +844,7 @@ struct OBJECTS_AND_NAME_A
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-objects_and_name_w))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-objects_and_name_w
 struct OBJECTS_AND_NAME_W
 {
     SYSTEM_AUDIT_OBJECT_ACE_FLAGS ObjectsPresent;
@@ -834,7 +855,7 @@ struct OBJECTS_AND_NAME_W
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-trustee_a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-trustee_a
 struct TRUSTEE_A
 {
     TRUSTEE_A*   pMultipleTrustee;
@@ -845,7 +866,7 @@ struct TRUSTEE_A
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-trustee_w))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-trustee_w
 struct TRUSTEE_W
 {
     TRUSTEE_W*   pMultipleTrustee;
@@ -856,7 +877,7 @@ struct TRUSTEE_W
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-explicit_access_a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-explicit_access_a
 struct EXPLICIT_ACCESS_A
 {
     uint        grfAccessPermissions;
@@ -866,7 +887,7 @@ struct EXPLICIT_ACCESS_A
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-explicit_access_w))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-explicit_access_w
 struct EXPLICIT_ACCESS_W
 {
     uint        grfAccessPermissions;
@@ -876,7 +897,7 @@ struct EXPLICIT_ACCESS_W
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-actrl_access_entrya))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-actrl_access_entrya
 struct ACTRL_ACCESS_ENTRYA
 {
     TRUSTEE_A Trustee;
@@ -888,7 +909,7 @@ struct ACTRL_ACCESS_ENTRYA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-actrl_access_entryw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-actrl_access_entryw
 struct ACTRL_ACCESS_ENTRYW
 {
     TRUSTEE_W Trustee;
@@ -900,7 +921,7 @@ struct ACTRL_ACCESS_ENTRYW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-actrl_access_entry_lista))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-actrl_access_entry_lista
 struct ACTRL_ACCESS_ENTRY_LISTA
 {
     uint                 cEntries;
@@ -908,7 +929,7 @@ struct ACTRL_ACCESS_ENTRY_LISTA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-actrl_access_entry_listw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-actrl_access_entry_listw
 struct ACTRL_ACCESS_ENTRY_LISTW
 {
     uint                 cEntries;
@@ -916,7 +937,7 @@ struct ACTRL_ACCESS_ENTRY_LISTW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-actrl_property_entrya))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-actrl_property_entrya
 struct ACTRL_PROPERTY_ENTRYA
 {
     PSTR lpProperty;
@@ -925,7 +946,7 @@ struct ACTRL_PROPERTY_ENTRYA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-actrl_property_entryw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-actrl_property_entryw
 struct ACTRL_PROPERTY_ENTRYW
 {
     PWSTR lpProperty;
@@ -934,7 +955,7 @@ struct ACTRL_PROPERTY_ENTRYW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-actrl_accessa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-actrl_accessa
 struct ACTRL_ACCESSA
 {
     uint cEntries;
@@ -942,7 +963,7 @@ struct ACTRL_ACCESSA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-actrl_accessw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-actrl_accessw
 struct ACTRL_ACCESSW
 {
     uint cEntries;
@@ -969,9 +990,13 @@ struct TRUSTEE_ACCESSW
 
 struct ACTRL_OVERLAPPED
 {
-    _Anonymous_e__Union Anonymous;
-    uint                Reserved2;
-    HANDLE              hEvent;
+    union
+    {
+        void* Provider;
+        uint  Reserved1;
+    }
+    uint   Reserved2;
+    HANDLE hEvent;
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
@@ -1008,7 +1033,7 @@ struct FN_OBJECT_MGR_FUNCTS
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-inherited_froma))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-inherited_froma
 struct INHERITED_FROMA
 {
     int  GenerationGap;
@@ -1016,7 +1041,7 @@ struct INHERITED_FROMA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-inherited_fromw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/accctrl/ns-accctrl-inherited_fromw
 struct INHERITED_FROMW
 {
     int   GenerationGap;
@@ -1045,11 +1070,25 @@ struct AUDIT_IP_ADDRESS
 
 struct AUDIT_PARAM
 {
-    AUDIT_PARAM_TYPE     Type;
-    uint                 Length;
-    uint                 Flags;
-    _Anonymous1_e__Union Anonymous1;
-    _Anonymous2_e__Union Anonymous2;
+    AUDIT_PARAM_TYPE Type;
+    uint             Length;
+    uint             Flags;
+    union
+    {
+        size_t              Data0;
+        PWSTR               String;
+        size_t              u;
+        SID*                psid;
+        GUID*               pguid;
+        uint                LogonId_LowPart;
+        AUDIT_OBJECT_TYPES* pObjectTypes;
+        AUDIT_IP_ADDRESS*   pIpAddress;
+    }
+    union
+    {
+        size_t Data1;
+        int    LogonId_HighPart;
+    }
 }
 
 struct AUDIT_PARAMS
@@ -1082,7 +1121,7 @@ struct AUTHZ_AUDIT_EVENT_TYPE_OLD
     AUTHZ_AUDIT_EVENT_TYPE_UNION u;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/authz/ns-authz-authz_access_request))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/authz/ns-authz-authz_access_request
 struct AUTHZ_ACCESS_REQUEST
 {
     uint              DesiredAccess;
@@ -1092,7 +1131,7 @@ struct AUTHZ_ACCESS_REQUEST
     void*             OptionalArguments;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/authz/ns-authz-authz_access_reply))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/authz/ns-authz-authz_access_reply
 struct AUTHZ_ACCESS_REPLY
 {
     uint  ResultListLength;
@@ -1101,41 +1140,51 @@ struct AUTHZ_ACCESS_REPLY
     uint* Error;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/authz/ns-authz-authz_security_attribute_fqbn_value))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/authz/ns-authz-authz_security_attribute_fqbn_value
 struct AUTHZ_SECURITY_ATTRIBUTE_FQBN_VALUE
 {
     ulong Version;
     PWSTR pName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/authz/ns-authz-authz_security_attribute_octet_string_value))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/authz/ns-authz-authz_security_attribute_octet_string_value
 struct AUTHZ_SECURITY_ATTRIBUTE_OCTET_STRING_VALUE
 {
     void* pValue;
     uint  ValueLength;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/authz/ns-authz-authz_security_attribute_v1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/authz/ns-authz-authz_security_attribute_v1
 struct AUTHZ_SECURITY_ATTRIBUTE_V1
 {
-    PWSTR            pName;
-    ushort           ValueType;
-    ushort           Reserved;
+    PWSTR  pName;
+    ushort ValueType;
+    ushort Reserved;
     AUTHZ_SECURITY_ATTRIBUTE_FLAGS Flags;
-    uint             ValueCount;
-    _Values_e__Union Values;
+    uint   ValueCount;
+    union Values
+    {
+        long*  pInt64;
+        ulong* pUint64;
+        PWSTR* ppString;
+        AUTHZ_SECURITY_ATTRIBUTE_FQBN_VALUE* pFqbn;
+        AUTHZ_SECURITY_ATTRIBUTE_OCTET_STRING_VALUE* pOctetString;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/authz/ns-authz-authz_security_attributes_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/authz/ns-authz-authz_security_attributes_information
 struct AUTHZ_SECURITY_ATTRIBUTES_INFORMATION
 {
-    ushort              Version;
-    ushort              Reserved;
-    uint                AttributeCount;
-    _Attribute_e__Union Attribute;
+    ushort Version;
+    ushort Reserved;
+    uint   AttributeCount;
+    union Attribute
+    {
+        AUTHZ_SECURITY_ATTRIBUTE_V1* pAttributeV1;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/authz/ns-authz-authz_rpc_init_info_client))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/authz/ns-authz-authz_rpc_init_info_client
 struct AUTHZ_RPC_INIT_INFO_CLIENT
 {
     ushort version_;
@@ -1147,7 +1196,7 @@ struct AUTHZ_RPC_INIT_INFO_CLIENT
     PWSTR  ServerSpn;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/authz/ns-authz-authz_init_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/authz/ns-authz-authz_init_info
 struct AUTHZ_INIT_INFO
 {
     ushort       version_;
@@ -1159,24 +1208,28 @@ struct AUTHZ_INIT_INFO
     PFN_AUTHZ_FREE_CENTRAL_ACCESS_POLICY pfnFreeCentralAccessPolicy;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/authz/ns-authz-authz_registration_object_type_name_offset))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/authz/ns-authz-authz_registration_object_type_name_offset
 struct AUTHZ_REGISTRATION_OBJECT_TYPE_NAME_OFFSET
 {
     PWSTR szObjectTypeName;
     uint  dwOffset;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/authz/ns-authz-authz_source_schema_registration))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/authz/ns-authz-authz_source_schema_registration
 struct AUTHZ_SOURCE_SCHEMA_REGISTRATION
 {
-    uint                dwFlags;
-    PWSTR               szEventSourceName;
-    PWSTR               szEventMessageFile;
-    PWSTR               szEventSourceXmlSchemaFile;
-    PWSTR               szEventAccessStringsFile;
-    PWSTR               szExecutableImagePath;
-    _Anonymous_e__Union Anonymous;
-    uint                dwObjectTypeNameCount;
+    uint  dwFlags;
+    PWSTR szEventSourceName;
+    PWSTR szEventMessageFile;
+    PWSTR szEventSourceXmlSchemaFile;
+    PWSTR szEventAccessStringsFile;
+    PWSTR szExecutableImagePath;
+    union
+    {
+        void* pReserved;
+        GUID* pProviderGuid;
+    }
+    uint  dwObjectTypeNameCount;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/AUTHZ_REGISTRATION_OBJECT_TYPE_NAME_OFFSET[1] ObjectTypeNames;
 }
 
@@ -1725,984 +1778,984 @@ struct AzPrincipalLocator;
 
 @GUID("edbd9ca9-9b82-4f6a-9e8b-98301e450f14")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazauthorizationstore))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazauthorizationstore
 interface IAzAuthorizationStore : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-get_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-get_description
     HRESULT get_Description(BSTR* pbstrDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-put_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-put_description
     HRESULT put_Description(BSTR bstrDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-get_applicationdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-get_applicationdata
     HRESULT get_ApplicationData(BSTR* pbstrApplicationData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-put_applicationdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-put_applicationdata
     HRESULT put_ApplicationData(BSTR bstrApplicationData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-get_domaintimeout))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-get_domaintimeout
     HRESULT get_DomainTimeout(int* plProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-put_domaintimeout))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-put_domaintimeout
     HRESULT put_DomainTimeout(int lProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-get_scriptenginetimeout))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-get_scriptenginetimeout
     HRESULT get_ScriptEngineTimeout(int* plProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-put_scriptenginetimeout))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-put_scriptenginetimeout
     HRESULT put_ScriptEngineTimeout(int lProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-get_maxscriptengines))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-get_maxscriptengines
     HRESULT get_MaxScriptEngines(int* plProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-put_maxscriptengines))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-put_maxscriptengines
     HRESULT put_MaxScriptEngines(int lProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-get_generateaudits))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-get_generateaudits
     HRESULT get_GenerateAudits(BOOL* pbProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-put_generateaudits))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-put_generateaudits
     HRESULT put_GenerateAudits(BOOL bProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-get_writable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-get_writable
     HRESULT get_Writable(BOOL* pfProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-getproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-getproperty
     HRESULT GetProperty(int lPropId, VARIANT varReserved, VARIANT* pvarProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-setproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-setproperty
     HRESULT SetProperty(int lPropId, VARIANT varProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-addpropertyitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-addpropertyitem
     HRESULT AddPropertyItem(AZ_PROP_CONSTANTS lPropId, VARIANT varProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-deletepropertyitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-deletepropertyitem
     HRESULT DeletePropertyItem(int lPropId, VARIANT varProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-get_policyadministrators))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-get_policyadministrators
     HRESULT get_PolicyAdministrators(VARIANT* pvarAdmins);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-get_policyreaders))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-get_policyreaders
     HRESULT get_PolicyReaders(VARIANT* pvarReaders);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-addpolicyadministrator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-addpolicyadministrator
     HRESULT AddPolicyAdministrator(BSTR bstrAdmin, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-deletepolicyadministrator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-deletepolicyadministrator
     HRESULT DeletePolicyAdministrator(BSTR bstrAdmin, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-addpolicyreader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-addpolicyreader
     HRESULT AddPolicyReader(BSTR bstrReader, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-deletepolicyreader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-deletepolicyreader
     HRESULT DeletePolicyReader(BSTR bstrReader, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-initialize
     HRESULT Initialize(AZ_PROP_CONSTANTS lFlags, BSTR bstrPolicyURL, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-updatecache))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-updatecache
     HRESULT UpdateCache(VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-delete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-delete
     HRESULT Delete(VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-get_applications))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-get_applications
     HRESULT get_Applications(IAzApplications* ppAppCollection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-openapplication))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-openapplication
     HRESULT OpenApplication(BSTR bstrApplicationName, VARIANT varReserved, IAzApplication* ppApplication);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-createapplication))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-createapplication
     HRESULT CreateApplication(BSTR bstrApplicationName, VARIANT varReserved, IAzApplication* ppApplication);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-deleteapplication))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-deleteapplication
     HRESULT DeleteApplication(BSTR bstrApplicationName, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-get_applicationgroups))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-get_applicationgroups
     HRESULT get_ApplicationGroups(IAzApplicationGroups* ppGroupCollection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-createapplicationgroup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-createapplicationgroup
     HRESULT CreateApplicationGroup(BSTR bstrGroupName, VARIANT varReserved, IAzApplicationGroup* ppGroup);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-openapplicationgroup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-openapplicationgroup
     HRESULT OpenApplicationGroup(BSTR bstrGroupName, VARIANT varReserved, IAzApplicationGroup* ppGroup);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-deleteapplicationgroup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-deleteapplicationgroup
     HRESULT DeleteApplicationGroup(BSTR bstrGroupName, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-submit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-submit
     HRESULT Submit(int lFlags, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-get_delegatedpolicyusers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-get_delegatedpolicyusers
     HRESULT get_DelegatedPolicyUsers(VARIANT* pvarDelegatedPolicyUsers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-adddelegatedpolicyuser))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-adddelegatedpolicyuser
     HRESULT AddDelegatedPolicyUser(BSTR bstrDelegatedPolicyUser, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-deletedelegatedpolicyuser))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-deletedelegatedpolicyuser
     HRESULT DeleteDelegatedPolicyUser(BSTR bstrDelegatedPolicyUser, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-get_targetmachine))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-get_targetmachine
     HRESULT get_TargetMachine(BSTR* pbstrTargetMachine);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-get_applystoresacl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-get_applystoresacl
     HRESULT get_ApplyStoreSacl(BOOL* pbApplyStoreSacl);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-put_applystoresacl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-put_applystoresacl
     HRESULT put_ApplyStoreSacl(BOOL bApplyStoreSacl);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-get_policyadministratorsname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-get_policyadministratorsname
     HRESULT get_PolicyAdministratorsName(VARIANT* pvarAdmins);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-get_policyreadersname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-get_policyreadersname
     HRESULT get_PolicyReadersName(VARIANT* pvarReaders);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-addpolicyadministratorname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-addpolicyadministratorname
     HRESULT AddPolicyAdministratorName(BSTR bstrAdmin, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-deletepolicyadministratorname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-deletepolicyadministratorname
     HRESULT DeletePolicyAdministratorName(BSTR bstrAdmin, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-addpolicyreadername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-addpolicyreadername
     HRESULT AddPolicyReaderName(BSTR bstrReader, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-deletepolicyreadername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-deletepolicyreadername
     HRESULT DeletePolicyReaderName(BSTR bstrReader, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-get_delegatedpolicyusersname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-get_delegatedpolicyusersname
     HRESULT get_DelegatedPolicyUsersName(VARIANT* pvarDelegatedPolicyUsers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-adddelegatedpolicyusername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-adddelegatedpolicyusername
     HRESULT AddDelegatedPolicyUserName(BSTR bstrDelegatedPolicyUser, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-deletedelegatedpolicyusername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-deletedelegatedpolicyusername
     HRESULT DeleteDelegatedPolicyUserName(BSTR bstrDelegatedPolicyUser, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-closeapplication))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore-closeapplication
     HRESULT CloseApplication(BSTR bstrApplicationName, int lFlag);
 }
 
 @GUID("b11e5584-d577-4273-b6c5-0973e0f8e80d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazauthorizationstore2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazauthorizationstore2
 interface IAzAuthorizationStore2 : IAzAuthorizationStore
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore2-openapplication2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore2-openapplication2
     HRESULT OpenApplication2(BSTR bstrApplicationName, VARIANT varReserved, IAzApplication2* ppApplication);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore2-createapplication2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore2-createapplication2
     HRESULT CreateApplication2(BSTR bstrApplicationName, VARIANT varReserved, IAzApplication2* ppApplication);
 }
 
 @GUID("abc08425-0c86-4fa0-9be3-7189956c926e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazauthorizationstore3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazauthorizationstore3
 interface IAzAuthorizationStore3 : IAzAuthorizationStore2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore3-isupdateneeded))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore3-isupdateneeded
     HRESULT IsUpdateNeeded(VARIANT_BOOL* pbIsUpdateNeeded);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore3-bizrulegroupsupported))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore3-bizrulegroupsupported
     HRESULT BizruleGroupSupported(VARIANT_BOOL* pbSupported);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore3-upgradestoresfunctionallevel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore3-upgradestoresfunctionallevel
     HRESULT UpgradeStoresFunctionalLevel(int lFunctionalLevel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore3-isfunctionallevelupgradesupported))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore3-isfunctionallevelupgradesupported
     HRESULT IsFunctionalLevelUpgradeSupported(int lFunctionalLevel, VARIANT_BOOL* pbSupported);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore3-getschemaversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazauthorizationstore3-getschemaversion
     HRESULT GetSchemaVersion(int* plMajorVersion, int* plMinorVersion);
 }
 
 @GUID("987bc7c7-b813-4d27-bede-6ba5ae867e95")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazapplication))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazapplication
 interface IAzApplication : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_name
     HRESULT get_Name(BSTR* pbstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-put_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-put_name
     HRESULT put_Name(BSTR bstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_description
     HRESULT get_Description(BSTR* pbstrDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-put_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-put_description
     HRESULT put_Description(BSTR bstrDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_applicationdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_applicationdata
     HRESULT get_ApplicationData(BSTR* pbstrApplicationData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-put_applicationdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-put_applicationdata
     HRESULT put_ApplicationData(BSTR bstrApplicationData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_authzinterfaceclsid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_authzinterfaceclsid
     HRESULT get_AuthzInterfaceClsid(BSTR* pbstrProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-put_authzinterfaceclsid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-put_authzinterfaceclsid
     HRESULT put_AuthzInterfaceClsid(BSTR bstrProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_version))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_version
     HRESULT get_Version(BSTR* pbstrProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-put_version))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-put_version
     HRESULT put_Version(BSTR bstrProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_generateaudits))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_generateaudits
     HRESULT get_GenerateAudits(BOOL* pbProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-put_generateaudits))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-put_generateaudits
     HRESULT put_GenerateAudits(BOOL bProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_applystoresacl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_applystoresacl
     HRESULT get_ApplyStoreSacl(BOOL* pbProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-put_applystoresacl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-put_applystoresacl
     HRESULT put_ApplyStoreSacl(BOOL bProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_writable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_writable
     HRESULT get_Writable(BOOL* pfProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-getproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-getproperty
     HRESULT GetProperty(int lPropId, VARIANT varReserved, VARIANT* pvarProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-setproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-setproperty
     HRESULT SetProperty(int lPropId, VARIANT varProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_policyadministrators))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_policyadministrators
     HRESULT get_PolicyAdministrators(VARIANT* pvarAdmins);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_policyreaders))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_policyreaders
     HRESULT get_PolicyReaders(VARIANT* pvarReaders);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-addpolicyadministrator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-addpolicyadministrator
     HRESULT AddPolicyAdministrator(BSTR bstrAdmin, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-deletepolicyadministrator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-deletepolicyadministrator
     HRESULT DeletePolicyAdministrator(BSTR bstrAdmin, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-addpolicyreader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-addpolicyreader
     HRESULT AddPolicyReader(BSTR bstrReader, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-deletepolicyreader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-deletepolicyreader
     HRESULT DeletePolicyReader(BSTR bstrReader, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_scopes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_scopes
     HRESULT get_Scopes(IAzScopes* ppScopeCollection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-openscope))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-openscope
     HRESULT OpenScope(BSTR bstrScopeName, VARIANT varReserved, IAzScope* ppScope);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-createscope))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-createscope
     HRESULT CreateScope(BSTR bstrScopeName, VARIANT varReserved, IAzScope* ppScope);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-deletescope))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-deletescope
     HRESULT DeleteScope(BSTR bstrScopeName, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_operations))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_operations
     HRESULT get_Operations(IAzOperations* ppOperationCollection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-openoperation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-openoperation
     HRESULT OpenOperation(BSTR bstrOperationName, VARIANT varReserved, IAzOperation* ppOperation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-createoperation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-createoperation
     HRESULT CreateOperation(BSTR bstrOperationName, VARIANT varReserved, IAzOperation* ppOperation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-deleteoperation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-deleteoperation
     HRESULT DeleteOperation(BSTR bstrOperationName, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_tasks))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_tasks
     HRESULT get_Tasks(IAzTasks* ppTaskCollection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-opentask))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-opentask
     HRESULT OpenTask(BSTR bstrTaskName, VARIANT varReserved, IAzTask* ppTask);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-createtask))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-createtask
     HRESULT CreateTask(BSTR bstrTaskName, VARIANT varReserved, IAzTask* ppTask);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-deletetask))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-deletetask
     HRESULT DeleteTask(BSTR bstrTaskName, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_applicationgroups))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_applicationgroups
     HRESULT get_ApplicationGroups(IAzApplicationGroups* ppGroupCollection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-openapplicationgroup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-openapplicationgroup
     HRESULT OpenApplicationGroup(BSTR bstrGroupName, VARIANT varReserved, IAzApplicationGroup* ppGroup);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-createapplicationgroup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-createapplicationgroup
     HRESULT CreateApplicationGroup(BSTR bstrGroupName, VARIANT varReserved, IAzApplicationGroup* ppGroup);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-deleteapplicationgroup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-deleteapplicationgroup
     HRESULT DeleteApplicationGroup(BSTR bstrGroupName, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_roles))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_roles
     HRESULT get_Roles(IAzRoles* ppRoleCollection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-openrole))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-openrole
     HRESULT OpenRole(BSTR bstrRoleName, VARIANT varReserved, IAzRole* ppRole);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-createrole))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-createrole
     HRESULT CreateRole(BSTR bstrRoleName, VARIANT varReserved, IAzRole* ppRole);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-deleterole))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-deleterole
     HRESULT DeleteRole(BSTR bstrRoleName, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-initializeclientcontextfromtoken))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-initializeclientcontextfromtoken
     HRESULT InitializeClientContextFromToken(ulong ullTokenHandle, VARIANT varReserved, 
                                              IAzClientContext* ppClientContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-addpropertyitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-addpropertyitem
     HRESULT AddPropertyItem(int lPropId, VARIANT varProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-deletepropertyitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-deletepropertyitem
     HRESULT DeletePropertyItem(int lPropId, VARIANT varProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-submit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-submit
     HRESULT Submit(int lFlags, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-initializeclientcontextfromname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-initializeclientcontextfromname
     HRESULT InitializeClientContextFromName(BSTR ClientName, BSTR DomainName, VARIANT varReserved, 
                                             IAzClientContext* ppClientContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_delegatedpolicyusers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_delegatedpolicyusers
     HRESULT get_DelegatedPolicyUsers(VARIANT* pvarDelegatedPolicyUsers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-adddelegatedpolicyuser))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-adddelegatedpolicyuser
     HRESULT AddDelegatedPolicyUser(BSTR bstrDelegatedPolicyUser, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-deletedelegatedpolicyuser))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-deletedelegatedpolicyuser
     HRESULT DeleteDelegatedPolicyUser(BSTR bstrDelegatedPolicyUser, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-initializeclientcontextfromstringsid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-initializeclientcontextfromstringsid
     HRESULT InitializeClientContextFromStringSid(BSTR SidString, int lOptions, VARIANT varReserved, 
                                                  IAzClientContext* ppClientContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_policyadministratorsname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_policyadministratorsname
     HRESULT get_PolicyAdministratorsName(VARIANT* pvarAdmins);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_policyreadersname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_policyreadersname
     HRESULT get_PolicyReadersName(VARIANT* pvarReaders);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-addpolicyadministratorname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-addpolicyadministratorname
     HRESULT AddPolicyAdministratorName(BSTR bstrAdmin, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-deletepolicyadministratorname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-deletepolicyadministratorname
     HRESULT DeletePolicyAdministratorName(BSTR bstrAdmin, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-addpolicyreadername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-addpolicyreadername
     HRESULT AddPolicyReaderName(BSTR bstrReader, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-deletepolicyreadername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-deletepolicyreadername
     HRESULT DeletePolicyReaderName(BSTR bstrReader, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_delegatedpolicyusersname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-get_delegatedpolicyusersname
     HRESULT get_DelegatedPolicyUsersName(VARIANT* pvarDelegatedPolicyUsers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-adddelegatedpolicyusername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-adddelegatedpolicyusername
     HRESULT AddDelegatedPolicyUserName(BSTR bstrDelegatedPolicyUser, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-deletedelegatedpolicyusername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication-deletedelegatedpolicyusername
     HRESULT DeleteDelegatedPolicyUserName(BSTR bstrDelegatedPolicyUser, VARIANT varReserved);
 }
 
 @GUID("086a68af-a249-437c-b18d-d4d86d6a9660")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazapplication2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazapplication2
 interface IAzApplication2 : IAzApplication
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication2-initializeclientcontextfromtoken2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication2-initializeclientcontextfromtoken2
     HRESULT InitializeClientContextFromToken2(uint ulTokenHandleLowPart, uint ulTokenHandleHighPart, 
                                               VARIANT varReserved, IAzClientContext2* ppClientContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication2-initializeclientcontext2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication2-initializeclientcontext2
     HRESULT InitializeClientContext2(BSTR IdentifyingString, VARIANT varReserved, 
                                      IAzClientContext2* ppClientContext);
 }
 
 @GUID("929b11a9-95c5-4a84-a29a-20ad42c2f16c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazapplications))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazapplications
 interface IAzApplications : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplications-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplications-get_item
     HRESULT get_Item(int Index, VARIANT* pvarObtPtr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplications-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplications-get_count
     HRESULT get_Count(int* plCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplications-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplications-get__newenum
     HRESULT get__NewEnum(IUnknown* ppEnumPtr);
 }
 
 @GUID("5e56b24f-ea01-4d61-be44-c49b5e4eaf74")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazoperation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazoperation
 interface IAzOperation : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazoperation-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazoperation-get_name
     HRESULT get_Name(BSTR* pbstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazoperation-put_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazoperation-put_name
     HRESULT put_Name(BSTR bstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazoperation-get_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazoperation-get_description
     HRESULT get_Description(BSTR* pbstrDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazoperation-put_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazoperation-put_description
     HRESULT put_Description(BSTR bstrDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazoperation-get_applicationdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazoperation-get_applicationdata
     HRESULT get_ApplicationData(BSTR* pbstrApplicationData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazoperation-put_applicationdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazoperation-put_applicationdata
     HRESULT put_ApplicationData(BSTR bstrApplicationData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazoperation-get_operationid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazoperation-get_operationid
     HRESULT get_OperationID(int* plProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazoperation-put_operationid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazoperation-put_operationid
     HRESULT put_OperationID(int lProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazoperation-get_writable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazoperation-get_writable
     HRESULT get_Writable(BOOL* pfProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazoperation-getproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazoperation-getproperty
     HRESULT GetProperty(int lPropId, VARIANT varReserved, VARIANT* pvarProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazoperation-setproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazoperation-setproperty
     HRESULT SetProperty(int lPropId, VARIANT varProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazoperation-submit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazoperation-submit
     HRESULT Submit(int lFlags, VARIANT varReserved);
 }
 
 @GUID("90ef9c07-9706-49d9-af80-0438a5f3ec35")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazoperations))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazoperations
 interface IAzOperations : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazoperations-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazoperations-get_item
     HRESULT get_Item(int Index, VARIANT* pvarObtPtr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazoperations-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazoperations-get_count
     HRESULT get_Count(int* plCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazoperations-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazoperations-get__newenum
     HRESULT get__NewEnum(IUnknown* ppEnumPtr);
 }
 
 @GUID("cb94e592-2e0e-4a6c-a336-b89a6dc1e388")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iaztask))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iaztask
 interface IAzTask : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-get_name
     HRESULT get_Name(BSTR* pbstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-put_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-put_name
     HRESULT put_Name(BSTR bstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-get_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-get_description
     HRESULT get_Description(BSTR* pbstrDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-put_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-put_description
     HRESULT put_Description(BSTR bstrDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-get_applicationdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-get_applicationdata
     HRESULT get_ApplicationData(BSTR* pbstrApplicationData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-put_applicationdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-put_applicationdata
     HRESULT put_ApplicationData(BSTR bstrApplicationData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-get_bizrule))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-get_bizrule
     HRESULT get_BizRule(BSTR* pbstrProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-put_bizrule))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-put_bizrule
     HRESULT put_BizRule(BSTR bstrProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-get_bizrulelanguage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-get_bizrulelanguage
     HRESULT get_BizRuleLanguage(BSTR* pbstrProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-put_bizrulelanguage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-put_bizrulelanguage
     HRESULT put_BizRuleLanguage(BSTR bstrProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-get_bizruleimportedpath))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-get_bizruleimportedpath
     HRESULT get_BizRuleImportedPath(BSTR* pbstrProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-put_bizruleimportedpath))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-put_bizruleimportedpath
     HRESULT put_BizRuleImportedPath(BSTR bstrProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-get_isroledefinition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-get_isroledefinition
     HRESULT get_IsRoleDefinition(BOOL* pfProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-put_isroledefinition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-put_isroledefinition
     HRESULT put_IsRoleDefinition(BOOL fProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-get_operations))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-get_operations
     HRESULT get_Operations(VARIANT* pvarProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-get_tasks))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-get_tasks
     HRESULT get_Tasks(VARIANT* pvarProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-addoperation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-addoperation
     HRESULT AddOperation(BSTR bstrOp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-deleteoperation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-deleteoperation
     HRESULT DeleteOperation(BSTR bstrOp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-addtask))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-addtask
     HRESULT AddTask(BSTR bstrTask, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-deletetask))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-deletetask
     HRESULT DeleteTask(BSTR bstrTask, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-get_writable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-get_writable
     HRESULT get_Writable(BOOL* pfProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-getproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-getproperty
     HRESULT GetProperty(int lPropId, VARIANT varReserved, VARIANT* pvarProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-setproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-setproperty
     HRESULT SetProperty(int lPropId, VARIANT varProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-addpropertyitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-addpropertyitem
     HRESULT AddPropertyItem(int lPropId, VARIANT varProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-deletepropertyitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-deletepropertyitem
     HRESULT DeletePropertyItem(int lPropId, VARIANT varProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-submit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask-submit
     HRESULT Submit(int lFlags, VARIANT varReserved);
 }
 
 @GUID("b338ccab-4c85-4388-8c0a-c58592bad398")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iaztasks))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iaztasks
 interface IAzTasks : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztasks-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztasks-get_item
     HRESULT get_Item(int Index, VARIANT* pvarObtPtr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztasks-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztasks-get_count
     HRESULT get_Count(int* plCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztasks-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztasks-get__newenum
     HRESULT get__NewEnum(IUnknown* ppEnumPtr);
 }
 
 @GUID("00e52487-e08d-4514-b62e-877d5645f5ab")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazscope))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazscope
 interface IAzScope : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-get_name
     HRESULT get_Name(BSTR* pbstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-put_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-put_name
     HRESULT put_Name(BSTR bstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-get_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-get_description
     HRESULT get_Description(BSTR* pbstrDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-put_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-put_description
     HRESULT put_Description(BSTR bstrDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-get_applicationdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-get_applicationdata
     HRESULT get_ApplicationData(BSTR* pbstrApplicationData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-put_applicationdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-put_applicationdata
     HRESULT put_ApplicationData(BSTR bstrApplicationData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-get_writable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-get_writable
     HRESULT get_Writable(BOOL* pfProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-getproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-getproperty
     HRESULT GetProperty(int lPropId, VARIANT varReserved, VARIANT* pvarProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-setproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-setproperty
     HRESULT SetProperty(int lPropId, VARIANT varProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-addpropertyitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-addpropertyitem
     HRESULT AddPropertyItem(int lPropId, VARIANT varProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-deletepropertyitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-deletepropertyitem
     HRESULT DeletePropertyItem(int lPropId, VARIANT varProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-get_policyadministrators))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-get_policyadministrators
     HRESULT get_PolicyAdministrators(VARIANT* pvarAdmins);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-get_policyreaders))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-get_policyreaders
     HRESULT get_PolicyReaders(VARIANT* pvarReaders);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-addpolicyadministrator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-addpolicyadministrator
     HRESULT AddPolicyAdministrator(BSTR bstrAdmin, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-deletepolicyadministrator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-deletepolicyadministrator
     HRESULT DeletePolicyAdministrator(BSTR bstrAdmin, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-addpolicyreader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-addpolicyreader
     HRESULT AddPolicyReader(BSTR bstrReader, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-deletepolicyreader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-deletepolicyreader
     HRESULT DeletePolicyReader(BSTR bstrReader, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-get_applicationgroups))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-get_applicationgroups
     HRESULT get_ApplicationGroups(IAzApplicationGroups* ppGroupCollection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-openapplicationgroup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-openapplicationgroup
     HRESULT OpenApplicationGroup(BSTR bstrGroupName, VARIANT varReserved, IAzApplicationGroup* ppGroup);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-createapplicationgroup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-createapplicationgroup
     HRESULT CreateApplicationGroup(BSTR bstrGroupName, VARIANT varReserved, IAzApplicationGroup* ppGroup);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-deleteapplicationgroup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-deleteapplicationgroup
     HRESULT DeleteApplicationGroup(BSTR bstrGroupName, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-get_roles))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-get_roles
     HRESULT get_Roles(IAzRoles* ppRoleCollection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-openrole))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-openrole
     HRESULT OpenRole(BSTR bstrRoleName, VARIANT varReserved, IAzRole* ppRole);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-createrole))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-createrole
     HRESULT CreateRole(BSTR bstrRoleName, VARIANT varReserved, IAzRole* ppRole);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-deleterole))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-deleterole
     HRESULT DeleteRole(BSTR bstrRoleName, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-get_tasks))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-get_tasks
     HRESULT get_Tasks(IAzTasks* ppTaskCollection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-opentask))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-opentask
     HRESULT OpenTask(BSTR bstrTaskName, VARIANT varReserved, IAzTask* ppTask);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-createtask))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-createtask
     HRESULT CreateTask(BSTR bstrTaskName, VARIANT varReserved, IAzTask* ppTask);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-deletetask))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-deletetask
     HRESULT DeleteTask(BSTR bstrTaskName, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-submit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-submit
     HRESULT Submit(int lFlags, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-get_canbedelegated))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-get_canbedelegated
     HRESULT get_CanBeDelegated(BOOL* pfProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-get_bizruleswritable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-get_bizruleswritable
     HRESULT get_BizrulesWritable(BOOL* pfProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-get_policyadministratorsname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-get_policyadministratorsname
     HRESULT get_PolicyAdministratorsName(VARIANT* pvarAdmins);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-get_policyreadersname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-get_policyreadersname
     HRESULT get_PolicyReadersName(VARIANT* pvarReaders);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-addpolicyadministratorname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-addpolicyadministratorname
     HRESULT AddPolicyAdministratorName(BSTR bstrAdmin, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-deletepolicyadministratorname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-deletepolicyadministratorname
     HRESULT DeletePolicyAdministratorName(BSTR bstrAdmin, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-addpolicyreadername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-addpolicyreadername
     HRESULT AddPolicyReaderName(BSTR bstrReader, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-deletepolicyreadername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope-deletepolicyreadername
     HRESULT DeletePolicyReaderName(BSTR bstrReader, VARIANT varReserved);
 }
 
 @GUID("78e14853-9f5e-406d-9b91-6bdba6973510")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazscopes))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazscopes
 interface IAzScopes : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscopes-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscopes-get_item
     HRESULT get_Item(int Index, VARIANT* pvarObtPtr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscopes-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscopes-get_count
     HRESULT get_Count(int* plCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscopes-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscopes-get__newenum
     HRESULT get__NewEnum(IUnknown* ppEnumPtr);
 }
 
 @GUID("f1b744cd-58a6-4e06-9fbf-36f6d779e21e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazapplicationgroup))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazapplicationgroup
 interface IAzApplicationGroup : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-get_name
     HRESULT get_Name(BSTR* pbstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-put_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-put_name
     HRESULT put_Name(BSTR bstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-get_type))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-get_type
     HRESULT get_Type(int* plProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-put_type))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-put_type
     HRESULT put_Type(int lProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-get_ldapquery))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-get_ldapquery
     HRESULT get_LdapQuery(BSTR* pbstrProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-put_ldapquery))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-put_ldapquery
     HRESULT put_LdapQuery(BSTR bstrProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-get_appmembers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-get_appmembers
     HRESULT get_AppMembers(VARIANT* pvarProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-get_appnonmembers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-get_appnonmembers
     HRESULT get_AppNonMembers(VARIANT* pvarProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-get_members))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-get_members
     HRESULT get_Members(VARIANT* pvarProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-get_nonmembers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-get_nonmembers
     HRESULT get_NonMembers(VARIANT* pvarProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-get_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-get_description
     HRESULT get_Description(BSTR* pbstrDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-put_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-put_description
     HRESULT put_Description(BSTR bstrDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-addappmember))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-addappmember
     HRESULT AddAppMember(BSTR bstrProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-deleteappmember))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-deleteappmember
     HRESULT DeleteAppMember(BSTR bstrProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-addappnonmember))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-addappnonmember
     HRESULT AddAppNonMember(BSTR bstrProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-deleteappnonmember))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-deleteappnonmember
     HRESULT DeleteAppNonMember(BSTR bstrProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-addmember))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-addmember
     HRESULT AddMember(BSTR bstrProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-deletemember))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-deletemember
     HRESULT DeleteMember(BSTR bstrProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-addnonmember))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-addnonmember
     HRESULT AddNonMember(BSTR bstrProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-deletenonmember))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-deletenonmember
     HRESULT DeleteNonMember(BSTR bstrProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-get_writable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-get_writable
     HRESULT get_Writable(BOOL* pfProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-getproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-getproperty
     HRESULT GetProperty(int lPropId, VARIANT varReserved, VARIANT* pvarProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-setproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-setproperty
     HRESULT SetProperty(int lPropId, VARIANT varProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-addpropertyitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-addpropertyitem
     HRESULT AddPropertyItem(int lPropId, VARIANT varProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-deletepropertyitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-deletepropertyitem
     HRESULT DeletePropertyItem(int lPropId, VARIANT varProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-submit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-submit
     HRESULT Submit(int lFlags, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-addmembername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-addmembername
     HRESULT AddMemberName(BSTR bstrProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-deletemembername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-deletemembername
     HRESULT DeleteMemberName(BSTR bstrProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-addnonmembername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-addnonmembername
     HRESULT AddNonMemberName(BSTR bstrProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-deletenonmembername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-deletenonmembername
     HRESULT DeleteNonMemberName(BSTR bstrProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-get_membersname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-get_membersname
     HRESULT get_MembersName(VARIANT* pvarProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-get_nonmembersname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup-get_nonmembersname
     HRESULT get_NonMembersName(VARIANT* pvarProp);
 }
 
 @GUID("4ce66ad5-9f3c-469d-a911-b99887a7e685")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazapplicationgroups))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazapplicationgroups
 interface IAzApplicationGroups : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroups-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroups-get_item
     HRESULT get_Item(int Index, VARIANT* pvarObtPtr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroups-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroups-get_count
     HRESULT get_Count(int* plCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroups-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroups-get__newenum
     HRESULT get__NewEnum(IUnknown* ppEnumPtr);
 }
 
 @GUID("859e0d8d-62d7-41d8-a034-c0cd5d43fdfa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazrole))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazrole
 interface IAzRole : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-get_name
     HRESULT get_Name(BSTR* pbstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-put_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-put_name
     HRESULT put_Name(BSTR bstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-get_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-get_description
     HRESULT get_Description(BSTR* pbstrDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-put_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-put_description
     HRESULT put_Description(BSTR bstrDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-get_applicationdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-get_applicationdata
     HRESULT get_ApplicationData(BSTR* pbstrApplicationData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-put_applicationdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-put_applicationdata
     HRESULT put_ApplicationData(BSTR bstrApplicationData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-addappmember))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-addappmember
     HRESULT AddAppMember(BSTR bstrProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-deleteappmember))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-deleteappmember
     HRESULT DeleteAppMember(BSTR bstrProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-addtask))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-addtask
     HRESULT AddTask(BSTR bstrProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-deletetask))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-deletetask
     HRESULT DeleteTask(BSTR bstrProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-addoperation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-addoperation
     HRESULT AddOperation(BSTR bstrProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-deleteoperation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-deleteoperation
     HRESULT DeleteOperation(BSTR bstrProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-addmember))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-addmember
     HRESULT AddMember(BSTR bstrProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-deletemember))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-deletemember
     HRESULT DeleteMember(BSTR bstrProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-get_writable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-get_writable
     HRESULT get_Writable(BOOL* pfProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-getproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-getproperty
     HRESULT GetProperty(int lPropId, VARIANT varReserved, VARIANT* pvarProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-setproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-setproperty
     HRESULT SetProperty(int lPropId, VARIANT varProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-get_appmembers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-get_appmembers
     HRESULT get_AppMembers(VARIANT* pvarProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-get_members))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-get_members
     HRESULT get_Members(VARIANT* pvarProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-get_operations))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-get_operations
     HRESULT get_Operations(VARIANT* pvarProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-get_tasks))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-get_tasks
     HRESULT get_Tasks(VARIANT* pvarProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-addpropertyitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-addpropertyitem
     HRESULT AddPropertyItem(int lPropId, VARIANT varProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-deletepropertyitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-deletepropertyitem
     HRESULT DeletePropertyItem(int lPropId, VARIANT varProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-submit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-submit
     HRESULT Submit(int lFlags, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-addmembername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-addmembername
     HRESULT AddMemberName(BSTR bstrProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-deletemembername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-deletemembername
     HRESULT DeleteMemberName(BSTR bstrProp, VARIANT varReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-get_membersname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazrole-get_membersname
     HRESULT get_MembersName(VARIANT* pvarProp);
 }
 
 @GUID("95e0f119-13b4-4dae-b65f-2f7d60d822e4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazroles))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazroles
 interface IAzRoles : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroles-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroles-get_item
     HRESULT get_Item(int Index, VARIANT* pvarObtPtr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroles-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroles-get_count
     HRESULT get_Count(int* plCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroles-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroles-get__newenum
     HRESULT get__NewEnum(IUnknown* ppEnumPtr);
 }
 
 @GUID("eff1f00b-488a-466d-afd9-a401c5f9eef5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazclientcontext))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazclientcontext
 interface IAzClientContext : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext-accesscheck))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext-accesscheck
     HRESULT AccessCheck(BSTR bstrObjectName, VARIANT varScopeNames, VARIANT varOperations, 
                         VARIANT varParameterNames, VARIANT varParameterValues, VARIANT varInterfaceNames, 
                         VARIANT varInterfaceFlags, VARIANT varInterfaces, VARIANT* pvarResults);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext-getbusinessrulestring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext-getbusinessrulestring
     HRESULT GetBusinessRuleString(BSTR* pbstrBusinessRuleString);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext-get_userdn))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext-get_userdn
     HRESULT get_UserDn(BSTR* pbstrProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext-get_usersamcompat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext-get_usersamcompat
     HRESULT get_UserSamCompat(BSTR* pbstrProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext-get_userdisplay))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext-get_userdisplay
     HRESULT get_UserDisplay(BSTR* pbstrProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext-get_userguid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext-get_userguid
     HRESULT get_UserGuid(BSTR* pbstrProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext-get_usercanonical))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext-get_usercanonical
     HRESULT get_UserCanonical(BSTR* pbstrProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext-get_userupn))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext-get_userupn
     HRESULT get_UserUpn(BSTR* pbstrProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext-get_userdnssamcompat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext-get_userdnssamcompat
     HRESULT get_UserDnsSamCompat(BSTR* pbstrProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext-getproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext-getproperty
     HRESULT GetProperty(int lPropId, VARIANT varReserved, VARIANT* pvarProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext-getroles))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext-getroles
     HRESULT GetRoles(BSTR bstrScopeName, VARIANT* pvarRoleNames);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext-get_roleforaccesscheck))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext-get_roleforaccesscheck
     HRESULT get_RoleForAccessCheck(BSTR* pbstrProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext-put_roleforaccesscheck))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext-put_roleforaccesscheck
     HRESULT put_RoleForAccessCheck(BSTR bstrProp);
 }
 
 @GUID("2b0c92b8-208a-488a-8f81-e4edb22111cd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazclientcontext2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazclientcontext2
 interface IAzClientContext2 : IAzClientContext
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext2-getassignedscopespage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext2-getassignedscopespage
     HRESULT GetAssignedScopesPage(int lOptions, int PageSize, VARIANT* pvarCursor, VARIANT* pvarScopeNames);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext2-addroles))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext2-addroles
     HRESULT AddRoles(VARIANT varRoles, BSTR bstrScopeName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext2-addapplicationgroups))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext2-addapplicationgroups
     HRESULT AddApplicationGroups(VARIANT varApplicationGroups);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext2-addstringsids))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext2-addstringsids
     HRESULT AddStringSids(VARIANT varStringSids);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext2-put_ldapquerydn))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext2-put_ldapquerydn
     HRESULT put_LDAPQueryDN(BSTR bstrLDAPQueryDN);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext2-get_ldapquerydn))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext2-get_ldapquerydn
     HRESULT get_LDAPQueryDN(BSTR* pbstrLDAPQueryDN);
 }
 
 @GUID("e192f17d-d59f-455e-a152-940316cd77b2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazbizrulecontext))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazbizrulecontext
 interface IAzBizRuleContext : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazbizrulecontext-put_businessruleresult))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazbizrulecontext-put_businessruleresult
     HRESULT put_BusinessRuleResult(BOOL bResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazbizrulecontext-put_businessrulestring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazbizrulecontext-put_businessrulestring
     HRESULT put_BusinessRuleString(BSTR bstrBusinessRuleString);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazbizrulecontext-get_businessrulestring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazbizrulecontext-get_businessrulestring
     HRESULT get_BusinessRuleString(BSTR* pbstrBusinessRuleString);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazbizrulecontext-getparameter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazbizrulecontext-getparameter
     HRESULT GetParameter(BSTR bstrParameterName, VARIANT* pvarParameterValue);
 }
 
 @GUID("fc17685f-e25d-4dcd-bae1-276ec9533cb5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazbizruleparameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazbizruleparameters
 interface IAzBizRuleParameters : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazbizruleparameters-addparameter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazbizruleparameters-addparameter
     HRESULT AddParameter(BSTR bstrParameterName, VARIANT varParameterValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazbizruleparameters-addparameters))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazbizruleparameters-addparameters
     HRESULT AddParameters(VARIANT varParameterNames, VARIANT varParameterValues);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazbizruleparameters-getparametervalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazbizruleparameters-getparametervalue
     HRESULT GetParameterValue(BSTR bstrParameterName, VARIANT* pvarParameterValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazbizruleparameters-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazbizruleparameters-remove
     HRESULT Remove(BSTR varParameterName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazbizruleparameters-removeall))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazbizruleparameters-removeall
     HRESULT RemoveAll();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazbizruleparameters-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazbizruleparameters-get_count
     HRESULT get_Count(uint* plCount);
 }
 
 @GUID("e94128c7-e9da-44cc-b0bd-53036f3aab3d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazbizruleinterfaces))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazbizruleinterfaces
 interface IAzBizRuleInterfaces : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazbizruleinterfaces-addinterface))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazbizruleinterfaces-addinterface
     HRESULT AddInterface(BSTR bstrInterfaceName, int lInterfaceFlag, VARIANT varInterface);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazbizruleinterfaces-addinterfaces))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazbizruleinterfaces-addinterfaces
     HRESULT AddInterfaces(VARIANT varInterfaceNames, VARIANT varInterfaceFlags, VARIANT varInterfaces);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazbizruleinterfaces-getinterfacevalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazbizruleinterfaces-getinterfacevalue
     HRESULT GetInterfaceValue(BSTR bstrInterfaceName, int* lInterfaceFlag, VARIANT* varInterface);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazbizruleinterfaces-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazbizruleinterfaces-remove
     HRESULT Remove(BSTR bstrInterfaceName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazbizruleinterfaces-removeall))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazbizruleinterfaces-removeall
     HRESULT RemoveAll();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazbizruleinterfaces-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazbizruleinterfaces-get_count
     HRESULT get_Count(uint* plCount);
 }
 
 @GUID("11894fde-1deb-4b4b-8907-6d1cda1f5d4f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazclientcontext3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazclientcontext3
 interface IAzClientContext3 : IAzClientContext2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext3-accesscheck2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext3-accesscheck2
     HRESULT AccessCheck2(BSTR bstrObjectName, BSTR bstrScopeName, int lOperation, uint* plResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext3-isinroleassignment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext3-isinroleassignment
     HRESULT IsInRoleAssignment(BSTR bstrScopeName, BSTR bstrRoleName, VARIANT_BOOL* pbIsInRole);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext3-getoperations))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext3-getoperations
     HRESULT GetOperations(BSTR bstrScopeName, IAzOperations* ppOperationCollection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext3-gettasks))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext3-gettasks
     HRESULT GetTasks(BSTR bstrScopeName, IAzTasks* ppTaskCollection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext3-get_bizruleparameters))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext3-get_bizruleparameters
     HRESULT get_BizRuleParameters(IAzBizRuleParameters* ppBizRuleParam);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext3-get_bizruleinterfaces))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext3-get_bizruleinterfaces
     HRESULT get_BizRuleInterfaces(IAzBizRuleInterfaces* ppBizRuleInterfaces);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext3-getgroups))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext3-getgroups
     HRESULT GetGroups(BSTR bstrScopeName, 
                       /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(AZ_PROP_CONSTANTS))], [])*/uint ulOptions, 
                       VARIANT* pGroupArray);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext3-get_sids))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazclientcontext3-get_sids
     HRESULT get_Sids(VARIANT* pStringSidArray);
 }
 
 @GUID("ee9fe8c9-c9f3-40e2-aa12-d1d8599727fd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazscope2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazscope2
 interface IAzScope2 : IAzScope
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope2-get_roledefinitions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope2-get_roledefinitions
     HRESULT get_RoleDefinitions(IAzRoleDefinitions* ppRoleDefinitions);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope2-createroledefinition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope2-createroledefinition
     HRESULT CreateRoleDefinition(BSTR bstrRoleDefinitionName, IAzRoleDefinition* ppRoleDefinitions);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope2-openroledefinition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope2-openroledefinition
     HRESULT OpenRoleDefinition(BSTR bstrRoleDefinitionName, IAzRoleDefinition* ppRoleDefinitions);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope2-deleteroledefinition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope2-deleteroledefinition
     HRESULT DeleteRoleDefinition(BSTR bstrRoleDefinitionName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope2-get_roleassignments))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope2-get_roleassignments
     HRESULT get_RoleAssignments(IAzRoleAssignments* ppRoleAssignments);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope2-createroleassignment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope2-createroleassignment
     HRESULT CreateRoleAssignment(BSTR bstrRoleAssignmentName, IAzRoleAssignment* ppRoleAssignment);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope2-openroleassignment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope2-openroleassignment
     HRESULT OpenRoleAssignment(BSTR bstrRoleAssignmentName, IAzRoleAssignment* ppRoleAssignment);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope2-deleteroleassignment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazscope2-deleteroleassignment
     HRESULT DeleteRoleAssignment(BSTR bstrRoleAssignmentName);
 }
 
 @GUID("181c845e-7196-4a7d-ac2e-020c0bb7a303")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazapplication3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazapplication3
 interface IAzApplication3 : IAzApplication2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication3-scopeexists))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication3-scopeexists
     HRESULT ScopeExists(BSTR bstrScopeName, VARIANT_BOOL* pbExist);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication3-openscope2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication3-openscope2
     HRESULT OpenScope2(BSTR bstrScopeName, IAzScope2* ppScope2);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication3-createscope2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication3-createscope2
     HRESULT CreateScope2(BSTR bstrScopeName, IAzScope2* ppScope2);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication3-deletescope2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication3-deletescope2
     HRESULT DeleteScope2(BSTR bstrScopeName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication3-get_roledefinitions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication3-get_roledefinitions
     HRESULT get_RoleDefinitions(IAzRoleDefinitions* ppRoleDefinitions);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication3-createroledefinition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication3-createroledefinition
     HRESULT CreateRoleDefinition(BSTR bstrRoleDefinitionName, IAzRoleDefinition* ppRoleDefinitions);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication3-openroledefinition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication3-openroledefinition
     HRESULT OpenRoleDefinition(BSTR bstrRoleDefinitionName, IAzRoleDefinition* ppRoleDefinitions);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication3-deleteroledefinition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication3-deleteroledefinition
     HRESULT DeleteRoleDefinition(BSTR bstrRoleDefinitionName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication3-get_roleassignments))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication3-get_roleassignments
     HRESULT get_RoleAssignments(IAzRoleAssignments* ppRoleAssignments);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication3-createroleassignment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication3-createroleassignment
     HRESULT CreateRoleAssignment(BSTR bstrRoleAssignmentName, IAzRoleAssignment* ppRoleAssignment);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication3-openroleassignment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication3-openroleassignment
     HRESULT OpenRoleAssignment(BSTR bstrRoleAssignmentName, IAzRoleAssignment* ppRoleAssignment);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication3-deleteroleassignment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication3-deleteroleassignment
     HRESULT DeleteRoleAssignment(BSTR bstrRoleAssignmentName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication3-get_bizrulesenabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication3-get_bizrulesenabled
     HRESULT get_BizRulesEnabled(VARIANT_BOOL* pbEnabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication3-put_bizrulesenabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplication3-put_bizrulesenabled
     HRESULT put_BizRulesEnabled(VARIANT_BOOL bEnabled);
 }
 
 @GUID("1f5ea01f-44a2-4184-9c48-a75b4dcc8ccc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazoperation2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazoperation2
 interface IAzOperation2 : IAzOperation
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazoperation2-roleassignments))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazoperation2-roleassignments
     HRESULT RoleAssignments(BSTR bstrScopeName, VARIANT_BOOL bRecursive, IAzRoleAssignments* ppRoleAssignments);
 }
 
 @GUID("881f25a5-d755-4550-957a-d503a3b34001")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazroledefinitions))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazroledefinitions
 interface IAzRoleDefinitions : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroledefinitions-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroledefinitions-get_item
     HRESULT get_Item(int Index, VARIANT* pvarObtPtr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroledefinitions-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroledefinitions-get_count
     HRESULT get_Count(int* plCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroledefinitions-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroledefinitions-get__newenum
     HRESULT get__NewEnum(IUnknown* ppEnumPtr);
 }
 
 @GUID("d97fcea1-2599-44f1-9fc3-58e9fbe09466")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazroledefinition))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazroledefinition
 interface IAzRoleDefinition : IAzTask
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroledefinition-roleassignments))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroledefinition-roleassignments
     HRESULT RoleAssignments(BSTR bstrScopeName, VARIANT_BOOL bRecursive, IAzRoleAssignments* ppRoleAssignments);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroledefinition-addroledefinition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroledefinition-addroledefinition
     HRESULT AddRoleDefinition(BSTR bstrRoleDefinition);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroledefinition-deleteroledefinition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroledefinition-deleteroledefinition
     HRESULT DeleteRoleDefinition(BSTR bstrRoleDefinition);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroledefinition-get_roledefinitions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroledefinition-get_roledefinitions
     HRESULT get_RoleDefinitions(IAzRoleDefinitions* ppRoleDefinitions);
 }
 
 @GUID("55647d31-0d5a-4fa3-b4ac-2b5f9ad5ab76")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazroleassignment))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazroleassignment
 interface IAzRoleAssignment : IAzRole
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroleassignment-addroledefinition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroleassignment-addroledefinition
     HRESULT AddRoleDefinition(BSTR bstrRoleDefinition);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroleassignment-deleteroledefinition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroleassignment-deleteroledefinition
     HRESULT DeleteRoleDefinition(BSTR bstrRoleDefinition);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroleassignment-get_roledefinitions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroleassignment-get_roledefinitions
     HRESULT get_RoleDefinitions(IAzRoleDefinitions* ppRoleDefinitions);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroleassignment-get_scope))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroleassignment-get_scope
     HRESULT get_Scope(IAzScope* ppScope);
 }
 
 @GUID("9c80b900-fceb-4d73-a0f4-c83b0bbf2481")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazroleassignments))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazroleassignments
 interface IAzRoleAssignments : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroleassignments-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroleassignments-get_item
     HRESULT get_Item(int Index, VARIANT* pvarObtPtr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroleassignments-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroleassignments-get_count
     HRESULT get_Count(int* plCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroleassignments-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazroleassignments-get__newenum
     HRESULT get__NewEnum(IUnknown* ppEnumPtr);
 }
 
 @GUID("e5c3507d-ad6a-4992-9c7f-74ab480b44cc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazprincipallocator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazprincipallocator
 interface IAzPrincipalLocator : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazprincipallocator-get_nameresolver))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazprincipallocator-get_nameresolver
     HRESULT get_NameResolver(IAzNameResolver* ppNameResolver);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazprincipallocator-get_objectpicker))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazprincipallocator-get_objectpicker
     HRESULT get_ObjectPicker(IAzObjectPicker* ppObjectPicker);
 }
 
 @GUID("504d0f15-73e2-43df-a870-a64f40714f53")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iaznameresolver))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iaznameresolver
 interface IAzNameResolver : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaznameresolver-namefromsid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaznameresolver-namefromsid
     HRESULT NameFromSid(BSTR bstrSid, int* pSidType, BSTR* pbstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaznameresolver-namesfromsids))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaznameresolver-namesfromsids
     HRESULT NamesFromSids(VARIANT vSids, VARIANT* pvSidTypes, VARIANT* pvNames);
 }
 
 @GUID("63130a48-699a-42d8-bf01-c62ac3fb79f9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazobjectpicker))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazobjectpicker
 interface IAzObjectPicker : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazobjectpicker-getprincipals))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazobjectpicker-getprincipals
     HRESULT GetPrincipals(HWND hParentWnd, BSTR bstrTitle, VARIANT* pvSidTypes, VARIANT* pvNames, VARIANT* pvSids);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazobjectpicker-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazobjectpicker-get_name
     HRESULT get_Name(BSTR* pbstrName);
 }
 
 @GUID("3f0613fc-b71a-464e-a11d-5b881a56cefa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazapplicationgroup2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iazapplicationgroup2
 interface IAzApplicationGroup2 : IAzApplicationGroup
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup2-get_bizrule))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup2-get_bizrule
     HRESULT get_BizRule(BSTR* pbstrProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup2-put_bizrule))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup2-put_bizrule
     HRESULT put_BizRule(BSTR bstrProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup2-get_bizrulelanguage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup2-get_bizrulelanguage
     HRESULT get_BizRuleLanguage(BSTR* pbstrProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup2-put_bizrulelanguage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup2-put_bizrulelanguage
     HRESULT put_BizRuleLanguage(BSTR bstrProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup2-get_bizruleimportedpath))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup2-get_bizruleimportedpath
     HRESULT get_BizRuleImportedPath(BSTR* pbstrProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup2-put_bizruleimportedpath))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup2-put_bizruleimportedpath
     HRESULT put_BizRuleImportedPath(BSTR bstrProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup2-roleassignments))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iazapplicationgroup2-roleassignments
     HRESULT RoleAssignments(BSTR bstrScopeName, VARIANT_BOOL bRecursive, IAzRoleAssignments* ppRoleAssignments);
 }
 
 @GUID("03a9a5ee-48c8-4832-9025-aad503c46526")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iaztask2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nn-azroles-iaztask2
 interface IAzTask2 : IAzTask
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask2-roleassignments))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/azroles/nf-azroles-iaztask2-roleassignments
     HRESULT RoleAssignments(BSTR bstrScopeName, VARIANT_BOOL bRecursive, IAzRoleAssignments* ppRoleAssignments);
 }
 

@@ -3,15 +3,16 @@
 module windows.win32.networkmanagement.windowsconnectionmanager;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, FILETIME, HANDLE, HRESULT, PWSTR;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, FILETIME, HANDLE, HRESULT, PWSTR;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmapi/ne-wcmapi-wcm_property))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmapi/ne-wcmapi-wcm_property
 alias WCM_PROPERTY = int;
 enum : int
 {
@@ -23,7 +24,8 @@ enum : int
     wcm_intf_property_dataplan_status          = 0x00000005,
     wcm_intf_property_hotspot_profile          = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmapi/ne-wcmapi-wcm_media_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmapi/ne-wcmapi-wcm_media_type
 alias WCM_MEDIA_TYPE = int;
 enum : int
 {
@@ -34,7 +36,8 @@ enum : int
     wcm_media_invalid  = 0x00000004,
     wcm_media_max      = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmapi/ne-wcmapi-wcm_connection_cost))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmapi/ne-wcmapi-wcm_connection_cost
 alias WCM_CONNECTION_COST = int;
 enum : int
 {
@@ -47,7 +50,8 @@ enum : int
     WCM_CONNECTION_COST_ROAMING              = 0x00040000,
     WCM_CONNECTION_COST_APPROACHINGDATALIMIT = 0x00080000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmapi/ne-wcmapi-wcm_connection_cost_source))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmapi/ne-wcmapi-wcm_connection_cost_source
 alias WCM_CONNECTION_COST_SOURCE = int;
 enum : int
 {
@@ -62,17 +66,17 @@ enum : int
 
 enum : uint
 {
-    WCM_API_VERSION_1_0 = 0x00000001,
-    WCM_API_VERSION     = 0x00000001,
+    WCM_API_VERSION_1_0 = 0x00000001U,
+    WCM_API_VERSION     = 0x00000001U,
 }
 
-enum uint WCM_UNKNOWN_DATAPLAN_STATUS = 0xffffffff;
-enum uint WCM_MAX_PROFILE_NAME = 0x00000100;
+enum uint WCM_UNKNOWN_DATAPLAN_STATUS = 0xffffffffU;
+enum uint WCM_MAX_PROFILE_NAME = 0x00000100U;
 
 enum : uint
 {
-    NET_INTERFACE_FLAG_NONE              = 0x00000000,
-    NET_INTERFACE_FLAG_CONNECT_IF_NEEDED = 0x00000001,
+    NET_INTERFACE_FLAG_NONE              = 0x00000000U,
+    NET_INTERFACE_FLAG_CONNECT_IF_NEEDED = 0x00000001U,
 }
 
 // Callbacks
@@ -82,14 +86,14 @@ alias ONDEMAND_NOTIFICATION_CALLBACK = void function(void* param0);
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmapi/ns-wcmapi-wcm_policy_value))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmapi/ns-wcmapi-wcm_policy_value
 struct WCM_POLICY_VALUE
 {
     BOOL fValue;
     BOOL fIsGroupPolicy;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmapi/ns-wcmapi-wcm_profile_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmapi/ns-wcmapi-wcm_profile_info
 struct WCM_PROFILE_INFO
 {
     wchar[256]     strProfileName;
@@ -97,21 +101,21 @@ struct WCM_PROFILE_INFO
     WCM_MEDIA_TYPE Media;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmapi/ns-wcmapi-wcm_profile_info_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmapi/ns-wcmapi-wcm_profile_info_list
 struct WCM_PROFILE_INFO_LIST
 {
     uint dwNumberOfItems;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/WCM_PROFILE_INFO[1] ProfileInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmapi/ns-wcmapi-wcm_connection_cost_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmapi/ns-wcmapi-wcm_connection_cost_data
 struct WCM_CONNECTION_COST_DATA
 {
     uint ConnectionCost;
     WCM_CONNECTION_COST_SOURCE CostSource;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmapi/ns-wcmapi-wcm_time_interval))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmapi/ns-wcmapi-wcm_time_interval
 struct WCM_TIME_INTERVAL
 {
     ushort wYear;
@@ -123,14 +127,14 @@ struct WCM_TIME_INTERVAL
     ushort wMilliseconds;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmapi/ns-wcmapi-wcm_usage_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmapi/ns-wcmapi-wcm_usage_data
 struct WCM_USAGE_DATA
 {
     uint     UsageInMegabytes;
     FILETIME LastSyncTime;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmapi/ns-wcmapi-wcm_billing_cycle_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmapi/ns-wcmapi-wcm_billing_cycle_info
 struct WCM_BILLING_CYCLE_INFO
 {
     FILETIME          StartDate;
@@ -138,7 +142,7 @@ struct WCM_BILLING_CYCLE_INFO
     BOOL              Reset;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcmapi/ns-wcmapi-wcm_dataplan_status))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcmapi/ns-wcmapi-wcm_dataplan_status
 struct WCM_DATAPLAN_STATUS
 {
     WCM_USAGE_DATA UsageData;
@@ -150,14 +154,14 @@ struct WCM_DATAPLAN_STATUS
     uint           Reserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ondemandconnroutehelper/ns-ondemandconnroutehelper-net_interface_context))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ondemandconnroutehelper/ns-ondemandconnroutehelper-net_interface_context
 struct NET_INTERFACE_CONTEXT
 {
     uint  InterfaceIndex;
     PWSTR ConfigurationName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ondemandconnroutehelper/ns-ondemandconnroutehelper-net_interface_context_table))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ondemandconnroutehelper/ns-ondemandconnroutehelper-net_interface_context_table
 struct NET_INTERFACE_CONTEXT_TABLE
 {
     HANDLE InterfaceContextHandle;

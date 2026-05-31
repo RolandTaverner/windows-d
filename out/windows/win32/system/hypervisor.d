@@ -3,8 +3,9 @@
 module windows.win32.system.hypervisor;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, HANDLE, HRESULT, LUID, PSTR, PWSTR;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, HANDLE, HRESULT, LUID, PSTR,
+                                                    PWSTR;
 public import windows.win32.networking.winsock : ADDRESS_FAMILY;
 public import windows.win32.system.hostcomputesystem : HCS_SYSTEM;
 public import windows.win32.system.power : DEVICE_POWER_STATE;
@@ -13,6 +14,7 @@ extern(Windows) @nogc nothrow:
 
 
 // Enums
+
 
 alias WHV_CAPABILITY_CODE = int;
 enum : int
@@ -35,6 +37,7 @@ enum : int
     WHvCapabilityCodeSyntheticProcessorFeaturesBanks = 0x00001008,
     WHvCapabilityCodeProcessorPerfmonFeatures        = 0x00001009,
 }
+
 alias WHV_PROCESSOR_VENDOR = int;
 enum : int
 {
@@ -42,6 +45,7 @@ enum : int
     WHvProcessorVendorIntel = 0x00000001,
     WHvProcessorVendorHygon = 0x00000002,
 }
+
 alias WHV_PARTITION_PROPERTY_CODE = int;
 enum : int
 {
@@ -76,6 +80,7 @@ enum : int
     WHvPartitionPropertyCodeUnimplementedMsrAction          = 0x00001010,
     WHvPartitionPropertyCodeProcessorCount                  = 0x00001fff,
 }
+
 alias WHV_MEMORY_ACCESS_TYPE = int;
 enum : int
 {
@@ -83,12 +88,14 @@ enum : int
     WHvMemoryAccessWrite   = 0x00000001,
     WHvMemoryAccessExecute = 0x00000002,
 }
+
 alias WHV_X64_CPUID_RESULT2_FLAGS = int;
 enum : int
 {
     WHvX64CpuidResult2FlagSubleafSpecific = 0x00000001,
     WHvX64CpuidResult2FlagVpSpecific      = 0x00000002,
 }
+
 alias WHV_MSR_ACTION = int;
 enum : int
 {
@@ -96,6 +103,7 @@ enum : int
     WHvMsrActionIgnoreWriteReadZero = 0x00000001,
     WHvMsrActionExit                = 0x00000002,
 }
+
 alias WHV_EXCEPTION_TYPE = int;
 enum : int
 {
@@ -117,6 +125,7 @@ enum : int
     WHvX64ExceptionTypeMachineCheckAbort            = 0x00000012,
     WHvX64ExceptionTypeSimdFloatingPointFault       = 0x00000013,
 }
+
 alias WHV_X64_LOCAL_APIC_EMULATION_MODE = int;
 enum : int
 {
@@ -124,6 +133,7 @@ enum : int
     WHvX64LocalApicEmulationModeXApic  = 0x00000001,
     WHvX64LocalApicEmulationModeX2Apic = 0x00000002,
 }
+
 alias WHV_MAP_GPA_RANGE_FLAGS = int;
 enum : int
 {
@@ -133,6 +143,7 @@ enum : int
     WHvMapGpaRangeFlagExecute         = 0x00000004,
     WHvMapGpaRangeFlagTrackDirtyPages = 0x00000008,
 }
+
 alias WHV_TRANSLATE_GVA_FLAGS = int;
 enum : int
 {
@@ -145,6 +156,7 @@ enum : int
     WHvTranslateGvaFlagEnforceSmap      = 0x00000100,
     WHvTranslateGvaFlagOverrideSmap     = 0x00000200,
 }
+
 alias WHV_TRANSLATE_GVA_RESULT_CODE = int;
 enum : int
 {
@@ -158,6 +170,7 @@ enum : int
     WHvTranslateGvaResultGpaIllegalOverlayAccess = 0x00000007,
     WHvTranslateGvaResultIntercept               = 0x00000008,
 }
+
 alias WHV_CACHE_TYPE = int;
 enum : int
 {
@@ -166,6 +179,7 @@ enum : int
     WHvCacheTypeWriteThrough   = 0x00000004,
     WHvCacheTypeWriteBack      = 0x00000006,
 }
+
 alias WHV_REGISTER_NAME = int;
 enum : int
 {
@@ -396,12 +410,14 @@ enum : int
     WHvRegisterInternalActivityState          = 0x80000005,
     WHvX64RegisterPendingDebugException       = 0x80000006,
 }
+
 alias WHV_X64_PENDING_EVENT_TYPE = int;
 enum : int
 {
     WHvX64PendingEventException = 0x00000000,
     WHvX64PendingEventExtInt    = 0x00000005,
 }
+
 alias WHV_RUN_VP_EXIT_REASON = int;
 enum : int
 {
@@ -425,17 +441,20 @@ enum : int
     WHvRunVpExitReasonX64ApicWriteTrap       = 0x00001007,
     WHvRunVpExitReasonCanceled               = 0x00002001,
 }
+
 alias WHV_X64_UNSUPPORTED_FEATURE_CODE = int;
 enum : int
 {
     WHvUnsupportedFeatureIntercept     = 0x00000001,
     WHvUnsupportedFeatureTaskSwitchTss = 0x00000002,
 }
+
 alias WHV_RUN_VP_CANCEL_REASON = int;
 enum : int
 {
     WHvRunVpCancelReasonUser = 0x00000000,
 }
+
 alias WHV_X64_PENDING_INTERRUPTION_TYPE = int;
 enum : int
 {
@@ -443,6 +462,7 @@ enum : int
     WHvX64PendingNmi       = 0x00000002,
     WHvX64PendingException = 0x00000003,
 }
+
 alias WHV_X64_APIC_WRITE_TYPE = int;
 enum : int
 {
@@ -452,6 +472,7 @@ enum : int
     WHvX64ApicWriteTypeLint0 = 0x00000350,
     WHvX64ApicWriteTypeLint1 = 0x00000360,
 }
+
 alias WHV_INTERRUPT_TYPE = int;
 enum : int
 {
@@ -462,23 +483,27 @@ enum : int
     WHvX64InterruptTypeSipi           = 0x00000006,
     WHvX64InterruptTypeLocalInt1      = 0x00000009,
 }
+
 alias WHV_INTERRUPT_DESTINATION_MODE = int;
 enum : int
 {
     WHvX64InterruptDestinationModePhysical = 0x00000000,
     WHvX64InterruptDestinationModeLogical  = 0x00000001,
 }
+
 alias WHV_INTERRUPT_TRIGGER_MODE = int;
 enum : int
 {
     WHvX64InterruptTriggerModeEdge  = 0x00000000,
     WHvX64InterruptTriggerModeLevel = 0x00000001,
 }
+
 alias WHV_PARTITION_COUNTER_SET = int;
 enum : int
 {
     WHvPartitionCounterSetMemory = 0x00000000,
 }
+
 alias WHV_PROCESSOR_COUNTER_SET = int;
 enum : int
 {
@@ -488,6 +513,7 @@ enum : int
     WHvProcessorCounterSetApic              = 0x00000003,
     WHvProcessorCounterSetSyntheticFeatures = 0x00000004,
 }
+
 alias WHV_ADVISE_GPA_RANGE_CODE = int;
 enum : int
 {
@@ -495,6 +521,7 @@ enum : int
     WHvAdviseGpaRangeCodePin      = 0x00000001,
     WHvAdviseGpaRangeCodeUnpin    = 0x00000002,
 }
+
 alias WHV_VIRTUAL_PROCESSOR_STATE_TYPE = int;
 enum : int
 {
@@ -504,12 +531,14 @@ enum : int
     WHvVirtualProcessorStateTypeInterruptControllerState2 = 0x00001000,
     WHvVirtualProcessorStateTypeXsaveState                = 0x00001001,
 }
+
 alias WHV_ALLOCATE_VPCI_RESOURCE_FLAGS = int;
 enum : int
 {
     WHvAllocateVpciResourceFlagNone           = 0x00000000,
     WHvAllocateVpciResourceFlagAllowDirectP2P = 0x00000001,
 }
+
 alias WHV_VPCI_DEVICE_NOTIFICATION_TYPE = int;
 enum : int
 {
@@ -517,6 +546,7 @@ enum : int
     WHvVpciDeviceNotificationMmioRemapping   = 0x00000001,
     WHvVpciDeviceNotificationSurpriseRemoval = 0x00000002,
 }
+
 alias WHV_CREATE_VPCI_DEVICE_FLAGS = int;
 enum : int
 {
@@ -524,6 +554,7 @@ enum : int
     WHvCreateVpciDeviceFlagPhysicallyBacked     = 0x00000001,
     WHvCreateVpciDeviceFlagUseLogicalInterrupts = 0x00000002,
 }
+
 alias WHV_VPCI_DEVICE_PROPERTY_CODE = int;
 enum : int
 {
@@ -531,12 +562,14 @@ enum : int
     WHvVpciDevicePropertyCodeHardwareIDs = 0x00000001,
     WHvVpciDevicePropertyCodeProbedBARs  = 0x00000002,
 }
+
 alias WHV_VPCI_MMIO_RANGE_FLAGS = int;
 enum : int
 {
     WHvVpciMmioRangeFlagReadAccess  = 0x00000001,
     WHvVpciMmioRangeFlagWriteAccess = 0x00000002,
 }
+
 alias WHV_VPCI_DEVICE_REGISTER_SPACE = int;
 enum : int
 {
@@ -548,12 +581,14 @@ enum : int
     WHvVpciBar4        = 0x00000004,
     WHvVpciBar5        = 0x00000005,
 }
+
 alias WHV_VPCI_INTERRUPT_TARGET_FLAGS = int;
 enum : int
 {
     WHvVpciInterruptTargetFlagNone      = 0x00000000,
     WHvVpciInterruptTargetFlagMulticast = 0x00000001,
 }
+
 alias WHV_TRIGGER_TYPE = int;
 enum : int
 {
@@ -561,37 +596,43 @@ enum : int
     WHvTriggerTypeSynicEvent      = 0x00000001,
     WHvTriggerTypeDeviceInterrupt = 0x00000002,
 }
+
 alias WHV_VIRTUAL_PROCESSOR_PROPERTY_CODE = int;
 enum : int
 {
     WHvVirtualProcessorPropertyCodeNumaNode = 0x00000000,
 }
+
 alias WHV_NOTIFICATION_PORT_TYPE = int;
 enum : int
 {
     WHvNotificationPortTypeEvent    = 0x00000002,
     WHvNotificationPortTypeDoorbell = 0x00000004,
 }
+
 alias WHV_NOTIFICATION_PORT_PROPERTY_CODE = int;
 enum : int
 {
     WHvNotificationPortPropertyPreferredTargetVp       = 0x00000001,
     WHvNotificationPortPropertyPreferredTargetDuration = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcs/Reference/hdv/HdvDeviceType))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcs/Reference/hdv/HdvDeviceType
 alias HDV_DEVICE_TYPE = int;
 enum : int
 {
     HdvDeviceTypeUndefined = 0x00000000,
     HdvDeviceTypePCI       = 0x00000001,
 }
+
 alias HDV_DEVICE_HOST_FLAGS = int;
 enum : int
 {
     HdvDeviceHostFlagNone                  = 0x00000000,
     HdvDeviceHostFlagInitializeComSecurity = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcs/Reference/hdv/HdvPciBarSelector))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcs/Reference/hdv/HdvPciBarSelector
 alias HDV_PCI_BAR_SELECTOR = int;
 enum : int
 {
@@ -602,6 +643,7 @@ enum : int
     HDV_PCI_BAR4 = 0x00000004,
     HDV_PCI_BAR5 = 0x00000005,
 }
+
 alias HDV_DOORBELL_FLAGS = int;
 enum : int
 {
@@ -612,6 +654,7 @@ enum : int
     HDV_DOORBELL_FLAG_TRIGGER_SIZE_QWORD = 0x00000004,
     HDV_DOORBELL_FLAG_TRIGGER_ANY_VALUE  = 0x80000000,
 }
+
 alias HDV_MMIO_MAPPING_FLAGS = int;
 enum : int
 {
@@ -619,13 +662,15 @@ enum : int
     HdvMmioMappingFlagWriteable  = 0x00000001,
     HdvMmioMappingFlagExecutable = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcs/Reference/hdv/HdvPciInterfaceVersion))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcs/Reference/hdv/HdvPciInterfaceVersion
 alias HDV_PCI_INTERFACE_VERSION = int;
 enum : int
 {
     HdvPciDeviceInterfaceVersionInvalid = 0x00000000,
     HdvPciDeviceInterfaceVersion1       = 0x00000001,
 }
+
 alias PAGING_MODE = int;
 enum : int
 {
@@ -636,6 +681,7 @@ enum : int
     Paging_Long     = 0x00000004,
     Paging_Armv8    = 0x00000005,
 }
+
 alias VIRTUAL_PROCESSOR_ARCH = int;
 enum : int
 {
@@ -644,6 +690,7 @@ enum : int
     Arch_x64     = 0x00000002,
     Arch_Armv8   = 0x00000003,
 }
+
 alias VIRTUAL_PROCESSOR_VENDOR = int;
 enum : int
 {
@@ -653,6 +700,7 @@ enum : int
     ProcessorVendor_Hygon   = 0x00000003,
     ProcessorVendor_Arm     = 0x00000004,
 }
+
 alias GUEST_OS_VENDOR = int;
 enum : int
 {
@@ -661,6 +709,7 @@ enum : int
     GuestOsVendorHPE       = 0x00000002,
     GuestOsVendorLANCOM    = 0x00000200,
 }
+
 alias GUEST_OS_MICROSOFT_IDS = int;
 enum : int
 {
@@ -671,6 +720,7 @@ enum : int
     GuestOsMicrosoftWindowsNT = 0x00000004,
     GuestOsMicrosoftWindowsCE = 0x00000005,
 }
+
 alias GUEST_OS_OPENSOURCE_IDS = int;
 enum : int
 {
@@ -680,6 +730,7 @@ enum : int
     GuestOsOpenSourceXen       = 0x00000003,
     GuestOsOpenSourceIllumos   = 0x00000004,
 }
+
 alias REGISTER_ID = int;
 enum : int
 {
@@ -849,25 +900,25 @@ enum : int
 
 enum : uint
 {
-    HVSOCKET_CONNECT_TIMEOUT     = 0x00000001,
-    HVSOCKET_CONNECT_TIMEOUT_MAX = 0x000493e0,
-    HVSOCKET_CONNECTED_SUSPEND   = 0x00000004,
+    HVSOCKET_CONNECT_TIMEOUT     = 0x00000001U,
+    HVSOCKET_CONNECT_TIMEOUT_MAX = 0x000493e0U,
+    HVSOCKET_CONNECTED_SUSPEND   = 0x00000004U,
 }
 
-enum uint HVSOCKET_HIGH_VTL = 0x00000008;
-enum uint HV_PROTOCOL_RAW = 0x00000001;
-enum uint HVSOCKET_ADDRESS_FLAG_PASSTHRU = 0x00000001;
-enum uint WHV_PROCESSOR_FEATURES_BANKS_COUNT = 0x00000002;
-enum uint WHV_SYNTHETIC_PROCESSOR_FEATURES_BANKS_COUNT = 0x00000001;
-enum uint WHV_READ_WRITE_GPA_RANGE_MAX_SIZE = 0x00000010;
-enum uint WHV_HYPERCALL_CONTEXT_MAX_XMM_REGISTERS = 0x00000006;
-enum uint WHV_MAX_DEVICE_ID_SIZE_IN_CHARS = 0x000000c8;
-enum uint WHV_VPCI_TYPE0_BAR_COUNT = 0x00000006;
-enum uint WHV_ANY_VP = 0xffffffff;
-enum uint WHV_SYNIC_MESSAGE_SIZE = 0x00000100;
+enum uint HVSOCKET_HIGH_VTL = 0x00000008U;
+enum uint HV_PROTOCOL_RAW = 0x00000001U;
+enum uint HVSOCKET_ADDRESS_FLAG_PASSTHRU = 0x00000001U;
+enum uint WHV_PROCESSOR_FEATURES_BANKS_COUNT = 0x00000002U;
+enum uint WHV_SYNTHETIC_PROCESSOR_FEATURES_BANKS_COUNT = 0x00000001U;
+enum uint WHV_READ_WRITE_GPA_RANGE_MAX_SIZE = 0x00000010U;
+enum uint WHV_HYPERCALL_CONTEXT_MAX_XMM_REGISTERS = 0x00000006U;
+enum uint WHV_MAX_DEVICE_ID_SIZE_IN_CHARS = 0x000000c8U;
+enum uint WHV_VPCI_TYPE0_BAR_COUNT = 0x00000006U;
+enum uint WHV_ANY_VP = 0xffffffffU;
+enum uint WHV_SYNIC_MESSAGE_SIZE = 0x00000100U;
 enum const(wchar)* VM_GENCOUNTER_SYMBOLIC_LINK_NAME = "\\VmGenerationCounter";
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vmgenerationcounter/ni-vmgenerationcounter-ioctl_vmgencounter_read))], [])*/uint IOCTL_VMGENCOUNTER_READ = 0x0032c004;
-enum uint HDV_PCI_BAR_COUNT = 0x00000006;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vmgenerationcounter/ni-vmgenerationcounter-ioctl_vmgencounter_read))], [])*/uint IOCTL_VMGENCOUNTER_READ = 0x0032c004U;
+enum uint HDV_PCI_BAR_COUNT = 0x00000006U;
 
 enum : GUID
 {
@@ -928,64 +979,103 @@ struct WHV_PARTITION_HANDLE
 
 union WHV_CAPABILITY_FEATURES
 {
-    _Anonymous_e__Struct Anonymous;
-    ulong                AsUINT64;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(10)), FixedArgSig(ElementSig(54))], [])*/ulong _bitfield404;
+    }
+    ulong AsUINT64;
 }
 
 union WHV_EXTENDED_VM_EXITS
 {
-    _Anonymous_e__Struct Anonymous;
-    ulong                AsUINT64;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(49))], [])*/ulong _bitfield405;
+    }
+    ulong AsUINT64;
 }
 
 union WHV_PROCESSOR_FEATURES
 {
-    _Anonymous_e__Struct Anonymous;
-    ulong                AsUINT64;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved6)), FixedArgSig(ElementSig(63)), FixedArgSig(ElementSig(1))], [])*/ulong _bitfield406;
+    }
+    ulong AsUINT64;
 }
 
 union WHV_PROCESSOR_FEATURES1
 {
-    _Anonymous_e__Struct Anonymous;
-    ulong                AsUINT64;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved5)), FixedArgSig(ElementSig(23)), FixedArgSig(ElementSig(41))], [])*/ulong _bitfield407;
+    }
+    ulong AsUINT64;
 }
 
 struct WHV_PROCESSOR_FEATURES_BANKS
 {
-    uint                BanksCount;
-    uint                Reserved0;
-    _Anonymous_e__Union Anonymous;
+    uint BanksCount;
+    uint Reserved0;
+    union
+    {
+        struct
+        {
+            WHV_PROCESSOR_FEATURES Bank0;
+            WHV_PROCESSOR_FEATURES1 Bank1;
+        }
+        ulong[2] AsUINT64;
+    }
 }
 
 union WHV_SYNTHETIC_PROCESSOR_FEATURES
 {
-    _Anonymous_e__Struct Anonymous;
-    ulong                AsUINT64;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(31)), FixedArgSig(ElementSig(33))], [])*/ulong _bitfield408;
+    }
+    ulong AsUINT64;
 }
 
 struct WHV_SYNTHETIC_PROCESSOR_FEATURES_BANKS
 {
-    uint                BanksCount;
-    uint                Reserved0;
-    _Anonymous_e__Union Anonymous;
+    uint BanksCount;
+    uint Reserved0;
+    union
+    {
+        struct
+        {
+            WHV_SYNTHETIC_PROCESSOR_FEATURES Bank0;
+        }
+        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ulong[1] AsUINT64;
+    }
 }
 
 union WHV_PROCESSOR_XSAVE_FEATURES
 {
-    _Anonymous_e__Struct Anonymous;
-    ulong                AsUINT64;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(31)), FixedArgSig(ElementSig(33))], [])*/ulong _bitfield409;
+    }
+    ulong AsUINT64;
 }
 
 union WHV_PROCESSOR_PERFMON_FEATURES
 {
-    _Anonymous_e__Struct Anonymous;
-    ulong                AsUINT64;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(62))], [])*/ulong _bitfield410;
+    }
+    ulong AsUINT64;
 }
 
 union WHV_X64_MSR_EXIT_BITMAP
 {
-    ulong                AsUINT64;
-    _Anonymous_e__Struct Anonymous;
+    ulong AsUINT64;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(58))], [])*/ulong _bitfield411;
+    }
 }
 
 struct WHV_MEMORY_RANGE_ENTRY
@@ -996,8 +1086,11 @@ struct WHV_MEMORY_RANGE_ENTRY
 
 union WHV_ADVISE_GPA_RANGE_POPULATE_FLAGS
 {
-    uint                 AsUINT32;
-    _Anonymous_e__Struct Anonymous;
+    uint AsUINT32;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(30))], [])*/uint _bitfield412;
+    }
 }
 
 struct WHV_ADVISE_GPA_RANGE_POPULATE
@@ -1008,7 +1101,7 @@ struct WHV_ADVISE_GPA_RANGE_POPULATE
 
 struct WHV_CAPABILITY_PROCESSOR_FREQUENCY_CAP
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield103;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield413;
     uint HighestFrequencyMhz;
     uint NominalFrequencyMhz;
     uint LowestFrequencyMhz;
@@ -1017,8 +1110,11 @@ struct WHV_CAPABILITY_PROCESSOR_FREQUENCY_CAP
 
 union WHV_SCHEDULER_FEATURES
 {
-    _Anonymous_e__Struct Anonymous;
-    ulong                AsUINT64;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(59))], [])*/ulong _bitfield414;
+    }
+    ulong AsUINT64;
 }
 
 union WHV_CAPABILITY
@@ -1125,40 +1221,90 @@ union WHV_ADVISE_GPA_RANGE
 
 union WHV_ACCESS_GPA_CONTROLS
 {
-    ulong                AsUINT64;
-    _Anonymous_e__Struct Anonymous;
+    ulong AsUINT64;
+    struct
+    {
+        WHV_CACHE_TYPE CacheType;
+        uint           Reserved;
+    }
 }
 
 union WHV_UINT128
 {
-    _Anonymous_e__Struct Anonymous;
-    uint[4]              Dword;
+    struct
+    {
+        ulong Low64;
+        ulong High64;
+    }
+    uint[4] Dword;
 }
 
 union WHV_X64_FP_REGISTER
 {
-    _Anonymous_e__Struct Anonymous;
-    WHV_UINT128          AsUINT128;
+    struct
+    {
+        ulong Mantissa;
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(48))], [])*/ulong _bitfield415;
+    }
+    WHV_UINT128 AsUINT128;
 }
 
 union WHV_X64_FP_CONTROL_STATUS_REGISTER
 {
-    _Anonymous_e__Struct Anonymous;
-    WHV_UINT128          AsUINT128;
+    struct
+    {
+        ushort FpControl;
+        ushort FpStatus;
+        ubyte  FpTag;
+        ubyte  Reserved;
+        ushort LastFpOp;
+        union
+        {
+            ulong LastFpRip;
+            struct
+            {
+                uint   LastFpEip;
+                ushort LastFpCs;
+                ushort Reserved2;
+            }
+        }
+    }
+    WHV_UINT128 AsUINT128;
 }
 
 union WHV_X64_XMM_CONTROL_STATUS_REGISTER
 {
-    _Anonymous_e__Struct Anonymous;
-    WHV_UINT128          AsUINT128;
+    struct
+    {
+        union
+        {
+            ulong LastFpRdp;
+            struct
+            {
+                uint   LastFpDp;
+                ushort LastFpDs;
+                ushort Reserved;
+            }
+        }
+        uint XmmStatusControl;
+        uint XmmStatusControlMask;
+    }
+    WHV_UINT128 AsUINT128;
 }
 
 struct WHV_X64_SEGMENT_REGISTER
 {
-    ulong               Base;
-    uint                Limit;
-    ushort              Selector;
-    _Anonymous_e__Union Anonymous;
+    ulong  Base;
+    uint   Limit;
+    ushort Selector;
+    union
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Granularity)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield416;
+        }
+        ushort Attributes;
+    }
 }
 
 struct WHV_X64_TABLE_REGISTER
@@ -1170,44 +1316,69 @@ struct WHV_X64_TABLE_REGISTER
 
 union WHV_X64_INTERRUPT_STATE_REGISTER
 {
-    _Anonymous_e__Struct Anonymous;
-    ulong                AsUINT64;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(62))], [])*/ulong _bitfield417;
+    }
+    ulong AsUINT64;
 }
 
 union WHV_X64_PENDING_INTERRUPTION_REGISTER
 {
-    _Anonymous_e__Struct Anonymous;
-    ulong                AsUINT64;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(InterruptionVector)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield418;
+        uint ErrorCode;
+    }
+    ulong AsUINT64;
 }
 
 union WHV_X64_DELIVERABILITY_NOTIFICATIONS_REGISTER
 {
-    _Anonymous_e__Struct Anonymous;
-    ulong                AsUINT64;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Sint)), FixedArgSig(ElementSig(48)), FixedArgSig(ElementSig(16))], [])*/ulong _bitfield419;
+    }
+    ulong AsUINT64;
 }
 
 union WHV_X64_PENDING_EXCEPTION_EVENT
 {
-    _Anonymous_e__Struct Anonymous;
-    WHV_UINT128          AsUINT128;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Vector)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield420;
+        uint  ErrorCode;
+        ulong ExceptionParameter;
+    }
+    WHV_UINT128 AsUINT128;
 }
 
 union WHV_X64_PENDING_EXT_INT_EVENT
 {
-    _Anonymous_e__Struct Anonymous;
-    WHV_UINT128          AsUINT128;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(48))], [])*/ulong _bitfield421;
+        ulong Reserved2;
+    }
+    WHV_UINT128 AsUINT128;
 }
 
 union WHV_INTERNAL_ACTIVITY_REGISTER
 {
-    _Anonymous_e__Struct Anonymous;
-    ulong                AsUINT64;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(61))], [])*/ulong _bitfield422;
+    }
+    ulong AsUINT64;
 }
 
 union WHV_X64_PENDING_DEBUG_EXCEPTION
 {
-    ulong                AsUINT64;
-    _Anonymous_e__Struct Anonymous;
+    ulong AsUINT64;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(59))], [])*/ulong _bitfield423;
+    }
 }
 
 struct WHV_SYNIC_SINT_DELIVERABLE_CONTEXT
@@ -1240,14 +1411,17 @@ union WHV_REGISTER_VALUE
 
 union WHV_X64_VP_EXECUTION_STATE
 {
-    _Anonymous_e__Struct Anonymous;
-    ushort               AsUINT16;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(13)), FixedArgSig(ElementSig(3))], [])*/ushort _bitfield424;
+    }
+    ushort AsUINT16;
 }
 
 struct WHV_VP_EXIT_CONTEXT
 {
     WHV_X64_VP_EXECUTION_STATE ExecutionState;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Cr8)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield104;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Cr8)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(4))], [])*/ubyte _bitfield425;
     ubyte Reserved;
     uint  Reserved2;
     WHV_X64_SEGMENT_REGISTER Cs;
@@ -1257,8 +1431,11 @@ struct WHV_VP_EXIT_CONTEXT
 
 union WHV_MEMORY_ACCESS_INFO
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUINT32;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(28))], [])*/uint _bitfield426;
+    }
+    uint AsUINT32;
 }
 
 struct WHV_MEMORY_ACCESS_CONTEXT
@@ -1273,8 +1450,11 @@ struct WHV_MEMORY_ACCESS_CONTEXT
 
 union WHV_X64_IO_PORT_ACCESS_INFO
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUINT32;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(26))], [])*/uint _bitfield427;
+    }
+    uint AsUINT32;
 }
 
 struct WHV_X64_IO_PORT_ACCESS_CONTEXT
@@ -1295,8 +1475,11 @@ struct WHV_X64_IO_PORT_ACCESS_CONTEXT
 
 union WHV_X64_MSR_ACCESS_INFO
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUINT32;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield428;
+    }
+    uint AsUINT32;
 }
 
 struct WHV_X64_MSR_ACCESS_CONTEXT
@@ -1321,8 +1504,11 @@ struct WHV_X64_CPUID_ACCESS_CONTEXT
 
 union WHV_VP_EXCEPTION_INFO
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUINT32;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(30))], [])*/uint _bitfield429;
+    }
+    uint AsUINT32;
 }
 
 struct WHV_VP_EXCEPTION_CONTEXT
@@ -1361,8 +1547,11 @@ struct WHV_X64_APIC_EOI_CONTEXT
 
 union WHV_X64_RDTSC_INFO
 {
-    _Anonymous_e__Struct Anonymous;
-    ulong                AsUINT64;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(63))], [])*/ulong _bitfield430;
+    }
+    ulong AsUINT64;
 }
 
 struct WHV_X64_RDTSC_CONTEXT
@@ -1410,12 +1599,29 @@ struct WHV_RUN_VP_EXIT_CONTEXT
     WHV_RUN_VP_EXIT_REASON ExitReason;
     uint                Reserved;
     WHV_VP_EXIT_CONTEXT VpContext;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        WHV_MEMORY_ACCESS_CONTEXT MemoryAccess;
+        WHV_X64_IO_PORT_ACCESS_CONTEXT IoPortAccess;
+        WHV_X64_MSR_ACCESS_CONTEXT MsrAccess;
+        WHV_X64_CPUID_ACCESS_CONTEXT CpuidAccess;
+        WHV_VP_EXCEPTION_CONTEXT VpException;
+        WHV_X64_INTERRUPTION_DELIVERABLE_CONTEXT InterruptWindow;
+        WHV_X64_UNSUPPORTED_FEATURE_CONTEXT UnsupportedFeature;
+        WHV_RUN_VP_CANCELED_CONTEXT CancelReason;
+        WHV_X64_APIC_EOI_CONTEXT ApicEoi;
+        WHV_X64_RDTSC_CONTEXT ReadTsc;
+        WHV_X64_APIC_SMI_CONTEXT ApicSmi;
+        WHV_HYPERCALL_CONTEXT Hypercall;
+        WHV_X64_APIC_INIT_SIPI_CONTEXT ApicInitSipi;
+        WHV_X64_APIC_WRITE_CONTEXT ApicWrite;
+        WHV_SYNIC_SINT_DELIVERABLE_CONTEXT SynicSintDeliverable;
+    }
 }
 
 struct WHV_INTERRUPT_CONTROL
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(48))], [])*/ulong _bitfield105;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(48))], [])*/ulong _bitfield431;
     uint Destination;
     uint Vector;
 }
@@ -1425,7 +1631,7 @@ struct WHV_DOORBELL_MATCH_DATA
     ulong GuestAddress;
     ulong Value;
     uint  Length;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(30))], [])*/uint _bitfield106;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(30))], [])*/uint _bitfield432;
 }
 
 struct WHV_PARTITION_MEMORY_COUNTERS
@@ -1510,8 +1716,11 @@ struct WHV_SRIOV_RESOURCE_DESCRIPTOR
 struct WHV_VPCI_DEVICE_NOTIFICATION
 {
     WHV_VPCI_DEVICE_NOTIFICATION_TYPE NotificationType;
-    uint                Reserved1;
-    _Anonymous_e__Union Anonymous;
+    uint Reserved1;
+    union
+    {
+        ulong Reserved2;
+    }
 }
 
 struct WHV_VPCI_HARDWARE_IDS
@@ -1557,29 +1766,54 @@ struct WHV_VPCI_INTERRUPT_TARGET
 
 struct WHV_TRIGGER_PARAMETERS
 {
-    WHV_TRIGGER_TYPE    TriggerType;
-    uint                Reserved;
-    _Anonymous_e__Union Anonymous;
+    WHV_TRIGGER_TYPE TriggerType;
+    uint             Reserved;
+    union
+    {
+        WHV_INTERRUPT_CONTROL Interrupt;
+        WHV_SYNIC_EVENT_PARAMETERS SynicEvent;
+        struct DeviceInterrupt
+        {
+            ulong LogicalDeviceId;
+            ulong MsiAddress;
+            uint  MsiData;
+            uint  Reserved;
+        }
+    }
 }
 
 struct WHV_VIRTUAL_PROCESSOR_PROPERTY
 {
     WHV_VIRTUAL_PROCESSOR_PROPERTY_CODE PropertyCode;
-    uint                Reserved;
-    _Anonymous_e__Union Anonymous;
+    uint Reserved;
+    union
+    {
+        ushort NumaNode;
+        ulong  Padding;
+    }
 }
 
 struct WHV_NOTIFICATION_PORT_PARAMETERS
 {
     WHV_NOTIFICATION_PORT_TYPE NotificationPortType;
-    uint                Reserved;
-    _Anonymous_e__Union Anonymous;
+    uint Reserved;
+    union
+    {
+        WHV_DOORBELL_MATCH_DATA Doorbell;
+        struct Event
+        {
+            uint ConnectionId;
+        }
+    }
 }
 
 union WHV_EMULATOR_STATUS
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsUINT32;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(10)), FixedArgSig(ElementSig(22))], [])*/uint _bitfield433;
+    }
+    uint AsUINT32;
 }
 
 struct WHV_EMULATOR_MEMORY_ACCESS_INFO
@@ -1625,14 +1859,14 @@ struct HVSOCKET_ADDRESS_INFO
     uint Flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/vmgenerationcounter/ns-vmgenerationcounter-vm_gencounter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/vmgenerationcounter/ns-vmgenerationcounter-vm_gencounter
 struct VM_GENCOUNTER
 {
     ulong GenerationCount;
     ulong GenerationCountHigh;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcs/Reference/hdv/HdvPciPnpId))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcs/Reference/hdv/HdvPciPnpId
 struct HDV_PCI_PNP_ID
 {
     ushort VendorID;
@@ -1669,18 +1903,80 @@ struct GPA_MEMORY_CHUNK
 union GUEST_OS_INFO
 {
     ulong AsUINT64;
-    _ClosedSource_e__Struct ClosedSource;
-    _OpenSource_e__Struct OpenSource;
+    struct ClosedSource
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(VendorId)), FixedArgSig(ElementSig(48)), FixedArgSig(ElementSig(16))], [])*/ulong _bitfield434;
+    }
+    struct OpenSource
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(IsOpenSource)), FixedArgSig(ElementSig(63)), FixedArgSig(ElementSig(1))], [])*/ulong _bitfield435;
+    }
 }
 
 union VIRTUAL_PROCESSOR_REGISTER
 {
-    ulong             Reg64;
-    uint              Reg32;
-    ushort            Reg16;
-    ubyte             Reg8;
-    _Reg128_e__Struct Reg128;
-    _X64_e__Union     X64;
+    ulong  Reg64;
+    uint   Reg32;
+    ushort Reg16;
+    ubyte  Reg8;
+    struct Reg128
+    {
+        ulong Low64;
+        ulong High64;
+    }
+    union X64
+    {
+        struct Segment
+        {
+            ulong  Base;
+            uint   Limit;
+            ushort Selector;
+            union
+            {
+                ushort Attributes;
+                struct
+                {
+                    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Granularity)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield436;
+                }
+            }
+        }
+        struct Table
+        {
+            ushort Limit;
+            ulong  Base;
+        }
+        struct FpControlStatus
+        {
+            ushort FpControl;
+            ushort FpStatus;
+            ubyte  FpTag;
+            ubyte  Reserved;
+            ushort LastFpOp;
+            union
+            {
+                ulong LastFpRip;
+                struct
+                {
+                    uint   LastFpEip;
+                    ushort LastFpCs;
+                }
+            }
+        }
+        struct XmmControlStatus
+        {
+            union
+            {
+                ulong LastFpRdp;
+                struct
+                {
+                    uint   LastFpDp;
+                    ushort LastFpDs;
+                }
+            }
+            uint XmmStatusControl;
+            uint XmmStatusControlMask;
+        }
+    }
 }
 
 struct DOS_IMAGE_INFO
@@ -1997,32 +2293,32 @@ HRESULT WHvEmulatorTryMmioEmulation(void* Emulator, void* Context, const(WHV_VP_
                                     const(WHV_MEMORY_ACCESS_CONTEXT)* MmioInstructionContext, 
                                     WHV_EMULATOR_STATUS* EmulatorReturnStatus);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcs/Reference/hdv/HdvInitializeDeviceHost))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcs/Reference/hdv/HdvInitializeDeviceHost
 @DllImport("vmdevicehost.dll")
 HRESULT HdvInitializeDeviceHost(HCS_SYSTEM computeSystem, void** deviceHostHandle);
 
 @DllImport("vmdevicehost.dll")
 HRESULT HdvInitializeDeviceHostEx(HCS_SYSTEM computeSystem, HDV_DEVICE_HOST_FLAGS flags, void** deviceHostHandle);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcs/Reference/hdv/HdvTeardownDeviceHost))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcs/Reference/hdv/HdvTeardownDeviceHost
 @DllImport("vmdevicehost.dll")
 HRESULT HdvTeardownDeviceHost(void* deviceHostHandle);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcs/Reference/hdv/HdvCreateDeviceInstance))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcs/Reference/hdv/HdvCreateDeviceInstance
 @DllImport("vmdevicehost.dll")
 HRESULT HdvCreateDeviceInstance(void* deviceHostHandle, HDV_DEVICE_TYPE deviceType, const(GUID)* deviceClassId, 
                                 const(GUID)* deviceInstanceId, const(void)* deviceInterface, void* deviceContext, 
                                 void** deviceHandle);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcs/Reference/hdv/HdvReadGuestMemory))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcs/Reference/hdv/HdvReadGuestMemory
 @DllImport("vmdevicehost.dll")
 HRESULT HdvReadGuestMemory(void* requestor, ulong guestPhysicalAddress, uint byteCount, ubyte* buffer);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcs/Reference/hdv/HdvWriteGuestMemory))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcs/Reference/hdv/HdvWriteGuestMemory
 @DllImport("vmdevicehost.dll")
 HRESULT HdvWriteGuestMemory(void* requestor, ulong guestPhysicalAddress, uint byteCount, const(ubyte)* buffer);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcs/Reference/hdv/HdvCreateGuestMemoryAperture))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcs/Reference/hdv/HdvCreateGuestMemoryAperture
 @DllImport("vmdevicehost.dll")
 HRESULT HdvCreateGuestMemoryAperture(void* requestor, ulong guestPhysicalAddress, uint byteCount, 
                                      BOOL writeProtected, void** mappedAddress);
@@ -2030,7 +2326,7 @@ HRESULT HdvCreateGuestMemoryAperture(void* requestor, ulong guestPhysicalAddress
 @DllImport("vmdevicehost.dll")
 HRESULT HdvDestroyGuestMemoryAperture(void* requestor, void* mappedAddress);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/virtualization/api/hcs/Reference/hdv/HdvDeliverGuestInterrupt))], [])
+// Microsoft documentation: https://learn.microsoft.com/virtualization/api/hcs/Reference/hdv/HdvDeliverGuestInterrupt
 @DllImport("vmdevicehost.dll")
 HRESULT HdvDeliverGuestInterrupt(void* requestor, ulong msiAddress, uint msiData);
 

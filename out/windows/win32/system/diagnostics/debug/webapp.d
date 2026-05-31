@@ -1,12 +1,12 @@
 // Written in the D programming language.
 
-module windows.win32.system.diagnostics.debug.webapp;
+module windows.win32.system.diagnostics.debug_.webapp;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BSTR, HRESULT, HWND, PWSTR;
-public import windows.win32.system.com : IServiceProvider, IUnknown;
-public import windows.win32.system.diagnostics.debug.activescript : IActiveScriptError;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BSTR, HRESULT, HWND, PWSTR;
+public import windows.win32.system.com.com : IServiceProvider, IUnknown;
+public import windows.win32.system.diagnostics.debug_.activescript : IActiveScriptError;
 public import windows.win32.web.mshtml : IHTMLDocument2, IHTMLWindow2;
 
 extern(Windows) @nogc nothrow:
@@ -22,87 +22,87 @@ alias UnregisterAuthoringClientFunctionType = HRESULT function(IWebApplicationHo
 
 @GUID("7c3f6998-1567-4bba-b52b-48d32141d613")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webapplication/nn-webapplication-iwebapplicationscriptevents))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webapplication/nn-webapplication-iwebapplicationscriptevents
 interface IWebApplicationScriptEvents : IUnknown
 {
     HRESULT BeforeScriptExecute(IHTMLWindow2 htmlWindow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationscriptevents-scripterror))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationscriptevents-scripterror
     HRESULT ScriptError(IHTMLWindow2 htmlWindow, IActiveScriptError scriptError, const(PWSTR) url, 
                         BOOL errorHandled);
 }
 
 @GUID("c22615d2-d318-4da2-8422-1fcaf77b10e4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webapplication/nn-webapplication-iwebapplicationnavigationevents))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webapplication/nn-webapplication-iwebapplicationnavigationevents
 interface IWebApplicationNavigationEvents : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationnavigationevents-beforenavigate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationnavigationevents-beforenavigate
     HRESULT BeforeNavigate(IHTMLWindow2 htmlWindow, const(PWSTR) url, uint navigationFlags, 
                            const(PWSTR) targetFrameName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationnavigationevents-navigatecomplete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationnavigationevents-navigatecomplete
     HRESULT NavigateComplete(IHTMLWindow2 htmlWindow, const(PWSTR) url);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationnavigationevents-navigateerror))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationnavigationevents-navigateerror
     HRESULT NavigateError(IHTMLWindow2 htmlWindow, const(PWSTR) url, const(PWSTR) targetFrameName, uint statusCode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationnavigationevents-documentcomplete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationnavigationevents-documentcomplete
     HRESULT DocumentComplete(IHTMLWindow2 htmlWindow, const(PWSTR) url);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationnavigationevents-downloadbegin))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationnavigationevents-downloadbegin
     HRESULT DownloadBegin();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationnavigationevents-downloadcomplete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationnavigationevents-downloadcomplete
     HRESULT DownloadComplete();
 }
 
 @GUID("5b2b3f99-328c-41d5-a6f7-7483ed8e71dd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webapplication/nn-webapplication-iwebapplicationuievents))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webapplication/nn-webapplication-iwebapplicationuievents
 interface IWebApplicationUIEvents : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationuievents-securityproblem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationuievents-securityproblem
     HRESULT SecurityProblem(uint securityProblem, HRESULT* result);
 }
 
 @GUID("3e59e6b7-c652-4daf-ad5e-16feb350cde3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webapplication/nn-webapplication-iwebapplicationupdateevents))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webapplication/nn-webapplication-iwebapplicationupdateevents
 interface IWebApplicationUpdateEvents : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationupdateevents-onpaint))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationupdateevents-onpaint
     HRESULT OnPaint();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationupdateevents-oncsschanged))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationupdateevents-oncsschanged
     HRESULT OnCssChanged();
 }
 
 @GUID("cecbd2c3-a3a5-4749-9681-20e9161c6794")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webapplication/nn-webapplication-iwebapplicationhost))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webapplication/nn-webapplication-iwebapplicationhost
 interface IWebApplicationHost : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationhost-get_hwnd))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationhost-get_hwnd
     HRESULT get_HWND(HWND* hwnd);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationhost-get_document))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationhost-get_document
     HRESULT get_Document(IHTMLDocument2* htmlDocument);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationhost-refresh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationhost-refresh
     HRESULT Refresh();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationhost-advise))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationhost-advise
     HRESULT Advise(const(GUID)* interfaceId, IUnknown callback, uint* cookie);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationhost-unadvise))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationhost-unadvise
     HRESULT Unadvise(uint cookie);
 }
 
 @GUID("bcdcd0de-330e-481b-b843-4898a6a8ebac")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webapplication/nn-webapplication-iwebapplicationactivation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webapplication/nn-webapplication-iwebapplicationactivation
 interface IWebApplicationActivation : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationactivation-cancelpendingactivation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationactivation-cancelpendingactivation
     HRESULT CancelPendingActivation();
 }
 
 @GUID("720aea93-1964-4db0-b005-29eb9e2b18a9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webapplication/nn-webapplication-iwebapplicationauthoringmode))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webapplication/nn-webapplication-iwebapplicationauthoringmode
 interface IWebApplicationAuthoringMode : IServiceProvider
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationauthoringmode-get_authoringclientbinary))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webapplication/nf-webapplication-iwebapplicationauthoringmode-get_authoringclientbinary
     HRESULT get_AuthoringClientBinary(BSTR* designModeDllPath);
 }
 

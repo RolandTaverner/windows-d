@@ -3,17 +3,19 @@
 module windows.win32.storage.xps.printing;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, HANDLE, HRESULT, PWSTR;
-public import windows.win32.storage.xps : IXpsOMPackageTarget;
-public import windows.win32.system.com : IDispatch, ISequentialStream, IStream, IUnknown;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, HANDLE, HRESULT, PWSTR;
+public import windows.win32.storage.xps.xps : IXpsOMPackageTarget;
+public import windows.win32.system.com.com : IDispatch, ISequentialStream, IStream,
+                                             IUnknown;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xpsprint/ne-xpsprint-xps_job_completion))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsprint/ne-xpsprint-xps_job_completion
 alias XPS_JOB_COMPLETION = int;
 enum : int
 {
@@ -22,7 +24,8 @@ enum : int
     XPS_JOB_CANCELLED   = 0x00000002,
     XPS_JOB_FAILED      = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/documenttarget/ne-documenttarget-printdocumentpackagecompletion))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/documenttarget/ne-documenttarget-printdocumentpackagecompletion
 enum PrintDocumentPackageCompletion : int
 {
     PrintDocumentPackageCompletion_InProgress = 0x00000000,
@@ -44,7 +47,7 @@ enum : GUID
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xpsprint/ns-xpsprint-xps_job_status))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsprint/ns-xpsprint-xps_job_status
 struct XPS_JOB_STATUS
 {
     uint               jobId;
@@ -55,7 +58,7 @@ struct XPS_JOB_STATUS
     HRESULT            jobStatus;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/documenttarget/ns-documenttarget-printdocumentpackagestatus))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/documenttarget/ns-documenttarget-printdocumentpackagestatus
 struct PrintDocumentPackageStatus
 {
     uint    JobId;
@@ -92,34 +95,34 @@ struct PrintDocumentPackageTargetFactory;
 
 @GUID("7a77dc5f-45d6-4dff-9307-d8cb846347ca")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xpsprint/nn-xpsprint-ixpsprintjobstream))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsprint/nn-xpsprint-ixpsprintjobstream
 interface IXpsPrintJobStream : ISequentialStream
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xpsprint/nf-xpsprint-ixpsprintjobstream-close))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsprint/nf-xpsprint-ixpsprintjobstream-close
     HRESULT Close();
 }
 
 @GUID("5ab89b06-8194-425f-ab3b-d7a96e350161")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xpsprint/nn-xpsprint-ixpsprintjob))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsprint/nn-xpsprint-ixpsprintjob
 interface IXpsPrintJob : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xpsprint/nf-xpsprint-ixpsprintjob-cancel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsprint/nf-xpsprint-ixpsprintjob-cancel
     HRESULT Cancel();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xpsprint/nf-xpsprint-ixpsprintjob-getjobstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xpsprint/nf-xpsprint-ixpsprintjob-getjobstatus
     HRESULT GetJobStatus(XPS_JOB_STATUS* jobStatus);
 }
 
 @GUID("1b8efec4-3019-4c27-964e-367202156906")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/documenttarget/nn-documenttarget-iprintdocumentpackagetarget))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/documenttarget/nn-documenttarget-iprintdocumentpackagetarget
 interface IPrintDocumentPackageTarget : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/documenttarget/nf-documenttarget-iprintdocumentpackagetarget-getpackagetargettypes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/documenttarget/nf-documenttarget-iprintdocumentpackagetarget-getpackagetargettypes
     HRESULT GetPackageTargetTypes(uint* targetCount, GUID** targetTypes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/documenttarget/nf-documenttarget-iprintdocumentpackagetarget-getpackagetarget))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/documenttarget/nf-documenttarget-iprintdocumentpackagetarget-getpackagetarget
     HRESULT GetPackageTarget(const(GUID)* guidTargetType, const(GUID)* riid, void** ppvTarget);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/documenttarget/nf-documenttarget-iprintdocumentpackagetarget-cancel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/documenttarget/nf-documenttarget-iprintdocumentpackagetarget-cancel
     HRESULT Cancel();
 }
 
@@ -132,19 +135,19 @@ interface IPrintDocumentPackageTarget2 : IUnknown
 
 @GUID("ed90c8ad-5c34-4d05-a1ec-0e8a9b3ad7af")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/documenttarget/nn-documenttarget-iprintdocumentpackagestatusevent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/documenttarget/nn-documenttarget-iprintdocumentpackagestatusevent
 interface IPrintDocumentPackageStatusEvent : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/documenttarget/nf-documenttarget-iprintdocumentpackagestatusevent-packagestatusupdated))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/documenttarget/nf-documenttarget-iprintdocumentpackagestatusevent-packagestatusupdated
     HRESULT PackageStatusUpdated(PrintDocumentPackageStatus* packageStatus);
 }
 
 @GUID("d2959bf7-b31b-4a3d-9600-712eb1335ba4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/documenttarget/nn-documenttarget-iprintdocumentpackagetargetfactory))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/documenttarget/nn-documenttarget-iprintdocumentpackagetargetfactory
 interface IPrintDocumentPackageTargetFactory : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/documenttarget/nf-documenttarget-iprintdocumentpackagetargetfactory-createdocumentpackagetargetforprintjob))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/documenttarget/nf-documenttarget-iprintdocumentpackagetargetfactory-createdocumentpackagetargetforprintjob
     HRESULT CreateDocumentPackageTargetForPrintJob(const(PWSTR) printerName, const(PWSTR) jobName, 
                                                    IStream jobOutputStream, IStream jobPrintTicketStream, 
                                                    IPrintDocumentPackageTarget* docPackageTarget);

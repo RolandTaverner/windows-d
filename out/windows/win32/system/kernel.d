@@ -3,14 +3,15 @@
 module windows.win32.system.kernel;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : PSTR;
-public import windows.win32.system.diagnostics.debug : CONTEXT, EXCEPTION_RECORD;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : PSTR;
+public import windows.win32.system.diagnostics.debug_.debug_ : CONTEXT, EXCEPTION_RECORD;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
+
 
 alias EXCEPTION_DISPOSITION = int;
 enum : int
@@ -20,18 +21,21 @@ enum : int
     ExceptionNestedException   = 0x00000002,
     ExceptionCollidedUnwind    = 0x00000003,
 }
+
 alias EVENT_TYPE = int;
 enum : int
 {
     NotificationEvent    = 0x00000000,
     SynchronizationEvent = 0x00000001,
 }
+
 alias TIMER_TYPE = int;
 enum : int
 {
     NotificationTimer    = 0x00000000,
     SynchronizationTimer = 0x00000001,
 }
+
 alias WAIT_TYPE = int;
 enum : int
 {
@@ -41,6 +45,7 @@ enum : int
     WaitDequeue      = 0x00000003,
     WaitDpc          = 0x00000004,
 }
+
 alias NT_PRODUCT_TYPE = int;
 enum : int
 {
@@ -48,6 +53,7 @@ enum : int
     NtProductLanManNt = 0x00000002,
     NtProductServer   = 0x00000003,
 }
+
 alias SUITE_TYPE = int;
 enum : int
 {
@@ -71,7 +77,8 @@ enum : int
     MultiUserTS             = 0x00000011,
     MaxSuiteType            = 0x00000012,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-compartment_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-compartment_id
 alias COMPARTMENT_ID = int;
 enum : int
 {
@@ -83,14 +90,14 @@ enum : int
 
 
 enum int OBJ_HANDLE_TAGBITS = 0x00000003;
-enum uint RTL_BALANCED_NODE_RESERVED_PARENT_MASK = 0x00000003;
-enum uint NULL64 = 0x00000000;
+enum uint RTL_BALANCED_NODE_RESERVED_PARENT_MASK = 0x00000003U;
+enum uint NULL64 = 0x00000000U;
 
 enum : uint
 {
-    MAXUCHAR  = 0x000000ff,
-    MAXUSHORT = 0x0000ffff,
-    MAXULONG  = 0xffffffff,
+    MAXUCHAR  = 0x000000ffU,
+    MAXUSHORT = 0x0000ffffU,
+    MAXULONG  = 0xffffffffU,
 }
 
 // Callbacks
@@ -101,25 +108,39 @@ alias EXCEPTION_ROUTINE = EXCEPTION_DISPOSITION function(EXCEPTION_RECORD* Excep
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-slist_entry))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-slist_entry
 struct SLIST_ENTRY
 {
     SLIST_ENTRY* Next;
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(4))], [])
-union SLIST_HEADER
+version(AArch64)
 {
-    _Anonymous_e__Struct Anonymous;
-    _HeaderArm64_e__Struct HeaderArm64;
+    union SLIST_HEADER
+    {
+        struct
+        {
+            ulong Alignment;
+            ulong Region;
+        }
+        struct HeaderArm64
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Sequence)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(48))], [])*/ulong _bitfield1;
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NextEntry)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(60))], [])*/ulong _bitfield2;
+        }
+    }
 }
 
 struct QUAD
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        long   UseThisFieldToCopy;
+        double DoNotUseThisField;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-processor_number))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-processor_number
 struct PROCESSOR_NUMBER
 {
     ushort Group;
@@ -127,7 +148,7 @@ struct PROCESSOR_NUMBER
     ubyte  Reserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdef/ns-ntdef-string))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdef/ns-ntdef-string
 struct STRING
 {
     ushort Length;
@@ -142,14 +163,14 @@ struct CSTRING
     const(PSTR) Buffer;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdef/ns-ntdef-list_entry))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdef/ns-ntdef-list_entry
 struct LIST_ENTRY
 {
     LIST_ENTRY* Flink;
     LIST_ENTRY* Blink;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntdef/ns-ntdef-single_list_entry))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntdef/ns-ntdef-single_list_entry
 struct SINGLE_LIST_ENTRY
 {
     SINGLE_LIST_ENTRY* Next;
@@ -157,8 +178,20 @@ struct SINGLE_LIST_ENTRY
 
 struct RTL_BALANCED_NODE
 {
-    _Anonymous1_e__Union Anonymous1;
-    _Anonymous2_e__Union Anonymous2;
+    union
+    {
+        RTL_BALANCED_NODE[2]* Children;
+        struct
+        {
+            RTL_BALANCED_NODE* Left;
+            RTL_BALANCED_NODE* Right;
+        }
+    }
+    union
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Balance)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(2))], [])*/ubyte _bitfield454;
+        size_t ParentValue;
+    }
 }
 
 struct LIST_ENTRY32
@@ -203,39 +236,61 @@ struct OBJECTID
     uint Uniquifier;
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(2))], [])
-union SLIST_HEADER
+version(X86_64)
 {
-    _Anonymous_e__Struct Anonymous;
-    _HeaderX64_e__Struct HeaderX64;
+    union SLIST_HEADER
+    {
+        _Anonymous_e__Struct Anonymous;
+        _HeaderX64_e__Struct HeaderX64;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct FLOATING_SAVE_AREA
+version(X86_64)
 {
-    uint      ControlWord;
-    uint      StatusWord;
-    uint      TagWord;
-    uint      ErrorOffset;
-    uint      ErrorSelector;
-    uint      DataOffset;
-    uint      DataSelector;
-    ubyte[80] RegisterArea;
-    uint      Cr0NpxState;
+    struct FLOATING_SAVE_AREA
+    {
+        uint      ControlWord;
+        uint      StatusWord;
+        uint      TagWord;
+        uint      ErrorOffset;
+        uint      ErrorSelector;
+        uint      DataOffset;
+        uint      DataSelector;
+        ubyte[80] RegisterArea;
+        uint      Cr0NpxState;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct FLOATING_SAVE_AREA
+version(AArch64)
 {
-    uint      ControlWord;
-    uint      StatusWord;
-    uint      TagWord;
-    uint      ErrorOffset;
-    uint      ErrorSelector;
-    uint      DataOffset;
-    uint      DataSelector;
-    ubyte[80] RegisterArea;
-    uint      Spare0;
+    struct FLOATING_SAVE_AREA
+    {
+        uint      ControlWord;
+        uint      StatusWord;
+        uint      TagWord;
+        uint      ErrorOffset;
+        uint      ErrorSelector;
+        uint      DataOffset;
+        uint      DataSelector;
+        ubyte[80] RegisterArea;
+        uint      Cr0NpxState;
+    }
+}
+
+version(X86)
+{
+    struct FLOATING_SAVE_AREA
+    {
+        uint      ControlWord;
+        uint      StatusWord;
+        uint      TagWord;
+        uint      ErrorOffset;
+        uint      ErrorSelector;
+        uint      DataOffset;
+        uint      DataSelector;
+        ubyte[80] RegisterArea;
+        uint      Spare0;
+    }
 }
 
 struct EXCEPTION_REGISTRATION_RECORD
@@ -247,19 +302,25 @@ struct EXCEPTION_REGISTRATION_RECORD
 struct NT_TIB
 {
     EXCEPTION_REGISTRATION_RECORD* ExceptionList;
-    void*               StackBase;
-    void*               StackLimit;
-    void*               SubSystemTib;
-    _Anonymous_e__Union Anonymous;
-    void*               ArbitraryUserPointer;
-    NT_TIB*             Self;
+    void*   StackBase;
+    void*   StackLimit;
+    void*   SubSystemTib;
+    union
+    {
+        void* FiberData;
+        uint  Version;
+    }
+    void*   ArbitraryUserPointer;
+    NT_TIB* Self;
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-union SLIST_HEADER
+version(X86)
 {
-    ulong                Alignment;
-    _Anonymous_e__Struct Anonymous;
+    union SLIST_HEADER
+    {
+        ulong                Alignment;
+        _Anonymous_e__Struct Anonymous;
+    }
 }
 
 // Functions

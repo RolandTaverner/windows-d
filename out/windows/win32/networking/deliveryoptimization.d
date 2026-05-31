@@ -3,8 +3,8 @@
 module windows.win32.networking.deliveryoptimization;
 
 public import windows.core;
-public import windows.win32.foundation : HRESULT, PWSTR;
-public import windows.win32.system.com : IEnumUnknown, IUnknown;
+public import windows.win32.foundation.foundation : HRESULT, PWSTR;
+public import windows.win32.system.com.com : IEnumUnknown, IUnknown;
 public import windows.win32.system.variant : VARIANT;
 
 extern(Windows) @nogc nothrow:
@@ -12,7 +12,8 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/deliveryoptimization/ne-deliveryoptimization-dodownloadstate))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/deliveryoptimization/ne-deliveryoptimization-dodownloadstate
 enum DODownloadState : int
 {
     DODownloadState_Created      = 0x00000000,
@@ -22,7 +23,8 @@ enum DODownloadState : int
     DODownloadState_Aborted      = 0x00000004,
     DODownloadState_Paused       = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/deliveryoptimization/ne-deliveryoptimization-dodownloadcostpolicy))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/deliveryoptimization/ne-deliveryoptimization-dodownloadcostpolicy
 enum DODownloadCostPolicy : int
 {
     DODownloadCostPolicy_Always       = 0x00000000,
@@ -32,7 +34,8 @@ enum DODownloadCostPolicy : int
     DODownloadCostPolicy_NoSurcharge  = 0x00000004,
     DODownloadCostPolicy_NoCellular   = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/deliveryoptimization/ne-deliveryoptimization-dodownloadproperty))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/deliveryoptimization/ne-deliveryoptimization-dodownloadproperty
 enum DODownloadProperty : int
 {
     DODownloadProperty_Id                                 = 0x00000000,
@@ -90,21 +93,21 @@ enum const(wchar)* IntegrityCheckInfo_HashOfHashes = "HashOfHashes";
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/deliveryoptimization/ns-deliveryoptimization-do_download_range))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/deliveryoptimization/ns-deliveryoptimization-do_download_range
 struct DO_DOWNLOAD_RANGE
 {
     ulong Offset;
     ulong Length;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/deliveryoptimization/ns-deliveryoptimization-do_download_ranges_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/deliveryoptimization/ns-deliveryoptimization-do_download_ranges_info
 struct DO_DOWNLOAD_RANGES_INFO
 {
     uint RangeCount;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DO_DOWNLOAD_RANGE[1] Ranges;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/deliveryoptimization/ns-deliveryoptimization-do_download_status))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/deliveryoptimization/ns-deliveryoptimization-do_download_status
 struct DO_DOWNLOAD_STATUS
 {
     ulong           BytesTotal;
@@ -114,7 +117,7 @@ struct DO_DOWNLOAD_STATUS
     HRESULT         ExtendedError;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/deliveryoptimization/ns-deliveryoptimization-do_download_enum_category))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/deliveryoptimization/ns-deliveryoptimization-do_download_enum_category
 struct DO_DOWNLOAD_ENUM_CATEGORY
 {
     DODownloadProperty Property;
@@ -127,40 +130,40 @@ struct DO_DOWNLOAD_ENUM_CATEGORY
 struct DeliveryOptimization;
 
 @GUID("fbbd7fc0-c147-4727-a38d-827ef071ee77")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/deliveryoptimization/nn-deliveryoptimization-idodownload))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/deliveryoptimization/nn-deliveryoptimization-idodownload
 interface IDODownload : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/deliveryoptimization/nf-deliveryoptimization-idodownload-start))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/deliveryoptimization/nf-deliveryoptimization-idodownload-start
     HRESULT Start(const(DO_DOWNLOAD_RANGES_INFO)* ranges);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/deliveryoptimization/nf-deliveryoptimization-idodownload-pause))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/deliveryoptimization/nf-deliveryoptimization-idodownload-pause
     HRESULT Pause();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/deliveryoptimization/nf-deliveryoptimization-idodownload-abort))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/deliveryoptimization/nf-deliveryoptimization-idodownload-abort
     HRESULT Abort();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/deliveryoptimization/nf-deliveryoptimization-idodownload-finalize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/deliveryoptimization/nf-deliveryoptimization-idodownload-finalize
     HRESULT Finalize();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/deliveryoptimization/nf-deliveryoptimization-idodownload-getstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/deliveryoptimization/nf-deliveryoptimization-idodownload-getstatus
     HRESULT GetStatus(DO_DOWNLOAD_STATUS* status);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/deliveryoptimization/nf-deliveryoptimization-idodownload-getproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/deliveryoptimization/nf-deliveryoptimization-idodownload-getproperty
     HRESULT GetProperty(DODownloadProperty propId, VARIANT* propVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/deliveryoptimization/nf-deliveryoptimization-idodownload-setproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/deliveryoptimization/nf-deliveryoptimization-idodownload-setproperty
     HRESULT SetProperty(DODownloadProperty propId, const(VARIANT)* propVal);
 }
 
 @GUID("d166e8e3-a90e-4392-8e87-05e996d3747d")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/deliveryoptimization/nn-deliveryoptimization-idodownloadstatuscallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/deliveryoptimization/nn-deliveryoptimization-idodownloadstatuscallback
 interface IDODownloadStatusCallback : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/deliveryoptimization/nf-deliveryoptimization-idodownloadstatuscallback-onstatuschange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/deliveryoptimization/nf-deliveryoptimization-idodownloadstatuscallback-onstatuschange
     HRESULT OnStatusChange(IDODownload download, const(DO_DOWNLOAD_STATUS)* status);
 }
 
 @GUID("400e2d4a-1431-4c1a-a748-39ca472cfdb1")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/deliveryoptimization/nn-deliveryoptimization-idomanager))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/deliveryoptimization/nn-deliveryoptimization-idomanager
 interface IDOManager : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/deliveryoptimization/nf-deliveryoptimization-idomanager-createdownload))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/deliveryoptimization/nf-deliveryoptimization-idomanager-createdownload
     HRESULT CreateDownload(IDODownload* download);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/deliveryoptimization/nf-deliveryoptimization-idomanager-enumdownloads))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/deliveryoptimization/nf-deliveryoptimization-idomanager-enumdownloads
     HRESULT EnumDownloads(const(DO_DOWNLOAD_ENUM_CATEGORY)* category, IEnumUnknown* ppEnum);
 }
 

@@ -3,10 +3,10 @@
 module windows.win32.system.winrt.graphics.capture;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : HRESULT, HWND;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : HRESULT, HWND;
 public import windows.win32.graphics.gdi : HMONITOR;
-public import windows.win32.system.com : IUnknown;
+public import windows.win32.system.com.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
@@ -16,9 +16,9 @@ extern(Windows) @nogc nothrow:
 @GUID("3628e81b-3cac-4c60-b7f4-23ce0e0c3356")
 interface IGraphicsCaptureItemInterop : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/windows.graphics.capture.interop/nf-windows-graphics-capture-interop-igraphicscaptureiteminterop-createforwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.graphics.capture.interop/nf-windows-graphics-capture-interop-igraphicscaptureiteminterop-createforwindow
     HRESULT CreateForWindow(HWND window, const(GUID)* riid, void** result);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/windows.graphics.capture.interop/nf-windows-graphics-capture-interop-igraphicscaptureiteminterop-createformonitor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.graphics.capture.interop/nf-windows-graphics-capture-interop-igraphicscaptureiteminterop-createformonitor
     HRESULT CreateForMonitor(HMONITOR monitor, const(GUID)* riid, void** result);
 }
 

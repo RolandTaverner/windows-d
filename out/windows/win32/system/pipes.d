@@ -3,8 +3,8 @@
 module windows.win32.system.pipes;
 
 public import windows.core;
-public import windows.win32.foundation : BOOL, HANDLE, PSTR, PWSTR;
-public import windows.win32.security : SECURITY_ATTRIBUTES;
+public import windows.win32.foundation.foundation : BOOL, HANDLE, PSTR, PWSTR;
+public import windows.win32.security.security : SECURITY_ATTRIBUTES;
 public import windows.win32.storage.filesystem : FILE_FLAGS_AND_ATTRIBUTES;
 public import windows.win32.system.io : OVERLAPPED;
 
@@ -13,31 +13,32 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias NAMED_PIPE_MODE = uint;
 enum : uint
 {
-    PIPE_WAIT                  = 0x00000000,
-    PIPE_NOWAIT                = 0x00000001,
-    PIPE_READMODE_BYTE         = 0x00000000,
-    PIPE_READMODE_MESSAGE      = 0x00000002,
-    PIPE_CLIENT_END            = 0x00000000,
-    PIPE_SERVER_END            = 0x00000001,
-    PIPE_TYPE_BYTE             = 0x00000000,
-    PIPE_TYPE_MESSAGE          = 0x00000004,
-    PIPE_ACCEPT_REMOTE_CLIENTS = 0x00000000,
-    PIPE_REJECT_REMOTE_CLIENTS = 0x00000008,
+    PIPE_WAIT                  = 0x00000000U,
+    PIPE_NOWAIT                = 0x00000001U,
+    PIPE_READMODE_BYTE         = 0x00000000U,
+    PIPE_READMODE_MESSAGE      = 0x00000002U,
+    PIPE_CLIENT_END            = 0x00000000U,
+    PIPE_SERVER_END            = 0x00000001U,
+    PIPE_TYPE_BYTE             = 0x00000000U,
+    PIPE_TYPE_MESSAGE          = 0x00000004U,
+    PIPE_ACCEPT_REMOTE_CLIENTS = 0x00000000U,
+    PIPE_REJECT_REMOTE_CLIENTS = 0x00000008U,
 }
 
 // Constants
 
 
-enum uint PIPE_UNLIMITED_INSTANCES = 0x000000ff;
-enum uint NMPWAIT_WAIT_FOREVER = 0xffffffff;
+enum uint PIPE_UNLIMITED_INSTANCES = 0x000000ffU;
+enum uint NMPWAIT_WAIT_FOREVER = 0xffffffffU;
 
 enum : uint
 {
-    NMPWAIT_NOWAIT           = 0x00000001,
-    NMPWAIT_USE_DEFAULT_WAIT = 0x00000000,
+    NMPWAIT_NOWAIT           = 0x00000001U,
+    NMPWAIT_USE_DEFAULT_WAIT = 0x00000000U,
 }
 
 // Functions

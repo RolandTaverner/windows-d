@@ -3,10 +3,10 @@
 module windows.win32.system.stationsanddesktops;
 
 public import windows.core;
-public import windows.win32.foundation : BOOL, HANDLE, HWND, LPARAM, LUID, PSTR,
-                                         PWSTR, WPARAM;
+public import windows.win32.foundation.foundation : BOOL, HANDLE, HWND, LPARAM, LUID, PSTR,
+                                                    PWSTR, WPARAM;
 public import windows.win32.graphics.gdi : DEVMODEA, DEVMODEW;
-public import windows.win32.security : SECURITY_ATTRIBUTES;
+public import windows.win32.security.security : SECURITY_ATTRIBUTES;
 public import windows.win32.ui.windowsandmessaging : WNDENUMPROC;
 
 extern(Windows) @nogc nothrow:
@@ -14,28 +14,31 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias BROADCAST_SYSTEM_MESSAGE_FLAGS = uint;
 enum : uint
 {
-    BSF_ALLOWSFW           = 0x00000080,
-    BSF_FLUSHDISK          = 0x00000004,
-    BSF_FORCEIFHUNG        = 0x00000020,
-    BSF_IGNORECURRENTTASK  = 0x00000002,
-    BSF_NOHANG             = 0x00000008,
-    BSF_NOTIMEOUTIFNOTHUNG = 0x00000040,
-    BSF_POSTMESSAGE        = 0x00000010,
-    BSF_QUERY              = 0x00000001,
-    BSF_SENDNOTIFYMESSAGE  = 0x00000100,
-    BSF_LUID               = 0x00000400,
-    BSF_RETURNHDESK        = 0x00000200,
+    BSF_ALLOWSFW           = 0x00000080U,
+    BSF_FLUSHDISK          = 0x00000004U,
+    BSF_FORCEIFHUNG        = 0x00000020U,
+    BSF_IGNORECURRENTTASK  = 0x00000002U,
+    BSF_NOHANG             = 0x00000008U,
+    BSF_NOTIMEOUTIFNOTHUNG = 0x00000040U,
+    BSF_POSTMESSAGE        = 0x00000010U,
+    BSF_QUERY              = 0x00000001U,
+    BSF_SENDNOTIFYMESSAGE  = 0x00000100U,
+    BSF_LUID               = 0x00000400U,
+    BSF_RETURNHDESK        = 0x00000200U,
 }
+
 alias BROADCAST_SYSTEM_MESSAGE_INFO = uint;
 enum : uint
 {
-    BSM_ALLCOMPONENTS = 0x00000000,
-    BSM_ALLDESKTOPS   = 0x00000010,
-    BSM_APPLICATIONS  = 0x00000008,
+    BSM_ALLCOMPONENTS = 0x00000000U,
+    BSM_ALLDESKTOPS   = 0x00000010U,
+    BSM_APPLICATIONS  = 0x00000008U,
 }
+
 alias USER_OBJECT_INFORMATION_INDEX = int;
 enum : int
 {
@@ -46,28 +49,30 @@ enum : int
     UOI_TYPE     = 0x00000003,
     UOI_USER_SID = 0x00000004,
 }
+
 alias DESKTOP_CONTROL_FLAGS = uint;
 enum : uint
 {
-    DF_ALLOWOTHERACCOUNTHOOK = 0x00000001,
+    DF_ALLOWOTHERACCOUNTHOOK = 0x00000001U,
 }
+
 alias DESKTOP_ACCESS_FLAGS = uint;
 enum : uint
 {
-    DESKTOP_DELETE          = 0x00010000,
-    DESKTOP_READ_CONTROL    = 0x00020000,
-    DESKTOP_WRITE_DAC       = 0x00040000,
-    DESKTOP_WRITE_OWNER     = 0x00080000,
-    DESKTOP_SYNCHRONIZE     = 0x00100000,
-    DESKTOP_READOBJECTS     = 0x00000001,
-    DESKTOP_CREATEWINDOW    = 0x00000002,
-    DESKTOP_CREATEMENU      = 0x00000004,
-    DESKTOP_HOOKCONTROL     = 0x00000008,
-    DESKTOP_JOURNALRECORD   = 0x00000010,
-    DESKTOP_JOURNALPLAYBACK = 0x00000020,
-    DESKTOP_ENUMERATE       = 0x00000040,
-    DESKTOP_WRITEOBJECTS    = 0x00000080,
-    DESKTOP_SWITCHDESKTOP   = 0x00000100,
+    DESKTOP_DELETE          = 0x00010000U,
+    DESKTOP_READ_CONTROL    = 0x00020000U,
+    DESKTOP_WRITE_DAC       = 0x00040000U,
+    DESKTOP_WRITE_OWNER     = 0x00080000U,
+    DESKTOP_SYNCHRONIZE     = 0x00100000U,
+    DESKTOP_READOBJECTS     = 0x00000001U,
+    DESKTOP_CREATEWINDOW    = 0x00000002U,
+    DESKTOP_CREATEMENU      = 0x00000004U,
+    DESKTOP_HOOKCONTROL     = 0x00000008U,
+    DESKTOP_JOURNALRECORD   = 0x00000010U,
+    DESKTOP_JOURNALPLAYBACK = 0x00000020U,
+    DESKTOP_ENUMERATE       = 0x00000040U,
+    DESKTOP_WRITEOBJECTS    = 0x00000080U,
+    DESKTOP_SWITCHDESKTOP   = 0x00000100U,
 }
 
 // Callbacks
@@ -100,7 +105,7 @@ struct HDESK
     void* Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-userobjectflags))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-userobjectflags
 struct USEROBJECTFLAGS
 {
     BOOL fInherit;
@@ -109,7 +114,7 @@ struct USEROBJECTFLAGS
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-bsminfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-bsminfo
 struct BSMINFO
 {
     uint  cbSize;

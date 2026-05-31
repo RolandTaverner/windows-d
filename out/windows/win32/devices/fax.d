@@ -3,21 +3,22 @@
 module windows.win32.devices.fax;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BSTR, CHAR, DEVPROPKEY, FILETIME,
-                                         HANDLE, HINSTANCE, HRESULT, HWND, PSTR,
-                                         PWSTR, SYSTEMTIME, VARIANT_BOOL;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, DEVPROPKEY, FILETIME,
+                                                    HANDLE, HINSTANCE, HRESULT, HWND,
+                                                    PSTR, PWSTR, SYSTEMTIME, VARIANT_BOOL;
 public import windows.win32.graphics.gdi : HDC;
-public import windows.win32.system.com : IDispatch, IUnknown;
+public import windows.win32.system.com.com : IDispatch, IUnknown;
 public import windows.win32.system.io : OVERLAPPED;
 public import windows.win32.system.registry : HKEY;
 public import windows.win32.system.variant : VARIANT;
-public import windows.win32.ui.controls : HPROPSHEETPAGE;
+public import windows.win32.ui.controls.controls : HPROPSHEETPAGE;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
+
 
 alias FAX_ENUM_LOG_LEVELS = int;
 enum : int
@@ -27,6 +28,7 @@ enum : int
     FAXLOG_LEVEL_MED  = 0x00000002,
     FAXLOG_LEVEL_MAX  = 0x00000003,
 }
+
 alias FAX_ENUM_LOG_CATEGORIES = int;
 enum : int
 {
@@ -35,6 +37,7 @@ enum : int
     FAXLOG_CATEGORY_INBOUND  = 0x00000003,
     FAXLOG_CATEGORY_UNKNOWN  = 0x00000004,
 }
+
 alias FAX_ENUM_JOB_COMMANDS = int;
 enum : int
 {
@@ -43,6 +46,7 @@ enum : int
     JC_PAUSE   = 0x00000002,
     JC_RESUME  = 0x00000003,
 }
+
 alias FAX_ENUM_JOB_SEND_ATTRIBUTES = int;
 enum : int
 {
@@ -50,6 +54,7 @@ enum : int
     JSA_SPECIFIC_TIME   = 0x00000001,
     JSA_DISCOUNT_PERIOD = 0x00000002,
 }
+
 alias FAX_ENUM_DELIVERY_REPORT_TYPES = int;
 enum : int
 {
@@ -57,13 +62,15 @@ enum : int
     DRT_EMAIL = 0x00000001,
     DRT_INBOX = 0x00000002,
 }
+
 alias FAX_ENUM_PORT_OPEN_TYPE = int;
 enum : int
 {
     PORT_OPEN_QUERY  = 0x00000001,
     PORT_OPEN_MODIFY = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_job_status_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_job_status_enum
 alias FAX_JOB_STATUS_ENUM = int;
 enum : int
 {
@@ -79,7 +86,8 @@ enum : int
     fjsCANCELING        = 0x00000400,
     fjsROUTING          = 0x00000800,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_job_extended_status_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_job_extended_status_enum
 alias FAX_JOB_EXTENDED_STATUS_ENUM = int;
 enum : int
 {
@@ -105,7 +113,8 @@ enum : int
     fjesCALL_ABORTED       = 0x00000013,
     fjesPROPRIETARY        = 0x01000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_job_operations_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_job_operations_enum
 alias FAX_JOB_OPERATIONS_ENUM = int;
 enum : int
 {
@@ -117,7 +126,8 @@ enum : int
     fjoRECIPIENT_INFO = 0x00000020,
     fjoSENDER_INFO    = 0x00000040,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_job_type_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_job_type_enum
 alias FAX_JOB_TYPE_ENUM = int;
 enum : int
 {
@@ -125,7 +135,8 @@ enum : int
     fjtRECEIVE = 0x00000001,
     fjtROUTING = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_server_events_type_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_server_events_type_enum
 alias FAX_SERVER_EVENTS_TYPE_ENUM = int;
 enum : int
 {
@@ -141,7 +152,8 @@ enum : int
     fsetDEVICE_STATUS = 0x00000100,
     fsetINCOMING_CALL = 0x00000200,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_server_apiversion_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_server_apiversion_enum
 alias FAX_SERVER_APIVERSION_ENUM = int;
 enum : int
 {
@@ -150,7 +162,8 @@ enum : int
     fsAPI_VERSION_2 = 0x00020000,
     fsAPI_VERSION_3 = 0x00030000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_smtp_authentication_type_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_smtp_authentication_type_enum
 alias FAX_SMTP_AUTHENTICATION_TYPE_ENUM = int;
 enum : int
 {
@@ -158,7 +171,8 @@ enum : int
     fsatBASIC     = 0x00000001,
     fsatNTLM      = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_receipt_type_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_receipt_type_enum
 alias FAX_RECEIPT_TYPE_ENUM = int;
 enum : int
 {
@@ -166,7 +180,8 @@ enum : int
     frtMAIL   = 0x00000001,
     frtMSGBOX = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_access_rights_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_access_rights_enum
 alias FAX_ACCESS_RIGHTS_ENUM = int;
 enum : int
 {
@@ -182,7 +197,8 @@ enum : int
     farQUERY_OUT_ARCHIVE  = 0x00000200,
     farMANAGE_OUT_ARCHIVE = 0x00000400,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_priority_type_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_priority_type_enum
 alias FAX_PRIORITY_TYPE_ENUM = int;
 enum : int
 {
@@ -190,7 +206,8 @@ enum : int
     fptNORMAL = 0x00000001,
     fptHIGH   = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_coverpage_type_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_coverpage_type_enum
 alias FAX_COVERPAGE_TYPE_ENUM = int;
 enum : int
 {
@@ -198,7 +215,8 @@ enum : int
     fcptLOCAL  = 0x00000001,
     fcptSERVER = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_schedule_type_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_schedule_type_enum
 alias FAX_SCHEDULE_TYPE_ENUM = int;
 enum : int
 {
@@ -206,7 +224,8 @@ enum : int
     fstSPECIFIC_TIME   = 0x00000001,
     fstDISCOUNT_PERIOD = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_provider_status_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_provider_status_enum
 alias FAX_PROVIDER_STATUS_ENUM = int;
 enum : int
 {
@@ -218,7 +237,8 @@ enum : int
     fpsCANT_LINK    = 0x00000005,
     fpsCANT_INIT    = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_device_receive_mode_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_device_receive_mode_enum
 alias FAX_DEVICE_RECEIVE_MODE_ENUM = int;
 enum : int
 {
@@ -226,7 +246,8 @@ enum : int
     fdrmAUTO_ANSWER   = 0x00000001,
     fdrmMANUAL_ANSWER = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_log_level_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_log_level_enum
 alias FAX_LOG_LEVEL_ENUM = int;
 enum : int
 {
@@ -235,7 +256,8 @@ enum : int
     fllMED  = 0x00000002,
     fllMAX  = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_group_status_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_group_status_enum
 alias FAX_GROUP_STATUS_ENUM = int;
 enum : int
 {
@@ -244,7 +266,8 @@ enum : int
     fgsALL_DEV_NOT_VALID  = 0x00000002,
     fgsSOME_DEV_NOT_VALID = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_rule_status_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_rule_status_enum
 alias FAX_RULE_STATUS_ENUM = int;
 enum : int
 {
@@ -254,7 +277,8 @@ enum : int
     frsSOME_GROUP_DEV_NOT_VALID = 0x00000003,
     frsBAD_DEVICE               = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_account_events_type_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_account_events_type_enum
 alias FAX_ACCOUNT_EVENTS_TYPE_ENUM = int;
 enum : int
 {
@@ -265,7 +289,8 @@ enum : int
     faetOUT_ARCHIVE  = 0x00000008,
     faetFXSSVC_ENDED = 0x00000010,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_access_rights_enum_2))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_access_rights_enum_2
 alias FAX_ACCESS_RIGHTS_ENUM_2 = int;
 enum : int
 {
@@ -280,12 +305,14 @@ enum : int
     far2MANAGE_ARCHIVES       = 0x00000100,
     far2MANAGE_RECEIVE_FOLDER = 0x00000200,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_routing_rule_code_enum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/ne-faxcomex-fax_routing_rule_code_enum
 alias FAX_ROUTING_RULE_CODE_ENUM = int;
 enum : int
 {
     frrcANY_CODE = 0x00000000,
 }
+
 alias FAXROUTE_ENABLE = int;
 enum : int
 {
@@ -293,17 +320,20 @@ enum : int
     STATUS_DISABLE = 0x00000000,
     STATUS_ENABLE  = 0x00000001,
 }
+
 alias FAX_ENUM_DEVICE_ID_SOURCE = int;
 enum : int
 {
     DEV_ID_SRC_FAX  = 0x00000000,
     DEV_ID_SRC_TAPI = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fxsutility/ne-fxsutility-sendtomode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fxsutility/ne-fxsutility-sendtomode
 enum SendToMode : int
 {
     SEND_TO_FAX_RECIPIENT_ATTACHMENT = 0x00000000,
 }
+
 alias STI_DEVICE_MJ_TYPE = int;
 enum : int
 {
@@ -316,40 +346,40 @@ enum : int
 // Constants
 
 
-enum uint prv_DEFAULT_PREFETCH_SIZE = 0x00000064;
-enum uint FS_INITIALIZING = 0x20000000;
-enum uint FS_DIALING = 0x20000001;
-enum uint FS_TRANSMITTING = 0x20000002;
-enum uint FS_RECEIVING = 0x20000004;
-enum uint FS_COMPLETED = 0x20000008;
-enum uint FS_HANDLED = 0x20000010;
-enum uint FS_LINE_UNAVAILABLE = 0x20000020;
+enum uint prv_DEFAULT_PREFETCH_SIZE = 0x00000064U;
+enum uint FS_INITIALIZING = 0x20000000U;
+enum uint FS_DIALING = 0x20000001U;
+enum uint FS_TRANSMITTING = 0x20000002U;
+enum uint FS_RECEIVING = 0x20000004U;
+enum uint FS_COMPLETED = 0x20000008U;
+enum uint FS_HANDLED = 0x20000010U;
+enum uint FS_LINE_UNAVAILABLE = 0x20000020U;
 
 enum : uint
 {
-    FS_BUSY      = 0x20000040,
-    FS_NO_ANSWER = 0x20000080,
+    FS_BUSY      = 0x20000040U,
+    FS_NO_ANSWER = 0x20000080U,
 }
 
-enum uint FS_BAD_ADDRESS = 0x20000100;
-enum uint FS_NO_DIAL_TONE = 0x20000200;
-enum uint FS_DISCONNECTED = 0x20000400;
-enum uint FS_FATAL_ERROR = 0x20000800;
-enum uint FS_NOT_FAX_CALL = 0x20001000;
+enum uint FS_BAD_ADDRESS = 0x20000100U;
+enum uint FS_NO_DIAL_TONE = 0x20000200U;
+enum uint FS_DISCONNECTED = 0x20000400U;
+enum uint FS_FATAL_ERROR = 0x20000800U;
+enum uint FS_NOT_FAX_CALL = 0x20001000U;
 
 enum : uint
 {
-    FS_CALL_DELAYED     = 0x20002000,
-    FS_CALL_BLACKLISTED = 0x20004000,
+    FS_CALL_DELAYED     = 0x20002000U,
+    FS_CALL_BLACKLISTED = 0x20004000U,
 }
 
-enum uint FS_USER_ABORT = 0x20200000;
-enum uint FS_ANSWERED = 0x20800000;
+enum uint FS_USER_ABORT = 0x20200000U;
+enum uint FS_ANSWERED = 0x20800000U;
 
 enum : uint
 {
-    FAXDEVRECEIVE_SIZE      = 0x00001000,
-    FAXDEVREPORTSTATUS_SIZE = 0x00001000,
+    FAXDEVRECEIVE_SIZE      = 0x00001000U,
+    FAXDEVREPORTSTATUS_SIZE = 0x00001000U,
 }
 
 enum : const(wchar)*
@@ -401,136 +431,136 @@ enum HRESULT FAX_E_DEVICE_NUM_LIMIT_EXCEEDED = HRESULT(0x80041b62);
 enum HRESULT FAX_E_NOT_SUPPORTED_ON_THIS_SKU = HRESULT(0x80041b63);
 enum HRESULT FAX_E_VERSION_MISMATCH = HRESULT(0x80041b64);
 enum HRESULT FAX_E_RECIPIENTS_LIMIT = HRESULT(0x80041b65);
-enum uint JT_UNKNOWN = 0x00000000;
+enum uint JT_UNKNOWN = 0x00000000U;
 
 enum : uint
 {
-    JT_SEND    = 0x00000001,
-    JT_RECEIVE = 0x00000002,
+    JT_SEND    = 0x00000001U,
+    JT_RECEIVE = 0x00000002U,
 }
 
-enum uint JT_ROUTING = 0x00000003;
-enum uint JT_FAIL_RECEIVE = 0x00000004;
-enum uint JS_PENDING = 0x00000000;
-enum uint JS_INPROGRESS = 0x00000001;
-enum uint JS_DELETING = 0x00000002;
-enum uint JS_FAILED = 0x00000004;
-enum uint JS_PAUSED = 0x00000008;
-enum uint JS_NOLINE = 0x00000010;
+enum uint JT_ROUTING = 0x00000003U;
+enum uint JT_FAIL_RECEIVE = 0x00000004U;
+enum uint JS_PENDING = 0x00000000U;
+enum uint JS_INPROGRESS = 0x00000001U;
+enum uint JS_DELETING = 0x00000002U;
+enum uint JS_FAILED = 0x00000004U;
+enum uint JS_PAUSED = 0x00000008U;
+enum uint JS_NOLINE = 0x00000010U;
 
 enum : uint
 {
-    JS_RETRYING         = 0x00000020,
-    JS_RETRIES_EXCEEDED = 0x00000040,
+    JS_RETRYING         = 0x00000020U,
+    JS_RETRIES_EXCEEDED = 0x00000040U,
 }
 
-enum uint FPS_DIALING = 0x20000001;
-enum uint FPS_SENDING = 0x20000002;
-enum uint FPS_RECEIVING = 0x20000004;
-enum uint FPS_COMPLETED = 0x20000008;
-enum uint FPS_HANDLED = 0x20000010;
-enum uint FPS_UNAVAILABLE = 0x20000020;
+enum uint FPS_DIALING = 0x20000001U;
+enum uint FPS_SENDING = 0x20000002U;
+enum uint FPS_RECEIVING = 0x20000004U;
+enum uint FPS_COMPLETED = 0x20000008U;
+enum uint FPS_HANDLED = 0x20000010U;
+enum uint FPS_UNAVAILABLE = 0x20000020U;
 
 enum : uint
 {
-    FPS_BUSY      = 0x20000040,
-    FPS_NO_ANSWER = 0x20000080,
+    FPS_BUSY      = 0x20000040U,
+    FPS_NO_ANSWER = 0x20000080U,
 }
 
-enum uint FPS_BAD_ADDRESS = 0x20000100;
-enum uint FPS_NO_DIAL_TONE = 0x20000200;
-enum uint FPS_DISCONNECTED = 0x20000400;
-enum uint FPS_FATAL_ERROR = 0x20000800;
-enum uint FPS_NOT_FAX_CALL = 0x20001000;
+enum uint FPS_BAD_ADDRESS = 0x20000100U;
+enum uint FPS_NO_DIAL_TONE = 0x20000200U;
+enum uint FPS_DISCONNECTED = 0x20000400U;
+enum uint FPS_FATAL_ERROR = 0x20000800U;
+enum uint FPS_NOT_FAX_CALL = 0x20001000U;
 
 enum : uint
 {
-    FPS_CALL_DELAYED     = 0x20002000,
-    FPS_CALL_BLACKLISTED = 0x20004000,
+    FPS_CALL_DELAYED     = 0x20002000U,
+    FPS_CALL_BLACKLISTED = 0x20004000U,
 }
 
-enum uint FPS_INITIALIZING = 0x20008000;
-enum uint FPS_OFFLINE = 0x20010000;
-enum uint FPS_RINGING = 0x20020000;
-enum uint FPS_AVAILABLE = 0x20100000;
-enum uint FPS_ABORTING = 0x20200000;
-enum uint FPS_ROUTING = 0x20400000;
-enum uint FPS_ANSWERED = 0x20800000;
-enum uint FPF_RECEIVE = 0x00000001;
+enum uint FPS_INITIALIZING = 0x20008000U;
+enum uint FPS_OFFLINE = 0x20010000U;
+enum uint FPS_RINGING = 0x20020000U;
+enum uint FPS_AVAILABLE = 0x20100000U;
+enum uint FPS_ABORTING = 0x20200000U;
+enum uint FPS_ROUTING = 0x20400000U;
+enum uint FPS_ANSWERED = 0x20800000U;
+enum uint FPF_RECEIVE = 0x00000001U;
 
 enum : uint
 {
-    FPF_SEND    = 0x00000002,
-    FPF_VIRTUAL = 0x00000004,
+    FPF_SEND    = 0x00000002U,
+    FPF_VIRTUAL = 0x00000004U,
 }
 
-enum uint FEI_DIALING = 0x00000001;
-enum uint FEI_SENDING = 0x00000002;
-enum uint FEI_RECEIVING = 0x00000003;
-enum uint FEI_COMPLETED = 0x00000004;
+enum uint FEI_DIALING = 0x00000001U;
+enum uint FEI_SENDING = 0x00000002U;
+enum uint FEI_RECEIVING = 0x00000003U;
+enum uint FEI_COMPLETED = 0x00000004U;
 
 enum : uint
 {
-    FEI_BUSY      = 0x00000005,
-    FEI_NO_ANSWER = 0x00000006,
+    FEI_BUSY      = 0x00000005U,
+    FEI_NO_ANSWER = 0x00000006U,
 }
 
-enum uint FEI_BAD_ADDRESS = 0x00000007;
-enum uint FEI_NO_DIAL_TONE = 0x00000008;
-enum uint FEI_DISCONNECTED = 0x00000009;
-enum uint FEI_FATAL_ERROR = 0x0000000a;
-enum uint FEI_NOT_FAX_CALL = 0x0000000b;
+enum uint FEI_BAD_ADDRESS = 0x00000007U;
+enum uint FEI_NO_DIAL_TONE = 0x00000008U;
+enum uint FEI_DISCONNECTED = 0x00000009U;
+enum uint FEI_FATAL_ERROR = 0x0000000aU;
+enum uint FEI_NOT_FAX_CALL = 0x0000000bU;
 
 enum : uint
 {
-    FEI_CALL_DELAYED     = 0x0000000c,
-    FEI_CALL_BLACKLISTED = 0x0000000d,
+    FEI_CALL_DELAYED     = 0x0000000cU,
+    FEI_CALL_BLACKLISTED = 0x0000000dU,
 }
 
-enum uint FEI_RINGING = 0x0000000e;
-enum uint FEI_ABORTING = 0x0000000f;
-enum uint FEI_ROUTING = 0x00000010;
+enum uint FEI_RINGING = 0x0000000eU;
+enum uint FEI_ABORTING = 0x0000000fU;
+enum uint FEI_ROUTING = 0x00000010U;
 
 enum : uint
 {
-    FEI_MODEM_POWERED_ON  = 0x00000011,
-    FEI_MODEM_POWERED_OFF = 0x00000012,
-}
-
-enum : uint
-{
-    FEI_IDLE         = 0x00000013,
-    FEI_FAXSVC_ENDED = 0x00000014,
-}
-
-enum uint FEI_ANSWERED = 0x00000015;
-enum uint FEI_JOB_QUEUED = 0x00000016;
-enum uint FEI_DELETED = 0x00000017;
-enum uint FEI_INITIALIZING = 0x00000018;
-enum uint FEI_LINE_UNAVAILABLE = 0x00000019;
-enum uint FEI_HANDLED = 0x0000001a;
-enum uint FEI_FAXSVC_STARTED = 0x0000001b;
-enum uint FEI_NEVENTS = 0x0000001b;
-
-enum : uint
-{
-    FAX_JOB_SUBMIT = 0x00000001,
-    FAX_JOB_QUERY  = 0x00000002,
+    FEI_MODEM_POWERED_ON  = 0x00000011U,
+    FEI_MODEM_POWERED_OFF = 0x00000012U,
 }
 
 enum : uint
 {
-    FAX_CONFIG_QUERY = 0x00000004,
-    FAX_CONFIG_SET   = 0x00000008,
+    FEI_IDLE         = 0x00000013U,
+    FEI_FAXSVC_ENDED = 0x00000014U,
+}
+
+enum uint FEI_ANSWERED = 0x00000015U;
+enum uint FEI_JOB_QUEUED = 0x00000016U;
+enum uint FEI_DELETED = 0x00000017U;
+enum uint FEI_INITIALIZING = 0x00000018U;
+enum uint FEI_LINE_UNAVAILABLE = 0x00000019U;
+enum uint FEI_HANDLED = 0x0000001aU;
+enum uint FEI_FAXSVC_STARTED = 0x0000001bU;
+enum uint FEI_NEVENTS = 0x0000001bU;
+
+enum : uint
+{
+    FAX_JOB_SUBMIT = 0x00000001U,
+    FAX_JOB_QUERY  = 0x00000002U,
 }
 
 enum : uint
 {
-    FAX_PORT_QUERY = 0x00000010,
-    FAX_PORT_SET   = 0x00000020,
+    FAX_CONFIG_QUERY = 0x00000004U,
+    FAX_CONFIG_SET   = 0x00000008U,
 }
 
-enum uint FAX_JOB_MANAGE = 0x00000040;
+enum : uint
+{
+    FAX_PORT_QUERY = 0x00000010U,
+    FAX_PORT_SET   = 0x00000020U,
+}
+
+enum uint FAX_JOB_MANAGE = 0x00000040U;
 
 enum : GUID
 {
@@ -549,7 +579,7 @@ enum : const(wchar)*
     CF_MSFAXSRV_ROUTING_METHOD_GUID = "FAXSRV_RoutingMethodGuid",
 }
 
-enum uint STI_UNICODE = 0x00000001;
+enum uint STI_UNICODE = 0x00000001U;
 enum GUID CLSID_Sti = GUID("b323f8e0-2e68-11d0-90ea-00aa0060f86c");
 enum GUID GUID_DeviceArrivedLaunch = GUID("740d9ee6-70f1-11d1-ad10-00a02438ad48");
 
@@ -569,88 +599,88 @@ enum : GUID
 
 enum : uint
 {
-    STI_VERSION_FLAG_MASK    = 0xff000000,
-    STI_VERSION_FLAG_UNICODE = 0x01000000,
-    STI_VERSION_REAL         = 0x00000002,
-    STI_VERSION_MIN_ALLOWED  = 0x00000002,
-    STI_VERSION              = 0x00000002,
+    STI_VERSION_FLAG_MASK    = 0xff000000U,
+    STI_VERSION_FLAG_UNICODE = 0x01000000U,
+    STI_VERSION_REAL         = 0x00000002U,
+    STI_VERSION_MIN_ALLOWED  = 0x00000002U,
+    STI_VERSION              = 0x00000002U,
 }
 
-enum uint STI_MAX_INTERNAL_NAME_LENGTH = 0x00000080;
+enum uint STI_MAX_INTERNAL_NAME_LENGTH = 0x00000080U;
 
 enum : uint
 {
-    STI_GENCAP_COMMON_MASK           = 0x000000ff,
-    STI_GENCAP_NOTIFICATIONS         = 0x00000001,
-    STI_GENCAP_POLLING_NEEDED        = 0x00000002,
-    STI_GENCAP_GENERATE_ARRIVALEVENT = 0x00000004,
-}
-
-enum : uint
-{
-    STI_GENCAP_AUTO_PORTSELECT = 0x00000008,
-    STI_GENCAP_WIA             = 0x00000010,
-    STI_GENCAP_SUBSET          = 0x00000020,
-}
-
-enum uint WIA_INCOMPAT_XP = 0x00000001;
-
-enum : uint
-{
-    STI_HW_CONFIG_UNKNOWN  = 0x00000001,
-    STI_HW_CONFIG_SCSI     = 0x00000002,
-    STI_HW_CONFIG_USB      = 0x00000004,
-    STI_HW_CONFIG_SERIAL   = 0x00000008,
-    STI_HW_CONFIG_PARALLEL = 0x00000010,
+    STI_GENCAP_COMMON_MASK           = 0x000000ffU,
+    STI_GENCAP_NOTIFICATIONS         = 0x00000001U,
+    STI_GENCAP_POLLING_NEEDED        = 0x00000002U,
+    STI_GENCAP_GENERATE_ARRIVALEVENT = 0x00000004U,
 }
 
 enum : uint
 {
-    STI_DEVSTATUS_ONLINE_STATE = 0x00000001,
-    STI_DEVSTATUS_EVENTS_STATE = 0x00000002,
+    STI_GENCAP_AUTO_PORTSELECT = 0x00000008U,
+    STI_GENCAP_WIA             = 0x00000010U,
+    STI_GENCAP_SUBSET          = 0x00000020U,
+}
+
+enum uint WIA_INCOMPAT_XP = 0x00000001U;
+
+enum : uint
+{
+    STI_HW_CONFIG_UNKNOWN  = 0x00000001U,
+    STI_HW_CONFIG_SCSI     = 0x00000002U,
+    STI_HW_CONFIG_USB      = 0x00000004U,
+    STI_HW_CONFIG_SERIAL   = 0x00000008U,
+    STI_HW_CONFIG_PARALLEL = 0x00000010U,
 }
 
 enum : uint
 {
-    STI_ONLINESTATE_OPERATIONAL       = 0x00000001,
-    STI_ONLINESTATE_PENDING           = 0x00000002,
-    STI_ONLINESTATE_ERROR             = 0x00000004,
-    STI_ONLINESTATE_PAUSED            = 0x00000008,
-    STI_ONLINESTATE_PAPER_JAM         = 0x00000010,
-    STI_ONLINESTATE_PAPER_PROBLEM     = 0x00000020,
-    STI_ONLINESTATE_OFFLINE           = 0x00000040,
-    STI_ONLINESTATE_IO_ACTIVE         = 0x00000080,
-    STI_ONLINESTATE_BUSY              = 0x00000100,
-    STI_ONLINESTATE_TRANSFERRING      = 0x00000200,
-    STI_ONLINESTATE_INITIALIZING      = 0x00000400,
-    STI_ONLINESTATE_WARMING_UP        = 0x00000800,
-    STI_ONLINESTATE_USER_INTERVENTION = 0x00001000,
-    STI_ONLINESTATE_POWER_SAVE        = 0x00002000,
+    STI_DEVSTATUS_ONLINE_STATE = 0x00000001U,
+    STI_DEVSTATUS_EVENTS_STATE = 0x00000002U,
 }
 
 enum : uint
 {
-    STI_EVENTHANDLING_ENABLED = 0x00000001,
-    STI_EVENTHANDLING_POLLING = 0x00000002,
-    STI_EVENTHANDLING_PENDING = 0x00000004,
+    STI_ONLINESTATE_OPERATIONAL       = 0x00000001U,
+    STI_ONLINESTATE_PENDING           = 0x00000002U,
+    STI_ONLINESTATE_ERROR             = 0x00000004U,
+    STI_ONLINESTATE_PAUSED            = 0x00000008U,
+    STI_ONLINESTATE_PAPER_JAM         = 0x00000010U,
+    STI_ONLINESTATE_PAPER_PROBLEM     = 0x00000020U,
+    STI_ONLINESTATE_OFFLINE           = 0x00000040U,
+    STI_ONLINESTATE_IO_ACTIVE         = 0x00000080U,
+    STI_ONLINESTATE_BUSY              = 0x00000100U,
+    STI_ONLINESTATE_TRANSFERRING      = 0x00000200U,
+    STI_ONLINESTATE_INITIALIZING      = 0x00000400U,
+    STI_ONLINESTATE_WARMING_UP        = 0x00000800U,
+    STI_ONLINESTATE_USER_INTERVENTION = 0x00001000U,
+    STI_ONLINESTATE_POWER_SAVE        = 0x00002000U,
 }
-
-enum uint STI_DIAGCODE_HWPRESENCE = 0x00000001;
 
 enum : uint
 {
-    STI_TRACE_INFORMATION = 0x00000001,
-    STI_TRACE_WARNING     = 0x00000002,
-    STI_TRACE_ERROR       = 0x00000004,
+    STI_EVENTHANDLING_ENABLED = 0x00000001U,
+    STI_EVENTHANDLING_POLLING = 0x00000002U,
+    STI_EVENTHANDLING_PENDING = 0x00000004U,
+}
+
+enum uint STI_DIAGCODE_HWPRESENCE = 0x00000001U;
+
+enum : uint
+{
+    STI_TRACE_INFORMATION = 0x00000001U,
+    STI_TRACE_WARNING     = 0x00000002U,
+    STI_TRACE_ERROR       = 0x00000004U,
 }
 
 enum : uint
 {
-    STI_SUBSCRIBE_FLAG_WINDOW = 0x00000001,
-    STI_SUBSCRIBE_FLAG_EVENT  = 0x00000002,
+    STI_SUBSCRIBE_FLAG_WINDOW = 0x00000001U,
+    STI_SUBSCRIBE_FLAG_EVENT  = 0x00000002U,
 }
 
-enum uint MAX_NOTIFICATION_DATA = 0x00000040;
+enum uint MAX_NOTIFICATION_DATA = 0x00000040U;
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* STI_ADD_DEVICE_BROADCAST_ACTION = "Arrival";
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* STI_REMOVE_DEVICE_BROADCAST_ACTION = "Removal";
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* STI_ADD_DEVICE_BROADCAST_STRING = "STI\\";
@@ -658,19 +688,19 @@ enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(Ele
 
 enum : uint
 {
-    STI_DEVICE_CREATE_STATUS = 0x00000001,
-    STI_DEVICE_CREATE_DATA   = 0x00000002,
-    STI_DEVICE_CREATE_BOTH   = 0x00000003,
-    STI_DEVICE_CREATE_MASK   = 0x0000ffff,
+    STI_DEVICE_CREATE_STATUS = 0x00000001U,
+    STI_DEVICE_CREATE_DATA   = 0x00000002U,
+    STI_DEVICE_CREATE_BOTH   = 0x00000003U,
+    STI_DEVICE_CREATE_MASK   = 0x0000ffffU,
 }
 
 enum : uint
 {
-    STIEDFL_ALLDEVICES   = 0x00000000,
-    STIEDFL_ATTACHEDONLY = 0x00000001,
+    STIEDFL_ALLDEVICES   = 0x00000000U,
+    STIEDFL_ATTACHEDONLY = 0x00000001U,
 }
 
-enum uint STI_RAW_RESERVED = 0x00001000;
+enum uint STI_RAW_RESERVED = 0x00001000U;
 
 enum : int
 {
@@ -755,9 +785,9 @@ enum : const(wchar)*
 }
 
 enum const(wchar)* IS_DIGITAL_CAMERA_STR = "IsDigitalCamera";
-enum uint IS_DIGITAL_CAMERA_VAL = 0x00000001;
+enum uint IS_DIGITAL_CAMERA_VAL = 0x00000001U;
 enum const(wchar)* SUPPORTS_MSCPLUS_STR = "SupportsMSCPlus";
-enum uint SUPPORTS_MSCPLUS_VAL = 0x00000001;
+enum uint SUPPORTS_MSCPLUS_VAL = 0x00000001U;
 
 enum : const(wchar)*
 {
@@ -789,10 +819,10 @@ enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(Element
     DEVPKEY_WIA_USDClassId = /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1809653702, 33039, 4560, 190, 199, 8, 0, 43, 226, 9, 47}, 2))], [])*/DEVPROPKEY(GUID("6BDD1FC6-810F-11D0-BEC7-08002BE2092F"), 3),
 }
 
-enum uint STI_USD_GENCAP_NATIVE_PUSHSUPPORT = 0x00000001;
-enum uint STI_DEVICE_CREATE_FOR_MONITOR = 0x01000000;
+enum uint STI_USD_GENCAP_NATIVE_PUSHSUPPORT = 0x00000001U;
+enum uint STI_DEVICE_CREATE_FOR_MONITOR = 0x01000000U;
 enum int lDEFAULT_PREFETCH_SIZE = 0x00000064;
-enum ushort wcharREASSIGN_RECIPIENTS_DELIMITER = 0x003b;
+enum ushort wcharREASSIGN_RECIPIENTS_DELIMITER = cast(ushort) 0x003b;
 
 // Callbacks
 
@@ -983,7 +1013,7 @@ alias PFAX_EXT_INITIALIZE_CONFIG = HRESULT function(PFAX_EXT_GET_DATA param0, PF
 
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_log_categorya))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_log_categorya
 struct FAX_LOG_CATEGORYA
 {
     const(PSTR) Name;
@@ -992,7 +1022,7 @@ struct FAX_LOG_CATEGORYA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_log_categoryw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_log_categoryw
 struct FAX_LOG_CATEGORYW
 {
     const(PWSTR) Name;
@@ -1000,7 +1030,7 @@ struct FAX_LOG_CATEGORYW
     uint         Level;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_time))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_time
 struct FAX_TIME
 {
     ushort Hour;
@@ -1008,7 +1038,7 @@ struct FAX_TIME
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_configurationa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_configurationa
 struct FAX_CONFIGURATIONA
 {
     uint        SizeOfStruct;
@@ -1027,7 +1057,7 @@ struct FAX_CONFIGURATIONA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_configurationw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_configurationw
 struct FAX_CONFIGURATIONW
 {
     uint         SizeOfStruct;
@@ -1046,7 +1076,7 @@ struct FAX_CONFIGURATIONW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_device_statusa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_device_statusa
 struct FAX_DEVICE_STATUSA
 {
     uint        SizeOfStruct;
@@ -1072,7 +1102,7 @@ struct FAX_DEVICE_STATUSA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_device_statusw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_device_statusw
 struct FAX_DEVICE_STATUSW
 {
     uint         SizeOfStruct;
@@ -1098,7 +1128,7 @@ struct FAX_DEVICE_STATUSW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_job_entrya))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_job_entrya
 struct FAX_JOB_ENTRYA
 {
     uint        SizeOfStruct;
@@ -1124,7 +1154,7 @@ struct FAX_JOB_ENTRYA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_job_entryw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_job_entryw
 struct FAX_JOB_ENTRYW
 {
     uint         SizeOfStruct;
@@ -1150,7 +1180,7 @@ struct FAX_JOB_ENTRYW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_port_infoa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_port_infoa
 struct FAX_PORT_INFOA
 {
     uint        SizeOfStruct;
@@ -1165,7 +1195,7 @@ struct FAX_PORT_INFOA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_port_infow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_port_infow
 struct FAX_PORT_INFOW
 {
     uint         SizeOfStruct;
@@ -1180,7 +1210,7 @@ struct FAX_PORT_INFOW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_routing_methoda))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_routing_methoda
 struct FAX_ROUTING_METHODA
 {
     uint        SizeOfStruct;
@@ -1195,7 +1225,7 @@ struct FAX_ROUTING_METHODA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_routing_methodw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_routing_methodw
 struct FAX_ROUTING_METHODW
 {
     uint         SizeOfStruct;
@@ -1210,7 +1240,7 @@ struct FAX_ROUTING_METHODW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_global_routing_infoa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_global_routing_infoa
 struct FAX_GLOBAL_ROUTING_INFOA
 {
     uint        SizeOfStruct;
@@ -1223,7 +1253,7 @@ struct FAX_GLOBAL_ROUTING_INFOA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_global_routing_infow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_global_routing_infow
 struct FAX_GLOBAL_ROUTING_INFOW
 {
     uint         SizeOfStruct;
@@ -1236,7 +1266,7 @@ struct FAX_GLOBAL_ROUTING_INFOW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_coverpage_infoa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_coverpage_infoa
 struct FAX_COVERPAGE_INFOA
 {
     uint        SizeOfStruct;
@@ -1271,7 +1301,7 @@ struct FAX_COVERPAGE_INFOA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_coverpage_infow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_coverpage_infow
 struct FAX_COVERPAGE_INFOW
 {
     uint         SizeOfStruct;
@@ -1306,7 +1336,7 @@ struct FAX_COVERPAGE_INFOW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_job_parama))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_job_parama
 struct FAX_JOB_PARAMA
 {
     uint        SizeOfStruct;
@@ -1327,7 +1357,7 @@ struct FAX_JOB_PARAMA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_job_paramw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_job_paramw
 struct FAX_JOB_PARAMW
 {
     uint         SizeOfStruct;
@@ -1348,7 +1378,7 @@ struct FAX_JOB_PARAMW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_eventa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_eventa
 struct FAX_EVENTA
 {
     uint     SizeOfStruct;
@@ -1359,7 +1389,7 @@ struct FAX_EVENTA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_eventw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_eventw
 struct FAX_EVENTW
 {
     uint     SizeOfStruct;
@@ -1370,7 +1400,7 @@ struct FAX_EVENTW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_print_infoa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_print_infoa
 struct FAX_PRINT_INFOA
 {
     uint        SizeOfStruct;
@@ -1387,7 +1417,7 @@ struct FAX_PRINT_INFOA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_print_infow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_print_infow
 struct FAX_PRINT_INFOW
 {
     uint         SizeOfStruct;
@@ -1404,7 +1434,7 @@ struct FAX_PRINT_INFOW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_context_infoa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_context_infoa
 struct FAX_CONTEXT_INFOA
 {
     uint     SizeOfStruct;
@@ -1413,7 +1443,7 @@ struct FAX_CONTEXT_INFOA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_context_infow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winfax/ns-winfax-fax_context_infow
 struct FAX_CONTEXT_INFOW
 {
     uint      SizeOfStruct;
@@ -1421,7 +1451,7 @@ struct FAX_CONTEXT_INFOW
     wchar[16] ServerName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxdev/ns-faxdev-fax_send))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxdev/ns-faxdev-fax_send
 struct FAX_SEND
 {
     uint    SizeOfStruct;
@@ -1435,7 +1465,7 @@ struct FAX_SEND
     uint[3] Reserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxdev/ns-faxdev-fax_receive))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxdev/ns-faxdev-fax_receive
 struct FAX_RECEIVE
 {
     uint    SizeOfStruct;
@@ -1445,7 +1475,7 @@ struct FAX_RECEIVE
     uint[4] Reserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxdev/ns-faxdev-fax_dev_status))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxdev/ns-faxdev-fax_dev_status
 struct FAX_DEV_STATUS
 {
     uint    SizeOfStruct;
@@ -1459,7 +1489,7 @@ struct FAX_DEV_STATUS
     uint[3] Reserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxroute/ns-faxroute-fax_route_callbackroutines))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxroute/ns-faxroute-fax_route_callbackroutines
 struct FAX_ROUTE_CALLBACKROUTINES
 {
     uint                SizeOfStruct;
@@ -1470,7 +1500,7 @@ struct FAX_ROUTE_CALLBACKROUTINES
     PFAXROUTEMODIFYROUTINGDATA FaxRouteModifyRoutingData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxroute/ns-faxroute-fax_route))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxroute/ns-faxroute-fax_route
 struct FAX_ROUTE
 {
     uint         SizeOfStruct;
@@ -1974,1496 +2004,1496 @@ struct FaxSecurity2;
 
 @GUID("8b86f485-fd7f-4824-886b-40c5caa617cc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxjobstatus))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxjobstatus
 interface IFaxJobStatus : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxjobstatus-get_status))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxjobstatus-get_status
     HRESULT get_Status(FAX_JOB_STATUS_ENUM* pStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxjobstatus-get_pages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxjobstatus-get_pages
     HRESULT get_Pages(int* plPages);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxjobstatus-get_size))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxjobstatus-get_size
     HRESULT get_Size(int* plSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxjobstatus-get_currentpage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxjobstatus-get_currentpage
     HRESULT get_CurrentPage(int* plCurrentPage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxjobstatus-get_deviceid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxjobstatus-get_deviceid
     HRESULT get_DeviceId(int* plDeviceId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxjobstatus-get_csid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxjobstatus-get_csid
     HRESULT get_CSID(BSTR* pbstrCSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxjobstatus-get_tsid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxjobstatus-get_tsid
     HRESULT get_TSID(BSTR* pbstrTSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxjobstatus-get_extendedstatuscode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxjobstatus-get_extendedstatuscode
     HRESULT get_ExtendedStatusCode(FAX_JOB_EXTENDED_STATUS_ENUM* pExtendedStatusCode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxjobstatus-get_extendedstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxjobstatus-get_extendedstatus
     HRESULT get_ExtendedStatus(BSTR* pbstrExtendedStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxjobstatus-get_availableoperations))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxjobstatus-get_availableoperations
     HRESULT get_AvailableOperations(FAX_JOB_OPERATIONS_ENUM* pAvailableOperations);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxjobstatus-get_retries))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxjobstatus-get_retries
     HRESULT get_Retries(int* plRetries);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxjobstatus-get_jobtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxjobstatus-get_jobtype
     HRESULT get_JobType(FAX_JOB_TYPE_ENUM* pJobType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxjobstatus-get_scheduledtime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxjobstatus-get_scheduledtime
     HRESULT get_ScheduledTime(double* pdateScheduledTime);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxjobstatus-get_transmissionstart))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxjobstatus-get_transmissionstart
     HRESULT get_TransmissionStart(double* pdateTransmissionStart);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxjobstatus-get_transmissionend))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxjobstatus-get_transmissionend
     HRESULT get_TransmissionEnd(double* pdateTransmissionEnd);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxjobstatus-get_callerid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxjobstatus-get_callerid
     HRESULT get_CallerId(BSTR* pbstrCallerId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxjobstatus-get_routinginformation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxjobstatus-get_routinginformation
     HRESULT get_RoutingInformation(BSTR* pbstrRoutingInformation);
 }
 
 @GUID("475b6469-90a5-4878-a577-17a86e8e3462")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxserver))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxserver
 interface IFaxServer : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-connect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-connect
     HRESULT Connect(BSTR bstrServerName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-get_servername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-get_servername
     HRESULT get_ServerName(BSTR* pbstrServerName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-getdeviceproviders))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-getdeviceproviders
     HRESULT GetDeviceProviders(IFaxDeviceProviders* ppFaxDeviceProviders);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-getdevices))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-getdevices
     HRESULT GetDevices(IFaxDevices* ppFaxDevices);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-get_inboundrouting))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-get_inboundrouting
     HRESULT get_InboundRouting(IFaxInboundRouting* ppFaxInboundRouting);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-get_folders))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-get_folders
     HRESULT get_Folders(IFaxFolders* pFaxFolders);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-get_loggingoptions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-get_loggingoptions
     HRESULT get_LoggingOptions(IFaxLoggingOptions* ppFaxLoggingOptions);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-get_majorversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-get_majorversion
     HRESULT get_MajorVersion(int* plMajorVersion);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-get_minorversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-get_minorversion
     HRESULT get_MinorVersion(int* plMinorVersion);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-get_majorbuild))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-get_majorbuild
     HRESULT get_MajorBuild(int* plMajorBuild);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-get_minorbuild))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-get_minorbuild
     HRESULT get_MinorBuild(int* plMinorBuild);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-get_debug))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-get_debug
     HRESULT get_Debug(VARIANT_BOOL* pbDebug);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-get_activity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-get_activity
     HRESULT get_Activity(IFaxActivity* ppFaxActivity);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-get_outboundrouting))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-get_outboundrouting
     HRESULT get_OutboundRouting(IFaxOutboundRouting* ppFaxOutboundRouting);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-get_receiptoptions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-get_receiptoptions
     HRESULT get_ReceiptOptions(IFaxReceiptOptions* ppFaxReceiptOptions);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-get_security))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-get_security
     HRESULT get_Security(IFaxSecurity* ppFaxSecurity);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-disconnect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-disconnect
     HRESULT Disconnect();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-getextensionproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-getextensionproperty
     HRESULT GetExtensionProperty(BSTR bstrGUID, VARIANT* pvProperty);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-setextensionproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-setextensionproperty
     HRESULT SetExtensionProperty(BSTR bstrGUID, VARIANT vProperty);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-listentoserverevents))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-listentoserverevents
     HRESULT ListenToServerEvents(FAX_SERVER_EVENTS_TYPE_ENUM EventTypes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-registerdeviceprovider))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-registerdeviceprovider
     HRESULT RegisterDeviceProvider(BSTR bstrGUID, BSTR bstrFriendlyName, BSTR bstrImageName, BSTR TspName, 
                                    int lFSPIVersion);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-unregisterdeviceprovider))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-unregisterdeviceprovider
     HRESULT UnregisterDeviceProvider(BSTR bstrUniqueName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-registerinboundroutingextension))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-registerinboundroutingextension
     HRESULT RegisterInboundRoutingExtension(BSTR bstrExtensionName, BSTR bstrFriendlyName, BSTR bstrImageName, 
                                             VARIANT vMethods);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-unregisterinboundroutingextension))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-unregisterinboundroutingextension
     HRESULT UnregisterInboundRoutingExtension(BSTR bstrExtensionUniqueName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-get_registeredevents))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-get_registeredevents
     HRESULT get_RegisteredEvents(FAX_SERVER_EVENTS_TYPE_ENUM* pEventTypes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-get_apiversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver-get_apiversion
     HRESULT get_APIVersion(FAX_SERVER_APIVERSION_ENUM* pAPIVersion);
 }
 
 @GUID("9fb76f62-4c7e-43a5-b6fd-502893f7e13e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxdeviceproviders))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxdeviceproviders
 interface IFaxDeviceProviders : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceproviders-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceproviders-get__newenum
     HRESULT get__NewEnum(IUnknown* ppUnk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceproviders-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceproviders-get_item
     HRESULT get_Item(VARIANT vIndex, IFaxDeviceProvider* pFaxDeviceProvider);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceproviders-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceproviders-get_count
     HRESULT get_Count(int* plCount);
 }
 
 @GUID("9e46783e-f34f-482e-a360-0416becbbd96")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxdevices))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxdevices
 interface IFaxDevices : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevices-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevices-get__newenum
     HRESULT get__NewEnum(IUnknown* ppUnk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevices-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevices-get_item
     HRESULT get_Item(VARIANT vIndex, IFaxDevice* pFaxDevice);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevices-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevices-get_count
     HRESULT get_Count(int* plCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevices-get_itembyid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevices-get_itembyid
     HRESULT get_ItemById(int lId, IFaxDevice* ppFaxDevice);
 }
 
 @GUID("8148c20f-9d52-45b1-bf96-38fc12713527")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxinboundrouting))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxinboundrouting
 interface IFaxInboundRouting : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundrouting-getextensions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundrouting-getextensions
     HRESULT GetExtensions(IFaxInboundRoutingExtensions* pFaxInboundRoutingExtensions);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundrouting-getmethods))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundrouting-getmethods
     HRESULT GetMethods(IFaxInboundRoutingMethods* pFaxInboundRoutingMethods);
 }
 
 @GUID("dce3b2a8-a7ab-42bc-9d0a-3149457261a0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxfolders))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxfolders
 interface IFaxFolders : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxfolders-get_outgoingqueue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxfolders-get_outgoingqueue
     HRESULT get_OutgoingQueue(IFaxOutgoingQueue* pFaxOutgoingQueue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxfolders-get_incomingqueue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxfolders-get_incomingqueue
     HRESULT get_IncomingQueue(IFaxIncomingQueue* pFaxIncomingQueue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxfolders-get_incomingarchive))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxfolders-get_incomingarchive
     HRESULT get_IncomingArchive(IFaxIncomingArchive* pFaxIncomingArchive);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxfolders-get_outgoingarchive))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxfolders-get_outgoingarchive
     HRESULT get_OutgoingArchive(IFaxOutgoingArchive* pFaxOutgoingArchive);
 }
 
 @GUID("34e64fb9-6b31-4d32-8b27-d286c0c33606")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxloggingoptions))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxloggingoptions
 interface IFaxLoggingOptions : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxloggingoptions-get_eventlogging))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxloggingoptions-get_eventlogging
     HRESULT get_EventLogging(IFaxEventLogging* pFaxEventLogging);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxloggingoptions-get_activitylogging))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxloggingoptions-get_activitylogging
     HRESULT get_ActivityLogging(IFaxActivityLogging* pFaxActivityLogging);
 }
 
 @GUID("4b106f97-3df5-40f2-bc3c-44cb8115ebdf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxactivity))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxactivity
 interface IFaxActivity : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxactivity-get_incomingmessages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxactivity-get_incomingmessages
     HRESULT get_IncomingMessages(int* plIncomingMessages);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxactivity-get_routingmessages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxactivity-get_routingmessages
     HRESULT get_RoutingMessages(int* plRoutingMessages);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxactivity-get_outgoingmessages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxactivity-get_outgoingmessages
     HRESULT get_OutgoingMessages(int* plOutgoingMessages);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxactivity-get_queuedmessages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxactivity-get_queuedmessages
     HRESULT get_QueuedMessages(int* plQueuedMessages);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxactivity-refresh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxactivity-refresh
     HRESULT Refresh();
 }
 
 @GUID("25dc05a4-9909-41bd-a95b-7e5d1dec1d43")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutboundrouting))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutboundrouting
 interface IFaxOutboundRouting : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundrouting-getgroups))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundrouting-getgroups
     HRESULT GetGroups(IFaxOutboundRoutingGroups* pFaxOutboundRoutingGroups);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundrouting-getrules))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundrouting-getrules
     HRESULT GetRules(IFaxOutboundRoutingRules* pFaxOutboundRoutingRules);
 }
 
 @GUID("378efaeb-5fcb-4afb-b2ee-e16e80614487")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxreceiptoptions))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxreceiptoptions
 interface IFaxReceiptOptions : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxreceiptoptions-get_authenticationtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxreceiptoptions-get_authenticationtype
     HRESULT get_AuthenticationType(FAX_SMTP_AUTHENTICATION_TYPE_ENUM* pType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxreceiptoptions-put_authenticationtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxreceiptoptions-put_authenticationtype
     HRESULT put_AuthenticationType(FAX_SMTP_AUTHENTICATION_TYPE_ENUM Type);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxreceiptoptions-get_smtpserver))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxreceiptoptions-get_smtpserver
     HRESULT get_SMTPServer(BSTR* pbstrSMTPServer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxreceiptoptions-put_smtpserver))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxreceiptoptions-put_smtpserver
     HRESULT put_SMTPServer(BSTR bstrSMTPServer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxreceiptoptions-get_smtpport))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxreceiptoptions-get_smtpport
     HRESULT get_SMTPPort(int* plSMTPPort);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxreceiptoptions-put_smtpport))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxreceiptoptions-put_smtpport
     HRESULT put_SMTPPort(int lSMTPPort);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxreceiptoptions-get_smtpsender))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxreceiptoptions-get_smtpsender
     HRESULT get_SMTPSender(BSTR* pbstrSMTPSender);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxreceiptoptions-put_smtpsender))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxreceiptoptions-put_smtpsender
     HRESULT put_SMTPSender(BSTR bstrSMTPSender);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxreceiptoptions-get_smtpuser))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxreceiptoptions-get_smtpuser
     HRESULT get_SMTPUser(BSTR* pbstrSMTPUser);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxreceiptoptions-put_smtpuser))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxreceiptoptions-put_smtpuser
     HRESULT put_SMTPUser(BSTR bstrSMTPUser);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxreceiptoptions-get_allowedreceipts))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxreceiptoptions-get_allowedreceipts
     HRESULT get_AllowedReceipts(FAX_RECEIPT_TYPE_ENUM* pAllowedReceipts);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxreceiptoptions-put_allowedreceipts))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxreceiptoptions-put_allowedreceipts
     HRESULT put_AllowedReceipts(FAX_RECEIPT_TYPE_ENUM AllowedReceipts);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxreceiptoptions-get_smtppassword))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxreceiptoptions-get_smtppassword
     HRESULT get_SMTPPassword(BSTR* pbstrSMTPPassword);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxreceiptoptions-put_smtppassword))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxreceiptoptions-put_smtppassword
     HRESULT put_SMTPPassword(BSTR bstrSMTPPassword);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxreceiptoptions-refresh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxreceiptoptions-refresh
     HRESULT Refresh();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxreceiptoptions-save))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxreceiptoptions-save
     HRESULT Save();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxreceiptoptions-get_useforinboundrouting))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxreceiptoptions-get_useforinboundrouting
     HRESULT get_UseForInboundRouting(VARIANT_BOOL* pbUseForInboundRouting);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxreceiptoptions-put_useforinboundrouting))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxreceiptoptions-put_useforinboundrouting
     HRESULT put_UseForInboundRouting(VARIANT_BOOL bUseForInboundRouting);
 }
 
 @GUID("77b508c1-09c0-47a2-91eb-fce7fdf2690e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxsecurity))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxsecurity
 interface IFaxSecurity : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsecurity-get_descriptor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsecurity-get_descriptor
     HRESULT get_Descriptor(VARIANT* pvDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsecurity-put_descriptor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsecurity-put_descriptor
     HRESULT put_Descriptor(VARIANT vDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsecurity-get_grantedrights))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsecurity-get_grantedrights
     HRESULT get_GrantedRights(FAX_ACCESS_RIGHTS_ENUM* pGrantedRights);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsecurity-refresh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsecurity-refresh
     HRESULT Refresh();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsecurity-save))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsecurity-save
     HRESULT Save();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsecurity-get_informationtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsecurity-get_informationtype
     HRESULT get_InformationType(int* plInformationType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsecurity-put_informationtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsecurity-put_informationtype
     HRESULT put_InformationType(int lInformationType);
 }
 
 @GUID("b207a246-09e3-4a4e-a7dc-fea31d29458f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxdocument))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxdocument
 interface IFaxDocument : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-get_body))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-get_body
     HRESULT get_Body(BSTR* pbstrBody);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-put_body))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-put_body
     HRESULT put_Body(BSTR bstrBody);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-get_sender))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-get_sender
     HRESULT get_Sender(IFaxSender* ppFaxSender);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-get_recipients))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-get_recipients
     HRESULT get_Recipients(IFaxRecipients* ppFaxRecipients);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-get_coverpage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-get_coverpage
     HRESULT get_CoverPage(BSTR* pbstrCoverPage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-put_coverpage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-put_coverpage
     HRESULT put_CoverPage(BSTR bstrCoverPage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-get_subject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-get_subject
     HRESULT get_Subject(BSTR* pbstrSubject);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-put_subject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-put_subject
     HRESULT put_Subject(BSTR bstrSubject);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-get_note))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-get_note
     HRESULT get_Note(BSTR* pbstrNote);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-put_note))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-put_note
     HRESULT put_Note(BSTR bstrNote);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-get_scheduletime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-get_scheduletime
     HRESULT get_ScheduleTime(double* pdateScheduleTime);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-put_scheduletime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-put_scheduletime
     HRESULT put_ScheduleTime(double dateScheduleTime);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-get_receiptaddress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-get_receiptaddress
     HRESULT get_ReceiptAddress(BSTR* pbstrReceiptAddress);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-put_receiptaddress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-put_receiptaddress
     HRESULT put_ReceiptAddress(BSTR bstrReceiptAddress);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-get_documentname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-get_documentname
     HRESULT get_DocumentName(BSTR* pbstrDocumentName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-put_documentname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-put_documentname
     HRESULT put_DocumentName(BSTR bstrDocumentName);
     HRESULT get_CallHandle(int* plCallHandle);
     HRESULT put_CallHandle(int lCallHandle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-get_coverpagetype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-get_coverpagetype
     HRESULT get_CoverPageType(FAX_COVERPAGE_TYPE_ENUM* pCoverPageType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-put_coverpagetype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-put_coverpagetype
     HRESULT put_CoverPageType(FAX_COVERPAGE_TYPE_ENUM CoverPageType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-get_scheduletype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-get_scheduletype
     HRESULT get_ScheduleType(FAX_SCHEDULE_TYPE_ENUM* pScheduleType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-put_scheduletype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-put_scheduletype
     HRESULT put_ScheduleType(FAX_SCHEDULE_TYPE_ENUM ScheduleType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-get_receipttype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-get_receipttype
     HRESULT get_ReceiptType(FAX_RECEIPT_TYPE_ENUM* pReceiptType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-put_receipttype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-put_receipttype
     HRESULT put_ReceiptType(FAX_RECEIPT_TYPE_ENUM ReceiptType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-get_groupbroadcastreceipts))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-get_groupbroadcastreceipts
     HRESULT get_GroupBroadcastReceipts(VARIANT_BOOL* pbUseGrouping);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-put_groupbroadcastreceipts))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-put_groupbroadcastreceipts
     HRESULT put_GroupBroadcastReceipts(VARIANT_BOOL bUseGrouping);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-get_priority))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-get_priority
     HRESULT get_Priority(FAX_PRIORITY_TYPE_ENUM* pPriority);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-put_priority))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-put_priority
     HRESULT put_Priority(FAX_PRIORITY_TYPE_ENUM Priority);
     HRESULT get_TapiConnection(IDispatch* ppTapiConnection);
     HRESULT putref_TapiConnection(IDispatch pTapiConnection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-submit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-submit
     HRESULT Submit(BSTR bstrFaxServerName, VARIANT* pvFaxOutgoingJobIDs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-connectedsubmit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-connectedsubmit
     HRESULT ConnectedSubmit(IFaxServer pFaxServer, VARIANT* pvFaxOutgoingJobIDs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-get_attachfaxtoreceipt))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-get_attachfaxtoreceipt
     HRESULT get_AttachFaxToReceipt(VARIANT_BOOL* pbAttachFax);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-put_attachfaxtoreceipt))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument-put_attachfaxtoreceipt
     HRESULT put_AttachFaxToReceipt(VARIANT_BOOL bAttachFax);
 }
 
 @GUID("0d879d7d-f57a-4cc6-a6f9-3ee5d527b46a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxsender))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxsender
 interface IFaxSender : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-get_billingcode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-get_billingcode
     HRESULT get_BillingCode(BSTR* pbstrBillingCode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-put_billingcode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-put_billingcode
     HRESULT put_BillingCode(BSTR bstrBillingCode);
     HRESULT get_City(BSTR* pbstrCity);
     HRESULT put_City(BSTR bstrCity);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-get_company))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-get_company
     HRESULT get_Company(BSTR* pbstrCompany);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-put_company))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-put_company
     HRESULT put_Company(BSTR bstrCompany);
     HRESULT get_Country(BSTR* pbstrCountry);
     HRESULT put_Country(BSTR bstrCountry);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-get_department))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-get_department
     HRESULT get_Department(BSTR* pbstrDepartment);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-put_department))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-put_department
     HRESULT put_Department(BSTR bstrDepartment);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-get_email))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-get_email
     HRESULT get_Email(BSTR* pbstrEmail);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-put_email))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-put_email
     HRESULT put_Email(BSTR bstrEmail);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-get_faxnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-get_faxnumber
     HRESULT get_FaxNumber(BSTR* pbstrFaxNumber);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-put_faxnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-put_faxnumber
     HRESULT put_FaxNumber(BSTR bstrFaxNumber);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-get_homephone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-get_homephone
     HRESULT get_HomePhone(BSTR* pbstrHomePhone);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-put_homephone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-put_homephone
     HRESULT put_HomePhone(BSTR bstrHomePhone);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-get_name
     HRESULT get_Name(BSTR* pbstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-put_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-put_name
     HRESULT put_Name(BSTR bstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-get_tsid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-get_tsid
     HRESULT get_TSID(BSTR* pbstrTSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-put_tsid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-put_tsid
     HRESULT put_TSID(BSTR bstrTSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-get_officephone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-get_officephone
     HRESULT get_OfficePhone(BSTR* pbstrOfficePhone);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-put_officephone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-put_officephone
     HRESULT put_OfficePhone(BSTR bstrOfficePhone);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-get_officelocation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-get_officelocation
     HRESULT get_OfficeLocation(BSTR* pbstrOfficeLocation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-put_officelocation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-put_officelocation
     HRESULT put_OfficeLocation(BSTR bstrOfficeLocation);
     HRESULT get_State(BSTR* pbstrState);
     HRESULT put_State(BSTR bstrState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-get_streetaddress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-get_streetaddress
     HRESULT get_StreetAddress(BSTR* pbstrStreetAddress);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-put_streetaddress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-put_streetaddress
     HRESULT put_StreetAddress(BSTR bstrStreetAddress);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-get_title))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-get_title
     HRESULT get_Title(BSTR* pbstrTitle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-put_title))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-put_title
     HRESULT put_Title(BSTR bstrTitle);
     HRESULT get_ZipCode(BSTR* pbstrZipCode);
     HRESULT put_ZipCode(BSTR bstrZipCode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-loaddefaultsender))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-loaddefaultsender
     HRESULT LoadDefaultSender();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-savedefaultsender))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsender-savedefaultsender
     HRESULT SaveDefaultSender();
 }
 
 @GUID("9a3da3a0-538d-42b6-9444-aaa57d0ce2bc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxrecipient))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxrecipient
 interface IFaxRecipient : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxrecipient-get_faxnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxrecipient-get_faxnumber
     HRESULT get_FaxNumber(BSTR* pbstrFaxNumber);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxrecipient-put_faxnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxrecipient-put_faxnumber
     HRESULT put_FaxNumber(BSTR bstrFaxNumber);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxrecipient-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxrecipient-get_name
     HRESULT get_Name(BSTR* pbstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxrecipient-put_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxrecipient-put_name
     HRESULT put_Name(BSTR bstrName);
 }
 
 @GUID("b9c9de5a-894e-4492-9fa3-08c627c11d5d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxrecipients))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxrecipients
 interface IFaxRecipients : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxrecipients-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxrecipients-get__newenum
     HRESULT get__NewEnum(IUnknown* ppUnk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxrecipients-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxrecipients-get_item
     HRESULT get_Item(int lIndex, IFaxRecipient* ppFaxRecipient);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxrecipients-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxrecipients-get_count
     HRESULT get_Count(int* plCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxrecipients-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxrecipients-add
     HRESULT Add(BSTR bstrFaxNumber, BSTR bstrRecipientName, IFaxRecipient* ppFaxRecipient);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxrecipients-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxrecipients-remove
     HRESULT Remove(int lIndex);
 }
 
 @GUID("76062cc7-f714-4fbd-aa06-ed6e4a4b70f3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxincomingarchive))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxincomingarchive
 interface IFaxIncomingArchive : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingarchive-get_usearchive))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingarchive-get_usearchive
     HRESULT get_UseArchive(VARIANT_BOOL* pbUseArchive);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingarchive-put_usearchive))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingarchive-put_usearchive
     HRESULT put_UseArchive(VARIANT_BOOL bUseArchive);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingarchive-get_archivefolder))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingarchive-get_archivefolder
     HRESULT get_ArchiveFolder(BSTR* pbstrArchiveFolder);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingarchive-put_archivefolder))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingarchive-put_archivefolder
     HRESULT put_ArchiveFolder(BSTR bstrArchiveFolder);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingarchive-get_sizequotawarning))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingarchive-get_sizequotawarning
     HRESULT get_SizeQuotaWarning(VARIANT_BOOL* pbSizeQuotaWarning);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingarchive-put_sizequotawarning))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingarchive-put_sizequotawarning
     HRESULT put_SizeQuotaWarning(VARIANT_BOOL bSizeQuotaWarning);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingarchive-get_highquotawatermark))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingarchive-get_highquotawatermark
     HRESULT get_HighQuotaWaterMark(int* plHighQuotaWaterMark);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingarchive-put_highquotawatermark))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingarchive-put_highquotawatermark
     HRESULT put_HighQuotaWaterMark(int lHighQuotaWaterMark);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingarchive-get_lowquotawatermark))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingarchive-get_lowquotawatermark
     HRESULT get_LowQuotaWaterMark(int* plLowQuotaWaterMark);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingarchive-put_lowquotawatermark))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingarchive-put_lowquotawatermark
     HRESULT put_LowQuotaWaterMark(int lLowQuotaWaterMark);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingarchive-get_agelimit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingarchive-get_agelimit
     HRESULT get_AgeLimit(int* plAgeLimit);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingarchive-put_agelimit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingarchive-put_agelimit
     HRESULT put_AgeLimit(int lAgeLimit);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingarchive-get_sizelow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingarchive-get_sizelow
     HRESULT get_SizeLow(int* plSizeLow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingarchive-get_sizehigh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingarchive-get_sizehigh
     HRESULT get_SizeHigh(int* plSizeHigh);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingarchive-refresh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingarchive-refresh
     HRESULT Refresh();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingarchive-save))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingarchive-save
     HRESULT Save();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingarchive-getmessages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingarchive-getmessages
     HRESULT GetMessages(int lPrefetchSize, IFaxIncomingMessageIterator* pFaxIncomingMessageIterator);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingarchive-getmessage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingarchive-getmessage
     HRESULT GetMessage(BSTR bstrMessageId, IFaxIncomingMessage* pFaxIncomingMessage);
 }
 
 @GUID("902e64ef-8fd8-4b75-9725-6014df161545")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxincomingqueue))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxincomingqueue
 interface IFaxIncomingQueue : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingqueue-get_blocked))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingqueue-get_blocked
     HRESULT get_Blocked(VARIANT_BOOL* pbBlocked);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingqueue-put_blocked))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingqueue-put_blocked
     HRESULT put_Blocked(VARIANT_BOOL bBlocked);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingqueue-refresh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingqueue-refresh
     HRESULT Refresh();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingqueue-save))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingqueue-save
     HRESULT Save();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingqueue-getjobs))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingqueue-getjobs
     HRESULT GetJobs(IFaxIncomingJobs* pFaxIncomingJobs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingqueue-getjob))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingqueue-getjob
     HRESULT GetJob(BSTR bstrJobId, IFaxIncomingJob* pFaxIncomingJob);
 }
 
 @GUID("c9c28f40-8d80-4e53-810f-9a79919b49fd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutgoingarchive))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutgoingarchive
 interface IFaxOutgoingArchive : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingarchive-get_usearchive))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingarchive-get_usearchive
     HRESULT get_UseArchive(VARIANT_BOOL* pbUseArchive);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingarchive-put_usearchive))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingarchive-put_usearchive
     HRESULT put_UseArchive(VARIANT_BOOL bUseArchive);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingarchive-get_archivefolder))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingarchive-get_archivefolder
     HRESULT get_ArchiveFolder(BSTR* pbstrArchiveFolder);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingarchive-put_archivefolder))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingarchive-put_archivefolder
     HRESULT put_ArchiveFolder(BSTR bstrArchiveFolder);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingarchive-get_sizequotawarning))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingarchive-get_sizequotawarning
     HRESULT get_SizeQuotaWarning(VARIANT_BOOL* pbSizeQuotaWarning);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingarchive-put_sizequotawarning))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingarchive-put_sizequotawarning
     HRESULT put_SizeQuotaWarning(VARIANT_BOOL bSizeQuotaWarning);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingarchive-get_highquotawatermark))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingarchive-get_highquotawatermark
     HRESULT get_HighQuotaWaterMark(int* plHighQuotaWaterMark);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingarchive-put_highquotawatermark))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingarchive-put_highquotawatermark
     HRESULT put_HighQuotaWaterMark(int lHighQuotaWaterMark);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingarchive-get_lowquotawatermark))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingarchive-get_lowquotawatermark
     HRESULT get_LowQuotaWaterMark(int* plLowQuotaWaterMark);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingarchive-put_lowquotawatermark))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingarchive-put_lowquotawatermark
     HRESULT put_LowQuotaWaterMark(int lLowQuotaWaterMark);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingarchive-get_agelimit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingarchive-get_agelimit
     HRESULT get_AgeLimit(int* plAgeLimit);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingarchive-put_agelimit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingarchive-put_agelimit
     HRESULT put_AgeLimit(int lAgeLimit);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingarchive-get_sizelow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingarchive-get_sizelow
     HRESULT get_SizeLow(int* plSizeLow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingarchive-get_sizehigh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingarchive-get_sizehigh
     HRESULT get_SizeHigh(int* plSizeHigh);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingarchive-refresh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingarchive-refresh
     HRESULT Refresh();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingarchive-save))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingarchive-save
     HRESULT Save();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingarchive-getmessages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingarchive-getmessages
     HRESULT GetMessages(int lPrefetchSize, IFaxOutgoingMessageIterator* pFaxOutgoingMessageIterator);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingarchive-getmessage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingarchive-getmessage
     HRESULT GetMessage(BSTR bstrMessageId, IFaxOutgoingMessage* pFaxOutgoingMessage);
 }
 
 @GUID("80b1df24-d9ac-4333-b373-487cedc80ce5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutgoingqueue))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutgoingqueue
 interface IFaxOutgoingQueue : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-get_blocked))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-get_blocked
     HRESULT get_Blocked(VARIANT_BOOL* pbBlocked);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-put_blocked))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-put_blocked
     HRESULT put_Blocked(VARIANT_BOOL bBlocked);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-get_paused))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-get_paused
     HRESULT get_Paused(VARIANT_BOOL* pbPaused);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-put_paused))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-put_paused
     HRESULT put_Paused(VARIANT_BOOL bPaused);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-get_allowpersonalcoverpages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-get_allowpersonalcoverpages
     HRESULT get_AllowPersonalCoverPages(VARIANT_BOOL* pbAllowPersonalCoverPages);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-put_allowpersonalcoverpages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-put_allowpersonalcoverpages
     HRESULT put_AllowPersonalCoverPages(VARIANT_BOOL bAllowPersonalCoverPages);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-get_usedevicetsid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-get_usedevicetsid
     HRESULT get_UseDeviceTSID(VARIANT_BOOL* pbUseDeviceTSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-put_usedevicetsid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-put_usedevicetsid
     HRESULT put_UseDeviceTSID(VARIANT_BOOL bUseDeviceTSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-get_retries))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-get_retries
     HRESULT get_Retries(int* plRetries);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-put_retries))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-put_retries
     HRESULT put_Retries(int lRetries);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-get_retrydelay))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-get_retrydelay
     HRESULT get_RetryDelay(int* plRetryDelay);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-put_retrydelay))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-put_retrydelay
     HRESULT put_RetryDelay(int lRetryDelay);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-get_discountratestart))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-get_discountratestart
     HRESULT get_DiscountRateStart(double* pdateDiscountRateStart);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-put_discountratestart))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-put_discountratestart
     HRESULT put_DiscountRateStart(double dateDiscountRateStart);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-get_discountrateend))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-get_discountrateend
     HRESULT get_DiscountRateEnd(double* pdateDiscountRateEnd);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-put_discountrateend))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-put_discountrateend
     HRESULT put_DiscountRateEnd(double dateDiscountRateEnd);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-get_agelimit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-get_agelimit
     HRESULT get_AgeLimit(int* plAgeLimit);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-put_agelimit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-put_agelimit
     HRESULT put_AgeLimit(int lAgeLimit);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-get_branding))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-get_branding
     HRESULT get_Branding(VARIANT_BOOL* pbBranding);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-put_branding))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-put_branding
     HRESULT put_Branding(VARIANT_BOOL bBranding);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-refresh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-refresh
     HRESULT Refresh();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-save))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-save
     HRESULT Save();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-getjobs))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-getjobs
     HRESULT GetJobs(IFaxOutgoingJobs* pFaxOutgoingJobs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-getjob))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingqueue-getjob
     HRESULT GetJob(BSTR bstrJobId, IFaxOutgoingJob* pFaxOutgoingJob);
 }
 
 @GUID("fd73ecc4-6f06-4f52-82a8-f7ba06ae3108")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxincomingmessageiterator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxincomingmessageiterator
 interface IFaxIncomingMessageIterator : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessageiterator-get_message))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessageiterator-get_message
     HRESULT get_Message(IFaxIncomingMessage* pFaxIncomingMessage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessageiterator-get_prefetchsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessageiterator-get_prefetchsize
     HRESULT get_PrefetchSize(int* plPrefetchSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessageiterator-put_prefetchsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessageiterator-put_prefetchsize
     HRESULT put_PrefetchSize(int lPrefetchSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessageiterator-get_ateof))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessageiterator-get_ateof
     HRESULT get_AtEOF(VARIANT_BOOL* pbEOF);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessageiterator-movefirst))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessageiterator-movefirst
     HRESULT MoveFirst();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessageiterator-movenext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessageiterator-movenext
     HRESULT MoveNext();
 }
 
 @GUID("7cab88fa-2ef9-4851-b2f3-1d148fed8447")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxincomingmessage))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxincomingmessage
 interface IFaxIncomingMessage : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage-get_id))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage-get_id
     HRESULT get_Id(BSTR* pbstrId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage-get_pages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage-get_pages
     HRESULT get_Pages(int* plPages);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage-get_size))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage-get_size
     HRESULT get_Size(int* plSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage-get_devicename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage-get_devicename
     HRESULT get_DeviceName(BSTR* pbstrDeviceName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage-get_retries))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage-get_retries
     HRESULT get_Retries(int* plRetries);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage-get_transmissionstart))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage-get_transmissionstart
     HRESULT get_TransmissionStart(double* pdateTransmissionStart);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage-get_transmissionend))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage-get_transmissionend
     HRESULT get_TransmissionEnd(double* pdateTransmissionEnd);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage-get_csid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage-get_csid
     HRESULT get_CSID(BSTR* pbstrCSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage-get_tsid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage-get_tsid
     HRESULT get_TSID(BSTR* pbstrTSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage-get_callerid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage-get_callerid
     HRESULT get_CallerId(BSTR* pbstrCallerId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage-get_routinginformation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage-get_routinginformation
     HRESULT get_RoutingInformation(BSTR* pbstrRoutingInformation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage-copytiff))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage-copytiff
     HRESULT CopyTiff(BSTR bstrTiffPath);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage-delete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage-delete
     HRESULT Delete();
 }
 
 @GUID("2c56d8e6-8c2f-4573-944c-e505f8f5aeed")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutgoingjobs))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutgoingjobs
 interface IFaxOutgoingJobs : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjobs-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjobs-get__newenum
     HRESULT get__NewEnum(IUnknown* ppUnk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjobs-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjobs-get_item
     HRESULT get_Item(VARIANT vIndex, IFaxOutgoingJob* pFaxOutgoingJob);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjobs-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjobs-get_count
     HRESULT get_Count(int* plCount);
 }
 
 @GUID("6356daad-6614-4583-bf7a-3ad67bbfc71c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutgoingjob))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutgoingjob
 interface IFaxOutgoingJob : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_subject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_subject
     HRESULT get_Subject(BSTR* pbstrSubject);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_documentname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_documentname
     HRESULT get_DocumentName(BSTR* pbstrDocumentName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_pages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_pages
     HRESULT get_Pages(int* plPages);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_size))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_size
     HRESULT get_Size(int* plSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_submissionid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_submissionid
     HRESULT get_SubmissionId(BSTR* pbstrSubmissionId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_id))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_id
     HRESULT get_Id(BSTR* pbstrId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_originalscheduledtime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_originalscheduledtime
     HRESULT get_OriginalScheduledTime(double* pdateOriginalScheduledTime);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_submissiontime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_submissiontime
     HRESULT get_SubmissionTime(double* pdateSubmissionTime);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_receipttype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_receipttype
     HRESULT get_ReceiptType(FAX_RECEIPT_TYPE_ENUM* pReceiptType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_priority))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_priority
     HRESULT get_Priority(FAX_PRIORITY_TYPE_ENUM* pPriority);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_sender))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_sender
     HRESULT get_Sender(IFaxSender* ppFaxSender);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_recipient))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_recipient
     HRESULT get_Recipient(IFaxRecipient* ppFaxRecipient);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_currentpage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_currentpage
     HRESULT get_CurrentPage(int* plCurrentPage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_deviceid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_deviceid
     HRESULT get_DeviceId(int* plDeviceId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_status))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_status
     HRESULT get_Status(FAX_JOB_STATUS_ENUM* pStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_extendedstatuscode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_extendedstatuscode
     HRESULT get_ExtendedStatusCode(FAX_JOB_EXTENDED_STATUS_ENUM* pExtendedStatusCode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_extendedstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_extendedstatus
     HRESULT get_ExtendedStatus(BSTR* pbstrExtendedStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_availableoperations))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_availableoperations
     HRESULT get_AvailableOperations(FAX_JOB_OPERATIONS_ENUM* pAvailableOperations);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_retries))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_retries
     HRESULT get_Retries(int* plRetries);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_scheduledtime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_scheduledtime
     HRESULT get_ScheduledTime(double* pdateScheduledTime);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_transmissionstart))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_transmissionstart
     HRESULT get_TransmissionStart(double* pdateTransmissionStart);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_transmissionend))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_transmissionend
     HRESULT get_TransmissionEnd(double* pdateTransmissionEnd);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_csid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_csid
     HRESULT get_CSID(BSTR* pbstrCSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_tsid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_tsid
     HRESULT get_TSID(BSTR* pbstrTSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_groupbroadcastreceipts))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-get_groupbroadcastreceipts
     HRESULT get_GroupBroadcastReceipts(VARIANT_BOOL* pbGroupBroadcastReceipts);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-pause))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-pause
     HRESULT Pause();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-resume))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-resume
     HRESULT Resume();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-restart))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-restart
     HRESULT Restart();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-copytiff))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-copytiff
     HRESULT CopyTiff(BSTR bstrTiffPath);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-refresh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-refresh
     HRESULT Refresh();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-cancel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob-cancel
     HRESULT Cancel();
 }
 
 @GUID("f5ec5d4f-b840-432f-9980-112fe42a9b7a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutgoingmessageiterator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutgoingmessageiterator
 interface IFaxOutgoingMessageIterator : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessageiterator-get_message))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessageiterator-get_message
     HRESULT get_Message(IFaxOutgoingMessage* pFaxOutgoingMessage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessageiterator-get_ateof))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessageiterator-get_ateof
     HRESULT get_AtEOF(VARIANT_BOOL* pbEOF);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessageiterator-get_prefetchsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessageiterator-get_prefetchsize
     HRESULT get_PrefetchSize(int* plPrefetchSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessageiterator-put_prefetchsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessageiterator-put_prefetchsize
     HRESULT put_PrefetchSize(int lPrefetchSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessageiterator-movefirst))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessageiterator-movefirst
     HRESULT MoveFirst();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessageiterator-movenext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessageiterator-movenext
     HRESULT MoveNext();
 }
 
 @GUID("f0ea35de-caa5-4a7c-82c7-2b60ba5f2be2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutgoingmessage))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutgoingmessage
 interface IFaxOutgoingMessage : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-get_submissionid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-get_submissionid
     HRESULT get_SubmissionId(BSTR* pbstrSubmissionId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-get_id))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-get_id
     HRESULT get_Id(BSTR* pbstrId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-get_subject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-get_subject
     HRESULT get_Subject(BSTR* pbstrSubject);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-get_documentname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-get_documentname
     HRESULT get_DocumentName(BSTR* pbstrDocumentName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-get_retries))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-get_retries
     HRESULT get_Retries(int* plRetries);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-get_pages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-get_pages
     HRESULT get_Pages(int* plPages);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-get_size))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-get_size
     HRESULT get_Size(int* plSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-get_originalscheduledtime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-get_originalscheduledtime
     HRESULT get_OriginalScheduledTime(double* pdateOriginalScheduledTime);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-get_submissiontime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-get_submissiontime
     HRESULT get_SubmissionTime(double* pdateSubmissionTime);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-get_priority))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-get_priority
     HRESULT get_Priority(FAX_PRIORITY_TYPE_ENUM* pPriority);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-get_sender))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-get_sender
     HRESULT get_Sender(IFaxSender* ppFaxSender);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-get_recipient))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-get_recipient
     HRESULT get_Recipient(IFaxRecipient* ppFaxRecipient);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-get_devicename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-get_devicename
     HRESULT get_DeviceName(BSTR* pbstrDeviceName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-get_transmissionstart))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-get_transmissionstart
     HRESULT get_TransmissionStart(double* pdateTransmissionStart);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-get_transmissionend))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-get_transmissionend
     HRESULT get_TransmissionEnd(double* pdateTransmissionEnd);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-get_csid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-get_csid
     HRESULT get_CSID(BSTR* pbstrCSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-get_tsid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-get_tsid
     HRESULT get_TSID(BSTR* pbstrTSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-copytiff))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-copytiff
     HRESULT CopyTiff(BSTR bstrTiffPath);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-delete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage-delete
     HRESULT Delete();
 }
 
 @GUID("011f04e9-4fd6-4c23-9513-b6b66bb26be9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxincomingjobs))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxincomingjobs
 interface IFaxIncomingJobs : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjobs-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjobs-get__newenum
     HRESULT get__NewEnum(IUnknown* ppUnk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjobs-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjobs-get_item
     HRESULT get_Item(VARIANT vIndex, IFaxIncomingJob* pFaxIncomingJob);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjobs-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjobs-get_count
     HRESULT get_Count(int* plCount);
 }
 
 @GUID("207529e6-654a-4916-9f88-4d232ee8a107")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxincomingjob))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxincomingjob
 interface IFaxIncomingJob : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-get_size))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-get_size
     HRESULT get_Size(int* plSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-get_id))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-get_id
     HRESULT get_Id(BSTR* pbstrId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-get_currentpage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-get_currentpage
     HRESULT get_CurrentPage(int* plCurrentPage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-get_deviceid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-get_deviceid
     HRESULT get_DeviceId(int* plDeviceId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-get_status))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-get_status
     HRESULT get_Status(FAX_JOB_STATUS_ENUM* pStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-get_extendedstatuscode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-get_extendedstatuscode
     HRESULT get_ExtendedStatusCode(FAX_JOB_EXTENDED_STATUS_ENUM* pExtendedStatusCode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-get_extendedstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-get_extendedstatus
     HRESULT get_ExtendedStatus(BSTR* pbstrExtendedStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-get_availableoperations))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-get_availableoperations
     HRESULT get_AvailableOperations(FAX_JOB_OPERATIONS_ENUM* pAvailableOperations);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-get_retries))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-get_retries
     HRESULT get_Retries(int* plRetries);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-get_transmissionstart))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-get_transmissionstart
     HRESULT get_TransmissionStart(double* pdateTransmissionStart);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-get_transmissionend))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-get_transmissionend
     HRESULT get_TransmissionEnd(double* pdateTransmissionEnd);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-get_csid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-get_csid
     HRESULT get_CSID(BSTR* pbstrCSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-get_tsid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-get_tsid
     HRESULT get_TSID(BSTR* pbstrTSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-get_callerid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-get_callerid
     HRESULT get_CallerId(BSTR* pbstrCallerId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-get_routinginformation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-get_routinginformation
     HRESULT get_RoutingInformation(BSTR* pbstrRoutingInformation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-get_jobtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-get_jobtype
     HRESULT get_JobType(FAX_JOB_TYPE_ENUM* pJobType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-cancel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-cancel
     HRESULT Cancel();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-refresh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-refresh
     HRESULT Refresh();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-copytiff))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingjob-copytiff
     HRESULT CopyTiff(BSTR bstrTiffPath);
 }
 
 @GUID("290eac63-83ec-449c-8417-f148df8c682a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxdeviceprovider))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxdeviceprovider
 interface IFaxDeviceProvider : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceprovider-get_friendlyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceprovider-get_friendlyname
     HRESULT get_FriendlyName(BSTR* pbstrFriendlyName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceprovider-get_imagename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceprovider-get_imagename
     HRESULT get_ImageName(BSTR* pbstrImageName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceprovider-get_uniquename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceprovider-get_uniquename
     HRESULT get_UniqueName(BSTR* pbstrUniqueName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceprovider-get_tapiprovidername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceprovider-get_tapiprovidername
     HRESULT get_TapiProviderName(BSTR* pbstrTapiProviderName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceprovider-get_majorversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceprovider-get_majorversion
     HRESULT get_MajorVersion(int* plMajorVersion);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceprovider-get_minorversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceprovider-get_minorversion
     HRESULT get_MinorVersion(int* plMinorVersion);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceprovider-get_majorbuild))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceprovider-get_majorbuild
     HRESULT get_MajorBuild(int* plMajorBuild);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceprovider-get_minorbuild))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceprovider-get_minorbuild
     HRESULT get_MinorBuild(int* plMinorBuild);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceprovider-get_debug))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceprovider-get_debug
     HRESULT get_Debug(VARIANT_BOOL* pbDebug);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceprovider-get_status))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceprovider-get_status
     HRESULT get_Status(FAX_PROVIDER_STATUS_ENUM* pStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceprovider-get_initerrorcode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceprovider-get_initerrorcode
     HRESULT get_InitErrorCode(int* plInitErrorCode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceprovider-get_deviceids))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceprovider-get_deviceids
     HRESULT get_DeviceIds(VARIANT* pvDeviceIds);
 }
 
 @GUID("49306c59-b52e-4867-9df4-ca5841c956d0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxdevice))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxdevice
 interface IFaxDevice : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-get_id))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-get_id
     HRESULT get_Id(int* plId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-get_devicename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-get_devicename
     HRESULT get_DeviceName(BSTR* pbstrDeviceName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-get_provideruniquename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-get_provideruniquename
     HRESULT get_ProviderUniqueName(BSTR* pbstrProviderUniqueName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-get_poweredoff))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-get_poweredoff
     HRESULT get_PoweredOff(VARIANT_BOOL* pbPoweredOff);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-get_receivingnow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-get_receivingnow
     HRESULT get_ReceivingNow(VARIANT_BOOL* pbReceivingNow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-get_sendingnow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-get_sendingnow
     HRESULT get_SendingNow(VARIANT_BOOL* pbSendingNow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-get_usedroutingmethods))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-get_usedroutingmethods
     HRESULT get_UsedRoutingMethods(VARIANT* pvUsedRoutingMethods);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-get_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-get_description
     HRESULT get_Description(BSTR* pbstrDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-put_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-put_description
     HRESULT put_Description(BSTR bstrDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-get_sendenabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-get_sendenabled
     HRESULT get_SendEnabled(VARIANT_BOOL* pbSendEnabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-put_sendenabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-put_sendenabled
     HRESULT put_SendEnabled(VARIANT_BOOL bSendEnabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-get_receivemode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-get_receivemode
     HRESULT get_ReceiveMode(FAX_DEVICE_RECEIVE_MODE_ENUM* pReceiveMode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-put_receivemode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-put_receivemode
     HRESULT put_ReceiveMode(FAX_DEVICE_RECEIVE_MODE_ENUM ReceiveMode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-get_ringsbeforeanswer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-get_ringsbeforeanswer
     HRESULT get_RingsBeforeAnswer(int* plRingsBeforeAnswer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-put_ringsbeforeanswer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-put_ringsbeforeanswer
     HRESULT put_RingsBeforeAnswer(int lRingsBeforeAnswer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-get_csid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-get_csid
     HRESULT get_CSID(BSTR* pbstrCSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-put_csid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-put_csid
     HRESULT put_CSID(BSTR bstrCSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-get_tsid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-get_tsid
     HRESULT get_TSID(BSTR* pbstrTSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-put_tsid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-put_tsid
     HRESULT put_TSID(BSTR bstrTSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-refresh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-refresh
     HRESULT Refresh();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-save))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-save
     HRESULT Save();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-getextensionproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-getextensionproperty
     HRESULT GetExtensionProperty(BSTR bstrGUID, VARIANT* pvProperty);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-setextensionproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-setextensionproperty
     HRESULT SetExtensionProperty(BSTR bstrGUID, VARIANT vProperty);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-useroutingmethod))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-useroutingmethod
     HRESULT UseRoutingMethod(BSTR bstrMethodGUID, VARIANT_BOOL bUse);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-get_ringingnow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-get_ringingnow
     HRESULT get_RingingNow(VARIANT_BOOL* pbRingingNow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-answercall))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdevice-answercall
     HRESULT AnswerCall();
 }
 
 @GUID("1e29078b-5a69-497b-9592-49b7e7faddb5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxactivitylogging))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxactivitylogging
 interface IFaxActivityLogging : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxactivitylogging-get_logincoming))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxactivitylogging-get_logincoming
     HRESULT get_LogIncoming(VARIANT_BOOL* pbLogIncoming);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxactivitylogging-put_logincoming))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxactivitylogging-put_logincoming
     HRESULT put_LogIncoming(VARIANT_BOOL bLogIncoming);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxactivitylogging-get_logoutgoing))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxactivitylogging-get_logoutgoing
     HRESULT get_LogOutgoing(VARIANT_BOOL* pbLogOutgoing);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxactivitylogging-put_logoutgoing))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxactivitylogging-put_logoutgoing
     HRESULT put_LogOutgoing(VARIANT_BOOL bLogOutgoing);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxactivitylogging-get_databasepath))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxactivitylogging-get_databasepath
     HRESULT get_DatabasePath(BSTR* pbstrDatabasePath);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxactivitylogging-put_databasepath))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxactivitylogging-put_databasepath
     HRESULT put_DatabasePath(BSTR bstrDatabasePath);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxactivitylogging-refresh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxactivitylogging-refresh
     HRESULT Refresh();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxactivitylogging-save))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxactivitylogging-save
     HRESULT Save();
 }
 
 @GUID("0880d965-20e8-42e4-8e17-944f192caad4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxeventlogging))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxeventlogging
 interface IFaxEventLogging : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxeventlogging-get_initeventslevel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxeventlogging-get_initeventslevel
     HRESULT get_InitEventsLevel(FAX_LOG_LEVEL_ENUM* pInitEventLevel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxeventlogging-put_initeventslevel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxeventlogging-put_initeventslevel
     HRESULT put_InitEventsLevel(FAX_LOG_LEVEL_ENUM InitEventLevel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxeventlogging-get_inboundeventslevel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxeventlogging-get_inboundeventslevel
     HRESULT get_InboundEventsLevel(FAX_LOG_LEVEL_ENUM* pInboundEventLevel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxeventlogging-put_inboundeventslevel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxeventlogging-put_inboundeventslevel
     HRESULT put_InboundEventsLevel(FAX_LOG_LEVEL_ENUM InboundEventLevel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxeventlogging-get_outboundeventslevel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxeventlogging-get_outboundeventslevel
     HRESULT get_OutboundEventsLevel(FAX_LOG_LEVEL_ENUM* pOutboundEventLevel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxeventlogging-put_outboundeventslevel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxeventlogging-put_outboundeventslevel
     HRESULT put_OutboundEventsLevel(FAX_LOG_LEVEL_ENUM OutboundEventLevel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxeventlogging-get_generaleventslevel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxeventlogging-get_generaleventslevel
     HRESULT get_GeneralEventsLevel(FAX_LOG_LEVEL_ENUM* pGeneralEventLevel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxeventlogging-put_generaleventslevel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxeventlogging-put_generaleventslevel
     HRESULT put_GeneralEventsLevel(FAX_LOG_LEVEL_ENUM GeneralEventLevel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxeventlogging-refresh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxeventlogging-refresh
     HRESULT Refresh();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxeventlogging-save))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxeventlogging-save
     HRESULT Save();
 }
 
 @GUID("235cbef7-c2de-4bfd-b8da-75097c82c87f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutboundroutinggroups))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutboundroutinggroups
 interface IFaxOutboundRoutingGroups : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutinggroups-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutinggroups-get__newenum
     HRESULT get__NewEnum(IUnknown* ppUnk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutinggroups-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutinggroups-get_item
     HRESULT get_Item(VARIANT vIndex, IFaxOutboundRoutingGroup* pFaxOutboundRoutingGroup);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutinggroups-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutinggroups-get_count
     HRESULT get_Count(int* plCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutinggroups-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutinggroups-add
     HRESULT Add(BSTR bstrName, IFaxOutboundRoutingGroup* pFaxOutboundRoutingGroup);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutinggroups-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutinggroups-remove
     HRESULT Remove(VARIANT vIndex);
 }
 
 @GUID("ca6289a1-7e25-4f87-9a0b-93365734962c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutboundroutinggroup))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutboundroutinggroup
 interface IFaxOutboundRoutingGroup : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutinggroup-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutinggroup-get_name
     HRESULT get_Name(BSTR* pbstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutinggroup-get_status))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutinggroup-get_status
     HRESULT get_Status(FAX_GROUP_STATUS_ENUM* pStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutinggroup-get_deviceids))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutinggroup-get_deviceids
     HRESULT get_DeviceIds(IFaxDeviceIds* pFaxDeviceIds);
 }
 
 @GUID("2f0f813f-4ce9-443e-8ca1-738cfaeee149")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxdeviceids))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxdeviceids
 interface IFaxDeviceIds : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceids-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceids-get__newenum
     HRESULT get__NewEnum(IUnknown* ppUnk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceids-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceids-get_item
     HRESULT get_Item(int lIndex, int* plDeviceId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceids-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceids-get_count
     HRESULT get_Count(int* plCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceids-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceids-add
     HRESULT Add(int lDeviceId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceids-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceids-remove
     HRESULT Remove(int lIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceids-setorder))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdeviceids-setorder
     HRESULT SetOrder(int lDeviceId, int lNewOrder);
 }
 
 @GUID("dcefa1e7-ae7d-4ed6-8521-369edcca5120")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutboundroutingrules))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutboundroutingrules
 interface IFaxOutboundRoutingRules : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutingrules-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutingrules-get__newenum
     HRESULT get__NewEnum(IUnknown* ppUnk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutingrules-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutingrules-get_item
     HRESULT get_Item(int lIndex, IFaxOutboundRoutingRule* pFaxOutboundRoutingRule);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutingrules-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutingrules-get_count
     HRESULT get_Count(int* plCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutingrules-itembycountryandarea))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutingrules-itembycountryandarea
     HRESULT ItemByCountryAndArea(int lCountryCode, int lAreaCode, IFaxOutboundRoutingRule* pFaxOutboundRoutingRule);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutingrules-removebycountryandarea))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutingrules-removebycountryandarea
     HRESULT RemoveByCountryAndArea(int lCountryCode, int lAreaCode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutingrules-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutingrules-remove
     HRESULT Remove(int lIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutingrules-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutingrules-add
     HRESULT Add(int lCountryCode, int lAreaCode, VARIANT_BOOL bUseDevice, BSTR bstrGroupName, int lDeviceId, 
                 IFaxOutboundRoutingRule* pFaxOutboundRoutingRule);
 }
 
 @GUID("e1f795d5-07c2-469f-b027-acacc23219da")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutboundroutingrule))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutboundroutingrule
 interface IFaxOutboundRoutingRule : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutingrule-get_countrycode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutingrule-get_countrycode
     HRESULT get_CountryCode(int* plCountryCode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutingrule-get_areacode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutingrule-get_areacode
     HRESULT get_AreaCode(int* plAreaCode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutingrule-get_status))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutingrule-get_status
     HRESULT get_Status(FAX_RULE_STATUS_ENUM* pStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutingrule-get_usedevice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutingrule-get_usedevice
     HRESULT get_UseDevice(VARIANT_BOOL* pbUseDevice);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutingrule-put_usedevice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutingrule-put_usedevice
     HRESULT put_UseDevice(VARIANT_BOOL bUseDevice);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutingrule-get_deviceid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutingrule-get_deviceid
     HRESULT get_DeviceId(int* plDeviceId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutingrule-put_deviceid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutingrule-put_deviceid
     HRESULT put_DeviceId(int DeviceId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutingrule-get_groupname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutingrule-get_groupname
     HRESULT get_GroupName(BSTR* pbstrGroupName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutingrule-put_groupname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutingrule-put_groupname
     HRESULT put_GroupName(BSTR bstrGroupName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutingrule-refresh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutingrule-refresh
     HRESULT Refresh();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutingrule-save))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutboundroutingrule-save
     HRESULT Save();
 }
 
 @GUID("2f6c9673-7b26-42de-8eb0-915dcd2a4f4c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxinboundroutingextensions))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxinboundroutingextensions
 interface IFaxInboundRoutingExtensions : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingextensions-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingextensions-get__newenum
     HRESULT get__NewEnum(IUnknown* ppUnk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingextensions-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingextensions-get_item
     HRESULT get_Item(VARIANT vIndex, IFaxInboundRoutingExtension* pFaxInboundRoutingExtension);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingextensions-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingextensions-get_count
     HRESULT get_Count(int* plCount);
 }
 
 @GUID("885b5e08-c26c-4ef9-af83-51580a750be1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxinboundroutingextension))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxinboundroutingextension
 interface IFaxInboundRoutingExtension : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingextension-get_friendlyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingextension-get_friendlyname
     HRESULT get_FriendlyName(BSTR* pbstrFriendlyName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingextension-get_imagename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingextension-get_imagename
     HRESULT get_ImageName(BSTR* pbstrImageName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingextension-get_uniquename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingextension-get_uniquename
     HRESULT get_UniqueName(BSTR* pbstrUniqueName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingextension-get_majorversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingextension-get_majorversion
     HRESULT get_MajorVersion(int* plMajorVersion);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingextension-get_minorversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingextension-get_minorversion
     HRESULT get_MinorVersion(int* plMinorVersion);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingextension-get_majorbuild))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingextension-get_majorbuild
     HRESULT get_MajorBuild(int* plMajorBuild);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingextension-get_minorbuild))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingextension-get_minorbuild
     HRESULT get_MinorBuild(int* plMinorBuild);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingextension-get_debug))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingextension-get_debug
     HRESULT get_Debug(VARIANT_BOOL* pbDebug);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingextension-get_status))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingextension-get_status
     HRESULT get_Status(FAX_PROVIDER_STATUS_ENUM* pStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingextension-get_initerrorcode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingextension-get_initerrorcode
     HRESULT get_InitErrorCode(int* plInitErrorCode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingextension-get_methods))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingextension-get_methods
     HRESULT get_Methods(VARIANT* pvMethods);
 }
 
 @GUID("783fca10-8908-4473-9d69-f67fbea0c6b9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxinboundroutingmethods))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxinboundroutingmethods
 interface IFaxInboundRoutingMethods : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingmethods-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingmethods-get__newenum
     HRESULT get__NewEnum(IUnknown* ppUnk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingmethods-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingmethods-get_item
     HRESULT get_Item(VARIANT vIndex, IFaxInboundRoutingMethod* pFaxInboundRoutingMethod);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingmethods-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingmethods-get_count
     HRESULT get_Count(int* plCount);
 }
 
 @GUID("45700061-ad9d-4776-a8c4-64065492cf4b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxinboundroutingmethod))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxinboundroutingmethod
 interface IFaxInboundRoutingMethod : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingmethod-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingmethod-get_name
     HRESULT get_Name(BSTR* pbstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingmethod-get_guid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingmethod-get_guid
     HRESULT get_GUID(BSTR* pbstrGUID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingmethod-get_functionname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingmethod-get_functionname
     HRESULT get_FunctionName(BSTR* pbstrFunctionName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingmethod-get_extensionfriendlyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingmethod-get_extensionfriendlyname
     HRESULT get_ExtensionFriendlyName(BSTR* pbstrExtensionFriendlyName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingmethod-get_extensionimagename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingmethod-get_extensionimagename
     HRESULT get_ExtensionImageName(BSTR* pbstrExtensionImageName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingmethod-get_priority))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingmethod-get_priority
     HRESULT get_Priority(int* plPriority);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingmethod-put_priority))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingmethod-put_priority
     HRESULT put_Priority(int lPriority);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingmethod-refresh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingmethod-refresh
     HRESULT Refresh();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingmethod-save))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxinboundroutingmethod-save
     HRESULT Save();
 }
 
 @GUID("e1347661-f9ef-4d6d-b4a5-c0a068b65cff")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxdocument2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxdocument2
 interface IFaxDocument2 : IFaxDocument
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument2-get_submissionid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument2-get_submissionid
     HRESULT get_SubmissionId(BSTR* pbstrSubmissionId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument2-get_bodies))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument2-get_bodies
     HRESULT get_Bodies(VARIANT* pvBodies);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument2-put_bodies))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument2-put_bodies
     HRESULT put_Bodies(VARIANT vBodies);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument2-submit2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument2-submit2
     HRESULT Submit2(BSTR bstrFaxServerName, VARIANT* pvFaxOutgoingJobIDs, int* plErrorBodyFile);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument2-connectedsubmit2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxdocument2-connectedsubmit2
     HRESULT ConnectedSubmit2(IFaxServer pFaxServer, VARIANT* pvFaxOutgoingJobIDs, int* plErrorBodyFile);
 }
 
 @GUID("10f4d0f7-0994-4543-ab6e-506949128c40")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxconfiguration))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxconfiguration
 interface IFaxConfiguration : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_usearchive))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_usearchive
     HRESULT get_UseArchive(VARIANT_BOOL* pbUseArchive);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-put_usearchive))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-put_usearchive
     HRESULT put_UseArchive(VARIANT_BOOL bUseArchive);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_archivelocation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_archivelocation
     HRESULT get_ArchiveLocation(BSTR* pbstrArchiveLocation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-put_archivelocation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-put_archivelocation
     HRESULT put_ArchiveLocation(BSTR bstrArchiveLocation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_sizequotawarning))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_sizequotawarning
     HRESULT get_SizeQuotaWarning(VARIANT_BOOL* pbSizeQuotaWarning);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-put_sizequotawarning))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-put_sizequotawarning
     HRESULT put_SizeQuotaWarning(VARIANT_BOOL bSizeQuotaWarning);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_highquotawatermark))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_highquotawatermark
     HRESULT get_HighQuotaWaterMark(int* plHighQuotaWaterMark);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-put_highquotawatermark))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-put_highquotawatermark
     HRESULT put_HighQuotaWaterMark(int lHighQuotaWaterMark);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_lowquotawatermark))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_lowquotawatermark
     HRESULT get_LowQuotaWaterMark(int* plLowQuotaWaterMark);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-put_lowquotawatermark))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-put_lowquotawatermark
     HRESULT put_LowQuotaWaterMark(int lLowQuotaWaterMark);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_archiveagelimit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_archiveagelimit
     HRESULT get_ArchiveAgeLimit(int* plArchiveAgeLimit);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-put_archiveagelimit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-put_archiveagelimit
     HRESULT put_ArchiveAgeLimit(int lArchiveAgeLimit);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_archivesizelow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_archivesizelow
     HRESULT get_ArchiveSizeLow(int* plSizeLow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_archivesizehigh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_archivesizehigh
     HRESULT get_ArchiveSizeHigh(int* plSizeHigh);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_outgoingqueueblocked))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_outgoingqueueblocked
     HRESULT get_OutgoingQueueBlocked(VARIANT_BOOL* pbOutgoingBlocked);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-put_outgoingqueueblocked))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-put_outgoingqueueblocked
     HRESULT put_OutgoingQueueBlocked(VARIANT_BOOL bOutgoingBlocked);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_outgoingqueuepaused))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_outgoingqueuepaused
     HRESULT get_OutgoingQueuePaused(VARIANT_BOOL* pbOutgoingPaused);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-put_outgoingqueuepaused))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-put_outgoingqueuepaused
     HRESULT put_OutgoingQueuePaused(VARIANT_BOOL bOutgoingPaused);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_allowpersonalcoverpages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_allowpersonalcoverpages
     HRESULT get_AllowPersonalCoverPages(VARIANT_BOOL* pbAllowPersonalCoverPages);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-put_allowpersonalcoverpages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-put_allowpersonalcoverpages
     HRESULT put_AllowPersonalCoverPages(VARIANT_BOOL bAllowPersonalCoverPages);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_usedevicetsid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_usedevicetsid
     HRESULT get_UseDeviceTSID(VARIANT_BOOL* pbUseDeviceTSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-put_usedevicetsid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-put_usedevicetsid
     HRESULT put_UseDeviceTSID(VARIANT_BOOL bUseDeviceTSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_retries))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_retries
     HRESULT get_Retries(int* plRetries);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-put_retries))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-put_retries
     HRESULT put_Retries(int lRetries);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_retrydelay))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_retrydelay
     HRESULT get_RetryDelay(int* plRetryDelay);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-put_retrydelay))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-put_retrydelay
     HRESULT put_RetryDelay(int lRetryDelay);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_discountratestart))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_discountratestart
     HRESULT get_DiscountRateStart(double* pdateDiscountRateStart);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-put_discountratestart))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-put_discountratestart
     HRESULT put_DiscountRateStart(double dateDiscountRateStart);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_discountrateend))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_discountrateend
     HRESULT get_DiscountRateEnd(double* pdateDiscountRateEnd);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-put_discountrateend))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-put_discountrateend
     HRESULT put_DiscountRateEnd(double dateDiscountRateEnd);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_outgoingqueueagelimit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_outgoingqueueagelimit
     HRESULT get_OutgoingQueueAgeLimit(int* plOutgoingQueueAgeLimit);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-put_outgoingqueueagelimit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-put_outgoingqueueagelimit
     HRESULT put_OutgoingQueueAgeLimit(int lOutgoingQueueAgeLimit);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_branding))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_branding
     HRESULT get_Branding(VARIANT_BOOL* pbBranding);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-put_branding))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-put_branding
     HRESULT put_Branding(VARIANT_BOOL bBranding);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_incomingqueueblocked))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_incomingqueueblocked
     HRESULT get_IncomingQueueBlocked(VARIANT_BOOL* pbIncomingBlocked);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-put_incomingqueueblocked))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-put_incomingqueueblocked
     HRESULT put_IncomingQueueBlocked(VARIANT_BOOL bIncomingBlocked);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_autocreateaccountonconnect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_autocreateaccountonconnect
     HRESULT get_AutoCreateAccountOnConnect(VARIANT_BOOL* pbAutoCreateAccountOnConnect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-put_autocreateaccountonconnect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-put_autocreateaccountonconnect
     HRESULT put_AutoCreateAccountOnConnect(VARIANT_BOOL bAutoCreateAccountOnConnect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_incomingfaxesarepublic))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-get_incomingfaxesarepublic
     HRESULT get_IncomingFaxesArePublic(VARIANT_BOOL* pbIncomingFaxesArePublic);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-put_incomingfaxesarepublic))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-put_incomingfaxesarepublic
     HRESULT put_IncomingFaxesArePublic(VARIANT_BOOL bIncomingFaxesArePublic);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-refresh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-refresh
     HRESULT Refresh();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-save))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxconfiguration-save
     HRESULT Save();
 }
 
 @GUID("571ced0f-5609-4f40-9176-547e3a72ca7c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxserver2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxserver2
 interface IFaxServer2 : IFaxServer
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver2-get_configuration))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver2-get_configuration
     HRESULT get_Configuration(IFaxConfiguration* ppFaxConfiguration);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver2-get_currentaccount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver2-get_currentaccount
     HRESULT get_CurrentAccount(IFaxAccount* ppCurrentAccount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver2-get_faxaccountset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver2-get_faxaccountset
     HRESULT get_FaxAccountSet(IFaxAccountSet* ppFaxAccountSet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver2-get_security2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxserver2-get_security2
     HRESULT get_Security2(IFaxSecurity2* ppFaxSecurity2);
 }
 
 @GUID("7428fbae-841e-47b8-86f4-2288946dca1b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxaccountset))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxaccountset
 interface IFaxAccountSet : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountset-getaccounts))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountset-getaccounts
     HRESULT GetAccounts(IFaxAccounts* ppFaxAccounts);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountset-getaccount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountset-getaccount
     HRESULT GetAccount(BSTR bstrAccountName, IFaxAccount* pFaxAccount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountset-addaccount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountset-addaccount
     HRESULT AddAccount(BSTR bstrAccountName, IFaxAccount* pFaxAccount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountset-removeaccount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountset-removeaccount
     HRESULT RemoveAccount(BSTR bstrAccountName);
 }
 
 @GUID("93ea8162-8be7-42d1-ae7b-ec74e2d989da")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxaccounts))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxaccounts
 interface IFaxAccounts : IDispatch
 {
     HRESULT get__NewEnum(IUnknown* ppUnk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccounts-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccounts-get_item
     HRESULT get_Item(VARIANT vIndex, IFaxAccount* pFaxAccount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccounts-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccounts-get_count
     HRESULT get_Count(int* plCount);
 }
 
 @GUID("68535b33-5dc4-4086-be26-b76f9b711006")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxaccount))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxaccount
 interface IFaxAccount : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccount-get_accountname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccount-get_accountname
     HRESULT get_AccountName(BSTR* pbstrAccountName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccount-get_folders))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccount-get_folders
     HRESULT get_Folders(IFaxAccountFolders* ppFolders);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccount-listentoaccountevents))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccount-listentoaccountevents
     HRESULT ListenToAccountEvents(FAX_ACCOUNT_EVENTS_TYPE_ENUM EventTypes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccount-get_registeredevents))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccount-get_registeredevents
     HRESULT get_RegisteredEvents(FAX_ACCOUNT_EVENTS_TYPE_ENUM* pRegisteredEvents);
 }
 
 @GUID("418a8d96-59a0-4789-b176-edf3dc8fa8f7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutgoingjob2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutgoingjob2
 interface IFaxOutgoingJob2 : IFaxOutgoingJob
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob2-get_hascoverpage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob2-get_hascoverpage
     HRESULT get_HasCoverPage(VARIANT_BOOL* pbHasCoverPage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob2-get_receiptaddress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob2-get_receiptaddress
     HRESULT get_ReceiptAddress(BSTR* pbstrReceiptAddress);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob2-get_scheduletype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingjob2-get_scheduletype
     HRESULT get_ScheduleType(FAX_SCHEDULE_TYPE_ENUM* pScheduleType);
 }
 
 @GUID("6463f89d-23d8-46a9-8f86-c47b77ca7926")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxaccountfolders))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxaccountfolders
 interface IFaxAccountFolders : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountfolders-get_outgoingqueue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountfolders-get_outgoingqueue
     HRESULT get_OutgoingQueue(IFaxAccountOutgoingQueue* pFaxOutgoingQueue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountfolders-get_incomingqueue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountfolders-get_incomingqueue
     HRESULT get_IncomingQueue(IFaxAccountIncomingQueue* pFaxIncomingQueue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountfolders-get_incomingarchive))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountfolders-get_incomingarchive
     HRESULT get_IncomingArchive(IFaxAccountIncomingArchive* pFaxIncomingArchive);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountfolders-get_outgoingarchive))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountfolders-get_outgoingarchive
     HRESULT get_OutgoingArchive(IFaxAccountOutgoingArchive* pFaxOutgoingArchive);
 }
 
 @GUID("dd142d92-0186-4a95-a090-cbc3eadba6b4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxaccountincomingqueue))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxaccountincomingqueue
 interface IFaxAccountIncomingQueue : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountincomingqueue-getjobs))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountincomingqueue-getjobs
     HRESULT GetJobs(IFaxIncomingJobs* pFaxIncomingJobs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountincomingqueue-getjob))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountincomingqueue-getjob
     HRESULT GetJob(BSTR bstrJobId, IFaxIncomingJob* pFaxIncomingJob);
 }
 
 @GUID("0f1424e9-f22d-4553-b7a5-0d24bd0d7e46")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxaccountoutgoingqueue))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxaccountoutgoingqueue
 interface IFaxAccountOutgoingQueue : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountoutgoingqueue-getjobs))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountoutgoingqueue-getjobs
     HRESULT GetJobs(IFaxOutgoingJobs* pFaxOutgoingJobs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountoutgoingqueue-getjob))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountoutgoingqueue-getjob
     HRESULT GetJob(BSTR bstrJobId, IFaxOutgoingJob* pFaxOutgoingJob);
 }
 
 @GUID("b37df687-bc88-4b46-b3be-b458b3ea9e7f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutgoingmessage2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxoutgoingmessage2
 interface IFaxOutgoingMessage2 : IFaxOutgoingMessage
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage2-get_hascoverpage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage2-get_hascoverpage
     HRESULT get_HasCoverPage(VARIANT_BOOL* pbHasCoverPage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage2-get_receipttype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage2-get_receipttype
     HRESULT get_ReceiptType(FAX_RECEIPT_TYPE_ENUM* pReceiptType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage2-get_receiptaddress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage2-get_receiptaddress
     HRESULT get_ReceiptAddress(BSTR* pbstrReceiptAddress);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage2-get_read))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage2-get_read
     HRESULT get_Read(VARIANT_BOOL* pbRead);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage2-put_read))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage2-put_read
     HRESULT put_Read(VARIANT_BOOL bRead);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage2-save))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage2-save
     HRESULT Save();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage2-refresh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxoutgoingmessage2-refresh
     HRESULT Refresh();
 }
 
 @GUID("a8a5b6ef-e0d6-4aee-955c-91625bec9db4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxaccountincomingarchive))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxaccountincomingarchive
 interface IFaxAccountIncomingArchive : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountincomingarchive-get_sizelow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountincomingarchive-get_sizelow
     HRESULT get_SizeLow(int* plSizeLow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountincomingarchive-get_sizehigh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountincomingarchive-get_sizehigh
     HRESULT get_SizeHigh(int* plSizeHigh);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountincomingarchive-refresh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountincomingarchive-refresh
     HRESULT Refresh();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountincomingarchive-getmessages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountincomingarchive-getmessages
     HRESULT GetMessages(int lPrefetchSize, IFaxIncomingMessageIterator* pFaxIncomingMessageIterator);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountincomingarchive-getmessage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountincomingarchive-getmessage
     HRESULT GetMessage(BSTR bstrMessageId, IFaxIncomingMessage* pFaxIncomingMessage);
 }
 
 @GUID("5463076d-ec14-491f-926e-b3ceda5e5662")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxaccountoutgoingarchive))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxaccountoutgoingarchive
 interface IFaxAccountOutgoingArchive : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountoutgoingarchive-get_sizelow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountoutgoingarchive-get_sizelow
     HRESULT get_SizeLow(int* plSizeLow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountoutgoingarchive-get_sizehigh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountoutgoingarchive-get_sizehigh
     HRESULT get_SizeHigh(int* plSizeHigh);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountoutgoingarchive-refresh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountoutgoingarchive-refresh
     HRESULT Refresh();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountoutgoingarchive-getmessages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountoutgoingarchive-getmessages
     HRESULT GetMessages(int lPrefetchSize, IFaxOutgoingMessageIterator* pFaxOutgoingMessageIterator);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountoutgoingarchive-getmessage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxaccountoutgoingarchive-getmessage
     HRESULT GetMessage(BSTR bstrMessageId, IFaxOutgoingMessage* pFaxOutgoingMessage);
 }
 
 @GUID("17d851f4-d09b-48fc-99c9-8f24c4db9ab1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxsecurity2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxsecurity2
 interface IFaxSecurity2 : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsecurity2-get_descriptor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsecurity2-get_descriptor
     HRESULT get_Descriptor(VARIANT* pvDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsecurity2-put_descriptor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsecurity2-put_descriptor
     HRESULT put_Descriptor(VARIANT vDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsecurity2-get_grantedrights))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsecurity2-get_grantedrights
     HRESULT get_GrantedRights(FAX_ACCESS_RIGHTS_ENUM_2* pGrantedRights);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsecurity2-refresh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsecurity2-refresh
     HRESULT Refresh();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsecurity2-save))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsecurity2-save
     HRESULT Save();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsecurity2-get_informationtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsecurity2-get_informationtype
     HRESULT get_InformationType(int* plInformationType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsecurity2-put_informationtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxsecurity2-put_informationtype
     HRESULT put_InformationType(int lInformationType);
 }
 
 @GUID("f9208503-e2bc-48f3-9ec0-e6236f9b509a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxincomingmessage2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxincomingmessage2
 interface IFaxIncomingMessage2 : IFaxIncomingMessage
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage2-get_subject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage2-get_subject
     HRESULT get_Subject(BSTR* pbstrSubject);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage2-put_subject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage2-put_subject
     HRESULT put_Subject(BSTR bstrSubject);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage2-get_sendername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage2-get_sendername
     HRESULT get_SenderName(BSTR* pbstrSenderName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage2-put_sendername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage2-put_sendername
     HRESULT put_SenderName(BSTR bstrSenderName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage2-get_senderfaxnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage2-get_senderfaxnumber
     HRESULT get_SenderFaxNumber(BSTR* pbstrSenderFaxNumber);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage2-put_senderfaxnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage2-put_senderfaxnumber
     HRESULT put_SenderFaxNumber(BSTR bstrSenderFaxNumber);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage2-get_hascoverpage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage2-get_hascoverpage
     HRESULT get_HasCoverPage(VARIANT_BOOL* pbHasCoverPage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage2-put_hascoverpage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage2-put_hascoverpage
     HRESULT put_HasCoverPage(VARIANT_BOOL bHasCoverPage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage2-get_recipients))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage2-get_recipients
     HRESULT get_Recipients(BSTR* pbstrRecipients);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage2-put_recipients))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage2-put_recipients
     HRESULT put_Recipients(BSTR bstrRecipients);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage2-get_wasreassigned))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage2-get_wasreassigned
     HRESULT get_WasReAssigned(VARIANT_BOOL* pbWasReAssigned);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage2-get_read))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage2-get_read
     HRESULT get_Read(VARIANT_BOOL* pbRead);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage2-put_read))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage2-put_read
     HRESULT put_Read(VARIANT_BOOL bRead);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage2-reassign))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage2-reassign
     HRESULT ReAssign();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage2-save))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage2-save
     HRESULT Save();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage2-refresh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-ifaxincomingmessage2-refresh
     HRESULT Refresh();
 }
 
@@ -3474,7 +3504,7 @@ interface IFaxServerNotify : IDispatch
 
 @GUID("ec9c69b9-5fe7-4805-9467-82fcd96af903")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxservernotify2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxservernotify2
 interface IFaxServerNotify2 : IDispatch
 {
     HRESULT OnIncomingJobAdded(IFaxServer2 pFaxServer, BSTR bstrJobId);
@@ -3510,31 +3540,31 @@ interface IFaxServerNotify2 : IDispatch
 
 @GUID("b9b3bc81-ac1b-46f3-b39d-0adc30e1b788")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxaccountnotify))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nn-faxcomex-ifaxaccountnotify
 interface IFaxAccountNotify : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-_ifaxaccountnotify-onincomingjobadded))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-_ifaxaccountnotify-onincomingjobadded
     HRESULT OnIncomingJobAdded(IFaxAccount pFaxAccount, BSTR bstrJobId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-_ifaxaccountnotify-onincomingjobremoved))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-_ifaxaccountnotify-onincomingjobremoved
     HRESULT OnIncomingJobRemoved(IFaxAccount pFaxAccount, BSTR bstrJobId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-_ifaxaccountnotify-onincomingjobchanged))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-_ifaxaccountnotify-onincomingjobchanged
     HRESULT OnIncomingJobChanged(IFaxAccount pFaxAccount, BSTR bstrJobId, IFaxJobStatus pJobStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-_ifaxaccountnotify-onoutgoingjobadded))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-_ifaxaccountnotify-onoutgoingjobadded
     HRESULT OnOutgoingJobAdded(IFaxAccount pFaxAccount, BSTR bstrJobId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-_ifaxaccountnotify-onoutgoingjobremoved))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-_ifaxaccountnotify-onoutgoingjobremoved
     HRESULT OnOutgoingJobRemoved(IFaxAccount pFaxAccount, BSTR bstrJobId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-_ifaxaccountnotify-onoutgoingjobchanged))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-_ifaxaccountnotify-onoutgoingjobchanged
     HRESULT OnOutgoingJobChanged(IFaxAccount pFaxAccount, BSTR bstrJobId, IFaxJobStatus pJobStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-_ifaxaccountnotify-onincomingmessageadded))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-_ifaxaccountnotify-onincomingmessageadded
     HRESULT OnIncomingMessageAdded(IFaxAccount pFaxAccount, BSTR bstrMessageId, VARIANT_BOOL fAddedToReceiveFolder);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-_ifaxaccountnotify-onincomingmessageremoved))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-_ifaxaccountnotify-onincomingmessageremoved
     HRESULT OnIncomingMessageRemoved(IFaxAccount pFaxAccount, BSTR bstrMessageId, 
                                      VARIANT_BOOL fRemovedFromReceiveFolder);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-_ifaxaccountnotify-onoutgoingmessageadded))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-_ifaxaccountnotify-onoutgoingmessageadded
     HRESULT OnOutgoingMessageAdded(IFaxAccount pFaxAccount, BSTR bstrMessageId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-_ifaxaccountnotify-onoutgoingmessageremoved))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-_ifaxaccountnotify-onoutgoingmessageremoved
     HRESULT OnOutgoingMessageRemoved(IFaxAccount pFaxAccount, BSTR bstrMessageId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-_ifaxaccountnotify-onservershutdown))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/faxcomex/nf-faxcomex-_ifaxaccountnotify-onservershutdown
     HRESULT OnServerShutDown(IFaxServer2 pFaxServer);
 }
 

@@ -3,16 +3,17 @@
 module windows.win32.ai.machinelearning.winml;
 
 public import windows.core;
-public import windows.win32.foundation : BOOL, HRESULT, PSTR, PWSTR;
+public import windows.win32.foundation.foundation : BOOL, HRESULT, PSTR, PWSTR;
 public import windows.win32.graphics.direct3d12 : ID3D12Device, ID3D12Resource;
-public import windows.win32.system.com : IUnknown;
+public import windows.win32.system.com.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winml/ne-winml-winml_tensor_data_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/ne-winml-winml_tensor_data_type
 alias WINML_TENSOR_DATA_TYPE = int;
 enum : int
 {
@@ -33,7 +34,8 @@ enum : int
     WINML_TENSOR_COMPLEX64  = 0x0000000e,
     WINML_TENSOR_COMPLEX128 = 0x0000000f,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winml/ne-winml-winml_feature_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/ne-winml-winml_feature_type
 alias WINML_FEATURE_TYPE = int;
 enum : int
 {
@@ -43,7 +45,8 @@ enum : int
     WINML_FEATURE_MAP       = 0x00000003,
     WINML_FEATURE_IMAGE     = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winml/ne-winml-winml_binding_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/ne-winml-winml_binding_type
 alias WINML_BINDING_TYPE = int;
 enum : int
 {
@@ -54,87 +57,95 @@ enum : int
     WINML_BINDING_IMAGE     = 0x00000004,
     WINML_BINDING_RESOURCE  = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winml/ne-winml-winml_runtime_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/ne-winml-winml_runtime_type
 alias WINML_RUNTIME_TYPE = int;
 enum : int
 {
     WINML_RUNTIME_CNTK = 0x00000000,
 }
+
 //ENUM ATTR: ScopedEnumAttribute : CustomAttributeSig([], [])
 enum MLOperatorAttributeType : uint
 {
-    Undefined   = 0x00000000,
-    Float       = 0x00000002,
-    Int         = 0x00000003,
-    String      = 0x00000004,
-    FloatArray  = 0x00000007,
-    IntArray    = 0x00000008,
-    StringArray = 0x00000009,
+    Undefined   = 0x00000000U,
+    Float       = 0x00000002U,
+    Int         = 0x00000003U,
+    String      = 0x00000004U,
+    FloatArray  = 0x00000007U,
+    IntArray    = 0x00000008U,
+    StringArray = 0x00000009U,
 }
+
 //ENUM ATTR: ScopedEnumAttribute : CustomAttributeSig([], [])
 enum MLOperatorTensorDataType : uint
 {
-    Undefined  = 0x00000000,
-    Float      = 0x00000001,
-    UInt8      = 0x00000002,
-    Int8       = 0x00000003,
-    UInt16     = 0x00000004,
-    Int16      = 0x00000005,
-    Int32      = 0x00000006,
-    Int64      = 0x00000007,
-    String     = 0x00000008,
-    Bool       = 0x00000009,
-    Float16    = 0x0000000a,
-    Double     = 0x0000000b,
-    UInt32     = 0x0000000c,
-    UInt64     = 0x0000000d,
-    Complex64  = 0x0000000e,
-    Complex128 = 0x0000000f,
+    Undefined  = 0x00000000U,
+    Float      = 0x00000001U,
+    UInt8      = 0x00000002U,
+    Int8       = 0x00000003U,
+    UInt16     = 0x00000004U,
+    Int16      = 0x00000005U,
+    Int32      = 0x00000006U,
+    Int64      = 0x00000007U,
+    String     = 0x00000008U,
+    Bool       = 0x00000009U,
+    Float16    = 0x0000000aU,
+    Double     = 0x0000000bU,
+    UInt32     = 0x0000000cU,
+    UInt64     = 0x0000000dU,
+    Complex64  = 0x0000000eU,
+    Complex128 = 0x0000000fU,
 }
+
 //ENUM ATTR: ScopedEnumAttribute : CustomAttributeSig([], [])
 enum MLOperatorEdgeType : uint
 {
-    Undefined      = 0x00000000,
-    Tensor         = 0x00000001,
-    SequenceTensor = 0x00000002,
-    Primitive      = 0x00000003,
+    Undefined      = 0x00000000U,
+    Tensor         = 0x00000001U,
+    SequenceTensor = 0x00000002U,
+    Primitive      = 0x00000003U,
 }
+
 //ENUM ATTR: ScopedEnumAttribute : CustomAttributeSig([], [])
 enum MLOperatorParameterOptions : uint
 {
-    Single   = 0x00000000,
-    Optional = 0x00000001,
-    Variadic = 0x00000002,
+    Single   = 0x00000000U,
+    Optional = 0x00000001U,
+    Variadic = 0x00000002U,
 }
+
 //ENUM ATTR: ScopedEnumAttribute : CustomAttributeSig([], [])
 enum MLOperatorSchemaEdgeTypeFormat : int
 {
     EdgeDescription = 0x00000000,
     Label           = 0x00000001,
 }
+
 //ENUM ATTR: ScopedEnumAttribute : CustomAttributeSig([], [])
 enum MLOperatorKernelOptions : uint
 {
-    None                    = 0x00000000,
-    AllowDynamicInputShapes = 0x00000001,
+    None                    = 0x00000000U,
+    AllowDynamicInputShapes = 0x00000001U,
 }
+
 //ENUM ATTR: ScopedEnumAttribute : CustomAttributeSig([], [])
 enum MLOperatorExecutionType : uint
 {
-    Undefined = 0x00000000,
-    Cpu       = 0x00000001,
-    D3D12     = 0x00000002,
+    Undefined = 0x00000000U,
+    Cpu       = 0x00000001U,
+    D3D12     = 0x00000002U,
 }
 
 // Constants
 
 
-enum uint WINML_TENSOR_DIMENSION_COUNT_MAX = 0x00000004;
+enum uint WINML_TENSOR_DIMENSION_COUNT_MAX = 0x00000004U;
 
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winml/ns-winml-winml_tensor_binding_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/ns-winml-winml_tensor_binding_desc
 struct WINML_TENSOR_BINDING_DESC
 {
     WINML_TENSOR_DATA_TYPE DataType;
@@ -144,25 +155,41 @@ struct WINML_TENSOR_BINDING_DESC
     void* pData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winml/ns-winml-winml_sequence_binding_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/ns-winml-winml_sequence_binding_desc
 struct WINML_SEQUENCE_BINDING_DESC
 {
-    uint                ElementCount;
+    uint ElementCount;
     WINML_TENSOR_DATA_TYPE ElementType;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        PWSTR*  pStrings;
+        long*   pInts;
+        float*  pFloats;
+        double* pDoubles;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winml/ns-winml-winml_map_binding_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/ns-winml-winml_map_binding_desc
 struct WINML_MAP_BINDING_DESC
 {
-    uint                 ElementCount;
+    uint ElementCount;
     WINML_TENSOR_DATA_TYPE KeyType;
-    _Anonymous1_e__Union Anonymous1;
+    union
+    {
+        PWSTR* pStringKeys;
+        long*  pIntKeys;
+    }
     WINML_TENSOR_DATA_TYPE Fields;
-    _Anonymous2_e__Union Anonymous2;
+    union
+    {
+        PWSTR*  pStringFields;
+        long*   pIntFields;
+        float*  pFloatFields;
+        double* pDoubleFields;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winml/ns-winml-winml_image_binding_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/ns-winml-winml_image_binding_desc
 struct WINML_IMAGE_BINDING_DESC
 {
     WINML_TENSOR_DATA_TYPE ElementType;
@@ -172,7 +199,7 @@ struct WINML_IMAGE_BINDING_DESC
     void* pData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winml/ns-winml-winml_resource_binding_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/ns-winml-winml_resource_binding_desc
 struct WINML_RESOURCE_BINDING_DESC
 {
     WINML_TENSOR_DATA_TYPE ElementType;
@@ -181,15 +208,22 @@ struct WINML_RESOURCE_BINDING_DESC
     ID3D12Resource pResource;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winml/ns-winml-winml_binding_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/ns-winml-winml_binding_desc
 struct WINML_BINDING_DESC
 {
-    const(PWSTR)        Name;
-    WINML_BINDING_TYPE  BindType;
-    _Anonymous_e__Union Anonymous;
+    const(PWSTR)       Name;
+    WINML_BINDING_TYPE BindType;
+    union
+    {
+        WINML_TENSOR_BINDING_DESC Tensor;
+        WINML_SEQUENCE_BINDING_DESC Sequence;
+        WINML_MAP_BINDING_DESC Map;
+        WINML_IMAGE_BINDING_DESC Image;
+        WINML_RESOURCE_BINDING_DESC Resource;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winml/ns-winml-winml_tensor_variable_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/ns-winml-winml_tensor_variable_desc
 struct WINML_TENSOR_VARIABLE_DESC
 {
     WINML_TENSOR_DATA_TYPE ElementType;
@@ -197,20 +231,20 @@ struct WINML_TENSOR_VARIABLE_DESC
     long* pShape;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winml/ns-winml-winml_sequence_variable_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/ns-winml-winml_sequence_variable_desc
 struct WINML_SEQUENCE_VARIABLE_DESC
 {
     WINML_TENSOR_DATA_TYPE ElementType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winml/ns-winml-winml_map_variable_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/ns-winml-winml_map_variable_desc
 struct WINML_MAP_VARIABLE_DESC
 {
     WINML_TENSOR_DATA_TYPE KeyType;
     WINML_TENSOR_DATA_TYPE Fields;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winml/ns-winml-winml_image_variable_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/ns-winml-winml_image_variable_desc
 struct WINML_IMAGE_VARIABLE_DESC
 {
     WINML_TENSOR_DATA_TYPE ElementType;
@@ -218,17 +252,23 @@ struct WINML_IMAGE_VARIABLE_DESC
     long* pShape;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winml/ns-winml-winml_variable_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/ns-winml-winml_variable_desc
 struct WINML_VARIABLE_DESC
 {
-    PWSTR               Name;
-    PWSTR               Description;
-    WINML_FEATURE_TYPE  FeatureType;
-    BOOL                Required;
-    _Anonymous_e__Union Anonymous;
+    PWSTR              Name;
+    PWSTR              Description;
+    WINML_FEATURE_TYPE FeatureType;
+    BOOL               Required;
+    union
+    {
+        WINML_TENSOR_VARIABLE_DESC Tensor;
+        WINML_SEQUENCE_VARIABLE_DESC Sequence;
+        WINML_MAP_VARIABLE_DESC Map;
+        WINML_IMAGE_VARIABLE_DESC Image;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winml/ns-winml-winml_model_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/ns-winml-winml_model_desc
 struct WINML_MODEL_DESC
 {
     PWSTR  Author;
@@ -240,15 +280,24 @@ struct WINML_MODEL_DESC
 
 struct MLOperatorEdgeDescription
 {
-    MLOperatorEdgeType  edgeType;
-    _Anonymous_e__Union Anonymous;
+    MLOperatorEdgeType edgeType;
+    union
+    {
+        ulong reserved;
+        MLOperatorTensorDataType tensorDataType;
+    }
 }
 
 struct MLOperatorSchemaEdgeDescription
 {
     MLOperatorParameterOptions options;
     MLOperatorSchemaEdgeTypeFormat typeFormat;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        const(void)* reserved;
+        const(PSTR)  typeLabel;
+        MLOperatorEdgeDescription edgeDescription;
+    }
 }
 
 struct MLOperatorEdgeTypeConstraint
@@ -267,10 +316,16 @@ struct MLOperatorAttribute
 
 struct MLOperatorAttributeNameValue
 {
-    const(PSTR)         name;
+    const(PSTR) name;
     MLOperatorAttributeType type;
-    uint                valueCount;
-    _Anonymous_e__Union Anonymous;
+    uint        valueCount;
+    union
+    {
+        const(void)*  reserved;
+        const(long)*  ints;
+        const(byte)** strings;
+        const(float)* floats;
+    }
 }
 
 struct MLOperatorSchemaDescription
@@ -322,51 +377,51 @@ HRESULT MLCreateOperatorRegistry(IMLOperatorRegistry* registry);
 
 @GUID("e2eeb6a9-f31f-4055-a521-e30b5b33664a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.17134))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winml/nn-winml-iwinmlmodel))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/nn-winml-iwinmlmodel
 interface IWinMLModel : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winml/nf-winml-iwinmlmodel-getdescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/nf-winml-iwinmlmodel-getdescription
     HRESULT GetDescription(WINML_MODEL_DESC** ppDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winml/nf-winml-iwinmlmodel-enumeratemetadata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/nf-winml-iwinmlmodel-enumeratemetadata
     HRESULT EnumerateMetadata(uint Index, const(PWSTR)* pKey, const(PWSTR)* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winml/nf-winml-iwinmlmodel-enumeratemodelinputs))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/nf-winml-iwinmlmodel-enumeratemodelinputs
     HRESULT EnumerateModelInputs(uint Index, WINML_VARIABLE_DESC** ppInputDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winml/nf-winml-iwinmlmodel-enumeratemodeloutputs))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/nf-winml-iwinmlmodel-enumeratemodeloutputs
     HRESULT EnumerateModelOutputs(uint Index, WINML_VARIABLE_DESC** ppOutputDescriptor);
 }
 
 @GUID("95848f9e-583d-4054-af12-916387cd8426")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.17134))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winml/nn-winml-iwinmlevaluationcontext))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/nn-winml-iwinmlevaluationcontext
 interface IWinMLEvaluationContext : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winml/nf-winml-iwinmlevaluationcontext-bindvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/nf-winml-iwinmlevaluationcontext-bindvalue
     HRESULT BindValue(WINML_BINDING_DESC* pDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winml/nf-winml-iwinmlevaluationcontext-getvaluebyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/nf-winml-iwinmlevaluationcontext-getvaluebyname
     HRESULT GetValueByName(const(PWSTR) Name, WINML_BINDING_DESC** pDescriptor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winml/nf-winml-iwinmlevaluationcontext-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/nf-winml-iwinmlevaluationcontext-clear
     HRESULT Clear();
 }
 
 @GUID("a0425329-40ae-48d9-bce3-829ef7b8a41a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.17134))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winml/nn-winml-iwinmlruntime))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/nn-winml-iwinmlruntime
 interface IWinMLRuntime : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winml/nf-winml-iwinmlruntime-loadmodel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/nf-winml-iwinmlruntime-loadmodel
     HRESULT LoadModel(const(PWSTR) Path, IWinMLModel* ppModel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winml/nf-winml-iwinmlruntime-createevaluationcontext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/nf-winml-iwinmlruntime-createevaluationcontext
     HRESULT CreateEvaluationContext(ID3D12Device device, IWinMLEvaluationContext* ppContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winml/nf-winml-iwinmlruntime-evaluatemodel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/nf-winml-iwinmlruntime-evaluatemodel
     HRESULT EvaluateModel(IWinMLEvaluationContext pContext);
 }
 
 @GUID("a807b84d-4ae5-4bc0-a76a-941aa246bd41")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.17134))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winml/nn-winml-iwinmlruntimefactory))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/nn-winml-iwinmlruntimefactory
 interface IWinMLRuntimeFactory : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winml/nf-winml-iwinmlruntimefactory-createruntime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winml/nf-winml-iwinmlruntimefactory-createruntime
     HRESULT CreateRuntime(WINML_RUNTIME_TYPE RuntimeType, IWinMLRuntime* ppRuntime);
 }
 

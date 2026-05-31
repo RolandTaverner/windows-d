@@ -3,14 +3,16 @@
 module windows.win32.system.environment;
 
 public import windows.core;
-public import windows.win32.foundation : BOOL, BOOLEAN, HANDLE, HRESULT, PSTR, PWSTR;
+public import windows.win32.foundation.foundation : BOOL, BOOLEAN, HANDLE, HRESULT, PSTR,
+                                                    PWSTR;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntenclv/ne-ntenclv-enclave_sealing_identity_policy))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntenclv/ne-ntenclv-enclave_sealing_identity_policy
 alias ENCLAVE_SEALING_IDENTITY_POLICY = int;
 enum : int
 {
@@ -27,66 +29,110 @@ enum : int
 
 enum : uint
 {
-    ENCLAVE_RUNTIME_POLICY_ALLOW_FULL_DEBUG    = 0x00000001,
-    ENCLAVE_RUNTIME_POLICY_ALLOW_DYNAMIC_DEBUG = 0x00000002,
+    ENCLAVE_RUNTIME_POLICY_ALLOW_FULL_DEBUG    = 0x00000001U,
+    ENCLAVE_RUNTIME_POLICY_ALLOW_DYNAMIC_DEBUG = 0x00000002U,
 }
 
-enum uint ENCLAVE_UNSEAL_FLAG_STALE_KEY = 0x00000001;
+enum uint ENCLAVE_UNSEAL_FLAG_STALE_KEY = 0x00000001U;
 
 enum : uint
 {
-    ENCLAVE_FLAG_FULL_DEBUG_ENABLED    = 0x00000001,
-    ENCLAVE_FLAG_DYNAMIC_DEBUG_ENABLED = 0x00000002,
-    ENCLAVE_FLAG_DYNAMIC_DEBUG_ACTIVE  = 0x00000004,
-}
-
-enum : uint
-{
-    VBS_ENCLAVE_REPORT_PKG_HEADER_VERSION_CURRENT             = 0x00000001,
-    VBS_ENCLAVE_REPORT_SIGNATURE_SCHEME_SHA256_RSA_PSS_SHA256 = 0x00000001,
-}
-
-enum uint VBS_ENCLAVE_REPORT_VERSION_CURRENT = 0x00000001;
-enum uint ENCLAVE_REPORT_DATA_LENGTH = 0x00000040;
-
-enum : uint
-{
-    VBS_ENCLAVE_VARDATA_INVALID = 0x00000000,
-    VBS_ENCLAVE_VARDATA_MODULE  = 0x00000001,
+    ENCLAVE_FLAG_FULL_DEBUG_ENABLED    = 0x00000001U,
+    ENCLAVE_FLAG_DYNAMIC_DEBUG_ENABLED = 0x00000002U,
+    ENCLAVE_FLAG_DYNAMIC_DEBUG_ACTIVE  = 0x00000004U,
 }
 
 enum : uint
 {
-    ENCLAVE_VBS_BASIC_KEY_FLAG_MEASUREMENT = 0x00000001,
-    ENCLAVE_VBS_BASIC_KEY_FLAG_FAMILY_ID   = 0x00000002,
-    ENCLAVE_VBS_BASIC_KEY_FLAG_IMAGE_ID    = 0x00000004,
-    ENCLAVE_VBS_BASIC_KEY_FLAG_DEBUG_KEY   = 0x00000008,
+    VBS_ENCLAVE_REPORT_PKG_HEADER_VERSION_CURRENT             = 0x00000001U,
+    VBS_ENCLAVE_REPORT_SIGNATURE_SCHEME_SHA256_RSA_PSS_SHA256 = 0x00000001U,
+}
+
+enum uint VBS_ENCLAVE_REPORT_VERSION_CURRENT = 0x00000001U;
+enum uint ENCLAVE_REPORT_DATA_LENGTH = 0x00000040U;
+
+enum : uint
+{
+    VBS_ENCLAVE_VARDATA_INVALID = 0x00000000U,
+    VBS_ENCLAVE_VARDATA_MODULE  = 0x00000001U,
+}
+
+enum : uint
+{
+    ENCLAVE_VBS_BASIC_KEY_FLAG_MEASUREMENT = 0x00000001U,
+    ENCLAVE_VBS_BASIC_KEY_FLAG_FAMILY_ID   = 0x00000002U,
+    ENCLAVE_VBS_BASIC_KEY_FLAG_IMAGE_ID    = 0x00000004U,
+    ENCLAVE_VBS_BASIC_KEY_FLAG_DEBUG_KEY   = 0x00000008U,
 }
 
 // Callbacks
 
-//DELEGATE ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(2))], [])
-alias VBS_BASIC_ENCLAVE_BASIC_CALL_RETURN_FROM_EXCEPTION = int function(VBS_BASIC_ENCLAVE_EXCEPTION_AMD64* ExceptionRecord);
-//DELEGATE ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-alias VBS_BASIC_ENCLAVE_BASIC_CALL_TERMINATE_THREAD = int function(VBS_BASIC_ENCLAVE_THREAD_DESCRIPTOR64* ThreadDescriptor);
-//DELEGATE ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-alias VBS_BASIC_ENCLAVE_BASIC_CALL_INTERRUPT_THREAD = int function(VBS_BASIC_ENCLAVE_THREAD_DESCRIPTOR64* ThreadDescriptor);
-//DELEGATE ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-alias VBS_BASIC_ENCLAVE_BASIC_CALL_CREATE_THREAD = int function(VBS_BASIC_ENCLAVE_THREAD_DESCRIPTOR64* ThreadDescriptor);
+
+version(X86_64)
+{
+    alias VBS_BASIC_ENCLAVE_BASIC_CALL_RETURN_FROM_EXCEPTION = int function(VBS_BASIC_ENCLAVE_EXCEPTION_AMD64* ExceptionRecord);
+}
+
+version(X86_64)
+{
+    alias VBS_BASIC_ENCLAVE_BASIC_CALL_TERMINATE_THREAD = int function(VBS_BASIC_ENCLAVE_THREAD_DESCRIPTOR64* ThreadDescriptor);
+}
+
+version(AArch64)
+{
+    alias VBS_BASIC_ENCLAVE_BASIC_CALL_TERMINATE_THREAD = int function(VBS_BASIC_ENCLAVE_THREAD_DESCRIPTOR64* ThreadDescriptor);
+}
+
+version(X86_64)
+{
+    alias VBS_BASIC_ENCLAVE_BASIC_CALL_INTERRUPT_THREAD = int function(VBS_BASIC_ENCLAVE_THREAD_DESCRIPTOR64* ThreadDescriptor);
+}
+
+version(AArch64)
+{
+    alias VBS_BASIC_ENCLAVE_BASIC_CALL_INTERRUPT_THREAD = int function(VBS_BASIC_ENCLAVE_THREAD_DESCRIPTOR64* ThreadDescriptor);
+}
+
+version(X86_64)
+{
+    alias VBS_BASIC_ENCLAVE_BASIC_CALL_CREATE_THREAD = int function(VBS_BASIC_ENCLAVE_THREAD_DESCRIPTOR64* ThreadDescriptor);
+}
+
+version(AArch64)
+{
+    alias VBS_BASIC_ENCLAVE_BASIC_CALL_CREATE_THREAD = int function(VBS_BASIC_ENCLAVE_THREAD_DESCRIPTOR64* ThreadDescriptor);
+}
 alias VBS_BASIC_ENCLAVE_BASIC_CALL_RETURN_FROM_ENCLAVE = void function(size_t ReturnValue);
-//DELEGATE ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(5))], [])
-alias VBS_BASIC_ENCLAVE_BASIC_CALL_RETURN_FROM_EXCEPTION = int function(void* ExceptionRecord);
-//DELEGATE ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-alias VBS_BASIC_ENCLAVE_BASIC_CALL_TERMINATE_THREAD = int function(VBS_BASIC_ENCLAVE_THREAD_DESCRIPTOR32* ThreadDescriptor);
-//DELEGATE ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-alias VBS_BASIC_ENCLAVE_BASIC_CALL_INTERRUPT_THREAD = int function(VBS_BASIC_ENCLAVE_THREAD_DESCRIPTOR32* ThreadDescriptor);
+
+version(X86)
+{
+    alias VBS_BASIC_ENCLAVE_BASIC_CALL_RETURN_FROM_EXCEPTION = int function(void* ExceptionRecord);
+}
+
+version(AArch64)
+{
+    alias VBS_BASIC_ENCLAVE_BASIC_CALL_RETURN_FROM_EXCEPTION = int function(void* ExceptionRecord);
+}
+
+version(X86)
+{
+    alias VBS_BASIC_ENCLAVE_BASIC_CALL_TERMINATE_THREAD = int function(VBS_BASIC_ENCLAVE_THREAD_DESCRIPTOR32* ThreadDescriptor);
+}
+
+version(X86)
+{
+    alias VBS_BASIC_ENCLAVE_BASIC_CALL_INTERRUPT_THREAD = int function(VBS_BASIC_ENCLAVE_THREAD_DESCRIPTOR32* ThreadDescriptor);
+}
 alias VBS_BASIC_ENCLAVE_BASIC_CALL_COMMIT_PAGES = int function(void* EnclaveAddress, size_t NumberOfBytes, 
                                                                void* SourceAddress, uint PageProtection);
 alias VBS_BASIC_ENCLAVE_BASIC_CALL_DECOMMIT_PAGES = int function(void* EnclaveAddress, size_t NumberOfBytes);
 alias VBS_BASIC_ENCLAVE_BASIC_CALL_PROTECT_PAGES = int function(void* EnclaveAddress, size_t NumberOfytes, 
                                                                 uint PageProtection);
-//DELEGATE ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-alias VBS_BASIC_ENCLAVE_BASIC_CALL_CREATE_THREAD = int function(VBS_BASIC_ENCLAVE_THREAD_DESCRIPTOR32* ThreadDescriptor);
+
+version(X86)
+{
+    alias VBS_BASIC_ENCLAVE_BASIC_CALL_CREATE_THREAD = int function(VBS_BASIC_ENCLAVE_THREAD_DESCRIPTOR32* ThreadDescriptor);
+}
 alias VBS_BASIC_ENCLAVE_BASIC_CALL_GET_ENCLAVE_INFORMATION = int function(ENCLAVE_INFORMATION* EnclaveInfo);
 alias VBS_BASIC_ENCLAVE_BASIC_CALL_GENERATE_KEY = int function(ENCLAVE_VBS_BASIC_KEY_REQUEST* KeyRequest, 
                                                                uint RequestedKeySize, ubyte* ReturnedKey);
@@ -101,7 +147,7 @@ alias VBS_BASIC_ENCLAVE_BASIC_CALL_GENERATE_RANDOM_DATA = int function(/*PARAM A
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntenclv/ns-ntenclv-enclave_identity))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntenclv/ns-ntenclv-enclave_identity
 struct ENCLAVE_IDENTITY
 {
 align (1):
@@ -118,7 +164,7 @@ align (1):
     uint      EnclaveType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntenclv/ns-ntenclv-vbs_enclave_report_pkg_header))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntenclv/ns-ntenclv-vbs_enclave_report_pkg_header
 struct VBS_ENCLAVE_REPORT_PKG_HEADER
 {
 align (1):
@@ -130,7 +176,7 @@ align (1):
     uint Reserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntenclv/ns-ntenclv-vbs_enclave_report))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntenclv/ns-ntenclv-vbs_enclave_report
 struct VBS_ENCLAVE_REPORT
 {
 align (1):
@@ -140,7 +186,7 @@ align (1):
     ENCLAVE_IDENTITY EnclaveIdentity;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntenclv/ns-ntenclv-vbs_enclave_report_vardata_header))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntenclv/ns-ntenclv-vbs_enclave_report_vardata_header
 struct VBS_ENCLAVE_REPORT_VARDATA_HEADER
 {
 align (1):
@@ -148,7 +194,7 @@ align (1):
     uint Size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntenclv/ns-ntenclv-vbs_enclave_report_module))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntenclv/ns-ntenclv-vbs_enclave_report_module
 struct VBS_ENCLAVE_REPORT_MODULE
 {
 align (1):
@@ -161,7 +207,7 @@ align (1):
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] ModuleName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntenclv/ns-ntenclv-enclave_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntenclv/ns-ntenclv-enclave_information
 struct ENCLAVE_INFORMATION
 {
     uint             EnclaveType;

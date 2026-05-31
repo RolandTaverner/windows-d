@@ -3,20 +3,21 @@
 module windows.win32.system.eventnotificationservice;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BSTR, HRESULT, PSTR, PWSTR;
-public import windows.win32.system.com : IDispatch;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BSTR, HRESULT, PSTR, PWSTR;
+public import windows.win32.system.com.com : IDispatch;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
+
 alias SENS_CONNECTION_TYPE = uint;
 enum : uint
 {
-    CONNECTION_LAN = 0x00000000,
-    CONNECTION_WAN = 0x00000001,
+    CONNECTION_LAN = 0x00000000U,
+    CONNECTION_WAN = 0x00000001U,
 }
 
 // Constants
@@ -24,13 +25,13 @@ enum : uint
 
 enum : uint
 {
-    NETWORK_ALIVE_LAN      = 0x00000001,
-    NETWORK_ALIVE_WAN      = 0x00000002,
-    NETWORK_ALIVE_AOL      = 0x00000004,
-    NETWORK_ALIVE_INTERNET = 0x00000008,
+    NETWORK_ALIVE_LAN      = 0x00000001U,
+    NETWORK_ALIVE_WAN      = 0x00000002U,
+    NETWORK_ALIVE_AOL      = 0x00000004U,
+    NETWORK_ALIVE_INTERNET = 0x00000008U,
 }
 
-enum uint CONNECTION_AOL = 0x00000004;
+enum uint CONNECTION_AOL = 0x00000004U;
 
 enum : GUID
 {
@@ -50,7 +51,7 @@ enum : GUID
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensapi/ns-sensapi-qocinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensapi/ns-sensapi-qocinfo
 struct QOCINFO
 {
     uint dwSize;
@@ -59,7 +60,7 @@ struct QOCINFO
     uint dwOutSpeed;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensevts/ns-sensevts-sens_qocinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensevts/ns-sensevts-sens_qocinfo
 struct SENS_QOCINFO
 {
     uint dwSize;
@@ -90,14 +91,14 @@ struct SENS;
 
 @GUID("d597bab1-5b9f-11d1-8dd2-00aa004abd5e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensevts/nn-sensevts-isensnetwork))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensevts/nn-sensevts-isensnetwork
 interface ISensNetwork : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isensnetwork-connectionmade))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isensnetwork-connectionmade
     HRESULT ConnectionMade(BSTR bstrConnection, uint ulType, SENS_QOCINFO* lpQOCInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isensnetwork-connectionmadenoqocinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isensnetwork-connectionmadenoqocinfo
     HRESULT ConnectionMadeNoQOCInfo(BSTR bstrConnection, uint ulType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isensnetwork-connectionlost))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isensnetwork-connectionlost
     HRESULT ConnectionLost(BSTR bstrConnection, SENS_CONNECTION_TYPE ulType);
     HRESULT DestinationReachable(BSTR bstrDestination, BSTR bstrConnection, uint ulType, SENS_QOCINFO* lpQOCInfo);
     HRESULT DestinationReachableNoQOCInfo(BSTR bstrDestination, BSTR bstrConnection, uint ulType);
@@ -105,52 +106,52 @@ interface ISensNetwork : IDispatch
 
 @GUID("d597bab2-5b9f-11d1-8dd2-00aa004abd5e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensevts/nn-sensevts-isensonnow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensevts/nn-sensevts-isensonnow
 interface ISensOnNow : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isensonnow-onacpower))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isensonnow-onacpower
     HRESULT OnACPower();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isensonnow-onbatterypower))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isensonnow-onbatterypower
     HRESULT OnBatteryPower(uint dwBatteryLifePercent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isensonnow-batterylow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isensonnow-batterylow
     HRESULT BatteryLow(uint dwBatteryLifePercent);
 }
 
 @GUID("d597bab3-5b9f-11d1-8dd2-00aa004abd5e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensevts/nn-sensevts-isenslogon))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensevts/nn-sensevts-isenslogon
 interface ISensLogon : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isenslogon-logon))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isenslogon-logon
     HRESULT Logon(BSTR bstrUserName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isenslogon-logoff))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isenslogon-logoff
     HRESULT Logoff(BSTR bstrUserName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isenslogon-startshell))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isenslogon-startshell
     HRESULT StartShell(BSTR bstrUserName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isenslogon-displaylock))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isenslogon-displaylock
     HRESULT DisplayLock(BSTR bstrUserName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isenslogon-displayunlock))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isenslogon-displayunlock
     HRESULT DisplayUnlock(BSTR bstrUserName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isenslogon-startscreensaver))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isenslogon-startscreensaver
     HRESULT StartScreenSaver(BSTR bstrUserName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isenslogon-stopscreensaver))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isenslogon-stopscreensaver
     HRESULT StopScreenSaver(BSTR bstrUserName);
 }
 
 @GUID("d597bab4-5b9f-11d1-8dd2-00aa004abd5e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensevts/nn-sensevts-isenslogon2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensevts/nn-sensevts-isenslogon2
 interface ISensLogon2 : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isenslogon2-logon))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isenslogon2-logon
     HRESULT Logon(BSTR bstrUserName, uint dwSessionId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isenslogon2-logoff))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isenslogon2-logoff
     HRESULT Logoff(BSTR bstrUserName, uint dwSessionId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isenslogon2-sessiondisconnect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isenslogon2-sessiondisconnect
     HRESULT SessionDisconnect(BSTR bstrUserName, uint dwSessionId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isenslogon2-sessionreconnect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isenslogon2-sessionreconnect
     HRESULT SessionReconnect(BSTR bstrUserName, uint dwSessionId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isenslogon2-postshell))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sensevts/nf-sensevts-isenslogon2-postshell
     HRESULT PostShell(BSTR bstrUserName, uint dwSessionId);
 }
 

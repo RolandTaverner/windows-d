@@ -3,15 +3,16 @@
 module windows.win32.system.systemservices;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOLEAN, CHAR, HANDLE, LUID, PSTR, PWSTR;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOLEAN, CHAR, HANDLE, LUID, PSTR, PWSTR;
 public import windows.win32.graphics.gdi : LOGPALETTE;
-public import windows.win32.security : PSID, SECURITY_IMPERSONATION_LEVEL, SID,
-                                       SID_AND_ATTRIBUTES, TOKEN_ELEVATION,
-                                       TOKEN_ELEVATION_TYPE, TOKEN_TYPE, TOKEN_USER;
-public import windows.win32.system.com : BYTE_BLOB, DWORD_BLOB, FLAGGED_BYTE_BLOB;
-public import windows.win32.system.diagnostics.debug : EXCEPTION_POINTERS, IMAGE_ARM64_RUNTIME_FUNCTION_ENTRY,
-                                                       IMAGE_RUNTIME_FUNCTION_ENTRY;
+public import windows.win32.security.security : PSID, SECURITY_IMPERSONATION_LEVEL, SID,
+                                                SID_AND_ATTRIBUTES, TOKEN_ELEVATION,
+                                                TOKEN_ELEVATION_TYPE, TOKEN_TYPE,
+                                                TOKEN_USER;
+public import windows.win32.system.com.com : BYTE_BLOB, DWORD_BLOB, FLAGGED_BYTE_BLOB;
+public import windows.win32.system.diagnostics.debug_.debug_ : EXCEPTION_POINTERS, IMAGE_ARM64_RUNTIME_FUNCTION_ENTRY,
+                                                               IMAGE_RUNTIME_FUNCTION_ENTRY;
 public import windows.win32.system.power : SYSTEM_BATTERY_STATE;
 
 extern(Windows) @nogc nothrow:
@@ -19,264 +20,277 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias ALERT_SYSTEM_SEV = uint;
 enum : uint
 {
-    ALERT_SYSTEM_INFORMATIONAL = 0x00000001,
-    ALERT_SYSTEM_WARNING       = 0x00000002,
-    ALERT_SYSTEM_ERROR         = 0x00000003,
-    ALERT_SYSTEM_QUERY         = 0x00000004,
-    ALERT_SYSTEM_CRITICAL      = 0x00000005,
+    ALERT_SYSTEM_INFORMATIONAL = 0x00000001U,
+    ALERT_SYSTEM_WARNING       = 0x00000002U,
+    ALERT_SYSTEM_ERROR         = 0x00000003U,
+    ALERT_SYSTEM_QUERY         = 0x00000004U,
+    ALERT_SYSTEM_CRITICAL      = 0x00000005U,
 }
+
 alias APPCOMMAND_ID = uint;
 enum : uint
 {
-    APPCOMMAND_BROWSER_BACKWARD                  = 0x00000001,
-    APPCOMMAND_BROWSER_FORWARD                   = 0x00000002,
-    APPCOMMAND_BROWSER_REFRESH                   = 0x00000003,
-    APPCOMMAND_BROWSER_STOP                      = 0x00000004,
-    APPCOMMAND_BROWSER_SEARCH                    = 0x00000005,
-    APPCOMMAND_BROWSER_FAVORITES                 = 0x00000006,
-    APPCOMMAND_BROWSER_HOME                      = 0x00000007,
-    APPCOMMAND_VOLUME_MUTE                       = 0x00000008,
-    APPCOMMAND_VOLUME_DOWN                       = 0x00000009,
-    APPCOMMAND_VOLUME_UP                         = 0x0000000a,
-    APPCOMMAND_MEDIA_NEXTTRACK                   = 0x0000000b,
-    APPCOMMAND_MEDIA_PREVIOUSTRACK               = 0x0000000c,
-    APPCOMMAND_MEDIA_STOP                        = 0x0000000d,
-    APPCOMMAND_MEDIA_PLAY_PAUSE                  = 0x0000000e,
-    APPCOMMAND_LAUNCH_MAIL                       = 0x0000000f,
-    APPCOMMAND_LAUNCH_MEDIA_SELECT               = 0x00000010,
-    APPCOMMAND_LAUNCH_APP1                       = 0x00000011,
-    APPCOMMAND_LAUNCH_APP2                       = 0x00000012,
-    APPCOMMAND_BASS_DOWN                         = 0x00000013,
-    APPCOMMAND_BASS_BOOST                        = 0x00000014,
-    APPCOMMAND_BASS_UP                           = 0x00000015,
-    APPCOMMAND_TREBLE_DOWN                       = 0x00000016,
-    APPCOMMAND_TREBLE_UP                         = 0x00000017,
-    APPCOMMAND_MICROPHONE_VOLUME_MUTE            = 0x00000018,
-    APPCOMMAND_MICROPHONE_VOLUME_DOWN            = 0x00000019,
-    APPCOMMAND_MICROPHONE_VOLUME_UP              = 0x0000001a,
-    APPCOMMAND_HELP                              = 0x0000001b,
-    APPCOMMAND_FIND                              = 0x0000001c,
-    APPCOMMAND_NEW                               = 0x0000001d,
-    APPCOMMAND_OPEN                              = 0x0000001e,
-    APPCOMMAND_CLOSE                             = 0x0000001f,
-    APPCOMMAND_SAVE                              = 0x00000020,
-    APPCOMMAND_PRINT                             = 0x00000021,
-    APPCOMMAND_UNDO                              = 0x00000022,
-    APPCOMMAND_REDO                              = 0x00000023,
-    APPCOMMAND_COPY                              = 0x00000024,
-    APPCOMMAND_CUT                               = 0x00000025,
-    APPCOMMAND_PASTE                             = 0x00000026,
-    APPCOMMAND_REPLY_TO_MAIL                     = 0x00000027,
-    APPCOMMAND_FORWARD_MAIL                      = 0x00000028,
-    APPCOMMAND_SEND_MAIL                         = 0x00000029,
-    APPCOMMAND_SPELL_CHECK                       = 0x0000002a,
-    APPCOMMAND_DICTATE_OR_COMMAND_CONTROL_TOGGLE = 0x0000002b,
-    APPCOMMAND_MIC_ON_OFF_TOGGLE                 = 0x0000002c,
-    APPCOMMAND_CORRECTION_LIST                   = 0x0000002d,
-    APPCOMMAND_MEDIA_PLAY                        = 0x0000002e,
-    APPCOMMAND_MEDIA_PAUSE                       = 0x0000002f,
-    APPCOMMAND_MEDIA_RECORD                      = 0x00000030,
-    APPCOMMAND_MEDIA_FAST_FORWARD                = 0x00000031,
-    APPCOMMAND_MEDIA_REWIND                      = 0x00000032,
-    APPCOMMAND_MEDIA_CHANNEL_UP                  = 0x00000033,
-    APPCOMMAND_MEDIA_CHANNEL_DOWN                = 0x00000034,
-    APPCOMMAND_DELETE                            = 0x00000035,
-    APPCOMMAND_DWM_FLIP3D                        = 0x00000036,
+    APPCOMMAND_BROWSER_BACKWARD                  = 0x00000001U,
+    APPCOMMAND_BROWSER_FORWARD                   = 0x00000002U,
+    APPCOMMAND_BROWSER_REFRESH                   = 0x00000003U,
+    APPCOMMAND_BROWSER_STOP                      = 0x00000004U,
+    APPCOMMAND_BROWSER_SEARCH                    = 0x00000005U,
+    APPCOMMAND_BROWSER_FAVORITES                 = 0x00000006U,
+    APPCOMMAND_BROWSER_HOME                      = 0x00000007U,
+    APPCOMMAND_VOLUME_MUTE                       = 0x00000008U,
+    APPCOMMAND_VOLUME_DOWN                       = 0x00000009U,
+    APPCOMMAND_VOLUME_UP                         = 0x0000000aU,
+    APPCOMMAND_MEDIA_NEXTTRACK                   = 0x0000000bU,
+    APPCOMMAND_MEDIA_PREVIOUSTRACK               = 0x0000000cU,
+    APPCOMMAND_MEDIA_STOP                        = 0x0000000dU,
+    APPCOMMAND_MEDIA_PLAY_PAUSE                  = 0x0000000eU,
+    APPCOMMAND_LAUNCH_MAIL                       = 0x0000000fU,
+    APPCOMMAND_LAUNCH_MEDIA_SELECT               = 0x00000010U,
+    APPCOMMAND_LAUNCH_APP1                       = 0x00000011U,
+    APPCOMMAND_LAUNCH_APP2                       = 0x00000012U,
+    APPCOMMAND_BASS_DOWN                         = 0x00000013U,
+    APPCOMMAND_BASS_BOOST                        = 0x00000014U,
+    APPCOMMAND_BASS_UP                           = 0x00000015U,
+    APPCOMMAND_TREBLE_DOWN                       = 0x00000016U,
+    APPCOMMAND_TREBLE_UP                         = 0x00000017U,
+    APPCOMMAND_MICROPHONE_VOLUME_MUTE            = 0x00000018U,
+    APPCOMMAND_MICROPHONE_VOLUME_DOWN            = 0x00000019U,
+    APPCOMMAND_MICROPHONE_VOLUME_UP              = 0x0000001aU,
+    APPCOMMAND_HELP                              = 0x0000001bU,
+    APPCOMMAND_FIND                              = 0x0000001cU,
+    APPCOMMAND_NEW                               = 0x0000001dU,
+    APPCOMMAND_OPEN                              = 0x0000001eU,
+    APPCOMMAND_CLOSE                             = 0x0000001fU,
+    APPCOMMAND_SAVE                              = 0x00000020U,
+    APPCOMMAND_PRINT                             = 0x00000021U,
+    APPCOMMAND_UNDO                              = 0x00000022U,
+    APPCOMMAND_REDO                              = 0x00000023U,
+    APPCOMMAND_COPY                              = 0x00000024U,
+    APPCOMMAND_CUT                               = 0x00000025U,
+    APPCOMMAND_PASTE                             = 0x00000026U,
+    APPCOMMAND_REPLY_TO_MAIL                     = 0x00000027U,
+    APPCOMMAND_FORWARD_MAIL                      = 0x00000028U,
+    APPCOMMAND_SEND_MAIL                         = 0x00000029U,
+    APPCOMMAND_SPELL_CHECK                       = 0x0000002aU,
+    APPCOMMAND_DICTATE_OR_COMMAND_CONTROL_TOGGLE = 0x0000002bU,
+    APPCOMMAND_MIC_ON_OFF_TOGGLE                 = 0x0000002cU,
+    APPCOMMAND_CORRECTION_LIST                   = 0x0000002dU,
+    APPCOMMAND_MEDIA_PLAY                        = 0x0000002eU,
+    APPCOMMAND_MEDIA_PAUSE                       = 0x0000002fU,
+    APPCOMMAND_MEDIA_RECORD                      = 0x00000030U,
+    APPCOMMAND_MEDIA_FAST_FORWARD                = 0x00000031U,
+    APPCOMMAND_MEDIA_REWIND                      = 0x00000032U,
+    APPCOMMAND_MEDIA_CHANNEL_UP                  = 0x00000033U,
+    APPCOMMAND_MEDIA_CHANNEL_DOWN                = 0x00000034U,
+    APPCOMMAND_DELETE                            = 0x00000035U,
+    APPCOMMAND_DWM_FLIP3D                        = 0x00000036U,
 }
+
 alias ATF_FLAGS = uint;
 enum : uint
 {
-    ATF_TIMEOUTON     = 0x00000001,
-    ATF_ONOFFFEEDBACK = 0x00000002,
+    ATF_TIMEOUTON     = 0x00000001U,
+    ATF_ONOFFFEEDBACK = 0x00000002U,
 }
+
 alias GESTURECONFIG_FLAGS = uint;
 enum : uint
 {
-    GC_ALLGESTURES                         = 0x00000001,
-    GC_ZOOM                                = 0x00000001,
-    GC_PAN                                 = 0x00000001,
-    GC_PAN_WITH_SINGLE_FINGER_VERTICALLY   = 0x00000002,
-    GC_PAN_WITH_SINGLE_FINGER_HORIZONTALLY = 0x00000004,
-    GC_PAN_WITH_GUTTER                     = 0x00000008,
-    GC_PAN_WITH_INERTIA                    = 0x00000010,
-    GC_ROTATE                              = 0x00000001,
-    GC_TWOFINGERTAP                        = 0x00000001,
-    GC_PRESSANDTAP                         = 0x00000001,
-    GC_ROLLOVER                            = 0x00000001,
+    GC_ALLGESTURES                         = 0x00000001U,
+    GC_ZOOM                                = 0x00000001U,
+    GC_PAN                                 = 0x00000001U,
+    GC_PAN_WITH_SINGLE_FINGER_VERTICALLY   = 0x00000002U,
+    GC_PAN_WITH_SINGLE_FINGER_HORIZONTALLY = 0x00000004U,
+    GC_PAN_WITH_GUTTER                     = 0x00000008U,
+    GC_PAN_WITH_INERTIA                    = 0x00000010U,
+    GC_ROTATE                              = 0x00000001U,
+    GC_TWOFINGERTAP                        = 0x00000001U,
+    GC_PRESSANDTAP                         = 0x00000001U,
+    GC_ROLLOVER                            = 0x00000001U,
 }
+
 alias CFE_UNDERLINE = uint;
 enum : uint
 {
-    CFU_CF1UNDERLINE             = 0x000000ff,
-    CFU_INVERT                   = 0x000000fe,
-    CFU_UNDERLINETHICKLONGDASH   = 0x00000012,
-    CFU_UNDERLINETHICKDOTTED     = 0x00000011,
-    CFU_UNDERLINETHICKDASHDOTDOT = 0x00000010,
-    CFU_UNDERLINETHICKDASHDOT    = 0x0000000f,
-    CFU_UNDERLINETHICKDASH       = 0x0000000e,
-    CFU_UNDERLINELONGDASH        = 0x0000000d,
-    CFU_UNDERLINEHEAVYWAVE       = 0x0000000c,
-    CFU_UNDERLINEDOUBLEWAVE      = 0x0000000b,
-    CFU_UNDERLINEHAIRLINE        = 0x0000000a,
-    CFU_UNDERLINETHICK           = 0x00000009,
-    CFU_UNDERLINEWAVE            = 0x00000008,
-    CFU_UNDERLINEDASHDOTDOT      = 0x00000007,
-    CFU_UNDERLINEDASHDOT         = 0x00000006,
-    CFU_UNDERLINEDASH            = 0x00000005,
-    CFU_UNDERLINEDOTTED          = 0x00000004,
-    CFU_UNDERLINEDOUBLE          = 0x00000003,
-    CFU_UNDERLINEWORD            = 0x00000002,
-    CFU_UNDERLINE                = 0x00000001,
-    CFU_UNDERLINENONE            = 0x00000000,
+    CFU_CF1UNDERLINE             = 0x000000ffU,
+    CFU_INVERT                   = 0x000000feU,
+    CFU_UNDERLINETHICKLONGDASH   = 0x00000012U,
+    CFU_UNDERLINETHICKDOTTED     = 0x00000011U,
+    CFU_UNDERLINETHICKDASHDOTDOT = 0x00000010U,
+    CFU_UNDERLINETHICKDASHDOT    = 0x0000000fU,
+    CFU_UNDERLINETHICKDASH       = 0x0000000eU,
+    CFU_UNDERLINELONGDASH        = 0x0000000dU,
+    CFU_UNDERLINEHEAVYWAVE       = 0x0000000cU,
+    CFU_UNDERLINEDOUBLEWAVE      = 0x0000000bU,
+    CFU_UNDERLINEHAIRLINE        = 0x0000000aU,
+    CFU_UNDERLINETHICK           = 0x00000009U,
+    CFU_UNDERLINEWAVE            = 0x00000008U,
+    CFU_UNDERLINEDASHDOTDOT      = 0x00000007U,
+    CFU_UNDERLINEDASHDOT         = 0x00000006U,
+    CFU_UNDERLINEDASH            = 0x00000005U,
+    CFU_UNDERLINEDOTTED          = 0x00000004U,
+    CFU_UNDERLINEDOUBLE          = 0x00000003U,
+    CFU_UNDERLINEWORD            = 0x00000002U,
+    CFU_UNDERLINE                = 0x00000001U,
+    CFU_UNDERLINENONE            = 0x00000000U,
 }
+
 alias IGP_ID = uint;
 enum : uint
 {
-    IGP_GETIMEVERSION = 0xfffffffc,
-    IGP_PROPERTY      = 0x00000004,
-    IGP_CONVERSION    = 0x00000008,
-    IGP_SENTENCE      = 0x0000000c,
-    IGP_UI            = 0x00000010,
-    IGP_SETCOMPSTR    = 0x00000014,
-    IGP_SELECT        = 0x00000018,
+    IGP_GETIMEVERSION = 0xfffffffcU,
+    IGP_PROPERTY      = 0x00000004U,
+    IGP_CONVERSION    = 0x00000008U,
+    IGP_SENTENCE      = 0x0000000cU,
+    IGP_UI            = 0x00000010U,
+    IGP_SETCOMPSTR    = 0x00000014U,
+    IGP_SELECT        = 0x00000018U,
 }
+
 alias WORD_WHEEL_OPEN_FLAGS = uint;
 enum : uint
 {
-    ITWW_OPEN_CONNECT = 0x00000000,
+    ITWW_OPEN_CONNECT = 0x00000000U,
 }
+
 alias TAPE_GET_DRIVE_PARAMETERS_FEATURES_HIGH = uint;
 enum : uint
 {
-    TAPE_DRIVE_ABS_BLK_IMMED    = 0x80002000,
-    TAPE_DRIVE_ABSOLUTE_BLK     = 0x80001000,
-    TAPE_DRIVE_END_OF_DATA      = 0x80010000,
-    TAPE_DRIVE_FILEMARKS        = 0x80040000,
-    TAPE_DRIVE_LOAD_UNLOAD      = 0x80000001,
-    TAPE_DRIVE_LOAD_UNLD_IMMED  = 0x80000020,
-    TAPE_DRIVE_LOCK_UNLOCK      = 0x80000004,
-    TAPE_DRIVE_LOCK_UNLK_IMMED  = 0x80000080,
-    TAPE_DRIVE_LOG_BLK_IMMED    = 0x80008000,
-    TAPE_DRIVE_LOGICAL_BLK      = 0x80004000,
-    TAPE_DRIVE_RELATIVE_BLKS    = 0x80020000,
-    TAPE_DRIVE_REVERSE_POSITION = 0x80400000,
-    TAPE_DRIVE_REWIND_IMMEDIATE = 0x80000008,
-    TAPE_DRIVE_SEQUENTIAL_FMKS  = 0x80080000,
-    TAPE_DRIVE_SEQUENTIAL_SMKS  = 0x80200000,
-    TAPE_DRIVE_SET_BLOCK_SIZE   = 0x80000010,
-    TAPE_DRIVE_SET_COMPRESSION  = 0x80000200,
-    TAPE_DRIVE_SET_ECC          = 0x80000100,
-    TAPE_DRIVE_SET_PADDING      = 0x80000400,
-    TAPE_DRIVE_SET_REPORT_SMKS  = 0x80000800,
-    TAPE_DRIVE_SETMARKS         = 0x80100000,
-    TAPE_DRIVE_SPACE_IMMEDIATE  = 0x80800000,
-    TAPE_DRIVE_TENSION          = 0x80000002,
-    TAPE_DRIVE_TENSION_IMMED    = 0x80000040,
-    TAPE_DRIVE_WRITE_FILEMARKS  = 0x82000000,
-    TAPE_DRIVE_WRITE_LONG_FMKS  = 0x88000000,
-    TAPE_DRIVE_WRITE_MARK_IMMED = 0x90000000,
-    TAPE_DRIVE_WRITE_SETMARKS   = 0x81000000,
-    TAPE_DRIVE_WRITE_SHORT_FMKS = 0x84000000,
+    TAPE_DRIVE_ABS_BLK_IMMED    = 0x80002000U,
+    TAPE_DRIVE_ABSOLUTE_BLK     = 0x80001000U,
+    TAPE_DRIVE_END_OF_DATA      = 0x80010000U,
+    TAPE_DRIVE_FILEMARKS        = 0x80040000U,
+    TAPE_DRIVE_LOAD_UNLOAD      = 0x80000001U,
+    TAPE_DRIVE_LOAD_UNLD_IMMED  = 0x80000020U,
+    TAPE_DRIVE_LOCK_UNLOCK      = 0x80000004U,
+    TAPE_DRIVE_LOCK_UNLK_IMMED  = 0x80000080U,
+    TAPE_DRIVE_LOG_BLK_IMMED    = 0x80008000U,
+    TAPE_DRIVE_LOGICAL_BLK      = 0x80004000U,
+    TAPE_DRIVE_RELATIVE_BLKS    = 0x80020000U,
+    TAPE_DRIVE_REVERSE_POSITION = 0x80400000U,
+    TAPE_DRIVE_REWIND_IMMEDIATE = 0x80000008U,
+    TAPE_DRIVE_SEQUENTIAL_FMKS  = 0x80080000U,
+    TAPE_DRIVE_SEQUENTIAL_SMKS  = 0x80200000U,
+    TAPE_DRIVE_SET_BLOCK_SIZE   = 0x80000010U,
+    TAPE_DRIVE_SET_COMPRESSION  = 0x80000200U,
+    TAPE_DRIVE_SET_ECC          = 0x80000100U,
+    TAPE_DRIVE_SET_PADDING      = 0x80000400U,
+    TAPE_DRIVE_SET_REPORT_SMKS  = 0x80000800U,
+    TAPE_DRIVE_SETMARKS         = 0x80100000U,
+    TAPE_DRIVE_SPACE_IMMEDIATE  = 0x80800000U,
+    TAPE_DRIVE_TENSION          = 0x80000002U,
+    TAPE_DRIVE_TENSION_IMMED    = 0x80000040U,
+    TAPE_DRIVE_WRITE_FILEMARKS  = 0x82000000U,
+    TAPE_DRIVE_WRITE_LONG_FMKS  = 0x88000000U,
+    TAPE_DRIVE_WRITE_MARK_IMMED = 0x90000000U,
+    TAPE_DRIVE_WRITE_SETMARKS   = 0x81000000U,
+    TAPE_DRIVE_WRITE_SHORT_FMKS = 0x84000000U,
 }
+
 alias MODIFIERKEYS_FLAGS = uint;
 enum : uint
 {
-    MK_LBUTTON  = 0x00000001,
-    MK_RBUTTON  = 0x00000002,
-    MK_SHIFT    = 0x00000004,
-    MK_CONTROL  = 0x00000008,
-    MK_MBUTTON  = 0x00000010,
-    MK_XBUTTON1 = 0x00000020,
-    MK_XBUTTON2 = 0x00000040,
+    MK_LBUTTON  = 0x00000001U,
+    MK_RBUTTON  = 0x00000002U,
+    MK_SHIFT    = 0x00000004U,
+    MK_CONTROL  = 0x00000008U,
+    MK_MBUTTON  = 0x00000010U,
+    MK_XBUTTON1 = 0x00000020U,
+    MK_XBUTTON2 = 0x00000040U,
 }
+
 alias STATIC_STYLES = uint;
 enum : uint
 {
-    SS_LEFT            = 0x00000000,
-    SS_CENTER          = 0x00000001,
-    SS_RIGHT           = 0x00000002,
-    SS_ICON            = 0x00000003,
-    SS_BLACKRECT       = 0x00000004,
-    SS_GRAYRECT        = 0x00000005,
-    SS_WHITERECT       = 0x00000006,
-    SS_BLACKFRAME      = 0x00000007,
-    SS_GRAYFRAME       = 0x00000008,
-    SS_WHITEFRAME      = 0x00000009,
-    SS_USERITEM        = 0x0000000a,
-    SS_SIMPLE          = 0x0000000b,
-    SS_LEFTNOWORDWRAP  = 0x0000000c,
-    SS_OWNERDRAW       = 0x0000000d,
-    SS_BITMAP          = 0x0000000e,
-    SS_ENHMETAFILE     = 0x0000000f,
-    SS_ETCHEDHORZ      = 0x00000010,
-    SS_ETCHEDVERT      = 0x00000011,
-    SS_ETCHEDFRAME     = 0x00000012,
-    SS_TYPEMASK        = 0x0000001f,
-    SS_REALSIZECONTROL = 0x00000040,
-    SS_NOPREFIX        = 0x00000080,
-    SS_NOTIFY          = 0x00000100,
-    SS_CENTERIMAGE     = 0x00000200,
-    SS_RIGHTJUST       = 0x00000400,
-    SS_REALSIZEIMAGE   = 0x00000800,
-    SS_SUNKEN          = 0x00001000,
-    SS_EDITCONTROL     = 0x00002000,
-    SS_ENDELLIPSIS     = 0x00004000,
-    SS_PATHELLIPSIS    = 0x00008000,
-    SS_WORDELLIPSIS    = 0x0000c000,
-    SS_ELLIPSISMASK    = 0x0000c000,
+    SS_LEFT            = 0x00000000U,
+    SS_CENTER          = 0x00000001U,
+    SS_RIGHT           = 0x00000002U,
+    SS_ICON            = 0x00000003U,
+    SS_BLACKRECT       = 0x00000004U,
+    SS_GRAYRECT        = 0x00000005U,
+    SS_WHITERECT       = 0x00000006U,
+    SS_BLACKFRAME      = 0x00000007U,
+    SS_GRAYFRAME       = 0x00000008U,
+    SS_WHITEFRAME      = 0x00000009U,
+    SS_USERITEM        = 0x0000000aU,
+    SS_SIMPLE          = 0x0000000bU,
+    SS_LEFTNOWORDWRAP  = 0x0000000cU,
+    SS_OWNERDRAW       = 0x0000000dU,
+    SS_BITMAP          = 0x0000000eU,
+    SS_ENHMETAFILE     = 0x0000000fU,
+    SS_ETCHEDHORZ      = 0x00000010U,
+    SS_ETCHEDVERT      = 0x00000011U,
+    SS_ETCHEDFRAME     = 0x00000012U,
+    SS_TYPEMASK        = 0x0000001fU,
+    SS_REALSIZECONTROL = 0x00000040U,
+    SS_NOPREFIX        = 0x00000080U,
+    SS_NOTIFY          = 0x00000100U,
+    SS_CENTERIMAGE     = 0x00000200U,
+    SS_RIGHTJUST       = 0x00000400U,
+    SS_REALSIZEIMAGE   = 0x00000800U,
+    SS_SUNKEN          = 0x00001000U,
+    SS_EDITCONTROL     = 0x00002000U,
+    SS_ENDELLIPSIS     = 0x00004000U,
+    SS_PATHELLIPSIS    = 0x00008000U,
+    SS_WORDELLIPSIS    = 0x0000c000U,
+    SS_ELLIPSISMASK    = 0x0000c000U,
 }
+
 alias RECO_FLAGS = uint;
 enum : uint
 {
-    RECO_PASTE = 0x00000000,
-    RECO_DROP  = 0x00000001,
-    RECO_COPY  = 0x00000002,
-    RECO_CUT   = 0x00000003,
-    RECO_DRAG  = 0x00000004,
+    RECO_PASTE = 0x00000000U,
+    RECO_DROP  = 0x00000001U,
+    RECO_COPY  = 0x00000002U,
+    RECO_CUT   = 0x00000003U,
+    RECO_DRAG  = 0x00000004U,
 }
+
 alias SFGAO_FLAGS = uint;
 enum : uint
 {
-    SFGAO_CANCOPY         = 0x00000001,
-    SFGAO_CANMOVE         = 0x00000002,
-    SFGAO_CANLINK         = 0x00000004,
-    SFGAO_STORAGE         = 0x00000008,
-    SFGAO_CANRENAME       = 0x00000010,
-    SFGAO_CANDELETE       = 0x00000020,
-    SFGAO_HASPROPSHEET    = 0x00000040,
-    SFGAO_DROPTARGET      = 0x00000100,
-    SFGAO_CAPABILITYMASK  = 0x00000177,
-    SFGAO_PLACEHOLDER     = 0x00000800,
-    SFGAO_SYSTEM          = 0x00001000,
-    SFGAO_ENCRYPTED       = 0x00002000,
-    SFGAO_ISSLOW          = 0x00004000,
-    SFGAO_GHOSTED         = 0x00008000,
-    SFGAO_LINK            = 0x00010000,
-    SFGAO_SHARE           = 0x00020000,
-    SFGAO_READONLY        = 0x00040000,
-    SFGAO_HIDDEN          = 0x00080000,
-    SFGAO_DISPLAYATTRMASK = 0x000fc000,
-    SFGAO_FILESYSANCESTOR = 0x10000000,
-    SFGAO_FOLDER          = 0x20000000,
-    SFGAO_FILESYSTEM      = 0x40000000,
-    SFGAO_HASSUBFOLDER    = 0x80000000,
-    SFGAO_CONTENTSMASK    = 0x80000000,
-    SFGAO_VALIDATE        = 0x01000000,
-    SFGAO_REMOVABLE       = 0x02000000,
-    SFGAO_COMPRESSED      = 0x04000000,
-    SFGAO_BROWSABLE       = 0x08000000,
-    SFGAO_NONENUMERATED   = 0x00100000,
-    SFGAO_NEWCONTENT      = 0x00200000,
-    SFGAO_CANMONIKER      = 0x00400000,
-    SFGAO_HASSTORAGE      = 0x00400000,
-    SFGAO_STREAM          = 0x00400000,
-    SFGAO_STORAGEANCESTOR = 0x00800000,
-    SFGAO_STORAGECAPMASK  = 0x70c50008,
-    SFGAO_PKEYSFGAOMASK   = 0x81044000,
+    SFGAO_CANCOPY         = 0x00000001U,
+    SFGAO_CANMOVE         = 0x00000002U,
+    SFGAO_CANLINK         = 0x00000004U,
+    SFGAO_STORAGE         = 0x00000008U,
+    SFGAO_CANRENAME       = 0x00000010U,
+    SFGAO_CANDELETE       = 0x00000020U,
+    SFGAO_HASPROPSHEET    = 0x00000040U,
+    SFGAO_DROPTARGET      = 0x00000100U,
+    SFGAO_CAPABILITYMASK  = 0x00000177U,
+    SFGAO_PLACEHOLDER     = 0x00000800U,
+    SFGAO_SYSTEM          = 0x00001000U,
+    SFGAO_ENCRYPTED       = 0x00002000U,
+    SFGAO_ISSLOW          = 0x00004000U,
+    SFGAO_GHOSTED         = 0x00008000U,
+    SFGAO_LINK            = 0x00010000U,
+    SFGAO_SHARE           = 0x00020000U,
+    SFGAO_READONLY        = 0x00040000U,
+    SFGAO_HIDDEN          = 0x00080000U,
+    SFGAO_DISPLAYATTRMASK = 0x000fc000U,
+    SFGAO_FILESYSANCESTOR = 0x10000000U,
+    SFGAO_FOLDER          = 0x20000000U,
+    SFGAO_FILESYSTEM      = 0x40000000U,
+    SFGAO_HASSUBFOLDER    = 0x80000000U,
+    SFGAO_CONTENTSMASK    = 0x80000000U,
+    SFGAO_VALIDATE        = 0x01000000U,
+    SFGAO_REMOVABLE       = 0x02000000U,
+    SFGAO_COMPRESSED      = 0x04000000U,
+    SFGAO_BROWSABLE       = 0x08000000U,
+    SFGAO_NONENUMERATED   = 0x00100000U,
+    SFGAO_NEWCONTENT      = 0x00200000U,
+    SFGAO_CANMONIKER      = 0x00400000U,
+    SFGAO_HASSTORAGE      = 0x00400000U,
+    SFGAO_STREAM          = 0x00400000U,
+    SFGAO_STORAGEANCESTOR = 0x00800000U,
+    SFGAO_STORAGECAPMASK  = 0x70c50008U,
+    SFGAO_PKEYSFGAOMASK   = 0x81044000U,
 }
+
 alias ACCESS_REASON_TYPE = int;
 enum : int
 {
@@ -299,6 +313,7 @@ enum : int
     AccessReasonTrustLabel               = 0x00900000,
     AccessReasonFilterAce                = 0x00a00000,
 }
+
 alias SE_IMAGE_SIGNATURE_TYPE = int;
 enum : int
 {
@@ -311,6 +326,7 @@ enum : int
     SeImageSignaturePackageCatalog   = 0x00000006,
     SeImageSignaturePplMitigated     = 0x00000007,
 }
+
 alias SERVERSILO_STATE = int;
 enum : int
 {
@@ -320,12 +336,14 @@ enum : int
     SERVERSILO_TERMINATING   = 0x00000003,
     SERVERSILO_TERMINATED    = 0x00000004,
 }
+
 alias RUNTIME_REPORT_TYPE = int;
 enum : int
 {
     RuntimeReportTypeDriver = 0x00000000,
     RuntimeReportTypeMax    = 0x00000001,
 }
+
 enum SharedVirtualDiskSupportType : int
 {
     SharedVirtualDisksUnsupported          = 0x00000000,
@@ -333,12 +351,14 @@ enum SharedVirtualDiskSupportType : int
     SharedVirtualDiskSnapshotsSupported    = 0x00000003,
     SharedVirtualDiskCDPSnapshotsSupported = 0x00000007,
 }
+
 enum SharedVirtualDiskHandleState : int
 {
     SharedVirtualDiskHandleStateNone         = 0x00000000,
     SharedVirtualDiskHandleStateFileShared   = 0x00000001,
     SharedVirtualDiskHandleStateHandleShared = 0x00000003,
 }
+
 alias MONITOR_DISPLAY_STATE = int;
 enum : int
 {
@@ -346,6 +366,7 @@ enum : int
     PowerMonitorOn  = 0x00000001,
     PowerMonitorDim = 0x00000002,
 }
+
 alias ENERGY_SAVER_STATUS = int;
 enum : int
 {
@@ -353,6 +374,7 @@ enum : int
     ENERGY_SAVER_STANDARD     = 0x00000001,
     ENERGY_SAVER_HIGH_SAVINGS = 0x00000002,
 }
+
 alias POWER_LIMIT_TYPES = int;
 enum : int
 {
@@ -367,6 +389,7 @@ enum : int
     PowerLimitPreemptiveOffset = 0x00000004,
     PowerLimitTypeMax          = 0x00000005,
 }
+
 alias HIBERFILE_BUCKET_SIZE = int;
 enum : int
 {
@@ -379,11 +402,13 @@ enum : int
     HiberFileBucketUnlimited = 0x00000006,
     HiberFileBucketMax       = 0x00000007,
 }
+
 alias IMAGE_AUX_SYMBOL_TYPE = int;
 enum : int
 {
     IMAGE_AUX_SYMBOL_TYPE_TOKEN_DEF = 0x00000001,
 }
+
 alias ARM64_FNPDATA_FLAGS = int;
 enum : int
 {
@@ -391,6 +416,7 @@ enum : int
     PdataPackedUnwindFunction = 0x00000001,
     PdataPackedUnwindFragment = 0x00000002,
 }
+
 alias ARM64_FNPDATA_CR = int;
 enum : int
 {
@@ -399,6 +425,7 @@ enum : int
     PdataCrChainedWithPac   = 0x00000002,
     PdataCrChained          = 0x00000003,
 }
+
 alias IMPORT_OBJECT_TYPE = int;
 enum : int
 {
@@ -406,6 +433,7 @@ enum : int
     IMPORT_OBJECT_DATA  = 0x00000001,
     IMPORT_OBJECT_CONST = 0x00000002,
 }
+
 alias IMPORT_OBJECT_NAME_TYPE = int;
 enum : int
 {
@@ -415,6 +443,7 @@ enum : int
     IMPORT_OBJECT_NAME_UNDECORATE = 0x00000003,
     IMPORT_OBJECT_NAME_EXPORTAS   = 0x00000004,
 }
+
 enum ReplacesCorHdrNumericDefines : int
 {
     COMIMAGE_FLAGS_ILONLY                      = 0x00000001,
@@ -443,6 +472,7 @@ enum ReplacesCorHdrNumericDefines : int
     MAX_CLASS_NAME                             = 0x00000400,
     MAX_PACKAGE_NAME                           = 0x00000400,
 }
+
 alias RTL_UMS_SCHEDULER_REASON = int;
 enum : int
 {
@@ -450,6 +480,7 @@ enum : int
     UmsSchedulerThreadBlocked = 0x00000001,
     UmsSchedulerThreadYield   = 0x00000002,
 }
+
 alias IMAGE_POLICY_ENTRY_TYPE = int;
 enum : int
 {
@@ -468,6 +499,7 @@ enum : int
     ImagePolicyEntryTypeOverride      = 0x0000000c,
     ImagePolicyEntryTypeMaximum       = 0x0000000d,
 }
+
 alias IMAGE_POLICY_ID = int;
 enum : int
 {
@@ -487,6 +519,7 @@ enum : int
     ImagePolicyIdTrustletIdOverridable = 0x0000000d,
     ImagePolicyIdMaximum               = 0x0000000e,
 }
+
 alias ACTIVATION_CONTEXT_INFO_CLASS = int;
 enum : int
 {
@@ -501,6 +534,7 @@ enum : int
     AssemblyDetailedInformationInActivationContxt          = 0x00000003,
     FileInformationInAssemblyOfAssemblyInActivationContxt  = 0x00000004,
 }
+
 alias SERVICE_NODE_TYPE = int;
 enum : int
 {
@@ -511,6 +545,7 @@ enum : int
     AdapterType              = 0x00000004,
     RecognizerType           = 0x00000008,
 }
+
 alias SERVICE_LOAD_TYPE = int;
 enum : int
 {
@@ -520,6 +555,7 @@ enum : int
     DemandLoad  = 0x00000003,
     DisableLoad = 0x00000004,
 }
+
 alias SERVICE_ERROR_TYPE = int;
 enum : int
 {
@@ -528,6 +564,7 @@ enum : int
     SevereError   = 0x00000002,
     CriticalError = 0x00000003,
 }
+
 alias TAPE_DRIVE_PROBLEM_TYPE = int;
 enum : int
 {
@@ -546,6 +583,7 @@ enum : int
     TapeDriveMediaLifeExpired    = 0x0000000c,
     TapeDriveSnappedTape         = 0x0000000d,
 }
+
 alias TRANSACTION_STATE = int;
 enum : int
 {
@@ -553,6 +591,7 @@ enum : int
     TransactionStateIndoubt         = 0x00000002,
     TransactionStateCommittedNotify = 0x00000003,
 }
+
 alias TRANSACTION_INFORMATION_CLASS = int;
 enum : int
 {
@@ -563,6 +602,7 @@ enum : int
     TransactionBindInformation               = 0x00000004,
     TransactionDTCPrivateInformation         = 0x00000005,
 }
+
 alias TRANSACTIONMANAGER_INFORMATION_CLASS = int;
 enum : int
 {
@@ -573,12 +613,14 @@ enum : int
     TransactionManagerOnlineProbeInformation       = 0x00000003,
     TransactionManagerOldestTransactionInformation = 0x00000005,
 }
+
 alias RESOURCEMANAGER_INFORMATION_CLASS = int;
 enum : int
 {
     ResourceManagerBasicInformation      = 0x00000000,
     ResourceManagerCompletionInformation = 0x00000001,
 }
+
 alias ENLISTMENT_INFORMATION_CLASS = int;
 enum : int
 {
@@ -586,6 +628,7 @@ enum : int
     EnlistmentRecoveryInformation = 0x00000001,
     EnlistmentCrmInformation      = 0x00000002,
 }
+
 alias KTMOBJECT_TYPE = int;
 enum : int
 {
@@ -601,901 +644,901 @@ enum : int
 
 enum : uint
 {
-    _MM_HINT_T0  = 0x00000001,
-    _MM_HINT_T1  = 0x00000002,
-    _MM_HINT_T2  = 0x00000003,
-    _MM_HINT_NTA = 0x00000000,
+    _MM_HINT_T0  = 0x00000001U,
+    _MM_HINT_T1  = 0x00000002U,
+    _MM_HINT_T2  = 0x00000003U,
+    _MM_HINT_NTA = 0x00000000U,
 }
 
-enum uint ANYSIZE_ARRAY = 0x00000001;
-enum uint MEMORY_ALLOCATION_ALIGNMENT = 0x00000010;
-enum uint X86_CACHE_ALIGNMENT_SIZE = 0x00000040;
-enum uint ARM_CACHE_ALIGNMENT_SIZE = 0x00000080;
-enum uint SYSTEM_CACHE_ALIGNMENT_SIZE = 0x00000040;
-enum uint PRAGMA_DEPRECATED_DDK = 0x00000001;
-enum uint UCSCHAR_INVALID_CHARACTER = 0xffffffff;
-enum uint MIN_UCSCHAR = 0x00000000;
-enum uint MAX_UCSCHAR = 0x0010ffff;
+enum uint ANYSIZE_ARRAY = 0x00000001U;
+enum uint MEMORY_ALLOCATION_ALIGNMENT = 0x00000010U;
+enum uint X86_CACHE_ALIGNMENT_SIZE = 0x00000040U;
+enum uint ARM_CACHE_ALIGNMENT_SIZE = 0x00000080U;
+enum uint SYSTEM_CACHE_ALIGNMENT_SIZE = 0x00000040U;
+enum uint PRAGMA_DEPRECATED_DDK = 0x00000001U;
+enum uint UCSCHAR_INVALID_CHARACTER = 0xffffffffU;
+enum uint MIN_UCSCHAR = 0x00000000U;
+enum uint MAX_UCSCHAR = 0x0010ffffU;
 
 enum : uint
 {
-    MAXIMUM_PROC_PER_GROUP = 0x00000040,
-    MAXIMUM_PROCESSORS     = 0x00000040,
+    MAXIMUM_PROC_PER_GROUP = 0x00000040U,
+    MAXIMUM_PROCESSORS     = 0x00000040U,
 }
 
-enum uint APPLICATION_ERROR_MASK = 0x20000000;
+enum uint APPLICATION_ERROR_MASK = 0x20000000U;
 
 enum : uint
 {
-    ERROR_SEVERITY_SUCCESS       = 0x00000000,
-    ERROR_SEVERITY_INFORMATIONAL = 0x40000000,
-    ERROR_SEVERITY_WARNING       = 0x80000000,
-    ERROR_SEVERITY_ERROR         = 0xc0000000,
+    ERROR_SEVERITY_SUCCESS       = 0x00000000U,
+    ERROR_SEVERITY_INFORMATIONAL = 0x40000000U,
+    ERROR_SEVERITY_WARNING       = 0x80000000U,
+    ERROR_SEVERITY_ERROR         = 0xc0000000U,
 }
 
-enum ulong MAXLONGLONG = 0x7fffffffffffffff;
-enum uint UNICODE_STRING_MAX_CHARS = 0x00007fff;
-enum uint MINCHAR = 0x00000080;
-enum uint MAXCHAR = 0x0000007f;
-enum uint MINSHORT = 0x00008000;
-enum uint MAXSHORT = 0x00007fff;
-enum uint MINLONG = 0x80000000;
+enum ulong MAXLONGLONG = 0x7fffffffffffffffUL;
+enum uint UNICODE_STRING_MAX_CHARS = 0x00007fffU;
+enum uint MINCHAR = 0x00000080U;
+enum uint MAXCHAR = 0x0000007fU;
+enum uint MINSHORT = 0x00008000U;
+enum uint MAXSHORT = 0x00007fffU;
+enum uint MINLONG = 0x80000000U;
 
 enum : uint
 {
-    MAXLONG  = 0x7fffffff,
-    MAXBYTE  = 0x000000ff,
-    MAXWORD  = 0x0000ffff,
-    MAXDWORD = 0xffffffff,
+    MAXLONG  = 0x7fffffffU,
+    MAXBYTE  = 0x000000ffU,
+    MAXWORD  = 0x0000ffffU,
+    MAXDWORD = 0xffffffffU,
 }
 
-enum uint ENCLAVE_SHORT_ID_LENGTH = 0x00000010;
-enum uint ENCLAVE_LONG_ID_LENGTH = 0x00000020;
-enum uint VER_SERVER_NT = 0x80000000;
-enum uint VER_WORKSTATION_NT = 0x40000000;
+enum uint ENCLAVE_SHORT_ID_LENGTH = 0x00000010U;
+enum uint ENCLAVE_LONG_ID_LENGTH = 0x00000020U;
+enum uint VER_SERVER_NT = 0x80000000U;
+enum uint VER_WORKSTATION_NT = 0x40000000U;
 
 enum : uint
 {
-    VER_SUITE_SMALLBUSINESS            = 0x00000001,
-    VER_SUITE_ENTERPRISE               = 0x00000002,
-    VER_SUITE_BACKOFFICE               = 0x00000004,
-    VER_SUITE_COMMUNICATIONS           = 0x00000008,
-    VER_SUITE_TERMINAL                 = 0x00000010,
-    VER_SUITE_SMALLBUSINESS_RESTRICTED = 0x00000020,
+    VER_SUITE_SMALLBUSINESS            = 0x00000001U,
+    VER_SUITE_ENTERPRISE               = 0x00000002U,
+    VER_SUITE_BACKOFFICE               = 0x00000004U,
+    VER_SUITE_COMMUNICATIONS           = 0x00000008U,
+    VER_SUITE_TERMINAL                 = 0x00000010U,
+    VER_SUITE_SMALLBUSINESS_RESTRICTED = 0x00000020U,
 }
 
 enum : uint
 {
-    VER_SUITE_EMBEDDEDNT          = 0x00000040,
-    VER_SUITE_DATACENTER          = 0x00000080,
-    VER_SUITE_SINGLEUSERTS        = 0x00000100,
-    VER_SUITE_PERSONAL            = 0x00000200,
-    VER_SUITE_BLADE               = 0x00000400,
-    VER_SUITE_EMBEDDED_RESTRICTED = 0x00000800,
+    VER_SUITE_EMBEDDEDNT          = 0x00000040U,
+    VER_SUITE_DATACENTER          = 0x00000080U,
+    VER_SUITE_SINGLEUSERTS        = 0x00000100U,
+    VER_SUITE_PERSONAL            = 0x00000200U,
+    VER_SUITE_BLADE               = 0x00000400U,
+    VER_SUITE_EMBEDDED_RESTRICTED = 0x00000800U,
 }
 
-enum uint VER_SUITE_SECURITY_APPLIANCE = 0x00001000;
+enum uint VER_SUITE_SECURITY_APPLIANCE = 0x00001000U;
 
 enum : uint
 {
-    VER_SUITE_STORAGE_SERVER = 0x00002000,
-    VER_SUITE_COMPUTE_SERVER = 0x00004000,
-    VER_SUITE_WH_SERVER      = 0x00008000,
-    VER_SUITE_MULTIUSERTS    = 0x00020000,
+    VER_SUITE_STORAGE_SERVER = 0x00002000U,
+    VER_SUITE_COMPUTE_SERVER = 0x00004000U,
+    VER_SUITE_WH_SERVER      = 0x00008000U,
+    VER_SUITE_MULTIUSERTS    = 0x00020000U,
 }
 
 enum : uint
 {
-    LANG_NEUTRAL   = 0x00000000,
-    LANG_INVARIANT = 0x0000007f,
+    LANG_NEUTRAL   = 0x00000000U,
+    LANG_INVARIANT = 0x0000007fU,
 }
 
 enum : uint
 {
-    LANG_AFRIKAANS   = 0x00000036,
-    LANG_ALBANIAN    = 0x0000001c,
-    LANG_ALSATIAN    = 0x00000084,
-    LANG_AMHARIC     = 0x0000005e,
-    LANG_ARABIC      = 0x00000001,
-    LANG_ARMENIAN    = 0x0000002b,
-    LANG_ASSAMESE    = 0x0000004d,
-    LANG_AZERI       = 0x0000002c,
-    LANG_AZERBAIJANI = 0x0000002c,
+    LANG_AFRIKAANS   = 0x00000036U,
+    LANG_ALBANIAN    = 0x0000001cU,
+    LANG_ALSATIAN    = 0x00000084U,
+    LANG_AMHARIC     = 0x0000005eU,
+    LANG_ARABIC      = 0x00000001U,
+    LANG_ARMENIAN    = 0x0000002bU,
+    LANG_ASSAMESE    = 0x0000004dU,
+    LANG_AZERI       = 0x0000002cU,
+    LANG_AZERBAIJANI = 0x0000002cU,
 }
 
 enum : uint
 {
-    LANG_BANGLA          = 0x00000045,
-    LANG_BASHKIR         = 0x0000006d,
-    LANG_BASQUE          = 0x0000002d,
-    LANG_BELARUSIAN      = 0x00000023,
-    LANG_BENGALI         = 0x00000045,
-    LANG_BRETON          = 0x0000007e,
-    LANG_BOSNIAN         = 0x0000001a,
-    LANG_BOSNIAN_NEUTRAL = 0x0000781a,
+    LANG_BANGLA          = 0x00000045U,
+    LANG_BASHKIR         = 0x0000006dU,
+    LANG_BASQUE          = 0x0000002dU,
+    LANG_BELARUSIAN      = 0x00000023U,
+    LANG_BENGALI         = 0x00000045U,
+    LANG_BRETON          = 0x0000007eU,
+    LANG_BOSNIAN         = 0x0000001aU,
+    LANG_BOSNIAN_NEUTRAL = 0x0000781aU,
 }
 
-enum uint LANG_BULGARIAN = 0x00000002;
+enum uint LANG_BULGARIAN = 0x00000002U;
 
 enum : uint
 {
-    LANG_CATALAN         = 0x00000003,
-    LANG_CENTRAL_KURDISH = 0x00000092,
+    LANG_CATALAN         = 0x00000003U,
+    LANG_CENTRAL_KURDISH = 0x00000092U,
 }
 
 enum : uint
 {
-    LANG_CHEROKEE            = 0x0000005c,
-    LANG_CHINESE             = 0x00000004,
-    LANG_CHINESE_SIMPLIFIED  = 0x00000004,
-    LANG_CHINESE_TRADITIONAL = 0x00007c04,
+    LANG_CHEROKEE            = 0x0000005cU,
+    LANG_CHINESE             = 0x00000004U,
+    LANG_CHINESE_SIMPLIFIED  = 0x00000004U,
+    LANG_CHINESE_TRADITIONAL = 0x00007c04U,
 }
 
 enum : uint
 {
-    LANG_CORSICAN = 0x00000083,
-    LANG_CROATIAN = 0x0000001a,
-    LANG_CZECH    = 0x00000005,
-    LANG_DANISH   = 0x00000006,
-    LANG_DARI     = 0x0000008c,
-    LANG_DIVEHI   = 0x00000065,
-    LANG_DUTCH    = 0x00000013,
-    LANG_ENGLISH  = 0x00000009,
-    LANG_ESTONIAN = 0x00000025,
+    LANG_CORSICAN = 0x00000083U,
+    LANG_CROATIAN = 0x0000001aU,
+    LANG_CZECH    = 0x00000005U,
+    LANG_DANISH   = 0x00000006U,
+    LANG_DARI     = 0x0000008cU,
+    LANG_DIVEHI   = 0x00000065U,
+    LANG_DUTCH    = 0x00000013U,
+    LANG_ENGLISH  = 0x00000009U,
+    LANG_ESTONIAN = 0x00000025U,
 }
 
 enum : uint
 {
-    LANG_FAEROESE    = 0x00000038,
-    LANG_FARSI       = 0x00000029,
-    LANG_FILIPINO    = 0x00000064,
-    LANG_FINNISH     = 0x0000000b,
-    LANG_FRENCH      = 0x0000000c,
-    LANG_FRISIAN     = 0x00000062,
-    LANG_FULAH       = 0x00000067,
-    LANG_GALICIAN    = 0x00000056,
-    LANG_GEORGIAN    = 0x00000037,
-    LANG_GERMAN      = 0x00000007,
-    LANG_GREEK       = 0x00000008,
-    LANG_GREENLANDIC = 0x0000006f,
+    LANG_FAEROESE    = 0x00000038U,
+    LANG_FARSI       = 0x00000029U,
+    LANG_FILIPINO    = 0x00000064U,
+    LANG_FINNISH     = 0x0000000bU,
+    LANG_FRENCH      = 0x0000000cU,
+    LANG_FRISIAN     = 0x00000062U,
+    LANG_FULAH       = 0x00000067U,
+    LANG_GALICIAN    = 0x00000056U,
+    LANG_GEORGIAN    = 0x00000037U,
+    LANG_GERMAN      = 0x00000007U,
+    LANG_GREEK       = 0x00000008U,
+    LANG_GREENLANDIC = 0x0000006fU,
 }
 
-enum uint LANG_GUJARATI = 0x00000047;
+enum uint LANG_GUJARATI = 0x00000047U;
 
 enum : uint
 {
-    LANG_HAUSA     = 0x00000068,
-    LANG_HAWAIIAN  = 0x00000075,
-    LANG_HEBREW    = 0x0000000d,
-    LANG_HINDI     = 0x00000039,
-    LANG_HUNGARIAN = 0x0000000e,
+    LANG_HAUSA     = 0x00000068U,
+    LANG_HAWAIIAN  = 0x00000075U,
+    LANG_HEBREW    = 0x0000000dU,
+    LANG_HINDI     = 0x00000039U,
+    LANG_HUNGARIAN = 0x0000000eU,
 }
 
 enum : uint
 {
-    LANG_ICELANDIC  = 0x0000000f,
-    LANG_IGBO       = 0x00000070,
-    LANG_INDONESIAN = 0x00000021,
-    LANG_INUKTITUT  = 0x0000005d,
-    LANG_IRISH      = 0x0000003c,
-    LANG_ITALIAN    = 0x00000010,
-    LANG_JAPANESE   = 0x00000011,
+    LANG_ICELANDIC  = 0x0000000fU,
+    LANG_IGBO       = 0x00000070U,
+    LANG_INDONESIAN = 0x00000021U,
+    LANG_INUKTITUT  = 0x0000005dU,
+    LANG_IRISH      = 0x0000003cU,
+    LANG_ITALIAN    = 0x00000010U,
+    LANG_JAPANESE   = 0x00000011U,
 }
 
 enum : uint
 {
-    LANG_KANNADA     = 0x0000004b,
-    LANG_KASHMIRI    = 0x00000060,
-    LANG_KAZAK       = 0x0000003f,
-    LANG_KHMER       = 0x00000053,
-    LANG_KICHE       = 0x00000086,
-    LANG_KINYARWANDA = 0x00000087,
+    LANG_KANNADA     = 0x0000004bU,
+    LANG_KASHMIRI    = 0x00000060U,
+    LANG_KAZAK       = 0x0000003fU,
+    LANG_KHMER       = 0x00000053U,
+    LANG_KICHE       = 0x00000086U,
+    LANG_KINYARWANDA = 0x00000087U,
 }
 
 enum : uint
 {
-    LANG_KONKANI    = 0x00000057,
-    LANG_KOREAN     = 0x00000012,
-    LANG_KYRGYZ     = 0x00000040,
-    LANG_LAO        = 0x00000054,
-    LANG_LATVIAN    = 0x00000026,
-    LANG_LITHUANIAN = 0x00000027,
+    LANG_KONKANI    = 0x00000057U,
+    LANG_KOREAN     = 0x00000012U,
+    LANG_KYRGYZ     = 0x00000040U,
+    LANG_LAO        = 0x00000054U,
+    LANG_LATVIAN    = 0x00000026U,
+    LANG_LITHUANIAN = 0x00000027U,
 }
 
-enum uint LANG_LOWER_SORBIAN = 0x0000002e;
-enum uint LANG_LUXEMBOURGISH = 0x0000006e;
+enum uint LANG_LOWER_SORBIAN = 0x0000002eU;
+enum uint LANG_LUXEMBOURGISH = 0x0000006eU;
 
 enum : uint
 {
-    LANG_MACEDONIAN = 0x0000002f,
-    LANG_MALAY      = 0x0000003e,
-    LANG_MALAYALAM  = 0x0000004c,
-    LANG_MALTESE    = 0x0000003a,
-    LANG_MANIPURI   = 0x00000058,
-    LANG_MAORI      = 0x00000081,
-    LANG_MAPUDUNGUN = 0x0000007a,
-    LANG_MARATHI    = 0x0000004e,
-    LANG_MOHAWK     = 0x0000007c,
-    LANG_MONGOLIAN  = 0x00000050,
+    LANG_MACEDONIAN = 0x0000002fU,
+    LANG_MALAY      = 0x0000003eU,
+    LANG_MALAYALAM  = 0x0000004cU,
+    LANG_MALTESE    = 0x0000003aU,
+    LANG_MANIPURI   = 0x00000058U,
+    LANG_MAORI      = 0x00000081U,
+    LANG_MAPUDUNGUN = 0x0000007aU,
+    LANG_MARATHI    = 0x0000004eU,
+    LANG_MOHAWK     = 0x0000007cU,
+    LANG_MONGOLIAN  = 0x00000050U,
 }
 
 enum : uint
 {
-    LANG_NEPALI    = 0x00000061,
-    LANG_NORWEGIAN = 0x00000014,
+    LANG_NEPALI    = 0x00000061U,
+    LANG_NORWEGIAN = 0x00000014U,
 }
 
 enum : uint
 {
-    LANG_OCCITAN    = 0x00000082,
-    LANG_ODIA       = 0x00000048,
-    LANG_ORIYA      = 0x00000048,
-    LANG_PASHTO     = 0x00000063,
-    LANG_PERSIAN    = 0x00000029,
-    LANG_POLISH     = 0x00000015,
-    LANG_PORTUGUESE = 0x00000016,
+    LANG_OCCITAN    = 0x00000082U,
+    LANG_ODIA       = 0x00000048U,
+    LANG_ORIYA      = 0x00000048U,
+    LANG_PASHTO     = 0x00000063U,
+    LANG_PERSIAN    = 0x00000029U,
+    LANG_POLISH     = 0x00000015U,
+    LANG_PORTUGUESE = 0x00000016U,
 }
 
 enum : uint
 {
-    LANG_PULAR           = 0x00000067,
-    LANG_PUNJABI         = 0x00000046,
-    LANG_QUECHUA         = 0x0000006b,
-    LANG_ROMANIAN        = 0x00000018,
-    LANG_ROMANSH         = 0x00000017,
-    LANG_RUSSIAN         = 0x00000019,
-    LANG_SAKHA           = 0x00000085,
-    LANG_SAMI            = 0x0000003b,
-    LANG_SANSKRIT        = 0x0000004f,
-    LANG_SCOTTISH_GAELIC = 0x00000091,
+    LANG_PULAR           = 0x00000067U,
+    LANG_PUNJABI         = 0x00000046U,
+    LANG_QUECHUA         = 0x0000006bU,
+    LANG_ROMANIAN        = 0x00000018U,
+    LANG_ROMANSH         = 0x00000017U,
+    LANG_RUSSIAN         = 0x00000019U,
+    LANG_SAKHA           = 0x00000085U,
+    LANG_SAMI            = 0x0000003bU,
+    LANG_SANSKRIT        = 0x0000004fU,
+    LANG_SCOTTISH_GAELIC = 0x00000091U,
 }
 
 enum : uint
 {
-    LANG_SERBIAN         = 0x0000001a,
-    LANG_SERBIAN_NEUTRAL = 0x00007c1a,
+    LANG_SERBIAN         = 0x0000001aU,
+    LANG_SERBIAN_NEUTRAL = 0x00007c1aU,
 }
 
 enum : uint
 {
-    LANG_SINDHI        = 0x00000059,
-    LANG_SINHALESE     = 0x0000005b,
-    LANG_SLOVAK        = 0x0000001b,
-    LANG_SLOVENIAN     = 0x00000024,
-    LANG_SOTHO         = 0x0000006c,
-    LANG_SPANISH       = 0x0000000a,
-    LANG_SWAHILI       = 0x00000041,
-    LANG_SWEDISH       = 0x0000001d,
-    LANG_SYRIAC        = 0x0000005a,
-    LANG_TAJIK         = 0x00000028,
-    LANG_TAMAZIGHT     = 0x0000005f,
-    LANG_TAMIL         = 0x00000049,
-    LANG_TATAR         = 0x00000044,
-    LANG_TELUGU        = 0x0000004a,
-    LANG_THAI          = 0x0000001e,
-    LANG_TIBETAN       = 0x00000051,
-    LANG_TIGRIGNA      = 0x00000073,
-    LANG_TIGRINYA      = 0x00000073,
-    LANG_TSWANA        = 0x00000032,
-    LANG_TURKISH       = 0x0000001f,
-    LANG_TURKMEN       = 0x00000042,
-    LANG_UIGHUR        = 0x00000080,
-    LANG_UKRAINIAN     = 0x00000022,
-    LANG_UPPER_SORBIAN = 0x0000002e,
+    LANG_SINDHI        = 0x00000059U,
+    LANG_SINHALESE     = 0x0000005bU,
+    LANG_SLOVAK        = 0x0000001bU,
+    LANG_SLOVENIAN     = 0x00000024U,
+    LANG_SOTHO         = 0x0000006cU,
+    LANG_SPANISH       = 0x0000000aU,
+    LANG_SWAHILI       = 0x00000041U,
+    LANG_SWEDISH       = 0x0000001dU,
+    LANG_SYRIAC        = 0x0000005aU,
+    LANG_TAJIK         = 0x00000028U,
+    LANG_TAMAZIGHT     = 0x0000005fU,
+    LANG_TAMIL         = 0x00000049U,
+    LANG_TATAR         = 0x00000044U,
+    LANG_TELUGU        = 0x0000004aU,
+    LANG_THAI          = 0x0000001eU,
+    LANG_TIBETAN       = 0x00000051U,
+    LANG_TIGRIGNA      = 0x00000073U,
+    LANG_TIGRINYA      = 0x00000073U,
+    LANG_TSWANA        = 0x00000032U,
+    LANG_TURKISH       = 0x0000001fU,
+    LANG_TURKMEN       = 0x00000042U,
+    LANG_UIGHUR        = 0x00000080U,
+    LANG_UKRAINIAN     = 0x00000022U,
+    LANG_UPPER_SORBIAN = 0x0000002eU,
 }
 
 enum : uint
 {
-    LANG_URDU       = 0x00000020,
-    LANG_UZBEK      = 0x00000043,
-    LANG_VALENCIAN  = 0x00000003,
-    LANG_VIETNAMESE = 0x0000002a,
+    LANG_URDU       = 0x00000020U,
+    LANG_UZBEK      = 0x00000043U,
+    LANG_VALENCIAN  = 0x00000003U,
+    LANG_VIETNAMESE = 0x0000002aU,
 }
 
 enum : uint
 {
-    LANG_WELSH  = 0x00000052,
-    LANG_WOLOF  = 0x00000088,
-    LANG_XHOSA  = 0x00000034,
-    LANG_YAKUT  = 0x00000085,
-    LANG_YI     = 0x00000078,
-    LANG_YORUBA = 0x0000006a,
-    LANG_ZULU   = 0x00000035,
+    LANG_WELSH  = 0x00000052U,
+    LANG_WOLOF  = 0x00000088U,
+    LANG_XHOSA  = 0x00000034U,
+    LANG_YAKUT  = 0x00000085U,
+    LANG_YI     = 0x00000078U,
+    LANG_YORUBA = 0x0000006aU,
+    LANG_ZULU   = 0x00000035U,
 }
 
 enum : uint
 {
-    SUBLANG_NEUTRAL            = 0x00000000,
-    SUBLANG_DEFAULT            = 0x00000001,
-    SUBLANG_SYS_DEFAULT        = 0x00000002,
-    SUBLANG_CUSTOM_DEFAULT     = 0x00000003,
-    SUBLANG_CUSTOM_UNSPECIFIED = 0x00000004,
+    SUBLANG_NEUTRAL            = 0x00000000U,
+    SUBLANG_DEFAULT            = 0x00000001U,
+    SUBLANG_SYS_DEFAULT        = 0x00000002U,
+    SUBLANG_CUSTOM_DEFAULT     = 0x00000003U,
+    SUBLANG_CUSTOM_UNSPECIFIED = 0x00000004U,
 }
 
-enum uint SUBLANG_UI_CUSTOM_DEFAULT = 0x00000005;
-enum uint SUBLANG_AFRIKAANS_SOUTH_AFRICA = 0x00000001;
+enum uint SUBLANG_UI_CUSTOM_DEFAULT = 0x00000005U;
+enum uint SUBLANG_AFRIKAANS_SOUTH_AFRICA = 0x00000001U;
 
 enum : uint
 {
-    SUBLANG_ALBANIAN_ALBANIA = 0x00000001,
-    SUBLANG_ALSATIAN_FRANCE  = 0x00000001,
+    SUBLANG_ALBANIAN_ALBANIA = 0x00000001U,
+    SUBLANG_ALSATIAN_FRANCE  = 0x00000001U,
 }
 
-enum uint SUBLANG_AMHARIC_ETHIOPIA = 0x00000001;
+enum uint SUBLANG_AMHARIC_ETHIOPIA = 0x00000001U;
 
 enum : uint
 {
-    SUBLANG_ARABIC_SAUDI_ARABIA = 0x00000001,
-    SUBLANG_ARABIC_IRAQ         = 0x00000002,
-    SUBLANG_ARABIC_EGYPT        = 0x00000003,
-    SUBLANG_ARABIC_LIBYA        = 0x00000004,
-    SUBLANG_ARABIC_ALGERIA      = 0x00000005,
-    SUBLANG_ARABIC_MOROCCO      = 0x00000006,
-    SUBLANG_ARABIC_TUNISIA      = 0x00000007,
-    SUBLANG_ARABIC_OMAN         = 0x00000008,
-    SUBLANG_ARABIC_YEMEN        = 0x00000009,
-    SUBLANG_ARABIC_SYRIA        = 0x0000000a,
-    SUBLANG_ARABIC_JORDAN       = 0x0000000b,
-    SUBLANG_ARABIC_LEBANON      = 0x0000000c,
-    SUBLANG_ARABIC_KUWAIT       = 0x0000000d,
-    SUBLANG_ARABIC_UAE          = 0x0000000e,
-    SUBLANG_ARABIC_BAHRAIN      = 0x0000000f,
-    SUBLANG_ARABIC_QATAR        = 0x00000010,
-    SUBLANG_ARMENIAN_ARMENIA    = 0x00000001,
+    SUBLANG_ARABIC_SAUDI_ARABIA = 0x00000001U,
+    SUBLANG_ARABIC_IRAQ         = 0x00000002U,
+    SUBLANG_ARABIC_EGYPT        = 0x00000003U,
+    SUBLANG_ARABIC_LIBYA        = 0x00000004U,
+    SUBLANG_ARABIC_ALGERIA      = 0x00000005U,
+    SUBLANG_ARABIC_MOROCCO      = 0x00000006U,
+    SUBLANG_ARABIC_TUNISIA      = 0x00000007U,
+    SUBLANG_ARABIC_OMAN         = 0x00000008U,
+    SUBLANG_ARABIC_YEMEN        = 0x00000009U,
+    SUBLANG_ARABIC_SYRIA        = 0x0000000aU,
+    SUBLANG_ARABIC_JORDAN       = 0x0000000bU,
+    SUBLANG_ARABIC_LEBANON      = 0x0000000cU,
+    SUBLANG_ARABIC_KUWAIT       = 0x0000000dU,
+    SUBLANG_ARABIC_UAE          = 0x0000000eU,
+    SUBLANG_ARABIC_BAHRAIN      = 0x0000000fU,
+    SUBLANG_ARABIC_QATAR        = 0x00000010U,
+    SUBLANG_ARMENIAN_ARMENIA    = 0x00000001U,
 }
 
 enum : uint
 {
-    SUBLANG_ASSAMESE_INDIA                  = 0x00000001,
-    SUBLANG_AZERI_LATIN                     = 0x00000001,
-    SUBLANG_AZERI_CYRILLIC                  = 0x00000002,
-    SUBLANG_AZERBAIJANI_AZERBAIJAN_LATIN    = 0x00000001,
-    SUBLANG_AZERBAIJANI_AZERBAIJAN_CYRILLIC = 0x00000002,
+    SUBLANG_ASSAMESE_INDIA                  = 0x00000001U,
+    SUBLANG_AZERI_LATIN                     = 0x00000001U,
+    SUBLANG_AZERI_CYRILLIC                  = 0x00000002U,
+    SUBLANG_AZERBAIJANI_AZERBAIJAN_LATIN    = 0x00000001U,
+    SUBLANG_AZERBAIJANI_AZERBAIJAN_CYRILLIC = 0x00000002U,
 }
 
 enum : uint
 {
-    SUBLANG_BANGLA_INDIA      = 0x00000001,
-    SUBLANG_BANGLA_BANGLADESH = 0x00000002,
+    SUBLANG_BANGLA_INDIA      = 0x00000001U,
+    SUBLANG_BANGLA_BANGLADESH = 0x00000002U,
 }
 
 enum : uint
 {
-    SUBLANG_BASHKIR_RUSSIA     = 0x00000001,
-    SUBLANG_BASQUE_BASQUE      = 0x00000001,
-    SUBLANG_BELARUSIAN_BELARUS = 0x00000001,
+    SUBLANG_BASHKIR_RUSSIA     = 0x00000001U,
+    SUBLANG_BASQUE_BASQUE      = 0x00000001U,
+    SUBLANG_BELARUSIAN_BELARUS = 0x00000001U,
 }
 
 enum : uint
 {
-    SUBLANG_BENGALI_INDIA      = 0x00000001,
-    SUBLANG_BENGALI_BANGLADESH = 0x00000002,
+    SUBLANG_BENGALI_INDIA      = 0x00000001U,
+    SUBLANG_BENGALI_BANGLADESH = 0x00000002U,
 }
 
 enum : uint
 {
-    SUBLANG_BOSNIAN_BOSNIA_HERZEGOVINA_LATIN    = 0x00000005,
-    SUBLANG_BOSNIAN_BOSNIA_HERZEGOVINA_CYRILLIC = 0x00000008,
+    SUBLANG_BOSNIAN_BOSNIA_HERZEGOVINA_LATIN    = 0x00000005U,
+    SUBLANG_BOSNIAN_BOSNIA_HERZEGOVINA_CYRILLIC = 0x00000008U,
 }
 
 enum : uint
 {
-    SUBLANG_BRETON_FRANCE      = 0x00000001,
-    SUBLANG_BULGARIAN_BULGARIA = 0x00000001,
+    SUBLANG_BRETON_FRANCE      = 0x00000001U,
+    SUBLANG_BULGARIAN_BULGARIA = 0x00000001U,
 }
 
-enum uint SUBLANG_CATALAN_CATALAN = 0x00000001;
-enum uint SUBLANG_CENTRAL_KURDISH_IRAQ = 0x00000001;
-enum uint SUBLANG_CHEROKEE_CHEROKEE = 0x00000001;
+enum uint SUBLANG_CATALAN_CATALAN = 0x00000001U;
+enum uint SUBLANG_CENTRAL_KURDISH_IRAQ = 0x00000001U;
+enum uint SUBLANG_CHEROKEE_CHEROKEE = 0x00000001U;
 
 enum : uint
 {
-    SUBLANG_CHINESE_TRADITIONAL = 0x00000001,
-    SUBLANG_CHINESE_SIMPLIFIED  = 0x00000002,
-    SUBLANG_CHINESE_HONGKONG    = 0x00000003,
-    SUBLANG_CHINESE_SINGAPORE   = 0x00000004,
-    SUBLANG_CHINESE_MACAU       = 0x00000005,
-    SUBLANG_CORSICAN_FRANCE     = 0x00000001,
+    SUBLANG_CHINESE_TRADITIONAL = 0x00000001U,
+    SUBLANG_CHINESE_SIMPLIFIED  = 0x00000002U,
+    SUBLANG_CHINESE_HONGKONG    = 0x00000003U,
+    SUBLANG_CHINESE_SINGAPORE   = 0x00000004U,
+    SUBLANG_CHINESE_MACAU       = 0x00000005U,
+    SUBLANG_CORSICAN_FRANCE     = 0x00000001U,
 }
 
-enum uint SUBLANG_CZECH_CZECH_REPUBLIC = 0x00000001;
+enum uint SUBLANG_CZECH_CZECH_REPUBLIC = 0x00000001U;
 
 enum : uint
 {
-    SUBLANG_CROATIAN_CROATIA                  = 0x00000001,
-    SUBLANG_CROATIAN_BOSNIA_HERZEGOVINA_LATIN = 0x00000004,
+    SUBLANG_CROATIAN_CROATIA                  = 0x00000001U,
+    SUBLANG_CROATIAN_BOSNIA_HERZEGOVINA_LATIN = 0x00000004U,
 }
 
 enum : uint
 {
-    SUBLANG_DANISH_DENMARK   = 0x00000001,
-    SUBLANG_DARI_AFGHANISTAN = 0x00000001,
+    SUBLANG_DANISH_DENMARK   = 0x00000001U,
+    SUBLANG_DARI_AFGHANISTAN = 0x00000001U,
 }
 
-enum uint SUBLANG_DIVEHI_MALDIVES = 0x00000001;
+enum uint SUBLANG_DIVEHI_MALDIVES = 0x00000001U;
 
 enum : uint
 {
-    SUBLANG_DUTCH         = 0x00000001,
-    SUBLANG_DUTCH_BELGIAN = 0x00000002,
+    SUBLANG_DUTCH         = 0x00000001U,
+    SUBLANG_DUTCH_BELGIAN = 0x00000002U,
 }
 
 enum : uint
 {
-    SUBLANG_ENGLISH_US           = 0x00000001,
-    SUBLANG_ENGLISH_UK           = 0x00000002,
-    SUBLANG_ENGLISH_AUS          = 0x00000003,
-    SUBLANG_ENGLISH_CAN          = 0x00000004,
-    SUBLANG_ENGLISH_NZ           = 0x00000005,
-    SUBLANG_ENGLISH_EIRE         = 0x00000006,
-    SUBLANG_ENGLISH_SOUTH_AFRICA = 0x00000007,
-    SUBLANG_ENGLISH_JAMAICA      = 0x00000008,
-    SUBLANG_ENGLISH_CARIBBEAN    = 0x00000009,
-    SUBLANG_ENGLISH_BELIZE       = 0x0000000a,
-    SUBLANG_ENGLISH_TRINIDAD     = 0x0000000b,
-    SUBLANG_ENGLISH_ZIMBABWE     = 0x0000000c,
-    SUBLANG_ENGLISH_PHILIPPINES  = 0x0000000d,
-    SUBLANG_ENGLISH_INDIA        = 0x00000010,
-    SUBLANG_ENGLISH_MALAYSIA     = 0x00000011,
-    SUBLANG_ENGLISH_SINGAPORE    = 0x00000012,
+    SUBLANG_ENGLISH_US           = 0x00000001U,
+    SUBLANG_ENGLISH_UK           = 0x00000002U,
+    SUBLANG_ENGLISH_AUS          = 0x00000003U,
+    SUBLANG_ENGLISH_CAN          = 0x00000004U,
+    SUBLANG_ENGLISH_NZ           = 0x00000005U,
+    SUBLANG_ENGLISH_EIRE         = 0x00000006U,
+    SUBLANG_ENGLISH_SOUTH_AFRICA = 0x00000007U,
+    SUBLANG_ENGLISH_JAMAICA      = 0x00000008U,
+    SUBLANG_ENGLISH_CARIBBEAN    = 0x00000009U,
+    SUBLANG_ENGLISH_BELIZE       = 0x0000000aU,
+    SUBLANG_ENGLISH_TRINIDAD     = 0x0000000bU,
+    SUBLANG_ENGLISH_ZIMBABWE     = 0x0000000cU,
+    SUBLANG_ENGLISH_PHILIPPINES  = 0x0000000dU,
+    SUBLANG_ENGLISH_INDIA        = 0x00000010U,
+    SUBLANG_ENGLISH_MALAYSIA     = 0x00000011U,
+    SUBLANG_ENGLISH_SINGAPORE    = 0x00000012U,
 }
 
-enum uint SUBLANG_ESTONIAN_ESTONIA = 0x00000001;
-enum uint SUBLANG_FAEROESE_FAROE_ISLANDS = 0x00000001;
-enum uint SUBLANG_FILIPINO_PHILIPPINES = 0x00000001;
-enum uint SUBLANG_FINNISH_FINLAND = 0x00000001;
+enum uint SUBLANG_ESTONIAN_ESTONIA = 0x00000001U;
+enum uint SUBLANG_FAEROESE_FAROE_ISLANDS = 0x00000001U;
+enum uint SUBLANG_FILIPINO_PHILIPPINES = 0x00000001U;
+enum uint SUBLANG_FINNISH_FINLAND = 0x00000001U;
 
 enum : uint
 {
-    SUBLANG_FRENCH              = 0x00000001,
-    SUBLANG_FRENCH_BELGIAN      = 0x00000002,
-    SUBLANG_FRENCH_CANADIAN     = 0x00000003,
-    SUBLANG_FRENCH_SWISS        = 0x00000004,
-    SUBLANG_FRENCH_LUXEMBOURG   = 0x00000005,
-    SUBLANG_FRENCH_MONACO       = 0x00000006,
-    SUBLANG_FRISIAN_NETHERLANDS = 0x00000001,
+    SUBLANG_FRENCH              = 0x00000001U,
+    SUBLANG_FRENCH_BELGIAN      = 0x00000002U,
+    SUBLANG_FRENCH_CANADIAN     = 0x00000003U,
+    SUBLANG_FRENCH_SWISS        = 0x00000004U,
+    SUBLANG_FRENCH_LUXEMBOURG   = 0x00000005U,
+    SUBLANG_FRENCH_MONACO       = 0x00000006U,
+    SUBLANG_FRISIAN_NETHERLANDS = 0x00000001U,
 }
 
-enum uint SUBLANG_FULAH_SENEGAL = 0x00000002;
-enum uint SUBLANG_GALICIAN_GALICIAN = 0x00000001;
+enum uint SUBLANG_FULAH_SENEGAL = 0x00000002U;
+enum uint SUBLANG_GALICIAN_GALICIAN = 0x00000001U;
 
 enum : uint
 {
-    SUBLANG_GEORGIAN_GEORGIA     = 0x00000001,
-    SUBLANG_GERMAN               = 0x00000001,
-    SUBLANG_GERMAN_SWISS         = 0x00000002,
-    SUBLANG_GERMAN_AUSTRIAN      = 0x00000003,
-    SUBLANG_GERMAN_LUXEMBOURG    = 0x00000004,
-    SUBLANG_GERMAN_LIECHTENSTEIN = 0x00000005,
+    SUBLANG_GEORGIAN_GEORGIA     = 0x00000001U,
+    SUBLANG_GERMAN               = 0x00000001U,
+    SUBLANG_GERMAN_SWISS         = 0x00000002U,
+    SUBLANG_GERMAN_AUSTRIAN      = 0x00000003U,
+    SUBLANG_GERMAN_LUXEMBOURG    = 0x00000004U,
+    SUBLANG_GERMAN_LIECHTENSTEIN = 0x00000005U,
 }
 
 enum : uint
 {
-    SUBLANG_GREEK_GREECE          = 0x00000001,
-    SUBLANG_GREENLANDIC_GREENLAND = 0x00000001,
+    SUBLANG_GREEK_GREECE          = 0x00000001U,
+    SUBLANG_GREENLANDIC_GREENLAND = 0x00000001U,
 }
 
-enum uint SUBLANG_GUJARATI_INDIA = 0x00000001;
-enum uint SUBLANG_HAUSA_NIGERIA_LATIN = 0x00000001;
+enum uint SUBLANG_GUJARATI_INDIA = 0x00000001U;
+enum uint SUBLANG_HAUSA_NIGERIA_LATIN = 0x00000001U;
 
 enum : uint
 {
-    SUBLANG_HAWAIIAN_US       = 0x00000001,
-    SUBLANG_HEBREW_ISRAEL     = 0x00000001,
-    SUBLANG_HINDI_INDIA       = 0x00000001,
-    SUBLANG_HUNGARIAN_HUNGARY = 0x00000001,
+    SUBLANG_HAWAIIAN_US       = 0x00000001U,
+    SUBLANG_HEBREW_ISRAEL     = 0x00000001U,
+    SUBLANG_HINDI_INDIA       = 0x00000001U,
+    SUBLANG_HUNGARIAN_HUNGARY = 0x00000001U,
 }
 
-enum uint SUBLANG_ICELANDIC_ICELAND = 0x00000001;
+enum uint SUBLANG_ICELANDIC_ICELAND = 0x00000001U;
 
 enum : uint
 {
-    SUBLANG_IGBO_NIGERIA         = 0x00000001,
-    SUBLANG_INDONESIAN_INDONESIA = 0x00000001,
+    SUBLANG_IGBO_NIGERIA         = 0x00000001U,
+    SUBLANG_INDONESIAN_INDONESIA = 0x00000001U,
 }
 
 enum : uint
 {
-    SUBLANG_INUKTITUT_CANADA       = 0x00000001,
-    SUBLANG_INUKTITUT_CANADA_LATIN = 0x00000002,
+    SUBLANG_INUKTITUT_CANADA       = 0x00000001U,
+    SUBLANG_INUKTITUT_CANADA_LATIN = 0x00000002U,
 }
 
 enum : uint
 {
-    SUBLANG_IRISH_IRELAND = 0x00000002,
-    SUBLANG_ITALIAN       = 0x00000001,
-    SUBLANG_ITALIAN_SWISS = 0x00000002,
+    SUBLANG_IRISH_IRELAND = 0x00000002U,
+    SUBLANG_ITALIAN       = 0x00000001U,
+    SUBLANG_ITALIAN_SWISS = 0x00000002U,
 }
 
-enum uint SUBLANG_JAPANESE_JAPAN = 0x00000001;
+enum uint SUBLANG_JAPANESE_JAPAN = 0x00000001U;
 
 enum : uint
 {
-    SUBLANG_KANNADA_INDIA    = 0x00000001,
-    SUBLANG_KASHMIRI_SASIA   = 0x00000002,
-    SUBLANG_KASHMIRI_INDIA   = 0x00000002,
-    SUBLANG_KAZAK_KAZAKHSTAN = 0x00000001,
+    SUBLANG_KANNADA_INDIA    = 0x00000001U,
+    SUBLANG_KASHMIRI_SASIA   = 0x00000002U,
+    SUBLANG_KASHMIRI_INDIA   = 0x00000002U,
+    SUBLANG_KAZAK_KAZAKHSTAN = 0x00000001U,
 }
 
 enum : uint
 {
-    SUBLANG_KHMER_CAMBODIA     = 0x00000001,
-    SUBLANG_KICHE_GUATEMALA    = 0x00000001,
-    SUBLANG_KINYARWANDA_RWANDA = 0x00000001,
+    SUBLANG_KHMER_CAMBODIA     = 0x00000001U,
+    SUBLANG_KICHE_GUATEMALA    = 0x00000001U,
+    SUBLANG_KINYARWANDA_RWANDA = 0x00000001U,
 }
 
 enum : uint
 {
-    SUBLANG_KONKANI_INDIA     = 0x00000001,
-    SUBLANG_KOREAN            = 0x00000001,
-    SUBLANG_KYRGYZ_KYRGYZSTAN = 0x00000001,
+    SUBLANG_KONKANI_INDIA     = 0x00000001U,
+    SUBLANG_KOREAN            = 0x00000001U,
+    SUBLANG_KYRGYZ_KYRGYZSTAN = 0x00000001U,
 }
 
 enum : uint
 {
-    SUBLANG_LAO_LAO               = 0x00000001,
-    SUBLANG_LATVIAN_LATVIA        = 0x00000001,
-    SUBLANG_LITHUANIAN            = 0x00000001,
-    SUBLANG_LOWER_SORBIAN_GERMANY = 0x00000002,
+    SUBLANG_LAO_LAO               = 0x00000001U,
+    SUBLANG_LATVIAN_LATVIA        = 0x00000001U,
+    SUBLANG_LITHUANIAN            = 0x00000001U,
+    SUBLANG_LOWER_SORBIAN_GERMANY = 0x00000002U,
 }
 
-enum uint SUBLANG_LUXEMBOURGISH_LUXEMBOURG = 0x00000001;
-enum uint SUBLANG_MACEDONIAN_MACEDONIA = 0x00000001;
+enum uint SUBLANG_LUXEMBOURGISH_LUXEMBOURG = 0x00000001U;
+enum uint SUBLANG_MACEDONIAN_MACEDONIA = 0x00000001U;
 
 enum : uint
 {
-    SUBLANG_MALAY_MALAYSIA          = 0x00000001,
-    SUBLANG_MALAY_BRUNEI_DARUSSALAM = 0x00000002,
-    SUBLANG_MALAYALAM_INDIA         = 0x00000001,
-    SUBLANG_MALTESE_MALTA           = 0x00000001,
-    SUBLANG_MAORI_NEW_ZEALAND       = 0x00000001,
+    SUBLANG_MALAY_MALAYSIA          = 0x00000001U,
+    SUBLANG_MALAY_BRUNEI_DARUSSALAM = 0x00000002U,
+    SUBLANG_MALAYALAM_INDIA         = 0x00000001U,
+    SUBLANG_MALTESE_MALTA           = 0x00000001U,
+    SUBLANG_MAORI_NEW_ZEALAND       = 0x00000001U,
 }
 
 enum : uint
 {
-    SUBLANG_MAPUDUNGUN_CHILE            = 0x00000001,
-    SUBLANG_MARATHI_INDIA               = 0x00000001,
-    SUBLANG_MOHAWK_MOHAWK               = 0x00000001,
-    SUBLANG_MONGOLIAN_CYRILLIC_MONGOLIA = 0x00000001,
-    SUBLANG_MONGOLIAN_PRC               = 0x00000002,
+    SUBLANG_MAPUDUNGUN_CHILE            = 0x00000001U,
+    SUBLANG_MARATHI_INDIA               = 0x00000001U,
+    SUBLANG_MOHAWK_MOHAWK               = 0x00000001U,
+    SUBLANG_MONGOLIAN_CYRILLIC_MONGOLIA = 0x00000001U,
+    SUBLANG_MONGOLIAN_PRC               = 0x00000002U,
 }
 
 enum : uint
 {
-    SUBLANG_NEPALI_INDIA      = 0x00000002,
-    SUBLANG_NEPALI_NEPAL      = 0x00000001,
-    SUBLANG_NORWEGIAN_BOKMAL  = 0x00000001,
-    SUBLANG_NORWEGIAN_NYNORSK = 0x00000002,
+    SUBLANG_NEPALI_INDIA      = 0x00000002U,
+    SUBLANG_NEPALI_NEPAL      = 0x00000001U,
+    SUBLANG_NORWEGIAN_BOKMAL  = 0x00000001U,
+    SUBLANG_NORWEGIAN_NYNORSK = 0x00000002U,
 }
 
 enum : uint
 {
-    SUBLANG_OCCITAN_FRANCE     = 0x00000001,
-    SUBLANG_ODIA_INDIA         = 0x00000001,
-    SUBLANG_ORIYA_INDIA        = 0x00000001,
-    SUBLANG_PASHTO_AFGHANISTAN = 0x00000001,
+    SUBLANG_OCCITAN_FRANCE     = 0x00000001U,
+    SUBLANG_ODIA_INDIA         = 0x00000001U,
+    SUBLANG_ORIYA_INDIA        = 0x00000001U,
+    SUBLANG_PASHTO_AFGHANISTAN = 0x00000001U,
 }
 
 enum : uint
 {
-    SUBLANG_PERSIAN_IRAN         = 0x00000001,
-    SUBLANG_POLISH_POLAND        = 0x00000001,
-    SUBLANG_PORTUGUESE           = 0x00000002,
-    SUBLANG_PORTUGUESE_BRAZILIAN = 0x00000001,
+    SUBLANG_PERSIAN_IRAN         = 0x00000001U,
+    SUBLANG_POLISH_POLAND        = 0x00000001U,
+    SUBLANG_PORTUGUESE           = 0x00000002U,
+    SUBLANG_PORTUGUESE_BRAZILIAN = 0x00000001U,
 }
 
 enum : uint
 {
-    SUBLANG_PULAR_SENEGAL    = 0x00000002,
-    SUBLANG_PUNJABI_INDIA    = 0x00000001,
-    SUBLANG_PUNJABI_PAKISTAN = 0x00000002,
+    SUBLANG_PULAR_SENEGAL    = 0x00000002U,
+    SUBLANG_PUNJABI_INDIA    = 0x00000001U,
+    SUBLANG_PUNJABI_PAKISTAN = 0x00000002U,
 }
 
 enum : uint
 {
-    SUBLANG_QUECHUA_BOLIVIA = 0x00000001,
-    SUBLANG_QUECHUA_ECUADOR = 0x00000002,
-    SUBLANG_QUECHUA_PERU    = 0x00000003,
+    SUBLANG_QUECHUA_BOLIVIA = 0x00000001U,
+    SUBLANG_QUECHUA_ECUADOR = 0x00000002U,
+    SUBLANG_QUECHUA_PERU    = 0x00000003U,
 }
 
 enum : uint
 {
-    SUBLANG_ROMANIAN_ROMANIA    = 0x00000001,
-    SUBLANG_ROMANSH_SWITZERLAND = 0x00000001,
+    SUBLANG_ROMANIAN_ROMANIA    = 0x00000001U,
+    SUBLANG_ROMANSH_SWITZERLAND = 0x00000001U,
 }
 
-enum uint SUBLANG_RUSSIAN_RUSSIA = 0x00000001;
+enum uint SUBLANG_RUSSIAN_RUSSIA = 0x00000001U;
 
 enum : uint
 {
-    SUBLANG_SAKHA_RUSSIA          = 0x00000001,
-    SUBLANG_SAMI_NORTHERN_NORWAY  = 0x00000001,
-    SUBLANG_SAMI_NORTHERN_SWEDEN  = 0x00000002,
-    SUBLANG_SAMI_NORTHERN_FINLAND = 0x00000003,
-    SUBLANG_SAMI_LULE_NORWAY      = 0x00000004,
-    SUBLANG_SAMI_LULE_SWEDEN      = 0x00000005,
-    SUBLANG_SAMI_SOUTHERN_NORWAY  = 0x00000006,
-    SUBLANG_SAMI_SOUTHERN_SWEDEN  = 0x00000007,
-    SUBLANG_SAMI_SKOLT_FINLAND    = 0x00000008,
-    SUBLANG_SAMI_INARI_FINLAND    = 0x00000009,
+    SUBLANG_SAKHA_RUSSIA          = 0x00000001U,
+    SUBLANG_SAMI_NORTHERN_NORWAY  = 0x00000001U,
+    SUBLANG_SAMI_NORTHERN_SWEDEN  = 0x00000002U,
+    SUBLANG_SAMI_NORTHERN_FINLAND = 0x00000003U,
+    SUBLANG_SAMI_LULE_NORWAY      = 0x00000004U,
+    SUBLANG_SAMI_LULE_SWEDEN      = 0x00000005U,
+    SUBLANG_SAMI_SOUTHERN_NORWAY  = 0x00000006U,
+    SUBLANG_SAMI_SOUTHERN_SWEDEN  = 0x00000007U,
+    SUBLANG_SAMI_SKOLT_FINLAND    = 0x00000008U,
+    SUBLANG_SAMI_INARI_FINLAND    = 0x00000009U,
 }
 
 enum : uint
 {
-    SUBLANG_SANSKRIT_INDIA  = 0x00000001,
-    SUBLANG_SCOTTISH_GAELIC = 0x00000001,
+    SUBLANG_SANSKRIT_INDIA  = 0x00000001U,
+    SUBLANG_SCOTTISH_GAELIC = 0x00000001U,
 }
 
 enum : uint
 {
-    SUBLANG_SERBIAN_BOSNIA_HERZEGOVINA_LATIN    = 0x00000006,
-    SUBLANG_SERBIAN_BOSNIA_HERZEGOVINA_CYRILLIC = 0x00000007,
+    SUBLANG_SERBIAN_BOSNIA_HERZEGOVINA_LATIN    = 0x00000006U,
+    SUBLANG_SERBIAN_BOSNIA_HERZEGOVINA_CYRILLIC = 0x00000007U,
 }
 
 enum : uint
 {
-    SUBLANG_SERBIAN_MONTENEGRO_LATIN    = 0x0000000b,
-    SUBLANG_SERBIAN_MONTENEGRO_CYRILLIC = 0x0000000c,
-    SUBLANG_SERBIAN_SERBIA_LATIN        = 0x00000009,
-    SUBLANG_SERBIAN_SERBIA_CYRILLIC     = 0x0000000a,
-    SUBLANG_SERBIAN_CROATIA             = 0x00000001,
-    SUBLANG_SERBIAN_LATIN               = 0x00000002,
-    SUBLANG_SERBIAN_CYRILLIC            = 0x00000003,
+    SUBLANG_SERBIAN_MONTENEGRO_LATIN    = 0x0000000bU,
+    SUBLANG_SERBIAN_MONTENEGRO_CYRILLIC = 0x0000000cU,
+    SUBLANG_SERBIAN_SERBIA_LATIN        = 0x00000009U,
+    SUBLANG_SERBIAN_SERBIA_CYRILLIC     = 0x0000000aU,
+    SUBLANG_SERBIAN_CROATIA             = 0x00000001U,
+    SUBLANG_SERBIAN_LATIN               = 0x00000002U,
+    SUBLANG_SERBIAN_CYRILLIC            = 0x00000003U,
 }
 
 enum : uint
 {
-    SUBLANG_SINDHI_INDIA        = 0x00000001,
-    SUBLANG_SINDHI_PAKISTAN     = 0x00000002,
-    SUBLANG_SINDHI_AFGHANISTAN  = 0x00000002,
-    SUBLANG_SINHALESE_SRI_LANKA = 0x00000001,
+    SUBLANG_SINDHI_INDIA        = 0x00000001U,
+    SUBLANG_SINDHI_PAKISTAN     = 0x00000002U,
+    SUBLANG_SINDHI_AFGHANISTAN  = 0x00000002U,
+    SUBLANG_SINHALESE_SRI_LANKA = 0x00000001U,
 }
 
-enum uint SUBLANG_SOTHO_NORTHERN_SOUTH_AFRICA = 0x00000001;
+enum uint SUBLANG_SOTHO_NORTHERN_SOUTH_AFRICA = 0x00000001U;
 
 enum : uint
 {
-    SUBLANG_SLOVAK_SLOVAKIA    = 0x00000001,
-    SUBLANG_SLOVENIAN_SLOVENIA = 0x00000001,
+    SUBLANG_SLOVAK_SLOVAKIA    = 0x00000001U,
+    SUBLANG_SLOVENIAN_SLOVENIA = 0x00000001U,
 }
 
 enum : uint
 {
-    SUBLANG_SPANISH                    = 0x00000001,
-    SUBLANG_SPANISH_MEXICAN            = 0x00000002,
-    SUBLANG_SPANISH_MODERN             = 0x00000003,
-    SUBLANG_SPANISH_GUATEMALA          = 0x00000004,
-    SUBLANG_SPANISH_COSTA_RICA         = 0x00000005,
-    SUBLANG_SPANISH_PANAMA             = 0x00000006,
-    SUBLANG_SPANISH_DOMINICAN_REPUBLIC = 0x00000007,
-    SUBLANG_SPANISH_VENEZUELA          = 0x00000008,
-    SUBLANG_SPANISH_COLOMBIA           = 0x00000009,
-    SUBLANG_SPANISH_PERU               = 0x0000000a,
-    SUBLANG_SPANISH_ARGENTINA          = 0x0000000b,
-    SUBLANG_SPANISH_ECUADOR            = 0x0000000c,
-    SUBLANG_SPANISH_CHILE              = 0x0000000d,
-    SUBLANG_SPANISH_URUGUAY            = 0x0000000e,
-    SUBLANG_SPANISH_PARAGUAY           = 0x0000000f,
-    SUBLANG_SPANISH_BOLIVIA            = 0x00000010,
-    SUBLANG_SPANISH_EL_SALVADOR        = 0x00000011,
-    SUBLANG_SPANISH_HONDURAS           = 0x00000012,
-    SUBLANG_SPANISH_NICARAGUA          = 0x00000013,
-    SUBLANG_SPANISH_PUERTO_RICO        = 0x00000014,
-    SUBLANG_SPANISH_US                 = 0x00000015,
-    SUBLANG_SWAHILI_KENYA              = 0x00000001,
-    SUBLANG_SWEDISH                    = 0x00000001,
-    SUBLANG_SWEDISH_FINLAND            = 0x00000002,
+    SUBLANG_SPANISH                    = 0x00000001U,
+    SUBLANG_SPANISH_MEXICAN            = 0x00000002U,
+    SUBLANG_SPANISH_MODERN             = 0x00000003U,
+    SUBLANG_SPANISH_GUATEMALA          = 0x00000004U,
+    SUBLANG_SPANISH_COSTA_RICA         = 0x00000005U,
+    SUBLANG_SPANISH_PANAMA             = 0x00000006U,
+    SUBLANG_SPANISH_DOMINICAN_REPUBLIC = 0x00000007U,
+    SUBLANG_SPANISH_VENEZUELA          = 0x00000008U,
+    SUBLANG_SPANISH_COLOMBIA           = 0x00000009U,
+    SUBLANG_SPANISH_PERU               = 0x0000000aU,
+    SUBLANG_SPANISH_ARGENTINA          = 0x0000000bU,
+    SUBLANG_SPANISH_ECUADOR            = 0x0000000cU,
+    SUBLANG_SPANISH_CHILE              = 0x0000000dU,
+    SUBLANG_SPANISH_URUGUAY            = 0x0000000eU,
+    SUBLANG_SPANISH_PARAGUAY           = 0x0000000fU,
+    SUBLANG_SPANISH_BOLIVIA            = 0x00000010U,
+    SUBLANG_SPANISH_EL_SALVADOR        = 0x00000011U,
+    SUBLANG_SPANISH_HONDURAS           = 0x00000012U,
+    SUBLANG_SPANISH_NICARAGUA          = 0x00000013U,
+    SUBLANG_SPANISH_PUERTO_RICO        = 0x00000014U,
+    SUBLANG_SPANISH_US                 = 0x00000015U,
+    SUBLANG_SWAHILI_KENYA              = 0x00000001U,
+    SUBLANG_SWEDISH                    = 0x00000001U,
+    SUBLANG_SWEDISH_FINLAND            = 0x00000002U,
 }
 
-enum uint SUBLANG_SYRIAC_SYRIA = 0x00000001;
+enum uint SUBLANG_SYRIAC_SYRIA = 0x00000001U;
 
 enum : uint
 {
-    SUBLANG_TAJIK_TAJIKISTAN           = 0x00000001,
-    SUBLANG_TAMAZIGHT_ALGERIA_LATIN    = 0x00000002,
-    SUBLANG_TAMAZIGHT_MOROCCO_TIFINAGH = 0x00000004,
+    SUBLANG_TAJIK_TAJIKISTAN           = 0x00000001U,
+    SUBLANG_TAMAZIGHT_ALGERIA_LATIN    = 0x00000002U,
+    SUBLANG_TAMAZIGHT_MOROCCO_TIFINAGH = 0x00000004U,
 }
 
 enum : uint
 {
-    SUBLANG_TAMIL_INDIA       = 0x00000001,
-    SUBLANG_TAMIL_SRI_LANKA   = 0x00000002,
-    SUBLANG_TATAR_RUSSIA      = 0x00000001,
-    SUBLANG_TELUGU_INDIA      = 0x00000001,
-    SUBLANG_THAI_THAILAND     = 0x00000001,
-    SUBLANG_TIBETAN_PRC       = 0x00000001,
-    SUBLANG_TIGRIGNA_ERITREA  = 0x00000002,
-    SUBLANG_TIGRINYA_ERITREA  = 0x00000002,
-    SUBLANG_TIGRINYA_ETHIOPIA = 0x00000001,
+    SUBLANG_TAMIL_INDIA       = 0x00000001U,
+    SUBLANG_TAMIL_SRI_LANKA   = 0x00000002U,
+    SUBLANG_TATAR_RUSSIA      = 0x00000001U,
+    SUBLANG_TELUGU_INDIA      = 0x00000001U,
+    SUBLANG_THAI_THAILAND     = 0x00000001U,
+    SUBLANG_TIBETAN_PRC       = 0x00000001U,
+    SUBLANG_TIGRIGNA_ERITREA  = 0x00000002U,
+    SUBLANG_TIGRINYA_ERITREA  = 0x00000002U,
+    SUBLANG_TIGRINYA_ETHIOPIA = 0x00000001U,
 }
 
 enum : uint
 {
-    SUBLANG_TSWANA_BOTSWANA     = 0x00000002,
-    SUBLANG_TSWANA_SOUTH_AFRICA = 0x00000001,
+    SUBLANG_TSWANA_BOTSWANA     = 0x00000002U,
+    SUBLANG_TSWANA_SOUTH_AFRICA = 0x00000001U,
 }
 
 enum : uint
 {
-    SUBLANG_TURKISH_TURKEY       = 0x00000001,
-    SUBLANG_TURKMEN_TURKMENISTAN = 0x00000001,
+    SUBLANG_TURKISH_TURKEY       = 0x00000001U,
+    SUBLANG_TURKMEN_TURKMENISTAN = 0x00000001U,
 }
 
 enum : uint
 {
-    SUBLANG_UIGHUR_PRC        = 0x00000001,
-    SUBLANG_UKRAINIAN_UKRAINE = 0x00000001,
+    SUBLANG_UIGHUR_PRC        = 0x00000001U,
+    SUBLANG_UKRAINIAN_UKRAINE = 0x00000001U,
 }
 
-enum uint SUBLANG_UPPER_SORBIAN_GERMANY = 0x00000001;
+enum uint SUBLANG_UPPER_SORBIAN_GERMANY = 0x00000001U;
 
 enum : uint
 {
-    SUBLANG_URDU_PAKISTAN  = 0x00000001,
-    SUBLANG_URDU_INDIA     = 0x00000002,
-    SUBLANG_UZBEK_LATIN    = 0x00000001,
-    SUBLANG_UZBEK_CYRILLIC = 0x00000002,
+    SUBLANG_URDU_PAKISTAN  = 0x00000001U,
+    SUBLANG_URDU_INDIA     = 0x00000002U,
+    SUBLANG_UZBEK_LATIN    = 0x00000001U,
+    SUBLANG_UZBEK_CYRILLIC = 0x00000002U,
 }
 
-enum uint SUBLANG_VALENCIAN_VALENCIA = 0x00000002;
-enum uint SUBLANG_VIETNAMESE_VIETNAM = 0x00000001;
-enum uint SUBLANG_WELSH_UNITED_KINGDOM = 0x00000001;
-enum uint SUBLANG_WOLOF_SENEGAL = 0x00000001;
-enum uint SUBLANG_XHOSA_SOUTH_AFRICA = 0x00000001;
+enum uint SUBLANG_VALENCIAN_VALENCIA = 0x00000002U;
+enum uint SUBLANG_VIETNAMESE_VIETNAM = 0x00000001U;
+enum uint SUBLANG_WELSH_UNITED_KINGDOM = 0x00000001U;
+enum uint SUBLANG_WOLOF_SENEGAL = 0x00000001U;
+enum uint SUBLANG_XHOSA_SOUTH_AFRICA = 0x00000001U;
 
 enum : uint
 {
-    SUBLANG_YAKUT_RUSSIA   = 0x00000001,
-    SUBLANG_YI_PRC         = 0x00000001,
-    SUBLANG_YORUBA_NIGERIA = 0x00000001,
+    SUBLANG_YAKUT_RUSSIA   = 0x00000001U,
+    SUBLANG_YI_PRC         = 0x00000001U,
+    SUBLANG_YORUBA_NIGERIA = 0x00000001U,
 }
 
-enum uint SUBLANG_ZULU_SOUTH_AFRICA = 0x00000001;
+enum uint SUBLANG_ZULU_SOUTH_AFRICA = 0x00000001U;
 
 enum : uint
 {
-    SORT_DEFAULT        = 0x00000000,
-    SORT_INVARIANT_MATH = 0x00000001,
+    SORT_DEFAULT        = 0x00000000U,
+    SORT_INVARIANT_MATH = 0x00000001U,
 }
 
 enum : uint
 {
-    SORT_JAPANESE_XJIS          = 0x00000000,
-    SORT_JAPANESE_UNICODE       = 0x00000001,
-    SORT_JAPANESE_RADICALSTROKE = 0x00000004,
+    SORT_JAPANESE_XJIS          = 0x00000000U,
+    SORT_JAPANESE_UNICODE       = 0x00000001U,
+    SORT_JAPANESE_RADICALSTROKE = 0x00000004U,
 }
 
 enum : uint
 {
-    SORT_CHINESE_BIG5          = 0x00000000,
-    SORT_CHINESE_PRCP          = 0x00000000,
-    SORT_CHINESE_UNICODE       = 0x00000001,
-    SORT_CHINESE_PRC           = 0x00000002,
-    SORT_CHINESE_BOPOMOFO      = 0x00000003,
-    SORT_CHINESE_RADICALSTROKE = 0x00000004,
+    SORT_CHINESE_BIG5          = 0x00000000U,
+    SORT_CHINESE_PRCP          = 0x00000000U,
+    SORT_CHINESE_UNICODE       = 0x00000001U,
+    SORT_CHINESE_PRC           = 0x00000002U,
+    SORT_CHINESE_BOPOMOFO      = 0x00000003U,
+    SORT_CHINESE_RADICALSTROKE = 0x00000004U,
 }
 
 enum : uint
 {
-    SORT_KOREAN_KSC     = 0x00000000,
-    SORT_KOREAN_UNICODE = 0x00000001,
+    SORT_KOREAN_KSC     = 0x00000000U,
+    SORT_KOREAN_UNICODE = 0x00000001U,
 }
 
-enum uint SORT_GERMAN_PHONE_BOOK = 0x00000001;
+enum uint SORT_GERMAN_PHONE_BOOK = 0x00000001U;
 
 enum : uint
 {
-    SORT_HUNGARIAN_DEFAULT   = 0x00000000,
-    SORT_HUNGARIAN_TECHNICAL = 0x00000001,
+    SORT_HUNGARIAN_DEFAULT   = 0x00000000U,
+    SORT_HUNGARIAN_TECHNICAL = 0x00000001U,
 }
 
 enum : uint
 {
-    SORT_GEORGIAN_TRADITIONAL = 0x00000000,
-    SORT_GEORGIAN_MODERN      = 0x00000001,
+    SORT_GEORGIAN_TRADITIONAL = 0x00000000U,
+    SORT_GEORGIAN_MODERN      = 0x00000001U,
 }
 
-enum uint NLS_VALID_LOCALE_MASK = 0x000fffff;
-enum uint LOCALE_NAME_MAX_LENGTH = 0x00000055;
+enum uint NLS_VALID_LOCALE_MASK = 0x000fffffU;
+enum uint LOCALE_NAME_MAX_LENGTH = 0x00000055U;
 
 enum : uint
 {
-    LOCALE_TRANSIENT_KEYBOARD1 = 0x00002000,
-    LOCALE_TRANSIENT_KEYBOARD2 = 0x00002400,
-    LOCALE_TRANSIENT_KEYBOARD3 = 0x00002800,
-    LOCALE_TRANSIENT_KEYBOARD4 = 0x00002c00,
+    LOCALE_TRANSIENT_KEYBOARD1 = 0x00002000U,
+    LOCALE_TRANSIENT_KEYBOARD2 = 0x00002400U,
+    LOCALE_TRANSIENT_KEYBOARD3 = 0x00002800U,
+    LOCALE_TRANSIENT_KEYBOARD4 = 0x00002c00U,
 }
 
-enum uint LOCALE_UNASSIGNED_LCID = 0x00001000;
-enum uint MAXIMUM_WAIT_OBJECTS = 0x00000040;
-enum uint MAXIMUM_SUSPEND_COUNT = 0x0000007f;
-enum uint XSTATE_CONTEXT_FLAG_LOOKASIDE = 0x00000001;
+enum uint LOCALE_UNASSIGNED_LCID = 0x00001000U;
+enum uint MAXIMUM_WAIT_OBJECTS = 0x00000040U;
+enum uint MAXIMUM_SUSPEND_COUNT = 0x0000007fU;
+enum uint XSTATE_CONTEXT_FLAG_LOOKASIDE = 0x00000001U;
 
 enum : uint
 {
-    PF_TEMPORAL_LEVEL_1 = 0x00000001,
-    PF_TEMPORAL_LEVEL_2 = 0x00000002,
-    PF_TEMPORAL_LEVEL_3 = 0x00000003,
+    PF_TEMPORAL_LEVEL_1 = 0x00000001U,
+    PF_TEMPORAL_LEVEL_2 = 0x00000002U,
+    PF_TEMPORAL_LEVEL_3 = 0x00000003U,
 }
 
-enum uint PF_NON_TEMPORAL_LEVEL_ALL = 0x00000000;
+enum uint PF_NON_TEMPORAL_LEVEL_ALL = 0x00000000U;
 
 enum : uint
 {
-    EXCEPTION_READ_FAULT    = 0x00000000,
-    EXCEPTION_WRITE_FAULT   = 0x00000001,
-    EXCEPTION_EXECUTE_FAULT = 0x00000008,
+    EXCEPTION_READ_FAULT    = 0x00000000U,
+    EXCEPTION_WRITE_FAULT   = 0x00000001U,
+    EXCEPTION_EXECUTE_FAULT = 0x00000008U,
 }
 
 enum : uint
 {
-    INITIAL_MXCSR = 0x00001f80,
-    INITIAL_FPCSR = 0x0000027f,
+    INITIAL_MXCSR = 0x00001f80U,
+    INITIAL_FPCSR = 0x0000027fU,
 }
 
-enum uint RUNTIME_FUNCTION_INDIRECT = 0x00000001;
-enum uint UNW_FLAG_NO_EPILOGUE = 0x80000000;
-enum uint UNWIND_CHAIN_LIMIT = 0x00000020;
+enum uint RUNTIME_FUNCTION_INDIRECT = 0x00000001U;
+enum uint UNW_FLAG_NO_EPILOGUE = 0x80000000U;
+enum uint UNWIND_CHAIN_LIMIT = 0x00000020U;
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* OUT_OF_PROCESS_FUNCTION_TABLE_CALLBACK_EXPORT_NAME = "OutOfProcessFunctionTableCallback";
 
 enum : uint
 {
-    INITIAL_CPSR  = 0x00000010,
-    INITIAL_FPSCR = 0x00000000,
+    INITIAL_CPSR  = 0x00000010U,
+    INITIAL_FPSCR = 0x00000000U,
 }
 
 enum : uint
 {
-    ARM_MAX_BREAKPOINTS = 0x00000008,
-    ARM_MAX_WATCHPOINTS = 0x00000001,
+    ARM_MAX_BREAKPOINTS = 0x00000008U,
+    ARM_MAX_WATCHPOINTS = 0x00000001U,
 }
 
 enum : uint
 {
-    ARM64_PREFETCH_PLD  = 0x00000000,
-    ARM64_PREFETCH_PLI  = 0x00000008,
-    ARM64_PREFETCH_PST  = 0x00000010,
-    ARM64_PREFETCH_L1   = 0x00000000,
-    ARM64_PREFETCH_L2   = 0x00000002,
-    ARM64_PREFETCH_L3   = 0x00000004,
-    ARM64_PREFETCH_KEEP = 0x00000000,
-    ARM64_PREFETCH_STRM = 0x00000001,
+    ARM64_PREFETCH_PLD  = 0x00000000U,
+    ARM64_PREFETCH_PLI  = 0x00000008U,
+    ARM64_PREFETCH_PST  = 0x00000010U,
+    ARM64_PREFETCH_L1   = 0x00000000U,
+    ARM64_PREFETCH_L2   = 0x00000002U,
+    ARM64_PREFETCH_L3   = 0x00000004U,
+    ARM64_PREFETCH_KEEP = 0x00000000U,
+    ARM64_PREFETCH_STRM = 0x00000001U,
 }
 
-enum uint _ARM64_MULT_INTRINS_SUPPORTED = 0x00000000;
+enum uint _ARM64_MULT_INTRINS_SUPPORTED = 0x00000000U;
 
 enum : uint
 {
-    ARM64_MAX_BREAKPOINTS = 0x00000008,
-    ARM64_MAX_WATCHPOINTS = 0x00000002,
+    ARM64_MAX_BREAKPOINTS = 0x00000008U,
+    ARM64_MAX_WATCHPOINTS = 0x00000002U,
 }
 
-enum uint NONVOL_INT_NUMREG_ARM64 = 0x0000000b;
-enum uint NONVOL_FP_NUMREG_ARM64 = 0x00000008;
-enum uint BREAK_DEBUG_BASE = 0x00080000;
-enum uint ASSERT_BREAKPOINT = 0x00080003;
-enum uint SIZE_OF_80387_REGISTERS = 0x00000050;
-enum uint MAXIMUM_SUPPORTED_EXTENSION = 0x00000200;
+enum uint NONVOL_INT_NUMREG_ARM64 = 0x0000000bU;
+enum uint NONVOL_FP_NUMREG_ARM64 = 0x00000008U;
+enum uint BREAK_DEBUG_BASE = 0x00080000U;
+enum uint ASSERT_BREAKPOINT = 0x00080003U;
+enum uint SIZE_OF_80387_REGISTERS = 0x00000050U;
+enum uint MAXIMUM_SUPPORTED_EXTENSION = 0x00000200U;
 
 enum : uint
 {
-    EXCEPTION_NONCONTINUABLE  = 0x00000001,
-    EXCEPTION_UNWINDING       = 0x00000002,
-    EXCEPTION_EXIT_UNWIND     = 0x00000004,
-    EXCEPTION_STACK_INVALID   = 0x00000008,
-    EXCEPTION_NESTED_CALL     = 0x00000010,
-    EXCEPTION_TARGET_UNWIND   = 0x00000020,
-    EXCEPTION_COLLIDED_UNWIND = 0x00000040,
+    EXCEPTION_NONCONTINUABLE  = 0x00000001U,
+    EXCEPTION_UNWINDING       = 0x00000002U,
+    EXCEPTION_EXIT_UNWIND     = 0x00000004U,
+    EXCEPTION_STACK_INVALID   = 0x00000008U,
+    EXCEPTION_NESTED_CALL     = 0x00000010U,
+    EXCEPTION_TARGET_UNWIND   = 0x00000020U,
+    EXCEPTION_COLLIDED_UNWIND = 0x00000040U,
 }
 
-enum uint EXCEPTION_SOFTWARE_ORIGINATE = 0x00000080;
-enum uint EXCEPTION_MAXIMUM_PARAMETERS = 0x0000000f;
-enum uint ACCESS_SYSTEM_SECURITY = 0x01000000;
-enum uint MAXIMUM_ALLOWED = 0x02000000;
-enum uint SID_REVISION = 0x00000001;
-enum uint SID_MAX_SUB_AUTHORITIES = 0x0000000f;
-enum uint SID_RECOMMENDED_SUB_AUTHORITIES = 0x00000001;
-enum uint SID_HASH_SIZE = 0x00000020;
+enum uint EXCEPTION_SOFTWARE_ORIGINATE = 0x00000080U;
+enum uint EXCEPTION_MAXIMUM_PARAMETERS = 0x0000000fU;
+enum uint ACCESS_SYSTEM_SECURITY = 0x01000000U;
+enum uint MAXIMUM_ALLOWED = 0x02000000U;
+enum uint SID_REVISION = 0x00000001U;
+enum uint SID_MAX_SUB_AUTHORITIES = 0x0000000fU;
+enum uint SID_RECOMMENDED_SUB_AUTHORITIES = 0x00000001U;
+enum uint SID_HASH_SIZE = 0x00000020U;
 
 enum : int
 {
@@ -1675,9 +1718,9 @@ enum int SECURITY_WINDOWSMOBILE_ID_BASE_RID = 0x00000070;
 
 enum : uint
 {
-    SECURITY_INSTALLER_GROUP_CAPABILITY_BASE      = 0x00000020,
-    SECURITY_INSTALLER_GROUP_CAPABILITY_RID_COUNT = 0x00000009,
-    SECURITY_INSTALLER_CAPABILITY_RID_COUNT       = 0x0000000a,
+    SECURITY_INSTALLER_GROUP_CAPABILITY_BASE      = 0x00000020U,
+    SECURITY_INSTALLER_GROUP_CAPABILITY_RID_COUNT = 0x00000009U,
+    SECURITY_INSTALLER_CAPABILITY_RID_COUNT       = 0x0000000aU,
 }
 
 enum : int
@@ -1825,7 +1868,7 @@ enum : int
     SECURITY_MANDATORY_MEDIUM_RID    = 0x00002000,
 }
 
-enum uint SECURITY_MANDATORY_MEDIUM_PLUS_RID = 0x00002100;
+enum uint SECURITY_MANDATORY_MEDIUM_PLUS_RID = 0x00002100U;
 
 enum : int
 {
@@ -1834,7 +1877,7 @@ enum : int
     SECURITY_MANDATORY_PROTECTED_PROCESS_RID = 0x00005000,
 }
 
-enum uint SECURITY_MANDATORY_MEDIUM_PLUS_CREDUI_RID = 0x0000200a;
+enum uint SECURITY_MANDATORY_MEDIUM_PLUS_CREDUI_RID = 0x0000200aU;
 enum int SECURITY_MANDATORY_MAXIMUM_USER_RID = 0x00004000;
 
 enum : int
@@ -1864,11 +1907,11 @@ enum : int
 
 enum : uint
 {
-    SECURITY_TRUSTED_INSTALLER_RID1 = 0x38fb89b5,
-    SECURITY_TRUSTED_INSTALLER_RID2 = 0xcbc28419,
-    SECURITY_TRUSTED_INSTALLER_RID3 = 0x6d236c5c,
-    SECURITY_TRUSTED_INSTALLER_RID4 = 0x6e770057,
-    SECURITY_TRUSTED_INSTALLER_RID5 = 0x876402c0,
+    SECURITY_TRUSTED_INSTALLER_RID1 = 0x38fb89b5U,
+    SECURITY_TRUSTED_INSTALLER_RID2 = 0xcbc28419U,
+    SECURITY_TRUSTED_INSTALLER_RID3 = 0x6d236c5cU,
+    SECURITY_TRUSTED_INSTALLER_RID4 = 0x6e770057U,
+    SECURITY_TRUSTED_INSTALLER_RID5 = 0x876402c0U,
 }
 
 enum : int
@@ -1894,87 +1937,87 @@ enum : int
 
 enum : uint
 {
-    ACL_REVISION1 = 0x00000001,
-    ACL_REVISION2 = 0x00000002,
-    ACL_REVISION3 = 0x00000003,
-    ACL_REVISION4 = 0x00000004,
+    ACL_REVISION1 = 0x00000001U,
+    ACL_REVISION2 = 0x00000002U,
+    ACL_REVISION3 = 0x00000003U,
+    ACL_REVISION4 = 0x00000004U,
 }
 
-enum uint MAX_ACL_REVISION = 0x00000004;
-enum uint ACCESS_MIN_MS_ACE_TYPE = 0x00000000;
-enum uint ACCESS_ALLOWED_ACE_TYPE = 0x00000000;
-enum uint ACCESS_DENIED_ACE_TYPE = 0x00000001;
-enum uint SYSTEM_AUDIT_ACE_TYPE = 0x00000002;
-enum uint SYSTEM_ALARM_ACE_TYPE = 0x00000003;
-enum uint ACCESS_MAX_MS_V2_ACE_TYPE = 0x00000003;
-enum uint ACCESS_ALLOWED_COMPOUND_ACE_TYPE = 0x00000004;
-enum uint ACCESS_MAX_MS_V3_ACE_TYPE = 0x00000004;
-enum uint ACCESS_MIN_MS_OBJECT_ACE_TYPE = 0x00000005;
-enum uint ACCESS_ALLOWED_OBJECT_ACE_TYPE = 0x00000005;
-enum uint ACCESS_DENIED_OBJECT_ACE_TYPE = 0x00000006;
-enum uint SYSTEM_AUDIT_OBJECT_ACE_TYPE = 0x00000007;
-enum uint SYSTEM_ALARM_OBJECT_ACE_TYPE = 0x00000008;
+enum uint MAX_ACL_REVISION = 0x00000004U;
+enum uint ACCESS_MIN_MS_ACE_TYPE = 0x00000000U;
+enum uint ACCESS_ALLOWED_ACE_TYPE = 0x00000000U;
+enum uint ACCESS_DENIED_ACE_TYPE = 0x00000001U;
+enum uint SYSTEM_AUDIT_ACE_TYPE = 0x00000002U;
+enum uint SYSTEM_ALARM_ACE_TYPE = 0x00000003U;
+enum uint ACCESS_MAX_MS_V2_ACE_TYPE = 0x00000003U;
+enum uint ACCESS_ALLOWED_COMPOUND_ACE_TYPE = 0x00000004U;
+enum uint ACCESS_MAX_MS_V3_ACE_TYPE = 0x00000004U;
+enum uint ACCESS_MIN_MS_OBJECT_ACE_TYPE = 0x00000005U;
+enum uint ACCESS_ALLOWED_OBJECT_ACE_TYPE = 0x00000005U;
+enum uint ACCESS_DENIED_OBJECT_ACE_TYPE = 0x00000006U;
+enum uint SYSTEM_AUDIT_OBJECT_ACE_TYPE = 0x00000007U;
+enum uint SYSTEM_ALARM_OBJECT_ACE_TYPE = 0x00000008U;
 
 enum : uint
 {
-    ACCESS_MAX_MS_OBJECT_ACE_TYPE = 0x00000008,
-    ACCESS_MAX_MS_V4_ACE_TYPE     = 0x00000008,
-    ACCESS_MAX_MS_ACE_TYPE        = 0x00000008,
+    ACCESS_MAX_MS_OBJECT_ACE_TYPE = 0x00000008U,
+    ACCESS_MAX_MS_V4_ACE_TYPE     = 0x00000008U,
+    ACCESS_MAX_MS_ACE_TYPE        = 0x00000008U,
 }
 
-enum uint ACCESS_ALLOWED_CALLBACK_ACE_TYPE = 0x00000009;
-enum uint ACCESS_DENIED_CALLBACK_ACE_TYPE = 0x0000000a;
-enum uint ACCESS_ALLOWED_CALLBACK_OBJECT_ACE_TYPE = 0x0000000b;
-enum uint ACCESS_DENIED_CALLBACK_OBJECT_ACE_TYPE = 0x0000000c;
-enum uint SYSTEM_AUDIT_CALLBACK_ACE_TYPE = 0x0000000d;
-enum uint SYSTEM_ALARM_CALLBACK_ACE_TYPE = 0x0000000e;
-enum uint SYSTEM_AUDIT_CALLBACK_OBJECT_ACE_TYPE = 0x0000000f;
-enum uint SYSTEM_ALARM_CALLBACK_OBJECT_ACE_TYPE = 0x00000010;
-enum uint SYSTEM_MANDATORY_LABEL_ACE_TYPE = 0x00000011;
-enum uint SYSTEM_RESOURCE_ATTRIBUTE_ACE_TYPE = 0x00000012;
-enum uint SYSTEM_SCOPED_POLICY_ID_ACE_TYPE = 0x00000013;
-enum uint SYSTEM_PROCESS_TRUST_LABEL_ACE_TYPE = 0x00000014;
-enum uint SYSTEM_ACCESS_FILTER_ACE_TYPE = 0x00000015;
-enum uint ACCESS_MAX_MS_V5_ACE_TYPE = 0x00000015;
-enum uint VALID_INHERIT_FLAGS = 0x0000001f;
-enum uint CRITICAL_ACE_FLAG = 0x00000020;
-enum uint TRUST_PROTECTED_FILTER_ACE_FLAG = 0x00000040;
+enum uint ACCESS_ALLOWED_CALLBACK_ACE_TYPE = 0x00000009U;
+enum uint ACCESS_DENIED_CALLBACK_ACE_TYPE = 0x0000000aU;
+enum uint ACCESS_ALLOWED_CALLBACK_OBJECT_ACE_TYPE = 0x0000000bU;
+enum uint ACCESS_DENIED_CALLBACK_OBJECT_ACE_TYPE = 0x0000000cU;
+enum uint SYSTEM_AUDIT_CALLBACK_ACE_TYPE = 0x0000000dU;
+enum uint SYSTEM_ALARM_CALLBACK_ACE_TYPE = 0x0000000eU;
+enum uint SYSTEM_AUDIT_CALLBACK_OBJECT_ACE_TYPE = 0x0000000fU;
+enum uint SYSTEM_ALARM_CALLBACK_OBJECT_ACE_TYPE = 0x00000010U;
+enum uint SYSTEM_MANDATORY_LABEL_ACE_TYPE = 0x00000011U;
+enum uint SYSTEM_RESOURCE_ATTRIBUTE_ACE_TYPE = 0x00000012U;
+enum uint SYSTEM_SCOPED_POLICY_ID_ACE_TYPE = 0x00000013U;
+enum uint SYSTEM_PROCESS_TRUST_LABEL_ACE_TYPE = 0x00000014U;
+enum uint SYSTEM_ACCESS_FILTER_ACE_TYPE = 0x00000015U;
+enum uint ACCESS_MAX_MS_V5_ACE_TYPE = 0x00000015U;
+enum uint VALID_INHERIT_FLAGS = 0x0000001fU;
+enum uint CRITICAL_ACE_FLAG = 0x00000020U;
+enum uint TRUST_PROTECTED_FILTER_ACE_FLAG = 0x00000040U;
 
 enum : uint
 {
-    SYSTEM_MANDATORY_LABEL_NO_WRITE_UP   = 0x00000001,
-    SYSTEM_MANDATORY_LABEL_NO_READ_UP    = 0x00000002,
-    SYSTEM_MANDATORY_LABEL_NO_EXECUTE_UP = 0x00000004,
-}
-
-enum : uint
-{
-    SYSTEM_PROCESS_TRUST_LABEL_VALID_MASK  = 0x00ffffff,
-    SYSTEM_PROCESS_TRUST_NOCONSTRAINT_MASK = 0xffffffff,
+    SYSTEM_MANDATORY_LABEL_NO_WRITE_UP   = 0x00000001U,
+    SYSTEM_MANDATORY_LABEL_NO_READ_UP    = 0x00000002U,
+    SYSTEM_MANDATORY_LABEL_NO_EXECUTE_UP = 0x00000004U,
 }
 
 enum : uint
 {
-    SYSTEM_ACCESS_FILTER_VALID_MASK        = 0x00ffffff,
-    SYSTEM_ACCESS_FILTER_NOCONSTRAINT_MASK = 0xffffffff,
+    SYSTEM_PROCESS_TRUST_LABEL_VALID_MASK  = 0x00ffffffU,
+    SYSTEM_PROCESS_TRUST_NOCONSTRAINT_MASK = 0xffffffffU,
 }
 
 enum : uint
 {
-    SECURITY_DESCRIPTOR_REVISION  = 0x00000001,
-    SECURITY_DESCRIPTOR_REVISION1 = 0x00000001,
+    SYSTEM_ACCESS_FILTER_VALID_MASK        = 0x00ffffffU,
+    SYSTEM_ACCESS_FILTER_NOCONSTRAINT_MASK = 0xffffffffU,
 }
-
-enum uint ACCESS_OBJECT_GUID = 0x00000000;
 
 enum : uint
 {
-    ACCESS_PROPERTY_SET_GUID = 0x00000001,
-    ACCESS_PROPERTY_GUID     = 0x00000002,
+    SECURITY_DESCRIPTOR_REVISION  = 0x00000001U,
+    SECURITY_DESCRIPTOR_REVISION1 = 0x00000001U,
 }
 
-enum uint ACCESS_MAX_LEVEL = 0x00000004;
-enum uint AUDIT_ALLOW_NO_PRIVILEGE = 0x00000001;
+enum uint ACCESS_OBJECT_GUID = 0x00000000U;
+
+enum : uint
+{
+    ACCESS_PROPERTY_SET_GUID = 0x00000001U,
+    ACCESS_PROPERTY_GUID     = 0x00000002U,
+}
+
+enum uint ACCESS_MAX_LEVEL = 0x00000004U;
+enum uint AUDIT_ALLOW_NO_PRIVILEGE = 0x00000001U;
 
 enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
 {
@@ -1984,26 +2027,26 @@ enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(E
     ACCESS_DS_OBJECT_TYPE_NAME_W = "Directory Service Object",
 }
 
-enum uint PRIVILEGE_SET_ALL_NECESSARY = 0x00000001;
+enum uint PRIVILEGE_SET_ALL_NECESSARY = 0x00000001U;
 
 enum : uint
 {
-    ACCESS_REASON_TYPE_MASK    = 0x00ff0000,
-    ACCESS_REASON_DATA_MASK    = 0x0000ffff,
-    ACCESS_REASON_STAGING_MASK = 0x80000000,
-    ACCESS_REASON_EXDATA_MASK  = 0x7f000000,
+    ACCESS_REASON_TYPE_MASK    = 0x00ff0000U,
+    ACCESS_REASON_DATA_MASK    = 0x0000ffffU,
+    ACCESS_REASON_STAGING_MASK = 0x80000000U,
+    ACCESS_REASON_EXDATA_MASK  = 0x7f000000U,
 }
 
 enum : uint
 {
-    SE_SECURITY_DESCRIPTOR_FLAG_NO_OWNER_ACE         = 0x00000001,
-    SE_SECURITY_DESCRIPTOR_FLAG_NO_LABEL_ACE         = 0x00000002,
-    SE_SECURITY_DESCRIPTOR_FLAG_NO_ACCESS_FILTER_ACE = 0x00000004,
-    SE_SECURITY_DESCRIPTOR_VALID_FLAGS               = 0x00000007,
+    SE_SECURITY_DESCRIPTOR_FLAG_NO_OWNER_ACE         = 0x00000001U,
+    SE_SECURITY_DESCRIPTOR_FLAG_NO_LABEL_ACE         = 0x00000002U,
+    SE_SECURITY_DESCRIPTOR_FLAG_NO_ACCESS_FILTER_ACE = 0x00000004U,
+    SE_SECURITY_DESCRIPTOR_VALID_FLAGS               = 0x00000007U,
 }
 
-enum uint SE_ACCESS_CHECK_FLAG_NO_LEARNING_MODE_LOGGING = 0x00000008;
-enum uint SE_ACCESS_CHECK_VALID_FLAGS = 0x00000008;
+enum uint SE_ACCESS_CHECK_FLAG_NO_LEARNING_MODE_LOGGING = 0x00000008U;
+enum uint SE_ACCESS_CHECK_VALID_FLAGS = 0x00000008U;
 enum const(wchar)* SE_ACTIVATE_AS_USER_CAPABILITY = "activateAsUser";
 enum const(wchar)* SE_CONSTRAINED_IMPERSONATION_CAPABILITY = "constrainedImpersonation";
 enum const(wchar)* SE_SESSION_IMPERSONATION_CAPABILITY = "sessionImpersonation";
@@ -2017,15 +2060,15 @@ enum const(wchar)* SE_APP_SILO_USER_PROFILE_MINIMAL_CAPABILITY = "isolatedWin32-
 enum const(wchar)* SE_APP_SILO_PROMPT_FOR_ACCESS_CAPABILITY = "isolatedWin32-promptForAccess";
 enum const(wchar)* SE_APP_SILO_ACCESS_TO_PUBLISHER_DIRECTORY_CAPABILITY = "isolatedWin32-accessToPublisherDirectory";
 enum const(wchar)* SE_APP_SILO_PRINT_CAPABILITY = "isolatedWin32-print";
-enum uint POLICY_AUDIT_SUBCATEGORY_COUNT = 0x0000003c;
-enum uint TOKEN_SOURCE_LENGTH = 0x00000008;
+enum uint POLICY_AUDIT_SUBCATEGORY_COUNT = 0x0000003cU;
+enum uint TOKEN_SOURCE_LENGTH = 0x00000008U;
 
 enum : uint
 {
-    CLAIM_SECURITY_ATTRIBUTE_TYPE_INVALID            = 0x00000000,
-    CLAIM_SECURITY_ATTRIBUTE_CUSTOM_FLAGS            = 0xffff0000,
-    CLAIM_SECURITY_ATTRIBUTES_INFORMATION_VERSION_V1 = 0x00000001,
-    CLAIM_SECURITY_ATTRIBUTES_INFORMATION_VERSION    = 0x00000001,
+    CLAIM_SECURITY_ATTRIBUTE_TYPE_INVALID            = 0x00000000U,
+    CLAIM_SECURITY_ATTRIBUTE_CUSTOM_FLAGS            = 0xffff0000U,
+    CLAIM_SECURITY_ATTRIBUTES_INFORMATION_VERSION_V1 = 0x00000001U,
+    CLAIM_SECURITY_ATTRIBUTES_INFORMATION_VERSION    = 0x00000001U,
 }
 
 enum int PROCESS_TRUST_LABEL_SECURITY_INFORMATION = 0x00000080;
@@ -2033,44 +2076,44 @@ enum int ACCESS_FILTER_SECURITY_INFORMATION = 0x00000100;
 
 enum : uint
 {
-    SE_SIGNING_LEVEL_UNCHECKED       = 0x00000000,
-    SE_SIGNING_LEVEL_UNSIGNED        = 0x00000001,
-    SE_SIGNING_LEVEL_ENTERPRISE      = 0x00000002,
-    SE_SIGNING_LEVEL_CUSTOM_1        = 0x00000003,
-    SE_SIGNING_LEVEL_DEVELOPER       = 0x00000003,
-    SE_SIGNING_LEVEL_AUTHENTICODE    = 0x00000004,
-    SE_SIGNING_LEVEL_CUSTOM_2        = 0x00000005,
-    SE_SIGNING_LEVEL_STORE           = 0x00000006,
-    SE_SIGNING_LEVEL_CUSTOM_3        = 0x00000007,
-    SE_SIGNING_LEVEL_ANTIMALWARE     = 0x00000007,
-    SE_SIGNING_LEVEL_MICROSOFT       = 0x00000008,
-    SE_SIGNING_LEVEL_CUSTOM_4        = 0x00000009,
-    SE_SIGNING_LEVEL_CUSTOM_5        = 0x0000000a,
-    SE_SIGNING_LEVEL_DYNAMIC_CODEGEN = 0x0000000b,
-    SE_SIGNING_LEVEL_WINDOWS         = 0x0000000c,
-    SE_SIGNING_LEVEL_CUSTOM_7        = 0x0000000d,
-    SE_SIGNING_LEVEL_WINDOWS_TCB     = 0x0000000e,
-    SE_SIGNING_LEVEL_CUSTOM_6        = 0x0000000f,
+    SE_SIGNING_LEVEL_UNCHECKED       = 0x00000000U,
+    SE_SIGNING_LEVEL_UNSIGNED        = 0x00000001U,
+    SE_SIGNING_LEVEL_ENTERPRISE      = 0x00000002U,
+    SE_SIGNING_LEVEL_CUSTOM_1        = 0x00000003U,
+    SE_SIGNING_LEVEL_DEVELOPER       = 0x00000003U,
+    SE_SIGNING_LEVEL_AUTHENTICODE    = 0x00000004U,
+    SE_SIGNING_LEVEL_CUSTOM_2        = 0x00000005U,
+    SE_SIGNING_LEVEL_STORE           = 0x00000006U,
+    SE_SIGNING_LEVEL_CUSTOM_3        = 0x00000007U,
+    SE_SIGNING_LEVEL_ANTIMALWARE     = 0x00000007U,
+    SE_SIGNING_LEVEL_MICROSOFT       = 0x00000008U,
+    SE_SIGNING_LEVEL_CUSTOM_4        = 0x00000009U,
+    SE_SIGNING_LEVEL_CUSTOM_5        = 0x0000000aU,
+    SE_SIGNING_LEVEL_DYNAMIC_CODEGEN = 0x0000000bU,
+    SE_SIGNING_LEVEL_WINDOWS         = 0x0000000cU,
+    SE_SIGNING_LEVEL_CUSTOM_7        = 0x0000000dU,
+    SE_SIGNING_LEVEL_WINDOWS_TCB     = 0x0000000eU,
+    SE_SIGNING_LEVEL_CUSTOM_6        = 0x0000000fU,
 }
 
 enum : uint
 {
-    JOB_OBJECT_ASSIGN_PROCESS          = 0x00000001,
-    JOB_OBJECT_SET_ATTRIBUTES          = 0x00000002,
-    JOB_OBJECT_QUERY                   = 0x00000004,
-    JOB_OBJECT_TERMINATE               = 0x00000008,
-    JOB_OBJECT_SET_SECURITY_ATTRIBUTES = 0x00000010,
+    JOB_OBJECT_ASSIGN_PROCESS          = 0x00000001U,
+    JOB_OBJECT_SET_ATTRIBUTES          = 0x00000002U,
+    JOB_OBJECT_QUERY                   = 0x00000004U,
+    JOB_OBJECT_TERMINATE               = 0x00000008U,
+    JOB_OBJECT_SET_SECURITY_ATTRIBUTES = 0x00000010U,
 }
 
-enum uint JOB_OBJECT_IMPERSONATE = 0x00000020;
-enum uint FLS_MAXIMUM_AVAILABLE = 0x00000ff0;
-enum uint TLS_MINIMUM_AVAILABLE = 0x00000040;
-enum uint THREAD_DYNAMIC_CODE_ALLOW = 0x00000001;
+enum uint JOB_OBJECT_IMPERSONATE = 0x00000020U;
+enum uint FLS_MAXIMUM_AVAILABLE = 0x00000ff0U;
+enum uint TLS_MINIMUM_AVAILABLE = 0x00000040U;
+enum uint THREAD_DYNAMIC_CODE_ALLOW = 0x00000001U;
 
 enum : uint
 {
-    THREAD_BASE_PRIORITY_LOWRT = 0x0000000f,
-    THREAD_BASE_PRIORITY_MAX   = 0x00000002,
+    THREAD_BASE_PRIORITY_LOWRT = 0x0000000fU,
+    THREAD_BASE_PRIORITY_MAX   = 0x00000002U,
 }
 
 enum : int
@@ -2081,397 +2124,397 @@ enum : int
 
 enum : uint
 {
-    COMPONENT_KTM         = 0x00000001,
-    COMPONENT_VALID_FLAGS = 0x00000001,
+    COMPONENT_KTM         = 0x00000001U,
+    COMPONENT_VALID_FLAGS = 0x00000001U,
 }
 
-enum uint MEMORY_PRIORITY_LOWEST = 0x00000000;
+enum uint MEMORY_PRIORITY_LOWEST = 0x00000000U;
 
 enum : uint
 {
-    DYNAMIC_EH_CONTINUATION_TARGET_ADD       = 0x00000001,
-    DYNAMIC_EH_CONTINUATION_TARGET_PROCESSED = 0x00000002,
-}
-
-enum : uint
-{
-    DYNAMIC_ENFORCED_ADDRESS_RANGE_ADD       = 0x00000001,
-    DYNAMIC_ENFORCED_ADDRESS_RANGE_PROCESSED = 0x00000002,
-}
-
-enum uint QUOTA_LIMITS_USE_DEFAULT_LIMITS = 0x00000010;
-enum uint MAX_HW_COUNTERS = 0x00000010;
-enum uint THREAD_PROFILING_FLAG_DISPATCH = 0x00000001;
-enum uint JOB_OBJECT_NET_RATE_CONTROL_MAX_DSCP_TAG = 0x00000040;
-
-enum : uint
-{
-    JOB_OBJECT_MSG_END_OF_JOB_TIME                 = 0x00000001,
-    JOB_OBJECT_MSG_END_OF_PROCESS_TIME             = 0x00000002,
-    JOB_OBJECT_MSG_ACTIVE_PROCESS_LIMIT            = 0x00000003,
-    JOB_OBJECT_MSG_ACTIVE_PROCESS_ZERO             = 0x00000004,
-    JOB_OBJECT_MSG_NEW_PROCESS                     = 0x00000006,
-    JOB_OBJECT_MSG_EXIT_PROCESS                    = 0x00000007,
-    JOB_OBJECT_MSG_ABNORMAL_EXIT_PROCESS           = 0x00000008,
-    JOB_OBJECT_MSG_PROCESS_MEMORY_LIMIT            = 0x00000009,
-    JOB_OBJECT_MSG_JOB_MEMORY_LIMIT                = 0x0000000a,
-    JOB_OBJECT_MSG_NOTIFICATION_LIMIT              = 0x0000000b,
-    JOB_OBJECT_MSG_JOB_CYCLE_TIME_LIMIT            = 0x0000000c,
-    JOB_OBJECT_MSG_SILO_TERMINATED                 = 0x0000000d,
-    JOB_OBJECT_MSG_MINIMUM                         = 0x00000001,
-    JOB_OBJECT_MSG_MAXIMUM                         = 0x0000000d,
-    JOB_OBJECT_UILIMIT_IME                         = 0x00000100,
-    JOB_OBJECT_UILIMIT_INJECTION                   = 0x00000200,
-    JOB_OBJECT_UILIMIT_ALL                         = 0x000003ff,
-    JOB_OBJECT_UI_VALID_FLAGS                      = 0x000003ff,
-    JOB_OBJECT_CPU_RATE_CONTROL_PER_PROCESSOR_CAPS = 0x00000020,
+    DYNAMIC_EH_CONTINUATION_TARGET_ADD       = 0x00000001U,
+    DYNAMIC_EH_CONTINUATION_TARGET_PROCESSED = 0x00000002U,
 }
 
 enum : uint
 {
-    MEMORY_PARTITION_QUERY_ACCESS  = 0x00000001,
-    MEMORY_PARTITION_MODIFY_ACCESS = 0x00000002,
+    DYNAMIC_ENFORCED_ADDRESS_RANGE_ADD       = 0x00000001U,
+    DYNAMIC_ENFORCED_ADDRESS_RANGE_PROCESSED = 0x00000002U,
 }
 
-enum uint MUTANT_QUERY_STATE = 0x00000001;
+enum uint QUOTA_LIMITS_USE_DEFAULT_LIMITS = 0x00000010U;
+enum uint MAX_HW_COUNTERS = 0x00000010U;
+enum uint THREAD_PROFILING_FLAG_DISPATCH = 0x00000001U;
+enum uint JOB_OBJECT_NET_RATE_CONTROL_MAX_DSCP_TAG = 0x00000040U;
 
 enum : uint
 {
-    TIME_ZONE_ID_UNKNOWN  = 0x00000000,
-    TIME_ZONE_ID_STANDARD = 0x00000001,
-    TIME_ZONE_ID_DAYLIGHT = 0x00000002,
-}
-
-enum uint LTP_PC_SMT = 0x00000001;
-enum uint CACHE_FULLY_ASSOCIATIVE = 0x000000ff;
-
-enum : uint
-{
-    PROCESSOR_INTEL_386     = 0x00000182,
-    PROCESSOR_INTEL_486     = 0x000001e6,
-    PROCESSOR_INTEL_PENTIUM = 0x0000024a,
-    PROCESSOR_INTEL_IA64    = 0x00000898,
-    PROCESSOR_AMD_X8664     = 0x000021d8,
-    PROCESSOR_MIPS_R4000    = 0x00000fa0,
-    PROCESSOR_ALPHA_21064   = 0x00005248,
-    PROCESSOR_PPC_601       = 0x00000259,
-    PROCESSOR_PPC_603       = 0x0000025b,
-    PROCESSOR_PPC_604       = 0x0000025c,
-    PROCESSOR_PPC_620       = 0x0000026c,
-    PROCESSOR_HITACHI_SH3   = 0x00002713,
-    PROCESSOR_HITACHI_SH3E  = 0x00002714,
-    PROCESSOR_HITACHI_SH4   = 0x00002715,
-    PROCESSOR_MOTOROLA_821  = 0x00000335,
-    PROCESSOR_SHx_SH3       = 0x00000067,
-    PROCESSOR_SHx_SH4       = 0x00000068,
-    PROCESSOR_STRONGARM     = 0x00000a11,
-    PROCESSOR_ARM720        = 0x00000720,
-    PROCESSOR_ARM820        = 0x00000820,
-    PROCESSOR_ARM920        = 0x00000920,
-    PROCESSOR_ARM_7TDMI     = 0x00011171,
-    PROCESSOR_OPTIL         = 0x0000494f,
+    JOB_OBJECT_MSG_END_OF_JOB_TIME                 = 0x00000001U,
+    JOB_OBJECT_MSG_END_OF_PROCESS_TIME             = 0x00000002U,
+    JOB_OBJECT_MSG_ACTIVE_PROCESS_LIMIT            = 0x00000003U,
+    JOB_OBJECT_MSG_ACTIVE_PROCESS_ZERO             = 0x00000004U,
+    JOB_OBJECT_MSG_NEW_PROCESS                     = 0x00000006U,
+    JOB_OBJECT_MSG_EXIT_PROCESS                    = 0x00000007U,
+    JOB_OBJECT_MSG_ABNORMAL_EXIT_PROCESS           = 0x00000008U,
+    JOB_OBJECT_MSG_PROCESS_MEMORY_LIMIT            = 0x00000009U,
+    JOB_OBJECT_MSG_JOB_MEMORY_LIMIT                = 0x0000000aU,
+    JOB_OBJECT_MSG_NOTIFICATION_LIMIT              = 0x0000000bU,
+    JOB_OBJECT_MSG_JOB_CYCLE_TIME_LIMIT            = 0x0000000cU,
+    JOB_OBJECT_MSG_SILO_TERMINATED                 = 0x0000000dU,
+    JOB_OBJECT_MSG_MINIMUM                         = 0x00000001U,
+    JOB_OBJECT_MSG_MAXIMUM                         = 0x0000000dU,
+    JOB_OBJECT_UILIMIT_IME                         = 0x00000100U,
+    JOB_OBJECT_UILIMIT_INJECTION                   = 0x00000200U,
+    JOB_OBJECT_UILIMIT_ALL                         = 0x000003ffU,
+    JOB_OBJECT_UI_VALID_FLAGS                      = 0x000003ffU,
+    JOB_OBJECT_CPU_RATE_CONTROL_PER_PROCESSOR_CAPS = 0x00000020U,
 }
 
 enum : uint
 {
-    XSTATE_LEGACY_FLOATING_POINT = 0x00000000,
-    XSTATE_LEGACY_SSE            = 0x00000001,
-    XSTATE_GSSE                  = 0x00000002,
-    XSTATE_AVX                   = 0x00000002,
-    XSTATE_MPX_BNDREGS           = 0x00000003,
-    XSTATE_MPX_BNDCSR            = 0x00000004,
-    XSTATE_AVX512_KMASK          = 0x00000005,
-    XSTATE_AVX512_ZMM_H          = 0x00000006,
-    XSTATE_AVX512_ZMM            = 0x00000007,
-    XSTATE_IPT                   = 0x00000008,
-    XSTATE_PASID                 = 0x0000000a,
-    XSTATE_CET_U                 = 0x0000000b,
-    XSTATE_CET_S                 = 0x0000000c,
-    XSTATE_AMX_TILE_CONFIG       = 0x00000011,
-    XSTATE_AMX_TILE_DATA         = 0x00000012,
+    MEMORY_PARTITION_QUERY_ACCESS  = 0x00000001U,
+    MEMORY_PARTITION_MODIFY_ACCESS = 0x00000002U,
 }
 
-enum uint XSTATE_LWP = 0x0000003e;
-enum uint MAXIMUM_XSTATE_FEATURES = 0x00000040;
+enum uint MUTANT_QUERY_STATE = 0x00000001U;
 
 enum : uint
 {
-    XSTATE_ARM64_SVE                = 0x00000002,
-    XSTATE_FIRST_NON_LEGACY_FEATURE = 0x00000002,
+    TIME_ZONE_ID_UNKNOWN  = 0x00000000U,
+    TIME_ZONE_ID_STANDARD = 0x00000001U,
+    TIME_ZONE_ID_DAYLIGHT = 0x00000002U,
 }
 
-enum uint XSTATE_COMPACTION_ENABLE = 0x0000003f;
+enum uint LTP_PC_SMT = 0x00000001U;
+enum uint CACHE_FULLY_ASSOCIATIVE = 0x000000ffU;
 
 enum : uint
 {
-    XSTATE_ALIGN_BIT                 = 0x00000001,
-    XSTATE_XFD_BIT                   = 0x00000002,
-    XSTATE_CONTROLFLAG_XSAVEOPT_MASK = 0x00000001,
-    XSTATE_CONTROLFLAG_XSAVEC_MASK   = 0x00000002,
-    XSTATE_CONTROLFLAG_XFD_MASK      = 0x00000004,
-}
-
-enum : uint
-{
-    RUNTIME_REPORT_PACKAGE_MAGIC           = 0x52545250,
-    RUNTIME_REPORT_PACKAGE_VERSION_CURRENT = 0x00000001,
-}
-
-enum : uint
-{
-    RUNTIME_REPORT_NONCE_SIZE                             = 0x00000020,
-    RUNTIME_REPORT_DIGEST_MAX_SIZE                        = 0x00000040,
-    RUNTIME_REPORT_SIGNATURE_SCHEME_SHA512_RSA_PSS_SHA512 = 0x00000001,
+    PROCESSOR_INTEL_386     = 0x00000182U,
+    PROCESSOR_INTEL_486     = 0x000001e6U,
+    PROCESSOR_INTEL_PENTIUM = 0x0000024aU,
+    PROCESSOR_INTEL_IA64    = 0x00000898U,
+    PROCESSOR_AMD_X8664     = 0x000021d8U,
+    PROCESSOR_MIPS_R4000    = 0x00000fa0U,
+    PROCESSOR_ALPHA_21064   = 0x00005248U,
+    PROCESSOR_PPC_601       = 0x00000259U,
+    PROCESSOR_PPC_603       = 0x0000025bU,
+    PROCESSOR_PPC_604       = 0x0000025cU,
+    PROCESSOR_PPC_620       = 0x0000026cU,
+    PROCESSOR_HITACHI_SH3   = 0x00002713U,
+    PROCESSOR_HITACHI_SH3E  = 0x00002714U,
+    PROCESSOR_HITACHI_SH4   = 0x00002715U,
+    PROCESSOR_MOTOROLA_821  = 0x00000335U,
+    PROCESSOR_SHx_SH3       = 0x00000067U,
+    PROCESSOR_SHx_SH4       = 0x00000068U,
+    PROCESSOR_STRONGARM     = 0x00000a11U,
+    PROCESSOR_ARM720        = 0x00000720U,
+    PROCESSOR_ARM820        = 0x00000820U,
+    PROCESSOR_ARM920        = 0x00000920U,
+    PROCESSOR_ARM_7TDMI     = 0x00011171U,
+    PROCESSOR_OPTIL         = 0x0000494fU,
 }
 
 enum : uint
 {
-    DRIVER_REPORT_DIGEST_MAX_SIZE = 0x00000040,
-    DRIVER_REPORT_NAME_MAX_LENGTH = 0x00000020,
+    XSTATE_LEGACY_FLOATING_POINT = 0x00000000U,
+    XSTATE_LEGACY_SSE            = 0x00000001U,
+    XSTATE_GSSE                  = 0x00000002U,
+    XSTATE_AVX                   = 0x00000002U,
+    XSTATE_MPX_BNDREGS           = 0x00000003U,
+    XSTATE_MPX_BNDCSR            = 0x00000004U,
+    XSTATE_AVX512_KMASK          = 0x00000005U,
+    XSTATE_AVX512_ZMM_H          = 0x00000006U,
+    XSTATE_AVX512_ZMM            = 0x00000007U,
+    XSTATE_IPT                   = 0x00000008U,
+    XSTATE_PASID                 = 0x0000000aU,
+    XSTATE_CET_U                 = 0x0000000bU,
+    XSTATE_CET_S                 = 0x0000000cU,
+    XSTATE_AMX_TILE_CONFIG       = 0x00000011U,
+    XSTATE_AMX_TILE_DATA         = 0x00000012U,
+}
+
+enum uint XSTATE_LWP = 0x0000003eU;
+enum uint MAXIMUM_XSTATE_FEATURES = 0x00000040U;
+
+enum : uint
+{
+    XSTATE_ARM64_SVE                = 0x00000002U,
+    XSTATE_FIRST_NON_LEGACY_FEATURE = 0x00000002U,
+}
+
+enum uint XSTATE_COMPACTION_ENABLE = 0x0000003fU;
+
+enum : uint
+{
+    XSTATE_ALIGN_BIT                 = 0x00000001U,
+    XSTATE_XFD_BIT                   = 0x00000002U,
+    XSTATE_CONTROLFLAG_XSAVEOPT_MASK = 0x00000001U,
+    XSTATE_CONTROLFLAG_XSAVEC_MASK   = 0x00000002U,
+    XSTATE_CONTROLFLAG_XFD_MASK      = 0x00000004U,
 }
 
 enum : uint
 {
-    CFG_CALL_TARGET_VALID                              = 0x00000001,
-    CFG_CALL_TARGET_PROCESSED                          = 0x00000002,
-    CFG_CALL_TARGET_CONVERT_EXPORT_SUPPRESSED_TO_VALID = 0x00000004,
+    RUNTIME_REPORT_PACKAGE_MAGIC           = 0x52545250U,
+    RUNTIME_REPORT_PACKAGE_VERSION_CURRENT = 0x00000001U,
 }
 
 enum : uint
 {
-    CFG_CALL_TARGET_VALID_XFG          = 0x00000008,
-    CFG_CALL_TARGET_CONVERT_XFG_TO_CFG = 0x00000010,
-}
-
-enum uint SESSION_QUERY_ACCESS = 0x00000001;
-enum uint SESSION_MODIFY_ACCESS = 0x00000002;
-enum uint MEM_TOP_DOWN = 0x00100000;
-enum uint MEM_WRITE_WATCH = 0x00200000;
-enum uint MEM_PHYSICAL = 0x00400000;
-enum uint MEM_ROTATE = 0x00800000;
-enum uint MEM_DIFFERENT_IMAGE_BASE_OK = 0x00800000;
-enum uint MEM_4MB_PAGES = 0x80000000;
-enum uint MEM_COALESCE_PLACEHOLDERS = 0x00000001;
-
-enum : uint
-{
-    MEM_EXTENDED_PARAMETER_GRAPHICS            = 0x00000001,
-    MEM_EXTENDED_PARAMETER_NONPAGED            = 0x00000002,
-    MEM_EXTENDED_PARAMETER_ZERO_PAGES_OPTIONAL = 0x00000004,
-    MEM_EXTENDED_PARAMETER_NONPAGED_LARGE      = 0x00000008,
-    MEM_EXTENDED_PARAMETER_NONPAGED_HUGE       = 0x00000010,
-    MEM_EXTENDED_PARAMETER_SOFT_FAULT_PAGES    = 0x00000020,
-    MEM_EXTENDED_PARAMETER_EC_CODE             = 0x00000040,
-    MEM_EXTENDED_PARAMETER_TYPE_BITS           = 0x00000008,
-}
-
-enum uint SEC_HUGE_PAGES = 0x00020000;
-enum uint WRITE_WATCH_FLAG_RESET = 0x00000001;
-enum uint VM_PREFETCH_TO_WORKING_SET = 0x00000001;
-
-enum : uint
-{
-    ENCLAVE_TYPE_SGX       = 0x00000001,
-    ENCLAVE_TYPE_SGX2      = 0x00000002,
-    ENCLAVE_TYPE_VBS       = 0x00000010,
-    ENCLAVE_VBS_FLAG_DEBUG = 0x00000001,
-}
-
-enum uint ENCLAVE_TYPE_VBS_BASIC = 0x00000011;
-
-enum : uint
-{
-    VBS_BASIC_PAGE_MEASURED_DATA     = 0x00000001,
-    VBS_BASIC_PAGE_UNMEASURED_DATA   = 0x00000002,
-    VBS_BASIC_PAGE_ZERO_FILL         = 0x00000003,
-    VBS_BASIC_PAGE_THREAD_DESCRIPTOR = 0x00000004,
-    VBS_BASIC_PAGE_SYSTEM_CALL       = 0x00000005,
-}
-
-enum uint DEDICATED_MEMORY_CACHE_ELIGIBLE = 0x00000001;
-
-enum : uint
-{
-    TREE_CONNECT_ATTRIBUTE_PRIVACY   = 0x00004000,
-    TREE_CONNECT_ATTRIBUTE_INTEGRITY = 0x00008000,
-    TREE_CONNECT_ATTRIBUTE_GLOBAL    = 0x00000004,
-    TREE_CONNECT_ATTRIBUTE_PINNED    = 0x00000002,
-}
-
-enum uint FILE_ATTRIBUTE_STRICTLY_SEQUENTIAL = 0x20000000;
-
-enum : uint
-{
-    MAILSLOT_NO_MESSAGE   = 0xffffffff,
-    MAILSLOT_WAIT_FOREVER = 0xffffffff,
-}
-
-enum uint FILE_CASE_SENSITIVE_SEARCH = 0x00000001;
-enum uint FILE_CASE_PRESERVED_NAMES = 0x00000002;
-enum uint FILE_UNICODE_ON_DISK = 0x00000004;
-enum uint FILE_PERSISTENT_ACLS = 0x00000008;
-enum uint FILE_FILE_COMPRESSION = 0x00000010;
-enum uint FILE_VOLUME_QUOTAS = 0x00000020;
-
-enum : uint
-{
-    FILE_SUPPORTS_SPARSE_FILES   = 0x00000040,
-    FILE_SUPPORTS_REPARSE_POINTS = 0x00000080,
-    FILE_SUPPORTS_REMOTE_STORAGE = 0x00000100,
-}
-
-enum uint FILE_RETURNS_CLEANUP_RESULT_INFO = 0x00000200;
-
-enum : uint
-{
-    FILE_SUPPORTS_POSIX_UNLINK_RENAME = 0x00000400,
-    FILE_SUPPORTS_BYPASS_IO           = 0x00000800,
-    FILE_SUPPORTS_STREAM_SNAPSHOTS    = 0x00001000,
-    FILE_SUPPORTS_CASE_SENSITIVE_DIRS = 0x00002000,
-}
-
-enum uint FILE_VOLUME_IS_COMPRESSED = 0x00008000;
-
-enum : uint
-{
-    FILE_SUPPORTS_OBJECT_IDS = 0x00010000,
-    FILE_SUPPORTS_ENCRYPTION = 0x00020000,
-}
-
-enum uint FILE_NAMED_STREAMS = 0x00040000;
-enum uint FILE_READ_ONLY_VOLUME = 0x00080000;
-enum uint FILE_SEQUENTIAL_WRITE_ONCE = 0x00100000;
-
-enum : uint
-{
-    FILE_SUPPORTS_TRANSACTIONS        = 0x00200000,
-    FILE_SUPPORTS_HARD_LINKS          = 0x00400000,
-    FILE_SUPPORTS_EXTENDED_ATTRIBUTES = 0x00800000,
-    FILE_SUPPORTS_OPEN_BY_FILE_ID     = 0x01000000,
-    FILE_SUPPORTS_USN_JOURNAL         = 0x02000000,
-    FILE_SUPPORTS_INTEGRITY_STREAMS   = 0x04000000,
-    FILE_SUPPORTS_BLOCK_REFCOUNTING   = 0x08000000,
-    FILE_SUPPORTS_SPARSE_VDL          = 0x10000000,
-}
-
-enum uint FILE_DAX_VOLUME = 0x20000000;
-enum uint FILE_SUPPORTS_GHOSTING = 0x40000000;
-
-enum : uint
-{
-    FILE_NAME_FLAG_HARDLINK     = 0x00000000,
-    FILE_NAME_FLAG_NTFS         = 0x00000001,
-    FILE_NAME_FLAG_DOS          = 0x00000002,
-    FILE_NAME_FLAG_BOTH         = 0x00000003,
-    FILE_NAME_FLAGS_UNSPECIFIED = 0x00000080,
+    RUNTIME_REPORT_NONCE_SIZE                             = 0x00000020U,
+    RUNTIME_REPORT_DIGEST_MAX_SIZE                        = 0x00000040U,
+    RUNTIME_REPORT_SIGNATURE_SCHEME_SHA512_RSA_PSS_SHA512 = 0x00000001U,
 }
 
 enum : uint
 {
-    LX_FILE_METADATA_HAS_UID       = 0x00000001,
-    LX_FILE_METADATA_HAS_GID       = 0x00000002,
-    LX_FILE_METADATA_HAS_MODE      = 0x00000004,
-    LX_FILE_METADATA_HAS_DEVICE_ID = 0x00000008,
-}
-
-enum uint LX_FILE_CASE_SENSITIVE_DIR = 0x00000010;
-enum uint FILE_CS_FLAG_CASE_SENSITIVE_DIR = 0x00000001;
-
-enum : uint
-{
-    FLUSH_FLAGS_FILE_DATA_ONLY      = 0x00000001,
-    FLUSH_FLAGS_NO_SYNC             = 0x00000002,
-    FLUSH_FLAGS_FILE_DATA_SYNC_ONLY = 0x00000004,
-    FLUSH_FLAGS_FLUSH_AND_PURGE     = 0x00000008,
+    DRIVER_REPORT_DIGEST_MAX_SIZE = 0x00000040U,
+    DRIVER_REPORT_NAME_MAX_LENGTH = 0x00000020U,
 }
 
 enum : uint
 {
-    IO_REPARSE_TAG_RESERVED_ZERO  = 0x00000000,
-    IO_REPARSE_TAG_RESERVED_ONE   = 0x00000001,
-    IO_REPARSE_TAG_RESERVED_TWO   = 0x00000002,
-    IO_REPARSE_TAG_RESERVED_RANGE = 0x00000002,
+    CFG_CALL_TARGET_VALID                              = 0x00000001U,
+    CFG_CALL_TARGET_PROCESSED                          = 0x00000002U,
+    CFG_CALL_TARGET_CONVERT_EXPORT_SUPPRESSED_TO_VALID = 0x00000004U,
+}
+
+enum : uint
+{
+    CFG_CALL_TARGET_VALID_XFG          = 0x00000008U,
+    CFG_CALL_TARGET_CONVERT_XFG_TO_CFG = 0x00000010U,
+}
+
+enum uint SESSION_QUERY_ACCESS = 0x00000001U;
+enum uint SESSION_MODIFY_ACCESS = 0x00000002U;
+enum uint MEM_TOP_DOWN = 0x00100000U;
+enum uint MEM_WRITE_WATCH = 0x00200000U;
+enum uint MEM_PHYSICAL = 0x00400000U;
+enum uint MEM_ROTATE = 0x00800000U;
+enum uint MEM_DIFFERENT_IMAGE_BASE_OK = 0x00800000U;
+enum uint MEM_4MB_PAGES = 0x80000000U;
+enum uint MEM_COALESCE_PLACEHOLDERS = 0x00000001U;
+
+enum : uint
+{
+    MEM_EXTENDED_PARAMETER_GRAPHICS            = 0x00000001U,
+    MEM_EXTENDED_PARAMETER_NONPAGED            = 0x00000002U,
+    MEM_EXTENDED_PARAMETER_ZERO_PAGES_OPTIONAL = 0x00000004U,
+    MEM_EXTENDED_PARAMETER_NONPAGED_LARGE      = 0x00000008U,
+    MEM_EXTENDED_PARAMETER_NONPAGED_HUGE       = 0x00000010U,
+    MEM_EXTENDED_PARAMETER_SOFT_FAULT_PAGES    = 0x00000020U,
+    MEM_EXTENDED_PARAMETER_EC_CODE             = 0x00000040U,
+    MEM_EXTENDED_PARAMETER_TYPE_BITS           = 0x00000008U,
+}
+
+enum uint SEC_HUGE_PAGES = 0x00020000U;
+enum uint WRITE_WATCH_FLAG_RESET = 0x00000001U;
+enum uint VM_PREFETCH_TO_WORKING_SET = 0x00000001U;
+
+enum : uint
+{
+    ENCLAVE_TYPE_SGX       = 0x00000001U,
+    ENCLAVE_TYPE_SGX2      = 0x00000002U,
+    ENCLAVE_TYPE_VBS       = 0x00000010U,
+    ENCLAVE_VBS_FLAG_DEBUG = 0x00000001U,
+}
+
+enum uint ENCLAVE_TYPE_VBS_BASIC = 0x00000011U;
+
+enum : uint
+{
+    VBS_BASIC_PAGE_MEASURED_DATA     = 0x00000001U,
+    VBS_BASIC_PAGE_UNMEASURED_DATA   = 0x00000002U,
+    VBS_BASIC_PAGE_ZERO_FILL         = 0x00000003U,
+    VBS_BASIC_PAGE_THREAD_DESCRIPTOR = 0x00000004U,
+    VBS_BASIC_PAGE_SYSTEM_CALL       = 0x00000005U,
+}
+
+enum uint DEDICATED_MEMORY_CACHE_ELIGIBLE = 0x00000001U;
+
+enum : uint
+{
+    TREE_CONNECT_ATTRIBUTE_PRIVACY   = 0x00004000U,
+    TREE_CONNECT_ATTRIBUTE_INTEGRITY = 0x00008000U,
+    TREE_CONNECT_ATTRIBUTE_GLOBAL    = 0x00000004U,
+    TREE_CONNECT_ATTRIBUTE_PINNED    = 0x00000002U,
+}
+
+enum uint FILE_ATTRIBUTE_STRICTLY_SEQUENTIAL = 0x20000000U;
+
+enum : uint
+{
+    MAILSLOT_NO_MESSAGE   = 0xffffffffU,
+    MAILSLOT_WAIT_FOREVER = 0xffffffffU,
+}
+
+enum uint FILE_CASE_SENSITIVE_SEARCH = 0x00000001U;
+enum uint FILE_CASE_PRESERVED_NAMES = 0x00000002U;
+enum uint FILE_UNICODE_ON_DISK = 0x00000004U;
+enum uint FILE_PERSISTENT_ACLS = 0x00000008U;
+enum uint FILE_FILE_COMPRESSION = 0x00000010U;
+enum uint FILE_VOLUME_QUOTAS = 0x00000020U;
+
+enum : uint
+{
+    FILE_SUPPORTS_SPARSE_FILES   = 0x00000040U,
+    FILE_SUPPORTS_REPARSE_POINTS = 0x00000080U,
+    FILE_SUPPORTS_REMOTE_STORAGE = 0x00000100U,
+}
+
+enum uint FILE_RETURNS_CLEANUP_RESULT_INFO = 0x00000200U;
+
+enum : uint
+{
+    FILE_SUPPORTS_POSIX_UNLINK_RENAME = 0x00000400U,
+    FILE_SUPPORTS_BYPASS_IO           = 0x00000800U,
+    FILE_SUPPORTS_STREAM_SNAPSHOTS    = 0x00001000U,
+    FILE_SUPPORTS_CASE_SENSITIVE_DIRS = 0x00002000U,
+}
+
+enum uint FILE_VOLUME_IS_COMPRESSED = 0x00008000U;
+
+enum : uint
+{
+    FILE_SUPPORTS_OBJECT_IDS = 0x00010000U,
+    FILE_SUPPORTS_ENCRYPTION = 0x00020000U,
+}
+
+enum uint FILE_NAMED_STREAMS = 0x00040000U;
+enum uint FILE_READ_ONLY_VOLUME = 0x00080000U;
+enum uint FILE_SEQUENTIAL_WRITE_ONCE = 0x00100000U;
+
+enum : uint
+{
+    FILE_SUPPORTS_TRANSACTIONS        = 0x00200000U,
+    FILE_SUPPORTS_HARD_LINKS          = 0x00400000U,
+    FILE_SUPPORTS_EXTENDED_ATTRIBUTES = 0x00800000U,
+    FILE_SUPPORTS_OPEN_BY_FILE_ID     = 0x01000000U,
+    FILE_SUPPORTS_USN_JOURNAL         = 0x02000000U,
+    FILE_SUPPORTS_INTEGRITY_STREAMS   = 0x04000000U,
+    FILE_SUPPORTS_BLOCK_REFCOUNTING   = 0x08000000U,
+    FILE_SUPPORTS_SPARSE_VDL          = 0x10000000U,
+}
+
+enum uint FILE_DAX_VOLUME = 0x20000000U;
+enum uint FILE_SUPPORTS_GHOSTING = 0x40000000U;
+
+enum : uint
+{
+    FILE_NAME_FLAG_HARDLINK     = 0x00000000U,
+    FILE_NAME_FLAG_NTFS         = 0x00000001U,
+    FILE_NAME_FLAG_DOS          = 0x00000002U,
+    FILE_NAME_FLAG_BOTH         = 0x00000003U,
+    FILE_NAME_FLAGS_UNSPECIFIED = 0x00000080U,
+}
+
+enum : uint
+{
+    LX_FILE_METADATA_HAS_UID       = 0x00000001U,
+    LX_FILE_METADATA_HAS_GID       = 0x00000002U,
+    LX_FILE_METADATA_HAS_MODE      = 0x00000004U,
+    LX_FILE_METADATA_HAS_DEVICE_ID = 0x00000008U,
+}
+
+enum uint LX_FILE_CASE_SENSITIVE_DIR = 0x00000010U;
+enum uint FILE_CS_FLAG_CASE_SENSITIVE_DIR = 0x00000001U;
+
+enum : uint
+{
+    FLUSH_FLAGS_FILE_DATA_ONLY      = 0x00000001U,
+    FLUSH_FLAGS_NO_SYNC             = 0x00000002U,
+    FLUSH_FLAGS_FILE_DATA_SYNC_ONLY = 0x00000004U,
+    FLUSH_FLAGS_FLUSH_AND_PURGE     = 0x00000008U,
+}
+
+enum : uint
+{
+    IO_REPARSE_TAG_RESERVED_ZERO  = 0x00000000U,
+    IO_REPARSE_TAG_RESERVED_ONE   = 0x00000001U,
+    IO_REPARSE_TAG_RESERVED_TWO   = 0x00000002U,
+    IO_REPARSE_TAG_RESERVED_RANGE = 0x00000002U,
 }
 
 enum int IO_REPARSE_TAG_RESERVED_INVALID = 0xc0008000;
 
 enum : uint
 {
-    IO_REPARSE_TAG_MOUNT_POINT      = 0xa0000003,
-    IO_REPARSE_TAG_HSM              = 0xc0000004,
-    IO_REPARSE_TAG_HSM2             = 0x80000006,
-    IO_REPARSE_TAG_SIS              = 0x80000007,
-    IO_REPARSE_TAG_WIM              = 0x80000008,
-    IO_REPARSE_TAG_CSV              = 0x80000009,
-    IO_REPARSE_TAG_DFS              = 0x8000000a,
-    IO_REPARSE_TAG_SYMLINK          = 0xa000000c,
-    IO_REPARSE_TAG_DFSR             = 0x80000012,
-    IO_REPARSE_TAG_DEDUP            = 0x80000013,
-    IO_REPARSE_TAG_NFS              = 0x80000014,
-    IO_REPARSE_TAG_FILE_PLACEHOLDER = 0x80000015,
-    IO_REPARSE_TAG_WOF              = 0x80000017,
-    IO_REPARSE_TAG_WCI              = 0x80000018,
-    IO_REPARSE_TAG_WCI_1            = 0x90001018,
-    IO_REPARSE_TAG_GLOBAL_REPARSE   = 0xa0000019,
-    IO_REPARSE_TAG_CLOUD            = 0x9000001a,
-    IO_REPARSE_TAG_CLOUD_1          = 0x9000101a,
-    IO_REPARSE_TAG_CLOUD_2          = 0x9000201a,
-    IO_REPARSE_TAG_CLOUD_3          = 0x9000301a,
-    IO_REPARSE_TAG_CLOUD_4          = 0x9000401a,
-    IO_REPARSE_TAG_CLOUD_5          = 0x9000501a,
-    IO_REPARSE_TAG_CLOUD_6          = 0x9000601a,
-    IO_REPARSE_TAG_CLOUD_7          = 0x9000701a,
-    IO_REPARSE_TAG_CLOUD_8          = 0x9000801a,
-    IO_REPARSE_TAG_CLOUD_9          = 0x9000901a,
-    IO_REPARSE_TAG_CLOUD_A          = 0x9000a01a,
-    IO_REPARSE_TAG_CLOUD_B          = 0x9000b01a,
-    IO_REPARSE_TAG_CLOUD_C          = 0x9000c01a,
-    IO_REPARSE_TAG_CLOUD_D          = 0x9000d01a,
-    IO_REPARSE_TAG_CLOUD_E          = 0x9000e01a,
-    IO_REPARSE_TAG_CLOUD_F          = 0x9000f01a,
-    IO_REPARSE_TAG_CLOUD_MASK       = 0x0000f000,
-    IO_REPARSE_TAG_APPEXECLINK      = 0x8000001b,
-    IO_REPARSE_TAG_PROJFS           = 0x9000001c,
-    IO_REPARSE_TAG_STORAGE_SYNC     = 0x8000001e,
-    IO_REPARSE_TAG_WCI_TOMBSTONE    = 0xa000001f,
-    IO_REPARSE_TAG_UNHANDLED        = 0x80000020,
-    IO_REPARSE_TAG_ONEDRIVE         = 0x80000021,
-    IO_REPARSE_TAG_PROJFS_TOMBSTONE = 0xa0000022,
-    IO_REPARSE_TAG_AF_UNIX          = 0x80000023,
+    IO_REPARSE_TAG_MOUNT_POINT      = 0xa0000003U,
+    IO_REPARSE_TAG_HSM              = 0xc0000004U,
+    IO_REPARSE_TAG_HSM2             = 0x80000006U,
+    IO_REPARSE_TAG_SIS              = 0x80000007U,
+    IO_REPARSE_TAG_WIM              = 0x80000008U,
+    IO_REPARSE_TAG_CSV              = 0x80000009U,
+    IO_REPARSE_TAG_DFS              = 0x8000000aU,
+    IO_REPARSE_TAG_SYMLINK          = 0xa000000cU,
+    IO_REPARSE_TAG_DFSR             = 0x80000012U,
+    IO_REPARSE_TAG_DEDUP            = 0x80000013U,
+    IO_REPARSE_TAG_NFS              = 0x80000014U,
+    IO_REPARSE_TAG_FILE_PLACEHOLDER = 0x80000015U,
+    IO_REPARSE_TAG_WOF              = 0x80000017U,
+    IO_REPARSE_TAG_WCI              = 0x80000018U,
+    IO_REPARSE_TAG_WCI_1            = 0x90001018U,
+    IO_REPARSE_TAG_GLOBAL_REPARSE   = 0xa0000019U,
+    IO_REPARSE_TAG_CLOUD            = 0x9000001aU,
+    IO_REPARSE_TAG_CLOUD_1          = 0x9000101aU,
+    IO_REPARSE_TAG_CLOUD_2          = 0x9000201aU,
+    IO_REPARSE_TAG_CLOUD_3          = 0x9000301aU,
+    IO_REPARSE_TAG_CLOUD_4          = 0x9000401aU,
+    IO_REPARSE_TAG_CLOUD_5          = 0x9000501aU,
+    IO_REPARSE_TAG_CLOUD_6          = 0x9000601aU,
+    IO_REPARSE_TAG_CLOUD_7          = 0x9000701aU,
+    IO_REPARSE_TAG_CLOUD_8          = 0x9000801aU,
+    IO_REPARSE_TAG_CLOUD_9          = 0x9000901aU,
+    IO_REPARSE_TAG_CLOUD_A          = 0x9000a01aU,
+    IO_REPARSE_TAG_CLOUD_B          = 0x9000b01aU,
+    IO_REPARSE_TAG_CLOUD_C          = 0x9000c01aU,
+    IO_REPARSE_TAG_CLOUD_D          = 0x9000d01aU,
+    IO_REPARSE_TAG_CLOUD_E          = 0x9000e01aU,
+    IO_REPARSE_TAG_CLOUD_F          = 0x9000f01aU,
+    IO_REPARSE_TAG_CLOUD_MASK       = 0x0000f000U,
+    IO_REPARSE_TAG_APPEXECLINK      = 0x8000001bU,
+    IO_REPARSE_TAG_PROJFS           = 0x9000001cU,
+    IO_REPARSE_TAG_STORAGE_SYNC     = 0x8000001eU,
+    IO_REPARSE_TAG_WCI_TOMBSTONE    = 0xa000001fU,
+    IO_REPARSE_TAG_UNHANDLED        = 0x80000020U,
+    IO_REPARSE_TAG_ONEDRIVE         = 0x80000021U,
+    IO_REPARSE_TAG_PROJFS_TOMBSTONE = 0xa0000022U,
+    IO_REPARSE_TAG_AF_UNIX          = 0x80000023U,
 }
 
 enum int IO_REPARSE_TAG_STORAGE_SYNC_FOLDER = 0x90000027;
 
 enum : uint
 {
-    IO_REPARSE_TAG_WCI_LINK     = 0xa0000027,
-    IO_REPARSE_TAG_WCI_LINK_1   = 0xa0001027,
-    IO_REPARSE_TAG_DATALESS_CIM = 0xa0000028,
+    IO_REPARSE_TAG_WCI_LINK     = 0xa0000027U,
+    IO_REPARSE_TAG_WCI_LINK_1   = 0xa0001027U,
+    IO_REPARSE_TAG_DATALESS_CIM = 0xa0000028U,
 }
 
 enum : uint
 {
-    SCRUB_DATA_INPUT_FLAG_RESUME                  = 0x00000001,
-    SCRUB_DATA_INPUT_FLAG_SKIP_IN_SYNC            = 0x00000002,
-    SCRUB_DATA_INPUT_FLAG_SKIP_NON_INTEGRITY_DATA = 0x00000004,
-    SCRUB_DATA_INPUT_FLAG_IGNORE_REDUNDANCY       = 0x00000008,
-    SCRUB_DATA_INPUT_FLAG_SKIP_DATA               = 0x00000010,
-    SCRUB_DATA_INPUT_FLAG_SCRUB_BY_OBJECT_ID      = 0x00000020,
-    SCRUB_DATA_INPUT_FLAG_OPLOCK_NOT_ACQUIRED     = 0x00000040,
+    SCRUB_DATA_INPUT_FLAG_RESUME                  = 0x00000001U,
+    SCRUB_DATA_INPUT_FLAG_SKIP_IN_SYNC            = 0x00000002U,
+    SCRUB_DATA_INPUT_FLAG_SKIP_NON_INTEGRITY_DATA = 0x00000004U,
+    SCRUB_DATA_INPUT_FLAG_IGNORE_REDUNDANCY       = 0x00000008U,
+    SCRUB_DATA_INPUT_FLAG_SKIP_DATA               = 0x00000010U,
+    SCRUB_DATA_INPUT_FLAG_SCRUB_BY_OBJECT_ID      = 0x00000020U,
+    SCRUB_DATA_INPUT_FLAG_OPLOCK_NOT_ACQUIRED     = 0x00000040U,
 }
 
 enum : uint
 {
-    SCRUB_DATA_OUTPUT_FLAG_INCOMPLETE                      = 0x00000001,
-    SCRUB_DATA_OUTPUT_FLAG_NON_USER_DATA_RANGE             = 0x00010000,
-    SCRUB_DATA_OUTPUT_FLAG_PARITY_EXTENT_DATA_RETURNED     = 0x00020000,
-    SCRUB_DATA_OUTPUT_FLAG_RESUME_CONTEXT_LENGTH_SPECIFIED = 0x00040000,
+    SCRUB_DATA_OUTPUT_FLAG_INCOMPLETE                      = 0x00000001U,
+    SCRUB_DATA_OUTPUT_FLAG_NON_USER_DATA_RANGE             = 0x00010000U,
+    SCRUB_DATA_OUTPUT_FLAG_PARITY_EXTENT_DATA_RETURNED     = 0x00020000U,
+    SCRUB_DATA_OUTPUT_FLAG_RESUME_CONTEXT_LENGTH_SPECIFIED = 0x00040000U,
 }
 
-enum uint SHUFFLE_FILE_FLAG_SKIP_INITIALIZING_NEW_CLUSTERS = 0x00000001;
-enum uint IO_COMPLETION_MODIFY_STATE = 0x00000002;
+enum uint SHUFFLE_FILE_FLAG_SKIP_INITIALIZING_NEW_CLUSTERS = 0x00000001U;
+enum uint IO_COMPLETION_MODIFY_STATE = 0x00000002U;
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* SMB_CCF_APP_INSTANCE_EA_NAME = "ClusteredApplicationInstance";
-enum uint NETWORK_APP_INSTANCE_CSV_FLAGS_VALID_ONLY_IF_CSV_COORDINATOR = 0x00000001;
+enum uint NETWORK_APP_INSTANCE_CSV_FLAGS_VALID_ONLY_IF_CSV_COORDINATOR = 0x00000001U;
 enum GUID GUID_MAX_POWER_SAVINGS = GUID("a1841308-3541-4fab-bc81-f71556f20b4a");
 enum GUID GUID_MIN_POWER_SAVINGS = GUID("8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c");
 enum GUID GUID_TYPICAL_POWER_SAVINGS = GUID("381b4222-f694-41f0-9685-ff5bb260df2e");
@@ -2621,16 +2664,16 @@ enum GUID GUID_SYSTEM_BUTTON_SUBGROUP = GUID("4f971e89-eebd-4455-a8de-9e59040e73
 
 enum : uint
 {
-    POWERBUTTON_ACTION_INDEX_NOTHING              = 0x00000000,
-    POWERBUTTON_ACTION_INDEX_SLEEP                = 0x00000001,
-    POWERBUTTON_ACTION_INDEX_HIBERNATE            = 0x00000002,
-    POWERBUTTON_ACTION_INDEX_SHUTDOWN             = 0x00000003,
-    POWERBUTTON_ACTION_INDEX_TURN_OFF_THE_DISPLAY = 0x00000004,
-    POWERBUTTON_ACTION_VALUE_NOTHING              = 0x00000000,
-    POWERBUTTON_ACTION_VALUE_SLEEP                = 0x00000002,
-    POWERBUTTON_ACTION_VALUE_HIBERNATE            = 0x00000003,
-    POWERBUTTON_ACTION_VALUE_SHUTDOWN             = 0x00000006,
-    POWERBUTTON_ACTION_VALUE_TURN_OFF_THE_DISPLAY = 0x00000008,
+    POWERBUTTON_ACTION_INDEX_NOTHING              = 0x00000000U,
+    POWERBUTTON_ACTION_INDEX_SLEEP                = 0x00000001U,
+    POWERBUTTON_ACTION_INDEX_HIBERNATE            = 0x00000002U,
+    POWERBUTTON_ACTION_INDEX_SHUTDOWN             = 0x00000003U,
+    POWERBUTTON_ACTION_INDEX_TURN_OFF_THE_DISPLAY = 0x00000004U,
+    POWERBUTTON_ACTION_VALUE_NOTHING              = 0x00000000U,
+    POWERBUTTON_ACTION_VALUE_SLEEP                = 0x00000002U,
+    POWERBUTTON_ACTION_VALUE_HIBERNATE            = 0x00000003U,
+    POWERBUTTON_ACTION_VALUE_SHUTDOWN             = 0x00000006U,
+    POWERBUTTON_ACTION_VALUE_TURN_OFF_THE_DISPLAY = 0x00000008U,
 }
 
 enum GUID GUID_POWERBUTTON_ACTION = GUID("7648efa3-dd9c-4e3e-b566-50f929386280");
@@ -2664,12 +2707,12 @@ enum : GUID
 
 enum : uint
 {
-    PERFSTATE_POLICY_CHANGE_IDEAL            = 0x00000000,
-    PERFSTATE_POLICY_CHANGE_SINGLE           = 0x00000001,
-    PERFSTATE_POLICY_CHANGE_ROCKET           = 0x00000002,
-    PERFSTATE_POLICY_CHANGE_IDEAL_AGGRESSIVE = 0x00000003,
-    PERFSTATE_POLICY_CHANGE_DECREASE_MAX     = 0x00000002,
-    PERFSTATE_POLICY_CHANGE_INCREASE_MAX     = 0x00000003,
+    PERFSTATE_POLICY_CHANGE_IDEAL            = 0x00000000U,
+    PERFSTATE_POLICY_CHANGE_SINGLE           = 0x00000001U,
+    PERFSTATE_POLICY_CHANGE_ROCKET           = 0x00000002U,
+    PERFSTATE_POLICY_CHANGE_IDEAL_AGGRESSIVE = 0x00000003U,
+    PERFSTATE_POLICY_CHANGE_DECREASE_MAX     = 0x00000002U,
+    PERFSTATE_POLICY_CHANGE_INCREASE_MAX     = 0x00000003U,
 }
 
 enum : GUID
@@ -2688,9 +2731,9 @@ enum : GUID
 
 enum : uint
 {
-    PROCESSOR_THROTTLE_DISABLED  = 0x00000000,
-    PROCESSOR_THROTTLE_ENABLED   = 0x00000001,
-    PROCESSOR_THROTTLE_AUTOMATIC = 0x00000002,
+    PROCESSOR_THROTTLE_DISABLED  = 0x00000000U,
+    PROCESSOR_THROTTLE_ENABLED   = 0x00000001U,
+    PROCESSOR_THROTTLE_AUTOMATIC = 0x00000002U,
 }
 
 enum : GUID
@@ -2715,30 +2758,30 @@ enum : GUID
 
 enum : uint
 {
-    PROCESSOR_PERF_BOOST_POLICY_DISABLED = 0x00000000,
-    PROCESSOR_PERF_BOOST_POLICY_MAX      = 0x00000064,
+    PROCESSOR_PERF_BOOST_POLICY_DISABLED = 0x00000000U,
+    PROCESSOR_PERF_BOOST_POLICY_MAX      = 0x00000064U,
 }
 
 enum GUID GUID_PROCESSOR_PERF_BOOST_MODE = GUID("be337238-0d82-4146-a960-4f3749d470c7");
 
 enum : uint
 {
-    PROCESSOR_PERF_BOOST_MODE_DISABLED                           = 0x00000000,
-    PROCESSOR_PERF_BOOST_MODE_ENABLED                            = 0x00000001,
-    PROCESSOR_PERF_BOOST_MODE_AGGRESSIVE                         = 0x00000002,
-    PROCESSOR_PERF_BOOST_MODE_EFFICIENT_ENABLED                  = 0x00000003,
-    PROCESSOR_PERF_BOOST_MODE_EFFICIENT_AGGRESSIVE               = 0x00000004,
-    PROCESSOR_PERF_BOOST_MODE_AGGRESSIVE_AT_GUARANTEED           = 0x00000005,
-    PROCESSOR_PERF_BOOST_MODE_EFFICIENT_AGGRESSIVE_AT_GUARANTEED = 0x00000006,
-    PROCESSOR_PERF_BOOST_MODE_MAX                                = 0x00000006,
+    PROCESSOR_PERF_BOOST_MODE_DISABLED                           = 0x00000000U,
+    PROCESSOR_PERF_BOOST_MODE_ENABLED                            = 0x00000001U,
+    PROCESSOR_PERF_BOOST_MODE_AGGRESSIVE                         = 0x00000002U,
+    PROCESSOR_PERF_BOOST_MODE_EFFICIENT_ENABLED                  = 0x00000003U,
+    PROCESSOR_PERF_BOOST_MODE_EFFICIENT_AGGRESSIVE               = 0x00000004U,
+    PROCESSOR_PERF_BOOST_MODE_AGGRESSIVE_AT_GUARANTEED           = 0x00000005U,
+    PROCESSOR_PERF_BOOST_MODE_EFFICIENT_AGGRESSIVE_AT_GUARANTEED = 0x00000006U,
+    PROCESSOR_PERF_BOOST_MODE_MAX                                = 0x00000006U,
 }
 
 enum GUID GUID_PROCESSOR_PERF_AUTONOMOUS_MODE = GUID("8baa4a8a-14c6-4451-8e8b-14bdbd197537");
 
 enum : uint
 {
-    PROCESSOR_PERF_AUTONOMOUS_MODE_DISABLED = 0x00000000,
-    PROCESSOR_PERF_AUTONOMOUS_MODE_ENABLED  = 0x00000001,
+    PROCESSOR_PERF_AUTONOMOUS_MODE_DISABLED = 0x00000000U,
+    PROCESSOR_PERF_AUTONOMOUS_MODE_ENABLED  = 0x00000001U,
 }
 
 enum : GUID
@@ -2750,24 +2793,24 @@ enum : GUID
 
 enum : uint
 {
-    PROCESSOR_PERF_PERFORMANCE_PREFERENCE = 0x000000ff,
-    PROCESSOR_PERF_ENERGY_PREFERENCE      = 0x00000000,
+    PROCESSOR_PERF_PERFORMANCE_PREFERENCE = 0x000000ffU,
+    PROCESSOR_PERF_ENERGY_PREFERENCE      = 0x00000000U,
 }
 
 enum GUID GUID_PROCESSOR_PERF_AUTONOMOUS_ACTIVITY_WINDOW = GUID("cfeda3d0-7697-4566-a922-a9086cd49dfa");
 
 enum : uint
 {
-    PROCESSOR_PERF_MINIMUM_ACTIVITY_WINDOW = 0x00000000,
-    PROCESSOR_PERF_MAXIMUM_ACTIVITY_WINDOW = 0x4bb2a980,
+    PROCESSOR_PERF_MINIMUM_ACTIVITY_WINDOW = 0x00000000U,
+    PROCESSOR_PERF_MAXIMUM_ACTIVITY_WINDOW = 0x4bb2a980U,
 }
 
 enum GUID GUID_PROCESSOR_DUTY_CYCLING = GUID("4e4450b3-6179-4e91-b8f1-5bb9938f81a1");
 
 enum : uint
 {
-    PROCESSOR_DUTY_CYCLING_DISABLED = 0x00000000,
-    PROCESSOR_DUTY_CYCLING_ENABLED  = 0x00000001,
+    PROCESSOR_DUTY_CYCLING_DISABLED = 0x00000000U,
+    PROCESSOR_DUTY_CYCLING_ENABLED  = 0x00000001U,
 }
 
 enum : GUID
@@ -2785,11 +2828,11 @@ enum : GUID
 
 enum : uint
 {
-    CORE_PARKING_POLICY_CHANGE_IDEAL     = 0x00000000,
-    CORE_PARKING_POLICY_CHANGE_SINGLE    = 0x00000001,
-    CORE_PARKING_POLICY_CHANGE_ROCKET    = 0x00000002,
-    CORE_PARKING_POLICY_CHANGE_MULTISTEP = 0x00000003,
-    CORE_PARKING_POLICY_CHANGE_MAX       = 0x00000003,
+    CORE_PARKING_POLICY_CHANGE_IDEAL     = 0x00000000U,
+    CORE_PARKING_POLICY_CHANGE_SINGLE    = 0x00000001U,
+    CORE_PARKING_POLICY_CHANGE_ROCKET    = 0x00000002U,
+    CORE_PARKING_POLICY_CHANGE_MULTISTEP = 0x00000003U,
+    CORE_PARKING_POLICY_CHANGE_MAX       = 0x00000003U,
 }
 
 enum : GUID
@@ -2851,19 +2894,19 @@ enum : GUID
 
 enum : uint
 {
-    PARKING_TOPOLOGY_POLICY_DISABLED   = 0x00000000,
-    PARKING_TOPOLOGY_POLICY_ROUNDROBIN = 0x00000001,
-    PARKING_TOPOLOGY_POLICY_SEQUENTIAL = 0x00000002,
+    PARKING_TOPOLOGY_POLICY_DISABLED   = 0x00000000U,
+    PARKING_TOPOLOGY_POLICY_ROUNDROBIN = 0x00000001U,
+    PARKING_TOPOLOGY_POLICY_SEQUENTIAL = 0x00000002U,
 }
 
 enum GUID GUID_PROCESSOR_SMT_UNPARKING_POLICY = GUID("b28a6829-c5f7-444e-8f61-10e24e85c532");
 
 enum : uint
 {
-    SMT_UNPARKING_POLICY_CORE            = 0x00000000,
-    SMT_UNPARKING_POLICY_CORE_PER_THREAD = 0x00000001,
-    SMT_UNPARKING_POLICY_LP_ROUNDROBIN   = 0x00000002,
-    SMT_UNPARKING_POLICY_LP_SEQUENTIAL   = 0x00000003,
+    SMT_UNPARKING_POLICY_CORE            = 0x00000000U,
+    SMT_UNPARKING_POLICY_CORE_PER_THREAD = 0x00000001U,
+    SMT_UNPARKING_POLICY_LP_ROUNDROBIN   = 0x00000002U,
+    SMT_UNPARKING_POLICY_LP_SEQUENTIAL   = 0x00000003U,
 }
 
 enum : GUID
@@ -2939,25 +2982,25 @@ enum GUID GUID_DEVICE_IDLE_POLICY = GUID("4faab71a-92e5-4726-b531-224559672d19")
 
 enum : uint
 {
-    POWER_DEVICE_IDLE_POLICY_PERFORMANCE  = 0x00000000,
-    POWER_DEVICE_IDLE_POLICY_CONSERVATIVE = 0x00000001,
+    POWER_DEVICE_IDLE_POLICY_PERFORMANCE  = 0x00000000U,
+    POWER_DEVICE_IDLE_POLICY_CONSERVATIVE = 0x00000001U,
 }
 
 enum GUID GUID_CONNECTIVITY_IN_STANDBY = GUID("f15576e8-98b7-4186-b944-eafa664402d9");
 
 enum : uint
 {
-    POWER_CONNECTIVITY_IN_STANDBY_DISABLED       = 0x00000000,
-    POWER_CONNECTIVITY_IN_STANDBY_ENABLED        = 0x00000001,
-    POWER_CONNECTIVITY_IN_STANDBY_SYSTEM_MANAGED = 0x00000002,
+    POWER_CONNECTIVITY_IN_STANDBY_DISABLED       = 0x00000000U,
+    POWER_CONNECTIVITY_IN_STANDBY_ENABLED        = 0x00000001U,
+    POWER_CONNECTIVITY_IN_STANDBY_SYSTEM_MANAGED = 0x00000002U,
 }
 
 enum GUID GUID_DISCONNECTED_STANDBY_MODE = GUID("68afb2d9-ee95-47a8-8f50-4115088073b1");
 
 enum : uint
 {
-    POWER_DISCONNECTED_STANDBY_MODE_NORMAL     = 0x00000000,
-    POWER_DISCONNECTED_STANDBY_MODE_AGGRESSIVE = 0x00000001,
+    POWER_DISCONNECTED_STANDBY_MODE_NORMAL     = 0x00000000U,
+    POWER_DISCONNECTED_STANDBY_MODE_AGGRESSIVE = 0x00000001U,
 }
 
 enum GUID GUID_ACDC_POWER_SOURCE = GUID("5d3e9a59-e9d5-4b00-a6bd-ff34ff516548");
@@ -3002,588 +3045,588 @@ enum GUID GUID_GRAPHICS_SUBGROUP = GUID("5fb4938d-1ee8-4b0f-9a3c-5036b0ab995c");
 enum GUID GUID_GPU_PREFERENCE_POLICY = GUID("dd848b2a-8a5d-4451-9ae2-39cd41658f6c");
 enum GUID GUID_MIXED_REALITY_MODE = GUID("1e626b4e-cf04-4f8d-9cc7-c97c5b0f2391");
 enum GUID GUID_SPR_ACTIVE_SESSION_CHANGE = GUID("0e24ce38-c393-4742-bdb1-744f4b9ee08e");
-enum uint POWER_SYSTEM_MAXIMUM = 0x00000007;
+enum uint POWER_SYSTEM_MAXIMUM = 0x00000007U;
 
 enum : uint
 {
-    DIAGNOSTIC_REASON_VERSION         = 0x00000000,
-    DIAGNOSTIC_REASON_SIMPLE_STRING   = 0x00000001,
-    DIAGNOSTIC_REASON_DETAILED_STRING = 0x00000002,
-    DIAGNOSTIC_REASON_NOT_SPECIFIED   = 0x80000000,
+    DIAGNOSTIC_REASON_VERSION         = 0x00000000U,
+    DIAGNOSTIC_REASON_SIMPLE_STRING   = 0x00000001U,
+    DIAGNOSTIC_REASON_DETAILED_STRING = 0x00000002U,
+    DIAGNOSTIC_REASON_NOT_SPECIFIED   = 0x80000000U,
 }
 
-enum uint POWER_REQUEST_CONTEXT_VERSION = 0x00000000;
-enum uint POWER_SETTING_VALUE_VERSION = 0x00000001;
+enum uint POWER_REQUEST_CONTEXT_VERSION = 0x00000000U;
+enum uint POWER_SETTING_VALUE_VERSION = 0x00000001U;
 
 enum : uint
 {
-    PROC_IDLE_BUCKET_COUNT    = 0x00000006,
-    PROC_IDLE_BUCKET_COUNT_EX = 0x00000010,
-}
-
-enum : uint
-{
-    ACPI_PPM_SOFTWARE_ALL = 0x000000fc,
-    ACPI_PPM_SOFTWARE_ANY = 0x000000fd,
-    ACPI_PPM_HARDWARE_ALL = 0x000000fe,
-}
-
-enum uint MS_PPM_SOFTWARE_ALL = 0x00000001;
-
-enum : uint
-{
-    POWER_ACTION_QUERY_ALLOWED     = 0x00000001,
-    POWER_ACTION_UI_ALLOWED        = 0x00000002,
-    POWER_ACTION_OVERRIDE_APPS     = 0x00000004,
-    POWER_ACTION_HIBERBOOT         = 0x00000008,
-    POWER_ACTION_USER_NOTIFY       = 0x00000010,
-    POWER_ACTION_DOZE_TO_HIBERNATE = 0x00000020,
-    POWER_ACTION_ACPI_CRITICAL     = 0x01000000,
-    POWER_ACTION_ACPI_USER_NOTIFY  = 0x02000000,
-    POWER_ACTION_DIRECTED_DRIPS    = 0x04000000,
-    POWER_ACTION_PSEUDO_TRANSITION = 0x08000000,
-    POWER_ACTION_LIGHTEST_FIRST    = 0x10000000,
-    POWER_ACTION_LOCK_CONSOLE      = 0x20000000,
-    POWER_ACTION_DISABLE_WAKES     = 0x40000000,
-    POWER_ACTION_CRITICAL          = 0x80000000,
-}
-
-enum uint POWER_USER_NOTIFY_FORCED_SHUTDOWN = 0x00000020;
-
-enum : uint
-{
-    BATTERY_DISCHARGE_FLAGS_EVENTCODE_MASK = 0x00000007,
-    BATTERY_DISCHARGE_FLAGS_ENABLE         = 0x80000000,
-}
-
-enum uint NUM_DISCHARGE_POLICIES = 0x00000004;
-
-enum : uint
-{
-    DISCHARGE_POLICY_CRITICAL = 0x00000000,
-    DISCHARGE_POLICY_LOW      = 0x00000001,
-}
-
-enum uint PROCESSOR_IDLESTATE_POLICY_COUNT = 0x00000003;
-
-enum : uint
-{
-    PO_THROTTLE_NONE     = 0x00000000,
-    PO_THROTTLE_CONSTANT = 0x00000001,
-    PO_THROTTLE_DEGRADE  = 0x00000002,
-    PO_THROTTLE_ADAPTIVE = 0x00000003,
-    PO_THROTTLE_MAXIMUM  = 0x00000004,
+    PROC_IDLE_BUCKET_COUNT    = 0x00000006U,
+    PROC_IDLE_BUCKET_COUNT_EX = 0x00000010U,
 }
 
 enum : uint
 {
-    HIBERFILE_TYPE_NONE    = 0x00000000,
-    HIBERFILE_TYPE_REDUCED = 0x00000001,
-    HIBERFILE_TYPE_FULL    = 0x00000002,
-    HIBERFILE_TYPE_MAX     = 0x00000003,
+    ACPI_PPM_SOFTWARE_ALL = 0x000000fcU,
+    ACPI_PPM_SOFTWARE_ANY = 0x000000fdU,
+    ACPI_PPM_HARDWARE_ALL = 0x000000feU,
 }
 
-enum ushort IMAGE_DOS_SIGNATURE = 0x5a4d;
+enum uint MS_PPM_SOFTWARE_ALL = 0x00000001U;
+
+enum : uint
+{
+    POWER_ACTION_QUERY_ALLOWED     = 0x00000001U,
+    POWER_ACTION_UI_ALLOWED        = 0x00000002U,
+    POWER_ACTION_OVERRIDE_APPS     = 0x00000004U,
+    POWER_ACTION_HIBERBOOT         = 0x00000008U,
+    POWER_ACTION_USER_NOTIFY       = 0x00000010U,
+    POWER_ACTION_DOZE_TO_HIBERNATE = 0x00000020U,
+    POWER_ACTION_ACPI_CRITICAL     = 0x01000000U,
+    POWER_ACTION_ACPI_USER_NOTIFY  = 0x02000000U,
+    POWER_ACTION_DIRECTED_DRIPS    = 0x04000000U,
+    POWER_ACTION_PSEUDO_TRANSITION = 0x08000000U,
+    POWER_ACTION_LIGHTEST_FIRST    = 0x10000000U,
+    POWER_ACTION_LOCK_CONSOLE      = 0x20000000U,
+    POWER_ACTION_DISABLE_WAKES     = 0x40000000U,
+    POWER_ACTION_CRITICAL          = 0x80000000U,
+}
+
+enum uint POWER_USER_NOTIFY_FORCED_SHUTDOWN = 0x00000020U;
+
+enum : uint
+{
+    BATTERY_DISCHARGE_FLAGS_EVENTCODE_MASK = 0x00000007U,
+    BATTERY_DISCHARGE_FLAGS_ENABLE         = 0x80000000U,
+}
+
+enum uint NUM_DISCHARGE_POLICIES = 0x00000004U;
+
+enum : uint
+{
+    DISCHARGE_POLICY_CRITICAL = 0x00000000U,
+    DISCHARGE_POLICY_LOW      = 0x00000001U,
+}
+
+enum uint PROCESSOR_IDLESTATE_POLICY_COUNT = 0x00000003U;
+
+enum : uint
+{
+    PO_THROTTLE_NONE     = 0x00000000U,
+    PO_THROTTLE_CONSTANT = 0x00000001U,
+    PO_THROTTLE_DEGRADE  = 0x00000002U,
+    PO_THROTTLE_ADAPTIVE = 0x00000003U,
+    PO_THROTTLE_MAXIMUM  = 0x00000004U,
+}
+
+enum : uint
+{
+    HIBERFILE_TYPE_NONE    = 0x00000000U,
+    HIBERFILE_TYPE_REDUCED = 0x00000001U,
+    HIBERFILE_TYPE_FULL    = 0x00000002U,
+    HIBERFILE_TYPE_MAX     = 0x00000003U,
+}
+
+enum ushort IMAGE_DOS_SIGNATURE = cast(ushort) 0x5a4d;
 
 enum : ushort
 {
-    IMAGE_OS2_SIGNATURE    = 0x454e,
-    IMAGE_OS2_SIGNATURE_LE = 0x454c,
+    IMAGE_OS2_SIGNATURE    = cast(ushort) 0x454e,
+    IMAGE_OS2_SIGNATURE_LE = cast(ushort) 0x454c,
 }
 
-enum ushort IMAGE_VXD_SIGNATURE = 0x454c;
-enum uint IMAGE_NT_SIGNATURE = 0x00004550;
-enum uint IMAGE_SIZEOF_FILE_HEADER = 0x00000014;
-enum uint IMAGE_NUMBEROF_DIRECTORY_ENTRIES = 0x00000010;
+enum ushort IMAGE_VXD_SIGNATURE = cast(ushort) 0x454c;
+enum uint IMAGE_NT_SIGNATURE = 0x00004550U;
+enum uint IMAGE_SIZEOF_FILE_HEADER = 0x00000014U;
+enum uint IMAGE_NUMBEROF_DIRECTORY_ENTRIES = 0x00000010U;
 
 enum : uint
 {
-    IMAGE_SIZEOF_SHORT_NAME     = 0x00000008,
-    IMAGE_SIZEOF_SECTION_HEADER = 0x00000028,
-    IMAGE_SIZEOF_SYMBOL         = 0x00000012,
-}
-
-enum : uint
-{
-    IMAGE_SYM_SECTION_MAX            = 0x0000feff,
-    IMAGE_SYM_SECTION_MAX_EX         = 0x7fffffff,
-    IMAGE_SYM_TYPE_NULL              = 0x00000000,
-    IMAGE_SYM_TYPE_VOID              = 0x00000001,
-    IMAGE_SYM_TYPE_CHAR              = 0x00000002,
-    IMAGE_SYM_TYPE_SHORT             = 0x00000003,
-    IMAGE_SYM_TYPE_INT               = 0x00000004,
-    IMAGE_SYM_TYPE_LONG              = 0x00000005,
-    IMAGE_SYM_TYPE_FLOAT             = 0x00000006,
-    IMAGE_SYM_TYPE_DOUBLE            = 0x00000007,
-    IMAGE_SYM_TYPE_STRUCT            = 0x00000008,
-    IMAGE_SYM_TYPE_UNION             = 0x00000009,
-    IMAGE_SYM_TYPE_ENUM              = 0x0000000a,
-    IMAGE_SYM_TYPE_MOE               = 0x0000000b,
-    IMAGE_SYM_TYPE_BYTE              = 0x0000000c,
-    IMAGE_SYM_TYPE_WORD              = 0x0000000d,
-    IMAGE_SYM_TYPE_UINT              = 0x0000000e,
-    IMAGE_SYM_TYPE_DWORD             = 0x0000000f,
-    IMAGE_SYM_TYPE_PCODE             = 0x00008000,
-    IMAGE_SYM_DTYPE_NULL             = 0x00000000,
-    IMAGE_SYM_DTYPE_POINTER          = 0x00000001,
-    IMAGE_SYM_DTYPE_FUNCTION         = 0x00000002,
-    IMAGE_SYM_DTYPE_ARRAY            = 0x00000003,
-    IMAGE_SYM_CLASS_NULL             = 0x00000000,
-    IMAGE_SYM_CLASS_AUTOMATIC        = 0x00000001,
-    IMAGE_SYM_CLASS_EXTERNAL         = 0x00000002,
-    IMAGE_SYM_CLASS_STATIC           = 0x00000003,
-    IMAGE_SYM_CLASS_REGISTER         = 0x00000004,
-    IMAGE_SYM_CLASS_EXTERNAL_DEF     = 0x00000005,
-    IMAGE_SYM_CLASS_LABEL            = 0x00000006,
-    IMAGE_SYM_CLASS_UNDEFINED_LABEL  = 0x00000007,
-    IMAGE_SYM_CLASS_MEMBER_OF_STRUCT = 0x00000008,
-    IMAGE_SYM_CLASS_ARGUMENT         = 0x00000009,
-    IMAGE_SYM_CLASS_STRUCT_TAG       = 0x0000000a,
-    IMAGE_SYM_CLASS_MEMBER_OF_UNION  = 0x0000000b,
-    IMAGE_SYM_CLASS_UNION_TAG        = 0x0000000c,
-    IMAGE_SYM_CLASS_TYPE_DEFINITION  = 0x0000000d,
-    IMAGE_SYM_CLASS_UNDEFINED_STATIC = 0x0000000e,
-    IMAGE_SYM_CLASS_ENUM_TAG         = 0x0000000f,
-    IMAGE_SYM_CLASS_MEMBER_OF_ENUM   = 0x00000010,
-    IMAGE_SYM_CLASS_REGISTER_PARAM   = 0x00000011,
-    IMAGE_SYM_CLASS_BIT_FIELD        = 0x00000012,
-    IMAGE_SYM_CLASS_FAR_EXTERNAL     = 0x00000044,
-    IMAGE_SYM_CLASS_BLOCK            = 0x00000064,
-    IMAGE_SYM_CLASS_FUNCTION         = 0x00000065,
-    IMAGE_SYM_CLASS_END_OF_STRUCT    = 0x00000066,
-    IMAGE_SYM_CLASS_FILE             = 0x00000067,
-    IMAGE_SYM_CLASS_SECTION          = 0x00000068,
-    IMAGE_SYM_CLASS_WEAK_EXTERNAL    = 0x00000069,
-    IMAGE_SYM_CLASS_CLR_TOKEN        = 0x0000006b,
-}
-
-enum uint N_BTMASK = 0x0000000f;
-
-enum : uint
-{
-    N_TMASK  = 0x00000030,
-    N_TMASK1 = 0x000000c0,
-    N_TMASK2 = 0x000000f0,
-}
-
-enum uint N_BTSHFT = 0x00000004;
-enum uint N_TSHIFT = 0x00000002;
-
-enum : uint
-{
-    IMAGE_COMDAT_SELECT_NODUPLICATES = 0x00000001,
-    IMAGE_COMDAT_SELECT_ANY          = 0x00000002,
-    IMAGE_COMDAT_SELECT_SAME_SIZE    = 0x00000003,
-    IMAGE_COMDAT_SELECT_EXACT_MATCH  = 0x00000004,
-    IMAGE_COMDAT_SELECT_ASSOCIATIVE  = 0x00000005,
-    IMAGE_COMDAT_SELECT_LARGEST      = 0x00000006,
-    IMAGE_COMDAT_SELECT_NEWEST       = 0x00000007,
+    IMAGE_SIZEOF_SHORT_NAME     = 0x00000008U,
+    IMAGE_SIZEOF_SECTION_HEADER = 0x00000028U,
+    IMAGE_SIZEOF_SYMBOL         = 0x00000012U,
 }
 
 enum : uint
 {
-    IMAGE_WEAK_EXTERN_SEARCH_NOLIBRARY = 0x00000001,
-    IMAGE_WEAK_EXTERN_SEARCH_LIBRARY   = 0x00000002,
-    IMAGE_WEAK_EXTERN_SEARCH_ALIAS     = 0x00000003,
-    IMAGE_WEAK_EXTERN_ANTI_DEPENDENCY  = 0x00000004,
+    IMAGE_SYM_SECTION_MAX            = 0x0000feffU,
+    IMAGE_SYM_SECTION_MAX_EX         = 0x7fffffffU,
+    IMAGE_SYM_TYPE_NULL              = 0x00000000U,
+    IMAGE_SYM_TYPE_VOID              = 0x00000001U,
+    IMAGE_SYM_TYPE_CHAR              = 0x00000002U,
+    IMAGE_SYM_TYPE_SHORT             = 0x00000003U,
+    IMAGE_SYM_TYPE_INT               = 0x00000004U,
+    IMAGE_SYM_TYPE_LONG              = 0x00000005U,
+    IMAGE_SYM_TYPE_FLOAT             = 0x00000006U,
+    IMAGE_SYM_TYPE_DOUBLE            = 0x00000007U,
+    IMAGE_SYM_TYPE_STRUCT            = 0x00000008U,
+    IMAGE_SYM_TYPE_UNION             = 0x00000009U,
+    IMAGE_SYM_TYPE_ENUM              = 0x0000000aU,
+    IMAGE_SYM_TYPE_MOE               = 0x0000000bU,
+    IMAGE_SYM_TYPE_BYTE              = 0x0000000cU,
+    IMAGE_SYM_TYPE_WORD              = 0x0000000dU,
+    IMAGE_SYM_TYPE_UINT              = 0x0000000eU,
+    IMAGE_SYM_TYPE_DWORD             = 0x0000000fU,
+    IMAGE_SYM_TYPE_PCODE             = 0x00008000U,
+    IMAGE_SYM_DTYPE_NULL             = 0x00000000U,
+    IMAGE_SYM_DTYPE_POINTER          = 0x00000001U,
+    IMAGE_SYM_DTYPE_FUNCTION         = 0x00000002U,
+    IMAGE_SYM_DTYPE_ARRAY            = 0x00000003U,
+    IMAGE_SYM_CLASS_NULL             = 0x00000000U,
+    IMAGE_SYM_CLASS_AUTOMATIC        = 0x00000001U,
+    IMAGE_SYM_CLASS_EXTERNAL         = 0x00000002U,
+    IMAGE_SYM_CLASS_STATIC           = 0x00000003U,
+    IMAGE_SYM_CLASS_REGISTER         = 0x00000004U,
+    IMAGE_SYM_CLASS_EXTERNAL_DEF     = 0x00000005U,
+    IMAGE_SYM_CLASS_LABEL            = 0x00000006U,
+    IMAGE_SYM_CLASS_UNDEFINED_LABEL  = 0x00000007U,
+    IMAGE_SYM_CLASS_MEMBER_OF_STRUCT = 0x00000008U,
+    IMAGE_SYM_CLASS_ARGUMENT         = 0x00000009U,
+    IMAGE_SYM_CLASS_STRUCT_TAG       = 0x0000000aU,
+    IMAGE_SYM_CLASS_MEMBER_OF_UNION  = 0x0000000bU,
+    IMAGE_SYM_CLASS_UNION_TAG        = 0x0000000cU,
+    IMAGE_SYM_CLASS_TYPE_DEFINITION  = 0x0000000dU,
+    IMAGE_SYM_CLASS_UNDEFINED_STATIC = 0x0000000eU,
+    IMAGE_SYM_CLASS_ENUM_TAG         = 0x0000000fU,
+    IMAGE_SYM_CLASS_MEMBER_OF_ENUM   = 0x00000010U,
+    IMAGE_SYM_CLASS_REGISTER_PARAM   = 0x00000011U,
+    IMAGE_SYM_CLASS_BIT_FIELD        = 0x00000012U,
+    IMAGE_SYM_CLASS_FAR_EXTERNAL     = 0x00000044U,
+    IMAGE_SYM_CLASS_BLOCK            = 0x00000064U,
+    IMAGE_SYM_CLASS_FUNCTION         = 0x00000065U,
+    IMAGE_SYM_CLASS_END_OF_STRUCT    = 0x00000066U,
+    IMAGE_SYM_CLASS_FILE             = 0x00000067U,
+    IMAGE_SYM_CLASS_SECTION          = 0x00000068U,
+    IMAGE_SYM_CLASS_WEAK_EXTERNAL    = 0x00000069U,
+    IMAGE_SYM_CLASS_CLR_TOKEN        = 0x0000006bU,
+}
+
+enum uint N_BTMASK = 0x0000000fU;
+
+enum : uint
+{
+    N_TMASK  = 0x00000030U,
+    N_TMASK1 = 0x000000c0U,
+    N_TMASK2 = 0x000000f0U,
+}
+
+enum uint N_BTSHFT = 0x00000004U;
+enum uint N_TSHIFT = 0x00000002U;
+
+enum : uint
+{
+    IMAGE_COMDAT_SELECT_NODUPLICATES = 0x00000001U,
+    IMAGE_COMDAT_SELECT_ANY          = 0x00000002U,
+    IMAGE_COMDAT_SELECT_SAME_SIZE    = 0x00000003U,
+    IMAGE_COMDAT_SELECT_EXACT_MATCH  = 0x00000004U,
+    IMAGE_COMDAT_SELECT_ASSOCIATIVE  = 0x00000005U,
+    IMAGE_COMDAT_SELECT_LARGEST      = 0x00000006U,
+    IMAGE_COMDAT_SELECT_NEWEST       = 0x00000007U,
 }
 
 enum : uint
 {
-    IMAGE_REL_I386_ABSOLUTE                    = 0x00000000,
-    IMAGE_REL_I386_DIR16                       = 0x00000001,
-    IMAGE_REL_I386_REL16                       = 0x00000002,
-    IMAGE_REL_I386_DIR32                       = 0x00000006,
-    IMAGE_REL_I386_DIR32NB                     = 0x00000007,
-    IMAGE_REL_I386_SEG12                       = 0x00000009,
-    IMAGE_REL_I386_SECTION                     = 0x0000000a,
-    IMAGE_REL_I386_SECREL                      = 0x0000000b,
-    IMAGE_REL_I386_TOKEN                       = 0x0000000c,
-    IMAGE_REL_I386_SECREL7                     = 0x0000000d,
-    IMAGE_REL_I386_REL32                       = 0x00000014,
-    IMAGE_REL_MIPS_ABSOLUTE                    = 0x00000000,
-    IMAGE_REL_MIPS_REFHALF                     = 0x00000001,
-    IMAGE_REL_MIPS_REFWORD                     = 0x00000002,
-    IMAGE_REL_MIPS_JMPADDR                     = 0x00000003,
-    IMAGE_REL_MIPS_REFHI                       = 0x00000004,
-    IMAGE_REL_MIPS_REFLO                       = 0x00000005,
-    IMAGE_REL_MIPS_GPREL                       = 0x00000006,
-    IMAGE_REL_MIPS_LITERAL                     = 0x00000007,
-    IMAGE_REL_MIPS_SECTION                     = 0x0000000a,
-    IMAGE_REL_MIPS_SECREL                      = 0x0000000b,
-    IMAGE_REL_MIPS_SECRELLO                    = 0x0000000c,
-    IMAGE_REL_MIPS_SECRELHI                    = 0x0000000d,
-    IMAGE_REL_MIPS_TOKEN                       = 0x0000000e,
-    IMAGE_REL_MIPS_JMPADDR16                   = 0x00000010,
-    IMAGE_REL_MIPS_REFWORDNB                   = 0x00000022,
-    IMAGE_REL_MIPS_PAIR                        = 0x00000025,
-    IMAGE_REL_ALPHA_ABSOLUTE                   = 0x00000000,
-    IMAGE_REL_ALPHA_REFLONG                    = 0x00000001,
-    IMAGE_REL_ALPHA_REFQUAD                    = 0x00000002,
-    IMAGE_REL_ALPHA_GPREL32                    = 0x00000003,
-    IMAGE_REL_ALPHA_LITERAL                    = 0x00000004,
-    IMAGE_REL_ALPHA_LITUSE                     = 0x00000005,
-    IMAGE_REL_ALPHA_GPDISP                     = 0x00000006,
-    IMAGE_REL_ALPHA_BRADDR                     = 0x00000007,
-    IMAGE_REL_ALPHA_HINT                       = 0x00000008,
-    IMAGE_REL_ALPHA_INLINE_REFLONG             = 0x00000009,
-    IMAGE_REL_ALPHA_REFHI                      = 0x0000000a,
-    IMAGE_REL_ALPHA_REFLO                      = 0x0000000b,
-    IMAGE_REL_ALPHA_PAIR                       = 0x0000000c,
-    IMAGE_REL_ALPHA_MATCH                      = 0x0000000d,
-    IMAGE_REL_ALPHA_SECTION                    = 0x0000000e,
-    IMAGE_REL_ALPHA_SECREL                     = 0x0000000f,
-    IMAGE_REL_ALPHA_REFLONGNB                  = 0x00000010,
-    IMAGE_REL_ALPHA_SECRELLO                   = 0x00000011,
-    IMAGE_REL_ALPHA_SECRELHI                   = 0x00000012,
-    IMAGE_REL_ALPHA_REFQ3                      = 0x00000013,
-    IMAGE_REL_ALPHA_REFQ2                      = 0x00000014,
-    IMAGE_REL_ALPHA_REFQ1                      = 0x00000015,
-    IMAGE_REL_ALPHA_GPRELLO                    = 0x00000016,
-    IMAGE_REL_ALPHA_GPRELHI                    = 0x00000017,
-    IMAGE_REL_PPC_ABSOLUTE                     = 0x00000000,
-    IMAGE_REL_PPC_ADDR64                       = 0x00000001,
-    IMAGE_REL_PPC_ADDR32                       = 0x00000002,
-    IMAGE_REL_PPC_ADDR24                       = 0x00000003,
-    IMAGE_REL_PPC_ADDR16                       = 0x00000004,
-    IMAGE_REL_PPC_ADDR14                       = 0x00000005,
-    IMAGE_REL_PPC_REL24                        = 0x00000006,
-    IMAGE_REL_PPC_REL14                        = 0x00000007,
-    IMAGE_REL_PPC_TOCREL16                     = 0x00000008,
-    IMAGE_REL_PPC_TOCREL14                     = 0x00000009,
-    IMAGE_REL_PPC_ADDR32NB                     = 0x0000000a,
-    IMAGE_REL_PPC_SECREL                       = 0x0000000b,
-    IMAGE_REL_PPC_SECTION                      = 0x0000000c,
-    IMAGE_REL_PPC_IFGLUE                       = 0x0000000d,
-    IMAGE_REL_PPC_IMGLUE                       = 0x0000000e,
-    IMAGE_REL_PPC_SECREL16                     = 0x0000000f,
-    IMAGE_REL_PPC_REFHI                        = 0x00000010,
-    IMAGE_REL_PPC_REFLO                        = 0x00000011,
-    IMAGE_REL_PPC_PAIR                         = 0x00000012,
-    IMAGE_REL_PPC_SECRELLO                     = 0x00000013,
-    IMAGE_REL_PPC_SECRELHI                     = 0x00000014,
-    IMAGE_REL_PPC_GPREL                        = 0x00000015,
-    IMAGE_REL_PPC_TOKEN                        = 0x00000016,
-    IMAGE_REL_PPC_TYPEMASK                     = 0x000000ff,
-    IMAGE_REL_PPC_NEG                          = 0x00000100,
-    IMAGE_REL_PPC_BRTAKEN                      = 0x00000200,
-    IMAGE_REL_PPC_BRNTAKEN                     = 0x00000400,
-    IMAGE_REL_PPC_TOCDEFN                      = 0x00000800,
-    IMAGE_REL_SH3_ABSOLUTE                     = 0x00000000,
-    IMAGE_REL_SH3_DIRECT16                     = 0x00000001,
-    IMAGE_REL_SH3_DIRECT32                     = 0x00000002,
-    IMAGE_REL_SH3_DIRECT8                      = 0x00000003,
-    IMAGE_REL_SH3_DIRECT8_WORD                 = 0x00000004,
-    IMAGE_REL_SH3_DIRECT8_LONG                 = 0x00000005,
-    IMAGE_REL_SH3_DIRECT4                      = 0x00000006,
-    IMAGE_REL_SH3_DIRECT4_WORD                 = 0x00000007,
-    IMAGE_REL_SH3_DIRECT4_LONG                 = 0x00000008,
-    IMAGE_REL_SH3_PCREL8_WORD                  = 0x00000009,
-    IMAGE_REL_SH3_PCREL8_LONG                  = 0x0000000a,
-    IMAGE_REL_SH3_PCREL12_WORD                 = 0x0000000b,
-    IMAGE_REL_SH3_STARTOF_SECTION              = 0x0000000c,
-    IMAGE_REL_SH3_SIZEOF_SECTION               = 0x0000000d,
-    IMAGE_REL_SH3_SECTION                      = 0x0000000e,
-    IMAGE_REL_SH3_SECREL                       = 0x0000000f,
-    IMAGE_REL_SH3_DIRECT32_NB                  = 0x00000010,
-    IMAGE_REL_SH3_GPREL4_LONG                  = 0x00000011,
-    IMAGE_REL_SH3_TOKEN                        = 0x00000012,
-    IMAGE_REL_SHM_PCRELPT                      = 0x00000013,
-    IMAGE_REL_SHM_REFLO                        = 0x00000014,
-    IMAGE_REL_SHM_REFHALF                      = 0x00000015,
-    IMAGE_REL_SHM_RELLO                        = 0x00000016,
-    IMAGE_REL_SHM_RELHALF                      = 0x00000017,
-    IMAGE_REL_SHM_PAIR                         = 0x00000018,
-    IMAGE_REL_SH_NOMODE                        = 0x00008000,
-    IMAGE_REL_ARM_ABSOLUTE                     = 0x00000000,
-    IMAGE_REL_ARM_ADDR32                       = 0x00000001,
-    IMAGE_REL_ARM_ADDR32NB                     = 0x00000002,
-    IMAGE_REL_ARM_BRANCH24                     = 0x00000003,
-    IMAGE_REL_ARM_BRANCH11                     = 0x00000004,
-    IMAGE_REL_ARM_TOKEN                        = 0x00000005,
-    IMAGE_REL_ARM_GPREL12                      = 0x00000006,
-    IMAGE_REL_ARM_GPREL7                       = 0x00000007,
-    IMAGE_REL_ARM_BLX24                        = 0x00000008,
-    IMAGE_REL_ARM_BLX11                        = 0x00000009,
-    IMAGE_REL_ARM_SECTION                      = 0x0000000e,
-    IMAGE_REL_ARM_SECREL                       = 0x0000000f,
-    IMAGE_REL_ARM_MOV32A                       = 0x00000010,
-    IMAGE_REL_ARM_MOV32                        = 0x00000010,
-    IMAGE_REL_ARM_MOV32T                       = 0x00000011,
-    IMAGE_REL_THUMB_MOV32                      = 0x00000011,
-    IMAGE_REL_ARM_BRANCH20T                    = 0x00000012,
-    IMAGE_REL_THUMB_BRANCH20                   = 0x00000012,
-    IMAGE_REL_ARM_BRANCH24T                    = 0x00000014,
-    IMAGE_REL_THUMB_BRANCH24                   = 0x00000014,
-    IMAGE_REL_ARM_BLX23T                       = 0x00000015,
-    IMAGE_REL_THUMB_BLX23                      = 0x00000015,
-    IMAGE_REL_AM_ABSOLUTE                      = 0x00000000,
-    IMAGE_REL_AM_ADDR32                        = 0x00000001,
-    IMAGE_REL_AM_ADDR32NB                      = 0x00000002,
-    IMAGE_REL_AM_CALL32                        = 0x00000003,
-    IMAGE_REL_AM_FUNCINFO                      = 0x00000004,
-    IMAGE_REL_AM_REL32_1                       = 0x00000005,
-    IMAGE_REL_AM_REL32_2                       = 0x00000006,
-    IMAGE_REL_AM_SECREL                        = 0x00000007,
-    IMAGE_REL_AM_SECTION                       = 0x00000008,
-    IMAGE_REL_AM_TOKEN                         = 0x00000009,
-    IMAGE_REL_ARM64_ABSOLUTE                   = 0x00000000,
-    IMAGE_REL_ARM64_ADDR32                     = 0x00000001,
-    IMAGE_REL_ARM64_ADDR32NB                   = 0x00000002,
-    IMAGE_REL_ARM64_BRANCH26                   = 0x00000003,
-    IMAGE_REL_ARM64_PAGEBASE_REL21             = 0x00000004,
-    IMAGE_REL_ARM64_REL21                      = 0x00000005,
-    IMAGE_REL_ARM64_PAGEOFFSET_12A             = 0x00000006,
-    IMAGE_REL_ARM64_PAGEOFFSET_12L             = 0x00000007,
-    IMAGE_REL_ARM64_SECREL                     = 0x00000008,
-    IMAGE_REL_ARM64_SECREL_LOW12A              = 0x00000009,
-    IMAGE_REL_ARM64_SECREL_HIGH12A             = 0x0000000a,
-    IMAGE_REL_ARM64_SECREL_LOW12L              = 0x0000000b,
-    IMAGE_REL_ARM64_TOKEN                      = 0x0000000c,
-    IMAGE_REL_ARM64_SECTION                    = 0x0000000d,
-    IMAGE_REL_ARM64_ADDR64                     = 0x0000000e,
-    IMAGE_REL_ARM64_BRANCH19                   = 0x0000000f,
-    IMAGE_REL_AMD64_ABSOLUTE                   = 0x00000000,
-    IMAGE_REL_AMD64_ADDR64                     = 0x00000001,
-    IMAGE_REL_AMD64_ADDR32                     = 0x00000002,
-    IMAGE_REL_AMD64_ADDR32NB                   = 0x00000003,
-    IMAGE_REL_AMD64_REL32                      = 0x00000004,
-    IMAGE_REL_AMD64_REL32_1                    = 0x00000005,
-    IMAGE_REL_AMD64_REL32_2                    = 0x00000006,
-    IMAGE_REL_AMD64_REL32_3                    = 0x00000007,
-    IMAGE_REL_AMD64_REL32_4                    = 0x00000008,
-    IMAGE_REL_AMD64_REL32_5                    = 0x00000009,
-    IMAGE_REL_AMD64_SECTION                    = 0x0000000a,
-    IMAGE_REL_AMD64_SECREL                     = 0x0000000b,
-    IMAGE_REL_AMD64_SECREL7                    = 0x0000000c,
-    IMAGE_REL_AMD64_TOKEN                      = 0x0000000d,
-    IMAGE_REL_AMD64_SREL32                     = 0x0000000e,
-    IMAGE_REL_AMD64_PAIR                       = 0x0000000f,
-    IMAGE_REL_AMD64_SSPAN32                    = 0x00000010,
-    IMAGE_REL_AMD64_EHANDLER                   = 0x00000011,
-    IMAGE_REL_AMD64_IMPORT_BR                  = 0x00000012,
-    IMAGE_REL_AMD64_IMPORT_CALL                = 0x00000013,
-    IMAGE_REL_AMD64_CFG_BR                     = 0x00000014,
-    IMAGE_REL_AMD64_CFG_BR_REX                 = 0x00000015,
-    IMAGE_REL_AMD64_CFG_CALL                   = 0x00000016,
-    IMAGE_REL_AMD64_INDIR_BR                   = 0x00000017,
-    IMAGE_REL_AMD64_INDIR_BR_REX               = 0x00000018,
-    IMAGE_REL_AMD64_INDIR_CALL                 = 0x00000019,
-    IMAGE_REL_AMD64_INDIR_BR_SWITCHTABLE_FIRST = 0x00000020,
-    IMAGE_REL_AMD64_INDIR_BR_SWITCHTABLE_LAST  = 0x0000002f,
+    IMAGE_WEAK_EXTERN_SEARCH_NOLIBRARY = 0x00000001U,
+    IMAGE_WEAK_EXTERN_SEARCH_LIBRARY   = 0x00000002U,
+    IMAGE_WEAK_EXTERN_SEARCH_ALIAS     = 0x00000003U,
+    IMAGE_WEAK_EXTERN_ANTI_DEPENDENCY  = 0x00000004U,
 }
 
 enum : uint
 {
-    IMAGE_REL_IA64_ABSOLUTE   = 0x00000000,
-    IMAGE_REL_IA64_IMM14      = 0x00000001,
-    IMAGE_REL_IA64_IMM22      = 0x00000002,
-    IMAGE_REL_IA64_IMM64      = 0x00000003,
-    IMAGE_REL_IA64_DIR32      = 0x00000004,
-    IMAGE_REL_IA64_DIR64      = 0x00000005,
-    IMAGE_REL_IA64_PCREL21B   = 0x00000006,
-    IMAGE_REL_IA64_PCREL21M   = 0x00000007,
-    IMAGE_REL_IA64_PCREL21F   = 0x00000008,
-    IMAGE_REL_IA64_GPREL22    = 0x00000009,
-    IMAGE_REL_IA64_LTOFF22    = 0x0000000a,
-    IMAGE_REL_IA64_SECTION    = 0x0000000b,
-    IMAGE_REL_IA64_SECREL22   = 0x0000000c,
-    IMAGE_REL_IA64_SECREL64I  = 0x0000000d,
-    IMAGE_REL_IA64_SECREL32   = 0x0000000e,
-    IMAGE_REL_IA64_DIR32NB    = 0x00000010,
-    IMAGE_REL_IA64_SREL14     = 0x00000011,
-    IMAGE_REL_IA64_SREL22     = 0x00000012,
-    IMAGE_REL_IA64_SREL32     = 0x00000013,
-    IMAGE_REL_IA64_UREL32     = 0x00000014,
-    IMAGE_REL_IA64_PCREL60X   = 0x00000015,
-    IMAGE_REL_IA64_PCREL60B   = 0x00000016,
-    IMAGE_REL_IA64_PCREL60F   = 0x00000017,
-    IMAGE_REL_IA64_PCREL60I   = 0x00000018,
-    IMAGE_REL_IA64_PCREL60M   = 0x00000019,
-    IMAGE_REL_IA64_IMMGPREL64 = 0x0000001a,
-    IMAGE_REL_IA64_TOKEN      = 0x0000001b,
-    IMAGE_REL_IA64_GPREL32    = 0x0000001c,
-    IMAGE_REL_IA64_ADDEND     = 0x0000001f,
-    IMAGE_REL_CEF_ABSOLUTE    = 0x00000000,
-    IMAGE_REL_CEF_ADDR32      = 0x00000001,
-    IMAGE_REL_CEF_ADDR64      = 0x00000002,
-    IMAGE_REL_CEF_ADDR32NB    = 0x00000003,
-    IMAGE_REL_CEF_SECTION     = 0x00000004,
-    IMAGE_REL_CEF_SECREL      = 0x00000005,
-    IMAGE_REL_CEF_TOKEN       = 0x00000006,
-    IMAGE_REL_CEE_ABSOLUTE    = 0x00000000,
-    IMAGE_REL_CEE_ADDR32      = 0x00000001,
-    IMAGE_REL_CEE_ADDR64      = 0x00000002,
-    IMAGE_REL_CEE_ADDR32NB    = 0x00000003,
-    IMAGE_REL_CEE_SECTION     = 0x00000004,
-    IMAGE_REL_CEE_SECREL      = 0x00000005,
-    IMAGE_REL_CEE_TOKEN       = 0x00000006,
-    IMAGE_REL_M32R_ABSOLUTE   = 0x00000000,
-    IMAGE_REL_M32R_ADDR32     = 0x00000001,
-    IMAGE_REL_M32R_ADDR32NB   = 0x00000002,
-    IMAGE_REL_M32R_ADDR24     = 0x00000003,
-    IMAGE_REL_M32R_GPREL16    = 0x00000004,
-    IMAGE_REL_M32R_PCREL24    = 0x00000005,
-    IMAGE_REL_M32R_PCREL16    = 0x00000006,
-    IMAGE_REL_M32R_PCREL8     = 0x00000007,
-    IMAGE_REL_M32R_REFHALF    = 0x00000008,
-    IMAGE_REL_M32R_REFHI      = 0x00000009,
-    IMAGE_REL_M32R_REFLO      = 0x0000000a,
-    IMAGE_REL_M32R_PAIR       = 0x0000000b,
-    IMAGE_REL_M32R_SECTION    = 0x0000000c,
-    IMAGE_REL_M32R_SECREL32   = 0x0000000d,
-    IMAGE_REL_M32R_TOKEN      = 0x0000000e,
-    IMAGE_REL_EBC_ABSOLUTE    = 0x00000000,
-    IMAGE_REL_EBC_ADDR32NB    = 0x00000001,
-    IMAGE_REL_EBC_REL32       = 0x00000002,
-    IMAGE_REL_EBC_SECTION     = 0x00000003,
-    IMAGE_REL_EBC_SECREL      = 0x00000004,
+    IMAGE_REL_I386_ABSOLUTE                    = 0x00000000U,
+    IMAGE_REL_I386_DIR16                       = 0x00000001U,
+    IMAGE_REL_I386_REL16                       = 0x00000002U,
+    IMAGE_REL_I386_DIR32                       = 0x00000006U,
+    IMAGE_REL_I386_DIR32NB                     = 0x00000007U,
+    IMAGE_REL_I386_SEG12                       = 0x00000009U,
+    IMAGE_REL_I386_SECTION                     = 0x0000000aU,
+    IMAGE_REL_I386_SECREL                      = 0x0000000bU,
+    IMAGE_REL_I386_TOKEN                       = 0x0000000cU,
+    IMAGE_REL_I386_SECREL7                     = 0x0000000dU,
+    IMAGE_REL_I386_REL32                       = 0x00000014U,
+    IMAGE_REL_MIPS_ABSOLUTE                    = 0x00000000U,
+    IMAGE_REL_MIPS_REFHALF                     = 0x00000001U,
+    IMAGE_REL_MIPS_REFWORD                     = 0x00000002U,
+    IMAGE_REL_MIPS_JMPADDR                     = 0x00000003U,
+    IMAGE_REL_MIPS_REFHI                       = 0x00000004U,
+    IMAGE_REL_MIPS_REFLO                       = 0x00000005U,
+    IMAGE_REL_MIPS_GPREL                       = 0x00000006U,
+    IMAGE_REL_MIPS_LITERAL                     = 0x00000007U,
+    IMAGE_REL_MIPS_SECTION                     = 0x0000000aU,
+    IMAGE_REL_MIPS_SECREL                      = 0x0000000bU,
+    IMAGE_REL_MIPS_SECRELLO                    = 0x0000000cU,
+    IMAGE_REL_MIPS_SECRELHI                    = 0x0000000dU,
+    IMAGE_REL_MIPS_TOKEN                       = 0x0000000eU,
+    IMAGE_REL_MIPS_JMPADDR16                   = 0x00000010U,
+    IMAGE_REL_MIPS_REFWORDNB                   = 0x00000022U,
+    IMAGE_REL_MIPS_PAIR                        = 0x00000025U,
+    IMAGE_REL_ALPHA_ABSOLUTE                   = 0x00000000U,
+    IMAGE_REL_ALPHA_REFLONG                    = 0x00000001U,
+    IMAGE_REL_ALPHA_REFQUAD                    = 0x00000002U,
+    IMAGE_REL_ALPHA_GPREL32                    = 0x00000003U,
+    IMAGE_REL_ALPHA_LITERAL                    = 0x00000004U,
+    IMAGE_REL_ALPHA_LITUSE                     = 0x00000005U,
+    IMAGE_REL_ALPHA_GPDISP                     = 0x00000006U,
+    IMAGE_REL_ALPHA_BRADDR                     = 0x00000007U,
+    IMAGE_REL_ALPHA_HINT                       = 0x00000008U,
+    IMAGE_REL_ALPHA_INLINE_REFLONG             = 0x00000009U,
+    IMAGE_REL_ALPHA_REFHI                      = 0x0000000aU,
+    IMAGE_REL_ALPHA_REFLO                      = 0x0000000bU,
+    IMAGE_REL_ALPHA_PAIR                       = 0x0000000cU,
+    IMAGE_REL_ALPHA_MATCH                      = 0x0000000dU,
+    IMAGE_REL_ALPHA_SECTION                    = 0x0000000eU,
+    IMAGE_REL_ALPHA_SECREL                     = 0x0000000fU,
+    IMAGE_REL_ALPHA_REFLONGNB                  = 0x00000010U,
+    IMAGE_REL_ALPHA_SECRELLO                   = 0x00000011U,
+    IMAGE_REL_ALPHA_SECRELHI                   = 0x00000012U,
+    IMAGE_REL_ALPHA_REFQ3                      = 0x00000013U,
+    IMAGE_REL_ALPHA_REFQ2                      = 0x00000014U,
+    IMAGE_REL_ALPHA_REFQ1                      = 0x00000015U,
+    IMAGE_REL_ALPHA_GPRELLO                    = 0x00000016U,
+    IMAGE_REL_ALPHA_GPRELHI                    = 0x00000017U,
+    IMAGE_REL_PPC_ABSOLUTE                     = 0x00000000U,
+    IMAGE_REL_PPC_ADDR64                       = 0x00000001U,
+    IMAGE_REL_PPC_ADDR32                       = 0x00000002U,
+    IMAGE_REL_PPC_ADDR24                       = 0x00000003U,
+    IMAGE_REL_PPC_ADDR16                       = 0x00000004U,
+    IMAGE_REL_PPC_ADDR14                       = 0x00000005U,
+    IMAGE_REL_PPC_REL24                        = 0x00000006U,
+    IMAGE_REL_PPC_REL14                        = 0x00000007U,
+    IMAGE_REL_PPC_TOCREL16                     = 0x00000008U,
+    IMAGE_REL_PPC_TOCREL14                     = 0x00000009U,
+    IMAGE_REL_PPC_ADDR32NB                     = 0x0000000aU,
+    IMAGE_REL_PPC_SECREL                       = 0x0000000bU,
+    IMAGE_REL_PPC_SECTION                      = 0x0000000cU,
+    IMAGE_REL_PPC_IFGLUE                       = 0x0000000dU,
+    IMAGE_REL_PPC_IMGLUE                       = 0x0000000eU,
+    IMAGE_REL_PPC_SECREL16                     = 0x0000000fU,
+    IMAGE_REL_PPC_REFHI                        = 0x00000010U,
+    IMAGE_REL_PPC_REFLO                        = 0x00000011U,
+    IMAGE_REL_PPC_PAIR                         = 0x00000012U,
+    IMAGE_REL_PPC_SECRELLO                     = 0x00000013U,
+    IMAGE_REL_PPC_SECRELHI                     = 0x00000014U,
+    IMAGE_REL_PPC_GPREL                        = 0x00000015U,
+    IMAGE_REL_PPC_TOKEN                        = 0x00000016U,
+    IMAGE_REL_PPC_TYPEMASK                     = 0x000000ffU,
+    IMAGE_REL_PPC_NEG                          = 0x00000100U,
+    IMAGE_REL_PPC_BRTAKEN                      = 0x00000200U,
+    IMAGE_REL_PPC_BRNTAKEN                     = 0x00000400U,
+    IMAGE_REL_PPC_TOCDEFN                      = 0x00000800U,
+    IMAGE_REL_SH3_ABSOLUTE                     = 0x00000000U,
+    IMAGE_REL_SH3_DIRECT16                     = 0x00000001U,
+    IMAGE_REL_SH3_DIRECT32                     = 0x00000002U,
+    IMAGE_REL_SH3_DIRECT8                      = 0x00000003U,
+    IMAGE_REL_SH3_DIRECT8_WORD                 = 0x00000004U,
+    IMAGE_REL_SH3_DIRECT8_LONG                 = 0x00000005U,
+    IMAGE_REL_SH3_DIRECT4                      = 0x00000006U,
+    IMAGE_REL_SH3_DIRECT4_WORD                 = 0x00000007U,
+    IMAGE_REL_SH3_DIRECT4_LONG                 = 0x00000008U,
+    IMAGE_REL_SH3_PCREL8_WORD                  = 0x00000009U,
+    IMAGE_REL_SH3_PCREL8_LONG                  = 0x0000000aU,
+    IMAGE_REL_SH3_PCREL12_WORD                 = 0x0000000bU,
+    IMAGE_REL_SH3_STARTOF_SECTION              = 0x0000000cU,
+    IMAGE_REL_SH3_SIZEOF_SECTION               = 0x0000000dU,
+    IMAGE_REL_SH3_SECTION                      = 0x0000000eU,
+    IMAGE_REL_SH3_SECREL                       = 0x0000000fU,
+    IMAGE_REL_SH3_DIRECT32_NB                  = 0x00000010U,
+    IMAGE_REL_SH3_GPREL4_LONG                  = 0x00000011U,
+    IMAGE_REL_SH3_TOKEN                        = 0x00000012U,
+    IMAGE_REL_SHM_PCRELPT                      = 0x00000013U,
+    IMAGE_REL_SHM_REFLO                        = 0x00000014U,
+    IMAGE_REL_SHM_REFHALF                      = 0x00000015U,
+    IMAGE_REL_SHM_RELLO                        = 0x00000016U,
+    IMAGE_REL_SHM_RELHALF                      = 0x00000017U,
+    IMAGE_REL_SHM_PAIR                         = 0x00000018U,
+    IMAGE_REL_SH_NOMODE                        = 0x00008000U,
+    IMAGE_REL_ARM_ABSOLUTE                     = 0x00000000U,
+    IMAGE_REL_ARM_ADDR32                       = 0x00000001U,
+    IMAGE_REL_ARM_ADDR32NB                     = 0x00000002U,
+    IMAGE_REL_ARM_BRANCH24                     = 0x00000003U,
+    IMAGE_REL_ARM_BRANCH11                     = 0x00000004U,
+    IMAGE_REL_ARM_TOKEN                        = 0x00000005U,
+    IMAGE_REL_ARM_GPREL12                      = 0x00000006U,
+    IMAGE_REL_ARM_GPREL7                       = 0x00000007U,
+    IMAGE_REL_ARM_BLX24                        = 0x00000008U,
+    IMAGE_REL_ARM_BLX11                        = 0x00000009U,
+    IMAGE_REL_ARM_SECTION                      = 0x0000000eU,
+    IMAGE_REL_ARM_SECREL                       = 0x0000000fU,
+    IMAGE_REL_ARM_MOV32A                       = 0x00000010U,
+    IMAGE_REL_ARM_MOV32                        = 0x00000010U,
+    IMAGE_REL_ARM_MOV32T                       = 0x00000011U,
+    IMAGE_REL_THUMB_MOV32                      = 0x00000011U,
+    IMAGE_REL_ARM_BRANCH20T                    = 0x00000012U,
+    IMAGE_REL_THUMB_BRANCH20                   = 0x00000012U,
+    IMAGE_REL_ARM_BRANCH24T                    = 0x00000014U,
+    IMAGE_REL_THUMB_BRANCH24                   = 0x00000014U,
+    IMAGE_REL_ARM_BLX23T                       = 0x00000015U,
+    IMAGE_REL_THUMB_BLX23                      = 0x00000015U,
+    IMAGE_REL_AM_ABSOLUTE                      = 0x00000000U,
+    IMAGE_REL_AM_ADDR32                        = 0x00000001U,
+    IMAGE_REL_AM_ADDR32NB                      = 0x00000002U,
+    IMAGE_REL_AM_CALL32                        = 0x00000003U,
+    IMAGE_REL_AM_FUNCINFO                      = 0x00000004U,
+    IMAGE_REL_AM_REL32_1                       = 0x00000005U,
+    IMAGE_REL_AM_REL32_2                       = 0x00000006U,
+    IMAGE_REL_AM_SECREL                        = 0x00000007U,
+    IMAGE_REL_AM_SECTION                       = 0x00000008U,
+    IMAGE_REL_AM_TOKEN                         = 0x00000009U,
+    IMAGE_REL_ARM64_ABSOLUTE                   = 0x00000000U,
+    IMAGE_REL_ARM64_ADDR32                     = 0x00000001U,
+    IMAGE_REL_ARM64_ADDR32NB                   = 0x00000002U,
+    IMAGE_REL_ARM64_BRANCH26                   = 0x00000003U,
+    IMAGE_REL_ARM64_PAGEBASE_REL21             = 0x00000004U,
+    IMAGE_REL_ARM64_REL21                      = 0x00000005U,
+    IMAGE_REL_ARM64_PAGEOFFSET_12A             = 0x00000006U,
+    IMAGE_REL_ARM64_PAGEOFFSET_12L             = 0x00000007U,
+    IMAGE_REL_ARM64_SECREL                     = 0x00000008U,
+    IMAGE_REL_ARM64_SECREL_LOW12A              = 0x00000009U,
+    IMAGE_REL_ARM64_SECREL_HIGH12A             = 0x0000000aU,
+    IMAGE_REL_ARM64_SECREL_LOW12L              = 0x0000000bU,
+    IMAGE_REL_ARM64_TOKEN                      = 0x0000000cU,
+    IMAGE_REL_ARM64_SECTION                    = 0x0000000dU,
+    IMAGE_REL_ARM64_ADDR64                     = 0x0000000eU,
+    IMAGE_REL_ARM64_BRANCH19                   = 0x0000000fU,
+    IMAGE_REL_AMD64_ABSOLUTE                   = 0x00000000U,
+    IMAGE_REL_AMD64_ADDR64                     = 0x00000001U,
+    IMAGE_REL_AMD64_ADDR32                     = 0x00000002U,
+    IMAGE_REL_AMD64_ADDR32NB                   = 0x00000003U,
+    IMAGE_REL_AMD64_REL32                      = 0x00000004U,
+    IMAGE_REL_AMD64_REL32_1                    = 0x00000005U,
+    IMAGE_REL_AMD64_REL32_2                    = 0x00000006U,
+    IMAGE_REL_AMD64_REL32_3                    = 0x00000007U,
+    IMAGE_REL_AMD64_REL32_4                    = 0x00000008U,
+    IMAGE_REL_AMD64_REL32_5                    = 0x00000009U,
+    IMAGE_REL_AMD64_SECTION                    = 0x0000000aU,
+    IMAGE_REL_AMD64_SECREL                     = 0x0000000bU,
+    IMAGE_REL_AMD64_SECREL7                    = 0x0000000cU,
+    IMAGE_REL_AMD64_TOKEN                      = 0x0000000dU,
+    IMAGE_REL_AMD64_SREL32                     = 0x0000000eU,
+    IMAGE_REL_AMD64_PAIR                       = 0x0000000fU,
+    IMAGE_REL_AMD64_SSPAN32                    = 0x00000010U,
+    IMAGE_REL_AMD64_EHANDLER                   = 0x00000011U,
+    IMAGE_REL_AMD64_IMPORT_BR                  = 0x00000012U,
+    IMAGE_REL_AMD64_IMPORT_CALL                = 0x00000013U,
+    IMAGE_REL_AMD64_CFG_BR                     = 0x00000014U,
+    IMAGE_REL_AMD64_CFG_BR_REX                 = 0x00000015U,
+    IMAGE_REL_AMD64_CFG_CALL                   = 0x00000016U,
+    IMAGE_REL_AMD64_INDIR_BR                   = 0x00000017U,
+    IMAGE_REL_AMD64_INDIR_BR_REX               = 0x00000018U,
+    IMAGE_REL_AMD64_INDIR_CALL                 = 0x00000019U,
+    IMAGE_REL_AMD64_INDIR_BR_SWITCHTABLE_FIRST = 0x00000020U,
+    IMAGE_REL_AMD64_INDIR_BR_SWITCHTABLE_LAST  = 0x0000002fU,
 }
 
 enum : uint
 {
-    EMARCH_ENC_I17_IMM7B_INST_WORD_X      = 0x00000003,
-    EMARCH_ENC_I17_IMM7B_SIZE_X           = 0x00000007,
-    EMARCH_ENC_I17_IMM7B_INST_WORD_POS_X  = 0x00000004,
-    EMARCH_ENC_I17_IMM7B_VAL_POS_X        = 0x00000000,
-    EMARCH_ENC_I17_IMM9D_INST_WORD_X      = 0x00000003,
-    EMARCH_ENC_I17_IMM9D_SIZE_X           = 0x00000009,
-    EMARCH_ENC_I17_IMM9D_INST_WORD_POS_X  = 0x00000012,
-    EMARCH_ENC_I17_IMM9D_VAL_POS_X        = 0x00000007,
-    EMARCH_ENC_I17_IMM5C_INST_WORD_X      = 0x00000003,
-    EMARCH_ENC_I17_IMM5C_SIZE_X           = 0x00000005,
-    EMARCH_ENC_I17_IMM5C_INST_WORD_POS_X  = 0x0000000d,
-    EMARCH_ENC_I17_IMM5C_VAL_POS_X        = 0x00000010,
-    EMARCH_ENC_I17_IC_INST_WORD_X         = 0x00000003,
-    EMARCH_ENC_I17_IC_SIZE_X              = 0x00000001,
-    EMARCH_ENC_I17_IC_INST_WORD_POS_X     = 0x0000000c,
-    EMARCH_ENC_I17_IC_VAL_POS_X           = 0x00000015,
-    EMARCH_ENC_I17_IMM41a_INST_WORD_X     = 0x00000001,
-    EMARCH_ENC_I17_IMM41a_SIZE_X          = 0x0000000a,
-    EMARCH_ENC_I17_IMM41a_INST_WORD_POS_X = 0x0000000e,
-    EMARCH_ENC_I17_IMM41a_VAL_POS_X       = 0x00000016,
-    EMARCH_ENC_I17_IMM41b_INST_WORD_X     = 0x00000001,
-    EMARCH_ENC_I17_IMM41b_SIZE_X          = 0x00000008,
-    EMARCH_ENC_I17_IMM41b_INST_WORD_POS_X = 0x00000018,
-    EMARCH_ENC_I17_IMM41b_VAL_POS_X       = 0x00000020,
-    EMARCH_ENC_I17_IMM41c_INST_WORD_X     = 0x00000002,
-    EMARCH_ENC_I17_IMM41c_SIZE_X          = 0x00000017,
-    EMARCH_ENC_I17_IMM41c_INST_WORD_POS_X = 0x00000000,
-    EMARCH_ENC_I17_IMM41c_VAL_POS_X       = 0x00000028,
-    EMARCH_ENC_I17_SIGN_INST_WORD_X       = 0x00000003,
-    EMARCH_ENC_I17_SIGN_SIZE_X            = 0x00000001,
-    EMARCH_ENC_I17_SIGN_INST_WORD_POS_X   = 0x0000001b,
-    EMARCH_ENC_I17_SIGN_VAL_POS_X         = 0x0000003f,
+    IMAGE_REL_IA64_ABSOLUTE   = 0x00000000U,
+    IMAGE_REL_IA64_IMM14      = 0x00000001U,
+    IMAGE_REL_IA64_IMM22      = 0x00000002U,
+    IMAGE_REL_IA64_IMM64      = 0x00000003U,
+    IMAGE_REL_IA64_DIR32      = 0x00000004U,
+    IMAGE_REL_IA64_DIR64      = 0x00000005U,
+    IMAGE_REL_IA64_PCREL21B   = 0x00000006U,
+    IMAGE_REL_IA64_PCREL21M   = 0x00000007U,
+    IMAGE_REL_IA64_PCREL21F   = 0x00000008U,
+    IMAGE_REL_IA64_GPREL22    = 0x00000009U,
+    IMAGE_REL_IA64_LTOFF22    = 0x0000000aU,
+    IMAGE_REL_IA64_SECTION    = 0x0000000bU,
+    IMAGE_REL_IA64_SECREL22   = 0x0000000cU,
+    IMAGE_REL_IA64_SECREL64I  = 0x0000000dU,
+    IMAGE_REL_IA64_SECREL32   = 0x0000000eU,
+    IMAGE_REL_IA64_DIR32NB    = 0x00000010U,
+    IMAGE_REL_IA64_SREL14     = 0x00000011U,
+    IMAGE_REL_IA64_SREL22     = 0x00000012U,
+    IMAGE_REL_IA64_SREL32     = 0x00000013U,
+    IMAGE_REL_IA64_UREL32     = 0x00000014U,
+    IMAGE_REL_IA64_PCREL60X   = 0x00000015U,
+    IMAGE_REL_IA64_PCREL60B   = 0x00000016U,
+    IMAGE_REL_IA64_PCREL60F   = 0x00000017U,
+    IMAGE_REL_IA64_PCREL60I   = 0x00000018U,
+    IMAGE_REL_IA64_PCREL60M   = 0x00000019U,
+    IMAGE_REL_IA64_IMMGPREL64 = 0x0000001aU,
+    IMAGE_REL_IA64_TOKEN      = 0x0000001bU,
+    IMAGE_REL_IA64_GPREL32    = 0x0000001cU,
+    IMAGE_REL_IA64_ADDEND     = 0x0000001fU,
+    IMAGE_REL_CEF_ABSOLUTE    = 0x00000000U,
+    IMAGE_REL_CEF_ADDR32      = 0x00000001U,
+    IMAGE_REL_CEF_ADDR64      = 0x00000002U,
+    IMAGE_REL_CEF_ADDR32NB    = 0x00000003U,
+    IMAGE_REL_CEF_SECTION     = 0x00000004U,
+    IMAGE_REL_CEF_SECREL      = 0x00000005U,
+    IMAGE_REL_CEF_TOKEN       = 0x00000006U,
+    IMAGE_REL_CEE_ABSOLUTE    = 0x00000000U,
+    IMAGE_REL_CEE_ADDR32      = 0x00000001U,
+    IMAGE_REL_CEE_ADDR64      = 0x00000002U,
+    IMAGE_REL_CEE_ADDR32NB    = 0x00000003U,
+    IMAGE_REL_CEE_SECTION     = 0x00000004U,
+    IMAGE_REL_CEE_SECREL      = 0x00000005U,
+    IMAGE_REL_CEE_TOKEN       = 0x00000006U,
+    IMAGE_REL_M32R_ABSOLUTE   = 0x00000000U,
+    IMAGE_REL_M32R_ADDR32     = 0x00000001U,
+    IMAGE_REL_M32R_ADDR32NB   = 0x00000002U,
+    IMAGE_REL_M32R_ADDR24     = 0x00000003U,
+    IMAGE_REL_M32R_GPREL16    = 0x00000004U,
+    IMAGE_REL_M32R_PCREL24    = 0x00000005U,
+    IMAGE_REL_M32R_PCREL16    = 0x00000006U,
+    IMAGE_REL_M32R_PCREL8     = 0x00000007U,
+    IMAGE_REL_M32R_REFHALF    = 0x00000008U,
+    IMAGE_REL_M32R_REFHI      = 0x00000009U,
+    IMAGE_REL_M32R_REFLO      = 0x0000000aU,
+    IMAGE_REL_M32R_PAIR       = 0x0000000bU,
+    IMAGE_REL_M32R_SECTION    = 0x0000000cU,
+    IMAGE_REL_M32R_SECREL32   = 0x0000000dU,
+    IMAGE_REL_M32R_TOKEN      = 0x0000000eU,
+    IMAGE_REL_EBC_ABSOLUTE    = 0x00000000U,
+    IMAGE_REL_EBC_ADDR32NB    = 0x00000001U,
+    IMAGE_REL_EBC_REL32       = 0x00000002U,
+    IMAGE_REL_EBC_SECTION     = 0x00000003U,
+    IMAGE_REL_EBC_SECREL      = 0x00000004U,
 }
 
 enum : uint
 {
-    X3_OPCODE_INST_WORD_X     = 0x00000003,
-    X3_OPCODE_SIZE_X          = 0x00000004,
-    X3_OPCODE_INST_WORD_POS_X = 0x0000001c,
-}
-
-enum uint X3_OPCODE_SIGN_VAL_POS_X = 0x00000000;
-enum uint X3_I_INST_WORD_X = 0x00000003;
-
-enum : uint
-{
-    X3_I_SIZE_X          = 0x00000001,
-    X3_I_INST_WORD_POS_X = 0x0000001b,
-}
-
-enum uint X3_I_SIGN_VAL_POS_X = 0x0000003b;
-
-enum : uint
-{
-    X3_D_WH_INST_WORD_X     = 0x00000003,
-    X3_D_WH_SIZE_X          = 0x00000003,
-    X3_D_WH_INST_WORD_POS_X = 0x00000018,
-}
-
-enum uint X3_D_WH_SIGN_VAL_POS_X = 0x00000000;
-
-enum : uint
-{
-    X3_IMM20_INST_WORD_X     = 0x00000003,
-    X3_IMM20_SIZE_X          = 0x00000014,
-    X3_IMM20_INST_WORD_POS_X = 0x00000004,
-}
-
-enum uint X3_IMM20_SIGN_VAL_POS_X = 0x00000000;
-
-enum : uint
-{
-    X3_IMM39_1_INST_WORD_X     = 0x00000002,
-    X3_IMM39_1_SIZE_X          = 0x00000017,
-    X3_IMM39_1_INST_WORD_POS_X = 0x00000000,
-    X3_IMM39_1_SIGN_VAL_POS_X  = 0x00000024,
+    EMARCH_ENC_I17_IMM7B_INST_WORD_X      = 0x00000003U,
+    EMARCH_ENC_I17_IMM7B_SIZE_X           = 0x00000007U,
+    EMARCH_ENC_I17_IMM7B_INST_WORD_POS_X  = 0x00000004U,
+    EMARCH_ENC_I17_IMM7B_VAL_POS_X        = 0x00000000U,
+    EMARCH_ENC_I17_IMM9D_INST_WORD_X      = 0x00000003U,
+    EMARCH_ENC_I17_IMM9D_SIZE_X           = 0x00000009U,
+    EMARCH_ENC_I17_IMM9D_INST_WORD_POS_X  = 0x00000012U,
+    EMARCH_ENC_I17_IMM9D_VAL_POS_X        = 0x00000007U,
+    EMARCH_ENC_I17_IMM5C_INST_WORD_X      = 0x00000003U,
+    EMARCH_ENC_I17_IMM5C_SIZE_X           = 0x00000005U,
+    EMARCH_ENC_I17_IMM5C_INST_WORD_POS_X  = 0x0000000dU,
+    EMARCH_ENC_I17_IMM5C_VAL_POS_X        = 0x00000010U,
+    EMARCH_ENC_I17_IC_INST_WORD_X         = 0x00000003U,
+    EMARCH_ENC_I17_IC_SIZE_X              = 0x00000001U,
+    EMARCH_ENC_I17_IC_INST_WORD_POS_X     = 0x0000000cU,
+    EMARCH_ENC_I17_IC_VAL_POS_X           = 0x00000015U,
+    EMARCH_ENC_I17_IMM41a_INST_WORD_X     = 0x00000001U,
+    EMARCH_ENC_I17_IMM41a_SIZE_X          = 0x0000000aU,
+    EMARCH_ENC_I17_IMM41a_INST_WORD_POS_X = 0x0000000eU,
+    EMARCH_ENC_I17_IMM41a_VAL_POS_X       = 0x00000016U,
+    EMARCH_ENC_I17_IMM41b_INST_WORD_X     = 0x00000001U,
+    EMARCH_ENC_I17_IMM41b_SIZE_X          = 0x00000008U,
+    EMARCH_ENC_I17_IMM41b_INST_WORD_POS_X = 0x00000018U,
+    EMARCH_ENC_I17_IMM41b_VAL_POS_X       = 0x00000020U,
+    EMARCH_ENC_I17_IMM41c_INST_WORD_X     = 0x00000002U,
+    EMARCH_ENC_I17_IMM41c_SIZE_X          = 0x00000017U,
+    EMARCH_ENC_I17_IMM41c_INST_WORD_POS_X = 0x00000000U,
+    EMARCH_ENC_I17_IMM41c_VAL_POS_X       = 0x00000028U,
+    EMARCH_ENC_I17_SIGN_INST_WORD_X       = 0x00000003U,
+    EMARCH_ENC_I17_SIGN_SIZE_X            = 0x00000001U,
+    EMARCH_ENC_I17_SIGN_INST_WORD_POS_X   = 0x0000001bU,
+    EMARCH_ENC_I17_SIGN_VAL_POS_X         = 0x0000003fU,
 }
 
 enum : uint
 {
-    X3_IMM39_2_INST_WORD_X     = 0x00000001,
-    X3_IMM39_2_SIZE_X          = 0x00000010,
-    X3_IMM39_2_INST_WORD_POS_X = 0x00000010,
-    X3_IMM39_2_SIGN_VAL_POS_X  = 0x00000014,
+    X3_OPCODE_INST_WORD_X     = 0x00000003U,
+    X3_OPCODE_SIZE_X          = 0x00000004U,
+    X3_OPCODE_INST_WORD_POS_X = 0x0000001cU,
 }
 
-enum uint X3_P_INST_WORD_X = 0x00000003;
+enum uint X3_OPCODE_SIGN_VAL_POS_X = 0x00000000U;
+enum uint X3_I_INST_WORD_X = 0x00000003U;
 
 enum : uint
 {
-    X3_P_SIZE_X          = 0x00000004,
-    X3_P_INST_WORD_POS_X = 0x00000000,
+    X3_I_SIZE_X          = 0x00000001U,
+    X3_I_INST_WORD_POS_X = 0x0000001bU,
 }
 
-enum uint X3_P_SIGN_VAL_POS_X = 0x00000000;
+enum uint X3_I_SIGN_VAL_POS_X = 0x0000003bU;
 
 enum : uint
 {
-    X3_TMPLT_INST_WORD_X     = 0x00000000,
-    X3_TMPLT_SIZE_X          = 0x00000004,
-    X3_TMPLT_INST_WORD_POS_X = 0x00000000,
+    X3_D_WH_INST_WORD_X     = 0x00000003U,
+    X3_D_WH_SIZE_X          = 0x00000003U,
+    X3_D_WH_INST_WORD_POS_X = 0x00000018U,
 }
 
-enum uint X3_TMPLT_SIGN_VAL_POS_X = 0x00000000;
+enum uint X3_D_WH_SIGN_VAL_POS_X = 0x00000000U;
 
 enum : uint
 {
-    X3_BTYPE_QP_INST_WORD_X     = 0x00000002,
-    X3_BTYPE_QP_SIZE_X          = 0x00000009,
-    X3_BTYPE_QP_INST_WORD_POS_X = 0x00000017,
-    X3_BTYPE_QP_INST_VAL_POS_X  = 0x00000000,
+    X3_IMM20_INST_WORD_X     = 0x00000003U,
+    X3_IMM20_SIZE_X          = 0x00000014U,
+    X3_IMM20_INST_WORD_POS_X = 0x00000004U,
+}
+
+enum uint X3_IMM20_SIGN_VAL_POS_X = 0x00000000U;
+
+enum : uint
+{
+    X3_IMM39_1_INST_WORD_X     = 0x00000002U,
+    X3_IMM39_1_SIZE_X          = 0x00000017U,
+    X3_IMM39_1_INST_WORD_POS_X = 0x00000000U,
+    X3_IMM39_1_SIGN_VAL_POS_X  = 0x00000024U,
 }
 
 enum : uint
 {
-    X3_EMPTY_INST_WORD_X     = 0x00000001,
-    X3_EMPTY_SIZE_X          = 0x00000002,
-    X3_EMPTY_INST_WORD_POS_X = 0x0000000e,
-    X3_EMPTY_INST_VAL_POS_X  = 0x00000000,
+    X3_IMM39_2_INST_WORD_X     = 0x00000001U,
+    X3_IMM39_2_SIZE_X          = 0x00000010U,
+    X3_IMM39_2_INST_WORD_POS_X = 0x00000010U,
+    X3_IMM39_2_SIGN_VAL_POS_X  = 0x00000014U,
+}
+
+enum uint X3_P_INST_WORD_X = 0x00000003U;
+
+enum : uint
+{
+    X3_P_SIZE_X          = 0x00000004U,
+    X3_P_INST_WORD_POS_X = 0x00000000U,
+}
+
+enum uint X3_P_SIGN_VAL_POS_X = 0x00000000U;
+
+enum : uint
+{
+    X3_TMPLT_INST_WORD_X     = 0x00000000U,
+    X3_TMPLT_SIZE_X          = 0x00000004U,
+    X3_TMPLT_INST_WORD_POS_X = 0x00000000U,
+}
+
+enum uint X3_TMPLT_SIGN_VAL_POS_X = 0x00000000U;
+
+enum : uint
+{
+    X3_BTYPE_QP_INST_WORD_X     = 0x00000002U,
+    X3_BTYPE_QP_SIZE_X          = 0x00000009U,
+    X3_BTYPE_QP_INST_WORD_POS_X = 0x00000017U,
+    X3_BTYPE_QP_INST_VAL_POS_X  = 0x00000000U,
 }
 
 enum : uint
 {
-    IMAGE_REL_BASED_ABSOLUTE           = 0x00000000,
-    IMAGE_REL_BASED_HIGH               = 0x00000001,
-    IMAGE_REL_BASED_LOW                = 0x00000002,
-    IMAGE_REL_BASED_HIGHLOW            = 0x00000003,
-    IMAGE_REL_BASED_HIGHADJ            = 0x00000004,
-    IMAGE_REL_BASED_MACHINE_SPECIFIC_5 = 0x00000005,
-    IMAGE_REL_BASED_RESERVED           = 0x00000006,
-    IMAGE_REL_BASED_MACHINE_SPECIFIC_7 = 0x00000007,
-    IMAGE_REL_BASED_MACHINE_SPECIFIC_8 = 0x00000008,
-    IMAGE_REL_BASED_MACHINE_SPECIFIC_9 = 0x00000009,
-    IMAGE_REL_BASED_DIR64              = 0x0000000a,
-    IMAGE_REL_BASED_IA64_IMM64         = 0x00000009,
-    IMAGE_REL_BASED_MIPS_JMPADDR       = 0x00000005,
-    IMAGE_REL_BASED_MIPS_JMPADDR16     = 0x00000009,
-    IMAGE_REL_BASED_ARM_MOV32          = 0x00000005,
-    IMAGE_REL_BASED_THUMB_MOV32        = 0x00000007,
+    X3_EMPTY_INST_WORD_X     = 0x00000001U,
+    X3_EMPTY_SIZE_X          = 0x00000002U,
+    X3_EMPTY_INST_WORD_POS_X = 0x0000000eU,
+    X3_EMPTY_INST_VAL_POS_X  = 0x00000000U,
 }
 
-enum uint IMAGE_ARCHIVE_START_SIZE = 0x00000008;
+enum : uint
+{
+    IMAGE_REL_BASED_ABSOLUTE           = 0x00000000U,
+    IMAGE_REL_BASED_HIGH               = 0x00000001U,
+    IMAGE_REL_BASED_LOW                = 0x00000002U,
+    IMAGE_REL_BASED_HIGHLOW            = 0x00000003U,
+    IMAGE_REL_BASED_HIGHADJ            = 0x00000004U,
+    IMAGE_REL_BASED_MACHINE_SPECIFIC_5 = 0x00000005U,
+    IMAGE_REL_BASED_RESERVED           = 0x00000006U,
+    IMAGE_REL_BASED_MACHINE_SPECIFIC_7 = 0x00000007U,
+    IMAGE_REL_BASED_MACHINE_SPECIFIC_8 = 0x00000008U,
+    IMAGE_REL_BASED_MACHINE_SPECIFIC_9 = 0x00000009U,
+    IMAGE_REL_BASED_DIR64              = 0x0000000aU,
+    IMAGE_REL_BASED_IA64_IMM64         = 0x00000009U,
+    IMAGE_REL_BASED_MIPS_JMPADDR       = 0x00000005U,
+    IMAGE_REL_BASED_MIPS_JMPADDR16     = 0x00000009U,
+    IMAGE_REL_BASED_ARM_MOV32          = 0x00000005U,
+    IMAGE_REL_BASED_THUMB_MOV32        = 0x00000007U,
+}
+
+enum uint IMAGE_ARCHIVE_START_SIZE = 0x00000008U;
 
 enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
 {
@@ -3598,389 +3641,389 @@ enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(E
     IMAGE_ARCHIVE_HYBRIDMAP_MEMBER = "/<HYBRIDMAP>/   ",
 }
 
-enum uint IMAGE_SIZEOF_ARCHIVE_MEMBER_HDR = 0x0000003c;
-enum ulong IMAGE_ORDINAL_FLAG64 = 0x8000000000000000;
-enum uint IMAGE_ORDINAL_FLAG32 = 0x80000000;
+enum uint IMAGE_SIZEOF_ARCHIVE_MEMBER_HDR = 0x0000003cU;
+enum ulong IMAGE_ORDINAL_FLAG64 = 0x8000000000000000UL;
+enum uint IMAGE_ORDINAL_FLAG32 = 0x80000000U;
 
 enum : uint
 {
-    IMAGE_RESOURCE_NAME_IS_STRING    = 0x80000000,
-    IMAGE_RESOURCE_DATA_IS_DIRECTORY = 0x80000000,
+    IMAGE_RESOURCE_NAME_IS_STRING    = 0x80000000U,
+    IMAGE_RESOURCE_DATA_IS_DIRECTORY = 0x80000000U,
 }
 
 enum : uint
 {
-    IMAGE_DYNAMIC_RELOCATION_GUARD_RF_PROLOGUE                 = 0x00000001,
-    IMAGE_DYNAMIC_RELOCATION_GUARD_RF_EPILOGUE                 = 0x00000002,
-    IMAGE_DYNAMIC_RELOCATION_GUARD_IMPORT_CONTROL_TRANSFER     = 0x00000003,
-    IMAGE_DYNAMIC_RELOCATION_GUARD_INDIR_CONTROL_TRANSFER      = 0x00000004,
-    IMAGE_DYNAMIC_RELOCATION_GUARD_SWITCHTABLE_BRANCH          = 0x00000005,
-    IMAGE_DYNAMIC_RELOCATION_FUNCTION_OVERRIDE                 = 0x00000007,
-    IMAGE_DYNAMIC_RELOCATION_ARM64_KERNEL_IMPORT_CALL_TRANSFER = 0x00000008,
-    IMAGE_DYNAMIC_RELOCATION_IMPORT_CONTROL_TRANSFER           = 0x00000003,
+    IMAGE_DYNAMIC_RELOCATION_GUARD_RF_PROLOGUE                 = 0x00000001U,
+    IMAGE_DYNAMIC_RELOCATION_GUARD_RF_EPILOGUE                 = 0x00000002U,
+    IMAGE_DYNAMIC_RELOCATION_GUARD_IMPORT_CONTROL_TRANSFER     = 0x00000003U,
+    IMAGE_DYNAMIC_RELOCATION_GUARD_INDIR_CONTROL_TRANSFER      = 0x00000004U,
+    IMAGE_DYNAMIC_RELOCATION_GUARD_SWITCHTABLE_BRANCH          = 0x00000005U,
+    IMAGE_DYNAMIC_RELOCATION_FUNCTION_OVERRIDE                 = 0x00000007U,
+    IMAGE_DYNAMIC_RELOCATION_ARM64_KERNEL_IMPORT_CALL_TRANSFER = 0x00000008U,
+    IMAGE_DYNAMIC_RELOCATION_IMPORT_CONTROL_TRANSFER           = 0x00000003U,
 }
 
 enum : uint
 {
-    IMAGE_FUNCTION_OVERRIDE_INVALID        = 0x00000000,
-    IMAGE_FUNCTION_OVERRIDE_X64_REL32      = 0x00000001,
-    IMAGE_FUNCTION_OVERRIDE_ARM64_BRANCH26 = 0x00000002,
-    IMAGE_FUNCTION_OVERRIDE_ARM64_THUNK    = 0x00000003,
+    IMAGE_FUNCTION_OVERRIDE_INVALID        = 0x00000000U,
+    IMAGE_FUNCTION_OVERRIDE_X64_REL32      = 0x00000001U,
+    IMAGE_FUNCTION_OVERRIDE_ARM64_BRANCH26 = 0x00000002U,
+    IMAGE_FUNCTION_OVERRIDE_ARM64_THUNK    = 0x00000003U,
 }
 
 enum : uint
 {
-    IMAGE_HOT_PATCH_INFO_FLAG_PATCHORDERCRITICAL = 0x00000001,
-    IMAGE_HOT_PATCH_INFO_FLAG_HOTSWAP            = 0x00000002,
-    IMAGE_HOT_PATCH_BASE_OBLIGATORY              = 0x00000001,
-    IMAGE_HOT_PATCH_BASE_CAN_ROLL_BACK           = 0x00000002,
-    IMAGE_HOT_PATCH_BASE_MACHINE_I386            = 0x00000004,
-    IMAGE_HOT_PATCH_BASE_MACHINE_ARM64           = 0x00000008,
-    IMAGE_HOT_PATCH_BASE_MACHINE_AMD64           = 0x00000010,
-    IMAGE_HOT_PATCH_CHUNK_INVERSE                = 0x80000000,
-    IMAGE_HOT_PATCH_CHUNK_OBLIGATORY             = 0x40000000,
-    IMAGE_HOT_PATCH_CHUNK_RESERVED               = 0x3ff03000,
-    IMAGE_HOT_PATCH_CHUNK_TYPE                   = 0x000fc000,
-    IMAGE_HOT_PATCH_CHUNK_SOURCE_RVA             = 0x00008000,
-    IMAGE_HOT_PATCH_CHUNK_TARGET_RVA             = 0x00004000,
-    IMAGE_HOT_PATCH_CHUNK_SIZE                   = 0x00000fff,
-    IMAGE_HOT_PATCH_NONE                         = 0x00000000,
-    IMAGE_HOT_PATCH_FUNCTION                     = 0x0001c000,
-    IMAGE_HOT_PATCH_ABSOLUTE                     = 0x0002c000,
-    IMAGE_HOT_PATCH_REL32                        = 0x0003c000,
-    IMAGE_HOT_PATCH_CALL_TARGET                  = 0x00044000,
-    IMAGE_HOT_PATCH_INDIRECT                     = 0x0005c000,
-    IMAGE_HOT_PATCH_NO_CALL_TARGET               = 0x00064000,
-    IMAGE_HOT_PATCH_DYNAMIC_VALUE                = 0x00078000,
+    IMAGE_HOT_PATCH_INFO_FLAG_PATCHORDERCRITICAL = 0x00000001U,
+    IMAGE_HOT_PATCH_INFO_FLAG_HOTSWAP            = 0x00000002U,
+    IMAGE_HOT_PATCH_BASE_OBLIGATORY              = 0x00000001U,
+    IMAGE_HOT_PATCH_BASE_CAN_ROLL_BACK           = 0x00000002U,
+    IMAGE_HOT_PATCH_BASE_MACHINE_I386            = 0x00000004U,
+    IMAGE_HOT_PATCH_BASE_MACHINE_ARM64           = 0x00000008U,
+    IMAGE_HOT_PATCH_BASE_MACHINE_AMD64           = 0x00000010U,
+    IMAGE_HOT_PATCH_CHUNK_INVERSE                = 0x80000000U,
+    IMAGE_HOT_PATCH_CHUNK_OBLIGATORY             = 0x40000000U,
+    IMAGE_HOT_PATCH_CHUNK_RESERVED               = 0x3ff03000U,
+    IMAGE_HOT_PATCH_CHUNK_TYPE                   = 0x000fc000U,
+    IMAGE_HOT_PATCH_CHUNK_SOURCE_RVA             = 0x00008000U,
+    IMAGE_HOT_PATCH_CHUNK_TARGET_RVA             = 0x00004000U,
+    IMAGE_HOT_PATCH_CHUNK_SIZE                   = 0x00000fffU,
+    IMAGE_HOT_PATCH_NONE                         = 0x00000000U,
+    IMAGE_HOT_PATCH_FUNCTION                     = 0x0001c000U,
+    IMAGE_HOT_PATCH_ABSOLUTE                     = 0x0002c000U,
+    IMAGE_HOT_PATCH_REL32                        = 0x0003c000U,
+    IMAGE_HOT_PATCH_CALL_TARGET                  = 0x00044000U,
+    IMAGE_HOT_PATCH_INDIRECT                     = 0x0005c000U,
+    IMAGE_HOT_PATCH_NO_CALL_TARGET               = 0x00064000U,
+    IMAGE_HOT_PATCH_DYNAMIC_VALUE                = 0x00078000U,
 }
 
 enum : uint
 {
-    IMAGE_GUARD_CF_INSTRUMENTED           = 0x00000100,
-    IMAGE_GUARD_CFW_INSTRUMENTED          = 0x00000200,
-    IMAGE_GUARD_CF_FUNCTION_TABLE_PRESENT = 0x00000400,
+    IMAGE_GUARD_CF_INSTRUMENTED           = 0x00000100U,
+    IMAGE_GUARD_CFW_INSTRUMENTED          = 0x00000200U,
+    IMAGE_GUARD_CF_FUNCTION_TABLE_PRESENT = 0x00000400U,
 }
 
-enum uint IMAGE_GUARD_SECURITY_COOKIE_UNUSED = 0x00000800;
-enum uint IMAGE_GUARD_PROTECT_DELAYLOAD_IAT = 0x00001000;
-enum uint IMAGE_GUARD_DELAYLOAD_IAT_IN_ITS_OWN_SECTION = 0x00002000;
-enum uint IMAGE_GUARD_CF_EXPORT_SUPPRESSION_INFO_PRESENT = 0x00004000;
-enum uint IMAGE_GUARD_CF_ENABLE_EXPORT_SUPPRESSION = 0x00008000;
-enum uint IMAGE_GUARD_CF_LONGJUMP_TABLE_PRESENT = 0x00010000;
+enum uint IMAGE_GUARD_SECURITY_COOKIE_UNUSED = 0x00000800U;
+enum uint IMAGE_GUARD_PROTECT_DELAYLOAD_IAT = 0x00001000U;
+enum uint IMAGE_GUARD_DELAYLOAD_IAT_IN_ITS_OWN_SECTION = 0x00002000U;
+enum uint IMAGE_GUARD_CF_EXPORT_SUPPRESSION_INFO_PRESENT = 0x00004000U;
+enum uint IMAGE_GUARD_CF_ENABLE_EXPORT_SUPPRESSION = 0x00008000U;
+enum uint IMAGE_GUARD_CF_LONGJUMP_TABLE_PRESENT = 0x00010000U;
 
 enum : uint
 {
-    IMAGE_GUARD_RF_INSTRUMENTED               = 0x00020000,
-    IMAGE_GUARD_RF_ENABLE                     = 0x00040000,
-    IMAGE_GUARD_RF_STRICT                     = 0x00080000,
-    IMAGE_GUARD_RETPOLINE_PRESENT             = 0x00100000,
-    IMAGE_GUARD_EH_CONTINUATION_TABLE_PRESENT = 0x00400000,
-}
-
-enum : uint
-{
-    IMAGE_GUARD_XFG_ENABLED                  = 0x00800000,
-    IMAGE_GUARD_CASTGUARD_PRESENT            = 0x01000000,
-    IMAGE_GUARD_MEMCPY_PRESENT               = 0x02000000,
-    IMAGE_GUARD_CF_FUNCTION_TABLE_SIZE_MASK  = 0xf0000000,
-    IMAGE_GUARD_CF_FUNCTION_TABLE_SIZE_SHIFT = 0x0000001c,
+    IMAGE_GUARD_RF_INSTRUMENTED               = 0x00020000U,
+    IMAGE_GUARD_RF_ENABLE                     = 0x00040000U,
+    IMAGE_GUARD_RF_STRICT                     = 0x00080000U,
+    IMAGE_GUARD_RETPOLINE_PRESENT             = 0x00100000U,
+    IMAGE_GUARD_EH_CONTINUATION_TABLE_PRESENT = 0x00400000U,
 }
 
 enum : uint
 {
-    IMAGE_GUARD_FLAG_FID_SUPPRESSED       = 0x00000001,
-    IMAGE_GUARD_FLAG_EXPORT_SUPPRESSED    = 0x00000002,
-    IMAGE_GUARD_FLAG_FID_LANGEXCPTHANDLER = 0x00000004,
-    IMAGE_GUARD_FLAG_FID_XFG              = 0x00000008,
+    IMAGE_GUARD_XFG_ENABLED                  = 0x00800000U,
+    IMAGE_GUARD_CASTGUARD_PRESENT            = 0x01000000U,
+    IMAGE_GUARD_MEMCPY_PRESENT               = 0x02000000U,
+    IMAGE_GUARD_CF_FUNCTION_TABLE_SIZE_MASK  = 0xf0000000U,
+    IMAGE_GUARD_CF_FUNCTION_TABLE_SIZE_SHIFT = 0x0000001cU,
 }
 
 enum : uint
 {
-    IMAGE_ENCLAVE_LONG_ID_LENGTH         = 0x00000020,
-    IMAGE_ENCLAVE_SHORT_ID_LENGTH        = 0x00000010,
-    IMAGE_ENCLAVE_POLICY_DEBUGGABLE      = 0x00000001,
-    IMAGE_ENCLAVE_POLICY_STRICT_MEMORY   = 0x00000002,
-    IMAGE_ENCLAVE_FLAG_PRIMARY_IMAGE     = 0x00000001,
-    IMAGE_ENCLAVE_IMPORT_MATCH_NONE      = 0x00000000,
-    IMAGE_ENCLAVE_IMPORT_MATCH_UNIQUE_ID = 0x00000001,
-    IMAGE_ENCLAVE_IMPORT_MATCH_AUTHOR_ID = 0x00000002,
-    IMAGE_ENCLAVE_IMPORT_MATCH_FAMILY_ID = 0x00000003,
-    IMAGE_ENCLAVE_IMPORT_MATCH_IMAGE_ID  = 0x00000004,
+    IMAGE_GUARD_FLAG_FID_SUPPRESSED       = 0x00000001U,
+    IMAGE_GUARD_FLAG_EXPORT_SUPPRESSED    = 0x00000002U,
+    IMAGE_GUARD_FLAG_FID_LANGEXCPTHANDLER = 0x00000004U,
+    IMAGE_GUARD_FLAG_FID_XFG              = 0x00000008U,
 }
 
 enum : uint
 {
-    IMAGE_DEBUG_TYPE_OMAP_TO_SRC           = 0x00000007,
-    IMAGE_DEBUG_TYPE_OMAP_FROM_SRC         = 0x00000008,
-    IMAGE_DEBUG_TYPE_RESERVED10            = 0x0000000a,
-    IMAGE_DEBUG_TYPE_BBT                   = 0x0000000a,
-    IMAGE_DEBUG_TYPE_CLSID                 = 0x0000000b,
-    IMAGE_DEBUG_TYPE_VC_FEATURE            = 0x0000000c,
-    IMAGE_DEBUG_TYPE_POGO                  = 0x0000000d,
-    IMAGE_DEBUG_TYPE_ILTCG                 = 0x0000000e,
-    IMAGE_DEBUG_TYPE_MPX                   = 0x0000000f,
-    IMAGE_DEBUG_TYPE_REPRO                 = 0x00000010,
-    IMAGE_DEBUG_TYPE_SPGO                  = 0x00000012,
-    IMAGE_DEBUG_TYPE_EX_DLLCHARACTERISTICS = 0x00000014,
+    IMAGE_ENCLAVE_LONG_ID_LENGTH         = 0x00000020U,
+    IMAGE_ENCLAVE_SHORT_ID_LENGTH        = 0x00000010U,
+    IMAGE_ENCLAVE_POLICY_DEBUGGABLE      = 0x00000001U,
+    IMAGE_ENCLAVE_POLICY_STRICT_MEMORY   = 0x00000002U,
+    IMAGE_ENCLAVE_FLAG_PRIMARY_IMAGE     = 0x00000001U,
+    IMAGE_ENCLAVE_IMPORT_MATCH_NONE      = 0x00000000U,
+    IMAGE_ENCLAVE_IMPORT_MATCH_UNIQUE_ID = 0x00000001U,
+    IMAGE_ENCLAVE_IMPORT_MATCH_AUTHOR_ID = 0x00000002U,
+    IMAGE_ENCLAVE_IMPORT_MATCH_FAMILY_ID = 0x00000003U,
+    IMAGE_ENCLAVE_IMPORT_MATCH_IMAGE_ID  = 0x00000004U,
 }
 
 enum : uint
 {
-    FRAME_FPO    = 0x00000000,
-    FRAME_TRAP   = 0x00000001,
-    FRAME_TSS    = 0x00000002,
-    FRAME_NONFPO = 0x00000003,
-}
-
-enum uint SIZEOF_RFPO_DATA = 0x00000010;
-enum uint IMAGE_DEBUG_MISC_EXENAME = 0x00000001;
-enum uint IMAGE_SEPARATE_DEBUG_SIGNATURE = 0x00004944;
-enum uint NON_PAGED_DEBUG_SIGNATURE = 0x0000494e;
-
-enum : uint
-{
-    IMAGE_SEPARATE_DEBUG_FLAGS_MASK = 0x00008000,
-    IMAGE_SEPARATE_DEBUG_MISMATCH   = 0x00008000,
-}
-
-enum uint IMPORT_OBJECT_HDR_SIG2 = 0x0000ffff;
-enum uint UNWIND_HISTORY_TABLE_SIZE = 0x0000000c;
-enum uint FAST_FAIL_LEGACY_GS_VIOLATION = 0x00000000;
-enum uint FAST_FAIL_VTGUARD_CHECK_FAILURE = 0x00000001;
-enum uint FAST_FAIL_STACK_COOKIE_CHECK_FAILURE = 0x00000002;
-enum uint FAST_FAIL_CORRUPT_LIST_ENTRY = 0x00000003;
-
-enum : uint
-{
-    FAST_FAIL_INCORRECT_STACK     = 0x00000004,
-    FAST_FAIL_INVALID_ARG         = 0x00000005,
-    FAST_FAIL_GS_COOKIE_INIT      = 0x00000006,
-    FAST_FAIL_FATAL_APP_EXIT      = 0x00000007,
-    FAST_FAIL_RANGE_CHECK_FAILURE = 0x00000008,
-}
-
-enum uint FAST_FAIL_UNSAFE_REGISTRY_ACCESS = 0x00000009;
-
-enum : uint
-{
-    FAST_FAIL_GUARD_ICALL_CHECK_FAILURE = 0x0000000a,
-    FAST_FAIL_GUARD_WRITE_CHECK_FAILURE = 0x0000000b,
+    IMAGE_DEBUG_TYPE_OMAP_TO_SRC           = 0x00000007U,
+    IMAGE_DEBUG_TYPE_OMAP_FROM_SRC         = 0x00000008U,
+    IMAGE_DEBUG_TYPE_RESERVED10            = 0x0000000aU,
+    IMAGE_DEBUG_TYPE_BBT                   = 0x0000000aU,
+    IMAGE_DEBUG_TYPE_CLSID                 = 0x0000000bU,
+    IMAGE_DEBUG_TYPE_VC_FEATURE            = 0x0000000cU,
+    IMAGE_DEBUG_TYPE_POGO                  = 0x0000000dU,
+    IMAGE_DEBUG_TYPE_ILTCG                 = 0x0000000eU,
+    IMAGE_DEBUG_TYPE_MPX                   = 0x0000000fU,
+    IMAGE_DEBUG_TYPE_REPRO                 = 0x00000010U,
+    IMAGE_DEBUG_TYPE_SPGO                  = 0x00000012U,
+    IMAGE_DEBUG_TYPE_EX_DLLCHARACTERISTICS = 0x00000014U,
 }
 
 enum : uint
 {
-    FAST_FAIL_INVALID_FIBER_SWITCH    = 0x0000000c,
-    FAST_FAIL_INVALID_SET_OF_CONTEXT  = 0x0000000d,
-    FAST_FAIL_INVALID_REFERENCE_COUNT = 0x0000000e,
-    FAST_FAIL_INVALID_JUMP_BUFFER     = 0x00000012,
+    FRAME_FPO    = 0x00000000U,
+    FRAME_TRAP   = 0x00000001U,
+    FRAME_TSS    = 0x00000002U,
+    FRAME_NONFPO = 0x00000003U,
 }
 
-enum uint FAST_FAIL_MRDATA_MODIFIED = 0x00000013;
-enum uint FAST_FAIL_CERTIFICATION_FAILURE = 0x00000014;
-enum uint FAST_FAIL_INVALID_EXCEPTION_CHAIN = 0x00000015;
+enum uint SIZEOF_RFPO_DATA = 0x00000010U;
+enum uint IMAGE_DEBUG_MISC_EXENAME = 0x00000001U;
+enum uint IMAGE_SEPARATE_DEBUG_SIGNATURE = 0x00004944U;
+enum uint NON_PAGED_DEBUG_SIGNATURE = 0x0000494eU;
 
 enum : uint
 {
-    FAST_FAIL_CRYPTO_LIBRARY              = 0x00000016,
-    FAST_FAIL_INVALID_CALL_IN_DLL_CALLOUT = 0x00000017,
-    FAST_FAIL_INVALID_IMAGE_BASE          = 0x00000018,
+    IMAGE_SEPARATE_DEBUG_FLAGS_MASK = 0x00008000U,
+    IMAGE_SEPARATE_DEBUG_MISMATCH   = 0x00008000U,
 }
 
-enum uint FAST_FAIL_DLOAD_PROTECTION_FAILURE = 0x00000019;
-enum uint FAST_FAIL_UNSAFE_EXTENSION_CALL = 0x0000001a;
-enum uint FAST_FAIL_DEPRECATED_SERVICE_INVOKED = 0x0000001b;
+enum uint IMPORT_OBJECT_HDR_SIG2 = 0x0000ffffU;
+enum uint UNWIND_HISTORY_TABLE_SIZE = 0x0000000cU;
+enum uint FAST_FAIL_LEGACY_GS_VIOLATION = 0x00000000U;
+enum uint FAST_FAIL_VTGUARD_CHECK_FAILURE = 0x00000001U;
+enum uint FAST_FAIL_STACK_COOKIE_CHECK_FAILURE = 0x00000002U;
+enum uint FAST_FAIL_CORRUPT_LIST_ENTRY = 0x00000003U;
 
 enum : uint
 {
-    FAST_FAIL_INVALID_BUFFER_ACCESS = 0x0000001c,
-    FAST_FAIL_INVALID_BALANCED_TREE = 0x0000001d,
-    FAST_FAIL_INVALID_NEXT_THREAD   = 0x0000001e,
+    FAST_FAIL_INCORRECT_STACK     = 0x00000004U,
+    FAST_FAIL_INVALID_ARG         = 0x00000005U,
+    FAST_FAIL_GS_COOKIE_INIT      = 0x00000006U,
+    FAST_FAIL_FATAL_APP_EXIT      = 0x00000007U,
+    FAST_FAIL_RANGE_CHECK_FAILURE = 0x00000008U,
 }
 
-enum uint FAST_FAIL_GUARD_ICALL_CHECK_SUPPRESSED = 0x0000001f;
+enum uint FAST_FAIL_UNSAFE_REGISTRY_ACCESS = 0x00000009U;
 
 enum : uint
 {
-    FAST_FAIL_APCS_DISABLED      = 0x00000020,
-    FAST_FAIL_INVALID_IDLE_STATE = 0x00000021,
-}
-
-enum uint FAST_FAIL_MRDATA_PROTECTION_FAILURE = 0x00000022;
-enum uint FAST_FAIL_UNEXPECTED_HEAP_EXCEPTION = 0x00000023;
-enum uint FAST_FAIL_INVALID_LOCK_STATE = 0x00000024;
-enum uint FAST_FAIL_GUARD_JUMPTABLE = 0x00000025;
-
-enum : uint
-{
-    FAST_FAIL_INVALID_LONGJUMP_TARGET  = 0x00000026,
-    FAST_FAIL_INVALID_DISPATCH_CONTEXT = 0x00000027,
-    FAST_FAIL_INVALID_THREAD           = 0x00000028,
-    FAST_FAIL_INVALID_SYSCALL_NUMBER   = 0x00000029,
-    FAST_FAIL_INVALID_FILE_OPERATION   = 0x0000002a,
-}
-
-enum uint FAST_FAIL_LPAC_ACCESS_DENIED = 0x0000002b;
-enum uint FAST_FAIL_GUARD_SS_FAILURE = 0x0000002c;
-enum uint FAST_FAIL_LOADER_CONTINUITY_FAILURE = 0x0000002d;
-enum uint FAST_FAIL_GUARD_EXPORT_SUPPRESSION_FAILURE = 0x0000002e;
-enum uint FAST_FAIL_INVALID_CONTROL_STACK = 0x0000002f;
-enum uint FAST_FAIL_SET_CONTEXT_DENIED = 0x00000030;
-
-enum : uint
-{
-    FAST_FAIL_INVALID_IAT              = 0x00000031,
-    FAST_FAIL_HEAP_METADATA_CORRUPTION = 0x00000032,
-}
-
-enum uint FAST_FAIL_PAYLOAD_RESTRICTION_VIOLATION = 0x00000033;
-enum uint FAST_FAIL_LOW_LABEL_ACCESS_DENIED = 0x00000034;
-enum uint FAST_FAIL_ENCLAVE_CALL_FAILURE = 0x00000035;
-enum uint FAST_FAIL_UNHANDLED_LSS_EXCEPTON = 0x00000036;
-enum uint FAST_FAIL_ADMINLESS_ACCESS_DENIED = 0x00000037;
-enum uint FAST_FAIL_UNEXPECTED_CALL = 0x00000038;
-enum uint FAST_FAIL_CONTROL_INVALID_RETURN_ADDRESS = 0x00000039;
-enum uint FAST_FAIL_UNEXPECTED_HOST_BEHAVIOR = 0x0000003a;
-enum uint FAST_FAIL_FLAGS_CORRUPTION = 0x0000003b;
-
-enum : uint
-{
-    FAST_FAIL_VEH_CORRUPTION                = 0x0000003c,
-    FAST_FAIL_ETW_CORRUPTION                = 0x0000003d,
-    FAST_FAIL_RIO_ABORT                     = 0x0000003e,
-    FAST_FAIL_INVALID_PFN                   = 0x0000003f,
-    FAST_FAIL_GUARD_ICALL_CHECK_FAILURE_XFG = 0x00000040,
+    FAST_FAIL_GUARD_ICALL_CHECK_FAILURE = 0x0000000aU,
+    FAST_FAIL_GUARD_WRITE_CHECK_FAILURE = 0x0000000bU,
 }
 
 enum : uint
 {
-    FAST_FAIL_CAST_GUARD             = 0x00000041,
-    FAST_FAIL_HOST_VISIBILITY_CHANGE = 0x00000042,
+    FAST_FAIL_INVALID_FIBER_SWITCH    = 0x0000000cU,
+    FAST_FAIL_INVALID_SET_OF_CONTEXT  = 0x0000000dU,
+    FAST_FAIL_INVALID_REFERENCE_COUNT = 0x0000000eU,
+    FAST_FAIL_INVALID_JUMP_BUFFER     = 0x00000012U,
 }
 
-enum uint FAST_FAIL_KERNEL_CET_SHADOW_STACK_ASSIST = 0x00000043;
-enum uint FAST_FAIL_PATCH_CALLBACK_FAILED = 0x00000044;
-enum uint FAST_FAIL_NTDLL_PATCH_FAILED = 0x00000045;
-enum uint FAST_FAIL_INVALID_FLS_DATA = 0x00000046;
+enum uint FAST_FAIL_MRDATA_MODIFIED = 0x00000013U;
+enum uint FAST_FAIL_CERTIFICATION_FAILURE = 0x00000014U;
+enum uint FAST_FAIL_INVALID_EXCEPTION_CHAIN = 0x00000015U;
 
 enum : uint
 {
-    FAST_FAIL_ASAN_ERROR        = 0x00000047,
-    FAST_FAIL_CLR_EXCEPTION_AOT = 0x00000048,
+    FAST_FAIL_CRYPTO_LIBRARY              = 0x00000016U,
+    FAST_FAIL_INVALID_CALL_IN_DLL_CALLOUT = 0x00000017U,
+    FAST_FAIL_INVALID_IMAGE_BASE          = 0x00000018U,
 }
 
-enum uint FAST_FAIL_POINTER_AUTH_INVALID_RETURN_ADDRESS = 0x00000049;
-enum uint FAST_FAIL_INVALID_THREAD_STATE = 0x0000004a;
-enum uint FAST_FAIL_CORRUPT_WOW64_STATE = 0x0000004b;
-enum uint FAST_FAIL_INVALID_EXTENDED_STATE = 0x0000004c;
-enum uint FAST_FAIL_KERNEL_POINTER_EXPECTED = 0x0000004d;
-enum uint FAST_FAIL_INVALID_FAST_FAIL_CODE = 0xffffffff;
+enum uint FAST_FAIL_DLOAD_PROTECTION_FAILURE = 0x00000019U;
+enum uint FAST_FAIL_UNSAFE_EXTENSION_CALL = 0x0000001aU;
+enum uint FAST_FAIL_DEPRECATED_SERVICE_INVOKED = 0x0000001bU;
 
 enum : uint
 {
-    IS_TEXT_UNICODE_DBCS_LEADBYTE = 0x00000400,
-    IS_TEXT_UNICODE_UTF8          = 0x00000800,
+    FAST_FAIL_INVALID_BUFFER_ACCESS = 0x0000001cU,
+    FAST_FAIL_INVALID_BALANCED_TREE = 0x0000001dU,
+    FAST_FAIL_INVALID_NEXT_THREAD   = 0x0000001eU,
 }
+
+enum uint FAST_FAIL_GUARD_ICALL_CHECK_SUPPRESSED = 0x0000001fU;
 
 enum : uint
 {
-    COMPRESSION_ENGINE_STANDARD = 0x00000000,
-    COMPRESSION_ENGINE_MAXIMUM  = 0x00000100,
-    COMPRESSION_ENGINE_HIBER    = 0x00000200,
+    FAST_FAIL_APCS_DISABLED      = 0x00000020U,
+    FAST_FAIL_INVALID_IDLE_STATE = 0x00000021U,
 }
 
-enum uint SEF_AI_USE_EXTRA_PARAMS = 0x00000800;
-enum uint SEF_FORCE_USER_MODE = 0x00002000;
-enum uint SEF_NORMALIZE_OUTPUT_DESCRIPTOR = 0x00004000;
+enum uint FAST_FAIL_MRDATA_PROTECTION_FAILURE = 0x00000022U;
+enum uint FAST_FAIL_UNEXPECTED_HEAP_EXCEPTION = 0x00000023U;
+enum uint FAST_FAIL_INVALID_LOCK_STATE = 0x00000024U;
+enum uint FAST_FAIL_GUARD_JUMPTABLE = 0x00000025U;
 
 enum : uint
 {
-    MESSAGE_RESOURCE_UNICODE = 0x00000001,
-    MESSAGE_RESOURCE_UTF8    = 0x00000002,
+    FAST_FAIL_INVALID_LONGJUMP_TARGET  = 0x00000026U,
+    FAST_FAIL_INVALID_DISPATCH_CONTEXT = 0x00000027U,
+    FAST_FAIL_INVALID_THREAD           = 0x00000028U,
+    FAST_FAIL_INVALID_SYSCALL_NUMBER   = 0x00000029U,
+    FAST_FAIL_INVALID_FILE_OPERATION   = 0x0000002aU,
 }
+
+enum uint FAST_FAIL_LPAC_ACCESS_DENIED = 0x0000002bU;
+enum uint FAST_FAIL_GUARD_SS_FAILURE = 0x0000002cU;
+enum uint FAST_FAIL_LOADER_CONTINUITY_FAILURE = 0x0000002dU;
+enum uint FAST_FAIL_GUARD_EXPORT_SUPPRESSION_FAILURE = 0x0000002eU;
+enum uint FAST_FAIL_INVALID_CONTROL_STACK = 0x0000002fU;
+enum uint FAST_FAIL_SET_CONTEXT_DENIED = 0x00000030U;
 
 enum : uint
 {
-    VER_EQUAL         = 0x00000001,
-    VER_GREATER       = 0x00000002,
-    VER_GREATER_EQUAL = 0x00000003,
+    FAST_FAIL_INVALID_IAT              = 0x00000031U,
+    FAST_FAIL_HEAP_METADATA_CORRUPTION = 0x00000032U,
 }
+
+enum uint FAST_FAIL_PAYLOAD_RESTRICTION_VIOLATION = 0x00000033U;
+enum uint FAST_FAIL_LOW_LABEL_ACCESS_DENIED = 0x00000034U;
+enum uint FAST_FAIL_ENCLAVE_CALL_FAILURE = 0x00000035U;
+enum uint FAST_FAIL_UNHANDLED_LSS_EXCEPTON = 0x00000036U;
+enum uint FAST_FAIL_ADMINLESS_ACCESS_DENIED = 0x00000037U;
+enum uint FAST_FAIL_UNEXPECTED_CALL = 0x00000038U;
+enum uint FAST_FAIL_CONTROL_INVALID_RETURN_ADDRESS = 0x00000039U;
+enum uint FAST_FAIL_UNEXPECTED_HOST_BEHAVIOR = 0x0000003aU;
+enum uint FAST_FAIL_FLAGS_CORRUPTION = 0x0000003bU;
 
 enum : uint
 {
-    VER_LESS       = 0x00000004,
-    VER_LESS_EQUAL = 0x00000005,
-}
-
-enum : uint
-{
-    VER_AND            = 0x00000006,
-    VER_OR             = 0x00000007,
-    VER_CONDITION_MASK = 0x00000007,
-}
-
-enum uint VER_NUM_BITS_PER_CONDITION_MASK = 0x00000003;
-enum uint VER_NT_WORKSTATION = 0x00000001;
-enum uint VER_NT_DOMAIN_CONTROLLER = 0x00000002;
-enum uint VER_NT_SERVER = 0x00000003;
-enum uint RTL_UMS_VERSION = 0x00000100;
-enum uint VRL_PREDEFINED_CLASS_BEGIN = 0x00000001;
-enum uint VRL_CUSTOM_CLASS_BEGIN = 0x00000100;
-enum uint VRL_ENABLE_KERNEL_BREAKS = 0x80000000;
-
-enum : uint
-{
-    CTMF_INCLUDE_APPCONTAINER = 0x00000001,
-    CTMF_INCLUDE_LPAC         = 0x00000002,
-}
-
-enum uint FLUSH_NV_MEMORY_IN_FLAG_NO_DRAIN = 0x00000001;
-
-enum : uint
-{
-    WRITE_NV_MEMORY_FLAG_FLUSH        = 0x00000001,
-    WRITE_NV_MEMORY_FLAG_NON_TEMPORAL = 0x00000002,
-    WRITE_NV_MEMORY_FLAG_NO_DRAIN     = 0x00000100,
+    FAST_FAIL_VEH_CORRUPTION                = 0x0000003cU,
+    FAST_FAIL_ETW_CORRUPTION                = 0x0000003dU,
+    FAST_FAIL_RIO_ABORT                     = 0x0000003eU,
+    FAST_FAIL_INVALID_PFN                   = 0x0000003fU,
+    FAST_FAIL_GUARD_ICALL_CHECK_FAILURE_XFG = 0x00000040U,
 }
 
 enum : uint
 {
-    FILL_NV_MEMORY_FLAG_FLUSH        = 0x00000001,
-    FILL_NV_MEMORY_FLAG_NON_TEMPORAL = 0x00000002,
-    FILL_NV_MEMORY_FLAG_NO_DRAIN     = 0x00000100,
+    FAST_FAIL_CAST_GUARD             = 0x00000041U,
+    FAST_FAIL_HOST_VISIBILITY_CHANGE = 0x00000042U,
 }
 
-enum uint IMAGE_POLICY_METADATA_VERSION = 0x00000001;
+enum uint FAST_FAIL_KERNEL_CET_SHADOW_STACK_ASSIST = 0x00000043U;
+enum uint FAST_FAIL_PATCH_CALLBACK_FAILED = 0x00000044U;
+enum uint FAST_FAIL_NTDLL_PATCH_FAILED = 0x00000045U;
+enum uint FAST_FAIL_INVALID_FLS_DATA = 0x00000046U;
+
+enum : uint
+{
+    FAST_FAIL_ASAN_ERROR        = 0x00000047U,
+    FAST_FAIL_CLR_EXCEPTION_AOT = 0x00000048U,
+}
+
+enum uint FAST_FAIL_POINTER_AUTH_INVALID_RETURN_ADDRESS = 0x00000049U;
+enum uint FAST_FAIL_INVALID_THREAD_STATE = 0x0000004aU;
+enum uint FAST_FAIL_CORRUPT_WOW64_STATE = 0x0000004bU;
+enum uint FAST_FAIL_INVALID_EXTENDED_STATE = 0x0000004cU;
+enum uint FAST_FAIL_KERNEL_POINTER_EXPECTED = 0x0000004dU;
+enum uint FAST_FAIL_INVALID_FAST_FAIL_CODE = 0xffffffffU;
+
+enum : uint
+{
+    IS_TEXT_UNICODE_DBCS_LEADBYTE = 0x00000400U,
+    IS_TEXT_UNICODE_UTF8          = 0x00000800U,
+}
+
+enum : uint
+{
+    COMPRESSION_ENGINE_STANDARD = 0x00000000U,
+    COMPRESSION_ENGINE_MAXIMUM  = 0x00000100U,
+    COMPRESSION_ENGINE_HIBER    = 0x00000200U,
+}
+
+enum uint SEF_AI_USE_EXTRA_PARAMS = 0x00000800U;
+enum uint SEF_FORCE_USER_MODE = 0x00002000U;
+enum uint SEF_NORMALIZE_OUTPUT_DESCRIPTOR = 0x00004000U;
+
+enum : uint
+{
+    MESSAGE_RESOURCE_UNICODE = 0x00000001U,
+    MESSAGE_RESOURCE_UTF8    = 0x00000002U,
+}
+
+enum : uint
+{
+    VER_EQUAL         = 0x00000001U,
+    VER_GREATER       = 0x00000002U,
+    VER_GREATER_EQUAL = 0x00000003U,
+}
+
+enum : uint
+{
+    VER_LESS       = 0x00000004U,
+    VER_LESS_EQUAL = 0x00000005U,
+}
+
+enum : uint
+{
+    VER_AND            = 0x00000006U,
+    VER_OR             = 0x00000007U,
+    VER_CONDITION_MASK = 0x00000007U,
+}
+
+enum uint VER_NUM_BITS_PER_CONDITION_MASK = 0x00000003U;
+enum uint VER_NT_WORKSTATION = 0x00000001U;
+enum uint VER_NT_DOMAIN_CONTROLLER = 0x00000002U;
+enum uint VER_NT_SERVER = 0x00000003U;
+enum uint RTL_UMS_VERSION = 0x00000100U;
+enum uint VRL_PREDEFINED_CLASS_BEGIN = 0x00000001U;
+enum uint VRL_CUSTOM_CLASS_BEGIN = 0x00000100U;
+enum uint VRL_ENABLE_KERNEL_BREAKS = 0x80000000U;
+
+enum : uint
+{
+    CTMF_INCLUDE_APPCONTAINER = 0x00000001U,
+    CTMF_INCLUDE_LPAC         = 0x00000002U,
+}
+
+enum uint FLUSH_NV_MEMORY_IN_FLAG_NO_DRAIN = 0x00000001U;
+
+enum : uint
+{
+    WRITE_NV_MEMORY_FLAG_FLUSH        = 0x00000001U,
+    WRITE_NV_MEMORY_FLAG_NON_TEMPORAL = 0x00000002U,
+    WRITE_NV_MEMORY_FLAG_NO_DRAIN     = 0x00000100U,
+}
+
+enum : uint
+{
+    FILL_NV_MEMORY_FLAG_FLUSH        = 0x00000001U,
+    FILL_NV_MEMORY_FLAG_NON_TEMPORAL = 0x00000002U,
+    FILL_NV_MEMORY_FLAG_NO_DRAIN     = 0x00000100U,
+}
+
+enum uint IMAGE_POLICY_METADATA_VERSION = 0x00000001U;
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* IMAGE_POLICY_SECTION_NAME = ".tPolicy";
-enum uint RTL_VIRTUAL_UNWIND2_VALIDATE_PAC = 0x00000001;
-enum uint HEAP_OPTIMIZE_RESOURCES_CURRENT_VERSION = 0x00000001;
+enum uint RTL_VIRTUAL_UNWIND2_VALIDATE_PAC = 0x00000001U;
+enum uint HEAP_OPTIMIZE_RESOURCES_CURRENT_VERSION = 0x00000001U;
 
 enum : uint
 {
-    WT_EXECUTEINUITHREAD           = 0x00000002,
-    WT_EXECUTEINPERSISTENTIOTHREAD = 0x00000040,
+    WT_EXECUTEINUITHREAD           = 0x00000002U,
+    WT_EXECUTEINPERSISTENTIOTHREAD = 0x00000040U,
 }
 
 enum : uint
 {
-    WT_EXECUTEINLONGTHREAD = 0x00000010,
-    WT_EXECUTEDELETEWAIT   = 0x00000008,
+    WT_EXECUTEINLONGTHREAD = 0x00000010U,
+    WT_EXECUTEDELETEWAIT   = 0x00000008U,
 }
 
 enum : uint
 {
-    ACTIVATION_CONTEXT_PATH_TYPE_NONE        = 0x00000001,
-    ACTIVATION_CONTEXT_PATH_TYPE_WIN32_FILE  = 0x00000002,
-    ACTIVATION_CONTEXT_PATH_TYPE_URL         = 0x00000003,
-    ACTIVATION_CONTEXT_PATH_TYPE_ASSEMBLYREF = 0x00000004,
+    ACTIVATION_CONTEXT_PATH_TYPE_NONE        = 0x00000001U,
+    ACTIVATION_CONTEXT_PATH_TYPE_WIN32_FILE  = 0x00000002U,
+    ACTIVATION_CONTEXT_PATH_TYPE_URL         = 0x00000003U,
+    ACTIVATION_CONTEXT_PATH_TYPE_ASSEMBLYREF = 0x00000004U,
 }
 
-enum uint CREATE_BOUNDARY_DESCRIPTOR_ADD_APPCONTAINER_SID = 0x00000001;
-enum uint PERFORMANCE_DATA_VERSION = 0x00000001;
+enum uint CREATE_BOUNDARY_DESCRIPTOR_ADD_APPCONTAINER_SID = 0x00000001U;
+enum uint PERFORMANCE_DATA_VERSION = 0x00000001U;
 
 enum : uint
 {
-    READ_THREAD_PROFILING_FLAG_DISPATCHING       = 0x00000001,
-    READ_THREAD_PROFILING_FLAG_HARDWARE_COUNTERS = 0x00000002,
+    READ_THREAD_PROFILING_FLAG_DISPATCHING       = 0x00000001U,
+    READ_THREAD_PROFILING_FLAG_HARDWARE_COUNTERS = 0x00000002U,
 }
 
 enum : const(wchar)*
@@ -3989,7 +4032,7 @@ enum : const(wchar)*
     UNIFIEDBUILDREVISION_VALUE = "UBR",
 }
 
-enum uint UNIFIEDBUILDREVISION_MIN = 0x00000000;
+enum uint UNIFIEDBUILDREVISION_MIN = 0x00000000U;
 
 enum : const(wchar)*
 {
@@ -3997,30 +4040,30 @@ enum : const(wchar)*
     DEVICEFAMILYDEVICEFORM_VALUE = "DeviceForm",
 }
 
-enum uint DLL_PROCESS_ATTACH = 0x00000001;
+enum uint DLL_PROCESS_ATTACH = 0x00000001U;
 
 enum : uint
 {
-    DLL_THREAD_ATTACH = 0x00000002,
-    DLL_THREAD_DETACH = 0x00000003,
+    DLL_THREAD_ATTACH = 0x00000002U,
+    DLL_THREAD_DETACH = 0x00000003U,
 }
 
-enum uint DLL_PROCESS_DETACH = 0x00000000;
-enum uint EVENTLOG_START_PAIRED_EVENT = 0x00000001;
+enum uint DLL_PROCESS_DETACH = 0x00000000U;
+enum uint EVENTLOG_START_PAIRED_EVENT = 0x00000001U;
 
 enum : uint
 {
-    EVENTLOG_END_PAIRED_EVENT      = 0x00000002,
-    EVENTLOG_END_ALL_PAIRED_EVENTS = 0x00000004,
+    EVENTLOG_END_PAIRED_EVENT      = 0x00000002U,
+    EVENTLOG_END_ALL_PAIRED_EVENTS = 0x00000004U,
 }
 
 enum : uint
 {
-    EVENTLOG_PAIRED_EVENT_ACTIVE   = 0x00000008,
-    EVENTLOG_PAIRED_EVENT_INACTIVE = 0x00000010,
+    EVENTLOG_PAIRED_EVENT_ACTIVE   = 0x00000008U,
+    EVENTLOG_PAIRED_EVENT_INACTIVE = 0x00000010U,
 }
 
-enum uint MAXLOGICALLOGNAMESIZE = 0x00000100;
+enum uint MAXLOGICALLOGNAMESIZE = 0x00000100U;
 enum int REG_REFRESH_HIVE = 0x00000002;
 enum int REG_NO_LAZY_FLUSH = 0x00000004;
 enum int REG_APP_HIVE = 0x00000010;
@@ -4041,29 +4084,29 @@ enum int REG_OPEN_READ_ONLY = 0x00002000;
 enum int REG_IMMUTABLE = 0x00004000;
 enum int REG_NO_IMPERSONATION_FALLBACK = 0x00008000;
 enum int REG_APP_HIVE_OPEN_READ_ONLY = 0x00002000;
-enum uint REG_FORCE_UNLOAD = 0x00000001;
-enum uint REG_UNLOAD_LEGAL_FLAGS = 0x00000001;
+enum uint REG_FORCE_UNLOAD = 0x00000001U;
+enum uint REG_UNLOAD_LEGAL_FLAGS = 0x00000001U;
 
 enum : uint
 {
-    SERVICE_USER_SERVICE         = 0x00000040,
-    SERVICE_USERSERVICE_INSTANCE = 0x00000080,
+    SERVICE_USER_SERVICE         = 0x00000040U,
+    SERVICE_USERSERVICE_INSTANCE = 0x00000080U,
 }
 
-enum uint SERVICE_INTERACTIVE_PROCESS = 0x00000100;
-enum uint SERVICE_PKG_SERVICE = 0x00000200;
-enum uint CM_SERVICE_NETWORK_BOOT_LOAD = 0x00000001;
-enum uint CM_SERVICE_VIRTUAL_DISK_BOOT_LOAD = 0x00000002;
-enum uint CM_SERVICE_USB_DISK_BOOT_LOAD = 0x00000004;
-enum uint CM_SERVICE_SD_DISK_BOOT_LOAD = 0x00000008;
-enum uint CM_SERVICE_USB3_DISK_BOOT_LOAD = 0x00000010;
-enum uint CM_SERVICE_MEASURED_BOOT_LOAD = 0x00000020;
-enum uint CM_SERVICE_VERIFIER_BOOT_LOAD = 0x00000040;
+enum uint SERVICE_INTERACTIVE_PROCESS = 0x00000100U;
+enum uint SERVICE_PKG_SERVICE = 0x00000200U;
+enum uint CM_SERVICE_NETWORK_BOOT_LOAD = 0x00000001U;
+enum uint CM_SERVICE_VIRTUAL_DISK_BOOT_LOAD = 0x00000002U;
+enum uint CM_SERVICE_USB_DISK_BOOT_LOAD = 0x00000004U;
+enum uint CM_SERVICE_SD_DISK_BOOT_LOAD = 0x00000008U;
+enum uint CM_SERVICE_USB3_DISK_BOOT_LOAD = 0x00000010U;
+enum uint CM_SERVICE_MEASURED_BOOT_LOAD = 0x00000020U;
+enum uint CM_SERVICE_VERIFIER_BOOT_LOAD = 0x00000040U;
 
 enum : uint
 {
-    CM_SERVICE_WINPE_BOOT_LOAD    = 0x00000080,
-    CM_SERVICE_RAM_DISK_BOOT_LOAD = 0x00000100,
+    CM_SERVICE_WINPE_BOOT_LOAD    = 0x00000080U,
+    CM_SERVICE_RAM_DISK_BOOT_LOAD = 0x00000100U,
 }
 
 enum : int
@@ -4074,33 +4117,33 @@ enum : int
 
 enum : uint
 {
-    TAPE_DRIVE_FIXED            = 0x00000001,
-    TAPE_DRIVE_SELECT           = 0x00000002,
-    TAPE_DRIVE_INITIATOR        = 0x00000004,
-    TAPE_DRIVE_ERASE_SHORT      = 0x00000010,
-    TAPE_DRIVE_ERASE_LONG       = 0x00000020,
-    TAPE_DRIVE_ERASE_BOP_ONLY   = 0x00000040,
-    TAPE_DRIVE_ERASE_IMMEDIATE  = 0x00000080,
-    TAPE_DRIVE_TAPE_CAPACITY    = 0x00000100,
-    TAPE_DRIVE_TAPE_REMAINING   = 0x00000200,
-    TAPE_DRIVE_FIXED_BLOCK      = 0x00000400,
-    TAPE_DRIVE_VARIABLE_BLOCK   = 0x00000800,
-    TAPE_DRIVE_WRITE_PROTECT    = 0x00001000,
-    TAPE_DRIVE_EOT_WZ_SIZE      = 0x00002000,
-    TAPE_DRIVE_ECC              = 0x00010000,
-    TAPE_DRIVE_COMPRESSION      = 0x00020000,
-    TAPE_DRIVE_PADDING          = 0x00040000,
-    TAPE_DRIVE_REPORT_SMKS      = 0x00080000,
-    TAPE_DRIVE_GET_ABSOLUTE_BLK = 0x00100000,
-    TAPE_DRIVE_GET_LOGICAL_BLK  = 0x00200000,
-    TAPE_DRIVE_SET_EOT_WZ_SIZE  = 0x00400000,
-    TAPE_DRIVE_EJECT_MEDIA      = 0x01000000,
-    TAPE_DRIVE_CLEAN_REQUESTS   = 0x02000000,
-    TAPE_DRIVE_SET_CMP_BOP_ONLY = 0x04000000,
-    TAPE_DRIVE_RESERVED_BIT     = 0x80000000,
-    TAPE_DRIVE_FORMAT           = 0xa0000000,
-    TAPE_DRIVE_FORMAT_IMMEDIATE = 0xc0000000,
-    TAPE_DRIVE_HIGH_FEATURES    = 0x80000000,
+    TAPE_DRIVE_FIXED            = 0x00000001U,
+    TAPE_DRIVE_SELECT           = 0x00000002U,
+    TAPE_DRIVE_INITIATOR        = 0x00000004U,
+    TAPE_DRIVE_ERASE_SHORT      = 0x00000010U,
+    TAPE_DRIVE_ERASE_LONG       = 0x00000020U,
+    TAPE_DRIVE_ERASE_BOP_ONLY   = 0x00000040U,
+    TAPE_DRIVE_ERASE_IMMEDIATE  = 0x00000080U,
+    TAPE_DRIVE_TAPE_CAPACITY    = 0x00000100U,
+    TAPE_DRIVE_TAPE_REMAINING   = 0x00000200U,
+    TAPE_DRIVE_FIXED_BLOCK      = 0x00000400U,
+    TAPE_DRIVE_VARIABLE_BLOCK   = 0x00000800U,
+    TAPE_DRIVE_WRITE_PROTECT    = 0x00001000U,
+    TAPE_DRIVE_EOT_WZ_SIZE      = 0x00002000U,
+    TAPE_DRIVE_ECC              = 0x00010000U,
+    TAPE_DRIVE_COMPRESSION      = 0x00020000U,
+    TAPE_DRIVE_PADDING          = 0x00040000U,
+    TAPE_DRIVE_REPORT_SMKS      = 0x00080000U,
+    TAPE_DRIVE_GET_ABSOLUTE_BLK = 0x00100000U,
+    TAPE_DRIVE_GET_LOGICAL_BLK  = 0x00200000U,
+    TAPE_DRIVE_SET_EOT_WZ_SIZE  = 0x00400000U,
+    TAPE_DRIVE_EJECT_MEDIA      = 0x01000000U,
+    TAPE_DRIVE_CLEAN_REQUESTS   = 0x02000000U,
+    TAPE_DRIVE_SET_CMP_BOP_ONLY = 0x04000000U,
+    TAPE_DRIVE_RESERVED_BIT     = 0x80000000U,
+    TAPE_DRIVE_FORMAT           = 0xa0000000U,
+    TAPE_DRIVE_FORMAT_IMMEDIATE = 0xc0000000U,
+    TAPE_DRIVE_HIGH_FEATURES    = 0x80000000U,
 }
 
 enum : int
@@ -4119,115 +4162,135 @@ enum : int
 
 enum : uint
 {
-    TRANSACTIONMANAGER_QUERY_INFORMATION = 0x00000001,
-    TRANSACTIONMANAGER_SET_INFORMATION   = 0x00000002,
-    TRANSACTIONMANAGER_RECOVER           = 0x00000004,
-    TRANSACTIONMANAGER_RENAME            = 0x00000008,
-    TRANSACTIONMANAGER_CREATE_RM         = 0x00000010,
-    TRANSACTIONMANAGER_BIND_TRANSACTION  = 0x00000020,
+    TRANSACTIONMANAGER_QUERY_INFORMATION = 0x00000001U,
+    TRANSACTIONMANAGER_SET_INFORMATION   = 0x00000002U,
+    TRANSACTIONMANAGER_RECOVER           = 0x00000004U,
+    TRANSACTIONMANAGER_RENAME            = 0x00000008U,
+    TRANSACTIONMANAGER_CREATE_RM         = 0x00000010U,
+    TRANSACTIONMANAGER_BIND_TRANSACTION  = 0x00000020U,
 }
 
 enum : uint
 {
-    TRANSACTION_QUERY_INFORMATION = 0x00000001,
-    TRANSACTION_SET_INFORMATION   = 0x00000002,
-    TRANSACTION_ENLIST            = 0x00000004,
-    TRANSACTION_COMMIT            = 0x00000008,
-    TRANSACTION_ROLLBACK          = 0x00000010,
-    TRANSACTION_PROPAGATE         = 0x00000020,
-    TRANSACTION_RIGHT_RESERVED1   = 0x00000040,
+    TRANSACTION_QUERY_INFORMATION = 0x00000001U,
+    TRANSACTION_SET_INFORMATION   = 0x00000002U,
+    TRANSACTION_ENLIST            = 0x00000004U,
+    TRANSACTION_COMMIT            = 0x00000008U,
+    TRANSACTION_ROLLBACK          = 0x00000010U,
+    TRANSACTION_PROPAGATE         = 0x00000020U,
+    TRANSACTION_RIGHT_RESERVED1   = 0x00000040U,
 }
 
 enum : uint
 {
-    RESOURCEMANAGER_QUERY_INFORMATION    = 0x00000001,
-    RESOURCEMANAGER_SET_INFORMATION      = 0x00000002,
-    RESOURCEMANAGER_RECOVER              = 0x00000004,
-    RESOURCEMANAGER_ENLIST               = 0x00000008,
-    RESOURCEMANAGER_GET_NOTIFICATION     = 0x00000010,
-    RESOURCEMANAGER_REGISTER_PROTOCOL    = 0x00000020,
-    RESOURCEMANAGER_COMPLETE_PROPAGATION = 0x00000040,
+    RESOURCEMANAGER_QUERY_INFORMATION    = 0x00000001U,
+    RESOURCEMANAGER_SET_INFORMATION      = 0x00000002U,
+    RESOURCEMANAGER_RECOVER              = 0x00000004U,
+    RESOURCEMANAGER_ENLIST               = 0x00000008U,
+    RESOURCEMANAGER_GET_NOTIFICATION     = 0x00000010U,
+    RESOURCEMANAGER_REGISTER_PROTOCOL    = 0x00000020U,
+    RESOURCEMANAGER_COMPLETE_PROPAGATION = 0x00000040U,
 }
 
-enum uint ENLISTMENT_QUERY_INFORMATION = 0x00000001;
+enum uint ENLISTMENT_QUERY_INFORMATION = 0x00000001U;
 
 enum : uint
 {
-    ENLISTMENT_SET_INFORMATION    = 0x00000002,
-    ENLISTMENT_RECOVER            = 0x00000004,
-    ENLISTMENT_SUBORDINATE_RIGHTS = 0x00000008,
-    ENLISTMENT_SUPERIOR_RIGHTS    = 0x00000010,
+    ENLISTMENT_SET_INFORMATION    = 0x00000002U,
+    ENLISTMENT_RECOVER            = 0x00000004U,
+    ENLISTMENT_SUBORDINATE_RIGHTS = 0x00000008U,
+    ENLISTMENT_SUPERIOR_RIGHTS    = 0x00000010U,
 }
 
-enum uint PcTeb = 0x00000018;
+enum uint PcTeb = 0x00000018U;
 
 enum : uint
 {
-    ACTIVATION_CONTEXT_SECTION_ASSEMBLY_INFORMATION         = 0x00000001,
-    ACTIVATION_CONTEXT_SECTION_DLL_REDIRECTION              = 0x00000002,
-    ACTIVATION_CONTEXT_SECTION_WINDOW_CLASS_REDIRECTION     = 0x00000003,
-    ACTIVATION_CONTEXT_SECTION_COM_SERVER_REDIRECTION       = 0x00000004,
-    ACTIVATION_CONTEXT_SECTION_COM_INTERFACE_REDIRECTION    = 0x00000005,
-    ACTIVATION_CONTEXT_SECTION_COM_TYPE_LIBRARY_REDIRECTION = 0x00000006,
-    ACTIVATION_CONTEXT_SECTION_COM_PROGID_REDIRECTION       = 0x00000007,
-    ACTIVATION_CONTEXT_SECTION_GLOBAL_OBJECT_RENAME_TABLE   = 0x00000008,
-    ACTIVATION_CONTEXT_SECTION_CLR_SURROGATES               = 0x00000009,
-    ACTIVATION_CONTEXT_SECTION_APPLICATION_SETTINGS         = 0x0000000a,
-    ACTIVATION_CONTEXT_SECTION_COMPATIBILITY_INFO           = 0x0000000b,
-    ACTIVATION_CONTEXT_SECTION_WINRT_ACTIVATABLE_CLASSES    = 0x0000000c,
+    ACTIVATION_CONTEXT_SECTION_ASSEMBLY_INFORMATION         = 0x00000001U,
+    ACTIVATION_CONTEXT_SECTION_DLL_REDIRECTION              = 0x00000002U,
+    ACTIVATION_CONTEXT_SECTION_WINDOW_CLASS_REDIRECTION     = 0x00000003U,
+    ACTIVATION_CONTEXT_SECTION_COM_SERVER_REDIRECTION       = 0x00000004U,
+    ACTIVATION_CONTEXT_SECTION_COM_INTERFACE_REDIRECTION    = 0x00000005U,
+    ACTIVATION_CONTEXT_SECTION_COM_TYPE_LIBRARY_REDIRECTION = 0x00000006U,
+    ACTIVATION_CONTEXT_SECTION_COM_PROGID_REDIRECTION       = 0x00000007U,
+    ACTIVATION_CONTEXT_SECTION_GLOBAL_OBJECT_RENAME_TABLE   = 0x00000008U,
+    ACTIVATION_CONTEXT_SECTION_CLR_SURROGATES               = 0x00000009U,
+    ACTIVATION_CONTEXT_SECTION_APPLICATION_SETTINGS         = 0x0000000aU,
+    ACTIVATION_CONTEXT_SECTION_COMPATIBILITY_INFO           = 0x0000000bU,
+    ACTIVATION_CONTEXT_SECTION_WINRT_ACTIVATABLE_CLASSES    = 0x0000000cU,
 }
 
-enum uint ROT_COMPARE_MAX = 0x00000800;
-enum uint WDT_INPROC_CALL = 0x48746457;
-enum uint WDT_REMOTE_CALL = 0x52746457;
-enum uint WDT_INPROC64_CALL = 0x50746457;
+enum uint ROT_COMPARE_MAX = 0x00000800U;
+enum uint WDT_INPROC_CALL = 0x48746457U;
+enum uint WDT_REMOTE_CALL = 0x52746457U;
+enum uint WDT_INPROC64_CALL = 0x50746457U;
 enum ubyte DECIMAL_NEG = 0x80;
 
 enum : uint
 {
-    PROCESS_HEAP_REGION            = 0x00000001,
-    PROCESS_HEAP_UNCOMMITTED_RANGE = 0x00000002,
-    PROCESS_HEAP_ENTRY_BUSY        = 0x00000004,
-    PROCESS_HEAP_SEG_ALLOC         = 0x00000008,
-    PROCESS_HEAP_ENTRY_MOVEABLE    = 0x00000010,
-    PROCESS_HEAP_ENTRY_DDESHARE    = 0x00000020,
+    PROCESS_HEAP_REGION            = 0x00000001U,
+    PROCESS_HEAP_UNCOMMITTED_RANGE = 0x00000002U,
+    PROCESS_HEAP_ENTRY_BUSY        = 0x00000004U,
+    PROCESS_HEAP_SEG_ALLOC         = 0x00000008U,
+    PROCESS_HEAP_ENTRY_MOVEABLE    = 0x00000010U,
+    PROCESS_HEAP_ENTRY_DDESHARE    = 0x00000020U,
 }
 
 enum : uint
 {
-    LMEM_NOCOMPACT = 0x00000010,
-    LMEM_NODISCARD = 0x00000020,
+    LMEM_NOCOMPACT = 0x00000010U,
+    LMEM_NODISCARD = 0x00000020U,
 }
 
 enum : uint
 {
-    LMEM_MODIFY      = 0x00000080,
-    LMEM_DISCARDABLE = 0x00000f00,
+    LMEM_MODIFY      = 0x00000080U,
+    LMEM_DISCARDABLE = 0x00000f00U,
 }
 
-enum uint LMEM_VALID_FLAGS = 0x00000f72;
-enum uint LMEM_INVALID_HANDLE = 0x00008000;
-enum uint LMEM_DISCARDED = 0x00004000;
-enum uint LMEM_LOCKCOUNT = 0x000000ff;
-enum uint NUMA_NO_PREFERRED_NODE = 0xffffffff;
-enum uint REDBOOK_DIGITAL_AUDIO_EXTRACTION_INFO_VERSION = 0x00000001;
+enum uint LMEM_VALID_FLAGS = 0x00000f72U;
+enum uint LMEM_INVALID_HANDLE = 0x00008000U;
+enum uint LMEM_DISCARDED = 0x00004000U;
+enum uint LMEM_LOCKCOUNT = 0x000000ffU;
+enum uint NUMA_NO_PREFERRED_NODE = 0xffffffffU;
+enum uint REDBOOK_DIGITAL_AUDIO_EXTRACTION_INFO_VERSION = 0x00000001U;
 
 // Callbacks
 
 alias PUMS_SCHEDULER_ENTRY_POINT = void function(RTL_UMS_SCHEDULER_REASON Reason, size_t ActivationPayload, 
                                                  void* SchedulerParam);
-//DELEGATE ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(4))], [])
-alias PTERMINATION_HANDLER = void function(BOOLEAN _abnormal_termination, ulong EstablisherFrame);
-//DELEGATE ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(4))], [])
-alias POUT_OF_PROCESS_FUNCTION_TABLE_CALLBACK = uint function(HANDLE Process, void* TableAddress, uint* Entries, 
+
+version(AArch64)
+{
+    alias PTERMINATION_HANDLER = void function(BOOLEAN _abnormal_termination, ulong EstablisherFrame);
+}
+
+version(AArch64)
+{
+    alias POUT_OF_PROCESS_FUNCTION_TABLE_CALLBACK = uint function(HANDLE Process, void* TableAddress, uint* Entries, 
                                                               IMAGE_ARM64_RUNTIME_FUNCTION_ENTRY** Functions);
-//DELEGATE ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(2))], [])
-alias POUT_OF_PROCESS_FUNCTION_TABLE_CALLBACK = uint function(HANDLE Process, void* TableAddress, uint* Entries, 
+}
+
+version(X86_64)
+{
+    alias POUT_OF_PROCESS_FUNCTION_TABLE_CALLBACK = uint function(HANDLE Process, void* TableAddress, uint* Entries, 
                                                               IMAGE_RUNTIME_FUNCTION_ENTRY** Functions);
-//DELEGATE ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-alias PEXCEPTION_FILTER = int function(EXCEPTION_POINTERS* ExceptionPointers, void* EstablisherFrame);
-//DELEGATE ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(2))], [])
-alias PTERMINATION_HANDLER = void function(BOOLEAN _abnormal_termination, void* EstablisherFrame);
+}
+
+version(X86_64)
+{
+    alias PEXCEPTION_FILTER = int function(EXCEPTION_POINTERS* ExceptionPointers, void* EstablisherFrame);
+}
+
+version(AArch64)
+{
+    alias PEXCEPTION_FILTER = int function(EXCEPTION_POINTERS* ExceptionPointers, void* EstablisherFrame);
+}
+
+version(X86_64)
+{
+    alias PTERMINATION_HANDLER = void function(BOOLEAN _abnormal_termination, void* EstablisherFrame);
+}
 alias PIMAGE_TLS_CALLBACK = void function(void* DllHandle, uint Reason, void* Reserved);
 
 // Structs
@@ -4275,26 +4338,44 @@ struct RemHBRUSH
 
 struct userCLIPFORMAT
 {
-    int          fContext;
-    _u_e__Struct u;
+    int fContext;
+    union u
+    {
+        uint  dwValue;
+        PWSTR pwszName;
+    }
 }
 
 struct GDI_NONREMOTE
 {
-    int          fContext;
-    _u_e__Struct u;
+    int fContext;
+    union u
+    {
+        int         hInproc;
+        DWORD_BLOB* hRemote;
+    }
 }
 
 struct userHGLOBAL
 {
-    int          fContext;
-    _u_e__Struct u;
+    int fContext;
+    union u
+    {
+        int                hInproc;
+        FLAGGED_BYTE_BLOB* hRemote;
+        long               hInproc64;
+    }
 }
 
 struct userHMETAFILE
 {
-    int          fContext;
-    _u_e__Struct u;
+    int fContext;
+    union u
+    {
+        int        hInproc;
+        BYTE_BLOB* hRemote;
+        long       hInproc64;
+    }
 }
 
 struct remoteMETAFILEPICT
@@ -4307,14 +4388,24 @@ struct remoteMETAFILEPICT
 
 struct userHMETAFILEPICT
 {
-    int          fContext;
-    _u_e__Struct u;
+    int fContext;
+    union u
+    {
+        int                 hInproc;
+        remoteMETAFILEPICT* hRemote;
+        long                hInproc64;
+    }
 }
 
 struct userHENHMETAFILE
 {
-    int          fContext;
-    _u_e__Struct u;
+    int fContext;
+    union u
+    {
+        int        hInproc;
+        BYTE_BLOB* hRemote;
+        long       hInproc64;
+    }
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
@@ -4332,20 +4423,34 @@ struct userBITMAP
 
 struct userHBITMAP
 {
-    int          fContext;
-    _u_e__Struct u;
+    int fContext;
+    union u
+    {
+        int         hInproc;
+        userBITMAP* hRemote;
+        long        hInproc64;
+    }
 }
 
 struct userHPALETTE
 {
-    int          fContext;
-    _u_e__Struct u;
+    int fContext;
+    union u
+    {
+        int         hInproc;
+        LOGPALETTE* hRemote;
+        long        hInproc64;
+    }
 }
 
 struct RemotableHandle
 {
-    int          fContext;
-    _u_e__Struct u;
+    int fContext;
+    union u
+    {
+        int hInproc;
+        int hRemote;
+    }
 }
 
 struct REDBOOK_DIGITAL_AUDIO_EXTRACTION_INFO
@@ -4356,14 +4461,28 @@ struct REDBOOK_DIGITAL_AUDIO_EXTRACTION_INFO
     uint AccurateMask0;
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct REARRANGE_FILE_DATA32
+version(X86_64)
 {
-    ulong SourceStartingOffset;
-    ulong TargetOffset;
-    uint  SourceFileHandle;
-    uint  Length;
-    uint  Flags;
+    struct REARRANGE_FILE_DATA32
+    {
+        ulong SourceStartingOffset;
+        ulong TargetOffset;
+        uint  SourceFileHandle;
+        uint  Length;
+        uint  Flags;
+    }
+}
+
+version(AArch64)
+{
+    struct REARRANGE_FILE_DATA32
+    {
+        ulong SourceStartingOffset;
+        ulong TargetOffset;
+        uint  SourceFileHandle;
+        uint  Length;
+        uint  Flags;
+    }
 }
 
 struct XSAVE_CET_U_FORMAT
@@ -4382,35 +4501,64 @@ struct XSAVE_ARM64_SVE_HEADER
 
 struct KERNEL_CET_CONTEXT
 {
-    ulong               Ssp;
-    ulong               Rip;
-    ushort              SegCs;
-    _Anonymous_e__Union Anonymous;
-    ushort[2]           Fill;
+    ulong     Ssp;
+    ulong     Rip;
+    ushort    SegCs;
+    union
+    {
+        ushort AllFlags;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Unused)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(14))], [])*/ushort _bitfield483;
+        }
+    }
+    ushort[2] Fill;
 }
 
 struct SCOPE_TABLE_AMD64
 {
     uint Count;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/_Anonymous_e__Struct[1] ScopeRecord;
+    struct
+    {
+        uint BeginAddress;
+        uint EndAddress;
+        uint HandlerAddress;
+        uint JumpTarget;
+    }
 }
 
 struct SCOPE_TABLE_ARM
 {
     uint Count;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/_Anonymous_e__Struct[1] ScopeRecord;
+    struct
+    {
+        uint BeginAddress;
+        uint EndAddress;
+        uint HandlerAddress;
+        uint JumpTarget;
+    }
 }
 
 struct SCOPE_TABLE_ARM64
 {
     uint Count;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/_Anonymous_e__Struct[1] ScopeRecord;
+    struct
+    {
+        uint BeginAddress;
+        uint EndAddress;
+        uint HandlerAddress;
+        uint JumpTarget;
+    }
 }
 
 union DISPATCHER_CONTEXT_NONVOLREG_ARM64
 {
-    ubyte[152]           Buffer;
-    _Anonymous_e__Struct Anonymous;
+    ubyte[152] Buffer;
+    struct
+    {
+        ulong[11] GpNvRegs;
+        double[8] FpNvRegs;
+    }
 }
 
 struct ATTRIBUTES_AND_SID
@@ -4427,8 +4575,16 @@ struct SECURITY_OBJECT_AI_PARAMS
 
 struct SE_TOKEN_USER
 {
-    _Anonymous1_e__Union Anonymous1;
-    _Anonymous2_e__Union Anonymous2;
+    union
+    {
+        TOKEN_USER         TokenUser;
+        SID_AND_ATTRIBUTES User;
+    }
+    union
+    {
+        SID       Sid;
+        ubyte[68] Buffer;
+    }
 }
 
 struct TOKEN_LOGGING_INFORMATION
@@ -4461,27 +4617,35 @@ struct TOKEN_BNO_ISOLATION_INFORMATION
 
 struct NT_TIB32
 {
-    uint                ExceptionList;
-    uint                StackBase;
-    uint                StackLimit;
-    uint                SubSystemTib;
-    _Anonymous_e__Union Anonymous;
-    uint                ArbitraryUserPointer;
-    uint                Self;
+    uint ExceptionList;
+    uint StackBase;
+    uint StackLimit;
+    uint SubSystemTib;
+    union
+    {
+        uint FiberData;
+        uint Version;
+    }
+    uint ArbitraryUserPointer;
+    uint Self;
 }
 
 struct NT_TIB64
 {
-    ulong               ExceptionList;
-    ulong               StackBase;
-    ulong               StackLimit;
-    ulong               SubSystemTib;
-    _Anonymous_e__Union Anonymous;
-    ulong               ArbitraryUserPointer;
-    ulong               Self;
+    ulong ExceptionList;
+    ulong StackBase;
+    ulong StackLimit;
+    ulong SubSystemTib;
+    union
+    {
+        ulong FiberData;
+        uint  Version;
+    }
+    ulong ArbitraryUserPointer;
+    ulong Self;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-ums_create_thread_attributes))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-ums_create_thread_attributes
 struct UMS_CREATE_THREAD_ATTRIBUTES
 {
     uint  UmsVersion;
@@ -4496,8 +4660,11 @@ struct COMPONENT_FILTER
 
 union RATE_QUOTA_LIMIT
 {
-    uint                 RateData;
-    _Anonymous_e__Struct Anonymous;
+    uint RateData;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved0)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(25))], [])*/uint _bitfield484;
+    }
 }
 
 struct QUOTA_LIMITS_EX
@@ -4516,108 +4683,234 @@ struct QUOTA_LIMITS_EX
     RATE_QUOTA_LIMIT CpuRateLimit;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-process_mitigation_aslr_policy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-process_mitigation_aslr_policy
 struct PROCESS_MITIGATION_ASLR_POLICY
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        uint Flags;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedFlags)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(28))], [])*/uint _bitfield485;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-process_mitigation_dep_policy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-process_mitigation_dep_policy
 struct PROCESS_MITIGATION_DEP_POLICY
 {
-    _Anonymous_e__Union Anonymous;
-    BOOLEAN             Permanent;
+    union
+    {
+        uint Flags;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedFlags)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(30))], [])*/uint _bitfield486;
+        }
+    }
+    BOOLEAN Permanent;
 }
 
 struct PROCESS_MITIGATION_SEHOP_POLICY
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        uint Flags;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedFlags)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield487;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-process_mitigation_strict_handle_check_policy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-process_mitigation_strict_handle_check_policy
 struct PROCESS_MITIGATION_STRICT_HANDLE_CHECK_POLICY
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        uint Flags;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedFlags)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(30))], [])*/uint _bitfield488;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-process_mitigation_system_call_disable_policy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-process_mitigation_system_call_disable_policy
 struct PROCESS_MITIGATION_SYSTEM_CALL_DISABLE_POLICY
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        uint Flags;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedFlags)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(28))], [])*/uint _bitfield489;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-process_mitigation_extension_point_disable_policy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-process_mitigation_extension_point_disable_policy
 struct PROCESS_MITIGATION_EXTENSION_POINT_DISABLE_POLICY
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        uint Flags;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedFlags)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield490;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-process_mitigation_dynamic_code_policy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-process_mitigation_dynamic_code_policy
 struct PROCESS_MITIGATION_DYNAMIC_CODE_POLICY
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        uint Flags;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedFlags)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(28))], [])*/uint _bitfield491;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-process_mitigation_control_flow_guard_policy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-process_mitigation_control_flow_guard_policy
 struct PROCESS_MITIGATION_CONTROL_FLOW_GUARD_POLICY
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        uint Flags;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedFlags)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(27))], [])*/uint _bitfield492;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-process_mitigation_binary_signature_policy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-process_mitigation_binary_signature_policy
 struct PROCESS_MITIGATION_BINARY_SIGNATURE_POLICY
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        uint Flags;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedFlags)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(27))], [])*/uint _bitfield493;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-process_mitigation_font_disable_policy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-process_mitigation_font_disable_policy
 struct PROCESS_MITIGATION_FONT_DISABLE_POLICY
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        uint Flags;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedFlags)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(30))], [])*/uint _bitfield494;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-process_mitigation_image_load_policy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-process_mitigation_image_load_policy
 struct PROCESS_MITIGATION_IMAGE_LOAD_POLICY
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        uint Flags;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedFlags)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(27))], [])*/uint _bitfield495;
+        }
+    }
 }
 
 struct PROCESS_MITIGATION_SYSTEM_CALL_FILTER_POLICY
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        uint Flags;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedFlags)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(28))], [])*/uint _bitfield496;
+        }
+    }
 }
 
 struct PROCESS_MITIGATION_PAYLOAD_RESTRICTION_POLICY
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        uint Flags;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedFlags)), FixedArgSig(ElementSig(12)), FixedArgSig(ElementSig(20))], [])*/uint _bitfield497;
+        }
+    }
 }
 
 struct PROCESS_MITIGATION_CHILD_PROCESS_POLICY
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        uint Flags;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedFlags)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(29))], [])*/uint _bitfield498;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-process_mitigation_side_channel_isolation_policy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-process_mitigation_side_channel_isolation_policy
 struct PROCESS_MITIGATION_SIDE_CHANNEL_ISOLATION_POLICY
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        uint Flags;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedFlags)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(27))], [])*/uint _bitfield499;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-process_mitigation_user_shadow_stack_policy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-process_mitigation_user_shadow_stack_policy
 struct PROCESS_MITIGATION_USER_SHADOW_STACK_POLICY
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        uint Flags;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedFlags)), FixedArgSig(ElementSig(10)), FixedArgSig(ElementSig(22))], [])*/uint _bitfield500;
+        }
+    }
 }
 
 struct PROCESS_MITIGATION_USER_POINTER_AUTH_POLICY
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        uint Flags;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedFlags)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield501;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-process-mitigation-redirection-trust-policy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-process-mitigation-redirection-trust-policy
 struct PROCESS_MITIGATION_REDIRECTION_TRUST_POLICY
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        uint Flags;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedFlags)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(30))], [])*/uint _bitfield502;
+        }
+    }
 }
 
 struct PROCESS_NETWORK_COUNTERS
@@ -4691,43 +4984,61 @@ struct RUNTIME_REPORT_HEADER
 
 struct DRIVER_INFO_ENTRY
 {
-    CHAR[32]        InternalName;
-    ushort          ImageHashAlgorithm;
-    ushort          PublisherThumbprintHashAlgorithm;
-    uint            ImageHashOffset;
-    uint            PublisherThumbprintOffset;
-    ushort          LoadCount;
-    ushort          OemNameSize;
-    uint            OemNameOffset;
-    _Flags_e__Union Flags;
-    ushort          Padding;
+    CHAR[32] InternalName;
+    ushort   ImageHashAlgorithm;
+    ushort   PublisherThumbprintHashAlgorithm;
+    uint     ImageHashOffset;
+    uint     PublisherThumbprintOffset;
+    ushort   LoadCount;
+    ushort   OemNameSize;
+    uint     OemNameOffset;
+    union Flags
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(13))], [])*/ushort _bitfield503;
+        }
+        ushort AsUInt16;
+    }
+    ushort   Padding;
 }
 
 struct DRIVER_RUNTIME_REPORT
 {
     RUNTIME_REPORT_HEADER Header;
-    ushort          NumberOfDrivers;
-    _Flags_e__Union Flags;
+    ushort NumberOfDrivers;
+    union Flags
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(13))], [])*/ushort _bitfield504;
+        }
+        ushort AsUInt16;
+    }
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DRIVER_INFO_ENTRY[1] DriverEntries;
 }
 
 struct FILE_NOTIFY_FULL_INFORMATION
 {
-    uint                NextEntryOffset;
-    uint                Action;
-    long                CreationTime;
-    long                LastModificationTime;
-    long                LastChangeTime;
-    long                LastAccessTime;
-    long                AllocatedLength;
-    long                FileSize;
-    uint                FileAttributes;
-    _Anonymous_e__Union Anonymous;
-    long                FileId;
-    long                ParentFileId;
-    ushort              FileNameLength;
-    ubyte               FileNameFlags;
-    ubyte               Reserved;
+    uint   NextEntryOffset;
+    uint   Action;
+    long   CreationTime;
+    long   LastModificationTime;
+    long   LastChangeTime;
+    long   LastAccessTime;
+    long   AllocatedLength;
+    long   FileSize;
+    uint   FileAttributes;
+    union
+    {
+        uint ReparsePointTag;
+        uint EaSize;
+    }
+    long   FileId;
+    long   ParentFileId;
+    ushort FileNameLength;
+    ubyte  FileNameFlags;
+    ubyte  Reserved;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] FileName;
 }
 
@@ -4867,7 +5178,14 @@ struct POWER_LIMIT_ATTRIBUTES
     uint              MaxTimeParameter;
     uint              DefaultACValue;
     uint              DefaultDCValue;
-    _Flags_e__Union   Flags;
+    union Flags
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield505;
+        }
+        uint AsUlong;
+    }
 }
 
 struct POWER_LIMIT_VALUE
@@ -4900,24 +5218,42 @@ struct PROCESSOR_IDLESTATE_INFO
 
 struct PROCESSOR_IDLESTATE_POLICY
 {
-    ushort          Revision;
-    _Flags_e__Union Flags;
-    uint            PolicyCount;
+    ushort Revision;
+    union Flags
+    {
+        ushort AsWORD;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(14))], [])*/ushort _bitfield506;
+        }
+    }
+    uint   PolicyCount;
     PROCESSOR_IDLESTATE_INFO[3] Policy;
 }
 
 struct PROCESSOR_PERFSTATE_POLICY
 {
-    uint                Revision;
-    ubyte               MaxThrottle;
-    ubyte               MinThrottle;
-    ubyte               BusyAdjThreshold;
-    _Anonymous_e__Union Anonymous;
-    uint                TimeCheck;
-    uint                IncreaseTime;
-    uint                DecreaseTime;
-    uint                IncreasePercent;
-    uint                DecreasePercent;
+    uint  Revision;
+    ubyte MaxThrottle;
+    ubyte MinThrottle;
+    ubyte BusyAdjThreshold;
+    union
+    {
+        ubyte Spare;
+        union Flags
+        {
+            ubyte AsBYTE;
+            struct
+            {
+                /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(3))], [])*/ubyte _bitfield507;
+            }
+        }
+    }
+    uint  TimeCheck;
+    uint  IncreaseTime;
+    uint  DecreaseTime;
+    uint  IncreasePercent;
+    uint  DecreasePercent;
 }
 
 struct HIBERFILE_BUCKET
@@ -5100,23 +5436,45 @@ struct ANON_OBJECT_HEADER_BIGOBJ
 struct IMAGE_SYMBOL
 {
 align (2):
-    _N_e__Union N;
-    uint        Value;
-    short       SectionNumber;
-    ushort      Type;
-    ubyte       StorageClass;
-    ubyte       NumberOfAuxSymbols;
+    union N
+    {
+    align (2):
+        ubyte[8] ShortName;
+        struct Name
+        {
+        align (2):
+            uint Short;
+            uint Long;
+        }
+        uint[2]  LongName;
+    }
+    uint   Value;
+    short  SectionNumber;
+    ushort Type;
+    ubyte  StorageClass;
+    ubyte  NumberOfAuxSymbols;
 }
 
 struct IMAGE_SYMBOL_EX
 {
 align (2):
-    _N_e__Union N;
-    uint        Value;
-    int         SectionNumber;
-    ushort      Type;
-    ubyte       StorageClass;
-    ubyte       NumberOfAuxSymbols;
+    union N
+    {
+    align (2):
+        ubyte[8] ShortName;
+        struct Name
+        {
+        align (2):
+            uint Short;
+            uint Long;
+        }
+        uint[2]  LongName;
+    }
+    uint   Value;
+    int    SectionNumber;
+    ushort Type;
+    ubyte  StorageClass;
+    ubyte  NumberOfAuxSymbols;
 }
 
 struct IMAGE_AUX_SYMBOL_TOKEN_DEF
@@ -5130,34 +5488,121 @@ align (2):
 
 union IMAGE_AUX_SYMBOL
 {
-    _Sym_e__Struct     Sym;
-    _File_e__Struct    File;
-    _Section_e__Struct Section;
+    struct Sym
+    {
+    align (2):
+        uint   TagIndex;
+        union Misc
+        {
+        align (2):
+            struct LnSz
+            {
+                ushort Linenumber;
+                ushort Size;
+            }
+            uint TotalSize;
+        }
+        union FcnAry
+        {
+            struct Function
+            {
+            align (2):
+                uint PointerToLinenumber;
+                uint PointerToNextFunction;
+            }
+            struct Array
+            {
+                ushort[4] Dimension;
+            }
+        }
+        ushort TvIndex;
+    }
+    struct File
+    {
+        ubyte[18] Name;
+    }
+    struct Section
+    {
+    align (2):
+        uint   Length;
+        ushort NumberOfRelocations;
+        ushort NumberOfLinenumbers;
+        uint   CheckSum;
+        short  Number;
+        ubyte  Selection;
+        ubyte  bReserved;
+        short  HighNumber;
+    }
     IMAGE_AUX_SYMBOL_TOKEN_DEF TokenDef;
-    _CRC_e__Struct     CRC;
+    struct CRC
+    {
+    align (2):
+        uint      crc;
+        ubyte[14] rgbReserved;
+    }
 }
 
 union IMAGE_AUX_SYMBOL_EX
 {
-    _Sym_e__Struct       Sym;
-    _File_e__Struct      File;
-    _Section_e__Struct   Section;
-    _Anonymous_e__Struct Anonymous;
-    _CRC_e__Struct       CRC;
+    struct Sym
+    {
+    align (2):
+        uint      WeakDefaultSymIndex;
+        uint      WeakSearchType;
+        ubyte[12] rgbReserved;
+    }
+    struct File
+    {
+        ubyte[20] Name;
+    }
+    struct Section
+    {
+    align (2):
+        uint     Length;
+        ushort   NumberOfRelocations;
+        ushort   NumberOfLinenumbers;
+        uint     CheckSum;
+        short    Number;
+        ubyte    Selection;
+        ubyte    bReserved;
+        short    HighNumber;
+        ubyte[2] rgbReserved;
+    }
+    struct
+    {
+        IMAGE_AUX_SYMBOL_TOKEN_DEF TokenDef;
+        ubyte[2] rgbReserved;
+    }
+    struct CRC
+    {
+    align (2):
+        uint      crc;
+        ubyte[16] rgbReserved;
+    }
 }
 
 struct IMAGE_RELOCATION
 {
 align (2):
-    _Anonymous_e__Union Anonymous;
-    uint                SymbolTableIndex;
-    ushort              Type;
+    union
+    {
+    align (2):
+        uint VirtualAddress;
+        uint RelocCount;
+    }
+    uint   SymbolTableIndex;
+    ushort Type;
 }
 
 struct IMAGE_LINENUMBER
 {
-    _Type_e__Union Type;
-    ushort         Linenumber;
+    union Type
+    {
+    align (2):
+        uint SymbolTableIndex;
+        uint VirtualAddress;
+    }
+    ushort Linenumber;
 }
 
 struct IMAGE_BASE_RELOCATION
@@ -5201,31 +5646,49 @@ struct IMAGE_IMPORT_BY_NAME
 struct IMAGE_TLS_DIRECTORY64
 {
 align (4):
-    ulong               StartAddressOfRawData;
-    ulong               EndAddressOfRawData;
-    ulong               AddressOfIndex;
-    ulong               AddressOfCallBacks;
-    uint                SizeOfZeroFill;
-    _Anonymous_e__Union Anonymous;
+    ulong StartAddressOfRawData;
+    ulong EndAddressOfRawData;
+    ulong AddressOfIndex;
+    ulong AddressOfCallBacks;
+    uint  SizeOfZeroFill;
+    union
+    {
+        uint Characteristics;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(24)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield508;
+        }
+    }
 }
 
 struct IMAGE_TLS_DIRECTORY32
 {
-    uint                StartAddressOfRawData;
-    uint                EndAddressOfRawData;
-    uint                AddressOfIndex;
-    uint                AddressOfCallBacks;
-    uint                SizeOfZeroFill;
-    _Anonymous_e__Union Anonymous;
+    uint StartAddressOfRawData;
+    uint EndAddressOfRawData;
+    uint AddressOfIndex;
+    uint AddressOfCallBacks;
+    uint SizeOfZeroFill;
+    union
+    {
+        uint Characteristics;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved1)), FixedArgSig(ElementSig(24)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield509;
+        }
+    }
 }
 
 struct IMAGE_IMPORT_DESCRIPTOR
 {
-    _Anonymous_e__Union Anonymous;
-    uint                TimeDateStamp;
-    uint                ForwarderChain;
-    uint                Name;
-    uint                FirstThunk;
+    union
+    {
+        uint Characteristics;
+        uint OriginalFirstThunk;
+    }
+    uint TimeDateStamp;
+    uint ForwarderChain;
+    uint Name;
+    uint FirstThunk;
 }
 
 struct IMAGE_BOUND_IMPORT_DESCRIPTOR
@@ -5254,8 +5717,23 @@ struct IMAGE_RESOURCE_DIRECTORY
 
 struct IMAGE_RESOURCE_DIRECTORY_ENTRY
 {
-    _Anonymous1_e__Union Anonymous1;
-    _Anonymous2_e__Union Anonymous2;
+    union
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(NameIsString)), FixedArgSig(ElementSig(31)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield510;
+        }
+        uint   Name;
+        ushort Id;
+    }
+    union
+    {
+        uint OffsetToData;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(DataIsDirectory)), FixedArgSig(ElementSig(31)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield511;
+        }
+    }
 }
 
 struct IMAGE_RESOURCE_DIRECTORY_STRING
@@ -5335,25 +5813,25 @@ align (1):
 struct IMAGE_IMPORT_CONTROL_TRANSFER_DYNAMIC_RELOCATION
 {
 align (1):
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(IATIndex)), FixedArgSig(ElementSig(13)), FixedArgSig(ElementSig(19))], [])*/uint _bitfield132;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(IATIndex)), FixedArgSig(ElementSig(13)), FixedArgSig(ElementSig(19))], [])*/uint _bitfield512;
 }
 
 struct IMAGE_IMPORT_CONTROL_TRANSFER_ARM64_RELOCATION
 {
 align (1):
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(IATIndex)), FixedArgSig(ElementSig(17)), FixedArgSig(ElementSig(15))], [])*/uint _bitfield133;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(IATIndex)), FixedArgSig(ElementSig(17)), FixedArgSig(ElementSig(15))], [])*/uint _bitfield513;
 }
 
 struct IMAGE_INDIR_CONTROL_TRANSFER_DYNAMIC_RELOCATION
 {
 align (1):
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield134;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield514;
 }
 
 struct IMAGE_SWITCHTABLE_BRANCH_DYNAMIC_RELOCATION
 {
 align (1):
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(RegisterNumber)), FixedArgSig(ElementSig(12)), FixedArgSig(ElementSig(4))], [])*/ushort _bitfield135;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(RegisterNumber)), FixedArgSig(ElementSig(12)), FixedArgSig(ElementSig(4))], [])*/ushort _bitfield515;
 }
 
 struct IMAGE_FUNCTION_OVERRIDE_HEADER
@@ -5413,7 +5891,10 @@ struct IMAGE_HOT_PATCH_BASE
 
 struct IMAGE_HOT_PATCH_MACHINE
 {
-    _Anonymous_e__Struct Anonymous;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Amd64EC)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield516;
+    }
 }
 
 struct IMAGE_HOT_PATCH_HASHES
@@ -5425,31 +5906,47 @@ struct IMAGE_HOT_PATCH_HASHES
 struct IMAGE_CE_RUNTIME_FUNCTION_ENTRY
 {
     uint FuncStart;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ExceptionFlag)), FixedArgSig(ElementSig(31)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield136;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ExceptionFlag)), FixedArgSig(ElementSig(31)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield517;
 }
 
 struct IMAGE_ARM_RUNTIME_FUNCTION_ENTRY
 {
-    uint                BeginAddress;
-    _Anonymous_e__Union Anonymous;
+    uint BeginAddress;
+    union
+    {
+        uint UnwindData;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(StackAdjust)), FixedArgSig(ElementSig(22)), FixedArgSig(ElementSig(10))], [])*/uint _bitfield518;
+        }
+    }
 }
 
 union IMAGE_ARM64_RUNTIME_FUNCTION_ENTRY_XDATA
 {
-    uint                 HeaderData;
-    _Anonymous_e__Struct Anonymous;
+    uint HeaderData;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CodeWords)), FixedArgSig(ElementSig(27)), FixedArgSig(ElementSig(5))], [])*/uint _bitfield519;
+    }
 }
 
 union IMAGE_ARM64_RUNTIME_FUNCTION_ENTRY_XDATA_EXTENDED
 {
-    uint                 ExtendedHeaderData;
-    _Anonymous_e__Struct Anonymous;
+    uint ExtendedHeaderData;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ExtendedCodeWords)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield520;
+    }
 }
 
 union IMAGE_ARM64_RUNTIME_FUNCTION_ENTRY_XDATA_EPILOG_SCOPE
 {
-    uint                 EpilogScopeData;
-    _Anonymous_e__Struct Anonymous;
+    uint EpilogScopeData;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(EpilogStartIndex)), FixedArgSig(ElementSig(22)), FixedArgSig(ElementSig(10))], [])*/uint _bitfield521;
+    }
 }
 
 struct IMAGE_ALPHA64_RUNTIME_FUNCTION_ENTRY
@@ -5513,7 +6010,7 @@ align (4):
 
 struct IMAGE_ARCHITECTURE_HEADER
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Anonymous2)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield137;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Anonymous2)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/uint _bitfield522;
     uint FirstEntryRVA;
 }
 
@@ -5525,21 +6022,39 @@ struct IMAGE_ARCHITECTURE_ENTRY
 
 struct IMPORT_OBJECT_HEADER
 {
-    ushort              Sig1;
-    ushort              Sig2;
-    ushort              Version;
-    ushort              Machine;
-    uint                TimeDateStamp;
-    uint                SizeOfData;
-    _Anonymous_e__Union Anonymous;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(11))], [])*/ushort _bitfield138;
+    ushort Sig1;
+    ushort Sig2;
+    ushort Version;
+    ushort Machine;
+    uint   TimeDateStamp;
+    uint   SizeOfData;
+    union
+    {
+        ushort Ordinal;
+        ushort Hint;
+    }
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(11))], [])*/ushort _bitfield523;
 }
 
 struct IMAGE_POLICY_ENTRY
 {
     IMAGE_POLICY_ENTRY_TYPE Type;
     IMAGE_POLICY_ID PolicyId;
-    _u_e__Union     u;
+    union u
+    {
+        const(void)* None;
+        BOOLEAN      BoolValue;
+        byte         Int8Value;
+        ubyte        UInt8Value;
+        short        Int16Value;
+        ushort       UInt16Value;
+        int          Int32Value;
+        uint         UInt32Value;
+        long         Int64Value;
+        ulong        UInt64Value;
+        const(PSTR)  AnsiStringValue;
+        const(PWSTR) UnicodeStringValue;
+    }
 }
 
 struct IMAGE_POLICY_METADATA
@@ -5550,7 +6065,7 @@ struct IMAGE_POLICY_METADATA
     IMAGE_POLICY_ENTRY[1] Policies;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-heap_optimize_resources_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-heap_optimize_resources_information
 struct HEAP_OPTIMIZE_RESOURCES_INFORMATION
 {
     uint Version;
@@ -5576,7 +6091,7 @@ struct PACKEDEVENTINFO
     uint[1] ulOffsets;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-tape_get_drive_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-tape_get_drive_parameters
 struct TAPE_GET_DRIVE_PARAMETERS
 {
     BOOLEAN ECC;
@@ -5592,7 +6107,7 @@ struct TAPE_GET_DRIVE_PARAMETERS
     uint    EOTWarningZoneSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-tape_set_drive_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-tape_set_drive_parameters
 struct TAPE_SET_DRIVE_PARAMETERS
 {
     BOOLEAN ECC;
@@ -5602,7 +6117,7 @@ struct TAPE_SET_DRIVE_PARAMETERS
     uint    EOTWarningZoneSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-tape_get_media_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-tape_get_media_parameters
 struct TAPE_GET_MEDIA_PARAMETERS
 {
     long    Capacity;
@@ -5612,7 +6127,7 @@ struct TAPE_GET_MEDIA_PARAMETERS
     BOOLEAN WriteProtected;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-tape_set_media_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-tape_set_media_parameters
 struct TAPE_SET_MEDIA_PARAMETERS
 {
     uint BlockSize;

@@ -3,12 +3,12 @@
 module windows.win32.ui.colorsystem;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BSTR, CHAR, COLORREF, HRESULT, HWND,
-                                         LPARAM, LUID, PSTR, PWSTR;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, COLORREF, HRESULT,
+                                                    HWND, LPARAM, LUID, PSTR, PWSTR;
 public import windows.win32.graphics.gdi : CIEXYZ, CIEXYZTRIPLE, EMR, HDC, HPALETTE,
                                            RGBTRIPLE;
-public import windows.win32.system.com : IUnknown;
+public import windows.win32.system.com.com : IUnknown;
 public import windows.win32.ui.windowsandmessaging : DLGPROC;
 
 extern(Windows) @nogc nothrow:
@@ -16,17 +16,19 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias ICM_COMMAND = uint;
 enum : uint
 {
-    ICM_ADDPROFILE          = 0x00000001,
-    ICM_DELETEPROFILE       = 0x00000002,
-    ICM_QUERYPROFILE        = 0x00000003,
-    ICM_SETDEFAULTPROFILE   = 0x00000004,
-    ICM_REGISTERICMATCHER   = 0x00000005,
-    ICM_UNREGISTERICMATCHER = 0x00000006,
-    ICM_QUERYMATCH          = 0x00000007,
+    ICM_ADDPROFILE          = 0x00000001U,
+    ICM_DELETEPROFILE       = 0x00000002U,
+    ICM_QUERYPROFILE        = 0x00000003U,
+    ICM_SETDEFAULTPROFILE   = 0x00000004U,
+    ICM_REGISTERICMATCHER   = 0x00000005U,
+    ICM_UNREGISTERICMATCHER = 0x00000006U,
+    ICM_QUERYMATCH          = 0x00000007U,
 }
+
 alias ICM_MODE = int;
 enum : int
 {
@@ -35,13 +37,15 @@ enum : int
     ICM_QUERY          = 0x00000003,
     ICM_DONE_OUTSIDEDC = 0x00000004,
 }
+
 alias COLOR_MATCH_TO_TARGET_ACTION = uint;
 enum : uint
 {
-    CS_ENABLE           = 0x00000001,
-    CS_DISABLE          = 0x00000002,
-    CS_DELETE_TRANSFORM = 0x00000003,
+    CS_ENABLE           = 0x00000001U,
+    CS_DISABLE          = 0x00000002U,
+    CS_DELETE_TRANSFORM = 0x00000003U,
 }
+
 alias LCSCSTYPE = int;
 enum : int
 {
@@ -49,7 +53,8 @@ enum : int
     LCS_sRGB                = 0x73524742,
     LCS_WINDOWS_COLOR_SPACE = 0x57696e20,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/TSF/colortype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/TSF/colortype
 alias COLORTYPE = int;
 enum : int
 {
@@ -66,7 +71,8 @@ enum : int
     COLOR_8_CHANNEL = 0x0000000b,
     COLOR_NAMED     = 0x0000000c,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/ne-icm-colorprofiletype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/ne-icm-colorprofiletype
 alias COLORPROFILETYPE = int;
 enum : int
 {
@@ -75,7 +81,8 @@ enum : int
     CPT_CAMP = 0x00000002,
     CPT_GMMP = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/ne-icm-colorprofilesubtype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/ne-icm-colorprofilesubtype
 alias COLORPROFILESUBTYPE = int;
 enum : int
 {
@@ -89,7 +96,8 @@ enum : int
     CPST_STANDARD_DISPLAY_COLOR_MODE = 0x00000007,
     CPST_EXTENDED_DISPLAY_COLOR_MODE = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/ne-icm-colordatatype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/ne-icm-colordatatype
 alias COLORDATATYPE = int;
 enum : int
 {
@@ -101,7 +109,8 @@ enum : int
     COLOR_10b_R10G10B10A2_XR = 0x00000006,
     COLOR_FLOAT16            = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/ne-icm-bmformat))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/ne-icm-bmformat
 alias BMFORMAT = int;
 enum : int
 {
@@ -147,13 +156,15 @@ enum : int
     BM_R10G10B10A2_XR      = 0x00000702,
     BM_R16G16B16A16_FLOAT  = 0x00000703,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/ne-icm-wcs_profile_management_scope))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/ne-icm-wcs_profile_management_scope
 alias WCS_PROFILE_MANAGEMENT_SCOPE = int;
 enum : int
 {
     WCS_PROFILE_MANAGEMENT_SCOPE_SYSTEM_WIDE  = 0x00000000,
     WCS_PROFILE_MANAGEMENT_SCOPE_CURRENT_USER = 0x00000001,
 }
+
 alias WCS_DEVICE_CAPABILITIES_TYPE = int;
 enum : int
 {
@@ -165,114 +176,114 @@ enum : int
 
 
 enum GUID CATID_WcsPlugin = GUID("a0b402e0-8240-405f-8a16-8a5b4df2f0dd");
-enum uint MAX_COLOR_CHANNELS = 0x00000008;
+enum uint MAX_COLOR_CHANNELS = 0x00000008U;
 
 enum : uint
 {
-    INTENT_PERCEPTUAL            = 0x00000000,
-    INTENT_RELATIVE_COLORIMETRIC = 0x00000001,
+    INTENT_PERCEPTUAL            = 0x00000000U,
+    INTENT_RELATIVE_COLORIMETRIC = 0x00000001U,
 }
 
 enum : uint
 {
-    INTENT_SATURATION            = 0x00000002,
-    INTENT_ABSOLUTE_COLORIMETRIC = 0x00000003,
+    INTENT_SATURATION            = 0x00000002U,
+    INTENT_ABSOLUTE_COLORIMETRIC = 0x00000003U,
 }
 
-enum uint FLAG_EMBEDDEDPROFILE = 0x00000001;
-enum uint FLAG_DEPENDENTONDATA = 0x00000002;
-enum uint FLAG_ENABLE_CHROMATIC_ADAPTATION = 0x02000000;
-enum uint ATTRIB_TRANSPARENCY = 0x00000001;
-enum uint ATTRIB_MATTE = 0x00000002;
+enum uint FLAG_EMBEDDEDPROFILE = 0x00000001U;
+enum uint FLAG_DEPENDENTONDATA = 0x00000002U;
+enum uint FLAG_ENABLE_CHROMATIC_ADAPTATION = 0x02000000U;
+enum uint ATTRIB_TRANSPARENCY = 0x00000001U;
+enum uint ATTRIB_MATTE = 0x00000002U;
 
 enum : uint
 {
-    PROFILE_FILENAME  = 0x00000001,
-    PROFILE_MEMBUFFER = 0x00000002,
-    PROFILE_READ      = 0x00000001,
-    PROFILE_READWRITE = 0x00000002,
+    PROFILE_FILENAME  = 0x00000001U,
+    PROFILE_MEMBUFFER = 0x00000002U,
+    PROFILE_READ      = 0x00000001U,
+    PROFILE_READWRITE = 0x00000002U,
 }
 
-enum uint INDEX_DONT_CARE = 0x00000000;
-enum uint CMM_FROM_PROFILE = 0x00000000;
-enum uint ENUM_TYPE_VERSION = 0x00000300;
-enum uint ET_DEVICENAME = 0x00000001;
-enum uint ET_MEDIATYPE = 0x00000002;
-enum uint ET_DITHERMODE = 0x00000004;
-enum uint ET_RESOLUTION = 0x00000008;
-enum uint ET_CMMTYPE = 0x00000010;
-enum uint ET_CLASS = 0x00000020;
-enum uint ET_DATACOLORSPACE = 0x00000040;
-enum uint ET_CONNECTIONSPACE = 0x00000080;
-enum uint ET_SIGNATURE = 0x00000100;
-enum uint ET_PLATFORM = 0x00000200;
-enum uint ET_PROFILEFLAGS = 0x00000400;
-enum uint ET_MANUFACTURER = 0x00000800;
-enum uint ET_MODEL = 0x00001000;
-enum uint ET_ATTRIBUTES = 0x00002000;
-enum uint ET_RENDERINGINTENT = 0x00004000;
-enum uint ET_CREATOR = 0x00008000;
-enum uint ET_DEVICECLASS = 0x00010000;
-enum uint ET_STANDARDDISPLAYCOLOR = 0x00020000;
-enum uint ET_EXTENDEDDISPLAYCOLOR = 0x00040000;
-enum uint PROOF_MODE = 0x00000001;
-enum uint NORMAL_MODE = 0x00000002;
-enum uint BEST_MODE = 0x00000003;
-enum uint ENABLE_GAMUT_CHECKING = 0x00010000;
-enum uint USE_RELATIVE_COLORIMETRIC = 0x00020000;
-enum uint FAST_TRANSLATE = 0x00040000;
-enum uint PRESERVEBLACK = 0x00100000;
-enum uint WCS_ALWAYS = 0x00200000;
-enum uint SEQUENTIAL_TRANSFORM = 0x80800000;
-enum uint RESERVED = 0x80000000;
+enum uint INDEX_DONT_CARE = 0x00000000U;
+enum uint CMM_FROM_PROFILE = 0x00000000U;
+enum uint ENUM_TYPE_VERSION = 0x00000300U;
+enum uint ET_DEVICENAME = 0x00000001U;
+enum uint ET_MEDIATYPE = 0x00000002U;
+enum uint ET_DITHERMODE = 0x00000004U;
+enum uint ET_RESOLUTION = 0x00000008U;
+enum uint ET_CMMTYPE = 0x00000010U;
+enum uint ET_CLASS = 0x00000020U;
+enum uint ET_DATACOLORSPACE = 0x00000040U;
+enum uint ET_CONNECTIONSPACE = 0x00000080U;
+enum uint ET_SIGNATURE = 0x00000100U;
+enum uint ET_PLATFORM = 0x00000200U;
+enum uint ET_PROFILEFLAGS = 0x00000400U;
+enum uint ET_MANUFACTURER = 0x00000800U;
+enum uint ET_MODEL = 0x00001000U;
+enum uint ET_ATTRIBUTES = 0x00002000U;
+enum uint ET_RENDERINGINTENT = 0x00004000U;
+enum uint ET_CREATOR = 0x00008000U;
+enum uint ET_DEVICECLASS = 0x00010000U;
+enum uint ET_STANDARDDISPLAYCOLOR = 0x00020000U;
+enum uint ET_EXTENDEDDISPLAYCOLOR = 0x00040000U;
+enum uint PROOF_MODE = 0x00000001U;
+enum uint NORMAL_MODE = 0x00000002U;
+enum uint BEST_MODE = 0x00000003U;
+enum uint ENABLE_GAMUT_CHECKING = 0x00010000U;
+enum uint USE_RELATIVE_COLORIMETRIC = 0x00020000U;
+enum uint FAST_TRANSLATE = 0x00040000U;
+enum uint PRESERVEBLACK = 0x00100000U;
+enum uint WCS_ALWAYS = 0x00200000U;
+enum uint SEQUENTIAL_TRANSFORM = 0x80800000U;
+enum uint RESERVED = 0x80000000U;
 
 enum : uint
 {
-    CSA_A    = 0x00000001,
-    CSA_ABC  = 0x00000002,
-    CSA_DEF  = 0x00000003,
-    CSA_DEFG = 0x00000004,
-    CSA_GRAY = 0x00000005,
-    CSA_RGB  = 0x00000006,
-    CSA_CMYK = 0x00000007,
-    CSA_Lab  = 0x00000008,
+    CSA_A    = 0x00000001U,
+    CSA_ABC  = 0x00000002U,
+    CSA_DEF  = 0x00000003U,
+    CSA_DEFG = 0x00000004U,
+    CSA_GRAY = 0x00000005U,
+    CSA_RGB  = 0x00000006U,
+    CSA_CMYK = 0x00000007U,
+    CSA_Lab  = 0x00000008U,
 }
 
-enum uint CMM_WIN_VERSION = 0x00000000;
+enum uint CMM_WIN_VERSION = 0x00000000U;
 
 enum : uint
 {
-    CMM_IDENT          = 0x00000001,
-    CMM_DRIVER_VERSION = 0x00000002,
+    CMM_IDENT          = 0x00000001U,
+    CMM_DRIVER_VERSION = 0x00000002U,
 }
 
-enum uint CMM_DLL_VERSION = 0x00000003;
-enum uint CMM_VERSION = 0x00000004;
-enum uint CMM_DESCRIPTION = 0x00000005;
-enum uint CMM_LOGOICON = 0x00000006;
-enum uint CMS_FORWARD = 0x00000000;
-enum uint CMS_BACKWARD = 0x00000001;
-enum uint COLOR_MATCH_VERSION = 0x00000200;
-enum uint CMS_DISABLEICM = 0x00000001;
-enum uint CMS_ENABLEPROOFING = 0x00000002;
-enum uint CMS_SETRENDERINTENT = 0x00000004;
-enum uint CMS_SETPROOFINTENT = 0x00000008;
-enum uint CMS_SETMONITORPROFILE = 0x00000010;
-enum uint CMS_SETPRINTERPROFILE = 0x00000020;
-enum uint CMS_SETTARGETPROFILE = 0x00000040;
+enum uint CMM_DLL_VERSION = 0x00000003U;
+enum uint CMM_VERSION = 0x00000004U;
+enum uint CMM_DESCRIPTION = 0x00000005U;
+enum uint CMM_LOGOICON = 0x00000006U;
+enum uint CMS_FORWARD = 0x00000000U;
+enum uint CMS_BACKWARD = 0x00000001U;
+enum uint COLOR_MATCH_VERSION = 0x00000200U;
+enum uint CMS_DISABLEICM = 0x00000001U;
+enum uint CMS_ENABLEPROOFING = 0x00000002U;
+enum uint CMS_SETRENDERINTENT = 0x00000004U;
+enum uint CMS_SETPROOFINTENT = 0x00000008U;
+enum uint CMS_SETMONITORPROFILE = 0x00000010U;
+enum uint CMS_SETPRINTERPROFILE = 0x00000020U;
+enum uint CMS_SETTARGETPROFILE = 0x00000040U;
 
 enum : uint
 {
-    CMS_USEHOOK          = 0x00000080,
-    CMS_USEAPPLYCALLBACK = 0x00000100,
+    CMS_USEHOOK          = 0x00000080U,
+    CMS_USEAPPLYCALLBACK = 0x00000100U,
 }
 
-enum uint CMS_USEDESCRIPTION = 0x00000200;
+enum uint CMS_USEDESCRIPTION = 0x00000200U;
 
 enum : uint
 {
-    CMS_DISABLEINTENT       = 0x00000400,
-    CMS_DISABLERENDERINTENT = 0x00000800,
+    CMS_DISABLEINTENT       = 0x00000400U,
+    CMS_DISABLERENDERINTENT = 0x00000800U,
 }
 
 enum int CMS_MONITOROVERFLOW = 0x80000000;
@@ -306,7 +317,7 @@ struct HCOLORSPACE
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-logcolorspacea))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-logcolorspacea
 struct LOGCOLORSPACEA
 {
     uint         lcsSignature;
@@ -322,7 +333,7 @@ struct LOGCOLORSPACEA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-logcolorspacew))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-logcolorspacew
 struct LOGCOLORSPACEW
 {
     uint         lcsSignature;
@@ -338,7 +349,7 @@ struct LOGCOLORSPACEW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrcreatecolorspace))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrcreatecolorspace
 struct EMRCREATECOLORSPACE
 {
     EMR            emr;
@@ -347,7 +358,7 @@ struct EMRCREATECOLORSPACE
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrcreatecolorspacew))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-emrcreatecolorspacew
 struct EMRCREATECOLORSPACEW
 {
     EMR            emr;
@@ -379,13 +390,13 @@ struct JabColorF
     float b;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcsplugin/ns-wcsplugin-gamutshelltriangle))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcsplugin/ns-wcsplugin-gamutshelltriangle
 struct GamutShellTriangle
 {
     uint[3] aVertexIndex;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcsplugin/ns-wcsplugin-gamutshell))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcsplugin/ns-wcsplugin-gamutshell
 struct GamutShell
 {
     float               JMin;
@@ -396,7 +407,7 @@ struct GamutShell
     GamutShellTriangle* pTriangles;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcsplugin/ns-wcsplugin-primaryjabcolors))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcsplugin/ns-wcsplugin-primaryjabcolors
 struct PrimaryJabColors
 {
     JabColorF red;
@@ -409,7 +420,7 @@ struct PrimaryJabColors
     JabColorF white;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcsplugin/ns-wcsplugin-primaryxyzcolors))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcsplugin/ns-wcsplugin-primaryxyzcolors
 struct PrimaryXYZColors
 {
     XYZColorF red;
@@ -422,7 +433,7 @@ struct PrimaryXYZColors
     XYZColorF white;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcsplugin/ns-wcsplugin-gamutboundarydescription))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcsplugin/ns-wcsplugin-gamutboundarydescription
 struct GamutBoundaryDescription
 {
     PrimaryJabColors* pPrimaries;
@@ -433,14 +444,14 @@ struct GamutBoundaryDescription
     GamutShell*       pPossibleShell;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcsplugin/ns-wcsplugin-blackinformation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcsplugin/ns-wcsplugin-blackinformation
 struct BlackInformation
 {
     BOOL  fBlackOnly;
     float blackWeight;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/ns-icm-named_profile_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/ns-icm-named_profile_info
 struct NAMED_PROFILE_INFO
 {
     uint     dwFlags;
@@ -450,13 +461,13 @@ struct NAMED_PROFILE_INFO
     byte[32] szSuffix;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/ns-icm-graycolor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/ns-icm-graycolor
 struct GRAYCOLOR
 {
     ushort gray;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/ns-icm-rgbcolor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/ns-icm-rgbcolor
 struct RGBCOLOR
 {
     ushort red;
@@ -464,7 +475,7 @@ struct RGBCOLOR
     ushort blue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/ns-icm-cmykcolor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/ns-icm-cmykcolor
 struct CMYKCOLOR
 {
     ushort cyan;
@@ -473,7 +484,7 @@ struct CMYKCOLOR
     ushort black;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/ns-icm-xyzcolor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/ns-icm-xyzcolor
 struct XYZCOLOR
 {
     ushort X;
@@ -481,7 +492,7 @@ struct XYZCOLOR
     ushort Z;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/ns-icm-yxycolor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/ns-icm-yxycolor
 struct YxyCOLOR
 {
     ushort Y;
@@ -489,7 +500,7 @@ struct YxyCOLOR
     ushort y;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/ns-icm-labcolor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/ns-icm-labcolor
 struct LabCOLOR
 {
     ushort L;
@@ -497,7 +508,7 @@ struct LabCOLOR
     ushort b;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/ns-icm-generic3channel))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/ns-icm-generic3channel
 struct GENERIC3CHANNEL
 {
     ushort ch1;
@@ -505,34 +516,38 @@ struct GENERIC3CHANNEL
     ushort ch3;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/ns-icm-namedcolor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/ns-icm-namedcolor
 struct NAMEDCOLOR
 {
     uint dwIndex;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/ns-icm-hificolor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/ns-icm-hificolor
 struct HiFiCOLOR
 {
     ubyte[8] channel;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/ns-icm-color))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/ns-icm-color
 union COLOR
 {
-    GRAYCOLOR            gray;
-    RGBCOLOR             rgb;
-    CMYKCOLOR            cmyk;
-    XYZCOLOR             XYZ;
-    YxyCOLOR             Yxy;
-    LabCOLOR             Lab;
-    GENERIC3CHANNEL      gen3ch;
-    NAMEDCOLOR           named;
-    HiFiCOLOR            hifi;
-    _Anonymous_e__Struct Anonymous;
+    GRAYCOLOR       gray;
+    RGBCOLOR        rgb;
+    CMYKCOLOR       cmyk;
+    XYZCOLOR        XYZ;
+    YxyCOLOR        Yxy;
+    LabCOLOR        Lab;
+    GENERIC3CHANNEL gen3ch;
+    NAMEDCOLOR      named;
+    HiFiCOLOR       hifi;
+    struct
+    {
+        uint  reserved1;
+        void* reserved2;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/ns-icm-profileheader))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/ns-icm-profileheader
 struct PROFILEHEADER
 {
     uint      phSize;
@@ -554,7 +569,7 @@ struct PROFILEHEADER
     ubyte[44] phReserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/ns-icm-profile))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/ns-icm-profile
 struct PROFILE
 {
     uint  dwType;
@@ -563,7 +578,7 @@ struct PROFILE
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/ns-icm-enumtypea))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/ns-icm-enumtypea
 struct ENUMTYPEA
 {
     uint        dwSize;
@@ -589,7 +604,7 @@ struct ENUMTYPEA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/ns-icm-enumtypew))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/ns-icm-enumtypew
 struct ENUMTYPEW
 {
     uint         dwSize;
@@ -615,7 +630,7 @@ struct ENUMTYPEW
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/ns-icm-colormatchsetupw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/ns-icm-colormatchsetupw
 struct COLORMATCHSETUPW
 {
     uint          dwSize;
@@ -640,7 +655,7 @@ struct COLORMATCHSETUPW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/ns-icm-colormatchsetupa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/ns-icm-colormatchsetupa
 struct COLORMATCHSETUPA
 {
     uint          dwSize;
@@ -781,17 +796,17 @@ ptrdiff_t OpenColorProfileA(PROFILE* pProfile, uint dwDesiredAccess, uint dwShar
 @DllImport("mscms.dll")
 ptrdiff_t OpenColorProfileW(PROFILE* pProfile, uint dwDesiredAccess, uint dwShareMode, uint dwCreationMode);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-closecolorprofile))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-closecolorprofile
 @DllImport("mscms.dll")
 BOOL CloseColorProfile(ptrdiff_t hProfile);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-getcolorprofilefromhandle))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-getcolorprofilefromhandle
 @DllImport("mscms.dll")
 BOOL GetColorProfileFromHandle(ptrdiff_t hProfile, 
                                /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/ubyte* pProfile, 
                                uint* pcbProfile);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-iscolorprofilevalid))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-iscolorprofilevalid
 @DllImport("mscms.dll")
 BOOL IsColorProfileValid(ptrdiff_t hProfile, BOOL* pbValid);
 
@@ -803,75 +818,75 @@ BOOL CreateProfileFromLogColorSpaceA(LOGCOLORSPACEA* pLogColorSpace, ubyte** pPr
 @DllImport("mscms.dll")
 BOOL CreateProfileFromLogColorSpaceW(LOGCOLORSPACEW* pLogColorSpace, ubyte** pProfile);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-getcountcolorprofileelements))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-getcountcolorprofileelements
 @DllImport("mscms.dll")
 BOOL GetCountColorProfileElements(ptrdiff_t hProfile, uint* pnElementCount);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-getcolorprofileheader))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-getcolorprofileheader
 @DllImport("mscms.dll")
 BOOL GetColorProfileHeader(ptrdiff_t hProfile, PROFILEHEADER* pHeader);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-getcolorprofileelementtag))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-getcolorprofileelementtag
 @DllImport("mscms.dll")
 BOOL GetColorProfileElementTag(ptrdiff_t hProfile, uint dwIndex, uint* pTag);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-iscolorprofiletagpresent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-iscolorprofiletagpresent
 @DllImport("mscms.dll")
 BOOL IsColorProfileTagPresent(ptrdiff_t hProfile, uint tag, BOOL* pbPresent);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-getcolorprofileelement))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-getcolorprofileelement
 @DllImport("mscms.dll")
 BOOL GetColorProfileElement(ptrdiff_t hProfile, uint tag, uint dwOffset, uint* pcbElement, 
                             /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* pElement, 
                             BOOL* pbReference);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-setcolorprofileheader))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-setcolorprofileheader
 @DllImport("mscms.dll")
 BOOL SetColorProfileHeader(ptrdiff_t hProfile, PROFILEHEADER* pHeader);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-setcolorprofileelementsize))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-setcolorprofileelementsize
 @DllImport("mscms.dll")
 BOOL SetColorProfileElementSize(ptrdiff_t hProfile, uint tagType, uint pcbElement);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-setcolorprofileelement))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-setcolorprofileelement
 @DllImport("mscms.dll")
 BOOL SetColorProfileElement(ptrdiff_t hProfile, uint tag, uint dwOffset, uint* pcbElement, void* pElement);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-setcolorprofileelementreference))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-setcolorprofileelementreference
 @DllImport("mscms.dll")
 BOOL SetColorProfileElementReference(ptrdiff_t hProfile, uint newTag, uint refTag);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-getps2colorspacearray))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-getps2colorspacearray
 @DllImport("mscms.dll")
 BOOL GetPS2ColorSpaceArray(ptrdiff_t hProfile, uint dwIntent, uint dwCSAType, 
                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* pPS2ColorSpaceArray, 
                            uint* pcbPS2ColorSpaceArray, BOOL* pbBinary);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-getps2colorrenderingintent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-getps2colorrenderingintent
 @DllImport("mscms.dll")
 BOOL GetPS2ColorRenderingIntent(ptrdiff_t hProfile, uint dwIntent, 
                                 /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/ubyte* pBuffer, 
                                 uint* pcbPS2ColorRenderingIntent);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-getps2colorrenderingdictionary))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-getps2colorrenderingdictionary
 @DllImport("mscms.dll")
 BOOL GetPS2ColorRenderingDictionary(ptrdiff_t hProfile, uint dwIntent, 
                                     /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/ubyte* pPS2ColorRenderingDictionary, 
                                     uint* pcbPS2ColorRenderingDictionary, BOOL* pbBinary);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-getnamedprofileinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-getnamedprofileinfo
 @DllImport("mscms.dll")
 BOOL GetNamedProfileInfo(ptrdiff_t hProfile, NAMED_PROFILE_INFO* pNamedProfileInfo);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-convertcolornametoindex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-convertcolornametoindex
 @DllImport("mscms.dll")
 BOOL ConvertColorNameToIndex(ptrdiff_t hProfile, byte** paColorName, uint* paIndex, uint dwCount);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-convertindextocolorname))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-convertindextocolorname
 @DllImport("mscms.dll")
 BOOL ConvertIndexToColorName(ptrdiff_t hProfile, uint* paIndex, byte** paColorName, uint dwCount);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-createdevicelinkprofile))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-createdevicelinkprofile
 @DllImport("mscms.dll")
 BOOL CreateDeviceLinkProfile(ptrdiff_t* hProfile, uint nProfiles, uint* padwIntent, uint nIntents, uint dwFlags, 
                              ubyte** pProfileData, uint indexPreferredCMM);
@@ -886,36 +901,36 @@ ptrdiff_t CreateColorTransformA(LOGCOLORSPACEA* pLogColorSpace, ptrdiff_t hDestP
 ptrdiff_t CreateColorTransformW(LOGCOLORSPACEW* pLogColorSpace, ptrdiff_t hDestProfile, ptrdiff_t hTargetProfile, 
                                 uint dwFlags);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-createmultiprofiletransform))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-createmultiprofiletransform
 @DllImport("mscms.dll")
 ptrdiff_t CreateMultiProfileTransform(ptrdiff_t* pahProfiles, uint nProfiles, uint* padwIntent, uint nIntents, 
                                       uint dwFlags, uint indexPreferredCMM);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-deletecolortransform))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-deletecolortransform
 @DllImport("mscms.dll")
 BOOL DeleteColorTransform(ptrdiff_t hxform);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-translatebitmapbits))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-translatebitmapbits
 @DllImport("mscms.dll")
 BOOL TranslateBitmapBits(ptrdiff_t hColorTransform, void* pSrcBits, BMFORMAT bmInput, uint dwWidth, uint dwHeight, 
                          uint dwInputStride, void* pDestBits, BMFORMAT bmOutput, uint dwOutputStride, 
                          LPBMCALLBACKFN pfnCallBack, LPARAM ulCallbackData);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-checkbitmapbits))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-checkbitmapbits
 @DllImport("mscms.dll")
 BOOL CheckBitmapBits(ptrdiff_t hColorTransform, void* pSrcBits, BMFORMAT bmInput, uint dwWidth, uint dwHeight, 
                      uint dwStride, ubyte* paResult, LPBMCALLBACKFN pfnCallback, LPARAM lpCallbackData);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-translatecolors))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-translatecolors
 @DllImport("mscms.dll")
 BOOL TranslateColors(ptrdiff_t hColorTransform, COLOR* paInputColors, uint nColors, COLORTYPE ctInput, 
                      COLOR* paOutputColors, COLORTYPE ctOutput);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-checkcolors))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-checkcolors
 @DllImport("mscms.dll")
 BOOL CheckColors(ptrdiff_t hColorTransform, COLOR* paInputColors, uint nColors, COLORTYPE ctInput, ubyte* paResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-getcmminfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-getcmminfo
 @DllImport("mscms.dll")
 uint GetCMMInfo(ptrdiff_t hColorTransform, uint param1);
 
@@ -935,7 +950,7 @@ BOOL UnregisterCMMA(const(PSTR) pMachineName, uint cmmID);
 @DllImport("mscms.dll")
 BOOL UnregisterCMMW(const(PWSTR) pMachineName, uint cmmID);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-selectcmm))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-selectcmm
 @DllImport("mscms.dll")
 BOOL SelectCMM(uint dwCMMType);
 
@@ -1026,62 +1041,62 @@ BOOL SetupColorMatchingW(COLORMATCHSETUPW* pcms);
 @DllImport("ICMUI.dll")
 BOOL SetupColorMatchingA(COLORMATCHSETUPA* pcms);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-wcsassociatecolorprofilewithdevice))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-wcsassociatecolorprofilewithdevice
 @DllImport("mscms.dll")
 BOOL WcsAssociateColorProfileWithDevice(WCS_PROFILE_MANAGEMENT_SCOPE scope_, const(PWSTR) pProfileName, 
                                         const(PWSTR) pDeviceName);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-wcsdisassociatecolorprofilefromdevice))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-wcsdisassociatecolorprofilefromdevice
 @DllImport("mscms.dll")
 BOOL WcsDisassociateColorProfileFromDevice(WCS_PROFILE_MANAGEMENT_SCOPE scope_, const(PWSTR) pProfileName, 
                                            const(PWSTR) pDeviceName);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-wcsenumcolorprofilessize))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-wcsenumcolorprofilessize
 @DllImport("mscms.dll")
 BOOL WcsEnumColorProfilesSize(WCS_PROFILE_MANAGEMENT_SCOPE scope_, ENUMTYPEW* pEnumRecord, uint* pdwSize);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-wcsenumcolorprofiles))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-wcsenumcolorprofiles
 @DllImport("mscms.dll")
 BOOL WcsEnumColorProfiles(WCS_PROFILE_MANAGEMENT_SCOPE scope_, ENUMTYPEW* pEnumRecord, 
                           /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/ubyte* pBuffer, 
                           uint dwSize, uint* pnProfiles);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-wcsgetdefaultcolorprofilesize))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-wcsgetdefaultcolorprofilesize
 @DllImport("mscms.dll")
 BOOL WcsGetDefaultColorProfileSize(WCS_PROFILE_MANAGEMENT_SCOPE scope_, const(PWSTR) pDeviceName, 
                                    COLORPROFILETYPE cptColorProfileType, COLORPROFILESUBTYPE cpstColorProfileSubType, 
                                    uint dwProfileID, uint* pcbProfileName);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-wcsgetdefaultcolorprofile))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-wcsgetdefaultcolorprofile
 @DllImport("mscms.dll")
 BOOL WcsGetDefaultColorProfile(WCS_PROFILE_MANAGEMENT_SCOPE scope_, const(PWSTR) pDeviceName, 
                                COLORPROFILETYPE cptColorProfileType, COLORPROFILESUBTYPE cpstColorProfileSubType, 
                                uint dwProfileID, uint cbProfileName, 
                                /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/PWSTR pProfileName);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-wcssetdefaultcolorprofile))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-wcssetdefaultcolorprofile
 @DllImport("mscms.dll")
 BOOL WcsSetDefaultColorProfile(WCS_PROFILE_MANAGEMENT_SCOPE scope_, const(PWSTR) pDeviceName, 
                                COLORPROFILETYPE cptColorProfileType, COLORPROFILESUBTYPE cpstColorProfileSubType, 
                                uint dwProfileID, const(PWSTR) pProfileName);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-wcssetdefaultrenderingintent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-wcssetdefaultrenderingintent
 @DllImport("mscms.dll")
 BOOL WcsSetDefaultRenderingIntent(WCS_PROFILE_MANAGEMENT_SCOPE scope_, uint dwRenderingIntent);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-wcsgetdefaultrenderingintent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-wcsgetdefaultrenderingintent
 @DllImport("mscms.dll")
 BOOL WcsGetDefaultRenderingIntent(WCS_PROFILE_MANAGEMENT_SCOPE scope_, uint* pdwRenderingIntent);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-wcsgetuseperuserprofiles))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-wcsgetuseperuserprofiles
 @DllImport("mscms.dll")
 BOOL WcsGetUsePerUserProfiles(const(PWSTR) pDeviceName, uint dwDeviceClass, BOOL* pUsePerUserProfiles);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-wcssetuseperuserprofiles))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-wcssetuseperuserprofiles
 @DllImport("mscms.dll")
 BOOL WcsSetUsePerUserProfiles(const(PWSTR) pDeviceName, uint dwDeviceClass, BOOL usePerUserProfiles);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-wcstranslatecolors))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-wcstranslatecolors
 @DllImport("mscms.dll")
 BOOL WcsTranslateColors(ptrdiff_t hColorTransform, uint nColors, uint nInputChannels, COLORDATATYPE cdtInput, 
                         uint cbInput, 
@@ -1089,37 +1104,37 @@ BOOL WcsTranslateColors(ptrdiff_t hColorTransform, uint nColors, uint nInputChan
                         uint nOutputChannels, COLORDATATYPE cdtOutput, uint cbOutput, 
                         /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(8)))])*/void* pOutputData);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-wcscheckcolors))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-wcscheckcolors
 @DllImport("mscms.dll")
 BOOL WcsCheckColors(ptrdiff_t hColorTransform, uint nColors, uint nInputChannels, COLORDATATYPE cdtInput, 
                     uint cbInput, 
                     /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* pInputData, 
                     ubyte* paResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-cmcheckcolors))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-cmcheckcolors
 @DllImport("ICM32.dll")
 BOOL CMCheckColors(ptrdiff_t hcmTransform, COLOR* lpaInputColors, uint nColors, COLORTYPE ctInput, 
                    ubyte* lpaResult);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-cmcheckrgbs))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-cmcheckrgbs
 @DllImport("ICM32.dll")
 BOOL CMCheckRGBs(ptrdiff_t hcmTransform, void* lpSrcBits, BMFORMAT bmInput, uint dwWidth, uint dwHeight, 
                  uint dwStride, ubyte* lpaResult, LPBMCALLBACKFN pfnCallback, LPARAM ulCallbackData);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-cmconvertcolornametoindex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-cmconvertcolornametoindex
 @DllImport("ICM32.dll")
 BOOL CMConvertColorNameToIndex(ptrdiff_t hProfile, byte** paColorName, uint* paIndex, uint dwCount);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-cmconvertindextocolorname))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-cmconvertindextocolorname
 @DllImport("ICM32.dll")
 BOOL CMConvertIndexToColorName(ptrdiff_t hProfile, uint* paIndex, byte** paColorName, uint dwCount);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-cmcreatedevicelinkprofile))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-cmcreatedevicelinkprofile
 @DllImport("ICM32.dll")
 BOOL CMCreateDeviceLinkProfile(ptrdiff_t* pahProfiles, uint nProfiles, uint* padwIntents, uint nIntents, 
                                uint dwFlags, ubyte** lpProfileData);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-cmcreatemultiprofiletransform))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-cmcreatemultiprofiletransform
 @DllImport("ICM32.dll")
 ptrdiff_t CMCreateMultiProfileTransform(ptrdiff_t* pahProfiles, uint nProfiles, uint* padwIntents, uint nIntents, 
                                         uint dwFlags);
@@ -1141,7 +1156,7 @@ ptrdiff_t CMCreateTransformW(LOGCOLORSPACEW* lpColorSpace, void* lpDevCharacter,
 ptrdiff_t CMCreateTransformExt(LOGCOLORSPACEA* lpColorSpace, void* lpDevCharacter, void* lpTargetDevCharacter, 
                                uint dwFlags);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-cmcheckcolorsingamut))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-cmcheckcolorsingamut
 @DllImport("ICM32.dll")
 BOOL CMCheckColorsInGamut(ptrdiff_t hcmTransform, RGBTRIPLE* lpaRGBTriple, 
                           /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/ubyte* lpaResult, 
@@ -1151,11 +1166,11 @@ BOOL CMCheckColorsInGamut(ptrdiff_t hcmTransform, RGBTRIPLE* lpaRGBTriple,
 @DllImport("ICM32.dll")
 BOOL CMCreateProfile(LOGCOLORSPACEA* lpColorSpace, void** lpProfileData);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-cmtranslatergb))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-cmtranslatergb
 @DllImport("ICM32.dll")
 BOOL CMTranslateRGB(ptrdiff_t hcmTransform, COLORREF ColorRef, uint* lpColorRef, uint dwFlags);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-cmtranslatergbs))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-cmtranslatergbs
 @DllImport("ICM32.dll")
 BOOL CMTranslateRGBs(ptrdiff_t hcmTransform, void* lpSrcBits, BMFORMAT bmInput, uint dwWidth, uint dwHeight, 
                      uint dwStride, void* lpDestBits, BMFORMAT bmOutput, uint dwTranslateDirection);
@@ -1165,28 +1180,28 @@ BOOL CMTranslateRGBs(ptrdiff_t hcmTransform, void* lpSrcBits, BMFORMAT bmInput, 
 ptrdiff_t CMCreateTransformExtW(LOGCOLORSPACEW* lpColorSpace, void* lpDevCharacter, void* lpTargetDevCharacter, 
                                 uint dwFlags);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-cmdeletetransform))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-cmdeletetransform
 @DllImport("ICM32.dll")
 BOOL CMDeleteTransform(ptrdiff_t hcmTransform);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-cmgetinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-cmgetinfo
 @DllImport("ICM32.dll")
 uint CMGetInfo(uint dwInfo);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-cmgetnamedprofileinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-cmgetnamedprofileinfo
 @DllImport("ICM32.dll")
 BOOL CMGetNamedProfileInfo(ptrdiff_t hProfile, NAMED_PROFILE_INFO* pNamedProfileInfo);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-cmisprofilevalid))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-cmisprofilevalid
 @DllImport("ICM32.dll")
 BOOL CMIsProfileValid(ptrdiff_t hProfile, BOOL* lpbValid);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-cmtranslatecolors))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-cmtranslatecolors
 @DllImport("ICM32.dll")
 BOOL CMTranslateColors(ptrdiff_t hcmTransform, COLOR* lpaInputColors, uint nColors, COLORTYPE ctInput, 
                        COLOR* lpaOutputColors, COLORTYPE ctOutput);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-cmtranslatergbsext))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-cmtranslatergbsext
 @DllImport("ICM32.dll")
 BOOL CMTranslateRGBsExt(ptrdiff_t hcmTransform, void* lpSrcBits, BMFORMAT bmInput, uint dwWidth, uint dwHeight, 
                         uint dwInputStride, void* lpDestBits, BMFORMAT bmOutput, uint dwOutputStride, 
@@ -1202,47 +1217,47 @@ ptrdiff_t WcsOpenColorProfileA(PROFILE* pCDMPProfile, PROFILE* pCAMPProfile, PRO
 ptrdiff_t WcsOpenColorProfileW(PROFILE* pCDMPProfile, PROFILE* pCAMPProfile, PROFILE* pGMMPProfile, 
                                uint dwDesireAccess, uint dwShareMode, uint dwCreationMode, uint dwFlags);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-wcscreateiccprofile))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-wcscreateiccprofile
 @DllImport("mscms.dll")
 ptrdiff_t WcsCreateIccProfile(ptrdiff_t hWcsProfile, uint dwOptions);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-wcsgetcalibrationmanagementstate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-wcsgetcalibrationmanagementstate
 @DllImport("mscms.dll")
 BOOL WcsGetCalibrationManagementState(BOOL* pbIsEnabled);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-wcssetcalibrationmanagementstate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-wcssetcalibrationmanagementstate
 @DllImport("mscms.dll")
 BOOL WcsSetCalibrationManagementState(BOOL bIsEnabled);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-colorprofileadddisplayassociation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-colorprofileadddisplayassociation
 @DllImport("mscms.dll")
 HRESULT ColorProfileAddDisplayAssociation(WCS_PROFILE_MANAGEMENT_SCOPE scope_, const(PWSTR) profileName, 
                                           LUID targetAdapterID, uint sourceID, BOOL setAsDefault, 
                                           BOOL associateAsAdvancedColor);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-colorprofileremovedisplayassociation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-colorprofileremovedisplayassociation
 @DllImport("mscms.dll")
 HRESULT ColorProfileRemoveDisplayAssociation(WCS_PROFILE_MANAGEMENT_SCOPE scope_, const(PWSTR) profileName, 
                                              LUID targetAdapterID, uint sourceID, BOOL dissociateAdvancedColor);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-colorprofilesetdisplaydefaultassociation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-colorprofilesetdisplaydefaultassociation
 @DllImport("mscms.dll")
 HRESULT ColorProfileSetDisplayDefaultAssociation(WCS_PROFILE_MANAGEMENT_SCOPE scope_, const(PWSTR) profileName, 
                                                  COLORPROFILETYPE profileType, COLORPROFILESUBTYPE profileSubType, 
                                                  LUID targetAdapterID, uint sourceID);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-colorprofilegetdisplaylist))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-colorprofilegetdisplaylist
 @DllImport("mscms.dll")
 HRESULT ColorProfileGetDisplayList(WCS_PROFILE_MANAGEMENT_SCOPE scope_, LUID targetAdapterID, uint sourceID, 
                                    PWSTR** profileList, uint* profileCount);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-colorprofilegetdisplaydefault))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-colorprofilegetdisplaydefault
 @DllImport("mscms.dll")
 HRESULT ColorProfileGetDisplayDefault(WCS_PROFILE_MANAGEMENT_SCOPE scope_, LUID targetAdapterID, uint sourceID, 
                                       COLORPROFILETYPE profileType, COLORPROFILESUBTYPE profileSubType, 
                                       PWSTR* profileName);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/icm/nf-icm-colorprofilegetdisplayuserscope))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/icm/nf-icm-colorprofilegetdisplayuserscope
 @DllImport("mscms.dll")
 HRESULT ColorProfileGetDisplayUserScope(LUID targetAdapterID, uint sourceID, WCS_PROFILE_MANAGEMENT_SCOPE* scope_);
 
@@ -1254,45 +1269,45 @@ HRESULT ColorProfileGetDeviceCapabilities(WCS_PROFILE_MANAGEMENT_SCOPE scope_, L
 // Interfaces
 
 @GUID("1cd63475-07c4-46fe-a903-d655316d11fd")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcsplugin/nn-wcsplugin-idevicemodelplugin))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcsplugin/nn-wcsplugin-idevicemodelplugin
 interface IDeviceModelPlugIn : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcsplugin/nf-wcsplugin-idevicemodelplugin-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcsplugin/nf-wcsplugin-idevicemodelplugin-initialize
     HRESULT Initialize(BSTR bstrXml, uint cNumModels, uint iModelPosition);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcsplugin/nf-wcsplugin-idevicemodelplugin-getnumchannels))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcsplugin/nf-wcsplugin-idevicemodelplugin-getnumchannels
     HRESULT GetNumChannels(uint* pNumChannels);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcsplugin/nf-wcsplugin-idevicemodelplugin-devicetocolorimetriccolors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcsplugin/nf-wcsplugin-idevicemodelplugin-devicetocolorimetriccolors
     HRESULT DeviceToColorimetricColors(uint cColors, uint cChannels, const(float)* pDeviceValues, 
                                        XYZColorF* pXYZColors);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcsplugin/nf-wcsplugin-idevicemodelplugin-colorimetrictodevicecolors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcsplugin/nf-wcsplugin-idevicemodelplugin-colorimetrictodevicecolors
     HRESULT ColorimetricToDeviceColors(uint cColors, uint cChannels, const(XYZColorF)* pXYZColors, 
                                        float* pDeviceValues);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcsplugin/nf-wcsplugin-idevicemodelplugin-colorimetrictodevicecolorswithblack))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcsplugin/nf-wcsplugin-idevicemodelplugin-colorimetrictodevicecolorswithblack
     HRESULT ColorimetricToDeviceColorsWithBlack(uint cColors, uint cChannels, const(XYZColorF)* pXYZColors, 
                                                 const(BlackInformation)* pBlackInformation, float* pDeviceValues);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcsplugin/nf-wcsplugin-idevicemodelplugin-settransformdevicemodelinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcsplugin/nf-wcsplugin-idevicemodelplugin-settransformdevicemodelinfo
     HRESULT SetTransformDeviceModelInfo(uint iModelPosition, IDeviceModelPlugIn pIDeviceModelOther);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcsplugin/nf-wcsplugin-idevicemodelplugin-getprimarysamples))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcsplugin/nf-wcsplugin-idevicemodelplugin-getprimarysamples
     HRESULT GetPrimarySamples(PrimaryXYZColors* pPrimaryColor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcsplugin/nf-wcsplugin-idevicemodelplugin-getgamutboundarymeshsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcsplugin/nf-wcsplugin-idevicemodelplugin-getgamutboundarymeshsize
     HRESULT GetGamutBoundaryMeshSize(uint* pNumVertices, uint* pNumTriangles);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcsplugin/nf-wcsplugin-idevicemodelplugin-getgamutboundarymesh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcsplugin/nf-wcsplugin-idevicemodelplugin-getgamutboundarymesh
     HRESULT GetGamutBoundaryMesh(uint cChannels, uint cVertices, uint cTriangles, float* pVertices, 
                                  GamutShellTriangle* pTriangles);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcsplugin/nf-wcsplugin-idevicemodelplugin-getneutralaxissize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcsplugin/nf-wcsplugin-idevicemodelplugin-getneutralaxissize
     HRESULT GetNeutralAxisSize(uint* pcColors);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcsplugin/nf-wcsplugin-idevicemodelplugin-getneutralaxis))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcsplugin/nf-wcsplugin-idevicemodelplugin-getneutralaxis
     HRESULT GetNeutralAxis(uint cColors, XYZColorF* pXYZColors);
 }
 
 @GUID("2dd80115-ad1e-41f6-a219-a4f4b583d1f9")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcsplugin/nn-wcsplugin-igamutmapmodelplugin))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcsplugin/nn-wcsplugin-igamutmapmodelplugin
 interface IGamutMapModelPlugIn : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcsplugin/nf-wcsplugin-igamutmapmodelplugin-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcsplugin/nf-wcsplugin-igamutmapmodelplugin-initialize
     HRESULT Initialize(BSTR bstrXml, IDeviceModelPlugIn pSrcPlugIn, IDeviceModelPlugIn pDestPlugIn, 
                        GamutBoundaryDescription* pSrcGBD, GamutBoundaryDescription* pDestGBD);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcsplugin/nf-wcsplugin-igamutmapmodelplugin-sourcetodestinationappearancecolors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcsplugin/nf-wcsplugin-igamutmapmodelplugin-sourcetodestinationappearancecolors
     HRESULT SourceToDestinationAppearanceColors(uint cColors, const(JChColorF)* pInputColors, 
                                                 JChColorF* pOutputColors);
 }

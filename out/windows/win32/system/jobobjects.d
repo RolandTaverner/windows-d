@@ -3,8 +3,8 @@
 module windows.win32.system.jobobjects;
 
 public import windows.core;
-public import windows.win32.foundation : BOOL, HANDLE, PSTR, PWSTR;
-public import windows.win32.security : SECURITY_ATTRIBUTES, TOKEN_GROUPS, TOKEN_PRIVILEGES;
+public import windows.win32.foundation.foundation : BOOL, HANDLE, PSTR, PWSTR;
+public import windows.win32.security.security : SECURITY_ATTRIBUTES, TOKEN_GROUPS, TOKEN_PRIVILEGES;
 public import windows.win32.system.threading : IO_COUNTERS;
 
 extern(Windows) @nogc nothrow:
@@ -12,75 +12,81 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias JOB_OBJECT_LIMIT = uint;
 enum : uint
 {
-    JOB_OBJECT_LIMIT_WORKINGSET                 = 0x00000001,
-    JOB_OBJECT_LIMIT_PROCESS_TIME               = 0x00000002,
-    JOB_OBJECT_LIMIT_JOB_TIME                   = 0x00000004,
-    JOB_OBJECT_LIMIT_ACTIVE_PROCESS             = 0x00000008,
-    JOB_OBJECT_LIMIT_AFFINITY                   = 0x00000010,
-    JOB_OBJECT_LIMIT_PRIORITY_CLASS             = 0x00000020,
-    JOB_OBJECT_LIMIT_PRESERVE_JOB_TIME          = 0x00000040,
-    JOB_OBJECT_LIMIT_SCHEDULING_CLASS           = 0x00000080,
-    JOB_OBJECT_LIMIT_PROCESS_MEMORY             = 0x00000100,
-    JOB_OBJECT_LIMIT_JOB_MEMORY                 = 0x00000200,
-    JOB_OBJECT_LIMIT_JOB_MEMORY_HIGH            = 0x00000200,
-    JOB_OBJECT_LIMIT_DIE_ON_UNHANDLED_EXCEPTION = 0x00000400,
-    JOB_OBJECT_LIMIT_BREAKAWAY_OK               = 0x00000800,
-    JOB_OBJECT_LIMIT_SILENT_BREAKAWAY_OK        = 0x00001000,
-    JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE          = 0x00002000,
-    JOB_OBJECT_LIMIT_SUBSET_AFFINITY            = 0x00004000,
-    JOB_OBJECT_LIMIT_JOB_MEMORY_LOW             = 0x00008000,
-    JOB_OBJECT_LIMIT_JOB_READ_BYTES             = 0x00010000,
-    JOB_OBJECT_LIMIT_JOB_WRITE_BYTES            = 0x00020000,
-    JOB_OBJECT_LIMIT_RATE_CONTROL               = 0x00040000,
-    JOB_OBJECT_LIMIT_CPU_RATE_CONTROL           = 0x00040000,
-    JOB_OBJECT_LIMIT_IO_RATE_CONTROL            = 0x00080000,
-    JOB_OBJECT_LIMIT_NET_RATE_CONTROL           = 0x00100000,
-    JOB_OBJECT_LIMIT_VALID_FLAGS                = 0x0007ffff,
-    JOB_OBJECT_BASIC_LIMIT_VALID_FLAGS          = 0x000000ff,
-    JOB_OBJECT_EXTENDED_LIMIT_VALID_FLAGS       = 0x00007fff,
-    JOB_OBJECT_NOTIFICATION_LIMIT_VALID_FLAGS   = 0x001f8204,
+    JOB_OBJECT_LIMIT_WORKINGSET                 = 0x00000001U,
+    JOB_OBJECT_LIMIT_PROCESS_TIME               = 0x00000002U,
+    JOB_OBJECT_LIMIT_JOB_TIME                   = 0x00000004U,
+    JOB_OBJECT_LIMIT_ACTIVE_PROCESS             = 0x00000008U,
+    JOB_OBJECT_LIMIT_AFFINITY                   = 0x00000010U,
+    JOB_OBJECT_LIMIT_PRIORITY_CLASS             = 0x00000020U,
+    JOB_OBJECT_LIMIT_PRESERVE_JOB_TIME          = 0x00000040U,
+    JOB_OBJECT_LIMIT_SCHEDULING_CLASS           = 0x00000080U,
+    JOB_OBJECT_LIMIT_PROCESS_MEMORY             = 0x00000100U,
+    JOB_OBJECT_LIMIT_JOB_MEMORY                 = 0x00000200U,
+    JOB_OBJECT_LIMIT_JOB_MEMORY_HIGH            = 0x00000200U,
+    JOB_OBJECT_LIMIT_DIE_ON_UNHANDLED_EXCEPTION = 0x00000400U,
+    JOB_OBJECT_LIMIT_BREAKAWAY_OK               = 0x00000800U,
+    JOB_OBJECT_LIMIT_SILENT_BREAKAWAY_OK        = 0x00001000U,
+    JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE          = 0x00002000U,
+    JOB_OBJECT_LIMIT_SUBSET_AFFINITY            = 0x00004000U,
+    JOB_OBJECT_LIMIT_JOB_MEMORY_LOW             = 0x00008000U,
+    JOB_OBJECT_LIMIT_JOB_READ_BYTES             = 0x00010000U,
+    JOB_OBJECT_LIMIT_JOB_WRITE_BYTES            = 0x00020000U,
+    JOB_OBJECT_LIMIT_RATE_CONTROL               = 0x00040000U,
+    JOB_OBJECT_LIMIT_CPU_RATE_CONTROL           = 0x00040000U,
+    JOB_OBJECT_LIMIT_IO_RATE_CONTROL            = 0x00080000U,
+    JOB_OBJECT_LIMIT_NET_RATE_CONTROL           = 0x00100000U,
+    JOB_OBJECT_LIMIT_VALID_FLAGS                = 0x0007ffffU,
+    JOB_OBJECT_BASIC_LIMIT_VALID_FLAGS          = 0x000000ffU,
+    JOB_OBJECT_EXTENDED_LIMIT_VALID_FLAGS       = 0x00007fffU,
+    JOB_OBJECT_NOTIFICATION_LIMIT_VALID_FLAGS   = 0x001f8204U,
 }
+
 alias JOB_OBJECT_UILIMIT = uint;
 enum : uint
 {
-    JOB_OBJECT_UILIMIT_NONE             = 0x00000000,
-    JOB_OBJECT_UILIMIT_HANDLES          = 0x00000001,
-    JOB_OBJECT_UILIMIT_READCLIPBOARD    = 0x00000002,
-    JOB_OBJECT_UILIMIT_WRITECLIPBOARD   = 0x00000004,
-    JOB_OBJECT_UILIMIT_SYSTEMPARAMETERS = 0x00000008,
-    JOB_OBJECT_UILIMIT_DISPLAYSETTINGS  = 0x00000010,
-    JOB_OBJECT_UILIMIT_GLOBALATOMS      = 0x00000020,
-    JOB_OBJECT_UILIMIT_DESKTOP          = 0x00000040,
-    JOB_OBJECT_UILIMIT_EXITWINDOWS      = 0x00000080,
+    JOB_OBJECT_UILIMIT_NONE             = 0x00000000U,
+    JOB_OBJECT_UILIMIT_HANDLES          = 0x00000001U,
+    JOB_OBJECT_UILIMIT_READCLIPBOARD    = 0x00000002U,
+    JOB_OBJECT_UILIMIT_WRITECLIPBOARD   = 0x00000004U,
+    JOB_OBJECT_UILIMIT_SYSTEMPARAMETERS = 0x00000008U,
+    JOB_OBJECT_UILIMIT_DISPLAYSETTINGS  = 0x00000010U,
+    JOB_OBJECT_UILIMIT_GLOBALATOMS      = 0x00000020U,
+    JOB_OBJECT_UILIMIT_DESKTOP          = 0x00000040U,
+    JOB_OBJECT_UILIMIT_EXITWINDOWS      = 0x00000080U,
 }
+
 alias JOB_OBJECT_SECURITY = uint;
 enum : uint
 {
-    JOB_OBJECT_SECURITY_NO_ADMIN         = 0x00000001,
-    JOB_OBJECT_SECURITY_RESTRICTED_TOKEN = 0x00000002,
-    JOB_OBJECT_SECURITY_ONLY_TOKEN       = 0x00000004,
-    JOB_OBJECT_SECURITY_FILTER_TOKENS    = 0x00000008,
-    JOB_OBJECT_SECURITY_VALID_FLAGS      = 0x0000000f,
+    JOB_OBJECT_SECURITY_NO_ADMIN         = 0x00000001U,
+    JOB_OBJECT_SECURITY_RESTRICTED_TOKEN = 0x00000002U,
+    JOB_OBJECT_SECURITY_ONLY_TOKEN       = 0x00000004U,
+    JOB_OBJECT_SECURITY_FILTER_TOKENS    = 0x00000008U,
+    JOB_OBJECT_SECURITY_VALID_FLAGS      = 0x0000000fU,
 }
+
 alias JOB_OBJECT_CPU_RATE_CONTROL = uint;
 enum : uint
 {
-    JOB_OBJECT_CPU_RATE_CONTROL_ENABLE       = 0x00000001,
-    JOB_OBJECT_CPU_RATE_CONTROL_WEIGHT_BASED = 0x00000002,
-    JOB_OBJECT_CPU_RATE_CONTROL_HARD_CAP     = 0x00000004,
-    JOB_OBJECT_CPU_RATE_CONTROL_NOTIFY       = 0x00000008,
-    JOB_OBJECT_CPU_RATE_CONTROL_MIN_MAX_RATE = 0x00000010,
-    JOB_OBJECT_CPU_RATE_CONTROL_VALID_FLAGS  = 0x0000003f,
+    JOB_OBJECT_CPU_RATE_CONTROL_ENABLE       = 0x00000001U,
+    JOB_OBJECT_CPU_RATE_CONTROL_WEIGHT_BASED = 0x00000002U,
+    JOB_OBJECT_CPU_RATE_CONTROL_HARD_CAP     = 0x00000004U,
+    JOB_OBJECT_CPU_RATE_CONTROL_NOTIFY       = 0x00000008U,
+    JOB_OBJECT_CPU_RATE_CONTROL_MIN_MAX_RATE = 0x00000010U,
+    JOB_OBJECT_CPU_RATE_CONTROL_VALID_FLAGS  = 0x0000003fU,
 }
+
 alias JOB_OBJECT_TERMINATE_AT_END_ACTION = uint;
 enum : uint
 {
-    JOB_OBJECT_TERMINATE_AT_END_OF_JOB = 0x00000000,
-    JOB_OBJECT_POST_AT_END_OF_JOB      = 0x00000001,
+    JOB_OBJECT_TERMINATE_AT_END_OF_JOB = 0x00000000U,
+    JOB_OBJECT_POST_AT_END_OF_JOB      = 0x00000001U,
 }
+
 alias JOBOBJECT_RATE_CONTROL_TOLERANCE = int;
 enum : int
 {
@@ -88,6 +94,7 @@ enum : int
     ToleranceMedium = 0x00000002,
     ToleranceHigh   = 0x00000003,
 }
+
 alias JOBOBJECT_RATE_CONTROL_TOLERANCE_INTERVAL = int;
 enum : int
 {
@@ -95,7 +102,8 @@ enum : int
     ToleranceIntervalMedium = 0x00000002,
     ToleranceIntervalLong   = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-job_object_net_rate_control_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-job_object_net_rate_control_flags
 alias JOB_OBJECT_NET_RATE_CONTROL_FLAGS = int;
 enum : int
 {
@@ -104,6 +112,7 @@ enum : int
     JOB_OBJECT_NET_RATE_CONTROL_DSCP_TAG      = 0x00000004,
     JOB_OBJECT_NET_RATE_CONTROL_VALID_FLAGS   = 0x00000007,
 }
+
 alias JOB_OBJECT_IO_RATE_CONTROL_FLAGS = int;
 enum : int
 {
@@ -113,6 +122,7 @@ enum : int
     JOB_OBJECT_IO_RATE_CONTROL_FORCE_UNIT_ACCESS_ON_SOFT_CAP = 0x00000008,
     JOB_OBJECT_IO_RATE_CONTROL_VALID_FLAGS                   = 0x0000000f,
 }
+
 alias JOBOBJECT_IO_ATTRIBUTION_CONTROL_FLAGS = int;
 enum : int
 {
@@ -120,6 +130,7 @@ enum : int
     JOBOBJECT_IO_ATTRIBUTION_CONTROL_DISABLE     = 0x00000002,
     JOBOBJECT_IO_ATTRIBUTION_CONTROL_VALID_FLAGS = 0x00000003,
 }
+
 alias JOBOBJECTINFOCLASS = int;
 enum : int
 {
@@ -180,7 +191,7 @@ enum : int
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/jobapi2/ns-jobapi2-jobobject_io_rate_control_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/jobapi2/ns-jobapi2-jobobject_io_rate_control_information
 struct JOBOBJECT_IO_RATE_CONTROL_INFORMATION
 {
     long         MaxIops;
@@ -198,7 +209,7 @@ struct JOB_SET_ARRAY
     uint   Flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_basic_accounting_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_basic_accounting_information
 struct JOBOBJECT_BASIC_ACCOUNTING_INFORMATION
 {
     long TotalUserTime;
@@ -211,7 +222,7 @@ struct JOBOBJECT_BASIC_ACCOUNTING_INFORMATION
     uint TotalTerminatedProcesses;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_basic_limit_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_basic_limit_information
 struct JOBOBJECT_BASIC_LIMIT_INFORMATION
 {
     long             PerProcessUserTimeLimit;
@@ -225,7 +236,7 @@ struct JOBOBJECT_BASIC_LIMIT_INFORMATION
     uint             SchedulingClass;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_extended_limit_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_extended_limit_information
 struct JOBOBJECT_EXTENDED_LIMIT_INFORMATION
 {
     JOBOBJECT_BASIC_LIMIT_INFORMATION BasicLimitInformation;
@@ -236,7 +247,7 @@ struct JOBOBJECT_EXTENDED_LIMIT_INFORMATION
     size_t      PeakJobMemoryUsed;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_basic_process_id_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_basic_process_id_list
 struct JOBOBJECT_BASIC_PROCESS_ID_LIST
 {
     uint NumberOfAssignedProcesses;
@@ -244,13 +255,13 @@ struct JOBOBJECT_BASIC_PROCESS_ID_LIST
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/size_t[1] ProcessIdList;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_basic_ui_restrictions))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_basic_ui_restrictions
 struct JOBOBJECT_BASIC_UI_RESTRICTIONS
 {
     JOB_OBJECT_UILIMIT UIRestrictionsClass;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_security_limit_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_security_limit_information
 struct JOBOBJECT_SECURITY_LIMIT_INFORMATION
 {
     JOB_OBJECT_SECURITY SecurityLimitFlags;
@@ -260,20 +271,20 @@ struct JOBOBJECT_SECURITY_LIMIT_INFORMATION
     TOKEN_GROUPS*       RestrictedSids;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_end_of_job_time_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_end_of_job_time_information
 struct JOBOBJECT_END_OF_JOB_TIME_INFORMATION
 {
     JOB_OBJECT_TERMINATE_AT_END_ACTION EndOfJobTimeAction;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_associate_completion_port))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_associate_completion_port
 struct JOBOBJECT_ASSOCIATE_COMPLETION_PORT
 {
     void*  CompletionKey;
     HANDLE CompletionPort;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_basic_and_io_accounting_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_basic_and_io_accounting_information
 struct JOBOBJECT_BASIC_AND_IO_ACCOUNTING_INFORMATION
 {
     JOBOBJECT_BASIC_ACCOUNTING_INFORMATION BasicInfo;
@@ -285,7 +296,7 @@ struct JOBOBJECT_JOBSET_INFORMATION
     uint MemberLevel;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_notification_limit_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_notification_limit_information
 struct JOBOBJECT_NOTIFICATION_LIMIT_INFORMATION
 {
     ulong            IoReadBytesLimit;
@@ -297,24 +308,36 @@ struct JOBOBJECT_NOTIFICATION_LIMIT_INFORMATION
     JOB_OBJECT_LIMIT LimitFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_notification_limit_information_2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_notification_limit_information_2
 struct JOBOBJECT_NOTIFICATION_LIMIT_INFORMATION_2
 {
-    ulong                IoReadBytesLimit;
-    ulong                IoWriteBytesLimit;
-    long                 PerJobUserTimeLimit;
-    _Anonymous1_e__Union Anonymous1;
-    _Anonymous2_e__Union Anonymous2;
-    _Anonymous3_e__Union Anonymous3;
-    JOB_OBJECT_LIMIT     LimitFlags;
+    ulong            IoReadBytesLimit;
+    ulong            IoWriteBytesLimit;
+    long             PerJobUserTimeLimit;
+    union
+    {
+        ulong JobHighMemoryLimit;
+        ulong JobMemoryLimit;
+    }
+    union
+    {
+        JOBOBJECT_RATE_CONTROL_TOLERANCE RateControlTolerance;
+        JOBOBJECT_RATE_CONTROL_TOLERANCE CpuRateControlTolerance;
+    }
+    union
+    {
+        JOBOBJECT_RATE_CONTROL_TOLERANCE_INTERVAL RateControlToleranceInterval;
+        JOBOBJECT_RATE_CONTROL_TOLERANCE_INTERVAL CpuRateControlToleranceInterval;
+    }
+    JOB_OBJECT_LIMIT LimitFlags;
     JOBOBJECT_RATE_CONTROL_TOLERANCE IoRateControlTolerance;
-    ulong                JobLowMemoryLimit;
+    ulong            JobLowMemoryLimit;
     JOBOBJECT_RATE_CONTROL_TOLERANCE_INTERVAL IoRateControlToleranceInterval;
     JOBOBJECT_RATE_CONTROL_TOLERANCE NetRateControlTolerance;
     JOBOBJECT_RATE_CONTROL_TOLERANCE_INTERVAL NetRateControlToleranceInterval;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_limit_violation_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_limit_violation_information
 struct JOBOBJECT_LIMIT_VIOLATION_INFORMATION
 {
     JOB_OBJECT_LIMIT LimitFlags;
@@ -331,36 +354,57 @@ struct JOBOBJECT_LIMIT_VIOLATION_INFORMATION
     JOBOBJECT_RATE_CONTROL_TOLERANCE RateControlToleranceLimit;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_limit_violation_information_2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_limit_violation_information_2
 struct JOBOBJECT_LIMIT_VIOLATION_INFORMATION_2
 {
-    JOB_OBJECT_LIMIT     LimitFlags;
-    JOB_OBJECT_LIMIT     ViolationLimitFlags;
-    ulong                IoReadBytes;
-    ulong                IoReadBytesLimit;
-    ulong                IoWriteBytes;
-    ulong                IoWriteBytesLimit;
-    long                 PerJobUserTime;
-    long                 PerJobUserTimeLimit;
-    ulong                JobMemory;
-    _Anonymous1_e__Union Anonymous1;
-    _Anonymous2_e__Union Anonymous2;
-    _Anonymous3_e__Union Anonymous3;
-    ulong                JobLowMemoryLimit;
+    JOB_OBJECT_LIMIT LimitFlags;
+    JOB_OBJECT_LIMIT ViolationLimitFlags;
+    ulong            IoReadBytes;
+    ulong            IoReadBytesLimit;
+    ulong            IoWriteBytes;
+    ulong            IoWriteBytesLimit;
+    long             PerJobUserTime;
+    long             PerJobUserTimeLimit;
+    ulong            JobMemory;
+    union
+    {
+        ulong JobHighMemoryLimit;
+        ulong JobMemoryLimit;
+    }
+    union
+    {
+        JOBOBJECT_RATE_CONTROL_TOLERANCE RateControlTolerance;
+        JOBOBJECT_RATE_CONTROL_TOLERANCE CpuRateControlTolerance;
+    }
+    union
+    {
+        JOBOBJECT_RATE_CONTROL_TOLERANCE RateControlToleranceLimit;
+        JOBOBJECT_RATE_CONTROL_TOLERANCE CpuRateControlToleranceLimit;
+    }
+    ulong            JobLowMemoryLimit;
     JOBOBJECT_RATE_CONTROL_TOLERANCE IoRateControlTolerance;
     JOBOBJECT_RATE_CONTROL_TOLERANCE IoRateControlToleranceLimit;
     JOBOBJECT_RATE_CONTROL_TOLERANCE NetRateControlTolerance;
     JOBOBJECT_RATE_CONTROL_TOLERANCE NetRateControlToleranceLimit;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_cpu_rate_control_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_cpu_rate_control_information
 struct JOBOBJECT_CPU_RATE_CONTROL_INFORMATION
 {
     JOB_OBJECT_CPU_RATE_CONTROL ControlFlags;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        uint CpuRate;
+        uint Weight;
+        struct
+        {
+            ushort MinRate;
+            ushort MaxRate;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_net_rate_control_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_net_rate_control_information
 struct JOBOBJECT_NET_RATE_CONTROL_INFORMATION
 {
     ulong MaxBandwidth;

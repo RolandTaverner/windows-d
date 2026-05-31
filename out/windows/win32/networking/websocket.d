@@ -3,14 +3,15 @@
 module windows.win32.networking.websocket;
 
 public import windows.core;
-public import windows.win32.foundation : HRESULT, PSTR;
+public import windows.win32.foundation.foundation : HRESULT, PSTR;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/websocket/ne-websocket-web_socket_close_status))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/websocket/ne-websocket-web_socket_close_status
 alias WEB_SOCKET_CLOSE_STATUS = int;
 enum : int
 {
@@ -27,7 +28,8 @@ enum : int
     WEB_SOCKET_SERVER_ERROR_CLOSE_STATUS           = 0x000003f3,
     WEB_SOCKET_SECURE_HANDSHAKE_ERROR_CLOSE_STATUS = 0x000003f7,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/websocket/ne-websocket-web_socket_property_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/websocket/ne-websocket-web_socket_property_type
 alias WEB_SOCKET_PROPERTY_TYPE = int;
 enum : int
 {
@@ -39,7 +41,8 @@ enum : int
     WEB_SOCKET_KEEPALIVE_INTERVAL_PROPERTY_TYPE        = 0x00000005,
     WEB_SOCKET_SUPPORTED_VERSIONS_PROPERTY_TYPE        = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/websocket/ne-websocket-web_socket_action_queue))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/websocket/ne-websocket-web_socket_action_queue
 alias WEB_SOCKET_ACTION_QUEUE = int;
 enum : int
 {
@@ -47,7 +50,8 @@ enum : int
     WEB_SOCKET_RECEIVE_ACTION_QUEUE = 0x00000002,
     WEB_SOCKET_ALL_ACTION_QUEUE     = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/websocket/ne-websocket-web_socket_buffer_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/websocket/ne-websocket-web_socket_buffer_type
 alias WEB_SOCKET_BUFFER_TYPE = int;
 enum : int
 {
@@ -59,7 +63,8 @@ enum : int
     WEB_SOCKET_PING_PONG_BUFFER_TYPE        = 0x80000005,
     WEB_SOCKET_UNSOLICITED_PONG_BUFFER_TYPE = 0x80000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/websocket/ne-websocket-web_socket_action))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/websocket/ne-websocket-web_socket_action
 alias WEB_SOCKET_ACTION = int;
 enum : int
 {
@@ -73,7 +78,7 @@ enum : int
 // Constants
 
 
-enum uint WEB_SOCKET_MAX_CLOSE_REASON_LENGTH = 0x0000007b;
+enum uint WEB_SOCKET_MAX_CLOSE_REASON_LENGTH = 0x0000007bU;
 
 // Structs
 
@@ -86,7 +91,7 @@ struct WEB_SOCKET_HANDLE
     void* Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/websocket/ns-websocket-web_socket_property))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/websocket/ns-websocket-web_socket_property
 struct WEB_SOCKET_PROPERTY
 {
     WEB_SOCKET_PROPERTY_TYPE Type;
@@ -94,7 +99,7 @@ struct WEB_SOCKET_PROPERTY
     uint  ulValueSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/websocket/ns-websocket-web_socket_http_header))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/websocket/ns-websocket-web_socket_http_header
 struct WEB_SOCKET_HTTP_HEADER
 {
     /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR pcName;
@@ -103,11 +108,20 @@ struct WEB_SOCKET_HTTP_HEADER
     uint ulValueLength;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/websocket/ns-websocket-web_socket_buffer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/websocket/ns-websocket-web_socket_buffer
 union WEB_SOCKET_BUFFER
 {
-    _Data_e__Struct Data;
-    _CloseStatus_e__Struct CloseStatus;
+    struct Data
+    {
+        ubyte* pbBuffer;
+        uint   ulBufferLength;
+    }
+    struct CloseStatus
+    {
+        ubyte* pbReason;
+        uint   ulReasonLength;
+        ushort usStatus;
+    }
 }
 
 // Functions

@@ -3,11 +3,11 @@
 module windows.win32.ui.shell.propertiessystem;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BSTR, CHAR, HANDLE, HRESULT, HWND,
-                                         POINTL, POINTS, PROPERTYKEY, PSTR, PWSTR,
-                                         RECTL;
-public import windows.win32.system.com : IBindCtx, IStream, IUnknown;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, HANDLE, HRESULT,
+                                                    HWND, POINTL, POINTS, PROPERTYKEY,
+                                                    PSTR, PWSTR, RECTL;
+public import windows.win32.system.com.com : IBindCtx, IStream, IUnknown;
 public import windows.win32.system.com.structuredstorage : IPropertyBag, IPropertySetStorage,
                                                            IPropertyStorage, PROPSPEC,
                                                            PROPVARIANT;
@@ -20,7 +20,8 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/ne-propsys-getpropertystoreflags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/ne-propsys-getpropertystoreflags
 alias GETPROPERTYSTOREFLAGS = int;
 enum : int
 {
@@ -40,7 +41,8 @@ enum : int
     GPS_VOLATILEPROPERTIESONLY  = 0x00001000,
     GPS_MASK_VALID              = 0x00001fff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/ne-propsys-pka_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/ne-propsys-pka_flags
 alias PKA_FLAGS = int;
 enum : int
 {
@@ -48,7 +50,8 @@ enum : int
     PKA_APPEND = 0x00000001,
     PKA_DELETE = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/ne-propsys-psc_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/ne-propsys-psc_state
 alias PSC_STATE = int;
 enum : int
 {
@@ -57,6 +60,7 @@ enum : int
     PSC_DIRTY       = 0x00000002,
     PSC_READONLY    = 0x00000003,
 }
+
 alias PROPENUMTYPE = int;
 enum : int
 {
@@ -65,28 +69,30 @@ enum : int
     PET_DEFAULTVALUE  = 0x00000002,
     PET_ENDRANGE      = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/ne-propsys-propdesc_type_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/ne-propsys-propdesc_type_flags
 alias PROPDESC_TYPE_FLAGS = uint;
 enum : uint
 {
-    PDTF_DEFAULT                   = 0x00000000,
-    PDTF_MULTIPLEVALUES            = 0x00000001,
-    PDTF_ISINNATE                  = 0x00000002,
-    PDTF_ISGROUP                   = 0x00000004,
-    PDTF_CANGROUPBY                = 0x00000008,
-    PDTF_CANSTACKBY                = 0x00000010,
-    PDTF_ISTREEPROPERTY            = 0x00000020,
-    PDTF_INCLUDEINFULLTEXTQUERY    = 0x00000040,
-    PDTF_ISVIEWABLE                = 0x00000080,
-    PDTF_ISQUERYABLE               = 0x00000100,
-    PDTF_CANBEPURGED               = 0x00000200,
-    PDTF_SEARCHRAWVALUE            = 0x00000400,
-    PDTF_DONTCOERCEEMPTYSTRINGS    = 0x00000800,
-    PDTF_ALWAYSINSUPPLEMENTALSTORE = 0x00001000,
-    PDTF_ISSYSTEMPROPERTY          = 0x80000000,
-    PDTF_MASK_ALL                  = 0x80001fff,
+    PDTF_DEFAULT                   = 0x00000000U,
+    PDTF_MULTIPLEVALUES            = 0x00000001U,
+    PDTF_ISINNATE                  = 0x00000002U,
+    PDTF_ISGROUP                   = 0x00000004U,
+    PDTF_CANGROUPBY                = 0x00000008U,
+    PDTF_CANSTACKBY                = 0x00000010U,
+    PDTF_ISTREEPROPERTY            = 0x00000020U,
+    PDTF_INCLUDEINFULLTEXTQUERY    = 0x00000040U,
+    PDTF_ISVIEWABLE                = 0x00000080U,
+    PDTF_ISQUERYABLE               = 0x00000100U,
+    PDTF_CANBEPURGED               = 0x00000200U,
+    PDTF_SEARCHRAWVALUE            = 0x00000400U,
+    PDTF_DONTCOERCEEMPTYSTRINGS    = 0x00000800U,
+    PDTF_ALWAYSINSUPPLEMENTALSTORE = 0x00001000U,
+    PDTF_ISSYSTEMPROPERTY          = 0x80000000U,
+    PDTF_MASK_ALL                  = 0x80001fffU,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/ne-propsys-propdesc_view_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/ne-propsys-propdesc_view_flags
 alias PROPDESC_VIEW_FLAGS = int;
 enum : int
 {
@@ -105,6 +111,7 @@ enum : int
     PDVF_CANWRAP             = 0x00001000,
     PDVF_MASK_ALL            = 0x00001bff,
 }
+
 alias PROPDESC_DISPLAYTYPE = int;
 enum : int
 {
@@ -114,6 +121,7 @@ enum : int
     PDDT_DATETIME   = 0x00000003,
     PDDT_ENUMERATED = 0x00000004,
 }
+
 alias PROPDESC_GROUPING_RANGE = int;
 enum : int
 {
@@ -125,7 +133,8 @@ enum : int
     PDGR_PERCENT      = 0x00000005,
     PDGR_ENUMERATED   = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/ne-propsys-propdesc_format_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/ne-propsys-propdesc_format_flags
 alias PROPDESC_FORMAT_FLAGS = int;
 enum : int
 {
@@ -145,6 +154,7 @@ enum : int
     PDFF_READONLY             = 0x00001000,
     PDFF_NOAUTOREADINGORDER   = 0x00002000,
 }
+
 alias PROPDESC_SORTDESCRIPTION = int;
 enum : int
 {
@@ -154,7 +164,8 @@ enum : int
     PDSD_SMALLEST_BIGGEST = 0x00000003,
     PDSD_OLDEST_NEWEST    = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/ne-propsys-propdesc_relativedescription_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/ne-propsys-propdesc_relativedescription_type
 alias PROPDESC_RELATIVEDESCRIPTION_TYPE = int;
 enum : int
 {
@@ -170,7 +181,8 @@ enum : int
     PDRDT_RATING   = 0x00000009,
     PDRDT_PRIORITY = 0x0000000a,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/ne-propsys-propdesc_aggregation_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/ne-propsys-propdesc_aggregation_type
 alias PROPDESC_AGGREGATION_TYPE = int;
 enum : int
 {
@@ -183,7 +195,8 @@ enum : int
     PDAT_MAX       = 0x00000006,
     PDAT_MIN       = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/ne-propsys-propdesc_condition_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/ne-propsys-propdesc_condition_type
 alias PROPDESC_CONDITION_TYPE = int;
 enum : int
 {
@@ -194,7 +207,8 @@ enum : int
     PDCOT_BOOLEAN  = 0x00000004,
     PDCOT_NUMBER   = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/ne-propsys-propdesc_searchinfo_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/ne-propsys-propdesc_searchinfo_flags
 alias PROPDESC_SEARCHINFO_FLAGS = int;
 enum : int
 {
@@ -205,7 +219,8 @@ enum : int
     PDSIF_ALWAYSINCLUDE   = 0x00000008,
     PDSIF_USEFORTYPEAHEAD = 0x00000010,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/ne-propsys-propdesc_columnindex_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/ne-propsys-propdesc_columnindex_type
 alias PROPDESC_COLUMNINDEX_TYPE = int;
 enum : int
 {
@@ -216,7 +231,8 @@ enum : int
     PDCIT_ONDISKALL    = 0x00000004,
     PDCIT_ONDISKVECTOR = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/ne-propsys-propdesc_enumfilter))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/ne-propsys-propdesc_enumfilter
 alias PROPDESC_ENUMFILTER = int;
 enum : int
 {
@@ -228,6 +244,7 @@ enum : int
     PDEF_INFULLTEXTQUERY = 0x00000005,
     PDEF_COLUMN          = 0x00000006,
 }
+
 alias _PERSIST_SPROPSTORE_FLAGS = int;
 enum : int
 {
@@ -235,7 +252,8 @@ enum : int
     FPSPS_READONLY                  = 0x00000001,
     FPSPS_TREAT_NEW_VALUES_AS_DIRTY = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/shobjidl_core/ne-shobjidl_core-sync_transfer_status))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shobjidl_core/ne-shobjidl_core-sync_transfer_status
 alias SYNC_TRANSFER_STATUS = int;
 enum : int
 {
@@ -252,7 +270,8 @@ enum : int
     STS_INCOMPLETE             = 0x00000200,
     STS_PLACEHOLDER_IFEMPTY    = 0x00000400,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/shobjidl_core/ne-shobjidl_core-placeholder_states))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shobjidl_core/ne-shobjidl_core-placeholder_states
 alias PLACEHOLDER_STATES = int;
 enum : int
 {
@@ -264,12 +283,14 @@ enum : int
     PS_DEFAULT                         = 0x00000007,
     PS_ALL                             = 0x0000000f,
 }
+
 alias PROPERTYUI_NAME_FLAGS = int;
 enum : int
 {
     PUIFNF_DEFAULT  = 0x00000000,
     PUIFNF_MNEMONIC = 0x00000001,
 }
+
 alias PROPERTYUI_FLAGS = int;
 enum : int
 {
@@ -277,6 +298,7 @@ enum : int
     PUIF_RIGHTALIGN       = 0x00000001,
     PUIF_NOLABELININFOTIP = 0x00000002,
 }
+
 alias PROPERTYUI_FORMAT_FLAGS = int;
 enum : int
 {
@@ -286,7 +308,8 @@ enum : int
     PUIFFDF_NOTIME       = 0x00000004,
     PUIFFDF_FRIENDLYDATE = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/shobjidl_core/ne-shobjidl_core-pdopstatus))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shobjidl_core/ne-shobjidl_core-pdopstatus
 alias PDOPSTATUS = int;
 enum : int
 {
@@ -296,7 +319,8 @@ enum : int
     PDOPS_STOPPED   = 0x00000004,
     PDOPS_ERRORS    = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/shobjidl/ne-shobjidl-sync_engine_state_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shobjidl/ne-shobjidl-sync_engine_state_flags
 alias SYNC_ENGINE_STATE_FLAGS = int;
 enum : int
 {
@@ -316,7 +340,7 @@ enum : int
 // Constants
 
 
-enum uint PKEY_PIDSTR_MAX = 0x0000000a;
+enum uint PKEY_PIDSTR_MAX = 0x0000000aU;
 
 // Structs
 
@@ -331,7 +355,7 @@ struct PCUSERIALIZEDPROPSTORAGE
     ptrdiff_t Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/shlobj_core/ns-shlobj_core-propprg))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shlobj_core/ns-shlobj_core-propprg
 struct PROPPRG
 {
 align (1):
@@ -687,97 +711,97 @@ struct PropertySystem;
 
 @GUID("b7d14566-0509-4cce-a71f-0a554233bd9b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-iinitializewithfile))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-iinitializewithfile
 interface IInitializeWithFile : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-iinitializewithfile-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-iinitializewithfile-initialize
     HRESULT Initialize(const(PWSTR) pszFilePath, uint grfMode);
 }
 
 @GUID("b824b49d-22ac-4161-ac8a-9916e8fa3f7f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-iinitializewithstream))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-iinitializewithstream
 interface IInitializeWithStream : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-iinitializewithstream-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-iinitializewithstream-initialize
     HRESULT Initialize(IStream pstream, uint grfMode);
 }
 
 @GUID("886d8eeb-8cf2-4446-8d02-cdba1dbdcf99")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertystore))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertystore
 interface IPropertyStore : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertystore-getcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertystore-getcount
     HRESULT GetCount(uint* cProps);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertystore-getat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertystore-getat
     HRESULT GetAt(uint iProp, PROPERTYKEY* pkey);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertystore-getvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertystore-getvalue
     HRESULT GetValue(const(PROPERTYKEY)* key, PROPVARIANT* pv);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertystore-setvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertystore-setvalue
     HRESULT SetValue(const(PROPERTYKEY)* key, const(PROPVARIANT)* propvar);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertystore-commit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertystore-commit
     HRESULT Commit();
 }
 
 @GUID("71604b0f-97b0-4764-8577-2f13e98a1422")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-inamedpropertystore))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-inamedpropertystore
 interface INamedPropertyStore : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-inamedpropertystore-getnamedvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-inamedpropertystore-getnamedvalue
     HRESULT GetNamedValue(const(PWSTR) pszName, PROPVARIANT* ppropvar);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-inamedpropertystore-setnamedvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-inamedpropertystore-setnamedvalue
     HRESULT SetNamedValue(const(PWSTR) pszName, const(PROPVARIANT)* propvar);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-inamedpropertystore-getnamecount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-inamedpropertystore-getnamecount
     HRESULT GetNameCount(uint* pdwCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-inamedpropertystore-getnameat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-inamedpropertystore-getnameat
     HRESULT GetNameAt(uint iProp, BSTR* pbstrName);
 }
 
 @GUID("fc0ca0a7-c316-4fd2-9031-3e628e6d4f23")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-iobjectwithpropertykey))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-iobjectwithpropertykey
 interface IObjectWithPropertyKey : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-iobjectwithpropertykey-setpropertykey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-iobjectwithpropertykey-setpropertykey
     HRESULT SetPropertyKey(const(PROPERTYKEY)* key);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-iobjectwithpropertykey-getpropertykey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-iobjectwithpropertykey-getpropertykey
     HRESULT GetPropertyKey(PROPERTYKEY* pkey);
 }
 
 @GUID("f917bc8a-1bba-4478-a245-1bde03eb9431")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertychange))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertychange
 interface IPropertyChange : IObjectWithPropertyKey
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertychange-applytopropvariant))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertychange-applytopropvariant
     HRESULT ApplyToPropVariant(const(PROPVARIANT)* propvarIn, PROPVARIANT* ppropvarOut);
 }
 
 @GUID("380f5cad-1b5e-42f2-805d-637fd392d31e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertychangearray))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertychangearray
 interface IPropertyChangeArray : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertychangearray-getcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertychangearray-getcount
     HRESULT GetCount(uint* pcOperations);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertychangearray-getat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertychangearray-getat
     HRESULT GetAt(uint iIndex, const(GUID)* riid, void** ppv);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertychangearray-insertat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertychangearray-insertat
     HRESULT InsertAt(uint iIndex, IPropertyChange ppropChange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertychangearray-append))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertychangearray-append
     HRESULT Append(IPropertyChange ppropChange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertychangearray-appendorreplace))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertychangearray-appendorreplace
     HRESULT AppendOrReplace(IPropertyChange ppropChange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertychangearray-removeat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertychangearray-removeat
     HRESULT RemoveAt(uint iIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertychangearray-iskeyinarray))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertychangearray-iskeyinarray
     HRESULT IsKeyInArray(const(PROPERTYKEY)* key);
 }
 
 @GUID("c8e2d566-186e-4d49-bf41-6909ead56acc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertystorecapabilities))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertystorecapabilities
 interface IPropertyStoreCapabilities : IUnknown
 {
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
@@ -786,234 +810,234 @@ interface IPropertyStoreCapabilities : IUnknown
 
 @GUID("3017056d-9a91-4e90-937d-746c72abbf4f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertystorecache))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertystorecache
 interface IPropertyStoreCache : IPropertyStore
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertystorecache-getstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertystorecache-getstate
     HRESULT GetState(const(PROPERTYKEY)* key, PSC_STATE* pstate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertystorecache-getvalueandstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertystorecache-getvalueandstate
     HRESULT GetValueAndState(const(PROPERTYKEY)* key, PROPVARIANT* ppropvar, PSC_STATE* pstate);
     HRESULT SetState(const(PROPERTYKEY)* key, PSC_STATE state);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertystorecache-setvalueandstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertystorecache-setvalueandstate
     HRESULT SetValueAndState(const(PROPERTYKEY)* key, const(PROPVARIANT)* ppropvar, PSC_STATE state);
 }
 
 @GUID("11e1fbf9-2d56-4a6b-8db3-7cd193a471f2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertyenumtype))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertyenumtype
 interface IPropertyEnumType : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertyenumtype-getenumtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertyenumtype-getenumtype
     HRESULT GetEnumType(PROPENUMTYPE* penumtype);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertyenumtype-getvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertyenumtype-getvalue
     HRESULT GetValue(PROPVARIANT* ppropvar);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertyenumtype-getrangeminvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertyenumtype-getrangeminvalue
     HRESULT GetRangeMinValue(PROPVARIANT* ppropvarMin);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertyenumtype-getrangesetvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertyenumtype-getrangesetvalue
     HRESULT GetRangeSetValue(PROPVARIANT* ppropvarSet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertyenumtype-getdisplaytext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertyenumtype-getdisplaytext
     HRESULT GetDisplayText(PWSTR* ppszDisplay);
 }
 
 @GUID("9b6e051c-5ddd-4321-9070-fe2acb55e794")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertyenumtype2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertyenumtype2
 interface IPropertyEnumType2 : IPropertyEnumType
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertyenumtype2-getimagereference))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertyenumtype2-getimagereference
     HRESULT GetImageReference(PWSTR* ppszImageRes);
 }
 
 @GUID("a99400f4-3d84-4557-94ba-1242fb2cc9a6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertyenumtypelist))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertyenumtypelist
 interface IPropertyEnumTypeList : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertyenumtypelist-getcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertyenumtypelist-getcount
     HRESULT GetCount(uint* pctypes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertyenumtypelist-getat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertyenumtypelist-getat
     HRESULT GetAt(uint itype, const(GUID)* riid, void** ppv);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertyenumtypelist-getconditionat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertyenumtypelist-getconditionat
     HRESULT GetConditionAt(uint nIndex, const(GUID)* riid, void** ppv);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertyenumtypelist-findmatchingindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertyenumtypelist-findmatchingindex
     HRESULT FindMatchingIndex(const(PROPVARIANT)* propvarCmp, uint* pnIndex);
 }
 
 @GUID("6f79d558-3e96-4549-a1d1-7d75d2288814")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertydescription))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertydescription
 interface IPropertyDescription : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-getpropertykey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-getpropertykey
     HRESULT GetPropertyKey(PROPERTYKEY* pkey);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-getcanonicalname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-getcanonicalname
     HRESULT GetCanonicalName(PWSTR* ppszName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-getpropertytype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-getpropertytype
     HRESULT GetPropertyType(ushort* pvartype);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-getdisplayname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-getdisplayname
     HRESULT GetDisplayName(PWSTR* ppszName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-geteditinvitation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-geteditinvitation
     HRESULT GetEditInvitation(PWSTR* ppszInvite);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-gettypeflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-gettypeflags
     HRESULT GetTypeFlags(PROPDESC_TYPE_FLAGS mask, PROPDESC_TYPE_FLAGS* ppdtFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-getviewflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-getviewflags
     HRESULT GetViewFlags(PROPDESC_VIEW_FLAGS* ppdvFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-getdefaultcolumnwidth))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-getdefaultcolumnwidth
     HRESULT GetDefaultColumnWidth(uint* pcxChars);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-getdisplaytype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-getdisplaytype
     HRESULT GetDisplayType(PROPDESC_DISPLAYTYPE* pdisplaytype);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-getcolumnstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-getcolumnstate
     HRESULT GetColumnState(uint* pcsFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-getgroupingrange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-getgroupingrange
     HRESULT GetGroupingRange(PROPDESC_GROUPING_RANGE* pgr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-getrelativedescriptiontype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-getrelativedescriptiontype
     HRESULT GetRelativeDescriptionType(PROPDESC_RELATIVEDESCRIPTION_TYPE* prdt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-getrelativedescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-getrelativedescription
     HRESULT GetRelativeDescription(const(PROPVARIANT)* propvar1, const(PROPVARIANT)* propvar2, PWSTR* ppszDesc1, 
                                    PWSTR* ppszDesc2);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-getsortdescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-getsortdescription
     HRESULT GetSortDescription(PROPDESC_SORTDESCRIPTION* psd);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-getsortdescriptionlabel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-getsortdescriptionlabel
     HRESULT GetSortDescriptionLabel(BOOL fDescending, PWSTR* ppszDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-getaggregationtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-getaggregationtype
     HRESULT GetAggregationType(PROPDESC_AGGREGATION_TYPE* paggtype);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-getconditiontype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-getconditiontype
     HRESULT GetConditionType(PROPDESC_CONDITION_TYPE* pcontype, CONDITION_OPERATION* popDefault);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-getenumtypelist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-getenumtypelist
     HRESULT GetEnumTypeList(const(GUID)* riid, void** ppv);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-coercetocanonicalvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-coercetocanonicalvalue
     HRESULT CoerceToCanonicalValue(PROPVARIANT* ppropvar);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-formatfordisplay))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-formatfordisplay
     HRESULT FormatForDisplay(const(PROPVARIANT)* propvar, PROPDESC_FORMAT_FLAGS pdfFlags, PWSTR* ppszDisplay);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-isvaluecanonical))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription-isvaluecanonical
     HRESULT IsValueCanonical(const(PROPVARIANT)* propvar);
 }
 
 @GUID("57d2eded-5062-400e-b107-5dae79fe57a6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertydescription2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertydescription2
 interface IPropertyDescription2 : IPropertyDescription
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription2-getimagereferenceforvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescription2-getimagereferenceforvalue
     HRESULT GetImageReferenceForValue(const(PROPVARIANT)* propvar, PWSTR* ppszImageRes);
 }
 
 @GUID("f67104fc-2af9-46fd-b32d-243c1404f3d1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertydescriptionaliasinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertydescriptionaliasinfo
 interface IPropertyDescriptionAliasInfo : IPropertyDescription
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescriptionaliasinfo-getsortbyalias))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescriptionaliasinfo-getsortbyalias
     HRESULT GetSortByAlias(const(GUID)* riid, void** ppv);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescriptionaliasinfo-getadditionalsortbyaliases))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescriptionaliasinfo-getadditionalsortbyaliases
     HRESULT GetAdditionalSortByAliases(const(GUID)* riid, void** ppv);
 }
 
 @GUID("078f91bd-29a2-440f-924e-46a291524520")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertydescriptionsearchinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertydescriptionsearchinfo
 interface IPropertyDescriptionSearchInfo : IPropertyDescription
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescriptionsearchinfo-getsearchinfoflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescriptionsearchinfo-getsearchinfoflags
     HRESULT GetSearchInfoFlags(PROPDESC_SEARCHINFO_FLAGS* ppdsiFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescriptionsearchinfo-getcolumnindextype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescriptionsearchinfo-getcolumnindextype
     HRESULT GetColumnIndexType(PROPDESC_COLUMNINDEX_TYPE* ppdciType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescriptionsearchinfo-getprojectionstring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescriptionsearchinfo-getprojectionstring
     HRESULT GetProjectionString(PWSTR* ppszProjection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescriptionsearchinfo-getmaxsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescriptionsearchinfo-getmaxsize
     HRESULT GetMaxSize(uint* pcbMaxSize);
 }
 
 @GUID("507393f4-2a3d-4a60-b59e-d9c75716c2dd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertydescriptionrelatedpropertyinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertydescriptionrelatedpropertyinfo
 interface IPropertyDescriptionRelatedPropertyInfo : IPropertyDescription
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescriptionrelatedpropertyinfo-getrelatedproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescriptionrelatedpropertyinfo-getrelatedproperty
     HRESULT GetRelatedProperty(const(PWSTR) pszRelationshipName, const(GUID)* riid, void** ppv);
 }
 
 @GUID("ca724e8a-c3e6-442b-88a4-6fb0db8035a3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertysystem))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertysystem
 interface IPropertySystem : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertysystem-getpropertydescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertysystem-getpropertydescription
     HRESULT GetPropertyDescription(const(PROPERTYKEY)* propkey, const(GUID)* riid, void** ppv);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertysystem-getpropertydescriptionbyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertysystem-getpropertydescriptionbyname
     HRESULT GetPropertyDescriptionByName(const(PWSTR) pszCanonicalName, const(GUID)* riid, void** ppv);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertysystem-getpropertydescriptionlistfromstring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertysystem-getpropertydescriptionlistfromstring
     HRESULT GetPropertyDescriptionListFromString(const(PWSTR) pszPropList, const(GUID)* riid, void** ppv);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertysystem-enumeratepropertydescriptions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertysystem-enumeratepropertydescriptions
     HRESULT EnumeratePropertyDescriptions(PROPDESC_ENUMFILTER filterOn, const(GUID)* riid, void** ppv);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertysystem-formatfordisplay))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertysystem-formatfordisplay
     HRESULT FormatForDisplay(const(PROPERTYKEY)* key, const(PROPVARIANT)* propvar, PROPDESC_FORMAT_FLAGS pdff, 
                              PWSTR pszText, uint cchText);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertysystem-formatfordisplayalloc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertysystem-formatfordisplayalloc
     HRESULT FormatForDisplayAlloc(const(PROPERTYKEY)* key, const(PROPVARIANT)* propvar, PROPDESC_FORMAT_FLAGS pdff, 
                                   PWSTR* ppszDisplay);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertysystem-registerpropertyschema))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertysystem-registerpropertyschema
     HRESULT RegisterPropertySchema(const(PWSTR) pszPath);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertysystem-unregisterpropertyschema))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertysystem-unregisterpropertyschema
     HRESULT UnregisterPropertySchema(const(PWSTR) pszPath);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertysystem-refreshpropertyschema))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertysystem-refreshpropertyschema
     HRESULT RefreshPropertySchema();
 }
 
 @GUID("1f9fc1d0-c39b-4b26-817f-011967d3440e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertydescriptionlist))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertydescriptionlist
 interface IPropertyDescriptionList : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescriptionlist-getcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescriptionlist-getcount
     HRESULT GetCount(uint* pcElem);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescriptionlist-getat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertydescriptionlist-getat
     HRESULT GetAt(uint iElem, const(GUID)* riid, void** ppv);
 }
 
 @GUID("bc110b6d-57e8-4148-a9c6-91015ab2f3a5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertystorefactory))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipropertystorefactory
 interface IPropertyStoreFactory : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertystorefactory-getpropertystore))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertystorefactory-getpropertystore
     HRESULT GetPropertyStore(GETPROPERTYSTOREFLAGS flags, IUnknown pUnkFactory, const(GUID)* riid, void** ppv);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertystorefactory-getpropertystoreforkeys))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipropertystorefactory-getpropertystoreforkeys
     HRESULT GetPropertyStoreForKeys(const(PROPERTYKEY)* rgKeys, uint cKeys, GETPROPERTYSTOREFLAGS flags, 
                                     const(GUID)* riid, void** ppv);
 }
 
 @GUID("40d4577f-e237-4bdb-bd69-58f089431b6a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-idelayedpropertystorefactory))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-idelayedpropertystorefactory
 interface IDelayedPropertyStoreFactory : IPropertyStoreFactory
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-idelayedpropertystorefactory-getdelayedpropertystore))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-idelayedpropertystorefactory-getdelayedpropertystore
     HRESULT GetDelayedPropertyStore(GETPROPERTYSTOREFLAGS flags, uint dwStoreId, const(GUID)* riid, void** ppv);
 }
 
 @GUID("e318ad57-0aa0-450f-aca5-6fab7103d917")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipersistserializedpropstorage))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipersistserializedpropstorage
 interface IPersistSerializedPropStorage : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipersistserializedpropstorage-setflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipersistserializedpropstorage-setflags
     HRESULT SetFlags(int flags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipersistserializedpropstorage-setpropertystorage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipersistserializedpropstorage-setpropertystorage
     HRESULT SetPropertyStorage(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/PCUSERIALIZEDPROPSTORAGE psps, 
                                uint cb);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipersistserializedpropstorage-getpropertystorage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipersistserializedpropstorage-getpropertystorage
     HRESULT GetPropertyStorage(SERIALIZEDPROPSTORAGE** ppsps, uint* pcb);
 }
 
 @GUID("77effa68-4f98-4366-ba72-573b3d880571")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipersistserializedpropstorage2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-ipersistserializedpropstorage2
 interface IPersistSerializedPropStorage2 : IPersistSerializedPropStorage
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipersistserializedpropstorage2-getpropertystoragesize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipersistserializedpropstorage2-getpropertystoragesize
     HRESULT GetPropertyStorageSize(uint* pcb);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipersistserializedpropstorage2-getpropertystoragebuffer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-ipersistserializedpropstorage2-getpropertystoragebuffer
     HRESULT GetPropertyStorageBuffer(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/SERIALIZEDPROPSTORAGE* psps, 
                                      uint cb, uint* pcbWritten);
 }
@@ -1026,33 +1050,33 @@ interface IPropertySystemChangeNotify : IUnknown
 
 @GUID("75121952-e0d0-43e5-9380-1d80483acf72")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-icreateobject))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nn-propsys-icreateobject
 interface ICreateObject : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-icreateobject-createobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/propsys/nf-propsys-icreateobject-createobject
     HRESULT CreateObject(const(GUID)* clsid, IUnknown pUnkOuter, const(GUID)* riid, void** ppv);
 }
 
 @GUID("757a7d9f-919a-4118-99d7-dbb208c8cc66")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/shobjidl_core/nn-shobjidl_core-ipropertyui))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shobjidl_core/nn-shobjidl_core-ipropertyui
 interface IPropertyUI : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/shobjidl_core/nf-shobjidl_core-ipropertyui-parsepropertyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shobjidl_core/nf-shobjidl_core-ipropertyui-parsepropertyname
     HRESULT ParsePropertyName(const(PWSTR) pszName, GUID* pfmtid, uint* ppid, uint* pchEaten);
     HRESULT GetCannonicalName(const(GUID)* fmtid, uint pid, PWSTR pwszText, uint cchText);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/shobjidl_core/nf-shobjidl_core-ipropertyui-getdisplayname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shobjidl_core/nf-shobjidl_core-ipropertyui-getdisplayname
     HRESULT GetDisplayName(const(GUID)* fmtid, uint pid, PROPERTYUI_NAME_FLAGS flags, PWSTR pwszText, uint cchText);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/shobjidl_core/nf-shobjidl_core-ipropertyui-getpropertydescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shobjidl_core/nf-shobjidl_core-ipropertyui-getpropertydescription
     HRESULT GetPropertyDescription(const(GUID)* fmtid, uint pid, PWSTR pwszText, uint cchText);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/shobjidl_core/nf-shobjidl_core-ipropertyui-getdefaultwidth))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shobjidl_core/nf-shobjidl_core-ipropertyui-getdefaultwidth
     HRESULT GetDefaultWidth(const(GUID)* fmtid, uint pid, uint* pcxChars);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/shobjidl_core/nf-shobjidl_core-ipropertyui-getflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shobjidl_core/nf-shobjidl_core-ipropertyui-getflags
     HRESULT GetFlags(const(GUID)* fmtid, uint pid, PROPERTYUI_FLAGS* pflags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/shobjidl_core/nf-shobjidl_core-ipropertyui-formatfordisplay))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shobjidl_core/nf-shobjidl_core-ipropertyui-formatfordisplay
     HRESULT FormatForDisplay(const(GUID)* fmtid, uint pid, const(PROPVARIANT)* ppropvar, 
                              PROPERTYUI_FORMAT_FLAGS puiff, PWSTR pwszText, uint cchText);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/shobjidl_core/nf-shobjidl_core-ipropertyui-gethelpinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/shobjidl_core/nf-shobjidl_core-ipropertyui-gethelpinfo
     HRESULT GetHelpInfo(const(GUID)* fmtid, uint pid, PWSTR pwszHelpFile, uint cch, uint* puHelpID);
 }
 

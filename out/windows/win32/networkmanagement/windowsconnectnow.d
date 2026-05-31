@@ -3,16 +3,17 @@
 module windows.win32.networkmanagement.windowsconnectnow;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : HRESULT, PROPERTYKEY, PWSTR;
-public import windows.win32.system.com : IUnknown;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : HRESULT, PROPERTYKEY, PWSTR;
+public import windows.win32.system.com.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcntypes/ne-wcntypes-wcn_attribute_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcntypes/ne-wcntypes-wcn_attribute_type
 alias WCN_ATTRIBUTE_TYPE = int;
 enum : int
 {
@@ -118,21 +119,24 @@ enum : int
     WCN_TYPE_VENDOR_EXTENSION_WFA                = 0x00000063,
     WCN_NUM_ATTRIBUTE_TYPES                      = 0x00000064,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcntypes/ne-wcntypes-wcn_value_type_version))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcntypes/ne-wcntypes-wcn_value_type_version
 alias WCN_VALUE_TYPE_VERSION = int;
 enum : int
 {
     WCN_VALUE_VERSION_1_0 = 0x00000010,
     WCN_VALUE_VERSION_2_0 = 0x00000020,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcntypes/ne-wcntypes-wcn_value_type_boolean))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcntypes/ne-wcntypes-wcn_value_type_boolean
 alias WCN_VALUE_TYPE_BOOLEAN = int;
 enum : int
 {
     WCN_VALUE_FALSE = 0x00000000,
     WCN_VALUE_TRUE  = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcntypes/ne-wcntypes-wcn_value_type_association_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcntypes/ne-wcntypes-wcn_value_type_association_state
 alias WCN_VALUE_TYPE_ASSOCIATION_STATE = int;
 enum : int
 {
@@ -142,7 +146,8 @@ enum : int
     WCN_VALUE_AS_ASSOCIATION_FAILURE   = 0x00000003,
     WCN_VALUE_AS_IP_FAILURE            = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcntypes/ne-wcntypes-wcn_value_type_authentication_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcntypes/ne-wcntypes-wcn_value_type_authentication_type
 alias WCN_VALUE_TYPE_AUTHENTICATION_TYPE = int;
 enum : int
 {
@@ -154,7 +159,8 @@ enum : int
     WCN_VALUE_AT_WPA2PSK          = 0x00000020,
     WCN_VALUE_AT_WPAWPA2PSK_MIXED = 0x00000022,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcntypes/ne-wcntypes-wcn_value_type_config_methods))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcntypes/ne-wcntypes-wcn_value_type_config_methods
 alias WCN_VALUE_TYPE_CONFIG_METHODS = int;
 enum : int
 {
@@ -172,7 +178,8 @@ enum : int
     WCN_VALUE_CM_VIRT_DISPLAY    = 0x00002008,
     WCN_VALUE_CM_PHYS_DISPLAY    = 0x00004008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcntypes/ne-wcntypes-wcn_value_type_configuration_error))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcntypes/ne-wcntypes-wcn_value_type_configuration_error
 alias WCN_VALUE_TYPE_CONFIGURATION_ERROR = int;
 enum : int
 {
@@ -196,14 +203,16 @@ enum : int
     WCN_VALUE_CE_REGISTRATION_SESSION_TIMEOUT   = 0x00000011,
     WCN_VALUE_CE_DEVICE_PASSWORD_AUTH_FAILURE   = 0x00000012,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcntypes/ne-wcntypes-wcn_value_type_connection_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcntypes/ne-wcntypes-wcn_value_type_connection_type
 alias WCN_VALUE_TYPE_CONNECTION_TYPE = int;
 enum : int
 {
     WCN_VALUE_CT_ESS  = 0x00000001,
     WCN_VALUE_CT_IBSS = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcntypes/ne-wcntypes-wcn_value_type_device_password_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcntypes/ne-wcntypes-wcn_value_type_device_password_id
 alias WCN_VALUE_TYPE_DEVICE_PASSWORD_ID = int;
 enum : int
 {
@@ -218,7 +227,8 @@ enum : int
     WCN_VALUE_DP_OUTOFBAND_MIN           = 0x00000010,
     WCN_VALUE_DP_OUTOFBAND_MAX           = 0x0000ffff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcntypes/ne-wcntypes-wcn_value_type_encryption_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcntypes/ne-wcntypes-wcn_value_type_encryption_type
 alias WCN_VALUE_TYPE_ENCRYPTION_TYPE = int;
 enum : int
 {
@@ -228,6 +238,7 @@ enum : int
     WCN_VALUE_ET_AES            = 0x00000008,
     WCN_VALUE_ET_TKIP_AES_MIXED = 0x0000000c,
 }
+
 alias WCN_VALUE_TYPE_MESSAGE_TYPE = int;
 enum : int
 {
@@ -247,6 +258,7 @@ enum : int
     WCN_VALUE_MT_NACK           = 0x0000000e,
     WCN_VALUE_MT_DONE           = 0x0000000f,
 }
+
 alias WCN_VALUE_TYPE_REQUEST_TYPE = int;
 enum : int
 {
@@ -255,6 +267,7 @@ enum : int
     WCN_VALUE_ReqT_REGISTRAR         = 0x00000002,
     WCN_VALUE_ReqT_MANAGER_REGISTRAR = 0x00000003,
 }
+
 alias WCN_VALUE_TYPE_RESPONSE_TYPE = int;
 enum : int
 {
@@ -263,14 +276,16 @@ enum : int
     WCN_VALUE_RspT_REGISTRAR        = 0x00000002,
     WCN_VALUE_RspT_AP               = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcntypes/ne-wcntypes-wcn_value_type_rf_bands))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcntypes/ne-wcntypes-wcn_value_type_rf_bands
 alias WCN_VALUE_TYPE_RF_BANDS = int;
 enum : int
 {
     WCN_VALUE_RB_24GHZ = 0x00000001,
     WCN_VALUE_RB_50GHZ = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcntypes/ne-wcntypes-wcn_value_type_wi_fi_protected_setup_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcntypes/ne-wcntypes-wcn_value_type_wi_fi_protected_setup_state
 alias WCN_VALUE_TYPE_WI_FI_PROTECTED_SETUP_STATE = int;
 enum : int
 {
@@ -278,7 +293,8 @@ enum : int
     WCN_VALUE_SS_NOT_CONFIGURED = 0x00000001,
     WCN_VALUE_SS_CONFIGURED     = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcndevice/ne-wcndevice-wcn_password_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcndevice/ne-wcndevice-wcn_password_type
 alias WCN_PASSWORD_TYPE = int;
 enum : int
 {
@@ -288,7 +304,8 @@ enum : int
     WCN_PASSWORD_TYPE_OOB_SPECIFIED           = 0x00000003,
     WCN_PASSWORD_TYPE_WFDS                    = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcndevice/ne-wcndevice-wcn_session_status))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcndevice/ne-wcndevice-wcn_session_status
 alias WCN_SESSION_STATUS = int;
 enum : int
 {
@@ -309,91 +326,91 @@ enum const(wchar)* WCN_QUERY_CONSTRAINT_USE_SOFTAP = "WCN.Discovery.SoftAP";
 
 enum : uint
 {
-    WCN_VALUE_DT_CATEGORY_COMPUTER                                 = 0x00000001,
-    WCN_VALUE_DT_CATEGORY_INPUT_DEVICE                             = 0x00000002,
-    WCN_VALUE_DT_CATEGORY_PRINTER                                  = 0x00000003,
-    WCN_VALUE_DT_CATEGORY_CAMERA                                   = 0x00000004,
-    WCN_VALUE_DT_CATEGORY_STORAGE                                  = 0x00000005,
-    WCN_VALUE_DT_CATEGORY_NETWORK_INFRASTRUCTURE                   = 0x00000006,
-    WCN_VALUE_DT_CATEGORY_DISPLAY                                  = 0x00000007,
-    WCN_VALUE_DT_CATEGORY_MULTIMEDIA_DEVICE                        = 0x00000008,
-    WCN_VALUE_DT_CATEGORY_GAMING_DEVICE                            = 0x00000009,
-    WCN_VALUE_DT_CATEGORY_TELEPHONE                                = 0x0000000a,
-    WCN_VALUE_DT_CATEGORY_AUDIO_DEVICE                             = 0x0000000b,
-    WCN_VALUE_DT_CATEGORY_OTHER                                    = 0x000000ff,
-    WCN_VALUE_DT_SUBTYPE_WIFI_OUI                                  = 0x0050f204,
-    WCN_VALUE_DT_SUBTYPE_COMPUTER__PC                              = 0x00000001,
-    WCN_VALUE_DT_SUBTYPE_COMPUTER__SERVER                          = 0x00000002,
-    WCN_VALUE_DT_SUBTYPE_COMPUTER__MEDIACENTER                     = 0x00000003,
-    WCN_VALUE_DT_SUBTYPE_COMPUTER__ULTRAMOBILEPC                   = 0x00000004,
-    WCN_VALUE_DT_SUBTYPE_COMPUTER__NOTEBOOK                        = 0x00000005,
-    WCN_VALUE_DT_SUBTYPE_COMPUTER__DESKTOP                         = 0x00000006,
-    WCN_VALUE_DT_SUBTYPE_COMPUTER__MID                             = 0x00000007,
-    WCN_VALUE_DT_SUBTYPE_COMPUTER__NETBOOK                         = 0x00000008,
-    WCN_VALUE_DT_SUBTYPE_INPUT_DEVICE__KEYBOARD                    = 0x00000001,
-    WCN_VALUE_DT_SUBTYPE_INPUT_DEVICE__MOUSE                       = 0x00000002,
-    WCN_VALUE_DT_SUBTYPE_INPUT_DEVICE__JOYSTICK                    = 0x00000003,
-    WCN_VALUE_DT_SUBTYPE_INPUT_DEVICE__TRACKBALL                   = 0x00000004,
-    WCN_VALUE_DT_SUBTYPE_INPUT_DEVICE__GAMECONTROLLER              = 0x00000005,
-    WCN_VALUE_DT_SUBTYPE_INPUT_DEVICE__REMOTE                      = 0x00000006,
-    WCN_VALUE_DT_SUBTYPE_INPUT_DEVICE__TOUCHSCREEN                 = 0x00000007,
-    WCN_VALUE_DT_SUBTYPE_INPUT_DEVICE__BIOMETRICREADER             = 0x00000008,
-    WCN_VALUE_DT_SUBTYPE_INPUT_DEVICE__BARCODEREADER               = 0x00000009,
-    WCN_VALUE_DT_SUBTYPE_PRINTER__PRINTER                          = 0x00000001,
-    WCN_VALUE_DT_SUBTYPE_PRINTER__SCANNER                          = 0x00000002,
-    WCN_VALUE_DT_SUBTYPE_PRINTER__FAX                              = 0x00000003,
-    WCN_VALUE_DT_SUBTYPE_PRINTER__COPIER                           = 0x00000004,
-    WCN_VALUE_DT_SUBTYPE_PRINTER__ALLINONE                         = 0x00000005,
-    WCN_VALUE_DT_SUBTYPE_CAMERA__STILL_CAMERA                      = 0x00000001,
-    WCN_VALUE_DT_SUBTYPE_CAMERA__VIDEO_CAMERA                      = 0x00000002,
-    WCN_VALUE_DT_SUBTYPE_CAMERA__WEB_CAMERA                        = 0x00000003,
-    WCN_VALUE_DT_SUBTYPE_CAMERA__SECURITY_CAMERA                   = 0x00000004,
-    WCN_VALUE_DT_SUBTYPE_STORAGE__NAS                              = 0x00000001,
-    WCN_VALUE_DT_SUBTYPE_NETWORK_INFRASTRUCUTURE__AP               = 0x00000001,
-    WCN_VALUE_DT_SUBTYPE_NETWORK_INFRASTRUCUTURE__ROUTER           = 0x00000002,
-    WCN_VALUE_DT_SUBTYPE_NETWORK_INFRASTRUCUTURE__SWITCH           = 0x00000003,
-    WCN_VALUE_DT_SUBTYPE_NETWORK_INFRASTRUCUTURE__GATEWAY          = 0x00000004,
-    WCN_VALUE_DT_SUBTYPE_NETWORK_INFRASTRUCUTURE__BRIDGE           = 0x00000005,
-    WCN_VALUE_DT_SUBTYPE_DISPLAY__TELEVISION                       = 0x00000001,
-    WCN_VALUE_DT_SUBTYPE_DISPLAY__PICTURE_FRAME                    = 0x00000002,
-    WCN_VALUE_DT_SUBTYPE_DISPLAY__PROJECTOR                        = 0x00000003,
-    WCN_VALUE_DT_SUBTYPE_DISPLAY__MONITOR                          = 0x00000004,
-    WCN_VALUE_DT_SUBTYPE_MULTIMEDIA_DEVICE__DAR                    = 0x00000001,
-    WCN_VALUE_DT_SUBTYPE_MULTIMEDIA_DEVICE__PVR                    = 0x00000002,
-    WCN_VALUE_DT_SUBTYPE_MULTIMEDIA_DEVICE__MCX                    = 0x00000003,
-    WCN_VALUE_DT_SUBTYPE_MULTIMEDIA_DEVICE__SETTOPBOX              = 0x00000004,
-    WCN_VALUE_DT_SUBTYPE_MULTIMEDIA_DEVICE__MEDIA_SERVER_ADAPT_EXT = 0x00000005,
-    WCN_VALUE_DT_SUBTYPE_MULTIMEDIA_DEVICE__PVP                    = 0x00000006,
-    WCN_VALUE_DT_SUBTYPE_GAMING_DEVICE__XBOX                       = 0x00000001,
-    WCN_VALUE_DT_SUBTYPE_GAMING_DEVICE__XBOX360                    = 0x00000002,
-    WCN_VALUE_DT_SUBTYPE_GAMING_DEVICE__PLAYSTATION                = 0x00000003,
-    WCN_VALUE_DT_SUBTYPE_GAMING_DEVICE__CONSOLE_ADAPT              = 0x00000004,
-    WCN_VALUE_DT_SUBTYPE_GAMING_DEVICE__PORTABLE                   = 0x00000005,
-    WCN_VALUE_DT_SUBTYPE_TELEPHONE__WINDOWS_MOBILE                 = 0x00000001,
-    WCN_VALUE_DT_SUBTYPE_TELEPHONE__PHONE_SINGLEMODE               = 0x00000002,
-    WCN_VALUE_DT_SUBTYPE_TELEPHONE__PHONE_DUALMODE                 = 0x00000003,
-    WCN_VALUE_DT_SUBTYPE_TELEPHONE__SMARTPHONE_SINGLEMODE          = 0x00000004,
-    WCN_VALUE_DT_SUBTYPE_TELEPHONE__SMARTPHONE_DUALMODE            = 0x00000005,
-    WCN_VALUE_DT_SUBTYPE_AUDIO_DEVICE__TUNER_RECEIVER              = 0x00000001,
-    WCN_VALUE_DT_SUBTYPE_AUDIO_DEVICE__SPEAKERS                    = 0x00000002,
-    WCN_VALUE_DT_SUBTYPE_AUDIO_DEVICE__PMP                         = 0x00000003,
-    WCN_VALUE_DT_SUBTYPE_AUDIO_DEVICE__HEADSET                     = 0x00000004,
-    WCN_VALUE_DT_SUBTYPE_AUDIO_DEVICE__HEADPHONES                  = 0x00000005,
-    WCN_VALUE_DT_SUBTYPE_AUDIO_DEVICE__MICROPHONE                  = 0x00000006,
-    WCN_VALUE_DT_SUBTYPE_AUDIO_DEVICE__HOMETHEATER                 = 0x00000007,
+    WCN_VALUE_DT_CATEGORY_COMPUTER                                 = 0x00000001U,
+    WCN_VALUE_DT_CATEGORY_INPUT_DEVICE                             = 0x00000002U,
+    WCN_VALUE_DT_CATEGORY_PRINTER                                  = 0x00000003U,
+    WCN_VALUE_DT_CATEGORY_CAMERA                                   = 0x00000004U,
+    WCN_VALUE_DT_CATEGORY_STORAGE                                  = 0x00000005U,
+    WCN_VALUE_DT_CATEGORY_NETWORK_INFRASTRUCTURE                   = 0x00000006U,
+    WCN_VALUE_DT_CATEGORY_DISPLAY                                  = 0x00000007U,
+    WCN_VALUE_DT_CATEGORY_MULTIMEDIA_DEVICE                        = 0x00000008U,
+    WCN_VALUE_DT_CATEGORY_GAMING_DEVICE                            = 0x00000009U,
+    WCN_VALUE_DT_CATEGORY_TELEPHONE                                = 0x0000000aU,
+    WCN_VALUE_DT_CATEGORY_AUDIO_DEVICE                             = 0x0000000bU,
+    WCN_VALUE_DT_CATEGORY_OTHER                                    = 0x000000ffU,
+    WCN_VALUE_DT_SUBTYPE_WIFI_OUI                                  = 0x0050f204U,
+    WCN_VALUE_DT_SUBTYPE_COMPUTER__PC                              = 0x00000001U,
+    WCN_VALUE_DT_SUBTYPE_COMPUTER__SERVER                          = 0x00000002U,
+    WCN_VALUE_DT_SUBTYPE_COMPUTER__MEDIACENTER                     = 0x00000003U,
+    WCN_VALUE_DT_SUBTYPE_COMPUTER__ULTRAMOBILEPC                   = 0x00000004U,
+    WCN_VALUE_DT_SUBTYPE_COMPUTER__NOTEBOOK                        = 0x00000005U,
+    WCN_VALUE_DT_SUBTYPE_COMPUTER__DESKTOP                         = 0x00000006U,
+    WCN_VALUE_DT_SUBTYPE_COMPUTER__MID                             = 0x00000007U,
+    WCN_VALUE_DT_SUBTYPE_COMPUTER__NETBOOK                         = 0x00000008U,
+    WCN_VALUE_DT_SUBTYPE_INPUT_DEVICE__KEYBOARD                    = 0x00000001U,
+    WCN_VALUE_DT_SUBTYPE_INPUT_DEVICE__MOUSE                       = 0x00000002U,
+    WCN_VALUE_DT_SUBTYPE_INPUT_DEVICE__JOYSTICK                    = 0x00000003U,
+    WCN_VALUE_DT_SUBTYPE_INPUT_DEVICE__TRACKBALL                   = 0x00000004U,
+    WCN_VALUE_DT_SUBTYPE_INPUT_DEVICE__GAMECONTROLLER              = 0x00000005U,
+    WCN_VALUE_DT_SUBTYPE_INPUT_DEVICE__REMOTE                      = 0x00000006U,
+    WCN_VALUE_DT_SUBTYPE_INPUT_DEVICE__TOUCHSCREEN                 = 0x00000007U,
+    WCN_VALUE_DT_SUBTYPE_INPUT_DEVICE__BIOMETRICREADER             = 0x00000008U,
+    WCN_VALUE_DT_SUBTYPE_INPUT_DEVICE__BARCODEREADER               = 0x00000009U,
+    WCN_VALUE_DT_SUBTYPE_PRINTER__PRINTER                          = 0x00000001U,
+    WCN_VALUE_DT_SUBTYPE_PRINTER__SCANNER                          = 0x00000002U,
+    WCN_VALUE_DT_SUBTYPE_PRINTER__FAX                              = 0x00000003U,
+    WCN_VALUE_DT_SUBTYPE_PRINTER__COPIER                           = 0x00000004U,
+    WCN_VALUE_DT_SUBTYPE_PRINTER__ALLINONE                         = 0x00000005U,
+    WCN_VALUE_DT_SUBTYPE_CAMERA__STILL_CAMERA                      = 0x00000001U,
+    WCN_VALUE_DT_SUBTYPE_CAMERA__VIDEO_CAMERA                      = 0x00000002U,
+    WCN_VALUE_DT_SUBTYPE_CAMERA__WEB_CAMERA                        = 0x00000003U,
+    WCN_VALUE_DT_SUBTYPE_CAMERA__SECURITY_CAMERA                   = 0x00000004U,
+    WCN_VALUE_DT_SUBTYPE_STORAGE__NAS                              = 0x00000001U,
+    WCN_VALUE_DT_SUBTYPE_NETWORK_INFRASTRUCUTURE__AP               = 0x00000001U,
+    WCN_VALUE_DT_SUBTYPE_NETWORK_INFRASTRUCUTURE__ROUTER           = 0x00000002U,
+    WCN_VALUE_DT_SUBTYPE_NETWORK_INFRASTRUCUTURE__SWITCH           = 0x00000003U,
+    WCN_VALUE_DT_SUBTYPE_NETWORK_INFRASTRUCUTURE__GATEWAY          = 0x00000004U,
+    WCN_VALUE_DT_SUBTYPE_NETWORK_INFRASTRUCUTURE__BRIDGE           = 0x00000005U,
+    WCN_VALUE_DT_SUBTYPE_DISPLAY__TELEVISION                       = 0x00000001U,
+    WCN_VALUE_DT_SUBTYPE_DISPLAY__PICTURE_FRAME                    = 0x00000002U,
+    WCN_VALUE_DT_SUBTYPE_DISPLAY__PROJECTOR                        = 0x00000003U,
+    WCN_VALUE_DT_SUBTYPE_DISPLAY__MONITOR                          = 0x00000004U,
+    WCN_VALUE_DT_SUBTYPE_MULTIMEDIA_DEVICE__DAR                    = 0x00000001U,
+    WCN_VALUE_DT_SUBTYPE_MULTIMEDIA_DEVICE__PVR                    = 0x00000002U,
+    WCN_VALUE_DT_SUBTYPE_MULTIMEDIA_DEVICE__MCX                    = 0x00000003U,
+    WCN_VALUE_DT_SUBTYPE_MULTIMEDIA_DEVICE__SETTOPBOX              = 0x00000004U,
+    WCN_VALUE_DT_SUBTYPE_MULTIMEDIA_DEVICE__MEDIA_SERVER_ADAPT_EXT = 0x00000005U,
+    WCN_VALUE_DT_SUBTYPE_MULTIMEDIA_DEVICE__PVP                    = 0x00000006U,
+    WCN_VALUE_DT_SUBTYPE_GAMING_DEVICE__XBOX                       = 0x00000001U,
+    WCN_VALUE_DT_SUBTYPE_GAMING_DEVICE__XBOX360                    = 0x00000002U,
+    WCN_VALUE_DT_SUBTYPE_GAMING_DEVICE__PLAYSTATION                = 0x00000003U,
+    WCN_VALUE_DT_SUBTYPE_GAMING_DEVICE__CONSOLE_ADAPT              = 0x00000004U,
+    WCN_VALUE_DT_SUBTYPE_GAMING_DEVICE__PORTABLE                   = 0x00000005U,
+    WCN_VALUE_DT_SUBTYPE_TELEPHONE__WINDOWS_MOBILE                 = 0x00000001U,
+    WCN_VALUE_DT_SUBTYPE_TELEPHONE__PHONE_SINGLEMODE               = 0x00000002U,
+    WCN_VALUE_DT_SUBTYPE_TELEPHONE__PHONE_DUALMODE                 = 0x00000003U,
+    WCN_VALUE_DT_SUBTYPE_TELEPHONE__SMARTPHONE_SINGLEMODE          = 0x00000004U,
+    WCN_VALUE_DT_SUBTYPE_TELEPHONE__SMARTPHONE_DUALMODE            = 0x00000005U,
+    WCN_VALUE_DT_SUBTYPE_AUDIO_DEVICE__TUNER_RECEIVER              = 0x00000001U,
+    WCN_VALUE_DT_SUBTYPE_AUDIO_DEVICE__SPEAKERS                    = 0x00000002U,
+    WCN_VALUE_DT_SUBTYPE_AUDIO_DEVICE__PMP                         = 0x00000003U,
+    WCN_VALUE_DT_SUBTYPE_AUDIO_DEVICE__HEADSET                     = 0x00000004U,
+    WCN_VALUE_DT_SUBTYPE_AUDIO_DEVICE__HEADPHONES                  = 0x00000005U,
+    WCN_VALUE_DT_SUBTYPE_AUDIO_DEVICE__MICROPHONE                  = 0x00000006U,
+    WCN_VALUE_DT_SUBTYPE_AUDIO_DEVICE__HOMETHEATER                 = 0x00000007U,
 }
 
-enum uint WCN_API_MAX_BUFFER_SIZE = 0x00000830;
-enum uint WCN_MICROSOFT_VENDOR_ID = 0x00000137;
-enum uint WCN_NO_SUBTYPE = 0xfffffffe;
+enum uint WCN_API_MAX_BUFFER_SIZE = 0x00000830U;
+enum uint WCN_MICROSOFT_VENDOR_ID = 0x00000137U;
+enum uint WCN_NO_SUBTYPE = 0xfffffffeU;
 
 enum : uint
 {
-    WCN_FLAG_DISCOVERY_VE     = 0x00000001,
-    WCN_FLAG_AUTHENTICATED_VE = 0x00000002,
+    WCN_FLAG_DISCOVERY_VE     = 0x00000001U,
+    WCN_FLAG_AUTHENTICATED_VE = 0x00000002U,
 }
 
-enum uint WCN_FLAG_ENCRYPTED_VE = 0x00000004;
+enum uint WCN_FLAG_ENCRYPTED_VE = 0x00000004U;
 enum GUID SID_WcnProvider = GUID("c100beca-d33a-4a4b-bf23-bbef4663d017");
 
 enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({2283342731, 18052, 4570, 162, 106, 0, 2, 179, 152, 142, 129}, 16))], [])*/PROPERTYKEY
@@ -408,7 +425,7 @@ enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSi
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcntypes/ns-wcntypes-wcn_value_type_primary_device_type))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcntypes/ns-wcntypes-wcn_value_type_primary_device_type
 struct WCN_VALUE_TYPE_PRIMARY_DEVICE_TYPE
 {
 align (1):
@@ -417,7 +434,7 @@ align (1):
     ushort SubCategory;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcndevice/ns-wcndevice-wcn_vendor_extension_spec))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcndevice/ns-wcndevice-wcn_vendor_extension_spec
 struct WCN_VENDOR_EXTENSION_SPEC
 {
     uint VendorId;
@@ -433,31 +450,31 @@ struct WCNDeviceObject;
 
 @GUID("c100be9c-d33a-4a4b-bf23-bbef4663d017")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcndevice/nn-wcndevice-iwcndevice))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcndevice/nn-wcndevice-iwcndevice
 interface IWCNDevice : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcndevice/nf-wcndevice-iwcndevice-setpassword))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcndevice/nf-wcndevice-iwcndevice-setpassword
     HRESULT SetPassword(WCN_PASSWORD_TYPE Type, uint dwPasswordLength, const(ubyte)* pbPassword);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcndevice/nf-wcndevice-iwcndevice-connect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcndevice/nf-wcndevice-iwcndevice-connect
     HRESULT Connect(IWCNConnectNotify pNotify);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcndevice/nf-wcndevice-iwcndevice-getattribute))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcndevice/nf-wcndevice-iwcndevice-getattribute
     HRESULT GetAttribute(WCN_ATTRIBUTE_TYPE AttributeType, uint dwMaxBufferSize, ubyte* pbBuffer, 
                          uint* pdwBufferUsed);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcndevice/nf-wcndevice-iwcndevice-getintegerattribute))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcndevice/nf-wcndevice-iwcndevice-getintegerattribute
     HRESULT GetIntegerAttribute(WCN_ATTRIBUTE_TYPE AttributeType, uint* puInteger);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcndevice/nf-wcndevice-iwcndevice-getstringattribute))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcndevice/nf-wcndevice-iwcndevice-getstringattribute
     HRESULT GetStringAttribute(WCN_ATTRIBUTE_TYPE AttributeType, uint cchMaxString, PWSTR wszString);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcndevice/nf-wcndevice-iwcndevice-getnetworkprofile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcndevice/nf-wcndevice-iwcndevice-getnetworkprofile
     HRESULT GetNetworkProfile(uint cchMaxStringLength, PWSTR wszProfile);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcndevice/nf-wcndevice-iwcndevice-setnetworkprofile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcndevice/nf-wcndevice-iwcndevice-setnetworkprofile
     HRESULT SetNetworkProfile(const(PWSTR) pszProfileXml);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcndevice/nf-wcndevice-iwcndevice-getvendorextension))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcndevice/nf-wcndevice-iwcndevice-getvendorextension
     HRESULT GetVendorExtension(const(WCN_VENDOR_EXTENSION_SPEC)* pVendorExtSpec, uint dwMaxBufferSize, 
                                ubyte* pbBuffer, uint* pdwBufferUsed);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcndevice/nf-wcndevice-iwcndevice-setvendorextension))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcndevice/nf-wcndevice-iwcndevice-setvendorextension
     HRESULT SetVendorExtension(const(WCN_VENDOR_EXTENSION_SPEC)* pVendorExtSpec, uint cbBuffer, 
                                const(ubyte)* pbBuffer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcndevice/nf-wcndevice-iwcndevice-unadvise))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcndevice/nf-wcndevice-iwcndevice-unadvise
     HRESULT Unadvise();
     HRESULT SetNFCPasswordParams(WCN_PASSWORD_TYPE Type, uint dwOOBPasswordID, uint dwPasswordLength, 
                                  const(ubyte)* pbPassword, uint dwRemotePublicKeyHashLength, 
@@ -467,12 +484,12 @@ interface IWCNDevice : IUnknown
 
 @GUID("c100be9f-d33a-4a4b-bf23-bbef4663d017")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcndevice/nn-wcndevice-iwcnconnectnotify))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcndevice/nn-wcndevice-iwcnconnectnotify
 interface IWCNConnectNotify : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcndevice/nf-wcndevice-iwcnconnectnotify-connectsucceeded))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcndevice/nf-wcndevice-iwcnconnectnotify-connectsucceeded
     HRESULT ConnectSucceeded();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wcndevice/nf-wcndevice-iwcnconnectnotify-connectfailed))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wcndevice/nf-wcndevice-iwcnconnectnotify-connectfailed
     HRESULT ConnectFailed(HRESULT hrFailure);
 }
 

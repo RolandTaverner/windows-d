@@ -3,12 +3,13 @@
 module windows.win32.storage.cabinets;
 
 public import windows.core;
-public import windows.win32.foundation : BOOL, CHAR, PSTR;
+public import windows.win32.foundation.foundation : BOOL, CHAR, PSTR;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
+
 
 alias FDICREATE_CPU_TYPE = int;
 enum : int
@@ -17,6 +18,7 @@ enum : int
     cpu80286   = 0x00000000,
     cpu80386   = 0x00000001,
 }
+
 alias FCIERROR = int;
 enum : int
 {
@@ -31,6 +33,7 @@ enum : int
     FCIERR_MCI_FAIL         = 0x00000008,
     FCIERR_CAB_FORMAT_LIMIT = 0x00000009,
 }
+
 alias FDIERROR = int;
 enum : int
 {
@@ -48,6 +51,7 @@ enum : int
     FDIERROR_USER_ABORT              = 0x0000000b,
     FDIERROR_EOF                     = 0x0000000c,
 }
+
 alias FDIDECRYPTTYPE = int;
 enum : int
 {
@@ -55,6 +59,7 @@ enum : int
     fdidtNEW_FOLDER  = 0x00000001,
     fdidtDECRYPT     = 0x00000002,
 }
+
 alias FDINOTIFICATIONTYPE = int;
 enum : int
 {
@@ -69,71 +74,71 @@ enum : int
 // Constants
 
 
-enum uint INCLUDED_FCI = 0x00000001;
-enum uint _A_NAME_IS_UTF = 0x00000080;
-enum uint _A_EXEC = 0x00000040;
+enum uint INCLUDED_FCI = 0x00000001U;
+enum uint _A_NAME_IS_UTF = 0x00000080U;
+enum uint _A_EXEC = 0x00000040U;
 
 enum : uint
 {
-    statusFile    = 0x00000000,
-    statusFolder  = 0x00000001,
-    statusCabinet = 0x00000002,
+    statusFile    = 0x00000000U,
+    statusFolder  = 0x00000001U,
+    statusCabinet = 0x00000002U,
 }
 
-enum uint INCLUDED_TYPES_FCI_FDI = 0x00000001;
+enum uint INCLUDED_TYPES_FCI_FDI = 0x00000001U;
 enum int CB_MAX_DISK = 0x7fffffff;
 
 enum : uint
 {
-    CB_MAX_FILENAME     = 0x00000100,
-    CB_MAX_CABINET_NAME = 0x00000100,
-    CB_MAX_CAB_PATH     = 0x00000100,
-    CB_MAX_DISK_NAME    = 0x00000100,
+    CB_MAX_FILENAME     = 0x00000100U,
+    CB_MAX_CABINET_NAME = 0x00000100U,
+    CB_MAX_CAB_PATH     = 0x00000100U,
+    CB_MAX_DISK_NAME    = 0x00000100U,
 }
 
-enum uint tcompMASK_TYPE = 0x0000000f;
+enum uint tcompMASK_TYPE = 0x0000000fU;
 
 enum : uint
 {
-    tcompTYPE_NONE    = 0x00000000,
-    tcompTYPE_MSZIP   = 0x00000001,
-    tcompTYPE_QUANTUM = 0x00000002,
-    tcompTYPE_LZX     = 0x00000003,
-}
-
-enum : uint
-{
-    tcompBAD             = 0x0000000f,
-    tcompMASK_LZX_WINDOW = 0x00001f00,
+    tcompTYPE_NONE    = 0x00000000U,
+    tcompTYPE_MSZIP   = 0x00000001U,
+    tcompTYPE_QUANTUM = 0x00000002U,
+    tcompTYPE_LZX     = 0x00000003U,
 }
 
 enum : uint
 {
-    tcompLZX_WINDOW_LO = 0x00000f00,
-    tcompLZX_WINDOW_HI = 0x00001500,
+    tcompBAD             = 0x0000000fU,
+    tcompMASK_LZX_WINDOW = 0x00001f00U,
 }
-
-enum uint tcompSHIFT_LZX_WINDOW = 0x00000008;
-enum uint tcompMASK_QUANTUM_LEVEL = 0x000000f0;
 
 enum : uint
 {
-    tcompQUANTUM_LEVEL_LO = 0x00000010,
-    tcompQUANTUM_LEVEL_HI = 0x00000070,
+    tcompLZX_WINDOW_LO = 0x00000f00U,
+    tcompLZX_WINDOW_HI = 0x00001500U,
 }
 
-enum uint tcompSHIFT_QUANTUM_LEVEL = 0x00000004;
-enum uint tcompMASK_QUANTUM_MEM = 0x00001f00;
+enum uint tcompSHIFT_LZX_WINDOW = 0x00000008U;
+enum uint tcompMASK_QUANTUM_LEVEL = 0x000000f0U;
 
 enum : uint
 {
-    tcompQUANTUM_MEM_LO = 0x00000a00,
-    tcompQUANTUM_MEM_HI = 0x00001500,
+    tcompQUANTUM_LEVEL_LO = 0x00000010U,
+    tcompQUANTUM_LEVEL_HI = 0x00000070U,
 }
 
-enum uint tcompSHIFT_QUANTUM_MEM = 0x00000008;
-enum uint tcompMASK_RESERVED = 0x0000e000;
-enum uint INCLUDED_FDI = 0x00000001;
+enum uint tcompSHIFT_QUANTUM_LEVEL = 0x00000004U;
+enum uint tcompMASK_QUANTUM_MEM = 0x00001f00U;
+
+enum : uint
+{
+    tcompQUANTUM_MEM_LO = 0x00000a00U,
+    tcompQUANTUM_MEM_HI = 0x00001500U,
+}
+
+enum uint tcompSHIFT_QUANTUM_MEM = 0x00000008U;
+enum uint tcompMASK_RESERVED = 0x0000e000U;
+enum uint INCLUDED_FDI = 0x00000001U;
 
 // Callbacks
 
@@ -169,14 +174,25 @@ alias PFNFDINOTIFY = ptrdiff_t function(FDINOTIFICATIONTYPE fdint, FDINOTIFICATI
 // Structs
 
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct FDISPILLFILE
+version(X86_64)
 {
-    CHAR[2] ach;
-    int     cbFile;
+    struct FDISPILLFILE
+    {
+        CHAR[2] ach;
+        int     cbFile;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fdi_fci_types/ns-fdi_fci_types-erf))], [])
+version(AArch64)
+{
+    struct FDISPILLFILE
+    {
+        CHAR[2] ach;
+        int     cbFile;
+    }
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fdi_fci_types/ns-fdi_fci_types-erf
 struct ERF
 {
     int  erfOper;
@@ -184,7 +200,7 @@ struct ERF
     BOOL fError;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fci/ns-fci-ccab))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fci/ns-fci-ccab
 struct CCAB
 {
     uint      cb;
@@ -201,7 +217,7 @@ struct CCAB
     CHAR[256] szCabPath;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fdi/ns-fdi-fdicabinetinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fdi/ns-fdi-fdicabinetinfo
 struct FDICABINETINFO
 {
     int    cbCabinet;
@@ -216,12 +232,36 @@ struct FDICABINETINFO
 
 struct FDIDECRYPT
 {
-    FDIDECRYPTTYPE      fdidt;
-    void*               pvUser;
-    _Anonymous_e__Union Anonymous;
+    FDIDECRYPTTYPE fdidt;
+    void*          pvUser;
+    union
+    {
+        struct cabinet
+        {
+            void*  pHeaderReserve;
+            ushort cbHeaderReserve;
+            ushort setID;
+            int    iCabinet;
+        }
+        struct folder
+        {
+            void*  pFolderReserve;
+            ushort cbFolderReserve;
+            ushort iFolder;
+        }
+        struct decrypt
+        {
+            void*  pDataReserve;
+            ushort cbDataReserve;
+            void*  pbData;
+            ushort cbData;
+            BOOL   fSplit;
+            ushort cbPartial;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fdi/ns-fdi-fdinotification))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fdi/ns-fdi-fdinotification
 struct FDINOTIFICATION
 {
     int       cb;
@@ -239,36 +279,38 @@ struct FDINOTIFICATION
     FDIERROR  fdie;
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct FDISPILLFILE
+version(X86)
 {
-align (1):
-    CHAR[2] ach;
-    int     cbFile;
+    struct FDISPILLFILE
+    {
+    align (1):
+        CHAR[2] ach;
+        int     cbFile;
+    }
 }
 
 // Functions
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fci/nf-fci-fcicreate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fci/nf-fci-fcicreate
 @DllImport("Cabinet.dll")
 void* FCICreate(ERF* perf, PFNFCIFILEPLACED pfnfcifp, PFNFCIALLOC pfna, PFNFCIFREE pfnf, PFNFCIOPEN pfnopen, 
                 PFNFCIREAD pfnread, PFNFCIWRITE pfnwrite, PFNFCICLOSE pfnclose, PFNFCISEEK pfnseek, 
                 PFNFCIDELETE pfndelete, PFNFCIGETTEMPFILE pfnfcigtf, CCAB* pccab, void* pv);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fci/nf-fci-fciaddfile))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fci/nf-fci-fciaddfile
 @DllImport("Cabinet.dll")
 BOOL FCIAddFile(void* hfci, PSTR pszSourceFile, PSTR pszFileName, BOOL fExecute, PFNFCIGETNEXTCABINET pfnfcignc, 
                 PFNFCISTATUS pfnfcis, PFNFCIGETOPENINFO pfnfcigoi, ushort typeCompress);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fci/nf-fci-fciflushcabinet))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fci/nf-fci-fciflushcabinet
 @DllImport("Cabinet.dll")
 BOOL FCIFlushCabinet(void* hfci, BOOL fGetNextCab, PFNFCIGETNEXTCABINET pfnfcignc, PFNFCISTATUS pfnfcis);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fci/nf-fci-fciflushfolder))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fci/nf-fci-fciflushfolder
 @DllImport("Cabinet.dll")
 BOOL FCIFlushFolder(void* hfci, PFNFCIGETNEXTCABINET pfnfcignc, PFNFCISTATUS pfnfcis);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fci/nf-fci-fcidestroy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fci/nf-fci-fcidestroy
 @DllImport("Cabinet.dll")
 BOOL FCIDestroy(void* hfci);
 
@@ -290,7 +332,7 @@ BOOL FDICopy(void* hfdi, PSTR pszCabinet, PSTR pszCabPath, int flags, PFNFDINOTI
 @DllImport("Cabinet.dll")
 BOOL FDIDestroy(void* hfdi);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/fdi/nf-fdi-fditruncatecabinet))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/fdi/nf-fdi-fditruncatecabinet
 @DllImport("Cabinet.dll")
 BOOL FDITruncateCabinet(void* hfdi, PSTR pszCabinetName, ushort iFolderToDelete);
 

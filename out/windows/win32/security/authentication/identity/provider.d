@@ -3,9 +3,9 @@
 module windows.win32.security.authentication.identity.provider;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, HRESULT, HWND, PROPERTYKEY, PWSTR;
-public import windows.win32.system.com : IBindCtx, IEnumUnknown, IUnknown;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, HRESULT, HWND, PROPERTYKEY, PWSTR;
+public import windows.win32.system.com.com : IBindCtx, IEnumUnknown, IUnknown;
 public import windows.win32.system.com.structuredstorage : PROPVARIANT;
 public import windows.win32.system.variant : VARIANT;
 public import windows.win32.ui.shell.propertiessystem : IPropertyStore;
@@ -15,13 +15,15 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sdoias/ne-sdoias-identity_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sdoias/ne-sdoias-identity_type
 alias IDENTITY_TYPE = int;
 enum : int
 {
     IDENTITIES_ALL     = 0x00000000,
     IDENTITIES_ME_ONLY = 0x00000001,
 }
+
 enum IdentityUpdateEvent : int
 {
     IDENTITY_ASSOCIATED    = 0x00000001,
@@ -33,6 +35,7 @@ enum IdentityUpdateEvent : int
     IDENTITY_CONNECTED     = 0x00000040,
     IDENTITY_DISCONNECTED  = 0x00000080,
 }
+
 alias IDENTITY_URL = int;
 enum : int
 {
@@ -44,6 +47,7 @@ enum : int
     IDENTITY_URL_RESTORE_WIZARD         = 0x00000005,
     IDENTITY_URL_CONNECT_WIZARD         = 0x00000006,
 }
+
 alias ACCOUNT_STATE = int;
 enum : int
 {
@@ -82,10 +86,10 @@ struct CIdentityProfileHandler;
 
 @GUID("4e982fed-d14b-440c-b8d6-bb386453d386")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/identityprovider/nn-identityprovider-iidentityadvise))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/identityprovider/nn-identityprovider-iidentityadvise
 interface IIdentityAdvise : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/identityprovider/nf-identityprovider-iidentityadvise-identityupdated))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/identityprovider/nf-identityprovider-iidentityadvise-identityupdated
     HRESULT IdentityUpdated(/*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(IdentityUpdateEvent))], [])*/uint dwIdentityUpdateEvents, 
                             const(PWSTR) lpszUniqueID);
 }
@@ -99,27 +103,27 @@ interface AsyncIIdentityAdvise : IUnknown
 
 @GUID("0d1b9e0c-e8ba-4f55-a81b-bce934b948f5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/identityprovider/nn-identityprovider-iidentityprovider))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/identityprovider/nn-identityprovider-iidentityprovider
 interface IIdentityProvider : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/identityprovider/nf-identityprovider-iidentityprovider-getidentityenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/identityprovider/nf-identityprovider-iidentityprovider-getidentityenum
     HRESULT GetIdentityEnum(const(IDENTITY_TYPE) eIdentityType, const(PROPERTYKEY)* pFilterkey, 
                             const(PROPVARIANT)* pFilterPropVarValue, IEnumUnknown* ppIdentityEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/identityprovider/nf-identityprovider-iidentityprovider-create))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/identityprovider/nf-identityprovider-iidentityprovider-create
     HRESULT Create(const(PWSTR) lpszUserName, IPropertyStore* ppPropertyStore, const(PROPVARIANT)* pKeywordsToAdd);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/identityprovider/nf-identityprovider-iidentityprovider-import))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/identityprovider/nf-identityprovider-iidentityprovider-import
     HRESULT Import(IPropertyStore pPropertyStore);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/identityprovider/nf-identityprovider-iidentityprovider-delete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/identityprovider/nf-identityprovider-iidentityprovider-delete
     HRESULT Delete(const(PWSTR) lpszUniqueID, const(PROPVARIANT)* pKeywordsToDelete);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/identityprovider/nf-identityprovider-iidentityprovider-findbyuniqueid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/identityprovider/nf-identityprovider-iidentityprovider-findbyuniqueid
     HRESULT FindByUniqueID(const(PWSTR) lpszUniqueID, IPropertyStore* ppPropertyStore);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/identityprovider/nf-identityprovider-iidentityprovider-getproviderpropertystore))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/identityprovider/nf-identityprovider-iidentityprovider-getproviderpropertystore
     HRESULT GetProviderPropertyStore(IPropertyStore* ppPropertyStore);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/identityprovider/nf-identityprovider-iidentityprovider-advise))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/identityprovider/nf-identityprovider-iidentityprovider-advise
     HRESULT Advise(IIdentityAdvise pIdentityAdvise, 
                    /*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(IdentityUpdateEvent))], [])*/uint dwIdentityUpdateEvents, 
                    uint* pdwCookie);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/identityprovider/nf-identityprovider-iidentityprovider-unadvise))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/identityprovider/nf-identityprovider-iidentityprovider-unadvise
     HRESULT UnAdvise(const(uint) dwCookie);
 }
 
@@ -147,14 +151,14 @@ interface AsyncIIdentityProvider : IUnknown
 
 @GUID("2af066b3-4cbb-4cba-a798-204b6af68cc0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/identityprovider/nn-identityprovider-iassociatedidentityprovider))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/identityprovider/nn-identityprovider-iassociatedidentityprovider
 interface IAssociatedIdentityProvider : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/identityprovider/nf-identityprovider-iassociatedidentityprovider-associateidentity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/identityprovider/nf-identityprovider-iassociatedidentityprovider-associateidentity
     HRESULT AssociateIdentity(HWND hwndParent, IPropertyStore* ppPropertyStore);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/identityprovider/nf-identityprovider-iassociatedidentityprovider-disassociateidentity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/identityprovider/nf-identityprovider-iassociatedidentityprovider-disassociateidentity
     HRESULT DisassociateIdentity(HWND hwndParent, const(PWSTR) lpszUniqueID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/identityprovider/nf-identityprovider-iassociatedidentityprovider-changecredential))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/identityprovider/nf-identityprovider-iassociatedidentityprovider-changecredential
     HRESULT ChangeCredential(HWND hwndParent, const(PWSTR) lpszUniqueID);
 }
 
@@ -171,15 +175,15 @@ interface AsyncIAssociatedIdentityProvider : IUnknown
 
 @GUID("b7417b54-e08c-429b-96c8-678d1369ecb1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/identityprovider/nn-identityprovider-iconnectedidentityprovider))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/identityprovider/nn-identityprovider-iconnectedidentityprovider
 interface IConnectedIdentityProvider : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/identityprovider/nf-identityprovider-iconnectedidentityprovider-connectidentity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/identityprovider/nf-identityprovider-iconnectedidentityprovider-connectidentity
     HRESULT ConnectIdentity(ubyte* AuthBuffer, uint AuthBufferSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/identityprovider/nf-identityprovider-iconnectedidentityprovider-disconnectidentity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/identityprovider/nf-identityprovider-iconnectedidentityprovider-disconnectidentity
     HRESULT DisconnectIdentity();
     HRESULT IsConnected(BOOL* Connected);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/identityprovider/nf-identityprovider-iconnectedidentityprovider-geturl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/identityprovider/nf-identityprovider-iconnectedidentityprovider-geturl
     HRESULT GetUrl(IDENTITY_URL Identifier, IBindCtx Context, VARIANT* PostData, PWSTR* Url);
     HRESULT GetAccountState(ACCOUNT_STATE* pState);
 }
@@ -219,22 +223,22 @@ interface AsyncIIdentityAuthentication : IUnknown
 
 @GUID("df586fa5-6f35-44f1-b209-b38e169772eb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/identitystore/nn-identitystore-iidentitystore))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/identitystore/nn-identitystore-iidentitystore
 interface IIdentityStore : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/identitystore/nf-identitystore-iidentitystore-getcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/identitystore/nf-identitystore-iidentitystore-getcount
     HRESULT GetCount(uint* pdwProviders);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/identitystore/nf-identitystore-iidentitystore-getat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/identitystore/nf-identitystore-iidentitystore-getat
     HRESULT GetAt(const(uint) dwProvider, GUID* pProvGuid, IUnknown* ppIdentityProvider);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/identitystore/nf-identitystore-iidentitystore-addtocache))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/identitystore/nf-identitystore-iidentitystore-addtocache
     HRESULT AddToCache(const(PWSTR) lpszUniqueID, const(GUID)* ProviderGUID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/identitystore/nf-identitystore-iidentitystore-converttosid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/identitystore/nf-identitystore-iidentitystore-converttosid
     HRESULT ConvertToSid(const(PWSTR) lpszUniqueID, const(GUID)* ProviderGUID, ushort cbSid, ubyte* pSid, 
                          ushort* pcbRequiredSid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/identitystore/nf-identitystore-iidentitystore-enumerateidentities))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/identitystore/nf-identitystore-iidentitystore-enumerateidentities
     HRESULT EnumerateIdentities(const(IDENTITY_TYPE) eIdentityType, const(PROPERTYKEY)* pFilterkey, 
                                 const(PROPVARIANT)* pFilterPropVarValue, IEnumUnknown* ppIdentityEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/identitystore/nf-identitystore-iidentitystore-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/identitystore/nf-identitystore-iidentitystore-reset
     HRESULT Reset();
 }
 

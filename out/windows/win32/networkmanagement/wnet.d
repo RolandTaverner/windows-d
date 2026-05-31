@@ -3,116 +3,128 @@
 module windows.win32.networkmanagement.wnet;
 
 public import windows.core;
-public import windows.win32.foundation : BOOL, HANDLE, HWND, LUID, PSTR, PWSTR,
-                                         WIN32_ERROR;
+public import windows.win32.foundation.foundation : BOOL, HANDLE, HWND, LUID, PSTR, PWSTR,
+                                                    WIN32_ERROR;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
+
 alias UNC_INFO_LEVEL = uint;
 enum : uint
 {
-    UNIVERSAL_NAME_INFO_LEVEL = 0x00000001,
-    REMOTE_NAME_INFO_LEVEL    = 0x00000002,
+    UNIVERSAL_NAME_INFO_LEVEL = 0x00000001U,
+    REMOTE_NAME_INFO_LEVEL    = 0x00000002U,
 }
+
 alias WNPERM_DLG = uint;
 enum : uint
 {
-    WNPERM_DLG_PERM  = 0x00000000,
-    WNPERM_DLG_AUDIT = 0x00000001,
-    WNPERM_DLG_OWNER = 0x00000002,
+    WNPERM_DLG_PERM  = 0x00000000U,
+    WNPERM_DLG_AUDIT = 0x00000001U,
+    WNPERM_DLG_OWNER = 0x00000002U,
 }
+
 alias WNET_OPEN_ENUM_USAGE = uint;
 enum : uint
 {
-    RESOURCEUSAGE_NONE        = 0x00000000,
-    RESOURCEUSAGE_CONNECTABLE = 0x00000001,
-    RESOURCEUSAGE_CONTAINER   = 0x00000002,
-    RESOURCEUSAGE_ATTACHED    = 0x00000010,
-    RESOURCEUSAGE_ALL         = 0x00000013,
+    RESOURCEUSAGE_NONE        = 0x00000000U,
+    RESOURCEUSAGE_CONNECTABLE = 0x00000001U,
+    RESOURCEUSAGE_CONTAINER   = 0x00000002U,
+    RESOURCEUSAGE_ATTACHED    = 0x00000010U,
+    RESOURCEUSAGE_ALL         = 0x00000013U,
 }
+
 alias NET_CONNECT_FLAGS = uint;
 enum : uint
 {
-    CONNECT_UPDATE_PROFILE          = 0x00000001,
-    CONNECT_UPDATE_RECENT           = 0x00000002,
-    CONNECT_TEMPORARY               = 0x00000004,
-    CONNECT_INTERACTIVE             = 0x00000008,
-    CONNECT_PROMPT                  = 0x00000010,
-    CONNECT_NEED_DRIVE              = 0x00000020,
-    CONNECT_REFCOUNT                = 0x00000040,
-    CONNECT_REDIRECT                = 0x00000080,
-    CONNECT_LOCALDRIVE              = 0x00000100,
-    CONNECT_CURRENT_MEDIA           = 0x00000200,
-    CONNECT_DEFERRED                = 0x00000400,
-    CONNECT_RESERVED                = 0xff000000,
-    CONNECT_COMMANDLINE             = 0x00000800,
-    CONNECT_CMD_SAVECRED            = 0x00001000,
-    CONNECT_CRED_RESET              = 0x00002000,
-    CONNECT_REQUIRE_INTEGRITY       = 0x00004000,
-    CONNECT_REQUIRE_PRIVACY         = 0x00008000,
-    CONNECT_WRITE_THROUGH_SEMANTICS = 0x00010000,
-    CONNECT_GLOBAL_MAPPING          = 0x00040000,
+    CONNECT_UPDATE_PROFILE          = 0x00000001U,
+    CONNECT_UPDATE_RECENT           = 0x00000002U,
+    CONNECT_TEMPORARY               = 0x00000004U,
+    CONNECT_INTERACTIVE             = 0x00000008U,
+    CONNECT_PROMPT                  = 0x00000010U,
+    CONNECT_NEED_DRIVE              = 0x00000020U,
+    CONNECT_REFCOUNT                = 0x00000040U,
+    CONNECT_REDIRECT                = 0x00000080U,
+    CONNECT_LOCALDRIVE              = 0x00000100U,
+    CONNECT_CURRENT_MEDIA           = 0x00000200U,
+    CONNECT_DEFERRED                = 0x00000400U,
+    CONNECT_RESERVED                = 0xff000000U,
+    CONNECT_COMMANDLINE             = 0x00000800U,
+    CONNECT_CMD_SAVECRED            = 0x00001000U,
+    CONNECT_CRED_RESET              = 0x00002000U,
+    CONNECT_REQUIRE_INTEGRITY       = 0x00004000U,
+    CONNECT_REQUIRE_PRIVACY         = 0x00008000U,
+    CONNECT_WRITE_THROUGH_SEMANTICS = 0x00010000U,
+    CONNECT_GLOBAL_MAPPING          = 0x00040000U,
 }
+
 alias NP_PROPERTY_DIALOG_SELECTION = uint;
 enum : uint
 {
-    WNPS_FILE = 0x00000000,
-    WNPS_DIR  = 0x00000001,
-    WNPS_MULT = 0x00000002,
+    WNPS_FILE = 0x00000000U,
+    WNPS_DIR  = 0x00000001U,
+    WNPS_MULT = 0x00000002U,
 }
+
 alias NPDIRECTORY_NOTIFY_OPERATION = uint;
 enum : uint
 {
-    WNDN_MKDIR = 0x00000001,
-    WNDN_RMDIR = 0x00000002,
-    WNDN_MVDIR = 0x00000003,
+    WNDN_MKDIR = 0x00000001U,
+    WNDN_RMDIR = 0x00000002U,
+    WNDN_MVDIR = 0x00000003U,
 }
+
 alias NET_RESOURCE_TYPE = uint;
 enum : uint
 {
-    RESOURCETYPE_ANY   = 0x00000000,
-    RESOURCETYPE_DISK  = 0x00000001,
-    RESOURCETYPE_PRINT = 0x00000002,
+    RESOURCETYPE_ANY   = 0x00000000U,
+    RESOURCETYPE_DISK  = 0x00000001U,
+    RESOURCETYPE_PRINT = 0x00000002U,
 }
+
 alias NETWORK_NAME_FORMAT_FLAGS = uint;
 enum : uint
 {
-    WNFMT_MULTILINE   = 0x00000001,
-    WNFMT_ABBREVIATED = 0x00000002,
+    WNFMT_MULTILINE   = 0x00000001U,
+    WNFMT_ABBREVIATED = 0x00000002U,
 }
+
 alias NET_RESOURCE_SCOPE = uint;
 enum : uint
 {
-    RESOURCE_CONNECTED  = 0x00000001,
-    RESOURCE_CONTEXT    = 0x00000005,
-    RESOURCE_GLOBALNET  = 0x00000002,
-    RESOURCE_REMEMBERED = 0x00000003,
+    RESOURCE_CONNECTED  = 0x00000001U,
+    RESOURCE_CONTEXT    = 0x00000005U,
+    RESOURCE_GLOBALNET  = 0x00000002U,
+    RESOURCE_REMEMBERED = 0x00000003U,
 }
+
 alias NETINFOSTRUCT_CHARACTERISTICS = uint;
 enum : uint
 {
-    NETINFO_DLL16      = 0x00000001,
-    NETINFO_DISKRED    = 0x00000004,
-    NETINFO_PRINTERRED = 0x00000008,
+    NETINFO_DLL16      = 0x00000001U,
+    NETINFO_DISKRED    = 0x00000004U,
+    NETINFO_PRINTERRED = 0x00000008U,
 }
+
 alias CONNECTDLGSTRUCT_FLAGS = uint;
 enum : uint
 {
-    CONNDLG_RO_PATH     = 0x00000001,
-    CONNDLG_CONN_POINT  = 0x00000002,
-    CONNDLG_USE_MRU     = 0x00000004,
-    CONNDLG_HIDE_BOX    = 0x00000008,
-    CONNDLG_PERSIST     = 0x00000010,
-    CONNDLG_NOT_PERSIST = 0x00000020,
+    CONNDLG_RO_PATH     = 0x00000001U,
+    CONNDLG_CONN_POINT  = 0x00000002U,
+    CONNDLG_USE_MRU     = 0x00000004U,
+    CONNDLG_HIDE_BOX    = 0x00000008U,
+    CONNDLG_PERSIST     = 0x00000010U,
+    CONNDLG_NOT_PERSIST = 0x00000020U,
 }
+
 alias DISCDLGSTRUCT_FLAGS = uint;
 enum : uint
 {
-    DISC_UPDATE_PROFILE = 0x00000001,
-    DISC_NO_FORCE       = 0x00000040,
+    DISC_UPDATE_PROFILE = 0x00000001U,
+    DISC_NO_FORCE       = 0x00000040U,
 }
 
 // Constants
@@ -120,169 +132,169 @@ enum : uint
 
 enum : uint
 {
-    WNGETCON_CONNECTED    = 0x00000000,
-    WNGETCON_DISCONNECTED = 0x00000001,
+    WNGETCON_CONNECTED    = 0x00000000U,
+    WNGETCON_DISCONNECTED = 0x00000001U,
 }
 
 enum : uint
 {
-    WNNC_SPEC_VERSION   = 0x00000001,
-    WNNC_SPEC_VERSION51 = 0x00050001,
+    WNNC_SPEC_VERSION   = 0x00000001U,
+    WNNC_SPEC_VERSION51 = 0x00050001U,
 }
 
 enum : uint
 {
-    WNNC_NET_TYPE = 0x00000002,
-    WNNC_NET_NONE = 0x00000000,
+    WNNC_NET_TYPE = 0x00000002U,
+    WNNC_NET_NONE = 0x00000000U,
 }
 
-enum uint WNNC_DRIVER_VERSION = 0x00000003;
+enum uint WNNC_DRIVER_VERSION = 0x00000003U;
 
 enum : uint
 {
-    WNNC_USER        = 0x00000004,
-    WNNC_USR_GETUSER = 0x00000001,
-}
-
-enum : uint
-{
-    WNNC_CONNECTION           = 0x00000006,
-    WNNC_CON_ADDCONNECTION    = 0x00000001,
-    WNNC_CON_CANCELCONNECTION = 0x00000002,
-}
-
-enum uint WNNC_CON_GETCONNECTIONS = 0x00000004;
-
-enum : uint
-{
-    WNNC_CON_ADDCONNECTION3 = 0x00000008,
-    WNNC_CON_ADDCONNECTION4 = 0x00000010,
-}
-
-enum uint WNNC_CON_CANCELCONNECTION2 = 0x00000020;
-enum uint WNNC_CON_GETPERFORMANCE = 0x00000040;
-enum uint WNNC_CON_DEFER = 0x00000080;
-
-enum : uint
-{
-    WNNC_DIALOG             = 0x00000008,
-    WNNC_DLG_DEVICEMODE     = 0x00000001,
-    WNNC_DLG_PROPERTYDIALOG = 0x00000020,
+    WNNC_USER        = 0x00000004U,
+    WNNC_USR_GETUSER = 0x00000001U,
 }
 
 enum : uint
 {
-    WNNC_DLG_SEARCHDIALOG      = 0x00000040,
-    WNNC_DLG_FORMATNETWORKNAME = 0x00000080,
+    WNNC_CONNECTION           = 0x00000006U,
+    WNNC_CON_ADDCONNECTION    = 0x00000001U,
+    WNNC_CON_CANCELCONNECTION = 0x00000002U,
 }
 
-enum uint WNNC_DLG_PERMISSIONEDITOR = 0x00000100;
+enum uint WNNC_CON_GETCONNECTIONS = 0x00000004U;
 
 enum : uint
 {
-    WNNC_DLG_GETRESOURCEPARENT      = 0x00000200,
-    WNNC_DLG_GETRESOURCEINFORMATION = 0x00000800,
+    WNNC_CON_ADDCONNECTION3 = 0x00000008U,
+    WNNC_CON_ADDCONNECTION4 = 0x00000010U,
 }
+
+enum uint WNNC_CON_CANCELCONNECTION2 = 0x00000020U;
+enum uint WNNC_CON_GETPERFORMANCE = 0x00000040U;
+enum uint WNNC_CON_DEFER = 0x00000080U;
 
 enum : uint
 {
-    WNNC_ADMIN                = 0x00000009,
-    WNNC_ADM_GETDIRECTORYTYPE = 0x00000001,
-}
-
-enum uint WNNC_ADM_DIRECTORYNOTIFY = 0x00000002;
-
-enum : uint
-{
-    WNNC_ENUMERATION    = 0x0000000b,
-    WNNC_ENUM_GLOBAL    = 0x00000001,
-    WNNC_ENUM_LOCAL     = 0x00000002,
-    WNNC_ENUM_CONTEXT   = 0x00000004,
-    WNNC_ENUM_SHAREABLE = 0x00000008,
+    WNNC_DIALOG             = 0x00000008U,
+    WNNC_DLG_DEVICEMODE     = 0x00000001U,
+    WNNC_DLG_PROPERTYDIALOG = 0x00000020U,
 }
 
 enum : uint
 {
-    WNNC_START          = 0x0000000c,
-    WNNC_WAIT_FOR_START = 0x00000001,
+    WNNC_DLG_SEARCHDIALOG      = 0x00000040U,
+    WNNC_DLG_FORMATNETWORKNAME = 0x00000080U,
 }
 
-enum uint WNNC_CONNECTION_FLAGS = 0x0000000d;
+enum uint WNNC_DLG_PERMISSIONEDITOR = 0x00000100U;
 
 enum : uint
 {
-    WNTYPE_DRIVE   = 0x00000001,
-    WNTYPE_FILE    = 0x00000002,
-    WNTYPE_PRINTER = 0x00000003,
-    WNTYPE_COMM    = 0x00000004,
-}
-
-enum uint WNSRCH_REFRESH_FIRST_LEVEL = 0x00000001;
-
-enum : uint
-{
-    WNDT_NORMAL  = 0x00000000,
-    WNDT_NETWORK = 0x00000001,
-}
-
-enum uint WN_NETWORK_CLASS = 0x00000001;
-enum uint WN_CREDENTIAL_CLASS = 0x00000002;
-enum uint WN_PRIMARY_AUTHENT_CLASS = 0x00000004;
-enum uint WN_SERVICE_CLASS = 0x00000008;
-enum uint WN_VALID_LOGON_ACCOUNT = 0x00000001;
-enum uint WN_NT_PASSWORD_CHANGED = 0x00000002;
-
-enum : uint
-{
-    NOTIFY_PRE  = 0x00000001,
-    NOTIFY_POST = 0x00000002,
+    WNNC_DLG_GETRESOURCEPARENT      = 0x00000200U,
+    WNNC_DLG_GETRESOURCEINFORMATION = 0x00000800U,
 }
 
 enum : uint
 {
-    WNPERMC_PERM  = 0x00000001,
-    WNPERMC_AUDIT = 0x00000002,
-    WNPERMC_OWNER = 0x00000004,
+    WNNC_ADMIN                = 0x00000009U,
+    WNNC_ADM_GETDIRECTORYTYPE = 0x00000001U,
+}
+
+enum uint WNNC_ADM_DIRECTORYNOTIFY = 0x00000002U;
+
+enum : uint
+{
+    WNNC_ENUMERATION    = 0x0000000bU,
+    WNNC_ENUM_GLOBAL    = 0x00000001U,
+    WNNC_ENUM_LOCAL     = 0x00000002U,
+    WNNC_ENUM_CONTEXT   = 0x00000004U,
+    WNNC_ENUM_SHAREABLE = 0x00000008U,
 }
 
 enum : uint
 {
-    RESOURCE_RECENT       = 0x00000004,
-    RESOURCETYPE_RESERVED = 0x00000008,
-    RESOURCETYPE_UNKNOWN  = 0xffffffff,
+    WNNC_START          = 0x0000000cU,
+    WNNC_WAIT_FOR_START = 0x00000001U,
+}
+
+enum uint WNNC_CONNECTION_FLAGS = 0x0000000dU;
+
+enum : uint
+{
+    WNTYPE_DRIVE   = 0x00000001U,
+    WNTYPE_FILE    = 0x00000002U,
+    WNTYPE_PRINTER = 0x00000003U,
+    WNTYPE_COMM    = 0x00000004U,
+}
+
+enum uint WNSRCH_REFRESH_FIRST_LEVEL = 0x00000001U;
+
+enum : uint
+{
+    WNDT_NORMAL  = 0x00000000U,
+    WNDT_NETWORK = 0x00000001U,
+}
+
+enum uint WN_NETWORK_CLASS = 0x00000001U;
+enum uint WN_CREDENTIAL_CLASS = 0x00000002U;
+enum uint WN_PRIMARY_AUTHENT_CLASS = 0x00000004U;
+enum uint WN_SERVICE_CLASS = 0x00000008U;
+enum uint WN_VALID_LOGON_ACCOUNT = 0x00000001U;
+enum uint WN_NT_PASSWORD_CHANGED = 0x00000002U;
+
+enum : uint
+{
+    NOTIFY_PRE  = 0x00000001U,
+    NOTIFY_POST = 0x00000002U,
 }
 
 enum : uint
 {
-    RESOURCEUSAGE_NOLOCALDEVICE = 0x00000004,
-    RESOURCEUSAGE_SIBLING       = 0x00000008,
-    RESOURCEUSAGE_RESERVED      = 0x80000000,
+    WNPERMC_PERM  = 0x00000001U,
+    WNPERMC_AUDIT = 0x00000002U,
+    WNPERMC_OWNER = 0x00000004U,
 }
 
 enum : uint
 {
-    RESOURCEDISPLAYTYPE_NETWORK      = 0x00000006,
-    RESOURCEDISPLAYTYPE_ROOT         = 0x00000007,
-    RESOURCEDISPLAYTYPE_SHAREADMIN   = 0x00000008,
-    RESOURCEDISPLAYTYPE_DIRECTORY    = 0x00000009,
-    RESOURCEDISPLAYTYPE_NDSCONTAINER = 0x0000000b,
+    RESOURCE_RECENT       = 0x00000004U,
+    RESOURCETYPE_RESERVED = 0x00000008U,
+    RESOURCETYPE_UNKNOWN  = 0xffffffffU,
 }
-
-enum uint NETPROPERTY_PERSISTENT = 0x00000001;
 
 enum : uint
 {
-    WNFMT_INENUM     = 0x00000010,
-    WNFMT_CONNECTION = 0x00000020,
+    RESOURCEUSAGE_NOLOCALDEVICE = 0x00000004U,
+    RESOURCEUSAGE_SIBLING       = 0x00000008U,
+    RESOURCEUSAGE_RESERVED      = 0x80000000U,
 }
-
-enum uint WNCON_FORNETCARD = 0x00000001;
-enum uint WNCON_NOTROUTED = 0x00000002;
 
 enum : uint
 {
-    WNCON_SLOWLINK = 0x00000004,
-    WNCON_DYNAMIC  = 0x00000008,
+    RESOURCEDISPLAYTYPE_NETWORK      = 0x00000006U,
+    RESOURCEDISPLAYTYPE_ROOT         = 0x00000007U,
+    RESOURCEDISPLAYTYPE_SHAREADMIN   = 0x00000008U,
+    RESOURCEDISPLAYTYPE_DIRECTORY    = 0x00000009U,
+    RESOURCEDISPLAYTYPE_NDSCONTAINER = 0x0000000bU,
+}
+
+enum uint NETPROPERTY_PERSISTENT = 0x00000001U;
+
+enum : uint
+{
+    WNFMT_INENUM     = 0x00000010U,
+    WNFMT_CONNECTION = 0x00000020U,
+}
+
+enum uint WNCON_FORNETCARD = 0x00000001U;
+enum uint WNCON_NOTROUTED = 0x00000002U;
+
+enum : uint
+{
+    WNCON_SLOWLINK = 0x00000004U,
+    WNCON_DYNAMIC  = 0x00000008U,
 }
 
 // Callbacks
@@ -353,7 +365,7 @@ alias PF_NPFMXGetPermHelp = uint function(PWSTR lpDriveName, uint nDialogType, B
 
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnetwk/ns-winnetwk-netresourcea))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnetwk/ns-winnetwk-netresourcea
 struct NETRESOURCEA
 {
     NET_RESOURCE_SCOPE dwScope;
@@ -367,7 +379,7 @@ struct NETRESOURCEA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnetwk/ns-winnetwk-netresourcew))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnetwk/ns-winnetwk-netresourcew
 struct NETRESOURCEW
 {
     NET_RESOURCE_SCOPE dwScope;
@@ -381,7 +393,7 @@ struct NETRESOURCEW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnetwk/ns-winnetwk-connectdlgstructa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnetwk/ns-winnetwk-connectdlgstructa
 struct CONNECTDLGSTRUCTA
 {
     uint          cbStructure;
@@ -392,7 +404,7 @@ struct CONNECTDLGSTRUCTA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnetwk/ns-winnetwk-connectdlgstructw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnetwk/ns-winnetwk-connectdlgstructw
 struct CONNECTDLGSTRUCTW
 {
     uint          cbStructure;
@@ -403,7 +415,7 @@ struct CONNECTDLGSTRUCTW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnetwk/ns-winnetwk-discdlgstructa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnetwk/ns-winnetwk-discdlgstructa
 struct DISCDLGSTRUCTA
 {
     uint                cbStructure;
@@ -414,7 +426,7 @@ struct DISCDLGSTRUCTA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnetwk/ns-winnetwk-discdlgstructw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnetwk/ns-winnetwk-discdlgstructw
 struct DISCDLGSTRUCTW
 {
     uint                cbStructure;
@@ -425,21 +437,21 @@ struct DISCDLGSTRUCTW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnetwk/ns-winnetwk-universal_name_infoa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnetwk/ns-winnetwk-universal_name_infoa
 struct UNIVERSAL_NAME_INFOA
 {
     PSTR lpUniversalName;
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnetwk/ns-winnetwk-universal_name_infow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnetwk/ns-winnetwk-universal_name_infow
 struct UNIVERSAL_NAME_INFOW
 {
     PWSTR lpUniversalName;
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnetwk/ns-winnetwk-remote_name_infoa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnetwk/ns-winnetwk-remote_name_infoa
 struct REMOTE_NAME_INFOA
 {
     PSTR lpUniversalName;
@@ -448,7 +460,7 @@ struct REMOTE_NAME_INFOA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnetwk/ns-winnetwk-remote_name_infow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnetwk/ns-winnetwk-remote_name_infow
 struct REMOTE_NAME_INFOW
 {
     PWSTR lpUniversalName;
@@ -456,7 +468,7 @@ struct REMOTE_NAME_INFOW
     PWSTR lpRemainingPath;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnetwk/ns-winnetwk-netinfostruct))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnetwk/ns-winnetwk-netinfostruct
 struct NETINFOSTRUCT
 {
     uint        cbStructure;
@@ -469,7 +481,7 @@ struct NETINFOSTRUCT
     uint        dwDrives;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnetwk/ns-winnetwk-netconnectinfostruct))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnetwk/ns-winnetwk-netconnectinfostruct
 struct NETCONNECTINFOSTRUCT
 {
     uint cbStructure;
@@ -479,7 +491,7 @@ struct NETCONNECTINFOSTRUCT
     uint dwOptDataSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/npapi/ns-npapi-notifyinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/npapi/ns-npapi-notifyinfo
 struct NOTIFYINFO
 {
     uint  dwNotifyStatus;
@@ -487,7 +499,7 @@ struct NOTIFYINFO
     void* lpContext;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/npapi/ns-npapi-notifyadd))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/npapi/ns-npapi-notifyadd
 struct NOTIFYADD
 {
     HWND              hwndOwner;
@@ -495,7 +507,7 @@ struct NOTIFYADD
     NET_CONNECT_FLAGS dwAddFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/npapi/ns-npapi-notifycancel))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/npapi/ns-npapi-notifycancel
 struct NOTIFYCANCEL
 {
     PWSTR lpName;

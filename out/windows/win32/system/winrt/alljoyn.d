@@ -3,9 +3,9 @@
 module windows.win32.system.winrt.alljoyn;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : HRESULT;
-public import windows.win32.system.winrt : HSTRING, IInspectable;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : HRESULT;
+public import windows.win32.system.winrt.winrt : HSTRING, IInspectable;
 
 extern(Windows) @nogc nothrow:
 
@@ -13,14 +13,14 @@ extern(Windows) @nogc nothrow:
 // Interfaces
 
 @GUID("fd89c65b-b50e-4a19-9d0c-b42b783281cd")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/windows.devices.alljoyn.interop/nn-windows-devices-alljoyn-interop-iwindowsdevicesalljoynbusattachmentinterop))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.devices.alljoyn.interop/nn-windows-devices-alljoyn-interop-iwindowsdevicesalljoynbusattachmentinterop
 interface IWindowsDevicesAllJoynBusAttachmentInterop : IInspectable
 {
     HRESULT get_Win32Handle(ulong* value);
 }
 
 @GUID("4b8f7505-b239-4e7b-88af-f6682575d861")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/windows.devices.alljoyn.interop/nn-windows-devices-alljoyn-interop-iwindowsdevicesalljoynbusattachmentfactoryinterop))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/windows.devices.alljoyn.interop/nn-windows-devices-alljoyn-interop-iwindowsdevicesalljoynbusattachmentfactoryinterop
 interface IWindowsDevicesAllJoynBusAttachmentFactoryInterop : IInspectable
 {
     HRESULT CreateFromWin32Handle(ulong win32handle, ubyte enableAboutData, const(GUID)* riid, void** ppv);

@@ -3,9 +3,9 @@
 module windows.win32.security.credentials;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, FILETIME, HANDLE, HRESULT, HWND,
-                                         NTSTATUS, PSTR, PWSTR, WIN32_ERROR;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, FILETIME, HANDLE, HRESULT, HWND,
+                                                    NTSTATUS, PSTR, PWSTR, WIN32_ERROR;
 public import windows.win32.graphics.gdi : HBITMAP;
 public import windows.win32.ui.windowsandmessaging : HICON;
 
@@ -14,109 +14,119 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias CRED_FLAGS = uint;
 enum : uint
 {
-    CRED_FLAGS_PASSWORD_FOR_CERT    = 0x00000001,
-    CRED_FLAGS_PROMPT_NOW           = 0x00000002,
-    CRED_FLAGS_USERNAME_TARGET      = 0x00000004,
-    CRED_FLAGS_OWF_CRED_BLOB        = 0x00000008,
-    CRED_FLAGS_REQUIRE_CONFIRMATION = 0x00000010,
-    CRED_FLAGS_WILDCARD_MATCH       = 0x00000020,
-    CRED_FLAGS_VSM_PROTECTED        = 0x00000040,
-    CRED_FLAGS_NGC_CERT             = 0x00000080,
-    CRED_FLAGS_VALID_FLAGS          = 0x0000f0ff,
-    CRED_FLAGS_VALID_INPUT_FLAGS    = 0x0000f09f,
+    CRED_FLAGS_PASSWORD_FOR_CERT    = 0x00000001U,
+    CRED_FLAGS_PROMPT_NOW           = 0x00000002U,
+    CRED_FLAGS_USERNAME_TARGET      = 0x00000004U,
+    CRED_FLAGS_OWF_CRED_BLOB        = 0x00000008U,
+    CRED_FLAGS_REQUIRE_CONFIRMATION = 0x00000010U,
+    CRED_FLAGS_WILDCARD_MATCH       = 0x00000020U,
+    CRED_FLAGS_VSM_PROTECTED        = 0x00000040U,
+    CRED_FLAGS_NGC_CERT             = 0x00000080U,
+    CRED_FLAGS_VALID_FLAGS          = 0x0000f0ffU,
+    CRED_FLAGS_VALID_INPUT_FLAGS    = 0x0000f09fU,
 }
+
 alias CRED_TYPE = uint;
 enum : uint
 {
-    CRED_TYPE_GENERIC                 = 0x00000001,
-    CRED_TYPE_DOMAIN_PASSWORD         = 0x00000002,
-    CRED_TYPE_DOMAIN_CERTIFICATE      = 0x00000003,
-    CRED_TYPE_DOMAIN_VISIBLE_PASSWORD = 0x00000004,
-    CRED_TYPE_GENERIC_CERTIFICATE     = 0x00000005,
-    CRED_TYPE_DOMAIN_EXTENDED         = 0x00000006,
-    CRED_TYPE_MAXIMUM                 = 0x00000007,
-    CRED_TYPE_MAXIMUM_EX              = 0x000003ef,
+    CRED_TYPE_GENERIC                 = 0x00000001U,
+    CRED_TYPE_DOMAIN_PASSWORD         = 0x00000002U,
+    CRED_TYPE_DOMAIN_CERTIFICATE      = 0x00000003U,
+    CRED_TYPE_DOMAIN_VISIBLE_PASSWORD = 0x00000004U,
+    CRED_TYPE_GENERIC_CERTIFICATE     = 0x00000005U,
+    CRED_TYPE_DOMAIN_EXTENDED         = 0x00000006U,
+    CRED_TYPE_MAXIMUM                 = 0x00000007U,
+    CRED_TYPE_MAXIMUM_EX              = 0x000003efU,
 }
+
 alias CRED_PERSIST = uint;
 enum : uint
 {
-    CRED_PERSIST_NONE          = 0x00000000,
-    CRED_PERSIST_SESSION       = 0x00000001,
-    CRED_PERSIST_LOCAL_MACHINE = 0x00000002,
-    CRED_PERSIST_ENTERPRISE    = 0x00000003,
+    CRED_PERSIST_NONE          = 0x00000000U,
+    CRED_PERSIST_SESSION       = 0x00000001U,
+    CRED_PERSIST_LOCAL_MACHINE = 0x00000002U,
+    CRED_PERSIST_ENTERPRISE    = 0x00000003U,
 }
+
 alias CREDUI_FLAGS = uint;
 enum : uint
 {
-    CREDUI_FLAGS_ALWAYS_SHOW_UI              = 0x00000080,
-    CREDUI_FLAGS_COMPLETE_USERNAME           = 0x00000800,
-    CREDUI_FLAGS_DO_NOT_PERSIST              = 0x00000002,
-    CREDUI_FLAGS_EXCLUDE_CERTIFICATES        = 0x00000008,
-    CREDUI_FLAGS_EXPECT_CONFIRMATION         = 0x00020000,
-    CREDUI_FLAGS_GENERIC_CREDENTIALS         = 0x00040000,
-    CREDUI_FLAGS_INCORRECT_PASSWORD          = 0x00000001,
-    CREDUI_FLAGS_KEEP_USERNAME               = 0x00100000,
-    CREDUI_FLAGS_PASSWORD_ONLY_OK            = 0x00000200,
-    CREDUI_FLAGS_PERSIST                     = 0x00001000,
-    CREDUI_FLAGS_REQUEST_ADMINISTRATOR       = 0x00000004,
-    CREDUI_FLAGS_REQUIRE_CERTIFICATE         = 0x00000010,
-    CREDUI_FLAGS_REQUIRE_SMARTCARD           = 0x00000100,
-    CREDUI_FLAGS_SERVER_CREDENTIAL           = 0x00004000,
-    CREDUI_FLAGS_SHOW_SAVE_CHECK_BOX         = 0x00000040,
-    CREDUI_FLAGS_USERNAME_TARGET_CREDENTIALS = 0x00080000,
-    CREDUI_FLAGS_VALIDATE_USERNAME           = 0x00000400,
+    CREDUI_FLAGS_ALWAYS_SHOW_UI              = 0x00000080U,
+    CREDUI_FLAGS_COMPLETE_USERNAME           = 0x00000800U,
+    CREDUI_FLAGS_DO_NOT_PERSIST              = 0x00000002U,
+    CREDUI_FLAGS_EXCLUDE_CERTIFICATES        = 0x00000008U,
+    CREDUI_FLAGS_EXPECT_CONFIRMATION         = 0x00020000U,
+    CREDUI_FLAGS_GENERIC_CREDENTIALS         = 0x00040000U,
+    CREDUI_FLAGS_INCORRECT_PASSWORD          = 0x00000001U,
+    CREDUI_FLAGS_KEEP_USERNAME               = 0x00100000U,
+    CREDUI_FLAGS_PASSWORD_ONLY_OK            = 0x00000200U,
+    CREDUI_FLAGS_PERSIST                     = 0x00001000U,
+    CREDUI_FLAGS_REQUEST_ADMINISTRATOR       = 0x00000004U,
+    CREDUI_FLAGS_REQUIRE_CERTIFICATE         = 0x00000010U,
+    CREDUI_FLAGS_REQUIRE_SMARTCARD           = 0x00000100U,
+    CREDUI_FLAGS_SERVER_CREDENTIAL           = 0x00004000U,
+    CREDUI_FLAGS_SHOW_SAVE_CHECK_BOX         = 0x00000040U,
+    CREDUI_FLAGS_USERNAME_TARGET_CREDENTIALS = 0x00080000U,
+    CREDUI_FLAGS_VALIDATE_USERNAME           = 0x00000400U,
 }
+
 alias SCARD_SCOPE = uint;
 enum : uint
 {
-    SCARD_SCOPE_USER   = 0x00000000,
-    SCARD_SCOPE_SYSTEM = 0x00000002,
+    SCARD_SCOPE_USER   = 0x00000000U,
+    SCARD_SCOPE_SYSTEM = 0x00000002U,
 }
+
 alias CRED_ENUMERATE_FLAGS = uint;
 enum : uint
 {
-    CRED_ENUMERATE_ALL_CREDENTIALS = 0x00000001,
+    CRED_ENUMERATE_ALL_CREDENTIALS = 0x00000001U,
 }
+
 alias CREDUIWIN_FLAGS = uint;
 enum : uint
 {
-    CREDUIWIN_GENERIC                = 0x00000001,
-    CREDUIWIN_CHECKBOX               = 0x00000002,
-    CREDUIWIN_AUTHPACKAGE_ONLY       = 0x00000010,
-    CREDUIWIN_IN_CRED_ONLY           = 0x00000020,
-    CREDUIWIN_ENUMERATE_ADMINS       = 0x00000100,
-    CREDUIWIN_ENUMERATE_CURRENT_USER = 0x00000200,
-    CREDUIWIN_SECURE_PROMPT          = 0x00001000,
-    CREDUIWIN_PREPROMPTING           = 0x00002000,
-    CREDUIWIN_PACK_32_WOW            = 0x10000000,
+    CREDUIWIN_GENERIC                = 0x00000001U,
+    CREDUIWIN_CHECKBOX               = 0x00000002U,
+    CREDUIWIN_AUTHPACKAGE_ONLY       = 0x00000010U,
+    CREDUIWIN_IN_CRED_ONLY           = 0x00000020U,
+    CREDUIWIN_ENUMERATE_ADMINS       = 0x00000100U,
+    CREDUIWIN_ENUMERATE_CURRENT_USER = 0x00000200U,
+    CREDUIWIN_SECURE_PROMPT          = 0x00001000U,
+    CREDUIWIN_PREPROMPTING           = 0x00002000U,
+    CREDUIWIN_PACK_32_WOW            = 0x10000000U,
 }
+
 alias SCARD_STATE = uint;
 enum : uint
 {
-    SCARD_STATE_UNAWARE     = 0x00000000,
-    SCARD_STATE_IGNORE      = 0x00000001,
-    SCARD_STATE_UNAVAILABLE = 0x00000008,
-    SCARD_STATE_EMPTY       = 0x00000010,
-    SCARD_STATE_PRESENT     = 0x00000020,
-    SCARD_STATE_ATRMATCH    = 0x00000040,
-    SCARD_STATE_EXCLUSIVE   = 0x00000080,
-    SCARD_STATE_INUSE       = 0x00000100,
-    SCARD_STATE_MUTE        = 0x00000200,
-    SCARD_STATE_CHANGED     = 0x00000002,
-    SCARD_STATE_UNKNOWN     = 0x00000004,
+    SCARD_STATE_UNAWARE     = 0x00000000U,
+    SCARD_STATE_IGNORE      = 0x00000001U,
+    SCARD_STATE_UNAVAILABLE = 0x00000008U,
+    SCARD_STATE_EMPTY       = 0x00000010U,
+    SCARD_STATE_PRESENT     = 0x00000020U,
+    SCARD_STATE_ATRMATCH    = 0x00000040U,
+    SCARD_STATE_EXCLUSIVE   = 0x00000080U,
+    SCARD_STATE_INUSE       = 0x00000100U,
+    SCARD_STATE_MUTE        = 0x00000200U,
+    SCARD_STATE_CHANGED     = 0x00000002U,
+    SCARD_STATE_UNKNOWN     = 0x00000004U,
 }
+
 alias CRED_PACK_FLAGS = uint;
 enum : uint
 {
-    CRED_PACK_PROTECTED_CREDENTIALS   = 0x00000001,
-    CRED_PACK_WOW_BUFFER              = 0x00000002,
-    CRED_PACK_GENERIC_CREDENTIALS     = 0x00000004,
-    CRED_PACK_ID_PROVIDER_CREDENTIALS = 0x00000008,
+    CRED_PACK_PROTECTED_CREDENTIALS   = 0x00000001U,
+    CRED_PACK_WOW_BUFFER              = 0x00000002U,
+    CRED_PACK_GENERIC_CREDENTIALS     = 0x00000004U,
+    CRED_PACK_ID_PROVIDER_CREDENTIALS = 0x00000008U,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/keycredmgr/ne-keycredmgr-keycredentialmanageroperationerrorstates))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/keycredmgr/ne-keycredmgr-keycredentialmanageroperationerrorstates
 enum KeyCredentialManagerOperationErrorStates : int
 {
     KeyCredentialManagerOperationErrorStateNone                 = 0x00000000,
@@ -128,14 +138,16 @@ enum KeyCredentialManagerOperationErrorStates : int
     KeyCredentialManagerOperationErrorStateHardwareFailure      = 0x00000020,
     KeyCredentialManagerOperationErrorStatePinExistsFailure     = 0x00000040,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/keycredmgr/ne-keycredmgr-keycredentialmanageroperationtype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/keycredmgr/ne-keycredmgr-keycredentialmanageroperationtype
 enum KeyCredentialManagerOperationType : int
 {
     KeyCredentialManagerProvisioning = 0x00000000,
     KeyCredentialManagerPinChange    = 0x00000001,
     KeyCredentialManagerPinReset     = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wincred/ne-wincred-cred_marshal_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincred/ne-wincred-cred_marshal_type
 alias CRED_MARSHAL_TYPE = int;
 enum : int
 {
@@ -145,7 +157,8 @@ enum : int
     UsernameForPackedCredentials = 0x00000004,
     BinaryBlobForSystem          = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wincred/ne-wincred-cred_protection_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincred/ne-wincred-cred_protection_type
 alias CRED_PROTECTION_TYPE = int;
 enum : int
 {
@@ -154,6 +167,7 @@ enum : int
     CredTrustedProtection   = 0x00000002,
     CredForSystemProtection = 0x00000003,
 }
+
 alias READER_SEL_REQUEST_MATCH_TYPE = int;
 enum : int
 {
@@ -161,7 +175,8 @@ enum : int
     RSR_MATCH_TYPE_SERIAL_NUMBER        = 0x00000002,
     RSR_MATCH_TYPE_ALL_CARDS            = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/credssp/ne-credssp-credspp_submit_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/credssp/ne-credssp-credspp_submit_type
 alias CREDSPP_SUBMIT_TYPE = int;
 enum : int
 {
@@ -176,94 +191,94 @@ enum : int
 // Constants
 
 
-enum uint CRED_MAX_CREDENTIAL_BLOB_SIZE = 0x00000a00;
-enum uint CRED_MAX_USERNAME_LENGTH = 0x00000201;
-enum uint CRED_MAX_DOMAIN_TARGET_NAME_LENGTH = 0x00000151;
-enum uint FILE_DEVICE_SMARTCARD = 0x00000031;
+enum uint CRED_MAX_CREDENTIAL_BLOB_SIZE = 0x00000a00U;
+enum uint CRED_MAX_USERNAME_LENGTH = 0x00000201U;
+enum uint CRED_MAX_DOMAIN_TARGET_NAME_LENGTH = 0x00000151U;
+enum uint FILE_DEVICE_SMARTCARD = 0x00000031U;
 enum GUID GUID_DEVINTERFACE_SMARTCARD_READER = GUID("50dd5230-ba8a-11d1-bf5d-0000f805f530");
-enum uint SCARD_ATR_LENGTH = 0x00000021;
+enum uint SCARD_ATR_LENGTH = 0x00000021U;
 
 enum : uint
 {
-    SCARD_PROTOCOL_UNDEFINED = 0x00000000,
-    SCARD_PROTOCOL_T0        = 0x00000001,
-    SCARD_PROTOCOL_T1        = 0x00000002,
-    SCARD_PROTOCOL_RAW       = 0x00010000,
-    SCARD_PROTOCOL_DEFAULT   = 0x80000000,
-    SCARD_PROTOCOL_OPTIMAL   = 0x00000000,
+    SCARD_PROTOCOL_UNDEFINED = 0x00000000U,
+    SCARD_PROTOCOL_T0        = 0x00000001U,
+    SCARD_PROTOCOL_T1        = 0x00000002U,
+    SCARD_PROTOCOL_RAW       = 0x00010000U,
+    SCARD_PROTOCOL_DEFAULT   = 0x80000000U,
+    SCARD_PROTOCOL_OPTIMAL   = 0x00000000U,
 }
 
-enum uint SCARD_POWER_DOWN = 0x00000000;
-enum uint SCARD_COLD_RESET = 0x00000001;
-enum uint SCARD_WARM_RESET = 0x00000002;
-enum uint MAXIMUM_ATTR_STRING_LENGTH = 0x00000020;
-enum uint MAXIMUM_SMARTCARD_READERS = 0x0000000a;
+enum uint SCARD_POWER_DOWN = 0x00000000U;
+enum uint SCARD_COLD_RESET = 0x00000001U;
+enum uint SCARD_WARM_RESET = 0x00000002U;
+enum uint MAXIMUM_ATTR_STRING_LENGTH = 0x00000020U;
+enum uint MAXIMUM_SMARTCARD_READERS = 0x0000000aU;
 
 enum : uint
 {
-    SCARD_CLASS_VENDOR_INFO    = 0x00000001,
-    SCARD_CLASS_COMMUNICATIONS = 0x00000002,
-    SCARD_CLASS_PROTOCOL       = 0x00000003,
-    SCARD_CLASS_POWER_MGMT     = 0x00000004,
-    SCARD_CLASS_SECURITY       = 0x00000005,
-    SCARD_CLASS_MECHANICAL     = 0x00000006,
-    SCARD_CLASS_VENDOR_DEFINED = 0x00000007,
-    SCARD_CLASS_IFD_PROTOCOL   = 0x00000008,
-    SCARD_CLASS_ICC_STATE      = 0x00000009,
-    SCARD_CLASS_PERF           = 0x00007ffe,
-    SCARD_CLASS_SYSTEM         = 0x00007fff,
-}
-
-enum : uint
-{
-    SCARD_T0_HEADER_LENGTH = 0x00000007,
-    SCARD_T0_CMD_LENGTH    = 0x00000005,
-}
-
-enum uint SCARD_T1_PROLOGUE_LENGTH = 0x00000003;
-
-enum : uint
-{
-    SCARD_T1_EPILOGUE_LENGTH     = 0x00000002,
-    SCARD_T1_EPILOGUE_LENGTH_LRC = 0x00000001,
-}
-
-enum uint SCARD_T1_MAX_IFS = 0x000000fe;
-
-enum : uint
-{
-    SCARD_UNKNOWN   = 0x00000000,
-    SCARD_ABSENT    = 0x00000001,
-    SCARD_PRESENT   = 0x00000002,
-    SCARD_SWALLOWED = 0x00000003,
+    SCARD_CLASS_VENDOR_INFO    = 0x00000001U,
+    SCARD_CLASS_COMMUNICATIONS = 0x00000002U,
+    SCARD_CLASS_PROTOCOL       = 0x00000003U,
+    SCARD_CLASS_POWER_MGMT     = 0x00000004U,
+    SCARD_CLASS_SECURITY       = 0x00000005U,
+    SCARD_CLASS_MECHANICAL     = 0x00000006U,
+    SCARD_CLASS_VENDOR_DEFINED = 0x00000007U,
+    SCARD_CLASS_IFD_PROTOCOL   = 0x00000008U,
+    SCARD_CLASS_ICC_STATE      = 0x00000009U,
+    SCARD_CLASS_PERF           = 0x00007ffeU,
+    SCARD_CLASS_SYSTEM         = 0x00007fffU,
 }
 
 enum : uint
 {
-    SCARD_POWERED    = 0x00000004,
-    SCARD_NEGOTIABLE = 0x00000005,
+    SCARD_T0_HEADER_LENGTH = 0x00000007U,
+    SCARD_T0_CMD_LENGTH    = 0x00000005U,
+}
+
+enum uint SCARD_T1_PROLOGUE_LENGTH = 0x00000003U;
+
+enum : uint
+{
+    SCARD_T1_EPILOGUE_LENGTH     = 0x00000002U,
+    SCARD_T1_EPILOGUE_LENGTH_LRC = 0x00000001U,
+}
+
+enum uint SCARD_T1_MAX_IFS = 0x000000feU;
+
+enum : uint
+{
+    SCARD_UNKNOWN   = 0x00000000U,
+    SCARD_ABSENT    = 0x00000001U,
+    SCARD_PRESENT   = 0x00000002U,
+    SCARD_SWALLOWED = 0x00000003U,
 }
 
 enum : uint
 {
-    SCARD_SPECIFIC               = 0x00000006,
-    SCARD_READER_SWALLOWS        = 0x00000001,
-    SCARD_READER_EJECTS          = 0x00000002,
-    SCARD_READER_CONFISCATES     = 0x00000004,
-    SCARD_READER_CONTACTLESS     = 0x00000008,
-    SCARD_READER_TYPE_SERIAL     = 0x00000001,
-    SCARD_READER_TYPE_PARALELL   = 0x00000002,
-    SCARD_READER_TYPE_KEYBOARD   = 0x00000004,
-    SCARD_READER_TYPE_SCSI       = 0x00000008,
-    SCARD_READER_TYPE_IDE        = 0x00000010,
-    SCARD_READER_TYPE_USB        = 0x00000020,
-    SCARD_READER_TYPE_PCMCIA     = 0x00000040,
-    SCARD_READER_TYPE_TPM        = 0x00000080,
-    SCARD_READER_TYPE_NFC        = 0x00000100,
-    SCARD_READER_TYPE_UICC       = 0x00000200,
-    SCARD_READER_TYPE_NGC        = 0x00000400,
-    SCARD_READER_TYPE_EMBEDDEDSE = 0x00000800,
-    SCARD_READER_TYPE_VENDOR     = 0x000000f0,
+    SCARD_POWERED    = 0x00000004U,
+    SCARD_NEGOTIABLE = 0x00000005U,
+}
+
+enum : uint
+{
+    SCARD_SPECIFIC               = 0x00000006U,
+    SCARD_READER_SWALLOWS        = 0x00000001U,
+    SCARD_READER_EJECTS          = 0x00000002U,
+    SCARD_READER_CONFISCATES     = 0x00000004U,
+    SCARD_READER_CONTACTLESS     = 0x00000008U,
+    SCARD_READER_TYPE_SERIAL     = 0x00000001U,
+    SCARD_READER_TYPE_PARALELL   = 0x00000002U,
+    SCARD_READER_TYPE_KEYBOARD   = 0x00000004U,
+    SCARD_READER_TYPE_SCSI       = 0x00000008U,
+    SCARD_READER_TYPE_IDE        = 0x00000010U,
+    SCARD_READER_TYPE_USB        = 0x00000020U,
+    SCARD_READER_TYPE_PCMCIA     = 0x00000040U,
+    SCARD_READER_TYPE_TPM        = 0x00000080U,
+    SCARD_READER_TYPE_NFC        = 0x00000100U,
+    SCARD_READER_TYPE_UICC       = 0x00000200U,
+    SCARD_READER_TYPE_NGC        = 0x00000400U,
+    SCARD_READER_TYPE_EMBEDDEDSE = 0x00000800U,
+    SCARD_READER_TYPE_VENDOR     = 0x000000f0U,
 }
 
 enum NTSTATUS STATUS_LOGON_FAILURE = NTSTATUS(0xc000006d);
@@ -296,20 +311,20 @@ enum : NTSTATUS
 
 enum : uint
 {
-    CRED_MAX_STRING_LENGTH              = 0x00000100,
-    CRED_MAX_GENERIC_TARGET_NAME_LENGTH = 0x00007fff,
+    CRED_MAX_STRING_LENGTH              = 0x00000100U,
+    CRED_MAX_GENERIC_TARGET_NAME_LENGTH = 0x00007fffU,
 }
 
 enum : uint
 {
-    CRED_MAX_TARGETNAME_NAMESPACE_LENGTH = 0x00000100,
-    CRED_MAX_TARGETNAME_ATTRIBUTE_LENGTH = 0x00000100,
+    CRED_MAX_TARGETNAME_NAMESPACE_LENGTH = 0x00000100U,
+    CRED_MAX_TARGETNAME_ATTRIBUTE_LENGTH = 0x00000100U,
 }
 
 enum : uint
 {
-    CRED_MAX_VALUE_SIZE = 0x00000100,
-    CRED_MAX_ATTRIBUTES = 0x00000040,
+    CRED_MAX_VALUE_SIZE = 0x00000100U,
+    CRED_MAX_ATTRIBUTES = 0x00000040U,
 }
 
 enum : const(wchar)*
@@ -364,54 +379,54 @@ enum : const(wchar)*
     CRED_TARGETNAME_ATTRIBUTE_CACHEDINTERACTIVE = "cachedinteractive",
 }
 
-enum uint CRED_LOGON_TYPES_MASK = 0x0000f000;
-enum uint CRED_TI_SERVER_FORMAT_UNKNOWN = 0x00000001;
-enum uint CRED_TI_DOMAIN_FORMAT_UNKNOWN = 0x00000002;
-enum uint CRED_TI_ONLY_PASSWORD_REQUIRED = 0x00000004;
-enum uint CRED_TI_USERNAME_TARGET = 0x00000008;
-enum uint CRED_TI_CREATE_EXPLICIT_CRED = 0x00000010;
-enum uint CRED_TI_WORKGROUP_MEMBER = 0x00000020;
-enum uint CRED_TI_DNSTREE_IS_DFS_SERVER = 0x00000040;
-enum uint CRED_TI_VALID_FLAGS = 0x0000f07f;
-enum uint CERT_HASH_LENGTH = 0x00000014;
+enum uint CRED_LOGON_TYPES_MASK = 0x0000f000U;
+enum uint CRED_TI_SERVER_FORMAT_UNKNOWN = 0x00000001U;
+enum uint CRED_TI_DOMAIN_FORMAT_UNKNOWN = 0x00000002U;
+enum uint CRED_TI_ONLY_PASSWORD_REQUIRED = 0x00000004U;
+enum uint CRED_TI_USERNAME_TARGET = 0x00000008U;
+enum uint CRED_TI_CREATE_EXPLICIT_CRED = 0x00000010U;
+enum uint CRED_TI_WORKGROUP_MEMBER = 0x00000020U;
+enum uint CRED_TI_DNSTREE_IS_DFS_SERVER = 0x00000040U;
+enum uint CRED_TI_VALID_FLAGS = 0x0000f07fU;
+enum uint CERT_HASH_LENGTH = 0x00000014U;
 
 enum : uint
 {
-    CREDUI_MAX_MESSAGE_LENGTH        = 0x00000400,
-    CREDUI_MAX_CAPTION_LENGTH        = 0x00000080,
-    CREDUI_MAX_GENERIC_TARGET_LENGTH = 0x00007fff,
+    CREDUI_MAX_MESSAGE_LENGTH        = 0x00000400U,
+    CREDUI_MAX_CAPTION_LENGTH        = 0x00000080U,
+    CREDUI_MAX_GENERIC_TARGET_LENGTH = 0x00007fffU,
 }
 
-enum uint CREDUI_MAX_DOMAIN_TARGET_LENGTH = 0x00000151;
-enum uint CREDUI_MAX_USERNAME_LENGTH = 0x00000201;
+enum uint CREDUI_MAX_DOMAIN_TARGET_LENGTH = 0x00000151U;
+enum uint CREDUI_MAX_USERNAME_LENGTH = 0x00000201U;
 
 enum : uint
 {
-    CREDUIWIN_USE_V2                     = 0x00000040,
-    CREDUIWIN_IGNORE_CLOUDAUTHORITY_NAME = 0x00040000,
+    CREDUIWIN_USE_V2                     = 0x00000040U,
+    CREDUIWIN_IGNORE_CLOUDAUTHORITY_NAME = 0x00040000U,
 }
 
-enum uint CREDUIWIN_DOWNLEVEL_HELLO_AS_SMART_CARD = 0x80000000;
-enum uint BACK_BUTTON_IDENTIFY_AUTH_PACKAGE = 0xcad00001;
-enum uint CREDUI_FOOTER_LINK_AUTHPACKAGE_ID = 0x0cad0002;
-enum uint CREDUI_PICKERSCREEN_AUTHPACKAGE_ID = 0x0cad0003;
-enum uint CRED_PRESERVE_CREDENTIAL_BLOB = 0x00000001;
-enum uint CRED_CACHE_TARGET_INFORMATION = 0x00000001;
-enum uint CRED_ALLOW_NAME_RESOLUTION = 0x00000001;
+enum uint CREDUIWIN_DOWNLEVEL_HELLO_AS_SMART_CARD = 0x80000000U;
+enum uint BACK_BUTTON_IDENTIFY_AUTH_PACKAGE = 0xcad00001U;
+enum uint CREDUI_FOOTER_LINK_AUTHPACKAGE_ID = 0x0cad0002U;
+enum uint CREDUI_PICKERSCREEN_AUTHPACKAGE_ID = 0x0cad0003U;
+enum uint CRED_PRESERVE_CREDENTIAL_BLOB = 0x00000001U;
+enum uint CRED_CACHE_TARGET_INFORMATION = 0x00000001U;
+enum uint CRED_ALLOW_NAME_RESOLUTION = 0x00000001U;
 
 enum : uint
 {
-    CRED_PROTECT_AS_SELF   = 0x00000001,
-    CRED_PROTECT_TO_SYSTEM = 0x00000002,
+    CRED_PROTECT_AS_SELF   = 0x00000001U,
+    CRED_PROTECT_TO_SYSTEM = 0x00000002U,
 }
 
 enum : uint
 {
-    CRED_UNPROTECT_AS_SELF         = 0x00000001,
-    CRED_UNPROTECT_ALLOW_TO_SYSTEM = 0x00000002,
+    CRED_UNPROTECT_AS_SELF         = 0x00000001U,
+    CRED_UNPROTECT_ALLOW_TO_SYSTEM = 0x00000002U,
 }
 
-enum uint SCARD_SCOPE_TERMINAL = 0x00000001;
+enum uint SCARD_SCOPE_TERMINAL = 0x00000001U;
 enum const(wchar)* SCARD_ALL_READERS = "SCard$AllReaders\000";
 enum const(wchar)* SCARD_DEFAULT_READERS = "SCard$DefaultReaders\000";
 enum const(wchar)* SCARD_LOCAL_READERS = "SCard$LocalReaders\000";
@@ -419,42 +434,42 @@ enum const(wchar)* SCARD_SYSTEM_READERS = "SCard$SystemReaders\000";
 
 enum : uint
 {
-    SCARD_PROVIDER_PRIMARY = 0x00000001,
-    SCARD_PROVIDER_CSP     = 0x00000002,
-    SCARD_PROVIDER_KSP     = 0x00000003,
+    SCARD_PROVIDER_PRIMARY = 0x00000001U,
+    SCARD_PROVIDER_CSP     = 0x00000002U,
+    SCARD_PROVIDER_KSP     = 0x00000003U,
 }
 
-enum uint SCARD_STATE_UNPOWERED = 0x00000400;
+enum uint SCARD_STATE_UNPOWERED = 0x00000400U;
 
 enum : uint
 {
-    SCARD_SHARE_EXCLUSIVE = 0x00000001,
-    SCARD_SHARE_SHARED    = 0x00000002,
-    SCARD_SHARE_DIRECT    = 0x00000003,
+    SCARD_SHARE_EXCLUSIVE = 0x00000001U,
+    SCARD_SHARE_SHARED    = 0x00000002U,
+    SCARD_SHARE_DIRECT    = 0x00000003U,
 }
 
-enum uint SCARD_LEAVE_CARD = 0x00000000;
-enum uint SCARD_RESET_CARD = 0x00000001;
-enum uint SCARD_UNPOWER_CARD = 0x00000002;
-enum uint SCARD_EJECT_CARD = 0x00000003;
+enum uint SCARD_LEAVE_CARD = 0x00000000U;
+enum uint SCARD_RESET_CARD = 0x00000001U;
+enum uint SCARD_UNPOWER_CARD = 0x00000002U;
+enum uint SCARD_EJECT_CARD = 0x00000003U;
 
 enum : uint
 {
-    SC_DLG_MINIMAL_UI = 0x00000001,
-    SC_DLG_NO_UI      = 0x00000002,
-    SC_DLG_FORCE_UI   = 0x00000004,
-}
-
-enum : uint
-{
-    SCERR_NOCARDNAME = 0x00004000,
-    SCERR_NOGUIDS    = 0x00008000,
+    SC_DLG_MINIMAL_UI = 0x00000001U,
+    SC_DLG_NO_UI      = 0x00000002U,
+    SC_DLG_FORCE_UI   = 0x00000004U,
 }
 
 enum : uint
 {
-    SCARD_AUDIT_CHV_FAILURE = 0x00000000,
-    SCARD_AUDIT_CHV_SUCCESS = 0x00000001,
+    SCERR_NOCARDNAME = 0x00004000U,
+    SCERR_NOGUIDS    = 0x00008000U,
+}
+
+enum : uint
+{
+    SCARD_AUDIT_CHV_FAILURE = 0x00000000U,
+    SCARD_AUDIT_CHV_SUCCESS = 0x00000001U,
 }
 
 enum const(wchar)* CREDSSP_NAME = "CREDSSP";
@@ -469,19 +484,19 @@ enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(Ele
 
 enum : uint
 {
-    CREDSSP_SERVER_AUTH_NEGOTIATE   = 0x00000001,
-    CREDSSP_SERVER_AUTH_CERTIFICATE = 0x00000002,
-    CREDSSP_SERVER_AUTH_LOOPBACK    = 0x00000004,
+    CREDSSP_SERVER_AUTH_NEGOTIATE   = 0x00000001U,
+    CREDSSP_SERVER_AUTH_CERTIFICATE = 0x00000002U,
+    CREDSSP_SERVER_AUTH_LOOPBACK    = 0x00000004U,
 }
 
 enum : uint
 {
-    SECPKG_ALT_ATTR                = 0x80000000,
-    SECPKG_ATTR_C_FULL_IDENT_TOKEN = 0x80000085,
+    SECPKG_ALT_ATTR                = 0x80000000U,
+    SECPKG_ATTR_C_FULL_IDENT_TOKEN = 0x80000085U,
 }
 
-enum uint CREDSSP_CRED_EX_VERSION = 0x00000000;
-enum uint CREDSSP_FLAG_REDIRECT = 0x00000001;
+enum uint CREDSSP_CRED_EX_VERSION = 0x00000000U;
+enum uint CREDSSP_FLAG_REDIRECT = 0x00000001U;
 
 // Callbacks
 
@@ -495,13 +510,13 @@ alias LPOCNDSCPROC = void function(size_t param0, size_t param1, void* param2);
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/keycredmgr/ns-keycredmgr-keycredentialmanagerinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/keycredmgr/ns-keycredmgr-keycredentialmanagerinfo
 struct KeyCredentialManagerInfo
 {
     GUID containerId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-sechandle))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/sspi/ns-sspi-sechandle
 struct SecHandle
 {
     size_t dwLower;
@@ -509,7 +524,7 @@ struct SecHandle
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wincred/ns-wincred-credential_attributea))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincred/ns-wincred-credential_attributea
 struct CREDENTIAL_ATTRIBUTEA
 {
     PSTR   Keyword;
@@ -519,7 +534,7 @@ struct CREDENTIAL_ATTRIBUTEA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wincred/ns-wincred-credential_attributew))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincred/ns-wincred-credential_attributew
 struct CREDENTIAL_ATTRIBUTEW
 {
     PWSTR  Keyword;
@@ -529,7 +544,7 @@ struct CREDENTIAL_ATTRIBUTEW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wincred/ns-wincred-credentiala))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincred/ns-wincred-credentiala
 struct CREDENTIALA
 {
     CRED_FLAGS   Flags;
@@ -547,7 +562,7 @@ struct CREDENTIALA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wincred/ns-wincred-credentialw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincred/ns-wincred-credentialw
 struct CREDENTIALW
 {
     CRED_FLAGS   Flags;
@@ -565,7 +580,7 @@ struct CREDENTIALW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wincred/ns-wincred-credential_target_informationa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincred/ns-wincred-credential_target_informationa
 struct CREDENTIAL_TARGET_INFORMATIONA
 {
     PSTR  TargetName;
@@ -581,7 +596,7 @@ struct CREDENTIAL_TARGET_INFORMATIONA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wincred/ns-wincred-credential_target_informationw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincred/ns-wincred-credential_target_informationw
 struct CREDENTIAL_TARGET_INFORMATIONW
 {
     PWSTR TargetName;
@@ -597,14 +612,14 @@ struct CREDENTIAL_TARGET_INFORMATIONW
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wincred/ns-wincred-cert_credential_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincred/ns-wincred-cert_credential_info
 struct CERT_CREDENTIAL_INFO
 {
     uint      cbSize;
     ubyte[20] rgbHashOfCert;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wincred/ns-wincred-username_target_credential_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincred/ns-wincred-username_target_credential_info
 struct USERNAME_TARGET_CREDENTIAL_INFO
 {
     PWSTR UserName;
@@ -618,7 +633,7 @@ struct BINARY_BLOB_CREDENTIAL_INFO
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wincred/ns-wincred-credui_infoa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincred/ns-wincred-credui_infoa
 struct CREDUI_INFOA
 {
     uint        cbSize;
@@ -630,7 +645,7 @@ struct CREDUI_INFOA
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wincred/ns-wincred-credui_infow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wincred/ns-wincred-credui_infow
 struct CREDUI_INFOW
 {
     uint         cbSize;
@@ -640,7 +655,7 @@ struct CREDUI_INFOW
     HBITMAP      hbmBanner;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SecAuthN/scard-io-request))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SecAuthN/scard-io-request
 struct SCARD_IO_REQUEST
 {
     uint dwProtocol;
@@ -658,10 +673,14 @@ struct SCARD_T0_COMMAND
 
 struct SCARD_T0_REQUEST
 {
-    SCARD_IO_REQUEST    ioRequest;
-    ubyte               bSw1;
-    ubyte               bSw2;
-    _Anonymous_e__Union Anonymous;
+    SCARD_IO_REQUEST ioRequest;
+    ubyte            bSw1;
+    ubyte            bSw2;
+    union
+    {
+        SCARD_T0_COMMAND CmdBytes;
+        ubyte[5]         rgbHeader;
+    }
 }
 
 struct SCARD_T1_REQUEST
@@ -670,7 +689,7 @@ struct SCARD_T1_REQUEST
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winscard/ns-winscard-scard_readerstatea))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winscard/ns-winscard-scard_readerstatea
 struct SCARD_READERSTATEA
 {
     const(PSTR) szReader;
@@ -682,7 +701,7 @@ struct SCARD_READERSTATEA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winscard/ns-winscard-scard_readerstatew))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winscard/ns-winscard-scard_readerstatew
 struct SCARD_READERSTATEW
 {
     const(PWSTR) szReader;
@@ -693,7 +712,7 @@ struct SCARD_READERSTATEW
     ubyte[36]    rgbAtr;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winscard/ns-winscard-scard_atrmask))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winscard/ns-winscard-scard_atrmask
 struct SCARD_ATRMASK
 {
     uint      cbAtr;
@@ -702,7 +721,7 @@ struct SCARD_ATRMASK
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winscard/ns-winscard-opencard_search_criteriaa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winscard/ns-winscard-opencard_search_criteriaa
 struct OPENCARD_SEARCH_CRITERIAA
 {
     uint           dwStructSize;
@@ -721,7 +740,7 @@ struct OPENCARD_SEARCH_CRITERIAA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winscard/ns-winscard-opencard_search_criteriaw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winscard/ns-winscard-opencard_search_criteriaw
 struct OPENCARD_SEARCH_CRITERIAW
 {
     uint           dwStructSize;
@@ -740,7 +759,7 @@ struct OPENCARD_SEARCH_CRITERIAW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winscard/ns-winscard-opencardname_exa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winscard/ns-winscard-opencardname_exa
 struct OPENCARDNAME_EXA
 {
     uint           dwStructSize;
@@ -764,7 +783,7 @@ struct OPENCARDNAME_EXA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winscard/ns-winscard-opencardname_exw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winscard/ns-winscard-opencardname_exw
 struct OPENCARDNAME_EXW
 {
     uint           dwStructSize;
@@ -789,10 +808,27 @@ struct OPENCARDNAME_EXW
 
 struct READER_SEL_REQUEST
 {
-    uint                dwShareMode;
-    uint                dwPreferredProtocols;
+    uint dwShareMode;
+    uint dwPreferredProtocols;
     READER_SEL_REQUEST_MATCH_TYPE MatchType;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct ReaderAndContainerParameter
+        {
+            uint cbReaderNameOffset;
+            uint cchReaderNameLength;
+            uint cbContainerNameOffset;
+            uint cchContainerNameLength;
+            uint dwDesiredCardModuleVersion;
+            uint dwCspFlags;
+        }
+        struct SerialNumberParameter
+        {
+            uint cbSerialNumberOffset;
+            uint cbSerialNumberLength;
+            uint dwDesiredCardModuleVersion;
+        }
+    }
 }
 
 struct READER_SEL_RESPONSE
@@ -804,7 +840,7 @@ struct READER_SEL_RESPONSE
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winscard/ns-winscard-opencardnamea))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winscard/ns-winscard-opencardnamea
 struct OPENCARDNAMEA
 {
     uint           dwStructSize;
@@ -833,7 +869,7 @@ struct OPENCARDNAMEA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winscard/ns-winscard-opencardnamew))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winscard/ns-winscard-opencardnamew
 struct OPENCARDNAMEW
 {
     uint           dwStructSize;
@@ -861,14 +897,14 @@ struct OPENCARDNAMEW
     size_t         hCardHandle;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/credssp/ns-credssp-secpkgcontext_clientcreds))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/credssp/ns-credssp-secpkgcontext_clientcreds
 struct SecPkgContext_ClientCreds
 {
     uint   AuthBufferLen;
     ubyte* AuthBuffer;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/credssp/ns-credssp-credssp_cred))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/credssp/ns-credssp-credssp_cred
 struct CREDSSP_CRED
 {
     CREDSPP_SUBMIT_TYPE Type;
@@ -887,22 +923,22 @@ struct CREDSSP_CRED_EX
 
 // Functions
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/keycredmgr/nf-keycredmgr-keycredentialmanagergetoperationerrorstates))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/keycredmgr/nf-keycredmgr-keycredentialmanagergetoperationerrorstates
 @DllImport("KeyCredMgr.dll")
 HRESULT KeyCredentialManagerGetOperationErrorStates(KeyCredentialManagerOperationType keyCredentialManagerOperationType, 
                                                     BOOL* isReady, 
                                                     KeyCredentialManagerOperationErrorStates* keyCredentialManagerOperationErrorStates);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/keycredmgr/nf-keycredmgr-keycredentialmanagershowuioperation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/keycredmgr/nf-keycredmgr-keycredentialmanagershowuioperation
 @DllImport("KeyCredMgr.dll")
 HRESULT KeyCredentialManagerShowUIOperation(HWND hWndOwner, 
                                             KeyCredentialManagerOperationType keyCredentialManagerOperationType);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/keycredmgr/nf-keycredmgr-keycredentialmanagergetinformation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/keycredmgr/nf-keycredmgr-keycredentialmanagergetinformation
 @DllImport("KeyCredMgr.dll")
 HRESULT KeyCredentialManagerGetInformation(KeyCredentialManagerInfo** keyCredentialManagerInfo);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/keycredmgr/nf-keycredmgr-keycredentialmanagerfreeinformation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/keycredmgr/nf-keycredmgr-keycredentialmanagerfreeinformation
 @DllImport("KeyCredMgr.dll")
 void KeyCredentialManagerFreeInformation(KeyCredentialManagerInfo* keyCredentialManagerInfo);
 

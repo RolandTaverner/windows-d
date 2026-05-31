@@ -3,7 +3,7 @@
 module windows.win32.system.diagnostics.ceip;
 
 public import windows.core;
-public import windows.win32.foundation : BOOL;
+public import windows.win32.foundation.foundation : BOOL;
 
 extern(Windows) @nogc nothrow:
 

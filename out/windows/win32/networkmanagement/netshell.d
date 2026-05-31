@@ -3,15 +3,16 @@
 module windows.win32.networkmanagement.netshell;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, HANDLE, PWSTR;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, HANDLE, PWSTR;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netsh/ne-netsh-ns_cmd_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netsh/ne-netsh-ns_cmd_flags
 alias NS_CMD_FLAGS = int;
 enum : int
 {
@@ -23,7 +24,8 @@ enum : int
     CMD_FLAG_LIMIT_MASK  = 0x0000ffff,
     CMD_FLAG_PRIORITY    = 0x80000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netsh/ne-netsh-ns_reqs))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netsh/ne-netsh-ns_reqs
 alias NS_REQS = int;
 enum : int
 {
@@ -32,6 +34,7 @@ enum : int
     NS_REQ_ALLOW_MULTIPLE = 0x00000002,
     NS_REQ_ONE_OR_MORE    = 0x00000003,
 }
+
 alias NS_EVENTS = int;
 enum : int
 {
@@ -41,6 +44,7 @@ enum : int
     NS_EVENT_FROM_N     = 0x00000004,
     NS_EVENT_FROM_START = 0x00000008,
 }
+
 alias NS_MODE_CHANGE = int;
 enum : int
 {
@@ -54,52 +58,52 @@ enum : int
 // Constants
 
 
-enum uint NETSH_ERROR_BASE = 0x00003a98;
-enum uint ERROR_NO_ENTRIES = 0x00003a98;
-enum uint ERROR_INVALID_SYNTAX = 0x00003a99;
-enum uint ERROR_PROTOCOL_NOT_IN_TRANSPORT = 0x00003a9a;
-enum uint ERROR_NO_CHANGE = 0x00003a9b;
-enum uint ERROR_CMD_NOT_FOUND = 0x00003a9c;
-enum uint ERROR_ENTRY_PT_NOT_FOUND = 0x00003a9d;
-enum uint ERROR_DLL_LOAD_FAILED = 0x00003a9e;
-enum uint ERROR_INIT_DISPLAY = 0x00003a9f;
-enum uint ERROR_TAG_ALREADY_PRESENT = 0x00003aa0;
-enum uint ERROR_INVALID_OPTION_TAG = 0x00003aa1;
+enum uint NETSH_ERROR_BASE = 0x00003a98U;
+enum uint ERROR_NO_ENTRIES = 0x00003a98U;
+enum uint ERROR_INVALID_SYNTAX = 0x00003a99U;
+enum uint ERROR_PROTOCOL_NOT_IN_TRANSPORT = 0x00003a9aU;
+enum uint ERROR_NO_CHANGE = 0x00003a9bU;
+enum uint ERROR_CMD_NOT_FOUND = 0x00003a9cU;
+enum uint ERROR_ENTRY_PT_NOT_FOUND = 0x00003a9dU;
+enum uint ERROR_DLL_LOAD_FAILED = 0x00003a9eU;
+enum uint ERROR_INIT_DISPLAY = 0x00003a9fU;
+enum uint ERROR_TAG_ALREADY_PRESENT = 0x00003aa0U;
+enum uint ERROR_INVALID_OPTION_TAG = 0x00003aa1U;
 
 enum : uint
 {
-    ERROR_NO_TAG         = 0x00003aa2,
-    ERROR_MISSING_OPTION = 0x00003aa3,
+    ERROR_NO_TAG         = 0x00003aa2U,
+    ERROR_MISSING_OPTION = 0x00003aa3U,
 }
 
-enum uint ERROR_TRANSPORT_NOT_PRESENT = 0x00003aa4;
-enum uint ERROR_SHOW_USAGE = 0x00003aa5;
-enum uint ERROR_INVALID_OPTION_VALUE = 0x00003aa6;
+enum uint ERROR_TRANSPORT_NOT_PRESENT = 0x00003aa4U;
+enum uint ERROR_SHOW_USAGE = 0x00003aa5U;
+enum uint ERROR_INVALID_OPTION_VALUE = 0x00003aa6U;
 
 enum : uint
 {
-    ERROR_OKAY                       = 0x00003aa7,
-    ERROR_CONTINUE_IN_PARENT_CONTEXT = 0x00003aa8,
+    ERROR_OKAY                       = 0x00003aa7U,
+    ERROR_CONTINUE_IN_PARENT_CONTEXT = 0x00003aa8U,
 }
 
-enum uint ERROR_SUPPRESS_OUTPUT = 0x00003aa9;
-enum uint ERROR_HELPER_ALREADY_REGISTERED = 0x00003aaa;
-enum uint ERROR_CONTEXT_ALREADY_REGISTERED = 0x00003aab;
-enum uint ERROR_PARSING_FAILURE = 0x00003aac;
-enum uint NETSH_ERROR_END = 0x00003aab;
+enum uint ERROR_SUPPRESS_OUTPUT = 0x00003aa9U;
+enum uint ERROR_HELPER_ALREADY_REGISTERED = 0x00003aaaU;
+enum uint ERROR_CONTEXT_ALREADY_REGISTERED = 0x00003aabU;
+enum uint ERROR_PARSING_FAILURE = 0x00003aacU;
+enum uint NETSH_ERROR_END = 0x00003aabU;
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* NS_GET_EVENT_IDS_FN_NAME = "GetEventIds";
-enum uint MAX_NAME_LEN = 0x00000030;
-enum uint NETSH_VERSION_50 = 0x00005000;
+enum uint MAX_NAME_LEN = 0x00000030U;
+enum uint NETSH_VERSION_50 = 0x00005000U;
 enum const(wchar)* NETSH_ARG_DELIMITER = "=";
 enum const(wchar)* NETSH_CMD_DELIMITER = " ";
 
 enum : uint
 {
-    NETSH_MAX_TOKEN_LENGTH     = 0x00000040,
-    NETSH_MAX_CMD_TOKEN_LENGTH = 0x00000080,
+    NETSH_MAX_TOKEN_LENGTH     = 0x00000040U,
+    NETSH_MAX_CMD_TOKEN_LENGTH = 0x00000080U,
 }
 
-enum uint DEFAULT_CONTEXT_PRIORITY = 0x00000064;
+enum uint DEFAULT_CONTEXT_PRIORITY = 0x00000064U;
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* GET_RESOURCE_STRING_FN_NAME = "GetResourceString";
 
 // Callbacks
@@ -128,16 +132,24 @@ struct TOKEN_VALUE
     uint         dwValue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netsh/ns-netsh-ns_helper_attributes))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netsh/ns-netsh-ns_helper_attributes
 struct NS_HELPER_ATTRIBUTES
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct
+        {
+            uint dwVersion;
+            uint dwReserved;
+        }
+        ulong _ullAlign;
+    }
     GUID                guidHelper;
     PNS_HELPER_START_FN pfnStart;
     PNS_HELPER_STOP_FN  pfnStop;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netsh/ns-netsh-cmd_entry))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netsh/ns-netsh-cmd_entry
 struct CMD_ENTRY
 {
     const(PWSTR)       pwszCmdToken;
@@ -148,7 +160,7 @@ struct CMD_ENTRY
     PNS_OSVERSIONCHECK pOsVersionCheck;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netsh/ns-netsh-cmd_group_entry))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netsh/ns-netsh-cmd_group_entry
 struct CMD_GROUP_ENTRY
 {
     const(PWSTR)       pwszCmdGroupToken;
@@ -159,10 +171,18 @@ struct CMD_GROUP_ENTRY
     PNS_OSVERSIONCHECK pOsVersionCheck;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netsh/ns-netsh-ns_context_attributes))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netsh/ns-netsh-ns_context_attributes
 struct NS_CONTEXT_ATTRIBUTES
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct
+        {
+            uint dwVersion;
+            uint dwReserved;
+        }
+        ulong _ullAlign;
+    }
     PWSTR               pwszContext;
     GUID                guidHelper;
     uint                dwFlags;
@@ -178,7 +198,7 @@ struct NS_CONTEXT_ATTRIBUTES
     PNS_OSVERSIONCHECK  pfnOsVersionCheck;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/netsh/ns-netsh-tag_type))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/netsh/ns-netsh-tag_type
 struct TAG_TYPE
 {
     const(PWSTR) pwszTag;

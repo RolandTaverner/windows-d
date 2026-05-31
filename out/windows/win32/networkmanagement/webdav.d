@@ -3,14 +3,15 @@
 module windows.win32.networkmanagement.webdav;
 
 public import windows.core;
-public import windows.win32.foundation : BOOL, HANDLE, PWSTR;
+public import windows.win32.foundation.foundation : BOOL, HANDLE, PWSTR;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/davclnt/ne-davclnt-authnextstep))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/davclnt/ne-davclnt-authnextstep
 alias AUTHNEXTSTEP = int;
 enum : int
 {
@@ -24,13 +25,13 @@ enum : int
 
 enum : uint
 {
-    DAV_AUTHN_SCHEME_BASIC     = 0x00000001,
-    DAV_AUTHN_SCHEME_NTLM      = 0x00000002,
-    DAV_AUTHN_SCHEME_PASSPORT  = 0x00000004,
-    DAV_AUTHN_SCHEME_DIGEST    = 0x00000008,
-    DAV_AUTHN_SCHEME_NEGOTIATE = 0x00000010,
-    DAV_AUTHN_SCHEME_CERT      = 0x00010000,
-    DAV_AUTHN_SCHEME_FBA       = 0x00100000,
+    DAV_AUTHN_SCHEME_BASIC     = 0x00000001U,
+    DAV_AUTHN_SCHEME_NTLM      = 0x00000002U,
+    DAV_AUTHN_SCHEME_PASSPORT  = 0x00000004U,
+    DAV_AUTHN_SCHEME_DIGEST    = 0x00000008U,
+    DAV_AUTHN_SCHEME_NEGOTIATE = 0x00000010U,
+    DAV_AUTHN_SCHEME_CERT      = 0x00010000U,
+    DAV_AUTHN_SCHEME_FBA       = 0x00100000U,
 }
 
 // Callbacks
@@ -43,7 +44,7 @@ alias PFNDAVAUTHCALLBACK = uint function(PWSTR lpwzServerName, PWSTR lpwzRemoteN
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/davclnt/ns-davclnt-dav_callback_auth_blob))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/davclnt/ns-davclnt-dav_callback_auth_blob
 struct DAV_CALLBACK_AUTH_BLOB
 {
     void* pBuffer;
@@ -51,7 +52,7 @@ struct DAV_CALLBACK_AUTH_BLOB
     uint  ulType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/davclnt/ns-davclnt-dav_callback_auth_unp))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/davclnt/ns-davclnt-dav_callback_auth_unp
 struct DAV_CALLBACK_AUTH_UNP
 {
     PWSTR pszUserName;
@@ -60,7 +61,7 @@ struct DAV_CALLBACK_AUTH_UNP
     uint  ulPasswordLength;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/davclnt/ns-davclnt-dav_callback_cred))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/davclnt/ns-davclnt-dav_callback_cred
 struct DAV_CALLBACK_CRED
 {
     DAV_CALLBACK_AUTH_BLOB AuthBlob;

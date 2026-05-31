@@ -3,35 +3,37 @@
 module windows.win32.storage.projectedfilesystem;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOLEAN, HRESULT, PWSTR;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOLEAN, HRESULT, PWSTR;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/projectedfslib/ne-projectedfslib-prj_notify_types))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/projectedfslib/ne-projectedfslib-prj_notify_types
 alias PRJ_NOTIFY_TYPES = uint;
 enum : uint
 {
-    PRJ_NOTIFY_NONE                               = 0x00000000,
-    PRJ_NOTIFY_SUPPRESS_NOTIFICATIONS             = 0x00000001,
-    PRJ_NOTIFY_FILE_OPENED                        = 0x00000002,
-    PRJ_NOTIFY_NEW_FILE_CREATED                   = 0x00000004,
-    PRJ_NOTIFY_FILE_OVERWRITTEN                   = 0x00000008,
-    PRJ_NOTIFY_PRE_DELETE                         = 0x00000010,
-    PRJ_NOTIFY_PRE_RENAME                         = 0x00000020,
-    PRJ_NOTIFY_PRE_SET_HARDLINK                   = 0x00000040,
-    PRJ_NOTIFY_FILE_RENAMED                       = 0x00000080,
-    PRJ_NOTIFY_HARDLINK_CREATED                   = 0x00000100,
-    PRJ_NOTIFY_FILE_HANDLE_CLOSED_NO_MODIFICATION = 0x00000200,
-    PRJ_NOTIFY_FILE_HANDLE_CLOSED_FILE_MODIFIED   = 0x00000400,
-    PRJ_NOTIFY_FILE_HANDLE_CLOSED_FILE_DELETED    = 0x00000800,
-    PRJ_NOTIFY_FILE_PRE_CONVERT_TO_FULL           = 0x00001000,
-    PRJ_NOTIFY_USE_EXISTING_MASK                  = 0xffffffff,
+    PRJ_NOTIFY_NONE                               = 0x00000000U,
+    PRJ_NOTIFY_SUPPRESS_NOTIFICATIONS             = 0x00000001U,
+    PRJ_NOTIFY_FILE_OPENED                        = 0x00000002U,
+    PRJ_NOTIFY_NEW_FILE_CREATED                   = 0x00000004U,
+    PRJ_NOTIFY_FILE_OVERWRITTEN                   = 0x00000008U,
+    PRJ_NOTIFY_PRE_DELETE                         = 0x00000010U,
+    PRJ_NOTIFY_PRE_RENAME                         = 0x00000020U,
+    PRJ_NOTIFY_PRE_SET_HARDLINK                   = 0x00000040U,
+    PRJ_NOTIFY_FILE_RENAMED                       = 0x00000080U,
+    PRJ_NOTIFY_HARDLINK_CREATED                   = 0x00000100U,
+    PRJ_NOTIFY_FILE_HANDLE_CLOSED_NO_MODIFICATION = 0x00000200U,
+    PRJ_NOTIFY_FILE_HANDLE_CLOSED_FILE_MODIFIED   = 0x00000400U,
+    PRJ_NOTIFY_FILE_HANDLE_CLOSED_FILE_DELETED    = 0x00000800U,
+    PRJ_NOTIFY_FILE_PRE_CONVERT_TO_FULL           = 0x00001000U,
+    PRJ_NOTIFY_USE_EXISTING_MASK                  = 0xffffffffU,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/projectedfslib/ne-projectedfslib-prj_notification))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/projectedfslib/ne-projectedfslib-prj_notification
 alias PRJ_NOTIFICATION = int;
 enum : int
 {
@@ -48,26 +50,30 @@ enum : int
     PRJ_NOTIFICATION_FILE_HANDLE_CLOSED_FILE_DELETED    = 0x00000800,
     PRJ_NOTIFICATION_FILE_PRE_CONVERT_TO_FULL           = 0x00001000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/projectedfslib/ne-projectedfslib-prj_ext_info_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/projectedfslib/ne-projectedfslib-prj_ext_info_type
 alias PRJ_EXT_INFO_TYPE = int;
 enum : int
 {
     PRJ_EXT_INFO_TYPE_SYMLINK = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/projectedfslib/ne-projectedfslib-prj_startvirtualizing_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/projectedfslib/ne-projectedfslib-prj_startvirtualizing_flags
 alias PRJ_STARTVIRTUALIZING_FLAGS = int;
 enum : int
 {
     PRJ_FLAG_NONE                    = 0x00000000,
     PRJ_FLAG_USE_NEGATIVE_PATH_CACHE = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/projectedfslib/ne-projectedfslib-prj_placeholder_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/projectedfslib/ne-projectedfslib-prj_placeholder_id
 alias PRJ_PLACEHOLDER_ID = int;
 enum : int
 {
     PRJ_PLACEHOLDER_ID_LENGTH = 0x00000080,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/projectedfslib/ne-projectedfslib-prj_update_types))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/projectedfslib/ne-projectedfslib-prj_update_types
 alias PRJ_UPDATE_TYPES = int;
 enum : int
 {
@@ -80,7 +86,8 @@ enum : int
     PRJ_UPDATE_ALLOW_READ_ONLY      = 0x00000020,
     PRJ_UPDATE_MAX_VAL              = 0x00000040,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/projectedfslib/ne-projectedfslib-prj_update_failure_causes))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/projectedfslib/ne-projectedfslib-prj_update_failure_causes
 alias PRJ_UPDATE_FAILURE_CAUSES = int;
 enum : int
 {
@@ -90,7 +97,8 @@ enum : int
     PRJ_UPDATE_FAILURE_CAUSE_TOMBSTONE      = 0x00000004,
     PRJ_UPDATE_FAILURE_CAUSE_READ_ONLY      = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/projectedfslib/ne-projectedfslib-prj_file_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/projectedfslib/ne-projectedfslib-prj_file_state
 alias PRJ_FILE_STATE = int;
 enum : int
 {
@@ -100,14 +108,16 @@ enum : int
     PRJ_FILE_STATE_FULL                 = 0x00000008,
     PRJ_FILE_STATE_TOMBSTONE            = 0x00000010,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/projectedfslib/ne-projectedfslib-prj_callback_data_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/projectedfslib/ne-projectedfslib-prj_callback_data_flags
 alias PRJ_CALLBACK_DATA_FLAGS = int;
 enum : int
 {
     PRJ_CB_DATA_FLAG_ENUM_RESTART_SCAN        = 0x00000001,
     PRJ_CB_DATA_FLAG_ENUM_RETURN_SINGLE_ENTRY = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/projectedfslib/ne-projectedfslib-prj_complete_command_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/projectedfslib/ne-projectedfslib-prj_complete_command_type
 alias PRJ_COMPLETE_COMMAND_TYPE = int;
 enum : int
 {
@@ -150,22 +160,28 @@ struct PRJ_DIR_ENTRY_BUFFER_HANDLE
     void* Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/projectedfslib/ns-projectedfslib-prj_extended_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/projectedfslib/ns-projectedfslib-prj_extended_info
 struct PRJ_EXTENDED_INFO
 {
-    PRJ_EXT_INFO_TYPE   InfoType;
-    uint                NextInfoOffset;
-    _Anonymous_e__Union Anonymous;
+    PRJ_EXT_INFO_TYPE InfoType;
+    uint              NextInfoOffset;
+    union
+    {
+        struct Symlink
+        {
+            const(PWSTR) TargetName;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/projectedfslib/ns-projectedfslib-prj_notification_mapping))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/projectedfslib/ns-projectedfslib-prj_notification_mapping
 struct PRJ_NOTIFICATION_MAPPING
 {
     PRJ_NOTIFY_TYPES NotificationBitMask;
     const(PWSTR)     NotificationRoot;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/projectedfslib/ns-projectedfslib-prj_startvirtualizing_options))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/projectedfslib/ns-projectedfslib-prj_startvirtualizing_options
 struct PRJ_STARTVIRTUALIZING_OPTIONS
 {
     PRJ_STARTVIRTUALIZING_FLAGS Flags;
@@ -175,21 +191,21 @@ struct PRJ_STARTVIRTUALIZING_OPTIONS
     uint NotificationMappingsCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/projectedfslib/ns-projectedfslib-prj_virtualization_instance_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/projectedfslib/ns-projectedfslib-prj_virtualization_instance_info
 struct PRJ_VIRTUALIZATION_INSTANCE_INFO
 {
     GUID InstanceID;
     uint WriteAlignment;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/projectedfslib/ns-projectedfslib-prj_placeholder_version_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/projectedfslib/ns-projectedfslib-prj_placeholder_version_info
 struct PRJ_PLACEHOLDER_VERSION_INFO
 {
     ubyte[128] ProviderID;
     ubyte[128] ContentID;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/projectedfslib/ns-projectedfslib-prj_file_basic_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/projectedfslib/ns-projectedfslib-prj_file_basic_info
 struct PRJ_FILE_BASIC_INFO
 {
     BOOLEAN IsDirectory;
@@ -201,18 +217,30 @@ struct PRJ_FILE_BASIC_INFO
     uint    FileAttributes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/projectedfslib/ns-projectedfslib-prj_placeholder_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/projectedfslib/ns-projectedfslib-prj_placeholder_info
 struct PRJ_PLACEHOLDER_INFO
 {
     PRJ_FILE_BASIC_INFO FileBasicInfo;
-    _EaInformation_e__Struct EaInformation;
-    _SecurityInformation_e__Struct SecurityInformation;
-    _StreamsInformation_e__Struct StreamsInformation;
+    struct EaInformation
+    {
+        uint EaBufferSize;
+        uint OffsetToFirstEa;
+    }
+    struct SecurityInformation
+    {
+        uint SecurityBufferSize;
+        uint OffsetToSecurityDescriptor;
+    }
+    struct StreamsInformation
+    {
+        uint StreamsInfoBufferSize;
+        uint OffsetToFirstStreamInfo;
+    }
     PRJ_PLACEHOLDER_VERSION_INFO VersionInfo;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] VariableData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/projectedfslib/ns-projectedfslib-prj_callback_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/projectedfslib/ns-projectedfslib-prj_callback_data
 struct PRJ_CALLBACK_DATA
 {
     uint         Size;
@@ -228,15 +256,24 @@ struct PRJ_CALLBACK_DATA
     void*        InstanceContext;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/projectedfslib/ns-projectedfslib-prj_notification_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/projectedfslib/ns-projectedfslib-prj_notification_parameters
 union PRJ_NOTIFICATION_PARAMETERS
 {
-    _PostCreate_e__Struct PostCreate;
-    _FileRenamed_e__Struct FileRenamed;
-    _FileDeletedOnHandleClose_e__Struct FileDeletedOnHandleClose;
+    struct PostCreate
+    {
+        PRJ_NOTIFY_TYPES NotificationMask;
+    }
+    struct FileRenamed
+    {
+        PRJ_NOTIFY_TYPES NotificationMask;
+    }
+    struct FileDeletedOnHandleClose
+    {
+        BOOLEAN IsFileModified;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/projectedfslib/ns-projectedfslib-prj_callbacks))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/projectedfslib/ns-projectedfslib-prj_callbacks
 struct PRJ_CALLBACKS
 {
     PRJ_START_DIRECTORY_ENUMERATION_CB StartDirectoryEnumerationCallback;
@@ -249,11 +286,21 @@ struct PRJ_CALLBACKS
     PRJ_CANCEL_COMMAND_CB CancelCommandCallback;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/projectedfslib/ns-projectedfslib-prj_complete_command_extended_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/projectedfslib/ns-projectedfslib-prj_complete_command_extended_parameters
 struct PRJ_COMPLETE_COMMAND_EXTENDED_PARAMETERS
 {
     PRJ_COMPLETE_COMMAND_TYPE CommandType;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct Notification
+        {
+            PRJ_NOTIFY_TYPES NotificationMask;
+        }
+        struct Enumeration
+        {
+            PRJ_DIR_ENTRY_BUFFER_HANDLE DirEntryBufferHandle;
+        }
+    }
 }
 
 // Functions

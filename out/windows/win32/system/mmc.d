@@ -3,13 +3,13 @@
 module windows.win32.system.mmc;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BSTR, COLORREF, HRESULT, HWND, LPARAM,
-                                         LRESULT, PWSTR, VARIANT_BOOL;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BSTR, COLORREF, HRESULT, HWND,
+                                                    LPARAM, LRESULT, PWSTR, VARIANT_BOOL;
 public import windows.win32.graphics.gdi : HBITMAP, HPALETTE;
-public import windows.win32.system.com : IDataObject, IDispatch, IEnumString, IUnknown;
+public import windows.win32.system.com.com : IDataObject, IDispatch, IEnumString, IUnknown;
 public import windows.win32.system.variant : VARIANT;
-public import windows.win32.ui.controls : HPROPSHEETPAGE;
+public import windows.win32.ui.controls.controls : HPROPSHEETPAGE;
 public import windows.win32.ui.windowsandmessaging : HICON;
 
 extern(Windows) @nogc nothrow:
@@ -17,7 +17,8 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmcobj/ne-mmcobj-mmc_property_action))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmcobj/ne-mmcobj-mmc_property_action
 alias MMC_PROPERTY_ACTION = int;
 enum : int
 {
@@ -25,7 +26,8 @@ enum : int
     MMC_PROPACT_CHANGING    = 0x00000002,
     MMC_PROPACT_INITIALIZED = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmcobj/ne-mmcobj-_documentmode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmcobj/ne-mmcobj-_documentmode
 alias _DocumentMode = int;
 enum : int
 {
@@ -34,7 +36,8 @@ enum : int
     DocumentMode_User_MDI = 0x00000002,
     DocumentMode_User_SDI = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmcobj/ne-mmcobj-_listviewmode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmcobj/ne-mmcobj-_listviewmode
 alias _ListViewMode = int;
 enum : int
 {
@@ -44,7 +47,8 @@ enum : int
     ListMode_Detail      = 0x00000003,
     ListMode_Filtered    = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmcobj/ne-mmcobj-_viewoptions))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmcobj/ne-mmcobj-_viewoptions
 alias _ViewOptions = int;
 enum : int
 {
@@ -54,7 +58,8 @@ enum : int
     ViewOption_NotPersistable   = 0x00000004,
     ViewOption_ActionPaneHidden = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmcobj/ne-mmcobj-_exportlistoptions))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmcobj/ne-mmcobj-_exportlistoptions
 alias _ExportListOptions = int;
 enum : int
 {
@@ -63,14 +68,16 @@ enum : int
     ExportListOptions_TabDelimited      = 0x00000002,
     ExportListOptions_SelectedItemsOnly = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmcobj/ne-mmcobj-_columnsortorder))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmcobj/ne-mmcobj-_columnsortorder
 alias _ColumnSortOrder = int;
 enum : int
 {
     SortOrder_Ascending  = 0x00000000,
     SortOrder_Descending = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ne-mmc-mmc_result_view_style))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ne-mmc-mmc_result_view_style
 alias MMC_RESULT_VIEW_STYLE = int;
 enum : int
 {
@@ -79,7 +86,8 @@ enum : int
     MMC_NOSORTHEADER       = 0x00000004,
     MMC_ENSUREFOCUSVISIBLE = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ne-mmc-mmc_control_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ne-mmc-mmc_control_type
 alias MMC_CONTROL_TYPE = int;
 enum : int
 {
@@ -87,7 +95,8 @@ enum : int
     MENUBUTTON  = 0x00000001,
     COMBOBOXBAR = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ne-mmc-mmc_console_verb))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ne-mmc-mmc_console_verb
 alias MMC_CONSOLE_VERB = int;
 enum : int
 {
@@ -105,7 +114,8 @@ enum : int
     MMC_VERB_FIRST      = 0x00008000,
     MMC_VERB_LAST       = 0x00008008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ne-mmc-mmc_button_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ne-mmc-mmc_button_state
 alias MMC_BUTTON_STATE = int;
 enum : int
 {
@@ -115,7 +125,8 @@ enum : int
     INDETERMINATE = 0x00000008,
     BUTTONPRESSED = 0x00000010,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ne-mmc-mmc_scope_item_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ne-mmc-mmc_scope_item_state
 alias MMC_SCOPE_ITEM_STATE = int;
 enum : int
 {
@@ -123,13 +134,15 @@ enum : int
     MMC_SCOPE_ITEM_STATE_BOLD         = 0x00000002,
     MMC_SCOPE_ITEM_STATE_EXPANDEDONCE = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ne-mmc-mmc_menu_command_ids))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ne-mmc-mmc_menu_command_ids
 alias MMC_MENU_COMMAND_IDS = int;
 enum : int
 {
     MMCC_STANDARD_VIEW_SELECT = 0xffffffff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ne-mmc-mmc_filter_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ne-mmc-mmc_filter_type
 alias MMC_FILTER_TYPE = int;
 enum : int
 {
@@ -137,7 +150,8 @@ enum : int
     MMC_INT_FILTER     = 0x00000001,
     MMC_FILTER_NOVALUE = 0x00008000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ne-mmc-mmc_filter_change_code))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ne-mmc-mmc_filter_change_code
 alias MMC_FILTER_CHANGE_CODE = int;
 enum : int
 {
@@ -145,7 +159,8 @@ enum : int
     MFCC_ENABLE       = 0x00000001,
     MFCC_VALUE_CHANGE = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ne-mmc-mmc_notify_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ne-mmc-mmc_notify_type
 alias MMC_NOTIFY_TYPE = int;
 enum : int
 {
@@ -185,7 +200,8 @@ enum : int
     MMCN_COLUMNS_CHANGED    = 0x00008022,
     MMCN_CANPASTE_OUTOFPROC = 0x00008023,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ne-mmc-data_object_types))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ne-mmc-data_object_types
 alias DATA_OBJECT_TYPES = int;
 enum : int
 {
@@ -194,6 +210,7 @@ enum : int
     CCT_SNAPIN_MANAGER = 0x00008002,
     CCT_UNINITIALIZED  = 0x0000ffff,
 }
+
 alias CCM_INSERTIONPOINTID = int;
 enum : int
 {
@@ -213,6 +230,7 @@ enum : int
     CCM_INSERTIONPOINTID_3RDPARTY_TASK       = 0x90000002,
     CCM_INSERTIONPOINTID_ROOT_MENU           = 0x80000000,
 }
+
 alias CCM_INSERTIONALLOWED = int;
 enum : int
 {
@@ -221,11 +239,13 @@ enum : int
     CCM_INSERTIONALLOWED_TASK = 0x00000004,
     CCM_INSERTIONALLOWED_VIEW = 0x00000008,
 }
+
 alias CCM_COMMANDID_MASK_CONSTANTS = uint;
 enum : uint
 {
-    CCM_COMMANDID_MASK_RESERVED = 0xffff0000,
+    CCM_COMMANDID_MASK_RESERVED = 0xffff0000U,
 }
+
 alias CCM_SPECIAL = int;
 enum : int
 {
@@ -236,7 +256,8 @@ enum : int
     CCM_SPECIAL_TESTONLY        = 0x00000010,
     CCM_SPECIAL_ELEVATION_ICON  = 0x00000020,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ne-mmc-mmc_task_display_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ne-mmc-mmc_task_display_type
 alias MMC_TASK_DISPLAY_TYPE = int;
 enum : int
 {
@@ -246,7 +267,8 @@ enum : int
     MMC_TASK_DISPLAY_TYPE_CHOCOLATE_GIF = 0x00000003,
     MMC_TASK_DISPLAY_TYPE_BITMAP        = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ne-mmc-mmc_action_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ne-mmc-mmc_action_type
 alias MMC_ACTION_TYPE = int;
 enum : int
 {
@@ -255,7 +277,8 @@ enum : int
     MMC_ACTION_LINK          = 0x00000001,
     MMC_ACTION_SCRIPT        = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ne-mmc-iconidentifier))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ne-mmc-iconidentifier
 enum IconIdentifier : int
 {
     Icon_None        = 0x00000000,
@@ -266,7 +289,8 @@ enum IconIdentifier : int
     Icon_First       = 0x00007f01,
     Icon_Last        = 0x00007f04,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ne-mmc-mmc_view_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ne-mmc-mmc_view_type
 alias MMC_VIEW_TYPE = int;
 enum : int
 {
@@ -280,15 +304,15 @@ enum : int
 
 enum : uint
 {
-    MMC_VER                  = 0x00000200,
-    MMC_PROP_CHANGEAFFECTSUI = 0x00000001,
+    MMC_VER                  = 0x00000200U,
+    MMC_PROP_CHANGEAFFECTSUI = 0x00000001U,
 }
 
 enum : uint
 {
-    MMC_PROP_MODIFIABLE = 0x00000002,
-    MMC_PROP_REMOVABLE  = 0x00000004,
-    MMC_PROP_PERSIST    = 0x00000008,
+    MMC_PROP_MODIFIABLE = 0x00000002U,
+    MMC_PROP_REMOVABLE  = 0x00000004U,
+    MMC_PROP_PERSIST    = 0x00000008U,
 }
 
 enum : int
@@ -300,83 +324,83 @@ enum : int
 
 enum : uint
 {
-    MMCLV_VIEWSTYLE_ICON      = 0x00000000,
-    MMCLV_VIEWSTYLE_SMALLICON = 0x00000002,
-    MMCLV_VIEWSTYLE_LIST      = 0x00000003,
-    MMCLV_VIEWSTYLE_REPORT    = 0x00000001,
-    MMCLV_VIEWSTYLE_FILTERED  = 0x00000004,
+    MMCLV_VIEWSTYLE_ICON      = 0x00000000U,
+    MMCLV_VIEWSTYLE_SMALLICON = 0x00000002U,
+    MMCLV_VIEWSTYLE_LIST      = 0x00000003U,
+    MMCLV_VIEWSTYLE_REPORT    = 0x00000001U,
+    MMCLV_VIEWSTYLE_FILTERED  = 0x00000004U,
 }
 
 enum : uint
 {
-    MMCLV_NOPTR                  = 0x00000000,
-    MMCLV_UPDATE_NOINVALIDATEALL = 0x00000001,
-    MMCLV_UPDATE_NOSCROLL        = 0x00000002,
+    MMCLV_NOPTR                  = 0x00000000U,
+    MMCLV_UPDATE_NOINVALIDATEALL = 0x00000001U,
+    MMCLV_UPDATE_NOSCROLL        = 0x00000002U,
 }
 
 enum int MMC_IMAGECALLBACK = 0xffffffff;
 
 enum : uint
 {
-    RDI_STR    = 0x00000002,
-    RDI_IMAGE  = 0x00000004,
-    RDI_STATE  = 0x00000008,
-    RDI_PARAM  = 0x00000010,
-    RDI_INDEX  = 0x00000020,
-    RDI_INDENT = 0x00000040,
+    RDI_STR    = 0x00000002U,
+    RDI_IMAGE  = 0x00000004U,
+    RDI_STATE  = 0x00000008U,
+    RDI_PARAM  = 0x00000010U,
+    RDI_INDEX  = 0x00000020U,
+    RDI_INDENT = 0x00000040U,
 }
 
 enum : uint
 {
-    MMC_VIEW_OPTIONS_NONE                          = 0x00000000,
-    MMC_VIEW_OPTIONS_NOLISTVIEWS                   = 0x00000001,
-    MMC_VIEW_OPTIONS_MULTISELECT                   = 0x00000002,
-    MMC_VIEW_OPTIONS_OWNERDATALIST                 = 0x00000004,
-    MMC_VIEW_OPTIONS_FILTERED                      = 0x00000008,
-    MMC_VIEW_OPTIONS_CREATENEW                     = 0x00000010,
-    MMC_VIEW_OPTIONS_USEFONTLINKING                = 0x00000020,
-    MMC_VIEW_OPTIONS_EXCLUDE_SCOPE_ITEMS_FROM_LIST = 0x00000040,
+    MMC_VIEW_OPTIONS_NONE                          = 0x00000000U,
+    MMC_VIEW_OPTIONS_NOLISTVIEWS                   = 0x00000001U,
+    MMC_VIEW_OPTIONS_MULTISELECT                   = 0x00000002U,
+    MMC_VIEW_OPTIONS_OWNERDATALIST                 = 0x00000004U,
+    MMC_VIEW_OPTIONS_FILTERED                      = 0x00000008U,
+    MMC_VIEW_OPTIONS_CREATENEW                     = 0x00000010U,
+    MMC_VIEW_OPTIONS_USEFONTLINKING                = 0x00000020U,
+    MMC_VIEW_OPTIONS_EXCLUDE_SCOPE_ITEMS_FROM_LIST = 0x00000040U,
 }
 
-enum uint MMC_VIEW_OPTIONS_LEXICAL_SORT = 0x00000080;
+enum uint MMC_VIEW_OPTIONS_LEXICAL_SORT = 0x00000080U;
 
 enum : uint
 {
-    MMC_PSO_NOAPPLYNOW    = 0x00000001,
-    MMC_PSO_HASHELP       = 0x00000002,
-    MMC_PSO_NEWWIZARDTYPE = 0x00000004,
-    MMC_PSO_NO_PROPTITLE  = 0x00000008,
+    MMC_PSO_NOAPPLYNOW    = 0x00000001U,
+    MMC_PSO_HASHELP       = 0x00000002U,
+    MMC_PSO_NEWWIZARDTYPE = 0x00000004U,
+    MMC_PSO_NO_PROPTITLE  = 0x00000008U,
 }
 
-enum uint RFI_PARTIAL = 0x00000001;
-enum uint RFI_WRAP = 0x00000002;
-enum uint RSI_DESCENDING = 0x00000001;
-enum uint RSI_NOSORTICON = 0x00000002;
+enum uint RFI_PARTIAL = 0x00000001U;
+enum uint RFI_WRAP = 0x00000002U;
+enum uint RSI_DESCENDING = 0x00000001U;
+enum uint RSI_NOSORTICON = 0x00000002U;
 
 enum : uint
 {
-    SDI_STR       = 0x00000002,
-    SDI_IMAGE     = 0x00000004,
-    SDI_OPENIMAGE = 0x00000008,
-}
-
-enum : uint
-{
-    SDI_STATE    = 0x00000010,
-    SDI_PARAM    = 0x00000020,
-    SDI_CHILDREN = 0x00000040,
+    SDI_STR       = 0x00000002U,
+    SDI_IMAGE     = 0x00000004U,
+    SDI_OPENIMAGE = 0x00000008U,
 }
 
 enum : uint
 {
-    SDI_PARENT   = 0x00000000,
-    SDI_PREVIOUS = 0x10000000,
+    SDI_STATE    = 0x00000010U,
+    SDI_PARAM    = 0x00000020U,
+    SDI_CHILDREN = 0x00000040U,
 }
 
 enum : uint
 {
-    SDI_NEXT  = 0x20000000,
-    SDI_FIRST = 0x08000000,
+    SDI_PARENT   = 0x00000000U,
+    SDI_PREVIOUS = 0x10000000U,
+}
+
+enum : uint
+{
+    SDI_NEXT  = 0x20000000U,
+    SDI_FIRST = 0x08000000U,
 }
 
 enum int MMC_MULTI_SELECT_COOKIE = 0xfffffffe;
@@ -390,74 +414,74 @@ enum : int
 
 enum : uint
 {
-    MMC_NW_OPTION_NONE         = 0x00000000,
-    MMC_NW_OPTION_NOSCOPEPANE  = 0x00000001,
-    MMC_NW_OPTION_NOTOOLBARS   = 0x00000002,
-    MMC_NW_OPTION_SHORTTITLE   = 0x00000004,
-    MMC_NW_OPTION_CUSTOMTITLE  = 0x00000008,
-    MMC_NW_OPTION_NOPERSIST    = 0x00000010,
-    MMC_NW_OPTION_NOACTIONPANE = 0x00000020,
+    MMC_NW_OPTION_NONE         = 0x00000000U,
+    MMC_NW_OPTION_NOSCOPEPANE  = 0x00000001U,
+    MMC_NW_OPTION_NOTOOLBARS   = 0x00000002U,
+    MMC_NW_OPTION_SHORTTITLE   = 0x00000004U,
+    MMC_NW_OPTION_CUSTOMTITLE  = 0x00000008U,
+    MMC_NW_OPTION_NOPERSIST    = 0x00000010U,
+    MMC_NW_OPTION_NOACTIONPANE = 0x00000020U,
 }
 
-enum uint MMC_NODEID_SLOW_RETRIEVAL = 0x00000001;
+enum uint MMC_NODEID_SLOW_RETRIEVAL = 0x00000001U;
 enum int SPECIAL_DOBJ_MIN = 0xfffffff6;
-enum uint SPECIAL_DOBJ_MAX = 0x00000000;
+enum uint SPECIAL_DOBJ_MAX = 0x00000000U;
 enum int AUTO_WIDTH = 0xffffffff;
 enum int HIDE_COLUMN = 0xfffffffc;
 
 enum : uint
 {
-    ILSIF_LEAVE_LARGE_ICON = 0x40000000,
-    ILSIF_LEAVE_SMALL_ICON = 0x20000000,
+    ILSIF_LEAVE_LARGE_ICON = 0x40000000U,
+    ILSIF_LEAVE_SMALL_ICON = 0x20000000U,
 }
 
-enum uint HDI_HIDDEN = 0x00000001;
-enum uint RDCI_ScopeItem = 0x80000000;
-enum uint RVTI_MISC_OPTIONS_NOLISTVIEWS = 0x00000001;
+enum uint HDI_HIDDEN = 0x00000001U;
+enum uint RDCI_ScopeItem = 0x80000000U;
+enum uint RVTI_MISC_OPTIONS_NOLISTVIEWS = 0x00000001U;
 
 enum : uint
 {
-    RVTI_LIST_OPTIONS_NONE                          = 0x00000000,
-    RVTI_LIST_OPTIONS_OWNERDATALIST                 = 0x00000002,
-    RVTI_LIST_OPTIONS_MULTISELECT                   = 0x00000004,
-    RVTI_LIST_OPTIONS_FILTERED                      = 0x00000008,
-    RVTI_LIST_OPTIONS_USEFONTLINKING                = 0x00000020,
-    RVTI_LIST_OPTIONS_EXCLUDE_SCOPE_ITEMS_FROM_LIST = 0x00000040,
-}
-
-enum : uint
-{
-    RVTI_LIST_OPTIONS_LEXICAL_SORT = 0x00000080,
-    RVTI_LIST_OPTIONS_ALLOWPASTE   = 0x00000100,
+    RVTI_LIST_OPTIONS_NONE                          = 0x00000000U,
+    RVTI_LIST_OPTIONS_OWNERDATALIST                 = 0x00000002U,
+    RVTI_LIST_OPTIONS_MULTISELECT                   = 0x00000004U,
+    RVTI_LIST_OPTIONS_FILTERED                      = 0x00000008U,
+    RVTI_LIST_OPTIONS_USEFONTLINKING                = 0x00000020U,
+    RVTI_LIST_OPTIONS_EXCLUDE_SCOPE_ITEMS_FROM_LIST = 0x00000040U,
 }
 
 enum : uint
 {
-    RVTI_HTML_OPTIONS_NONE       = 0x00000000,
-    RVTI_HTML_OPTIONS_NOLISTVIEW = 0x00000001,
+    RVTI_LIST_OPTIONS_LEXICAL_SORT = 0x00000080U,
+    RVTI_LIST_OPTIONS_ALLOWPASTE   = 0x00000100U,
 }
 
 enum : uint
 {
-    RVTI_OCX_OPTIONS_NONE       = 0x00000000,
-    RVTI_OCX_OPTIONS_NOLISTVIEW = 0x00000001,
-    RVTI_OCX_OPTIONS_CACHE_OCX  = 0x00000002,
+    RVTI_HTML_OPTIONS_NONE       = 0x00000000U,
+    RVTI_HTML_OPTIONS_NOLISTVIEW = 0x00000001U,
 }
-
-enum uint MMC_DEFAULT_OPERATION_COPY = 0x00000001;
 
 enum : uint
 {
-    MMC_ITEM_OVERLAY_STATE_MASK  = 0x00000f00,
-    MMC_ITEM_OVERLAY_STATE_SHIFT = 0x00000008,
+    RVTI_OCX_OPTIONS_NONE       = 0x00000000U,
+    RVTI_OCX_OPTIONS_NOLISTVIEW = 0x00000001U,
+    RVTI_OCX_OPTIONS_CACHE_OCX  = 0x00000002U,
 }
 
-enum uint MMC_ITEM_STATE_MASK = 0x000000ff;
+enum uint MMC_DEFAULT_OPERATION_COPY = 0x00000001U;
+
+enum : uint
+{
+    MMC_ITEM_OVERLAY_STATE_MASK  = 0x00000f00U,
+    MMC_ITEM_OVERLAY_STATE_SHIFT = 0x00000008U,
+}
+
+enum uint MMC_ITEM_STATE_MASK = 0x000000ffU;
 
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmcobj/ns-mmcobj-mmc_snapin_property))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmcobj/ns-mmcobj-mmc_snapin_property
 struct MMC_SNAPIN_PROPERTY
 {
     const(PWSTR)        pszPropName;
@@ -465,7 +489,7 @@ struct MMC_SNAPIN_PROPERTY
     MMC_PROPERTY_ACTION eAction;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-mmcbutton))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-mmcbutton
 struct MMCBUTTON
 {
     int   nBitmap;
@@ -476,7 +500,7 @@ struct MMCBUTTON
     PWSTR lpTooltipText;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-resultdataitem))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-resultdataitem
 struct RESULTDATAITEM
 {
     uint      mask;
@@ -491,7 +515,7 @@ struct RESULTDATAITEM
     int       iIndent;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-resultfindinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-resultfindinfo
 struct RESULTFINDINFO
 {
     PWSTR psz;
@@ -499,7 +523,7 @@ struct RESULTFINDINFO
     uint  dwOptions;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-scopedataitem))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-scopedataitem
 struct SCOPEDATAITEM
 {
     uint      mask;
@@ -513,7 +537,7 @@ struct SCOPEDATAITEM
     ptrdiff_t ID;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-contextmenuitem))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-contextmenuitem
 struct CONTEXTMENUITEM
 {
     PWSTR strName;
@@ -524,7 +548,7 @@ struct CONTEXTMENUITEM
     int   fSpecialFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-menubuttondata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-menubuttondata
 struct MENUBUTTONDATA
 {
     int idCommand;
@@ -532,7 +556,7 @@ struct MENUBUTTONDATA
     int y;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-mmc_filterdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-mmc_filterdata
 struct MMC_FILTERDATA
 {
     PWSTR pszText;
@@ -540,7 +564,7 @@ struct MMC_FILTERDATA
     int   lValue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-mmc_restore_view))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-mmc_restore_view
 struct MMC_RESTORE_VIEW
 {
     uint      dwSize;
@@ -549,7 +573,7 @@ struct MMC_RESTORE_VIEW
     int       lViewOptions;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-mmc_expandsync_struct))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-mmc_expandsync_struct
 struct MMC_EXPANDSYNC_STRUCT
 {
     BOOL      bHandled;
@@ -557,35 +581,35 @@ struct MMC_EXPANDSYNC_STRUCT
     ptrdiff_t hItem;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-mmc_visible_columns))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-mmc_visible_columns
 struct MMC_VISIBLE_COLUMNS
 {
     int nVisibleColumns;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/int[1] rgVisibleCols;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-smmcdataobjects))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-smmcdataobjects
 struct SMMCDataObjects
 {
     uint count;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/IDataObject[1] lpDataObject;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-smmcobjecttypes))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-smmcobjecttypes
 struct SMMCObjectTypes
 {
     uint count;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/GUID[1] guid;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-snodeid))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-snodeid
 struct SNodeID
 {
     uint cBytes;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] id;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-snodeid2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-snodeid2
 struct SNodeID2
 {
     uint dwFlags;
@@ -593,7 +617,7 @@ struct SNodeID2
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] id;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-scolumnsetid))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-scolumnsetid
 struct SColumnSetID
 {
     uint dwFlags;
@@ -601,7 +625,7 @@ struct SColumnSetID
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] id;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-mmc_task_display_symbol))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-mmc_task_display_symbol
 struct MMC_TASK_DISPLAY_SYMBOL
 {
     PWSTR szFontFamilyName;
@@ -609,31 +633,40 @@ struct MMC_TASK_DISPLAY_SYMBOL
     PWSTR szSymbolString;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-mmc_task_display_bitmap))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-mmc_task_display_bitmap
 struct MMC_TASK_DISPLAY_BITMAP
 {
     PWSTR szMouseOverBitmap;
     PWSTR szMouseOffBitmap;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-mmc_task_display_object))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-mmc_task_display_object
 struct MMC_TASK_DISPLAY_OBJECT
 {
     MMC_TASK_DISPLAY_TYPE eDisplayType;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        MMC_TASK_DISPLAY_BITMAP uBitmap;
+        MMC_TASK_DISPLAY_SYMBOL uSymbol;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-mmc_task))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-mmc_task
 struct MMC_TASK
 {
     MMC_TASK_DISPLAY_OBJECT sDisplayObject;
-    PWSTR               szText;
-    PWSTR               szHelpString;
-    MMC_ACTION_TYPE     eActionType;
-    _Anonymous_e__Union Anonymous;
+    PWSTR           szText;
+    PWSTR           szHelpString;
+    MMC_ACTION_TYPE eActionType;
+    union
+    {
+        ptrdiff_t nCommandID;
+        PWSTR     szActionURL;
+        PWSTR     szScript;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-mmc_listpad_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-mmc_listpad_info
 struct MMC_LISTPAD_INFO
 {
     PWSTR     szTitle;
@@ -641,7 +674,7 @@ struct MMC_LISTPAD_INFO
     ptrdiff_t nCommandID;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-mmc_column_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-mmc_column_data
 struct MMC_COLUMN_DATA
 {
     int    nColIndex;
@@ -651,7 +684,7 @@ struct MMC_COLUMN_DATA
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-mmc_column_set_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-mmc_column_set_data
 struct MMC_COLUMN_SET_DATA
 {
     int              cbSize;
@@ -659,7 +692,7 @@ struct MMC_COLUMN_SET_DATA
     MMC_COLUMN_DATA* pColData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-mmc_sort_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-mmc_sort_data
 struct MMC_SORT_DATA
 {
     int    nColIndex;
@@ -668,7 +701,7 @@ struct MMC_SORT_DATA
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-mmc_sort_set_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-mmc_sort_set_data
 struct MMC_SORT_SET_DATA
 {
     int            cbSize;
@@ -676,7 +709,7 @@ struct MMC_SORT_SET_DATA
     MMC_SORT_DATA* pSortData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-rditemhdr))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-rditemhdr
 struct RDITEMHDR
 {
     uint      dwFlags;
@@ -685,7 +718,7 @@ struct RDITEMHDR
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-rdcompare))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-rdcompare
 struct RDCOMPARE
 {
     uint       cbSize;
@@ -696,16 +729,29 @@ struct RDCOMPARE
     RDITEMHDR* prdch2;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-result_view_type_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-result_view_type_info
 struct RESULT_VIEW_TYPE_INFO
 {
-    PWSTR               pstrPersistableViewDescription;
-    MMC_VIEW_TYPE       eViewType;
-    uint                dwMiscOptions;
-    _Anonymous_e__Union Anonymous;
+    PWSTR         pstrPersistableViewDescription;
+    MMC_VIEW_TYPE eViewType;
+    uint          dwMiscOptions;
+    union
+    {
+        uint dwListOptions;
+        struct
+        {
+            uint  dwHTMLOptions;
+            PWSTR pstrURL;
+        }
+        struct
+        {
+            uint     dwOCXOptions;
+            IUnknown pUnkControl;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-contextmenuitem2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-contextmenuitem2
 struct CONTEXTMENUITEM2
 {
     PWSTR strName;
@@ -717,7 +763,7 @@ struct CONTEXTMENUITEM2
     PWSTR strLanguageIndependentName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-mmc_ext_view_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/ns-mmc-mmc_ext_view_data
 struct MMC_EXT_VIEW_DATA
 {
     GUID         viewID;
@@ -743,23 +789,23 @@ struct ConsolePower;
 
 @GUID("f7889da9-4a02-4837-bf89-1a6f2a021010")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmcobj/nn-mmcobj-isnapinproperties))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmcobj/nn-mmcobj-isnapinproperties
 interface ISnapinProperties : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmcobj/nf-mmcobj-isnapinproperties-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmcobj/nf-mmcobj-isnapinproperties-initialize
     HRESULT Initialize(Properties pProperties);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmcobj/nf-mmcobj-isnapinproperties-querypropertynames))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmcobj/nf-mmcobj-isnapinproperties-querypropertynames
     HRESULT QueryPropertyNames(ISnapinPropertiesCallback pCallback);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmcobj/nf-mmcobj-isnapinproperties-propertieschanged))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmcobj/nf-mmcobj-isnapinproperties-propertieschanged
     HRESULT PropertiesChanged(int cProperties, MMC_SNAPIN_PROPERTY* pProperties);
 }
 
 @GUID("a50fa2e5-7e61-45eb-a8d4-9a07b3e851a8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmcobj/nn-mmcobj-isnapinpropertiescallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmcobj/nn-mmcobj-isnapinpropertiescallback
 interface ISnapinPropertiesCallback : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmcobj/nf-mmcobj-isnapinpropertiescallback-addpropertyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmcobj/nf-mmcobj-isnapinpropertiescallback-addpropertyname
     HRESULT AddPropertyName(const(PWSTR) pszPropName, uint dwFlags);
 }
 
@@ -810,7 +856,7 @@ interface _EventConnector : IDispatch
 }
 
 @GUID("e5e2d970-5bb3-4306-8804-b0968a31c8e6")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/medfound/framerateconverter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/medfound/framerateconverter
 interface Frame : IDispatch
 {
     HRESULT Maximize();
@@ -890,7 +936,7 @@ interface SnapIns : IDispatch
 }
 
 @GUID("ad4d6ca6-912f-409b-a26e-7fd234aef542")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SecCrypto/extension))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SecCrypto/extension
 interface Extension : IDispatch
 {
     HRESULT get_Name(BSTR* Name);
@@ -903,11 +949,11 @@ interface Extension : IDispatch
 }
 
 @GUID("82dbea43-8ca4-44bc-a2ca-d18741059ec8")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SecCertEnroll/extensions))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SecCertEnroll/extensions
 interface Extensions : IDispatch
 {
     HRESULT get__NewEnum(IUnknown* retval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SecCrypto/extensions-item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/SecCrypto/extensions-item
     HRESULT Item(int Index, Extension* Extension);
     HRESULT get_Count(int* Count);
 }
@@ -944,7 +990,7 @@ interface Views : IDispatch
 }
 
 @GUID("6efc2da2-b38c-457e-9abb-ed2d189b8c38")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Msi/view-object))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Msi/view-object
 interface View : IDispatch
 {
     HRESULT get_ActiveScopeNode(Node* Node);
@@ -975,7 +1021,7 @@ interface View : IDispatch
     HRESULT ExecuteScopeNodeMenuItem(BSTR MenuItemPath, VARIANT ScopeNode);
     HRESULT ExecuteShellCommand(BSTR Command, BSTR Directory, BSTR Parameters, BSTR WindowState);
     HRESULT get_Frame(Frame* Frame);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Msi/view-close))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/Msi/view-close
     HRESULT Close();
     HRESULT get_ScopeTreeVisible(BOOL* Visible);
     HRESULT put_ScopeTreeVisible(BOOL Visible);
@@ -1001,7 +1047,7 @@ interface Nodes : IDispatch
 }
 
 @GUID("dab39ce0-25e6-4e07-8362-ba9c95706545")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/windowsribbon/windowsribbon-element-contextmenu))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/windowsribbon/windowsribbon-element-contextmenu
 interface ContextMenu : IDispatch
 {
     HRESULT get__NewEnum(IUnknown* retval);
@@ -1021,7 +1067,7 @@ interface MenuItem : IDispatch
 }
 
 @GUID("2886abc2-a425-42b2-91c6-e25c0e04581c")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/com/properties-and-methods))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/com/properties-and-methods
 interface Properties : IDispatch
 {
     HRESULT get__NewEnum(IUnknown* retval);
@@ -1031,7 +1077,7 @@ interface Properties : IDispatch
 }
 
 @GUID("4600c3a5-e301-41d8-b6d0-ef2e4212e0ca")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/wpd_sdk/attributes))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/wpd_sdk/attributes
 interface Property : IDispatch
 {
     HRESULT get_Value(VARIANT* Value);
@@ -1041,632 +1087,632 @@ interface Property : IDispatch
 
 @GUID("955ab28a-5218-11d0-a985-00c04fd8d565")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-icomponentdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-icomponentdata
 interface IComponentData : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponentdata-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponentdata-initialize
     HRESULT Initialize(IUnknown pUnknown);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponentdata-createcomponent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponentdata-createcomponent
     HRESULT CreateComponent(IComponent* ppComponent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponentdata-notify))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponentdata-notify
     HRESULT Notify(IDataObject lpDataObject, MMC_NOTIFY_TYPE event, LPARAM arg, LPARAM param3);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponentdata-destroy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponentdata-destroy
     HRESULT Destroy();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponentdata-querydataobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponentdata-querydataobject
     HRESULT QueryDataObject(ptrdiff_t cookie, DATA_OBJECT_TYPES type, IDataObject* ppDataObject);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponentdata-getdisplayinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponentdata-getdisplayinfo
     HRESULT GetDisplayInfo(SCOPEDATAITEM* pScopeDataItem);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponentdata-compareobjects))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponentdata-compareobjects
     HRESULT CompareObjects(IDataObject lpDataObjectA, IDataObject lpDataObjectB);
 }
 
 @GUID("43136eb2-d36c-11cf-adbc-00aa00a80033")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-icomponent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tuner/nn-tuner-icomponent
 interface IComponent : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponent-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponent-initialize
     HRESULT Initialize(IConsole lpConsole);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponent-notify))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponent-notify
     HRESULT Notify(IDataObject lpDataObject, MMC_NOTIFY_TYPE event, LPARAM arg, LPARAM param3);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponent-destroy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponent-destroy
     HRESULT Destroy(ptrdiff_t cookie);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponent-querydataobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponent-querydataobject
     HRESULT QueryDataObject(ptrdiff_t cookie, DATA_OBJECT_TYPES type, IDataObject* ppDataObject);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponent-getresultviewtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponent-getresultviewtype
     HRESULT GetResultViewType(ptrdiff_t cookie, PWSTR* ppViewType, int* pViewOptions);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponent-getdisplayinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponent-getdisplayinfo
     HRESULT GetDisplayInfo(RESULTDATAITEM* pResultDataItem);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponent-compareobjects))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponent-compareobjects
     HRESULT CompareObjects(IDataObject lpDataObjectA, IDataObject lpDataObjectB);
 }
 
 @GUID("e8315a52-7a1a-11d0-a2d2-00c04fd909dd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iresultdatacompare))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iresultdatacompare
 interface IResultDataCompare : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdatacompare-compare))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdatacompare-compare
     HRESULT Compare(LPARAM lUserParam, ptrdiff_t cookieA, ptrdiff_t cookieB, int* pnResult);
 }
 
 @GUID("9cb396d8-ea83-11d0-aef1-00c04fb6dd2c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iresultownerdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iresultownerdata
 interface IResultOwnerData : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultownerdata-finditem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultownerdata-finditem
     HRESULT FindItem(RESULTFINDINFO* pFindInfo, int* pnFoundIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultownerdata-cachehint))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultownerdata-cachehint
     HRESULT CacheHint(int nStartIndex, int nEndIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultownerdata-sortitems))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultownerdata-sortitems
     HRESULT SortItems(int nColumn, uint dwSortOptions, LPARAM lUserParam);
 }
 
 @GUID("43136eb1-d36c-11cf-adbc-00aa00a80033")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iconsole))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iconsole
 interface IConsole : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsole-setheader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsole-setheader
     HRESULT SetHeader(IHeaderCtrl pHeader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsole-settoolbar))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsole-settoolbar
     HRESULT SetToolbar(IToolbar pToolbar);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsole-queryresultview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsole-queryresultview
     HRESULT QueryResultView(IUnknown* pUnknown);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsole-queryscopeimagelist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsole-queryscopeimagelist
     HRESULT QueryScopeImageList(IImageList* ppImageList);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsole-queryresultimagelist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsole-queryresultimagelist
     HRESULT QueryResultImageList(IImageList* ppImageList);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsole-updateallviews))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsole-updateallviews
     HRESULT UpdateAllViews(IDataObject lpDataObject, LPARAM data, ptrdiff_t hint);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsole-messagebox))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsole-messagebox
     HRESULT MessageBox(const(PWSTR) lpszText, const(PWSTR) lpszTitle, uint fuStyle, int* piRetval);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsole-queryconsoleverb))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsole-queryconsoleverb
     HRESULT QueryConsoleVerb(IConsoleVerb* ppConsoleVerb);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsole-selectscopeitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsole-selectscopeitem
     HRESULT SelectScopeItem(ptrdiff_t hScopeItem);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsole-getmainwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsole-getmainwindow
     HRESULT GetMainWindow(HWND* phwnd);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsole-newwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsole-newwindow
     HRESULT NewWindow(ptrdiff_t hScopeItem, uint lOptions);
 }
 
 @GUID("43136eb3-d36c-11cf-adbc-00aa00a80033")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iheaderctrl))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iheaderctrl
 interface IHeaderCtrl : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iheaderctrl-insertcolumn))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iheaderctrl-insertcolumn
     HRESULT InsertColumn(int nCol, const(PWSTR) title, int nFormat, int nWidth);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iheaderctrl-deletecolumn))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iheaderctrl-deletecolumn
     HRESULT DeleteColumn(int nCol);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iheaderctrl-setcolumntext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iheaderctrl-setcolumntext
     HRESULT SetColumnText(int nCol, const(PWSTR) title);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iheaderctrl-getcolumntext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iheaderctrl-getcolumntext
     HRESULT GetColumnText(int nCol, PWSTR* pText);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iheaderctrl-setcolumnwidth))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iheaderctrl-setcolumnwidth
     HRESULT SetColumnWidth(int nCol, int nWidth);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iheaderctrl-getcolumnwidth))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iheaderctrl-getcolumnwidth
     HRESULT GetColumnWidth(int nCol, int* pWidth);
 }
 
 @GUID("43136eb7-d36c-11cf-adbc-00aa00a80033")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-icontextmenucallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-icontextmenucallback
 interface IContextMenuCallback : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icontextmenucallback-additem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icontextmenucallback-additem
     HRESULT AddItem(CONTEXTMENUITEM* pItem);
 }
 
 @GUID("43136eb6-d36c-11cf-adbc-00aa00a80033")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-icontextmenuprovider))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-icontextmenuprovider
 interface IContextMenuProvider : IContextMenuCallback
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icontextmenuprovider-emptymenulist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icontextmenuprovider-emptymenulist
     HRESULT EmptyMenuList();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icontextmenuprovider-addprimaryextensionitems))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icontextmenuprovider-addprimaryextensionitems
     HRESULT AddPrimaryExtensionItems(IUnknown piExtension, IDataObject piDataObject);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icontextmenuprovider-addthirdpartyextensionitems))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icontextmenuprovider-addthirdpartyextensionitems
     HRESULT AddThirdPartyExtensionItems(IDataObject piDataObject);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icontextmenuprovider-showcontextmenu))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icontextmenuprovider-showcontextmenu
     HRESULT ShowContextMenu(HWND hwndParent, int xPos, int yPos, int* plSelected);
 }
 
 @GUID("4f3b7a4f-cfac-11cf-b8e3-00c04fd8d5b0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iextendcontextmenu))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iextendcontextmenu
 interface IExtendContextMenu : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iextendcontextmenu-addmenuitems))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iextendcontextmenu-addmenuitems
     HRESULT AddMenuItems(IDataObject piDataObject, IContextMenuCallback piCallback, int* pInsertionAllowed);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iextendcontextmenu-command))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iextendcontextmenu-command
     HRESULT Command(int lCommandID, IDataObject piDataObject);
 }
 
 @GUID("43136eb8-d36c-11cf-adbc-00aa00a80033")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/commoncontrols/nn-commoncontrols-iimagelist))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/commoncontrols/nn-commoncontrols-iimagelist
 interface IImageList : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iimagelist-imagelistseticon))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iimagelist-imagelistseticon
     HRESULT ImageListSetIcon(ptrdiff_t* pIcon, int nLoc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iimagelist-imagelistsetstrip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iimagelist-imagelistsetstrip
     HRESULT ImageListSetStrip(ptrdiff_t* pBMapSm, ptrdiff_t* pBMapLg, int nStartLoc, COLORREF cMask);
 }
 
 @GUID("31da5fa0-e0eb-11cf-9f21-00aa003ca9f6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iresultdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iresultdata
 interface IResultData : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdata-insertitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdata-insertitem
     HRESULT InsertItem(RESULTDATAITEM* item);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdata-deleteitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdata-deleteitem
     HRESULT DeleteItem(ptrdiff_t itemID, int nCol);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdata-finditembylparam))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdata-finditembylparam
     HRESULT FindItemByLParam(LPARAM lParam, ptrdiff_t* pItemID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdata-deleteallrsltitems))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdata-deleteallrsltitems
     HRESULT DeleteAllRsltItems();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdata-setitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdata-setitem
     HRESULT SetItem(RESULTDATAITEM* item);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdata-getitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdata-getitem
     HRESULT GetItem(RESULTDATAITEM* item);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdata-getnextitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdata-getnextitem
     HRESULT GetNextItem(RESULTDATAITEM* item);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdata-modifyitemstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdata-modifyitemstate
     HRESULT ModifyItemState(int nIndex, ptrdiff_t itemID, uint uAdd, uint uRemove);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdata-modifyviewstyle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdata-modifyviewstyle
     HRESULT ModifyViewStyle(MMC_RESULT_VIEW_STYLE add, MMC_RESULT_VIEW_STYLE remove);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdata-setviewmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdata-setviewmode
     HRESULT SetViewMode(int lViewMode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdata-getviewmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdata-getviewmode
     HRESULT GetViewMode(int* lViewMode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdata-updateitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdata-updateitem
     HRESULT UpdateItem(ptrdiff_t itemID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdata-sort))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdata-sort
     HRESULT Sort(int nColumn, uint dwSortOptions, LPARAM lUserParam);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdata-setdescbartext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdata-setdescbartext
     HRESULT SetDescBarText(PWSTR DescText);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdata-setitemcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdata-setitemcount
     HRESULT SetItemCount(int nItemCount, uint dwOptions);
 }
 
 @GUID("bedeb620-f24d-11cf-8afc-00aa003ca9f6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iconsolenamespace))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iconsolenamespace
 interface IConsoleNameSpace : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsolenamespace-insertitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsolenamespace-insertitem
     HRESULT InsertItem(SCOPEDATAITEM* item);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsolenamespace-deleteitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsolenamespace-deleteitem
     HRESULT DeleteItem(ptrdiff_t hItem, int fDeleteThis);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsolenamespace-setitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsolenamespace-setitem
     HRESULT SetItem(SCOPEDATAITEM* item);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsolenamespace-getitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsolenamespace-getitem
     HRESULT GetItem(SCOPEDATAITEM* item);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsolenamespace-getchilditem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsolenamespace-getchilditem
     HRESULT GetChildItem(ptrdiff_t item, ptrdiff_t* pItemChild, ptrdiff_t* pCookie);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsolenamespace-getnextitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsolenamespace-getnextitem
     HRESULT GetNextItem(ptrdiff_t item, ptrdiff_t* pItemNext, ptrdiff_t* pCookie);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsolenamespace-getparentitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsolenamespace-getparentitem
     HRESULT GetParentItem(ptrdiff_t item, ptrdiff_t* pItemParent, ptrdiff_t* pCookie);
 }
 
 @GUID("255f18cc-65db-11d1-a7dc-00c04fd8d565")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iconsolenamespace2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iconsolenamespace2
 interface IConsoleNameSpace2 : IConsoleNameSpace
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsolenamespace2-expand))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsolenamespace2-expand
     HRESULT Expand(ptrdiff_t hItem);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsolenamespace2-addextension))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsolenamespace2-addextension
     HRESULT AddExtension(ptrdiff_t hItem, GUID* lpClsid);
 }
 
 @GUID("85de64dd-ef21-11cf-a285-00c04fd8dbe6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-ipropertysheetcallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-ipropertysheetcallback
 interface IPropertySheetCallback : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-ipropertysheetcallback-addpage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-ipropertysheetcallback-addpage
     HRESULT AddPage(HPROPSHEETPAGE hPage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-ipropertysheetcallback-removepage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-ipropertysheetcallback-removepage
     HRESULT RemovePage(HPROPSHEETPAGE hPage);
 }
 
 @GUID("85de64de-ef21-11cf-a285-00c04fd8dbe6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-ipropertysheetprovider))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-ipropertysheetprovider
 interface IPropertySheetProvider : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-ipropertysheetprovider-createpropertysheet))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-ipropertysheetprovider-createpropertysheet
     HRESULT CreatePropertySheet(const(PWSTR) title, ubyte type, ptrdiff_t cookie, IDataObject pIDataObjectm, 
                                 uint dwOptions);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-ipropertysheetprovider-findpropertysheet))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-ipropertysheetprovider-findpropertysheet
     HRESULT FindPropertySheet(ptrdiff_t hItem, IComponent lpComponent, IDataObject lpDataObject);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-ipropertysheetprovider-addprimarypages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-ipropertysheetprovider-addprimarypages
     HRESULT AddPrimaryPages(IUnknown lpUnknown, BOOL bCreateHandle, HWND hNotifyWindow, BOOL bScopePane);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-ipropertysheetprovider-addextensionpages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-ipropertysheetprovider-addextensionpages
     HRESULT AddExtensionPages();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-ipropertysheetprovider-show))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-ipropertysheetprovider-show
     HRESULT Show(ptrdiff_t window, int page);
 }
 
 @GUID("85de64dc-ef21-11cf-a285-00c04fd8dbe6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iextendpropertysheet))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iextendpropertysheet
 interface IExtendPropertySheet : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iextendpropertysheet-createpropertypages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iextendpropertysheet-createpropertypages
     HRESULT CreatePropertyPages(IPropertySheetCallback lpProvider, ptrdiff_t handle, IDataObject lpIDataObject);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iextendpropertysheet-querypagesfor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iextendpropertysheet-querypagesfor
     HRESULT QueryPagesFor(IDataObject lpDataObject);
 }
 
 @GUID("69fb811e-6c1c-11d0-a2cb-00c04fd909dd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-icontrolbar))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-icontrolbar
 interface IControlbar : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icontrolbar-create))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icontrolbar-create
     HRESULT Create(MMC_CONTROL_TYPE nType, IExtendControlbar pExtendControlbar, IUnknown* ppUnknown);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icontrolbar-attach))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icontrolbar-attach
     HRESULT Attach(MMC_CONTROL_TYPE nType, IUnknown lpUnknown);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icontrolbar-detach))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icontrolbar-detach
     HRESULT Detach(IUnknown lpUnknown);
 }
 
 @GUID("49506520-6f40-11d0-a98b-00c04fd8d565")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iextendcontrolbar))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iextendcontrolbar
 interface IExtendControlbar : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iextendcontrolbar-setcontrolbar))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iextendcontrolbar-setcontrolbar
     HRESULT SetControlbar(IControlbar pControlbar);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iextendcontrolbar-controlbarnotify))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iextendcontrolbar-controlbarnotify
     HRESULT ControlbarNotify(MMC_NOTIFY_TYPE event, LPARAM arg, LPARAM param2);
 }
 
 @GUID("43136eb9-d36c-11cf-adbc-00aa00a80033")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-itoolbar))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-itoolbar
 interface IToolbar : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-itoolbar-addbitmap))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-itoolbar-addbitmap
     HRESULT AddBitmap(int nImages, HBITMAP hbmp, int cxSize, int cySize, COLORREF crMask);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-itoolbar-addbuttons))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-itoolbar-addbuttons
     HRESULT AddButtons(int nButtons, MMCBUTTON* lpButtons);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-itoolbar-insertbutton))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-itoolbar-insertbutton
     HRESULT InsertButton(int nIndex, MMCBUTTON* lpButton);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-itoolbar-deletebutton))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-itoolbar-deletebutton
     HRESULT DeleteButton(int nIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-itoolbar-getbuttonstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-itoolbar-getbuttonstate
     HRESULT GetButtonState(int idCommand, MMC_BUTTON_STATE nState, BOOL* pState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-itoolbar-setbuttonstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-itoolbar-setbuttonstate
     HRESULT SetButtonState(int idCommand, MMC_BUTTON_STATE nState, BOOL bState);
 }
 
 @GUID("e49f7a60-74af-11d0-a286-00c04fd8fe93")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iconsoleverb))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iconsoleverb
 interface IConsoleVerb : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsoleverb-getverbstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsoleverb-getverbstate
     HRESULT GetVerbState(MMC_CONSOLE_VERB eCmdID, MMC_BUTTON_STATE nState, BOOL* pState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsoleverb-setverbstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsoleverb-setverbstate
     HRESULT SetVerbState(MMC_CONSOLE_VERB eCmdID, MMC_BUTTON_STATE nState, BOOL bState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsoleverb-setdefaultverb))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsoleverb-setdefaultverb
     HRESULT SetDefaultVerb(MMC_CONSOLE_VERB eCmdID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsoleverb-getdefaultverb))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsoleverb-getdefaultverb
     HRESULT GetDefaultVerb(MMC_CONSOLE_VERB* peCmdID);
 }
 
 @GUID("1245208c-a151-11d0-a7d7-00c04fd909dd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-isnapinabout))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-isnapinabout
 interface ISnapinAbout : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-isnapinabout-getsnapindescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-isnapinabout-getsnapindescription
     HRESULT GetSnapinDescription(PWSTR* lpDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-isnapinabout-getprovider))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-isnapinabout-getprovider
     HRESULT GetProvider(PWSTR* lpName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-isnapinabout-getsnapinversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-isnapinabout-getsnapinversion
     HRESULT GetSnapinVersion(PWSTR* lpVersion);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-isnapinabout-getsnapinimage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-isnapinabout-getsnapinimage
     HRESULT GetSnapinImage(HICON* hAppIcon);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-isnapinabout-getstaticfolderimage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-isnapinabout-getstaticfolderimage
     HRESULT GetStaticFolderImage(HBITMAP* hSmallImage, HBITMAP* hSmallImageOpen, HBITMAP* hLargeImage, 
                                  COLORREF* cMask);
 }
 
 @GUID("951ed750-d080-11d0-b197-000000000000")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-imenubutton))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-imenubutton
 interface IMenuButton : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-imenubutton-addbutton))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-imenubutton-addbutton
     HRESULT AddButton(int idCommand, PWSTR lpButtonText, PWSTR lpTooltipText);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-imenubutton-setbutton))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-imenubutton-setbutton
     HRESULT SetButton(int idCommand, PWSTR lpButtonText, PWSTR lpTooltipText);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-imenubutton-setbuttonstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-imenubutton-setbuttonstate
     HRESULT SetButtonState(int idCommand, MMC_BUTTON_STATE nState, BOOL bState);
 }
 
 @GUID("a6b15ace-df59-11d0-a7dd-00c04fd909dd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-isnapinhelp))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-isnapinhelp
 interface ISnapinHelp : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-isnapinhelp-gethelptopic))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-isnapinhelp-gethelptopic
     HRESULT GetHelpTopic(PWSTR* lpCompiledHelpFile);
 }
 
 @GUID("b7a87232-4a51-11d1-a7ea-00c04fd909dd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iextendpropertysheet2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iextendpropertysheet2
 interface IExtendPropertySheet2 : IExtendPropertySheet
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iextendpropertysheet2-getwatermarks))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iextendpropertysheet2-getwatermarks
     HRESULT GetWatermarks(IDataObject lpIDataObject, HBITMAP* lphWatermark, HBITMAP* lphHeader, 
                           HPALETTE* lphPalette, BOOL* bStretch);
 }
 
 @GUID("9757abb8-1b32-11d1-a7ce-00c04fd8d565")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iheaderctrl2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iheaderctrl2
 interface IHeaderCtrl2 : IHeaderCtrl
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iheaderctrl2-setchangetimeout))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iheaderctrl2-setchangetimeout
     HRESULT SetChangeTimeOut(uint uTimeout);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iheaderctrl2-setcolumnfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iheaderctrl2-setcolumnfilter
     HRESULT SetColumnFilter(uint nColumn, uint dwType, MMC_FILTERDATA* pFilterData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iheaderctrl2-getcolumnfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iheaderctrl2-getcolumnfilter
     HRESULT GetColumnFilter(uint nColumn, uint* pdwType, MMC_FILTERDATA* pFilterData);
 }
 
 @GUID("4861a010-20f9-11d2-a510-00c04fb6dd2c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-isnapinhelp2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-isnapinhelp2
 interface ISnapinHelp2 : ISnapinHelp
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-isnapinhelp2-getlinkedtopics))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-isnapinhelp2-getlinkedtopics
     HRESULT GetLinkedTopics(PWSTR* lpCompiledHelpFiles);
 }
 
 @GUID("338698b1-5a02-11d1-9fec-00600832db4a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-ienumtask))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-ienumtask
 interface IEnumTASK : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-ienumtask-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-ienumtask-next
     HRESULT Next(uint celt, MMC_TASK* rgelt, uint* pceltFetched);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-ienumtask-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-ienumtask-skip
     HRESULT Skip(uint celt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-ienumtask-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-ienumtask-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-ienumtask-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-ienumtask-clone
     HRESULT Clone(IEnumTASK* ppenum);
 }
 
 @GUID("8dee6511-554d-11d1-9fea-00600832db4a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iextendtaskpad))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iextendtaskpad
 interface IExtendTaskPad : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iextendtaskpad-tasknotify))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iextendtaskpad-tasknotify
     HRESULT TaskNotify(IDataObject pdo, VARIANT* arg, VARIANT* param2);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iextendtaskpad-enumtasks))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iextendtaskpad-enumtasks
     HRESULT EnumTasks(IDataObject pdo, PWSTR szTaskGroup, IEnumTASK* ppEnumTASK);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iextendtaskpad-gettitle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iextendtaskpad-gettitle
     HRESULT GetTitle(PWSTR pszGroup, PWSTR* pszTitle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iextendtaskpad-getdescriptivetext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iextendtaskpad-getdescriptivetext
     HRESULT GetDescriptiveText(PWSTR pszGroup, PWSTR* pszDescriptiveText);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iextendtaskpad-getbackground))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iextendtaskpad-getbackground
     HRESULT GetBackground(PWSTR pszGroup, MMC_TASK_DISPLAY_OBJECT* pTDO);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iextendtaskpad-getlistpadinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iextendtaskpad-getlistpadinfo
     HRESULT GetListPadInfo(PWSTR pszGroup, MMC_LISTPAD_INFO* lpListPadInfo);
 }
 
 @GUID("103d842a-aa63-11d1-a7e1-00c04fd8d565")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iconsole2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iconsole2
 interface IConsole2 : IConsole
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsole2-expand))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsole2-expand
     HRESULT Expand(ptrdiff_t hItem, BOOL bExpand);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsole2-istaskpadviewpreferred))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsole2-istaskpadviewpreferred
     HRESULT IsTaskpadViewPreferred();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsole2-setstatustext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsole2-setstatustext
     HRESULT SetStatusText(PWSTR pszStatusText);
 }
 
 @GUID("cc593830-b926-11d1-8063-0000f875a9ce")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-idisplayhelp))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-idisplayhelp
 interface IDisplayHelp : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-idisplayhelp-showtopic))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-idisplayhelp-showtopic
     HRESULT ShowTopic(PWSTR pszHelpTopic);
 }
 
 @GUID("72782d7a-a4a0-11d1-af0f-00c04fb6dd2c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-irequiredextensions))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-irequiredextensions
 interface IRequiredExtensions : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-irequiredextensions-enableallextensions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-irequiredextensions-enableallextensions
     HRESULT EnableAllExtensions();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-irequiredextensions-getfirstextension))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-irequiredextensions-getfirstextension
     HRESULT GetFirstExtension(GUID* pExtCLSID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-irequiredextensions-getnextextension))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-irequiredextensions-getnextextension
     HRESULT GetNextExtension(GUID* pExtCLSID);
 }
 
 @GUID("de40b7a4-0f65-11d2-8e25-00c04f8ecd78")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-istringtable))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-istringtable
 interface IStringTable : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-istringtable-addstring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-istringtable-addstring
     HRESULT AddString(const(PWSTR) pszAdd, uint* pStringID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-istringtable-getstring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-istringtable-getstring
     HRESULT GetString(uint StringID, uint cchBuffer, PWSTR lpBuffer, uint* pcchOut);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-istringtable-getstringlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-istringtable-getstringlength
     HRESULT GetStringLength(uint StringID, uint* pcchString);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-istringtable-deletestring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-istringtable-deletestring
     HRESULT DeleteString(uint StringID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-istringtable-deleteallstrings))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-istringtable-deleteallstrings
     HRESULT DeleteAllStrings();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-istringtable-findstring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-istringtable-findstring
     HRESULT FindString(const(PWSTR) pszFind, uint* pStringID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-istringtable-enumerate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-istringtable-enumerate
     HRESULT Enumerate(IEnumString* ppEnum);
 }
 
 @GUID("547c1354-024d-11d3-a707-00c04f8ef4cb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-icolumndata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-icolumndata
 interface IColumnData : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icolumndata-setcolumnconfigdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icolumndata-setcolumnconfigdata
     HRESULT SetColumnConfigData(SColumnSetID* pColID, MMC_COLUMN_SET_DATA* pColSetData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icolumndata-getcolumnconfigdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icolumndata-getcolumnconfigdata
     HRESULT GetColumnConfigData(SColumnSetID* pColID, MMC_COLUMN_SET_DATA** ppColSetData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icolumndata-setcolumnsortdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icolumndata-setcolumnsortdata
     HRESULT SetColumnSortData(SColumnSetID* pColID, MMC_SORT_SET_DATA* pColSortData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icolumndata-getcolumnsortdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icolumndata-getcolumnsortdata
     HRESULT GetColumnSortData(SColumnSetID* pColID, MMC_SORT_SET_DATA** ppColSortData);
 }
 
 @GUID("80f94174-fccc-11d2-b991-00c04f8ecd78")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-imessageview))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-imessageview
 interface IMessageView : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-imessageview-settitletext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-imessageview-settitletext
     HRESULT SetTitleText(const(PWSTR) pszTitleText);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-imessageview-setbodytext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-imessageview-setbodytext
     HRESULT SetBodyText(const(PWSTR) pszBodyText);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-imessageview-seticon))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-imessageview-seticon
     HRESULT SetIcon(IconIdentifier id);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-imessageview-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-imessageview-clear
     HRESULT Clear();
 }
 
 @GUID("96933476-0251-11d3-aeb0-00c04f8ecd78")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iresultdatacompareex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iresultdatacompareex
 interface IResultDataCompareEx : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdatacompareex-compare))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdatacompareex-compare
     HRESULT Compare(RDCOMPARE* prdc, int* pnResult);
 }
 
 @GUID("cca0f2d2-82de-41b5-bf47-3b2076273d5c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-icomponentdata2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-icomponentdata2
 interface IComponentData2 : IComponentData
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponentdata2-querydispatch))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponentdata2-querydispatch
     HRESULT QueryDispatch(ptrdiff_t cookie, DATA_OBJECT_TYPES type, IDispatch* ppDispatch);
 }
 
 @GUID("79a2d615-4a10-4ed4-8c65-8633f9335095")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-icomponent2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-icomponent2
 interface IComponent2 : IComponent
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponent2-querydispatch))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponent2-querydispatch
     HRESULT QueryDispatch(ptrdiff_t cookie, DATA_OBJECT_TYPES type, IDispatch* ppDispatch);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponent2-getresultviewtype2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponent2-getresultviewtype2
     HRESULT GetResultViewType2(ptrdiff_t cookie, RESULT_VIEW_TYPE_INFO* pResultViewType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponent2-restoreresultview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icomponent2-restoreresultview
     HRESULT RestoreResultView(ptrdiff_t cookie, RESULT_VIEW_TYPE_INFO* pResultViewType);
 }
 
 @GUID("e178bc0e-2ed0-4b5e-8097-42c9087e8b33")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-icontextmenucallback2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-icontextmenucallback2
 interface IContextMenuCallback2 : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icontextmenucallback2-additem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-icontextmenucallback2-additem
     HRESULT AddItem(CONTEXTMENUITEM2* pItem);
 }
 
 @GUID("a8d2c5fe-cdcb-4b9d-bde5-a27343ff54bc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-immcversioninfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-immcversioninfo
 interface IMMCVersionInfo : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-immcversioninfo-getmmcversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-immcversioninfo-getmmcversion
     HRESULT GetMMCVersion(int* pVersionMajor, int* pVersionMinor);
 }
 
 @GUID("89995cee-d2ed-4c0e-ae5e-df7e76f3fa53")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iextendview))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iextendview
 interface IExtendView : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iextendview-getviews))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iextendview-getviews
     HRESULT GetViews(IDataObject pDataObject, IViewExtensionCallback pViewExtensionCallback);
 }
 
 @GUID("34dd928a-7599-41e5-9f5e-d6bc3062c2da")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iviewextensioncallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iviewextensioncallback
 interface IViewExtensionCallback : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iviewextensioncallback-addview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iviewextensioncallback-addview
     HRESULT AddView(MMC_EXT_VIEW_DATA* pExtViewData);
 }
 
 @GUID("1cfbdd0e-62ca-49ce-a3af-dbb2de61b068")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iconsolepower))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iconsolepower
 interface IConsolePower : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsolepower-setexecutionstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsolepower-setexecutionstate
     HRESULT SetExecutionState(uint dwAdd, uint dwRemove);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsolepower-resetidletimer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsolepower-resetidletimer
     HRESULT ResetIdleTimer(uint dwFlags);
 }
 
 @GUID("3333759f-fe4f-4975-b143-fec0a5dd6d65")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iconsolepowersink))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iconsolepowersink
 interface IConsolePowerSink : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsolepowersink-onpowerbroadcast))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsolepowersink-onpowerbroadcast
     HRESULT OnPowerBroadcast(uint nEvent, LPARAM lParam, LRESULT* plReturn);
 }
 
 @GUID("15bc4d24-a522-4406-aa55-0749537a6865")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-inodeproperties))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-inodeproperties
 interface INodeProperties : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-inodeproperties-getproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-inodeproperties-getproperty
     HRESULT GetProperty(IDataObject pDataObject, BSTR szPropertyName, BSTR* pbstrProperty);
 }
 
 @GUID("4f85efdb-d0e1-498c-8d4a-d010dfdd404f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iconsole3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iconsole3
 interface IConsole3 : IConsole2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsole3-renamescopeitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iconsole3-renamescopeitem
     HRESULT RenameScopeItem(ptrdiff_t hScopeItem);
 }
 
 @GUID("0f36e0eb-a7f1-4a81-be5a-9247f7de4b1b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iresultdata2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nn-mmc-iresultdata2
 interface IResultData2 : IResultData
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdata2-renameresultitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mmc/nf-mmc-iresultdata2-renameresultitem
     HRESULT RenameResultItem(ptrdiff_t itemID);
 }
 

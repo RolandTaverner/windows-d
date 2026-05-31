@@ -3,14 +3,15 @@
 module windows.win32.security.configurationsnapin;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, HRESULT;
-public import windows.win32.system.com : IUnknown;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, HRESULT;
+public import windows.win32.system.com.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
+
 
 alias SCE_LOG_ERR_LEVEL = int;
 enum : int
@@ -20,7 +21,8 @@ enum : int
     SCE_LOG_LEVEL_DETAIL = 0x00000002,
     SCE_LOG_LEVEL_DEBUG  = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/scesvc/ne-scesvc-scesvc_info_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/scesvc/ne-scesvc-scesvc_info_type
 alias SCESVC_INFO_TYPE = int;
 enum : int
 {
@@ -120,7 +122,7 @@ alias PF_UpdateService = uint function(SCESVC_CALLBACK_INFO* pSceCbInfo, SCESVC_
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/scesvc/ns-scesvc-scesvc_configuration_line))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/scesvc/ns-scesvc-scesvc_configuration_line
 struct SCESVC_CONFIGURATION_LINE
 {
     byte* Key;
@@ -128,14 +130,14 @@ struct SCESVC_CONFIGURATION_LINE
     uint  ValueLen;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/scesvc/ns-scesvc-scesvc_configuration_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/scesvc/ns-scesvc-scesvc_configuration_info
 struct SCESVC_CONFIGURATION_INFO
 {
     uint Count;
     SCESVC_CONFIGURATION_LINE* Lines;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/scesvc/ns-scesvc-scesvc_analysis_line))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/scesvc/ns-scesvc-scesvc_analysis_line
 struct SCESVC_ANALYSIS_LINE
 {
     byte*  Key;
@@ -143,14 +145,14 @@ struct SCESVC_ANALYSIS_LINE
     uint   ValueLen;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/scesvc/ns-scesvc-scesvc_analysis_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/scesvc/ns-scesvc-scesvc_analysis_info
 struct SCESVC_ANALYSIS_INFO
 {
     uint Count;
     SCESVC_ANALYSIS_LINE* Lines;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/scesvc/ns-scesvc-scesvc_callback_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/scesvc/ns-scesvc-scesvc_callback_info
 struct SCESVC_CALLBACK_INFO
 {
     void*            sceHandle;
@@ -164,30 +166,30 @@ struct SCESVC_CALLBACK_INFO
 
 @GUID("6d90e0d0-200d-11d1-affb-00c04fb984f9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/scesvc/nn-scesvc-iscesvcattachmentpersistinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/scesvc/nn-scesvc-iscesvcattachmentpersistinfo
 interface ISceSvcAttachmentPersistInfo : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/scesvc/nf-scesvc-iscesvcattachmentpersistinfo-save))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/scesvc/nf-scesvc-iscesvcattachmentpersistinfo-save
     HRESULT Save(byte* lpTemplateName, void** scesvcHandle, void** ppvData, BOOL* pbOverwriteAll);
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
     HRESULT IsDirty(byte* lpTemplateName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/scesvc/nf-scesvc-iscesvcattachmentpersistinfo-freebuffer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/scesvc/nf-scesvc-iscesvcattachmentpersistinfo-freebuffer
     HRESULT FreeBuffer(void* pvData);
 }
 
 @GUID("17c35fde-200d-11d1-affb-00c04fb984f9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/scesvc/nn-scesvc-iscesvcattachmentdata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/scesvc/nn-scesvc-iscesvcattachmentdata
 interface ISceSvcAttachmentData : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/scesvc/nf-scesvc-iscesvcattachmentdata-getdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/scesvc/nf-scesvc-iscesvcattachmentdata-getdata
     HRESULT GetData(void* scesvcHandle, SCESVC_INFO_TYPE sceType, void** ppvData, uint* psceEnumHandle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/scesvc/nf-scesvc-iscesvcattachmentdata-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/scesvc/nf-scesvc-iscesvcattachmentdata-initialize
     HRESULT Initialize(byte* lpServiceName, byte* lpTemplateName, ISceSvcAttachmentPersistInfo lpSceSvcPersistInfo, 
                        void** pscesvcHandle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/scesvc/nf-scesvc-iscesvcattachmentdata-freebuffer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/scesvc/nf-scesvc-iscesvcattachmentdata-freebuffer
     HRESULT FreeBuffer(void* pvData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/scesvc/nf-scesvc-iscesvcattachmentdata-closehandle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/scesvc/nf-scesvc-iscesvcattachmentdata-closehandle
     HRESULT CloseHandle(void* scesvcHandle);
 }
 

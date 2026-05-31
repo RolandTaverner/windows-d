@@ -3,10 +3,10 @@
 module windows.win32.security.isolation;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, HANDLE, HRESULT, PWSTR;
-public import windows.win32.security : PSID, SID_AND_ATTRIBUTES;
-public import windows.win32.system.com : IUnknown;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, HANDLE, HRESULT, PWSTR;
+public import windows.win32.security.security : PSID, SID_AND_ATTRIBUTES;
+public import windows.win32.system.com.com : IUnknown;
 public import windows.win32.system.registry : HKEY;
 
 extern(Windows) @nogc nothrow:
@@ -41,11 +41,11 @@ HRESULT IsProcessInWDAGContainer(void* Reserved, BOOL* isProcessInWDAGContainer)
 @DllImport("api-ms-win-security-isolatedcontainer-l1-1-0.dll")
 HRESULT IsProcessInIsolatedContainer(BOOL* isProcessInIsolatedContainer);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/isolatedwindowsenvironmentutils/nf-isolatedwindowsenvironmentutils-isprocessinisolatedwindowsenvironment))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/isolatedwindowsenvironmentutils/nf-isolatedwindowsenvironmentutils-isprocessinisolatedwindowsenvironment
 @DllImport("IsolatedWindowsEnvironmentUtils.dll")
 HRESULT IsProcessInIsolatedWindowsEnvironment(BOOL* isProcessInIsolatedWindowsEnvironment);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/isolatedwindowsenvironmentutils/nf-isolatedwindowsenvironmentutils-iscrossisolatedenvironmentclipboardcontent))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/isolatedwindowsenvironmentutils/nf-isolatedwindowsenvironmentutils-iscrossisolatedenvironmentclipboardcontent
 @DllImport("IsolatedWindowsEnvironmentUtils.dll")
 HRESULT IsCrossIsolatedEnvironmentClipboardContent(BOOL* isCrossIsolatedEnvironmentClipboardContent);
 
@@ -84,7 +84,7 @@ HRESULT DeriveAppContainerSidFromAppContainerName(const(PWSTR) pszAppContainerNa
 struct IsolatedAppLauncher;
 
 @GUID("f686878f-7b42-4cc4-96fb-f4f3b6e3d24d")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/isolatedapplauncher/nn-isolatedapplauncher-iisolatedapplauncher))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/isolatedapplauncher/nn-isolatedapplauncher-iisolatedapplauncher
 interface IIsolatedAppLauncher : IUnknown
 {
     HRESULT Launch(const(PWSTR) appUserModelId, const(PWSTR) arguments, 

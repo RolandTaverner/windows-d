@@ -3,28 +3,30 @@
 module windows.win32.storage.operationrecorder;
 
 public import windows.core;
-public import windows.win32.foundation : BOOL;
+public import windows.win32.foundation.foundation : BOOL;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
+
 alias OPERATION_START_FLAGS = uint;
 enum : uint
 {
-    OPERATION_START_TRACE_CURRENT_THREAD = 0x00000001,
+    OPERATION_START_TRACE_CURRENT_THREAD = 0x00000001U,
 }
+
 alias OPERATION_END_PARAMETERS_FLAGS = uint;
 enum : uint
 {
-    OPERATION_END_DISCARD = 0x00000001,
+    OPERATION_END_DISCARD = 0x00000001U,
 }
 
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winbase/ns-winbase-operation_start_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winbase/ns-winbase-operation_start_parameters
 struct OPERATION_START_PARAMETERS
 {
     uint Version;
@@ -32,7 +34,7 @@ struct OPERATION_START_PARAMETERS
     OPERATION_START_FLAGS Flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winbase/ns-winbase-operation_end_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winbase/ns-winbase-operation_end_parameters
 struct OPERATION_END_PARAMETERS
 {
     uint Version;

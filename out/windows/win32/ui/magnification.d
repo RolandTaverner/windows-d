@@ -3,8 +3,8 @@
 module windows.win32.ui.magnification;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, HWND, RECT;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, HWND, RECT;
 public import windows.win32.graphics.gdi : HRGN;
 
 extern(Windows) @nogc nothrow:
@@ -12,11 +12,12 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias MW_FILTERMODE = uint;
 enum : uint
 {
-    MW_FILTERMODE_EXCLUDE = 0x00000000,
-    MW_FILTERMODE_INCLUDE = 0x00000001,
+    MW_FILTERMODE_EXCLUDE = 0x00000000U,
+    MW_FILTERMODE_INCLUDE = 0x00000001U,
 }
 
 // Constants
@@ -41,14 +42,14 @@ alias MagImageScalingCallback = BOOL function(HWND hwnd, void* srcdata, MAGIMAGE
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/magnification/ns-magnification-magtransform))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/magnification/ns-magnification-magtransform
 struct MAGTRANSFORM
 {
     float[9] v;
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/magnification/ns-magnification-magimageheader))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/magnification/ns-magnification-magimageheader
 struct MAGIMAGEHEADER
 {
     uint   width;
@@ -59,7 +60,7 @@ struct MAGIMAGEHEADER
     size_t cbSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/magnification/ns-magnification-magcoloreffect))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/magnification/ns-magnification-magcoloreffect
 struct MAGCOLOREFFECT
 {
     float[25] transform;

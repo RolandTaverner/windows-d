@@ -3,9 +3,10 @@
 module windows.win32.system.power;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BOOLEAN, DEVPROPKEY, HANDLE, HRESULT,
-                                         LPARAM, NTSTATUS, PWSTR, WIN32_ERROR;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BOOLEAN, DEVPROPKEY, HANDLE,
+                                                    HRESULT, LPARAM, NTSTATUS, PWSTR,
+                                                    WIN32_ERROR;
 public import windows.win32.system.registry : HKEY, REG_SAM_FLAGS;
 public import windows.win32.system.threading : REASON_CONTEXT;
 public import windows.win32.ui.windowsandmessaging : REGISTER_NOTIFICATION_FLAGS;
@@ -15,62 +16,68 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias POWER_COOLING_MODE = ushort;
 enum : ushort
 {
-    PO_TZ_ACTIVE       = 0x0000,
-    PO_TZ_PASSIVE      = 0x0001,
-    PO_TZ_INVALID_MODE = 0x0002,
+    PO_TZ_ACTIVE       = cast(ushort) 0x0000,
+    PO_TZ_PASSIVE      = cast(ushort) 0x0001,
+    PO_TZ_INVALID_MODE = cast(ushort) 0x0002,
 }
+
 alias POWER_PLATFORM_ROLE_VERSION = uint;
 enum : uint
 {
-    POWER_PLATFORM_ROLE_V1 = 0x00000001,
-    POWER_PLATFORM_ROLE_V2 = 0x00000002,
+    POWER_PLATFORM_ROLE_V1 = 0x00000001U,
+    POWER_PLATFORM_ROLE_V2 = 0x00000002U,
 }
+
 alias EXECUTION_STATE = uint;
 enum : uint
 {
-    ES_AWAYMODE_REQUIRED = 0x00000040,
-    ES_CONTINUOUS        = 0x80000000,
-    ES_DISPLAY_REQUIRED  = 0x00000002,
-    ES_SYSTEM_REQUIRED   = 0x00000001,
-    ES_USER_PRESENT      = 0x00000004,
+    ES_AWAYMODE_REQUIRED = 0x00000040U,
+    ES_CONTINUOUS        = 0x80000000U,
+    ES_DISPLAY_REQUIRED  = 0x00000002U,
+    ES_SYSTEM_REQUIRED   = 0x00000001U,
+    ES_USER_PRESENT      = 0x00000004U,
 }
+
 alias POWER_ACTION_POLICY_EVENT_CODE = uint;
 enum : uint
 {
-    POWER_FORCE_TRIGGER_RESET     = 0x80000000,
-    POWER_LEVEL_USER_NOTIFY_EXEC  = 0x00000004,
-    POWER_LEVEL_USER_NOTIFY_SOUND = 0x00000002,
-    POWER_LEVEL_USER_NOTIFY_TEXT  = 0x00000001,
-    POWER_USER_NOTIFY_BUTTON      = 0x00000008,
-    POWER_USER_NOTIFY_SHUTDOWN    = 0x00000010,
+    POWER_FORCE_TRIGGER_RESET     = 0x80000000U,
+    POWER_LEVEL_USER_NOTIFY_EXEC  = 0x00000004U,
+    POWER_LEVEL_USER_NOTIFY_SOUND = 0x00000002U,
+    POWER_LEVEL_USER_NOTIFY_TEXT  = 0x00000001U,
+    POWER_USER_NOTIFY_BUTTON      = 0x00000008U,
+    POWER_USER_NOTIFY_SHUTDOWN    = 0x00000010U,
 }
+
 alias DEVICE_POWER_CAPABILITIES = uint;
 enum : uint
 {
-    PDCAP_D0_SUPPORTED           = 0x00000001,
-    PDCAP_D1_SUPPORTED           = 0x00000002,
-    PDCAP_D2_SUPPORTED           = 0x00000004,
-    PDCAP_D3_SUPPORTED           = 0x00000008,
-    PDCAP_WAKE_FROM_D0_SUPPORTED = 0x00000010,
-    PDCAP_WAKE_FROM_D1_SUPPORTED = 0x00000020,
-    PDCAP_WAKE_FROM_D2_SUPPORTED = 0x00000040,
-    PDCAP_WAKE_FROM_D3_SUPPORTED = 0x00000080,
-    PDCAP_WARM_EJECT_SUPPORTED   = 0x00000100,
-    PDCAP_S0_SUPPORTED           = 0x00010000,
-    PDCAP_S1_SUPPORTED           = 0x00020000,
-    PDCAP_S2_SUPPORTED           = 0x00040000,
-    PDCAP_S3_SUPPORTED           = 0x00080000,
-    PDCAP_WAKE_FROM_S0_SUPPORTED = 0x00100000,
-    PDCAP_WAKE_FROM_S1_SUPPORTED = 0x00200000,
-    PDCAP_WAKE_FROM_S2_SUPPORTED = 0x00400000,
-    PDCAP_WAKE_FROM_S3_SUPPORTED = 0x00800000,
-    PDCAP_S4_SUPPORTED           = 0x01000000,
-    PDCAP_S5_SUPPORTED           = 0x02000000,
+    PDCAP_D0_SUPPORTED           = 0x00000001U,
+    PDCAP_D1_SUPPORTED           = 0x00000002U,
+    PDCAP_D2_SUPPORTED           = 0x00000004U,
+    PDCAP_D3_SUPPORTED           = 0x00000008U,
+    PDCAP_WAKE_FROM_D0_SUPPORTED = 0x00000010U,
+    PDCAP_WAKE_FROM_D1_SUPPORTED = 0x00000020U,
+    PDCAP_WAKE_FROM_D2_SUPPORTED = 0x00000040U,
+    PDCAP_WAKE_FROM_D3_SUPPORTED = 0x00000080U,
+    PDCAP_WARM_EJECT_SUPPORTED   = 0x00000100U,
+    PDCAP_S0_SUPPORTED           = 0x00010000U,
+    PDCAP_S1_SUPPORTED           = 0x00020000U,
+    PDCAP_S2_SUPPORTED           = 0x00040000U,
+    PDCAP_S3_SUPPORTED           = 0x00080000U,
+    PDCAP_WAKE_FROM_S0_SUPPORTED = 0x00100000U,
+    PDCAP_WAKE_FROM_S1_SUPPORTED = 0x00200000U,
+    PDCAP_WAKE_FROM_S2_SUPPORTED = 0x00400000U,
+    PDCAP_WAKE_FROM_S3_SUPPORTED = 0x00800000U,
+    PDCAP_S4_SUPPORTED           = 0x01000000U,
+    PDCAP_S5_SUPPORTED           = 0x02000000U,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/powersetting/ne-powersetting-effective_power_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/powersetting/ne-powersetting-effective_power_mode
 alias EFFECTIVE_POWER_MODE = int;
 enum : int
 {
@@ -84,7 +91,8 @@ enum : int
     EffectivePowerModeGameMode               = 0x00000005,
     EffectivePowerModeMixedReality           = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/powrprof/ne-powrprof-power_data_accessor))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/powrprof/ne-powrprof-power_data_accessor
 alias POWER_DATA_ACCESSOR = int;
 enum : int
 {
@@ -118,6 +126,7 @@ enum : int
     ACCESS_POWER_MODE                           = 0x0000001a,
     ACCESS_ACTIVE_OVERLAY_SCHEME                = 0x0000001b,
 }
+
 alias BATTERY_QUERY_INFORMATION_LEVEL = int;
 enum : int
 {
@@ -131,6 +140,7 @@ enum : int
     BatteryUniqueID               = 0x00000007,
     BatterySerialNumber           = 0x00000008,
 }
+
 alias BATTERY_CHARGING_SOURCE_TYPE = int;
 enum : int
 {
@@ -139,6 +149,7 @@ enum : int
     BatteryChargingSourceType_Wireless = 0x00000003,
     BatteryChargingSourceType_Max      = 0x00000004,
 }
+
 alias USB_CHARGER_PORT = int;
 enum : int
 {
@@ -146,6 +157,7 @@ enum : int
     UsbChargerPort_TypeC  = 0x00000001,
     UsbChargerPort_Max    = 0x00000002,
 }
+
 alias BATTERY_SET_INFORMATION_LEVEL = int;
 enum : int
 {
@@ -156,6 +168,7 @@ enum : int
     BatteryChargerId      = 0x00000004,
     BatteryChargerStatus  = 0x00000005,
 }
+
 alias ACPI_TIME_RESOLUTION = int;
 enum : int
 {
@@ -163,13 +176,15 @@ enum : int
     AcpiTimeResolutionSeconds      = 0x00000001,
     AcpiTimeResolutionMax          = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/emi/ne-emi-emi_measurement_unit))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/emi/ne-emi-emi_measurement_unit
 alias EMI_MEASUREMENT_UNIT = int;
 enum : int
 {
     EmiMeasurementUnitPicowattHours = 0x00000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-system_power_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-system_power_state
 alias SYSTEM_POWER_STATE = int;
 enum : int
 {
@@ -182,7 +197,8 @@ enum : int
     PowerSystemShutdown    = 0x00000006,
     PowerSystemMaximum     = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-power_action))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-power_action
 alias POWER_ACTION = int;
 enum : int
 {
@@ -196,6 +212,7 @@ enum : int
     PowerActionWarmEject     = 0x00000007,
     PowerActionDisplayOff    = 0x00000008,
 }
+
 alias DEVICE_POWER_STATE = int;
 enum : int
 {
@@ -206,6 +223,7 @@ enum : int
     PowerDeviceD3          = 0x00000004,
     PowerDeviceMaximum     = 0x00000005,
 }
+
 alias USER_ACTIVITY_PRESENCE = int;
 enum : int
 {
@@ -215,12 +233,14 @@ enum : int
     PowerUserMaximum    = 0x00000003,
     PowerUserInvalid    = 0x00000003,
 }
+
 alias LATENCY_TIME = int;
 enum : int
 {
     LT_DONT_CARE      = 0x00000000,
     LT_LOWEST_LATENCY = 0x00000001,
 }
+
 alias POWER_REQUEST_TYPE = int;
 enum : int
 {
@@ -229,6 +249,7 @@ enum : int
     PowerRequestAwayModeRequired  = 0x00000002,
     PowerRequestExecutionRequired = 0x00000003,
 }
+
 alias POWER_INFORMATION_LEVEL = int;
 enum : int
 {
@@ -333,6 +354,7 @@ enum : int
     SystemPowerSourceState             = 0x00000062,
     PowerInformationLevelMaximum       = 0x00000063,
 }
+
 alias POWER_USER_PRESENCE_TYPE = int;
 enum : int
 {
@@ -340,6 +362,7 @@ enum : int
     UserPresent    = 0x00000001,
     UserUnknown    = 0x000000ff,
 }
+
 alias POWER_MONITOR_REQUEST_REASON = int;
 enum : int
 {
@@ -403,6 +426,7 @@ enum : int
     MonitorRequestReasonSmartRestrictedStandby         = 0x00000039,
     MonitorRequestReasonMax                            = 0x0000003a,
 }
+
 alias POWER_MONITOR_REQUEST_TYPE = int;
 enum : int
 {
@@ -410,7 +434,8 @@ enum : int
     MonitorRequestTypeOnAndPresent = 0x00000001,
     MonitorRequestTypeToggleOn     = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-system_power_condition))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-system_power_condition
 alias SYSTEM_POWER_CONDITION = int;
 enum : int
 {
@@ -419,7 +444,8 @@ enum : int
     PoHot              = 0x00000002,
     PoConditionMaximum = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-power_platform_role))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ne-winnt-power_platform_role
 alias POWER_PLATFORM_ROLE = int;
 enum : int
 {
@@ -434,6 +460,7 @@ enum : int
     PlatformRoleSlate             = 0x00000008,
     PlatformRoleMaximum           = 0x00000009,
 }
+
 alias POWER_SETTING_ALTITUDE = int;
 enum : int
 {
@@ -451,44 +478,44 @@ enum : int
 
 enum : uint
 {
-    PPM_FIRMWARE_ACPI1C2      = 0x00000001,
-    PPM_FIRMWARE_ACPI1C3      = 0x00000002,
-    PPM_FIRMWARE_ACPI1TSTATES = 0x00000004,
-    PPM_FIRMWARE_CST          = 0x00000008,
-    PPM_FIRMWARE_CSD          = 0x00000010,
-    PPM_FIRMWARE_PCT          = 0x00000020,
-    PPM_FIRMWARE_PSS          = 0x00000040,
-    PPM_FIRMWARE_XPSS         = 0x00000080,
-    PPM_FIRMWARE_PPC          = 0x00000100,
-    PPM_FIRMWARE_PSD          = 0x00000200,
-    PPM_FIRMWARE_PTC          = 0x00000400,
-    PPM_FIRMWARE_TSS          = 0x00000800,
-    PPM_FIRMWARE_TPC          = 0x00001000,
-    PPM_FIRMWARE_TSD          = 0x00002000,
-    PPM_FIRMWARE_PCCH         = 0x00004000,
-    PPM_FIRMWARE_PCCP         = 0x00008000,
-    PPM_FIRMWARE_OSC          = 0x00010000,
-    PPM_FIRMWARE_PDC          = 0x00020000,
-    PPM_FIRMWARE_CPC          = 0x00040000,
-    PPM_FIRMWARE_LPI          = 0x00080000,
+    PPM_FIRMWARE_ACPI1C2      = 0x00000001U,
+    PPM_FIRMWARE_ACPI1C3      = 0x00000002U,
+    PPM_FIRMWARE_ACPI1TSTATES = 0x00000004U,
+    PPM_FIRMWARE_CST          = 0x00000008U,
+    PPM_FIRMWARE_CSD          = 0x00000010U,
+    PPM_FIRMWARE_PCT          = 0x00000020U,
+    PPM_FIRMWARE_PSS          = 0x00000040U,
+    PPM_FIRMWARE_XPSS         = 0x00000080U,
+    PPM_FIRMWARE_PPC          = 0x00000100U,
+    PPM_FIRMWARE_PSD          = 0x00000200U,
+    PPM_FIRMWARE_PTC          = 0x00000400U,
+    PPM_FIRMWARE_TSS          = 0x00000800U,
+    PPM_FIRMWARE_TPC          = 0x00001000U,
+    PPM_FIRMWARE_TSD          = 0x00002000U,
+    PPM_FIRMWARE_PCCH         = 0x00004000U,
+    PPM_FIRMWARE_PCCP         = 0x00008000U,
+    PPM_FIRMWARE_OSC          = 0x00010000U,
+    PPM_FIRMWARE_PDC          = 0x00020000U,
+    PPM_FIRMWARE_CPC          = 0x00040000U,
+    PPM_FIRMWARE_LPI          = 0x00080000U,
 }
 
 enum : uint
 {
-    PPM_PERFORMANCE_IMPLEMENTATION_NONE    = 0x00000000,
-    PPM_PERFORMANCE_IMPLEMENTATION_PSTATES = 0x00000001,
-    PPM_PERFORMANCE_IMPLEMENTATION_PCCV1   = 0x00000002,
-    PPM_PERFORMANCE_IMPLEMENTATION_CPPC    = 0x00000003,
-    PPM_PERFORMANCE_IMPLEMENTATION_PEP     = 0x00000004,
+    PPM_PERFORMANCE_IMPLEMENTATION_NONE    = 0x00000000U,
+    PPM_PERFORMANCE_IMPLEMENTATION_PSTATES = 0x00000001U,
+    PPM_PERFORMANCE_IMPLEMENTATION_PCCV1   = 0x00000002U,
+    PPM_PERFORMANCE_IMPLEMENTATION_CPPC    = 0x00000003U,
+    PPM_PERFORMANCE_IMPLEMENTATION_PEP     = 0x00000004U,
 }
 
 enum : uint
 {
-    PPM_IDLE_IMPLEMENTATION_NONE      = 0x00000000,
-    PPM_IDLE_IMPLEMENTATION_CSTATES   = 0x00000001,
-    PPM_IDLE_IMPLEMENTATION_PEP       = 0x00000002,
-    PPM_IDLE_IMPLEMENTATION_MICROPEP  = 0x00000003,
-    PPM_IDLE_IMPLEMENTATION_LPISTATES = 0x00000004,
+    PPM_IDLE_IMPLEMENTATION_NONE      = 0x00000000U,
+    PPM_IDLE_IMPLEMENTATION_CSTATES   = 0x00000001U,
+    PPM_IDLE_IMPLEMENTATION_PEP       = 0x00000002U,
+    PPM_IDLE_IMPLEMENTATION_MICROPEP  = 0x00000003U,
+    PPM_IDLE_IMPLEMENTATION_LPISTATES = 0x00000004U,
 }
 
 enum : GUID
@@ -542,173 +569,173 @@ enum : GUID
     GUID_DEVINTERFACE_CUSTOMIZED_IO      = GUID("2ed8544a-8eef-4033-b2a0-04aaa507cecb"),
 }
 
-enum uint BATTERY_UNKNOWN_CAPACITY = 0xffffffff;
-enum uint UNKNOWN_CAPACITY = 0xffffffff;
-enum uint BATTERY_SYSTEM_BATTERY = 0x80000000;
-enum uint BATTERY_CAPACITY_RELATIVE = 0x40000000;
-enum uint BATTERY_IS_SHORT_TERM = 0x20000000;
+enum uint BATTERY_UNKNOWN_CAPACITY = 0xffffffffU;
+enum uint UNKNOWN_CAPACITY = 0xffffffffU;
+enum uint BATTERY_SYSTEM_BATTERY = 0x80000000U;
+enum uint BATTERY_CAPACITY_RELATIVE = 0x40000000U;
+enum uint BATTERY_IS_SHORT_TERM = 0x20000000U;
 
 enum : uint
 {
-    BATTERY_SEALED                  = 0x10000000,
-    BATTERY_SET_CHARGE_SUPPORTED    = 0x00000001,
-    BATTERY_SET_DISCHARGE_SUPPORTED = 0x00000002,
+    BATTERY_SEALED                  = 0x10000000U,
+    BATTERY_SET_CHARGE_SUPPORTED    = 0x00000001U,
+    BATTERY_SET_DISCHARGE_SUPPORTED = 0x00000002U,
 }
 
 enum : uint
 {
-    BATTERY_SET_CHARGINGSOURCE_SUPPORTED = 0x00000004,
-    BATTERY_SET_CHARGER_ID_SUPPORTED     = 0x00000008,
+    BATTERY_SET_CHARGINGSOURCE_SUPPORTED = 0x00000004U,
+    BATTERY_SET_CHARGER_ID_SUPPORTED     = 0x00000008U,
 }
 
 enum : uint
 {
-    BATTERY_UNKNOWN_TIME    = 0xffffffff,
-    BATTERY_UNKNOWN_CURRENT = 0xffffffff,
+    BATTERY_UNKNOWN_TIME    = 0xffffffffU,
+    BATTERY_UNKNOWN_CURRENT = 0xffffffffU,
 }
 
-enum uint UNKNOWN_CURRENT = 0xffffffff;
+enum uint UNKNOWN_CURRENT = 0xffffffffU;
 
 enum : uint
 {
-    BATTERY_USB_CHARGER_STATUS_FN_DEFAULT_USB = 0x00000001,
-    BATTERY_USB_CHARGER_STATUS_UCM_PD         = 0x00000002,
-}
-
-enum : uint
-{
-    BATTERY_UNKNOWN_VOLTAGE = 0xffffffff,
-    BATTERY_UNKNOWN_RATE    = 0x80000000,
+    BATTERY_USB_CHARGER_STATUS_FN_DEFAULT_USB = 0x00000001U,
+    BATTERY_USB_CHARGER_STATUS_UCM_PD         = 0x00000002U,
 }
 
 enum : uint
 {
-    UNKNOWN_RATE    = 0x80000000,
-    UNKNOWN_VOLTAGE = 0xffffffff,
+    BATTERY_UNKNOWN_VOLTAGE = 0xffffffffU,
+    BATTERY_UNKNOWN_RATE    = 0x80000000U,
 }
-
-enum uint BATTERY_POWER_ON_LINE = 0x00000001;
 
 enum : uint
 {
-    BATTERY_DISCHARGING = 0x00000002,
-    BATTERY_CHARGING    = 0x00000004,
-    BATTERY_CRITICAL    = 0x00000008,
+    UNKNOWN_RATE    = 0x80000000U,
+    UNKNOWN_VOLTAGE = 0xffffffffU,
 }
 
-enum uint MAX_BATTERY_STRING_SIZE = 0x00000080;
+enum uint BATTERY_POWER_ON_LINE = 0x00000001U;
+
+enum : uint
+{
+    BATTERY_DISCHARGING = 0x00000002U,
+    BATTERY_CHARGING    = 0x00000004U,
+    BATTERY_CRITICAL    = 0x00000008U,
+}
+
+enum uint MAX_BATTERY_STRING_SIZE = 0x00000080U;
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Power/ioctl-battery-query-tag))], [])*/uint
 {
-    IOCTL_BATTERY_QUERY_TAG              = 0x00294040,
-    IOCTL_BATTERY_QUERY_INFORMATION      = 0x00294044,
-    IOCTL_BATTERY_SET_INFORMATION        = 0x00298048,
-    IOCTL_BATTERY_QUERY_STATUS           = 0x0029404c,
-    IOCTL_BATTERY_CHARGING_SOURCE_CHANGE = 0x00294050,
+    IOCTL_BATTERY_QUERY_TAG              = 0x00294040U,
+    IOCTL_BATTERY_QUERY_INFORMATION      = 0x00294044U,
+    IOCTL_BATTERY_SET_INFORMATION        = 0x00298048U,
+    IOCTL_BATTERY_QUERY_STATUS           = 0x0029404cU,
+    IOCTL_BATTERY_CHARGING_SOURCE_CHANGE = 0x00294050U,
 }
 
-enum uint BATTERY_TAG_INVALID = 0x00000000;
+enum uint BATTERY_TAG_INVALID = 0x00000000U;
 
 enum : uint
 {
-    IOCTL_QUERY_CUSTOMIZED_IO_CAPABILITIES     = 0x00294280,
-    IOCTL_QUERY_CUSTOMIZED_INPUT_FROM_PLATFORM = 0x00294284,
+    IOCTL_QUERY_CUSTOMIZED_IO_CAPABILITIES     = 0x00294280U,
+    IOCTL_QUERY_CUSTOMIZED_INPUT_FROM_PLATFORM = 0x00294284U,
 }
 
-enum uint IOCTL_SEND_CUSTOMIZED_OUTPUT_TO_PLATFORM = 0x00298288;
-enum uint MAX_ACTIVE_COOLING_LEVELS = 0x0000000a;
-enum uint ACTIVE_COOLING = 0x00000000;
-enum uint PASSIVE_COOLING = 0x00000001;
+enum uint IOCTL_SEND_CUSTOMIZED_OUTPUT_TO_PLATFORM = 0x00298288U;
+enum uint MAX_ACTIVE_COOLING_LEVELS = 0x0000000aU;
+enum uint ACTIVE_COOLING = 0x00000000U;
+enum uint PASSIVE_COOLING = 0x00000001U;
 
 enum : uint
 {
-    THERMAL_WAIT_READ_TIMEOUT_IMMEDIATE = 0x00000000,
-    THERMAL_WAIT_READ_TIMEOUT_NONE      = 0xffffffff,
-}
-
-enum : uint
-{
-    TZ_ACTIVATION_REASON_THERMAL = 0x00000001,
-    TZ_ACTIVATION_REASON_CURRENT = 0x00000002,
+    THERMAL_WAIT_READ_TIMEOUT_IMMEDIATE = 0x00000000U,
+    THERMAL_WAIT_READ_TIMEOUT_NONE      = 0xffffffffU,
 }
 
 enum : uint
 {
-    THERMAL_POLICY_VERSION_1 = 0x00000001,
-    THERMAL_POLICY_VERSION_2 = 0x00000002,
+    TZ_ACTIVATION_REASON_THERMAL = 0x00000001U,
+    TZ_ACTIVATION_REASON_CURRENT = 0x00000002U,
 }
 
 enum : uint
 {
-    IOCTL_THERMAL_QUERY_INFORMATION  = 0x00294080,
-    IOCTL_THERMAL_SET_COOLING_POLICY = 0x00298084,
-}
-
-enum uint IOCTL_RUN_ACTIVE_COOLING_METHOD = 0x00298088;
-
-enum : uint
-{
-    IOCTL_THERMAL_SET_PASSIVE_LIMIT = 0x0029808c,
-    IOCTL_THERMAL_READ_TEMPERATURE  = 0x00294090,
-    IOCTL_THERMAL_READ_POLICY       = 0x00294094,
-}
-
-enum uint IOCTL_QUERY_LID = 0x002940c0;
-enum uint IOCTL_NOTIFY_SWITCH_EVENT = 0x00294100;
-
-enum : uint
-{
-    IOCTL_GET_SYS_BUTTON_CAPS  = 0x00294140,
-    IOCTL_GET_SYS_BUTTON_EVENT = 0x00294144,
+    THERMAL_POLICY_VERSION_1 = 0x00000001U,
+    THERMAL_POLICY_VERSION_2 = 0x00000002U,
 }
 
 enum : uint
 {
-    SYS_BUTTON_POWER          = 0x00000001,
-    SYS_BUTTON_SLEEP          = 0x00000002,
-    SYS_BUTTON_LID            = 0x00000004,
-    SYS_BUTTON_WAKE           = 0x80000000,
-    SYS_BUTTON_LID_STATE_MASK = 0x00030000,
-    SYS_BUTTON_LID_OPEN       = 0x00010000,
-    SYS_BUTTON_LID_CLOSED     = 0x00020000,
-    SYS_BUTTON_LID_INITIAL    = 0x00040000,
-    SYS_BUTTON_LID_CHANGED    = 0x00080000,
+    IOCTL_THERMAL_QUERY_INFORMATION  = 0x00294080U,
+    IOCTL_THERMAL_SET_COOLING_POLICY = 0x00298084U,
 }
 
-enum uint IOCTL_GET_PROCESSOR_OBJ_INFO = 0x00294180;
-enum uint THERMAL_COOLING_INTERFACE_VERSION = 0x00000001;
-enum uint THERMAL_DEVICE_INTERFACE_VERSION = 0x00000001;
-enum uint POWER_LIMIT_INTERFACE_VERSION = 0x00000001;
-enum uint IOCTL_SET_SYS_MESSAGE_INDICATOR = 0x002981c0;
+enum uint IOCTL_RUN_ACTIVE_COOLING_METHOD = 0x00298088U;
 
 enum : uint
 {
-    IOCTL_SET_WAKE_ALARM_VALUE  = 0x00298200,
-    IOCTL_SET_WAKE_ALARM_POLICY = 0x00298204,
+    IOCTL_THERMAL_SET_PASSIVE_LIMIT = 0x0029808cU,
+    IOCTL_THERMAL_READ_TEMPERATURE  = 0x00294090U,
+    IOCTL_THERMAL_READ_POLICY       = 0x00294094U,
 }
+
+enum uint IOCTL_QUERY_LID = 0x002940c0U;
+enum uint IOCTL_NOTIFY_SWITCH_EVENT = 0x00294100U;
 
 enum : uint
 {
-    IOCTL_GET_WAKE_ALARM_VALUE  = 0x0029c208,
-    IOCTL_GET_WAKE_ALARM_POLICY = 0x0029c20c,
-}
-
-enum uint ACPI_TIME_ADJUST_DAYLIGHT = 0x00000001;
-
-enum : uint
-{
-    ACPI_TIME_IN_DAYLIGHT  = 0x00000002,
-    ACPI_TIME_ZONE_UNKNOWN = 0x000007ff,
+    IOCTL_GET_SYS_BUTTON_CAPS  = 0x00294140U,
+    IOCTL_GET_SYS_BUTTON_EVENT = 0x00294144U,
 }
 
 enum : uint
 {
-    IOCTL_ACPI_GET_REAL_TIME = 0x00294210,
-    IOCTL_ACPI_SET_REAL_TIME = 0x00298214,
+    SYS_BUTTON_POWER          = 0x00000001U,
+    SYS_BUTTON_SLEEP          = 0x00000002U,
+    SYS_BUTTON_LID            = 0x00000004U,
+    SYS_BUTTON_WAKE           = 0x80000000U,
+    SYS_BUTTON_LID_STATE_MASK = 0x00030000U,
+    SYS_BUTTON_LID_OPEN       = 0x00010000U,
+    SYS_BUTTON_LID_CLOSED     = 0x00020000U,
+    SYS_BUTTON_LID_INITIAL    = 0x00040000U,
+    SYS_BUTTON_LID_CHANGED    = 0x00080000U,
 }
 
-enum uint IOCTL_GET_WAKE_ALARM_SYSTEM_POWERSTATE = 0x00294218;
-enum uint IOCTL_GET_ACPI_TIME_AND_ALARM_CAPABILITIES = 0x0029421c;
+enum uint IOCTL_GET_PROCESSOR_OBJ_INFO = 0x00294180U;
+enum uint THERMAL_COOLING_INTERFACE_VERSION = 0x00000001U;
+enum uint THERMAL_DEVICE_INTERFACE_VERSION = 0x00000001U;
+enum uint POWER_LIMIT_INTERFACE_VERSION = 0x00000001U;
+enum uint IOCTL_SET_SYS_MESSAGE_INDICATOR = 0x002981c0U;
+
+enum : uint
+{
+    IOCTL_SET_WAKE_ALARM_VALUE  = 0x00298200U,
+    IOCTL_SET_WAKE_ALARM_POLICY = 0x00298204U,
+}
+
+enum : uint
+{
+    IOCTL_GET_WAKE_ALARM_VALUE  = 0x0029c208U,
+    IOCTL_GET_WAKE_ALARM_POLICY = 0x0029c20cU,
+}
+
+enum uint ACPI_TIME_ADJUST_DAYLIGHT = 0x00000001U;
+
+enum : uint
+{
+    ACPI_TIME_IN_DAYLIGHT  = 0x00000002U,
+    ACPI_TIME_ZONE_UNKNOWN = 0x000007ffU,
+}
+
+enum : uint
+{
+    IOCTL_ACPI_GET_REAL_TIME = 0x00294210U,
+    IOCTL_ACPI_SET_REAL_TIME = 0x00298214U,
+}
+
+enum uint IOCTL_GET_WAKE_ALARM_SYSTEM_POWERSTATE = 0x00294218U;
+enum uint IOCTL_GET_ACPI_TIME_AND_ALARM_CAPABILITIES = 0x0029421cU;
 enum GUID BATTERY_STATUS_WMI_GUID = GUID("fc4670d1-ebbf-416e-87ce-374a4ebc111a");
 enum GUID BATTERY_RUNTIME_WMI_GUID = GUID("535a3767-1ac2-49bc-a077-3f7a02e40aec");
 enum GUID BATTERY_TEMPERATURE_WMI_GUID = GUID("1a52a14d-adce-4a44-9a3e-c8d8f15ff2c2");
@@ -725,82 +752,82 @@ enum GUID BATTERY_TAG_CHANGE_WMI_GUID = GUID("5e1f6e19-8786-4d23-94fc-9e746bd5d8
 
 enum : uint
 {
-    BATTERY_NOTIFY_VERSION_1 = 0x00000001,
-    BATTERY_NOTIFY_VERSION_2 = 0x00000002,
+    BATTERY_NOTIFY_VERSION_1 = 0x00000001U,
+    BATTERY_NOTIFY_VERSION_2 = 0x00000002U,
 }
 
-enum uint CHARGE_REQUIREMENT_MAX_POWER_SOURCE_TYPES = 0x00000002;
+enum uint CHARGE_REQUIREMENT_MAX_POWER_SOURCE_TYPES = 0x00000002U;
 
 enum : uint
 {
-    BATTERY_MINIPORT_UPDATE_DATA_VER_1 = 0x00000001,
-    BATTERY_MINIPORT_UPDATE_DATA_VER_2 = 0x00000002,
-}
-
-enum : uint
-{
-    BATTERY_CLASS_MAJOR_VERSION   = 0x00000001,
-    BATTERY_CLASS_MINOR_VERSION   = 0x00000000,
-    BATTERY_CLASS_MINOR_VERSION_1 = 0x00000001,
-    BATTERY_CLASS_MINOR_VERSION_2 = 0x00000002,
+    BATTERY_MINIPORT_UPDATE_DATA_VER_1 = 0x00000001U,
+    BATTERY_MINIPORT_UPDATE_DATA_VER_2 = 0x00000002U,
 }
 
 enum : uint
 {
-    ADAPTER_CLASS_MAJOR_VERSION = 0x00000001,
-    ADAPTER_CLASS_MINOR_VERSION = 0x00000000,
+    BATTERY_CLASS_MAJOR_VERSION   = 0x00000001U,
+    BATTERY_CLASS_MINOR_VERSION   = 0x00000000U,
+    BATTERY_CLASS_MINOR_VERSION_1 = 0x00000001U,
+    BATTERY_CLASS_MINOR_VERSION_2 = 0x00000002U,
+}
+
+enum : uint
+{
+    ADAPTER_CLASS_MAJOR_VERSION = 0x00000001U,
+    ADAPTER_CLASS_MINOR_VERSION = 0x00000000U,
 }
 
 enum GUID GUID_DEVICE_ENERGY_METER = GUID("45bd8344-7ed6-49cf-a440-c276c933b053");
 
 enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/emi/ni-emi-ioctl_emi_get_version))], [])*/uint
 {
-    IOCTL_EMI_GET_VERSION       = 0x00224000,
-    IOCTL_EMI_GET_METADATA_SIZE = 0x00224004,
-    IOCTL_EMI_GET_METADATA      = 0x00224008,
-    IOCTL_EMI_GET_MEASUREMENT   = 0x0022400c,
+    IOCTL_EMI_GET_VERSION       = 0x00224000U,
+    IOCTL_EMI_GET_METADATA_SIZE = 0x00224004U,
+    IOCTL_EMI_GET_METADATA      = 0x00224008U,
+    IOCTL_EMI_GET_MEASUREMENT   = 0x0022400cU,
 }
 
-enum uint EMI_NAME_MAX = 0x00000010;
+enum uint EMI_NAME_MAX = 0x00000010U;
 
 enum : uint
 {
-    EMI_VERSION_V1 = 0x00000001,
-    EMI_VERSION_V2 = 0x00000002,
-}
-
-enum : uint
-{
-    EFFECTIVE_POWER_MODE_V1 = 0x00000001,
-    EFFECTIVE_POWER_MODE_V2 = 0x00000002,
-}
-
-enum uint EnableSysTrayBatteryMeter = 0x00000001;
-enum uint EnableMultiBatteryDisplay = 0x00000002;
-enum uint EnablePasswordLogon = 0x00000004;
-enum uint EnableWakeOnRing = 0x00000008;
-enum uint EnableVideoDimDisplay = 0x00000010;
-
-enum : uint
-{
-    POWER_ATTRIBUTE_HIDE      = 0x00000001,
-    POWER_ATTRIBUTE_SHOW_AOAC = 0x00000002,
+    EMI_VERSION_V1 = 0x00000001U,
+    EMI_VERSION_V2 = 0x00000002U,
 }
 
 enum : uint
 {
-    DEVICEPOWER_HARDWAREID              = 0x80000000,
-    DEVICEPOWER_AND_OPERATION           = 0x40000000,
-    DEVICEPOWER_FILTER_DEVICES_PRESENT  = 0x20000000,
-    DEVICEPOWER_FILTER_HARDWARE         = 0x10000000,
-    DEVICEPOWER_FILTER_WAKEENABLED      = 0x08000000,
-    DEVICEPOWER_FILTER_WAKEPROGRAMMABLE = 0x04000000,
-    DEVICEPOWER_FILTER_ON_NAME          = 0x02000000,
-    DEVICEPOWER_SET_WAKEENABLED         = 0x00000001,
-    DEVICEPOWER_CLEAR_WAKEENABLED       = 0x00000002,
+    EFFECTIVE_POWER_MODE_V1 = 0x00000001U,
+    EFFECTIVE_POWER_MODE_V2 = 0x00000002U,
 }
 
-enum uint THERMAL_EVENT_VERSION = 0x00000001;
+enum uint EnableSysTrayBatteryMeter = 0x00000001U;
+enum uint EnableMultiBatteryDisplay = 0x00000002U;
+enum uint EnablePasswordLogon = 0x00000004U;
+enum uint EnableWakeOnRing = 0x00000008U;
+enum uint EnableVideoDimDisplay = 0x00000010U;
+
+enum : uint
+{
+    POWER_ATTRIBUTE_HIDE      = 0x00000001U,
+    POWER_ATTRIBUTE_SHOW_AOAC = 0x00000002U,
+}
+
+enum : uint
+{
+    DEVICEPOWER_HARDWAREID              = 0x80000000U,
+    DEVICEPOWER_AND_OPERATION           = 0x40000000U,
+    DEVICEPOWER_FILTER_DEVICES_PRESENT  = 0x20000000U,
+    DEVICEPOWER_FILTER_HARDWARE         = 0x10000000U,
+    DEVICEPOWER_FILTER_WAKEENABLED      = 0x08000000U,
+    DEVICEPOWER_FILTER_WAKEPROGRAMMABLE = 0x04000000U,
+    DEVICEPOWER_FILTER_ON_NAME          = 0x02000000U,
+    DEVICEPOWER_SET_WAKEENABLED         = 0x00000001U,
+    DEVICEPOWER_CLEAR_WAKEENABLED       = 0x00000002U,
+}
+
+enum uint THERMAL_EVENT_VERSION = 0x00000001U;
 
 // Callbacks
 
@@ -821,7 +848,7 @@ alias PDEVICE_NOTIFY_CALLBACK_ROUTINE = uint function(void* Context, uint Type, 
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Power/processor-power-information-str))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Power/processor-power-information-str
 struct PROCESSOR_POWER_INFORMATION
 {
     uint Number;
@@ -832,7 +859,7 @@ struct PROCESSOR_POWER_INFORMATION
     uint CurrentIdleState;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Power/system-power-information-str))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Power/system-power-information-str
 struct SYSTEM_POWER_INFORMATION
 {
     uint               MaxIdlenessAllowed;
@@ -849,7 +876,7 @@ struct HPOWERNOTIFY
     ptrdiff_t Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/powrprof/ns-powrprof-global_machine_power_policy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/powrprof/ns-powrprof-global_machine_power_policy
 struct GLOBAL_MACHINE_POWER_POLICY
 {
     uint               Revision;
@@ -858,7 +885,7 @@ struct GLOBAL_MACHINE_POWER_POLICY
     uint               BroadcastCapacityResolution;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/powrprof/ns-powrprof-global_user_power_policy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/powrprof/ns-powrprof-global_user_power_policy
 struct GLOBAL_USER_POWER_POLICY
 {
     uint                Revision;
@@ -872,14 +899,14 @@ struct GLOBAL_USER_POWER_POLICY
     uint                GlobalFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/powrprof/ns-powrprof-global_power_policy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/powrprof/ns-powrprof-global_power_policy
 struct GLOBAL_POWER_POLICY
 {
     GLOBAL_USER_POWER_POLICY user;
     GLOBAL_MACHINE_POWER_POLICY mach;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/powrprof/ns-powrprof-machine_power_policy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/powrprof/ns-powrprof-machine_power_policy
 struct MACHINE_POWER_POLICY
 {
     uint                Revision;
@@ -898,7 +925,7 @@ struct MACHINE_POWER_POLICY
     POWER_ACTION_POLICY OverThrottledDc;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/powrprof/ns-powrprof-machine_processor_power_policy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/powrprof/ns-powrprof-machine_processor_power_policy
 struct MACHINE_PROCESSOR_POWER_POLICY
 {
     uint Revision;
@@ -906,7 +933,7 @@ struct MACHINE_PROCESSOR_POWER_POLICY
     PROCESSOR_POWER_POLICY ProcessorPolicyDc;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/powrprof/ns-powrprof-user_power_policy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/powrprof/ns-powrprof-user_power_policy
 struct USER_POWER_POLICY
 {
     uint                Revision;
@@ -933,21 +960,21 @@ struct USER_POWER_POLICY
     ubyte               ForcedThrottleDc;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/powrprof/ns-powrprof-power_policy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/powrprof/ns-powrprof-power_policy
 struct POWER_POLICY
 {
     USER_POWER_POLICY    user;
     MACHINE_POWER_POLICY mach;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/powrprof/ns-powrprof-device_notify_subscribe_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/powrprof/ns-powrprof-device_notify_subscribe_parameters
 struct DEVICE_NOTIFY_SUBSCRIBE_PARAMETERS
 {
     PDEVICE_NOTIFY_CALLBACK_ROUTINE Callback;
     void* Context;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/powrprof/ns-powrprof-thermal_event))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/powrprof/ns-powrprof-thermal_event
 struct THERMAL_EVENT
 {
     uint  Version;
@@ -958,7 +985,7 @@ struct THERMAL_EVENT
     PWSTR Initiator;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Power/battery-query-information-str))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Power/battery-query-information-str
 struct BATTERY_QUERY_INFORMATION
 {
     uint BatteryTag;
@@ -966,7 +993,7 @@ struct BATTERY_QUERY_INFORMATION
     uint AtRate;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Power/battery-information-str))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Power/battery-information-str
 struct BATTERY_INFORMATION
 {
     uint     Capabilities;
@@ -993,7 +1020,7 @@ struct BATTERY_CHARGING_SOURCE_INFORMATION
     BOOLEAN SourceOnline;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Power/battery-set-information-str))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Power/battery-set-information-str
 struct BATTERY_SET_INFORMATION
 {
     uint BatteryTag;
@@ -1020,7 +1047,7 @@ struct BATTERY_USB_CHARGER_STATUS
     GUID             OemCharger;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Power/battery-wait-status-str))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Power/battery-wait-status-str
 struct BATTERY_WAIT_STATUS
 {
     uint BatteryTag;
@@ -1030,7 +1057,7 @@ struct BATTERY_WAIT_STATUS
     uint HighCapacity;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Power/battery-status-str))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Power/battery-status-str
 struct BATTERY_STATUS
 {
     uint PowerState;
@@ -1041,8 +1068,11 @@ struct BATTERY_STATUS
 
 union POWER_ADAPTER_POWER_STATES
 {
-    _States_e__Struct States;
-    uint              AsUlong;
+    struct States
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(29))], [])*/uint _bitfield462;
+    }
+    uint AsUlong;
 }
 
 struct POWER_ADAPTER_STATUS
@@ -1072,7 +1102,7 @@ struct POWER_ADAPTER_CHARGE_REQUIREMENT
     uint MaximumPower;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/Power/battery-manufacture-date-str))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/Power/battery-manufacture-date-str
 struct BATTERY_MANUFACTURE_DATE
 {
     ubyte  Day;
@@ -1183,26 +1213,26 @@ struct ACPI_TIME_AND_ALARM_CAPABILITIES
     ACPI_TIME_RESOLUTION RealTimeResolution;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/emi/ns-emi-emi_version))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/emi/ns-emi-emi_version
 struct EMI_VERSION
 {
     ushort EmiVersion;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/emi/ns-emi-emi_metadata_size))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/emi/ns-emi-emi_metadata_size
 struct EMI_METADATA_SIZE
 {
     uint MetadataSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/emi/ns-emi-emi_channel_measurement_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/emi/ns-emi-emi_channel_measurement_data
 struct EMI_CHANNEL_MEASUREMENT_DATA
 {
     ulong AbsoluteEnergy;
     ulong AbsoluteTime;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/emi/ns-emi-emi_metadata_v1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/emi/ns-emi-emi_metadata_v1
 struct EMI_METADATA_V1
 {
     EMI_MEASUREMENT_UNIT MeasurementUnit;
@@ -1213,7 +1243,7 @@ struct EMI_METADATA_V1
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] MeteredHardwareName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/emi/ns-emi-emi_channel_v2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/emi/ns-emi-emi_channel_v2
 struct EMI_CHANNEL_V2
 {
     EMI_MEASUREMENT_UNIT MeasurementUnit;
@@ -1221,7 +1251,7 @@ struct EMI_CHANNEL_V2
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] ChannelName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/emi/ns-emi-emi_metadata_v2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/emi/ns-emi-emi_metadata_v2
 struct EMI_METADATA_V2
 {
     wchar[16] HardwareOEM;
@@ -1231,7 +1261,7 @@ struct EMI_METADATA_V2
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/EMI_CHANNEL_V2[1] Channels;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/emi/ns-emi-emi_measurement_data_v2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/emi/ns-emi-emi_measurement_data_v2
 struct EMI_MEASUREMENT_DATA_V2
 {
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/EMI_CHANNEL_MEASUREMENT_DATA[1] ChannelData;
@@ -1317,7 +1347,7 @@ struct POWER_PLATFORM_INFORMATION
     BOOLEAN AoAc;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-battery_reporting_scale))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-battery_reporting_scale
 struct BATTERY_REPORTING_SCALE
 {
     uint Granularity;
@@ -1518,7 +1548,7 @@ struct PPM_THERMAL_POLICY_EVENT
     ulong Processors;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-power_action_policy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-power_action_policy
 struct POWER_ACTION_POLICY
 {
     POWER_ACTION Action;
@@ -1526,7 +1556,7 @@ struct POWER_ACTION_POLICY
     POWER_ACTION_POLICY_EVENT_CODE EventCode;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-system_power_level))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-system_power_level
 struct SYSTEM_POWER_LEVEL
 {
     BOOLEAN             Enable;
@@ -1536,7 +1566,7 @@ struct SYSTEM_POWER_LEVEL
     SYSTEM_POWER_STATE  MinSystemState;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-system_power_policy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-system_power_policy
 struct SYSTEM_POWER_POLICY
 {
     uint                Revision;
@@ -1569,7 +1599,7 @@ struct SYSTEM_POWER_POLICY
     POWER_ACTION_POLICY OverThrottled;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-processor_power_policy_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-processor_power_policy_info
 struct PROCESSOR_POWER_POLICY_INFO
 {
     uint     TimeCheck;
@@ -1578,21 +1608,21 @@ struct PROCESSOR_POWER_POLICY_INFO
     ubyte    DemotePercent;
     ubyte    PromotePercent;
     ubyte[2] Spare;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(30))], [])*/uint _bitfield116;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(30))], [])*/uint _bitfield463;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-processor_power_policy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-processor_power_policy
 struct PROCESSOR_POWER_POLICY
 {
     uint     Revision;
     ubyte    DynamicThrottle;
     ubyte[3] Spare;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield117;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(1)), FixedArgSig(ElementSig(31))], [])*/uint _bitfield464;
     uint     PolicyCount;
     PROCESSOR_POWER_POLICY_INFO[3] Policy;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-administrator_power_policy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-administrator_power_policy
 struct ADMINISTRATOR_POWER_POLICY
 {
     SYSTEM_POWER_STATE MinSleep;
@@ -1603,7 +1633,7 @@ struct ADMINISTRATOR_POWER_POLICY
     uint               MaxSpindownTimeout;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-system_power_capabilities))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-system_power_capabilities
 struct SYSTEM_POWER_CAPABILITIES
 {
     BOOLEAN            PowerButtonPresent;
@@ -1641,7 +1671,7 @@ struct SYSTEM_POWER_CAPABILITIES
     SYSTEM_POWER_STATE DefaultLowLatencyWake;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-system_battery_state))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-system_battery_state
 struct SYSTEM_BATTERY_STATE
 {
     BOOLEAN    AcOnLine;
@@ -1658,7 +1688,7 @@ struct SYSTEM_BATTERY_STATE
     uint       DefaultAlert2;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-powerbroadcast_setting))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-powerbroadcast_setting
 struct POWERBROADCAST_SETTING
 {
     GUID PowerSetting;
@@ -1666,7 +1696,7 @@ struct POWERBROADCAST_SETTING
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Data;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winbase/ns-winbase-system_power_status))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winbase/ns-winbase-system_power_status
 struct SYSTEM_POWER_STATUS
 {
     ubyte ACLineStatus;

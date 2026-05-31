@@ -3,7 +3,7 @@
 module windows.win32.ui.input.pointer;
 
 public import windows.core;
-public import windows.win32.foundation : BOOL, HANDLE, HWND, POINT, RECT;
+public import windows.win32.foundation.foundation : BOOL, HANDLE, HWND, POINT, RECT;
 public import windows.win32.graphics.gdi : HMONITOR;
 public import windows.win32.ui.windowsandmessaging : POINTER_INPUT_TYPE;
 
@@ -12,37 +12,40 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias POINTER_FLAGS = uint;
 enum : uint
 {
-    POINTER_FLAG_NONE           = 0x00000000,
-    POINTER_FLAG_NEW            = 0x00000001,
-    POINTER_FLAG_INRANGE        = 0x00000002,
-    POINTER_FLAG_INCONTACT      = 0x00000004,
-    POINTER_FLAG_FIRSTBUTTON    = 0x00000010,
-    POINTER_FLAG_SECONDBUTTON   = 0x00000020,
-    POINTER_FLAG_THIRDBUTTON    = 0x00000040,
-    POINTER_FLAG_FOURTHBUTTON   = 0x00000080,
-    POINTER_FLAG_FIFTHBUTTON    = 0x00000100,
-    POINTER_FLAG_PRIMARY        = 0x00002000,
-    POINTER_FLAG_CONFIDENCE     = 0x00004000,
-    POINTER_FLAG_CANCELED       = 0x00008000,
-    POINTER_FLAG_DOWN           = 0x00010000,
-    POINTER_FLAG_UPDATE         = 0x00020000,
-    POINTER_FLAG_UP             = 0x00040000,
-    POINTER_FLAG_WHEEL          = 0x00080000,
-    POINTER_FLAG_HWHEEL         = 0x00100000,
-    POINTER_FLAG_CAPTURECHANGED = 0x00200000,
-    POINTER_FLAG_HASTRANSFORM   = 0x00400000,
+    POINTER_FLAG_NONE           = 0x00000000U,
+    POINTER_FLAG_NEW            = 0x00000001U,
+    POINTER_FLAG_INRANGE        = 0x00000002U,
+    POINTER_FLAG_INCONTACT      = 0x00000004U,
+    POINTER_FLAG_FIRSTBUTTON    = 0x00000010U,
+    POINTER_FLAG_SECONDBUTTON   = 0x00000020U,
+    POINTER_FLAG_THIRDBUTTON    = 0x00000040U,
+    POINTER_FLAG_FOURTHBUTTON   = 0x00000080U,
+    POINTER_FLAG_FIFTHBUTTON    = 0x00000100U,
+    POINTER_FLAG_PRIMARY        = 0x00002000U,
+    POINTER_FLAG_CONFIDENCE     = 0x00004000U,
+    POINTER_FLAG_CANCELED       = 0x00008000U,
+    POINTER_FLAG_DOWN           = 0x00010000U,
+    POINTER_FLAG_UPDATE         = 0x00020000U,
+    POINTER_FLAG_UP             = 0x00040000U,
+    POINTER_FLAG_WHEEL          = 0x00080000U,
+    POINTER_FLAG_HWHEEL         = 0x00100000U,
+    POINTER_FLAG_CAPTURECHANGED = 0x00200000U,
+    POINTER_FLAG_HASTRANSFORM   = 0x00400000U,
 }
+
 alias TOUCH_FEEDBACK_MODE = uint;
 enum : uint
 {
-    TOUCH_FEEDBACK_DEFAULT  = 0x00000001,
-    TOUCH_FEEDBACK_INDIRECT = 0x00000002,
-    TOUCH_FEEDBACK_NONE     = 0x00000003,
+    TOUCH_FEEDBACK_DEFAULT  = 0x00000001U,
+    TOUCH_FEEDBACK_INDIRECT = 0x00000002U,
+    TOUCH_FEEDBACK_NONE     = 0x00000003U,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ne-winuser-pointer_button_change_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ne-winuser-pointer_button_change_type
 alias POINTER_BUTTON_CHANGE_TYPE = int;
 enum : int
 {
@@ -58,7 +61,8 @@ enum : int
     POINTER_CHANGE_FIFTHBUTTON_DOWN  = 0x00000009,
     POINTER_CHANGE_FIFTHBUTTON_UP    = 0x0000000a,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ne-winuser-pointer_feedback_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ne-winuser-pointer_feedback_mode
 alias POINTER_FEEDBACK_MODE = int;
 enum : int
 {
@@ -66,7 +70,8 @@ enum : int
     POINTER_FEEDBACK_INDIRECT = 0x00000002,
     POINTER_FEEDBACK_NONE     = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ne-winuser-pointer_device_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ne-winuser-pointer_device_type
 alias POINTER_DEVICE_TYPE = int;
 enum : int
 {
@@ -76,7 +81,8 @@ enum : int
     POINTER_DEVICE_TYPE_TOUCH_PAD      = 0x00000004,
     POINTER_DEVICE_TYPE_MAX            = 0xffffffff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ne-winuser-pointer_device_cursor_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ne-winuser-pointer_device_cursor_type
 alias POINTER_DEVICE_CURSOR_TYPE = int;
 enum : int
 {
@@ -97,7 +103,7 @@ struct HSYNTHETICPOINTERDEVICE
     void* Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-pointer_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-pointer_info
 struct POINTER_INFO
 {
     POINTER_INPUT_TYPE pointerType;
@@ -118,7 +124,7 @@ struct POINTER_INFO
     POINTER_BUTTON_CHANGE_TYPE ButtonChangeType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-pointer_touch_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-pointer_touch_info
 struct POINTER_TOUCH_INFO
 {
     POINTER_INFO pointerInfo;
@@ -130,7 +136,7 @@ struct POINTER_TOUCH_INFO
     uint         pressure;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-pointer_pen_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-pointer_pen_info
 struct POINTER_PEN_INFO
 {
     POINTER_INFO pointerInfo;
@@ -142,14 +148,19 @@ struct POINTER_PEN_INFO
     int          tiltY;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-pointer_type_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-pointer_type_info
 struct POINTER_TYPE_INFO
 {
-    POINTER_INPUT_TYPE  type;
-    _Anonymous_e__Union Anonymous;
+    POINTER_INPUT_TYPE type;
+    union
+    {
+        POINTER_INFO       pointerInfo;
+        POINTER_TOUCH_INFO touchInfo;
+        POINTER_PEN_INFO   penInfo;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-input_injection_value))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-input_injection_value
 struct INPUT_INJECTION_VALUE
 {
     ushort page;
@@ -158,13 +169,35 @@ struct INPUT_INJECTION_VALUE
     ushort index;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-input_transform))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-input_transform
 struct INPUT_TRANSFORM
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct
+        {
+            float _11;
+            float _12;
+            float _13;
+            float _14;
+            float _21;
+            float _22;
+            float _23;
+            float _24;
+            float _31;
+            float _32;
+            float _33;
+            float _34;
+            float _41;
+            float _42;
+            float _43;
+            float _44;
+        }
+        float[16] m;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-pointer_device_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-pointer_device_info
 struct POINTER_DEVICE_INFO
 {
     uint                displayOrientation;
@@ -176,7 +209,7 @@ struct POINTER_DEVICE_INFO
     wchar[520]          productString;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-pointer_device_property))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-pointer_device_property
 struct POINTER_DEVICE_PROPERTY
 {
     int    logicalMin;
@@ -189,7 +222,7 @@ struct POINTER_DEVICE_PROPERTY
     ushort usageId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-pointer_device_cursor_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-pointer_device_cursor_info
 struct POINTER_DEVICE_CURSOR_INFO
 {
     uint cursorId;

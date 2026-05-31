@@ -3,21 +3,23 @@
 module windows.win32.ui.tabletpc;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BSTR, COLORREF, HANDLE_PTR, HRESULT,
-                                         HWND, POINT, PWSTR, RECT, VARIANT_BOOL;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BSTR, COLORREF, HANDLE_PTR,
+                                                    HRESULT, HWND, POINT, PWSTR, RECT,
+                                                    VARIANT_BOOL;
 public import windows.win32.graphics.gdi : XFORM;
-public import windows.win32.system.com : IDataObject, IDispatch, IUnknown, SAFEARRAY;
+public import windows.win32.system.com.com : IDataObject, IDispatch, IUnknown, SAFEARRAY;
 public import windows.win32.system.ole : IFontDisp, IPictureDisp, OLE_HANDLE;
 public import windows.win32.system.variant : VARIANT;
-public import windows.win32.ui.controls : NMHDR;
+public import windows.win32.ui.controls.controls : NMHDR;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tpcshrd/ne-tpcshrd-property_units))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tpcshrd/ne-tpcshrd-property_units
 alias PROPERTY_UNITS = int;
 enum : int
 {
@@ -39,6 +41,7 @@ enum : int
     PROPERTY_UNITS_AMPERE      = 0x0000000f,
     PROPERTY_UNITS_CANDELA     = 0x00000010,
 }
+
 alias INK_METRIC_FLAGS = int;
 enum : int
 {
@@ -46,19 +49,22 @@ enum : int
     IMF_ITALIC               = 0x00000002,
     IMF_BOLD                 = 0x00000004,
 }
+
 alias GET_DANDIDATE_FLAGS = int;
 enum : int
 {
     TCF_ALLOW_RECOGNITION = 0x00000001,
     TCF_FORCE_RECOGNITION = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkselectionconstants))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkselectionconstants
 enum InkSelectionConstants : int
 {
     ISC_FirstElement = 0x00000000,
     ISC_AllElements  = 0xffffffff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkboundingboxmode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkboundingboxmode
 enum InkBoundingBoxMode : int
 {
     IBBM_Default    = 0x00000000,
@@ -67,14 +73,16 @@ enum InkBoundingBoxMode : int
     IBBM_PointsOnly = 0x00000003,
     IBBM_Union      = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkextractflags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkextractflags
 enum InkExtractFlags : int
 {
     IEF_CopyFromOriginal   = 0x00000000,
     IEF_RemoveFromOriginal = 0x00000001,
     IEF_Default            = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkpersistenceformat))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkpersistenceformat
 enum InkPersistenceFormat : int
 {
     IPF_InkSerializedFormat       = 0x00000000,
@@ -82,20 +90,23 @@ enum InkPersistenceFormat : int
     IPF_GIF                       = 0x00000002,
     IPF_Base64GIF                 = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkpersistencecompressionmode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkpersistencecompressionmode
 enum InkPersistenceCompressionMode : int
 {
     IPCM_Default            = 0x00000000,
     IPCM_MaximumCompression = 0x00000001,
     IPCM_NoCompression      = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkpentip))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkpentip
 enum InkPenTip : int
 {
     IPT_Ball      = 0x00000000,
     IPT_Rectangle = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkrasteroperation))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkrasteroperation
 enum InkRasterOperation : int
 {
     IRO_Black       = 0x00000001,
@@ -115,7 +126,8 @@ enum InkRasterOperation : int
     IRO_MergePen    = 0x0000000f,
     IRO_White       = 0x00000010,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkmousepointer))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkmousepointer
 enum InkMousePointer : int
 {
     IMP_Default        = 0x00000000,
@@ -135,7 +147,8 @@ enum InkMousePointer : int
     IMP_Hand           = 0x0000000e,
     IMP_Custom         = 0x00000063,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkclipboardmodes))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkclipboardmodes
 enum InkClipboardModes : int
 {
     ICB_Copy        = 0x00000000,
@@ -144,7 +157,8 @@ enum InkClipboardModes : int
     ICB_DelayedCopy = 0x00000020,
     ICB_Default     = 0x00000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkclipboardformats))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkclipboardformats
 enum InkClipboardFormats : int
 {
     ICF_None                = 0x00000000,
@@ -158,7 +172,8 @@ enum InkClipboardFormats : int
     ICF_CopyMask            = 0x0000007f,
     ICF_Default             = 0x0000007f,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-selectionhitresult))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-selectionhitresult
 enum SelectionHitResult : int
 {
     SHR_None      = 0x00000000,
@@ -172,7 +187,8 @@ enum SelectionHitResult : int
     SHR_S         = 0x00000008,
     SHR_Selection = 0x00000009,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkrecognitionstatus))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkrecognitionstatus
 enum InkRecognitionStatus : int
 {
     IRS_NoError                     = 0x00000000,
@@ -187,6 +203,7 @@ enum InkRecognitionStatus : int
     IRS_SetPrefixSuffixFailed       = 0x00000100,
     IRS_SetWordListFailed           = 0x00000200,
 }
+
 alias DISPID_InkRectangle = int;
 enum : int
 {
@@ -198,12 +215,14 @@ enum : int
     DISPID_IRSetRectangle = 0x00000006,
     DISPID_IRData         = 0x00000007,
 }
+
 alias DISPID_InkExtendedProperty = int;
 enum : int
 {
     DISPID_IEPGuid = 0x00000001,
     DISPID_IEPData = 0x00000002,
 }
+
 alias DISPID_InkExtendedProperties = int;
 enum : int
 {
@@ -215,6 +234,7 @@ enum : int
     DISPID_IEPsClear             = 0x00000004,
     DISPID_IEPsDoesPropertyExist = 0x00000005,
 }
+
 alias DISPID_InkDrawingAttributes = int;
 enum : int
 {
@@ -230,6 +250,7 @@ enum : int
     DISPID_DAClone              = 0x0000000a,
     DISPID_DAExtendedProperties = 0x0000000b,
 }
+
 alias DISPID_InkTransform = int;
 enum : int
 {
@@ -249,7 +270,8 @@ enum : int
     DISPID_ITSetTransform = 0x0000000e,
     DISPID_ITData         = 0x0000000f,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkapplicationgesture))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkapplicationgesture
 enum InkApplicationGesture : int
 {
     IAG_AllGestures     = 0x00000000,
@@ -297,7 +319,8 @@ enum InkApplicationGesture : int
     IAG_Tap             = 0x0000f0f0,
     IAG_DoubleTap       = 0x0000f0f1,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inksystemgesture))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inksystemgesture
 enum InkSystemGesture : int
 {
     ISG_Tap        = 0x00000010,
@@ -311,13 +334,15 @@ enum InkSystemGesture : int
     ISG_HoverLeave = 0x00000018,
     ISG_Flick      = 0x0000001f,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkrecognitionconfidence))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkrecognitionconfidence
 enum InkRecognitionConfidence : int
 {
     IRC_Strong       = 0x00000000,
     IRC_Intermediate = 0x00000001,
     IRC_Poor         = 0x00000002,
 }
+
 alias DISPID_InkGesture = int;
 enum : int
 {
@@ -325,6 +350,7 @@ enum : int
     DISPID_IGGetHotPoint = 0x00000001,
     DISPID_IGConfidence  = 0x00000002,
 }
+
 alias DISPID_InkCursor = int;
 enum : int
 {
@@ -335,6 +361,7 @@ enum : int
     DISPID_ICsrInverted          = 0x00000004,
     DISPID_ICsrTablet            = 0x00000005,
 }
+
 alias DISPID_InkCursors = int;
 enum : int
 {
@@ -342,13 +369,15 @@ enum : int
     DISPID_ICsItem     = 0x00000000,
     DISPID_ICsCount    = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkcursorbuttonstate))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkcursorbuttonstate
 enum InkCursorButtonState : int
 {
     ICBS_Unavailable = 0x00000000,
     ICBS_Up          = 0x00000001,
     ICBS_Down        = 0x00000002,
 }
+
 alias DISPID_InkCursorButton = int;
 enum : int
 {
@@ -356,6 +385,7 @@ enum : int
     DISPID_ICBId    = 0x00000001,
     DISPID_ICBState = 0x00000002,
 }
+
 alias DISPID_InkCursorButtons = int;
 enum : int
 {
@@ -363,7 +393,8 @@ enum : int
     DISPID_ICBsItem     = 0x00000000,
     DISPID_ICBsCount    = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-tablethardwarecapabilities))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-tablethardwarecapabilities
 enum TabletHardwareCapabilities : int
 {
     THWC_Integrated             = 0x00000001,
@@ -371,7 +402,8 @@ enum TabletHardwareCapabilities : int
     THWC_HardProximity          = 0x00000004,
     THWC_CursorsHavePhysicalIds = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-tabletpropertymetricunit))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-tabletpropertymetricunit
 enum TabletPropertyMetricUnit : int
 {
     TPMU_Default     = 0x00000000,
@@ -383,6 +415,7 @@ enum TabletPropertyMetricUnit : int
     TPMU_Pounds      = 0x00000006,
     TPMU_Grams       = 0x00000007,
 }
+
 alias DISPID_InkTablet = int;
 enum : int
 {
@@ -393,23 +426,27 @@ enum : int
     DISPID_ITMaximumInputRectangle     = 0x00000004,
     DISPID_ITHardwareCapabilities      = 0x00000005,
 }
+
 enum TabletDeviceKind : int
 {
     TDK_Mouse = 0x00000000,
     TDK_Pen   = 0x00000001,
     TDK_Touch = 0x00000002,
 }
+
 alias DISPID_InkTablet2 = int;
 enum : int
 {
     DISPID_IT2DeviceKind = 0x00000000,
 }
+
 alias DISPID_InkTablet3 = int;
 enum : int
 {
     DISPID_IT3IsMultiTouch   = 0x00000000,
     DISPID_IT3MaximumCursors = 0x00000001,
 }
+
 alias DISPID_InkTablets = int;
 enum : int
 {
@@ -419,6 +456,7 @@ enum : int
     DISPID_ITsCount                     = 0x00000002,
     DISPID_ITsIsPacketPropertySupported = 0x00000003,
 }
+
 alias DISPID_InkStrokeDisp = int;
 enum : int
 {
@@ -456,6 +494,7 @@ enum : int
     DISPID_ISDShear                               = 0x00000020,
     DISPID_ISDScale                               = 0x00000021,
 }
+
 alias DISPID_InkStrokes = int;
 enum : int
 {
@@ -481,6 +520,7 @@ enum : int
     DISPID_ISsRecognitionResult       = 0x00000012,
     DISPID_ISsRemoveRecognitionResult = 0x00000013,
 }
+
 alias DISPID_InkCustomStrokes = int;
 enum : int
 {
@@ -491,12 +531,14 @@ enum : int
     DISPID_ICSsRemove   = 0x00000003,
     DISPID_ICSsClear    = 0x00000004,
 }
+
 alias DISPID_StrokeEvent = int;
 enum : int
 {
     DISPID_SEStrokesAdded   = 0x00000001,
     DISPID_SEStrokesRemoved = 0x00000002,
 }
+
 alias DISPID_Ink = int;
 enum : int
 {
@@ -526,12 +568,14 @@ enum : int
     DISPID_ICanPaste                   = 0x00000018,
     DISPID_IClipboardPaste             = 0x00000019,
 }
+
 alias DISPID_InkEvent = int;
 enum : int
 {
     DISPID_IEInkAdded   = 0x00000001,
     DISPID_IEInkDeleted = 0x00000002,
 }
+
 alias DISPID_InkRenderer = int;
 enum : int
 {
@@ -551,7 +595,8 @@ enum : int
     DISPID_IRRotate                    = 0x0000000e,
     DISPID_IRScale                     = 0x0000000f,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkcollectoreventinterest))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkcollectoreventinterest
 enum InkCollectorEventInterest : int
 {
     ICEI_DefaultEvents    = 0xffffffff,
@@ -573,20 +618,23 @@ enum InkCollectorEventInterest : int
     ICEI_DblClick         = 0x0000000f,
     ICEI_AllEvents        = 0x00000010,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkmousebutton))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkmousebutton
 enum InkMouseButton : int
 {
     IMF_Left   = 0x00000001,
     IMF_Right  = 0x00000002,
     IMF_Middle = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkshiftkeymodifierflags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkshiftkeymodifierflags
 enum InkShiftKeyModifierFlags : int
 {
     IKM_Shift   = 0x00000001,
     IKM_Control = 0x00000002,
     IKM_Alt     = 0x00000004,
 }
+
 alias DISPID_InkCollectorEvent = int;
 enum : int
 {
@@ -632,20 +680,23 @@ enum : int
     DISPID_IPEResize              = 0x00000028,
     DISPID_IPESizeChanged         = 0x00000029,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkoverlayeditingmode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkoverlayeditingmode
 enum InkOverlayEditingMode : int
 {
     IOEM_Ink    = 0x00000000,
     IOEM_Delete = 0x00000001,
     IOEM_Select = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkoverlayattachmode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkoverlayattachmode
 enum InkOverlayAttachMode : int
 {
     IOAM_Behind  = 0x00000000,
     IOAM_InFront = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkpicturesizemode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkpicturesizemode
 enum InkPictureSizeMode : int
 {
     IPSM_AutoSize     = 0x00000000,
@@ -653,19 +704,22 @@ enum InkPictureSizeMode : int
     IPSM_Normal       = 0x00000002,
     IPSM_StretchImage = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkoverlayerasermode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkoverlayerasermode
 enum InkOverlayEraserMode : int
 {
     IOERM_StrokeErase = 0x00000000,
     IOERM_PointErase  = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkcollectionmode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkcollectionmode
 enum InkCollectionMode : int
 {
     ICM_InkOnly       = 0x00000000,
     ICM_GestureOnly   = 0x00000001,
     ICM_InkAndGesture = 0x00000002,
 }
+
 alias DISPID_InkCollector = int;
 enum : int
 {
@@ -709,6 +763,7 @@ enum : int
     DISPID_ICSupportHighContrastInk         = 0x00000026,
     DISPID_IOSupportHighContrastSelectionUI = 0x00000027,
 }
+
 alias DISPID_InkRecognizer = int;
 enum : int
 {
@@ -721,7 +776,8 @@ enum : int
     DISPID_RecoCreateRecognizerContext    = 0x00000007,
     DISPID_RecoSupportedProperties        = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkrecognizercapabilities))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkrecognizercapabilities
 enum InkRecognizerCapabilities : int
 {
     IRC_DontCare                     = 0x00000001,
@@ -747,12 +803,14 @@ enum InkRecognizerCapabilities : int
     IRC_Alpha                        = 0x00100000,
     IRC_Beta                         = 0x00200000,
 }
+
 alias DISPID_InkRecognizer2 = int;
 enum : int
 {
     DISPID_RecoId            = 0x00000000,
     DISPID_RecoUnicodeRanges = 0x00000001,
 }
+
 alias DISPID_InkRecognizers = int;
 enum : int
 {
@@ -761,14 +819,16 @@ enum : int
     DISPID_IRecosCount                = 0x00000001,
     DISPID_IRecosGetDefaultRecognizer = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkrecognizercharacterautocompletionmode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkrecognizercharacterautocompletionmode
 enum InkRecognizerCharacterAutoCompletionMode : int
 {
     IRCACM_Full   = 0x00000000,
     IRCACM_Prefix = 0x00000001,
     IRCACM_Random = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkrecognitionmodes))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkrecognitionmodes
 enum InkRecognitionModes : int
 {
     IRM_None                   = 0x00000000,
@@ -781,12 +841,14 @@ enum InkRecognitionModes : int
     IRM_AutoSpace              = 0x00000040,
     IRM_Max                    = 0x00000080,
 }
+
 alias DISPID_InkRecognitionEvent = int;
 enum : int
 {
     DISPID_IRERecognitionWithAlternates = 0x00000001,
     DISPID_IRERecognition               = 0x00000002,
 }
+
 alias DISPID_InkRecoContext = int;
 enum : int
 {
@@ -808,18 +870,21 @@ enum : int
     DISPID_IRecoCtx_BackgroundRecognizeWithAlternates = 0x00000010,
     DISPID_IRecoCtx_IsStringSupported                 = 0x00000011,
 }
+
 alias DISPID_InkRecoContext2 = int;
 enum : int
 {
     DISPID_IRecoCtx2_EnabledUnicodeRanges = 0x00000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkrecognitionalternatesselection))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/ne-msinkaut-inkrecognitionalternatesselection
 enum InkRecognitionAlternatesSelection : int
 {
     IRAS_Start        = 0x00000000,
     IRAS_DefaultCount = 0x0000000a,
     IRAS_All          = 0xffffffff,
 }
+
 alias DISPID_InkRecognitionResult = int;
 enum : int
 {
@@ -831,6 +896,7 @@ enum : int
     DISPID_InkRecognitionResult_ModifyTopAlternate      = 0x00000006,
     DISPID_InkRecognitionResult_SetResultOnStrokes      = 0x00000007,
 }
+
 alias DISPID_InkRecoAlternate = int;
 enum : int
 {
@@ -850,6 +916,7 @@ enum : int
     DISPID_InkRecoAlternate_ConfidenceAlternates                 = 0x0000000e,
     DISPID_InkRecoAlternate_AlternatesWithConstantPropertyValues = 0x0000000f,
 }
+
 alias DISPID_InkRecognitionAlternates = int;
 enum : int
 {
@@ -858,6 +925,7 @@ enum : int
     DISPID_InkRecognitionAlternates_Count   = 0x00000001,
     DISPID_InkRecognitionAlternates_Strokes = 0x00000002,
 }
+
 alias DISPID_InkRecognizerGuide = int;
 enum : int
 {
@@ -868,6 +936,7 @@ enum : int
     DISPID_IRGMidline    = 0x00000005,
     DISPID_IRGGuideData  = 0x00000006,
 }
+
 alias DISPID_InkWordList = int;
 enum : int
 {
@@ -875,12 +944,14 @@ enum : int
     DISPID_InkWordList_RemoveWord = 0x00000001,
     DISPID_InkWordList_Merge      = 0x00000002,
 }
+
 alias DISPID_InkWordList2 = int;
 enum : int
 {
     DISPID_InkWordList2_AddWords = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut15/ne-msinkaut15-inkdivisiontype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut15/ne-msinkaut15-inkdivisiontype
 enum InkDivisionType : int
 {
     IDT_Segment   = 0x00000000,
@@ -888,6 +959,7 @@ enum InkDivisionType : int
     IDT_Paragraph = 0x00000002,
     IDT_Drawing   = 0x00000003,
 }
+
 alias DISPID_InkDivider = int;
 enum : int
 {
@@ -896,12 +968,14 @@ enum : int
     DISPID_IInkDivider_LineHeight        = 0x00000003,
     DISPID_IInkDivider_Divide            = 0x00000004,
 }
+
 alias DISPID_InkDivisionResult = int;
 enum : int
 {
     DISPID_IInkDivisionResult_Strokes      = 0x00000001,
     DISPID_IInkDivisionResult_ResultByType = 0x00000002,
 }
+
 alias DISPID_InkDivisionUnit = int;
 enum : int
 {
@@ -910,6 +984,7 @@ enum : int
     DISPID_IInkDivisionUnit_RecognizedString  = 0x00000003,
     DISPID_IInkDivisionUnit_RotationTransform = 0x00000004,
 }
+
 alias DISPID_InkDivisionUnits = int;
 enum : int
 {
@@ -917,6 +992,7 @@ enum : int
     DISPID_IInkDivisionUnits_Item    = 0x00000000,
     DISPID_IInkDivisionUnits_Count   = 0x00000001,
 }
+
 alias DISPID_PenInputPanel = int;
 enum : int
 {
@@ -938,6 +1014,7 @@ enum : int
     DISPID_PIPEnableTsf          = 0x0000000f,
     DISPID_PIPAutoShow           = 0x00000010,
 }
+
 alias DISPID_PenInputPanelEvents = int;
 enum : int
 {
@@ -946,6 +1023,7 @@ enum : int
     DISPID_PIPEInputFailed    = 0x00000002,
     DISPID_PIPEPanelMoving    = 0x00000003,
 }
+
 enum VisualState : int
 {
     InPlace      = 0x00000000,
@@ -954,7 +1032,8 @@ enum VisualState : int
     DockedBottom = 0x00000003,
     Closed       = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/ne-peninputpanel-interactionmode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/ne-peninputpanel-interactionmode
 enum InteractionMode : int
 {
     InteractionMode_InPlace      = 0x00000000,
@@ -962,14 +1041,16 @@ enum InteractionMode : int
     InteractionMode_DockedTop    = 0x00000002,
     InteractionMode_DockedBottom = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/ne-peninputpanel-inplacestate))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/ne-peninputpanel-inplacestate
 enum InPlaceState : int
 {
     InPlaceState_Auto        = 0x00000000,
     InPlaceState_HoverTarget = 0x00000001,
     InPlaceState_Expanded    = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/ne-peninputpanel-panelinputarea))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/ne-peninputpanel-panelinputarea
 enum PanelInputArea : int
 {
     PanelInputArea_Auto         = 0x00000000,
@@ -977,7 +1058,8 @@ enum PanelInputArea : int
     PanelInputArea_WritingPad   = 0x00000002,
     PanelInputArea_CharacterPad = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/ne-peninputpanel-correctionmode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/ne-peninputpanel-correctionmode
 enum CorrectionMode : int
 {
     CorrectionMode_NotVisible             = 0x00000000,
@@ -985,21 +1067,24 @@ enum CorrectionMode : int
     CorrectionMode_PostInsertionCollapsed = 0x00000002,
     CorrectionMode_PostInsertionExpanded  = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/ne-peninputpanel-correctionposition))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/ne-peninputpanel-correctionposition
 enum CorrectionPosition : int
 {
     CorrectionPosition_Auto   = 0x00000000,
     CorrectionPosition_Bottom = 0x00000001,
     CorrectionPosition_Top    = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/ne-peninputpanel-inplacedirection))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/ne-peninputpanel-inplacedirection
 enum InPlaceDirection : int
 {
     InPlaceDirection_Auto   = 0x00000000,
     InPlaceDirection_Bottom = 0x00000001,
     InPlaceDirection_Top    = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/ne-peninputpanel-eventmask))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/ne-peninputpanel-eventmask
 enum EventMask : int
 {
     EventMask_InPlaceStateChanging      = 0x00000001,
@@ -1016,7 +1101,8 @@ enum EventMask : int
     EventMask_TextInserted              = 0x00000800,
     EventMask_All                       = 0x00000fff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/ne-peninputpanel-paneltype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/ne-peninputpanel-paneltype
 enum PanelType : int
 {
     PT_Default     = 0x00000000,
@@ -1024,7 +1110,8 @@ enum PanelType : int
     PT_Handwriting = 0x00000002,
     PT_Keyboard    = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tabflicks/ne-tabflicks-flickdirection))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tabflicks/ne-tabflicks-flickdirection
 alias FLICKDIRECTION = int;
 enum : int
 {
@@ -1039,7 +1126,8 @@ enum : int
     FLICKDIRECTION_DOWNRIGHT = 0x00000007,
     FLICKDIRECTION_INVALID   = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tabflicks/ne-tabflicks-flickmode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tabflicks/ne-tabflicks-flickmode
 alias FLICKMODE = int;
 enum : int
 {
@@ -1050,7 +1138,8 @@ enum : int
     FLICKMODE_MAX      = 0x00000002,
     FLICKMODE_DEFAULT  = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tabflicks/ne-tabflicks-flickaction_commandcode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tabflicks/ne-tabflicks-flickaction_commandcode
 alias FLICKACTION_COMMANDCODE = int;
 enum : int
 {
@@ -1060,14 +1149,16 @@ enum : int
     FLICKACTION_COMMANDCODE_CUSTOMKEY   = 0x00000003,
     FLICKACTION_COMMANDCODE_KEYMODIFIER = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tabflicks/ne-tabflicks-scrolldirection))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tabflicks/ne-tabflicks-scrolldirection
 alias SCROLLDIRECTION = int;
 enum : int
 {
     SCROLLDIRECTION_UP   = 0x00000000,
     SCROLLDIRECTION_DOWN = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tabflicks/ne-tabflicks-keymodifier))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tabflicks/ne-tabflicks-keymodifier
 alias KEYMODIFIER = int;
 enum : int
 {
@@ -1078,7 +1169,8 @@ enum : int
     KEYMODIFIER_ALTGR   = 0x00000010,
     KEYMODIFIER_EXT     = 0x00000020,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/ne-inked-mousebutton))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/ne-inked-mousebutton
 enum MouseButton : int
 {
     NO_BUTTON     = 0x00000000,
@@ -1086,14 +1178,16 @@ enum MouseButton : int
     RIGHT_BUTTON  = 0x00000002,
     MIDDLE_BUTTON = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/ne-inked-selalignmentconstants))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/ne-inked-selalignmentconstants
 enum SelAlignmentConstants : int
 {
     rtfLeft   = 0x00000000,
     rtfRight  = 0x00000001,
     rtfCenter = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/ne-inked-dispid_inkedit))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/ne-inked-dispid_inkedit
 alias DISPID_InkEdit = int;
 enum : int
 {
@@ -1134,7 +1228,8 @@ enum : int
     DISPID_SetGestStatus      = 0x00000022,
     DISPID_Refresh            = 0x00000023,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/ne-inked-dispid_inkeditevents))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/ne-inked-dispid_inkeditevents
 alias DISPID_InkEditEvents = int;
 enum : int
 {
@@ -1153,45 +1248,52 @@ enum : int
     DISPID_IeeGesture           = 0x00000017,
     DISPID_IeeRecognitionResult = 0x00000018,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/ne-inked-inkmode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/ne-inked-inkmode
 enum InkMode : int
 {
     IEM_Disabled      = 0x00000000,
     IEM_Ink           = 0x00000001,
     IEM_InkAndGesture = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/ne-inked-inkinsertmode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/ne-inked-inkinsertmode
 enum InkInsertMode : int
 {
     IEM_InsertText = 0x00000000,
     IEM_InsertInk  = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/ne-inked-inkeditstatus))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/ne-inked-inkeditstatus
 enum InkEditStatus : int
 {
     IES_Idle        = 0x00000000,
     IES_Collecting  = 0x00000001,
     IES_Recognizing = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/ne-inked-inkdisplaymode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/ne-inked-inkdisplaymode
 enum InkDisplayMode : int
 {
     IDM_Ink  = 0x00000000,
     IDM_Text = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/ne-inked-appearanceconstants))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/ne-inked-appearanceconstants
 enum AppearanceConstants : int
 {
     rtfFlat   = 0x00000000,
     rtfThreeD = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/ne-inked-borderstyleconstants))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/ne-inked-borderstyleconstants
 enum BorderStyleConstants : int
 {
     rtfNoBorder    = 0x00000000,
     rtfFixedSingle = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/ne-inked-scrollbarsconstants))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/ne-inked-scrollbarsconstants
 enum ScrollBarsConstants : int
 {
     rtfNone       = 0x00000000,
@@ -1199,7 +1301,8 @@ enum ScrollBarsConstants : int
     rtfVertical   = 0x00000002,
     rtfBoth       = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/micaut/ne-micaut-micuielement))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/micaut/ne-micaut-micuielement
 alias MICUIELEMENT = int;
 enum : int
 {
@@ -1214,7 +1317,8 @@ enum : int
     MICUIELEMENT_INKPANEL_BACKGROUND    = 0x00000100,
     MICUIELEMENT_RESULTPANEL_BACKGROUND = 0x00000200,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/micaut/ne-micaut-micuielementstate))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/micaut/ne-micaut-micuielementstate
 alias MICUIELEMENTSTATE = int;
 enum : int
 {
@@ -1223,6 +1327,7 @@ enum : int
     MICUIELEMENTSTATE_PRESSED  = 0x00000003,
     MICUIELEMENTSTATE_DISABLED = 0x00000004,
 }
+
 alias DISPID_MathInputControlEvents = int;
 enum : int
 {
@@ -1231,7 +1336,8 @@ enum : int
     DISPID_MICPaint  = 0x00000002,
     DISPID_MICClear  = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/ne-rtscom-realtimestylusdatainterest))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/ne-rtscom-realtimestylusdatainterest
 enum RealTimeStylusDataInterest : int
 {
     RTSDI_AllData                = 0xffffffff,
@@ -1255,14 +1361,16 @@ enum RealTimeStylusDataInterest : int
     RTSDI_UpdateMapping          = 0x00010000,
     RTSDI_DefaultEvents          = 0x00009386,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/ne-rtscom-stylusqueue))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/ne-rtscom-stylusqueue
 enum StylusQueue : int
 {
     SyncStylusQueue           = 0x00000001,
     AsyncStylusQueueImmediate = 0x00000002,
     AsyncStylusQueue          = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/ne-rtscom-realtimestyluslocktype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/ne-rtscom-realtimestyluslocktype
 enum RealTimeStylusLockType : int
 {
     RTSLT_ObjLock         = 0x00000001,
@@ -1272,7 +1380,8 @@ enum RealTimeStylusLockType : int
     RTSLT_SyncObjLock     = 0x0000000b,
     RTSLT_AsyncObjLock    = 0x0000000d,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rectypes/ne-rectypes-line_metrics))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rectypes/ne-rectypes-line_metrics
 alias LINE_METRICS = int;
 enum : int
 {
@@ -1281,7 +1390,8 @@ enum : int
     LM_ASCENDER  = 0x00000002,
     LM_DESCENDER = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rectypes/ne-rectypes-confidence_level))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rectypes/ne-rectypes-confidence_level
 alias CONFIDENCE_LEVEL = int;
 enum : int
 {
@@ -1289,7 +1399,8 @@ enum : int
     CFL_INTERMEDIATE = 0x00000001,
     CFL_POOR         = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rectypes/ne-rectypes-alt_breaks))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rectypes/ne-rectypes-alt_breaks
 alias ALT_BREAKS = int;
 enum : int
 {
@@ -1297,6 +1408,7 @@ enum : int
     ALT_BREAKS_UNIQUE = 0x00000001,
     ALT_BREAKS_FULL   = 0x00000002,
 }
+
 alias RECO_TYPE = int;
 enum : int
 {
@@ -1311,37 +1423,37 @@ enum const(wchar)* MICROSOFT_URL_EXPERIENCE_PROPERTY = "Microsoft TIP URL Experi
 enum const(wchar)* MICROSOFT_TIP_NO_INSERT_BUTTON_PROPERTY = "Microsoft TIP No Insert Option";
 enum const(wchar)* MICROSOFT_TIP_COMBOBOXLIST_PROPERTY = "Microsoft TIP ComboBox List Window Identifier";
 enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/tablet/microsoft-tip-opening-msg))], [])*/const(wchar)* MICROSOFT_TIP_OPENING_MSG = "TabletInputPanelOpening";
-enum uint SAFE_PARTIAL = 0x00000001;
-enum uint BEST_COMPLETE = 0x00000002;
-enum uint MAX_VENDORNAME = 0x00000020;
-enum uint MAX_FRIENDLYNAME = 0x00000040;
-enum uint MAX_LANGUAGES = 0x00000040;
+enum uint SAFE_PARTIAL = 0x00000001U;
+enum uint BEST_COMPLETE = 0x00000002U;
+enum uint MAX_VENDORNAME = 0x00000020U;
+enum uint MAX_FRIENDLYNAME = 0x00000040U;
+enum uint MAX_LANGUAGES = 0x00000040U;
 
 enum : uint
 {
-    CAC_FULL   = 0x00000000,
-    CAC_PREFIX = 0x00000001,
+    CAC_FULL   = 0x00000000U,
+    CAC_PREFIX = 0x00000001U,
 }
 
-enum uint CAC_RANDOM = 0x00000002;
+enum uint CAC_RANDOM = 0x00000002U;
 
 enum : uint
 {
-    ASYNC_RECO_INTERRUPTED       = 0x00000001,
-    ASYNC_RECO_PROCESS_FAILED    = 0x00000002,
-    ASYNC_RECO_ADDSTROKE_FAILED  = 0x00000004,
-    ASYNC_RECO_SETCACMODE_FAILED = 0x00000008,
+    ASYNC_RECO_INTERRUPTED       = 0x00000001U,
+    ASYNC_RECO_PROCESS_FAILED    = 0x00000002U,
+    ASYNC_RECO_ADDSTROKE_FAILED  = 0x00000004U,
+    ASYNC_RECO_SETCACMODE_FAILED = 0x00000008U,
 }
 
-enum uint ASYNC_RECO_RESETCONTEXT_FAILED = 0x00000010;
+enum uint ASYNC_RECO_RESETCONTEXT_FAILED = 0x00000010U;
 
 enum : uint
 {
-    ASYNC_RECO_SETGUIDE_FAILED       = 0x00000020,
-    ASYNC_RECO_SETFLAGS_FAILED       = 0x00000040,
-    ASYNC_RECO_SETFACTOID_FAILED     = 0x00000080,
-    ASYNC_RECO_SETTEXTCONTEXT_FAILED = 0x00000100,
-    ASYNC_RECO_SETWORDLIST_FAILED    = 0x00000200,
+    ASYNC_RECO_SETGUIDE_FAILED       = 0x00000020U,
+    ASYNC_RECO_SETFLAGS_FAILED       = 0x00000040U,
+    ASYNC_RECO_SETFACTOID_FAILED     = 0x00000080U,
+    ASYNC_RECO_SETTEXTCONTEXT_FAILED = 0x00000100U,
+    ASYNC_RECO_SETWORDLIST_FAILED    = 0x00000200U,
 }
 
 enum int RF_DONTCARE = 0x00000001;
@@ -1366,53 +1478,53 @@ enum int RF_STROKEREORDER = 0x00002000;
 enum int RF_PERSONALIZABLE = 0x00004000;
 enum int RF_PERFORMSLINEBREAKING = 0x00010000;
 enum int RF_REQUIRESSEGMENTATIONBREAKING = 0x00020000;
-enum uint FLICK_WM_HANDLED_MASK = 0x00000001;
-enum uint NUM_FLICK_DIRECTIONS = 0x00000008;
+enum uint FLICK_WM_HANDLED_MASK = 0x00000001U;
+enum uint NUM_FLICK_DIRECTIONS = 0x00000008U;
 
 enum : uint
 {
-    WM_TABLET_DEFBASE                  = 0x000002c0,
-    WM_TABLET_MAXOFFSET                = 0x00000020,
-    WM_TABLET_ADDED                    = 0x000002c8,
-    WM_TABLET_DELETED                  = 0x000002c9,
-    WM_TABLET_FLICK                    = 0x000002cb,
-    WM_TABLET_QUERYSYSTEMGESTURESTATUS = 0x000002cc,
+    WM_TABLET_DEFBASE                  = 0x000002c0U,
+    WM_TABLET_MAXOFFSET                = 0x00000020U,
+    WM_TABLET_ADDED                    = 0x000002c8U,
+    WM_TABLET_DELETED                  = 0x000002c9U,
+    WM_TABLET_FLICK                    = 0x000002cbU,
+    WM_TABLET_QUERYSYSTEMGESTURESTATUS = 0x000002ccU,
 }
 
 enum : uint
 {
-    TABLET_DISABLE_PRESSANDHOLD      = 0x00000001,
-    TABLET_DISABLE_PENTAPFEEDBACK    = 0x00000008,
-    TABLET_DISABLE_PENBARRELFEEDBACK = 0x00000010,
-    TABLET_DISABLE_TOUCHUIFORCEON    = 0x00000100,
-    TABLET_DISABLE_TOUCHUIFORCEOFF   = 0x00000200,
-    TABLET_DISABLE_TOUCHSWITCH       = 0x00008000,
-    TABLET_DISABLE_FLICKS            = 0x00010000,
+    TABLET_DISABLE_PRESSANDHOLD      = 0x00000001U,
+    TABLET_DISABLE_PENTAPFEEDBACK    = 0x00000008U,
+    TABLET_DISABLE_PENBARRELFEEDBACK = 0x00000010U,
+    TABLET_DISABLE_TOUCHUIFORCEON    = 0x00000100U,
+    TABLET_DISABLE_TOUCHUIFORCEOFF   = 0x00000200U,
+    TABLET_DISABLE_TOUCHSWITCH       = 0x00008000U,
+    TABLET_DISABLE_FLICKS            = 0x00010000U,
 }
 
 enum : uint
 {
-    TABLET_ENABLE_FLICKSONCONTEXT   = 0x00020000,
-    TABLET_ENABLE_FLICKLEARNINGMODE = 0x00040000,
+    TABLET_ENABLE_FLICKSONCONTEXT   = 0x00020000U,
+    TABLET_ENABLE_FLICKLEARNINGMODE = 0x00040000U,
 }
 
 enum : uint
 {
-    TABLET_DISABLE_SMOOTHSCROLLING   = 0x00080000,
-    TABLET_DISABLE_FLICKFALLBACKKEYS = 0x00100000,
+    TABLET_DISABLE_SMOOTHSCROLLING   = 0x00080000U,
+    TABLET_DISABLE_FLICKFALLBACKKEYS = 0x00100000U,
 }
 
-enum uint TABLET_ENABLE_MULTITOUCHDATA = 0x01000000;
+enum uint TABLET_ENABLE_MULTITOUCHDATA = 0x01000000U;
 
 enum : uint
 {
-    MAX_PACKET_PROPERTY_COUNT = 0x00000020,
-    MAX_PACKET_BUTTON_COUNT   = 0x00000020,
+    MAX_PACKET_PROPERTY_COUNT = 0x00000020U,
+    MAX_PACKET_BUTTON_COUNT   = 0x00000020U,
 }
 
-enum uint IP_CURSOR_DOWN = 0x00000001;
-enum uint IP_INVERTED = 0x00000002;
-enum uint IP_MARGIN = 0x00000004;
+enum uint IP_CURSOR_DOWN = 0x00000001U;
+enum uint IP_INVERTED = 0x00000002U;
+enum uint IP_MARGIN = 0x00000004U;
 enum const(wchar)* INK_SERIALIZED_FORMAT = "Ink Serialized Format";
 
 enum : const(wchar)*
@@ -1519,261 +1631,261 @@ enum : const(wchar)*
     INKEDIT_CLASS  = "INKEDIT",
 }
 
-enum uint IEC__BASE = 0x00000600;
-enum uint EM_GETINKMODE = 0x00000601;
-enum uint EM_SETINKMODE = 0x00000602;
-enum uint EM_GETINKINSERTMODE = 0x00000603;
-enum uint EM_SETINKINSERTMODE = 0x00000604;
-enum uint EM_GETDRAWATTR = 0x00000605;
-enum uint EM_SETDRAWATTR = 0x00000606;
-enum uint EM_GETRECOTIMEOUT = 0x00000607;
-enum uint EM_SETRECOTIMEOUT = 0x00000608;
-enum uint EM_GETGESTURESTATUS = 0x00000609;
-enum uint EM_SETGESTURESTATUS = 0x0000060a;
-enum uint EM_GETRECOGNIZER = 0x0000060b;
-enum uint EM_SETRECOGNIZER = 0x0000060c;
-enum uint EM_GETFACTOID = 0x0000060d;
-enum uint EM_SETFACTOID = 0x0000060e;
-enum uint EM_GETSELINK = 0x0000060f;
-enum uint EM_SETSELINK = 0x00000610;
-enum uint EM_GETMOUSEICON = 0x00000611;
-enum uint EM_SETMOUSEICON = 0x00000612;
-enum uint EM_GETMOUSEPOINTER = 0x00000613;
-enum uint EM_SETMOUSEPOINTER = 0x00000614;
-enum uint EM_GETSTATUS = 0x00000615;
-enum uint EM_RECOGNIZE = 0x00000616;
-enum uint EM_GETUSEMOUSEFORINPUT = 0x00000617;
-enum uint EM_SETUSEMOUSEFORINPUT = 0x00000618;
-enum uint EM_SETSELINKDISPLAYMODE = 0x00000619;
-enum uint EM_GETSELINKDISPLAYMODE = 0x0000061a;
+enum uint IEC__BASE = 0x00000600U;
+enum uint EM_GETINKMODE = 0x00000601U;
+enum uint EM_SETINKMODE = 0x00000602U;
+enum uint EM_GETINKINSERTMODE = 0x00000603U;
+enum uint EM_SETINKINSERTMODE = 0x00000604U;
+enum uint EM_GETDRAWATTR = 0x00000605U;
+enum uint EM_SETDRAWATTR = 0x00000606U;
+enum uint EM_GETRECOTIMEOUT = 0x00000607U;
+enum uint EM_SETRECOTIMEOUT = 0x00000608U;
+enum uint EM_GETGESTURESTATUS = 0x00000609U;
+enum uint EM_SETGESTURESTATUS = 0x0000060aU;
+enum uint EM_GETRECOGNIZER = 0x0000060bU;
+enum uint EM_SETRECOGNIZER = 0x0000060cU;
+enum uint EM_GETFACTOID = 0x0000060dU;
+enum uint EM_SETFACTOID = 0x0000060eU;
+enum uint EM_GETSELINK = 0x0000060fU;
+enum uint EM_SETSELINK = 0x00000610U;
+enum uint EM_GETMOUSEICON = 0x00000611U;
+enum uint EM_SETMOUSEICON = 0x00000612U;
+enum uint EM_GETMOUSEPOINTER = 0x00000613U;
+enum uint EM_SETMOUSEPOINTER = 0x00000614U;
+enum uint EM_GETSTATUS = 0x00000615U;
+enum uint EM_RECOGNIZE = 0x00000616U;
+enum uint EM_GETUSEMOUSEFORINPUT = 0x00000617U;
+enum uint EM_SETUSEMOUSEFORINPUT = 0x00000618U;
+enum uint EM_SETSELINKDISPLAYMODE = 0x00000619U;
+enum uint EM_GETSELINKDISPLAYMODE = 0x0000061aU;
 
 enum : uint
 {
-    IECN__BASE             = 0x00000800,
-    IECN_STROKE            = 0x00000801,
-    IECN_GESTURE           = 0x00000802,
-    IECN_RECOGNITIONRESULT = 0x00000803,
+    IECN__BASE             = 0x00000800U,
+    IECN_STROKE            = 0x00000801U,
+    IECN_GESTURE           = 0x00000802U,
+    IECN_RECOGNITIONRESULT = 0x00000803U,
 }
 
 enum : uint
 {
-    RECOFLAG_WORDMODE               = 0x00000001,
-    RECOFLAG_COERCE                 = 0x00000002,
-    RECOFLAG_SINGLESEG              = 0x00000004,
-    RECOFLAG_PREFIXOK               = 0x00000008,
-    RECOFLAG_LINEMODE               = 0x00000010,
-    RECOFLAG_DISABLEPERSONALIZATION = 0x00000020,
+    RECOFLAG_WORDMODE               = 0x00000001U,
+    RECOFLAG_COERCE                 = 0x00000002U,
+    RECOFLAG_SINGLESEG              = 0x00000004U,
+    RECOFLAG_PREFIXOK               = 0x00000008U,
+    RECOFLAG_LINEMODE               = 0x00000010U,
+    RECOFLAG_DISABLEPERSONALIZATION = 0x00000020U,
 }
 
-enum uint RECOFLAG_AUTOSPACE = 0x00000040;
+enum uint RECOFLAG_AUTOSPACE = 0x00000040U;
 enum int RECOCONF_LOWCONFIDENCE = 0xffffffff;
-enum uint RECOCONF_MEDIUMCONFIDENCE = 0x00000000;
-enum uint RECOCONF_HIGHCONFIDENCE = 0x00000001;
-enum uint RECOCONF_NOTSET = 0x00000080;
+enum uint RECOCONF_MEDIUMCONFIDENCE = 0x00000000U;
+enum uint RECOCONF_HIGHCONFIDENCE = 0x00000001U;
+enum uint RECOCONF_NOTSET = 0x00000080U;
 
 enum : uint
 {
-    GESTURE_NULL         = 0x0000f000,
-    GESTURE_SCRATCHOUT   = 0x0000f001,
-    GESTURE_TRIANGLE     = 0x0000f002,
-    GESTURE_SQUARE       = 0x0000f003,
-    GESTURE_STAR         = 0x0000f004,
-    GESTURE_CHECK        = 0x0000f005,
-    GESTURE_INFINITY     = 0x0000f006,
-    GESTURE_CROSS        = 0x0000f007,
-    GESTURE_PARAGRAPH    = 0x0000f008,
-    GESTURE_SECTION      = 0x0000f009,
-    GESTURE_BULLET       = 0x0000f00a,
-    GESTURE_BULLET_CROSS = 0x0000f00b,
+    GESTURE_NULL         = 0x0000f000U,
+    GESTURE_SCRATCHOUT   = 0x0000f001U,
+    GESTURE_TRIANGLE     = 0x0000f002U,
+    GESTURE_SQUARE       = 0x0000f003U,
+    GESTURE_STAR         = 0x0000f004U,
+    GESTURE_CHECK        = 0x0000f005U,
+    GESTURE_INFINITY     = 0x0000f006U,
+    GESTURE_CROSS        = 0x0000f007U,
+    GESTURE_PARAGRAPH    = 0x0000f008U,
+    GESTURE_SECTION      = 0x0000f009U,
+    GESTURE_BULLET       = 0x0000f00aU,
+    GESTURE_BULLET_CROSS = 0x0000f00bU,
 }
 
 enum : uint
 {
-    GESTURE_SQUIGGLE        = 0x0000f00c,
-    GESTURE_SWAP            = 0x0000f00d,
-    GESTURE_OPENUP          = 0x0000f00e,
-    GESTURE_CLOSEUP         = 0x0000f00f,
-    GESTURE_CURLICUE        = 0x0000f010,
-    GESTURE_DOUBLE_CURLICUE = 0x0000f011,
+    GESTURE_SQUIGGLE        = 0x0000f00cU,
+    GESTURE_SWAP            = 0x0000f00dU,
+    GESTURE_OPENUP          = 0x0000f00eU,
+    GESTURE_CLOSEUP         = 0x0000f00fU,
+    GESTURE_CURLICUE        = 0x0000f010U,
+    GESTURE_DOUBLE_CURLICUE = 0x0000f011U,
 }
 
 enum : uint
 {
-    GESTURE_RECTANGLE     = 0x0000f012,
-    GESTURE_CIRCLE        = 0x0000f020,
-    GESTURE_DOUBLE_CIRCLE = 0x0000f021,
+    GESTURE_RECTANGLE     = 0x0000f012U,
+    GESTURE_CIRCLE        = 0x0000f020U,
+    GESTURE_DOUBLE_CIRCLE = 0x0000f021U,
 }
 
 enum : uint
 {
-    GESTURE_CIRCLE_TAP       = 0x0000f022,
-    GESTURE_CIRCLE_CIRCLE    = 0x0000f023,
-    GESTURE_CIRCLE_CROSS     = 0x0000f025,
-    GESTURE_CIRCLE_LINE_VERT = 0x0000f026,
-    GESTURE_CIRCLE_LINE_HORZ = 0x0000f027,
+    GESTURE_CIRCLE_TAP       = 0x0000f022U,
+    GESTURE_CIRCLE_CIRCLE    = 0x0000f023U,
+    GESTURE_CIRCLE_CROSS     = 0x0000f025U,
+    GESTURE_CIRCLE_LINE_VERT = 0x0000f026U,
+    GESTURE_CIRCLE_LINE_HORZ = 0x0000f027U,
 }
 
 enum : uint
 {
-    GESTURE_SEMICIRCLE_LEFT  = 0x0000f028,
-    GESTURE_SEMICIRCLE_RIGHT = 0x0000f029,
+    GESTURE_SEMICIRCLE_LEFT  = 0x0000f028U,
+    GESTURE_SEMICIRCLE_RIGHT = 0x0000f029U,
 }
 
 enum : uint
 {
-    GESTURE_CHEVRON_UP    = 0x0000f030,
-    GESTURE_CHEVRON_DOWN  = 0x0000f031,
-    GESTURE_CHEVRON_LEFT  = 0x0000f032,
-    GESTURE_CHEVRON_RIGHT = 0x0000f033,
+    GESTURE_CHEVRON_UP    = 0x0000f030U,
+    GESTURE_CHEVRON_DOWN  = 0x0000f031U,
+    GESTURE_CHEVRON_LEFT  = 0x0000f032U,
+    GESTURE_CHEVRON_RIGHT = 0x0000f033U,
 }
 
 enum : uint
 {
-    GESTURE_ARROW_UP           = 0x0000f038,
-    GESTURE_ARROW_DOWN         = 0x0000f039,
-    GESTURE_ARROW_LEFT         = 0x0000f03a,
-    GESTURE_ARROW_RIGHT        = 0x0000f03b,
-    GESTURE_DOUBLE_ARROW_UP    = 0x0000f03c,
-    GESTURE_DOUBLE_ARROW_DOWN  = 0x0000f03d,
-    GESTURE_DOUBLE_ARROW_LEFT  = 0x0000f03e,
-    GESTURE_DOUBLE_ARROW_RIGHT = 0x0000f03f,
+    GESTURE_ARROW_UP           = 0x0000f038U,
+    GESTURE_ARROW_DOWN         = 0x0000f039U,
+    GESTURE_ARROW_LEFT         = 0x0000f03aU,
+    GESTURE_ARROW_RIGHT        = 0x0000f03bU,
+    GESTURE_DOUBLE_ARROW_UP    = 0x0000f03cU,
+    GESTURE_DOUBLE_ARROW_DOWN  = 0x0000f03dU,
+    GESTURE_DOUBLE_ARROW_LEFT  = 0x0000f03eU,
+    GESTURE_DOUBLE_ARROW_RIGHT = 0x0000f03fU,
 }
 
 enum : uint
 {
-    GESTURE_UP_ARROW_LEFT  = 0x0000f040,
-    GESTURE_UP_ARROW_RIGHT = 0x0000f041,
+    GESTURE_UP_ARROW_LEFT  = 0x0000f040U,
+    GESTURE_UP_ARROW_RIGHT = 0x0000f041U,
 }
 
 enum : uint
 {
-    GESTURE_DOWN_ARROW_LEFT  = 0x0000f042,
-    GESTURE_DOWN_ARROW_RIGHT = 0x0000f043,
+    GESTURE_DOWN_ARROW_LEFT  = 0x0000f042U,
+    GESTURE_DOWN_ARROW_RIGHT = 0x0000f043U,
 }
 
 enum : uint
 {
-    GESTURE_LEFT_ARROW_UP   = 0x0000f044,
-    GESTURE_LEFT_ARROW_DOWN = 0x0000f045,
+    GESTURE_LEFT_ARROW_UP   = 0x0000f044U,
+    GESTURE_LEFT_ARROW_DOWN = 0x0000f045U,
 }
 
 enum : uint
 {
-    GESTURE_RIGHT_ARROW_UP   = 0x0000f046,
-    GESTURE_RIGHT_ARROW_DOWN = 0x0000f047,
+    GESTURE_RIGHT_ARROW_UP   = 0x0000f046U,
+    GESTURE_RIGHT_ARROW_DOWN = 0x0000f047U,
 }
 
 enum : uint
 {
-    GESTURE_UP                 = 0x0000f058,
-    GESTURE_DOWN               = 0x0000f059,
-    GESTURE_LEFT               = 0x0000f05a,
-    GESTURE_RIGHT              = 0x0000f05b,
-    GESTURE_DIAGONAL_LEFTUP    = 0x0000f05c,
-    GESTURE_DIAGONAL_RIGHTUP   = 0x0000f05d,
-    GESTURE_DIAGONAL_LEFTDOWN  = 0x0000f05e,
-    GESTURE_DIAGONAL_RIGHTDOWN = 0x0000f05f,
+    GESTURE_UP                 = 0x0000f058U,
+    GESTURE_DOWN               = 0x0000f059U,
+    GESTURE_LEFT               = 0x0000f05aU,
+    GESTURE_RIGHT              = 0x0000f05bU,
+    GESTURE_DIAGONAL_LEFTUP    = 0x0000f05cU,
+    GESTURE_DIAGONAL_RIGHTUP   = 0x0000f05dU,
+    GESTURE_DIAGONAL_LEFTDOWN  = 0x0000f05eU,
+    GESTURE_DIAGONAL_RIGHTDOWN = 0x0000f05fU,
 }
 
 enum : uint
 {
-    GESTURE_UP_DOWN       = 0x0000f060,
-    GESTURE_DOWN_UP       = 0x0000f061,
-    GESTURE_LEFT_RIGHT    = 0x0000f062,
-    GESTURE_RIGHT_LEFT    = 0x0000f063,
-    GESTURE_UP_LEFT_LONG  = 0x0000f064,
-    GESTURE_UP_RIGHT_LONG = 0x0000f065,
+    GESTURE_UP_DOWN       = 0x0000f060U,
+    GESTURE_DOWN_UP       = 0x0000f061U,
+    GESTURE_LEFT_RIGHT    = 0x0000f062U,
+    GESTURE_RIGHT_LEFT    = 0x0000f063U,
+    GESTURE_UP_LEFT_LONG  = 0x0000f064U,
+    GESTURE_UP_RIGHT_LONG = 0x0000f065U,
 }
 
 enum : uint
 {
-    GESTURE_DOWN_LEFT_LONG  = 0x0000f066,
-    GESTURE_DOWN_RIGHT_LONG = 0x0000f067,
+    GESTURE_DOWN_LEFT_LONG  = 0x0000f066U,
+    GESTURE_DOWN_RIGHT_LONG = 0x0000f067U,
 }
 
 enum : uint
 {
-    GESTURE_UP_LEFT      = 0x0000f068,
-    GESTURE_UP_RIGHT     = 0x0000f069,
-    GESTURE_DOWN_LEFT    = 0x0000f06a,
-    GESTURE_DOWN_RIGHT   = 0x0000f06b,
-    GESTURE_LEFT_UP      = 0x0000f06c,
-    GESTURE_LEFT_DOWN    = 0x0000f06d,
-    GESTURE_RIGHT_UP     = 0x0000f06e,
-    GESTURE_RIGHT_DOWN   = 0x0000f06f,
-    GESTURE_LETTER_A     = 0x0000f080,
-    GESTURE_LETTER_B     = 0x0000f081,
-    GESTURE_LETTER_C     = 0x0000f082,
-    GESTURE_LETTER_D     = 0x0000f083,
-    GESTURE_LETTER_E     = 0x0000f084,
-    GESTURE_LETTER_F     = 0x0000f085,
-    GESTURE_LETTER_G     = 0x0000f086,
-    GESTURE_LETTER_H     = 0x0000f087,
-    GESTURE_LETTER_I     = 0x0000f088,
-    GESTURE_LETTER_J     = 0x0000f089,
-    GESTURE_LETTER_K     = 0x0000f08a,
-    GESTURE_LETTER_L     = 0x0000f08b,
-    GESTURE_LETTER_M     = 0x0000f08c,
-    GESTURE_LETTER_N     = 0x0000f08d,
-    GESTURE_LETTER_O     = 0x0000f08e,
-    GESTURE_LETTER_P     = 0x0000f08f,
-    GESTURE_LETTER_Q     = 0x0000f090,
-    GESTURE_LETTER_R     = 0x0000f091,
-    GESTURE_LETTER_S     = 0x0000f092,
-    GESTURE_LETTER_T     = 0x0000f093,
-    GESTURE_LETTER_U     = 0x0000f094,
-    GESTURE_LETTER_V     = 0x0000f095,
-    GESTURE_LETTER_W     = 0x0000f096,
-    GESTURE_LETTER_X     = 0x0000f097,
-    GESTURE_LETTER_Y     = 0x0000f098,
-    GESTURE_LETTER_Z     = 0x0000f099,
-    GESTURE_DIGIT_0      = 0x0000f09a,
-    GESTURE_DIGIT_1      = 0x0000f09b,
-    GESTURE_DIGIT_2      = 0x0000f09c,
-    GESTURE_DIGIT_3      = 0x0000f09d,
-    GESTURE_DIGIT_4      = 0x0000f09e,
-    GESTURE_DIGIT_5      = 0x0000f09f,
-    GESTURE_DIGIT_6      = 0x0000f0a0,
-    GESTURE_DIGIT_7      = 0x0000f0a1,
-    GESTURE_DIGIT_8      = 0x0000f0a2,
-    GESTURE_DIGIT_9      = 0x0000f0a3,
-    GESTURE_EXCLAMATION  = 0x0000f0a4,
-    GESTURE_QUESTION     = 0x0000f0a5,
-    GESTURE_SHARP        = 0x0000f0a6,
-    GESTURE_DOLLAR       = 0x0000f0a7,
-    GESTURE_ASTERISK     = 0x0000f0a8,
-    GESTURE_PLUS         = 0x0000f0a9,
-    GESTURE_DOUBLE_UP    = 0x0000f0b8,
-    GESTURE_DOUBLE_DOWN  = 0x0000f0b9,
-    GESTURE_DOUBLE_LEFT  = 0x0000f0ba,
-    GESTURE_DOUBLE_RIGHT = 0x0000f0bb,
+    GESTURE_UP_LEFT      = 0x0000f068U,
+    GESTURE_UP_RIGHT     = 0x0000f069U,
+    GESTURE_DOWN_LEFT    = 0x0000f06aU,
+    GESTURE_DOWN_RIGHT   = 0x0000f06bU,
+    GESTURE_LEFT_UP      = 0x0000f06cU,
+    GESTURE_LEFT_DOWN    = 0x0000f06dU,
+    GESTURE_RIGHT_UP     = 0x0000f06eU,
+    GESTURE_RIGHT_DOWN   = 0x0000f06fU,
+    GESTURE_LETTER_A     = 0x0000f080U,
+    GESTURE_LETTER_B     = 0x0000f081U,
+    GESTURE_LETTER_C     = 0x0000f082U,
+    GESTURE_LETTER_D     = 0x0000f083U,
+    GESTURE_LETTER_E     = 0x0000f084U,
+    GESTURE_LETTER_F     = 0x0000f085U,
+    GESTURE_LETTER_G     = 0x0000f086U,
+    GESTURE_LETTER_H     = 0x0000f087U,
+    GESTURE_LETTER_I     = 0x0000f088U,
+    GESTURE_LETTER_J     = 0x0000f089U,
+    GESTURE_LETTER_K     = 0x0000f08aU,
+    GESTURE_LETTER_L     = 0x0000f08bU,
+    GESTURE_LETTER_M     = 0x0000f08cU,
+    GESTURE_LETTER_N     = 0x0000f08dU,
+    GESTURE_LETTER_O     = 0x0000f08eU,
+    GESTURE_LETTER_P     = 0x0000f08fU,
+    GESTURE_LETTER_Q     = 0x0000f090U,
+    GESTURE_LETTER_R     = 0x0000f091U,
+    GESTURE_LETTER_S     = 0x0000f092U,
+    GESTURE_LETTER_T     = 0x0000f093U,
+    GESTURE_LETTER_U     = 0x0000f094U,
+    GESTURE_LETTER_V     = 0x0000f095U,
+    GESTURE_LETTER_W     = 0x0000f096U,
+    GESTURE_LETTER_X     = 0x0000f097U,
+    GESTURE_LETTER_Y     = 0x0000f098U,
+    GESTURE_LETTER_Z     = 0x0000f099U,
+    GESTURE_DIGIT_0      = 0x0000f09aU,
+    GESTURE_DIGIT_1      = 0x0000f09bU,
+    GESTURE_DIGIT_2      = 0x0000f09cU,
+    GESTURE_DIGIT_3      = 0x0000f09dU,
+    GESTURE_DIGIT_4      = 0x0000f09eU,
+    GESTURE_DIGIT_5      = 0x0000f09fU,
+    GESTURE_DIGIT_6      = 0x0000f0a0U,
+    GESTURE_DIGIT_7      = 0x0000f0a1U,
+    GESTURE_DIGIT_8      = 0x0000f0a2U,
+    GESTURE_DIGIT_9      = 0x0000f0a3U,
+    GESTURE_EXCLAMATION  = 0x0000f0a4U,
+    GESTURE_QUESTION     = 0x0000f0a5U,
+    GESTURE_SHARP        = 0x0000f0a6U,
+    GESTURE_DOLLAR       = 0x0000f0a7U,
+    GESTURE_ASTERISK     = 0x0000f0a8U,
+    GESTURE_PLUS         = 0x0000f0a9U,
+    GESTURE_DOUBLE_UP    = 0x0000f0b8U,
+    GESTURE_DOUBLE_DOWN  = 0x0000f0b9U,
+    GESTURE_DOUBLE_LEFT  = 0x0000f0baU,
+    GESTURE_DOUBLE_RIGHT = 0x0000f0bbU,
 }
 
 enum : uint
 {
-    GESTURE_TRIPLE_UP    = 0x0000f0bc,
-    GESTURE_TRIPLE_DOWN  = 0x0000f0bd,
-    GESTURE_TRIPLE_LEFT  = 0x0000f0be,
-    GESTURE_TRIPLE_RIGHT = 0x0000f0bf,
+    GESTURE_TRIPLE_UP    = 0x0000f0bcU,
+    GESTURE_TRIPLE_DOWN  = 0x0000f0bdU,
+    GESTURE_TRIPLE_LEFT  = 0x0000f0beU,
+    GESTURE_TRIPLE_RIGHT = 0x0000f0bfU,
 }
 
 enum : uint
 {
-    GESTURE_BRACKET_OVER  = 0x0000f0e4,
-    GESTURE_BRACKET_UNDER = 0x0000f0e5,
-    GESTURE_BRACKET_LEFT  = 0x0000f0e6,
-    GESTURE_BRACKET_RIGHT = 0x0000f0e7,
-    GESTURE_BRACE_OVER    = 0x0000f0e8,
-    GESTURE_BRACE_UNDER   = 0x0000f0e9,
-    GESTURE_BRACE_LEFT    = 0x0000f0ea,
-    GESTURE_BRACE_RIGHT   = 0x0000f0eb,
-    GESTURE_TAP           = 0x0000f0f0,
-    GESTURE_DOUBLE_TAP    = 0x0000f0f1,
-    GESTURE_TRIPLE_TAP    = 0x0000f0f2,
-    GESTURE_QUAD_TAP      = 0x0000f0f3,
+    GESTURE_BRACKET_OVER  = 0x0000f0e4U,
+    GESTURE_BRACKET_UNDER = 0x0000f0e5U,
+    GESTURE_BRACKET_LEFT  = 0x0000f0e6U,
+    GESTURE_BRACKET_RIGHT = 0x0000f0e7U,
+    GESTURE_BRACE_OVER    = 0x0000f0e8U,
+    GESTURE_BRACE_UNDER   = 0x0000f0e9U,
+    GESTURE_BRACE_LEFT    = 0x0000f0eaU,
+    GESTURE_BRACE_RIGHT   = 0x0000f0ebU,
+    GESTURE_TAP           = 0x0000f0f0U,
+    GESTURE_DOUBLE_TAP    = 0x0000f0f1U,
+    GESTURE_TRIPLE_TAP    = 0x0000f0f2U,
+    GESTURE_QUAD_TAP      = 0x0000f0f3U,
 }
 
-enum uint FACILITY_INK = 0x00000028;
+enum uint FACILITY_INK = 0x00000028U;
 
 enum : GUID
 {
@@ -1822,7 +1934,7 @@ alias PfnRecoCallback = HRESULT function(uint param0, ubyte* param1, HRECOCONTEX
 @RAIIFree!DestroyAlternate
 //STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
 //STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/tablet/hrecoalt-handle))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/tablet/hrecoalt-handle
 struct HRECOALT
 {
     void* Value;
@@ -1831,7 +1943,7 @@ struct HRECOALT
 @RAIIFree!DestroyContext
 //STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
 //STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/tablet/hrecocontext-handle))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/tablet/hrecocontext-handle
 struct HRECOCONTEXT
 {
     void* Value;
@@ -1840,7 +1952,7 @@ struct HRECOCONTEXT
 @RAIIFree!DestroyRecognizer
 //STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
 //STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/tablet/hrecognizer-handle))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/tablet/hrecognizer-handle
 struct HRECOGNIZER
 {
     void* Value;
@@ -1856,13 +1968,13 @@ struct HRECOLATTICE
 @RAIIFree!DestroyWordList
 //STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(-1))], [])
 //STRUCT ATTR: InvalidHandleValueAttribute : CustomAttributeSig([FixedArgSig(ElementSig(0))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/tablet/hrecowordlist-handle))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/tablet/hrecowordlist-handle
 struct HRECOWORDLIST
 {
     void* Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tpcshrd/ns-tpcshrd-system_event_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tpcshrd/ns-tpcshrd-system_event_data
 struct SYSTEM_EVENT_DATA
 {
     ubyte bModifier;
@@ -1873,14 +1985,14 @@ struct SYSTEM_EVENT_DATA
     uint  dwButtonState;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tpcshrd/ns-tpcshrd-stroke_range))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tpcshrd/ns-tpcshrd-stroke_range
 struct STROKE_RANGE
 {
     uint iStrokeBegin;
     uint iStrokeEnd;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tpcshrd/ns-tpcshrd-property_metrics))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tpcshrd/ns-tpcshrd-property_metrics
 struct PROPERTY_METRICS
 {
     int            nLogicalMin;
@@ -1889,14 +2001,14 @@ struct PROPERTY_METRICS
     float          fResolution;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tpcshrd/ns-tpcshrd-packet_property))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tpcshrd/ns-tpcshrd-packet_property
 struct PACKET_PROPERTY
 {
     GUID             guid;
     PROPERTY_METRICS PropertyMetrics;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tpcshrd/ns-tpcshrd-packet_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tpcshrd/ns-tpcshrd-packet_description
 struct PACKET_DESCRIPTION
 {
     uint             cbPacketSize;
@@ -1906,7 +2018,7 @@ struct PACKET_DESCRIPTION
     GUID*            pguidButtons;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/ns-msinkaut-inkmetric))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/ns-msinkaut-inkmetric
 struct INKMETRIC
 {
     int      iHeight;
@@ -1916,7 +2028,7 @@ struct INKMETRIC
     COLORREF color;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/ns-msinkaut-inkrecoguide))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/ns-msinkaut-inkrecoguide
 struct InkRecoGuide
 {
     RECT rectWritingBox;
@@ -1926,19 +2038,19 @@ struct InkRecoGuide
     int  midline;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tabflicks/ns-tabflicks-flick_point))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tabflicks/ns-tabflicks-flick_point
 struct FLICK_POINT
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(y)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/int _bitfield155;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(y)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/int _bitfield547;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/tabflicks/ns-tabflicks-flick_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/tabflicks/ns-tabflicks-flick_data
 struct FLICK_DATA
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(iActionArgument)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/int _bitfield156;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(iActionArgument)), FixedArgSig(ElementSig(16)), FixedArgSig(ElementSig(16))], [])*/int _bitfield548;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/ns-inked-iec_strokeinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/ns-inked-iec_strokeinfo
 struct IEC_STROKEINFO
 {
     NMHDR          nmhdr;
@@ -1946,7 +2058,7 @@ struct IEC_STROKEINFO
     IInkStrokeDisp Stroke;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/ns-inked-iec_gestureinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/ns-inked-iec_gestureinfo
 struct IEC_GESTUREINFO
 {
     NMHDR       nmhdr;
@@ -1955,14 +2067,14 @@ struct IEC_GESTUREINFO
     VARIANT     Gestures;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/ns-inked-iec_recognitionresultinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/ns-inked-iec_recognitionresultinfo
 struct IEC_RECOGNITIONRESULTINFO
 {
     NMHDR nmhdr;
     IInkRecognitionResult RecognitionResult;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/ns-rtscom-stylusinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/ns-rtscom-stylusinfo
 struct StylusInfo
 {
     uint tcid;
@@ -1983,7 +2095,7 @@ struct DYNAMIC_RENDERER_CACHED_DATA
     IDynamicRenderer dynamicRenderer;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rectypes/ns-rectypes-reco_guide))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rectypes/ns-rectypes-reco_guide
 struct RECO_GUIDE
 {
     int xOrigin;
@@ -1997,7 +2109,7 @@ struct RECO_GUIDE
     int cyMid;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rectypes/ns-rectypes-reco_attrs))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rectypes/ns-rectypes-reco_attrs
 struct RECO_ATTRS
 {
     uint       dwRecoCapabilityFlags;
@@ -2006,28 +2118,28 @@ struct RECO_ATTRS
     ushort[64] awLanguageId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rectypes/ns-rectypes-reco_range))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rectypes/ns-rectypes-reco_range
 struct RECO_RANGE
 {
     uint iwcBegin;
     uint cCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rectypes/ns-rectypes-line_segment))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rectypes/ns-rectypes-line_segment
 struct LINE_SEGMENT
 {
     POINT PtA;
     POINT PtB;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rectypes/ns-rectypes-lattice_metrics))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rectypes/ns-rectypes-lattice_metrics
 struct LATTICE_METRICS
 {
     LINE_SEGMENT lsBaseline;
     short        iMidlineOffset;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rectypes/ns-rectypes-reco_lattice_property))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rectypes/ns-rectypes-reco_lattice_property
 struct RECO_LATTICE_PROPERTY
 {
     GUID   guidProperty;
@@ -2035,14 +2147,14 @@ struct RECO_LATTICE_PROPERTY
     ubyte* pPropertyValue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rectypes/ns-rectypes-reco_lattice_properties))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rectypes/ns-rectypes-reco_lattice_properties
 struct RECO_LATTICE_PROPERTIES
 {
     uint cProperties;
     RECO_LATTICE_PROPERTY** apProps;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rectypes/ns-rectypes-reco_lattice_element))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rectypes/ns-rectypes-reco_lattice_element
 struct RECO_LATTICE_ELEMENT
 {
     int    score;
@@ -2053,7 +2165,7 @@ struct RECO_LATTICE_ELEMENT
     RECO_LATTICE_PROPERTIES epProp;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rectypes/ns-rectypes-reco_lattice_column))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rectypes/ns-rectypes-reco_lattice_column
 struct RECO_LATTICE_COLUMN
 {
     uint  key;
@@ -2064,7 +2176,7 @@ struct RECO_LATTICE_COLUMN
     RECO_LATTICE_ELEMENT* pLatticeElements;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rectypes/ns-rectypes-reco_lattice))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rectypes/ns-rectypes-reco_lattice
 struct RECO_LATTICE
 {
     uint                 ulColumnCount;
@@ -2076,7 +2188,7 @@ struct RECO_LATTICE
     uint*                pulBestResultIndexes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rectypes/ns-rectypes-character_range))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rectypes/ns-rectypes-character_range
 struct CHARACTER_RANGE
 {
     wchar  wcLow;
@@ -2158,7 +2270,7 @@ HRESULT CloneContext(HRECOCONTEXT hrc, HRECOCONTEXT* pCloneHrc);
 @DllImport("inkobjcore.dll")
 HRESULT ResetContext(HRECOCONTEXT hrc);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/recapis/nf-recapis-process))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/recapis/nf-recapis-process
 @DllImport("inkobjcore.dll")
 HRESULT Process(HRECOCONTEXT hrc, BOOL* pbPartialProcessing);
 
@@ -2327,424 +2439,424 @@ struct StrokeBuilder;
 struct TipAutoCompleteClient;
 
 @GUID("9794ff82-6071-4717-8a8b-6ac7c64a686e")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkrectangle))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkrectangle
 interface IInkRectangle : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrectangle-get_top))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrectangle-get_top
     HRESULT get_Top(int* Units);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrectangle-put_top))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrectangle-put_top
     HRESULT put_Top(int Units);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrectangle-get_left))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrectangle-get_left
     HRESULT get_Left(int* Units);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrectangle-put_left))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrectangle-put_left
     HRESULT put_Left(int Units);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrectangle-get_bottom))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrectangle-get_bottom
     HRESULT get_Bottom(int* Units);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrectangle-put_bottom))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrectangle-put_bottom
     HRESULT put_Bottom(int Units);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrectangle-get_right))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrectangle-get_right
     HRESULT get_Right(int* Units);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrectangle-put_right))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrectangle-put_right
     HRESULT put_Right(int Units);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrectangle-get_data))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrectangle-get_data
     HRESULT get_Data(RECT* Rect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrectangle-put_data))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrectangle-put_data
     HRESULT put_Data(RECT Rect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrectangle-getrectangle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrectangle-getrectangle
     HRESULT GetRectangle(int* Top, int* Left, int* Bottom, int* Right);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrectangle-setrectangle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrectangle-setrectangle
     HRESULT SetRectangle(int Top, int Left, int Bottom, int Right);
 }
 
 @GUID("db489209-b7c3-411d-90f6-1548cfff271e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkextendedproperty))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkextendedproperty
 interface IInkExtendedProperty : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkextendedproperty-get_guid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkextendedproperty-get_guid
     HRESULT get_Guid(BSTR* Guid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkextendedproperty-get_data))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkextendedproperty-get_data
     HRESULT get_Data(VARIANT* Data);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkextendedproperty-put_data))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkextendedproperty-put_data
     HRESULT put_Data(VARIANT Data);
 }
 
 @GUID("89f2a8be-95a9-4530-8b8f-88e971e3e25f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkextendedproperties))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkextendedproperties
 interface IInkExtendedProperties : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkextendedproperties-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkextendedproperties-get_count
     HRESULT get_Count(int* Count);
     HRESULT get__NewEnum(IUnknown* _NewEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkextendedproperties-item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkextendedproperties-item
     HRESULT Item(VARIANT Identifier, IInkExtendedProperty* Item);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkextendedproperties-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkextendedproperties-add
     HRESULT Add(BSTR Guid, VARIANT Data, IInkExtendedProperty* InkExtendedProperty);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkextendedproperties-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkextendedproperties-remove
     HRESULT Remove(VARIANT Identifier);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkextendedproperties-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkextendedproperties-clear
     HRESULT Clear();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkextendedproperties-doespropertyexist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkextendedproperties-doespropertyexist
     HRESULT DoesPropertyExist(BSTR Guid, VARIANT_BOOL* DoesPropertyExist);
 }
 
 @GUID("bf519b75-0a15-4623-adc9-c00d436a8092")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkdrawingattributes))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkdrawingattributes
 interface IInkDrawingAttributes : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-get_color))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-get_color
     HRESULT get_Color(int* CurrentColor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-put_color))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-put_color
     HRESULT put_Color(int NewColor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-get_width))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-get_width
     HRESULT get_Width(float* CurrentWidth);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-put_width))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-put_width
     HRESULT put_Width(float NewWidth);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-get_height))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-get_height
     HRESULT get_Height(float* CurrentHeight);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-put_height))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-put_height
     HRESULT put_Height(float NewHeight);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-get_fittocurve))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-get_fittocurve
     HRESULT get_FitToCurve(VARIANT_BOOL* Flag);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-put_fittocurve))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-put_fittocurve
     HRESULT put_FitToCurve(VARIANT_BOOL Flag);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-get_ignorepressure))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-get_ignorepressure
     HRESULT get_IgnorePressure(VARIANT_BOOL* Flag);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-put_ignorepressure))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-put_ignorepressure
     HRESULT put_IgnorePressure(VARIANT_BOOL Flag);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-get_antialiased))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-get_antialiased
     HRESULT get_AntiAliased(VARIANT_BOOL* Flag);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-put_antialiased))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-put_antialiased
     HRESULT put_AntiAliased(VARIANT_BOOL Flag);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-get_transparency))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-get_transparency
     HRESULT get_Transparency(int* CurrentTransparency);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-put_transparency))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-put_transparency
     HRESULT put_Transparency(int NewTransparency);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-get_rasteroperation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-get_rasteroperation
     HRESULT get_RasterOperation(InkRasterOperation* CurrentRasterOperation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-put_rasteroperation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-put_rasteroperation
     HRESULT put_RasterOperation(InkRasterOperation NewRasterOperation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-get_pentip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-get_pentip
     HRESULT get_PenTip(InkPenTip* CurrentPenTip);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-put_pentip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-put_pentip
     HRESULT put_PenTip(InkPenTip NewPenTip);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-get_extendedproperties))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-get_extendedproperties
     HRESULT get_ExtendedProperties(IInkExtendedProperties* Properties);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdrawingattributes-clone
     HRESULT Clone(IInkDrawingAttributes* DrawingAttributes);
 }
 
 @GUID("615f1d43-8703-4565-88e2-8201d2ecd7b7")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinktransform))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinktransform
 interface IInkTransform : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-translate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-translate
     HRESULT Translate(float HorizontalComponent, float VerticalComponent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-rotate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-rotate
     HRESULT Rotate(float Degrees, float x, float y);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-reflect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-reflect
     HRESULT Reflect(VARIANT_BOOL Horizontally, VARIANT_BOOL Vertically);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-shear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-shear
     HRESULT Shear(float HorizontalComponent, float VerticalComponent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-scaletransform))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-scaletransform
     HRESULT ScaleTransform(float HorizontalMultiplier, float VerticalMultiplier);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-gettransform))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-gettransform
     HRESULT GetTransform(float* eM11, float* eM12, float* eM21, float* eM22, float* eDx, float* eDy);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-settransform))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-settransform
     HRESULT SetTransform(float eM11, float eM12, float eM21, float eM22, float eDx, float eDy);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-get_em11))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-get_em11
     HRESULT get_eM11(float* Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-put_em11))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-put_em11
     HRESULT put_eM11(float Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-get_em12))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-get_em12
     HRESULT get_eM12(float* Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-put_em12))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-put_em12
     HRESULT put_eM12(float Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-get_em21))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-get_em21
     HRESULT get_eM21(float* Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-put_em21))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-put_em21
     HRESULT put_eM21(float Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-get_em22))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-get_em22
     HRESULT get_eM22(float* Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-put_em22))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-put_em22
     HRESULT put_eM22(float Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-get_edx))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-get_edx
     HRESULT get_eDx(float* Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-put_edx))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-put_edx
     HRESULT put_eDx(float Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-get_edy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-get_edy
     HRESULT get_eDy(float* Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-put_edy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-put_edy
     HRESULT put_eDy(float Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-get_data))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-get_data
     HRESULT get_Data(XFORM* XForm);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-put_data))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktransform-put_data
     HRESULT put_Data(XFORM XForm);
 }
 
 @GUID("3bdc0a97-04e5-4e26-b813-18f052d41def")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkgesture))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkgesture
 interface IInkGesture : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkgesture-get_confidence))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkgesture-get_confidence
     HRESULT get_Confidence(InkRecognitionConfidence* Confidence);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkgesture-get_id))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkgesture-get_id
     HRESULT get_Id(InkApplicationGesture* Id);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkgesture-gethotpoint))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkgesture-gethotpoint
     HRESULT GetHotPoint(int* X, int* Y);
 }
 
 @GUID("ad30c630-40c5-4350-8405-9c71012fc558")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkcursor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkcursor
 interface IInkCursor : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcursor-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcursor-get_name
     HRESULT get_Name(BSTR* Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcursor-get_id))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcursor-get_id
     HRESULT get_Id(int* Id);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcursor-get_inverted))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcursor-get_inverted
     HRESULT get_Inverted(VARIANT_BOOL* Status);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcursor-get_drawingattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcursor-get_drawingattributes
     HRESULT get_DrawingAttributes(IInkDrawingAttributes* Attributes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcursor-putref_drawingattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcursor-putref_drawingattributes
     HRESULT putref_DrawingAttributes(IInkDrawingAttributes Attributes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcursor-get_tablet))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcursor-get_tablet
     HRESULT get_Tablet(IInkTablet* Tablet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcursor-get_buttons))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcursor-get_buttons
     HRESULT get_Buttons(IInkCursorButtons* Buttons);
 }
 
 @GUID("a248c1ac-c698-4e06-9e5c-d57f77c7e647")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkcursors))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkcursors
 interface IInkCursors : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcursors-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcursors-get_count
     HRESULT get_Count(int* Count);
     HRESULT get__NewEnum(IUnknown* _NewEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcursors-item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcursors-item
     HRESULT Item(int Index, IInkCursor* Cursor);
 }
 
 @GUID("85ef9417-1d59-49b2-a13c-702c85430894")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkcursorbutton))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkcursorbutton
 interface IInkCursorButton : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcursorbutton-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcursorbutton-get_name
     HRESULT get_Name(BSTR* Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcursorbutton-get_id))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcursorbutton-get_id
     HRESULT get_Id(BSTR* Id);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcursorbutton-get_state))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcursorbutton-get_state
     HRESULT get_State(InkCursorButtonState* CurrentState);
 }
 
 @GUID("3671cc40-b624-4671-9fa0-db119d952d54")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkcursorbuttons))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkcursorbuttons
 interface IInkCursorButtons : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcursorbuttons-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcursorbuttons-get_count
     HRESULT get_Count(int* Count);
     HRESULT get__NewEnum(IUnknown* _NewEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcursorbuttons-item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcursorbuttons-item
     HRESULT Item(VARIANT Identifier, IInkCursorButton* Button);
 }
 
 @GUID("2de25eaa-6ef8-42d5-aee9-185bc81b912d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinktablet))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinktablet
 interface IInkTablet : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktablet-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktablet-get_name
     HRESULT get_Name(BSTR* Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktablet-get_plugandplayid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktablet-get_plugandplayid
     HRESULT get_PlugAndPlayId(BSTR* Id);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktablet-get_maximuminputrectangle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktablet-get_maximuminputrectangle
     HRESULT get_MaximumInputRectangle(IInkRectangle* Rectangle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktablet-get_hardwarecapabilities))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktablet-get_hardwarecapabilities
     HRESULT get_HardwareCapabilities(TabletHardwareCapabilities* Capabilities);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktablet-ispacketpropertysupported))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktablet-ispacketpropertysupported
     HRESULT IsPacketPropertySupported(BSTR packetPropertyName, VARIANT_BOOL* Supported);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktablet-getpropertymetrics))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktablet-getpropertymetrics
     HRESULT GetPropertyMetrics(BSTR propertyName, int* Minimum, int* Maximum, TabletPropertyMetricUnit* Units, 
                                float* Resolution);
 }
 
 @GUID("90c91ad2-fa36-49d6-9516-ce8d570f6f85")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinktablet2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinktablet2
 interface IInkTablet2 : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktablet2-get_devicekind))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktablet2-get_devicekind
     HRESULT get_DeviceKind(TabletDeviceKind* Kind);
 }
 
 @GUID("7e313997-1327-41dd-8ca9-79f24be17250")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinktablet3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinktablet3
 interface IInkTablet3 : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktablet3-get_ismultitouch))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktablet3-get_ismultitouch
     HRESULT get_IsMultiTouch(VARIANT_BOOL* pIsMultiTouch);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktablet3-get_maximumcursors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktablet3-get_maximumcursors
     HRESULT get_MaximumCursors(uint* pMaximumCursors);
 }
 
 @GUID("112086d9-7779-4535-a699-862b43ac1863")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinktablets))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinktablets
 interface IInkTablets : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktablets-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktablets-get_count
     HRESULT get_Count(int* Count);
     HRESULT get__NewEnum(IUnknown* _NewEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktablets-get_defaulttablet))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktablets-get_defaulttablet
     HRESULT get_DefaultTablet(IInkTablet* DefaultTablet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktablets-item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktablets-item
     HRESULT Item(int Index, IInkTablet* Tablet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktablets-ispacketpropertysupported))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinktablets-ispacketpropertysupported
     HRESULT IsPacketPropertySupported(BSTR packetPropertyName, VARIANT_BOOL* Supported);
 }
 
 @GUID("43242fea-91d1-4a72-963e-fbb91829cfa2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkstrokedisp))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkstrokedisp
 interface IInkStrokeDisp : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-get_id))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-get_id
     HRESULT get_ID(int* ID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-get_bezierpoints))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-get_bezierpoints
     HRESULT get_BezierPoints(VARIANT* Points);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-get_drawingattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-get_drawingattributes
     HRESULT get_DrawingAttributes(IInkDrawingAttributes* DrawAttrs);
     HRESULT putref_DrawingAttributes(IInkDrawingAttributes DrawAttrs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-get_ink))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-get_ink
     HRESULT get_Ink(IInkDisp* Ink);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-get_extendedproperties))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-get_extendedproperties
     HRESULT get_ExtendedProperties(IInkExtendedProperties* Properties);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-get_polylinecusps))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-get_polylinecusps
     HRESULT get_PolylineCusps(VARIANT* Cusps);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-get_beziercusps))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-get_beziercusps
     HRESULT get_BezierCusps(VARIANT* Cusps);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-get_selfintersections))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-get_selfintersections
     HRESULT get_SelfIntersections(VARIANT* Intersections);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-get_packetcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-get_packetcount
     HRESULT get_PacketCount(int* plCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-get_packetsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-get_packetsize
     HRESULT get_PacketSize(int* plSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-get_packetdescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-get_packetdescription
     HRESULT get_PacketDescription(VARIANT* PacketDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-get_deleted))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-get_deleted
     HRESULT get_Deleted(VARIANT_BOOL* Deleted);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-getboundingbox))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-getboundingbox
     HRESULT GetBoundingBox(InkBoundingBoxMode BoundingBoxMode, IInkRectangle* Rectangle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-findintersections))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-findintersections
     HRESULT FindIntersections(IInkStrokes Strokes, VARIANT* Intersections);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-getrectangleintersections))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-getrectangleintersections
     HRESULT GetRectangleIntersections(IInkRectangle Rectangle, VARIANT* Intersections);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-clip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-clip
     HRESULT Clip(IInkRectangle Rectangle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-hittestcircle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-hittestcircle
     HRESULT HitTestCircle(int X, int Y, float Radius, VARIANT_BOOL* Intersects);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-nearestpoint))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-nearestpoint
     HRESULT NearestPoint(int X, int Y, float* Distance, float* Point);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-split))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-split
     HRESULT Split(float SplitAt, IInkStrokeDisp* NewStroke);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-getpacketdescriptionpropertymetrics))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-getpacketdescriptionpropertymetrics
     HRESULT GetPacketDescriptionPropertyMetrics(BSTR PropertyName, int* Minimum, int* Maximum, 
                                                 TabletPropertyMetricUnit* Units, float* Resolution);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-getpoints))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-getpoints
     HRESULT GetPoints(int Index, int Count, VARIANT* Points);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-setpoints))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-setpoints
     HRESULT SetPoints(VARIANT Points, int Index, int Count, int* NumberOfPointsSet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-getpacketdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-getpacketdata
     HRESULT GetPacketData(int Index, int Count, VARIANT* PacketData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-getpacketvaluesbyproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-getpacketvaluesbyproperty
     HRESULT GetPacketValuesByProperty(BSTR PropertyName, int Index, int Count, VARIANT* PacketValues);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-setpacketvaluesbyproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-setpacketvaluesbyproperty
     HRESULT SetPacketValuesByProperty(BSTR bstrPropertyName, VARIANT PacketValues, int Index, int Count, 
                                       int* NumberOfPacketsSet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-getflattenedbezierpoints))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-getflattenedbezierpoints
     HRESULT GetFlattenedBezierPoints(int FittingError, VARIANT* FlattenedBezierPoints);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-transform))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-transform
     HRESULT Transform(IInkTransform Transform, VARIANT_BOOL ApplyOnPenWidth);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-scaletorectangle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-scaletorectangle
     HRESULT ScaleToRectangle(IInkRectangle Rectangle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-move))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-move
     HRESULT Move(float HorizontalComponent, float VerticalComponent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-rotate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-rotate
     HRESULT Rotate(float Degrees, float x, float y);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-shear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-shear
     HRESULT Shear(float HorizontalMultiplier, float VerticalMultiplier);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-scaletransform))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokedisp-scaletransform
     HRESULT ScaleTransform(float HorizontalMultiplier, float VerticalMultiplier);
 }
 
 @GUID("f1f4c9d8-590a-4963-b3ae-1935671bb6f3")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkstrokes))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkstrokes
 interface IInkStrokes : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-get_count
     HRESULT get_Count(int* Count);
     HRESULT get__NewEnum(IUnknown* _NewEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-get_ink))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-get_ink
     HRESULT get_Ink(IInkDisp* Ink);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-get_recognitionresult))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-get_recognitionresult
     HRESULT get_RecognitionResult(IInkRecognitionResult* RecognitionResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-tostring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-tostring
     HRESULT ToString(BSTR* ToString);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-item
     HRESULT Item(int Index, IInkStrokeDisp* Stroke);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-add
     HRESULT Add(IInkStrokeDisp InkStroke);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-addstrokes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-addstrokes
     HRESULT AddStrokes(IInkStrokes InkStrokes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-remove
     HRESULT Remove(IInkStrokeDisp InkStroke);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-removestrokes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-removestrokes
     HRESULT RemoveStrokes(IInkStrokes InkStrokes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-modifydrawingattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-modifydrawingattributes
     HRESULT ModifyDrawingAttributes(IInkDrawingAttributes DrawAttrs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-getboundingbox))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-getboundingbox
     HRESULT GetBoundingBox(InkBoundingBoxMode BoundingBoxMode, IInkRectangle* BoundingBox);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-transform))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-transform
     HRESULT Transform(IInkTransform Transform, VARIANT_BOOL ApplyOnPenWidth);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-scaletorectangle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-scaletorectangle
     HRESULT ScaleToRectangle(IInkRectangle Rectangle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-move))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-move
     HRESULT Move(float HorizontalComponent, float VerticalComponent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-rotate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-rotate
     HRESULT Rotate(float Degrees, float x, float y);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-shear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-shear
     HRESULT Shear(float HorizontalMultiplier, float VerticalMultiplier);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-scaletransform))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-scaletransform
     HRESULT ScaleTransform(float HorizontalMultiplier, float VerticalMultiplier);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-clip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-clip
     HRESULT Clip(IInkRectangle Rectangle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-removerecognitionresult))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkstrokes-removerecognitionresult
     HRESULT RemoveRecognitionResult();
 }
 
 @GUID("7e23a88f-c30e-420f-9bdb-28902543f0c1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkcustomstrokes))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkcustomstrokes
 interface IInkCustomStrokes : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcustomstrokes-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcustomstrokes-get_count
     HRESULT get_Count(int* Count);
     HRESULT get__NewEnum(IUnknown* _NewEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcustomstrokes-item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcustomstrokes-item
     HRESULT Item(VARIANT Identifier, IInkStrokes* Strokes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcustomstrokes-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcustomstrokes-add
     HRESULT Add(BSTR Name, IInkStrokes Strokes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcustomstrokes-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcustomstrokes-remove
     HRESULT Remove(VARIANT Identifier);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcustomstrokes-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcustomstrokes-clear
     HRESULT Clear();
 }
 
@@ -2754,61 +2866,61 @@ interface _IInkStrokesEvents : IDispatch
 }
 
 @GUID("9d398fa0-c4e2-4fcd-9973-975caaf47ea6")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkdisp))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkdisp
 interface IInkDisp : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-get_strokes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-get_strokes
     HRESULT get_Strokes(IInkStrokes* Strokes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-get_extendedproperties))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-get_extendedproperties
     HRESULT get_ExtendedProperties(IInkExtendedProperties* Properties);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-get_dirty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-get_dirty
     HRESULT get_Dirty(VARIANT_BOOL* Dirty);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-put_dirty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-put_dirty
     HRESULT put_Dirty(VARIANT_BOOL Dirty);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-get_customstrokes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-get_customstrokes
     HRESULT get_CustomStrokes(IInkCustomStrokes* ppunkInkCustomStrokes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-getboundingbox))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-getboundingbox
     HRESULT GetBoundingBox(InkBoundingBoxMode BoundingBoxMode, IInkRectangle* Rectangle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-deletestrokes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-deletestrokes
     HRESULT DeleteStrokes(IInkStrokes Strokes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-deletestroke))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-deletestroke
     HRESULT DeleteStroke(IInkStrokeDisp Stroke);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-extractstrokes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-extractstrokes
     HRESULT ExtractStrokes(IInkStrokes Strokes, InkExtractFlags ExtractFlags, IInkDisp* ExtractedInk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-extractwithrectangle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-extractwithrectangle
     HRESULT ExtractWithRectangle(IInkRectangle Rectangle, InkExtractFlags extractFlags, IInkDisp* ExtractedInk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-clip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-clip
     HRESULT Clip(IInkRectangle Rectangle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-clone
     HRESULT Clone(IInkDisp* NewInk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-hittestcircle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-hittestcircle
     HRESULT HitTestCircle(int X, int Y, float radius, IInkStrokes* Strokes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-hittestwithrectangle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-hittestwithrectangle
     HRESULT HitTestWithRectangle(IInkRectangle SelectionRectangle, float IntersectPercent, IInkStrokes* Strokes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-hittestwithlasso))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-hittestwithlasso
     HRESULT HitTestWithLasso(VARIANT Points, float IntersectPercent, VARIANT* LassoPoints, IInkStrokes* Strokes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-nearestpoint))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-nearestpoint
     HRESULT NearestPoint(int X, int Y, float* PointOnStroke, float* DistanceFromPacket, IInkStrokeDisp* Stroke);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-createstrokes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-createstrokes
     HRESULT CreateStrokes(VARIANT StrokeIds, IInkStrokes* Strokes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-addstrokesatrectangle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-addstrokesatrectangle
     HRESULT AddStrokesAtRectangle(IInkStrokes SourceStrokes, IInkRectangle TargetRectangle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-save))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-save
     HRESULT Save(InkPersistenceFormat PersistenceFormat, InkPersistenceCompressionMode CompressionMode, 
                  VARIANT* Data);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-load))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-load
     HRESULT Load(VARIANT Data);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-createstroke))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-createstroke
     HRESULT CreateStroke(VARIANT PacketData, VARIANT PacketDescription, IInkStrokeDisp* Stroke);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-clipboardcopywithrectangle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-clipboardcopywithrectangle
     HRESULT ClipboardCopyWithRectangle(IInkRectangle Rectangle, InkClipboardFormats ClipboardFormats, 
                                        InkClipboardModes ClipboardModes, IDataObject* DataObject);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-clipboardcopy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-clipboardcopy
     HRESULT ClipboardCopy(IInkStrokes strokes, InkClipboardFormats ClipboardFormats, 
                           InkClipboardModes ClipboardModes, IDataObject* DataObject);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-canpaste))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-canpaste
     HRESULT CanPaste(IDataObject DataObject, VARIANT_BOOL* CanPaste);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-clipboardpaste))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkdisp-clipboardpaste
     HRESULT ClipboardPaste(int x, int y, IDataObject DataObject, IInkStrokes* Strokes);
 }
 
@@ -2818,123 +2930,123 @@ interface _IInkEvents : IDispatch
 }
 
 @GUID("e6257a9c-b511-4f4c-a8b0-a7dbc9506b83")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkrenderer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkrenderer
 interface IInkRenderer : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrenderer-getviewtransform))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrenderer-getviewtransform
     HRESULT GetViewTransform(IInkTransform ViewTransform);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrenderer-setviewtransform))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrenderer-setviewtransform
     HRESULT SetViewTransform(IInkTransform ViewTransform);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrenderer-getobjecttransform))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrenderer-getobjecttransform
     HRESULT GetObjectTransform(IInkTransform ObjectTransform);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrenderer-setobjecttransform))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrenderer-setobjecttransform
     HRESULT SetObjectTransform(IInkTransform ObjectTransform);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrenderer-draw))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrenderer-draw
     HRESULT Draw(ptrdiff_t hDC, IInkStrokes Strokes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrenderer-drawstroke))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrenderer-drawstroke
     HRESULT DrawStroke(ptrdiff_t hDC, IInkStrokeDisp Stroke, IInkDrawingAttributes DrawingAttributes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrenderer-pixeltoinkspace))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrenderer-pixeltoinkspace
     HRESULT PixelToInkSpace(ptrdiff_t hDC, int* x, int* y);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrenderer-inkspacetopixel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrenderer-inkspacetopixel
     HRESULT InkSpaceToPixel(ptrdiff_t hdcDisplay, int* x, int* y);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrenderer-pixeltoinkspacefrompoints))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrenderer-pixeltoinkspacefrompoints
     HRESULT PixelToInkSpaceFromPoints(ptrdiff_t hDC, VARIANT* Points);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrenderer-inkspacetopixelfrompoints))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrenderer-inkspacetopixelfrompoints
     HRESULT InkSpaceToPixelFromPoints(ptrdiff_t hDC, VARIANT* Points);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrenderer-measure))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrenderer-measure
     HRESULT Measure(IInkStrokes Strokes, IInkRectangle* Rectangle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrenderer-measurestroke))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrenderer-measurestroke
     HRESULT MeasureStroke(IInkStrokeDisp Stroke, IInkDrawingAttributes DrawingAttributes, IInkRectangle* Rectangle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrenderer-move))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrenderer-move
     HRESULT Move(float HorizontalComponent, float VerticalComponent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrenderer-rotate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrenderer-rotate
     HRESULT Rotate(float Degrees, float x, float y);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrenderer-scaletransform))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrenderer-scaletransform
     HRESULT ScaleTransform(float HorizontalMultiplier, float VerticalMultiplier, VARIANT_BOOL ApplyOnPenWidth);
 }
 
 @GUID("f0f060b5-8b1f-4a7c-89ec-880692588a4f")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkcollector))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkcollector
 interface IInkCollector : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-get_hwnd))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-get_hwnd
     HRESULT get_hWnd(ptrdiff_t* CurrentWindow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-put_hwnd))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-put_hwnd
     HRESULT put_hWnd(ptrdiff_t NewWindow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-get_enabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-get_enabled
     HRESULT get_Enabled(VARIANT_BOOL* Collecting);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-put_enabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-put_enabled
     HRESULT put_Enabled(VARIANT_BOOL Collecting);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-get_defaultdrawingattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-get_defaultdrawingattributes
     HRESULT get_DefaultDrawingAttributes(IInkDrawingAttributes* CurrentAttributes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-putref_defaultdrawingattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-putref_defaultdrawingattributes
     HRESULT putref_DefaultDrawingAttributes(IInkDrawingAttributes NewAttributes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-get_renderer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-get_renderer
     HRESULT get_Renderer(IInkRenderer* CurrentInkRenderer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-putref_renderer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-putref_renderer
     HRESULT putref_Renderer(IInkRenderer NewInkRenderer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-get_ink))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-get_ink
     HRESULT get_Ink(IInkDisp* Ink);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-putref_ink))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-putref_ink
     HRESULT putref_Ink(IInkDisp NewInk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-get_autoredraw))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-get_autoredraw
     HRESULT get_AutoRedraw(VARIANT_BOOL* AutoRedraw);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-put_autoredraw))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-put_autoredraw
     HRESULT put_AutoRedraw(VARIANT_BOOL AutoRedraw);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-get_collectingink))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-get_collectingink
     HRESULT get_CollectingInk(VARIANT_BOOL* Collecting);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-get_collectionmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-get_collectionmode
     HRESULT get_CollectionMode(InkCollectionMode* Mode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-put_collectionmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-put_collectionmode
     HRESULT put_CollectionMode(InkCollectionMode Mode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-get_dynamicrendering))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-get_dynamicrendering
     HRESULT get_DynamicRendering(VARIANT_BOOL* Enabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-put_dynamicrendering))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-put_dynamicrendering
     HRESULT put_DynamicRendering(VARIANT_BOOL Enabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-get_desiredpacketdescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-get_desiredpacketdescription
     HRESULT get_DesiredPacketDescription(VARIANT* PacketGuids);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-put_desiredpacketdescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-put_desiredpacketdescription
     HRESULT put_DesiredPacketDescription(VARIANT PacketGuids);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-get_mouseicon))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-get_mouseicon
     HRESULT get_MouseIcon(IPictureDisp* MouseIcon);
     HRESULT put_MouseIcon(IPictureDisp MouseIcon);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-putref_mouseicon))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-putref_mouseicon
     HRESULT putref_MouseIcon(IPictureDisp MouseIcon);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-get_mousepointer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-get_mousepointer
     HRESULT get_MousePointer(InkMousePointer* MousePointer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-put_mousepointer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-put_mousepointer
     HRESULT put_MousePointer(InkMousePointer MousePointer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-get_cursors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-get_cursors
     HRESULT get_Cursors(IInkCursors* Cursors);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-get_marginx))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-get_marginx
     HRESULT get_MarginX(int* MarginX);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-put_marginx))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-put_marginx
     HRESULT put_MarginX(int MarginX);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-get_marginy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-get_marginy
     HRESULT get_MarginY(int* MarginY);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-put_marginy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-put_marginy
     HRESULT put_MarginY(int MarginY);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-get_tablet))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-get_tablet
     HRESULT get_Tablet(IInkTablet* SingleTablet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-get_supporthighcontrastink))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-get_supporthighcontrastink
     HRESULT get_SupportHighContrastInk(VARIANT_BOOL* Support);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-put_supporthighcontrastink))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-put_supporthighcontrastink
     HRESULT put_SupportHighContrastInk(VARIANT_BOOL Support);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-setgesturestatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-setgesturestatus
     HRESULT SetGestureStatus(InkApplicationGesture Gesture, VARIANT_BOOL Listen);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-getgesturestatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-getgesturestatus
     HRESULT GetGestureStatus(InkApplicationGesture Gesture, VARIANT_BOOL* Listening);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-getwindowinputrectangle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-getwindowinputrectangle
     HRESULT GetWindowInputRectangle(IInkRectangle* WindowInputRectangle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-setwindowinputrectangle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-setwindowinputrectangle
     HRESULT SetWindowInputRectangle(IInkRectangle WindowInputRectangle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-setalltabletsmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-setalltabletsmode
     HRESULT SetAllTabletsMode(VARIANT_BOOL UseMouseForInput);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-setsingletabletintegratedmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-setsingletabletintegratedmode
     HRESULT SetSingleTabletIntegratedMode(IInkTablet Tablet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-geteventinterest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-geteventinterest
     HRESULT GetEventInterest(InkCollectorEventInterest EventId, VARIANT_BOOL* Listen);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-seteventinterest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkcollector-seteventinterest
     HRESULT SetEventInterest(InkCollectorEventInterest EventId, VARIANT_BOOL Listen);
 }
 
@@ -2944,112 +3056,112 @@ interface _IInkCollectorEvents : IDispatch
 }
 
 @GUID("b82a463b-c1c5-45a3-997c-deab5651b67a")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkoverlay))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkoverlay
 interface IInkOverlay : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_hwnd))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_hwnd
     HRESULT get_hWnd(ptrdiff_t* CurrentWindow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-put_hwnd))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-put_hwnd
     HRESULT put_hWnd(ptrdiff_t NewWindow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_enabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_enabled
     HRESULT get_Enabled(VARIANT_BOOL* Collecting);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-put_enabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-put_enabled
     HRESULT put_Enabled(VARIANT_BOOL Collecting);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_defaultdrawingattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_defaultdrawingattributes
     HRESULT get_DefaultDrawingAttributes(IInkDrawingAttributes* CurrentAttributes);
     HRESULT putref_DefaultDrawingAttributes(IInkDrawingAttributes NewAttributes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_renderer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_renderer
     HRESULT get_Renderer(IInkRenderer* CurrentInkRenderer);
     HRESULT putref_Renderer(IInkRenderer NewInkRenderer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_ink))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_ink
     HRESULT get_Ink(IInkDisp* Ink);
     HRESULT putref_Ink(IInkDisp NewInk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_autoredraw))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_autoredraw
     HRESULT get_AutoRedraw(VARIANT_BOOL* AutoRedraw);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-put_autoredraw))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-put_autoredraw
     HRESULT put_AutoRedraw(VARIANT_BOOL AutoRedraw);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_collectingink))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_collectingink
     HRESULT get_CollectingInk(VARIANT_BOOL* Collecting);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_collectionmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_collectionmode
     HRESULT get_CollectionMode(InkCollectionMode* Mode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-put_collectionmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-put_collectionmode
     HRESULT put_CollectionMode(InkCollectionMode Mode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_dynamicrendering))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_dynamicrendering
     HRESULT get_DynamicRendering(VARIANT_BOOL* Enabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-put_dynamicrendering))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-put_dynamicrendering
     HRESULT put_DynamicRendering(VARIANT_BOOL Enabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_desiredpacketdescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_desiredpacketdescription
     HRESULT get_DesiredPacketDescription(VARIANT* PacketGuids);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-put_desiredpacketdescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-put_desiredpacketdescription
     HRESULT put_DesiredPacketDescription(VARIANT PacketGuids);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_mouseicon))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_mouseicon
     HRESULT get_MouseIcon(IPictureDisp* MouseIcon);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-put_mouseicon))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-put_mouseicon
     HRESULT put_MouseIcon(IPictureDisp MouseIcon);
     HRESULT putref_MouseIcon(IPictureDisp MouseIcon);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_mousepointer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_mousepointer
     HRESULT get_MousePointer(InkMousePointer* MousePointer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-put_mousepointer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-put_mousepointer
     HRESULT put_MousePointer(InkMousePointer MousePointer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_editingmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_editingmode
     HRESULT get_EditingMode(InkOverlayEditingMode* EditingMode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-put_editingmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-put_editingmode
     HRESULT put_EditingMode(InkOverlayEditingMode EditingMode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_selection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_selection
     HRESULT get_Selection(IInkStrokes* Selection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-put_selection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-put_selection
     HRESULT put_Selection(IInkStrokes Selection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_erasermode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_erasermode
     HRESULT get_EraserMode(InkOverlayEraserMode* EraserMode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-put_erasermode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-put_erasermode
     HRESULT put_EraserMode(InkOverlayEraserMode EraserMode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_eraserwidth))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_eraserwidth
     HRESULT get_EraserWidth(int* EraserWidth);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-put_eraserwidth))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-put_eraserwidth
     HRESULT put_EraserWidth(int newEraserWidth);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_attachmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_attachmode
     HRESULT get_AttachMode(InkOverlayAttachMode* AttachMode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-put_attachmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-put_attachmode
     HRESULT put_AttachMode(InkOverlayAttachMode AttachMode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_cursors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_cursors
     HRESULT get_Cursors(IInkCursors* Cursors);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_marginx))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_marginx
     HRESULT get_MarginX(int* MarginX);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-put_marginx))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-put_marginx
     HRESULT put_MarginX(int MarginX);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_marginy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_marginy
     HRESULT get_MarginY(int* MarginY);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-put_marginy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-put_marginy
     HRESULT put_MarginY(int MarginY);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_tablet))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_tablet
     HRESULT get_Tablet(IInkTablet* SingleTablet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_supporthighcontrastink))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_supporthighcontrastink
     HRESULT get_SupportHighContrastInk(VARIANT_BOOL* Support);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-put_supporthighcontrastink))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-put_supporthighcontrastink
     HRESULT put_SupportHighContrastInk(VARIANT_BOOL Support);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_supporthighcontrastselectionui))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-get_supporthighcontrastselectionui
     HRESULT get_SupportHighContrastSelectionUI(VARIANT_BOOL* Support);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-put_supporthighcontrastselectionui))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-put_supporthighcontrastselectionui
     HRESULT put_SupportHighContrastSelectionUI(VARIANT_BOOL Support);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-hittestselection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-hittestselection
     HRESULT HitTestSelection(int x, int y, SelectionHitResult* SelArea);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-draw))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-draw
     HRESULT Draw(IInkRectangle Rect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-setgesturestatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-setgesturestatus
     HRESULT SetGestureStatus(InkApplicationGesture Gesture, VARIANT_BOOL Listen);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-getgesturestatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-getgesturestatus
     HRESULT GetGestureStatus(InkApplicationGesture Gesture, VARIANT_BOOL* Listening);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-getwindowinputrectangle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-getwindowinputrectangle
     HRESULT GetWindowInputRectangle(IInkRectangle* WindowInputRectangle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-setwindowinputrectangle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-setwindowinputrectangle
     HRESULT SetWindowInputRectangle(IInkRectangle WindowInputRectangle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-setalltabletsmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-setalltabletsmode
     HRESULT SetAllTabletsMode(VARIANT_BOOL UseMouseForInput);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-setsingletabletintegratedmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-setsingletabletintegratedmode
     HRESULT SetSingleTabletIntegratedMode(IInkTablet Tablet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-geteventinterest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-geteventinterest
     HRESULT GetEventInterest(InkCollectorEventInterest EventId, VARIANT_BOOL* Listen);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-seteventinterest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkoverlay-seteventinterest
     HRESULT SetEventInterest(InkCollectorEventInterest EventId, VARIANT_BOOL Listen);
 }
 
@@ -3059,121 +3171,121 @@ interface _IInkOverlayEvents : IDispatch
 }
 
 @GUID("e85662e0-379a-40d7-9b5c-757d233f9923")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkpicture))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkpicture
 interface IInkPicture : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_hwnd))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_hwnd
     HRESULT get_hWnd(ptrdiff_t* CurrentWindow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_defaultdrawingattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_defaultdrawingattributes
     HRESULT get_DefaultDrawingAttributes(IInkDrawingAttributes* CurrentAttributes);
     HRESULT putref_DefaultDrawingAttributes(IInkDrawingAttributes NewAttributes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_renderer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_renderer
     HRESULT get_Renderer(IInkRenderer* CurrentInkRenderer);
     HRESULT putref_Renderer(IInkRenderer NewInkRenderer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_ink))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_ink
     HRESULT get_Ink(IInkDisp* Ink);
     HRESULT putref_Ink(IInkDisp NewInk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_autoredraw))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_autoredraw
     HRESULT get_AutoRedraw(VARIANT_BOOL* AutoRedraw);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-put_autoredraw))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-put_autoredraw
     HRESULT put_AutoRedraw(VARIANT_BOOL AutoRedraw);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_collectingink))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_collectingink
     HRESULT get_CollectingInk(VARIANT_BOOL* Collecting);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_collectionmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_collectionmode
     HRESULT get_CollectionMode(InkCollectionMode* Mode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-put_collectionmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-put_collectionmode
     HRESULT put_CollectionMode(InkCollectionMode Mode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_dynamicrendering))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_dynamicrendering
     HRESULT get_DynamicRendering(VARIANT_BOOL* Enabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-put_dynamicrendering))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-put_dynamicrendering
     HRESULT put_DynamicRendering(VARIANT_BOOL Enabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_desiredpacketdescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_desiredpacketdescription
     HRESULT get_DesiredPacketDescription(VARIANT* PacketGuids);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-put_desiredpacketdescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-put_desiredpacketdescription
     HRESULT put_DesiredPacketDescription(VARIANT PacketGuids);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_mouseicon))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_mouseicon
     HRESULT get_MouseIcon(IPictureDisp* MouseIcon);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-put_mouseicon))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-put_mouseicon
     HRESULT put_MouseIcon(IPictureDisp MouseIcon);
     HRESULT putref_MouseIcon(IPictureDisp MouseIcon);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_mousepointer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_mousepointer
     HRESULT get_MousePointer(InkMousePointer* MousePointer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-put_mousepointer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-put_mousepointer
     HRESULT put_MousePointer(InkMousePointer MousePointer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_editingmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_editingmode
     HRESULT get_EditingMode(InkOverlayEditingMode* EditingMode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-put_editingmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-put_editingmode
     HRESULT put_EditingMode(InkOverlayEditingMode EditingMode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_selection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_selection
     HRESULT get_Selection(IInkStrokes* Selection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-put_selection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-put_selection
     HRESULT put_Selection(IInkStrokes Selection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_erasermode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_erasermode
     HRESULT get_EraserMode(InkOverlayEraserMode* EraserMode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-put_erasermode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-put_erasermode
     HRESULT put_EraserMode(InkOverlayEraserMode EraserMode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_eraserwidth))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_eraserwidth
     HRESULT get_EraserWidth(int* EraserWidth);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-put_eraserwidth))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-put_eraserwidth
     HRESULT put_EraserWidth(int newEraserWidth);
     HRESULT putref_Picture(IPictureDisp pPicture);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-put_picture))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-put_picture
     HRESULT put_Picture(IPictureDisp pPicture);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_picture))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_picture
     HRESULT get_Picture(IPictureDisp* ppPicture);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-put_sizemode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-put_sizemode
     HRESULT put_SizeMode(InkPictureSizeMode smNewSizeMode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_sizemode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_sizemode
     HRESULT get_SizeMode(InkPictureSizeMode* smSizeMode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-put_backcolor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-put_backcolor
     HRESULT put_BackColor(uint newColor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_backcolor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_backcolor
     HRESULT get_BackColor(uint* pColor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_cursors))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_cursors
     HRESULT get_Cursors(IInkCursors* Cursors);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_marginx))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_marginx
     HRESULT get_MarginX(int* MarginX);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-put_marginx))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-put_marginx
     HRESULT put_MarginX(int MarginX);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_marginy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_marginy
     HRESULT get_MarginY(int* MarginY);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-put_marginy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-put_marginy
     HRESULT put_MarginY(int MarginY);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_tablet))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_tablet
     HRESULT get_Tablet(IInkTablet* SingleTablet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_supporthighcontrastink))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_supporthighcontrastink
     HRESULT get_SupportHighContrastInk(VARIANT_BOOL* Support);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-put_supporthighcontrastink))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-put_supporthighcontrastink
     HRESULT put_SupportHighContrastInk(VARIANT_BOOL Support);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_supporthighcontrastselectionui))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_supporthighcontrastselectionui
     HRESULT get_SupportHighContrastSelectionUI(VARIANT_BOOL* Support);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-put_supporthighcontrastselectionui))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-put_supporthighcontrastselectionui
     HRESULT put_SupportHighContrastSelectionUI(VARIANT_BOOL Support);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-hittestselection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-hittestselection
     HRESULT HitTestSelection(int x, int y, SelectionHitResult* SelArea);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-setgesturestatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-setgesturestatus
     HRESULT SetGestureStatus(InkApplicationGesture Gesture, VARIANT_BOOL Listen);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-getgesturestatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-getgesturestatus
     HRESULT GetGestureStatus(InkApplicationGesture Gesture, VARIANT_BOOL* Listening);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-getwindowinputrectangle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-getwindowinputrectangle
     HRESULT GetWindowInputRectangle(IInkRectangle* WindowInputRectangle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-setwindowinputrectangle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-setwindowinputrectangle
     HRESULT SetWindowInputRectangle(IInkRectangle WindowInputRectangle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-setalltabletsmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-setalltabletsmode
     HRESULT SetAllTabletsMode(VARIANT_BOOL UseMouseForInput);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-setsingletabletintegratedmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-setsingletabletintegratedmode
     HRESULT SetSingleTabletIntegratedMode(IInkTablet Tablet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-geteventinterest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-geteventinterest
     HRESULT GetEventInterest(InkCollectorEventInterest EventId, VARIANT_BOOL* Listen);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-seteventinterest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-seteventinterest
     HRESULT SetEventInterest(InkCollectorEventInterest EventId, VARIANT_BOOL Listen);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_inkenabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_inkenabled
     HRESULT get_InkEnabled(VARIANT_BOOL* Collecting);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-put_inkenabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-put_inkenabled
     HRESULT put_InkEnabled(VARIANT_BOOL Collecting);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_enabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-get_enabled
     HRESULT get_Enabled(VARIANT_BOOL* pbool);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-put_enabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkpicture-put_enabled
     HRESULT put_Enabled(VARIANT_BOOL vbool);
 }
 
@@ -3184,46 +3296,46 @@ interface _IInkPictureEvents : IDispatch
 
 @GUID("782bf7cf-034b-4396-8a32-3a1833cf6b56")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkrecognizer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkrecognizer
 interface IInkRecognizer : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizer-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizer-get_name
     HRESULT get_Name(BSTR* Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizer-get_vendor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizer-get_vendor
     HRESULT get_Vendor(BSTR* Vendor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizer-get_capabilities))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizer-get_capabilities
     HRESULT get_Capabilities(InkRecognizerCapabilities* CapabilitiesFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizer-get_languages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizer-get_languages
     HRESULT get_Languages(VARIANT* Languages);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizer-get_supportedproperties))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizer-get_supportedproperties
     HRESULT get_SupportedProperties(VARIANT* SupportedProperties);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizer-get_preferredpacketdescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizer-get_preferredpacketdescription
     HRESULT get_PreferredPacketDescription(VARIANT* PreferredPacketDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizer-createrecognizercontext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizer-createrecognizercontext
     HRESULT CreateRecognizerContext(IInkRecognizerContext* Context);
 }
 
 @GUID("6110118a-3a75-4ad6-b2aa-04b2b72bbe65")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkrecognizer2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkrecognizer2
 interface IInkRecognizer2 : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizer2-get_id))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizer2-get_id
     HRESULT get_Id(BSTR* pbstrId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizer2-get_unicoderanges))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizer2-get_unicoderanges
     HRESULT get_UnicodeRanges(VARIANT* UnicodeRanges);
 }
 
 @GUID("9ccc4f12-b0b7-4a8b-bf58-4aeca4e8cefd")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkrecognizers))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkrecognizers
 interface IInkRecognizers : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizers-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizers-get_count
     HRESULT get_Count(int* Count);
     HRESULT get__NewEnum(IUnknown* _NewEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizers-getdefaultrecognizer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizers-getdefaultrecognizer
     HRESULT GetDefaultRecognizer(int lcid, IInkRecognizer* DefaultRecognizer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizers-item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizers-item
     HRESULT Item(int Index, IInkRecognizer* InkRecognizer);
 }
 
@@ -3233,192 +3345,192 @@ interface _IInkRecognitionEvents : IDispatch
 }
 
 @GUID("c68f52f9-32a3-4625-906c-44fc23b40958")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkrecognizercontext))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkrecognizercontext
 interface IInkRecognizerContext : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-get_strokes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-get_strokes
     HRESULT get_Strokes(IInkStrokes* Strokes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-putref_strokes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-putref_strokes
     HRESULT putref_Strokes(IInkStrokes Strokes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-get_characterautocompletionmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-get_characterautocompletionmode
     HRESULT get_CharacterAutoCompletionMode(InkRecognizerCharacterAutoCompletionMode* Mode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-put_characterautocompletionmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-put_characterautocompletionmode
     HRESULT put_CharacterAutoCompletionMode(InkRecognizerCharacterAutoCompletionMode Mode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-get_factoid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-get_factoid
     HRESULT get_Factoid(BSTR* Factoid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-put_factoid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-put_factoid
     HRESULT put_Factoid(BSTR factoid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-get_guide))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-get_guide
     HRESULT get_Guide(IInkRecognizerGuide* RecognizerGuide);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-putref_guide))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-putref_guide
     HRESULT putref_Guide(IInkRecognizerGuide RecognizerGuide);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-get_prefixtext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-get_prefixtext
     HRESULT get_PrefixText(BSTR* Prefix);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-put_prefixtext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-put_prefixtext
     HRESULT put_PrefixText(BSTR Prefix);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-get_suffixtext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-get_suffixtext
     HRESULT get_SuffixText(BSTR* Suffix);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-put_suffixtext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-put_suffixtext
     HRESULT put_SuffixText(BSTR Suffix);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-get_recognitionflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-get_recognitionflags
     HRESULT get_RecognitionFlags(InkRecognitionModes* Modes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-put_recognitionflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-put_recognitionflags
     HRESULT put_RecognitionFlags(InkRecognitionModes Modes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-get_wordlist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-get_wordlist
     HRESULT get_WordList(IInkWordList* WordList);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-putref_wordlist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-putref_wordlist
     HRESULT putref_WordList(IInkWordList WordList);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-get_recognizer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-get_recognizer
     HRESULT get_Recognizer(IInkRecognizer* Recognizer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-recognize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-recognize
     HRESULT Recognize(InkRecognitionStatus* RecognitionStatus, IInkRecognitionResult* RecognitionResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-stopbackgroundrecognition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-stopbackgroundrecognition
     HRESULT StopBackgroundRecognition();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-endinkinput))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-endinkinput
     HRESULT EndInkInput();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-backgroundrecognize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-backgroundrecognize
     HRESULT BackgroundRecognize(VARIANT CustomData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-backgroundrecognizewithalternates))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-backgroundrecognizewithalternates
     HRESULT BackgroundRecognizeWithAlternates(VARIANT CustomData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-clone
     HRESULT Clone(IInkRecognizerContext* RecoContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-isstringsupported))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext-isstringsupported
     HRESULT IsStringSupported(BSTR String, VARIANT_BOOL* Supported);
 }
 
 @GUID("d6f0e32f-73d8-408e-8e9f-5fea592c363f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkrecognizercontext2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkrecognizercontext2
 interface IInkRecognizerContext2 : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext2-get_enabledunicoderanges))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext2-get_enabledunicoderanges
     HRESULT get_EnabledUnicodeRanges(VARIANT* UnicodeRanges);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext2-put_enabledunicoderanges))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizercontext2-put_enabledunicoderanges
     HRESULT put_EnabledUnicodeRanges(VARIANT UnicodeRanges);
 }
 
 @GUID("3bc129a8-86cd-45ad-bde8-e0d32d61c16d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkrecognitionresult))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkrecognitionresult
 interface IInkRecognitionResult : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionresult-get_topstring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionresult-get_topstring
     HRESULT get_TopString(BSTR* TopString);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionresult-get_topalternate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionresult-get_topalternate
     HRESULT get_TopAlternate(IInkRecognitionAlternate* TopAlternate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionresult-get_topconfidence))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionresult-get_topconfidence
     HRESULT get_TopConfidence(InkRecognitionConfidence* TopConfidence);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionresult-get_strokes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionresult-get_strokes
     HRESULT get_Strokes(IInkStrokes* Strokes);
     HRESULT AlternatesFromSelection(int selectionStart, int selectionLength, int maximumAlternates, 
                                     IInkRecognitionAlternates* AlternatesFromSelection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionresult-modifytopalternate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionresult-modifytopalternate
     HRESULT ModifyTopAlternate(IInkRecognitionAlternate Alternate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionresult-setresultonstrokes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionresult-setresultonstrokes
     HRESULT SetResultOnStrokes();
 }
 
 @GUID("b7e660ad-77e4-429b-adda-873780d1fc4a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkrecognitionalternate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkrecognitionalternate
 interface IInkRecognitionAlternate : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionalternate-get_string))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionalternate-get_string
     HRESULT get_String(BSTR* RecoString);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionalternate-get_confidence))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionalternate-get_confidence
     HRESULT get_Confidence(InkRecognitionConfidence* Confidence);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionalternate-get_baseline))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionalternate-get_baseline
     HRESULT get_Baseline(VARIANT* Baseline);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionalternate-get_midline))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionalternate-get_midline
     HRESULT get_Midline(VARIANT* Midline);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionalternate-get_ascender))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionalternate-get_ascender
     HRESULT get_Ascender(VARIANT* Ascender);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionalternate-get_descender))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionalternate-get_descender
     HRESULT get_Descender(VARIANT* Descender);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionalternate-get_linenumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionalternate-get_linenumber
     HRESULT get_LineNumber(int* LineNumber);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionalternate-get_strokes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionalternate-get_strokes
     HRESULT get_Strokes(IInkStrokes* Strokes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionalternate-get_linealternates))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionalternate-get_linealternates
     HRESULT get_LineAlternates(IInkRecognitionAlternates* LineAlternates);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionalternate-get_confidencealternates))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionalternate-get_confidencealternates
     HRESULT get_ConfidenceAlternates(IInkRecognitionAlternates* ConfidenceAlternates);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionalternate-getstrokesfromstrokeranges))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionalternate-getstrokesfromstrokeranges
     HRESULT GetStrokesFromStrokeRanges(IInkStrokes Strokes, IInkStrokes* GetStrokesFromStrokeRanges);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionalternate-getstrokesfromtextrange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionalternate-getstrokesfromtextrange
     HRESULT GetStrokesFromTextRange(int* selectionStart, int* selectionLength, 
                                     IInkStrokes* GetStrokesFromTextRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionalternate-gettextrangefromstrokes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionalternate-gettextrangefromstrokes
     HRESULT GetTextRangeFromStrokes(IInkStrokes Strokes, int* selectionStart, int* selectionLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionalternate-alternateswithconstantpropertyvalues))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionalternate-alternateswithconstantpropertyvalues
     HRESULT AlternatesWithConstantPropertyValues(BSTR PropertyType, 
                                                  IInkRecognitionAlternates* AlternatesWithConstantPropertyValues);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionalternate-getpropertyvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionalternate-getpropertyvalue
     HRESULT GetPropertyValue(BSTR PropertyType, VARIANT* PropertyValue);
 }
 
 @GUID("286a167f-9f19-4c61-9d53-4f07be622b84")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkrecognitionalternates))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkrecognitionalternates
 interface IInkRecognitionAlternates : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionalternates-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionalternates-get_count
     HRESULT get_Count(int* Count);
     HRESULT get__NewEnum(IUnknown* _NewEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionalternates-get_strokes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionalternates-get_strokes
     HRESULT get_Strokes(IInkStrokes* Strokes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionalternates-item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognitionalternates-item
     HRESULT Item(int Index, IInkRecognitionAlternate* InkRecoAlternate);
 }
 
 @GUID("d934be07-7b84-4208-9136-83c20994e905")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkrecognizerguide))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkrecognizerguide
 interface IInkRecognizerGuide : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizerguide-get_writingbox))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizerguide-get_writingbox
     HRESULT get_WritingBox(IInkRectangle* Rectangle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizerguide-put_writingbox))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizerguide-put_writingbox
     HRESULT put_WritingBox(IInkRectangle Rectangle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizerguide-get_drawnbox))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizerguide-get_drawnbox
     HRESULT get_DrawnBox(IInkRectangle* Rectangle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizerguide-put_drawnbox))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizerguide-put_drawnbox
     HRESULT put_DrawnBox(IInkRectangle Rectangle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizerguide-get_rows))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizerguide-get_rows
     HRESULT get_Rows(int* Units);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizerguide-put_rows))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizerguide-put_rows
     HRESULT put_Rows(int Units);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizerguide-get_columns))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizerguide-get_columns
     HRESULT get_Columns(int* Units);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizerguide-put_columns))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizerguide-put_columns
     HRESULT put_Columns(int Units);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizerguide-get_midline))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizerguide-get_midline
     HRESULT get_Midline(int* Units);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizerguide-put_midline))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizerguide-put_midline
     HRESULT put_Midline(int Units);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizerguide-get_guidedata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizerguide-get_guidedata
     HRESULT get_GuideData(InkRecoGuide* pRecoGuide);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizerguide-put_guidedata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkrecognizerguide-put_guidedata
     HRESULT put_GuideData(InkRecoGuide recoGuide);
 }
 
 @GUID("76ba3491-cb2f-406b-9961-0e0c4cdaaef2")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkwordlist))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkwordlist
 interface IInkWordList : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkwordlist-addword))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkwordlist-addword
     HRESULT AddWord(BSTR NewWord);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkwordlist-removeword))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkwordlist-removeword
     HRESULT RemoveWord(BSTR RemoveWord);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkwordlist-merge))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkwordlist-merge
     HRESULT Merge(IInkWordList MergeWordList);
 }
 
 @GUID("14542586-11bf-4f5f-b6e7-49d0744aab6e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkwordlist2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinkwordlist2
 interface IInkWordList2 : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkwordlist2-addwords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinkwordlist2-addwords
     HRESULT AddWords(BSTR NewWords);
 }
 
@@ -3429,20 +3541,20 @@ interface IInk : IDispatch
 
 @GUID("9c1c5ad6-f22f-4de4-b453-a2cc482e7c33")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinklineinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nn-msinkaut-iinklineinfo
 interface IInkLineInfo : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinklineinfo-setformat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinklineinfo-setformat
     HRESULT SetFormat(INKMETRIC* pim);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinklineinfo-getformat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinklineinfo-getformat
     HRESULT GetFormat(INKMETRIC* pim);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinklineinfo-getinkextent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinklineinfo-getinkextent
     HRESULT GetInkExtent(INKMETRIC* pim, uint* pnWidth);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinklineinfo-getcandidate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinklineinfo-getcandidate
     HRESULT GetCandidate(uint nCandidateNum, PWSTR pwcRecogWord, uint* pcwcRecogWord, uint dwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinklineinfo-setcandidate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinklineinfo-setcandidate
     HRESULT SetCandidate(uint nCandidateNum, PWSTR strRecogWord);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinklineinfo-recognize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut/nf-msinkaut-iinklineinfo-recognize
     HRESULT Recognize();
 }
 
@@ -3452,114 +3564,114 @@ interface ISketchInk : IDispatch
 }
 
 @GUID("5de00405-f9a4-4651-b0c5-c317defd58b9")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut15/nn-msinkaut15-iinkdivider))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut15/nn-msinkaut15-iinkdivider
 interface IInkDivider : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut15/nf-msinkaut15-iinkdivider-get_strokes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut15/nf-msinkaut15-iinkdivider-get_strokes
     HRESULT get_Strokes(IInkStrokes* Strokes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut15/nf-msinkaut15-iinkdivider-putref_strokes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut15/nf-msinkaut15-iinkdivider-putref_strokes
     HRESULT putref_Strokes(IInkStrokes Strokes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut15/nf-msinkaut15-iinkdivider-get_recognizercontext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut15/nf-msinkaut15-iinkdivider-get_recognizercontext
     HRESULT get_RecognizerContext(IInkRecognizerContext* RecognizerContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut15/nf-msinkaut15-iinkdivider-putref_recognizercontext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut15/nf-msinkaut15-iinkdivider-putref_recognizercontext
     HRESULT putref_RecognizerContext(IInkRecognizerContext RecognizerContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut15/nf-msinkaut15-iinkdivider-get_lineheight))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut15/nf-msinkaut15-iinkdivider-get_lineheight
     HRESULT get_LineHeight(int* LineHeight);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut15/nf-msinkaut15-iinkdivider-put_lineheight))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut15/nf-msinkaut15-iinkdivider-put_lineheight
     HRESULT put_LineHeight(int LineHeight);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut15/nf-msinkaut15-iinkdivider-divide))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut15/nf-msinkaut15-iinkdivider-divide
     HRESULT Divide(IInkDivisionResult* InkDivisionResult);
 }
 
 @GUID("2dbec0a7-74c7-4b38-81eb-aa8ef0c24900")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut15/nn-msinkaut15-iinkdivisionresult))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut15/nn-msinkaut15-iinkdivisionresult
 interface IInkDivisionResult : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut15/nf-msinkaut15-iinkdivisionresult-get_strokes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut15/nf-msinkaut15-iinkdivisionresult-get_strokes
     HRESULT get_Strokes(IInkStrokes* Strokes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut15/nf-msinkaut15-iinkdivisionresult-resultbytype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut15/nf-msinkaut15-iinkdivisionresult-resultbytype
     HRESULT ResultByType(InkDivisionType divisionType, IInkDivisionUnits* InkDivisionUnits);
 }
 
 @GUID("85aee342-48b0-4244-9dd5-1ed435410fab")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut15/nn-msinkaut15-iinkdivisionunit))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut15/nn-msinkaut15-iinkdivisionunit
 interface IInkDivisionUnit : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut15/nf-msinkaut15-iinkdivisionunit-get_strokes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut15/nf-msinkaut15-iinkdivisionunit-get_strokes
     HRESULT get_Strokes(IInkStrokes* Strokes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut15/nf-msinkaut15-iinkdivisionunit-get_divisiontype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut15/nf-msinkaut15-iinkdivisionunit-get_divisiontype
     HRESULT get_DivisionType(InkDivisionType* divisionType);
     HRESULT get_RecognizedString(BSTR* RecoString);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut15/nf-msinkaut15-iinkdivisionunit-get_rotationtransform))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut15/nf-msinkaut15-iinkdivisionunit-get_rotationtransform
     HRESULT get_RotationTransform(IInkTransform* RotationTransform);
 }
 
 @GUID("1bb5ddc2-31cc-4135-ab82-2c66c9f00c41")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut15/nn-msinkaut15-iinkdivisionunits))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut15/nn-msinkaut15-iinkdivisionunits
 interface IInkDivisionUnits : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut15/nf-msinkaut15-iinkdivisionunits-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut15/nf-msinkaut15-iinkdivisionunits-get_count
     HRESULT get_Count(int* Count);
     HRESULT get__NewEnum(IUnknown* _NewEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/msinkaut15/nf-msinkaut15-iinkdivisionunits-item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/msinkaut15/nf-msinkaut15-iinkdivisionunits-item
     HRESULT Item(int Index, IInkDivisionUnit* InkDivisionUnit);
 }
 
 @GUID("fa7a4083-5747-4040-a182-0b0e9fd4fac7")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nn-peninputpanel-ipeninputpanel))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nn-peninputpanel-ipeninputpanel
 interface IPenInputPanel : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-get_busy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-get_busy
     HRESULT get_Busy(VARIANT_BOOL* Busy);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-get_factoid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-get_factoid
     HRESULT get_Factoid(BSTR* Factoid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-put_factoid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-put_factoid
     HRESULT put_Factoid(BSTR Factoid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-get_attachededitwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-get_attachededitwindow
     HRESULT get_AttachedEditWindow(int* AttachedEditWindow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-put_attachededitwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-put_attachededitwindow
     HRESULT put_AttachedEditWindow(int AttachedEditWindow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-get_currentpanel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-get_currentpanel
     HRESULT get_CurrentPanel(PanelType* CurrentPanel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-put_currentpanel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-put_currentpanel
     HRESULT put_CurrentPanel(PanelType CurrentPanel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-get_defaultpanel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-get_defaultpanel
     HRESULT get_DefaultPanel(PanelType* pDefaultPanel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-put_defaultpanel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-put_defaultpanel
     HRESULT put_DefaultPanel(PanelType DefaultPanel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-get_visible))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-get_visible
     HRESULT get_Visible(VARIANT_BOOL* Visible);
     HRESULT put_Visible(VARIANT_BOOL Visible);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-get_top))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-get_top
     HRESULT get_Top(int* Top);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-get_left))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-get_left
     HRESULT get_Left(int* Left);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-get_width))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-get_width
     HRESULT get_Width(int* Width);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-get_height))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-get_height
     HRESULT get_Height(int* Height);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-get_verticaloffset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-get_verticaloffset
     HRESULT get_VerticalOffset(int* VerticalOffset);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-put_verticaloffset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-put_verticaloffset
     HRESULT put_VerticalOffset(int VerticalOffset);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-get_horizontaloffset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-get_horizontaloffset
     HRESULT get_HorizontalOffset(int* HorizontalOffset);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-put_horizontaloffset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-put_horizontaloffset
     HRESULT put_HorizontalOffset(int HorizontalOffset);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-get_autoshow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-get_autoshow
     HRESULT get_AutoShow(VARIANT_BOOL* pAutoShow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-put_autoshow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-put_autoshow
     HRESULT put_AutoShow(VARIANT_BOOL AutoShow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-moveto))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-moveto
     HRESULT MoveTo(int Left, int Top);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-commitpendinginput))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-commitpendinginput
     HRESULT CommitPendingInput();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-refresh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-refresh
     HRESULT Refresh();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-enabletsf))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ipeninputpanel-enabletsf
     HRESULT EnableTsf(VARIANT_BOOL Enable);
 }
 
@@ -3570,102 +3682,102 @@ interface _IPenInputPanelEvents : IDispatch
 
 @GUID("56fdea97-ecd6-43e7-aa3a-816be7785860")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nn-peninputpanel-ihandwrittentextinsertion))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nn-peninputpanel-ihandwrittentextinsertion
 interface IHandwrittenTextInsertion : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ihandwrittentextinsertion-insertrecognitionresultsarray))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ihandwrittentextinsertion-insertrecognitionresultsarray
     HRESULT InsertRecognitionResultsArray(SAFEARRAY* psaAlternates, uint locale, 
                                           BOOL fAlternateContainsAutoSpacingInformation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ihandwrittentextinsertion-insertinkrecognitionresult))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-ihandwrittentextinsertion-insertinkrecognitionresult
     HRESULT InsertInkRecognitionResult(IInkRecognitionResult pIInkRecoResult, uint locale, 
                                        BOOL fAlternateContainsAutoSpacingInformation);
 }
 
 @GUID("27560408-8e64-4fe1-804e-421201584b31")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nn-peninputpanel-itextinputpaneleventsink))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nn-peninputpanel-itextinputpaneleventsink
 interface ITextInputPanelEventSink : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpaneleventsink-inplacestatechanging))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpaneleventsink-inplacestatechanging
     HRESULT InPlaceStateChanging(InPlaceState oldInPlaceState, InPlaceState newInPlaceState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpaneleventsink-inplacestatechanged))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpaneleventsink-inplacestatechanged
     HRESULT InPlaceStateChanged(InPlaceState oldInPlaceState, InPlaceState newInPlaceState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpaneleventsink-inplacesizechanging))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpaneleventsink-inplacesizechanging
     HRESULT InPlaceSizeChanging(RECT oldBoundingRectangle, RECT newBoundingRectangle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpaneleventsink-inplacesizechanged))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpaneleventsink-inplacesizechanged
     HRESULT InPlaceSizeChanged(RECT oldBoundingRectangle, RECT newBoundingRectangle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpaneleventsink-inputareachanging))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpaneleventsink-inputareachanging
     HRESULT InputAreaChanging(PanelInputArea oldInputArea, PanelInputArea newInputArea);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpaneleventsink-inputareachanged))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpaneleventsink-inputareachanged
     HRESULT InputAreaChanged(PanelInputArea oldInputArea, PanelInputArea newInputArea);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpaneleventsink-correctionmodechanging))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpaneleventsink-correctionmodechanging
     HRESULT CorrectionModeChanging(CorrectionMode oldCorrectionMode, CorrectionMode newCorrectionMode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpaneleventsink-correctionmodechanged))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpaneleventsink-correctionmodechanged
     HRESULT CorrectionModeChanged(CorrectionMode oldCorrectionMode, CorrectionMode newCorrectionMode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpaneleventsink-inplacevisibilitychanging))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpaneleventsink-inplacevisibilitychanging
     HRESULT InPlaceVisibilityChanging(BOOL oldVisible, BOOL newVisible);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpaneleventsink-inplacevisibilitychanged))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpaneleventsink-inplacevisibilitychanged
     HRESULT InPlaceVisibilityChanged(BOOL oldVisible, BOOL newVisible);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpaneleventsink-textinserting))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpaneleventsink-textinserting
     HRESULT TextInserting(SAFEARRAY* Ink);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpaneleventsink-textinserted))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpaneleventsink-textinserted
     HRESULT TextInserted(SAFEARRAY* Ink);
 }
 
 @GUID("6b6a65a5-6af3-46c2-b6ea-56cd1f80df71")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nn-peninputpanel-itextinputpanel))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nn-peninputpanel-itextinputpanel
 interface ITextInputPanel : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-get_attachededitwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-get_attachededitwindow
     HRESULT get_AttachedEditWindow(HWND* AttachedEditWindow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-put_attachededitwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-put_attachededitwindow
     HRESULT put_AttachedEditWindow(HWND AttachedEditWindow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-get_currentinteractionmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-get_currentinteractionmode
     HRESULT get_CurrentInteractionMode(InteractionMode* CurrentInteractionMode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-get_defaultinplacestate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-get_defaultinplacestate
     HRESULT get_DefaultInPlaceState(InPlaceState* State);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-put_defaultinplacestate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-put_defaultinplacestate
     HRESULT put_DefaultInPlaceState(InPlaceState State);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-get_currentinplacestate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-get_currentinplacestate
     HRESULT get_CurrentInPlaceState(InPlaceState* State);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-get_defaultinputarea))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-get_defaultinputarea
     HRESULT get_DefaultInputArea(PanelInputArea* Area);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-put_defaultinputarea))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-put_defaultinputarea
     HRESULT put_DefaultInputArea(PanelInputArea Area);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-get_currentinputarea))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-get_currentinputarea
     HRESULT get_CurrentInputArea(PanelInputArea* Area);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-get_currentcorrectionmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-get_currentcorrectionmode
     HRESULT get_CurrentCorrectionMode(CorrectionMode* Mode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-get_preferredinplacedirection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-get_preferredinplacedirection
     HRESULT get_PreferredInPlaceDirection(InPlaceDirection* Direction);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-put_preferredinplacedirection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-put_preferredinplacedirection
     HRESULT put_PreferredInPlaceDirection(InPlaceDirection Direction);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-get_expandpostinsertioncorrection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-get_expandpostinsertioncorrection
     HRESULT get_ExpandPostInsertionCorrection(BOOL* Expand);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-put_expandpostinsertioncorrection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-put_expandpostinsertioncorrection
     HRESULT put_ExpandPostInsertionCorrection(BOOL Expand);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-get_inplacevisibleonfocus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-get_inplacevisibleonfocus
     HRESULT get_InPlaceVisibleOnFocus(BOOL* Visible);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-put_inplacevisibleonfocus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-put_inplacevisibleonfocus
     HRESULT put_InPlaceVisibleOnFocus(BOOL Visible);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-get_inplaceboundingrectangle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-get_inplaceboundingrectangle
     HRESULT get_InPlaceBoundingRectangle(RECT* BoundingRectangle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-get_popupcorrectionheight))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-get_popupcorrectionheight
     HRESULT get_PopUpCorrectionHeight(int* Height);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-get_popdowncorrectionheight))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-get_popdowncorrectionheight
     HRESULT get_PopDownCorrectionHeight(int* Height);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-commitpendinginput))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-commitpendinginput
     HRESULT CommitPendingInput();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-setinplacevisibility))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-setinplacevisibility
     HRESULT SetInPlaceVisibility(BOOL Visible);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-setinplaceposition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-setinplaceposition
     HRESULT SetInPlacePosition(int xPosition, int yPosition, CorrectionPosition position);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-setinplacehovertargetposition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-setinplacehovertargetposition
     HRESULT SetInPlaceHoverTargetPosition(int xPosition, int yPosition);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-advise))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-advise
     HRESULT Advise(ITextInputPanelEventSink EventSink, uint EventMask);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-unadvise))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanel-unadvise
     HRESULT Unadvise(ITextInputPanelEventSink EventSink);
 }
 
@@ -3680,170 +3792,170 @@ interface IInputPanelWindowHandle : IUnknown
 
 @GUID("9f424568-1920-48cc-9811-a993cbf5adba")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nn-peninputpanel-itextinputpanelruninfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nn-peninputpanel-itextinputpanelruninfo
 interface ITextInputPanelRunInfo : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanelruninfo-istiprunning))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/peninputpanel/nf-peninputpanel-itextinputpanelruninfo-istiprunning
     HRESULT IsTipRunning(BOOL* pfRunning);
 }
 
 @GUID("f2127a19-fbfb-4aed-8464-3f36d78cfefb")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nn-inked-iinkedit))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nn-inked-iinkedit
 interface IInkEdit : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_status))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_status
     HRESULT get_Status(InkEditStatus* pStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_usemouseforinput))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_usemouseforinput
     HRESULT get_UseMouseForInput(VARIANT_BOOL* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_usemouseforinput))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_usemouseforinput
     HRESULT put_UseMouseForInput(VARIANT_BOOL newVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_inkmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_inkmode
     HRESULT get_InkMode(InkMode* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_inkmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_inkmode
     HRESULT put_InkMode(InkMode newVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_inkinsertmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_inkinsertmode
     HRESULT get_InkInsertMode(InkInsertMode* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_inkinsertmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_inkinsertmode
     HRESULT put_InkInsertMode(InkInsertMode newVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_drawingattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_drawingattributes
     HRESULT get_DrawingAttributes(IInkDrawingAttributes* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-putref_drawingattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-putref_drawingattributes
     HRESULT putref_DrawingAttributes(IInkDrawingAttributes newVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_recognitiontimeout))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_recognitiontimeout
     HRESULT get_RecognitionTimeout(int* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_recognitiontimeout))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_recognitiontimeout
     HRESULT put_RecognitionTimeout(int newVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_recognizer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_recognizer
     HRESULT get_Recognizer(IInkRecognizer* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-putref_recognizer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-putref_recognizer
     HRESULT putref_Recognizer(IInkRecognizer newVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_factoid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_factoid
     HRESULT get_Factoid(BSTR* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_factoid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_factoid
     HRESULT put_Factoid(BSTR newVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_selinks))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_selinks
     HRESULT get_SelInks(VARIANT* pSelInk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_selinks))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_selinks
     HRESULT put_SelInks(VARIANT SelInk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_selinksdisplaymode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_selinksdisplaymode
     HRESULT get_SelInksDisplayMode(InkDisplayMode* pInkDisplayMode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_selinksdisplaymode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_selinksdisplaymode
     HRESULT put_SelInksDisplayMode(InkDisplayMode InkDisplayMode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-recognize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-recognize
     HRESULT Recognize();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-getgesturestatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-getgesturestatus
     HRESULT GetGestureStatus(InkApplicationGesture Gesture, VARIANT_BOOL* pListen);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-setgesturestatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-setgesturestatus
     HRESULT SetGestureStatus(InkApplicationGesture Gesture, VARIANT_BOOL Listen);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_backcolor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_backcolor
     HRESULT put_BackColor(uint clr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_backcolor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_backcolor
     HRESULT get_BackColor(uint* pclr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_appearance))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_appearance
     HRESULT get_Appearance(AppearanceConstants* pAppearance);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_appearance))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_appearance
     HRESULT put_Appearance(AppearanceConstants pAppearance);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_borderstyle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_borderstyle
     HRESULT get_BorderStyle(BorderStyleConstants* pBorderStyle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_borderstyle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_borderstyle
     HRESULT put_BorderStyle(BorderStyleConstants pBorderStyle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_hwnd))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_hwnd
     HRESULT get_Hwnd(OLE_HANDLE* pohHwnd);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_font))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_font
     HRESULT get_Font(IFontDisp* ppFont);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-putref_font))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-putref_font
     HRESULT putref_Font(IFontDisp ppFont);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_text))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_text
     HRESULT get_Text(BSTR* pbstrText);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_text))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_text
     HRESULT put_Text(BSTR pbstrText);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_mouseicon))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_mouseicon
     HRESULT get_MouseIcon(IPictureDisp* MouseIcon);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_mouseicon))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_mouseicon
     HRESULT put_MouseIcon(IPictureDisp MouseIcon);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-putref_mouseicon))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-putref_mouseicon
     HRESULT putref_MouseIcon(IPictureDisp MouseIcon);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_mousepointer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_mousepointer
     HRESULT get_MousePointer(InkMousePointer* MousePointer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_mousepointer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_mousepointer
     HRESULT put_MousePointer(InkMousePointer MousePointer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_locked))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_locked
     HRESULT get_Locked(VARIANT_BOOL* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_locked))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_locked
     HRESULT put_Locked(VARIANT_BOOL newVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_enabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_enabled
     HRESULT get_Enabled(VARIANT_BOOL* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_enabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_enabled
     HRESULT put_Enabled(VARIANT_BOOL newVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_maxlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_maxlength
     HRESULT get_MaxLength(int* plMaxLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_maxlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_maxlength
     HRESULT put_MaxLength(int lMaxLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_multiline))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_multiline
     HRESULT get_MultiLine(VARIANT_BOOL* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_multiline))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_multiline
     HRESULT put_MultiLine(VARIANT_BOOL newVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_scrollbars))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_scrollbars
     HRESULT get_ScrollBars(ScrollBarsConstants* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_scrollbars))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_scrollbars
     HRESULT put_ScrollBars(ScrollBarsConstants newVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_disablenoscroll))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_disablenoscroll
     HRESULT get_DisableNoScroll(VARIANT_BOOL* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_disablenoscroll))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_disablenoscroll
     HRESULT put_DisableNoScroll(VARIANT_BOOL newVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_selalignment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_selalignment
     HRESULT get_SelAlignment(VARIANT* pvarSelAlignment);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_selalignment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_selalignment
     HRESULT put_SelAlignment(VARIANT pvarSelAlignment);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_selbold))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_selbold
     HRESULT get_SelBold(VARIANT* pvarSelBold);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_selbold))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_selbold
     HRESULT put_SelBold(VARIANT pvarSelBold);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_selitalic))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_selitalic
     HRESULT get_SelItalic(VARIANT* pvarSelItalic);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_selitalic))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_selitalic
     HRESULT put_SelItalic(VARIANT pvarSelItalic);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_selunderline))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_selunderline
     HRESULT get_SelUnderline(VARIANT* pvarSelUnderline);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_selunderline))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_selunderline
     HRESULT put_SelUnderline(VARIANT pvarSelUnderline);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_selcolor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_selcolor
     HRESULT get_SelColor(VARIANT* pvarSelColor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_selcolor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_selcolor
     HRESULT put_SelColor(VARIANT pvarSelColor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_selfontname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_selfontname
     HRESULT get_SelFontName(VARIANT* pvarSelFontName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_selfontname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_selfontname
     HRESULT put_SelFontName(VARIANT pvarSelFontName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_selfontsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_selfontsize
     HRESULT get_SelFontSize(VARIANT* pvarSelFontSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_selfontsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_selfontsize
     HRESULT put_SelFontSize(VARIANT pvarSelFontSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_selcharoffset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_selcharoffset
     HRESULT get_SelCharOffset(VARIANT* pvarSelCharOffset);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_selcharoffset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_selcharoffset
     HRESULT put_SelCharOffset(VARIANT pvarSelCharOffset);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_textrtf))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_textrtf
     HRESULT get_TextRTF(BSTR* pbstrTextRTF);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_textrtf))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_textrtf
     HRESULT put_TextRTF(BSTR pbstrTextRTF);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_selstart))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_selstart
     HRESULT get_SelStart(int* plSelStart);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_selstart))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_selstart
     HRESULT put_SelStart(int plSelStart);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_sellength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_sellength
     HRESULT get_SelLength(int* plSelLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_sellength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_sellength
     HRESULT put_SelLength(int plSelLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_seltext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_seltext
     HRESULT get_SelText(BSTR* pbstrSelText);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_seltext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_seltext
     HRESULT put_SelText(BSTR pbstrSelText);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_selrtf))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-get_selrtf
     HRESULT get_SelRTF(BSTR* pbstrSelRTF);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_selrtf))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-put_selrtf
     HRESULT put_SelRTF(BSTR pbstrSelRTF);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-refresh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/inked/nf-inked-iinkedit-refresh
     HRESULT Refresh();
 }
 
@@ -3853,288 +3965,288 @@ interface _IInkEditEvents : IDispatch
 }
 
 @GUID("eba615aa-fac6-4738-ba5f-ff09e9fe473e")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/micaut/nn-micaut-imathinputcontrol))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/micaut/nn-micaut-imathinputcontrol
 interface IMathInputControl : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/micaut/nf-micaut-imathinputcontrol-show))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/micaut/nf-micaut-imathinputcontrol-show
     HRESULT Show();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/micaut/nf-micaut-imathinputcontrol-hide))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/micaut/nf-micaut-imathinputcontrol-hide
     HRESULT Hide();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/micaut/nf-micaut-imathinputcontrol-isvisible))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/micaut/nf-micaut-imathinputcontrol-isvisible
     HRESULT IsVisible(VARIANT_BOOL* pvbShown);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/micaut/nf-micaut-imathinputcontrol-getposition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/micaut/nf-micaut-imathinputcontrol-getposition
     HRESULT GetPosition(int* Left, int* Top, int* Right, int* Bottom);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/micaut/nf-micaut-imathinputcontrol-setposition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/micaut/nf-micaut-imathinputcontrol-setposition
     HRESULT SetPosition(int Left, int Top, int Right, int Bottom);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/micaut/nf-micaut-imathinputcontrol-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/micaut/nf-micaut-imathinputcontrol-clear
     HRESULT Clear();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/micaut/nf-micaut-imathinputcontrol-setcustompaint))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/micaut/nf-micaut-imathinputcontrol-setcustompaint
     HRESULT SetCustomPaint(int Element, VARIANT_BOOL Paint);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/micaut/nf-micaut-imathinputcontrol-setcaptiontext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/micaut/nf-micaut-imathinputcontrol-setcaptiontext
     HRESULT SetCaptionText(BSTR CaptionText);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/micaut/nf-micaut-imathinputcontrol-loadink))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/micaut/nf-micaut-imathinputcontrol-loadink
     HRESULT LoadInk(IInkDisp Ink);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/micaut/nf-micaut-imathinputcontrol-setownerwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/micaut/nf-micaut-imathinputcontrol-setownerwindow
     HRESULT SetOwnerWindow(ptrdiff_t OwnerWindow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/micaut/nf-micaut-imathinputcontrol-enableextendedbuttons))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/micaut/nf-micaut-imathinputcontrol-enableextendedbuttons
     HRESULT EnableExtendedButtons(VARIANT_BOOL Extended);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/micaut/nf-micaut-imathinputcontrol-getpreviewheight))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/micaut/nf-micaut-imathinputcontrol-getpreviewheight
     HRESULT GetPreviewHeight(int* Height);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/micaut/nf-micaut-imathinputcontrol-setpreviewheight))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/micaut/nf-micaut-imathinputcontrol-setpreviewheight
     HRESULT SetPreviewHeight(int Height);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/micaut/nf-micaut-imathinputcontrol-enableautogrow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/micaut/nf-micaut-imathinputcontrol-enableautogrow
     HRESULT EnableAutoGrow(VARIANT_BOOL AutoGrow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/micaut/nf-micaut-imathinputcontrol-addfunctionname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/micaut/nf-micaut-imathinputcontrol-addfunctionname
     HRESULT AddFunctionName(BSTR FunctionName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/micaut/nf-micaut-imathinputcontrol-removefunctionname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/micaut/nf-micaut-imathinputcontrol-removefunctionname
     HRESULT RemoveFunctionName(BSTR FunctionName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/micaut/nf-micaut-imathinputcontrol-gethovericon))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/micaut/nf-micaut-imathinputcontrol-gethovericon
     HRESULT GetHoverIcon(IPictureDisp* HoverImage);
 }
 
 @GUID("683336b5-a47d-4358-96f9-875a472ae70a")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/micaut/nn-micaut-_imathinputcontrolevents))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/micaut/nn-micaut-_imathinputcontrolevents
 interface _IMathInputControlEvents : IDispatch
 {
 }
 
 @GUID("a8bb5d22-3144-4a7b-93cd-f34a16be513a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nn-rtscom-irealtimestylus))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nn-rtscom-irealtimestylus
 interface IRealTimeStylus : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-get_enabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-get_enabled
     HRESULT get_Enabled(BOOL* pfEnable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-put_enabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-put_enabled
     HRESULT put_Enabled(BOOL fEnable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-get_hwnd))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-get_hwnd
     HRESULT get_HWND(HANDLE_PTR* phwnd);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-put_hwnd))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-put_hwnd
     HRESULT put_HWND(HANDLE_PTR hwnd);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-get_windowinputrectangle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-get_windowinputrectangle
     HRESULT get_WindowInputRectangle(RECT* prcWndInputRect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-put_windowinputrectangle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-put_windowinputrectangle
     HRESULT put_WindowInputRectangle(const(RECT)* prcWndInputRect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-addstylussyncplugin))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-addstylussyncplugin
     HRESULT AddStylusSyncPlugin(uint iIndex, IStylusSyncPlugin piPlugin);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-removestylussyncplugin))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-removestylussyncplugin
     HRESULT RemoveStylusSyncPlugin(uint iIndex, IStylusSyncPlugin* ppiPlugin);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-removeallstylussyncplugins))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-removeallstylussyncplugins
     HRESULT RemoveAllStylusSyncPlugins();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-getstylussyncplugin))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-getstylussyncplugin
     HRESULT GetStylusSyncPlugin(uint iIndex, IStylusSyncPlugin* ppiPlugin);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-getstylussyncplugincount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-getstylussyncplugincount
     HRESULT GetStylusSyncPluginCount(uint* pcPlugins);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-addstylusasyncplugin))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-addstylusasyncplugin
     HRESULT AddStylusAsyncPlugin(uint iIndex, IStylusAsyncPlugin piPlugin);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-removestylusasyncplugin))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-removestylusasyncplugin
     HRESULT RemoveStylusAsyncPlugin(uint iIndex, IStylusAsyncPlugin* ppiPlugin);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-removeallstylusasyncplugins))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-removeallstylusasyncplugins
     HRESULT RemoveAllStylusAsyncPlugins();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-getstylusasyncplugin))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-getstylusasyncplugin
     HRESULT GetStylusAsyncPlugin(uint iIndex, IStylusAsyncPlugin* ppiPlugin);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-getstylusasyncplugincount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-getstylusasyncplugincount
     HRESULT GetStylusAsyncPluginCount(uint* pcPlugins);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-get_childrealtimestylusplugin))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-get_childrealtimestylusplugin
     HRESULT get_ChildRealTimeStylusPlugin(IRealTimeStylus* ppiRTS);
     HRESULT putref_ChildRealTimeStylusPlugin(IRealTimeStylus piRTS);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-addcustomstylusdatatoqueue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-addcustomstylusdatatoqueue
     HRESULT AddCustomStylusDataToQueue(StylusQueue sq, const(GUID)* pGuidId, uint cbData, ubyte* pbData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-clearstylusqueues))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-clearstylusqueues
     HRESULT ClearStylusQueues();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-setalltabletsmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-setalltabletsmode
     HRESULT SetAllTabletsMode(BOOL fUseMouseForInput);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-setsingletabletmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-setsingletabletmode
     HRESULT SetSingleTabletMode(IInkTablet piTablet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-gettablet))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-gettablet
     HRESULT GetTablet(IInkTablet* ppiSingleTablet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-gettabletcontextidfromtablet))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-gettabletcontextidfromtablet
     HRESULT GetTabletContextIdFromTablet(IInkTablet piTablet, uint* ptcid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-gettabletfromtabletcontextid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-gettabletfromtabletcontextid
     HRESULT GetTabletFromTabletContextId(uint tcid, IInkTablet* ppiTablet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-getalltabletcontextids))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-getalltabletcontextids
     HRESULT GetAllTabletContextIds(uint* pcTcidCount, uint** ppTcids);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-getstyluses))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-getstyluses
     HRESULT GetStyluses(IInkCursors* ppiInkCursors);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-getstylusforid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-getstylusforid
     HRESULT GetStylusForId(uint sid, IInkCursor* ppiInkCursor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-setdesiredpacketdescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-setdesiredpacketdescription
     HRESULT SetDesiredPacketDescription(uint cProperties, const(GUID)* pPropertyGuids);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-getdesiredpacketdescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-getdesiredpacketdescription
     HRESULT GetDesiredPacketDescription(uint* pcProperties, GUID** ppPropertyGuids);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-getpacketdescriptiondata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus-getpacketdescriptiondata
     HRESULT GetPacketDescriptionData(uint tcid, float* pfInkToDeviceScaleX, float* pfInkToDeviceScaleY, 
                                      uint* pcPacketProperties, PACKET_PROPERTY** ppPacketProperties);
 }
 
 @GUID("b5f2a6cd-3179-4a3e-b9c4-bb5865962be2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nn-rtscom-irealtimestylus2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nn-rtscom-irealtimestylus2
 interface IRealTimeStylus2 : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus2-get_flicksenabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus2-get_flicksenabled
     HRESULT get_FlicksEnabled(BOOL* pfEnable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus2-put_flicksenabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus2-put_flicksenabled
     HRESULT put_FlicksEnabled(BOOL fEnable);
 }
 
 @GUID("d70230a3-6986-4051-b57a-1cf69f4d9db5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nn-rtscom-irealtimestylus3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nn-rtscom-irealtimestylus3
 interface IRealTimeStylus3 : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus3-get_multitouchenabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus3-get_multitouchenabled
     HRESULT get_MultiTouchEnabled(BOOL* pfEnable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus3-put_multitouchenabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylus3-put_multitouchenabled
     HRESULT put_MultiTouchEnabled(BOOL fEnable);
 }
 
 @GUID("aa87eab8-ab4a-4cea-b5cb-46d84c6a2509")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nn-rtscom-irealtimestylussynchronization))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nn-rtscom-irealtimestylussynchronization
 interface IRealTimeStylusSynchronization : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylussynchronization-acquirelock))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylussynchronization-acquirelock
     HRESULT AcquireLock(RealTimeStylusLockType lock);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylussynchronization-releaselock))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-irealtimestylussynchronization-releaselock
     HRESULT ReleaseLock(RealTimeStylusLockType lock);
 }
 
 @GUID("a5fd4e2d-c44b-4092-9177-260905eb672b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nn-rtscom-istrokebuilder))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nn-rtscom-istrokebuilder
 interface IStrokeBuilder : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istrokebuilder-createstroke))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istrokebuilder-createstroke
     HRESULT CreateStroke(uint cPktBuffLength, const(int)* pPackets, uint cPacketProperties, 
                          const(PACKET_PROPERTY)* pPacketProperties, float fInkToDeviceScaleX, 
                          float fInkToDeviceScaleY, IInkStrokeDisp* ppIInkStroke);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istrokebuilder-beginstroke))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istrokebuilder-beginstroke
     HRESULT BeginStroke(uint tcid, uint sid, const(int)* pPacket, uint cPacketProperties, 
                         PACKET_PROPERTY* pPacketProperties, float fInkToDeviceScaleX, float fInkToDeviceScaleY, 
                         IInkStrokeDisp* ppIInkStroke);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istrokebuilder-appendpackets))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istrokebuilder-appendpackets
     HRESULT AppendPackets(uint tcid, uint sid, uint cPktBuffLength, const(int)* pPackets);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istrokebuilder-endstroke))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istrokebuilder-endstroke
     HRESULT EndStroke(uint tcid, uint sid, IInkStrokeDisp* ppIInkStroke, RECT* pDirtyRect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istrokebuilder-get_ink))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istrokebuilder-get_ink
     HRESULT get_Ink(IInkDisp* ppiInkObj);
     HRESULT putref_Ink(IInkDisp piInkObj);
 }
 
 @GUID("a81436d8-4757-4fd1-a185-133f97c6c545")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nn-rtscom-istylusplugin))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nn-rtscom-istylusplugin
 interface IStylusPlugin : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istylusplugin-realtimestylusenabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istylusplugin-realtimestylusenabled
     HRESULT RealTimeStylusEnabled(IRealTimeStylus piRtsSrc, uint cTcidCount, const(uint)* pTcids);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istylusplugin-realtimestylusdisabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istylusplugin-realtimestylusdisabled
     HRESULT RealTimeStylusDisabled(IRealTimeStylus piRtsSrc, uint cTcidCount, const(uint)* pTcids);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istylusplugin-stylusinrange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istylusplugin-stylusinrange
     HRESULT StylusInRange(IRealTimeStylus piRtsSrc, uint tcid, uint sid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istylusplugin-stylusoutofrange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istylusplugin-stylusoutofrange
     HRESULT StylusOutOfRange(IRealTimeStylus piRtsSrc, uint tcid, uint sid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istylusplugin-stylusdown))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istylusplugin-stylusdown
     HRESULT StylusDown(IRealTimeStylus piRtsSrc, const(StylusInfo)* pStylusInfo, uint cPropCountPerPkt, 
                        int* pPacket, int** ppInOutPkt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istylusplugin-stylusup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istylusplugin-stylusup
     HRESULT StylusUp(IRealTimeStylus piRtsSrc, const(StylusInfo)* pStylusInfo, uint cPropCountPerPkt, int* pPacket, 
                      int** ppInOutPkt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istylusplugin-stylusbuttondown))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istylusplugin-stylusbuttondown
     HRESULT StylusButtonDown(IRealTimeStylus piRtsSrc, uint sid, const(GUID)* pGuidStylusButton, POINT* pStylusPos);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istylusplugin-stylusbuttonup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istylusplugin-stylusbuttonup
     HRESULT StylusButtonUp(IRealTimeStylus piRtsSrc, uint sid, const(GUID)* pGuidStylusButton, POINT* pStylusPos);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istylusplugin-inairpackets))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istylusplugin-inairpackets
     HRESULT InAirPackets(IRealTimeStylus piRtsSrc, const(StylusInfo)* pStylusInfo, uint cPktCount, 
                          uint cPktBuffLength, int* pPackets, uint* pcInOutPkts, int** ppInOutPkts);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istylusplugin-packets))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istylusplugin-packets
     HRESULT Packets(IRealTimeStylus piRtsSrc, const(StylusInfo)* pStylusInfo, uint cPktCount, uint cPktBuffLength, 
                     int* pPackets, uint* pcInOutPkts, int** ppInOutPkts);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istylusplugin-customstylusdataadded))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istylusplugin-customstylusdataadded
     HRESULT CustomStylusDataAdded(IRealTimeStylus piRtsSrc, const(GUID)* pGuidId, uint cbData, 
                                   const(ubyte)* pbData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istylusplugin-systemevent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istylusplugin-systemevent
     HRESULT SystemEvent(IRealTimeStylus piRtsSrc, uint tcid, uint sid, ushort event, SYSTEM_EVENT_DATA eventdata);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istylusplugin-tabletadded))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istylusplugin-tabletadded
     HRESULT TabletAdded(IRealTimeStylus piRtsSrc, IInkTablet piTablet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istylusplugin-tabletremoved))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istylusplugin-tabletremoved
     HRESULT TabletRemoved(IRealTimeStylus piRtsSrc, int iTabletIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istylusplugin-error))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istylusplugin-error
     HRESULT Error(IRealTimeStylus piRtsSrc, IStylusPlugin piPlugin, RealTimeStylusDataInterest dataInterest, 
                   HRESULT hrErrorCode, ptrdiff_t* lptrKey);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istylusplugin-updatemapping))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istylusplugin-updatemapping
     HRESULT UpdateMapping(IRealTimeStylus piRtsSrc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istylusplugin-datainterest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-istylusplugin-datainterest
     HRESULT DataInterest(RealTimeStylusDataInterest* pDataInterest);
 }
 
 @GUID("a157b174-482f-4d71-a3f6-3a41ddd11be9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nn-rtscom-istylussyncplugin))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nn-rtscom-istylussyncplugin
 interface IStylusSyncPlugin : IStylusPlugin
 {
 }
 
 @GUID("a7cca85a-31bc-4cd2-aadc-3289a3af11c8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nn-rtscom-istylusasyncplugin))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nn-rtscom-istylusasyncplugin
 interface IStylusAsyncPlugin : IStylusPlugin
 {
 }
 
 @GUID("a079468e-7165-46f9-b7af-98ad01a93009")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nn-rtscom-idynamicrenderer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nn-rtscom-idynamicrenderer
 interface IDynamicRenderer : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-idynamicrenderer-get_enabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-idynamicrenderer-get_enabled
     HRESULT get_Enabled(BOOL* bEnabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-idynamicrenderer-put_enabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-idynamicrenderer-put_enabled
     HRESULT put_Enabled(BOOL bEnabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-idynamicrenderer-get_hwnd))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-idynamicrenderer-get_hwnd
     HRESULT get_HWND(HANDLE_PTR* hwnd);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-idynamicrenderer-put_hwnd))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-idynamicrenderer-put_hwnd
     HRESULT put_HWND(HANDLE_PTR hwnd);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-idynamicrenderer-get_cliprectangle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-idynamicrenderer-get_cliprectangle
     HRESULT get_ClipRectangle(RECT* prcClipRect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-idynamicrenderer-put_cliprectangle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-idynamicrenderer-put_cliprectangle
     HRESULT put_ClipRectangle(const(RECT)* prcClipRect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-idynamicrenderer-get_clipregion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-idynamicrenderer-get_clipregion
     HRESULT get_ClipRegion(HANDLE_PTR* phClipRgn);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-idynamicrenderer-put_clipregion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-idynamicrenderer-put_clipregion
     HRESULT put_ClipRegion(HANDLE_PTR hClipRgn);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-idynamicrenderer-get_drawingattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-idynamicrenderer-get_drawingattributes
     HRESULT get_DrawingAttributes(IInkDrawingAttributes* ppiDA);
     HRESULT putref_DrawingAttributes(IInkDrawingAttributes piDA);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-idynamicrenderer-get_datacacheenabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-idynamicrenderer-get_datacacheenabled
     HRESULT get_DataCacheEnabled(BOOL* pfCacheData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-idynamicrenderer-put_datacacheenabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-idynamicrenderer-put_datacacheenabled
     HRESULT put_DataCacheEnabled(BOOL fCacheData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-idynamicrenderer-releasecacheddata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-idynamicrenderer-releasecacheddata
     HRESULT ReleaseCachedData(uint strokeId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-idynamicrenderer-refresh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-idynamicrenderer-refresh
     HRESULT Refresh();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-idynamicrenderer-draw))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-idynamicrenderer-draw
     HRESULT Draw(HANDLE_PTR hDC);
 }
 
 @GUID("ae9ef86b-7054-45e3-ae22-3174dc8811b7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nn-rtscom-igesturerecognizer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nn-rtscom-igesturerecognizer
 interface IGestureRecognizer : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-igesturerecognizer-get_enabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-igesturerecognizer-get_enabled
     HRESULT get_Enabled(BOOL* pfEnabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-igesturerecognizer-put_enabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-igesturerecognizer-put_enabled
     HRESULT put_Enabled(BOOL fEnabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-igesturerecognizer-get_maxstrokecount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-igesturerecognizer-get_maxstrokecount
     HRESULT get_MaxStrokeCount(int* pcStrokes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-igesturerecognizer-put_maxstrokecount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-igesturerecognizer-put_maxstrokecount
     HRESULT put_MaxStrokeCount(int cStrokes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-igesturerecognizer-enablegestures))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-igesturerecognizer-enablegestures
     HRESULT EnableGestures(uint cGestures, const(int)* pGestures);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-igesturerecognizer-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtscom/nf-rtscom-igesturerecognizer-reset
     HRESULT Reset();
 }
 

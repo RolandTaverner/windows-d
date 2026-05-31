@@ -3,12 +3,13 @@
 module windows.win32.security.licenseprotection;
 
 public import windows.core;
-public import windows.win32.foundation : FILETIME, HRESULT, PWSTR;
+public import windows.win32.foundation.foundation : FILETIME, HRESULT, PWSTR;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
+
 
 enum LicenseProtectionStatus : int
 {

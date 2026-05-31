@@ -3,10 +3,10 @@
 module windows.win32.security.directoryservices;
 
 public import windows.core;
-public import windows.win32.foundation : HRESULT, HWND, LPARAM, PWSTR;
+public import windows.win32.foundation.foundation : HRESULT, HWND, LPARAM, PWSTR;
 public import windows.win32.security.authorization.ui : ISecurityInformation;
-public import windows.win32.security : PSECURITY_DESCRIPTOR;
-public import windows.win32.ui.controls : HPROPSHEETPAGE;
+public import windows.win32.security.security : PSECURITY_DESCRIPTOR;
+public import windows.win32.ui.controls.controls : HPROPSHEETPAGE;
 
 extern(Windows) @nogc nothrow:
 
@@ -14,20 +14,20 @@ extern(Windows) @nogc nothrow:
 // Constants
 
 
-enum uint DSSI_READ_ONLY = 0x00000001;
-enum uint DSSI_NO_ACCESS_CHECK = 0x00000002;
+enum uint DSSI_READ_ONLY = 0x00000001U;
+enum uint DSSI_NO_ACCESS_CHECK = 0x00000002U;
 
 enum : uint
 {
-    DSSI_NO_EDIT_SACL  = 0x00000004,
-    DSSI_NO_EDIT_OWNER = 0x00000008,
+    DSSI_NO_EDIT_SACL  = 0x00000004U,
+    DSSI_NO_EDIT_OWNER = 0x00000008U,
 }
 
 enum : uint
 {
-    DSSI_IS_ROOT             = 0x00000010,
-    DSSI_NO_FILTER           = 0x00000020,
-    DSSI_NO_READONLY_MESSAGE = 0x00000040,
+    DSSI_IS_ROOT             = 0x00000010U,
+    DSSI_NO_FILTER           = 0x00000020U,
+    DSSI_NO_READONLY_MESSAGE = 0x00000040U,
 }
 
 // Callbacks

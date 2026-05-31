@@ -3,11 +3,11 @@
 module windows.win32.system.variant;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BSTR, CHAR, DECIMAL, FILETIME, HINSTANCE,
-                                         HRESULT, PSTR, PWSTR, SYSTEMTIME,
-                                         VARIANT_BOOL;
-public import windows.win32.system.com : CY, IDispatch, IUnknown, SAFEARRAY;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, DECIMAL, FILETIME,
+                                                    HINSTANCE, HRESULT, PSTR, PWSTR,
+                                                    SYSTEMTIME, VARIANT_BOOL;
+public import windows.win32.system.com.com : CY, IDispatch, IUnknown, SAFEARRAY;
 public import windows.win32.system.ole : IRecordInfo;
 
 extern(Windows) @nogc nothrow:
@@ -15,81 +15,85 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias VAR_CHANGE_FLAGS = ushort;
 enum : ushort
 {
-    VARIANT_NOVALUEPROP        = 0x0001,
-    VARIANT_ALPHABOOL          = 0x0002,
-    VARIANT_NOUSEROVERRIDE     = 0x0004,
-    VARIANT_CALENDAR_HIJRI     = 0x0008,
-    VARIANT_LOCALBOOL          = 0x0010,
-    VARIANT_CALENDAR_THAI      = 0x0020,
-    VARIANT_CALENDAR_GREGORIAN = 0x0040,
-    VARIANT_USE_NLS            = 0x0080,
+    VARIANT_NOVALUEPROP        = cast(ushort) 0x0001,
+    VARIANT_ALPHABOOL          = cast(ushort) 0x0002,
+    VARIANT_NOUSEROVERRIDE     = cast(ushort) 0x0004,
+    VARIANT_CALENDAR_HIJRI     = cast(ushort) 0x0008,
+    VARIANT_LOCALBOOL          = cast(ushort) 0x0010,
+    VARIANT_CALENDAR_THAI      = cast(ushort) 0x0020,
+    VARIANT_CALENDAR_GREGORIAN = cast(ushort) 0x0040,
+    VARIANT_USE_NLS            = cast(ushort) 0x0080,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wtypes/ne-wtypes-varenum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wtypes/ne-wtypes-varenum
 alias VARENUM = ushort;
 enum : ushort
 {
-    VT_EMPTY            = 0x0000,
-    VT_NULL             = 0x0001,
-    VT_I2               = 0x0002,
-    VT_I4               = 0x0003,
-    VT_R4               = 0x0004,
-    VT_R8               = 0x0005,
-    VT_CY               = 0x0006,
-    VT_DATE             = 0x0007,
-    VT_BSTR             = 0x0008,
-    VT_DISPATCH         = 0x0009,
-    VT_ERROR            = 0x000a,
-    VT_BOOL             = 0x000b,
-    VT_VARIANT          = 0x000c,
-    VT_UNKNOWN          = 0x000d,
-    VT_DECIMAL          = 0x000e,
-    VT_I1               = 0x0010,
-    VT_UI1              = 0x0011,
-    VT_UI2              = 0x0012,
-    VT_UI4              = 0x0013,
-    VT_I8               = 0x0014,
-    VT_UI8              = 0x0015,
-    VT_INT              = 0x0016,
-    VT_UINT             = 0x0017,
-    VT_VOID             = 0x0018,
-    VT_HRESULT          = 0x0019,
-    VT_PTR              = 0x001a,
-    VT_SAFEARRAY        = 0x001b,
-    VT_CARRAY           = 0x001c,
-    VT_USERDEFINED      = 0x001d,
-    VT_LPSTR            = 0x001e,
-    VT_LPWSTR           = 0x001f,
-    VT_RECORD           = 0x0024,
-    VT_INT_PTR          = 0x0025,
-    VT_UINT_PTR         = 0x0026,
-    VT_FILETIME         = 0x0040,
-    VT_BLOB             = 0x0041,
-    VT_STREAM           = 0x0042,
-    VT_STORAGE          = 0x0043,
-    VT_STREAMED_OBJECT  = 0x0044,
-    VT_STORED_OBJECT    = 0x0045,
-    VT_BLOB_OBJECT      = 0x0046,
-    VT_CF               = 0x0047,
-    VT_CLSID            = 0x0048,
-    VT_VERSIONED_STREAM = 0x0049,
-    VT_BSTR_BLOB        = 0x0fff,
-    VT_VECTOR           = 0x1000,
-    VT_ARRAY            = 0x2000,
-    VT_BYREF            = 0x4000,
-    VT_RESERVED         = 0x8000,
-    VT_ILLEGAL          = 0xffff,
-    VT_ILLEGALMASKED    = 0x0fff,
-    VT_TYPEMASK         = 0x0fff,
+    VT_EMPTY            = cast(ushort) 0x0000,
+    VT_NULL             = cast(ushort) 0x0001,
+    VT_I2               = cast(ushort) 0x0002,
+    VT_I4               = cast(ushort) 0x0003,
+    VT_R4               = cast(ushort) 0x0004,
+    VT_R8               = cast(ushort) 0x0005,
+    VT_CY               = cast(ushort) 0x0006,
+    VT_DATE             = cast(ushort) 0x0007,
+    VT_BSTR             = cast(ushort) 0x0008,
+    VT_DISPATCH         = cast(ushort) 0x0009,
+    VT_ERROR            = cast(ushort) 0x000a,
+    VT_BOOL             = cast(ushort) 0x000b,
+    VT_VARIANT          = cast(ushort) 0x000c,
+    VT_UNKNOWN          = cast(ushort) 0x000d,
+    VT_DECIMAL          = cast(ushort) 0x000e,
+    VT_I1               = cast(ushort) 0x0010,
+    VT_UI1              = cast(ushort) 0x0011,
+    VT_UI2              = cast(ushort) 0x0012,
+    VT_UI4              = cast(ushort) 0x0013,
+    VT_I8               = cast(ushort) 0x0014,
+    VT_UI8              = cast(ushort) 0x0015,
+    VT_INT              = cast(ushort) 0x0016,
+    VT_UINT             = cast(ushort) 0x0017,
+    VT_VOID             = cast(ushort) 0x0018,
+    VT_HRESULT          = cast(ushort) 0x0019,
+    VT_PTR              = cast(ushort) 0x001a,
+    VT_SAFEARRAY        = cast(ushort) 0x001b,
+    VT_CARRAY           = cast(ushort) 0x001c,
+    VT_USERDEFINED      = cast(ushort) 0x001d,
+    VT_LPSTR            = cast(ushort) 0x001e,
+    VT_LPWSTR           = cast(ushort) 0x001f,
+    VT_RECORD           = cast(ushort) 0x0024,
+    VT_INT_PTR          = cast(ushort) 0x0025,
+    VT_UINT_PTR         = cast(ushort) 0x0026,
+    VT_FILETIME         = cast(ushort) 0x0040,
+    VT_BLOB             = cast(ushort) 0x0041,
+    VT_STREAM           = cast(ushort) 0x0042,
+    VT_STORAGE          = cast(ushort) 0x0043,
+    VT_STREAMED_OBJECT  = cast(ushort) 0x0044,
+    VT_STORED_OBJECT    = cast(ushort) 0x0045,
+    VT_BLOB_OBJECT      = cast(ushort) 0x0046,
+    VT_CF               = cast(ushort) 0x0047,
+    VT_CLSID            = cast(ushort) 0x0048,
+    VT_VERSIONED_STREAM = cast(ushort) 0x0049,
+    VT_BSTR_BLOB        = cast(ushort) 0x0fff,
+    VT_VECTOR           = cast(ushort) 0x1000,
+    VT_ARRAY            = cast(ushort) 0x2000,
+    VT_BYREF            = cast(ushort) 0x4000,
+    VT_RESERVED         = cast(ushort) 0x8000,
+    VT_ILLEGAL          = cast(ushort) 0xffff,
+    VT_ILLEGALMASKED    = cast(ushort) 0x0fff,
+    VT_TYPEMASK         = cast(ushort) 0x0fff,
 }
+
 alias PSTIME_FLAGS = int;
 enum : int
 {
     PSTF_UTC   = 0x00000000,
     PSTF_LOCAL = 0x00000001,
 }
+
 alias DRAWPROGRESSFLAGS = int;
 enum : int
 {
@@ -104,27 +108,90 @@ enum : int
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/ns-oaidl-variant))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/ns-oaidl-variant
 struct VARIANT
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct
+        {
+            VARENUM vt;
+            ushort  wReserved1;
+            ushort  wReserved2;
+            ushort  wReserved3;
+            union
+            {
+                long          llVal;
+                int           lVal;
+                ubyte         bVal;
+                short         iVal;
+                float         fltVal;
+                double        dblVal;
+                VARIANT_BOOL  boolVal;
+                VARIANT_BOOL  __OBSOLETE__VARIANT_BOOL;
+                int           scode;
+                CY            cyVal;
+                double        date;
+                BSTR          bstrVal;
+                IUnknown      punkVal;
+                IDispatch     pdispVal;
+                SAFEARRAY*    parray;
+                ubyte*        pbVal;
+                short*        piVal;
+                int*          plVal;
+                long*         pllVal;
+                float*        pfltVal;
+                double*       pdblVal;
+                VARIANT_BOOL* pboolVal;
+                VARIANT_BOOL* __OBSOLETE__VARIANT_PBOOL;
+                int*          pscode;
+                CY*           pcyVal;
+                double*       pdate;
+                BSTR*         pbstrVal;
+                IUnknown*     ppunkVal;
+                IDispatch*    ppdispVal;
+                SAFEARRAY**   pparray;
+                VARIANT*      pvarVal;
+                void*         byref;
+                CHAR          cVal;
+                ushort        uiVal;
+                uint          ulVal;
+                ulong         ullVal;
+                int           intVal;
+                uint          uintVal;
+                DECIMAL*      pdecVal;
+                PSTR          pcVal;
+                ushort*       puiVal;
+                uint*         pulVal;
+                ulong*        pullVal;
+                int*          pintVal;
+                uint*         puintVal;
+                struct
+                {
+                    void*       pvRecord;
+                    IRecordInfo pRecInfo;
+                }
+            }
+        }
+        DECIMAL decVal;
+    }
 }
 
 // Functions
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-variant_usersize))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-variant_usersize
 @DllImport("OLEAUT32.dll")
 uint VARIANT_UserSize(uint* param0, uint param1, VARIANT* param2);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-variant_usermarshal))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-variant_usermarshal
 @DllImport("OLEAUT32.dll")
 ubyte* VARIANT_UserMarshal(uint* param0, ubyte* param1, VARIANT* param2);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-variant_userunmarshal))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-variant_userunmarshal
 @DllImport("OLEAUT32.dll")
 ubyte* VARIANT_UserUnmarshal(uint* param0, ubyte* param1, VARIANT* param2);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-variant_userfree))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oaidl/nf-oaidl-variant_userfree
 @DllImport("OLEAUT32.dll")
 void VARIANT_UserFree(uint* param0, VARIANT* param1);
 
@@ -144,43 +211,43 @@ ubyte* VARIANT_UserUnmarshal64(uint* param0, ubyte* param1, VARIANT* param2);
 @DllImport("OLEAUT32.dll")
 void VARIANT_UserFree64(uint* param0, VARIANT* param1);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-dosdatetimetovarianttime))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-dosdatetimetovarianttime
 @DllImport("OLEAUT32.dll")
 int DosDateTimeToVariantTime(ushort wDosDate, ushort wDosTime, double* pvtime);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varianttimetodosdatetime))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varianttimetodosdatetime
 @DllImport("OLEAUT32.dll")
 int VariantTimeToDosDateTime(double vtime, ushort* pwDosDate, ushort* pwDosTime);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-systemtimetovarianttime))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-systemtimetovarianttime
 @DllImport("OLEAUT32.dll")
 int SystemTimeToVariantTime(SYSTEMTIME* lpSystemTime, double* pvtime);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varianttimetosystemtime))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-varianttimetosystemtime
 @DllImport("OLEAUT32.dll")
 int VariantTimeToSystemTime(double vtime, SYSTEMTIME* lpSystemTime);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-variantinit))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-variantinit
 @DllImport("OLEAUT32.dll")
 void VariantInit(VARIANT* pvarg);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-variantclear))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-variantclear
 @DllImport("OLEAUT32.dll")
 HRESULT VariantClear(VARIANT* pvarg);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-variantcopy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-variantcopy
 @DllImport("OLEAUT32.dll")
 HRESULT VariantCopy(VARIANT* pvargDest, const(VARIANT)* pvargSrc);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-variantcopyind))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-variantcopyind
 @DllImport("OLEAUT32.dll")
 HRESULT VariantCopyInd(VARIANT* pvarDest, const(VARIANT)* pvargSrc);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-variantchangetype))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-variantchangetype
 @DllImport("OLEAUT32.dll")
 HRESULT VariantChangeType(VARIANT* pvargDest, const(VARIANT)* pvarSrc, VAR_CHANGE_FLAGS wFlags, VARENUM vt);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-variantchangetypeex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oleauto/nf-oleauto-variantchangetypeex
 @DllImport("OLEAUT32.dll")
 HRESULT VariantChangeTypeEx(VARIANT* pvargDest, const(VARIANT)* pvarSrc, uint lcid, VAR_CHANGE_FLAGS wFlags, 
                             VARENUM vt);

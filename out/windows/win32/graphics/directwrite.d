@@ -3,31 +3,33 @@
 module windows.win32.graphics.directwrite;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, COLORREF, FILETIME, HANDLE, HRESULT,
-                                         POINT, PWSTR, RECT, SIZE;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, COLORREF, FILETIME, HANDLE,
+                                                    HRESULT, POINT, PWSTR, RECT, SIZE;
 public import windows.win32.globalization : FONTSIGNATURE;
 public import windows.win32.graphics.direct2d.common : D2D1_GRADIENT_STOP, D2D_POINT_2F, D2D_RECT_F,
                                                        D2D_SIZE_U, ID2D1SimplifiedGeometrySink;
 public import windows.win32.graphics.gdi : HDC, HMONITOR, LOGFONTA, LOGFONTW;
-public import windows.win32.system.com : IUnknown;
+public import windows.win32.system.com.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/ne-dwrite_3-dwrite_font_axis_tag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/ne-dwrite_3-dwrite_font_axis_tag
 alias DWRITE_FONT_AXIS_TAG = uint;
 enum : uint
 {
-    DWRITE_FONT_AXIS_TAG_WEIGHT       = 0x74686777,
-    DWRITE_FONT_AXIS_TAG_WIDTH        = 0x68746477,
-    DWRITE_FONT_AXIS_TAG_SLANT        = 0x746e6c73,
-    DWRITE_FONT_AXIS_TAG_OPTICAL_SIZE = 0x7a73706f,
-    DWRITE_FONT_AXIS_TAG_ITALIC       = 0x6c617469,
+    DWRITE_FONT_AXIS_TAG_WEIGHT       = 0x74686777U,
+    DWRITE_FONT_AXIS_TAG_WIDTH        = 0x68746477U,
+    DWRITE_FONT_AXIS_TAG_SLANT        = 0x746e6c73U,
+    DWRITE_FONT_AXIS_TAG_OPTICAL_SIZE = 0x7a73706fU,
+    DWRITE_FONT_AXIS_TAG_ITALIC       = 0x6c617469U,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dcommon/ne-dcommon-dwrite_measuring_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcommon/ne-dcommon-dwrite_measuring_mode
 alias DWRITE_MEASURING_MODE = int;
 enum : int
 {
@@ -35,7 +37,8 @@ enum : int
     DWRITE_MEASURING_MODE_GDI_CLASSIC = 0x00000001,
     DWRITE_MEASURING_MODE_GDI_NATURAL = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dcommon/ne-dcommon-dwrite_glyph_image_formats))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dcommon/ne-dcommon-dwrite_glyph_image_formats
 alias DWRITE_GLYPH_IMAGE_FORMATS = int;
 enum : int
 {
@@ -50,7 +53,8 @@ enum : int
     DWRITE_GLYPH_IMAGE_FORMATS_PREMULTIPLIED_B8G8R8A8 = 0x00000080,
     DWRITE_GLYPH_IMAGE_FORMATS_COLR_PAINT_TREE        = 0x00000100,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_font_file_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_font_file_type
 alias DWRITE_FONT_FILE_TYPE = int;
 enum : int
 {
@@ -64,7 +68,8 @@ enum : int
     DWRITE_FONT_FILE_TYPE_BITMAP              = 0x00000007,
     DWRITE_FONT_FILE_TYPE_TRUETYPE_COLLECTION = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_font_face_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_font_face_type
 alias DWRITE_FONT_FACE_TYPE = int;
 enum : int
 {
@@ -78,7 +83,8 @@ enum : int
     DWRITE_FONT_FACE_TYPE_RAW_CFF             = 0x00000007,
     DWRITE_FONT_FACE_TYPE_TRUETYPE_COLLECTION = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_font_simulations))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_font_simulations
 alias DWRITE_FONT_SIMULATIONS = int;
 enum : int
 {
@@ -86,7 +92,8 @@ enum : int
     DWRITE_FONT_SIMULATIONS_BOLD    = 0x00000001,
     DWRITE_FONT_SIMULATIONS_OBLIQUE = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_font_weight))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_font_weight
 alias DWRITE_FONT_WEIGHT = int;
 enum : int
 {
@@ -108,7 +115,8 @@ enum : int
     DWRITE_FONT_WEIGHT_EXTRA_BLACK = 0x000003b6,
     DWRITE_FONT_WEIGHT_ULTRA_BLACK = 0x000003b6,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_font_stretch))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_font_stretch
 alias DWRITE_FONT_STRETCH = int;
 enum : int
 {
@@ -124,7 +132,8 @@ enum : int
     DWRITE_FONT_STRETCH_EXTRA_EXPANDED  = 0x00000008,
     DWRITE_FONT_STRETCH_ULTRA_EXPANDED  = 0x00000009,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_font_style))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_font_style
 alias DWRITE_FONT_STYLE = int;
 enum : int
 {
@@ -132,7 +141,8 @@ enum : int
     DWRITE_FONT_STYLE_OBLIQUE = 0x00000001,
     DWRITE_FONT_STYLE_ITALIC  = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_informational_string_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_informational_string_id
 alias DWRITE_INFORMATIONAL_STRING_ID = int;
 enum : int
 {
@@ -162,14 +172,16 @@ enum : int
     DWRITE_INFORMATIONAL_STRING_PREFERRED_SUBFAMILY_NAMES        = 0x0000000e,
     DWRITE_INFORMATIONAL_STRING_WWS_FAMILY_NAME                  = 0x00000013,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_factory_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_factory_type
 alias DWRITE_FACTORY_TYPE = int;
 enum : int
 {
     DWRITE_FACTORY_TYPE_SHARED   = 0x00000000,
     DWRITE_FACTORY_TYPE_ISOLATED = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_pixel_geometry))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_pixel_geometry
 alias DWRITE_PIXEL_GEOMETRY = int;
 enum : int
 {
@@ -177,7 +189,8 @@ enum : int
     DWRITE_PIXEL_GEOMETRY_RGB  = 0x00000001,
     DWRITE_PIXEL_GEOMETRY_BGR  = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_rendering_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_rendering_mode
 alias DWRITE_RENDERING_MODE = int;
 enum : int
 {
@@ -193,7 +206,8 @@ enum : int
     DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL           = 0x00000004,
     DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL_SYMMETRIC = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_reading_direction))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_reading_direction
 alias DWRITE_READING_DIRECTION = int;
 enum : int
 {
@@ -202,7 +216,8 @@ enum : int
     DWRITE_READING_DIRECTION_TOP_TO_BOTTOM = 0x00000002,
     DWRITE_READING_DIRECTION_BOTTOM_TO_TOP = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_flow_direction))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_flow_direction
 alias DWRITE_FLOW_DIRECTION = int;
 enum : int
 {
@@ -211,7 +226,8 @@ enum : int
     DWRITE_FLOW_DIRECTION_LEFT_TO_RIGHT = 0x00000002,
     DWRITE_FLOW_DIRECTION_RIGHT_TO_LEFT = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_text_alignment))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_text_alignment
 alias DWRITE_TEXT_ALIGNMENT = int;
 enum : int
 {
@@ -220,7 +236,8 @@ enum : int
     DWRITE_TEXT_ALIGNMENT_CENTER    = 0x00000002,
     DWRITE_TEXT_ALIGNMENT_JUSTIFIED = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_paragraph_alignment))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_paragraph_alignment
 alias DWRITE_PARAGRAPH_ALIGNMENT = int;
 enum : int
 {
@@ -228,7 +245,8 @@ enum : int
     DWRITE_PARAGRAPH_ALIGNMENT_FAR    = 0x00000001,
     DWRITE_PARAGRAPH_ALIGNMENT_CENTER = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_word_wrapping))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_word_wrapping
 alias DWRITE_WORD_WRAPPING = int;
 enum : int
 {
@@ -238,7 +256,8 @@ enum : int
     DWRITE_WORD_WRAPPING_WHOLE_WORD      = 0x00000003,
     DWRITE_WORD_WRAPPING_CHARACTER       = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_line_spacing_method))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_line_spacing_method
 alias DWRITE_LINE_SPACING_METHOD = int;
 enum : int
 {
@@ -246,7 +265,8 @@ enum : int
     DWRITE_LINE_SPACING_METHOD_UNIFORM      = 0x00000001,
     DWRITE_LINE_SPACING_METHOD_PROPORTIONAL = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_trimming_granularity))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_trimming_granularity
 alias DWRITE_TRIMMING_GRANULARITY = int;
 enum : int
 {
@@ -254,100 +274,103 @@ enum : int
     DWRITE_TRIMMING_GRANULARITY_CHARACTER = 0x00000001,
     DWRITE_TRIMMING_GRANULARITY_WORD      = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_font_feature_tag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_font_feature_tag
 alias DWRITE_FONT_FEATURE_TAG = uint;
 enum : uint
 {
-    DWRITE_FONT_FEATURE_TAG_ALTERNATIVE_FRACTIONS            = 0x63726661,
-    DWRITE_FONT_FEATURE_TAG_PETITE_CAPITALS_FROM_CAPITALS    = 0x63703263,
-    DWRITE_FONT_FEATURE_TAG_SMALL_CAPITALS_FROM_CAPITALS     = 0x63733263,
-    DWRITE_FONT_FEATURE_TAG_CONTEXTUAL_ALTERNATES            = 0x746c6163,
-    DWRITE_FONT_FEATURE_TAG_CASE_SENSITIVE_FORMS             = 0x65736163,
-    DWRITE_FONT_FEATURE_TAG_GLYPH_COMPOSITION_DECOMPOSITION  = 0x706d6363,
-    DWRITE_FONT_FEATURE_TAG_CONTEXTUAL_LIGATURES             = 0x67696c63,
-    DWRITE_FONT_FEATURE_TAG_CAPITAL_SPACING                  = 0x70737063,
-    DWRITE_FONT_FEATURE_TAG_CONTEXTUAL_SWASH                 = 0x68777363,
-    DWRITE_FONT_FEATURE_TAG_CURSIVE_POSITIONING              = 0x73727563,
-    DWRITE_FONT_FEATURE_TAG_DEFAULT                          = 0x746c6664,
-    DWRITE_FONT_FEATURE_TAG_DISCRETIONARY_LIGATURES          = 0x67696c64,
-    DWRITE_FONT_FEATURE_TAG_EXPERT_FORMS                     = 0x74707865,
-    DWRITE_FONT_FEATURE_TAG_FRACTIONS                        = 0x63617266,
-    DWRITE_FONT_FEATURE_TAG_FULL_WIDTH                       = 0x64697766,
-    DWRITE_FONT_FEATURE_TAG_HALF_FORMS                       = 0x666c6168,
-    DWRITE_FONT_FEATURE_TAG_HALANT_FORMS                     = 0x6e6c6168,
-    DWRITE_FONT_FEATURE_TAG_ALTERNATE_HALF_WIDTH             = 0x746c6168,
-    DWRITE_FONT_FEATURE_TAG_HISTORICAL_FORMS                 = 0x74736968,
-    DWRITE_FONT_FEATURE_TAG_HORIZONTAL_KANA_ALTERNATES       = 0x616e6b68,
-    DWRITE_FONT_FEATURE_TAG_HISTORICAL_LIGATURES             = 0x67696c68,
-    DWRITE_FONT_FEATURE_TAG_HALF_WIDTH                       = 0x64697768,
-    DWRITE_FONT_FEATURE_TAG_HOJO_KANJI_FORMS                 = 0x6f6a6f68,
-    DWRITE_FONT_FEATURE_TAG_JIS04_FORMS                      = 0x3430706a,
-    DWRITE_FONT_FEATURE_TAG_JIS78_FORMS                      = 0x3837706a,
-    DWRITE_FONT_FEATURE_TAG_JIS83_FORMS                      = 0x3338706a,
-    DWRITE_FONT_FEATURE_TAG_JIS90_FORMS                      = 0x3039706a,
-    DWRITE_FONT_FEATURE_TAG_KERNING                          = 0x6e72656b,
-    DWRITE_FONT_FEATURE_TAG_STANDARD_LIGATURES               = 0x6167696c,
-    DWRITE_FONT_FEATURE_TAG_LINING_FIGURES                   = 0x6d756e6c,
-    DWRITE_FONT_FEATURE_TAG_LOCALIZED_FORMS                  = 0x6c636f6c,
-    DWRITE_FONT_FEATURE_TAG_MARK_POSITIONING                 = 0x6b72616d,
-    DWRITE_FONT_FEATURE_TAG_MATHEMATICAL_GREEK               = 0x6b72676d,
-    DWRITE_FONT_FEATURE_TAG_MARK_TO_MARK_POSITIONING         = 0x6b6d6b6d,
-    DWRITE_FONT_FEATURE_TAG_ALTERNATE_ANNOTATION_FORMS       = 0x746c616e,
-    DWRITE_FONT_FEATURE_TAG_NLC_KANJI_FORMS                  = 0x6b636c6e,
-    DWRITE_FONT_FEATURE_TAG_OLD_STYLE_FIGURES                = 0x6d756e6f,
-    DWRITE_FONT_FEATURE_TAG_ORDINALS                         = 0x6e64726f,
-    DWRITE_FONT_FEATURE_TAG_PROPORTIONAL_ALTERNATE_WIDTH     = 0x746c6170,
-    DWRITE_FONT_FEATURE_TAG_PETITE_CAPITALS                  = 0x70616370,
-    DWRITE_FONT_FEATURE_TAG_PROPORTIONAL_FIGURES             = 0x6d756e70,
-    DWRITE_FONT_FEATURE_TAG_PROPORTIONAL_WIDTHS              = 0x64697770,
-    DWRITE_FONT_FEATURE_TAG_QUARTER_WIDTHS                   = 0x64697771,
-    DWRITE_FONT_FEATURE_TAG_REQUIRED_LIGATURES               = 0x67696c72,
-    DWRITE_FONT_FEATURE_TAG_RUBY_NOTATION_FORMS              = 0x79627572,
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_ALTERNATES             = 0x746c6173,
-    DWRITE_FONT_FEATURE_TAG_SCIENTIFIC_INFERIORS             = 0x666e6973,
-    DWRITE_FONT_FEATURE_TAG_SMALL_CAPITALS                   = 0x70636d73,
-    DWRITE_FONT_FEATURE_TAG_SIMPLIFIED_FORMS                 = 0x6c706d73,
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_1                  = 0x31307373,
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_2                  = 0x32307373,
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_3                  = 0x33307373,
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_4                  = 0x34307373,
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_5                  = 0x35307373,
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_6                  = 0x36307373,
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_7                  = 0x37307373,
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_8                  = 0x38307373,
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_9                  = 0x39307373,
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_10                 = 0x30317373,
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_11                 = 0x31317373,
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_12                 = 0x32317373,
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_13                 = 0x33317373,
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_14                 = 0x34317373,
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_15                 = 0x35317373,
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_16                 = 0x36317373,
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_17                 = 0x37317373,
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_18                 = 0x38317373,
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_19                 = 0x39317373,
-    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_20                 = 0x30327373,
-    DWRITE_FONT_FEATURE_TAG_SUBSCRIPT                        = 0x73627573,
-    DWRITE_FONT_FEATURE_TAG_SUPERSCRIPT                      = 0x73707573,
-    DWRITE_FONT_FEATURE_TAG_SWASH                            = 0x68737773,
-    DWRITE_FONT_FEATURE_TAG_TITLING                          = 0x6c746974,
-    DWRITE_FONT_FEATURE_TAG_TRADITIONAL_NAME_FORMS           = 0x6d616e74,
-    DWRITE_FONT_FEATURE_TAG_TABULAR_FIGURES                  = 0x6d756e74,
-    DWRITE_FONT_FEATURE_TAG_TRADITIONAL_FORMS                = 0x64617274,
-    DWRITE_FONT_FEATURE_TAG_THIRD_WIDTHS                     = 0x64697774,
-    DWRITE_FONT_FEATURE_TAG_UNICASE                          = 0x63696e75,
-    DWRITE_FONT_FEATURE_TAG_VERTICAL_WRITING                 = 0x74726576,
-    DWRITE_FONT_FEATURE_TAG_VERTICAL_ALTERNATES_AND_ROTATION = 0x32747276,
-    DWRITE_FONT_FEATURE_TAG_SLASHED_ZERO                     = 0x6f72657a,
+    DWRITE_FONT_FEATURE_TAG_ALTERNATIVE_FRACTIONS            = 0x63726661U,
+    DWRITE_FONT_FEATURE_TAG_PETITE_CAPITALS_FROM_CAPITALS    = 0x63703263U,
+    DWRITE_FONT_FEATURE_TAG_SMALL_CAPITALS_FROM_CAPITALS     = 0x63733263U,
+    DWRITE_FONT_FEATURE_TAG_CONTEXTUAL_ALTERNATES            = 0x746c6163U,
+    DWRITE_FONT_FEATURE_TAG_CASE_SENSITIVE_FORMS             = 0x65736163U,
+    DWRITE_FONT_FEATURE_TAG_GLYPH_COMPOSITION_DECOMPOSITION  = 0x706d6363U,
+    DWRITE_FONT_FEATURE_TAG_CONTEXTUAL_LIGATURES             = 0x67696c63U,
+    DWRITE_FONT_FEATURE_TAG_CAPITAL_SPACING                  = 0x70737063U,
+    DWRITE_FONT_FEATURE_TAG_CONTEXTUAL_SWASH                 = 0x68777363U,
+    DWRITE_FONT_FEATURE_TAG_CURSIVE_POSITIONING              = 0x73727563U,
+    DWRITE_FONT_FEATURE_TAG_DEFAULT                          = 0x746c6664U,
+    DWRITE_FONT_FEATURE_TAG_DISCRETIONARY_LIGATURES          = 0x67696c64U,
+    DWRITE_FONT_FEATURE_TAG_EXPERT_FORMS                     = 0x74707865U,
+    DWRITE_FONT_FEATURE_TAG_FRACTIONS                        = 0x63617266U,
+    DWRITE_FONT_FEATURE_TAG_FULL_WIDTH                       = 0x64697766U,
+    DWRITE_FONT_FEATURE_TAG_HALF_FORMS                       = 0x666c6168U,
+    DWRITE_FONT_FEATURE_TAG_HALANT_FORMS                     = 0x6e6c6168U,
+    DWRITE_FONT_FEATURE_TAG_ALTERNATE_HALF_WIDTH             = 0x746c6168U,
+    DWRITE_FONT_FEATURE_TAG_HISTORICAL_FORMS                 = 0x74736968U,
+    DWRITE_FONT_FEATURE_TAG_HORIZONTAL_KANA_ALTERNATES       = 0x616e6b68U,
+    DWRITE_FONT_FEATURE_TAG_HISTORICAL_LIGATURES             = 0x67696c68U,
+    DWRITE_FONT_FEATURE_TAG_HALF_WIDTH                       = 0x64697768U,
+    DWRITE_FONT_FEATURE_TAG_HOJO_KANJI_FORMS                 = 0x6f6a6f68U,
+    DWRITE_FONT_FEATURE_TAG_JIS04_FORMS                      = 0x3430706aU,
+    DWRITE_FONT_FEATURE_TAG_JIS78_FORMS                      = 0x3837706aU,
+    DWRITE_FONT_FEATURE_TAG_JIS83_FORMS                      = 0x3338706aU,
+    DWRITE_FONT_FEATURE_TAG_JIS90_FORMS                      = 0x3039706aU,
+    DWRITE_FONT_FEATURE_TAG_KERNING                          = 0x6e72656bU,
+    DWRITE_FONT_FEATURE_TAG_STANDARD_LIGATURES               = 0x6167696cU,
+    DWRITE_FONT_FEATURE_TAG_LINING_FIGURES                   = 0x6d756e6cU,
+    DWRITE_FONT_FEATURE_TAG_LOCALIZED_FORMS                  = 0x6c636f6cU,
+    DWRITE_FONT_FEATURE_TAG_MARK_POSITIONING                 = 0x6b72616dU,
+    DWRITE_FONT_FEATURE_TAG_MATHEMATICAL_GREEK               = 0x6b72676dU,
+    DWRITE_FONT_FEATURE_TAG_MARK_TO_MARK_POSITIONING         = 0x6b6d6b6dU,
+    DWRITE_FONT_FEATURE_TAG_ALTERNATE_ANNOTATION_FORMS       = 0x746c616eU,
+    DWRITE_FONT_FEATURE_TAG_NLC_KANJI_FORMS                  = 0x6b636c6eU,
+    DWRITE_FONT_FEATURE_TAG_OLD_STYLE_FIGURES                = 0x6d756e6fU,
+    DWRITE_FONT_FEATURE_TAG_ORDINALS                         = 0x6e64726fU,
+    DWRITE_FONT_FEATURE_TAG_PROPORTIONAL_ALTERNATE_WIDTH     = 0x746c6170U,
+    DWRITE_FONT_FEATURE_TAG_PETITE_CAPITALS                  = 0x70616370U,
+    DWRITE_FONT_FEATURE_TAG_PROPORTIONAL_FIGURES             = 0x6d756e70U,
+    DWRITE_FONT_FEATURE_TAG_PROPORTIONAL_WIDTHS              = 0x64697770U,
+    DWRITE_FONT_FEATURE_TAG_QUARTER_WIDTHS                   = 0x64697771U,
+    DWRITE_FONT_FEATURE_TAG_REQUIRED_LIGATURES               = 0x67696c72U,
+    DWRITE_FONT_FEATURE_TAG_RUBY_NOTATION_FORMS              = 0x79627572U,
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_ALTERNATES             = 0x746c6173U,
+    DWRITE_FONT_FEATURE_TAG_SCIENTIFIC_INFERIORS             = 0x666e6973U,
+    DWRITE_FONT_FEATURE_TAG_SMALL_CAPITALS                   = 0x70636d73U,
+    DWRITE_FONT_FEATURE_TAG_SIMPLIFIED_FORMS                 = 0x6c706d73U,
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_1                  = 0x31307373U,
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_2                  = 0x32307373U,
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_3                  = 0x33307373U,
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_4                  = 0x34307373U,
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_5                  = 0x35307373U,
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_6                  = 0x36307373U,
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_7                  = 0x37307373U,
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_8                  = 0x38307373U,
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_9                  = 0x39307373U,
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_10                 = 0x30317373U,
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_11                 = 0x31317373U,
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_12                 = 0x32317373U,
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_13                 = 0x33317373U,
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_14                 = 0x34317373U,
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_15                 = 0x35317373U,
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_16                 = 0x36317373U,
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_17                 = 0x37317373U,
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_18                 = 0x38317373U,
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_19                 = 0x39317373U,
+    DWRITE_FONT_FEATURE_TAG_STYLISTIC_SET_20                 = 0x30327373U,
+    DWRITE_FONT_FEATURE_TAG_SUBSCRIPT                        = 0x73627573U,
+    DWRITE_FONT_FEATURE_TAG_SUPERSCRIPT                      = 0x73707573U,
+    DWRITE_FONT_FEATURE_TAG_SWASH                            = 0x68737773U,
+    DWRITE_FONT_FEATURE_TAG_TITLING                          = 0x6c746974U,
+    DWRITE_FONT_FEATURE_TAG_TRADITIONAL_NAME_FORMS           = 0x6d616e74U,
+    DWRITE_FONT_FEATURE_TAG_TABULAR_FIGURES                  = 0x6d756e74U,
+    DWRITE_FONT_FEATURE_TAG_TRADITIONAL_FORMS                = 0x64617274U,
+    DWRITE_FONT_FEATURE_TAG_THIRD_WIDTHS                     = 0x64697774U,
+    DWRITE_FONT_FEATURE_TAG_UNICASE                          = 0x63696e75U,
+    DWRITE_FONT_FEATURE_TAG_VERTICAL_WRITING                 = 0x74726576U,
+    DWRITE_FONT_FEATURE_TAG_VERTICAL_ALTERNATES_AND_ROTATION = 0x32747276U,
+    DWRITE_FONT_FEATURE_TAG_SLASHED_ZERO                     = 0x6f72657aU,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_script_shapes))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_script_shapes
 alias DWRITE_SCRIPT_SHAPES = int;
 enum : int
 {
     DWRITE_SCRIPT_SHAPES_DEFAULT   = 0x00000000,
     DWRITE_SCRIPT_SHAPES_NO_VISUAL = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_break_condition))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_break_condition
 alias DWRITE_BREAK_CONDITION = int;
 enum : int
 {
@@ -356,7 +379,8 @@ enum : int
     DWRITE_BREAK_CONDITION_MAY_NOT_BREAK = 0x00000002,
     DWRITE_BREAK_CONDITION_MUST_BREAK    = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_number_substitution_method))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_number_substitution_method
 alias DWRITE_NUMBER_SUBSTITUTION_METHOD = int;
 enum : int
 {
@@ -366,14 +390,16 @@ enum : int
     DWRITE_NUMBER_SUBSTITUTION_METHOD_NATIONAL     = 0x00000003,
     DWRITE_NUMBER_SUBSTITUTION_METHOD_TRADITIONAL  = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_texture_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ne-dwrite-dwrite_texture_type
 alias DWRITE_TEXTURE_TYPE = int;
 enum : int
 {
     DWRITE_TEXTURE_ALIASED_1x1   = 0x00000000,
     DWRITE_TEXTURE_CLEARTYPE_3x1 = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_family))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_family
 alias DWRITE_PANOSE_FAMILY = int;
 enum : int
 {
@@ -385,7 +411,8 @@ enum : int
     DWRITE_PANOSE_FAMILY_SYMBOL       = 0x00000005,
     DWRITE_PANOSE_FAMILY_PICTORIAL    = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_serif_style))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_serif_style
 alias DWRITE_PANOSE_SERIF_STYLE = int;
 enum : int
 {
@@ -409,7 +436,8 @@ enum : int
     DWRITE_PANOSE_SERIF_STYLE_PERP_SANS          = 0x0000000d,
     DWRITE_PANOSE_SERIF_STYLE_BONE               = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_weight))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_weight
 alias DWRITE_PANOSE_WEIGHT = int;
 enum : int
 {
@@ -427,7 +455,8 @@ enum : int
     DWRITE_PANOSE_WEIGHT_EXTRA_BLACK = 0x0000000b,
     DWRITE_PANOSE_WEIGHT_NORD        = 0x0000000b,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_proportion))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_proportion
 alias DWRITE_PANOSE_PROPORTION = int;
 enum : int
 {
@@ -442,7 +471,8 @@ enum : int
     DWRITE_PANOSE_PROPORTION_VERY_CONDENSED = 0x00000008,
     DWRITE_PANOSE_PROPORTION_MONOSPACED     = 0x00000009,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_contrast))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_contrast
 alias DWRITE_PANOSE_CONTRAST = int;
 enum : int
 {
@@ -461,7 +491,8 @@ enum : int
     DWRITE_PANOSE_CONTRAST_HORIZONTAL_HIGH   = 0x0000000c,
     DWRITE_PANOSE_CONTRAST_BROKEN            = 0x0000000d,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_stroke_variation))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_stroke_variation
 alias DWRITE_PANOSE_STROKE_VARIATION = int;
 enum : int
 {
@@ -477,7 +508,8 @@ enum : int
     DWRITE_PANOSE_STROKE_VARIATION_INSTANT_VERTICAL     = 0x00000009,
     DWRITE_PANOSE_STROKE_VARIATION_INSTANT_HORIZONTAL   = 0x0000000a,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_arm_style))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_arm_style
 alias DWRITE_PANOSE_ARM_STYLE = int;
 enum : int
 {
@@ -501,7 +533,8 @@ enum : int
     DWRITE_PANOSE_ARM_STYLE_BENT_ARMS_SINGLE_SERIF        = 0x0000000a,
     DWRITE_PANOSE_ARM_STYLE_BENT_ARMS_DOUBLE_SERIF        = 0x0000000b,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_letterform))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_letterform
 alias DWRITE_PANOSE_LETTERFORM = int;
 enum : int
 {
@@ -522,7 +555,8 @@ enum : int
     DWRITE_PANOSE_LETTERFORM_OBLIQUE_OFF_CENTER = 0x0000000e,
     DWRITE_PANOSE_LETTERFORM_OBLIQUE_SQUARE     = 0x0000000f,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_midline))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_midline
 alias DWRITE_PANOSE_MIDLINE = int;
 enum : int
 {
@@ -541,7 +575,8 @@ enum : int
     DWRITE_PANOSE_MIDLINE_LOW_POINTED      = 0x0000000c,
     DWRITE_PANOSE_MIDLINE_LOW_SERIFED      = 0x0000000d,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_xheight))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_xheight
 alias DWRITE_PANOSE_XHEIGHT = int;
 enum : int
 {
@@ -556,7 +591,8 @@ enum : int
     DWRITE_PANOSE_XHEIGHT_CONSTANT_STD      = 0x00000003,
     DWRITE_PANOSE_XHEIGHT_DUCKING_STD       = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_tool_kind))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_tool_kind
 alias DWRITE_PANOSE_TOOL_KIND = int;
 enum : int
 {
@@ -571,7 +607,8 @@ enum : int
     DWRITE_PANOSE_TOOL_KIND_FELT_PEN_BRUSH_TIP = 0x00000008,
     DWRITE_PANOSE_TOOL_KIND_WILD_BRUSH         = 0x00000009,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_spacing))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_spacing
 alias DWRITE_PANOSE_SPACING = int;
 enum : int
 {
@@ -580,7 +617,8 @@ enum : int
     DWRITE_PANOSE_SPACING_PROPORTIONAL_SPACED = 0x00000002,
     DWRITE_PANOSE_SPACING_MONOSPACED          = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_aspect_ratio))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_aspect_ratio
 alias DWRITE_PANOSE_ASPECT_RATIO = int;
 enum : int
 {
@@ -592,7 +630,8 @@ enum : int
     DWRITE_PANOSE_ASPECT_RATIO_EXPANDED       = 0x00000005,
     DWRITE_PANOSE_ASPECT_RATIO_VERY_EXPANDED  = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_script_topology))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_script_topology
 alias DWRITE_PANOSE_SCRIPT_TOPOLOGY = int;
 enum : int
 {
@@ -608,7 +647,8 @@ enum : int
     DWRITE_PANOSE_SCRIPT_TOPOLOGY_BLACKLETTER_TRAILING     = 0x00000009,
     DWRITE_PANOSE_SCRIPT_TOPOLOGY_BLACKLETTER_CONNECTED    = 0x0000000a,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_script_form))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_script_form
 alias DWRITE_PANOSE_SCRIPT_FORM = int;
 enum : int
 {
@@ -627,7 +667,8 @@ enum : int
     DWRITE_PANOSE_SCRIPT_FORM_EXAGGERATED_MORE_WRAPPING    = 0x0000000c,
     DWRITE_PANOSE_SCRIPT_FORM_EXAGGERATED_EXTREME_WRAPPING = 0x0000000d,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_finials))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_finials
 alias DWRITE_PANOSE_FINIALS = int;
 enum : int
 {
@@ -646,7 +687,8 @@ enum : int
     DWRITE_PANOSE_FINIALS_ROUND_CLOSED_LOOPS   = 0x0000000c,
     DWRITE_PANOSE_FINIALS_ROUND_OPEN_LOOPS     = 0x0000000d,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_xascent))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_xascent
 alias DWRITE_PANOSE_XASCENT = int;
 enum : int
 {
@@ -658,7 +700,8 @@ enum : int
     DWRITE_PANOSE_XASCENT_HIGH      = 0x00000005,
     DWRITE_PANOSE_XASCENT_VERY_HIGH = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_decorative_class))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_decorative_class
 alias DWRITE_PANOSE_DECORATIVE_CLASS = int;
 enum : int
 {
@@ -676,7 +719,8 @@ enum : int
     DWRITE_PANOSE_DECORATIVE_CLASS_COLLAGE              = 0x0000000b,
     DWRITE_PANOSE_DECORATIVE_CLASS_MONTAGE              = 0x0000000c,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_aspect))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_aspect
 alias DWRITE_PANOSE_ASPECT = int;
 enum : int
 {
@@ -691,7 +735,8 @@ enum : int
     DWRITE_PANOSE_ASPECT_SUPER_EXTENDED  = 0x00000008,
     DWRITE_PANOSE_ASPECT_MONOSPACED      = 0x00000009,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_fill))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_fill
 alias DWRITE_PANOSE_FILL = int;
 enum : int
 {
@@ -704,7 +749,8 @@ enum : int
     DWRITE_PANOSE_FILL_SHAPED_FILL         = 0x00000006,
     DWRITE_PANOSE_FILL_DRAWN_DISTRESSED    = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_lining))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_lining
 alias DWRITE_PANOSE_LINING = int;
 enum : int
 {
@@ -718,7 +764,8 @@ enum : int
     DWRITE_PANOSE_LINING_RELIEF   = 0x00000007,
     DWRITE_PANOSE_LINING_BACKDROP = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_decorative_topology))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_decorative_topology
 alias DWRITE_PANOSE_DECORATIVE_TOPOLOGY = int;
 enum : int
 {
@@ -739,7 +786,8 @@ enum : int
     DWRITE_PANOSE_DECORATIVE_TOPOLOGY_BLACKLETTER              = 0x0000000e,
     DWRITE_PANOSE_DECORATIVE_TOPOLOGY_SWASH_VARIANCE           = 0x0000000f,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_character_ranges))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_character_ranges
 alias DWRITE_PANOSE_CHARACTER_RANGES = int;
 enum : int
 {
@@ -750,7 +798,8 @@ enum : int
     DWRITE_PANOSE_CHARACTER_RANGES_NO_LOWER_CASE       = 0x00000004,
     DWRITE_PANOSE_CHARACTER_RANGES_SMALL_CAPS          = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_symbol_kind))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_symbol_kind
 alias DWRITE_PANOSE_SYMBOL_KIND = int;
 enum : int
 {
@@ -768,7 +817,8 @@ enum : int
     DWRITE_PANOSE_SYMBOL_KIND_LOGOS             = 0x0000000b,
     DWRITE_PANOSE_SYMBOL_KIND_INDUSTRY_SPECIFIC = 0x0000000c,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_symbol_aspect_ratio))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_panose_symbol_aspect_ratio
 alias DWRITE_PANOSE_SYMBOL_ASPECT_RATIO = int;
 enum : int
 {
@@ -783,14 +833,16 @@ enum : int
     DWRITE_PANOSE_SYMBOL_ASPECT_RATIO_NARROW             = 0x00000008,
     DWRITE_PANOSE_SYMBOL_ASPECT_RATIO_VERY_NARROW        = 0x00000009,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_outline_threshold))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_outline_threshold
 alias DWRITE_OUTLINE_THRESHOLD = int;
 enum : int
 {
     DWRITE_OUTLINE_THRESHOLD_ANTIALIASED = 0x00000000,
     DWRITE_OUTLINE_THRESHOLD_ALIASED     = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_baseline))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_baseline
 alias DWRITE_BASELINE = int;
 enum : int
 {
@@ -804,14 +856,16 @@ enum : int
     DWRITE_BASELINE_MINIMUM            = 0x00000007,
     DWRITE_BASELINE_MAXIMUM            = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_vertical_glyph_orientation))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_vertical_glyph_orientation
 alias DWRITE_VERTICAL_GLYPH_ORIENTATION = int;
 enum : int
 {
     DWRITE_VERTICAL_GLYPH_ORIENTATION_DEFAULT = 0x00000000,
     DWRITE_VERTICAL_GLYPH_ORIENTATION_STACKED = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_glyph_orientation_angle))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_glyph_orientation_angle
 alias DWRITE_GLYPH_ORIENTATION_ANGLE = int;
 enum : int
 {
@@ -820,21 +874,24 @@ enum : int
     DWRITE_GLYPH_ORIENTATION_ANGLE_180_DEGREES = 0x00000002,
     DWRITE_GLYPH_ORIENTATION_ANGLE_270_DEGREES = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_text_antialias_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/ne-dwrite_1-dwrite_text_antialias_mode
 alias DWRITE_TEXT_ANTIALIAS_MODE = int;
 enum : int
 {
     DWRITE_TEXT_ANTIALIAS_MODE_CLEARTYPE = 0x00000000,
     DWRITE_TEXT_ANTIALIAS_MODE_GRAYSCALE = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/ne-dwrite_2-dwrite_optical_alignment))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/ne-dwrite_2-dwrite_optical_alignment
 alias DWRITE_OPTICAL_ALIGNMENT = int;
 enum : int
 {
     DWRITE_OPTICAL_ALIGNMENT_NONE             = 0x00000000,
     DWRITE_OPTICAL_ALIGNMENT_NO_SIDE_BEARINGS = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/ne-dwrite_2-dwrite_grid_fit_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/ne-dwrite_2-dwrite_grid_fit_mode
 alias DWRITE_GRID_FIT_MODE = int;
 enum : int
 {
@@ -842,7 +899,8 @@ enum : int
     DWRITE_GRID_FIT_MODE_DISABLED = 0x00000001,
     DWRITE_GRID_FIT_MODE_ENABLED  = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/ne-dwrite_3-dwrite_font_property_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/ne-dwrite_3-dwrite_font_property_id
 alias DWRITE_FONT_PROPERTY_ID = int;
 enum : int
 {
@@ -866,7 +924,8 @@ enum : int
     DWRITE_FONT_PROPERTY_ID_FAMILY_NAME                      = 0x00000001,
     DWRITE_FONT_PROPERTY_ID_FACE_NAME                        = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/ne-dwrite_3-dwrite_locality))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/ne-dwrite_3-dwrite_locality
 alias DWRITE_LOCALITY = int;
 enum : int
 {
@@ -874,7 +933,8 @@ enum : int
     DWRITE_LOCALITY_PARTIAL = 0x00000001,
     DWRITE_LOCALITY_LOCAL   = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/ne-dwrite_3-dwrite_rendering_mode1))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/ne-dwrite_3-dwrite_rendering_mode1
 alias DWRITE_RENDERING_MODE1 = int;
 enum : int
 {
@@ -887,7 +947,8 @@ enum : int
     DWRITE_RENDERING_MODE1_OUTLINE                       = 0x00000006,
     DWRITE_RENDERING_MODE1_NATURAL_SYMMETRIC_DOWNSAMPLED = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/ne-dwrite_3-dwrite_font_line_gap_usage))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/ne-dwrite_3-dwrite_font_line_gap_usage
 alias DWRITE_FONT_LINE_GAP_USAGE = int;
 enum : int
 {
@@ -895,7 +956,8 @@ enum : int
     DWRITE_FONT_LINE_GAP_USAGE_DISABLED = 0x00000001,
     DWRITE_FONT_LINE_GAP_USAGE_ENABLED  = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/ne-dwrite_3-dwrite_container_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/ne-dwrite_3-dwrite_container_type
 alias DWRITE_CONTAINER_TYPE = int;
 enum : int
 {
@@ -903,21 +965,24 @@ enum : int
     DWRITE_CONTAINER_TYPE_WOFF    = 0x00000001,
     DWRITE_CONTAINER_TYPE_WOFF2   = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/ne-dwrite_3-dwrite_font_family_model))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/ne-dwrite_3-dwrite_font_family_model
 alias DWRITE_FONT_FAMILY_MODEL = int;
 enum : int
 {
     DWRITE_FONT_FAMILY_MODEL_TYPOGRAPHIC          = 0x00000000,
     DWRITE_FONT_FAMILY_MODEL_WEIGHT_STRETCH_STYLE = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/ne-dwrite_3-dwrite_automatic_font_axes))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/ne-dwrite_3-dwrite_automatic_font_axes
 alias DWRITE_AUTOMATIC_FONT_AXES = int;
 enum : int
 {
     DWRITE_AUTOMATIC_FONT_AXES_NONE         = 0x00000000,
     DWRITE_AUTOMATIC_FONT_AXES_OPTICAL_SIZE = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/ne-dwrite_3-dwrite_font_axis_attributes))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/ne-dwrite_3-dwrite_font_axis_attributes
 alias DWRITE_FONT_AXIS_ATTRIBUTES = int;
 enum : int
 {
@@ -925,7 +990,8 @@ enum : int
     DWRITE_FONT_AXIS_ATTRIBUTES_VARIABLE = 0x00000001,
     DWRITE_FONT_AXIS_ATTRIBUTES_HIDDEN   = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/ne-dwrite_3-dwrite_font_source_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/ne-dwrite_3-dwrite_font_source_type
 alias DWRITE_FONT_SOURCE_TYPE = int;
 enum : int
 {
@@ -935,6 +1001,7 @@ enum : int
     DWRITE_FONT_SOURCE_TYPE_APPX_PACKAGE         = 0x00000003,
     DWRITE_FONT_SOURCE_TYPE_REMOTE_FONT_PROVIDER = 0x00000004,
 }
+
 alias DWRITE_PAINT_FEATURE_LEVEL = int;
 enum : int
 {
@@ -942,6 +1009,7 @@ enum : int
     DWRITE_PAINT_FEATURE_LEVEL_COLR_V0 = 0x00000001,
     DWRITE_PAINT_FEATURE_LEVEL_COLR_V1 = 0x00000002,
 }
+
 alias DWRITE_PAINT_ATTRIBUTES = int;
 enum : int
 {
@@ -949,6 +1017,7 @@ enum : int
     DWRITE_PAINT_ATTRIBUTES_USES_PALETTE    = 0x00000001,
     DWRITE_PAINT_ATTRIBUTES_USES_TEXT_COLOR = 0x00000002,
 }
+
 alias DWRITE_COLOR_COMPOSITE_MODE = int;
 enum : int
 {
@@ -981,6 +1050,7 @@ enum : int
     DWRITE_COLOR_COMPOSITE_HSL_COLOR      = 0x0000001a,
     DWRITE_COLOR_COMPOSITE_HSL_LUMINOSITY = 0x0000001b,
 }
+
 alias DWRITE_PAINT_TYPE = int;
 enum : int
 {
@@ -1000,9 +1070,9 @@ enum : int
 // Constants
 
 
-enum uint DWRITE_ALPHA_MAX = 0x000000ff;
-enum uint FACILITY_DWRITE = 0x00000898;
-enum uint DWRITE_ERR_BASE = 0x00005000;
+enum uint DWRITE_ALPHA_MAX = 0x000000ffU;
+enum uint FACILITY_DWRITE = 0x00000898U;
+enum uint DWRITE_ERR_BASE = 0x00005000U;
 
 enum : HRESULT
 {
@@ -1012,13 +1082,13 @@ enum : HRESULT
 }
 
 enum HRESULT DWRITE_E_TOOMANYDOWNLOADS = HRESULT(0x88985010);
-enum uint DWRITE_STANDARD_FONT_AXIS_COUNT = 0x00000005;
-enum uint DWRITE_NO_PALETTE_INDEX = 0x0000ffff;
+enum uint DWRITE_STANDARD_FONT_AXIS_COUNT = 0x00000005U;
+enum uint DWRITE_NO_PALETTE_INDEX = 0x0000ffffU;
 
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DirectWrite/dwrite-color-f))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/dwrite-color-f
 struct DWRITE_COLOR_F
 {
     float r;
@@ -1027,7 +1097,7 @@ struct DWRITE_COLOR_F
     float a;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_font_metrics))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_font_metrics
 struct DWRITE_FONT_METRICS
 {
     ushort designUnitsPerEm;
@@ -1042,7 +1112,7 @@ struct DWRITE_FONT_METRICS
     ushort strikethroughThickness;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_glyph_metrics))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_glyph_metrics
 struct DWRITE_GLYPH_METRICS
 {
     int  leftSideBearing;
@@ -1054,14 +1124,14 @@ struct DWRITE_GLYPH_METRICS
     int  verticalOriginY;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_glyph_offset))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_glyph_offset
 struct DWRITE_GLYPH_OFFSET
 {
     float advanceOffset;
     float ascenderOffset;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_matrix))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_matrix
 struct DWRITE_MATRIX
 {
     float m11;
@@ -1072,28 +1142,28 @@ struct DWRITE_MATRIX
     float dy;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_text_range))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_text_range
 struct DWRITE_TEXT_RANGE
 {
     uint startPosition;
     uint length;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_font_feature))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_font_feature
 struct DWRITE_FONT_FEATURE
 {
     DWRITE_FONT_FEATURE_TAG nameTag;
     uint parameter;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_typographic_features))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_typographic_features
 struct DWRITE_TYPOGRAPHIC_FEATURES
 {
     DWRITE_FONT_FEATURE* features;
     uint                 featureCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_trimming))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_trimming
 struct DWRITE_TRIMMING
 {
     DWRITE_TRIMMING_GRANULARITY granularity;
@@ -1101,32 +1171,32 @@ struct DWRITE_TRIMMING
     uint delimiterCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_script_analysis))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_script_analysis
 struct DWRITE_SCRIPT_ANALYSIS
 {
     ushort               script;
     DWRITE_SCRIPT_SHAPES shapes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_line_breakpoint))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_line_breakpoint
 struct DWRITE_LINE_BREAKPOINT
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(padding)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(2))], [])*/ubyte _bitfield36;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(padding)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(2))], [])*/ubyte _bitfield93;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_shaping_text_properties))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_shaping_text_properties
 struct DWRITE_SHAPING_TEXT_PROPERTIES
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(13))], [])*/ushort _bitfield37;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(3)), FixedArgSig(ElementSig(13))], [])*/ushort _bitfield94;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_shaping_glyph_properties))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_shaping_glyph_properties
 struct DWRITE_SHAPING_GLYPH_PROPERTIES
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(9))], [])*/ushort _bitfield38;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(9))], [])*/ushort _bitfield95;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_glyph_run))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_glyph_run
 struct DWRITE_GLYPH_RUN
 {
     IDWriteFontFace fontFace;
@@ -1139,7 +1209,7 @@ struct DWRITE_GLYPH_RUN
     uint            bidiLevel;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_glyph_run_description))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_glyph_run_description
 struct DWRITE_GLYPH_RUN_DESCRIPTION
 {
     const(PWSTR)   localeName;
@@ -1149,7 +1219,7 @@ struct DWRITE_GLYPH_RUN_DESCRIPTION
     uint           textPosition;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_underline))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_underline
 struct DWRITE_UNDERLINE
 {
     float        width;
@@ -1162,7 +1232,7 @@ struct DWRITE_UNDERLINE
     DWRITE_MEASURING_MODE measuringMode;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_strikethrough))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_strikethrough
 struct DWRITE_STRIKETHROUGH
 {
     float        width;
@@ -1174,7 +1244,7 @@ struct DWRITE_STRIKETHROUGH
     DWRITE_MEASURING_MODE measuringMode;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_line_metrics))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_line_metrics
 struct DWRITE_LINE_METRICS
 {
     uint  length;
@@ -1185,15 +1255,15 @@ struct DWRITE_LINE_METRICS
     BOOL  isTrimmed;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_cluster_metrics))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_cluster_metrics
 struct DWRITE_CLUSTER_METRICS
 {
     float  width;
     ushort length;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(padding)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(11))], [])*/ushort _bitfield39;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(padding)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(11))], [])*/ushort _bitfield96;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_text_metrics))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_text_metrics
 struct DWRITE_TEXT_METRICS
 {
     float left;
@@ -1207,7 +1277,7 @@ struct DWRITE_TEXT_METRICS
     uint  lineCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_inline_object_metrics))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_inline_object_metrics
 struct DWRITE_INLINE_OBJECT_METRICS
 {
     float width;
@@ -1216,7 +1286,7 @@ struct DWRITE_INLINE_OBJECT_METRICS
     BOOL  supportsSideways;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_overhang_metrics))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_overhang_metrics
 struct DWRITE_OVERHANG_METRICS
 {
     float left;
@@ -1225,7 +1295,7 @@ struct DWRITE_OVERHANG_METRICS
     float bottom;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_hit_test_metrics))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/ns-dwrite-dwrite_hit_test_metrics
 struct DWRITE_HIT_TEST_METRICS
 {
     uint  textPosition;
@@ -1239,7 +1309,7 @@ struct DWRITE_HIT_TEST_METRICS
     BOOL  isTrimmed;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/ns-dwrite_1-dwrite_font_metrics1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/ns-dwrite_1-dwrite_font_metrics1
 struct DWRITE_FONT_METRICS1
 {
     DWRITE_FONT_METRICS Base;
@@ -1258,7 +1328,7 @@ struct DWRITE_FONT_METRICS1
     BOOL                hasTypographicMetrics;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/ns-dwrite_1-dwrite_caret_metrics))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/ns-dwrite_1-dwrite_caret_metrics
 struct DWRITE_CARET_METRICS
 {
     short slopeRise;
@@ -1266,51 +1336,99 @@ struct DWRITE_CARET_METRICS
     short offset;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/ns-dwrite_1-dwrite_panose))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/ns-dwrite_1-dwrite_panose
 union DWRITE_PANOSE
 {
-    ubyte[10]         values;
-    ubyte             familyKind;
-    _text_e__Struct   text;
-    _script_e__Struct script;
-    _decorative_e__Struct decorative;
-    _symbol_e__Struct symbol;
+    ubyte[10] values;
+    ubyte     familyKind;
+    struct text
+    {
+        ubyte familyKind;
+        ubyte serifStyle;
+        ubyte weight;
+        ubyte proportion;
+        ubyte contrast;
+        ubyte strokeVariation;
+        ubyte armStyle;
+        ubyte letterform;
+        ubyte midline;
+        ubyte xHeight;
+    }
+    struct script
+    {
+        ubyte familyKind;
+        ubyte toolKind;
+        ubyte weight;
+        ubyte spacing;
+        ubyte aspectRatio;
+        ubyte contrast;
+        ubyte scriptTopology;
+        ubyte scriptForm;
+        ubyte finials;
+        ubyte xAscent;
+    }
+    struct decorative
+    {
+        ubyte familyKind;
+        ubyte decorativeClass;
+        ubyte weight;
+        ubyte aspect;
+        ubyte contrast;
+        ubyte serifVariant;
+        ubyte fill;
+        ubyte lining;
+        ubyte decorativeTopology;
+        ubyte characterRange;
+    }
+    struct symbol
+    {
+        ubyte familyKind;
+        ubyte symbolKind;
+        ubyte weight;
+        ubyte spacing;
+        ubyte aspectRatioAndContrast;
+        ubyte aspectRatio94;
+        ubyte aspectRatio119;
+        ubyte aspectRatio157;
+        ubyte aspectRatio163;
+        ubyte aspectRatio211;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/ns-dwrite_1-dwrite_unicode_range))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/ns-dwrite_1-dwrite_unicode_range
 struct DWRITE_UNICODE_RANGE
 {
     uint first;
     uint last;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/ns-dwrite_1-dwrite_script_properties))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/ns-dwrite_1-dwrite_script_properties
 struct DWRITE_SCRIPT_PROPERTIES
 {
     uint isoScriptCode;
     uint isoScriptNumber;
     uint clusterLookahead;
     uint justificationCharacter;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(25))], [])*/uint _bitfield40;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(25))], [])*/uint _bitfield97;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/ns-dwrite_1-dwrite_justification_opportunity))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/ns-dwrite_1-dwrite_justification_opportunity
 struct DWRITE_JUSTIFICATION_OPPORTUNITY
 {
     float expansionMinimum;
     float expansionMaximum;
     float compressionMaximum;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(20)), FixedArgSig(ElementSig(12))], [])*/uint _bitfield41;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(reserved)), FixedArgSig(ElementSig(20)), FixedArgSig(ElementSig(12))], [])*/uint _bitfield98;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/ns-dwrite_2-dwrite_text_metrics1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/ns-dwrite_2-dwrite_text_metrics1
 struct DWRITE_TEXT_METRICS1
 {
     DWRITE_TEXT_METRICS Base;
     float               heightIncludingTrailingWhitespace;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/ns-dwrite_2-dwrite_color_glyph_run))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/ns-dwrite_2-dwrite_color_glyph_run
 struct DWRITE_COLOR_GLYPH_RUN
 {
     DWRITE_GLYPH_RUN glyphRun;
@@ -1321,7 +1439,7 @@ struct DWRITE_COLOR_GLYPH_RUN
     ushort           paletteIndex;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/ns-dwrite_3-dwrite_font_property))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/ns-dwrite_3-dwrite_font_property
 struct DWRITE_FONT_PROPERTY
 {
     DWRITE_FONT_PROPERTY_ID propertyId;
@@ -1329,7 +1447,7 @@ struct DWRITE_FONT_PROPERTY
     const(PWSTR) localeName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/ns-dwrite_3-dwrite_line_metrics1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/ns-dwrite_3-dwrite_line_metrics1
 struct DWRITE_LINE_METRICS1
 {
     DWRITE_LINE_METRICS Base;
@@ -1337,7 +1455,7 @@ struct DWRITE_LINE_METRICS1
     float               leadingAfter;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/ns-dwrite_3-dwrite_line_spacing))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/ns-dwrite_3-dwrite_line_spacing
 struct DWRITE_LINE_SPACING
 {
     DWRITE_LINE_SPACING_METHOD method;
@@ -1347,7 +1465,7 @@ struct DWRITE_LINE_SPACING
     DWRITE_FONT_LINE_GAP_USAGE fontLineGapUsage;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/ns-dwrite_3-dwrite_color_glyph_run1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/ns-dwrite_3-dwrite_color_glyph_run1
 struct DWRITE_COLOR_GLYPH_RUN1
 {
     DWRITE_COLOR_GLYPH_RUN Base;
@@ -1355,7 +1473,7 @@ struct DWRITE_COLOR_GLYPH_RUN1
     DWRITE_MEASURING_MODE measuringMode;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/ns-dwrite_3-dwrite_glyph_image_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/ns-dwrite_3-dwrite_glyph_image_data
 struct DWRITE_GLYPH_IMAGE_DATA
 {
     const(void)* imageData;
@@ -1369,21 +1487,21 @@ struct DWRITE_GLYPH_IMAGE_DATA
     POINT        verticalBottomOrigin;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/ns-dwrite_3-dwrite_file_fragment))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/ns-dwrite_3-dwrite_file_fragment
 struct DWRITE_FILE_FRAGMENT
 {
     ulong fileOffset;
     ulong fragmentSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/ns-dwrite_3-dwrite_font_axis_value))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/ns-dwrite_3-dwrite_font_axis_value
 struct DWRITE_FONT_AXIS_VALUE
 {
     DWRITE_FONT_AXIS_TAG axisTag;
     float                value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/ns-dwrite_3-dwrite_font_axis_range))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/ns-dwrite_3-dwrite_font_axis_range
 struct DWRITE_FONT_AXIS_RANGE
 {
     DWRITE_FONT_AXIS_TAG axisTag;
@@ -1409,7 +1527,64 @@ struct DWRITE_PAINT_COLOR
 struct DWRITE_PAINT_ELEMENT
 {
     DWRITE_PAINT_TYPE paintType;
-    PAINT_UNION       paint;
+    union paint
+    {
+        struct layers
+        {
+            uint childCount;
+        }
+        struct solidGlyph
+        {
+            uint               glyphIndex;
+            DWRITE_PAINT_COLOR color;
+        }
+        DWRITE_PAINT_COLOR solid;
+        struct linearGradient
+        {
+            uint  extendMode;
+            uint  gradientStopCount;
+            float x0;
+            float y0;
+            float x1;
+            float y1;
+            float x2;
+            float y2;
+        }
+        struct radialGradient
+        {
+            uint  extendMode;
+            uint  gradientStopCount;
+            float x0;
+            float y0;
+            float radius0;
+            float x1;
+            float y1;
+            float radius1;
+        }
+        struct sweepGradient
+        {
+            uint  extendMode;
+            uint  gradientStopCount;
+            float centerX;
+            float centerY;
+            float startAngle;
+            float endAngle;
+        }
+        struct glyph
+        {
+            uint glyphIndex;
+        }
+        struct colorGlyph
+        {
+            uint       glyphIndex;
+            D2D_RECT_F clipBox;
+        }
+        DWRITE_MATRIX      transform;
+        struct composite
+        {
+            DWRITE_COLOR_COMPOSITE_MODE mode;
+        }
+    }
 }
 
 // Functions
@@ -1423,122 +1598,122 @@ HRESULT DWriteCreateFactory(DWRITE_FACTORY_TYPE factoryType, const(GUID)* iid, v
 
 @GUID("727cad4e-d6af-4c9e-8a08-d695b11caa49")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritefontfileloader))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritefontfileloader
 interface IDWriteFontFileLoader : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontfileloader-createstreamfromkey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontfileloader-createstreamfromkey
     HRESULT CreateStreamFromKey(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(void)* fontFileReferenceKey, 
                                 uint fontFileReferenceKeySize, IDWriteFontFileStream* fontFileStream);
 }
 
 @GUID("b2d9f3ec-c9fe-4a11-a2ec-d86208f7c0a2")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DirectWrite/idwritelocalfontfileloader))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritelocalfontfileloader
 interface IDWriteLocalFontFileLoader : IDWriteFontFileLoader
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DirectWrite/idwritelocalfontfileloader-getfilepathlengthfromkey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritelocalfontfileloader-getfilepathlengthfromkey
     HRESULT GetFilePathLengthFromKey(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(void)* fontFileReferenceKey, 
                                      uint fontFileReferenceKeySize, uint* filePathLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DirectWrite/idwritelocalfontfileloader-getfilepathfromkey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritelocalfontfileloader-getfilepathfromkey
     HRESULT GetFilePathFromKey(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(void)* fontFileReferenceKey, 
                                uint fontFileReferenceKeySize, PWSTR filePath, uint filePathSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DirectWrite/idwritelocalfontfileloader-getlastwritetimefromkey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritelocalfontfileloader-getlastwritetimefromkey
     HRESULT GetLastWriteTimeFromKey(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(void)* fontFileReferenceKey, 
                                     uint fontFileReferenceKeySize, FILETIME* lastWriteTime);
 }
 
 @GUID("6d4865fe-0ab8-4d91-8f62-5dd6be34a3e0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritefontfilestream))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritefontfilestream
 interface IDWriteFontFileStream : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontfilestream-readfilefragment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontfilestream-readfilefragment
     HRESULT ReadFileFragment(const(void)** fragmentStart, ulong fileOffset, ulong fragmentSize, 
                              void** fragmentContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontfilestream-releasefilefragment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontfilestream-releasefilefragment
     void    ReleaseFileFragment(void* fragmentContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontfilestream-getfilesize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontfilestream-getfilesize
     HRESULT GetFileSize(ulong* fileSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontfilestream-getlastwritetime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontfilestream-getlastwritetime
     HRESULT GetLastWriteTime(ulong* lastWriteTime);
 }
 
 @GUID("739d886a-cef5-47dc-8769-1a8b41bebbb0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritefontfile))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritefontfile
 interface IDWriteFontFile : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontfile-getreferencekey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontfile-getreferencekey
     HRESULT GetReferenceKey(const(void)** fontFileReferenceKey, uint* fontFileReferenceKeySize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontfile-getloader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontfile-getloader
     HRESULT GetLoader(IDWriteFontFileLoader* fontFileLoader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontfile-analyze))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontfile-analyze
     HRESULT Analyze(BOOL* isSupportedFontType, DWRITE_FONT_FILE_TYPE* fontFileType, 
                     DWRITE_FONT_FACE_TYPE* fontFaceType, uint* numberOfFaces);
 }
 
 @GUID("2f0da53a-2add-47cd-82ee-d9ec34688e75")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwriterenderingparams))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwriterenderingparams
 interface IDWriteRenderingParams : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwriterenderingparams-getgamma))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwriterenderingparams-getgamma
     float GetGamma();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwriterenderingparams-getenhancedcontrast))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwriterenderingparams-getenhancedcontrast
     float GetEnhancedContrast();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwriterenderingparams-getcleartypelevel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwriterenderingparams-getcleartypelevel
     float GetClearTypeLevel();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwriterenderingparams-getpixelgeometry))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwriterenderingparams-getpixelgeometry
     DWRITE_PIXEL_GEOMETRY GetPixelGeometry();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwriterenderingparams-getrenderingmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwriterenderingparams-getrenderingmode
     DWRITE_RENDERING_MODE GetRenderingMode();
 }
 
 @GUID("5f49804d-7024-4d43-bfa9-d25984f53849")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritefontface))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritefontface
 interface IDWriteFontFace : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontface-gettype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontface-gettype
     DWRITE_FONT_FACE_TYPE GetType();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontface-getfiles))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontface-getfiles
     HRESULT GetFiles(uint* numberOfFiles, IDWriteFontFile* fontFiles);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontface-getindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontface-getindex
     uint    GetIndex();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontface-getsimulations))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontface-getsimulations
     DWRITE_FONT_SIMULATIONS GetSimulations();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontface-issymbolfont))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontface-issymbolfont
     BOOL    IsSymbolFont();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontface-getmetrics))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontface-getmetrics
     void    GetMetrics(DWRITE_FONT_METRICS* fontFaceMetrics);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontface-getglyphcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontface-getglyphcount
     ushort  GetGlyphCount();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontface-getdesignglyphmetrics))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontface-getdesignglyphmetrics
     HRESULT GetDesignGlyphMetrics(const(ushort)* glyphIndices, uint glyphCount, DWRITE_GLYPH_METRICS* glyphMetrics, 
                                   BOOL isSideways);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontface-getglyphindices))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontface-getglyphindices
     HRESULT GetGlyphIndices(const(uint)* codePoints, uint codePointCount, ushort* glyphIndices);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontface-trygetfonttable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontface-trygetfonttable
     HRESULT TryGetFontTable(uint openTypeTableTag, const(void)** tableData, uint* tableSize, void** tableContext, 
                             BOOL* exists);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontface-releasefonttable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontface-releasefonttable
     void    ReleaseFontTable(void* tableContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontface-getglyphrunoutline))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontface-getglyphrunoutline
     HRESULT GetGlyphRunOutline(float emSize, const(ushort)* glyphIndices, const(float)* glyphAdvances, 
                                const(DWRITE_GLYPH_OFFSET)* glyphOffsets, uint glyphCount, BOOL isSideways, 
                                BOOL isRightToLeft, ID2D1SimplifiedGeometrySink geometrySink);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontface-getrecommendedrenderingmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontface-getrecommendedrenderingmode
     HRESULT GetRecommendedRenderingMode(float emSize, float pixelsPerDip, DWRITE_MEASURING_MODE measuringMode, 
                                         IDWriteRenderingParams renderingParams, DWRITE_RENDERING_MODE* renderingMode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DirectWrite/idwritefontface-getgdicompatiblemetrics))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritefontface-getgdicompatiblemetrics
     HRESULT GetGdiCompatibleMetrics(float emSize, float pixelsPerDip, const(DWRITE_MATRIX)* transform, 
                                     DWRITE_FONT_METRICS* fontFaceMetrics);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DirectWrite/idwritefontface-getgdicompatibleglyphmetrics))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritefontface-getgdicompatibleglyphmetrics
     HRESULT GetGdiCompatibleGlyphMetrics(float emSize, float pixelsPerDip, const(DWRITE_MATRIX)* transform, 
                                          BOOL useGdiNatural, const(ushort)* glyphIndices, uint glyphCount, 
                                          DWRITE_GLYPH_METRICS* glyphMetrics, BOOL isSideways);
@@ -1546,11 +1721,11 @@ interface IDWriteFontFace : IUnknown
 
 @GUID("cca920e4-52f0-492b-bfa8-29c72ee0a468")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritefontcollectionloader))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritefontcollectionloader
 interface IDWriteFontCollectionLoader : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontcollectionloader-createenumeratorfromkey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontcollectionloader-createenumeratorfromkey
     HRESULT CreateEnumeratorFromKey(IDWriteFactory factory, 
                                     /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/const(void)* collectionKey, 
                                     uint collectionKeySize, IDWriteFontFileEnumerator* fontFileEnumerator);
@@ -1558,253 +1733,253 @@ interface IDWriteFontCollectionLoader : IUnknown
 
 @GUID("72755049-5ff7-435d-8348-4be97cfa6c7c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritefontfileenumerator))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritefontfileenumerator
 interface IDWriteFontFileEnumerator : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontfileenumerator-movenext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontfileenumerator-movenext
     HRESULT MoveNext(BOOL* hasCurrentFile);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontfileenumerator-getcurrentfontfile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontfileenumerator-getcurrentfontfile
     HRESULT GetCurrentFontFile(IDWriteFontFile* fontFile);
 }
 
 @GUID("08256209-099a-4b34-b86d-c22b110e7771")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritelocalizedstrings))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritelocalizedstrings
 interface IDWriteLocalizedStrings : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritelocalizedstrings-getcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritelocalizedstrings-getcount
     uint    GetCount();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritelocalizedstrings-findlocalename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritelocalizedstrings-findlocalename
     HRESULT FindLocaleName(const(PWSTR) localeName, uint* index, BOOL* exists);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritelocalizedstrings-getlocalenamelength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritelocalizedstrings-getlocalenamelength
     HRESULT GetLocaleNameLength(uint index, uint* length);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritelocalizedstrings-getlocalename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritelocalizedstrings-getlocalename
     HRESULT GetLocaleName(uint index, PWSTR localeName, uint size);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritelocalizedstrings-getstringlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritelocalizedstrings-getstringlength
     HRESULT GetStringLength(uint index, uint* length);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritelocalizedstrings-getstring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritelocalizedstrings-getstring
     HRESULT GetString(uint index, PWSTR stringBuffer, uint size);
 }
 
 @GUID("a84cee02-3eea-4eee-a827-87c1a02a0fcc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritefontcollection))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritefontcollection
 interface IDWriteFontCollection : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontcollection-getfontfamilycount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontcollection-getfontfamilycount
     uint    GetFontFamilyCount();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontcollection-getfontfamily))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontcollection-getfontfamily
     HRESULT GetFontFamily(uint index, IDWriteFontFamily* fontFamily);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontcollection-findfamilyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontcollection-findfamilyname
     HRESULT FindFamilyName(const(PWSTR) familyName, uint* index, BOOL* exists);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontcollection-getfontfromfontface))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontcollection-getfontfromfontface
     HRESULT GetFontFromFontFace(IDWriteFontFace fontFace, IDWriteFont* font);
 }
 
 @GUID("1a0d8438-1d97-4ec1-aef9-a2fb86ed6acb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritefontlist))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritefontlist
 interface IDWriteFontList : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontlist-getfontcollection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontlist-getfontcollection
     HRESULT GetFontCollection(IDWriteFontCollection* fontCollection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontlist-getfontcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontlist-getfontcount
     uint    GetFontCount();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontlist-getfont))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontlist-getfont
     HRESULT GetFont(uint index, IDWriteFont* font);
 }
 
 @GUID("da20d8ef-812a-4c43-9802-62ec4abd7add")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritefontfamily))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritefontfamily
 interface IDWriteFontFamily : IDWriteFontList
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontfamily-getfamilynames))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontfamily-getfamilynames
     HRESULT GetFamilyNames(IDWriteLocalizedStrings* names);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontfamily-getfirstmatchingfont))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontfamily-getfirstmatchingfont
     HRESULT GetFirstMatchingFont(DWRITE_FONT_WEIGHT weight, DWRITE_FONT_STRETCH stretch, DWRITE_FONT_STYLE style, 
                                  IDWriteFont* matchingFont);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontfamily-getmatchingfonts))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefontfamily-getmatchingfonts
     HRESULT GetMatchingFonts(DWRITE_FONT_WEIGHT weight, DWRITE_FONT_STRETCH stretch, DWRITE_FONT_STYLE style, 
                              IDWriteFontList* matchingFonts);
 }
 
 @GUID("acd16696-8c14-4f5d-877e-fe3fc1d32737")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritefont))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritefont
 interface IDWriteFont : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefont-getfontfamily))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefont-getfontfamily
     HRESULT GetFontFamily(IDWriteFontFamily* fontFamily);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefont-getweight))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefont-getweight
     DWRITE_FONT_WEIGHT GetWeight();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefont-getstretch))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefont-getstretch
     DWRITE_FONT_STRETCH GetStretch();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefont-getstyle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefont-getstyle
     DWRITE_FONT_STYLE GetStyle();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefont-issymbolfont))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefont-issymbolfont
     BOOL    IsSymbolFont();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefont-getfacenames))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefont-getfacenames
     HRESULT GetFaceNames(IDWriteLocalizedStrings* names);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefont-getinformationalstrings))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefont-getinformationalstrings
     HRESULT GetInformationalStrings(DWRITE_INFORMATIONAL_STRING_ID informationalStringID, 
                                     IDWriteLocalizedStrings* informationalStrings, BOOL* exists);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefont-getsimulations))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefont-getsimulations
     DWRITE_FONT_SIMULATIONS GetSimulations();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefont-getmetrics))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefont-getmetrics
     void    GetMetrics(DWRITE_FONT_METRICS* fontMetrics);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefont-hascharacter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefont-hascharacter
     HRESULT HasCharacter(uint unicodeValue, BOOL* exists);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefont-createfontface))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefont-createfontface
     HRESULT CreateFontFace(IDWriteFontFace* fontFace);
 }
 
 @GUID("9c906818-31d7-4fd3-a151-7c5e225db55a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritetextformat))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritetextformat
 interface IDWriteTextFormat : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-settextalignment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-settextalignment
     HRESULT SetTextAlignment(DWRITE_TEXT_ALIGNMENT textAlignment);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-setparagraphalignment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-setparagraphalignment
     HRESULT SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT paragraphAlignment);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-setwordwrapping))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-setwordwrapping
     HRESULT SetWordWrapping(DWRITE_WORD_WRAPPING wordWrapping);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-setreadingdirection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-setreadingdirection
     HRESULT SetReadingDirection(DWRITE_READING_DIRECTION readingDirection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-setflowdirection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-setflowdirection
     HRESULT SetFlowDirection(DWRITE_FLOW_DIRECTION flowDirection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-setincrementaltabstop))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-setincrementaltabstop
     HRESULT SetIncrementalTabStop(float incrementalTabStop);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-settrimming))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-settrimming
     HRESULT SetTrimming(const(DWRITE_TRIMMING)* trimmingOptions, IDWriteInlineObject trimmingSign);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-setlinespacing))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-setlinespacing
     HRESULT SetLineSpacing(DWRITE_LINE_SPACING_METHOD lineSpacingMethod, float lineSpacing, float baseline);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-gettextalignment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-gettextalignment
     DWRITE_TEXT_ALIGNMENT GetTextAlignment();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getparagraphalignment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getparagraphalignment
     DWRITE_PARAGRAPH_ALIGNMENT GetParagraphAlignment();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getwordwrapping))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getwordwrapping
     DWRITE_WORD_WRAPPING GetWordWrapping();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getreadingdirection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getreadingdirection
     DWRITE_READING_DIRECTION GetReadingDirection();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getflowdirection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getflowdirection
     DWRITE_FLOW_DIRECTION GetFlowDirection();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getincrementaltabstop))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getincrementaltabstop
     float   GetIncrementalTabStop();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-gettrimming))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-gettrimming
     HRESULT GetTrimming(DWRITE_TRIMMING* trimmingOptions, IDWriteInlineObject* trimmingSign);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getlinespacing))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getlinespacing
     HRESULT GetLineSpacing(DWRITE_LINE_SPACING_METHOD* lineSpacingMethod, float* lineSpacing, float* baseline);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getfontcollection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getfontcollection
     HRESULT GetFontCollection(IDWriteFontCollection* fontCollection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getfontfamilynamelength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getfontfamilynamelength
     uint    GetFontFamilyNameLength();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getfontfamilyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getfontfamilyname
     HRESULT GetFontFamilyName(PWSTR fontFamilyName, uint nameSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getfontweight))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getfontweight
     DWRITE_FONT_WEIGHT GetFontWeight();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getfontstyle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getfontstyle
     DWRITE_FONT_STYLE GetFontStyle();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getfontstretch))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getfontstretch
     DWRITE_FONT_STRETCH GetFontStretch();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getfontsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getfontsize
     float   GetFontSize();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getlocalenamelength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getlocalenamelength
     uint    GetLocaleNameLength();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getlocalename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getlocalename
     HRESULT GetLocaleName(PWSTR localeName, uint nameSize);
 }
 
 @GUID("55f1112b-1dc2-4b3c-9541-f46894ed85b6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritetypography))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritetypography
 interface IDWriteTypography : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetypography-addfontfeature))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetypography-addfontfeature
     HRESULT AddFontFeature(DWRITE_FONT_FEATURE fontFeature);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetypography-getfontfeaturecount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetypography-getfontfeaturecount
     uint    GetFontFeatureCount();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetypography-getfontfeature))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetypography-getfontfeature
     HRESULT GetFontFeature(uint fontFeatureIndex, DWRITE_FONT_FEATURE* fontFeature);
 }
 
 @GUID("14885cc9-bab0-4f90-b6ed-5c366a2cd03d")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DirectWrite/idwritenumbersubstitution))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritenumbersubstitution
 interface IDWriteNumberSubstitution : IUnknown
 {
 }
 
 @GUID("688e1a58-5094-47c8-adc8-fbcea60ae92b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritetextanalysissource))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritetextanalysissource
 interface IDWriteTextAnalysisSource : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextanalysissource-gettextatposition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextanalysissource-gettextatposition
     HRESULT GetTextAtPosition(uint textPosition, const(ushort)** textString, uint* textLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextanalysissource-gettextbeforeposition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextanalysissource-gettextbeforeposition
     HRESULT GetTextBeforePosition(uint textPosition, const(ushort)** textString, uint* textLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextanalysissource-getparagraphreadingdirection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextanalysissource-getparagraphreadingdirection
     DWRITE_READING_DIRECTION GetParagraphReadingDirection();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextanalysissource-getlocalename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextanalysissource-getlocalename
     HRESULT GetLocaleName(uint textPosition, uint* textLength, const(ushort)** localeName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextanalysissource-getnumbersubstitution))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextanalysissource-getnumbersubstitution
     HRESULT GetNumberSubstitution(uint textPosition, uint* textLength, 
                                   IDWriteNumberSubstitution* numberSubstitution);
 }
 
 @GUID("5810cd44-0ca0-4701-b3fa-bec5182ae4f6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritetextanalysissink))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritetextanalysissink
 interface IDWriteTextAnalysisSink : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextanalysissink-setscriptanalysis))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextanalysissink-setscriptanalysis
     HRESULT SetScriptAnalysis(uint textPosition, uint textLength, const(DWRITE_SCRIPT_ANALYSIS)* scriptAnalysis);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextanalysissink-setlinebreakpoints))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextanalysissink-setlinebreakpoints
     HRESULT SetLineBreakpoints(uint textPosition, uint textLength, const(DWRITE_LINE_BREAKPOINT)* lineBreakpoints);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextanalysissink-setbidilevel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextanalysissink-setbidilevel
     HRESULT SetBidiLevel(uint textPosition, uint textLength, ubyte explicitLevel, ubyte resolvedLevel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextanalysissink-setnumbersubstitution))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextanalysissink-setnumbersubstitution
     HRESULT SetNumberSubstitution(uint textPosition, uint textLength, IDWriteNumberSubstitution numberSubstitution);
 }
 
 @GUID("b7e6163e-7f46-43b4-84b3-e4e6249c365d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritetextanalyzer))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritetextanalyzer
 interface IDWriteTextAnalyzer : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextanalyzer-analyzescript))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextanalyzer-analyzescript
     HRESULT AnalyzeScript(IDWriteTextAnalysisSource analysisSource, uint textPosition, uint textLength, 
                           IDWriteTextAnalysisSink analysisSink);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextanalyzer-analyzebidi))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextanalyzer-analyzebidi
     HRESULT AnalyzeBidi(IDWriteTextAnalysisSource analysisSource, uint textPosition, uint textLength, 
                         IDWriteTextAnalysisSink analysisSink);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextanalyzer-analyzenumbersubstitution))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextanalyzer-analyzenumbersubstitution
     HRESULT AnalyzeNumberSubstitution(IDWriteTextAnalysisSource analysisSource, uint textPosition, uint textLength, 
                                       IDWriteTextAnalysisSink analysisSink);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextanalyzer-analyzelinebreakpoints))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextanalyzer-analyzelinebreakpoints
     HRESULT AnalyzeLineBreakpoints(IDWriteTextAnalysisSource analysisSource, uint textPosition, uint textLength, 
                                    IDWriteTextAnalysisSink analysisSink);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextanalyzer-getglyphs))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextanalyzer-getglyphs
     HRESULT GetGlyphs(const(PWSTR) textString, uint textLength, IDWriteFontFace fontFace, BOOL isSideways, 
                       BOOL isRightToLeft, const(DWRITE_SCRIPT_ANALYSIS)* scriptAnalysis, const(PWSTR) localeName, 
                       IDWriteNumberSubstitution numberSubstitution, const(DWRITE_TYPOGRAPHIC_FEATURES)** features, 
                       const(uint)* featureRangeLengths, uint featureRanges, uint maxGlyphCount, ushort* clusterMap, 
                       DWRITE_SHAPING_TEXT_PROPERTIES* textProps, ushort* glyphIndices, 
                       DWRITE_SHAPING_GLYPH_PROPERTIES* glyphProps, uint* actualGlyphCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextanalyzer-getglyphplacements))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextanalyzer-getglyphplacements
     HRESULT GetGlyphPlacements(const(PWSTR) textString, const(ushort)* clusterMap, 
                                DWRITE_SHAPING_TEXT_PROPERTIES* textProps, uint textLength, 
                                const(ushort)* glyphIndices, const(DWRITE_SHAPING_GLYPH_PROPERTIES)* glyphProps, 
@@ -1813,7 +1988,7 @@ interface IDWriteTextAnalyzer : IUnknown
                                const(PWSTR) localeName, const(DWRITE_TYPOGRAPHIC_FEATURES)** features, 
                                const(uint)* featureRangeLengths, uint featureRanges, float* glyphAdvances, 
                                DWRITE_GLYPH_OFFSET* glyphOffsets);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DirectWrite/idwritetextanalyzer-getgdicompatibleglyphplacements))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritetextanalyzer-getgdicompatibleglyphplacements
     HRESULT GetGdiCompatibleGlyphPlacements(const(PWSTR) textString, const(ushort)* clusterMap, 
                                             DWRITE_SHAPING_TEXT_PROPERTIES* textProps, uint textLength, 
                                             const(ushort)* glyphIndices, 
@@ -1828,52 +2003,52 @@ interface IDWriteTextAnalyzer : IUnknown
 
 @GUID("8339fde3-106f-47ab-8373-1c6295eb10b3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwriteinlineobject))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwriteinlineobject
 interface IDWriteInlineObject : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwriteinlineobject-draw))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwriteinlineobject-draw
     HRESULT Draw(void* clientDrawingContext, IDWriteTextRenderer renderer, float originX, float originY, 
                  BOOL isSideways, BOOL isRightToLeft, IUnknown clientDrawingEffect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwriteinlineobject-getmetrics))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwriteinlineobject-getmetrics
     HRESULT GetMetrics(DWRITE_INLINE_OBJECT_METRICS* metrics);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DirectWrite/idwriteinlineobject-getoverhangmetrics))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwriteinlineobject-getoverhangmetrics
     HRESULT GetOverhangMetrics(DWRITE_OVERHANG_METRICS* overhangs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwriteinlineobject-getbreakconditions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwriteinlineobject-getbreakconditions
     HRESULT GetBreakConditions(DWRITE_BREAK_CONDITION* breakConditionBefore, 
                                DWRITE_BREAK_CONDITION* breakConditionAfter);
 }
 
 @GUID("eaf3a2da-ecf4-4d24-b644-b34f6842024b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritepixelsnapping))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritepixelsnapping
 interface IDWritePixelSnapping : IUnknown
 {
     HRESULT IsPixelSnappingDisabled(void* clientDrawingContext, BOOL* isDisabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritepixelsnapping-getcurrenttransform))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritepixelsnapping-getcurrenttransform
     HRESULT GetCurrentTransform(void* clientDrawingContext, DWRITE_MATRIX* transform);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritepixelsnapping-getpixelsperdip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritepixelsnapping-getpixelsperdip
     HRESULT GetPixelsPerDip(void* clientDrawingContext, float* pixelsPerDip);
 }
 
 @GUID("ef8a8135-5cc6-45fe-8825-c5a0724eb819")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritetextrenderer))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritetextrenderer
 interface IDWriteTextRenderer : IDWritePixelSnapping
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextrenderer-drawglyphrun))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextrenderer-drawglyphrun
     HRESULT DrawGlyphRun(void* clientDrawingContext, float baselineOriginX, float baselineOriginY, 
                          DWRITE_MEASURING_MODE measuringMode, const(DWRITE_GLYPH_RUN)* glyphRun, 
                          const(DWRITE_GLYPH_RUN_DESCRIPTION)* glyphRunDescription, IUnknown clientDrawingEffect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextrenderer-drawunderline))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextrenderer-drawunderline
     HRESULT DrawUnderline(void* clientDrawingContext, float baselineOriginX, float baselineOriginY, 
                           const(DWRITE_UNDERLINE)* underline, IUnknown clientDrawingEffect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextrenderer-drawstrikethrough))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextrenderer-drawstrikethrough
     HRESULT DrawStrikethrough(void* clientDrawingContext, float baselineOriginX, float baselineOriginY, 
                               const(DWRITE_STRIKETHROUGH)* strikethrough, IUnknown clientDrawingEffect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextrenderer-drawinlineobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextrenderer-drawinlineobject
     HRESULT DrawInlineObject(void* clientDrawingContext, float originX, float originY, 
                              IDWriteInlineObject inlineObject, BOOL isSideways, BOOL isRightToLeft, 
                              IUnknown clientDrawingEffect);
@@ -1881,92 +2056,92 @@ interface IDWriteTextRenderer : IDWritePixelSnapping
 
 @GUID("53737037-6d14-410b-9bfe-0b182bb70961")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritetextlayout))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritetextlayout
 interface IDWriteTextLayout : IDWriteTextFormat
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-setmaxwidth))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-setmaxwidth
     HRESULT SetMaxWidth(float maxWidth);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-setmaxheight))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-setmaxheight
     HRESULT SetMaxHeight(float maxHeight);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-setfontcollection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-setfontcollection
     HRESULT SetFontCollection(IDWriteFontCollection fontCollection, DWRITE_TEXT_RANGE textRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-setfontfamilyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-setfontfamilyname
     HRESULT SetFontFamilyName(const(PWSTR) fontFamilyName, DWRITE_TEXT_RANGE textRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-setfontweight))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-setfontweight
     HRESULT SetFontWeight(DWRITE_FONT_WEIGHT fontWeight, DWRITE_TEXT_RANGE textRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-setfontstyle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-setfontstyle
     HRESULT SetFontStyle(DWRITE_FONT_STYLE fontStyle, DWRITE_TEXT_RANGE textRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-setfontstretch))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-setfontstretch
     HRESULT SetFontStretch(DWRITE_FONT_STRETCH fontStretch, DWRITE_TEXT_RANGE textRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-setfontsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-setfontsize
     HRESULT SetFontSize(float fontSize, DWRITE_TEXT_RANGE textRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-setunderline))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-setunderline
     HRESULT SetUnderline(BOOL hasUnderline, DWRITE_TEXT_RANGE textRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-setstrikethrough))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-setstrikethrough
     HRESULT SetStrikethrough(BOOL hasStrikethrough, DWRITE_TEXT_RANGE textRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-setdrawingeffect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-setdrawingeffect
     HRESULT SetDrawingEffect(IUnknown drawingEffect, DWRITE_TEXT_RANGE textRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-setinlineobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-setinlineobject
     HRESULT SetInlineObject(IDWriteInlineObject inlineObject, DWRITE_TEXT_RANGE textRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-settypography))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-settypography
     HRESULT SetTypography(IDWriteTypography typography, DWRITE_TEXT_RANGE textRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-setlocalename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-setlocalename
     HRESULT SetLocaleName(const(PWSTR) localeName, DWRITE_TEXT_RANGE textRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-getmaxwidth))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-getmaxwidth
     float   GetMaxWidth();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-getmaxheight))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-getmaxheight
     float   GetMaxHeight();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-getfontcollection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-getfontcollection
     HRESULT GetFontCollection(uint currentPosition, IDWriteFontCollection* fontCollection, 
                               DWRITE_TEXT_RANGE* textRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-getfontfamilynamelength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-getfontfamilynamelength
     HRESULT GetFontFamilyNameLength(uint currentPosition, uint* nameLength, DWRITE_TEXT_RANGE* textRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-getfontfamilyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-getfontfamilyname
     HRESULT GetFontFamilyName(uint currentPosition, PWSTR fontFamilyName, uint nameSize, 
                               DWRITE_TEXT_RANGE* textRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-getfontweight))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-getfontweight
     HRESULT GetFontWeight(uint currentPosition, DWRITE_FONT_WEIGHT* fontWeight, DWRITE_TEXT_RANGE* textRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-getfontstyle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-getfontstyle
     HRESULT GetFontStyle(uint currentPosition, DWRITE_FONT_STYLE* fontStyle, DWRITE_TEXT_RANGE* textRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-getfontstretch))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-getfontstretch
     HRESULT GetFontStretch(uint currentPosition, DWRITE_FONT_STRETCH* fontStretch, DWRITE_TEXT_RANGE* textRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-getfontsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-getfontsize
     HRESULT GetFontSize(uint currentPosition, float* fontSize, DWRITE_TEXT_RANGE* textRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-getunderline))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-getunderline
     HRESULT GetUnderline(uint currentPosition, BOOL* hasUnderline, DWRITE_TEXT_RANGE* textRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-getstrikethrough))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-getstrikethrough
     HRESULT GetStrikethrough(uint currentPosition, BOOL* hasStrikethrough, DWRITE_TEXT_RANGE* textRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-getdrawingeffect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-getdrawingeffect
     HRESULT GetDrawingEffect(uint currentPosition, IUnknown* drawingEffect, DWRITE_TEXT_RANGE* textRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-getinlineobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-getinlineobject
     HRESULT GetInlineObject(uint currentPosition, IDWriteInlineObject* inlineObject, DWRITE_TEXT_RANGE* textRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-gettypography))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-gettypography
     HRESULT GetTypography(uint currentPosition, IDWriteTypography* typography, DWRITE_TEXT_RANGE* textRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-getlocalenamelength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-getlocalenamelength
     HRESULT GetLocaleNameLength(uint currentPosition, uint* nameLength, DWRITE_TEXT_RANGE* textRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-getlocalename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-getlocalename
     HRESULT GetLocaleName(uint currentPosition, PWSTR localeName, uint nameSize, DWRITE_TEXT_RANGE* textRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-draw))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-draw
     HRESULT Draw(void* clientDrawingContext, IDWriteTextRenderer renderer, float originX, float originY);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-getlinemetrics))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-getlinemetrics
     HRESULT GetLineMetrics(DWRITE_LINE_METRICS* lineMetrics, uint maxLineCount, uint* actualLineCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-getmetrics))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-getmetrics
     HRESULT GetMetrics(DWRITE_TEXT_METRICS* textMetrics);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DirectWrite/idwritetextlayout-getoverhangmetrics))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritetextlayout-getoverhangmetrics
     HRESULT GetOverhangMetrics(DWRITE_OVERHANG_METRICS* overhangs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-getclustermetrics))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-getclustermetrics
     HRESULT GetClusterMetrics(DWRITE_CLUSTER_METRICS* clusterMetrics, uint maxClusterCount, 
                               uint* actualClusterCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DirectWrite/idwritetextlayout-determineminwidth))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritetextlayout-determineminwidth
     HRESULT DetermineMinWidth(float* minWidth);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-hittestpoint))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-hittestpoint
     HRESULT HitTestPoint(float pointX, float pointY, BOOL* isTrailingHit, BOOL* isInside, 
                          DWRITE_HIT_TEST_METRICS* hitTestMetrics);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-hittesttextposition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-hittesttextposition
     HRESULT HitTestTextPosition(uint textPosition, BOOL isTrailingHit, float* pointX, float* pointY, 
                                 DWRITE_HIT_TEST_METRICS* hitTestMetrics);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-hittesttextrange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritetextlayout-hittesttextrange
     HRESULT HitTestTextRange(uint textPosition, uint textLength, float originX, float originY, 
                              DWRITE_HIT_TEST_METRICS* hitTestMetrics, uint maxHitTestMetricsCount, 
                              uint* actualHitTestMetricsCount);
@@ -1974,129 +2149,129 @@ interface IDWriteTextLayout : IDWriteTextFormat
 
 @GUID("5e5a32a3-8dff-4773-9ff6-0696eab77267")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritebitmaprendertarget))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritebitmaprendertarget
 interface IDWriteBitmapRenderTarget : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritebitmaprendertarget-drawglyphrun))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritebitmaprendertarget-drawglyphrun
     HRESULT DrawGlyphRun(float baselineOriginX, float baselineOriginY, DWRITE_MEASURING_MODE measuringMode, 
                          const(DWRITE_GLYPH_RUN)* glyphRun, IDWriteRenderingParams renderingParams, 
                          COLORREF textColor, RECT* blackBoxRect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritebitmaprendertarget-getmemorydc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritebitmaprendertarget-getmemorydc
     HDC     GetMemoryDC();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritebitmaprendertarget-getpixelsperdip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritebitmaprendertarget-getpixelsperdip
     float   GetPixelsPerDip();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritebitmaprendertarget-setpixelsperdip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritebitmaprendertarget-setpixelsperdip
     HRESULT SetPixelsPerDip(float pixelsPerDip);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritebitmaprendertarget-getcurrenttransform))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritebitmaprendertarget-getcurrenttransform
     HRESULT GetCurrentTransform(DWRITE_MATRIX* transform);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritebitmaprendertarget-setcurrenttransform))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritebitmaprendertarget-setcurrenttransform
     HRESULT SetCurrentTransform(const(DWRITE_MATRIX)* transform);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritebitmaprendertarget-getsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritebitmaprendertarget-getsize
     HRESULT GetSize(SIZE* size);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritebitmaprendertarget-resize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritebitmaprendertarget-resize
     HRESULT Resize(uint width, uint height);
 }
 
 @GUID("1edd9491-9853-4299-898f-6432983b6f3a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritegdiinterop))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritegdiinterop
 interface IDWriteGdiInterop : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritegdiinterop-createfontfromlogfont))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritegdiinterop-createfontfromlogfont
     HRESULT CreateFontFromLOGFONT(const(LOGFONTW)* logFont, IDWriteFont* font);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritegdiinterop-convertfonttologfont))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritegdiinterop-convertfonttologfont
     HRESULT ConvertFontToLOGFONT(IDWriteFont font, LOGFONTW* logFont, BOOL* isSystemFont);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritegdiinterop-convertfontfacetologfont))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritegdiinterop-convertfontfacetologfont
     HRESULT ConvertFontFaceToLOGFONT(IDWriteFontFace font, LOGFONTW* logFont);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritegdiinterop-createfontfacefromhdc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritegdiinterop-createfontfacefromhdc
     HRESULT CreateFontFaceFromHdc(HDC hdc, IDWriteFontFace* fontFace);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritegdiinterop-createbitmaprendertarget))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritegdiinterop-createbitmaprendertarget
     HRESULT CreateBitmapRenderTarget(HDC hdc, uint width, uint height, IDWriteBitmapRenderTarget* renderTarget);
 }
 
 @GUID("7d97dbf7-e085-42d4-81e3-6a883bded118")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwriteglyphrunanalysis))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwriteglyphrunanalysis
 interface IDWriteGlyphRunAnalysis : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwriteglyphrunanalysis-getalphatexturebounds))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwriteglyphrunanalysis-getalphatexturebounds
     HRESULT GetAlphaTextureBounds(DWRITE_TEXTURE_TYPE textureType, RECT* textureBounds);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwriteglyphrunanalysis-createalphatexture))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwriteglyphrunanalysis-createalphatexture
     HRESULT CreateAlphaTexture(DWRITE_TEXTURE_TYPE textureType, const(RECT)* textureBounds, 
                                /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/ubyte* alphaValues, 
                                uint bufferSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwriteglyphrunanalysis-getalphablendparams))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwriteglyphrunanalysis-getalphablendparams
     HRESULT GetAlphaBlendParams(IDWriteRenderingParams renderingParams, float* blendGamma, 
                                 float* blendEnhancedContrast, float* blendClearTypeLevel);
 }
 
 @GUID("b859ee5a-d838-4b5b-a2e8-1adc7d93db48")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritefactory))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nn-dwrite-idwritefactory
 interface IDWriteFactory : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-getsystemfontcollection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-getsystemfontcollection
     HRESULT GetSystemFontCollection(IDWriteFontCollection* fontCollection, BOOL checkForUpdates);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-createcustomfontcollection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-createcustomfontcollection
     HRESULT CreateCustomFontCollection(IDWriteFontCollectionLoader collectionLoader, 
                                        /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/const(void)* collectionKey, 
                                        uint collectionKeySize, IDWriteFontCollection* fontCollection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-registerfontcollectionloader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-registerfontcollectionloader
     HRESULT RegisterFontCollectionLoader(IDWriteFontCollectionLoader fontCollectionLoader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-unregisterfontcollectionloader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-unregisterfontcollectionloader
     HRESULT UnregisterFontCollectionLoader(IDWriteFontCollectionLoader fontCollectionLoader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-createfontfilereference))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-createfontfilereference
     HRESULT CreateFontFileReference(const(PWSTR) filePath, const(FILETIME)* lastWriteTime, 
                                     IDWriteFontFile* fontFile);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-createcustomfontfilereference))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-createcustomfontfilereference
     HRESULT CreateCustomFontFileReference(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(void)* fontFileReferenceKey, 
                                           uint fontFileReferenceKeySize, IDWriteFontFileLoader fontFileLoader, 
                                           IDWriteFontFile* fontFile);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-createfontface))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-createfontface
     HRESULT CreateFontFace(DWRITE_FONT_FACE_TYPE fontFaceType, uint numberOfFiles, IDWriteFontFile* fontFiles, 
                            uint faceIndex, DWRITE_FONT_SIMULATIONS fontFaceSimulationFlags, 
                            IDWriteFontFace* fontFace);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-createrenderingparams))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-createrenderingparams
     HRESULT CreateRenderingParams(IDWriteRenderingParams* renderingParams);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-createmonitorrenderingparams))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-createmonitorrenderingparams
     HRESULT CreateMonitorRenderingParams(HMONITOR monitor, IDWriteRenderingParams* renderingParams);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-createcustomrenderingparams))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-createcustomrenderingparams
     HRESULT CreateCustomRenderingParams(float gamma, float enhancedContrast, float clearTypeLevel, 
                                         DWRITE_PIXEL_GEOMETRY pixelGeometry, DWRITE_RENDERING_MODE renderingMode, 
                                         IDWriteRenderingParams* renderingParams);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-registerfontfileloader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-registerfontfileloader
     HRESULT RegisterFontFileLoader(IDWriteFontFileLoader fontFileLoader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-unregisterfontfileloader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-unregisterfontfileloader
     HRESULT UnregisterFontFileLoader(IDWriteFontFileLoader fontFileLoader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-createtextformat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-createtextformat
     HRESULT CreateTextFormat(const(PWSTR) fontFamilyName, IDWriteFontCollection fontCollection, 
                              DWRITE_FONT_WEIGHT fontWeight, DWRITE_FONT_STYLE fontStyle, 
                              DWRITE_FONT_STRETCH fontStretch, float fontSize, const(PWSTR) localeName, 
                              IDWriteTextFormat* textFormat);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-createtypography))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-createtypography
     HRESULT CreateTypography(IDWriteTypography* typography);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-getgdiinterop))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-getgdiinterop
     HRESULT GetGdiInterop(IDWriteGdiInterop* gdiInterop);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-createtextlayout))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-createtextlayout
     HRESULT CreateTextLayout(const(PWSTR) string, uint stringLength, IDWriteTextFormat textFormat, float maxWidth, 
                              float maxHeight, IDWriteTextLayout* textLayout);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-creategdicompatibletextlayout))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-creategdicompatibletextlayout
     HRESULT CreateGdiCompatibleTextLayout(const(PWSTR) string, uint stringLength, IDWriteTextFormat textFormat, 
                                           float layoutWidth, float layoutHeight, float pixelsPerDip, 
                                           const(DWRITE_MATRIX)* transform, BOOL useGdiNatural, 
                                           IDWriteTextLayout* textLayout);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-createellipsistrimmingsign))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-createellipsistrimmingsign
     HRESULT CreateEllipsisTrimmingSign(IDWriteTextFormat textFormat, IDWriteInlineObject* trimmingSign);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-createtextanalyzer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-createtextanalyzer
     HRESULT CreateTextAnalyzer(IDWriteTextAnalyzer* textAnalyzer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-createnumbersubstitution))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-createnumbersubstitution
     HRESULT CreateNumberSubstitution(DWRITE_NUMBER_SUBSTITUTION_METHOD substitutionMethod, const(PWSTR) localeName, 
                                      BOOL ignoreUserOverride, IDWriteNumberSubstitution* numberSubstitution);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-createglyphrunanalysis))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite/nf-dwrite-idwritefactory-createglyphrunanalysis
     HRESULT CreateGlyphRunAnalysis(const(DWRITE_GLYPH_RUN)* glyphRun, float pixelsPerDip, 
                                    const(DWRITE_MATRIX)* transform, DWRITE_RENDERING_MODE renderingMode, 
                                    DWRITE_MEASURING_MODE measuringMode, float baselineOriginX, float baselineOriginY, 
@@ -2105,13 +2280,13 @@ interface IDWriteFactory : IUnknown
 
 @GUID("30572f99-dac6-41db-a16e-0486307e606a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nn-dwrite_1-idwritefactory1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nn-dwrite_1-idwritefactory1
 interface IDWriteFactory1 : IDWriteFactory
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefactory1-geteudcfontcollection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefactory1-geteudcfontcollection
     HRESULT GetEudcFontCollection(IDWriteFontCollection* fontCollection, BOOL checkForUpdates);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefactory1-createcustomrenderingparams))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefactory1-createcustomrenderingparams
     HRESULT CreateCustomRenderingParams(float gamma, float enhancedContrast, float enhancedContrastGrayscale, 
                                         float clearTypeLevel, DWRITE_PIXEL_GEOMETRY pixelGeometry, 
                                         DWRITE_RENDERING_MODE renderingMode, 
@@ -2120,108 +2295,108 @@ interface IDWriteFactory1 : IDWriteFactory
 
 @GUID("a71efdb4-9fdb-4838-ad90-cfc3be8c3daf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nn-dwrite_1-idwritefontface1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nn-dwrite_1-idwritefontface1
 interface IDWriteFontFace1 : IDWriteFontFace
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefontface1-getmetrics))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefontface1-getmetrics
     void    GetMetrics(DWRITE_FONT_METRICS1* fontMetrics);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefontface1-getgdicompatiblemetrics))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefontface1-getgdicompatiblemetrics
     HRESULT GetGdiCompatibleMetrics(float emSize, float pixelsPerDip, const(DWRITE_MATRIX)* transform, 
                                     DWRITE_FONT_METRICS1* fontMetrics);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefontface1-getcaretmetrics))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefontface1-getcaretmetrics
     void    GetCaretMetrics(DWRITE_CARET_METRICS* caretMetrics);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefontface1-getunicoderanges))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefontface1-getunicoderanges
     HRESULT GetUnicodeRanges(uint maxRangeCount, DWRITE_UNICODE_RANGE* unicodeRanges, uint* actualRangeCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefontface1-ismonospacedfont))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefontface1-ismonospacedfont
     BOOL    IsMonospacedFont();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefontface1-getdesignglyphadvances))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefontface1-getdesignglyphadvances
     HRESULT GetDesignGlyphAdvances(uint glyphCount, const(ushort)* glyphIndices, int* glyphAdvances, 
                                    BOOL isSideways);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefontface1-getgdicompatibleglyphadvances))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefontface1-getgdicompatibleglyphadvances
     HRESULT GetGdiCompatibleGlyphAdvances(float emSize, float pixelsPerDip, const(DWRITE_MATRIX)* transform, 
                                           BOOL useGdiNatural, BOOL isSideways, uint glyphCount, 
                                           const(ushort)* glyphIndices, int* glyphAdvances);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefontface1-getkerningpairadjustments))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefontface1-getkerningpairadjustments
     HRESULT GetKerningPairAdjustments(uint glyphCount, const(ushort)* glyphIndices, int* glyphAdvanceAdjustments);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefontface1-haskerningpairs))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefontface1-haskerningpairs
     BOOL    HasKerningPairs();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefontface1-getrecommendedrenderingmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefontface1-getrecommendedrenderingmode
     HRESULT GetRecommendedRenderingMode(float fontEmSize, float dpiX, float dpiY, const(DWRITE_MATRIX)* transform, 
                                         BOOL isSideways, DWRITE_OUTLINE_THRESHOLD outlineThreshold, 
                                         DWRITE_MEASURING_MODE measuringMode, DWRITE_RENDERING_MODE* renderingMode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefontface1-getverticalglyphvariants))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefontface1-getverticalglyphvariants
     HRESULT GetVerticalGlyphVariants(uint glyphCount, const(ushort)* nominalGlyphIndices, 
                                      ushort* verticalGlyphIndices);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefontface1-hasverticalglyphvariants))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefontface1-hasverticalglyphvariants
     BOOL    HasVerticalGlyphVariants();
 }
 
 @GUID("acd16696-8c14-4f5d-877e-fe3fc1d32738")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nn-dwrite_1-idwritefont1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nn-dwrite_1-idwritefont1
 interface IDWriteFont1 : IDWriteFont
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefont1-getmetrics))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefont1-getmetrics
     void    GetMetrics(DWRITE_FONT_METRICS1* fontMetrics);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefont1-getpanose))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefont1-getpanose
     void    GetPanose(DWRITE_PANOSE* panose);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefont1-getunicoderanges))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefont1-getunicoderanges
     HRESULT GetUnicodeRanges(uint maxRangeCount, DWRITE_UNICODE_RANGE* unicodeRanges, uint* actualRangeCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefont1-ismonospacedfont))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritefont1-ismonospacedfont
     BOOL    IsMonospacedFont();
 }
 
 @GUID("94413cf4-a6fc-4248-8b50-6674348fcad3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nn-dwrite_1-idwriterenderingparams1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nn-dwrite_1-idwriterenderingparams1
 interface IDWriteRenderingParams1 : IDWriteRenderingParams
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwriterenderingparams1-getgrayscaleenhancedcontrast))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwriterenderingparams1-getgrayscaleenhancedcontrast
     float GetGrayscaleEnhancedContrast();
 }
 
 @GUID("80dad800-e21f-4e83-96ce-bfcce500db7c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nn-dwrite_1-idwritetextanalyzer1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nn-dwrite_1-idwritetextanalyzer1
 interface IDWriteTextAnalyzer1 : IDWriteTextAnalyzer
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritetextanalyzer1-applycharacterspacing))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritetextanalyzer1-applycharacterspacing
     HRESULT ApplyCharacterSpacing(float leadingSpacing, float trailingSpacing, float minimumAdvanceWidth, 
                                   uint textLength, uint glyphCount, const(ushort)* clusterMap, 
                                   const(float)* glyphAdvances, const(DWRITE_GLYPH_OFFSET)* glyphOffsets, 
                                   const(DWRITE_SHAPING_GLYPH_PROPERTIES)* glyphProperties, 
                                   float* modifiedGlyphAdvances, DWRITE_GLYPH_OFFSET* modifiedGlyphOffsets);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritetextanalyzer1-getbaseline))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritetextanalyzer1-getbaseline
     HRESULT GetBaseline(IDWriteFontFace fontFace, DWRITE_BASELINE baseline, BOOL isVertical, 
                         BOOL isSimulationAllowed, DWRITE_SCRIPT_ANALYSIS scriptAnalysis, const(PWSTR) localeName, 
                         int* baselineCoordinate, BOOL* exists);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritetextanalyzer1-analyzeverticalglyphorientation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritetextanalyzer1-analyzeverticalglyphorientation
     HRESULT AnalyzeVerticalGlyphOrientation(IDWriteTextAnalysisSource1 analysisSource, uint textPosition, 
                                             uint textLength, IDWriteTextAnalysisSink1 analysisSink);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritetextanalyzer1-getglyphorientationtransform))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritetextanalyzer1-getglyphorientationtransform
     HRESULT GetGlyphOrientationTransform(DWRITE_GLYPH_ORIENTATION_ANGLE glyphOrientationAngle, BOOL isSideways, 
                                          DWRITE_MATRIX* transform);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritetextanalyzer1-getscriptproperties))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritetextanalyzer1-getscriptproperties
     HRESULT GetScriptProperties(DWRITE_SCRIPT_ANALYSIS scriptAnalysis, DWRITE_SCRIPT_PROPERTIES* scriptProperties);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritetextanalyzer1-gettextcomplexity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritetextanalyzer1-gettextcomplexity
     HRESULT GetTextComplexity(const(PWSTR) textString, uint textLength, IDWriteFontFace fontFace, 
                               BOOL* isTextSimple, uint* textLengthRead, ushort* glyphIndices);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritetextanalyzer1-getjustificationopportunities))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritetextanalyzer1-getjustificationopportunities
     HRESULT GetJustificationOpportunities(IDWriteFontFace fontFace, float fontEmSize, 
                                           DWRITE_SCRIPT_ANALYSIS scriptAnalysis, uint textLength, uint glyphCount, 
                                           const(PWSTR) textString, const(ushort)* clusterMap, 
                                           const(DWRITE_SHAPING_GLYPH_PROPERTIES)* glyphProperties, 
                                           DWRITE_JUSTIFICATION_OPPORTUNITY* justificationOpportunities);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritetextanalyzer1-justifyglyphadvances))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritetextanalyzer1-justifyglyphadvances
     HRESULT JustifyGlyphAdvances(float lineWidth, uint glyphCount, 
                                  const(DWRITE_JUSTIFICATION_OPPORTUNITY)* justificationOpportunities, 
                                  const(float)* glyphAdvances, const(DWRITE_GLYPH_OFFSET)* glyphOffsets, 
                                  float* justifiedGlyphAdvances, DWRITE_GLYPH_OFFSET* justifiedGlyphOffsets);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritetextanalyzer1-getjustifiedglyphs))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritetextanalyzer1-getjustifiedglyphs
     HRESULT GetJustifiedGlyphs(IDWriteFontFace fontFace, float fontEmSize, DWRITE_SCRIPT_ANALYSIS scriptAnalysis, 
                                uint textLength, uint glyphCount, uint maxGlyphCount, const(ushort)* clusterMap, 
                                const(ushort)* glyphIndices, const(float)* glyphAdvances, 
@@ -2234,22 +2409,22 @@ interface IDWriteTextAnalyzer1 : IDWriteTextAnalyzer
 
 @GUID("639cfad8-0fb4-4b21-a58a-067920120009")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nn-dwrite_1-idwritetextanalysissource1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nn-dwrite_1-idwritetextanalysissource1
 interface IDWriteTextAnalysisSource1 : IDWriteTextAnalysisSource
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritetextanalysissource1-getverticalglyphorientation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritetextanalysissource1-getverticalglyphorientation
     HRESULT GetVerticalGlyphOrientation(uint textPosition, uint* textLength, 
                                         DWRITE_VERTICAL_GLYPH_ORIENTATION* glyphOrientation, ubyte* bidiLevel);
 }
 
 @GUID("b0d941a0-85e7-4d8b-9fd3-5ced9934482a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nn-dwrite_1-idwritetextanalysissink1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nn-dwrite_1-idwritetextanalysissink1
 interface IDWriteTextAnalysisSink1 : IDWriteTextAnalysisSink
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritetextanalysissink1-setglyphorientation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritetextanalysissink1-setglyphorientation
     HRESULT SetGlyphOrientation(uint textPosition, uint textLength, 
                                 DWRITE_GLYPH_ORIENTATION_ANGLE glyphOrientationAngle, ubyte adjustedBidiLevel, 
                                 BOOL isSideways, BOOL isRightToLeft);
@@ -2257,54 +2432,54 @@ interface IDWriteTextAnalysisSink1 : IDWriteTextAnalysisSink
 
 @GUID("9064d822-80a7-465c-a986-df65f78b8feb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nn-dwrite_1-idwritetextlayout1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nn-dwrite_1-idwritetextlayout1
 interface IDWriteTextLayout1 : IDWriteTextLayout
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritetextlayout1-setpairkerning))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritetextlayout1-setpairkerning
     HRESULT SetPairKerning(BOOL isPairKerningEnabled, DWRITE_TEXT_RANGE textRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritetextlayout1-getpairkerning))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritetextlayout1-getpairkerning
     HRESULT GetPairKerning(uint currentPosition, BOOL* isPairKerningEnabled, DWRITE_TEXT_RANGE* textRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritetextlayout1-setcharacterspacing))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritetextlayout1-setcharacterspacing
     HRESULT SetCharacterSpacing(float leadingSpacing, float trailingSpacing, float minimumAdvanceWidth, 
                                 DWRITE_TEXT_RANGE textRange);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritetextlayout1-getcharacterspacing))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritetextlayout1-getcharacterspacing
     HRESULT GetCharacterSpacing(uint currentPosition, float* leadingSpacing, float* trailingSpacing, 
                                 float* minimumAdvanceWidth, DWRITE_TEXT_RANGE* textRange);
 }
 
 @GUID("791e8298-3ef3-4230-9880-c9bdecc42064")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nn-dwrite_1-idwritebitmaprendertarget1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nn-dwrite_1-idwritebitmaprendertarget1
 interface IDWriteBitmapRenderTarget1 : IDWriteBitmapRenderTarget
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritebitmaprendertarget1-gettextantialiasmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritebitmaprendertarget1-gettextantialiasmode
     DWRITE_TEXT_ANTIALIAS_MODE GetTextAntialiasMode();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritebitmaprendertarget1-settextantialiasmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_1/nf-dwrite_1-idwritebitmaprendertarget1-settextantialiasmode
     HRESULT SetTextAntialiasMode(DWRITE_TEXT_ANTIALIAS_MODE antialiasMode);
 }
 
 @GUID("d3e0e934-22a0-427e-aae4-7d9574b59db1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/nn-dwrite_2-idwritetextrenderer1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nn-dwrite_2-idwritetextrenderer1
 interface IDWriteTextRenderer1 : IDWriteTextRenderer
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextrenderer1-drawglyphrun))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextrenderer1-drawglyphrun
     HRESULT DrawGlyphRun(void* clientDrawingContext, float baselineOriginX, float baselineOriginY, 
                          DWRITE_GLYPH_ORIENTATION_ANGLE orientationAngle, DWRITE_MEASURING_MODE measuringMode, 
                          const(DWRITE_GLYPH_RUN)* glyphRun, const(DWRITE_GLYPH_RUN_DESCRIPTION)* glyphRunDescription, 
                          IUnknown clientDrawingEffect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextrenderer1-drawunderline))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextrenderer1-drawunderline
     HRESULT DrawUnderline(void* clientDrawingContext, float baselineOriginX, float baselineOriginY, 
                           DWRITE_GLYPH_ORIENTATION_ANGLE orientationAngle, const(DWRITE_UNDERLINE)* underline, 
                           IUnknown clientDrawingEffect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextrenderer1-drawstrikethrough))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextrenderer1-drawstrikethrough
     HRESULT DrawStrikethrough(void* clientDrawingContext, float baselineOriginX, float baselineOriginY, 
                               DWRITE_GLYPH_ORIENTATION_ANGLE orientationAngle, 
                               const(DWRITE_STRIKETHROUGH)* strikethrough, IUnknown clientDrawingEffect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextrenderer1-drawinlineobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextrenderer1-drawinlineobject
     HRESULT DrawInlineObject(void* clientDrawingContext, float originX, float originY, 
                              DWRITE_GLYPH_ORIENTATION_ANGLE orientationAngle, IDWriteInlineObject inlineObject, 
                              BOOL isSideways, BOOL isRightToLeft, IUnknown clientDrawingEffect);
@@ -2312,68 +2487,68 @@ interface IDWriteTextRenderer1 : IDWriteTextRenderer
 
 @GUID("5f174b49-0d8b-4cfb-8bca-f1cce9d06c67")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DirectWrite/idwritetextformat1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritetextformat1
 interface IDWriteTextFormat1 : IDWriteTextFormat
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextformat1-setverticalglyphorientation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextformat1-setverticalglyphorientation
     HRESULT SetVerticalGlyphOrientation(DWRITE_VERTICAL_GLYPH_ORIENTATION glyphOrientation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextformat1-getverticalglyphorientation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextformat1-getverticalglyphorientation
     DWRITE_VERTICAL_GLYPH_ORIENTATION GetVerticalGlyphOrientation();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextformat1-setlastlinewrapping))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextformat1-setlastlinewrapping
     HRESULT SetLastLineWrapping(BOOL isLastLineWrappingEnabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextformat1-getlastlinewrapping))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextformat1-getlastlinewrapping
     BOOL    GetLastLineWrapping();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextformat1-setopticalalignment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextformat1-setopticalalignment
     HRESULT SetOpticalAlignment(DWRITE_OPTICAL_ALIGNMENT opticalAlignment);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextformat1-getopticalalignment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextformat1-getopticalalignment
     DWRITE_OPTICAL_ALIGNMENT GetOpticalAlignment();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextformat1-setfontfallback))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextformat1-setfontfallback
     HRESULT SetFontFallback(IDWriteFontFallback fontFallback);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextformat1-getfontfallback))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextformat1-getfontfallback
     HRESULT GetFontFallback(IDWriteFontFallback* fontFallback);
 }
 
 @GUID("1093c18f-8d5e-43f0-b064-0917311b525e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DirectWrite/idwritetextlayout2))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritetextlayout2
 interface IDWriteTextLayout2 : IDWriteTextLayout1
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DirectWrite/idwritetextlayout2-getmetrics))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritetextlayout2-getmetrics
     HRESULT GetMetrics(DWRITE_TEXT_METRICS1* textMetrics);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextlayout2-setverticalglyphorientation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextlayout2-setverticalglyphorientation
     HRESULT SetVerticalGlyphOrientation(DWRITE_VERTICAL_GLYPH_ORIENTATION glyphOrientation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextlayout2-getverticalglyphorientation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextlayout2-getverticalglyphorientation
     DWRITE_VERTICAL_GLYPH_ORIENTATION GetVerticalGlyphOrientation();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextlayout2-setlastlinewrapping))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextlayout2-setlastlinewrapping
     HRESULT SetLastLineWrapping(BOOL isLastLineWrappingEnabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextlayout2-getlastlinewrapping))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextlayout2-getlastlinewrapping
     BOOL    GetLastLineWrapping();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextlayout2-setopticalalignment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextlayout2-setopticalalignment
     HRESULT SetOpticalAlignment(DWRITE_OPTICAL_ALIGNMENT opticalAlignment);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextlayout2-getopticalalignment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextlayout2-getopticalalignment
     DWRITE_OPTICAL_ALIGNMENT GetOpticalAlignment();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextlayout2-setfontfallback))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextlayout2-setfontfallback
     HRESULT SetFontFallback(IDWriteFontFallback fontFallback);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextlayout2-getfontfallback))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextlayout2-getfontfallback
     HRESULT GetFontFallback(IDWriteFontFallback* fontFallback);
 }
 
 @GUID("553a9ff3-5693-4df7-b52b-74806f7f2eb9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DirectWrite/idwritetextanalyzer2))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritetextanalyzer2
 interface IDWriteTextAnalyzer2 : IDWriteTextAnalyzer1
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextanalyzer2-getglyphorientationtransform))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextanalyzer2-getglyphorientationtransform
     HRESULT GetGlyphOrientationTransform(DWRITE_GLYPH_ORIENTATION_ANGLE glyphOrientationAngle, BOOL isSideways, 
                                          float originX, float originY, DWRITE_MATRIX* transform);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextanalyzer2-gettypographicfeatures))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextanalyzer2-gettypographicfeatures
     HRESULT GetTypographicFeatures(IDWriteFontFace fontFace, DWRITE_SCRIPT_ANALYSIS scriptAnalysis, 
                                    const(PWSTR) localeName, uint maxTagCount, uint* actualTagCount, 
                                    DWRITE_FONT_FEATURE_TAG* tags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextanalyzer2-checktypographicfeature))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritetextanalyzer2-checktypographicfeature
     HRESULT CheckTypographicFeature(IDWriteFontFace fontFace, DWRITE_SCRIPT_ANALYSIS scriptAnalysis, 
                                     const(PWSTR) localeName, DWRITE_FONT_FEATURE_TAG featureTag, uint glyphCount, 
                                     const(ushort)* glyphIndices, ubyte* featureApplies);
@@ -2381,11 +2556,11 @@ interface IDWriteTextAnalyzer2 : IDWriteTextAnalyzer1
 
 @GUID("efa008f9-f7a1-48bf-b05c-f224713cc0ff")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/nn-dwrite_2-idwritefontfallback))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nn-dwrite_2-idwritefontfallback
 interface IDWriteFontFallback : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DirectWrite/idwritefontfallback-mapcharacters))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritefontfallback-mapcharacters
     HRESULT MapCharacters(IDWriteTextAnalysisSource analysisSource, uint textPosition, uint textLength, 
                           IDWriteFontCollection baseFontCollection, const(PWSTR) baseFamilyName, 
                           DWRITE_FONT_WEIGHT baseWeight, DWRITE_FONT_STYLE baseStyle, 
@@ -2394,46 +2569,46 @@ interface IDWriteFontFallback : IUnknown
 
 @GUID("fd882d06-8aba-4fb8-b849-8be8b73e14de")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DirectWrite/idwritefontfallbackbuilder))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritefontfallbackbuilder
 interface IDWriteFontFallbackBuilder : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DirectWrite/idwritefontfallbackbuilder-addmapping))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritefontfallbackbuilder-addmapping
     HRESULT AddMapping(const(DWRITE_UNICODE_RANGE)* ranges, uint rangesCount, const(ushort)** targetFamilyNames, 
                        uint targetFamilyNamesCount, IDWriteFontCollection fontCollection, const(PWSTR) localeName, 
                        const(PWSTR) baseFamilyName, float scale);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritefontfallbackbuilder-addmappings))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritefontfallbackbuilder-addmappings
     HRESULT AddMappings(IDWriteFontFallback fontFallback);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritefontfallbackbuilder-createfontfallback))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritefontfallbackbuilder-createfontfallback
     HRESULT CreateFontFallback(IDWriteFontFallback* fontFallback);
 }
 
 @GUID("29748ed6-8c9c-4a6a-be0b-d912e8538944")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DirectWrite/idwritefont2))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritefont2
 interface IDWriteFont2 : IDWriteFont1
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DirectWrite/idwritefont2-iscolorfont))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritefont2-iscolorfont
     BOOL IsColorFont();
 }
 
 @GUID("d8b768ff-64bc-4e66-982b-ec8e87f693f7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/nn-dwrite_2-idwritefontface2))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nn-dwrite_2-idwritefontface2
 interface IDWriteFontFace2 : IDWriteFontFace1
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritefontface2-iscolorfont))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritefontface2-iscolorfont
     BOOL    IsColorFont();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritefontface2-getcolorpalettecount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritefontface2-getcolorpalettecount
     uint    GetColorPaletteCount();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritefontface2-getpaletteentrycount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritefontface2-getpaletteentrycount
     uint    GetPaletteEntryCount();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritefontface2-getpaletteentries))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritefontface2-getpaletteentries
     HRESULT GetPaletteEntries(uint colorPaletteIndex, uint firstEntryIndex, uint entryCount, 
                               DWRITE_COLOR_F* paletteEntries);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritefontface2-getrecommendedrenderingmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritefontface2-getrecommendedrenderingmode
     HRESULT GetRecommendedRenderingMode(float fontEmSize, float dpiX, float dpiY, const(DWRITE_MATRIX)* transform, 
                                         BOOL isSideways, DWRITE_OUTLINE_THRESHOLD outlineThreshold, 
                                         DWRITE_MEASURING_MODE measuringMode, IDWriteRenderingParams renderingParams, 
@@ -2442,47 +2617,47 @@ interface IDWriteFontFace2 : IDWriteFontFace1
 
 @GUID("d31fbe17-f157-41a2-8d24-cb779e0560e8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DirectWrite/idwritecolorglyphrunenumerator))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritecolorglyphrunenumerator
 interface IDWriteColorGlyphRunEnumerator : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DirectWrite/idwritecolorglyphrunenumerator-movenext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritecolorglyphrunenumerator-movenext
     HRESULT MoveNext(BOOL* hasRun);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritecolorglyphrunenumerator-getcurrentrun))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritecolorglyphrunenumerator-getcurrentrun
     HRESULT GetCurrentRun(const(DWRITE_COLOR_GLYPH_RUN)** colorGlyphRun);
 }
 
 @GUID("f9d711c3-9777-40ae-87e8-3e5af9bf0948")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/nn-dwrite_2-idwriterenderingparams2))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nn-dwrite_2-idwriterenderingparams2
 interface IDWriteRenderingParams2 : IDWriteRenderingParams1
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwriterenderingparams2-getgridfitmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwriterenderingparams2-getgridfitmode
     DWRITE_GRID_FIT_MODE GetGridFitMode();
 }
 
 @GUID("0439fc60-ca44-4994-8dee-3a9af7b732ec")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DirectWrite/idwritefactory2))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritefactory2
 interface IDWriteFactory2 : IDWriteFactory1
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DirectWrite/idwritefactory2-getsystemfontfallback))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritefactory2-getsystemfontfallback
     HRESULT GetSystemFontFallback(IDWriteFontFallback* fontFallback);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritefactory2-createfontfallbackbuilder))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritefactory2-createfontfallbackbuilder
     HRESULT CreateFontFallbackBuilder(IDWriteFontFallbackBuilder* fontFallbackBuilder);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritefactory2-translatecolorglyphrun))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_2/nf-dwrite_2-idwritefactory2-translatecolorglyphrun
     HRESULT TranslateColorGlyphRun(float baselineOriginX, float baselineOriginY, const(DWRITE_GLYPH_RUN)* glyphRun, 
                                    const(DWRITE_GLYPH_RUN_DESCRIPTION)* glyphRunDescription, 
                                    DWRITE_MEASURING_MODE measuringMode, const(DWRITE_MATRIX)* worldToDeviceTransform, 
                                    uint colorPaletteIndex, IDWriteColorGlyphRunEnumerator* colorLayers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DirectWrite/idwritefactory2-createcustomrenderingparams))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritefactory2-createcustomrenderingparams
     HRESULT CreateCustomRenderingParams(float gamma, float enhancedContrast, float grayscaleEnhancedContrast, 
                                         float clearTypeLevel, DWRITE_PIXEL_GEOMETRY pixelGeometry, 
                                         DWRITE_RENDERING_MODE renderingMode, DWRITE_GRID_FIT_MODE gridFitMode, 
                                         IDWriteRenderingParams2* renderingParams);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DirectWrite/idwritefactory2-createglyphrunanalysis))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritefactory2-createglyphrunanalysis
     HRESULT CreateGlyphRunAnalysis(const(DWRITE_GLYPH_RUN)* glyphRun, const(DWRITE_MATRIX)* transform, 
                                    DWRITE_RENDERING_MODE renderingMode, DWRITE_MEASURING_MODE measuringMode, 
                                    DWRITE_GRID_FIT_MODE gridFitMode, DWRITE_TEXT_ANTIALIAS_MODE antialiasMode, 
@@ -2492,645 +2667,645 @@ interface IDWriteFactory2 : IDWriteFactory1
 
 @GUID("b7924baa-391b-412a-8c5c-e44cc2d867dc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwriterenderingparams3))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwriterenderingparams3
 interface IDWriteRenderingParams3 : IDWriteRenderingParams2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwriterenderingparams3-getrenderingmode1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwriterenderingparams3-getrenderingmode1
     DWRITE_RENDERING_MODE1 GetRenderingMode1();
 }
 
 @GUID("9a1b41c3-d3bb-466a-87fc-fe67556a3b65")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefactory3))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefactory3
 interface IDWriteFactory3 : IDWriteFactory2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory3-createglyphrunanalysis))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory3-createglyphrunanalysis
     HRESULT CreateGlyphRunAnalysis(const(DWRITE_GLYPH_RUN)* glyphRun, const(DWRITE_MATRIX)* transform, 
                                    DWRITE_RENDERING_MODE1 renderingMode, DWRITE_MEASURING_MODE measuringMode, 
                                    DWRITE_GRID_FIT_MODE gridFitMode, DWRITE_TEXT_ANTIALIAS_MODE antialiasMode, 
                                    float baselineOriginX, float baselineOriginY, 
                                    IDWriteGlyphRunAnalysis* glyphRunAnalysis);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory3-createcustomrenderingparams))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory3-createcustomrenderingparams
     HRESULT CreateCustomRenderingParams(float gamma, float enhancedContrast, float grayscaleEnhancedContrast, 
                                         float clearTypeLevel, DWRITE_PIXEL_GEOMETRY pixelGeometry, 
                                         DWRITE_RENDERING_MODE1 renderingMode, DWRITE_GRID_FIT_MODE gridFitMode, 
                                         IDWriteRenderingParams3* renderingParams);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory3-createfontfacereference(wcharconst_filetimeconst_uint32_dwrite_font_simulations_idwritefontfacereference)))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory3-createfontfacereference(wcharconst_filetimeconst_uint32_dwrite_font_simulations_idwritefontfacereference)
     HRESULT CreateFontFaceReference(IDWriteFontFile fontFile, uint faceIndex, 
                                     DWRITE_FONT_SIMULATIONS fontSimulations, 
                                     IDWriteFontFaceReference* fontFaceReference);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory3-createfontfacereference(wcharconst_filetimeconst_uint32_dwrite_font_simulations_idwritefontfacereference)))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory3-createfontfacereference(wcharconst_filetimeconst_uint32_dwrite_font_simulations_idwritefontfacereference)
     HRESULT CreateFontFaceReference(const(PWSTR) filePath, const(FILETIME)* lastWriteTime, uint faceIndex, 
                                     DWRITE_FONT_SIMULATIONS fontSimulations, 
                                     IDWriteFontFaceReference* fontFaceReference);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory3-getsystemfontset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory3-getsystemfontset
     HRESULT GetSystemFontSet(IDWriteFontSet* fontSet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory3-createfontsetbuilder))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory3-createfontsetbuilder
     HRESULT CreateFontSetBuilder(IDWriteFontSetBuilder* fontSetBuilder);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory3-createfontcollectionfromfontset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory3-createfontcollectionfromfontset
     HRESULT CreateFontCollectionFromFontSet(IDWriteFontSet fontSet, IDWriteFontCollection1* fontCollection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory3-getsystemfontcollection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory3-getsystemfontcollection
     HRESULT GetSystemFontCollection(BOOL includeDownloadableFonts, IDWriteFontCollection1* fontCollection, 
                                     BOOL checkForUpdates);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory3-getfontdownloadqueue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory3-getfontdownloadqueue
     HRESULT GetFontDownloadQueue(IDWriteFontDownloadQueue* fontDownloadQueue);
 }
 
 @GUID("53585141-d9f8-4095-8321-d73cf6bd116b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontset))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontset
 interface IDWriteFontSet : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset-getfontcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset-getfontcount
     uint    GetFontCount();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset-getfontfacereference))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset-getfontfacereference
     HRESULT GetFontFaceReference(uint listIndex, IDWriteFontFaceReference* fontFaceReference);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset-findfontfacereference))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset-findfontfacereference
     HRESULT FindFontFaceReference(IDWriteFontFaceReference fontFaceReference, uint* listIndex, BOOL* exists);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset-findfontface))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset-findfontface
     HRESULT FindFontFace(IDWriteFontFace fontFace, uint* listIndex, BOOL* exists);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset-getpropertyvalues(dwrite_font_property_id_wcharconst_idwritestringlist)))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset-getpropertyvalues(dwrite_font_property_id_wcharconst_idwritestringlist)
     HRESULT GetPropertyValues(DWRITE_FONT_PROPERTY_ID propertyID, IDWriteStringList* values);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset-getpropertyvalues(dwrite_font_property_id_wcharconst_idwritestringlist)))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset-getpropertyvalues(dwrite_font_property_id_wcharconst_idwritestringlist)
     HRESULT GetPropertyValues(DWRITE_FONT_PROPERTY_ID propertyID, const(PWSTR) preferredLocaleNames, 
                               IDWriteStringList* values);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset-getpropertyvalues(dwrite_font_property_id_wcharconst_idwritestringlist)))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset-getpropertyvalues(dwrite_font_property_id_wcharconst_idwritestringlist)
     HRESULT GetPropertyValues(uint listIndex, DWRITE_FONT_PROPERTY_ID propertyId, BOOL* exists, 
                               IDWriteLocalizedStrings* values);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset-getpropertyoccurrencecount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset-getpropertyoccurrencecount
     HRESULT GetPropertyOccurrenceCount(const(DWRITE_FONT_PROPERTY)* property, uint* propertyOccurrenceCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset-getmatchingfonts(dwrite_font_propertyconst_uint32_idwritefontset)))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset-getmatchingfonts(dwrite_font_propertyconst_uint32_idwritefontset)
     HRESULT GetMatchingFonts(const(PWSTR) familyName, DWRITE_FONT_WEIGHT fontWeight, 
                              DWRITE_FONT_STRETCH fontStretch, DWRITE_FONT_STYLE fontStyle, 
                              IDWriteFontSet* filteredSet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset-getmatchingfonts(dwrite_font_propertyconst_uint32_idwritefontset)))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset-getmatchingfonts(dwrite_font_propertyconst_uint32_idwritefontset)
     HRESULT GetMatchingFonts(const(DWRITE_FONT_PROPERTY)* properties, uint propertyCount, 
                              IDWriteFontSet* filteredSet);
 }
 
 @GUID("2f642afe-9c68-4f40-b8be-457401afcb3d")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontsetbuilder))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontsetbuilder
 interface IDWriteFontSetBuilder : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontsetbuilder-addfontfacereference(idwritefontfacereference)))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontsetbuilder-addfontfacereference(idwritefontfacereference)
     HRESULT AddFontFaceReference(IDWriteFontFaceReference fontFaceReference, 
                                  const(DWRITE_FONT_PROPERTY)* properties, uint propertyCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontsetbuilder-addfontfacereference(idwritefontfacereference)))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontsetbuilder-addfontfacereference(idwritefontfacereference)
     HRESULT AddFontFaceReference(IDWriteFontFaceReference fontFaceReference);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontsetbuilder-addfontset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontsetbuilder-addfontset
     HRESULT AddFontSet(IDWriteFontSet fontSet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontsetbuilder-createfontset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontsetbuilder-createfontset
     HRESULT CreateFontSet(IDWriteFontSet* fontSet);
 }
 
 @GUID("53585141-d9f8-4095-8321-d73cf6bd116c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontcollection1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontcollection1
 interface IDWriteFontCollection1 : IDWriteFontCollection
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontcollection1-getfontset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontcollection1-getfontset
     HRESULT GetFontSet(IDWriteFontSet* fontSet);
     HRESULT GetFontFamily(uint index, IDWriteFontFamily1* fontFamily);
 }
 
 @GUID("da20d8ef-812a-4c43-9802-62ec4abd7adf")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontfamily1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontfamily1
 interface IDWriteFontFamily1 : IDWriteFontFamily
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfamily1-getfontlocality))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfamily1-getfontlocality
     DWRITE_LOCALITY GetFontLocality(uint listIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfamily1-getfont))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfamily1-getfont
     HRESULT GetFont(uint listIndex, IDWriteFont3* font);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfamily1-getfontfacereference))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfamily1-getfontfacereference
     HRESULT GetFontFaceReference(uint listIndex, IDWriteFontFaceReference* fontFaceReference);
 }
 
 @GUID("da20d8ef-812a-4c43-9802-62ec4abd7ade")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontlist1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontlist1
 interface IDWriteFontList1 : IDWriteFontList
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontlist1-getfontlocality))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontlist1-getfontlocality
     DWRITE_LOCALITY GetFontLocality(uint listIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontlist1-getfont))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontlist1-getfont
     HRESULT GetFont(uint listIndex, IDWriteFont3* font);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontlist1-getfontfacereference))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontlist1-getfontfacereference
     HRESULT GetFontFaceReference(uint listIndex, IDWriteFontFaceReference* fontFaceReference);
 }
 
 @GUID("5e7fa7ca-dde3-424c-89f0-9fcd6fed58cd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontfacereference))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontfacereference
 interface IDWriteFontFaceReference : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfacereference-createfontface))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfacereference-createfontface
     HRESULT CreateFontFace(IDWriteFontFace3* fontFace);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfacereference-createfontfacewithsimulations))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfacereference-createfontfacewithsimulations
     HRESULT CreateFontFaceWithSimulations(DWRITE_FONT_SIMULATIONS fontFaceSimulationFlags, 
                                           IDWriteFontFace3* fontFace);
     BOOL    Equals(IDWriteFontFaceReference fontFaceReference);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfacereference-getfontfaceindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfacereference-getfontfaceindex
     uint    GetFontFaceIndex();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfacereference-getsimulations))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfacereference-getsimulations
     DWRITE_FONT_SIMULATIONS GetSimulations();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfacereference-getfontfile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfacereference-getfontfile
     HRESULT GetFontFile(IDWriteFontFile* fontFile);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfacereference-getlocalfilesize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfacereference-getlocalfilesize
     ulong   GetLocalFileSize();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfacereference-getfilesize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfacereference-getfilesize
     ulong   GetFileSize();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfacereference-getfiletime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfacereference-getfiletime
     HRESULT GetFileTime(FILETIME* lastWriteTime);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfacereference-getlocality))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfacereference-getlocality
     DWRITE_LOCALITY GetLocality();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfacereference-enqueuefontdownloadrequest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfacereference-enqueuefontdownloadrequest
     HRESULT EnqueueFontDownloadRequest();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfacereference-enqueuecharacterdownloadrequest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfacereference-enqueuecharacterdownloadrequest
     HRESULT EnqueueCharacterDownloadRequest(const(PWSTR) characters, uint characterCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfacereference-enqueueglyphdownloadrequest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfacereference-enqueueglyphdownloadrequest
     HRESULT EnqueueGlyphDownloadRequest(const(ushort)* glyphIndices, uint glyphCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfacereference-enqueuefilefragmentdownloadrequest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfacereference-enqueuefilefragmentdownloadrequest
     HRESULT EnqueueFileFragmentDownloadRequest(ulong fileOffset, ulong fragmentSize);
 }
 
 @GUID("29748ed6-8c9c-4a6a-be0b-d912e8538944")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefont3))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefont3
 interface IDWriteFont3 : IDWriteFont2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefont3-createfontface))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefont3-createfontface
     HRESULT CreateFontFace(IDWriteFontFace3* fontFace);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefont3-equals))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefont3-equals
     BOOL    Equals(IDWriteFont font);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefont3-getfontfacereference))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefont3-getfontfacereference
     HRESULT GetFontFaceReference(IDWriteFontFaceReference* fontFaceReference);
     BOOL    HasCharacter(uint unicodeValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefont3-getlocality))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefont3-getlocality
     DWRITE_LOCALITY GetLocality();
 }
 
 @GUID("d37d7598-09be-4222-a236-2081341cc1f2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontface3))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontface3
 interface IDWriteFontFace3 : IDWriteFontFace2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface3-getfontfacereference))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface3-getfontfacereference
     HRESULT GetFontFaceReference(IDWriteFontFaceReference* fontFaceReference);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface3-getpanose))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface3-getpanose
     void    GetPanose(DWRITE_PANOSE* panose);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface3-getweight))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface3-getweight
     DWRITE_FONT_WEIGHT GetWeight();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface3-getstretch))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface3-getstretch
     DWRITE_FONT_STRETCH GetStretch();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface3-getstyle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface3-getstyle
     DWRITE_FONT_STYLE GetStyle();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface3-getfamilynames))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface3-getfamilynames
     HRESULT GetFamilyNames(IDWriteLocalizedStrings* names);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface3-getfacenames))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface3-getfacenames
     HRESULT GetFaceNames(IDWriteLocalizedStrings* names);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface3-getinformationalstrings))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface3-getinformationalstrings
     HRESULT GetInformationalStrings(DWRITE_INFORMATIONAL_STRING_ID informationalStringID, 
                                     IDWriteLocalizedStrings* informationalStrings, BOOL* exists);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface3-hascharacter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface3-hascharacter
     BOOL    HasCharacter(uint unicodeValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface3-getrecommendedrenderingmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface3-getrecommendedrenderingmode
     HRESULT GetRecommendedRenderingMode(float fontEmSize, float dpiX, float dpiY, const(DWRITE_MATRIX)* transform, 
                                         BOOL isSideways, DWRITE_OUTLINE_THRESHOLD outlineThreshold, 
                                         DWRITE_MEASURING_MODE measuringMode, IDWriteRenderingParams renderingParams, 
                                         DWRITE_RENDERING_MODE1* renderingMode, DWRITE_GRID_FIT_MODE* gridFitMode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface3-ischaracterlocal))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface3-ischaracterlocal
     BOOL    IsCharacterLocal(uint unicodeValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface3-isglyphlocal))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface3-isglyphlocal
     BOOL    IsGlyphLocal(ushort glyphId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface3-arecharacterslocal))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface3-arecharacterslocal
     HRESULT AreCharactersLocal(const(PWSTR) characters, uint characterCount, BOOL enqueueIfNotLocal, BOOL* isLocal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface3-areglyphslocal))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface3-areglyphslocal
     HRESULT AreGlyphsLocal(const(ushort)* glyphIndices, uint glyphCount, BOOL enqueueIfNotLocal, BOOL* isLocal);
 }
 
 @GUID("cfee3140-1157-47ca-8b85-31bfcf3f2d0e")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritestringlist))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritestringlist
 interface IDWriteStringList : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritestringlist-getcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritestringlist-getcount
     uint    GetCount();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritestringlist-getlocalenamelength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritestringlist-getlocalenamelength
     HRESULT GetLocaleNameLength(uint listIndex, uint* length);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritestringlist-getlocalename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritestringlist-getlocalename
     HRESULT GetLocaleName(uint listIndex, PWSTR localeName, uint size);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritestringlist-getstringlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritestringlist-getstringlength
     HRESULT GetStringLength(uint listIndex, uint* length);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritestringlist-getstring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritestringlist-getstring
     HRESULT GetString(uint listIndex, PWSTR stringBuffer, uint stringBufferSize);
 }
 
 @GUID("b06fe5b9-43ec-4393-881b-dbe4dc72fda7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontdownloadlistener))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontdownloadlistener
 interface IDWriteFontDownloadListener : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontdownloadlistener-downloadcompleted))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontdownloadlistener-downloadcompleted
     void DownloadCompleted(IDWriteFontDownloadQueue downloadQueue, IUnknown context, HRESULT downloadResult);
 }
 
 @GUID("b71e6052-5aea-4fa3-832e-f60d431f7e91")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontdownloadqueue))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontdownloadqueue
 interface IDWriteFontDownloadQueue : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontdownloadqueue-addlistener))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontdownloadqueue-addlistener
     HRESULT AddListener(IDWriteFontDownloadListener listener, uint* token);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontdownloadqueue-removelistener))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontdownloadqueue-removelistener
     HRESULT RemoveListener(uint token);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontdownloadqueue-isempty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontdownloadqueue-isempty
     BOOL    IsEmpty();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontdownloadqueue-begindownload))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontdownloadqueue-begindownload
     HRESULT BeginDownload(IUnknown context);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontdownloadqueue-canceldownload))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontdownloadqueue-canceldownload
     HRESULT CancelDownload();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontdownloadqueue-getgenerationcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontdownloadqueue-getgenerationcount
     ulong   GetGenerationCount();
 }
 
 @GUID("4556be70-3abd-4f70-90be-421780a6f515")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritegdiinterop1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritegdiinterop1
 interface IDWriteGdiInterop1 : IDWriteGdiInterop
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritegdiinterop1-createfontfromlogfont))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritegdiinterop1-createfontfromlogfont
     HRESULT CreateFontFromLOGFONT(const(LOGFONTW)* logFont, IDWriteFontCollection fontCollection, 
                                   IDWriteFont* font);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritegdiinterop1-getfontsignature(idwritefontface_fontsignature)))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritegdiinterop1-getfontsignature(idwritefontface_fontsignature)
     HRESULT GetFontSignature(IDWriteFontFace fontFace, FONTSIGNATURE* fontSignature);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritegdiinterop1-getfontsignature(idwritefontface_fontsignature)))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritegdiinterop1-getfontsignature(idwritefontface_fontsignature)
     HRESULT GetFontSignature(IDWriteFont font, FONTSIGNATURE* fontSignature);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritegdiinterop1-getmatchingfontsbylogfont))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritegdiinterop1-getmatchingfontsbylogfont
     HRESULT GetMatchingFontsByLOGFONT(const(LOGFONTA)* logFont, IDWriteFontSet fontSet, 
                                       IDWriteFontSet* filteredSet);
 }
 
 @GUID("f67e0edd-9e3d-4ecc-8c32-4183253dfe70")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DirectWrite/idwritetextformat2))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritetextformat2
 interface IDWriteTextFormat2 : IDWriteTextFormat1
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DirectWrite/idwritetextformat2-setlinespacing))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritetextformat2-setlinespacing
     HRESULT SetLineSpacing(const(DWRITE_LINE_SPACING)* lineSpacingOptions);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritetextformat2-getlinespacing))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritetextformat2-getlinespacing
     HRESULT GetLineSpacing(DWRITE_LINE_SPACING* lineSpacingOptions);
 }
 
 @GUID("07ddcd52-020e-4de8-ac33-6c953d83f92d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DirectWrite/idwritetextlayout3))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritetextlayout3
 interface IDWriteTextLayout3 : IDWriteTextLayout2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DirectWrite/idwritetextlayout3-invalidatelayout))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritetextlayout3-invalidatelayout
     HRESULT InvalidateLayout();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DirectWrite/idwritetextlayout3-setlinespacing))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritetextlayout3-setlinespacing
     HRESULT SetLineSpacing(const(DWRITE_LINE_SPACING)* lineSpacingOptions);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DirectWrite/idwritetextlayout3-getlinespacing))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritetextlayout3-getlinespacing
     HRESULT GetLineSpacing(DWRITE_LINE_SPACING* lineSpacingOptions);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/DirectWrite/idwritetextlayout3-getlinemetrics))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/DirectWrite/idwritetextlayout3-getlinemetrics
     HRESULT GetLineMetrics(DWRITE_LINE_METRICS1* lineMetrics, uint maxLineCount, uint* actualLineCount);
 }
 
 @GUID("7c5f86da-c7a1-4f05-b8e1-55a179fe5a35")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritecolorglyphrunenumerator1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritecolorglyphrunenumerator1
 interface IDWriteColorGlyphRunEnumerator1 : IDWriteColorGlyphRunEnumerator
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritecolorglyphrunenumerator1-getcurrentrun))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritecolorglyphrunenumerator1-getcurrentrun
     HRESULT GetCurrentRun(const(DWRITE_COLOR_GLYPH_RUN1)** colorGlyphRun);
 }
 
 @GUID("27f2a904-4eb8-441d-9678-0563f53e3e2f")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontface4))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontface4
 interface IDWriteFontFace4 : IDWriteFontFace3
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface4-getglyphimageformats))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface4-getglyphimageformats
     HRESULT GetGlyphImageFormats(ushort glyphId, uint pixelsPerEmFirst, uint pixelsPerEmLast, 
                                  DWRITE_GLYPH_IMAGE_FORMATS* glyphImageFormats);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface4-getglyphimageformats))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface4-getglyphimageformats
     DWRITE_GLYPH_IMAGE_FORMATS GetGlyphImageFormats();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface4-getglyphimagedata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface4-getglyphimagedata
     HRESULT GetGlyphImageData(ushort glyphId, uint pixelsPerEm, DWRITE_GLYPH_IMAGE_FORMATS glyphImageFormat, 
                               DWRITE_GLYPH_IMAGE_DATA* glyphData, void** glyphDataContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface4-releaseglyphimagedata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface4-releaseglyphimagedata
     void    ReleaseGlyphImageData(void* glyphDataContext);
 }
 
 @GUID("4b0b5bd3-0797-4549-8ac5-fe915cc53856")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefactory4))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefactory4
 interface IDWriteFactory4 : IDWriteFactory3
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory4-translatecolorglyphrun))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory4-translatecolorglyphrun
     HRESULT TranslateColorGlyphRun(D2D_POINT_2F baselineOrigin, const(DWRITE_GLYPH_RUN)* glyphRun, 
                                    const(DWRITE_GLYPH_RUN_DESCRIPTION)* glyphRunDescription, 
                                    DWRITE_GLYPH_IMAGE_FORMATS desiredGlyphImageFormats, 
                                    DWRITE_MEASURING_MODE measuringMode, const(DWRITE_MATRIX)* worldAndDpiTransform, 
                                    uint colorPaletteIndex, IDWriteColorGlyphRunEnumerator1* colorLayers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory4-computeglyphorigins(dwrite_glyph_runconst_dwrite_measuring_mode_d2d1_point_2f_dwrite_matrixconst_d2d1_point_2f)))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory4-computeglyphorigins(dwrite_glyph_runconst_dwrite_measuring_mode_d2d1_point_2f_dwrite_matrixconst_d2d1_point_2f)
     HRESULT ComputeGlyphOrigins(const(DWRITE_GLYPH_RUN)* glyphRun, D2D_POINT_2F baselineOrigin, 
                                 D2D_POINT_2F* glyphOrigins);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory4-computeglyphorigins(dwrite_glyph_runconst_dwrite_measuring_mode_d2d1_point_2f_dwrite_matrixconst_d2d1_point_2f)))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory4-computeglyphorigins(dwrite_glyph_runconst_dwrite_measuring_mode_d2d1_point_2f_dwrite_matrixconst_d2d1_point_2f)
     HRESULT ComputeGlyphOrigins(const(DWRITE_GLYPH_RUN)* glyphRun, DWRITE_MEASURING_MODE measuringMode, 
                                 D2D_POINT_2F baselineOrigin, const(DWRITE_MATRIX)* worldAndDpiTransform, 
                                 D2D_POINT_2F* glyphOrigins);
 }
 
 @GUID("3ff7715f-3cdc-4dc6-9b72-ec5621dccafd")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontsetbuilder1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontsetbuilder1
 interface IDWriteFontSetBuilder1 : IDWriteFontSetBuilder
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontsetbuilder1-addfontfile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontsetbuilder1-addfontfile
     HRESULT AddFontFile(IDWriteFontFile fontFile);
 }
 
 @GUID("ce25f8fd-863b-4d13-9651-c1f88dc73fe2")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwriteasyncresult))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwriteasyncresult
 interface IDWriteAsyncResult : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwriteasyncresult-getwaithandle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwriteasyncresult-getwaithandle
     HANDLE  GetWaitHandle();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwriteasyncresult-getresult))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwriteasyncresult-getresult
     HRESULT GetResult();
 }
 
 @GUID("4db3757a-2c72-4ed9-b2b6-1ababe1aff9c")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwriteremotefontfilestream))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwriteremotefontfilestream
 interface IDWriteRemoteFontFileStream : IDWriteFontFileStream
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwriteremotefontfilestream-getlocalfilesize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwriteremotefontfilestream-getlocalfilesize
     HRESULT GetLocalFileSize(ulong* localFileSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwriteremotefontfilestream-getfilefragmentlocality))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwriteremotefontfilestream-getfilefragmentlocality
     HRESULT GetFileFragmentLocality(ulong fileOffset, ulong fragmentSize, BOOL* isLocal, ulong* partialSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwriteremotefontfilestream-getlocality))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwriteremotefontfilestream-getlocality
     DWRITE_LOCALITY GetLocality();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwriteremotefontfilestream-begindownload))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwriteremotefontfilestream-begindownload
     HRESULT BeginDownload(const(GUID)* downloadOperationID, const(DWRITE_FILE_FRAGMENT)* fileFragments, 
                           uint fragmentCount, IDWriteAsyncResult* asyncResult);
 }
 
 @GUID("68648c83-6ede-46c0-ab46-20083a887fde")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwriteremotefontfileloader))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwriteremotefontfileloader
 interface IDWriteRemoteFontFileLoader : IDWriteFontFileLoader
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwriteremotefontfileloader-createremotestreamfromkey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwriteremotefontfileloader-createremotestreamfromkey
     HRESULT CreateRemoteStreamFromKey(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(void)* fontFileReferenceKey, 
                                       uint fontFileReferenceKeySize, IDWriteRemoteFontFileStream* fontFileStream);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwriteremotefontfileloader-getlocalityfromkey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwriteremotefontfileloader-getlocalityfromkey
     HRESULT GetLocalityFromKey(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(void)* fontFileReferenceKey, 
                                uint fontFileReferenceKeySize, DWRITE_LOCALITY* locality);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwriteremotefontfileloader-createfontfilereferencefromurl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwriteremotefontfileloader-createfontfilereferencefromurl
     HRESULT CreateFontFileReferenceFromUrl(IDWriteFactory factory, const(PWSTR) baseUrl, const(PWSTR) fontFileUrl, 
                                            IDWriteFontFile* fontFile);
 }
 
 @GUID("dc102f47-a12d-4b1c-822d-9e117e33043f")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwriteinmemoryfontfileloader))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwriteinmemoryfontfileloader
 interface IDWriteInMemoryFontFileLoader : IDWriteFontFileLoader
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwriteinmemoryfontfileloader-createinmemoryfontfilereference))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwriteinmemoryfontfileloader-createinmemoryfontfilereference
     HRESULT CreateInMemoryFontFileReference(IDWriteFactory factory, 
                                             /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/const(void)* fontData, 
                                             uint fontDataSize, IUnknown ownerObject, IDWriteFontFile* fontFile);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwriteinmemoryfontfileloader-getfilecount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwriteinmemoryfontfileloader-getfilecount
     uint    GetFileCount();
 }
 
 @GUID("958db99a-be2a-4f09-af7d-65189803d1d3")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefactory5))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefactory5
 interface IDWriteFactory5 : IDWriteFactory4
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory5-createfontsetbuilder))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory5-createfontsetbuilder
     HRESULT CreateFontSetBuilder(IDWriteFontSetBuilder1* fontSetBuilder);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory5-createinmemoryfontfileloader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory5-createinmemoryfontfileloader
     HRESULT CreateInMemoryFontFileLoader(IDWriteInMemoryFontFileLoader* newLoader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory5-createhttpfontfileloader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory5-createhttpfontfileloader
     HRESULT CreateHttpFontFileLoader(const(PWSTR) referrerUrl, const(PWSTR) extraHeaders, 
                                      IDWriteRemoteFontFileLoader* newLoader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory5-analyzecontainertype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory5-analyzecontainertype
     DWRITE_CONTAINER_TYPE AnalyzeContainerType(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(void)* fileData, 
                                                uint fileDataSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory5-unpackfontfile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory5-unpackfontfile
     HRESULT UnpackFontFile(DWRITE_CONTAINER_TYPE containerType, 
                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/const(void)* fileData, 
                            uint fileDataSize, IDWriteFontFileStream* unpackedFontStream);
 }
 
 @GUID("f3744d80-21f7-42eb-b35d-995bc72fc223")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefactory6))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefactory6
 interface IDWriteFactory6 : IDWriteFactory5
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory6-createfontfacereference))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory6-createfontfacereference
     HRESULT CreateFontFaceReference(IDWriteFontFile fontFile, uint faceIndex, 
                                     DWRITE_FONT_SIMULATIONS fontSimulations, 
                                     const(DWRITE_FONT_AXIS_VALUE)* fontAxisValues, uint fontAxisValueCount, 
                                     IDWriteFontFaceReference1* fontFaceReference);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory6-createfontresource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory6-createfontresource
     HRESULT CreateFontResource(IDWriteFontFile fontFile, uint faceIndex, IDWriteFontResource* fontResource);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory6-getsystemfontset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory6-getsystemfontset
     HRESULT GetSystemFontSet(BOOL includeDownloadableFonts, IDWriteFontSet1* fontSet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory6-getsystemfontcollection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory6-getsystemfontcollection
     HRESULT GetSystemFontCollection(BOOL includeDownloadableFonts, DWRITE_FONT_FAMILY_MODEL fontFamilyModel, 
                                     IDWriteFontCollection2* fontCollection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory6-createfontcollectionfromfontset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory6-createfontcollectionfromfontset
     HRESULT CreateFontCollectionFromFontSet(IDWriteFontSet fontSet, DWRITE_FONT_FAMILY_MODEL fontFamilyModel, 
                                             IDWriteFontCollection2* fontCollection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory6-createfontsetbuilder))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory6-createfontsetbuilder
     HRESULT CreateFontSetBuilder(IDWriteFontSetBuilder2* fontSetBuilder);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory6-createtextformat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory6-createtextformat
     HRESULT CreateTextFormat(const(PWSTR) fontFamilyName, IDWriteFontCollection fontCollection, 
                              const(DWRITE_FONT_AXIS_VALUE)* fontAxisValues, uint fontAxisValueCount, float fontSize, 
                              const(PWSTR) localeName, IDWriteTextFormat3* textFormat);
 }
 
 @GUID("98eff3a5-b667-479a-b145-e2fa5b9fdc29")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontface5))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontface5
 interface IDWriteFontFace5 : IDWriteFontFace4
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface5-getfontaxisvaluecount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface5-getfontaxisvaluecount
     uint    GetFontAxisValueCount();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface5-getfontaxisvalues))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface5-getfontaxisvalues
     HRESULT GetFontAxisValues(DWRITE_FONT_AXIS_VALUE* fontAxisValues, uint fontAxisValueCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface5-hasvariations))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface5-hasvariations
     BOOL    HasVariations();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface5-getfontresource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface5-getfontresource
     HRESULT GetFontResource(IDWriteFontResource* fontResource);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface5-equals))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontface5-equals
     BOOL    Equals(IDWriteFontFace fontFace);
 }
 
 @GUID("1f803a76-6871-48e8-987f-b975551c50f2")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontresource))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontresource
 interface IDWriteFontResource : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontresource-getfontfile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontresource-getfontfile
     HRESULT GetFontFile(IDWriteFontFile* fontFile);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontresource-getfontfaceindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontresource-getfontfaceindex
     uint    GetFontFaceIndex();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontresource-getfontaxiscount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontresource-getfontaxiscount
     uint    GetFontAxisCount();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontresource-getdefaultfontaxisvalues))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontresource-getdefaultfontaxisvalues
     HRESULT GetDefaultFontAxisValues(DWRITE_FONT_AXIS_VALUE* fontAxisValues, uint fontAxisValueCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontresource-getfontaxisranges))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontresource-getfontaxisranges
     HRESULT GetFontAxisRanges(DWRITE_FONT_AXIS_RANGE* fontAxisRanges, uint fontAxisRangeCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontresource-getfontaxisattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontresource-getfontaxisattributes
     DWRITE_FONT_AXIS_ATTRIBUTES GetFontAxisAttributes(uint axisIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontresource-getaxisnames))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontresource-getaxisnames
     HRESULT GetAxisNames(uint axisIndex, IDWriteLocalizedStrings* names);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontresource-getaxisvaluenamecount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontresource-getaxisvaluenamecount
     uint    GetAxisValueNameCount(uint axisIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontresource-getaxisvaluenames))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontresource-getaxisvaluenames
     HRESULT GetAxisValueNames(uint axisIndex, uint axisValueIndex, DWRITE_FONT_AXIS_RANGE* fontAxisRange, 
                               IDWriteLocalizedStrings* names);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontresource-hasvariations))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontresource-hasvariations
     BOOL    HasVariations();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontresource-createfontface))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontresource-createfontface
     HRESULT CreateFontFace(DWRITE_FONT_SIMULATIONS fontSimulations, const(DWRITE_FONT_AXIS_VALUE)* fontAxisValues, 
                            uint fontAxisValueCount, IDWriteFontFace5* fontFace);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontresource-createfontfacereference))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontresource-createfontfacereference
     HRESULT CreateFontFaceReference(DWRITE_FONT_SIMULATIONS fontSimulations, 
                                     const(DWRITE_FONT_AXIS_VALUE)* fontAxisValues, uint fontAxisValueCount, 
                                     IDWriteFontFaceReference1* fontFaceReference);
 }
 
 @GUID("c081fe77-2fd1-41ac-a5a3-34983c4ba61a")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontfacereference1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontfacereference1
 interface IDWriteFontFaceReference1 : IDWriteFontFaceReference
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfacereference1-createfontface))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfacereference1-createfontface
     HRESULT CreateFontFace(IDWriteFontFace5* fontFace);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfacereference1-getfontaxisvaluecount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfacereference1-getfontaxisvaluecount
     uint    GetFontAxisValueCount();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfacereference1-getfontaxisvalues))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfacereference1-getfontaxisvalues
     HRESULT GetFontAxisValues(DWRITE_FONT_AXIS_VALUE* fontAxisValues, uint fontAxisValueCount);
 }
 
 @GUID("ee5ba612-b131-463c-8f4f-3189b9401e45")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontsetbuilder2))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontsetbuilder2
 interface IDWriteFontSetBuilder2 : IDWriteFontSetBuilder1
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontsetbuilder2-addfont))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontsetbuilder2-addfont
     HRESULT AddFont(IDWriteFontFile fontFile, uint fontFaceIndex, DWRITE_FONT_SIMULATIONS fontSimulations, 
                     const(DWRITE_FONT_AXIS_VALUE)* fontAxisValues, uint fontAxisValueCount, 
                     const(DWRITE_FONT_AXIS_RANGE)* fontAxisRanges, uint fontAxisRangeCount, 
                     const(DWRITE_FONT_PROPERTY)* properties, uint propertyCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontsetbuilder2-addfontfile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontsetbuilder2-addfontfile
     HRESULT AddFontFile(const(PWSTR) filePath);
 }
 
 @GUID("7e9fda85-6c92-4053-bc47-7ae3530db4d3")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontset1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontset1
 interface IDWriteFontSet1 : IDWriteFontSet
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset1-getmatchingfonts))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset1-getmatchingfonts
     HRESULT GetMatchingFonts(const(DWRITE_FONT_PROPERTY)* fontProperty, 
                              const(DWRITE_FONT_AXIS_VALUE)* fontAxisValues, uint fontAxisValueCount, 
                              IDWriteFontSet1* matchingFonts);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset1-getfirstfontresources))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset1-getfirstfontresources
     HRESULT GetFirstFontResources(IDWriteFontSet1* filteredFontSet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset1-getfilteredfonts(uint32const_uint32_idwritefontset1)))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset1-getfilteredfonts(uint32const_uint32_idwritefontset1)
     HRESULT GetFilteredFonts(const(uint)* indices, uint indexCount, IDWriteFontSet1* filteredFontSet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset1-getfilteredfonts(uint32const_uint32_idwritefontset1)))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset1-getfilteredfonts(uint32const_uint32_idwritefontset1)
     HRESULT GetFilteredFonts(const(DWRITE_FONT_AXIS_RANGE)* fontAxisRanges, uint fontAxisRangeCount, 
                              BOOL selectAnyRange, IDWriteFontSet1* filteredFontSet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset1-getfilteredfonts(uint32const_uint32_idwritefontset1)))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset1-getfilteredfonts(uint32const_uint32_idwritefontset1)
     HRESULT GetFilteredFonts(const(DWRITE_FONT_PROPERTY)* properties, uint propertyCount, BOOL selectAnyProperty, 
                              IDWriteFontSet1* filteredFontSet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset1-getfilteredfontindices))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset1-getfilteredfontindices
     HRESULT GetFilteredFontIndices(const(DWRITE_FONT_AXIS_RANGE)* fontAxisRanges, uint fontAxisRangeCount, 
                                    BOOL selectAnyRange, uint* indices, uint maxIndexCount, uint* actualIndexCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset1-getfilteredfontindices))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset1-getfilteredfontindices
     HRESULT GetFilteredFontIndices(const(DWRITE_FONT_PROPERTY)* properties, uint propertyCount, 
                                    BOOL selectAnyProperty, uint* indices, uint maxIndexCount, uint* actualIndexCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset1-getfontaxisranges))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset1-getfontaxisranges
     HRESULT GetFontAxisRanges(uint listIndex, DWRITE_FONT_AXIS_RANGE* fontAxisRanges, uint maxFontAxisRangeCount, 
                               uint* actualFontAxisRangeCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset1-getfontaxisranges))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset1-getfontaxisranges
     HRESULT GetFontAxisRanges(DWRITE_FONT_AXIS_RANGE* fontAxisRanges, uint maxFontAxisRangeCount, 
                               uint* actualFontAxisRangeCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset1-getfontfacereference))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset1-getfontfacereference
     HRESULT GetFontFaceReference(uint listIndex, IDWriteFontFaceReference1* fontFaceReference);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset1-createfontresource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset1-createfontresource
     HRESULT CreateFontResource(uint listIndex, IDWriteFontResource* fontResource);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset1-createfontface))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset1-createfontface
     HRESULT CreateFontFace(uint listIndex, IDWriteFontFace5* fontFace);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset1-getfontlocality))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset1-getfontlocality
     DWRITE_LOCALITY GetFontLocality(uint listIndex);
 }
 
 @GUID("c0763a34-77af-445a-b735-08c37b0a5bf5")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontlist2))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontlist2
 interface IDWriteFontList2 : IDWriteFontList1
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontlist2-getfontset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontlist2-getfontset
     HRESULT GetFontSet(IDWriteFontSet1* fontSet);
 }
 
 @GUID("3ed49e77-a398-4261-b9cf-c126c2131ef3")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontfamily2))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontfamily2
 interface IDWriteFontFamily2 : IDWriteFontFamily1
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfamily2-getmatchingfonts))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfamily2-getmatchingfonts
     HRESULT GetMatchingFonts(const(DWRITE_FONT_AXIS_VALUE)* fontAxisValues, uint fontAxisValueCount, 
                              IDWriteFontList2* matchingFonts);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfamily2-getfontset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontfamily2-getfontset
     HRESULT GetFontSet(IDWriteFontSet1* fontSet);
 }
 
 @GUID("514039c6-4617-4064-bf8b-92ea83e506e0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontcollection2))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontcollection2
 interface IDWriteFontCollection2 : IDWriteFontCollection1
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontcollection2-getfontfamily))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontcollection2-getfontfamily
     HRESULT GetFontFamily(uint index, IDWriteFontFamily2* fontFamily);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontcollection2-getmatchingfonts))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontcollection2-getmatchingfonts
     HRESULT GetMatchingFonts(const(PWSTR) familyName, const(DWRITE_FONT_AXIS_VALUE)* fontAxisValues, 
                              uint fontAxisValueCount, IDWriteFontList2* fontList);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontcollection2-getfontfamilymodel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontcollection2-getfontfamilymodel
     DWRITE_FONT_FAMILY_MODEL GetFontFamilyModel();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontcollection2-getfontset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontcollection2-getfontset
     HRESULT GetFontSet(IDWriteFontSet1* fontSet);
 }
 
 @GUID("05a9bf42-223f-4441-b5fb-8263685f55e9")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritetextlayout4))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritetextlayout4
 interface IDWriteTextLayout4 : IDWriteTextLayout3
 {
     HRESULT SetFontAxisValues(const(DWRITE_FONT_AXIS_VALUE)* fontAxisValues, uint fontAxisValueCount, 
@@ -3143,25 +3318,25 @@ interface IDWriteTextLayout4 : IDWriteTextLayout3
 }
 
 @GUID("6d3b5641-e550-430d-a85b-b7bf48a93427")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritetextformat3))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritetextformat3
 interface IDWriteTextFormat3 : IDWriteTextFormat2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritetextformat3-setfontaxisvalues))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritetextformat3-setfontaxisvalues
     HRESULT SetFontAxisValues(const(DWRITE_FONT_AXIS_VALUE)* fontAxisValues, uint fontAxisValueCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritetextformat3-getfontaxisvaluecount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritetextformat3-getfontaxisvaluecount
     uint    GetFontAxisValueCount();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritetextformat3-getfontaxisvalues))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritetextformat3-getfontaxisvalues
     HRESULT GetFontAxisValues(DWRITE_FONT_AXIS_VALUE* fontAxisValues, uint fontAxisValueCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritetextformat3-getautomaticfontaxes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritetextformat3-getautomaticfontaxes
     DWRITE_AUTOMATIC_FONT_AXES GetAutomaticFontAxes();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritetextformat3-setautomaticfontaxes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritetextformat3-setautomaticfontaxes
     HRESULT SetAutomaticFontAxes(DWRITE_AUTOMATIC_FONT_AXES automaticFontAxes);
 }
 
 @GUID("2397599d-dd0d-4681-bd6a-f4f31eaade77")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontfallback1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontfallback1
 interface IDWriteFontFallback1 : IDWriteFontFallback
 {
     HRESULT MapCharacters(IDWriteTextAnalysisSource analysisSource, uint textPosition, uint textLength, 
@@ -3171,45 +3346,45 @@ interface IDWriteFontFallback1 : IDWriteFontFallback
 }
 
 @GUID("dc7ead19-e54c-43af-b2da-4e2b79ba3f7f")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontset2))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontset2
 interface IDWriteFontSet2 : IDWriteFontSet1
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset2-getexpirationevent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset2-getexpirationevent
     HANDLE GetExpirationEvent();
 }
 
 @GUID("a4d055a6-f9e3-4e25-93b7-9e309f3af8e9")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontcollection3))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontcollection3
 interface IDWriteFontCollection3 : IDWriteFontCollection2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontcollection3-getexpirationevent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontcollection3-getexpirationevent
     HANDLE GetExpirationEvent();
 }
 
 @GUID("35d0e0b3-9076-4d2e-a016-a91b568a06b4")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefactory7))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefactory7
 interface IDWriteFactory7 : IDWriteFactory6
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory7-getsystemfontset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory7-getsystemfontset
     HRESULT GetSystemFontSet(BOOL includeDownloadableFonts, IDWriteFontSet2* fontSet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory7-getsystemfontcollection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefactory7-getsystemfontcollection
     HRESULT GetSystemFontCollection(BOOL includeDownloadableFonts, DWRITE_FONT_FAMILY_MODEL fontFamilyModel, 
                                     IDWriteFontCollection3* fontCollection);
 }
 
 @GUID("7c073ef2-a7f4-4045-8c32-8ab8ae640f90")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontset3))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontset3
 interface IDWriteFontSet3 : IDWriteFontSet2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset3-getfontsourcetype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset3-getfontsourcetype
     DWRITE_FONT_SOURCE_TYPE GetFontSourceType(uint fontIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset3-getfontsourcenamelength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset3-getfontsourcenamelength
     uint    GetFontSourceNameLength(uint listIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset3-getfontsourcename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset3-getfontsourcename
     HRESULT GetFontSourceName(uint listIndex, PWSTR stringBuffer, uint stringBufferSize);
 }
 
@@ -3222,16 +3397,16 @@ interface IDWriteFontFace6 : IDWriteFontFace5
 }
 
 @GUID("eec175fc-bea9-4c86-8b53-ccbdd7df0c82")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontset4))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nn-dwrite_3-idwritefontset4
 interface IDWriteFontSet4 : IDWriteFontSet3
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset4-convertweightstretchstyletofontaxisvalues))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset4-convertweightstretchstyletofontaxisvalues
     uint    ConvertWeightStretchStyleToFontAxisValues(const(DWRITE_FONT_AXIS_VALUE)* inputAxisValues, 
                                                       uint inputAxisCount, DWRITE_FONT_WEIGHT fontWeight, 
                                                       DWRITE_FONT_STRETCH fontStretch, DWRITE_FONT_STYLE fontStyle, 
                                                       float fontSize, DWRITE_FONT_AXIS_VALUE* outputAxisValues);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset4-getmatchingfonts))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwrite_3/nf-dwrite_3-idwritefontset4-getmatchingfonts
     HRESULT GetMatchingFonts(const(PWSTR) familyName, const(DWRITE_FONT_AXIS_VALUE)* fontAxisValues, 
                              uint fontAxisValueCount, DWRITE_FONT_SIMULATIONS allowedSimulations, 
                              IDWriteFontSet4* matchingFonts);

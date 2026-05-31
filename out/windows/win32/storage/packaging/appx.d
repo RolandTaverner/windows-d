@@ -4,17 +4,18 @@ module windows.win32.storage.packaging.appx;
 
 public import windows.core;
 public import windows.win32.data.xml.msxml : IXMLDOMDocument;
-public import windows.win32.foundation : BOOL, FILETIME, HANDLE, HRESULT, PSTR, PWSTR,
-                                         WIN32_ERROR;
-public import windows.win32.security : PSID;
-public import windows.win32.system.com : IStream, IUnknown, IUri;
+public import windows.win32.foundation.foundation : BOOL, FILETIME, HANDLE, HRESULT, PSTR,
+                                                    PWSTR, WIN32_ERROR;
+public import windows.win32.security.security : PSID;
+public import windows.win32.system.com.com : IStream, IUnknown, IUri;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/ne-appxpackaging-appx_compression_option))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/ne-appxpackaging-appx_compression_option
 alias APPX_COMPRESSION_OPTION = int;
 enum : int
 {
@@ -24,7 +25,8 @@ enum : int
     APPX_COMPRESSION_OPTION_FAST      = 0x00000003,
     APPX_COMPRESSION_OPTION_SUPERFAST = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/ne-appxpackaging-appx_footprint_file_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/ne-appxpackaging-appx_footprint_file_type
 alias APPX_FOOTPRINT_FILE_TYPE = int;
 enum : int
 {
@@ -34,7 +36,8 @@ enum : int
     APPX_FOOTPRINT_FILE_TYPE_CODEINTEGRITY   = 0x00000003,
     APPX_FOOTPRINT_FILE_TYPE_CONTENTGROUPMAP = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/ne-appxpackaging-appx_bundle_footprint_file_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/ne-appxpackaging-appx_bundle_footprint_file_type
 alias APPX_BUNDLE_FOOTPRINT_FILE_TYPE = int;
 enum : int
 {
@@ -44,7 +47,8 @@ enum : int
     APPX_BUNDLE_FOOTPRINT_FILE_TYPE_SIGNATURE = 0x00000002,
     APPX_BUNDLE_FOOTPRINT_FILE_TYPE_LAST      = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/ne-appxpackaging-appx_capabilities))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/ne-appxpackaging-appx_capabilities
 alias APPX_CAPABILITIES = int;
 enum : int
 {
@@ -61,7 +65,8 @@ enum : int
     APPX_CAPABILITY_APPOINTMENTS                  = 0x00000400,
     APPX_CAPABILITY_CONTACTS                      = 0x00000800,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/ne-appxpackaging-appx_package_architecture))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/ne-appxpackaging-appx_package_architecture
 alias APPX_PACKAGE_ARCHITECTURE = int;
 enum : int
 {
@@ -71,7 +76,8 @@ enum : int
     APPX_PACKAGE_ARCHITECTURE_NEUTRAL = 0x0000000b,
     APPX_PACKAGE_ARCHITECTURE_ARM64   = 0x0000000c,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/ne-appxpackaging-appx_package_architecture2))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/ne-appxpackaging-appx_package_architecture2
 alias APPX_PACKAGE_ARCHITECTURE2 = int;
 enum : int
 {
@@ -83,13 +89,15 @@ enum : int
     APPX_PACKAGE_ARCHITECTURE2_X86_ON_ARM64 = 0x0000000e,
     APPX_PACKAGE_ARCHITECTURE2_UNKNOWN      = 0x0000ffff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/ne-appxpackaging-appx_bundle_payload_package_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/ne-appxpackaging-appx_bundle_payload_package_type
 alias APPX_BUNDLE_PAYLOAD_PACKAGE_TYPE = int;
 enum : int
 {
     APPX_BUNDLE_PAYLOAD_PACKAGE_TYPE_APPLICATION = 0x00000000,
     APPX_BUNDLE_PAYLOAD_PACKAGE_TYPE_RESOURCE    = 0x00000001,
 }
+
 alias DX_FEATURE_LEVEL = int;
 enum : int
 {
@@ -98,6 +106,7 @@ enum : int
     DX_FEATURE_LEVEL_10          = 0x00000002,
     DX_FEATURE_LEVEL_11          = 0x00000003,
 }
+
 alias APPX_CAPABILITY_CLASS_TYPE = int;
 enum : int
 {
@@ -108,6 +117,7 @@ enum : int
     APPX_CAPABILITY_CLASS_ALL        = 0x00000007,
     APPX_CAPABILITY_CLASS_CUSTOM     = 0x00000008,
 }
+
 alias APPX_PACKAGING_CONTEXT_CHANGE_TYPE = int;
 enum : int
 {
@@ -116,7 +126,8 @@ enum : int
     APPX_PACKAGING_CONTEXT_CHANGE_TYPE_DETAILS = 0x00000002,
     APPX_PACKAGING_CONTEXT_CHANGE_TYPE_END     = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/ne-appxpackaging-appx_encrypted_package_options))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/ne-appxpackaging-appx_encrypted_package_options
 alias APPX_ENCRYPTED_PACKAGE_OPTIONS = int;
 enum : int
 {
@@ -124,13 +135,15 @@ enum : int
     APPX_ENCRYPTED_PACKAGE_OPTION_DIFFUSION    = 0x00000001,
     APPX_ENCRYPTED_PACKAGE_OPTION_PAGE_HASHING = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/ne-appxpackaging-appx_package_editor_update_package_option))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/ne-appxpackaging-appx_package_editor_update_package_option
 alias APPX_PACKAGE_EDITOR_UPDATE_PACKAGE_OPTION = int;
 enum : int
 {
     APPX_PACKAGE_EDITOR_UPDATE_PACKAGE_OPTION_APPEND_DELTA = 0x00000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/ne-appxpackaging-appx_package_editor_update_package_manifest_options))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/ne-appxpackaging-appx_package_editor_update_package_manifest_options
 alias APPX_PACKAGE_EDITOR_UPDATE_PACKAGE_MANIFEST_OPTIONS = int;
 enum : int
 {
@@ -138,7 +151,8 @@ enum : int
     APPX_PACKAGE_EDITOR_UPDATE_PACKAGE_MANIFEST_OPTION_SKIP_VALIDATION = 0x00000001,
     APPX_PACKAGE_EDITOR_UPDATE_PACKAGE_MANIFEST_OPTION_LOCALIZED       = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmodel/ne-appmodel-packagepathtype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmodel/ne-appmodel-packagepathtype
 enum PackagePathType : int
 {
     PackagePathType_Install           = 0x00000000,
@@ -148,7 +162,8 @@ enum PackagePathType : int
     PackagePathType_UserExternal      = 0x00000004,
     PackagePathType_EffectiveExternal = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmodel/ne-appmodel-packageorigin))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmodel/ne-appmodel-packageorigin
 enum PackageOrigin : int
 {
     PackageOrigin_Unknown           = 0x00000000,
@@ -159,26 +174,30 @@ enum PackageOrigin : int
     PackageOrigin_DeveloperSigned   = 0x00000005,
     PackageOrigin_LineOfBusiness    = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmodel/ne-appmodel-createpackagedependencyoptions))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmodel/ne-appmodel-createpackagedependencyoptions
 enum CreatePackageDependencyOptions : int
 {
     CreatePackageDependencyOptions_None                            = 0x00000000,
     CreatePackageDependencyOptions_DoNotVerifyDependencyResolution = 0x00000001,
     CreatePackageDependencyOptions_ScopeIsSystem                   = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmodel/ne-appmodel-packagedependencylifetimekind))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmodel/ne-appmodel-packagedependencylifetimekind
 enum PackageDependencyLifetimeKind : int
 {
     PackageDependencyLifetimeKind_Process     = 0x00000000,
     PackageDependencyLifetimeKind_FilePath    = 0x00000001,
     PackageDependencyLifetimeKind_RegistryKey = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmodel/ne-appmodel-addpackagedependencyoptions))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmodel/ne-appmodel-addpackagedependencyoptions
 enum AddPackageDependencyOptions : int
 {
     AddPackageDependencyOptions_None                   = 0x00000000,
     AddPackageDependencyOptions_PrependIfRankCollision = 0x00000001,
 }
+
 alias AddPackageDependencyOptions2 = int;
 enum : int
 {
@@ -186,7 +205,8 @@ enum : int
     AddPackageDependencyOptions2_PrependIfRankCollision     = 0x00000001,
     AddPackageDependencyOptions2_SpecifiedPackageFamilyOnly = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmodel/ne-appmodel-packagedependencyprocessorarchitectures))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmodel/ne-appmodel-packagedependencyprocessorarchitectures
 enum PackageDependencyProcessorArchitectures : int
 {
     PackageDependencyProcessorArchitectures_None    = 0x00000000,
@@ -197,13 +217,15 @@ enum PackageDependencyProcessorArchitectures : int
     PackageDependencyProcessorArchitectures_Arm64   = 0x00000010,
     PackageDependencyProcessorArchitectures_X86A64  = 0x00000020,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmodel/ne-appmodel-apppolicylifecyclemanagement))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmodel/ne-appmodel-apppolicylifecyclemanagement
 enum AppPolicyLifecycleManagement : int
 {
     AppPolicyLifecycleManagement_Unmanaged = 0x00000000,
     AppPolicyLifecycleManagement_Managed   = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmodel/ne-appmodel-apppolicywindowingmodel))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmodel/ne-appmodel-apppolicywindowingmodel
 enum AppPolicyWindowingModel : int
 {
     AppPolicyWindowingModel_None           = 0x00000000,
@@ -211,13 +233,15 @@ enum AppPolicyWindowingModel : int
     AppPolicyWindowingModel_ClassicDesktop = 0x00000002,
     AppPolicyWindowingModel_ClassicPhone   = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmodel/ne-appmodel-apppolicymediafoundationcodecloading))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmodel/ne-appmodel-apppolicymediafoundationcodecloading
 enum AppPolicyMediaFoundationCodecLoading : int
 {
     AppPolicyMediaFoundationCodecLoading_All       = 0x00000000,
     AppPolicyMediaFoundationCodecLoading_InboxOnly = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmodel/ne-appmodel-apppolicyclrcompat))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmodel/ne-appmodel-apppolicyclrcompat
 enum AppPolicyClrCompat : int
 {
     AppPolicyClrCompat_Other           = 0x00000000,
@@ -225,30 +249,35 @@ enum AppPolicyClrCompat : int
     AppPolicyClrCompat_Universal       = 0x00000002,
     AppPolicyClrCompat_PackagedDesktop = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmodel/ne-appmodel-apppolicythreadinitializationtype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmodel/ne-appmodel-apppolicythreadinitializationtype
 enum AppPolicyThreadInitializationType : int
 {
     AppPolicyThreadInitializationType_None            = 0x00000000,
     AppPolicyThreadInitializationType_InitializeWinRT = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmodel/ne-appmodel-apppolicyshowdeveloperdiagnostic))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmodel/ne-appmodel-apppolicyshowdeveloperdiagnostic
 enum AppPolicyShowDeveloperDiagnostic : int
 {
     AppPolicyShowDeveloperDiagnostic_None   = 0x00000000,
     AppPolicyShowDeveloperDiagnostic_ShowUI = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmodel/ne-appmodel-apppolicyprocessterminationmethod))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmodel/ne-appmodel-apppolicyprocessterminationmethod
 enum AppPolicyProcessTerminationMethod : int
 {
     AppPolicyProcessTerminationMethod_ExitProcess      = 0x00000000,
     AppPolicyProcessTerminationMethod_TerminateProcess = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmodel/ne-appmodel-apppolicycreatefileaccess))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmodel/ne-appmodel-apppolicycreatefileaccess
 enum AppPolicyCreateFileAccess : int
 {
     AppPolicyCreateFileAccess_Full    = 0x00000000,
     AppPolicyCreateFileAccess_Limited = 0x00000001,
 }
+
 enum PackageInfo3Type : int
 {
     PackageInfo3Type_PackageInfoGeneration = 0x00000010,
@@ -259,117 +288,117 @@ enum PackageInfo3Type : int
 
 enum : uint
 {
-    PACKAGE_FULL_NAME_MIN_LENGTH = 0x0000001e,
-    PACKAGE_FULL_NAME_MAX_LENGTH = 0x0000007f,
+    PACKAGE_FULL_NAME_MIN_LENGTH = 0x0000001eU,
+    PACKAGE_FULL_NAME_MAX_LENGTH = 0x0000007fU,
 }
 
 enum : uint
 {
-    PACKAGE_FAMILY_NAME_MIN_LENGTH = 0x00000011,
-    PACKAGE_FAMILY_NAME_MAX_LENGTH = 0x00000040,
+    PACKAGE_FAMILY_NAME_MIN_LENGTH = 0x00000011U,
+    PACKAGE_FAMILY_NAME_MAX_LENGTH = 0x00000040U,
 }
 
-enum uint PACKAGE_GRAPH_MAX_SIZE = 0x00000281;
+enum uint PACKAGE_GRAPH_MAX_SIZE = 0x00000281U;
 
 enum : uint
 {
-    APPLICATION_USER_MODEL_ID_MIN_LENGTH = 0x00000014,
-    APPLICATION_USER_MODEL_ID_MAX_LENGTH = 0x00000082,
-}
-
-enum : uint
-{
-    PACKAGE_PROPERTY_FRAMEWORK = 0x00000001,
-    PACKAGE_PROPERTY_RESOURCE  = 0x00000002,
-    PACKAGE_PROPERTY_BUNDLE    = 0x00000004,
-    PACKAGE_PROPERTY_OPTIONAL  = 0x00000008,
+    APPLICATION_USER_MODEL_ID_MIN_LENGTH = 0x00000014U,
+    APPLICATION_USER_MODEL_ID_MAX_LENGTH = 0x00000082U,
 }
 
 enum : uint
 {
-    PACKAGE_FILTER_HEAD     = 0x00000010,
-    PACKAGE_FILTER_DIRECT   = 0x00000020,
-    PACKAGE_FILTER_RESOURCE = 0x00000040,
-    PACKAGE_FILTER_BUNDLE   = 0x00000080,
+    PACKAGE_PROPERTY_FRAMEWORK = 0x00000001U,
+    PACKAGE_PROPERTY_RESOURCE  = 0x00000002U,
+    PACKAGE_PROPERTY_BUNDLE    = 0x00000004U,
+    PACKAGE_PROPERTY_OPTIONAL  = 0x00000008U,
 }
 
 enum : uint
 {
-    PACKAGE_INFORMATION_BASIC = 0x00000000,
-    PACKAGE_INFORMATION_FULL  = 0x00000100,
-}
-
-enum uint PACKAGE_PROPERTY_DEVELOPMENT_MODE = 0x00010000;
-enum uint PACKAGE_FILTER_OPTIONAL = 0x00020000;
-enum uint PACKAGE_PROPERTY_IS_IN_RELATED_SET = 0x00040000;
-enum uint PACKAGE_FILTER_IS_IN_RELATED_SET = 0x00040000;
-enum uint PACKAGE_PROPERTY_STATIC = 0x00080000;
-enum uint PACKAGE_FILTER_STATIC = 0x00080000;
-enum uint PACKAGE_PROPERTY_DYNAMIC = 0x00100000;
-enum uint PACKAGE_FILTER_DYNAMIC = 0x00100000;
-enum uint PACKAGE_PROPERTY_HOSTRUNTIME = 0x00200000;
-
-enum : uint
-{
-    PACKAGE_FILTER_HOSTRUNTIME = 0x00200000,
-    PACKAGE_FILTER_ALL_LOADED  = 0x00000000,
-}
-
-enum uint PACKAGE_DEPENDENCY_RANK_DEFAULT = 0x00000000;
-
-enum : uint
-{
-    PACKAGE_ARCHITECTURE_MIN_LENGTH = 0x00000003,
-    PACKAGE_ARCHITECTURE_MAX_LENGTH = 0x00000007,
+    PACKAGE_FILTER_HEAD     = 0x00000010U,
+    PACKAGE_FILTER_DIRECT   = 0x00000020U,
+    PACKAGE_FILTER_RESOURCE = 0x00000040U,
+    PACKAGE_FILTER_BUNDLE   = 0x00000080U,
 }
 
 enum : uint
 {
-    PACKAGE_VERSION_MIN_LENGTH = 0x00000007,
-    PACKAGE_VERSION_MAX_LENGTH = 0x00000017,
+    PACKAGE_INFORMATION_BASIC = 0x00000000U,
+    PACKAGE_INFORMATION_FULL  = 0x00000100U,
+}
+
+enum uint PACKAGE_PROPERTY_DEVELOPMENT_MODE = 0x00010000U;
+enum uint PACKAGE_FILTER_OPTIONAL = 0x00020000U;
+enum uint PACKAGE_PROPERTY_IS_IN_RELATED_SET = 0x00040000U;
+enum uint PACKAGE_FILTER_IS_IN_RELATED_SET = 0x00040000U;
+enum uint PACKAGE_PROPERTY_STATIC = 0x00080000U;
+enum uint PACKAGE_FILTER_STATIC = 0x00080000U;
+enum uint PACKAGE_PROPERTY_DYNAMIC = 0x00100000U;
+enum uint PACKAGE_FILTER_DYNAMIC = 0x00100000U;
+enum uint PACKAGE_PROPERTY_HOSTRUNTIME = 0x00200000U;
+
+enum : uint
+{
+    PACKAGE_FILTER_HOSTRUNTIME = 0x00200000U,
+    PACKAGE_FILTER_ALL_LOADED  = 0x00000000U,
+}
+
+enum uint PACKAGE_DEPENDENCY_RANK_DEFAULT = 0x00000000U;
+
+enum : uint
+{
+    PACKAGE_ARCHITECTURE_MIN_LENGTH = 0x00000003U,
+    PACKAGE_ARCHITECTURE_MAX_LENGTH = 0x00000007U,
 }
 
 enum : uint
 {
-    PACKAGE_NAME_MIN_LENGTH = 0x00000003,
-    PACKAGE_NAME_MAX_LENGTH = 0x00000032,
+    PACKAGE_VERSION_MIN_LENGTH = 0x00000007U,
+    PACKAGE_VERSION_MAX_LENGTH = 0x00000017U,
 }
 
 enum : uint
 {
-    PACKAGE_PUBLISHER_MIN_LENGTH   = 0x00000003,
-    PACKAGE_PUBLISHER_MAX_LENGTH   = 0x00002000,
-    PACKAGE_PUBLISHERID_MIN_LENGTH = 0x0000000d,
-    PACKAGE_PUBLISHERID_MAX_LENGTH = 0x0000000d,
+    PACKAGE_NAME_MIN_LENGTH = 0x00000003U,
+    PACKAGE_NAME_MAX_LENGTH = 0x00000032U,
 }
 
 enum : uint
 {
-    PACKAGE_RESOURCEID_MIN_LENGTH = 0x00000000,
-    PACKAGE_RESOURCEID_MAX_LENGTH = 0x0000001e,
-}
-
-enum uint PACKAGE_MIN_DEPENDENCIES = 0x00000000;
-enum uint PACKAGE_MAX_DEPENDENCIES = 0x00000080;
-
-enum : uint
-{
-    PACKAGE_FAMILY_MIN_RESOURCE_PACKAGES = 0x00000000,
-    PACKAGE_FAMILY_MAX_RESOURCE_PACKAGES = 0x00000200,
-}
-
-enum uint PACKAGE_GRAPH_MIN_SIZE = 0x00000001;
-
-enum : uint
-{
-    PACKAGE_APPLICATIONS_MIN_COUNT = 0x00000000,
-    PACKAGE_APPLICATIONS_MAX_COUNT = 0x00000064,
+    PACKAGE_PUBLISHER_MIN_LENGTH   = 0x00000003U,
+    PACKAGE_PUBLISHER_MAX_LENGTH   = 0x00002000U,
+    PACKAGE_PUBLISHERID_MIN_LENGTH = 0x0000000dU,
+    PACKAGE_PUBLISHERID_MAX_LENGTH = 0x0000000dU,
 }
 
 enum : uint
 {
-    PACKAGE_RELATIVE_APPLICATION_ID_MIN_LENGTH = 0x00000002,
-    PACKAGE_RELATIVE_APPLICATION_ID_MAX_LENGTH = 0x00000041,
+    PACKAGE_RESOURCEID_MIN_LENGTH = 0x00000000U,
+    PACKAGE_RESOURCEID_MAX_LENGTH = 0x0000001eU,
+}
+
+enum uint PACKAGE_MIN_DEPENDENCIES = 0x00000000U;
+enum uint PACKAGE_MAX_DEPENDENCIES = 0x00000080U;
+
+enum : uint
+{
+    PACKAGE_FAMILY_MIN_RESOURCE_PACKAGES = 0x00000000U,
+    PACKAGE_FAMILY_MAX_RESOURCE_PACKAGES = 0x00000200U,
+}
+
+enum uint PACKAGE_GRAPH_MIN_SIZE = 0x00000001U;
+
+enum : uint
+{
+    PACKAGE_APPLICATIONS_MIN_COUNT = 0x00000000U,
+    PACKAGE_APPLICATIONS_MAX_COUNT = 0x00000064U,
+}
+
+enum : uint
+{
+    PACKAGE_RELATIVE_APPLICATION_ID_MIN_LENGTH = 0x00000002U,
+    PACKAGE_RELATIVE_APPLICATION_ID_MAX_LENGTH = 0x00000041U,
 }
 
 // Structs
@@ -385,41 +414,76 @@ struct PACKAGEDEPENDENCY_CONTEXT
     void* Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmodel/ns-appmodel-package_id))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct PACKAGE_ID
+version(X86_64)
 {
-align (4):
-    uint            reserved;
-    uint            processorArchitecture;
-    PACKAGE_VERSION version_;
-    PWSTR           name;
-    PWSTR           publisher;
-    PWSTR           resourceId;
-    PWSTR           publisherId;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmodel/ns-appmodel-package_id
+    struct PACKAGE_ID
+    {
+    align (4):
+        uint            reserved;
+        uint            processorArchitecture;
+        PACKAGE_VERSION version_;
+        PWSTR           name;
+        PWSTR           publisher;
+        PWSTR           resourceId;
+        PWSTR           publisherId;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmodel/ns-appmodel-package_info))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct PACKAGE_INFO
+version(AArch64)
 {
-align (4):
-    uint       reserved;
-    uint       flags;
-    PWSTR      path;
-    PWSTR      packageFullName;
-    PWSTR      packageFamilyName;
-    PACKAGE_ID packageId;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmodel/ns-appmodel-package_id
+    struct PACKAGE_ID
+    {
+    align (4):
+        uint            reserved;
+        uint            processorArchitecture;
+        PACKAGE_VERSION version_;
+        PWSTR           name;
+        PWSTR           publisher;
+        PWSTR           resourceId;
+        PWSTR           publisherId;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/ns-appxpackaging-appx_package_settings))], [])
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmodel/ns-appmodel-package_info
+    struct PACKAGE_INFO
+    {
+    align (4):
+        uint       reserved;
+        uint       flags;
+        PWSTR      path;
+        PWSTR      packageFullName;
+        PWSTR      packageFamilyName;
+        PACKAGE_ID packageId;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmodel/ns-appmodel-package_info
+    struct PACKAGE_INFO
+    {
+    align (4):
+        uint       reserved;
+        uint       flags;
+        PWSTR      path;
+        PWSTR      packageFullName;
+        PWSTR      packageFamilyName;
+        PACKAGE_ID packageId;
+    }
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/ns-appxpackaging-appx_package_settings
 struct APPX_PACKAGE_SETTINGS
 {
     BOOL forceZip32;
     IUri hashMethod;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/ns-appxpackaging-appx_package_writer_payload_stream))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/ns-appxpackaging-appx_package_writer_payload_stream
 struct APPX_PACKAGE_WRITER_PAYLOAD_STREAM
 {
     IStream      inputStream;
@@ -428,7 +492,7 @@ struct APPX_PACKAGE_WRITER_PAYLOAD_STREAM
     APPX_COMPRESSION_OPTION compressionOption;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/ns-appxpackaging-appx_encrypted_package_settings))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/ns-appxpackaging-appx_encrypted_package_settings
 struct APPX_ENCRYPTED_PACKAGE_SETTINGS
 {
     uint         keyLength;
@@ -437,7 +501,7 @@ struct APPX_ENCRYPTED_PACKAGE_SETTINGS
     IUri         blockMapHashAlgorithm;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/ns-appxpackaging-appx_encrypted_package_settings2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/ns-appxpackaging-appx_encrypted_package_settings2
 struct APPX_ENCRYPTED_PACKAGE_SETTINGS2
 {
     uint         keyLength;
@@ -446,7 +510,7 @@ struct APPX_ENCRYPTED_PACKAGE_SETTINGS2
     uint         options;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/ns-appxpackaging-appx_key_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/ns-appxpackaging-appx_key_info
 struct APPX_KEY_INFO
 {
     uint   keyLength;
@@ -455,30 +519,43 @@ struct APPX_KEY_INFO
     ubyte* keyId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/ns-appxpackaging-appx_encrypted_exemptions))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/ns-appxpackaging-appx_encrypted_exemptions
 struct APPX_ENCRYPTED_EXEMPTIONS
 {
     uint          count;
     const(PWSTR)* plainTextFiles;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmodel/ns-appmodel-package_version))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmodel/ns-appmodel-package_version
 struct PACKAGE_VERSION
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+    align (4):
+        ulong Version;
+        struct
+        {
+            ushort Revision;
+            ushort Build;
+            ushort Minor;
+            ushort Major;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmodel/ns-appmodel-package_id))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct PACKAGE_ID
+version(X86)
 {
-    uint            reserved;
-    uint            processorArchitecture;
-    PACKAGE_VERSION version_;
-    PWSTR           name;
-    PWSTR           publisher;
-    PWSTR           resourceId;
-    PWSTR           publisherId;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmodel/ns-appmodel-package_id
+    struct PACKAGE_ID
+    {
+        uint            reserved;
+        uint            processorArchitecture;
+        PACKAGE_VERSION version_;
+        PWSTR           name;
+        PWSTR           publisher;
+        PWSTR           resourceId;
+        PWSTR           publisherId;
+    }
 }
 
 struct _PACKAGE_INFO_REFERENCE
@@ -486,16 +563,18 @@ struct _PACKAGE_INFO_REFERENCE
     void* reserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmodel/ns-appmodel-package_info))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct PACKAGE_INFO
+version(X86)
 {
-    uint       reserved;
-    uint       flags;
-    PWSTR      path;
-    PWSTR      packageFullName;
-    PWSTR      packageFamilyName;
-    PACKAGE_ID packageId;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmodel/ns-appmodel-package_info
+    struct PACKAGE_INFO
+    {
+        uint       reserved;
+        uint       flags;
+        PWSTR      path;
+        PWSTR      packageFullName;
+        PWSTR      packageFamilyName;
+        PACKAGE_ID packageId;
+    }
 }
 
 struct FindPackageDependencyCriteria
@@ -579,16 +658,16 @@ WIN32_ERROR GetCurrentPackageInfo2(const(uint) flags, PackagePathType packagePat
 @DllImport("api-ms-win-appmodel-runtime-l1-1-3.dll")
 WIN32_ERROR GetCurrentPackagePath2(PackagePathType packagePathType, uint* pathLength, PWSTR path);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmodel/nf-appmodel-getcurrentapplicationusermodelid))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmodel/nf-appmodel-getcurrentapplicationusermodelid
 @DllImport("KERNEL32.dll")
 WIN32_ERROR GetCurrentApplicationUserModelId(uint* applicationUserModelIdLength, PWSTR applicationUserModelId);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmodel/nf-appmodel-getapplicationusermodelid))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmodel/nf-appmodel-getapplicationusermodelid
 @DllImport("KERNEL32.dll")
 WIN32_ERROR GetApplicationUserModelId(HANDLE hProcess, uint* applicationUserModelIdLength, 
                                       PWSTR applicationUserModelId);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmodel/nf-appmodel-getapplicationusermodelidfromtoken))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmodel/nf-appmodel-getapplicationusermodelidfromtoken
 @DllImport("api-ms-win-appmodel-runtime-l1-1-1.dll")
 WIN32_ERROR GetApplicationUserModelIdFromToken(HANDLE token, uint* applicationUserModelIdLength, 
                                                PWSTR applicationUserModelId);
@@ -702,7 +781,7 @@ WIN32_ERROR GetPackageInfo2(_PACKAGE_INFO_REFERENCE* packageInfoReference, const
 @DllImport("KERNEL32.dll")
 HRESULT CheckIsMSIXPackage(const(PWSTR) packageFullName, BOOL* isMSIXPackage);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmodel/nf-appmodel-trycreatepackagedependency))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmodel/nf-appmodel-trycreatepackagedependency
 @DllImport("KERNELBASE.dll")
 HRESULT TryCreatePackageDependency(PSID user, const(PWSTR) packageFamilyName, PACKAGE_VERSION minVersion, 
                                    PackageDependencyProcessorArchitectures packageDependencyProcessorArchitectures, 
@@ -716,11 +795,11 @@ HRESULT TryCreatePackageDependency2(PSID user, const(PWSTR) packageFamilyName, P
                                     CreatePackageDependencyOptions options, const(FILETIME)* lifetimeExpiration, 
                                     PWSTR* packageDependencyId);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmodel/nf-appmodel-deletepackagedependency))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmodel/nf-appmodel-deletepackagedependency
 @DllImport("KERNELBASE.dll")
 HRESULT DeletePackageDependency(const(PWSTR) packageDependencyId);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmodel/nf-appmodel-addpackagedependency))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmodel/nf-appmodel-addpackagedependency
 @DllImport("KERNELBASE.dll")
 HRESULT AddPackageDependency(const(PWSTR) packageDependencyId, int rank, AddPackageDependencyOptions options, 
                              PACKAGEDEPENDENCY_CONTEXT* packageDependencyContext, PWSTR* packageFullName);
@@ -729,18 +808,18 @@ HRESULT AddPackageDependency(const(PWSTR) packageDependencyId, int rank, AddPack
 HRESULT AddPackageDependency2(const(PWSTR) packageDependencyId, int rank, AddPackageDependencyOptions2 options, 
                               PACKAGEDEPENDENCY_CONTEXT* packageDependencyContext, PWSTR* packageFullName);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmodel/nf-appmodel-removepackagedependency))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmodel/nf-appmodel-removepackagedependency
 @DllImport("KERNELBASE.dll")
 HRESULT RemovePackageDependency(PACKAGEDEPENDENCY_CONTEXT packageDependencyContext);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmodel/nf-appmodel-getresolvedpackagefullnameforpackagedependency))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmodel/nf-appmodel-getresolvedpackagefullnameforpackagedependency
 @DllImport("KERNELBASE.dll")
 HRESULT GetResolvedPackageFullNameForPackageDependency(const(PWSTR) packageDependencyId, PWSTR* packageFullName);
 
 @DllImport("api-ms-win-appmodel-runtime-l1-1-7.dll")
 HRESULT GetResolvedPackageFullNameForPackageDependency2(const(PWSTR) packageDependencyId, PWSTR* packageFullName);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmodel/nf-appmodel-getidforpackagedependencycontext))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmodel/nf-appmodel-getidforpackagedependencycontext
 @DllImport("KERNELBASE.dll")
 HRESULT GetIdForPackageDependencyContext(PACKAGEDEPENDENCY_CONTEXT packageDependencyContext, 
                                          PWSTR* packageDependencyId);
@@ -763,36 +842,36 @@ HRESULT GetPackageDependencyInformation(const(PWSTR) packageDependencyId, PSID* 
 HRESULT GetProcessesUsingPackageDependency(const(PWSTR) packageDependencyId, PSID user, BOOL scopeIsSystem, 
                                            uint* processIdsCount, uint** processIds);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmodel/nf-appmodel-apppolicygetlifecyclemanagement))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmodel/nf-appmodel-apppolicygetlifecyclemanagement
 @DllImport("KERNEL32.dll")
 WIN32_ERROR AppPolicyGetLifecycleManagement(HANDLE processToken, AppPolicyLifecycleManagement* policy);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmodel/nf-appmodel-apppolicygetwindowingmodel))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmodel/nf-appmodel-apppolicygetwindowingmodel
 @DllImport("KERNEL32.dll")
 WIN32_ERROR AppPolicyGetWindowingModel(HANDLE processToken, AppPolicyWindowingModel* policy);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmodel/nf-appmodel-apppolicygetmediafoundationcodecloading))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmodel/nf-appmodel-apppolicygetmediafoundationcodecloading
 @DllImport("KERNEL32.dll")
 WIN32_ERROR AppPolicyGetMediaFoundationCodecLoading(HANDLE processToken, 
                                                     AppPolicyMediaFoundationCodecLoading* policy);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmodel/nf-appmodel-apppolicygetclrcompat))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmodel/nf-appmodel-apppolicygetclrcompat
 @DllImport("KERNEL32.dll")
 WIN32_ERROR AppPolicyGetClrCompat(HANDLE processToken, AppPolicyClrCompat* policy);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmodel/nf-appmodel-apppolicygetthreadinitializationtype))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmodel/nf-appmodel-apppolicygetthreadinitializationtype
 @DllImport("KERNEL32.dll")
 WIN32_ERROR AppPolicyGetThreadInitializationType(HANDLE processToken, AppPolicyThreadInitializationType* policy);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmodel/nf-appmodel-apppolicygetshowdeveloperdiagnostic))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmodel/nf-appmodel-apppolicygetshowdeveloperdiagnostic
 @DllImport("KERNEL32.dll")
 WIN32_ERROR AppPolicyGetShowDeveloperDiagnostic(HANDLE processToken, AppPolicyShowDeveloperDiagnostic* policy);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmodel/nf-appmodel-apppolicygetprocessterminationmethod))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmodel/nf-appmodel-apppolicygetprocessterminationmethod
 @DllImport("KERNEL32.dll")
 WIN32_ERROR AppPolicyGetProcessTerminationMethod(HANDLE processToken, AppPolicyProcessTerminationMethod* policy);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appmodel/nf-appmodel-apppolicygetcreatefileaccess))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appmodel/nf-appmodel-apppolicygetcreatefileaccess
 @DllImport("KERNEL32.dll")
 WIN32_ERROR AppPolicyGetCreateFileAccess(HANDLE processToken, AppPolicyCreateFileAccess* policy);
 
@@ -819,7 +898,7 @@ PACKAGE_VIRTUALIZATION_CONTEXT_HANDLE GetCurrentPackageVirtualizationContext();
 @DllImport("KERNEL32.dll")
 HRESULT GetProcessesInVirtualizationContext(const(PWSTR) packageFamilyName, uint* count, HANDLE** processes);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/appxpkg/appmodel/nf-appmodel-getcurrentpackageinfo3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/appxpkg/appmodel/nf-appmodel-getcurrentpackageinfo3
 @DllImport("KERNEL32.dll")
 HRESULT GetCurrentPackageInfo3(uint flags, PackageInfo3Type packageInfoType, uint* bufferLength, 
                                /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* buffer, 
@@ -848,47 +927,47 @@ struct AppxPackageEditor;
 
 @GUID("beb94909-e451-438b-b5a7-d79e767b75d8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxfactory))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxfactory
 interface IAppxFactory : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxfactory-createpackagewriter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxfactory-createpackagewriter
     HRESULT CreatePackageWriter(IStream outputStream, APPX_PACKAGE_SETTINGS* settings, 
                                 IAppxPackageWriter* packageWriter);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxfactory-createpackagereader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxfactory-createpackagereader
     HRESULT CreatePackageReader(IStream inputStream, IAppxPackageReader* packageReader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxfactory-createmanifestreader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxfactory-createmanifestreader
     HRESULT CreateManifestReader(IStream inputStream, IAppxManifestReader* manifestReader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxfactory-createblockmapreader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxfactory-createblockmapreader
     HRESULT CreateBlockMapReader(IStream inputStream, IAppxBlockMapReader* blockMapReader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxfactory-createvalidatedblockmapreader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxfactory-createvalidatedblockmapreader
     HRESULT CreateValidatedBlockMapReader(IStream blockMapStream, const(PWSTR) signatureFileName, 
                                           IAppxBlockMapReader* blockMapReader);
 }
 
 @GUID("f1346df2-c282-4e22-b918-743a929a8d55")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxfactory2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxfactory2
 interface IAppxFactory2 : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxfactory2-createcontentgroupmapreader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxfactory2-createcontentgroupmapreader
     HRESULT CreateContentGroupMapReader(IStream inputStream, IAppxContentGroupMapReader* contentGroupMapReader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxfactory2-createsourcecontentgroupmapreader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxfactory2-createsourcecontentgroupmapreader
     HRESULT CreateSourceContentGroupMapReader(IStream inputStream, IAppxSourceContentGroupMapReader* reader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxfactory2-createcontentgroupmapwriter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxfactory2-createcontentgroupmapwriter
     HRESULT CreateContentGroupMapWriter(IStream stream, IAppxContentGroupMapWriter* contentGroupMapWriter);
 }
 
 @GUID("776b2c05-e21d-4e24-ba1a-cd529a8bfdbb")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxfactory3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxfactory3
 interface IAppxFactory3 : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxfactory3-createpackagereader2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxfactory3-createpackagereader2
     HRESULT CreatePackageReader2(IStream inputStream, const(PWSTR) expectedDigest, 
                                  IAppxPackageReader* packageReader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxfactory3-createmanifestreader2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxfactory3-createmanifestreader2
     HRESULT CreateManifestReader2(IStream inputStream, const(PWSTR) expectedDigest, 
                                   IAppxManifestReader* manifestReader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxfactory3-createappinstallerreader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxfactory3-createappinstallerreader
     HRESULT CreateAppInstallerReader(IStream inputStream, const(PWSTR) expectedDigest, 
                                      IAppxAppInstallerReader* appInstallerReader);
 }
@@ -902,65 +981,65 @@ interface IAppxFactory4 : IUnknown
 
 @GUID("b5c49650-99bc-481c-9a34-3d53a4106708")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxpackagereader))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxpackagereader
 interface IAppxPackageReader : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxpackagereader-getblockmap))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxpackagereader-getblockmap
     HRESULT GetBlockMap(IAppxBlockMapReader* blockMapReader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxpackagereader-getfootprintfile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxpackagereader-getfootprintfile
     HRESULT GetFootprintFile(APPX_FOOTPRINT_FILE_TYPE type, IAppxFile* file);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxpackagereader-getpayloadfile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxpackagereader-getpayloadfile
     HRESULT GetPayloadFile(const(PWSTR) fileName, IAppxFile* file);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxpackagereader-getpayloadfiles))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxpackagereader-getpayloadfiles
     HRESULT GetPayloadFiles(IAppxFilesEnumerator* filesEnumerator);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxpackagereader-getmanifest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxpackagereader-getmanifest
     HRESULT GetManifest(IAppxManifestReader* manifestReader);
 }
 
 @GUID("9099e33b-246f-41e4-881a-008eb613f858")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxpackagewriter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxpackagewriter
 interface IAppxPackageWriter : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxpackagewriter-addpayloadfile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxpackagewriter-addpayloadfile
     HRESULT AddPayloadFile(const(PWSTR) fileName, const(PWSTR) contentType, 
                            APPX_COMPRESSION_OPTION compressionOption, IStream inputStream);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxpackagewriter-close))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxpackagewriter-close
     HRESULT Close(IStream manifest);
 }
 
 @GUID("2cf5c4fd-e54c-4ea5-ba4e-f8c4b105a8c8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxpackagewriter2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxpackagewriter2
 interface IAppxPackageWriter2 : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxpackagewriter2-close))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxpackagewriter2-close
     HRESULT Close(IStream manifest, IStream contentGroupMap);
 }
 
 @GUID("a83aacd3-41c0-4501-b8a3-74164f50b2fd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxpackagewriter3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxpackagewriter3
 interface IAppxPackageWriter3 : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxpackagewriter3-addpayloadfiles))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxpackagewriter3-addpayloadfiles
     HRESULT AddPayloadFiles(uint fileCount, APPX_PACKAGE_WRITER_PAYLOAD_STREAM* payloadFiles, ulong memoryLimit);
 }
 
 @GUID("91df827b-94fd-468f-827b-57f41b2f6f2e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxfile))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxfile
 interface IAppxFile : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxfile-getcompressionoption))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxfile-getcompressionoption
     HRESULT GetCompressionOption(APPX_COMPRESSION_OPTION* compressionOption);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxfile-getcontenttype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxfile-getcontenttype
     HRESULT GetContentType(PWSTR* contentType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxfile-getname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxfile-getname
     HRESULT GetName(PWSTR* fileName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxfile-getsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxfile-getsize
     HRESULT GetSize(ulong* size);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxfile-getstream))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxfile-getstream
     HRESULT GetStream(IStream* stream);
 }
 
@@ -972,46 +1051,46 @@ interface IAppxFile2 : IAppxFile
 
 @GUID("f007eeaf-9831-411c-9847-917cdc62d1fe")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxfilesenumerator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxfilesenumerator
 interface IAppxFilesEnumerator : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxfilesenumerator-getcurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxfilesenumerator-getcurrent
     HRESULT GetCurrent(IAppxFile* file);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxfilesenumerator-gethascurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxfilesenumerator-gethascurrent
     HRESULT GetHasCurrent(BOOL* hasCurrent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxfilesenumerator-movenext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxfilesenumerator-movenext
     HRESULT MoveNext(BOOL* hasNext);
 }
 
 @GUID("5efec991-bca3-42d1-9ec2-e92d609ec22a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxblockmapreader))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxblockmapreader
 interface IAppxBlockMapReader : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxblockmapreader-getfile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxblockmapreader-getfile
     HRESULT GetFile(const(PWSTR) filename, IAppxBlockMapFile* file);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxblockmapreader-getfiles))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxblockmapreader-getfiles
     HRESULT GetFiles(IAppxBlockMapFilesEnumerator* enumerator);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxblockmapreader-gethashmethod))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxblockmapreader-gethashmethod
     HRESULT GetHashMethod(IUri* hashMethod);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxblockmapreader-getstream))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxblockmapreader-getstream
     HRESULT GetStream(IStream* blockMapStream);
 }
 
 @GUID("277672ac-4f63-42c1-8abc-beae3600eb59")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxblockmapfile))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxblockmapfile
 interface IAppxBlockMapFile : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxblockmapfile-getblocks))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxblockmapfile-getblocks
     HRESULT GetBlocks(IAppxBlockMapBlocksEnumerator* blocks);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxblockmapfile-getlocalfileheadersize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxblockmapfile-getlocalfileheadersize
     HRESULT GetLocalFileHeaderSize(uint* lfhSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxblockmapfile-getname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxblockmapfile-getname
     HRESULT GetName(PWSTR* name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxblockmapfile-getuncompressedsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxblockmapfile-getuncompressedsize
     HRESULT GetUncompressedSize(ulong* size);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxblockmapfile-validatefilehash))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxblockmapfile-validatefilehash
     HRESULT ValidateFileHash(IStream fileStream, BOOL* isValid);
 }
 
@@ -1023,72 +1102,72 @@ interface IAppxBlockMapFile2 : IAppxBlockMapFile
 
 @GUID("02b856a2-4262-4070-bacb-1a8cbbc42305")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxblockmapfilesenumerator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxblockmapfilesenumerator
 interface IAppxBlockMapFilesEnumerator : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxblockmapfilesenumerator-getcurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxblockmapfilesenumerator-getcurrent
     HRESULT GetCurrent(IAppxBlockMapFile* file);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxblockmapfilesenumerator-gethascurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxblockmapfilesenumerator-gethascurrent
     HRESULT GetHasCurrent(BOOL* hasCurrent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxblockmapfilesenumerator-movenext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxblockmapfilesenumerator-movenext
     HRESULT MoveNext(BOOL* hasCurrent);
 }
 
 @GUID("75cf3930-3244-4fe0-a8c8-e0bcb270b889")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxblockmapblock))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxblockmapblock
 interface IAppxBlockMapBlock : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxblockmapblock-gethash))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxblockmapblock-gethash
     HRESULT GetHash(uint* bufferSize, ubyte** buffer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxblockmapblock-getcompressedsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxblockmapblock-getcompressedsize
     HRESULT GetCompressedSize(uint* size);
 }
 
 @GUID("6b429b5b-36ef-479e-b9eb-0c1482b49e16")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxblockmapblocksenumerator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxblockmapblocksenumerator
 interface IAppxBlockMapBlocksEnumerator : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxblockmapblocksenumerator-getcurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxblockmapblocksenumerator-getcurrent
     HRESULT GetCurrent(IAppxBlockMapBlock* block);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxblockmapblocksenumerator-gethascurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxblockmapblocksenumerator-gethascurrent
     HRESULT GetHasCurrent(BOOL* hasCurrent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxblockmapblocksenumerator-movenext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxblockmapblocksenumerator-movenext
     HRESULT MoveNext(BOOL* hasNext);
 }
 
 @GUID("4e1bd148-55a0-4480-a3d1-15544710637c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxmanifestreader))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxmanifestreader
 interface IAppxManifestReader : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestreader-getpackageid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestreader-getpackageid
     HRESULT GetPackageId(IAppxManifestPackageId* packageId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestreader-getproperties))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestreader-getproperties
     HRESULT GetProperties(IAppxManifestProperties* packageProperties);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestreader-getpackagedependencies))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestreader-getpackagedependencies
     HRESULT GetPackageDependencies(IAppxManifestPackageDependenciesEnumerator* dependencies);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestreader-getcapabilities))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestreader-getcapabilities
     HRESULT GetCapabilities(APPX_CAPABILITIES* capabilities);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestreader-getresources))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestreader-getresources
     HRESULT GetResources(IAppxManifestResourcesEnumerator* resources);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestreader-getdevicecapabilities))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestreader-getdevicecapabilities
     HRESULT GetDeviceCapabilities(IAppxManifestDeviceCapabilitiesEnumerator* deviceCapabilities);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestreader-getprerequisite))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestreader-getprerequisite
     HRESULT GetPrerequisite(const(PWSTR) name, ulong* value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestreader-getapplications))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestreader-getapplications
     HRESULT GetApplications(IAppxManifestApplicationsEnumerator* applications);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestreader-getstream))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestreader-getstream
     HRESULT GetStream(IStream* manifestStream);
 }
 
 @GUID("d06f67bc-b31d-4eba-a8af-638e73e77b4d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxmanifestreader2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxmanifestreader2
 interface IAppxManifestReader2 : IAppxManifestReader
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestreader2-getqualifiedresources))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestreader2-getqualifiedresources
     HRESULT GetQualifiedResources(IAppxManifestQualifiedResourcesEnumerator* resources);
 }
 
@@ -1108,19 +1187,19 @@ interface IAppxManifestReader4 : IAppxManifestReader3
 
 @GUID("8d7ae132-a690-4c00-b75a-6aae1feaac80")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxmanifestreader5))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxmanifestreader5
 interface IAppxManifestReader5 : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestreader5-getmainpackagedependencies))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestreader5-getmainpackagedependencies
     HRESULT GetMainPackageDependencies(IAppxManifestMainPackageDependenciesEnumerator* mainPackageDependencies);
 }
 
 @GUID("34deaca4-d3c0-4e3e-b312-e42625e3807e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxmanifestreader6))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxmanifestreader6
 interface IAppxManifestReader6 : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestreader6-getisnonqualifiedresourcepackage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestreader6-getisnonqualifiedresourcepackage
     HRESULT GetIsNonQualifiedResourcePackage(BOOL* isNonQualifiedResourcePackage);
 }
 
@@ -1201,81 +1280,81 @@ interface IAppxManifestHostRuntimeDependency2 : IUnknown
 
 @GUID("2634847d-5b5d-4fe5-a243-002ff95edc7e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxmanifestoptionalpackageinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxmanifestoptionalpackageinfo
 interface IAppxManifestOptionalPackageInfo : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestoptionalpackageinfo-getisoptionalpackage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestoptionalpackageinfo-getisoptionalpackage
     HRESULT GetIsOptionalPackage(BOOL* isOptionalPackage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestoptionalpackageinfo-getmainpackagename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestoptionalpackageinfo-getmainpackagename
     HRESULT GetMainPackageName(PWSTR* mainPackageName);
 }
 
 @GUID("a99c4f00-51d2-4f0f-ba46-7ed5255ebdff")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxmanifestmainpackagedependenciesenumerator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxmanifestmainpackagedependenciesenumerator
 interface IAppxManifestMainPackageDependenciesEnumerator : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestmainpackagedependenciesenumerator-getcurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestmainpackagedependenciesenumerator-getcurrent
     HRESULT GetCurrent(IAppxManifestMainPackageDependency* mainPackageDependency);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestmainpackagedependenciesenumerator-gethascurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestmainpackagedependenciesenumerator-gethascurrent
     HRESULT GetHasCurrent(BOOL* hasCurrent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestmainpackagedependenciesenumerator-movenext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestmainpackagedependenciesenumerator-movenext
     HRESULT MoveNext(BOOL* hasNext);
 }
 
 @GUID("05d0611c-bc29-46d5-97e2-84b9c79bd8ae")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxmanifestmainpackagedependency))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxmanifestmainpackagedependency
 interface IAppxManifestMainPackageDependency : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestmainpackagedependency-getname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestmainpackagedependency-getname
     HRESULT GetName(PWSTR* name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestmainpackagedependency-getpublisher))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestmainpackagedependency-getpublisher
     HRESULT GetPublisher(PWSTR* publisher);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestmainpackagedependency-getpackagefamilyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestmainpackagedependency-getpackagefamilyname
     HRESULT GetPackageFamilyName(PWSTR* packageFamilyName);
 }
 
 @GUID("283ce2d7-7153-4a91-9649-7a0f7240945f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxmanifestpackageid))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxmanifestpackageid
 interface IAppxManifestPackageId : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestpackageid-getname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestpackageid-getname
     HRESULT GetName(PWSTR* name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestpackageid-getarchitecture))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestpackageid-getarchitecture
     HRESULT GetArchitecture(APPX_PACKAGE_ARCHITECTURE* architecture);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestpackageid-getpublisher))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestpackageid-getpublisher
     HRESULT GetPublisher(PWSTR* publisher);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestpackageid-getversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestpackageid-getversion
     HRESULT GetVersion(ulong* packageVersion);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestpackageid-getresourceid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestpackageid-getresourceid
     HRESULT GetResourceId(PWSTR* resourceId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestpackageid-comparepublisher))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestpackageid-comparepublisher
     HRESULT ComparePublisher(const(PWSTR) other, BOOL* isSame);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestpackageid-getpackagefullname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestpackageid-getpackagefullname
     HRESULT GetPackageFullName(PWSTR* packageFullName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestpackageid-getpackagefamilyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestpackageid-getpackagefamilyname
     HRESULT GetPackageFamilyName(PWSTR* packageFamilyName);
 }
 
 @GUID("2256999d-d617-42f1-880e-0ba4542319d5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxmanifestpackageid2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxmanifestpackageid2
 interface IAppxManifestPackageId2 : IAppxManifestPackageId
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestpackageid2-getarchitecture2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestpackageid2-getarchitecture2
     HRESULT GetArchitecture2(APPX_PACKAGE_ARCHITECTURE2* architecture);
 }
 
 @GUID("03faf64d-f26f-4b2c-aaf7-8fe7789b8bca")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxmanifestproperties))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxmanifestproperties
 interface IAppxManifestProperties : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestproperties-getboolvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestproperties-getboolvalue
     HRESULT GetBoolValue(const(PWSTR) name, BOOL* value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestproperties-getstringvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestproperties-getstringvalue
     HRESULT GetStringValue(const(PWSTR) name, PWSTR* value);
 }
 
@@ -1289,49 +1368,49 @@ interface IAppxManifestTargetDeviceFamiliesEnumerator : IUnknown
 
 @GUID("9091b09b-c8d5-4f31-8687-a338259faefb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxmanifesttargetdevicefamily))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxmanifesttargetdevicefamily
 interface IAppxManifestTargetDeviceFamily : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifesttargetdevicefamily-getname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifesttargetdevicefamily-getname
     HRESULT GetName(PWSTR* name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifesttargetdevicefamily-getminversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifesttargetdevicefamily-getminversion
     HRESULT GetMinVersion(ulong* minVersion);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifesttargetdevicefamily-getmaxversiontested))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifesttargetdevicefamily-getmaxversiontested
     HRESULT GetMaxVersionTested(ulong* maxVersionTested);
 }
 
 @GUID("b43bbcf9-65a6-42dd-bac0-8c6741e7f5a4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxmanifestpackagedependenciesenumerator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxmanifestpackagedependenciesenumerator
 interface IAppxManifestPackageDependenciesEnumerator : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestpackagedependenciesenumerator-getcurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestpackagedependenciesenumerator-getcurrent
     HRESULT GetCurrent(IAppxManifestPackageDependency* dependency);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestpackagedependenciesenumerator-gethascurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestpackagedependenciesenumerator-gethascurrent
     HRESULT GetHasCurrent(BOOL* hasCurrent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestpackagedependenciesenumerator-movenext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestpackagedependenciesenumerator-movenext
     HRESULT MoveNext(BOOL* hasNext);
 }
 
 @GUID("e4946b59-733e-43f0-a724-3bde4c1285a0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxmanifestpackagedependency))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxmanifestpackagedependency
 interface IAppxManifestPackageDependency : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestpackagedependency-getname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestpackagedependency-getname
     HRESULT GetName(PWSTR* name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestpackagedependency-getpublisher))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestpackagedependency-getpublisher
     HRESULT GetPublisher(PWSTR* publisher);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestpackagedependency-getminversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestpackagedependency-getminversion
     HRESULT GetMinVersion(ulong* minVersion);
 }
 
 @GUID("dda0b713-f3ff-49d3-898a-2786780c5d98")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxmanifestpackagedependency2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxmanifestpackagedependency2
 interface IAppxManifestPackageDependency2 : IAppxManifestPackageDependency
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestpackagedependency2-getmaxmajorversiontested))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestpackagedependency2-getmaxmajorversiontested
     HRESULT GetMaxMajorVersionTested(ushort* maxMajorVersionTested);
 }
 
@@ -1343,27 +1422,27 @@ interface IAppxManifestPackageDependency3 : IUnknown
 
 @GUID("de4dfbbd-881a-48bb-858c-d6f2baeae6ed")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxmanifestresourcesenumerator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxmanifestresourcesenumerator
 interface IAppxManifestResourcesEnumerator : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestresourcesenumerator-getcurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestresourcesenumerator-getcurrent
     HRESULT GetCurrent(PWSTR* resource);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestresourcesenumerator-gethascurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestresourcesenumerator-gethascurrent
     HRESULT GetHasCurrent(BOOL* hasCurrent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestresourcesenumerator-movenext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestresourcesenumerator-movenext
     HRESULT MoveNext(BOOL* hasNext);
 }
 
 @GUID("30204541-427b-4a1c-bacf-655bf463a540")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxmanifestdevicecapabilitiesenumerator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxmanifestdevicecapabilitiesenumerator
 interface IAppxManifestDeviceCapabilitiesEnumerator : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestdevicecapabilitiesenumerator-getcurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestdevicecapabilitiesenumerator-getcurrent
     HRESULT GetCurrent(PWSTR* deviceCapability);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestdevicecapabilitiesenumerator-gethascurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestdevicecapabilitiesenumerator-gethascurrent
     HRESULT GetHasCurrent(BOOL* hasCurrent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestdevicecapabilitiesenumerator-movenext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestdevicecapabilitiesenumerator-movenext
     HRESULT MoveNext(BOOL* hasNext);
 }
 
@@ -1377,25 +1456,25 @@ interface IAppxManifestCapabilitiesEnumerator : IUnknown
 
 @GUID("9eb8a55a-f04b-4d0d-808d-686185d4847a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxmanifestapplicationsenumerator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxmanifestapplicationsenumerator
 interface IAppxManifestApplicationsEnumerator : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestapplicationsenumerator-getcurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestapplicationsenumerator-getcurrent
     HRESULT GetCurrent(IAppxManifestApplication* application);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestapplicationsenumerator-gethascurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestapplicationsenumerator-gethascurrent
     HRESULT GetHasCurrent(BOOL* hasCurrent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestapplicationsenumerator-movenext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestapplicationsenumerator-movenext
     HRESULT MoveNext(BOOL* hasNext);
 }
 
 @GUID("5da89bf4-3773-46be-b650-7e744863b7e8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxmanifestapplication))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxmanifestapplication
 interface IAppxManifestApplication : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestapplication-getstringvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestapplication-getstringvalue
     HRESULT GetStringValue(const(PWSTR) name, PWSTR* value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestapplication-getappusermodelid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxmanifestapplication-getappusermodelid
     HRESULT GetAppUserModelId(PWSTR* appUserModelId);
 }
 
@@ -1417,22 +1496,22 @@ interface IAppxManifestQualifiedResource : IUnknown
 
 @GUID("bba65864-965f-4a5f-855f-f074bdbf3a7b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxbundlefactory))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxbundlefactory
 interface IAppxBundleFactory : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlefactory-createbundlewriter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlefactory-createbundlewriter
     HRESULT CreateBundleWriter(IStream outputStream, ulong bundleVersion, IAppxBundleWriter* bundleWriter);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlefactory-createbundlereader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlefactory-createbundlereader
     HRESULT CreateBundleReader(IStream inputStream, IAppxBundleReader* bundleReader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlefactory-createbundlemanifestreader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlefactory-createbundlemanifestreader
     HRESULT CreateBundleManifestReader(IStream inputStream, IAppxBundleManifestReader* manifestReader);
 }
 
 @GUID("7325b83d-0185-42c4-82ac-be34ab1a2a8a")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxbundlefactory2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxbundlefactory2
 interface IAppxBundleFactory2 : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlefactory2-createbundlereader2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlefactory2-createbundlereader2
     HRESULT CreateBundleReader2(IStream inputStream, const(PWSTR) expectedDigest, IAppxBundleReader* bundleReader);
 }
 
@@ -1445,63 +1524,63 @@ interface IAppxBundleFactory3 : IUnknown
 
 @GUID("ec446fe8-bfec-4c64-ab4f-49f038f0c6d2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxbundlewriter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxbundlewriter
 interface IAppxBundleWriter : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlewriter-addpayloadpackage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlewriter-addpayloadpackage
     HRESULT AddPayloadPackage(const(PWSTR) fileName, IStream packageStream);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlewriter-close))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlewriter-close
     HRESULT Close();
 }
 
 @GUID("6d8fe971-01cc-49a0-b685-233851279962")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxbundlewriter2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxbundlewriter2
 interface IAppxBundleWriter2 : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlewriter2-addexternalpackagereference))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlewriter2-addexternalpackagereference
     HRESULT AddExternalPackageReference(const(PWSTR) fileName, IStream inputStream);
 }
 
 @GUID("ad711152-f969-4193-82d5-9ddf2786d21a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxbundlewriter3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxbundlewriter3
 interface IAppxBundleWriter3 : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlewriter3-addpackagereference))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlewriter3-addpackagereference
     HRESULT AddPackageReference(const(PWSTR) fileName, IStream inputStream);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlewriter3-close))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlewriter3-close
     HRESULT Close(const(PWSTR) hashMethodString);
 }
 
 @GUID("9cd9d523-5009-4c01-9882-dc029fbd47a3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxbundlewriter4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxbundlewriter4
 interface IAppxBundleWriter4 : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlewriter4-addpayloadpackage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlewriter4-addpayloadpackage
     HRESULT AddPayloadPackage(const(PWSTR) fileName, IStream packageStream, BOOL isDefaultApplicablePackage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlewriter4-addpackagereference))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlewriter4-addpackagereference
     HRESULT AddPackageReference(const(PWSTR) fileName, IStream inputStream, BOOL isDefaultApplicablePackage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlewriter4-addexternalpackagereference))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlewriter4-addexternalpackagereference
     HRESULT AddExternalPackageReference(const(PWSTR) fileName, IStream inputStream, 
                                         BOOL isDefaultApplicablePackage);
 }
 
 @GUID("dd75b8c0-ba76-43b0-ae0f-68656a1dc5c8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxbundlereader))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxbundlereader
 interface IAppxBundleReader : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlereader-getfootprintfile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlereader-getfootprintfile
     HRESULT GetFootprintFile(APPX_BUNDLE_FOOTPRINT_FILE_TYPE fileType, IAppxFile* footprintFile);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlereader-getblockmap))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlereader-getblockmap
     HRESULT GetBlockMap(IAppxBlockMapReader* blockMapReader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlereader-getmanifest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlereader-getmanifest
     HRESULT GetManifest(IAppxBundleManifestReader* manifestReader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlereader-getpayloadpackages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlereader-getpayloadpackages
     HRESULT GetPayloadPackages(IAppxFilesEnumerator* payloadPackages);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlereader-getpayloadpackage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlereader-getpayloadpackage
     HRESULT GetPayloadPackage(const(PWSTR) fileName, IAppxFile* payloadPackage);
 }
 
@@ -1513,68 +1592,68 @@ interface IAppxBundleReader2 : IUnknown
 
 @GUID("cf0ebbc1-cc99-4106-91eb-e67462e04fb0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxbundlemanifestreader))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxbundlemanifestreader
 interface IAppxBundleManifestReader : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestreader-getpackageid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestreader-getpackageid
     HRESULT GetPackageId(IAppxManifestPackageId* packageId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestreader-getpackageinfoitems))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestreader-getpackageinfoitems
     HRESULT GetPackageInfoItems(IAppxBundleManifestPackageInfoEnumerator* packageInfoItems);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestreader-getstream))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestreader-getstream
     HRESULT GetStream(IStream* manifestStream);
 }
 
 @GUID("5517df70-033f-4af2-8213-87d766805c02")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxbundlemanifestreader2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxbundlemanifestreader2
 interface IAppxBundleManifestReader2 : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestreader2-getoptionalbundles))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestreader2-getoptionalbundles
     HRESULT GetOptionalBundles(IAppxBundleManifestOptionalBundleInfoEnumerator* optionalBundles);
 }
 
 @GUID("f9b856ee-49a6-4e19-b2b0-6a2406d63a32")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxbundlemanifestpackageinfoenumerator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxbundlemanifestpackageinfoenumerator
 interface IAppxBundleManifestPackageInfoEnumerator : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestpackageinfoenumerator-getcurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestpackageinfoenumerator-getcurrent
     HRESULT GetCurrent(IAppxBundleManifestPackageInfo* packageInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestpackageinfoenumerator-gethascurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestpackageinfoenumerator-gethascurrent
     HRESULT GetHasCurrent(BOOL* hasCurrent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestpackageinfoenumerator-movenext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestpackageinfoenumerator-movenext
     HRESULT MoveNext(BOOL* hasNext);
 }
 
 @GUID("54cd06c1-268f-40bb-8ed2-757a9ebaec8d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxbundlemanifestpackageinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxbundlemanifestpackageinfo
 interface IAppxBundleManifestPackageInfo : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestpackageinfo-getpackagetype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestpackageinfo-getpackagetype
     HRESULT GetPackageType(APPX_BUNDLE_PAYLOAD_PACKAGE_TYPE* packageType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestpackageinfo-getpackageid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestpackageinfo-getpackageid
     HRESULT GetPackageId(IAppxManifestPackageId* packageId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestpackageinfo-getfilename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestpackageinfo-getfilename
     HRESULT GetFileName(PWSTR* fileName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestpackageinfo-getoffset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestpackageinfo-getoffset
     HRESULT GetOffset(ulong* offset);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestpackageinfo-getsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestpackageinfo-getsize
     HRESULT GetSize(ulong* size);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestpackageinfo-getresources))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestpackageinfo-getresources
     HRESULT GetResources(IAppxManifestQualifiedResourcesEnumerator* resources);
 }
 
 @GUID("44c2acbc-b2cf-4ccb-bbdb-9c6da8c3bc9e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxbundlemanifestpackageinfo2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxbundlemanifestpackageinfo2
 interface IAppxBundleManifestPackageInfo2 : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestpackageinfo2-getispackagereference))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestpackageinfo2-getispackagereference
     HRESULT GetIsPackageReference(BOOL* isPackageReference);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestpackageinfo2-getisnonqualifiedresourcepackage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestpackageinfo2-getisnonqualifiedresourcepackage
     HRESULT GetIsNonQualifiedResourcePackage(BOOL* isNonQualifiedResourcePackage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestpackageinfo2-getisdefaultapplicablepackage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestpackageinfo2-getisdefaultapplicablepackage
     HRESULT GetIsDefaultApplicablePackage(BOOL* isDefaultApplicablePackage);
 }
 
@@ -1592,97 +1671,97 @@ interface IAppxBundleManifestPackageInfo4 : IUnknown
 
 @GUID("9a178793-f97e-46ac-aaca-dd5ba4c177c8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxbundlemanifestoptionalbundleinfoenumerator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxbundlemanifestoptionalbundleinfoenumerator
 interface IAppxBundleManifestOptionalBundleInfoEnumerator : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestoptionalbundleinfoenumerator-getcurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestoptionalbundleinfoenumerator-getcurrent
     HRESULT GetCurrent(IAppxBundleManifestOptionalBundleInfo* optionalBundle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestoptionalbundleinfoenumerator-gethascurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestoptionalbundleinfoenumerator-gethascurrent
     HRESULT GetHasCurrent(BOOL* hasCurrent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestoptionalbundleinfoenumerator-movenext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestoptionalbundleinfoenumerator-movenext
     HRESULT MoveNext(BOOL* hasNext);
 }
 
 @GUID("515bf2e8-bcb0-4d69-8c48-e383147b6e12")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxbundlemanifestoptionalbundleinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxbundlemanifestoptionalbundleinfo
 interface IAppxBundleManifestOptionalBundleInfo : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestoptionalbundleinfo-getpackageid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestoptionalbundleinfo-getpackageid
     HRESULT GetPackageId(IAppxManifestPackageId* packageId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestoptionalbundleinfo-getfilename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestoptionalbundleinfo-getfilename
     HRESULT GetFileName(PWSTR* fileName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestoptionalbundleinfo-getpackageinfoitems))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxbundlemanifestoptionalbundleinfo-getpackageinfoitems
     HRESULT GetPackageInfoItems(IAppxBundleManifestPackageInfoEnumerator* packageInfoItems);
 }
 
 @GUID("1a09a2fd-7440-44eb-8c84-848205a6a1cc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxcontentgroupfilesenumerator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxcontentgroupfilesenumerator
 interface IAppxContentGroupFilesEnumerator : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxcontentgroupfilesenumerator-getcurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxcontentgroupfilesenumerator-getcurrent
     HRESULT GetCurrent(PWSTR* file);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxcontentgroupfilesenumerator-gethascurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxcontentgroupfilesenumerator-gethascurrent
     HRESULT GetHasCurrent(BOOL* hasCurrent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxcontentgroupfilesenumerator-movenext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxcontentgroupfilesenumerator-movenext
     HRESULT MoveNext(BOOL* hasNext);
 }
 
 @GUID("328f6468-c04f-4e3c-b6fa-6b8d27f3003a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxcontentgroup))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxcontentgroup
 interface IAppxContentGroup : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxcontentgroup-getname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxcontentgroup-getname
     HRESULT GetName(PWSTR* groupName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxcontentgroup-getfiles))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxcontentgroup-getfiles
     HRESULT GetFiles(IAppxContentGroupFilesEnumerator* enumerator);
 }
 
 @GUID("3264e477-16d1-4d63-823e-7d2984696634")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxcontentgroupsenumerator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxcontentgroupsenumerator
 interface IAppxContentGroupsEnumerator : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxcontentgroupsenumerator-getcurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxcontentgroupsenumerator-getcurrent
     HRESULT GetCurrent(IAppxContentGroup* stream);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxcontentgroupsenumerator-gethascurrent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxcontentgroupsenumerator-gethascurrent
     HRESULT GetHasCurrent(BOOL* hasCurrent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxcontentgroupsenumerator-movenext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxcontentgroupsenumerator-movenext
     HRESULT MoveNext(BOOL* hasNext);
 }
 
 @GUID("418726d8-dd99-4f5d-9886-157add20de01")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxcontentgroupmapreader))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxcontentgroupmapreader
 interface IAppxContentGroupMapReader : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxcontentgroupmapreader-getrequiredgroup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxcontentgroupmapreader-getrequiredgroup
     HRESULT GetRequiredGroup(IAppxContentGroup* requiredGroup);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxcontentgroupmapreader-getautomaticgroups))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxcontentgroupmapreader-getautomaticgroups
     HRESULT GetAutomaticGroups(IAppxContentGroupsEnumerator* automaticGroupsEnumerator);
 }
 
 @GUID("f329791d-540b-4a9f-bc75-3282b7d73193")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxsourcecontentgroupmapreader))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxsourcecontentgroupmapreader
 interface IAppxSourceContentGroupMapReader : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxsourcecontentgroupmapreader-getrequiredgroup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxsourcecontentgroupmapreader-getrequiredgroup
     HRESULT GetRequiredGroup(IAppxContentGroup* requiredGroup);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxsourcecontentgroupmapreader-getautomaticgroups))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxsourcecontentgroupmapreader-getautomaticgroups
     HRESULT GetAutomaticGroups(IAppxContentGroupsEnumerator* automaticGroupsEnumerator);
 }
 
 @GUID("d07ab776-a9de-4798-8c14-3db31e687c78")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxcontentgroupmapwriter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxcontentgroupmapwriter
 interface IAppxContentGroupMapWriter : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxcontentgroupmapwriter-addautomaticgroup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxcontentgroupmapwriter-addautomaticgroup
     HRESULT AddAutomaticGroup(const(PWSTR) groupName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxcontentgroupmapwriter-addautomaticfile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxcontentgroupmapwriter-addautomaticfile
     HRESULT AddAutomaticFile(const(PWSTR) fileName);
     HRESULT Close();
 }
@@ -1702,64 +1781,64 @@ interface IAppxPackagingDiagnosticEventSinkManager : IUnknown
 }
 
 @GUID("f35bc38c-1d2f-43db-a1f4-586430d1fed2")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxappinstallerreader))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxappinstallerreader
 interface IAppxAppInstallerReader : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxappinstallerreader-getxmldom))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxappinstallerreader-getxmldom
     HRESULT GetXmlDom(IXMLDOMDocument* dom);
 }
 
 @GUID("9fe2702b-7640-4659-8e6c-349e43c4cdbd")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxdigestprovider))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxdigestprovider
 interface IAppxDigestProvider : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxdigestprovider-getdigest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxdigestprovider-getdigest
     HRESULT GetDigest(PWSTR* digest);
 }
 
 @GUID("80e8e04d-8c88-44ae-a011-7cadf6fb2e72")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.14393))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxencryptionfactory))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxencryptionfactory
 interface IAppxEncryptionFactory : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptionfactory-encryptpackage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptionfactory-encryptpackage
     HRESULT EncryptPackage(IStream inputStream, IStream outputStream, 
                            const(APPX_ENCRYPTED_PACKAGE_SETTINGS)* settings, const(APPX_KEY_INFO)* keyInfo, 
                            const(APPX_ENCRYPTED_EXEMPTIONS)* exemptedFiles);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptionfactory-decryptpackage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptionfactory-decryptpackage
     HRESULT DecryptPackage(IStream inputStream, IStream outputStream, const(APPX_KEY_INFO)* keyInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptionfactory-createencryptedpackagewriter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptionfactory-createencryptedpackagewriter
     HRESULT CreateEncryptedPackageWriter(IStream outputStream, IStream manifestStream, 
                                          const(APPX_ENCRYPTED_PACKAGE_SETTINGS)* settings, 
                                          const(APPX_KEY_INFO)* keyInfo, 
                                          const(APPX_ENCRYPTED_EXEMPTIONS)* exemptedFiles, 
                                          IAppxEncryptedPackageWriter* packageWriter);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptionfactory-createencryptedpackagereader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptionfactory-createencryptedpackagereader
     HRESULT CreateEncryptedPackageReader(IStream inputStream, const(APPX_KEY_INFO)* keyInfo, 
                                          IAppxPackageReader* packageReader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptionfactory-encryptbundle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptionfactory-encryptbundle
     HRESULT EncryptBundle(IStream inputStream, IStream outputStream, 
                           const(APPX_ENCRYPTED_PACKAGE_SETTINGS)* settings, const(APPX_KEY_INFO)* keyInfo, 
                           const(APPX_ENCRYPTED_EXEMPTIONS)* exemptedFiles);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptionfactory-decryptbundle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptionfactory-decryptbundle
     HRESULT DecryptBundle(IStream inputStream, IStream outputStream, const(APPX_KEY_INFO)* keyInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptionfactory-createencryptedbundlewriter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptionfactory-createencryptedbundlewriter
     HRESULT CreateEncryptedBundleWriter(IStream outputStream, ulong bundleVersion, 
                                         const(APPX_ENCRYPTED_PACKAGE_SETTINGS)* settings, 
                                         const(APPX_KEY_INFO)* keyInfo, 
                                         const(APPX_ENCRYPTED_EXEMPTIONS)* exemptedFiles, 
                                         IAppxEncryptedBundleWriter* bundleWriter);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptionfactory-createencryptedbundlereader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptionfactory-createencryptedbundlereader
     HRESULT CreateEncryptedBundleReader(IStream inputStream, const(APPX_KEY_INFO)* keyInfo, 
                                         IAppxBundleReader* bundleReader);
 }
 
 @GUID("c1b11eee-c4ba-4ab2-a55d-d015fe8ff64f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxencryptionfactory2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxencryptionfactory2
 interface IAppxEncryptionFactory2 : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptionfactory2-createencryptedpackagewriter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptionfactory2-createencryptedpackagewriter
     HRESULT CreateEncryptedPackageWriter(IStream outputStream, IStream manifestStream, 
                                          IStream contentGroupMapStream, 
                                          const(APPX_ENCRYPTED_PACKAGE_SETTINGS)* settings, 
@@ -1770,25 +1849,25 @@ interface IAppxEncryptionFactory2 : IUnknown
 
 @GUID("09edca37-cd64-47d6-b7e8-1cb11d4f7e05")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxencryptionfactory3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxencryptionfactory3
 interface IAppxEncryptionFactory3 : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptionfactory3-encryptpackage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptionfactory3-encryptpackage
     HRESULT EncryptPackage(IStream inputStream, IStream outputStream, 
                            const(APPX_ENCRYPTED_PACKAGE_SETTINGS2)* settings, const(APPX_KEY_INFO)* keyInfo, 
                            const(APPX_ENCRYPTED_EXEMPTIONS)* exemptedFiles);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptionfactory3-createencryptedpackagewriter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptionfactory3-createencryptedpackagewriter
     HRESULT CreateEncryptedPackageWriter(IStream outputStream, IStream manifestStream, 
                                          IStream contentGroupMapStream, 
                                          const(APPX_ENCRYPTED_PACKAGE_SETTINGS2)* settings, 
                                          const(APPX_KEY_INFO)* keyInfo, 
                                          const(APPX_ENCRYPTED_EXEMPTIONS)* exemptedFiles, 
                                          IAppxEncryptedPackageWriter* packageWriter);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptionfactory3-encryptbundle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptionfactory3-encryptbundle
     HRESULT EncryptBundle(IStream inputStream, IStream outputStream, 
                           const(APPX_ENCRYPTED_PACKAGE_SETTINGS2)* settings, const(APPX_KEY_INFO)* keyInfo, 
                           const(APPX_ENCRYPTED_EXEMPTIONS)* exemptedFiles);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptionfactory3-createencryptedbundlewriter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptionfactory3-createencryptedbundlewriter
     HRESULT CreateEncryptedBundleWriter(IStream outputStream, ulong bundleVersion, 
                                         const(APPX_ENCRYPTED_PACKAGE_SETTINGS2)* settings, 
                                         const(APPX_KEY_INFO)* keyInfo, 
@@ -1798,102 +1877,102 @@ interface IAppxEncryptionFactory3 : IUnknown
 
 @GUID("a879611f-12fd-41fe-85d5-06ae779bbaf5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxencryptionfactory4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxencryptionfactory4
 interface IAppxEncryptionFactory4 : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptionfactory4-encryptpackage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptionfactory4-encryptpackage
     HRESULT EncryptPackage(IStream inputStream, IStream outputStream, 
                            const(APPX_ENCRYPTED_PACKAGE_SETTINGS2)* settings, const(APPX_KEY_INFO)* keyInfo, 
                            const(APPX_ENCRYPTED_EXEMPTIONS)* exemptedFiles, ulong memoryLimit);
 }
 
 @GUID("68d6e77a-f446-480f-b0f0-d91a24c60746")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxencryptionfactory5))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxencryptionfactory5
 interface IAppxEncryptionFactory5 : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptionfactory5-createencryptedpackagereader2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptionfactory5-createencryptedpackagereader2
     HRESULT CreateEncryptedPackageReader2(IStream inputStream, const(APPX_KEY_INFO)* keyInfo, 
                                           const(PWSTR) expectedDigest, IAppxPackageReader* packageReader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptionfactory5-createencryptedbundlereader2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptionfactory5-createencryptedbundlereader2
     HRESULT CreateEncryptedBundleReader2(IStream inputStream, const(APPX_KEY_INFO)* keyInfo, 
                                          const(PWSTR) expectedDigest, IAppxBundleReader* bundleReader);
 }
 
 @GUID("f43d0b0b-1379-40e2-9b29-682ea2bf42af")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.14393))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxencryptedpackagewriter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxencryptedpackagewriter
 interface IAppxEncryptedPackageWriter : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptedpackagewriter-addpayloadfileencrypted))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptedpackagewriter-addpayloadfileencrypted
     HRESULT AddPayloadFileEncrypted(const(PWSTR) fileName, APPX_COMPRESSION_OPTION compressionOption, 
                                     IStream inputStream);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptedpackagewriter-close))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptedpackagewriter-close
     HRESULT Close();
 }
 
 @GUID("3e475447-3a25-40b5-8ad2-f953ae50c92d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.14393))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxencryptedpackagewriter2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxencryptedpackagewriter2
 interface IAppxEncryptedPackageWriter2 : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptedpackagewriter2-addpayloadfilesencrypted))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptedpackagewriter2-addpayloadfilesencrypted
     HRESULT AddPayloadFilesEncrypted(uint fileCount, APPX_PACKAGE_WRITER_PAYLOAD_STREAM* payloadFiles, 
                                      ulong memoryLimit);
 }
 
 @GUID("80b0902f-7bf0-4117-b8c6-4279ef81ee77")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.14393))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxencryptedbundlewriter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxencryptedbundlewriter
 interface IAppxEncryptedBundleWriter : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptedbundlewriter-addpayloadpackageencrypted))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptedbundlewriter-addpayloadpackageencrypted
     HRESULT AddPayloadPackageEncrypted(const(PWSTR) fileName, IStream packageStream);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptedbundlewriter-close))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptedbundlewriter-close
     HRESULT Close();
 }
 
 @GUID("e644be82-f0fa-42b8-a956-8d1cb48ee379")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxencryptedbundlewriter2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxencryptedbundlewriter2
 interface IAppxEncryptedBundleWriter2 : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptedbundlewriter2-addexternalpackagereference))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptedbundlewriter2-addexternalpackagereference
     HRESULT AddExternalPackageReference(const(PWSTR) fileName, IStream inputStream);
 }
 
 @GUID("0d34deb3-5cae-4dd3-977c-504932a51d31")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxencryptedbundlewriter3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxencryptedbundlewriter3
 interface IAppxEncryptedBundleWriter3 : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptedbundlewriter3-addpayloadpackageencrypted))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptedbundlewriter3-addpayloadpackageencrypted
     HRESULT AddPayloadPackageEncrypted(const(PWSTR) fileName, IStream packageStream, 
                                        BOOL isDefaultApplicablePackage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptedbundlewriter3-addexternalpackagereference))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxencryptedbundlewriter3-addexternalpackagereference
     HRESULT AddExternalPackageReference(const(PWSTR) fileName, IStream inputStream, 
                                         BOOL isDefaultApplicablePackage);
 }
 
 @GUID("e2adb6dc-5e71-4416-86b6-86e5f5291a6b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxpackageeditor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nn-appxpackaging-iappxpackageeditor
 interface IAppxPackageEditor : IUnknown
 {
     HRESULT SetWorkingDirectory(const(PWSTR) workingDirectory);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxpackageeditor-createdeltapackage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxpackageeditor-createdeltapackage
     HRESULT CreateDeltaPackage(IStream updatedPackageStream, IStream baselinePackageStream, 
                                IStream deltaPackageStream);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxpackageeditor-createdeltapackageusingbaselineblockmap))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxpackageeditor-createdeltapackageusingbaselineblockmap
     HRESULT CreateDeltaPackageUsingBaselineBlockMap(IStream updatedPackageStream, IStream baselineBlockMapStream, 
                                                     const(PWSTR) baselinePackageFullName, IStream deltaPackageStream);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxpackageeditor-updatepackage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxpackageeditor-updatepackage
     HRESULT UpdatePackage(IStream baselinePackageStream, IStream deltaPackageStream, 
                           APPX_PACKAGE_EDITOR_UPDATE_PACKAGE_OPTION updateOption);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxpackageeditor-updateencryptedpackage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxpackageeditor-updateencryptedpackage
     HRESULT UpdateEncryptedPackage(IStream baselineEncryptedPackageStream, IStream deltaPackageStream, 
                                    APPX_PACKAGE_EDITOR_UPDATE_PACKAGE_OPTION updateOption, 
                                    const(APPX_ENCRYPTED_PACKAGE_SETTINGS2)* settings, const(APPX_KEY_INFO)* keyInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxpackageeditor-updatepackagemanifest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/appxpackaging/nf-appxpackaging-iappxpackageeditor-updatepackagemanifest
     HRESULT UpdatePackageManifest(IStream packageStream, IStream updatedManifestStream, BOOL isPackageEncrypted, 
                                   APPX_PACKAGE_EDITOR_UPDATE_PACKAGE_MANIFEST_OPTIONS options);
 }

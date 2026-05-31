@@ -3,9 +3,9 @@
 module windows.win32.networking.backgroundintelligenttransferservice;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BSTR, FILETIME, HRESULT, PWSTR;
-public import windows.win32.system.com : IDispatch, IUnknown;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BSTR, FILETIME, HRESULT, PWSTR;
+public import windows.win32.system.com.com : IDispatch, IUnknown;
 public import windows.win32.system.variant : VARIANT;
 
 extern(Windows) @nogc nothrow:
@@ -13,13 +13,15 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias BG_TOKEN = uint;
 enum : uint
 {
-    BG_TOKEN_LOCAL_FILE = 0x00000001,
-    BG_TOKEN_NETWORK    = 0x00000002,
+    BG_TOKEN_LOCAL_FILE = 0x00000001U,
+    BG_TOKEN_NETWORK    = 0x00000002U,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/ne-bits-bg_error_context))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/ne-bits-bg_error_context
 alias BG_ERROR_CONTEXT = int;
 enum : int
 {
@@ -33,7 +35,8 @@ enum : int
     BG_ERROR_CONTEXT_REMOTE_APPLICATION          = 0x00000007,
     BG_ERROR_CONTEXT_SERVER_CERTIFICATE_CALLBACK = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/ne-bits-bg_job_priority))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/ne-bits-bg_job_priority
 alias BG_JOB_PRIORITY = int;
 enum : int
 {
@@ -42,7 +45,8 @@ enum : int
     BG_JOB_PRIORITY_NORMAL     = 0x00000002,
     BG_JOB_PRIORITY_LOW        = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/ne-bits-bg_job_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/ne-bits-bg_job_state
 alias BG_JOB_STATE = int;
 enum : int
 {
@@ -56,7 +60,8 @@ enum : int
     BG_JOB_STATE_ACKNOWLEDGED    = 0x00000007,
     BG_JOB_STATE_CANCELLED       = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/ne-bits-bg_job_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/ne-bits-bg_job_type
 alias BG_JOB_TYPE = int;
 enum : int
 {
@@ -64,7 +69,8 @@ enum : int
     BG_JOB_TYPE_UPLOAD       = 0x00000001,
     BG_JOB_TYPE_UPLOAD_REPLY = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/ne-bits-bg_job_proxy_usage))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/ne-bits-bg_job_proxy_usage
 alias BG_JOB_PROXY_USAGE = int;
 enum : int
 {
@@ -73,14 +79,16 @@ enum : int
     BG_JOB_PROXY_USAGE_OVERRIDE   = 0x00000002,
     BG_JOB_PROXY_USAGE_AUTODETECT = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits1_5/ne-bits1_5-bg_auth_target))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits1_5/ne-bits1_5-bg_auth_target
 alias BG_AUTH_TARGET = int;
 enum : int
 {
     BG_AUTH_TARGET_SERVER = 0x00000001,
     BG_AUTH_TARGET_PROXY  = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits1_5/ne-bits1_5-bg_auth_scheme))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits1_5/ne-bits1_5-bg_auth_scheme
 alias BG_AUTH_SCHEME = int;
 enum : int
 {
@@ -90,7 +98,8 @@ enum : int
     BG_AUTH_SCHEME_NEGOTIATE = 0x00000004,
     BG_AUTH_SCHEME_PASSPORT  = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits2_5/ne-bits2_5-bg_cert_store_location))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits2_5/ne-bits2_5-bg_cert_store_location
 alias BG_CERT_STORE_LOCATION = int;
 enum : int
 {
@@ -103,7 +112,8 @@ enum : int
     BG_CERT_STORE_LOCATION_LOCAL_MACHINE_GROUP_POLICY = 0x00000006,
     BG_CERT_STORE_LOCATION_LOCAL_MACHINE_ENTERPRISE   = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits5_0/ne-bits5_0-bits_job_transfer_policy))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits5_0/ne-bits5_0-bits_job_transfer_policy
 alias BITS_JOB_TRANSFER_POLICY = int;
 enum : int
 {
@@ -113,7 +123,8 @@ enum : int
     BITS_JOB_TRANSFER_POLICY_STANDARD     = 0x80000067,
     BITS_JOB_TRANSFER_POLICY_UNRESTRICTED = 0x80000021,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits5_0/ne-bits5_0-bits_job_property_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits5_0/ne-bits5_0-bits_job_property_id
 alias BITS_JOB_PROPERTY_ID = int;
 enum : int
 {
@@ -126,13 +137,15 @@ enum : int
     BITS_JOB_PROPERTY_MINIMUM_NOTIFICATION_INTERVAL_MS = 0x00000009,
     BITS_JOB_PROPERTY_ON_DEMAND_MODE                   = 0x0000000a,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits5_0/ne-bits5_0-bits_file_property_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits5_0/ne-bits5_0-bits_file_property_id
 alias BITS_FILE_PROPERTY_ID = int;
 enum : int
 {
     BITS_FILE_PROPERTY_ID_HTTP_RESPONSE_HEADERS = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/ne-qmgr-groupprop))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/ne-qmgr-groupprop
 alias GROUPPROP = int;
 enum : int
 {
@@ -156,126 +169,126 @@ enum : int
 
 enum : uint
 {
-    BG_NOTIFY_JOB_TRANSFERRED  = 0x00000001,
-    BG_NOTIFY_JOB_ERROR        = 0x00000002,
-    BG_NOTIFY_DISABLE          = 0x00000004,
-    BG_NOTIFY_JOB_MODIFICATION = 0x00000008,
+    BG_NOTIFY_JOB_TRANSFERRED  = 0x00000001U,
+    BG_NOTIFY_JOB_ERROR        = 0x00000002U,
+    BG_NOTIFY_DISABLE          = 0x00000004U,
+    BG_NOTIFY_JOB_MODIFICATION = 0x00000008U,
 }
 
 enum : uint
 {
-    BG_NOTIFY_FILE_TRANSFERRED        = 0x00000010,
-    BG_NOTIFY_FILE_RANGES_TRANSFERRED = 0x00000020,
+    BG_NOTIFY_FILE_TRANSFERRED        = 0x00000010U,
+    BG_NOTIFY_FILE_RANGES_TRANSFERRED = 0x00000020U,
 }
 
-enum uint BG_JOB_ENUM_ALL_USERS = 0x00000001;
+enum uint BG_JOB_ENUM_ALL_USERS = 0x00000001U;
 
 enum : uint
 {
-    BG_COPY_FILE_OWNER = 0x00000001,
-    BG_COPY_FILE_GROUP = 0x00000002,
-    BG_COPY_FILE_DACL  = 0x00000004,
-    BG_COPY_FILE_SACL  = 0x00000008,
-    BG_COPY_FILE_ALL   = 0x0000000f,
+    BG_COPY_FILE_OWNER = 0x00000001U,
+    BG_COPY_FILE_GROUP = 0x00000002U,
+    BG_COPY_FILE_DACL  = 0x00000004U,
+    BG_COPY_FILE_SACL  = 0x00000008U,
+    BG_COPY_FILE_ALL   = 0x0000000fU,
 }
 
-enum uint BG_SSL_ENABLE_CRL_CHECK = 0x00000001;
+enum uint BG_SSL_ENABLE_CRL_CHECK = 0x00000001U;
 
 enum : uint
 {
-    BG_SSL_IGNORE_CERT_CN_INVALID   = 0x00000002,
-    BG_SSL_IGNORE_CERT_DATE_INVALID = 0x00000004,
-    BG_SSL_IGNORE_UNKNOWN_CA        = 0x00000008,
-    BG_SSL_IGNORE_CERT_WRONG_USAGE  = 0x00000010,
-}
-
-enum : uint
-{
-    BG_HTTP_REDIRECT_POLICY_MASK                = 0x00000700,
-    BG_HTTP_REDIRECT_POLICY_ALLOW_SILENT        = 0x00000000,
-    BG_HTTP_REDIRECT_POLICY_ALLOW_REPORT        = 0x00000100,
-    BG_HTTP_REDIRECT_POLICY_DISALLOW            = 0x00000200,
-    BG_HTTP_REDIRECT_POLICY_ALLOW_HTTPS_TO_HTTP = 0x00000800,
+    BG_SSL_IGNORE_CERT_CN_INVALID   = 0x00000002U,
+    BG_SSL_IGNORE_CERT_DATE_INVALID = 0x00000004U,
+    BG_SSL_IGNORE_UNKNOWN_CA        = 0x00000008U,
+    BG_SSL_IGNORE_CERT_WRONG_USAGE  = 0x00000010U,
 }
 
 enum : uint
 {
-    BG_ENABLE_PEERCACHING_CLIENT = 0x00000001,
-    BG_ENABLE_PEERCACHING_SERVER = 0x00000002,
-}
-
-enum uint BG_DISABLE_BRANCH_CACHE = 0x00000004;
-
-enum : uint
-{
-    BG_JOB_ENABLE_PEERCACHING_CLIENT = 0x00000001,
-    BG_JOB_ENABLE_PEERCACHING_SERVER = 0x00000002,
-}
-
-enum uint BG_JOB_DISABLE_BRANCH_CACHE = 0x00000004;
-
-enum : uint
-{
-    BITS_COST_STATE_UNRESTRICTED         = 0x00000001,
-    BITS_COST_STATE_CAPPED_USAGE_UNKNOWN = 0x00000002,
-    BITS_COST_STATE_BELOW_CAP            = 0x00000004,
-    BITS_COST_STATE_NEAR_CAP             = 0x00000008,
-    BITS_COST_STATE_OVERCAP_CHARGED      = 0x00000010,
-    BITS_COST_STATE_OVERCAP_THROTTLED    = 0x00000020,
-    BITS_COST_STATE_USAGE_BASED          = 0x00000040,
-    BITS_COST_STATE_ROAMING              = 0x00000080,
-    BITS_COST_OPTION_IGNORE_CONGESTION   = 0x80000000,
-}
-
-enum uint BITS_COST_STATE_RESERVED = 0x40000000;
-
-enum : uint
-{
-    QM_NOTIFY_FILE_DONE      = 0x00000001,
-    QM_NOTIFY_JOB_DONE       = 0x00000002,
-    QM_NOTIFY_GROUP_DONE     = 0x00000004,
-    QM_NOTIFY_DISABLE_NOTIFY = 0x00000040,
-    QM_NOTIFY_USE_PROGRESSEX = 0x00000080,
+    BG_HTTP_REDIRECT_POLICY_MASK                = 0x00000700U,
+    BG_HTTP_REDIRECT_POLICY_ALLOW_SILENT        = 0x00000000U,
+    BG_HTTP_REDIRECT_POLICY_ALLOW_REPORT        = 0x00000100U,
+    BG_HTTP_REDIRECT_POLICY_DISALLOW            = 0x00000200U,
+    BG_HTTP_REDIRECT_POLICY_ALLOW_HTTPS_TO_HTTP = 0x00000800U,
 }
 
 enum : uint
 {
-    QM_STATUS_FILE_COMPLETE   = 0x00000001,
-    QM_STATUS_FILE_INCOMPLETE = 0x00000002,
+    BG_ENABLE_PEERCACHING_CLIENT = 0x00000001U,
+    BG_ENABLE_PEERCACHING_SERVER = 0x00000002U,
+}
+
+enum uint BG_DISABLE_BRANCH_CACHE = 0x00000004U;
+
+enum : uint
+{
+    BG_JOB_ENABLE_PEERCACHING_CLIENT = 0x00000001U,
+    BG_JOB_ENABLE_PEERCACHING_SERVER = 0x00000002U,
+}
+
+enum uint BG_JOB_DISABLE_BRANCH_CACHE = 0x00000004U;
+
+enum : uint
+{
+    BITS_COST_STATE_UNRESTRICTED         = 0x00000001U,
+    BITS_COST_STATE_CAPPED_USAGE_UNKNOWN = 0x00000002U,
+    BITS_COST_STATE_BELOW_CAP            = 0x00000004U,
+    BITS_COST_STATE_NEAR_CAP             = 0x00000008U,
+    BITS_COST_STATE_OVERCAP_CHARGED      = 0x00000010U,
+    BITS_COST_STATE_OVERCAP_THROTTLED    = 0x00000020U,
+    BITS_COST_STATE_USAGE_BASED          = 0x00000040U,
+    BITS_COST_STATE_ROAMING              = 0x00000080U,
+    BITS_COST_OPTION_IGNORE_CONGESTION   = 0x80000000U,
+}
+
+enum uint BITS_COST_STATE_RESERVED = 0x40000000U;
+
+enum : uint
+{
+    QM_NOTIFY_FILE_DONE      = 0x00000001U,
+    QM_NOTIFY_JOB_DONE       = 0x00000002U,
+    QM_NOTIFY_GROUP_DONE     = 0x00000004U,
+    QM_NOTIFY_DISABLE_NOTIFY = 0x00000040U,
+    QM_NOTIFY_USE_PROGRESSEX = 0x00000080U,
 }
 
 enum : uint
 {
-    QM_STATUS_JOB_COMPLETE     = 0x00000004,
-    QM_STATUS_JOB_INCOMPLETE   = 0x00000008,
-    QM_STATUS_JOB_ERROR        = 0x00000010,
-    QM_STATUS_JOB_FOREGROUND   = 0x00000020,
-    QM_STATUS_GROUP_COMPLETE   = 0x00000040,
-    QM_STATUS_GROUP_INCOMPLETE = 0x00000080,
-    QM_STATUS_GROUP_SUSPENDED  = 0x00000100,
-    QM_STATUS_GROUP_ERROR      = 0x00000200,
-    QM_STATUS_GROUP_FOREGROUND = 0x00000400,
+    QM_STATUS_FILE_COMPLETE   = 0x00000001U,
+    QM_STATUS_FILE_INCOMPLETE = 0x00000002U,
 }
 
 enum : uint
 {
-    QM_PROTOCOL_HTTP   = 0x00000001,
-    QM_PROTOCOL_FTP    = 0x00000002,
-    QM_PROTOCOL_SMB    = 0x00000003,
-    QM_PROTOCOL_CUSTOM = 0x00000004,
+    QM_STATUS_JOB_COMPLETE     = 0x00000004U,
+    QM_STATUS_JOB_INCOMPLETE   = 0x00000008U,
+    QM_STATUS_JOB_ERROR        = 0x00000010U,
+    QM_STATUS_JOB_FOREGROUND   = 0x00000020U,
+    QM_STATUS_GROUP_COMPLETE   = 0x00000040U,
+    QM_STATUS_GROUP_INCOMPLETE = 0x00000080U,
+    QM_STATUS_GROUP_SUSPENDED  = 0x00000100U,
+    QM_STATUS_GROUP_ERROR      = 0x00000200U,
+    QM_STATUS_GROUP_FOREGROUND = 0x00000400U,
 }
 
 enum : uint
 {
-    QM_PROGRESS_PERCENT_DONE = 0x00000001,
-    QM_PROGRESS_TIME_DONE    = 0x00000002,
-    QM_PROGRESS_SIZE_DONE    = 0x00000003,
+    QM_PROTOCOL_HTTP   = 0x00000001U,
+    QM_PROTOCOL_FTP    = 0x00000002U,
+    QM_PROTOCOL_SMB    = 0x00000003U,
+    QM_PROTOCOL_CUSTOM = 0x00000004U,
 }
 
-enum uint QM_E_INVALID_STATE = 0x81001001;
-enum uint QM_E_SERVICE_UNAVAILABLE = 0x81001002;
-enum uint QM_E_DOWNLOADER_UNAVAILABLE = 0x81001003;
-enum uint QM_E_ITEM_NOT_FOUND = 0x81001004;
+enum : uint
+{
+    QM_PROGRESS_PERCENT_DONE = 0x00000001U,
+    QM_PROGRESS_TIME_DONE    = 0x00000002U,
+    QM_PROGRESS_SIZE_DONE    = 0x00000003U,
+}
+
+enum uint QM_E_INVALID_STATE = 0x81001001U;
+enum uint QM_E_SERVICE_UNAVAILABLE = 0x81001002U;
+enum uint QM_E_DOWNLOADER_UNAVAILABLE = 0x81001003U;
+enum uint QM_E_ITEM_NOT_FOUND = 0x81001004U;
 enum int BG_E_NOT_FOUND = 0x80200001;
 enum int BG_E_INVALID_STATE = 0x80200002;
 
@@ -512,7 +525,7 @@ enum int BITS_MC_WSD_PORT = 0x8019400b;
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/ns-bits-bg_file_progress))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/ns-bits-bg_file_progress
 struct BG_FILE_PROGRESS
 {
     ulong BytesTotal;
@@ -520,14 +533,14 @@ struct BG_FILE_PROGRESS
     BOOL  Completed;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/ns-bits-bg_file_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/ns-bits-bg_file_info
 struct BG_FILE_INFO
 {
     PWSTR RemoteName;
     PWSTR LocalName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/ns-bits-bg_job_progress))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/ns-bits-bg_job_progress
 struct BG_JOB_PROGRESS
 {
     ulong BytesTotal;
@@ -536,7 +549,7 @@ struct BG_JOB_PROGRESS
     uint  FilesTransferred;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/ns-bits-bg_job_times))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/ns-bits-bg_job_times
 struct BG_JOB_TIMES
 {
     FILETIME CreationTime;
@@ -544,27 +557,27 @@ struct BG_JOB_TIMES
     FILETIME TransferCompletionTime;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits1_5/ns-bits1_5-bg_job_reply_progress))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits1_5/ns-bits1_5-bg_job_reply_progress
 struct BG_JOB_REPLY_PROGRESS
 {
     ulong BytesTotal;
     ulong BytesTransferred;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits1_5/ns-bits1_5-bg_basic_credentials))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits1_5/ns-bits1_5-bg_basic_credentials
 struct BG_BASIC_CREDENTIALS
 {
     PWSTR UserName;
     PWSTR Password;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits1_5/ns-bits1_5-bg_auth_credentials_union))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits1_5/ns-bits1_5-bg_auth_credentials_union
 union BG_AUTH_CREDENTIALS_UNION
 {
     BG_BASIC_CREDENTIALS Basic;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits1_5/ns-bits1_5-bg_auth_credentials))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits1_5/ns-bits1_5-bg_auth_credentials
 struct BG_AUTH_CREDENTIALS
 {
     BG_AUTH_TARGET Target;
@@ -572,14 +585,14 @@ struct BG_AUTH_CREDENTIALS
     BG_AUTH_CREDENTIALS_UNION Credentials;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits2_0/ns-bits2_0-bg_file_range))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits2_0/ns-bits2_0-bg_file_range
 struct BG_FILE_RANGE
 {
     ulong InitialOffset;
     ulong Length;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits5_0/ns-bits5_0-bits_job_property_value))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits5_0/ns-bits5_0-bits_job_property_value
 union BITS_JOB_PROPERTY_VALUE
 {
     uint           Dword;
@@ -589,13 +602,13 @@ union BITS_JOB_PROPERTY_VALUE
     BG_AUTH_TARGET Target;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits5_0/ns-bits5_0-bits_file_property_value))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits5_0/ns-bits5_0-bits_file_property_value
 union BITS_FILE_PROPERTY_VALUE
 {
     PWSTR String;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/ns-qmgr-filesetinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/ns-qmgr-filesetinfo
 struct FILESETINFO
 {
     BSTR bstrRemoteFile;
@@ -643,151 +656,151 @@ struct BackgroundCopyQMgr;
 
 @GUID("01b7bd23-fb88-4a77-8490-5891d3e4653a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nn-bits-ibackgroundcopyfile))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nn-bits-ibackgroundcopyfile
 interface IBackgroundCopyFile : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyfile-getremotename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyfile-getremotename
     HRESULT GetRemoteName(PWSTR* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyfile-getlocalname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyfile-getlocalname
     HRESULT GetLocalName(PWSTR* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyfile-getprogress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyfile-getprogress
     HRESULT GetProgress(BG_FILE_PROGRESS* pVal);
 }
 
 @GUID("ca51e165-c365-424c-8d41-24aaa4ff3c40")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nn-bits-ienumbackgroundcopyfiles))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nn-bits-ienumbackgroundcopyfiles
 interface IEnumBackgroundCopyFiles : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ienumbackgroundcopyfiles-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ienumbackgroundcopyfiles-next
     HRESULT Next(uint celt, IBackgroundCopyFile* rgelt, uint* pceltFetched);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ienumbackgroundcopyfiles-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ienumbackgroundcopyfiles-skip
     HRESULT Skip(uint celt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ienumbackgroundcopyfiles-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ienumbackgroundcopyfiles-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ienumbackgroundcopyfiles-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ienumbackgroundcopyfiles-clone
     HRESULT Clone(IEnumBackgroundCopyFiles* ppenum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ienumbackgroundcopyfiles-getcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ienumbackgroundcopyfiles-getcount
     HRESULT GetCount(uint* puCount);
 }
 
 @GUID("19c613a0-fcb8-4f28-81ae-897c3d078f81")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nn-bits-ibackgroundcopyerror))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nn-bits-ibackgroundcopyerror
 interface IBackgroundCopyError : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyerror-geterror))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyerror-geterror
     HRESULT GetError(BG_ERROR_CONTEXT* pContext, HRESULT* pCode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyerror-getfile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyerror-getfile
     HRESULT GetFile(IBackgroundCopyFile* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyerror-geterrordescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyerror-geterrordescription
     HRESULT GetErrorDescription(uint LanguageId, PWSTR* pErrorDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyerror-geterrorcontextdescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyerror-geterrorcontextdescription
     HRESULT GetErrorContextDescription(uint LanguageId, PWSTR* pContextDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyerror-getprotocol))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyerror-getprotocol
     HRESULT GetProtocol(PWSTR* pProtocol);
 }
 
 @GUID("37668d37-507e-4160-9316-26306d150b12")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nn-bits-ibackgroundcopyjob))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nn-bits-ibackgroundcopyjob
 interface IBackgroundCopyJob : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-addfileset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-addfileset
     HRESULT AddFileSet(uint cFileCount, BG_FILE_INFO* pFileSet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-addfile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-addfile
     HRESULT AddFile(const(PWSTR) RemoteUrl, const(PWSTR) LocalName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-enumfiles))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-enumfiles
     HRESULT EnumFiles(IEnumBackgroundCopyFiles* pEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-suspend))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-suspend
     HRESULT Suspend();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-resume))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-resume
     HRESULT Resume();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-cancel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-cancel
     HRESULT Cancel();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-complete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-complete
     HRESULT Complete();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-getid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-getid
     HRESULT GetId(GUID* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-gettype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-gettype
     HRESULT GetType(BG_JOB_TYPE* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-getprogress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-getprogress
     HRESULT GetProgress(BG_JOB_PROGRESS* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-gettimes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-gettimes
     HRESULT GetTimes(BG_JOB_TIMES* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-getstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-getstate
     HRESULT GetState(BG_JOB_STATE* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-geterror))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-geterror
     HRESULT GetError(IBackgroundCopyError* ppError);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-getowner))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-getowner
     HRESULT GetOwner(/*PARAM ATTR: FreeWithAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CoTaskMemFree))], [])*/PWSTR* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-setdisplayname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-setdisplayname
     HRESULT SetDisplayName(const(PWSTR) Val);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-getdisplayname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-getdisplayname
     HRESULT GetDisplayName(/*PARAM ATTR: FreeWithAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CoTaskMemFree))], [])*/PWSTR* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-setdescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-setdescription
     HRESULT SetDescription(const(PWSTR) Val);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-getdescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-getdescription
     HRESULT GetDescription(/*PARAM ATTR: FreeWithAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CoTaskMemFree))], [])*/PWSTR* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-setpriority))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-setpriority
     HRESULT SetPriority(BG_JOB_PRIORITY Val);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-getpriority))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-getpriority
     HRESULT GetPriority(BG_JOB_PRIORITY* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-setnotifyflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-setnotifyflags
     HRESULT SetNotifyFlags(uint Val);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-getnotifyflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-getnotifyflags
     HRESULT GetNotifyFlags(uint* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-setnotifyinterface))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-setnotifyinterface
     HRESULT SetNotifyInterface(IUnknown Val);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-getnotifyinterface))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-getnotifyinterface
     HRESULT GetNotifyInterface(IUnknown* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-setminimumretrydelay))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-setminimumretrydelay
     HRESULT SetMinimumRetryDelay(uint Seconds);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-getminimumretrydelay))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-getminimumretrydelay
     HRESULT GetMinimumRetryDelay(uint* Seconds);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-setnoprogresstimeout))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-setnoprogresstimeout
     HRESULT SetNoProgressTimeout(uint Seconds);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-getnoprogresstimeout))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-getnoprogresstimeout
     HRESULT GetNoProgressTimeout(uint* Seconds);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-geterrorcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-geterrorcount
     HRESULT GetErrorCount(uint* Errors);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-setproxysettings))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-setproxysettings
     HRESULT SetProxySettings(BG_JOB_PROXY_USAGE ProxyUsage, const(PWSTR) ProxyList, const(PWSTR) ProxyBypassList);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-getproxysettings))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-getproxysettings
     HRESULT GetProxySettings(BG_JOB_PROXY_USAGE* pProxyUsage, 
                              /*PARAM ATTR: FreeWithAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CoTaskMemFree))], [])*/PWSTR* pProxyList, 
                              /*PARAM ATTR: FreeWithAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CoTaskMemFree))], [])*/PWSTR* pProxyBypassList);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-takeownership))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopyjob-takeownership
     HRESULT TakeOwnership();
 }
 
 @GUID("1af4f612-3b71-466f-8f58-7b6f73ac57ad")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nn-bits-ienumbackgroundcopyjobs))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nn-bits-ienumbackgroundcopyjobs
 interface IEnumBackgroundCopyJobs : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ienumbackgroundcopyjobs-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ienumbackgroundcopyjobs-next
     HRESULT Next(uint celt, IBackgroundCopyJob* rgelt, uint* pceltFetched);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ienumbackgroundcopyjobs-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ienumbackgroundcopyjobs-skip
     HRESULT Skip(uint celt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ienumbackgroundcopyjobs-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ienumbackgroundcopyjobs-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ienumbackgroundcopyjobs-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ienumbackgroundcopyjobs-clone
     HRESULT Clone(IEnumBackgroundCopyJobs* ppenum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ienumbackgroundcopyjobs-getcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ienumbackgroundcopyjobs-getcount
     HRESULT GetCount(uint* puCount);
 }
 
 @GUID("97ea99c7-0186-4ad4-8df9-c5b4e0ed6b22")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nn-bits-ibackgroundcopycallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nn-bits-ibackgroundcopycallback
 interface IBackgroundCopyCallback : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopycallback-jobtransferred))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopycallback-jobtransferred
     HRESULT JobTransferred(IBackgroundCopyJob pJob);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopycallback-joberror))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopycallback-joberror
     HRESULT JobError(IBackgroundCopyJob pJob, IBackgroundCopyError pError);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopycallback-jobmodification))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopycallback-jobmodification
     HRESULT JobModification(IBackgroundCopyJob pJob, uint dwReserved);
 }
 
@@ -804,490 +817,490 @@ interface AsyncIBackgroundCopyCallback : IUnknown
 
 @GUID("5ce34c0d-0dc9-4c1f-897c-daa1b78cee7c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nn-bits-ibackgroundcopymanager))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nn-bits-ibackgroundcopymanager
 interface IBackgroundCopyManager : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopymanager-createjob))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopymanager-createjob
     HRESULT CreateJob(const(PWSTR) DisplayName, BG_JOB_TYPE Type, GUID* pJobId, IBackgroundCopyJob* ppJob);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopymanager-getjob))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopymanager-getjob
     HRESULT GetJob(const(GUID)* jobID, IBackgroundCopyJob* ppJob);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopymanager-enumjobs))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopymanager-enumjobs
     HRESULT EnumJobs(uint dwFlags, IEnumBackgroundCopyJobs* ppEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopymanager-geterrordescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits/nf-bits-ibackgroundcopymanager-geterrordescription
     HRESULT GetErrorDescription(HRESULT hResult, uint LanguageId, 
                                 /*PARAM ATTR: FreeWithAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CoTaskMemFree))], [])*/PWSTR* pErrorDescription);
 }
 
 @GUID("54b50739-686f-45eb-9dff-d6a9a0faa9af")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits1_5/nn-bits1_5-ibackgroundcopyjob2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits1_5/nn-bits1_5-ibackgroundcopyjob2
 interface IBackgroundCopyJob2 : IBackgroundCopyJob
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits1_5/nf-bits1_5-ibackgroundcopyjob2-setnotifycmdline))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits1_5/nf-bits1_5-ibackgroundcopyjob2-setnotifycmdline
     HRESULT SetNotifyCmdLine(const(PWSTR) Program, const(PWSTR) Parameters);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits1_5/nf-bits1_5-ibackgroundcopyjob2-getnotifycmdline))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits1_5/nf-bits1_5-ibackgroundcopyjob2-getnotifycmdline
     HRESULT GetNotifyCmdLine(PWSTR* pProgram, PWSTR* pParameters);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits1_5/nf-bits1_5-ibackgroundcopyjob2-getreplyprogress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits1_5/nf-bits1_5-ibackgroundcopyjob2-getreplyprogress
     HRESULT GetReplyProgress(BG_JOB_REPLY_PROGRESS* pProgress);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits1_5/nf-bits1_5-ibackgroundcopyjob2-getreplydata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits1_5/nf-bits1_5-ibackgroundcopyjob2-getreplydata
     HRESULT GetReplyData(ubyte** ppBuffer, ulong* pLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits1_5/nf-bits1_5-ibackgroundcopyjob2-setreplyfilename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits1_5/nf-bits1_5-ibackgroundcopyjob2-setreplyfilename
     HRESULT SetReplyFileName(const(PWSTR) ReplyFileName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits1_5/nf-bits1_5-ibackgroundcopyjob2-getreplyfilename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits1_5/nf-bits1_5-ibackgroundcopyjob2-getreplyfilename
     HRESULT GetReplyFileName(PWSTR* pReplyFileName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits1_5/nf-bits1_5-ibackgroundcopyjob2-setcredentials))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits1_5/nf-bits1_5-ibackgroundcopyjob2-setcredentials
     HRESULT SetCredentials(BG_AUTH_CREDENTIALS* credentials);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits1_5/nf-bits1_5-ibackgroundcopyjob2-removecredentials))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits1_5/nf-bits1_5-ibackgroundcopyjob2-removecredentials
     HRESULT RemoveCredentials(BG_AUTH_TARGET Target, BG_AUTH_SCHEME Scheme);
 }
 
 @GUID("443c8934-90ff-48ed-bcde-26f5c7450042")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits2_0/nn-bits2_0-ibackgroundcopyjob3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits2_0/nn-bits2_0-ibackgroundcopyjob3
 interface IBackgroundCopyJob3 : IBackgroundCopyJob2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits2_0/nf-bits2_0-ibackgroundcopyjob3-replaceremoteprefix))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits2_0/nf-bits2_0-ibackgroundcopyjob3-replaceremoteprefix
     HRESULT ReplaceRemotePrefix(const(PWSTR) OldPrefix, const(PWSTR) NewPrefix);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits2_0/nf-bits2_0-ibackgroundcopyjob3-addfilewithranges))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits2_0/nf-bits2_0-ibackgroundcopyjob3-addfilewithranges
     HRESULT AddFileWithRanges(const(PWSTR) RemoteUrl, const(PWSTR) LocalName, uint RangeCount, 
                               BG_FILE_RANGE* Ranges);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits2_0/nf-bits2_0-ibackgroundcopyjob3-setfileaclflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits2_0/nf-bits2_0-ibackgroundcopyjob3-setfileaclflags
     HRESULT SetFileACLFlags(uint Flags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits2_0/nf-bits2_0-ibackgroundcopyjob3-getfileaclflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits2_0/nf-bits2_0-ibackgroundcopyjob3-getfileaclflags
     HRESULT GetFileACLFlags(uint* Flags);
 }
 
 @GUID("83e81b93-0873-474d-8a8c-f2018b1a939c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits2_0/nn-bits2_0-ibackgroundcopyfile2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits2_0/nn-bits2_0-ibackgroundcopyfile2
 interface IBackgroundCopyFile2 : IBackgroundCopyFile
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits2_0/nf-bits2_0-ibackgroundcopyfile2-getfileranges))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits2_0/nf-bits2_0-ibackgroundcopyfile2-getfileranges
     HRESULT GetFileRanges(uint* RangeCount, 
                           /*PARAM ATTR: FreeWithAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CoTaskMemFree))], [])*/BG_FILE_RANGE** Ranges);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits2_0/nf-bits2_0-ibackgroundcopyfile2-setremotename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits2_0/nf-bits2_0-ibackgroundcopyfile2-setremotename
     HRESULT SetRemoteName(const(PWSTR) Val);
 }
 
 @GUID("f1bd1079-9f01-4bdc-8036-f09b70095066")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits2_5/nn-bits2_5-ibackgroundcopyjobhttpoptions))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits2_5/nn-bits2_5-ibackgroundcopyjobhttpoptions
 interface IBackgroundCopyJobHttpOptions : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits2_5/nf-bits2_5-ibackgroundcopyjobhttpoptions-setclientcertificatebyid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits2_5/nf-bits2_5-ibackgroundcopyjobhttpoptions-setclientcertificatebyid
     HRESULT SetClientCertificateByID(BG_CERT_STORE_LOCATION StoreLocation, const(PWSTR) StoreName, 
                                      ubyte* pCertHashBlob);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits2_5/nf-bits2_5-ibackgroundcopyjobhttpoptions-setclientcertificatebyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits2_5/nf-bits2_5-ibackgroundcopyjobhttpoptions-setclientcertificatebyname
     HRESULT SetClientCertificateByName(BG_CERT_STORE_LOCATION StoreLocation, const(PWSTR) StoreName, 
                                        const(PWSTR) SubjectName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits2_5/nf-bits2_5-ibackgroundcopyjobhttpoptions-removeclientcertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits2_5/nf-bits2_5-ibackgroundcopyjobhttpoptions-removeclientcertificate
     HRESULT RemoveClientCertificate();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits2_5/nf-bits2_5-ibackgroundcopyjobhttpoptions-getclientcertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits2_5/nf-bits2_5-ibackgroundcopyjobhttpoptions-getclientcertificate
     HRESULT GetClientCertificate(BG_CERT_STORE_LOCATION* pStoreLocation, PWSTR* pStoreName, 
                                  /*PARAM ATTR: FreeWithAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CoTaskMemFree))], [])*/ubyte** ppCertHashBlob, 
                                  /*PARAM ATTR: FreeWithAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CoTaskMemFree))], [])*/PWSTR* pSubjectName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits2_5/nf-bits2_5-ibackgroundcopyjobhttpoptions-setcustomheaders))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits2_5/nf-bits2_5-ibackgroundcopyjobhttpoptions-setcustomheaders
     HRESULT SetCustomHeaders(const(PWSTR) RequestHeaders);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits2_5/nf-bits2_5-ibackgroundcopyjobhttpoptions-getcustomheaders))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits2_5/nf-bits2_5-ibackgroundcopyjobhttpoptions-getcustomheaders
     HRESULT GetCustomHeaders(/*PARAM ATTR: FreeWithAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CoTaskMemFree))], [])*/PWSTR* pRequestHeaders);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits2_5/nf-bits2_5-ibackgroundcopyjobhttpoptions-setsecurityflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits2_5/nf-bits2_5-ibackgroundcopyjobhttpoptions-setsecurityflags
     HRESULT SetSecurityFlags(uint Flags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits2_5/nf-bits2_5-ibackgroundcopyjobhttpoptions-getsecurityflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits2_5/nf-bits2_5-ibackgroundcopyjobhttpoptions-getsecurityflags
     HRESULT GetSecurityFlags(uint* pFlags);
 }
 
 @GUID("659cdeaf-489e-11d9-a9cd-000d56965251")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nn-bits3_0-ibitspeercacherecord))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nn-bits3_0-ibitspeercacherecord
 interface IBitsPeerCacheRecord : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacherecord-getid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacherecord-getid
     HRESULT GetId(GUID* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacherecord-getoriginurl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacherecord-getoriginurl
     HRESULT GetOriginUrl(PWSTR* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacherecord-getfilesize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacherecord-getfilesize
     HRESULT GetFileSize(ulong* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacherecord-getfilemodificationtime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacherecord-getfilemodificationtime
     HRESULT GetFileModificationTime(FILETIME* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacherecord-getlastaccesstime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacherecord-getlastaccesstime
     HRESULT GetLastAccessTime(FILETIME* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacherecord-isfilevalidated))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacherecord-isfilevalidated
     HRESULT IsFileValidated();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacherecord-getfileranges))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacherecord-getfileranges
     HRESULT GetFileRanges(uint* pRangeCount, BG_FILE_RANGE** ppRanges);
 }
 
 @GUID("659cdea4-489e-11d9-a9cd-000d56965251")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nn-bits3_0-ienumbitspeercacherecords))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nn-bits3_0-ienumbitspeercacherecords
 interface IEnumBitsPeerCacheRecords : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ienumbitspeercacherecords-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ienumbitspeercacherecords-next
     HRESULT Next(uint celt, IBitsPeerCacheRecord* rgelt, uint* pceltFetched);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ienumbitspeercacherecords-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ienumbitspeercacherecords-skip
     HRESULT Skip(uint celt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ienumbitspeercacherecords-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ienumbitspeercacherecords-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ienumbitspeercacherecords-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ienumbitspeercacherecords-clone
     HRESULT Clone(IEnumBitsPeerCacheRecords* ppenum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ienumbitspeercacherecords-getcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ienumbitspeercacherecords-getcount
     HRESULT GetCount(uint* puCount);
 }
 
 @GUID("659cdea2-489e-11d9-a9cd-000d56965251")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nn-bits3_0-ibitspeer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nn-bits3_0-ibitspeer
 interface IBitsPeer : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeer-getpeername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeer-getpeername
     HRESULT GetPeerName(PWSTR* pName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeer-isauthenticated))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeer-isauthenticated
     HRESULT IsAuthenticated(BOOL* pAuth);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeer-isavailable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeer-isavailable
     HRESULT IsAvailable(BOOL* pOnline);
 }
 
 @GUID("659cdea5-489e-11d9-a9cd-000d56965251")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nn-bits3_0-ienumbitspeers))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nn-bits3_0-ienumbitspeers
 interface IEnumBitsPeers : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ienumbitspeers-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ienumbitspeers-next
     HRESULT Next(uint celt, IBitsPeer* rgelt, uint* pceltFetched);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ienumbitspeers-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ienumbitspeers-skip
     HRESULT Skip(uint celt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ienumbitspeers-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ienumbitspeers-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ienumbitspeers-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ienumbitspeers-clone
     HRESULT Clone(IEnumBitsPeers* ppenum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ienumbitspeers-getcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ienumbitspeers-getcount
     HRESULT GetCount(uint* puCount);
 }
 
 @GUID("659cdead-489e-11d9-a9cd-000d56965251")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nn-bits3_0-ibitspeercacheadministration))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nn-bits3_0-ibitspeercacheadministration
 interface IBitsPeerCacheAdministration : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacheadministration-getmaximumcachesize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacheadministration-getmaximumcachesize
     HRESULT GetMaximumCacheSize(uint* pBytes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacheadministration-setmaximumcachesize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacheadministration-setmaximumcachesize
     HRESULT SetMaximumCacheSize(uint Bytes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacheadministration-getmaximumcontentage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacheadministration-getmaximumcontentage
     HRESULT GetMaximumContentAge(uint* pSeconds);
 //METH ATTR: CanReturnMultipleSuccessValuesAttribute : CustomAttributeSig([], [])
     HRESULT SetMaximumContentAge(uint Seconds);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacheadministration-getconfigurationflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacheadministration-getconfigurationflags
     HRESULT GetConfigurationFlags(uint* pFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacheadministration-setconfigurationflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacheadministration-setconfigurationflags
     HRESULT SetConfigurationFlags(uint Flags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacheadministration-enumrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacheadministration-enumrecords
     HRESULT EnumRecords(IEnumBitsPeerCacheRecords* ppEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacheadministration-getrecord))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacheadministration-getrecord
     HRESULT GetRecord(const(GUID)* id, IBitsPeerCacheRecord* ppRecord);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacheadministration-clearrecords))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacheadministration-clearrecords
     HRESULT ClearRecords();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacheadministration-deleterecord))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacheadministration-deleterecord
     HRESULT DeleteRecord(const(GUID)* id);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacheadministration-deleteurl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacheadministration-deleteurl
     HRESULT DeleteUrl(const(PWSTR) url);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacheadministration-enumpeers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacheadministration-enumpeers
     HRESULT EnumPeers(IEnumBitsPeers* ppEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacheadministration-clearpeers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacheadministration-clearpeers
     HRESULT ClearPeers();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacheadministration-discoverpeers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibitspeercacheadministration-discoverpeers
     HRESULT DiscoverPeers();
 }
 
 @GUID("659cdeae-489e-11d9-a9cd-000d56965251")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nn-bits3_0-ibackgroundcopyjob4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nn-bits3_0-ibackgroundcopyjob4
 interface IBackgroundCopyJob4 : IBackgroundCopyJob3
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibackgroundcopyjob4-setpeercachingflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibackgroundcopyjob4-setpeercachingflags
     HRESULT SetPeerCachingFlags(uint Flags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibackgroundcopyjob4-getpeercachingflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibackgroundcopyjob4-getpeercachingflags
     HRESULT GetPeerCachingFlags(uint* pFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibackgroundcopyjob4-getownerintegritylevel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibackgroundcopyjob4-getownerintegritylevel
     HRESULT GetOwnerIntegrityLevel(uint* pLevel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibackgroundcopyjob4-getownerelevationstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibackgroundcopyjob4-getownerelevationstate
     HRESULT GetOwnerElevationState(BOOL* pElevated);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibackgroundcopyjob4-setmaximumdownloadtime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibackgroundcopyjob4-setmaximumdownloadtime
     HRESULT SetMaximumDownloadTime(uint Timeout);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibackgroundcopyjob4-getmaximumdownloadtime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibackgroundcopyjob4-getmaximumdownloadtime
     HRESULT GetMaximumDownloadTime(uint* pTimeout);
 }
 
 @GUID("659cdeaa-489e-11d9-a9cd-000d56965251")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nn-bits3_0-ibackgroundcopyfile3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nn-bits3_0-ibackgroundcopyfile3
 interface IBackgroundCopyFile3 : IBackgroundCopyFile2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibackgroundcopyfile3-gettemporaryname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibackgroundcopyfile3-gettemporaryname
     HRESULT GetTemporaryName(/*PARAM ATTR: FreeWithAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CoTaskMemFree))], [])*/PWSTR* pFilename);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibackgroundcopyfile3-setvalidationstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibackgroundcopyfile3-setvalidationstate
     HRESULT SetValidationState(BOOL state);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibackgroundcopyfile3-getvalidationstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibackgroundcopyfile3-getvalidationstate
     HRESULT GetValidationState(BOOL* pState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibackgroundcopyfile3-isdownloadedfrompeer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibackgroundcopyfile3-isdownloadedfrompeer
     HRESULT IsDownloadedFromPeer(BOOL* pVal);
 }
 
 @GUID("659cdeac-489e-11d9-a9cd-000d56965251")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nn-bits3_0-ibackgroundcopycallback2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nn-bits3_0-ibackgroundcopycallback2
 interface IBackgroundCopyCallback2 : IBackgroundCopyCallback
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibackgroundcopycallback2-filetransferred))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits3_0/nf-bits3_0-ibackgroundcopycallback2-filetransferred
     HRESULT FileTransferred(IBackgroundCopyJob pJob, IBackgroundCopyFile pFile);
 }
 
 @GUID("9a2584c3-f7d2-457a-9a5e-22b67bffc7d2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits4_0/nn-bits4_0-ibitstokenoptions))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits4_0/nn-bits4_0-ibitstokenoptions
 interface IBitsTokenOptions : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits4_0/nf-bits4_0-ibitstokenoptions-sethelpertokenflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits4_0/nf-bits4_0-ibitstokenoptions-sethelpertokenflags
     HRESULT SetHelperTokenFlags(BG_TOKEN UsageFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits4_0/nf-bits4_0-ibitstokenoptions-gethelpertokenflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits4_0/nf-bits4_0-ibitstokenoptions-gethelpertokenflags
     HRESULT GetHelperTokenFlags(BG_TOKEN* pFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits4_0/nf-bits4_0-ibitstokenoptions-sethelpertoken))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits4_0/nf-bits4_0-ibitstokenoptions-sethelpertoken
     HRESULT SetHelperToken();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits4_0/nf-bits4_0-ibitstokenoptions-clearhelpertoken))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits4_0/nf-bits4_0-ibitstokenoptions-clearhelpertoken
     HRESULT ClearHelperToken();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits4_0/nf-bits4_0-ibitstokenoptions-gethelpertokensid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits4_0/nf-bits4_0-ibitstokenoptions-gethelpertokensid
     HRESULT GetHelperTokenSid(PWSTR* pSid);
 }
 
 @GUID("ef7e0655-7888-4960-b0e5-730846e03492")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits4_0/nn-bits4_0-ibackgroundcopyfile4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits4_0/nn-bits4_0-ibackgroundcopyfile4
 interface IBackgroundCopyFile4 : IBackgroundCopyFile3
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits4_0/nf-bits4_0-ibackgroundcopyfile4-getpeerdownloadstats))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits4_0/nf-bits4_0-ibackgroundcopyfile4-getpeerdownloadstats
     HRESULT GetPeerDownloadStats(ulong* pFromOrigin, ulong* pFromPeers);
 }
 
 @GUID("e847030c-bbba-4657-af6d-484aa42bf1fe")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits5_0/nn-bits5_0-ibackgroundcopyjob5))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits5_0/nn-bits5_0-ibackgroundcopyjob5
 interface IBackgroundCopyJob5 : IBackgroundCopyJob4
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits5_0/nf-bits5_0-ibackgroundcopyjob5-setproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits5_0/nf-bits5_0-ibackgroundcopyjob5-setproperty
     HRESULT SetProperty(BITS_JOB_PROPERTY_ID PropertyId, BITS_JOB_PROPERTY_VALUE PropertyValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits5_0/nf-bits5_0-ibackgroundcopyjob5-getproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits5_0/nf-bits5_0-ibackgroundcopyjob5-getproperty
     HRESULT GetProperty(BITS_JOB_PROPERTY_ID PropertyId, BITS_JOB_PROPERTY_VALUE* PropertyValue);
 }
 
 @GUID("85c1657f-dafc-40e8-8834-df18ea25717e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits5_0/nn-bits5_0-ibackgroundcopyfile5))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits5_0/nn-bits5_0-ibackgroundcopyfile5
 interface IBackgroundCopyFile5 : IBackgroundCopyFile4
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits5_0/nf-bits5_0-ibackgroundcopyfile5-setproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits5_0/nf-bits5_0-ibackgroundcopyfile5-setproperty
     HRESULT SetProperty(BITS_FILE_PROPERTY_ID PropertyId, BITS_FILE_PROPERTY_VALUE PropertyValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits5_0/nf-bits5_0-ibackgroundcopyfile5-getproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits5_0/nf-bits5_0-ibackgroundcopyfile5-getproperty
     HRESULT GetProperty(BITS_FILE_PROPERTY_ID PropertyId, BITS_FILE_PROPERTY_VALUE* PropertyValue);
 }
 
 @GUID("98c97bd2-e32b-4ad8-a528-95fd8b16bd42")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits10_1/nn-bits10_1-ibackgroundcopycallback3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits10_1/nn-bits10_1-ibackgroundcopycallback3
 interface IBackgroundCopyCallback3 : IBackgroundCopyCallback2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits10_1/nf-bits10_1-ibackgroundcopycallback3-filerangestransferred))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits10_1/nf-bits10_1-ibackgroundcopycallback3-filerangestransferred
     HRESULT FileRangesTransferred(IBackgroundCopyJob job, IBackgroundCopyFile file, uint rangeCount, 
                                   const(BG_FILE_RANGE)* ranges);
 }
 
 @GUID("cf6784f7-d677-49fd-9368-cb47aee9d1ad")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.15063))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits10_1/nn-bits10_1-ibackgroundcopyfile6))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits10_1/nn-bits10_1-ibackgroundcopyfile6
 interface IBackgroundCopyFile6 : IBackgroundCopyFile5
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits10_1/nf-bits10_1-ibackgroundcopyfile6-updatedownloadposition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits10_1/nf-bits10_1-ibackgroundcopyfile6-updatedownloadposition
     HRESULT UpdateDownloadPosition(ulong offset);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits10_1/nf-bits10_1-ibackgroundcopyfile6-requestfileranges))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits10_1/nf-bits10_1-ibackgroundcopyfile6-requestfileranges
     HRESULT RequestFileRanges(uint rangeCount, const(BG_FILE_RANGE)* ranges);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits10_1/nf-bits10_1-ibackgroundcopyfile6-getfilledfileranges))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits10_1/nf-bits10_1-ibackgroundcopyfile6-getfilledfileranges
     HRESULT GetFilledFileRanges(uint* rangeCount, BG_FILE_RANGE** ranges);
 }
 
 @GUID("b591a192-a405-4fc3-8323-4c5c542578fc")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.17763))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits10_2/nn-bits10_2-ibackgroundcopyjobhttpoptions2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits10_2/nn-bits10_2-ibackgroundcopyjobhttpoptions2
 interface IBackgroundCopyJobHttpOptions2 : IBackgroundCopyJobHttpOptions
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits10_2/nf-bits10_2-ibackgroundcopyjobhttpoptions2-sethttpmethod))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits10_2/nf-bits10_2-ibackgroundcopyjobhttpoptions2-sethttpmethod
     HRESULT SetHttpMethod(const(PWSTR) method);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits10_2/nf-bits10_2-ibackgroundcopyjobhttpoptions2-gethttpmethod))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits10_2/nf-bits10_2-ibackgroundcopyjobhttpoptions2-gethttpmethod
     HRESULT GetHttpMethod(/*PARAM ATTR: FreeWithAttribute : CustomAttributeSig([FixedArgSig(ElementSig(CoTaskMemFree))], [])*/PWSTR* method);
 }
 
 @GUID("4cec0d02-def7-4158-813a-c32a46945ff7")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits10_3/nn-bits10_3-ibackgroundcopyservercertificatevalidationcallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits10_3/nn-bits10_3-ibackgroundcopyservercertificatevalidationcallback
 interface IBackgroundCopyServerCertificateValidationCallback : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits10_3/nf-bits10_3-ibackgroundcopyservercertificatevalidationcallback-validateservercertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits10_3/nf-bits10_3-ibackgroundcopyservercertificatevalidationcallback-validateservercertificate
     HRESULT ValidateServerCertificate(IBackgroundCopyJob job, IBackgroundCopyFile file, uint certLength, 
                                       const(ubyte)* certData, uint certEncodingType, uint certStoreLength, 
                                       const(ubyte)* certStoreData);
 }
 
 @GUID("8a9263d3-fd4c-4eda-9b28-30132a4d4e3c")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits10_3/nn-bits10_3-ibackgroundcopyjobhttpoptions3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits10_3/nn-bits10_3-ibackgroundcopyjobhttpoptions3
 interface IBackgroundCopyJobHttpOptions3 : IBackgroundCopyJobHttpOptions2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits10_3/nf-bits10_3-ibackgroundcopyjobhttpoptions3-setservercertificatevalidationinterface))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits10_3/nf-bits10_3-ibackgroundcopyjobhttpoptions3-setservercertificatevalidationinterface
     HRESULT SetServerCertificateValidationInterface(IUnknown certValidationCallback);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bits10_3/nf-bits10_3-ibackgroundcopyjobhttpoptions3-makecustomheaderswriteonly))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bits10_3/nf-bits10_3-ibackgroundcopyjobhttpoptions3-makecustomheaderswriteonly
     HRESULT MakeCustomHeadersWriteOnly();
 }
 
 @GUID("29cfbbf7-09e4-4b97-b0bc-f2287e3d8eb3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bitscfg/nn-bitscfg-ibitsextensionsetup))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bitscfg/nn-bitscfg-ibitsextensionsetup
 interface IBITSExtensionSetup : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bitscfg/nf-bitscfg-ibitsextensionsetup-enablebitsuploads))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bitscfg/nf-bitscfg-ibitsextensionsetup-enablebitsuploads
     HRESULT EnableBITSUploads();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bitscfg/nf-bitscfg-ibitsextensionsetup-disablebitsuploads))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bitscfg/nf-bitscfg-ibitsextensionsetup-disablebitsuploads
     HRESULT DisableBITSUploads();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bitscfg/nf-bitscfg-ibitsextensionsetup-getcleanuptaskname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bitscfg/nf-bitscfg-ibitsextensionsetup-getcleanuptaskname
     HRESULT GetCleanupTaskName(BSTR* pTaskName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bitscfg/nf-bitscfg-ibitsextensionsetup-getcleanuptask))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bitscfg/nf-bitscfg-ibitsextensionsetup-getcleanuptask
     HRESULT GetCleanupTask(const(GUID)* riid, IUnknown* ppUnk);
 }
 
 @GUID("d5d2d542-5503-4e64-8b48-72ef91a32ee1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bitscfg/nn-bitscfg-ibitsextensionsetupfactory))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bitscfg/nn-bitscfg-ibitsextensionsetupfactory
 interface IBITSExtensionSetupFactory : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bitscfg/nf-bitscfg-ibitsextensionsetupfactory-getobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bitscfg/nf-bitscfg-ibitsextensionsetupfactory-getobject
     HRESULT GetObject(BSTR Path, IBITSExtensionSetup* ppExtensionSetup);
 }
 
 @GUID("59f5553c-2031-4629-bb18-2645a6970947")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nn-qmgr-ibackgroundcopyjob1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nn-qmgr-ibackgroundcopyjob1
 interface IBackgroundCopyJob1 : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nn-qmgr-ibackgroundcopyjob1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nn-qmgr-ibackgroundcopyjob1
     HRESULT CancelJob();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopyjob1-getprogress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopyjob1-getprogress
     HRESULT GetProgress(uint dwFlags, uint* pdwProgress);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopyjob1-getstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopyjob1-getstatus
     HRESULT GetStatus(uint* pdwStatus, uint* pdwWin32Result, uint* pdwTransportResult, uint* pdwNumOfRetries);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopyjob1-addfiles))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopyjob1-addfiles
     HRESULT AddFiles(uint cFileCount, FILESETINFO** ppFileSet);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopyjob1-getfile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopyjob1-getfile
     HRESULT GetFile(uint cFileIndex, FILESETINFO* pFileInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopyjob1-getfilecount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopyjob1-getfilecount
     HRESULT GetFileCount(uint* pdwFileCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nn-qmgr-ibackgroundcopyjob1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nn-qmgr-ibackgroundcopyjob1
     HRESULT SwitchToForeground();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopyjob1-get_jobid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopyjob1-get_jobid
     HRESULT get_JobID(GUID* pguidJobID);
 }
 
 @GUID("8baeba9d-8f1c-42c4-b82c-09ae79980d25")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nn-qmgr-ienumbackgroundcopyjobs1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nn-qmgr-ienumbackgroundcopyjobs1
 interface IEnumBackgroundCopyJobs1 : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ienumbackgroundcopyjobs1-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ienumbackgroundcopyjobs1-next
     HRESULT Next(uint celt, GUID* rgelt, uint* pceltFetched);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ienumbackgroundcopyjobs1-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ienumbackgroundcopyjobs1-skip
     HRESULT Skip(uint celt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ienumbackgroundcopyjobs1-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ienumbackgroundcopyjobs1-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ienumbackgroundcopyjobs1-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ienumbackgroundcopyjobs1-clone
     HRESULT Clone(IEnumBackgroundCopyJobs1* ppenum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ienumbackgroundcopyjobs1-getcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ienumbackgroundcopyjobs1-getcount
     HRESULT GetCount(uint* puCount);
 }
 
 @GUID("1ded80a7-53ea-424f-8a04-17fea9adc4f5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nn-qmgr-ibackgroundcopygroup))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nn-qmgr-ibackgroundcopygroup
 interface IBackgroundCopyGroup : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopygroup-getprop))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopygroup-getprop
     HRESULT GetProp(GROUPPROP propID, VARIANT* pvarVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopygroup-setprop))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopygroup-setprop
     HRESULT SetProp(GROUPPROP propID, VARIANT* pvarVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopygroup-getprogress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopygroup-getprogress
     HRESULT GetProgress(uint dwFlags, uint* pdwProgress);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopygroup-getstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopygroup-getstatus
     HRESULT GetStatus(uint* pdwStatus, uint* pdwJobIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopygroup-getjob))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopygroup-getjob
     HRESULT GetJob(GUID jobID, IBackgroundCopyJob1* ppJob);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopygroup-suspendgroup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopygroup-suspendgroup
     HRESULT SuspendGroup();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopygroup-resumegroup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopygroup-resumegroup
     HRESULT ResumeGroup();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopygroup-cancelgroup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopygroup-cancelgroup
     HRESULT CancelGroup();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopygroup-get_size))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopygroup-get_size
     HRESULT get_Size(uint* pdwSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopygroup-get_groupid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopygroup-get_groupid
     HRESULT get_GroupID(GUID* pguidGroupID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopygroup-createjob))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopygroup-createjob
     HRESULT CreateJob(GUID guidJobID, IBackgroundCopyJob1* ppJob);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopygroup-enumjobs))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopygroup-enumjobs
     HRESULT EnumJobs(uint dwFlags, IEnumBackgroundCopyJobs1* ppEnumJobs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopygroup-switchtoforeground))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopygroup-switchtoforeground
     HRESULT SwitchToForeground();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nn-qmgr-ibackgroundcopygroup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nn-qmgr-ibackgroundcopygroup
     HRESULT QueryNewJobInterface(const(GUID)* iid, IUnknown* pUnk);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nn-qmgr-ibackgroundcopygroup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nn-qmgr-ibackgroundcopygroup
     HRESULT SetNotificationPointer(const(GUID)* iid, IUnknown pUnk);
 }
 
 @GUID("d993e603-4aa4-47c5-8665-c20d39c2ba4f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nn-qmgr-ienumbackgroundcopygroups))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nn-qmgr-ienumbackgroundcopygroups
 interface IEnumBackgroundCopyGroups : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ienumbackgroundcopygroups-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ienumbackgroundcopygroups-next
     HRESULT Next(uint celt, GUID* rgelt, uint* pceltFetched);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ienumbackgroundcopygroups-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ienumbackgroundcopygroups-skip
     HRESULT Skip(uint celt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ienumbackgroundcopygroups-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ienumbackgroundcopygroups-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ienumbackgroundcopygroups-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ienumbackgroundcopygroups-clone
     HRESULT Clone(IEnumBackgroundCopyGroups* ppenum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ienumbackgroundcopygroups-getcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ienumbackgroundcopygroups-getcount
     HRESULT GetCount(uint* puCount);
 }
 
 @GUID("084f6593-3800-4e08-9b59-99fa59addf82")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nn-qmgr-ibackgroundcopycallback1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nn-qmgr-ibackgroundcopycallback1
 interface IBackgroundCopyCallback1 : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopycallback1-onstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopycallback1-onstatus
     HRESULT OnStatus(IBackgroundCopyGroup pGroup, IBackgroundCopyJob1 pJob, uint dwFileIndex, uint dwStatus, 
                      uint dwNumOfRetries, uint dwWin32Result, uint dwTransportResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nn-qmgr-ibackgroundcopycallback1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nn-qmgr-ibackgroundcopycallback1
     HRESULT OnProgress(uint ProgressType, IBackgroundCopyGroup pGroup, IBackgroundCopyJob1 pJob, uint dwFileIndex, 
                        uint dwProgressValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nn-qmgr-ibackgroundcopycallback1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nn-qmgr-ibackgroundcopycallback1
     HRESULT OnProgressEx(uint ProgressType, IBackgroundCopyGroup pGroup, IBackgroundCopyJob1 pJob, 
                          uint dwFileIndex, uint dwProgressValue, uint dwByteArraySize, ubyte* pByte);
 }
 
 @GUID("16f41c69-09f5-41d2-8cd8-3c08c47bc8a8")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nn-qmgr-ibackgroundcopyqmgr))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nn-qmgr-ibackgroundcopyqmgr
 interface IBackgroundCopyQMgr : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopyqmgr-creategroup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopyqmgr-creategroup
     HRESULT CreateGroup(GUID guidGroupID, IBackgroundCopyGroup* ppGroup);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopyqmgr-getgroup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopyqmgr-getgroup
     HRESULT GetGroup(GUID groupID, IBackgroundCopyGroup* ppGroup);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopyqmgr-enumgroups))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/qmgr/nf-qmgr-ibackgroundcopyqmgr-enumgroups
     HRESULT EnumGroups(uint dwFlags, IEnumBackgroundCopyGroups* ppEnumGroups);
 }
 

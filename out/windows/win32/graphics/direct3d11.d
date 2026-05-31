@@ -3,48 +3,53 @@
 module windows.win32.graphics.direct3d11;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, HANDLE, HMODULE, HRESULT, PSTR, PWSTR,
-                                         RECT, SIZE;
-public import windows.win32.graphics.direct3d : D3D_CBUFFER_TYPE, D3D_DRIVER_TYPE, D3D_FEATURE_LEVEL,
-                                                D3D_INTERPOLATION_MODE, D3D_MIN_PRECISION,
-                                                D3D_NAME, D3D_PARAMETER_FLAGS,
-                                                D3D_PRIMITIVE, D3D_PRIMITIVE_TOPOLOGY,
-                                                D3D_REGISTER_COMPONENT_TYPE,
-                                                D3D_RESOURCE_RETURN_TYPE,
-                                                D3D_SHADER_INPUT_TYPE,
-                                                D3D_SHADER_VARIABLE_CLASS,
-                                                D3D_SHADER_VARIABLE_TYPE, D3D_SRV_DIMENSION,
-                                                D3D_TESSELLATOR_DOMAIN,
-                                                D3D_TESSELLATOR_OUTPUT_PRIMITIVE,
-                                                D3D_TESSELLATOR_PARTITIONING, ID3DBlob;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, HANDLE, HMODULE, HRESULT, PSTR,
+                                                    PWSTR, RECT, SIZE;
+public import windows.win32.graphics.direct3d.direct3d : D3D_CBUFFER_TYPE, D3D_DRIVER_TYPE,
+                                                         D3D_FEATURE_LEVEL, D3D_INTERPOLATION_MODE,
+                                                         D3D_MIN_PRECISION, D3D_NAME,
+                                                         D3D_PARAMETER_FLAGS, D3D_PRIMITIVE,
+                                                         D3D_PRIMITIVE_TOPOLOGY,
+                                                         D3D_REGISTER_COMPONENT_TYPE,
+                                                         D3D_RESOURCE_RETURN_TYPE,
+                                                         D3D_SHADER_INPUT_TYPE,
+                                                         D3D_SHADER_VARIABLE_CLASS,
+                                                         D3D_SHADER_VARIABLE_TYPE,
+                                                         D3D_SRV_DIMENSION, D3D_TESSELLATOR_DOMAIN,
+                                                         D3D_TESSELLATOR_OUTPUT_PRIMITIVE,
+                                                         D3D_TESSELLATOR_PARTITIONING,
+                                                         ID3DBlob;
 public import windows.win32.graphics.dxgi.common : DXGI_COLOR_SPACE_TYPE, DXGI_FORMAT, DXGI_RATIONAL,
                                                    DXGI_SAMPLE_DESC;
-public import windows.win32.graphics.dxgi : DXGI_HDR_METADATA_TYPE, DXGI_SWAP_CHAIN_DESC,
-                                            IDXGIAdapter, IDXGISwapChain;
-public import windows.win32.security : SECURITY_ATTRIBUTES;
-public import windows.win32.system.com : IUnknown;
+public import windows.win32.graphics.dxgi.dxgi : DXGI_HDR_METADATA_TYPE, DXGI_SWAP_CHAIN_DESC,
+                                                 IDXGIAdapter, IDXGISwapChain;
+public import windows.win32.security.security : SECURITY_ATTRIBUTES;
+public import windows.win32.system.com.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_input_classification))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_input_classification
 alias D3D11_INPUT_CLASSIFICATION = int;
 enum : int
 {
     D3D11_INPUT_PER_VERTEX_DATA   = 0x00000000,
     D3D11_INPUT_PER_INSTANCE_DATA = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_fill_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_fill_mode
 alias D3D11_FILL_MODE = int;
 enum : int
 {
     D3D11_FILL_WIREFRAME = 0x00000002,
     D3D11_FILL_SOLID     = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_cull_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_cull_mode
 alias D3D11_CULL_MODE = int;
 enum : int
 {
@@ -52,7 +57,8 @@ enum : int
     D3D11_CULL_FRONT = 0x00000002,
     D3D11_CULL_BACK  = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_resource_dimension))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_resource_dimension
 alias D3D11_RESOURCE_DIMENSION = int;
 enum : int
 {
@@ -62,7 +68,8 @@ enum : int
     D3D11_RESOURCE_DIMENSION_TEXTURE2D = 0x00000003,
     D3D11_RESOURCE_DIMENSION_TEXTURE3D = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_dsv_dimension))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_dsv_dimension
 alias D3D11_DSV_DIMENSION = int;
 enum : int
 {
@@ -74,7 +81,8 @@ enum : int
     D3D11_DSV_DIMENSION_TEXTURE2DMS      = 0x00000005,
     D3D11_DSV_DIMENSION_TEXTURE2DMSARRAY = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_rtv_dimension))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_rtv_dimension
 alias D3D11_RTV_DIMENSION = int;
 enum : int
 {
@@ -88,7 +96,8 @@ enum : int
     D3D11_RTV_DIMENSION_TEXTURE2DMSARRAY = 0x00000007,
     D3D11_RTV_DIMENSION_TEXTURE3D        = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_uav_dimension))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_uav_dimension
 alias D3D11_UAV_DIMENSION = int;
 enum : int
 {
@@ -100,7 +109,8 @@ enum : int
     D3D11_UAV_DIMENSION_TEXTURE2DARRAY = 0x00000005,
     D3D11_UAV_DIMENSION_TEXTURE3D      = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_usage))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_usage
 alias D3D11_USAGE = int;
 enum : int
 {
@@ -109,7 +119,8 @@ enum : int
     D3D11_USAGE_DYNAMIC   = 0x00000002,
     D3D11_USAGE_STAGING   = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_bind_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_bind_flag
 alias D3D11_BIND_FLAG = int;
 enum : int
 {
@@ -124,14 +135,16 @@ enum : int
     D3D11_BIND_DECODER          = 0x00000200,
     D3D11_BIND_VIDEO_ENCODER    = 0x00000400,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_cpu_access_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_cpu_access_flag
 alias D3D11_CPU_ACCESS_FLAG = int;
 enum : int
 {
     D3D11_CPU_ACCESS_WRITE = 0x00010000,
     D3D11_CPU_ACCESS_READ  = 0x00020000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_resource_misc_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_resource_misc_flag
 alias D3D11_RESOURCE_MISC_FLAG = int;
 enum : int
 {
@@ -156,7 +169,8 @@ enum : int
     D3D11_RESOURCE_MISC_SHARED_EXCLUSIVE_WRITER         = 0x00200000,
     D3D11_RESOURCE_MISC_NO_SHADER_ACCESS                = 0x00400000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_map))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_map
 alias D3D11_MAP = int;
 enum : int
 {
@@ -166,26 +180,30 @@ enum : int
     D3D11_MAP_WRITE_DISCARD      = 0x00000004,
     D3D11_MAP_WRITE_NO_OVERWRITE = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_map_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_map_flag
 alias D3D11_MAP_FLAG = int;
 enum : int
 {
     D3D11_MAP_FLAG_DO_NOT_WAIT = 0x00100000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_raise_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_raise_flag
 alias D3D11_RAISE_FLAG = int;
 enum : int
 {
     D3D11_RAISE_FLAG_DRIVER_INTERNAL_ERROR = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_clear_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_clear_flag
 alias D3D11_CLEAR_FLAG = uint;
 enum : uint
 {
-    D3D11_CLEAR_DEPTH   = 0x00000001,
-    D3D11_CLEAR_STENCIL = 0x00000002,
+    D3D11_CLEAR_DEPTH   = 0x00000001U,
+    D3D11_CLEAR_STENCIL = 0x00000002U,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_comparison_func))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_comparison_func
 alias D3D11_COMPARISON_FUNC = int;
 enum : int
 {
@@ -198,14 +216,16 @@ enum : int
     D3D11_COMPARISON_GREATER_EQUAL = 0x00000007,
     D3D11_COMPARISON_ALWAYS        = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_depth_write_mask))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_depth_write_mask
 alias D3D11_DEPTH_WRITE_MASK = int;
 enum : int
 {
     D3D11_DEPTH_WRITE_MASK_ZERO = 0x00000000,
     D3D11_DEPTH_WRITE_MASK_ALL  = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_stencil_op))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_stencil_op
 alias D3D11_STENCIL_OP = int;
 enum : int
 {
@@ -218,7 +238,8 @@ enum : int
     D3D11_STENCIL_OP_INCR     = 0x00000007,
     D3D11_STENCIL_OP_DECR     = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_blend))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_blend
 alias D3D11_BLEND = int;
 enum : int
 {
@@ -240,7 +261,8 @@ enum : int
     D3D11_BLEND_SRC1_ALPHA       = 0x00000012,
     D3D11_BLEND_INV_SRC1_ALPHA   = 0x00000013,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_blend_op))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_blend_op
 alias D3D11_BLEND_OP = int;
 enum : int
 {
@@ -250,7 +272,8 @@ enum : int
     D3D11_BLEND_OP_MIN          = 0x00000004,
     D3D11_BLEND_OP_MAX          = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_color_write_enable))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_color_write_enable
 alias D3D11_COLOR_WRITE_ENABLE = int;
 enum : int
 {
@@ -260,7 +283,8 @@ enum : int
     D3D11_COLOR_WRITE_ENABLE_ALPHA = 0x00000008,
     D3D11_COLOR_WRITE_ENABLE_ALL   = 0x0000000f,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_texturecube_face))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_texturecube_face
 alias D3D11_TEXTURECUBE_FACE = int;
 enum : int
 {
@@ -271,20 +295,23 @@ enum : int
     D3D11_TEXTURECUBE_FACE_POSITIVE_Z = 0x00000004,
     D3D11_TEXTURECUBE_FACE_NEGATIVE_Z = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_bufferex_srv_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_bufferex_srv_flag
 alias D3D11_BUFFEREX_SRV_FLAG = int;
 enum : int
 {
     D3D11_BUFFEREX_SRV_FLAG_RAW = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_dsv_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_dsv_flag
 alias D3D11_DSV_FLAG = int;
 enum : int
 {
     D3D11_DSV_READ_ONLY_DEPTH   = 0x00000001,
     D3D11_DSV_READ_ONLY_STENCIL = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_buffer_uav_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_buffer_uav_flag
 alias D3D11_BUFFER_UAV_FLAG = int;
 enum : int
 {
@@ -292,7 +319,8 @@ enum : int
     D3D11_BUFFER_UAV_FLAG_APPEND  = 0x00000002,
     D3D11_BUFFER_UAV_FLAG_COUNTER = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_filter))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_filter
 alias D3D11_FILTER = int;
 enum : int
 {
@@ -333,14 +361,16 @@ enum : int
     D3D11_FILTER_MAXIMUM_MIN_MAG_MIP_LINEAR                 = 0x00000195,
     D3D11_FILTER_MAXIMUM_ANISOTROPIC                        = 0x000001d5,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_filter_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_filter_type
 alias D3D11_FILTER_TYPE = int;
 enum : int
 {
     D3D11_FILTER_TYPE_POINT  = 0x00000000,
     D3D11_FILTER_TYPE_LINEAR = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_filter_reduction_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_filter_reduction_type
 alias D3D11_FILTER_REDUCTION_TYPE = int;
 enum : int
 {
@@ -349,7 +379,8 @@ enum : int
     D3D11_FILTER_REDUCTION_TYPE_MINIMUM    = 0x00000002,
     D3D11_FILTER_REDUCTION_TYPE_MAXIMUM    = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_texture_address_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_texture_address_mode
 alias D3D11_TEXTURE_ADDRESS_MODE = int;
 enum : int
 {
@@ -359,7 +390,8 @@ enum : int
     D3D11_TEXTURE_ADDRESS_BORDER      = 0x00000004,
     D3D11_TEXTURE_ADDRESS_MIRROR_ONCE = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_format_support))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_format_support
 alias D3D11_FORMAT_SUPPORT = int;
 enum : int
 {
@@ -395,7 +427,8 @@ enum : int
     D3D11_FORMAT_SUPPORT_VIDEO_PROCESSOR_INPUT       = 0x20000000,
     D3D11_FORMAT_SUPPORT_VIDEO_ENCODER               = 0x40000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_format_support2))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_format_support2
 alias D3D11_FORMAT_SUPPORT2 = int;
 enum : int
 {
@@ -413,13 +446,15 @@ enum : int
     D3D11_FORMAT_SUPPORT2_MULTIPLANE_OVERLAY                           = 0x00004000,
     D3D11_FORMAT_SUPPORT2_DISPLAYABLE                                  = 0x00010000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_async_getdata_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_async_getdata_flag
 alias D3D11_ASYNC_GETDATA_FLAG = int;
 enum : int
 {
     D3D11_ASYNC_GETDATA_DONOTFLUSH = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_query))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_query
 alias D3D11_QUERY = int;
 enum : int
 {
@@ -440,19 +475,22 @@ enum : int
     D3D11_QUERY_SO_STATISTICS_STREAM3         = 0x0000000e,
     D3D11_QUERY_SO_OVERFLOW_PREDICATE_STREAM3 = 0x0000000f,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_query_misc_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_query_misc_flag
 alias D3D11_QUERY_MISC_FLAG = int;
 enum : int
 {
     D3D11_QUERY_MISC_PREDICATEHINT = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_counter))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_counter
 alias D3D11_COUNTER = int;
 enum : int
 {
     D3D11_COUNTER_DEVICE_DEPENDENT_0 = 0x40000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_counter_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_counter_type
 alias D3D11_COUNTER_TYPE = int;
 enum : int
 {
@@ -461,21 +499,24 @@ enum : int
     D3D11_COUNTER_TYPE_UINT32  = 0x00000002,
     D3D11_COUNTER_TYPE_UINT64  = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_standard_multisample_quality_levels))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_standard_multisample_quality_levels
 alias D3D11_STANDARD_MULTISAMPLE_QUALITY_LEVELS = int;
 enum : int
 {
     D3D11_STANDARD_MULTISAMPLE_PATTERN = 0xffffffff,
     D3D11_CENTER_MULTISAMPLE_PATTERN   = 0xfffffffe,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_device_context_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_device_context_type
 alias D3D11_DEVICE_CONTEXT_TYPE = int;
 enum : int
 {
     D3D11_DEVICE_CONTEXT_IMMEDIATE = 0x00000000,
     D3D11_DEVICE_CONTEXT_DEFERRED  = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_feature))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_feature
 alias D3D11_FEATURE = int;
 enum : int
 {
@@ -502,14 +543,16 @@ enum : int
     D3D11_FEATURE_DISPLAYABLE                    = 0x00000014,
     D3D11_FEATURE_D3D11_OPTIONS6                 = 0x00000015,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_shader_min_precision_support))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_shader_min_precision_support
 alias D3D11_SHADER_MIN_PRECISION_SUPPORT = int;
 enum : int
 {
     D3D11_SHADER_MIN_PRECISION_10_BIT = 0x00000001,
     D3D11_SHADER_MIN_PRECISION_16_BIT = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_tiled_resources_tier))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_tiled_resources_tier
 alias D3D11_TILED_RESOURCES_TIER = int;
 enum : int
 {
@@ -518,7 +561,8 @@ enum : int
     D3D11_TILED_RESOURCES_TIER_2        = 0x00000002,
     D3D11_TILED_RESOURCES_TIER_3        = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_conservative_rasterization_tier))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_conservative_rasterization_tier
 alias D3D11_CONSERVATIVE_RASTERIZATION_TIER = int;
 enum : int
 {
@@ -527,7 +571,8 @@ enum : int
     D3D11_CONSERVATIVE_RASTERIZATION_TIER_2        = 0x00000002,
     D3D11_CONSERVATIVE_RASTERIZATION_TIER_3        = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_shader_cache_support_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_shader_cache_support_flags
 alias D3D11_SHADER_CACHE_SUPPORT_FLAGS = int;
 enum : int
 {
@@ -535,7 +580,8 @@ enum : int
     D3D11_SHADER_CACHE_SUPPORT_AUTOMATIC_INPROC_CACHE = 0x00000001,
     D3D11_SHADER_CACHE_SUPPORT_AUTOMATIC_DISK_CACHE   = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_shared_resource_tier))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_shared_resource_tier
 alias D3D11_SHARED_RESOURCE_TIER = int;
 enum : int
 {
@@ -544,13 +590,15 @@ enum : int
     D3D11_SHARED_RESOURCE_TIER_2 = 0x00000002,
     D3D11_SHARED_RESOURCE_TIER_3 = 0x00000003,
 }
+
 alias D3D11_SHADER_ACCESS_RESTRICTED_RESOURCE_TIER = int;
 enum : int
 {
     D3D11_SHADER_ACCESS_RESTRICTED_RESOURCE_TIER_0 = 0x00000000,
     D3D11_SHADER_ACCESS_RESTRICTED_RESOURCE_TIER_1 = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_video_decoder_buffer_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_video_decoder_buffer_type
 alias D3D11_VIDEO_DECODER_BUFFER_TYPE = int;
 enum : int
 {
@@ -565,14 +613,16 @@ enum : int
     D3D11_VIDEO_DECODER_BUFFER_FILM_GRAIN                  = 0x00000008,
     D3D11_VIDEO_DECODER_BUFFER_HUFFMAN_TABLE               = 0x00000009,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_video_processor_format_support))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_video_processor_format_support
 alias D3D11_VIDEO_PROCESSOR_FORMAT_SUPPORT = int;
 enum : int
 {
     D3D11_VIDEO_PROCESSOR_FORMAT_SUPPORT_INPUT  = 0x00000001,
     D3D11_VIDEO_PROCESSOR_FORMAT_SUPPORT_OUTPUT = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_video_processor_device_caps))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_video_processor_device_caps
 alias D3D11_VIDEO_PROCESSOR_DEVICE_CAPS = int;
 enum : int
 {
@@ -582,7 +632,8 @@ enum : int
     D3D11_VIDEO_PROCESSOR_DEVICE_CAPS_YCbCr_MATRIX_CONVERSION = 0x00000008,
     D3D11_VIDEO_PROCESSOR_DEVICE_CAPS_NOMINAL_RANGE           = 0x00000010,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_video_processor_feature_caps))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_video_processor_feature_caps
 alias D3D11_VIDEO_PROCESSOR_FEATURE_CAPS = int;
 enum : int
 {
@@ -599,7 +650,8 @@ enum : int
     D3D11_VIDEO_PROCESSOR_FEATURE_CAPS_SHADER_USAGE       = 0x00000400,
     D3D11_VIDEO_PROCESSOR_FEATURE_CAPS_METADATA_HDR10     = 0x00000800,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_video_processor_filter_caps))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_video_processor_filter_caps
 alias D3D11_VIDEO_PROCESSOR_FILTER_CAPS = int;
 enum : int
 {
@@ -612,7 +664,8 @@ enum : int
     D3D11_VIDEO_PROCESSOR_FILTER_CAPS_ANAMORPHIC_SCALING = 0x00000040,
     D3D11_VIDEO_PROCESSOR_FILTER_CAPS_STEREO_ADJUSTMENT  = 0x00000080,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_video_processor_format_caps))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_video_processor_format_caps
 alias D3D11_VIDEO_PROCESSOR_FORMAT_CAPS = int;
 enum : int
 {
@@ -621,7 +674,8 @@ enum : int
     D3D11_VIDEO_PROCESSOR_FORMAT_CAPS_RGB_LUMA_KEY       = 0x00000004,
     D3D11_VIDEO_PROCESSOR_FORMAT_CAPS_PALETTE_INTERLACED = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_video_processor_auto_stream_caps))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_video_processor_auto_stream_caps
 alias D3D11_VIDEO_PROCESSOR_AUTO_STREAM_CAPS = int;
 enum : int
 {
@@ -634,7 +688,8 @@ enum : int
     D3D11_VIDEO_PROCESSOR_AUTO_STREAM_CAPS_SUPER_RESOLUTION    = 0x00000040,
     D3D11_VIDEO_PROCESSOR_AUTO_STREAM_CAPS_ANAMORPHIC_SCALING  = 0x00000080,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_video_processor_stereo_caps))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_video_processor_stereo_caps
 alias D3D11_VIDEO_PROCESSOR_STEREO_CAPS = int;
 enum : int
 {
@@ -644,7 +699,8 @@ enum : int
     D3D11_VIDEO_PROCESSOR_STEREO_CAPS_CHECKERBOARD       = 0x00000008,
     D3D11_VIDEO_PROCESSOR_STEREO_CAPS_FLIP_MODE          = 0x00000010,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_video_processor_processor_caps))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_video_processor_processor_caps
 alias D3D11_VIDEO_PROCESSOR_PROCESSOR_CAPS = int;
 enum : int
 {
@@ -655,7 +711,8 @@ enum : int
     D3D11_VIDEO_PROCESSOR_PROCESSOR_CAPS_INVERSE_TELECINE                = 0x00000010,
     D3D11_VIDEO_PROCESSOR_PROCESSOR_CAPS_FRAME_RATE_CONVERSION           = 0x00000020,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_video_processor_itelecine_caps))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_video_processor_itelecine_caps
 alias D3D11_VIDEO_PROCESSOR_ITELECINE_CAPS = int;
 enum : int
 {
@@ -670,7 +727,8 @@ enum : int
     D3D11_VIDEO_PROCESSOR_ITELECINE_CAPS_222222222223 = 0x00000100,
     D3D11_VIDEO_PROCESSOR_ITELECINE_CAPS_OTHER        = 0x80000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_content_protection_caps))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_content_protection_caps
 alias D3D11_CONTENT_PROTECTION_CAPS = int;
 enum : int
 {
@@ -691,7 +749,8 @@ enum : int
     D3D11_CONTENT_PROTECTION_CAPS_HARDWARE_DRM_COMMUNICATION                = 0x00004000,
     D3D11_CONTENT_PROTECTION_CAPS_HARDWARE_DRM_COMMUNICATION_MULTI_THREADED = 0x00008000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_video_processor_filter))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_video_processor_filter
 alias D3D11_VIDEO_PROCESSOR_FILTER = int;
 enum : int
 {
@@ -704,7 +763,8 @@ enum : int
     D3D11_VIDEO_PROCESSOR_FILTER_ANAMORPHIC_SCALING = 0x00000006,
     D3D11_VIDEO_PROCESSOR_FILTER_STEREO_ADJUSTMENT  = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_video_frame_format))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_video_frame_format
 alias D3D11_VIDEO_FRAME_FORMAT = int;
 enum : int
 {
@@ -712,7 +772,8 @@ enum : int
     D3D11_VIDEO_FRAME_FORMAT_INTERLACED_TOP_FIELD_FIRST    = 0x00000001,
     D3D11_VIDEO_FRAME_FORMAT_INTERLACED_BOTTOM_FIELD_FIRST = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_video_usage))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_video_usage
 alias D3D11_VIDEO_USAGE = int;
 enum : int
 {
@@ -720,7 +781,8 @@ enum : int
     D3D11_VIDEO_USAGE_OPTIMAL_SPEED   = 0x00000001,
     D3D11_VIDEO_USAGE_OPTIMAL_QUALITY = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_video_processor_nominal_range))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_video_processor_nominal_range
 alias D3D11_VIDEO_PROCESSOR_NOMINAL_RANGE = int;
 enum : int
 {
@@ -728,7 +790,8 @@ enum : int
     D3D11_VIDEO_PROCESSOR_NOMINAL_RANGE_16_235    = 0x00000001,
     D3D11_VIDEO_PROCESSOR_NOMINAL_RANGE_0_255     = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_video_processor_alpha_fill_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_video_processor_alpha_fill_mode
 alias D3D11_VIDEO_PROCESSOR_ALPHA_FILL_MODE = int;
 enum : int
 {
@@ -737,7 +800,8 @@ enum : int
     D3D11_VIDEO_PROCESSOR_ALPHA_FILL_MODE_DESTINATION   = 0x00000002,
     D3D11_VIDEO_PROCESSOR_ALPHA_FILL_MODE_SOURCE_STREAM = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_video_processor_output_rate))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_video_processor_output_rate
 alias D3D11_VIDEO_PROCESSOR_OUTPUT_RATE = int;
 enum : int
 {
@@ -745,7 +809,8 @@ enum : int
     D3D11_VIDEO_PROCESSOR_OUTPUT_RATE_HALF   = 0x00000001,
     D3D11_VIDEO_PROCESSOR_OUTPUT_RATE_CUSTOM = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_video_processor_stereo_format))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_video_processor_stereo_format
 alias D3D11_VIDEO_PROCESSOR_STEREO_FORMAT = int;
 enum : int
 {
@@ -758,7 +823,8 @@ enum : int
     D3D11_VIDEO_PROCESSOR_STEREO_FORMAT_COLUMN_INTERLEAVED = 0x00000006,
     D3D11_VIDEO_PROCESSOR_STEREO_FORMAT_CHECKERBOARD       = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_video_processor_stereo_flip_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_video_processor_stereo_flip_mode
 alias D3D11_VIDEO_PROCESSOR_STEREO_FLIP_MODE = int;
 enum : int
 {
@@ -766,7 +832,8 @@ enum : int
     D3D11_VIDEO_PROCESSOR_STEREO_FLIP_FRAME0 = 0x00000001,
     D3D11_VIDEO_PROCESSOR_STEREO_FLIP_FRAME1 = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_video_processor_rotation))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_video_processor_rotation
 alias D3D11_VIDEO_PROCESSOR_ROTATION = int;
 enum : int
 {
@@ -775,7 +842,8 @@ enum : int
     D3D11_VIDEO_PROCESSOR_ROTATION_180      = 0x00000002,
     D3D11_VIDEO_PROCESSOR_ROTATION_270      = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_authenticated_channel_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_authenticated_channel_type
 alias D3D11_AUTHENTICATED_CHANNEL_TYPE = int;
 enum : int
 {
@@ -783,7 +851,8 @@ enum : int
     D3D11_AUTHENTICATED_CHANNEL_DRIVER_SOFTWARE = 0x00000002,
     D3D11_AUTHENTICATED_CHANNEL_DRIVER_HARDWARE = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_authenticated_process_identifier_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_authenticated_process_identifier_type
 alias D3D11_AUTHENTICATED_PROCESS_IDENTIFIER_TYPE = int;
 enum : int
 {
@@ -791,7 +860,8 @@ enum : int
     D3D11_PROCESSIDTYPE_DWM     = 0x00000001,
     D3D11_PROCESSIDTYPE_HANDLE  = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_bus_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_bus_type
 alias D3D11_BUS_TYPE = int;
 enum : int
 {
@@ -807,21 +877,24 @@ enum : int
     D3D11_BUS_IMPL_MODIFIER_DAUGHTER_BOARD_CONNECTOR_INSIDE_OF_NUAE = 0x00050000,
     D3D11_BUS_IMPL_MODIFIER_NON_STANDARD                            = 0x80000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_vdov_dimension))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_vdov_dimension
 alias D3D11_VDOV_DIMENSION = int;
 enum : int
 {
     D3D11_VDOV_DIMENSION_UNKNOWN   = 0x00000000,
     D3D11_VDOV_DIMENSION_TEXTURE2D = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_vpiv_dimension))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_vpiv_dimension
 alias D3D11_VPIV_DIMENSION = int;
 enum : int
 {
     D3D11_VPIV_DIMENSION_UNKNOWN   = 0x00000000,
     D3D11_VPIV_DIMENSION_TEXTURE2D = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_vpov_dimension))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_vpov_dimension
 alias D3D11_VPOV_DIMENSION = int;
 enum : int
 {
@@ -829,21 +902,23 @@ enum : int
     D3D11_VPOV_DIMENSION_TEXTURE2D      = 0x00000001,
     D3D11_VPOV_DIMENSION_TEXTURE2DARRAY = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_create_device_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ne-d3d11-d3d11_create_device_flag
 alias D3D11_CREATE_DEVICE_FLAG = uint;
 enum : uint
 {
-    D3D11_CREATE_DEVICE_SINGLETHREADED                                = 0x00000001,
-    D3D11_CREATE_DEVICE_DEBUG                                         = 0x00000002,
-    D3D11_CREATE_DEVICE_SWITCH_TO_REF                                 = 0x00000004,
-    D3D11_CREATE_DEVICE_PREVENT_INTERNAL_THREADING_OPTIMIZATIONS      = 0x00000008,
-    D3D11_CREATE_DEVICE_BGRA_SUPPORT                                  = 0x00000020,
-    D3D11_CREATE_DEVICE_DEBUGGABLE                                    = 0x00000040,
-    D3D11_CREATE_DEVICE_PREVENT_ALTERING_LAYER_SETTINGS_FROM_REGISTRY = 0x00000080,
-    D3D11_CREATE_DEVICE_DISABLE_GPU_TIMEOUT                           = 0x00000100,
-    D3D11_CREATE_DEVICE_VIDEO_SUPPORT                                 = 0x00000800,
+    D3D11_CREATE_DEVICE_SINGLETHREADED                                = 0x00000001U,
+    D3D11_CREATE_DEVICE_DEBUG                                         = 0x00000002U,
+    D3D11_CREATE_DEVICE_SWITCH_TO_REF                                 = 0x00000004U,
+    D3D11_CREATE_DEVICE_PREVENT_INTERNAL_THREADING_OPTIMIZATIONS      = 0x00000008U,
+    D3D11_CREATE_DEVICE_BGRA_SUPPORT                                  = 0x00000020U,
+    D3D11_CREATE_DEVICE_DEBUGGABLE                                    = 0x00000040U,
+    D3D11_CREATE_DEVICE_PREVENT_ALTERING_LAYER_SETTINGS_FROM_REGISTRY = 0x00000080U,
+    D3D11_CREATE_DEVICE_DISABLE_GPU_TIMEOUT                           = 0x00000100U,
+    D3D11_CREATE_DEVICE_VIDEO_SUPPORT                                 = 0x00000800U,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/ne-d3d11sdklayers-d3d11_rldo_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/ne-d3d11sdklayers-d3d11_rldo_flags
 alias D3D11_RLDO_FLAGS = int;
 enum : int
 {
@@ -851,7 +926,8 @@ enum : int
     D3D11_RLDO_DETAIL          = 0x00000002,
     D3D11_RLDO_IGNORE_INTERNAL = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/ne-d3d11sdklayers-d3d11_shader_tracking_resource_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/ne-d3d11sdklayers-d3d11_shader_tracking_resource_type
 alias D3D11_SHADER_TRACKING_RESOURCE_TYPE = int;
 enum : int
 {
@@ -864,7 +940,8 @@ enum : int
     D3D11_SHADER_TRACKING_RESOURCE_TYPE_GROUPSHARED_NON_UAV  = 0x00000006,
     D3D11_SHADER_TRACKING_RESOURCE_TYPE_ALL                  = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/ne-d3d11sdklayers-d3d11_shader_tracking_options))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/ne-d3d11sdklayers-d3d11_shader_tracking_options
 alias D3D11_SHADER_TRACKING_OPTIONS = int;
 enum : int
 {
@@ -884,7 +961,8 @@ enum : int
     D3D11_SHADER_TRACKING_OPTION_ALL_HAZARDS_ALLOWING_SAME                    = 0x000003fe,
     D3D11_SHADER_TRACKING_OPTION_ALL_OPTIONS                                  = 0x000003ff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/ne-d3d11sdklayers-d3d11_message_category))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/ne-d3d11sdklayers-d3d11_message_category
 alias D3D11_MESSAGE_CATEGORY = int;
 enum : int
 {
@@ -900,7 +978,8 @@ enum : int
     D3D11_MESSAGE_CATEGORY_EXECUTION             = 0x00000009,
     D3D11_MESSAGE_CATEGORY_SHADER                = 0x0000000a,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/ne-d3d11sdklayers-d3d11_message_severity))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/ne-d3d11sdklayers-d3d11_message_severity
 alias D3D11_MESSAGE_SEVERITY = int;
 enum : int
 {
@@ -910,7 +989,8 @@ enum : int
     D3D11_MESSAGE_SEVERITY_INFO       = 0x00000003,
     D3D11_MESSAGE_SEVERITY_MESSAGE    = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/ne-d3d11sdklayers-d3d11_message_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/ne-d3d11sdklayers-d3d11_message_id
 alias D3D11_MESSAGE_ID = int;
 enum : int
 {
@@ -2253,14 +2333,16 @@ enum : int
     D3D11_MESSAGE_ID_DEVICE_DRAW_RESOURCE_FORMAT_AND_WRITE_MASK_MISMATCH                         = 0x0030022c,
     D3D11_MESSAGE_ID_D3D11_5_MESSAGES_END                                                        = 0x0030022d,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/ne-d3d11_1-d3d11_copy_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/ne-d3d11_1-d3d11_copy_flags
 alias D3D11_COPY_FLAGS = int;
 enum : int
 {
     D3D11_COPY_NO_OVERWRITE = 0x00000001,
     D3D11_COPY_DISCARD      = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/ne-d3d11_1-d3d11_logic_op))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/ne-d3d11_1-d3d11_logic_op
 alias D3D11_LOGIC_OP = int;
 enum : int
 {
@@ -2281,13 +2363,15 @@ enum : int
     D3D11_LOGIC_OP_OR_REVERSE    = 0x0000000e,
     D3D11_LOGIC_OP_OR_INVERTED   = 0x0000000f,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/ne-d3d11_1-d3d11_1_create_device_context_state_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/ne-d3d11_1-d3d11_1_create_device_context_state_flag
 alias D3D11_1_CREATE_DEVICE_CONTEXT_STATE_FLAG = int;
 enum : int
 {
     D3D11_1_CREATE_DEVICE_CONTEXT_STATE_SINGLETHREADED = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/ne-d3d11_1-d3d11_video_decoder_caps))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/ne-d3d11_1-d3d11_video_decoder_caps
 alias D3D11_VIDEO_DECODER_CAPS = int;
 enum : int
 {
@@ -2297,7 +2381,8 @@ enum : int
     D3D11_VIDEO_DECODER_CAPS_DOWNSAMPLE_REQUIRED = 0x00000008,
     D3D11_VIDEO_DECODER_CAPS_UNSUPPORTED         = 0x00000010,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/ne-d3d11_1-d3d11_video_processor_behavior_hints))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/ne-d3d11_1-d3d11_video_processor_behavior_hints
 alias D3D11_VIDEO_PROCESSOR_BEHAVIOR_HINTS = int;
 enum : int
 {
@@ -2306,7 +2391,8 @@ enum : int
     D3D11_VIDEO_PROCESSOR_BEHAVIOR_HINT_MULTIPLANE_OVERLAY_COLOR_SPACE_CONVERSION = 0x00000004,
     D3D11_VIDEO_PROCESSOR_BEHAVIOR_HINT_TRIPLE_BUFFER_OUTPUT                      = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/ne-d3d11_1-d3d11_crypto_session_status))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/ne-d3d11_1-d3d11_crypto_session_status
 alias D3D11_CRYPTO_SESSION_STATUS = int;
 enum : int
 {
@@ -2314,13 +2400,15 @@ enum : int
     D3D11_CRYPTO_SESSION_STATUS_KEY_LOST             = 0x00000001,
     D3D11_CRYPTO_SESSION_STATUS_KEY_AND_CONTENT_LOST = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_2/ne-d3d11_2-d3d11_tile_mapping_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_2/ne-d3d11_2-d3d11_tile_mapping_flag
 alias D3D11_TILE_MAPPING_FLAG = int;
 enum : int
 {
     D3D11_TILE_MAPPING_NO_OVERWRITE = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_2/ne-d3d11_2-d3d11_tile_range_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_2/ne-d3d11_2-d3d11_tile_range_flag
 alias D3D11_TILE_RANGE_FLAG = int;
 enum : int
 {
@@ -2328,13 +2416,15 @@ enum : int
     D3D11_TILE_RANGE_SKIP              = 0x00000002,
     D3D11_TILE_RANGE_REUSE_SINGLE_TILE = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_2/ne-d3d11_2-d3d11_check_multisample_quality_levels_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_2/ne-d3d11_2-d3d11_check_multisample_quality_levels_flag
 alias D3D11_CHECK_MULTISAMPLE_QUALITY_LEVELS_FLAG = int;
 enum : int
 {
     D3D11_CHECK_MULTISAMPLE_QUALITY_LEVELS_TILED_RESOURCE = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_2/ne-d3d11_2-d3d11_tile_copy_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_2/ne-d3d11_2-d3d11_tile_copy_flag
 alias D3D11_TILE_COPY_FLAG = int;
 enum : int
 {
@@ -2342,7 +2432,8 @@ enum : int
     D3D11_TILE_COPY_LINEAR_BUFFER_TO_SWIZZLED_TILED_RESOURCE = 0x00000002,
     D3D11_TILE_COPY_SWIZZLED_TILED_RESOURCE_TO_LINEAR_BUFFER = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/ne-d3d11_3-d3d11_context_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/ne-d3d11_3-d3d11_context_type
 alias D3D11_CONTEXT_TYPE = int;
 enum : int
 {
@@ -2352,7 +2443,8 @@ enum : int
     D3D11_CONTEXT_TYPE_COPY    = 0x00000003,
     D3D11_CONTEXT_TYPE_VIDEO   = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/ne-d3d11_3-d3d11_texture_layout))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/ne-d3d11_3-d3d11_texture_layout
 alias D3D11_TEXTURE_LAYOUT = int;
 enum : int
 {
@@ -2360,14 +2452,16 @@ enum : int
     D3D11_TEXTURE_LAYOUT_ROW_MAJOR            = 0x00000001,
     D3D11_TEXTURE_LAYOUT_64K_STANDARD_SWIZZLE = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/ne-d3d11_3-d3d11_conservative_rasterization_mode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/ne-d3d11_3-d3d11_conservative_rasterization_mode
 alias D3D11_CONSERVATIVE_RASTERIZATION_MODE = int;
 enum : int
 {
     D3D11_CONSERVATIVE_RASTERIZATION_MODE_OFF = 0x00000000,
     D3D11_CONSERVATIVE_RASTERIZATION_MODE_ON  = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/ne-d3d11_3-d3d11_fence_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/ne-d3d11_3-d3d11_fence_flag
 alias D3D11_FENCE_FLAG = int;
 enum : int
 {
@@ -2376,13 +2470,15 @@ enum : int
     D3D11_FENCE_FLAG_SHARED_CROSS_ADAPTER = 0x00000004,
     D3D11_FENCE_FLAG_NON_MONITORED        = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_4/ne-d3d11_4-d3d11_feature_video))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_4/ne-d3d11_4-d3d11_feature_video
 alias D3D11_FEATURE_VIDEO = int;
 enum : int
 {
     D3D11_FEATURE_VIDEO_DECODER_HISTOGRAM = 0x00000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_4/ne-d3d11_4-d3d11_video_decoder_histogram_component))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_4/ne-d3d11_4-d3d11_video_decoder_histogram_component
 alias D3D11_VIDEO_DECODER_HISTOGRAM_COMPONENT = int;
 enum : int
 {
@@ -2394,7 +2490,8 @@ enum : int
     D3D11_VIDEO_DECODER_HISTOGRAM_COMPONENT_B = 0x00000002,
     D3D11_VIDEO_DECODER_HISTOGRAM_COMPONENT_A = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_4/ne-d3d11_4-d3d11_video_decoder_histogram_component_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_4/ne-d3d11_4-d3d11_video_decoder_histogram_component_flags
 alias D3D11_VIDEO_DECODER_HISTOGRAM_COMPONENT_FLAGS = int;
 enum : int
 {
@@ -2407,12 +2504,14 @@ enum : int
     D3D11_VIDEO_DECODER_HISTOGRAM_COMPONENT_FLAG_B    = 0x00000004,
     D3D11_VIDEO_DECODER_HISTOGRAM_COMPONENT_FLAG_A    = 0x00000008,
 }
+
 alias D3D11_CRYPTO_SESSION_KEY_EXCHANGE_FLAGS = int;
 enum : int
 {
     D3D11_CRYPTO_SESSION_KEY_EXCHANGE_FLAG_NONE = 0x00000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/ne-d3d11shader-d3d11_shader_version_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/ne-d3d11shader-d3d11_shader_version_type
 alias D3D11_SHADER_VERSION_TYPE = int;
 enum : int
 {
@@ -2424,7 +2523,8 @@ enum : int
     D3D11_SHVER_COMPUTE_SHADER  = 0x00000005,
     D3D11_SHVER_RESERVED0       = 0x0000fff0,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/ne-d3d11shadertracing-d3d11_shader_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/ne-d3d11shadertracing-d3d11_shader_type
 alias D3D11_SHADER_TYPE = int;
 enum : int
 {
@@ -2435,7 +2535,8 @@ enum : int
     D3D11_PIXEL_SHADER    = 0x00000005,
     D3D11_COMPUTE_SHADER  = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/ne-d3d11shadertracing-d3d11_trace_gs_input_primitive))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/ne-d3d11shadertracing-d3d11_trace_gs_input_primitive
 alias D3D11_TRACE_GS_INPUT_PRIMITIVE = int;
 enum : int
 {
@@ -2446,7 +2547,8 @@ enum : int
     D3D11_TRACE_GS_INPUT_PRIMITIVE_LINE_ADJ     = 0x00000006,
     D3D11_TRACE_GS_INPUT_PRIMITIVE_TRIANGLE_ADJ = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/ne-d3d11shadertracing-d3d11_trace_register_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/ne-d3d11shadertracing-d3d11_trace_register_type
 alias D3D11_TRACE_REGISTER_TYPE = int;
 enum : int
 {
@@ -2487,7 +2589,8 @@ enum : int
     D3D11_TRACE_INPUT_CYCLE_COUNTER_REGISTER                = 0x00000022,
     D3D11_TRACE_INTERFACE_POINTER                           = 0x00000023,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcsx/ne-d3dcsx-d3dx11_scan_data_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcsx/ne-d3dcsx-d3dx11_scan_data_type
 alias D3DX11_SCAN_DATA_TYPE = int;
 enum : int
 {
@@ -2495,7 +2598,8 @@ enum : int
     D3DX11_SCAN_DATA_TYPE_INT   = 0x00000002,
     D3DX11_SCAN_DATA_TYPE_UINT  = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcsx/ne-d3dcsx-d3dx11_scan_opcode))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcsx/ne-d3dcsx-d3dx11_scan_opcode
 alias D3DX11_SCAN_OPCODE = int;
 enum : int
 {
@@ -2507,21 +2611,24 @@ enum : int
     D3DX11_SCAN_OPCODE_OR  = 0x00000006,
     D3DX11_SCAN_OPCODE_XOR = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcsx/ne-d3dcsx-d3dx11_scan_direction))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcsx/ne-d3dcsx-d3dx11_scan_direction
 alias D3DX11_SCAN_DIRECTION = int;
 enum : int
 {
     D3DX11_SCAN_DIRECTION_FORWARD  = 0x00000001,
     D3DX11_SCAN_DIRECTION_BACKWARD = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcsx/ne-d3dcsx-d3dx11_fft_data_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcsx/ne-d3dcsx-d3dx11_fft_data_type
 alias D3DX11_FFT_DATA_TYPE = int;
 enum : int
 {
     D3DX11_FFT_DATA_TYPE_REAL    = 0x00000000,
     D3DX11_FFT_DATA_TYPE_COMPLEX = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcsx/ne-d3dcsx-d3dx11_fft_dim_mask))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcsx/ne-d3dcsx-d3dx11_fft_dim_mask
 alias D3DX11_FFT_DIM_MASK = int;
 enum : int
 {
@@ -2529,7 +2636,8 @@ enum : int
     D3DX11_FFT_DIM_MASK_2D = 0x00000003,
     D3DX11_FFT_DIM_MASK_3D = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcsx/ne-d3dcsx-d3dx11_fft_create_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcsx/ne-d3dcsx-d3dx11_fft_create_flag
 alias D3DX11_FFT_CREATE_FLAG = int;
 enum : int
 {
@@ -2539,59 +2647,59 @@ enum : int
 // Constants
 
 
-enum uint D3D11_16BIT_INDEX_STRIP_CUT_VALUE = 0x0000ffff;
-enum uint D3D11_32BIT_INDEX_STRIP_CUT_VALUE = 0xffffffff;
-enum uint D3D11_8BIT_INDEX_STRIP_CUT_VALUE = 0x000000ff;
-enum uint D3D11_ARRAY_AXIS_ADDRESS_RANGE_BIT_COUNT = 0x00000009;
+enum uint D3D11_16BIT_INDEX_STRIP_CUT_VALUE = 0x0000ffffU;
+enum uint D3D11_32BIT_INDEX_STRIP_CUT_VALUE = 0xffffffffU;
+enum uint D3D11_8BIT_INDEX_STRIP_CUT_VALUE = 0x000000ffU;
+enum uint D3D11_ARRAY_AXIS_ADDRESS_RANGE_BIT_COUNT = 0x00000009U;
 
 enum : uint
 {
-    D3D11_CLIP_OR_CULL_DISTANCE_COUNT         = 0x00000008,
-    D3D11_CLIP_OR_CULL_DISTANCE_ELEMENT_COUNT = 0x00000002,
+    D3D11_CLIP_OR_CULL_DISTANCE_COUNT         = 0x00000008U,
+    D3D11_CLIP_OR_CULL_DISTANCE_ELEMENT_COUNT = 0x00000002U,
 }
 
 enum : uint
 {
-    D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT                        = 0x0000000e,
-    D3D11_COMMONSHADER_CONSTANT_BUFFER_COMPONENTS                            = 0x00000004,
-    D3D11_COMMONSHADER_CONSTANT_BUFFER_COMPONENT_BIT_COUNT                   = 0x00000020,
-    D3D11_COMMONSHADER_CONSTANT_BUFFER_HW_SLOT_COUNT                         = 0x0000000f,
-    D3D11_COMMONSHADER_CONSTANT_BUFFER_PARTIAL_UPDATE_EXTENTS_BYTE_ALIGNMENT = 0x00000010,
-    D3D11_COMMONSHADER_CONSTANT_BUFFER_REGISTER_COMPONENTS                   = 0x00000004,
-    D3D11_COMMONSHADER_CONSTANT_BUFFER_REGISTER_COUNT                        = 0x0000000f,
-    D3D11_COMMONSHADER_CONSTANT_BUFFER_REGISTER_READS_PER_INST               = 0x00000001,
-    D3D11_COMMONSHADER_CONSTANT_BUFFER_REGISTER_READ_PORTS                   = 0x00000001,
+    D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT                        = 0x0000000eU,
+    D3D11_COMMONSHADER_CONSTANT_BUFFER_COMPONENTS                            = 0x00000004U,
+    D3D11_COMMONSHADER_CONSTANT_BUFFER_COMPONENT_BIT_COUNT                   = 0x00000020U,
+    D3D11_COMMONSHADER_CONSTANT_BUFFER_HW_SLOT_COUNT                         = 0x0000000fU,
+    D3D11_COMMONSHADER_CONSTANT_BUFFER_PARTIAL_UPDATE_EXTENTS_BYTE_ALIGNMENT = 0x00000010U,
+    D3D11_COMMONSHADER_CONSTANT_BUFFER_REGISTER_COMPONENTS                   = 0x00000004U,
+    D3D11_COMMONSHADER_CONSTANT_BUFFER_REGISTER_COUNT                        = 0x0000000fU,
+    D3D11_COMMONSHADER_CONSTANT_BUFFER_REGISTER_READS_PER_INST               = 0x00000001U,
+    D3D11_COMMONSHADER_CONSTANT_BUFFER_REGISTER_READ_PORTS                   = 0x00000001U,
 }
 
 enum : uint
 {
-    D3D11_COMMONSHADER_FLOWCONTROL_NESTING_LIMIT                         = 0x00000040,
-    D3D11_COMMONSHADER_IMMEDIATE_CONSTANT_BUFFER_REGISTER_COMPONENTS     = 0x00000004,
-    D3D11_COMMONSHADER_IMMEDIATE_CONSTANT_BUFFER_REGISTER_COUNT          = 0x00000001,
-    D3D11_COMMONSHADER_IMMEDIATE_CONSTANT_BUFFER_REGISTER_READS_PER_INST = 0x00000001,
-    D3D11_COMMONSHADER_IMMEDIATE_CONSTANT_BUFFER_REGISTER_READ_PORTS     = 0x00000001,
-    D3D11_COMMONSHADER_IMMEDIATE_VALUE_COMPONENT_BIT_COUNT               = 0x00000020,
+    D3D11_COMMONSHADER_FLOWCONTROL_NESTING_LIMIT                         = 0x00000040U,
+    D3D11_COMMONSHADER_IMMEDIATE_CONSTANT_BUFFER_REGISTER_COMPONENTS     = 0x00000004U,
+    D3D11_COMMONSHADER_IMMEDIATE_CONSTANT_BUFFER_REGISTER_COUNT          = 0x00000001U,
+    D3D11_COMMONSHADER_IMMEDIATE_CONSTANT_BUFFER_REGISTER_READS_PER_INST = 0x00000001U,
+    D3D11_COMMONSHADER_IMMEDIATE_CONSTANT_BUFFER_REGISTER_READ_PORTS     = 0x00000001U,
+    D3D11_COMMONSHADER_IMMEDIATE_VALUE_COMPONENT_BIT_COUNT               = 0x00000020U,
 }
 
 enum : uint
 {
-    D3D11_COMMONSHADER_INPUT_RESOURCE_REGISTER_COMPONENTS     = 0x00000001,
-    D3D11_COMMONSHADER_INPUT_RESOURCE_REGISTER_COUNT          = 0x00000080,
-    D3D11_COMMONSHADER_INPUT_RESOURCE_REGISTER_READS_PER_INST = 0x00000001,
-    D3D11_COMMONSHADER_INPUT_RESOURCE_REGISTER_READ_PORTS     = 0x00000001,
-    D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT              = 0x00000080,
-    D3D11_COMMONSHADER_SAMPLER_REGISTER_COMPONENTS            = 0x00000001,
-    D3D11_COMMONSHADER_SAMPLER_REGISTER_COUNT                 = 0x00000010,
-    D3D11_COMMONSHADER_SAMPLER_REGISTER_READS_PER_INST        = 0x00000001,
-    D3D11_COMMONSHADER_SAMPLER_REGISTER_READ_PORTS            = 0x00000001,
-    D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT                     = 0x00000010,
-    D3D11_COMMONSHADER_SUBROUTINE_NESTING_LIMIT               = 0x00000020,
-    D3D11_COMMONSHADER_TEMP_REGISTER_COMPONENTS               = 0x00000004,
-    D3D11_COMMONSHADER_TEMP_REGISTER_COMPONENT_BIT_COUNT      = 0x00000020,
-    D3D11_COMMONSHADER_TEMP_REGISTER_COUNT                    = 0x00001000,
-    D3D11_COMMONSHADER_TEMP_REGISTER_READS_PER_INST           = 0x00000003,
-    D3D11_COMMONSHADER_TEMP_REGISTER_READ_PORTS               = 0x00000003,
-    D3D11_COMMONSHADER_TEXCOORD_RANGE_REDUCTION_MAX           = 0x0000000a,
+    D3D11_COMMONSHADER_INPUT_RESOURCE_REGISTER_COMPONENTS     = 0x00000001U,
+    D3D11_COMMONSHADER_INPUT_RESOURCE_REGISTER_COUNT          = 0x00000080U,
+    D3D11_COMMONSHADER_INPUT_RESOURCE_REGISTER_READS_PER_INST = 0x00000001U,
+    D3D11_COMMONSHADER_INPUT_RESOURCE_REGISTER_READ_PORTS     = 0x00000001U,
+    D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT              = 0x00000080U,
+    D3D11_COMMONSHADER_SAMPLER_REGISTER_COMPONENTS            = 0x00000001U,
+    D3D11_COMMONSHADER_SAMPLER_REGISTER_COUNT                 = 0x00000010U,
+    D3D11_COMMONSHADER_SAMPLER_REGISTER_READS_PER_INST        = 0x00000001U,
+    D3D11_COMMONSHADER_SAMPLER_REGISTER_READ_PORTS            = 0x00000001U,
+    D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT                     = 0x00000010U,
+    D3D11_COMMONSHADER_SUBROUTINE_NESTING_LIMIT               = 0x00000020U,
+    D3D11_COMMONSHADER_TEMP_REGISTER_COMPONENTS               = 0x00000004U,
+    D3D11_COMMONSHADER_TEMP_REGISTER_COMPONENT_BIT_COUNT      = 0x00000020U,
+    D3D11_COMMONSHADER_TEMP_REGISTER_COUNT                    = 0x00001000U,
+    D3D11_COMMONSHADER_TEMP_REGISTER_READS_PER_INST           = 0x00000003U,
+    D3D11_COMMONSHADER_TEMP_REGISTER_READ_PORTS               = 0x00000003U,
+    D3D11_COMMONSHADER_TEXCOORD_RANGE_REDUCTION_MAX           = 0x0000000aU,
 }
 
 enum : int
@@ -2600,83 +2708,83 @@ enum : int
     D3D11_COMMONSHADER_TEXEL_OFFSET_MAX_NEGATIVE    = 0xfffffff8,
 }
 
-enum uint D3D11_COMMONSHADER_TEXEL_OFFSET_MAX_POSITIVE = 0x00000007;
+enum uint D3D11_COMMONSHADER_TEXEL_OFFSET_MAX_POSITIVE = 0x00000007U;
 
 enum : uint
 {
-    D3D11_CS_4_X_BUCKET00_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000100,
-    D3D11_CS_4_X_BUCKET00_MAX_NUM_THREADS_PER_GROUP          = 0x00000040,
-    D3D11_CS_4_X_BUCKET01_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x000000f0,
-    D3D11_CS_4_X_BUCKET01_MAX_NUM_THREADS_PER_GROUP          = 0x00000044,
-    D3D11_CS_4_X_BUCKET02_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x000000e0,
-    D3D11_CS_4_X_BUCKET02_MAX_NUM_THREADS_PER_GROUP          = 0x00000048,
-    D3D11_CS_4_X_BUCKET03_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x000000d0,
-    D3D11_CS_4_X_BUCKET03_MAX_NUM_THREADS_PER_GROUP          = 0x0000004c,
-    D3D11_CS_4_X_BUCKET04_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x000000c0,
-    D3D11_CS_4_X_BUCKET04_MAX_NUM_THREADS_PER_GROUP          = 0x00000054,
-    D3D11_CS_4_X_BUCKET05_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x000000b0,
-    D3D11_CS_4_X_BUCKET05_MAX_NUM_THREADS_PER_GROUP          = 0x0000005c,
-    D3D11_CS_4_X_BUCKET06_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x000000a0,
-    D3D11_CS_4_X_BUCKET06_MAX_NUM_THREADS_PER_GROUP          = 0x00000064,
-    D3D11_CS_4_X_BUCKET07_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000090,
-    D3D11_CS_4_X_BUCKET07_MAX_NUM_THREADS_PER_GROUP          = 0x00000070,
-    D3D11_CS_4_X_BUCKET08_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000080,
-    D3D11_CS_4_X_BUCKET08_MAX_NUM_THREADS_PER_GROUP          = 0x00000080,
-    D3D11_CS_4_X_BUCKET09_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000070,
-    D3D11_CS_4_X_BUCKET09_MAX_NUM_THREADS_PER_GROUP          = 0x00000090,
-    D3D11_CS_4_X_BUCKET10_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000060,
-    D3D11_CS_4_X_BUCKET10_MAX_NUM_THREADS_PER_GROUP          = 0x000000a8,
-    D3D11_CS_4_X_BUCKET11_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000050,
-    D3D11_CS_4_X_BUCKET11_MAX_NUM_THREADS_PER_GROUP          = 0x000000cc,
-    D3D11_CS_4_X_BUCKET12_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000040,
-    D3D11_CS_4_X_BUCKET12_MAX_NUM_THREADS_PER_GROUP          = 0x00000100,
-    D3D11_CS_4_X_BUCKET13_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000030,
-    D3D11_CS_4_X_BUCKET13_MAX_NUM_THREADS_PER_GROUP          = 0x00000154,
-    D3D11_CS_4_X_BUCKET14_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000020,
-    D3D11_CS_4_X_BUCKET14_MAX_NUM_THREADS_PER_GROUP          = 0x00000200,
-    D3D11_CS_4_X_BUCKET15_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000010,
-    D3D11_CS_4_X_BUCKET15_MAX_NUM_THREADS_PER_GROUP          = 0x00000300,
+    D3D11_CS_4_X_BUCKET00_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000100U,
+    D3D11_CS_4_X_BUCKET00_MAX_NUM_THREADS_PER_GROUP          = 0x00000040U,
+    D3D11_CS_4_X_BUCKET01_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x000000f0U,
+    D3D11_CS_4_X_BUCKET01_MAX_NUM_THREADS_PER_GROUP          = 0x00000044U,
+    D3D11_CS_4_X_BUCKET02_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x000000e0U,
+    D3D11_CS_4_X_BUCKET02_MAX_NUM_THREADS_PER_GROUP          = 0x00000048U,
+    D3D11_CS_4_X_BUCKET03_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x000000d0U,
+    D3D11_CS_4_X_BUCKET03_MAX_NUM_THREADS_PER_GROUP          = 0x0000004cU,
+    D3D11_CS_4_X_BUCKET04_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x000000c0U,
+    D3D11_CS_4_X_BUCKET04_MAX_NUM_THREADS_PER_GROUP          = 0x00000054U,
+    D3D11_CS_4_X_BUCKET05_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x000000b0U,
+    D3D11_CS_4_X_BUCKET05_MAX_NUM_THREADS_PER_GROUP          = 0x0000005cU,
+    D3D11_CS_4_X_BUCKET06_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x000000a0U,
+    D3D11_CS_4_X_BUCKET06_MAX_NUM_THREADS_PER_GROUP          = 0x00000064U,
+    D3D11_CS_4_X_BUCKET07_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000090U,
+    D3D11_CS_4_X_BUCKET07_MAX_NUM_THREADS_PER_GROUP          = 0x00000070U,
+    D3D11_CS_4_X_BUCKET08_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000080U,
+    D3D11_CS_4_X_BUCKET08_MAX_NUM_THREADS_PER_GROUP          = 0x00000080U,
+    D3D11_CS_4_X_BUCKET09_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000070U,
+    D3D11_CS_4_X_BUCKET09_MAX_NUM_THREADS_PER_GROUP          = 0x00000090U,
+    D3D11_CS_4_X_BUCKET10_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000060U,
+    D3D11_CS_4_X_BUCKET10_MAX_NUM_THREADS_PER_GROUP          = 0x000000a8U,
+    D3D11_CS_4_X_BUCKET11_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000050U,
+    D3D11_CS_4_X_BUCKET11_MAX_NUM_THREADS_PER_GROUP          = 0x000000ccU,
+    D3D11_CS_4_X_BUCKET12_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000040U,
+    D3D11_CS_4_X_BUCKET12_MAX_NUM_THREADS_PER_GROUP          = 0x00000100U,
+    D3D11_CS_4_X_BUCKET13_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000030U,
+    D3D11_CS_4_X_BUCKET13_MAX_NUM_THREADS_PER_GROUP          = 0x00000154U,
+    D3D11_CS_4_X_BUCKET14_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000020U,
+    D3D11_CS_4_X_BUCKET14_MAX_NUM_THREADS_PER_GROUP          = 0x00000200U,
+    D3D11_CS_4_X_BUCKET15_MAX_BYTES_TGSM_WRITABLE_PER_THREAD = 0x00000010U,
+    D3D11_CS_4_X_BUCKET15_MAX_NUM_THREADS_PER_GROUP          = 0x00000300U,
 }
 
-enum uint D3D11_CS_4_X_DISPATCH_MAX_THREAD_GROUPS_IN_Z_DIMENSION = 0x00000001;
-enum uint D3D11_CS_4_X_RAW_UAV_BYTE_ALIGNMENT = 0x00000100;
+enum uint D3D11_CS_4_X_DISPATCH_MAX_THREAD_GROUPS_IN_Z_DIMENSION = 0x00000001U;
+enum uint D3D11_CS_4_X_RAW_UAV_BYTE_ALIGNMENT = 0x00000100U;
 
 enum : uint
 {
-    D3D11_CS_4_X_THREAD_GROUP_MAX_THREADS_PER_GROUP = 0x00000300,
-    D3D11_CS_4_X_THREAD_GROUP_MAX_X                 = 0x00000300,
-    D3D11_CS_4_X_THREAD_GROUP_MAX_Y                 = 0x00000300,
-    D3D11_CS_4_X_UAV_REGISTER_COUNT                 = 0x00000001,
+    D3D11_CS_4_X_THREAD_GROUP_MAX_THREADS_PER_GROUP = 0x00000300U,
+    D3D11_CS_4_X_THREAD_GROUP_MAX_X                 = 0x00000300U,
+    D3D11_CS_4_X_THREAD_GROUP_MAX_Y                 = 0x00000300U,
+    D3D11_CS_4_X_UAV_REGISTER_COUNT                 = 0x00000001U,
 }
 
-enum uint D3D11_CS_DISPATCH_MAX_THREAD_GROUPS_PER_DIMENSION = 0x0000ffff;
+enum uint D3D11_CS_DISPATCH_MAX_THREAD_GROUPS_PER_DIMENSION = 0x0000ffffU;
 
 enum : uint
 {
-    D3D11_CS_TGSM_REGISTER_COUNT               = 0x00002000,
-    D3D11_CS_TGSM_REGISTER_READS_PER_INST      = 0x00000001,
-    D3D11_CS_TGSM_RESOURCE_REGISTER_COMPONENTS = 0x00000001,
-    D3D11_CS_TGSM_RESOURCE_REGISTER_READ_PORTS = 0x00000001,
+    D3D11_CS_TGSM_REGISTER_COUNT               = 0x00002000U,
+    D3D11_CS_TGSM_REGISTER_READS_PER_INST      = 0x00000001U,
+    D3D11_CS_TGSM_RESOURCE_REGISTER_COMPONENTS = 0x00000001U,
+    D3D11_CS_TGSM_RESOURCE_REGISTER_READ_PORTS = 0x00000001U,
 }
 
 enum : uint
 {
-    D3D11_CS_THREADGROUPID_REGISTER_COMPONENTS            = 0x00000003,
-    D3D11_CS_THREADGROUPID_REGISTER_COUNT                 = 0x00000001,
-    D3D11_CS_THREADIDINGROUPFLATTENED_REGISTER_COMPONENTS = 0x00000001,
-    D3D11_CS_THREADIDINGROUPFLATTENED_REGISTER_COUNT      = 0x00000001,
-    D3D11_CS_THREADIDINGROUP_REGISTER_COMPONENTS          = 0x00000003,
-    D3D11_CS_THREADIDINGROUP_REGISTER_COUNT               = 0x00000001,
-    D3D11_CS_THREADID_REGISTER_COMPONENTS                 = 0x00000003,
-    D3D11_CS_THREADID_REGISTER_COUNT                      = 0x00000001,
-    D3D11_CS_THREAD_GROUP_MAX_THREADS_PER_GROUP           = 0x00000400,
-    D3D11_CS_THREAD_GROUP_MAX_X                           = 0x00000400,
-    D3D11_CS_THREAD_GROUP_MAX_Y                           = 0x00000400,
-    D3D11_CS_THREAD_GROUP_MAX_Z                           = 0x00000040,
-    D3D11_CS_THREAD_GROUP_MIN_X                           = 0x00000001,
-    D3D11_CS_THREAD_GROUP_MIN_Y                           = 0x00000001,
-    D3D11_CS_THREAD_GROUP_MIN_Z                           = 0x00000001,
-    D3D11_CS_THREAD_LOCAL_TEMP_REGISTER_POOL              = 0x00004000,
+    D3D11_CS_THREADGROUPID_REGISTER_COMPONENTS            = 0x00000003U,
+    D3D11_CS_THREADGROUPID_REGISTER_COUNT                 = 0x00000001U,
+    D3D11_CS_THREADIDINGROUPFLATTENED_REGISTER_COMPONENTS = 0x00000001U,
+    D3D11_CS_THREADIDINGROUPFLATTENED_REGISTER_COUNT      = 0x00000001U,
+    D3D11_CS_THREADIDINGROUP_REGISTER_COMPONENTS          = 0x00000003U,
+    D3D11_CS_THREADIDINGROUP_REGISTER_COUNT               = 0x00000001U,
+    D3D11_CS_THREADID_REGISTER_COMPONENTS                 = 0x00000003U,
+    D3D11_CS_THREADID_REGISTER_COUNT                      = 0x00000001U,
+    D3D11_CS_THREAD_GROUP_MAX_THREADS_PER_GROUP           = 0x00000400U,
+    D3D11_CS_THREAD_GROUP_MAX_X                           = 0x00000400U,
+    D3D11_CS_THREAD_GROUP_MAX_Y                           = 0x00000400U,
+    D3D11_CS_THREAD_GROUP_MAX_Z                           = 0x00000040U,
+    D3D11_CS_THREAD_GROUP_MIN_X                           = 0x00000001U,
+    D3D11_CS_THREAD_GROUP_MIN_Y                           = 0x00000001U,
+    D3D11_CS_THREAD_GROUP_MIN_Z                           = 0x00000001U,
+    D3D11_CS_THREAD_LOCAL_TEMP_REGISTER_POOL              = 0x00004000U,
 }
 
 enum : float
@@ -2688,30 +2796,30 @@ enum : float
     D3D11_DEFAULT_BORDER_COLOR_COMPONENT = 0x0p+0,
 }
 
-enum uint D3D11_DEFAULT_DEPTH_BIAS = 0x00000000;
+enum uint D3D11_DEFAULT_DEPTH_BIAS = 0x00000000U;
 enum float D3D11_DEFAULT_DEPTH_BIAS_CLAMP = 0x0p+0;
-enum uint D3D11_DEFAULT_MAX_ANISOTROPY = 0x00000010;
+enum uint D3D11_DEFAULT_MAX_ANISOTROPY = 0x00000010U;
 enum float D3D11_DEFAULT_MIP_LOD_BIAS = 0x0p+0;
-enum uint D3D11_DEFAULT_RENDER_TARGET_ARRAY_INDEX = 0x00000000;
+enum uint D3D11_DEFAULT_RENDER_TARGET_ARRAY_INDEX = 0x00000000U;
 
 enum : uint
 {
-    D3D11_DEFAULT_SAMPLE_MASK    = 0xffffffff,
-    D3D11_DEFAULT_SCISSOR_ENDX   = 0x00000000,
-    D3D11_DEFAULT_SCISSOR_ENDY   = 0x00000000,
-    D3D11_DEFAULT_SCISSOR_STARTX = 0x00000000,
-    D3D11_DEFAULT_SCISSOR_STARTY = 0x00000000,
+    D3D11_DEFAULT_SAMPLE_MASK    = 0xffffffffU,
+    D3D11_DEFAULT_SCISSOR_ENDX   = 0x00000000U,
+    D3D11_DEFAULT_SCISSOR_ENDY   = 0x00000000U,
+    D3D11_DEFAULT_SCISSOR_STARTX = 0x00000000U,
+    D3D11_DEFAULT_SCISSOR_STARTY = 0x00000000U,
 }
 
 enum float D3D11_DEFAULT_SLOPE_SCALED_DEPTH_BIAS = 0x0p+0;
 
 enum : uint
 {
-    D3D11_DEFAULT_STENCIL_READ_MASK              = 0x000000ff,
-    D3D11_DEFAULT_STENCIL_REFERENCE              = 0x00000000,
-    D3D11_DEFAULT_STENCIL_WRITE_MASK             = 0x000000ff,
-    D3D11_DEFAULT_VIEWPORT_AND_SCISSORRECT_INDEX = 0x00000000,
-    D3D11_DEFAULT_VIEWPORT_HEIGHT                = 0x00000000,
+    D3D11_DEFAULT_STENCIL_READ_MASK              = 0x000000ffU,
+    D3D11_DEFAULT_STENCIL_REFERENCE              = 0x00000000U,
+    D3D11_DEFAULT_STENCIL_WRITE_MASK             = 0x000000ffU,
+    D3D11_DEFAULT_VIEWPORT_AND_SCISSORRECT_INDEX = 0x00000000U,
+    D3D11_DEFAULT_VIEWPORT_HEIGHT                = 0x00000000U,
 }
 
 enum : float
@@ -2722,53 +2830,53 @@ enum : float
 
 enum : uint
 {
-    D3D11_DEFAULT_VIEWPORT_TOPLEFTX = 0x00000000,
-    D3D11_DEFAULT_VIEWPORT_TOPLEFTY = 0x00000000,
-    D3D11_DEFAULT_VIEWPORT_WIDTH    = 0x00000000,
+    D3D11_DEFAULT_VIEWPORT_TOPLEFTX = 0x00000000U,
+    D3D11_DEFAULT_VIEWPORT_TOPLEFTY = 0x00000000U,
+    D3D11_DEFAULT_VIEWPORT_WIDTH    = 0x00000000U,
 }
 
 enum : uint
 {
-    D3D11_DS_INPUT_CONTROL_POINTS_MAX_TOTAL_SCALARS           = 0x00000f80,
-    D3D11_DS_INPUT_CONTROL_POINT_REGISTER_COMPONENTS          = 0x00000004,
-    D3D11_DS_INPUT_CONTROL_POINT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D11_DS_INPUT_CONTROL_POINT_REGISTER_COUNT               = 0x00000020,
-    D3D11_DS_INPUT_CONTROL_POINT_REGISTER_READS_PER_INST      = 0x00000002,
-    D3D11_DS_INPUT_CONTROL_POINT_REGISTER_READ_PORTS          = 0x00000001,
+    D3D11_DS_INPUT_CONTROL_POINTS_MAX_TOTAL_SCALARS           = 0x00000f80U,
+    D3D11_DS_INPUT_CONTROL_POINT_REGISTER_COMPONENTS          = 0x00000004U,
+    D3D11_DS_INPUT_CONTROL_POINT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D11_DS_INPUT_CONTROL_POINT_REGISTER_COUNT               = 0x00000020U,
+    D3D11_DS_INPUT_CONTROL_POINT_REGISTER_READS_PER_INST      = 0x00000002U,
+    D3D11_DS_INPUT_CONTROL_POINT_REGISTER_READ_PORTS          = 0x00000001U,
 }
 
 enum : uint
 {
-    D3D11_DS_INPUT_DOMAIN_POINT_REGISTER_COMPONENTS          = 0x00000003,
-    D3D11_DS_INPUT_DOMAIN_POINT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D11_DS_INPUT_DOMAIN_POINT_REGISTER_COUNT               = 0x00000001,
-    D3D11_DS_INPUT_DOMAIN_POINT_REGISTER_READS_PER_INST      = 0x00000002,
-    D3D11_DS_INPUT_DOMAIN_POINT_REGISTER_READ_PORTS          = 0x00000001,
+    D3D11_DS_INPUT_DOMAIN_POINT_REGISTER_COMPONENTS          = 0x00000003U,
+    D3D11_DS_INPUT_DOMAIN_POINT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D11_DS_INPUT_DOMAIN_POINT_REGISTER_COUNT               = 0x00000001U,
+    D3D11_DS_INPUT_DOMAIN_POINT_REGISTER_READS_PER_INST      = 0x00000002U,
+    D3D11_DS_INPUT_DOMAIN_POINT_REGISTER_READ_PORTS          = 0x00000001U,
 }
 
 enum : uint
 {
-    D3D11_DS_INPUT_PATCH_CONSTANT_REGISTER_COMPONENTS          = 0x00000004,
-    D3D11_DS_INPUT_PATCH_CONSTANT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D11_DS_INPUT_PATCH_CONSTANT_REGISTER_COUNT               = 0x00000020,
-    D3D11_DS_INPUT_PATCH_CONSTANT_REGISTER_READS_PER_INST      = 0x00000002,
-    D3D11_DS_INPUT_PATCH_CONSTANT_REGISTER_READ_PORTS          = 0x00000001,
+    D3D11_DS_INPUT_PATCH_CONSTANT_REGISTER_COMPONENTS          = 0x00000004U,
+    D3D11_DS_INPUT_PATCH_CONSTANT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D11_DS_INPUT_PATCH_CONSTANT_REGISTER_COUNT               = 0x00000020U,
+    D3D11_DS_INPUT_PATCH_CONSTANT_REGISTER_READS_PER_INST      = 0x00000002U,
+    D3D11_DS_INPUT_PATCH_CONSTANT_REGISTER_READ_PORTS          = 0x00000001U,
 }
 
 enum : uint
 {
-    D3D11_DS_INPUT_PRIMITIVE_ID_REGISTER_COMPONENTS          = 0x00000001,
-    D3D11_DS_INPUT_PRIMITIVE_ID_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D11_DS_INPUT_PRIMITIVE_ID_REGISTER_COUNT               = 0x00000001,
-    D3D11_DS_INPUT_PRIMITIVE_ID_REGISTER_READS_PER_INST      = 0x00000002,
-    D3D11_DS_INPUT_PRIMITIVE_ID_REGISTER_READ_PORTS          = 0x00000001,
+    D3D11_DS_INPUT_PRIMITIVE_ID_REGISTER_COMPONENTS          = 0x00000001U,
+    D3D11_DS_INPUT_PRIMITIVE_ID_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D11_DS_INPUT_PRIMITIVE_ID_REGISTER_COUNT               = 0x00000001U,
+    D3D11_DS_INPUT_PRIMITIVE_ID_REGISTER_READS_PER_INST      = 0x00000002U,
+    D3D11_DS_INPUT_PRIMITIVE_ID_REGISTER_READ_PORTS          = 0x00000001U,
 }
 
 enum : uint
 {
-    D3D11_DS_OUTPUT_REGISTER_COMPONENTS          = 0x00000004,
-    D3D11_DS_OUTPUT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D11_DS_OUTPUT_REGISTER_COUNT               = 0x00000020,
+    D3D11_DS_OUTPUT_REGISTER_COMPONENTS          = 0x00000004U,
+    D3D11_DS_OUTPUT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D11_DS_OUTPUT_REGISTER_COUNT               = 0x00000020U,
 }
 
 enum double D3D11_FLOAT16_FUSED_TOLERANCE_IN_ULP = 0x1.3333333333333p-1;
@@ -2803,86 +2911,86 @@ enum : float
 
 enum : uint
 {
-    D3D11_GS_INPUT_INSTANCE_ID_READS_PER_INST               = 0x00000002,
-    D3D11_GS_INPUT_INSTANCE_ID_READ_PORTS                   = 0x00000001,
-    D3D11_GS_INPUT_INSTANCE_ID_REGISTER_COMPONENTS          = 0x00000001,
-    D3D11_GS_INPUT_INSTANCE_ID_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D11_GS_INPUT_INSTANCE_ID_REGISTER_COUNT               = 0x00000001,
+    D3D11_GS_INPUT_INSTANCE_ID_READS_PER_INST               = 0x00000002U,
+    D3D11_GS_INPUT_INSTANCE_ID_READ_PORTS                   = 0x00000001U,
+    D3D11_GS_INPUT_INSTANCE_ID_REGISTER_COMPONENTS          = 0x00000001U,
+    D3D11_GS_INPUT_INSTANCE_ID_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D11_GS_INPUT_INSTANCE_ID_REGISTER_COUNT               = 0x00000001U,
 }
 
 enum : uint
 {
-    D3D11_GS_INPUT_PRIM_CONST_REGISTER_COMPONENTS          = 0x00000001,
-    D3D11_GS_INPUT_PRIM_CONST_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D11_GS_INPUT_PRIM_CONST_REGISTER_COUNT               = 0x00000001,
-    D3D11_GS_INPUT_PRIM_CONST_REGISTER_READS_PER_INST      = 0x00000002,
-    D3D11_GS_INPUT_PRIM_CONST_REGISTER_READ_PORTS          = 0x00000001,
+    D3D11_GS_INPUT_PRIM_CONST_REGISTER_COMPONENTS          = 0x00000001U,
+    D3D11_GS_INPUT_PRIM_CONST_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D11_GS_INPUT_PRIM_CONST_REGISTER_COUNT               = 0x00000001U,
+    D3D11_GS_INPUT_PRIM_CONST_REGISTER_READS_PER_INST      = 0x00000002U,
+    D3D11_GS_INPUT_PRIM_CONST_REGISTER_READ_PORTS          = 0x00000001U,
 }
 
 enum : uint
 {
-    D3D11_GS_INPUT_REGISTER_COMPONENTS          = 0x00000004,
-    D3D11_GS_INPUT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D11_GS_INPUT_REGISTER_COUNT               = 0x00000020,
-    D3D11_GS_INPUT_REGISTER_READS_PER_INST      = 0x00000002,
-    D3D11_GS_INPUT_REGISTER_READ_PORTS          = 0x00000001,
-    D3D11_GS_INPUT_REGISTER_VERTICES            = 0x00000020,
+    D3D11_GS_INPUT_REGISTER_COMPONENTS          = 0x00000004U,
+    D3D11_GS_INPUT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D11_GS_INPUT_REGISTER_COUNT               = 0x00000020U,
+    D3D11_GS_INPUT_REGISTER_READS_PER_INST      = 0x00000002U,
+    D3D11_GS_INPUT_REGISTER_READ_PORTS          = 0x00000001U,
+    D3D11_GS_INPUT_REGISTER_VERTICES            = 0x00000020U,
 }
 
 enum : uint
 {
-    D3D11_GS_MAX_INSTANCE_COUNT                       = 0x00000020,
-    D3D11_GS_MAX_OUTPUT_VERTEX_COUNT_ACROSS_INSTANCES = 0x00000400,
+    D3D11_GS_MAX_INSTANCE_COUNT                       = 0x00000020U,
+    D3D11_GS_MAX_OUTPUT_VERTEX_COUNT_ACROSS_INSTANCES = 0x00000400U,
 }
 
 enum : uint
 {
-    D3D11_GS_OUTPUT_ELEMENTS                     = 0x00000020,
-    D3D11_GS_OUTPUT_REGISTER_COMPONENTS          = 0x00000004,
-    D3D11_GS_OUTPUT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D11_GS_OUTPUT_REGISTER_COUNT               = 0x00000020,
+    D3D11_GS_OUTPUT_ELEMENTS                     = 0x00000020U,
+    D3D11_GS_OUTPUT_REGISTER_COMPONENTS          = 0x00000004U,
+    D3D11_GS_OUTPUT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D11_GS_OUTPUT_REGISTER_COUNT               = 0x00000020U,
 }
 
 enum : uint
 {
-    D3D11_HS_CONTROL_POINT_PHASE_INPUT_REGISTER_COUNT   = 0x00000020,
-    D3D11_HS_CONTROL_POINT_PHASE_OUTPUT_REGISTER_COUNT  = 0x00000020,
-    D3D11_HS_CONTROL_POINT_REGISTER_COMPONENTS          = 0x00000004,
-    D3D11_HS_CONTROL_POINT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D11_HS_CONTROL_POINT_REGISTER_READS_PER_INST      = 0x00000002,
-    D3D11_HS_CONTROL_POINT_REGISTER_READ_PORTS          = 0x00000001,
+    D3D11_HS_CONTROL_POINT_PHASE_INPUT_REGISTER_COUNT   = 0x00000020U,
+    D3D11_HS_CONTROL_POINT_PHASE_OUTPUT_REGISTER_COUNT  = 0x00000020U,
+    D3D11_HS_CONTROL_POINT_REGISTER_COMPONENTS          = 0x00000004U,
+    D3D11_HS_CONTROL_POINT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D11_HS_CONTROL_POINT_REGISTER_READS_PER_INST      = 0x00000002U,
+    D3D11_HS_CONTROL_POINT_REGISTER_READ_PORTS          = 0x00000001U,
 }
 
-enum uint D3D11_HS_FORK_PHASE_INSTANCE_COUNT_UPPER_BOUND = 0xffffffff;
+enum uint D3D11_HS_FORK_PHASE_INSTANCE_COUNT_UPPER_BOUND = 0xffffffffU;
 
 enum : uint
 {
-    D3D11_HS_INPUT_FORK_INSTANCE_ID_REGISTER_COMPONENTS          = 0x00000001,
-    D3D11_HS_INPUT_FORK_INSTANCE_ID_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D11_HS_INPUT_FORK_INSTANCE_ID_REGISTER_COUNT               = 0x00000001,
-    D3D11_HS_INPUT_FORK_INSTANCE_ID_REGISTER_READS_PER_INST      = 0x00000002,
-    D3D11_HS_INPUT_FORK_INSTANCE_ID_REGISTER_READ_PORTS          = 0x00000001,
-}
-
-enum : uint
-{
-    D3D11_HS_INPUT_JOIN_INSTANCE_ID_REGISTER_COMPONENTS          = 0x00000001,
-    D3D11_HS_INPUT_JOIN_INSTANCE_ID_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D11_HS_INPUT_JOIN_INSTANCE_ID_REGISTER_COUNT               = 0x00000001,
-    D3D11_HS_INPUT_JOIN_INSTANCE_ID_REGISTER_READS_PER_INST      = 0x00000002,
-    D3D11_HS_INPUT_JOIN_INSTANCE_ID_REGISTER_READ_PORTS          = 0x00000001,
+    D3D11_HS_INPUT_FORK_INSTANCE_ID_REGISTER_COMPONENTS          = 0x00000001U,
+    D3D11_HS_INPUT_FORK_INSTANCE_ID_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D11_HS_INPUT_FORK_INSTANCE_ID_REGISTER_COUNT               = 0x00000001U,
+    D3D11_HS_INPUT_FORK_INSTANCE_ID_REGISTER_READS_PER_INST      = 0x00000002U,
+    D3D11_HS_INPUT_FORK_INSTANCE_ID_REGISTER_READ_PORTS          = 0x00000001U,
 }
 
 enum : uint
 {
-    D3D11_HS_INPUT_PRIMITIVE_ID_REGISTER_COMPONENTS          = 0x00000001,
-    D3D11_HS_INPUT_PRIMITIVE_ID_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D11_HS_INPUT_PRIMITIVE_ID_REGISTER_COUNT               = 0x00000001,
-    D3D11_HS_INPUT_PRIMITIVE_ID_REGISTER_READS_PER_INST      = 0x00000002,
-    D3D11_HS_INPUT_PRIMITIVE_ID_REGISTER_READ_PORTS          = 0x00000001,
+    D3D11_HS_INPUT_JOIN_INSTANCE_ID_REGISTER_COMPONENTS          = 0x00000001U,
+    D3D11_HS_INPUT_JOIN_INSTANCE_ID_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D11_HS_INPUT_JOIN_INSTANCE_ID_REGISTER_COUNT               = 0x00000001U,
+    D3D11_HS_INPUT_JOIN_INSTANCE_ID_REGISTER_READS_PER_INST      = 0x00000002U,
+    D3D11_HS_INPUT_JOIN_INSTANCE_ID_REGISTER_READ_PORTS          = 0x00000001U,
 }
 
-enum uint D3D11_HS_JOIN_PHASE_INSTANCE_COUNT_UPPER_BOUND = 0xffffffff;
+enum : uint
+{
+    D3D11_HS_INPUT_PRIMITIVE_ID_REGISTER_COMPONENTS          = 0x00000001U,
+    D3D11_HS_INPUT_PRIMITIVE_ID_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D11_HS_INPUT_PRIMITIVE_ID_REGISTER_COUNT               = 0x00000001U,
+    D3D11_HS_INPUT_PRIMITIVE_ID_REGISTER_READS_PER_INST      = 0x00000002U,
+    D3D11_HS_INPUT_PRIMITIVE_ID_REGISTER_READ_PORTS          = 0x00000001U,
+}
+
+enum uint D3D11_HS_JOIN_PHASE_INSTANCE_COUNT_UPPER_BOUND = 0xffffffffU;
 
 enum : float
 {
@@ -2892,71 +3000,71 @@ enum : float
 
 enum : uint
 {
-    D3D11_HS_OUTPUT_CONTROL_POINTS_MAX_TOTAL_SCALARS              = 0x00000f80,
-    D3D11_HS_OUTPUT_CONTROL_POINT_ID_REGISTER_COMPONENTS          = 0x00000001,
-    D3D11_HS_OUTPUT_CONTROL_POINT_ID_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D11_HS_OUTPUT_CONTROL_POINT_ID_REGISTER_COUNT               = 0x00000001,
-    D3D11_HS_OUTPUT_CONTROL_POINT_ID_REGISTER_READS_PER_INST      = 0x00000002,
-    D3D11_HS_OUTPUT_CONTROL_POINT_ID_REGISTER_READ_PORTS          = 0x00000001,
+    D3D11_HS_OUTPUT_CONTROL_POINTS_MAX_TOTAL_SCALARS              = 0x00000f80U,
+    D3D11_HS_OUTPUT_CONTROL_POINT_ID_REGISTER_COMPONENTS          = 0x00000001U,
+    D3D11_HS_OUTPUT_CONTROL_POINT_ID_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D11_HS_OUTPUT_CONTROL_POINT_ID_REGISTER_COUNT               = 0x00000001U,
+    D3D11_HS_OUTPUT_CONTROL_POINT_ID_REGISTER_READS_PER_INST      = 0x00000002U,
+    D3D11_HS_OUTPUT_CONTROL_POINT_ID_REGISTER_READ_PORTS          = 0x00000001U,
 }
 
 enum : uint
 {
-    D3D11_HS_OUTPUT_PATCH_CONSTANT_REGISTER_COMPONENTS          = 0x00000004,
-    D3D11_HS_OUTPUT_PATCH_CONSTANT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D11_HS_OUTPUT_PATCH_CONSTANT_REGISTER_COUNT               = 0x00000020,
-    D3D11_HS_OUTPUT_PATCH_CONSTANT_REGISTER_READS_PER_INST      = 0x00000002,
-    D3D11_HS_OUTPUT_PATCH_CONSTANT_REGISTER_READ_PORTS          = 0x00000001,
-    D3D11_HS_OUTPUT_PATCH_CONSTANT_REGISTER_SCALAR_COMPONENTS   = 0x00000080,
+    D3D11_HS_OUTPUT_PATCH_CONSTANT_REGISTER_COMPONENTS          = 0x00000004U,
+    D3D11_HS_OUTPUT_PATCH_CONSTANT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D11_HS_OUTPUT_PATCH_CONSTANT_REGISTER_COUNT               = 0x00000020U,
+    D3D11_HS_OUTPUT_PATCH_CONSTANT_REGISTER_READS_PER_INST      = 0x00000002U,
+    D3D11_HS_OUTPUT_PATCH_CONSTANT_REGISTER_READ_PORTS          = 0x00000001U,
+    D3D11_HS_OUTPUT_PATCH_CONSTANT_REGISTER_SCALAR_COMPONENTS   = 0x00000080U,
 }
 
-enum uint D3D11_IA_DEFAULT_INDEX_BUFFER_OFFSET_IN_BYTES = 0x00000000;
+enum uint D3D11_IA_DEFAULT_INDEX_BUFFER_OFFSET_IN_BYTES = 0x00000000U;
 
 enum : uint
 {
-    D3D11_IA_DEFAULT_PRIMITIVE_TOPOLOGY            = 0x00000000,
-    D3D11_IA_DEFAULT_VERTEX_BUFFER_OFFSET_IN_BYTES = 0x00000000,
+    D3D11_IA_DEFAULT_PRIMITIVE_TOPOLOGY            = 0x00000000U,
+    D3D11_IA_DEFAULT_VERTEX_BUFFER_OFFSET_IN_BYTES = 0x00000000U,
 }
 
-enum uint D3D11_IA_INDEX_INPUT_RESOURCE_SLOT_COUNT = 0x00000001;
-enum uint D3D11_IA_INSTANCE_ID_BIT_COUNT = 0x00000020;
-enum uint D3D11_IA_INTEGER_ARITHMETIC_BIT_COUNT = 0x00000020;
-enum uint D3D11_IA_PATCH_MAX_CONTROL_POINT_COUNT = 0x00000020;
-enum uint D3D11_IA_PRIMITIVE_ID_BIT_COUNT = 0x00000020;
+enum uint D3D11_IA_INDEX_INPUT_RESOURCE_SLOT_COUNT = 0x00000001U;
+enum uint D3D11_IA_INSTANCE_ID_BIT_COUNT = 0x00000020U;
+enum uint D3D11_IA_INTEGER_ARITHMETIC_BIT_COUNT = 0x00000020U;
+enum uint D3D11_IA_PATCH_MAX_CONTROL_POINT_COUNT = 0x00000020U;
+enum uint D3D11_IA_PRIMITIVE_ID_BIT_COUNT = 0x00000020U;
 
 enum : uint
 {
-    D3D11_IA_VERTEX_ID_BIT_COUNT                        = 0x00000020,
-    D3D11_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT           = 0x00000020,
-    D3D11_IA_VERTEX_INPUT_STRUCTURE_ELEMENTS_COMPONENTS = 0x00000080,
-    D3D11_IA_VERTEX_INPUT_STRUCTURE_ELEMENT_COUNT       = 0x00000020,
+    D3D11_IA_VERTEX_ID_BIT_COUNT                        = 0x00000020U,
+    D3D11_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT           = 0x00000020U,
+    D3D11_IA_VERTEX_INPUT_STRUCTURE_ELEMENTS_COMPONENTS = 0x00000080U,
+    D3D11_IA_VERTEX_INPUT_STRUCTURE_ELEMENT_COUNT       = 0x00000020U,
 }
 
 enum : uint
 {
-    D3D11_INTEGER_DIVIDE_BY_ZERO_QUOTIENT  = 0xffffffff,
-    D3D11_INTEGER_DIVIDE_BY_ZERO_REMAINDER = 0xffffffff,
+    D3D11_INTEGER_DIVIDE_BY_ZERO_QUOTIENT  = 0xffffffffU,
+    D3D11_INTEGER_DIVIDE_BY_ZERO_REMAINDER = 0xffffffffU,
 }
 
-enum uint D3D11_KEEP_RENDER_TARGETS_AND_DEPTH_STENCIL = 0xffffffff;
-enum uint D3D11_KEEP_UNORDERED_ACCESS_VIEWS = 0xffffffff;
+enum uint D3D11_KEEP_RENDER_TARGETS_AND_DEPTH_STENCIL = 0xffffffffU;
+enum uint D3D11_KEEP_UNORDERED_ACCESS_VIEWS = 0xffffffffU;
 enum float D3D11_LINEAR_GAMMA = 0x1p+0;
-enum uint D3D11_MAJOR_VERSION = 0x0000000b;
+enum uint D3D11_MAJOR_VERSION = 0x0000000bU;
 enum float D3D11_MAX_BORDER_COLOR_COMPONENT = 0x1p+0;
 enum float D3D11_MAX_DEPTH = 0x1p+0;
 
 enum : uint
 {
-    D3D11_MAX_MAXANISOTROPY            = 0x00000010,
-    D3D11_MAX_MULTISAMPLE_SAMPLE_COUNT = 0x00000020,
+    D3D11_MAX_MAXANISOTROPY            = 0x00000010U,
+    D3D11_MAX_MULTISAMPLE_SAMPLE_COUNT = 0x00000020U,
 }
 
 enum float D3D11_MAX_POSITION_VALUE = 0x1.a36e2ep+114;
-enum uint D3D11_MAX_TEXTURE_DIMENSION_2_TO_EXP = 0x00000011;
-enum uint D3D11_MINOR_VERSION = 0x00000000;
+enum uint D3D11_MAX_TEXTURE_DIMENSION_2_TO_EXP = 0x00000011U;
+enum uint D3D11_MINOR_VERSION = 0x00000000U;
 enum float D3D11_MIN_BORDER_COLOR_COMPONENT = 0x0p+0;
 enum float D3D11_MIN_DEPTH = 0x0p+0;
-enum uint D3D11_MIN_MAXANISOTROPY = 0x00000000;
+enum uint D3D11_MIN_MAXANISOTROPY = 0x00000000U;
 
 enum : float
 {
@@ -2966,128 +3074,128 @@ enum : float
 
 enum : uint
 {
-    D3D11_MIP_LOD_FRACTIONAL_BIT_COUNT = 0x00000008,
-    D3D11_MIP_LOD_RANGE_BIT_COUNT      = 0x00000008,
+    D3D11_MIP_LOD_FRACTIONAL_BIT_COUNT = 0x00000008U,
+    D3D11_MIP_LOD_RANGE_BIT_COUNT      = 0x00000008U,
 }
 
 enum float D3D11_MULTISAMPLE_ANTIALIAS_LINE_WIDTH = 0x1.666666p+0;
-enum uint D3D11_NONSAMPLE_FETCH_OUT_OF_RANGE_ACCESS_RESULT = 0x00000000;
-enum uint D3D11_PIXEL_ADDRESS_RANGE_BIT_COUNT = 0x0000000f;
-enum uint D3D11_PRE_SCISSOR_PIXEL_ADDRESS_RANGE_BIT_COUNT = 0x00000010;
+enum uint D3D11_NONSAMPLE_FETCH_OUT_OF_RANGE_ACCESS_RESULT = 0x00000000U;
+enum uint D3D11_PIXEL_ADDRESS_RANGE_BIT_COUNT = 0x0000000fU;
+enum uint D3D11_PRE_SCISSOR_PIXEL_ADDRESS_RANGE_BIT_COUNT = 0x00000010U;
 
 enum : uint
 {
-    D3D11_PS_CS_UAV_REGISTER_COMPONENTS     = 0x00000001,
-    D3D11_PS_CS_UAV_REGISTER_COUNT          = 0x00000008,
-    D3D11_PS_CS_UAV_REGISTER_READS_PER_INST = 0x00000001,
-    D3D11_PS_CS_UAV_REGISTER_READ_PORTS     = 0x00000001,
+    D3D11_PS_CS_UAV_REGISTER_COMPONENTS     = 0x00000001U,
+    D3D11_PS_CS_UAV_REGISTER_COUNT          = 0x00000008U,
+    D3D11_PS_CS_UAV_REGISTER_READS_PER_INST = 0x00000001U,
+    D3D11_PS_CS_UAV_REGISTER_READ_PORTS     = 0x00000001U,
 }
 
 enum : uint
 {
-    D3D11_PS_FRONTFACING_DEFAULT_VALUE = 0xffffffff,
-    D3D11_PS_FRONTFACING_FALSE_VALUE   = 0x00000000,
-    D3D11_PS_FRONTFACING_TRUE_VALUE    = 0xffffffff,
+    D3D11_PS_FRONTFACING_DEFAULT_VALUE = 0xffffffffU,
+    D3D11_PS_FRONTFACING_FALSE_VALUE   = 0x00000000U,
+    D3D11_PS_FRONTFACING_TRUE_VALUE    = 0xffffffffU,
 }
 
 enum : uint
 {
-    D3D11_PS_INPUT_REGISTER_COMPONENTS          = 0x00000004,
-    D3D11_PS_INPUT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D11_PS_INPUT_REGISTER_COUNT               = 0x00000020,
-    D3D11_PS_INPUT_REGISTER_READS_PER_INST      = 0x00000002,
-    D3D11_PS_INPUT_REGISTER_READ_PORTS          = 0x00000001,
+    D3D11_PS_INPUT_REGISTER_COMPONENTS          = 0x00000004U,
+    D3D11_PS_INPUT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D11_PS_INPUT_REGISTER_COUNT               = 0x00000020U,
+    D3D11_PS_INPUT_REGISTER_READS_PER_INST      = 0x00000002U,
+    D3D11_PS_INPUT_REGISTER_READ_PORTS          = 0x00000001U,
 }
 
 enum float D3D11_PS_LEGACY_PIXEL_CENTER_FRACTIONAL_COMPONENT = 0x0p+0;
 
 enum : uint
 {
-    D3D11_PS_OUTPUT_DEPTH_REGISTER_COMPONENTS          = 0x00000001,
-    D3D11_PS_OUTPUT_DEPTH_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D11_PS_OUTPUT_DEPTH_REGISTER_COUNT               = 0x00000001,
-    D3D11_PS_OUTPUT_MASK_REGISTER_COMPONENTS           = 0x00000001,
-    D3D11_PS_OUTPUT_MASK_REGISTER_COMPONENT_BIT_COUNT  = 0x00000020,
-    D3D11_PS_OUTPUT_MASK_REGISTER_COUNT                = 0x00000001,
-    D3D11_PS_OUTPUT_REGISTER_COMPONENTS                = 0x00000004,
-    D3D11_PS_OUTPUT_REGISTER_COMPONENT_BIT_COUNT       = 0x00000020,
-    D3D11_PS_OUTPUT_REGISTER_COUNT                     = 0x00000008,
+    D3D11_PS_OUTPUT_DEPTH_REGISTER_COMPONENTS          = 0x00000001U,
+    D3D11_PS_OUTPUT_DEPTH_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D11_PS_OUTPUT_DEPTH_REGISTER_COUNT               = 0x00000001U,
+    D3D11_PS_OUTPUT_MASK_REGISTER_COMPONENTS           = 0x00000001U,
+    D3D11_PS_OUTPUT_MASK_REGISTER_COMPONENT_BIT_COUNT  = 0x00000020U,
+    D3D11_PS_OUTPUT_MASK_REGISTER_COUNT                = 0x00000001U,
+    D3D11_PS_OUTPUT_REGISTER_COMPONENTS                = 0x00000004U,
+    D3D11_PS_OUTPUT_REGISTER_COMPONENT_BIT_COUNT       = 0x00000020U,
+    D3D11_PS_OUTPUT_REGISTER_COUNT                     = 0x00000008U,
 }
 
 enum float D3D11_PS_PIXEL_CENTER_FRACTIONAL_COMPONENT = 0x1p-1;
-enum uint D3D11_RAW_UAV_SRV_BYTE_ALIGNMENT = 0x00000010;
-enum uint D3D11_REQ_BLEND_OBJECT_COUNT_PER_DEVICE = 0x00001000;
-enum uint D3D11_REQ_BUFFER_RESOURCE_TEXEL_COUNT_2_TO_EXP = 0x0000001b;
-enum uint D3D11_REQ_CONSTANT_BUFFER_ELEMENT_COUNT = 0x00001000;
-enum uint D3D11_REQ_DEPTH_STENCIL_OBJECT_COUNT_PER_DEVICE = 0x00001000;
-enum uint D3D11_REQ_DRAWINDEXED_INDEX_COUNT_2_TO_EXP = 0x00000020;
-enum uint D3D11_REQ_DRAW_VERTEX_COUNT_2_TO_EXP = 0x00000020;
-enum uint D3D11_REQ_FILTERING_HW_ADDRESSABLE_RESOURCE_DIMENSION = 0x00004000;
-enum uint D3D11_REQ_GS_INVOCATION_32BIT_OUTPUT_COMPONENT_LIMIT = 0x00000400;
-enum uint D3D11_REQ_IMMEDIATE_CONSTANT_BUFFER_ELEMENT_COUNT = 0x00001000;
+enum uint D3D11_RAW_UAV_SRV_BYTE_ALIGNMENT = 0x00000010U;
+enum uint D3D11_REQ_BLEND_OBJECT_COUNT_PER_DEVICE = 0x00001000U;
+enum uint D3D11_REQ_BUFFER_RESOURCE_TEXEL_COUNT_2_TO_EXP = 0x0000001bU;
+enum uint D3D11_REQ_CONSTANT_BUFFER_ELEMENT_COUNT = 0x00001000U;
+enum uint D3D11_REQ_DEPTH_STENCIL_OBJECT_COUNT_PER_DEVICE = 0x00001000U;
+enum uint D3D11_REQ_DRAWINDEXED_INDEX_COUNT_2_TO_EXP = 0x00000020U;
+enum uint D3D11_REQ_DRAW_VERTEX_COUNT_2_TO_EXP = 0x00000020U;
+enum uint D3D11_REQ_FILTERING_HW_ADDRESSABLE_RESOURCE_DIMENSION = 0x00004000U;
+enum uint D3D11_REQ_GS_INVOCATION_32BIT_OUTPUT_COMPONENT_LIMIT = 0x00000400U;
+enum uint D3D11_REQ_IMMEDIATE_CONSTANT_BUFFER_ELEMENT_COUNT = 0x00001000U;
 
 enum : uint
 {
-    D3D11_REQ_MAXANISOTROPY                         = 0x00000010,
-    D3D11_REQ_MIP_LEVELS                            = 0x0000000f,
-    D3D11_REQ_MULTI_ELEMENT_STRUCTURE_SIZE_IN_BYTES = 0x00000800,
+    D3D11_REQ_MAXANISOTROPY                         = 0x00000010U,
+    D3D11_REQ_MIP_LEVELS                            = 0x0000000fU,
+    D3D11_REQ_MULTI_ELEMENT_STRUCTURE_SIZE_IN_BYTES = 0x00000800U,
 }
 
-enum uint D3D11_REQ_RASTERIZER_OBJECT_COUNT_PER_DEVICE = 0x00001000;
-enum uint D3D11_REQ_RENDER_TO_BUFFER_WINDOW_WIDTH = 0x00004000;
-enum uint D3D11_REQ_RESOURCE_SIZE_IN_MEGABYTES_EXPRESSION_A_TERM = 0x00000080;
+enum uint D3D11_REQ_RASTERIZER_OBJECT_COUNT_PER_DEVICE = 0x00001000U;
+enum uint D3D11_REQ_RENDER_TO_BUFFER_WINDOW_WIDTH = 0x00004000U;
+enum uint D3D11_REQ_RESOURCE_SIZE_IN_MEGABYTES_EXPRESSION_A_TERM = 0x00000080U;
 enum float D3D11_REQ_RESOURCE_SIZE_IN_MEGABYTES_EXPRESSION_B_TERM = 0x1p-2;
-enum uint D3D11_REQ_RESOURCE_SIZE_IN_MEGABYTES_EXPRESSION_C_TERM = 0x00000800;
-enum uint D3D11_REQ_RESOURCE_VIEW_COUNT_PER_DEVICE_2_TO_EXP = 0x00000014;
-enum uint D3D11_REQ_SAMPLER_OBJECT_COUNT_PER_DEVICE = 0x00001000;
+enum uint D3D11_REQ_RESOURCE_SIZE_IN_MEGABYTES_EXPRESSION_C_TERM = 0x00000800U;
+enum uint D3D11_REQ_RESOURCE_VIEW_COUNT_PER_DEVICE_2_TO_EXP = 0x00000014U;
+enum uint D3D11_REQ_SAMPLER_OBJECT_COUNT_PER_DEVICE = 0x00001000U;
 
 enum : uint
 {
-    D3D11_REQ_TEXTURE1D_ARRAY_AXIS_DIMENSION = 0x00000800,
-    D3D11_REQ_TEXTURE1D_U_DIMENSION          = 0x00004000,
-    D3D11_REQ_TEXTURE2D_ARRAY_AXIS_DIMENSION = 0x00000800,
-    D3D11_REQ_TEXTURE2D_U_OR_V_DIMENSION     = 0x00004000,
-    D3D11_REQ_TEXTURE3D_U_V_OR_W_DIMENSION   = 0x00000800,
-    D3D11_REQ_TEXTURECUBE_DIMENSION          = 0x00004000,
+    D3D11_REQ_TEXTURE1D_ARRAY_AXIS_DIMENSION = 0x00000800U,
+    D3D11_REQ_TEXTURE1D_U_DIMENSION          = 0x00004000U,
+    D3D11_REQ_TEXTURE2D_ARRAY_AXIS_DIMENSION = 0x00000800U,
+    D3D11_REQ_TEXTURE2D_U_OR_V_DIMENSION     = 0x00004000U,
+    D3D11_REQ_TEXTURE3D_U_V_OR_W_DIMENSION   = 0x00000800U,
+    D3D11_REQ_TEXTURECUBE_DIMENSION          = 0x00004000U,
 }
 
-enum uint D3D11_RESINFO_INSTRUCTION_MISSING_COMPONENT_RETVAL = 0x00000000;
+enum uint D3D11_RESINFO_INSTRUCTION_MISSING_COMPONENT_RETVAL = 0x00000000U;
 
 enum : uint
 {
-    D3D11_SHADER_MAJOR_VERSION            = 0x00000005,
-    D3D11_SHADER_MAX_INSTANCES            = 0x0000ffff,
-    D3D11_SHADER_MAX_INTERFACES           = 0x000000fd,
-    D3D11_SHADER_MAX_INTERFACE_CALL_SITES = 0x00001000,
-    D3D11_SHADER_MAX_TYPES                = 0x0000ffff,
-    D3D11_SHADER_MINOR_VERSION            = 0x00000000,
+    D3D11_SHADER_MAJOR_VERSION            = 0x00000005U,
+    D3D11_SHADER_MAX_INSTANCES            = 0x0000ffffU,
+    D3D11_SHADER_MAX_INTERFACES           = 0x000000fdU,
+    D3D11_SHADER_MAX_INTERFACE_CALL_SITES = 0x00001000U,
+    D3D11_SHADER_MAX_TYPES                = 0x0000ffffU,
+    D3D11_SHADER_MINOR_VERSION            = 0x00000000U,
 }
 
 enum : uint
 {
-    D3D11_SHIFT_INSTRUCTION_PAD_VALUE             = 0x00000000,
-    D3D11_SHIFT_INSTRUCTION_SHIFT_VALUE_BIT_COUNT = 0x00000005,
+    D3D11_SHIFT_INSTRUCTION_PAD_VALUE             = 0x00000000U,
+    D3D11_SHIFT_INSTRUCTION_SHIFT_VALUE_BIT_COUNT = 0x00000005U,
 }
 
-enum uint D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT = 0x00000008;
+enum uint D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT = 0x00000008U;
 
 enum : uint
 {
-    D3D11_SO_BUFFER_MAX_STRIDE_IN_BYTES       = 0x00000800,
-    D3D11_SO_BUFFER_MAX_WRITE_WINDOW_IN_BYTES = 0x00000200,
+    D3D11_SO_BUFFER_MAX_STRIDE_IN_BYTES       = 0x00000800U,
+    D3D11_SO_BUFFER_MAX_WRITE_WINDOW_IN_BYTES = 0x00000200U,
 }
 
-enum uint D3D11_SO_BUFFER_SLOT_COUNT = 0x00000004;
-enum uint D3D11_SO_DDI_REGISTER_INDEX_DENOTING_GAP = 0xffffffff;
-enum uint D3D11_SO_NO_RASTERIZED_STREAM = 0xffffffff;
-enum uint D3D11_SO_OUTPUT_COMPONENT_COUNT = 0x00000080;
-enum uint D3D11_SO_STREAM_COUNT = 0x00000004;
+enum uint D3D11_SO_BUFFER_SLOT_COUNT = 0x00000004U;
+enum uint D3D11_SO_DDI_REGISTER_INDEX_DENOTING_GAP = 0xffffffffU;
+enum uint D3D11_SO_NO_RASTERIZED_STREAM = 0xffffffffU;
+enum uint D3D11_SO_OUTPUT_COMPONENT_COUNT = 0x00000080U;
+enum uint D3D11_SO_STREAM_COUNT = 0x00000004U;
 
 enum : uint
 {
-    D3D11_SPEC_DATE_DAY   = 0x00000010,
-    D3D11_SPEC_DATE_MONTH = 0x00000005,
-    D3D11_SPEC_DATE_YEAR  = 0x000007db,
+    D3D11_SPEC_DATE_DAY   = 0x00000010U,
+    D3D11_SPEC_DATE_MONTH = 0x00000005U,
+    D3D11_SPEC_DATE_YEAR  = 0x000007dbU,
 }
 
 enum double D3D11_SPEC_VERSION = 0x1.11eb851eb851fp+0;
@@ -3105,94 +3213,94 @@ enum : float
 
 enum : uint
 {
-    D3D11_STANDARD_COMPONENT_BIT_COUNT         = 0x00000020,
-    D3D11_STANDARD_COMPONENT_BIT_COUNT_DOUBLED = 0x00000040,
+    D3D11_STANDARD_COMPONENT_BIT_COUNT         = 0x00000020U,
+    D3D11_STANDARD_COMPONENT_BIT_COUNT_DOUBLED = 0x00000040U,
 }
 
-enum uint D3D11_STANDARD_MAXIMUM_ELEMENT_ALIGNMENT_BYTE_MULTIPLE = 0x00000004;
+enum uint D3D11_STANDARD_MAXIMUM_ELEMENT_ALIGNMENT_BYTE_MULTIPLE = 0x00000004U;
 
 enum : uint
 {
-    D3D11_STANDARD_PIXEL_COMPONENT_COUNT        = 0x00000080,
-    D3D11_STANDARD_PIXEL_ELEMENT_COUNT          = 0x00000020,
-    D3D11_STANDARD_VECTOR_SIZE                  = 0x00000004,
-    D3D11_STANDARD_VERTEX_ELEMENT_COUNT         = 0x00000020,
-    D3D11_STANDARD_VERTEX_TOTAL_COMPONENT_COUNT = 0x00000040,
+    D3D11_STANDARD_PIXEL_COMPONENT_COUNT        = 0x00000080U,
+    D3D11_STANDARD_PIXEL_ELEMENT_COUNT          = 0x00000020U,
+    D3D11_STANDARD_VECTOR_SIZE                  = 0x00000004U,
+    D3D11_STANDARD_VERTEX_ELEMENT_COUNT         = 0x00000020U,
+    D3D11_STANDARD_VERTEX_TOTAL_COMPONENT_COUNT = 0x00000040U,
 }
 
-enum uint D3D11_SUBPIXEL_FRACTIONAL_BIT_COUNT = 0x00000008;
-enum uint D3D11_SUBTEXEL_FRACTIONAL_BIT_COUNT = 0x00000008;
+enum uint D3D11_SUBPIXEL_FRACTIONAL_BIT_COUNT = 0x00000008U;
+enum uint D3D11_SUBTEXEL_FRACTIONAL_BIT_COUNT = 0x00000008U;
 
 enum : uint
 {
-    D3D11_TESSELLATOR_MAX_EVEN_TESSELLATION_FACTOR            = 0x00000040,
-    D3D11_TESSELLATOR_MAX_ISOLINE_DENSITY_TESSELLATION_FACTOR = 0x00000040,
+    D3D11_TESSELLATOR_MAX_EVEN_TESSELLATION_FACTOR            = 0x00000040U,
+    D3D11_TESSELLATOR_MAX_ISOLINE_DENSITY_TESSELLATION_FACTOR = 0x00000040U,
 }
 
 enum : uint
 {
-    D3D11_TESSELLATOR_MAX_ODD_TESSELLATION_FACTOR             = 0x0000003f,
-    D3D11_TESSELLATOR_MAX_TESSELLATION_FACTOR                 = 0x00000040,
-    D3D11_TESSELLATOR_MIN_EVEN_TESSELLATION_FACTOR            = 0x00000002,
-    D3D11_TESSELLATOR_MIN_ISOLINE_DENSITY_TESSELLATION_FACTOR = 0x00000001,
+    D3D11_TESSELLATOR_MAX_ODD_TESSELLATION_FACTOR             = 0x0000003fU,
+    D3D11_TESSELLATOR_MAX_TESSELLATION_FACTOR                 = 0x00000040U,
+    D3D11_TESSELLATOR_MIN_EVEN_TESSELLATION_FACTOR            = 0x00000002U,
+    D3D11_TESSELLATOR_MIN_ISOLINE_DENSITY_TESSELLATION_FACTOR = 0x00000001U,
 }
 
-enum uint D3D11_TESSELLATOR_MIN_ODD_TESSELLATION_FACTOR = 0x00000001;
-enum uint D3D11_TEXEL_ADDRESS_RANGE_BIT_COUNT = 0x00000010;
-enum uint D3D11_UNBOUND_MEMORY_ACCESS_RESULT = 0x00000000;
+enum uint D3D11_TESSELLATOR_MIN_ODD_TESSELLATION_FACTOR = 0x00000001U;
+enum uint D3D11_TEXEL_ADDRESS_RANGE_BIT_COUNT = 0x00000010U;
+enum uint D3D11_UNBOUND_MEMORY_ACCESS_RESULT = 0x00000000U;
 
 enum : uint
 {
-    D3D11_VIEWPORT_AND_SCISSORRECT_MAX_INDEX                 = 0x0000000f,
-    D3D11_VIEWPORT_AND_SCISSORRECT_OBJECT_COUNT_PER_PIPELINE = 0x00000010,
+    D3D11_VIEWPORT_AND_SCISSORRECT_MAX_INDEX                 = 0x0000000fU,
+    D3D11_VIEWPORT_AND_SCISSORRECT_OBJECT_COUNT_PER_PIPELINE = 0x00000010U,
 }
 
-enum uint D3D11_VIEWPORT_BOUNDS_MAX = 0x00007fff;
+enum uint D3D11_VIEWPORT_BOUNDS_MAX = 0x00007fffU;
 enum int D3D11_VIEWPORT_BOUNDS_MIN = 0xffff8000;
 
 enum : uint
 {
-    D3D11_VS_INPUT_REGISTER_COMPONENTS          = 0x00000004,
-    D3D11_VS_INPUT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D11_VS_INPUT_REGISTER_COUNT               = 0x00000020,
-    D3D11_VS_INPUT_REGISTER_READS_PER_INST      = 0x00000002,
-    D3D11_VS_INPUT_REGISTER_READ_PORTS          = 0x00000001,
+    D3D11_VS_INPUT_REGISTER_COMPONENTS          = 0x00000004U,
+    D3D11_VS_INPUT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D11_VS_INPUT_REGISTER_COUNT               = 0x00000020U,
+    D3D11_VS_INPUT_REGISTER_READS_PER_INST      = 0x00000002U,
+    D3D11_VS_INPUT_REGISTER_READ_PORTS          = 0x00000001U,
 }
 
 enum : uint
 {
-    D3D11_VS_OUTPUT_REGISTER_COMPONENTS          = 0x00000004,
-    D3D11_VS_OUTPUT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020,
-    D3D11_VS_OUTPUT_REGISTER_COUNT               = 0x00000020,
+    D3D11_VS_OUTPUT_REGISTER_COMPONENTS          = 0x00000004U,
+    D3D11_VS_OUTPUT_REGISTER_COMPONENT_BIT_COUNT = 0x00000020U,
+    D3D11_VS_OUTPUT_REGISTER_COUNT               = 0x00000020U,
 }
 
-enum uint D3D11_WHQL_CONTEXT_COUNT_FOR_RESOURCE_LIMIT = 0x0000000a;
-enum uint D3D11_WHQL_DRAWINDEXED_INDEX_COUNT_2_TO_EXP = 0x00000019;
-enum uint D3D11_WHQL_DRAW_VERTEX_COUNT_2_TO_EXP = 0x00000019;
-enum uint D3D11_1_UAV_SLOT_COUNT = 0x00000040;
-enum uint D3D11_2_TILED_RESOURCE_TILE_SIZE_IN_BYTES = 0x00010000;
+enum uint D3D11_WHQL_CONTEXT_COUNT_FOR_RESOURCE_LIMIT = 0x0000000aU;
+enum uint D3D11_WHQL_DRAWINDEXED_INDEX_COUNT_2_TO_EXP = 0x00000019U;
+enum uint D3D11_WHQL_DRAW_VERTEX_COUNT_2_TO_EXP = 0x00000019U;
+enum uint D3D11_1_UAV_SLOT_COUNT = 0x00000040U;
+enum uint D3D11_2_TILED_RESOURCE_TILE_SIZE_IN_BYTES = 0x00010000U;
 
 enum : uint
 {
-    D3D11_4_VIDEO_DECODER_MAX_HISTOGRAM_COMPONENTS   = 0x00000004,
-    D3D11_4_VIDEO_DECODER_HISTOGRAM_OFFSET_ALIGNMENT = 0x00000100,
+    D3D11_4_VIDEO_DECODER_MAX_HISTOGRAM_COMPONENTS   = 0x00000004U,
+    D3D11_4_VIDEO_DECODER_HISTOGRAM_OFFSET_ALIGNMENT = 0x00000100U,
 }
 
-enum uint _FACD3D11 = 0x0000087c;
-enum uint D3D11_APPEND_ALIGNED_ELEMENT = 0xffffffff;
+enum uint _FACD3D11 = 0x0000087cU;
+enum uint D3D11_APPEND_ALIGNED_ELEMENT = 0xffffffffU;
 
 enum : uint
 {
-    D3D11_FILTER_REDUCTION_TYPE_MASK  = 0x00000003,
-    D3D11_FILTER_REDUCTION_TYPE_SHIFT = 0x00000007,
+    D3D11_FILTER_REDUCTION_TYPE_MASK  = 0x00000003U,
+    D3D11_FILTER_REDUCTION_TYPE_SHIFT = 0x00000007U,
 }
 
-enum uint D3D11_FILTER_TYPE_MASK = 0x00000003;
-enum uint D3D11_MIN_FILTER_SHIFT = 0x00000004;
-enum uint D3D11_MAG_FILTER_SHIFT = 0x00000002;
-enum uint D3D11_MIP_FILTER_SHIFT = 0x00000000;
-enum uint D3D11_COMPARISON_FILTERING_BIT = 0x00000080;
-enum uint D3D11_ANISOTROPIC_FILTERING_BIT = 0x00000040;
+enum uint D3D11_FILTER_TYPE_MASK = 0x00000003U;
+enum uint D3D11_MIN_FILTER_SHIFT = 0x00000004U;
+enum uint D3D11_MAG_FILTER_SHIFT = 0x00000002U;
+enum uint D3D11_MIP_FILTER_SHIFT = 0x00000000U;
+enum uint D3D11_COMPARISON_FILTERING_BIT = 0x00000080U;
+enum uint D3D11_ANISOTROPIC_FILTERING_BIT = 0x00000040U;
 
 enum : GUID
 {
@@ -3295,21 +3403,21 @@ enum : GUID
 }
 
 enum GUID D3D11_KEY_EXCHANGE_RSAES_OAEP = GUID("c1949895-d72a-4a1d-8e5d-ed857d171520");
-enum uint D3D11_SDK_VERSION = 0x00000007;
-enum uint D3D11_PACKED_TILE = 0xffffffff;
-enum uint D3D11_SDK_LAYERS_VERSION = 0x00000001;
+enum uint D3D11_SDK_VERSION = 0x00000007U;
+enum uint D3D11_PACKED_TILE = 0xffffffffU;
+enum uint D3D11_SDK_LAYERS_VERSION = 0x00000001U;
 
 enum : uint
 {
-    D3D11_DEBUG_FEATURE_FLUSH_PER_RENDER_OP             = 0x00000001,
-    D3D11_DEBUG_FEATURE_FINISH_PER_RENDER_OP            = 0x00000002,
-    D3D11_DEBUG_FEATURE_PRESENT_PER_RENDER_OP           = 0x00000004,
-    D3D11_DEBUG_FEATURE_ALWAYS_DISCARD_OFFERED_RESOURCE = 0x00000008,
+    D3D11_DEBUG_FEATURE_FLUSH_PER_RENDER_OP             = 0x00000001U,
+    D3D11_DEBUG_FEATURE_FINISH_PER_RENDER_OP            = 0x00000002U,
+    D3D11_DEBUG_FEATURE_PRESENT_PER_RENDER_OP           = 0x00000004U,
+    D3D11_DEBUG_FEATURE_ALWAYS_DISCARD_OFFERED_RESOURCE = 0x00000008U,
 }
 
-enum uint D3D11_DEBUG_FEATURE_NEVER_DISCARD_OFFERED_RESOURCE = 0x00000010;
-enum uint D3D11_DEBUG_FEATURE_AVOID_BEHAVIOR_CHANGING_DEBUG_AIDS = 0x00000040;
-enum uint D3D11_DEBUG_FEATURE_DISABLE_TILED_RESOURCE_MAPPING_TRACKING_AND_VALIDATION = 0x00000080;
+enum uint D3D11_DEBUG_FEATURE_NEVER_DISCARD_OFFERED_RESOURCE = 0x00000010U;
+enum uint D3D11_DEBUG_FEATURE_AVOID_BEHAVIOR_CHANGING_DEBUG_AIDS = 0x00000040U;
+enum uint D3D11_DEBUG_FEATURE_DISABLE_TILED_RESOURCE_MAPPING_TRACKING_AND_VALIDATION = 0x00000080U;
 enum GUID DXGI_DEBUG_D3D11 = GUID("4b99317b-ac39-4aa6-bb0b-baa04784798f");
 enum const(wchar)* D3D11_REGKEY_PATH = "Software\\Microsoft\\Direct3D";
 enum const(wchar)* D3D11_MUTE_DEBUG_OUTPUT = "MuteDebugOutput";
@@ -3346,47 +3454,47 @@ enum : const(wchar)*
     D3D11_FORCE_SHADER_SKIP_OPTIMIZATION = "ForceShaderSkipOptimization",
 }
 
-enum uint D3D11_INFO_QUEUE_DEFAULT_MESSAGE_COUNT_LIMIT = 0x00000400;
+enum uint D3D11_INFO_QUEUE_DEFAULT_MESSAGE_COUNT_LIMIT = 0x00000400U;
 enum int D3D_RETURN_PARAMETER_INDEX = 0xffffffff;
 
 enum : uint
 {
-    D3D_SHADER_REQUIRES_DOUBLES                      = 0x00000001,
-    D3D_SHADER_REQUIRES_EARLY_DEPTH_STENCIL          = 0x00000002,
-    D3D_SHADER_REQUIRES_UAVS_AT_EVERY_STAGE          = 0x00000004,
-    D3D_SHADER_REQUIRES_64_UAVS                      = 0x00000008,
-    D3D_SHADER_REQUIRES_MINIMUM_PRECISION            = 0x00000010,
-    D3D_SHADER_REQUIRES_11_1_DOUBLE_EXTENSIONS       = 0x00000020,
-    D3D_SHADER_REQUIRES_11_1_SHADER_EXTENSIONS       = 0x00000040,
-    D3D_SHADER_REQUIRES_LEVEL_9_COMPARISON_FILTERING = 0x00000080,
-    D3D_SHADER_REQUIRES_TILED_RESOURCES              = 0x00000100,
+    D3D_SHADER_REQUIRES_DOUBLES                      = 0x00000001U,
+    D3D_SHADER_REQUIRES_EARLY_DEPTH_STENCIL          = 0x00000002U,
+    D3D_SHADER_REQUIRES_UAVS_AT_EVERY_STAGE          = 0x00000004U,
+    D3D_SHADER_REQUIRES_64_UAVS                      = 0x00000008U,
+    D3D_SHADER_REQUIRES_MINIMUM_PRECISION            = 0x00000010U,
+    D3D_SHADER_REQUIRES_11_1_DOUBLE_EXTENSIONS       = 0x00000020U,
+    D3D_SHADER_REQUIRES_11_1_SHADER_EXTENSIONS       = 0x00000040U,
+    D3D_SHADER_REQUIRES_LEVEL_9_COMPARISON_FILTERING = 0x00000080U,
+    D3D_SHADER_REQUIRES_TILED_RESOURCES              = 0x00000100U,
 }
 
 enum : uint
 {
-    D3D11_TRACE_COMPONENT_X = 0x00000001,
-    D3D11_TRACE_COMPONENT_Y = 0x00000002,
-    D3D11_TRACE_COMPONENT_Z = 0x00000004,
-    D3D11_TRACE_COMPONENT_W = 0x00000008,
+    D3D11_TRACE_COMPONENT_X = 0x00000001U,
+    D3D11_TRACE_COMPONENT_Y = 0x00000002U,
+    D3D11_TRACE_COMPONENT_Z = 0x00000004U,
+    D3D11_TRACE_COMPONENT_W = 0x00000008U,
 }
 
 enum : uint
 {
-    D3D11_SHADER_TRACE_FLAG_RECORD_REGISTER_WRITES = 0x00000001,
-    D3D11_SHADER_TRACE_FLAG_RECORD_REGISTER_READS  = 0x00000002,
+    D3D11_SHADER_TRACE_FLAG_RECORD_REGISTER_WRITES = 0x00000001U,
+    D3D11_SHADER_TRACE_FLAG_RECORD_REGISTER_READS  = 0x00000002U,
 }
 
-enum uint D3D11_TRACE_REGISTER_FLAGS_RELATIVE_INDEXING = 0x00000001;
+enum uint D3D11_TRACE_REGISTER_FLAGS_RELATIVE_INDEXING = 0x00000001U;
 
 enum : uint
 {
-    D3D11_TRACE_MISC_GS_EMIT        = 0x00000001,
-    D3D11_TRACE_MISC_GS_CUT         = 0x00000002,
-    D3D11_TRACE_MISC_PS_DISCARD     = 0x00000004,
-    D3D11_TRACE_MISC_GS_EMIT_STREAM = 0x00000008,
-    D3D11_TRACE_MISC_GS_CUT_STREAM  = 0x00000010,
-    D3D11_TRACE_MISC_HALT           = 0x00000020,
-    D3D11_TRACE_MISC_MESSAGE        = 0x00000040,
+    D3D11_TRACE_MISC_GS_EMIT        = 0x00000001U,
+    D3D11_TRACE_MISC_GS_CUT         = 0x00000002U,
+    D3D11_TRACE_MISC_PS_DISCARD     = 0x00000004U,
+    D3D11_TRACE_MISC_GS_EMIT_STREAM = 0x00000008U,
+    D3D11_TRACE_MISC_GS_CUT_STREAM  = 0x00000010U,
+    D3D11_TRACE_MISC_HALT           = 0x00000020U,
+    D3D11_TRACE_MISC_MESSAGE        = 0x00000040U,
 }
 
 enum : const(wchar)*
@@ -3398,9 +3506,9 @@ enum : const(wchar)*
 
 enum : uint
 {
-    D3DX11_FFT_MAX_PRECOMPUTE_BUFFERS = 0x00000004,
-    D3DX11_FFT_MAX_TEMP_BUFFERS       = 0x00000004,
-    D3DX11_FFT_MAX_DIMENSIONS         = 0x00000020,
+    D3DX11_FFT_MAX_PRECOMPUTE_BUFFERS = 0x00000004U,
+    D3DX11_FFT_MAX_TEMP_BUFFERS       = 0x00000004U,
+    D3DX11_FFT_MAX_DIMENSIONS         = 0x00000020U,
 }
 
 // Callbacks
@@ -3420,7 +3528,7 @@ alias PFN_D3D11_CREATE_DEVICE_AND_SWAP_CHAIN = HRESULT function(IDXGIAdapter par
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_input_element_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_input_element_desc
 struct D3D11_INPUT_ELEMENT_DESC
 {
     const(PSTR) SemanticName;
@@ -3432,7 +3540,7 @@ struct D3D11_INPUT_ELEMENT_DESC
     uint        InstanceDataStepRate;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_so_declaration_entry))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_so_declaration_entry
 struct D3D11_SO_DECLARATION_ENTRY
 {
     uint        Stream;
@@ -3443,7 +3551,7 @@ struct D3D11_SO_DECLARATION_ENTRY
     ubyte       OutputSlot;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_viewport))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_viewport
 struct D3D11_VIEWPORT
 {
     float TopLeftX;
@@ -3454,7 +3562,7 @@ struct D3D11_VIEWPORT
     float MaxDepth;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_draw_instanced_indirect_args))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_draw_instanced_indirect_args
 struct D3D11_DRAW_INSTANCED_INDIRECT_ARGS
 {
     uint VertexCountPerInstance;
@@ -3463,7 +3571,7 @@ struct D3D11_DRAW_INSTANCED_INDIRECT_ARGS
     uint StartInstanceLocation;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_draw_indexed_instanced_indirect_args))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_draw_indexed_instanced_indirect_args
 struct D3D11_DRAW_INDEXED_INSTANCED_INDIRECT_ARGS
 {
     uint IndexCountPerInstance;
@@ -3473,7 +3581,7 @@ struct D3D11_DRAW_INDEXED_INSTANCED_INDIRECT_ARGS
     uint StartInstanceLocation;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_box))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_box
 struct D3D11_BOX
 {
     uint left;
@@ -3484,7 +3592,7 @@ struct D3D11_BOX
     uint back;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_depth_stencilop_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_depth_stencilop_desc
 struct D3D11_DEPTH_STENCILOP_DESC
 {
     D3D11_STENCIL_OP StencilFailOp;
@@ -3493,7 +3601,7 @@ struct D3D11_DEPTH_STENCILOP_DESC
     D3D11_COMPARISON_FUNC StencilFunc;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_depth_stencil_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_depth_stencil_desc
 struct D3D11_DEPTH_STENCIL_DESC
 {
     BOOL  DepthEnable;
@@ -3506,7 +3614,7 @@ struct D3D11_DEPTH_STENCIL_DESC
     D3D11_DEPTH_STENCILOP_DESC BackFace;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_render_target_blend_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_render_target_blend_desc
 struct D3D11_RENDER_TARGET_BLEND_DESC
 {
     BOOL           BlendEnable;
@@ -3519,7 +3627,7 @@ struct D3D11_RENDER_TARGET_BLEND_DESC
     ubyte          RenderTargetWriteMask;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_blend_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_blend_desc
 struct D3D11_BLEND_DESC
 {
     BOOL AlphaToCoverageEnable;
@@ -3527,7 +3635,7 @@ struct D3D11_BLEND_DESC
     D3D11_RENDER_TARGET_BLEND_DESC[8] RenderTarget;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_rasterizer_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_rasterizer_desc
 struct D3D11_RASTERIZER_DESC
 {
     D3D11_FILL_MODE FillMode;
@@ -3542,7 +3650,7 @@ struct D3D11_RASTERIZER_DESC
     BOOL            AntialiasedLineEnable;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_subresource_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_subresource_data
 struct D3D11_SUBRESOURCE_DATA
 {
     const(void)* pSysMem;
@@ -3550,7 +3658,7 @@ struct D3D11_SUBRESOURCE_DATA
     uint         SysMemSlicePitch;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_mapped_subresource))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_mapped_subresource
 struct D3D11_MAPPED_SUBRESOURCE
 {
     void* pData;
@@ -3558,7 +3666,7 @@ struct D3D11_MAPPED_SUBRESOURCE
     uint  DepthPitch;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_buffer_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_buffer_desc
 struct D3D11_BUFFER_DESC
 {
     uint        ByteWidth;
@@ -3569,7 +3677,7 @@ struct D3D11_BUFFER_DESC
     uint        StructureByteStride;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_texture1d_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_texture1d_desc
 struct D3D11_TEXTURE1D_DESC
 {
     uint        Width;
@@ -3582,7 +3690,7 @@ struct D3D11_TEXTURE1D_DESC
     /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(D3D11_RESOURCE_MISC_FLAG))], [])*/uint MiscFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_texture2d_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_texture2d_desc
 struct D3D11_TEXTURE2D_DESC
 {
     uint             Width;
@@ -3597,7 +3705,7 @@ struct D3D11_TEXTURE2D_DESC
     /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(D3D11_RESOURCE_MISC_FLAG))], [])*/uint MiscFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_texture3d_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_texture3d_desc
 struct D3D11_TEXTURE3D_DESC
 {
     uint        Width;
@@ -3611,14 +3719,22 @@ struct D3D11_TEXTURE3D_DESC
     /*FIELD ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(D3D11_RESOURCE_MISC_FLAG))], [])*/uint MiscFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_buffer_srv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_buffer_srv
 struct D3D11_BUFFER_SRV
 {
-    _Anonymous1_e__Union Anonymous1;
-    _Anonymous2_e__Union Anonymous2;
+    union
+    {
+        uint FirstElement;
+        uint ElementOffset;
+    }
+    union
+    {
+        uint NumElements;
+        uint ElementWidth;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_bufferex_srv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_bufferex_srv
 struct D3D11_BUFFEREX_SRV
 {
     uint FirstElement;
@@ -3626,14 +3742,14 @@ struct D3D11_BUFFEREX_SRV
     uint Flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex1d_srv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex1d_srv
 struct D3D11_TEX1D_SRV
 {
     uint MostDetailedMip;
     uint MipLevels;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex1d_array_srv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex1d_array_srv
 struct D3D11_TEX1D_ARRAY_SRV
 {
     uint MostDetailedMip;
@@ -3642,14 +3758,14 @@ struct D3D11_TEX1D_ARRAY_SRV
     uint ArraySize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex2d_srv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex2d_srv
 struct D3D11_TEX2D_SRV
 {
     uint MostDetailedMip;
     uint MipLevels;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex2d_array_srv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex2d_array_srv
 struct D3D11_TEX2D_ARRAY_SRV
 {
     uint MostDetailedMip;
@@ -3658,21 +3774,21 @@ struct D3D11_TEX2D_ARRAY_SRV
     uint ArraySize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex3d_srv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex3d_srv
 struct D3D11_TEX3D_SRV
 {
     uint MostDetailedMip;
     uint MipLevels;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_texcube_srv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_texcube_srv
 struct D3D11_TEXCUBE_SRV
 {
     uint MostDetailedMip;
     uint MipLevels;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_texcube_array_srv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_texcube_array_srv
 struct D3D11_TEXCUBE_ARRAY_SRV
 {
     uint MostDetailedMip;
@@ -3681,41 +3797,62 @@ struct D3D11_TEXCUBE_ARRAY_SRV
     uint NumCubes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex2dms_srv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex2dms_srv
 struct D3D11_TEX2DMS_SRV
 {
     uint UnusedField_NothingToDefine;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex2dms_array_srv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex2dms_array_srv
 struct D3D11_TEX2DMS_ARRAY_SRV
 {
     uint FirstArraySlice;
     uint ArraySize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_shader_resource_view_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_shader_resource_view_desc
 struct D3D11_SHADER_RESOURCE_VIEW_DESC
 {
-    DXGI_FORMAT         Format;
-    D3D_SRV_DIMENSION   ViewDimension;
-    _Anonymous_e__Union Anonymous;
+    DXGI_FORMAT       Format;
+    D3D_SRV_DIMENSION ViewDimension;
+    union
+    {
+        D3D11_BUFFER_SRV   Buffer;
+        D3D11_TEX1D_SRV    Texture1D;
+        D3D11_TEX1D_ARRAY_SRV Texture1DArray;
+        D3D11_TEX2D_SRV    Texture2D;
+        D3D11_TEX2D_ARRAY_SRV Texture2DArray;
+        D3D11_TEX2DMS_SRV  Texture2DMS;
+        D3D11_TEX2DMS_ARRAY_SRV Texture2DMSArray;
+        D3D11_TEX3D_SRV    Texture3D;
+        D3D11_TEXCUBE_SRV  TextureCube;
+        D3D11_TEXCUBE_ARRAY_SRV TextureCubeArray;
+        D3D11_BUFFEREX_SRV BufferEx;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_buffer_rtv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_buffer_rtv
 struct D3D11_BUFFER_RTV
 {
-    _Anonymous1_e__Union Anonymous1;
-    _Anonymous2_e__Union Anonymous2;
+    union
+    {
+        uint FirstElement;
+        uint ElementOffset;
+    }
+    union
+    {
+        uint NumElements;
+        uint ElementWidth;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex1d_rtv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex1d_rtv
 struct D3D11_TEX1D_RTV
 {
     uint MipSlice;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex1d_array_rtv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex1d_array_rtv
 struct D3D11_TEX1D_ARRAY_RTV
 {
     uint MipSlice;
@@ -3723,19 +3860,19 @@ struct D3D11_TEX1D_ARRAY_RTV
     uint ArraySize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex2d_rtv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex2d_rtv
 struct D3D11_TEX2D_RTV
 {
     uint MipSlice;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex2dms_rtv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex2dms_rtv
 struct D3D11_TEX2DMS_RTV
 {
     uint UnusedField_NothingToDefine;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex2d_array_rtv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex2d_array_rtv
 struct D3D11_TEX2D_ARRAY_RTV
 {
     uint MipSlice;
@@ -3743,14 +3880,14 @@ struct D3D11_TEX2D_ARRAY_RTV
     uint ArraySize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex2dms_array_rtv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex2dms_array_rtv
 struct D3D11_TEX2DMS_ARRAY_RTV
 {
     uint FirstArraySlice;
     uint ArraySize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex3d_rtv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex3d_rtv
 struct D3D11_TEX3D_RTV
 {
     uint MipSlice;
@@ -3758,21 +3895,31 @@ struct D3D11_TEX3D_RTV
     uint WSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_render_target_view_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_render_target_view_desc
 struct D3D11_RENDER_TARGET_VIEW_DESC
 {
     DXGI_FORMAT         Format;
     D3D11_RTV_DIMENSION ViewDimension;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        D3D11_BUFFER_RTV  Buffer;
+        D3D11_TEX1D_RTV   Texture1D;
+        D3D11_TEX1D_ARRAY_RTV Texture1DArray;
+        D3D11_TEX2D_RTV   Texture2D;
+        D3D11_TEX2D_ARRAY_RTV Texture2DArray;
+        D3D11_TEX2DMS_RTV Texture2DMS;
+        D3D11_TEX2DMS_ARRAY_RTV Texture2DMSArray;
+        D3D11_TEX3D_RTV   Texture3D;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex1d_dsv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex1d_dsv
 struct D3D11_TEX1D_DSV
 {
     uint MipSlice;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex1d_array_dsv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex1d_array_dsv
 struct D3D11_TEX1D_ARRAY_DSV
 {
     uint MipSlice;
@@ -3780,13 +3927,13 @@ struct D3D11_TEX1D_ARRAY_DSV
     uint ArraySize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex2d_dsv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex2d_dsv
 struct D3D11_TEX2D_DSV
 {
     uint MipSlice;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex2d_array_dsv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex2d_array_dsv
 struct D3D11_TEX2D_ARRAY_DSV
 {
     uint MipSlice;
@@ -3794,29 +3941,37 @@ struct D3D11_TEX2D_ARRAY_DSV
     uint ArraySize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex2dms_dsv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex2dms_dsv
 struct D3D11_TEX2DMS_DSV
 {
     uint UnusedField_NothingToDefine;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex2dms_array_dsv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex2dms_array_dsv
 struct D3D11_TEX2DMS_ARRAY_DSV
 {
     uint FirstArraySlice;
     uint ArraySize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_depth_stencil_view_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_depth_stencil_view_desc
 struct D3D11_DEPTH_STENCIL_VIEW_DESC
 {
     DXGI_FORMAT         Format;
     D3D11_DSV_DIMENSION ViewDimension;
     uint                Flags;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        D3D11_TEX1D_DSV   Texture1D;
+        D3D11_TEX1D_ARRAY_DSV Texture1DArray;
+        D3D11_TEX2D_DSV   Texture2D;
+        D3D11_TEX2D_ARRAY_DSV Texture2DArray;
+        D3D11_TEX2DMS_DSV Texture2DMS;
+        D3D11_TEX2DMS_ARRAY_DSV Texture2DMSArray;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_buffer_uav))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_buffer_uav
 struct D3D11_BUFFER_UAV
 {
     uint FirstElement;
@@ -3824,13 +3979,13 @@ struct D3D11_BUFFER_UAV
     uint Flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex1d_uav))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex1d_uav
 struct D3D11_TEX1D_UAV
 {
     uint MipSlice;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex1d_array_uav))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex1d_array_uav
 struct D3D11_TEX1D_ARRAY_UAV
 {
     uint MipSlice;
@@ -3838,13 +3993,13 @@ struct D3D11_TEX1D_ARRAY_UAV
     uint ArraySize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex2d_uav))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex2d_uav
 struct D3D11_TEX2D_UAV
 {
     uint MipSlice;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex2d_array_uav))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex2d_array_uav
 struct D3D11_TEX2D_ARRAY_UAV
 {
     uint MipSlice;
@@ -3852,7 +4007,7 @@ struct D3D11_TEX2D_ARRAY_UAV
     uint ArraySize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex3d_uav))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex3d_uav
 struct D3D11_TEX3D_UAV
 {
     uint MipSlice;
@@ -3860,15 +4015,23 @@ struct D3D11_TEX3D_UAV
     uint WSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_unordered_access_view_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_unordered_access_view_desc
 struct D3D11_UNORDERED_ACCESS_VIEW_DESC
 {
     DXGI_FORMAT         Format;
     D3D11_UAV_DIMENSION ViewDimension;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        D3D11_BUFFER_UAV Buffer;
+        D3D11_TEX1D_UAV  Texture1D;
+        D3D11_TEX1D_ARRAY_UAV Texture1DArray;
+        D3D11_TEX2D_UAV  Texture2D;
+        D3D11_TEX2D_ARRAY_UAV Texture2DArray;
+        D3D11_TEX3D_UAV  Texture3D;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_sampler_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_sampler_desc
 struct D3D11_SAMPLER_DESC
 {
     D3D11_FILTER Filter;
@@ -3883,21 +4046,21 @@ struct D3D11_SAMPLER_DESC
     float        MaxLOD;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_query_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_query_desc
 struct D3D11_QUERY_DESC
 {
     D3D11_QUERY Query;
     uint        MiscFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_query_data_timestamp_disjoint))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_query_data_timestamp_disjoint
 struct D3D11_QUERY_DATA_TIMESTAMP_DISJOINT
 {
     ulong Frequency;
     BOOL  Disjoint;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_query_data_pipeline_statistics))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_query_data_pipeline_statistics
 struct D3D11_QUERY_DATA_PIPELINE_STATISTICS
 {
     ulong IAVertices;
@@ -3913,21 +4076,21 @@ struct D3D11_QUERY_DATA_PIPELINE_STATISTICS
     ulong CSInvocations;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_query_data_so_statistics))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_query_data_so_statistics
 struct D3D11_QUERY_DATA_SO_STATISTICS
 {
     ulong NumPrimitivesWritten;
     ulong PrimitivesStorageNeeded;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_counter_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_counter_desc
 struct D3D11_COUNTER_DESC
 {
     D3D11_COUNTER Counter;
     uint          MiscFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_counter_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_counter_info
 struct D3D11_COUNTER_INFO
 {
     D3D11_COUNTER LastDeviceDependentCounter;
@@ -3935,7 +4098,7 @@ struct D3D11_COUNTER_INFO
     ubyte         NumDetectableParallelUnits;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_class_instance_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_class_instance_desc
 struct D3D11_CLASS_INSTANCE_DESC
 {
     uint InstanceId;
@@ -3948,40 +4111,40 @@ struct D3D11_CLASS_INSTANCE_DESC
     BOOL Created;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_threading))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_threading
 struct D3D11_FEATURE_DATA_THREADING
 {
     BOOL DriverConcurrentCreates;
     BOOL DriverCommandLists;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_doubles))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_doubles
 struct D3D11_FEATURE_DATA_DOUBLES
 {
     BOOL DoublePrecisionFloatShaderOps;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_format_support))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_format_support
 struct D3D11_FEATURE_DATA_FORMAT_SUPPORT
 {
     DXGI_FORMAT InFormat;
     uint        OutFormatSupport;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_format_support2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_format_support2
 struct D3D11_FEATURE_DATA_FORMAT_SUPPORT2
 {
     DXGI_FORMAT InFormat;
     uint        OutFormatSupport2;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_d3d10_x_hardware_options))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_d3d10_x_hardware_options
 struct D3D11_FEATURE_DATA_D3D10_X_HARDWARE_OPTIONS
 {
     BOOL ComputeShaders_Plus_RawAndStructuredBuffers_Via_Shader_4_x;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_d3d11_options))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_d3d11_options
 struct D3D11_FEATURE_DATA_D3D11_OPTIONS
 {
     BOOL OutputMergerLogicOp;
@@ -4005,26 +4168,26 @@ struct D3D11_FEATURE_DATA_ARCHITECTURE_INFO
     BOOL TileBasedDeferredRenderer;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_d3d9_options))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_d3d9_options
 struct D3D11_FEATURE_DATA_D3D9_OPTIONS
 {
     BOOL FullNonPow2TextureSupport;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_d3d9_shadow_support))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_d3d9_shadow_support
 struct D3D11_FEATURE_DATA_D3D9_SHADOW_SUPPORT
 {
     BOOL SupportsDepthAsTextureWithLessEqualComparisonFilter;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_shader_min_precision_support))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_shader_min_precision_support
 struct D3D11_FEATURE_DATA_SHADER_MIN_PRECISION_SUPPORT
 {
     uint PixelShaderMinPrecision;
     uint AllOtherShaderStagesMinPrecision;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_d3d11_options1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_d3d11_options1
 struct D3D11_FEATURE_DATA_D3D11_OPTIONS1
 {
     D3D11_TILED_RESOURCES_TIER TiledResourcesTier;
@@ -4033,19 +4196,19 @@ struct D3D11_FEATURE_DATA_D3D11_OPTIONS1
     BOOL MapOnDefaultBuffers;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_d3d9_simple_instancing_support))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_d3d9_simple_instancing_support
 struct D3D11_FEATURE_DATA_D3D9_SIMPLE_INSTANCING_SUPPORT
 {
     BOOL SimpleInstancingSupported;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_marker_support))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_marker_support
 struct D3D11_FEATURE_DATA_MARKER_SUPPORT
 {
     BOOL Profile;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_d3d9_options1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_d3d9_options1
 struct D3D11_FEATURE_DATA_D3D9_OPTIONS1
 {
     BOOL FullNonPow2TextureSupported;
@@ -4054,7 +4217,7 @@ struct D3D11_FEATURE_DATA_D3D9_OPTIONS1
     BOOL TextureCubeFaceRenderTargetWithNonCubeDepthStencilSupported;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_d3d11_options2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_d3d11_options2
 struct D3D11_FEATURE_DATA_D3D11_OPTIONS2
 {
     BOOL PSSpecifiedStencilRefSupported;
@@ -4067,33 +4230,33 @@ struct D3D11_FEATURE_DATA_D3D11_OPTIONS2
     BOOL UnifiedMemoryArchitecture;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_d3d11_options3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_d3d11_options3
 struct D3D11_FEATURE_DATA_D3D11_OPTIONS3
 {
     BOOL VPAndRTArrayIndexFromAnyShaderFeedingRasterizer;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_gpu_virtual_address_support))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_gpu_virtual_address_support
 struct D3D11_FEATURE_DATA_GPU_VIRTUAL_ADDRESS_SUPPORT
 {
     uint MaxGPUVirtualAddressBitsPerResource;
     uint MaxGPUVirtualAddressBitsPerProcess;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_shader_cache))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_shader_cache
 struct D3D11_FEATURE_DATA_SHADER_CACHE
 {
     uint SupportFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_displayable))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_displayable
 struct D3D11_FEATURE_DATA_DISPLAYABLE
 {
     BOOL DisplayableTexture;
     D3D11_SHARED_RESOURCE_TIER SharedResourceTier;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_d3d11_options5))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_d3d11_options5
 struct D3D11_FEATURE_DATA_D3D11_OPTIONS5
 {
     D3D11_SHARED_RESOURCE_TIER SharedResourceTier;
@@ -4104,7 +4267,7 @@ struct D3D11_FEATURE_DATA_D3D11_OPTIONS6
     D3D11_SHADER_ACCESS_RESTRICTED_RESOURCE_TIER ShaderAccessRestrictedResourceTier;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_video_decoder_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_video_decoder_desc
 struct D3D11_VIDEO_DECODER_DESC
 {
     GUID        Guid;
@@ -4113,7 +4276,7 @@ struct D3D11_VIDEO_DECODER_DESC
     DXGI_FORMAT OutputFormat;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_video_decoder_config))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_video_decoder_config
 struct D3D11_VIDEO_DECODER_CONFIG
 {
     GUID   guidConfigBitstreamEncryption;
@@ -4135,14 +4298,14 @@ struct D3D11_VIDEO_DECODER_CONFIG
     ushort ConfigDecoderSpecific;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_aes_ctr_iv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_aes_ctr_iv
 struct D3D11_AES_CTR_IV
 {
     ulong IV;
     ulong Count;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_encrypted_block_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_encrypted_block_info
 struct D3D11_ENCRYPTED_BLOCK_INFO
 {
     uint NumEncryptedBytesAtBeginning;
@@ -4150,7 +4313,7 @@ struct D3D11_ENCRYPTED_BLOCK_INFO
     uint NumBytesInEncryptPattern;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_video_decoder_buffer_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_video_decoder_buffer_desc
 struct D3D11_VIDEO_DECODER_BUFFER_DESC
 {
     D3D11_VIDEO_DECODER_BUFFER_TYPE BufferType;
@@ -4169,7 +4332,7 @@ struct D3D11_VIDEO_DECODER_BUFFER_DESC
     D3D11_ENCRYPTED_BLOCK_INFO EncryptedBlockInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_video_decoder_extension))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_video_decoder_extension
 struct D3D11_VIDEO_DECODER_EXTENSION
 {
     uint            Function;
@@ -4181,7 +4344,7 @@ struct D3D11_VIDEO_DECODER_EXTENSION
     ID3D11Resource* ppResourceList;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_video_processor_caps))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_video_processor_caps
 struct D3D11_VIDEO_PROCESSOR_CAPS
 {
     uint DeviceCaps;
@@ -4195,7 +4358,7 @@ struct D3D11_VIDEO_PROCESSOR_CAPS
     uint MaxStreamStates;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_video_processor_rate_conversion_caps))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_video_processor_rate_conversion_caps
 struct D3D11_VIDEO_PROCESSOR_RATE_CONVERSION_CAPS
 {
     uint PastFrames;
@@ -4205,7 +4368,7 @@ struct D3D11_VIDEO_PROCESSOR_RATE_CONVERSION_CAPS
     uint CustomRateCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_video_content_protection_caps))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_video_content_protection_caps
 struct D3D11_VIDEO_CONTENT_PROTECTION_CAPS
 {
     uint  Caps;
@@ -4214,7 +4377,7 @@ struct D3D11_VIDEO_CONTENT_PROTECTION_CAPS
     ulong ProtectedMemorySize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_video_processor_custom_rate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_video_processor_custom_rate
 struct D3D11_VIDEO_PROCESSOR_CUSTOM_RATE
 {
     DXGI_RATIONAL CustomRate;
@@ -4223,7 +4386,7 @@ struct D3D11_VIDEO_PROCESSOR_CUSTOM_RATE
     uint          InputFramesOrFields;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_video_processor_filter_range))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_video_processor_filter_range
 struct D3D11_VIDEO_PROCESSOR_FILTER_RANGE
 {
     int   Minimum;
@@ -4232,7 +4395,7 @@ struct D3D11_VIDEO_PROCESSOR_FILTER_RANGE
     float Multiplier;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_video_processor_content_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_video_processor_content_desc
 struct D3D11_VIDEO_PROCESSOR_CONTENT_DESC
 {
     D3D11_VIDEO_FRAME_FORMAT InputFrameFormat;
@@ -4245,7 +4408,7 @@ struct D3D11_VIDEO_PROCESSOR_CONTENT_DESC
     D3D11_VIDEO_USAGE Usage;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_video_color_rgba))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_video_color_rgba
 struct D3D11_VIDEO_COLOR_RGBA
 {
     float R;
@@ -4254,7 +4417,7 @@ struct D3D11_VIDEO_COLOR_RGBA
     float A;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_video_color_ycbcra))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_video_color_ycbcra
 struct D3D11_VIDEO_COLOR_YCbCrA
 {
     float Y;
@@ -4263,19 +4426,23 @@ struct D3D11_VIDEO_COLOR_YCbCrA
     float A;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_video_color))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_video_color
 struct D3D11_VIDEO_COLOR
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        D3D11_VIDEO_COLOR_YCbCrA YCbCr;
+        D3D11_VIDEO_COLOR_RGBA RGBA;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_video_processor_color_space))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_video_processor_color_space
 struct D3D11_VIDEO_PROCESSOR_COLOR_SPACE
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(26))], [])*/uint _bitfield34;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(6)), FixedArgSig(ElementSig(26))], [])*/uint _bitfield89;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_video_processor_stream))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_video_processor_stream
 struct D3D11_VIDEO_PROCESSOR_STREAM
 {
     BOOL Enable;
@@ -4291,13 +4458,13 @@ struct D3D11_VIDEO_PROCESSOR_STREAM
     ID3D11VideoProcessorInputView* ppFutureSurfacesRight;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_omac))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_omac
 struct D3D11_OMAC
 {
     ubyte[16] Omac;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_input))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_input
 struct D3D11_AUTHENTICATED_QUERY_INPUT
 {
     GUID   QueryType;
@@ -4305,7 +4472,7 @@ struct D3D11_AUTHENTICATED_QUERY_INPUT
     uint   SequenceNumber;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_output))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_output
 struct D3D11_AUTHENTICATED_QUERY_OUTPUT
 {
     D3D11_OMAC omac;
@@ -4315,42 +4482,45 @@ struct D3D11_AUTHENTICATED_QUERY_OUTPUT
     HRESULT    ReturnCode;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_protection_flags))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_protection_flags
 union D3D11_AUTHENTICATED_PROTECTION_FLAGS
 {
-    _Flags_e__Struct Flags;
-    uint             Value;
+    struct Flags
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(30))], [])*/uint _bitfield90;
+    }
+    uint Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_protection_output))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_protection_output
 struct D3D11_AUTHENTICATED_QUERY_PROTECTION_OUTPUT
 {
     D3D11_AUTHENTICATED_QUERY_OUTPUT Output;
     D3D11_AUTHENTICATED_PROTECTION_FLAGS ProtectionFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_channel_type_output))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_channel_type_output
 struct D3D11_AUTHENTICATED_QUERY_CHANNEL_TYPE_OUTPUT
 {
     D3D11_AUTHENTICATED_QUERY_OUTPUT Output;
     D3D11_AUTHENTICATED_CHANNEL_TYPE ChannelType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_device_handle_output))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_device_handle_output
 struct D3D11_AUTHENTICATED_QUERY_DEVICE_HANDLE_OUTPUT
 {
     D3D11_AUTHENTICATED_QUERY_OUTPUT Output;
     HANDLE DeviceHandle;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_crypto_session_input))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_crypto_session_input
 struct D3D11_AUTHENTICATED_QUERY_CRYPTO_SESSION_INPUT
 {
     D3D11_AUTHENTICATED_QUERY_INPUT Input;
     HANDLE DecoderHandle;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_crypto_session_output))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_crypto_session_output
 struct D3D11_AUTHENTICATED_QUERY_CRYPTO_SESSION_OUTPUT
 {
     D3D11_AUTHENTICATED_QUERY_OUTPUT Output;
@@ -4359,21 +4529,21 @@ struct D3D11_AUTHENTICATED_QUERY_CRYPTO_SESSION_OUTPUT
     HANDLE DeviceHandle;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_restricted_shared_resource_process_count_output))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_restricted_shared_resource_process_count_output
 struct D3D11_AUTHENTICATED_QUERY_RESTRICTED_SHARED_RESOURCE_PROCESS_COUNT_OUTPUT
 {
     D3D11_AUTHENTICATED_QUERY_OUTPUT Output;
     uint RestrictedSharedResourceProcessCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_restricted_shared_resource_process_input))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_restricted_shared_resource_process_input
 struct D3D11_AUTHENTICATED_QUERY_RESTRICTED_SHARED_RESOURCE_PROCESS_INPUT
 {
     D3D11_AUTHENTICATED_QUERY_INPUT Input;
     uint ProcessIndex;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_restricted_shared_resource_process_output))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_restricted_shared_resource_process_output
 struct D3D11_AUTHENTICATED_QUERY_RESTRICTED_SHARED_RESOURCE_PROCESS_OUTPUT
 {
     D3D11_AUTHENTICATED_QUERY_OUTPUT Output;
@@ -4382,14 +4552,14 @@ struct D3D11_AUTHENTICATED_QUERY_RESTRICTED_SHARED_RESOURCE_PROCESS_OUTPUT
     HANDLE ProcessHandle;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_unrestricted_protected_shared_resource_count_output))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_unrestricted_protected_shared_resource_count_output
 struct D3D11_AUTHENTICATED_QUERY_UNRESTRICTED_PROTECTED_SHARED_RESOURCE_COUNT_OUTPUT
 {
     D3D11_AUTHENTICATED_QUERY_OUTPUT Output;
     uint UnrestrictedProtectedSharedResourceCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_output_id_count_input))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_output_id_count_input
 struct D3D11_AUTHENTICATED_QUERY_OUTPUT_ID_COUNT_INPUT
 {
     D3D11_AUTHENTICATED_QUERY_INPUT Input;
@@ -4397,7 +4567,7 @@ struct D3D11_AUTHENTICATED_QUERY_OUTPUT_ID_COUNT_INPUT
     HANDLE CryptoSessionHandle;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_output_id_count_output))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_output_id_count_output
 struct D3D11_AUTHENTICATED_QUERY_OUTPUT_ID_COUNT_OUTPUT
 {
     D3D11_AUTHENTICATED_QUERY_OUTPUT Output;
@@ -4406,7 +4576,7 @@ struct D3D11_AUTHENTICATED_QUERY_OUTPUT_ID_COUNT_OUTPUT
     uint   OutputIDCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_output_id_input))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_output_id_input
 struct D3D11_AUTHENTICATED_QUERY_OUTPUT_ID_INPUT
 {
     D3D11_AUTHENTICATED_QUERY_INPUT Input;
@@ -4415,7 +4585,7 @@ struct D3D11_AUTHENTICATED_QUERY_OUTPUT_ID_INPUT
     uint   OutputIDIndex;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_output_id_output))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_output_id_output
 struct D3D11_AUTHENTICATED_QUERY_OUTPUT_ID_OUTPUT
 {
     D3D11_AUTHENTICATED_QUERY_OUTPUT Output;
@@ -4425,7 +4595,7 @@ struct D3D11_AUTHENTICATED_QUERY_OUTPUT_ID_OUTPUT
     ulong  OutputID;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_accessibility_output))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_accessibility_output
 struct D3D11_AUTHENTICATED_QUERY_ACCESSIBILITY_OUTPUT
 {
     D3D11_AUTHENTICATED_QUERY_OUTPUT Output;
@@ -4434,21 +4604,21 @@ struct D3D11_AUTHENTICATED_QUERY_ACCESSIBILITY_OUTPUT
     BOOL           AccessibleInNonContiguousBlocks;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_accessibility_encryption_guid_count_output))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_accessibility_encryption_guid_count_output
 struct D3D11_AUTHENTICATED_QUERY_ACCESSIBILITY_ENCRYPTION_GUID_COUNT_OUTPUT
 {
     D3D11_AUTHENTICATED_QUERY_OUTPUT Output;
     uint EncryptionGuidCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_accessibility_encryption_guid_input))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_accessibility_encryption_guid_input
 struct D3D11_AUTHENTICATED_QUERY_ACCESSIBILITY_ENCRYPTION_GUID_INPUT
 {
     D3D11_AUTHENTICATED_QUERY_INPUT Input;
     uint EncryptionGuidIndex;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_accessibility_encryption_guid_output))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_accessibility_encryption_guid_output
 struct D3D11_AUTHENTICATED_QUERY_ACCESSIBILITY_ENCRYPTION_GUID_OUTPUT
 {
     D3D11_AUTHENTICATED_QUERY_OUTPUT Output;
@@ -4456,14 +4626,14 @@ struct D3D11_AUTHENTICATED_QUERY_ACCESSIBILITY_ENCRYPTION_GUID_OUTPUT
     GUID EncryptionGuid;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_current_accessibility_encryption_output))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_query_current_accessibility_encryption_output
 struct D3D11_AUTHENTICATED_QUERY_CURRENT_ACCESSIBILITY_ENCRYPTION_OUTPUT
 {
     D3D11_AUTHENTICATED_QUERY_OUTPUT Output;
     GUID EncryptionGuid;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_configure_input))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_configure_input
 struct D3D11_AUTHENTICATED_CONFIGURE_INPUT
 {
     D3D11_OMAC omac;
@@ -4472,7 +4642,7 @@ struct D3D11_AUTHENTICATED_CONFIGURE_INPUT
     uint       SequenceNumber;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_configure_output))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_configure_output
 struct D3D11_AUTHENTICATED_CONFIGURE_OUTPUT
 {
     D3D11_OMAC omac;
@@ -4482,7 +4652,7 @@ struct D3D11_AUTHENTICATED_CONFIGURE_OUTPUT
     HRESULT    ReturnCode;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_configure_initialize_input))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_configure_initialize_input
 struct D3D11_AUTHENTICATED_CONFIGURE_INITIALIZE_INPUT
 {
     D3D11_AUTHENTICATED_CONFIGURE_INPUT Parameters;
@@ -4490,14 +4660,14 @@ struct D3D11_AUTHENTICATED_CONFIGURE_INITIALIZE_INPUT
     uint StartSequenceConfigure;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_configure_protection_input))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_configure_protection_input
 struct D3D11_AUTHENTICATED_CONFIGURE_PROTECTION_INPUT
 {
     D3D11_AUTHENTICATED_CONFIGURE_INPUT Parameters;
     D3D11_AUTHENTICATED_PROTECTION_FLAGS Protections;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_configure_crypto_session_input))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_configure_crypto_session_input
 struct D3D11_AUTHENTICATED_CONFIGURE_CRYPTO_SESSION_INPUT
 {
     D3D11_AUTHENTICATED_CONFIGURE_INPUT Parameters;
@@ -4506,7 +4676,7 @@ struct D3D11_AUTHENTICATED_CONFIGURE_CRYPTO_SESSION_INPUT
     HANDLE DeviceHandle;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_configure_shared_resource_input))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_configure_shared_resource_input
 struct D3D11_AUTHENTICATED_CONFIGURE_SHARED_RESOURCE_INPUT
 {
     D3D11_AUTHENTICATED_CONFIGURE_INPUT Parameters;
@@ -4515,49 +4685,55 @@ struct D3D11_AUTHENTICATED_CONFIGURE_SHARED_RESOURCE_INPUT
     BOOL   AllowAccess;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_configure_accessible_encryption_input))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_authenticated_configure_accessible_encryption_input
 struct D3D11_AUTHENTICATED_CONFIGURE_ACCESSIBLE_ENCRYPTION_INPUT
 {
     D3D11_AUTHENTICATED_CONFIGURE_INPUT Parameters;
     GUID EncryptionGuid;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex2d_vdov))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex2d_vdov
 struct D3D11_TEX2D_VDOV
 {
     uint ArraySlice;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_video_decoder_output_view_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_video_decoder_output_view_desc
 struct D3D11_VIDEO_DECODER_OUTPUT_VIEW_DESC
 {
     GUID                 DecodeProfile;
     D3D11_VDOV_DIMENSION ViewDimension;
-    _Anonymous_e__Union  Anonymous;
+    union
+    {
+        D3D11_TEX2D_VDOV Texture2D;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex2d_vpiv))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex2d_vpiv
 struct D3D11_TEX2D_VPIV
 {
     uint MipSlice;
     uint ArraySlice;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_video_processor_input_view_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_video_processor_input_view_desc
 struct D3D11_VIDEO_PROCESSOR_INPUT_VIEW_DESC
 {
     uint                 FourCC;
     D3D11_VPIV_DIMENSION ViewDimension;
-    _Anonymous_e__Union  Anonymous;
+    union
+    {
+        D3D11_TEX2D_VPIV Texture2D;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex2d_vpov))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex2d_vpov
 struct D3D11_TEX2D_VPOV
 {
     uint MipSlice;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex2d_array_vpov))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_tex2d_array_vpov
 struct D3D11_TEX2D_ARRAY_VPOV
 {
     uint MipSlice;
@@ -4565,14 +4741,18 @@ struct D3D11_TEX2D_ARRAY_VPOV
     uint ArraySize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_video_processor_output_view_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/ns-d3d11-d3d11_video_processor_output_view_desc
 struct D3D11_VIDEO_PROCESSOR_OUTPUT_VIEW_DESC
 {
     D3D11_VPOV_DIMENSION ViewDimension;
-    _Anonymous_e__Union  Anonymous;
+    union
+    {
+        D3D11_TEX2D_VPOV Texture2D;
+        D3D11_TEX2D_ARRAY_VPOV Texture2DArray;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/ns-d3d11sdklayers-d3d11_message))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/ns-d3d11sdklayers-d3d11_message
 struct D3D11_MESSAGE
 {
     D3D11_MESSAGE_CATEGORY Category;
@@ -4582,7 +4762,7 @@ struct D3D11_MESSAGE
     size_t           DescriptionByteLength;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/ns-d3d11sdklayers-d3d11_info_queue_filter_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/ns-d3d11sdklayers-d3d11_info_queue_filter_desc
 struct D3D11_INFO_QUEUE_FILTER_DESC
 {
     uint              NumCategories;
@@ -4593,14 +4773,14 @@ struct D3D11_INFO_QUEUE_FILTER_DESC
     D3D11_MESSAGE_ID* pIDList;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/ns-d3d11sdklayers-d3d11_info_queue_filter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/ns-d3d11sdklayers-d3d11_info_queue_filter
 struct D3D11_INFO_QUEUE_FILTER
 {
     D3D11_INFO_QUEUE_FILTER_DESC AllowList;
     D3D11_INFO_QUEUE_FILTER_DESC DenyList;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/ns-d3d11_1-d3d11_render_target_blend_desc1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/ns-d3d11_1-d3d11_render_target_blend_desc1
 struct D3D11_RENDER_TARGET_BLEND_DESC1
 {
     BOOL           BlendEnable;
@@ -4615,7 +4795,7 @@ struct D3D11_RENDER_TARGET_BLEND_DESC1
     ubyte          RenderTargetWriteMask;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/ns-d3d11_1-d3d11_blend_desc1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/ns-d3d11_1-d3d11_blend_desc1
 struct D3D11_BLEND_DESC1
 {
     BOOL AlphaToCoverageEnable;
@@ -4623,7 +4803,7 @@ struct D3D11_BLEND_DESC1
     D3D11_RENDER_TARGET_BLEND_DESC1[8] RenderTarget;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/ns-d3d11_1-d3d11_rasterizer_desc1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/ns-d3d11_1-d3d11_rasterizer_desc1
 struct D3D11_RASTERIZER_DESC1
 {
     D3D11_FILL_MODE FillMode;
@@ -4639,14 +4819,14 @@ struct D3D11_RASTERIZER_DESC1
     uint            ForcedSampleCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/ns-d3d11_1-d3d11_video_decoder_sub_sample_mapping_block))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/ns-d3d11_1-d3d11_video_decoder_sub_sample_mapping_block
 struct D3D11_VIDEO_DECODER_SUB_SAMPLE_MAPPING_BLOCK
 {
     uint ClearSize;
     uint EncryptedSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/ns-d3d11_1-d3d11_video_decoder_buffer_desc1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/ns-d3d11_1-d3d11_video_decoder_buffer_desc1
 struct D3D11_VIDEO_DECODER_BUFFER_DESC1
 {
     D3D11_VIDEO_DECODER_BUFFER_TYPE BufferType;
@@ -4658,7 +4838,7 @@ struct D3D11_VIDEO_DECODER_BUFFER_DESC1
     uint  SubSampleMappingCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/ns-d3d11_1-d3d11_video_decoder_begin_frame_crypto_session))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/ns-d3d11_1-d3d11_video_decoder_begin_frame_crypto_session
 struct D3D11_VIDEO_DECODER_BEGIN_FRAME_CRYPTO_SESSION
 {
     ID3D11CryptoSession pCryptoSession;
@@ -4669,7 +4849,7 @@ struct D3D11_VIDEO_DECODER_BEGIN_FRAME_CRYPTO_SESSION
     void*               pPrivateData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/ns-d3d11_1-d3d11_video_processor_stream_behavior_hint))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/ns-d3d11_1-d3d11_video_processor_stream_behavior_hint
 struct D3D11_VIDEO_PROCESSOR_STREAM_BEHAVIOR_HINT
 {
     BOOL        Enable;
@@ -4678,7 +4858,7 @@ struct D3D11_VIDEO_PROCESSOR_STREAM_BEHAVIOR_HINT
     DXGI_FORMAT Format;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/ns-d3d11_1-d3d11_key_exchange_hw_protection_input_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/ns-d3d11_1-d3d11_key_exchange_hw_protection_input_data
 struct D3D11_KEY_EXCHANGE_HW_PROTECTION_INPUT_DATA
 {
     uint     PrivateDataSize;
@@ -4686,7 +4866,7 @@ struct D3D11_KEY_EXCHANGE_HW_PROTECTION_INPUT_DATA
     ubyte[4] pbInput;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/ns-d3d11_1-d3d11_key_exchange_hw_protection_output_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/ns-d3d11_1-d3d11_key_exchange_hw_protection_output_data
 struct D3D11_KEY_EXCHANGE_HW_PROTECTION_OUTPUT_DATA
 {
     uint     PrivateDataSize;
@@ -4697,7 +4877,7 @@ struct D3D11_KEY_EXCHANGE_HW_PROTECTION_OUTPUT_DATA
     ubyte[4] pbOutput;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/ns-d3d11_1-d3d11_key_exchange_hw_protection_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/ns-d3d11_1-d3d11_key_exchange_hw_protection_data
 struct D3D11_KEY_EXCHANGE_HW_PROTECTION_DATA
 {
     uint    HWProtectionFunctionID;
@@ -4706,7 +4886,7 @@ struct D3D11_KEY_EXCHANGE_HW_PROTECTION_DATA
     HRESULT Status;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/ns-d3d11_1-d3d11_video_sample_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/ns-d3d11_1-d3d11_video_sample_desc
 struct D3D11_VIDEO_SAMPLE_DESC
 {
     uint        Width;
@@ -4715,7 +4895,7 @@ struct D3D11_VIDEO_SAMPLE_DESC
     DXGI_COLOR_SPACE_TYPE ColorSpace;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_2/ns-d3d11_2-d3d11_tiled_resource_coordinate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_2/ns-d3d11_2-d3d11_tiled_resource_coordinate
 struct D3D11_TILED_RESOURCE_COORDINATE
 {
     uint X;
@@ -4724,7 +4904,7 @@ struct D3D11_TILED_RESOURCE_COORDINATE
     uint Subresource;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_2/ns-d3d11_2-d3d11_tile_region_size))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_2/ns-d3d11_2-d3d11_tile_region_size
 struct D3D11_TILE_REGION_SIZE
 {
     uint   NumTiles;
@@ -4734,7 +4914,7 @@ struct D3D11_TILE_REGION_SIZE
     ushort Depth;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_2/ns-d3d11_2-d3d11_subresource_tiling))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_2/ns-d3d11_2-d3d11_subresource_tiling
 struct D3D11_SUBRESOURCE_TILING
 {
     uint   WidthInTiles;
@@ -4743,7 +4923,7 @@ struct D3D11_SUBRESOURCE_TILING
     uint   StartTileIndexInOverallResource;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_2/ns-d3d11_2-d3d11_tile_shape))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_2/ns-d3d11_2-d3d11_tile_shape
 struct D3D11_TILE_SHAPE
 {
     uint WidthInTexels;
@@ -4751,7 +4931,7 @@ struct D3D11_TILE_SHAPE
     uint DepthInTexels;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_2/ns-d3d11_2-d3d11_packed_mip_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_2/ns-d3d11_2-d3d11_packed_mip_desc
 struct D3D11_PACKED_MIP_DESC
 {
     ubyte NumStandardMips;
@@ -4760,7 +4940,7 @@ struct D3D11_PACKED_MIP_DESC
     uint  StartTileIndexInOverallResource;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/ns-d3d11_3-d3d11_texture2d_desc1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/ns-d3d11_3-d3d11_texture2d_desc1
 struct D3D11_TEXTURE2D_DESC1
 {
     uint                 Width;
@@ -4776,7 +4956,7 @@ struct D3D11_TEXTURE2D_DESC1
     D3D11_TEXTURE_LAYOUT TextureLayout;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/ns-d3d11_3-d3d11_texture3d_desc1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/ns-d3d11_3-d3d11_texture3d_desc1
 struct D3D11_TEXTURE3D_DESC1
 {
     uint                 Width;
@@ -4791,7 +4971,7 @@ struct D3D11_TEXTURE3D_DESC1
     D3D11_TEXTURE_LAYOUT TextureLayout;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/ns-d3d11_3-d3d11_rasterizer_desc2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/ns-d3d11_3-d3d11_rasterizer_desc2
 struct D3D11_RASTERIZER_DESC2
 {
     D3D11_FILL_MODE FillMode;
@@ -4808,7 +4988,7 @@ struct D3D11_RASTERIZER_DESC2
     D3D11_CONSERVATIVE_RASTERIZATION_MODE ConservativeRaster;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/ns-d3d11_3-d3d11_tex2d_srv1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/ns-d3d11_3-d3d11_tex2d_srv1
 struct D3D11_TEX2D_SRV1
 {
     uint MostDetailedMip;
@@ -4816,7 +4996,7 @@ struct D3D11_TEX2D_SRV1
     uint PlaneSlice;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/ns-d3d11_3-d3d11_tex2d_array_srv1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/ns-d3d11_3-d3d11_tex2d_array_srv1
 struct D3D11_TEX2D_ARRAY_SRV1
 {
     uint MostDetailedMip;
@@ -4826,22 +5006,35 @@ struct D3D11_TEX2D_ARRAY_SRV1
     uint PlaneSlice;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/ns-d3d11_3-d3d11_shader_resource_view_desc1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/ns-d3d11_3-d3d11_shader_resource_view_desc1
 struct D3D11_SHADER_RESOURCE_VIEW_DESC1
 {
-    DXGI_FORMAT         Format;
-    D3D_SRV_DIMENSION   ViewDimension;
-    _Anonymous_e__Union Anonymous;
+    DXGI_FORMAT       Format;
+    D3D_SRV_DIMENSION ViewDimension;
+    union
+    {
+        D3D11_BUFFER_SRV   Buffer;
+        D3D11_TEX1D_SRV    Texture1D;
+        D3D11_TEX1D_ARRAY_SRV Texture1DArray;
+        D3D11_TEX2D_SRV1   Texture2D;
+        D3D11_TEX2D_ARRAY_SRV1 Texture2DArray;
+        D3D11_TEX2DMS_SRV  Texture2DMS;
+        D3D11_TEX2DMS_ARRAY_SRV Texture2DMSArray;
+        D3D11_TEX3D_SRV    Texture3D;
+        D3D11_TEXCUBE_SRV  TextureCube;
+        D3D11_TEXCUBE_ARRAY_SRV TextureCubeArray;
+        D3D11_BUFFEREX_SRV BufferEx;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/ns-d3d11_3-d3d11_tex2d_rtv1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/ns-d3d11_3-d3d11_tex2d_rtv1
 struct D3D11_TEX2D_RTV1
 {
     uint MipSlice;
     uint PlaneSlice;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/ns-d3d11_3-d3d11_tex2d_array_rtv1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/ns-d3d11_3-d3d11_tex2d_array_rtv1
 struct D3D11_TEX2D_ARRAY_RTV1
 {
     uint MipSlice;
@@ -4850,22 +5043,32 @@ struct D3D11_TEX2D_ARRAY_RTV1
     uint PlaneSlice;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/ns-d3d11_3-d3d11_render_target_view_desc1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/ns-d3d11_3-d3d11_render_target_view_desc1
 struct D3D11_RENDER_TARGET_VIEW_DESC1
 {
     DXGI_FORMAT         Format;
     D3D11_RTV_DIMENSION ViewDimension;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        D3D11_BUFFER_RTV  Buffer;
+        D3D11_TEX1D_RTV   Texture1D;
+        D3D11_TEX1D_ARRAY_RTV Texture1DArray;
+        D3D11_TEX2D_RTV1  Texture2D;
+        D3D11_TEX2D_ARRAY_RTV1 Texture2DArray;
+        D3D11_TEX2DMS_RTV Texture2DMS;
+        D3D11_TEX2DMS_ARRAY_RTV Texture2DMSArray;
+        D3D11_TEX3D_RTV   Texture3D;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/ns-d3d11_3-d3d11_tex2d_uav1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/ns-d3d11_3-d3d11_tex2d_uav1
 struct D3D11_TEX2D_UAV1
 {
     uint MipSlice;
     uint PlaneSlice;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/ns-d3d11_3-d3d11_tex2d_array_uav1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/ns-d3d11_3-d3d11_tex2d_array_uav1
 struct D3D11_TEX2D_ARRAY_UAV1
 {
     uint MipSlice;
@@ -4874,15 +5077,23 @@ struct D3D11_TEX2D_ARRAY_UAV1
     uint PlaneSlice;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/ns-d3d11_3-d3d11_unordered_access_view_desc1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/ns-d3d11_3-d3d11_unordered_access_view_desc1
 struct D3D11_UNORDERED_ACCESS_VIEW_DESC1
 {
     DXGI_FORMAT         Format;
     D3D11_UAV_DIMENSION ViewDimension;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        D3D11_BUFFER_UAV Buffer;
+        D3D11_TEX1D_UAV  Texture1D;
+        D3D11_TEX1D_ARRAY_UAV Texture1DArray;
+        D3D11_TEX2D_UAV1 Texture2D;
+        D3D11_TEX2D_ARRAY_UAV1 Texture2DArray;
+        D3D11_TEX3D_UAV  Texture3D;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/ns-d3d11_3-d3d11_query_desc1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/ns-d3d11_3-d3d11_query_desc1
 struct D3D11_QUERY_DESC1
 {
     D3D11_QUERY        Query;
@@ -4890,7 +5101,7 @@ struct D3D11_QUERY_DESC1
     D3D11_CONTEXT_TYPE ContextType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_4/ns-d3d11_4-d3d11_feature_data_video_decoder_histogram))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_4/ns-d3d11_4-d3d11_feature_data_video_decoder_histogram
 struct D3D11_FEATURE_DATA_VIDEO_DECODER_HISTOGRAM
 {
     D3D11_VIDEO_DECODER_DESC DecoderDesc;
@@ -4912,13 +5123,13 @@ struct D3D11_VIDEO_DECODER_BUFFER_DESC2
     uint  cBlocksStripeClear;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_4/ns-d3d11_4-d3d11_feature_data_d3d11_options4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_4/ns-d3d11_4-d3d11_feature_data_d3d11_options4
 struct D3D11_FEATURE_DATA_D3D11_OPTIONS4
 {
     BOOL ExtendedNV12SharedTextureSupported;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/ns-d3d11shader-d3d11_signature_parameter_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/ns-d3d11shader-d3d11_signature_parameter_desc
 struct D3D11_SIGNATURE_PARAMETER_DESC
 {
     const(PSTR)       SemanticName;
@@ -4932,7 +5143,7 @@ struct D3D11_SIGNATURE_PARAMETER_DESC
     D3D_MIN_PRECISION MinPrecision;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/ns-d3d11shader-d3d11_shader_buffer_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/ns-d3d11shader-d3d11_shader_buffer_desc
 struct D3D11_SHADER_BUFFER_DESC
 {
     const(PSTR)      Name;
@@ -4942,7 +5153,7 @@ struct D3D11_SHADER_BUFFER_DESC
     uint             uFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/ns-d3d11shader-d3d11_shader_variable_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/ns-d3d11shader-d3d11_shader_variable_desc
 struct D3D11_SHADER_VARIABLE_DESC
 {
     const(PSTR) Name;
@@ -4956,7 +5167,7 @@ struct D3D11_SHADER_VARIABLE_DESC
     uint        SamplerSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/ns-d3d11shader-d3d11_shader_type_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/ns-d3d11shader-d3d11_shader_type_desc
 struct D3D11_SHADER_TYPE_DESC
 {
     D3D_SHADER_VARIABLE_CLASS Class;
@@ -4969,7 +5180,7 @@ struct D3D11_SHADER_TYPE_DESC
     const(PSTR) Name;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/ns-d3d11shader-d3d11_shader_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/ns-d3d11shader-d3d11_shader_desc
 struct D3D11_SHADER_DESC
 {
     uint          Version;
@@ -5012,7 +5223,7 @@ struct D3D11_SHADER_DESC
     uint          cTextureStoreInstructions;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/ns-d3d11shader-d3d11_shader_input_bind_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/ns-d3d11shader-d3d11_shader_input_bind_desc
 struct D3D11_SHADER_INPUT_BIND_DESC
 {
     const(PSTR)       Name;
@@ -5025,7 +5236,7 @@ struct D3D11_SHADER_INPUT_BIND_DESC
     uint              NumSamples;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/ns-d3d11shader-d3d11_library_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/ns-d3d11shader-d3d11_library_desc
 struct D3D11_LIBRARY_DESC
 {
     const(PSTR) Creator;
@@ -5033,7 +5244,7 @@ struct D3D11_LIBRARY_DESC
     uint        FunctionCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/ns-d3d11shader-d3d11_function_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/ns-d3d11shader-d3d11_function_desc
 struct D3D11_FUNCTION_DESC
 {
     uint              Version;
@@ -5071,7 +5282,7 @@ struct D3D11_FUNCTION_DESC
     BOOL              Has10Level9PixelShader;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/ns-d3d11shader-d3d11_parameter_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/ns-d3d11shader-d3d11_parameter_desc
 struct D3D11_PARAMETER_DESC
 {
     const(PSTR)         Name;
@@ -5088,31 +5299,31 @@ struct D3D11_PARAMETER_DESC
     uint                FirstOutComponent;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/ns-d3d11shadertracing-d3d11_vertex_shader_trace_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/ns-d3d11shadertracing-d3d11_vertex_shader_trace_desc
 struct D3D11_VERTEX_SHADER_TRACE_DESC
 {
     ulong Invocation;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/ns-d3d11shadertracing-d3d11_hull_shader_trace_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/ns-d3d11shadertracing-d3d11_hull_shader_trace_desc
 struct D3D11_HULL_SHADER_TRACE_DESC
 {
     ulong Invocation;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/ns-d3d11shadertracing-d3d11_domain_shader_trace_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/ns-d3d11shadertracing-d3d11_domain_shader_trace_desc
 struct D3D11_DOMAIN_SHADER_TRACE_DESC
 {
     ulong Invocation;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/ns-d3d11shadertracing-d3d11_geometry_shader_trace_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/ns-d3d11shadertracing-d3d11_geometry_shader_trace_desc
 struct D3D11_GEOMETRY_SHADER_TRACE_DESC
 {
     ulong Invocation;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/ns-d3d11shadertracing-d3d11_pixel_shader_trace_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/ns-d3d11shadertracing-d3d11_pixel_shader_trace_desc
 struct D3D11_PIXEL_SHADER_TRACE_DESC
 {
     ulong Invocation;
@@ -5121,7 +5332,7 @@ struct D3D11_PIXEL_SHADER_TRACE_DESC
     ulong SampleMask;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/ns-d3d11shadertracing-d3d11_compute_shader_trace_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/ns-d3d11shadertracing-d3d11_compute_shader_trace_desc
 struct D3D11_COMPUTE_SHADER_TRACE_DESC
 {
     ulong   Invocation;
@@ -5129,15 +5340,23 @@ struct D3D11_COMPUTE_SHADER_TRACE_DESC
     uint[3] ThreadGroupID;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/ns-d3d11shadertracing-d3d11_shader_trace_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/ns-d3d11shadertracing-d3d11_shader_trace_desc
 struct D3D11_SHADER_TRACE_DESC
 {
-    D3D11_SHADER_TYPE   Type;
-    uint                Flags;
-    _Anonymous_e__Union Anonymous;
+    D3D11_SHADER_TYPE Type;
+    uint              Flags;
+    union
+    {
+        D3D11_VERTEX_SHADER_TRACE_DESC VertexShaderTraceDesc;
+        D3D11_HULL_SHADER_TRACE_DESC HullShaderTraceDesc;
+        D3D11_DOMAIN_SHADER_TRACE_DESC DomainShaderTraceDesc;
+        D3D11_GEOMETRY_SHADER_TRACE_DESC GeometryShaderTraceDesc;
+        D3D11_PIXEL_SHADER_TRACE_DESC PixelShaderTraceDesc;
+        D3D11_COMPUTE_SHADER_TRACE_DESC ComputeShaderTraceDesc;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/ns-d3d11shadertracing-d3d11_trace_stats))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/ns-d3d11shadertracing-d3d11_trace_stats
 struct D3D11_TRACE_STATS
 {
     D3D11_SHADER_TRACE_DESC TraceDesc;
@@ -5165,23 +5384,27 @@ struct D3D11_TRACE_STATS
     ubyte[32]    DSInputPatchConstantMask;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/ns-d3d11shadertracing-d3d11_trace_value))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/ns-d3d11shadertracing-d3d11_trace_value
 struct D3D11_TRACE_VALUE
 {
     uint[4] Bits;
     ubyte   ValidMask;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/ns-d3d11shadertracing-d3d11_trace_register))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/ns-d3d11shadertracing-d3d11_trace_register
 struct D3D11_TRACE_REGISTER
 {
     D3D11_TRACE_REGISTER_TYPE RegType;
-    _Anonymous_e__Union Anonymous;
-    ubyte               OperandIndex;
-    ubyte               Flags;
+    union
+    {
+        ushort    Index1D;
+        ushort[2] Index2D;
+    }
+    ubyte OperandIndex;
+    ubyte Flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/ns-d3d11shadertracing-d3d11_trace_step))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/ns-d3d11shadertracing-d3d11_trace_step
 struct D3D11_TRACE_STEP
 {
     uint   ID;
@@ -5193,7 +5416,7 @@ struct D3D11_TRACE_STEP
     ulong  CurrentGlobalCycle;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcsx/ns-d3dcsx-d3dx11_fft_desc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcsx/ns-d3dcsx-d3dx11_fft_desc
 struct D3DX11_FFT_DESC
 {
     uint                 NumDimensions;
@@ -5202,7 +5425,7 @@ struct D3DX11_FFT_DESC
     D3DX11_FFT_DATA_TYPE Type;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcsx/ns-d3dcsx-d3dx11_fft_buffer_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcsx/ns-d3dcsx-d3dx11_fft_buffer_info
 struct D3DX11_FFT_BUFFER_INFO
 {
     uint    NumTempBufferSizes;
@@ -5213,14 +5436,14 @@ struct D3DX11_FFT_BUFFER_INFO
 
 // Functions
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-d3d11createdevice))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-d3d11createdevice
 @DllImport("d3d11.dll")
 HRESULT D3D11CreateDevice(IDXGIAdapter pAdapter, D3D_DRIVER_TYPE DriverType, HMODULE Software, 
                           D3D11_CREATE_DEVICE_FLAG Flags, const(D3D_FEATURE_LEVEL)* pFeatureLevels, 
                           uint FeatureLevels, uint SDKVersion, ID3D11Device* ppDevice, 
                           D3D_FEATURE_LEVEL* pFeatureLevel, ID3D11DeviceContext* ppImmediateContext);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-d3d11createdeviceandswapchain))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-d3d11createdeviceandswapchain
 @DllImport("d3d11.dll")
 HRESULT D3D11CreateDeviceAndSwapChain(IDXGIAdapter pAdapter, D3D_DRIVER_TYPE DriverType, HMODULE Software, 
                                       D3D11_CREATE_DEVICE_FLAG Flags, const(D3D_FEATURE_LEVEL)* pFeatureLevels, 
@@ -5235,47 +5458,47 @@ HRESULT D3DDisassemble11Trace(/*PARAM ATTR: MemorySizeAttribute : CustomAttribut
                               size_t SrcDataSize, ID3D11ShaderTrace pTrace, uint StartStep, uint NumSteps, 
                               uint Flags, ID3DBlob* ppDisassembly);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-d3dx11createscan))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-d3dx11createscan
 @DllImport("d3dcsx.dll")
 HRESULT D3DX11CreateScan(ID3D11DeviceContext pDeviceContext, uint MaxElementScanSize, uint MaxScanCount, 
                          ID3DX11Scan* ppScan);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-d3dx11createsegmentedscan))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-d3dx11createsegmentedscan
 @DllImport("d3dcsx.dll")
 HRESULT D3DX11CreateSegmentedScan(ID3D11DeviceContext pDeviceContext, uint MaxElementScanSize, 
                                   ID3DX11SegmentedScan* ppScan);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-d3dx11createfft))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-d3dx11createfft
 @DllImport("d3dcsx.dll")
 HRESULT D3DX11CreateFFT(ID3D11DeviceContext pDeviceContext, const(D3DX11_FFT_DESC)* pDesc, uint Flags, 
                         D3DX11_FFT_BUFFER_INFO* pBufferInfo, ID3DX11FFT* ppFFT);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-d3dx11createfft1dreal))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-d3dx11createfft1dreal
 @DllImport("d3dcsx.dll")
 HRESULT D3DX11CreateFFT1DReal(ID3D11DeviceContext pDeviceContext, uint X, uint Flags, 
                               D3DX11_FFT_BUFFER_INFO* pBufferInfo, ID3DX11FFT* ppFFT);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-d3dx11createfft1dcomplex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-d3dx11createfft1dcomplex
 @DllImport("d3dcsx.dll")
 HRESULT D3DX11CreateFFT1DComplex(ID3D11DeviceContext pDeviceContext, uint X, uint Flags, 
                                  D3DX11_FFT_BUFFER_INFO* pBufferInfo, ID3DX11FFT* ppFFT);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-d3dx11createfft2dreal))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-d3dx11createfft2dreal
 @DllImport("d3dcsx.dll")
 HRESULT D3DX11CreateFFT2DReal(ID3D11DeviceContext pDeviceContext, uint X, uint Y, uint Flags, 
                               D3DX11_FFT_BUFFER_INFO* pBufferInfo, ID3DX11FFT* ppFFT);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-d3dx11createfft2dcomplex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-d3dx11createfft2dcomplex
 @DllImport("d3dcsx.dll")
 HRESULT D3DX11CreateFFT2DComplex(ID3D11DeviceContext pDeviceContext, uint X, uint Y, uint Flags, 
                                  D3DX11_FFT_BUFFER_INFO* pBufferInfo, ID3DX11FFT* ppFFT);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-d3dx11createfft3dreal))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-d3dx11createfft3dreal
 @DllImport("d3dcsx.dll")
 HRESULT D3DX11CreateFFT3DReal(ID3D11DeviceContext pDeviceContext, uint X, uint Y, uint Z, uint Flags, 
                               D3DX11_FFT_BUFFER_INFO* pBufferInfo, ID3DX11FFT* ppFFT);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-d3dx11createfft3dcomplex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-d3dx11createfft3dcomplex
 @DllImport("d3dcsx.dll")
 HRESULT D3DX11CreateFFT3DComplex(ID3D11DeviceContext pDeviceContext, uint X, uint Y, uint Z, uint Flags, 
                                  D3DX11_FFT_BUFFER_INFO* pBufferInfo, ID3DX11FFT* ppFFT);
@@ -5285,1320 +5508,1320 @@ HRESULT D3DX11CreateFFT3DComplex(ID3D11DeviceContext pDeviceContext, uint X, uin
 
 @GUID("1841e5c8-16b0-489b-bcc8-44cfb0d5deae")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11devicechild))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11devicechild
 interface ID3D11DeviceChild : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicechild-getdevice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicechild-getdevice
     void    GetDevice(ID3D11Device* ppDevice);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicechild-getprivatedata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicechild-getprivatedata
     HRESULT GetPrivateData(const(GUID)* guid, uint* pDataSize, 
                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/void* pData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicechild-setprivatedata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicechild-setprivatedata
     HRESULT SetPrivateData(const(GUID)* guid, uint DataSize, 
                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(void)* pData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicechild-setprivatedatainterface))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicechild-setprivatedatainterface
     HRESULT SetPrivateDataInterface(const(GUID)* guid, const(IUnknown) pData);
 }
 
 @GUID("03823efb-8d8f-4e1c-9aa2-f64bb2cbfdf1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11depthstencilstate))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11depthstencilstate
 interface ID3D11DepthStencilState : ID3D11DeviceChild
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11depthstencilstate-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11depthstencilstate-getdesc
     void GetDesc(D3D11_DEPTH_STENCIL_DESC* pDesc);
 }
 
 @GUID("75b68faa-347d-4159-8f45-a0640f01cd9a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11blendstate))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11blendstate
 interface ID3D11BlendState : ID3D11DeviceChild
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11blendstate-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11blendstate-getdesc
     void GetDesc(D3D11_BLEND_DESC* pDesc);
 }
 
 @GUID("9bb4ab81-ab1a-4d8f-b506-fc04200b6ee7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11rasterizerstate))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11rasterizerstate
 interface ID3D11RasterizerState : ID3D11DeviceChild
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11rasterizerstate-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11rasterizerstate-getdesc
     void GetDesc(D3D11_RASTERIZER_DESC* pDesc);
 }
 
 @GUID("dc8e63f3-d12b-4952-b47b-5e45026a862d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11resource))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11resource
 interface ID3D11Resource : ID3D11DeviceChild
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11resource-gettype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11resource-gettype
     void GetType(D3D11_RESOURCE_DIMENSION* pResourceDimension);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11resource-setevictionpriority))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11resource-setevictionpriority
     void SetEvictionPriority(uint EvictionPriority);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11resource-getevictionpriority))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11resource-getevictionpriority
     uint GetEvictionPriority();
 }
 
 @GUID("48570b85-d1ee-4fcd-a250-eb350722b037")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11buffer))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11buffer
 interface ID3D11Buffer : ID3D11Resource
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11buffer-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11buffer-getdesc
     void GetDesc(D3D11_BUFFER_DESC* pDesc);
 }
 
 @GUID("f8fb5c27-c6b3-4f75-a4c8-439af2ef564c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11texture1d))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11texture1d
 interface ID3D11Texture1D : ID3D11Resource
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11texture1d-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11texture1d-getdesc
     void GetDesc(D3D11_TEXTURE1D_DESC* pDesc);
 }
 
 @GUID("6f15aaf2-d208-4e89-9ab4-489535d34f9c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11texture2d))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11texture2d
 interface ID3D11Texture2D : ID3D11Resource
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11texture2d-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11texture2d-getdesc
     void GetDesc(D3D11_TEXTURE2D_DESC* pDesc);
 }
 
 @GUID("037e866e-f56d-4357-a8af-9dabbe6e250e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11texture3d))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11texture3d
 interface ID3D11Texture3D : ID3D11Resource
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11texture3d-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11texture3d-getdesc
     void GetDesc(D3D11_TEXTURE3D_DESC* pDesc);
 }
 
 @GUID("839d1216-bb2e-412b-b7f4-a9dbebe08ed1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11view))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11view
 interface ID3D11View : ID3D11DeviceChild
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11view-getresource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11view-getresource
     void GetResource(ID3D11Resource* ppResource);
 }
 
 @GUID("b0e06fe0-8192-4e1a-b1ca-36d7414710b2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11shaderresourceview))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11shaderresourceview
 interface ID3D11ShaderResourceView : ID3D11View
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11shaderresourceview-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11shaderresourceview-getdesc
     void GetDesc(D3D11_SHADER_RESOURCE_VIEW_DESC* pDesc);
 }
 
 @GUID("dfdba067-0b8d-4865-875b-d7b4516cc164")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11rendertargetview))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11rendertargetview
 interface ID3D11RenderTargetView : ID3D11View
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11rendertargetview-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11rendertargetview-getdesc
     void GetDesc(D3D11_RENDER_TARGET_VIEW_DESC* pDesc);
 }
 
 @GUID("9fdac92a-1876-48c3-afad-25b94f84a9b6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11depthstencilview))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11depthstencilview
 interface ID3D11DepthStencilView : ID3D11View
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11depthstencilview-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11depthstencilview-getdesc
     void GetDesc(D3D11_DEPTH_STENCIL_VIEW_DESC* pDesc);
 }
 
 @GUID("28acf509-7f5c-48f6-8611-f316010a6380")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11unorderedaccessview))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11unorderedaccessview
 interface ID3D11UnorderedAccessView : ID3D11View
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11unorderedaccessview-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11unorderedaccessview-getdesc
     void GetDesc(D3D11_UNORDERED_ACCESS_VIEW_DESC* pDesc);
 }
 
 @GUID("3b301d64-d678-4289-8897-22f8928b72f3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11vertexshader))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11vertexshader
 interface ID3D11VertexShader : ID3D11DeviceChild
 {
 }
 
 @GUID("8e5c6061-628a-4c8e-8264-bbe45cb3d5dd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11hullshader))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11hullshader
 interface ID3D11HullShader : ID3D11DeviceChild
 {
 }
 
 @GUID("f582c508-0f36-490c-9977-31eece268cfa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11domainshader))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11domainshader
 interface ID3D11DomainShader : ID3D11DeviceChild
 {
 }
 
 @GUID("38325b96-effb-4022-ba02-2e795b70275c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11geometryshader))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11geometryshader
 interface ID3D11GeometryShader : ID3D11DeviceChild
 {
 }
 
 @GUID("ea82e40d-51dc-4f33-93d4-db7c9125ae8c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11pixelshader))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11pixelshader
 interface ID3D11PixelShader : ID3D11DeviceChild
 {
 }
 
 @GUID("4f5b196e-c2bd-495e-bd01-1fded38e4969")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11computeshader))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11computeshader
 interface ID3D11ComputeShader : ID3D11DeviceChild
 {
 }
 
 @GUID("e4819ddc-4cf0-4025-bd26-5de82a3e07b7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11inputlayout))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11inputlayout
 interface ID3D11InputLayout : ID3D11DeviceChild
 {
 }
 
 @GUID("da6fea51-564c-4487-9810-f0d0f9b4e3a5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11samplerstate))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11samplerstate
 interface ID3D11SamplerState : ID3D11DeviceChild
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11samplerstate-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11samplerstate-getdesc
     void GetDesc(D3D11_SAMPLER_DESC* pDesc);
 }
 
 @GUID("4b35d0cd-1e15-4258-9c98-1b1333f6dd3b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11asynchronous))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11asynchronous
 interface ID3D11Asynchronous : ID3D11DeviceChild
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11asynchronous-getdatasize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11asynchronous-getdatasize
     uint GetDataSize();
 }
 
 @GUID("d6c00747-87b7-425e-b84d-44d108560afd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11query))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11query
 interface ID3D11Query : ID3D11Asynchronous
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11query-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11query-getdesc
     void GetDesc(D3D11_QUERY_DESC* pDesc);
 }
 
 @GUID("9eb576dd-9f77-4d86-81aa-8bab5fe490e2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11predicate))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11predicate
 interface ID3D11Predicate : ID3D11Query
 {
 }
 
 @GUID("6e8c49fb-a371-4770-b440-29086022b741")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11counter))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11counter
 interface ID3D11Counter : ID3D11Asynchronous
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11counter-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11counter-getdesc
     void GetDesc(D3D11_COUNTER_DESC* pDesc);
 }
 
 @GUID("a6cd7faa-b0b7-4a2f-9436-8662a65797cb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11classinstance))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11classinstance
 interface ID3D11ClassInstance : ID3D11DeviceChild
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11classinstance-getclasslinkage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11classinstance-getclasslinkage
     void GetClassLinkage(ID3D11ClassLinkage* ppLinkage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11classinstance-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11classinstance-getdesc
     void GetDesc(D3D11_CLASS_INSTANCE_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11classinstance-getinstancename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11classinstance-getinstancename
     void GetInstanceName(PSTR pInstanceName, size_t* pBufferLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11classinstance-gettypename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11classinstance-gettypename
     void GetTypeName(PSTR pTypeName, size_t* pBufferLength);
 }
 
 @GUID("ddf57cba-9543-46e4-a12b-f207a0fe7fed")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11classlinkage))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11classlinkage
 interface ID3D11ClassLinkage : ID3D11DeviceChild
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11classlinkage-getclassinstance))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11classlinkage-getclassinstance
     HRESULT GetClassInstance(const(PSTR) pClassInstanceName, uint InstanceIndex, ID3D11ClassInstance* ppInstance);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11classlinkage-createclassinstance))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11classlinkage-createclassinstance
     HRESULT CreateClassInstance(const(PSTR) pClassTypeName, uint ConstantBufferOffset, uint ConstantVectorOffset, 
                                 uint TextureOffset, uint SamplerOffset, ID3D11ClassInstance* ppInstance);
 }
 
 @GUID("a24bc4d1-769e-43f7-8013-98ff566c18e2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11commandlist))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11commandlist
 interface ID3D11CommandList : ID3D11DeviceChild
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11commandlist-getcontextflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11commandlist-getcontextflags
     uint GetContextFlags();
 }
 
 @GUID("c0bfa96c-e089-44fb-8eaf-26f8796190da")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11devicecontext))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11devicecontext
 interface ID3D11DeviceContext : ID3D11DeviceChild
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-vssetconstantbuffers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-vssetconstantbuffers
     void    VSSetConstantBuffers(uint StartSlot, uint NumBuffers, ID3D11Buffer* ppConstantBuffers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-pssetshaderresources))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-pssetshaderresources
     void    PSSetShaderResources(uint StartSlot, uint NumViews, ID3D11ShaderResourceView* ppShaderResourceViews);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-pssetshader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-pssetshader
     void    PSSetShader(ID3D11PixelShader pPixelShader, ID3D11ClassInstance* ppClassInstances, 
                         uint NumClassInstances);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-pssetsamplers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-pssetsamplers
     void    PSSetSamplers(uint StartSlot, uint NumSamplers, ID3D11SamplerState* ppSamplers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-vssetshader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-vssetshader
     void    VSSetShader(ID3D11VertexShader pVertexShader, ID3D11ClassInstance* ppClassInstances, 
                         uint NumClassInstances);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-drawindexed))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-drawindexed
     void    DrawIndexed(uint IndexCount, uint StartIndexLocation, int BaseVertexLocation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-draw))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-draw
     void    Draw(uint VertexCount, uint StartVertexLocation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-map))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-map
     HRESULT Map(ID3D11Resource pResource, uint Subresource, D3D11_MAP MapType, uint MapFlags, 
                 D3D11_MAPPED_SUBRESOURCE* pMappedResource);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-unmap))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-unmap
     void    Unmap(ID3D11Resource pResource, uint Subresource);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-pssetconstantbuffers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-pssetconstantbuffers
     void    PSSetConstantBuffers(uint StartSlot, uint NumBuffers, ID3D11Buffer* ppConstantBuffers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-iasetinputlayout))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-iasetinputlayout
     void    IASetInputLayout(ID3D11InputLayout pInputLayout);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-iasetvertexbuffers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-iasetvertexbuffers
     void    IASetVertexBuffers(uint StartSlot, uint NumBuffers, ID3D11Buffer* ppVertexBuffers, 
                                const(uint)* pStrides, const(uint)* pOffsets);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-iasetindexbuffer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-iasetindexbuffer
     void    IASetIndexBuffer(ID3D11Buffer pIndexBuffer, DXGI_FORMAT Format, uint Offset);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-drawindexedinstanced))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-drawindexedinstanced
     void    DrawIndexedInstanced(uint IndexCountPerInstance, uint InstanceCount, uint StartIndexLocation, 
                                  int BaseVertexLocation, uint StartInstanceLocation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-drawinstanced))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-drawinstanced
     void    DrawInstanced(uint VertexCountPerInstance, uint InstanceCount, uint StartVertexLocation, 
                           uint StartInstanceLocation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-gssetconstantbuffers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-gssetconstantbuffers
     void    GSSetConstantBuffers(uint StartSlot, uint NumBuffers, ID3D11Buffer* ppConstantBuffers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-gssetshader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-gssetshader
     void    GSSetShader(ID3D11GeometryShader pShader, ID3D11ClassInstance* ppClassInstances, 
                         uint NumClassInstances);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-iasetprimitivetopology))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-iasetprimitivetopology
     void    IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY Topology);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-vssetshaderresources))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-vssetshaderresources
     void    VSSetShaderResources(uint StartSlot, uint NumViews, ID3D11ShaderResourceView* ppShaderResourceViews);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-vssetsamplers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-vssetsamplers
     void    VSSetSamplers(uint StartSlot, uint NumSamplers, ID3D11SamplerState* ppSamplers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-begin))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-begin
     void    Begin(ID3D11Asynchronous pAsync);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-end))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-end
     void    End(ID3D11Asynchronous pAsync);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-getdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-getdata
     HRESULT GetData(ID3D11Asynchronous pAsync, 
                     /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* pData, 
                     uint DataSize, uint GetDataFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-setpredication))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-setpredication
     void    SetPredication(ID3D11Predicate pPredicate, BOOL PredicateValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-gssetshaderresources))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-gssetshaderresources
     void    GSSetShaderResources(uint StartSlot, uint NumViews, ID3D11ShaderResourceView* ppShaderResourceViews);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-gssetsamplers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-gssetsamplers
     void    GSSetSamplers(uint StartSlot, uint NumSamplers, ID3D11SamplerState* ppSamplers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-omsetrendertargets))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-omsetrendertargets
     void    OMSetRenderTargets(uint NumViews, ID3D11RenderTargetView* ppRenderTargetViews, 
                                ID3D11DepthStencilView pDepthStencilView);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-omsetrendertargetsandunorderedaccessviews))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-omsetrendertargetsandunorderedaccessviews
     void    OMSetRenderTargetsAndUnorderedAccessViews(uint NumRTVs, ID3D11RenderTargetView* ppRenderTargetViews, 
                                                       ID3D11DepthStencilView pDepthStencilView, uint UAVStartSlot, 
                                                       uint NumUAVs, 
                                                       ID3D11UnorderedAccessView* ppUnorderedAccessViews, 
                                                       const(uint)* pUAVInitialCounts);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-omsetblendstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-omsetblendstate
     void    OMSetBlendState(ID3D11BlendState pBlendState, const(float)* BlendFactor, uint SampleMask);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-omsetdepthstencilstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-omsetdepthstencilstate
     void    OMSetDepthStencilState(ID3D11DepthStencilState pDepthStencilState, uint StencilRef);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-sosettargets))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-sosettargets
     void    SOSetTargets(uint NumBuffers, ID3D11Buffer* ppSOTargets, const(uint)* pOffsets);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-drawauto))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-drawauto
     void    DrawAuto();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-drawindexedinstancedindirect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-drawindexedinstancedindirect
     void    DrawIndexedInstancedIndirect(ID3D11Buffer pBufferForArgs, uint AlignedByteOffsetForArgs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-drawinstancedindirect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-drawinstancedindirect
     void    DrawInstancedIndirect(ID3D11Buffer pBufferForArgs, uint AlignedByteOffsetForArgs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-dispatch))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-dispatch
     void    Dispatch(uint ThreadGroupCountX, uint ThreadGroupCountY, uint ThreadGroupCountZ);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-dispatchindirect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-dispatchindirect
     void    DispatchIndirect(ID3D11Buffer pBufferForArgs, uint AlignedByteOffsetForArgs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-rssetstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-rssetstate
     void    RSSetState(ID3D11RasterizerState pRasterizerState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-rssetviewports))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-rssetviewports
     void    RSSetViewports(uint NumViewports, const(D3D11_VIEWPORT)* pViewports);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-rssetscissorrects))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-rssetscissorrects
     void    RSSetScissorRects(uint NumRects, const(RECT)* pRects);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-copysubresourceregion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-copysubresourceregion
     void    CopySubresourceRegion(ID3D11Resource pDstResource, uint DstSubresource, uint DstX, uint DstY, 
                                   uint DstZ, ID3D11Resource pSrcResource, uint SrcSubresource, 
                                   const(D3D11_BOX)* pSrcBox);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-copyresource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-copyresource
     void    CopyResource(ID3D11Resource pDstResource, ID3D11Resource pSrcResource);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-updatesubresource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-updatesubresource
     void    UpdateSubresource(ID3D11Resource pDstResource, uint DstSubresource, const(D3D11_BOX)* pDstBox, 
                               const(void)* pSrcData, uint SrcRowPitch, uint SrcDepthPitch);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-copystructurecount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-copystructurecount
     void    CopyStructureCount(ID3D11Buffer pDstBuffer, uint DstAlignedByteOffset, 
                                ID3D11UnorderedAccessView pSrcView);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-clearrendertargetview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-clearrendertargetview
     void    ClearRenderTargetView(ID3D11RenderTargetView pRenderTargetView, const(float)* ColorRGBA);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-clearunorderedaccessviewuint))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-clearunorderedaccessviewuint
     void    ClearUnorderedAccessViewUint(ID3D11UnorderedAccessView pUnorderedAccessView, const(uint)* Values);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-clearunorderedaccessviewfloat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-clearunorderedaccessviewfloat
     void    ClearUnorderedAccessViewFloat(ID3D11UnorderedAccessView pUnorderedAccessView, const(float)* Values);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-cleardepthstencilview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-cleardepthstencilview
     void    ClearDepthStencilView(ID3D11DepthStencilView pDepthStencilView, uint ClearFlags, float Depth, 
                                   ubyte Stencil);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-generatemips))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-generatemips
     void    GenerateMips(ID3D11ShaderResourceView pShaderResourceView);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-setresourceminlod))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-setresourceminlod
     void    SetResourceMinLOD(ID3D11Resource pResource, float MinLOD);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-getresourceminlod))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-getresourceminlod
     float   GetResourceMinLOD(ID3D11Resource pResource);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-resolvesubresource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-resolvesubresource
     void    ResolveSubresource(ID3D11Resource pDstResource, uint DstSubresource, ID3D11Resource pSrcResource, 
                                uint SrcSubresource, DXGI_FORMAT Format);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-executecommandlist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-executecommandlist
     void    ExecuteCommandList(ID3D11CommandList pCommandList, BOOL RestoreContextState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-hssetshaderresources))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-hssetshaderresources
     void    HSSetShaderResources(uint StartSlot, uint NumViews, ID3D11ShaderResourceView* ppShaderResourceViews);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-hssetshader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-hssetshader
     void    HSSetShader(ID3D11HullShader pHullShader, ID3D11ClassInstance* ppClassInstances, 
                         uint NumClassInstances);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-hssetsamplers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-hssetsamplers
     void    HSSetSamplers(uint StartSlot, uint NumSamplers, ID3D11SamplerState* ppSamplers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-hssetconstantbuffers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-hssetconstantbuffers
     void    HSSetConstantBuffers(uint StartSlot, uint NumBuffers, ID3D11Buffer* ppConstantBuffers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-dssetshaderresources))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-dssetshaderresources
     void    DSSetShaderResources(uint StartSlot, uint NumViews, ID3D11ShaderResourceView* ppShaderResourceViews);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-dssetshader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-dssetshader
     void    DSSetShader(ID3D11DomainShader pDomainShader, ID3D11ClassInstance* ppClassInstances, 
                         uint NumClassInstances);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-dssetsamplers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-dssetsamplers
     void    DSSetSamplers(uint StartSlot, uint NumSamplers, ID3D11SamplerState* ppSamplers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-dssetconstantbuffers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-dssetconstantbuffers
     void    DSSetConstantBuffers(uint StartSlot, uint NumBuffers, ID3D11Buffer* ppConstantBuffers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-cssetshaderresources))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-cssetshaderresources
     void    CSSetShaderResources(uint StartSlot, uint NumViews, ID3D11ShaderResourceView* ppShaderResourceViews);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-cssetunorderedaccessviews))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-cssetunorderedaccessviews
     void    CSSetUnorderedAccessViews(uint StartSlot, uint NumUAVs, 
                                       ID3D11UnorderedAccessView* ppUnorderedAccessViews, 
                                       const(uint)* pUAVInitialCounts);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-cssetshader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-cssetshader
     void    CSSetShader(ID3D11ComputeShader pComputeShader, ID3D11ClassInstance* ppClassInstances, 
                         uint NumClassInstances);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-cssetsamplers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-cssetsamplers
     void    CSSetSamplers(uint StartSlot, uint NumSamplers, ID3D11SamplerState* ppSamplers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-cssetconstantbuffers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-cssetconstantbuffers
     void    CSSetConstantBuffers(uint StartSlot, uint NumBuffers, ID3D11Buffer* ppConstantBuffers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-vsgetconstantbuffers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-vsgetconstantbuffers
     void    VSGetConstantBuffers(uint StartSlot, uint NumBuffers, ID3D11Buffer* ppConstantBuffers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-psgetshaderresources))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-psgetshaderresources
     void    PSGetShaderResources(uint StartSlot, uint NumViews, ID3D11ShaderResourceView* ppShaderResourceViews);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-psgetshader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-psgetshader
     void    PSGetShader(ID3D11PixelShader* ppPixelShader, ID3D11ClassInstance* ppClassInstances, 
                         uint* pNumClassInstances);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-psgetsamplers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-psgetsamplers
     void    PSGetSamplers(uint StartSlot, uint NumSamplers, ID3D11SamplerState* ppSamplers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-vsgetshader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-vsgetshader
     void    VSGetShader(ID3D11VertexShader* ppVertexShader, ID3D11ClassInstance* ppClassInstances, 
                         uint* pNumClassInstances);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-psgetconstantbuffers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-psgetconstantbuffers
     void    PSGetConstantBuffers(uint StartSlot, uint NumBuffers, ID3D11Buffer* ppConstantBuffers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-iagetinputlayout))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-iagetinputlayout
     void    IAGetInputLayout(ID3D11InputLayout* ppInputLayout);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-iagetvertexbuffers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-iagetvertexbuffers
     void    IAGetVertexBuffers(uint StartSlot, uint NumBuffers, ID3D11Buffer* ppVertexBuffers, uint* pStrides, 
                                uint* pOffsets);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-iagetindexbuffer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-iagetindexbuffer
     void    IAGetIndexBuffer(ID3D11Buffer* pIndexBuffer, DXGI_FORMAT* Format, uint* Offset);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-gsgetconstantbuffers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-gsgetconstantbuffers
     void    GSGetConstantBuffers(uint StartSlot, uint NumBuffers, ID3D11Buffer* ppConstantBuffers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-gsgetshader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-gsgetshader
     void    GSGetShader(ID3D11GeometryShader* ppGeometryShader, ID3D11ClassInstance* ppClassInstances, 
                         uint* pNumClassInstances);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-iagetprimitivetopology))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-iagetprimitivetopology
     void    IAGetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY* pTopology);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-vsgetshaderresources))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-vsgetshaderresources
     void    VSGetShaderResources(uint StartSlot, uint NumViews, ID3D11ShaderResourceView* ppShaderResourceViews);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-vsgetsamplers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-vsgetsamplers
     void    VSGetSamplers(uint StartSlot, uint NumSamplers, ID3D11SamplerState* ppSamplers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-getpredication))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-getpredication
     void    GetPredication(ID3D11Predicate* ppPredicate, BOOL* pPredicateValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-gsgetshaderresources))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-gsgetshaderresources
     void    GSGetShaderResources(uint StartSlot, uint NumViews, ID3D11ShaderResourceView* ppShaderResourceViews);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-gsgetsamplers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-gsgetsamplers
     void    GSGetSamplers(uint StartSlot, uint NumSamplers, ID3D11SamplerState* ppSamplers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-omgetrendertargets))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-omgetrendertargets
     void    OMGetRenderTargets(uint NumViews, ID3D11RenderTargetView* ppRenderTargetViews, 
                                ID3D11DepthStencilView* ppDepthStencilView);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-omgetrendertargetsandunorderedaccessviews))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-omgetrendertargetsandunorderedaccessviews
     void    OMGetRenderTargetsAndUnorderedAccessViews(uint NumRTVs, ID3D11RenderTargetView* ppRenderTargetViews, 
                                                       ID3D11DepthStencilView* ppDepthStencilView, uint UAVStartSlot, 
                                                       uint NumUAVs, 
                                                       ID3D11UnorderedAccessView* ppUnorderedAccessViews);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-omgetblendstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-omgetblendstate
     void    OMGetBlendState(ID3D11BlendState* ppBlendState, float* BlendFactor, uint* pSampleMask);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-omgetdepthstencilstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-omgetdepthstencilstate
     void    OMGetDepthStencilState(ID3D11DepthStencilState* ppDepthStencilState, uint* pStencilRef);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-sogettargets))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-sogettargets
     void    SOGetTargets(uint NumBuffers, ID3D11Buffer* ppSOTargets);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-rsgetstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-rsgetstate
     void    RSGetState(ID3D11RasterizerState* ppRasterizerState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-rsgetviewports))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-rsgetviewports
     void    RSGetViewports(uint* pNumViewports, D3D11_VIEWPORT* pViewports);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-rsgetscissorrects))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-rsgetscissorrects
     void    RSGetScissorRects(uint* pNumRects, RECT* pRects);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-hsgetshaderresources))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-hsgetshaderresources
     void    HSGetShaderResources(uint StartSlot, uint NumViews, ID3D11ShaderResourceView* ppShaderResourceViews);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-hsgetshader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-hsgetshader
     void    HSGetShader(ID3D11HullShader* ppHullShader, ID3D11ClassInstance* ppClassInstances, 
                         uint* pNumClassInstances);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-hsgetsamplers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-hsgetsamplers
     void    HSGetSamplers(uint StartSlot, uint NumSamplers, ID3D11SamplerState* ppSamplers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-hsgetconstantbuffers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-hsgetconstantbuffers
     void    HSGetConstantBuffers(uint StartSlot, uint NumBuffers, ID3D11Buffer* ppConstantBuffers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-dsgetshaderresources))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-dsgetshaderresources
     void    DSGetShaderResources(uint StartSlot, uint NumViews, ID3D11ShaderResourceView* ppShaderResourceViews);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-dsgetshader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-dsgetshader
     void    DSGetShader(ID3D11DomainShader* ppDomainShader, ID3D11ClassInstance* ppClassInstances, 
                         uint* pNumClassInstances);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-dsgetsamplers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-dsgetsamplers
     void    DSGetSamplers(uint StartSlot, uint NumSamplers, ID3D11SamplerState* ppSamplers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-dsgetconstantbuffers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-dsgetconstantbuffers
     void    DSGetConstantBuffers(uint StartSlot, uint NumBuffers, ID3D11Buffer* ppConstantBuffers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-csgetshaderresources))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-csgetshaderresources
     void    CSGetShaderResources(uint StartSlot, uint NumViews, ID3D11ShaderResourceView* ppShaderResourceViews);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-csgetunorderedaccessviews))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-csgetunorderedaccessviews
     void    CSGetUnorderedAccessViews(uint StartSlot, uint NumUAVs, 
                                       ID3D11UnorderedAccessView* ppUnorderedAccessViews);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-csgetshader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-csgetshader
     void    CSGetShader(ID3D11ComputeShader* ppComputeShader, ID3D11ClassInstance* ppClassInstances, 
                         uint* pNumClassInstances);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-csgetsamplers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-csgetsamplers
     void    CSGetSamplers(uint StartSlot, uint NumSamplers, ID3D11SamplerState* ppSamplers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-csgetconstantbuffers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-csgetconstantbuffers
     void    CSGetConstantBuffers(uint StartSlot, uint NumBuffers, ID3D11Buffer* ppConstantBuffers);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-clearstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-clearstate
     void    ClearState();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-flush))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-flush
     void    Flush();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-gettype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-gettype
     D3D11_DEVICE_CONTEXT_TYPE GetType();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-getcontextflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-getcontextflags
     uint    GetContextFlags();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-finishcommandlist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-finishcommandlist
     HRESULT FinishCommandList(BOOL RestoreDeferredContextState, ID3D11CommandList* ppCommandList);
 }
 
 @GUID("3c9c5b51-995d-48d1-9b8d-fa5caeded65c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11videodecoder))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11videodecoder
 interface ID3D11VideoDecoder : ID3D11DeviceChild
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodecoder-getcreationparameters))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodecoder-getcreationparameters
     HRESULT GetCreationParameters(D3D11_VIDEO_DECODER_DESC* pVideoDesc, D3D11_VIDEO_DECODER_CONFIG* pConfig);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodecoder-getdriverhandle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodecoder-getdriverhandle
     HRESULT GetDriverHandle(HANDLE* pDriverHandle);
 }
 
 @GUID("31627037-53ab-4200-9061-05faa9ab45f9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11videoprocessorenumerator))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11videoprocessorenumerator
 interface ID3D11VideoProcessorEnumerator : ID3D11DeviceChild
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videoprocessorenumerator-getvideoprocessorcontentdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videoprocessorenumerator-getvideoprocessorcontentdesc
     HRESULT GetVideoProcessorContentDesc(D3D11_VIDEO_PROCESSOR_CONTENT_DESC* pContentDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videoprocessorenumerator-checkvideoprocessorformat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videoprocessorenumerator-checkvideoprocessorformat
     HRESULT CheckVideoProcessorFormat(DXGI_FORMAT Format, uint* pFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videoprocessorenumerator-getvideoprocessorcaps))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videoprocessorenumerator-getvideoprocessorcaps
     HRESULT GetVideoProcessorCaps(D3D11_VIDEO_PROCESSOR_CAPS* pCaps);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videoprocessorenumerator-getvideoprocessorrateconversioncaps))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videoprocessorenumerator-getvideoprocessorrateconversioncaps
     HRESULT GetVideoProcessorRateConversionCaps(uint TypeIndex, D3D11_VIDEO_PROCESSOR_RATE_CONVERSION_CAPS* pCaps);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videoprocessorenumerator-getvideoprocessorcustomrate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videoprocessorenumerator-getvideoprocessorcustomrate
     HRESULT GetVideoProcessorCustomRate(uint TypeIndex, uint CustomRateIndex, 
                                         D3D11_VIDEO_PROCESSOR_CUSTOM_RATE* pRate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videoprocessorenumerator-getvideoprocessorfilterrange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videoprocessorenumerator-getvideoprocessorfilterrange
     HRESULT GetVideoProcessorFilterRange(D3D11_VIDEO_PROCESSOR_FILTER Filter, 
                                          D3D11_VIDEO_PROCESSOR_FILTER_RANGE* pRange);
 }
 
 @GUID("1d7b0652-185f-41c6-85ce-0c5be3d4ae6c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11videoprocessor))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11videoprocessor
 interface ID3D11VideoProcessor : ID3D11DeviceChild
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videoprocessor-getcontentdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videoprocessor-getcontentdesc
     void GetContentDesc(D3D11_VIDEO_PROCESSOR_CONTENT_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videoprocessor-getrateconversioncaps))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videoprocessor-getrateconversioncaps
     void GetRateConversionCaps(D3D11_VIDEO_PROCESSOR_RATE_CONVERSION_CAPS* pCaps);
 }
 
 @GUID("3015a308-dcbd-47aa-a747-192486d14d4a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11authenticatedchannel))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11authenticatedchannel
 interface ID3D11AuthenticatedChannel : ID3D11DeviceChild
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11authenticatedchannel-getcertificatesize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11authenticatedchannel-getcertificatesize
     HRESULT GetCertificateSize(uint* pCertificateSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11authenticatedchannel-getcertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11authenticatedchannel-getcertificate
     HRESULT GetCertificate(uint CertificateSize, 
                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(0)))])*/ubyte* pCertificate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11authenticatedchannel-getchannelhandle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11authenticatedchannel-getchannelhandle
     void    GetChannelHandle(HANDLE* pChannelHandle);
 }
 
 @GUID("9b32f9ad-bdcc-40a6-a39d-d5c865845720")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11cryptosession))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11cryptosession
 interface ID3D11CryptoSession : ID3D11DeviceChild
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11cryptosession-getcryptotype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11cryptosession-getcryptotype
     void    GetCryptoType(GUID* pCryptoType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11cryptosession-getdecoderprofile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11cryptosession-getdecoderprofile
     void    GetDecoderProfile(GUID* pDecoderProfile);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11cryptosession-getcertificatesize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11cryptosession-getcertificatesize
     HRESULT GetCertificateSize(uint* pCertificateSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11cryptosession-getcertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11cryptosession-getcertificate
     HRESULT GetCertificate(uint CertificateSize, 
                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(0)))])*/ubyte* pCertificate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11cryptosession-getcryptosessionhandle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11cryptosession-getcryptosessionhandle
     void    GetCryptoSessionHandle(HANDLE* pCryptoSessionHandle);
 }
 
 @GUID("c2931aea-2a85-4f20-860f-fba1fd256e18")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11videodecoderoutputview))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11videodecoderoutputview
 interface ID3D11VideoDecoderOutputView : ID3D11View
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodecoderoutputview-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodecoderoutputview-getdesc
     void GetDesc(D3D11_VIDEO_DECODER_OUTPUT_VIEW_DESC* pDesc);
 }
 
 @GUID("11ec5a5f-51dc-4945-ab34-6e8c21300ea5")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11videoprocessorinputview))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11videoprocessorinputview
 interface ID3D11VideoProcessorInputView : ID3D11View
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videoprocessorinputview-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videoprocessorinputview-getdesc
     void GetDesc(D3D11_VIDEO_PROCESSOR_INPUT_VIEW_DESC* pDesc);
 }
 
 @GUID("a048285e-25a9-4527-bd93-d68b68c44254")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11videoprocessoroutputview))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11videoprocessoroutputview
 interface ID3D11VideoProcessorOutputView : ID3D11View
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videoprocessoroutputview-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videoprocessoroutputview-getdesc
     void GetDesc(D3D11_VIDEO_PROCESSOR_OUTPUT_VIEW_DESC* pDesc);
 }
 
 @GUID("61f21c45-3c0e-4a74-9cea-67100d9ad5e4")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11videocontext))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11videocontext
 interface ID3D11VideoContext : ID3D11DeviceChild
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-getdecoderbuffer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-getdecoderbuffer
     HRESULT GetDecoderBuffer(ID3D11VideoDecoder pDecoder, D3D11_VIDEO_DECODER_BUFFER_TYPE Type, uint* pBufferSize, 
                              void** ppBuffer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-releasedecoderbuffer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-releasedecoderbuffer
     HRESULT ReleaseDecoderBuffer(ID3D11VideoDecoder pDecoder, D3D11_VIDEO_DECODER_BUFFER_TYPE Type);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-decoderbeginframe))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-decoderbeginframe
     HRESULT DecoderBeginFrame(ID3D11VideoDecoder pDecoder, ID3D11VideoDecoderOutputView pView, uint ContentKeySize, 
                               /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/const(void)* pContentKey);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-decoderendframe))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-decoderendframe
     HRESULT DecoderEndFrame(ID3D11VideoDecoder pDecoder);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-submitdecoderbuffers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-submitdecoderbuffers
     HRESULT SubmitDecoderBuffers(ID3D11VideoDecoder pDecoder, uint NumBuffers, 
                                  const(D3D11_VIDEO_DECODER_BUFFER_DESC)* pBufferDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-decoderextension))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-decoderextension
     int     DecoderExtension(ID3D11VideoDecoder pDecoder, const(D3D11_VIDEO_DECODER_EXTENSION)* pExtensionData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetoutputtargetrect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetoutputtargetrect
     void    VideoProcessorSetOutputTargetRect(ID3D11VideoProcessor pVideoProcessor, BOOL Enable, 
                                               const(RECT)* pRect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetoutputbackgroundcolor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetoutputbackgroundcolor
     void    VideoProcessorSetOutputBackgroundColor(ID3D11VideoProcessor pVideoProcessor, BOOL YCbCr, 
                                                    const(D3D11_VIDEO_COLOR)* pColor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetoutputcolorspace))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetoutputcolorspace
     void    VideoProcessorSetOutputColorSpace(ID3D11VideoProcessor pVideoProcessor, 
                                               const(D3D11_VIDEO_PROCESSOR_COLOR_SPACE)* pColorSpace);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetoutputalphafillmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetoutputalphafillmode
     void    VideoProcessorSetOutputAlphaFillMode(ID3D11VideoProcessor pVideoProcessor, 
                                                  D3D11_VIDEO_PROCESSOR_ALPHA_FILL_MODE AlphaFillMode, 
                                                  uint StreamIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetoutputconstriction))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetoutputconstriction
     void    VideoProcessorSetOutputConstriction(ID3D11VideoProcessor pVideoProcessor, BOOL Enable, SIZE Size);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetoutputstereomode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetoutputstereomode
     void    VideoProcessorSetOutputStereoMode(ID3D11VideoProcessor pVideoProcessor, BOOL Enable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetoutputextension))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetoutputextension
     int     VideoProcessorSetOutputExtension(ID3D11VideoProcessor pVideoProcessor, const(GUID)* pExtensionGuid, 
                                              uint DataSize, void* pData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetoutputtargetrect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetoutputtargetrect
     void    VideoProcessorGetOutputTargetRect(ID3D11VideoProcessor pVideoProcessor, BOOL* Enabled, RECT* pRect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetoutputbackgroundcolor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetoutputbackgroundcolor
     void    VideoProcessorGetOutputBackgroundColor(ID3D11VideoProcessor pVideoProcessor, BOOL* pYCbCr, 
                                                    D3D11_VIDEO_COLOR* pColor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetoutputcolorspace))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetoutputcolorspace
     void    VideoProcessorGetOutputColorSpace(ID3D11VideoProcessor pVideoProcessor, 
                                               D3D11_VIDEO_PROCESSOR_COLOR_SPACE* pColorSpace);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetoutputalphafillmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetoutputalphafillmode
     void    VideoProcessorGetOutputAlphaFillMode(ID3D11VideoProcessor pVideoProcessor, 
                                                  D3D11_VIDEO_PROCESSOR_ALPHA_FILL_MODE* pAlphaFillMode, 
                                                  uint* pStreamIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetoutputconstriction))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetoutputconstriction
     void    VideoProcessorGetOutputConstriction(ID3D11VideoProcessor pVideoProcessor, BOOL* pEnabled, SIZE* pSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetoutputstereomode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetoutputstereomode
     void    VideoProcessorGetOutputStereoMode(ID3D11VideoProcessor pVideoProcessor, BOOL* pEnabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetoutputextension))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetoutputextension
     int     VideoProcessorGetOutputExtension(ID3D11VideoProcessor pVideoProcessor, const(GUID)* pExtensionGuid, 
                                              uint DataSize, 
                                              /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* pData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetstreamframeformat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetstreamframeformat
     void    VideoProcessorSetStreamFrameFormat(ID3D11VideoProcessor pVideoProcessor, uint StreamIndex, 
                                                D3D11_VIDEO_FRAME_FORMAT FrameFormat);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetstreamcolorspace))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetstreamcolorspace
     void    VideoProcessorSetStreamColorSpace(ID3D11VideoProcessor pVideoProcessor, uint StreamIndex, 
                                               const(D3D11_VIDEO_PROCESSOR_COLOR_SPACE)* pColorSpace);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetstreamoutputrate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetstreamoutputrate
     void    VideoProcessorSetStreamOutputRate(ID3D11VideoProcessor pVideoProcessor, uint StreamIndex, 
                                               D3D11_VIDEO_PROCESSOR_OUTPUT_RATE OutputRate, BOOL RepeatFrame, 
                                               const(DXGI_RATIONAL)* pCustomRate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetstreamsourcerect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetstreamsourcerect
     void    VideoProcessorSetStreamSourceRect(ID3D11VideoProcessor pVideoProcessor, uint StreamIndex, BOOL Enable, 
                                               const(RECT)* pRect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetstreamdestrect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetstreamdestrect
     void    VideoProcessorSetStreamDestRect(ID3D11VideoProcessor pVideoProcessor, uint StreamIndex, BOOL Enable, 
                                             const(RECT)* pRect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetstreamalpha))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetstreamalpha
     void    VideoProcessorSetStreamAlpha(ID3D11VideoProcessor pVideoProcessor, uint StreamIndex, BOOL Enable, 
                                          float Alpha);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetstreampalette))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetstreampalette
     void    VideoProcessorSetStreamPalette(ID3D11VideoProcessor pVideoProcessor, uint StreamIndex, uint Count, 
                                            const(uint)* pEntries);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetstreampixelaspectratio))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetstreampixelaspectratio
     void    VideoProcessorSetStreamPixelAspectRatio(ID3D11VideoProcessor pVideoProcessor, uint StreamIndex, 
                                                     BOOL Enable, const(DXGI_RATIONAL)* pSourceAspectRatio, 
                                                     const(DXGI_RATIONAL)* pDestinationAspectRatio);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetstreamlumakey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetstreamlumakey
     void    VideoProcessorSetStreamLumaKey(ID3D11VideoProcessor pVideoProcessor, uint StreamIndex, BOOL Enable, 
                                            float Lower, float Upper);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetstreamstereoformat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetstreamstereoformat
     void    VideoProcessorSetStreamStereoFormat(ID3D11VideoProcessor pVideoProcessor, uint StreamIndex, 
                                                 BOOL Enable, D3D11_VIDEO_PROCESSOR_STEREO_FORMAT Format, 
                                                 BOOL LeftViewFrame0, BOOL BaseViewFrame0, 
                                                 D3D11_VIDEO_PROCESSOR_STEREO_FLIP_MODE FlipMode, int MonoOffset);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetstreamautoprocessingmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetstreamautoprocessingmode
     void    VideoProcessorSetStreamAutoProcessingMode(ID3D11VideoProcessor pVideoProcessor, uint StreamIndex, 
                                                       BOOL Enable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetstreamfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetstreamfilter
     void    VideoProcessorSetStreamFilter(ID3D11VideoProcessor pVideoProcessor, uint StreamIndex, 
                                           D3D11_VIDEO_PROCESSOR_FILTER Filter, BOOL Enable, int Level);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetstreamextension))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetstreamextension
     int     VideoProcessorSetStreamExtension(ID3D11VideoProcessor pVideoProcessor, uint StreamIndex, 
                                              const(GUID)* pExtensionGuid, uint DataSize, void* pData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetstreamframeformat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetstreamframeformat
     void    VideoProcessorGetStreamFrameFormat(ID3D11VideoProcessor pVideoProcessor, uint StreamIndex, 
                                                D3D11_VIDEO_FRAME_FORMAT* pFrameFormat);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetstreamcolorspace))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetstreamcolorspace
     void    VideoProcessorGetStreamColorSpace(ID3D11VideoProcessor pVideoProcessor, uint StreamIndex, 
                                               D3D11_VIDEO_PROCESSOR_COLOR_SPACE* pColorSpace);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetstreamoutputrate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetstreamoutputrate
     void    VideoProcessorGetStreamOutputRate(ID3D11VideoProcessor pVideoProcessor, uint StreamIndex, 
                                               D3D11_VIDEO_PROCESSOR_OUTPUT_RATE* pOutputRate, BOOL* pRepeatFrame, 
                                               DXGI_RATIONAL* pCustomRate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetstreamsourcerect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetstreamsourcerect
     void    VideoProcessorGetStreamSourceRect(ID3D11VideoProcessor pVideoProcessor, uint StreamIndex, 
                                               BOOL* pEnabled, RECT* pRect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetstreamdestrect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetstreamdestrect
     void    VideoProcessorGetStreamDestRect(ID3D11VideoProcessor pVideoProcessor, uint StreamIndex, BOOL* pEnabled, 
                                             RECT* pRect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetstreamalpha))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetstreamalpha
     void    VideoProcessorGetStreamAlpha(ID3D11VideoProcessor pVideoProcessor, uint StreamIndex, BOOL* pEnabled, 
                                          float* pAlpha);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetstreampalette))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetstreampalette
     void    VideoProcessorGetStreamPalette(ID3D11VideoProcessor pVideoProcessor, uint StreamIndex, uint Count, 
                                            uint* pEntries);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetstreampixelaspectratio))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetstreampixelaspectratio
     void    VideoProcessorGetStreamPixelAspectRatio(ID3D11VideoProcessor pVideoProcessor, uint StreamIndex, 
                                                     BOOL* pEnabled, DXGI_RATIONAL* pSourceAspectRatio, 
                                                     DXGI_RATIONAL* pDestinationAspectRatio);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetstreamlumakey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetstreamlumakey
     void    VideoProcessorGetStreamLumaKey(ID3D11VideoProcessor pVideoProcessor, uint StreamIndex, BOOL* pEnabled, 
                                            float* pLower, float* pUpper);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetstreamstereoformat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetstreamstereoformat
     void    VideoProcessorGetStreamStereoFormat(ID3D11VideoProcessor pVideoProcessor, uint StreamIndex, 
                                                 BOOL* pEnable, D3D11_VIDEO_PROCESSOR_STEREO_FORMAT* pFormat, 
                                                 BOOL* pLeftViewFrame0, BOOL* pBaseViewFrame0, 
                                                 D3D11_VIDEO_PROCESSOR_STEREO_FLIP_MODE* pFlipMode, int* MonoOffset);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetstreamautoprocessingmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetstreamautoprocessingmode
     void    VideoProcessorGetStreamAutoProcessingMode(ID3D11VideoProcessor pVideoProcessor, uint StreamIndex, 
                                                       BOOL* pEnabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetstreamfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetstreamfilter
     void    VideoProcessorGetStreamFilter(ID3D11VideoProcessor pVideoProcessor, uint StreamIndex, 
                                           D3D11_VIDEO_PROCESSOR_FILTER Filter, BOOL* pEnabled, int* pLevel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetstreamextension))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetstreamextension
     int     VideoProcessorGetStreamExtension(ID3D11VideoProcessor pVideoProcessor, uint StreamIndex, 
                                              const(GUID)* pExtensionGuid, uint DataSize, 
                                              /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* pData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorblt))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorblt
     HRESULT VideoProcessorBlt(ID3D11VideoProcessor pVideoProcessor, ID3D11VideoProcessorOutputView pView, 
                               uint OutputFrame, uint StreamCount, const(D3D11_VIDEO_PROCESSOR_STREAM)* pStreams);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-negotiatecryptosessionkeyexchange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-negotiatecryptosessionkeyexchange
     HRESULT NegotiateCryptoSessionKeyExchange(ID3D11CryptoSession pCryptoSession, uint DataSize, 
                                               /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/void* pData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-encryptionblt))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-encryptionblt
     void    EncryptionBlt(ID3D11CryptoSession pCryptoSession, ID3D11Texture2D pSrcSurface, 
                           ID3D11Texture2D pDstSurface, uint IVSize, 
                           /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* pIV);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-decryptionblt))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-decryptionblt
     void    DecryptionBlt(ID3D11CryptoSession pCryptoSession, ID3D11Texture2D pSrcSurface, 
                           ID3D11Texture2D pDstSurface, D3D11_ENCRYPTED_BLOCK_INFO* pEncryptedBlockInfo, 
                           uint ContentKeySize, 
                           /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/const(void)* pContentKey, 
                           uint IVSize, 
                           /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(6)))])*/void* pIV);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-startsessionkeyrefresh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-startsessionkeyrefresh
     void    StartSessionKeyRefresh(ID3D11CryptoSession pCryptoSession, uint RandomNumberSize, 
                                    /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/void* pRandomNumber);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-finishsessionkeyrefresh))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-finishsessionkeyrefresh
     void    FinishSessionKeyRefresh(ID3D11CryptoSession pCryptoSession);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-getencryptionbltkey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-getencryptionbltkey
     HRESULT GetEncryptionBltKey(ID3D11CryptoSession pCryptoSession, uint KeySize, 
                                 /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/void* pReadbackKey);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-negotiateauthenticatedchannelkeyexchange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-negotiateauthenticatedchannelkeyexchange
     HRESULT NegotiateAuthenticatedChannelKeyExchange(ID3D11AuthenticatedChannel pChannel, uint DataSize, 
                                                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/void* pData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-queryauthenticatedchannel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-queryauthenticatedchannel
     HRESULT QueryAuthenticatedChannel(ID3D11AuthenticatedChannel pChannel, uint InputSize, 
                                       /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(void)* pInput, 
                                       uint OutputSize, 
                                       /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* pOutput);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-configureauthenticatedchannel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-configureauthenticatedchannel
     HRESULT ConfigureAuthenticatedChannel(ID3D11AuthenticatedChannel pChannel, uint InputSize, 
                                           /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(void)* pInput, 
                                           D3D11_AUTHENTICATED_CONFIGURE_OUTPUT* pOutput);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetstreamrotation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorsetstreamrotation
     void    VideoProcessorSetStreamRotation(ID3D11VideoProcessor pVideoProcessor, uint StreamIndex, BOOL Enable, 
                                             D3D11_VIDEO_PROCESSOR_ROTATION Rotation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetstreamrotation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videocontext-videoprocessorgetstreamrotation
     void    VideoProcessorGetStreamRotation(ID3D11VideoProcessor pVideoProcessor, uint StreamIndex, BOOL* pEnable, 
                                             D3D11_VIDEO_PROCESSOR_ROTATION* pRotation);
 }
 
 @GUID("10ec4d5b-975a-4689-b9e4-d0aac30fe333")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11videodevice))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11videodevice
 interface ID3D11VideoDevice : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodevice-createvideodecoder))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodevice-createvideodecoder
     HRESULT CreateVideoDecoder(const(D3D11_VIDEO_DECODER_DESC)* pVideoDesc, 
                                const(D3D11_VIDEO_DECODER_CONFIG)* pConfig, ID3D11VideoDecoder* ppDecoder);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodevice-createvideoprocessor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodevice-createvideoprocessor
     HRESULT CreateVideoProcessor(ID3D11VideoProcessorEnumerator pEnum, uint RateConversionIndex, 
                                  ID3D11VideoProcessor* ppVideoProcessor);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodevice-createauthenticatedchannel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodevice-createauthenticatedchannel
     HRESULT CreateAuthenticatedChannel(D3D11_AUTHENTICATED_CHANNEL_TYPE ChannelType, 
                                        ID3D11AuthenticatedChannel* ppAuthenticatedChannel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodevice-createcryptosession))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodevice-createcryptosession
     HRESULT CreateCryptoSession(const(GUID)* pCryptoType, const(GUID)* pDecoderProfile, 
                                 const(GUID)* pKeyExchangeType, ID3D11CryptoSession* ppCryptoSession);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodevice-createvideodecoderoutputview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodevice-createvideodecoderoutputview
     HRESULT CreateVideoDecoderOutputView(ID3D11Resource pResource, 
                                          const(D3D11_VIDEO_DECODER_OUTPUT_VIEW_DESC)* pDesc, 
                                          ID3D11VideoDecoderOutputView* ppVDOVView);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodevice-createvideoprocessorinputview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodevice-createvideoprocessorinputview
     HRESULT CreateVideoProcessorInputView(ID3D11Resource pResource, ID3D11VideoProcessorEnumerator pEnum, 
                                           const(D3D11_VIDEO_PROCESSOR_INPUT_VIEW_DESC)* pDesc, 
                                           ID3D11VideoProcessorInputView* ppVPIView);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodevice-createvideoprocessoroutputview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodevice-createvideoprocessoroutputview
     HRESULT CreateVideoProcessorOutputView(ID3D11Resource pResource, ID3D11VideoProcessorEnumerator pEnum, 
                                            const(D3D11_VIDEO_PROCESSOR_OUTPUT_VIEW_DESC)* pDesc, 
                                            ID3D11VideoProcessorOutputView* ppVPOView);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodevice-createvideoprocessorenumerator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodevice-createvideoprocessorenumerator
     HRESULT CreateVideoProcessorEnumerator(const(D3D11_VIDEO_PROCESSOR_CONTENT_DESC)* pDesc, 
                                            ID3D11VideoProcessorEnumerator* ppEnum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodevice-getvideodecoderprofilecount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodevice-getvideodecoderprofilecount
     uint    GetVideoDecoderProfileCount();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodevice-getvideodecoderprofile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodevice-getvideodecoderprofile
     HRESULT GetVideoDecoderProfile(uint Index, GUID* pDecoderProfile);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodevice-checkvideodecoderformat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodevice-checkvideodecoderformat
     HRESULT CheckVideoDecoderFormat(const(GUID)* pDecoderProfile, DXGI_FORMAT Format, BOOL* pSupported);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodevice-getvideodecoderconfigcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodevice-getvideodecoderconfigcount
     HRESULT GetVideoDecoderConfigCount(const(D3D11_VIDEO_DECODER_DESC)* pDesc, uint* pCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodevice-getvideodecoderconfig))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodevice-getvideodecoderconfig
     HRESULT GetVideoDecoderConfig(const(D3D11_VIDEO_DECODER_DESC)* pDesc, uint Index, 
                                   D3D11_VIDEO_DECODER_CONFIG* pConfig);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodevice-getcontentprotectioncaps))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodevice-getcontentprotectioncaps
     HRESULT GetContentProtectionCaps(const(GUID)* pCryptoType, const(GUID)* pDecoderProfile, 
                                      D3D11_VIDEO_CONTENT_PROTECTION_CAPS* pCaps);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodevice-checkcryptokeyexchange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodevice-checkcryptokeyexchange
     HRESULT CheckCryptoKeyExchange(const(GUID)* pCryptoType, const(GUID)* pDecoderProfile, uint Index, 
                                    GUID* pKeyExchangeType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodevice-setprivatedata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodevice-setprivatedata
     HRESULT SetPrivateData(const(GUID)* guid, uint DataSize, 
                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(void)* pData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodevice-setprivatedatainterface))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11videodevice-setprivatedatainterface
     HRESULT SetPrivateDataInterface(const(GUID)* guid, const(IUnknown) pData);
 }
 
 @GUID("db6f6ddb-ac77-4e88-8253-819df9bbf140")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11device))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nn-d3d11-id3d11device
 interface ID3D11Device : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createbuffer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createbuffer
     HRESULT CreateBuffer(const(D3D11_BUFFER_DESC)* pDesc, const(D3D11_SUBRESOURCE_DATA)* pInitialData, 
                          ID3D11Buffer* ppBuffer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createtexture1d))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createtexture1d
     HRESULT CreateTexture1D(const(D3D11_TEXTURE1D_DESC)* pDesc, const(D3D11_SUBRESOURCE_DATA)* pInitialData, 
                             ID3D11Texture1D* ppTexture1D);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createtexture2d))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createtexture2d
     HRESULT CreateTexture2D(const(D3D11_TEXTURE2D_DESC)* pDesc, const(D3D11_SUBRESOURCE_DATA)* pInitialData, 
                             ID3D11Texture2D* ppTexture2D);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createtexture3d))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createtexture3d
     HRESULT CreateTexture3D(const(D3D11_TEXTURE3D_DESC)* pDesc, const(D3D11_SUBRESOURCE_DATA)* pInitialData, 
                             ID3D11Texture3D* ppTexture3D);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createshaderresourceview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createshaderresourceview
     HRESULT CreateShaderResourceView(ID3D11Resource pResource, const(D3D11_SHADER_RESOURCE_VIEW_DESC)* pDesc, 
                                      ID3D11ShaderResourceView* ppSRView);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createunorderedaccessview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createunorderedaccessview
     HRESULT CreateUnorderedAccessView(ID3D11Resource pResource, const(D3D11_UNORDERED_ACCESS_VIEW_DESC)* pDesc, 
                                       ID3D11UnorderedAccessView* ppUAView);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createrendertargetview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createrendertargetview
     HRESULT CreateRenderTargetView(ID3D11Resource pResource, const(D3D11_RENDER_TARGET_VIEW_DESC)* pDesc, 
                                    ID3D11RenderTargetView* ppRTView);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createdepthstencilview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createdepthstencilview
     HRESULT CreateDepthStencilView(ID3D11Resource pResource, const(D3D11_DEPTH_STENCIL_VIEW_DESC)* pDesc, 
                                    ID3D11DepthStencilView* ppDepthStencilView);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createinputlayout))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createinputlayout
     HRESULT CreateInputLayout(const(D3D11_INPUT_ELEMENT_DESC)* pInputElementDescs, uint NumElements, 
                               const(void)* pShaderBytecodeWithInputSignature, size_t BytecodeLength, 
                               ID3D11InputLayout* ppInputLayout);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createvertexshader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createvertexshader
     HRESULT CreateVertexShader(const(void)* pShaderBytecode, size_t BytecodeLength, 
                                ID3D11ClassLinkage pClassLinkage, ID3D11VertexShader* ppVertexShader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-creategeometryshader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-creategeometryshader
     HRESULT CreateGeometryShader(const(void)* pShaderBytecode, size_t BytecodeLength, 
                                  ID3D11ClassLinkage pClassLinkage, ID3D11GeometryShader* ppGeometryShader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-creategeometryshaderwithstreamoutput))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-creategeometryshaderwithstreamoutput
     HRESULT CreateGeometryShaderWithStreamOutput(const(void)* pShaderBytecode, size_t BytecodeLength, 
                                                  const(D3D11_SO_DECLARATION_ENTRY)* pSODeclaration, uint NumEntries, 
                                                  const(uint)* pBufferStrides, uint NumStrides, uint RasterizedStream, 
                                                  ID3D11ClassLinkage pClassLinkage, 
                                                  ID3D11GeometryShader* ppGeometryShader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createpixelshader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createpixelshader
     HRESULT CreatePixelShader(const(void)* pShaderBytecode, size_t BytecodeLength, 
                               ID3D11ClassLinkage pClassLinkage, ID3D11PixelShader* ppPixelShader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createhullshader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createhullshader
     HRESULT CreateHullShader(const(void)* pShaderBytecode, size_t BytecodeLength, ID3D11ClassLinkage pClassLinkage, 
                              ID3D11HullShader* ppHullShader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createdomainshader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createdomainshader
     HRESULT CreateDomainShader(const(void)* pShaderBytecode, size_t BytecodeLength, 
                                ID3D11ClassLinkage pClassLinkage, ID3D11DomainShader* ppDomainShader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createcomputeshader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createcomputeshader
     HRESULT CreateComputeShader(const(void)* pShaderBytecode, size_t BytecodeLength, 
                                 ID3D11ClassLinkage pClassLinkage, ID3D11ComputeShader* ppComputeShader);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createclasslinkage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createclasslinkage
     HRESULT CreateClassLinkage(ID3D11ClassLinkage* ppLinkage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createblendstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createblendstate
     HRESULT CreateBlendState(const(D3D11_BLEND_DESC)* pBlendStateDesc, ID3D11BlendState* ppBlendState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createdepthstencilstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createdepthstencilstate
     HRESULT CreateDepthStencilState(const(D3D11_DEPTH_STENCIL_DESC)* pDepthStencilDesc, 
                                     ID3D11DepthStencilState* ppDepthStencilState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createrasterizerstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createrasterizerstate
     HRESULT CreateRasterizerState(const(D3D11_RASTERIZER_DESC)* pRasterizerDesc, 
                                   ID3D11RasterizerState* ppRasterizerState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createsamplerstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createsamplerstate
     HRESULT CreateSamplerState(const(D3D11_SAMPLER_DESC)* pSamplerDesc, ID3D11SamplerState* ppSamplerState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createquery))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createquery
     HRESULT CreateQuery(const(D3D11_QUERY_DESC)* pQueryDesc, ID3D11Query* ppQuery);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createpredicate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createpredicate
     HRESULT CreatePredicate(const(D3D11_QUERY_DESC)* pPredicateDesc, ID3D11Predicate* ppPredicate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createcounter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createcounter
     HRESULT CreateCounter(const(D3D11_COUNTER_DESC)* pCounterDesc, ID3D11Counter* ppCounter);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createdeferredcontext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-createdeferredcontext
     HRESULT CreateDeferredContext(uint ContextFlags, ID3D11DeviceContext* ppDeferredContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-opensharedresource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-opensharedresource
     HRESULT OpenSharedResource(HANDLE hResource, const(GUID)* ReturnedInterface, void** ppResource);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-checkformatsupport))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-checkformatsupport
     HRESULT CheckFormatSupport(DXGI_FORMAT Format, uint* pFormatSupport);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-checkmultisamplequalitylevels))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-checkmultisamplequalitylevels
     HRESULT CheckMultisampleQualityLevels(DXGI_FORMAT Format, uint SampleCount, uint* pNumQualityLevels);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-checkcounterinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-checkcounterinfo
     void    CheckCounterInfo(D3D11_COUNTER_INFO* pCounterInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-checkcounter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-checkcounter
     HRESULT CheckCounter(const(D3D11_COUNTER_DESC)* pDesc, D3D11_COUNTER_TYPE* pType, uint* pActiveCounters, 
                          PSTR szName, uint* pNameLength, PSTR szUnits, uint* pUnitsLength, PSTR szDescription, 
                          uint* pDescriptionLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-checkfeaturesupport))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-checkfeaturesupport
     HRESULT CheckFeatureSupport(D3D11_FEATURE Feature, 
                                 /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* pFeatureSupportData, 
                                 uint FeatureSupportDataSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-getprivatedata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-getprivatedata
     HRESULT GetPrivateData(const(GUID)* guid, uint* pDataSize, 
                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/void* pData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-setprivatedata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-setprivatedata
     HRESULT SetPrivateData(const(GUID)* guid, uint DataSize, 
                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/const(void)* pData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-setprivatedatainterface))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-setprivatedatainterface
     HRESULT SetPrivateDataInterface(const(GUID)* guid, const(IUnknown) pData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-getfeaturelevel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-getfeaturelevel
     D3D_FEATURE_LEVEL GetFeatureLevel();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-getcreationflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-getcreationflags
     uint    GetCreationFlags();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-getdeviceremovedreason))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-getdeviceremovedreason
     HRESULT GetDeviceRemovedReason();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-getimmediatecontext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-getimmediatecontext
     void    GetImmediateContext(ID3D11DeviceContext* ppImmediateContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-setexceptionmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-setexceptionmode
     HRESULT SetExceptionMode(uint RaiseFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-getexceptionmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11/nf-d3d11-id3d11device-getexceptionmode
     uint    GetExceptionMode();
 }
 
 @GUID("79cf2233-7536-4948-9d36-1e4692dc5760")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nn-d3d11sdklayers-id3d11debug))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nn-d3d11sdklayers-id3d11debug
 interface ID3D11Debug : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11debug-setfeaturemask))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11debug-setfeaturemask
     HRESULT SetFeatureMask(uint Mask);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11debug-getfeaturemask))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11debug-getfeaturemask
     uint    GetFeatureMask();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11debug-setpresentperrenderopdelay))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11debug-setpresentperrenderopdelay
     HRESULT SetPresentPerRenderOpDelay(uint Milliseconds);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11debug-getpresentperrenderopdelay))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11debug-getpresentperrenderopdelay
     uint    GetPresentPerRenderOpDelay();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11debug-setswapchain))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11debug-setswapchain
     HRESULT SetSwapChain(IDXGISwapChain pSwapChain);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11debug-getswapchain))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11debug-getswapchain
     HRESULT GetSwapChain(IDXGISwapChain* ppSwapChain);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11debug-validatecontext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11debug-validatecontext
     HRESULT ValidateContext(ID3D11DeviceContext pContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11debug-reportlivedeviceobjects))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11debug-reportlivedeviceobjects
     HRESULT ReportLiveDeviceObjects(D3D11_RLDO_FLAGS Flags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11debug-validatecontextfordispatch))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11debug-validatecontextfordispatch
     HRESULT ValidateContextForDispatch(ID3D11DeviceContext pContext);
 }
 
 @GUID("1ef337e3-58e7-4f83-a692-db221f5ed47e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nn-d3d11sdklayers-id3d11switchtoref))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nn-d3d11sdklayers-id3d11switchtoref
 interface ID3D11SwitchToRef : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11switchtoref-setuseref))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11switchtoref-setuseref
     BOOL SetUseRef(BOOL UseRef);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11switchtoref-getuseref))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11switchtoref-getuseref
     BOOL GetUseRef();
 }
 
 @GUID("1911c771-1587-413e-a7e0-fb26c3de0268")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nn-d3d11sdklayers-id3d11tracingdevice))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nn-d3d11sdklayers-id3d11tracingdevice
 interface ID3D11TracingDevice : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11tracingdevice-setshadertrackingoptionsbytype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11tracingdevice-setshadertrackingoptionsbytype
     HRESULT SetShaderTrackingOptionsByType(uint ResourceTypeFlags, uint Options);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11tracingdevice-setshadertrackingoptions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11tracingdevice-setshadertrackingoptions
     HRESULT SetShaderTrackingOptions(IUnknown pShader, uint Options);
 }
 
 @GUID("193dacdf-0db2-4c05-a55c-ef06cac56fd9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nn-d3d11sdklayers-id3d11reftrackingoptions))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nn-d3d11sdklayers-id3d11reftrackingoptions
 interface ID3D11RefTrackingOptions : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11reftrackingoptions-settrackingoptions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11reftrackingoptions-settrackingoptions
     HRESULT SetTrackingOptions(uint uOptions);
 }
 
 @GUID("03916615-c644-418c-9bf4-75db5be63ca0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nn-d3d11sdklayers-id3d11refdefaulttrackingoptions))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nn-d3d11sdklayers-id3d11refdefaulttrackingoptions
 interface ID3D11RefDefaultTrackingOptions : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11refdefaulttrackingoptions-settrackingoptions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11refdefaulttrackingoptions-settrackingoptions
     HRESULT SetTrackingOptions(uint ResourceTypeFlags, uint Options);
 }
 
 @GUID("6543dbb6-1b48-42f5-ab82-e97ec74326f6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nn-d3d11sdklayers-id3d11infoqueue))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nn-d3d11sdklayers-id3d11infoqueue
 interface ID3D11InfoQueue : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-setmessagecountlimit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-setmessagecountlimit
     HRESULT SetMessageCountLimit(ulong MessageCountLimit);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-clearstoredmessages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-clearstoredmessages
     void    ClearStoredMessages();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-getmessage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-getmessage
     HRESULT GetMessage(ulong MessageIndex, 
                        /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/D3D11_MESSAGE* pMessage, 
                        size_t* pMessageByteLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-getnummessagesallowedbystoragefilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-getnummessagesallowedbystoragefilter
     ulong   GetNumMessagesAllowedByStorageFilter();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-getnummessagesdeniedbystoragefilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-getnummessagesdeniedbystoragefilter
     ulong   GetNumMessagesDeniedByStorageFilter();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-getnumstoredmessages))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-getnumstoredmessages
     ulong   GetNumStoredMessages();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-getnumstoredmessagesallowedbyretrievalfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-getnumstoredmessagesallowedbyretrievalfilter
     ulong   GetNumStoredMessagesAllowedByRetrievalFilter();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-getnummessagesdiscardedbymessagecountlimit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-getnummessagesdiscardedbymessagecountlimit
     ulong   GetNumMessagesDiscardedByMessageCountLimit();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-getmessagecountlimit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-getmessagecountlimit
     ulong   GetMessageCountLimit();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-addstoragefilterentries))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-addstoragefilterentries
     HRESULT AddStorageFilterEntries(D3D11_INFO_QUEUE_FILTER* pFilter);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-getstoragefilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-getstoragefilter
     HRESULT GetStorageFilter(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/D3D11_INFO_QUEUE_FILTER* pFilter, 
                              size_t* pFilterByteLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-clearstoragefilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-clearstoragefilter
     void    ClearStorageFilter();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-pushemptystoragefilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-pushemptystoragefilter
     HRESULT PushEmptyStorageFilter();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-pushcopyofstoragefilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-pushcopyofstoragefilter
     HRESULT PushCopyOfStorageFilter();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-pushstoragefilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-pushstoragefilter
     HRESULT PushStorageFilter(D3D11_INFO_QUEUE_FILTER* pFilter);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-popstoragefilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-popstoragefilter
     void    PopStorageFilter();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-getstoragefilterstacksize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-getstoragefilterstacksize
     uint    GetStorageFilterStackSize();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-addretrievalfilterentries))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-addretrievalfilterentries
     HRESULT AddRetrievalFilterEntries(D3D11_INFO_QUEUE_FILTER* pFilter);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-getretrievalfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-getretrievalfilter
     HRESULT GetRetrievalFilter(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/D3D11_INFO_QUEUE_FILTER* pFilter, 
                                size_t* pFilterByteLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-clearretrievalfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-clearretrievalfilter
     void    ClearRetrievalFilter();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-pushemptyretrievalfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-pushemptyretrievalfilter
     HRESULT PushEmptyRetrievalFilter();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-pushcopyofretrievalfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-pushcopyofretrievalfilter
     HRESULT PushCopyOfRetrievalFilter();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-pushretrievalfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-pushretrievalfilter
     HRESULT PushRetrievalFilter(D3D11_INFO_QUEUE_FILTER* pFilter);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-popretrievalfilter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-popretrievalfilter
     void    PopRetrievalFilter();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-getretrievalfilterstacksize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-getretrievalfilterstacksize
     uint    GetRetrievalFilterStackSize();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-addmessage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-addmessage
     HRESULT AddMessage(D3D11_MESSAGE_CATEGORY Category, D3D11_MESSAGE_SEVERITY Severity, D3D11_MESSAGE_ID ID, 
                        const(PSTR) pDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-addapplicationmessage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-addapplicationmessage
     HRESULT AddApplicationMessage(D3D11_MESSAGE_SEVERITY Severity, const(PSTR) pDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-setbreakoncategory))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-setbreakoncategory
     HRESULT SetBreakOnCategory(D3D11_MESSAGE_CATEGORY Category, BOOL bEnable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-setbreakonseverity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-setbreakonseverity
     HRESULT SetBreakOnSeverity(D3D11_MESSAGE_SEVERITY Severity, BOOL bEnable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-setbreakonid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-setbreakonid
     HRESULT SetBreakOnID(D3D11_MESSAGE_ID ID, BOOL bEnable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-getbreakoncategory))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-getbreakoncategory
     BOOL    GetBreakOnCategory(D3D11_MESSAGE_CATEGORY Category);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-getbreakonseverity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-getbreakonseverity
     BOOL    GetBreakOnSeverity(D3D11_MESSAGE_SEVERITY Severity);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-getbreakonid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-getbreakonid
     BOOL    GetBreakOnID(D3D11_MESSAGE_ID ID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-setmutedebugoutput))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-setmutedebugoutput
     void    SetMuteDebugOutput(BOOL bMute);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-getmutedebugoutput))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11sdklayers/nf-d3d11sdklayers-id3d11infoqueue-getmutedebugoutput
     BOOL    GetMuteDebugOutput();
 }
 
 @GUID("cc86fabe-da55-401d-85e7-e3c9de2877e9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nn-d3d11_1-id3d11blendstate1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nn-d3d11_1-id3d11blendstate1
 interface ID3D11BlendState1 : ID3D11BlendState
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11blendstate1-getdesc1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11blendstate1-getdesc1
     void GetDesc1(D3D11_BLEND_DESC1* pDesc);
 }
 
 @GUID("1217d7a6-5039-418c-b042-9cbe256afd6e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nn-d3d11_1-id3d11rasterizerstate1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nn-d3d11_1-id3d11rasterizerstate1
 interface ID3D11RasterizerState1 : ID3D11RasterizerState
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11rasterizerstate1-getdesc1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11rasterizerstate1-getdesc1
     void GetDesc1(D3D11_RASTERIZER_DESC1* pDesc);
 }
 
 @GUID("5c1e0d8a-7c23-48f9-8c59-a92958ceff11")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nn-d3d11_1-id3ddevicecontextstate))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nn-d3d11_1-id3ddevicecontextstate
 interface ID3DDeviceContextState : ID3D11DeviceChild
 {
 }
 
 @GUID("bb2c6faa-b5fb-4082-8e6b-388b8cfa90e1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nn-d3d11_1-id3d11devicecontext1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nn-d3d11_1-id3d11devicecontext1
 interface ID3D11DeviceContext1 : ID3D11DeviceContext
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-copysubresourceregion1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-copysubresourceregion1
     void CopySubresourceRegion1(ID3D11Resource pDstResource, uint DstSubresource, uint DstX, uint DstY, uint DstZ, 
                                 ID3D11Resource pSrcResource, uint SrcSubresource, const(D3D11_BOX)* pSrcBox, 
                                 uint CopyFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-updatesubresource1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-updatesubresource1
     void UpdateSubresource1(ID3D11Resource pDstResource, uint DstSubresource, const(D3D11_BOX)* pDstBox, 
                             const(void)* pSrcData, uint SrcRowPitch, uint SrcDepthPitch, uint CopyFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-discardresource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-discardresource
     void DiscardResource(ID3D11Resource pResource);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-discardview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-discardview
     void DiscardView(ID3D11View pResourceView);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-vssetconstantbuffers1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-vssetconstantbuffers1
     void VSSetConstantBuffers1(uint StartSlot, uint NumBuffers, ID3D11Buffer* ppConstantBuffers, 
                                const(uint)* pFirstConstant, const(uint)* pNumConstants);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-hssetconstantbuffers1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-hssetconstantbuffers1
     void HSSetConstantBuffers1(uint StartSlot, uint NumBuffers, ID3D11Buffer* ppConstantBuffers, 
                                const(uint)* pFirstConstant, const(uint)* pNumConstants);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-dssetconstantbuffers1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-dssetconstantbuffers1
     void DSSetConstantBuffers1(uint StartSlot, uint NumBuffers, ID3D11Buffer* ppConstantBuffers, 
                                const(uint)* pFirstConstant, const(uint)* pNumConstants);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-gssetconstantbuffers1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-gssetconstantbuffers1
     void GSSetConstantBuffers1(uint StartSlot, uint NumBuffers, ID3D11Buffer* ppConstantBuffers, 
                                const(uint)* pFirstConstant, const(uint)* pNumConstants);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-pssetconstantbuffers1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-pssetconstantbuffers1
     void PSSetConstantBuffers1(uint StartSlot, uint NumBuffers, ID3D11Buffer* ppConstantBuffers, 
                                const(uint)* pFirstConstant, const(uint)* pNumConstants);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-cssetconstantbuffers1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-cssetconstantbuffers1
     void CSSetConstantBuffers1(uint StartSlot, uint NumBuffers, ID3D11Buffer* ppConstantBuffers, 
                                const(uint)* pFirstConstant, const(uint)* pNumConstants);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-vsgetconstantbuffers1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-vsgetconstantbuffers1
     void VSGetConstantBuffers1(uint StartSlot, uint NumBuffers, ID3D11Buffer* ppConstantBuffers, 
                                uint* pFirstConstant, uint* pNumConstants);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-hsgetconstantbuffers1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-hsgetconstantbuffers1
     void HSGetConstantBuffers1(uint StartSlot, uint NumBuffers, ID3D11Buffer* ppConstantBuffers, 
                                uint* pFirstConstant, uint* pNumConstants);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-dsgetconstantbuffers1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-dsgetconstantbuffers1
     void DSGetConstantBuffers1(uint StartSlot, uint NumBuffers, ID3D11Buffer* ppConstantBuffers, 
                                uint* pFirstConstant, uint* pNumConstants);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-gsgetconstantbuffers1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-gsgetconstantbuffers1
     void GSGetConstantBuffers1(uint StartSlot, uint NumBuffers, ID3D11Buffer* ppConstantBuffers, 
                                uint* pFirstConstant, uint* pNumConstants);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-psgetconstantbuffers1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-psgetconstantbuffers1
     void PSGetConstantBuffers1(uint StartSlot, uint NumBuffers, ID3D11Buffer* ppConstantBuffers, 
                                uint* pFirstConstant, uint* pNumConstants);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-csgetconstantbuffers1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-csgetconstantbuffers1
     void CSGetConstantBuffers1(uint StartSlot, uint NumBuffers, ID3D11Buffer* ppConstantBuffers, 
                                uint* pFirstConstant, uint* pNumConstants);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-swapdevicecontextstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-swapdevicecontextstate
     void SwapDeviceContextState(ID3DDeviceContextState pState, ID3DDeviceContextState* ppPreviousState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-clearview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-clearview
     void ClearView(ID3D11View pView, const(float)* Color, const(RECT)* pRect, uint NumRects);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-discardview1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11devicecontext1-discardview1
     void DiscardView1(ID3D11View pResourceView, const(RECT)* pRects, uint NumRects);
 }
 
 @GUID("a7f026da-a5f8-4487-a564-15e34357651e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nn-d3d11_1-id3d11videocontext1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nn-d3d11_1-id3d11videocontext1
 interface ID3D11VideoContext1 : ID3D11VideoContext
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videocontext1-submitdecoderbuffers1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videocontext1-submitdecoderbuffers1
     HRESULT SubmitDecoderBuffers1(ID3D11VideoDecoder pDecoder, uint NumBuffers, 
                                   const(D3D11_VIDEO_DECODER_BUFFER_DESC1)* pBufferDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videocontext1-getdatafornewhardwarekey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videocontext1-getdatafornewhardwarekey
     HRESULT GetDataForNewHardwareKey(ID3D11CryptoSession pCryptoSession, uint PrivateInputSize, 
                                      const(void)* pPrivatInputData, ulong* pPrivateOutputData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videocontext1-checkcryptosessionstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videocontext1-checkcryptosessionstatus
     HRESULT CheckCryptoSessionStatus(ID3D11CryptoSession pCryptoSession, D3D11_CRYPTO_SESSION_STATUS* pStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videocontext1-decoderenabledownsampling))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videocontext1-decoderenabledownsampling
     HRESULT DecoderEnableDownsampling(ID3D11VideoDecoder pDecoder, DXGI_COLOR_SPACE_TYPE InputColorSpace, 
                                       const(D3D11_VIDEO_SAMPLE_DESC)* pOutputDesc, uint ReferenceFrameCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videocontext1-decoderupdatedownsampling))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videocontext1-decoderupdatedownsampling
     HRESULT DecoderUpdateDownsampling(ID3D11VideoDecoder pDecoder, const(D3D11_VIDEO_SAMPLE_DESC)* pOutputDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videocontext1-videoprocessorsetoutputcolorspace1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videocontext1-videoprocessorsetoutputcolorspace1
     void    VideoProcessorSetOutputColorSpace1(ID3D11VideoProcessor pVideoProcessor, 
                                                DXGI_COLOR_SPACE_TYPE ColorSpace);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videocontext1-videoprocessorsetoutputshaderusage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videocontext1-videoprocessorsetoutputshaderusage
     void    VideoProcessorSetOutputShaderUsage(ID3D11VideoProcessor pVideoProcessor, BOOL ShaderUsage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videocontext1-videoprocessorgetoutputcolorspace1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videocontext1-videoprocessorgetoutputcolorspace1
     void    VideoProcessorGetOutputColorSpace1(ID3D11VideoProcessor pVideoProcessor, 
                                                DXGI_COLOR_SPACE_TYPE* pColorSpace);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videocontext1-videoprocessorgetoutputshaderusage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videocontext1-videoprocessorgetoutputshaderusage
     void    VideoProcessorGetOutputShaderUsage(ID3D11VideoProcessor pVideoProcessor, BOOL* pShaderUsage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videocontext1-videoprocessorsetstreamcolorspace1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videocontext1-videoprocessorsetstreamcolorspace1
     void    VideoProcessorSetStreamColorSpace1(ID3D11VideoProcessor pVideoProcessor, uint StreamIndex, 
                                                DXGI_COLOR_SPACE_TYPE ColorSpace);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videocontext1-videoprocessorsetstreammirror))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videocontext1-videoprocessorsetstreammirror
     void    VideoProcessorSetStreamMirror(ID3D11VideoProcessor pVideoProcessor, uint StreamIndex, BOOL Enable, 
                                           BOOL FlipHorizontal, BOOL FlipVertical);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videocontext1-videoprocessorgetstreamcolorspace1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videocontext1-videoprocessorgetstreamcolorspace1
     void    VideoProcessorGetStreamColorSpace1(ID3D11VideoProcessor pVideoProcessor, uint StreamIndex, 
                                                DXGI_COLOR_SPACE_TYPE* pColorSpace);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videocontext1-videoprocessorgetstreammirror))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videocontext1-videoprocessorgetstreammirror
     void    VideoProcessorGetStreamMirror(ID3D11VideoProcessor pVideoProcessor, uint StreamIndex, BOOL* pEnable, 
                                           BOOL* pFlipHorizontal, BOOL* pFlipVertical);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videocontext1-videoprocessorgetbehaviorhints))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videocontext1-videoprocessorgetbehaviorhints
     HRESULT VideoProcessorGetBehaviorHints(ID3D11VideoProcessor pVideoProcessor, uint OutputWidth, 
                                            uint OutputHeight, DXGI_FORMAT OutputFormat, uint StreamCount, 
                                            const(D3D11_VIDEO_PROCESSOR_STREAM_BEHAVIOR_HINT)* pStreams, 
@@ -6607,26 +6830,26 @@ interface ID3D11VideoContext1 : ID3D11VideoContext
 
 @GUID("29da1d51-1321-4454-804b-f5fc9f861f0f")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nn-d3d11_1-id3d11videodevice1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nn-d3d11_1-id3d11videodevice1
 interface ID3D11VideoDevice1 : ID3D11VideoDevice
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videodevice1-getcryptosessionprivatedatasize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videodevice1-getcryptosessionprivatedatasize
     HRESULT GetCryptoSessionPrivateDataSize(const(GUID)* pCryptoType, const(GUID)* pDecoderProfile, 
                                             const(GUID)* pKeyExchangeType, uint* pPrivateInputSize, 
                                             uint* pPrivateOutputSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videodevice1-getvideodecodercaps))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videodevice1-getvideodecodercaps
     HRESULT GetVideoDecoderCaps(const(GUID)* pDecoderProfile, uint SampleWidth, uint SampleHeight, 
                                 const(DXGI_RATIONAL)* pFrameRate, uint BitRate, const(GUID)* pCryptoType, 
                                 uint* pDecoderCaps);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videodevice1-checkvideodecoderdownsampling))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videodevice1-checkvideodecoderdownsampling
     HRESULT CheckVideoDecoderDownsampling(const(D3D11_VIDEO_DECODER_DESC)* pInputDesc, 
                                           DXGI_COLOR_SPACE_TYPE InputColorSpace, 
                                           const(D3D11_VIDEO_DECODER_CONFIG)* pInputConfig, 
                                           const(DXGI_RATIONAL)* pFrameRate, 
                                           const(D3D11_VIDEO_SAMPLE_DESC)* pOutputDesc, BOOL* pSupported, 
                                           BOOL* pRealTimeHint);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videodevice1-recommendvideodecoderdownsampleparameters))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videodevice1-recommendvideodecoderdownsampleparameters
     HRESULT RecommendVideoDecoderDownsampleParameters(const(D3D11_VIDEO_DECODER_DESC)* pInputDesc, 
                                                       DXGI_COLOR_SPACE_TYPE InputColorSpace, 
                                                       const(D3D11_VIDEO_DECODER_CONFIG)* pInputConfig, 
@@ -6636,11 +6859,11 @@ interface ID3D11VideoDevice1 : ID3D11VideoDevice
 
 @GUID("465217f2-5568-43cf-b5b9-f61d54531ca1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nn-d3d11_1-id3d11videoprocessorenumerator1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nn-d3d11_1-id3d11videoprocessorenumerator1
 interface ID3D11VideoProcessorEnumerator1 : ID3D11VideoProcessorEnumerator
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videoprocessorenumerator1-checkvideoprocessorformatconversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11videoprocessorenumerator1-checkvideoprocessorformatconversion
     HRESULT CheckVideoProcessorFormatConversion(DXGI_FORMAT InputFormat, DXGI_COLOR_SPACE_TYPE InputColorSpace, 
                                                 DXGI_FORMAT OutputFormat, DXGI_COLOR_SPACE_TYPE OutputColorSpace, 
                                                 BOOL* pSupported);
@@ -6648,322 +6871,322 @@ interface ID3D11VideoProcessorEnumerator1 : ID3D11VideoProcessorEnumerator
 
 @GUID("a04bfb29-08ef-43d6-a49c-a9bdbdcbe686")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nn-d3d11_1-id3d11device1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nn-d3d11_1-id3d11device1
 interface ID3D11Device1 : ID3D11Device
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11device1-getimmediatecontext1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11device1-getimmediatecontext1
     void    GetImmediateContext1(ID3D11DeviceContext1* ppImmediateContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11device1-createdeferredcontext1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11device1-createdeferredcontext1
     HRESULT CreateDeferredContext1(uint ContextFlags, ID3D11DeviceContext1* ppDeferredContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11device1-createblendstate1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11device1-createblendstate1
     HRESULT CreateBlendState1(const(D3D11_BLEND_DESC1)* pBlendStateDesc, ID3D11BlendState1* ppBlendState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11device1-createrasterizerstate1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11device1-createrasterizerstate1
     HRESULT CreateRasterizerState1(const(D3D11_RASTERIZER_DESC1)* pRasterizerDesc, 
                                    ID3D11RasterizerState1* ppRasterizerState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11device1-createdevicecontextstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11device1-createdevicecontextstate
     HRESULT CreateDeviceContextState(uint Flags, const(D3D_FEATURE_LEVEL)* pFeatureLevels, uint FeatureLevels, 
                                      uint SDKVersion, const(GUID)* EmulatedInterface, 
                                      D3D_FEATURE_LEVEL* pChosenFeatureLevel, ID3DDeviceContextState* ppContextState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11device1-opensharedresource1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11device1-opensharedresource1
     HRESULT OpenSharedResource1(HANDLE hResource, const(GUID)* returnedInterface, void** ppResource);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11device1-opensharedresourcebyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3d11device1-opensharedresourcebyname
     HRESULT OpenSharedResourceByName(const(PWSTR) lpName, uint dwDesiredAccess, const(GUID)* returnedInterface, 
                                      void** ppResource);
 }
 
 @GUID("b2daad8b-03d4-4dbf-95eb-32ab4b63d0ab")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nn-d3d11_1-id3duserdefinedannotation))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nn-d3d11_1-id3duserdefinedannotation
 interface ID3DUserDefinedAnnotation : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3duserdefinedannotation-beginevent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3duserdefinedannotation-beginevent
     int  BeginEvent(const(PWSTR) Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3duserdefinedannotation-endevent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3duserdefinedannotation-endevent
     int  EndEvent();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3duserdefinedannotation-setmarker))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3duserdefinedannotation-setmarker
     void SetMarker(const(PWSTR) Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3duserdefinedannotation-getstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_1/nf-d3d11_1-id3duserdefinedannotation-getstatus
     BOOL GetStatus();
 }
 
 @GUID("420d5b32-b90c-4da4-bef0-359f6a24a83a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_2/nn-d3d11_2-id3d11devicecontext2))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_2/nn-d3d11_2-id3d11devicecontext2
 interface ID3D11DeviceContext2 : ID3D11DeviceContext1
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_2/nf-d3d11_2-id3d11devicecontext2-updatetilemappings))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_2/nf-d3d11_2-id3d11devicecontext2-updatetilemappings
     HRESULT UpdateTileMappings(ID3D11Resource pTiledResource, uint NumTiledResourceRegions, 
                                const(D3D11_TILED_RESOURCE_COORDINATE)* pTiledResourceRegionStartCoordinates, 
                                const(D3D11_TILE_REGION_SIZE)* pTiledResourceRegionSizes, ID3D11Buffer pTilePool, 
                                uint NumRanges, const(uint)* pRangeFlags, const(uint)* pTilePoolStartOffsets, 
                                const(uint)* pRangeTileCounts, uint Flags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_2/nf-d3d11_2-id3d11devicecontext2-copytilemappings))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_2/nf-d3d11_2-id3d11devicecontext2-copytilemappings
     HRESULT CopyTileMappings(ID3D11Resource pDestTiledResource, 
                              const(D3D11_TILED_RESOURCE_COORDINATE)* pDestRegionStartCoordinate, 
                              ID3D11Resource pSourceTiledResource, 
                              const(D3D11_TILED_RESOURCE_COORDINATE)* pSourceRegionStartCoordinate, 
                              const(D3D11_TILE_REGION_SIZE)* pTileRegionSize, uint Flags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_2/nf-d3d11_2-id3d11devicecontext2-copytiles))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_2/nf-d3d11_2-id3d11devicecontext2-copytiles
     void    CopyTiles(ID3D11Resource pTiledResource, 
                       const(D3D11_TILED_RESOURCE_COORDINATE)* pTileRegionStartCoordinate, 
                       const(D3D11_TILE_REGION_SIZE)* pTileRegionSize, ID3D11Buffer pBuffer, 
                       ulong BufferStartOffsetInBytes, uint Flags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_2/nf-d3d11_2-id3d11devicecontext2-updatetiles))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_2/nf-d3d11_2-id3d11devicecontext2-updatetiles
     void    UpdateTiles(ID3D11Resource pDestTiledResource, 
                         const(D3D11_TILED_RESOURCE_COORDINATE)* pDestTileRegionStartCoordinate, 
                         const(D3D11_TILE_REGION_SIZE)* pDestTileRegionSize, const(void)* pSourceTileData, uint Flags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_2/nf-d3d11_2-id3d11devicecontext2-resizetilepool))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_2/nf-d3d11_2-id3d11devicecontext2-resizetilepool
     HRESULT ResizeTilePool(ID3D11Buffer pTilePool, ulong NewSizeInBytes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_2/nf-d3d11_2-id3d11devicecontext2-tiledresourcebarrier))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_2/nf-d3d11_2-id3d11devicecontext2-tiledresourcebarrier
     void    TiledResourceBarrier(ID3D11DeviceChild pTiledResourceOrViewAccessBeforeBarrier, 
                                  ID3D11DeviceChild pTiledResourceOrViewAccessAfterBarrier);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_2/nf-d3d11_2-id3d11devicecontext2-isannotationenabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_2/nf-d3d11_2-id3d11devicecontext2-isannotationenabled
     BOOL    IsAnnotationEnabled();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_2/nf-d3d11_2-id3d11devicecontext2-setmarkerint))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_2/nf-d3d11_2-id3d11devicecontext2-setmarkerint
     void    SetMarkerInt(const(PWSTR) pLabel, int Data);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_2/nf-d3d11_2-id3d11devicecontext2-begineventint))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_2/nf-d3d11_2-id3d11devicecontext2-begineventint
     void    BeginEventInt(const(PWSTR) pLabel, int Data);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_2/nf-d3d11_2-id3d11devicecontext2-endevent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_2/nf-d3d11_2-id3d11devicecontext2-endevent
     void    EndEvent();
 }
 
 @GUID("9d06dffa-d1e5-4d07-83a8-1bb123f2f841")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_2/nn-d3d11_2-id3d11device2))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_2/nn-d3d11_2-id3d11device2
 interface ID3D11Device2 : ID3D11Device1
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_2/nf-d3d11_2-id3d11device2-getimmediatecontext2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_2/nf-d3d11_2-id3d11device2-getimmediatecontext2
     void    GetImmediateContext2(ID3D11DeviceContext2* ppImmediateContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_2/nf-d3d11_2-id3d11device2-createdeferredcontext2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_2/nf-d3d11_2-id3d11device2-createdeferredcontext2
     HRESULT CreateDeferredContext2(uint ContextFlags, ID3D11DeviceContext2* ppDeferredContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_2/nf-d3d11_2-id3d11device2-getresourcetiling))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_2/nf-d3d11_2-id3d11device2-getresourcetiling
     void    GetResourceTiling(ID3D11Resource pTiledResource, uint* pNumTilesForEntireResource, 
                               D3D11_PACKED_MIP_DESC* pPackedMipDesc, 
                               D3D11_TILE_SHAPE* pStandardTileShapeForNonPackedMips, uint* pNumSubresourceTilings, 
                               uint FirstSubresourceTilingToGet, 
                               D3D11_SUBRESOURCE_TILING* pSubresourceTilingsForNonPackedMips);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_2/nf-d3d11_2-id3d11device2-checkmultisamplequalitylevels1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_2/nf-d3d11_2-id3d11device2-checkmultisamplequalitylevels1
     HRESULT CheckMultisampleQualityLevels1(DXGI_FORMAT Format, uint SampleCount, uint Flags, 
                                            uint* pNumQualityLevels);
 }
 
 @GUID("51218251-1e33-4617-9ccb-4d3a4367e7bb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/nn-d3d11_3-id3d11texture2d1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nn-d3d11_3-id3d11texture2d1
 interface ID3D11Texture2D1 : ID3D11Texture2D
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11texture2d1-getdesc1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11texture2d1-getdesc1
     void GetDesc1(D3D11_TEXTURE2D_DESC1* pDesc);
 }
 
 @GUID("0c711683-2853-4846-9bb0-f3e60639e46a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/nn-d3d11_3-id3d11texture3d1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nn-d3d11_3-id3d11texture3d1
 interface ID3D11Texture3D1 : ID3D11Texture3D
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11texture3d1-getdesc1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11texture3d1-getdesc1
     void GetDesc1(D3D11_TEXTURE3D_DESC1* pDesc);
 }
 
 @GUID("6fbd02fb-209f-46c4-b059-2ed15586a6ac")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/nn-d3d11_3-id3d11rasterizerstate2))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nn-d3d11_3-id3d11rasterizerstate2
 interface ID3D11RasterizerState2 : ID3D11RasterizerState1
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11rasterizerstate2-getdesc2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11rasterizerstate2-getdesc2
     void GetDesc2(D3D11_RASTERIZER_DESC2* pDesc);
 }
 
 @GUID("91308b87-9040-411d-8c67-c39253ce3802")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/nn-d3d11_3-id3d11shaderresourceview1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nn-d3d11_3-id3d11shaderresourceview1
 interface ID3D11ShaderResourceView1 : ID3D11ShaderResourceView
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11shaderresourceview1-getdesc1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11shaderresourceview1-getdesc1
     void GetDesc1(D3D11_SHADER_RESOURCE_VIEW_DESC1* pDesc1);
 }
 
 @GUID("ffbe2e23-f011-418a-ac56-5ceed7c5b94b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/nn-d3d11_3-id3d11rendertargetview1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nn-d3d11_3-id3d11rendertargetview1
 interface ID3D11RenderTargetView1 : ID3D11RenderTargetView
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11rendertargetview1-getdesc1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11rendertargetview1-getdesc1
     void GetDesc1(D3D11_RENDER_TARGET_VIEW_DESC1* pDesc1);
 }
 
 @GUID("7b3b6153-a886-4544-ab37-6537c8500403")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/nn-d3d11_3-id3d11unorderedaccessview1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nn-d3d11_3-id3d11unorderedaccessview1
 interface ID3D11UnorderedAccessView1 : ID3D11UnorderedAccessView
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11unorderedaccessview1-getdesc1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11unorderedaccessview1-getdesc1
     void GetDesc1(D3D11_UNORDERED_ACCESS_VIEW_DESC1* pDesc1);
 }
 
 @GUID("631b4766-36dc-461d-8db6-c47e13e60916")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/nn-d3d11_3-id3d11query1))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nn-d3d11_3-id3d11query1
 interface ID3D11Query1 : ID3D11Query
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11query1-getdesc1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11query1-getdesc1
     void GetDesc1(D3D11_QUERY_DESC1* pDesc1);
 }
 
 @GUID("b4e3c01d-e79e-4637-91b2-510e9f4c9b8f")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/nn-d3d11_3-id3d11devicecontext3))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nn-d3d11_3-id3d11devicecontext3
 interface ID3D11DeviceContext3 : ID3D11DeviceContext2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11devicecontext3-flush1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11devicecontext3-flush1
     void Flush1(D3D11_CONTEXT_TYPE ContextType, HANDLE hEvent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11devicecontext3-sethardwareprotectionstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11devicecontext3-sethardwareprotectionstate
     void SetHardwareProtectionState(BOOL HwProtectionEnable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11devicecontext3-gethardwareprotectionstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11devicecontext3-gethardwareprotectionstate
     void GetHardwareProtectionState(BOOL* pHwProtectionEnable);
 }
 
 @GUID("affde9d1-1df7-4bb7-8a34-0f46251dab80")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/nn-d3d11_3-id3d11fence))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nn-d3d11_3-id3d11fence
 interface ID3D11Fence : ID3D11DeviceChild
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11fence-createsharedhandle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11fence-createsharedhandle
     HRESULT CreateSharedHandle(const(SECURITY_ATTRIBUTES)* pAttributes, uint dwAccess, const(PWSTR) lpName, 
                                HANDLE* pHandle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11fence-getcompletedvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11fence-getcompletedvalue
     ulong   GetCompletedValue();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11fence-seteventoncompletion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11fence-seteventoncompletion
     HRESULT SetEventOnCompletion(ulong Value, HANDLE hEvent);
 }
 
 @GUID("917600da-f58c-4c33-98d8-3e15b390fa24")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/nn-d3d11_3-id3d11devicecontext4))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nn-d3d11_3-id3d11devicecontext4
 interface ID3D11DeviceContext4 : ID3D11DeviceContext3
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11devicecontext4-signal))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11devicecontext4-signal
     HRESULT Signal(ID3D11Fence pFence, ulong Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11devicecontext4-wait))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11devicecontext4-wait
     HRESULT Wait(ID3D11Fence pFence, ulong Value);
 }
 
 @GUID("a05c8c37-d2c6-4732-b3a0-9ce0b0dc9ae6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/nn-d3d11_3-id3d11device3))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nn-d3d11_3-id3d11device3
 interface ID3D11Device3 : ID3D11Device2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11device3-createtexture2d1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11device3-createtexture2d1
     HRESULT CreateTexture2D1(const(D3D11_TEXTURE2D_DESC1)* pDesc1, const(D3D11_SUBRESOURCE_DATA)* pInitialData, 
                              ID3D11Texture2D1* ppTexture2D);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11device3-createtexture3d1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11device3-createtexture3d1
     HRESULT CreateTexture3D1(const(D3D11_TEXTURE3D_DESC1)* pDesc1, const(D3D11_SUBRESOURCE_DATA)* pInitialData, 
                              ID3D11Texture3D1* ppTexture3D);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11device3-createrasterizerstate2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11device3-createrasterizerstate2
     HRESULT CreateRasterizerState2(const(D3D11_RASTERIZER_DESC2)* pRasterizerDesc, 
                                    ID3D11RasterizerState2* ppRasterizerState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11device3-createshaderresourceview1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11device3-createshaderresourceview1
     HRESULT CreateShaderResourceView1(ID3D11Resource pResource, const(D3D11_SHADER_RESOURCE_VIEW_DESC1)* pDesc1, 
                                       ID3D11ShaderResourceView1* ppSRView1);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11device3-createunorderedaccessview1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11device3-createunorderedaccessview1
     HRESULT CreateUnorderedAccessView1(ID3D11Resource pResource, const(D3D11_UNORDERED_ACCESS_VIEW_DESC1)* pDesc1, 
                                        ID3D11UnorderedAccessView1* ppUAView1);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11device3-createrendertargetview1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11device3-createrendertargetview1
     HRESULT CreateRenderTargetView1(ID3D11Resource pResource, const(D3D11_RENDER_TARGET_VIEW_DESC1)* pDesc1, 
                                     ID3D11RenderTargetView1* ppRTView1);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11device3-createquery1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11device3-createquery1
     HRESULT CreateQuery1(const(D3D11_QUERY_DESC1)* pQueryDesc1, ID3D11Query1* ppQuery1);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11device3-getimmediatecontext3))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11device3-getimmediatecontext3
     void    GetImmediateContext3(ID3D11DeviceContext3* ppImmediateContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11device3-createdeferredcontext3))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11device3-createdeferredcontext3
     HRESULT CreateDeferredContext3(uint ContextFlags, ID3D11DeviceContext3* ppDeferredContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11device3-writetosubresource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11device3-writetosubresource
     void    WriteToSubresource(ID3D11Resource pDstResource, uint DstSubresource, const(D3D11_BOX)* pDstBox, 
                                const(void)* pSrcData, uint SrcRowPitch, uint SrcDepthPitch);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11device3-readfromsubresource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_3/nf-d3d11_3-id3d11device3-readfromsubresource
     void    ReadFromSubresource(void* pDstData, uint DstRowPitch, uint DstDepthPitch, ID3D11Resource pSrcResource, 
                                 uint SrcSubresource, const(D3D11_BOX)* pSrcBox);
 }
 
 @GUID("8992ab71-02e6-4b8d-ba48-b056dcda42c4")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_4/nn-d3d11_4-id3d11device4))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_4/nn-d3d11_4-id3d11device4
 interface ID3D11Device4 : ID3D11Device3
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_4/nf-d3d11_4-id3d11device4-registerdeviceremovedevent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_4/nf-d3d11_4-id3d11device4-registerdeviceremovedevent
     HRESULT RegisterDeviceRemovedEvent(HANDLE hEvent, uint* pdwCookie);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_4/nf-d3d11_4-id3d11device4-unregisterdeviceremoved))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_4/nf-d3d11_4-id3d11device4-unregisterdeviceremoved
     void    UnregisterDeviceRemoved(uint dwCookie);
 }
 
 @GUID("8ffde202-a0e7-45df-9e01-e837801b5ea0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_4/nn-d3d11_4-id3d11device5))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_4/nn-d3d11_4-id3d11device5
 interface ID3D11Device5 : ID3D11Device4
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_4/nf-d3d11_4-id3d11device5-opensharedfence))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_4/nf-d3d11_4-id3d11device5-opensharedfence
     HRESULT OpenSharedFence(HANDLE hFence, const(GUID)* ReturnedInterface, void** ppFence);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_4/nf-d3d11_4-id3d11device5-createfence))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_4/nf-d3d11_4-id3d11device5-createfence
     HRESULT CreateFence(ulong InitialValue, D3D11_FENCE_FLAG Flags, const(GUID)* ReturnedInterface, void** ppFence);
 }
 
 @GUID("9b7e4e00-342c-4106-a19f-4f2704f689f0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_4/nn-d3d11_4-id3d11multithread))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_4/nn-d3d11_4-id3d11multithread
 interface ID3D11Multithread : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_4/nf-d3d11_4-id3d11multithread-enter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_4/nf-d3d11_4-id3d11multithread-enter
     void Enter();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_4/nf-d3d11_4-id3d11multithread-leave))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_4/nf-d3d11_4-id3d11multithread-leave
     void Leave();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_4/nf-d3d11_4-id3d11multithread-setmultithreadprotected))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_4/nf-d3d11_4-id3d11multithread-setmultithreadprotected
     BOOL SetMultithreadProtected(BOOL bMTProtect);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_4/nf-d3d11_4-id3d11multithread-getmultithreadprotected))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_4/nf-d3d11_4-id3d11multithread-getmultithreadprotected
     BOOL GetMultithreadProtected();
 }
 
 @GUID("c4e7374c-6243-4d1b-ae87-52b4f740e261")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows10.0.10240))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_4/nn-d3d11_4-id3d11videocontext2))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_4/nn-d3d11_4-id3d11videocontext2
 interface ID3D11VideoContext2 : ID3D11VideoContext1
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_4/nf-d3d11_4-id3d11videocontext2-videoprocessorsetoutputhdrmetadata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_4/nf-d3d11_4-id3d11videocontext2-videoprocessorsetoutputhdrmetadata
     void VideoProcessorSetOutputHDRMetaData(ID3D11VideoProcessor pVideoProcessor, DXGI_HDR_METADATA_TYPE Type, 
                                             uint Size, 
                                             /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/const(void)* pHDRMetaData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_4/nf-d3d11_4-id3d11videocontext2-videoprocessorgetoutputhdrmetadata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_4/nf-d3d11_4-id3d11videocontext2-videoprocessorgetoutputhdrmetadata
     void VideoProcessorGetOutputHDRMetaData(ID3D11VideoProcessor pVideoProcessor, DXGI_HDR_METADATA_TYPE* pType, 
                                             uint Size, 
                                             /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* pMetaData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_4/nf-d3d11_4-id3d11videocontext2-videoprocessorsetstreamhdrmetadata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_4/nf-d3d11_4-id3d11videocontext2-videoprocessorsetstreamhdrmetadata
     void VideoProcessorSetStreamHDRMetaData(ID3D11VideoProcessor pVideoProcessor, uint StreamIndex, 
                                             DXGI_HDR_METADATA_TYPE Type, uint Size, 
                                             /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/const(void)* pHDRMetaData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_4/nf-d3d11_4-id3d11videocontext2-videoprocessorgetstreamhdrmetadata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_4/nf-d3d11_4-id3d11videocontext2-videoprocessorgetstreamhdrmetadata
     void VideoProcessorGetStreamHDRMetaData(ID3D11VideoProcessor pVideoProcessor, uint StreamIndex, 
                                             DXGI_HDR_METADATA_TYPE* pType, uint Size, 
                                             /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* pMetaData);
 }
 
 @GUID("59c0cb01-35f0-4a70-8f67-87905c906a53")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_4/nn-d3d11_4-id3d11videodevice2))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_4/nn-d3d11_4-id3d11videodevice2
 interface ID3D11VideoDevice2 : ID3D11VideoDevice1
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_4/nf-d3d11_4-id3d11videodevice2-checkfeaturesupport))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_4/nf-d3d11_4-id3d11videodevice2-checkfeaturesupport
     HRESULT CheckFeatureSupport(D3D11_FEATURE_VIDEO Feature, 
                                 /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* pFeatureSupportData, 
                                 uint FeatureSupportDataSize);
@@ -6973,11 +7196,11 @@ interface ID3D11VideoDevice2 : ID3D11VideoDevice1
 }
 
 @GUID("a9e2faa0-cb39-418f-a0b7-d8aad4de672e")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_4/nn-d3d11_4-id3d11videocontext3))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_4/nn-d3d11_4-id3d11videocontext3
 interface ID3D11VideoContext3 : ID3D11VideoContext2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11_4/nf-d3d11_4-id3d11videocontext3-decoderbeginframe1))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11_4/nf-d3d11_4-id3d11videocontext3-decoderbeginframe1
     HRESULT DecoderBeginFrame1(ID3D11VideoDecoder pDecoder, ID3D11VideoDecoderOutputView pView, 
                                uint ContentKeySize, 
                                /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/const(void)* pContentKey, 
@@ -6988,320 +7211,320 @@ interface ID3D11VideoContext3 : ID3D11VideoContext2
 }
 
 @GUID("6e6ffa6a-9bae-4613-a51e-91652d508c21")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nn-d3d11shader-id3d11shaderreflectiontype))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nn-d3d11shader-id3d11shaderreflectiontype
 interface ID3D11ShaderReflectionType
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectiontype-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectiontype-getdesc
     HRESULT GetDesc(D3D11_SHADER_TYPE_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectiontype-getmembertypebyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectiontype-getmembertypebyindex
     ID3D11ShaderReflectionType GetMemberTypeByIndex(uint Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectiontype-getmembertypebyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectiontype-getmembertypebyname
     ID3D11ShaderReflectionType GetMemberTypeByName(const(PSTR) Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectiontype-getmembertypename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectiontype-getmembertypename
     PSTR    GetMemberTypeName(uint Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectiontype-isequal))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectiontype-isequal
     HRESULT IsEqual(ID3D11ShaderReflectionType pType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectiontype-getsubtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectiontype-getsubtype
     ID3D11ShaderReflectionType GetSubType();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectiontype-getbaseclass))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectiontype-getbaseclass
     ID3D11ShaderReflectionType GetBaseClass();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectiontype-getnuminterfaces))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectiontype-getnuminterfaces
     uint    GetNumInterfaces();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectiontype-getinterfacebyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectiontype-getinterfacebyindex
     ID3D11ShaderReflectionType GetInterfaceByIndex(uint uIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectiontype-isoftype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectiontype-isoftype
     HRESULT IsOfType(ID3D11ShaderReflectionType pType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectiontype-implementsinterface))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectiontype-implementsinterface
     HRESULT ImplementsInterface(ID3D11ShaderReflectionType pBase);
 }
 
 @GUID("51f23923-f3e5-4bd1-91cb-606177d8db4c")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nn-d3d11shader-id3d11shaderreflectionvariable))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nn-d3d11shader-id3d11shaderreflectionvariable
 interface ID3D11ShaderReflectionVariable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectionvariable-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectionvariable-getdesc
     HRESULT GetDesc(D3D11_SHADER_VARIABLE_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectionvariable-gettype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectionvariable-gettype
     ID3D11ShaderReflectionType GetType();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectionvariable-getbuffer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectionvariable-getbuffer
     ID3D11ShaderReflectionConstantBuffer GetBuffer();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectionvariable-getinterfaceslot))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectionvariable-getinterfaceslot
     uint    GetInterfaceSlot(uint uArrayIndex);
 }
 
 @GUID("eb62d63d-93dd-4318-8ae8-c6f83ad371b8")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nn-d3d11shader-id3d11shaderreflectionconstantbuffer))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nn-d3d11shader-id3d11shaderreflectionconstantbuffer
 interface ID3D11ShaderReflectionConstantBuffer
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectionconstantbuffer-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectionconstantbuffer-getdesc
     HRESULT GetDesc(D3D11_SHADER_BUFFER_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectionconstantbuffer-getvariablebyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectionconstantbuffer-getvariablebyindex
     ID3D11ShaderReflectionVariable GetVariableByIndex(uint Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectionconstantbuffer-getvariablebyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflectionconstantbuffer-getvariablebyname
     ID3D11ShaderReflectionVariable GetVariableByName(const(PSTR) Name);
 }
 
 @GUID("8d536ca1-0cca-4956-a837-786963755584")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nn-d3d11shader-id3d11shaderreflection))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nn-d3d11shader-id3d11shaderreflection
 interface ID3D11ShaderReflection : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-getdesc
     HRESULT GetDesc(D3D11_SHADER_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-getconstantbufferbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-getconstantbufferbyindex
     ID3D11ShaderReflectionConstantBuffer GetConstantBufferByIndex(uint Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-getconstantbufferbyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-getconstantbufferbyname
     ID3D11ShaderReflectionConstantBuffer GetConstantBufferByName(const(PSTR) Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-getresourcebindingdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-getresourcebindingdesc
     HRESULT GetResourceBindingDesc(uint ResourceIndex, D3D11_SHADER_INPUT_BIND_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-getinputparameterdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-getinputparameterdesc
     HRESULT GetInputParameterDesc(uint ParameterIndex, D3D11_SIGNATURE_PARAMETER_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-getoutputparameterdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-getoutputparameterdesc
     HRESULT GetOutputParameterDesc(uint ParameterIndex, D3D11_SIGNATURE_PARAMETER_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-getpatchconstantparameterdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-getpatchconstantparameterdesc
     HRESULT GetPatchConstantParameterDesc(uint ParameterIndex, D3D11_SIGNATURE_PARAMETER_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-getvariablebyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-getvariablebyname
     ID3D11ShaderReflectionVariable GetVariableByName(const(PSTR) Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-getresourcebindingdescbyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-getresourcebindingdescbyname
     HRESULT GetResourceBindingDescByName(const(PSTR) Name, D3D11_SHADER_INPUT_BIND_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-getmovinstructioncount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-getmovinstructioncount
     uint    GetMovInstructionCount();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-getmovcinstructioncount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-getmovcinstructioncount
     uint    GetMovcInstructionCount();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-getconversioninstructioncount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-getconversioninstructioncount
     uint    GetConversionInstructionCount();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-getbitwiseinstructioncount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-getbitwiseinstructioncount
     uint    GetBitwiseInstructionCount();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-getgsinputprimitive))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-getgsinputprimitive
     D3D_PRIMITIVE GetGSInputPrimitive();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-issamplefrequencyshader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-issamplefrequencyshader
     BOOL    IsSampleFrequencyShader();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-getnuminterfaceslots))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-getnuminterfaceslots
     uint    GetNumInterfaceSlots();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-getminfeaturelevel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-getminfeaturelevel
     HRESULT GetMinFeatureLevel(D3D_FEATURE_LEVEL* pLevel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-getthreadgroupsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-getthreadgroupsize
     uint    GetThreadGroupSize(uint* pSizeX, uint* pSizeY, uint* pSizeZ);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-getrequiresflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11shaderreflection-getrequiresflags
     ulong   GetRequiresFlags();
 }
 
 @GUID("54384f1b-5b3e-4bb7-ae01-60ba3097cbb6")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nn-d3d11shader-id3d11libraryreflection))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nn-d3d11shader-id3d11libraryreflection
 interface ID3D11LibraryReflection : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11libraryreflection-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11libraryreflection-getdesc
     HRESULT GetDesc(D3D11_LIBRARY_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11libraryreflection-getfunctionbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11libraryreflection-getfunctionbyindex
     ID3D11FunctionReflection GetFunctionByIndex(int FunctionIndex);
 }
 
 @GUID("207bcecb-d683-4a06-a8a3-9b149b9f73a4")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nn-d3d11shader-id3d11functionreflection))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nn-d3d11shader-id3d11functionreflection
 interface ID3D11FunctionReflection
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11functionreflection-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11functionreflection-getdesc
     HRESULT GetDesc(D3D11_FUNCTION_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11functionreflection-getconstantbufferbyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11functionreflection-getconstantbufferbyindex
     ID3D11ShaderReflectionConstantBuffer GetConstantBufferByIndex(uint BufferIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11functionreflection-getconstantbufferbyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11functionreflection-getconstantbufferbyname
     ID3D11ShaderReflectionConstantBuffer GetConstantBufferByName(const(PSTR) Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11functionreflection-getresourcebindingdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11functionreflection-getresourcebindingdesc
     HRESULT GetResourceBindingDesc(uint ResourceIndex, D3D11_SHADER_INPUT_BIND_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11functionreflection-getvariablebyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11functionreflection-getvariablebyname
     ID3D11ShaderReflectionVariable GetVariableByName(const(PSTR) Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11functionreflection-getresourcebindingdescbyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11functionreflection-getresourcebindingdescbyname
     HRESULT GetResourceBindingDescByName(const(PSTR) Name, D3D11_SHADER_INPUT_BIND_DESC* pDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11functionreflection-getfunctionparameter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11functionreflection-getfunctionparameter
     ID3D11FunctionParameterReflection GetFunctionParameter(int ParameterIndex);
 }
 
 @GUID("42757488-334f-47fe-982e-1a65d08cc462")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nn-d3d11shader-id3d11functionparameterreflection))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nn-d3d11shader-id3d11functionparameterreflection
 interface ID3D11FunctionParameterReflection
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11functionparameterreflection-getdesc))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11functionparameterreflection-getdesc
     HRESULT GetDesc(D3D11_PARAMETER_DESC* pDesc);
 }
 
 @GUID("469e07f7-045a-48d5-aa12-68a478cdf75d")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nn-d3d11shader-id3d11moduleinstance))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nn-d3d11shader-id3d11moduleinstance
 interface ID3D11ModuleInstance : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11moduleinstance-bindconstantbuffer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11moduleinstance-bindconstantbuffer
     HRESULT BindConstantBuffer(uint uSrcSlot, uint uDstSlot, uint cbDstOffset);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11moduleinstance-bindconstantbufferbyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11moduleinstance-bindconstantbufferbyname
     HRESULT BindConstantBufferByName(const(PSTR) pName, uint uDstSlot, uint cbDstOffset);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11moduleinstance-bindresource))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11moduleinstance-bindresource
     HRESULT BindResource(uint uSrcSlot, uint uDstSlot, uint uCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11moduleinstance-bindresourcebyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11moduleinstance-bindresourcebyname
     HRESULT BindResourceByName(const(PSTR) pName, uint uDstSlot, uint uCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11moduleinstance-bindsampler))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11moduleinstance-bindsampler
     HRESULT BindSampler(uint uSrcSlot, uint uDstSlot, uint uCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11moduleinstance-bindsamplerbyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11moduleinstance-bindsamplerbyname
     HRESULT BindSamplerByName(const(PSTR) pName, uint uDstSlot, uint uCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11moduleinstance-bindunorderedaccessview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11moduleinstance-bindunorderedaccessview
     HRESULT BindUnorderedAccessView(uint uSrcSlot, uint uDstSlot, uint uCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11moduleinstance-bindunorderedaccessviewbyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11moduleinstance-bindunorderedaccessviewbyname
     HRESULT BindUnorderedAccessViewByName(const(PSTR) pName, uint uDstSlot, uint uCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11moduleinstance-bindresourceasunorderedaccessview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11moduleinstance-bindresourceasunorderedaccessview
     HRESULT BindResourceAsUnorderedAccessView(uint uSrcSrvSlot, uint uDstUavSlot, uint uCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11moduleinstance-bindresourceasunorderedaccessviewbyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11moduleinstance-bindresourceasunorderedaccessviewbyname
     HRESULT BindResourceAsUnorderedAccessViewByName(const(PSTR) pSrvName, uint uDstUavSlot, uint uCount);
 }
 
 @GUID("cac701ee-80fc-4122-8242-10b39c8cec34")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nn-d3d11shader-id3d11module))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nn-d3d11shader-id3d11module
 interface ID3D11Module : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11module-createinstance))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11module-createinstance
     HRESULT CreateInstance(const(PSTR) pNamespace, ID3D11ModuleInstance* ppModuleInstance);
 }
 
 @GUID("59a6cd0e-e10d-4c1f-88c0-63aba1daf30e")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nn-d3d11shader-id3d11linker))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nn-d3d11shader-id3d11linker
 interface ID3D11Linker : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11linker-link))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11linker-link
     HRESULT Link(ID3D11ModuleInstance pEntry, const(PSTR) pEntryName, const(PSTR) pTargetName, uint uFlags, 
                  ID3DBlob* ppShaderBlob, ID3DBlob* ppErrorBuffer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11linker-uselibrary))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11linker-uselibrary
     HRESULT UseLibrary(ID3D11ModuleInstance pLibraryMI);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11linker-addclipplanefromcbuffer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11linker-addclipplanefromcbuffer
     HRESULT AddClipPlaneFromCBuffer(uint uCBufferSlot, uint uCBufferEntry);
 }
 
 @GUID("d80dd70c-8d2f-4751-94a1-03c79b3556db")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nn-d3d11shader-id3d11linkingnode))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nn-d3d11shader-id3d11linkingnode
 interface ID3D11LinkingNode : IUnknown
 {
 }
 
 @GUID("54133220-1ce8-43d3-8236-9855c5ceecff")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nn-d3d11shader-id3d11functionlinkinggraph))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nn-d3d11shader-id3d11functionlinkinggraph
 interface ID3D11FunctionLinkingGraph : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11functionlinkinggraph-createmoduleinstance))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11functionlinkinggraph-createmoduleinstance
     HRESULT CreateModuleInstance(ID3D11ModuleInstance* ppModuleInstance, ID3DBlob* ppErrorBuffer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11functionlinkinggraph-setinputsignature))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11functionlinkinggraph-setinputsignature
     HRESULT SetInputSignature(const(D3D11_PARAMETER_DESC)* pInputParameters, uint cInputParameters, 
                               ID3D11LinkingNode* ppInputNode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11functionlinkinggraph-setoutputsignature))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11functionlinkinggraph-setoutputsignature
     HRESULT SetOutputSignature(const(D3D11_PARAMETER_DESC)* pOutputParameters, uint cOutputParameters, 
                                ID3D11LinkingNode* ppOutputNode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11functionlinkinggraph-callfunction))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11functionlinkinggraph-callfunction
     HRESULT CallFunction(const(PSTR) pModuleInstanceNamespace, ID3D11Module pModuleWithFunctionPrototype, 
                          const(PSTR) pFunctionName, ID3D11LinkingNode* ppCallNode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11functionlinkinggraph-passvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11functionlinkinggraph-passvalue
     HRESULT PassValue(ID3D11LinkingNode pSrcNode, int SrcParameterIndex, ID3D11LinkingNode pDstNode, 
                       int DstParameterIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11functionlinkinggraph-passvaluewithswizzle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11functionlinkinggraph-passvaluewithswizzle
     HRESULT PassValueWithSwizzle(ID3D11LinkingNode pSrcNode, int SrcParameterIndex, const(PSTR) pSrcSwizzle, 
                                  ID3D11LinkingNode pDstNode, int DstParameterIndex, const(PSTR) pDstSwizzle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11functionlinkinggraph-getlasterror))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11functionlinkinggraph-getlasterror
     HRESULT GetLastError(ID3DBlob* ppErrorBuffer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11functionlinkinggraph-generatehlsl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shader/nf-d3d11shader-id3d11functionlinkinggraph-generatehlsl
     HRESULT GenerateHlsl(uint uFlags, ID3DBlob* ppBuffer);
 }
 
 @GUID("36b013e6-2811-4845-baa7-d623fe0df104")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/nn-d3d11shadertracing-id3d11shadertrace))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/nn-d3d11shadertracing-id3d11shadertrace
 interface ID3D11ShaderTrace : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/nf-d3d11shadertracing-id3d11shadertrace-traceready))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/nf-d3d11shadertracing-id3d11shadertrace-traceready
     HRESULT TraceReady(ulong* pTestCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/nf-d3d11shadertracing-id3d11shadertrace-resettrace))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/nf-d3d11shadertracing-id3d11shadertrace-resettrace
     void    ResetTrace();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/nf-d3d11shadertracing-id3d11shadertrace-gettracestats))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/nf-d3d11shadertracing-id3d11shadertrace-gettracestats
     HRESULT GetTraceStats(D3D11_TRACE_STATS* pTraceStats);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/nf-d3d11shadertracing-id3d11shadertrace-psselectstamp))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/nf-d3d11shadertracing-id3d11shadertrace-psselectstamp
     HRESULT PSSelectStamp(uint stampIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/nf-d3d11shadertracing-id3d11shadertrace-getinitialregistercontents))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/nf-d3d11shadertracing-id3d11shadertrace-getinitialregistercontents
     HRESULT GetInitialRegisterContents(D3D11_TRACE_REGISTER* pRegister, D3D11_TRACE_VALUE* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/nf-d3d11shadertracing-id3d11shadertrace-getstep))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/nf-d3d11shadertracing-id3d11shadertrace-getstep
     HRESULT GetStep(uint stepIndex, D3D11_TRACE_STEP* pTraceStep);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/nf-d3d11shadertracing-id3d11shadertrace-getwrittenregister))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/nf-d3d11shadertracing-id3d11shadertrace-getwrittenregister
     HRESULT GetWrittenRegister(uint stepIndex, uint writtenRegisterIndex, D3D11_TRACE_REGISTER* pRegister, 
                                D3D11_TRACE_VALUE* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/nf-d3d11shadertracing-id3d11shadertrace-getreadregister))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/nf-d3d11shadertracing-id3d11shadertrace-getreadregister
     HRESULT GetReadRegister(uint stepIndex, uint readRegisterIndex, D3D11_TRACE_REGISTER* pRegister, 
                             D3D11_TRACE_VALUE* pValue);
 }
 
 @GUID("1fbad429-66ab-41cc-9617-667ac10e4459")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/nn-d3d11shadertracing-id3d11shadertracefactory))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/nn-d3d11shadertracing-id3d11shadertracefactory
 interface ID3D11ShaderTraceFactory : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/nf-d3d11shadertracing-id3d11shadertracefactory-createshadertrace))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3d11shadertracing/nf-d3d11shadertracing-id3d11shadertracefactory-createshadertrace
     HRESULT CreateShaderTrace(IUnknown pShader, D3D11_SHADER_TRACE_DESC* pTraceDesc, 
                               ID3D11ShaderTrace* ppShaderTrace);
 }
 
 @GUID("5089b68f-e71d-4d38-be8e-f363b95a9405")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcsx/nn-d3dcsx-id3dx11scan))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcsx/nn-d3dcsx-id3dx11scan
 interface ID3DX11Scan : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-id3dx11scan-setscandirection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-id3dx11scan-setscandirection
     HRESULT SetScanDirection(D3DX11_SCAN_DIRECTION Direction);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-id3dx11scan-scan))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-id3dx11scan-scan
     HRESULT Scan(D3DX11_SCAN_DATA_TYPE ElementType, D3DX11_SCAN_OPCODE OpCode, uint ElementScanSize, 
                  ID3D11UnorderedAccessView pSrc, ID3D11UnorderedAccessView pDst);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-id3dx11scan-multiscan))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-id3dx11scan-multiscan
     HRESULT Multiscan(D3DX11_SCAN_DATA_TYPE ElementType, D3DX11_SCAN_OPCODE OpCode, uint ElementScanSize, 
                       uint ElementScanPitch, uint ScanCount, ID3D11UnorderedAccessView pSrc, 
                       ID3D11UnorderedAccessView pDst);
 }
 
 @GUID("a915128c-d954-4c79-bfe1-64db923194d6")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcsx/nn-d3dcsx-id3dx11segmentedscan))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcsx/nn-d3dcsx-id3dx11segmentedscan
 interface ID3DX11SegmentedScan : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-id3dx11segmentedscan-setscandirection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-id3dx11segmentedscan-setscandirection
     HRESULT SetScanDirection(D3DX11_SCAN_DIRECTION Direction);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-id3dx11segmentedscan-segscan))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-id3dx11segmentedscan-segscan
     HRESULT SegScan(D3DX11_SCAN_DATA_TYPE ElementType, D3DX11_SCAN_OPCODE OpCode, uint ElementScanSize, 
                     ID3D11UnorderedAccessView pSrc, ID3D11UnorderedAccessView pSrcElementFlags, 
                     ID3D11UnorderedAccessView pDst);
 }
 
 @GUID("b3f7a938-4c93-4310-a675-b30d6de50553")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcsx/nn-d3dcsx-id3dx11fft))], [])
 //INTERFACEF ATTR: AgileAttribute : CustomAttributeSig([], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcsx/nn-d3dcsx-id3dx11fft
 interface ID3DX11FFT : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-id3dx11fft-setforwardscale))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-id3dx11fft-setforwardscale
     HRESULT SetForwardScale(float ForwardScale);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-id3dx11fft-getforwardscale))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-id3dx11fft-getforwardscale
     float   GetForwardScale();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-id3dx11fft-setinversescale))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-id3dx11fft-setinversescale
     HRESULT SetInverseScale(float InverseScale);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-id3dx11fft-getinversescale))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-id3dx11fft-getinversescale
     float   GetInverseScale();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-id3dx11fft-attachbuffersandprecompute))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-id3dx11fft-attachbuffersandprecompute
     HRESULT AttachBuffersAndPrecompute(uint NumTempBuffers, ID3D11UnorderedAccessView* ppTempBuffers, 
                                        uint NumPrecomputeBuffers, ID3D11UnorderedAccessView* ppPrecomputeBufferSizes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-id3dx11fft-forwardtransform))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-id3dx11fft-forwardtransform
     HRESULT ForwardTransform(const(ID3D11UnorderedAccessView) pInputBuffer, 
                              ID3D11UnorderedAccessView* ppOutputBuffer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-id3dx11fft-inversetransform))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/d3dcsx/nf-d3dcsx-id3dx11fft-inversetransform
     HRESULT InverseTransform(const(ID3D11UnorderedAccessView) pInputBuffer, 
                              ID3D11UnorderedAccessView* ppOutputBuffer);
 }

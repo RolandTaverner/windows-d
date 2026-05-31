@@ -3,111 +3,117 @@
 module windows.win32.system.dataexchange;
 
 public import windows.core;
-public import windows.win32.foundation : BOOL, CHAR, HANDLE, HWND, LPARAM, PSTR,
-                                         PWSTR, WPARAM;
+public import windows.win32.foundation.foundation : BOOL, CHAR, HANDLE, HWND, LPARAM, PSTR,
+                                                    PWSTR, WPARAM;
 public import windows.win32.graphics.gdi : HDC, HENHMETAFILE, HMETAFILE;
-public import windows.win32.security : SECURITY_QUALITY_OF_SERVICE;
+public import windows.win32.security.security : SECURITY_QUALITY_OF_SERVICE;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
+
 alias DDE_ENABLE_CALLBACK_CMD = uint;
 enum : uint
 {
-    EC_ENABLEALL    = 0x00000000,
-    EC_ENABLEONE    = 0x00000080,
-    EC_DISABLE      = 0x00000008,
-    EC_QUERYWAITING = 0x00000002,
+    EC_ENABLEALL    = 0x00000000U,
+    EC_ENABLEONE    = 0x00000080U,
+    EC_DISABLE      = 0x00000008U,
+    EC_QUERYWAITING = 0x00000002U,
 }
+
 alias DDE_INITIALIZE_COMMAND = uint;
 enum : uint
 {
-    APPCLASS_MONITOR          = 0x00000001,
-    APPCLASS_STANDARD         = 0x00000000,
-    APPCMD_CLIENTONLY         = 0x00000010,
-    APPCMD_FILTERINITS        = 0x00000020,
-    CBF_FAIL_ALLSVRXACTIONS   = 0x0003f000,
-    CBF_FAIL_ADVISES          = 0x00004000,
-    CBF_FAIL_CONNECTIONS      = 0x00002000,
-    CBF_FAIL_EXECUTES         = 0x00008000,
-    CBF_FAIL_POKES            = 0x00010000,
-    CBF_FAIL_REQUESTS         = 0x00020000,
-    CBF_FAIL_SELFCONNECTIONS  = 0x00001000,
-    CBF_SKIP_ALLNOTIFICATIONS = 0x003c0000,
-    CBF_SKIP_CONNECT_CONFIRMS = 0x00040000,
-    CBF_SKIP_DISCONNECTS      = 0x00200000,
-    CBF_SKIP_REGISTRATIONS    = 0x00080000,
-    CBF_SKIP_UNREGISTRATIONS  = 0x00100000,
-    MF_CALLBACKS              = 0x08000000,
-    MF_CONV                   = 0x40000000,
-    MF_ERRORS                 = 0x10000000,
-    MF_HSZ_INFO               = 0x01000000,
-    MF_LINKS                  = 0x20000000,
-    MF_POSTMSGS               = 0x04000000,
-    MF_SENDMSGS               = 0x02000000,
+    APPCLASS_MONITOR          = 0x00000001U,
+    APPCLASS_STANDARD         = 0x00000000U,
+    APPCMD_CLIENTONLY         = 0x00000010U,
+    APPCMD_FILTERINITS        = 0x00000020U,
+    CBF_FAIL_ALLSVRXACTIONS   = 0x0003f000U,
+    CBF_FAIL_ADVISES          = 0x00004000U,
+    CBF_FAIL_CONNECTIONS      = 0x00002000U,
+    CBF_FAIL_EXECUTES         = 0x00008000U,
+    CBF_FAIL_POKES            = 0x00010000U,
+    CBF_FAIL_REQUESTS         = 0x00020000U,
+    CBF_FAIL_SELFCONNECTIONS  = 0x00001000U,
+    CBF_SKIP_ALLNOTIFICATIONS = 0x003c0000U,
+    CBF_SKIP_CONNECT_CONFIRMS = 0x00040000U,
+    CBF_SKIP_DISCONNECTS      = 0x00200000U,
+    CBF_SKIP_REGISTRATIONS    = 0x00080000U,
+    CBF_SKIP_UNREGISTRATIONS  = 0x00100000U,
+    MF_CALLBACKS              = 0x08000000U,
+    MF_CONV                   = 0x40000000U,
+    MF_ERRORS                 = 0x10000000U,
+    MF_HSZ_INFO               = 0x01000000U,
+    MF_LINKS                  = 0x20000000U,
+    MF_POSTMSGS               = 0x04000000U,
+    MF_SENDMSGS               = 0x02000000U,
 }
+
 alias DDE_NAME_SERVICE_CMD = uint;
 enum : uint
 {
-    DNS_REGISTER   = 0x00000001,
-    DNS_UNREGISTER = 0x00000002,
-    DNS_FILTERON   = 0x00000004,
-    DNS_FILTEROFF  = 0x00000008,
+    DNS_REGISTER   = 0x00000001U,
+    DNS_UNREGISTER = 0x00000002U,
+    DNS_FILTERON   = 0x00000004U,
+    DNS_FILTEROFF  = 0x00000008U,
 }
+
 alias DDE_CLIENT_TRANSACTION_TYPE = uint;
 enum : uint
 {
-    XTYP_ADVSTART        = 0x00001030,
-    XTYP_ADVSTOP         = 0x00008040,
-    XTYP_EXECUTE         = 0x00004050,
-    XTYP_POKE            = 0x00004090,
-    XTYP_REQUEST         = 0x000020b0,
-    XTYP_ADVDATA         = 0x00004010,
-    XTYP_ADVREQ          = 0x00002022,
-    XTYP_CONNECT         = 0x00001062,
-    XTYP_CONNECT_CONFIRM = 0x00008072,
-    XTYP_DISCONNECT      = 0x000080c2,
-    XTYP_MONITOR         = 0x000080f2,
-    XTYP_REGISTER        = 0x000080a2,
-    XTYP_UNREGISTER      = 0x000080d2,
-    XTYP_WILDCONNECT     = 0x000020e2,
-    XTYP_XACT_COMPLETE   = 0x00008080,
+    XTYP_ADVSTART        = 0x00001030U,
+    XTYP_ADVSTOP         = 0x00008040U,
+    XTYP_EXECUTE         = 0x00004050U,
+    XTYP_POKE            = 0x00004090U,
+    XTYP_REQUEST         = 0x000020b0U,
+    XTYP_ADVDATA         = 0x00004010U,
+    XTYP_ADVREQ          = 0x00002022U,
+    XTYP_CONNECT         = 0x00001062U,
+    XTYP_CONNECT_CONFIRM = 0x00008072U,
+    XTYP_DISCONNECT      = 0x000080c2U,
+    XTYP_MONITOR         = 0x000080f2U,
+    XTYP_REGISTER        = 0x000080a2U,
+    XTYP_UNREGISTER      = 0x000080d2U,
+    XTYP_WILDCONNECT     = 0x000020e2U,
+    XTYP_XACT_COMPLETE   = 0x00008080U,
 }
+
 alias CONVINFO_CONVERSATION_STATE = uint;
 enum : uint
 {
-    XST_ADVACKRCVD     = 0x0000000d,
-    XST_ADVDATAACKRCVD = 0x00000010,
-    XST_ADVDATASENT    = 0x0000000f,
-    XST_ADVSENT        = 0x0000000b,
-    XST_CONNECTED      = 0x00000002,
-    XST_DATARCVD       = 0x00000006,
-    XST_EXECACKRCVD    = 0x0000000a,
-    XST_EXECSENT       = 0x00000009,
-    XST_INCOMPLETE     = 0x00000001,
-    XST_INIT1          = 0x00000003,
-    XST_INIT2          = 0x00000004,
-    XST_NULL           = 0x00000000,
-    XST_POKEACKRCVD    = 0x00000008,
-    XST_POKESENT       = 0x00000007,
-    XST_REQSENT        = 0x00000005,
-    XST_UNADVACKRCVD   = 0x0000000e,
-    XST_UNADVSENT      = 0x0000000c,
+    XST_ADVACKRCVD     = 0x0000000dU,
+    XST_ADVDATAACKRCVD = 0x00000010U,
+    XST_ADVDATASENT    = 0x0000000fU,
+    XST_ADVSENT        = 0x0000000bU,
+    XST_CONNECTED      = 0x00000002U,
+    XST_DATARCVD       = 0x00000006U,
+    XST_EXECACKRCVD    = 0x0000000aU,
+    XST_EXECSENT       = 0x00000009U,
+    XST_INCOMPLETE     = 0x00000001U,
+    XST_INIT1          = 0x00000003U,
+    XST_INIT2          = 0x00000004U,
+    XST_NULL           = 0x00000000U,
+    XST_POKEACKRCVD    = 0x00000008U,
+    XST_POKESENT       = 0x00000007U,
+    XST_REQSENT        = 0x00000005U,
+    XST_UNADVACKRCVD   = 0x0000000eU,
+    XST_UNADVSENT      = 0x0000000cU,
 }
+
 alias CONVINFO_STATUS = uint;
 enum : uint
 {
-    ST_ADVISE     = 0x00000002,
-    ST_BLOCKED    = 0x00000008,
-    ST_BLOCKNEXT  = 0x00000080,
-    ST_CLIENT     = 0x00000010,
-    ST_CONNECTED  = 0x00000001,
-    ST_INLIST     = 0x00000040,
-    ST_ISLOCAL    = 0x00000004,
-    ST_ISSELF     = 0x00000100,
-    ST_TERMINATED = 0x00000020,
+    ST_ADVISE     = 0x00000002U,
+    ST_BLOCKED    = 0x00000008U,
+    ST_BLOCKNEXT  = 0x00000080U,
+    ST_CLIENT     = 0x00000010U,
+    ST_CONNECTED  = 0x00000001U,
+    ST_INLIST     = 0x00000040U,
+    ST_ISLOCAL    = 0x00000004U,
+    ST_ISSELF     = 0x00000100U,
+    ST_TERMINATED = 0x00000020U,
 }
 
 // Constants
@@ -115,38 +121,38 @@ enum : uint
 
 enum : uint
 {
-    WM_DDE_FIRST     = 0x000003e0,
-    WM_DDE_INITIATE  = 0x000003e0,
-    WM_DDE_TERMINATE = 0x000003e1,
-    WM_DDE_ADVISE    = 0x000003e2,
-    WM_DDE_UNADVISE  = 0x000003e3,
-    WM_DDE_ACK       = 0x000003e4,
-    WM_DDE_DATA      = 0x000003e5,
-    WM_DDE_REQUEST   = 0x000003e6,
-    WM_DDE_POKE      = 0x000003e7,
-    WM_DDE_EXECUTE   = 0x000003e8,
-    WM_DDE_LAST      = 0x000003e8,
+    WM_DDE_FIRST     = 0x000003e0U,
+    WM_DDE_INITIATE  = 0x000003e0U,
+    WM_DDE_TERMINATE = 0x000003e1U,
+    WM_DDE_ADVISE    = 0x000003e2U,
+    WM_DDE_UNADVISE  = 0x000003e3U,
+    WM_DDE_ACK       = 0x000003e4U,
+    WM_DDE_DATA      = 0x000003e5U,
+    WM_DDE_REQUEST   = 0x000003e6U,
+    WM_DDE_POKE      = 0x000003e7U,
+    WM_DDE_EXECUTE   = 0x000003e8U,
+    WM_DDE_LAST      = 0x000003e8U,
 }
 
-enum uint CADV_LATEACK = 0x0000ffff;
+enum uint CADV_LATEACK = 0x0000ffffU;
 
 enum : uint
 {
-    DDE_FACK      = 0x00008000,
-    DDE_FBUSY     = 0x00004000,
-    DDE_FDEFERUPD = 0x00004000,
+    DDE_FACK      = 0x00008000U,
+    DDE_FBUSY     = 0x00004000U,
+    DDE_FDEFERUPD = 0x00004000U,
 }
 
 enum : uint
 {
-    DDE_FACKREQ    = 0x00008000,
-    DDE_FRELEASE   = 0x00002000,
-    DDE_FREQUESTED = 0x00001000,
+    DDE_FACKREQ    = 0x00008000U,
+    DDE_FRELEASE   = 0x00002000U,
+    DDE_FREQUESTED = 0x00001000U,
 }
 
-enum uint DDE_FAPPSTATUS = 0x000000ff;
-enum uint DDE_FNOTPROCESSED = 0x00000000;
-enum uint MSGF_DDEMGR = 0x00008001;
+enum uint DDE_FAPPSTATUS = 0x000000ffU;
+enum uint DDE_FNOTPROCESSED = 0x00000000U;
+enum uint MSGF_DDEMGR = 0x00008001U;
 
 enum : int
 {
@@ -157,28 +163,28 @@ enum : int
 
 enum : uint
 {
-    XTYPF_NOBLOCK = 0x00000002,
-    XTYPF_NODATA  = 0x00000004,
-    XTYPF_ACKREQ  = 0x00000008,
+    XTYPF_NOBLOCK = 0x00000002U,
+    XTYPF_NODATA  = 0x00000004U,
+    XTYPF_ACKREQ  = 0x00000008U,
 }
 
 enum : uint
 {
-    XCLASS_MASK         = 0x0000fc00,
-    XCLASS_BOOL         = 0x00001000,
-    XCLASS_DATA         = 0x00002000,
-    XCLASS_FLAGS        = 0x00004000,
-    XCLASS_NOTIFICATION = 0x00008000,
+    XCLASS_MASK         = 0x0000fc00U,
+    XCLASS_BOOL         = 0x00001000U,
+    XCLASS_DATA         = 0x00002000U,
+    XCLASS_FLAGS        = 0x00004000U,
+    XCLASS_NOTIFICATION = 0x00008000U,
 }
 
 enum : uint
 {
-    XTYP_MASK  = 0x000000f0,
-    XTYP_SHIFT = 0x00000004,
+    XTYP_MASK  = 0x000000f0U,
+    XTYP_SHIFT = 0x00000004U,
 }
 
-enum uint TIMEOUT_ASYNC = 0xffffffff;
-enum uint QID_SYNC = 0xffffffff;
+enum uint TIMEOUT_ASYNC = 0xffffffffU;
+enum uint QID_SYNC = 0xffffffffU;
 
 enum : const(wchar)*
 {
@@ -194,69 +200,69 @@ enum : const(wchar)*
 enum const(wchar)* SZDDE_ITEM_ITEMLIST = "TopicItemList";
 enum int APPCMD_MASK = 0x00000ff0;
 enum int APPCLASS_MASK = 0x0000000f;
-enum uint HDATA_APPOWNED = 0x00000001;
+enum uint HDATA_APPOWNED = 0x00000001U;
 
 enum : uint
 {
-    DMLERR_NO_ERROR      = 0x00000000,
-    DMLERR_FIRST         = 0x00004000,
-    DMLERR_ADVACKTIMEOUT = 0x00004000,
+    DMLERR_NO_ERROR      = 0x00000000U,
+    DMLERR_FIRST         = 0x00004000U,
+    DMLERR_ADVACKTIMEOUT = 0x00004000U,
 }
 
 enum : uint
 {
-    DMLERR_BUSY           = 0x00004001,
-    DMLERR_DATAACKTIMEOUT = 0x00004002,
+    DMLERR_BUSY           = 0x00004001U,
+    DMLERR_DATAACKTIMEOUT = 0x00004002U,
 }
 
 enum : uint
 {
-    DMLERR_DLL_NOT_INITIALIZED = 0x00004003,
-    DMLERR_DLL_USAGE           = 0x00004004,
-    DMLERR_EXECACKTIMEOUT      = 0x00004005,
+    DMLERR_DLL_NOT_INITIALIZED = 0x00004003U,
+    DMLERR_DLL_USAGE           = 0x00004004U,
+    DMLERR_EXECACKTIMEOUT      = 0x00004005U,
 }
 
-enum uint DMLERR_INVALIDPARAMETER = 0x00004006;
+enum uint DMLERR_INVALIDPARAMETER = 0x00004006U;
 
 enum : uint
 {
-    DMLERR_LOW_MEMORY   = 0x00004007,
-    DMLERR_MEMORY_ERROR = 0x00004008,
-}
-
-enum : uint
-{
-    DMLERR_NOTPROCESSED        = 0x00004009,
-    DMLERR_NO_CONV_ESTABLISHED = 0x0000400a,
+    DMLERR_LOW_MEMORY   = 0x00004007U,
+    DMLERR_MEMORY_ERROR = 0x00004008U,
 }
 
 enum : uint
 {
-    DMLERR_POKEACKTIMEOUT = 0x0000400b,
-    DMLERR_POSTMSG_FAILED = 0x0000400c,
+    DMLERR_NOTPROCESSED        = 0x00004009U,
+    DMLERR_NO_CONV_ESTABLISHED = 0x0000400aU,
 }
 
 enum : uint
 {
-    DMLERR_REENTRANCY       = 0x0000400d,
-    DMLERR_SERVER_DIED      = 0x0000400e,
-    DMLERR_SYS_ERROR        = 0x0000400f,
-    DMLERR_UNADVACKTIMEOUT  = 0x00004010,
-    DMLERR_UNFOUND_QUEUE_ID = 0x00004011,
+    DMLERR_POKEACKTIMEOUT = 0x0000400bU,
+    DMLERR_POSTMSG_FAILED = 0x0000400cU,
 }
-
-enum uint DMLERR_LAST = 0x00004011;
-enum uint MH_CREATE = 0x00000001;
 
 enum : uint
 {
-    MH_KEEP   = 0x00000002,
-    MH_DELETE = 0x00000003,
+    DMLERR_REENTRANCY       = 0x0000400dU,
+    DMLERR_SERVER_DIED      = 0x0000400eU,
+    DMLERR_SYS_ERROR        = 0x0000400fU,
+    DMLERR_UNADVACKTIMEOUT  = 0x00004010U,
+    DMLERR_UNFOUND_QUEUE_ID = 0x00004011U,
 }
 
-enum uint MH_CLEANUP = 0x00000004;
-enum uint MAX_MONITORS = 0x00000004;
-enum uint MF_MASK = 0xff000000;
+enum uint DMLERR_LAST = 0x00004011U;
+enum uint MH_CREATE = 0x00000001U;
+
+enum : uint
+{
+    MH_KEEP   = 0x00000002U,
+    MH_DELETE = 0x00000003U,
+}
+
+enum uint MH_CLEANUP = 0x00000004U;
+enum uint MAX_MONITORS = 0x00000004U;
+enum uint MF_MASK = 0xff000000U;
 
 // Callbacks
 
@@ -296,56 +302,56 @@ struct HDDEDATA
     void* Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dde/ns-dde-ddeack))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dde/ns-dde-ddeack
 struct DDEACK
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fAck)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield90;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fAck)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield367;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dde/ns-dde-ddeadvise))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dde/ns-dde-ddeadvise
 struct DDEADVISE
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fAckReq)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield91;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fAckReq)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield368;
     short cfFormat;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dde/ns-dde-ddedata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dde/ns-dde-ddedata
 struct DDEDATA
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fAckReq)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield92;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fAckReq)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield369;
     short cfFormat;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dde/ns-dde-ddepoke))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dde/ns-dde-ddepoke
 struct DDEPOKE
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fReserved)), FixedArgSig(ElementSig(14)), FixedArgSig(ElementSig(2))], [])*/ushort _bitfield93;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fReserved)), FixedArgSig(ElementSig(14)), FixedArgSig(ElementSig(2))], [])*/ushort _bitfield370;
     short cfFormat;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Value;
 }
 
 struct DDELN
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fAckReq)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield94;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fAckReq)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield371;
     short cfFormat;
 }
 
 struct DDEUP
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fAckReq)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield95;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(fAckReq)), FixedArgSig(ElementSig(15)), FixedArgSig(ElementSig(1))], [])*/ushort _bitfield372;
     short cfFormat;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] rgb;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddeml/ns-ddeml-hszpair))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddeml/ns-ddeml-hszpair
 struct HSZPAIR
 {
     HSZ hszSvc;
     HSZ hszTopic;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddeml/ns-ddeml-convcontext))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddeml/ns-ddeml-convcontext
 struct CONVCONTEXT
 {
     uint cb;
@@ -357,7 +363,7 @@ struct CONVCONTEXT
     SECURITY_QUALITY_OF_SERVICE qos;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddeml/ns-ddeml-convinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddeml/ns-ddeml-convinfo
 struct CONVINFO
 {
     uint            cb;
@@ -378,7 +384,7 @@ struct CONVINFO
     HWND            hwndPartner;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddeml/ns-ddeml-ddeml_msg_hook_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddeml/ns-ddeml-ddeml_msg_hook_data
 struct DDEML_MSG_HOOK_DATA
 {
     size_t  uiLo;
@@ -387,7 +393,7 @@ struct DDEML_MSG_HOOK_DATA
     uint[8] Data;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddeml/ns-ddeml-monmsgstruct))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddeml/ns-ddeml-monmsgstruct
 struct MONMSGSTRUCT
 {
     uint                cb;
@@ -400,7 +406,7 @@ struct MONMSGSTRUCT
     DDEML_MSG_HOOK_DATA dmhd;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddeml/ns-ddeml-moncbstruct))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddeml/ns-ddeml-moncbstruct
 struct MONCBSTRUCT
 {
     uint        cb;
@@ -421,7 +427,7 @@ struct MONCBSTRUCT
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddeml/ns-ddeml-monhszstructa))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddeml/ns-ddeml-monhszstructa
 struct MONHSZSTRUCTA
 {
     uint   cb;
@@ -433,7 +439,7 @@ struct MONHSZSTRUCTA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddeml/ns-ddeml-monhszstructw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddeml/ns-ddeml-monhszstructw
 struct MONHSZSTRUCTW
 {
     uint   cb;
@@ -444,7 +450,7 @@ struct MONHSZSTRUCTW
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] str;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddeml/ns-ddeml-monerrstruct))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddeml/ns-ddeml-monerrstruct
 struct MONERRSTRUCT
 {
     uint   cb;
@@ -453,7 +459,7 @@ struct MONERRSTRUCT
     HANDLE hTask;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddeml/ns-ddeml-monlinkstruct))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddeml/ns-ddeml-monlinkstruct
 struct MONLINKSTRUCT
 {
     uint   cb;
@@ -470,7 +476,7 @@ struct MONLINKSTRUCT
     HCONV  hConvClient;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ddeml/ns-ddeml-monconvstruct))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ddeml/ns-ddeml-monconvstruct
 struct MONCONVSTRUCT
 {
     uint   cb;
@@ -483,7 +489,7 @@ struct MONCONVSTRUCT
     HCONV  hConvServer;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-metafilepict))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wingdi/ns-wingdi-metafilepict
 struct METAFILEPICT
 {
     int       mm;
@@ -492,7 +498,7 @@ struct METAFILEPICT
     HMETAFILE hMF;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-copydatastruct))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winuser/ns-winuser-copydatastruct
 struct COPYDATASTRUCT
 {
     size_t dwData;

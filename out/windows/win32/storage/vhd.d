@@ -3,9 +3,9 @@
 module windows.win32.storage.vhd;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, HANDLE, PWSTR, WIN32_ERROR;
-public import windows.win32.security : PSECURITY_DESCRIPTOR;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, HANDLE, PWSTR, WIN32_ERROR;
+public import windows.win32.security.security : PSECURITY_DESCRIPTOR;
 public import windows.win32.system.io : OVERLAPPED;
 
 extern(Windows) @nogc nothrow:
@@ -13,7 +13,8 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-open_virtual_disk_version))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-open_virtual_disk_version
 alias OPEN_VIRTUAL_DISK_VERSION = int;
 enum : int
 {
@@ -22,7 +23,8 @@ enum : int
     OPEN_VIRTUAL_DISK_VERSION_2           = 0x00000002,
     OPEN_VIRTUAL_DISK_VERSION_3           = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-virtual_disk_access_mask~r1))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-virtual_disk_access_mask~r1
 alias VIRTUAL_DISK_ACCESS_MASK = int;
 enum : int
 {
@@ -37,7 +39,8 @@ enum : int
     VIRTUAL_DISK_ACCESS_ALL       = 0x003f0000,
     VIRTUAL_DISK_ACCESS_WRITABLE  = 0x00320000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-open_virtual_disk_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-open_virtual_disk_flag
 alias OPEN_VIRTUAL_DISK_FLAG = int;
 enum : int
 {
@@ -55,7 +58,8 @@ enum : int
     OPEN_VIRTUAL_DISK_FLAG_SUPPORT_SPARSE_FILES_ANY_FS    = 0x00000400,
     OPEN_VIRTUAL_DISK_FLAG_SUPPORT_ENCRYPTED_FILES        = 0x00000800,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-create_virtual_disk_version))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-create_virtual_disk_version
 alias CREATE_VIRTUAL_DISK_VERSION = int;
 enum : int
 {
@@ -65,7 +69,8 @@ enum : int
     CREATE_VIRTUAL_DISK_VERSION_3           = 0x00000003,
     CREATE_VIRTUAL_DISK_VERSION_4           = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-create_virtual_disk_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-create_virtual_disk_flag
 alias CREATE_VIRTUAL_DISK_FLAG = int;
 enum : int
 {
@@ -82,7 +87,8 @@ enum : int
     CREATE_VIRTUAL_DISK_FLAG_SUPPORT_COMPRESSED_VOLUMES            = 0x00000200,
     CREATE_VIRTUAL_DISK_FLAG_SUPPORT_SPARSE_FILES_ANY_FS           = 0x00000400,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-attach_virtual_disk_version))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-attach_virtual_disk_version
 alias ATTACH_VIRTUAL_DISK_VERSION = int;
 enum : int
 {
@@ -90,7 +96,8 @@ enum : int
     ATTACH_VIRTUAL_DISK_VERSION_1           = 0x00000001,
     ATTACH_VIRTUAL_DISK_VERSION_2           = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-attach_virtual_disk_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-attach_virtual_disk_flag
 alias ATTACH_VIRTUAL_DISK_FLAG = int;
 enum : int
 {
@@ -107,13 +114,15 @@ enum : int
     ATTACH_VIRTUAL_DISK_FLAG_REGISTER_VOLUME                  = 0x00000200,
     ATTACH_VIRTUAL_DISK_FLAG_AT_BOOT                          = 0x00000400,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-detach_virtual_disk_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-detach_virtual_disk_flag
 alias DETACH_VIRTUAL_DISK_FLAG = int;
 enum : int
 {
     DETACH_VIRTUAL_DISK_FLAG_NONE = 0x00000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-dependent_disk_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-dependent_disk_flag
 alias DEPENDENT_DISK_FLAG = int;
 enum : int
 {
@@ -133,7 +142,8 @@ enum : int
     DEPENDENT_DISK_FLAG_ALWAYS_ALLOW_SPARSE        = 0x00001000,
     DEPENDENT_DISK_FLAG_SUPPORT_ENCRYPTED_FILES    = 0x00002000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-storage_dependency_info_version))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-storage_dependency_info_version
 alias STORAGE_DEPENDENCY_INFO_VERSION = int;
 enum : int
 {
@@ -141,7 +151,8 @@ enum : int
     STORAGE_DEPENDENCY_INFO_VERSION_1           = 0x00000001,
     STORAGE_DEPENDENCY_INFO_VERSION_2           = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-get_storage_dependency_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-get_storage_dependency_flag
 alias GET_STORAGE_DEPENDENCY_FLAG = int;
 enum : int
 {
@@ -149,7 +160,8 @@ enum : int
     GET_STORAGE_DEPENDENCY_FLAG_HOST_VOLUMES = 0x00000001,
     GET_STORAGE_DEPENDENCY_FLAG_DISK_HANDLE  = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-get_virtual_disk_info_version))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-get_virtual_disk_info_version
 alias GET_VIRTUAL_DISK_INFO_VERSION = int;
 enum : int
 {
@@ -170,7 +182,8 @@ enum : int
     GET_VIRTUAL_DISK_INFO_VIRTUAL_DISK_ID            = 0x0000000e,
     GET_VIRTUAL_DISK_INFO_CHANGE_TRACKING_STATE      = 0x0000000f,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-set_virtual_disk_info_version))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-set_virtual_disk_info_version
 alias SET_VIRTUAL_DISK_INFO_VERSION = int;
 enum : int
 {
@@ -183,14 +196,16 @@ enum : int
     SET_VIRTUAL_DISK_INFO_CHANGE_TRACKING_STATE  = 0x00000006,
     SET_VIRTUAL_DISK_INFO_PARENT_LOCATOR         = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-compact_virtual_disk_version))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-compact_virtual_disk_version
 alias COMPACT_VIRTUAL_DISK_VERSION = int;
 enum : int
 {
     COMPACT_VIRTUAL_DISK_VERSION_UNSPECIFIED = 0x00000000,
     COMPACT_VIRTUAL_DISK_VERSION_1           = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-compact_virtual_disk_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-compact_virtual_disk_flag
 alias COMPACT_VIRTUAL_DISK_FLAG = int;
 enum : int
 {
@@ -198,7 +213,8 @@ enum : int
     COMPACT_VIRTUAL_DISK_FLAG_NO_ZERO_SCAN   = 0x00000001,
     COMPACT_VIRTUAL_DISK_FLAG_NO_BLOCK_MOVES = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-merge_virtual_disk_version))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-merge_virtual_disk_version
 alias MERGE_VIRTUAL_DISK_VERSION = int;
 enum : int
 {
@@ -206,34 +222,39 @@ enum : int
     MERGE_VIRTUAL_DISK_VERSION_1           = 0x00000001,
     MERGE_VIRTUAL_DISK_VERSION_2           = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-merge_virtual_disk_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-merge_virtual_disk_flag
 alias MERGE_VIRTUAL_DISK_FLAG = int;
 enum : int
 {
     MERGE_VIRTUAL_DISK_FLAG_NONE = 0x00000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-expand_virtual_disk_version))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-expand_virtual_disk_version
 alias EXPAND_VIRTUAL_DISK_VERSION = int;
 enum : int
 {
     EXPAND_VIRTUAL_DISK_VERSION_UNSPECIFIED = 0x00000000,
     EXPAND_VIRTUAL_DISK_VERSION_1           = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-expand_virtual_disk_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-expand_virtual_disk_flag
 alias EXPAND_VIRTUAL_DISK_FLAG = int;
 enum : int
 {
     EXPAND_VIRTUAL_DISK_FLAG_NONE          = 0x00000000,
     EXPAND_VIRTUAL_DISK_FLAG_NOTIFY_CHANGE = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-resize_virtual_disk_version))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-resize_virtual_disk_version
 alias RESIZE_VIRTUAL_DISK_VERSION = int;
 enum : int
 {
     RESIZE_VIRTUAL_DISK_VERSION_UNSPECIFIED = 0x00000000,
     RESIZE_VIRTUAL_DISK_VERSION_1           = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-resize_virtual_disk_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-resize_virtual_disk_flag
 alias RESIZE_VIRTUAL_DISK_FLAG = int;
 enum : int
 {
@@ -241,14 +262,16 @@ enum : int
     RESIZE_VIRTUAL_DISK_FLAG_ALLOW_UNSAFE_VIRTUAL_SIZE            = 0x00000001,
     RESIZE_VIRTUAL_DISK_FLAG_RESIZE_TO_SMALLEST_SAFE_VIRTUAL_SIZE = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-mirror_virtual_disk_version))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-mirror_virtual_disk_version
 alias MIRROR_VIRTUAL_DISK_VERSION = int;
 enum : int
 {
     MIRROR_VIRTUAL_DISK_VERSION_UNSPECIFIED = 0x00000000,
     MIRROR_VIRTUAL_DISK_VERSION_1           = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-mirror_virtual_disk_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-mirror_virtual_disk_flag
 alias MIRROR_VIRTUAL_DISK_FLAG = int;
 enum : int
 {
@@ -258,40 +281,46 @@ enum : int
     MIRROR_VIRTUAL_DISK_FLAG_ENABLE_SMB_COMPRESSION = 0x00000004,
     MIRROR_VIRTUAL_DISK_FLAG_IS_LIVE_MIGRATION      = 0x00000008,
 }
+
 alias QUERY_CHANGES_VIRTUAL_DISK_FLAG = int;
 enum : int
 {
     QUERY_CHANGES_VIRTUAL_DISK_FLAG_NONE = 0x00000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-take_snapshot_vhdset_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-take_snapshot_vhdset_flag
 alias TAKE_SNAPSHOT_VHDSET_FLAG = int;
 enum : int
 {
     TAKE_SNAPSHOT_VHDSET_FLAG_NONE      = 0x00000000,
     TAKE_SNAPSHOT_VHDSET_FLAG_WRITEABLE = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-take_snapshot_vhdset_version))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-take_snapshot_vhdset_version
 alias TAKE_SNAPSHOT_VHDSET_VERSION = int;
 enum : int
 {
     TAKE_SNAPSHOT_VHDSET_VERSION_UNSPECIFIED = 0x00000000,
     TAKE_SNAPSHOT_VHDSET_VERSION_1           = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-delete_snapshot_vhdset_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-delete_snapshot_vhdset_flag
 alias DELETE_SNAPSHOT_VHDSET_FLAG = int;
 enum : int
 {
     DELETE_SNAPSHOT_VHDSET_FLAG_NONE        = 0x00000000,
     DELETE_SNAPSHOT_VHDSET_FLAG_PERSIST_RCT = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-delete_snapshot_vhdset_version))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-delete_snapshot_vhdset_version
 alias DELETE_SNAPSHOT_VHDSET_VERSION = int;
 enum : int
 {
     DELETE_SNAPSHOT_VHDSET_VERSION_UNSPECIFIED = 0x00000000,
     DELETE_SNAPSHOT_VHDSET_VERSION_1           = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-modify_vhdset_version))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-modify_vhdset_version
 alias MODIFY_VHDSET_VERSION = int;
 enum : int
 {
@@ -300,46 +329,53 @@ enum : int
     MODIFY_VHDSET_REMOVE_SNAPSHOT       = 0x00000002,
     MODIFY_VHDSET_DEFAULT_SNAPSHOT_PATH = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-modify_vhdset_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-modify_vhdset_flag
 alias MODIFY_VHDSET_FLAG = int;
 enum : int
 {
     MODIFY_VHDSET_FLAG_NONE               = 0x00000000,
     MODIFY_VHDSET_FLAG_WRITEABLE_SNAPSHOT = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-apply_snapshot_vhdset_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-apply_snapshot_vhdset_flag
 alias APPLY_SNAPSHOT_VHDSET_FLAG = int;
 enum : int
 {
     APPLY_SNAPSHOT_VHDSET_FLAG_NONE      = 0x00000000,
     APPLY_SNAPSHOT_VHDSET_FLAG_WRITEABLE = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-apply_snapshot_vhdset_version))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-apply_snapshot_vhdset_version
 alias APPLY_SNAPSHOT_VHDSET_VERSION = int;
 enum : int
 {
     APPLY_SNAPSHOT_VHDSET_VERSION_UNSPECIFIED = 0x00000000,
     APPLY_SNAPSHOT_VHDSET_VERSION_1           = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-raw_scsi_virtual_disk_flag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-raw_scsi_virtual_disk_flag
 alias RAW_SCSI_VIRTUAL_DISK_FLAG = int;
 enum : int
 {
     RAW_SCSI_VIRTUAL_DISK_FLAG_NONE = 0x00000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-raw_scsi_virtual_disk_version))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ne-virtdisk-raw_scsi_virtual_disk_version
 alias RAW_SCSI_VIRTUAL_DISK_VERSION = int;
 enum : int
 {
     RAW_SCSI_VIRTUAL_DISK_VERSION_UNSPECIFIED = 0x00000000,
     RAW_SCSI_VIRTUAL_DISK_VERSION_1           = 0x00000001,
 }
+
 alias FORK_VIRTUAL_DISK_VERSION = int;
 enum : int
 {
     FORK_VIRTUAL_DISK_VERSION_UNSPECIFIED = 0x00000000,
     FORK_VIRTUAL_DISK_VERSION_1           = 0x00000001,
 }
+
 alias FORK_VIRTUAL_DISK_FLAG = int;
 enum : int
 {
@@ -358,56 +394,145 @@ enum : GUID
 
 enum : uint
 {
-    VIRTUAL_STORAGE_TYPE_DEVICE_UNKNOWN = 0x00000000,
-    VIRTUAL_STORAGE_TYPE_DEVICE_ISO     = 0x00000001,
-    VIRTUAL_STORAGE_TYPE_DEVICE_VHD     = 0x00000002,
-    VIRTUAL_STORAGE_TYPE_DEVICE_VHDX    = 0x00000003,
-    VIRTUAL_STORAGE_TYPE_DEVICE_VHDSET  = 0x00000004,
+    VIRTUAL_STORAGE_TYPE_DEVICE_UNKNOWN = 0x00000000U,
+    VIRTUAL_STORAGE_TYPE_DEVICE_ISO     = 0x00000001U,
+    VIRTUAL_STORAGE_TYPE_DEVICE_VHD     = 0x00000002U,
+    VIRTUAL_STORAGE_TYPE_DEVICE_VHDX    = 0x00000003U,
+    VIRTUAL_STORAGE_TYPE_DEVICE_VHDSET  = 0x00000004U,
 }
 
-enum uint OPEN_VIRTUAL_DISK_RW_DEPTH_DEFAULT = 0x00000001;
+enum uint OPEN_VIRTUAL_DISK_RW_DEPTH_DEFAULT = 0x00000001U;
 
 enum : uint
 {
-    CREATE_VIRTUAL_DISK_PARAMETERS_DEFAULT_BLOCK_SIZE  = 0x00000000,
-    CREATE_VIRTUAL_DISK_PARAMETERS_DEFAULT_SECTOR_SIZE = 0x00000000,
+    CREATE_VIRTUAL_DISK_PARAMETERS_DEFAULT_BLOCK_SIZE  = 0x00000000U,
+    CREATE_VIRTUAL_DISK_PARAMETERS_DEFAULT_SECTOR_SIZE = 0x00000000U,
 }
 
-enum uint VIRTUAL_DISK_MAXIMUM_CHANGE_TRACKING_ID_LENGTH = 0x00000100;
-enum uint MERGE_VIRTUAL_DISK_DEFAULT_MERGE_DEPTH = 0x00000001;
+enum uint VIRTUAL_DISK_MAXIMUM_CHANGE_TRACKING_ID_LENGTH = 0x00000100U;
+enum uint MERGE_VIRTUAL_DISK_DEFAULT_MERGE_DEPTH = 0x00000001U;
 
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-virtual_storage_type))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-virtual_storage_type
 struct VIRTUAL_STORAGE_TYPE
 {
     uint DeviceId;
     GUID VendorId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-open_virtual_disk_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-open_virtual_disk_parameters
 struct OPEN_VIRTUAL_DISK_PARAMETERS
 {
     OPEN_VIRTUAL_DISK_VERSION Version;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct Version1
+        {
+            uint RWDepth;
+        }
+        struct Version2
+        {
+            BOOL GetInfoOnly;
+            BOOL ReadOnly;
+            GUID ResiliencyGuid;
+        }
+        struct Version3
+        {
+            BOOL GetInfoOnly;
+            BOOL ReadOnly;
+            GUID ResiliencyGuid;
+            GUID SnapshotId;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-create_virtual_disk_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-create_virtual_disk_parameters
 struct CREATE_VIRTUAL_DISK_PARAMETERS
 {
     CREATE_VIRTUAL_DISK_VERSION Version;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct Version1
+        {
+            GUID         UniqueId;
+            ulong        MaximumSize;
+            uint         BlockSizeInBytes;
+            uint         SectorSizeInBytes;
+            const(PWSTR) ParentPath;
+            const(PWSTR) SourcePath;
+        }
+        struct Version2
+        {
+            GUID                 UniqueId;
+            ulong                MaximumSize;
+            uint                 BlockSizeInBytes;
+            uint                 SectorSizeInBytes;
+            uint                 PhysicalSectorSizeInBytes;
+            const(PWSTR)         ParentPath;
+            const(PWSTR)         SourcePath;
+            OPEN_VIRTUAL_DISK_FLAG OpenFlags;
+            VIRTUAL_STORAGE_TYPE ParentVirtualStorageType;
+            VIRTUAL_STORAGE_TYPE SourceVirtualStorageType;
+            GUID                 ResiliencyGuid;
+        }
+        struct Version3
+        {
+            GUID                 UniqueId;
+            ulong                MaximumSize;
+            uint                 BlockSizeInBytes;
+            uint                 SectorSizeInBytes;
+            uint                 PhysicalSectorSizeInBytes;
+            const(PWSTR)         ParentPath;
+            const(PWSTR)         SourcePath;
+            OPEN_VIRTUAL_DISK_FLAG OpenFlags;
+            VIRTUAL_STORAGE_TYPE ParentVirtualStorageType;
+            VIRTUAL_STORAGE_TYPE SourceVirtualStorageType;
+            GUID                 ResiliencyGuid;
+            const(PWSTR)         SourceLimitPath;
+            VIRTUAL_STORAGE_TYPE BackingStorageType;
+        }
+        struct Version4
+        {
+            GUID                 UniqueId;
+            ulong                MaximumSize;
+            uint                 BlockSizeInBytes;
+            uint                 SectorSizeInBytes;
+            uint                 PhysicalSectorSizeInBytes;
+            const(PWSTR)         ParentPath;
+            const(PWSTR)         SourcePath;
+            OPEN_VIRTUAL_DISK_FLAG OpenFlags;
+            VIRTUAL_STORAGE_TYPE ParentVirtualStorageType;
+            VIRTUAL_STORAGE_TYPE SourceVirtualStorageType;
+            GUID                 ResiliencyGuid;
+            const(PWSTR)         SourceLimitPath;
+            VIRTUAL_STORAGE_TYPE BackingStorageType;
+            GUID                 PmemAddressAbstractionType;
+            ulong                DataAlignment;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-attach_virtual_disk_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-attach_virtual_disk_parameters
 struct ATTACH_VIRTUAL_DISK_PARAMETERS
 {
     ATTACH_VIRTUAL_DISK_VERSION Version;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct Version1
+        {
+            uint Reserved;
+        }
+        struct Version2
+        {
+            ulong RestrictedOffset;
+            ulong RestrictedLength;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-storage_dependency_info_type_1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-storage_dependency_info_type_1
 struct STORAGE_DEPENDENCY_INFO_TYPE_1
 {
     DEPENDENT_DISK_FLAG  DependencyTypeFlags;
@@ -415,7 +540,7 @@ struct STORAGE_DEPENDENCY_INFO_TYPE_1
     VIRTUAL_STORAGE_TYPE VirtualStorageType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-storage_dependency_info_type_2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-storage_dependency_info_type_2
 struct STORAGE_DEPENDENCY_INFO_TYPE_2
 {
     DEPENDENT_DISK_FLAG  DependencyTypeFlags;
@@ -428,29 +553,87 @@ struct STORAGE_DEPENDENCY_INFO_TYPE_2
     PWSTR                DependentVolumeRelativePath;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-storage_dependency_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-storage_dependency_info
 struct STORAGE_DEPENDENCY_INFO
 {
     STORAGE_DEPENDENCY_INFO_VERSION Version;
-    uint                NumberEntries;
-    _Anonymous_e__Union Anonymous;
+    uint NumberEntries;
+    union
+    {
+        STORAGE_DEPENDENCY_INFO_TYPE_1[1] Version1Entries;
+        STORAGE_DEPENDENCY_INFO_TYPE_2[1] Version2Entries;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-get_virtual_disk_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-get_virtual_disk_info
 struct GET_VIRTUAL_DISK_INFO
 {
     GET_VIRTUAL_DISK_INFO_VERSION Version;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct Size
+        {
+            ulong VirtualSize;
+            ulong PhysicalSize;
+            uint  BlockSize;
+            uint  SectorSize;
+        }
+        GUID                 Identifier;
+        struct ParentLocation
+        {
+            BOOL ParentResolved;
+            /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] ParentLocationBuffer;
+        }
+        GUID                 ParentIdentifier;
+        uint                 ParentTimestamp;
+        VIRTUAL_STORAGE_TYPE VirtualStorageType;
+        uint                 ProviderSubtype;
+        BOOL                 Is4kAligned;
+        BOOL                 IsLoaded;
+        struct PhysicalDisk
+        {
+            uint LogicalSectorSize;
+            uint PhysicalSectorSize;
+            BOOL IsRemote;
+        }
+        uint                 VhdPhysicalSectorSize;
+        ulong                SmallestSafeVirtualSize;
+        uint                 FragmentationPercentage;
+        GUID                 VirtualDiskId;
+        struct ChangeTrackingState
+        {
+            BOOL Enabled;
+            BOOL NewerChanges;
+            /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] MostRecentId;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-set_virtual_disk_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-set_virtual_disk_info
 struct SET_VIRTUAL_DISK_INFO
 {
     SET_VIRTUAL_DISK_INFO_VERSION Version;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        const(PWSTR) ParentFilePath;
+        GUID         UniqueIdentifier;
+        struct ParentPathWithDepthInfo
+        {
+            uint         ChildDepth;
+            const(PWSTR) ParentFilePath;
+        }
+        uint         VhdPhysicalSectorSize;
+        GUID         VirtualDiskId;
+        BOOL         ChangeTrackingEnabled;
+        struct ParentLocator
+        {
+            GUID         LinkageId;
+            const(PWSTR) ParentFilePath;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-virtual_disk_progress))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-virtual_disk_progress
 struct VIRTUAL_DISK_PROGRESS
 {
     uint  OperationStatus;
@@ -458,42 +641,77 @@ struct VIRTUAL_DISK_PROGRESS
     ulong CompletionValue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-compact_virtual_disk_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-compact_virtual_disk_parameters
 struct COMPACT_VIRTUAL_DISK_PARAMETERS
 {
     COMPACT_VIRTUAL_DISK_VERSION Version;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct Version1
+        {
+            uint Reserved;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-merge_virtual_disk_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-merge_virtual_disk_parameters
 struct MERGE_VIRTUAL_DISK_PARAMETERS
 {
     MERGE_VIRTUAL_DISK_VERSION Version;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct Version1
+        {
+            uint MergeDepth;
+        }
+        struct Version2
+        {
+            uint MergeSourceDepth;
+            uint MergeTargetDepth;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-expand_virtual_disk_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-expand_virtual_disk_parameters
 struct EXPAND_VIRTUAL_DISK_PARAMETERS
 {
     EXPAND_VIRTUAL_DISK_VERSION Version;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct Version1
+        {
+            ulong NewSize;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-resize_virtual_disk_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-resize_virtual_disk_parameters
 struct RESIZE_VIRTUAL_DISK_PARAMETERS
 {
     RESIZE_VIRTUAL_DISK_VERSION Version;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct Version1
+        {
+            ulong NewSize;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-mirror_virtual_disk_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-mirror_virtual_disk_parameters
 struct MIRROR_VIRTUAL_DISK_PARAMETERS
 {
     MIRROR_VIRTUAL_DISK_VERSION Version;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct Version1
+        {
+            const(PWSTR) MirrorVirtualDiskPath;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-query_changes_virtual_disk_range))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-query_changes_virtual_disk_range
 struct QUERY_CHANGES_VIRTUAL_DISK_RANGE
 {
     ulong ByteOffset;
@@ -501,52 +719,108 @@ struct QUERY_CHANGES_VIRTUAL_DISK_RANGE
     ulong Reserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-take_snapshot_vhdset_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-take_snapshot_vhdset_parameters
 struct TAKE_SNAPSHOT_VHDSET_PARAMETERS
 {
     TAKE_SNAPSHOT_VHDSET_VERSION Version;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct Version1
+        {
+            GUID SnapshotId;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-delete_snapshot_vhdset_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-delete_snapshot_vhdset_parameters
 struct DELETE_SNAPSHOT_VHDSET_PARAMETERS
 {
     DELETE_SNAPSHOT_VHDSET_VERSION Version;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct Version1
+        {
+            GUID SnapshotId;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-modify_vhdset_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-modify_vhdset_parameters
 struct MODIFY_VHDSET_PARAMETERS
 {
     MODIFY_VHDSET_VERSION Version;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct SnapshotPath
+        {
+            GUID         SnapshotId;
+            const(PWSTR) SnapshotFilePath;
+        }
+        GUID         SnapshotId;
+        const(PWSTR) DefaultFilePath;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-apply_snapshot_vhdset_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-apply_snapshot_vhdset_parameters
 struct APPLY_SNAPSHOT_VHDSET_PARAMETERS
 {
     APPLY_SNAPSHOT_VHDSET_VERSION Version;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct Version1
+        {
+            GUID SnapshotId;
+            GUID LeafSnapshotId;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-raw_scsi_virtual_disk_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-raw_scsi_virtual_disk_parameters
 struct RAW_SCSI_VIRTUAL_DISK_PARAMETERS
 {
     RAW_SCSI_VIRTUAL_DISK_VERSION Version;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct Version1
+        {
+            BOOL   RSVDHandle;
+            ubyte  DataIn;
+            ubyte  CdbLength;
+            ubyte  SenseInfoLength;
+            uint   SrbFlags;
+            uint   DataTransferLength;
+            void*  DataBuffer;
+            ubyte* SenseInfo;
+            ubyte* Cdb;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-raw_scsi_virtual_disk_response))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/virtdisk/ns-virtdisk-raw_scsi_virtual_disk_response
 struct RAW_SCSI_VIRTUAL_DISK_RESPONSE
 {
     RAW_SCSI_VIRTUAL_DISK_VERSION Version;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct Version1
+        {
+            ubyte ScsiStatus;
+            ubyte SenseInfoLength;
+            uint  DataTransferLength;
+        }
+    }
 }
 
 struct FORK_VIRTUAL_DISK_PARAMETERS
 {
     FORK_VIRTUAL_DISK_VERSION Version;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        struct Version1
+        {
+            const(PWSTR) ForkedVirtualDiskPath;
+        }
+    }
 }
 
 // Functions

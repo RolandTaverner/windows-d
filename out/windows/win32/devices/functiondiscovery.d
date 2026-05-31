@@ -3,9 +3,9 @@
 module windows.win32.devices.functiondiscovery;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, HRESULT, PROPERTYKEY, PWSTR;
-public import windows.win32.system.com : IServiceProvider, IUnknown, STGM;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, HRESULT, PROPERTYKEY, PWSTR;
+public import windows.win32.system.com.com : IServiceProvider, IUnknown, STGM;
 public import windows.win32.system.com.structuredstorage : PROPVARIANT;
 public import windows.win32.ui.shell.propertiessystem : IPropertyStore;
 
@@ -14,7 +14,8 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryconstraints/ne-functiondiscoveryconstraints-propertyconstraint))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryconstraints/ne-functiondiscoveryconstraints-propertyconstraint
 enum PropertyConstraint : int
 {
     QC_EQUALS             = 0x00000000,
@@ -28,19 +29,22 @@ enum PropertyConstraint : int
     QC_DOESNOTEXIST       = 0x00000008,
     QC_CONTAINS           = 0x00000009,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/ne-functiondiscoveryapi-systemvisibilityflags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/ne-functiondiscoveryapi-systemvisibilityflags
 enum SystemVisibilityFlags : int
 {
     SVF_SYSTEM = 0x00000000,
     SVF_USER   = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/ne-functiondiscoveryapi-queryupdateaction))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/ne-functiondiscoveryapi-queryupdateaction
 enum QueryUpdateAction : int
 {
     QUA_ADD    = 0x00000000,
     QUA_REMOVE = 0x00000001,
     QUA_CHANGE = 0x00000002,
 }
+
 enum QueryCategoryType : int
 {
     QCT_PROVIDER = 0x00000000,
@@ -52,13 +56,13 @@ enum QueryCategoryType : int
 
 enum : uint
 {
-    FD_EVENTID_PRIVATE         = 0x00000064,
-    FD_EVENTID                 = 0x000003e8,
-    FD_EVENTID_SEARCHCOMPLETE  = 0x000003e8,
-    FD_EVENTID_ASYNCTHREADEXIT = 0x000003e9,
-    FD_EVENTID_SEARCHSTART     = 0x000003ea,
-    FD_EVENTID_IPADDRESSCHANGE = 0x000003eb,
-    FD_EVENTID_QUERYREFRESH    = 0x000003ec,
+    FD_EVENTID_PRIVATE         = 0x00000064U,
+    FD_EVENTID                 = 0x000003e8U,
+    FD_EVENTID_SEARCHCOMPLETE  = 0x000003e8U,
+    FD_EVENTID_ASYNCTHREADEXIT = 0x000003e9U,
+    FD_EVENTID_SEARCHSTART     = 0x000003eaU,
+    FD_EVENTID_IPADDRESSCHANGE = 0x000003ebU,
+    FD_EVENTID_QUERYREFRESH    = 0x000003ecU,
 }
 
 enum GUID SID_PnpProvider = GUID("8101368e-cabb-4426-acff-96c410812000");
@@ -83,8 +87,8 @@ enum GUID FMTID_FD = GUID("904b03a2-471d-423c-a584-f3483238a146");
 
 enum : uint
 {
-    FD_Visibility_Default = 0x00000000,
-    FD_Visibility_Hidden  = 0x00000001,
+    FD_Visibility_Default = 0x00000000U,
+    FD_Visibility_Hidden  = 0x00000001U,
 }
 
 enum : GUID
@@ -280,10 +284,10 @@ enum /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSi
 
 enum : uint
 {
-    PNPX_INSTALLSTATE_NOTINSTALLED = 0x00000000,
-    PNPX_INSTALLSTATE_INSTALLED    = 0x00000001,
-    PNPX_INSTALLSTATE_INSTALLING   = 0x00000002,
-    PNPX_INSTALLSTATE_FAILED       = 0x00000003,
+    PNPX_INSTALLSTATE_NOTINSTALLED = 0x00000000U,
+    PNPX_INSTALLSTATE_INSTALLED    = 0x00000001U,
+    PNPX_INSTALLSTATE_INSTALLING   = 0x00000002U,
+    PNPX_INSTALLSTATE_FAILED       = 0x00000003U,
 }
 
 enum : /*FIELD ATTR: ConstantAttribute : CustomAttributeSig([FixedArgSig(ElementSig({1701460915, 60608, 17405, 132, 119, 74, 224, 64, 74, 150, 205}, 28672))], [])*/PROPERTYKEY
@@ -512,7 +516,7 @@ enum : /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(El
     PKEY_DeviceInterfaceClass_DefaultInterface = /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/CoreAudio/pkey-deviceinterface-friendlyname))], [])*/PROPERTYKEY(GUID("14C83A99-0B3F-44B7-BE4C-A178D3990564"), 2),
 }
 
-enum uint FD_LONGHORN = 0x00000001;
+enum uint FD_LONGHORN = 0x00000001U;
 enum const(wchar)* FD_SUBKEY = "SOFTWARE\\Microsoft\\Function Discovery\\";
 
 enum : const(wchar)*
@@ -551,8 +555,8 @@ enum : const(wchar)*
 
 enum : uint
 {
-    MAX_FDCONSTRAINTNAME_LENGTH  = 0x00000064,
-    MAX_FDCONSTRAINTVALUE_LENGTH = 0x000003e8,
+    MAX_FDCONSTRAINTNAME_LENGTH  = 0x00000064U,
+    MAX_FDCONSTRAINTVALUE_LENGTH = 0x000003e8U,
 }
 
 enum : const(wchar)*
@@ -698,81 +702,81 @@ struct PropertyStoreCollection;
 
 @GUID("5f6c1ba8-5330-422e-a368-572b244d3f87")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nn-functiondiscoveryapi-ifunctiondiscoverynotification))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nn-functiondiscoveryapi-ifunctiondiscoverynotification
 interface IFunctionDiscoveryNotification : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctiondiscoverynotification-onupdate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctiondiscoverynotification-onupdate
     HRESULT OnUpdate(QueryUpdateAction enumQueryUpdateAction, ulong fdqcQueryContext, 
                      IFunctionInstance pIFunctionInstance);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctiondiscoverynotification-onerror))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctiondiscoverynotification-onerror
     HRESULT OnError(HRESULT hr, ulong fdqcQueryContext, const(PWSTR) pszProvider);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctiondiscoverynotification-onevent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctiondiscoverynotification-onevent
     HRESULT OnEvent(uint dwEventID, ulong fdqcQueryContext, const(PWSTR) pszProvider);
 }
 
 @GUID("4df99b70-e148-4432-b004-4c9eeb535a5e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nn-functiondiscoveryapi-ifunctiondiscovery))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nn-functiondiscoveryapi-ifunctiondiscovery
 interface IFunctionDiscovery : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctiondiscovery-getinstancecollection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctiondiscovery-getinstancecollection
     HRESULT GetInstanceCollection(const(PWSTR) pszCategory, const(PWSTR) pszSubCategory, 
                                   BOOL fIncludeAllSubCategories, 
                                   IFunctionInstanceCollection* ppIFunctionInstanceCollection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctiondiscovery-getinstance))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctiondiscovery-getinstance
     HRESULT GetInstance(const(PWSTR) pszFunctionInstanceIdentity, IFunctionInstance* ppIFunctionInstance);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctiondiscovery-createinstancecollectionquery))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctiondiscovery-createinstancecollectionquery
     HRESULT CreateInstanceCollectionQuery(const(PWSTR) pszCategory, const(PWSTR) pszSubCategory, 
                                           BOOL fIncludeAllSubCategories, 
                                           IFunctionDiscoveryNotification pIFunctionDiscoveryNotification, 
                                           ulong* pfdqcQueryContext, 
                                           IFunctionInstanceCollectionQuery* ppIFunctionInstanceCollectionQuery);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctiondiscovery-createinstancequery))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctiondiscovery-createinstancequery
     HRESULT CreateInstanceQuery(const(PWSTR) pszFunctionInstanceIdentity, 
                                 IFunctionDiscoveryNotification pIFunctionDiscoveryNotification, 
                                 ulong* pfdqcQueryContext, IFunctionInstanceQuery* ppIFunctionInstanceQuery);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctiondiscovery-addinstance))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctiondiscovery-addinstance
     HRESULT AddInstance(SystemVisibilityFlags enumSystemVisibility, const(PWSTR) pszCategory, 
                         const(PWSTR) pszSubCategory, const(PWSTR) pszCategoryIdentity, 
                         IFunctionInstance* ppIFunctionInstance);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctiondiscovery-removeinstance))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctiondiscovery-removeinstance
     HRESULT RemoveInstance(SystemVisibilityFlags enumSystemVisibility, const(PWSTR) pszCategory, 
                            const(PWSTR) pszSubCategory, const(PWSTR) pszCategoryIdentity);
 }
 
 @GUID("33591c10-0bed-4f02-b0ab-1530d5533ee9")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nn-functiondiscoveryapi-ifunctioninstance))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nn-functiondiscoveryapi-ifunctioninstance
 interface IFunctionInstance : IServiceProvider
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctioninstance-getid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctioninstance-getid
     HRESULT GetID(ushort** ppszCoMemIdentity);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctioninstance-getproviderinstanceid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctioninstance-getproviderinstanceid
     HRESULT GetProviderInstanceID(ushort** ppszCoMemProviderInstanceIdentity);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctioninstance-openpropertystore))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctioninstance-openpropertystore
     HRESULT OpenPropertyStore(STGM dwStgAccess, IPropertyStore* ppIPropertyStore);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctioninstance-getcategory))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctioninstance-getcategory
     HRESULT GetCategory(ushort** ppszCoMemCategory, ushort** ppszCoMemSubCategory);
 }
 
 @GUID("f0a3d895-855c-42a2-948d-2f97d450ecb1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nn-functiondiscoveryapi-ifunctioninstancecollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nn-functiondiscoveryapi-ifunctioninstancecollection
 interface IFunctionInstanceCollection : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctioninstancecollection-getcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctioninstancecollection-getcount
     HRESULT GetCount(uint* pdwCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctioninstancecollection-get))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctioninstancecollection-get
     HRESULT Get(const(PWSTR) pszInstanceIdentity, uint* pdwIndex, IFunctionInstance* ppIFunctionInstance);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctioninstancecollection-item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctioninstancecollection-item
     HRESULT Item(uint dwIndex, IFunctionInstance* ppIFunctionInstance);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctioninstancecollection-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctioninstancecollection-add
     HRESULT Add(IFunctionInstance pIFunctionInstance);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctioninstancecollection-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctioninstancecollection-remove
     HRESULT Remove(uint dwIndex, IFunctionInstance* ppIFunctionInstance);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctioninstancecollection-delete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctioninstancecollection-delete
     HRESULT Delete(uint dwIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctioninstancecollection-deleteall))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctioninstancecollection-deleteall
     HRESULT DeleteAll();
 }
 
@@ -790,189 +794,189 @@ interface IPropertyStoreCollection : IUnknown
 
 @GUID("6242bc6b-90ec-4b37-bb46-e229fd84ed95")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nn-functiondiscoveryapi-ifunctioninstancequery))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nn-functiondiscoveryapi-ifunctioninstancequery
 interface IFunctionInstanceQuery : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctioninstancequery-execute))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctioninstancequery-execute
     HRESULT Execute(IFunctionInstance* ppIFunctionInstance);
 }
 
 @GUID("57cc6fd2-c09a-4289-bb72-25f04142058e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nn-functiondiscoveryapi-ifunctioninstancecollectionquery))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nn-functiondiscoveryapi-ifunctioninstancecollectionquery
 interface IFunctionInstanceCollectionQuery : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctioninstancecollectionquery-addqueryconstraint))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctioninstancecollectionquery-addqueryconstraint
     HRESULT AddQueryConstraint(const(PWSTR) pszConstraintName, const(PWSTR) pszConstraintValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctioninstancecollectionquery-addpropertyconstraint))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctioninstancecollectionquery-addpropertyconstraint
     HRESULT AddPropertyConstraint(const(PROPERTYKEY)* Key, const(PROPVARIANT)* pv, 
                                   PropertyConstraint enumPropertyConstraint);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctioninstancecollectionquery-execute))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryapi/nf-functiondiscoveryapi-ifunctioninstancecollectionquery-execute
     HRESULT Execute(IFunctionInstanceCollection* ppIFunctionInstanceCollection);
 }
 
 @GUID("dcde394f-1478-4813-a402-f6fb10657222")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nn-functiondiscoveryprovider-ifunctiondiscoveryprovider))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nn-functiondiscoveryprovider-ifunctiondiscoveryprovider
 interface IFunctionDiscoveryProvider : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-ifunctiondiscoveryprovider-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-ifunctiondiscoveryprovider-initialize
     HRESULT Initialize(IFunctionDiscoveryProviderFactory pIFunctionDiscoveryProviderFactory, 
                        IFunctionDiscoveryNotification pIFunctionDiscoveryNotification, uint lcidUserDefault, 
                        uint* pdwStgAccessCapabilities);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-ifunctiondiscoveryprovider-query))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-ifunctiondiscoveryprovider-query
     HRESULT Query(IFunctionDiscoveryProviderQuery pIFunctionDiscoveryProviderQuery, 
                   IFunctionInstanceCollection* ppIFunctionInstanceCollection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-ifunctiondiscoveryprovider-endquery))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-ifunctiondiscoveryprovider-endquery
     HRESULT EndQuery();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-ifunctiondiscoveryprovider-instancepropertystorevalidateaccess))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-ifunctiondiscoveryprovider-instancepropertystorevalidateaccess
     HRESULT InstancePropertyStoreValidateAccess(IFunctionInstance pIFunctionInstance, 
                                                 ptrdiff_t iProviderInstanceContext, const(uint) dwStgAccess);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-ifunctiondiscoveryprovider-instancepropertystoreopen))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-ifunctiondiscoveryprovider-instancepropertystoreopen
     HRESULT InstancePropertyStoreOpen(IFunctionInstance pIFunctionInstance, ptrdiff_t iProviderInstanceContext, 
                                       const(uint) dwStgAccess, IPropertyStore* ppIPropertyStore);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-ifunctiondiscoveryprovider-instancepropertystoreflush))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-ifunctiondiscoveryprovider-instancepropertystoreflush
     HRESULT InstancePropertyStoreFlush(IFunctionInstance pIFunctionInstance, ptrdiff_t iProviderInstanceContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-ifunctiondiscoveryprovider-instancequeryservice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-ifunctiondiscoveryprovider-instancequeryservice
     HRESULT InstanceQueryService(IFunctionInstance pIFunctionInstance, ptrdiff_t iProviderInstanceContext, 
                                  const(GUID)* guidService, const(GUID)* riid, IUnknown* ppIUnknown);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-ifunctiondiscoveryprovider-instancereleased))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-ifunctiondiscoveryprovider-instancereleased
     HRESULT InstanceReleased(IFunctionInstance pIFunctionInstance, ptrdiff_t iProviderInstanceContext);
 }
 
 @GUID("cf986ea6-3b5f-4c5f-b88a-2f8b20ceef17")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nn-functiondiscoveryprovider-iproviderproperties))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nn-functiondiscoveryprovider-iproviderproperties
 interface IProviderProperties : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-iproviderproperties-getcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-iproviderproperties-getcount
     HRESULT GetCount(IFunctionInstance pIFunctionInstance, ptrdiff_t iProviderInstanceContext, uint* pdwCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-iproviderproperties-getat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-iproviderproperties-getat
     HRESULT GetAt(IFunctionInstance pIFunctionInstance, ptrdiff_t iProviderInstanceContext, uint dwIndex, 
                   PROPERTYKEY* pKey);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-iproviderproperties-getvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-iproviderproperties-getvalue
     HRESULT GetValue(IFunctionInstance pIFunctionInstance, ptrdiff_t iProviderInstanceContext, 
                      const(PROPERTYKEY)* Key, PROPVARIANT* ppropVar);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-iproviderproperties-setvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-iproviderproperties-setvalue
     HRESULT SetValue(IFunctionInstance pIFunctionInstance, ptrdiff_t iProviderInstanceContext, 
                      const(PROPERTYKEY)* Key, const(PROPVARIANT)* ppropVar);
 }
 
 @GUID("cd1b9a04-206c-4a05-a0c8-1635a21a2b7c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nn-functiondiscoveryprovider-iproviderpublishing))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nn-functiondiscoveryprovider-iproviderpublishing
 interface IProviderPublishing : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-iproviderpublishing-createinstance))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-iproviderpublishing-createinstance
     HRESULT CreateInstance(SystemVisibilityFlags enumVisibilityFlags, const(PWSTR) pszSubCategory, 
                            const(PWSTR) pszProviderInstanceIdentity, IFunctionInstance* ppIFunctionInstance);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-iproviderpublishing-removeinstance))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-iproviderpublishing-removeinstance
     HRESULT RemoveInstance(SystemVisibilityFlags enumVisibilityFlags, const(PWSTR) pszSubCategory, 
                            const(PWSTR) pszProviderInstanceIdentity);
 }
 
 @GUID("86443ff0-1ad5-4e68-a45a-40c2c329de3b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nn-functiondiscoveryprovider-ifunctiondiscoveryproviderfactory))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nn-functiondiscoveryprovider-ifunctiondiscoveryproviderfactory
 interface IFunctionDiscoveryProviderFactory : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-ifunctiondiscoveryproviderfactory-createpropertystore))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-ifunctiondiscoveryproviderfactory-createpropertystore
     HRESULT CreatePropertyStore(IPropertyStore* ppIPropertyStore);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-ifunctiondiscoveryproviderfactory-createinstance))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-ifunctiondiscoveryproviderfactory-createinstance
     HRESULT CreateInstance(const(PWSTR) pszSubCategory, const(PWSTR) pszProviderInstanceIdentity, 
                            ptrdiff_t iProviderInstanceContext, IPropertyStore pIPropertyStore, 
                            IFunctionDiscoveryProvider pIFunctionDiscoveryProvider, 
                            IFunctionInstance* ppIFunctionInstance);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-ifunctiondiscoveryproviderfactory-createfunctioninstancecollection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-ifunctiondiscoveryproviderfactory-createfunctioninstancecollection
     HRESULT CreateFunctionInstanceCollection(IFunctionInstanceCollection* ppIFunctionInstanceCollection);
 }
 
 @GUID("6876ea98-baec-46db-bc20-75a76e267a3a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nn-functiondiscoveryprovider-ifunctiondiscoveryproviderquery))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nn-functiondiscoveryprovider-ifunctiondiscoveryproviderquery
 interface IFunctionDiscoveryProviderQuery : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-ifunctiondiscoveryproviderquery-isinstancequery))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-ifunctiondiscoveryproviderquery-isinstancequery
     HRESULT IsInstanceQuery(BOOL* pisInstanceQuery, ushort** ppszConstraintValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-ifunctiondiscoveryproviderquery-issubcategoryquery))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-ifunctiondiscoveryproviderquery-issubcategoryquery
     HRESULT IsSubcategoryQuery(BOOL* pisSubcategoryQuery, ushort** ppszConstraintValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-ifunctiondiscoveryproviderquery-getqueryconstraints))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-ifunctiondiscoveryproviderquery-getqueryconstraints
     HRESULT GetQueryConstraints(IProviderQueryConstraintCollection* ppIProviderQueryConstraints);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-ifunctiondiscoveryproviderquery-getpropertyconstraints))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-ifunctiondiscoveryproviderquery-getpropertyconstraints
     HRESULT GetPropertyConstraints(IProviderPropertyConstraintCollection* ppIProviderPropertyConstraints);
 }
 
 @GUID("9c243e11-3261-4bcd-b922-84a873d460ae")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nn-functiondiscoveryprovider-iproviderqueryconstraintcollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nn-functiondiscoveryprovider-iproviderqueryconstraintcollection
 interface IProviderQueryConstraintCollection : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-iproviderqueryconstraintcollection-getcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-iproviderqueryconstraintcollection-getcount
     HRESULT GetCount(uint* pdwCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-iproviderqueryconstraintcollection-get))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-iproviderqueryconstraintcollection-get
     HRESULT Get(const(PWSTR) pszConstraintName, ushort** ppszConstraintValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-iproviderqueryconstraintcollection-item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-iproviderqueryconstraintcollection-item
     HRESULT Item(uint dwIndex, ushort** ppszConstraintName, ushort** ppszConstraintValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-iproviderqueryconstraintcollection-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-iproviderqueryconstraintcollection-next
     HRESULT Next(ushort** ppszConstraintName, ushort** ppszConstraintValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-iproviderqueryconstraintcollection-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-iproviderqueryconstraintcollection-skip
     HRESULT Skip();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-iproviderqueryconstraintcollection-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-iproviderqueryconstraintcollection-reset
     HRESULT Reset();
 }
 
 @GUID("f4fae42f-5778-4a13-8540-b5fd8c1398dd")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nn-functiondiscoveryprovider-iproviderpropertyconstraintcollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nn-functiondiscoveryprovider-iproviderpropertyconstraintcollection
 interface IProviderPropertyConstraintCollection : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-iproviderpropertyconstraintcollection-getcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-iproviderpropertyconstraintcollection-getcount
     HRESULT GetCount(uint* pdwCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-iproviderpropertyconstraintcollection-get))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-iproviderpropertyconstraintcollection-get
     HRESULT Get(const(PROPERTYKEY)* Key, PROPVARIANT* pPropVar, uint* pdwPropertyConstraint);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-iproviderpropertyconstraintcollection-item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-iproviderpropertyconstraintcollection-item
     HRESULT Item(uint dwIndex, PROPERTYKEY* pKey, PROPVARIANT* pPropVar, uint* pdwPropertyConstraint);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-iproviderpropertyconstraintcollection-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-iproviderpropertyconstraintcollection-next
     HRESULT Next(PROPERTYKEY* pKey, PROPVARIANT* pPropVar, uint* pdwPropertyConstraint);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-iproviderpropertyconstraintcollection-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-iproviderpropertyconstraintcollection-skip
     HRESULT Skip();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-iproviderpropertyconstraintcollection-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-iproviderpropertyconstraintcollection-reset
     HRESULT Reset();
 }
 
 @GUID("4c81ed02-1b04-43f2-a451-69966cbcd1c2")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nn-functiondiscoveryprovider-ifunctiondiscoveryserviceprovider))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nn-functiondiscoveryprovider-ifunctiondiscoveryserviceprovider
 interface IFunctionDiscoveryServiceProvider : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-ifunctiondiscoveryserviceprovider-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/functiondiscoveryprovider/nf-functiondiscoveryprovider-ifunctiondiscoveryserviceprovider-initialize
     HRESULT Initialize(IFunctionInstance pIFunctionInstance, const(GUID)* riid, void** ppv);
 }
 
 @GUID("0bd7e521-4da6-42d5-81ba-1981b6b94075")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pnpxassoc/nn-pnpxassoc-ipnpxassociation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pnpxassoc/nn-pnpxassoc-ipnpxassociation
 interface IPNPXAssociation : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pnpxassoc/nf-pnpxassoc-ipnpxassociation-associate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pnpxassoc/nf-pnpxassoc-ipnpxassociation-associate
     HRESULT Associate(const(PWSTR) pszSubcategory);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pnpxassoc/nf-pnpxassoc-ipnpxassociation-unassociate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pnpxassoc/nf-pnpxassoc-ipnpxassociation-unassociate
     HRESULT Unassociate(const(PWSTR) pszSubcategory);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pnpxassoc/nf-pnpxassoc-ipnpxassociation-delete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pnpxassoc/nf-pnpxassoc-ipnpxassociation-delete
     HRESULT Delete(const(PWSTR) pszSubcategory);
 }
 
 @GUID("eed366d0-35b8-4fc5-8d20-7e5bd31f6ded")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pnpxassoc/nn-pnpxassoc-ipnpxdeviceassociation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pnpxassoc/nn-pnpxassoc-ipnpxdeviceassociation
 interface IPNPXDeviceAssociation : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pnpxassoc/nf-pnpxassoc-ipnpxdeviceassociation-associate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pnpxassoc/nf-pnpxassoc-ipnpxdeviceassociation-associate
     HRESULT Associate(const(PWSTR) pszSubCategory, IFunctionDiscoveryNotification pIFunctionDiscoveryNotification);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pnpxassoc/nf-pnpxassoc-ipnpxdeviceassociation-unassociate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pnpxassoc/nf-pnpxassoc-ipnpxdeviceassociation-unassociate
     HRESULT Unassociate(const(PWSTR) pszSubCategory, 
                         IFunctionDiscoveryNotification pIFunctionDiscoveryNotification);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/pnpxassoc/nf-pnpxassoc-ipnpxdeviceassociation-delete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/pnpxassoc/nf-pnpxassoc-ipnpxdeviceassociation-delete
     HRESULT Delete(const(PWSTR) pszSubcategory, IFunctionDiscoveryNotification pIFunctionDiscoveryNotification);
 }
 

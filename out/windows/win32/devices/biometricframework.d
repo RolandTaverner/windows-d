@@ -3,9 +3,9 @@
 module windows.win32.devices.biometricframework;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BOOLEAN, HANDLE, HRESULT, HWND, POINT,
-                                         PWSTR, RECT;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BOOLEAN, HANDLE, HRESULT, HWND,
+                                                    POINT, PWSTR, RECT;
 public import windows.win32.system.io : OVERLAPPED;
 
 extern(Windows) @nogc nothrow:
@@ -13,31 +13,35 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SecBioMet/winbio-setting-source-constants))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SecBioMet/winbio-setting-source-constants
 alias WINBIO_SETTING_SOURCE = uint;
 enum : uint
 {
-    WINBIO_SETTING_SOURCE_INVALID = 0x00000000,
-    WINBIO_SETTING_SOURCE_DEFAULT = 0x00000001,
-    WINBIO_SETTING_SOURCE_LOCAL   = 0x00000003,
-    WINBIO_SETTING_SOURCE_POLICY  = 0x00000002,
+    WINBIO_SETTING_SOURCE_INVALID = 0x00000000U,
+    WINBIO_SETTING_SOURCE_DEFAULT = 0x00000001U,
+    WINBIO_SETTING_SOURCE_LOCAL   = 0x00000003U,
+    WINBIO_SETTING_SOURCE_POLICY  = 0x00000002U,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SecBioMet/winbio-component-constants))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SecBioMet/winbio-component-constants
 alias WINBIO_COMPONENT = uint;
 enum : uint
 {
-    WINBIO_COMPONENT_SENSOR  = 0x00000001,
-    WINBIO_COMPONENT_ENGINE  = 0x00000002,
-    WINBIO_COMPONENT_STORAGE = 0x00000003,
+    WINBIO_COMPONENT_SENSOR  = 0x00000001U,
+    WINBIO_COMPONENT_ENGINE  = 0x00000002U,
+    WINBIO_COMPONENT_STORAGE = 0x00000003U,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SecBioMet/winbio-pool-constants))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SecBioMet/winbio-pool-constants
 alias WINBIO_POOL = uint;
 enum : uint
 {
-    WINBIO_POOL_SYSTEM  = 0x00000001,
-    WINBIO_POOL_PRIVATE = 0x00000002,
+    WINBIO_POOL_SYSTEM  = 0x00000001U,
+    WINBIO_POOL_PRIVATE = 0x00000002U,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SecBioMet/winbio-anti-spoof-policy-action))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SecBioMet/winbio-anti-spoof-policy-action
 alias WINBIO_ANTI_SPOOF_POLICY_ACTION = int;
 enum : int
 {
@@ -45,7 +49,8 @@ enum : int
     WINBIO_ANTI_SPOOF_ENABLE  = 0x00000001,
     WINBIO_ANTI_SPOOF_REMOVE  = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SecBioMet/winbio-policy-source))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SecBioMet/winbio-policy-source
 alias WINBIO_POLICY_SOURCE = int;
 enum : int
 {
@@ -54,14 +59,16 @@ enum : int
     WINBIO_POLICY_LOCAL   = 0x00000002,
     WINBIO_POLICY_ADMIN   = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SecBioMet/winbio-credential-type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SecBioMet/winbio-credential-type
 alias WINBIO_CREDENTIAL_TYPE = int;
 enum : int
 {
     WINBIO_CREDENTIAL_PASSWORD = 0x00000001,
     WINBIO_CREDENTIAL_ALL      = 0xffffffff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SecBioMet/winbio-credential-format))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SecBioMet/winbio-credential-format
 alias WINBIO_CREDENTIAL_FORMAT = int;
 enum : int
 {
@@ -69,13 +76,15 @@ enum : int
     WINBIO_PASSWORD_PACKED    = 0x00000002,
     WINBIO_PASSWORD_PROTECTED = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SecBioMet/winbio-credential-state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SecBioMet/winbio-credential-state
 alias WINBIO_CREDENTIAL_STATE = int;
 enum : int
 {
     WINBIO_CREDENTIAL_NOT_SET = 0x00000001,
     WINBIO_CREDENTIAL_SET     = 0x00000002,
 }
+
 alias WINBIO_ESS_STATE_FLAGS = int;
 enum : int
 {
@@ -96,7 +105,8 @@ enum : int
     WINBIO_ESS_BLOCKED_NON_ESS_CAMERA                        = 0x00004000,
     WINBIO_ESS_SOURCE_DEFAULT                                = 0x00008000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winbio/ne-winbio-winbio_async_notification_method))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winbio/ne-winbio-winbio_async_notification_method
 alias WINBIO_ASYNC_NOTIFICATION_METHOD = int;
 enum : int
 {
@@ -109,70 +119,70 @@ enum : int
 // Constants
 
 
-enum uint WINBIO_MAX_STRING_LEN = 0x00000100;
+enum uint WINBIO_MAX_STRING_LEN = 0x00000100U;
 
 enum : uint
 {
-    WINBIO_SCP_VERSION_1           = 0x00000001,
-    WINBIO_SCP_RANDOM_SIZE_V1      = 0x00000020,
-    WINBIO_SCP_DIGEST_SIZE_V1      = 0x00000020,
-    WINBIO_SCP_CURVE_FIELD_SIZE_V1 = 0x00000020,
+    WINBIO_SCP_VERSION_1           = 0x00000001U,
+    WINBIO_SCP_RANDOM_SIZE_V1      = 0x00000020U,
+    WINBIO_SCP_DIGEST_SIZE_V1      = 0x00000020U,
+    WINBIO_SCP_CURVE_FIELD_SIZE_V1 = 0x00000020U,
 }
 
 enum : uint
 {
-    WINBIO_SCP_PUBLIC_KEY_SIZE_V1  = 0x00000041,
-    WINBIO_SCP_PRIVATE_KEY_SIZE_V1 = 0x00000020,
+    WINBIO_SCP_PUBLIC_KEY_SIZE_V1  = 0x00000041U,
+    WINBIO_SCP_PRIVATE_KEY_SIZE_V1 = 0x00000020U,
 }
 
-enum uint WINBIO_SCP_SIGNATURE_SIZE_V1 = 0x00000040;
+enum uint WINBIO_SCP_SIGNATURE_SIZE_V1 = 0x00000040U;
 
 enum : uint
 {
-    WINBIO_SCP_ENCRYPTION_BLOCK_SIZE_V1 = 0x00000010,
-    WINBIO_SCP_ENCRYPTION_KEY_SIZE_V1   = 0x00000020,
+    WINBIO_SCP_ENCRYPTION_BLOCK_SIZE_V1 = 0x00000010U,
+    WINBIO_SCP_ENCRYPTION_KEY_SIZE_V1   = 0x00000020U,
 }
 
 enum : uint
 {
-    WINBIO_BIR_ALIGN_SIZE = 0x00000008,
-    WINBIO_BIR_ALGIN_SIZE = 0x00000008,
+    WINBIO_BIR_ALIGN_SIZE = 0x00000008U,
+    WINBIO_BIR_ALGIN_SIZE = 0x00000008U,
 }
 
 enum : ushort
 {
-    WINBIO_DATA_FLAG_PRIVACY             = 0x0002,
-    WINBIO_DATA_FLAG_INTEGRITY           = 0x0001,
-    WINBIO_DATA_FLAG_SIGNED              = 0x0004,
-    WINBIO_DATA_FLAG_RAW                 = 0x0020,
-    WINBIO_DATA_FLAG_INTERMEDIATE        = 0x0040,
-    WINBIO_DATA_FLAG_PROCESSED           = 0x0080,
-    WINBIO_DATA_FLAG_OPTION_MASK_PRESENT = 0x0008,
+    WINBIO_DATA_FLAG_PRIVACY             = cast(ushort) 0x0002,
+    WINBIO_DATA_FLAG_INTEGRITY           = cast(ushort) 0x0001,
+    WINBIO_DATA_FLAG_SIGNED              = cast(ushort) 0x0004,
+    WINBIO_DATA_FLAG_RAW                 = cast(ushort) 0x0020,
+    WINBIO_DATA_FLAG_INTERMEDIATE        = cast(ushort) 0x0040,
+    WINBIO_DATA_FLAG_PROCESSED           = cast(ushort) 0x0080,
+    WINBIO_DATA_FLAG_OPTION_MASK_PRESENT = cast(ushort) 0x0008,
 }
 
 enum : ushort
 {
-    WINBIO_ANSI_381_PIXELS_PER_INCH                = 0x0001,
-    WINBIO_ANSI_381_PIXELS_PER_CM                  = 0x0002,
-    WINBIO_ANSI_381_IMG_UNCOMPRESSED               = 0x0000,
-    WINBIO_ANSI_381_IMG_BIT_PACKED                 = 0x0001,
-    WINBIO_ANSI_381_IMG_COMPRESSED_WSQ             = 0x0002,
-    WINBIO_ANSI_381_IMG_COMPRESSED_JPEG            = 0x0003,
-    WINBIO_ANSI_381_IMG_COMPRESSED_JPEG2000        = 0x0004,
-    WINBIO_ANSI_381_IMG_COMPRESSED_PNG             = 0x0005,
-    WINBIO_ANSI_381_IMP_TYPE_LIVE_SCAN_PLAIN       = 0x0000,
-    WINBIO_ANSI_381_IMP_TYPE_LIVE_SCAN_ROLLED      = 0x0001,
-    WINBIO_ANSI_381_IMP_TYPE_NONLIVE_SCAN_PLAIN    = 0x0002,
-    WINBIO_ANSI_381_IMP_TYPE_NONLIVE_SCAN_ROLLED   = 0x0003,
-    WINBIO_ANSI_381_IMP_TYPE_LATENT                = 0x0007,
-    WINBIO_ANSI_381_IMP_TYPE_SWIPE                 = 0x0008,
-    WINBIO_ANSI_381_IMP_TYPE_LIVE_SCAN_CONTACTLESS = 0x0009,
+    WINBIO_ANSI_381_PIXELS_PER_INCH                = cast(ushort) 0x0001,
+    WINBIO_ANSI_381_PIXELS_PER_CM                  = cast(ushort) 0x0002,
+    WINBIO_ANSI_381_IMG_UNCOMPRESSED               = cast(ushort) 0x0000,
+    WINBIO_ANSI_381_IMG_BIT_PACKED                 = cast(ushort) 0x0001,
+    WINBIO_ANSI_381_IMG_COMPRESSED_WSQ             = cast(ushort) 0x0002,
+    WINBIO_ANSI_381_IMG_COMPRESSED_JPEG            = cast(ushort) 0x0003,
+    WINBIO_ANSI_381_IMG_COMPRESSED_JPEG2000        = cast(ushort) 0x0004,
+    WINBIO_ANSI_381_IMG_COMPRESSED_PNG             = cast(ushort) 0x0005,
+    WINBIO_ANSI_381_IMP_TYPE_LIVE_SCAN_PLAIN       = cast(ushort) 0x0000,
+    WINBIO_ANSI_381_IMP_TYPE_LIVE_SCAN_ROLLED      = cast(ushort) 0x0001,
+    WINBIO_ANSI_381_IMP_TYPE_NONLIVE_SCAN_PLAIN    = cast(ushort) 0x0002,
+    WINBIO_ANSI_381_IMP_TYPE_NONLIVE_SCAN_ROLLED   = cast(ushort) 0x0003,
+    WINBIO_ANSI_381_IMP_TYPE_LATENT                = cast(ushort) 0x0007,
+    WINBIO_ANSI_381_IMP_TYPE_SWIPE                 = cast(ushort) 0x0008,
+    WINBIO_ANSI_381_IMP_TYPE_LIVE_SCAN_CONTACTLESS = cast(ushort) 0x0009,
 }
 
 enum : uint
 {
-    FACILITY_WINBIO = 0x00000009,
-    FACILITY_NONE   = 0x00000000,
+    FACILITY_WINBIO = 0x00000009U,
+    FACILITY_NONE   = 0x00000000U,
 }
 
 enum HRESULT WINBIO_E_UNSUPPORTED_FACTOR = HRESULT(0x80098001);
@@ -335,12 +345,12 @@ enum : HRESULT
 }
 
 enum GUID GUID_DEVINTERFACE_BIOMETRIC_READER = GUID("e2b5183a-99ea-4cc3-ad6b-80ca8d715b80");
-enum uint IOCTL_BIOMETRIC_VENDOR = 0x00442000;
+enum uint IOCTL_BIOMETRIC_VENDOR = 0x00442000U;
 
 enum : uint
 {
-    WINBIO_WBDI_MAJOR_VERSION = 0x00000001,
-    WINBIO_WBDI_MINOR_VERSION = 0x00000000,
+    WINBIO_WBDI_MAJOR_VERSION = 0x00000001U,
+    WINBIO_WBDI_MINOR_VERSION = 0x00000000U,
 }
 
 // Callbacks
@@ -652,18 +662,29 @@ struct WINIBIO_STORAGE_CONTEXT
     ptrdiff_t Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SecBioMet/winbio-version))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SecBioMet/winbio-version
 struct WINBIO_VERSION
 {
     uint MajorVersion;
     uint MinorVersion;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SecBioMet/winbio-identity))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SecBioMet/winbio-identity
 struct WINBIO_IDENTITY
 {
-    uint            Type;
-    _Value_e__Union Value;
+    uint Type;
+    union Value
+    {
+        uint      Null;
+        uint      Wildcard;
+        GUID      TemplateGuid;
+        struct AccountSid
+        {
+            uint      Size;
+            ubyte[68] Data;
+        }
+        ubyte[32] SecureId;
+    }
 }
 
 struct WINBIO_SECURE_CONNECTION_PARAMS
@@ -683,14 +704,14 @@ struct WINBIO_SECURE_CONNECTION_DATA
     uint   IntermediateCA2Size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SecBioMet/winbio-bir-data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SecBioMet/winbio-bir-data
 struct WINBIO_BIR_DATA
 {
     uint Size;
     uint Offset;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SecBioMet/winbio-bir))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SecBioMet/winbio-bir
 struct WINBIO_BIR
 {
     WINBIO_BIR_DATA HeaderBlock;
@@ -699,14 +720,14 @@ struct WINBIO_BIR
     WINBIO_BIR_DATA SignatureBlock;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SecBioMet/winbio-registered-format))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SecBioMet/winbio-registered-format
 struct WINBIO_REGISTERED_FORMAT
 {
     ushort Owner;
     ushort Type;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SecBioMet/winbio-bir-header))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SecBioMet/winbio-bir-header
 struct WINBIO_BIR_HEADER
 {
     ushort ValidFields;
@@ -718,12 +739,16 @@ struct WINBIO_BIR_HEADER
     ubyte  Purpose;
     byte   DataQuality;
     long   CreationDate;
-    _ValidityPeriod_e__Struct ValidityPeriod;
+    struct ValidityPeriod
+    {
+        long BeginDate;
+        long EndDate;
+    }
     WINBIO_REGISTERED_FORMAT BiometricDataFormat;
     WINBIO_REGISTERED_FORMAT ProductId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SecBioMet/winbio-bdb-ansi-381-header))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SecBioMet/winbio-bdb-ansi-381-header
 struct WINBIO_BDB_ANSI_381_HEADER
 {
     ulong  RecordLength;
@@ -743,7 +768,7 @@ struct WINBIO_BDB_ANSI_381_HEADER
     ushort Reserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SecBioMet/winbio-bdb-ansi-381-record))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SecBioMet/winbio-bdb-ansi-381-record
 struct WINBIO_BDB_ANSI_381_RECORD
 {
     uint   BlockLength;
@@ -765,21 +790,55 @@ struct WINBIO_SECURE_BUFFER_HEADER_V1
     ulong ValidationTag;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SecBioMet/winbio-event-constants))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SecBioMet/winbio-event-constants
 struct WINBIO_EVENT
 {
-    uint                 Type;
-    _Parameters_e__Union Parameters;
+    uint Type;
+    union Parameters
+    {
+        struct Unclaimed
+        {
+            uint UnitId;
+            uint RejectDetail;
+        }
+        struct UnclaimedIdentify
+        {
+            uint            UnitId;
+            WINBIO_IDENTITY Identity;
+            ubyte           SubFactor;
+            uint            RejectDetail;
+        }
+        struct Error
+        {
+            HRESULT ErrorCode;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SecBioMet/winbio-presence-properties))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SecBioMet/winbio-presence-properties
 union WINBIO_PRESENCE_PROPERTIES
 {
-    _FacialFeatures_e__Struct FacialFeatures;
-    _Iris_e__Struct Iris;
+    struct FacialFeatures
+    {
+        RECT BoundingBox;
+        int  Distance;
+        struct OpaqueEngineData
+        {
+            GUID     AdapterId;
+            uint[78] Data;
+        }
+    }
+    struct Iris
+    {
+        RECT  EyeBoundingBox_1;
+        RECT  EyeBoundingBox_2;
+        POINT PupilCenter_1;
+        POINT PupilCenter_2;
+        int   Distance;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SecBioMet/winbio-presence))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SecBioMet/winbio-presence
 struct WINBIO_PRESENCE
 {
     uint            Factor;
@@ -790,10 +849,14 @@ struct WINBIO_PRESENCE
     ulong           TrackingId;
     ulong           Ticket;
     WINBIO_PRESENCE_PROPERTIES Properties;
-    _Authorization_e__Struct Authorization;
+    struct Authorization
+    {
+        uint      Size;
+        ubyte[32] Data;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SecBioMet/winbio-bsp-schema))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SecBioMet/winbio-bsp-schema
 struct WINBIO_BSP_SCHEMA
 {
     uint           BiometricFactor;
@@ -803,7 +866,7 @@ struct WINBIO_BSP_SCHEMA
     WINBIO_VERSION Version;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SecBioMet/winbio-unit-schema))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SecBioMet/winbio-unit-schema
 struct WINBIO_UNIT_SCHEMA
 {
     uint           UnitId;
@@ -819,7 +882,7 @@ struct WINBIO_UNIT_SCHEMA
     WINBIO_VERSION FirmwareVersion;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SecBioMet/winbio-storage-schema))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SecBioMet/winbio-storage-schema
 struct WINBIO_STORAGE_SCHEMA
 {
     uint        BiometricFactor;
@@ -830,39 +893,170 @@ struct WINBIO_STORAGE_SCHEMA
     ushort[256] ConnectionString;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SecBioMet/winbio-extended-sensor-info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SecBioMet/winbio-extended-sensor-info
 struct WINBIO_EXTENDED_SENSOR_INFO
 {
-    uint               GenericSensorCapabilities;
-    uint               Factor;
-    _Specific_e__Union Specific;
+    uint GenericSensorCapabilities;
+    uint Factor;
+    union Specific
+    {
+        uint Null;
+        struct FacialFeatures
+        {
+            RECT  FrameSize;
+            POINT FrameOffset;
+            uint  MandatoryOrientation;
+            struct HardwareInfo
+            {
+                wchar[260] ColorSensorId;
+                wchar[260] InfraredSensorId;
+                uint       InfraredSensorRotationAngle;
+            }
+        }
+        struct Fingerprint
+        {
+            uint Reserved;
+        }
+        struct Iris
+        {
+            RECT  FrameSize;
+            POINT FrameOffset;
+            uint  MandatoryOrientation;
+        }
+        struct Voice
+        {
+            uint Reserved;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SecBioMet/winbio-extended-engine-info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SecBioMet/winbio-extended-engine-info
 struct WINBIO_EXTENDED_ENGINE_INFO
 {
-    uint               GenericEngineCapabilities;
-    uint               Factor;
-    _Specific_e__Union Specific;
+    uint GenericEngineCapabilities;
+    uint Factor;
+    union Specific
+    {
+        uint Null;
+        struct FacialFeatures
+        {
+            uint Capabilities;
+            struct EnrollmentRequirements
+            {
+                uint Null;
+            }
+        }
+        struct Fingerprint
+        {
+            uint Capabilities;
+            struct EnrollmentRequirements
+            {
+                uint GeneralSamples;
+                uint Center;
+                uint TopEdge;
+                uint BottomEdge;
+                uint LeftEdge;
+                uint RightEdge;
+            }
+        }
+        struct Iris
+        {
+            uint Capabilities;
+            struct EnrollmentRequirements
+            {
+                uint Null;
+            }
+        }
+        struct Voice
+        {
+            uint Capabilities;
+            struct EnrollmentRequirements
+            {
+                uint Null;
+            }
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SecBioMet/winbio-extended-storage-info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SecBioMet/winbio-extended-storage-info
 struct WINBIO_EXTENDED_STORAGE_INFO
 {
-    uint               GenericStorageCapabilities;
-    uint               Factor;
-    _Specific_e__Union Specific;
+    uint GenericStorageCapabilities;
+    uint Factor;
+    union Specific
+    {
+        uint Null;
+        struct FacialFeatures
+        {
+            uint Capabilities;
+        }
+        struct Fingerprint
+        {
+            uint Capabilities;
+        }
+        struct Iris
+        {
+            uint Capabilities;
+        }
+        struct Voice
+        {
+            uint Capabilities;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SecBioMet/winbio-extended-enrollment-status))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SecBioMet/winbio-extended-enrollment-status
 struct WINBIO_EXTENDED_ENROLLMENT_STATUS
 {
-    HRESULT            TemplateStatus;
-    uint               RejectDetail;
-    uint               PercentComplete;
-    uint               Factor;
-    ubyte              SubFactor;
-    _Specific_e__Union Specific;
+    HRESULT TemplateStatus;
+    uint    RejectDetail;
+    uint    PercentComplete;
+    uint    Factor;
+    ubyte   SubFactor;
+    union Specific
+    {
+        uint Null;
+        struct FacialFeatures
+        {
+            RECT BoundingBox;
+            int  Distance;
+            struct OpaqueEngineData
+            {
+                GUID     AdapterId;
+                uint[78] Data;
+            }
+        }
+        struct Fingerprint
+        {
+            uint GeneralSamples;
+            uint Center;
+            uint TopEdge;
+            uint BottomEdge;
+            uint LeftEdge;
+            uint RightEdge;
+        }
+        struct Iris
+        {
+            RECT   EyeBoundingBox_1;
+            RECT   EyeBoundingBox_2;
+            POINT  PupilCenter_1;
+            POINT  PupilCenter_2;
+            int    Distance;
+            uint   GridPointCompletionPercent;
+            ushort GridPointIndex;
+            struct Point3D
+            {
+                double X;
+                double Y;
+                double Z;
+            }
+            BOOL   StopCaptureAndShowCriticalFeedback;
+        }
+        struct Voice
+        {
+            uint Reserved;
+        }
+    }
 }
 
 struct WINBIO_EXTENDED_UNIT_STATUS
@@ -877,21 +1071,21 @@ struct WINBIO_FP_BU_STATE
     HRESULT CreationResult;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SecBioMet/winbio-anti-spoof-policy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SecBioMet/winbio-anti-spoof-policy
 struct WINBIO_ANTI_SPOOF_POLICY
 {
     WINBIO_ANTI_SPOOF_POLICY_ACTION Action;
     WINBIO_POLICY_SOURCE Source;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SecBioMet/winbio-extended-enrollment-parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SecBioMet/winbio-extended-enrollment-parameters
 struct WINBIO_EXTENDED_ENROLLMENT_PARAMETERS
 {
     size_t Size;
     ubyte  SubFactor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/SecBioMet/winbio-account-policy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/SecBioMet/winbio-account-policy
 struct WINBIO_ACCOUNT_POLICY
 {
     WINBIO_IDENTITY Identity;
@@ -922,20 +1116,143 @@ struct WINBIO_CONNECTED_SENSOR
     BOOL isEnhancedSignInSecurityCapable;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winbio/ns-winbio-winbio_async_result))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winbio/ns-winbio-winbio_async_result
 struct WINBIO_ASYNC_RESULT
 {
-    uint                 SessionHandle;
-    uint                 Operation;
-    ulong                SequenceNumber;
-    long                 TimeStamp;
-    HRESULT              ApiStatus;
-    uint                 UnitId;
-    void*                UserData;
-    _Parameters_e__Union Parameters;
+    uint    SessionHandle;
+    uint    Operation;
+    ulong   SequenceNumber;
+    long    TimeStamp;
+    HRESULT ApiStatus;
+    uint    UnitId;
+    void*   UserData;
+    union Parameters
+    {
+        struct Verify
+        {
+            BOOLEAN Match;
+            uint    RejectDetail;
+        }
+        struct Identify
+        {
+            WINBIO_IDENTITY Identity;
+            ubyte           SubFactor;
+            uint            RejectDetail;
+        }
+        struct EnrollBegin
+        {
+            ubyte SubFactor;
+        }
+        struct EnrollCapture
+        {
+            uint RejectDetail;
+        }
+        struct EnrollCommit
+        {
+            WINBIO_IDENTITY Identity;
+            BOOLEAN         IsNewTemplate;
+        }
+        struct EnumEnrollments
+        {
+            WINBIO_IDENTITY Identity;
+            size_t          SubFactorCount;
+            ubyte*          SubFactorArray;
+        }
+        struct CaptureSample
+        {
+            WINBIO_BIR* Sample;
+            size_t      SampleSize;
+            uint        RejectDetail;
+        }
+        struct DeleteTemplate
+        {
+            WINBIO_IDENTITY Identity;
+            ubyte           SubFactor;
+        }
+        struct GetProperty
+        {
+            uint            PropertyType;
+            uint            PropertyId;
+            WINBIO_IDENTITY Identity;
+            ubyte           SubFactor;
+            size_t          PropertyBufferSize;
+            void*           PropertyBuffer;
+        }
+        struct SetProperty
+        {
+            uint            PropertyType;
+            uint            PropertyId;
+            WINBIO_IDENTITY Identity;
+            ubyte           SubFactor;
+            size_t          PropertyBufferSize;
+            void*           PropertyBuffer;
+        }
+        struct GetEvent
+        {
+            WINBIO_EVENT Event;
+        }
+        struct ControlUnit
+        {
+            WINBIO_COMPONENT Component;
+            uint             ControlCode;
+            uint             OperationStatus;
+            ubyte*           SendBuffer;
+            size_t           SendBufferSize;
+            ubyte*           ReceiveBuffer;
+            size_t           ReceiveBufferSize;
+            size_t           ReceiveDataSize;
+        }
+        struct EnumServiceProviders
+        {
+            size_t             BspCount;
+            WINBIO_BSP_SCHEMA* BspSchemaArray;
+        }
+        struct EnumBiometricUnits
+        {
+            size_t              UnitCount;
+            WINBIO_UNIT_SCHEMA* UnitSchemaArray;
+        }
+        struct EnumDatabases
+        {
+            size_t StorageCount;
+            WINBIO_STORAGE_SCHEMA* StorageSchemaArray;
+        }
+        struct VerifyAndReleaseTicket
+        {
+            BOOLEAN Match;
+            uint    RejectDetail;
+            ulong   Ticket;
+        }
+        struct IdentifyAndReleaseTicket
+        {
+            WINBIO_IDENTITY Identity;
+            ubyte           SubFactor;
+            uint            RejectDetail;
+            ulong           Ticket;
+        }
+        struct EnrollSelect
+        {
+            ulong SelectorValue;
+        }
+        struct MonitorPresence
+        {
+            uint             ChangeType;
+            size_t           PresenceCount;
+            WINBIO_PRESENCE* PresenceArray;
+        }
+        struct GetProtectionPolicy
+        {
+            WINBIO_IDENTITY Identity;
+            WINBIO_PROTECTION_POLICY Policy;
+        }
+        struct NotifyUnitStatusChange
+        {
+            WINBIO_EXTENDED_UNIT_STATUS ExtendedStatus;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winbio_adapter/ns-winbio_adapter-winbio_storage_record))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winbio_adapter/ns-winbio_adapter-winbio_storage_record
 struct WINBIO_STORAGE_RECORD
 {
     WINBIO_IDENTITY* Identity;
@@ -948,7 +1265,7 @@ struct WINBIO_STORAGE_RECORD
     size_t           PayloadBlobSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winbio_adapter/ns-winbio_adapter-winbio_pipeline))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winbio_adapter/ns-winbio_adapter-winbio_pipeline
 struct WINBIO_PIPELINE
 {
     HANDLE SensorHandle;
@@ -963,14 +1280,14 @@ struct WINBIO_PIPELINE
     WINBIO_FRAMEWORK_INTERFACE* FrameworkInterface;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winbio_adapter/ns-winbio_adapter-winbio_adapter_interface_version))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winbio_adapter/ns-winbio_adapter-winbio_adapter_interface_version
 struct WINBIO_ADAPTER_INTERFACE_VERSION
 {
     ushort MajorVersion;
     ushort MinorVersion;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winbio_adapter/ns-winbio_adapter-winbio_sensor_interface))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winbio_adapter/ns-winbio_adapter-winbio_sensor_interface
 struct WINBIO_SENSOR_INTERFACE
 {
     WINBIO_ADAPTER_INTERFACE_VERSION Version;
@@ -1010,7 +1327,7 @@ struct WINBIO_SENSOR_INTERFACE
     PIBIO_SENSOR_FINISH_NOTIFY_WAKE_FN FinishNotifyWake;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winbio_adapter/ns-winbio_adapter-winbio_engine_interface))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winbio_adapter/ns-winbio_adapter-winbio_engine_interface
 struct WINBIO_ENGINE_INTERFACE
 {
     WINBIO_ADAPTER_INTERFACE_VERSION Version;
@@ -1060,7 +1377,7 @@ struct WINBIO_ENGINE_INTERFACE
     PIBIO_ENGINE_IDENTIFY_FEATURE_SET_AUTHENTICATED_FN IdentifyFeatureSetAuthenticated;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winbio_adapter/ns-winbio_adapter-winbio_storage_interface))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winbio_adapter/ns-winbio_adapter-winbio_storage_interface
 struct WINBIO_STORAGE_INTERFACE
 {
     WINBIO_ADAPTER_INTERFACE_VERSION Version;

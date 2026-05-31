@@ -3,14 +3,15 @@
 module windows.win32.security.authentication.webauthn;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, HRESULT, HWND, PWSTR;
-public import windows.win32.system.com : IUnknown;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, HRESULT, HWND, PWSTR;
+public import windows.win32.system.com.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
+
 
 alias EXPERIMENTAL_PLUGIN_AUTHENTICATOR_STATE = int;
 enum : int
@@ -19,6 +20,7 @@ enum : int
     PluginAuthenticatorState_Disabled = 0x00000001,
     PluginAuthenticatorState_Enabled  = 0x00000002,
 }
+
 alias EXPERIMENTAL_WEBAUTHN_PLUGIN_PERFORM_UV_OPERATION_TYPE = int;
 enum : int
 {
@@ -26,12 +28,14 @@ enum : int
     GetUvCount = 0x00000002,
     GetPubKey  = 0x00000003,
 }
+
 alias AUTHENTICATOR_STATE = int;
 enum : int
 {
     AuthenticatorState_Disabled = 0x00000000,
     AuthenticatorState_Enabled  = 0x00000001,
 }
+
 alias WEBAUTHN_PLUGIN_PERFORM_UV_OPERATION_TYPE = int;
 enum : int
 {
@@ -39,11 +43,13 @@ enum : int
     GetUserVerificationCount = 0x00000002,
     GetPublicKey             = 0x00000003,
 }
+
 alias WEBAUTHN_PLUGIN_REQUEST_TYPE = int;
 enum : int
 {
     WEBAUTHN_PLUGIN_REQUEST_TYPE_CTAP2_CBOR = 0x00000001,
 }
+
 alias PLUGIN_LOCK_STATUS = int;
 enum : int
 {
@@ -56,30 +62,30 @@ enum : int
 
 enum : uint
 {
-    WEBAUTHN_API_VERSION_1       = 0x00000001,
-    WEBAUTHN_API_VERSION_2       = 0x00000002,
-    WEBAUTHN_API_VERSION_3       = 0x00000003,
-    WEBAUTHN_API_VERSION_4       = 0x00000004,
-    WEBAUTHN_API_VERSION_5       = 0x00000005,
-    WEBAUTHN_API_VERSION_6       = 0x00000006,
-    WEBAUTHN_API_VERSION_7       = 0x00000007,
-    WEBAUTHN_API_VERSION_8       = 0x00000008,
-    WEBAUTHN_API_VERSION_9       = 0x00000009,
-    WEBAUTHN_API_CURRENT_VERSION = 0x00000009,
+    WEBAUTHN_API_VERSION_1       = 0x00000001U,
+    WEBAUTHN_API_VERSION_2       = 0x00000002U,
+    WEBAUTHN_API_VERSION_3       = 0x00000003U,
+    WEBAUTHN_API_VERSION_4       = 0x00000004U,
+    WEBAUTHN_API_VERSION_5       = 0x00000005U,
+    WEBAUTHN_API_VERSION_6       = 0x00000006U,
+    WEBAUTHN_API_VERSION_7       = 0x00000007U,
+    WEBAUTHN_API_VERSION_8       = 0x00000008U,
+    WEBAUTHN_API_VERSION_9       = 0x00000009U,
+    WEBAUTHN_API_CURRENT_VERSION = 0x00000009U,
 }
 
 enum : uint
 {
-    WEBAUTHN_RP_ENTITY_INFORMATION_VERSION_1       = 0x00000001,
-    WEBAUTHN_RP_ENTITY_INFORMATION_CURRENT_VERSION = 0x00000001,
+    WEBAUTHN_RP_ENTITY_INFORMATION_VERSION_1       = 0x00000001U,
+    WEBAUTHN_RP_ENTITY_INFORMATION_CURRENT_VERSION = 0x00000001U,
 }
 
-enum uint WEBAUTHN_MAX_USER_ID_LENGTH = 0x00000040;
+enum uint WEBAUTHN_MAX_USER_ID_LENGTH = 0x00000040U;
 
 enum : uint
 {
-    WEBAUTHN_USER_ENTITY_INFORMATION_VERSION_1       = 0x00000001,
-    WEBAUTHN_USER_ENTITY_INFORMATION_CURRENT_VERSION = 0x00000001,
+    WEBAUTHN_USER_ENTITY_INFORMATION_VERSION_1       = 0x00000001U,
+    WEBAUTHN_USER_ENTITY_INFORMATION_CURRENT_VERSION = 0x00000001U,
 }
 
 enum : const(wchar)*
@@ -89,7 +95,7 @@ enum : const(wchar)*
     WEBAUTHN_HASH_ALGORITHM_SHA_512 = "SHA-512",
 }
 
-enum uint WEBAUTHN_CLIENT_DATA_CURRENT_VERSION = 0x00000001;
+enum uint WEBAUTHN_CLIENT_DATA_CURRENT_VERSION = 0x00000001U;
 enum const(wchar)* WEBAUTHN_CREDENTIAL_TYPE_PUBLIC_KEY = "public-key";
 
 enum : int
@@ -105,19 +111,19 @@ enum : int
     WEBAUTHN_COSE_ALGORITHM_RSA_PSS_WITH_SHA512           = 0xffffffd9,
 }
 
-enum uint WEBAUTHN_COSE_CREDENTIAL_PARAMETER_CURRENT_VERSION = 0x00000001;
-enum uint WEBAUTHN_CREDENTIAL_CURRENT_VERSION = 0x00000001;
+enum uint WEBAUTHN_COSE_CREDENTIAL_PARAMETER_CURRENT_VERSION = 0x00000001U;
+enum uint WEBAUTHN_CREDENTIAL_CURRENT_VERSION = 0x00000001U;
 
 enum : uint
 {
-    WEBAUTHN_CTAP_TRANSPORT_USB        = 0x00000001,
-    WEBAUTHN_CTAP_TRANSPORT_NFC        = 0x00000002,
-    WEBAUTHN_CTAP_TRANSPORT_BLE        = 0x00000004,
-    WEBAUTHN_CTAP_TRANSPORT_TEST       = 0x00000008,
-    WEBAUTHN_CTAP_TRANSPORT_INTERNAL   = 0x00000010,
-    WEBAUTHN_CTAP_TRANSPORT_HYBRID     = 0x00000020,
-    WEBAUTHN_CTAP_TRANSPORT_SMART_CARD = 0x00000040,
-    WEBAUTHN_CTAP_TRANSPORT_FLAGS_MASK = 0x0000007f,
+    WEBAUTHN_CTAP_TRANSPORT_USB        = 0x00000001U,
+    WEBAUTHN_CTAP_TRANSPORT_NFC        = 0x00000002U,
+    WEBAUTHN_CTAP_TRANSPORT_BLE        = 0x00000004U,
+    WEBAUTHN_CTAP_TRANSPORT_TEST       = 0x00000008U,
+    WEBAUTHN_CTAP_TRANSPORT_INTERNAL   = 0x00000010U,
+    WEBAUTHN_CTAP_TRANSPORT_HYBRID     = 0x00000020U,
+    WEBAUTHN_CTAP_TRANSPORT_SMART_CARD = 0x00000040U,
+    WEBAUTHN_CTAP_TRANSPORT_FLAGS_MASK = 0x0000007fU,
 }
 
 enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
@@ -130,46 +136,46 @@ enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(E
     WEBAUTHN_CTAP_TRANSPORT_INTERNAL_STRING   = "internal",
 }
 
-enum uint WEBAUTHN_CREDENTIAL_EX_CURRENT_VERSION = 0x00000001;
+enum uint WEBAUTHN_CREDENTIAL_EX_CURRENT_VERSION = 0x00000001U;
 
 enum : uint
 {
-    CTAPCBOR_HYBRID_STORAGE_LINKED_DATA_VERSION_1       = 0x00000001,
-    CTAPCBOR_HYBRID_STORAGE_LINKED_DATA_CURRENT_VERSION = 0x00000001,
+    CTAPCBOR_HYBRID_STORAGE_LINKED_DATA_VERSION_1       = 0x00000001U,
+    CTAPCBOR_HYBRID_STORAGE_LINKED_DATA_CURRENT_VERSION = 0x00000001U,
 }
 
 enum : uint
 {
-    WEBAUTHN_AUTHENTICATOR_DETAILS_OPTIONS_VERSION_1       = 0x00000001,
-    WEBAUTHN_AUTHENTICATOR_DETAILS_OPTIONS_CURRENT_VERSION = 0x00000001,
-    WEBAUTHN_AUTHENTICATOR_DETAILS_VERSION_1               = 0x00000001,
-    WEBAUTHN_AUTHENTICATOR_DETAILS_CURRENT_VERSION         = 0x00000001,
+    WEBAUTHN_AUTHENTICATOR_DETAILS_OPTIONS_VERSION_1       = 0x00000001U,
+    WEBAUTHN_AUTHENTICATOR_DETAILS_OPTIONS_CURRENT_VERSION = 0x00000001U,
+    WEBAUTHN_AUTHENTICATOR_DETAILS_VERSION_1               = 0x00000001U,
+    WEBAUTHN_AUTHENTICATOR_DETAILS_CURRENT_VERSION         = 0x00000001U,
 }
 
 enum : uint
 {
-    WEBAUTHN_CREDENTIAL_DETAILS_VERSION_1       = 0x00000001,
-    WEBAUTHN_CREDENTIAL_DETAILS_VERSION_2       = 0x00000002,
-    WEBAUTHN_CREDENTIAL_DETAILS_VERSION_3       = 0x00000003,
-    WEBAUTHN_CREDENTIAL_DETAILS_VERSION_4       = 0x00000004,
-    WEBAUTHN_CREDENTIAL_DETAILS_CURRENT_VERSION = 0x00000004,
+    WEBAUTHN_CREDENTIAL_DETAILS_VERSION_1       = 0x00000001U,
+    WEBAUTHN_CREDENTIAL_DETAILS_VERSION_2       = 0x00000002U,
+    WEBAUTHN_CREDENTIAL_DETAILS_VERSION_3       = 0x00000003U,
+    WEBAUTHN_CREDENTIAL_DETAILS_VERSION_4       = 0x00000004U,
+    WEBAUTHN_CREDENTIAL_DETAILS_CURRENT_VERSION = 0x00000004U,
 }
 
 enum : uint
 {
-    WEBAUTHN_GET_CREDENTIALS_OPTIONS_VERSION_1       = 0x00000001,
-    WEBAUTHN_GET_CREDENTIALS_OPTIONS_CURRENT_VERSION = 0x00000001,
+    WEBAUTHN_GET_CREDENTIALS_OPTIONS_VERSION_1       = 0x00000001U,
+    WEBAUTHN_GET_CREDENTIALS_OPTIONS_CURRENT_VERSION = 0x00000001U,
 }
 
-enum uint WEBAUTHN_CTAP_ONE_HMAC_SECRET_LENGTH = 0x00000020;
+enum uint WEBAUTHN_CTAP_ONE_HMAC_SECRET_LENGTH = 0x00000020U;
 enum const(wchar)* WEBAUTHN_EXTENSIONS_IDENTIFIER_HMAC_SECRET = "hmac-secret";
 
 enum : uint
 {
-    WEBAUTHN_USER_VERIFICATION_ANY                              = 0x00000000,
-    WEBAUTHN_USER_VERIFICATION_OPTIONAL                         = 0x00000001,
-    WEBAUTHN_USER_VERIFICATION_OPTIONAL_WITH_CREDENTIAL_ID_LIST = 0x00000002,
-    WEBAUTHN_USER_VERIFICATION_REQUIRED                         = 0x00000003,
+    WEBAUTHN_USER_VERIFICATION_ANY                              = 0x00000000U,
+    WEBAUTHN_USER_VERIFICATION_OPTIONAL                         = 0x00000001U,
+    WEBAUTHN_USER_VERIFICATION_OPTIONAL_WITH_CREDENTIAL_ID_LIST = 0x00000002U,
+    WEBAUTHN_USER_VERIFICATION_REQUIRED                         = 0x00000003U,
 }
 
 enum : const(wchar)*
@@ -181,40 +187,40 @@ enum : const(wchar)*
 
 enum : uint
 {
-    WEBAUTHN_AUTHENTICATOR_ATTACHMENT_ANY                   = 0x00000000,
-    WEBAUTHN_AUTHENTICATOR_ATTACHMENT_PLATFORM              = 0x00000001,
-    WEBAUTHN_AUTHENTICATOR_ATTACHMENT_CROSS_PLATFORM        = 0x00000002,
-    WEBAUTHN_AUTHENTICATOR_ATTACHMENT_CROSS_PLATFORM_U2F_V2 = 0x00000003,
+    WEBAUTHN_AUTHENTICATOR_ATTACHMENT_ANY                   = 0x00000000U,
+    WEBAUTHN_AUTHENTICATOR_ATTACHMENT_PLATFORM              = 0x00000001U,
+    WEBAUTHN_AUTHENTICATOR_ATTACHMENT_CROSS_PLATFORM        = 0x00000002U,
+    WEBAUTHN_AUTHENTICATOR_ATTACHMENT_CROSS_PLATFORM_U2F_V2 = 0x00000003U,
 }
 
 enum : uint
 {
-    WEBAUTHN_USER_VERIFICATION_REQUIREMENT_ANY         = 0x00000000,
-    WEBAUTHN_USER_VERIFICATION_REQUIREMENT_REQUIRED    = 0x00000001,
-    WEBAUTHN_USER_VERIFICATION_REQUIREMENT_PREFERRED   = 0x00000002,
-    WEBAUTHN_USER_VERIFICATION_REQUIREMENT_DISCOURAGED = 0x00000003,
+    WEBAUTHN_USER_VERIFICATION_REQUIREMENT_ANY         = 0x00000000U,
+    WEBAUTHN_USER_VERIFICATION_REQUIREMENT_REQUIRED    = 0x00000001U,
+    WEBAUTHN_USER_VERIFICATION_REQUIREMENT_PREFERRED   = 0x00000002U,
+    WEBAUTHN_USER_VERIFICATION_REQUIREMENT_DISCOURAGED = 0x00000003U,
 }
 
 enum : uint
 {
-    WEBAUTHN_ATTESTATION_CONVEYANCE_PREFERENCE_ANY      = 0x00000000,
-    WEBAUTHN_ATTESTATION_CONVEYANCE_PREFERENCE_NONE     = 0x00000001,
-    WEBAUTHN_ATTESTATION_CONVEYANCE_PREFERENCE_INDIRECT = 0x00000002,
-    WEBAUTHN_ATTESTATION_CONVEYANCE_PREFERENCE_DIRECT   = 0x00000003,
+    WEBAUTHN_ATTESTATION_CONVEYANCE_PREFERENCE_ANY      = 0x00000000U,
+    WEBAUTHN_ATTESTATION_CONVEYANCE_PREFERENCE_NONE     = 0x00000001U,
+    WEBAUTHN_ATTESTATION_CONVEYANCE_PREFERENCE_INDIRECT = 0x00000002U,
+    WEBAUTHN_ATTESTATION_CONVEYANCE_PREFERENCE_DIRECT   = 0x00000003U,
 }
 
 enum : uint
 {
-    WEBAUTHN_ENTERPRISE_ATTESTATION_NONE               = 0x00000000,
-    WEBAUTHN_ENTERPRISE_ATTESTATION_VENDOR_FACILITATED = 0x00000001,
-    WEBAUTHN_ENTERPRISE_ATTESTATION_PLATFORM_MANAGED   = 0x00000002,
+    WEBAUTHN_ENTERPRISE_ATTESTATION_NONE               = 0x00000000U,
+    WEBAUTHN_ENTERPRISE_ATTESTATION_VENDOR_FACILITATED = 0x00000001U,
+    WEBAUTHN_ENTERPRISE_ATTESTATION_PLATFORM_MANAGED   = 0x00000002U,
 }
 
 enum : uint
 {
-    WEBAUTHN_LARGE_BLOB_SUPPORT_NONE      = 0x00000000,
-    WEBAUTHN_LARGE_BLOB_SUPPORT_REQUIRED  = 0x00000001,
-    WEBAUTHN_LARGE_BLOB_SUPPORT_PREFERRED = 0x00000002,
+    WEBAUTHN_LARGE_BLOB_SUPPORT_NONE      = 0x00000000U,
+    WEBAUTHN_LARGE_BLOB_SUPPORT_REQUIRED  = 0x00000001U,
+    WEBAUTHN_LARGE_BLOB_SUPPORT_PREFERRED = 0x00000002U,
 }
 
 enum : const(wchar)*
@@ -226,50 +232,50 @@ enum : const(wchar)*
 
 enum : uint
 {
-    WEBAUTHN_AUTHENTICATOR_MAKE_CREDENTIAL_OPTIONS_VERSION_1       = 0x00000001,
-    WEBAUTHN_AUTHENTICATOR_MAKE_CREDENTIAL_OPTIONS_VERSION_2       = 0x00000002,
-    WEBAUTHN_AUTHENTICATOR_MAKE_CREDENTIAL_OPTIONS_VERSION_3       = 0x00000003,
-    WEBAUTHN_AUTHENTICATOR_MAKE_CREDENTIAL_OPTIONS_VERSION_4       = 0x00000004,
-    WEBAUTHN_AUTHENTICATOR_MAKE_CREDENTIAL_OPTIONS_VERSION_5       = 0x00000005,
-    WEBAUTHN_AUTHENTICATOR_MAKE_CREDENTIAL_OPTIONS_VERSION_6       = 0x00000006,
-    WEBAUTHN_AUTHENTICATOR_MAKE_CREDENTIAL_OPTIONS_VERSION_7       = 0x00000007,
-    WEBAUTHN_AUTHENTICATOR_MAKE_CREDENTIAL_OPTIONS_VERSION_8       = 0x00000008,
-    WEBAUTHN_AUTHENTICATOR_MAKE_CREDENTIAL_OPTIONS_VERSION_9       = 0x00000009,
-    WEBAUTHN_AUTHENTICATOR_MAKE_CREDENTIAL_OPTIONS_CURRENT_VERSION = 0x00000009,
+    WEBAUTHN_AUTHENTICATOR_MAKE_CREDENTIAL_OPTIONS_VERSION_1       = 0x00000001U,
+    WEBAUTHN_AUTHENTICATOR_MAKE_CREDENTIAL_OPTIONS_VERSION_2       = 0x00000002U,
+    WEBAUTHN_AUTHENTICATOR_MAKE_CREDENTIAL_OPTIONS_VERSION_3       = 0x00000003U,
+    WEBAUTHN_AUTHENTICATOR_MAKE_CREDENTIAL_OPTIONS_VERSION_4       = 0x00000004U,
+    WEBAUTHN_AUTHENTICATOR_MAKE_CREDENTIAL_OPTIONS_VERSION_5       = 0x00000005U,
+    WEBAUTHN_AUTHENTICATOR_MAKE_CREDENTIAL_OPTIONS_VERSION_6       = 0x00000006U,
+    WEBAUTHN_AUTHENTICATOR_MAKE_CREDENTIAL_OPTIONS_VERSION_7       = 0x00000007U,
+    WEBAUTHN_AUTHENTICATOR_MAKE_CREDENTIAL_OPTIONS_VERSION_8       = 0x00000008U,
+    WEBAUTHN_AUTHENTICATOR_MAKE_CREDENTIAL_OPTIONS_VERSION_9       = 0x00000009U,
+    WEBAUTHN_AUTHENTICATOR_MAKE_CREDENTIAL_OPTIONS_CURRENT_VERSION = 0x00000009U,
 }
 
 enum : uint
 {
-    WEBAUTHN_CRED_LARGE_BLOB_OPERATION_NONE   = 0x00000000,
-    WEBAUTHN_CRED_LARGE_BLOB_OPERATION_GET    = 0x00000001,
-    WEBAUTHN_CRED_LARGE_BLOB_OPERATION_SET    = 0x00000002,
-    WEBAUTHN_CRED_LARGE_BLOB_OPERATION_DELETE = 0x00000003,
+    WEBAUTHN_CRED_LARGE_BLOB_OPERATION_NONE   = 0x00000000U,
+    WEBAUTHN_CRED_LARGE_BLOB_OPERATION_GET    = 0x00000001U,
+    WEBAUTHN_CRED_LARGE_BLOB_OPERATION_SET    = 0x00000002U,
+    WEBAUTHN_CRED_LARGE_BLOB_OPERATION_DELETE = 0x00000003U,
 }
 
 enum : uint
 {
-    WEBAUTHN_AUTHENTICATOR_GET_ASSERTION_OPTIONS_VERSION_1       = 0x00000001,
-    WEBAUTHN_AUTHENTICATOR_GET_ASSERTION_OPTIONS_VERSION_2       = 0x00000002,
-    WEBAUTHN_AUTHENTICATOR_GET_ASSERTION_OPTIONS_VERSION_3       = 0x00000003,
-    WEBAUTHN_AUTHENTICATOR_GET_ASSERTION_OPTIONS_VERSION_4       = 0x00000004,
-    WEBAUTHN_AUTHENTICATOR_GET_ASSERTION_OPTIONS_VERSION_5       = 0x00000005,
-    WEBAUTHN_AUTHENTICATOR_GET_ASSERTION_OPTIONS_VERSION_6       = 0x00000006,
-    WEBAUTHN_AUTHENTICATOR_GET_ASSERTION_OPTIONS_VERSION_7       = 0x00000007,
-    WEBAUTHN_AUTHENTICATOR_GET_ASSERTION_OPTIONS_VERSION_8       = 0x00000008,
-    WEBAUTHN_AUTHENTICATOR_GET_ASSERTION_OPTIONS_VERSION_9       = 0x00000009,
-    WEBAUTHN_AUTHENTICATOR_GET_ASSERTION_OPTIONS_CURRENT_VERSION = 0x00000009,
+    WEBAUTHN_AUTHENTICATOR_GET_ASSERTION_OPTIONS_VERSION_1       = 0x00000001U,
+    WEBAUTHN_AUTHENTICATOR_GET_ASSERTION_OPTIONS_VERSION_2       = 0x00000002U,
+    WEBAUTHN_AUTHENTICATOR_GET_ASSERTION_OPTIONS_VERSION_3       = 0x00000003U,
+    WEBAUTHN_AUTHENTICATOR_GET_ASSERTION_OPTIONS_VERSION_4       = 0x00000004U,
+    WEBAUTHN_AUTHENTICATOR_GET_ASSERTION_OPTIONS_VERSION_5       = 0x00000005U,
+    WEBAUTHN_AUTHENTICATOR_GET_ASSERTION_OPTIONS_VERSION_6       = 0x00000006U,
+    WEBAUTHN_AUTHENTICATOR_GET_ASSERTION_OPTIONS_VERSION_7       = 0x00000007U,
+    WEBAUTHN_AUTHENTICATOR_GET_ASSERTION_OPTIONS_VERSION_8       = 0x00000008U,
+    WEBAUTHN_AUTHENTICATOR_GET_ASSERTION_OPTIONS_VERSION_9       = 0x00000009U,
+    WEBAUTHN_AUTHENTICATOR_GET_ASSERTION_OPTIONS_CURRENT_VERSION = 0x00000009U,
 }
 
-enum uint WEBAUTHN_AUTHENTICATOR_HMAC_SECRET_VALUES_FLAG = 0x00100000;
+enum uint WEBAUTHN_AUTHENTICATOR_HMAC_SECRET_VALUES_FLAG = 0x00100000U;
 
 enum : uint
 {
-    WEBAUTHN_ATTESTATION_DECODE_NONE   = 0x00000000,
-    WEBAUTHN_ATTESTATION_DECODE_COMMON = 0x00000001,
+    WEBAUTHN_ATTESTATION_DECODE_NONE   = 0x00000000U,
+    WEBAUTHN_ATTESTATION_DECODE_COMMON = 0x00000001U,
 }
 
 enum const(wchar)* WEBAUTHN_ATTESTATION_VER_TPM_2_0 = "2.0";
-enum uint WEBAUTHN_COMMON_ATTESTATION_CURRENT_VERSION = 0x00000001;
+enum uint WEBAUTHN_COMMON_ATTESTATION_CURRENT_VERSION = 0x00000001U;
 
 enum : const(wchar)*
 {
@@ -281,84 +287,84 @@ enum : const(wchar)*
 
 enum : uint
 {
-    WEBAUTHN_CREDENTIAL_ATTESTATION_VERSION_1       = 0x00000001,
-    WEBAUTHN_CREDENTIAL_ATTESTATION_VERSION_2       = 0x00000002,
-    WEBAUTHN_CREDENTIAL_ATTESTATION_VERSION_3       = 0x00000003,
-    WEBAUTHN_CREDENTIAL_ATTESTATION_VERSION_4       = 0x00000004,
-    WEBAUTHN_CREDENTIAL_ATTESTATION_VERSION_5       = 0x00000005,
-    WEBAUTHN_CREDENTIAL_ATTESTATION_VERSION_6       = 0x00000006,
-    WEBAUTHN_CREDENTIAL_ATTESTATION_VERSION_7       = 0x00000007,
-    WEBAUTHN_CREDENTIAL_ATTESTATION_VERSION_8       = 0x00000008,
-    WEBAUTHN_CREDENTIAL_ATTESTATION_CURRENT_VERSION = 0x00000008,
+    WEBAUTHN_CREDENTIAL_ATTESTATION_VERSION_1       = 0x00000001U,
+    WEBAUTHN_CREDENTIAL_ATTESTATION_VERSION_2       = 0x00000002U,
+    WEBAUTHN_CREDENTIAL_ATTESTATION_VERSION_3       = 0x00000003U,
+    WEBAUTHN_CREDENTIAL_ATTESTATION_VERSION_4       = 0x00000004U,
+    WEBAUTHN_CREDENTIAL_ATTESTATION_VERSION_5       = 0x00000005U,
+    WEBAUTHN_CREDENTIAL_ATTESTATION_VERSION_6       = 0x00000006U,
+    WEBAUTHN_CREDENTIAL_ATTESTATION_VERSION_7       = 0x00000007U,
+    WEBAUTHN_CREDENTIAL_ATTESTATION_VERSION_8       = 0x00000008U,
+    WEBAUTHN_CREDENTIAL_ATTESTATION_CURRENT_VERSION = 0x00000008U,
 }
 
 enum : uint
 {
-    WEBAUTHN_CRED_LARGE_BLOB_STATUS_NONE                 = 0x00000000,
-    WEBAUTHN_CRED_LARGE_BLOB_STATUS_SUCCESS              = 0x00000001,
-    WEBAUTHN_CRED_LARGE_BLOB_STATUS_NOT_SUPPORTED        = 0x00000002,
-    WEBAUTHN_CRED_LARGE_BLOB_STATUS_INVALID_DATA         = 0x00000003,
-    WEBAUTHN_CRED_LARGE_BLOB_STATUS_INVALID_PARAMETER    = 0x00000004,
-    WEBAUTHN_CRED_LARGE_BLOB_STATUS_NOT_FOUND            = 0x00000005,
-    WEBAUTHN_CRED_LARGE_BLOB_STATUS_MULTIPLE_CREDENTIALS = 0x00000006,
-    WEBAUTHN_CRED_LARGE_BLOB_STATUS_LACK_OF_SPACE        = 0x00000007,
-    WEBAUTHN_CRED_LARGE_BLOB_STATUS_PLATFORM_ERROR       = 0x00000008,
-    WEBAUTHN_CRED_LARGE_BLOB_STATUS_AUTHENTICATOR_ERROR  = 0x00000009,
+    WEBAUTHN_CRED_LARGE_BLOB_STATUS_NONE                 = 0x00000000U,
+    WEBAUTHN_CRED_LARGE_BLOB_STATUS_SUCCESS              = 0x00000001U,
+    WEBAUTHN_CRED_LARGE_BLOB_STATUS_NOT_SUPPORTED        = 0x00000002U,
+    WEBAUTHN_CRED_LARGE_BLOB_STATUS_INVALID_DATA         = 0x00000003U,
+    WEBAUTHN_CRED_LARGE_BLOB_STATUS_INVALID_PARAMETER    = 0x00000004U,
+    WEBAUTHN_CRED_LARGE_BLOB_STATUS_NOT_FOUND            = 0x00000005U,
+    WEBAUTHN_CRED_LARGE_BLOB_STATUS_MULTIPLE_CREDENTIALS = 0x00000006U,
+    WEBAUTHN_CRED_LARGE_BLOB_STATUS_LACK_OF_SPACE        = 0x00000007U,
+    WEBAUTHN_CRED_LARGE_BLOB_STATUS_PLATFORM_ERROR       = 0x00000008U,
+    WEBAUTHN_CRED_LARGE_BLOB_STATUS_AUTHENTICATOR_ERROR  = 0x00000009U,
 }
 
 enum : uint
 {
-    WEBAUTHN_ASSERTION_VERSION_1       = 0x00000001,
-    WEBAUTHN_ASSERTION_VERSION_2       = 0x00000002,
-    WEBAUTHN_ASSERTION_VERSION_3       = 0x00000003,
-    WEBAUTHN_ASSERTION_VERSION_4       = 0x00000004,
-    WEBAUTHN_ASSERTION_VERSION_5       = 0x00000005,
-    WEBAUTHN_ASSERTION_VERSION_6       = 0x00000006,
-    WEBAUTHN_ASSERTION_CURRENT_VERSION = 0x00000006,
+    WEBAUTHN_ASSERTION_VERSION_1       = 0x00000001U,
+    WEBAUTHN_ASSERTION_VERSION_2       = 0x00000002U,
+    WEBAUTHN_ASSERTION_VERSION_3       = 0x00000003U,
+    WEBAUTHN_ASSERTION_VERSION_4       = 0x00000004U,
+    WEBAUTHN_ASSERTION_VERSION_5       = 0x00000005U,
+    WEBAUTHN_ASSERTION_VERSION_6       = 0x00000006U,
+    WEBAUTHN_ASSERTION_CURRENT_VERSION = 0x00000006U,
 }
 
 enum : uint
 {
-    EXPERIMENTAL_WEBAUTHN_CTAPCBOR_AUTHENTICATOR_OPTIONS_VERSION_1         = 0x00000001,
-    EXPERIMENTAL_WEBAUTHN_CTAPCBOR_AUTHENTICATOR_OPTIONS_CURRENT_VERSION   = 0x00000001,
-    EXPERIMENTAL_WEBAUTHN_CTAPCBOR_ECC_PUBLIC_KEY_VERSION_1                = 0x00000001,
-    EXPERIMENTAL_WEBAUTHN_CTAPCBOR_ECC_PUBLIC_KEY_CURRENT_VERSION          = 0x00000001,
-    EXPERIMENTAL_WEBAUTHN_CTAPCBOR_HMAC_SALT_EXTENSION_VERSION_1           = 0x00000001,
-    EXPERIMENTAL_WEBAUTHN_CTAPCBOR_HMAC_SALT_EXTENSION_CURRENT_VERSION     = 0x00000001,
-    EXPERIMENTAL_WEBAUTHN_CTAPCBOR_MAKE_CREDENTIAL_REQUEST_VERSION_1       = 0x00000001,
-    EXPERIMENTAL_WEBAUTHN_CTAPCBOR_MAKE_CREDENTIAL_REQUEST_CURRENT_VERSION = 0x00000001,
-    EXPERIMENTAL_WEBAUTHN_CTAPCBOR_GET_ASSERTION_REQUEST_VERSION_1         = 0x00000001,
-    EXPERIMENTAL_WEBAUTHN_CTAPCBOR_GET_ASSERTION_REQUEST_CURRENT_VERSION   = 0x00000001,
+    EXPERIMENTAL_WEBAUTHN_CTAPCBOR_AUTHENTICATOR_OPTIONS_VERSION_1         = 0x00000001U,
+    EXPERIMENTAL_WEBAUTHN_CTAPCBOR_AUTHENTICATOR_OPTIONS_CURRENT_VERSION   = 0x00000001U,
+    EXPERIMENTAL_WEBAUTHN_CTAPCBOR_ECC_PUBLIC_KEY_VERSION_1                = 0x00000001U,
+    EXPERIMENTAL_WEBAUTHN_CTAPCBOR_ECC_PUBLIC_KEY_CURRENT_VERSION          = 0x00000001U,
+    EXPERIMENTAL_WEBAUTHN_CTAPCBOR_HMAC_SALT_EXTENSION_VERSION_1           = 0x00000001U,
+    EXPERIMENTAL_WEBAUTHN_CTAPCBOR_HMAC_SALT_EXTENSION_CURRENT_VERSION     = 0x00000001U,
+    EXPERIMENTAL_WEBAUTHN_CTAPCBOR_MAKE_CREDENTIAL_REQUEST_VERSION_1       = 0x00000001U,
+    EXPERIMENTAL_WEBAUTHN_CTAPCBOR_MAKE_CREDENTIAL_REQUEST_CURRENT_VERSION = 0x00000001U,
+    EXPERIMENTAL_WEBAUTHN_CTAPCBOR_GET_ASSERTION_REQUEST_VERSION_1         = 0x00000001U,
+    EXPERIMENTAL_WEBAUTHN_CTAPCBOR_GET_ASSERTION_REQUEST_CURRENT_VERSION   = 0x00000001U,
 }
 
 enum : uint
 {
-    WEBAUTHN_CTAPCBOR_AUTHENTICATOR_OPTIONS_VERSION_1       = 0x00000001,
-    WEBAUTHN_CTAPCBOR_AUTHENTICATOR_OPTIONS_CURRENT_VERSION = 0x00000001,
+    WEBAUTHN_CTAPCBOR_AUTHENTICATOR_OPTIONS_VERSION_1       = 0x00000001U,
+    WEBAUTHN_CTAPCBOR_AUTHENTICATOR_OPTIONS_CURRENT_VERSION = 0x00000001U,
 }
 
 enum : uint
 {
-    WEBAUTHN_CTAPCBOR_ECC_PUBLIC_KEY_VERSION_1       = 0x00000001,
-    WEBAUTHN_CTAPCBOR_ECC_PUBLIC_KEY_CURRENT_VERSION = 0x00000001,
+    WEBAUTHN_CTAPCBOR_ECC_PUBLIC_KEY_VERSION_1       = 0x00000001U,
+    WEBAUTHN_CTAPCBOR_ECC_PUBLIC_KEY_CURRENT_VERSION = 0x00000001U,
 }
 
 enum : uint
 {
-    WEBAUTHN_CTAPCBOR_HMAC_SALT_EXTENSION_VERSION_1       = 0x00000001,
-    WEBAUTHN_CTAPCBOR_HMAC_SALT_EXTENSION_CURRENT_VERSION = 0x00000001,
+    WEBAUTHN_CTAPCBOR_HMAC_SALT_EXTENSION_VERSION_1       = 0x00000001U,
+    WEBAUTHN_CTAPCBOR_HMAC_SALT_EXTENSION_CURRENT_VERSION = 0x00000001U,
 }
 
 enum : uint
 {
-    WEBAUTHN_CTAPCBOR_MAKE_CREDENTIAL_REQUEST_VERSION_1       = 0x00000001,
-    WEBAUTHN_CTAPCBOR_MAKE_CREDENTIAL_REQUEST_CURRENT_VERSION = 0x00000001,
+    WEBAUTHN_CTAPCBOR_MAKE_CREDENTIAL_REQUEST_VERSION_1       = 0x00000001U,
+    WEBAUTHN_CTAPCBOR_MAKE_CREDENTIAL_REQUEST_CURRENT_VERSION = 0x00000001U,
 }
 
 enum : uint
 {
-    WEBAUTHN_CTAPCBOR_GET_ASSERTION_REQUEST_VERSION_1       = 0x00000001,
-    WEBAUTHN_CTAPCBOR_GET_ASSERTION_REQUEST_CURRENT_VERSION = 0x00000001,
+    WEBAUTHN_CTAPCBOR_GET_ASSERTION_REQUEST_VERSION_1       = 0x00000001U,
+    WEBAUTHN_CTAPCBOR_GET_ASSERTION_REQUEST_CURRENT_VERSION = 0x00000001U,
 }
 
 // Callbacks
@@ -369,7 +375,7 @@ alias WEBAUTHN_PLUGIN_STATUS_CHANGE_CALLBACK = void function(void* context);
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_rp_entity_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_rp_entity_information
 struct WEBAUTHN_RP_ENTITY_INFORMATION
 {
     uint         dwVersion;
@@ -378,7 +384,7 @@ struct WEBAUTHN_RP_ENTITY_INFORMATION
     const(PWSTR) pwszIcon;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_user_entity_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_user_entity_information
 struct WEBAUTHN_USER_ENTITY_INFORMATION
 {
     uint         dwVersion;
@@ -389,7 +395,7 @@ struct WEBAUTHN_USER_ENTITY_INFORMATION
     const(PWSTR) pwszDisplayName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_client_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_client_data
 struct WEBAUTHN_CLIENT_DATA
 {
     uint         dwVersion;
@@ -398,7 +404,7 @@ struct WEBAUTHN_CLIENT_DATA
     const(PWSTR) pwszHashAlgId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_cose_credential_parameter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_cose_credential_parameter
 struct WEBAUTHN_COSE_CREDENTIAL_PARAMETER
 {
     uint         dwVersion;
@@ -406,14 +412,14 @@ struct WEBAUTHN_COSE_CREDENTIAL_PARAMETER
     int          lAlg;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_cose_credential_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_cose_credential_parameters
 struct WEBAUTHN_COSE_CREDENTIAL_PARAMETERS
 {
     uint cCredentialParameters;
     WEBAUTHN_COSE_CREDENTIAL_PARAMETER* pCredentialParameters;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_credential))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_credential
 struct WEBAUTHN_CREDENTIAL
 {
     uint         dwVersion;
@@ -422,14 +428,14 @@ struct WEBAUTHN_CREDENTIAL
     const(PWSTR) pwszCredentialType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_credentials))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_credentials
 struct WEBAUTHN_CREDENTIALS
 {
     uint                 cCredentials;
     WEBAUTHN_CREDENTIAL* pCredentials;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_credential_ex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_credential_ex
 struct WEBAUTHN_CREDENTIAL_EX
 {
     uint         dwVersion;
@@ -439,7 +445,7 @@ struct WEBAUTHN_CREDENTIAL_EX
     uint         dwTransports;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_credential_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_credential_list
 struct WEBAUTHN_CREDENTIAL_LIST
 {
     uint cCredentials;
@@ -483,7 +489,7 @@ struct WEBAUTHN_AUTHENTICATOR_DETAILS_LIST
     WEBAUTHN_AUTHENTICATOR_DETAILS** ppAuthenticatorDetails;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_credential_details))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_credential_details
 struct WEBAUTHN_CREDENTIAL_DETAILS
 {
     uint         dwVersion;
@@ -500,14 +506,14 @@ struct WEBAUTHN_CREDENTIAL_DETAILS
     uint         dwTransports;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_credential_details_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_credential_details_list
 struct WEBAUTHN_CREDENTIAL_DETAILS_LIST
 {
     uint cCredentialDetails;
     WEBAUTHN_CREDENTIAL_DETAILS** ppCredentialDetails;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_get_credentials_options))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_get_credentials_options
 struct WEBAUTHN_GET_CREDENTIALS_OPTIONS
 {
     uint         dwVersion;
@@ -515,7 +521,7 @@ struct WEBAUTHN_GET_CREDENTIALS_OPTIONS
     BOOL         bBrowserInPrivateMode;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_hmac_secret_salt))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_hmac_secret_salt
 struct WEBAUTHN_HMAC_SECRET_SALT
 {
     uint   cbFirst;
@@ -524,7 +530,7 @@ struct WEBAUTHN_HMAC_SECRET_SALT
     ubyte* pbSecond;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_cred_with_hmac_secret_salt))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_cred_with_hmac_secret_salt
 struct WEBAUTHN_CRED_WITH_HMAC_SECRET_SALT
 {
     uint   cbCredID;
@@ -532,7 +538,7 @@ struct WEBAUTHN_CRED_WITH_HMAC_SECRET_SALT
     WEBAUTHN_HMAC_SECRET_SALT* pHmacSecretSalt;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_hmac_secret_salt_values))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_hmac_secret_salt_values
 struct WEBAUTHN_HMAC_SECRET_SALT_VALUES
 {
     WEBAUTHN_HMAC_SECRET_SALT* pGlobalHmacSalt;
@@ -540,21 +546,21 @@ struct WEBAUTHN_HMAC_SECRET_SALT_VALUES
     WEBAUTHN_CRED_WITH_HMAC_SECRET_SALT* pCredWithHmacSecretSaltList;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_cred_protect_extension_in))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_cred_protect_extension_in
 struct WEBAUTHN_CRED_PROTECT_EXTENSION_IN
 {
     uint dwCredProtect;
     BOOL bRequireCredProtect;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_cred_blob_extension))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_cred_blob_extension
 struct WEBAUTHN_CRED_BLOB_EXTENSION
 {
     uint   cbCredBlob;
     ubyte* pbCredBlob;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_extension))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_extension
 struct WEBAUTHN_EXTENSION
 {
     const(PWSTR) pwszExtensionIdentifier;
@@ -562,14 +568,14 @@ struct WEBAUTHN_EXTENSION
     void*        pvExtension;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_extensions))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_extensions
 struct WEBAUTHN_EXTENSIONS
 {
     uint                cExtensions;
     WEBAUTHN_EXTENSION* pExtensions;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_authenticator_make_credential_options))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_authenticator_make_credential_options
 struct WEBAUTHN_AUTHENTICATOR_MAKE_CREDENTIAL_OPTIONS
 {
     uint                 dwVersion;
@@ -602,7 +608,7 @@ struct WEBAUTHN_AUTHENTICATOR_MAKE_CREDENTIAL_OPTIONS
     ubyte*               pbAuthenticatorId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_authenticator_get_assertion_options))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_authenticator_get_assertion_options
 struct WEBAUTHN_AUTHENTICATOR_GET_ASSERTION_OPTIONS
 {
     uint                 dwVersion;
@@ -634,14 +640,14 @@ struct WEBAUTHN_AUTHENTICATOR_GET_ASSERTION_OPTIONS
     ubyte*               pbAuthenticatorId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_x5c))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_x5c
 struct WEBAUTHN_X5C
 {
     uint   cbData;
     ubyte* pbData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_common_attestation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_common_attestation
 struct WEBAUTHN_COMMON_ATTESTATION
 {
     uint          dwVersion;
@@ -658,7 +664,7 @@ struct WEBAUTHN_COMMON_ATTESTATION
     ubyte*        pbPubArea;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_credential_attestation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_credential_attestation
 struct WEBAUTHN_CREDENTIAL_ATTESTATION
 {
     uint                dwVersion;
@@ -690,7 +696,7 @@ struct WEBAUTHN_CREDENTIAL_ATTESTATION
     ubyte*              pbRegistrationResponseJSON;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_assertion))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthn/ns-webauthn-webauthn_assertion
 struct WEBAUTHN_ASSERTION
 {
     uint                dwVersion;
@@ -1126,15 +1132,15 @@ struct WEBAUTHN_PLUGIN_CANCEL_OPERATION_REQUEST
 
 // Functions
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthn/nf-webauthn-webauthngetapiversionnumber))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthn/nf-webauthn-webauthngetapiversionnumber
 @DllImport("webauthn.dll")
 uint WebAuthNGetApiVersionNumber();
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthn/nf-webauthn-webauthnisuserverifyingplatformauthenticatoravailable))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthn/nf-webauthn-webauthnisuserverifyingplatformauthenticatoravailable
 @DllImport("webauthn.dll")
 HRESULT WebAuthNIsUserVerifyingPlatformAuthenticatorAvailable(BOOL* pbIsUserVerifyingPlatformAuthenticatorAvailable);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthn/nf-webauthn-webauthnauthenticatormakecredential))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthn/nf-webauthn-webauthnauthenticatormakecredential
 @DllImport("webauthn.dll")
 HRESULT WebAuthNAuthenticatorMakeCredential(HWND hWnd, WEBAUTHN_RP_ENTITY_INFORMATION* pRpInformation, 
                                             WEBAUTHN_USER_ENTITY_INFORMATION* pUserInformation, 
@@ -1143,39 +1149,39 @@ HRESULT WebAuthNAuthenticatorMakeCredential(HWND hWnd, WEBAUTHN_RP_ENTITY_INFORM
                                             WEBAUTHN_AUTHENTICATOR_MAKE_CREDENTIAL_OPTIONS* pWebAuthNMakeCredentialOptions, 
                                             WEBAUTHN_CREDENTIAL_ATTESTATION** ppWebAuthNCredentialAttestation);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthn/nf-webauthn-webauthnauthenticatorgetassertion))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthn/nf-webauthn-webauthnauthenticatorgetassertion
 @DllImport("webauthn.dll")
 HRESULT WebAuthNAuthenticatorGetAssertion(HWND hWnd, const(PWSTR) pwszRpId, 
                                           WEBAUTHN_CLIENT_DATA* pWebAuthNClientData, 
                                           WEBAUTHN_AUTHENTICATOR_GET_ASSERTION_OPTIONS* pWebAuthNGetAssertionOptions, 
                                           WEBAUTHN_ASSERTION** ppWebAuthNAssertion);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthn/nf-webauthn-webauthnfreecredentialattestation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthn/nf-webauthn-webauthnfreecredentialattestation
 @DllImport("webauthn.dll")
 void WebAuthNFreeCredentialAttestation(WEBAUTHN_CREDENTIAL_ATTESTATION* pWebAuthNCredentialAttestation);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthn/nf-webauthn-webauthnfreeassertion))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthn/nf-webauthn-webauthnfreeassertion
 @DllImport("webauthn.dll")
 void WebAuthNFreeAssertion(WEBAUTHN_ASSERTION* pWebAuthNAssertion);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthn/nf-webauthn-webauthngetcancellationid))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthn/nf-webauthn-webauthngetcancellationid
 @DllImport("webauthn.dll")
 HRESULT WebAuthNGetCancellationId(GUID* pCancellationId);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthn/nf-webauthn-webauthncancelcurrentoperation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthn/nf-webauthn-webauthncancelcurrentoperation
 @DllImport("webauthn.dll")
 HRESULT WebAuthNCancelCurrentOperation(const(GUID)* pCancellationId);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthn/nf-webauthn-webauthngetplatformcredentiallist))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthn/nf-webauthn-webauthngetplatformcredentiallist
 @DllImport("webauthn.dll")
 HRESULT WebAuthNGetPlatformCredentialList(WEBAUTHN_GET_CREDENTIALS_OPTIONS* pGetCredentialsOptions, 
                                           WEBAUTHN_CREDENTIAL_DETAILS_LIST** ppCredentialDetailsList);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthn/nf-webauthn-webauthnfreeplatformcredentiallist))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthn/nf-webauthn-webauthnfreeplatformcredentiallist
 @DllImport("webauthn.dll")
 void WebAuthNFreePlatformCredentialList(WEBAUTHN_CREDENTIAL_DETAILS_LIST* pCredentialDetailsList);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthn/nf-webauthn-webauthndeleteplatformcredential))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthn/nf-webauthn-webauthndeleteplatformcredential
 @DllImport("webauthn.dll")
 HRESULT WebAuthNDeletePlatformCredential(uint cbCredentialId, 
                                          /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(0)))])*/const(ubyte)* pbCredentialId);
@@ -1187,11 +1193,11 @@ HRESULT WebAuthNGetAuthenticatorList(WEBAUTHN_AUTHENTICATOR_DETAILS_OPTIONS* pWe
 @DllImport("webauthn.dll")
 void WebAuthNFreeAuthenticatorList(WEBAUTHN_AUTHENTICATOR_DETAILS_LIST* pAuthenticatorDetailsList);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthn/nf-webauthn-webauthngeterrorname))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthn/nf-webauthn-webauthngeterrorname
 @DllImport("webauthn.dll")
 PWSTR WebAuthNGetErrorName(HRESULT hr);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/webauthn/nf-webauthn-webauthngetw3cexceptiondomerror))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/webauthn/nf-webauthn-webauthngetw3cexceptiondomerror
 @DllImport("webauthn.dll")
 HRESULT WebAuthNGetW3CExceptionDOMError(HRESULT hr);
 

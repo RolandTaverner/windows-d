@@ -3,23 +3,25 @@
 module windows.win32.security.cryptography.certificates;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BSTR, HRESULT, HWND, NTSTATUS, PWSTR,
-                                         UNICODE_STRING, VARIANT_BOOL;
-public import windows.win32.security.authentication.identity : LSA_TOKEN_INFORMATION_TYPE,
-                                                               SecPkgContext_IssuerListInfoEx;
-public import windows.win32.security.cryptography : CERT_CHAIN_CONTEXT, CERT_CONTEXT, CERT_EXTENSIONS,
-                                                    CERT_RDN_ATTR_VALUE_TYPE,
-                                                    CERT_SELECT_CRITERIA, CERT_USAGE_MATCH,
-                                                    CRYPT_ATTRIBUTES, CRYPT_INTEGER_BLOB,
-                                                    HCERTSTORE;
-public import windows.win32.system.com : IDispatch, IUnknown;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BSTR, HRESULT, HWND, NTSTATUS,
+                                                    PWSTR, UNICODE_STRING, VARIANT_BOOL;
+public import windows.win32.security.authentication.identity.identity : LSA_TOKEN_INFORMATION_TYPE,
+                                                                        SecPkgContext_IssuerListInfoEx;
+public import windows.win32.security.cryptography.cryptography : CERT_CHAIN_CONTEXT, CERT_CONTEXT,
+                                                                 CERT_EXTENSIONS,
+                                                                 CERT_RDN_ATTR_VALUE_TYPE,
+                                                                 CERT_SELECT_CRITERIA,
+                                                                 CERT_USAGE_MATCH, CRYPT_ATTRIBUTES,
+                                                                 CRYPT_INTEGER_BLOB, HCERTSTORE;
+public import windows.win32.system.com.com : IDispatch, IUnknown;
 public import windows.win32.system.variant : VARIANT;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
+
 
 alias CERT_VIEW_COLUMN_INDEX = int;
 enum : int
@@ -28,12 +30,14 @@ enum : int
     CV_COLUMN_LOG_FAILED_DEFAULT = 0xfffffffd,
     CV_COLUMN_QUEUE_DEFAULT      = 0xffffffff,
 }
+
 alias CERT_DELETE_ROW_FLAGS = int;
 enum : int
 {
     CDR_EXPIRED              = 0x00000001,
     CDR_REQUEST_LAST_CHANGED = 0x00000002,
 }
+
 alias FULL_RESPONSE_PROPERTY_ID = int;
 enum : int
 {
@@ -60,6 +64,7 @@ enum : int
     FR_PROP_ATTESTATIONCHALLENGE          = 0x00000014,
     FR_PROP_ATTESTATIONPROVIDERNAME       = 0x00000015,
 }
+
 alias CVRC_COLUMN = int;
 enum : int
 {
@@ -68,6 +73,7 @@ enum : int
     CVRC_COLUMN_VALUE  = 0x00000002,
     CVRC_COLUMN_MASK   = 0x00000fff,
 }
+
 alias CERT_IMPORT_FLAGS = int;
 enum : int
 {
@@ -75,6 +81,7 @@ enum : int
     CR_IN_BASE64       = 0x00000001,
     CR_IN_BINARY       = 0x00000002,
 }
+
 alias CERT_GET_CONFIG_FLAGS = int;
 enum : int
 {
@@ -85,6 +92,7 @@ enum : int
     CC_UIPICKCONFIG            = 0x00000001,
     CC_UIPICKCONFIGSKIPLOCALCA = 0x00000005,
 }
+
 alias ENUM_CERT_COLUMN_VALUE_FLAGS = int;
 enum : int
 {
@@ -98,6 +106,7 @@ enum : int
     CV_OUT_HEXASCII            = 0x00000005,
     CV_OUT_HEXASCIIADDR        = 0x0000000b,
 }
+
 alias PENDING_REQUEST_DESIRED_PROPERTY = int;
 enum : int
 {
@@ -107,26 +116,29 @@ enum : int
     XEPR_HASH           = 0x00000008,
     XEPR_REQUESTID      = 0x00000004,
 }
+
 alias CERTADMIN_GET_ROLES_FLAGS = uint;
 enum : uint
 {
-    CA_ACCESS_ADMIN    = 0x00000001,
-    CA_ACCESS_AUDITOR  = 0x00000004,
-    CA_ACCESS_ENROLL   = 0x00000200,
-    CA_ACCESS_OFFICER  = 0x00000002,
-    CA_ACCESS_OPERATOR = 0x00000008,
-    CA_ACCESS_READ     = 0x00000100,
+    CA_ACCESS_ADMIN    = 0x00000001U,
+    CA_ACCESS_AUDITOR  = 0x00000004U,
+    CA_ACCESS_ENROLL   = 0x00000200U,
+    CA_ACCESS_OFFICER  = 0x00000002U,
+    CA_ACCESS_OPERATOR = 0x00000008U,
+    CA_ACCESS_READ     = 0x00000100U,
 }
+
 alias CR_DISP = uint;
 enum : uint
 {
-    CR_DISP_DENIED             = 0x00000002,
-    CR_DISP_ERROR              = 0x00000001,
-    CR_DISP_INCOMPLETE         = 0x00000000,
-    CR_DISP_ISSUED             = 0x00000003,
-    CR_DISP_ISSUED_OUT_OF_BAND = 0x00000004,
-    CR_DISP_UNDER_SUBMISSION   = 0x00000005,
+    CR_DISP_DENIED             = 0x00000002U,
+    CR_DISP_ERROR              = 0x00000001U,
+    CR_DISP_INCOMPLETE         = 0x00000000U,
+    CR_DISP_ISSUED             = 0x00000003U,
+    CR_DISP_ISSUED_OUT_OF_BAND = 0x00000004U,
+    CR_DISP_UNDER_SUBMISSION   = 0x00000005U,
 }
+
 alias XEKL_KEYSIZE = int;
 enum : int
 {
@@ -134,6 +146,7 @@ enum : int
     XEKL_KEYSIZE_MAX = 0x00000002,
     XEKL_KEYSIZE_INC = 0x00000003,
 }
+
 alias CERT_CREATE_REQUEST_FLAGS = int;
 enum : int
 {
@@ -142,23 +155,26 @@ enum : int
     XECR_PKCS10_V2_0 = 0x00000001,
     XECR_PKCS7       = 0x00000002,
 }
+
 alias CERT_EXIT_EVENT_MASK = uint;
 enum : uint
 {
-    EXITEVENT_CERTDENIED          = 0x00000004,
-    EXITEVENT_CERTISSUED          = 0x00000001,
-    EXITEVENT_CERTPENDING         = 0x00000002,
-    EXITEVENT_CERTRETRIEVEPENDING = 0x00000010,
-    EXITEVENT_CERTREVOKED         = 0x00000008,
-    EXITEVENT_CRLISSUED           = 0x00000020,
-    EXITEVENT_SHUTDOWN            = 0x00000040,
+    EXITEVENT_CERTDENIED          = 0x00000004U,
+    EXITEVENT_CERTISSUED          = 0x00000001U,
+    EXITEVENT_CERTPENDING         = 0x00000002U,
+    EXITEVENT_CERTRETRIEVEPENDING = 0x00000010U,
+    EXITEVENT_CERTREVOKED         = 0x00000008U,
+    EXITEVENT_CRLISSUED           = 0x00000020U,
+    EXITEVENT_SHUTDOWN            = 0x00000040U,
 }
+
 alias ADDED_CERT_TYPE = int;
 enum : int
 {
     XECT_EXTENSION_V1 = 0x00000001,
     XECT_EXTENSION_V2 = 0x00000002,
 }
+
 alias CVRC_TABLE = int;
 enum : int
 {
@@ -167,6 +183,7 @@ enum : int
     CVRC_TABLE_EXTENSIONS = 0x00003000,
     CVRC_TABLE_REQCERT    = 0x00000000,
 }
+
 alias CERT_PROPERTY_TYPE = int;
 enum : int
 {
@@ -175,6 +192,7 @@ enum : int
     PROPTYPE_LONG   = 0x00000001,
     PROPTYPE_STRING = 0x00000004,
 }
+
 alias CERT_ALT_NAME = int;
 enum : int
 {
@@ -186,18 +204,21 @@ enum : int
     CERT_ALT_NAME_IP_ADDRESS     = 0x00000008,
     CERT_ALT_NAME_OTHER_NAME     = 0x00000001,
 }
+
 alias CSBACKUP_TYPE = uint;
 enum : uint
 {
-    CSBACKUP_TYPE_FULL      = 0x00000001,
-    CSBACKUP_TYPE_LOGS_ONLY = 0x00000002,
+    CSBACKUP_TYPE_FULL      = 0x00000001U,
+    CSBACKUP_TYPE_LOGS_ONLY = 0x00000002U,
 }
+
 alias XEKL_KEYSPEC = int;
 enum : int
 {
     XEKL_KEYSPEC_KEYX = 0x00000001,
     XEKL_KEYSPEC_SIG  = 0x00000002,
 }
+
 alias CERT_REQUEST_OUT_TYPE = int;
 enum : int
 {
@@ -205,6 +226,7 @@ enum : int
     CR_OUT_BASE64       = 0x00000001,
     CR_OUT_BINARY       = 0x00000002,
 }
+
 alias CERT_VIEW_SEEK_OPERATOR_FLAGS = int;
 enum : int
 {
@@ -214,6 +236,7 @@ enum : int
     CVR_SEEK_GE = 0x00000008,
     CVR_SEEK_GT = 0x00000010,
 }
+
 enum OCSPSigningFlag : int
 {
     OCSP_SF_SILENT                           = 0x00000001,
@@ -227,11 +250,13 @@ enum OCSPSigningFlag : int
     OCSP_SF_ALLOW_NONCE_EXTENSION            = 0x00000100,
     OCSP_SF_ALLOW_SIGNINGCERT_AUTOENROLLMENT = 0x00000200,
 }
+
 enum OCSPRequestFlag : int
 {
     OCSP_RF_REJECT_SIGNED_REQUESTS = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certcli/ne-certcli-x509enrollmentauthflags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/ne-certcli-x509enrollmentauthflags
 enum X509EnrollmentAuthFlags : int
 {
     X509AuthNone        = 0x00000000,
@@ -240,6 +265,7 @@ enum X509EnrollmentAuthFlags : int
     X509AuthUsername    = 0x00000004,
     X509AuthCertificate = 0x00000008,
 }
+
 enum X509SCEPMessageType : int
 {
     SCEPMessageUnknown              = 0xffffffff,
@@ -250,7 +276,8 @@ enum X509SCEPMessageType : int
     SCEPMessageGetCRL               = 0x00000016,
     SCEPMessageClaimChallengeAnswer = 0x00000029,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certpol/ne-certpol-x509scepdisposition))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certpol/ne-certpol-x509scepdisposition
 enum X509SCEPDisposition : int
 {
     SCEPDispositionUnknown          = 0xffffffff,
@@ -259,7 +286,8 @@ enum X509SCEPDisposition : int
     SCEPDispositionPending          = 0x00000003,
     SCEPDispositionPendingChallenge = 0x0000000b,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certpol/ne-certpol-x509scepfailinfo))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certpol/ne-certpol-x509scepfailinfo
 alias X509SCEPFailInfo = int;
 enum : int
 {
@@ -270,7 +298,8 @@ enum : int
     SCEPFailBadTime         = 0x00000003,
     SCEPFailBadCertId       = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-certenroll_objectid))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-certenroll_objectid
 alias CERTENROLL_OBJECTID = int;
 enum : int
 {
@@ -713,13 +742,15 @@ enum : int
     XCN_OID_ENROLL_ENCRYPTION_ALGORITHM                   = 0x000001b5,
     XCN_OID_ENROLL_KSP_NAME                               = 0x000001b6,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-websecuritylevel))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-websecuritylevel
 enum WebSecurityLevel : int
 {
     LevelUnsafe = 0x00000000,
     LevelSafe   = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-encodingtype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-encodingtype
 enum EncodingType : int
 {
     XCN_CRYPT_STRING_BASE64HEADER        = 0x00000000,
@@ -745,14 +776,16 @@ enum EncodingType : int
     XCN_CRYPT_STRING_NOCRLF              = 0x40000000,
     XCN_CRYPT_STRING_NOCR                = 0x80000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-pfxexportoptions))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-pfxexportoptions
 enum PFXExportOptions : int
 {
     PFXExportEEOnly        = 0x00000000,
     PFXExportChainNoRoot   = 0x00000001,
     PFXExportChainWithRoot = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-objectidgroupid))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-objectidgroupid
 enum ObjectIdGroupId : int
 {
     XCN_CRYPT_ANY_GROUP_ID                     = 0x00000000,
@@ -776,20 +809,23 @@ enum ObjectIdGroupId : int
     XCN_CRYPT_OID_INFO_OID_GROUP_BIT_LEN_SHIFT = 0x00000010,
     XCN_CRYPT_KEY_LENGTH_MASK                  = 0x0fff0000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-objectidpublickeyflags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-objectidpublickeyflags
 enum ObjectIdPublicKeyFlags : int
 {
     XCN_CRYPT_OID_INFO_PUBKEY_ANY              = 0x00000000,
     XCN_CRYPT_OID_INFO_PUBKEY_SIGN_KEY_FLAG    = 0x80000000,
     XCN_CRYPT_OID_INFO_PUBKEY_ENCRYPT_KEY_FLAG = 0x40000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-algorithmflags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-algorithmflags
 enum AlgorithmFlags : int
 {
     AlgorithmFlagsNone = 0x00000000,
     AlgorithmFlagsWrap = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-x500nameflags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-x500nameflags
 enum X500NameFlags : int
 {
     XCN_CERT_NAME_STR_NONE                      = 0x00000000,
@@ -813,7 +849,8 @@ enum X500NameFlags : int
     XCN_CERT_NAME_STR_ENABLE_PUNYCODE_FLAG      = 0x00200000,
     XCN_CERT_NAME_STR_DS_ESCAPED                = 0x00800000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-x509certificateenrollmentcontext))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-x509certificateenrollmentcontext
 enum X509CertificateEnrollmentContext : int
 {
     ContextNone                      = 0x00000000,
@@ -821,7 +858,8 @@ enum X509CertificateEnrollmentContext : int
     ContextMachine                   = 0x00000002,
     ContextAdministratorForceMachine = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-enrollmentenrollstatus))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-enrollmentenrollstatus
 enum EnrollmentEnrollStatus : int
 {
     Enrolled                           = 0x00000001,
@@ -832,19 +870,22 @@ enum EnrollmentEnrollStatus : int
     EnrollSkipped                      = 0x00000040,
     EnrollDenied                       = 0x00000100,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-enrollmentselectionstatus))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-enrollmentselectionstatus
 enum EnrollmentSelectionStatus : int
 {
     SelectedNo  = 0x00000000,
     SelectedYes = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-enrollmentdisplaystatus))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-enrollmentdisplaystatus
 enum EnrollmentDisplayStatus : int
 {
     DisplayNo  = 0x00000000,
     DisplayYes = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-x509providertype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-x509providertype
 enum X509ProviderType : int
 {
     XCN_PROV_NONE          = 0x00000000,
@@ -867,7 +908,8 @@ enum X509ProviderType : int
     XCN_PROV_REPLACE_OWF   = 0x00000017,
     XCN_PROV_RSA_AES       = 0x00000018,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-algorithmtype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-algorithmtype
 enum AlgorithmType : int
 {
     XCN_BCRYPT_UNKNOWN_INTERFACE               = 0x00000000,
@@ -879,7 +921,8 @@ enum AlgorithmType : int
     XCN_BCRYPT_RNG_INTERFACE                   = 0x00000006,
     XCN_BCRYPT_KEY_DERIVATION_INTERFACE        = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-algorithmoperationflags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-algorithmoperationflags
 enum AlgorithmOperationFlags : int
 {
     XCN_NCRYPT_NO_OPERATION                    = 0x00000000,
@@ -897,14 +940,16 @@ enum AlgorithmOperationFlags : int
     XCN_NCRYPT_EXACT_MATCH_OPERATION           = 0x00800000,
     XCN_NCRYPT_PREFERENCE_MASK_OPERATION       = 0x00e00000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-x509keyspec))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-x509keyspec
 enum X509KeySpec : int
 {
     XCN_AT_NONE        = 0x00000000,
     XCN_AT_KEYEXCHANGE = 0x00000001,
     XCN_AT_SIGNATURE   = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-keyidentifierhashalgorithm))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-keyidentifierhashalgorithm
 enum KeyIdentifierHashAlgorithm : int
 {
     SKIHashDefault  = 0x00000000,
@@ -913,7 +958,8 @@ enum KeyIdentifierHashAlgorithm : int
     SKIHashSha256   = 0x00000003,
     SKIHashHPKP     = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-x509privatekeyexportflags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-x509privatekeyexportflags
 enum X509PrivateKeyExportFlags : int
 {
     XCN_NCRYPT_ALLOW_EXPORT_NONE              = 0x00000000,
@@ -922,7 +968,8 @@ enum X509PrivateKeyExportFlags : int
     XCN_NCRYPT_ALLOW_ARCHIVING_FLAG           = 0x00000004,
     XCN_NCRYPT_ALLOW_PLAINTEXT_ARCHIVING_FLAG = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-x509privatekeyusageflags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-x509privatekeyusageflags
 enum X509PrivateKeyUsageFlags : int
 {
     XCN_NCRYPT_ALLOW_USAGES_NONE        = 0x00000000,
@@ -932,7 +979,8 @@ enum X509PrivateKeyUsageFlags : int
     XCN_NCRYPT_ALLOW_KEY_IMPORT_FLAG    = 0x00000008,
     XCN_NCRYPT_ALLOW_ALL_USAGES         = 0x00ffffff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-x509privatekeyprotection))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-x509privatekeyprotection
 enum X509PrivateKeyProtection : int
 {
     XCN_NCRYPT_UI_NO_PROTECTION_FLAG              = 0x00000000,
@@ -941,7 +989,8 @@ enum X509PrivateKeyProtection : int
     XCN_NCRYPT_UI_FINGERPRINT_PROTECTION_FLAG     = 0x00000004,
     XCN_NCRYPT_UI_APPCONTAINER_ACCESS_MEDIUM_FLAG = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-x509privatekeyverify))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-x509privatekeyverify
 enum X509PrivateKeyVerify : int
 {
     VerifyNone            = 0x00000000,
@@ -950,6 +999,7 @@ enum X509PrivateKeyVerify : int
     VerifySmartCardSilent = 0x00000003,
     VerifyAllowUI         = 0x00000004,
 }
+
 enum X509HardwareKeyUsageFlags : int
 {
     XCN_NCRYPT_PCP_NONE           = 0x00000000,
@@ -960,13 +1010,15 @@ enum X509HardwareKeyUsageFlags : int
     XCN_NCRYPT_PCP_STORAGE_KEY    = 0x00000004,
     XCN_NCRYPT_PCP_IDENTITY_KEY   = 0x00000008,
 }
+
 enum X509KeyParametersExportType : int
 {
     XCN_CRYPT_OID_USE_CURVE_NONE                       = 0x00000000,
     XCN_CRYPT_OID_USE_CURVE_NAME_FOR_ENCODE_FLAG       = 0x20000000,
     XCN_CRYPT_OID_USE_CURVE_PARAMETERS_FOR_ENCODE_FLAG = 0x10000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-x509keyusageflags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-x509keyusageflags
 enum X509KeyUsageFlags : int
 {
     XCN_CERT_NO_KEY_USAGE                = 0x00000000,
@@ -981,7 +1033,8 @@ enum X509KeyUsageFlags : int
     XCN_CERT_ENCIPHER_ONLY_KEY_USAGE     = 0x00000001,
     XCN_CERT_DECIPHER_ONLY_KEY_USAGE     = 0x00008000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-alternativenametype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-alternativenametype
 enum AlternativeNameType : int
 {
     XCN_CERT_ALT_NAME_UNKNOWN             = 0x00000000,
@@ -997,7 +1050,8 @@ enum AlternativeNameType : int
     XCN_CERT_ALT_NAME_GUID                = 0x0000000a,
     XCN_CERT_ALT_NAME_USER_PRINCIPLE_NAME = 0x0000000b,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-policyqualifiertype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-policyqualifiertype
 enum PolicyQualifierType : int
 {
     PolicyQualifierTypeUnknown    = 0x00000000,
@@ -1005,7 +1059,8 @@ enum PolicyQualifierType : int
     PolicyQualifierTypeUserNotice = 0x00000002,
     PolicyQualifierTypeFlags      = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-requestclientinfoclientid))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-requestclientinfoclientid
 enum RequestClientInfoClientId : int
 {
     ClientIdNone           = 0x00000000,
@@ -1022,7 +1077,8 @@ enum RequestClientInfoClientId : int
     ClientIdWinRT          = 0x0000000b,
     ClientIdUserStart      = 0x000003e8,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-certenroll_propertyid))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-certenroll_propertyid
 alias CERTENROLL_PROPERTYID = int;
 enum : int
 {
@@ -1127,13 +1183,15 @@ enum : int
     XCN_CERT_LAST_USER_PROP_ID                               = 0x0000ffff,
     XCN_CERT_STORE_LOCALIZED_NAME_PROP_ID                    = 0x00001000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-enrollmentpolicyserverpropertyflags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-enrollmentpolicyserverpropertyflags
 enum EnrollmentPolicyServerPropertyFlags : int
 {
     DefaultNone         = 0x00000000,
     DefaultPolicyServer = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-policyserverurlflags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-policyserverurlflags
 enum PolicyServerUrlFlags : int
 {
     PsfNone                  = 0x00000000,
@@ -1143,7 +1201,8 @@ enum PolicyServerUrlFlags : int
     PsfAutoEnrollmentEnabled = 0x00000010,
     PsfAllowUnTrustedCA      = 0x00000020,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-enrollmenttemplateproperty))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-enrollmenttemplateproperty
 enum EnrollmentTemplateProperty : int
 {
     TemplatePropCommonName            = 0x00000001,
@@ -1178,7 +1237,8 @@ enum EnrollmentTemplateProperty : int
     TemplatePropValidityPeriod        = 0x0000001e,
     TemplatePropRenewalPeriod         = 0x0000001f,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-committemplateflags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-committemplateflags
 enum CommitTemplateFlags : int
 {
     CommitFlagSaveTemplateGenerateOID   = 0x00000001,
@@ -1186,7 +1246,8 @@ enum CommitTemplateFlags : int
     CommitFlagSaveTemplateOverwrite     = 0x00000003,
     CommitFlagDeleteTemplate            = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-enrollmentcaproperty))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-enrollmentcaproperty
 enum EnrollmentCAProperty : int
 {
     CAPropCommonName         = 0x00000001,
@@ -1202,7 +1263,8 @@ enum EnrollmentCAProperty : int
     CAPropSecurity           = 0x0000000b,
     CAPropRenewalOnly        = 0x0000000c,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-x509enrollmentpolicyloadoption))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-x509enrollmentpolicyloadoption
 enum X509EnrollmentPolicyLoadOption : int
 {
     LoadOptionDefault              = 0x00000000,
@@ -1210,27 +1272,31 @@ enum X509EnrollmentPolicyLoadOption : int
     LoadOptionReload               = 0x00000002,
     LoadOptionRegisterForADChanges = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-enrollmentpolicyflags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-enrollmentpolicyflags
 enum EnrollmentPolicyFlags : int
 {
     DisableGroupPolicyList = 0x00000002,
     DisableUserServerList  = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-policyserverurlpropertyid))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-policyserverurlpropertyid
 alias PolicyServerUrlPropertyID = int;
 enum : int
 {
     PsPolicyID     = 0x00000000,
     PsFriendlyName = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-x509enrollmentpolicyexportflags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-x509enrollmentpolicyexportflags
 enum X509EnrollmentPolicyExportFlags : int
 {
     ExportTemplates = 0x00000001,
     ExportOIDs      = 0x00000002,
     ExportCAs       = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-x509requesttype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-x509requesttype
 enum X509RequestType : int
 {
     TypeAny         = 0x00000000,
@@ -1239,7 +1305,8 @@ enum X509RequestType : int
     TypeCmc         = 0x00000003,
     TypeCertificate = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-x509requestinheritoptions))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-x509requestinheritoptions
 enum X509RequestInheritOptions : int
 {
     InheritDefault                = 0x00000000,
@@ -1257,18 +1324,21 @@ enum X509RequestInheritOptions : int
     InheritValidityPeriodFlag     = 0x00000400,
     InheritReserved80000000       = 0x80000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-innerrequestlevel))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-innerrequestlevel
 enum InnerRequestLevel : int
 {
     LevelInnermost = 0x00000000,
     LevelNext      = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-pkcs10allowedsignaturetypes))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-pkcs10allowedsignaturetypes
 enum Pkcs10AllowedSignatureTypes : int
 {
     AllowedKeySignature  = 0x00000001,
     AllowedNullSignature = 0x00000002,
 }
+
 enum KeyAttestationClaimType : int
 {
     XCN_NCRYPT_CLAIM_NONE                  = 0x00000000,
@@ -1277,7 +1347,8 @@ enum KeyAttestationClaimType : int
     XCN_NCRYPT_CLAIM_SUBJECT_ONLY          = 0x00000002,
     XCN_NCRYPT_CLAIM_UNKNOWN               = 0x00001000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-installresponserestrictionflags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-installresponserestrictionflags
 enum InstallResponseRestrictionFlags : int
 {
     AllowNone                 = 0x00000000,
@@ -1285,11 +1356,13 @@ enum InstallResponseRestrictionFlags : int
     AllowUntrustedCertificate = 0x00000002,
     AllowUntrustedRoot        = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-webenrollmentflags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-webenrollmentflags
 enum WebEnrollmentFlags : int
 {
     EnrollPrompt = 0x00000001,
 }
+
 enum CRLRevocationReason : int
 {
     XCN_CRL_REASON_UNSPECIFIED            = 0x00000000,
@@ -1303,11 +1376,13 @@ enum CRLRevocationReason : int
     XCN_CRL_REASON_PRIVILEGE_WITHDRAWN    = 0x00000009,
     XCN_CRL_REASON_AA_COMPROMISE          = 0x0000000a,
 }
+
 enum X509SCEPProcessMessageFlags : int
 {
     SCEPProcessDefault         = 0x00000000,
     SCEPProcessSkipCertInstall = 0x00000001,
 }
+
 enum DelayRetryAction : int
 {
     DelayRetryUnknown     = 0x00000000,
@@ -1317,7 +1392,8 @@ enum DelayRetryAction : int
     DelayRetrySuccess     = 0x00000004,
     DelayRetryPastSuccess = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-x509certificatetemplategeneralflag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-x509certificatetemplategeneralflag
 enum X509CertificateTemplateGeneralFlag : int
 {
     GeneralMachineType  = 0x00000040,
@@ -1327,7 +1403,8 @@ enum X509CertificateTemplateGeneralFlag : int
     GeneralModified     = 0x00020000,
     GeneralDonotPersist = 0x00001000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-x509certificatetemplateenrollmentflag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-x509certificatetemplateenrollmentflag
 enum X509CertificateTemplateEnrollmentFlag : int
 {
     EnrollmentIncludeSymmetricAlgorithms                   = 0x00000001,
@@ -1350,7 +1427,8 @@ enum X509CertificateTemplateEnrollmentFlag : int
     EnrollmentCertificateIssuancePoliciesFromRequest       = 0x00020000,
     EnrollmentSkipAutoRenewal                              = 0x00040000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-x509certificatetemplatesubjectnameflag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-x509certificatetemplatesubjectnameflag
 enum X509CertificateTemplateSubjectNameFlag : int
 {
     SubjectNameEnrolleeSupplies                  = 0x00000001,
@@ -1367,7 +1445,8 @@ enum X509CertificateTemplateSubjectNameFlag : int
     SubjectAlternativeNameRequireDNS             = 0x08000000,
     SubjectAlternativeNameRequireDomainDNS       = 0x00400000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-x509certificatetemplateprivatekeyflag))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-x509certificatetemplateprivatekeyflag
 enum X509CertificateTemplatePrivateKeyFlag : int
 {
     PrivateKeyRequireArchival                    = 0x00000001,
@@ -1391,7 +1470,8 @@ enum X509CertificateTemplatePrivateKeyFlag : int
     PrivateKeyClientVersionMask                  = 0x0f000000,
     PrivateKeyClientVersionShift                 = 0x00000018,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-importpfxflags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/ne-certenroll-importpfxflags
 enum ImportPFXFlags : int
 {
     ImportNone                = 0x00000000,
@@ -1408,7 +1488,8 @@ enum ImportPFXFlags : int
     ImportInstallChain        = 0x00000400,
     ImportInstallChainAndRoot = 0x00000800,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certsrv/ne-certsrv-enum_catypes))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certsrv/ne-certsrv-enum_catypes
 alias ENUM_CATYPES = int;
 enum : int
 {
@@ -1427,37 +1508,37 @@ enum const(wchar)* wszREGKEYCERTSVCPATH = "SYSTEM\\CurrentControlSet\\Services\\
 
 enum : uint
 {
-    CA_DISP_INCOMPLETE       = 0x00000000,
-    CA_DISP_ERROR            = 0x00000001,
-    CA_DISP_REVOKED          = 0x00000002,
-    CA_DISP_VALID            = 0x00000003,
-    CA_DISP_INVALID          = 0x00000004,
-    CA_DISP_UNDER_SUBMISSION = 0x00000005,
+    CA_DISP_INCOMPLETE       = 0x00000000U,
+    CA_DISP_ERROR            = 0x00000001U,
+    CA_DISP_REVOKED          = 0x00000002U,
+    CA_DISP_VALID            = 0x00000003U,
+    CA_DISP_INVALID          = 0x00000004U,
+    CA_DISP_UNDER_SUBMISSION = 0x00000005U,
 }
 
 enum : uint
 {
-    KRA_DISP_EXPIRED   = 0x00000000,
-    KRA_DISP_NOTFOUND  = 0x00000001,
-    KRA_DISP_REVOKED   = 0x00000002,
-    KRA_DISP_VALID     = 0x00000003,
-    KRA_DISP_INVALID   = 0x00000004,
-    KRA_DISP_UNTRUSTED = 0x00000005,
-    KRA_DISP_NOTLOADED = 0x00000006,
+    KRA_DISP_EXPIRED   = 0x00000000U,
+    KRA_DISP_NOTFOUND  = 0x00000001U,
+    KRA_DISP_REVOKED   = 0x00000002U,
+    KRA_DISP_VALID     = 0x00000003U,
+    KRA_DISP_INVALID   = 0x00000004U,
+    KRA_DISP_UNTRUSTED = 0x00000005U,
+    KRA_DISP_NOTLOADED = 0x00000006U,
 }
 
-enum uint CA_ACCESS_MASKROLES = 0x000000ff;
+enum uint CA_ACCESS_MASKROLES = 0x000000ffU;
 
 enum : uint
 {
-    CA_CRL_BASE      = 0x00000001,
-    CA_CRL_DELTA     = 0x00000002,
-    CA_CRL_REPUBLISH = 0x00000010,
+    CA_CRL_BASE      = 0x00000001U,
+    CA_CRL_DELTA     = 0x00000002U,
+    CA_CRL_REPUBLISH = 0x00000010U,
 }
 
-enum uint ICF_ALLOWFOREIGN = 0x00010000;
-enum uint ICF_EXISTINGROW = 0x00020000;
-enum uint IKF_OVERWRITE = 0x00010000;
+enum uint ICF_ALLOWFOREIGN = 0x00010000U;
+enum uint ICF_EXISTINGROW = 0x00020000U;
+enum uint IKF_OVERWRITE = 0x00010000U;
 
 enum : const(wchar)*
 {
@@ -1521,31 +1602,31 @@ enum : const(wchar)*
 
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* szBACKUPANNOTATION = "Cert Server Backup Interface";
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* szRESTOREANNOTATION = "Cert Server Restore Interface";
-enum uint CSBACKUP_TYPE_MASK = 0x00000003;
+enum uint CSBACKUP_TYPE_MASK = 0x00000003U;
 
 enum : uint
 {
-    CSRESTORE_TYPE_FULL    = 0x00000001,
-    CSRESTORE_TYPE_ONLINE  = 0x00000002,
-    CSRESTORE_TYPE_CATCHUP = 0x00000004,
-    CSRESTORE_TYPE_MASK    = 0x00000005,
+    CSRESTORE_TYPE_FULL    = 0x00000001U,
+    CSRESTORE_TYPE_ONLINE  = 0x00000002U,
+    CSRESTORE_TYPE_CATCHUP = 0x00000004U,
+    CSRESTORE_TYPE_MASK    = 0x00000005U,
 }
 
-enum uint CSBACKUP_DISABLE_INCREMENTAL = 0xffffffff;
+enum uint CSBACKUP_DISABLE_INCREMENTAL = 0xffffffffU;
 
 enum : uint
 {
-    CSBFT_DIRECTORY          = 0x00000080,
-    CSBFT_DATABASE_DIRECTORY = 0x00000040,
+    CSBFT_DIRECTORY          = 0x00000080U,
+    CSBFT_DATABASE_DIRECTORY = 0x00000040U,
 }
 
-enum uint CSBFT_LOG_DIRECTORY = 0x00000020;
+enum uint CSBFT_LOG_DIRECTORY = 0x00000020U;
 
 enum : ulong
 {
-    CSCONTROL_SHUTDOWN = 0x0000000000000001,
-    CSCONTROL_SUSPEND  = 0x0000000000000002,
-    CSCONTROL_RESTART  = 0x0000000000000003,
+    CSCONTROL_SHUTDOWN = 0x0000000000000001UL,
+    CSCONTROL_SUSPEND  = 0x0000000000000002UL,
+    CSCONTROL_RESTART  = 0x0000000000000003UL,
 }
 
 enum : const(wchar)*
@@ -1581,219 +1662,219 @@ enum : const(wchar)*
 
 enum : uint
 {
-    CAIF_DSENTRY           = 0x00000001,
-    CAIF_SHAREDFOLDERENTRY = 0x00000002,
+    CAIF_DSENTRY           = 0x00000001U,
+    CAIF_SHAREDFOLDERENTRY = 0x00000002U,
 }
 
-enum uint CAIF_REGISTRY = 0x00000004;
+enum uint CAIF_REGISTRY = 0x00000004U;
 
 enum : uint
 {
-    CAIF_LOCAL          = 0x00000008,
-    CAIF_REGISTRYPARENT = 0x00000010,
-}
-
-enum : uint
-{
-    CR_IN_ENCODEANY  = 0x000000ff,
-    CR_IN_ENCODEMASK = 0x000000ff,
-}
-
-enum uint CR_IN_FORMATANY = 0x00000000;
-
-enum : uint
-{
-    CR_IN_PKCS10            = 0x00000100,
-    CR_IN_KEYGEN            = 0x00000200,
-    CR_IN_PKCS7             = 0x00000300,
-    CR_IN_CMC               = 0x00000400,
-    CR_IN_CHALLENGERESPONSE = 0x00000500,
-}
-
-enum uint CR_IN_SIGNEDCERTIFICATETIMESTAMPLIST = 0x00000600;
-enum uint CR_IN_FORMATMASK = 0x0000ff00;
-
-enum : uint
-{
-    CR_IN_SCEP         = 0x00010000,
-    CR_IN_RPC          = 0x00020000,
-    CR_IN_HTTP         = 0x00030000,
-    CR_IN_FULLRESPONSE = 0x00040000,
+    CAIF_LOCAL          = 0x00000008U,
+    CAIF_REGISTRYPARENT = 0x00000010U,
 }
 
 enum : uint
 {
-    CR_IN_CRLS         = 0x00080000,
-    CR_IN_MACHINE      = 0x00100000,
-    CR_IN_ROBO         = 0x00200000,
-    CR_IN_CLIENTIDNONE = 0x00400000,
+    CR_IN_ENCODEANY  = 0x000000ffU,
+    CR_IN_ENCODEMASK = 0x000000ffU,
 }
 
-enum uint CR_IN_CONNECTONLY = 0x00800000;
-enum uint CR_IN_RETURNCHALLENGE = 0x01000000;
+enum uint CR_IN_FORMATANY = 0x00000000U;
 
 enum : uint
 {
-    CR_IN_SCEPPOST                = 0x02000000,
-    CR_IN_CERTIFICATETRANSPARENCY = 0x04000000,
+    CR_IN_PKCS10            = 0x00000100U,
+    CR_IN_KEYGEN            = 0x00000200U,
+    CR_IN_PKCS7             = 0x00000300U,
+    CR_IN_CMC               = 0x00000400U,
+    CR_IN_CHALLENGERESPONSE = 0x00000500U,
 }
 
-enum uint CR_IN_PRESIGN = 0x08000000;
-enum uint CR_DISP_REVOKED = 0x00000006;
-enum uint CR_OUT_BASE64REQUESTHEADER = 0x00000003;
+enum uint CR_IN_SIGNEDCERTIFICATETIMESTAMPLIST = 0x00000600U;
+enum uint CR_IN_FORMATMASK = 0x0000ff00U;
 
 enum : uint
 {
-    CR_OUT_HEX                 = 0x00000004,
-    CR_OUT_HEXASCII            = 0x00000005,
-    CR_OUT_BASE64X509CRLHEADER = 0x00000009,
-}
-
-enum : uint
-{
-    CR_OUT_HEXADDR      = 0x0000000a,
-    CR_OUT_HEXASCIIADDR = 0x0000000b,
-    CR_OUT_HEXRAW       = 0x0000000c,
-    CR_OUT_ENCODEMASK   = 0x000000ff,
-    CR_OUT_CHAIN        = 0x00000100,
-    CR_OUT_CRLS         = 0x00000200,
-    CR_OUT_NOCRLF       = 0x40000000,
-    CR_OUT_NOCR         = 0x80000000,
+    CR_IN_SCEP         = 0x00010000U,
+    CR_IN_RPC          = 0x00020000U,
+    CR_IN_HTTP         = 0x00030000U,
+    CR_IN_FULLRESPONSE = 0x00040000U,
 }
 
 enum : uint
 {
-    CR_GEMT_DEFAULT        = 0x00000000,
-    CR_GEMT_HRESULT_STRING = 0x00000001,
-    CR_GEMT_HTTP_ERROR     = 0x00000002,
+    CR_IN_CRLS         = 0x00080000U,
+    CR_IN_MACHINE      = 0x00100000U,
+    CR_IN_ROBO         = 0x00200000U,
+    CR_IN_CLIENTIDNONE = 0x00400000U,
+}
+
+enum uint CR_IN_CONNECTONLY = 0x00800000U;
+enum uint CR_IN_RETURNCHALLENGE = 0x01000000U;
+
+enum : uint
+{
+    CR_IN_SCEPPOST                = 0x02000000U,
+    CR_IN_CERTIFICATETRANSPARENCY = 0x04000000U,
+}
+
+enum uint CR_IN_PRESIGN = 0x08000000U;
+enum uint CR_DISP_REVOKED = 0x00000006U;
+enum uint CR_OUT_BASE64REQUESTHEADER = 0x00000003U;
+
+enum : uint
+{
+    CR_OUT_HEX                 = 0x00000004U,
+    CR_OUT_HEXASCII            = 0x00000005U,
+    CR_OUT_BASE64X509CRLHEADER = 0x00000009U,
 }
 
 enum : uint
 {
-    CR_PROP_NONE           = 0x00000000,
-    CR_PROP_FILEVERSION    = 0x00000001,
-    CR_PROP_PRODUCTVERSION = 0x00000002,
+    CR_OUT_HEXADDR      = 0x0000000aU,
+    CR_OUT_HEXASCIIADDR = 0x0000000bU,
+    CR_OUT_HEXRAW       = 0x0000000cU,
+    CR_OUT_ENCODEMASK   = 0x000000ffU,
+    CR_OUT_CHAIN        = 0x00000100U,
+    CR_OUT_CRLS         = 0x00000200U,
+    CR_OUT_NOCRLF       = 0x40000000U,
+    CR_OUT_NOCR         = 0x80000000U,
 }
 
 enum : uint
 {
-    CR_PROP_EXITCOUNT       = 0x00000003,
-    CR_PROP_EXITDESCRIPTION = 0x00000004,
-}
-
-enum uint CR_PROP_POLICYDESCRIPTION = 0x00000005;
-
-enum : uint
-{
-    CR_PROP_CANAME          = 0x00000006,
-    CR_PROP_SANITIZEDCANAME = 0x00000007,
-}
-
-enum uint CR_PROP_SHAREDFOLDER = 0x00000008;
-
-enum : uint
-{
-    CR_PROP_PARENTCA        = 0x00000009,
-    CR_PROP_CATYPE          = 0x0000000a,
-    CR_PROP_CASIGCERTCOUNT  = 0x0000000b,
-    CR_PROP_CASIGCERT       = 0x0000000c,
-    CR_PROP_CASIGCERTCHAIN  = 0x0000000d,
-    CR_PROP_CAXCHGCERTCOUNT = 0x0000000e,
-    CR_PROP_CAXCHGCERT      = 0x0000000f,
-    CR_PROP_CAXCHGCERTCHAIN = 0x00000010,
+    CR_GEMT_DEFAULT        = 0x00000000U,
+    CR_GEMT_HRESULT_STRING = 0x00000001U,
+    CR_GEMT_HTTP_ERROR     = 0x00000002U,
 }
 
 enum : uint
 {
-    CR_PROP_BASECRL               = 0x00000011,
-    CR_PROP_DELTACRL              = 0x00000012,
-    CR_PROP_CACERTSTATE           = 0x00000013,
-    CR_PROP_CRLSTATE              = 0x00000014,
-    CR_PROP_CAPROPIDMAX           = 0x00000015,
-    CR_PROP_DNSNAME               = 0x00000016,
-    CR_PROP_ROLESEPARATIONENABLED = 0x00000017,
+    CR_PROP_NONE           = 0x00000000U,
+    CR_PROP_FILEVERSION    = 0x00000001U,
+    CR_PROP_PRODUCTVERSION = 0x00000002U,
 }
 
 enum : uint
 {
-    CR_PROP_KRACERTUSEDCOUNT = 0x00000018,
-    CR_PROP_KRACERTCOUNT     = 0x00000019,
-    CR_PROP_KRACERT          = 0x0000001a,
-    CR_PROP_KRACERTSTATE     = 0x0000001b,
+    CR_PROP_EXITCOUNT       = 0x00000003U,
+    CR_PROP_EXITDESCRIPTION = 0x00000004U,
 }
 
-enum uint CR_PROP_ADVANCEDSERVER = 0x0000001c;
+enum uint CR_PROP_POLICYDESCRIPTION = 0x00000005U;
 
 enum : uint
 {
-    CR_PROP_TEMPLATES            = 0x0000001d,
-    CR_PROP_BASECRLPUBLISHSTATUS = 0x0000001e,
+    CR_PROP_CANAME          = 0x00000006U,
+    CR_PROP_SANITIZEDCANAME = 0x00000007U,
 }
 
-enum uint CR_PROP_DELTACRLPUBLISHSTATUS = 0x0000001f;
-enum uint CR_PROP_CASIGCERTCRLCHAIN = 0x00000020;
-enum uint CR_PROP_CAXCHGCERTCRLCHAIN = 0x00000021;
+enum uint CR_PROP_SHAREDFOLDER = 0x00000008U;
 
 enum : uint
 {
-    CR_PROP_CACERTSTATUSCODE   = 0x00000022,
-    CR_PROP_CAFORWARDCROSSCERT = 0x00000023,
-}
-
-enum uint CR_PROP_CABACKWARDCROSSCERT = 0x00000024;
-enum uint CR_PROP_CAFORWARDCROSSCERTSTATE = 0x00000025;
-enum uint CR_PROP_CABACKWARDCROSSCERTSTATE = 0x00000026;
-enum uint CR_PROP_CACERTVERSION = 0x00000027;
-enum uint CR_PROP_SANITIZEDCASHORTNAME = 0x00000028;
-
-enum : uint
-{
-    CR_PROP_CERTCDPURLS     = 0x00000029,
-    CR_PROP_CERTAIAURLS     = 0x0000002a,
-    CR_PROP_CERTAIAOCSPURLS = 0x0000002b,
+    CR_PROP_PARENTCA        = 0x00000009U,
+    CR_PROP_CATYPE          = 0x0000000aU,
+    CR_PROP_CASIGCERTCOUNT  = 0x0000000bU,
+    CR_PROP_CASIGCERT       = 0x0000000cU,
+    CR_PROP_CASIGCERTCHAIN  = 0x0000000dU,
+    CR_PROP_CAXCHGCERTCOUNT = 0x0000000eU,
+    CR_PROP_CAXCHGCERT      = 0x0000000fU,
+    CR_PROP_CAXCHGCERTCHAIN = 0x00000010U,
 }
 
 enum : uint
 {
-    CR_PROP_LOCALENAME           = 0x0000002c,
-    CR_PROP_SUBJECTTEMPLATE_OIDS = 0x0000002d,
-}
-
-enum uint CR_PROP_CRLPARTITIONCOUNT = 0x0000002e;
-
-enum : uint
-{
-    CR_PROP_PARTITIONED_BASECRL               = 0x0000002f,
-    CR_PROP_PARTITIONED_DELTACRL              = 0x00000030,
-    CR_PROP_PARTITIONED_BASECRLPUBLISHSTATUS  = 0x00000031,
-    CR_PROP_PARTITIONED_DELTACRLPUBLISHSTATUS = 0x00000032,
+    CR_PROP_BASECRL               = 0x00000011U,
+    CR_PROP_DELTACRL              = 0x00000012U,
+    CR_PROP_CACERTSTATE           = 0x00000013U,
+    CR_PROP_CRLSTATE              = 0x00000014U,
+    CR_PROP_CAPROPIDMAX           = 0x00000015U,
+    CR_PROP_DNSNAME               = 0x00000016U,
+    CR_PROP_ROLESEPARATIONENABLED = 0x00000017U,
 }
 
 enum : uint
 {
-    CR_PROP_SCEPSERVERCERTS        = 0x000003e8,
-    CR_PROP_SCEPSERVERCAPABILITIES = 0x000003e9,
-    CR_PROP_SCEPSERVERCERTSCHAIN   = 0x000003ea,
-    CR_PROP_SCEPMIN                = 0x000003e8,
-    CR_PROP_SCEPMAX                = 0x000003ea,
+    CR_PROP_KRACERTUSEDCOUNT = 0x00000018U,
+    CR_PROP_KRACERTCOUNT     = 0x00000019U,
+    CR_PROP_KRACERT          = 0x0000001aU,
+    CR_PROP_KRACERTSTATE     = 0x0000001bU,
 }
 
-enum uint FR_PROP_CLAIMCHALLENGE = 0x00000016;
-enum uint EAN_NAMEOBJECTID = 0x80000000;
-enum uint EANR_SUPPRESS_IA5CONVERSION = 0x80000000;
-enum uint CERTENROLL_INDEX_BASE = 0x00000000;
+enum uint CR_PROP_ADVANCEDSERVER = 0x0000001cU;
 
 enum : uint
 {
-    EXITEVENT_INVALID      = 0x00000000,
-    EXITEVENT_STARTUP      = 0x00000080,
-    EXITEVENT_CERTIMPORTED = 0x00000200,
+    CR_PROP_TEMPLATES            = 0x0000001dU,
+    CR_PROP_BASECRLPUBLISHSTATUS = 0x0000001eU,
 }
 
-enum uint ENUMEXT_OBJECTID = 0x00000001;
-enum uint CMM_REFRESHONLY = 0x00000001;
-enum uint CMM_READONLY = 0x00000002;
-enum uint DBG_CERTSRV = 0x00000001;
+enum uint CR_PROP_DELTACRLPUBLISHSTATUS = 0x0000001fU;
+enum uint CR_PROP_CASIGCERTCRLCHAIN = 0x00000020U;
+enum uint CR_PROP_CAXCHGCERTCRLCHAIN = 0x00000021U;
+
+enum : uint
+{
+    CR_PROP_CACERTSTATUSCODE   = 0x00000022U,
+    CR_PROP_CAFORWARDCROSSCERT = 0x00000023U,
+}
+
+enum uint CR_PROP_CABACKWARDCROSSCERT = 0x00000024U;
+enum uint CR_PROP_CAFORWARDCROSSCERTSTATE = 0x00000025U;
+enum uint CR_PROP_CABACKWARDCROSSCERTSTATE = 0x00000026U;
+enum uint CR_PROP_CACERTVERSION = 0x00000027U;
+enum uint CR_PROP_SANITIZEDCASHORTNAME = 0x00000028U;
+
+enum : uint
+{
+    CR_PROP_CERTCDPURLS     = 0x00000029U,
+    CR_PROP_CERTAIAURLS     = 0x0000002aU,
+    CR_PROP_CERTAIAOCSPURLS = 0x0000002bU,
+}
+
+enum : uint
+{
+    CR_PROP_LOCALENAME           = 0x0000002cU,
+    CR_PROP_SUBJECTTEMPLATE_OIDS = 0x0000002dU,
+}
+
+enum uint CR_PROP_CRLPARTITIONCOUNT = 0x0000002eU;
+
+enum : uint
+{
+    CR_PROP_PARTITIONED_BASECRL               = 0x0000002fU,
+    CR_PROP_PARTITIONED_DELTACRL              = 0x00000030U,
+    CR_PROP_PARTITIONED_BASECRLPUBLISHSTATUS  = 0x00000031U,
+    CR_PROP_PARTITIONED_DELTACRLPUBLISHSTATUS = 0x00000032U,
+}
+
+enum : uint
+{
+    CR_PROP_SCEPSERVERCERTS        = 0x000003e8U,
+    CR_PROP_SCEPSERVERCAPABILITIES = 0x000003e9U,
+    CR_PROP_SCEPSERVERCERTSCHAIN   = 0x000003eaU,
+    CR_PROP_SCEPMIN                = 0x000003e8U,
+    CR_PROP_SCEPMAX                = 0x000003eaU,
+}
+
+enum uint FR_PROP_CLAIMCHALLENGE = 0x00000016U;
+enum uint EAN_NAMEOBJECTID = 0x80000000U;
+enum uint EANR_SUPPRESS_IA5CONVERSION = 0x80000000U;
+enum uint CERTENROLL_INDEX_BASE = 0x00000000U;
+
+enum : uint
+{
+    EXITEVENT_INVALID      = 0x00000000U,
+    EXITEVENT_STARTUP      = 0x00000080U,
+    EXITEVENT_CERTIMPORTED = 0x00000200U,
+}
+
+enum uint ENUMEXT_OBJECTID = 0x00000001U;
+enum uint CMM_REFRESHONLY = 0x00000001U;
+enum uint CMM_READONLY = 0x00000002U;
+enum uint DBG_CERTSRV = 0x00000001U;
 enum const(wchar)* wszSERVICE_NAME = "CertSvc";
 
 enum : const(wchar)*
@@ -1834,73 +1915,73 @@ enum : const(wchar)*
 
 enum const(wchar)* wszREGLDAPFLAGS = "LDAPFlags";
 enum const(wchar)* wszREGCERTSRVDEBUG = "Debug";
-enum uint DBSESSIONCOUNTDEFAULT = 0x00000064;
+enum uint DBSESSIONCOUNTDEFAULT = 0x00000064U;
 
 enum : uint
 {
-    DBFLAGS_READONLY        = 0x00000001,
-    DBFLAGS_CREATEIFNEEDED  = 0x00000002,
-    DBFLAGS_CIRCULARLOGGING = 0x00000004,
+    DBFLAGS_READONLY        = 0x00000001U,
+    DBFLAGS_CREATEIFNEEDED  = 0x00000002U,
+    DBFLAGS_CIRCULARLOGGING = 0x00000004U,
 }
 
 enum : uint
 {
-    DBFLAGS_LAZYFLUSH        = 0x00000008,
-    DBFLAGS_MAXCACHESIZEX100 = 0x00000010,
+    DBFLAGS_LAZYFLUSH        = 0x00000008U,
+    DBFLAGS_MAXCACHESIZEX100 = 0x00000010U,
 }
 
-enum uint DBFLAGS_CHECKPOINTDEPTH60MB = 0x00000020;
+enum uint DBFLAGS_CHECKPOINTDEPTH60MB = 0x00000020U;
 
 enum : uint
 {
-    DBFLAGS_LOGBUFFERSLARGE = 0x00000040,
-    DBFLAGS_LOGBUFFERSHUGE  = 0x00000080,
-    DBFLAGS_LOGFILESIZE16MB = 0x00000100,
+    DBFLAGS_LOGBUFFERSLARGE = 0x00000040U,
+    DBFLAGS_LOGBUFFERSHUGE  = 0x00000080U,
+    DBFLAGS_LOGFILESIZE16MB = 0x00000100U,
 }
 
-enum uint DBFLAGS_MULTITHREADTRANSACTIONS = 0x00000200;
-enum uint DBFLAGS_DISABLESNAPSHOTBACKUP = 0x00000400;
-enum uint DBFLAGS_ENABLEVOLATILEREQUESTS = 0x00000800;
+enum uint DBFLAGS_MULTITHREADTRANSACTIONS = 0x00000200U;
+enum uint DBFLAGS_DISABLESNAPSHOTBACKUP = 0x00000400U;
+enum uint DBFLAGS_ENABLEVOLATILEREQUESTS = 0x00000800U;
 
 enum : uint
 {
-    LDAPF_SSLENABLE   = 0x00000001,
-    LDAPF_SIGNDISABLE = 0x00000002,
-}
-
-enum : uint
-{
-    CSVER_MAJOR_WIN2K    = 0x00000001,
-    CSVER_MINOR_WIN2K    = 0x00000001,
-    CSVER_MAJOR_WHISTLER = 0x00000002,
+    LDAPF_SSLENABLE   = 0x00000001U,
+    LDAPF_SIGNDISABLE = 0x00000002U,
 }
 
 enum : uint
 {
-    CSVER_MINOR_WHISTLER_BETA2 = 0x00000001,
-    CSVER_MINOR_WHISTLER_BETA3 = 0x00000002,
+    CSVER_MAJOR_WIN2K    = 0x00000001U,
+    CSVER_MINOR_WIN2K    = 0x00000001U,
+    CSVER_MAJOR_WHISTLER = 0x00000002U,
 }
-
-enum uint CSVER_MAJOR_LONGHORN = 0x00000003;
-enum uint CSVER_MINOR_LONGHORN_BETA1 = 0x00000001;
 
 enum : uint
 {
-    CSVER_MAJOR_WIN7    = 0x00000004,
-    CSVER_MINOR_WIN7    = 0x00000001,
-    CSVER_MAJOR_WIN8    = 0x00000005,
-    CSVER_MINOR_WIN8    = 0x00000001,
-    CSVER_MAJOR_WINBLUE = 0x00000006,
+    CSVER_MINOR_WHISTLER_BETA2 = 0x00000001U,
+    CSVER_MINOR_WHISTLER_BETA3 = 0x00000002U,
 }
 
-enum uint CSVER_MINOR_WINBLUE = 0x00000001;
-enum uint CSVER_MAJOR_THRESHOLD = 0x00000007;
-enum uint CSVER_MINOR_THRESHOLD = 0x00000001;
+enum uint CSVER_MAJOR_LONGHORN = 0x00000003U;
+enum uint CSVER_MINOR_LONGHORN_BETA1 = 0x00000001U;
 
 enum : uint
 {
-    CSVER_MAJOR = 0x00000007,
-    CSVER_MINOR = 0x00000001,
+    CSVER_MAJOR_WIN7    = 0x00000004U,
+    CSVER_MINOR_WIN7    = 0x00000001U,
+    CSVER_MAJOR_WIN8    = 0x00000005U,
+    CSVER_MINOR_WIN8    = 0x00000001U,
+    CSVER_MAJOR_WINBLUE = 0x00000006U,
+}
+
+enum uint CSVER_MINOR_WINBLUE = 0x00000001U;
+enum uint CSVER_MAJOR_THRESHOLD = 0x00000007U;
+enum uint CSVER_MINOR_THRESHOLD = 0x00000001U;
+
+enum : uint
+{
+    CSVER_MAJOR = 0x00000007U,
+    CSVER_MINOR = 0x00000001U,
 }
 
 enum const(wchar)* wszREGKEYRESTOREINPROGRESS = "RestoreInProgress";
@@ -2074,121 +2155,121 @@ enum : const(wchar)*
     wszDBBACKUPCERTBACKDAT = "certbkxp.dat",
 }
 
-enum uint CCLOCKSKEWMINUTESDEFAULT = 0x0000000a;
-enum uint CVIEWAGEMINUTESDEFAULT = 0x00000010;
+enum uint CCLOCKSKEWMINUTESDEFAULT = 0x0000000aU;
+enum uint CVIEWAGEMINUTESDEFAULT = 0x00000010U;
 
 enum : uint
 {
-    dwVALIDITYPERIODCOUNTDEFAULT_ROOT       = 0x00000005,
-    dwVALIDITYPERIODCOUNTDEFAULT_ENTERPRISE = 0x00000002,
-    dwVALIDITYPERIODCOUNTDEFAULT_STANDALONE = 0x00000001,
+    dwVALIDITYPERIODCOUNTDEFAULT_ROOT       = 0x00000005U,
+    dwVALIDITYPERIODCOUNTDEFAULT_ENTERPRISE = 0x00000002U,
+    dwVALIDITYPERIODCOUNTDEFAULT_STANDALONE = 0x00000001U,
 }
 
-enum uint dwCAXCHGVALIDITYPERIODCOUNTDEFAULT = 0x00000001;
-enum uint dwCAXCHGOVERLAPPERIODCOUNTDEFAULT = 0x00000001;
-enum uint dwCRLPERIODCOUNTDEFAULT = 0x00000001;
-enum uint dwCRLOVERLAPPERIODCOUNTDEFAULT = 0x00000000;
-enum uint dwCRLDELTAPERIODCOUNTDEFAULT = 0x00000001;
-enum uint dwCRLDELTAOVERLAPPERIODCOUNTDEFAULT = 0x00000000;
-enum uint SETUP_SERVER_FLAG = 0x00000001;
-enum uint SETUP_CLIENT_FLAG = 0x00000002;
-enum uint SETUP_SUSPEND_FLAG = 0x00000004;
-enum uint SETUP_REQUEST_FLAG = 0x00000008;
-enum uint SETUP_ONLINE_FLAG = 0x00000010;
-enum uint SETUP_DENIED_FLAG = 0x00000020;
-enum uint SETUP_CREATEDB_FLAG = 0x00000040;
-enum uint SETUP_ATTEMPT_VROOT_CREATE = 0x00000080;
-enum uint SETUP_FORCECRL_FLAG = 0x00000100;
-enum uint SETUP_UPDATE_CAOBJECT_SVRTYPE = 0x00000200;
-enum uint SETUP_SERVER_UPGRADED_FLAG = 0x00000400;
-enum uint SETUP_W2K_SECURITY_NOT_UPGRADED_FLAG = 0x00000800;
-enum uint SETUP_SECURITY_CHANGED = 0x00001000;
-enum uint SETUP_DCOM_SECURITY_UPDATED_FLAG = 0x00002000;
-enum uint SETUP_SERVER_IS_UP_TO_DATE_FLAG = 0x00004000;
-enum uint CRLF_DELTA_USE_OLDEST_UNEXPIRED_BASE = 0x00000001;
-enum uint CRLF_DELETE_EXPIRED_CRLS = 0x00000002;
-enum uint CRLF_CRLNUMBER_CRITICAL = 0x00000004;
-enum uint CRLF_REVCHECK_IGNORE_OFFLINE = 0x00000008;
-enum uint CRLF_IGNORE_INVALID_POLICIES = 0x00000010;
-enum uint CRLF_REBUILD_MODIFIED_SUBJECT_ONLY = 0x00000020;
-enum uint CRLF_SAVE_FAILED_CERTS = 0x00000040;
-enum uint CRLF_IGNORE_UNKNOWN_CMC_ATTRIBUTES = 0x00000080;
-enum uint CRLF_IGNORE_CROSS_CERT_TRUST_ERROR = 0x00000100;
-enum uint CRLF_PUBLISH_EXPIRED_CERT_CRLS = 0x00000200;
-enum uint CRLF_ENFORCE_ENROLLMENT_AGENT = 0x00000400;
+enum uint dwCAXCHGVALIDITYPERIODCOUNTDEFAULT = 0x00000001U;
+enum uint dwCAXCHGOVERLAPPERIODCOUNTDEFAULT = 0x00000001U;
+enum uint dwCRLPERIODCOUNTDEFAULT = 0x00000001U;
+enum uint dwCRLOVERLAPPERIODCOUNTDEFAULT = 0x00000000U;
+enum uint dwCRLDELTAPERIODCOUNTDEFAULT = 0x00000001U;
+enum uint dwCRLDELTAOVERLAPPERIODCOUNTDEFAULT = 0x00000000U;
+enum uint SETUP_SERVER_FLAG = 0x00000001U;
+enum uint SETUP_CLIENT_FLAG = 0x00000002U;
+enum uint SETUP_SUSPEND_FLAG = 0x00000004U;
+enum uint SETUP_REQUEST_FLAG = 0x00000008U;
+enum uint SETUP_ONLINE_FLAG = 0x00000010U;
+enum uint SETUP_DENIED_FLAG = 0x00000020U;
+enum uint SETUP_CREATEDB_FLAG = 0x00000040U;
+enum uint SETUP_ATTEMPT_VROOT_CREATE = 0x00000080U;
+enum uint SETUP_FORCECRL_FLAG = 0x00000100U;
+enum uint SETUP_UPDATE_CAOBJECT_SVRTYPE = 0x00000200U;
+enum uint SETUP_SERVER_UPGRADED_FLAG = 0x00000400U;
+enum uint SETUP_W2K_SECURITY_NOT_UPGRADED_FLAG = 0x00000800U;
+enum uint SETUP_SECURITY_CHANGED = 0x00001000U;
+enum uint SETUP_DCOM_SECURITY_UPDATED_FLAG = 0x00002000U;
+enum uint SETUP_SERVER_IS_UP_TO_DATE_FLAG = 0x00004000U;
+enum uint CRLF_DELTA_USE_OLDEST_UNEXPIRED_BASE = 0x00000001U;
+enum uint CRLF_DELETE_EXPIRED_CRLS = 0x00000002U;
+enum uint CRLF_CRLNUMBER_CRITICAL = 0x00000004U;
+enum uint CRLF_REVCHECK_IGNORE_OFFLINE = 0x00000008U;
+enum uint CRLF_IGNORE_INVALID_POLICIES = 0x00000010U;
+enum uint CRLF_REBUILD_MODIFIED_SUBJECT_ONLY = 0x00000020U;
+enum uint CRLF_SAVE_FAILED_CERTS = 0x00000040U;
+enum uint CRLF_IGNORE_UNKNOWN_CMC_ATTRIBUTES = 0x00000080U;
+enum uint CRLF_IGNORE_CROSS_CERT_TRUST_ERROR = 0x00000100U;
+enum uint CRLF_PUBLISH_EXPIRED_CERT_CRLS = 0x00000200U;
+enum uint CRLF_ENFORCE_ENROLLMENT_AGENT = 0x00000400U;
 
 enum : uint
 {
-    CRLF_DISABLE_RDN_REORDER      = 0x00000800,
-    CRLF_DISABLE_ROOT_CROSS_CERTS = 0x00001000,
+    CRLF_DISABLE_RDN_REORDER      = 0x00000800U,
+    CRLF_DISABLE_ROOT_CROSS_CERTS = 0x00001000U,
 }
 
-enum uint CRLF_LOG_FULL_RESPONSE = 0x00002000;
-enum uint CRLF_USE_XCHG_CERT_TEMPLATE = 0x00004000;
-enum uint CRLF_USE_CROSS_CERT_TEMPLATE = 0x00008000;
-enum uint CRLF_ALLOW_REQUEST_ATTRIBUTE_SUBJECT = 0x00010000;
-enum uint CRLF_REVCHECK_IGNORE_NOREVCHECK = 0x00020000;
+enum uint CRLF_LOG_FULL_RESPONSE = 0x00002000U;
+enum uint CRLF_USE_XCHG_CERT_TEMPLATE = 0x00004000U;
+enum uint CRLF_USE_CROSS_CERT_TEMPLATE = 0x00008000U;
+enum uint CRLF_ALLOW_REQUEST_ATTRIBUTE_SUBJECT = 0x00010000U;
+enum uint CRLF_REVCHECK_IGNORE_NOREVCHECK = 0x00020000U;
 
 enum : uint
 {
-    CRLF_PRESERVE_EXPIRED_CA_CERTS = 0x00040000,
-    CRLF_PRESERVE_REVOKED_CA_CERTS = 0x00080000,
+    CRLF_PRESERVE_EXPIRED_CA_CERTS = 0x00040000U,
+    CRLF_PRESERVE_REVOKED_CA_CERTS = 0x00080000U,
 }
 
-enum uint CRLF_DISABLE_CHAIN_VERIFICATION = 0x00100000;
-enum uint CRLF_BUILD_ROOTCA_CRLENTRIES_BASEDONKEY = 0x00200000;
-enum uint CRLF_ENABLE_CRL_PARTITION = 0x00400000;
-enum uint CRLF_PARTITION_ZERO_EXCLUSIVE = 0x00800000;
+enum uint CRLF_DISABLE_CHAIN_VERIFICATION = 0x00100000U;
+enum uint CRLF_BUILD_ROOTCA_CRLENTRIES_BASEDONKEY = 0x00200000U;
+enum uint CRLF_ENABLE_CRL_PARTITION = 0x00400000U;
+enum uint CRLF_PARTITION_ZERO_EXCLUSIVE = 0x00800000U;
 
 enum : uint
 {
-    CRLF_CONTAINS_ONLY_CACERTS   = 0x01000000,
-    CRLF_CONTAINS_ONLY_USERCERTS = 0x02000000,
+    CRLF_CONTAINS_ONLY_CACERTS   = 0x01000000U,
+    CRLF_CONTAINS_ONLY_USERCERTS = 0x02000000U,
 }
 
-enum uint KRAF_ENABLEFOREIGN = 0x00000001;
-enum uint KRAF_SAVEBADREQUESTKEY = 0x00000002;
-enum uint KRAF_ENABLEARCHIVEALL = 0x00000004;
-enum uint KRAF_DISABLEUSEDEFAULTPROVIDER = 0x00000008;
-enum uint IF_LOCKICERTREQUEST = 0x00000001;
-enum uint IF_NOREMOTEICERTREQUEST = 0x00000002;
-enum uint IF_NOLOCALICERTREQUEST = 0x00000004;
-enum uint IF_NORPCICERTREQUEST = 0x00000008;
-enum uint IF_NOREMOTEICERTADMIN = 0x00000010;
-enum uint IF_NOLOCALICERTADMIN = 0x00000020;
-enum uint IF_NOREMOTEICERTADMINBACKUP = 0x00000040;
-enum uint IF_NOLOCALICERTADMINBACKUP = 0x00000080;
-enum uint IF_NOSNAPSHOTBACKUP = 0x00000100;
+enum uint KRAF_ENABLEFOREIGN = 0x00000001U;
+enum uint KRAF_SAVEBADREQUESTKEY = 0x00000002U;
+enum uint KRAF_ENABLEARCHIVEALL = 0x00000004U;
+enum uint KRAF_DISABLEUSEDEFAULTPROVIDER = 0x00000008U;
+enum uint IF_LOCKICERTREQUEST = 0x00000001U;
+enum uint IF_NOREMOTEICERTREQUEST = 0x00000002U;
+enum uint IF_NOLOCALICERTREQUEST = 0x00000004U;
+enum uint IF_NORPCICERTREQUEST = 0x00000008U;
+enum uint IF_NOREMOTEICERTADMIN = 0x00000010U;
+enum uint IF_NOLOCALICERTADMIN = 0x00000020U;
+enum uint IF_NOREMOTEICERTADMINBACKUP = 0x00000040U;
+enum uint IF_NOLOCALICERTADMINBACKUP = 0x00000080U;
+enum uint IF_NOSNAPSHOTBACKUP = 0x00000100U;
 
 enum : uint
 {
-    IF_ENFORCEENCRYPTICERTREQUEST = 0x00000200,
-    IF_ENFORCEENCRYPTICERTADMIN   = 0x00000400,
+    IF_ENFORCEENCRYPTICERTREQUEST = 0x00000200U,
+    IF_ENFORCEENCRYPTICERTADMIN   = 0x00000400U,
 }
 
-enum uint IF_ENABLEEXITKEYRETRIEVAL = 0x00000800;
-enum uint IF_ENABLEADMINASAUDITOR = 0x00001000;
-enum uint IF_ENABLEPRESIGNSUPPORT = 0x00002000;
+enum uint IF_ENABLEEXITKEYRETRIEVAL = 0x00000800U;
+enum uint IF_ENABLEADMINASAUDITOR = 0x00001000U;
+enum uint IF_ENABLEPRESIGNSUPPORT = 0x00002000U;
 
 enum : uint
 {
-    PROCFLG_NONE            = 0x00000000,
-    PROCFLG_ENFORCEGOODKEYS = 0x00000001,
+    PROCFLG_NONE            = 0x00000000U,
+    PROCFLG_ENFORCEGOODKEYS = 0x00000001U,
 }
 
-enum uint CSURL_SERVERPUBLISH = 0x00000001;
+enum uint CSURL_SERVERPUBLISH = 0x00000001U;
 
 enum : uint
 {
-    CSURL_ADDTOCERTCDP     = 0x00000002,
-    CSURL_ADDTOFRESHESTCRL = 0x00000004,
-    CSURL_ADDTOCRLCDP      = 0x00000008,
+    CSURL_ADDTOCERTCDP     = 0x00000002U,
+    CSURL_ADDTOFRESHESTCRL = 0x00000004U,
+    CSURL_ADDTOCRLCDP      = 0x00000008U,
 }
 
-enum uint CSURL_PUBLISHRETRY = 0x00000010;
-enum uint CSURL_ADDTOCERTOCSP = 0x00000020;
-enum uint CSURL_SERVERPUBLISHDELTA = 0x00000040;
-enum uint CSURL_ADDTOIDP = 0x00000080;
+enum uint CSURL_PUBLISHRETRY = 0x00000010U;
+enum uint CSURL_ADDTOCERTOCSP = 0x00000020U;
+enum uint CSURL_SERVERPUBLISHDELTA = 0x00000040U;
+enum uint CSURL_ADDTOIDP = 0x00000080U;
 
 enum : const(wchar)*
 {
@@ -2295,104 +2376,104 @@ enum const(wchar)* wszREGEKUOIDSFORVOLATILEREQUESTS = "EKUOIDsforVolatileRequest
 enum const(wchar)* wszREGLDAPSESSIONOPTIONS = "LDAPSessionOptions";
 enum const(wchar)* wszLDAPSESSIONOPTIONVALUE = "LDAPSessionOptionValue";
 enum const(wchar)* wszREGDEFAULTSMIME = "DefaultSMIME";
-enum uint CAPATHLENGTH_INFINITE = 0xffffffff;
+enum uint CAPATHLENGTH_INFINITE = 0xffffffffU;
 
 enum : uint
 {
-    REQDISP_PENDING             = 0x00000000,
-    REQDISP_ISSUE               = 0x00000001,
-    REQDISP_DENY                = 0x00000002,
-    REQDISP_USEREQUESTATTRIBUTE = 0x00000003,
+    REQDISP_PENDING             = 0x00000000U,
+    REQDISP_ISSUE               = 0x00000001U,
+    REQDISP_DENY                = 0x00000002U,
+    REQDISP_USEREQUESTATTRIBUTE = 0x00000003U,
 }
 
 enum : uint
 {
-    REQDISP_MASK         = 0x000000ff,
-    REQDISP_PENDINGFIRST = 0x00000100,
+    REQDISP_MASK         = 0x000000ffU,
+    REQDISP_PENDINGFIRST = 0x00000100U,
 }
 
-enum uint REQDISP_DEFAULT_ENTERPRISE = 0x00000001;
+enum uint REQDISP_DEFAULT_ENTERPRISE = 0x00000001U;
 
 enum : uint
 {
-    REVEXT_CDPLDAPURL_OLD = 0x00000001,
-    REVEXT_CDPHTTPURL_OLD = 0x00000002,
-    REVEXT_CDPFTPURL_OLD  = 0x00000004,
-    REVEXT_CDPFILEURL_OLD = 0x00000008,
-    REVEXT_CDPURLMASK_OLD = 0x000000ff,
-    REVEXT_CDPENABLE      = 0x00000100,
-    REVEXT_ASPENABLE      = 0x00000200,
-    REVEXT_DEFAULT_NODS   = 0x00000100,
-    REVEXT_DEFAULT_DS     = 0x00000100,
-}
-
-enum : uint
-{
-    ISSCERT_LDAPURL_OLD  = 0x00000001,
-    ISSCERT_HTTPURL_OLD  = 0x00000002,
-    ISSCERT_FTPURL_OLD   = 0x00000004,
-    ISSCERT_FILEURL_OLD  = 0x00000008,
-    ISSCERT_URLMASK_OLD  = 0x000000ff,
-    ISSCERT_ENABLE       = 0x00000100,
-    ISSCERT_DEFAULT_NODS = 0x00000100,
-    ISSCERT_DEFAULT_DS   = 0x00000100,
-}
-
-enum uint EDITF_ENABLEREQUESTEXTENSIONS = 0x00000001;
-enum uint EDITF_REQUESTEXTENSIONLIST = 0x00000002;
-enum uint EDITF_DISABLEEXTENSIONLIST = 0x00000004;
-
-enum : uint
-{
-    EDITF_ADDOLDKEYUSAGE = 0x00000008,
-    EDITF_ADDOLDCERTTYPE = 0x00000010,
-}
-
-enum uint EDITF_ATTRIBUTEENDDATE = 0x00000020;
-
-enum : uint
-{
-    EDITF_BASICCONSTRAINTSCRITICAL = 0x00000040,
-    EDITF_BASICCONSTRAINTSCA       = 0x00000080,
-}
-
-enum uint EDITF_ENABLEAKIKEYID = 0x00000100;
-enum uint EDITF_ATTRIBUTECA = 0x00000200;
-enum uint EDITF_IGNOREREQUESTERGROUP = 0x00000400;
-
-enum : uint
-{
-    EDITF_ENABLEAKIISSUERNAME   = 0x00000800,
-    EDITF_ENABLEAKIISSUERSERIAL = 0x00001000,
-    EDITF_ENABLEAKICRITICAL     = 0x00002000,
-}
-
-enum uint EDITF_SERVERUPGRADED = 0x00004000;
-enum uint EDITF_ATTRIBUTEEKU = 0x00008000;
-enum uint EDITF_ENABLEDEFAULTSMIME = 0x00010000;
-enum uint EDITF_EMAILOPTIONAL = 0x00020000;
-enum uint EDITF_ATTRIBUTESUBJECTALTNAME2 = 0x00040000;
-
-enum : uint
-{
-    EDITF_ENABLELDAPREFERRALS = 0x00080000,
-    EDITF_ENABLECHASECLIENTDC = 0x00100000,
-}
-
-enum uint EDITF_AUDITCERTTEMPLATELOAD = 0x00200000;
-
-enum : uint
-{
-    EDITF_DISABLEOLDOSCNUPN      = 0x00400000,
-    EDITF_DISABLELDAPPACKAGELIST = 0x00800000,
+    REVEXT_CDPLDAPURL_OLD = 0x00000001U,
+    REVEXT_CDPHTTPURL_OLD = 0x00000002U,
+    REVEXT_CDPFTPURL_OLD  = 0x00000004U,
+    REVEXT_CDPFILEURL_OLD = 0x00000008U,
+    REVEXT_CDPURLMASK_OLD = 0x000000ffU,
+    REVEXT_CDPENABLE      = 0x00000100U,
+    REVEXT_ASPENABLE      = 0x00000200U,
+    REVEXT_DEFAULT_NODS   = 0x00000100U,
+    REVEXT_DEFAULT_DS     = 0x00000100U,
 }
 
 enum : uint
 {
-    EDITF_ENABLEUPNMAP                = 0x01000000,
-    EDITF_ENABLEOCSPREVNOCHECK        = 0x02000000,
-    EDITF_ENABLERENEWONBEHALFOF       = 0x04000000,
-    EDITF_ENABLEKEYENCIPHERMENTCACERT = 0x08000000,
+    ISSCERT_LDAPURL_OLD  = 0x00000001U,
+    ISSCERT_HTTPURL_OLD  = 0x00000002U,
+    ISSCERT_FTPURL_OLD   = 0x00000004U,
+    ISSCERT_FILEURL_OLD  = 0x00000008U,
+    ISSCERT_URLMASK_OLD  = 0x000000ffU,
+    ISSCERT_ENABLE       = 0x00000100U,
+    ISSCERT_DEFAULT_NODS = 0x00000100U,
+    ISSCERT_DEFAULT_DS   = 0x00000100U,
+}
+
+enum uint EDITF_ENABLEREQUESTEXTENSIONS = 0x00000001U;
+enum uint EDITF_REQUESTEXTENSIONLIST = 0x00000002U;
+enum uint EDITF_DISABLEEXTENSIONLIST = 0x00000004U;
+
+enum : uint
+{
+    EDITF_ADDOLDKEYUSAGE = 0x00000008U,
+    EDITF_ADDOLDCERTTYPE = 0x00000010U,
+}
+
+enum uint EDITF_ATTRIBUTEENDDATE = 0x00000020U;
+
+enum : uint
+{
+    EDITF_BASICCONSTRAINTSCRITICAL = 0x00000040U,
+    EDITF_BASICCONSTRAINTSCA       = 0x00000080U,
+}
+
+enum uint EDITF_ENABLEAKIKEYID = 0x00000100U;
+enum uint EDITF_ATTRIBUTECA = 0x00000200U;
+enum uint EDITF_IGNOREREQUESTERGROUP = 0x00000400U;
+
+enum : uint
+{
+    EDITF_ENABLEAKIISSUERNAME   = 0x00000800U,
+    EDITF_ENABLEAKIISSUERSERIAL = 0x00001000U,
+    EDITF_ENABLEAKICRITICAL     = 0x00002000U,
+}
+
+enum uint EDITF_SERVERUPGRADED = 0x00004000U;
+enum uint EDITF_ATTRIBUTEEKU = 0x00008000U;
+enum uint EDITF_ENABLEDEFAULTSMIME = 0x00010000U;
+enum uint EDITF_EMAILOPTIONAL = 0x00020000U;
+enum uint EDITF_ATTRIBUTESUBJECTALTNAME2 = 0x00040000U;
+
+enum : uint
+{
+    EDITF_ENABLELDAPREFERRALS = 0x00080000U,
+    EDITF_ENABLECHASECLIENTDC = 0x00100000U,
+}
+
+enum uint EDITF_AUDITCERTTEMPLATELOAD = 0x00200000U;
+
+enum : uint
+{
+    EDITF_DISABLEOLDOSCNUPN      = 0x00400000U,
+    EDITF_DISABLELDAPPACKAGELIST = 0x00800000U,
+}
+
+enum : uint
+{
+    EDITF_ENABLEUPNMAP                = 0x01000000U,
+    EDITF_ENABLEOCSPREVNOCHECK        = 0x02000000U,
+    EDITF_ENABLERENEWONBEHALFOF       = 0x04000000U,
+    EDITF_ENABLEKEYENCIPHERMENTCACERT = 0x08000000U,
 }
 
 enum : const(wchar)*
@@ -2406,16 +2487,16 @@ enum const(wchar)* wszREGCERTPUBLISHFLAGS = "PublishCertFlags";
 
 enum : uint
 {
-    EXITPUB_FILE            = 0x00000001,
-    EXITPUB_ACTIVEDIRECTORY = 0x00000002,
+    EXITPUB_FILE            = 0x00000001U,
+    EXITPUB_ACTIVEDIRECTORY = 0x00000002U,
 }
 
-enum uint EXITPUB_REMOVEOLDCERTS = 0x00000010;
+enum uint EXITPUB_REMOVEOLDCERTS = 0x00000010U;
 
 enum : uint
 {
-    EXITPUB_DEFAULT_ENTERPRISE = 0x00000002,
-    EXITPUB_DEFAULT_STANDALONE = 0x00000001,
+    EXITPUB_DEFAULT_ENTERPRISE = 0x00000002U,
+    EXITPUB_DEFAULT_STANDALONE = 0x00000001U,
 }
 
 enum : const(wchar)*
@@ -2699,13 +2780,13 @@ enum : const(wchar)*
 
 enum const(wchar)* wszREGPRESERVESCEPDUMMYCERTS = "PreserveSCEPDummyCerts";
 enum const(wchar)* wszREGALLPROVIDERS = "All";
-enum uint TP_MACHINEPOLICY = 0x00000001;
+enum uint TP_MACHINEPOLICY = 0x00000001U;
 enum const(wchar)* wszREGKEYREPAIR = "KeyRepair";
 
 enum : uint
 {
-    KR_ENABLE_MACHINE = 0x00000001,
-    KR_ENABLE_USER    = 0x00000002,
+    KR_ENABLE_MACHINE = 0x00000001U,
+    KR_ENABLE_USER    = 0x00000002U,
 }
 
 enum : const(wchar)*
@@ -2715,7 +2796,7 @@ enum : const(wchar)*
 }
 
 enum const(wchar)* CONFIGURATION_REG_EPTOKENCHECKVALUE = "EPTokenCheckValue";
-enum uint EP_TOKENCHECK_DEFAULT_VALUE = 0x00000002;
+enum uint EP_TOKENCHECK_DEFAULT_VALUE = 0x00000002U;
 enum const(wchar)* CONFIGURATION_REG_DISABLE_HTTPSONLY = "DisableHTTPSOnly";
 enum const(wchar)* wszPROPDISTINGUISHEDNAME = "DistinguishedName";
 
@@ -2977,20 +3058,20 @@ enum const(wchar)* wszPROPNAMETYPE = "NameType";
 
 enum : uint
 {
-    EXTENSION_CRITICAL_FLAG       = 0x00000001,
-    EXTENSION_DISABLE_FLAG        = 0x00000002,
-    EXTENSION_DELETE_FLAG         = 0x00000004,
-    EXTENSION_POLICY_MASK         = 0x0000ffff,
-    EXTENSION_ORIGIN_REQUEST      = 0x00010000,
-    EXTENSION_ORIGIN_POLICY       = 0x00020000,
-    EXTENSION_ORIGIN_ADMIN        = 0x00030000,
-    EXTENSION_ORIGIN_SERVER       = 0x00040000,
-    EXTENSION_ORIGIN_RENEWALCERT  = 0x00050000,
-    EXTENSION_ORIGIN_IMPORTEDCERT = 0x00060000,
-    EXTENSION_ORIGIN_PKCS7        = 0x00070000,
-    EXTENSION_ORIGIN_CMC          = 0x00080000,
-    EXTENSION_ORIGIN_CACERT       = 0x00090000,
-    EXTENSION_ORIGIN_MASK         = 0x000f0000,
+    EXTENSION_CRITICAL_FLAG       = 0x00000001U,
+    EXTENSION_DISABLE_FLAG        = 0x00000002U,
+    EXTENSION_DELETE_FLAG         = 0x00000004U,
+    EXTENSION_POLICY_MASK         = 0x0000ffffU,
+    EXTENSION_ORIGIN_REQUEST      = 0x00010000U,
+    EXTENSION_ORIGIN_POLICY       = 0x00020000U,
+    EXTENSION_ORIGIN_ADMIN        = 0x00030000U,
+    EXTENSION_ORIGIN_SERVER       = 0x00040000U,
+    EXTENSION_ORIGIN_RENEWALCERT  = 0x00050000U,
+    EXTENSION_ORIGIN_IMPORTEDCERT = 0x00060000U,
+    EXTENSION_ORIGIN_PKCS7        = 0x00070000U,
+    EXTENSION_ORIGIN_CMC          = 0x00080000U,
+    EXTENSION_ORIGIN_CACERT       = 0x00090000U,
+    EXTENSION_ORIGIN_MASK         = 0x000f0000U,
 }
 
 enum : const(wchar)*
@@ -3035,101 +3116,101 @@ enum : const(wchar)*
 
 enum : uint
 {
-    CPF_BASE     = 0x00000001,
-    CPF_DELTA    = 0x00000002,
-    CPF_COMPLETE = 0x00000004,
+    CPF_BASE     = 0x00000001U,
+    CPF_DELTA    = 0x00000002U,
+    CPF_COMPLETE = 0x00000004U,
 }
 
-enum uint CPF_SHADOW = 0x00000008;
-enum uint CPF_CASTORE_ERROR = 0x00000010;
-enum uint CPF_BADURL_ERROR = 0x00000020;
-enum uint CPF_MANUAL = 0x00000040;
-enum uint CPF_SIGNATURE_ERROR = 0x00000080;
-enum uint CPF_LDAP_ERROR = 0x00000100;
-enum uint CPF_FILE_ERROR = 0x00000200;
-enum uint CPF_FTP_ERROR = 0x00000400;
-enum uint CPF_HTTP_ERROR = 0x00000800;
+enum uint CPF_SHADOW = 0x00000008U;
+enum uint CPF_CASTORE_ERROR = 0x00000010U;
+enum uint CPF_BADURL_ERROR = 0x00000020U;
+enum uint CPF_MANUAL = 0x00000040U;
+enum uint CPF_SIGNATURE_ERROR = 0x00000080U;
+enum uint CPF_LDAP_ERROR = 0x00000100U;
+enum uint CPF_FILE_ERROR = 0x00000200U;
+enum uint CPF_FTP_ERROR = 0x00000400U;
+enum uint CPF_HTTP_ERROR = 0x00000800U;
 
 enum : uint
 {
-    CPF_POSTPONED_BASE_LDAP_ERROR = 0x00001000,
-    CPF_POSTPONED_BASE_FILE_ERROR = 0x00002000,
+    CPF_POSTPONED_BASE_LDAP_ERROR = 0x00001000U,
+    CPF_POSTPONED_BASE_FILE_ERROR = 0x00002000U,
 }
 
-enum uint PROPTYPE_MASK = 0x000000ff;
+enum uint PROPTYPE_MASK = 0x000000ffU;
 
 enum : uint
 {
-    PROPCALLER_SERVER  = 0x00000100,
-    PROPCALLER_POLICY  = 0x00000200,
-    PROPCALLER_EXIT    = 0x00000300,
-    PROPCALLER_ADMIN   = 0x00000400,
-    PROPCALLER_REQUEST = 0x00000500,
-    PROPCALLER_MASK    = 0x00000f00,
+    PROPCALLER_SERVER  = 0x00000100U,
+    PROPCALLER_POLICY  = 0x00000200U,
+    PROPCALLER_EXIT    = 0x00000300U,
+    PROPCALLER_ADMIN   = 0x00000400U,
+    PROPCALLER_REQUEST = 0x00000500U,
+    PROPCALLER_MASK    = 0x00000f00U,
 }
 
-enum uint PROPFLAGS_INDEXED = 0x00010000;
-enum uint CR_FLG_FORCETELETEX = 0x00000001;
+enum uint PROPFLAGS_INDEXED = 0x00010000U;
+enum uint CR_FLG_FORCETELETEX = 0x00000001U;
 
 enum : uint
 {
-    CR_FLG_RENEWAL          = 0x00000002,
-    CR_FLG_FORCEUTF8        = 0x00000004,
-    CR_FLG_CAXCHGCERT       = 0x00000008,
-    CR_FLG_ENROLLONBEHALFOF = 0x00000010,
+    CR_FLG_RENEWAL          = 0x00000002U,
+    CR_FLG_FORCEUTF8        = 0x00000004U,
+    CR_FLG_CAXCHGCERT       = 0x00000008U,
+    CR_FLG_ENROLLONBEHALFOF = 0x00000010U,
 }
 
-enum uint CR_FLG_SUBJECTUNMODIFIED = 0x00000020;
-enum uint CR_FLG_VALIDENCRYPTEDKEYHASH = 0x00000040;
-enum uint CR_FLG_CACROSSCERT = 0x00000080;
-enum uint CR_FLG_ENFORCEUTF8 = 0x00000100;
-enum uint CR_FLG_DEFINEDCACERT = 0x00000200;
+enum uint CR_FLG_SUBJECTUNMODIFIED = 0x00000020U;
+enum uint CR_FLG_VALIDENCRYPTEDKEYHASH = 0x00000040U;
+enum uint CR_FLG_CACROSSCERT = 0x00000080U;
+enum uint CR_FLG_ENFORCEUTF8 = 0x00000100U;
+enum uint CR_FLG_DEFINEDCACERT = 0x00000200U;
 
 enum : uint
 {
-    CR_FLG_CHALLENGEPENDING   = 0x00000400,
-    CR_FLG_CHALLENGESATISFIED = 0x00000800,
-}
-
-enum : uint
-{
-    CR_FLG_TRUSTONUSE   = 0x00001000,
-    CR_FLG_TRUSTEKCERT  = 0x00002000,
-    CR_FLG_TRUSTEKKEY   = 0x00004000,
-    CR_FLG_PUBLISHERROR = 0x80000000,
+    CR_FLG_CHALLENGEPENDING   = 0x00000400U,
+    CR_FLG_CHALLENGESATISFIED = 0x00000800U,
 }
 
 enum : uint
 {
-    DB_DISP_ACTIVE        = 0x00000008,
-    DB_DISP_PENDING       = 0x00000009,
-    DB_DISP_QUEUE_MAX     = 0x00000009,
-    DB_DISP_FOREIGN       = 0x0000000c,
-    DB_DISP_CA_CERT       = 0x0000000f,
-    DB_DISP_CA_CERT_CHAIN = 0x00000010,
+    CR_FLG_TRUSTONUSE   = 0x00001000U,
+    CR_FLG_TRUSTEKCERT  = 0x00002000U,
+    CR_FLG_TRUSTEKKEY   = 0x00004000U,
+    CR_FLG_PUBLISHERROR = 0x80000000U,
 }
 
 enum : uint
 {
-    DB_DISP_KRA_CERT       = 0x00000011,
-    DB_DISP_LOG_MIN        = 0x00000014,
-    DB_DISP_ISSUED         = 0x00000014,
-    DB_DISP_REVOKED        = 0x00000015,
-    DB_DISP_LOG_FAILED_MIN = 0x0000001e,
+    DB_DISP_ACTIVE        = 0x00000008U,
+    DB_DISP_PENDING       = 0x00000009U,
+    DB_DISP_QUEUE_MAX     = 0x00000009U,
+    DB_DISP_FOREIGN       = 0x0000000cU,
+    DB_DISP_CA_CERT       = 0x0000000fU,
+    DB_DISP_CA_CERT_CHAIN = 0x00000010U,
 }
 
 enum : uint
 {
-    DB_DISP_ERROR  = 0x0000001e,
-    DB_DISP_DENIED = 0x0000001f,
+    DB_DISP_KRA_CERT       = 0x00000011U,
+    DB_DISP_LOG_MIN        = 0x00000014U,
+    DB_DISP_ISSUED         = 0x00000014U,
+    DB_DISP_REVOKED        = 0x00000015U,
+    DB_DISP_LOG_FAILED_MIN = 0x0000001eU,
 }
-
-enum uint VR_PENDING = 0x00000000;
 
 enum : uint
 {
-    VR_INSTANT_OK  = 0x00000001,
-    VR_INSTANT_BAD = 0x00000002,
+    DB_DISP_ERROR  = 0x0000001eU,
+    DB_DISP_DENIED = 0x0000001fU,
+}
+
+enum uint VR_PENDING = 0x00000000U;
+
+enum : uint
+{
+    VR_INSTANT_OK  = 0x00000001U,
+    VR_INSTANT_BAD = 0x00000002U,
 }
 
 enum : const(wchar)*
@@ -3153,24 +3234,24 @@ enum : const(wchar)*
 
 enum : uint
 {
-    CV_OUT_HEXRAW     = 0x0000000c,
-    CV_OUT_ENCODEMASK = 0x000000ff,
-    CV_OUT_NOCRLF     = 0x40000000,
-    CV_OUT_NOCR       = 0x80000000,
+    CV_OUT_HEXRAW     = 0x0000000cU,
+    CV_OUT_ENCODEMASK = 0x000000ffU,
+    CV_OUT_NOCRLF     = 0x40000000U,
+    CV_OUT_NOCR       = 0x80000000U,
 }
 
 enum : uint
 {
-    CVR_SEEK_NONE    = 0x00000000,
-    CVR_SEEK_MASK    = 0x000000ff,
-    CVR_SEEK_NODELTA = 0x00001000,
+    CVR_SEEK_NONE    = 0x00000000U,
+    CVR_SEEK_MASK    = 0x000000ffU,
+    CVR_SEEK_NODELTA = 0x00001000U,
 }
 
 enum : uint
 {
-    CVR_SORT_NONE    = 0x00000000,
-    CVR_SORT_ASCEND  = 0x00000001,
-    CVR_SORT_DESCEND = 0x00000002,
+    CVR_SORT_NONE    = 0x00000000U,
+    CVR_SORT_ASCEND  = 0x00000001U,
+    CVR_SORT_DESCEND = 0x00000002U,
 }
 
 enum int CV_COLUMN_EXTENSION_DEFAULT = 0xfffffffc;
@@ -3184,38 +3265,38 @@ enum : int
 
 enum : uint
 {
-    CVRC_TABLE_MASK  = 0x0000f000,
-    CVRC_TABLE_SHIFT = 0x0000000c,
+    CVRC_TABLE_MASK  = 0x0000f000U,
+    CVRC_TABLE_SHIFT = 0x0000000cU,
 }
 
-enum uint CRYPT_ENUM_ALL_PROVIDERS = 0x00000001;
+enum uint CRYPT_ENUM_ALL_PROVIDERS = 0x00000001U;
 enum int XEPR_ENUM_FIRST = 0xffffffff;
 
 enum : uint
 {
-    XEPR_DATE         = 0x00000005,
-    XEPR_TEMPLATENAME = 0x00000006,
+    XEPR_DATE         = 0x00000005U,
+    XEPR_TEMPLATENAME = 0x00000006U,
 }
 
 enum : uint
 {
-    XEPR_VERSION        = 0x00000007,
-    XEPR_V1TEMPLATENAME = 0x00000009,
+    XEPR_VERSION        = 0x00000007U,
+    XEPR_V1TEMPLATENAME = 0x00000009U,
 }
 
-enum uint XEPR_V2TEMPLATEOID = 0x00000010;
-enum uint XEKL_KEYSIZE_DEFAULT = 0x00000004;
-enum uint XECP_STRING_PROPERTY = 0x00000001;
+enum uint XEPR_V2TEMPLATEOID = 0x00000010U;
+enum uint XEKL_KEYSIZE_DEFAULT = 0x00000004U;
+enum uint XECP_STRING_PROPERTY = 0x00000001U;
 
 enum : uint
 {
-    XECI_DISABLE    = 0x00000000,
-    XECI_XENROLL    = 0x00000001,
-    XECI_AUTOENROLL = 0x00000002,
+    XECI_DISABLE    = 0x00000000U,
+    XECI_XENROLL    = 0x00000001U,
+    XECI_AUTOENROLL = 0x00000002U,
 }
 
-enum uint XECI_REQWIZARD = 0x00000003;
-enum uint XECI_CERTREQ = 0x00000004;
+enum uint XECI_REQWIZARD = 0x00000003U;
+enum uint XECI_CERTREQ = 0x00000004U;
 
 enum : const(wchar)*
 {
@@ -3710,603 +3791,603 @@ struct CEnroll;
 
 @GUID("9c735be2-57a5-11d1-9bdb-00c04fb683fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nn-certview-ienumcertviewcolumn))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nn-certview-ienumcertviewcolumn
 interface IEnumCERTVIEWCOLUMN : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewcolumn-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewcolumn-next
     HRESULT Next(int* pIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewcolumn-getname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewcolumn-getname
     HRESULT GetName(BSTR* pstrOut);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewcolumn-getdisplayname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewcolumn-getdisplayname
     HRESULT GetDisplayName(BSTR* pstrOut);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewcolumn-gettype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewcolumn-gettype
     HRESULT GetType(int* pType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewcolumn-isindexed))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewcolumn-isindexed
     HRESULT IsIndexed(int* pIndexed);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewcolumn-getmaxlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewcolumn-getmaxlength
     HRESULT GetMaxLength(int* pMaxLength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewcolumn-getvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewcolumn-getvalue
     HRESULT GetValue(ENUM_CERT_COLUMN_VALUE_FLAGS Flags, VARIANT* pvarValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewcolumn-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewcolumn-skip
     HRESULT Skip(int celt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewcolumn-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewcolumn-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewcolumn-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewcolumn-clone
     HRESULT Clone(IEnumCERTVIEWCOLUMN* ppenum);
 }
 
 @GUID("e77db656-7653-11d1-9bde-00c04fb683fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nn-certview-ienumcertviewattribute))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nn-certview-ienumcertviewattribute
 interface IEnumCERTVIEWATTRIBUTE : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewattribute-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewattribute-next
     HRESULT Next(int* pIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewattribute-getname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewattribute-getname
     HRESULT GetName(BSTR* pstrOut);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewattribute-getvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewattribute-getvalue
     HRESULT GetValue(BSTR* pstrOut);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewattribute-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewattribute-skip
     HRESULT Skip(int celt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewattribute-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewattribute-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewattribute-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewattribute-clone
     HRESULT Clone(IEnumCERTVIEWATTRIBUTE* ppenum);
 }
 
 @GUID("e7dd1466-7653-11d1-9bde-00c04fb683fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nn-certview-ienumcertviewextension))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nn-certview-ienumcertviewextension
 interface IEnumCERTVIEWEXTENSION : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewextension-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewextension-next
     HRESULT Next(int* pIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewextension-getname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewextension-getname
     HRESULT GetName(BSTR* pstrOut);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewextension-getflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewextension-getflags
     HRESULT GetFlags(int* pFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewextension-getvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewextension-getvalue
     HRESULT GetValue(CERT_PROPERTY_TYPE Type, ENUM_CERT_COLUMN_VALUE_FLAGS Flags, VARIANT* pvarValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewextension-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewextension-skip
     HRESULT Skip(int celt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewextension-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewextension-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewextension-clone))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewextension-clone
     HRESULT Clone(IEnumCERTVIEWEXTENSION* ppenum);
 }
 
 @GUID("d1157f4c-5af2-11d1-9bdc-00c04fb683fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nn-certview-ienumcertviewrow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nn-certview-ienumcertviewrow
 interface IEnumCERTVIEWROW : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewrow-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewrow-next
     HRESULT Next(int* pIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewrow-enumcertviewcolumn))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewrow-enumcertviewcolumn
     HRESULT EnumCertViewColumn(IEnumCERTVIEWCOLUMN* ppenum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewrow-enumcertviewattribute))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewrow-enumcertviewattribute
     HRESULT EnumCertViewAttribute(int Flags, IEnumCERTVIEWATTRIBUTE* ppenum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewrow-enumcertviewextension))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewrow-enumcertviewextension
     HRESULT EnumCertViewExtension(int Flags, IEnumCERTVIEWEXTENSION* ppenum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewrow-skip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewrow-skip
     HRESULT Skip(int celt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewrow-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewrow-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nn-certview-ienumcertviewrow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nn-certview-ienumcertviewrow
     HRESULT Clone(IEnumCERTVIEWROW* ppenum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewrow-getmaxindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-ienumcertviewrow-getmaxindex
     HRESULT GetMaxIndex(int* pIndex);
 }
 
 @GUID("c3fac344-1e84-11d1-9bd6-00c04fb683fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nn-certview-icertview))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nn-certview-icertview
 interface ICertView : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-icertview-openconnection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-icertview-openconnection
     HRESULT OpenConnection(const(BSTR) strConfig);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-icertview-enumcertviewcolumn))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-icertview-enumcertviewcolumn
     HRESULT EnumCertViewColumn(CVRC_COLUMN fResultColumn, IEnumCERTVIEWCOLUMN* ppenum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-icertview-getcolumncount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-icertview-getcolumncount
     HRESULT GetColumnCount(CVRC_COLUMN fResultColumn, int* pcColumn);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-icertview-getcolumnindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-icertview-getcolumnindex
     HRESULT GetColumnIndex(CVRC_COLUMN fResultColumn, const(BSTR) strColumnName, int* pColumnIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-icertview-setresultcolumncount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-icertview-setresultcolumncount
     HRESULT SetResultColumnCount(int cResultColumn);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-icertview-setresultcolumn))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-icertview-setresultcolumn
     HRESULT SetResultColumn(int ColumnIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-icertview-setrestriction))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-icertview-setrestriction
     HRESULT SetRestriction(CERT_VIEW_COLUMN_INDEX ColumnIndex, CERT_VIEW_SEEK_OPERATOR_FLAGS SeekOperator, 
                            int SortOrder, const(VARIANT)* pvarValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-icertview-openview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-icertview-openview
     HRESULT OpenView(IEnumCERTVIEWROW* ppenum);
 }
 
 @GUID("d594b282-8851-4b61-9c66-3edadf848863")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nn-certview-icertview2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nn-certview-icertview2
 interface ICertView2 : ICertView
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certview/nf-certview-icertview2-settable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certview/nf-certview-icertview2-settable
     HRESULT SetTable(CVRC_TABLE Table);
 }
 
 @GUID("34df6950-7fb6-11d0-8817-00a0c903b83c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nn-certadm-icertadmin))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nn-certadm-icertadmin
 interface ICertAdmin : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin-isvalidcertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin-isvalidcertificate
     HRESULT IsValidCertificate(const(BSTR) strConfig, const(BSTR) strSerialNumber, int* pDisposition);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin-getrevocationreason))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin-getrevocationreason
     HRESULT GetRevocationReason(int* pReason);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin-revokecertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin-revokecertificate
     HRESULT RevokeCertificate(const(BSTR) strConfig, const(BSTR) strSerialNumber, int Reason, double Date);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin-setrequestattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin-setrequestattributes
     HRESULT SetRequestAttributes(const(BSTR) strConfig, int RequestId, const(BSTR) strAttributes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin-setcertificateextension))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin-setcertificateextension
     HRESULT SetCertificateExtension(const(BSTR) strConfig, int RequestId, const(BSTR) strExtensionName, 
                                     CERT_PROPERTY_TYPE Type, int Flags, const(VARIANT)* pvarValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin-denyrequest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin-denyrequest
     HRESULT DenyRequest(const(BSTR) strConfig, int RequestId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin-resubmitrequest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin-resubmitrequest
     HRESULT ResubmitRequest(const(BSTR) strConfig, int RequestId, int* pDisposition);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin-publishcrl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin-publishcrl
     HRESULT PublishCRL(const(BSTR) strConfig, double Date);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin-getcrl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin-getcrl
     HRESULT GetCRL(const(BSTR) strConfig, int Flags, BSTR* pstrCRL);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin-importcertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin-importcertificate
     HRESULT ImportCertificate(const(BSTR) strConfig, const(BSTR) strCertificate, CERT_IMPORT_FLAGS Flags, 
                               int* pRequestId);
 }
 
 @GUID("f7c3ac41-b8ce-4fb4-aa58-3d1dc0e36b39")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nn-certadm-icertadmin2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nn-certadm-icertadmin2
 interface ICertAdmin2 : ICertAdmin
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin2-publishcrls))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin2-publishcrls
     HRESULT PublishCRLs(const(BSTR) strConfig, double Date, int CRLFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin2-getcaproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin2-getcaproperty
     HRESULT GetCAProperty(const(BSTR) strConfig, int PropId, int PropIndex, int PropType, int Flags, 
                           VARIANT* pvarPropertyValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin2-setcaproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin2-setcaproperty
     HRESULT SetCAProperty(const(BSTR) strConfig, int PropId, int PropIndex, CERT_PROPERTY_TYPE PropType, 
                           VARIANT* pvarPropertyValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin2-getcapropertyflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin2-getcapropertyflags
     HRESULT GetCAPropertyFlags(const(BSTR) strConfig, int PropId, int* pPropFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin2-getcapropertydisplayname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin2-getcapropertydisplayname
     HRESULT GetCAPropertyDisplayName(const(BSTR) strConfig, int PropId, BSTR* pstrDisplayName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin2-getarchivedkey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin2-getarchivedkey
     HRESULT GetArchivedKey(const(BSTR) strConfig, int RequestId, int Flags, BSTR* pstrArchivedKey);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin2-getconfigentry))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin2-getconfigentry
     HRESULT GetConfigEntry(const(BSTR) strConfig, const(BSTR) strNodePath, const(BSTR) strEntryName, 
                            VARIANT* pvarEntry);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin2-setconfigentry))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin2-setconfigentry
     HRESULT SetConfigEntry(const(BSTR) strConfig, const(BSTR) strNodePath, const(BSTR) strEntryName, 
                            VARIANT* pvarEntry);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin2-importkey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin2-importkey
     HRESULT ImportKey(const(BSTR) strConfig, int RequestId, const(BSTR) strCertHash, CERT_IMPORT_FLAGS Flags, 
                       const(BSTR) strKey);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin2-getmyroles))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin2-getmyroles
     HRESULT GetMyRoles(const(BSTR) strConfig, CERTADMIN_GET_ROLES_FLAGS* pRoles);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin2-deleterow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-icertadmin2-deleterow
     HRESULT DeleteRow(const(BSTR) strConfig, CERT_DELETE_ROW_FLAGS Flags, double Date, CVRC_TABLE Table, int RowId, 
                       int* pcDeleted);
 }
 
 @GUID("66fb7839-5f04-4c25-ad18-9ff1a8376ee0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nn-certadm-iocspproperty))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nn-certadm-iocspproperty
 interface IOCSPProperty : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspproperty-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspproperty-get_name
     HRESULT get_Name(BSTR* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspproperty-get_value))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspproperty-get_value
     HRESULT get_Value(VARIANT* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspproperty-put_value))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspproperty-put_value
     HRESULT put_Value(VARIANT newVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspproperty-get_modified))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspproperty-get_modified
     HRESULT get_Modified(VARIANT_BOOL* pVal);
 }
 
 @GUID("2597c18d-54e6-4b74-9fa9-a6bfda99cbbe")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nn-certadm-iocsppropertycollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nn-certadm-iocsppropertycollection
 interface IOCSPPropertyCollection : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocsppropertycollection-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocsppropertycollection-get__newenum
     HRESULT get__NewEnum(IUnknown* ppVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocsppropertycollection-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocsppropertycollection-get_item
     HRESULT get_Item(int Index, VARIANT* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocsppropertycollection-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocsppropertycollection-get_count
     HRESULT get_Count(int* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocsppropertycollection-get_itembyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocsppropertycollection-get_itembyname
     HRESULT get_ItemByName(const(BSTR) bstrPropName, VARIANT* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocsppropertycollection-createproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocsppropertycollection-createproperty
     HRESULT CreateProperty(const(BSTR) bstrPropName, const(VARIANT)* pVarPropValue, IOCSPProperty* ppVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocsppropertycollection-deleteproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocsppropertycollection-deleteproperty
     HRESULT DeleteProperty(const(BSTR) bstrPropName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocsppropertycollection-initializefromproperties))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocsppropertycollection-initializefromproperties
     HRESULT InitializeFromProperties(const(VARIANT)* pVarProperties);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocsppropertycollection-getallproperties))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocsppropertycollection-getallproperties
     HRESULT GetAllProperties(VARIANT* pVarProperties);
 }
 
 @GUID("aec92b40-3d46-433f-87d1-b84d5c1e790d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nn-certadm-iocspcaconfiguration))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nn-certadm-iocspcaconfiguration
 interface IOCSPCAConfiguration : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-get_identifier))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-get_identifier
     HRESULT get_Identifier(BSTR* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-get_cacertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-get_cacertificate
     HRESULT get_CACertificate(VARIANT* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-get_hashalgorithm))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-get_hashalgorithm
     HRESULT get_HashAlgorithm(BSTR* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-put_hashalgorithm))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-put_hashalgorithm
     HRESULT put_HashAlgorithm(const(BSTR) newVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-get_signingflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-get_signingflags
     HRESULT get_SigningFlags(uint* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-put_signingflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-put_signingflags
     HRESULT put_SigningFlags(uint newVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-get_signingcertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-get_signingcertificate
     HRESULT get_SigningCertificate(VARIANT* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-put_signingcertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-put_signingcertificate
     HRESULT put_SigningCertificate(VARIANT newVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-get_reminderduration))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-get_reminderduration
     HRESULT get_ReminderDuration(uint* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-put_reminderduration))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-put_reminderduration
     HRESULT put_ReminderDuration(uint newVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-get_errorcode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-get_errorcode
     HRESULT get_ErrorCode(uint* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-get_cspname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-get_cspname
     HRESULT get_CSPName(BSTR* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-get_keyspec))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-get_keyspec
     HRESULT get_KeySpec(uint* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-get_providerclsid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-get_providerclsid
     HRESULT get_ProviderCLSID(BSTR* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-put_providerclsid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-put_providerclsid
     HRESULT put_ProviderCLSID(const(BSTR) newVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-get_providerproperties))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-get_providerproperties
     HRESULT get_ProviderProperties(VARIANT* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-put_providerproperties))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-put_providerproperties
     HRESULT put_ProviderProperties(VARIANT newVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-get_modified))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-get_modified
     HRESULT get_Modified(VARIANT_BOOL* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-get_localrevocationinformation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-get_localrevocationinformation
     HRESULT get_LocalRevocationInformation(VARIANT* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-put_localrevocationinformation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-put_localrevocationinformation
     HRESULT put_LocalRevocationInformation(VARIANT newVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-get_signingcertificatetemplate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-get_signingcertificatetemplate
     HRESULT get_SigningCertificateTemplate(BSTR* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-put_signingcertificatetemplate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-put_signingcertificatetemplate
     HRESULT put_SigningCertificateTemplate(const(BSTR) newVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-get_caconfig))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-get_caconfig
     HRESULT get_CAConfig(BSTR* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-put_caconfig))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfiguration-put_caconfig
     HRESULT put_CAConfig(const(BSTR) newVal);
 }
 
 @GUID("2bebea0b-5ece-4f28-a91c-86b4bb20f0d3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nn-certadm-iocspcaconfigurationcollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nn-certadm-iocspcaconfigurationcollection
 interface IOCSPCAConfigurationCollection : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfigurationcollection-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfigurationcollection-get__newenum
     HRESULT get__NewEnum(IUnknown* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfigurationcollection-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfigurationcollection-get_item
     HRESULT get_Item(int Index, VARIANT* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfigurationcollection-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfigurationcollection-get_count
     HRESULT get_Count(int* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfigurationcollection-get_itembyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfigurationcollection-get_itembyname
     HRESULT get_ItemByName(const(BSTR) bstrIdentifier, VARIANT* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfigurationcollection-createcaconfiguration))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfigurationcollection-createcaconfiguration
     HRESULT CreateCAConfiguration(const(BSTR) bstrIdentifier, VARIANT varCACert, IOCSPCAConfiguration* ppVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfigurationcollection-deletecaconfiguration))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspcaconfigurationcollection-deletecaconfiguration
     HRESULT DeleteCAConfiguration(const(BSTR) bstrIdentifier);
 }
 
 @GUID("322e830d-67db-4fe9-9577-4596d9f09294")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2008))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nn-certadm-iocspadmin))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nn-certadm-iocspadmin
 interface IOCSPAdmin : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspadmin-get_ocspserviceproperties))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspadmin-get_ocspserviceproperties
     HRESULT get_OCSPServiceProperties(IOCSPPropertyCollection* ppVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspadmin-get_ocspcaconfigurationcollection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspadmin-get_ocspcaconfigurationcollection
     HRESULT get_OCSPCAConfigurationCollection(IOCSPCAConfigurationCollection* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspadmin-getconfiguration))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspadmin-getconfiguration
     HRESULT GetConfiguration(const(BSTR) bstrServerName, VARIANT_BOOL bForce);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspadmin-setconfiguration))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspadmin-setconfiguration
     HRESULT SetConfiguration(const(BSTR) bstrServerName, VARIANT_BOOL bForce);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspadmin-getmyroles))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspadmin-getmyroles
     HRESULT GetMyRoles(const(BSTR) bstrServerName, int* pRoles);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspadmin-ping))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspadmin-ping
     HRESULT Ping(const(BSTR) bstrServerName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspadmin-setsecurity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspadmin-setsecurity
     HRESULT SetSecurity(const(BSTR) bstrServerName, const(BSTR) bstrVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspadmin-getsecurity))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspadmin-getsecurity
     HRESULT GetSecurity(const(BSTR) bstrServerName, BSTR* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspadmin-getsigningcertificates))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspadmin-getsigningcertificates
     HRESULT GetSigningCertificates(const(BSTR) bstrServerName, const(VARIANT)* pCACertVar, VARIANT* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspadmin-gethashalgorithms))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certadm/nf-certadm-iocspadmin-gethashalgorithms
     HRESULT GetHashAlgorithms(const(BSTR) bstrServerName, const(BSTR) bstrCAId, VARIANT* pVal);
 }
 
 @GUID("aa000922-ffbe-11cf-8800-00a0c903b83c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certif/nn-certif-icertserverpolicy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certif/nn-certif-icertserverpolicy
 interface ICertServerPolicy : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverpolicy-setcontext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverpolicy-setcontext
     HRESULT SetContext(int Context);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverpolicy-getrequestproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverpolicy-getrequestproperty
     HRESULT GetRequestProperty(const(BSTR) strPropertyName, int PropertyType, VARIANT* pvarPropertyValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverpolicy-getrequestattribute))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverpolicy-getrequestattribute
     HRESULT GetRequestAttribute(const(BSTR) strAttributeName, BSTR* pstrAttributeValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverpolicy-getcertificateproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverpolicy-getcertificateproperty
     HRESULT GetCertificateProperty(const(BSTR) strPropertyName, CERT_PROPERTY_TYPE PropertyType, 
                                    VARIANT* pvarPropertyValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverpolicy-setcertificateproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverpolicy-setcertificateproperty
     HRESULT SetCertificateProperty(const(BSTR) strPropertyName, int PropertyType, 
                                    const(VARIANT)* pvarPropertyValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverpolicy-getcertificateextension))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverpolicy-getcertificateextension
     HRESULT GetCertificateExtension(const(BSTR) strExtensionName, CERT_PROPERTY_TYPE Type, VARIANT* pvarValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverpolicy-getcertificateextensionflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverpolicy-getcertificateextensionflags
     HRESULT GetCertificateExtensionFlags(int* pExtFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverpolicy-setcertificateextension))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverpolicy-setcertificateextension
     HRESULT SetCertificateExtension(const(BSTR) strExtensionName, int Type, int ExtFlags, 
                                     const(VARIANT)* pvarValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverpolicy-enumerateextensionssetup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverpolicy-enumerateextensionssetup
     HRESULT EnumerateExtensionsSetup(int Flags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverpolicy-enumerateextensions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverpolicy-enumerateextensions
     HRESULT EnumerateExtensions(BSTR* pstrExtensionName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverpolicy-enumerateextensionsclose))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverpolicy-enumerateextensionsclose
     HRESULT EnumerateExtensionsClose();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverpolicy-enumerateattributessetup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverpolicy-enumerateattributessetup
     HRESULT EnumerateAttributesSetup(int Flags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverpolicy-enumerateattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverpolicy-enumerateattributes
     HRESULT EnumerateAttributes(BSTR* pstrAttributeName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverpolicy-enumerateattributesclose))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverpolicy-enumerateattributesclose
     HRESULT EnumerateAttributesClose();
 }
 
 @GUID("4ba9eb90-732c-11d0-8816-00a0c903b83c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certif/nn-certif-icertserverexit))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certif/nn-certif-icertserverexit
 interface ICertServerExit : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverexit-setcontext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverexit-setcontext
     HRESULT SetContext(int Context);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverexit-getrequestproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverexit-getrequestproperty
     HRESULT GetRequestProperty(const(BSTR) strPropertyName, int PropertyType, VARIANT* pvarPropertyValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverexit-getrequestattribute))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverexit-getrequestattribute
     HRESULT GetRequestAttribute(const(BSTR) strAttributeName, BSTR* pstrAttributeValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverexit-getcertificateproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverexit-getcertificateproperty
     HRESULT GetCertificateProperty(const(BSTR) strPropertyName, int PropertyType, VARIANT* pvarPropertyValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverexit-getcertificateextension))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverexit-getcertificateextension
     HRESULT GetCertificateExtension(const(BSTR) strExtensionName, int Type, VARIANT* pvarValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverexit-getcertificateextensionflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverexit-getcertificateextensionflags
     HRESULT GetCertificateExtensionFlags(int* pExtFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverexit-enumerateextensionssetup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverexit-enumerateextensionssetup
     HRESULT EnumerateExtensionsSetup(int Flags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverexit-enumerateextensions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverexit-enumerateextensions
     HRESULT EnumerateExtensions(BSTR* pstrExtensionName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverexit-enumerateextensionsclose))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverexit-enumerateextensionsclose
     HRESULT EnumerateExtensionsClose();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverexit-enumerateattributessetup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverexit-enumerateattributessetup
     HRESULT EnumerateAttributesSetup(int Flags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverexit-enumerateattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverexit-enumerateattributes
     HRESULT EnumerateAttributes(BSTR* pstrAttributeName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverexit-enumerateattributesclose))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certif/nf-certif-icertserverexit-enumerateattributesclose
     HRESULT EnumerateAttributesClose();
 }
 
 @GUID("c7ea09c0-ce17-11d0-8833-00a0c903b83c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certcli/nn-certcli-icertgetconfig))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nn-certcli-icertgetconfig
 interface ICertGetConfig : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertgetconfig-getconfig))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertgetconfig-getconfig
     HRESULT GetConfig(CERT_GET_CONFIG_FLAGS Flags, BSTR* pstrOut);
 }
 
 @GUID("372fce34-4324-11d0-8810-00a0c903b83c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certcli/nn-certcli-icertconfig))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nn-certcli-icertconfig
 interface ICertConfig : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertconfig-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertconfig-reset
     HRESULT Reset(int Index, int* pCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertconfig-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertconfig-next
     HRESULT Next(int* pIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertconfig-getfield))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertconfig-getfield
     HRESULT GetField(const(BSTR) strFieldName, BSTR* pstrOut);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertconfig-getconfig))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertconfig-getconfig
     HRESULT GetConfig(int Flags, BSTR* pstrOut);
 }
 
 @GUID("7a18edde-7e78-4163-8ded-78e2c9cee924")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certcli/nn-certcli-icertconfig2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nn-certcli-icertconfig2
 interface ICertConfig2 : ICertConfig
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertconfig2-setsharedfolder))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertconfig2-setsharedfolder
     HRESULT SetSharedFolder(const(BSTR) strSharedFolder);
 }
 
 @GUID("014e4840-5523-11d0-8812-00a0c903b83c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certcli/nn-certcli-icertrequest))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nn-certcli-icertrequest
 interface ICertRequest : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertrequest-submit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertrequest-submit
     HRESULT Submit(int Flags, const(BSTR) strRequest, const(BSTR) strAttributes, const(BSTR) strConfig, 
                    int* pDisposition);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertrequest-retrievepending))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertrequest-retrievepending
     HRESULT RetrievePending(int RequestId, const(BSTR) strConfig, int* pDisposition);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertrequest-getlaststatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertrequest-getlaststatus
     HRESULT GetLastStatus(int* pStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertrequest-getrequestid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertrequest-getrequestid
     HRESULT GetRequestId(int* pRequestId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertrequest-getdispositionmessage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertrequest-getdispositionmessage
     HRESULT GetDispositionMessage(BSTR* pstrDispositionMessage);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertrequest-getcacertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertrequest-getcacertificate
     HRESULT GetCACertificate(int fExchangeCertificate, const(BSTR) strConfig, int Flags, BSTR* pstrCertificate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertrequest-getcertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertrequest-getcertificate
     HRESULT GetCertificate(int Flags, BSTR* pstrCertificate);
 }
 
 @GUID("a4772988-4a85-4fa9-824e-b5cf5c16405a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certcli/nn-certcli-icertrequest2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nn-certcli-icertrequest2
 interface ICertRequest2 : ICertRequest
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertrequest2-getissuedcertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertrequest2-getissuedcertificate
     HRESULT GetIssuedCertificate(const(BSTR) strConfig, int RequestId, const(BSTR) strSerialNumber, 
                                  CR_DISP* pDisposition);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertrequest2-geterrormessagetext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertrequest2-geterrormessagetext
     HRESULT GetErrorMessageText(int hrMessage, int Flags, BSTR* pstrErrorMessageText);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertrequest2-getcaproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertrequest2-getcaproperty
     HRESULT GetCAProperty(const(BSTR) strConfig, int PropId, int PropIndex, int PropType, int Flags, 
                           VARIANT* pvarPropertyValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertrequest2-getcapropertyflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertrequest2-getcapropertyflags
     HRESULT GetCAPropertyFlags(const(BSTR) strConfig, int PropId, int* pPropFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertrequest2-getcapropertydisplayname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertrequest2-getcapropertydisplayname
     HRESULT GetCAPropertyDisplayName(const(BSTR) strConfig, int PropId, BSTR* pstrDisplayName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertrequest2-getfullresponseproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertrequest2-getfullresponseproperty
     HRESULT GetFullResponseProperty(FULL_RESPONSE_PROPERTY_ID PropId, int PropIndex, CERT_PROPERTY_TYPE PropType, 
                                     CERT_REQUEST_OUT_TYPE Flags, VARIANT* pvarPropertyValue);
 }
 
 @GUID("afc8f92b-33a2-4861-bf36-2933b7cd67b3")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certcli/nn-certcli-icertrequest3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nn-certcli-icertrequest3
 interface ICertRequest3 : ICertRequest2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertrequest3-setcredential))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertrequest3-setcredential
     HRESULT SetCredential(int hWnd, X509EnrollmentAuthFlags AuthType, BSTR strCredential, BSTR strPassword);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertrequest3-getrequestidstring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertrequest3-getrequestidstring
     HRESULT GetRequestIdString(BSTR* pstrRequestId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertrequest3-getissuedcertificate2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertrequest3-getissuedcertificate2
     HRESULT GetIssuedCertificate2(BSTR strConfig, BSTR strRequestId, BSTR strSerialNumber, CR_DISP* pDisposition);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertrequest3-getrefreshpolicy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certcli/nf-certcli-icertrequest3-getrefreshpolicy
     HRESULT GetRefreshPolicy(VARIANT_BOOL* pValue);
 }
 
 @GUID("e7d7ad42-bd3d-11d1-9a4d-00c04fc297eb")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certmod/nn-certmod-icertmanagemodule))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certmod/nn-certmod-icertmanagemodule
 interface ICertManageModule : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certmod/nf-certmod-icertmanagemodule-getproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certmod/nf-certmod-icertmanagemodule-getproperty
     HRESULT GetProperty(const(BSTR) strConfig, BSTR strStorageLocation, BSTR strPropertyName, int Flags, 
                         VARIANT* pvarProperty);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certmod/nf-certmod-icertmanagemodule-setproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certmod/nf-certmod-icertmanagemodule-setproperty
     HRESULT SetProperty(const(BSTR) strConfig, BSTR strStorageLocation, BSTR strPropertyName, int Flags, 
                         const(VARIANT)* pvarProperty);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certmod/nf-certmod-icertmanagemodule-configure))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certmod/nf-certmod-icertmanagemodule-configure
     HRESULT Configure(const(BSTR) strConfig, BSTR strStorageLocation, int Flags);
 }
 
 @GUID("38bb5a00-7636-11d0-b413-00a0c91bbf8c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certpol/nn-certpol-icertpolicy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certpol/nn-certpol-icertpolicy
 interface ICertPolicy : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certpol/nf-certpol-icertpolicy-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certpol/nf-certpol-icertpolicy-initialize
     HRESULT Initialize(const(BSTR) strConfig);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certpol/nf-certpol-icertpolicy-verifyrequest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certpol/nf-certpol-icertpolicy-verifyrequest
     HRESULT VerifyRequest(const(BSTR) strConfig, int Context, int bNewRequest, int Flags, int* pDisposition);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certpol/nf-certpol-icertpolicy-getdescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certpol/nf-certpol-icertpolicy-getdescription
     HRESULT GetDescription(BSTR* pstrDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certpol/nf-certpol-icertpolicy-shutdown))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certpol/nf-certpol-icertpolicy-shutdown
     HRESULT ShutDown();
 }
 
 @GUID("3db4910e-8001-4bf1-aa1b-f43a808317a0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certpol/nn-certpol-icertpolicy2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certpol/nn-certpol-icertpolicy2
 interface ICertPolicy2 : ICertPolicy
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certpol/nf-certpol-icertpolicy2-getmanagemodule))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certpol/nf-certpol-icertpolicy2-getmanagemodule
     HRESULT GetManageModule(ICertManageModule* ppManageModule);
 }
 
 @GUID("13ca515d-431d-46cc-8c2e-1da269bbd625")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certpol/nn-certpol-indespolicy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certpol/nn-certpol-indespolicy
 interface INDESPolicy : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certpol/nf-certpol-indespolicy-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certpol/nf-certpol-indespolicy-initialize
     HRESULT Initialize();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certpol/nf-certpol-indespolicy-uninitialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certpol/nf-certpol-indespolicy-uninitialize
     HRESULT Uninitialize();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certpol/nf-certpol-indespolicy-generatechallenge))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certpol/nf-certpol-indespolicy-generatechallenge
     HRESULT GenerateChallenge(const(PWSTR) pwszTemplate, const(PWSTR) pwszParams, PWSTR* ppwszResponse);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certpol/nf-certpol-indespolicy-verifyrequest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certpol/nf-certpol-indespolicy-verifyrequest
     HRESULT VerifyRequest(CERTTRANSBLOB* pctbRequest, CERTTRANSBLOB* pctbSigningCertEncoded, 
                           const(PWSTR) pwszTemplate, const(PWSTR) pwszTransactionId, BOOL* pfVerified);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certpol/nf-certpol-indespolicy-notify))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certpol/nf-certpol-indespolicy-notify
     HRESULT Notify(const(PWSTR) pwszChallenge, const(PWSTR) pwszTransactionId, X509SCEPDisposition disposition, 
                    int lastHResult, CERTTRANSBLOB* pctbIssuedCertEncoded);
 }
 
 @GUID("728ab300-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-iobjectid))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-iobjectid
 interface IObjectId : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-iobjectid-initializefromname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-iobjectid-initializefromname
     HRESULT InitializeFromName(CERTENROLL_OBJECTID Name);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-iobjectid-initializefromvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-iobjectid-initializefromvalue
     HRESULT InitializeFromValue(BSTR strValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-iobjectid-initializefromalgorithmname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-iobjectid-initializefromalgorithmname
     HRESULT InitializeFromAlgorithmName(ObjectIdGroupId GroupId, ObjectIdPublicKeyFlags KeyFlags, 
                                         AlgorithmFlags AlgFlags, BSTR strAlgorithmName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-iobjectid-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-iobjectid-get_name
     HRESULT get_Name(CERTENROLL_OBJECTID* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-iobjectid-get_friendlyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-iobjectid-get_friendlyname
     HRESULT get_FriendlyName(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-iobjectid-put_friendlyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-iobjectid-put_friendlyname
     HRESULT put_FriendlyName(BSTR Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-iobjectid-get_value))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-iobjectid-get_value
     HRESULT get_Value(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-iobjectid-getalgorithmname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-iobjectid-getalgorithmname
     HRESULT GetAlgorithmName(ObjectIdGroupId GroupId, ObjectIdPublicKeyFlags KeyFlags, BSTR* pstrAlgorithmName);
 }
 
 @GUID("728ab301-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-iobjectids))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-iobjectids
 interface IObjectIds : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-iobjectids-get_itembyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-iobjectids-get_itembyindex
     HRESULT get_ItemByIndex(int Index, IObjectId* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-iobjectids-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-iobjectids-get_count
     HRESULT get_Count(int* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-iobjectids-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-iobjectids-get__newenum
     HRESULT get__NewEnum(IUnknown* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-iobjectids-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-iobjectids-add
     HRESULT Add(IObjectId pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-iobjectids-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-iobjectids-remove
     HRESULT Remove(int Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-iobjectids-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-iobjectids-clear
     HRESULT Clear();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-iobjectids-addrange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-iobjectids-addrange
     HRESULT AddRange(IObjectIds pValue);
 }
 
 @GUID("728ab302-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ibinaryconverter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ibinaryconverter
 interface IBinaryConverter : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ibinaryconverter-stringtostring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ibinaryconverter-stringtostring
     HRESULT StringToString(BSTR strEncodedIn, EncodingType EncodingIn, EncodingType Encoding, BSTR* pstrEncoded);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ibinaryconverter-variantbytearraytostring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ibinaryconverter-variantbytearraytostring
     HRESULT VariantByteArrayToString(VARIANT* pvarByteArray, EncodingType Encoding, BSTR* pstrEncoded);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ibinaryconverter-stringtovariantbytearray))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ibinaryconverter-stringtovariantbytearray
     HRESULT StringToVariantByteArray(BSTR strEncoded, EncodingType Encoding, VARIANT* pvarByteArray);
 }
 
@@ -4319,364 +4400,364 @@ interface IBinaryConverter2 : IBinaryConverter
 
 @GUID("728ab303-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix500distinguishedname))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix500distinguishedname
 interface IX500DistinguishedName : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix500distinguishedname-decode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix500distinguishedname-decode
     HRESULT Decode(BSTR strEncodedName, EncodingType Encoding, X500NameFlags NameFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix500distinguishedname-encode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix500distinguishedname-encode
     HRESULT Encode(BSTR strName, X500NameFlags NameFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix500distinguishedname-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix500distinguishedname-get_name
     HRESULT get_Name(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix500distinguishedname-get_encodedname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix500distinguishedname-get_encodedname
     HRESULT get_EncodedName(EncodingType Encoding, BSTR* pValue);
 }
 
 @GUID("728ab304-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509enrollmentstatus))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509enrollmentstatus
 interface IX509EnrollmentStatus : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentstatus-appendtext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentstatus-appendtext
     HRESULT AppendText(BSTR strText);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentstatus-get_text))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentstatus-get_text
     HRESULT get_Text(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentstatus-put_text))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentstatus-put_text
     HRESULT put_Text(BSTR Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentstatus-get_selected))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentstatus-get_selected
     HRESULT get_Selected(EnrollmentSelectionStatus* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentstatus-put_selected))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentstatus-put_selected
     HRESULT put_Selected(EnrollmentSelectionStatus Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentstatus-get_display))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentstatus-get_display
     HRESULT get_Display(EnrollmentDisplayStatus* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentstatus-put_display))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentstatus-put_display
     HRESULT put_Display(EnrollmentDisplayStatus Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentstatus-get_status))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentstatus-get_status
     HRESULT get_Status(EnrollmentEnrollStatus* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentstatus-put_status))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentstatus-put_status
     HRESULT put_Status(EnrollmentEnrollStatus Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentstatus-get_error))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentstatus-get_error
     HRESULT get_Error(HRESULT* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentstatus-put_error))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentstatus-put_error
     HRESULT put_Error(HRESULT Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentstatus-get_errortext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentstatus-get_errortext
     HRESULT get_ErrorText(BSTR* pValue);
 }
 
 @GUID("728ab305-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icspalgorithm))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icspalgorithm
 interface ICspAlgorithm : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspalgorithm-getalgorithmoid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspalgorithm-getalgorithmoid
     HRESULT GetAlgorithmOid(int Length, AlgorithmFlags AlgFlags, IObjectId* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspalgorithm-get_defaultlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspalgorithm-get_defaultlength
     HRESULT get_DefaultLength(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspalgorithm-get_incrementlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspalgorithm-get_incrementlength
     HRESULT get_IncrementLength(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspalgorithm-get_longname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspalgorithm-get_longname
     HRESULT get_LongName(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspalgorithm-get_valid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspalgorithm-get_valid
     HRESULT get_Valid(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspalgorithm-get_maxlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspalgorithm-get_maxlength
     HRESULT get_MaxLength(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspalgorithm-get_minlength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspalgorithm-get_minlength
     HRESULT get_MinLength(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspalgorithm-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspalgorithm-get_name
     HRESULT get_Name(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspalgorithm-get_type))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspalgorithm-get_type
     HRESULT get_Type(AlgorithmType* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspalgorithm-get_operations))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspalgorithm-get_operations
     HRESULT get_Operations(AlgorithmOperationFlags* pValue);
 }
 
 @GUID("728ab306-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icspalgorithms))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icspalgorithms
 interface ICspAlgorithms : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspalgorithms-get_itembyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspalgorithms-get_itembyindex
     HRESULT get_ItemByIndex(int Index, ICspAlgorithm* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspalgorithms-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspalgorithms-get_count
     HRESULT get_Count(int* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspalgorithms-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspalgorithms-get__newenum
     HRESULT get__NewEnum(IUnknown* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspalgorithms-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspalgorithms-add
     HRESULT Add(ICspAlgorithm pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspalgorithms-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspalgorithms-remove
     HRESULT Remove(int Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspalgorithms-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspalgorithms-clear
     HRESULT Clear();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspalgorithms-get_itembyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspalgorithms-get_itembyname
     HRESULT get_ItemByName(BSTR strName, ICspAlgorithm* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspalgorithms-get_indexbyobjectid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspalgorithms-get_indexbyobjectid
     HRESULT get_IndexByObjectId(IObjectId pObjectId, int* pIndex);
 }
 
 @GUID("728ab307-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icspinformation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icspinformation
 interface ICspInformation : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformation-initializefromname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformation-initializefromname
     HRESULT InitializeFromName(BSTR strName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformation-initializefromtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformation-initializefromtype
     HRESULT InitializeFromType(X509ProviderType Type, IObjectId pAlgorithm, VARIANT_BOOL MachineContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformation-get_cspalgorithms))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformation-get_cspalgorithms
     HRESULT get_CspAlgorithms(ICspAlgorithms* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformation-get_hashardwarerandomnumbergenerator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformation-get_hashardwarerandomnumbergenerator
     HRESULT get_HasHardwareRandomNumberGenerator(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformation-get_ishardwaredevice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformation-get_ishardwaredevice
     HRESULT get_IsHardwareDevice(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformation-get_isremovable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformation-get_isremovable
     HRESULT get_IsRemovable(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformation-get_issoftwaredevice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformation-get_issoftwaredevice
     HRESULT get_IsSoftwareDevice(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformation-get_valid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformation-get_valid
     HRESULT get_Valid(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformation-get_maxkeycontainernamelength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformation-get_maxkeycontainernamelength
     HRESULT get_MaxKeyContainerNameLength(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformation-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformation-get_name
     HRESULT get_Name(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformation-get_type))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformation-get_type
     HRESULT get_Type(X509ProviderType* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformation-get_version))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformation-get_version
     HRESULT get_Version(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformation-get_keyspec))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformation-get_keyspec
     HRESULT get_KeySpec(X509KeySpec* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformation-get_issmartcard))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformation-get_issmartcard
     HRESULT get_IsSmartCard(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformation-getdefaultsecuritydescriptor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformation-getdefaultsecuritydescriptor
     HRESULT GetDefaultSecurityDescriptor(VARIANT_BOOL MachineContext, BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformation-get_legacycsp))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformation-get_legacycsp
     HRESULT get_LegacyCsp(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformation-getcspstatusfromoperations))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformation-getcspstatusfromoperations
     HRESULT GetCspStatusFromOperations(IObjectId pAlgorithm, AlgorithmOperationFlags Operations, 
                                        ICspStatus* ppValue);
 }
 
 @GUID("728ab308-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icspinformations))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icspinformations
 interface ICspInformations : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformations-get_itembyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformations-get_itembyindex
     HRESULT get_ItemByIndex(int Index, ICspInformation* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformations-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformations-get_count
     HRESULT get_Count(int* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformations-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformations-get__newenum
     HRESULT get__NewEnum(IUnknown* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformations-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformations-add
     HRESULT Add(ICspInformation pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformations-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformations-remove
     HRESULT Remove(int Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformations-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformations-clear
     HRESULT Clear();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformations-addavailablecsps))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformations-addavailablecsps
     HRESULT AddAvailableCsps();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformations-get_itembyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformations-get_itembyname
     HRESULT get_ItemByName(BSTR strName, ICspInformation* ppCspInformation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformations-getcspstatusfromprovidername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformations-getcspstatusfromprovidername
     HRESULT GetCspStatusFromProviderName(BSTR strProviderName, X509KeySpec LegacyKeySpec, ICspStatus* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformations-getcspstatusesfromoperations))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformations-getcspstatusesfromoperations
     HRESULT GetCspStatusesFromOperations(AlgorithmOperationFlags Operations, ICspInformation pCspInformation, 
                                          ICspStatuses* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformations-getencryptioncspalgorithms))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformations-getencryptioncspalgorithms
     HRESULT GetEncryptionCspAlgorithms(ICspInformation pCspInformation, ICspAlgorithms* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformations-gethashalgorithms))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspinformations-gethashalgorithms
     HRESULT GetHashAlgorithms(ICspInformation pCspInformation, IObjectIds* ppValue);
 }
 
 @GUID("728ab309-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icspstatus))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icspstatus
 interface ICspStatus : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspstatus-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspstatus-initialize
     HRESULT Initialize(ICspInformation pCsp, ICspAlgorithm pAlgorithm);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspstatus-get_ordinal))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspstatus-get_ordinal
     HRESULT get_Ordinal(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspstatus-put_ordinal))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspstatus-put_ordinal
     HRESULT put_Ordinal(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspstatus-get_cspalgorithm))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspstatus-get_cspalgorithm
     HRESULT get_CspAlgorithm(ICspAlgorithm* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspstatus-get_cspinformation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspstatus-get_cspinformation
     HRESULT get_CspInformation(ICspInformation* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspstatus-get_enrollmentstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspstatus-get_enrollmentstatus
     HRESULT get_EnrollmentStatus(IX509EnrollmentStatus* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspstatus-get_displayname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspstatus-get_displayname
     HRESULT get_DisplayName(BSTR* pValue);
 }
 
 @GUID("728ab30a-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icspstatuses))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icspstatuses
 interface ICspStatuses : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspstatuses-get_itembyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspstatuses-get_itembyindex
     HRESULT get_ItemByIndex(int Index, ICspStatus* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspstatuses-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspstatuses-get_count
     HRESULT get_Count(int* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspstatuses-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspstatuses-get__newenum
     HRESULT get__NewEnum(IUnknown* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspstatuses-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspstatuses-add
     HRESULT Add(ICspStatus pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspstatuses-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspstatuses-remove
     HRESULT Remove(int Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspstatuses-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspstatuses-clear
     HRESULT Clear();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspstatuses-get_itembyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspstatuses-get_itembyname
     HRESULT get_ItemByName(BSTR strCspName, BSTR strAlgorithmName, ICspStatus* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspstatuses-get_itembyordinal))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspstatuses-get_itembyordinal
     HRESULT get_ItemByOrdinal(int Ordinal, ICspStatus* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspstatuses-get_itembyoperations))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspstatuses-get_itembyoperations
     HRESULT get_ItemByOperations(BSTR strCspName, BSTR strAlgorithmName, AlgorithmOperationFlags Operations, 
                                  ICspStatus* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspstatuses-get_itembyprovider))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icspstatuses-get_itembyprovider
     HRESULT get_ItemByProvider(ICspStatus pCspStatus, ICspStatus* ppValue);
 }
 
 @GUID("728ab30b-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509publickey))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509publickey
 interface IX509PublicKey : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509publickey-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509publickey-initialize
     HRESULT Initialize(IObjectId pObjectId, BSTR strEncodedKey, BSTR strEncodedParameters, EncodingType Encoding);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509publickey-initializefromencodedpublickeyinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509publickey-initializefromencodedpublickeyinfo
     HRESULT InitializeFromEncodedPublicKeyInfo(BSTR strEncodedPublicKeyInfo, EncodingType Encoding);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509publickey-get_algorithm))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509publickey-get_algorithm
     HRESULT get_Algorithm(IObjectId* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509publickey-get_length))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509publickey-get_length
     HRESULT get_Length(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509publickey-get_encodedkey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509publickey-get_encodedkey
     HRESULT get_EncodedKey(EncodingType Encoding, BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509publickey-get_encodedparameters))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509publickey-get_encodedparameters
     HRESULT get_EncodedParameters(EncodingType Encoding, BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509publickey-computekeyidentifier))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509publickey-computekeyidentifier
     HRESULT ComputeKeyIdentifier(KeyIdentifierHashAlgorithm Algorithm, EncodingType Encoding, BSTR* pValue);
 }
 
 @GUID("728ab30c-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509privatekey))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509privatekey
 interface IX509PrivateKey : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-open))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-open
     HRESULT Open();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-create))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-create
     HRESULT Create();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-close))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-close
     HRESULT Close();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-delete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-delete
     HRESULT Delete();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-verify))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-verify
     HRESULT Verify(X509PrivateKeyVerify VerifyType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-import))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-import
     HRESULT Import(BSTR strExportType, BSTR strEncodedKey, EncodingType Encoding);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-export))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-export
     HRESULT Export(BSTR strExportType, EncodingType Encoding, BSTR* pstrEncodedKey);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-exportpublickey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-exportpublickey
     HRESULT ExportPublicKey(IX509PublicKey* ppPublicKey);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_containername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_containername
     HRESULT get_ContainerName(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_containername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_containername
     HRESULT put_ContainerName(BSTR Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_containernameprefix))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_containernameprefix
     HRESULT get_ContainerNamePrefix(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_containernameprefix))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_containernameprefix
     HRESULT put_ContainerNamePrefix(BSTR Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_readername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_readername
     HRESULT get_ReaderName(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_readername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_readername
     HRESULT put_ReaderName(BSTR Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_cspinformations))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_cspinformations
     HRESULT get_CspInformations(ICspInformations* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_cspinformations))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_cspinformations
     HRESULT put_CspInformations(ICspInformations pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_cspstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_cspstatus
     HRESULT get_CspStatus(ICspStatus* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_cspstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_cspstatus
     HRESULT put_CspStatus(ICspStatus pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_providername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_providername
     HRESULT get_ProviderName(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_providername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_providername
     HRESULT put_ProviderName(BSTR Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_providertype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_providertype
     HRESULT get_ProviderType(X509ProviderType* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_providertype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_providertype
     HRESULT put_ProviderType(X509ProviderType Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_legacycsp))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_legacycsp
     HRESULT get_LegacyCsp(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_legacycsp))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_legacycsp
     HRESULT put_LegacyCsp(VARIANT_BOOL Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_algorithm))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_algorithm
     HRESULT get_Algorithm(IObjectId* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_algorithm))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_algorithm
     HRESULT put_Algorithm(IObjectId pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_keyspec))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_keyspec
     HRESULT get_KeySpec(X509KeySpec* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_keyspec))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_keyspec
     HRESULT put_KeySpec(X509KeySpec Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_length))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_length
     HRESULT get_Length(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_length))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_length
     HRESULT put_Length(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_exportpolicy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_exportpolicy
     HRESULT get_ExportPolicy(X509PrivateKeyExportFlags* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_exportpolicy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_exportpolicy
     HRESULT put_ExportPolicy(X509PrivateKeyExportFlags Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_keyusage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_keyusage
     HRESULT get_KeyUsage(X509PrivateKeyUsageFlags* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_keyusage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_keyusage
     HRESULT put_KeyUsage(X509PrivateKeyUsageFlags Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_keyprotection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_keyprotection
     HRESULT get_KeyProtection(X509PrivateKeyProtection* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_keyprotection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_keyprotection
     HRESULT put_KeyProtection(X509PrivateKeyProtection Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_machinecontext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_machinecontext
     HRESULT get_MachineContext(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_machinecontext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_machinecontext
     HRESULT put_MachineContext(VARIANT_BOOL Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_securitydescriptor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_securitydescriptor
     HRESULT get_SecurityDescriptor(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_securitydescriptor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_securitydescriptor
     HRESULT put_SecurityDescriptor(BSTR Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_certificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_certificate
     HRESULT get_Certificate(EncodingType Encoding, BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_certificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_certificate
     HRESULT put_Certificate(EncodingType Encoding, BSTR Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_uniquecontainername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_uniquecontainername
     HRESULT get_UniqueContainerName(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_opened))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_opened
     HRESULT get_Opened(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_defaultcontainer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_defaultcontainer
     HRESULT get_DefaultContainer(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_existing))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_existing
     HRESULT get_Existing(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_existing))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_existing
     HRESULT put_Existing(VARIANT_BOOL Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_silent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_silent
     HRESULT get_Silent(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_silent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_silent
     HRESULT put_Silent(VARIANT_BOOL Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_parentwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_parentwindow
     HRESULT get_ParentWindow(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_parentwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_parentwindow
     HRESULT put_ParentWindow(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_uicontextmessage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_uicontextmessage
     HRESULT get_UIContextMessage(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_uicontextmessage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_uicontextmessage
     HRESULT put_UIContextMessage(BSTR Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_pin))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_pin
     HRESULT put_Pin(BSTR Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_friendlyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_friendlyname
     HRESULT get_FriendlyName(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_friendlyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_friendlyname
     HRESULT put_FriendlyName(BSTR Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-get_description
     HRESULT get_Description(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509privatekey-put_description
     HRESULT put_Description(BSTR Value);
 }
 
@@ -4696,1229 +4777,1229 @@ interface IX509PrivateKey2 : IX509PrivateKey
 }
 
 @GUID("b11cd855-f4c4-4fc6-b710-4422237f09e9")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509endorsementkey))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509endorsementkey
 interface IX509EndorsementKey : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509endorsementkey-get_providername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509endorsementkey-get_providername
     HRESULT get_ProviderName(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509endorsementkey-put_providername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509endorsementkey-put_providername
     HRESULT put_ProviderName(BSTR Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509endorsementkey-get_length))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509endorsementkey-get_length
     HRESULT get_Length(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509endorsementkey-get_opened))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509endorsementkey-get_opened
     HRESULT get_Opened(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509endorsementkey-addcertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509endorsementkey-addcertificate
     HRESULT AddCertificate(EncodingType Encoding, BSTR strCertificate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509endorsementkey-removecertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509endorsementkey-removecertificate
     HRESULT RemoveCertificate(EncodingType Encoding, BSTR strCertificate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509endorsementkey-getcertificatebyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509endorsementkey-getcertificatebyindex
     HRESULT GetCertificateByIndex(VARIANT_BOOL ManufacturerOnly, int dwIndex, EncodingType Encoding, BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509endorsementkey-getcertificatecount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509endorsementkey-getcertificatecount
     HRESULT GetCertificateCount(VARIANT_BOOL ManufacturerOnly, int* pCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509endorsementkey-exportpublickey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509endorsementkey-exportpublickey
     HRESULT ExportPublicKey(IX509PublicKey* ppPublicKey);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509endorsementkey-open))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509endorsementkey-open
     HRESULT Open();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509endorsementkey-close))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509endorsementkey-close
     HRESULT Close();
 }
 
 @GUID("728ab30d-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extension))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extension
 interface IX509Extension : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extension-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extension-initialize
     HRESULT Initialize(IObjectId pObjectId, EncodingType Encoding, BSTR strEncodedData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extension-get_objectid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extension-get_objectid
     HRESULT get_ObjectId(IObjectId* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extension-get_rawdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extension-get_rawdata
     HRESULT get_RawData(EncodingType Encoding, BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extension-get_critical))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extension-get_critical
     HRESULT get_Critical(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extension-put_critical))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extension-put_critical
     HRESULT put_Critical(VARIANT_BOOL Value);
 }
 
 @GUID("728ab30e-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extensions))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extensions
 interface IX509Extensions : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensions-get_itembyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensions-get_itembyindex
     HRESULT get_ItemByIndex(int Index, IX509Extension* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensions-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensions-get_count
     HRESULT get_Count(int* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensions-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensions-get__newenum
     HRESULT get__NewEnum(IUnknown* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensions-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensions-add
     HRESULT Add(IX509Extension pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensions-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensions-remove
     HRESULT Remove(int Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensions-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensions-clear
     HRESULT Clear();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensions-get_indexbyobjectid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensions-get_indexbyobjectid
     HRESULT get_IndexByObjectId(IObjectId pObjectId, int* pIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensions-addrange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensions-addrange
     HRESULT AddRange(IX509Extensions pValue);
 }
 
 @GUID("728ab30f-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extensionkeyusage))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extensionkeyusage
 interface IX509ExtensionKeyUsage : IX509Extension
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionkeyusage-initializeencode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionkeyusage-initializeencode
     HRESULT InitializeEncode(X509KeyUsageFlags UsageFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionkeyusage-initializedecode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionkeyusage-initializedecode
     HRESULT InitializeDecode(EncodingType Encoding, BSTR strEncodedData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionkeyusage-get_keyusage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionkeyusage-get_keyusage
     HRESULT get_KeyUsage(X509KeyUsageFlags* pValue);
 }
 
 @GUID("728ab310-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extensionenhancedkeyusage))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extensionenhancedkeyusage
 interface IX509ExtensionEnhancedKeyUsage : IX509Extension
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionenhancedkeyusage-initializeencode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionenhancedkeyusage-initializeencode
     HRESULT InitializeEncode(IObjectIds pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionenhancedkeyusage-initializedecode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionenhancedkeyusage-initializedecode
     HRESULT InitializeDecode(EncodingType Encoding, BSTR strEncodedData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionenhancedkeyusage-get_enhancedkeyusage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionenhancedkeyusage-get_enhancedkeyusage
     HRESULT get_EnhancedKeyUsage(IObjectIds* ppValue);
 }
 
 @GUID("728ab311-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extensiontemplatename))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extensiontemplatename
 interface IX509ExtensionTemplateName : IX509Extension
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensiontemplatename-initializeencode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensiontemplatename-initializeencode
     HRESULT InitializeEncode(BSTR strTemplateName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensiontemplatename-initializedecode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensiontemplatename-initializedecode
     HRESULT InitializeDecode(EncodingType Encoding, BSTR strEncodedData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensiontemplatename-get_templatename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensiontemplatename-get_templatename
     HRESULT get_TemplateName(BSTR* pValue);
 }
 
 @GUID("728ab312-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extensiontemplate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extensiontemplate
 interface IX509ExtensionTemplate : IX509Extension
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensiontemplate-initializeencode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensiontemplate-initializeencode
     HRESULT InitializeEncode(IObjectId pTemplateOid, int MajorVersion, int MinorVersion);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensiontemplate-initializedecode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensiontemplate-initializedecode
     HRESULT InitializeDecode(EncodingType Encoding, BSTR strEncodedData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensiontemplate-get_templateoid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensiontemplate-get_templateoid
     HRESULT get_TemplateOid(IObjectId* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensiontemplate-get_majorversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensiontemplate-get_majorversion
     HRESULT get_MajorVersion(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensiontemplate-get_minorversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensiontemplate-get_minorversion
     HRESULT get_MinorVersion(int* pValue);
 }
 
 @GUID("728ab313-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ialternativename))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ialternativename
 interface IAlternativeName : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ialternativename-initializefromstring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ialternativename-initializefromstring
     HRESULT InitializeFromString(AlternativeNameType Type, BSTR strValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ialternativename-initializefromrawdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ialternativename-initializefromrawdata
     HRESULT InitializeFromRawData(AlternativeNameType Type, EncodingType Encoding, BSTR strRawData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ialternativename-initializefromothername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ialternativename-initializefromothername
     HRESULT InitializeFromOtherName(IObjectId pObjectId, EncodingType Encoding, BSTR strRawData, 
                                     VARIANT_BOOL ToBeWrapped);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ialternativename-get_type))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ialternativename-get_type
     HRESULT get_Type(AlternativeNameType* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ialternativename-get_strvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ialternativename-get_strvalue
     HRESULT get_StrValue(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ialternativename-get_objectid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ialternativename-get_objectid
     HRESULT get_ObjectId(IObjectId* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ialternativename-get_rawdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ialternativename-get_rawdata
     HRESULT get_RawData(EncodingType Encoding, BSTR* pValue);
 }
 
 @GUID("728ab314-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ialternativenames))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ialternativenames
 interface IAlternativeNames : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ialternativenames-get_itembyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ialternativenames-get_itembyindex
     HRESULT get_ItemByIndex(int Index, IAlternativeName* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ialternativenames-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ialternativenames-get_count
     HRESULT get_Count(int* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ialternativenames-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ialternativenames-get__newenum
     HRESULT get__NewEnum(IUnknown* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ialternativenames-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ialternativenames-add
     HRESULT Add(IAlternativeName pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ialternativenames-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ialternativenames-remove
     HRESULT Remove(int Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ialternativenames-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ialternativenames-clear
     HRESULT Clear();
 }
 
 @GUID("728ab315-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extensionalternativenames))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extensionalternativenames
 interface IX509ExtensionAlternativeNames : IX509Extension
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionalternativenames-initializeencode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionalternativenames-initializeencode
     HRESULT InitializeEncode(IAlternativeNames pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionalternativenames-initializedecode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionalternativenames-initializedecode
     HRESULT InitializeDecode(EncodingType Encoding, BSTR strEncodedData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionalternativenames-get_alternativenames))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionalternativenames-get_alternativenames
     HRESULT get_AlternativeNames(IAlternativeNames* ppValue);
 }
 
 @GUID("728ab316-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extensionbasicconstraints))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extensionbasicconstraints
 interface IX509ExtensionBasicConstraints : IX509Extension
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionbasicconstraints-initializeencode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionbasicconstraints-initializeencode
     HRESULT InitializeEncode(VARIANT_BOOL IsCA, int PathLenConstraint);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionbasicconstraints-initializedecode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionbasicconstraints-initializedecode
     HRESULT InitializeDecode(EncodingType Encoding, BSTR strEncodedData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionbasicconstraints-get_isca))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionbasicconstraints-get_isca
     HRESULT get_IsCA(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionbasicconstraints-get_pathlenconstraint))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionbasicconstraints-get_pathlenconstraint
     HRESULT get_PathLenConstraint(int* pValue);
 }
 
 @GUID("728ab317-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extensionsubjectkeyidentifier))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extensionsubjectkeyidentifier
 interface IX509ExtensionSubjectKeyIdentifier : IX509Extension
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionsubjectkeyidentifier-initializeencode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionsubjectkeyidentifier-initializeencode
     HRESULT InitializeEncode(EncodingType Encoding, BSTR strKeyIdentifier);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionsubjectkeyidentifier-initializedecode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionsubjectkeyidentifier-initializedecode
     HRESULT InitializeDecode(EncodingType Encoding, BSTR strEncodedData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionsubjectkeyidentifier-get_subjectkeyidentifier))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionsubjectkeyidentifier-get_subjectkeyidentifier
     HRESULT get_SubjectKeyIdentifier(EncodingType Encoding, BSTR* pValue);
 }
 
 @GUID("728ab318-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extensionauthoritykeyidentifier))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extensionauthoritykeyidentifier
 interface IX509ExtensionAuthorityKeyIdentifier : IX509Extension
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionauthoritykeyidentifier-initializeencode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionauthoritykeyidentifier-initializeencode
     HRESULT InitializeEncode(EncodingType Encoding, BSTR strKeyIdentifier);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionauthoritykeyidentifier-initializedecode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionauthoritykeyidentifier-initializedecode
     HRESULT InitializeDecode(EncodingType Encoding, BSTR strEncodedData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionauthoritykeyidentifier-get_authoritykeyidentifier))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionauthoritykeyidentifier-get_authoritykeyidentifier
     HRESULT get_AuthorityKeyIdentifier(EncodingType Encoding, BSTR* pValue);
 }
 
 @GUID("728ab319-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ismimecapability))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ismimecapability
 interface ISmimeCapability : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ismimecapability-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ismimecapability-initialize
     HRESULT Initialize(IObjectId pObjectId, int BitCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ismimecapability-get_objectid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ismimecapability-get_objectid
     HRESULT get_ObjectId(IObjectId* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ismimecapability-get_bitcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ismimecapability-get_bitcount
     HRESULT get_BitCount(int* pValue);
 }
 
 @GUID("728ab31a-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ismimecapabilities))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ismimecapabilities
 interface ISmimeCapabilities : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ismimecapabilities-get_itembyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ismimecapabilities-get_itembyindex
     HRESULT get_ItemByIndex(int Index, ISmimeCapability* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ismimecapabilities-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ismimecapabilities-get_count
     HRESULT get_Count(int* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ismimecapabilities-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ismimecapabilities-get__newenum
     HRESULT get__NewEnum(IUnknown* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ismimecapabilities-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ismimecapabilities-add
     HRESULT Add(ISmimeCapability pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ismimecapabilities-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ismimecapabilities-remove
     HRESULT Remove(int Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ismimecapabilities-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ismimecapabilities-clear
     HRESULT Clear();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ismimecapabilities-addfromcsp))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ismimecapabilities-addfromcsp
     HRESULT AddFromCsp(ICspInformation pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ismimecapabilities-addavailablesmimecapabilities))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ismimecapabilities-addavailablesmimecapabilities
     HRESULT AddAvailableSmimeCapabilities(VARIANT_BOOL MachineContext);
 }
 
 @GUID("728ab31b-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extensionsmimecapabilities))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extensionsmimecapabilities
 interface IX509ExtensionSmimeCapabilities : IX509Extension
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionsmimecapabilities-initializeencode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionsmimecapabilities-initializeencode
     HRESULT InitializeEncode(ISmimeCapabilities pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionsmimecapabilities-initializedecode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionsmimecapabilities-initializedecode
     HRESULT InitializeDecode(EncodingType Encoding, BSTR strEncodedData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionsmimecapabilities-get_smimecapabilities))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionsmimecapabilities-get_smimecapabilities
     HRESULT get_SmimeCapabilities(ISmimeCapabilities* ppValue);
 }
 
 @GUID("728ab31c-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ipolicyqualifier))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ipolicyqualifier
 interface IPolicyQualifier : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ipolicyqualifier-initializeencode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ipolicyqualifier-initializeencode
     HRESULT InitializeEncode(BSTR strQualifier, PolicyQualifierType Type);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ipolicyqualifier-get_objectid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ipolicyqualifier-get_objectid
     HRESULT get_ObjectId(IObjectId* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ipolicyqualifier-get_qualifier))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ipolicyqualifier-get_qualifier
     HRESULT get_Qualifier(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ipolicyqualifier-get_type))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ipolicyqualifier-get_type
     HRESULT get_Type(PolicyQualifierType* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ipolicyqualifier-get_rawdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ipolicyqualifier-get_rawdata
     HRESULT get_RawData(EncodingType Encoding, BSTR* pValue);
 }
 
 @GUID("728ab31d-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ipolicyqualifiers))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ipolicyqualifiers
 interface IPolicyQualifiers : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ipolicyqualifiers-get_itembyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ipolicyqualifiers-get_itembyindex
     HRESULT get_ItemByIndex(int Index, IPolicyQualifier* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ipolicyqualifiers-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ipolicyqualifiers-get_count
     HRESULT get_Count(int* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ipolicyqualifiers-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ipolicyqualifiers-get__newenum
     HRESULT get__NewEnum(IUnknown* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ipolicyqualifiers-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ipolicyqualifiers-add
     HRESULT Add(IPolicyQualifier pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ipolicyqualifiers-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ipolicyqualifiers-remove
     HRESULT Remove(int Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ipolicyqualifiers-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ipolicyqualifiers-clear
     HRESULT Clear();
 }
 
 @GUID("728ab31e-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertificatepolicy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertificatepolicy
 interface ICertificatePolicy : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificatepolicy-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificatepolicy-initialize
     HRESULT Initialize(IObjectId pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificatepolicy-get_objectid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificatepolicy-get_objectid
     HRESULT get_ObjectId(IObjectId* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificatepolicy-get_policyqualifiers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificatepolicy-get_policyqualifiers
     HRESULT get_PolicyQualifiers(IPolicyQualifiers* ppValue);
 }
 
 @GUID("728ab31f-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertificatepolicies))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertificatepolicies
 interface ICertificatePolicies : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificatepolicies-get_itembyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificatepolicies-get_itembyindex
     HRESULT get_ItemByIndex(int Index, ICertificatePolicy* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificatepolicies-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificatepolicies-get_count
     HRESULT get_Count(int* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificatepolicies-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificatepolicies-get__newenum
     HRESULT get__NewEnum(IUnknown* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificatepolicies-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificatepolicies-add
     HRESULT Add(ICertificatePolicy pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificatepolicies-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificatepolicies-remove
     HRESULT Remove(int Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificatepolicies-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificatepolicies-clear
     HRESULT Clear();
 }
 
 @GUID("728ab320-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extensioncertificatepolicies))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extensioncertificatepolicies
 interface IX509ExtensionCertificatePolicies : IX509Extension
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensioncertificatepolicies-initializeencode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensioncertificatepolicies-initializeencode
     HRESULT InitializeEncode(ICertificatePolicies pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensioncertificatepolicies-initializedecode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensioncertificatepolicies-initializedecode
     HRESULT InitializeDecode(EncodingType Encoding, BSTR strEncodedData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensioncertificatepolicies-get_policies))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensioncertificatepolicies-get_policies
     HRESULT get_Policies(ICertificatePolicies* ppValue);
 }
 
 @GUID("728ab321-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extensionmsapplicationpolicies))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509extensionmsapplicationpolicies
 interface IX509ExtensionMSApplicationPolicies : IX509Extension
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionmsapplicationpolicies-initializeencode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionmsapplicationpolicies-initializeencode
     HRESULT InitializeEncode(ICertificatePolicies pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionmsapplicationpolicies-initializedecode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionmsapplicationpolicies-initializedecode
     HRESULT InitializeDecode(EncodingType Encoding, BSTR strEncodedData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionmsapplicationpolicies-get_policies))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509extensionmsapplicationpolicies-get_policies
     HRESULT get_Policies(ICertificatePolicies* ppValue);
 }
 
 @GUID("728ab322-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509attribute))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509attribute
 interface IX509Attribute : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attribute-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attribute-initialize
     HRESULT Initialize(IObjectId pObjectId, EncodingType Encoding, BSTR strEncodedData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attribute-get_objectid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attribute-get_objectid
     HRESULT get_ObjectId(IObjectId* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attribute-get_rawdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attribute-get_rawdata
     HRESULT get_RawData(EncodingType Encoding, BSTR* pValue);
 }
 
 @GUID("728ab323-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509attributes))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509attributes
 interface IX509Attributes : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributes-get_itembyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributes-get_itembyindex
     HRESULT get_ItemByIndex(int Index, IX509Attribute* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributes-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributes-get_count
     HRESULT get_Count(int* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributes-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributes-get__newenum
     HRESULT get__NewEnum(IUnknown* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributes-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributes-add
     HRESULT Add(IX509Attribute pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributes-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributes-remove
     HRESULT Remove(int Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributes-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributes-clear
     HRESULT Clear();
 }
 
 @GUID("728ab324-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509attributeextensions))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509attributeextensions
 interface IX509AttributeExtensions : IX509Attribute
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributeextensions-initializeencode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributeextensions-initializeencode
     HRESULT InitializeEncode(IX509Extensions pExtensions);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributeextensions-initializedecode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributeextensions-initializedecode
     HRESULT InitializeDecode(EncodingType Encoding, BSTR strEncodedData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributeextensions-get_x509extensions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributeextensions-get_x509extensions
     HRESULT get_X509Extensions(IX509Extensions* ppValue);
 }
 
 @GUID("728ab325-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509attributeclientid))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509attributeclientid
 interface IX509AttributeClientId : IX509Attribute
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributeclientid-initializeencode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributeclientid-initializeencode
     HRESULT InitializeEncode(RequestClientInfoClientId ClientId, BSTR strMachineDnsName, BSTR strUserSamName, 
                              BSTR strProcessName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributeclientid-initializedecode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributeclientid-initializedecode
     HRESULT InitializeDecode(EncodingType Encoding, BSTR strEncodedData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributeclientid-get_clientid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributeclientid-get_clientid
     HRESULT get_ClientId(RequestClientInfoClientId* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributeclientid-get_machinednsname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributeclientid-get_machinednsname
     HRESULT get_MachineDnsName(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributeclientid-get_usersamname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributeclientid-get_usersamname
     HRESULT get_UserSamName(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributeclientid-get_processname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributeclientid-get_processname
     HRESULT get_ProcessName(BSTR* pValue);
 }
 
 @GUID("728ab326-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509attributerenewalcertificate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509attributerenewalcertificate
 interface IX509AttributeRenewalCertificate : IX509Attribute
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributerenewalcertificate-initializeencode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributerenewalcertificate-initializeencode
     HRESULT InitializeEncode(EncodingType Encoding, BSTR strCert);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributerenewalcertificate-initializedecode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributerenewalcertificate-initializedecode
     HRESULT InitializeDecode(EncodingType Encoding, BSTR strEncodedData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributerenewalcertificate-get_renewalcertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributerenewalcertificate-get_renewalcertificate
     HRESULT get_RenewalCertificate(EncodingType Encoding, BSTR* pValue);
 }
 
 @GUID("728ab327-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509attributearchivekey))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509attributearchivekey
 interface IX509AttributeArchiveKey : IX509Attribute
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributearchivekey-initializeencode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributearchivekey-initializeencode
     HRESULT InitializeEncode(IX509PrivateKey pKey, EncodingType Encoding, BSTR strCAXCert, IObjectId pAlgorithm, 
                              int EncryptionStrength);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributearchivekey-initializedecode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributearchivekey-initializedecode
     HRESULT InitializeDecode(EncodingType Encoding, BSTR strEncodedData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributearchivekey-get_encryptedkeyblob))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributearchivekey-get_encryptedkeyblob
     HRESULT get_EncryptedKeyBlob(EncodingType Encoding, BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributearchivekey-get_encryptionalgorithm))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributearchivekey-get_encryptionalgorithm
     HRESULT get_EncryptionAlgorithm(IObjectId* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributearchivekey-get_encryptionstrength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributearchivekey-get_encryptionstrength
     HRESULT get_EncryptionStrength(int* pValue);
 }
 
 @GUID("728ab328-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509attributearchivekeyhash))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509attributearchivekeyhash
 interface IX509AttributeArchiveKeyHash : IX509Attribute
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributearchivekeyhash-initializeencodefromencryptedkeyblob))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributearchivekeyhash-initializeencodefromencryptedkeyblob
     HRESULT InitializeEncodeFromEncryptedKeyBlob(EncodingType Encoding, BSTR strEncryptedKeyBlob);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributearchivekeyhash-initializedecode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributearchivekeyhash-initializedecode
     HRESULT InitializeDecode(EncodingType Encoding, BSTR strEncodedData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributearchivekeyhash-get_encryptedkeyhashblob))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributearchivekeyhash-get_encryptedkeyhashblob
     HRESULT get_EncryptedKeyHashBlob(EncodingType Encoding, BSTR* pValue);
 }
 
 @GUID("728ab32a-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509attributeosversion))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509attributeosversion
 interface IX509AttributeOSVersion : IX509Attribute
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributeosversion-initializeencode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributeosversion-initializeencode
     HRESULT InitializeEncode(BSTR strOSVersion);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributeosversion-initializedecode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributeosversion-initializedecode
     HRESULT InitializeDecode(EncodingType Encoding, BSTR strEncodedData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributeosversion-get_osversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributeosversion-get_osversion
     HRESULT get_OSVersion(BSTR* pValue);
 }
 
 @GUID("728ab32b-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509attributecspprovider))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509attributecspprovider
 interface IX509AttributeCspProvider : IX509Attribute
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributecspprovider-initializeencode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributecspprovider-initializeencode
     HRESULT InitializeEncode(X509KeySpec KeySpec, BSTR strProviderName, EncodingType Encoding, BSTR strSignature);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributecspprovider-initializedecode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributecspprovider-initializedecode
     HRESULT InitializeDecode(EncodingType Encoding, BSTR strEncodedData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributecspprovider-get_keyspec))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributecspprovider-get_keyspec
     HRESULT get_KeySpec(X509KeySpec* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributecspprovider-get_providername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributecspprovider-get_providername
     HRESULT get_ProviderName(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributecspprovider-get_signature))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509attributecspprovider-get_signature
     HRESULT get_Signature(EncodingType Encoding, BSTR* pValue);
 }
 
 @GUID("728ab32c-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icryptattribute))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icryptattribute
 interface ICryptAttribute : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icryptattribute-initializefromobjectid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icryptattribute-initializefromobjectid
     HRESULT InitializeFromObjectId(IObjectId pObjectId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icryptattribute-initializefromvalues))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icryptattribute-initializefromvalues
     HRESULT InitializeFromValues(IX509Attributes pAttributes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icryptattribute-get_objectid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icryptattribute-get_objectid
     HRESULT get_ObjectId(IObjectId* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icryptattribute-get_values))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icryptattribute-get_values
     HRESULT get_Values(IX509Attributes* ppValue);
 }
 
 @GUID("728ab32d-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icryptattributes))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icryptattributes
 interface ICryptAttributes : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icryptattributes-get_itembyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icryptattributes-get_itembyindex
     HRESULT get_ItemByIndex(int Index, ICryptAttribute* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icryptattributes-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icryptattributes-get_count
     HRESULT get_Count(int* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icryptattributes-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icryptattributes-get__newenum
     HRESULT get__NewEnum(IUnknown* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icryptattributes-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icryptattributes-add
     HRESULT Add(ICryptAttribute pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icryptattributes-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icryptattributes-remove
     HRESULT Remove(int Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icryptattributes-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icryptattributes-clear
     HRESULT Clear();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icryptattributes-get_indexbyobjectid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icryptattributes-get_indexbyobjectid
     HRESULT get_IndexByObjectId(IObjectId pObjectId, int* pIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icryptattributes-addrange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icryptattributes-addrange
     HRESULT AddRange(ICryptAttributes pValue);
 }
 
 @GUID("728ab32e-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertproperty))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertproperty
 interface ICertProperty : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertproperty-initializefromcertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertproperty-initializefromcertificate
     HRESULT InitializeFromCertificate(VARIANT_BOOL MachineContext, EncodingType Encoding, BSTR strCertificate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertproperty-initializedecode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertproperty-initializedecode
     HRESULT InitializeDecode(EncodingType Encoding, BSTR strEncodedData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertproperty-get_propertyid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertproperty-get_propertyid
     HRESULT get_PropertyId(CERTENROLL_PROPERTYID* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertproperty-put_propertyid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertproperty-put_propertyid
     HRESULT put_PropertyId(CERTENROLL_PROPERTYID Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertproperty-get_rawdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertproperty-get_rawdata
     HRESULT get_RawData(EncodingType Encoding, BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertproperty-removefromcertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertproperty-removefromcertificate
     HRESULT RemoveFromCertificate(VARIANT_BOOL MachineContext, EncodingType Encoding, BSTR strCertificate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertproperty-setvalueoncertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertproperty-setvalueoncertificate
     HRESULT SetValueOnCertificate(VARIANT_BOOL MachineContext, EncodingType Encoding, BSTR strCertificate);
 }
 
 @GUID("728ab32f-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertproperties))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertproperties
 interface ICertProperties : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertproperties-get_itembyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertproperties-get_itembyindex
     HRESULT get_ItemByIndex(int Index, ICertProperty* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertproperties-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertproperties-get_count
     HRESULT get_Count(int* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertproperties-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertproperties-get__newenum
     HRESULT get__NewEnum(IUnknown* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertproperties-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertproperties-add
     HRESULT Add(ICertProperty pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertproperties-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertproperties-remove
     HRESULT Remove(int Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertproperties-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertproperties-clear
     HRESULT Clear();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertproperties-initializefromcertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertproperties-initializefromcertificate
     HRESULT InitializeFromCertificate(VARIANT_BOOL MachineContext, EncodingType Encoding, BSTR strCertificate);
 }
 
 @GUID("728ab330-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertpropertyfriendlyname))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertpropertyfriendlyname
 interface ICertPropertyFriendlyName : ICertProperty
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyfriendlyname-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyfriendlyname-initialize
     HRESULT Initialize(BSTR strFriendlyName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyfriendlyname-get_friendlyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyfriendlyname-get_friendlyname
     HRESULT get_FriendlyName(BSTR* pValue);
 }
 
 @GUID("728ab331-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertpropertydescription))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertpropertydescription
 interface ICertPropertyDescription : ICertProperty
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertydescription-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertydescription-initialize
     HRESULT Initialize(BSTR strDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertydescription-get_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertydescription-get_description
     HRESULT get_Description(BSTR* pValue);
 }
 
 @GUID("728ab332-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertpropertyautoenroll))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertpropertyautoenroll
 interface ICertPropertyAutoEnroll : ICertProperty
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyautoenroll-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyautoenroll-initialize
     HRESULT Initialize(BSTR strTemplateName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyautoenroll-get_templatename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyautoenroll-get_templatename
     HRESULT get_TemplateName(BSTR* pValue);
 }
 
 @GUID("728ab333-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertpropertyrequestoriginator))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertpropertyrequestoriginator
 interface ICertPropertyRequestOriginator : ICertProperty
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyrequestoriginator-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyrequestoriginator-initialize
     HRESULT Initialize(BSTR strRequestOriginator);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyrequestoriginator-initializefromlocalrequestoriginator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyrequestoriginator-initializefromlocalrequestoriginator
     HRESULT InitializeFromLocalRequestOriginator();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyrequestoriginator-get_requestoriginator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyrequestoriginator-get_requestoriginator
     HRESULT get_RequestOriginator(BSTR* pValue);
 }
 
 @GUID("728ab334-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertpropertysha1hash))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertpropertysha1hash
 interface ICertPropertySHA1Hash : ICertProperty
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertysha1hash-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertysha1hash-initialize
     HRESULT Initialize(EncodingType Encoding, BSTR strRenewalValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertysha1hash-get_sha1hash))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertysha1hash-get_sha1hash
     HRESULT get_SHA1Hash(EncodingType Encoding, BSTR* pValue);
 }
 
 @GUID("728ab336-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertpropertykeyprovinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertpropertykeyprovinfo
 interface ICertPropertyKeyProvInfo : ICertProperty
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertykeyprovinfo-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertykeyprovinfo-initialize
     HRESULT Initialize(IX509PrivateKey pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertykeyprovinfo-get_privatekey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertykeyprovinfo-get_privatekey
     HRESULT get_PrivateKey(IX509PrivateKey* ppValue);
 }
 
 @GUID("728ab337-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertpropertyarchived))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertpropertyarchived
 interface ICertPropertyArchived : ICertProperty
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyarchived-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyarchived-initialize
     HRESULT Initialize(VARIANT_BOOL ArchivedValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyarchived-get_archived))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyarchived-get_archived
     HRESULT get_Archived(VARIANT_BOOL* pValue);
 }
 
 @GUID("728ab338-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertpropertybackedup))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertpropertybackedup
 interface ICertPropertyBackedUp : ICertProperty
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertybackedup-initializefromcurrenttime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertybackedup-initializefromcurrenttime
     HRESULT InitializeFromCurrentTime(VARIANT_BOOL BackedUpValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertybackedup-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertybackedup-initialize
     HRESULT Initialize(VARIANT_BOOL BackedUpValue, double Date);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertybackedup-get_backedupvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertybackedup-get_backedupvalue
     HRESULT get_BackedUpValue(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertybackedup-get_backeduptime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertybackedup-get_backeduptime
     HRESULT get_BackedUpTime(double* pDate);
 }
 
 @GUID("728ab339-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertpropertyenrollment))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertpropertyenrollment
 interface ICertPropertyEnrollment : ICertProperty
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyenrollment-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyenrollment-initialize
     HRESULT Initialize(int RequestId, BSTR strCADnsName, BSTR strCAName, BSTR strFriendlyName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyenrollment-get_requestid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyenrollment-get_requestid
     HRESULT get_RequestId(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyenrollment-get_cadnsname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyenrollment-get_cadnsname
     HRESULT get_CADnsName(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyenrollment-get_caname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyenrollment-get_caname
     HRESULT get_CAName(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyenrollment-get_friendlyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyenrollment-get_friendlyname
     HRESULT get_FriendlyName(BSTR* pValue);
 }
 
 @GUID("728ab33a-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertpropertyrenewal))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertpropertyrenewal
 interface ICertPropertyRenewal : ICertProperty
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyrenewal-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyrenewal-initialize
     HRESULT Initialize(EncodingType Encoding, BSTR strRenewalValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyrenewal-initializefromcertificatehash))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyrenewal-initializefromcertificatehash
     HRESULT InitializeFromCertificateHash(VARIANT_BOOL MachineContext, EncodingType Encoding, BSTR strCertificate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyrenewal-get_renewal))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyrenewal-get_renewal
     HRESULT get_Renewal(EncodingType Encoding, BSTR* pValue);
 }
 
 @GUID("728ab33b-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertpropertyarchivedkeyhash))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertpropertyarchivedkeyhash
 interface ICertPropertyArchivedKeyHash : ICertProperty
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyarchivedkeyhash-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyarchivedkeyhash-initialize
     HRESULT Initialize(EncodingType Encoding, BSTR strArchivedKeyHashValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyarchivedkeyhash-get_archivedkeyhash))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyarchivedkeyhash-get_archivedkeyhash
     HRESULT get_ArchivedKeyHash(EncodingType Encoding, BSTR* pValue);
 }
 
 @GUID("728ab34a-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertpropertyenrollmentpolicyserver))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertpropertyenrollmentpolicyserver
 interface ICertPropertyEnrollmentPolicyServer : ICertProperty
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyenrollmentpolicyserver-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyenrollmentpolicyserver-initialize
     HRESULT Initialize(EnrollmentPolicyServerPropertyFlags PropertyFlags, X509EnrollmentAuthFlags AuthFlags, 
                        X509EnrollmentAuthFlags EnrollmentServerAuthFlags, PolicyServerUrlFlags UrlFlags, 
                        BSTR strRequestId, BSTR strUrl, BSTR strId, BSTR strEnrollmentServerUrl);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyenrollmentpolicyserver-getpolicyserverurl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyenrollmentpolicyserver-getpolicyserverurl
     HRESULT GetPolicyServerUrl(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyenrollmentpolicyserver-getpolicyserverid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyenrollmentpolicyserver-getpolicyserverid
     HRESULT GetPolicyServerId(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyenrollmentpolicyserver-getenrollmentserverurl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyenrollmentpolicyserver-getenrollmentserverurl
     HRESULT GetEnrollmentServerUrl(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyenrollmentpolicyserver-getrequestidstring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyenrollmentpolicyserver-getrequestidstring
     HRESULT GetRequestIdString(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyenrollmentpolicyserver-getpropertyflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyenrollmentpolicyserver-getpropertyflags
     HRESULT GetPropertyFlags(EnrollmentPolicyServerPropertyFlags* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyenrollmentpolicyserver-geturlflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyenrollmentpolicyserver-geturlflags
     HRESULT GetUrlFlags(PolicyServerUrlFlags* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyenrollmentpolicyserver-getauthentication))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyenrollmentpolicyserver-getauthentication
     HRESULT GetAuthentication(X509EnrollmentAuthFlags* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyenrollmentpolicyserver-getenrollmentserverauthentication))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertpropertyenrollmentpolicyserver-getenrollmentserverauthentication
     HRESULT GetEnrollmentServerAuthentication(X509EnrollmentAuthFlags* pValue);
 }
 
 @GUID("728ab33c-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509signatureinformation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509signatureinformation
 interface IX509SignatureInformation : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509signatureinformation-get_hashalgorithm))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509signatureinformation-get_hashalgorithm
     HRESULT get_HashAlgorithm(IObjectId* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509signatureinformation-put_hashalgorithm))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509signatureinformation-put_hashalgorithm
     HRESULT put_HashAlgorithm(IObjectId pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509signatureinformation-get_publickeyalgorithm))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509signatureinformation-get_publickeyalgorithm
     HRESULT get_PublicKeyAlgorithm(IObjectId* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509signatureinformation-put_publickeyalgorithm))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509signatureinformation-put_publickeyalgorithm
     HRESULT put_PublicKeyAlgorithm(IObjectId pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509signatureinformation-get_parameters))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509signatureinformation-get_parameters
     HRESULT get_Parameters(EncodingType Encoding, BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509signatureinformation-put_parameters))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509signatureinformation-put_parameters
     HRESULT put_Parameters(EncodingType Encoding, BSTR Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509signatureinformation-get_alternatesignaturealgorithm))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509signatureinformation-get_alternatesignaturealgorithm
     HRESULT get_AlternateSignatureAlgorithm(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509signatureinformation-put_alternatesignaturealgorithm))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509signatureinformation-put_alternatesignaturealgorithm
     HRESULT put_AlternateSignatureAlgorithm(VARIANT_BOOL Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509signatureinformation-get_alternatesignaturealgorithmset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509signatureinformation-get_alternatesignaturealgorithmset
     HRESULT get_AlternateSignatureAlgorithmSet(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509signatureinformation-get_nullsigned))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509signatureinformation-get_nullsigned
     HRESULT get_NullSigned(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509signatureinformation-put_nullsigned))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509signatureinformation-put_nullsigned
     HRESULT put_NullSigned(VARIANT_BOOL Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509signatureinformation-getsignaturealgorithm))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509signatureinformation-getsignaturealgorithm
     HRESULT GetSignatureAlgorithm(VARIANT_BOOL Pkcs7Signature, VARIANT_BOOL SignatureKey, IObjectId* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509signatureinformation-setdefaultvalues))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509signatureinformation-setdefaultvalues
     HRESULT SetDefaultValues();
 }
 
 @GUID("728ab33d-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-isignercertificate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-isignercertificate
 interface ISignerCertificate : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-isignercertificate-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-isignercertificate-initialize
     HRESULT Initialize(VARIANT_BOOL MachineContext, X509PrivateKeyVerify VerifyType, EncodingType Encoding, 
                        BSTR strCertificate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-isignercertificate-get_certificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-isignercertificate-get_certificate
     HRESULT get_Certificate(EncodingType Encoding, BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-isignercertificate-get_privatekey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-isignercertificate-get_privatekey
     HRESULT get_PrivateKey(IX509PrivateKey* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-isignercertificate-get_silent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-isignercertificate-get_silent
     HRESULT get_Silent(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-isignercertificate-put_silent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-isignercertificate-put_silent
     HRESULT put_Silent(VARIANT_BOOL Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-isignercertificate-get_parentwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-isignercertificate-get_parentwindow
     HRESULT get_ParentWindow(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-isignercertificate-put_parentwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-isignercertificate-put_parentwindow
     HRESULT put_ParentWindow(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-isignercertificate-get_uicontextmessage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-isignercertificate-get_uicontextmessage
     HRESULT get_UIContextMessage(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-isignercertificate-put_uicontextmessage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-isignercertificate-put_uicontextmessage
     HRESULT put_UIContextMessage(BSTR Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-isignercertificate-put_pin))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-isignercertificate-put_pin
     HRESULT put_Pin(BSTR Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-isignercertificate-get_signatureinformation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-isignercertificate-get_signatureinformation
     HRESULT get_SignatureInformation(IX509SignatureInformation* ppValue);
 }
 
 @GUID("728ab33e-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-isignercertificates))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-isignercertificates
 interface ISignerCertificates : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-isignercertificates-get_itembyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-isignercertificates-get_itembyindex
     HRESULT get_ItemByIndex(int Index, ISignerCertificate* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-isignercertificates-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-isignercertificates-get_count
     HRESULT get_Count(int* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-isignercertificates-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-isignercertificates-get__newenum
     HRESULT get__NewEnum(IUnknown* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-isignercertificates-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-isignercertificates-add
     HRESULT Add(ISignerCertificate pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-isignercertificates-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-isignercertificates-remove
     HRESULT Remove(int Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-isignercertificates-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-isignercertificates-clear
     HRESULT Clear();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-isignercertificates-find))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-isignercertificates-find
     HRESULT Find(ISignerCertificate pSignerCert, int* piSignerCert);
 }
 
 @GUID("728ab33f-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509namevaluepair))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509namevaluepair
 interface IX509NameValuePair : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509namevaluepair-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509namevaluepair-initialize
     HRESULT Initialize(BSTR strName, BSTR strValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509namevaluepair-get_value))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509namevaluepair-get_value
     HRESULT get_Value(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509namevaluepair-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509namevaluepair-get_name
     HRESULT get_Name(BSTR* pValue);
 }
 
 @GUID("728ab340-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509namevaluepairs))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509namevaluepairs
 interface IX509NameValuePairs : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509namevaluepairs-get_itembyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509namevaluepairs-get_itembyindex
     HRESULT get_ItemByIndex(int Index, IX509NameValuePair* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509namevaluepairs-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509namevaluepairs-get_count
     HRESULT get_Count(int* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509namevaluepairs-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509namevaluepairs-get__newenum
     HRESULT get__NewEnum(IUnknown* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509namevaluepairs-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509namevaluepairs-add
     HRESULT Add(IX509NameValuePair pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509namevaluepairs-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509namevaluepairs-remove
     HRESULT Remove(int Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509namevaluepairs-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509namevaluepairs-clear
     HRESULT Clear();
 }
 
 @GUID("54244a13-555a-4e22-896d-1b0e52f76406")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificatetemplate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificatetemplate
 interface IX509CertificateTemplate : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificatetemplate-get_property))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificatetemplate-get_property
     HRESULT get_Property(EnrollmentTemplateProperty property, VARIANT* pValue);
 }
 
 @GUID("13b79003-2181-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificatetemplates))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificatetemplates
 interface IX509CertificateTemplates : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificatetemplates-get_itembyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificatetemplates-get_itembyindex
     HRESULT get_ItemByIndex(int Index, IX509CertificateTemplate* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificatetemplates-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificatetemplates-get_count
     HRESULT get_Count(int* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificatetemplates-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificatetemplates-get__newenum
     HRESULT get__NewEnum(IUnknown* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificatetemplates-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificatetemplates-add
     HRESULT Add(IX509CertificateTemplate pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificatetemplates-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificatetemplates-remove
     HRESULT Remove(int Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificatetemplates-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificatetemplates-clear
     HRESULT Clear();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificatetemplates-get_itembyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificatetemplates-get_itembyname
     HRESULT get_ItemByName(BSTR bstrName, IX509CertificateTemplate* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificatetemplates-get_itembyoid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificatetemplates-get_itembyoid
     HRESULT get_ItemByOid(IObjectId pOid, IX509CertificateTemplate* ppValue);
 }
 
 @GUID("f49466a7-395a-4e9e-b6e7-32b331600dc0")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificatetemplatewritable))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificatetemplatewritable
 interface IX509CertificateTemplateWritable : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificatetemplatewritable-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificatetemplatewritable-initialize
     HRESULT Initialize(IX509CertificateTemplate pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificatetemplatewritable-commit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificatetemplatewritable-commit
     HRESULT Commit(CommitTemplateFlags commitFlags, BSTR strServerContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificatetemplatewritable-get_property))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificatetemplatewritable-get_property
     HRESULT get_Property(EnrollmentTemplateProperty property, VARIANT* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificatetemplatewritable-put_property))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificatetemplatewritable-put_property
     HRESULT put_Property(EnrollmentTemplateProperty property, VARIANT value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificatetemplatewritable-get_template))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificatetemplatewritable-get_template
     HRESULT get_Template(IX509CertificateTemplate* ppValue);
 }
 
 @GUID("835d1f61-1e95-4bc8-b4d3-976c42b968f7")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertificationauthority))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertificationauthority
 interface ICertificationAuthority : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificationauthority-get_property))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificationauthority-get_property
     HRESULT get_Property(EnrollmentCAProperty property, VARIANT* pValue);
 }
 
 @GUID("13b79005-2181-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertificationauthorities))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertificationauthorities
 interface ICertificationAuthorities : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificationauthorities-get_itembyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificationauthorities-get_itembyindex
     HRESULT get_ItemByIndex(int Index, ICertificationAuthority* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificationauthorities-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificationauthorities-get_count
     HRESULT get_Count(int* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificationauthorities-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificationauthorities-get__newenum
     HRESULT get__NewEnum(IUnknown* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificationauthorities-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificationauthorities-add
     HRESULT Add(ICertificationAuthority pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificationauthorities-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificationauthorities-remove
     HRESULT Remove(int Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificationauthorities-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificationauthorities-clear
     HRESULT Clear();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificationauthorities-computesitecosts))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificationauthorities-computesitecosts
     HRESULT ComputeSiteCosts();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificationauthorities-get_itembyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificationauthorities-get_itembyname
     HRESULT get_ItemByName(BSTR strName, ICertificationAuthority* ppValue);
 }
 
 @GUID("13b79026-2181-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509enrollmentpolicyserver))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509enrollmentpolicyserver
 interface IX509EnrollmentPolicyServer : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-initialize
     HRESULT Initialize(BSTR bstrPolicyServerUrl, BSTR bstrPolicyServerId, X509EnrollmentAuthFlags authFlags, 
                        VARIANT_BOOL fIsUnTrusted, X509CertificateEnrollmentContext context);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-loadpolicy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-loadpolicy
     HRESULT LoadPolicy(X509EnrollmentPolicyLoadOption option);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-gettemplates))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-gettemplates
     HRESULT GetTemplates(IX509CertificateTemplates* pTemplates);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-getcasfortemplate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-getcasfortemplate
     HRESULT GetCAsForTemplate(IX509CertificateTemplate pTemplate, ICertificationAuthorities* ppCAs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-getcas))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-getcas
     HRESULT GetCAs(ICertificationAuthorities* ppCAs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-validate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-validate
     HRESULT Validate();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-getcustomoids))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-getcustomoids
     HRESULT GetCustomOids(IObjectIds* ppObjectIds);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-getnextupdatetime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-getnextupdatetime
     HRESULT GetNextUpdateTime(double* pDate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-getlastupdatetime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-getlastupdatetime
     HRESULT GetLastUpdateTime(double* pDate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-getpolicyserverurl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-getpolicyserverurl
     HRESULT GetPolicyServerUrl(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-getpolicyserverid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-getpolicyserverid
     HRESULT GetPolicyServerId(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-getfriendlyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-getfriendlyname
     HRESULT GetFriendlyName(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-getisdefaultcep))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-getisdefaultcep
     HRESULT GetIsDefaultCEP(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-getuseclientid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-getuseclientid
     HRESULT GetUseClientId(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-getallowuntrustedca))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-getallowuntrustedca
     HRESULT GetAllowUnTrustedCA(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-getcachepath))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-getcachepath
     HRESULT GetCachePath(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-getcachedir))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-getcachedir
     HRESULT GetCacheDir(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-getauthflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-getauthflags
     HRESULT GetAuthFlags(X509EnrollmentAuthFlags* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-setcredential))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-setcredential
     HRESULT SetCredential(int hWndParent, X509EnrollmentAuthFlags flag, BSTR strCredential, BSTR strPassword);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-querychanges))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-querychanges
     HRESULT QueryChanges(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-initializeimport))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-initializeimport
     HRESULT InitializeImport(VARIANT val);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-export))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-export
     HRESULT Export(X509EnrollmentPolicyExportFlags exportFlags, VARIANT* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-get_cost))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-get_cost
     HRESULT get_Cost(uint* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-put_cost))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentpolicyserver-put_cost
     HRESULT put_Cost(uint value);
 }
 
 @GUID("884e204a-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509policyserverurl))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509policyserverurl
 interface IX509PolicyServerUrl : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverurl-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverurl-initialize
     HRESULT Initialize(X509CertificateEnrollmentContext context);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverurl-get_url))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverurl-get_url
     HRESULT get_Url(BSTR* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverurl-put_url))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverurl-put_url
     HRESULT put_Url(BSTR pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverurl-get_default))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverurl-get_default
     HRESULT get_Default(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverurl-put_default))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverurl-put_default
     HRESULT put_Default(VARIANT_BOOL value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverurl-get_flags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverurl-get_flags
     HRESULT get_Flags(PolicyServerUrlFlags* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverurl-put_flags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverurl-put_flags
     HRESULT put_Flags(PolicyServerUrlFlags Flags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverurl-get_authflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverurl-get_authflags
     HRESULT get_AuthFlags(X509EnrollmentAuthFlags* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverurl-put_authflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverurl-put_authflags
     HRESULT put_AuthFlags(X509EnrollmentAuthFlags Flags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverurl-get_cost))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverurl-get_cost
     HRESULT get_Cost(uint* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverurl-put_cost))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverurl-put_cost
     HRESULT put_Cost(uint value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverurl-getstringproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverurl-getstringproperty
     HRESULT GetStringProperty(PolicyServerUrlPropertyID propertyId, BSTR* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverurl-setstringproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverurl-setstringproperty
     HRESULT SetStringProperty(PolicyServerUrlPropertyID propertyId, BSTR pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverurl-updateregistry))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverurl-updateregistry
     HRESULT UpdateRegistry(X509CertificateEnrollmentContext context);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverurl-removefromregistry))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverurl-removefromregistry
     HRESULT RemoveFromRegistry(X509CertificateEnrollmentContext context);
 }
 
 @GUID("884e204b-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509policyserverlistmanager))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509policyserverlistmanager
 interface IX509PolicyServerListManager : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverlistmanager-get_itembyindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverlistmanager-get_itembyindex
     HRESULT get_ItemByIndex(int Index, IX509PolicyServerUrl* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverlistmanager-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverlistmanager-get_count
     HRESULT get_Count(int* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverlistmanager-get__newenum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverlistmanager-get__newenum
     HRESULT get__NewEnum(IUnknown* pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverlistmanager-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverlistmanager-add
     HRESULT Add(IX509PolicyServerUrl pVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverlistmanager-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverlistmanager-remove
     HRESULT Remove(int Index);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverlistmanager-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverlistmanager-clear
     HRESULT Clear();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverlistmanager-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509policyserverlistmanager-initialize
     HRESULT Initialize(X509CertificateEnrollmentContext context, PolicyServerUrlFlags Flags);
 }
 
 @GUID("728ab341-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificaterequest))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificaterequest
 interface IX509CertificateRequest : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-initialize
     HRESULT Initialize(X509CertificateEnrollmentContext Context);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-encode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-encode
     HRESULT Encode();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-resetforencode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-resetforencode
     HRESULT ResetForEncode();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-getinnerrequest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-getinnerrequest
     HRESULT GetInnerRequest(InnerRequestLevel Level, IX509CertificateRequest* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-get_type))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-get_type
     HRESULT get_Type(X509RequestType* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-get_enrollmentcontext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-get_enrollmentcontext
     HRESULT get_EnrollmentContext(X509CertificateEnrollmentContext* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-get_silent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-get_silent
     HRESULT get_Silent(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-put_silent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-put_silent
     HRESULT put_Silent(VARIANT_BOOL Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-get_parentwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-get_parentwindow
     HRESULT get_ParentWindow(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-put_parentwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-put_parentwindow
     HRESULT put_ParentWindow(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-get_uicontextmessage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-get_uicontextmessage
     HRESULT get_UIContextMessage(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-put_uicontextmessage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-put_uicontextmessage
     HRESULT put_UIContextMessage(BSTR Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-get_suppressdefaults))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-get_suppressdefaults
     HRESULT get_SuppressDefaults(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-put_suppressdefaults))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-put_suppressdefaults
     HRESULT put_SuppressDefaults(VARIANT_BOOL Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-get_renewalcertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-get_renewalcertificate
     HRESULT get_RenewalCertificate(EncodingType Encoding, BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-put_renewalcertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-put_renewalcertificate
     HRESULT put_RenewalCertificate(EncodingType Encoding, BSTR Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-get_clientid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-get_clientid
     HRESULT get_ClientId(RequestClientInfoClientId* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-put_clientid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-put_clientid
     HRESULT put_ClientId(RequestClientInfoClientId Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-get_cspinformations))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-get_cspinformations
     HRESULT get_CspInformations(ICspInformations* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-put_cspinformations))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-put_cspinformations
     HRESULT put_CspInformations(ICspInformations pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-get_hashalgorithm))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-get_hashalgorithm
     HRESULT get_HashAlgorithm(IObjectId* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-put_hashalgorithm))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-put_hashalgorithm
     HRESULT put_HashAlgorithm(IObjectId pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-get_alternatesignaturealgorithm))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-get_alternatesignaturealgorithm
     HRESULT get_AlternateSignatureAlgorithm(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-put_alternatesignaturealgorithm))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-put_alternatesignaturealgorithm
     HRESULT put_AlternateSignatureAlgorithm(VARIANT_BOOL Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-get_rawdata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequest-get_rawdata
     HRESULT get_RawData(EncodingType Encoding, BSTR* pValue);
 }
 
 @GUID("728ab342-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificaterequestpkcs10))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificaterequestpkcs10
 interface IX509CertificateRequestPkcs10 : IX509CertificateRequest
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-initializefromtemplatename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-initializefromtemplatename
     HRESULT InitializeFromTemplateName(X509CertificateEnrollmentContext Context, BSTR strTemplateName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-initializefromprivatekey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-initializefromprivatekey
     HRESULT InitializeFromPrivateKey(X509CertificateEnrollmentContext Context, IX509PrivateKey pPrivateKey, 
                                      BSTR strTemplateName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-initializefrompublickey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-initializefrompublickey
     HRESULT InitializeFromPublicKey(X509CertificateEnrollmentContext Context, IX509PublicKey pPublicKey, 
                                     BSTR strTemplateName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-initializefromcertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-initializefromcertificate
     HRESULT InitializeFromCertificate(X509CertificateEnrollmentContext Context, BSTR strCertificate, 
                                       EncodingType Encoding, X509RequestInheritOptions InheritOptions);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-initializedecode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-initializedecode
     HRESULT InitializeDecode(BSTR strEncodedData, EncodingType Encoding);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-checksignature))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-checksignature
     HRESULT CheckSignature(Pkcs10AllowedSignatureTypes AllowedSignatureTypes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-issmartcard))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-issmartcard
     HRESULT IsSmartCard(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-get_templateobjectid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-get_templateobjectid
     HRESULT get_TemplateObjectId(IObjectId* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-get_publickey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-get_publickey
     HRESULT get_PublicKey(IX509PublicKey* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-get_privatekey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-get_privatekey
     HRESULT get_PrivateKey(IX509PrivateKey* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-get_nullsigned))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-get_nullsigned
     HRESULT get_NullSigned(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-get_reusekey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-get_reusekey
     HRESULT get_ReuseKey(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-get_oldcertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-get_oldcertificate
     HRESULT get_OldCertificate(EncodingType Encoding, BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-get_subject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-get_subject
     HRESULT get_Subject(IX500DistinguishedName* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-put_subject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-put_subject
     HRESULT put_Subject(IX500DistinguishedName pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-get_cspstatuses))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-get_cspstatuses
     HRESULT get_CspStatuses(ICspStatuses* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-get_smimecapabilities))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-get_smimecapabilities
     HRESULT get_SmimeCapabilities(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-put_smimecapabilities))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-put_smimecapabilities
     HRESULT put_SmimeCapabilities(VARIANT_BOOL Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-get_signatureinformation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-get_signatureinformation
     HRESULT get_SignatureInformation(IX509SignatureInformation* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-get_keycontainernameprefix))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-get_keycontainernameprefix
     HRESULT get_KeyContainerNamePrefix(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-put_keycontainernameprefix))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-put_keycontainernameprefix
     HRESULT put_KeyContainerNamePrefix(BSTR Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-get_cryptattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-get_cryptattributes
     HRESULT get_CryptAttributes(ICryptAttributes* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-get_x509extensions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-get_x509extensions
     HRESULT get_X509Extensions(IX509Extensions* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-get_criticalextensions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-get_criticalextensions
     HRESULT get_CriticalExtensions(IObjectIds* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-get_suppressoids))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-get_suppressoids
     HRESULT get_SuppressOids(IObjectIds* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-get_rawdatatobesigned))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-get_rawdatatobesigned
     HRESULT get_RawDataToBeSigned(EncodingType Encoding, BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-get_signature))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-get_signature
     HRESULT get_Signature(EncodingType Encoding, BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-getcspstatuses))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10-getcspstatuses
     HRESULT GetCspStatuses(X509KeySpec KeySpec, ICspStatuses* ppCspStatuses);
 }
 
 @GUID("728ab35b-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificaterequestpkcs10v2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificaterequestpkcs10v2
 interface IX509CertificateRequestPkcs10V2 : IX509CertificateRequestPkcs10
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10v2-initializefromtemplate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10v2-initializefromtemplate
     HRESULT InitializeFromTemplate(X509CertificateEnrollmentContext context, 
                                    IX509EnrollmentPolicyServer pPolicyServer, IX509CertificateTemplate pTemplate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10v2-initializefromprivatekeytemplate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10v2-initializefromprivatekeytemplate
     HRESULT InitializeFromPrivateKeyTemplate(X509CertificateEnrollmentContext Context, IX509PrivateKey pPrivateKey, 
                                              IX509EnrollmentPolicyServer pPolicyServer, 
                                              IX509CertificateTemplate pTemplate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10v2-initializefrompublickeytemplate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10v2-initializefrompublickeytemplate
     HRESULT InitializeFromPublicKeyTemplate(X509CertificateEnrollmentContext Context, IX509PublicKey pPublicKey, 
                                             IX509EnrollmentPolicyServer pPolicyServer, 
                                             IX509CertificateTemplate pTemplate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10v2-get_policyserver))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10v2-get_policyserver
     HRESULT get_PolicyServer(IX509EnrollmentPolicyServer* ppPolicyServer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10v2-get_template))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10v2-get_template
     HRESULT get_Template(IX509CertificateTemplate* ppTemplate);
 }
 
 @GUID("54ea9942-3d66-4530-b76e-7c9170d3ec52")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificaterequestpkcs10v3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificaterequestpkcs10v3
 interface IX509CertificateRequestPkcs10V3 : IX509CertificateRequestPkcs10V2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10v3-get_attestprivatekey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10v3-get_attestprivatekey
     HRESULT get_AttestPrivateKey(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10v3-put_attestprivatekey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10v3-put_attestprivatekey
     HRESULT put_AttestPrivateKey(VARIANT_BOOL Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10v3-get_attestationencryptioncertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10v3-get_attestationencryptioncertificate
     HRESULT get_AttestationEncryptionCertificate(EncodingType Encoding, BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10v3-put_attestationencryptioncertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10v3-put_attestationencryptioncertificate
     HRESULT put_AttestationEncryptionCertificate(EncodingType Encoding, BSTR Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10v3-get_encryptionalgorithm))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10v3-get_encryptionalgorithm
     HRESULT get_EncryptionAlgorithm(IObjectId* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10v3-put_encryptionalgorithm))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10v3-put_encryptionalgorithm
     HRESULT put_EncryptionAlgorithm(IObjectId pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10v3-get_encryptionstrength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10v3-get_encryptionstrength
     HRESULT get_EncryptionStrength(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10v3-put_encryptionstrength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10v3-put_encryptionstrength
     HRESULT put_EncryptionStrength(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10v3-get_challengepassword))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10v3-get_challengepassword
     HRESULT get_ChallengePassword(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10v3-put_challengepassword))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10v3-put_challengepassword
     HRESULT put_ChallengePassword(BSTR Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10v3-get_namevaluepairs))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs10v3-get_namevaluepairs
     HRESULT get_NameValuePairs(IX509NameValuePairs* ppValue);
 }
 
@@ -5933,275 +6014,275 @@ interface IX509CertificateRequestPkcs10V4 : IX509CertificateRequestPkcs10V3
 
 @GUID("728ab343-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificaterequestcertificate))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificaterequestcertificate
 interface IX509CertificateRequestCertificate : IX509CertificateRequestPkcs10
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcertificate-checkpublickeysignature))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcertificate-checkpublickeysignature
     HRESULT CheckPublicKeySignature(IX509PublicKey pPublicKey);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcertificate-get_issuer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcertificate-get_issuer
     HRESULT get_Issuer(IX500DistinguishedName* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcertificate-put_issuer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcertificate-put_issuer
     HRESULT put_Issuer(IX500DistinguishedName pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcertificate-get_notbefore))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcertificate-get_notbefore
     HRESULT get_NotBefore(double* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcertificate-put_notbefore))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcertificate-put_notbefore
     HRESULT put_NotBefore(double Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcertificate-get_notafter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcertificate-get_notafter
     HRESULT get_NotAfter(double* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcertificate-put_notafter))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcertificate-put_notafter
     HRESULT put_NotAfter(double Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcertificate-get_serialnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcertificate-get_serialnumber
     HRESULT get_SerialNumber(EncodingType Encoding, BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcertificate-put_serialnumber))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcertificate-put_serialnumber
     HRESULT put_SerialNumber(EncodingType Encoding, BSTR Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcertificate-get_signercertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcertificate-get_signercertificate
     HRESULT get_SignerCertificate(ISignerCertificate* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcertificate-put_signercertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcertificate-put_signercertificate
     HRESULT put_SignerCertificate(ISignerCertificate pValue);
 }
 
 @GUID("728ab35a-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificaterequestcertificate2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificaterequestcertificate2
 interface IX509CertificateRequestCertificate2 : IX509CertificateRequestCertificate
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcertificate2-initializefromtemplate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcertificate2-initializefromtemplate
     HRESULT InitializeFromTemplate(X509CertificateEnrollmentContext context, 
                                    IX509EnrollmentPolicyServer pPolicyServer, IX509CertificateTemplate pTemplate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcertificate2-initializefromprivatekeytemplate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcertificate2-initializefromprivatekeytemplate
     HRESULT InitializeFromPrivateKeyTemplate(X509CertificateEnrollmentContext Context, IX509PrivateKey pPrivateKey, 
                                              IX509EnrollmentPolicyServer pPolicyServer, 
                                              IX509CertificateTemplate pTemplate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcertificate2-get_policyserver))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcertificate2-get_policyserver
     HRESULT get_PolicyServer(IX509EnrollmentPolicyServer* ppPolicyServer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcertificate2-get_template))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcertificate2-get_template
     HRESULT get_Template(IX509CertificateTemplate* ppTemplate);
 }
 
 @GUID("728ab344-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificaterequestpkcs7))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificaterequestpkcs7
 interface IX509CertificateRequestPkcs7 : IX509CertificateRequest
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs7-initializefromtemplatename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs7-initializefromtemplatename
     HRESULT InitializeFromTemplateName(X509CertificateEnrollmentContext Context, BSTR strTemplateName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs7-initializefromcertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs7-initializefromcertificate
     HRESULT InitializeFromCertificate(X509CertificateEnrollmentContext Context, VARIANT_BOOL RenewalRequest, 
                                       BSTR strCertificate, EncodingType Encoding, 
                                       X509RequestInheritOptions InheritOptions);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs7-initializefrominnerrequest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs7-initializefrominnerrequest
     HRESULT InitializeFromInnerRequest(IX509CertificateRequest pInnerRequest);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs7-initializedecode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs7-initializedecode
     HRESULT InitializeDecode(BSTR strEncodedData, EncodingType Encoding);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs7-get_requestername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs7-get_requestername
     HRESULT get_RequesterName(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs7-put_requestername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs7-put_requestername
     HRESULT put_RequesterName(BSTR Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs7-get_signercertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs7-get_signercertificate
     HRESULT get_SignerCertificate(ISignerCertificate* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs7-put_signercertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs7-put_signercertificate
     HRESULT put_SignerCertificate(ISignerCertificate pValue);
 }
 
 @GUID("728ab35c-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificaterequestpkcs7v2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificaterequestpkcs7v2
 interface IX509CertificateRequestPkcs7V2 : IX509CertificateRequestPkcs7
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs7v2-initializefromtemplate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs7v2-initializefromtemplate
     HRESULT InitializeFromTemplate(X509CertificateEnrollmentContext context, 
                                    IX509EnrollmentPolicyServer pPolicyServer, IX509CertificateTemplate pTemplate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs7v2-get_policyserver))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs7v2-get_policyserver
     HRESULT get_PolicyServer(IX509EnrollmentPolicyServer* ppPolicyServer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs7v2-get_template))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs7v2-get_template
     HRESULT get_Template(IX509CertificateTemplate* ppTemplate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs7v2-checkcertificatesignature))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestpkcs7v2-checkcertificatesignature
     HRESULT CheckCertificateSignature(VARIANT_BOOL ValidateCertificateChain);
 }
 
 @GUID("728ab345-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificaterequestcmc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificaterequestcmc
 interface IX509CertificateRequestCmc : IX509CertificateRequestPkcs7
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-initializefrominnerrequesttemplatename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-initializefrominnerrequesttemplatename
     HRESULT InitializeFromInnerRequestTemplateName(IX509CertificateRequest pInnerRequest, BSTR strTemplateName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-get_templateobjectid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-get_templateobjectid
     HRESULT get_TemplateObjectId(IObjectId* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-get_nullsigned))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-get_nullsigned
     HRESULT get_NullSigned(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-get_cryptattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-get_cryptattributes
     HRESULT get_CryptAttributes(ICryptAttributes* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-get_namevaluepairs))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-get_namevaluepairs
     HRESULT get_NameValuePairs(IX509NameValuePairs* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-get_x509extensions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-get_x509extensions
     HRESULT get_X509Extensions(IX509Extensions* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-get_criticalextensions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-get_criticalextensions
     HRESULT get_CriticalExtensions(IObjectIds* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-get_suppressoids))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-get_suppressoids
     HRESULT get_SuppressOids(IObjectIds* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-get_transactionid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-get_transactionid
     HRESULT get_TransactionId(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-put_transactionid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-put_transactionid
     HRESULT put_TransactionId(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-get_sendernonce))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-get_sendernonce
     HRESULT get_SenderNonce(EncodingType Encoding, BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-put_sendernonce))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-put_sendernonce
     HRESULT put_SenderNonce(EncodingType Encoding, BSTR Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-get_signatureinformation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-get_signatureinformation
     HRESULT get_SignatureInformation(IX509SignatureInformation* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-get_archiveprivatekey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-get_archiveprivatekey
     HRESULT get_ArchivePrivateKey(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-put_archiveprivatekey))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-put_archiveprivatekey
     HRESULT put_ArchivePrivateKey(VARIANT_BOOL Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-get_keyarchivalcertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-get_keyarchivalcertificate
     HRESULT get_KeyArchivalCertificate(EncodingType Encoding, BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-put_keyarchivalcertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-put_keyarchivalcertificate
     HRESULT put_KeyArchivalCertificate(EncodingType Encoding, BSTR Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-get_encryptionalgorithm))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-get_encryptionalgorithm
     HRESULT get_EncryptionAlgorithm(IObjectId* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-put_encryptionalgorithm))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-put_encryptionalgorithm
     HRESULT put_EncryptionAlgorithm(IObjectId pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-get_encryptionstrength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-get_encryptionstrength
     HRESULT get_EncryptionStrength(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-put_encryptionstrength))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-put_encryptionstrength
     HRESULT put_EncryptionStrength(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-get_encryptedkeyhash))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-get_encryptedkeyhash
     HRESULT get_EncryptedKeyHash(EncodingType Encoding, BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-get_signercertificates))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc-get_signercertificates
     HRESULT get_SignerCertificates(ISignerCertificates* ppValue);
 }
 
 @GUID("728ab35d-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificaterequestcmc2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509certificaterequestcmc2
 interface IX509CertificateRequestCmc2 : IX509CertificateRequestCmc
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc2-initializefromtemplate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc2-initializefromtemplate
     HRESULT InitializeFromTemplate(X509CertificateEnrollmentContext context, 
                                    IX509EnrollmentPolicyServer pPolicyServer, IX509CertificateTemplate pTemplate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc2-initializefrominnerrequesttemplate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc2-initializefrominnerrequesttemplate
     HRESULT InitializeFromInnerRequestTemplate(IX509CertificateRequest pInnerRequest, 
                                                IX509EnrollmentPolicyServer pPolicyServer, 
                                                IX509CertificateTemplate pTemplate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc2-get_policyserver))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc2-get_policyserver
     HRESULT get_PolicyServer(IX509EnrollmentPolicyServer* ppPolicyServer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc2-get_template))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc2-get_template
     HRESULT get_Template(IX509CertificateTemplate* ppTemplate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc2-checksignature))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc2-checksignature
     HRESULT CheckSignature(Pkcs10AllowedSignatureTypes AllowedSignatureTypes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc2-checkcertificatesignature))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509certificaterequestcmc2-checkcertificatesignature
     HRESULT CheckCertificateSignature(ISignerCertificate pSignerCertificate, VARIANT_BOOL ValidateCertificateChain);
 }
 
 @GUID("728ab346-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509enrollment))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509enrollment
 interface IX509Enrollment : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-initialize
     HRESULT Initialize(X509CertificateEnrollmentContext Context);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-initializefromtemplatename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-initializefromtemplatename
     HRESULT InitializeFromTemplateName(X509CertificateEnrollmentContext Context, BSTR strTemplateName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-initializefromrequest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-initializefromrequest
     HRESULT InitializeFromRequest(IX509CertificateRequest pRequest);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-createrequest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-createrequest
     HRESULT CreateRequest(EncodingType Encoding, BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-enroll))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-enroll
     HRESULT Enroll();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-installresponse))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-installresponse
     HRESULT InstallResponse(InstallResponseRestrictionFlags Restrictions, BSTR strResponse, EncodingType Encoding, 
                             BSTR strPassword);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-createpfx))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-createpfx
     HRESULT CreatePFX(BSTR strPassword, PFXExportOptions ExportOptions, EncodingType Encoding, BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-get_request))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-get_request
     HRESULT get_Request(IX509CertificateRequest* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-get_silent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-get_silent
     HRESULT get_Silent(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-put_silent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-put_silent
     HRESULT put_Silent(VARIANT_BOOL Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-get_parentwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-get_parentwindow
     HRESULT get_ParentWindow(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-put_parentwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-put_parentwindow
     HRESULT put_ParentWindow(int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-get_namevaluepairs))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-get_namevaluepairs
     HRESULT get_NameValuePairs(IX509NameValuePairs* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-get_enrollmentcontext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-get_enrollmentcontext
     HRESULT get_EnrollmentContext(X509CertificateEnrollmentContext* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-get_status))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-get_status
     HRESULT get_Status(IX509EnrollmentStatus* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-get_certificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-get_certificate
     HRESULT get_Certificate(EncodingType Encoding, BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-get_response))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-get_response
     HRESULT get_Response(EncodingType Encoding, BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-get_certificatefriendlyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-get_certificatefriendlyname
     HRESULT get_CertificateFriendlyName(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-put_certificatefriendlyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-put_certificatefriendlyname
     HRESULT put_CertificateFriendlyName(BSTR strValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-get_certificatedescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-get_certificatedescription
     HRESULT get_CertificateDescription(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-put_certificatedescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-put_certificatedescription
     HRESULT put_CertificateDescription(BSTR strValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-get_requestid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-get_requestid
     HRESULT get_RequestId(int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-get_caconfigstring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment-get_caconfigstring
     HRESULT get_CAConfigString(BSTR* pValue);
 }
 
 @GUID("728ab350-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509enrollment2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509enrollment2
 interface IX509Enrollment2 : IX509Enrollment
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment2-initializefromtemplate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment2-initializefromtemplate
     HRESULT InitializeFromTemplate(X509CertificateEnrollmentContext context, 
                                    IX509EnrollmentPolicyServer pPolicyServer, IX509CertificateTemplate pTemplate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment2-installresponse2))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment2-installresponse2
     HRESULT InstallResponse2(InstallResponseRestrictionFlags Restrictions, BSTR strResponse, EncodingType Encoding, 
                              BSTR strPassword, BSTR strEnrollmentPolicyServerUrl, BSTR strEnrollmentPolicyServerID, 
                              PolicyServerUrlFlags EnrollmentPolicyServerFlags, X509EnrollmentAuthFlags authFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment2-get_policyserver))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment2-get_policyserver
     HRESULT get_PolicyServer(IX509EnrollmentPolicyServer* ppPolicyServer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment2-get_template))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment2-get_template
     HRESULT get_Template(IX509CertificateTemplate* ppTemplate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment2-get_requestidstring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollment2-get_requestidstring
     HRESULT get_RequestIdString(BSTR* pValue);
 }
 
 @GUID("728ab351-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509enrollmenthelper))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509enrollmenthelper
 interface IX509EnrollmentHelper : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmenthelper-addpolicyserver))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmenthelper-addpolicyserver
     HRESULT AddPolicyServer(BSTR strEnrollmentPolicyServerURI, BSTR strEnrollmentPolicyID, 
                             PolicyServerUrlFlags EnrollmentPolicyServerFlags, X509EnrollmentAuthFlags authFlags, 
                             BSTR strCredential, BSTR strPassword);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmenthelper-addenrollmentserver))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmenthelper-addenrollmentserver
     HRESULT AddEnrollmentServer(BSTR strEnrollmentServerURI, X509EnrollmentAuthFlags authFlags, BSTR strCredential, 
                                 BSTR strPassword);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmenthelper-enroll))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmenthelper-enroll
     HRESULT Enroll(BSTR strEnrollmentPolicyServerURI, BSTR strTemplateName, EncodingType Encoding, 
                    WebEnrollmentFlags enrollFlags, BSTR* pstrCertificate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmenthelper-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmenthelper-initialize
     HRESULT Initialize(X509CertificateEnrollmentContext Context);
 }
 
 @GUID("728ab349-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509enrollmentwebclassfactory))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509enrollmentwebclassfactory
 interface IX509EnrollmentWebClassFactory : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentwebclassfactory-createobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509enrollmentwebclassfactory-createobject
     HRESULT CreateObject(BSTR strProgID, IUnknown* ppIUnknown);
 }
 
 @GUID("728ab352-217d-11da-b2a4-000e7bbb2b09")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509machineenrollmentfactory))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509machineenrollmentfactory
 interface IX509MachineEnrollmentFactory : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509machineenrollmentfactory-createobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509machineenrollmentfactory-createobject
     HRESULT CreateObject(BSTR strProgID, IX509EnrollmentHelper* ppIHelper);
 }
 
@@ -6267,14 +6348,14 @@ interface IX509CertificateRevocationList : IDispatch
 }
 
 @GUID("6f175a7c-4a3a-40ae-9dba-592fd6bbf9b8")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertificateattestationchallenge))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-icertificateattestationchallenge
 interface ICertificateAttestationChallenge : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificateattestationchallenge-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificateattestationchallenge-initialize
     HRESULT Initialize(EncodingType Encoding, BSTR strPendingFullCmcResponseWithChallenge);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificateattestationchallenge-decryptchallenge))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificateattestationchallenge-decryptchallenge
     HRESULT DecryptChallenge(EncodingType Encoding, BSTR* pstrEnvelopedPkcs7ReencryptedToCA);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificateattestationchallenge-get_requestid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-icertificateattestationchallenge-get_requestid
     HRESULT get_RequestID(BSTR* pstrRequestID);
 }
 
@@ -6286,54 +6367,54 @@ interface ICertificateAttestationChallenge2 : ICertificateAttestationChallenge
 }
 
 @GUID("728ab361-217d-11da-b2a4-000e7bbb2b09")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509scepenrollment))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nn-certenroll-ix509scepenrollment
 interface IX509SCEPEnrollment : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-initialize
     HRESULT Initialize(IX509CertificateRequestPkcs10 pRequest, BSTR strThumbprint, EncodingType ThumprintEncoding, 
                        BSTR strServerCertificates, EncodingType Encoding);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-initializeforpending))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-initializeforpending
     HRESULT InitializeForPending(X509CertificateEnrollmentContext Context);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-createrequestmessage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-createrequestmessage
     HRESULT CreateRequestMessage(EncodingType Encoding, BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-createretrievependingmessage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-createretrievependingmessage
     HRESULT CreateRetrievePendingMessage(EncodingType Encoding, BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-createretrievecertificatemessage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-createretrievecertificatemessage
     HRESULT CreateRetrieveCertificateMessage(X509CertificateEnrollmentContext Context, BSTR strIssuer, 
                                              EncodingType IssuerEncoding, BSTR strSerialNumber, 
                                              EncodingType SerialNumberEncoding, EncodingType Encoding, BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-processresponsemessage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-processresponsemessage
     HRESULT ProcessResponseMessage(BSTR strResponse, EncodingType Encoding, X509SCEPDisposition* pDisposition);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-put_servercapabilities))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-put_servercapabilities
     HRESULT put_ServerCapabilities(BSTR Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-get_failinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-get_failinfo
     HRESULT get_FailInfo(X509SCEPFailInfo* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-get_signercertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-get_signercertificate
     HRESULT get_SignerCertificate(ISignerCertificate* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-put_signercertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-put_signercertificate
     HRESULT put_SignerCertificate(ISignerCertificate pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-get_oldcertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-get_oldcertificate
     HRESULT get_OldCertificate(ISignerCertificate* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-put_oldcertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-put_oldcertificate
     HRESULT put_OldCertificate(ISignerCertificate pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-get_transactionid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-get_transactionid
     HRESULT get_TransactionId(EncodingType Encoding, BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-put_transactionid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-put_transactionid
     HRESULT put_TransactionId(EncodingType Encoding, BSTR Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-get_request))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-get_request
     HRESULT get_Request(IX509CertificateRequestPkcs10* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-get_certificatefriendlyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-get_certificatefriendlyname
     HRESULT get_CertificateFriendlyName(BSTR* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-put_certificatefriendlyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-put_certificatefriendlyname
     HRESULT put_CertificateFriendlyName(BSTR Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-get_status))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-get_status
     HRESULT get_Status(IX509EnrollmentStatus* ppValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-get_certificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-get_certificate
     HRESULT get_Certificate(EncodingType Encoding, BSTR* pValue);
     HRESULT get_Silent(VARIANT_BOOL* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-put_silent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-put_silent
     HRESULT put_Silent(VARIANT_BOOL Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-deleterequest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenroll/nf-certenroll-ix509scepenrollment-deleterequest
     HRESULT DeleteRequest();
 }
 
@@ -6364,22 +6445,22 @@ interface IX509SCEPEnrollmentHelper : IDispatch
 
 @GUID("12a88820-7494-11d0-8816-00a0c903b83c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nn-certenc-icertencodestringarray))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nn-certenc-icertencodestringarray
 interface ICertEncodeStringArray : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodestringarray-decode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodestringarray-decode
     HRESULT Decode(const(BSTR) strBinary);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodestringarray-getstringtype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodestringarray-getstringtype
     HRESULT GetStringType(int* pStringType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodestringarray-getcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodestringarray-getcount
     HRESULT GetCount(int* pCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodestringarray-getvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodestringarray-getvalue
     HRESULT GetValue(int Index, BSTR* pstr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodestringarray-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodestringarray-reset
     HRESULT Reset(int Count, CERT_RDN_ATTR_VALUE_TYPE StringType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodestringarray-setvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodestringarray-setvalue
     HRESULT SetValue(int Index, const(BSTR) str);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodestringarray-encode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodestringarray-encode
     HRESULT Encode(BSTR* pstrBinary);
 }
 
@@ -6392,20 +6473,20 @@ interface ICertEncodeStringArray2 : ICertEncodeStringArray
 
 @GUID("15e2f230-a0a2-11d0-8821-00a0c903b83c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nn-certenc-icertencodelongarray))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nn-certenc-icertencodelongarray
 interface ICertEncodeLongArray : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodelongarray-decode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodelongarray-decode
     HRESULT Decode(const(BSTR) strBinary);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodelongarray-getcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodelongarray-getcount
     HRESULT GetCount(int* pCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodelongarray-getvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodelongarray-getvalue
     HRESULT GetValue(int Index, int* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodelongarray-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodelongarray-reset
     HRESULT Reset(int Count);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodelongarray-setvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodelongarray-setvalue
     HRESULT SetValue(int Index, int Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodelongarray-encode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodelongarray-encode
     HRESULT Encode(BSTR* pstrBinary);
 }
 
@@ -6418,20 +6499,20 @@ interface ICertEncodeLongArray2 : ICertEncodeLongArray
 
 @GUID("2f9469a0-a470-11d0-8821-00a0c903b83c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nn-certenc-icertencodedatearray))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nn-certenc-icertencodedatearray
 interface ICertEncodeDateArray : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodedatearray-decode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodedatearray-decode
     HRESULT Decode(const(BSTR) strBinary);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodedatearray-getcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodedatearray-getcount
     HRESULT GetCount(int* pCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodedatearray-getvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodedatearray-getvalue
     HRESULT GetValue(int Index, double* pValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodedatearray-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodedatearray-reset
     HRESULT Reset(int Count);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodedatearray-setvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodedatearray-setvalue
     HRESULT SetValue(int Index, double Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodedatearray-encode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodedatearray-encode
     HRESULT Encode(BSTR* pstrBinary);
 }
 
@@ -6444,26 +6525,26 @@ interface ICertEncodeDateArray2 : ICertEncodeDateArray
 
 @GUID("01958640-bbff-11d0-8825-00a0c903b83c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nn-certenc-icertencodecrldistinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nn-certenc-icertencodecrldistinfo
 interface ICertEncodeCRLDistInfo : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodecrldistinfo-decode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodecrldistinfo-decode
     HRESULT Decode(const(BSTR) strBinary);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodecrldistinfo-getdistpointcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodecrldistinfo-getdistpointcount
     HRESULT GetDistPointCount(int* pDistPointCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodecrldistinfo-getnamecount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodecrldistinfo-getnamecount
     HRESULT GetNameCount(int DistPointIndex, int* pNameCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodecrldistinfo-getnamechoice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodecrldistinfo-getnamechoice
     HRESULT GetNameChoice(int DistPointIndex, int NameIndex, int* pNameChoice);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodecrldistinfo-getname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodecrldistinfo-getname
     HRESULT GetName(int DistPointIndex, int NameIndex, BSTR* pstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodecrldistinfo-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodecrldistinfo-reset
     HRESULT Reset(int DistPointCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodecrldistinfo-setnamecount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodecrldistinfo-setnamecount
     HRESULT SetNameCount(int DistPointIndex, int NameCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodecrldistinfo-setnameentry))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodecrldistinfo-setnameentry
     HRESULT SetNameEntry(int DistPointIndex, int NameIndex, CERT_ALT_NAME NameChoice, const(BSTR) strName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodecrldistinfo-encode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodecrldistinfo-encode
     HRESULT Encode(BSTR* pstrBinary);
 }
 
@@ -6476,22 +6557,22 @@ interface ICertEncodeCRLDistInfo2 : ICertEncodeCRLDistInfo
 
 @GUID("1c9a8c70-1271-11d1-9bd4-00c04fb683fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nn-certenc-icertencodealtname))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nn-certenc-icertencodealtname
 interface ICertEncodeAltName : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodealtname-decode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodealtname-decode
     HRESULT Decode(const(BSTR) strBinary);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodealtname-getnamecount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodealtname-getnamecount
     HRESULT GetNameCount(int* pNameCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodealtname-getnamechoice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodealtname-getnamechoice
     HRESULT GetNameChoice(int NameIndex, int* pNameChoice);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodealtname-getname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodealtname-getname
     HRESULT GetName(int NameIndex, BSTR* pstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodealtname-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodealtname-reset
     HRESULT Reset(int NameCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodealtname-setnameentry))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodealtname-setnameentry
     HRESULT SetNameEntry(int NameIndex, CERT_ALT_NAME NameChoice, const(BSTR) strName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodealtname-encode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodealtname-encode
     HRESULT Encode(BSTR* pstrBinary);
 }
 
@@ -6506,16 +6587,16 @@ interface ICertEncodeAltName2 : ICertEncodeAltName
 
 @GUID("6db525be-1278-11d1-9bd4-00c04fb683fa")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nn-certenc-icertencodebitstring))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nn-certenc-icertencodebitstring
 interface ICertEncodeBitString : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodebitstring-decode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodebitstring-decode
     HRESULT Decode(const(BSTR) strBinary);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodebitstring-getbitcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodebitstring-getbitcount
     HRESULT GetBitCount(int* pBitCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodebitstring-getbitstring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodebitstring-getbitstring
     HRESULT GetBitString(BSTR* pstrBitString);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodebitstring-encode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certenc/nf-certenc-icertencodebitstring-encode
     HRESULT Encode(int BitCount, BSTR strBitString, BSTR* pstrBinary);
 }
 
@@ -6530,539 +6611,539 @@ interface ICertEncodeBitString2 : ICertEncodeBitString
 
 @GUID("e19ae1a0-7364-11d0-8816-00a0c903b83c")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certexit/nn-certexit-icertexit))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certexit/nn-certexit-icertexit
 interface ICertExit : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certexit/nf-certexit-icertexit-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certexit/nf-certexit-icertexit-initialize
     HRESULT Initialize(const(BSTR) strConfig, CERT_EXIT_EVENT_MASK* pEventMask);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certexit/nf-certexit-icertexit-notify))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certexit/nf-certexit-icertexit-notify
     HRESULT Notify(int ExitEvent, int Context);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certexit/nf-certexit-icertexit-getdescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certexit/nf-certexit-icertexit-getdescription
     HRESULT GetDescription(BSTR* pstrDescription);
 }
 
 @GUID("0abf484b-d049-464d-a7ed-552e7529b0ff")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windowsserver2003))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certexit/nn-certexit-icertexit2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certexit/nn-certexit-icertexit2
 interface ICertExit2 : ICertExit
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/certexit/nf-certexit-icertexit2-getmanagemodule))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/certexit/nf-certexit-icertexit2-getmanagemodule
     HRESULT GetManageModule(ICertManageModule* ppManageModule);
 }
 
 @GUID("43f8f288-7a20-11d0-8f06-00c04fc295e1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nn-xenroll-icenroll))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nn-xenroll-icenroll
 interface ICEnroll : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-createfilepkcs10))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-createfilepkcs10
     HRESULT createFilePKCS10(BSTR DNName, BSTR Usage, BSTR wszPKCS10FileName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-acceptfilepkcs7))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-acceptfilepkcs7
     HRESULT acceptFilePKCS7(BSTR wszPKCS7FileName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-createpkcs10))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-createpkcs10
     HRESULT createPKCS10(BSTR DNName, BSTR Usage, BSTR* pPKCS10);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-acceptpkcs7))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-acceptpkcs7
     HRESULT acceptPKCS7(BSTR PKCS7);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-getcertfrompkcs7))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-getcertfrompkcs7
     HRESULT getCertFromPKCS7(BSTR wszPKCS7, BSTR* pbstrCert);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-enumproviders))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-enumproviders
     HRESULT enumProviders(int dwIndex, int dwFlags, BSTR* pbstrProvName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-enumcontainers))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-enumcontainers
     HRESULT enumContainers(int dwIndex, BSTR* pbstr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-freerequestinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-freerequestinfo
     HRESULT freeRequestInfo(BSTR PKCS7OrPKCS10);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_mystorename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_mystorename
     HRESULT get_MyStoreName(BSTR* pbstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_mystorename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_mystorename
     HRESULT put_MyStoreName(BSTR bstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_mystoretype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_mystoretype
     HRESULT get_MyStoreType(BSTR* pbstrType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_mystoretype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_mystoretype
     HRESULT put_MyStoreType(BSTR bstrType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_mystoreflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_mystoreflags
     HRESULT get_MyStoreFlags(int* pdwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_mystoreflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_mystoreflags
     HRESULT put_MyStoreFlags(int dwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_castorename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_castorename
     HRESULT get_CAStoreName(BSTR* pbstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_castorename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_castorename
     HRESULT put_CAStoreName(BSTR bstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_castoretype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_castoretype
     HRESULT get_CAStoreType(BSTR* pbstrType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_castoretype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_castoretype
     HRESULT put_CAStoreType(BSTR bstrType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_castoreflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_castoreflags
     HRESULT get_CAStoreFlags(int* pdwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_castoreflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_castoreflags
     HRESULT put_CAStoreFlags(int dwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_rootstorename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_rootstorename
     HRESULT get_RootStoreName(BSTR* pbstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_rootstorename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_rootstorename
     HRESULT put_RootStoreName(BSTR bstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_rootstoretype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_rootstoretype
     HRESULT get_RootStoreType(BSTR* pbstrType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_rootstoretype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_rootstoretype
     HRESULT put_RootStoreType(BSTR bstrType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_rootstoreflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_rootstoreflags
     HRESULT get_RootStoreFlags(int* pdwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_rootstoreflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_rootstoreflags
     HRESULT put_RootStoreFlags(int dwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_requeststorename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_requeststorename
     HRESULT get_RequestStoreName(BSTR* pbstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_requeststorename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_requeststorename
     HRESULT put_RequestStoreName(BSTR bstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_requeststoretype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_requeststoretype
     HRESULT get_RequestStoreType(BSTR* pbstrType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_requeststoretype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_requeststoretype
     HRESULT put_RequestStoreType(BSTR bstrType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_requeststoreflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_requeststoreflags
     HRESULT get_RequestStoreFlags(int* pdwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_requeststoreflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_requeststoreflags
     HRESULT put_RequestStoreFlags(int dwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_containername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_containername
     HRESULT get_ContainerName(BSTR* pbstrContainer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_containername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_containername
     HRESULT put_ContainerName(BSTR bstrContainer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_providername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_providername
     HRESULT get_ProviderName(BSTR* pbstrProvider);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_providername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_providername
     HRESULT put_ProviderName(BSTR bstrProvider);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_providertype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_providertype
     HRESULT get_ProviderType(int* pdwType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_providertype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_providertype
     HRESULT put_ProviderType(int dwType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_keyspec))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_keyspec
     HRESULT get_KeySpec(int* pdw);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_keyspec))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_keyspec
     HRESULT put_KeySpec(int dw);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_providerflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_providerflags
     HRESULT get_ProviderFlags(int* pdwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_providerflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_providerflags
     HRESULT put_ProviderFlags(int dwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_useexistingkeyset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_useexistingkeyset
     HRESULT get_UseExistingKeySet(BOOL* fUseExistingKeys);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_useexistingkeyset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_useexistingkeyset
     HRESULT put_UseExistingKeySet(BOOL fUseExistingKeys);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_genkeyflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_genkeyflags
     HRESULT get_GenKeyFlags(int* pdwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_genkeyflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_genkeyflags
     HRESULT put_GenKeyFlags(int dwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_deleterequestcert))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_deleterequestcert
     HRESULT get_DeleteRequestCert(BOOL* fDelete);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_deleterequestcert))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_deleterequestcert
     HRESULT put_DeleteRequestCert(BOOL fDelete);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_writecerttocsp))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_writecerttocsp
     HRESULT get_WriteCertToCSP(BOOL* fBool);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_writecerttocsp))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_writecerttocsp
     HRESULT put_WriteCertToCSP(BOOL fBool);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_spcfilename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_spcfilename
     HRESULT get_SPCFileName(BSTR* pbstr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_spcfilename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_spcfilename
     HRESULT put_SPCFileName(BSTR bstr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_pvkfilename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_pvkfilename
     HRESULT get_PVKFileName(BSTR* pbstr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_pvkfilename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_pvkfilename
     HRESULT put_PVKFileName(BSTR bstr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_hashalgorithm))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-get_hashalgorithm
     HRESULT get_HashAlgorithm(BSTR* pbstr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_hashalgorithm))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll-put_hashalgorithm
     HRESULT put_HashAlgorithm(BSTR bstr);
 }
 
 @GUID("704ca730-c90b-11d1-9bec-00c04fc295e1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nn-xenroll-icenroll2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nn-xenroll-icenroll2
 interface ICEnroll2 : ICEnroll
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll2-addcerttypetorequest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll2-addcerttypetorequest
     HRESULT addCertTypeToRequest(BSTR CertType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll2-addnamevaluepairtosignature))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll2-addnamevaluepairtosignature
     HRESULT addNameValuePairToSignature(BSTR Name, BSTR Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll2-get_writecerttouserds))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll2-get_writecerttouserds
     HRESULT get_WriteCertToUserDS(BOOL* fBool);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll2-put_writecerttouserds))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll2-put_writecerttouserds
     HRESULT put_WriteCertToUserDS(BOOL fBool);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll2-get_enablet61dnencoding))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll2-get_enablet61dnencoding
     HRESULT get_EnableT61DNEncoding(BOOL* fBool);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll2-put_enablet61dnencoding))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll2-put_enablet61dnencoding
     HRESULT put_EnableT61DNEncoding(BOOL fBool);
 }
 
 @GUID("c28c2d95-b7de-11d2-a421-00c04f79fe8e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nn-xenroll-icenroll3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nn-xenroll-icenroll3
 interface ICEnroll3 : ICEnroll2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll3-installpkcs7))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll3-installpkcs7
     HRESULT InstallPKCS7(BSTR PKCS7);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll3-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll3-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll3-getsupportedkeyspec))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll3-getsupportedkeyspec
     HRESULT GetSupportedKeySpec(int* pdwKeySpec);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll3-getkeylen))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll3-getkeylen
     HRESULT GetKeyLen(BOOL fMin, BOOL fExchange, int* pdwKeySize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll3-enumalgs))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll3-enumalgs
     HRESULT EnumAlgs(int dwIndex, int algClass, int* pdwAlgID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll3-getalgname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll3-getalgname
     HRESULT GetAlgName(int algID, BSTR* pbstr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll3-put_reusehardwarekeyifunabletogennew))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll3-put_reusehardwarekeyifunabletogennew
     HRESULT put_ReuseHardwareKeyIfUnableToGenNew(BOOL fReuseHardwareKeyIfUnableToGenNew);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll3-get_reusehardwarekeyifunabletogennew))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll3-get_reusehardwarekeyifunabletogennew
     HRESULT get_ReuseHardwareKeyIfUnableToGenNew(BOOL* fReuseHardwareKeyIfUnableToGenNew);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll3-put_hashalgid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll3-put_hashalgid
     HRESULT put_HashAlgID(int hashAlgID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll3-get_hashalgid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll3-get_hashalgid
     HRESULT get_HashAlgID(int* hashAlgID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll3-put_limitexchangekeytoencipherment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll3-put_limitexchangekeytoencipherment
     HRESULT put_LimitExchangeKeyToEncipherment(BOOL fLimitExchangeKeyToEncipherment);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll3-get_limitexchangekeytoencipherment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll3-get_limitexchangekeytoencipherment
     HRESULT get_LimitExchangeKeyToEncipherment(BOOL* fLimitExchangeKeyToEncipherment);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll3-put_enablesmimecapabilities))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll3-put_enablesmimecapabilities
     HRESULT put_EnableSMIMECapabilities(BOOL fEnableSMIMECapabilities);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll3-get_enablesmimecapabilities))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll3-get_enablesmimecapabilities
     HRESULT get_EnableSMIMECapabilities(BOOL* fEnableSMIMECapabilities);
 }
 
 @GUID("c1f1188a-2eb5-4a80-841b-7e729a356d90")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nn-xenroll-icenroll4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nn-xenroll-icenroll4
 interface ICEnroll4 : ICEnroll3
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-put_privatekeyarchivecertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-put_privatekeyarchivecertificate
     HRESULT put_PrivateKeyArchiveCertificate(BSTR bstrCert);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-get_privatekeyarchivecertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-get_privatekeyarchivecertificate
     HRESULT get_PrivateKeyArchiveCertificate(BSTR* pbstrCert);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-put_thumbprint))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-put_thumbprint
     HRESULT put_ThumbPrint(BSTR bstrThumbPrint);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-get_thumbprint))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-get_thumbprint
     HRESULT get_ThumbPrint(BSTR* pbstrThumbPrint);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-binarytostring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-binarytostring
     HRESULT binaryToString(int Flags, BSTR strBinary, BSTR* pstrEncoded);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-stringtobinary))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-stringtobinary
     HRESULT stringToBinary(int Flags, BSTR strEncoded, BSTR* pstrBinary);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-addextensiontorequest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-addextensiontorequest
     HRESULT addExtensionToRequest(int Flags, BSTR strName, BSTR strValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-addattributetorequest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-addattributetorequest
     HRESULT addAttributeToRequest(int Flags, BSTR strName, BSTR strValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-addnamevaluepairtorequest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-addnamevaluepairtorequest
     HRESULT addNameValuePairToRequest(int Flags, BSTR strName, BSTR strValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-resetextensions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-resetextensions
     HRESULT resetExtensions();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-resetattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-resetattributes
     HRESULT resetAttributes();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-createrequest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-createrequest
     HRESULT createRequest(CERT_CREATE_REQUEST_FLAGS Flags, BSTR strDNName, BSTR Usage, BSTR* pstrRequest);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-createfilerequest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-createfilerequest
     HRESULT createFileRequest(CERT_CREATE_REQUEST_FLAGS Flags, BSTR strDNName, BSTR strUsage, 
                               BSTR strRequestFileName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-acceptresponse))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-acceptresponse
     HRESULT acceptResponse(BSTR strResponse);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-acceptfileresponse))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-acceptfileresponse
     HRESULT acceptFileResponse(BSTR strResponseFileName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-getcertfromresponse))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-getcertfromresponse
     HRESULT getCertFromResponse(BSTR strResponse, BSTR* pstrCert);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-getcertfromfileresponse))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-getcertfromfileresponse
     HRESULT getCertFromFileResponse(BSTR strResponseFileName, BSTR* pstrCert);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-createpfx))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-createpfx
     HRESULT createPFX(BSTR strPassword, BSTR* pstrPFX);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-createfilepfx))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-createfilepfx
     HRESULT createFilePFX(BSTR strPassword, BSTR strPFXFileName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-setpendingrequestinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-setpendingrequestinfo
     HRESULT setPendingRequestInfo(int lRequestID, BSTR strCADNS, BSTR strCAName, BSTR strFriendlyName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-enumpendingrequest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-enumpendingrequest
     HRESULT enumPendingRequest(int lIndex, PENDING_REQUEST_DESIRED_PROPERTY lDesiredProperty, 
                                VARIANT* pvarProperty);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-removependingrequest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-removependingrequest
     HRESULT removePendingRequest(BSTR strThumbprint);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-getkeylenex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-getkeylenex
     HRESULT GetKeyLenEx(XEKL_KEYSIZE lSizeSpec, XEKL_KEYSPEC lKeySpec, int* pdwKeySize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-installpkcs7ex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-installpkcs7ex
     HRESULT InstallPKCS7Ex(BSTR PKCS7, int* plCertInstalled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-addcerttypetorequestex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-addcerttypetorequestex
     HRESULT addCertTypeToRequestEx(ADDED_CERT_TYPE lType, BSTR bstrOIDOrName, int lMajorVersion, 
                                    BOOL fMinorVersion, int lMinorVersion);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-getprovidertype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-getprovidertype
     HRESULT getProviderType(BSTR strProvName, int* plProvType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-put_signercertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-put_signercertificate
     HRESULT put_SignerCertificate(BSTR bstrCert);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-put_clientid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-put_clientid
     HRESULT put_ClientId(int lClientId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-get_clientid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-get_clientid
     HRESULT get_ClientId(int* plClientId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-addblobpropertytocertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-addblobpropertytocertificate
     HRESULT addBlobPropertyToCertificate(int lPropertyId, int lReserved, BSTR bstrProperty);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-resetblobproperties))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-resetblobproperties
     HRESULT resetBlobProperties();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-put_includesubjectkeyid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-put_includesubjectkeyid
     HRESULT put_IncludeSubjectKeyID(BOOL fInclude);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-get_includesubjectkeyid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-icenroll4-get_includesubjectkeyid
     HRESULT get_IncludeSubjectKeyID(BOOL* pfInclude);
 }
 
 @GUID("acaa7838-4585-11d1-ab57-00c04fc295e1")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nn-xenroll-ienroll))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nn-xenroll-ienroll
 interface IEnroll : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-createfilepkcs10wstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-createfilepkcs10wstr
     HRESULT createFilePKCS10WStr(const(PWSTR) DNName, const(PWSTR) Usage, const(PWSTR) wszPKCS10FileName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-acceptfilepkcs7wstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-acceptfilepkcs7wstr
     HRESULT acceptFilePKCS7WStr(const(PWSTR) wszPKCS7FileName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-createpkcs10wstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-createpkcs10wstr
     HRESULT createPKCS10WStr(const(PWSTR) DNName, const(PWSTR) Usage, CRYPT_INTEGER_BLOB* pPkcs10Blob);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-acceptpkcs7blob))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-acceptpkcs7blob
     HRESULT acceptPKCS7Blob(CRYPT_INTEGER_BLOB* pBlobPKCS7);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-getcertcontextfrompkcs7))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-getcertcontextfrompkcs7
     CERT_CONTEXT* getCertContextFromPKCS7(CRYPT_INTEGER_BLOB* pBlobPKCS7);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-getmystore))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-getmystore
     HCERTSTORE getMyStore();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-getcastore))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-getcastore
     HCERTSTORE getCAStore();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-getroothstore))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-getroothstore
     HCERTSTORE getROOTHStore();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-enumproviderswstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-enumproviderswstr
     HRESULT enumProvidersWStr(int dwIndex, int dwFlags, PWSTR* pbstrProvName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-enumcontainerswstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-enumcontainerswstr
     HRESULT enumContainersWStr(int dwIndex, PWSTR* pbstr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-freerequestinfoblob))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-freerequestinfoblob
     HRESULT freeRequestInfoBlob(CRYPT_INTEGER_BLOB pkcs7OrPkcs10);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_mystorenamewstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_mystorenamewstr
     HRESULT get_MyStoreNameWStr(PWSTR* szwName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_mystorenamewstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_mystorenamewstr
     HRESULT put_MyStoreNameWStr(PWSTR szwName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_mystoretypewstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_mystoretypewstr
     HRESULT get_MyStoreTypeWStr(PWSTR* szwType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_mystoretypewstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_mystoretypewstr
     HRESULT put_MyStoreTypeWStr(PWSTR szwType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_mystoreflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_mystoreflags
     HRESULT get_MyStoreFlags(int* pdwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_mystoreflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_mystoreflags
     HRESULT put_MyStoreFlags(int dwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_castorenamewstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_castorenamewstr
     HRESULT get_CAStoreNameWStr(PWSTR* szwName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_castorenamewstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_castorenamewstr
     HRESULT put_CAStoreNameWStr(PWSTR szwName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_castoretypewstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_castoretypewstr
     HRESULT get_CAStoreTypeWStr(PWSTR* szwType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_castoretypewstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_castoretypewstr
     HRESULT put_CAStoreTypeWStr(PWSTR szwType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_castoreflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_castoreflags
     HRESULT get_CAStoreFlags(int* pdwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_castoreflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_castoreflags
     HRESULT put_CAStoreFlags(int dwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_rootstorenamewstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_rootstorenamewstr
     HRESULT get_RootStoreNameWStr(PWSTR* szwName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_rootstorenamewstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_rootstorenamewstr
     HRESULT put_RootStoreNameWStr(PWSTR szwName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_rootstoretypewstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_rootstoretypewstr
     HRESULT get_RootStoreTypeWStr(PWSTR* szwType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_rootstoretypewstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_rootstoretypewstr
     HRESULT put_RootStoreTypeWStr(PWSTR szwType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_rootstoreflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_rootstoreflags
     HRESULT get_RootStoreFlags(int* pdwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_rootstoreflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_rootstoreflags
     HRESULT put_RootStoreFlags(int dwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_requeststorenamewstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_requeststorenamewstr
     HRESULT get_RequestStoreNameWStr(PWSTR* szwName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_requeststorenamewstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_requeststorenamewstr
     HRESULT put_RequestStoreNameWStr(PWSTR szwName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_requeststoretypewstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_requeststoretypewstr
     HRESULT get_RequestStoreTypeWStr(PWSTR* szwType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_requeststoretypewstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_requeststoretypewstr
     HRESULT put_RequestStoreTypeWStr(PWSTR szwType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_requeststoreflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_requeststoreflags
     HRESULT get_RequestStoreFlags(int* pdwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_requeststoreflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_requeststoreflags
     HRESULT put_RequestStoreFlags(int dwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_containernamewstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_containernamewstr
     HRESULT get_ContainerNameWStr(PWSTR* szwContainer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_containernamewstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_containernamewstr
     HRESULT put_ContainerNameWStr(PWSTR szwContainer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_providernamewstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_providernamewstr
     HRESULT get_ProviderNameWStr(PWSTR* szwProvider);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_providernamewstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_providernamewstr
     HRESULT put_ProviderNameWStr(PWSTR szwProvider);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_providertype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_providertype
     HRESULT get_ProviderType(int* pdwType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_providertype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_providertype
     HRESULT put_ProviderType(int dwType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_keyspec))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_keyspec
     HRESULT get_KeySpec(int* pdw);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_keyspec))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_keyspec
     HRESULT put_KeySpec(int dw);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_providerflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_providerflags
     HRESULT get_ProviderFlags(int* pdwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_providerflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_providerflags
     HRESULT put_ProviderFlags(int dwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_useexistingkeyset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_useexistingkeyset
     HRESULT get_UseExistingKeySet(BOOL* fUseExistingKeys);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_useexistingkeyset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_useexistingkeyset
     HRESULT put_UseExistingKeySet(BOOL fUseExistingKeys);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_genkeyflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_genkeyflags
     HRESULT get_GenKeyFlags(int* pdwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_genkeyflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_genkeyflags
     HRESULT put_GenKeyFlags(int dwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_deleterequestcert))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_deleterequestcert
     HRESULT get_DeleteRequestCert(BOOL* fDelete);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_deleterequestcert))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_deleterequestcert
     HRESULT put_DeleteRequestCert(BOOL fDelete);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_writecerttouserds))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_writecerttouserds
     HRESULT get_WriteCertToUserDS(BOOL* fBool);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_writecerttouserds))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_writecerttouserds
     HRESULT put_WriteCertToUserDS(BOOL fBool);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_enablet61dnencoding))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_enablet61dnencoding
     HRESULT get_EnableT61DNEncoding(BOOL* fBool);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_enablet61dnencoding))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_enablet61dnencoding
     HRESULT put_EnableT61DNEncoding(BOOL fBool);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_writecerttocsp))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_writecerttocsp
     HRESULT get_WriteCertToCSP(BOOL* fBool);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_writecerttocsp))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_writecerttocsp
     HRESULT put_WriteCertToCSP(BOOL fBool);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_spcfilenamewstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_spcfilenamewstr
     HRESULT get_SPCFileNameWStr(PWSTR* szw);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_spcfilenamewstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_spcfilenamewstr
     HRESULT put_SPCFileNameWStr(PWSTR szw);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_pvkfilenamewstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_pvkfilenamewstr
     HRESULT get_PVKFileNameWStr(PWSTR* szw);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_pvkfilenamewstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_pvkfilenamewstr
     HRESULT put_PVKFileNameWStr(PWSTR szw);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_hashalgorithmwstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_hashalgorithmwstr
     HRESULT get_HashAlgorithmWStr(PWSTR* szw);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_hashalgorithmwstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_hashalgorithmwstr
     HRESULT put_HashAlgorithmWStr(PWSTR szw);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_renewalcertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-get_renewalcertificate
     HRESULT get_RenewalCertificate(CERT_CONTEXT** ppCertContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_renewalcertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-put_renewalcertificate
     HRESULT put_RenewalCertificate(const(CERT_CONTEXT)* pCertContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-addcerttypetorequestwstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-addcerttypetorequestwstr
     HRESULT AddCertTypeToRequestWStr(PWSTR szw);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-addnamevaluepairtosignaturewstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-addnamevaluepairtosignaturewstr
     HRESULT AddNameValuePairToSignatureWStr(PWSTR Name, PWSTR Value);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-addextensionstorequest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-addextensionstorequest
     HRESULT AddExtensionsToRequest(CERT_EXTENSIONS* pCertExtensions);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-addauthenticatedattributestopkcs7request))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-addauthenticatedattributestopkcs7request
     HRESULT AddAuthenticatedAttributesToPKCS7Request(CRYPT_ATTRIBUTES* pAttributes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-createpkcs7requestfromrequest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll-createpkcs7requestfromrequest
     HRESULT CreatePKCS7RequestFromRequest(CRYPT_INTEGER_BLOB* pRequest, const(CERT_CONTEXT)* pSigningCertContext, 
                                           CRYPT_INTEGER_BLOB* pPkcs7Blob);
 }
 
 @GUID("c080e199-b7df-11d2-a421-00c04f79fe8e")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nn-xenroll-ienroll2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nn-xenroll-ienroll2
 interface IEnroll2 : IEnroll
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll2-installpkcs7blob))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll2-installpkcs7blob
     HRESULT InstallPKCS7Blob(CRYPT_INTEGER_BLOB* pBlobPKCS7);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll2-reset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll2-reset
     HRESULT Reset();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll2-getsupportedkeyspec))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll2-getsupportedkeyspec
     HRESULT GetSupportedKeySpec(int* pdwKeySpec);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll2-getkeylen))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll2-getkeylen
     HRESULT GetKeyLen(BOOL fMin, BOOL fExchange, int* pdwKeySize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll2-enumalgs))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll2-enumalgs
     HRESULT EnumAlgs(int dwIndex, int algClass, int* pdwAlgID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll2-getalgnamewstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll2-getalgnamewstr
     HRESULT GetAlgNameWStr(int algID, PWSTR* ppwsz);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll2-put_reusehardwarekeyifunabletogennew))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll2-put_reusehardwarekeyifunabletogennew
     HRESULT put_ReuseHardwareKeyIfUnableToGenNew(BOOL fReuseHardwareKeyIfUnableToGenNew);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll2-get_reusehardwarekeyifunabletogennew))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll2-get_reusehardwarekeyifunabletogennew
     HRESULT get_ReuseHardwareKeyIfUnableToGenNew(BOOL* fReuseHardwareKeyIfUnableToGenNew);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll2-put_hashalgid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll2-put_hashalgid
     HRESULT put_HashAlgID(int hashAlgID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll2-get_hashalgid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll2-get_hashalgid
     HRESULT get_HashAlgID(int* hashAlgID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll2-sethstoremy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll2-sethstoremy
     HRESULT SetHStoreMy(HCERTSTORE hStore);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll2-sethstoreca))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll2-sethstoreca
     HRESULT SetHStoreCA(HCERTSTORE hStore);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll2-sethstoreroot))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll2-sethstoreroot
     HRESULT SetHStoreROOT(HCERTSTORE hStore);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll2-sethstorerequest))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll2-sethstorerequest
     HRESULT SetHStoreRequest(HCERTSTORE hStore);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll2-put_limitexchangekeytoencipherment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll2-put_limitexchangekeytoencipherment
     HRESULT put_LimitExchangeKeyToEncipherment(BOOL fLimitExchangeKeyToEncipherment);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll2-get_limitexchangekeytoencipherment))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll2-get_limitexchangekeytoencipherment
     HRESULT get_LimitExchangeKeyToEncipherment(BOOL* fLimitExchangeKeyToEncipherment);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll2-put_enablesmimecapabilities))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll2-put_enablesmimecapabilities
     HRESULT put_EnableSMIMECapabilities(BOOL fEnableSMIMECapabilities);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll2-get_enablesmimecapabilities))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll2-get_enablesmimecapabilities
     HRESULT get_EnableSMIMECapabilities(BOOL* fEnableSMIMECapabilities);
 }
 
 @GUID("f8053fe5-78f4-448f-a0db-41d61b73446b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.1.2600))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nn-xenroll-ienroll4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nn-xenroll-ienroll4
 interface IEnroll4 : IEnroll2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-put_thumbprintwstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-put_thumbprintwstr
     HRESULT put_ThumbPrintWStr(CRYPT_INTEGER_BLOB thumbPrintBlob);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-get_thumbprintwstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-get_thumbprintwstr
     HRESULT get_ThumbPrintWStr(CRYPT_INTEGER_BLOB* thumbPrintBlob);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-setprivatekeyarchivecertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-setprivatekeyarchivecertificate
     HRESULT SetPrivateKeyArchiveCertificate(const(CERT_CONTEXT)* pPrivateKeyArchiveCert);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-getprivatekeyarchivecertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-getprivatekeyarchivecertificate
     CERT_CONTEXT* GetPrivateKeyArchiveCertificate();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-binaryblobtostring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-binaryblobtostring
     HRESULT binaryBlobToString(int Flags, CRYPT_INTEGER_BLOB* pblobBinary, PWSTR* ppwszString);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-stringtobinaryblob))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-stringtobinaryblob
     HRESULT stringToBinaryBlob(int Flags, const(PWSTR) pwszString, CRYPT_INTEGER_BLOB* pblobBinary, int* pdwSkip, 
                                int* pdwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-addextensiontorequestwstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-addextensiontorequestwstr
     HRESULT addExtensionToRequestWStr(int Flags, const(PWSTR) pwszName, CRYPT_INTEGER_BLOB* pblobValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-addattributetorequestwstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-addattributetorequestwstr
     HRESULT addAttributeToRequestWStr(int Flags, const(PWSTR) pwszName, CRYPT_INTEGER_BLOB* pblobValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-addnamevaluepairtorequestwstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-addnamevaluepairtorequestwstr
     HRESULT addNameValuePairToRequestWStr(int Flags, const(PWSTR) pwszName, const(PWSTR) pwszValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-resetextensions))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-resetextensions
     HRESULT resetExtensions();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-resetattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-resetattributes
     HRESULT resetAttributes();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-createrequestwstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-createrequestwstr
     HRESULT createRequestWStr(CERT_CREATE_REQUEST_FLAGS Flags, const(PWSTR) pwszDNName, const(PWSTR) pwszUsage, 
                               CRYPT_INTEGER_BLOB* pblobRequest);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-createfilerequestwstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-createfilerequestwstr
     HRESULT createFileRequestWStr(CERT_CREATE_REQUEST_FLAGS Flags, const(PWSTR) pwszDNName, const(PWSTR) pwszUsage, 
                                   const(PWSTR) pwszRequestFileName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-acceptresponseblob))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-acceptresponseblob
     HRESULT acceptResponseBlob(CRYPT_INTEGER_BLOB* pblobResponse);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-acceptfileresponsewstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-acceptfileresponsewstr
     HRESULT acceptFileResponseWStr(const(PWSTR) pwszResponseFileName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-getcertcontextfromresponseblob))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-getcertcontextfromresponseblob
     HRESULT getCertContextFromResponseBlob(CRYPT_INTEGER_BLOB* pblobResponse, CERT_CONTEXT** ppCertContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-getcertcontextfromfileresponsewstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-getcertcontextfromfileresponsewstr
     HRESULT getCertContextFromFileResponseWStr(const(PWSTR) pwszResponseFileName, CERT_CONTEXT** ppCertContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-createpfxwstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-createpfxwstr
     HRESULT createPFXWStr(const(PWSTR) pwszPassword, CRYPT_INTEGER_BLOB* pblobPFX);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-createfilepfxwstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-createfilepfxwstr
     HRESULT createFilePFXWStr(const(PWSTR) pwszPassword, const(PWSTR) pwszPFXFileName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-setpendingrequestinfowstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-setpendingrequestinfowstr
     HRESULT setPendingRequestInfoWStr(int lRequestID, const(PWSTR) pwszCADNS, const(PWSTR) pwszCAName, 
                                       const(PWSTR) pwszFriendlyName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-enumpendingrequestwstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-enumpendingrequestwstr
     HRESULT enumPendingRequestWStr(int lIndex, PENDING_REQUEST_DESIRED_PROPERTY lDesiredProperty, void* ppProperty);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-removependingrequestwstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-removependingrequestwstr
     HRESULT removePendingRequestWStr(CRYPT_INTEGER_BLOB thumbPrintBlob);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-getkeylenex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-getkeylenex
     HRESULT GetKeyLenEx(XEKL_KEYSIZE lSizeSpec, XEKL_KEYSPEC lKeySpec, int* pdwKeySize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-installpkcs7blobex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-installpkcs7blobex
     HRESULT InstallPKCS7BlobEx(CRYPT_INTEGER_BLOB* pBlobPKCS7, int* plCertInstalled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-addcerttypetorequestwstrex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-addcerttypetorequestwstrex
     HRESULT AddCertTypeToRequestWStrEx(ADDED_CERT_TYPE lType, const(PWSTR) pwszOIDOrName, int lMajorVersion, 
                                        BOOL fMinorVersion, int lMinorVersion);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-getprovidertypewstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-getprovidertypewstr
     HRESULT getProviderTypeWStr(const(PWSTR) pwszProvName, int* plProvType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-addblobpropertytocertificatewstr))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-addblobpropertytocertificatewstr
     HRESULT addBlobPropertyToCertificateWStr(int lPropertyId, int lReserved, CRYPT_INTEGER_BLOB* pBlobProperty);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-setsignercertificate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-setsignercertificate
     HRESULT SetSignerCertificate(const(CERT_CONTEXT)* pSignerCert);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-put_clientid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-put_clientid
     HRESULT put_ClientId(int lClientId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-get_clientid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-get_clientid
     HRESULT get_ClientId(int* plClientId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-put_includesubjectkeyid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-put_includesubjectkeyid
     HRESULT put_IncludeSubjectKeyID(BOOL fInclude);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-get_includesubjectkeyid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/xenroll/nf-xenroll-ienroll4-get_includesubjectkeyid
     HRESULT get_IncludeSubjectKeyID(BOOL* pfInclude);
 }
 

@@ -3,10 +3,11 @@
 module windows.win32.networking.httpserver;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BOOLEAN, HANDLE, HRESULT, PSTR, PWSTR;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BOOLEAN, HANDLE, HRESULT, PSTR,
+                                                    PWSTR;
 public import windows.win32.networking.winsock : SOCKADDR, SOCKADDR_STORAGE;
-public import windows.win32.security : PSECURITY_DESCRIPTOR, SECURITY_ATTRIBUTES;
+public import windows.win32.security.security : PSECURITY_DESCRIPTOR, SECURITY_ATTRIBUTES;
 public import windows.win32.system.io : OVERLAPPED;
 
 extern(Windows) @nogc nothrow:
@@ -14,19 +15,22 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias HTTP_RECEIVE_HTTP_REQUEST_FLAGS = uint;
 enum : uint
 {
-    HTTP_RECEIVE_REQUEST_FLAG_COPY_BODY  = 0x00000001,
-    HTTP_RECEIVE_REQUEST_FLAG_FLUSH_BODY = 0x00000002,
+    HTTP_RECEIVE_REQUEST_FLAG_COPY_BODY  = 0x00000001U,
+    HTTP_RECEIVE_REQUEST_FLAG_FLUSH_BODY = 0x00000002U,
 }
+
 alias HTTP_INITIALIZE = uint;
 enum : uint
 {
-    HTTP_INITIALIZE_CONFIG = 0x00000002,
-    HTTP_INITIALIZE_SERVER = 0x00000001,
+    HTTP_INITIALIZE_CONFIG = 0x00000002U,
+    HTTP_INITIALIZE_SERVER = 0x00000001U,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ne-http-http_server_property))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ne-http-http_server_property
 alias HTTP_SERVER_PROPERTY = int;
 enum : int
 {
@@ -46,14 +50,16 @@ enum : int
     HttpServerFastForwardingProperty         = 0x00000012,
     HttpServerRequestInfoProperty            = 0x00000013,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ne-http-http_enabled_state))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ne-http-http_enabled_state
 alias HTTP_ENABLED_STATE = int;
 enum : int
 {
     HttpEnabledStateActive   = 0x00000000,
     HttpEnabledStateInactive = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ne-http-http_503_response_verbosity))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ne-http-http_503_response_verbosity
 alias HTTP_503_RESPONSE_VERBOSITY = int;
 enum : int
 {
@@ -61,7 +67,8 @@ enum : int
     Http503ResponseVerbosityLimited = 0x00000001,
     Http503ResponseVerbosityFull    = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ne-http-http_qos_setting_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ne-http-http_qos_setting_type
 alias HTTP_QOS_SETTING_TYPE = int;
 enum : int
 {
@@ -69,20 +76,23 @@ enum : int
     HttpQosSettingTypeConnectionLimit = 0x00000001,
     HttpQosSettingTypeFlowRate        = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ne-http-http_service_config_timeout_key))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ne-http-http_service_config_timeout_key
 alias HTTP_SERVICE_CONFIG_TIMEOUT_KEY = int;
 enum : int
 {
     IdleConnectionTimeout = 0x00000000,
     HeaderWaitTimeout     = 0x00000001,
 }
+
 alias HTTP_SERVICE_CONFIG_SETTING_KEY = int;
 enum : int
 {
     HttpNone        = 0x00000000,
     HttpTlsThrottle = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ne-http-http_service_binding_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ne-http-http_service_binding_type
 alias HTTP_SERVICE_BINDING_TYPE = int;
 enum : int
 {
@@ -90,7 +100,8 @@ enum : int
     HttpServiceBindingTypeW    = 0x00000001,
     HttpServiceBindingTypeA    = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ne-http-http_authentication_hardening_levels))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ne-http-http_authentication_hardening_levels
 alias HTTP_AUTHENTICATION_HARDENING_LEVELS = int;
 enum : int
 {
@@ -98,7 +109,8 @@ enum : int
     HttpAuthenticationHardeningMedium = 0x00000001,
     HttpAuthenticationHardeningStrict = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ne-http-http_logging_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ne-http-http_logging_type
 alias HTTP_LOGGING_TYPE = int;
 enum : int
 {
@@ -107,7 +119,8 @@ enum : int
     HttpLoggingTypeNCSA = 0x00000002,
     HttpLoggingTypeRaw  = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ne-http-http_logging_rollover_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ne-http-http_logging_rollover_type
 alias HTTP_LOGGING_ROLLOVER_TYPE = int;
 enum : int
 {
@@ -117,6 +130,7 @@ enum : int
     HttpLoggingRolloverMonthly = 0x00000003,
     HttpLoggingRolloverHourly  = 0x00000004,
 }
+
 alias HTTP_PROTECTION_LEVEL_TYPE = int;
 enum : int
 {
@@ -124,6 +138,7 @@ enum : int
     HttpProtectionLevelEdgeRestricted = 0x00000001,
     HttpProtectionLevelRestricted     = 0x00000002,
 }
+
 alias HTTP_SCHEME = int;
 enum : int
 {
@@ -131,7 +146,8 @@ enum : int
     HttpSchemeHttps   = 0x00000001,
     HttpSchemeMaximum = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ne-http-http_verb))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ne-http-http_verb
 alias HTTP_VERB = int;
 enum : int
 {
@@ -157,7 +173,8 @@ enum : int
     HttpVerbSEARCH    = 0x00000013,
     HttpVerbMaximum   = 0x00000014,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ne-http-http_header_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ne-http-http_header_id
 alias HTTP_HEADER_ID = int;
 enum : int
 {
@@ -216,13 +233,15 @@ enum : int
     HttpHeaderResponseMaximum    = 0x0000001e,
     HttpHeaderMaximum            = 0x00000029,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ne-http-http_log_data_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ne-http-http_log_data_type
 alias HTTP_LOG_DATA_TYPE = int;
 enum : int
 {
     HttpLogDataTypeFields = 0x00000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ne-http-http_data_chunk_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ne-http-http_data_chunk_type
 alias HTTP_DATA_CHUNK_TYPE = int;
 enum : int
 {
@@ -234,20 +253,23 @@ enum : int
     HttpDataChunkFromWinHttpFastForwarding = 0x00000005,
     HttpDataChunkMaximum                   = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ne-http-http_delegate_request_property_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ne-http-http_delegate_request_property_id
 alias HTTP_DELEGATE_REQUEST_PROPERTY_ID = int;
 enum : int
 {
     DelegateRequestReservedProperty    = 0x00000000,
     DelegateRequestDelegateUrlProperty = 0x00000001,
 }
+
 alias HTTP_CREATE_REQUEST_QUEUE_PROPERTY_ID = int;
 enum : int
 {
     CreateRequestQueueExternalIdProperty = 0x00000001,
     CreateRequestQueueMax                = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ne-http-http_auth_status))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ne-http-http_auth_status
 alias HTTP_AUTH_STATUS = int;
 enum : int
 {
@@ -255,7 +277,8 @@ enum : int
     HttpAuthStatusNotAuthenticated = 0x00000001,
     HttpAuthStatusFailure          = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ne-http-http_request_auth_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ne-http-http_request_auth_type
 alias HTTP_REQUEST_AUTH_TYPE = int;
 enum : int
 {
@@ -266,6 +289,7 @@ enum : int
     HttpRequestAuthTypeNegotiate = 0x00000004,
     HttpRequestAuthTypeKerberos  = 0x00000005,
 }
+
 alias HTTP_REQUEST_SIZING_TYPE = int;
 enum : int
 {
@@ -276,6 +300,7 @@ enum : int
     HttpRequestSizingTypeHeaders                    = 0x00000004,
     HttpRequestSizingTypeMax                        = 0x00000005,
 }
+
 alias HTTP_REQUEST_TIMING_TYPE = int;
 enum : int
 {
@@ -311,7 +336,8 @@ enum : int
     HttpRequestTimingTypeHttp3HeaderDecodeEnd           = 0x0000001d,
     HttpRequestTimingTypeMax                            = 0x0000001e,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ne-http-http_request_info_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ne-http-http_request_info_type
 alias HTTP_REQUEST_INFO_TYPE = int;
 enum : int
 {
@@ -331,7 +357,8 @@ enum : int
     HttpRequestInfoTypeDscpTag                        = 0x0000000d,
     HttpRequestInfoTypeInitialPacketTtl               = 0x0000000e,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ne-http-http_response_info_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ne-http-http_response_info_type
 alias HTTP_RESPONSE_INFO_TYPE = int;
 enum : int
 {
@@ -340,7 +367,8 @@ enum : int
     HttpResponseInfoTypeQoSProperty            = 0x00000002,
     HttpResponseInfoTypeChannelBind            = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ne-http-http_cache_policy_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ne-http-http_cache_policy_type
 alias HTTP_CACHE_POLICY_TYPE = int;
 enum : int
 {
@@ -349,7 +377,8 @@ enum : int
     HttpCachePolicyTimeToLive      = 0x00000002,
     HttpCachePolicyMaximum         = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ne-http-http_service_config_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ne-http-http_service_config_id
 alias HTTP_SERVICE_CONFIG_ID = int;
 enum : int
 {
@@ -368,7 +397,8 @@ enum : int
     HttpServiceConfigSslScopedCcsCertInfoEx = 0x0000000c,
     HttpServiceConfigMax                    = 0x0000000d,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ne-http-http_service_config_query_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ne-http-http_service_config_query_type
 alias HTTP_SERVICE_CONFIG_QUERY_TYPE = int;
 enum : int
 {
@@ -376,6 +406,7 @@ enum : int
     HttpServiceConfigQueryNext  = 0x00000001,
     HttpServiceConfigQueryMax   = 0x00000002,
 }
+
 alias HTTP_SSL_SERVICE_CONFIG_EX_PARAM_TYPE = int;
 enum : int
 {
@@ -388,6 +419,7 @@ enum : int
     ExParamTypeCertConfig           = 0x00000006,
     ExParamTypeMax                  = 0x00000007,
 }
+
 alias HTTP_PERFORMANCE_PARAM_TYPE = int;
 enum : int
 {
@@ -399,14 +431,16 @@ enum : int
     PerformanceParamDecryptOnSspiThread        = 0x00000005,
     PerformanceParamMax                        = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ne-http-http_service_config_cache_key))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ne-http-http_service_config_cache_key
 alias HTTP_SERVICE_CONFIG_CACHE_KEY = int;
 enum : int
 {
     MaxCacheResponseSize = 0x00000000,
     CacheRangeChunkSize  = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ne-http-http_request_property))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ne-http-http_request_property
 alias HTTP_REQUEST_PROPERTY = int;
 enum : int
 {
@@ -426,7 +460,8 @@ enum : int
     HttpRequestPropertyDscpTag                        = 0x0000000d,
     HttpRequestPropertyTlsCipherInfo                  = 0x0000000e,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ne-http-http_feature_id))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ne-http-http_feature_id
 alias HTTP_FEATURE_ID = int;
 enum : int
 {
@@ -455,176 +490,176 @@ enum : int
 // Constants
 
 
-enum uint HTTP_DEMAND_CBT = 0x00000004;
-enum uint HTTP_MAX_SERVER_QUEUE_LENGTH = 0x7fffffff;
-enum uint HTTP_MIN_SERVER_QUEUE_LENGTH = 0x00000001;
+enum uint HTTP_DEMAND_CBT = 0x00000004U;
+enum uint HTTP_MAX_SERVER_QUEUE_LENGTH = 0x7fffffffU;
+enum uint HTTP_MIN_SERVER_QUEUE_LENGTH = 0x00000001U;
 
 enum : uint
 {
-    HTTP_AUTH_ENABLE_BASIC                               = 0x00000001,
-    HTTP_AUTH_ENABLE_DIGEST                              = 0x00000002,
-    HTTP_AUTH_ENABLE_NTLM                                = 0x00000004,
-    HTTP_AUTH_ENABLE_NEGOTIATE                           = 0x00000008,
-    HTTP_AUTH_ENABLE_KERBEROS                            = 0x00000010,
-    HTTP_AUTH_EX_FLAG_ENABLE_KERBEROS_CREDENTIAL_CACHING = 0x00000001,
+    HTTP_AUTH_ENABLE_BASIC                               = 0x00000001U,
+    HTTP_AUTH_ENABLE_DIGEST                              = 0x00000002U,
+    HTTP_AUTH_ENABLE_NTLM                                = 0x00000004U,
+    HTTP_AUTH_ENABLE_NEGOTIATE                           = 0x00000008U,
+    HTTP_AUTH_ENABLE_KERBEROS                            = 0x00000010U,
+    HTTP_AUTH_EX_FLAG_ENABLE_KERBEROS_CREDENTIAL_CACHING = 0x00000001U,
 }
 
-enum uint HTTP_AUTH_EX_FLAG_CAPTURE_CREDENTIAL = 0x00000002;
+enum uint HTTP_AUTH_EX_FLAG_CAPTURE_CREDENTIAL = 0x00000002U;
 
 enum : uint
 {
-    HTTP_CHANNEL_BIND_PROXY                 = 0x00000001,
-    HTTP_CHANNEL_BIND_PROXY_COHOSTING       = 0x00000020,
-    HTTP_CHANNEL_BIND_NO_SERVICE_NAME_CHECK = 0x00000002,
-    HTTP_CHANNEL_BIND_DOTLESS_SERVICE       = 0x00000004,
-    HTTP_CHANNEL_BIND_SECURE_CHANNEL_TOKEN  = 0x00000008,
-    HTTP_CHANNEL_BIND_CLIENT_SERVICE        = 0x00000010,
-}
-
-enum : uint
-{
-    HTTP_LOG_FIELD_DATE           = 0x00000001,
-    HTTP_LOG_FIELD_TIME           = 0x00000002,
-    HTTP_LOG_FIELD_CLIENT_IP      = 0x00000004,
-    HTTP_LOG_FIELD_USER_NAME      = 0x00000008,
-    HTTP_LOG_FIELD_SITE_NAME      = 0x00000010,
-    HTTP_LOG_FIELD_COMPUTER_NAME  = 0x00000020,
-    HTTP_LOG_FIELD_SERVER_IP      = 0x00000040,
-    HTTP_LOG_FIELD_METHOD         = 0x00000080,
-    HTTP_LOG_FIELD_URI_STEM       = 0x00000100,
-    HTTP_LOG_FIELD_URI_QUERY      = 0x00000200,
-    HTTP_LOG_FIELD_STATUS         = 0x00000400,
-    HTTP_LOG_FIELD_WIN32_STATUS   = 0x00000800,
-    HTTP_LOG_FIELD_BYTES_SENT     = 0x00001000,
-    HTTP_LOG_FIELD_BYTES_RECV     = 0x00002000,
-    HTTP_LOG_FIELD_TIME_TAKEN     = 0x00004000,
-    HTTP_LOG_FIELD_SERVER_PORT    = 0x00008000,
-    HTTP_LOG_FIELD_USER_AGENT     = 0x00010000,
-    HTTP_LOG_FIELD_COOKIE         = 0x00020000,
-    HTTP_LOG_FIELD_REFERER        = 0x00040000,
-    HTTP_LOG_FIELD_VERSION        = 0x00080000,
-    HTTP_LOG_FIELD_HOST           = 0x00100000,
-    HTTP_LOG_FIELD_SUB_STATUS     = 0x00200000,
-    HTTP_LOG_FIELD_STREAM_ID      = 0x08000000,
-    HTTP_LOG_FIELD_STREAM_ID_EX   = 0x10000000,
-    HTTP_LOG_FIELD_TRANSPORT_TYPE = 0x20000000,
-    HTTP_LOG_FIELD_CLIENT_PORT    = 0x00400000,
-    HTTP_LOG_FIELD_URI            = 0x00800000,
-    HTTP_LOG_FIELD_SITE_ID        = 0x01000000,
-    HTTP_LOG_FIELD_REASON         = 0x02000000,
-    HTTP_LOG_FIELD_QUEUE_NAME     = 0x04000000,
-    HTTP_LOG_FIELD_CORRELATION_ID = 0x40000000,
-    HTTP_LOG_FIELD_FAULT_CODE     = 0x80000000,
-}
-
-enum ulong HTTP_LOG_FIELD_EXT_FAULT_CODE_EXT = 0x0000000000000001;
-
-enum : uint
-{
-    HTTP_LOGGING_FLAG_LOCAL_TIME_ROLLOVER = 0x00000001,
-    HTTP_LOGGING_FLAG_USE_UTF8_CONVERSION = 0x00000002,
-    HTTP_LOGGING_FLAG_LOG_ERRORS_ONLY     = 0x00000004,
-    HTTP_LOGGING_FLAG_LOG_SUCCESS_ONLY    = 0x00000008,
+    HTTP_CHANNEL_BIND_PROXY                 = 0x00000001U,
+    HTTP_CHANNEL_BIND_PROXY_COHOSTING       = 0x00000020U,
+    HTTP_CHANNEL_BIND_NO_SERVICE_NAME_CHECK = 0x00000002U,
+    HTTP_CHANNEL_BIND_DOTLESS_SERVICE       = 0x00000004U,
+    HTTP_CHANNEL_BIND_SECURE_CHANNEL_TOKEN  = 0x00000008U,
+    HTTP_CHANNEL_BIND_CLIENT_SERVICE        = 0x00000010U,
 }
 
 enum : uint
 {
-    HTTP_CREATE_REQUEST_QUEUE_FLAG_OPEN_EXISTING = 0x00000001,
-    HTTP_CREATE_REQUEST_QUEUE_FLAG_CONTROLLER    = 0x00000002,
-    HTTP_CREATE_REQUEST_QUEUE_FLAG_DELEGATION    = 0x00000008,
+    HTTP_LOG_FIELD_DATE           = 0x00000001U,
+    HTTP_LOG_FIELD_TIME           = 0x00000002U,
+    HTTP_LOG_FIELD_CLIENT_IP      = 0x00000004U,
+    HTTP_LOG_FIELD_USER_NAME      = 0x00000008U,
+    HTTP_LOG_FIELD_SITE_NAME      = 0x00000010U,
+    HTTP_LOG_FIELD_COMPUTER_NAME  = 0x00000020U,
+    HTTP_LOG_FIELD_SERVER_IP      = 0x00000040U,
+    HTTP_LOG_FIELD_METHOD         = 0x00000080U,
+    HTTP_LOG_FIELD_URI_STEM       = 0x00000100U,
+    HTTP_LOG_FIELD_URI_QUERY      = 0x00000200U,
+    HTTP_LOG_FIELD_STATUS         = 0x00000400U,
+    HTTP_LOG_FIELD_WIN32_STATUS   = 0x00000800U,
+    HTTP_LOG_FIELD_BYTES_SENT     = 0x00001000U,
+    HTTP_LOG_FIELD_BYTES_RECV     = 0x00002000U,
+    HTTP_LOG_FIELD_TIME_TAKEN     = 0x00004000U,
+    HTTP_LOG_FIELD_SERVER_PORT    = 0x00008000U,
+    HTTP_LOG_FIELD_USER_AGENT     = 0x00010000U,
+    HTTP_LOG_FIELD_COOKIE         = 0x00020000U,
+    HTTP_LOG_FIELD_REFERER        = 0x00040000U,
+    HTTP_LOG_FIELD_VERSION        = 0x00080000U,
+    HTTP_LOG_FIELD_HOST           = 0x00100000U,
+    HTTP_LOG_FIELD_SUB_STATUS     = 0x00200000U,
+    HTTP_LOG_FIELD_STREAM_ID      = 0x08000000U,
+    HTTP_LOG_FIELD_STREAM_ID_EX   = 0x10000000U,
+    HTTP_LOG_FIELD_TRANSPORT_TYPE = 0x20000000U,
+    HTTP_LOG_FIELD_CLIENT_PORT    = 0x00400000U,
+    HTTP_LOG_FIELD_URI            = 0x00800000U,
+    HTTP_LOG_FIELD_SITE_ID        = 0x01000000U,
+    HTTP_LOG_FIELD_REASON         = 0x02000000U,
+    HTTP_LOG_FIELD_QUEUE_NAME     = 0x04000000U,
+    HTTP_LOG_FIELD_CORRELATION_ID = 0x40000000U,
+    HTTP_LOG_FIELD_FAULT_CODE     = 0x80000000U,
 }
 
-enum uint HTTP_RECEIVE_REQUEST_ENTITY_BODY_FLAG_FILL_BUFFER = 0x00000001;
+enum ulong HTTP_LOG_FIELD_EXT_FAULT_CODE_EXT = 0x0000000000000001UL;
 
 enum : uint
 {
-    HTTP_SEND_RESPONSE_FLAG_DISCONNECT         = 0x00000001,
-    HTTP_SEND_RESPONSE_FLAG_MORE_DATA          = 0x00000002,
-    HTTP_SEND_RESPONSE_FLAG_BUFFER_DATA        = 0x00000004,
-    HTTP_SEND_RESPONSE_FLAG_ENABLE_NAGLING     = 0x00000008,
-    HTTP_SEND_RESPONSE_FLAG_PROCESS_RANGES     = 0x00000020,
-    HTTP_SEND_RESPONSE_FLAG_OPAQUE             = 0x00000040,
-    HTTP_SEND_RESPONSE_FLAG_GOAWAY             = 0x00000100,
-    HTTP_SEND_RESPONSE_FLAG_AUTOMATIC_CHUNKING = 0x00000200,
-}
-
-enum uint HTTP_FLUSH_RESPONSE_FLAG_RECURSIVE = 0x00000001;
-enum uint HTTP_URL_FLAG_REMOVE_ALL = 0x00000001;
-enum uint HTTP_RECEIVE_SECURE_CHANNEL_TOKEN = 0x00000001;
-enum uint HTTP_RECEIVE_FULL_CHAIN = 0x00000002;
-
-enum : uint
-{
-    HTTP_REQUEST_SIZING_INFO_FLAG_TCP_FAST_OPEN          = 0x00000001,
-    HTTP_REQUEST_SIZING_INFO_FLAG_TLS_SESSION_RESUMPTION = 0x00000002,
-    HTTP_REQUEST_SIZING_INFO_FLAG_TLS_FALSE_START        = 0x00000004,
-    HTTP_REQUEST_SIZING_INFO_FLAG_FIRST_REQUEST          = 0x00000008,
-}
-
-enum uint HTTP_REQUEST_AUTH_FLAG_TOKEN_FOR_CACHED_CRED = 0x00000001;
-
-enum : uint
-{
-    HTTP_REQUEST_FLAG_MORE_ENTITY_BODY_EXISTS          = 0x00000001,
-    HTTP_REQUEST_FLAG_IP_ROUTED                        = 0x00000002,
-    HTTP_REQUEST_FLAG_HTTP2                            = 0x00000004,
-    HTTP_REQUEST_FLAG_HTTP3                            = 0x00000008,
-    HTTP_REQUEST_FLAG_FAST_FORWARDING_ALLOWED          = 0x00000010,
-    HTTP_REQUEST_FLAG_FAST_FORWARDING_RESPONSE_ALLOWED = 0x00000010,
-}
-
-enum : uint
-{
-    HTTP_RESPONSE_FLAG_MULTIPLE_ENCODINGS_AVAILABLE = 0x00000001,
-    HTTP_RESPONSE_FLAG_MORE_ENTITY_BODY_EXISTS      = 0x00000002,
-}
-
-enum uint HTTP_RESPONSE_INFO_FLAGS_PRESERVE_ORDER = 0x00000001;
-
-enum : uint
-{
-    HTTP_CERT_CHECK_MODE_NO_REVOCATION            = 0x00000001,
-    HTTP_CERT_CHECK_MODE_CACHED_REVOCATION        = 0x00000002,
-    HTTP_CERT_CHECK_MODE_USE_REVOCATION_FRESHNESS = 0x00000004,
-    HTTP_CERT_CHECK_MODE_CACHED_URLS              = 0x00000008,
-    HTTP_CERT_CHECK_MODE_NO_AIA                   = 0x00000010,
-    HTTP_CERT_CHECK_MODE_NO_USAGE_CHECK           = 0x00010000,
+    HTTP_LOGGING_FLAG_LOCAL_TIME_ROLLOVER = 0x00000001U,
+    HTTP_LOGGING_FLAG_USE_UTF8_CONVERSION = 0x00000002U,
+    HTTP_LOGGING_FLAG_LOG_ERRORS_ONLY     = 0x00000004U,
+    HTTP_LOGGING_FLAG_LOG_SUCCESS_ONLY    = 0x00000008U,
 }
 
 enum : uint
 {
-    HTTP_SSL_CERT_SHA_HASH_LENGTH   = 0x00000014,
-    HTTP_SSL_CERT_STORE_NAME_LENGTH = 0x00000080,
+    HTTP_CREATE_REQUEST_QUEUE_FLAG_OPEN_EXISTING = 0x00000001U,
+    HTTP_CREATE_REQUEST_QUEUE_FLAG_CONTROLLER    = 0x00000002U,
+    HTTP_CREATE_REQUEST_QUEUE_FLAG_DELEGATION    = 0x00000008U,
+}
+
+enum uint HTTP_RECEIVE_REQUEST_ENTITY_BODY_FLAG_FILL_BUFFER = 0x00000001U;
+
+enum : uint
+{
+    HTTP_SEND_RESPONSE_FLAG_DISCONNECT         = 0x00000001U,
+    HTTP_SEND_RESPONSE_FLAG_MORE_DATA          = 0x00000002U,
+    HTTP_SEND_RESPONSE_FLAG_BUFFER_DATA        = 0x00000004U,
+    HTTP_SEND_RESPONSE_FLAG_ENABLE_NAGLING     = 0x00000008U,
+    HTTP_SEND_RESPONSE_FLAG_PROCESS_RANGES     = 0x00000020U,
+    HTTP_SEND_RESPONSE_FLAG_OPAQUE             = 0x00000040U,
+    HTTP_SEND_RESPONSE_FLAG_GOAWAY             = 0x00000100U,
+    HTTP_SEND_RESPONSE_FLAG_AUTOMATIC_CHUNKING = 0x00000200U,
+}
+
+enum uint HTTP_FLUSH_RESPONSE_FLAG_RECURSIVE = 0x00000001U;
+enum uint HTTP_URL_FLAG_REMOVE_ALL = 0x00000001U;
+enum uint HTTP_RECEIVE_SECURE_CHANNEL_TOKEN = 0x00000001U;
+enum uint HTTP_RECEIVE_FULL_CHAIN = 0x00000002U;
+
+enum : uint
+{
+    HTTP_REQUEST_SIZING_INFO_FLAG_TCP_FAST_OPEN          = 0x00000001U,
+    HTTP_REQUEST_SIZING_INFO_FLAG_TLS_SESSION_RESUMPTION = 0x00000002U,
+    HTTP_REQUEST_SIZING_INFO_FLAG_TLS_FALSE_START        = 0x00000004U,
+    HTTP_REQUEST_SIZING_INFO_FLAG_FIRST_REQUEST          = 0x00000008U,
+}
+
+enum uint HTTP_REQUEST_AUTH_FLAG_TOKEN_FOR_CACHED_CRED = 0x00000001U;
+
+enum : uint
+{
+    HTTP_REQUEST_FLAG_MORE_ENTITY_BODY_EXISTS          = 0x00000001U,
+    HTTP_REQUEST_FLAG_IP_ROUTED                        = 0x00000002U,
+    HTTP_REQUEST_FLAG_HTTP2                            = 0x00000004U,
+    HTTP_REQUEST_FLAG_HTTP3                            = 0x00000008U,
+    HTTP_REQUEST_FLAG_FAST_FORWARDING_ALLOWED          = 0x00000010U,
+    HTTP_REQUEST_FLAG_FAST_FORWARDING_RESPONSE_ALLOWED = 0x00000010U,
 }
 
 enum : uint
 {
-    HTTP_SERVICE_CONFIG_SSL_FLAG_USE_DS_MAPPER             = 0x00000001,
-    HTTP_SERVICE_CONFIG_SSL_FLAG_NEGOTIATE_CLIENT_CERT     = 0x00000002,
-    HTTP_SERVICE_CONFIG_SSL_FLAG_NO_RAW_FILTER             = 0x00000004,
-    HTTP_SERVICE_CONFIG_SSL_FLAG_REJECT                    = 0x00000008,
-    HTTP_SERVICE_CONFIG_SSL_FLAG_DISABLE_HTTP2             = 0x00000010,
-    HTTP_SERVICE_CONFIG_SSL_FLAG_DISABLE_QUIC              = 0x00000020,
-    HTTP_SERVICE_CONFIG_SSL_FLAG_DISABLE_TLS13             = 0x00000040,
-    HTTP_SERVICE_CONFIG_SSL_FLAG_DISABLE_OCSP_STAPLING     = 0x00000080,
-    HTTP_SERVICE_CONFIG_SSL_FLAG_ENABLE_TOKEN_BINDING      = 0x00000100,
-    HTTP_SERVICE_CONFIG_SSL_FLAG_LOG_EXTENDED_EVENTS       = 0x00000200,
-    HTTP_SERVICE_CONFIG_SSL_FLAG_DISABLE_LEGACY_TLS        = 0x00000400,
-    HTTP_SERVICE_CONFIG_SSL_FLAG_ENABLE_SESSION_TICKET     = 0x00000800,
-    HTTP_SERVICE_CONFIG_SSL_FLAG_DISABLE_TLS12             = 0x00001000,
-    HTTP_SERVICE_CONFIG_SSL_FLAG_ENABLE_CLIENT_CORRELATION = 0x00002000,
-    HTTP_SERVICE_CONFIG_SSL_FLAG_DISABLE_SESSION_ID        = 0x00004000,
-    HTTP_SERVICE_CONFIG_SSL_FLAG_ENABLE_CACHE_CLIENT_HELLO = 0x00008000,
+    HTTP_RESPONSE_FLAG_MULTIPLE_ENCODINGS_AVAILABLE = 0x00000001U,
+    HTTP_RESPONSE_FLAG_MORE_ENTITY_BODY_EXISTS      = 0x00000002U,
+}
+
+enum uint HTTP_RESPONSE_INFO_FLAGS_PRESERVE_ORDER = 0x00000001U;
+
+enum : uint
+{
+    HTTP_CERT_CHECK_MODE_NO_REVOCATION            = 0x00000001U,
+    HTTP_CERT_CHECK_MODE_CACHED_REVOCATION        = 0x00000002U,
+    HTTP_CERT_CHECK_MODE_USE_REVOCATION_FRESHNESS = 0x00000004U,
+    HTTP_CERT_CHECK_MODE_CACHED_URLS              = 0x00000008U,
+    HTTP_CERT_CHECK_MODE_NO_AIA                   = 0x00000010U,
+    HTTP_CERT_CHECK_MODE_NO_USAGE_CHECK           = 0x00010000U,
 }
 
 enum : uint
 {
-    HTTP_REQUEST_PROPERTY_SNI_HOST_MAX_LENGTH = 0x000000ff,
-    HTTP_REQUEST_PROPERTY_SNI_FLAG_SNI_USED   = 0x00000001,
-    HTTP_REQUEST_PROPERTY_SNI_FLAG_NO_SNI     = 0x00000002,
+    HTTP_SSL_CERT_SHA_HASH_LENGTH   = 0x00000014U,
+    HTTP_SSL_CERT_STORE_NAME_LENGTH = 0x00000080U,
 }
 
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_version))], [])*/const(wchar)* HTTP_VERSION = "HTTP/1.0";
+enum : uint
+{
+    HTTP_SERVICE_CONFIG_SSL_FLAG_USE_DS_MAPPER             = 0x00000001U,
+    HTTP_SERVICE_CONFIG_SSL_FLAG_NEGOTIATE_CLIENT_CERT     = 0x00000002U,
+    HTTP_SERVICE_CONFIG_SSL_FLAG_NO_RAW_FILTER             = 0x00000004U,
+    HTTP_SERVICE_CONFIG_SSL_FLAG_REJECT                    = 0x00000008U,
+    HTTP_SERVICE_CONFIG_SSL_FLAG_DISABLE_HTTP2             = 0x00000010U,
+    HTTP_SERVICE_CONFIG_SSL_FLAG_DISABLE_QUIC              = 0x00000020U,
+    HTTP_SERVICE_CONFIG_SSL_FLAG_DISABLE_TLS13             = 0x00000040U,
+    HTTP_SERVICE_CONFIG_SSL_FLAG_DISABLE_OCSP_STAPLING     = 0x00000080U,
+    HTTP_SERVICE_CONFIG_SSL_FLAG_ENABLE_TOKEN_BINDING      = 0x00000100U,
+    HTTP_SERVICE_CONFIG_SSL_FLAG_LOG_EXTENDED_EVENTS       = 0x00000200U,
+    HTTP_SERVICE_CONFIG_SSL_FLAG_DISABLE_LEGACY_TLS        = 0x00000400U,
+    HTTP_SERVICE_CONFIG_SSL_FLAG_ENABLE_SESSION_TICKET     = 0x00000800U,
+    HTTP_SERVICE_CONFIG_SSL_FLAG_DISABLE_TLS12             = 0x00001000U,
+    HTTP_SERVICE_CONFIG_SSL_FLAG_ENABLE_CLIENT_CORRELATION = 0x00002000U,
+    HTTP_SERVICE_CONFIG_SSL_FLAG_DISABLE_SESSION_ID        = 0x00004000U,
+    HTTP_SERVICE_CONFIG_SSL_FLAG_ENABLE_CACHE_CLIENT_HELLO = 0x00008000U,
+}
+
+enum : uint
+{
+    HTTP_REQUEST_PROPERTY_SNI_HOST_MAX_LENGTH = 0x000000ffU,
+    HTTP_REQUEST_PROPERTY_SNI_FLAG_SNI_USED   = 0x00000001U,
+    HTTP_REQUEST_PROPERTY_SNI_FLAG_NO_SNI     = 0x00000002U,
+}
+
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_version))], [])*/const(wchar)* HTTP_VERSION_ = "HTTP/1.0";
 
 // Structs
 
@@ -637,41 +672,41 @@ struct HTTP_REQUEST_QUEUE_HANDLE
     void* Value;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_property_flags))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_property_flags
 struct HTTP_PROPERTY_FLAGS
 {
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Present)), FixedArgSig(ElementSig(0)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield64;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Present)), FixedArgSig(ElementSig(0)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield142;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_state_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_state_info
 struct HTTP_STATE_INFO
 {
     HTTP_PROPERTY_FLAGS Flags;
     HTTP_ENABLED_STATE  State;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_qos_setting_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_qos_setting_info
 struct HTTP_QOS_SETTING_INFO
 {
     HTTP_QOS_SETTING_TYPE QosType;
     void* QosSetting;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_connection_limit_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_connection_limit_info
 struct HTTP_CONNECTION_LIMIT_INFO
 {
     HTTP_PROPERTY_FLAGS Flags;
     uint                MaxConnections;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_bandwidth_limit_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_bandwidth_limit_info
 struct HTTP_BANDWIDTH_LIMIT_INFO
 {
     HTTP_PROPERTY_FLAGS Flags;
     uint                MaxBandwidth;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_flowrate_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_flowrate_info
 struct HTTP_FLOWRATE_INFO
 {
     HTTP_PROPERTY_FLAGS Flags;
@@ -680,14 +715,14 @@ struct HTTP_FLOWRATE_INFO
     uint                BurstSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_config_timeout_set))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_config_timeout_set
 struct HTTP_SERVICE_CONFIG_TIMEOUT_SET
 {
     HTTP_SERVICE_CONFIG_TIMEOUT_KEY KeyDesc;
     ushort ParamDesc;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_timeout_limit_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_timeout_limit_info
 struct HTTP_TIMEOUT_LIMIT_INFO
 {
     HTTP_PROPERTY_FLAGS Flags;
@@ -705,7 +740,7 @@ struct HTTP_SERVICE_CONFIG_SETTING_SET
     uint ParamDesc;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_listen_endpoint_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_listen_endpoint_info
 struct HTTP_LISTEN_ENDPOINT_INFO
 {
     HTTP_PROPERTY_FLAGS Flags;
@@ -718,7 +753,7 @@ struct HTTP_FAST_FORWARD_INFO
     BOOLEAN             EnableFastForwarding;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_server_authentication_digest_params))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_server_authentication_digest_params
 struct HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS
 {
     ushort DomainNameLength;
@@ -727,14 +762,14 @@ struct HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS
     PWSTR  Realm;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_server_authentication_basic_params))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_server_authentication_basic_params
 struct HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS
 {
     ushort RealmLength;
     PWSTR  Realm;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_server_authentication_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_server_authentication_info
 struct HTTP_SERVER_AUTHENTICATION_INFO
 {
     HTTP_PROPERTY_FLAGS Flags;
@@ -747,14 +782,14 @@ struct HTTP_SERVER_AUTHENTICATION_INFO
     HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS BasicParams;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_binding_base))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_binding_base
 struct HTTP_SERVICE_BINDING_BASE
 {
     HTTP_SERVICE_BINDING_TYPE Type;
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_binding_a))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_binding_a
 struct HTTP_SERVICE_BINDING_A
 {
     HTTP_SERVICE_BINDING_BASE Base;
@@ -763,7 +798,7 @@ struct HTTP_SERVICE_BINDING_A
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_binding_w))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_binding_w
 struct HTTP_SERVICE_BINDING_W
 {
     HTTP_SERVICE_BINDING_BASE Base;
@@ -771,7 +806,7 @@ struct HTTP_SERVICE_BINDING_W
     uint BufferSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_channel_bind_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_channel_bind_info
 struct HTTP_CHANNEL_BIND_INFO
 {
     HTTP_AUTHENTICATION_HARDENING_LEVELS Hardening;
@@ -780,7 +815,7 @@ struct HTTP_CHANNEL_BIND_INFO
     uint NumberOfServiceNames;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_request_channel_bind_status))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_request_channel_bind_status
 struct HTTP_REQUEST_CHANNEL_BIND_STATUS
 {
     HTTP_SERVICE_BINDING_BASE* ServiceName;
@@ -798,7 +833,7 @@ struct HTTP_REQUEST_TOKEN_BINDING_INFO
     ubyte  KeyType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_logging_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_logging_info
 struct HTTP_LOGGING_INFO
 {
     HTTP_PROPERTY_FLAGS  Flags;
@@ -817,7 +852,7 @@ struct HTTP_LOGGING_INFO
     PSECURITY_DESCRIPTOR pSecurityDescriptor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_binding_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_binding_info
 struct HTTP_BINDING_INFO
 {
     HTTP_PROPERTY_FLAGS Flags;
@@ -836,28 +871,28 @@ struct HTTP_REQUEST_INFO_PROPERTY_INFO
     ulong               RequestInfoFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_byte_range))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_byte_range
 struct HTTP_BYTE_RANGE
 {
     ulong StartingOffset;
     ulong Length;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_version))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_version
 struct HTTP_VERSION
 {
     ushort MajorVersion;
     ushort MinorVersion;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_known_header))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_known_header
 struct HTTP_KNOWN_HEADER
 {
     ushort      RawValueLength;
     const(PSTR) pRawValue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_unknown_header))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_unknown_header
 struct HTTP_UNKNOWN_HEADER
 {
     ushort      NameLength;
@@ -866,13 +901,13 @@ struct HTTP_UNKNOWN_HEADER
     const(PSTR) pRawValue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_log_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_log_data
 struct HTTP_LOG_DATA
 {
     HTTP_LOG_DATA_TYPE Type;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_log_fields_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_log_fields_data
 struct HTTP_LOG_FIELDS_DATA
 {
     HTTP_LOG_DATA Base;
@@ -912,14 +947,45 @@ struct HTTP_WINHTTP_FAST_FORWARDING_DATA
     ubyte[16] Reserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_data_chunk))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_data_chunk
 struct HTTP_DATA_CHUNK
 {
     HTTP_DATA_CHUNK_TYPE DataChunkType;
-    _Anonymous_e__Union  Anonymous;
+    union
+    {
+        struct FromMemory
+        {
+            void* pBuffer;
+            uint  BufferLength;
+        }
+        struct FromFileHandle
+        {
+            HTTP_BYTE_RANGE ByteRange;
+            HANDLE          FileHandle;
+        }
+        struct FromFragmentCache
+        {
+            ushort       FragmentNameLength;
+            const(PWSTR) pFragmentName;
+        }
+        struct FromFragmentCacheEx
+        {
+            HTTP_BYTE_RANGE ByteRange;
+            const(PWSTR)    pFragmentName;
+        }
+        struct Trailers
+        {
+            ushort               TrailerCount;
+            HTTP_UNKNOWN_HEADER* pTrailers;
+        }
+        struct FromWinHttpFastForwarding
+        {
+            HTTP_WINHTTP_FAST_FORWARDING_DATA WhFastForwardingData;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_request_headers))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_request_headers
 struct HTTP_REQUEST_HEADERS
 {
     ushort               UnknownHeaderCount;
@@ -929,7 +995,7 @@ struct HTTP_REQUEST_HEADERS
     HTTP_KNOWN_HEADER[41] KnownHeaders;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_response_headers))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_response_headers
 struct HTTP_RESPONSE_HEADERS
 {
     ushort               UnknownHeaderCount;
@@ -939,7 +1005,7 @@ struct HTTP_RESPONSE_HEADERS
     HTTP_KNOWN_HEADER[30] KnownHeaders;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_delegate_request_property_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_delegate_request_property_info
 struct HTTP_DELEGATE_REQUEST_PROPERTY_INFO
 {
     HTTP_DELEGATE_REQUEST_PROPERTY_ID PropertyId;
@@ -954,14 +1020,14 @@ struct HTTP_CREATE_REQUEST_QUEUE_PROPERTY_INFO
     void* PropertyInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_transport_address))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_transport_address
 struct HTTP_TRANSPORT_ADDRESS
 {
     SOCKADDR* pRemoteAddress;
     SOCKADDR* pLocalAddress;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_cooked_url))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_cooked_url
 struct HTTP_COOKED_URL
 {
     ushort       FullUrlLength;
@@ -974,7 +1040,7 @@ struct HTTP_COOKED_URL
     const(PWSTR) pQueryString;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_ssl_client_cert_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_ssl_client_cert_info
 struct HTTP_SSL_CLIENT_CERT_INFO
 {
     uint    CertFlags;
@@ -984,7 +1050,7 @@ struct HTTP_SSL_CLIENT_CERT_INFO
     BOOLEAN CertDeniedByMapper;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_ssl_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_ssl_info
 struct HTTP_SSL_INFO
 {
     ushort      ServerCertKeySize;
@@ -1037,7 +1103,7 @@ struct HTTP_REQUEST_INITIAL_PACKET_TTL_INFO
     ubyte InitialPacketTtl;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_request_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_request_info
 struct HTTP_REQUEST_INFO
 {
     HTTP_REQUEST_INFO_TYPE InfoType;
@@ -1045,7 +1111,7 @@ struct HTTP_REQUEST_INFO
     void* pInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_request_auth_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_request_auth_info
 struct HTTP_REQUEST_AUTH_INFO
 {
     HTTP_AUTH_STATUS AuthStatus;
@@ -1063,7 +1129,7 @@ struct HTTP_REQUEST_AUTH_INFO
     PWSTR            pPackageName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_request_v1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_request_v1
 struct HTTP_REQUEST_V1
 {
     uint                 Flags;
@@ -1086,7 +1152,7 @@ struct HTTP_REQUEST_V1
     HTTP_SSL_INFO*       pSslInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_request_v2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_request_v2
 struct HTTP_REQUEST_V2
 {
     HTTP_REQUEST_V1    Base;
@@ -1094,7 +1160,7 @@ struct HTTP_REQUEST_V2
     HTTP_REQUEST_INFO* pRequestInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_response_v1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_response_v1
 struct HTTP_RESPONSE_V1
 {
     uint             Flags;
@@ -1107,7 +1173,7 @@ struct HTTP_RESPONSE_V1
     HTTP_DATA_CHUNK* pEntityChunks;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_response_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_response_info
 struct HTTP_RESPONSE_INFO
 {
     HTTP_RESPONSE_INFO_TYPE Type;
@@ -1115,7 +1181,7 @@ struct HTTP_RESPONSE_INFO
     void* pInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_multiple_known_headers))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_multiple_known_headers
 struct HTTP_MULTIPLE_KNOWN_HEADERS
 {
     HTTP_HEADER_ID     HeaderId;
@@ -1124,7 +1190,7 @@ struct HTTP_MULTIPLE_KNOWN_HEADERS
     HTTP_KNOWN_HEADER* KnownHeaders;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_response_v2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_response_v2
 struct HTTP_RESPONSE_V2
 {
     HTTP_RESPONSE_V1    Base;
@@ -1132,21 +1198,21 @@ struct HTTP_RESPONSE_V2
     HTTP_RESPONSE_INFO* pResponseInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-httpapi_version))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-httpapi_version
 struct HTTPAPI_VERSION
 {
     ushort HttpApiMajorVersion;
     ushort HttpApiMinorVersion;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_cache_policy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_cache_policy
 struct HTTP_CACHE_POLICY
 {
     HTTP_CACHE_POLICY_TYPE Policy;
     uint SecondsToLive;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_config_ssl_key))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_config_ssl_key
 struct HTTP_SERVICE_CONFIG_SSL_KEY
 {
     SOCKADDR* pIpPort;
@@ -1157,20 +1223,20 @@ struct HTTP_SERVICE_CONFIG_SSL_KEY_EX
     SOCKADDR_STORAGE IpPort;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_config_ssl_sni_key))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_config_ssl_sni_key
 struct HTTP_SERVICE_CONFIG_SSL_SNI_KEY
 {
     SOCKADDR_STORAGE IpPort;
     PWSTR            Host;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_config_ssl_ccs_key))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_config_ssl_ccs_key
 struct HTTP_SERVICE_CONFIG_SSL_CCS_KEY
 {
     SOCKADDR_STORAGE LocalAddress;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_config_ssl_param))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_config_ssl_param
 struct HTTP_SERVICE_CONFIG_SSL_PARAM
 {
     uint  SslHashLength;
@@ -1237,25 +1303,34 @@ struct HTTP_CERT_CONFIG_PARAM
 struct HTTP_SERVICE_CONFIG_SSL_PARAM_EX
 {
     HTTP_SSL_SERVICE_CONFIG_EX_PARAM_TYPE ParamType;
-    ulong               Flags;
-    _Anonymous_e__Union Anonymous;
+    ulong Flags;
+    union
+    {
+        HTTP2_WINDOW_SIZE_PARAM Http2WindowSizeParam;
+        HTTP2_SETTINGS_LIMITS_PARAM Http2SettingsLimitsParam;
+        HTTP_PERFORMANCE_PARAM HttpPerformanceParam;
+        HTTP_TLS_RESTRICTIONS_PARAM HttpTlsRestrictionsParam;
+        HTTP_ERROR_HEADERS_PARAM HttpErrorHeadersParam;
+        HTTP_TLS_SESSION_TICKET_KEYS_PARAM HttpTlsSessionTicketKeysParam;
+        HTTP_CERT_CONFIG_PARAM HttpCertConfigParam;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_config_ssl_set))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_config_ssl_set
 struct HTTP_SERVICE_CONFIG_SSL_SET
 {
     HTTP_SERVICE_CONFIG_SSL_KEY KeyDesc;
     HTTP_SERVICE_CONFIG_SSL_PARAM ParamDesc;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_config_ssl_sni_set))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_config_ssl_sni_set
 struct HTTP_SERVICE_CONFIG_SSL_SNI_SET
 {
     HTTP_SERVICE_CONFIG_SSL_SNI_KEY KeyDesc;
     HTTP_SERVICE_CONFIG_SSL_PARAM ParamDesc;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_config_ssl_ccs_set))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_config_ssl_ccs_set
 struct HTTP_SERVICE_CONFIG_SSL_CCS_SET
 {
     HTTP_SERVICE_CONFIG_SSL_CCS_KEY KeyDesc;
@@ -1280,7 +1355,7 @@ struct HTTP_SERVICE_CONFIG_SSL_CCS_SET_EX
     HTTP_SERVICE_CONFIG_SSL_PARAM_EX ParamDesc;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_config_ssl_query))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_config_ssl_query
 struct HTTP_SERVICE_CONFIG_SSL_QUERY
 {
     HTTP_SERVICE_CONFIG_QUERY_TYPE QueryDesc;
@@ -1288,7 +1363,7 @@ struct HTTP_SERVICE_CONFIG_SSL_QUERY
     uint dwToken;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_config_ssl_sni_query))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_config_ssl_sni_query
 struct HTTP_SERVICE_CONFIG_SSL_SNI_QUERY
 {
     HTTP_SERVICE_CONFIG_QUERY_TYPE QueryDesc;
@@ -1296,7 +1371,7 @@ struct HTTP_SERVICE_CONFIG_SSL_SNI_QUERY
     uint dwToken;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_config_ssl_ccs_query))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_config_ssl_ccs_query
 struct HTTP_SERVICE_CONFIG_SSL_CCS_QUERY
 {
     HTTP_SERVICE_CONFIG_QUERY_TYPE QueryDesc;
@@ -1328,40 +1403,40 @@ struct HTTP_SERVICE_CONFIG_SSL_CCS_QUERY_EX
     HTTP_SSL_SERVICE_CONFIG_EX_PARAM_TYPE ParamType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_config_ip_listen_param))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_config_ip_listen_param
 struct HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM
 {
     ushort    AddrLength;
     SOCKADDR* pAddress;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_config_ip_listen_query))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_config_ip_listen_query
 struct HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY
 {
     uint AddrCount;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/SOCKADDR_STORAGE[1] AddrList;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_config_urlacl_key))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_config_urlacl_key
 struct HTTP_SERVICE_CONFIG_URLACL_KEY
 {
     PWSTR pUrlPrefix;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_config_urlacl_param))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_config_urlacl_param
 struct HTTP_SERVICE_CONFIG_URLACL_PARAM
 {
     PWSTR pStringSecurityDescriptor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_config_urlacl_set))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_config_urlacl_set
 struct HTTP_SERVICE_CONFIG_URLACL_SET
 {
     HTTP_SERVICE_CONFIG_URLACL_KEY KeyDesc;
     HTTP_SERVICE_CONFIG_URLACL_PARAM ParamDesc;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_config_urlacl_query))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_config_urlacl_query
 struct HTTP_SERVICE_CONFIG_URLACL_QUERY
 {
     HTTP_SERVICE_CONFIG_QUERY_TYPE QueryDesc;
@@ -1369,7 +1444,7 @@ struct HTTP_SERVICE_CONFIG_URLACL_QUERY
     uint dwToken;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_config_cache_set))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_service_config_cache_set
 struct HTTP_SERVICE_CONFIG_CACHE_SET
 {
     HTTP_SERVICE_CONFIG_CACHE_KEY KeyDesc;
@@ -1392,7 +1467,7 @@ struct HTTP_REQUEST_PROPERTY_SNI
     uint       Flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/ns-http-http_request_property_stream_error))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/ns-http-http_request_property_stream_error
 struct HTTP_REQUEST_PROPERTY_STREAM_ERROR
 {
     uint ErrorCode;
@@ -1514,7 +1589,7 @@ uint HttpQueryRequestQueueProperty(HANDLE RequestQueueHandle, HTTP_SERVER_PROPER
                                    uint* ReturnLength, 
                                    /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/void* Reserved2);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/nf-http-httpsetrequestproperty))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/nf-http-httpsetrequestproperty
 @DllImport("HTTPAPI.dll")
 uint HttpSetRequestProperty(HANDLE RequestQueueHandle, ulong Id, HTTP_REQUEST_PROPERTY PropertyId, 
                             /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/void* Input, 
@@ -1646,7 +1721,7 @@ uint HttpDeclarePush(HANDLE RequestQueueHandle, ulong RequestId, HTTP_VERB Verb,
 uint HttpWaitForDisconnect(HANDLE RequestQueueHandle, ulong ConnectionId, 
                            /*PARAM ATTR: RetainedAttribute : CustomAttributeSig([], [])*/OVERLAPPED* Overlapped);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/nf-http-httpwaitfordisconnectex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/nf-http-httpwaitfordisconnectex
 @DllImport("HTTPAPI.dll")
 uint HttpWaitForDisconnectEx(HANDLE RequestQueueHandle, ulong ConnectionId, 
                              /*PARAM ATTR: ReservedAttribute : CustomAttributeSig([], [])*/uint Reserved, 
@@ -1662,17 +1737,17 @@ uint HttpCancelHttpRequest(HANDLE RequestQueueHandle, ulong RequestId,
 uint HttpWaitForDemandStart(HANDLE RequestQueueHandle, 
                             /*PARAM ATTR: RetainedAttribute : CustomAttributeSig([], [])*/OVERLAPPED* Overlapped);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/nf-http-httpisfeaturesupported))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/nf-http-httpisfeaturesupported
 @DllImport("HTTPAPI.dll")
 BOOL HttpIsFeatureSupported(HTTP_FEATURE_ID FeatureId);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/nf-http-httpdelegaterequestex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/nf-http-httpdelegaterequestex
 @DllImport("HTTPAPI.dll")
 uint HttpDelegateRequestEx(HANDLE RequestQueueHandle, HANDLE DelegateQueueHandle, ulong RequestId, 
                            ulong DelegateUrlGroupId, uint PropertyInfoSetSize, 
                            HTTP_DELEGATE_REQUEST_PROPERTY_INFO* PropertyInfoSet);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/http/nf-http-httpfindurlgroupid))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/http/nf-http-httpfindurlgroupid
 @DllImport("HTTPAPI.dll")
 uint HttpFindUrlGroupId(const(PWSTR) FullyQualifiedUrl, HANDLE RequestQueueHandle, ulong* UrlGroupId);
 

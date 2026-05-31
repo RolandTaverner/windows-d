@@ -3,7 +3,7 @@
 module windows.win32.networkmanagement.netbios;
 
 public import windows.core;
-public import windows.win32.foundation : HANDLE;
+public import windows.win32.foundation.foundation : HANDLE;
 
 extern(Windows) @nogc nothrow:
 
@@ -11,204 +11,231 @@ extern(Windows) @nogc nothrow:
 // Constants
 
 
-enum uint NCBNAMSZ = 0x00000010;
-enum uint MAX_LANA = 0x000000fe;
-enum uint NAME_FLAGS_MASK = 0x00000087;
-enum uint GROUP_NAME = 0x00000080;
-enum uint UNIQUE_NAME = 0x00000000;
+enum uint NCBNAMSZ = 0x00000010U;
+enum uint MAX_LANA = 0x000000feU;
+enum uint NAME_FLAGS_MASK = 0x00000087U;
+enum uint GROUP_NAME = 0x00000080U;
+enum uint UNIQUE_NAME = 0x00000000U;
 
 enum : uint
 {
-    REGISTERING = 0x00000000,
-    REGISTERED  = 0x00000004,
+    REGISTERING = 0x00000000U,
+    REGISTERED  = 0x00000004U,
 }
 
-enum uint DEREGISTERED = 0x00000005;
+enum uint DEREGISTERED = 0x00000005U;
 
 enum : uint
 {
-    DUPLICATE       = 0x00000006,
-    DUPLICATE_DEREG = 0x00000007,
+    DUPLICATE       = 0x00000006U,
+    DUPLICATE_DEREG = 0x00000007U,
 }
 
-enum uint LISTEN_OUTSTANDING = 0x00000001;
-enum uint CALL_PENDING = 0x00000002;
-enum uint SESSION_ESTABLISHED = 0x00000003;
+enum uint LISTEN_OUTSTANDING = 0x00000001U;
+enum uint CALL_PENDING = 0x00000002U;
+enum uint SESSION_ESTABLISHED = 0x00000003U;
 
 enum : uint
 {
-    HANGUP_PENDING  = 0x00000004,
-    HANGUP_COMPLETE = 0x00000005,
+    HANGUP_PENDING  = 0x00000004U,
+    HANGUP_COMPLETE = 0x00000005U,
 }
 
-enum uint SESSION_ABORTED = 0x00000006;
+enum uint SESSION_ABORTED = 0x00000006U;
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* ALL_TRANSPORTS = "M\0\0\0";
 enum /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)* MS_NBF = "MNBF";
 
 enum : uint
 {
-    NCBCALL   = 0x00000010,
-    NCBLISTEN = 0x00000011,
+    NCBCALL   = 0x00000010U,
+    NCBLISTEN = 0x00000011U,
 }
 
-enum uint NCBHANGUP = 0x00000012;
+enum uint NCBHANGUP = 0x00000012U;
 
 enum : uint
 {
-    NCBSEND    = 0x00000014,
-    NCBRECV    = 0x00000015,
-    NCBRECVANY = 0x00000016,
+    NCBSEND    = 0x00000014U,
+    NCBRECV    = 0x00000015U,
+    NCBRECVANY = 0x00000016U,
 }
 
-enum uint NCBCHAINSEND = 0x00000017;
+enum uint NCBCHAINSEND = 0x00000017U;
 
 enum : uint
 {
-    NCBDGSEND   = 0x00000020,
-    NCBDGRECV   = 0x00000021,
-    NCBDGSENDBC = 0x00000022,
-    NCBDGRECVBC = 0x00000023,
+    NCBDGSEND   = 0x00000020U,
+    NCBDGRECV   = 0x00000021U,
+    NCBDGSENDBC = 0x00000022U,
+    NCBDGRECVBC = 0x00000023U,
 }
 
-enum uint NCBADDNAME = 0x00000030;
-enum uint NCBDELNAME = 0x00000031;
-enum uint NCBRESET = 0x00000032;
-enum uint NCBASTAT = 0x00000033;
-enum uint NCBSSTAT = 0x00000034;
-enum uint NCBCANCEL = 0x00000035;
-enum uint NCBADDGRNAME = 0x00000036;
+enum uint NCBADDNAME = 0x00000030U;
+enum uint NCBDELNAME = 0x00000031U;
+enum uint NCBRESET = 0x00000032U;
+enum uint NCBASTAT = 0x00000033U;
+enum uint NCBSSTAT = 0x00000034U;
+enum uint NCBCANCEL = 0x00000035U;
+enum uint NCBADDGRNAME = 0x00000036U;
 
 enum : uint
 {
-    NCBENUM   = 0x00000037,
-    NCBUNLINK = 0x00000070,
+    NCBENUM   = 0x00000037U,
+    NCBUNLINK = 0x00000070U,
 }
 
-enum uint NCBSENDNA = 0x00000071;
-enum uint NCBCHAINSENDNA = 0x00000072;
-enum uint NCBLANSTALERT = 0x00000073;
-enum uint NCBACTION = 0x00000077;
-enum uint NCBFINDNAME = 0x00000078;
-enum uint NCBTRACE = 0x00000079;
-enum uint ASYNCH = 0x00000080;
-enum uint NRC_GOODRET = 0x00000000;
-enum uint NRC_BUFLEN = 0x00000001;
-enum uint NRC_ILLCMD = 0x00000003;
-enum uint NRC_CMDTMO = 0x00000005;
-enum uint NRC_INCOMP = 0x00000006;
+enum uint NCBSENDNA = 0x00000071U;
+enum uint NCBCHAINSENDNA = 0x00000072U;
+enum uint NCBLANSTALERT = 0x00000073U;
+enum uint NCBACTION = 0x00000077U;
+enum uint NCBFINDNAME = 0x00000078U;
+enum uint NCBTRACE = 0x00000079U;
+enum uint ASYNCH = 0x00000080U;
+enum uint NRC_GOODRET = 0x00000000U;
+enum uint NRC_BUFLEN = 0x00000001U;
+enum uint NRC_ILLCMD = 0x00000003U;
+enum uint NRC_CMDTMO = 0x00000005U;
+enum uint NRC_INCOMP = 0x00000006U;
 
 enum : uint
 {
-    NRC_BADDR   = 0x00000007,
-    NRC_SNUMOUT = 0x00000008,
-}
-
-enum : uint
-{
-    NRC_NORES   = 0x00000009,
-    NRC_SCLOSED = 0x0000000a,
-}
-
-enum uint NRC_CMDCAN = 0x0000000b;
-enum uint NRC_DUPNAME = 0x0000000d;
-enum uint NRC_NAMTFUL = 0x0000000e;
-enum uint NRC_ACTSES = 0x0000000f;
-enum uint NRC_LOCTFUL = 0x00000011;
-enum uint NRC_REMTFUL = 0x00000012;
-
-enum : uint
-{
-    NRC_ILLNN  = 0x00000013,
-    NRC_NOCALL = 0x00000014,
-    NRC_NOWILD = 0x00000015,
+    NRC_BADDR   = 0x00000007U,
+    NRC_SNUMOUT = 0x00000008U,
 }
 
 enum : uint
 {
-    NRC_INUSE  = 0x00000016,
-    NRC_NAMERR = 0x00000017,
+    NRC_NORES   = 0x00000009U,
+    NRC_SCLOSED = 0x0000000aU,
 }
 
-enum uint NRC_SABORT = 0x00000018;
-enum uint NRC_NAMCONF = 0x00000019;
-enum uint NRC_IFBUSY = 0x00000021;
-enum uint NRC_TOOMANY = 0x00000022;
-enum uint NRC_BRIDGE = 0x00000023;
+enum uint NRC_CMDCAN = 0x0000000bU;
+enum uint NRC_DUPNAME = 0x0000000dU;
+enum uint NRC_NAMTFUL = 0x0000000eU;
+enum uint NRC_ACTSES = 0x0000000fU;
+enum uint NRC_LOCTFUL = 0x00000011U;
+enum uint NRC_REMTFUL = 0x00000012U;
 
 enum : uint
 {
-    NRC_CANOCCR = 0x00000024,
-    NRC_CANCEL  = 0x00000026,
-}
-
-enum uint NRC_DUPENV = 0x00000030;
-enum uint NRC_ENVNOTDEF = 0x00000034;
-enum uint NRC_OSRESNOTAV = 0x00000035;
-enum uint NRC_MAXAPPS = 0x00000036;
-
-enum : uint
-{
-    NRC_NOSAPS      = 0x00000037,
-    NRC_NORESOURCES = 0x00000038,
+    NRC_ILLNN  = 0x00000013U,
+    NRC_NOCALL = 0x00000014U,
+    NRC_NOWILD = 0x00000015U,
 }
 
 enum : uint
 {
-    NRC_INVADDRESS = 0x00000039,
-    NRC_INVDDID    = 0x0000003b,
+    NRC_INUSE  = 0x00000016U,
+    NRC_NAMERR = 0x00000017U,
 }
 
-enum uint NRC_LOCKFAIL = 0x0000003c;
-enum uint NRC_OPENERR = 0x0000003f;
-enum uint NRC_SYSTEM = 0x00000040;
-enum uint NRC_PENDING = 0x000000ff;
+enum uint NRC_SABORT = 0x00000018U;
+enum uint NRC_NAMCONF = 0x00000019U;
+enum uint NRC_IFBUSY = 0x00000021U;
+enum uint NRC_TOOMANY = 0x00000022U;
+enum uint NRC_BRIDGE = 0x00000023U;
+
+enum : uint
+{
+    NRC_CANOCCR = 0x00000024U,
+    NRC_CANCEL  = 0x00000026U,
+}
+
+enum uint NRC_DUPENV = 0x00000030U;
+enum uint NRC_ENVNOTDEF = 0x00000034U;
+enum uint NRC_OSRESNOTAV = 0x00000035U;
+enum uint NRC_MAXAPPS = 0x00000036U;
+
+enum : uint
+{
+    NRC_NOSAPS      = 0x00000037U,
+    NRC_NORESOURCES = 0x00000038U,
+}
+
+enum : uint
+{
+    NRC_INVADDRESS = 0x00000039U,
+    NRC_INVDDID    = 0x0000003bU,
+}
+
+enum uint NRC_LOCKFAIL = 0x0000003cU;
+enum uint NRC_OPENERR = 0x0000003fU;
+enum uint NRC_SYSTEM = 0x00000040U;
+enum uint NRC_PENDING = 0x000000ffU;
 
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nb30/ns-nb30-ncb))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct NCB
+version(X86_64)
 {
-    ubyte     ncb_command;
-    ubyte     ncb_retcode;
-    ubyte     ncb_lsn;
-    ubyte     ncb_num;
-    ubyte*    ncb_buffer;
-    ushort    ncb_length;
-    ubyte[16] ncb_callname;
-    ubyte[16] ncb_name;
-    ubyte     ncb_rto;
-    ubyte     ncb_sto;
-    ptrdiff_t ncb_post;
-    ubyte     ncb_lana_num;
-    ubyte     ncb_cmd_cplt;
-    ubyte[18] ncb_reserve;
-    HANDLE    ncb_event;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nb30/ns-nb30-ncb
+    struct NCB
+    {
+        ubyte     ncb_command;
+        ubyte     ncb_retcode;
+        ubyte     ncb_lsn;
+        ubyte     ncb_num;
+        ubyte*    ncb_buffer;
+        ushort    ncb_length;
+        ubyte[16] ncb_callname;
+        ubyte[16] ncb_name;
+        ubyte     ncb_rto;
+        ubyte     ncb_sto;
+        ptrdiff_t ncb_post;
+        ubyte     ncb_lana_num;
+        ubyte     ncb_cmd_cplt;
+        ubyte[18] ncb_reserve;
+        HANDLE    ncb_event;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nb30/ns-nb30-ncb))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct NCB
+version(AArch64)
 {
-    ubyte     ncb_command;
-    ubyte     ncb_retcode;
-    ubyte     ncb_lsn;
-    ubyte     ncb_num;
-    ubyte*    ncb_buffer;
-    ushort    ncb_length;
-    ubyte[16] ncb_callname;
-    ubyte[16] ncb_name;
-    ubyte     ncb_rto;
-    ubyte     ncb_sto;
-    ptrdiff_t ncb_post;
-    ubyte     ncb_lana_num;
-    ubyte     ncb_cmd_cplt;
-    ubyte[10] ncb_reserve;
-    HANDLE    ncb_event;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nb30/ns-nb30-ncb
+    struct NCB
+    {
+        ubyte     ncb_command;
+        ubyte     ncb_retcode;
+        ubyte     ncb_lsn;
+        ubyte     ncb_num;
+        ubyte*    ncb_buffer;
+        ushort    ncb_length;
+        ubyte[16] ncb_callname;
+        ubyte[16] ncb_name;
+        ubyte     ncb_rto;
+        ubyte     ncb_sto;
+        ptrdiff_t ncb_post;
+        ubyte     ncb_lana_num;
+        ubyte     ncb_cmd_cplt;
+        ubyte[18] ncb_reserve;
+        HANDLE    ncb_event;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nb30/ns-nb30-adapter_status))], [])
+version(X86)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nb30/ns-nb30-ncb
+    struct NCB
+    {
+        ubyte     ncb_command;
+        ubyte     ncb_retcode;
+        ubyte     ncb_lsn;
+        ubyte     ncb_num;
+        ubyte*    ncb_buffer;
+        ushort    ncb_length;
+        ubyte[16] ncb_callname;
+        ubyte[16] ncb_name;
+        ubyte     ncb_rto;
+        ubyte     ncb_sto;
+        ptrdiff_t ncb_post;
+        ubyte     ncb_lana_num;
+        ubyte     ncb_cmd_cplt;
+        ubyte[10] ncb_reserve;
+        HANDLE    ncb_event;
+    }
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nb30/ns-nb30-adapter_status
 struct ADAPTER_STATUS
 {
     ubyte[6] adapter_address;
@@ -240,7 +267,7 @@ struct ADAPTER_STATUS
     ushort   name_count;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nb30/ns-nb30-name_buffer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nb30/ns-nb30-name_buffer
 struct NAME_BUFFER
 {
     ubyte[16] name;
@@ -248,7 +275,7 @@ struct NAME_BUFFER
     ubyte     name_flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nb30/ns-nb30-session_header))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nb30/ns-nb30-session_header
 struct SESSION_HEADER
 {
     ubyte sess_name;
@@ -257,7 +284,7 @@ struct SESSION_HEADER
     ubyte rcv_any_outstanding;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nb30/ns-nb30-session_buffer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nb30/ns-nb30-session_buffer
 struct SESSION_BUFFER
 {
     ubyte     lsn;
@@ -268,14 +295,14 @@ struct SESSION_BUFFER
     ubyte     sends_outstanding;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nb30/ns-nb30-lana_enum))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nb30/ns-nb30-lana_enum
 struct LANA_ENUM
 {
     ubyte      length;
     ubyte[255] lana;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nb30/ns-nb30-find_name_header))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nb30/ns-nb30-find_name_header
 struct FIND_NAME_HEADER
 {
     ushort node_count;
@@ -283,7 +310,7 @@ struct FIND_NAME_HEADER
     ubyte  unique_group;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nb30/ns-nb30-find_name_buffer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nb30/ns-nb30-find_name_buffer
 struct FIND_NAME_BUFFER
 {
     ubyte     length;
@@ -294,7 +321,7 @@ struct FIND_NAME_BUFFER
     ubyte[18] routing_info;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/nb30/ns-nb30-action_header))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/nb30/ns-nb30-action_header
 struct ACTION_HEADER
 {
     uint   transport_id;

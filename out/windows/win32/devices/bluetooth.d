@@ -3,20 +3,22 @@
 module windows.win32.devices.bluetooth;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BOOLEAN, CHAR, HANDLE, HRESULT, HWND,
-                                         PWSTR, SYSTEMTIME;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BOOLEAN, CHAR, HANDLE, HRESULT,
+                                                    HWND, PWSTR, SYSTEMTIME;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
+
 enum NodeContainerType : int
 {
     NodeContainerTypeSequence    = 0x00000000,
     NodeContainerTypeAlternative = 0x00000001,
 }
+
 alias SDP_TYPE = int;
 enum : int
 {
@@ -31,6 +33,7 @@ enum : int
     SDP_TYPE_URL         = 0x00000008,
     SDP_TYPE_CONTAINER   = 0x00000020,
 }
+
 alias SDP_SPECIFICTYPE = int;
 enum : int
 {
@@ -49,6 +52,7 @@ enum : int
     SDP_ST_UUID32  = 0x00000220,
     SDP_ST_UUID128 = 0x00000430,
 }
+
 alias IO_CAPABILITY = int;
 enum : int
 {
@@ -58,6 +62,7 @@ enum : int
     IoCaps_NoInputNoOutput = 0x00000003,
     IoCaps_Undefined       = 0x000000ff,
 }
+
 alias AUTHENTICATION_REQUIREMENTS = int;
 enum : int
 {
@@ -69,7 +74,8 @@ enum : int
     MITMProtectionRequiredGeneralBonding    = 0x00000005,
     MITMProtectionNotDefined                = 0x000000ff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bluetoothapis/ne-bluetoothapis-bluetooth_authentication_method))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bluetoothapis/ne-bluetoothapis-bluetooth_authentication_method
 alias BLUETOOTH_AUTHENTICATION_METHOD = int;
 enum : int
 {
@@ -79,7 +85,8 @@ enum : int
     BLUETOOTH_AUTHENTICATION_METHOD_PASSKEY_NOTIFICATION = 0x00000004,
     BLUETOOTH_AUTHENTICATION_METHOD_PASSKEY              = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bluetoothapis/ne-bluetoothapis-bluetooth_io_capability))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bluetoothapis/ne-bluetoothapis-bluetooth_io_capability
 alias BLUETOOTH_IO_CAPABILITY = int;
 enum : int
 {
@@ -89,7 +96,8 @@ enum : int
     BLUETOOTH_IO_CAPABILITY_NOINPUTNOOUTPUT = 0x00000003,
     BLUETOOTH_IO_CAPABILITY_UNDEFINED       = 0x000000ff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bluetoothapis/ne-bluetoothapis-bluetooth_authentication_requirements))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bluetoothapis/ne-bluetoothapis-bluetooth_authentication_requirements
 alias BLUETOOTH_AUTHENTICATION_REQUIREMENTS = int;
 enum : int
 {
@@ -101,7 +109,8 @@ enum : int
     BLUETOOTH_MITM_ProtectionRequiredGeneralBonding    = 0x00000005,
     BLUETOOTH_MITM_ProtectionNotDefined                = 0x000000ff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bthledef/ne-bthledef-bth_le_gatt_descriptor_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bthledef/ne-bthledef-bth_le_gatt_descriptor_type
 alias BTH_LE_GATT_DESCRIPTOR_TYPE = int;
 enum : int
 {
@@ -113,7 +122,8 @@ enum : int
     CharacteristicAggregateFormat     = 0x00000005,
     CustomDescriptor                  = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bthledef/ne-bthledef-bth_le_gatt_event_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bthledef/ne-bthledef-bth_le_gatt_event_type
 alias BTH_LE_GATT_EVENT_TYPE = int;
 enum : int
 {
@@ -123,8 +133,8 @@ enum : int
 // Constants
 
 
-enum uint BTH_MAJORVERSION = 0x00000002;
-enum uint BTH_MINORVERSION = 0x00000001;
+enum uint BTH_MAJORVERSION = 0x00000002U;
+enum uint BTH_MINORVERSION = 0x00000001U;
 enum GUID GUID_BTHPORT_DEVICE_INTERFACE = GUID("0850302a-b344-4fda-9be9-90576b8d46f0");
 enum GUID GUID_BTH_RFCOMM_SERVICE_DEVICE_INTERFACE = GUID("b142fc3e-fa4e-460b-8abc-072b628b3c70");
 
@@ -140,887 +150,887 @@ enum : GUID
 }
 
 enum GUID Bluetooth_Base_UUID = GUID("00000000-0000-1000-8000-00805f9b34fb");
-enum uint SDP_PROTOCOL_UUID16 = 0x00000001;
-enum uint UDP_PROTOCOL_UUID16 = 0x00000002;
-enum uint RFCOMM_PROTOCOL_UUID16 = 0x00000003;
-enum uint TCP_PROTOCOL_UUID16 = 0x00000004;
-enum uint TCSBIN_PROTOCOL_UUID16 = 0x00000005;
-enum uint TCSAT_PROTOCOL_UUID16 = 0x00000006;
-enum uint ATT_PROTOCOL_UUID16 = 0x00000007;
-enum uint OBEX_PROTOCOL_UUID16 = 0x00000008;
-enum uint IP_PROTOCOL_UUID16 = 0x00000009;
-enum uint FTP_PROTOCOL_UUID16 = 0x0000000a;
-enum uint HTTP_PROTOCOL_UUID16 = 0x0000000c;
-enum uint WSP_PROTOCOL_UUID16 = 0x0000000e;
-enum uint BNEP_PROTOCOL_UUID16 = 0x0000000f;
-enum uint UPNP_PROTOCOL_UUID16 = 0x00000010;
-enum uint HID_PROTOCOL_UUID16 = 0x00000011;
-enum uint HCCC_PROTOCOL_UUID16 = 0x00000012;
-enum uint HCDC_PROTOCOL_UUID16 = 0x00000014;
-enum uint HCN_PROTOCOL_UUID16 = 0x00000016;
-enum uint AVCTP_PROTOCOL_UUID16 = 0x00000017;
-enum uint AVDTP_PROTOCOL_UUID16 = 0x00000019;
-enum uint CMPT_PROTOCOL_UUID16 = 0x0000001b;
-enum uint UDI_C_PLANE_PROTOCOL_UUID16 = 0x0000001d;
-enum uint L2CAP_PROTOCOL_UUID16 = 0x00000100;
-enum uint ServiceDiscoveryServerServiceClassID_UUID16 = 0x00001000;
-enum uint BrowseGroupDescriptorServiceClassID_UUID16 = 0x00001001;
-enum uint PublicBrowseGroupServiceClassID_UUID16 = 0x00001002;
-enum uint SerialPortServiceClassID_UUID16 = 0x00001101;
-enum uint LANAccessUsingPPPServiceClassID_UUID16 = 0x00001102;
-enum uint DialupNetworkingServiceClassID_UUID16 = 0x00001103;
-enum uint IrMCSyncServiceClassID_UUID16 = 0x00001104;
-enum uint OBEXObjectPushServiceClassID_UUID16 = 0x00001105;
-enum uint OBEXFileTransferServiceClassID_UUID16 = 0x00001106;
-enum uint IrMcSyncCommandServiceClassID_UUID16 = 0x00001107;
-enum uint HeadsetServiceClassID_UUID16 = 0x00001108;
-enum uint CordlessTelephonyServiceClassID_UUID16 = 0x00001109;
-enum uint AudioSourceServiceClassID_UUID16 = 0x0000110a;
-enum uint AudioSinkServiceClassID_UUID16 = 0x0000110b;
-enum uint AVRemoteControlTargetServiceClassID_UUID16 = 0x0000110c;
-
-enum : uint
-{
-    AVRemoteControlServiceClassID_UUID16         = 0x0000110e,
-    AVRemoteControlControllerServiceClass_UUID16 = 0x0000110f,
-}
-
-enum uint IntercomServiceClassID_UUID16 = 0x00001110;
-enum uint FaxServiceClassID_UUID16 = 0x00001111;
-enum uint HeadsetAudioGatewayServiceClassID_UUID16 = 0x00001112;
-enum uint WAPServiceClassID_UUID16 = 0x00001113;
-enum uint WAPClientServiceClassID_UUID16 = 0x00001114;
-enum uint PANUServiceClassID_UUID16 = 0x00001115;
-enum uint NAPServiceClassID_UUID16 = 0x00001116;
-enum uint GNServiceClassID_UUID16 = 0x00001117;
-enum uint DirectPrintingServiceClassID_UUID16 = 0x00001118;
-enum uint ReferencePrintingServiceClassID_UUID16 = 0x00001119;
-enum uint ImagingResponderServiceClassID_UUID16 = 0x0000111b;
-enum uint ImagingAutomaticArchiveServiceClassID_UUID16 = 0x0000111c;
-enum uint ImagingReferenceObjectsServiceClassID_UUID16 = 0x0000111d;
-enum uint HandsfreeServiceClassID_UUID16 = 0x0000111e;
-enum uint HandsfreeAudioGatewayServiceClassID_UUID16 = 0x0000111f;
-enum uint DirectPrintingReferenceObjectsServiceClassID_UUID16 = 0x00001120;
-enum uint ReflectsUIServiceClassID_UUID16 = 0x00001121;
-enum uint PrintingStatusServiceClassID_UUID16 = 0x00001123;
-enum uint HumanInterfaceDeviceServiceClassID_UUID16 = 0x00001124;
-enum uint HCRPrintServiceClassID_UUID16 = 0x00001126;
-enum uint HCRScanServiceClassID_UUID16 = 0x00001127;
-enum uint CommonISDNAccessServiceClassID_UUID16 = 0x00001128;
-enum uint VideoConferencingGWServiceClassID_UUID16 = 0x00001129;
-enum uint UDIMTServiceClassID_UUID16 = 0x0000112a;
-enum uint UDITAServiceClassID_UUID16 = 0x0000112b;
-enum uint AudioVideoServiceClassID_UUID16 = 0x0000112c;
-enum uint SimAccessServiceClassID_UUID16 = 0x0000112d;
-
-enum : uint
-{
-    PhonebookAccessPceServiceClassID_UUID16 = 0x0000112e,
-    PhonebookAccessPseServiceClassID_UUID16 = 0x0000112f,
-}
-
-enum uint HeadsetHSServiceClassID_UUID16 = 0x00001131;
-enum uint MessageAccessServerServiceClassID_UUID16 = 0x00001132;
-enum uint MessageNotificationServerServiceClassID_UUID16 = 0x00001133;
-enum uint GNSSServerServiceClassID_UUID16 = 0x00001136;
-enum uint ThreeDimensionalDisplayServiceClassID_UUID16 = 0x00001137;
-enum uint ThreeDimensionalGlassesServiceClassID_UUID16 = 0x00001138;
-enum uint MPSServiceClassID_UUID16 = 0x0000113b;
-enum uint CTNAccessServiceClassID_UUID16 = 0x0000113c;
-enum uint CTNNotificationServiceClassID_UUID16 = 0x0000113d;
-enum uint PnPInformationServiceClassID_UUID16 = 0x00001200;
-enum uint GenericNetworkingServiceClassID_UUID16 = 0x00001201;
-enum uint GenericFileTransferServiceClassID_UUID16 = 0x00001202;
-enum uint GenericAudioServiceClassID_UUID16 = 0x00001203;
-enum uint GenericTelephonyServiceClassID_UUID16 = 0x00001204;
-enum uint UPnpServiceClassID_UUID16 = 0x00001205;
-enum uint UPnpIpServiceClassID_UUID16 = 0x00001206;
-enum uint ESdpUpnpIpPanServiceClassID_UUID16 = 0x00001300;
-enum uint ESdpUpnpIpLapServiceClassID_UUID16 = 0x00001301;
-enum uint ESdpUpnpL2capServiceClassID_UUID16 = 0x00001302;
-enum uint VideoSourceServiceClassID_UUID16 = 0x00001303;
-enum uint VideoSinkServiceClassID_UUID16 = 0x00001304;
-
+enum uint SDP_PROTOCOL_UUID16 = 0x00000001U;
+enum uint UDP_PROTOCOL_UUID16 = 0x00000002U;
+enum uint RFCOMM_PROTOCOL_UUID16 = 0x00000003U;
+enum uint TCP_PROTOCOL_UUID16 = 0x00000004U;
+enum uint TCSBIN_PROTOCOL_UUID16 = 0x00000005U;
+enum uint TCSAT_PROTOCOL_UUID16 = 0x00000006U;
+enum uint ATT_PROTOCOL_UUID16 = 0x00000007U;
+enum uint OBEX_PROTOCOL_UUID16 = 0x00000008U;
+enum uint IP_PROTOCOL_UUID16 = 0x00000009U;
+enum uint FTP_PROTOCOL_UUID16 = 0x0000000aU;
+enum uint HTTP_PROTOCOL_UUID16 = 0x0000000cU;
+enum uint WSP_PROTOCOL_UUID16 = 0x0000000eU;
+enum uint BNEP_PROTOCOL_UUID16 = 0x0000000fU;
+enum uint UPNP_PROTOCOL_UUID16 = 0x00000010U;
+enum uint HID_PROTOCOL_UUID16 = 0x00000011U;
+enum uint HCCC_PROTOCOL_UUID16 = 0x00000012U;
+enum uint HCDC_PROTOCOL_UUID16 = 0x00000014U;
+enum uint HCN_PROTOCOL_UUID16 = 0x00000016U;
+enum uint AVCTP_PROTOCOL_UUID16 = 0x00000017U;
+enum uint AVDTP_PROTOCOL_UUID16 = 0x00000019U;
+enum uint CMPT_PROTOCOL_UUID16 = 0x0000001bU;
+enum uint UDI_C_PLANE_PROTOCOL_UUID16 = 0x0000001dU;
+enum uint L2CAP_PROTOCOL_UUID16 = 0x00000100U;
+enum uint ServiceDiscoveryServerServiceClassID_UUID16 = 0x00001000U;
+enum uint BrowseGroupDescriptorServiceClassID_UUID16 = 0x00001001U;
+enum uint PublicBrowseGroupServiceClassID_UUID16 = 0x00001002U;
+enum uint SerialPortServiceClassID_UUID16 = 0x00001101U;
+enum uint LANAccessUsingPPPServiceClassID_UUID16 = 0x00001102U;
+enum uint DialupNetworkingServiceClassID_UUID16 = 0x00001103U;
+enum uint IrMCSyncServiceClassID_UUID16 = 0x00001104U;
+enum uint OBEXObjectPushServiceClassID_UUID16 = 0x00001105U;
+enum uint OBEXFileTransferServiceClassID_UUID16 = 0x00001106U;
+enum uint IrMcSyncCommandServiceClassID_UUID16 = 0x00001107U;
+enum uint HeadsetServiceClassID_UUID16 = 0x00001108U;
+enum uint CordlessTelephonyServiceClassID_UUID16 = 0x00001109U;
+enum uint AudioSourceServiceClassID_UUID16 = 0x0000110aU;
+enum uint AudioSinkServiceClassID_UUID16 = 0x0000110bU;
+enum uint AVRemoteControlTargetServiceClassID_UUID16 = 0x0000110cU;
+
+enum : uint
+{
+    AVRemoteControlServiceClassID_UUID16         = 0x0000110eU,
+    AVRemoteControlControllerServiceClass_UUID16 = 0x0000110fU,
+}
+
+enum uint IntercomServiceClassID_UUID16 = 0x00001110U;
+enum uint FaxServiceClassID_UUID16 = 0x00001111U;
+enum uint HeadsetAudioGatewayServiceClassID_UUID16 = 0x00001112U;
+enum uint WAPServiceClassID_UUID16 = 0x00001113U;
+enum uint WAPClientServiceClassID_UUID16 = 0x00001114U;
+enum uint PANUServiceClassID_UUID16 = 0x00001115U;
+enum uint NAPServiceClassID_UUID16 = 0x00001116U;
+enum uint GNServiceClassID_UUID16 = 0x00001117U;
+enum uint DirectPrintingServiceClassID_UUID16 = 0x00001118U;
+enum uint ReferencePrintingServiceClassID_UUID16 = 0x00001119U;
+enum uint ImagingResponderServiceClassID_UUID16 = 0x0000111bU;
+enum uint ImagingAutomaticArchiveServiceClassID_UUID16 = 0x0000111cU;
+enum uint ImagingReferenceObjectsServiceClassID_UUID16 = 0x0000111dU;
+enum uint HandsfreeServiceClassID_UUID16 = 0x0000111eU;
+enum uint HandsfreeAudioGatewayServiceClassID_UUID16 = 0x0000111fU;
+enum uint DirectPrintingReferenceObjectsServiceClassID_UUID16 = 0x00001120U;
+enum uint ReflectsUIServiceClassID_UUID16 = 0x00001121U;
+enum uint PrintingStatusServiceClassID_UUID16 = 0x00001123U;
+enum uint HumanInterfaceDeviceServiceClassID_UUID16 = 0x00001124U;
+enum uint HCRPrintServiceClassID_UUID16 = 0x00001126U;
+enum uint HCRScanServiceClassID_UUID16 = 0x00001127U;
+enum uint CommonISDNAccessServiceClassID_UUID16 = 0x00001128U;
+enum uint VideoConferencingGWServiceClassID_UUID16 = 0x00001129U;
+enum uint UDIMTServiceClassID_UUID16 = 0x0000112aU;
+enum uint UDITAServiceClassID_UUID16 = 0x0000112bU;
+enum uint AudioVideoServiceClassID_UUID16 = 0x0000112cU;
+enum uint SimAccessServiceClassID_UUID16 = 0x0000112dU;
+
+enum : uint
+{
+    PhonebookAccessPceServiceClassID_UUID16 = 0x0000112eU,
+    PhonebookAccessPseServiceClassID_UUID16 = 0x0000112fU,
+}
+
+enum uint HeadsetHSServiceClassID_UUID16 = 0x00001131U;
+enum uint MessageAccessServerServiceClassID_UUID16 = 0x00001132U;
+enum uint MessageNotificationServerServiceClassID_UUID16 = 0x00001133U;
+enum uint GNSSServerServiceClassID_UUID16 = 0x00001136U;
+enum uint ThreeDimensionalDisplayServiceClassID_UUID16 = 0x00001137U;
+enum uint ThreeDimensionalGlassesServiceClassID_UUID16 = 0x00001138U;
+enum uint MPSServiceClassID_UUID16 = 0x0000113bU;
+enum uint CTNAccessServiceClassID_UUID16 = 0x0000113cU;
+enum uint CTNNotificationServiceClassID_UUID16 = 0x0000113dU;
+enum uint PnPInformationServiceClassID_UUID16 = 0x00001200U;
+enum uint GenericNetworkingServiceClassID_UUID16 = 0x00001201U;
+enum uint GenericFileTransferServiceClassID_UUID16 = 0x00001202U;
+enum uint GenericAudioServiceClassID_UUID16 = 0x00001203U;
+enum uint GenericTelephonyServiceClassID_UUID16 = 0x00001204U;
+enum uint UPnpServiceClassID_UUID16 = 0x00001205U;
+enum uint UPnpIpServiceClassID_UUID16 = 0x00001206U;
+enum uint ESdpUpnpIpPanServiceClassID_UUID16 = 0x00001300U;
+enum uint ESdpUpnpIpLapServiceClassID_UUID16 = 0x00001301U;
+enum uint ESdpUpnpL2capServiceClassID_UUID16 = 0x00001302U;
+enum uint VideoSourceServiceClassID_UUID16 = 0x00001303U;
+enum uint VideoSinkServiceClassID_UUID16 = 0x00001304U;
+
 enum : uint
 {
-    HealthDeviceProfileSourceServiceClassID_UUID16 = 0x00001401,
-    HealthDeviceProfileSinkServiceClassID_UUID16   = 0x00001402,
+    HealthDeviceProfileSourceServiceClassID_UUID16 = 0x00001401U,
+    HealthDeviceProfileSinkServiceClassID_UUID16   = 0x00001402U,
 }
 
-enum uint AdvancedAudioDistributionProfileID_UUID16 = 0x0000110d;
-enum uint ImagingServiceProfileID_UUID16 = 0x0000111a;
-enum uint BasicPrintingProfileID_UUID16 = 0x00001122;
-enum uint HardcopyCableReplacementProfileID_UUID16 = 0x00001125;
-enum uint PhonebookAccessProfileID_UUID16 = 0x00001130;
-enum uint MessageAccessProfileID_UUID16 = 0x00001134;
-enum uint GNSSProfileID_UUID16 = 0x00001135;
-enum uint ThreeDimensionalSynchronizationProfileID_UUID16 = 0x00001139;
-enum uint MPSProfileID_UUID16 = 0x0000113a;
-enum uint CTNProfileID_UUID16 = 0x0000113e;
-enum uint VideoDistributionProfileID_UUID16 = 0x00001305;
-enum uint HealthDeviceProfileID_UUID16 = 0x00001400;
-enum uint VideoConferencingServiceClassID_UUID16 = 0x0000110f;
-enum uint CommonISDNAccessServiceClass_UUID16 = 0x00001128;
-enum uint VideoConferencingGWServiceClass_UUID16 = 0x00001129;
-enum uint UDIMTServiceClass_UUID16 = 0x0000112a;
-enum uint UDITAServiceClass_UUID16 = 0x0000112b;
-enum uint AudioVideoServiceClass_UUID16 = 0x0000112c;
-enum uint CordlessServiceClassID_UUID16 = 0x00001109;
-enum uint AudioSinkSourceServiceClassID_UUID16 = 0x0000110b;
-enum uint AdvancedAudioDistributionServiceClassID_UUID16 = 0x0000110d;
-enum uint ImagingServiceClassID_UUID16 = 0x0000111a;
-enum uint BasicPrintingServiceClassID_UUID16 = 0x00001122;
-enum uint HardcopyCableReplacementServiceClassID_UUID16 = 0x00001125;
+enum uint AdvancedAudioDistributionProfileID_UUID16 = 0x0000110dU;
+enum uint ImagingServiceProfileID_UUID16 = 0x0000111aU;
+enum uint BasicPrintingProfileID_UUID16 = 0x00001122U;
+enum uint HardcopyCableReplacementProfileID_UUID16 = 0x00001125U;
+enum uint PhonebookAccessProfileID_UUID16 = 0x00001130U;
+enum uint MessageAccessProfileID_UUID16 = 0x00001134U;
+enum uint GNSSProfileID_UUID16 = 0x00001135U;
+enum uint ThreeDimensionalSynchronizationProfileID_UUID16 = 0x00001139U;
+enum uint MPSProfileID_UUID16 = 0x0000113aU;
+enum uint CTNProfileID_UUID16 = 0x0000113eU;
+enum uint VideoDistributionProfileID_UUID16 = 0x00001305U;
+enum uint HealthDeviceProfileID_UUID16 = 0x00001400U;
+enum uint VideoConferencingServiceClassID_UUID16 = 0x0000110fU;
+enum uint CommonISDNAccessServiceClass_UUID16 = 0x00001128U;
+enum uint VideoConferencingGWServiceClass_UUID16 = 0x00001129U;
+enum uint UDIMTServiceClass_UUID16 = 0x0000112aU;
+enum uint UDITAServiceClass_UUID16 = 0x0000112bU;
+enum uint AudioVideoServiceClass_UUID16 = 0x0000112cU;
+enum uint CordlessServiceClassID_UUID16 = 0x00001109U;
+enum uint AudioSinkSourceServiceClassID_UUID16 = 0x0000110bU;
+enum uint AdvancedAudioDistributionServiceClassID_UUID16 = 0x0000110dU;
+enum uint ImagingServiceClassID_UUID16 = 0x0000111aU;
+enum uint BasicPrintingServiceClassID_UUID16 = 0x00001122U;
+enum uint HardcopyCableReplacementServiceClassID_UUID16 = 0x00001125U;
 
 enum : uint
 {
-    BTH_MAX_NAME_SIZE = 0x000000f8,
-    BTH_MAX_PIN_SIZE  = 0x00000010,
+    BTH_MAX_NAME_SIZE = 0x000000f8U,
+    BTH_MAX_PIN_SIZE  = 0x00000010U,
 }
 
-enum uint BTH_LINK_KEY_LENGTH = 0x00000010;
+enum uint BTH_LINK_KEY_LENGTH = 0x00000010U;
 
 enum : uint
 {
-    BTH_MFG_ERICSSON      = 0x00000000,
-    BTH_MFG_NOKIA         = 0x00000001,
-    BTH_MFG_INTEL         = 0x00000002,
-    BTH_MFG_IBM           = 0x00000003,
-    BTH_MFG_TOSHIBA       = 0x00000004,
-    BTH_MFG_3COM          = 0x00000005,
-    BTH_MFG_MICROSOFT     = 0x00000006,
-    BTH_MFG_LUCENT        = 0x00000007,
-    BTH_MFG_MOTOROLA      = 0x00000008,
-    BTH_MFG_INFINEON      = 0x00000009,
-    BTH_MFG_CSR           = 0x0000000a,
-    BTH_MFG_SILICONWAVE   = 0x0000000b,
-    BTH_MFG_DIGIANSWER    = 0x0000000c,
-    BTH_MFG_TI            = 0x0000000d,
-    BTH_MFG_PARTHUS       = 0x0000000e,
-    BTH_MFG_BROADCOM      = 0x0000000f,
-    BTH_MFG_MITEL         = 0x00000010,
-    BTH_MFG_WIDCOMM       = 0x00000011,
-    BTH_MFG_ZEEVO         = 0x00000012,
-    BTH_MFG_ATMEL         = 0x00000013,
-    BTH_MFG_MITSIBUSHI    = 0x00000014,
-    BTH_MFG_RTX_TELECOM   = 0x00000015,
-    BTH_MFG_KC_TECHNOLOGY = 0x00000016,
+    BTH_MFG_ERICSSON      = 0x00000000U,
+    BTH_MFG_NOKIA         = 0x00000001U,
+    BTH_MFG_INTEL         = 0x00000002U,
+    BTH_MFG_IBM           = 0x00000003U,
+    BTH_MFG_TOSHIBA       = 0x00000004U,
+    BTH_MFG_3COM          = 0x00000005U,
+    BTH_MFG_MICROSOFT     = 0x00000006U,
+    BTH_MFG_LUCENT        = 0x00000007U,
+    BTH_MFG_MOTOROLA      = 0x00000008U,
+    BTH_MFG_INFINEON      = 0x00000009U,
+    BTH_MFG_CSR           = 0x0000000aU,
+    BTH_MFG_SILICONWAVE   = 0x0000000bU,
+    BTH_MFG_DIGIANSWER    = 0x0000000cU,
+    BTH_MFG_TI            = 0x0000000dU,
+    BTH_MFG_PARTHUS       = 0x0000000eU,
+    BTH_MFG_BROADCOM      = 0x0000000fU,
+    BTH_MFG_MITEL         = 0x00000010U,
+    BTH_MFG_WIDCOMM       = 0x00000011U,
+    BTH_MFG_ZEEVO         = 0x00000012U,
+    BTH_MFG_ATMEL         = 0x00000013U,
+    BTH_MFG_MITSIBUSHI    = 0x00000014U,
+    BTH_MFG_RTX_TELECOM   = 0x00000015U,
+    BTH_MFG_KC_TECHNOLOGY = 0x00000016U,
 }
 
 enum : uint
 {
-    BTH_MFG_NEWLOGIC      = 0x00000017,
-    BTH_MFG_TRANSILICA    = 0x00000018,
-    BTH_MFG_ROHDE_SCHWARZ = 0x00000019,
+    BTH_MFG_NEWLOGIC      = 0x00000017U,
+    BTH_MFG_TRANSILICA    = 0x00000018U,
+    BTH_MFG_ROHDE_SCHWARZ = 0x00000019U,
 }
 
 enum : uint
 {
-    BTH_MFG_TTPCOM                 = 0x0000001a,
-    BTH_MFG_SIGNIA                 = 0x0000001b,
-    BTH_MFG_CONEXANT               = 0x0000001c,
-    BTH_MFG_QUALCOMM               = 0x0000001d,
-    BTH_MFG_INVENTEL               = 0x0000001e,
-    BTH_MFG_AVM_BERLIN             = 0x0000001f,
-    BTH_MFG_BANDSPEED              = 0x00000020,
-    BTH_MFG_MANSELLA               = 0x00000021,
-    BTH_MFG_NEC                    = 0x00000022,
-    BTH_MFG_WAVEPLUS_TECHNOLOGY_CO = 0x00000023,
+    BTH_MFG_TTPCOM                 = 0x0000001aU,
+    BTH_MFG_SIGNIA                 = 0x0000001bU,
+    BTH_MFG_CONEXANT               = 0x0000001cU,
+    BTH_MFG_QUALCOMM               = 0x0000001dU,
+    BTH_MFG_INVENTEL               = 0x0000001eU,
+    BTH_MFG_AVM_BERLIN             = 0x0000001fU,
+    BTH_MFG_BANDSPEED              = 0x00000020U,
+    BTH_MFG_MANSELLA               = 0x00000021U,
+    BTH_MFG_NEC                    = 0x00000022U,
+    BTH_MFG_WAVEPLUS_TECHNOLOGY_CO = 0x00000023U,
 }
 
 enum : uint
 {
-    BTH_MFG_ALCATEL               = 0x00000024,
-    BTH_MFG_PHILIPS_SEMICONDUCTOR = 0x00000025,
+    BTH_MFG_ALCATEL               = 0x00000024U,
+    BTH_MFG_PHILIPS_SEMICONDUCTOR = 0x00000025U,
 }
 
-enum uint BTH_MFG_C_TECHNOLOGIES = 0x00000026;
-enum uint BTH_MFG_OPEN_INTERFACE = 0x00000027;
-enum uint BTH_MFG_RF_MICRO_DEVICES = 0x00000028;
+enum uint BTH_MFG_C_TECHNOLOGIES = 0x00000026U;
+enum uint BTH_MFG_OPEN_INTERFACE = 0x00000027U;
+enum uint BTH_MFG_RF_MICRO_DEVICES = 0x00000028U;
 
 enum : uint
 {
-    BTH_MFG_HITACHI             = 0x00000029,
-    BTH_MFG_SYMBOL_TECHNOLOGIES = 0x0000002a,
+    BTH_MFG_HITACHI             = 0x00000029U,
+    BTH_MFG_SYMBOL_TECHNOLOGIES = 0x0000002aU,
 }
 
 enum : uint
 {
-    BTH_MFG_TENOVIS                = 0x0000002b,
-    BTH_MFG_MACRONIX_INTERNATIONAL = 0x0000002c,
+    BTH_MFG_TENOVIS                = 0x0000002bU,
+    BTH_MFG_MACRONIX_INTERNATIONAL = 0x0000002cU,
 }
 
 enum : uint
 {
-    BTH_MFG_MARVELL                   = 0x00000048,
-    BTH_MFG_APPLE                     = 0x0000004c,
-    BTH_MFG_NORDIC_SEMICONDUCTORS_ASA = 0x00000059,
+    BTH_MFG_MARVELL                   = 0x00000048U,
+    BTH_MFG_APPLE                     = 0x0000004cU,
+    BTH_MFG_NORDIC_SEMICONDUCTORS_ASA = 0x00000059U,
 }
 
-enum uint BTH_MFG_ARUBA_NETWORKS = 0x0000011b;
-enum uint BTH_MFG_INTERNAL_USE = 0x0000ffff;
-enum uint SAP_BIT_OFFSET = 0x00000000;
-enum uint COD_FORMAT_BIT_OFFSET = 0x00000000;
-enum uint COD_MINOR_BIT_OFFSET = 0x00000002;
-enum uint COD_FORMAT_MASK = 0x00000003;
-enum uint COD_MINOR_MASK = 0x000000fc;
-enum uint COD_MAJOR_MASK = 0x00001f00;
-enum uint COD_SERVICE_MASK = 0x00ffe000;
-enum uint COD_VERSION = 0x00000000;
+enum uint BTH_MFG_ARUBA_NETWORKS = 0x0000011bU;
+enum uint BTH_MFG_INTERNAL_USE = 0x0000ffffU;
+enum uint SAP_BIT_OFFSET = 0x00000000U;
+enum uint COD_FORMAT_BIT_OFFSET = 0x00000000U;
+enum uint COD_MINOR_BIT_OFFSET = 0x00000002U;
+enum uint COD_FORMAT_MASK = 0x00000003U;
+enum uint COD_MINOR_MASK = 0x000000fcU;
+enum uint COD_MAJOR_MASK = 0x00001f00U;
+enum uint COD_SERVICE_MASK = 0x00ffe000U;
+enum uint COD_VERSION = 0x00000000U;
 
 enum : uint
 {
-    COD_SERVICE_LIMITED     = 0x00000001,
-    COD_SERVICE_LE_AUDIO    = 0x00000002,
-    COD_SERVICE_POSITIONING = 0x00000008,
-    COD_SERVICE_NETWORKING  = 0x00000010,
-    COD_SERVICE_RENDERING   = 0x00000020,
-    COD_SERVICE_CAPTURING   = 0x00000040,
-    COD_SERVICE_OBJECT_XFER = 0x00000080,
-    COD_SERVICE_AUDIO       = 0x00000100,
-    COD_SERVICE_TELEPHONY   = 0x00000200,
-    COD_SERVICE_INFORMATION = 0x00000400,
-    COD_SERVICE_MAX_COUNT   = 0x0000000a,
+    COD_SERVICE_LIMITED     = 0x00000001U,
+    COD_SERVICE_LE_AUDIO    = 0x00000002U,
+    COD_SERVICE_POSITIONING = 0x00000008U,
+    COD_SERVICE_NETWORKING  = 0x00000010U,
+    COD_SERVICE_RENDERING   = 0x00000020U,
+    COD_SERVICE_CAPTURING   = 0x00000040U,
+    COD_SERVICE_OBJECT_XFER = 0x00000080U,
+    COD_SERVICE_AUDIO       = 0x00000100U,
+    COD_SERVICE_TELEPHONY   = 0x00000200U,
+    COD_SERVICE_INFORMATION = 0x00000400U,
+    COD_SERVICE_MAX_COUNT   = 0x0000000aU,
 }
 
 enum : uint
 {
-    COD_MAJOR_MISCELLANEOUS = 0x00000000,
-    COD_MAJOR_COMPUTER      = 0x00000001,
-    COD_MAJOR_PHONE         = 0x00000002,
-    COD_MAJOR_LAN_ACCESS    = 0x00000003,
-    COD_MAJOR_AUDIO         = 0x00000004,
-    COD_MAJOR_PERIPHERAL    = 0x00000005,
-    COD_MAJOR_IMAGING       = 0x00000006,
-    COD_MAJOR_WEARABLE      = 0x00000007,
-    COD_MAJOR_TOY           = 0x00000008,
-    COD_MAJOR_HEALTH        = 0x00000009,
-    COD_MAJOR_UNCLASSIFIED  = 0x0000001f,
+    COD_MAJOR_MISCELLANEOUS = 0x00000000U,
+    COD_MAJOR_COMPUTER      = 0x00000001U,
+    COD_MAJOR_PHONE         = 0x00000002U,
+    COD_MAJOR_LAN_ACCESS    = 0x00000003U,
+    COD_MAJOR_AUDIO         = 0x00000004U,
+    COD_MAJOR_PERIPHERAL    = 0x00000005U,
+    COD_MAJOR_IMAGING       = 0x00000006U,
+    COD_MAJOR_WEARABLE      = 0x00000007U,
+    COD_MAJOR_TOY           = 0x00000008U,
+    COD_MAJOR_HEALTH        = 0x00000009U,
+    COD_MAJOR_UNCLASSIFIED  = 0x0000001fU,
 }
 
 enum : uint
 {
-    COD_COMPUTER_MINOR_UNCLASSIFIED = 0x00000000,
-    COD_COMPUTER_MINOR_DESKTOP      = 0x00000001,
-    COD_COMPUTER_MINOR_SERVER       = 0x00000002,
-    COD_COMPUTER_MINOR_LAPTOP       = 0x00000003,
-    COD_COMPUTER_MINOR_HANDHELD     = 0x00000004,
-    COD_COMPUTER_MINOR_PALM         = 0x00000005,
-    COD_COMPUTER_MINOR_WEARABLE     = 0x00000006,
+    COD_COMPUTER_MINOR_UNCLASSIFIED = 0x00000000U,
+    COD_COMPUTER_MINOR_DESKTOP      = 0x00000001U,
+    COD_COMPUTER_MINOR_SERVER       = 0x00000002U,
+    COD_COMPUTER_MINOR_LAPTOP       = 0x00000003U,
+    COD_COMPUTER_MINOR_HANDHELD     = 0x00000004U,
+    COD_COMPUTER_MINOR_PALM         = 0x00000005U,
+    COD_COMPUTER_MINOR_WEARABLE     = 0x00000006U,
 }
 
 enum : uint
 {
-    COD_PHONE_MINOR_UNCLASSIFIED = 0x00000000,
-    COD_PHONE_MINOR_CELLULAR     = 0x00000001,
-    COD_PHONE_MINOR_CORDLESS     = 0x00000002,
-    COD_PHONE_MINOR_SMART        = 0x00000003,
-    COD_PHONE_MINOR_WIRED_MODEM  = 0x00000004,
+    COD_PHONE_MINOR_UNCLASSIFIED = 0x00000000U,
+    COD_PHONE_MINOR_CELLULAR     = 0x00000001U,
+    COD_PHONE_MINOR_CORDLESS     = 0x00000002U,
+    COD_PHONE_MINOR_SMART        = 0x00000003U,
+    COD_PHONE_MINOR_WIRED_MODEM  = 0x00000004U,
 }
 
 enum : uint
 {
-    COD_AUDIO_MINOR_UNCLASSIFIED               = 0x00000000,
-    COD_AUDIO_MINOR_HEADSET                    = 0x00000001,
-    COD_AUDIO_MINOR_HANDS_FREE                 = 0x00000002,
-    COD_AUDIO_MINOR_HEADSET_HANDS_FREE         = 0x00000003,
-    COD_AUDIO_MINOR_MICROPHONE                 = 0x00000004,
-    COD_AUDIO_MINOR_LOUDSPEAKER                = 0x00000005,
-    COD_AUDIO_MINOR_HEADPHONES                 = 0x00000006,
-    COD_AUDIO_MINOR_PORTABLE_AUDIO             = 0x00000007,
-    COD_AUDIO_MINOR_CAR_AUDIO                  = 0x00000008,
-    COD_AUDIO_MINOR_SET_TOP_BOX                = 0x00000009,
-    COD_AUDIO_MINOR_HIFI_AUDIO                 = 0x0000000a,
-    COD_AUDIO_MINOR_VCR                        = 0x0000000b,
-    COD_AUDIO_MINOR_VIDEO_CAMERA               = 0x0000000c,
-    COD_AUDIO_MINOR_CAMCORDER                  = 0x0000000d,
-    COD_AUDIO_MINOR_VIDEO_MONITOR              = 0x0000000e,
-    COD_AUDIO_MINOR_VIDEO_DISPLAY_LOUDSPEAKER  = 0x0000000f,
-    COD_AUDIO_MINOR_VIDEO_DISPLAY_CONFERENCING = 0x00000010,
+    COD_AUDIO_MINOR_UNCLASSIFIED               = 0x00000000U,
+    COD_AUDIO_MINOR_HEADSET                    = 0x00000001U,
+    COD_AUDIO_MINOR_HANDS_FREE                 = 0x00000002U,
+    COD_AUDIO_MINOR_HEADSET_HANDS_FREE         = 0x00000003U,
+    COD_AUDIO_MINOR_MICROPHONE                 = 0x00000004U,
+    COD_AUDIO_MINOR_LOUDSPEAKER                = 0x00000005U,
+    COD_AUDIO_MINOR_HEADPHONES                 = 0x00000006U,
+    COD_AUDIO_MINOR_PORTABLE_AUDIO             = 0x00000007U,
+    COD_AUDIO_MINOR_CAR_AUDIO                  = 0x00000008U,
+    COD_AUDIO_MINOR_SET_TOP_BOX                = 0x00000009U,
+    COD_AUDIO_MINOR_HIFI_AUDIO                 = 0x0000000aU,
+    COD_AUDIO_MINOR_VCR                        = 0x0000000bU,
+    COD_AUDIO_MINOR_VIDEO_CAMERA               = 0x0000000cU,
+    COD_AUDIO_MINOR_CAMCORDER                  = 0x0000000dU,
+    COD_AUDIO_MINOR_VIDEO_MONITOR              = 0x0000000eU,
+    COD_AUDIO_MINOR_VIDEO_DISPLAY_LOUDSPEAKER  = 0x0000000fU,
+    COD_AUDIO_MINOR_VIDEO_DISPLAY_CONFERENCING = 0x00000010U,
 }
 
-enum uint COD_AUDIO_MINOR_GAMING_TOY = 0x00000012;
+enum uint COD_AUDIO_MINOR_GAMING_TOY = 0x00000012U;
 
 enum : uint
 {
-    COD_PERIPHERAL_MINOR_KEYBOARD_MASK  = 0x00000010,
-    COD_PERIPHERAL_MINOR_POINTER_MASK   = 0x00000020,
-    COD_PERIPHERAL_MINOR_NO_CATEGORY    = 0x00000000,
-    COD_PERIPHERAL_MINOR_JOYSTICK       = 0x00000001,
-    COD_PERIPHERAL_MINOR_GAMEPAD        = 0x00000002,
-    COD_PERIPHERAL_MINOR_REMOTE_CONTROL = 0x00000003,
-    COD_PERIPHERAL_MINOR_SENSING        = 0x00000004,
+    COD_PERIPHERAL_MINOR_KEYBOARD_MASK  = 0x00000010U,
+    COD_PERIPHERAL_MINOR_POINTER_MASK   = 0x00000020U,
+    COD_PERIPHERAL_MINOR_NO_CATEGORY    = 0x00000000U,
+    COD_PERIPHERAL_MINOR_JOYSTICK       = 0x00000001U,
+    COD_PERIPHERAL_MINOR_GAMEPAD        = 0x00000002U,
+    COD_PERIPHERAL_MINOR_REMOTE_CONTROL = 0x00000003U,
+    COD_PERIPHERAL_MINOR_SENSING        = 0x00000004U,
 }
 
 enum : uint
 {
-    COD_IMAGING_MINOR_DISPLAY_MASK = 0x00000004,
-    COD_IMAGING_MINOR_CAMERA_MASK  = 0x00000008,
-    COD_IMAGING_MINOR_SCANNER_MASK = 0x00000010,
-    COD_IMAGING_MINOR_PRINTER_MASK = 0x00000020,
+    COD_IMAGING_MINOR_DISPLAY_MASK = 0x00000004U,
+    COD_IMAGING_MINOR_CAMERA_MASK  = 0x00000008U,
+    COD_IMAGING_MINOR_SCANNER_MASK = 0x00000010U,
+    COD_IMAGING_MINOR_PRINTER_MASK = 0x00000020U,
 }
 
 enum : uint
 {
-    COD_WEARABLE_MINOR_WRIST_WATCH = 0x00000001,
-    COD_WEARABLE_MINOR_PAGER       = 0x00000002,
-    COD_WEARABLE_MINOR_JACKET      = 0x00000003,
-    COD_WEARABLE_MINOR_HELMET      = 0x00000004,
-    COD_WEARABLE_MINOR_GLASSES     = 0x00000005,
+    COD_WEARABLE_MINOR_WRIST_WATCH = 0x00000001U,
+    COD_WEARABLE_MINOR_PAGER       = 0x00000002U,
+    COD_WEARABLE_MINOR_JACKET      = 0x00000003U,
+    COD_WEARABLE_MINOR_HELMET      = 0x00000004U,
+    COD_WEARABLE_MINOR_GLASSES     = 0x00000005U,
 }
 
 enum : uint
 {
-    COD_TOY_MINOR_ROBOT              = 0x00000001,
-    COD_TOY_MINOR_VEHICLE            = 0x00000002,
-    COD_TOY_MINOR_DOLL_ACTION_FIGURE = 0x00000003,
-    COD_TOY_MINOR_CONTROLLER         = 0x00000004,
-    COD_TOY_MINOR_GAME               = 0x00000005,
+    COD_TOY_MINOR_ROBOT              = 0x00000001U,
+    COD_TOY_MINOR_VEHICLE            = 0x00000002U,
+    COD_TOY_MINOR_DOLL_ACTION_FIGURE = 0x00000003U,
+    COD_TOY_MINOR_CONTROLLER         = 0x00000004U,
+    COD_TOY_MINOR_GAME               = 0x00000005U,
 }
 
 enum : uint
 {
-    COD_HEALTH_MINOR_BLOOD_PRESSURE_MONITOR = 0x00000001,
-    COD_HEALTH_MINOR_THERMOMETER            = 0x00000002,
-    COD_HEALTH_MINOR_WEIGHING_SCALE         = 0x00000003,
-    COD_HEALTH_MINOR_GLUCOSE_METER          = 0x00000004,
-    COD_HEALTH_MINOR_PULSE_OXIMETER         = 0x00000005,
-    COD_HEALTH_MINOR_HEART_PULSE_MONITOR    = 0x00000006,
-    COD_HEALTH_MINOR_HEALTH_DATA_DISPLAY    = 0x00000007,
-    COD_HEALTH_MINOR_STEP_COUNTER           = 0x00000008,
+    COD_HEALTH_MINOR_BLOOD_PRESSURE_MONITOR = 0x00000001U,
+    COD_HEALTH_MINOR_THERMOMETER            = 0x00000002U,
+    COD_HEALTH_MINOR_WEIGHING_SCALE         = 0x00000003U,
+    COD_HEALTH_MINOR_GLUCOSE_METER          = 0x00000004U,
+    COD_HEALTH_MINOR_PULSE_OXIMETER         = 0x00000005U,
+    COD_HEALTH_MINOR_HEART_PULSE_MONITOR    = 0x00000006U,
+    COD_HEALTH_MINOR_HEALTH_DATA_DISPLAY    = 0x00000007U,
+    COD_HEALTH_MINOR_STEP_COUNTER           = 0x00000008U,
 }
 
-enum uint COD_LAN_ACCESS_BIT_OFFSET = 0x00000005;
+enum uint COD_LAN_ACCESS_BIT_OFFSET = 0x00000005U;
 
 enum : uint
 {
-    COD_LAN_MINOR_MASK         = 0x0000001c,
-    COD_LAN_ACCESS_MASK        = 0x000000e0,
-    COD_LAN_MINOR_UNCLASSIFIED = 0x00000000,
+    COD_LAN_MINOR_MASK         = 0x0000001cU,
+    COD_LAN_ACCESS_MASK        = 0x000000e0U,
+    COD_LAN_MINOR_UNCLASSIFIED = 0x00000000U,
 }
 
 enum : uint
 {
-    COD_LAN_ACCESS_0_USED  = 0x00000000,
-    COD_LAN_ACCESS_17_USED = 0x00000001,
-    COD_LAN_ACCESS_33_USED = 0x00000002,
-    COD_LAN_ACCESS_50_USED = 0x00000003,
-    COD_LAN_ACCESS_67_USED = 0x00000004,
-    COD_LAN_ACCESS_83_USED = 0x00000005,
-    COD_LAN_ACCESS_99_USED = 0x00000006,
-    COD_LAN_ACCESS_FULL    = 0x00000007,
+    COD_LAN_ACCESS_0_USED  = 0x00000000U,
+    COD_LAN_ACCESS_17_USED = 0x00000001U,
+    COD_LAN_ACCESS_33_USED = 0x00000002U,
+    COD_LAN_ACCESS_50_USED = 0x00000003U,
+    COD_LAN_ACCESS_67_USED = 0x00000004U,
+    COD_LAN_ACCESS_83_USED = 0x00000005U,
+    COD_LAN_ACCESS_99_USED = 0x00000006U,
+    COD_LAN_ACCESS_FULL    = 0x00000007U,
 }
 
 enum : uint
 {
-    BTH_EIR_FLAGS_ID             = 0x00000001,
-    BTH_EIR_16_UUIDS_PARTIAL_ID  = 0x00000002,
-    BTH_EIR_16_UUIDS_COMPLETE_ID = 0x00000003,
+    BTH_EIR_FLAGS_ID             = 0x00000001U,
+    BTH_EIR_16_UUIDS_PARTIAL_ID  = 0x00000002U,
+    BTH_EIR_16_UUIDS_COMPLETE_ID = 0x00000003U,
 }
 
 enum : uint
 {
-    BTH_EIR_32_UUIDS_PARTIAL_ID  = 0x00000004,
-    BTH_EIR_32_UUIDS_COMPLETE_ID = 0x00000005,
+    BTH_EIR_32_UUIDS_PARTIAL_ID  = 0x00000004U,
+    BTH_EIR_32_UUIDS_COMPLETE_ID = 0x00000005U,
 }
 
 enum : uint
 {
-    BTH_EIR_128_UUIDS_PARTIAL_ID  = 0x00000006,
-    BTH_EIR_128_UUIDS_COMPLETE_ID = 0x00000007,
+    BTH_EIR_128_UUIDS_PARTIAL_ID  = 0x00000006U,
+    BTH_EIR_128_UUIDS_COMPLETE_ID = 0x00000007U,
 }
 
 enum : uint
 {
-    BTH_EIR_LOCAL_NAME_PARTIAL_ID  = 0x00000008,
-    BTH_EIR_LOCAL_NAME_COMPLETE_ID = 0x00000009,
+    BTH_EIR_LOCAL_NAME_PARTIAL_ID  = 0x00000008U,
+    BTH_EIR_LOCAL_NAME_COMPLETE_ID = 0x00000009U,
 }
 
-enum uint BTH_EIR_TX_POWER_LEVEL_ID = 0x0000000a;
+enum uint BTH_EIR_TX_POWER_LEVEL_ID = 0x0000000aU;
 
 enum : uint
 {
-    BTH_EIR_OOB_OPT_DATA_LEN_ID  = 0x0000000b,
-    BTH_EIR_OOB_BD_ADDR_ID       = 0x0000000c,
-    BTH_EIR_OOB_COD_ID           = 0x0000000d,
-    BTH_EIR_OOB_SP_HASH_ID       = 0x0000000e,
-    BTH_EIR_OOB_SP_RANDOMIZER_ID = 0x0000000f,
+    BTH_EIR_OOB_OPT_DATA_LEN_ID  = 0x0000000bU,
+    BTH_EIR_OOB_BD_ADDR_ID       = 0x0000000cU,
+    BTH_EIR_OOB_COD_ID           = 0x0000000dU,
+    BTH_EIR_OOB_SP_HASH_ID       = 0x0000000eU,
+    BTH_EIR_OOB_SP_RANDOMIZER_ID = 0x0000000fU,
 }
 
-enum uint BTH_EIR_MANUFACTURER_ID = 0x000000ff;
-enum uint BTH_EIR_SIZE = 0x000000f0;
-enum uint LAP_GIAC_VALUE = 0x009e8b33;
-enum uint LAP_LIAC_VALUE = 0x009e8b00;
+enum uint BTH_EIR_MANUFACTURER_ID = 0x000000ffU;
+enum uint BTH_EIR_SIZE = 0x000000f0U;
+enum uint LAP_GIAC_VALUE = 0x009e8b33U;
+enum uint LAP_LIAC_VALUE = 0x009e8b00U;
 
 enum : uint
 {
-    BTH_ADDR_IAC_FIRST = 0x009e8b00,
-    BTH_ADDR_IAC_LAST  = 0x009e8b3f,
-    BTH_ADDR_LIAC      = 0x009e8b00,
-    BTH_ADDR_GIAC      = 0x009e8b33,
+    BTH_ADDR_IAC_FIRST = 0x009e8b00U,
+    BTH_ADDR_IAC_LAST  = 0x009e8b3fU,
+    BTH_ADDR_LIAC      = 0x009e8b00U,
+    BTH_ADDR_GIAC      = 0x009e8b33U,
 }
 
 enum : uint
 {
-    BTH_ERROR_SUCCESS             = 0x00000000,
-    BTH_ERROR_UNKNOWN_HCI_COMMAND = 0x00000001,
+    BTH_ERROR_SUCCESS             = 0x00000000U,
+    BTH_ERROR_UNKNOWN_HCI_COMMAND = 0x00000001U,
 }
 
 enum : uint
 {
-    BTH_ERROR_NO_CONNECTION    = 0x00000002,
-    BTH_ERROR_HARDWARE_FAILURE = 0x00000003,
+    BTH_ERROR_NO_CONNECTION    = 0x00000002U,
+    BTH_ERROR_HARDWARE_FAILURE = 0x00000003U,
 }
 
 enum : uint
 {
-    BTH_ERROR_PAGE_TIMEOUT           = 0x00000004,
-    BTH_ERROR_AUTHENTICATION_FAILURE = 0x00000005,
+    BTH_ERROR_PAGE_TIMEOUT           = 0x00000004U,
+    BTH_ERROR_AUTHENTICATION_FAILURE = 0x00000005U,
 }
 
 enum : uint
 {
-    BTH_ERROR_KEY_MISSING        = 0x00000006,
-    BTH_ERROR_MEMORY_FULL        = 0x00000007,
-    BTH_ERROR_CONNECTION_TIMEOUT = 0x00000008,
+    BTH_ERROR_KEY_MISSING        = 0x00000006U,
+    BTH_ERROR_MEMORY_FULL        = 0x00000007U,
+    BTH_ERROR_CONNECTION_TIMEOUT = 0x00000008U,
 }
 
 enum : uint
 {
-    BTH_ERROR_MAX_NUMBER_OF_CONNECTIONS     = 0x00000009,
-    BTH_ERROR_MAX_NUMBER_OF_SCO_CONNECTIONS = 0x0000000a,
+    BTH_ERROR_MAX_NUMBER_OF_CONNECTIONS     = 0x00000009U,
+    BTH_ERROR_MAX_NUMBER_OF_SCO_CONNECTIONS = 0x0000000aU,
 }
 
-enum uint BTH_ERROR_ACL_CONNECTION_ALREADY_EXISTS = 0x0000000b;
-enum uint BTH_ERROR_COMMAND_DISALLOWED = 0x0000000c;
+enum uint BTH_ERROR_ACL_CONNECTION_ALREADY_EXISTS = 0x0000000bU;
+enum uint BTH_ERROR_COMMAND_DISALLOWED = 0x0000000cU;
 
 enum : uint
 {
-    BTH_ERROR_HOST_REJECTED_LIMITED_RESOURCES = 0x0000000d,
-    BTH_ERROR_HOST_REJECTED_SECURITY_REASONS  = 0x0000000e,
-    BTH_ERROR_HOST_REJECTED_PERSONAL_DEVICE   = 0x0000000f,
+    BTH_ERROR_HOST_REJECTED_LIMITED_RESOURCES = 0x0000000dU,
+    BTH_ERROR_HOST_REJECTED_SECURITY_REASONS  = 0x0000000eU,
+    BTH_ERROR_HOST_REJECTED_PERSONAL_DEVICE   = 0x0000000fU,
 }
 
 enum : uint
 {
-    BTH_ERROR_HOST_TIMEOUT                     = 0x00000010,
-    BTH_ERROR_UNSUPPORTED_FEATURE_OR_PARAMETER = 0x00000011,
+    BTH_ERROR_HOST_TIMEOUT                     = 0x00000010U,
+    BTH_ERROR_UNSUPPORTED_FEATURE_OR_PARAMETER = 0x00000011U,
 }
 
-enum uint BTH_ERROR_INVALID_HCI_PARAMETER = 0x00000012;
+enum uint BTH_ERROR_INVALID_HCI_PARAMETER = 0x00000012U;
 
 enum : uint
 {
-    BTH_ERROR_REMOTE_USER_ENDED_CONNECTION = 0x00000013,
-    BTH_ERROR_REMOTE_LOW_RESOURCES         = 0x00000014,
-    BTH_ERROR_REMOTE_POWERING_OFF          = 0x00000015,
+    BTH_ERROR_REMOTE_USER_ENDED_CONNECTION = 0x00000013U,
+    BTH_ERROR_REMOTE_LOW_RESOURCES         = 0x00000014U,
+    BTH_ERROR_REMOTE_POWERING_OFF          = 0x00000015U,
 }
 
-enum uint BTH_ERROR_LOCAL_HOST_TERMINATED_CONNECTION = 0x00000016;
-enum uint BTH_ERROR_REPEATED_ATTEMPTS = 0x00000017;
-enum uint BTH_ERROR_PAIRING_NOT_ALLOWED = 0x00000018;
+enum uint BTH_ERROR_LOCAL_HOST_TERMINATED_CONNECTION = 0x00000016U;
+enum uint BTH_ERROR_REPEATED_ATTEMPTS = 0x00000017U;
+enum uint BTH_ERROR_PAIRING_NOT_ALLOWED = 0x00000018U;
 
 enum : uint
 {
-    BTH_ERROR_UKNOWN_LMP_PDU             = 0x00000019,
-    BTH_ERROR_UNSUPPORTED_REMOTE_FEATURE = 0x0000001a,
+    BTH_ERROR_UKNOWN_LMP_PDU             = 0x00000019U,
+    BTH_ERROR_UNSUPPORTED_REMOTE_FEATURE = 0x0000001aU,
 }
 
 enum : uint
 {
-    BTH_ERROR_SCO_OFFSET_REJECTED   = 0x0000001b,
-    BTH_ERROR_SCO_INTERVAL_REJECTED = 0x0000001c,
-    BTH_ERROR_SCO_AIRMODE_REJECTED  = 0x0000001d,
+    BTH_ERROR_SCO_OFFSET_REJECTED   = 0x0000001bU,
+    BTH_ERROR_SCO_INTERVAL_REJECTED = 0x0000001cU,
+    BTH_ERROR_SCO_AIRMODE_REJECTED  = 0x0000001dU,
 }
 
-enum uint BTH_ERROR_INVALID_LMP_PARAMETERS = 0x0000001e;
+enum uint BTH_ERROR_INVALID_LMP_PARAMETERS = 0x0000001eU;
 
 enum : uint
 {
-    BTH_ERROR_UNSPECIFIED_ERROR          = 0x0000001f,
-    BTH_ERROR_UNSUPPORTED_LMP_PARM_VALUE = 0x00000020,
+    BTH_ERROR_UNSPECIFIED_ERROR          = 0x0000001fU,
+    BTH_ERROR_UNSUPPORTED_LMP_PARM_VALUE = 0x00000020U,
 }
 
-enum uint BTH_ERROR_ROLE_CHANGE_NOT_ALLOWED = 0x00000021;
+enum uint BTH_ERROR_ROLE_CHANGE_NOT_ALLOWED = 0x00000021U;
 
 enum : uint
 {
-    BTH_ERROR_LMP_RESPONSE_TIMEOUT      = 0x00000022,
-    BTH_ERROR_LMP_TRANSACTION_COLLISION = 0x00000023,
+    BTH_ERROR_LMP_RESPONSE_TIMEOUT      = 0x00000022U,
+    BTH_ERROR_LMP_TRANSACTION_COLLISION = 0x00000023U,
 }
 
-enum uint BTH_ERROR_LMP_PDU_NOT_ALLOWED = 0x00000024;
-enum uint BTH_ERROR_ENCRYPTION_MODE_NOT_ACCEPTABLE = 0x00000025;
-enum uint BTH_ERROR_UNIT_KEY_NOT_USED = 0x00000026;
-enum uint BTH_ERROR_QOS_IS_NOT_SUPPORTED = 0x00000027;
+enum uint BTH_ERROR_LMP_PDU_NOT_ALLOWED = 0x00000024U;
+enum uint BTH_ERROR_ENCRYPTION_MODE_NOT_ACCEPTABLE = 0x00000025U;
+enum uint BTH_ERROR_UNIT_KEY_NOT_USED = 0x00000026U;
+enum uint BTH_ERROR_QOS_IS_NOT_SUPPORTED = 0x00000027U;
 
 enum : uint
 {
-    BTH_ERROR_INSTANT_PASSED                      = 0x00000028,
-    BTH_ERROR_PAIRING_WITH_UNIT_KEY_NOT_SUPPORTED = 0x00000029,
+    BTH_ERROR_INSTANT_PASSED                      = 0x00000028U,
+    BTH_ERROR_PAIRING_WITH_UNIT_KEY_NOT_SUPPORTED = 0x00000029U,
 }
 
-enum uint BTH_ERROR_DIFFERENT_TRANSACTION_COLLISION = 0x0000002a;
-enum uint BTH_ERROR_QOS_UNACCEPTABLE_PARAMETER = 0x0000002c;
+enum uint BTH_ERROR_DIFFERENT_TRANSACTION_COLLISION = 0x0000002aU;
+enum uint BTH_ERROR_QOS_UNACCEPTABLE_PARAMETER = 0x0000002cU;
 
 enum : uint
 {
-    BTH_ERROR_QOS_REJECTED                         = 0x0000002d,
-    BTH_ERROR_CHANNEL_CLASSIFICATION_NOT_SUPPORTED = 0x0000002e,
+    BTH_ERROR_QOS_REJECTED                         = 0x0000002dU,
+    BTH_ERROR_CHANNEL_CLASSIFICATION_NOT_SUPPORTED = 0x0000002eU,
 }
 
-enum uint BTH_ERROR_INSUFFICIENT_SECURITY = 0x0000002f;
-enum uint BTH_ERROR_PARAMETER_OUT_OF_MANDATORY_RANGE = 0x00000030;
-enum uint BTH_ERROR_ROLE_SWITCH_PENDING = 0x00000032;
-enum uint BTH_ERROR_RESERVED_SLOT_VIOLATION = 0x00000034;
-enum uint BTH_ERROR_ROLE_SWITCH_FAILED = 0x00000035;
-enum uint BTH_ERROR_EXTENDED_INQUIRY_RESPONSE_TOO_LARGE = 0x00000036;
-enum uint BTH_ERROR_SECURE_SIMPLE_PAIRING_NOT_SUPPORTED_BY_HOST = 0x00000037;
-enum uint BTH_ERROR_HOST_BUSY_PAIRING = 0x00000038;
-enum uint BTH_ERROR_CONNECTION_REJECTED_DUE_TO_NO_SUITABLE_CHANNEL_FOUND = 0x00000039;
-enum uint BTH_ERROR_CONTROLLER_BUSY = 0x0000003a;
-enum uint BTH_ERROR_UNACCEPTABLE_CONNECTION_INTERVAL = 0x0000003b;
-enum uint BTH_ERROR_DIRECTED_ADVERTISING_TIMEOUT = 0x0000003c;
+enum uint BTH_ERROR_INSUFFICIENT_SECURITY = 0x0000002fU;
+enum uint BTH_ERROR_PARAMETER_OUT_OF_MANDATORY_RANGE = 0x00000030U;
+enum uint BTH_ERROR_ROLE_SWITCH_PENDING = 0x00000032U;
+enum uint BTH_ERROR_RESERVED_SLOT_VIOLATION = 0x00000034U;
+enum uint BTH_ERROR_ROLE_SWITCH_FAILED = 0x00000035U;
+enum uint BTH_ERROR_EXTENDED_INQUIRY_RESPONSE_TOO_LARGE = 0x00000036U;
+enum uint BTH_ERROR_SECURE_SIMPLE_PAIRING_NOT_SUPPORTED_BY_HOST = 0x00000037U;
+enum uint BTH_ERROR_HOST_BUSY_PAIRING = 0x00000038U;
+enum uint BTH_ERROR_CONNECTION_REJECTED_DUE_TO_NO_SUITABLE_CHANNEL_FOUND = 0x00000039U;
+enum uint BTH_ERROR_CONTROLLER_BUSY = 0x0000003aU;
+enum uint BTH_ERROR_UNACCEPTABLE_CONNECTION_INTERVAL = 0x0000003bU;
+enum uint BTH_ERROR_DIRECTED_ADVERTISING_TIMEOUT = 0x0000003cU;
 
 enum : uint
 {
-    BTH_ERROR_CONNECTION_TERMINATED_DUE_TO_MIC_FAILURE = 0x0000003d,
-    BTH_ERROR_CONNECTION_FAILED_TO_BE_ESTABLISHED      = 0x0000003e,
+    BTH_ERROR_CONNECTION_TERMINATED_DUE_TO_MIC_FAILURE = 0x0000003dU,
+    BTH_ERROR_CONNECTION_FAILED_TO_BE_ESTABLISHED      = 0x0000003eU,
 }
 
-enum uint BTH_ERROR_MAC_CONNECTION_FAILED = 0x0000003f;
-enum uint BTH_ERROR_COARSE_CLOCK_ADJUSTMENT_REJECTED = 0x00000040;
-enum uint BTH_ERROR_TYPE_0_SUBMAP_NOT_DEFINED = 0x00000041;
-enum uint BTH_ERROR_UNKNOWN_ADVERTISING_IDENTIFIER = 0x00000042;
+enum uint BTH_ERROR_MAC_CONNECTION_FAILED = 0x0000003fU;
+enum uint BTH_ERROR_COARSE_CLOCK_ADJUSTMENT_REJECTED = 0x00000040U;
+enum uint BTH_ERROR_TYPE_0_SUBMAP_NOT_DEFINED = 0x00000041U;
+enum uint BTH_ERROR_UNKNOWN_ADVERTISING_IDENTIFIER = 0x00000042U;
 
 enum : uint
 {
-    BTH_ERROR_LIMIT_REACHED               = 0x00000043,
-    BTH_ERROR_OPERATION_CANCELLED_BY_HOST = 0x00000044,
+    BTH_ERROR_LIMIT_REACHED               = 0x00000043U,
+    BTH_ERROR_OPERATION_CANCELLED_BY_HOST = 0x00000044U,
 }
 
-enum uint BTH_ERROR_PACKET_TOO_LONG = 0x00000045;
-enum uint BTH_ERROR_UNSPECIFIED = 0x000000ff;
+enum uint BTH_ERROR_PACKET_TOO_LONG = 0x00000045U;
+enum uint BTH_ERROR_UNSPECIFIED = 0x000000ffU;
 
 enum : uint
 {
-    L2CAP_MIN_MTU     = 0x00000030,
-    L2CAP_MAX_MTU     = 0x0000ffff,
-    L2CAP_DEFAULT_MTU = 0x000002a0,
+    L2CAP_MIN_MTU     = 0x00000030U,
+    L2CAP_MAX_MTU     = 0x0000ffffU,
+    L2CAP_DEFAULT_MTU = 0x000002a0U,
 }
 
-enum uint MAX_L2CAP_PING_DATA_LENGTH = 0x0000002c;
-enum uint MAX_L2CAP_INFO_DATA_LENGTH = 0x0000002c;
+enum uint MAX_L2CAP_PING_DATA_LENGTH = 0x0000002cU;
+enum uint MAX_L2CAP_INFO_DATA_LENGTH = 0x0000002cU;
 
 enum : uint
 {
-    BDIF_ADDRESS  = 0x00000001,
-    BDIF_COD      = 0x00000002,
-    BDIF_NAME     = 0x00000004,
-    BDIF_PAIRED   = 0x00000008,
-    BDIF_PERSONAL = 0x00000010,
+    BDIF_ADDRESS  = 0x00000001U,
+    BDIF_COD      = 0x00000002U,
+    BDIF_NAME     = 0x00000004U,
+    BDIF_PAIRED   = 0x00000008U,
+    BDIF_PERSONAL = 0x00000010U,
 }
 
-enum uint BDIF_CONNECTED = 0x00000020;
-enum uint BDIF_SHORT_NAME = 0x00000040;
+enum uint BDIF_CONNECTED = 0x00000020U;
+enum uint BDIF_SHORT_NAME = 0x00000040U;
 
 enum : uint
 {
-    BDIF_VISIBLE            = 0x00000080,
-    BDIF_SSP_SUPPORTED      = 0x00000100,
-    BDIF_SSP_PAIRED         = 0x00000200,
-    BDIF_SSP_MITM_PROTECTED = 0x00000400,
+    BDIF_VISIBLE            = 0x00000080U,
+    BDIF_SSP_SUPPORTED      = 0x00000100U,
+    BDIF_SSP_PAIRED         = 0x00000200U,
+    BDIF_SSP_MITM_PROTECTED = 0x00000400U,
 }
 
 enum : uint
 {
-    BDIF_RSSI              = 0x00001000,
-    BDIF_EIR               = 0x00002000,
-    BDIF_BR                = 0x00004000,
-    BDIF_LE                = 0x00008000,
-    BDIF_LE_PAIRED         = 0x00010000,
-    BDIF_LE_PERSONAL       = 0x00020000,
-    BDIF_LE_MITM_PROTECTED = 0x00040000,
+    BDIF_RSSI              = 0x00001000U,
+    BDIF_EIR               = 0x00002000U,
+    BDIF_BR                = 0x00004000U,
+    BDIF_LE                = 0x00008000U,
+    BDIF_LE_PAIRED         = 0x00010000U,
+    BDIF_LE_PERSONAL       = 0x00020000U,
+    BDIF_LE_MITM_PROTECTED = 0x00040000U,
 }
 
-enum uint BDIF_LE_PRIVACY_ENABLED = 0x00080000;
-enum uint BDIF_LE_RANDOM_ADDRESS_TYPE = 0x00100000;
-enum uint BDIF_LE_DISCOVERABLE = 0x00200000;
+enum uint BDIF_LE_PRIVACY_ENABLED = 0x00080000U;
+enum uint BDIF_LE_RANDOM_ADDRESS_TYPE = 0x00100000U;
+enum uint BDIF_LE_DISCOVERABLE = 0x00200000U;
 
 enum : uint
 {
-    BDIF_LE_NAME        = 0x00400000,
-    BDIF_LE_VISIBLE     = 0x00800000,
-    BDIF_LE_CONNECTED   = 0x01000000,
-    BDIF_LE_CONNECTABLE = 0x02000000,
+    BDIF_LE_NAME        = 0x00400000U,
+    BDIF_LE_VISIBLE     = 0x00800000U,
+    BDIF_LE_CONNECTED   = 0x01000000U,
+    BDIF_LE_CONNECTABLE = 0x02000000U,
 }
 
-enum uint BDIF_BR_SECURE_CONNECTION_PAIRED = 0x08000000;
-enum uint BDIF_LE_SECURE_CONNECTION_PAIRED = 0x10000000;
-enum uint BDIF_DEBUGKEY = 0x20000000;
-enum uint BDIF_LE_DEBUGKEY = 0x40000000;
-enum uint BDIF_TX_POWER = 0x80000000;
+enum uint BDIF_BR_SECURE_CONNECTION_PAIRED = 0x08000000U;
+enum uint BDIF_LE_SECURE_CONNECTION_PAIRED = 0x10000000U;
+enum uint BDIF_DEBUGKEY = 0x20000000U;
+enum uint BDIF_LE_DEBUGKEY = 0x40000000U;
+enum uint BDIF_TX_POWER = 0x80000000U;
 
 enum : uint
 {
-    HCI_CONNECTION_TYPE_ACL = 0x00000001,
-    HCI_CONNECTION_TYPE_SCO = 0x00000002,
-    HCI_CONNECTION_TYPE_LE  = 0x00000003,
+    HCI_CONNECTION_TYPE_ACL = 0x00000001U,
+    HCI_CONNECTION_TYPE_SCO = 0x00000002U,
+    HCI_CONNECTION_TYPE_LE  = 0x00000003U,
 }
 
 enum : uint
 {
-    HCI_CONNNECTION_TYPE_ACL = 0x00000001,
-    HCI_CONNNECTION_TYPE_SCO = 0x00000002,
+    HCI_CONNNECTION_TYPE_ACL = 0x00000001U,
+    HCI_CONNNECTION_TYPE_SCO = 0x00000002U,
 }
 
-enum uint BTH_MAX_SERVICE_NAME_SIZE = 0x00000100;
-enum uint MAX_UUIDS_IN_QUERY = 0x0000000c;
-enum uint BTH_VID_DEFAULT_VALUE = 0x0000ffff;
+enum uint BTH_MAX_SERVICE_NAME_SIZE = 0x00000100U;
+enum uint MAX_UUIDS_IN_QUERY = 0x0000000cU;
+enum uint BTH_VID_DEFAULT_VALUE = 0x0000ffffU;
 
 enum : uint
 {
-    SDP_ERROR_INVALID_SDP_VERSION        = 0x00000001,
-    SDP_ERROR_INVALID_RECORD_HANDLE      = 0x00000002,
-    SDP_ERROR_INVALID_REQUEST_SYNTAX     = 0x00000003,
-    SDP_ERROR_INVALID_PDU_SIZE           = 0x00000004,
-    SDP_ERROR_INVALID_CONTINUATION_STATE = 0x00000005,
+    SDP_ERROR_INVALID_SDP_VERSION        = 0x00000001U,
+    SDP_ERROR_INVALID_RECORD_HANDLE      = 0x00000002U,
+    SDP_ERROR_INVALID_REQUEST_SYNTAX     = 0x00000003U,
+    SDP_ERROR_INVALID_PDU_SIZE           = 0x00000004U,
+    SDP_ERROR_INVALID_CONTINUATION_STATE = 0x00000005U,
 }
 
-enum uint SDP_ERROR_INSUFFICIENT_RESOURCES = 0x00000006;
+enum uint SDP_ERROR_INSUFFICIENT_RESOURCES = 0x00000006U;
 
 enum : uint
 {
-    SDP_ATTRIB_RECORD_HANDLE            = 0x00000000,
-    SDP_ATTRIB_CLASS_ID_LIST            = 0x00000001,
-    SDP_ATTRIB_RECORD_STATE             = 0x00000002,
-    SDP_ATTRIB_SERVICE_ID               = 0x00000003,
-    SDP_ATTRIB_PROTOCOL_DESCRIPTOR_LIST = 0x00000004,
+    SDP_ATTRIB_RECORD_HANDLE            = 0x00000000U,
+    SDP_ATTRIB_CLASS_ID_LIST            = 0x00000001U,
+    SDP_ATTRIB_RECORD_STATE             = 0x00000002U,
+    SDP_ATTRIB_SERVICE_ID               = 0x00000003U,
+    SDP_ATTRIB_PROTOCOL_DESCRIPTOR_LIST = 0x00000004U,
 }
 
-enum uint SDP_ATTRIB_BROWSE_GROUP_LIST = 0x00000005;
-enum uint SDP_ATTRIB_LANG_BASE_ATTRIB_ID_LIST = 0x00000006;
-enum uint SDP_ATTRIB_INFO_TIME_TO_LIVE = 0x00000007;
+enum uint SDP_ATTRIB_BROWSE_GROUP_LIST = 0x00000005U;
+enum uint SDP_ATTRIB_LANG_BASE_ATTRIB_ID_LIST = 0x00000006U;
+enum uint SDP_ATTRIB_INFO_TIME_TO_LIVE = 0x00000007U;
 
 enum : uint
 {
-    SDP_ATTRIB_AVAILABILITY            = 0x00000008,
-    SDP_ATTRIB_PROFILE_DESCRIPTOR_LIST = 0x00000009,
+    SDP_ATTRIB_AVAILABILITY            = 0x00000008U,
+    SDP_ATTRIB_PROFILE_DESCRIPTOR_LIST = 0x00000009U,
 }
 
-enum uint SDP_ATTRIB_DOCUMENTATION_URL = 0x0000000a;
-enum uint SDP_ATTRIB_CLIENT_EXECUTABLE_URL = 0x0000000b;
+enum uint SDP_ATTRIB_DOCUMENTATION_URL = 0x0000000aU;
+enum uint SDP_ATTRIB_CLIENT_EXECUTABLE_URL = 0x0000000bU;
 
 enum : uint
 {
-    SDP_ATTRIB_ICON_URL                            = 0x0000000c,
-    SDP_ATTRIB_ADDITIONAL_PROTOCOL_DESCRIPTOR_LIST = 0x0000000d,
+    SDP_ATTRIB_ICON_URL                            = 0x0000000cU,
+    SDP_ATTRIB_ADDITIONAL_PROTOCOL_DESCRIPTOR_LIST = 0x0000000dU,
 }
 
-enum uint SDP_ATTRIB_PROFILE_SPECIFIC = 0x00000200;
+enum uint SDP_ATTRIB_PROFILE_SPECIFIC = 0x00000200U;
 
 enum : uint
 {
-    LANG_BASE_LANGUAGE_INDEX = 0x00000000,
-    LANG_BASE_ENCODING_INDEX = 0x00000001,
-    LANG_BASE_OFFSET_INDEX   = 0x00000002,
+    LANG_BASE_LANGUAGE_INDEX = 0x00000000U,
+    LANG_BASE_ENCODING_INDEX = 0x00000001U,
+    LANG_BASE_OFFSET_INDEX   = 0x00000002U,
 }
 
-enum uint LANG_DEFAULT_ID = 0x00000100;
-enum uint LANGUAGE_EN_US = 0x0000656e;
-enum uint ENCODING_UTF_8 = 0x0000006a;
-enum uint STRING_NAME_OFFSET = 0x00000000;
-enum uint STRING_DESCRIPTION_OFFSET = 0x00000001;
-enum uint STRING_PROVIDER_NAME_OFFSET = 0x00000002;
+enum uint LANG_DEFAULT_ID = 0x00000100U;
+enum uint LANGUAGE_EN_US = 0x0000656eU;
+enum uint ENCODING_UTF_8 = 0x0000006aU;
+enum uint STRING_NAME_OFFSET = 0x00000000U;
+enum uint STRING_DESCRIPTION_OFFSET = 0x00000001U;
+enum uint STRING_PROVIDER_NAME_OFFSET = 0x00000002U;
 
 enum : uint
 {
-    SDP_ATTRIB_SDP_VERSION_NUMBER_LIST = 0x00000200,
-    SDP_ATTRIB_SDP_DATABASE_STATE      = 0x00000201,
+    SDP_ATTRIB_SDP_VERSION_NUMBER_LIST = 0x00000200U,
+    SDP_ATTRIB_SDP_DATABASE_STATE      = 0x00000201U,
 }
 
 enum : uint
 {
-    SDP_ATTRIB_BROWSE_GROUP_ID           = 0x00000200,
-    SDP_ATTRIB_CORDLESS_EXTERNAL_NETWORK = 0x00000301,
+    SDP_ATTRIB_BROWSE_GROUP_ID           = 0x00000200U,
+    SDP_ATTRIB_CORDLESS_EXTERNAL_NETWORK = 0x00000301U,
 }
 
 enum : uint
 {
-    SDP_ATTRIB_FAX_CLASS_1_SUPPORT        = 0x00000302,
-    SDP_ATTRIB_FAX_CLASS_2_0_SUPPORT      = 0x00000303,
-    SDP_ATTRIB_FAX_CLASS_2_SUPPORT        = 0x00000304,
-    SDP_ATTRIB_FAX_AUDIO_FEEDBACK_SUPPORT = 0x00000305,
+    SDP_ATTRIB_FAX_CLASS_1_SUPPORT        = 0x00000302U,
+    SDP_ATTRIB_FAX_CLASS_2_0_SUPPORT      = 0x00000303U,
+    SDP_ATTRIB_FAX_CLASS_2_SUPPORT        = 0x00000304U,
+    SDP_ATTRIB_FAX_AUDIO_FEEDBACK_SUPPORT = 0x00000305U,
 }
 
-enum uint SDP_ATTRIB_HEADSET_REMOTE_AUDIO_VOLUME_CONTROL = 0x00000302;
+enum uint SDP_ATTRIB_HEADSET_REMOTE_AUDIO_VOLUME_CONTROL = 0x00000302U;
 
 enum : uint
 {
-    SDP_ATTRIB_LAN_LPSUBNET                       = 0x00000200,
-    SDP_ATTRIB_OBJECT_PUSH_SUPPORTED_FORMATS_LIST = 0x00000303,
+    SDP_ATTRIB_LAN_LPSUBNET                       = 0x00000200U,
+    SDP_ATTRIB_OBJECT_PUSH_SUPPORTED_FORMATS_LIST = 0x00000303U,
 }
 
-enum uint SDP_ATTRIB_SYNCH_SUPPORTED_DATA_STORES_LIST = 0x00000301;
+enum uint SDP_ATTRIB_SYNCH_SUPPORTED_DATA_STORES_LIST = 0x00000301U;
 
 enum : uint
 {
-    SDP_ATTRIB_SERVICE_VERSION          = 0x00000300,
-    SDP_ATTRIB_PAN_NETWORK_ADDRESS      = 0x00000306,
-    SDP_ATTRIB_PAN_WAP_GATEWAY          = 0x00000307,
-    SDP_ATTRIB_PAN_HOME_PAGE_URL        = 0x00000308,
-    SDP_ATTRIB_PAN_WAP_STACK_TYPE       = 0x00000309,
-    SDP_ATTRIB_PAN_SECURITY_DESCRIPTION = 0x0000030a,
-    SDP_ATTRIB_PAN_NET_ACCESS_TYPE      = 0x0000030b,
-    SDP_ATTRIB_PAN_MAX_NET_ACCESS_RATE  = 0x0000030c,
+    SDP_ATTRIB_SERVICE_VERSION          = 0x00000300U,
+    SDP_ATTRIB_PAN_NETWORK_ADDRESS      = 0x00000306U,
+    SDP_ATTRIB_PAN_WAP_GATEWAY          = 0x00000307U,
+    SDP_ATTRIB_PAN_HOME_PAGE_URL        = 0x00000308U,
+    SDP_ATTRIB_PAN_WAP_STACK_TYPE       = 0x00000309U,
+    SDP_ATTRIB_PAN_SECURITY_DESCRIPTION = 0x0000030aU,
+    SDP_ATTRIB_PAN_NET_ACCESS_TYPE      = 0x0000030bU,
+    SDP_ATTRIB_PAN_MAX_NET_ACCESS_RATE  = 0x0000030cU,
 }
 
 enum : uint
 {
-    SDP_ATTRIB_IMAGING_SUPPORTED_CAPABILITIES = 0x00000310,
-    SDP_ATTRIB_IMAGING_SUPPORTED_FEATURES     = 0x00000311,
-    SDP_ATTRIB_IMAGING_SUPPORTED_FUNCTIONS    = 0x00000312,
-    SDP_ATTRIB_IMAGING_TOTAL_DATA_CAPACITY    = 0x00000313,
+    SDP_ATTRIB_IMAGING_SUPPORTED_CAPABILITIES = 0x00000310U,
+    SDP_ATTRIB_IMAGING_SUPPORTED_FEATURES     = 0x00000311U,
+    SDP_ATTRIB_IMAGING_SUPPORTED_FUNCTIONS    = 0x00000312U,
+    SDP_ATTRIB_IMAGING_TOTAL_DATA_CAPACITY    = 0x00000313U,
 }
 
 enum : uint
 {
-    SDP_ATTRIB_DI_SPECIFICATION_ID = 0x00000200,
-    SDP_ATTRIB_DI_VENDOR_ID        = 0x00000201,
-    SDP_ATTRIB_DI_PRODUCT_ID       = 0x00000202,
-    SDP_ATTRIB_DI_VERSION          = 0x00000203,
-    SDP_ATTRIB_DI_PRIMARY_RECORD   = 0x00000204,
-    SDP_ATTRIB_DI_VENDOR_ID_SOURCE = 0x00000205,
+    SDP_ATTRIB_DI_SPECIFICATION_ID = 0x00000200U,
+    SDP_ATTRIB_DI_VENDOR_ID        = 0x00000201U,
+    SDP_ATTRIB_DI_PRODUCT_ID       = 0x00000202U,
+    SDP_ATTRIB_DI_VERSION          = 0x00000203U,
+    SDP_ATTRIB_DI_PRIMARY_RECORD   = 0x00000204U,
+    SDP_ATTRIB_DI_VENDOR_ID_SOURCE = 0x00000205U,
 }
 
 enum : uint
 {
-    SDP_ATTRIB_HID_DEVICE_RELEASE_NUMBER = 0x00000200,
-    SDP_ATTRIB_HID_PARSER_VERSION        = 0x00000201,
-    SDP_ATTRIB_HID_DEVICE_SUBCLASS       = 0x00000202,
-    SDP_ATTRIB_HID_COUNTRY_CODE          = 0x00000203,
-    SDP_ATTRIB_HID_VIRTUAL_CABLE         = 0x00000204,
-    SDP_ATTRIB_HID_RECONNECT_INITIATE    = 0x00000205,
-    SDP_ATTRIB_HID_DESCRIPTOR_LIST       = 0x00000206,
-    SDP_ATTRIB_HID_LANG_ID_BASE_LIST     = 0x00000207,
-    SDP_ATTRIB_HID_SDP_DISABLE           = 0x00000208,
-    SDP_ATTRIB_HID_BATTERY_POWER         = 0x00000209,
-    SDP_ATTRIB_HID_REMOTE_WAKE           = 0x0000020a,
-    SDP_ATTRIB_HID_PROFILE_VERSION       = 0x0000020b,
-    SDP_ATTRIB_HID_SUPERVISION_TIMEOUT   = 0x0000020c,
-    SDP_ATTRIB_HID_NORMALLY_CONNECTABLE  = 0x0000020d,
-    SDP_ATTRIB_HID_BOOT_DEVICE           = 0x0000020e,
-    SDP_ATTRIB_HID_SSR_HOST_MAX_LATENCY  = 0x0000020f,
-    SDP_ATTRIB_HID_SSR_HOST_MIN_TIMEOUT  = 0x00000210,
+    SDP_ATTRIB_HID_DEVICE_RELEASE_NUMBER = 0x00000200U,
+    SDP_ATTRIB_HID_PARSER_VERSION        = 0x00000201U,
+    SDP_ATTRIB_HID_DEVICE_SUBCLASS       = 0x00000202U,
+    SDP_ATTRIB_HID_COUNTRY_CODE          = 0x00000203U,
+    SDP_ATTRIB_HID_VIRTUAL_CABLE         = 0x00000204U,
+    SDP_ATTRIB_HID_RECONNECT_INITIATE    = 0x00000205U,
+    SDP_ATTRIB_HID_DESCRIPTOR_LIST       = 0x00000206U,
+    SDP_ATTRIB_HID_LANG_ID_BASE_LIST     = 0x00000207U,
+    SDP_ATTRIB_HID_SDP_DISABLE           = 0x00000208U,
+    SDP_ATTRIB_HID_BATTERY_POWER         = 0x00000209U,
+    SDP_ATTRIB_HID_REMOTE_WAKE           = 0x0000020aU,
+    SDP_ATTRIB_HID_PROFILE_VERSION       = 0x0000020bU,
+    SDP_ATTRIB_HID_SUPERVISION_TIMEOUT   = 0x0000020cU,
+    SDP_ATTRIB_HID_NORMALLY_CONNECTABLE  = 0x0000020dU,
+    SDP_ATTRIB_HID_BOOT_DEVICE           = 0x0000020eU,
+    SDP_ATTRIB_HID_SSR_HOST_MAX_LATENCY  = 0x0000020fU,
+    SDP_ATTRIB_HID_SSR_HOST_MIN_TIMEOUT  = 0x00000210U,
 }
 
-enum uint SDP_ATTRIB_A2DP_SUPPORTED_FEATURES = 0x00000311;
-enum uint SDP_ATTRIB_AVRCP_SUPPORTED_FEATURES = 0x00000311;
-enum uint SDP_ATTRIB_HFP_SUPPORTED_FEATURES = 0x00000311;
+enum uint SDP_ATTRIB_A2DP_SUPPORTED_FEATURES = 0x00000311U;
+enum uint SDP_ATTRIB_AVRCP_SUPPORTED_FEATURES = 0x00000311U;
+enum uint SDP_ATTRIB_HFP_SUPPORTED_FEATURES = 0x00000311U;
 
 enum : uint
 {
-    AVRCP_SUPPORTED_FEATURES_CATEGORY_1                      = 0x00000001,
-    AVRCP_SUPPORTED_FEATURES_CATEGORY_2                      = 0x00000002,
-    AVRCP_SUPPORTED_FEATURES_CATEGORY_3                      = 0x00000004,
-    AVRCP_SUPPORTED_FEATURES_CATEGORY_4                      = 0x00000008,
-    AVRCP_SUPPORTED_FEATURES_CT_BROWSING                     = 0x00000040,
-    AVRCP_SUPPORTED_FEATURES_CT_COVER_ART_IMAGE_PROPERTIES   = 0x00000080,
-    AVRCP_SUPPORTED_FEATURES_CT_COVER_ART_IMAGE              = 0x00000100,
-    AVRCP_SUPPORTED_FEATURES_CT_COVER_ART_LINKED_THUMBNAIL   = 0x00000200,
-    AVRCP_SUPPORTED_FEATURES_TG_PLAYER_APPLICATION_SETTINGS  = 0x00000010,
-    AVRCP_SUPPORTED_FEATURES_TG_GROUP_NAVIGATION             = 0x00000020,
-    AVRCP_SUPPORTED_FEATURES_TG_BROWSING                     = 0x00000040,
-    AVRCP_SUPPORTED_FEATURES_TG_MULTIPLE_PLAYER_APPLICATIONS = 0x00000080,
-    AVRCP_SUPPORTED_FEATURES_TG_COVER_ART                    = 0x00000100,
+    AVRCP_SUPPORTED_FEATURES_CATEGORY_1                      = 0x00000001U,
+    AVRCP_SUPPORTED_FEATURES_CATEGORY_2                      = 0x00000002U,
+    AVRCP_SUPPORTED_FEATURES_CATEGORY_3                      = 0x00000004U,
+    AVRCP_SUPPORTED_FEATURES_CATEGORY_4                      = 0x00000008U,
+    AVRCP_SUPPORTED_FEATURES_CT_BROWSING                     = 0x00000040U,
+    AVRCP_SUPPORTED_FEATURES_CT_COVER_ART_IMAGE_PROPERTIES   = 0x00000080U,
+    AVRCP_SUPPORTED_FEATURES_CT_COVER_ART_IMAGE              = 0x00000100U,
+    AVRCP_SUPPORTED_FEATURES_CT_COVER_ART_LINKED_THUMBNAIL   = 0x00000200U,
+    AVRCP_SUPPORTED_FEATURES_TG_PLAYER_APPLICATION_SETTINGS  = 0x00000010U,
+    AVRCP_SUPPORTED_FEATURES_TG_GROUP_NAVIGATION             = 0x00000020U,
+    AVRCP_SUPPORTED_FEATURES_TG_BROWSING                     = 0x00000040U,
+    AVRCP_SUPPORTED_FEATURES_TG_MULTIPLE_PLAYER_APPLICATIONS = 0x00000080U,
+    AVRCP_SUPPORTED_FEATURES_TG_COVER_ART                    = 0x00000100U,
 }
 
 enum : uint
 {
-    A2DP_SINK_SUPPORTED_FEATURES_HEADPHONE = 0x00000001,
-    A2DP_SINK_SUPPORTED_FEATURES_SPEAKER   = 0x00000002,
-    A2DP_SINK_SUPPORTED_FEATURES_RECORDER  = 0x00000004,
-    A2DP_SINK_SUPPORTED_FEATURES_AMPLIFIER = 0x00000008,
+    A2DP_SINK_SUPPORTED_FEATURES_HEADPHONE = 0x00000001U,
+    A2DP_SINK_SUPPORTED_FEATURES_SPEAKER   = 0x00000002U,
+    A2DP_SINK_SUPPORTED_FEATURES_RECORDER  = 0x00000004U,
+    A2DP_SINK_SUPPORTED_FEATURES_AMPLIFIER = 0x00000008U,
 }
 
 enum : uint
 {
-    A2DP_SOURCE_SUPPORTED_FEATURES_PLAYER     = 0x00000001,
-    A2DP_SOURCE_SUPPORTED_FEATURES_MICROPHONE = 0x00000002,
-    A2DP_SOURCE_SUPPORTED_FEATURES_TUNER      = 0x00000004,
-    A2DP_SOURCE_SUPPORTED_FEATURES_MIXER      = 0x00000008,
+    A2DP_SOURCE_SUPPORTED_FEATURES_PLAYER     = 0x00000001U,
+    A2DP_SOURCE_SUPPORTED_FEATURES_MICROPHONE = 0x00000002U,
+    A2DP_SOURCE_SUPPORTED_FEATURES_TUNER      = 0x00000004U,
+    A2DP_SOURCE_SUPPORTED_FEATURES_MIXER      = 0x00000008U,
 }
 
 enum : uint
 {
-    CORDLESS_EXTERNAL_NETWORK_PSTN            = 0x00000001,
-    CORDLESS_EXTERNAL_NETWORK_ISDN            = 0x00000002,
-    CORDLESS_EXTERNAL_NETWORK_GSM             = 0x00000003,
-    CORDLESS_EXTERNAL_NETWORK_CDMA            = 0x00000004,
-    CORDLESS_EXTERNAL_NETWORK_ANALOG_CELLULAR = 0x00000005,
-    CORDLESS_EXTERNAL_NETWORK_PACKET_SWITCHED = 0x00000006,
-    CORDLESS_EXTERNAL_NETWORK_OTHER           = 0x00000007,
+    CORDLESS_EXTERNAL_NETWORK_PSTN            = 0x00000001U,
+    CORDLESS_EXTERNAL_NETWORK_ISDN            = 0x00000002U,
+    CORDLESS_EXTERNAL_NETWORK_GSM             = 0x00000003U,
+    CORDLESS_EXTERNAL_NETWORK_CDMA            = 0x00000004U,
+    CORDLESS_EXTERNAL_NETWORK_ANALOG_CELLULAR = 0x00000005U,
+    CORDLESS_EXTERNAL_NETWORK_PACKET_SWITCHED = 0x00000006U,
+    CORDLESS_EXTERNAL_NETWORK_OTHER           = 0x00000007U,
 }
 
 enum : uint
 {
-    OBJECT_PUSH_FORMAT_VCARD_2_1 = 0x00000001,
-    OBJECT_PUSH_FORMAT_VCARD_3_0 = 0x00000002,
-    OBJECT_PUSH_FORMAT_VCAL_1_0  = 0x00000003,
-    OBJECT_PUSH_FORMAT_ICAL_2_0  = 0x00000004,
-    OBJECT_PUSH_FORMAT_VNOTE     = 0x00000005,
-    OBJECT_PUSH_FORMAT_VMESSAGE  = 0x00000006,
-    OBJECT_PUSH_FORMAT_ANY       = 0x000000ff,
+    OBJECT_PUSH_FORMAT_VCARD_2_1 = 0x00000001U,
+    OBJECT_PUSH_FORMAT_VCARD_3_0 = 0x00000002U,
+    OBJECT_PUSH_FORMAT_VCAL_1_0  = 0x00000003U,
+    OBJECT_PUSH_FORMAT_ICAL_2_0  = 0x00000004U,
+    OBJECT_PUSH_FORMAT_VNOTE     = 0x00000005U,
+    OBJECT_PUSH_FORMAT_VMESSAGE  = 0x00000006U,
+    OBJECT_PUSH_FORMAT_ANY       = 0x000000ffU,
 }
 
 enum : uint
 {
-    SYNCH_DATA_STORE_PHONEBOOK = 0x00000001,
-    SYNCH_DATA_STORE_CALENDAR  = 0x00000003,
-    SYNCH_DATA_STORE_NOTES     = 0x00000005,
-    SYNCH_DATA_STORE_MESSAGES  = 0x00000006,
+    SYNCH_DATA_STORE_PHONEBOOK = 0x00000001U,
+    SYNCH_DATA_STORE_CALENDAR  = 0x00000003U,
+    SYNCH_DATA_STORE_NOTES     = 0x00000005U,
+    SYNCH_DATA_STORE_MESSAGES  = 0x00000006U,
 }
 
 enum : uint
 {
-    DI_VENDOR_ID_SOURCE_BLUETOOTH_SIG = 0x00000001,
-    DI_VENDOR_ID_SOURCE_USB_IF        = 0x00000002,
+    DI_VENDOR_ID_SOURCE_BLUETOOTH_SIG = 0x00000001U,
+    DI_VENDOR_ID_SOURCE_USB_IF        = 0x00000002U,
 }
 
 enum : uint
 {
-    PSM_SDP    = 0x00000001,
-    PSM_RFCOMM = 0x00000003,
+    PSM_SDP    = 0x00000001U,
+    PSM_RFCOMM = 0x00000003U,
 }
 
 enum : uint
 {
-    PSM_TCS_BIN          = 0x00000005,
-    PSM_TCS_BIN_CORDLESS = 0x00000007,
+    PSM_TCS_BIN          = 0x00000005U,
+    PSM_TCS_BIN_CORDLESS = 0x00000007U,
 }
 
 enum : uint
 {
-    PSM_BNEP          = 0x0000000f,
-    PSM_HID_CONTROL   = 0x00000011,
-    PSM_HID_INTERRUPT = 0x00000013,
+    PSM_BNEP          = 0x0000000fU,
+    PSM_HID_CONTROL   = 0x00000011U,
+    PSM_HID_INTERRUPT = 0x00000013U,
 }
 
 enum : uint
 {
-    PSM_UPNP         = 0x00000015,
-    PSM_AVCTP        = 0x00000017,
-    PSM_AVDTP        = 0x00000019,
-    PSM_AVCTP_BROWSE = 0x0000001b,
+    PSM_UPNP         = 0x00000015U,
+    PSM_AVCTP        = 0x00000017U,
+    PSM_AVDTP        = 0x00000019U,
+    PSM_AVCTP_BROWSE = 0x0000001bU,
 }
 
-enum uint PSM_UDI_C_PLANE = 0x0000001d;
+enum uint PSM_UDI_C_PLANE = 0x0000001dU;
 
 enum : uint
 {
-    PSM_ATT     = 0x0000001f,
-    PSM_3DSP    = 0x00000021,
-    PSM_LE_IPSP = 0x00000023,
+    PSM_ATT     = 0x0000001fU,
+    PSM_3DSP    = 0x00000021U,
+    PSM_LE_IPSP = 0x00000023U,
 }
 
 enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
@@ -1044,70 +1054,70 @@ enum : const(wchar)*
 }
 
 enum const(wchar)* STR_USBHCI_CLASS_HARDWAREID = "USB\\Class_E0&SubClass_01&Prot_01";
-enum uint BTH_IOCTL_BASE = 0x00000000;
+enum uint BTH_IOCTL_BASE = 0x00000000U;
 
 enum : uint
 {
-    SDP_CONNECT_CACHE     = 0x00000001,
-    SDP_CONNECT_ALLOW_PIN = 0x00000002,
+    SDP_CONNECT_CACHE     = 0x00000001U,
+    SDP_CONNECT_ALLOW_PIN = 0x00000002U,
 }
 
 enum : uint
 {
-    SDP_REQUEST_TO_DEFAULT = 0x00000000,
-    SDP_REQUEST_TO_MIN     = 0x0000000a,
-    SDP_REQUEST_TO_MAX     = 0x0000002d,
+    SDP_REQUEST_TO_DEFAULT = 0x00000000U,
+    SDP_REQUEST_TO_MIN     = 0x0000000aU,
+    SDP_REQUEST_TO_MAX     = 0x0000002dU,
 }
 
 enum : uint
 {
-    SERVICE_OPTION_DO_NOT_PUBLISH     = 0x00000002,
-    SERVICE_OPTION_NO_PUBLIC_BROWSE   = 0x00000004,
-    SERVICE_OPTION_DO_NOT_PUBLISH_EIR = 0x00000008,
+    SERVICE_OPTION_DO_NOT_PUBLISH     = 0x00000002U,
+    SERVICE_OPTION_NO_PUBLIC_BROWSE   = 0x00000004U,
+    SERVICE_OPTION_DO_NOT_PUBLISH_EIR = 0x00000008U,
 }
 
 enum : uint
 {
-    SERVICE_SECURITY_USE_DEFAULTS     = 0x00000000,
-    SERVICE_SECURITY_NONE             = 0x00000001,
-    SERVICE_SECURITY_AUTHORIZE        = 0x00000002,
-    SERVICE_SECURITY_AUTHENTICATE     = 0x00000004,
-    SERVICE_SECURITY_ENCRYPT_REQUIRED = 0x00000010,
-    SERVICE_SECURITY_ENCRYPT_OPTIONAL = 0x00000020,
-    SERVICE_SECURITY_DISABLED         = 0x10000000,
-    SERVICE_SECURITY_NO_ASK           = 0x20000000,
+    SERVICE_SECURITY_USE_DEFAULTS     = 0x00000000U,
+    SERVICE_SECURITY_NONE             = 0x00000001U,
+    SERVICE_SECURITY_AUTHORIZE        = 0x00000002U,
+    SERVICE_SECURITY_AUTHENTICATE     = 0x00000004U,
+    SERVICE_SECURITY_ENCRYPT_REQUIRED = 0x00000010U,
+    SERVICE_SECURITY_ENCRYPT_OPTIONAL = 0x00000020U,
+    SERVICE_SECURITY_DISABLED         = 0x10000000U,
+    SERVICE_SECURITY_NO_ASK           = 0x20000000U,
 }
 
 enum : uint
 {
-    SDP_SEARCH_NO_PARSE_CHECK  = 0x00000001,
-    SDP_SEARCH_NO_FORMAT_CHECK = 0x00000002,
+    SDP_SEARCH_NO_PARSE_CHECK  = 0x00000001U,
+    SDP_SEARCH_NO_FORMAT_CHECK = 0x00000002U,
 }
 
-enum ulong BTH_HOST_FEATURE_ENHANCED_RETRANSMISSION_MODE = 0x0000000000000001;
+enum ulong BTH_HOST_FEATURE_ENHANCED_RETRANSMISSION_MODE = 0x0000000000000001UL;
 
 enum : ulong
 {
-    BTH_HOST_FEATURE_STREAMING_MODE = 0x0000000000000002,
-    BTH_HOST_FEATURE_LOW_ENERGY     = 0x0000000000000004,
-    BTH_HOST_FEATURE_SCO_HCI        = 0x0000000000000008,
-    BTH_HOST_FEATURE_SCO_HCIBYPASS  = 0x0000000000000010,
+    BTH_HOST_FEATURE_STREAMING_MODE = 0x0000000000000002UL,
+    BTH_HOST_FEATURE_LOW_ENERGY     = 0x0000000000000004UL,
+    BTH_HOST_FEATURE_SCO_HCI        = 0x0000000000000008UL,
+    BTH_HOST_FEATURE_SCO_HCIBYPASS  = 0x0000000000000010UL,
 }
 
 enum : uint
 {
-    BLUETOOTH_MAX_NAME_SIZE           = 0x000000f8,
-    BLUETOOTH_MAX_PASSKEY_SIZE        = 0x00000010,
-    BLUETOOTH_MAX_PASSKEY_BUFFER_SIZE = 0x00000011,
-    BLUETOOTH_MAX_SERVICE_NAME_SIZE   = 0x00000100,
+    BLUETOOTH_MAX_NAME_SIZE           = 0x000000f8U,
+    BLUETOOTH_MAX_PASSKEY_SIZE        = 0x00000010U,
+    BLUETOOTH_MAX_PASSKEY_BUFFER_SIZE = 0x00000011U,
+    BLUETOOTH_MAX_SERVICE_NAME_SIZE   = 0x00000100U,
 }
 
-enum uint BLUETOOTH_DEVICE_NAME_SIZE = 0x00000100;
+enum uint BLUETOOTH_DEVICE_NAME_SIZE = 0x00000100U;
 
 enum : uint
 {
-    BLUETOOTH_SERVICE_DISABLE = 0x00000000,
-    BLUETOOTH_SERVICE_ENABLE  = 0x00000001,
+    BLUETOOTH_SERVICE_DISABLE = 0x00000000U,
+    BLUETOOTH_SERVICE_ENABLE  = 0x00000001U,
 }
 
 enum : GUID
@@ -1120,383 +1130,383 @@ enum GUID BTH_LE_ATT_BLUETOOTH_BASE_GUID = GUID("00000000-0000-1000-8000-00805f9
 
 enum : uint
 {
-    BTH_LE_SERVICE_GAP  = 0x00001800,
-    BTH_LE_SERVICE_GATT = 0x00001801,
+    BTH_LE_SERVICE_GAP  = 0x00001800U,
+    BTH_LE_SERVICE_GATT = 0x00001801U,
 }
 
 enum : uint
 {
-    BTH_LE_GATT_ATTRIBUTE_TYPE_PRIMARY_SERVICE   = 0x00002800,
-    BTH_LE_GATT_ATTRIBUTE_TYPE_SECONDARY_SERVICE = 0x00002801,
-    BTH_LE_GATT_ATTRIBUTE_TYPE_INCLUDE           = 0x00002802,
-    BTH_LE_GATT_ATTRIBUTE_TYPE_CHARACTERISTIC    = 0x00002803,
+    BTH_LE_GATT_ATTRIBUTE_TYPE_PRIMARY_SERVICE   = 0x00002800U,
+    BTH_LE_GATT_ATTRIBUTE_TYPE_SECONDARY_SERVICE = 0x00002801U,
+    BTH_LE_GATT_ATTRIBUTE_TYPE_INCLUDE           = 0x00002802U,
+    BTH_LE_GATT_ATTRIBUTE_TYPE_CHARACTERISTIC    = 0x00002803U,
 }
 
 enum : uint
 {
-    BTH_LE_GATT_CHARACTERISTIC_DESCRIPTOR_EXTENDED_PROPERTIES                = 0x00002900,
-    BTH_LE_GATT_CHARACTERISTIC_DESCRIPTOR_USER_DESCRIPTION                   = 0x00002901,
-    BTH_LE_GATT_CHARACTERISTIC_DESCRIPTOR_CLIENT_CONFIGURATION               = 0x00002902,
-    BTH_LE_GATT_CHARACTERISTIC_DESCRIPTOR_SERVER_CONFIGURATION               = 0x00002903,
-    BTH_LE_GATT_CHARACTERISTIC_DESCRIPTOR_FORMAT                             = 0x00002904,
-    BTH_LE_GATT_CHARACTERISTIC_DESCRIPTOR_AGGREGATE_FORMAT                   = 0x00002905,
-    BTH_LE_GATT_CHARACTERISTIC_TYPE_DEVICE_NAME                              = 0x00002a00,
-    BTH_LE_GATT_CHARACTERISTIC_TYPE_APPEARANCE                               = 0x00002a01,
-    BTH_LE_GATT_CHARACTERISTIC_TYPE_PERIPHERAL_PRIVACY_FLAG                  = 0x00002a02,
-    BTH_LE_GATT_CHARACTERISTIC_TYPE_RECONNECTION_ADDRESS                     = 0x00002a03,
-    BTH_LE_GATT_CHARACTERISTIC_TYPE_PERIPHERAL_PREFERED_CONNECTION_PARAMETER = 0x00002a04,
-    BTH_LE_GATT_CHARACTERISTIC_TYPE_SERVICE_CHANGED                          = 0x00002a05,
+    BTH_LE_GATT_CHARACTERISTIC_DESCRIPTOR_EXTENDED_PROPERTIES                = 0x00002900U,
+    BTH_LE_GATT_CHARACTERISTIC_DESCRIPTOR_USER_DESCRIPTION                   = 0x00002901U,
+    BTH_LE_GATT_CHARACTERISTIC_DESCRIPTOR_CLIENT_CONFIGURATION               = 0x00002902U,
+    BTH_LE_GATT_CHARACTERISTIC_DESCRIPTOR_SERVER_CONFIGURATION               = 0x00002903U,
+    BTH_LE_GATT_CHARACTERISTIC_DESCRIPTOR_FORMAT                             = 0x00002904U,
+    BTH_LE_GATT_CHARACTERISTIC_DESCRIPTOR_AGGREGATE_FORMAT                   = 0x00002905U,
+    BTH_LE_GATT_CHARACTERISTIC_TYPE_DEVICE_NAME                              = 0x00002a00U,
+    BTH_LE_GATT_CHARACTERISTIC_TYPE_APPEARANCE                               = 0x00002a01U,
+    BTH_LE_GATT_CHARACTERISTIC_TYPE_PERIPHERAL_PRIVACY_FLAG                  = 0x00002a02U,
+    BTH_LE_GATT_CHARACTERISTIC_TYPE_RECONNECTION_ADDRESS                     = 0x00002a03U,
+    BTH_LE_GATT_CHARACTERISTIC_TYPE_PERIPHERAL_PREFERED_CONNECTION_PARAMETER = 0x00002a04U,
+    BTH_LE_GATT_CHARACTERISTIC_TYPE_SERVICE_CHANGED                          = 0x00002a05U,
 }
 
 enum : uint
 {
-    BTH_LE_GAP_APPEARANCE_CATEGORY_OFFSET                        = 0x00000006,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_MASK                          = 0x000003ff,
-    BTH_LE_GAP_APPEARANCE_SUB_CATEGORY_MASK                      = 0x0000003f,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_UNCATEGORIZED                 = 0x00000000,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_PHONE                         = 0x00000001,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_COMPUTER                      = 0x00000002,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_WATCH                         = 0x00000003,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_CLOCK                         = 0x00000004,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_DISPLAY                       = 0x00000005,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_REMOTE_CONTROL                = 0x00000006,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_EYE_GLASSES                   = 0x00000007,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_TAG                           = 0x00000008,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_KEYRING                       = 0x00000009,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_MEDIA_PLAYER                  = 0x0000000a,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_BARCODE_SCANNER               = 0x0000000b,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_THERMOMETER                   = 0x0000000c,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_HEART_RATE                    = 0x0000000d,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_BLOOD_PRESSURE                = 0x0000000e,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_HID                           = 0x0000000f,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_GLUCOSE_METER                 = 0x00000010,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_RUNNING_WALKING_SENSOR        = 0x00000011,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_CYCLING                       = 0x00000012,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_CONTROL_DEVICE                = 0x00000013,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_NETWORK_DEVICE                = 0x00000014,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_SENSOR                        = 0x00000015,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_LIGHT_FIXTURES                = 0x00000016,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_FAN                           = 0x00000017,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_HVAC                          = 0x00000018,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_AIR_CONDITIONING              = 0x00000019,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_HUMIDIFIER                    = 0x0000001a,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_HEATING                       = 0x0000001b,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_ACCESS_CONTROL                = 0x0000001c,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_MOTORIZED_DEVICE              = 0x0000001d,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_POWER_DEVICE                  = 0x0000001e,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_LIGHT_SOURCE                  = 0x0000001f,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_WINDOW_COVERING               = 0x00000020,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_AUDIO_SINK                    = 0x00000021,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_AUDIO_SOURCE                  = 0x00000022,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_MOTORIZED_VEHICLE             = 0x00000023,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_DOMESTIC_APPLIANCE            = 0x00000024,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_WEARABLE_AUDIO_DEVICE         = 0x00000025,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_AIRCRAFT                      = 0x00000026,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_AV_EQUIPMENT                  = 0x00000027,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_DISPLAY_EQUIPMENT             = 0x00000028,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_HEARING_AID                   = 0x00000029,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_GAMING                        = 0x0000002a,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_SIGNAGE                       = 0x0000002b,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_PLUSE_OXIMETER                = 0x00000031,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_WEIGHT_SCALE                  = 0x00000032,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_PERSONAL_MOBILITY_DEVICE      = 0x00000033,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_CONTINUOUS_GLUCOSE_MONITOR    = 0x00000034,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_INSULIN_PUMP                  = 0x00000035,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_MEDICATION_DELIVERY           = 0x00000036,
-    BTH_LE_GAP_APPEARANCE_CATEGORY_OUTDOOR_SPORTS_ACTIVITY       = 0x00000051,
-    BTH_LE_GAP_APPEARANCE_SUBCATEGORY_GENERIC                    = 0x00000000,
-    BTH_LE_GAP_APPEARANCE_WATCH_SUBCATEGORY_SPORTS_WATCH         = 0x00000001,
-    BTH_LE_GAP_APPEARANCE_THERMOMETER_SUBCATEGORY_EAR            = 0x00000001,
-    BTH_LE_GAP_APPEARANCE_HEART_RATE_SUBCATEGORY_HEART_RATE_BELT = 0x00000001,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_OFFSET                        = 0x00000006U,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_MASK                          = 0x000003ffU,
+    BTH_LE_GAP_APPEARANCE_SUB_CATEGORY_MASK                      = 0x0000003fU,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_UNCATEGORIZED                 = 0x00000000U,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_PHONE                         = 0x00000001U,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_COMPUTER                      = 0x00000002U,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_WATCH                         = 0x00000003U,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_CLOCK                         = 0x00000004U,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_DISPLAY                       = 0x00000005U,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_REMOTE_CONTROL                = 0x00000006U,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_EYE_GLASSES                   = 0x00000007U,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_TAG                           = 0x00000008U,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_KEYRING                       = 0x00000009U,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_MEDIA_PLAYER                  = 0x0000000aU,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_BARCODE_SCANNER               = 0x0000000bU,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_THERMOMETER                   = 0x0000000cU,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_HEART_RATE                    = 0x0000000dU,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_BLOOD_PRESSURE                = 0x0000000eU,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_HID                           = 0x0000000fU,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_GLUCOSE_METER                 = 0x00000010U,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_RUNNING_WALKING_SENSOR        = 0x00000011U,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_CYCLING                       = 0x00000012U,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_CONTROL_DEVICE                = 0x00000013U,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_NETWORK_DEVICE                = 0x00000014U,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_SENSOR                        = 0x00000015U,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_LIGHT_FIXTURES                = 0x00000016U,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_FAN                           = 0x00000017U,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_HVAC                          = 0x00000018U,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_AIR_CONDITIONING              = 0x00000019U,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_HUMIDIFIER                    = 0x0000001aU,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_HEATING                       = 0x0000001bU,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_ACCESS_CONTROL                = 0x0000001cU,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_MOTORIZED_DEVICE              = 0x0000001dU,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_POWER_DEVICE                  = 0x0000001eU,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_LIGHT_SOURCE                  = 0x0000001fU,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_WINDOW_COVERING               = 0x00000020U,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_AUDIO_SINK                    = 0x00000021U,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_AUDIO_SOURCE                  = 0x00000022U,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_MOTORIZED_VEHICLE             = 0x00000023U,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_DOMESTIC_APPLIANCE            = 0x00000024U,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_WEARABLE_AUDIO_DEVICE         = 0x00000025U,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_AIRCRAFT                      = 0x00000026U,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_AV_EQUIPMENT                  = 0x00000027U,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_DISPLAY_EQUIPMENT             = 0x00000028U,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_HEARING_AID                   = 0x00000029U,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_GAMING                        = 0x0000002aU,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_SIGNAGE                       = 0x0000002bU,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_PLUSE_OXIMETER                = 0x00000031U,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_WEIGHT_SCALE                  = 0x00000032U,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_PERSONAL_MOBILITY_DEVICE      = 0x00000033U,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_CONTINUOUS_GLUCOSE_MONITOR    = 0x00000034U,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_INSULIN_PUMP                  = 0x00000035U,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_MEDICATION_DELIVERY           = 0x00000036U,
+    BTH_LE_GAP_APPEARANCE_CATEGORY_OUTDOOR_SPORTS_ACTIVITY       = 0x00000051U,
+    BTH_LE_GAP_APPEARANCE_SUBCATEGORY_GENERIC                    = 0x00000000U,
+    BTH_LE_GAP_APPEARANCE_WATCH_SUBCATEGORY_SPORTS_WATCH         = 0x00000001U,
+    BTH_LE_GAP_APPEARANCE_THERMOMETER_SUBCATEGORY_EAR            = 0x00000001U,
+    BTH_LE_GAP_APPEARANCE_HEART_RATE_SUBCATEGORY_HEART_RATE_BELT = 0x00000001U,
 }
 
 enum : uint
 {
-    BTH_LE_GAP_APPEARANCE_BLOOD_PRESSURE_SUBCATEGORY_ARM      = 0x00000001,
-    BTH_LE_GAP_APPEARANCE_BLOOD_PRESSURE_SUBCATEGORY_WRIST    = 0x00000002,
-    BTH_LE_GAP_APPEARANCE_HID_SUBCATEGORY_KEYBOARD            = 0x00000001,
-    BTH_LE_GAP_APPEARANCE_HID_SUBCATEGORY_MOUSE               = 0x00000002,
-    BTH_LE_GAP_APPEARANCE_HID_SUBCATEGORY_JOYSTICK            = 0x00000003,
-    BTH_LE_GAP_APPEARANCE_HID_SUBCATEGORY_GAMEPAD             = 0x00000004,
-    BTH_LE_GAP_APPEARANCE_HID_SUBCATEGORY_DIGITIZER_TABLET    = 0x00000005,
-    BTH_LE_GAP_APPEARANCE_HID_SUBCATEGORY_CARD_READER         = 0x00000006,
-    BTH_LE_GAP_APPEARANCE_HID_SUBCATEGORY_DIGITAL_PEN         = 0x00000007,
-    BTH_LE_GAP_APPEARANCE_HID_SUBCATEGORY_BARCODE_SCANNER     = 0x00000008,
-    BTH_LE_GAP_APPEARANCE_HID_SUBCATEGORY_TOUCHPAD            = 0x00000009,
-    BTH_LE_GAP_APPEARANCE_HID_SUBCATEGORY_PRESENTATION_REMOTE = 0x0000000a,
+    BTH_LE_GAP_APPEARANCE_BLOOD_PRESSURE_SUBCATEGORY_ARM      = 0x00000001U,
+    BTH_LE_GAP_APPEARANCE_BLOOD_PRESSURE_SUBCATEGORY_WRIST    = 0x00000002U,
+    BTH_LE_GAP_APPEARANCE_HID_SUBCATEGORY_KEYBOARD            = 0x00000001U,
+    BTH_LE_GAP_APPEARANCE_HID_SUBCATEGORY_MOUSE               = 0x00000002U,
+    BTH_LE_GAP_APPEARANCE_HID_SUBCATEGORY_JOYSTICK            = 0x00000003U,
+    BTH_LE_GAP_APPEARANCE_HID_SUBCATEGORY_GAMEPAD             = 0x00000004U,
+    BTH_LE_GAP_APPEARANCE_HID_SUBCATEGORY_DIGITIZER_TABLET    = 0x00000005U,
+    BTH_LE_GAP_APPEARANCE_HID_SUBCATEGORY_CARD_READER         = 0x00000006U,
+    BTH_LE_GAP_APPEARANCE_HID_SUBCATEGORY_DIGITAL_PEN         = 0x00000007U,
+    BTH_LE_GAP_APPEARANCE_HID_SUBCATEGORY_BARCODE_SCANNER     = 0x00000008U,
+    BTH_LE_GAP_APPEARANCE_HID_SUBCATEGORY_TOUCHPAD            = 0x00000009U,
+    BTH_LE_GAP_APPEARANCE_HID_SUBCATEGORY_PRESENTATION_REMOTE = 0x0000000aU,
 }
 
 enum : uint
 {
-    BTH_LE_GAP_APPEARANCE_RUNNING_WALKING_SENSOR_SUBCATEGORY_IN_SHOE = 0x00000001,
-    BTH_LE_GAP_APPEARANCE_RUNNING_WALKING_SENSOR_SUBCATEGORY_ON_SHOE = 0x00000002,
-    BTH_LE_GAP_APPEARANCE_RUNNING_WALKING_SENSOR_SUBCATEGORY_ON_HIP  = 0x00000003,
+    BTH_LE_GAP_APPEARANCE_RUNNING_WALKING_SENSOR_SUBCATEGORY_IN_SHOE = 0x00000001U,
+    BTH_LE_GAP_APPEARANCE_RUNNING_WALKING_SENSOR_SUBCATEGORY_ON_SHOE = 0x00000002U,
+    BTH_LE_GAP_APPEARANCE_RUNNING_WALKING_SENSOR_SUBCATEGORY_ON_HIP  = 0x00000003U,
 }
 
 enum : uint
 {
-    BTH_LE_GAP_APPEARANCE_CYCLING_SUBCATEGORY_CYCLING_COMPUTER         = 0x00000001,
-    BTH_LE_GAP_APPEARANCE_CYCLING_SUBCATEGORY_SPEED_SENSOR             = 0x00000002,
-    BTH_LE_GAP_APPEARANCE_CYCLING_SUBCATEGORY_CADENCE_SENSOR           = 0x00000003,
-    BTH_LE_GAP_APPEARANCE_CYCLING_SUBCATEGORY_POWER_SENSOR             = 0x00000004,
-    BTH_LE_GAP_APPEARANCE_CYCLING_SUBCATEGORY_SPEED_AND_CADENCE_SENSOR = 0x00000005,
+    BTH_LE_GAP_APPEARANCE_CYCLING_SUBCATEGORY_CYCLING_COMPUTER         = 0x00000001U,
+    BTH_LE_GAP_APPEARANCE_CYCLING_SUBCATEGORY_SPEED_SENSOR             = 0x00000002U,
+    BTH_LE_GAP_APPEARANCE_CYCLING_SUBCATEGORY_CADENCE_SENSOR           = 0x00000003U,
+    BTH_LE_GAP_APPEARANCE_CYCLING_SUBCATEGORY_POWER_SENSOR             = 0x00000004U,
+    BTH_LE_GAP_APPEARANCE_CYCLING_SUBCATEGORY_SPEED_AND_CADENCE_SENSOR = 0x00000005U,
 }
 
 enum : uint
 {
-    BTH_LE_GAP_APPEARANCE_AUDIO_SINK_SUBCATEGORY_STANDALONE_SPEAKER    = 0x00000001,
-    BTH_LE_GAP_APPEARANCE_AUDIO_SINK_SUBCATEGORY_SOUNDBAR              = 0x00000002,
-    BTH_LE_GAP_APPEARANCE_AUDIO_SINK_SUBCATEGORY_BOOKSHELF_SPEAKER     = 0x00000003,
-    BTH_LE_GAP_APPEARANCE_AUDIO_SINK_SUBCATEGORY_STANDMOUNTED_SPEAKER  = 0x00000004,
-    BTH_LE_GAP_APPEARANCE_AUDIO_SINK_SUBCATEGORY_SPEAKERPHONE          = 0x00000005,
-    BTH_LE_GAP_APPEARANCE_AUDIO_SOURCE_SUBCATEGORY_MICROPHONE          = 0x00000001,
-    BTH_LE_GAP_APPEARANCE_AUDIO_SOURCE_SUBCATEGORY_ALARM               = 0x00000002,
-    BTH_LE_GAP_APPEARANCE_AUDIO_SOURCE_SUBCATEGORY_BELL                = 0x00000003,
-    BTH_LE_GAP_APPEARANCE_AUDIO_SOURCE_SUBCATEGORY_HORN                = 0x00000004,
-    BTH_LE_GAP_APPEARANCE_AUDIO_SOURCE_SUBCATEGORY_BROADCASTING_DEVICE = 0x00000005,
-    BTH_LE_GAP_APPEARANCE_AUDIO_SOURCE_SUBCATEGORY_SERVICE_DESK        = 0x00000006,
-    BTH_LE_GAP_APPEARANCE_AUDIO_SOURCE_SUBCATEGORY_KIOSK               = 0x00000007,
-    BTH_LE_GAP_APPEARANCE_AUDIO_SOURCE_SUBCATEGORY_BROADCASTING_ROOM   = 0x00000008,
-    BTH_LE_GAP_APPEARANCE_AUDIO_SOURCE_SUBCATEGORY_AUDITORIUM          = 0x00000009,
+    BTH_LE_GAP_APPEARANCE_AUDIO_SINK_SUBCATEGORY_STANDALONE_SPEAKER    = 0x00000001U,
+    BTH_LE_GAP_APPEARANCE_AUDIO_SINK_SUBCATEGORY_SOUNDBAR              = 0x00000002U,
+    BTH_LE_GAP_APPEARANCE_AUDIO_SINK_SUBCATEGORY_BOOKSHELF_SPEAKER     = 0x00000003U,
+    BTH_LE_GAP_APPEARANCE_AUDIO_SINK_SUBCATEGORY_STANDMOUNTED_SPEAKER  = 0x00000004U,
+    BTH_LE_GAP_APPEARANCE_AUDIO_SINK_SUBCATEGORY_SPEAKERPHONE          = 0x00000005U,
+    BTH_LE_GAP_APPEARANCE_AUDIO_SOURCE_SUBCATEGORY_MICROPHONE          = 0x00000001U,
+    BTH_LE_GAP_APPEARANCE_AUDIO_SOURCE_SUBCATEGORY_ALARM               = 0x00000002U,
+    BTH_LE_GAP_APPEARANCE_AUDIO_SOURCE_SUBCATEGORY_BELL                = 0x00000003U,
+    BTH_LE_GAP_APPEARANCE_AUDIO_SOURCE_SUBCATEGORY_HORN                = 0x00000004U,
+    BTH_LE_GAP_APPEARANCE_AUDIO_SOURCE_SUBCATEGORY_BROADCASTING_DEVICE = 0x00000005U,
+    BTH_LE_GAP_APPEARANCE_AUDIO_SOURCE_SUBCATEGORY_SERVICE_DESK        = 0x00000006U,
+    BTH_LE_GAP_APPEARANCE_AUDIO_SOURCE_SUBCATEGORY_KIOSK               = 0x00000007U,
+    BTH_LE_GAP_APPEARANCE_AUDIO_SOURCE_SUBCATEGORY_BROADCASTING_ROOM   = 0x00000008U,
+    BTH_LE_GAP_APPEARANCE_AUDIO_SOURCE_SUBCATEGORY_AUDITORIUM          = 0x00000009U,
 }
 
 enum : uint
 {
-    BTH_LE_GAP_APPEARANCE_WEARABLE_AUDIO_DEVICE_SUBCATEGORY_EARBUD     = 0x00000001,
-    BTH_LE_GAP_APPEARANCE_WEARABLE_AUDIO_DEVICE_SUBCATEGORY_HEADSET    = 0x00000002,
-    BTH_LE_GAP_APPEARANCE_WEARABLE_AUDIO_DEVICE_SUBCATEGORY_HEADPHONES = 0x00000003,
-    BTH_LE_GAP_APPEARANCE_WEARABLE_AUDIO_DEVICE_SUBCATEGORY_NECKBAND   = 0x00000004,
+    BTH_LE_GAP_APPEARANCE_WEARABLE_AUDIO_DEVICE_SUBCATEGORY_EARBUD     = 0x00000001U,
+    BTH_LE_GAP_APPEARANCE_WEARABLE_AUDIO_DEVICE_SUBCATEGORY_HEADSET    = 0x00000002U,
+    BTH_LE_GAP_APPEARANCE_WEARABLE_AUDIO_DEVICE_SUBCATEGORY_HEADPHONES = 0x00000003U,
+    BTH_LE_GAP_APPEARANCE_WEARABLE_AUDIO_DEVICE_SUBCATEGORY_NECKBAND   = 0x00000004U,
 }
 
 enum : uint
 {
-    BTH_LE_GAP_APPEARANCE_HEARING_AID_SUBCATEGORY_IN_EAR_HEARING_AID     = 0x00000001,
-    BTH_LE_GAP_APPEARANCE_HEARING_AID_SUBCATEGORY_BEHIND_EAR_HEARING_AID = 0x00000002,
-    BTH_LE_GAP_APPEARANCE_HEARING_AID_SUBCATEGORY_COCHLEAR_IMPLANT       = 0x00000003,
+    BTH_LE_GAP_APPEARANCE_HEARING_AID_SUBCATEGORY_IN_EAR_HEARING_AID     = 0x00000001U,
+    BTH_LE_GAP_APPEARANCE_HEARING_AID_SUBCATEGORY_BEHIND_EAR_HEARING_AID = 0x00000002U,
+    BTH_LE_GAP_APPEARANCE_HEARING_AID_SUBCATEGORY_COCHLEAR_IMPLANT       = 0x00000003U,
 }
 
 enum : uint
 {
-    BTH_LE_GAP_APPEARANCE_PULSE_OXIMETER_SUBCATEGORY_FINGERTIP  = 0x00000001,
-    BTH_LE_GAP_APPEARANCE_PULSE_OXIMETER_SUBCATEGORY_WRIST_WORN = 0x00000002,
+    BTH_LE_GAP_APPEARANCE_PULSE_OXIMETER_SUBCATEGORY_FINGERTIP  = 0x00000001U,
+    BTH_LE_GAP_APPEARANCE_PULSE_OXIMETER_SUBCATEGORY_WRIST_WORN = 0x00000002U,
 }
 
 enum : uint
 {
-    BTH_LE_GAP_APPEARANCE_OUTDOOR_SPORTS_ACTIVITY_SUBCATEGORY_LOCATION_DISPLAY_DEVICE            = 0x00000001,
-    BTH_LE_GAP_APPEARANCE_OUTDOOR_SPORTS_ACTIVITY_SUBCATEGORY_LOCATION_NAVIGATION_DISPLAY_DEVICE = 0x00000002,
-    BTH_LE_GAP_APPEARANCE_OUTDOOR_SPORTS_ACTIVITY_SUBCATEGORY_LOCATION_POD                       = 0x00000003,
-    BTH_LE_GAP_APPEARANCE_OUTDOOR_SPORTS_ACTIVITY_SUBCATEGORY_LOCATION_NAVIGATION_POD            = 0x00000004,
+    BTH_LE_GAP_APPEARANCE_OUTDOOR_SPORTS_ACTIVITY_SUBCATEGORY_LOCATION_DISPLAY_DEVICE            = 0x00000001U,
+    BTH_LE_GAP_APPEARANCE_OUTDOOR_SPORTS_ACTIVITY_SUBCATEGORY_LOCATION_NAVIGATION_DISPLAY_DEVICE = 0x00000002U,
+    BTH_LE_GAP_APPEARANCE_OUTDOOR_SPORTS_ACTIVITY_SUBCATEGORY_LOCATION_POD                       = 0x00000003U,
+    BTH_LE_GAP_APPEARANCE_OUTDOOR_SPORTS_ACTIVITY_SUBCATEGORY_LOCATION_NAVIGATION_POD            = 0x00000004U,
 }
 
-enum uint BTH_LE_GATT_DEFAULT_MAX_INCLUDED_SERVICES_DEPTH = 0x00000003;
-enum uint BTH_LE_ATT_TRANSACTION_TIMEOUT = 0x0000001e;
+enum uint BTH_LE_GATT_DEFAULT_MAX_INCLUDED_SERVICES_DEPTH = 0x00000003U;
+enum uint BTH_LE_ATT_TRANSACTION_TIMEOUT = 0x0000001eU;
 
 enum : uint
 {
-    BTH_LE_ATT_MAX_VALUE_SIZE = 0x00000200,
-    BTH_LE_ATT_CID            = 0x00000004,
-}
-
-enum : uint
-{
-    BTHLEENUM_ATT_MTU_MIN                 = 0x00000017,
-    BTHLEENUM_ATT_MTU_MAX                 = 0x0000ffff,
-    BTHLEENUM_ATT_MTU_DEFAULT             = 0x00000017,
-    BTHLEENUM_ATT_MTU_INITIAL_NEGOTIATION = 0x0000020d,
+    BTH_LE_ATT_MAX_VALUE_SIZE = 0x00000200U,
+    BTH_LE_ATT_CID            = 0x00000004U,
 }
 
 enum : uint
 {
-    BTH_LE_ERROR_INVALID_HANDLE              = 0x00000001,
-    BTH_LE_ERROR_READ_NOT_PERMITTED          = 0x00000002,
-    BTH_LE_ERROR_WRITE_NOT_PERMITTED         = 0x00000003,
-    BTH_LE_ERROR_INVALID_PDU                 = 0x00000004,
-    BTH_LE_ERROR_INSUFFICIENT_AUTHENTICATION = 0x00000005,
-}
-
-enum uint BTH_LE_ERROR_REQUEST_NOT_SUPPORTED = 0x00000006;
-
-enum : uint
-{
-    BTH_LE_ERROR_INVALID_OFFSET             = 0x00000007,
-    BTH_LE_ERROR_INSUFFICIENT_AUTHORIZATION = 0x00000008,
+    BTHLEENUM_ATT_MTU_MIN                 = 0x00000017U,
+    BTHLEENUM_ATT_MTU_MAX                 = 0x0000ffffU,
+    BTHLEENUM_ATT_MTU_DEFAULT             = 0x00000017U,
+    BTHLEENUM_ATT_MTU_INITIAL_NEGOTIATION = 0x0000020dU,
 }
 
 enum : uint
 {
-    BTH_LE_ERROR_PREPARE_QUEUE_FULL               = 0x00000009,
-    BTH_LE_ERROR_ATTRIBUTE_NOT_FOUND              = 0x0000000a,
-    BTH_LE_ERROR_ATTRIBUTE_NOT_LONG               = 0x0000000b,
-    BTH_LE_ERROR_INSUFFICIENT_ENCRYPTION_KEY_SIZE = 0x0000000c,
+    BTH_LE_ERROR_INVALID_HANDLE              = 0x00000001U,
+    BTH_LE_ERROR_READ_NOT_PERMITTED          = 0x00000002U,
+    BTH_LE_ERROR_WRITE_NOT_PERMITTED         = 0x00000003U,
+    BTH_LE_ERROR_INVALID_PDU                 = 0x00000004U,
+    BTH_LE_ERROR_INSUFFICIENT_AUTHENTICATION = 0x00000005U,
 }
 
-enum uint BTH_LE_ERROR_INVALID_ATTRIBUTE_VALUE_LENGTH = 0x0000000d;
+enum uint BTH_LE_ERROR_REQUEST_NOT_SUPPORTED = 0x00000006U;
 
 enum : uint
 {
-    BTH_LE_ERROR_UNLIKELY                = 0x0000000e,
-    BTH_LE_ERROR_INSUFFICIENT_ENCRYPTION = 0x0000000f,
-}
-
-enum uint BTH_LE_ERROR_UNSUPPORTED_GROUP_TYPE = 0x00000010;
-enum uint BTH_LE_ERROR_INSUFFICIENT_RESOURCES = 0x00000011;
-enum uint BTH_LE_ERROR_UNKNOWN = 0x00001000;
-
-enum : uint
-{
-    BLUETOOTH_GATT_FLAG_NONE                     = 0x00000000,
-    BLUETOOTH_GATT_FLAG_CONNECTION_ENCRYPTED     = 0x00000001,
-    BLUETOOTH_GATT_FLAG_CONNECTION_AUTHENTICATED = 0x00000002,
-    BLUETOOTH_GATT_FLAG_FORCE_READ_FROM_DEVICE   = 0x00000004,
-    BLUETOOTH_GATT_FLAG_FORCE_READ_FROM_CACHE    = 0x00000008,
-    BLUETOOTH_GATT_FLAG_SIGNED_WRITE             = 0x00000010,
-    BLUETOOTH_GATT_FLAG_WRITE_WITHOUT_RESPONSE   = 0x00000020,
-    BLUETOOTH_GATT_FLAG_RETURN_ALL               = 0x00000040,
+    BTH_LE_ERROR_INVALID_OFFSET             = 0x00000007U,
+    BTH_LE_ERROR_INSUFFICIENT_AUTHORIZATION = 0x00000008U,
 }
 
 enum : uint
 {
-    BT_PORT_MIN       = 0x00000001,
-    BT_PORT_MAX       = 0x0000ffff,
-    BT_PORT_DYN_FIRST = 0x00001001,
+    BTH_LE_ERROR_PREPARE_QUEUE_FULL               = 0x00000009U,
+    BTH_LE_ERROR_ATTRIBUTE_NOT_FOUND              = 0x0000000aU,
+    BTH_LE_ERROR_ATTRIBUTE_NOT_LONG               = 0x0000000bU,
+    BTH_LE_ERROR_INSUFFICIENT_ENCRYPTION_KEY_SIZE = 0x0000000cU,
 }
 
-enum ushort AF_BTH = 0x0020;
-enum ushort PF_BTH = 0x0020;
-enum uint NS_BTH = 0x00000010;
+enum uint BTH_LE_ERROR_INVALID_ATTRIBUTE_VALUE_LENGTH = 0x0000000dU;
+
+enum : uint
+{
+    BTH_LE_ERROR_UNLIKELY                = 0x0000000eU,
+    BTH_LE_ERROR_INSUFFICIENT_ENCRYPTION = 0x0000000fU,
+}
+
+enum uint BTH_LE_ERROR_UNSUPPORTED_GROUP_TYPE = 0x00000010U;
+enum uint BTH_LE_ERROR_INSUFFICIENT_RESOURCES = 0x00000011U;
+enum uint BTH_LE_ERROR_UNKNOWN = 0x00001000U;
+
+enum : uint
+{
+    BLUETOOTH_GATT_FLAG_NONE                     = 0x00000000U,
+    BLUETOOTH_GATT_FLAG_CONNECTION_ENCRYPTED     = 0x00000001U,
+    BLUETOOTH_GATT_FLAG_CONNECTION_AUTHENTICATED = 0x00000002U,
+    BLUETOOTH_GATT_FLAG_FORCE_READ_FROM_DEVICE   = 0x00000004U,
+    BLUETOOTH_GATT_FLAG_FORCE_READ_FROM_CACHE    = 0x00000008U,
+    BLUETOOTH_GATT_FLAG_SIGNED_WRITE             = 0x00000010U,
+    BLUETOOTH_GATT_FLAG_WRITE_WITHOUT_RESPONSE   = 0x00000020U,
+    BLUETOOTH_GATT_FLAG_RETURN_ALL               = 0x00000040U,
+}
+
+enum : uint
+{
+    BT_PORT_MIN       = 0x00000001U,
+    BT_PORT_MAX       = 0x0000ffffU,
+    BT_PORT_DYN_FIRST = 0x00001001U,
+}
+
+enum ushort AF_BTH = cast(ushort) 0x0020;
+enum ushort PF_BTH = cast(ushort) 0x0020;
+enum uint NS_BTH = 0x00000010U;
 enum GUID SVCID_BTH_PROVIDER = GUID("06aa63e0-7d60-41ff-afb2-3ee6d2d9392d");
-enum uint BTH_ADDR_STRING_SIZE = 0x0000000c;
+enum uint BTH_ADDR_STRING_SIZE = 0x0000000cU;
 
 enum : uint
 {
-    BTHPROTO_RFCOMM = 0x00000003,
-    BTHPROTO_L2CAP  = 0x00000100,
+    BTHPROTO_RFCOMM = 0x00000003U,
+    BTHPROTO_L2CAP  = 0x00000100U,
 }
 
-enum uint SOL_RFCOMM = 0x00000003;
+enum uint SOL_RFCOMM = 0x00000003U;
 
 enum : uint
 {
-    SOL_L2CAP = 0x00000100,
-    SOL_SDP   = 0x00000101,
+    SOL_L2CAP = 0x00000100U,
+    SOL_SDP   = 0x00000101U,
 }
 
-enum uint SO_BTH_AUTHENTICATE = 0x80000001;
+enum uint SO_BTH_AUTHENTICATE = 0x80000001U;
 
 enum : uint
 {
-    SO_BTH_ENCRYPT = 0x00000002,
-    SO_BTH_MTU     = 0x80000007,
-    SO_BTH_MTU_MAX = 0x80000008,
-    SO_BTH_MTU_MIN = 0x8000000a,
-}
-
-enum : uint
-{
-    RFCOMM_MAX_MTU = 0x000003f3,
-    RFCOMM_MIN_MTU = 0x00000017,
-}
-
-enum uint BTH_SDP_VERSION = 0x00000001;
-enum uint SDP_DEFAULT_INQUIRY_SECONDS = 0x00000006;
-enum uint SDP_MAX_INQUIRY_SECONDS = 0x0000003c;
-enum uint SDP_DEFAULT_INQUIRY_MAX_RESPONSES = 0x000000ff;
-
-enum : uint
-{
-    SDP_SERVICE_SEARCH_REQUEST           = 0x00000001,
-    SDP_SERVICE_ATTRIBUTE_REQUEST        = 0x00000002,
-    SDP_SERVICE_SEARCH_ATTRIBUTE_REQUEST = 0x00000003,
+    SO_BTH_ENCRYPT = 0x00000002U,
+    SO_BTH_MTU     = 0x80000007U,
+    SO_BTH_MTU_MAX = 0x80000008U,
+    SO_BTH_MTU_MIN = 0x8000000aU,
 }
 
 enum : uint
 {
-    BTHNS_RESULT_DEVICE_CONNECTED     = 0x00010000,
-    BTHNS_RESULT_DEVICE_REMEMBERED    = 0x00020000,
-    BTHNS_RESULT_DEVICE_AUTHENTICATED = 0x00040000,
+    RFCOMM_MAX_MTU = 0x000003f3U,
+    RFCOMM_MIN_MTU = 0x00000017U,
+}
+
+enum uint BTH_SDP_VERSION = 0x00000001U;
+enum uint SDP_DEFAULT_INQUIRY_SECONDS = 0x00000006U;
+enum uint SDP_MAX_INQUIRY_SECONDS = 0x0000003cU;
+enum uint SDP_DEFAULT_INQUIRY_MAX_RESPONSES = 0x000000ffU;
+
+enum : uint
+{
+    SDP_SERVICE_SEARCH_REQUEST           = 0x00000001U,
+    SDP_SERVICE_ATTRIBUTE_REQUEST        = 0x00000002U,
+    SDP_SERVICE_SEARCH_ATTRIBUTE_REQUEST = 0x00000003U,
 }
 
 enum : uint
 {
-    RLS_ERROR   = 0x00000001,
-    RLS_OVERRUN = 0x00000002,
-}
-
-enum uint RLS_PARITY = 0x00000004;
-enum uint RLS_FRAMING = 0x00000008;
-
-enum : uint
-{
-    RPN_BAUD_2400   = 0x00000000,
-    RPN_BAUD_4800   = 0x00000001,
-    RPN_BAUD_7200   = 0x00000002,
-    RPN_BAUD_9600   = 0x00000003,
-    RPN_BAUD_19200  = 0x00000004,
-    RPN_BAUD_38400  = 0x00000005,
-    RPN_BAUD_57600  = 0x00000006,
-    RPN_BAUD_115200 = 0x00000007,
-    RPN_BAUD_230400 = 0x00000008,
+    BTHNS_RESULT_DEVICE_CONNECTED     = 0x00010000U,
+    BTHNS_RESULT_DEVICE_REMEMBERED    = 0x00020000U,
+    BTHNS_RESULT_DEVICE_AUTHENTICATED = 0x00040000U,
 }
 
 enum : uint
 {
-    RPN_DATA_5 = 0x00000000,
-    RPN_DATA_6 = 0x00000001,
-    RPN_DATA_7 = 0x00000002,
-    RPN_DATA_8 = 0x00000003,
+    RLS_ERROR   = 0x00000001U,
+    RLS_OVERRUN = 0x00000002U,
+}
+
+enum uint RLS_PARITY = 0x00000004U;
+enum uint RLS_FRAMING = 0x00000008U;
+
+enum : uint
+{
+    RPN_BAUD_2400   = 0x00000000U,
+    RPN_BAUD_4800   = 0x00000001U,
+    RPN_BAUD_7200   = 0x00000002U,
+    RPN_BAUD_9600   = 0x00000003U,
+    RPN_BAUD_19200  = 0x00000004U,
+    RPN_BAUD_38400  = 0x00000005U,
+    RPN_BAUD_57600  = 0x00000006U,
+    RPN_BAUD_115200 = 0x00000007U,
+    RPN_BAUD_230400 = 0x00000008U,
 }
 
 enum : uint
 {
-    RPN_STOP_1   = 0x00000000,
-    RPN_STOP_1_5 = 0x00000004,
+    RPN_DATA_5 = 0x00000000U,
+    RPN_DATA_6 = 0x00000001U,
+    RPN_DATA_7 = 0x00000002U,
+    RPN_DATA_8 = 0x00000003U,
 }
 
 enum : uint
 {
-    RPN_PARITY_NONE  = 0x00000000,
-    RPN_PARITY_ODD   = 0x00000008,
-    RPN_PARITY_EVEN  = 0x00000018,
-    RPN_PARITY_MARK  = 0x00000028,
-    RPN_PARITY_SPACE = 0x00000038,
+    RPN_STOP_1   = 0x00000000U,
+    RPN_STOP_1_5 = 0x00000004U,
 }
 
 enum : uint
 {
-    RPN_FLOW_X_IN    = 0x00000001,
-    RPN_FLOW_X_OUT   = 0x00000002,
-    RPN_FLOW_RTR_IN  = 0x00000004,
-    RPN_FLOW_RTR_OUT = 0x00000008,
-    RPN_FLOW_RTC_IN  = 0x00000010,
-    RPN_FLOW_RTC_OUT = 0x00000020,
+    RPN_PARITY_NONE  = 0x00000000U,
+    RPN_PARITY_ODD   = 0x00000008U,
+    RPN_PARITY_EVEN  = 0x00000018U,
+    RPN_PARITY_MARK  = 0x00000028U,
+    RPN_PARITY_SPACE = 0x00000038U,
 }
 
 enum : uint
 {
-    RPN_PARAM_BAUD    = 0x00000001,
-    RPN_PARAM_DATA    = 0x00000002,
-    RPN_PARAM_STOP    = 0x00000004,
-    RPN_PARAM_PARITY  = 0x00000008,
-    RPN_PARAM_P_TYPE  = 0x00000010,
-    RPN_PARAM_XON     = 0x00000020,
-    RPN_PARAM_XOFF    = 0x00000040,
-    RPN_PARAM_X_IN    = 0x00000001,
-    RPN_PARAM_X_OUT   = 0x00000002,
-    RPN_PARAM_RTR_IN  = 0x00000004,
-    RPN_PARAM_RTR_OUT = 0x00000008,
-    RPN_PARAM_RTC_IN  = 0x00000010,
-    RPN_PARAM_RTC_OUT = 0x00000020,
+    RPN_FLOW_X_IN    = 0x00000001U,
+    RPN_FLOW_X_OUT   = 0x00000002U,
+    RPN_FLOW_RTR_IN  = 0x00000004U,
+    RPN_FLOW_RTR_OUT = 0x00000008U,
+    RPN_FLOW_RTC_IN  = 0x00000010U,
+    RPN_FLOW_RTC_OUT = 0x00000020U,
 }
 
 enum : uint
 {
-    RFCOMM_CMD_NONE         = 0x00000000,
-    RFCOMM_CMD_MSC          = 0x00000001,
-    RFCOMM_CMD_RLS          = 0x00000002,
-    RFCOMM_CMD_RPN          = 0x00000003,
-    RFCOMM_CMD_RPN_REQUEST  = 0x00000004,
-    RFCOMM_CMD_RPN_RESPONSE = 0x00000005,
+    RPN_PARAM_BAUD    = 0x00000001U,
+    RPN_PARAM_DATA    = 0x00000002U,
+    RPN_PARAM_STOP    = 0x00000004U,
+    RPN_PARAM_PARITY  = 0x00000008U,
+    RPN_PARAM_P_TYPE  = 0x00000010U,
+    RPN_PARAM_XON     = 0x00000020U,
+    RPN_PARAM_XOFF    = 0x00000040U,
+    RPN_PARAM_X_IN    = 0x00000001U,
+    RPN_PARAM_X_OUT   = 0x00000002U,
+    RPN_PARAM_RTR_IN  = 0x00000004U,
+    RPN_PARAM_RTR_OUT = 0x00000008U,
+    RPN_PARAM_RTC_IN  = 0x00000010U,
+    RPN_PARAM_RTC_OUT = 0x00000020U,
+}
+
+enum : uint
+{
+    RFCOMM_CMD_NONE         = 0x00000000U,
+    RFCOMM_CMD_MSC          = 0x00000001U,
+    RFCOMM_CMD_RLS          = 0x00000002U,
+    RFCOMM_CMD_RPN          = 0x00000003U,
+    RFCOMM_CMD_RPN_REQUEST  = 0x00000004U,
+    RFCOMM_CMD_RPN_RESPONSE = 0x00000005U,
 }
 
 // Callbacks
@@ -1549,14 +1559,14 @@ struct SDP_ULARGE_INTEGER_16
     ulong HighPart;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bthsdpdef/ns-bthsdpdef-sdpattributerange))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bthsdpdef/ns-bthsdpdef-sdpattributerange
 struct SdpAttributeRange
 {
     ushort minAttribute;
     ushort maxAttribute;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bthsdpdef/ns-bthsdpdef-sdpqueryuuidunion))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bthsdpdef/ns-bthsdpdef-sdpqueryuuidunion
 union SdpQueryUuidUnion
 {
     GUID   uuid128;
@@ -1564,14 +1574,14 @@ union SdpQueryUuidUnion
     ushort uuid16;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bthsdpdef/ns-bthsdpdef-sdpqueryuuid))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bthsdpdef/ns-bthsdpdef-sdpqueryuuid
 struct SdpQueryUuid
 {
     SdpQueryUuidUnion u;
     ushort            uuidType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bthdef/ns-bthdef-bth_device_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bthdef/ns-bthdef-bth_device_info
 struct BTH_DEVICE_INFO
 {
     uint      flags;
@@ -1580,14 +1590,14 @@ struct BTH_DEVICE_INFO
     CHAR[248] name;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bthdef/ns-bthdef-bth_radio_in_range))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bthdef/ns-bthdef-bth_radio_in_range
 struct BTH_RADIO_IN_RANGE
 {
     BTH_DEVICE_INFO deviceInfo;
     uint            previousDeviceFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bthdef/ns-bthdef-bth_l2cap_event_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bthdef/ns-bthdef-bth_l2cap_event_info
 struct BTH_L2CAP_EVENT_INFO
 {
     ulong  bthAddress;
@@ -1596,7 +1606,7 @@ struct BTH_L2CAP_EVENT_INFO
     ubyte  initiated;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bthdef/ns-bthdef-bth_hci_event_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bthdef/ns-bthdef-bth_hci_event_info
 struct BTH_HCI_EVENT_INFO
 {
     ulong bthAddress;
@@ -1606,7 +1616,11 @@ struct BTH_HCI_EVENT_INFO
 
 struct BLUETOOTH_ADDRESS
 {
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        ulong    ullLong;
+        ubyte[6] rgBytes;
+    }
 }
 
 struct BLUETOOTH_LOCAL_SERVICE_INFO
@@ -1617,13 +1631,13 @@ struct BLUETOOTH_LOCAL_SERVICE_INFO
     wchar[256]        szDeviceString;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bluetoothapis/ns-bluetoothapis-bluetooth_find_radio_params))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bluetoothapis/ns-bluetoothapis-bluetooth_find_radio_params
 struct BLUETOOTH_FIND_RADIO_PARAMS
 {
     uint dwSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bluetoothapis/ns-bluetoothapis-bluetooth_radio_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bluetoothapis/ns-bluetoothapis-bluetooth_radio_info
 struct BLUETOOTH_RADIO_INFO
 {
     uint              dwSize;
@@ -1647,17 +1661,21 @@ struct BLUETOOTH_DEVICE_INFO
     wchar[248]        szName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bluetoothapis/ns-bluetoothapis-bluetooth_authentication_callback_params))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bluetoothapis/ns-bluetoothapis-bluetooth_authentication_callback_params
 struct BLUETOOTH_AUTHENTICATION_CALLBACK_PARAMS
 {
     BLUETOOTH_DEVICE_INFO deviceInfo;
     BLUETOOTH_AUTHENTICATION_METHOD authenticationMethod;
     BLUETOOTH_IO_CAPABILITY ioCapability;
     BLUETOOTH_AUTHENTICATION_REQUIREMENTS authenticationRequirements;
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        uint Numeric_Value;
+        uint Passkey;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bluetoothapis/ns-bluetoothapis-bluetooth_device_search_params))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bluetoothapis/ns-bluetoothapis-bluetooth_device_search_params
 struct BLUETOOTH_DEVICE_SEARCH_PARAMS
 {
     uint   dwSize;
@@ -1670,14 +1688,14 @@ struct BLUETOOTH_DEVICE_SEARCH_PARAMS
     HANDLE hRadio;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bluetoothapis/ns-bluetoothapis-bluetooth_cod_pairs))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bluetoothapis/ns-bluetoothapis-bluetooth_cod_pairs
 struct BLUETOOTH_COD_PAIRS
 {
     uint         ulCODMask;
     const(PWSTR) pcszDescription;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bluetoothapis/ns-bluetoothapis-bluetooth_select_device_params))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bluetoothapis/ns-bluetoothapis-bluetooth_select_device_params
 struct BLUETOOTH_SELECT_DEVICE_PARAMS
 {
     uint                 dwSize;
@@ -1697,50 +1715,92 @@ struct BLUETOOTH_SELECT_DEVICE_PARAMS
     BLUETOOTH_DEVICE_INFO* pDevices;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bluetoothapis/ns-bluetoothapis-bluetooth_pin_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bluetoothapis/ns-bluetoothapis-bluetooth_pin_info
 struct BLUETOOTH_PIN_INFO
 {
     ubyte[16] pin;
     ubyte     pinLength;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bluetoothapis/ns-bluetoothapis-bluetooth_oob_data_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bluetoothapis/ns-bluetoothapis-bluetooth_oob_data_info
 struct BLUETOOTH_OOB_DATA_INFO
 {
     ubyte[16] C;
     ubyte[16] R;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bluetoothapis/ns-bluetoothapis-bluetooth_numeric_comparison_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bluetoothapis/ns-bluetoothapis-bluetooth_numeric_comparison_info
 struct BLUETOOTH_NUMERIC_COMPARISON_INFO
 {
     uint NumericValue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bluetoothapis/ns-bluetoothapis-bluetooth_passkey_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bluetoothapis/ns-bluetoothapis-bluetooth_passkey_info
 struct BLUETOOTH_PASSKEY_INFO
 {
     uint passkey;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bluetoothapis/ns-bluetoothapis-bluetooth_authenticate_response))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bluetoothapis/ns-bluetoothapis-bluetooth_authenticate_response
 struct BLUETOOTH_AUTHENTICATE_RESPONSE
 {
-    BLUETOOTH_ADDRESS   bthAddressRemote;
+    BLUETOOTH_ADDRESS bthAddressRemote;
     BLUETOOTH_AUTHENTICATION_METHOD authMethod;
-    _Anonymous_e__Union Anonymous;
-    ubyte               negativeResponse;
+    union
+    {
+        BLUETOOTH_PIN_INFO pinInfo;
+        BLUETOOTH_OOB_DATA_INFO oobInfo;
+        BLUETOOTH_NUMERIC_COMPARISON_INFO numericCompInfo;
+        BLUETOOTH_PASSKEY_INFO passkeyInfo;
+    }
+    ubyte             negativeResponse;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bluetoothapis/ns-bluetoothapis-sdp_element_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bluetoothapis/ns-bluetoothapis-sdp_element_data
 struct SDP_ELEMENT_DATA
 {
     SDP_TYPE         type;
     SDP_SPECIFICTYPE specificType;
-    _data_e__Union   data;
+    union data
+    {
+        SDP_LARGE_INTEGER_16 int128;
+        long                 int64;
+        int                  int32;
+        short                int16;
+        CHAR                 int8;
+        SDP_ULARGE_INTEGER_16 uint128;
+        ulong                uint64;
+        uint                 uint32;
+        ushort               uint16;
+        ubyte                uint8;
+        ubyte                booleanVal;
+        GUID                 uuid128;
+        uint                 uuid32;
+        ushort               uuid16;
+        struct string
+        {
+            ubyte* value;
+            uint   length;
+        }
+        struct url
+        {
+            ubyte* value;
+            uint   length;
+        }
+        struct sequence
+        {
+            ubyte* value;
+            uint   length;
+        }
+        struct alternative
+        {
+            ubyte* value;
+            uint   length;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bluetoothapis/ns-bluetoothapis-sdp_string_type_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bluetoothapis/ns-bluetoothapis-sdp_string_type_data
 struct SDP_STRING_TYPE_DATA
 {
     ushort encoding;
@@ -1748,21 +1808,25 @@ struct SDP_STRING_TYPE_DATA
     ushort attributeId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bthledef/ns-bthledef-bth_le_uuid))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bthledef/ns-bthledef-bth_le_uuid
 struct BTH_LE_UUID
 {
-    BOOLEAN         IsShortUuid;
-    _Value_e__Union Value;
+    BOOLEAN IsShortUuid;
+    union Value
+    {
+        ushort ShortUuid;
+        GUID   LongUuid;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bthledef/ns-bthledef-bth_le_gatt_service))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bthledef/ns-bthledef-bth_le_gatt_service
 struct BTH_LE_GATT_SERVICE
 {
     BTH_LE_UUID ServiceUuid;
     ushort      AttributeHandle;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bthledef/ns-bthledef-bth_le_gatt_characteristic))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bthledef/ns-bthledef-bth_le_gatt_characteristic
 struct BTH_LE_GATT_CHARACTERISTIC
 {
     ushort      ServiceHandle;
@@ -1779,14 +1843,14 @@ struct BTH_LE_GATT_CHARACTERISTIC
     BOOLEAN     HasExtendedProperties;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bthledef/ns-bthledef-bth_le_gatt_characteristic_value))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bthledef/ns-bthledef-bth_le_gatt_characteristic_value
 struct BTH_LE_GATT_CHARACTERISTIC_VALUE
 {
     uint DataSize;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Data;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bthledef/ns-bthledef-bth_le_gatt_descriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bthledef/ns-bthledef-bth_le_gatt_descriptor
 struct BTH_LE_GATT_DESCRIPTOR
 {
     ushort      ServiceHandle;
@@ -1796,24 +1860,48 @@ struct BTH_LE_GATT_DESCRIPTOR
     ushort      AttributeHandle;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bthledef/ns-bthledef-bth_le_gatt_descriptor_value))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bthledef/ns-bthledef-bth_le_gatt_descriptor_value
 struct BTH_LE_GATT_DESCRIPTOR_VALUE
 {
     BTH_LE_GATT_DESCRIPTOR_TYPE DescriptorType;
-    BTH_LE_UUID         DescriptorUuid;
-    _Anonymous_e__Union Anonymous;
-    uint                DataSize;
+    BTH_LE_UUID DescriptorUuid;
+    union
+    {
+        struct CharacteristicExtendedProperties
+        {
+            BOOLEAN IsReliableWriteEnabled;
+            BOOLEAN IsAuxiliariesWritable;
+        }
+        struct ClientCharacteristicConfiguration
+        {
+            BOOLEAN IsSubscribeToNotification;
+            BOOLEAN IsSubscribeToIndication;
+        }
+        struct ServerCharacteristicConfiguration
+        {
+            BOOLEAN IsBroadcast;
+        }
+        struct CharacteristicFormat
+        {
+            ubyte       Format;
+            ubyte       Exponent;
+            BTH_LE_UUID Unit;
+            ubyte       NameSpace;
+            BTH_LE_UUID Description;
+        }
+    }
+    uint        DataSize;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] Data;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bthledef/ns-bthledef-bluetooth_gatt_value_changed_event_registration))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bthledef/ns-bthledef-bluetooth_gatt_value_changed_event_registration
 struct BLUETOOTH_GATT_VALUE_CHANGED_EVENT_REGISTRATION
 {
     ushort NumCharacteristics;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/BTH_LE_GATT_CHARACTERISTIC[1] Characteristics;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/bthledef/ns-bthledef-bluetooth_gatt_value_changed_event))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/bthledef/ns-bthledef-bluetooth_gatt_value_changed_event
 struct BLUETOOTH_GATT_VALUE_CHANGED_EVENT
 {
     ushort ChangedAttributeHandle;
@@ -1821,7 +1909,7 @@ struct BLUETOOTH_GATT_VALUE_CHANGED_EVENT
     BTH_LE_GATT_CHARACTERISTIC_VALUE* CharacteristicValue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2bth/ns-ws2bth-sockaddr_bth))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2bth/ns-ws2bth-sockaddr_bth
 struct SOCKADDR_BTH
 {
 align (1):
@@ -1831,7 +1919,7 @@ align (1):
     uint   port;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2bth/ns-ws2bth-bth_set_service))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2bth/ns-ws2bth-bth_set_service
 struct BTH_SET_SERVICE
 {
 align (1):
@@ -1843,7 +1931,7 @@ align (1):
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] pRecord;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2bth/ns-ws2bth-bth_query_device))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2bth/ns-ws2bth-bth_query_device
 struct BTH_QUERY_DEVICE
 {
 align (1):
@@ -1851,7 +1939,7 @@ align (1):
     ubyte length;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ws2bth/ns-ws2bth-bth_query_service))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ws2bth/ns-ws2bth-bth_query_service
 struct BTH_QUERY_SERVICE
 {
 align (1):
@@ -1887,8 +1975,13 @@ struct RFCOMM_RPN_DATA
 struct RFCOMM_COMMAND
 {
 align (1):
-    uint           CmdType;
-    _Data_e__Union Data;
+    uint CmdType;
+    union Data
+    {
+        RFCOMM_MSC_DATA MSC;
+        RFCOMM_RLS_DATA RLS;
+        RFCOMM_RPN_DATA RPN;
+    }
 }
 
 struct BTH_PING_REQ
@@ -1915,9 +2008,14 @@ align (1):
 struct BTH_INFO_RSP
 {
 align (1):
-    ushort              result;
-    ubyte               dataLen;
-    _Anonymous_e__Union Anonymous;
+    ushort result;
+    ubyte  dataLen;
+    union
+    {
+    align (1):
+        ushort    connectionlessMTU;
+        ubyte[44] data;
+    }
 }
 
 // Functions

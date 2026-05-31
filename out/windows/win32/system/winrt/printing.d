@@ -3,14 +3,14 @@
 module windows.win32.system.winrt.printing;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : HRESULT, HWND, PWSTR;
-public import windows.win32.graphics.printing : IPrinterPropertyBag, IPrinterQueue;
-public import windows.win32.storage.xps : IXpsDocumentPackageTarget, IXpsOMObjectFactory1,
-                                          IXpsOMPageReference;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : HRESULT, HWND, PWSTR;
+public import windows.win32.graphics.printing.printing : IPrinterPropertyBag, IPrinterQueue;
+public import windows.win32.storage.xps.xps : IXpsDocumentPackageTarget, IXpsOMObjectFactory1,
+                                              IXpsOMPageReference;
 public import windows.win32.storage.xps.printing : IPrintDocumentPackageTarget;
-public import windows.win32.system.com : IStream, IUnknown;
-public import windows.win32.system.winrt : IInspectable;
+public import windows.win32.system.com.com : IStream, IUnknown;
+public import windows.win32.system.winrt.winrt : IInspectable;
 
 extern(Windows) @nogc nothrow:
 
@@ -18,23 +18,23 @@ extern(Windows) @nogc nothrow:
 // Interfaces
 
 @GUID("9ca31010-1484-4587-b26b-dddf9f9caecd")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/print3dmanagerinterop/nn-print3dmanagerinterop-iprinting3dmanagerinterop))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/print3dmanagerinterop/nn-print3dmanagerinterop-iprinting3dmanagerinterop
 interface IPrinting3DManagerInterop : IInspectable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/print3dmanagerinterop/nf-print3dmanagerinterop-iprinting3dmanagerinterop-getforwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/print3dmanagerinterop/nf-print3dmanagerinterop-iprinting3dmanagerinterop-getforwindow
     HRESULT GetForWindow(HWND appWindow, const(GUID)* riid, void** printManager);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/print3dmanagerinterop/nf-print3dmanagerinterop-iprinting3dmanagerinterop-showprintuiforwindowasync))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/print3dmanagerinterop/nf-print3dmanagerinterop-iprinting3dmanagerinterop-showprintuiforwindowasync
     HRESULT ShowPrintUIForWindowAsync(HWND appWindow, const(GUID)* riid, void** asyncOperation);
 }
 
 @GUID("c5435a42-8d43-4e7b-a68a-ef311e392087")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows8.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/printmanagerinterop/nn-printmanagerinterop-iprintmanagerinterop))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/printmanagerinterop/nn-printmanagerinterop-iprintmanagerinterop
 interface IPrintManagerInterop : IInspectable
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/printmanagerinterop/nf-printmanagerinterop-iprintmanagerinterop-getforwindow))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/printmanagerinterop/nf-printmanagerinterop-iprintmanagerinterop-getforwindow
     HRESULT GetForWindow(HWND appWindow, const(GUID)* riid, void** printManager);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/printmanagerinterop/nf-printmanagerinterop-iprintmanagerinterop-showprintuiforwindowasync))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/printmanagerinterop/nf-printmanagerinterop-iprintmanagerinterop-showprintuiforwindowasync
     HRESULT ShowPrintUIForWindowAsync(HWND appWindow, const(GUID)* riid, void** asyncOperation);
 }
 

@@ -3,18 +3,19 @@
 module windows.win32.graphics.dwm;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, HRESULT, HWND, LPARAM, LRESULT, POINT,
-                                         RECT, SIZE, WPARAM;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, HRESULT, HWND, LPARAM, LRESULT,
+                                                    POINT, RECT, SIZE, WPARAM;
 public import windows.win32.graphics.gdi : HBITMAP, HRGN;
-public import windows.win32.ui.controls : MARGINS;
+public import windows.win32.ui.controls.controls : MARGINS;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwmapi/ne-dwmapi-dwmwindowattribute))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwmapi/ne-dwmapi-dwmwindowattribute
 alias DWMWINDOWATTRIBUTE = int;
 enum : int
 {
@@ -46,7 +47,8 @@ enum : int
     DWMWA_BORDER_MARGINS                 = 0x00000028,
     DWMWA_LAST                           = 0x00000029,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwmapi/ne-dwmapi-dwm_window_corner_preference))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwmapi/ne-dwmapi-dwm_window_corner_preference
 alias DWM_WINDOW_CORNER_PREFERENCE = int;
 enum : int
 {
@@ -55,7 +57,8 @@ enum : int
     DWMWCP_ROUND      = 0x00000002,
     DWMWCP_ROUNDSMALL = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwmapi/ne-dwmapi-dwm_systembackdrop_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwmapi/ne-dwmapi-dwm_systembackdrop_type
 alias DWM_SYSTEMBACKDROP_TYPE = int;
 enum : int
 {
@@ -65,7 +68,8 @@ enum : int
     DWMSBT_TRANSIENTWINDOW = 0x00000003,
     DWMSBT_TABBEDWINDOW    = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwmapi/ne-dwmapi-dwmncrenderingpolicy))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwmapi/ne-dwmapi-dwmncrenderingpolicy
 alias DWMNCRENDERINGPOLICY = int;
 enum : int
 {
@@ -74,7 +78,8 @@ enum : int
     DWMNCRP_ENABLED        = 0x00000002,
     DWMNCRP_LAST           = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwmapi/ne-dwmapi-dwmflip3dwindowpolicy))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwmapi/ne-dwmapi-dwmflip3dwindowpolicy
 alias DWMFLIP3DWINDOWPOLICY = int;
 enum : int
 {
@@ -83,7 +88,8 @@ enum : int
     DWMFLIP3D_EXCLUDEABOVE = 0x00000002,
     DWMFLIP3D_LAST         = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwmapi/ne-dwmapi-dwm_source_frame_sampling))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwmapi/ne-dwmapi-dwm_source_frame_sampling
 alias DWM_SOURCE_FRAME_SAMPLING = int;
 enum : int
 {
@@ -91,14 +97,16 @@ enum : int
     DWM_SOURCE_FRAME_SAMPLING_COVERAGE = 0x00000001,
     DWM_SOURCE_FRAME_SAMPLING_LAST     = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwmapi/ne-dwmapi-dwmtransition_ownedwindow_target))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwmapi/ne-dwmapi-dwmtransition_ownedwindow_target
 alias DWMTRANSITION_OWNEDWINDOW_TARGET = int;
 enum : int
 {
     DWMTRANSITION_OWNEDWINDOW_NULL       = 0xffffffff,
     DWMTRANSITION_OWNEDWINDOW_REPOSITION = 0x00000000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwmapi/ne-dwmapi-gesture_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwmapi/ne-dwmapi-gesture_type
 alias GESTURE_TYPE = int;
 enum : int
 {
@@ -114,19 +122,21 @@ enum : int
     GT_TOUCH_PRESSANDHOLDABORT = 0x00000009,
     GT_TOUCH_PRESSANDTAP       = 0x0000000a,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwmapi/ne-dwmapi-dwm_showcontact))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwmapi/ne-dwmapi-dwm_showcontact
 alias DWM_SHOWCONTACT = uint;
 enum : uint
 {
-    DWMSC_DOWN      = 0x00000001,
-    DWMSC_UP        = 0x00000002,
-    DWMSC_DRAG      = 0x00000004,
-    DWMSC_HOLD      = 0x00000008,
-    DWMSC_PENBARREL = 0x00000010,
-    DWMSC_NONE      = 0x00000000,
-    DWMSC_ALL       = 0xffffffff,
+    DWMSC_DOWN      = 0x00000001U,
+    DWMSC_UP        = 0x00000002U,
+    DWMSC_DRAG      = 0x00000004U,
+    DWMSC_HOLD      = 0x00000008U,
+    DWMSC_PENBARREL = 0x00000010U,
+    DWMSC_NONE      = 0x00000000U,
+    DWMSC_ALL       = 0xffffffffU,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwmapi/ne-dwmapi-dwm_tab_window_requirements))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwmapi/ne-dwmapi-dwm_tab_window_requirements
 alias DWM_TAB_WINDOW_REQUIREMENTS = int;
 enum : int
 {
@@ -148,49 +158,49 @@ enum : int
 
 enum : uint
 {
-    DWM_BB_ENABLE                = 0x00000001,
-    DWM_BB_BLURREGION            = 0x00000002,
-    DWM_BB_TRANSITIONONMAXIMIZED = 0x00000004,
+    DWM_BB_ENABLE                = 0x00000001U,
+    DWM_BB_BLURREGION            = 0x00000002U,
+    DWM_BB_TRANSITIONONMAXIMIZED = 0x00000004U,
 }
 
 enum : uint
 {
-    DWMWA_COLOR_DEFAULT = 0xffffffff,
-    DWMWA_COLOR_NONE    = 0xfffffffe,
+    DWMWA_COLOR_DEFAULT = 0xffffffffU,
+    DWMWA_COLOR_NONE    = 0xfffffffeU,
 }
 
 enum : uint
 {
-    DWM_CLOAKED_APP       = 0x00000001,
-    DWM_CLOAKED_SHELL     = 0x00000002,
-    DWM_CLOAKED_INHERITED = 0x00000004,
+    DWM_CLOAKED_APP       = 0x00000001U,
+    DWM_CLOAKED_SHELL     = 0x00000002U,
+    DWM_CLOAKED_INHERITED = 0x00000004U,
 }
 
 enum : uint
 {
-    DWM_TNP_RECTDESTINATION      = 0x00000001,
-    DWM_TNP_RECTSOURCE           = 0x00000002,
-    DWM_TNP_OPACITY              = 0x00000004,
-    DWM_TNP_VISIBLE              = 0x00000008,
-    DWM_TNP_SOURCECLIENTAREAONLY = 0x00000010,
+    DWM_TNP_RECTDESTINATION      = 0x00000001U,
+    DWM_TNP_RECTSOURCE           = 0x00000002U,
+    DWM_TNP_OPACITY              = 0x00000004U,
+    DWM_TNP_VISIBLE              = 0x00000008U,
+    DWM_TNP_SOURCECLIENTAREAONLY = 0x00000010U,
 }
 
 enum int DWM_FRAME_DURATION_DEFAULT = 0xffffffff;
-enum uint DWM_EC_DISABLECOMPOSITION = 0x00000000;
-enum uint DWM_EC_ENABLECOMPOSITION = 0x00000001;
-enum uint DWM_SIT_DISPLAYFRAME = 0x00000001;
-enum uint c_DwmMaxQueuedBuffers = 0x00000008;
+enum uint DWM_EC_DISABLECOMPOSITION = 0x00000000U;
+enum uint DWM_EC_ENABLECOMPOSITION = 0x00000001U;
+enum uint DWM_SIT_DISPLAYFRAME = 0x00000001U;
+enum uint c_DwmMaxQueuedBuffers = 0x00000008U;
 
 enum : uint
 {
-    c_DwmMaxMonitors = 0x00000010,
-    c_DwmMaxAdapters = 0x00000010,
+    c_DwmMaxMonitors = 0x00000010U,
+    c_DwmMaxAdapters = 0x00000010U,
 }
 
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwmapi/ns-dwmapi-dwm_blurbehind))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwmapi/ns-dwmapi-dwm_blurbehind
 struct DWM_BLURBEHIND
 {
 align (1):
@@ -200,7 +210,7 @@ align (1):
     BOOL fTransitionOnMaximized;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwmapi/ns-dwmapi-dwm_thumbnail_properties))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwmapi/ns-dwmapi-dwm_thumbnail_properties
 struct DWM_THUMBNAIL_PROPERTIES
 {
 align (1):
@@ -212,7 +222,7 @@ align (1):
     BOOL  fSourceClientAreaOnly;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwmapi/ns-dwmapi-unsigned_ratio))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwmapi/ns-dwmapi-unsigned_ratio
 struct UNSIGNED_RATIO
 {
 align (1):
@@ -221,7 +231,7 @@ align (1):
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwmapi/ns-dwmapi-dwm_timing_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwmapi/ns-dwmapi-dwm_timing_info
 struct DWM_TIMING_INFO
 {
 align (1):
@@ -268,7 +278,7 @@ align (1):
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dwmapi/ns-dwmapi-dwm_present_parameters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dwmapi/ns-dwmapi-dwm_present_parameters
 struct DWM_PRESENT_PARAMETERS
 {
 align (1):
@@ -282,7 +292,7 @@ align (1):
     DWM_SOURCE_FRAME_SAMPLING eSampling;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/mileffects/ns-mileffects-milmatrix3x2d))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/mileffects/ns-mileffects-milmatrix3x2d
 struct MilMatrix3x2D
 {
 align (1):

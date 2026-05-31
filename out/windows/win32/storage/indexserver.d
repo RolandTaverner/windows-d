@@ -3,15 +3,16 @@
 module windows.win32.storage.indexserver;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : HRESULT, PWSTR, RECT;
-public import windows.win32.system.com : IStream, IUnknown;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : HRESULT, PWSTR, RECT;
+public import windows.win32.system.com.com : IStream, IUnknown;
 public import windows.win32.system.com.structuredstorage : IStorage, PROPSPEC, PROPVARIANT;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
+
 
 alias IFILTER_INIT = int;
 enum : int
@@ -30,13 +31,15 @@ enum : int
     IFILTER_INIT_DISABLE_EMBEDDED        = 0x00000800,
     IFILTER_INIT_EMIT_FORMATTING         = 0x00001000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/filter/ne-filter-ifilter_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/filter/ne-filter-ifilter_flags
 alias IFILTER_FLAGS = int;
 enum : int
 {
     IFILTER_FLAGS_OLE_PROPERTIES = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/filter/ne-filter-chunkstate))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/filter/ne-filter-chunkstate
 alias CHUNKSTATE = int;
 enum : int
 {
@@ -45,7 +48,8 @@ enum : int
     CHUNK_FILTER_OWNED_VALUE = 0x00000004,
     CHUNK_IMAGE              = 0x00000008,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/filter/ne-filter-chunk_breaktype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/filter/ne-filter-chunk_breaktype
 alias CHUNK_BREAKTYPE = int;
 enum : int
 {
@@ -55,6 +59,7 @@ enum : int
     CHUNK_EOP      = 0x00000003,
     CHUNK_EOC      = 0x00000004,
 }
+
 alias IMAGE_PIXELFORMAT = int;
 enum : int
 {
@@ -62,7 +67,8 @@ enum : int
     FILTER_PIXELFORMAT_PBGRA8 = 0x00000001,
     FILTER_PIXELFORMAT_BGR8   = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/indexsrv/ne-indexsrv-wordrep_break_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/ne-indexsrv-wordrep_break_type
 alias WORDREP_BREAK_TYPE = int;
 enum : int
 {
@@ -71,7 +77,8 @@ enum : int
     WORDREP_BREAK_EOP = 0x00000002,
     WORDREP_BREAK_EOC = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledbguid/ne-oledbguid-dbkindenum))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledbguid/ne-oledbguid-dbkindenum
 alias DBKINDENUM = int;
 enum : int
 {
@@ -89,252 +96,252 @@ enum : int
 
 enum : uint
 {
-    CI_VERSION_WDS30 = 0x00000102,
-    CI_VERSION_WDS40 = 0x00000109,
-    CI_VERSION_WIN70 = 0x00000700,
+    CI_VERSION_WDS30 = 0x00000102U,
+    CI_VERSION_WDS40 = 0x00000109U,
+    CI_VERSION_WIN70 = 0x00000700U,
 }
 
 enum const(wchar)* CINULLCATALOG = "::_noindex_::";
 enum const(wchar)* CIADMIN = "::_nodocstore_::";
-enum uint LIFF_LOAD_DEFINED_FILTER = 0x00000001;
-enum uint LIFF_IMPLEMENT_TEXT_FILTER_FALLBACK_POLICY = 0x00000002;
-enum uint LIFF_FORCE_TEXT_FILTER_FALLBACK = 0x00000003;
+enum uint LIFF_LOAD_DEFINED_FILTER = 0x00000001U;
+enum uint LIFF_IMPLEMENT_TEXT_FILTER_FALLBACK_POLICY = 0x00000002U;
+enum uint LIFF_FORCE_TEXT_FILTER_FALLBACK = 0x00000003U;
 enum GUID CLSID_INDEX_SERVER_DSO = GUID("f9ae8980-7e52-11d0-8964-00c04fd611d7");
 enum GUID PSGUID_FILENAME = GUID("41cf5ae0-f75a-4806-bd87-59c7d9248eb9");
-enum uint PID_FILENAME = 0x00000064;
+enum uint PID_FILENAME = 0x00000064U;
 enum GUID DBPROPSET_FSCIFRMWRK_EXT = GUID("a9bd1526-6a80-11d0-8c9d-0020af1d740e");
 
 enum : uint
 {
-    DBPROP_CI_CATALOG_NAME   = 0x00000002,
-    DBPROP_CI_INCLUDE_SCOPES = 0x00000003,
-    DBPROP_CI_DEPTHS         = 0x00000004,
-    DBPROP_CI_SCOPE_FLAGS    = 0x00000004,
-    DBPROP_CI_EXCLUDE_SCOPES = 0x00000005,
-    DBPROP_CI_SECURITY_ID    = 0x00000006,
-    DBPROP_CI_QUERY_TYPE     = 0x00000007,
-    DBPROP_CI_PROVIDER       = 0x00000008,
+    DBPROP_CI_CATALOG_NAME   = 0x00000002U,
+    DBPROP_CI_INCLUDE_SCOPES = 0x00000003U,
+    DBPROP_CI_DEPTHS         = 0x00000004U,
+    DBPROP_CI_SCOPE_FLAGS    = 0x00000004U,
+    DBPROP_CI_EXCLUDE_SCOPES = 0x00000005U,
+    DBPROP_CI_SECURITY_ID    = 0x00000006U,
+    DBPROP_CI_QUERY_TYPE     = 0x00000007U,
+    DBPROP_CI_PROVIDER       = 0x00000008U,
 }
 
 enum : uint
 {
-    CI_PROVIDER_MSSEARCH         = 0x00000001,
-    CI_PROVIDER_INDEXING_SERVICE = 0x00000002,
-    CI_PROVIDER_ALL              = 0xffffffff,
+    CI_PROVIDER_MSSEARCH         = 0x00000001U,
+    CI_PROVIDER_INDEXING_SERVICE = 0x00000002U,
+    CI_PROVIDER_ALL              = 0xffffffffU,
 }
 
 enum GUID DBPROPSET_SESS_QUERYEXT = GUID("63623309-2d8b-4d17-b152-6e2956c26a70");
-enum uint DBPROP_DEFAULT_EQUALS_BEHAVIOR = 0x00000002;
+enum uint DBPROP_DEFAULT_EQUALS_BEHAVIOR = 0x00000002U;
 enum GUID DBPROPSET_QUERYEXT = GUID("a7ac77ed-f8d7-11ce-a798-0020f8008025");
-enum uint DBPROP_USECONTENTINDEX = 0x00000002;
-enum uint DBPROP_DEFERNONINDEXEDTRIMMING = 0x00000003;
-enum uint DBPROP_USEEXTENDEDDBTYPES = 0x00000004;
-enum uint DBPROP_IGNORENOISEONLYCLAUSES = 0x00000005;
-enum uint DBPROP_GENERICOPTIONS_STRING = 0x00000006;
+enum uint DBPROP_USECONTENTINDEX = 0x00000002U;
+enum uint DBPROP_DEFERNONINDEXEDTRIMMING = 0x00000003U;
+enum uint DBPROP_USEEXTENDEDDBTYPES = 0x00000004U;
+enum uint DBPROP_IGNORENOISEONLYCLAUSES = 0x00000005U;
+enum uint DBPROP_GENERICOPTIONS_STRING = 0x00000006U;
 
 enum : uint
 {
-    DBPROP_FIRSTROWS                = 0x00000007,
-    DBPROP_DEFERCATALOGVERIFICATION = 0x00000008,
+    DBPROP_FIRSTROWS                = 0x00000007U,
+    DBPROP_DEFERCATALOGVERIFICATION = 0x00000008U,
 }
 
-enum uint DBPROP_CATALOGLISTID = 0x00000009;
-enum uint DBPROP_GENERATEPARSETREE = 0x0000000a;
-enum uint DBPROP_APPLICATION_NAME = 0x0000000b;
+enum uint DBPROP_CATALOGLISTID = 0x00000009U;
+enum uint DBPROP_GENERATEPARSETREE = 0x0000000aU;
+enum uint DBPROP_APPLICATION_NAME = 0x0000000bU;
 
 enum : uint
 {
-    DBPROP_FREETEXTANYTERM     = 0x0000000c,
-    DBPROP_FREETEXTUSESTEMMING = 0x0000000d,
+    DBPROP_FREETEXTANYTERM     = 0x0000000cU,
+    DBPROP_FREETEXTUSESTEMMING = 0x0000000dU,
 }
 
 enum : uint
 {
-    DBPROP_IGNORESBRI                 = 0x0000000e,
-    DBPROP_DONOTCOMPUTEEXPENSIVEPROPS = 0x0000000f,
+    DBPROP_IGNORESBRI                 = 0x0000000eU,
+    DBPROP_DONOTCOMPUTEEXPENSIVEPROPS = 0x0000000fU,
 }
 
-enum uint DBPROP_ENABLEROWSETEVENTS = 0x00000010;
+enum uint DBPROP_ENABLEROWSETEVENTS = 0x00000010U;
 
 enum : uint
 {
-    DBPROP_SESSION_ID = 0x00000011,
-    DBPROP_QUERY_ID   = 0x00000012,
+    DBPROP_SESSION_ID = 0x00000011U,
+    DBPROP_QUERY_ID   = 0x00000012U,
 }
 
 enum GUID DBPROPSET_CIFRMWRKCORE_EXT = GUID("afafaca5-b5d1-11d0-8c62-00c04fc2db8d");
 
 enum : uint
 {
-    DBPROP_MACHINE      = 0x00000002,
-    DBPROP_CLIENT_CLSID = 0x00000003,
+    DBPROP_MACHINE      = 0x00000002U,
+    DBPROP_CLIENT_CLSID = 0x00000003U,
 }
 
 enum GUID DBPROPSET_MSIDXS_ROWSETEXT = GUID("aa6ee6b0-e828-11d0-b23e-00aa0047fc01");
-enum uint MSIDXSPROP_ROWSETQUERYSTATUS = 0x00000002;
-enum uint MSIDXSPROP_COMMAND_LOCALE_STRING = 0x00000003;
-enum uint MSIDXSPROP_QUERY_RESTRICTION = 0x00000004;
+enum uint MSIDXSPROP_ROWSETQUERYSTATUS = 0x00000002U;
+enum uint MSIDXSPROP_COMMAND_LOCALE_STRING = 0x00000003U;
+enum uint MSIDXSPROP_QUERY_RESTRICTION = 0x00000004U;
 
 enum : uint
 {
-    MSIDXSPROP_PARSE_TREE            = 0x00000005,
-    MSIDXSPROP_MAX_RANK              = 0x00000006,
-    MSIDXSPROP_RESULTS_FOUND         = 0x00000007,
-    MSIDXSPROP_WHEREID               = 0x00000008,
-    MSIDXSPROP_SERVER_VERSION        = 0x00000009,
-    MSIDXSPROP_SERVER_WINVER_MAJOR   = 0x0000000a,
-    MSIDXSPROP_SERVER_WINVER_MINOR   = 0x0000000b,
-    MSIDXSPROP_SERVER_NLSVERSION     = 0x0000000c,
-    MSIDXSPROP_SERVER_NLSVER_DEFINED = 0x0000000d,
+    MSIDXSPROP_PARSE_TREE            = 0x00000005U,
+    MSIDXSPROP_MAX_RANK              = 0x00000006U,
+    MSIDXSPROP_RESULTS_FOUND         = 0x00000007U,
+    MSIDXSPROP_WHEREID               = 0x00000008U,
+    MSIDXSPROP_SERVER_VERSION        = 0x00000009U,
+    MSIDXSPROP_SERVER_WINVER_MAJOR   = 0x0000000aU,
+    MSIDXSPROP_SERVER_WINVER_MINOR   = 0x0000000bU,
+    MSIDXSPROP_SERVER_NLSVERSION     = 0x0000000cU,
+    MSIDXSPROP_SERVER_NLSVER_DEFINED = 0x0000000dU,
 }
 
-enum uint MSIDXSPROP_SAME_SORTORDER_USED = 0x0000000e;
+enum uint MSIDXSPROP_SAME_SORTORDER_USED = 0x0000000eU;
 
 enum : uint
 {
-    STAT_BUSY          = 0x00000000,
-    STAT_ERROR         = 0x00000001,
-    STAT_DONE          = 0x00000002,
-    STAT_REFRESH       = 0x00000003,
-    STAT_PARTIAL_SCOPE = 0x00000008,
+    STAT_BUSY          = 0x00000000U,
+    STAT_ERROR         = 0x00000001U,
+    STAT_DONE          = 0x00000002U,
+    STAT_REFRESH       = 0x00000003U,
+    STAT_PARTIAL_SCOPE = 0x00000008U,
 }
 
-enum uint STAT_NOISE_WORDS = 0x00000010;
-enum uint STAT_CONTENT_OUT_OF_DATE = 0x00000020;
-enum uint STAT_REFRESH_INCOMPLETE = 0x00000040;
-enum uint STAT_CONTENT_QUERY_INCOMPLETE = 0x00000080;
-enum uint STAT_TIME_LIMIT_EXCEEDED = 0x00000100;
-enum uint STAT_SHARING_VIOLATION = 0x00000200;
+enum uint STAT_NOISE_WORDS = 0x00000010U;
+enum uint STAT_CONTENT_OUT_OF_DATE = 0x00000020U;
+enum uint STAT_REFRESH_INCOMPLETE = 0x00000040U;
+enum uint STAT_CONTENT_QUERY_INCOMPLETE = 0x00000080U;
+enum uint STAT_TIME_LIMIT_EXCEEDED = 0x00000100U;
+enum uint STAT_SHARING_VIOLATION = 0x00000200U;
 
 enum : uint
 {
-    STAT_MISSING_RELDOC         = 0x00000400,
-    STAT_MISSING_PROP_IN_RELDOC = 0x00000800,
+    STAT_MISSING_RELDOC         = 0x00000400U,
+    STAT_MISSING_PROP_IN_RELDOC = 0x00000800U,
 }
 
-enum uint STAT_RELDOC_ACCESS_DENIED = 0x00001000;
-enum uint STAT_COALESCE_COMP_ALL_NOISE = 0x00002000;
+enum uint STAT_RELDOC_ACCESS_DENIED = 0x00001000U;
+enum uint STAT_COALESCE_COMP_ALL_NOISE = 0x00002000U;
 
 enum : uint
 {
-    QUERY_SHALLOW       = 0x00000000,
-    QUERY_DEEP          = 0x00000001,
-    QUERY_PHYSICAL_PATH = 0x00000000,
+    QUERY_SHALLOW       = 0x00000000U,
+    QUERY_DEEP          = 0x00000001U,
+    QUERY_PHYSICAL_PATH = 0x00000000U,
 }
 
-enum uint QUERY_VIRTUAL_PATH = 0x00000002;
+enum uint QUERY_VIRTUAL_PATH = 0x00000002U;
 
 enum : uint
 {
-    PROPID_QUERY_WORKID       = 0x00000005,
-    PROPID_QUERY_UNFILTERED   = 0x00000007,
-    PROPID_QUERY_VIRTUALPATH  = 0x00000009,
-    PROPID_QUERY_LASTSEENTIME = 0x0000000a,
-}
-
-enum : uint
-{
-    CICAT_STOPPED   = 0x00000001,
-    CICAT_READONLY  = 0x00000002,
-    CICAT_WRITABLE  = 0x00000004,
-    CICAT_NO_QUERY  = 0x00000008,
-    CICAT_GET_STATE = 0x00000010,
-}
-
-enum uint CICAT_ALL_OPENED = 0x00000020;
-
-enum : uint
-{
-    CI_STATE_SHADOW_MERGE          = 0x00000001,
-    CI_STATE_MASTER_MERGE          = 0x00000002,
-    CI_STATE_CONTENT_SCAN_REQUIRED = 0x00000004,
-}
-
-enum uint CI_STATE_ANNEALING_MERGE = 0x00000008;
-
-enum : uint
-{
-    CI_STATE_SCANNING              = 0x00000010,
-    CI_STATE_RECOVERING            = 0x00000020,
-    CI_STATE_INDEX_MIGRATION_MERGE = 0x00000040,
+    PROPID_QUERY_WORKID       = 0x00000005U,
+    PROPID_QUERY_UNFILTERED   = 0x00000007U,
+    PROPID_QUERY_VIRTUALPATH  = 0x00000009U,
+    PROPID_QUERY_LASTSEENTIME = 0x0000000aU,
 }
 
 enum : uint
 {
-    CI_STATE_LOW_MEMORY          = 0x00000080,
-    CI_STATE_HIGH_IO             = 0x00000100,
-    CI_STATE_MASTER_MERGE_PAUSED = 0x00000200,
+    CICAT_STOPPED   = 0x00000001U,
+    CICAT_READONLY  = 0x00000002U,
+    CICAT_WRITABLE  = 0x00000004U,
+    CICAT_NO_QUERY  = 0x00000008U,
+    CICAT_GET_STATE = 0x00000010U,
+}
+
+enum uint CICAT_ALL_OPENED = 0x00000020U;
+
+enum : uint
+{
+    CI_STATE_SHADOW_MERGE          = 0x00000001U,
+    CI_STATE_MASTER_MERGE          = 0x00000002U,
+    CI_STATE_CONTENT_SCAN_REQUIRED = 0x00000004U,
+}
+
+enum uint CI_STATE_ANNEALING_MERGE = 0x00000008U;
+
+enum : uint
+{
+    CI_STATE_SCANNING              = 0x00000010U,
+    CI_STATE_RECOVERING            = 0x00000020U,
+    CI_STATE_INDEX_MIGRATION_MERGE = 0x00000040U,
 }
 
 enum : uint
 {
-    CI_STATE_READ_ONLY      = 0x00000400,
-    CI_STATE_BATTERY_POWER  = 0x00000800,
-    CI_STATE_USER_ACTIVE    = 0x00001000,
-    CI_STATE_STARTING       = 0x00002000,
-    CI_STATE_READING_USNS   = 0x00004000,
-    CI_STATE_DELETION_MERGE = 0x00008000,
+    CI_STATE_LOW_MEMORY          = 0x00000080U,
+    CI_STATE_HIGH_IO             = 0x00000100U,
+    CI_STATE_MASTER_MERGE_PAUSED = 0x00000200U,
 }
 
 enum : uint
 {
-    CI_STATE_LOW_DISK       = 0x00010000,
-    CI_STATE_HIGH_CPU       = 0x00020000,
-    CI_STATE_BATTERY_POLICY = 0x00040000,
+    CI_STATE_READ_ONLY      = 0x00000400U,
+    CI_STATE_BATTERY_POWER  = 0x00000800U,
+    CI_STATE_USER_ACTIVE    = 0x00001000U,
+    CI_STATE_STARTING       = 0x00002000U,
+    CI_STATE_READING_USNS   = 0x00004000U,
+    CI_STATE_DELETION_MERGE = 0x00008000U,
 }
 
 enum : uint
 {
-    GENERATE_METHOD_EXACT   = 0x00000000,
-    GENERATE_METHOD_PREFIX  = 0x00000001,
-    GENERATE_METHOD_INFLECT = 0x00000002,
+    CI_STATE_LOW_DISK       = 0x00010000U,
+    CI_STATE_HIGH_CPU       = 0x00020000U,
+    CI_STATE_BATTERY_POLICY = 0x00040000U,
 }
 
 enum : uint
 {
-    SCOPE_FLAG_MASK    = 0x000000ff,
-    SCOPE_FLAG_INCLUDE = 0x00000001,
-    SCOPE_FLAG_DEEP    = 0x00000002,
+    GENERATE_METHOD_EXACT   = 0x00000000U,
+    GENERATE_METHOD_PREFIX  = 0x00000001U,
+    GENERATE_METHOD_INFLECT = 0x00000002U,
 }
 
 enum : uint
 {
-    SCOPE_TYPE_MASK    = 0xffffff00,
-    SCOPE_TYPE_WINPATH = 0x00000100,
-    SCOPE_TYPE_VPATH   = 0x00000200,
+    SCOPE_FLAG_MASK    = 0x000000ffU,
+    SCOPE_FLAG_INCLUDE = 0x00000001U,
+    SCOPE_FLAG_DEEP    = 0x00000002U,
 }
 
 enum : uint
 {
-    PROPID_QUERY_RANKVECTOR = 0x00000002,
-    PROPID_QUERY_RANK       = 0x00000003,
-    PROPID_QUERY_HITCOUNT   = 0x00000004,
-    PROPID_QUERY_ALL        = 0x00000006,
-    PROPID_STG_CONTENTS     = 0x00000013,
+    SCOPE_TYPE_MASK    = 0xffffff00U,
+    SCOPE_TYPE_WINPATH = 0x00000100U,
+    SCOPE_TYPE_VPATH   = 0x00000200U,
 }
 
 enum : uint
 {
-    VECTOR_RANK_MIN     = 0x00000000,
-    VECTOR_RANK_MAX     = 0x00000001,
-    VECTOR_RANK_INNER   = 0x00000002,
-    VECTOR_RANK_DICE    = 0x00000003,
-    VECTOR_RANK_JACCARD = 0x00000004,
+    PROPID_QUERY_RANKVECTOR = 0x00000002U,
+    PROPID_QUERY_RANK       = 0x00000003U,
+    PROPID_QUERY_HITCOUNT   = 0x00000004U,
+    PROPID_QUERY_ALL        = 0x00000006U,
+    PROPID_STG_CONTENTS     = 0x00000013U,
 }
 
 enum : uint
 {
-    DBSETFUNC_NONE     = 0x00000000,
-    DBSETFUNC_ALL      = 0x00000001,
-    DBSETFUNC_DISTINCT = 0x00000002,
+    VECTOR_RANK_MIN     = 0x00000000U,
+    VECTOR_RANK_MAX     = 0x00000001U,
+    VECTOR_RANK_INNER   = 0x00000002U,
+    VECTOR_RANK_DICE    = 0x00000003U,
+    VECTOR_RANK_JACCARD = 0x00000004U,
 }
 
 enum : uint
 {
-    PROXIMITY_UNIT_WORD      = 0x00000000,
-    PROXIMITY_UNIT_SENTENCE  = 0x00000001,
-    PROXIMITY_UNIT_PARAGRAPH = 0x00000002,
-    PROXIMITY_UNIT_CHAPTER   = 0x00000003,
+    DBSETFUNC_NONE     = 0x00000000U,
+    DBSETFUNC_ALL      = 0x00000001U,
+    DBSETFUNC_DISTINCT = 0x00000002U,
+}
+
+enum : uint
+{
+    PROXIMITY_UNIT_WORD      = 0x00000000U,
+    PROXIMITY_UNIT_SENTENCE  = 0x00000001U,
+    PROXIMITY_UNIT_PARAGRAPH = 0x00000002U,
+    PROXIMITY_UNIT_CHAPTER   = 0x00000003U,
 }
 
 enum HRESULT NOT_AN_ERROR = HRESULT(0x00080000);
@@ -376,7 +383,7 @@ enum : HRESULT
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ntquery/ns-ntquery-ci_state))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ntquery/ns-ntquery-ci_state
 struct CI_STATE
 {
     uint cbStruct;
@@ -396,14 +403,14 @@ struct CI_STATE
     uint dwPropCacheSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/filter/ns-filter-fullpropspec))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/filter/ns-filter-fullpropspec
 struct FULLPROPSPEC
 {
     GUID     guidPropSet;
     PROPSPEC psProperty;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/filter/ns-filter-filterregion))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/filter/ns-filter-filterregion
 struct FILTERREGION
 {
     uint idChunk;
@@ -411,7 +418,7 @@ struct FILTERREGION
     uint cwcExtent;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/filter/ns-filter-stat_chunk))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/filter/ns-filter-stat_chunk
 struct STAT_CHUNK
 {
     uint            idChunk;
@@ -431,23 +438,54 @@ struct IMAGE_INFO
     IMAGE_PIXELFORMAT Format;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledbguid/ns-oledbguid-dbid))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct DBID
+version(X86_64)
 {
-    _uGuid_e__Union uGuid;
-    uint            eKind;
-    _uName_e__Union uName;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledbguid/ns-oledbguid-dbid
+    struct DBID
+    {
+        union uGuid
+        {
+            GUID  guid;
+            GUID* pguid;
+        }
+        uint eKind;
+        union uName
+        {
+            PWSTR pwszName;
+            uint  ulPropid;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/oledbguid/ns-oledbguid-dbid))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct DBID
+version(AArch64)
 {
-align (2):
-    _uGuid_e__Union uGuid;
-    uint            eKind;
-    _uName_e__Union uName;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledbguid/ns-oledbguid-dbid
+    struct DBID
+    {
+        union uGuid
+        {
+            GUID  guid;
+            GUID* pguid;
+        }
+        uint eKind;
+        union uName
+        {
+            PWSTR pwszName;
+            uint  ulPropid;
+        }
+    }
+}
+
+version(X86)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/oledbguid/ns-oledbguid-dbid
+    struct DBID
+    {
+    align (2):
+        _uGuid_e__Union uGuid;
+        uint            eKind;
+        _uName_e__Union uName;
+    }
 }
 
 // Functions
@@ -472,18 +510,18 @@ HRESULT BindIFilterFromStream(IStream pStm, IUnknown pUnkOuter, void** ppIUnk);
 
 @GUID("89bcb740-6119-101a-bcb7-00dd010655af")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/filter/nn-filter-ifilter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/filter/nn-filter-ifilter
 interface IFilter : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/filter/nf-filter-ifilter-init))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/filter/nf-filter-ifilter-init
     int Init(uint grfFlags, uint cAttributes, const(FULLPROPSPEC)* aAttributes, uint* pFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/filter/nf-filter-ifilter-getchunk))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/filter/nf-filter-ifilter-getchunk
     int GetChunk(STAT_CHUNK* pStat);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/filter/nf-filter-ifilter-gettext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/filter/nf-filter-ifilter-gettext
     int GetText(uint* pcwcBuffer, PWSTR awcBuffer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/filter/nf-filter-ifilter-getvalue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/filter/nf-filter-ifilter-getvalue
     int GetValue(PROPVARIANT** ppPropValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/filter/nf-filter-ifilter-bindregion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/filter/nf-filter-ifilter-bindregion
     int BindRegion(FILTERREGION origPos, const(GUID)* riid, void** ppunk);
 }
 
@@ -497,13 +535,13 @@ interface IPixelFilter : IFilter
 
 @GUID("cc906ff0-c058-101a-b554-08002b33b0e6")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows5.0))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/indexsrv/nn-indexsrv-iphrasesink))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/nn-indexsrv-iphrasesink
 interface IPhraseSink : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-iphrasesink-putsmallphrase))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-iphrasesink-putsmallphrase
     HRESULT PutSmallPhrase(const(PWSTR) pwcNoun, uint cwcNoun, const(PWSTR) pwcModifier, uint cwcModifier, 
                            uint ulAttachmentType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-iphrasesink-putphrase))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/indexsrv/nf-indexsrv-iphrasesink-putphrase
     HRESULT PutPhrase(const(PWSTR) pwcPhrase, uint cwcPhrase);
 }
 

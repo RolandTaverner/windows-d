@@ -1,18 +1,18 @@
 // Written in the D programming language.
 
-module windows.win32.system.diagnostics.debug;
+module windows.win32.system.diagnostics.debug_.debug_;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BOOLEAN, BSTR, CHAR, HANDLE, HMODULE,
-                                         HRESULT, HWND, NTSTATUS, PSTR, PWSTR,
-                                         SYSTEMTIME;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BOOLEAN, BSTR, CHAR, HANDLE,
+                                                    HMODULE, HRESULT, HWND, NTSTATUS,
+                                                    PSTR, PWSTR, SYSTEMTIME;
 public import windows.win32.security.wintrust : WIN_CERTIFICATE;
 public import windows.win32.storage.filesystem : VS_FIXEDFILEINFO;
-public import windows.win32.system.com : IUnknown;
+public import windows.win32.system.com.com : IUnknown;
 public import windows.win32.system.com.structuredstorage : ILockBytes;
 public import windows.win32.system.kernel : EXCEPTION_ROUTINE, FLOATING_SAVE_AREA, LIST_ENTRY;
-public import windows.win32.system.memory : VIRTUAL_ALLOCATION_TYPE;
+public import windows.win32.system.memory.memory : VIRTUAL_ALLOCATION_TYPE;
 public import windows.win32.system.ole : CADWORD, CALPOLESTR;
 public import windows.win32.system.systeminformation : IMAGE_FILE_MACHINE, PROCESSOR_ARCHITECTURE;
 public import windows.win32.system.threading : LPTHREAD_START_ROUTINE;
@@ -25,1104 +25,1134 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias SYM_LOAD_FLAGS = uint;
 enum : uint
 {
-    SLMFLAG_NONE       = 0x00000000,
-    SLMFLAG_VIRTUAL    = 0x00000001,
-    SLMFLAG_ALT_INDEX  = 0x00000002,
-    SLMFLAG_NO_SYMBOLS = 0x00000004,
+    SLMFLAG_NONE       = 0x00000000U,
+    SLMFLAG_VIRTUAL    = 0x00000001U,
+    SLMFLAG_ALT_INDEX  = 0x00000002U,
+    SLMFLAG_NO_SYMBOLS = 0x00000004U,
 }
+
 alias IMAGE_SECTION_CHARACTERISTICS = uint;
 enum : uint
 {
-    IMAGE_SCN_TYPE_NO_PAD            = 0x00000008,
-    IMAGE_SCN_CNT_CODE               = 0x00000020,
-    IMAGE_SCN_CNT_INITIALIZED_DATA   = 0x00000040,
-    IMAGE_SCN_CNT_UNINITIALIZED_DATA = 0x00000080,
-    IMAGE_SCN_LNK_OTHER              = 0x00000100,
-    IMAGE_SCN_LNK_INFO               = 0x00000200,
-    IMAGE_SCN_LNK_REMOVE             = 0x00000800,
-    IMAGE_SCN_LNK_COMDAT             = 0x00001000,
-    IMAGE_SCN_NO_DEFER_SPEC_EXC      = 0x00004000,
-    IMAGE_SCN_GPREL                  = 0x00008000,
-    IMAGE_SCN_MEM_FARDATA            = 0x00008000,
-    IMAGE_SCN_MEM_PURGEABLE          = 0x00020000,
-    IMAGE_SCN_MEM_16BIT              = 0x00020000,
-    IMAGE_SCN_MEM_LOCKED             = 0x00040000,
-    IMAGE_SCN_MEM_PRELOAD            = 0x00080000,
-    IMAGE_SCN_ALIGN_1BYTES           = 0x00100000,
-    IMAGE_SCN_ALIGN_2BYTES           = 0x00200000,
-    IMAGE_SCN_ALIGN_4BYTES           = 0x00300000,
-    IMAGE_SCN_ALIGN_8BYTES           = 0x00400000,
-    IMAGE_SCN_ALIGN_16BYTES          = 0x00500000,
-    IMAGE_SCN_ALIGN_32BYTES          = 0x00600000,
-    IMAGE_SCN_ALIGN_64BYTES          = 0x00700000,
-    IMAGE_SCN_ALIGN_128BYTES         = 0x00800000,
-    IMAGE_SCN_ALIGN_256BYTES         = 0x00900000,
-    IMAGE_SCN_ALIGN_512BYTES         = 0x00a00000,
-    IMAGE_SCN_ALIGN_1024BYTES        = 0x00b00000,
-    IMAGE_SCN_ALIGN_2048BYTES        = 0x00c00000,
-    IMAGE_SCN_ALIGN_4096BYTES        = 0x00d00000,
-    IMAGE_SCN_ALIGN_8192BYTES        = 0x00e00000,
-    IMAGE_SCN_ALIGN_MASK             = 0x00f00000,
-    IMAGE_SCN_LNK_NRELOC_OVFL        = 0x01000000,
-    IMAGE_SCN_MEM_DISCARDABLE        = 0x02000000,
-    IMAGE_SCN_MEM_NOT_CACHED         = 0x04000000,
-    IMAGE_SCN_MEM_NOT_PAGED          = 0x08000000,
-    IMAGE_SCN_MEM_SHARED             = 0x10000000,
-    IMAGE_SCN_MEM_EXECUTE            = 0x20000000,
-    IMAGE_SCN_MEM_READ               = 0x40000000,
-    IMAGE_SCN_MEM_WRITE              = 0x80000000,
-    IMAGE_SCN_SCALE_INDEX            = 0x00000001,
+    IMAGE_SCN_TYPE_NO_PAD            = 0x00000008U,
+    IMAGE_SCN_CNT_CODE               = 0x00000020U,
+    IMAGE_SCN_CNT_INITIALIZED_DATA   = 0x00000040U,
+    IMAGE_SCN_CNT_UNINITIALIZED_DATA = 0x00000080U,
+    IMAGE_SCN_LNK_OTHER              = 0x00000100U,
+    IMAGE_SCN_LNK_INFO               = 0x00000200U,
+    IMAGE_SCN_LNK_REMOVE             = 0x00000800U,
+    IMAGE_SCN_LNK_COMDAT             = 0x00001000U,
+    IMAGE_SCN_NO_DEFER_SPEC_EXC      = 0x00004000U,
+    IMAGE_SCN_GPREL                  = 0x00008000U,
+    IMAGE_SCN_MEM_FARDATA            = 0x00008000U,
+    IMAGE_SCN_MEM_PURGEABLE          = 0x00020000U,
+    IMAGE_SCN_MEM_16BIT              = 0x00020000U,
+    IMAGE_SCN_MEM_LOCKED             = 0x00040000U,
+    IMAGE_SCN_MEM_PRELOAD            = 0x00080000U,
+    IMAGE_SCN_ALIGN_1BYTES           = 0x00100000U,
+    IMAGE_SCN_ALIGN_2BYTES           = 0x00200000U,
+    IMAGE_SCN_ALIGN_4BYTES           = 0x00300000U,
+    IMAGE_SCN_ALIGN_8BYTES           = 0x00400000U,
+    IMAGE_SCN_ALIGN_16BYTES          = 0x00500000U,
+    IMAGE_SCN_ALIGN_32BYTES          = 0x00600000U,
+    IMAGE_SCN_ALIGN_64BYTES          = 0x00700000U,
+    IMAGE_SCN_ALIGN_128BYTES         = 0x00800000U,
+    IMAGE_SCN_ALIGN_256BYTES         = 0x00900000U,
+    IMAGE_SCN_ALIGN_512BYTES         = 0x00a00000U,
+    IMAGE_SCN_ALIGN_1024BYTES        = 0x00b00000U,
+    IMAGE_SCN_ALIGN_2048BYTES        = 0x00c00000U,
+    IMAGE_SCN_ALIGN_4096BYTES        = 0x00d00000U,
+    IMAGE_SCN_ALIGN_8192BYTES        = 0x00e00000U,
+    IMAGE_SCN_ALIGN_MASK             = 0x00f00000U,
+    IMAGE_SCN_LNK_NRELOC_OVFL        = 0x01000000U,
+    IMAGE_SCN_MEM_DISCARDABLE        = 0x02000000U,
+    IMAGE_SCN_MEM_NOT_CACHED         = 0x04000000U,
+    IMAGE_SCN_MEM_NOT_PAGED          = 0x08000000U,
+    IMAGE_SCN_MEM_SHARED             = 0x10000000U,
+    IMAGE_SCN_MEM_EXECUTE            = 0x20000000U,
+    IMAGE_SCN_MEM_READ               = 0x40000000U,
+    IMAGE_SCN_MEM_WRITE              = 0x80000000U,
+    IMAGE_SCN_SCALE_INDEX            = 0x00000001U,
 }
+
 alias IMAGE_SUBSYSTEM = ushort;
 enum : ushort
 {
-    IMAGE_SUBSYSTEM_UNKNOWN                  = 0x0000,
-    IMAGE_SUBSYSTEM_NATIVE                   = 0x0001,
-    IMAGE_SUBSYSTEM_WINDOWS_GUI              = 0x0002,
-    IMAGE_SUBSYSTEM_WINDOWS_CUI              = 0x0003,
-    IMAGE_SUBSYSTEM_OS2_CUI                  = 0x0005,
-    IMAGE_SUBSYSTEM_POSIX_CUI                = 0x0007,
-    IMAGE_SUBSYSTEM_NATIVE_WINDOWS           = 0x0008,
-    IMAGE_SUBSYSTEM_WINDOWS_CE_GUI           = 0x0009,
-    IMAGE_SUBSYSTEM_EFI_APPLICATION          = 0x000a,
-    IMAGE_SUBSYSTEM_EFI_BOOT_SERVICE_DRIVER  = 0x000b,
-    IMAGE_SUBSYSTEM_EFI_RUNTIME_DRIVER       = 0x000c,
-    IMAGE_SUBSYSTEM_EFI_ROM                  = 0x000d,
-    IMAGE_SUBSYSTEM_XBOX                     = 0x000e,
-    IMAGE_SUBSYSTEM_WINDOWS_BOOT_APPLICATION = 0x0010,
-    IMAGE_SUBSYSTEM_XBOX_CODE_CATALOG        = 0x0011,
+    IMAGE_SUBSYSTEM_UNKNOWN                  = cast(ushort) 0x0000,
+    IMAGE_SUBSYSTEM_NATIVE                   = cast(ushort) 0x0001,
+    IMAGE_SUBSYSTEM_WINDOWS_GUI              = cast(ushort) 0x0002,
+    IMAGE_SUBSYSTEM_WINDOWS_CUI              = cast(ushort) 0x0003,
+    IMAGE_SUBSYSTEM_OS2_CUI                  = cast(ushort) 0x0005,
+    IMAGE_SUBSYSTEM_POSIX_CUI                = cast(ushort) 0x0007,
+    IMAGE_SUBSYSTEM_NATIVE_WINDOWS           = cast(ushort) 0x0008,
+    IMAGE_SUBSYSTEM_WINDOWS_CE_GUI           = cast(ushort) 0x0009,
+    IMAGE_SUBSYSTEM_EFI_APPLICATION          = cast(ushort) 0x000a,
+    IMAGE_SUBSYSTEM_EFI_BOOT_SERVICE_DRIVER  = cast(ushort) 0x000b,
+    IMAGE_SUBSYSTEM_EFI_RUNTIME_DRIVER       = cast(ushort) 0x000c,
+    IMAGE_SUBSYSTEM_EFI_ROM                  = cast(ushort) 0x000d,
+    IMAGE_SUBSYSTEM_XBOX                     = cast(ushort) 0x000e,
+    IMAGE_SUBSYSTEM_WINDOWS_BOOT_APPLICATION = cast(ushort) 0x0010,
+    IMAGE_SUBSYSTEM_XBOX_CODE_CATALOG        = cast(ushort) 0x0011,
 }
+
 alias IMAGE_DLL_CHARACTERISTICS = ushort;
 enum : ushort
 {
-    IMAGE_DLLCHARACTERISTICS_HIGH_ENTROPY_VA                               = 0x0020,
-    IMAGE_DLLCHARACTERISTICS_DYNAMIC_BASE                                  = 0x0040,
-    IMAGE_DLLCHARACTERISTICS_FORCE_INTEGRITY                               = 0x0080,
-    IMAGE_DLLCHARACTERISTICS_NX_COMPAT                                     = 0x0100,
-    IMAGE_DLLCHARACTERISTICS_NO_ISOLATION                                  = 0x0200,
-    IMAGE_DLLCHARACTERISTICS_NO_SEH                                        = 0x0400,
-    IMAGE_DLLCHARACTERISTICS_NO_BIND                                       = 0x0800,
-    IMAGE_DLLCHARACTERISTICS_APPCONTAINER                                  = 0x1000,
-    IMAGE_DLLCHARACTERISTICS_WDM_DRIVER                                    = 0x2000,
-    IMAGE_DLLCHARACTERISTICS_GUARD_CF                                      = 0x4000,
-    IMAGE_DLLCHARACTERISTICS_TERMINAL_SERVER_AWARE                         = 0x8000,
-    IMAGE_DLLCHARACTERISTICS_EX_CET_COMPAT                                 = 0x0001,
-    IMAGE_DLLCHARACTERISTICS_EX_CET_COMPAT_STRICT_MODE                     = 0x0002,
-    IMAGE_DLLCHARACTERISTICS_EX_CET_SET_CONTEXT_IP_VALIDATION_RELAXED_MODE = 0x0004,
-    IMAGE_DLLCHARACTERISTICS_EX_CET_DYNAMIC_APIS_ALLOW_IN_PROC             = 0x0008,
-    IMAGE_DLLCHARACTERISTICS_EX_CET_RESERVED_1                             = 0x0010,
-    IMAGE_DLLCHARACTERISTICS_EX_CET_RESERVED_2                             = 0x0020,
-    IMAGE_DLLCHARACTERISTICS_EX_FORWARD_CFI_COMPAT                         = 0x0040,
-    IMAGE_DLLCHARACTERISTICS_EX_HOTPATCH_COMPATIBLE                        = 0x0080,
+    IMAGE_DLLCHARACTERISTICS_HIGH_ENTROPY_VA                               = cast(ushort) 0x0020,
+    IMAGE_DLLCHARACTERISTICS_DYNAMIC_BASE                                  = cast(ushort) 0x0040,
+    IMAGE_DLLCHARACTERISTICS_FORCE_INTEGRITY                               = cast(ushort) 0x0080,
+    IMAGE_DLLCHARACTERISTICS_NX_COMPAT                                     = cast(ushort) 0x0100,
+    IMAGE_DLLCHARACTERISTICS_NO_ISOLATION                                  = cast(ushort) 0x0200,
+    IMAGE_DLLCHARACTERISTICS_NO_SEH                                        = cast(ushort) 0x0400,
+    IMAGE_DLLCHARACTERISTICS_NO_BIND                                       = cast(ushort) 0x0800,
+    IMAGE_DLLCHARACTERISTICS_APPCONTAINER                                  = cast(ushort) 0x1000,
+    IMAGE_DLLCHARACTERISTICS_WDM_DRIVER                                    = cast(ushort) 0x2000,
+    IMAGE_DLLCHARACTERISTICS_GUARD_CF                                      = cast(ushort) 0x4000,
+    IMAGE_DLLCHARACTERISTICS_TERMINAL_SERVER_AWARE                         = cast(ushort) 0x8000,
+    IMAGE_DLLCHARACTERISTICS_EX_CET_COMPAT                                 = cast(ushort) 0x0001,
+    IMAGE_DLLCHARACTERISTICS_EX_CET_COMPAT_STRICT_MODE                     = cast(ushort) 0x0002,
+    IMAGE_DLLCHARACTERISTICS_EX_CET_SET_CONTEXT_IP_VALIDATION_RELAXED_MODE = cast(ushort) 0x0004,
+    IMAGE_DLLCHARACTERISTICS_EX_CET_DYNAMIC_APIS_ALLOW_IN_PROC             = cast(ushort) 0x0008,
+    IMAGE_DLLCHARACTERISTICS_EX_CET_RESERVED_1                             = cast(ushort) 0x0010,
+    IMAGE_DLLCHARACTERISTICS_EX_CET_RESERVED_2                             = cast(ushort) 0x0020,
+    IMAGE_DLLCHARACTERISTICS_EX_FORWARD_CFI_COMPAT                         = cast(ushort) 0x0040,
+    IMAGE_DLLCHARACTERISTICS_EX_HOTPATCH_COMPATIBLE                        = cast(ushort) 0x0080,
 }
+
 alias IMAGE_OPTIONAL_HEADER_MAGIC = ushort;
 enum : ushort
 {
-    IMAGE_NT_OPTIONAL_HDR_MAGIC   = 0x020b,
-    IMAGE_NT_OPTIONAL_HDR32_MAGIC = 0x010b,
-    IMAGE_NT_OPTIONAL_HDR64_MAGIC = 0x020b,
-    IMAGE_ROM_OPTIONAL_HDR_MAGIC  = 0x0107,
+    IMAGE_NT_OPTIONAL_HDR_MAGIC   = cast(ushort) 0x020b,
+    IMAGE_NT_OPTIONAL_HDR32_MAGIC = cast(ushort) 0x010b,
+    IMAGE_NT_OPTIONAL_HDR64_MAGIC = cast(ushort) 0x020b,
+    IMAGE_ROM_OPTIONAL_HDR_MAGIC  = cast(ushort) 0x0107,
 }
+
 alias BUGCHECK_ERROR = uint;
 enum : uint
 {
-    HARDWARE_PROFILE_UNDOCKED_STRING                         = 0x40010001,
-    HARDWARE_PROFILE_DOCKED_STRING                           = 0x40010002,
-    HARDWARE_PROFILE_UNKNOWN_STRING                          = 0x40010003,
-    WINDOWS_NT_BANNER                                        = 0x4000007e,
-    WINDOWS_NT_CSD_STRING                                    = 0x40000087,
-    WINDOWS_NT_INFO_STRING                                   = 0x40000088,
-    WINDOWS_NT_MP_STRING                                     = 0x40000089,
-    THREAD_TERMINATE_HELD_MUTEX                              = 0x4000008a,
-    WINDOWS_NT_INFO_STRING_PLURAL                            = 0x4000009d,
-    WINDOWS_NT_RC_STRING                                     = 0x4000009e,
-    APC_INDEX_MISMATCH                                       = 0x00000001,
-    DEVICE_QUEUE_NOT_BUSY                                    = 0x00000002,
-    INVALID_AFFINITY_SET                                     = 0x00000003,
-    INVALID_DATA_ACCESS_TRAP                                 = 0x00000004,
-    INVALID_PROCESS_ATTACH_ATTEMPT                           = 0x00000005,
-    INVALID_PROCESS_DETACH_ATTEMPT                           = 0x00000006,
-    INVALID_SOFTWARE_INTERRUPT                               = 0x00000007,
-    IRQL_NOT_DISPATCH_LEVEL                                  = 0x00000008,
-    IRQL_NOT_GREATER_OR_EQUAL                                = 0x00000009,
-    IRQL_NOT_LESS_OR_EQUAL                                   = 0x0000000a,
-    NO_EXCEPTION_HANDLING_SUPPORT                            = 0x0000000b,
-    MAXIMUM_WAIT_OBJECTS_EXCEEDED                            = 0x0000000c,
-    MUTEX_LEVEL_NUMBER_VIOLATION                             = 0x0000000d,
-    NO_USER_MODE_CONTEXT                                     = 0x0000000e,
-    SPIN_LOCK_ALREADY_OWNED                                  = 0x0000000f,
-    SPIN_LOCK_NOT_OWNED                                      = 0x00000010,
-    THREAD_NOT_MUTEX_OWNER                                   = 0x00000011,
-    TRAP_CAUSE_UNKNOWN                                       = 0x00000012,
-    EMPTY_THREAD_REAPER_LIST                                 = 0x00000013,
-    CREATE_DELETE_LOCK_NOT_LOCKED                            = 0x00000014,
-    LAST_CHANCE_CALLED_FROM_KMODE                            = 0x00000015,
-    CID_HANDLE_CREATION                                      = 0x00000016,
-    CID_HANDLE_DELETION                                      = 0x00000017,
-    REFERENCE_BY_POINTER                                     = 0x00000018,
-    BAD_POOL_HEADER                                          = 0x00000019,
-    MEMORY_MANAGEMENT                                        = 0x0000001a,
-    PFN_SHARE_COUNT                                          = 0x0000001b,
-    PFN_REFERENCE_COUNT                                      = 0x0000001c,
-    NO_SPIN_LOCK_AVAILABLE                                   = 0x0000001d,
-    KMODE_EXCEPTION_NOT_HANDLED                              = 0x0000001e,
-    SHARED_RESOURCE_CONV_ERROR                               = 0x0000001f,
-    KERNEL_APC_PENDING_DURING_EXIT                           = 0x00000020,
-    QUOTA_UNDERFLOW                                          = 0x00000021,
-    FILE_SYSTEM                                              = 0x00000022,
-    FAT_FILE_SYSTEM                                          = 0x00000023,
-    NTFS_FILE_SYSTEM                                         = 0x00000024,
-    NPFS_FILE_SYSTEM                                         = 0x00000025,
-    CDFS_FILE_SYSTEM                                         = 0x00000026,
-    RDR_FILE_SYSTEM                                          = 0x00000027,
-    CORRUPT_ACCESS_TOKEN                                     = 0x00000028,
-    SECURITY_SYSTEM                                          = 0x00000029,
-    INCONSISTENT_IRP                                         = 0x0000002a,
-    PANIC_STACK_SWITCH                                       = 0x0000002b,
-    PORT_DRIVER_INTERNAL                                     = 0x0000002c,
-    SCSI_DISK_DRIVER_INTERNAL                                = 0x0000002d,
-    DATA_BUS_ERROR                                           = 0x0000002e,
-    INSTRUCTION_BUS_ERROR                                    = 0x0000002f,
-    SET_OF_INVALID_CONTEXT                                   = 0x00000030,
-    PHASE0_INITIALIZATION_FAILED                             = 0x00000031,
-    PHASE1_INITIALIZATION_FAILED                             = 0x00000032,
-    UNEXPECTED_INITIALIZATION_CALL                           = 0x00000033,
-    CACHE_MANAGER                                            = 0x00000034,
-    NO_MORE_IRP_STACK_LOCATIONS                              = 0x00000035,
-    DEVICE_REFERENCE_COUNT_NOT_ZERO                          = 0x00000036,
-    FLOPPY_INTERNAL_ERROR                                    = 0x00000037,
-    SERIAL_DRIVER_INTERNAL                                   = 0x00000038,
-    SYSTEM_EXIT_OWNED_MUTEX                                  = 0x00000039,
-    SYSTEM_UNWIND_PREVIOUS_USER                              = 0x0000003a,
-    SYSTEM_SERVICE_EXCEPTION                                 = 0x0000003b,
-    INTERRUPT_UNWIND_ATTEMPTED                               = 0x0000003c,
-    INTERRUPT_EXCEPTION_NOT_HANDLED                          = 0x0000003d,
-    MULTIPROCESSOR_CONFIGURATION_NOT_SUPPORTED               = 0x0000003e,
-    NO_MORE_SYSTEM_PTES                                      = 0x0000003f,
-    TARGET_MDL_TOO_SMALL                                     = 0x00000040,
-    MUST_SUCCEED_POOL_EMPTY                                  = 0x00000041,
-    ATDISK_DRIVER_INTERNAL                                   = 0x00000042,
-    NO_SUCH_PARTITION                                        = 0x00000043,
-    MULTIPLE_IRP_COMPLETE_REQUESTS                           = 0x00000044,
-    INSUFFICIENT_SYSTEM_MAP_REGS                             = 0x00000045,
-    DEREF_UNKNOWN_LOGON_SESSION                              = 0x00000046,
-    REF_UNKNOWN_LOGON_SESSION                                = 0x00000047,
-    CANCEL_STATE_IN_COMPLETED_IRP                            = 0x00000048,
-    PAGE_FAULT_WITH_INTERRUPTS_OFF                           = 0x00000049,
-    IRQL_GT_ZERO_AT_SYSTEM_SERVICE                           = 0x0000004a,
-    STREAMS_INTERNAL_ERROR                                   = 0x0000004b,
-    FATAL_UNHANDLED_HARD_ERROR                               = 0x0000004c,
-    NO_PAGES_AVAILABLE                                       = 0x0000004d,
-    PFN_LIST_CORRUPT                                         = 0x0000004e,
-    NDIS_INTERNAL_ERROR                                      = 0x0000004f,
-    PAGE_FAULT_IN_NONPAGED_AREA                              = 0x00000050,
-    PAGE_FAULT_IN_NONPAGED_AREA_M                            = 0x10000050,
-    REGISTRY_ERROR                                           = 0x00000051,
-    MAILSLOT_FILE_SYSTEM                                     = 0x00000052,
-    NO_BOOT_DEVICE                                           = 0x00000053,
-    LM_SERVER_INTERNAL_ERROR                                 = 0x00000054,
-    DATA_COHERENCY_EXCEPTION                                 = 0x00000055,
-    INSTRUCTION_COHERENCY_EXCEPTION                          = 0x00000056,
-    XNS_INTERNAL_ERROR                                       = 0x00000057,
-    VOLMGRX_INTERNAL_ERROR                                   = 0x00000058,
-    PINBALL_FILE_SYSTEM                                      = 0x00000059,
-    CRITICAL_SERVICE_FAILED                                  = 0x0000005a,
-    SET_ENV_VAR_FAILED                                       = 0x0000005b,
-    HAL_INITIALIZATION_FAILED                                = 0x0000005c,
-    UNSUPPORTED_PROCESSOR                                    = 0x0000005d,
-    OBJECT_INITIALIZATION_FAILED                             = 0x0000005e,
-    SECURITY_INITIALIZATION_FAILED                           = 0x0000005f,
-    PROCESS_INITIALIZATION_FAILED                            = 0x00000060,
-    HAL1_INITIALIZATION_FAILED                               = 0x00000061,
-    OBJECT1_INITIALIZATION_FAILED                            = 0x00000062,
-    SECURITY1_INITIALIZATION_FAILED                          = 0x00000063,
-    SYMBOLIC_INITIALIZATION_FAILED                           = 0x00000064,
-    MEMORY1_INITIALIZATION_FAILED                            = 0x00000065,
-    CACHE_INITIALIZATION_FAILED                              = 0x00000066,
-    CONFIG_INITIALIZATION_FAILED                             = 0x00000067,
-    FILE_INITIALIZATION_FAILED                               = 0x00000068,
-    IO1_INITIALIZATION_FAILED                                = 0x00000069,
-    LPC_INITIALIZATION_FAILED                                = 0x0000006a,
-    PROCESS1_INITIALIZATION_FAILED                           = 0x0000006b,
-    REFMON_INITIALIZATION_FAILED                             = 0x0000006c,
-    SESSION1_INITIALIZATION_FAILED                           = 0x0000006d,
-    BOOTPROC_INITIALIZATION_FAILED                           = 0x0000006e,
-    VSL_INITIALIZATION_FAILED                                = 0x0000006f,
-    SOFT_RESTART_FATAL_ERROR                                 = 0x00000070,
-    ASSIGN_DRIVE_LETTERS_FAILED                              = 0x00000072,
-    CONFIG_LIST_FAILED                                       = 0x00000073,
-    BAD_SYSTEM_CONFIG_INFO                                   = 0x00000074,
-    CANNOT_WRITE_CONFIGURATION                               = 0x00000075,
-    PROCESS_HAS_LOCKED_PAGES                                 = 0x00000076,
-    KERNEL_STACK_INPAGE_ERROR                                = 0x00000077,
-    PHASE0_EXCEPTION                                         = 0x00000078,
-    MISMATCHED_HAL                                           = 0x00000079,
-    KERNEL_DATA_INPAGE_ERROR                                 = 0x0000007a,
-    INACCESSIBLE_BOOT_DEVICE                                 = 0x0000007b,
-    BUGCODE_NDIS_DRIVER                                      = 0x0000007c,
-    INSTALL_MORE_MEMORY                                      = 0x0000007d,
-    SYSTEM_THREAD_EXCEPTION_NOT_HANDLED                      = 0x0000007e,
-    SYSTEM_THREAD_EXCEPTION_NOT_HANDLED_M                    = 0x1000007e,
-    UNEXPECTED_KERNEL_MODE_TRAP                              = 0x0000007f,
-    UNEXPECTED_KERNEL_MODE_TRAP_M                            = 0x1000007f,
-    NMI_HARDWARE_FAILURE                                     = 0x00000080,
-    SPIN_LOCK_INIT_FAILURE                                   = 0x00000081,
-    DFS_FILE_SYSTEM                                          = 0x00000082,
-    OFS_FILE_SYSTEM                                          = 0x00000083,
-    RECOM_DRIVER                                             = 0x00000084,
-    SETUP_FAILURE                                            = 0x00000085,
-    AUDIT_FAILURE                                            = 0x00000086,
-    MBR_CHECKSUM_MISMATCH                                    = 0x0000008b,
-    KERNEL_MODE_EXCEPTION_NOT_HANDLED                        = 0x0000008e,
-    KERNEL_MODE_EXCEPTION_NOT_HANDLED_M                      = 0x1000008e,
-    PP0_INITIALIZATION_FAILED                                = 0x0000008f,
-    PP1_INITIALIZATION_FAILED                                = 0x00000090,
-    WIN32K_INIT_OR_RIT_FAILURE                               = 0x00000091,
-    UP_DRIVER_ON_MP_SYSTEM                                   = 0x00000092,
-    INVALID_KERNEL_HANDLE                                    = 0x00000093,
-    KERNEL_STACK_LOCKED_AT_EXIT                              = 0x00000094,
-    PNP_INTERNAL_ERROR                                       = 0x00000095,
-    INVALID_WORK_QUEUE_ITEM                                  = 0x00000096,
-    BOUND_IMAGE_UNSUPPORTED                                  = 0x00000097,
-    END_OF_NT_EVALUATION_PERIOD                              = 0x00000098,
-    INVALID_REGION_OR_SEGMENT                                = 0x00000099,
-    SYSTEM_LICENSE_VIOLATION                                 = 0x0000009a,
-    UDFS_FILE_SYSTEM                                         = 0x0000009b,
-    MACHINE_CHECK_EXCEPTION                                  = 0x0000009c,
-    USER_MODE_HEALTH_MONITOR                                 = 0x0000009e,
-    DRIVER_POWER_STATE_FAILURE                               = 0x0000009f,
-    INTERNAL_POWER_ERROR                                     = 0x000000a0,
-    PCI_BUS_DRIVER_INTERNAL                                  = 0x000000a1,
-    MEMORY_IMAGE_CORRUPT                                     = 0x000000a2,
-    ACPI_DRIVER_INTERNAL                                     = 0x000000a3,
-    CNSS_FILE_SYSTEM_FILTER                                  = 0x000000a4,
-    ACPI_BIOS_ERROR                                          = 0x000000a5,
-    FP_EMULATION_ERROR                                       = 0x000000a6,
-    BAD_EXHANDLE                                             = 0x000000a7,
-    BOOTING_IN_SAFEMODE_MINIMAL                              = 0x000000a8,
-    BOOTING_IN_SAFEMODE_NETWORK                              = 0x000000a9,
-    BOOTING_IN_SAFEMODE_DSREPAIR                             = 0x000000aa,
-    SESSION_HAS_VALID_POOL_ON_EXIT                           = 0x000000ab,
-    HAL_MEMORY_ALLOCATION                                    = 0x000000ac,
-    VIDEO_DRIVER_DEBUG_REPORT_REQUEST                        = 0x400000ad,
-    BGI_DETECTED_VIOLATION                                   = 0x000000b1,
-    VIDEO_DRIVER_INIT_FAILURE                                = 0x000000b4,
-    BOOTLOG_LOADED                                           = 0x000000b5,
-    BOOTLOG_NOT_LOADED                                       = 0x000000b6,
-    BOOTLOG_ENABLED                                          = 0x000000b7,
-    ATTEMPTED_SWITCH_FROM_DPC                                = 0x000000b8,
-    CHIPSET_DETECTED_ERROR                                   = 0x000000b9,
-    SESSION_HAS_VALID_VIEWS_ON_EXIT                          = 0x000000ba,
-    NETWORK_BOOT_INITIALIZATION_FAILED                       = 0x000000bb,
-    NETWORK_BOOT_DUPLICATE_ADDRESS                           = 0x000000bc,
-    INVALID_HIBERNATED_STATE                                 = 0x000000bd,
-    ATTEMPTED_WRITE_TO_READONLY_MEMORY                       = 0x000000be,
-    MUTEX_ALREADY_OWNED                                      = 0x000000bf,
-    PCI_CONFIG_SPACE_ACCESS_FAILURE                          = 0x000000c0,
-    SPECIAL_POOL_DETECTED_MEMORY_CORRUPTION                  = 0x000000c1,
-    BAD_POOL_CALLER                                          = 0x000000c2,
-    SYSTEM_IMAGE_BAD_SIGNATURE                               = 0x000000c3,
-    DRIVER_VERIFIER_DETECTED_VIOLATION                       = 0x000000c4,
-    DRIVER_CORRUPTED_EXPOOL                                  = 0x000000c5,
-    DRIVER_CAUGHT_MODIFYING_FREED_POOL                       = 0x000000c6,
-    TIMER_OR_DPC_INVALID                                     = 0x000000c7,
-    IRQL_UNEXPECTED_VALUE                                    = 0x000000c8,
-    DRIVER_VERIFIER_IOMANAGER_VIOLATION                      = 0x000000c9,
-    PNP_DETECTED_FATAL_ERROR                                 = 0x000000ca,
-    DRIVER_LEFT_LOCKED_PAGES_IN_PROCESS                      = 0x000000cb,
-    PAGE_FAULT_IN_FREED_SPECIAL_POOL                         = 0x000000cc,
-    PAGE_FAULT_BEYOND_END_OF_ALLOCATION                      = 0x000000cd,
-    DRIVER_UNLOADED_WITHOUT_CANCELLING_PENDING_OPERATIONS    = 0x000000ce,
-    TERMINAL_SERVER_DRIVER_MADE_INCORRECT_MEMORY_REFERENCE   = 0x000000cf,
-    DRIVER_CORRUPTED_MMPOOL                                  = 0x000000d0,
-    DRIVER_IRQL_NOT_LESS_OR_EQUAL                            = 0x000000d1,
-    BUGCODE_ID_DRIVER                                        = 0x000000d2,
-    DRIVER_PORTION_MUST_BE_NONPAGED                          = 0x000000d3,
-    SYSTEM_SCAN_AT_RAISED_IRQL_CAUGHT_IMPROPER_DRIVER_UNLOAD = 0x000000d4,
-    DRIVER_PAGE_FAULT_IN_FREED_SPECIAL_POOL                  = 0x000000d5,
-    DRIVER_PAGE_FAULT_BEYOND_END_OF_ALLOCATION               = 0x000000d6,
-    DRIVER_PAGE_FAULT_BEYOND_END_OF_ALLOCATION_M             = 0x100000d6,
-    DRIVER_UNMAPPING_INVALID_VIEW                            = 0x000000d7,
-    DRIVER_USED_EXCESSIVE_PTES                               = 0x000000d8,
-    LOCKED_PAGES_TRACKER_CORRUPTION                          = 0x000000d9,
-    SYSTEM_PTE_MISUSE                                        = 0x000000da,
-    DRIVER_CORRUPTED_SYSPTES                                 = 0x000000db,
-    DRIVER_INVALID_STACK_ACCESS                              = 0x000000dc,
-    POOL_CORRUPTION_IN_FILE_AREA                             = 0x000000de,
-    IMPERSONATING_WORKER_THREAD                              = 0x000000df,
-    ACPI_BIOS_FATAL_ERROR                                    = 0x000000e0,
-    WORKER_THREAD_RETURNED_AT_BAD_IRQL                       = 0x000000e1,
-    MANUALLY_INITIATED_CRASH                                 = 0x000000e2,
-    RESOURCE_NOT_OWNED                                       = 0x000000e3,
-    WORKER_INVALID                                           = 0x000000e4,
-    POWER_FAILURE_SIMULATE                                   = 0x000000e5,
-    DRIVER_VERIFIER_DMA_VIOLATION                            = 0x000000e6,
-    INVALID_FLOATING_POINT_STATE                             = 0x000000e7,
-    INVALID_CANCEL_OF_FILE_OPEN                              = 0x000000e8,
-    ACTIVE_EX_WORKER_THREAD_TERMINATION                      = 0x000000e9,
-    SAVER_UNSPECIFIED                                        = 0x0000f000,
-    SAVER_BLANKSCREEN                                        = 0x0000f002,
-    SAVER_INPUT                                              = 0x0000f003,
-    SAVER_WATCHDOG                                           = 0x0000f004,
-    SAVER_STARTNOTVISIBLE                                    = 0x0000f005,
-    SAVER_NAVIGATIONMODEL                                    = 0x0000f006,
-    SAVER_OUTOFMEMORY                                        = 0x0000f007,
-    SAVER_GRAPHICS                                           = 0x0000f008,
-    SAVER_NAVSERVERTIMEOUT                                   = 0x0000f009,
-    SAVER_CHROMEPROCESSCRASH                                 = 0x0000f00a,
-    SAVER_NOTIFICATIONDISMISSAL                              = 0x0000f00b,
-    SAVER_SPEECHDISMISSAL                                    = 0x0000f00c,
-    SAVER_CALLDISMISSAL                                      = 0x0000f00d,
-    SAVER_APPBARDISMISSAL                                    = 0x0000f00e,
-    SAVER_RILADAPTATIONCRASH                                 = 0x0000f00f,
-    SAVER_APPLISTUNREACHABLE                                 = 0x0000f010,
-    SAVER_REPORTNOTIFICATIONFAILURE                          = 0x0000f011,
-    SAVER_UNEXPECTEDSHUTDOWN                                 = 0x0000f012,
-    SAVER_RPCFAILURE                                         = 0x0000f013,
-    SAVER_AUXILIARYFULLDUMP                                  = 0x0000f014,
-    SAVER_ACCOUNTPROVSVCINITFAILURE                          = 0x0000f015,
-    SAVER_MTBFCOMMANDTIMEOUT                                 = 0x00000315,
-    SAVER_MTBFCOMMANDHANG                                    = 0x0000f101,
-    SAVER_MTBFPASSBUGCHECK                                   = 0x0000f102,
-    SAVER_MTBFIOERROR                                        = 0x0000f103,
-    SAVER_RENDERTHREADHANG                                   = 0x0000f200,
-    SAVER_RENDERMOBILEUIOOM                                  = 0x0000f201,
-    SAVER_DEVICEUPDATEUNSPECIFIED                            = 0x0000f300,
-    SAVER_AUDIODRIVERHANG                                    = 0x0000f400,
-    SAVER_BATTERYPULLOUT                                     = 0x0000f500,
-    SAVER_MEDIACORETESTHANG                                  = 0x0000f600,
-    SAVER_RESOURCEMANAGEMENT                                 = 0x0000f700,
-    SAVER_CAPTURESERVICE                                     = 0x0000f800,
-    SAVER_WAITFORSHELLREADY                                  = 0x0000f900,
-    SAVER_NONRESPONSIVEPROCESS                               = 0x00000194,
-    SAVER_SICKAPPLICATION                                    = 0x00008866,
-    THREAD_STUCK_IN_DEVICE_DRIVER                            = 0x000000ea,
-    THREAD_STUCK_IN_DEVICE_DRIVER_M                          = 0x100000ea,
-    DIRTY_MAPPED_PAGES_CONGESTION                            = 0x000000eb,
-    SESSION_HAS_VALID_SPECIAL_POOL_ON_EXIT                   = 0x000000ec,
-    UNMOUNTABLE_BOOT_VOLUME                                  = 0x000000ed,
-    CRITICAL_PROCESS_DIED                                    = 0x000000ef,
-    STORAGE_MINIPORT_ERROR                                   = 0x000000f0,
-    SCSI_VERIFIER_DETECTED_VIOLATION                         = 0x000000f1,
-    HARDWARE_INTERRUPT_STORM                                 = 0x000000f2,
-    DISORDERLY_SHUTDOWN                                      = 0x000000f3,
-    CRITICAL_OBJECT_TERMINATION                              = 0x000000f4,
-    FLTMGR_FILE_SYSTEM                                       = 0x000000f5,
-    PCI_VERIFIER_DETECTED_VIOLATION                          = 0x000000f6,
-    DRIVER_OVERRAN_STACK_BUFFER                              = 0x000000f7,
-    RAMDISK_BOOT_INITIALIZATION_FAILED                       = 0x000000f8,
-    DRIVER_RETURNED_STATUS_REPARSE_FOR_VOLUME_OPEN           = 0x000000f9,
-    HTTP_DRIVER_CORRUPTED                                    = 0x000000fa,
-    RECURSIVE_MACHINE_CHECK                                  = 0x000000fb,
-    ATTEMPTED_EXECUTE_OF_NOEXECUTE_MEMORY                    = 0x000000fc,
-    DIRTY_NOWRITE_PAGES_CONGESTION                           = 0x000000fd,
-    BUGCODE_USB_DRIVER                                       = 0x000000fe,
-    BC_BLUETOOTH_VERIFIER_FAULT                              = 0x00000bfe,
-    BC_BTHMINI_VERIFIER_FAULT                                = 0x00000bff,
-    RESERVE_QUEUE_OVERFLOW                                   = 0x000000ff,
-    LOADER_BLOCK_MISMATCH                                    = 0x00000100,
-    CLOCK_WATCHDOG_TIMEOUT                                   = 0x00000101,
-    DPC_WATCHDOG_TIMEOUT                                     = 0x00000102,
-    MUP_FILE_SYSTEM                                          = 0x00000103,
-    AGP_INVALID_ACCESS                                       = 0x00000104,
-    AGP_GART_CORRUPTION                                      = 0x00000105,
-    AGP_ILLEGALLY_REPROGRAMMED                               = 0x00000106,
-    KERNEL_EXPAND_STACK_ACTIVE                               = 0x00000107,
-    THIRD_PARTY_FILE_SYSTEM_FAILURE                          = 0x00000108,
-    CRITICAL_STRUCTURE_CORRUPTION                            = 0x00000109,
-    APP_TAGGING_INITIALIZATION_FAILED                        = 0x0000010a,
-    DFSC_FILE_SYSTEM                                         = 0x0000010b,
-    FSRTL_EXTRA_CREATE_PARAMETER_VIOLATION                   = 0x0000010c,
-    WDF_VIOLATION                                            = 0x0000010d,
-    VIDEO_MEMORY_MANAGEMENT_INTERNAL                         = 0x0000010e,
-    DRIVER_INVALID_CRUNTIME_PARAMETER                        = 0x00000110,
-    RECURSIVE_NMI                                            = 0x00000111,
-    MSRPC_STATE_VIOLATION                                    = 0x00000112,
-    VIDEO_DXGKRNL_FATAL_ERROR                                = 0x00000113,
-    VIDEO_SHADOW_DRIVER_FATAL_ERROR                          = 0x00000114,
-    AGP_INTERNAL                                             = 0x00000115,
-    VIDEO_TDR_FAILURE                                        = 0x00000116,
-    VIDEO_TDR_TIMEOUT_DETECTED                               = 0x00000117,
-    NTHV_GUEST_ERROR                                         = 0x00000118,
-    VIDEO_SCHEDULER_INTERNAL_ERROR                           = 0x00000119,
-    EM_INITIALIZATION_ERROR                                  = 0x0000011a,
-    DRIVER_RETURNED_HOLDING_CANCEL_LOCK                      = 0x0000011b,
-    ATTEMPTED_WRITE_TO_CM_PROTECTED_STORAGE                  = 0x0000011c,
-    EVENT_TRACING_FATAL_ERROR                                = 0x0000011d,
-    TOO_MANY_RECURSIVE_FAULTS                                = 0x0000011e,
-    INVALID_DRIVER_HANDLE                                    = 0x0000011f,
-    BITLOCKER_FATAL_ERROR                                    = 0x00000120,
-    DRIVER_VIOLATION                                         = 0x00000121,
-    WHEA_INTERNAL_ERROR                                      = 0x00000122,
-    CRYPTO_SELF_TEST_FAILURE                                 = 0x00000123,
-    WHEA_UNCORRECTABLE_ERROR                                 = 0x00000124,
-    NMR_INVALID_STATE                                        = 0x00000125,
-    NETIO_INVALID_POOL_CALLER                                = 0x00000126,
-    PAGE_NOT_ZERO                                            = 0x00000127,
-    WORKER_THREAD_RETURNED_WITH_BAD_IO_PRIORITY              = 0x00000128,
-    WORKER_THREAD_RETURNED_WITH_BAD_PAGING_IO_PRIORITY       = 0x00000129,
-    MUI_NO_VALID_SYSTEM_LANGUAGE                             = 0x0000012a,
-    FAULTY_HARDWARE_CORRUPTED_PAGE                           = 0x0000012b,
-    EXFAT_FILE_SYSTEM                                        = 0x0000012c,
-    VOLSNAP_OVERLAPPED_TABLE_ACCESS                          = 0x0000012d,
-    INVALID_MDL_RANGE                                        = 0x0000012e,
-    VHD_BOOT_INITIALIZATION_FAILED                           = 0x0000012f,
-    DYNAMIC_ADD_PROCESSOR_MISMATCH                           = 0x00000130,
-    INVALID_EXTENDED_PROCESSOR_STATE                         = 0x00000131,
-    RESOURCE_OWNER_POINTER_INVALID                           = 0x00000132,
-    DPC_WATCHDOG_VIOLATION                                   = 0x00000133,
-    DRIVE_EXTENDER                                           = 0x00000134,
-    REGISTRY_FILTER_DRIVER_EXCEPTION                         = 0x00000135,
-    VHD_BOOT_HOST_VOLUME_NOT_ENOUGH_SPACE                    = 0x00000136,
-    WIN32K_HANDLE_MANAGER                                    = 0x00000137,
-    GPIO_CONTROLLER_DRIVER_ERROR                             = 0x00000138,
-    KERNEL_SECURITY_CHECK_FAILURE                            = 0x00000139,
-    KERNEL_MODE_HEAP_CORRUPTION                              = 0x0000013a,
-    PASSIVE_INTERRUPT_ERROR                                  = 0x0000013b,
-    INVALID_IO_BOOST_STATE                                   = 0x0000013c,
-    CRITICAL_INITIALIZATION_FAILURE                          = 0x0000013d,
-    ERRATA_WORKAROUND_UNSUCCESSFUL                           = 0x0000013e,
-    REGISTRY_CALLBACK_DRIVER_EXCEPTION                       = 0x0000013f,
-    STORAGE_DEVICE_ABNORMALITY_DETECTED                      = 0x00000140,
-    VIDEO_ENGINE_TIMEOUT_DETECTED                            = 0x00000141,
-    VIDEO_TDR_APPLICATION_BLOCKED                            = 0x00000142,
-    PROCESSOR_DRIVER_INTERNAL                                = 0x00000143,
-    BUGCODE_USB3_DRIVER                                      = 0x00000144,
-    SECURE_BOOT_VIOLATION                                    = 0x00000145,
-    NDIS_NET_BUFFER_LIST_INFO_ILLEGALLY_TRANSFERRED          = 0x00000146,
-    ABNORMAL_RESET_DETECTED                                  = 0x00000147,
-    IO_OBJECT_INVALID                                        = 0x00000148,
-    REFS_FILE_SYSTEM                                         = 0x00000149,
-    KERNEL_WMI_INTERNAL                                      = 0x0000014a,
-    SOC_SUBSYSTEM_FAILURE                                    = 0x0000014b,
-    FATAL_ABNORMAL_RESET_ERROR                               = 0x0000014c,
-    EXCEPTION_SCOPE_INVALID                                  = 0x0000014d,
-    SOC_CRITICAL_DEVICE_REMOVED                              = 0x0000014e,
-    PDC_WATCHDOG_TIMEOUT                                     = 0x0000014f,
-    TCPIP_AOAC_NIC_ACTIVE_REFERENCE_LEAK                     = 0x00000150,
-    UNSUPPORTED_INSTRUCTION_MODE                             = 0x00000151,
-    INVALID_PUSH_LOCK_FLAGS                                  = 0x00000152,
-    KERNEL_LOCK_ENTRY_LEAKED_ON_THREAD_TERMINATION           = 0x00000153,
-    UNEXPECTED_STORE_EXCEPTION                               = 0x00000154,
-    OS_DATA_TAMPERING                                        = 0x00000155,
-    WINSOCK_DETECTED_HUNG_CLOSESOCKET_LIVEDUMP               = 0x00000156,
-    KERNEL_THREAD_PRIORITY_FLOOR_VIOLATION                   = 0x00000157,
-    ILLEGAL_IOMMU_PAGE_FAULT                                 = 0x00000158,
-    HAL_ILLEGAL_IOMMU_PAGE_FAULT                             = 0x00000159,
-    SDBUS_INTERNAL_ERROR                                     = 0x0000015a,
-    WORKER_THREAD_RETURNED_WITH_SYSTEM_PAGE_PRIORITY_ACTIVE  = 0x0000015b,
-    PDC_WATCHDOG_TIMEOUT_LIVEDUMP                            = 0x0000015c,
-    SOC_SUBSYSTEM_FAILURE_LIVEDUMP                           = 0x0000015d,
-    BUGCODE_NDIS_DRIVER_LIVE_DUMP                            = 0x0000015e,
-    CONNECTED_STANDBY_WATCHDOG_TIMEOUT_LIVEDUMP              = 0x0000015f,
-    WIN32K_ATOMIC_CHECK_FAILURE                              = 0x00000160,
-    LIVE_SYSTEM_DUMP                                         = 0x00000161,
-    KERNEL_AUTO_BOOST_INVALID_LOCK_RELEASE                   = 0x00000162,
-    WORKER_THREAD_TEST_CONDITION                             = 0x00000163,
-    WIN32K_CRITICAL_FAILURE                                  = 0x00000164,
-    CLUSTER_CSV_STATUS_IO_TIMEOUT_LIVEDUMP                   = 0x00000165,
-    CLUSTER_RESOURCE_CALL_TIMEOUT_LIVEDUMP                   = 0x00000166,
-    CLUSTER_CSV_SNAPSHOT_DEVICE_INFO_TIMEOUT_LIVEDUMP        = 0x00000167,
-    CLUSTER_CSV_STATE_TRANSITION_TIMEOUT_LIVEDUMP            = 0x00000168,
-    CLUSTER_CSV_VOLUME_ARRIVAL_LIVEDUMP                      = 0x00000169,
-    CLUSTER_CSV_VOLUME_REMOVAL_LIVEDUMP                      = 0x0000016a,
-    CLUSTER_CSV_CLUSTER_WATCHDOG_LIVEDUMP                    = 0x0000016b,
-    INVALID_RUNDOWN_PROTECTION_FLAGS                         = 0x0000016c,
-    INVALID_SLOT_ALLOCATOR_FLAGS                             = 0x0000016d,
-    ERESOURCE_INVALID_RELEASE                                = 0x0000016e,
-    CLUSTER_CSV_STATE_TRANSITION_INTERVAL_TIMEOUT_LIVEDUMP   = 0x0000016f,
-    CLUSTER_CSV_CLUSSVC_DISCONNECT_WATCHDOG                  = 0x00000170,
-    CRYPTO_LIBRARY_INTERNAL_ERROR                            = 0x00000171,
-    SECURE_KERNEL_HIBERNATE_ERROR                            = 0x00000172,
-    COREMSGCALL_INTERNAL_ERROR                               = 0x00000173,
-    COREMSG_INTERNAL_ERROR                                   = 0x00000174,
-    PREVIOUS_FATAL_ABNORMAL_RESET_ERROR                      = 0x00000175,
-    STORAGE_STACK_FATAL_ERROR                                = 0x00000176,
-    ELAM_DRIVER_DETECTED_FATAL_ERROR                         = 0x00000178,
-    CLUSTER_CLUSPORT_STATUS_IO_TIMEOUT_LIVEDUMP              = 0x00000179,
-    PROFILER_CONFIGURATION_ILLEGAL                           = 0x0000017b,
-    PDC_LOCK_WATCHDOG_LIVEDUMP                               = 0x0000017c,
-    PDC_UNEXPECTED_REVOCATION_LIVEDUMP                       = 0x0000017d,
-    MICROCODE_REVISION_MISMATCH                              = 0x0000017e,
-    HYPERGUARD_INITIALIZATION_FAILURE                        = 0x0000017f,
-    WVR_LIVEDUMP_REPLICATION_IOCONTEXT_TIMEOUT               = 0x00000180,
-    WVR_LIVEDUMP_STATE_TRANSITION_TIMEOUT                    = 0x00000181,
-    WVR_LIVEDUMP_RECOVERY_IOCONTEXT_TIMEOUT                  = 0x00000182,
-    WVR_LIVEDUMP_APP_IO_TIMEOUT                              = 0x00000183,
-    WVR_LIVEDUMP_MANUALLY_INITIATED                          = 0x00000184,
-    WVR_LIVEDUMP_STATE_FAILURE                               = 0x00000185,
-    WVR_LIVEDUMP_CRITICAL_ERROR                              = 0x00000186,
-    VIDEO_DWMINIT_TIMEOUT_FALLBACK_BDD                       = 0x00000187,
-    CLUSTER_CSVFS_LIVEDUMP                                   = 0x00000188,
-    BAD_OBJECT_HEADER                                        = 0x00000189,
-    SILO_CORRUPT                                             = 0x0000018a,
-    SECURE_KERNEL_ERROR                                      = 0x0000018b,
-    HYPERGUARD_VIOLATION                                     = 0x0000018c,
-    SECURE_FAULT_UNHANDLED                                   = 0x0000018d,
-    KERNEL_PARTITION_REFERENCE_VIOLATION                     = 0x0000018e,
-    SYNTHETIC_EXCEPTION_UNHANDLED                            = 0x0000018f,
-    WIN32K_CRITICAL_FAILURE_LIVEDUMP                         = 0x00000190,
-    PF_DETECTED_CORRUPTION                                   = 0x00000191,
-    KERNEL_AUTO_BOOST_LOCK_ACQUISITION_WITH_RAISED_IRQL      = 0x00000192,
-    VIDEO_DXGKRNL_LIVEDUMP                                   = 0x00000193,
-    KERNEL_STORAGE_SLOT_IN_USE                               = 0x00000199,
-    SMB_SERVER_LIVEDUMP                                      = 0x00000195,
-    LOADER_ROLLBACK_DETECTED                                 = 0x00000196,
-    WIN32K_SECURITY_FAILURE                                  = 0x00000197,
-    UFX_LIVEDUMP                                             = 0x00000198,
-    WORKER_THREAD_RETURNED_WHILE_ATTACHED_TO_SILO            = 0x0000019a,
-    TTM_FATAL_ERROR                                          = 0x0000019b,
-    WIN32K_POWER_WATCHDOG_TIMEOUT                            = 0x0000019c,
-    CLUSTER_SVHDX_LIVEDUMP                                   = 0x0000019d,
-    BUGCODE_NETADAPTER_DRIVER                                = 0x0000019e,
-    PDC_PRIVILEGE_CHECK_LIVEDUMP                             = 0x0000019f,
-    TTM_WATCHDOG_TIMEOUT                                     = 0x000001a0,
-    WIN32K_CALLOUT_WATCHDOG_LIVEDUMP                         = 0x000001a1,
-    WIN32K_CALLOUT_WATCHDOG_BUGCHECK                         = 0x000001a2,
-    CALL_HAS_NOT_RETURNED_WATCHDOG_TIMEOUT_LIVEDUMP          = 0x000001a3,
-    DRIPS_SW_HW_DIVERGENCE_LIVEDUMP                          = 0x000001a4,
-    USB_DRIPS_BLOCKER_SURPRISE_REMOVAL_LIVEDUMP              = 0x000001a5,
-    BLUETOOTH_ERROR_RECOVERY_LIVEDUMP                        = 0x000001a6,
-    SMB_REDIRECTOR_LIVEDUMP                                  = 0x000001a7,
-    VIDEO_DXGKRNL_BLACK_SCREEN_LIVEDUMP                      = 0x000001a8,
-    DIRECTED_FX_TRANSITION_LIVEDUMP                          = 0x000001a9,
-    EXCEPTION_ON_INVALID_STACK                               = 0x000001aa,
-    UNWIND_ON_INVALID_STACK                                  = 0x000001ab,
-    VIDEO_MINIPORT_FAILED_LIVEDUMP                           = 0x000001b0,
-    VIDEO_MINIPORT_BLACK_SCREEN_LIVEDUMP                     = 0x000001b8,
-    DRIVER_VERIFIER_DETECTED_VIOLATION_LIVEDUMP              = 0x000001c4,
-    IO_THREADPOOL_DEADLOCK_LIVEDUMP                          = 0x000001c5,
-    FAST_ERESOURCE_PRECONDITION_VIOLATION                    = 0x000001c6,
-    STORE_DATA_STRUCTURE_CORRUPTION                          = 0x000001c7,
-    MANUALLY_INITIATED_POWER_BUTTON_HOLD                     = 0x000001c8,
-    USER_MODE_HEALTH_MONITOR_LIVEDUMP                        = 0x000001c9,
-    SYNTHETIC_WATCHDOG_TIMEOUT                               = 0x000001ca,
-    INVALID_SILO_DETACH                                      = 0x000001cb,
-    EXRESOURCE_TIMEOUT_LIVEDUMP                              = 0x000001cc,
-    INVALID_CALLBACK_STACK_ADDRESS                           = 0x000001cd,
-    INVALID_KERNEL_STACK_ADDRESS                             = 0x000001ce,
-    HARDWARE_WATCHDOG_TIMEOUT                                = 0x000001cf,
-    ACPI_FIRMWARE_WATCHDOG_TIMEOUT                           = 0x000001d0,
-    TELEMETRY_ASSERTS_LIVEDUMP                               = 0x000001d1,
-    WORKER_THREAD_INVALID_STATE                              = 0x000001d2,
-    WFP_INVALID_OPERATION                                    = 0x000001d3,
-    UCMUCSI_LIVEDUMP                                         = 0x000001d4,
-    DRIVER_PNP_WATCHDOG                                      = 0x000001d5,
-    WORKER_THREAD_RETURNED_WITH_NON_DEFAULT_WORKLOAD_CLASS   = 0x000001d6,
-    EFS_FATAL_ERROR                                          = 0x000001d7,
-    UCMUCSI_FAILURE                                          = 0x000001d8,
-    HAL_IOMMU_INTERNAL_ERROR                                 = 0x000001d9,
-    HAL_BLOCKED_PROCESSOR_INTERNAL_ERROR                     = 0x000001da,
-    IPI_WATCHDOG_TIMEOUT                                     = 0x000001db,
-    DMA_COMMON_BUFFER_VECTOR_ERROR                           = 0x000001dc,
-    BUGCODE_MBBADAPTER_DRIVER                                = 0x000001dd,
-    BUGCODE_WIFIADAPTER_DRIVER                               = 0x000001de,
-    PROCESSOR_START_TIMEOUT                                  = 0x000001df,
-    INVALID_ALTERNATE_SYSTEM_CALL_HANDLER_REGISTRATION       = 0x000001e0,
-    DEVICE_DIAGNOSTIC_LOG_LIVEDUMP                           = 0x000001e1,
-    AZURE_DEVICE_FW_DUMP                                     = 0x000001e2,
-    BREAKAWAY_CABLE_TRANSITION                               = 0x000001e3,
-    VIDEO_DXGKRNL_SYSMM_FATAL_ERROR                          = 0x000001e4,
-    DRIVER_VERIFIER_TRACKING_LIVE_DUMP                       = 0x000001e5,
-    CRASHDUMP_WATCHDOG_TIMEOUT                               = 0x000001e6,
-    REGISTRY_LIVE_DUMP                                       = 0x000001e7,
-    INVALID_THREAD_AFFINITY_STATE                            = 0x000001e8,
-    ILLEGAL_ATS_INITIALIZATION                               = 0x000001e9,
-    SECURE_PCI_CONFIG_SPACE_ACCESS_VIOLATION                 = 0x000001ea,
-    DAM_WATCHDOG_TIMEOUT                                     = 0x000001eb,
-    HANDLE_LIVE_DUMP                                         = 0x000001ec,
-    HANDLE_ERROR_ON_CRITICAL_THREAD                          = 0x000001ed,
-    MPSDRV_QUERY_USER                                        = 0x400001ee,
-    VMBUS_LIVEDUMP                                           = 0x400001ef,
-    USB4_HARDWARE_VIOLATION                                  = 0x000001f0,
-    KASAN_ENLIGHTENMENT_VIOLATION                            = 0x000001f1,
-    KASAN_ILLEGAL_ACCESS                                     = 0x000001f2,
-    IORING                                                   = 0x000001f3,
-    MDL_CACHE                                                = 0x000001f4,
-    APPLICATION_HANG_KERNEL_LIVEDUMP                         = 0x000001f5,
-    MISALIGNED_POINTER_PARAMETER                             = 0x000001f6,
-    MSSECCORE_ASSERTION_FAILURE                              = 0x000001f7,
-    INVALID_MINIMAL_PROCESS_STATE                            = 0x000001f8,
-    PREVIOUS_MODE_MISMATCH                                   = 0x000001f9,
-    SMB_SRV_REQUEST_VALIDATION_FAILURE                       = 0x000001fa,
-    IOMMU_INTERRUPT_REMAPPING_FAULT                          = 0x000001fb,
-    WIN32K_CALLOUT_UNREGISTER_FAILED                         = 0x000001fc,
-    HAL_SPE_INTERNAL_ERROR                                   = 0x000001fd,
-    SMB_CLIENT_REQUEST_VALIDATION_FAILURE                    = 0x000001fe,
-    CPU_SCHEDULER_INTERNAL_ERROR                             = 0x00000200,
-    PROCESS_TERMINATE_LIKELY_DEADLOCK                        = 0x00000201,
-    UNEXPECTED_CODEPATH                                      = 0x00000202,
-    INVALID_EXTENSION_STATE                                  = 0x00000203,
-    STORAGE_DRIVER_LIVEDUMP                                  = 0x00000207,
-    XBOX_VMCTRL_CS_TIMEOUT                                   = 0x00000356,
-    XBOX_CORRUPTED_IMAGE                                     = 0x00000357,
-    XBOX_INVERTED_FUNCTION_TABLE_OVERFLOW                    = 0x00000358,
-    XBOX_CORRUPTED_IMAGE_BASE                                = 0x00000359,
-    XBOX_XDS_WATCHDOG_TIMEOUT                                = 0x0000035a,
-    XBOX_SHUTDOWN_WATCHDOG_TIMEOUT                           = 0x0000035b,
-    XBOX_CANNOT_MANAGE_PARTITION_MEMORY                      = 0x0000035d,
-    XBOX_360_SYSTEM_CRASH                                    = 0x00000360,
-    XBOX_360_SYSTEM_CRASH_RESERVED                           = 0x00000420,
-    XBOX_SECURITY_FAILUE                                     = 0x00000421,
-    KERNEL_CFG_INIT_FAILURE                                  = 0x00000422,
-    MANUALLY_INITIATED_POWER_BUTTON_HOLD_LIVE_DUMP           = 0x000011c8,
-    HYPERVISOR_ERROR                                         = 0x00020001,
-    XBOX_MANUALLY_INITIATED_CRASH                            = 0x00030006,
-    MANUALLY_INITIATED_BLACKSCREEN_HOTKEY_LIVE_DUMP          = 0x000021c8,
-    WINLOGON_FATAL_ERROR                                     = 0xc000021a,
-    MANUALLY_INITIATED_CRASH1                                = 0xdeaddead,
-    BUGCHECK_CONTEXT_MODIFIER                                = 0x80000000,
+    HARDWARE_PROFILE_UNDOCKED_STRING                         = 0x40010001U,
+    HARDWARE_PROFILE_DOCKED_STRING                           = 0x40010002U,
+    HARDWARE_PROFILE_UNKNOWN_STRING                          = 0x40010003U,
+    WINDOWS_NT_BANNER                                        = 0x4000007eU,
+    WINDOWS_NT_CSD_STRING                                    = 0x40000087U,
+    WINDOWS_NT_INFO_STRING                                   = 0x40000088U,
+    WINDOWS_NT_MP_STRING                                     = 0x40000089U,
+    THREAD_TERMINATE_HELD_MUTEX                              = 0x4000008aU,
+    WINDOWS_NT_INFO_STRING_PLURAL                            = 0x4000009dU,
+    WINDOWS_NT_RC_STRING                                     = 0x4000009eU,
+    APC_INDEX_MISMATCH                                       = 0x00000001U,
+    DEVICE_QUEUE_NOT_BUSY                                    = 0x00000002U,
+    INVALID_AFFINITY_SET                                     = 0x00000003U,
+    INVALID_DATA_ACCESS_TRAP                                 = 0x00000004U,
+    INVALID_PROCESS_ATTACH_ATTEMPT                           = 0x00000005U,
+    INVALID_PROCESS_DETACH_ATTEMPT                           = 0x00000006U,
+    INVALID_SOFTWARE_INTERRUPT                               = 0x00000007U,
+    IRQL_NOT_DISPATCH_LEVEL                                  = 0x00000008U,
+    IRQL_NOT_GREATER_OR_EQUAL                                = 0x00000009U,
+    IRQL_NOT_LESS_OR_EQUAL                                   = 0x0000000aU,
+    NO_EXCEPTION_HANDLING_SUPPORT                            = 0x0000000bU,
+    MAXIMUM_WAIT_OBJECTS_EXCEEDED                            = 0x0000000cU,
+    MUTEX_LEVEL_NUMBER_VIOLATION                             = 0x0000000dU,
+    NO_USER_MODE_CONTEXT                                     = 0x0000000eU,
+    SPIN_LOCK_ALREADY_OWNED                                  = 0x0000000fU,
+    SPIN_LOCK_NOT_OWNED                                      = 0x00000010U,
+    THREAD_NOT_MUTEX_OWNER                                   = 0x00000011U,
+    TRAP_CAUSE_UNKNOWN                                       = 0x00000012U,
+    EMPTY_THREAD_REAPER_LIST                                 = 0x00000013U,
+    CREATE_DELETE_LOCK_NOT_LOCKED                            = 0x00000014U,
+    LAST_CHANCE_CALLED_FROM_KMODE                            = 0x00000015U,
+    CID_HANDLE_CREATION                                      = 0x00000016U,
+    CID_HANDLE_DELETION                                      = 0x00000017U,
+    REFERENCE_BY_POINTER                                     = 0x00000018U,
+    BAD_POOL_HEADER                                          = 0x00000019U,
+    MEMORY_MANAGEMENT                                        = 0x0000001aU,
+    PFN_SHARE_COUNT                                          = 0x0000001bU,
+    PFN_REFERENCE_COUNT                                      = 0x0000001cU,
+    NO_SPIN_LOCK_AVAILABLE                                   = 0x0000001dU,
+    KMODE_EXCEPTION_NOT_HANDLED                              = 0x0000001eU,
+    SHARED_RESOURCE_CONV_ERROR                               = 0x0000001fU,
+    KERNEL_APC_PENDING_DURING_EXIT                           = 0x00000020U,
+    QUOTA_UNDERFLOW                                          = 0x00000021U,
+    FILE_SYSTEM                                              = 0x00000022U,
+    FAT_FILE_SYSTEM                                          = 0x00000023U,
+    NTFS_FILE_SYSTEM                                         = 0x00000024U,
+    NPFS_FILE_SYSTEM                                         = 0x00000025U,
+    CDFS_FILE_SYSTEM                                         = 0x00000026U,
+    RDR_FILE_SYSTEM                                          = 0x00000027U,
+    CORRUPT_ACCESS_TOKEN                                     = 0x00000028U,
+    SECURITY_SYSTEM                                          = 0x00000029U,
+    INCONSISTENT_IRP                                         = 0x0000002aU,
+    PANIC_STACK_SWITCH                                       = 0x0000002bU,
+    PORT_DRIVER_INTERNAL                                     = 0x0000002cU,
+    SCSI_DISK_DRIVER_INTERNAL                                = 0x0000002dU,
+    DATA_BUS_ERROR                                           = 0x0000002eU,
+    INSTRUCTION_BUS_ERROR                                    = 0x0000002fU,
+    SET_OF_INVALID_CONTEXT                                   = 0x00000030U,
+    PHASE0_INITIALIZATION_FAILED                             = 0x00000031U,
+    PHASE1_INITIALIZATION_FAILED                             = 0x00000032U,
+    UNEXPECTED_INITIALIZATION_CALL                           = 0x00000033U,
+    CACHE_MANAGER                                            = 0x00000034U,
+    NO_MORE_IRP_STACK_LOCATIONS                              = 0x00000035U,
+    DEVICE_REFERENCE_COUNT_NOT_ZERO                          = 0x00000036U,
+    FLOPPY_INTERNAL_ERROR                                    = 0x00000037U,
+    SERIAL_DRIVER_INTERNAL                                   = 0x00000038U,
+    SYSTEM_EXIT_OWNED_MUTEX                                  = 0x00000039U,
+    SYSTEM_UNWIND_PREVIOUS_USER                              = 0x0000003aU,
+    SYSTEM_SERVICE_EXCEPTION                                 = 0x0000003bU,
+    INTERRUPT_UNWIND_ATTEMPTED                               = 0x0000003cU,
+    INTERRUPT_EXCEPTION_NOT_HANDLED                          = 0x0000003dU,
+    MULTIPROCESSOR_CONFIGURATION_NOT_SUPPORTED               = 0x0000003eU,
+    NO_MORE_SYSTEM_PTES                                      = 0x0000003fU,
+    TARGET_MDL_TOO_SMALL                                     = 0x00000040U,
+    MUST_SUCCEED_POOL_EMPTY                                  = 0x00000041U,
+    ATDISK_DRIVER_INTERNAL                                   = 0x00000042U,
+    NO_SUCH_PARTITION                                        = 0x00000043U,
+    MULTIPLE_IRP_COMPLETE_REQUESTS                           = 0x00000044U,
+    INSUFFICIENT_SYSTEM_MAP_REGS                             = 0x00000045U,
+    DEREF_UNKNOWN_LOGON_SESSION                              = 0x00000046U,
+    REF_UNKNOWN_LOGON_SESSION                                = 0x00000047U,
+    CANCEL_STATE_IN_COMPLETED_IRP                            = 0x00000048U,
+    PAGE_FAULT_WITH_INTERRUPTS_OFF                           = 0x00000049U,
+    IRQL_GT_ZERO_AT_SYSTEM_SERVICE                           = 0x0000004aU,
+    STREAMS_INTERNAL_ERROR                                   = 0x0000004bU,
+    FATAL_UNHANDLED_HARD_ERROR                               = 0x0000004cU,
+    NO_PAGES_AVAILABLE                                       = 0x0000004dU,
+    PFN_LIST_CORRUPT                                         = 0x0000004eU,
+    NDIS_INTERNAL_ERROR                                      = 0x0000004fU,
+    PAGE_FAULT_IN_NONPAGED_AREA                              = 0x00000050U,
+    PAGE_FAULT_IN_NONPAGED_AREA_M                            = 0x10000050U,
+    REGISTRY_ERROR                                           = 0x00000051U,
+    MAILSLOT_FILE_SYSTEM                                     = 0x00000052U,
+    NO_BOOT_DEVICE                                           = 0x00000053U,
+    LM_SERVER_INTERNAL_ERROR                                 = 0x00000054U,
+    DATA_COHERENCY_EXCEPTION                                 = 0x00000055U,
+    INSTRUCTION_COHERENCY_EXCEPTION                          = 0x00000056U,
+    XNS_INTERNAL_ERROR                                       = 0x00000057U,
+    VOLMGRX_INTERNAL_ERROR                                   = 0x00000058U,
+    PINBALL_FILE_SYSTEM                                      = 0x00000059U,
+    CRITICAL_SERVICE_FAILED                                  = 0x0000005aU,
+    SET_ENV_VAR_FAILED                                       = 0x0000005bU,
+    HAL_INITIALIZATION_FAILED                                = 0x0000005cU,
+    UNSUPPORTED_PROCESSOR                                    = 0x0000005dU,
+    OBJECT_INITIALIZATION_FAILED                             = 0x0000005eU,
+    SECURITY_INITIALIZATION_FAILED                           = 0x0000005fU,
+    PROCESS_INITIALIZATION_FAILED                            = 0x00000060U,
+    HAL1_INITIALIZATION_FAILED                               = 0x00000061U,
+    OBJECT1_INITIALIZATION_FAILED                            = 0x00000062U,
+    SECURITY1_INITIALIZATION_FAILED                          = 0x00000063U,
+    SYMBOLIC_INITIALIZATION_FAILED                           = 0x00000064U,
+    MEMORY1_INITIALIZATION_FAILED                            = 0x00000065U,
+    CACHE_INITIALIZATION_FAILED                              = 0x00000066U,
+    CONFIG_INITIALIZATION_FAILED                             = 0x00000067U,
+    FILE_INITIALIZATION_FAILED                               = 0x00000068U,
+    IO1_INITIALIZATION_FAILED                                = 0x00000069U,
+    LPC_INITIALIZATION_FAILED                                = 0x0000006aU,
+    PROCESS1_INITIALIZATION_FAILED                           = 0x0000006bU,
+    REFMON_INITIALIZATION_FAILED                             = 0x0000006cU,
+    SESSION1_INITIALIZATION_FAILED                           = 0x0000006dU,
+    BOOTPROC_INITIALIZATION_FAILED                           = 0x0000006eU,
+    VSL_INITIALIZATION_FAILED                                = 0x0000006fU,
+    SOFT_RESTART_FATAL_ERROR                                 = 0x00000070U,
+    ASSIGN_DRIVE_LETTERS_FAILED                              = 0x00000072U,
+    CONFIG_LIST_FAILED                                       = 0x00000073U,
+    BAD_SYSTEM_CONFIG_INFO                                   = 0x00000074U,
+    CANNOT_WRITE_CONFIGURATION                               = 0x00000075U,
+    PROCESS_HAS_LOCKED_PAGES                                 = 0x00000076U,
+    KERNEL_STACK_INPAGE_ERROR                                = 0x00000077U,
+    PHASE0_EXCEPTION                                         = 0x00000078U,
+    MISMATCHED_HAL                                           = 0x00000079U,
+    KERNEL_DATA_INPAGE_ERROR                                 = 0x0000007aU,
+    INACCESSIBLE_BOOT_DEVICE                                 = 0x0000007bU,
+    BUGCODE_NDIS_DRIVER                                      = 0x0000007cU,
+    INSTALL_MORE_MEMORY                                      = 0x0000007dU,
+    SYSTEM_THREAD_EXCEPTION_NOT_HANDLED                      = 0x0000007eU,
+    SYSTEM_THREAD_EXCEPTION_NOT_HANDLED_M                    = 0x1000007eU,
+    UNEXPECTED_KERNEL_MODE_TRAP                              = 0x0000007fU,
+    UNEXPECTED_KERNEL_MODE_TRAP_M                            = 0x1000007fU,
+    NMI_HARDWARE_FAILURE                                     = 0x00000080U,
+    SPIN_LOCK_INIT_FAILURE                                   = 0x00000081U,
+    DFS_FILE_SYSTEM                                          = 0x00000082U,
+    OFS_FILE_SYSTEM                                          = 0x00000083U,
+    RECOM_DRIVER                                             = 0x00000084U,
+    SETUP_FAILURE                                            = 0x00000085U,
+    AUDIT_FAILURE                                            = 0x00000086U,
+    MBR_CHECKSUM_MISMATCH                                    = 0x0000008bU,
+    KERNEL_MODE_EXCEPTION_NOT_HANDLED                        = 0x0000008eU,
+    KERNEL_MODE_EXCEPTION_NOT_HANDLED_M                      = 0x1000008eU,
+    PP0_INITIALIZATION_FAILED                                = 0x0000008fU,
+    PP1_INITIALIZATION_FAILED                                = 0x00000090U,
+    WIN32K_INIT_OR_RIT_FAILURE                               = 0x00000091U,
+    UP_DRIVER_ON_MP_SYSTEM                                   = 0x00000092U,
+    INVALID_KERNEL_HANDLE                                    = 0x00000093U,
+    KERNEL_STACK_LOCKED_AT_EXIT                              = 0x00000094U,
+    PNP_INTERNAL_ERROR                                       = 0x00000095U,
+    INVALID_WORK_QUEUE_ITEM                                  = 0x00000096U,
+    BOUND_IMAGE_UNSUPPORTED                                  = 0x00000097U,
+    END_OF_NT_EVALUATION_PERIOD                              = 0x00000098U,
+    INVALID_REGION_OR_SEGMENT                                = 0x00000099U,
+    SYSTEM_LICENSE_VIOLATION                                 = 0x0000009aU,
+    UDFS_FILE_SYSTEM                                         = 0x0000009bU,
+    MACHINE_CHECK_EXCEPTION                                  = 0x0000009cU,
+    USER_MODE_HEALTH_MONITOR                                 = 0x0000009eU,
+    DRIVER_POWER_STATE_FAILURE                               = 0x0000009fU,
+    INTERNAL_POWER_ERROR                                     = 0x000000a0U,
+    PCI_BUS_DRIVER_INTERNAL                                  = 0x000000a1U,
+    MEMORY_IMAGE_CORRUPT                                     = 0x000000a2U,
+    ACPI_DRIVER_INTERNAL                                     = 0x000000a3U,
+    CNSS_FILE_SYSTEM_FILTER                                  = 0x000000a4U,
+    ACPI_BIOS_ERROR                                          = 0x000000a5U,
+    FP_EMULATION_ERROR                                       = 0x000000a6U,
+    BAD_EXHANDLE                                             = 0x000000a7U,
+    BOOTING_IN_SAFEMODE_MINIMAL                              = 0x000000a8U,
+    BOOTING_IN_SAFEMODE_NETWORK                              = 0x000000a9U,
+    BOOTING_IN_SAFEMODE_DSREPAIR                             = 0x000000aaU,
+    SESSION_HAS_VALID_POOL_ON_EXIT                           = 0x000000abU,
+    HAL_MEMORY_ALLOCATION                                    = 0x000000acU,
+    VIDEO_DRIVER_DEBUG_REPORT_REQUEST                        = 0x400000adU,
+    BGI_DETECTED_VIOLATION                                   = 0x000000b1U,
+    VIDEO_DRIVER_INIT_FAILURE                                = 0x000000b4U,
+    BOOTLOG_LOADED                                           = 0x000000b5U,
+    BOOTLOG_NOT_LOADED                                       = 0x000000b6U,
+    BOOTLOG_ENABLED                                          = 0x000000b7U,
+    ATTEMPTED_SWITCH_FROM_DPC                                = 0x000000b8U,
+    CHIPSET_DETECTED_ERROR                                   = 0x000000b9U,
+    SESSION_HAS_VALID_VIEWS_ON_EXIT                          = 0x000000baU,
+    NETWORK_BOOT_INITIALIZATION_FAILED                       = 0x000000bbU,
+    NETWORK_BOOT_DUPLICATE_ADDRESS                           = 0x000000bcU,
+    INVALID_HIBERNATED_STATE                                 = 0x000000bdU,
+    ATTEMPTED_WRITE_TO_READONLY_MEMORY                       = 0x000000beU,
+    MUTEX_ALREADY_OWNED                                      = 0x000000bfU,
+    PCI_CONFIG_SPACE_ACCESS_FAILURE                          = 0x000000c0U,
+    SPECIAL_POOL_DETECTED_MEMORY_CORRUPTION                  = 0x000000c1U,
+    BAD_POOL_CALLER                                          = 0x000000c2U,
+    SYSTEM_IMAGE_BAD_SIGNATURE                               = 0x000000c3U,
+    DRIVER_VERIFIER_DETECTED_VIOLATION                       = 0x000000c4U,
+    DRIVER_CORRUPTED_EXPOOL                                  = 0x000000c5U,
+    DRIVER_CAUGHT_MODIFYING_FREED_POOL                       = 0x000000c6U,
+    TIMER_OR_DPC_INVALID                                     = 0x000000c7U,
+    IRQL_UNEXPECTED_VALUE                                    = 0x000000c8U,
+    DRIVER_VERIFIER_IOMANAGER_VIOLATION                      = 0x000000c9U,
+    PNP_DETECTED_FATAL_ERROR                                 = 0x000000caU,
+    DRIVER_LEFT_LOCKED_PAGES_IN_PROCESS                      = 0x000000cbU,
+    PAGE_FAULT_IN_FREED_SPECIAL_POOL                         = 0x000000ccU,
+    PAGE_FAULT_BEYOND_END_OF_ALLOCATION                      = 0x000000cdU,
+    DRIVER_UNLOADED_WITHOUT_CANCELLING_PENDING_OPERATIONS    = 0x000000ceU,
+    TERMINAL_SERVER_DRIVER_MADE_INCORRECT_MEMORY_REFERENCE   = 0x000000cfU,
+    DRIVER_CORRUPTED_MMPOOL                                  = 0x000000d0U,
+    DRIVER_IRQL_NOT_LESS_OR_EQUAL                            = 0x000000d1U,
+    BUGCODE_ID_DRIVER                                        = 0x000000d2U,
+    DRIVER_PORTION_MUST_BE_NONPAGED                          = 0x000000d3U,
+    SYSTEM_SCAN_AT_RAISED_IRQL_CAUGHT_IMPROPER_DRIVER_UNLOAD = 0x000000d4U,
+    DRIVER_PAGE_FAULT_IN_FREED_SPECIAL_POOL                  = 0x000000d5U,
+    DRIVER_PAGE_FAULT_BEYOND_END_OF_ALLOCATION               = 0x000000d6U,
+    DRIVER_PAGE_FAULT_BEYOND_END_OF_ALLOCATION_M             = 0x100000d6U,
+    DRIVER_UNMAPPING_INVALID_VIEW                            = 0x000000d7U,
+    DRIVER_USED_EXCESSIVE_PTES                               = 0x000000d8U,
+    LOCKED_PAGES_TRACKER_CORRUPTION                          = 0x000000d9U,
+    SYSTEM_PTE_MISUSE                                        = 0x000000daU,
+    DRIVER_CORRUPTED_SYSPTES                                 = 0x000000dbU,
+    DRIVER_INVALID_STACK_ACCESS                              = 0x000000dcU,
+    POOL_CORRUPTION_IN_FILE_AREA                             = 0x000000deU,
+    IMPERSONATING_WORKER_THREAD                              = 0x000000dfU,
+    ACPI_BIOS_FATAL_ERROR                                    = 0x000000e0U,
+    WORKER_THREAD_RETURNED_AT_BAD_IRQL                       = 0x000000e1U,
+    MANUALLY_INITIATED_CRASH                                 = 0x000000e2U,
+    RESOURCE_NOT_OWNED                                       = 0x000000e3U,
+    WORKER_INVALID                                           = 0x000000e4U,
+    POWER_FAILURE_SIMULATE                                   = 0x000000e5U,
+    DRIVER_VERIFIER_DMA_VIOLATION                            = 0x000000e6U,
+    INVALID_FLOATING_POINT_STATE                             = 0x000000e7U,
+    INVALID_CANCEL_OF_FILE_OPEN                              = 0x000000e8U,
+    ACTIVE_EX_WORKER_THREAD_TERMINATION                      = 0x000000e9U,
+    SAVER_UNSPECIFIED                                        = 0x0000f000U,
+    SAVER_BLANKSCREEN                                        = 0x0000f002U,
+    SAVER_INPUT                                              = 0x0000f003U,
+    SAVER_WATCHDOG                                           = 0x0000f004U,
+    SAVER_STARTNOTVISIBLE                                    = 0x0000f005U,
+    SAVER_NAVIGATIONMODEL                                    = 0x0000f006U,
+    SAVER_OUTOFMEMORY                                        = 0x0000f007U,
+    SAVER_GRAPHICS                                           = 0x0000f008U,
+    SAVER_NAVSERVERTIMEOUT                                   = 0x0000f009U,
+    SAVER_CHROMEPROCESSCRASH                                 = 0x0000f00aU,
+    SAVER_NOTIFICATIONDISMISSAL                              = 0x0000f00bU,
+    SAVER_SPEECHDISMISSAL                                    = 0x0000f00cU,
+    SAVER_CALLDISMISSAL                                      = 0x0000f00dU,
+    SAVER_APPBARDISMISSAL                                    = 0x0000f00eU,
+    SAVER_RILADAPTATIONCRASH                                 = 0x0000f00fU,
+    SAVER_APPLISTUNREACHABLE                                 = 0x0000f010U,
+    SAVER_REPORTNOTIFICATIONFAILURE                          = 0x0000f011U,
+    SAVER_UNEXPECTEDSHUTDOWN                                 = 0x0000f012U,
+    SAVER_RPCFAILURE                                         = 0x0000f013U,
+    SAVER_AUXILIARYFULLDUMP                                  = 0x0000f014U,
+    SAVER_ACCOUNTPROVSVCINITFAILURE                          = 0x0000f015U,
+    SAVER_MTBFCOMMANDTIMEOUT                                 = 0x00000315U,
+    SAVER_MTBFCOMMANDHANG                                    = 0x0000f101U,
+    SAVER_MTBFPASSBUGCHECK                                   = 0x0000f102U,
+    SAVER_MTBFIOERROR                                        = 0x0000f103U,
+    SAVER_RENDERTHREADHANG                                   = 0x0000f200U,
+    SAVER_RENDERMOBILEUIOOM                                  = 0x0000f201U,
+    SAVER_DEVICEUPDATEUNSPECIFIED                            = 0x0000f300U,
+    SAVER_AUDIODRIVERHANG                                    = 0x0000f400U,
+    SAVER_BATTERYPULLOUT                                     = 0x0000f500U,
+    SAVER_MEDIACORETESTHANG                                  = 0x0000f600U,
+    SAVER_RESOURCEMANAGEMENT                                 = 0x0000f700U,
+    SAVER_CAPTURESERVICE                                     = 0x0000f800U,
+    SAVER_WAITFORSHELLREADY                                  = 0x0000f900U,
+    SAVER_NONRESPONSIVEPROCESS                               = 0x00000194U,
+    SAVER_SICKAPPLICATION                                    = 0x00008866U,
+    THREAD_STUCK_IN_DEVICE_DRIVER                            = 0x000000eaU,
+    THREAD_STUCK_IN_DEVICE_DRIVER_M                          = 0x100000eaU,
+    DIRTY_MAPPED_PAGES_CONGESTION                            = 0x000000ebU,
+    SESSION_HAS_VALID_SPECIAL_POOL_ON_EXIT                   = 0x000000ecU,
+    UNMOUNTABLE_BOOT_VOLUME                                  = 0x000000edU,
+    CRITICAL_PROCESS_DIED                                    = 0x000000efU,
+    STORAGE_MINIPORT_ERROR                                   = 0x000000f0U,
+    SCSI_VERIFIER_DETECTED_VIOLATION                         = 0x000000f1U,
+    HARDWARE_INTERRUPT_STORM                                 = 0x000000f2U,
+    DISORDERLY_SHUTDOWN                                      = 0x000000f3U,
+    CRITICAL_OBJECT_TERMINATION                              = 0x000000f4U,
+    FLTMGR_FILE_SYSTEM                                       = 0x000000f5U,
+    PCI_VERIFIER_DETECTED_VIOLATION                          = 0x000000f6U,
+    DRIVER_OVERRAN_STACK_BUFFER                              = 0x000000f7U,
+    RAMDISK_BOOT_INITIALIZATION_FAILED                       = 0x000000f8U,
+    DRIVER_RETURNED_STATUS_REPARSE_FOR_VOLUME_OPEN           = 0x000000f9U,
+    HTTP_DRIVER_CORRUPTED                                    = 0x000000faU,
+    RECURSIVE_MACHINE_CHECK                                  = 0x000000fbU,
+    ATTEMPTED_EXECUTE_OF_NOEXECUTE_MEMORY                    = 0x000000fcU,
+    DIRTY_NOWRITE_PAGES_CONGESTION                           = 0x000000fdU,
+    BUGCODE_USB_DRIVER                                       = 0x000000feU,
+    BC_BLUETOOTH_VERIFIER_FAULT                              = 0x00000bfeU,
+    BC_BTHMINI_VERIFIER_FAULT                                = 0x00000bffU,
+    RESERVE_QUEUE_OVERFLOW                                   = 0x000000ffU,
+    LOADER_BLOCK_MISMATCH                                    = 0x00000100U,
+    CLOCK_WATCHDOG_TIMEOUT                                   = 0x00000101U,
+    DPC_WATCHDOG_TIMEOUT                                     = 0x00000102U,
+    MUP_FILE_SYSTEM                                          = 0x00000103U,
+    AGP_INVALID_ACCESS                                       = 0x00000104U,
+    AGP_GART_CORRUPTION                                      = 0x00000105U,
+    AGP_ILLEGALLY_REPROGRAMMED                               = 0x00000106U,
+    KERNEL_EXPAND_STACK_ACTIVE                               = 0x00000107U,
+    THIRD_PARTY_FILE_SYSTEM_FAILURE                          = 0x00000108U,
+    CRITICAL_STRUCTURE_CORRUPTION                            = 0x00000109U,
+    APP_TAGGING_INITIALIZATION_FAILED                        = 0x0000010aU,
+    DFSC_FILE_SYSTEM                                         = 0x0000010bU,
+    FSRTL_EXTRA_CREATE_PARAMETER_VIOLATION                   = 0x0000010cU,
+    WDF_VIOLATION                                            = 0x0000010dU,
+    VIDEO_MEMORY_MANAGEMENT_INTERNAL                         = 0x0000010eU,
+    DRIVER_INVALID_CRUNTIME_PARAMETER                        = 0x00000110U,
+    RECURSIVE_NMI                                            = 0x00000111U,
+    MSRPC_STATE_VIOLATION                                    = 0x00000112U,
+    VIDEO_DXGKRNL_FATAL_ERROR                                = 0x00000113U,
+    VIDEO_SHADOW_DRIVER_FATAL_ERROR                          = 0x00000114U,
+    AGP_INTERNAL                                             = 0x00000115U,
+    VIDEO_TDR_FAILURE                                        = 0x00000116U,
+    VIDEO_TDR_TIMEOUT_DETECTED                               = 0x00000117U,
+    NTHV_GUEST_ERROR                                         = 0x00000118U,
+    VIDEO_SCHEDULER_INTERNAL_ERROR                           = 0x00000119U,
+    EM_INITIALIZATION_ERROR                                  = 0x0000011aU,
+    DRIVER_RETURNED_HOLDING_CANCEL_LOCK                      = 0x0000011bU,
+    ATTEMPTED_WRITE_TO_CM_PROTECTED_STORAGE                  = 0x0000011cU,
+    EVENT_TRACING_FATAL_ERROR                                = 0x0000011dU,
+    TOO_MANY_RECURSIVE_FAULTS                                = 0x0000011eU,
+    INVALID_DRIVER_HANDLE                                    = 0x0000011fU,
+    BITLOCKER_FATAL_ERROR                                    = 0x00000120U,
+    DRIVER_VIOLATION                                         = 0x00000121U,
+    WHEA_INTERNAL_ERROR                                      = 0x00000122U,
+    CRYPTO_SELF_TEST_FAILURE                                 = 0x00000123U,
+    WHEA_UNCORRECTABLE_ERROR                                 = 0x00000124U,
+    NMR_INVALID_STATE                                        = 0x00000125U,
+    NETIO_INVALID_POOL_CALLER                                = 0x00000126U,
+    PAGE_NOT_ZERO                                            = 0x00000127U,
+    WORKER_THREAD_RETURNED_WITH_BAD_IO_PRIORITY              = 0x00000128U,
+    WORKER_THREAD_RETURNED_WITH_BAD_PAGING_IO_PRIORITY       = 0x00000129U,
+    MUI_NO_VALID_SYSTEM_LANGUAGE                             = 0x0000012aU,
+    FAULTY_HARDWARE_CORRUPTED_PAGE                           = 0x0000012bU,
+    EXFAT_FILE_SYSTEM                                        = 0x0000012cU,
+    VOLSNAP_OVERLAPPED_TABLE_ACCESS                          = 0x0000012dU,
+    INVALID_MDL_RANGE                                        = 0x0000012eU,
+    VHD_BOOT_INITIALIZATION_FAILED                           = 0x0000012fU,
+    DYNAMIC_ADD_PROCESSOR_MISMATCH                           = 0x00000130U,
+    INVALID_EXTENDED_PROCESSOR_STATE                         = 0x00000131U,
+    RESOURCE_OWNER_POINTER_INVALID                           = 0x00000132U,
+    DPC_WATCHDOG_VIOLATION                                   = 0x00000133U,
+    DRIVE_EXTENDER                                           = 0x00000134U,
+    REGISTRY_FILTER_DRIVER_EXCEPTION                         = 0x00000135U,
+    VHD_BOOT_HOST_VOLUME_NOT_ENOUGH_SPACE                    = 0x00000136U,
+    WIN32K_HANDLE_MANAGER                                    = 0x00000137U,
+    GPIO_CONTROLLER_DRIVER_ERROR                             = 0x00000138U,
+    KERNEL_SECURITY_CHECK_FAILURE                            = 0x00000139U,
+    KERNEL_MODE_HEAP_CORRUPTION                              = 0x0000013aU,
+    PASSIVE_INTERRUPT_ERROR                                  = 0x0000013bU,
+    INVALID_IO_BOOST_STATE                                   = 0x0000013cU,
+    CRITICAL_INITIALIZATION_FAILURE                          = 0x0000013dU,
+    ERRATA_WORKAROUND_UNSUCCESSFUL                           = 0x0000013eU,
+    REGISTRY_CALLBACK_DRIVER_EXCEPTION                       = 0x0000013fU,
+    STORAGE_DEVICE_ABNORMALITY_DETECTED                      = 0x00000140U,
+    VIDEO_ENGINE_TIMEOUT_DETECTED                            = 0x00000141U,
+    VIDEO_TDR_APPLICATION_BLOCKED                            = 0x00000142U,
+    PROCESSOR_DRIVER_INTERNAL                                = 0x00000143U,
+    BUGCODE_USB3_DRIVER                                      = 0x00000144U,
+    SECURE_BOOT_VIOLATION                                    = 0x00000145U,
+    NDIS_NET_BUFFER_LIST_INFO_ILLEGALLY_TRANSFERRED          = 0x00000146U,
+    ABNORMAL_RESET_DETECTED                                  = 0x00000147U,
+    IO_OBJECT_INVALID                                        = 0x00000148U,
+    REFS_FILE_SYSTEM                                         = 0x00000149U,
+    KERNEL_WMI_INTERNAL                                      = 0x0000014aU,
+    SOC_SUBSYSTEM_FAILURE                                    = 0x0000014bU,
+    FATAL_ABNORMAL_RESET_ERROR                               = 0x0000014cU,
+    EXCEPTION_SCOPE_INVALID                                  = 0x0000014dU,
+    SOC_CRITICAL_DEVICE_REMOVED                              = 0x0000014eU,
+    PDC_WATCHDOG_TIMEOUT                                     = 0x0000014fU,
+    TCPIP_AOAC_NIC_ACTIVE_REFERENCE_LEAK                     = 0x00000150U,
+    UNSUPPORTED_INSTRUCTION_MODE                             = 0x00000151U,
+    INVALID_PUSH_LOCK_FLAGS                                  = 0x00000152U,
+    KERNEL_LOCK_ENTRY_LEAKED_ON_THREAD_TERMINATION           = 0x00000153U,
+    UNEXPECTED_STORE_EXCEPTION                               = 0x00000154U,
+    OS_DATA_TAMPERING                                        = 0x00000155U,
+    WINSOCK_DETECTED_HUNG_CLOSESOCKET_LIVEDUMP               = 0x00000156U,
+    KERNEL_THREAD_PRIORITY_FLOOR_VIOLATION                   = 0x00000157U,
+    ILLEGAL_IOMMU_PAGE_FAULT                                 = 0x00000158U,
+    HAL_ILLEGAL_IOMMU_PAGE_FAULT                             = 0x00000159U,
+    SDBUS_INTERNAL_ERROR                                     = 0x0000015aU,
+    WORKER_THREAD_RETURNED_WITH_SYSTEM_PAGE_PRIORITY_ACTIVE  = 0x0000015bU,
+    PDC_WATCHDOG_TIMEOUT_LIVEDUMP                            = 0x0000015cU,
+    SOC_SUBSYSTEM_FAILURE_LIVEDUMP                           = 0x0000015dU,
+    BUGCODE_NDIS_DRIVER_LIVE_DUMP                            = 0x0000015eU,
+    CONNECTED_STANDBY_WATCHDOG_TIMEOUT_LIVEDUMP              = 0x0000015fU,
+    WIN32K_ATOMIC_CHECK_FAILURE                              = 0x00000160U,
+    LIVE_SYSTEM_DUMP                                         = 0x00000161U,
+    KERNEL_AUTO_BOOST_INVALID_LOCK_RELEASE                   = 0x00000162U,
+    WORKER_THREAD_TEST_CONDITION                             = 0x00000163U,
+    WIN32K_CRITICAL_FAILURE                                  = 0x00000164U,
+    CLUSTER_CSV_STATUS_IO_TIMEOUT_LIVEDUMP                   = 0x00000165U,
+    CLUSTER_RESOURCE_CALL_TIMEOUT_LIVEDUMP                   = 0x00000166U,
+    CLUSTER_CSV_SNAPSHOT_DEVICE_INFO_TIMEOUT_LIVEDUMP        = 0x00000167U,
+    CLUSTER_CSV_STATE_TRANSITION_TIMEOUT_LIVEDUMP            = 0x00000168U,
+    CLUSTER_CSV_VOLUME_ARRIVAL_LIVEDUMP                      = 0x00000169U,
+    CLUSTER_CSV_VOLUME_REMOVAL_LIVEDUMP                      = 0x0000016aU,
+    CLUSTER_CSV_CLUSTER_WATCHDOG_LIVEDUMP                    = 0x0000016bU,
+    INVALID_RUNDOWN_PROTECTION_FLAGS                         = 0x0000016cU,
+    INVALID_SLOT_ALLOCATOR_FLAGS                             = 0x0000016dU,
+    ERESOURCE_INVALID_RELEASE                                = 0x0000016eU,
+    CLUSTER_CSV_STATE_TRANSITION_INTERVAL_TIMEOUT_LIVEDUMP   = 0x0000016fU,
+    CLUSTER_CSV_CLUSSVC_DISCONNECT_WATCHDOG                  = 0x00000170U,
+    CRYPTO_LIBRARY_INTERNAL_ERROR                            = 0x00000171U,
+    SECURE_KERNEL_HIBERNATE_ERROR                            = 0x00000172U,
+    COREMSGCALL_INTERNAL_ERROR                               = 0x00000173U,
+    COREMSG_INTERNAL_ERROR                                   = 0x00000174U,
+    PREVIOUS_FATAL_ABNORMAL_RESET_ERROR                      = 0x00000175U,
+    STORAGE_STACK_FATAL_ERROR                                = 0x00000176U,
+    ELAM_DRIVER_DETECTED_FATAL_ERROR                         = 0x00000178U,
+    CLUSTER_CLUSPORT_STATUS_IO_TIMEOUT_LIVEDUMP              = 0x00000179U,
+    PROFILER_CONFIGURATION_ILLEGAL                           = 0x0000017bU,
+    PDC_LOCK_WATCHDOG_LIVEDUMP                               = 0x0000017cU,
+    PDC_UNEXPECTED_REVOCATION_LIVEDUMP                       = 0x0000017dU,
+    MICROCODE_REVISION_MISMATCH                              = 0x0000017eU,
+    HYPERGUARD_INITIALIZATION_FAILURE                        = 0x0000017fU,
+    WVR_LIVEDUMP_REPLICATION_IOCONTEXT_TIMEOUT               = 0x00000180U,
+    WVR_LIVEDUMP_STATE_TRANSITION_TIMEOUT                    = 0x00000181U,
+    WVR_LIVEDUMP_RECOVERY_IOCONTEXT_TIMEOUT                  = 0x00000182U,
+    WVR_LIVEDUMP_APP_IO_TIMEOUT                              = 0x00000183U,
+    WVR_LIVEDUMP_MANUALLY_INITIATED                          = 0x00000184U,
+    WVR_LIVEDUMP_STATE_FAILURE                               = 0x00000185U,
+    WVR_LIVEDUMP_CRITICAL_ERROR                              = 0x00000186U,
+    VIDEO_DWMINIT_TIMEOUT_FALLBACK_BDD                       = 0x00000187U,
+    CLUSTER_CSVFS_LIVEDUMP                                   = 0x00000188U,
+    BAD_OBJECT_HEADER                                        = 0x00000189U,
+    SILO_CORRUPT                                             = 0x0000018aU,
+    SECURE_KERNEL_ERROR                                      = 0x0000018bU,
+    HYPERGUARD_VIOLATION                                     = 0x0000018cU,
+    SECURE_FAULT_UNHANDLED                                   = 0x0000018dU,
+    KERNEL_PARTITION_REFERENCE_VIOLATION                     = 0x0000018eU,
+    SYNTHETIC_EXCEPTION_UNHANDLED                            = 0x0000018fU,
+    WIN32K_CRITICAL_FAILURE_LIVEDUMP                         = 0x00000190U,
+    PF_DETECTED_CORRUPTION                                   = 0x00000191U,
+    KERNEL_AUTO_BOOST_LOCK_ACQUISITION_WITH_RAISED_IRQL      = 0x00000192U,
+    VIDEO_DXGKRNL_LIVEDUMP                                   = 0x00000193U,
+    KERNEL_STORAGE_SLOT_IN_USE                               = 0x00000199U,
+    SMB_SERVER_LIVEDUMP                                      = 0x00000195U,
+    LOADER_ROLLBACK_DETECTED                                 = 0x00000196U,
+    WIN32K_SECURITY_FAILURE                                  = 0x00000197U,
+    UFX_LIVEDUMP                                             = 0x00000198U,
+    WORKER_THREAD_RETURNED_WHILE_ATTACHED_TO_SILO            = 0x0000019aU,
+    TTM_FATAL_ERROR                                          = 0x0000019bU,
+    WIN32K_POWER_WATCHDOG_TIMEOUT                            = 0x0000019cU,
+    CLUSTER_SVHDX_LIVEDUMP                                   = 0x0000019dU,
+    BUGCODE_NETADAPTER_DRIVER                                = 0x0000019eU,
+    PDC_PRIVILEGE_CHECK_LIVEDUMP                             = 0x0000019fU,
+    TTM_WATCHDOG_TIMEOUT                                     = 0x000001a0U,
+    WIN32K_CALLOUT_WATCHDOG_LIVEDUMP                         = 0x000001a1U,
+    WIN32K_CALLOUT_WATCHDOG_BUGCHECK                         = 0x000001a2U,
+    CALL_HAS_NOT_RETURNED_WATCHDOG_TIMEOUT_LIVEDUMP          = 0x000001a3U,
+    DRIPS_SW_HW_DIVERGENCE_LIVEDUMP                          = 0x000001a4U,
+    USB_DRIPS_BLOCKER_SURPRISE_REMOVAL_LIVEDUMP              = 0x000001a5U,
+    BLUETOOTH_ERROR_RECOVERY_LIVEDUMP                        = 0x000001a6U,
+    SMB_REDIRECTOR_LIVEDUMP                                  = 0x000001a7U,
+    VIDEO_DXGKRNL_BLACK_SCREEN_LIVEDUMP                      = 0x000001a8U,
+    DIRECTED_FX_TRANSITION_LIVEDUMP                          = 0x000001a9U,
+    EXCEPTION_ON_INVALID_STACK                               = 0x000001aaU,
+    UNWIND_ON_INVALID_STACK                                  = 0x000001abU,
+    VIDEO_MINIPORT_FAILED_LIVEDUMP                           = 0x000001b0U,
+    VIDEO_MINIPORT_BLACK_SCREEN_LIVEDUMP                     = 0x000001b8U,
+    DRIVER_VERIFIER_DETECTED_VIOLATION_LIVEDUMP              = 0x000001c4U,
+    IO_THREADPOOL_DEADLOCK_LIVEDUMP                          = 0x000001c5U,
+    FAST_ERESOURCE_PRECONDITION_VIOLATION                    = 0x000001c6U,
+    STORE_DATA_STRUCTURE_CORRUPTION                          = 0x000001c7U,
+    MANUALLY_INITIATED_POWER_BUTTON_HOLD                     = 0x000001c8U,
+    USER_MODE_HEALTH_MONITOR_LIVEDUMP                        = 0x000001c9U,
+    SYNTHETIC_WATCHDOG_TIMEOUT                               = 0x000001caU,
+    INVALID_SILO_DETACH                                      = 0x000001cbU,
+    EXRESOURCE_TIMEOUT_LIVEDUMP                              = 0x000001ccU,
+    INVALID_CALLBACK_STACK_ADDRESS                           = 0x000001cdU,
+    INVALID_KERNEL_STACK_ADDRESS                             = 0x000001ceU,
+    HARDWARE_WATCHDOG_TIMEOUT                                = 0x000001cfU,
+    ACPI_FIRMWARE_WATCHDOG_TIMEOUT                           = 0x000001d0U,
+    TELEMETRY_ASSERTS_LIVEDUMP                               = 0x000001d1U,
+    WORKER_THREAD_INVALID_STATE                              = 0x000001d2U,
+    WFP_INVALID_OPERATION                                    = 0x000001d3U,
+    UCMUCSI_LIVEDUMP                                         = 0x000001d4U,
+    DRIVER_PNP_WATCHDOG                                      = 0x000001d5U,
+    WORKER_THREAD_RETURNED_WITH_NON_DEFAULT_WORKLOAD_CLASS   = 0x000001d6U,
+    EFS_FATAL_ERROR                                          = 0x000001d7U,
+    UCMUCSI_FAILURE                                          = 0x000001d8U,
+    HAL_IOMMU_INTERNAL_ERROR                                 = 0x000001d9U,
+    HAL_BLOCKED_PROCESSOR_INTERNAL_ERROR                     = 0x000001daU,
+    IPI_WATCHDOG_TIMEOUT                                     = 0x000001dbU,
+    DMA_COMMON_BUFFER_VECTOR_ERROR                           = 0x000001dcU,
+    BUGCODE_MBBADAPTER_DRIVER                                = 0x000001ddU,
+    BUGCODE_WIFIADAPTER_DRIVER                               = 0x000001deU,
+    PROCESSOR_START_TIMEOUT                                  = 0x000001dfU,
+    INVALID_ALTERNATE_SYSTEM_CALL_HANDLER_REGISTRATION       = 0x000001e0U,
+    DEVICE_DIAGNOSTIC_LOG_LIVEDUMP                           = 0x000001e1U,
+    AZURE_DEVICE_FW_DUMP                                     = 0x000001e2U,
+    BREAKAWAY_CABLE_TRANSITION                               = 0x000001e3U,
+    VIDEO_DXGKRNL_SYSMM_FATAL_ERROR                          = 0x000001e4U,
+    DRIVER_VERIFIER_TRACKING_LIVE_DUMP                       = 0x000001e5U,
+    CRASHDUMP_WATCHDOG_TIMEOUT                               = 0x000001e6U,
+    REGISTRY_LIVE_DUMP                                       = 0x000001e7U,
+    INVALID_THREAD_AFFINITY_STATE                            = 0x000001e8U,
+    ILLEGAL_ATS_INITIALIZATION                               = 0x000001e9U,
+    SECURE_PCI_CONFIG_SPACE_ACCESS_VIOLATION                 = 0x000001eaU,
+    DAM_WATCHDOG_TIMEOUT                                     = 0x000001ebU,
+    HANDLE_LIVE_DUMP                                         = 0x000001ecU,
+    HANDLE_ERROR_ON_CRITICAL_THREAD                          = 0x000001edU,
+    MPSDRV_QUERY_USER                                        = 0x400001eeU,
+    VMBUS_LIVEDUMP                                           = 0x400001efU,
+    USB4_HARDWARE_VIOLATION                                  = 0x000001f0U,
+    KASAN_ENLIGHTENMENT_VIOLATION                            = 0x000001f1U,
+    KASAN_ILLEGAL_ACCESS                                     = 0x000001f2U,
+    IORING                                                   = 0x000001f3U,
+    MDL_CACHE                                                = 0x000001f4U,
+    APPLICATION_HANG_KERNEL_LIVEDUMP                         = 0x000001f5U,
+    MISALIGNED_POINTER_PARAMETER                             = 0x000001f6U,
+    MSSECCORE_ASSERTION_FAILURE                              = 0x000001f7U,
+    INVALID_MINIMAL_PROCESS_STATE                            = 0x000001f8U,
+    PREVIOUS_MODE_MISMATCH                                   = 0x000001f9U,
+    SMB_SRV_REQUEST_VALIDATION_FAILURE                       = 0x000001faU,
+    IOMMU_INTERRUPT_REMAPPING_FAULT                          = 0x000001fbU,
+    WIN32K_CALLOUT_UNREGISTER_FAILED                         = 0x000001fcU,
+    HAL_SPE_INTERNAL_ERROR                                   = 0x000001fdU,
+    SMB_CLIENT_REQUEST_VALIDATION_FAILURE                    = 0x000001feU,
+    CPU_SCHEDULER_INTERNAL_ERROR                             = 0x00000200U,
+    PROCESS_TERMINATE_LIKELY_DEADLOCK                        = 0x00000201U,
+    UNEXPECTED_CODEPATH                                      = 0x00000202U,
+    INVALID_EXTENSION_STATE                                  = 0x00000203U,
+    STORAGE_DRIVER_LIVEDUMP                                  = 0x00000207U,
+    XBOX_VMCTRL_CS_TIMEOUT                                   = 0x00000356U,
+    XBOX_CORRUPTED_IMAGE                                     = 0x00000357U,
+    XBOX_INVERTED_FUNCTION_TABLE_OVERFLOW                    = 0x00000358U,
+    XBOX_CORRUPTED_IMAGE_BASE                                = 0x00000359U,
+    XBOX_XDS_WATCHDOG_TIMEOUT                                = 0x0000035aU,
+    XBOX_SHUTDOWN_WATCHDOG_TIMEOUT                           = 0x0000035bU,
+    XBOX_CANNOT_MANAGE_PARTITION_MEMORY                      = 0x0000035dU,
+    XBOX_360_SYSTEM_CRASH                                    = 0x00000360U,
+    XBOX_360_SYSTEM_CRASH_RESERVED                           = 0x00000420U,
+    XBOX_SECURITY_FAILUE                                     = 0x00000421U,
+    KERNEL_CFG_INIT_FAILURE                                  = 0x00000422U,
+    MANUALLY_INITIATED_POWER_BUTTON_HOLD_LIVE_DUMP           = 0x000011c8U,
+    HYPERVISOR_ERROR                                         = 0x00020001U,
+    XBOX_MANUALLY_INITIATED_CRASH                            = 0x00030006U,
+    MANUALLY_INITIATED_BLACKSCREEN_HOTKEY_LIVE_DUMP          = 0x000021c8U,
+    WINLOGON_FATAL_ERROR                                     = 0xc000021aU,
+    MANUALLY_INITIATED_CRASH1                                = 0xdeaddeadU,
+    BUGCHECK_CONTEXT_MODIFIER                                = 0x80000000U,
 }
+
 alias FACILITY_CODE = uint;
 enum : uint
 {
-    FACILITY_NULL                                     = 0x00000000,
-    FACILITY_RPC                                      = 0x00000001,
-    FACILITY_DISPATCH                                 = 0x00000002,
-    FACILITY_STORAGE                                  = 0x00000003,
-    FACILITY_ITF                                      = 0x00000004,
-    FACILITY_WIN32                                    = 0x00000007,
-    FACILITY_WINDOWS                                  = 0x00000008,
-    FACILITY_SSPI                                     = 0x00000009,
-    FACILITY_SECURITY                                 = 0x00000009,
-    FACILITY_CONTROL                                  = 0x0000000a,
-    FACILITY_CERT                                     = 0x0000000b,
-    FACILITY_INTERNET                                 = 0x0000000c,
-    FACILITY_MEDIASERVER                              = 0x0000000d,
-    FACILITY_MSMQ                                     = 0x0000000e,
-    FACILITY_SETUPAPI                                 = 0x0000000f,
-    FACILITY_SCARD                                    = 0x00000010,
-    FACILITY_COMPLUS                                  = 0x00000011,
-    FACILITY_AAF                                      = 0x00000012,
-    FACILITY_URT                                      = 0x00000013,
-    FACILITY_ACS                                      = 0x00000014,
-    FACILITY_DPLAY                                    = 0x00000015,
-    FACILITY_UMI                                      = 0x00000016,
-    FACILITY_SXS                                      = 0x00000017,
-    FACILITY_WINDOWS_CE                               = 0x00000018,
-    FACILITY_HTTP                                     = 0x00000019,
-    FACILITY_USERMODE_COMMONLOG                       = 0x0000001a,
-    FACILITY_WER                                      = 0x0000001b,
-    FACILITY_USERMODE_FILTER_MANAGER                  = 0x0000001f,
-    FACILITY_BACKGROUNDCOPY                           = 0x00000020,
-    FACILITY_CONFIGURATION                            = 0x00000021,
-    FACILITY_WIA                                      = 0x00000021,
-    FACILITY_STATE_MANAGEMENT                         = 0x00000022,
-    FACILITY_METADIRECTORY                            = 0x00000023,
-    FACILITY_WINDOWSUPDATE                            = 0x00000024,
-    FACILITY_DIRECTORYSERVICE                         = 0x00000025,
-    FACILITY_GRAPHICS                                 = 0x00000026,
-    FACILITY_SHELL                                    = 0x00000027,
-    FACILITY_NAP                                      = 0x00000027,
-    FACILITY_TPM_SERVICES                             = 0x00000028,
-    FACILITY_TPM_SOFTWARE                             = 0x00000029,
-    FACILITY_UI                                       = 0x0000002a,
-    FACILITY_XAML                                     = 0x0000002b,
-    FACILITY_ACTION_QUEUE                             = 0x0000002c,
-    FACILITY_PLA                                      = 0x00000030,
-    FACILITY_WINDOWS_SETUP                            = 0x00000030,
-    FACILITY_FVE                                      = 0x00000031,
-    FACILITY_FWP                                      = 0x00000032,
-    FACILITY_WINRM                                    = 0x00000033,
-    FACILITY_NDIS                                     = 0x00000034,
-    FACILITY_USERMODE_HYPERVISOR                      = 0x00000035,
-    FACILITY_CMI                                      = 0x00000036,
-    FACILITY_USERMODE_VIRTUALIZATION                  = 0x00000037,
-    FACILITY_USERMODE_VOLMGR                          = 0x00000038,
-    FACILITY_BCD                                      = 0x00000039,
-    FACILITY_USERMODE_VHD                             = 0x0000003a,
-    FACILITY_USERMODE_HNS                             = 0x0000003b,
-    FACILITY_SDIAG                                    = 0x0000003c,
-    FACILITY_WEBSERVICES                              = 0x0000003d,
-    FACILITY_WINPE                                    = 0x0000003d,
-    FACILITY_WPN                                      = 0x0000003e,
-    FACILITY_WINDOWS_STORE                            = 0x0000003f,
-    FACILITY_INPUT                                    = 0x00000040,
-    FACILITY_QUIC                                     = 0x00000041,
-    FACILITY_EAP                                      = 0x00000042,
-    FACILITY_IORING                                   = 0x00000046,
-    FACILITY_WINDOWS_DEFENDER                         = 0x00000050,
-    FACILITY_OPC                                      = 0x00000051,
-    FACILITY_XPS                                      = 0x00000052,
-    FACILITY_MBN                                      = 0x00000054,
-    FACILITY_POWERSHELL                               = 0x00000054,
-    FACILITY_RAS                                      = 0x00000053,
-    FACILITY_P2P_INT                                  = 0x00000062,
-    FACILITY_P2P                                      = 0x00000063,
-    FACILITY_DAF                                      = 0x00000064,
-    FACILITY_BLUETOOTH_ATT                            = 0x00000065,
-    FACILITY_AUDIO                                    = 0x00000066,
-    FACILITY_STATEREPOSITORY                          = 0x00000067,
-    FACILITY_VISUALCPP                                = 0x0000006d,
-    FACILITY_SCRIPT                                   = 0x00000070,
-    FACILITY_PARSE                                    = 0x00000071,
-    FACILITY_BLB                                      = 0x00000078,
-    FACILITY_BLB_CLI                                  = 0x00000079,
-    FACILITY_WSBAPP                                   = 0x0000007a,
-    FACILITY_BLBUI                                    = 0x00000080,
-    FACILITY_USN                                      = 0x00000081,
-    FACILITY_USERMODE_VOLSNAP                         = 0x00000082,
-    FACILITY_TIERING                                  = 0x00000083,
-    FACILITY_WSB_ONLINE                               = 0x00000085,
-    FACILITY_ONLINE_ID                                = 0x00000086,
-    FACILITY_DEVICE_UPDATE_AGENT                      = 0x00000087,
-    FACILITY_DRVSERVICING                             = 0x00000088,
-    FACILITY_DLS                                      = 0x00000099,
-    FACILITY_DELIVERY_OPTIMIZATION                    = 0x000000d0,
-    FACILITY_USERMODE_SPACES                          = 0x000000e7,
-    FACILITY_USER_MODE_SECURITY_CORE                  = 0x000000e8,
-    FACILITY_USERMODE_LICENSING                       = 0x000000ea,
-    FACILITY_SOS                                      = 0x000000a0,
-    FACILITY_OCP_UPDATE_AGENT                         = 0x000000ad,
-    FACILITY_DEBUGGERS                                = 0x000000b0,
-    FACILITY_SPP                                      = 0x00000100,
-    FACILITY_RESTORE                                  = 0x00000100,
-    FACILITY_DMSERVER                                 = 0x00000100,
-    FACILITY_DEPLOYMENT_SERVICES_SERVER               = 0x00000101,
-    FACILITY_DEPLOYMENT_SERVICES_IMAGING              = 0x00000102,
-    FACILITY_DEPLOYMENT_SERVICES_MANAGEMENT           = 0x00000103,
-    FACILITY_DEPLOYMENT_SERVICES_UTIL                 = 0x00000104,
-    FACILITY_DEPLOYMENT_SERVICES_BINLSVC              = 0x00000105,
-    FACILITY_DEPLOYMENT_SERVICES_PXE                  = 0x00000107,
-    FACILITY_DEPLOYMENT_SERVICES_TFTP                 = 0x00000108,
-    FACILITY_DEPLOYMENT_SERVICES_TRANSPORT_MANAGEMENT = 0x00000110,
-    FACILITY_DEPLOYMENT_SERVICES_DRIVER_PROVISIONING  = 0x00000116,
-    FACILITY_DEPLOYMENT_SERVICES_MULTICAST_SERVER     = 0x00000121,
-    FACILITY_DEPLOYMENT_SERVICES_MULTICAST_CLIENT     = 0x00000122,
-    FACILITY_DEPLOYMENT_SERVICES_CONTENT_PROVIDER     = 0x00000125,
-    FACILITY_HSP_SERVICES                             = 0x00000128,
-    FACILITY_HSP_SOFTWARE                             = 0x00000129,
-    FACILITY_LINGUISTIC_SERVICES                      = 0x00000131,
-    FACILITY_AUDIOSTREAMING                           = 0x00000446,
-    FACILITY_TTD                                      = 0x000005d2,
-    FACILITY_ACCELERATOR                              = 0x00000600,
-    FACILITY_WMAAECMA                                 = 0x000007cc,
-    FACILITY_DIRECTMUSIC                              = 0x00000878,
-    FACILITY_DIRECT3D10                               = 0x00000879,
-    FACILITY_DXGI                                     = 0x0000087a,
-    FACILITY_DXGI_DDI                                 = 0x0000087b,
-    FACILITY_DIRECT3D11                               = 0x0000087c,
-    FACILITY_DIRECT3D11_DEBUG                         = 0x0000087d,
-    FACILITY_DIRECT3D12                               = 0x0000087e,
-    FACILITY_DIRECT3D12_DEBUG                         = 0x0000087f,
-    FACILITY_DXCORE                                   = 0x00000880,
-    FACILITY_PRESENTATION                             = 0x00000881,
-    FACILITY_LEAP                                     = 0x00000888,
-    FACILITY_AUDCLNT                                  = 0x00000889,
-    FACILITY_WINCODEC_DWRITE_DWM                      = 0x00000898,
-    FACILITY_WINML                                    = 0x00000890,
-    FACILITY_DIRECT2D                                 = 0x00000899,
-    FACILITY_DEFRAG                                   = 0x00000900,
-    FACILITY_USERMODE_SDBUS                           = 0x00000901,
-    FACILITY_JSCRIPT                                  = 0x00000902,
-    FACILITY_PIDGENX                                  = 0x00000a01,
-    FACILITY_EAS                                      = 0x00000055,
-    FACILITY_WEB                                      = 0x00000375,
-    FACILITY_WEB_SOCKET                               = 0x00000376,
-    FACILITY_MOBILE                                   = 0x00000701,
-    FACILITY_SQLITE                                   = 0x000007af,
-    FACILITY_SERVICE_FABRIC                           = 0x000007b0,
-    FACILITY_UTC                                      = 0x000007c5,
-    FACILITY_WEP                                      = 0x00000801,
-    FACILITY_SYNCENGINE                               = 0x00000802,
-    FACILITY_XBOX                                     = 0x00000923,
-    FACILITY_GAME                                     = 0x00000924,
-    FACILITY_USERMODE_UNIONFS                         = 0x00000925,
-    FACILITY_USERMODE_PRM                             = 0x00000926,
-    FACILITY_USERMODE_WIN_ACCEL                       = 0x00000927,
-    FACILITY_PPF                                      = 0x00000928,
-    FACILITY_PIX                                      = 0x00000abc,
-    FACILITY_NT_BIT                                   = 0x10000000,
+    FACILITY_NULL                                     = 0x00000000U,
+    FACILITY_RPC                                      = 0x00000001U,
+    FACILITY_DISPATCH                                 = 0x00000002U,
+    FACILITY_STORAGE                                  = 0x00000003U,
+    FACILITY_ITF                                      = 0x00000004U,
+    FACILITY_WIN32                                    = 0x00000007U,
+    FACILITY_WINDOWS                                  = 0x00000008U,
+    FACILITY_SSPI                                     = 0x00000009U,
+    FACILITY_SECURITY                                 = 0x00000009U,
+    FACILITY_CONTROL                                  = 0x0000000aU,
+    FACILITY_CERT                                     = 0x0000000bU,
+    FACILITY_INTERNET                                 = 0x0000000cU,
+    FACILITY_MEDIASERVER                              = 0x0000000dU,
+    FACILITY_MSMQ                                     = 0x0000000eU,
+    FACILITY_SETUPAPI                                 = 0x0000000fU,
+    FACILITY_SCARD                                    = 0x00000010U,
+    FACILITY_COMPLUS                                  = 0x00000011U,
+    FACILITY_AAF                                      = 0x00000012U,
+    FACILITY_URT                                      = 0x00000013U,
+    FACILITY_ACS                                      = 0x00000014U,
+    FACILITY_DPLAY                                    = 0x00000015U,
+    FACILITY_UMI                                      = 0x00000016U,
+    FACILITY_SXS                                      = 0x00000017U,
+    FACILITY_WINDOWS_CE                               = 0x00000018U,
+    FACILITY_HTTP                                     = 0x00000019U,
+    FACILITY_USERMODE_COMMONLOG                       = 0x0000001aU,
+    FACILITY_WER                                      = 0x0000001bU,
+    FACILITY_USERMODE_FILTER_MANAGER                  = 0x0000001fU,
+    FACILITY_BACKGROUNDCOPY                           = 0x00000020U,
+    FACILITY_CONFIGURATION                            = 0x00000021U,
+    FACILITY_WIA                                      = 0x00000021U,
+    FACILITY_STATE_MANAGEMENT                         = 0x00000022U,
+    FACILITY_METADIRECTORY                            = 0x00000023U,
+    FACILITY_WINDOWSUPDATE                            = 0x00000024U,
+    FACILITY_DIRECTORYSERVICE                         = 0x00000025U,
+    FACILITY_GRAPHICS                                 = 0x00000026U,
+    FACILITY_SHELL                                    = 0x00000027U,
+    FACILITY_NAP                                      = 0x00000027U,
+    FACILITY_TPM_SERVICES                             = 0x00000028U,
+    FACILITY_TPM_SOFTWARE                             = 0x00000029U,
+    FACILITY_UI                                       = 0x0000002aU,
+    FACILITY_XAML                                     = 0x0000002bU,
+    FACILITY_ACTION_QUEUE                             = 0x0000002cU,
+    FACILITY_PLA                                      = 0x00000030U,
+    FACILITY_WINDOWS_SETUP                            = 0x00000030U,
+    FACILITY_FVE                                      = 0x00000031U,
+    FACILITY_FWP                                      = 0x00000032U,
+    FACILITY_WINRM                                    = 0x00000033U,
+    FACILITY_NDIS                                     = 0x00000034U,
+    FACILITY_USERMODE_HYPERVISOR                      = 0x00000035U,
+    FACILITY_CMI                                      = 0x00000036U,
+    FACILITY_USERMODE_VIRTUALIZATION                  = 0x00000037U,
+    FACILITY_USERMODE_VOLMGR                          = 0x00000038U,
+    FACILITY_BCD                                      = 0x00000039U,
+    FACILITY_USERMODE_VHD                             = 0x0000003aU,
+    FACILITY_USERMODE_HNS                             = 0x0000003bU,
+    FACILITY_SDIAG                                    = 0x0000003cU,
+    FACILITY_WEBSERVICES                              = 0x0000003dU,
+    FACILITY_WINPE                                    = 0x0000003dU,
+    FACILITY_WPN                                      = 0x0000003eU,
+    FACILITY_WINDOWS_STORE                            = 0x0000003fU,
+    FACILITY_INPUT                                    = 0x00000040U,
+    FACILITY_QUIC                                     = 0x00000041U,
+    FACILITY_EAP                                      = 0x00000042U,
+    FACILITY_IORING                                   = 0x00000046U,
+    FACILITY_WINDOWS_DEFENDER                         = 0x00000050U,
+    FACILITY_OPC                                      = 0x00000051U,
+    FACILITY_XPS                                      = 0x00000052U,
+    FACILITY_MBN                                      = 0x00000054U,
+    FACILITY_POWERSHELL                               = 0x00000054U,
+    FACILITY_RAS                                      = 0x00000053U,
+    FACILITY_P2P_INT                                  = 0x00000062U,
+    FACILITY_P2P                                      = 0x00000063U,
+    FACILITY_DAF                                      = 0x00000064U,
+    FACILITY_BLUETOOTH_ATT                            = 0x00000065U,
+    FACILITY_AUDIO                                    = 0x00000066U,
+    FACILITY_STATEREPOSITORY                          = 0x00000067U,
+    FACILITY_VISUALCPP                                = 0x0000006dU,
+    FACILITY_SCRIPT                                   = 0x00000070U,
+    FACILITY_PARSE                                    = 0x00000071U,
+    FACILITY_BLB                                      = 0x00000078U,
+    FACILITY_BLB_CLI                                  = 0x00000079U,
+    FACILITY_WSBAPP                                   = 0x0000007aU,
+    FACILITY_BLBUI                                    = 0x00000080U,
+    FACILITY_USN                                      = 0x00000081U,
+    FACILITY_USERMODE_VOLSNAP                         = 0x00000082U,
+    FACILITY_TIERING                                  = 0x00000083U,
+    FACILITY_WSB_ONLINE                               = 0x00000085U,
+    FACILITY_ONLINE_ID                                = 0x00000086U,
+    FACILITY_DEVICE_UPDATE_AGENT                      = 0x00000087U,
+    FACILITY_DRVSERVICING                             = 0x00000088U,
+    FACILITY_DLS                                      = 0x00000099U,
+    FACILITY_DELIVERY_OPTIMIZATION                    = 0x000000d0U,
+    FACILITY_USERMODE_SPACES                          = 0x000000e7U,
+    FACILITY_USER_MODE_SECURITY_CORE                  = 0x000000e8U,
+    FACILITY_USERMODE_LICENSING                       = 0x000000eaU,
+    FACILITY_SOS                                      = 0x000000a0U,
+    FACILITY_OCP_UPDATE_AGENT                         = 0x000000adU,
+    FACILITY_DEBUGGERS                                = 0x000000b0U,
+    FACILITY_SPP                                      = 0x00000100U,
+    FACILITY_RESTORE                                  = 0x00000100U,
+    FACILITY_DMSERVER                                 = 0x00000100U,
+    FACILITY_DEPLOYMENT_SERVICES_SERVER               = 0x00000101U,
+    FACILITY_DEPLOYMENT_SERVICES_IMAGING              = 0x00000102U,
+    FACILITY_DEPLOYMENT_SERVICES_MANAGEMENT           = 0x00000103U,
+    FACILITY_DEPLOYMENT_SERVICES_UTIL                 = 0x00000104U,
+    FACILITY_DEPLOYMENT_SERVICES_BINLSVC              = 0x00000105U,
+    FACILITY_DEPLOYMENT_SERVICES_PXE                  = 0x00000107U,
+    FACILITY_DEPLOYMENT_SERVICES_TFTP                 = 0x00000108U,
+    FACILITY_DEPLOYMENT_SERVICES_TRANSPORT_MANAGEMENT = 0x00000110U,
+    FACILITY_DEPLOYMENT_SERVICES_DRIVER_PROVISIONING  = 0x00000116U,
+    FACILITY_DEPLOYMENT_SERVICES_MULTICAST_SERVER     = 0x00000121U,
+    FACILITY_DEPLOYMENT_SERVICES_MULTICAST_CLIENT     = 0x00000122U,
+    FACILITY_DEPLOYMENT_SERVICES_CONTENT_PROVIDER     = 0x00000125U,
+    FACILITY_HSP_SERVICES                             = 0x00000128U,
+    FACILITY_HSP_SOFTWARE                             = 0x00000129U,
+    FACILITY_LINGUISTIC_SERVICES                      = 0x00000131U,
+    FACILITY_AUDIOSTREAMING                           = 0x00000446U,
+    FACILITY_TTD                                      = 0x000005d2U,
+    FACILITY_ACCELERATOR                              = 0x00000600U,
+    FACILITY_WMAAECMA                                 = 0x000007ccU,
+    FACILITY_DIRECTMUSIC                              = 0x00000878U,
+    FACILITY_DIRECT3D10                               = 0x00000879U,
+    FACILITY_DXGI                                     = 0x0000087aU,
+    FACILITY_DXGI_DDI                                 = 0x0000087bU,
+    FACILITY_DIRECT3D11                               = 0x0000087cU,
+    FACILITY_DIRECT3D11_DEBUG                         = 0x0000087dU,
+    FACILITY_DIRECT3D12                               = 0x0000087eU,
+    FACILITY_DIRECT3D12_DEBUG                         = 0x0000087fU,
+    FACILITY_DXCORE                                   = 0x00000880U,
+    FACILITY_PRESENTATION                             = 0x00000881U,
+    FACILITY_LEAP                                     = 0x00000888U,
+    FACILITY_AUDCLNT                                  = 0x00000889U,
+    FACILITY_WINCODEC_DWRITE_DWM                      = 0x00000898U,
+    FACILITY_WINML                                    = 0x00000890U,
+    FACILITY_DIRECT2D                                 = 0x00000899U,
+    FACILITY_DEFRAG                                   = 0x00000900U,
+    FACILITY_USERMODE_SDBUS                           = 0x00000901U,
+    FACILITY_JSCRIPT                                  = 0x00000902U,
+    FACILITY_PIDGENX                                  = 0x00000a01U,
+    FACILITY_EAS                                      = 0x00000055U,
+    FACILITY_WEB                                      = 0x00000375U,
+    FACILITY_WEB_SOCKET                               = 0x00000376U,
+    FACILITY_MOBILE                                   = 0x00000701U,
+    FACILITY_SQLITE                                   = 0x000007afU,
+    FACILITY_SERVICE_FABRIC                           = 0x000007b0U,
+    FACILITY_UTC                                      = 0x000007c5U,
+    FACILITY_WEP                                      = 0x00000801U,
+    FACILITY_SYNCENGINE                               = 0x00000802U,
+    FACILITY_XBOX                                     = 0x00000923U,
+    FACILITY_GAME                                     = 0x00000924U,
+    FACILITY_USERMODE_UNIONFS                         = 0x00000925U,
+    FACILITY_USERMODE_PRM                             = 0x00000926U,
+    FACILITY_USERMODE_WIN_ACCEL                       = 0x00000927U,
+    FACILITY_PPF                                      = 0x00000928U,
+    FACILITY_PIX                                      = 0x00000abcU,
+    FACILITY_NT_BIT                                   = 0x10000000U,
 }
+
 alias THREAD_ERROR_MODE = uint;
 enum : uint
 {
-    SEM_ALL_ERRORS             = 0x00000000,
-    SEM_FAILCRITICALERRORS     = 0x00000001,
-    SEM_NOGPFAULTERRORBOX      = 0x00000002,
-    SEM_NOOPENFILEERRORBOX     = 0x00008000,
-    SEM_NOALIGNMENTFAULTEXCEPT = 0x00000004,
+    SEM_ALL_ERRORS             = 0x00000000U,
+    SEM_FAILCRITICALERRORS     = 0x00000001U,
+    SEM_NOGPFAULTERRORBOX      = 0x00000002U,
+    SEM_NOOPENFILEERRORBOX     = 0x00008000U,
+    SEM_NOALIGNMENTFAULTEXCEPT = 0x00000004U,
 }
+
 alias FORMAT_MESSAGE_OPTIONS = uint;
 enum : uint
 {
-    FORMAT_MESSAGE_ALLOCATE_BUFFER = 0x00000100,
-    FORMAT_MESSAGE_ARGUMENT_ARRAY  = 0x00002000,
-    FORMAT_MESSAGE_FROM_HMODULE    = 0x00000800,
-    FORMAT_MESSAGE_FROM_STRING     = 0x00000400,
-    FORMAT_MESSAGE_FROM_SYSTEM     = 0x00001000,
-    FORMAT_MESSAGE_IGNORE_INSERTS  = 0x00000200,
+    FORMAT_MESSAGE_ALLOCATE_BUFFER = 0x00000100U,
+    FORMAT_MESSAGE_ARGUMENT_ARRAY  = 0x00002000U,
+    FORMAT_MESSAGE_FROM_HMODULE    = 0x00000800U,
+    FORMAT_MESSAGE_FROM_STRING     = 0x00000400U,
+    FORMAT_MESSAGE_FROM_SYSTEM     = 0x00001000U,
+    FORMAT_MESSAGE_IGNORE_INSERTS  = 0x00000200U,
 }
+
 alias RTL_VIRTUAL_UNWIND_HANDLER_TYPE = uint;
 enum : uint
 {
-    UNW_FLAG_NHANDLER  = 0x00000000,
-    UNW_FLAG_EHANDLER  = 0x00000001,
-    UNW_FLAG_UHANDLER  = 0x00000002,
-    UNW_FLAG_CHAININFO = 0x00000004,
+    UNW_FLAG_NHANDLER  = 0x00000000U,
+    UNW_FLAG_EHANDLER  = 0x00000001U,
+    UNW_FLAG_UHANDLER  = 0x00000002U,
+    UNW_FLAG_CHAININFO = 0x00000004U,
 }
+
 alias OPEN_THREAD_WAIT_CHAIN_SESSION_FLAGS = uint;
 enum : uint
 {
-    WCT_ASYNC_OPEN_FLAG = 0x00000001,
+    WCT_ASYNC_OPEN_FLAG = 0x00000001U,
 }
+
 alias SYM_SRV_STORE_FILE_FLAGS = uint;
 enum : uint
 {
-    SYMSTOREOPT_COMPRESS       = 0x00000001,
-    SYMSTOREOPT_OVERWRITE      = 0x00000002,
-    SYMSTOREOPT_PASS_IF_EXISTS = 0x00000040,
-    SYMSTOREOPT_POINTER        = 0x00000008,
-    SYMSTOREOPT_RETURNINDEX    = 0x00000004,
+    SYMSTOREOPT_COMPRESS       = 0x00000001U,
+    SYMSTOREOPT_OVERWRITE      = 0x00000002U,
+    SYMSTOREOPT_PASS_IF_EXISTS = 0x00000040U,
+    SYMSTOREOPT_POINTER        = 0x00000008U,
+    SYMSTOREOPT_RETURNINDEX    = 0x00000004U,
 }
+
 alias IMAGE_DIRECTORY_ENTRY = ushort;
 enum : ushort
 {
-    IMAGE_DIRECTORY_ENTRY_ARCHITECTURE   = 0x0007,
-    IMAGE_DIRECTORY_ENTRY_BASERELOC      = 0x0005,
-    IMAGE_DIRECTORY_ENTRY_BOUND_IMPORT   = 0x000b,
-    IMAGE_DIRECTORY_ENTRY_COM_DESCRIPTOR = 0x000e,
-    IMAGE_DIRECTORY_ENTRY_DEBUG          = 0x0006,
-    IMAGE_DIRECTORY_ENTRY_DELAY_IMPORT   = 0x000d,
-    IMAGE_DIRECTORY_ENTRY_EXCEPTION      = 0x0003,
-    IMAGE_DIRECTORY_ENTRY_EXPORT         = 0x0000,
-    IMAGE_DIRECTORY_ENTRY_GLOBALPTR      = 0x0008,
-    IMAGE_DIRECTORY_ENTRY_IAT            = 0x000c,
-    IMAGE_DIRECTORY_ENTRY_IMPORT         = 0x0001,
-    IMAGE_DIRECTORY_ENTRY_LOAD_CONFIG    = 0x000a,
-    IMAGE_DIRECTORY_ENTRY_RESOURCE       = 0x0002,
-    IMAGE_DIRECTORY_ENTRY_SECURITY       = 0x0004,
-    IMAGE_DIRECTORY_ENTRY_TLS            = 0x0009,
+    IMAGE_DIRECTORY_ENTRY_ARCHITECTURE   = cast(ushort) 0x0007,
+    IMAGE_DIRECTORY_ENTRY_BASERELOC      = cast(ushort) 0x0005,
+    IMAGE_DIRECTORY_ENTRY_BOUND_IMPORT   = cast(ushort) 0x000b,
+    IMAGE_DIRECTORY_ENTRY_COM_DESCRIPTOR = cast(ushort) 0x000e,
+    IMAGE_DIRECTORY_ENTRY_DEBUG          = cast(ushort) 0x0006,
+    IMAGE_DIRECTORY_ENTRY_DELAY_IMPORT   = cast(ushort) 0x000d,
+    IMAGE_DIRECTORY_ENTRY_EXCEPTION      = cast(ushort) 0x0003,
+    IMAGE_DIRECTORY_ENTRY_EXPORT         = cast(ushort) 0x0000,
+    IMAGE_DIRECTORY_ENTRY_GLOBALPTR      = cast(ushort) 0x0008,
+    IMAGE_DIRECTORY_ENTRY_IAT            = cast(ushort) 0x000c,
+    IMAGE_DIRECTORY_ENTRY_IMPORT         = cast(ushort) 0x0001,
+    IMAGE_DIRECTORY_ENTRY_LOAD_CONFIG    = cast(ushort) 0x000a,
+    IMAGE_DIRECTORY_ENTRY_RESOURCE       = cast(ushort) 0x0002,
+    IMAGE_DIRECTORY_ENTRY_SECURITY       = cast(ushort) 0x0004,
+    IMAGE_DIRECTORY_ENTRY_TLS            = cast(ushort) 0x0009,
 }
+
 alias WAIT_CHAIN_THREAD_OPTIONS = uint;
 enum : uint
 {
-    WCT_OUT_OF_PROC_COM_FLAG = 0x00000002,
-    WCT_OUT_OF_PROC_CS_FLAG  = 0x00000004,
-    WCT_OUT_OF_PROC_FLAG     = 0x00000001,
+    WCT_OUT_OF_PROC_COM_FLAG = 0x00000002U,
+    WCT_OUT_OF_PROC_CS_FLAG  = 0x00000004U,
+    WCT_OUT_OF_PROC_FLAG     = 0x00000001U,
 }
+
 alias SYM_FIND_ID_OPTION = uint;
 enum : uint
 {
-    SSRVOPT_DWORD    = 0x00000002,
-    SSRVOPT_DWORDPTR = 0x00000004,
-    SSRVOPT_GUIDPTR  = 0x00000008,
+    SSRVOPT_DWORD    = 0x00000002U,
+    SSRVOPT_DWORDPTR = 0x00000004U,
+    SSRVOPT_GUIDPTR  = 0x00000008U,
 }
+
 alias IMAGE_FILE_CHARACTERISTICS = ushort;
 enum : ushort
 {
-    IMAGE_FILE_RELOCS_STRIPPED         = 0x0001,
-    IMAGE_FILE_EXECUTABLE_IMAGE        = 0x0002,
-    IMAGE_FILE_LINE_NUMS_STRIPPED      = 0x0004,
-    IMAGE_FILE_LOCAL_SYMS_STRIPPED     = 0x0008,
-    IMAGE_FILE_AGGRESIVE_WS_TRIM       = 0x0010,
-    IMAGE_FILE_LARGE_ADDRESS_AWARE     = 0x0020,
-    IMAGE_FILE_BYTES_REVERSED_LO       = 0x0080,
-    IMAGE_FILE_32BIT_MACHINE           = 0x0100,
-    IMAGE_FILE_DEBUG_STRIPPED          = 0x0200,
-    IMAGE_FILE_REMOVABLE_RUN_FROM_SWAP = 0x0400,
-    IMAGE_FILE_NET_RUN_FROM_SWAP       = 0x0800,
-    IMAGE_FILE_SYSTEM                  = 0x1000,
-    IMAGE_FILE_DLL                     = 0x2000,
-    IMAGE_FILE_UP_SYSTEM_ONLY          = 0x4000,
-    IMAGE_FILE_BYTES_REVERSED_HI       = 0x8000,
+    IMAGE_FILE_RELOCS_STRIPPED         = cast(ushort) 0x0001,
+    IMAGE_FILE_EXECUTABLE_IMAGE        = cast(ushort) 0x0002,
+    IMAGE_FILE_LINE_NUMS_STRIPPED      = cast(ushort) 0x0004,
+    IMAGE_FILE_LOCAL_SYMS_STRIPPED     = cast(ushort) 0x0008,
+    IMAGE_FILE_AGGRESIVE_WS_TRIM       = cast(ushort) 0x0010,
+    IMAGE_FILE_LARGE_ADDRESS_AWARE     = cast(ushort) 0x0020,
+    IMAGE_FILE_BYTES_REVERSED_LO       = cast(ushort) 0x0080,
+    IMAGE_FILE_32BIT_MACHINE           = cast(ushort) 0x0100,
+    IMAGE_FILE_DEBUG_STRIPPED          = cast(ushort) 0x0200,
+    IMAGE_FILE_REMOVABLE_RUN_FROM_SWAP = cast(ushort) 0x0400,
+    IMAGE_FILE_NET_RUN_FROM_SWAP       = cast(ushort) 0x0800,
+    IMAGE_FILE_SYSTEM                  = cast(ushort) 0x1000,
+    IMAGE_FILE_DLL                     = cast(ushort) 0x2000,
+    IMAGE_FILE_UP_SYSTEM_ONLY          = cast(ushort) 0x4000,
+    IMAGE_FILE_BYTES_REVERSED_HI       = cast(ushort) 0x8000,
 }
+
 alias IMAGE_FILE_CHARACTERISTICS2 = uint;
 enum : uint
 {
-    IMAGE_FILE_RELOCS_STRIPPED2         = 0x00000001,
-    IMAGE_FILE_EXECUTABLE_IMAGE2        = 0x00000002,
-    IMAGE_FILE_LINE_NUMS_STRIPPED2      = 0x00000004,
-    IMAGE_FILE_LOCAL_SYMS_STRIPPED2     = 0x00000008,
-    IMAGE_FILE_AGGRESIVE_WS_TRIM2       = 0x00000010,
-    IMAGE_FILE_LARGE_ADDRESS_AWARE2     = 0x00000020,
-    IMAGE_FILE_BYTES_REVERSED_LO2       = 0x00000080,
-    IMAGE_FILE_32BIT_MACHINE2           = 0x00000100,
-    IMAGE_FILE_DEBUG_STRIPPED2          = 0x00000200,
-    IMAGE_FILE_REMOVABLE_RUN_FROM_SWAP2 = 0x00000400,
-    IMAGE_FILE_NET_RUN_FROM_SWAP2       = 0x00000800,
-    IMAGE_FILE_SYSTEM_2                 = 0x00001000,
-    IMAGE_FILE_DLL_2                    = 0x00002000,
-    IMAGE_FILE_UP_SYSTEM_ONLY_2         = 0x00004000,
-    IMAGE_FILE_BYTES_REVERSED_HI_2      = 0x00008000,
+    IMAGE_FILE_RELOCS_STRIPPED2         = 0x00000001U,
+    IMAGE_FILE_EXECUTABLE_IMAGE2        = 0x00000002U,
+    IMAGE_FILE_LINE_NUMS_STRIPPED2      = 0x00000004U,
+    IMAGE_FILE_LOCAL_SYMS_STRIPPED2     = 0x00000008U,
+    IMAGE_FILE_AGGRESIVE_WS_TRIM2       = 0x00000010U,
+    IMAGE_FILE_LARGE_ADDRESS_AWARE2     = 0x00000020U,
+    IMAGE_FILE_BYTES_REVERSED_LO2       = 0x00000080U,
+    IMAGE_FILE_32BIT_MACHINE2           = 0x00000100U,
+    IMAGE_FILE_DEBUG_STRIPPED2          = 0x00000200U,
+    IMAGE_FILE_REMOVABLE_RUN_FROM_SWAP2 = 0x00000400U,
+    IMAGE_FILE_NET_RUN_FROM_SWAP2       = 0x00000800U,
+    IMAGE_FILE_SYSTEM_2                 = 0x00001000U,
+    IMAGE_FILE_DLL_2                    = 0x00002000U,
+    IMAGE_FILE_UP_SYSTEM_ONLY_2         = 0x00004000U,
+    IMAGE_FILE_BYTES_REVERSED_HI_2      = 0x00008000U,
 }
+
 alias SYMBOL_INFO_FLAGS = uint;
 enum : uint
 {
-    SYMFLAG_CLR_TOKEN    = 0x00040000,
-    SYMFLAG_CONSTANT     = 0x00000100,
-    SYMFLAG_EXPORT       = 0x00000200,
-    SYMFLAG_FORWARDER    = 0x00000400,
-    SYMFLAG_FRAMEREL     = 0x00000020,
-    SYMFLAG_FUNCTION     = 0x00000800,
-    SYMFLAG_ILREL        = 0x00010000,
-    SYMFLAG_LOCAL        = 0x00000080,
-    SYMFLAG_METADATA     = 0x00020000,
-    SYMFLAG_PARAMETER    = 0x00000040,
-    SYMFLAG_REGISTER     = 0x00000008,
-    SYMFLAG_REGREL       = 0x00000010,
-    SYMFLAG_SLOT         = 0x00008000,
-    SYMFLAG_THUNK        = 0x00002000,
-    SYMFLAG_TLSREL       = 0x00004000,
-    SYMFLAG_VALUEPRESENT = 0x00000001,
-    SYMFLAG_VIRTUAL      = 0x00001000,
+    SYMFLAG_CLR_TOKEN    = 0x00040000U,
+    SYMFLAG_CONSTANT     = 0x00000100U,
+    SYMFLAG_EXPORT       = 0x00000200U,
+    SYMFLAG_FORWARDER    = 0x00000400U,
+    SYMFLAG_FRAMEREL     = 0x00000020U,
+    SYMFLAG_FUNCTION     = 0x00000800U,
+    SYMFLAG_ILREL        = 0x00010000U,
+    SYMFLAG_LOCAL        = 0x00000080U,
+    SYMFLAG_METADATA     = 0x00020000U,
+    SYMFLAG_PARAMETER    = 0x00000040U,
+    SYMFLAG_REGISTER     = 0x00000008U,
+    SYMFLAG_REGREL       = 0x00000010U,
+    SYMFLAG_SLOT         = 0x00008000U,
+    SYMFLAG_THUNK        = 0x00002000U,
+    SYMFLAG_TLSREL       = 0x00004000U,
+    SYMFLAG_VALUEPRESENT = 0x00000001U,
+    SYMFLAG_VIRTUAL      = 0x00001000U,
 }
+
 alias IMAGEHLP_CBA_EVENT_SEVERITY = uint;
 enum : uint
 {
-    sevInfo    = 0x00000000,
-    sevProblem = 0x00000001,
-    sevAttn    = 0x00000002,
-    sevFatal   = 0x00000003,
+    sevInfo    = 0x00000000U,
+    sevProblem = 0x00000001U,
+    sevAttn    = 0x00000002U,
+    sevFatal   = 0x00000003U,
 }
+
 alias IMAGEHLP_GET_TYPE_INFO_FLAGS = uint;
 enum : uint
 {
-    IMAGEHLP_GET_TYPE_INFO_CHILDREN = 0x00000002,
-    IMAGEHLP_GET_TYPE_INFO_UNCACHED = 0x00000001,
+    IMAGEHLP_GET_TYPE_INFO_CHILDREN = 0x00000002U,
+    IMAGEHLP_GET_TYPE_INFO_UNCACHED = 0x00000001U,
 }
+
 alias RIP_INFO_TYPE = uint;
 enum : uint
 {
-    SLE_ERROR      = 0x00000001,
-    SLE_MINORERROR = 0x00000002,
-    SLE_WARNING    = 0x00000003,
+    SLE_ERROR      = 0x00000001U,
+    SLE_MINORERROR = 0x00000002U,
+    SLE_WARNING    = 0x00000003U,
 }
+
 alias VER_PLATFORM = uint;
 enum : uint
 {
-    VER_PLATFORM_WIN32s        = 0x00000000,
-    VER_PLATFORM_WIN32_WINDOWS = 0x00000001,
-    VER_PLATFORM_WIN32_NT      = 0x00000002,
+    VER_PLATFORM_WIN32s        = 0x00000000U,
+    VER_PLATFORM_WIN32_WINDOWS = 0x00000001U,
+    VER_PLATFORM_WIN32_NT      = 0x00000002U,
 }
+
 alias IMAGE_DEBUG_TYPE = uint;
 enum : uint
 {
-    IMAGE_DEBUG_TYPE_UNKNOWN   = 0x00000000,
-    IMAGE_DEBUG_TYPE_COFF      = 0x00000001,
-    IMAGE_DEBUG_TYPE_CODEVIEW  = 0x00000002,
-    IMAGE_DEBUG_TYPE_FPO       = 0x00000003,
-    IMAGE_DEBUG_TYPE_MISC      = 0x00000004,
-    IMAGE_DEBUG_TYPE_EXCEPTION = 0x00000005,
-    IMAGE_DEBUG_TYPE_FIXUP     = 0x00000006,
-    IMAGE_DEBUG_TYPE_BORLAND   = 0x00000009,
+    IMAGE_DEBUG_TYPE_UNKNOWN   = 0x00000000U,
+    IMAGE_DEBUG_TYPE_COFF      = 0x00000001U,
+    IMAGE_DEBUG_TYPE_CODEVIEW  = 0x00000002U,
+    IMAGE_DEBUG_TYPE_FPO       = 0x00000003U,
+    IMAGE_DEBUG_TYPE_MISC      = 0x00000004U,
+    IMAGE_DEBUG_TYPE_EXCEPTION = 0x00000005U,
+    IMAGE_DEBUG_TYPE_FIXUP     = 0x00000006U,
+    IMAGE_DEBUG_TYPE_BORLAND   = 0x00000009U,
 }
+
 alias MINIDUMP_THREAD_INFO_DUMP_FLAGS = uint;
 enum : uint
 {
-    MINIDUMP_THREAD_INFO_ERROR_THREAD    = 0x00000001,
-    MINIDUMP_THREAD_INFO_EXITED_THREAD   = 0x00000004,
-    MINIDUMP_THREAD_INFO_INVALID_CONTEXT = 0x00000010,
-    MINIDUMP_THREAD_INFO_INVALID_INFO    = 0x00000008,
-    MINIDUMP_THREAD_INFO_INVALID_TEB     = 0x00000020,
-    MINIDUMP_THREAD_INFO_WRITING_THREAD  = 0x00000002,
+    MINIDUMP_THREAD_INFO_ERROR_THREAD    = 0x00000001U,
+    MINIDUMP_THREAD_INFO_EXITED_THREAD   = 0x00000004U,
+    MINIDUMP_THREAD_INFO_INVALID_CONTEXT = 0x00000010U,
+    MINIDUMP_THREAD_INFO_INVALID_INFO    = 0x00000008U,
+    MINIDUMP_THREAD_INFO_INVALID_TEB     = 0x00000020U,
+    MINIDUMP_THREAD_INFO_WRITING_THREAD  = 0x00000002U,
 }
+
 alias DEBUG_EVENT_CODE = uint;
 enum : uint
 {
-    CREATE_PROCESS_DEBUG_EVENT = 0x00000003,
-    CREATE_THREAD_DEBUG_EVENT  = 0x00000002,
-    EXCEPTION_DEBUG_EVENT      = 0x00000001,
-    EXIT_PROCESS_DEBUG_EVENT   = 0x00000005,
-    EXIT_THREAD_DEBUG_EVENT    = 0x00000004,
-    LOAD_DLL_DEBUG_EVENT       = 0x00000006,
-    OUTPUT_DEBUG_STRING_EVENT  = 0x00000008,
-    RIP_EVENT                  = 0x00000009,
-    UNLOAD_DLL_DEBUG_EVENT     = 0x00000007,
+    CREATE_PROCESS_DEBUG_EVENT = 0x00000003U,
+    CREATE_THREAD_DEBUG_EVENT  = 0x00000002U,
+    EXCEPTION_DEBUG_EVENT      = 0x00000001U,
+    EXIT_PROCESS_DEBUG_EVENT   = 0x00000005U,
+    EXIT_THREAD_DEBUG_EVENT    = 0x00000004U,
+    LOAD_DLL_DEBUG_EVENT       = 0x00000006U,
+    OUTPUT_DEBUG_STRING_EVENT  = 0x00000008U,
+    RIP_EVENT                  = 0x00000009U,
+    UNLOAD_DLL_DEBUG_EVENT     = 0x00000007U,
 }
+
 alias MINIDUMP_MISC_INFO_FLAGS = uint;
 enum : uint
 {
-    MINIDUMP_MISC1_PROCESS_ID    = 0x00000001,
-    MINIDUMP_MISC1_PROCESS_TIMES = 0x00000002,
+    MINIDUMP_MISC1_PROCESS_ID    = 0x00000001U,
+    MINIDUMP_MISC1_PROCESS_TIMES = 0x00000002U,
 }
+
 alias MODLOAD_DATA_TYPE = uint;
 enum : uint
 {
-    DBHHEADER_DEBUGDIRS = 0x00000001,
-    DBHHEADER_CVMISC    = 0x00000002,
+    DBHHEADER_DEBUGDIRS = 0x00000001U,
+    DBHHEADER_CVMISC    = 0x00000002U,
 }
+
 alias CONTEXT_FLAGS = uint;
 enum : uint
 {
-    CONTEXT_AMD64                     = 0x00100000,
-    CONTEXT_CONTROL_AMD64             = 0x00100001,
-    CONTEXT_INTEGER_AMD64             = 0x00100002,
-    CONTEXT_SEGMENTS_AMD64            = 0x00100004,
-    CONTEXT_FLOATING_POINT_AMD64      = 0x00100008,
-    CONTEXT_DEBUG_REGISTERS_AMD64     = 0x00100010,
-    CONTEXT_FULL_AMD64                = 0x0010000b,
-    CONTEXT_ALL_AMD64                 = 0x0010001f,
-    CONTEXT_XSTATE_AMD64              = 0x00100040,
-    CONTEXT_KERNEL_CET_AMD64          = 0x00100080,
-    CONTEXT_KERNEL_DEBUGGER_AMD64     = 0x04000000,
-    CONTEXT_EXCEPTION_ACTIVE_AMD64    = 0x08000000,
-    CONTEXT_SERVICE_ACTIVE_AMD64      = 0x10000000,
-    CONTEXT_EXCEPTION_REQUEST_AMD64   = 0x40000000,
-    CONTEXT_EXCEPTION_REPORTING_AMD64 = 0x80000000,
-    CONTEXT_UNWOUND_TO_CALL_AMD64     = 0x20000000,
-    CONTEXT_X86                       = 0x00010000,
-    CONTEXT_CONTROL_X86               = 0x00010001,
-    CONTEXT_INTEGER_X86               = 0x00010002,
-    CONTEXT_SEGMENTS_X86              = 0x00010004,
-    CONTEXT_FLOATING_POINT_X86        = 0x00010008,
-    CONTEXT_DEBUG_REGISTERS_X86       = 0x00010010,
-    CONTEXT_EXTENDED_REGISTERS_X86    = 0x00010020,
-    CONTEXT_FULL_X86                  = 0x00010007,
-    CONTEXT_ALL_X86                   = 0x0001003f,
-    CONTEXT_XSTATE_X86                = 0x00010040,
-    CONTEXT_EXCEPTION_ACTIVE_X86      = 0x08000000,
-    CONTEXT_SERVICE_ACTIVE_X86        = 0x10000000,
-    CONTEXT_EXCEPTION_REQUEST_X86     = 0x40000000,
-    CONTEXT_EXCEPTION_REPORTING_X86   = 0x80000000,
-    CONTEXT_ARM64                     = 0x00400000,
-    CONTEXT_CONTROL_ARM64             = 0x00400001,
-    CONTEXT_INTEGER_ARM64             = 0x00400002,
-    CONTEXT_FLOATING_POINT_ARM64      = 0x00400004,
-    CONTEXT_DEBUG_REGISTERS_ARM64     = 0x00400008,
-    CONTEXT_X18_ARM64                 = 0x00400010,
-    CONTEXT_FULL_ARM64                = 0x00400007,
-    CONTEXT_ALL_ARM64                 = 0x0040001f,
-    CONTEXT_EXCEPTION_ACTIVE_ARM64    = 0x08000000,
-    CONTEXT_SERVICE_ACTIVE_ARM64      = 0x10000000,
-    CONTEXT_EXCEPTION_REQUEST_ARM64   = 0x40000000,
-    CONTEXT_EXCEPTION_REPORTING_ARM64 = 0x80000000,
-    CONTEXT_UNWOUND_TO_CALL_ARM64     = 0x20000000,
-    CONTEXT_RET_TO_GUEST_ARM64        = 0x40000000,
-    CONTEXT_ARM                       = 0x00200000,
-    CONTEXT_CONTROL_ARM               = 0x00200001,
-    CONTEXT_INTEGER_ARM               = 0x00200002,
-    CONTEXT_FLOATING_POINT_ARM        = 0x00200004,
-    CONTEXT_DEBUG_REGISTERS_ARM       = 0x00200008,
-    CONTEXT_FULL_ARM                  = 0x00200007,
-    CONTEXT_ALL_ARM                   = 0x0020000f,
-    CONTEXT_EXCEPTION_ACTIVE_ARM      = 0x08000000,
-    CONTEXT_SERVICE_ACTIVE_ARM        = 0x10000000,
-    CONTEXT_EXCEPTION_REQUEST_ARM     = 0x40000000,
-    CONTEXT_EXCEPTION_REPORTING_ARM   = 0x80000000,
-    CONTEXT_UNWOUND_TO_CALL_ARM       = 0x20000000,
+    CONTEXT_AMD64                     = 0x00100000U,
+    CONTEXT_CONTROL_AMD64             = 0x00100001U,
+    CONTEXT_INTEGER_AMD64             = 0x00100002U,
+    CONTEXT_SEGMENTS_AMD64            = 0x00100004U,
+    CONTEXT_FLOATING_POINT_AMD64      = 0x00100008U,
+    CONTEXT_DEBUG_REGISTERS_AMD64     = 0x00100010U,
+    CONTEXT_FULL_AMD64                = 0x0010000bU,
+    CONTEXT_ALL_AMD64                 = 0x0010001fU,
+    CONTEXT_XSTATE_AMD64              = 0x00100040U,
+    CONTEXT_KERNEL_CET_AMD64          = 0x00100080U,
+    CONTEXT_KERNEL_DEBUGGER_AMD64     = 0x04000000U,
+    CONTEXT_EXCEPTION_ACTIVE_AMD64    = 0x08000000U,
+    CONTEXT_SERVICE_ACTIVE_AMD64      = 0x10000000U,
+    CONTEXT_EXCEPTION_REQUEST_AMD64   = 0x40000000U,
+    CONTEXT_EXCEPTION_REPORTING_AMD64 = 0x80000000U,
+    CONTEXT_UNWOUND_TO_CALL_AMD64     = 0x20000000U,
+    CONTEXT_X86                       = 0x00010000U,
+    CONTEXT_CONTROL_X86               = 0x00010001U,
+    CONTEXT_INTEGER_X86               = 0x00010002U,
+    CONTEXT_SEGMENTS_X86              = 0x00010004U,
+    CONTEXT_FLOATING_POINT_X86        = 0x00010008U,
+    CONTEXT_DEBUG_REGISTERS_X86       = 0x00010010U,
+    CONTEXT_EXTENDED_REGISTERS_X86    = 0x00010020U,
+    CONTEXT_FULL_X86                  = 0x00010007U,
+    CONTEXT_ALL_X86                   = 0x0001003fU,
+    CONTEXT_XSTATE_X86                = 0x00010040U,
+    CONTEXT_EXCEPTION_ACTIVE_X86      = 0x08000000U,
+    CONTEXT_SERVICE_ACTIVE_X86        = 0x10000000U,
+    CONTEXT_EXCEPTION_REQUEST_X86     = 0x40000000U,
+    CONTEXT_EXCEPTION_REPORTING_X86   = 0x80000000U,
+    CONTEXT_ARM64                     = 0x00400000U,
+    CONTEXT_CONTROL_ARM64             = 0x00400001U,
+    CONTEXT_INTEGER_ARM64             = 0x00400002U,
+    CONTEXT_FLOATING_POINT_ARM64      = 0x00400004U,
+    CONTEXT_DEBUG_REGISTERS_ARM64     = 0x00400008U,
+    CONTEXT_X18_ARM64                 = 0x00400010U,
+    CONTEXT_FULL_ARM64                = 0x00400007U,
+    CONTEXT_ALL_ARM64                 = 0x0040001fU,
+    CONTEXT_EXCEPTION_ACTIVE_ARM64    = 0x08000000U,
+    CONTEXT_SERVICE_ACTIVE_ARM64      = 0x10000000U,
+    CONTEXT_EXCEPTION_REQUEST_ARM64   = 0x40000000U,
+    CONTEXT_EXCEPTION_REPORTING_ARM64 = 0x80000000U,
+    CONTEXT_UNWOUND_TO_CALL_ARM64     = 0x20000000U,
+    CONTEXT_RET_TO_GUEST_ARM64        = 0x40000000U,
+    CONTEXT_ARM                       = 0x00200000U,
+    CONTEXT_CONTROL_ARM               = 0x00200001U,
+    CONTEXT_INTEGER_ARM               = 0x00200002U,
+    CONTEXT_FLOATING_POINT_ARM        = 0x00200004U,
+    CONTEXT_DEBUG_REGISTERS_ARM       = 0x00200008U,
+    CONTEXT_FULL_ARM                  = 0x00200007U,
+    CONTEXT_ALL_ARM                   = 0x0020000fU,
+    CONTEXT_EXCEPTION_ACTIVE_ARM      = 0x08000000U,
+    CONTEXT_SERVICE_ACTIVE_ARM        = 0x10000000U,
+    CONTEXT_EXCEPTION_REQUEST_ARM     = 0x40000000U,
+    CONTEXT_EXCEPTION_REPORTING_ARM   = 0x80000000U,
+    CONTEXT_UNWOUND_TO_CALL_ARM       = 0x20000000U,
 }
+
 alias WOW64_CONTEXT_FLAGS = uint;
 enum : uint
 {
-    WOW64_CONTEXT_X86                 = 0x00010000,
-    WOW64_CONTEXT_CONTROL             = 0x00010001,
-    WOW64_CONTEXT_INTEGER             = 0x00010002,
-    WOW64_CONTEXT_SEGMENTS            = 0x00010004,
-    WOW64_CONTEXT_FLOATING_POINT      = 0x00010008,
-    WOW64_CONTEXT_DEBUG_REGISTERS     = 0x00010010,
-    WOW64_CONTEXT_EXTENDED_REGISTERS  = 0x00010020,
-    WOW64_CONTEXT_FULL                = 0x00010007,
-    WOW64_CONTEXT_ALL                 = 0x0001003f,
-    WOW64_CONTEXT_XSTATE              = 0x00010040,
-    WOW64_CONTEXT_EXCEPTION_ACTIVE    = 0x08000000,
-    WOW64_CONTEXT_SERVICE_ACTIVE      = 0x10000000,
-    WOW64_CONTEXT_EXCEPTION_REQUEST   = 0x40000000,
-    WOW64_CONTEXT_EXCEPTION_REPORTING = 0x80000000,
+    WOW64_CONTEXT_X86                 = 0x00010000U,
+    WOW64_CONTEXT_CONTROL             = 0x00010001U,
+    WOW64_CONTEXT_INTEGER             = 0x00010002U,
+    WOW64_CONTEXT_SEGMENTS            = 0x00010004U,
+    WOW64_CONTEXT_FLOATING_POINT      = 0x00010008U,
+    WOW64_CONTEXT_DEBUG_REGISTERS     = 0x00010010U,
+    WOW64_CONTEXT_EXTENDED_REGISTERS  = 0x00010020U,
+    WOW64_CONTEXT_FULL                = 0x00010007U,
+    WOW64_CONTEXT_ALL                 = 0x0001003fU,
+    WOW64_CONTEXT_XSTATE              = 0x00010040U,
+    WOW64_CONTEXT_EXCEPTION_ACTIVE    = 0x08000000U,
+    WOW64_CONTEXT_SERVICE_ACTIVE      = 0x10000000U,
+    WOW64_CONTEXT_EXCEPTION_REQUEST   = 0x40000000U,
+    WOW64_CONTEXT_EXCEPTION_REPORTING = 0x80000000U,
 }
+
 alias WCT_OBJECT_TYPE = int;
 enum : int
 {
@@ -1140,6 +1170,7 @@ enum : int
     WctSmbIoType           = 0x0000000c,
     WctMaxType             = 0x0000000d,
 }
+
 alias WCT_OBJECT_STATUS = int;
 enum : int
 {
@@ -1155,7 +1186,8 @@ enum : int
     WctStatusError        = 0x0000000a,
     WctStatusMax          = 0x0000000b,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ne-minidumpapiset-minidump_stream_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ne-minidumpapiset-minidump_stream_type
 alias MINIDUMP_STREAM_TYPE = int;
 enum : int
 {
@@ -1199,7 +1231,8 @@ enum : int
     ceStreamDiagnosisList       = 0x0000800c,
     LastReservedStream          = 0x0000ffff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ne-minidumpapiset-minidump_handle_object_information_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ne-minidumpapiset-minidump_handle_object_information_type
 alias MINIDUMP_HANDLE_OBJECT_INFORMATION_TYPE = int;
 enum : int
 {
@@ -1214,7 +1247,8 @@ enum : int
     MiniSemaphoreInformation1          = 0x00000008,
     MiniHandleObjectInformationTypeMax = 0x00000009,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ne-minidumpapiset-minidump_callback_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ne-minidumpapiset-minidump_callback_type
 alias MINIDUMP_CALLBACK_TYPE = int;
 enum : int
 {
@@ -1240,7 +1274,8 @@ enum : int
     VmPreReadCallback            = 0x00000013,
     VmPostReadCallback           = 0x00000014,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ne-minidumpapiset-thread_write_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ne-minidumpapiset-thread_write_flags
 alias THREAD_WRITE_FLAGS = int;
 enum : int
 {
@@ -1252,7 +1287,8 @@ enum : int
     ThreadWriteThreadData        = 0x00000020,
     ThreadWriteThreadInfo        = 0x00000040,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ne-minidumpapiset-module_write_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ne-minidumpapiset-module_write_flags
 alias MODULE_WRITE_FLAGS = int;
 enum : int
 {
@@ -1264,7 +1300,8 @@ enum : int
     ModuleWriteTlsData       = 0x00000020,
     ModuleWriteCodeSegs      = 0x00000040,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ne-minidumpapiset-minidump_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ne-minidumpapiset-minidump_type
 alias MINIDUMP_TYPE = int;
 enum : int
 {
@@ -1298,13 +1335,15 @@ enum : int
     MiniDumpNoIgnoreInaccessibleMemory     = 0x02000000,
     MiniDumpValidTypeFlagsEx               = 0x03ffffff,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ne-minidumpapiset-minidump_secondary_flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ne-minidumpapiset-minidump_secondary_flags
 alias MINIDUMP_SECONDARY_FLAGS = int;
 enum : int
 {
     MiniSecondaryWithoutPowerInfo = 0x00000001,
     MiniSecondaryValidFlags       = 0x00000001,
 }
+
 alias IMAGEHLP_STATUS_REASON = int;
 enum : int
 {
@@ -1329,6 +1368,7 @@ enum : int
     BindForwarderNOT32        = 0x00000012,
     BindForwarderNOT64        = 0x00000013,
 }
+
 alias ADDRESS_MODE = int;
 enum : int
 {
@@ -1337,6 +1377,7 @@ enum : int
     AddrModeReal = 0x00000002,
     AddrModeFlat = 0x00000003,
 }
+
 alias SYM_TYPE = int;
 enum : int
 {
@@ -1351,6 +1392,7 @@ enum : int
     SymVirtual  = 0x00000008,
     NumSymTypes = 0x00000009,
 }
+
 alias IMAGEHLP_HD_TYPE = int;
 enum : int
 {
@@ -1359,7 +1401,8 @@ enum : int
     hdSrc   = 0x00000002,
     hdMax   = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ne-dbghelp-imagehlp_extended_options))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ne-dbghelp-imagehlp_extended_options
 alias IMAGEHLP_EXTENDED_OPTIONS = int;
 enum : int
 {
@@ -1369,7 +1412,8 @@ enum : int
     SYMOPT_EX_NEVERLOADSYMBOLS        = 0x00000003,
     SYMOPT_EX_MAX                     = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ne-dbghelp-imagehlp_symbol_type_info))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ne-dbghelp-imagehlp_symbol_type_info
 alias IMAGEHLP_SYMBOL_TYPE_INFO = int;
 enum : int
 {
@@ -1414,6 +1458,7 @@ enum : int
     TI_GET_DISCRIMINATEDUNION_TAG_RANGES      = 0x00000026,
     IMAGEHLP_SYMBOL_TYPE_INFO_MAX             = 0x00000027,
 }
+
 alias IMAGEHLP_SF_TYPE = int;
 enum : int
 {
@@ -1423,6 +1468,7 @@ enum : int
     sfMpd   = 0x00000003,
     sfMax   = 0x00000004,
 }
+
 alias DUMP_TYPE = int;
 enum : int
 {
@@ -1436,6 +1482,7 @@ enum : int
     DUMP_TYPE_BITMAP_KERNEL = 0x00000006,
     DUMP_TYPE_AUTOMATIC     = 0x00000007,
 }
+
 alias WHEA_ERROR_SOURCE_TYPE = int;
 enum : int
 {
@@ -1460,6 +1507,7 @@ enum : int
     WheaErrSrcTypeSei          = 0x00000012,
     WheaErrSrcTypeMax          = 0x00000013,
 }
+
 alias WHEA_ERROR_SOURCE_STATE = int;
 enum : int
 {
@@ -1468,6 +1516,7 @@ enum : int
     WheaErrSrcStateRemoved       = 0x00000003,
     WheaErrSrcStateRemovePending = 0x00000004,
 }
+
 alias IPMI_OS_SEL_RECORD_TYPE = int;
 enum : int
 {
@@ -1483,6 +1532,7 @@ enum : int
     IpmiOsSelRecordTypeBugcheckData     = 0x00000009,
     IpmiOsSelRecordTypeMax              = 0x0000000a,
 }
+
 alias PAGE_OFFLINE_ERROR_TYPES = int;
 enum : int
 {
@@ -1491,6 +1541,7 @@ enum : int
     BitErrorDdr5 = 0x00000002,
     RowErrorDdr5 = 0x00000003,
 }
+
 alias DBGPROP_ATTRIB_FLAGS = int;
 enum : int
 {
@@ -1520,6 +1571,7 @@ enum : int
     DBGPROP_ATTRIB_VALUE_IS_RETURN_VALUE  = 0x08000000,
     DBGPROP_ATTRIB_VALUE_PENDING_MUTATION = 0x10000000,
 }
+
 alias DBGPROP_INFO = int;
 enum : int
 {
@@ -1533,6 +1585,7 @@ enum : int
     DBGPROP_INFO_CALLTOSTRING = 0x04000000,
     DBGPROP_INFO_AUTOEXPAND   = 0x08000000,
 }
+
 alias OBJECT_ATTRIB_FLAGS = int;
 enum : int
 {
@@ -1572,6 +1625,7 @@ enum : int
     OBJECT_ATTRIB_IS_INHERITED         = 0x40000000,
     OBJECT_ATTRIB_IS_INTERFACE         = 0x80000000,
 }
+
 alias PROP_INFO_FLAGS = int;
 enum : int
 {
@@ -1583,6 +1637,7 @@ enum : int
     PROP_INFO_DEBUGPROP  = 0x00000010,
     PROP_INFO_AUTOEXPAND = 0x08000000,
 }
+
 alias EX_PROP_INFO_FLAGS = int;
 enum : int
 {
@@ -1604,8 +1659,8 @@ enum : int
     EXCEPTION_CONTINUE_EXECUTION = 0xffffffff,
 }
 
-enum uint WOW64_SIZE_OF_80387_REGISTERS = 0x00000050;
-enum uint WOW64_MAXIMUM_SUPPORTED_EXTENSION = 0x00000200;
+enum uint WOW64_SIZE_OF_80387_REGISTERS = 0x00000050U;
+enum uint WOW64_MAXIMUM_SUPPORTED_EXTENSION = 0x00000200U;
 
 enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ansi))], [])*/const(wchar)*
 {
@@ -1614,646 +1669,652 @@ enum : /*FIELD ATTR: NativeEncodingAttribute : CustomAttributeSig([FixedArgSig(E
     RESTORE_LAST_ERROR_NAME   = "RestoreLastError",
 }
 
-enum uint MAX_SYM_NAME = 0x000007d0;
-enum uint BIND_NO_BOUND_IMPORTS = 0x00000001;
-enum uint BIND_NO_UPDATE = 0x00000002;
-enum uint BIND_ALL_IMAGES = 0x00000004;
-enum uint BIND_CACHE_IMPORT_DLLS = 0x00000008;
-enum uint BIND_REPORT_64BIT_VA = 0x00000010;
+enum uint MAX_SYM_NAME = 0x000007d0U;
+enum uint BIND_NO_BOUND_IMPORTS = 0x00000001U;
+enum uint BIND_NO_UPDATE = 0x00000002U;
+enum uint BIND_ALL_IMAGES = 0x00000004U;
+enum uint BIND_CACHE_IMPORT_DLLS = 0x00000008U;
+enum uint BIND_REPORT_64BIT_VA = 0x00000010U;
 
 enum : uint
 {
-    CHECKSUM_SUCCESS         = 0x00000000,
-    CHECKSUM_OPEN_FAILURE    = 0x00000001,
-    CHECKSUM_MAP_FAILURE     = 0x00000002,
-    CHECKSUM_MAPVIEW_FAILURE = 0x00000003,
+    CHECKSUM_SUCCESS         = 0x00000000U,
+    CHECKSUM_OPEN_FAILURE    = 0x00000001U,
+    CHECKSUM_MAP_FAILURE     = 0x00000002U,
+    CHECKSUM_MAPVIEW_FAILURE = 0x00000003U,
 }
 
-enum uint CHECKSUM_UNICODE_FAILURE = 0x00000004;
-enum uint SPLITSYM_REMOVE_PRIVATE = 0x00000001;
+enum uint CHECKSUM_UNICODE_FAILURE = 0x00000004U;
+enum uint SPLITSYM_REMOVE_PRIVATE = 0x00000001U;
 
 enum : uint
 {
-    SPLITSYM_EXTRACT_ALL       = 0x00000002,
-    SPLITSYM_SYMBOLPATH_IS_SRC = 0x00000004,
+    SPLITSYM_EXTRACT_ALL       = 0x00000002U,
+    SPLITSYM_SYMBOLPATH_IS_SRC = 0x00000004U,
 }
 
 enum : uint
 {
-    CERT_PE_IMAGE_DIGEST_DEBUG_INFO      = 0x00000001,
-    CERT_PE_IMAGE_DIGEST_RESOURCES       = 0x00000002,
-    CERT_PE_IMAGE_DIGEST_ALL_IMPORT_INFO = 0x00000004,
-    CERT_PE_IMAGE_DIGEST_NON_PE_INFO     = 0x00000008,
+    CERT_PE_IMAGE_DIGEST_DEBUG_INFO      = 0x00000001U,
+    CERT_PE_IMAGE_DIGEST_RESOURCES       = 0x00000002U,
+    CERT_PE_IMAGE_DIGEST_ALL_IMPORT_INFO = 0x00000004U,
+    CERT_PE_IMAGE_DIGEST_NON_PE_INFO     = 0x00000008U,
 }
 
-enum uint CERT_SECTION_TYPE_ANY = 0x000000ff;
-enum uint ERROR_IMAGE_NOT_STRIPPED = 0x00008800;
+enum uint CERT_SECTION_TYPE_ANY = 0x000000ffU;
+enum uint ERROR_IMAGE_NOT_STRIPPED = 0x00008800U;
 
 enum : uint
 {
-    ERROR_NO_DBG_POINTER = 0x00008801,
-    ERROR_NO_PDB_POINTER = 0x00008802,
+    ERROR_NO_DBG_POINTER = 0x00008801U,
+    ERROR_NO_PDB_POINTER = 0x00008802U,
 }
 
 enum : uint
 {
-    UNDNAME_COMPLETE               = 0x00000000,
-    UNDNAME_NO_LEADING_UNDERSCORES = 0x00000001,
+    UNDNAME_COMPLETE               = 0x00000000U,
+    UNDNAME_NO_LEADING_UNDERSCORES = 0x00000001U,
 }
 
 enum : uint
 {
-    UNDNAME_NO_MS_KEYWORDS         = 0x00000002,
-    UNDNAME_NO_FUNCTION_RETURNS    = 0x00000004,
-    UNDNAME_NO_ALLOCATION_MODEL    = 0x00000008,
-    UNDNAME_NO_ALLOCATION_LANGUAGE = 0x00000010,
+    UNDNAME_NO_MS_KEYWORDS         = 0x00000002U,
+    UNDNAME_NO_FUNCTION_RETURNS    = 0x00000004U,
+    UNDNAME_NO_ALLOCATION_MODEL    = 0x00000008U,
+    UNDNAME_NO_ALLOCATION_LANGUAGE = 0x00000010U,
 }
 
 enum : uint
 {
-    UNDNAME_NO_MS_THISTYPE       = 0x00000020,
-    UNDNAME_NO_CV_THISTYPE       = 0x00000040,
-    UNDNAME_NO_THISTYPE          = 0x00000060,
-    UNDNAME_NO_ACCESS_SPECIFIERS = 0x00000080,
+    UNDNAME_NO_MS_THISTYPE       = 0x00000020U,
+    UNDNAME_NO_CV_THISTYPE       = 0x00000040U,
+    UNDNAME_NO_THISTYPE          = 0x00000060U,
+    UNDNAME_NO_ACCESS_SPECIFIERS = 0x00000080U,
 }
 
 enum : uint
 {
-    UNDNAME_NO_THROW_SIGNATURES = 0x00000100,
-    UNDNAME_NO_MEMBER_TYPE      = 0x00000200,
-    UNDNAME_NO_RETURN_UDT_MODEL = 0x00000400,
+    UNDNAME_NO_THROW_SIGNATURES = 0x00000100U,
+    UNDNAME_NO_MEMBER_TYPE      = 0x00000200U,
+    UNDNAME_NO_RETURN_UDT_MODEL = 0x00000400U,
 }
 
-enum uint UNDNAME_32_BIT_DECODE = 0x00000800;
+enum uint UNDNAME_32_BIT_DECODE = 0x00000800U;
 
 enum : uint
 {
-    UNDNAME_NAME_ONLY       = 0x00001000,
-    UNDNAME_NO_ARGUMENTS    = 0x00002000,
-    UNDNAME_NO_SPECIAL_SYMS = 0x00004000,
+    UNDNAME_NAME_ONLY       = 0x00001000U,
+    UNDNAME_NO_ARGUMENTS    = 0x00002000U,
+    UNDNAME_NO_SPECIAL_SYMS = 0x00004000U,
 }
 
-enum uint DBHHEADER_PDBGUID = 0x00000003;
+enum uint DBHHEADER_PDBGUID = 0x00000003U;
 
 enum : uint
 {
-    INLINE_FRAME_CONTEXT_INIT   = 0x00000000,
-    INLINE_FRAME_CONTEXT_IGNORE = 0xffffffff,
+    INLINE_FRAME_CONTEXT_INIT   = 0x00000000U,
+    INLINE_FRAME_CONTEXT_IGNORE = 0xffffffffU,
 }
 
-enum uint TARGET_ATTRIBUTE_PACMASK = 0x00000001;
+enum uint TARGET_ATTRIBUTE_PACMASK = 0x00000001U;
 
 enum : uint
 {
-    SYM_STKWALK_DEFAULT         = 0x00000000,
-    SYM_STKWALK_FORCE_FRAMEPTR  = 0x00000001,
-    SYM_STKWALK_ZEROEXTEND_PTRS = 0x00000002,
+    SYM_STKWALK_DEFAULT         = 0x00000000U,
+    SYM_STKWALK_FORCE_FRAMEPTR  = 0x00000001U,
+    SYM_STKWALK_ZEROEXTEND_PTRS = 0x00000002U,
 }
 
-enum uint API_VERSION_NUMBER = 0x0000000c;
+enum uint API_VERSION_NUMBER = 0x0000000cU;
 
 enum : uint
 {
-    SYMFLAG_NULL           = 0x00080000,
-    SYMFLAG_FUNC_NO_RETURN = 0x00100000,
+    SYMFLAG_NULL           = 0x00080000U,
+    SYMFLAG_FUNC_NO_RETURN = 0x00100000U,
 }
 
-enum uint SYMFLAG_SYNTHETIC_ZEROBASE = 0x00200000;
+enum uint SYMFLAG_SYNTHETIC_ZEROBASE = 0x00200000U;
 
 enum : uint
 {
-    SYMFLAG_PUBLIC_CODE       = 0x00400000,
-    SYMFLAG_REGREL_ALIASINDIR = 0x00800000,
+    SYMFLAG_PUBLIC_CODE       = 0x00400000U,
+    SYMFLAG_REGREL_ALIASINDIR = 0x00800000U,
 }
 
-enum uint SYMFLAG_FIXUP_ARM64X = 0x01000000;
+enum uint SYMFLAG_FIXUP_ARM64X = 0x01000000U;
 
 enum : uint
 {
-    SYMFLAG_GLOBAL  = 0x02000000,
-    SYMFLAG_COMPLEX = 0x04000000,
-    SYMFLAG_RESET   = 0x80000000,
+    SYMFLAG_GLOBAL  = 0x02000000U,
+    SYMFLAG_COMPLEX = 0x04000000U,
+    SYMFLAG_RESET   = 0x80000000U,
 }
 
 enum : uint
 {
-    IMAGEHLP_MODULE_REGION_DLLBASE    = 0x00000001,
-    IMAGEHLP_MODULE_REGION_DLLRANGE   = 0x00000002,
-    IMAGEHLP_MODULE_REGION_ADDITIONAL = 0x00000004,
-    IMAGEHLP_MODULE_REGION_JIT        = 0x00000008,
-    IMAGEHLP_MODULE_REGION_ALL        = 0x000000ff,
+    IMAGEHLP_MODULE_REGION_DLLBASE    = 0x00000001U,
+    IMAGEHLP_MODULE_REGION_DLLRANGE   = 0x00000002U,
+    IMAGEHLP_MODULE_REGION_ADDITIONAL = 0x00000004U,
+    IMAGEHLP_MODULE_REGION_JIT        = 0x00000008U,
+    IMAGEHLP_MODULE_REGION_ALL        = 0x000000ffU,
 }
 
 enum : uint
 {
-    CBA_DEFERRED_SYMBOL_LOAD_START    = 0x00000001,
-    CBA_DEFERRED_SYMBOL_LOAD_COMPLETE = 0x00000002,
-    CBA_DEFERRED_SYMBOL_LOAD_FAILURE  = 0x00000003,
+    CBA_DEFERRED_SYMBOL_LOAD_START    = 0x00000001U,
+    CBA_DEFERRED_SYMBOL_LOAD_COMPLETE = 0x00000002U,
+    CBA_DEFERRED_SYMBOL_LOAD_FAILURE  = 0x00000003U,
 }
 
-enum uint CBA_SYMBOLS_UNLOADED = 0x00000004;
-enum uint CBA_DUPLICATE_SYMBOL = 0x00000005;
-enum uint CBA_READ_MEMORY = 0x00000006;
-enum uint CBA_DEFERRED_SYMBOL_LOAD_CANCEL = 0x00000007;
-enum uint CBA_SET_OPTIONS = 0x00000008;
+enum uint CBA_SYMBOLS_UNLOADED = 0x00000004U;
+enum uint CBA_DUPLICATE_SYMBOL = 0x00000005U;
+enum uint CBA_READ_MEMORY = 0x00000006U;
+enum uint CBA_DEFERRED_SYMBOL_LOAD_CANCEL = 0x00000007U;
+enum uint CBA_SET_OPTIONS = 0x00000008U;
 
 enum : uint
 {
-    CBA_EVENT                        = 0x00000010,
-    CBA_DEFERRED_SYMBOL_LOAD_PARTIAL = 0x00000020,
+    CBA_EVENT                        = 0x00000010U,
+    CBA_DEFERRED_SYMBOL_LOAD_PARTIAL = 0x00000020U,
 }
 
-enum uint CBA_DEBUG_INFO = 0x10000000;
+enum uint CBA_DEBUG_INFO = 0x10000000U;
 
 enum : uint
 {
-    CBA_SRCSRV_INFO  = 0x20000000,
-    CBA_SRCSRV_EVENT = 0x40000000,
+    CBA_SRCSRV_INFO  = 0x20000000U,
+    CBA_SRCSRV_EVENT = 0x40000000U,
 }
 
-enum uint CBA_UPDATE_STATUS_BAR = 0x50000000;
-enum uint CBA_ENGINE_PRESENT = 0x60000000;
-enum uint CBA_CHECK_ENGOPT_DISALLOW_NETWORK_PATHS = 0x70000000;
-enum uint CBA_CHECK_ARM_MACHINE_THUMB_TYPE_OVERRIDE = 0x80000000;
-enum uint CBA_XML_LOG = 0x90000000;
-enum uint CBA_MAP_JIT_SYMBOL = 0xa0000000;
+enum uint CBA_UPDATE_STATUS_BAR = 0x50000000U;
+enum uint CBA_ENGINE_PRESENT = 0x60000000U;
+enum uint CBA_CHECK_ENGOPT_DISALLOW_NETWORK_PATHS = 0x70000000U;
+enum uint CBA_CHECK_ARM_MACHINE_THUMB_TYPE_OVERRIDE = 0x80000000U;
+enum uint CBA_XML_LOG = 0x90000000U;
+enum uint CBA_MAP_JIT_SYMBOL = 0xa0000000U;
 
 enum : uint
 {
-    EVENT_SRCSPEW_START = 0x00000064,
-    EVENT_SRCSPEW       = 0x00000064,
-    EVENT_SRCSPEW_END   = 0x000000c7,
+    EVENT_SRCSPEW_START = 0x00000064U,
+    EVENT_SRCSPEW       = 0x00000064U,
+    EVENT_SRCSPEW_END   = 0x000000c7U,
 }
 
 enum : uint
 {
-    DSLFLAG_MISMATCHED_PDB = 0x00000001,
-    DSLFLAG_MISMATCHED_DBG = 0x00000002,
+    DSLFLAG_MISMATCHED_PDB = 0x00000001U,
+    DSLFLAG_MISMATCHED_DBG = 0x00000002U,
 }
 
 enum : uint
 {
-    FLAG_ENGINE_PRESENT                = 0x00000004,
-    FLAG_ENGOPT_DISALLOW_NETWORK_PATHS = 0x00000008,
+    FLAG_ENGINE_PRESENT                = 0x00000004U,
+    FLAG_ENGOPT_DISALLOW_NETWORK_PATHS = 0x00000008U,
 }
 
-enum uint FLAG_OVERRIDE_ARM_MACHINE_TYPE = 0x00000010;
-enum uint SYMOPT_CASE_INSENSITIVE = 0x00000001;
+enum uint FLAG_OVERRIDE_ARM_MACHINE_TYPE = 0x00000010U;
+enum uint SYMOPT_CASE_INSENSITIVE = 0x00000001U;
 
 enum : uint
 {
-    SYMOPT_UNDNAME        = 0x00000002,
-    SYMOPT_DEFERRED_LOADS = 0x00000004,
+    SYMOPT_UNDNAME        = 0x00000002U,
+    SYMOPT_DEFERRED_LOADS = 0x00000004U,
 }
 
 enum : uint
 {
-    SYMOPT_NO_CPP            = 0x00000008,
-    SYMOPT_LOAD_LINES        = 0x00000010,
-    SYMOPT_OMAP_FIND_NEAREST = 0x00000020,
+    SYMOPT_NO_CPP            = 0x00000008U,
+    SYMOPT_LOAD_LINES        = 0x00000010U,
+    SYMOPT_OMAP_FIND_NEAREST = 0x00000020U,
 }
 
-enum uint SYMOPT_LOAD_ANYTHING = 0x00000040;
-enum uint SYMOPT_IGNORE_CVREC = 0x00000080;
-enum uint SYMOPT_NO_UNQUALIFIED_LOADS = 0x00000100;
-enum uint SYMOPT_FAIL_CRITICAL_ERRORS = 0x00000200;
-enum uint SYMOPT_EXACT_SYMBOLS = 0x00000400;
-enum uint SYMOPT_ALLOW_ABSOLUTE_SYMBOLS = 0x00000800;
-enum uint SYMOPT_IGNORE_NT_SYMPATH = 0x00001000;
-enum uint SYMOPT_INCLUDE_32BIT_MODULES = 0x00002000;
-enum uint SYMOPT_PUBLICS_ONLY = 0x00004000;
+enum uint SYMOPT_LOAD_ANYTHING = 0x00000040U;
+enum uint SYMOPT_IGNORE_CVREC = 0x00000080U;
+enum uint SYMOPT_NO_UNQUALIFIED_LOADS = 0x00000100U;
+enum uint SYMOPT_FAIL_CRITICAL_ERRORS = 0x00000200U;
+enum uint SYMOPT_EXACT_SYMBOLS = 0x00000400U;
+enum uint SYMOPT_ALLOW_ABSOLUTE_SYMBOLS = 0x00000800U;
+enum uint SYMOPT_IGNORE_NT_SYMPATH = 0x00001000U;
+enum uint SYMOPT_INCLUDE_32BIT_MODULES = 0x00002000U;
+enum uint SYMOPT_PUBLICS_ONLY = 0x00004000U;
 
 enum : uint
 {
-    SYMOPT_NO_PUBLICS   = 0x00008000,
-    SYMOPT_AUTO_PUBLICS = 0x00010000,
+    SYMOPT_NO_PUBLICS   = 0x00008000U,
+    SYMOPT_AUTO_PUBLICS = 0x00010000U,
 }
 
-enum uint SYMOPT_NO_IMAGE_SEARCH = 0x00020000;
+enum uint SYMOPT_NO_IMAGE_SEARCH = 0x00020000U;
 
 enum : uint
 {
-    SYMOPT_SECURE          = 0x00040000,
-    SYMOPT_NO_PROMPTS      = 0x00080000,
-    SYMOPT_OVERWRITE       = 0x00100000,
-    SYMOPT_IGNORE_IMAGEDIR = 0x00200000,
+    SYMOPT_SECURE          = 0x00040000U,
+    SYMOPT_NO_PROMPTS      = 0x00080000U,
+    SYMOPT_OVERWRITE       = 0x00100000U,
+    SYMOPT_IGNORE_IMAGEDIR = 0x00200000U,
 }
 
-enum uint SYMOPT_FLAT_DIRECTORY = 0x00400000;
-enum uint SYMOPT_FAVOR_COMPRESSED = 0x00800000;
-enum uint SYMOPT_ALLOW_ZERO_ADDRESS = 0x01000000;
-enum uint SYMOPT_DISABLE_SYMSRV_AUTODETECT = 0x02000000;
-enum uint SYMOPT_READONLY_CACHE = 0x04000000;
-enum uint SYMOPT_SYMPATH_LAST = 0x08000000;
+enum uint SYMOPT_FLAT_DIRECTORY = 0x00400000U;
+enum uint SYMOPT_FAVOR_COMPRESSED = 0x00800000U;
+enum uint SYMOPT_ALLOW_ZERO_ADDRESS = 0x01000000U;
+enum uint SYMOPT_DISABLE_SYMSRV_AUTODETECT = 0x02000000U;
+enum uint SYMOPT_READONLY_CACHE = 0x04000000U;
+enum uint SYMOPT_SYMPATH_LAST = 0x08000000U;
 
 enum : uint
 {
-    SYMOPT_DISABLE_FAST_SYMBOLS       = 0x10000000,
-    SYMOPT_DISABLE_SYMSRV_TIMEOUT     = 0x20000000,
-    SYMOPT_DISABLE_SRVSTAR_ON_STARTUP = 0x40000000,
+    SYMOPT_DISABLE_FAST_SYMBOLS       = 0x10000000U,
+    SYMOPT_DISABLE_SYMSRV_TIMEOUT     = 0x20000000U,
+    SYMOPT_DISABLE_SRVSTAR_ON_STARTUP = 0x40000000U,
 }
 
-enum uint SYMOPT_DEBUG = 0x80000000;
+enum uint SYMOPT_DEBUG = 0x80000000U;
 
 enum : uint
 {
-    SYM_INLINE_COMP_ERROR     = 0x00000000,
-    SYM_INLINE_COMP_IDENTICAL = 0x00000001,
-    SYM_INLINE_COMP_STEPIN    = 0x00000002,
-    SYM_INLINE_COMP_STEPOUT   = 0x00000003,
-    SYM_INLINE_COMP_STEPOVER  = 0x00000004,
-    SYM_INLINE_COMP_DIFFERENT = 0x00000005,
+    SYM_INLINE_COMP_ERROR     = 0x00000000U,
+    SYM_INLINE_COMP_IDENTICAL = 0x00000001U,
+    SYM_INLINE_COMP_STEPIN    = 0x00000002U,
+    SYM_INLINE_COMP_STEPOUT   = 0x00000003U,
+    SYM_INLINE_COMP_STEPOVER  = 0x00000004U,
+    SYM_INLINE_COMP_DIFFERENT = 0x00000005U,
 }
 
 enum : uint
 {
-    ESLFLAG_FULLPATH    = 0x00000001,
-    ESLFLAG_NEAREST     = 0x00000002,
-    ESLFLAG_PREV        = 0x00000004,
-    ESLFLAG_NEXT        = 0x00000008,
-    ESLFLAG_INLINE_SITE = 0x00000010,
+    ESLFLAG_FULLPATH    = 0x00000001U,
+    ESLFLAG_NEAREST     = 0x00000002U,
+    ESLFLAG_PREV        = 0x00000004U,
+    ESLFLAG_NEXT        = 0x00000008U,
+    ESLFLAG_INLINE_SITE = 0x00000010U,
 }
 
 enum : uint
 {
-    SYMENUM_OPTIONS_DEFAULT = 0x00000001,
-    SYMENUM_OPTIONS_INLINE  = 0x00000002,
+    SYMENUM_OPTIONS_DEFAULT = 0x00000001U,
+    SYMENUM_OPTIONS_INLINE  = 0x00000002U,
 }
 
 enum : uint
 {
-    SYMSEARCH_MASKOBJS    = 0x00000001,
-    SYMSEARCH_RECURSE     = 0x00000002,
-    SYMSEARCH_GLOBALSONLY = 0x00000004,
-    SYMSEARCH_ALLITEMS    = 0x00000008,
+    SYMSEARCH_MASKOBJS    = 0x00000001U,
+    SYMSEARCH_RECURSE     = 0x00000002U,
+    SYMSEARCH_GLOBALSONLY = 0x00000004U,
+    SYMSEARCH_ALLITEMS    = 0x00000008U,
 }
 
-enum uint EXT_OUTPUT_VER = 0x00000001;
-enum uint SYMSRV_VERSION = 0x00000002;
+enum uint EXT_OUTPUT_VER = 0x00000001U;
+enum uint SYMSRV_VERSION = 0x00000002U;
 
 enum : uint
 {
-    SSRVOPT_CALLBACK         = 0x00000001,
-    SSRVOPT_OLDGUIDPTR       = 0x00000010,
-    SSRVOPT_UNATTENDED       = 0x00000020,
-    SSRVOPT_NOCOPY           = 0x00000040,
-    SSRVOPT_GETPATH          = 0x00000040,
-    SSRVOPT_PARENTWIN        = 0x00000080,
-    SSRVOPT_PARAMTYPE        = 0x00000100,
-    SSRVOPT_SECURE           = 0x00000200,
-    SSRVOPT_TRACE            = 0x00000400,
-    SSRVOPT_SETCONTEXT       = 0x00000800,
-    SSRVOPT_PROXY            = 0x00001000,
-    SSRVOPT_DOWNSTREAM_STORE = 0x00002000,
+    SSRVOPT_CALLBACK         = 0x00000001U,
+    SSRVOPT_OLDGUIDPTR       = 0x00000010U,
+    SSRVOPT_UNATTENDED       = 0x00000020U,
+    SSRVOPT_NOCOPY           = 0x00000040U,
+    SSRVOPT_GETPATH          = 0x00000040U,
+    SSRVOPT_PARENTWIN        = 0x00000080U,
+    SSRVOPT_PARAMTYPE        = 0x00000100U,
+    SSRVOPT_SECURE           = 0x00000200U,
+    SSRVOPT_TRACE            = 0x00000400U,
+    SSRVOPT_SETCONTEXT       = 0x00000800U,
+    SSRVOPT_PROXY            = 0x00001000U,
+    SSRVOPT_DOWNSTREAM_STORE = 0x00002000U,
 }
 
 enum : uint
 {
-    SSRVOPT_OVERWRITE          = 0x00004000,
-    SSRVOPT_RESETTOU           = 0x00008000,
-    SSRVOPT_CALLBACKW          = 0x00010000,
-    SSRVOPT_FLAT_DEFAULT_STORE = 0x00020000,
+    SSRVOPT_OVERWRITE          = 0x00004000U,
+    SSRVOPT_RESETTOU           = 0x00008000U,
+    SSRVOPT_CALLBACKW          = 0x00010000U,
+    SSRVOPT_FLAT_DEFAULT_STORE = 0x00020000U,
 }
 
 enum : uint
 {
-    SSRVOPT_PROXYW           = 0x00040000,
-    SSRVOPT_MESSAGE          = 0x00080000,
-    SSRVOPT_SERVICE          = 0x00100000,
-    SSRVOPT_FAVOR_COMPRESSED = 0x00200000,
+    SSRVOPT_PROXYW           = 0x00040000U,
+    SSRVOPT_MESSAGE          = 0x00080000U,
+    SSRVOPT_SERVICE          = 0x00100000U,
+    SSRVOPT_FAVOR_COMPRESSED = 0x00200000U,
 }
 
 enum : uint
 {
-    SSRVOPT_STRING          = 0x00400000,
-    SSRVOPT_WINHTTP         = 0x00800000,
-    SSRVOPT_WININET         = 0x01000000,
-    SSRVOPT_DONT_UNCOMPRESS = 0x02000000,
+    SSRVOPT_STRING          = 0x00400000U,
+    SSRVOPT_WINHTTP         = 0x00800000U,
+    SSRVOPT_WININET         = 0x01000000U,
+    SSRVOPT_DONT_UNCOMPRESS = 0x02000000U,
 }
 
 enum : uint
 {
-    SSRVOPT_DISABLE_PING_HOST = 0x04000000,
-    SSRVOPT_DISABLE_TIMEOUT   = 0x08000000,
+    SSRVOPT_DISABLE_PING_HOST = 0x04000000U,
+    SSRVOPT_DISABLE_TIMEOUT   = 0x08000000U,
 }
 
-enum uint SSRVOPT_ENABLE_COMM_MSG = 0x10000000;
+enum uint SSRVOPT_ENABLE_COMM_MSG = 0x10000000U;
 
 enum : uint
 {
-    SSRVOPT_URI_FILTER     = 0x20000000,
-    SSRVOPT_URI_TIERS      = 0x40000000,
-    SSRVOPT_RETRY_APP_HANG = 0x80000000,
+    SSRVOPT_URI_FILTER     = 0x20000000U,
+    SSRVOPT_URI_TIERS      = 0x40000000U,
+    SSRVOPT_RETRY_APP_HANG = 0x80000000U,
 }
 
-enum uint SSRVOPT_MAX = 0x80000000;
-enum uint NUM_SSRVOPTS = 0x00000020;
+enum uint SSRVOPT_MAX = 0x80000000U;
+enum uint NUM_SSRVOPTS = 0x00000020U;
 
 enum : uint
 {
-    SSRVURI_HTTP_NORMAL     = 0x00000001,
-    SSRVURI_HTTP_COMPRESSED = 0x00000002,
-    SSRVURI_HTTP_FILEPTR    = 0x00000004,
+    SSRVURI_HTTP_NORMAL     = 0x00000001U,
+    SSRVURI_HTTP_COMPRESSED = 0x00000002U,
+    SSRVURI_HTTP_FILEPTR    = 0x00000004U,
 }
 
 enum : uint
 {
-    SSRVURI_UNC_NORMAL     = 0x00000010,
-    SSRVURI_UNC_COMPRESSED = 0x00000020,
-    SSRVURI_UNC_FILEPTR    = 0x00000040,
-    SSRVURI_HTTP_MASK      = 0x0000000f,
-    SSRVURI_UNC_MASK       = 0x000000f0,
-    SSRVURI_ALL            = 0x000000ff,
-    SSRVURI_NORMAL         = 0x00000001,
-    SSRVURI_COMPRESSED     = 0x00000002,
-    SSRVURI_FILEPTR        = 0x00000004,
+    SSRVURI_UNC_NORMAL     = 0x00000010U,
+    SSRVURI_UNC_COMPRESSED = 0x00000020U,
+    SSRVURI_UNC_FILEPTR    = 0x00000040U,
+    SSRVURI_HTTP_MASK      = 0x0000000fU,
+    SSRVURI_UNC_MASK       = 0x000000f0U,
+    SSRVURI_ALL            = 0x000000ffU,
+    SSRVURI_NORMAL         = 0x00000001U,
+    SSRVURI_COMPRESSED     = 0x00000002U,
+    SSRVURI_FILEPTR        = 0x00000004U,
 }
 
 enum : uint
 {
-    SSRVACTION_TRACE          = 0x00000001,
-    SSRVACTION_QUERYCANCEL    = 0x00000002,
-    SSRVACTION_EVENT          = 0x00000003,
-    SSRVACTION_EVENTW         = 0x00000004,
-    SSRVACTION_SIZE           = 0x00000005,
-    SSRVACTION_HTTPSTATUS     = 0x00000006,
-    SSRVACTION_XMLOUTPUT      = 0x00000007,
-    SSRVACTION_CHECKSUMSTATUS = 0x00000008,
+    SSRVACTION_TRACE          = 0x00000001U,
+    SSRVACTION_QUERYCANCEL    = 0x00000002U,
+    SSRVACTION_EVENT          = 0x00000003U,
+    SSRVACTION_EVENTW         = 0x00000004U,
+    SSRVACTION_SIZE           = 0x00000005U,
+    SSRVACTION_HTTPSTATUS     = 0x00000006U,
+    SSRVACTION_XMLOUTPUT      = 0x00000007U,
+    SSRVACTION_CHECKSUMSTATUS = 0x00000008U,
 }
 
 enum : uint
 {
-    SYMSTOREOPT_ALT_INDEX = 0x00000010,
-    SYMSTOREOPT_UNICODE   = 0x00000020,
+    SYMSTOREOPT_ALT_INDEX = 0x00000010U,
+    SYMSTOREOPT_UNICODE   = 0x00000020U,
 }
 
 enum : uint
 {
-    SYMF_OMAP_GENERATED = 0x00000001,
-    SYMF_OMAP_MODIFIED  = 0x00000002,
+    SYMF_OMAP_GENERATED = 0x00000001U,
+    SYMF_OMAP_MODIFIED  = 0x00000002U,
 }
 
 enum : uint
 {
-    SYMF_REGISTER = 0x00000008,
-    SYMF_REGREL   = 0x00000010,
-    SYMF_FRAMEREL = 0x00000020,
+    SYMF_REGISTER = 0x00000008U,
+    SYMF_REGREL   = 0x00000010U,
+    SYMF_FRAMEREL = 0x00000020U,
 }
 
-enum uint SYMF_PARAMETER = 0x00000040;
+enum uint SYMF_PARAMETER = 0x00000040U;
 
 enum : uint
 {
-    SYMF_LOCAL    = 0x00000080,
-    SYMF_CONSTANT = 0x00000100,
+    SYMF_LOCAL    = 0x00000080U,
+    SYMF_CONSTANT = 0x00000100U,
 }
 
 enum : uint
 {
-    SYMF_EXPORT    = 0x00000200,
-    SYMF_FORWARDER = 0x00000400,
-    SYMF_FUNCTION  = 0x00000800,
+    SYMF_EXPORT    = 0x00000200U,
+    SYMF_FORWARDER = 0x00000400U,
+    SYMF_FUNCTION  = 0x00000800U,
 }
 
 enum : uint
 {
-    SYMF_VIRTUAL = 0x00001000,
-    SYMF_THUNK   = 0x00002000,
-    SYMF_TLSREL  = 0x00004000,
+    SYMF_VIRTUAL = 0x00001000U,
+    SYMF_THUNK   = 0x00002000U,
+    SYMF_TLSREL  = 0x00004000U,
 }
 
 enum : uint
 {
-    IMAGEHLP_SYMBOL_INFO_VALUEPRESENT  = 0x00000001,
-    IMAGEHLP_SYMBOL_INFO_REGISTER      = 0x00000008,
-    IMAGEHLP_SYMBOL_INFO_REGRELATIVE   = 0x00000010,
-    IMAGEHLP_SYMBOL_INFO_FRAMERELATIVE = 0x00000020,
-    IMAGEHLP_SYMBOL_INFO_PARAMETER     = 0x00000040,
-    IMAGEHLP_SYMBOL_INFO_LOCAL         = 0x00000080,
-    IMAGEHLP_SYMBOL_INFO_CONSTANT      = 0x00000100,
-    IMAGEHLP_SYMBOL_FUNCTION           = 0x00000800,
-    IMAGEHLP_SYMBOL_VIRTUAL            = 0x00001000,
-    IMAGEHLP_SYMBOL_THUNK              = 0x00002000,
-    IMAGEHLP_SYMBOL_INFO_TLSRELATIVE   = 0x00004000,
+    IMAGEHLP_SYMBOL_INFO_VALUEPRESENT  = 0x00000001U,
+    IMAGEHLP_SYMBOL_INFO_REGISTER      = 0x00000008U,
+    IMAGEHLP_SYMBOL_INFO_REGRELATIVE   = 0x00000010U,
+    IMAGEHLP_SYMBOL_INFO_FRAMERELATIVE = 0x00000020U,
+    IMAGEHLP_SYMBOL_INFO_PARAMETER     = 0x00000040U,
+    IMAGEHLP_SYMBOL_INFO_LOCAL         = 0x00000080U,
+    IMAGEHLP_SYMBOL_INFO_CONSTANT      = 0x00000100U,
+    IMAGEHLP_SYMBOL_FUNCTION           = 0x00000800U,
+    IMAGEHLP_SYMBOL_VIRTUAL            = 0x00001000U,
+    IMAGEHLP_SYMBOL_THUNK              = 0x00002000U,
+    IMAGEHLP_SYMBOL_INFO_TLSRELATIVE   = 0x00004000U,
 }
 
 enum : uint
 {
-    IMAGEHLP_RMAP_MAPPED_FLAT           = 0x00000001,
-    IMAGEHLP_RMAP_BIG_ENDIAN            = 0x00000002,
-    IMAGEHLP_RMAP_IGNORE_MISCOMPARE     = 0x00000004,
-    IMAGEHLP_RMAP_FIXUP_ARM64X          = 0x10000000,
-    IMAGEHLP_RMAP_LOAD_RW_DATA_SECTIONS = 0x20000000,
+    IMAGEHLP_RMAP_MAPPED_FLAT           = 0x00000001U,
+    IMAGEHLP_RMAP_BIG_ENDIAN            = 0x00000002U,
+    IMAGEHLP_RMAP_IGNORE_MISCOMPARE     = 0x00000004U,
+    IMAGEHLP_RMAP_FIXUP_ARM64X          = 0x10000000U,
+    IMAGEHLP_RMAP_LOAD_RW_DATA_SECTIONS = 0x20000000U,
 }
 
-enum uint IMAGEHLP_RMAP_OMIT_SHARED_RW_DATA_SECTIONS = 0x40000000;
-enum uint IMAGEHLP_RMAP_FIXUP_IMAGEBASE = 0x80000000;
-enum uint DMP_PHYSICAL_MEMORY_BLOCK_SIZE_32 = 0x000002bc;
-enum uint DMP_CONTEXT_RECORD_SIZE_32 = 0x000004b0;
+enum uint IMAGEHLP_RMAP_OMIT_SHARED_RW_DATA_SECTIONS = 0x40000000U;
+enum uint IMAGEHLP_RMAP_FIXUP_IMAGEBASE = 0x80000000U;
+enum uint DMP_PHYSICAL_MEMORY_BLOCK_SIZE_32 = 0x000002bcU;
+enum uint DMP_CONTEXT_RECORD_SIZE_32 = 0x000004b0U;
 
 enum : uint
 {
-    DMP_RESERVED_0_SIZE_32 = 0x000006e0,
-    DMP_RESERVED_2_SIZE_32 = 0x00000010,
-    DMP_RESERVED_3_SIZE_32 = 0x00000038,
+    DMP_RESERVED_0_SIZE_32 = 0x000006e0U,
+    DMP_RESERVED_2_SIZE_32 = 0x00000010U,
+    DMP_RESERVED_3_SIZE_32 = 0x00000038U,
 }
 
-enum uint DMP_PHYSICAL_MEMORY_BLOCK_SIZE_64 = 0x000002bc;
-enum uint DMP_CONTEXT_RECORD_SIZE_64 = 0x00000bb8;
-enum uint DMP_RESERVED_0_SIZE_64 = 0x00000fa8;
-enum uint DMP_HEADER_COMMENT_SIZE = 0x00000080;
+enum uint DMP_PHYSICAL_MEMORY_BLOCK_SIZE_64 = 0x000002bcU;
+enum uint DMP_CONTEXT_RECORD_SIZE_64 = 0x00000bb8U;
+enum uint DMP_RESERVED_0_SIZE_64 = 0x00000fa8U;
+enum uint DMP_HEADER_COMMENT_SIZE = 0x00000080U;
 
 enum : uint
 {
-    DUMP_SUMMARY_VALID_KERNEL_VA       = 0x00000001,
-    DUMP_SUMMARY_VALID_CURRENT_USER_VA = 0x00000002,
+    DUMP_SUMMARY_VALID_KERNEL_VA       = 0x00000001U,
+    DUMP_SUMMARY_VALID_CURRENT_USER_VA = 0x00000002U,
 }
 
 enum : uint
 {
-    MINIDUMP_VERSION                    = 0x0000a793,
-    MINIDUMP_MISC1_PROCESSOR_POWER_INFO = 0x00000004,
+    MINIDUMP_VERSION                    = 0x0000a793U,
+    MINIDUMP_MISC1_PROCESSOR_POWER_INFO = 0x00000004U,
 }
 
 enum : uint
 {
-    MINIDUMP_MISC3_PROCESS_INTEGRITY     = 0x00000010,
-    MINIDUMP_MISC3_PROCESS_EXECUTE_FLAGS = 0x00000020,
-    MINIDUMP_MISC3_TIMEZONE              = 0x00000040,
-    MINIDUMP_MISC3_PROTECTED_PROCESS     = 0x00000080,
-    MINIDUMP_MISC4_BUILDSTRING           = 0x00000100,
-    MINIDUMP_MISC5_PROCESS_COOKIE        = 0x00000200,
+    MINIDUMP_MISC3_PROCESS_INTEGRITY     = 0x00000010U,
+    MINIDUMP_MISC3_PROCESS_EXECUTE_FLAGS = 0x00000020U,
+    MINIDUMP_MISC3_TIMEZONE              = 0x00000040U,
+    MINIDUMP_MISC3_PROTECTED_PROCESS     = 0x00000080U,
+    MINIDUMP_MISC4_BUILDSTRING           = 0x00000100U,
+    MINIDUMP_MISC5_PROCESS_COOKIE        = 0x00000200U,
 }
 
-enum uint MINIDUMP_SYSMEMINFO1_FILECACHE_TRANSITIONREPURPOSECOUNT_FLAGS = 0x00000001;
+enum uint MINIDUMP_SYSMEMINFO1_FILECACHE_TRANSITIONREPURPOSECOUNT_FLAGS = 0x00000001U;
 
 enum : uint
 {
-    MINIDUMP_SYSMEMINFO1_BASICPERF                                     = 0x00000002,
-    MINIDUMP_SYSMEMINFO1_PERF_CCTOTALDIRTYPAGES_CCDIRTYPAGETHRESHOLD   = 0x00000004,
-    MINIDUMP_SYSMEMINFO1_PERF_RESIDENTAVAILABLEPAGES_SHAREDCOMMITPAGES = 0x00000008,
+    MINIDUMP_SYSMEMINFO1_BASICPERF                                     = 0x00000002U,
+    MINIDUMP_SYSMEMINFO1_PERF_CCTOTALDIRTYPAGES_CCDIRTYPAGETHRESHOLD   = 0x00000004U,
+    MINIDUMP_SYSMEMINFO1_PERF_RESIDENTAVAILABLEPAGES_SHAREDCOMMITPAGES = 0x00000008U,
 }
 
-enum uint MINIDUMP_SYSMEMINFO1_PERF_MDLPAGESALLOCATED_PFNDATABASECOMMITTEDPAGES = 0x00000010;
-enum uint MINIDUMP_SYSMEMINFO1_PERF_SYSTEMPAGETABLECOMMITTEDPAGES_CONTIGUOUSPAGESALLOCATED = 0x00000020;
+enum uint MINIDUMP_SYSMEMINFO1_PERF_MDLPAGESALLOCATED_PFNDATABASECOMMITTEDPAGES = 0x00000010U;
+enum uint MINIDUMP_SYSMEMINFO1_PERF_SYSTEMPAGETABLECOMMITTEDPAGES_CONTIGUOUSPAGESALLOCATED = 0x00000020U;
 
 enum : uint
 {
-    MINIDUMP_PROCESS_VM_COUNTERS             = 0x00000001,
-    MINIDUMP_PROCESS_VM_COUNTERS_VIRTUALSIZE = 0x00000002,
-    MINIDUMP_PROCESS_VM_COUNTERS_EX          = 0x00000004,
-    MINIDUMP_PROCESS_VM_COUNTERS_EX2         = 0x00000008,
-    MINIDUMP_PROCESS_VM_COUNTERS_JOB         = 0x00000010,
+    MINIDUMP_PROCESS_VM_COUNTERS             = 0x00000001U,
+    MINIDUMP_PROCESS_VM_COUNTERS_VIRTUALSIZE = 0x00000002U,
+    MINIDUMP_PROCESS_VM_COUNTERS_EX          = 0x00000004U,
+    MINIDUMP_PROCESS_VM_COUNTERS_EX2         = 0x00000008U,
+    MINIDUMP_PROCESS_VM_COUNTERS_JOB         = 0x00000010U,
 }
 
 enum : uint
 {
-    INTERFACESAFE_FOR_UNTRUSTED_CALLER = 0x00000001,
-    INTERFACESAFE_FOR_UNTRUSTED_DATA   = 0x00000002,
+    INTERFACESAFE_FOR_UNTRUSTED_CALLER = 0x00000001U,
+    INTERFACESAFE_FOR_UNTRUSTED_DATA   = 0x00000002U,
 }
 
 enum : uint
 {
-    INTERFACE_USES_DISPEX           = 0x00000004,
-    INTERFACE_USES_SECURITY_MANAGER = 0x00000008,
+    INTERFACE_USES_DISPEX           = 0x00000004U,
+    INTERFACE_USES_SECURITY_MANAGER = 0x00000008U,
 }
 
-enum uint WCT_MAX_NODE_COUNT = 0x00000010;
-enum uint WCT_OBJNAME_LENGTH = 0x00000080;
-enum uint WCT_NETWORK_IO_FLAG = 0x00000008;
+enum uint WCT_MAX_NODE_COUNT = 0x00000010U;
+enum uint WCT_OBJNAME_LENGTH = 0x00000080U;
+enum uint WCT_NETWORK_IO_FLAG = 0x00000008U;
 
 enum : uint
 {
-    WHEA_ERROR_SOURCE_DESCRIPTOR_VERSION_10 = 0x0000000a,
-    WHEA_ERROR_SOURCE_DESCRIPTOR_VERSION_11 = 0x0000000b,
+    WHEA_ERROR_SOURCE_DESCRIPTOR_VERSION_10 = 0x0000000aU,
+    WHEA_ERROR_SOURCE_DESCRIPTOR_VERSION_11 = 0x0000000bU,
 }
 
-enum uint WHEA_MAX_MC_BANKS = 0x00000020;
+enum uint WHEA_MAX_MC_BANKS = 0x00000020U;
 
 enum : uint
 {
-    WHEA_ERROR_SOURCE_FLAG_FIRMWAREFIRST = 0x00000001,
-    WHEA_ERROR_SOURCE_FLAG_GLOBAL        = 0x00000002,
-    WHEA_ERROR_SOURCE_FLAG_GHES_ASSIST   = 0x00000004,
-    WHEA_ERROR_SOURCE_FLAG_DEFAULTSOURCE = 0x80000000,
+    WHEA_ERROR_SOURCE_FLAG_FIRMWAREFIRST = 0x00000001U,
+    WHEA_ERROR_SOURCE_FLAG_GLOBAL        = 0x00000002U,
+    WHEA_ERROR_SOURCE_FLAG_GHES_ASSIST   = 0x00000004U,
+    WHEA_ERROR_SOURCE_FLAG_DEFAULTSOURCE = 0x80000000U,
 }
 
-enum uint WHEA_ERR_SRC_OVERRIDE_FLAG = 0x40000000;
+enum uint WHEA_ERR_SRC_OVERRIDE_FLAG = 0x40000000U;
 
 enum : uint
 {
-    WHEA_ERROR_SOURCE_INVALID_RELATED_SOURCE      = 0x0000ffff,
-    WHEA_ERROR_SOURCE_DESCRIPTOR_TYPE_XPFMCE      = 0x00000000,
-    WHEA_ERROR_SOURCE_DESCRIPTOR_TYPE_XPFCMC      = 0x00000001,
-    WHEA_ERROR_SOURCE_DESCRIPTOR_TYPE_XPFNMI      = 0x00000002,
-    WHEA_ERROR_SOURCE_DESCRIPTOR_TYPE_IPFMCA      = 0x00000003,
-    WHEA_ERROR_SOURCE_DESCRIPTOR_TYPE_IPFCMC      = 0x00000004,
-    WHEA_ERROR_SOURCE_DESCRIPTOR_TYPE_IPFCPE      = 0x00000005,
-    WHEA_ERROR_SOURCE_DESCRIPTOR_TYPE_AERROOTPORT = 0x00000006,
-    WHEA_ERROR_SOURCE_DESCRIPTOR_TYPE_AERENDPOINT = 0x00000007,
-    WHEA_ERROR_SOURCE_DESCRIPTOR_TYPE_AERBRIDGE   = 0x00000008,
-    WHEA_ERROR_SOURCE_DESCRIPTOR_TYPE_GENERIC     = 0x00000009,
-    WHEA_ERROR_SOURCE_DESCRIPTOR_TYPE_GENERIC_V2  = 0x0000000a,
+    WHEA_ERROR_SOURCE_INVALID_RELATED_SOURCE      = 0x0000ffffU,
+    WHEA_ERROR_SOURCE_DESCRIPTOR_TYPE_XPFMCE      = 0x00000000U,
+    WHEA_ERROR_SOURCE_DESCRIPTOR_TYPE_XPFCMC      = 0x00000001U,
+    WHEA_ERROR_SOURCE_DESCRIPTOR_TYPE_XPFNMI      = 0x00000002U,
+    WHEA_ERROR_SOURCE_DESCRIPTOR_TYPE_IPFMCA      = 0x00000003U,
+    WHEA_ERROR_SOURCE_DESCRIPTOR_TYPE_IPFCMC      = 0x00000004U,
+    WHEA_ERROR_SOURCE_DESCRIPTOR_TYPE_IPFCPE      = 0x00000005U,
+    WHEA_ERROR_SOURCE_DESCRIPTOR_TYPE_AERROOTPORT = 0x00000006U,
+    WHEA_ERROR_SOURCE_DESCRIPTOR_TYPE_AERENDPOINT = 0x00000007U,
+    WHEA_ERROR_SOURCE_DESCRIPTOR_TYPE_AERBRIDGE   = 0x00000008U,
+    WHEA_ERROR_SOURCE_DESCRIPTOR_TYPE_GENERIC     = 0x00000009U,
+    WHEA_ERROR_SOURCE_DESCRIPTOR_TYPE_GENERIC_V2  = 0x0000000aU,
 }
 
 enum : uint
 {
-    WHEA_XPF_MC_BANK_STATUSFORMAT_IA32MCA    = 0x00000000,
-    WHEA_XPF_MC_BANK_STATUSFORMAT_Intel64MCA = 0x00000001,
-    WHEA_XPF_MC_BANK_STATUSFORMAT_AMD64MCA   = 0x00000002,
+    WHEA_XPF_MC_BANK_STATUSFORMAT_IA32MCA    = 0x00000000U,
+    WHEA_XPF_MC_BANK_STATUSFORMAT_Intel64MCA = 0x00000001U,
+    WHEA_XPF_MC_BANK_STATUSFORMAT_AMD64MCA   = 0x00000002U,
 }
 
 enum : uint
 {
-    WHEA_NOTIFICATION_TYPE_POLLED                 = 0x00000000,
-    WHEA_NOTIFICATION_TYPE_EXTERNALINTERRUPT      = 0x00000001,
-    WHEA_NOTIFICATION_TYPE_LOCALINTERRUPT         = 0x00000002,
-    WHEA_NOTIFICATION_TYPE_SCI                    = 0x00000003,
-    WHEA_NOTIFICATION_TYPE_NMI                    = 0x00000004,
-    WHEA_NOTIFICATION_TYPE_CMCI                   = 0x00000005,
-    WHEA_NOTIFICATION_TYPE_MCE                    = 0x00000006,
-    WHEA_NOTIFICATION_TYPE_GPIO_SIGNAL            = 0x00000007,
-    WHEA_NOTIFICATION_TYPE_ARMV8_SEA              = 0x00000008,
-    WHEA_NOTIFICATION_TYPE_ARMV8_SEI              = 0x00000009,
-    WHEA_NOTIFICATION_TYPE_EXTERNALINTERRUPT_GSIV = 0x0000000a,
-    WHEA_NOTIFICATION_TYPE_SDEI                   = 0x0000000b,
+    WHEA_NOTIFICATION_TYPE_POLLED                 = 0x00000000U,
+    WHEA_NOTIFICATION_TYPE_EXTERNALINTERRUPT      = 0x00000001U,
+    WHEA_NOTIFICATION_TYPE_LOCALINTERRUPT         = 0x00000002U,
+    WHEA_NOTIFICATION_TYPE_SCI                    = 0x00000003U,
+    WHEA_NOTIFICATION_TYPE_NMI                    = 0x00000004U,
+    WHEA_NOTIFICATION_TYPE_CMCI                   = 0x00000005U,
+    WHEA_NOTIFICATION_TYPE_MCE                    = 0x00000006U,
+    WHEA_NOTIFICATION_TYPE_GPIO_SIGNAL            = 0x00000007U,
+    WHEA_NOTIFICATION_TYPE_ARMV8_SEA              = 0x00000008U,
+    WHEA_NOTIFICATION_TYPE_ARMV8_SEI              = 0x00000009U,
+    WHEA_NOTIFICATION_TYPE_EXTERNALINTERRUPT_GSIV = 0x0000000aU,
+    WHEA_NOTIFICATION_TYPE_SDEI                   = 0x0000000bU,
 }
 
 enum : uint
 {
-    WHEA_DEVICE_DRIVER_CONFIG_V1      = 0x00000001,
-    WHEA_DEVICE_DRIVER_CONFIG_V2      = 0x00000002,
-    WHEA_DEVICE_DRIVER_CONFIG_MIN     = 0x00000001,
-    WHEA_DEVICE_DRIVER_CONFIG_MAX     = 0x00000002,
-    WHEA_DEVICE_DRIVER_BUFFER_SET_V1  = 0x00000001,
-    WHEA_DEVICE_DRIVER_BUFFER_SET_MIN = 0x00000001,
-    WHEA_DEVICE_DRIVER_BUFFER_SET_MAX = 0x00000001,
+    WHEA_DEVICE_DRIVER_CONFIG_V1      = 0x00000001U,
+    WHEA_DEVICE_DRIVER_CONFIG_V2      = 0x00000002U,
+    WHEA_DEVICE_DRIVER_CONFIG_MIN     = 0x00000001U,
+    WHEA_DEVICE_DRIVER_CONFIG_MAX     = 0x00000002U,
+    WHEA_DEVICE_DRIVER_BUFFER_SET_V1  = 0x00000001U,
+    WHEA_DEVICE_DRIVER_BUFFER_SET_MIN = 0x00000001U,
+    WHEA_DEVICE_DRIVER_BUFFER_SET_MAX = 0x00000001U,
 }
 
-enum uint WHEA_DISABLE_OFFLINE = 0x00000000;
+enum uint WHEA_DISABLE_OFFLINE = 0x00000000U;
 
 enum : uint
 {
-    WHEA_MEM_PERSISTOFFLINE = 0x00000001,
-    WHEA_MEM_PFA_DISABLE    = 0x00000002,
-    WHEA_MEM_PFA_PAGECOUNT  = 0x00000003,
-    WHEA_MEM_PFA_THRESHOLD  = 0x00000004,
-    WHEA_MEM_PFA_TIMEOUT    = 0x00000005,
+    WHEA_MEM_PERSISTOFFLINE = 0x00000001U,
+    WHEA_MEM_PFA_DISABLE    = 0x00000002U,
+    WHEA_MEM_PFA_PAGECOUNT  = 0x00000003U,
+    WHEA_MEM_PFA_THRESHOLD  = 0x00000004U,
+    WHEA_MEM_PFA_TIMEOUT    = 0x00000005U,
 }
 
-enum uint WHEA_DISABLE_DUMMY_WRITE = 0x00000006;
+enum uint WHEA_DISABLE_DUMMY_WRITE = 0x00000006U;
 
 enum : uint
 {
-    WHEA_RESTORE_CMCI_ENABLED   = 0x00000007,
-    WHEA_RESTORE_CMCI_ATTEMPTS  = 0x00000008,
-    WHEA_RESTORE_CMCI_ERR_LIMIT = 0x00000009,
+    WHEA_RESTORE_CMCI_ENABLED   = 0x00000007U,
+    WHEA_RESTORE_CMCI_ATTEMPTS  = 0x00000008U,
+    WHEA_RESTORE_CMCI_ERR_LIMIT = 0x00000009U,
 }
 
 enum : uint
 {
-    WHEA_CMCI_THRESHOLD_COUNT      = 0x0000000a,
-    WHEA_CMCI_THRESHOLD_TIME       = 0x0000000b,
-    WHEA_CMCI_THRESHOLD_POLL_COUNT = 0x0000000c,
+    WHEA_CMCI_THRESHOLD_COUNT      = 0x0000000aU,
+    WHEA_CMCI_THRESHOLD_TIME       = 0x0000000bU,
+    WHEA_CMCI_THRESHOLD_POLL_COUNT = 0x0000000cU,
 }
 
-enum uint WHEA_PENDING_PAGE_LIST_SZ = 0x0000000d;
+enum uint WHEA_PENDING_PAGE_LIST_SZ = 0x0000000dU;
 
 enum : uint
 {
-    WHEA_BAD_PAGE_LIST_MAX_SIZE = 0x0000000e,
-    WHEA_BAD_PAGE_LIST_LOCATION = 0x0000000f,
+    WHEA_BAD_PAGE_LIST_MAX_SIZE = 0x0000000eU,
+    WHEA_BAD_PAGE_LIST_LOCATION = 0x0000000fU,
 }
 
-enum uint WHEA_NOTIFY_ALL_OFFLINES = 0x00000010;
+enum uint WHEA_NOTIFY_ALL_OFFLINES = 0x00000010U;
 
 enum : uint
 {
-    WHEA_ROW_FAIL_CHECK_EXTENT    = 0x00000011,
-    WHEA_ROW_FAIL_CHECK_ENABLE    = 0x00000012,
-    WHEA_ROW_FAIL_CHECK_THRESHOLD = 0x00000013,
+    WHEA_ROW_FAIL_CHECK_EXTENT    = 0x00000011U,
+    WHEA_ROW_FAIL_CHECK_ENABLE    = 0x00000012U,
+    WHEA_ROW_FAIL_CHECK_THRESHOLD = 0x00000013U,
 }
 
-enum uint WHEA_DISABLE_PRM_ADDRESS_TRANSLATION = 0x00000014;
-enum uint WHEA_ENABLE_BATCHED_ROW_OFFLINE = 0x00000015;
+enum uint WHEA_DISABLE_PRM_ADDRESS_TRANSLATION = 0x00000014U;
+enum uint WHEA_ENABLE_BATCHED_ROW_OFFLINE = 0x00000015U;
 
 enum : uint
 {
-    IPMI_OS_SEL_RECORD_VERSION_1 = 0x00000001,
-    IPMI_OS_SEL_RECORD_VERSION   = 0x00000001,
+    IPMI_OS_SEL_RECORD_VERSION_1 = 0x00000001U,
+    IPMI_OS_SEL_RECORD_VERSION   = 0x00000001U,
 }
 
-enum uint IPMI_IOCTL_INDEX = 0x00000400;
-enum uint IOCTL_IPMI_INTERNAL_RECORD_SEL_EVENT = 0x00221000;
-enum uint IPMI_OS_SEL_RECORD_MASK = 0x0000ffff;
+enum uint IPMI_IOCTL_INDEX = 0x00000400U;
+enum uint IOCTL_IPMI_INTERNAL_RECORD_SEL_EVENT = 0x00221000U;
+enum uint IPMI_OS_SEL_RECORD_MASK = 0x0000ffffU;
 enum int sevMax = 0x00000004;
 
 // Callbacks
 
-//DELEGATE ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(4))], [])
-alias PGET_RUNTIME_FUNCTION_CALLBACK = IMAGE_ARM64_RUNTIME_FUNCTION_ENTRY* function(ulong ControlPc, void* Context);
-//DELEGATE ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(2))], [])
-alias PGET_RUNTIME_FUNCTION_CALLBACK = IMAGE_RUNTIME_FUNCTION_ENTRY* function(ulong ControlPc, void* Context);
+
+version(AArch64)
+{
+    alias PGET_RUNTIME_FUNCTION_CALLBACK = IMAGE_ARM64_RUNTIME_FUNCTION_ENTRY* function(ulong ControlPc, void* Context);
+}
+
+version(X86_64)
+{
+    alias PGET_RUNTIME_FUNCTION_CALLBACK = IMAGE_RUNTIME_FUNCTION_ENTRY* function(ulong ControlPc, void* Context);
+}
 alias PVECTORED_EXCEPTION_HANDLER = int function(EXCEPTION_POINTERS* ExceptionInfo);
 alias LPTOP_LEVEL_EXCEPTION_FILTER = int function(EXCEPTION_POINTERS* ExceptionInfo);
 alias PWAITCHAINCALLBACK = void function(void* WctHandle, size_t Context, uint CallbackStatus, uint* NodeCount, 
@@ -2293,16 +2354,28 @@ alias PGET_MODULE_BASE_ROUTINE64 = ulong function(HANDLE hProcess, ulong Address
 alias PTRANSLATE_ADDRESS_ROUTINE64 = ulong function(HANDLE hProcess, HANDLE hThread, ADDRESS64* lpaddr);
 alias PGET_TARGET_ATTRIBUTE_VALUE64 = BOOL function(HANDLE hProcess, uint Attribute, ulong AttributeData, 
                                                     ulong* AttributeValue);
-//DELEGATE ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-alias PREAD_PROCESS_MEMORY_ROUTINE = BOOL function(HANDLE hProcess, uint lpBaseAddress, 
+
+version(X86)
+{
+    alias PREAD_PROCESS_MEMORY_ROUTINE = BOOL function(HANDLE hProcess, uint lpBaseAddress, 
                                                    /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* lpBuffer, 
                                                    uint nSize, uint* lpNumberOfBytesRead);
-//DELEGATE ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-alias PFUNCTION_TABLE_ACCESS_ROUTINE = void* function(HANDLE hProcess, uint AddrBase);
-//DELEGATE ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-alias PGET_MODULE_BASE_ROUTINE = uint function(HANDLE hProcess, uint Address);
-//DELEGATE ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-alias PTRANSLATE_ADDRESS_ROUTINE = uint function(HANDLE hProcess, HANDLE hThread, ADDRESS* lpaddr);
+}
+
+version(X86)
+{
+    alias PFUNCTION_TABLE_ACCESS_ROUTINE = void* function(HANDLE hProcess, uint AddrBase);
+}
+
+version(X86)
+{
+    alias PGET_MODULE_BASE_ROUTINE = uint function(HANDLE hProcess, uint Address);
+}
+
+version(X86)
+{
+    alias PTRANSLATE_ADDRESS_ROUTINE = uint function(HANDLE hProcess, HANDLE hThread, ADDRESS* lpaddr);
+}
 alias PSYM_ENUMMODULES_CALLBACK64 = BOOL function(const(PSTR) ModuleName, ulong BaseOfDll, void* UserContext);
 alias PSYM_ENUMMODULES_CALLBACKW64 = BOOL function(const(PWSTR) ModuleName, ulong BaseOfDll, void* UserContext);
 alias PENUMLOADED_MODULES_CALLBACK64 = BOOL function(const(PSTR) ModuleName, ulong ModuleBase, uint ModuleSize, 
@@ -2319,22 +2392,37 @@ alias PSYMBOL_REGISTERED_CALLBACK64 = BOOL function(HANDLE hProcess, uint Action
                                                     ulong UserContext);
 alias PSYMBOL_FUNCENTRY_CALLBACK = void* function(HANDLE hProcess, uint AddrBase, void* UserContext);
 alias PSYMBOL_FUNCENTRY_CALLBACK64 = void* function(HANDLE hProcess, ulong AddrBase, ulong UserContext);
-//DELEGATE ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-alias PSYM_ENUMMODULES_CALLBACK = BOOL function(const(PSTR) ModuleName, uint BaseOfDll, void* UserContext);
-//DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//DELEGATE ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-alias PSYM_ENUMSYMBOLS_CALLBACK = BOOL function(const(PSTR) SymbolName, uint SymbolAddress, uint SymbolSize, 
+
+version(X86)
+{
+    alias PSYM_ENUMMODULES_CALLBACK = BOOL function(const(PSTR) ModuleName, uint BaseOfDll, void* UserContext);
+}
+
+version(X86)
+{
+    //DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
+    alias PSYM_ENUMSYMBOLS_CALLBACK = BOOL function(const(PSTR) SymbolName, uint SymbolAddress, uint SymbolSize, 
                                                 void* UserContext);
-//DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//DELEGATE ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-alias PSYM_ENUMSYMBOLS_CALLBACKW = BOOL function(const(PWSTR) SymbolName, uint SymbolAddress, uint SymbolSize, 
+}
+
+version(X86)
+{
+    //DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+    alias PSYM_ENUMSYMBOLS_CALLBACKW = BOOL function(const(PWSTR) SymbolName, uint SymbolAddress, uint SymbolSize, 
                                                  void* UserContext);
-//DELEGATE ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-alias PENUMLOADED_MODULES_CALLBACK = BOOL function(const(PSTR) ModuleName, uint ModuleBase, uint ModuleSize, 
+}
+
+version(X86)
+{
+    alias PENUMLOADED_MODULES_CALLBACK = BOOL function(const(PSTR) ModuleName, uint ModuleBase, uint ModuleSize, 
                                                    void* UserContext);
-//DELEGATE ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-alias PSYMBOL_REGISTERED_CALLBACK = BOOL function(HANDLE hProcess, uint ActionCode, void* CallbackData, 
+}
+
+version(X86)
+{
+    alias PSYMBOL_REGISTERED_CALLBACK = BOOL function(HANDLE hProcess, uint ActionCode, void* CallbackData, 
                                                   void* UserContext);
+}
 //DELEGATE ATTR: AnsiAttribute : CustomAttributeSig([], [])
 alias PSYM_ENUMSOURCEFILES_CALLBACK = BOOL function(SOURCEFILE* pSourceFile, void* UserContext);
 //DELEGATE ATTR: UnicodeAttribute : CustomAttributeSig([], [])
@@ -2436,111 +2524,160 @@ alias WHEA_ERROR_SOURCE_CORRECT_DEVICE_DRIVER = NTSTATUS function(void* ErrorSou
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-context))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(4))], [])
-struct CONTEXT
+version(AArch64)
 {
-    CONTEXT_FLAGS        ContextFlags;
-    uint                 Cpsr;
-    _Anonymous_e__Union  Anonymous;
-    ulong                Sp;
-    ulong                Pc;
-    ARM64_NT_NEON128[32] V;
-    uint                 Fpcr;
-    uint                 Fpsr;
-    uint[8]              Bcr;
-    ulong[8]             Bvr;
-    uint[2]              Wcr;
-    ulong[2]             Wvr;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-context
+    struct CONTEXT
+    {
+        CONTEXT_FLAGS        ContextFlags;
+        uint                 Cpsr;
+        union
+        {
+            struct
+            {
+                ulong X0;
+                ulong X1;
+                ulong X2;
+                ulong X3;
+                ulong X4;
+                ulong X5;
+                ulong X6;
+                ulong X7;
+                ulong X8;
+                ulong X9;
+                ulong X10;
+                ulong X11;
+                ulong X12;
+                ulong X13;
+                ulong X14;
+                ulong X15;
+                ulong X16;
+                ulong X17;
+                ulong X18;
+                ulong X19;
+                ulong X20;
+                ulong X21;
+                ulong X22;
+                ulong X23;
+                ulong X24;
+                ulong X25;
+                ulong X26;
+                ulong X27;
+                ulong X28;
+                ulong Fp;
+                ulong Lr;
+            }
+            ulong[31] X;
+        }
+        ulong                Sp;
+        ulong                Pc;
+        ARM64_NT_NEON128[32] V;
+        uint                 Fpcr;
+        uint                 Fpsr;
+        uint[8]              Bcr;
+        ulong[8]             Bvr;
+        uint[2]              Wcr;
+        ulong[2]             Wvr;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(4))], [])
-struct DISPATCHER_CONTEXT
+version(AArch64)
 {
-    size_t            ControlPc;
-    size_t            ImageBase;
-    IMAGE_ARM64_RUNTIME_FUNCTION_ENTRY* FunctionEntry;
-    size_t            EstablisherFrame;
-    size_t            TargetPc;
-    CONTEXT*          ContextRecord;
-    EXCEPTION_ROUTINE LanguageHandler;
-    void*             HandlerData;
-    UNWIND_HISTORY_TABLE* HistoryTable;
-    uint              ScopeIndex;
-    BOOLEAN           ControlPcIsUnwound;
-    ubyte*            NonVolatileRegisters;
+    struct DISPATCHER_CONTEXT
+    {
+        size_t            ControlPc;
+        size_t            ImageBase;
+        IMAGE_ARM64_RUNTIME_FUNCTION_ENTRY* FunctionEntry;
+        size_t            EstablisherFrame;
+        size_t            TargetPc;
+        CONTEXT*          ContextRecord;
+        EXCEPTION_ROUTINE LanguageHandler;
+        void*             HandlerData;
+        UNWIND_HISTORY_TABLE* HistoryTable;
+        uint              ScopeIndex;
+        BOOLEAN           ControlPcIsUnwound;
+        ubyte*            NonVolatileRegisters;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(4))], [])
-struct KNONVOLATILE_CONTEXT_POINTERS
+version(AArch64)
 {
-    ulong* X19;
-    ulong* X20;
-    ulong* X21;
-    ulong* X22;
-    ulong* X23;
-    ulong* X24;
-    ulong* X25;
-    ulong* X26;
-    ulong* X27;
-    ulong* X28;
-    ulong* Fp;
-    ulong* Lr;
-    ulong* D8;
-    ulong* D9;
-    ulong* D10;
-    ulong* D11;
-    ulong* D12;
-    ulong* D13;
-    ulong* D14;
-    ulong* D15;
+    struct KNONVOLATILE_CONTEXT_POINTERS
+    {
+        ulong* X19;
+        ulong* X20;
+        ulong* X21;
+        ulong* X22;
+        ulong* X23;
+        ulong* X24;
+        ulong* X25;
+        ulong* X26;
+        ulong* X27;
+        ulong* X28;
+        ulong* Fp;
+        ulong* Lr;
+        ulong* D8;
+        ulong* D9;
+        ulong* D10;
+        ulong* D11;
+        ulong* D12;
+        ulong* D13;
+        ulong* D14;
+        ulong* D15;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(4))], [])
-struct UNWIND_HISTORY_TABLE_ENTRY
+version(AArch64)
 {
-    size_t ImageBase;
-    IMAGE_ARM64_RUNTIME_FUNCTION_ENTRY* FunctionEntry;
+    struct UNWIND_HISTORY_TABLE_ENTRY
+    {
+        size_t ImageBase;
+        IMAGE_ARM64_RUNTIME_FUNCTION_ENTRY* FunctionEntry;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_thread_callback))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(4))], [])
-struct MINIDUMP_THREAD_CALLBACK
+version(AArch64)
 {
-align (4):
-    uint    ThreadId;
-    HANDLE  ThreadHandle;
-    uint    Pad;
-    CONTEXT Context;
-    uint    SizeOfContext;
-    ulong   StackBase;
-    ulong   StackEnd;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_thread_callback
+    struct MINIDUMP_THREAD_CALLBACK
+    {
+    align (4):
+        uint    ThreadId;
+        HANDLE  ThreadHandle;
+        uint    Pad;
+        CONTEXT Context;
+        uint    SizeOfContext;
+        ulong   StackBase;
+        ulong   StackEnd;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_thread_ex_callback))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(4))], [])
-struct MINIDUMP_THREAD_EX_CALLBACK
+version(AArch64)
 {
-align (4):
-    uint    ThreadId;
-    HANDLE  ThreadHandle;
-    uint    Pad;
-    CONTEXT Context;
-    uint    SizeOfContext;
-    ulong   StackBase;
-    ulong   StackEnd;
-    ulong   BackingStoreBase;
-    ulong   BackingStoreEnd;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_thread_ex_callback
+    struct MINIDUMP_THREAD_EX_CALLBACK
+    {
+    align (4):
+        uint    ThreadId;
+        HANDLE  ThreadHandle;
+        uint    Pad;
+        CONTEXT Context;
+        uint    SizeOfContext;
+        ulong   StackBase;
+        ulong   StackEnd;
+        ulong   BackingStoreBase;
+        ulong   BackingStoreEnd;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minwinbase/ns-minwinbase-exception_debug_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minwinbase/ns-minwinbase-exception_debug_info
 struct EXCEPTION_DEBUG_INFO
 {
     EXCEPTION_RECORD ExceptionRecord;
     uint             dwFirstChance;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minwinbase/ns-minwinbase-create_thread_debug_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minwinbase/ns-minwinbase-create_thread_debug_info
 struct CREATE_THREAD_DEBUG_INFO
 {
     HANDLE hThread;
@@ -2548,7 +2685,7 @@ struct CREATE_THREAD_DEBUG_INFO
     LPTHREAD_START_ROUTINE lpStartAddress;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minwinbase/ns-minwinbase-create_process_debug_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minwinbase/ns-minwinbase-create_process_debug_info
 struct CREATE_PROCESS_DEBUG_INFO
 {
     HANDLE hFile;
@@ -2563,19 +2700,19 @@ struct CREATE_PROCESS_DEBUG_INFO
     ushort fUnicode;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minwinbase/ns-minwinbase-exit_thread_debug_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minwinbase/ns-minwinbase-exit_thread_debug_info
 struct EXIT_THREAD_DEBUG_INFO
 {
     uint dwExitCode;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minwinbase/ns-minwinbase-exit_process_debug_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minwinbase/ns-minwinbase-exit_process_debug_info
 struct EXIT_PROCESS_DEBUG_INFO
 {
     uint dwExitCode;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minwinbase/ns-minwinbase-load_dll_debug_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minwinbase/ns-minwinbase-load_dll_debug_info
 struct LOAD_DLL_DEBUG_INFO
 {
     HANDLE hFile;
@@ -2586,13 +2723,13 @@ struct LOAD_DLL_DEBUG_INFO
     ushort fUnicode;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minwinbase/ns-minwinbase-unload_dll_debug_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minwinbase/ns-minwinbase-unload_dll_debug_info
 struct UNLOAD_DLL_DEBUG_INFO
 {
     void* lpBaseOfDll;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minwinbase/ns-minwinbase-output_debug_string_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minwinbase/ns-minwinbase-output_debug_string_info
 struct OUTPUT_DEBUG_STRING_INFO
 {
     PSTR   lpDebugStringData;
@@ -2600,23 +2737,34 @@ struct OUTPUT_DEBUG_STRING_INFO
     ushort nDebugStringLength;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minwinbase/ns-minwinbase-rip_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minwinbase/ns-minwinbase-rip_info
 struct RIP_INFO
 {
     uint          dwError;
     RIP_INFO_TYPE dwType;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minwinbase/ns-minwinbase-debug_event))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minwinbase/ns-minwinbase-debug_event
 struct DEBUG_EVENT
 {
     DEBUG_EVENT_CODE dwDebugEventCode;
     uint             dwProcessId;
     uint             dwThreadId;
-    _u_e__Union      u;
+    union u
+    {
+        EXCEPTION_DEBUG_INFO Exception;
+        CREATE_THREAD_DEBUG_INFO CreateThread;
+        CREATE_PROCESS_DEBUG_INFO CreateProcessInfo;
+        EXIT_THREAD_DEBUG_INFO ExitThread;
+        EXIT_PROCESS_DEBUG_INFO ExitProcess;
+        LOAD_DLL_DEBUG_INFO  LoadDll;
+        UNLOAD_DLL_DEBUG_INFO UnloadDll;
+        OUTPUT_DEBUG_STRING_INFO DebugString;
+        RIP_INFO             RipInfo;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/processthreadsapi/ns-processthreadsapi-apc_callback_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/processthreadsapi/ns-processthreadsapi-apc_callback_data
 struct APC_CALLBACK_DATA
 {
     size_t   Parameter;
@@ -2625,189 +2773,332 @@ struct APC_CALLBACK_DATA
     size_t   Reserved1;
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct XSAVE_FORMAT
+version(X86_64)
 {
-    ushort    ControlWord;
-    ushort    StatusWord;
-    ubyte     TagWord;
-    ubyte     Reserved1;
-    ushort    ErrorOpcode;
-    uint      ErrorOffset;
-    ushort    ErrorSelector;
-    ushort    Reserved2;
-    uint      DataOffset;
-    ushort    DataSelector;
-    ushort    Reserved3;
-    uint      MxCsr;
-    uint      MxCsr_Mask;
-    M128A[8]  FloatRegisters;
-    M128A[16] XmmRegisters;
-    ubyte[96] Reserved4;
+    struct XSAVE_FORMAT
+    {
+        ushort    ControlWord;
+        ushort    StatusWord;
+        ubyte     TagWord;
+        ubyte     Reserved1;
+        ushort    ErrorOpcode;
+        uint      ErrorOffset;
+        ushort    ErrorSelector;
+        ushort    Reserved2;
+        uint      DataOffset;
+        ushort    DataSelector;
+        ushort    Reserved3;
+        uint      MxCsr;
+        uint      MxCsr_Mask;
+        M128A[8]  FloatRegisters;
+        M128A[16] XmmRegisters;
+        ubyte[96] Reserved4;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct XSTATE_CONTEXT
+version(AArch64)
 {
-    ulong       Mask;
-    uint        Length;
-    ubyte       Flags;
-    ubyte[3]    Reserved0;
-    XSAVE_AREA* Area;
-    void*       Buffer;
+    struct XSAVE_FORMAT
+    {
+        ushort    ControlWord;
+        ushort    StatusWord;
+        ubyte     TagWord;
+        ubyte     Reserved1;
+        ushort    ErrorOpcode;
+        uint      ErrorOffset;
+        ushort    ErrorSelector;
+        ushort    Reserved2;
+        uint      DataOffset;
+        ushort    DataSelector;
+        ushort    Reserved3;
+        uint      MxCsr;
+        uint      MxCsr_Mask;
+        M128A[8]  FloatRegisters;
+        M128A[16] XmmRegisters;
+        ubyte[96] Reserved4;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-context))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(2))], [])
-struct CONTEXT
+version(X86_64)
 {
-    ulong               P1Home;
-    ulong               P2Home;
-    ulong               P3Home;
-    ulong               P4Home;
-    ulong               P5Home;
-    ulong               P6Home;
-    CONTEXT_FLAGS       ContextFlags;
-    uint                MxCsr;
-    ushort              SegCs;
-    ushort              SegDs;
-    ushort              SegEs;
-    ushort              SegFs;
-    ushort              SegGs;
-    ushort              SegSs;
-    uint                EFlags;
-    ulong               Dr0;
-    ulong               Dr1;
-    ulong               Dr2;
-    ulong               Dr3;
-    ulong               Dr6;
-    ulong               Dr7;
-    ulong               Rax;
-    ulong               Rcx;
-    ulong               Rdx;
-    ulong               Rbx;
-    ulong               Rsp;
-    ulong               Rbp;
-    ulong               Rsi;
-    ulong               Rdi;
-    ulong               R8;
-    ulong               R9;
-    ulong               R10;
-    ulong               R11;
-    ulong               R12;
-    ulong               R13;
-    ulong               R14;
-    ulong               R15;
-    ulong               Rip;
-    _Anonymous_e__Union Anonymous;
-    M128A[26]           VectorRegister;
-    ulong               VectorControl;
-    ulong               DebugControl;
-    ulong               LastBranchToRip;
-    ulong               LastBranchFromRip;
-    ulong               LastExceptionToRip;
-    ulong               LastExceptionFromRip;
+    struct XSTATE_CONTEXT
+    {
+        ulong       Mask;
+        uint        Length;
+        ubyte       Flags;
+        ubyte[3]    Reserved0;
+        XSAVE_AREA* Area;
+        void*       Buffer;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(2))], [])
-struct DISPATCHER_CONTEXT
+version(AArch64)
 {
-    ulong             ControlPc;
-    ulong             ImageBase;
-    IMAGE_RUNTIME_FUNCTION_ENTRY* FunctionEntry;
-    ulong             EstablisherFrame;
-    ulong             TargetIp;
-    CONTEXT*          ContextRecord;
-    EXCEPTION_ROUTINE LanguageHandler;
-    void*             HandlerData;
-    UNWIND_HISTORY_TABLE* HistoryTable;
-    uint              ScopeIndex;
-    uint              Fill0;
+    struct XSTATE_CONTEXT
+    {
+        ulong       Mask;
+        uint        Length;
+        ubyte       Flags;
+        ubyte[3]    Reserved0;
+        XSAVE_AREA* Area;
+        void*       Buffer;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(2))], [])
-struct KNONVOLATILE_CONTEXT_POINTERS
+version(X86_64)
 {
-    _Anonymous1_e__Union Anonymous1;
-    _Anonymous2_e__Union Anonymous2;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-context
+    struct CONTEXT
+    {
+        ulong               P1Home;
+        ulong               P2Home;
+        ulong               P3Home;
+        ulong               P4Home;
+        ulong               P5Home;
+        ulong               P6Home;
+        CONTEXT_FLAGS       ContextFlags;
+        uint                MxCsr;
+        ushort              SegCs;
+        ushort              SegDs;
+        ushort              SegEs;
+        ushort              SegFs;
+        ushort              SegGs;
+        ushort              SegSs;
+        uint                EFlags;
+        ulong               Dr0;
+        ulong               Dr1;
+        ulong               Dr2;
+        ulong               Dr3;
+        ulong               Dr6;
+        ulong               Dr7;
+        ulong               Rax;
+        ulong               Rcx;
+        ulong               Rdx;
+        ulong               Rbx;
+        ulong               Rsp;
+        ulong               Rbp;
+        ulong               Rsi;
+        ulong               Rdi;
+        ulong               R8;
+        ulong               R9;
+        ulong               R10;
+        ulong               R11;
+        ulong               R12;
+        ulong               R13;
+        ulong               R14;
+        ulong               R15;
+        ulong               Rip;
+        _Anonymous_e__Union Anonymous;
+        M128A[26]           VectorRegister;
+        ulong               VectorControl;
+        ulong               DebugControl;
+        ulong               LastBranchToRip;
+        ulong               LastBranchFromRip;
+        ulong               LastExceptionToRip;
+        ulong               LastExceptionFromRip;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(2))], [])
-struct UNWIND_HISTORY_TABLE_ENTRY
+version(X86_64)
 {
-    size_t ImageBase;
-    IMAGE_RUNTIME_FUNCTION_ENTRY* FunctionEntry;
+    struct DISPATCHER_CONTEXT
+    {
+        ulong             ControlPc;
+        ulong             ImageBase;
+        IMAGE_RUNTIME_FUNCTION_ENTRY* FunctionEntry;
+        ulong             EstablisherFrame;
+        ulong             TargetIp;
+        CONTEXT*          ContextRecord;
+        EXCEPTION_ROUTINE LanguageHandler;
+        void*             HandlerData;
+        UNWIND_HISTORY_TABLE* HistoryTable;
+        uint              ScopeIndex;
+        uint              Fill0;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct UNWIND_HISTORY_TABLE
+version(X86_64)
 {
-    uint   Count;
-    ubyte  LocalHint;
-    ubyte  GlobalHint;
-    ubyte  Search;
-    ubyte  Once;
-    size_t LowAddress;
-    size_t HighAddress;
-    UNWIND_HISTORY_TABLE_ENTRY[12] Entry;
+    struct KNONVOLATILE_CONTEXT_POINTERS
+    {
+        _Anonymous1_e__Union Anonymous1;
+        _Anonymous2_e__Union Anonymous2;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_exception_information))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct MINIDUMP_EXCEPTION_INFORMATION
+version(X86_64)
 {
-align (4):
-    uint                ThreadId;
-    EXCEPTION_POINTERS* ExceptionPointers;
-    BOOL                ClientPointers;
+    struct UNWIND_HISTORY_TABLE_ENTRY
+    {
+        size_t ImageBase;
+        IMAGE_RUNTIME_FUNCTION_ENTRY* FunctionEntry;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_user_stream))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct MINIDUMP_USER_STREAM
+version(X86_64)
 {
-align (4):
-    uint  Type;
-    uint  BufferSize;
-    void* Buffer;
+    struct UNWIND_HISTORY_TABLE
+    {
+        uint   Count;
+        ubyte  LocalHint;
+        ubyte  GlobalHint;
+        ubyte  Search;
+        ubyte  Once;
+        size_t LowAddress;
+        size_t HighAddress;
+        UNWIND_HISTORY_TABLE_ENTRY[12] Entry;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_user_stream_information))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct MINIDUMP_USER_STREAM_INFORMATION
+version(AArch64)
 {
-align (4):
-    uint UserStreamCount;
-    MINIDUMP_USER_STREAM* UserStreamArray;
+    struct UNWIND_HISTORY_TABLE
+    {
+        uint   Count;
+        ubyte  LocalHint;
+        ubyte  GlobalHint;
+        ubyte  Search;
+        ubyte  Once;
+        size_t LowAddress;
+        size_t HighAddress;
+        UNWIND_HISTORY_TABLE_ENTRY[12] Entry;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_callback_information))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct MINIDUMP_CALLBACK_INFORMATION
+version(X86_64)
 {
-align (4):
-    MINIDUMP_CALLBACK_ROUTINE CallbackRoutine;
-    void* CallbackParam;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_exception_information
+    struct MINIDUMP_EXCEPTION_INFORMATION
+    {
+    align (4):
+        uint                ThreadId;
+        EXCEPTION_POINTERS* ExceptionPointers;
+        BOOL                ClientPointers;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-loaded_image))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct LOADED_IMAGE
+version(AArch64)
 {
-    PSTR                ModuleName;
-    HANDLE              hFile;
-    ubyte*              MappedAddress;
-    IMAGE_NT_HEADERS64* FileHeader;
-    IMAGE_SECTION_HEADER* LastRvaSection;
-    uint                NumberOfSections;
-    IMAGE_SECTION_HEADER* Sections;
-    IMAGE_FILE_CHARACTERISTICS2 Characteristics;
-    BOOLEAN             fSystemImage;
-    BOOLEAN             fDOSImage;
-    BOOLEAN             fReadOnly;
-    ubyte               Version;
-    LIST_ENTRY          Links;
-    uint                SizeOfImage;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_exception_information
+    struct MINIDUMP_EXCEPTION_INFORMATION
+    {
+    align (4):
+        uint                ThreadId;
+        EXCEPTION_POINTERS* ExceptionPointers;
+        BOOL                ClientPointers;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_user_stream
+    struct MINIDUMP_USER_STREAM
+    {
+    align (4):
+        uint  Type;
+        uint  BufferSize;
+        void* Buffer;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_user_stream
+    struct MINIDUMP_USER_STREAM
+    {
+    align (4):
+        uint  Type;
+        uint  BufferSize;
+        void* Buffer;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_user_stream_information
+    struct MINIDUMP_USER_STREAM_INFORMATION
+    {
+    align (4):
+        uint UserStreamCount;
+        MINIDUMP_USER_STREAM* UserStreamArray;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_user_stream_information
+    struct MINIDUMP_USER_STREAM_INFORMATION
+    {
+    align (4):
+        uint UserStreamCount;
+        MINIDUMP_USER_STREAM* UserStreamArray;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_callback_information
+    struct MINIDUMP_CALLBACK_INFORMATION
+    {
+    align (4):
+        MINIDUMP_CALLBACK_ROUTINE CallbackRoutine;
+        void* CallbackParam;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_callback_information
+    struct MINIDUMP_CALLBACK_INFORMATION
+    {
+    align (4):
+        MINIDUMP_CALLBACK_ROUTINE CallbackRoutine;
+        void* CallbackParam;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-loaded_image
+    struct LOADED_IMAGE
+    {
+        PSTR                ModuleName;
+        HANDLE              hFile;
+        ubyte*              MappedAddress;
+        IMAGE_NT_HEADERS64* FileHeader;
+        IMAGE_SECTION_HEADER* LastRvaSection;
+        uint                NumberOfSections;
+        IMAGE_SECTION_HEADER* Sections;
+        IMAGE_FILE_CHARACTERISTICS2 Characteristics;
+        BOOLEAN             fSystemImage;
+        BOOLEAN             fDOSImage;
+        BOOLEAN             fReadOnly;
+        ubyte               Version;
+        LIST_ENTRY          Links;
+        uint                SizeOfImage;
+    }
+}
+
+version(AArch64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-loaded_image
+    struct LOADED_IMAGE
+    {
+        PSTR                ModuleName;
+        HANDLE              hFile;
+        ubyte*              MappedAddress;
+        IMAGE_NT_HEADERS64* FileHeader;
+        IMAGE_SECTION_HEADER* LastRvaSection;
+        uint                NumberOfSections;
+        IMAGE_SECTION_HEADER* Sections;
+        IMAGE_FILE_CHARACTERISTICS2 Characteristics;
+        BOOLEAN             fSystemImage;
+        BOOLEAN             fDOSImage;
+        BOOLEAN             fReadOnly;
+        ubyte               Version;
+        LIST_ENTRY          Links;
+        uint                SizeOfImage;
+    }
 }
 
 struct M128A
@@ -2816,25 +3107,27 @@ struct M128A
     long  High;
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct XSAVE_FORMAT
+version(X86)
 {
-    ushort     ControlWord;
-    ushort     StatusWord;
-    ubyte      TagWord;
-    ubyte      Reserved1;
-    ushort     ErrorOpcode;
-    uint       ErrorOffset;
-    ushort     ErrorSelector;
-    ushort     Reserved2;
-    uint       DataOffset;
-    ushort     DataSelector;
-    ushort     Reserved3;
-    uint       MxCsr;
-    uint       MxCsr_Mask;
-    M128A[8]   FloatRegisters;
-    M128A[8]   XmmRegisters;
-    ubyte[224] Reserved4;
+    struct XSAVE_FORMAT
+    {
+        ushort     ControlWord;
+        ushort     StatusWord;
+        ubyte      TagWord;
+        ubyte      Reserved1;
+        ushort     ErrorOpcode;
+        uint       ErrorOffset;
+        ushort     ErrorSelector;
+        ushort     Reserved2;
+        uint       DataOffset;
+        ushort     DataSelector;
+        ushort     Reserved3;
+        uint       MxCsr;
+        uint       MxCsr_Mask;
+        M128A[8]   FloatRegisters;
+        M128A[8]   XmmRegisters;
+        ubyte[224] Reserved4;
+    }
 }
 
 struct XSAVE_AREA_HEADER
@@ -2850,92 +3143,211 @@ struct XSAVE_AREA
     XSAVE_AREA_HEADER Header;
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct XSTATE_CONTEXT
+version(X86)
 {
-    ulong       Mask;
-    uint        Length;
-    ubyte       Flags;
-    ubyte[3]    Reserved0;
-    XSAVE_AREA* Area;
-    uint        Reserved2;
-    void*       Buffer;
-    uint        Reserved3;
+    struct XSTATE_CONTEXT
+    {
+        ulong       Mask;
+        uint        Length;
+        ubyte       Flags;
+        ubyte[3]    Reserved0;
+        XSAVE_AREA* Area;
+        uint        Reserved2;
+        void*       Buffer;
+        uint        Reserved3;
+    }
 }
 
 union ARM64_NT_NEON128
 {
-    _Anonymous_e__Struct Anonymous;
-    double[2]            D;
-    float[4]             S;
-    ushort[8]            H;
-    ubyte[16]            B;
+    struct
+    {
+        ulong Low;
+        long  High;
+    }
+    double[2] D;
+    float[4]  S;
+    ushort[8] H;
+    ubyte[16] B;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-arm64_nt_context))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(3))], [])
-struct ARM64_NT_CONTEXT
+version(X86)
 {
-    uint                 ContextFlags;
-    uint                 Cpsr;
-    _Anonymous_e__Union  Anonymous;
-    ulong                Sp;
-    ulong                Pc;
-    ARM64_NT_NEON128[32] V;
-    uint                 Fpcr;
-    uint                 Fpsr;
-    uint[8]              Bcr;
-    ulong[8]             Bvr;
-    uint[2]              Wcr;
-    ulong[2]             Wvr;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-arm64_nt_context
+    struct ARM64_NT_CONTEXT
+    {
+        uint                 ContextFlags;
+        uint                 Cpsr;
+        union
+        {
+            struct
+            {
+                ulong X0;
+                ulong X1;
+                ulong X2;
+                ulong X3;
+                ulong X4;
+                ulong X5;
+                ulong X6;
+                ulong X7;
+                ulong X8;
+                ulong X9;
+                ulong X10;
+                ulong X11;
+                ulong X12;
+                ulong X13;
+                ulong X14;
+                ulong X15;
+                ulong X16;
+                ulong X17;
+                ulong X18;
+                ulong X19;
+                ulong X20;
+                ulong X21;
+                ulong X22;
+                ulong X23;
+                ulong X24;
+                ulong X25;
+                ulong X26;
+                ulong X27;
+                ulong X28;
+                ulong Fp;
+                ulong Lr;
+            }
+            ulong[31] X;
+        }
+        ulong                Sp;
+        ulong                Pc;
+        ARM64_NT_NEON128[32] V;
+        uint                 Fpcr;
+        uint                 Fpsr;
+        uint[8]              Bcr;
+        ulong[8]             Bvr;
+        uint[2]              Wcr;
+        ulong[2]             Wvr;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-context))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct CONTEXT
+version(X86_64)
 {
-    CONTEXT_FLAGS      ContextFlags;
-    uint               Dr0;
-    uint               Dr1;
-    uint               Dr2;
-    uint               Dr3;
-    uint               Dr6;
-    uint               Dr7;
-    FLOATING_SAVE_AREA FloatSave;
-    uint               SegGs;
-    uint               SegFs;
-    uint               SegEs;
-    uint               SegDs;
-    uint               Edi;
-    uint               Esi;
-    uint               Ebx;
-    uint               Edx;
-    uint               Ecx;
-    uint               Eax;
-    uint               Ebp;
-    uint               Eip;
-    uint               SegCs;
-    uint               EFlags;
-    uint               Esp;
-    uint               SegSs;
-    ubyte[512]         ExtendedRegisters;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-arm64_nt_context
+    struct ARM64_NT_CONTEXT
+    {
+        uint                 ContextFlags;
+        uint                 Cpsr;
+        union
+        {
+            struct
+            {
+                ulong X0;
+                ulong X1;
+                ulong X2;
+                ulong X3;
+                ulong X4;
+                ulong X5;
+                ulong X6;
+                ulong X7;
+                ulong X8;
+                ulong X9;
+                ulong X10;
+                ulong X11;
+                ulong X12;
+                ulong X13;
+                ulong X14;
+                ulong X15;
+                ulong X16;
+                ulong X17;
+                ulong X18;
+                ulong X19;
+                ulong X20;
+                ulong X21;
+                ulong X22;
+                ulong X23;
+                ulong X24;
+                ulong X25;
+                ulong X26;
+                ulong X27;
+                ulong X28;
+                ulong Fp;
+                ulong Lr;
+            }
+            ulong[31] X;
+        }
+        ulong                Sp;
+        ulong                Pc;
+        ARM64_NT_NEON128[32] V;
+        uint                 Fpcr;
+        uint                 Fpsr;
+        uint[8]              Bcr;
+        ulong[8]             Bvr;
+        uint[2]              Wcr;
+        ulong[2]             Wvr;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-ldt_entry))], [])
+version(X86)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-context
+    struct CONTEXT
+    {
+        CONTEXT_FLAGS      ContextFlags;
+        uint               Dr0;
+        uint               Dr1;
+        uint               Dr2;
+        uint               Dr3;
+        uint               Dr6;
+        uint               Dr7;
+        FLOATING_SAVE_AREA FloatSave;
+        uint               SegGs;
+        uint               SegFs;
+        uint               SegEs;
+        uint               SegDs;
+        uint               Edi;
+        uint               Esi;
+        uint               Ebx;
+        uint               Edx;
+        uint               Ecx;
+        uint               Eax;
+        uint               Ebp;
+        uint               Eip;
+        uint               SegCs;
+        uint               EFlags;
+        uint               Esp;
+        uint               SegSs;
+        ubyte[512]         ExtendedRegisters;
+    }
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-ldt_entry
 struct LDT_ENTRY
 {
-    ushort             LimitLow;
-    ushort             BaseLow;
-    _HighWord_e__Union HighWord;
+    ushort LimitLow;
+    ushort BaseLow;
+    union HighWord
+    {
+        struct Bytes
+        {
+            ubyte BaseMid;
+            ubyte Flags1;
+            ubyte Flags2;
+            ubyte BaseHi;
+        }
+        struct Bits
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(BaseHi)), FixedArgSig(ElementSig(24)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield373;
+        }
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct KNONVOLATILE_CONTEXT_POINTERS
+version(X86)
 {
-    uint Dummy;
+    struct KNONVOLATILE_CONTEXT_POINTERS
+    {
+        uint Dummy;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-wow64_floating_save_area))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-wow64_floating_save_area
 struct WOW64_FLOATING_SAVE_AREA
 {
     uint      ControlWord;
@@ -2949,7 +3361,7 @@ struct WOW64_FLOATING_SAVE_AREA
     uint      Cr0NpxState;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-wow64_context))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-wow64_context
 struct WOW64_CONTEXT
 {
     WOW64_CONTEXT_FLAGS ContextFlags;
@@ -2979,12 +3391,25 @@ struct WOW64_CONTEXT
     ubyte[512]          ExtendedRegisters;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-wow64_ldt_entry))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-wow64_ldt_entry
 struct WOW64_LDT_ENTRY
 {
-    ushort             LimitLow;
-    ushort             BaseLow;
-    _HighWord_e__Union HighWord;
+    ushort LimitLow;
+    ushort BaseLow;
+    union HighWord
+    {
+        struct Bytes
+        {
+            ubyte BaseMid;
+            ubyte Flags1;
+            ubyte Flags2;
+            ubyte BaseHi;
+        }
+        struct Bits
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(BaseHi)), FixedArgSig(ElementSig(24)), FixedArgSig(ElementSig(8))], [])*/uint _bitfield374;
+        }
+    }
 }
 
 struct WOW64_DESCRIPTOR_TABLE_ENTRY
@@ -2993,7 +3418,7 @@ struct WOW64_DESCRIPTOR_TABLE_ENTRY
     WOW64_LDT_ENTRY Descriptor;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-exception_record))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-exception_record
 struct EXCEPTION_RECORD
 {
     NTSTATUS          ExceptionCode;
@@ -3014,7 +3439,7 @@ struct EXCEPTION_RECORD32
     uint[15] ExceptionInformation;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-exception_record64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-exception_record64
 struct EXCEPTION_RECORD64
 {
     NTSTATUS  ExceptionCode;
@@ -3026,7 +3451,7 @@ struct EXCEPTION_RECORD64
     ulong[15] ExceptionInformation;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-exception_pointers))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-exception_pointers
 struct EXCEPTION_POINTERS
 {
     EXCEPTION_RECORD* ExceptionRecord;
@@ -3041,23 +3466,30 @@ struct XSTATE_FEATURE
 
 struct XSTATE_CONFIGURATION
 {
-    ulong               EnabledFeatures;
-    ulong               EnabledVolatileFeatures;
-    uint                Size;
-    _Anonymous_e__Union Anonymous;
-    XSTATE_FEATURE[64]  Features;
-    ulong               EnabledSupervisorFeatures;
-    ulong               AlignedFeatures;
-    uint                AllFeatureSize;
-    uint[64]            AllFeatures;
-    ulong               EnabledUserVisibleSupervisorFeatures;
-    ulong               ExtendedFeatureDisableFeatures;
-    uint                AllNonLargeFeatureSize;
-    ushort              MaxSveVectorLength;
-    ushort              Spare1;
+    ulong              EnabledFeatures;
+    ulong              EnabledVolatileFeatures;
+    uint               Size;
+    union
+    {
+        uint ControlFlags;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ExtendedFeatureDisable)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(1))], [])*/uint _bitfield375;
+        }
+    }
+    XSTATE_FEATURE[64] Features;
+    ulong              EnabledSupervisorFeatures;
+    ulong              AlignedFeatures;
+    uint               AllFeatureSize;
+    uint[64]           AllFeatures;
+    ulong              EnabledUserVisibleSupervisorFeatures;
+    ulong              ExtendedFeatureDisableFeatures;
+    uint               AllNonLargeFeatureSize;
+    ushort             MaxSveVectorLength;
+    ushort             Spare1;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-image_file_header))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-image_file_header
 struct IMAGE_FILE_HEADER
 {
     IMAGE_FILE_MACHINE Machine;
@@ -3069,14 +3501,14 @@ struct IMAGE_FILE_HEADER
     IMAGE_FILE_CHARACTERISTICS Characteristics;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-image_data_directory))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-image_data_directory
 struct IMAGE_DATA_DIRECTORY
 {
     uint VirtualAddress;
     uint Size;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-image_optional_header32))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-image_optional_header32
 struct IMAGE_OPTIONAL_HEADER32
 {
     IMAGE_OPTIONAL_HEADER_MAGIC Magic;
@@ -3129,7 +3561,7 @@ struct IMAGE_ROM_OPTIONAL_HEADER
     uint    GpValue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-image_optional_header64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-image_optional_header64
 struct IMAGE_OPTIONAL_HEADER64
 {
 align (4):
@@ -3165,7 +3597,7 @@ align (4):
     IMAGE_DATA_DIRECTORY[16] DataDirectory;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-image_nt_headers64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-image_nt_headers64
 struct IMAGE_NT_HEADERS64
 {
     uint              Signature;
@@ -3173,7 +3605,7 @@ struct IMAGE_NT_HEADERS64
     IMAGE_OPTIONAL_HEADER64 OptionalHeader;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-image_nt_headers32))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-image_nt_headers32
 struct IMAGE_NT_HEADERS32
 {
     uint              Signature;
@@ -3187,18 +3619,22 @@ struct IMAGE_ROM_HEADERS
     IMAGE_ROM_OPTIONAL_HEADER OptionalHeader;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-image_section_header))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-image_section_header
 struct IMAGE_SECTION_HEADER
 {
-    ubyte[8]       Name;
-    _Misc_e__Union Misc;
-    uint           VirtualAddress;
-    uint           SizeOfRawData;
-    uint           PointerToRawData;
-    uint           PointerToRelocations;
-    uint           PointerToLinenumbers;
-    ushort         NumberOfRelocations;
-    ushort         NumberOfLinenumbers;
+    ubyte[8] Name;
+    union Misc
+    {
+        uint PhysicalAddress;
+        uint VirtualSize;
+    }
+    uint     VirtualAddress;
+    uint     SizeOfRawData;
+    uint     PointerToRawData;
+    uint     PointerToRelocations;
+    uint     PointerToLinenumbers;
+    ushort   NumberOfRelocations;
+    ushort   NumberOfLinenumbers;
     IMAGE_SECTION_CHARACTERISTICS Characteristics;
 }
 
@@ -3210,7 +3646,7 @@ struct IMAGE_LOAD_CONFIG_CODE_INTEGRITY
     uint   Reserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-image_load_config_directory32))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-image_load_config_directory32
 struct IMAGE_LOAD_CONFIG_DIRECTORY32
 {
     uint   Size;
@@ -3265,7 +3701,7 @@ struct IMAGE_LOAD_CONFIG_DIRECTORY32
     uint   UmaFunctionPointers;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-image_load_config_directory64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-image_load_config_directory64
 struct IMAGE_LOAD_CONFIG_DIRECTORY64
 {
 align (4):
@@ -3323,18 +3759,29 @@ align (4):
 
 struct IMAGE_ARM64_RUNTIME_FUNCTION_ENTRY
 {
-    uint                BeginAddress;
-    _Anonymous_e__Union Anonymous;
+    uint BeginAddress;
+    union
+    {
+        uint UnwindData;
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(FrameSize)), FixedArgSig(ElementSig(23)), FixedArgSig(ElementSig(9))], [])*/uint _bitfield376;
+        }
+    }
 }
 
 struct IMAGE_RUNTIME_FUNCTION_ENTRY
 {
-    uint                BeginAddress;
-    uint                EndAddress;
-    _Anonymous_e__Union Anonymous;
+    uint BeginAddress;
+    uint EndAddress;
+    union
+    {
+        uint UnwindInfoAddress;
+        uint UnwindData;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-image_debug_directory))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-image_debug_directory
 struct IMAGE_DEBUG_DIRECTORY
 {
     uint             Characteristics;
@@ -3347,7 +3794,7 @@ struct IMAGE_DEBUG_DIRECTORY
     uint             PointerToRawData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-image_coff_symbols_header))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-image_coff_symbols_header
 struct IMAGE_COFF_SYMBOLS_HEADER
 {
     uint NumberOfSymbols;
@@ -3360,17 +3807,17 @@ struct IMAGE_COFF_SYMBOLS_HEADER
     uint RvaToLastByteOfData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-fpo_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-fpo_data
 struct FPO_DATA
 {
     uint   ulOffStart;
     uint   cbProcSize;
     uint   cdwLocals;
     ushort cdwParams;
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbFrame)), FixedArgSig(ElementSig(14)), FixedArgSig(ElementSig(2))], [])*/ushort _bitfield96;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbFrame)), FixedArgSig(ElementSig(14)), FixedArgSig(ElementSig(2))], [])*/ushort _bitfield377;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-image_function_entry))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-image_function_entry
 struct IMAGE_FUNCTION_ENTRY
 {
     uint StartingAddress;
@@ -3378,13 +3825,18 @@ struct IMAGE_FUNCTION_ENTRY
     uint EndOfPrologue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-image_function_entry64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-image_function_entry64
 struct IMAGE_FUNCTION_ENTRY64
 {
 align (4):
-    ulong               StartingAddress;
-    ulong               EndingAddress;
-    _Anonymous_e__Union Anonymous;
+    ulong StartingAddress;
+    ulong EndingAddress;
+    union
+    {
+    align (4):
+        ulong EndOfPrologue;
+        ulong UnwindInfoAddress;
+    }
 }
 
 struct IMAGE_COR20_HEADER
@@ -3394,7 +3846,11 @@ struct IMAGE_COR20_HEADER
     ushort               MinorRuntimeVersion;
     IMAGE_DATA_DIRECTORY MetaData;
     uint                 Flags;
-    _Anonymous_e__Union  Anonymous;
+    union
+    {
+        uint EntryPointToken;
+        uint EntryPointRVA;
+    }
     IMAGE_DATA_DIRECTORY Resources;
     IMAGE_DATA_DIRECTORY StrongNameSignature;
     IMAGE_DATA_DIRECTORY CodeManagerTable;
@@ -3403,15 +3859,30 @@ struct IMAGE_COR20_HEADER
     IMAGE_DATA_DIRECTORY ManagedNativeHeader;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wct/ns-wct-waitchain_node_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wct/ns-wct-waitchain_node_info
 struct WAITCHAIN_NODE_INFO
 {
-    WCT_OBJECT_TYPE     ObjectType;
-    WCT_OBJECT_STATUS   ObjectStatus;
-    _Anonymous_e__Union Anonymous;
+    WCT_OBJECT_TYPE   ObjectType;
+    WCT_OBJECT_STATUS ObjectStatus;
+    union
+    {
+        struct LockObject
+        {
+            wchar[128] ObjectName;
+            long       Timeout;
+            BOOL       Alertable;
+        }
+        struct ThreadObject
+        {
+            uint ProcessId;
+            uint ThreadId;
+            uint WaitTime;
+            uint ContextSwitches;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_location_descriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_location_descriptor
 struct MINIDUMP_LOCATION_DESCRIPTOR
 {
 align (4):
@@ -3419,7 +3890,7 @@ align (4):
     uint Rva;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_location_descriptor64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_location_descriptor64
 struct MINIDUMP_LOCATION_DESCRIPTOR64
 {
 align (4):
@@ -3427,7 +3898,7 @@ align (4):
     ulong Rva;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_memory_descriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_memory_descriptor
 struct MINIDUMP_MEMORY_DESCRIPTOR
 {
 align (4):
@@ -3435,7 +3906,7 @@ align (4):
     MINIDUMP_LOCATION_DESCRIPTOR Memory;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_memory_descriptor64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_memory_descriptor64
 struct MINIDUMP_MEMORY_DESCRIPTOR64
 {
 align (4):
@@ -3443,20 +3914,24 @@ align (4):
     ulong DataSize;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_header))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_header
 struct MINIDUMP_HEADER
 {
 align (4):
-    uint                Signature;
-    uint                Version;
-    uint                NumberOfStreams;
-    uint                StreamDirectoryRva;
-    uint                CheckSum;
-    _Anonymous_e__Union Anonymous;
-    ulong               Flags;
+    uint  Signature;
+    uint  Version;
+    uint  NumberOfStreams;
+    uint  StreamDirectoryRva;
+    uint  CheckSum;
+    union
+    {
+        uint Reserved;
+        uint TimeDateStamp;
+    }
+    ulong Flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_directory))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_directory
 struct MINIDUMP_DIRECTORY
 {
 align (4):
@@ -3464,7 +3939,7 @@ align (4):
     MINIDUMP_LOCATION_DESCRIPTOR Location;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_string))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_string
 struct MINIDUMP_STRING
 {
 align (4):
@@ -3474,28 +3949,54 @@ align (4):
 
 union CPU_INFORMATION
 {
-    _X86CpuInfo_e__Struct X86CpuInfo;
-    _OtherCpuInfo_e__Struct OtherCpuInfo;
+    struct X86CpuInfo
+    {
+        uint[3] VendorId;
+        uint    VersionInformation;
+        uint    FeatureInformation;
+        uint    AMDExtendedCpuFeatures;
+    }
+    struct OtherCpuInfo
+    {
+    align (4):
+        ulong[2] ProcessorFeatures;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_system_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_system_info
 struct MINIDUMP_SYSTEM_INFO
 {
 align (4):
     PROCESSOR_ARCHITECTURE ProcessorArchitecture;
-    ushort               ProcessorLevel;
-    ushort               ProcessorRevision;
-    _Anonymous1_e__Union Anonymous1;
-    uint                 MajorVersion;
-    uint                 MinorVersion;
-    uint                 BuildNumber;
-    VER_PLATFORM         PlatformId;
-    uint                 CSDVersionRva;
-    _Anonymous2_e__Union Anonymous2;
-    CPU_INFORMATION      Cpu;
+    ushort          ProcessorLevel;
+    ushort          ProcessorRevision;
+    union
+    {
+        ushort Reserved0;
+        struct
+        {
+            ubyte NumberOfProcessors;
+            ubyte ProductType;
+        }
+    }
+    uint            MajorVersion;
+    uint            MinorVersion;
+    uint            BuildNumber;
+    VER_PLATFORM    PlatformId;
+    uint            CSDVersionRva;
+    union
+    {
+        uint Reserved1;
+        struct
+        {
+            ushort SuiteMask;
+            ushort Reserved2;
+        }
+    }
+    CPU_INFORMATION Cpu;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_thread))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_thread
 struct MINIDUMP_THREAD
 {
 align (4):
@@ -3508,7 +4009,7 @@ align (4):
     MINIDUMP_LOCATION_DESCRIPTOR ThreadContext;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_thread_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_thread_list
 struct MINIDUMP_THREAD_LIST
 {
 align (4):
@@ -3516,7 +4017,7 @@ align (4):
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MINIDUMP_THREAD[1] Threads;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_thread_ex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_thread_ex
 struct MINIDUMP_THREAD_EX
 {
 align (4):
@@ -3530,7 +4031,7 @@ align (4):
     MINIDUMP_MEMORY_DESCRIPTOR BackingStore;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_thread_ex_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_thread_ex_list
 struct MINIDUMP_THREAD_EX_LIST
 {
 align (4):
@@ -3538,7 +4039,7 @@ align (4):
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MINIDUMP_THREAD_EX[1] Threads;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_exception))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_exception
 struct MINIDUMP_EXCEPTION
 {
 align (4):
@@ -3551,7 +4052,7 @@ align (4):
     ulong[15] ExceptionInformation;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_exception_stream))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_exception_stream
 struct MINIDUMP_EXCEPTION_STREAM
 {
 align (4):
@@ -3561,7 +4062,7 @@ align (4):
     MINIDUMP_LOCATION_DESCRIPTOR ThreadContext;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_module))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_module
 struct MINIDUMP_MODULE
 {
 align (4):
@@ -3577,7 +4078,7 @@ align (4):
     ulong            Reserved1;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_module_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_module_list
 struct MINIDUMP_MODULE_LIST
 {
 align (4):
@@ -3585,7 +4086,7 @@ align (4):
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MINIDUMP_MODULE[1] Modules;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_memory_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_memory_list
 struct MINIDUMP_MEMORY_LIST
 {
 align (4):
@@ -3593,7 +4094,7 @@ align (4):
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MINIDUMP_MEMORY_DESCRIPTOR[1] MemoryRanges;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_memory64_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_memory64_list
 struct MINIDUMP_MEMORY64_LIST
 {
 align (4):
@@ -3602,13 +4103,15 @@ align (4):
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MINIDUMP_MEMORY_DESCRIPTOR64[1] MemoryRanges;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_exception_information))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct MINIDUMP_EXCEPTION_INFORMATION
+version(X86)
 {
-    uint                ThreadId;
-    EXCEPTION_POINTERS* ExceptionPointers;
-    BOOL                ClientPointers;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_exception_information
+    struct MINIDUMP_EXCEPTION_INFORMATION
+    {
+        uint                ThreadId;
+        EXCEPTION_POINTERS* ExceptionPointers;
+        BOOL                ClientPointers;
+    }
 }
 
 struct MINIDUMP_EXCEPTION_INFORMATION64
@@ -3620,7 +4123,7 @@ align (4):
     BOOL  ClientPointers;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_handle_object_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_handle_object_information
 struct MINIDUMP_HANDLE_OBJECT_INFORMATION
 {
 align (4):
@@ -3629,7 +4132,7 @@ align (4):
     uint SizeOfInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_handle_descriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_handle_descriptor
 struct MINIDUMP_HANDLE_DESCRIPTOR
 {
 align (4):
@@ -3642,7 +4145,7 @@ align (4):
     uint  PointerCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_handle_descriptor_2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_handle_descriptor_2
 struct MINIDUMP_HANDLE_DESCRIPTOR_2
 {
 align (4):
@@ -3657,7 +4160,7 @@ align (4):
     uint  Reserved0;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_handle_data_stream))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_handle_data_stream
 struct MINIDUMP_HANDLE_DATA_STREAM
 {
 align (4):
@@ -3667,7 +4170,7 @@ align (4):
     uint Reserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_handle_operation_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_handle_operation_list
 struct MINIDUMP_HANDLE_OPERATION_LIST
 {
 align (4):
@@ -3677,7 +4180,7 @@ align (4):
     uint Reserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_function_table_descriptor))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_function_table_descriptor
 struct MINIDUMP_FUNCTION_TABLE_DESCRIPTOR
 {
 align (4):
@@ -3688,7 +4191,7 @@ align (4):
     uint  SizeOfAlignPad;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_function_table_stream))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_function_table_stream
 struct MINIDUMP_FUNCTION_TABLE_STREAM
 {
 align (4):
@@ -3700,7 +4203,7 @@ align (4):
     uint SizeOfAlignPad;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_unloaded_module))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_unloaded_module
 struct MINIDUMP_UNLOADED_MODULE
 {
 align (4):
@@ -3711,7 +4214,7 @@ align (4):
     uint  ModuleNameRva;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_unloaded_module_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_unloaded_module_list
 struct MINIDUMP_UNLOADED_MODULE_LIST
 {
 align (4):
@@ -3729,7 +4232,7 @@ align (4):
     XSTATE_FEATURE[64] Features;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_misc_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_misc_info
 struct MINIDUMP_MISC_INFO
 {
 align (4):
@@ -3741,7 +4244,7 @@ align (4):
     uint ProcessKernelTime;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_misc_info_2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_misc_info_2
 struct MINIDUMP_MISC_INFO_2
 {
 align (4):
@@ -3827,7 +4330,7 @@ align (4):
     uint       ProcessCookie;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_memory_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_memory_info
 struct MINIDUMP_MEMORY_INFO
 {
 align (4):
@@ -3842,7 +4345,7 @@ align (4):
     uint  __alignment2;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_memory_info_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_memory_info_list
 struct MINIDUMP_MEMORY_INFO_LIST
 {
 align (4):
@@ -3865,7 +4368,7 @@ align (4):
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/MINIDUMP_THREAD_NAME[1] ThreadNames;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_thread_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_thread_info
 struct MINIDUMP_THREAD_INFO
 {
 align (4):
@@ -3881,7 +4384,7 @@ align (4):
     ulong Affinity;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_thread_info_list))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_thread_info_list
 struct MINIDUMP_THREAD_INFO_LIST
 {
 align (4):
@@ -4185,59 +4688,99 @@ align (4):
     MINIDUMP_LOCATION_DESCRIPTOR Memory;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_user_stream))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct MINIDUMP_USER_STREAM
+version(X86)
 {
-    uint  Type;
-    uint  BufferSize;
-    void* Buffer;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_user_stream
+    struct MINIDUMP_USER_STREAM
+    {
+        uint  Type;
+        uint  BufferSize;
+        void* Buffer;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_user_stream_information))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct MINIDUMP_USER_STREAM_INFORMATION
+version(X86)
 {
-    uint UserStreamCount;
-    MINIDUMP_USER_STREAM* UserStreamArray;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_user_stream_information
+    struct MINIDUMP_USER_STREAM_INFORMATION
+    {
+        uint UserStreamCount;
+        MINIDUMP_USER_STREAM* UserStreamArray;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_thread_callback))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(3))], [])
-struct MINIDUMP_THREAD_CALLBACK
+version(X86)
 {
-align (4):
-    uint    ThreadId;
-    HANDLE  ThreadHandle;
-    CONTEXT Context;
-    uint    SizeOfContext;
-    ulong   StackBase;
-    ulong   StackEnd;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_thread_callback
+    struct MINIDUMP_THREAD_CALLBACK
+    {
+    align (4):
+        uint    ThreadId;
+        HANDLE  ThreadHandle;
+        CONTEXT Context;
+        uint    SizeOfContext;
+        ulong   StackBase;
+        ulong   StackEnd;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_thread_ex_callback))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(3))], [])
-struct MINIDUMP_THREAD_EX_CALLBACK
+version(X86_64)
 {
-align (4):
-    uint    ThreadId;
-    HANDLE  ThreadHandle;
-    CONTEXT Context;
-    uint    SizeOfContext;
-    ulong   StackBase;
-    ulong   StackEnd;
-    ulong   BackingStoreBase;
-    ulong   BackingStoreEnd;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_thread_callback
+    struct MINIDUMP_THREAD_CALLBACK
+    {
+    align (4):
+        uint    ThreadId;
+        HANDLE  ThreadHandle;
+        CONTEXT Context;
+        uint    SizeOfContext;
+        ulong   StackBase;
+        ulong   StackEnd;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_include_thread_callback))], [])
+version(X86)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_thread_ex_callback
+    struct MINIDUMP_THREAD_EX_CALLBACK
+    {
+    align (4):
+        uint    ThreadId;
+        HANDLE  ThreadHandle;
+        CONTEXT Context;
+        uint    SizeOfContext;
+        ulong   StackBase;
+        ulong   StackEnd;
+        ulong   BackingStoreBase;
+        ulong   BackingStoreEnd;
+    }
+}
+
+version(X86_64)
+{
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_thread_ex_callback
+    struct MINIDUMP_THREAD_EX_CALLBACK
+    {
+    align (4):
+        uint    ThreadId;
+        HANDLE  ThreadHandle;
+        CONTEXT Context;
+        uint    SizeOfContext;
+        ulong   StackBase;
+        ulong   StackEnd;
+        ulong   BackingStoreBase;
+        ulong   BackingStoreEnd;
+    }
+}
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_include_thread_callback
 struct MINIDUMP_INCLUDE_THREAD_CALLBACK
 {
 align (4):
     uint ThreadId;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_module_callback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_module_callback
 struct MINIDUMP_MODULE_CALLBACK
 {
 align (4):
@@ -4253,14 +4796,14 @@ align (4):
     uint             SizeOfMiscRecord;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_include_module_callback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_include_module_callback
 struct MINIDUMP_INCLUDE_MODULE_CALLBACK
 {
 align (4):
     ulong BaseOfImage;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_io_callback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_io_callback
 struct MINIDUMP_IO_CALLBACK
 {
 align (4):
@@ -4270,7 +4813,7 @@ align (4):
     uint   BufferBytes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_read_memory_failure_callback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_read_memory_failure_callback
 struct MINIDUMP_READ_MEMORY_FAILURE_CALLBACK
 {
 align (4):
@@ -4303,89 +4846,142 @@ align (4):
     HRESULT Status;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_callback_input))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_callback_input
 struct MINIDUMP_CALLBACK_INPUT
 {
 align (4):
-    uint                ProcessId;
-    HANDLE              ProcessHandle;
-    uint                CallbackType;
-    _Anonymous_e__Union Anonymous;
+    uint   ProcessId;
+    HANDLE ProcessHandle;
+    uint   CallbackType;
+    union
+    {
+        HRESULT              Status;
+        MINIDUMP_THREAD_CALLBACK Thread;
+        MINIDUMP_THREAD_EX_CALLBACK ThreadEx;
+        MINIDUMP_MODULE_CALLBACK Module;
+        MINIDUMP_INCLUDE_THREAD_CALLBACK IncludeThread;
+        MINIDUMP_INCLUDE_MODULE_CALLBACK IncludeModule;
+        MINIDUMP_IO_CALLBACK Io;
+        MINIDUMP_READ_MEMORY_FAILURE_CALLBACK ReadMemoryFailure;
+        uint                 SecondaryFlags;
+        MINIDUMP_VM_QUERY_CALLBACK VmQuery;
+        MINIDUMP_VM_PRE_READ_CALLBACK VmPreRead;
+        MINIDUMP_VM_POST_READ_CALLBACK VmPostRead;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_callback_output))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_callback_output
 struct MINIDUMP_CALLBACK_OUTPUT
 {
 align (4):
-    _Anonymous_e__Union Anonymous;
+    union
+    {
+        uint    ModuleWriteFlags;
+        uint    ThreadWriteFlags;
+        uint    SecondaryFlags;
+        struct
+        {
+        align (4):
+            ulong MemoryBase;
+            uint  MemorySize;
+        }
+        struct
+        {
+            BOOL CheckCancel;
+            BOOL Cancel;
+        }
+        HANDLE  Handle;
+        struct
+        {
+            MINIDUMP_MEMORY_INFO VmRegion;
+            BOOL                 Continue;
+        }
+        struct
+        {
+            HRESULT              VmQueryStatus;
+            MINIDUMP_MEMORY_INFO VmQueryResult;
+        }
+        struct
+        {
+            HRESULT VmReadStatus;
+            uint    VmReadBytesCompleted;
+        }
+        HRESULT Status;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_callback_information))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct MINIDUMP_CALLBACK_INFORMATION
+version(X86)
 {
-    MINIDUMP_CALLBACK_ROUTINE CallbackRoutine;
-    void* CallbackParam;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/ns-minidumpapiset-minidump_callback_information
+    struct MINIDUMP_CALLBACK_INFORMATION
+    {
+        MINIDUMP_CALLBACK_ROUTINE CallbackRoutine;
+        void* CallbackParam;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-loaded_image))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct LOADED_IMAGE
+version(X86)
 {
-    PSTR                ModuleName;
-    HANDLE              hFile;
-    ubyte*              MappedAddress;
-    IMAGE_NT_HEADERS32* FileHeader;
-    IMAGE_SECTION_HEADER* LastRvaSection;
-    uint                NumberOfSections;
-    IMAGE_SECTION_HEADER* Sections;
-    IMAGE_FILE_CHARACTERISTICS2 Characteristics;
-    BOOLEAN             fSystemImage;
-    BOOLEAN             fDOSImage;
-    BOOLEAN             fReadOnly;
-    ubyte               Version;
-    LIST_ENTRY          Links;
-    uint                SizeOfImage;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-loaded_image
+    struct LOADED_IMAGE
+    {
+        PSTR                ModuleName;
+        HANDLE              hFile;
+        ubyte*              MappedAddress;
+        IMAGE_NT_HEADERS32* FileHeader;
+        IMAGE_SECTION_HEADER* LastRvaSection;
+        uint                NumberOfSections;
+        IMAGE_SECTION_HEADER* Sections;
+        IMAGE_FILE_CHARACTERISTICS2 Characteristics;
+        BOOLEAN             fSystemImage;
+        BOOLEAN             fDOSImage;
+        BOOLEAN             fReadOnly;
+        ubyte               Version;
+        LIST_ENTRY          Links;
+        uint                SizeOfImage;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-image_debug_information))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct IMAGE_DEBUG_INFORMATION
+version(X86)
 {
-    LIST_ENTRY List;
-    uint       ReservedSize;
-    void*      ReservedMappedBase;
-    ushort     ReservedMachine;
-    ushort     ReservedCharacteristics;
-    uint       ReservedCheckSum;
-    uint       ImageBase;
-    uint       SizeOfImage;
-    uint       ReservedNumberOfSections;
-    IMAGE_SECTION_HEADER* ReservedSections;
-    uint       ReservedExportedNamesSize;
-    PSTR       ReservedExportedNames;
-    uint       ReservedNumberOfFunctionTableEntries;
-    IMAGE_FUNCTION_ENTRY* ReservedFunctionTableEntries;
-    uint       ReservedLowestFunctionStartingAddress;
-    uint       ReservedHighestFunctionEndingAddress;
-    uint       ReservedNumberOfFpoTableEntries;
-    FPO_DATA*  ReservedFpoTableEntries;
-    uint       SizeOfCoffSymbols;
-    IMAGE_COFF_SYMBOLS_HEADER* CoffSymbols;
-    uint       ReservedSizeOfCodeViewSymbols;
-    void*      ReservedCodeViewSymbols;
-    PSTR       ImageFilePath;
-    PSTR       ImageFileName;
-    PSTR       ReservedDebugFilePath;
-    uint       ReservedTimeDateStamp;
-    BOOL       ReservedRomImage;
-    IMAGE_DEBUG_DIRECTORY* ReservedDebugDirectory;
-    uint       ReservedNumberOfDebugDirectories;
-    uint       ReservedOriginalFunctionTableBaseAddress;
-    uint[2]    Reserved;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-image_debug_information
+    struct IMAGE_DEBUG_INFORMATION
+    {
+        LIST_ENTRY List;
+        uint       ReservedSize;
+        void*      ReservedMappedBase;
+        ushort     ReservedMachine;
+        ushort     ReservedCharacteristics;
+        uint       ReservedCheckSum;
+        uint       ImageBase;
+        uint       SizeOfImage;
+        uint       ReservedNumberOfSections;
+        IMAGE_SECTION_HEADER* ReservedSections;
+        uint       ReservedExportedNamesSize;
+        PSTR       ReservedExportedNames;
+        uint       ReservedNumberOfFunctionTableEntries;
+        IMAGE_FUNCTION_ENTRY* ReservedFunctionTableEntries;
+        uint       ReservedLowestFunctionStartingAddress;
+        uint       ReservedHighestFunctionEndingAddress;
+        uint       ReservedNumberOfFpoTableEntries;
+        FPO_DATA*  ReservedFpoTableEntries;
+        uint       SizeOfCoffSymbols;
+        IMAGE_COFF_SYMBOLS_HEADER* CoffSymbols;
+        uint       ReservedSizeOfCodeViewSymbols;
+        void*      ReservedCodeViewSymbols;
+        PSTR       ImageFilePath;
+        PSTR       ImageFileName;
+        PSTR       ReservedDebugFilePath;
+        uint       ReservedTimeDateStamp;
+        BOOL       ReservedRomImage;
+        IMAGE_DEBUG_DIRECTORY* ReservedDebugDirectory;
+        uint       ReservedNumberOfDebugDirectories;
+        uint       ReservedOriginalFunctionTableBaseAddress;
+        uint[2]    Reserved;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-modload_data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-modload_data
 struct MODLOAD_DATA
 {
     uint              ssize;
@@ -4395,7 +4991,7 @@ struct MODLOAD_DATA
     uint              flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-modload_cvmisc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-modload_cvmisc
 struct MODLOAD_CVMISC
 {
     uint   oCV;
@@ -4412,7 +5008,7 @@ struct MODLOAD_PDBGUID_PDBAGE
     uint PdbAge;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-address64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-address64
 struct ADDRESS64
 {
     ulong        Offset;
@@ -4420,16 +5016,18 @@ struct ADDRESS64
     ADDRESS_MODE Mode;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/NetMon2/address))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct ADDRESS
+version(X86)
 {
-    uint         Offset;
-    ushort       Segment;
-    ADDRESS_MODE Mode;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/NetMon2/address
+    struct ADDRESS
+    {
+        uint         Offset;
+        ushort       Segment;
+        ADDRESS_MODE Mode;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-kdhelp64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-kdhelp64
 struct KDHELP64
 {
     ulong    Thread;
@@ -4451,25 +5049,27 @@ struct KDHELP64
     ulong[2] Reserved0;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-kdhelp))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct KDHELP
+version(X86)
 {
-    uint    Thread;
-    uint    ThCallbackStack;
-    uint    NextCallback;
-    uint    FramePointer;
-    uint    KiCallUserMode;
-    uint    KeUserCallbackDispatcher;
-    uint    SystemRangeStart;
-    uint    ThCallbackBStore;
-    uint    KiUserExceptionDispatcher;
-    uint    StackBase;
-    uint    StackLimit;
-    uint[5] Reserved;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-kdhelp
+    struct KDHELP
+    {
+        uint    Thread;
+        uint    ThCallbackStack;
+        uint    NextCallback;
+        uint    FramePointer;
+        uint    KiCallUserMode;
+        uint    KeUserCallbackDispatcher;
+        uint    SystemRangeStart;
+        uint    ThCallbackBStore;
+        uint    KiUserExceptionDispatcher;
+        uint    StackBase;
+        uint    StackLimit;
+        uint[5] Reserved;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-stackframe64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-stackframe64
 struct STACKFRAME64
 {
     ADDRESS64 AddrPC;
@@ -4485,7 +5085,7 @@ struct STACKFRAME64
     KDHELP64  KdHelp;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-stackframe_ex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-stackframe_ex
 struct STACKFRAME_EX
 {
     ADDRESS64 AddrPC;
@@ -4503,24 +5103,26 @@ struct STACKFRAME_EX
     uint      InlineFrameContext;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-stackframe))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct STACKFRAME
+version(X86)
 {
-    ADDRESS AddrPC;
-    ADDRESS AddrReturn;
-    ADDRESS AddrFrame;
-    ADDRESS AddrStack;
-    void*   FuncTableEntry;
-    uint[4] Params;
-    BOOL    Far;
-    BOOL    Virtual;
-    uint[3] Reserved;
-    KDHELP  KdHelp;
-    ADDRESS AddrBStore;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-stackframe
+    struct STACKFRAME
+    {
+        ADDRESS AddrPC;
+        ADDRESS AddrReturn;
+        ADDRESS AddrFrame;
+        ADDRESS AddrStack;
+        void*   FuncTableEntry;
+        uint[4] Params;
+        BOOL    Far;
+        BOOL    Virtual;
+        uint[3] Reserved;
+        KDHELP  KdHelp;
+        ADDRESS AddrBStore;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-api_version))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-api_version
 struct API_VERSION
 {
     ushort MajorVersion;
@@ -4529,7 +5131,7 @@ struct API_VERSION
     ushort Reserved;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_symbol64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_symbol64
 struct IMAGEHLP_SYMBOL64
 {
     uint  SizeOfStruct;
@@ -4546,7 +5148,7 @@ struct IMAGEHLP_SYMBOL64_PACKAGE
     CHAR[2001]        name;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_symbolw64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_symbolw64
 struct IMAGEHLP_SYMBOLW64
 {
     uint  SizeOfStruct;
@@ -4563,46 +5165,54 @@ struct IMAGEHLP_SYMBOLW64_PACKAGE
     wchar[2001]        name;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_symbol))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct IMAGEHLP_SYMBOL
+version(X86)
 {
-    uint SizeOfStruct;
-    uint Address;
-    uint Size;
-    uint Flags;
-    uint MaxNameLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/CHAR[1] Name;
+    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_symbol
+    struct IMAGEHLP_SYMBOL
+    {
+        uint SizeOfStruct;
+        uint Address;
+        uint Size;
+        uint Flags;
+        uint MaxNameLength;
+        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/CHAR[1] Name;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct IMAGEHLP_SYMBOL_PACKAGE
+version(X86)
 {
-    IMAGEHLP_SYMBOL sym;
-    CHAR[2001]      name;
+    struct IMAGEHLP_SYMBOL_PACKAGE
+    {
+        IMAGEHLP_SYMBOL sym;
+        CHAR[2001]      name;
+    }
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct IMAGEHLP_SYMBOLW
+version(X86)
 {
-    uint SizeOfStruct;
-    uint Address;
-    uint Size;
-    uint Flags;
-    uint MaxNameLength;
-    /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] Name;
+    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+    struct IMAGEHLP_SYMBOLW
+    {
+        uint SizeOfStruct;
+        uint Address;
+        uint Size;
+        uint Flags;
+        uint MaxNameLength;
+        /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] Name;
+    }
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct IMAGEHLP_SYMBOLW_PACKAGE
+version(X86)
 {
-    IMAGEHLP_SYMBOLW sym;
-    wchar[2001]      name;
+    struct IMAGEHLP_SYMBOLW_PACKAGE
+    {
+        IMAGEHLP_SYMBOLW sym;
+        wchar[2001]      name;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_module64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_module64
 struct IMAGEHLP_MODULE64
 {
     uint      SizeOfStruct;
@@ -4638,7 +5248,7 @@ struct IMAGEHLP_MODULE64_EX
     uint              RegionFlags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_modulew64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_modulew64
 struct IMAGEHLP_MODULEW64
 {
     uint       SizeOfStruct;
@@ -4674,40 +5284,44 @@ struct IMAGEHLP_MODULEW64_EX
     uint               RegionFlags;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_module))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct IMAGEHLP_MODULE
+version(X86)
 {
-    uint      SizeOfStruct;
-    uint      BaseOfImage;
-    uint      ImageSize;
-    uint      TimeDateStamp;
-    uint      CheckSum;
-    uint      NumSyms;
-    SYM_TYPE  SymType;
-    CHAR[32]  ModuleName;
-    CHAR[256] ImageName;
-    CHAR[256] LoadedImageName;
+    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_module
+    struct IMAGEHLP_MODULE
+    {
+        uint      SizeOfStruct;
+        uint      BaseOfImage;
+        uint      ImageSize;
+        uint      TimeDateStamp;
+        uint      CheckSum;
+        uint      NumSyms;
+        SYM_TYPE  SymType;
+        CHAR[32]  ModuleName;
+        CHAR[256] ImageName;
+        CHAR[256] LoadedImageName;
+    }
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct IMAGEHLP_MODULEW
+version(X86)
 {
-    uint       SizeOfStruct;
-    uint       BaseOfImage;
-    uint       ImageSize;
-    uint       TimeDateStamp;
-    uint       CheckSum;
-    uint       NumSyms;
-    SYM_TYPE   SymType;
-    wchar[32]  ModuleName;
-    wchar[256] ImageName;
-    wchar[256] LoadedImageName;
+    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+    struct IMAGEHLP_MODULEW
+    {
+        uint       SizeOfStruct;
+        uint       BaseOfImage;
+        uint       ImageSize;
+        uint       TimeDateStamp;
+        uint       CheckSum;
+        uint       NumSyms;
+        SYM_TYPE   SymType;
+        wchar[32]  ModuleName;
+        wchar[256] ImageName;
+        wchar[256] LoadedImageName;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_line64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_line64
 struct IMAGEHLP_LINE64
 {
     uint  SizeOfStruct;
@@ -4717,7 +5331,7 @@ struct IMAGEHLP_LINE64
     ulong Address;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_linew64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_linew64
 struct IMAGEHLP_LINEW64
 {
     uint  SizeOfStruct;
@@ -4727,31 +5341,35 @@ struct IMAGEHLP_LINEW64
     ulong Address;
 }
 
-//STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_line))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct IMAGEHLP_LINE
+version(X86)
 {
-    uint  SizeOfStruct;
-    void* Key;
-    uint  LineNumber;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR FileName;
-    uint  Address;
+    //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_line
+    struct IMAGEHLP_LINE
+    {
+        uint  SizeOfStruct;
+        void* Key;
+        uint  LineNumber;
+        /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR FileName;
+        uint  Address;
+    }
 }
 
-//STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct IMAGEHLP_LINEW
+version(X86)
 {
-    uint  SizeOfStruct;
-    void* Key;
-    uint  LineNumber;
-    /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR FileName;
-    ulong Address;
+    //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
+    struct IMAGEHLP_LINEW
+    {
+        uint  SizeOfStruct;
+        void* Key;
+        uint  LineNumber;
+        /*FIELD ATTR: NotNullTerminatedAttribute : CustomAttributeSig([], [])*/PSTR FileName;
+        ulong Address;
+    }
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-sourcefile))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-sourcefile
 struct SOURCEFILE
 {
     ulong ModBase;
@@ -4759,14 +5377,14 @@ struct SOURCEFILE
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-sourcefilew))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-sourcefilew
 struct SOURCEFILEW
 {
     ulong ModBase;
     PWSTR FileName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_cba_read_memory))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_cba_read_memory
 struct IMAGEHLP_CBA_READ_MEMORY
 {
     ulong addr;
@@ -4776,7 +5394,7 @@ struct IMAGEHLP_CBA_READ_MEMORY
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_cba_event))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_cba_event
 struct IMAGEHLP_CBA_EVENT
 {
     IMAGEHLP_CBA_EVENT_SEVERITY severity;
@@ -4786,7 +5404,7 @@ struct IMAGEHLP_CBA_EVENT
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_cba_eventw))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_cba_eventw
 struct IMAGEHLP_CBA_EVENTW
 {
     IMAGEHLP_CBA_EVENT_SEVERITY severity;
@@ -4795,7 +5413,7 @@ struct IMAGEHLP_CBA_EVENTW
     void*        object;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_deferred_symbol_load64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_deferred_symbol_load64
 struct IMAGEHLP_DEFERRED_SYMBOL_LOAD64
 {
     uint      SizeOfStruct;
@@ -4808,7 +5426,7 @@ struct IMAGEHLP_DEFERRED_SYMBOL_LOAD64
     uint      Flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_deferred_symbol_loadw64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_deferred_symbol_loadw64
 struct IMAGEHLP_DEFERRED_SYMBOL_LOADW64
 {
     uint       SizeOfStruct;
@@ -4821,20 +5439,22 @@ struct IMAGEHLP_DEFERRED_SYMBOL_LOADW64
     uint       Flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_deferred_symbol_load))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct IMAGEHLP_DEFERRED_SYMBOL_LOAD
+version(X86)
 {
-    uint      SizeOfStruct;
-    uint      BaseOfImage;
-    uint      CheckSum;
-    uint      TimeDateStamp;
-    CHAR[260] FileName;
-    BOOLEAN   Reparse;
-    HANDLE    hFile;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_deferred_symbol_load
+    struct IMAGEHLP_DEFERRED_SYMBOL_LOAD
+    {
+        uint      SizeOfStruct;
+        uint      BaseOfImage;
+        uint      CheckSum;
+        uint      TimeDateStamp;
+        CHAR[260] FileName;
+        BOOLEAN   Reparse;
+        HANDLE    hFile;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_duplicate_symbol64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_duplicate_symbol64
 struct IMAGEHLP_DUPLICATE_SYMBOL64
 {
     uint               SizeOfStruct;
@@ -4843,14 +5463,16 @@ struct IMAGEHLP_DUPLICATE_SYMBOL64
     uint               SelectedSymbol;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_duplicate_symbol))], [])
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct IMAGEHLP_DUPLICATE_SYMBOL
+version(X86)
 {
-    uint             SizeOfStruct;
-    uint             NumberOfDups;
-    IMAGEHLP_SYMBOL* Symbol;
-    uint             SelectedSymbol;
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_duplicate_symbol
+    struct IMAGEHLP_DUPLICATE_SYMBOL
+    {
+        uint             SizeOfStruct;
+        uint             NumberOfDups;
+        IMAGEHLP_SYMBOL* Symbol;
+        uint             SelectedSymbol;
+    }
 }
 
 struct IMAGEHLP_JIT_SYMBOLMAP
@@ -4860,7 +5482,7 @@ struct IMAGEHLP_JIT_SYMBOLMAP
     ulong BaseOfImage;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-omap))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-omap
 struct OMAP
 {
     uint rva;
@@ -4868,7 +5490,7 @@ struct OMAP
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-srccodeinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-srccodeinfo
 struct SRCCODEINFO
 {
     uint      SizeOfStruct;
@@ -4881,7 +5503,7 @@ struct SRCCODEINFO
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-srccodeinfow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-srccodeinfow
 struct SRCCODEINFOW
 {
     uint       SizeOfStruct;
@@ -4908,7 +5530,7 @@ struct MODULE_TYPE_INFO
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-symbol_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-symbol_info
 struct SYMBOL_INFO
 {
     uint              SizeOfStruct;
@@ -4936,7 +5558,7 @@ struct SYMBOL_INFO_PACKAGE
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-symbol_infow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-symbol_infow
 struct SYMBOL_INFOW
 {
     uint              SizeOfStruct;
@@ -4963,7 +5585,7 @@ struct SYMBOL_INFO_PACKAGEW
     wchar[2001]  name;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_stack_frame))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_stack_frame
 struct IMAGEHLP_STACK_FRAME
 {
     ulong    InstructionOffset;
@@ -4978,7 +5600,7 @@ struct IMAGEHLP_STACK_FRAME
     uint     Reserved2;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-ti_findchildren_params))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-ti_findchildren_params
 struct TI_FINDCHILDREN_PARAMS
 {
     uint Count;
@@ -4999,7 +5621,7 @@ struct TI_GET_DISCRIMINATEDUNION_TAG_RANGES_PARAMS
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/DISCRIMINATEDUNION_TAG_VALUE[1] Range;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_get_type_info_params))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_get_type_info_params
 struct IMAGEHLP_GET_TYPE_INFO_PARAMS
 {
     uint    SizeOfStruct;
@@ -5023,7 +5645,7 @@ struct IMAGEHLP_GET_TYPE_INFO_PARAMS
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-symsrv_index_info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-symsrv_index_info
 struct SYMSRV_INDEX_INFO
 {
     uint      sizeofstruct;
@@ -5039,7 +5661,7 @@ struct SYMSRV_INDEX_INFO
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-symsrv_index_infow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/ns-dbghelp-symsrv_index_infow
 struct SYMSRV_INDEX_INFOW
 {
     uint       sizeofstruct;
@@ -5095,8 +5717,11 @@ struct PHYSICAL_MEMORY_DESCRIPTOR64
 
 union DUMP_FILE_ATTRIBUTES
 {
-    _Anonymous_e__Struct Anonymous;
-    uint                 Attributes;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(ReservedFlags)), FixedArgSig(ElementSig(10)), FixedArgSig(ElementSig(22))], [])*/uint _bitfield378;
+    }
+    uint Attributes;
 }
 
 struct DUMP_HEADER32
@@ -5121,7 +5746,11 @@ struct DUMP_HEADER32
     ubyte                KdSecondaryVersion;
     ubyte[2]             Spare3;
     uint                 KdDebuggerDataBlock;
-    _Anonymous_e__Union  Anonymous;
+    union
+    {
+        PHYSICAL_MEMORY_DESCRIPTOR32 PhysicalMemoryBlock;
+        ubyte[700] PhysicalMemoryBlockBuffer;
+    }
     ubyte[1200]          ContextRecord;
     EXCEPTION_RECORD32   Exception;
     CHAR[128]            Comment;
@@ -5160,7 +5789,11 @@ struct DUMP_HEADER64
     ulong                BugCheckParameter4;
     CHAR[32]             VersionUser;
     ulong                KdDebuggerDataBlock;
-    _Anonymous_e__Union  Anonymous;
+    union
+    {
+        PHYSICAL_MEMORY_DESCRIPTOR64 PhysicalMemoryBlock;
+        ubyte[700] PhysicalMemoryBlockBuffer;
+    }
     ubyte[3000]          ContextRecord;
     EXCEPTION_RECORD64   Exception;
     uint                 DumpType;
@@ -5229,50 +5862,150 @@ align (1):
 union WHEA_NOTIFICATION_FLAGS
 {
 align (1):
-    _Anonymous_e__Struct Anonymous;
-    ushort               AsUSHORT;
+    struct
+    {
+    align (1):
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(11))], [])*/ushort _bitfield379;
+    }
+    ushort AsUSHORT;
 }
 
 union XPF_MC_BANK_FLAGS
 {
-    _Anonymous_e__Struct Anonymous;
-    ubyte                AsUCHAR;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(6))], [])*/ubyte _bitfield380;
+    }
+    ubyte AsUCHAR;
 }
 
 union XPF_MCE_FLAGS
 {
 align (1):
-    _Anonymous_e__Struct Anonymous;
-    uint                 AsULONG;
+    struct
+    {
+    align (1):
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(30))], [])*/uint _bitfield381;
+    }
+    uint AsULONG;
 }
 
 union AER_ROOTPORT_DESCRIPTOR_FLAGS
 {
 align (1):
-    _Anonymous_e__Struct Anonymous;
-    ushort               AsUSHORT;
+    struct
+    {
+    align (1):
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(5)), FixedArgSig(ElementSig(11))], [])*/ushort _bitfield382;
+    }
+    ushort AsUSHORT;
 }
 
 union AER_ENDPOINT_DESCRIPTOR_FLAGS
 {
 align (1):
-    _Anonymous_e__Struct Anonymous;
-    ushort               AsUSHORT;
+    struct
+    {
+    align (1):
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(4)), FixedArgSig(ElementSig(12))], [])*/ushort _bitfield383;
+    }
+    ushort AsUSHORT;
 }
 
 union AER_BRIDGE_DESCRIPTOR_FLAGS
 {
 align (1):
-    _Anonymous_e__Struct Anonymous;
-    ushort               AsUSHORT;
+    struct
+    {
+    align (1):
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(7)), FixedArgSig(ElementSig(9))], [])*/ushort _bitfield384;
+    }
+    ushort AsUSHORT;
 }
 
 struct WHEA_NOTIFICATION_DESCRIPTOR
 {
-    ubyte       Type;
-    ubyte       Length;
+    ubyte Type;
+    ubyte Length;
     WHEA_NOTIFICATION_FLAGS Flags;
-    _u_e__Union u;
+    union u
+    {
+        struct Polled
+        {
+        align (1):
+            uint PollInterval;
+        }
+        struct Interrupt
+        {
+        align (1):
+            uint PollInterval;
+            uint Vector;
+            uint SwitchToPollingThreshold;
+            uint SwitchToPollingWindow;
+            uint ErrorThreshold;
+            uint ErrorThresholdWindow;
+        }
+        struct LocalInterrupt
+        {
+        align (1):
+            uint PollInterval;
+            uint Vector;
+            uint SwitchToPollingThreshold;
+            uint SwitchToPollingWindow;
+            uint ErrorThreshold;
+            uint ErrorThresholdWindow;
+        }
+        struct Sci
+        {
+        align (1):
+            uint PollInterval;
+            uint Vector;
+            uint SwitchToPollingThreshold;
+            uint SwitchToPollingWindow;
+            uint ErrorThreshold;
+            uint ErrorThresholdWindow;
+        }
+        struct Nmi
+        {
+        align (1):
+            uint PollInterval;
+            uint Vector;
+            uint SwitchToPollingThreshold;
+            uint SwitchToPollingWindow;
+            uint ErrorThreshold;
+            uint ErrorThresholdWindow;
+        }
+        struct Sea
+        {
+        align (1):
+            uint PollInterval;
+            uint Vector;
+            uint SwitchToPollingThreshold;
+            uint SwitchToPollingWindow;
+            uint ErrorThreshold;
+            uint ErrorThresholdWindow;
+        }
+        struct Sei
+        {
+        align (1):
+            uint PollInterval;
+            uint Vector;
+            uint SwitchToPollingThreshold;
+            uint SwitchToPollingWindow;
+            uint ErrorThreshold;
+            uint ErrorThresholdWindow;
+        }
+        struct Gsiv
+        {
+        align (1):
+            uint PollInterval;
+            uint Vector;
+            uint SwitchToPollingThreshold;
+            uint SwitchToPollingWindow;
+            uint ErrorThreshold;
+            uint ErrorThresholdWindow;
+        }
+    }
 }
 
 struct WHEA_XPF_MC_BANK_DESCRIPTOR
@@ -5314,7 +6047,16 @@ align (1):
 
 struct WHEA_PCI_SLOT_NUMBER
 {
-    _u_e__Union u;
+    union u
+    {
+    align (1):
+        struct bits
+        {
+        align (1):
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(8)), FixedArgSig(ElementSig(24))], [])*/uint _bitfield385;
+        }
+        uint AsULONG;
+    }
 }
 
 struct WHEA_XPF_NMI_DESCRIPTOR
@@ -5463,17 +6205,31 @@ align (1):
 struct WHEA_ERROR_SOURCE_DESCRIPTOR
 {
 align (1):
-    uint           Length;
-    uint           Version;
+    uint Length;
+    uint Version;
     WHEA_ERROR_SOURCE_TYPE Type;
     WHEA_ERROR_SOURCE_STATE State;
-    uint           MaxRawDataLength;
-    uint           NumRecordsToPreallocate;
-    uint           MaxSectionsPerRecord;
-    uint           ErrorSourceId;
-    uint           PlatformErrorSourceId;
-    uint           Flags;
-    _Info_e__Union Info;
+    uint MaxRawDataLength;
+    uint NumRecordsToPreallocate;
+    uint MaxSectionsPerRecord;
+    uint ErrorSourceId;
+    uint PlatformErrorSourceId;
+    uint Flags;
+    union Info
+    {
+        WHEA_XPF_MCE_DESCRIPTOR XpfMceDescriptor;
+        WHEA_XPF_CMC_DESCRIPTOR XpfCmcDescriptor;
+        WHEA_XPF_NMI_DESCRIPTOR XpfNmiDescriptor;
+        WHEA_IPF_MCA_DESCRIPTOR IpfMcaDescriptor;
+        WHEA_IPF_CMC_DESCRIPTOR IpfCmcDescriptor;
+        WHEA_IPF_CPE_DESCRIPTOR IpfCpeDescriptor;
+        WHEA_AER_ROOTPORT_DESCRIPTOR AerRootportDescriptor;
+        WHEA_AER_ENDPOINT_DESCRIPTOR AerEndpointDescriptor;
+        WHEA_AER_BRIDGE_DESCRIPTOR AerBridgeDescriptor;
+        WHEA_GENERIC_ERROR_DESCRIPTOR GenErrDescriptor;
+        WHEA_GENERIC_ERROR_DESCRIPTOR_V2 GenErrDescriptorV2;
+        WHEA_DEVICE_DRIVER_DESCRIPTOR DeviceDriverDescriptor;
+    }
 }
 
 struct IPMI_OS_SEL_RECORD
@@ -5489,26 +6245,43 @@ align (1):
 
 union DIMM_ADDRESS
 {
-    _Ddr4_e__Struct Ddr4;
-    _Ddr5_e__Struct Ddr5;
+    struct Ddr4
+    {
+    align (1):
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(32)), FixedArgSig(ElementSig(32))], [])*/ulong _bitfield386;
+        uint  Row;
+        uint  Column;
+        ulong Info;
+    }
+    struct Ddr5
+    {
+    align (1):
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(43)), FixedArgSig(ElementSig(21))], [])*/ulong _bitfield387;
+        uint  Row;
+        uint  Column;
+        ulong Info;
+    }
 }
 
 union PAGE_OFFLINE_VALID_BITS
 {
-    _Anonymous_e__Struct Anonymous;
-    ubyte                AsUINT8;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(2)), FixedArgSig(ElementSig(6))], [])*/ubyte _bitfield388;
+    }
+    ubyte AsUINT8;
 }
 
 struct DIMM_ADDR_VALID_BITS_DDR4
 {
 align (1):
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(12)), FixedArgSig(ElementSig(20))], [])*/uint _bitfield97;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(12)), FixedArgSig(ElementSig(20))], [])*/uint _bitfield389;
 }
 
 struct DIMM_ADDR_VALID_BITS_DDR5
 {
 align (1):
-    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(13)), FixedArgSig(ElementSig(19))], [])*/uint _bitfield98;
+    /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Reserved)), FixedArgSig(ElementSig(13)), FixedArgSig(ElementSig(19))], [])*/uint _bitfield390;
 }
 
 union DIMM_ADDR_VALID_BITS
@@ -5562,15 +6335,15 @@ struct ExtendedDebugPropertyInfo
 
 // Functions
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/nf-winnt-rtladdfunctiontable))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/nf-winnt-rtladdfunctiontable
 @DllImport("KERNEL32.dll")
 BOOLEAN RtlAddFunctionTable(IMAGE_ARM64_RUNTIME_FUNCTION_ENTRY* FunctionTable, uint EntryCount, size_t BaseAddress);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/nf-winnt-rtldeletefunctiontable))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/nf-winnt-rtldeletefunctiontable
 @DllImport("KERNEL32.dll")
 BOOLEAN RtlDeleteFunctionTable(IMAGE_ARM64_RUNTIME_FUNCTION_ENTRY* FunctionTable);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/nf-winnt-rtlinstallfunctiontablecallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/nf-winnt-rtlinstallfunctiontablecallback
 @DllImport("KERNEL32.dll")
 BOOLEAN RtlInstallFunctionTableCallback(ulong TableIdentifier, ulong BaseAddress, uint Length, 
                                         PGET_RUNTIME_FUNCTION_CALLBACK Callback, void* Context, 
@@ -5581,12 +6354,12 @@ BOOLEAN RtlInstallFunctionTableCallback(ulong TableIdentifier, ulong BaseAddress
 uint RtlAddGrowableFunctionTable(void** DynamicTable, IMAGE_ARM64_RUNTIME_FUNCTION_ENTRY* FunctionTable, 
                                  uint EntryCount, uint MaximumEntryCount, size_t RangeBase, size_t RangeEnd);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/nf-winnt-rtllookupfunctionentry))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/nf-winnt-rtllookupfunctionentry
 @DllImport("KERNEL32.dll")
 IMAGE_ARM64_RUNTIME_FUNCTION_ENTRY* RtlLookupFunctionEntry(size_t ControlPc, size_t* ImageBase, 
                                                            UNWIND_HISTORY_TABLE* HistoryTable);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/nf-winnt-rtlvirtualunwind))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/nf-winnt-rtlvirtualunwind
 @DllImport("KERNEL32.dll")
 EXCEPTION_ROUTINE RtlVirtualUnwind(RTL_VIRTUAL_UNWIND_HANDLER_TYPE HandlerType, size_t ImageBase, size_t ControlPc, 
                                    IMAGE_ARM64_RUNTIME_FUNCTION_ENTRY* FunctionEntry, CONTEXT* ContextRecord, 
@@ -5627,19 +6400,21 @@ BOOL Wow64GetThreadContext(HANDLE hThread, WOW64_CONTEXT* lpContext);
 @DllImport("KERNEL32.dll")
 BOOL Wow64SetThreadContext(HANDLE hThread, const(WOW64_CONTEXT)* lpContext);
 
-//METH ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(2))], [])
-@DllImport("KERNEL32.dll")
-void RtlCaptureContext2(CONTEXT* ContextRecord);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/nf-winnt-rtladdfunctiontable))], [])
+version(X86_64)
+{
+    @DllImport("KERNEL32.dll")
+void RtlCaptureContext2(CONTEXT* ContextRecord);
+}
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/nf-winnt-rtladdfunctiontable
 @DllImport("KERNEL32.dll")
 BOOLEAN RtlAddFunctionTable(IMAGE_RUNTIME_FUNCTION_ENTRY* FunctionTable, uint EntryCount, ulong BaseAddress);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/nf-winnt-rtldeletefunctiontable))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/nf-winnt-rtldeletefunctiontable
 @DllImport("KERNEL32.dll")
 BOOLEAN RtlDeleteFunctionTable(IMAGE_RUNTIME_FUNCTION_ENTRY* FunctionTable);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/nf-winnt-rtlinstallfunctiontablecallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/nf-winnt-rtlinstallfunctiontablecallback
 @DllImport("KERNEL32.dll")
 BOOLEAN RtlInstallFunctionTableCallback(ulong TableIdentifier, ulong BaseAddress, uint Length, 
                                         PGET_RUNTIME_FUNCTION_CALLBACK Callback, void* Context, 
@@ -5658,17 +6433,17 @@ void RtlGrowFunctionTable(void* DynamicTable, uint NewEntryCount);
 @DllImport("ntdll.dll")
 void RtlDeleteGrowableFunctionTable(void* DynamicTable);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/nf-winnt-rtllookupfunctionentry))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/nf-winnt-rtllookupfunctionentry
 @DllImport("KERNEL32.dll")
 IMAGE_RUNTIME_FUNCTION_ENTRY* RtlLookupFunctionEntry(ulong ControlPc, ulong* ImageBase, 
                                                      UNWIND_HISTORY_TABLE* HistoryTable);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/nf-winnt-rtlunwindex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/nf-winnt-rtlunwindex
 @DllImport("KERNEL32.dll")
 void RtlUnwindEx(void* TargetFrame, void* TargetIp, EXCEPTION_RECORD* ExceptionRecord, void* ReturnValue, 
                  CONTEXT* ContextRecord, UNWIND_HISTORY_TABLE* HistoryTable);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/nf-winnt-rtlvirtualunwind))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/nf-winnt-rtlvirtualunwind
 @DllImport("KERNEL32.dll")
 EXCEPTION_ROUTINE RtlVirtualUnwind(RTL_VIRTUAL_UNWIND_HANDLER_TYPE HandlerType, ulong ImageBase, ulong ControlPc, 
                                    IMAGE_RUNTIME_FUNCTION_ENTRY* FunctionEntry, CONTEXT* ContextRecord, 
@@ -5687,15 +6462,15 @@ BOOL GetImageConfigInformation(LOADED_IMAGE* LoadedImage, IMAGE_LOAD_CONFIG_DIRE
 @DllImport("imagehlp.dll")
 BOOL SetImageConfigInformation(LOADED_IMAGE* LoadedImage, IMAGE_LOAD_CONFIG_DIRECTORY64* ImageConfigInformation);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-imagentheader))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-imagentheader
 @DllImport("dbghelp.dll")
 IMAGE_NT_HEADERS64* ImageNtHeader(void* Base);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-imagervatosection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-imagervatosection
 @DllImport("dbghelp.dll")
 IMAGE_SECTION_HEADER* ImageRvaToSection(IMAGE_NT_HEADERS64* NtHeaders, void* Base, uint Rva);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-imagervatova))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-imagervatova
 @DllImport("dbghelp.dll")
 void* ImageRvaToVa(IMAGE_NT_HEADERS64* NtHeaders, void* Base, uint Rva, IMAGE_SECTION_HEADER** LastRvaSection);
 
@@ -5711,15 +6486,15 @@ void RtlCaptureContext(CONTEXT* ContextRecord);
 @DllImport("KERNEL32.dll")
 void RtlUnwind(void* TargetFrame, void* TargetIp, EXCEPTION_RECORD* ExceptionRecord, void* ReturnValue);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/nf-winnt-rtlrestorecontext))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/nf-winnt-rtlrestorecontext
 @DllImport("KERNEL32.dll")
 void RtlRestoreContext(CONTEXT* ContextRecord, EXCEPTION_RECORD* ExceptionRecord);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/rtlsupportapi/nf-rtlsupportapi-rtlraiseexception))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/rtlsupportapi/nf-rtlsupportapi-rtlraiseexception
 @DllImport("KERNEL32.dll")
 void RtlRaiseException(EXCEPTION_RECORD* ExceptionRecord);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winnt/nf-winnt-rtlpctofileheader))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winnt/nf-winnt-rtlpctofileheader
 @DllImport("KERNEL32.dll")
 void* RtlPcToFileHeader(void* PcValue, void** BaseOfImage);
 
@@ -5862,14 +6637,14 @@ BOOL GetThreadWaitChain(void* WctHandle, size_t Context, WAIT_CHAIN_THREAD_OPTIO
 @DllImport("ADVAPI32.dll")
 void RegisterWaitChainCOMCallback(PCOGETCALLSTATE CallStateCallback, PCOGETACTIVATIONSTATE ActivationStateCallback);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/nf-minidumpapiset-minidumpwritedump))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/nf-minidumpapiset-minidumpwritedump
 @DllImport("dbghelp.dll")
 BOOL MiniDumpWriteDump(HANDLE hProcess, uint ProcessId, HANDLE hFile, MINIDUMP_TYPE DumpType, 
                        MINIDUMP_EXCEPTION_INFORMATION* ExceptionParam, 
                        MINIDUMP_USER_STREAM_INFORMATION* UserStreamParam, 
                        MINIDUMP_CALLBACK_INFORMATION* CallbackParam);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/minidumpapiset/nf-minidumpapiset-minidumpreaddumpstream))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/minidumpapiset/nf-minidumpapiset-minidumpreaddumpstream
 @DllImport("dbghelp.dll")
 BOOL MiniDumpReadDumpStream(void* BaseOfDump, uint StreamNumber, MINIDUMP_DIRECTORY** Dir, void** StreamPointer, 
                             uint* StreamSize);
@@ -5985,7 +6760,7 @@ HANDLE SymFindDebugInfoFile(HANDLE hProcess, const(PSTR) FileName, PSTR DebugFil
 HANDLE SymFindDebugInfoFileW(HANDLE hProcess, const(PWSTR) FileName, PWSTR DebugFilePath, 
                              PFIND_DEBUG_FILE_CALLBACKW Callback, void* CallerData);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-finddebuginfofile))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-finddebuginfofile
 @DllImport("dbghelp.dll")
 HANDLE FindDebugInfoFile(const(PSTR) FileName, const(PSTR) SymbolPath, PSTR DebugFilePath);
 
@@ -6021,7 +6796,7 @@ HANDLE SymFindExecutableImage(HANDLE hProcess, const(PSTR) FileName, PSTR ImageF
 HANDLE SymFindExecutableImageW(HANDLE hProcess, const(PWSTR) FileName, PWSTR ImageFilePath, 
                                PFIND_EXE_FILE_CALLBACKW Callback, void* CallerData);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-findexecutableimage))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-findexecutableimage
 @DllImport("dbghelp.dll")
 HANDLE FindExecutableImage(const(PSTR) FileName, const(PSTR) SymbolPath, PSTR ImageFilePath);
 
@@ -6035,25 +6810,25 @@ HANDLE FindExecutableImageEx(const(PSTR) FileName, const(PSTR) SymbolPath, PSTR 
 HANDLE FindExecutableImageExW(const(PWSTR) FileName, const(PWSTR) SymbolPath, PWSTR ImageFilePath, 
                               PFIND_EXE_FILE_CALLBACKW Callback, void* CallerData);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-imagentheader))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-imagentheader
 @DllImport("dbghelp.dll")
 IMAGE_NT_HEADERS32* ImageNtHeader(void* Base);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-imagedirectoryentrytodataex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-imagedirectoryentrytodataex
 @DllImport("dbghelp.dll")
 void* ImageDirectoryEntryToDataEx(void* Base, BOOLEAN MappedAsImage, IMAGE_DIRECTORY_ENTRY DirectoryEntry, 
                                   uint* Size, IMAGE_SECTION_HEADER** FoundHeader);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-imagedirectoryentrytodata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-imagedirectoryentrytodata
 @DllImport("dbghelp.dll")
 void* ImageDirectoryEntryToData(void* Base, BOOLEAN MappedAsImage, IMAGE_DIRECTORY_ENTRY DirectoryEntry, 
                                 uint* Size);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-imagervatosection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-imagervatosection
 @DllImport("dbghelp.dll")
 IMAGE_SECTION_HEADER* ImageRvaToSection(IMAGE_NT_HEADERS32* NtHeaders, void* Base, uint Rva);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-imagervatova))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-imagervatova
 @DllImport("dbghelp.dll")
 void* ImageRvaToVa(IMAGE_NT_HEADERS32* NtHeaders, void* Base, uint Rva, IMAGE_SECTION_HEADER** LastRvaSection);
 
@@ -6075,7 +6850,7 @@ BOOL EnumDirTree(HANDLE hProcess, const(PSTR) RootPath, const(PSTR) InputPathNam
 BOOL EnumDirTreeW(HANDLE hProcess, const(PWSTR) RootPath, const(PWSTR) InputPathName, PWSTR OutputPathBuffer, 
                   PENUMDIRTREE_CALLBACKW cb, void* data);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-makesuredirectorypathexists))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-makesuredirectorypathexists
 @DllImport("dbghelp.dll")
 BOOL MakeSureDirectoryPathExists(const(PSTR) DirPath);
 
@@ -6087,14 +6862,14 @@ uint UnDecorateSymbolName(const(PSTR) name, PSTR outputString, uint maxStringLen
 @DllImport("dbghelp.dll")
 uint UnDecorateSymbolNameW(const(PWSTR) name, PWSTR outputString, uint maxStringLength, uint flags);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-stackwalk64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-stackwalk64
 @DllImport("dbghelp.dll")
 BOOL StackWalk64(uint MachineType, HANDLE hProcess, HANDLE hThread, STACKFRAME64* StackFrame, void* ContextRecord, 
                  PREAD_PROCESS_MEMORY_ROUTINE64 ReadMemoryRoutine, 
                  PFUNCTION_TABLE_ACCESS_ROUTINE64 FunctionTableAccessRoutine, 
                  PGET_MODULE_BASE_ROUTINE64 GetModuleBaseRoutine, PTRANSLATE_ADDRESS_ROUTINE64 TranslateAddress);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-stackwalkex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-stackwalkex
 @DllImport("dbghelp.dll")
 BOOL StackWalkEx(uint MachineType, HANDLE hProcess, HANDLE hThread, STACKFRAME_EX* StackFrame, void* ContextRecord, 
                  PREAD_PROCESS_MEMORY_ROUTINE64 ReadMemoryRoutine, 
@@ -6109,26 +6884,26 @@ BOOL StackWalk2(uint MachineType, HANDLE hProcess, HANDLE hThread, STACKFRAME_EX
                 PGET_MODULE_BASE_ROUTINE64 GetModuleBaseRoutine, PTRANSLATE_ADDRESS_ROUTINE64 TranslateAddress, 
                 PGET_TARGET_ATTRIBUTE_VALUE64 GetTargetAttributeValue, uint Flags);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/ETW/stackwalk))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/ETW/stackwalk
 @DllImport("dbghelp.dll")
 BOOL StackWalk(uint MachineType, HANDLE hProcess, HANDLE hThread, STACKFRAME* StackFrame, void* ContextRecord, 
                PREAD_PROCESS_MEMORY_ROUTINE ReadMemoryRoutine, 
                PFUNCTION_TABLE_ACCESS_ROUTINE FunctionTableAccessRoutine, 
                PGET_MODULE_BASE_ROUTINE GetModuleBaseRoutine, PTRANSLATE_ADDRESS_ROUTINE TranslateAddress);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-imagehlpapiversion))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-imagehlpapiversion
 @DllImport("dbghelp.dll")
 API_VERSION* ImagehlpApiVersion();
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-imagehlpapiversionex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-imagehlpapiversionex
 @DllImport("dbghelp.dll")
 API_VERSION* ImagehlpApiVersionEx(API_VERSION* AppVersion);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-gettimestampforloadedlibrary))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-gettimestampforloadedlibrary
 @DllImport("dbghelp.dll")
 uint GetTimestampForLoadedLibrary(HMODULE Module);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symsetparentwindow))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symsetparentwindow
 @DllImport("dbghelp.dll")
 BOOL SymSetParentWindow(HWND hwnd);
 
@@ -6153,28 +6928,28 @@ PSTR SymGetHomeDirectory(/*PARAM ATTR: AssociatedEnumAttribute : CustomAttribute
 PWSTR SymGetHomeDirectoryW(/*PARAM ATTR: AssociatedEnumAttribute : CustomAttributeSig([FixedArgSig(ElementSig(IMAGEHLP_HD_TYPE))], [])*/uint type, 
                            PWSTR dir, size_t size);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetomaps))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetomaps
 @DllImport("dbghelp.dll")
 BOOL SymGetOmaps(HANDLE hProcess, ulong BaseOfDll, OMAP** OmapTo, ulong* cOmapTo, OMAP** OmapFrom, 
                  ulong* cOmapFrom);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symsetoptions))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symsetoptions
 @DllImport("dbghelp.dll")
 uint SymSetOptions(uint SymOptions);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetoptions))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetoptions
 @DllImport("dbghelp.dll")
 uint SymGetOptions();
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symcleanup))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symcleanup
 @DllImport("dbghelp.dll")
 BOOL SymCleanup(HANDLE hProcess);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetextendedoption))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetextendedoption
 @DllImport("dbghelp.dll")
 BOOL SymGetExtendedOption(IMAGEHLP_EXTENDED_OPTIONS option);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symsetextendedoption))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symsetextendedoption
 @DllImport("dbghelp.dll")
 BOOL SymSetExtendedOption(IMAGEHLP_EXTENDED_OPTIONS option, BOOL value);
 
@@ -6200,15 +6975,15 @@ BOOL SymEnumSourceFiles(HANDLE hProcess, ulong ModBase, const(PSTR) Mask, PSYM_E
 BOOL SymEnumSourceFilesW(HANDLE hProcess, ulong ModBase, const(PWSTR) Mask, 
                          PSYM_ENUMSOURCEFILES_CALLBACKW cbSrcFiles, void* UserContext);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symenumeratemodules64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symenumeratemodules64
 @DllImport("dbghelp.dll")
 BOOL SymEnumerateModules64(HANDLE hProcess, PSYM_ENUMMODULES_CALLBACK64 EnumModulesCallback, void* UserContext);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symenumeratemodulesw64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symenumeratemodulesw64
 @DllImport("dbghelp.dll")
 BOOL SymEnumerateModulesW64(HANDLE hProcess, PSYM_ENUMMODULES_CALLBACKW64 EnumModulesCallback, void* UserContext);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symenumeratemodules))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symenumeratemodules
 @DllImport("dbghelp.dll")
 BOOL SymEnumerateModules(HANDLE hProcess, PSYM_ENUMMODULES_CALLBACK EnumModulesCallback, void* UserContext);
 
@@ -6222,32 +6997,32 @@ BOOL EnumerateLoadedModulesEx(HANDLE hProcess, PENUMLOADED_MODULES_CALLBACK64 En
 BOOL EnumerateLoadedModulesExW(HANDLE hProcess, PENUMLOADED_MODULES_CALLBACKW64 EnumLoadedModulesCallback, 
                                void* UserContext);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-enumerateloadedmodules64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-enumerateloadedmodules64
 @DllImport("dbghelp.dll")
 BOOL EnumerateLoadedModules64(HANDLE hProcess, PENUMLOADED_MODULES_CALLBACK64 EnumLoadedModulesCallback, 
                               void* UserContext);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-enumerateloadedmodulesw64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-enumerateloadedmodulesw64
 @DllImport("dbghelp.dll")
 BOOL EnumerateLoadedModulesW64(HANDLE hProcess, PENUMLOADED_MODULES_CALLBACKW64 EnumLoadedModulesCallback, 
                                void* UserContext);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-enumerateloadedmodules))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-enumerateloadedmodules
 @DllImport("dbghelp.dll")
 BOOL EnumerateLoadedModules(HANDLE hProcess, PENUMLOADED_MODULES_CALLBACK EnumLoadedModulesCallback, 
                             void* UserContext);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symfunctiontableaccess64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symfunctiontableaccess64
 @DllImport("dbghelp.dll")
 void* SymFunctionTableAccess64(HANDLE hProcess, ulong AddrBase);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symfunctiontableaccess64accessroutines))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symfunctiontableaccess64accessroutines
 @DllImport("dbghelp.dll")
 void* SymFunctionTableAccess64AccessRoutines(HANDLE hProcess, ulong AddrBase, 
                                              PREAD_PROCESS_MEMORY_ROUTINE64 ReadMemoryRoutine, 
                                              PGET_MODULE_BASE_ROUTINE64 GetModuleBaseRoutine);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symfunctiontableaccess))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symfunctiontableaccess
 @DllImport("dbghelp.dll")
 void* SymFunctionTableAccess(HANDLE hProcess, uint AddrBase);
 
@@ -6256,11 +7031,11 @@ BOOL SymGetUnwindInfo(HANDLE hProcess, ulong Address,
                       /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* Buffer, 
                       uint* Size);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetmoduleinfo64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetmoduleinfo64
 @DllImport("dbghelp.dll")
 BOOL SymGetModuleInfo64(HANDLE hProcess, ulong qwAddr, IMAGEHLP_MODULE64* ModuleInfo);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetmoduleinfow64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetmoduleinfow64
 @DllImport("dbghelp.dll")
 BOOL SymGetModuleInfoW64(HANDLE hProcess, ulong qwAddr, IMAGEHLP_MODULEW64* ModuleInfo);
 
@@ -6272,11 +7047,11 @@ BOOL SymGetModuleInfo(HANDLE hProcess, uint dwAddr, IMAGEHLP_MODULE* ModuleInfo)
 @DllImport("dbghelp.dll")
 BOOL SymGetModuleInfoW(HANDLE hProcess, uint dwAddr, IMAGEHLP_MODULEW* ModuleInfo);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetmodulebase64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetmodulebase64
 @DllImport("dbghelp.dll")
 ulong SymGetModuleBase64(HANDLE hProcess, ulong qwAddr);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetmodulebase))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetmodulebase
 @DllImport("dbghelp.dll")
 uint SymGetModuleBase(HANDLE hProcess, uint dwAddr);
 
@@ -6290,11 +7065,11 @@ BOOL SymEnumLines(HANDLE hProcess, ulong Base, const(PSTR) Obj, const(PSTR) File
 BOOL SymEnumLinesW(HANDLE hProcess, ulong Base, const(PWSTR) Obj, const(PWSTR) File, 
                    PSYM_ENUMLINES_CALLBACKW EnumLinesCallback, void* UserContext);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetlinefromaddr64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetlinefromaddr64
 @DllImport("dbghelp.dll")
 BOOL SymGetLineFromAddr64(HANDLE hProcess, ulong qwAddr, uint* pdwDisplacement, IMAGEHLP_LINE64* Line64);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetlinefromaddrw64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetlinefromaddrw64
 @DllImport("dbghelp.dll")
 BOOL SymGetLineFromAddrW64(HANDLE hProcess, ulong dwAddr, uint* pdwDisplacement, IMAGEHLP_LINEW64* Line);
 
@@ -6318,16 +7093,16 @@ BOOL SymEnumSourceLines(HANDLE hProcess, ulong Base, const(PSTR) Obj, const(PSTR
 BOOL SymEnumSourceLinesW(HANDLE hProcess, ulong Base, const(PWSTR) Obj, const(PWSTR) File, uint Line, uint Flags, 
                          PSYM_ENUMLINES_CALLBACKW EnumLinesCallback, void* UserContext);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symaddrincludeinlinetrace))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symaddrincludeinlinetrace
 @DllImport("dbghelp.dll")
 uint SymAddrIncludeInlineTrace(HANDLE hProcess, ulong Address);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symcompareinlinetrace))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symcompareinlinetrace
 @DllImport("dbghelp.dll")
 uint SymCompareInlineTrace(HANDLE hProcess, ulong Address1, uint InlineContext1, ulong RetAddress1, ulong Address2, 
                            ulong RetAddress2);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symqueryinlinetrace))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symqueryinlinetrace
 @DllImport("dbghelp.dll")
 BOOL SymQueryInlineTrace(HANDLE hProcess, ulong StartAddress, uint StartContext, ulong StartRetAddress, 
                          ulong CurAddress, uint* CurContext, uint* CurFrameIndex);
@@ -6336,26 +7111,26 @@ BOOL SymQueryInlineTrace(HANDLE hProcess, ulong StartAddress, uint StartContext,
 @DllImport("dbghelp.dll")
 BOOL SymGetLineFromAddr(HANDLE hProcess, uint dwAddr, uint* pdwDisplacement, IMAGEHLP_LINE* Line);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetlinefromname64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetlinefromname64
 @DllImport("dbghelp.dll")
 BOOL SymGetLineFromName64(HANDLE hProcess, const(PSTR) ModuleName, const(PSTR) FileName, uint dwLineNumber, 
                           int* plDisplacement, IMAGEHLP_LINE64* Line);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetlinefromnamew64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetlinefromnamew64
 @DllImport("dbghelp.dll")
 BOOL SymGetLineFromNameW64(HANDLE hProcess, const(PWSTR) ModuleName, const(PWSTR) FileName, uint dwLineNumber, 
                            int* plDisplacement, IMAGEHLP_LINEW64* Line);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetlinefromname))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetlinefromname
 @DllImport("dbghelp.dll")
 BOOL SymGetLineFromName(HANDLE hProcess, const(PSTR) ModuleName, const(PSTR) FileName, uint dwLineNumber, 
                         int* plDisplacement, IMAGEHLP_LINE* Line);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetlinenext64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetlinenext64
 @DllImport("dbghelp.dll")
 BOOL SymGetLineNext64(HANDLE hProcess, IMAGEHLP_LINE64* Line);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetlinenextw64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetlinenextw64
 @DllImport("dbghelp.dll")
 BOOL SymGetLineNextW64(HANDLE hProcess, IMAGEHLP_LINEW64* Line);
 
@@ -6363,11 +7138,11 @@ BOOL SymGetLineNextW64(HANDLE hProcess, IMAGEHLP_LINEW64* Line);
 @DllImport("dbghelp.dll")
 BOOL SymGetLineNext(HANDLE hProcess, IMAGEHLP_LINE* Line);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetlineprev64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetlineprev64
 @DllImport("dbghelp.dll")
 BOOL SymGetLinePrev64(HANDLE hProcess, IMAGEHLP_LINE64* Line);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetlineprevw64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetlineprevw64
 @DllImport("dbghelp.dll")
 BOOL SymGetLinePrevW64(HANDLE hProcess, IMAGEHLP_LINEW64* Line);
 
@@ -6375,7 +7150,7 @@ BOOL SymGetLinePrevW64(HANDLE hProcess, IMAGEHLP_LINEW64* Line);
 @DllImport("dbghelp.dll")
 BOOL SymGetLinePrev(HANDLE hProcess, IMAGEHLP_LINE* Line);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetfilelineoffsets64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetfilelineoffsets64
 @DllImport("dbghelp.dll")
 uint SymGetFileLineOffsets64(HANDLE hProcess, const(PSTR) ModuleName, const(PSTR) FileName, ulong* Buffer, 
                              uint BufferLines);
@@ -6454,7 +7229,7 @@ BOOL SymGetSourceVarFromToken(HANDLE hProcess, void* Token, const(PSTR) Params, 
 BOOL SymGetSourceVarFromTokenW(HANDLE hProcess, void* Token, const(PWSTR) Params, const(PWSTR) VarName, 
                                PWSTR Value, uint Size);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symenumsourcefiletokens))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symenumsourcefiletokens
 @DllImport("dbghelp.dll")
 BOOL SymEnumSourceFileTokens(HANDLE hProcess, ulong Base, PENUMSOURCEFILETOKENSCALLBACK Callback);
 
@@ -6492,61 +7267,61 @@ ulong SymLoadModuleEx(HANDLE hProcess, HANDLE hFile, const(PSTR) ImageName, cons
 ulong SymLoadModuleExW(HANDLE hProcess, HANDLE hFile, const(PWSTR) ImageName, const(PWSTR) ModuleName, 
                        ulong BaseOfDll, uint DllSize, MODLOAD_DATA* Data, SYM_LOAD_FLAGS Flags);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symunloadmodule64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symunloadmodule64
 @DllImport("dbghelp.dll")
 BOOL SymUnloadModule64(HANDLE hProcess, ulong BaseOfDll);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symunloadmodule))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symunloadmodule
 @DllImport("dbghelp.dll")
 BOOL SymUnloadModule(HANDLE hProcess, uint BaseOfDll);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symundname64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symundname64
 @DllImport("dbghelp.dll")
 BOOL SymUnDName64(IMAGEHLP_SYMBOL64* sym, PSTR UnDecName, uint UnDecNameLength);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symundname))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symundname
 @DllImport("dbghelp.dll")
 BOOL SymUnDName(IMAGEHLP_SYMBOL* sym, PSTR UnDecName, uint UnDecNameLength);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symregistercallback64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symregistercallback64
 @DllImport("dbghelp.dll")
 BOOL SymRegisterCallback64(HANDLE hProcess, PSYMBOL_REGISTERED_CALLBACK64 CallbackFunction, ulong UserContext);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symregistercallbackw64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symregistercallbackw64
 @DllImport("dbghelp.dll")
 BOOL SymRegisterCallbackW64(HANDLE hProcess, PSYMBOL_REGISTERED_CALLBACK64 CallbackFunction, ulong UserContext);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symregisterfunctionentrycallback64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symregisterfunctionentrycallback64
 @DllImport("dbghelp.dll")
 BOOL SymRegisterFunctionEntryCallback64(HANDLE hProcess, PSYMBOL_FUNCENTRY_CALLBACK64 CallbackFunction, 
                                         ulong UserContext);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symregistercallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symregistercallback
 @DllImport("dbghelp.dll")
 BOOL SymRegisterCallback(HANDLE hProcess, PSYMBOL_REGISTERED_CALLBACK CallbackFunction, void* UserContext);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symregisterfunctionentrycallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symregisterfunctionentrycallback
 @DllImport("dbghelp.dll")
 BOOL SymRegisterFunctionEntryCallback(HANDLE hProcess, PSYMBOL_FUNCENTRY_CALLBACK CallbackFunction, 
                                       void* UserContext);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symsetcontext))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symsetcontext
 @DllImport("dbghelp.dll")
 BOOL SymSetContext(HANDLE hProcess, IMAGEHLP_STACK_FRAME* StackFrame, void* Context);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symsetscopefromaddr))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symsetscopefromaddr
 @DllImport("dbghelp.dll")
 BOOL SymSetScopeFromAddr(HANDLE hProcess, ulong Address);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symsetscopefrominlinecontext))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symsetscopefrominlinecontext
 @DllImport("dbghelp.dll")
 BOOL SymSetScopeFromInlineContext(HANDLE hProcess, ulong Address, uint InlineContext);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symsetscopefromindex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symsetscopefromindex
 @DllImport("dbghelp.dll")
 BOOL SymSetScopeFromIndex(HANDLE hProcess, ulong BaseOfDll, uint Index);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symenumprocesses))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symenumprocesses
 @DllImport("dbghelp.dll")
 BOOL SymEnumProcesses(PSYM_ENUMPROCESSES_CALLBACK EnumProcessesCallback, void* UserContext);
 
@@ -6656,11 +7431,11 @@ BOOL SymFromIndex(HANDLE hProcess, ulong BaseOfDll, uint Index, SYMBOL_INFO* Sym
 @DllImport("dbghelp.dll")
 BOOL SymFromIndexW(HANDLE hProcess, ulong BaseOfDll, uint Index, SYMBOL_INFOW* Symbol);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgettypeinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgettypeinfo
 @DllImport("dbghelp.dll")
 BOOL SymGetTypeInfo(HANDLE hProcess, ulong ModBase, uint TypeId, IMAGEHLP_SYMBOL_TYPE_INFO GetType, void* pInfo);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgettypeinfoex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgettypeinfoex
 @DllImport("dbghelp.dll")
 BOOL SymGetTypeInfoEx(HANDLE hProcess, ulong ModBase, IMAGEHLP_GET_TYPE_INFO_PARAMS* Params);
 
@@ -6708,7 +7483,7 @@ BOOL SymDeleteSymbol(HANDLE hProcess, ulong BaseOfDll, const(PSTR) Name, ulong A
 @DllImport("dbghelp.dll")
 BOOL SymDeleteSymbolW(HANDLE hProcess, ulong BaseOfDll, const(PWSTR) Name, ulong Address, uint Flags);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symrefreshmodulelist))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symrefreshmodulelist
 @DllImport("dbghelp.dll")
 BOOL SymRefreshModuleList(HANDLE hProcess);
 
@@ -6818,19 +7593,19 @@ BOOL DbgHelpCreateUserDump(const(PSTR) FileName, PDBGHELP_CREATE_USER_DUMP_CALLB
 @DllImport("dbghelp.dll")
 BOOL DbgHelpCreateUserDumpW(const(PWSTR) FileName, PDBGHELP_CREATE_USER_DUMP_CALLBACK Callback, void* UserData);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetsymfromaddr64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetsymfromaddr64
 @DllImport("dbghelp.dll")
 BOOL SymGetSymFromAddr64(HANDLE hProcess, ulong qwAddr, ulong* pdwDisplacement, IMAGEHLP_SYMBOL64* Symbol);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetsymfromaddr))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetsymfromaddr
 @DllImport("dbghelp.dll")
 BOOL SymGetSymFromAddr(HANDLE hProcess, uint dwAddr, uint* pdwDisplacement, IMAGEHLP_SYMBOL* Symbol);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetsymfromname64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetsymfromname64
 @DllImport("dbghelp.dll")
 BOOL SymGetSymFromName64(HANDLE hProcess, const(PSTR) Name, IMAGEHLP_SYMBOL64* Symbol);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetsymfromname))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetsymfromname
 @DllImport("dbghelp.dll")
 BOOL SymGetSymFromName(HANDLE hProcess, const(PSTR) Name, IMAGEHLP_SYMBOL* Symbol);
 
@@ -6869,17 +7644,17 @@ BOOL SymEnumerateSymbols(HANDLE hProcess, uint BaseOfDll, PSYM_ENUMSYMBOLS_CALLB
 BOOL SymEnumerateSymbolsW(HANDLE hProcess, uint BaseOfDll, PSYM_ENUMSYMBOLS_CALLBACKW EnumSymbolsCallback, 
                           void* UserContext);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symloadmodule64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symloadmodule64
 @DllImport("dbghelp.dll")
 ulong SymLoadModule64(HANDLE hProcess, HANDLE hFile, const(PSTR) ImageName, const(PSTR) ModuleName, 
                       ulong BaseOfDll, uint SizeOfDll);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symloadmodule))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symloadmodule
 @DllImport("dbghelp.dll")
 uint SymLoadModule(HANDLE hProcess, HANDLE hFile, const(PSTR) ImageName, const(PSTR) ModuleName, uint BaseOfDll, 
                    uint SizeOfDll);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetsymnext64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetsymnext64
 @DllImport("dbghelp.dll")
 BOOL SymGetSymNext64(HANDLE hProcess, IMAGEHLP_SYMBOL64* Symbol);
 
@@ -6887,7 +7662,7 @@ BOOL SymGetSymNext64(HANDLE hProcess, IMAGEHLP_SYMBOL64* Symbol);
 @DllImport("dbghelp.dll")
 BOOL SymGetSymNext(HANDLE hProcess, IMAGEHLP_SYMBOL* Symbol);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetsymprev64))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-symgetsymprev64
 @DllImport("dbghelp.dll")
 BOOL SymGetSymPrev64(HANDLE hProcess, IMAGEHLP_SYMBOL64* Symbol);
 
@@ -6898,11 +7673,11 @@ BOOL SymGetSymPrev(HANDLE hProcess, IMAGEHLP_SYMBOL* Symbol);
 @DllImport("dbghelp.dll")
 void SetCheckUserInterruptShared(LPCALL_BACK_USER_INTERRUPT_ROUTINE lpStartAddress);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-getsymloaderror))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-getsymloaderror
 @DllImport("dbghelp.dll")
 uint GetSymLoadError();
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-setsymloaderror))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/dbghelp/nf-dbghelp-setsymloaderror
 @DllImport("dbghelp.dll")
 void SetSymLoadError(uint error);
 
@@ -6979,7 +7754,7 @@ BOOL CopyContext(CONTEXT* Destination, CONTEXT_FLAGS ContextFlags, CONTEXT* Sour
 BOOL InitializeContext(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* Buffer, 
                        CONTEXT_FLAGS ContextFlags, CONTEXT** Context, uint* ContextLength);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/winbase/nf-winbase-initializecontext2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/winbase/nf-winbase-initializecontext2
 @DllImport("KERNEL32.dll")
 BOOL InitializeContext2(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/void* Buffer, 
                         CONTEXT_FLAGS ContextFlags, CONTEXT** Context, uint* ContextLength, 

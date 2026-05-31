@@ -1,6 +1,6 @@
 // Written in the D programming language.
 
-module windows.foundation;
+module windows.foundation.foundation;
 
 public import windows.core;
 

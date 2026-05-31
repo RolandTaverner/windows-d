@@ -3,26 +3,27 @@
 module windows.win32.system.processstatus;
 
 public import windows.core;
-public import windows.win32.foundation : BOOL, HANDLE, HMODULE, PSTR, PWSTR;
+public import windows.win32.foundation.foundation : BOOL, HANDLE, HMODULE, PSTR, PWSTR;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
+
 alias ENUM_PROCESS_MODULES_EX_FLAGS = uint;
 enum : uint
 {
-    LIST_MODULES_ALL     = 0x00000003,
-    LIST_MODULES_DEFAULT = 0x00000000,
-    LIST_MODULES_32BIT   = 0x00000001,
-    LIST_MODULES_64BIT   = 0x00000002,
+    LIST_MODULES_ALL     = 0x00000003U,
+    LIST_MODULES_DEFAULT = 0x00000000U,
+    LIST_MODULES_32BIT   = 0x00000001U,
+    LIST_MODULES_64BIT   = 0x00000002U,
 }
 
 // Constants
 
 
-enum uint PSAPI_VERSION = 0x00000002;
+enum uint PSAPI_VERSION = 0x00000002U;
 
 // Callbacks
 
@@ -36,7 +37,7 @@ alias PENUM_PAGE_FILE_CALLBACKA = BOOL function(void* pContext, ENUM_PAGE_FILE_I
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/psapi/ns-psapi-moduleinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/psapi/ns-psapi-moduleinfo
 struct MODULEINFO
 {
     void* lpBaseOfDll;
@@ -44,14 +45,14 @@ struct MODULEINFO
     void* EntryPoint;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/psapi/ns-psapi-psapi_ws_watch_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/psapi/ns-psapi-psapi_ws_watch_information
 struct PSAPI_WS_WATCH_INFORMATION
 {
     void* FaultingPc;
     void* FaultingVa;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/psapi/ns-psapi-psapi_ws_watch_information_ex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/psapi/ns-psapi-psapi_ws_watch_information_ex
 struct PSAPI_WS_WATCH_INFORMATION_EX
 {
     PSAPI_WS_WATCH_INFORMATION BasicInfo;
@@ -59,35 +60,48 @@ struct PSAPI_WS_WATCH_INFORMATION_EX
     size_t Flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/psapi/ns-psapi-psapi_working_set_block))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/psapi/ns-psapi-psapi_working_set_block
 union PSAPI_WORKING_SET_BLOCK
 {
-    size_t               Flags;
-    _Anonymous_e__Struct Anonymous;
+    size_t Flags;
+    struct
+    {
+        /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(VirtualPage)), FixedArgSig(ElementSig(12)), FixedArgSig(ElementSig(20))], [])*/size_t _bitfield465;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/psapi/ns-psapi-psapi_working_set_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/psapi/ns-psapi-psapi_working_set_information
 struct PSAPI_WORKING_SET_INFORMATION
 {
     size_t NumberOfEntries;
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/PSAPI_WORKING_SET_BLOCK[1] WorkingSetInfo;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/psapi/ns-psapi-psapi_working_set_ex_block))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/psapi/ns-psapi-psapi_working_set_ex_block
 union PSAPI_WORKING_SET_EX_BLOCK
 {
-    size_t              Flags;
-    _Anonymous_e__Union Anonymous;
+    size_t Flags;
+    union
+    {
+        struct
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Bad)), FixedArgSig(ElementSig(31)), FixedArgSig(ElementSig(1))], [])*/size_t _bitfield466;
+        }
+        struct Invalid
+        {
+            /*FIELD ATTR: NativeBitfieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(Bad)), FixedArgSig(ElementSig(31)), FixedArgSig(ElementSig(1))], [])*/size_t _bitfield467;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/psapi/ns-psapi-psapi_working_set_ex_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/psapi/ns-psapi-psapi_working_set_ex_information
 struct PSAPI_WORKING_SET_EX_INFORMATION
 {
     void* VirtualAddress;
     PSAPI_WORKING_SET_EX_BLOCK VirtualAttributes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/psapi/ns-psapi-process_memory_counters))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/psapi/ns-psapi-process_memory_counters
 struct PROCESS_MEMORY_COUNTERS
 {
     uint   cb;
@@ -102,7 +116,7 @@ struct PROCESS_MEMORY_COUNTERS
     size_t PeakPagefileUsage;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/psapi/ns-psapi-process_memory_counters_ex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/psapi/ns-psapi-process_memory_counters_ex
 struct PROCESS_MEMORY_COUNTERS_EX
 {
     uint   cb;
@@ -135,7 +149,7 @@ struct PROCESS_MEMORY_COUNTERS_EX2
     ulong  SharedCommitUsage;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/psapi/ns-psapi-performance_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/psapi/ns-psapi-performance_information
 struct PERFORMANCE_INFORMATION
 {
     uint   cb;
@@ -154,7 +168,7 @@ struct PERFORMANCE_INFORMATION
     uint   ThreadCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/psapi/ns-psapi-enum_page_file_information))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/psapi/ns-psapi-enum_page_file_information
 struct ENUM_PAGE_FILE_INFORMATION
 {
     uint   cb;
@@ -290,18 +304,18 @@ uint GetProcessImageFileNameA(HANDLE hProcess, PSTR lpImageFileName, uint nSize)
 @DllImport("PSAPI.dll")
 uint GetProcessImageFileNameW(HANDLE hProcess, PWSTR lpImageFileName, uint nSize);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/psapi/nf-psapi-enumprocesses))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/psapi/nf-psapi-enumprocesses
 @DllImport("KERNEL32.dll")
 BOOL K32EnumProcesses(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/uint* lpidProcess, 
                       uint cb, uint* lpcbNeeded);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/psapi/nf-psapi-enumprocessmodules))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/psapi/nf-psapi-enumprocessmodules
 @DllImport("KERNEL32.dll")
 BOOL K32EnumProcessModules(HANDLE hProcess, 
                            /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/HMODULE* lphModule, 
                            uint cb, uint* lpcbNeeded);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/psapi/nf-psapi-enumprocessmodulesex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/psapi/nf-psapi-enumprocessmodulesex
 @DllImport("KERNEL32.dll")
 BOOL K32EnumProcessModulesEx(HANDLE hProcess, 
                              /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/HMODULE* lphModule, 
@@ -323,25 +337,25 @@ uint K32GetModuleFileNameExA(HANDLE hProcess, HMODULE hModule, PSTR lpFilename, 
 @DllImport("KERNEL32.dll")
 uint K32GetModuleFileNameExW(HANDLE hProcess, HMODULE hModule, PWSTR lpFilename, uint nSize);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/psapi/nf-psapi-getmoduleinformation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/psapi/nf-psapi-getmoduleinformation
 @DllImport("KERNEL32.dll")
 BOOL K32GetModuleInformation(HANDLE hProcess, HMODULE hModule, MODULEINFO* lpmodinfo, uint cb);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/psapi/nf-psapi-emptyworkingset))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/psapi/nf-psapi-emptyworkingset
 @DllImport("KERNEL32.dll")
 BOOL K32EmptyWorkingSet(HANDLE hProcess);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/psapi/nf-psapi-initializeprocessforwswatch))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/psapi/nf-psapi-initializeprocessforwswatch
 @DllImport("KERNEL32.dll")
 BOOL K32InitializeProcessForWsWatch(HANDLE hProcess);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/psapi/nf-psapi-getwschanges))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/psapi/nf-psapi-getwschanges
 @DllImport("KERNEL32.dll")
 BOOL K32GetWsChanges(HANDLE hProcess, 
                      /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/PSAPI_WS_WATCH_INFORMATION* lpWatchInfo, 
                      uint cb);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/psapi/nf-psapi-getwschangesex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/psapi/nf-psapi-getwschangesex
 @DllImport("KERNEL32.dll")
 BOOL K32GetWsChangesEx(HANDLE hProcess, 
                        /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/PSAPI_WS_WATCH_INFORMATION_EX* lpWatchInfoEx, 
@@ -355,7 +369,7 @@ uint K32GetMappedFileNameW(HANDLE hProcess, void* lpv, PWSTR lpFilename, uint nS
 @DllImport("KERNEL32.dll")
 uint K32GetMappedFileNameA(HANDLE hProcess, void* lpv, PSTR lpFilename, uint nSize);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/psapi/nf-psapi-enumdevicedrivers))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/psapi/nf-psapi-enumdevicedrivers
 @DllImport("KERNEL32.dll")
 BOOL K32EnumDeviceDrivers(/*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(1)))])*/void** lpImageBase, 
                           uint cb, uint* lpcbNeeded);
@@ -376,25 +390,25 @@ uint K32GetDeviceDriverFileNameA(void* ImageBase, PSTR lpFilename, uint nSize);
 @DllImport("KERNEL32.dll")
 uint K32GetDeviceDriverFileNameW(void* ImageBase, PWSTR lpFilename, uint nSize);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/psapi/nf-psapi-queryworkingset))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/psapi/nf-psapi-queryworkingset
 @DllImport("KERNEL32.dll")
 BOOL K32QueryWorkingSet(HANDLE hProcess, 
                         /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* pv, 
                         uint cb);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/psapi/nf-psapi-queryworkingsetex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/psapi/nf-psapi-queryworkingsetex
 @DllImport("KERNEL32.dll")
 BOOL K32QueryWorkingSetEx(HANDLE hProcess, 
                           /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* pv, 
                           uint cb);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/psapi/nf-psapi-getprocessmemoryinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/psapi/nf-psapi-getprocessmemoryinfo
 @DllImport("KERNEL32.dll")
 BOOL K32GetProcessMemoryInfo(HANDLE Process, 
                              /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/PROCESS_MEMORY_COUNTERS* ppsmemCounters, 
                              uint cb);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/psapi/nf-psapi-getperformanceinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/psapi/nf-psapi-getperformanceinfo
 @DllImport("KERNEL32.dll")
 BOOL K32GetPerformanceInfo(PERFORMANCE_INFORMATION* pPerformanceInformation, uint cb);
 

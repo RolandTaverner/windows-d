@@ -1,23 +1,24 @@
 // Written in the D programming language.
 
-module windows.win32.graphics.printing;
+module windows.win32.graphics.printing.printing;
 
 public import windows.core;
-public import system : Guid;
+public import system.system : Guid;
 public import windows.win32.data.xml.msxml : IXMLDOMDocument2;
 public import windows.win32.devices.communication : COMMTIMEOUTS;
 public import windows.win32.devices.display : FD_KERNINGPAIR;
-public import windows.win32.foundation : BOOL, BSTR, CHAR, FARPROC, FILETIME, HANDLE,
-                                         HINSTANCE, HRESULT, HWND, LPARAM, LRESULT,
-                                         POINTL, PSTR, PWSTR, RECT, RECTL, SIZE,
-                                         SYSTEMTIME, WPARAM;
-public import windows.win32.graphics.dxgi : IDXGISurface;
+public import windows.win32.foundation.foundation : BOOL, BSTR, CHAR, FARPROC, FILETIME,
+                                                    HANDLE, HINSTANCE, HRESULT, HWND,
+                                                    LPARAM, LRESULT, POINTL, PSTR,
+                                                    PWSTR, RECT, RECTL, SIZE, SYSTEMTIME,
+                                                    WPARAM;
+public import windows.win32.graphics.dxgi.dxgi : IDXGISurface;
 public import windows.win32.graphics.gdi : DEVMODEA, DEVMODEW, HDC, PANOSE;
-public import windows.win32.graphics.imaging : IWICBitmap;
-public import windows.win32.security : PSECURITY_DESCRIPTOR;
-public import windows.win32.storage.xps : DOCINFOW, IXpsOMPage;
-public import windows.win32.system.com : IDispatch, IEnumUnknown, IErrorInfo, IStream,
-                                         IUnknown, STREAM_SEEK;
+public import windows.win32.graphics.imaging.imaging : IWICBitmap;
+public import windows.win32.security.security : PSECURITY_DESCRIPTOR;
+public import windows.win32.storage.xps.xps : DOCINFOW, IXpsOMPage;
+public import windows.win32.system.com.com : IDispatch, IEnumUnknown, IErrorInfo, IStream,
+                                             IUnknown, STREAM_SEEK;
 public import windows.win32.system.ole : ICreateErrorInfo;
 public import windows.win32.system.power : POWERBROADCAST_SETTING;
 public import windows.win32.system.registry : HKEY;
@@ -29,32 +30,34 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
+
 alias PRINTER_ACCESS_RIGHTS = uint;
 enum : uint
 {
-    PRINTER_ALL_ACCESS               = 0x000f000c,
-    PRINTER_READ                     = 0x00020008,
-    PRINTER_WRITE                    = 0x00020008,
-    PRINTER_EXECUTE                  = 0x00020008,
-    SERVER_ALL_ACCESS                = 0x000f0003,
-    SERVER_READ                      = 0x00020002,
-    SERVER_WRITE                     = 0x00020003,
-    SERVER_EXECUTE                   = 0x00020002,
-    PRINTER_DELETE                   = 0x00010000,
-    PRINTER_READ_CONTROL             = 0x00020000,
-    PRINTER_WRITE_DAC                = 0x00040000,
-    PRINTER_WRITE_OWNER              = 0x00080000,
-    PRINTER_SYNCHRONIZE              = 0x00100000,
-    PRINTER_STANDARD_RIGHTS_REQUIRED = 0x000f0000,
-    PRINTER_STANDARD_RIGHTS_READ     = 0x00020000,
-    PRINTER_STANDARD_RIGHTS_WRITE    = 0x00020000,
-    PRINTER_STANDARD_RIGHTS_EXECUTE  = 0x00020000,
-    SERVER_ACCESS_ADMINISTER         = 0x00000001,
-    SERVER_ACCESS_ENUMERATE          = 0x00000002,
-    PRINTER_ACCESS_ADMINISTER        = 0x00000004,
-    PRINTER_ACCESS_USE               = 0x00000008,
-    PRINTER_ACCESS_MANAGE_LIMITED    = 0x00000040,
+    PRINTER_ALL_ACCESS               = 0x000f000cU,
+    PRINTER_READ                     = 0x00020008U,
+    PRINTER_WRITE                    = 0x00020008U,
+    PRINTER_EXECUTE                  = 0x00020008U,
+    SERVER_ALL_ACCESS                = 0x000f0003U,
+    SERVER_READ                      = 0x00020002U,
+    SERVER_WRITE                     = 0x00020003U,
+    SERVER_EXECUTE                   = 0x00020002U,
+    PRINTER_DELETE                   = 0x00010000U,
+    PRINTER_READ_CONTROL             = 0x00020000U,
+    PRINTER_WRITE_DAC                = 0x00040000U,
+    PRINTER_WRITE_OWNER              = 0x00080000U,
+    PRINTER_SYNCHRONIZE              = 0x00100000U,
+    PRINTER_STANDARD_RIGHTS_REQUIRED = 0x000f0000U,
+    PRINTER_STANDARD_RIGHTS_READ     = 0x00020000U,
+    PRINTER_STANDARD_RIGHTS_WRITE    = 0x00020000U,
+    PRINTER_STANDARD_RIGHTS_EXECUTE  = 0x00020000U,
+    SERVER_ACCESS_ADMINISTER         = 0x00000001U,
+    SERVER_ACCESS_ENUMERATE          = 0x00000002U,
+    PRINTER_ACCESS_ADMINISTER        = 0x00000004U,
+    PRINTER_ACCESS_USE               = 0x00000008U,
+    PRINTER_ACCESS_MANAGE_LIMITED    = 0x00000040U,
 }
+
 enum EXpsCompressionOptions : int
 {
     Compression_NotCompressed = 0x00000000,
@@ -62,17 +65,20 @@ enum EXpsCompressionOptions : int
     Compression_Small         = 0x00000002,
     Compression_Fast          = 0x00000003,
 }
+
 enum EXpsFontOptions : int
 {
     Font_Normal      = 0x00000000,
     Font_Obfusticate = 0x00000001,
 }
+
 enum EXpsJobConsumption : int
 {
     XpsJob_DocumentSequenceAdded = 0x00000000,
     XpsJob_FixedDocumentAdded    = 0x00000001,
     XpsJob_FixedPageAdded        = 0x00000002,
 }
+
 enum EXpsFontRestriction : int
 {
     Xps_Restricted_Font_Installable  = 0x00000000,
@@ -80,6 +86,7 @@ enum EXpsFontRestriction : int
     Xps_Restricted_Font_PreviewPrint = 0x00000004,
     Xps_Restricted_Font_Editable     = 0x00000008,
 }
+
 alias BIDI_TYPE = int;
 enum : int
 {
@@ -92,7 +99,8 @@ enum : int
     BIDI_ENUM   = 0x00000006,
     BIDI_BLOB   = 0x00000007,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/printer-option-flags))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-option-flags
 alias PRINTER_OPTION_FLAGS = int;
 enum : int
 {
@@ -101,6 +109,7 @@ enum : int
     PRINTER_OPTION_CLIENT_CHANGE  = 0x00000004,
     PRINTER_OPTION_NO_CLIENT_DATA = 0x00000008,
 }
+
 enum EPrintPropertyType : int
 {
     kPropertyTypeString              = 0x00000001,
@@ -114,7 +123,8 @@ enum EPrintPropertyType : int
     kPropertyTypeNotificationOptions = 0x00000009,
     kPropertyTypeBuffer              = 0x0000000a,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/eprintxpsjobprogress))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/eprintxpsjobprogress
 enum EPrintXPSJobProgress : int
 {
     kAddingDocumentSequence = 0x00000000,
@@ -128,13 +138,15 @@ enum EPrintXPSJobProgress : int
     kImageAdded             = 0x00000008,
     kXpsDocumentCommitted   = 0x00000009,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/eprintxpsjoboperation))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/eprintxpsjoboperation
 enum EPrintXPSJobOperation : int
 {
     kJobProduction  = 0x00000001,
     kJobConsumption = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/print-execution-context))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/print-execution-context
 alias PRINT_EXECUTION_CONTEXT = int;
 enum : int
 {
@@ -144,6 +156,7 @@ enum : int
     PRINT_EXECUTION_CONTEXT_FILTER_PIPELINE        = 0x00000003,
     PRINT_EXECUTION_CONTEXT_WOW64                  = 0x00000004,
 }
+
 alias MXDC_LANDSCAPE_ROTATION_ENUMS = int;
 enum : int
 {
@@ -151,6 +164,7 @@ enum : int
     MXDC_LANDSCAPE_ROTATE_NONE                         = 0x00000000,
     MXDC_LANDSCAPE_ROTATE_COUNTERCLOCKWISE_270_DEGREES = 0xffffffa6,
 }
+
 alias MXDC_IMAGE_TYPE_ENUMS = int;
 enum : int
 {
@@ -159,7 +173,8 @@ enum : int
     MXDC_IMAGETYPE_JPEGLOW_COMPRESSION    = 0x00000003,
     MXDC_IMAGETYPE_PNG                    = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/mxdcs0pageenums))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/mxdcs0pageenums
 alias MXDC_S0_PAGE_ENUMS = int;
 enum : int
 {
@@ -174,6 +189,7 @@ enum : int
     MXDC_RESOURCE_PNG_THUMBNAIL  = 0x00000008,
     MXDC_RESOURCE_MAX            = 0x00000009,
 }
+
 alias EATTRIBUTE_DATATYPE = int;
 enum : int
 {
@@ -189,12 +205,14 @@ enum : int
     kADT_RECT             = 0x00000009,
     kADT_CUSTOMSIZEPARAMS = 0x0000000a,
 }
+
 alias SHIMOPTS = int;
 enum : int
 {
     PTSHIM_DEFAULT    = 0x00000000,
     PTSHIM_NOSNAPSHOT = 0x00000001,
 }
+
 enum PrintSchemaConstrainedSetting : int
 {
     PrintSchemaConstrainedSetting_None        = 0x00000000,
@@ -202,17 +220,20 @@ enum PrintSchemaConstrainedSetting : int
     PrintSchemaConstrainedSetting_Admin       = 0x00000002,
     PrintSchemaConstrainedSetting_Device      = 0x00000003,
 }
+
 enum PrintSchemaSelectionType : int
 {
     PrintSchemaSelectionType_PickOne  = 0x00000000,
     PrintSchemaSelectionType_PickMany = 0x00000001,
 }
+
 enum PrintSchemaParameterDataType : int
 {
     PrintSchemaParameterDataType_Integer       = 0x00000000,
     PrintSchemaParameterDataType_NumericString = 0x00000001,
     PrintSchemaParameterDataType_String        = 0x00000002,
 }
+
 enum PrintJobStatus : int
 {
     PrintJobStatus_Paused             = 0x00000001,
@@ -230,19 +251,22 @@ enum PrintJobStatus : int
     PrintJobStatus_Complete           = 0x00001000,
     PrintJobStatus_Retained           = 0x00002000,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/prnasnot/ne-prnasnot-printasyncnotifyuserfilter))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/prnasnot/ne-prnasnot-printasyncnotifyuserfilter
 enum PrintAsyncNotifyUserFilter : int
 {
     kPerUser  = 0x00000000,
     kAllUsers = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/prnasnot/ne-prnasnot-printasyncnotifyconversationstyle))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/prnasnot/ne-prnasnot-printasyncnotifyconversationstyle
 enum PrintAsyncNotifyConversationStyle : int
 {
     kBiDirectional  = 0x00000000,
     kUniDirectional = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/prnasnot/ne-prnasnot-printasyncnotifyerror))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/prnasnot/ne-prnasnot-printasyncnotifyerror
 enum PrintAsyncNotifyError : int
 {
     CHANNEL_CLOSED_BY_SERVER                = 0x00000001,
@@ -270,6 +294,7 @@ enum PrintAsyncNotifyError : int
     LOCAL_ONLY_REGISTRATION                 = 0x00000017,
     REMOTE_ONLY_REGISTRATION                = 0x00000018,
 }
+
 enum EBranchOfficeJobEventType : int
 {
     kInvalidJobState     = 0x00000000,
@@ -279,6 +304,7 @@ enum EBranchOfficeJobEventType : int
     kLogJobPipelineError = 0x00000004,
     kLogOfflineFileFull  = 0x00000005,
 }
+
 alias NOTIFICATION_CALLBACK_COMMANDS = int;
 enum : int
 {
@@ -286,6 +312,7 @@ enum : int
     NOTIFICATION_COMMAND_CONTEXT_ACQUIRE = 0x00000001,
     NOTIFICATION_COMMAND_CONTEXT_RELEASE = 0x00000002,
 }
+
 alias NOTIFICATION_CONFIG_FLAGS = int;
 enum : int
 {
@@ -294,17 +321,20 @@ enum : int
     NOTIFICATION_CONFIG_EVENT_TRIGGER     = 0x00000004,
     NOTIFICATION_CONFIG_ASYNC_CHANNEL     = 0x00000008,
 }
+
 alias UI_TYPE = int;
 enum : int
 {
     kMessageBox = 0x00000000,
 }
+
 alias XPSRAS_RENDERING_MODE = int;
 enum : int
 {
     XPSRAS_RENDERING_MODE_ANTIALIASED = 0x00000000,
     XPSRAS_RENDERING_MODE_ALIASED     = 0x00000001,
 }
+
 alias XPSRAS_PIXEL_FORMAT = int;
 enum : int
 {
@@ -312,12 +342,14 @@ enum : int
     XPSRAS_PIXEL_FORMAT_64BPP_PRGBA_HALF_SCRGB   = 0x00000002,
     XPSRAS_PIXEL_FORMAT_128BPP_PRGBA_FLOAT_SCRGB = 0x00000003,
 }
+
 alias XPSRAS_BACKGROUND_COLOR = int;
 enum : int
 {
     XPSRAS_BACKGROUND_COLOR_TRANSPARENT = 0x00000000,
     XPSRAS_BACKGROUND_COLOR_OPAQUE      = 0x00000001,
 }
+
 enum PageCountType : int
 {
     FinalPageCount        = 0x00000000,
@@ -329,159 +361,159 @@ enum PageCountType : int
 
 enum : uint
 {
-    USB_PRINTER_INTERFACE_CLASSIC = 0x00000001,
-    USB_PRINTER_INTERFACE_IPP     = 0x00000002,
-    USB_PRINTER_INTERFACE_DUAL    = 0x00000003,
+    USB_PRINTER_INTERFACE_CLASSIC = 0x00000001U,
+    USB_PRINTER_INTERFACE_IPP     = 0x00000002U,
+    USB_PRINTER_INTERFACE_DUAL    = 0x00000003U,
 }
 
 enum : uint
 {
-    USB_PRINT_IPP_COMPAT_ID = 0x00000001,
-    USB_PRINT_IPP_FAXOUT    = 0x00000002,
+    USB_PRINT_IPP_COMPAT_ID = 0x00000001U,
+    USB_PRINT_IPP_FAXOUT    = 0x00000002U,
 }
 
-enum uint USBPRINT_IOCTL_INDEX = 0x00000000;
+enum uint USBPRINT_IOCTL_INDEX = 0x00000000U;
 
 enum : uint
 {
-    IOCTL_USBPRINT_GET_LPT_STATUS      = 0x00220030,
-    IOCTL_USBPRINT_GET_1284_ID         = 0x00220034,
-    IOCTL_USBPRINT_VENDOR_SET_COMMAND  = 0x00220038,
-    IOCTL_USBPRINT_VENDOR_GET_COMMAND  = 0x0022003c,
-    IOCTL_USBPRINT_SOFT_RESET          = 0x00220040,
-    IOCTL_USBPRINT_GET_PROTOCOL        = 0x00220044,
-    IOCTL_USBPRINT_SET_PROTOCOL        = 0x00220048,
-    IOCTL_USBPRINT_GET_INTERFACE_TYPE  = 0x0022004c,
-    IOCTL_USBPRINT_SET_PORT_NUMBER     = 0x00220050,
-    IOCTL_USBPRINT_ADD_MSIPP_COMPAT_ID = 0x00220054,
-    IOCTL_USBPRINT_SET_DEVICE_ID       = 0x00220058,
-    IOCTL_USBPRINT_ADD_CHILD_DEVICE    = 0x0022005c,
-    IOCTL_USBPRINT_CYCLE_PORT          = 0x00220060,
-    IOCTL_USBPRINT_GET_MFG_MDL_ID      = 0x00220064,
-}
-
-enum : uint
-{
-    TVOT_2STATES  = 0x00000000,
-    TVOT_3STATES  = 0x00000001,
-    TVOT_UDARROW  = 0x00000002,
-    TVOT_TRACKBAR = 0x00000003,
-}
-
-enum uint TVOT_SCROLLBAR = 0x00000004;
-
-enum : uint
-{
-    TVOT_LISTBOX  = 0x00000005,
-    TVOT_COMBOBOX = 0x00000006,
+    IOCTL_USBPRINT_GET_LPT_STATUS      = 0x00220030U,
+    IOCTL_USBPRINT_GET_1284_ID         = 0x00220034U,
+    IOCTL_USBPRINT_VENDOR_SET_COMMAND  = 0x00220038U,
+    IOCTL_USBPRINT_VENDOR_GET_COMMAND  = 0x0022003cU,
+    IOCTL_USBPRINT_SOFT_RESET          = 0x00220040U,
+    IOCTL_USBPRINT_GET_PROTOCOL        = 0x00220044U,
+    IOCTL_USBPRINT_SET_PROTOCOL        = 0x00220048U,
+    IOCTL_USBPRINT_GET_INTERFACE_TYPE  = 0x0022004cU,
+    IOCTL_USBPRINT_SET_PORT_NUMBER     = 0x00220050U,
+    IOCTL_USBPRINT_ADD_MSIPP_COMPAT_ID = 0x00220054U,
+    IOCTL_USBPRINT_SET_DEVICE_ID       = 0x00220058U,
+    IOCTL_USBPRINT_ADD_CHILD_DEVICE    = 0x0022005cU,
+    IOCTL_USBPRINT_CYCLE_PORT          = 0x00220060U,
+    IOCTL_USBPRINT_GET_MFG_MDL_ID      = 0x00220064U,
 }
 
 enum : uint
 {
-    TVOT_EDITBOX    = 0x00000007,
-    TVOT_PUSHBUTTON = 0x00000008,
+    TVOT_2STATES  = 0x00000000U,
+    TVOT_3STATES  = 0x00000001U,
+    TVOT_UDARROW  = 0x00000002U,
+    TVOT_TRACKBAR = 0x00000003U,
+}
+
+enum uint TVOT_SCROLLBAR = 0x00000004U;
+
+enum : uint
+{
+    TVOT_LISTBOX  = 0x00000005U,
+    TVOT_COMBOBOX = 0x00000006U,
 }
 
 enum : uint
 {
-    TVOT_CHKBOX     = 0x00000009,
-    TVOT_NSTATES_EX = 0x0000000a,
+    TVOT_EDITBOX    = 0x00000007U,
+    TVOT_PUSHBUTTON = 0x00000008U,
 }
 
 enum : uint
 {
-    CHKBOXS_FALSE_TRUE  = 0x00000000,
-    CHKBOXS_NO_YES      = 0x00000001,
-    CHKBOXS_OFF_ON      = 0x00000002,
-    CHKBOXS_FALSE_PDATA = 0x00000003,
-    CHKBOXS_NO_PDATA    = 0x00000004,
-    CHKBOXS_OFF_PDATA   = 0x00000005,
-    CHKBOXS_NONE_PDATA  = 0x00000006,
+    TVOT_CHKBOX     = 0x00000009U,
+    TVOT_NSTATES_EX = 0x0000000aU,
 }
 
 enum : uint
 {
-    PUSHBUTTON_TYPE_DLGPROC  = 0x00000000,
-    PUSHBUTTON_TYPE_CALLBACK = 0x00000001,
-    PUSHBUTTON_TYPE_HTCLRADJ = 0x00000002,
-    PUSHBUTTON_TYPE_HTSETUP  = 0x00000003,
-}
-
-enum uint MAX_RES_STR_CHARS = 0x000000a0;
-
-enum : uint
-{
-    OPTPF_HIDE            = 0x00000001,
-    OPTPF_DISABLED        = 0x00000002,
-    OPTPF_ICONID_AS_HICON = 0x00000004,
+    CHKBOXS_FALSE_TRUE  = 0x00000000U,
+    CHKBOXS_NO_YES      = 0x00000001U,
+    CHKBOXS_OFF_ON      = 0x00000002U,
+    CHKBOXS_FALSE_PDATA = 0x00000003U,
+    CHKBOXS_NO_PDATA    = 0x00000004U,
+    CHKBOXS_OFF_PDATA   = 0x00000005U,
+    CHKBOXS_NONE_PDATA  = 0x00000006U,
 }
 
 enum : uint
 {
-    OPTPF_OVERLAY_WARNING_ICON = 0x00000008,
-    OPTPF_OVERLAY_STOP_ICON    = 0x00000010,
-    OPTPF_OVERLAY_NO_ICON      = 0x00000020,
+    PUSHBUTTON_TYPE_DLGPROC  = 0x00000000U,
+    PUSHBUTTON_TYPE_CALLBACK = 0x00000001U,
+    PUSHBUTTON_TYPE_HTCLRADJ = 0x00000002U,
+    PUSHBUTTON_TYPE_HTSETUP  = 0x00000003U,
 }
 
-enum uint OPTPF_USE_HDLGTEMPLATE = 0x00000040;
-enum uint OPTPF_MASK = 0x0000007f;
+enum uint MAX_RES_STR_CHARS = 0x000000a0U;
 
 enum : uint
 {
-    OPTCF_HIDE = 0x00000001,
-    OPTCF_MASK = 0x00000001,
+    OPTPF_HIDE            = 0x00000001U,
+    OPTPF_DISABLED        = 0x00000002U,
+    OPTPF_ICONID_AS_HICON = 0x00000004U,
 }
-
-enum uint OPTTF_TYPE_DISABLED = 0x00000001;
-enum uint OPTTF_NOSPACE_BEFORE_POSTFIX = 0x00000002;
-enum uint OPTTF_MASK = 0x00000003;
 
 enum : uint
 {
-    OTS_LBCB_SORT             = 0x00000001,
-    OTS_LBCB_PROPPAGE_LBUSECB = 0x00000002,
-    OTS_LBCB_PROPPAGE_CBUSELB = 0x00000004,
+    OPTPF_OVERLAY_WARNING_ICON = 0x00000008U,
+    OPTPF_OVERLAY_STOP_ICON    = 0x00000010U,
+    OPTPF_OVERLAY_NO_ICON      = 0x00000020U,
 }
 
-enum uint OTS_LBCB_INCL_ITEM_NONE = 0x00000008;
-enum uint OTS_LBCB_NO_ICON16_IN_ITEM = 0x00000010;
-enum uint OTS_PUSH_INCL_SETUP_TITLE = 0x00000020;
-enum uint OTS_PUSH_NO_DOT_DOT_DOT = 0x00000040;
-enum uint OTS_PUSH_ENABLE_ALWAYS = 0x00000080;
-enum uint OTS_MASK = 0x000000ff;
-enum uint EPF_PUSH_TYPE_DLGPROC = 0x00000001;
-enum uint EPF_INCL_SETUP_TITLE = 0x00000002;
-enum uint EPF_NO_DOT_DOT_DOT = 0x00000004;
-enum uint EPF_ICONID_AS_HICON = 0x00000008;
+enum uint OPTPF_USE_HDLGTEMPLATE = 0x00000040U;
+enum uint OPTPF_MASK = 0x0000007fU;
 
 enum : uint
 {
-    EPF_OVERLAY_WARNING_ICON = 0x00000010,
-    EPF_OVERLAY_STOP_ICON    = 0x00000020,
-    EPF_OVERLAY_NO_ICON      = 0x00000040,
+    OPTCF_HIDE = 0x00000001U,
+    OPTCF_MASK = 0x00000001U,
 }
 
-enum uint EPF_USE_HDLGTEMPLATE = 0x00000080;
-enum uint EPF_MASK = 0x000000ff;
+enum uint OPTTF_TYPE_DISABLED = 0x00000001U;
+enum uint OPTTF_NOSPACE_BEFORE_POSTFIX = 0x00000002U;
+enum uint OPTTF_MASK = 0x00000003U;
 
 enum : uint
 {
-    ECBF_CHECKNAME_AT_FRONT     = 0x00000001,
-    ECBF_CHECKNAME_ONLY_ENABLED = 0x00000002,
+    OTS_LBCB_SORT             = 0x00000001U,
+    OTS_LBCB_PROPPAGE_LBUSECB = 0x00000002U,
+    OTS_LBCB_PROPPAGE_CBUSELB = 0x00000004U,
 }
 
-enum uint ECBF_ICONID_AS_HICON = 0x00000004;
+enum uint OTS_LBCB_INCL_ITEM_NONE = 0x00000008U;
+enum uint OTS_LBCB_NO_ICON16_IN_ITEM = 0x00000010U;
+enum uint OTS_PUSH_INCL_SETUP_TITLE = 0x00000020U;
+enum uint OTS_PUSH_NO_DOT_DOT_DOT = 0x00000040U;
+enum uint OTS_PUSH_ENABLE_ALWAYS = 0x00000080U;
+enum uint OTS_MASK = 0x000000ffU;
+enum uint EPF_PUSH_TYPE_DLGPROC = 0x00000001U;
+enum uint EPF_INCL_SETUP_TITLE = 0x00000002U;
+enum uint EPF_NO_DOT_DOT_DOT = 0x00000004U;
+enum uint EPF_ICONID_AS_HICON = 0x00000008U;
 
 enum : uint
 {
-    ECBF_OVERLAY_WARNING_ICON       = 0x00000008,
-    ECBF_OVERLAY_ECBICON_IF_CHECKED = 0x00000010,
-    ECBF_OVERLAY_STOP_ICON          = 0x00000020,
-    ECBF_OVERLAY_NO_ICON            = 0x00000040,
+    EPF_OVERLAY_WARNING_ICON = 0x00000010U,
+    EPF_OVERLAY_STOP_ICON    = 0x00000020U,
+    EPF_OVERLAY_NO_ICON      = 0x00000040U,
 }
 
-enum uint ECBF_CHECKNAME_ONLY = 0x00000080;
-enum uint ECBF_MASK = 0x000000ff;
+enum uint EPF_USE_HDLGTEMPLATE = 0x00000080U;
+enum uint EPF_MASK = 0x000000ffU;
+
+enum : uint
+{
+    ECBF_CHECKNAME_AT_FRONT     = 0x00000001U,
+    ECBF_CHECKNAME_ONLY_ENABLED = 0x00000002U,
+}
+
+enum uint ECBF_ICONID_AS_HICON = 0x00000004U;
+
+enum : uint
+{
+    ECBF_OVERLAY_WARNING_ICON       = 0x00000008U,
+    ECBF_OVERLAY_ECBICON_IF_CHECKED = 0x00000010U,
+    ECBF_OVERLAY_STOP_ICON          = 0x00000020U,
+    ECBF_OVERLAY_NO_ICON            = 0x00000040U,
+}
+
+enum uint ECBF_CHECKNAME_ONLY = 0x00000080U;
+enum uint ECBF_MASK = 0x000000ffU;
 
 enum : int
 {
@@ -517,237 +549,237 @@ enum int OPTIF_MASK = 0x0001ffff;
 
 enum : uint
 {
-    DMPUB_NONE        = 0x00000000,
-    DMPUB_FIRST       = 0x00000001,
-    DMPUB_ORIENTATION = 0x00000001,
+    DMPUB_NONE        = 0x00000000U,
+    DMPUB_FIRST       = 0x00000001U,
+    DMPUB_ORIENTATION = 0x00000001U,
 }
 
 enum : uint
 {
-    DMPUB_SCALE          = 0x00000002,
-    DMPUB_COPIES_COLLATE = 0x00000003,
+    DMPUB_SCALE          = 0x00000002U,
+    DMPUB_COPIES_COLLATE = 0x00000003U,
 }
 
-enum uint DMPUB_DEFSOURCE = 0x00000004;
-enum uint DMPUB_PRINTQUALITY = 0x00000005;
+enum uint DMPUB_DEFSOURCE = 0x00000004U;
+enum uint DMPUB_PRINTQUALITY = 0x00000005U;
 
 enum : uint
 {
-    DMPUB_COLOR     = 0x00000006,
-    DMPUB_DUPLEX    = 0x00000007,
-    DMPUB_TTOPTION  = 0x00000008,
-    DMPUB_FORMNAME  = 0x00000009,
-    DMPUB_ICMMETHOD = 0x0000000a,
-    DMPUB_ICMINTENT = 0x0000000b,
+    DMPUB_COLOR     = 0x00000006U,
+    DMPUB_DUPLEX    = 0x00000007U,
+    DMPUB_TTOPTION  = 0x00000008U,
+    DMPUB_FORMNAME  = 0x00000009U,
+    DMPUB_ICMMETHOD = 0x0000000aU,
+    DMPUB_ICMINTENT = 0x0000000bU,
 }
 
-enum uint DMPUB_MEDIATYPE = 0x0000000c;
-enum uint DMPUB_DITHERTYPE = 0x0000000d;
-enum uint DMPUB_OUTPUTBIN = 0x0000000e;
+enum uint DMPUB_MEDIATYPE = 0x0000000cU;
+enum uint DMPUB_DITHERTYPE = 0x0000000dU;
+enum uint DMPUB_OUTPUTBIN = 0x0000000eU;
 
 enum : uint
 {
-    DMPUB_QUALITY   = 0x0000000f,
-    DMPUB_NUP       = 0x00000010,
-    DMPUB_PAGEORDER = 0x00000011,
+    DMPUB_QUALITY   = 0x0000000fU,
+    DMPUB_NUP       = 0x00000010U,
+    DMPUB_PAGEORDER = 0x00000011U,
 }
 
-enum uint DMPUB_NUP_DIRECTION = 0x00000012;
-enum uint DMPUB_MANUAL_DUPLEX = 0x00000013;
+enum uint DMPUB_NUP_DIRECTION = 0x00000012U;
+enum uint DMPUB_MANUAL_DUPLEX = 0x00000013U;
 
 enum : uint
 {
-    DMPUB_STAPLE       = 0x00000014,
-    DMPUB_BOOKLET_EDGE = 0x00000015,
-}
-
-enum : uint
-{
-    DMPUB_LAST             = 0x00000015,
-    DMPUB_OEM_PAPER_ITEM   = 0x00000061,
-    DMPUB_OEM_GRAPHIC_ITEM = 0x00000062,
-    DMPUB_OEM_ROOT_ITEM    = 0x00000063,
-}
-
-enum uint DMPUB_USER = 0x00000064;
-enum uint OIEXTF_ANSI_STRING = 0x00000001;
-
-enum : uint
-{
-    CPSUICB_REASON_SEL_CHANGED      = 0x00000000,
-    CPSUICB_REASON_PUSHBUTTON       = 0x00000001,
-    CPSUICB_REASON_ECB_CHANGED      = 0x00000002,
-    CPSUICB_REASON_DLGPROC          = 0x00000003,
-    CPSUICB_REASON_UNDO_CHANGES     = 0x00000004,
-    CPSUICB_REASON_EXTPUSH          = 0x00000005,
-    CPSUICB_REASON_APPLYNOW         = 0x00000006,
-    CPSUICB_REASON_OPTITEM_SETFOCUS = 0x00000007,
-    CPSUICB_REASON_ITEMS_REVERTED   = 0x00000008,
-    CPSUICB_REASON_ABOUT            = 0x00000009,
-    CPSUICB_REASON_SETACTIVE        = 0x0000000a,
-    CPSUICB_REASON_KILLACTIVE       = 0x0000000b,
+    DMPUB_STAPLE       = 0x00000014U,
+    DMPUB_BOOKLET_EDGE = 0x00000015U,
 }
 
 enum : uint
 {
-    CPSUICB_ACTION_NONE          = 0x00000000,
-    CPSUICB_ACTION_OPTIF_CHANGED = 0x00000001,
-    CPSUICB_ACTION_REINIT_ITEMS  = 0x00000002,
-    CPSUICB_ACTION_NO_APPLY_EXIT = 0x00000003,
-    CPSUICB_ACTION_ITEMS_APPLIED = 0x00000004,
+    DMPUB_LAST             = 0x00000015U,
+    DMPUB_OEM_PAPER_ITEM   = 0x00000061U,
+    DMPUB_OEM_GRAPHIC_ITEM = 0x00000062U,
+    DMPUB_OEM_ROOT_ITEM    = 0x00000063U,
 }
 
-enum uint DP_STD_TREEVIEWPAGE = 0x0000ffff;
+enum uint DMPUB_USER = 0x00000064U;
+enum uint OIEXTF_ANSI_STRING = 0x00000001U;
 
 enum : uint
 {
-    DP_STD_DOCPROPPAGE2 = 0x0000fffe,
-    DP_STD_DOCPROPPAGE1 = 0x0000fffd,
-}
-
-enum uint DP_STD_RESERVED_START = 0x0000fff0;
-enum uint MAX_DLGPAGE_COUNT = 0x00000040;
-enum uint DPF_ICONID_AS_HICON = 0x00000001;
-enum uint DPF_USE_HDLGTEMPLATE = 0x00000002;
-enum uint CPSUIF_UPDATE_PERMISSION = 0x00000001;
-enum uint CPSUIF_ICONID_AS_HICON = 0x00000002;
-enum uint CPSUIF_ABOUT_CALLBACK = 0x00000004;
-
-enum : uint
-{
-    CPSFUNC_ADD_HPROPSHEETPAGE   = 0x00000000,
-    CPSFUNC_ADD_PROPSHEETPAGEW   = 0x00000001,
-    CPSFUNC_ADD_PCOMPROPSHEETUIA = 0x00000002,
-    CPSFUNC_ADD_PCOMPROPSHEETUIW = 0x00000003,
-    CPSFUNC_ADD_PFNPROPSHEETUIA  = 0x00000004,
-    CPSFUNC_ADD_PFNPROPSHEETUIW  = 0x00000005,
-}
-
-enum uint CPSFUNC_DELETE_HCOMPROPSHEET = 0x00000006;
-enum uint CPSFUNC_SET_HSTARTPAGE = 0x00000007;
-enum uint CPSFUNC_GET_PAGECOUNT = 0x00000008;
-
-enum : uint
-{
-    CPSFUNC_SET_RESULT     = 0x00000009,
-    CPSFUNC_GET_HPSUIPAGES = 0x0000000a,
+    CPSUICB_REASON_SEL_CHANGED      = 0x00000000U,
+    CPSUICB_REASON_PUSHBUTTON       = 0x00000001U,
+    CPSUICB_REASON_ECB_CHANGED      = 0x00000002U,
+    CPSUICB_REASON_DLGPROC          = 0x00000003U,
+    CPSUICB_REASON_UNDO_CHANGES     = 0x00000004U,
+    CPSUICB_REASON_EXTPUSH          = 0x00000005U,
+    CPSUICB_REASON_APPLYNOW         = 0x00000006U,
+    CPSUICB_REASON_OPTITEM_SETFOCUS = 0x00000007U,
+    CPSUICB_REASON_ITEMS_REVERTED   = 0x00000008U,
+    CPSUICB_REASON_ABOUT            = 0x00000009U,
+    CPSUICB_REASON_SETACTIVE        = 0x0000000aU,
+    CPSUICB_REASON_KILLACTIVE       = 0x0000000bU,
 }
 
 enum : uint
 {
-    CPSFUNC_LOAD_CPSUI_STRINGA = 0x0000000b,
-    CPSFUNC_LOAD_CPSUI_STRINGW = 0x0000000c,
-    CPSFUNC_LOAD_CPSUI_ICON    = 0x0000000d,
+    CPSUICB_ACTION_NONE          = 0x00000000U,
+    CPSUICB_ACTION_OPTIF_CHANGED = 0x00000001U,
+    CPSUICB_ACTION_REINIT_ITEMS  = 0x00000002U,
+    CPSUICB_ACTION_NO_APPLY_EXIT = 0x00000003U,
+    CPSUICB_ACTION_ITEMS_APPLIED = 0x00000004U,
 }
 
-enum uint CPSFUNC_GET_PFNPROPSHEETUI_ICON = 0x0000000e;
-enum uint CPSFUNC_ADD_PROPSHEETPAGEA = 0x0000000f;
+enum uint DP_STD_TREEVIEWPAGE = 0x0000ffffU;
 
 enum : uint
 {
-    CPSFUNC_INSERT_PSUIPAGEA = 0x00000010,
-    CPSFUNC_INSERT_PSUIPAGEW = 0x00000011,
+    DP_STD_DOCPROPPAGE2 = 0x0000fffeU,
+    DP_STD_DOCPROPPAGE1 = 0x0000fffdU,
 }
+
+enum uint DP_STD_RESERVED_START = 0x0000fff0U;
+enum uint MAX_DLGPAGE_COUNT = 0x00000040U;
+enum uint DPF_ICONID_AS_HICON = 0x00000001U;
+enum uint DPF_USE_HDLGTEMPLATE = 0x00000002U;
+enum uint CPSUIF_UPDATE_PERMISSION = 0x00000001U;
+enum uint CPSUIF_ICONID_AS_HICON = 0x00000002U;
+enum uint CPSUIF_ABOUT_CALLBACK = 0x00000004U;
 
 enum : uint
 {
-    CPSFUNC_SET_PSUIPAGE_TITLEA = 0x00000012,
-    CPSFUNC_SET_PSUIPAGE_TITLEW = 0x00000013,
-    CPSFUNC_SET_PSUIPAGE_ICON   = 0x00000014,
-    CPSFUNC_SET_DATABLOCK       = 0x00000015,
+    CPSFUNC_ADD_HPROPSHEETPAGE   = 0x00000000U,
+    CPSFUNC_ADD_PROPSHEETPAGEW   = 0x00000001U,
+    CPSFUNC_ADD_PCOMPROPSHEETUIA = 0x00000002U,
+    CPSFUNC_ADD_PCOMPROPSHEETUIW = 0x00000003U,
+    CPSFUNC_ADD_PFNPROPSHEETUIA  = 0x00000004U,
+    CPSFUNC_ADD_PFNPROPSHEETUIW  = 0x00000005U,
 }
 
-enum uint CPSFUNC_QUERY_DATABLOCK = 0x00000016;
-enum uint CPSFUNC_SET_DMPUB_HIDEBITS = 0x00000017;
-enum uint CPSFUNC_IGNORE_CPSUI_PSN_APPLY = 0x00000018;
-enum uint CPSFUNC_DO_APPLY_CPSUI = 0x00000019;
-enum uint CPSFUNC_SET_FUSION_CONTEXT = 0x0000001a;
-enum uint MAX_CPSFUNC_INDEX = 0x0000001a;
+enum uint CPSFUNC_DELETE_HCOMPROPSHEET = 0x00000006U;
+enum uint CPSFUNC_SET_HSTARTPAGE = 0x00000007U;
+enum uint CPSFUNC_GET_PAGECOUNT = 0x00000008U;
 
 enum : uint
 {
-    CPSFUNC_ADD_PCOMPROPSHEETUI = 0x00000003,
-    CPSFUNC_ADD_PFNPROPSHEETUI  = 0x00000005,
-}
-
-enum uint CPSFUNC_LOAD_CPSUI_STRING = 0x0000000c;
-enum uint CPSFUNC_ADD_PROPSHEETPAGE = 0x00000001;
-enum uint CPSFUNC_INSERT_PSUIPAGE = 0x00000011;
-enum uint CPSFUNC_SET_PSUIPAGE_TITLE = 0x00000013;
-
-enum : uint
-{
-    SR_OWNER        = 0x00000000,
-    SR_OWNER_PARENT = 0x00000001,
+    CPSFUNC_SET_RESULT     = 0x00000009U,
+    CPSFUNC_GET_HPSUIPAGES = 0x0000000aU,
 }
 
 enum : uint
 {
-    PSUIPAGEINSERT_GROUP_PARENT    = 0x00000000,
-    PSUIPAGEINSERT_PCOMPROPSHEETUI = 0x00000001,
-    PSUIPAGEINSERT_PFNPROPSHEETUI  = 0x00000002,
-    PSUIPAGEINSERT_PROPSHEETPAGE   = 0x00000003,
-    PSUIPAGEINSERT_HPROPSHEETPAGE  = 0x00000004,
-    PSUIPAGEINSERT_DLL             = 0x00000005,
+    CPSFUNC_LOAD_CPSUI_STRINGA = 0x0000000bU,
+    CPSFUNC_LOAD_CPSUI_STRINGW = 0x0000000cU,
+    CPSFUNC_LOAD_CPSUI_ICON    = 0x0000000dU,
 }
 
-enum uint MAX_PSUIPAGEINSERT_INDEX = 0x00000005;
+enum uint CPSFUNC_GET_PFNPROPSHEETUI_ICON = 0x0000000eU;
+enum uint CPSFUNC_ADD_PROPSHEETPAGEA = 0x0000000fU;
 
 enum : uint
 {
-    INSPSUIPAGE_MODE_BEFORE      = 0x00000000,
-    INSPSUIPAGE_MODE_AFTER       = 0x00000001,
-    INSPSUIPAGE_MODE_FIRST_CHILD = 0x00000002,
-    INSPSUIPAGE_MODE_LAST_CHILD  = 0x00000003,
-    INSPSUIPAGE_MODE_INDEX       = 0x00000004,
-}
-
-enum uint SSP_TVPAGE = 0x00002710;
-
-enum : uint
-{
-    SSP_STDPAGE1 = 0x00002711,
-    SSP_STDPAGE2 = 0x00002712,
+    CPSFUNC_INSERT_PSUIPAGEA = 0x00000010U,
+    CPSFUNC_INSERT_PSUIPAGEW = 0x00000011U,
 }
 
 enum : uint
 {
-    APPLYCPSUI_NO_NEWDEF        = 0x00000001,
-    APPLYCPSUI_OK_CANCEL_BUTTON = 0x00000002,
+    CPSFUNC_SET_PSUIPAGE_TITLEA = 0x00000012U,
+    CPSFUNC_SET_PSUIPAGE_TITLEW = 0x00000013U,
+    CPSFUNC_SET_PSUIPAGE_ICON   = 0x00000014U,
+    CPSFUNC_SET_DATABLOCK       = 0x00000015U,
+}
+
+enum uint CPSFUNC_QUERY_DATABLOCK = 0x00000016U;
+enum uint CPSFUNC_SET_DMPUB_HIDEBITS = 0x00000017U;
+enum uint CPSFUNC_IGNORE_CPSUI_PSN_APPLY = 0x00000018U;
+enum uint CPSFUNC_DO_APPLY_CPSUI = 0x00000019U;
+enum uint CPSFUNC_SET_FUSION_CONTEXT = 0x0000001aU;
+enum uint MAX_CPSFUNC_INDEX = 0x0000001aU;
+
+enum : uint
+{
+    CPSFUNC_ADD_PCOMPROPSHEETUI = 0x00000003U,
+    CPSFUNC_ADD_PFNPROPSHEETUI  = 0x00000005U,
+}
+
+enum uint CPSFUNC_LOAD_CPSUI_STRING = 0x0000000cU;
+enum uint CPSFUNC_ADD_PROPSHEETPAGE = 0x00000001U;
+enum uint CPSFUNC_INSERT_PSUIPAGE = 0x00000011U;
+enum uint CPSFUNC_SET_PSUIPAGE_TITLE = 0x00000013U;
+
+enum : uint
+{
+    SR_OWNER        = 0x00000000U,
+    SR_OWNER_PARENT = 0x00000001U,
 }
 
 enum : uint
 {
-    PROPSHEETUI_REASON_INIT            = 0x00000000,
-    PROPSHEETUI_REASON_GET_INFO_HEADER = 0x00000001,
-    PROPSHEETUI_REASON_DESTROY         = 0x00000002,
-    PROPSHEETUI_REASON_SET_RESULT      = 0x00000003,
-    PROPSHEETUI_REASON_GET_ICON        = 0x00000004,
-    PROPSHEETUI_REASON_BEFORE_INIT     = 0x00000005,
+    PSUIPAGEINSERT_GROUP_PARENT    = 0x00000000U,
+    PSUIPAGEINSERT_PCOMPROPSHEETUI = 0x00000001U,
+    PSUIPAGEINSERT_PFNPROPSHEETUI  = 0x00000002U,
+    PSUIPAGEINSERT_PROPSHEETPAGE   = 0x00000003U,
+    PSUIPAGEINSERT_HPROPSHEETPAGE  = 0x00000004U,
+    PSUIPAGEINSERT_DLL             = 0x00000005U,
 }
 
-enum uint MAX_PROPSHEETUI_REASON_INDEX = 0x00000005;
-enum uint PROPSHEETUI_INFO_VERSION = 0x00000100;
-enum uint PSUIINFO_UNICODE = 0x00000001;
+enum uint MAX_PSUIPAGEINSERT_INDEX = 0x00000005U;
 
 enum : uint
 {
-    PSUIHDRF_OBSOLETE     = 0x00000001,
-    PSUIHDRF_NOAPPLYNOW   = 0x00000002,
-    PSUIHDRF_PROPTITLE    = 0x00000004,
-    PSUIHDRF_USEHICON     = 0x00000008,
-    PSUIHDRF_DEFTITLE     = 0x00000010,
-    PSUIHDRF_EXACT_PTITLE = 0x00000020,
+    INSPSUIPAGE_MODE_BEFORE      = 0x00000000U,
+    INSPSUIPAGE_MODE_AFTER       = 0x00000001U,
+    INSPSUIPAGE_MODE_FIRST_CHILD = 0x00000002U,
+    INSPSUIPAGE_MODE_LAST_CHILD  = 0x00000003U,
+    INSPSUIPAGE_MODE_INDEX       = 0x00000004U,
+}
+
+enum uint SSP_TVPAGE = 0x00002710U;
+
+enum : uint
+{
+    SSP_STDPAGE1 = 0x00002711U,
+    SSP_STDPAGE2 = 0x00002712U,
 }
 
 enum : uint
 {
-    CPSUI_CANCEL         = 0x00000000,
-    CPSUI_OK             = 0x00000001,
-    CPSUI_RESTARTWINDOWS = 0x00000002,
+    APPLYCPSUI_NO_NEWDEF        = 0x00000001U,
+    APPLYCPSUI_OK_CANCEL_BUTTON = 0x00000002U,
 }
 
-enum uint CPSUI_REBOOTSYSTEM = 0x00000003;
+enum : uint
+{
+    PROPSHEETUI_REASON_INIT            = 0x00000000U,
+    PROPSHEETUI_REASON_GET_INFO_HEADER = 0x00000001U,
+    PROPSHEETUI_REASON_DESTROY         = 0x00000002U,
+    PROPSHEETUI_REASON_SET_RESULT      = 0x00000003U,
+    PROPSHEETUI_REASON_GET_ICON        = 0x00000004U,
+    PROPSHEETUI_REASON_BEFORE_INIT     = 0x00000005U,
+}
+
+enum uint MAX_PROPSHEETUI_REASON_INDEX = 0x00000005U;
+enum uint PROPSHEETUI_INFO_VERSION = 0x00000100U;
+enum uint PSUIINFO_UNICODE = 0x00000001U;
+
+enum : uint
+{
+    PSUIHDRF_OBSOLETE     = 0x00000001U,
+    PSUIHDRF_NOAPPLYNOW   = 0x00000002U,
+    PSUIHDRF_PROPTITLE    = 0x00000004U,
+    PSUIHDRF_USEHICON     = 0x00000008U,
+    PSUIHDRF_DEFTITLE     = 0x00000010U,
+    PSUIHDRF_EXACT_PTITLE = 0x00000020U,
+}
+
+enum : uint
+{
+    CPSUI_CANCEL         = 0x00000000U,
+    CPSUI_OK             = 0x00000001U,
+    CPSUI_RESTARTWINDOWS = 0x00000002U,
+}
+
+enum uint CPSUI_REBOOTSYSTEM = 0x00000003U;
 
 enum : int
 {
@@ -849,377 +881,377 @@ enum int ERR_CPSUI_INTERNAL_ERROR = 0xffffd8f0;
 
 enum : uint
 {
-    IDI_CPSUI_ICONID_FIRST      = 0x0000fa00,
-    IDI_CPSUI_EMPTY             = 0x0000fa00,
-    IDI_CPSUI_SEL_NONE          = 0x0000fa01,
-    IDI_CPSUI_WARNING           = 0x0000fa02,
-    IDI_CPSUI_NO                = 0x0000fa03,
-    IDI_CPSUI_YES               = 0x0000fa04,
-    IDI_CPSUI_FALSE             = 0x0000fa05,
-    IDI_CPSUI_TRUE              = 0x0000fa06,
-    IDI_CPSUI_OFF               = 0x0000fa07,
-    IDI_CPSUI_ON                = 0x0000fa08,
-    IDI_CPSUI_PAPER_OUTPUT      = 0x0000fa09,
-    IDI_CPSUI_ENVELOPE          = 0x0000fa0a,
-    IDI_CPSUI_MEM               = 0x0000fa0b,
-    IDI_CPSUI_FONTCARTHDR       = 0x0000fa0c,
-    IDI_CPSUI_FONTCART          = 0x0000fa0d,
-    IDI_CPSUI_STAPLER_ON        = 0x0000fa0e,
-    IDI_CPSUI_STAPLER_OFF       = 0x0000fa0f,
-    IDI_CPSUI_HT_HOST           = 0x0000fa10,
-    IDI_CPSUI_HT_DEVICE         = 0x0000fa11,
-    IDI_CPSUI_TT_PRINTASGRAPHIC = 0x0000fa12,
-    IDI_CPSUI_TT_DOWNLOADSOFT   = 0x0000fa13,
-    IDI_CPSUI_TT_DOWNLOADVECT   = 0x0000fa14,
-    IDI_CPSUI_TT_SUBDEV         = 0x0000fa15,
-    IDI_CPSUI_PORTRAIT          = 0x0000fa16,
-    IDI_CPSUI_LANDSCAPE         = 0x0000fa17,
-    IDI_CPSUI_ROT_LAND          = 0x0000fa18,
-    IDI_CPSUI_AUTOSEL           = 0x0000fa19,
-    IDI_CPSUI_PAPER_TRAY        = 0x0000fa1a,
-    IDI_CPSUI_PAPER_TRAY2       = 0x0000fa1b,
-    IDI_CPSUI_PAPER_TRAY3       = 0x0000fa1c,
-    IDI_CPSUI_TRANSPARENT       = 0x0000fa1d,
-    IDI_CPSUI_COLLATE           = 0x0000fa1e,
-    IDI_CPSUI_DUPLEX_NONE       = 0x0000fa1f,
-    IDI_CPSUI_DUPLEX_HORZ       = 0x0000fa20,
-    IDI_CPSUI_DUPLEX_VERT       = 0x0000fa21,
-    IDI_CPSUI_RES_DRAFT         = 0x0000fa22,
-    IDI_CPSUI_RES_LOW           = 0x0000fa23,
-    IDI_CPSUI_RES_MEDIUM        = 0x0000fa24,
-    IDI_CPSUI_RES_HIGH          = 0x0000fa25,
-    IDI_CPSUI_RES_PRESENTATION  = 0x0000fa26,
+    IDI_CPSUI_ICONID_FIRST      = 0x0000fa00U,
+    IDI_CPSUI_EMPTY             = 0x0000fa00U,
+    IDI_CPSUI_SEL_NONE          = 0x0000fa01U,
+    IDI_CPSUI_WARNING           = 0x0000fa02U,
+    IDI_CPSUI_NO                = 0x0000fa03U,
+    IDI_CPSUI_YES               = 0x0000fa04U,
+    IDI_CPSUI_FALSE             = 0x0000fa05U,
+    IDI_CPSUI_TRUE              = 0x0000fa06U,
+    IDI_CPSUI_OFF               = 0x0000fa07U,
+    IDI_CPSUI_ON                = 0x0000fa08U,
+    IDI_CPSUI_PAPER_OUTPUT      = 0x0000fa09U,
+    IDI_CPSUI_ENVELOPE          = 0x0000fa0aU,
+    IDI_CPSUI_MEM               = 0x0000fa0bU,
+    IDI_CPSUI_FONTCARTHDR       = 0x0000fa0cU,
+    IDI_CPSUI_FONTCART          = 0x0000fa0dU,
+    IDI_CPSUI_STAPLER_ON        = 0x0000fa0eU,
+    IDI_CPSUI_STAPLER_OFF       = 0x0000fa0fU,
+    IDI_CPSUI_HT_HOST           = 0x0000fa10U,
+    IDI_CPSUI_HT_DEVICE         = 0x0000fa11U,
+    IDI_CPSUI_TT_PRINTASGRAPHIC = 0x0000fa12U,
+    IDI_CPSUI_TT_DOWNLOADSOFT   = 0x0000fa13U,
+    IDI_CPSUI_TT_DOWNLOADVECT   = 0x0000fa14U,
+    IDI_CPSUI_TT_SUBDEV         = 0x0000fa15U,
+    IDI_CPSUI_PORTRAIT          = 0x0000fa16U,
+    IDI_CPSUI_LANDSCAPE         = 0x0000fa17U,
+    IDI_CPSUI_ROT_LAND          = 0x0000fa18U,
+    IDI_CPSUI_AUTOSEL           = 0x0000fa19U,
+    IDI_CPSUI_PAPER_TRAY        = 0x0000fa1aU,
+    IDI_CPSUI_PAPER_TRAY2       = 0x0000fa1bU,
+    IDI_CPSUI_PAPER_TRAY3       = 0x0000fa1cU,
+    IDI_CPSUI_TRANSPARENT       = 0x0000fa1dU,
+    IDI_CPSUI_COLLATE           = 0x0000fa1eU,
+    IDI_CPSUI_DUPLEX_NONE       = 0x0000fa1fU,
+    IDI_CPSUI_DUPLEX_HORZ       = 0x0000fa20U,
+    IDI_CPSUI_DUPLEX_VERT       = 0x0000fa21U,
+    IDI_CPSUI_RES_DRAFT         = 0x0000fa22U,
+    IDI_CPSUI_RES_LOW           = 0x0000fa23U,
+    IDI_CPSUI_RES_MEDIUM        = 0x0000fa24U,
+    IDI_CPSUI_RES_HIGH          = 0x0000fa25U,
+    IDI_CPSUI_RES_PRESENTATION  = 0x0000fa26U,
 }
 
 enum : uint
 {
-    IDI_CPSUI_MONO            = 0x0000fa27,
-    IDI_CPSUI_COLOR           = 0x0000fa28,
-    IDI_CPSUI_DITHER_NONE     = 0x0000fa29,
-    IDI_CPSUI_DITHER_COARSE   = 0x0000fa2a,
-    IDI_CPSUI_DITHER_FINE     = 0x0000fa2b,
-    IDI_CPSUI_DITHER_LINEART  = 0x0000fa2c,
-    IDI_CPSUI_SCALING         = 0x0000fa2d,
-    IDI_CPSUI_COPY            = 0x0000fa2e,
-    IDI_CPSUI_HTCLRADJ        = 0x0000fa2f,
-    IDI_CPSUI_HALFTONE_SETUP  = 0x0000fa30,
-    IDI_CPSUI_WATERMARK       = 0x0000fa31,
-    IDI_CPSUI_ERROR           = 0x0000fa32,
-    IDI_CPSUI_ICM_OPTION      = 0x0000fa33,
-    IDI_CPSUI_ICM_METHOD      = 0x0000fa34,
-    IDI_CPSUI_ICM_INTENT      = 0x0000fa35,
-    IDI_CPSUI_STD_FORM        = 0x0000fa36,
-    IDI_CPSUI_OUTBIN          = 0x0000fa37,
-    IDI_CPSUI_OUTPUT          = 0x0000fa38,
-    IDI_CPSUI_GRAPHIC         = 0x0000fa39,
-    IDI_CPSUI_ADVANCE         = 0x0000fa3a,
-    IDI_CPSUI_DOCUMENT        = 0x0000fa3b,
-    IDI_CPSUI_DEVICE          = 0x0000fa3c,
-    IDI_CPSUI_DEVICE2         = 0x0000fa3d,
-    IDI_CPSUI_PRINTER         = 0x0000fa3e,
-    IDI_CPSUI_PRINTER2        = 0x0000fa3f,
-    IDI_CPSUI_PRINTER3        = 0x0000fa40,
-    IDI_CPSUI_PRINTER4        = 0x0000fa41,
-    IDI_CPSUI_OPTION          = 0x0000fa42,
-    IDI_CPSUI_OPTION2         = 0x0000fa43,
-    IDI_CPSUI_STOP            = 0x0000fa44,
-    IDI_CPSUI_NOTINSTALLED    = 0x0000fa45,
-    IDI_CPSUI_WARNING_OVERLAY = 0x0000fa46,
+    IDI_CPSUI_MONO            = 0x0000fa27U,
+    IDI_CPSUI_COLOR           = 0x0000fa28U,
+    IDI_CPSUI_DITHER_NONE     = 0x0000fa29U,
+    IDI_CPSUI_DITHER_COARSE   = 0x0000fa2aU,
+    IDI_CPSUI_DITHER_FINE     = 0x0000fa2bU,
+    IDI_CPSUI_DITHER_LINEART  = 0x0000fa2cU,
+    IDI_CPSUI_SCALING         = 0x0000fa2dU,
+    IDI_CPSUI_COPY            = 0x0000fa2eU,
+    IDI_CPSUI_HTCLRADJ        = 0x0000fa2fU,
+    IDI_CPSUI_HALFTONE_SETUP  = 0x0000fa30U,
+    IDI_CPSUI_WATERMARK       = 0x0000fa31U,
+    IDI_CPSUI_ERROR           = 0x0000fa32U,
+    IDI_CPSUI_ICM_OPTION      = 0x0000fa33U,
+    IDI_CPSUI_ICM_METHOD      = 0x0000fa34U,
+    IDI_CPSUI_ICM_INTENT      = 0x0000fa35U,
+    IDI_CPSUI_STD_FORM        = 0x0000fa36U,
+    IDI_CPSUI_OUTBIN          = 0x0000fa37U,
+    IDI_CPSUI_OUTPUT          = 0x0000fa38U,
+    IDI_CPSUI_GRAPHIC         = 0x0000fa39U,
+    IDI_CPSUI_ADVANCE         = 0x0000fa3aU,
+    IDI_CPSUI_DOCUMENT        = 0x0000fa3bU,
+    IDI_CPSUI_DEVICE          = 0x0000fa3cU,
+    IDI_CPSUI_DEVICE2         = 0x0000fa3dU,
+    IDI_CPSUI_PRINTER         = 0x0000fa3eU,
+    IDI_CPSUI_PRINTER2        = 0x0000fa3fU,
+    IDI_CPSUI_PRINTER3        = 0x0000fa40U,
+    IDI_CPSUI_PRINTER4        = 0x0000fa41U,
+    IDI_CPSUI_OPTION          = 0x0000fa42U,
+    IDI_CPSUI_OPTION2         = 0x0000fa43U,
+    IDI_CPSUI_STOP            = 0x0000fa44U,
+    IDI_CPSUI_NOTINSTALLED    = 0x0000fa45U,
+    IDI_CPSUI_WARNING_OVERLAY = 0x0000fa46U,
 }
 
-enum uint IDI_CPSUI_STOP_WARNING_OVERLAY = 0x0000fa47;
+enum uint IDI_CPSUI_STOP_WARNING_OVERLAY = 0x0000fa47U;
 
 enum : uint
 {
-    IDI_CPSUI_GENERIC_OPTION     = 0x0000fa48,
-    IDI_CPSUI_GENERIC_ITEM       = 0x0000fa49,
-    IDI_CPSUI_RUN_DIALOG         = 0x0000fa4a,
-    IDI_CPSUI_QUESTION           = 0x0000fa4b,
-    IDI_CPSUI_FORMTRAYASSIGN     = 0x0000fa4c,
-    IDI_CPSUI_PRINTER_FOLDER     = 0x0000fa4d,
-    IDI_CPSUI_INSTALLABLE_OPTION = 0x0000fa4e,
+    IDI_CPSUI_GENERIC_OPTION     = 0x0000fa48U,
+    IDI_CPSUI_GENERIC_ITEM       = 0x0000fa49U,
+    IDI_CPSUI_RUN_DIALOG         = 0x0000fa4aU,
+    IDI_CPSUI_QUESTION           = 0x0000fa4bU,
+    IDI_CPSUI_FORMTRAYASSIGN     = 0x0000fa4cU,
+    IDI_CPSUI_PRINTER_FOLDER     = 0x0000fa4dU,
+    IDI_CPSUI_INSTALLABLE_OPTION = 0x0000fa4eU,
 }
 
-enum uint IDI_CPSUI_PRINTER_FEATURE = 0x0000fa4f;
+enum uint IDI_CPSUI_PRINTER_FEATURE = 0x0000fa4fU;
 
 enum : uint
 {
-    IDI_CPSUI_DEVICE_FEATURE    = 0x0000fa50,
-    IDI_CPSUI_FONTSUB           = 0x0000fa51,
-    IDI_CPSUI_POSTSCRIPT        = 0x0000fa52,
-    IDI_CPSUI_TELEPHONE         = 0x0000fa53,
-    IDI_CPSUI_DUPLEX_NONE_L     = 0x0000fa54,
-    IDI_CPSUI_DUPLEX_HORZ_L     = 0x0000fa55,
-    IDI_CPSUI_DUPLEX_VERT_L     = 0x0000fa56,
-    IDI_CPSUI_LF_PEN_PLOTTER    = 0x0000fa57,
-    IDI_CPSUI_SF_PEN_PLOTTER    = 0x0000fa58,
-    IDI_CPSUI_LF_RASTER_PLOTTER = 0x0000fa59,
+    IDI_CPSUI_DEVICE_FEATURE    = 0x0000fa50U,
+    IDI_CPSUI_FONTSUB           = 0x0000fa51U,
+    IDI_CPSUI_POSTSCRIPT        = 0x0000fa52U,
+    IDI_CPSUI_TELEPHONE         = 0x0000fa53U,
+    IDI_CPSUI_DUPLEX_NONE_L     = 0x0000fa54U,
+    IDI_CPSUI_DUPLEX_HORZ_L     = 0x0000fa55U,
+    IDI_CPSUI_DUPLEX_VERT_L     = 0x0000fa56U,
+    IDI_CPSUI_LF_PEN_PLOTTER    = 0x0000fa57U,
+    IDI_CPSUI_SF_PEN_PLOTTER    = 0x0000fa58U,
+    IDI_CPSUI_LF_RASTER_PLOTTER = 0x0000fa59U,
 }
 
-enum uint IDI_CPSUI_SF_RASTER_PLOTTER = 0x0000fa5a;
+enum uint IDI_CPSUI_SF_RASTER_PLOTTER = 0x0000fa5aU;
 
 enum : uint
 {
-    IDI_CPSUI_ROLL_PAPER             = 0x0000fa5b,
-    IDI_CPSUI_PEN_CARROUSEL          = 0x0000fa5c,
-    IDI_CPSUI_PLOTTER_PEN            = 0x0000fa5d,
-    IDI_CPSUI_MANUAL_FEED            = 0x0000fa5e,
-    IDI_CPSUI_FAX                    = 0x0000fa5f,
-    IDI_CPSUI_PAGE_PROTECT           = 0x0000fa60,
-    IDI_CPSUI_ENVELOPE_FEED          = 0x0000fa61,
-    IDI_CPSUI_FONTCART_SLOT          = 0x0000fa62,
-    IDI_CPSUI_LAYOUT_BMP_PORTRAIT    = 0x0000fa63,
-    IDI_CPSUI_LAYOUT_BMP_ARROWL      = 0x0000fa64,
-    IDI_CPSUI_LAYOUT_BMP_ARROWS      = 0x0000fa65,
-    IDI_CPSUI_LAYOUT_BMP_BOOKLETL    = 0x0000fa66,
-    IDI_CPSUI_LAYOUT_BMP_BOOKLETP    = 0x0000fa67,
-    IDI_CPSUI_LAYOUT_BMP_ARROWLR     = 0x0000fa68,
-    IDI_CPSUI_LAYOUT_BMP_ROT_PORT    = 0x0000fa69,
-    IDI_CPSUI_LAYOUT_BMP_BOOKLETL_NB = 0x0000fa6a,
-    IDI_CPSUI_LAYOUT_BMP_BOOKLETP_NB = 0x0000fa6b,
-}
-
-enum : uint
-{
-    IDI_CPSUI_ROT_PORT    = 0x0000fa6e,
-    IDI_CPSUI_NUP_BORDER  = 0x0000fa6f,
-    IDI_CPSUI_ICONID_LAST = 0x0000fa6f,
+    IDI_CPSUI_ROLL_PAPER             = 0x0000fa5bU,
+    IDI_CPSUI_PEN_CARROUSEL          = 0x0000fa5cU,
+    IDI_CPSUI_PLOTTER_PEN            = 0x0000fa5dU,
+    IDI_CPSUI_MANUAL_FEED            = 0x0000fa5eU,
+    IDI_CPSUI_FAX                    = 0x0000fa5fU,
+    IDI_CPSUI_PAGE_PROTECT           = 0x0000fa60U,
+    IDI_CPSUI_ENVELOPE_FEED          = 0x0000fa61U,
+    IDI_CPSUI_FONTCART_SLOT          = 0x0000fa62U,
+    IDI_CPSUI_LAYOUT_BMP_PORTRAIT    = 0x0000fa63U,
+    IDI_CPSUI_LAYOUT_BMP_ARROWL      = 0x0000fa64U,
+    IDI_CPSUI_LAYOUT_BMP_ARROWS      = 0x0000fa65U,
+    IDI_CPSUI_LAYOUT_BMP_BOOKLETL    = 0x0000fa66U,
+    IDI_CPSUI_LAYOUT_BMP_BOOKLETP    = 0x0000fa67U,
+    IDI_CPSUI_LAYOUT_BMP_ARROWLR     = 0x0000fa68U,
+    IDI_CPSUI_LAYOUT_BMP_ROT_PORT    = 0x0000fa69U,
+    IDI_CPSUI_LAYOUT_BMP_BOOKLETL_NB = 0x0000fa6aU,
+    IDI_CPSUI_LAYOUT_BMP_BOOKLETP_NB = 0x0000fa6bU,
 }
 
 enum : uint
 {
-    IDS_CPSUI_STRID_FIRST     = 0x0000fcbc,
-    IDS_CPSUI_SETUP           = 0x0000fcbc,
-    IDS_CPSUI_MORE            = 0x0000fcbd,
-    IDS_CPSUI_CHANGE          = 0x0000fcbe,
-    IDS_CPSUI_OPTION          = 0x0000fcbf,
-    IDS_CPSUI_OF              = 0x0000fcc0,
-    IDS_CPSUI_RANGE_FROM      = 0x0000fcc1,
-    IDS_CPSUI_TO              = 0x0000fcc2,
-    IDS_CPSUI_COLON_SEP       = 0x0000fcc3,
-    IDS_CPSUI_LEFT_ANGLE      = 0x0000fcc4,
-    IDS_CPSUI_RIGHT_ANGLE     = 0x0000fcc5,
-    IDS_CPSUI_SLASH_SEP       = 0x0000fcc6,
-    IDS_CPSUI_PERCENT         = 0x0000fcc7,
-    IDS_CPSUI_LBCB_NOSEL      = 0x0000fcc8,
-    IDS_CPSUI_PROPERTIES      = 0x0000fcc9,
-    IDS_CPSUI_DEFAULTDOCUMENT = 0x0000fcca,
-    IDS_CPSUI_DOCUMENT        = 0x0000fccb,
-    IDS_CPSUI_ADVANCEDOCUMENT = 0x0000fccc,
+    IDI_CPSUI_ROT_PORT    = 0x0000fa6eU,
+    IDI_CPSUI_NUP_BORDER  = 0x0000fa6fU,
+    IDI_CPSUI_ICONID_LAST = 0x0000fa6fU,
 }
 
 enum : uint
 {
-    IDS_CPSUI_PRINTER         = 0x0000fccd,
-    IDS_CPSUI_AUTOSELECT      = 0x0000fcce,
-    IDS_CPSUI_PAPER_OUTPUT    = 0x0000fccf,
-    IDS_CPSUI_GRAPHIC         = 0x0000fcd0,
-    IDS_CPSUI_OPTIONS         = 0x0000fcd1,
-    IDS_CPSUI_ADVANCED        = 0x0000fcd2,
-    IDS_CPSUI_STDDOCPROPTAB   = 0x0000fcd3,
-    IDS_CPSUI_STDDOCPROPTVTAB = 0x0000fcd4,
+    IDS_CPSUI_STRID_FIRST     = 0x0000fcbcU,
+    IDS_CPSUI_SETUP           = 0x0000fcbcU,
+    IDS_CPSUI_MORE            = 0x0000fcbdU,
+    IDS_CPSUI_CHANGE          = 0x0000fcbeU,
+    IDS_CPSUI_OPTION          = 0x0000fcbfU,
+    IDS_CPSUI_OF              = 0x0000fcc0U,
+    IDS_CPSUI_RANGE_FROM      = 0x0000fcc1U,
+    IDS_CPSUI_TO              = 0x0000fcc2U,
+    IDS_CPSUI_COLON_SEP       = 0x0000fcc3U,
+    IDS_CPSUI_LEFT_ANGLE      = 0x0000fcc4U,
+    IDS_CPSUI_RIGHT_ANGLE     = 0x0000fcc5U,
+    IDS_CPSUI_SLASH_SEP       = 0x0000fcc6U,
+    IDS_CPSUI_PERCENT         = 0x0000fcc7U,
+    IDS_CPSUI_LBCB_NOSEL      = 0x0000fcc8U,
+    IDS_CPSUI_PROPERTIES      = 0x0000fcc9U,
+    IDS_CPSUI_DEFAULTDOCUMENT = 0x0000fccaU,
+    IDS_CPSUI_DOCUMENT        = 0x0000fccbU,
+    IDS_CPSUI_ADVANCEDOCUMENT = 0x0000fcccU,
 }
 
 enum : uint
 {
-    IDS_CPSUI_DEVICEOPTIONS   = 0x0000fcd5,
-    IDS_CPSUI_FALSE           = 0x0000fcd6,
-    IDS_CPSUI_TRUE            = 0x0000fcd7,
-    IDS_CPSUI_NO              = 0x0000fcd8,
-    IDS_CPSUI_YES             = 0x0000fcd9,
-    IDS_CPSUI_OFF             = 0x0000fcda,
-    IDS_CPSUI_ON              = 0x0000fcdb,
-    IDS_CPSUI_DEFAULT         = 0x0000fcdc,
-    IDS_CPSUI_ERROR           = 0x0000fcdd,
-    IDS_CPSUI_NONE            = 0x0000fcde,
-    IDS_CPSUI_NOT             = 0x0000fcdf,
-    IDS_CPSUI_EXIST           = 0x0000fce0,
-    IDS_CPSUI_NOTINSTALLED    = 0x0000fce1,
-    IDS_CPSUI_ORIENTATION     = 0x0000fce2,
-    IDS_CPSUI_SCALING         = 0x0000fce3,
-    IDS_CPSUI_NUM_OF_COPIES   = 0x0000fce4,
-    IDS_CPSUI_SOURCE          = 0x0000fce5,
-    IDS_CPSUI_PRINTQUALITY    = 0x0000fce6,
-    IDS_CPSUI_RESOLUTION      = 0x0000fce7,
-    IDS_CPSUI_COLOR_APPERANCE = 0x0000fce8,
+    IDS_CPSUI_PRINTER         = 0x0000fccdU,
+    IDS_CPSUI_AUTOSELECT      = 0x0000fcceU,
+    IDS_CPSUI_PAPER_OUTPUT    = 0x0000fccfU,
+    IDS_CPSUI_GRAPHIC         = 0x0000fcd0U,
+    IDS_CPSUI_OPTIONS         = 0x0000fcd1U,
+    IDS_CPSUI_ADVANCED        = 0x0000fcd2U,
+    IDS_CPSUI_STDDOCPROPTAB   = 0x0000fcd3U,
+    IDS_CPSUI_STDDOCPROPTVTAB = 0x0000fcd4U,
 }
 
 enum : uint
 {
-    IDS_CPSUI_DUPLEX          = 0x0000fce9,
-    IDS_CPSUI_TTOPTION        = 0x0000fcea,
-    IDS_CPSUI_FORMNAME        = 0x0000fceb,
-    IDS_CPSUI_ICM             = 0x0000fcec,
-    IDS_CPSUI_ICMMETHOD       = 0x0000fced,
-    IDS_CPSUI_ICMINTENT       = 0x0000fcee,
-    IDS_CPSUI_MEDIA           = 0x0000fcef,
-    IDS_CPSUI_DITHERING       = 0x0000fcf0,
-    IDS_CPSUI_PORTRAIT        = 0x0000fcf1,
-    IDS_CPSUI_LANDSCAPE       = 0x0000fcf2,
-    IDS_CPSUI_ROT_LAND        = 0x0000fcf3,
-    IDS_CPSUI_COLLATE         = 0x0000fcf4,
-    IDS_CPSUI_COLLATED        = 0x0000fcf5,
-    IDS_CPSUI_PRINTFLDSETTING = 0x0000fcf6,
+    IDS_CPSUI_DEVICEOPTIONS   = 0x0000fcd5U,
+    IDS_CPSUI_FALSE           = 0x0000fcd6U,
+    IDS_CPSUI_TRUE            = 0x0000fcd7U,
+    IDS_CPSUI_NO              = 0x0000fcd8U,
+    IDS_CPSUI_YES             = 0x0000fcd9U,
+    IDS_CPSUI_OFF             = 0x0000fcdaU,
+    IDS_CPSUI_ON              = 0x0000fcdbU,
+    IDS_CPSUI_DEFAULT         = 0x0000fcdcU,
+    IDS_CPSUI_ERROR           = 0x0000fcddU,
+    IDS_CPSUI_NONE            = 0x0000fcdeU,
+    IDS_CPSUI_NOT             = 0x0000fcdfU,
+    IDS_CPSUI_EXIST           = 0x0000fce0U,
+    IDS_CPSUI_NOTINSTALLED    = 0x0000fce1U,
+    IDS_CPSUI_ORIENTATION     = 0x0000fce2U,
+    IDS_CPSUI_SCALING         = 0x0000fce3U,
+    IDS_CPSUI_NUM_OF_COPIES   = 0x0000fce4U,
+    IDS_CPSUI_SOURCE          = 0x0000fce5U,
+    IDS_CPSUI_PRINTQUALITY    = 0x0000fce6U,
+    IDS_CPSUI_RESOLUTION      = 0x0000fce7U,
+    IDS_CPSUI_COLOR_APPERANCE = 0x0000fce8U,
 }
 
 enum : uint
 {
-    IDS_CPSUI_DRAFT             = 0x0000fcf7,
-    IDS_CPSUI_LOW               = 0x0000fcf8,
-    IDS_CPSUI_MEDIUM            = 0x0000fcf9,
-    IDS_CPSUI_HIGH              = 0x0000fcfa,
-    IDS_CPSUI_PRESENTATION      = 0x0000fcfb,
-    IDS_CPSUI_COLOR             = 0x0000fcfc,
-    IDS_CPSUI_GRAYSCALE         = 0x0000fcfd,
-    IDS_CPSUI_MONOCHROME        = 0x0000fcfe,
-    IDS_CPSUI_SIMPLEX           = 0x0000fcff,
-    IDS_CPSUI_HORIZONTAL        = 0x0000fd00,
-    IDS_CPSUI_VERTICAL          = 0x0000fd01,
-    IDS_CPSUI_LONG_SIDE         = 0x0000fd02,
-    IDS_CPSUI_SHORT_SIDE        = 0x0000fd03,
-    IDS_CPSUI_TT_PRINTASGRAPHIC = 0x0000fd04,
-    IDS_CPSUI_TT_DOWNLOADSOFT   = 0x0000fd05,
-    IDS_CPSUI_TT_DOWNLOADVECT   = 0x0000fd06,
-    IDS_CPSUI_TT_SUBDEV         = 0x0000fd07,
-    IDS_CPSUI_ICM_BLACKWHITE    = 0x0000fd08,
-    IDS_CPSUI_ICM_NO            = 0x0000fd09,
-    IDS_CPSUI_ICM_YES           = 0x0000fd0a,
-    IDS_CPSUI_ICM_SATURATION    = 0x0000fd0b,
-    IDS_CPSUI_ICM_CONTRAST      = 0x0000fd0c,
-    IDS_CPSUI_ICM_COLORMETRIC   = 0x0000fd0d,
+    IDS_CPSUI_DUPLEX          = 0x0000fce9U,
+    IDS_CPSUI_TTOPTION        = 0x0000fceaU,
+    IDS_CPSUI_FORMNAME        = 0x0000fcebU,
+    IDS_CPSUI_ICM             = 0x0000fcecU,
+    IDS_CPSUI_ICMMETHOD       = 0x0000fcedU,
+    IDS_CPSUI_ICMINTENT       = 0x0000fceeU,
+    IDS_CPSUI_MEDIA           = 0x0000fcefU,
+    IDS_CPSUI_DITHERING       = 0x0000fcf0U,
+    IDS_CPSUI_PORTRAIT        = 0x0000fcf1U,
+    IDS_CPSUI_LANDSCAPE       = 0x0000fcf2U,
+    IDS_CPSUI_ROT_LAND        = 0x0000fcf3U,
+    IDS_CPSUI_COLLATE         = 0x0000fcf4U,
+    IDS_CPSUI_COLLATED        = 0x0000fcf5U,
+    IDS_CPSUI_PRINTFLDSETTING = 0x0000fcf6U,
 }
 
 enum : uint
 {
-    IDS_CPSUI_STANDARD        = 0x0000fd0e,
-    IDS_CPSUI_GLOSSY          = 0x0000fd0f,
-    IDS_CPSUI_TRANSPARENCY    = 0x0000fd10,
-    IDS_CPSUI_REGULAR         = 0x0000fd11,
-    IDS_CPSUI_BOND            = 0x0000fd12,
-    IDS_CPSUI_COARSE          = 0x0000fd13,
-    IDS_CPSUI_FINE            = 0x0000fd14,
-    IDS_CPSUI_LINEART         = 0x0000fd15,
-    IDS_CPSUI_ERRDIFFUSE      = 0x0000fd16,
-    IDS_CPSUI_HALFTONE        = 0x0000fd17,
-    IDS_CPSUI_HTCLRADJ        = 0x0000fd18,
-    IDS_CPSUI_USE_HOST_HT     = 0x0000fd19,
-    IDS_CPSUI_USE_DEVICE_HT   = 0x0000fd1a,
-    IDS_CPSUI_USE_PRINTER_HT  = 0x0000fd1b,
-    IDS_CPSUI_OUTBINASSIGN    = 0x0000fd1c,
-    IDS_CPSUI_WATERMARK       = 0x0000fd1d,
-    IDS_CPSUI_FORMTRAYASSIGN  = 0x0000fd1e,
-    IDS_CPSUI_UPPER_TRAY      = 0x0000fd1f,
-    IDS_CPSUI_ONLYONE         = 0x0000fd20,
-    IDS_CPSUI_LOWER_TRAY      = 0x0000fd21,
-    IDS_CPSUI_MIDDLE_TRAY     = 0x0000fd22,
-    IDS_CPSUI_MANUAL_TRAY     = 0x0000fd23,
-    IDS_CPSUI_ENVELOPE_TRAY   = 0x0000fd24,
-    IDS_CPSUI_ENVMANUAL_TRAY  = 0x0000fd25,
-    IDS_CPSUI_TRACTOR_TRAY    = 0x0000fd26,
-    IDS_CPSUI_SMALLFMT_TRAY   = 0x0000fd27,
-    IDS_CPSUI_LARGEFMT_TRAY   = 0x0000fd28,
-    IDS_CPSUI_LARGECAP_TRAY   = 0x0000fd29,
-    IDS_CPSUI_CASSETTE_TRAY   = 0x0000fd2a,
-    IDS_CPSUI_DEFAULT_TRAY    = 0x0000fd2b,
-    IDS_CPSUI_FORMSOURCE      = 0x0000fd2c,
-    IDS_CPSUI_MANUALFEED      = 0x0000fd2d,
-    IDS_CPSUI_PRINTERMEM_KB   = 0x0000fd2e,
-    IDS_CPSUI_PRINTERMEM_MB   = 0x0000fd2f,
-    IDS_CPSUI_PAGEPROTECT     = 0x0000fd30,
-    IDS_CPSUI_HALFTONE_SETUP  = 0x0000fd31,
-    IDS_CPSUI_INSTFONTCART    = 0x0000fd32,
-    IDS_CPSUI_SLOT1           = 0x0000fd33,
-    IDS_CPSUI_SLOT2           = 0x0000fd34,
-    IDS_CPSUI_SLOT3           = 0x0000fd35,
-    IDS_CPSUI_SLOT4           = 0x0000fd36,
-    IDS_CPSUI_LEFT_SLOT       = 0x0000fd37,
-    IDS_CPSUI_RIGHT_SLOT      = 0x0000fd38,
-    IDS_CPSUI_STAPLER         = 0x0000fd39,
-    IDS_CPSUI_STAPLER_ON      = 0x0000fd3a,
-    IDS_CPSUI_STAPLER_OFF     = 0x0000fd3b,
-    IDS_CPSUI_STACKER         = 0x0000fd3c,
-    IDS_CPSUI_MAILBOX         = 0x0000fd3d,
-    IDS_CPSUI_COPY            = 0x0000fd3e,
-    IDS_CPSUI_COPIES          = 0x0000fd3f,
-    IDS_CPSUI_TOTAL           = 0x0000fd40,
-    IDS_CPSUI_MAKE            = 0x0000fd41,
-    IDS_CPSUI_PRINT           = 0x0000fd42,
-    IDS_CPSUI_FAX             = 0x0000fd43,
-    IDS_CPSUI_PLOT            = 0x0000fd44,
-    IDS_CPSUI_SLOW            = 0x0000fd45,
-    IDS_CPSUI_FAST            = 0x0000fd46,
-    IDS_CPSUI_ROTATED         = 0x0000fd47,
-    IDS_CPSUI_RESET           = 0x0000fd48,
-    IDS_CPSUI_ALL             = 0x0000fd49,
-    IDS_CPSUI_DEVICE          = 0x0000fd4a,
-    IDS_CPSUI_SETTINGS        = 0x0000fd4b,
-    IDS_CPSUI_REVERT          = 0x0000fd4c,
-    IDS_CPSUI_CHANGES         = 0x0000fd4d,
-    IDS_CPSUI_CHANGED         = 0x0000fd4e,
-    IDS_CPSUI_WARNING         = 0x0000fd4f,
-    IDS_CPSUI_ABOUT           = 0x0000fd50,
-    IDS_CPSUI_VERSION         = 0x0000fd51,
-    IDS_CPSUI_NO_NAME         = 0x0000fd52,
-    IDS_CPSUI_SETTING         = 0x0000fd53,
-    IDS_CPSUI_DEVICE_SETTINGS = 0x0000fd54,
+    IDS_CPSUI_DRAFT             = 0x0000fcf7U,
+    IDS_CPSUI_LOW               = 0x0000fcf8U,
+    IDS_CPSUI_MEDIUM            = 0x0000fcf9U,
+    IDS_CPSUI_HIGH              = 0x0000fcfaU,
+    IDS_CPSUI_PRESENTATION      = 0x0000fcfbU,
+    IDS_CPSUI_COLOR             = 0x0000fcfcU,
+    IDS_CPSUI_GRAYSCALE         = 0x0000fcfdU,
+    IDS_CPSUI_MONOCHROME        = 0x0000fcfeU,
+    IDS_CPSUI_SIMPLEX           = 0x0000fcffU,
+    IDS_CPSUI_HORIZONTAL        = 0x0000fd00U,
+    IDS_CPSUI_VERTICAL          = 0x0000fd01U,
+    IDS_CPSUI_LONG_SIDE         = 0x0000fd02U,
+    IDS_CPSUI_SHORT_SIDE        = 0x0000fd03U,
+    IDS_CPSUI_TT_PRINTASGRAPHIC = 0x0000fd04U,
+    IDS_CPSUI_TT_DOWNLOADSOFT   = 0x0000fd05U,
+    IDS_CPSUI_TT_DOWNLOADVECT   = 0x0000fd06U,
+    IDS_CPSUI_TT_SUBDEV         = 0x0000fd07U,
+    IDS_CPSUI_ICM_BLACKWHITE    = 0x0000fd08U,
+    IDS_CPSUI_ICM_NO            = 0x0000fd09U,
+    IDS_CPSUI_ICM_YES           = 0x0000fd0aU,
+    IDS_CPSUI_ICM_SATURATION    = 0x0000fd0bU,
+    IDS_CPSUI_ICM_CONTRAST      = 0x0000fd0cU,
+    IDS_CPSUI_ICM_COLORMETRIC   = 0x0000fd0dU,
 }
 
 enum : uint
 {
-    IDS_CPSUI_STDDOCPROPTAB1   = 0x0000fd55,
-    IDS_CPSUI_STDDOCPROPTAB2   = 0x0000fd56,
-    IDS_CPSUI_PAGEORDER        = 0x0000fd57,
-    IDS_CPSUI_FRONTTOBACK      = 0x0000fd58,
-    IDS_CPSUI_BACKTOFRONT      = 0x0000fd59,
-    IDS_CPSUI_QUALITY_SETTINGS = 0x0000fd5a,
-    IDS_CPSUI_QUALITY_DRAFT    = 0x0000fd5b,
-    IDS_CPSUI_QUALITY_BETTER   = 0x0000fd5c,
-    IDS_CPSUI_QUALITY_BEST     = 0x0000fd5d,
-    IDS_CPSUI_QUALITY_CUSTOM   = 0x0000fd5e,
-    IDS_CPSUI_OUTPUTBIN        = 0x0000fd5f,
-    IDS_CPSUI_NUP              = 0x0000fd60,
-    IDS_CPSUI_NUP_NORMAL       = 0x0000fd61,
-    IDS_CPSUI_NUP_TWOUP        = 0x0000fd62,
-    IDS_CPSUI_NUP_FOURUP       = 0x0000fd63,
-    IDS_CPSUI_NUP_SIXUP        = 0x0000fd64,
-    IDS_CPSUI_NUP_NINEUP       = 0x0000fd65,
-    IDS_CPSUI_NUP_SIXTEENUP    = 0x0000fd66,
-    IDS_CPSUI_SIDE1            = 0x0000fd67,
-    IDS_CPSUI_SIDE2            = 0x0000fd68,
-    IDS_CPSUI_BOOKLET          = 0x0000fd69,
-    IDS_CPSUI_POSTER           = 0x0000fd6a,
-    IDS_CPSUI_POSTER_2x2       = 0x0000fd6b,
-    IDS_CPSUI_POSTER_3x3       = 0x0000fd6c,
-    IDS_CPSUI_POSTER_4x4       = 0x0000fd6d,
-    IDS_CPSUI_NUP_DIRECTION    = 0x0000fd6e,
-    IDS_CPSUI_RIGHT_THEN_DOWN  = 0x0000fd6f,
+    IDS_CPSUI_STANDARD        = 0x0000fd0eU,
+    IDS_CPSUI_GLOSSY          = 0x0000fd0fU,
+    IDS_CPSUI_TRANSPARENCY    = 0x0000fd10U,
+    IDS_CPSUI_REGULAR         = 0x0000fd11U,
+    IDS_CPSUI_BOND            = 0x0000fd12U,
+    IDS_CPSUI_COARSE          = 0x0000fd13U,
+    IDS_CPSUI_FINE            = 0x0000fd14U,
+    IDS_CPSUI_LINEART         = 0x0000fd15U,
+    IDS_CPSUI_ERRDIFFUSE      = 0x0000fd16U,
+    IDS_CPSUI_HALFTONE        = 0x0000fd17U,
+    IDS_CPSUI_HTCLRADJ        = 0x0000fd18U,
+    IDS_CPSUI_USE_HOST_HT     = 0x0000fd19U,
+    IDS_CPSUI_USE_DEVICE_HT   = 0x0000fd1aU,
+    IDS_CPSUI_USE_PRINTER_HT  = 0x0000fd1bU,
+    IDS_CPSUI_OUTBINASSIGN    = 0x0000fd1cU,
+    IDS_CPSUI_WATERMARK       = 0x0000fd1dU,
+    IDS_CPSUI_FORMTRAYASSIGN  = 0x0000fd1eU,
+    IDS_CPSUI_UPPER_TRAY      = 0x0000fd1fU,
+    IDS_CPSUI_ONLYONE         = 0x0000fd20U,
+    IDS_CPSUI_LOWER_TRAY      = 0x0000fd21U,
+    IDS_CPSUI_MIDDLE_TRAY     = 0x0000fd22U,
+    IDS_CPSUI_MANUAL_TRAY     = 0x0000fd23U,
+    IDS_CPSUI_ENVELOPE_TRAY   = 0x0000fd24U,
+    IDS_CPSUI_ENVMANUAL_TRAY  = 0x0000fd25U,
+    IDS_CPSUI_TRACTOR_TRAY    = 0x0000fd26U,
+    IDS_CPSUI_SMALLFMT_TRAY   = 0x0000fd27U,
+    IDS_CPSUI_LARGEFMT_TRAY   = 0x0000fd28U,
+    IDS_CPSUI_LARGECAP_TRAY   = 0x0000fd29U,
+    IDS_CPSUI_CASSETTE_TRAY   = 0x0000fd2aU,
+    IDS_CPSUI_DEFAULT_TRAY    = 0x0000fd2bU,
+    IDS_CPSUI_FORMSOURCE      = 0x0000fd2cU,
+    IDS_CPSUI_MANUALFEED      = 0x0000fd2dU,
+    IDS_CPSUI_PRINTERMEM_KB   = 0x0000fd2eU,
+    IDS_CPSUI_PRINTERMEM_MB   = 0x0000fd2fU,
+    IDS_CPSUI_PAGEPROTECT     = 0x0000fd30U,
+    IDS_CPSUI_HALFTONE_SETUP  = 0x0000fd31U,
+    IDS_CPSUI_INSTFONTCART    = 0x0000fd32U,
+    IDS_CPSUI_SLOT1           = 0x0000fd33U,
+    IDS_CPSUI_SLOT2           = 0x0000fd34U,
+    IDS_CPSUI_SLOT3           = 0x0000fd35U,
+    IDS_CPSUI_SLOT4           = 0x0000fd36U,
+    IDS_CPSUI_LEFT_SLOT       = 0x0000fd37U,
+    IDS_CPSUI_RIGHT_SLOT      = 0x0000fd38U,
+    IDS_CPSUI_STAPLER         = 0x0000fd39U,
+    IDS_CPSUI_STAPLER_ON      = 0x0000fd3aU,
+    IDS_CPSUI_STAPLER_OFF     = 0x0000fd3bU,
+    IDS_CPSUI_STACKER         = 0x0000fd3cU,
+    IDS_CPSUI_MAILBOX         = 0x0000fd3dU,
+    IDS_CPSUI_COPY            = 0x0000fd3eU,
+    IDS_CPSUI_COPIES          = 0x0000fd3fU,
+    IDS_CPSUI_TOTAL           = 0x0000fd40U,
+    IDS_CPSUI_MAKE            = 0x0000fd41U,
+    IDS_CPSUI_PRINT           = 0x0000fd42U,
+    IDS_CPSUI_FAX             = 0x0000fd43U,
+    IDS_CPSUI_PLOT            = 0x0000fd44U,
+    IDS_CPSUI_SLOW            = 0x0000fd45U,
+    IDS_CPSUI_FAST            = 0x0000fd46U,
+    IDS_CPSUI_ROTATED         = 0x0000fd47U,
+    IDS_CPSUI_RESET           = 0x0000fd48U,
+    IDS_CPSUI_ALL             = 0x0000fd49U,
+    IDS_CPSUI_DEVICE          = 0x0000fd4aU,
+    IDS_CPSUI_SETTINGS        = 0x0000fd4bU,
+    IDS_CPSUI_REVERT          = 0x0000fd4cU,
+    IDS_CPSUI_CHANGES         = 0x0000fd4dU,
+    IDS_CPSUI_CHANGED         = 0x0000fd4eU,
+    IDS_CPSUI_WARNING         = 0x0000fd4fU,
+    IDS_CPSUI_ABOUT           = 0x0000fd50U,
+    IDS_CPSUI_VERSION         = 0x0000fd51U,
+    IDS_CPSUI_NO_NAME         = 0x0000fd52U,
+    IDS_CPSUI_SETTING         = 0x0000fd53U,
+    IDS_CPSUI_DEVICE_SETTINGS = 0x0000fd54U,
 }
-
-enum uint IDS_CPSUI_DOWN_THEN_RIGHT = 0x0000fd70;
 
 enum : uint
 {
-    IDS_CPSUI_LEFT_THEN_DOWN    = 0x0000fd71,
-    IDS_CPSUI_DOWN_THEN_LEFT    = 0x0000fd72,
-    IDS_CPSUI_MANUAL_DUPLEX     = 0x0000fd73,
-    IDS_CPSUI_MANUAL_DUPLEX_ON  = 0x0000fd74,
-    IDS_CPSUI_MANUAL_DUPLEX_OFF = 0x0000fd75,
+    IDS_CPSUI_STDDOCPROPTAB1   = 0x0000fd55U,
+    IDS_CPSUI_STDDOCPROPTAB2   = 0x0000fd56U,
+    IDS_CPSUI_PAGEORDER        = 0x0000fd57U,
+    IDS_CPSUI_FRONTTOBACK      = 0x0000fd58U,
+    IDS_CPSUI_BACKTOFRONT      = 0x0000fd59U,
+    IDS_CPSUI_QUALITY_SETTINGS = 0x0000fd5aU,
+    IDS_CPSUI_QUALITY_DRAFT    = 0x0000fd5bU,
+    IDS_CPSUI_QUALITY_BETTER   = 0x0000fd5cU,
+    IDS_CPSUI_QUALITY_BEST     = 0x0000fd5dU,
+    IDS_CPSUI_QUALITY_CUSTOM   = 0x0000fd5eU,
+    IDS_CPSUI_OUTPUTBIN        = 0x0000fd5fU,
+    IDS_CPSUI_NUP              = 0x0000fd60U,
+    IDS_CPSUI_NUP_NORMAL       = 0x0000fd61U,
+    IDS_CPSUI_NUP_TWOUP        = 0x0000fd62U,
+    IDS_CPSUI_NUP_FOURUP       = 0x0000fd63U,
+    IDS_CPSUI_NUP_SIXUP        = 0x0000fd64U,
+    IDS_CPSUI_NUP_NINEUP       = 0x0000fd65U,
+    IDS_CPSUI_NUP_SIXTEENUP    = 0x0000fd66U,
+    IDS_CPSUI_SIDE1            = 0x0000fd67U,
+    IDS_CPSUI_SIDE2            = 0x0000fd68U,
+    IDS_CPSUI_BOOKLET          = 0x0000fd69U,
+    IDS_CPSUI_POSTER           = 0x0000fd6aU,
+    IDS_CPSUI_POSTER_2x2       = 0x0000fd6bU,
+    IDS_CPSUI_POSTER_3x3       = 0x0000fd6cU,
+    IDS_CPSUI_POSTER_4x4       = 0x0000fd6dU,
+    IDS_CPSUI_NUP_DIRECTION    = 0x0000fd6eU,
+    IDS_CPSUI_RIGHT_THEN_DOWN  = 0x0000fd6fU,
+}
+
+enum uint IDS_CPSUI_DOWN_THEN_RIGHT = 0x0000fd70U;
+
+enum : uint
+{
+    IDS_CPSUI_LEFT_THEN_DOWN    = 0x0000fd71U,
+    IDS_CPSUI_DOWN_THEN_LEFT    = 0x0000fd72U,
+    IDS_CPSUI_MANUAL_DUPLEX     = 0x0000fd73U,
+    IDS_CPSUI_MANUAL_DUPLEX_ON  = 0x0000fd74U,
+    IDS_CPSUI_MANUAL_DUPLEX_OFF = 0x0000fd75U,
 }
 
 enum : uint
 {
-    IDS_CPSUI_ROT_PORT           = 0x0000fd76,
-    IDS_CPSUI_STAPLE             = 0x0000fd77,
-    IDS_CPSUI_BOOKLET_EDGE       = 0x0000fd78,
-    IDS_CPSUI_BOOKLET_EDGE_LEFT  = 0x0000fd79,
-    IDS_CPSUI_BOOKLET_EDGE_RIGHT = 0x0000fd7a,
+    IDS_CPSUI_ROT_PORT           = 0x0000fd76U,
+    IDS_CPSUI_STAPLE             = 0x0000fd77U,
+    IDS_CPSUI_BOOKLET_EDGE       = 0x0000fd78U,
+    IDS_CPSUI_BOOKLET_EDGE_LEFT  = 0x0000fd79U,
+    IDS_CPSUI_BOOKLET_EDGE_RIGHT = 0x0000fd7aU,
 }
 
 enum : uint
 {
-    IDS_CPSUI_NUP_BORDER   = 0x0000fd7b,
-    IDS_CPSUI_NUP_BORDERED = 0x0000fd7c,
-    IDS_CPSUI_STRID_LAST   = 0x0000fd7c,
+    IDS_CPSUI_NUP_BORDER   = 0x0000fd7bU,
+    IDS_CPSUI_NUP_BORDERED = 0x0000fd7cU,
+    IDS_CPSUI_STRID_LAST   = 0x0000fd7cU,
 }
 
 enum : const(wchar)*
@@ -1253,21 +1285,21 @@ enum const(wchar)* XPS_FP_RESOURCE_DLL_PATHS = "ResourceDLLPaths";
 enum const(wchar)* XPS_FP_JOB_LEVEL_PRINTTICKET = "JobPrintTicket";
 enum const(wchar)* XPS_FP_PRINTDEVICECAPABILITIES = "PrintDeviceCapabilities";
 enum const(wchar)* XPS_FP_FAX_JOB_PROPERTIES = "JobFaxProperties";
-enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/mxdc-escape))], [])*/uint MXDC_ESCAPE = 0x0000101a;
-enum uint MXDCOP_GET_FILENAME = 0x0000000e;
+enum /*FIELD ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/mxdc-escape))], [])*/uint MXDC_ESCAPE = 0x0000101aU;
+enum uint MXDCOP_GET_FILENAME = 0x0000000eU;
 
 enum : uint
 {
-    MXDCOP_PRINTTICKET_FIXED_DOC_SEQ = 0x00000016,
-    MXDCOP_PRINTTICKET_FIXED_DOC     = 0x00000018,
-    MXDCOP_PRINTTICKET_FIXED_PAGE    = 0x0000001a,
+    MXDCOP_PRINTTICKET_FIXED_DOC_SEQ = 0x00000016U,
+    MXDCOP_PRINTTICKET_FIXED_DOC     = 0x00000018U,
+    MXDCOP_PRINTTICKET_FIXED_PAGE    = 0x0000001aU,
 }
 
 enum : uint
 {
-    MXDCOP_SET_S0PAGE           = 0x0000001c,
-    MXDCOP_SET_S0PAGE_RESOURCE  = 0x0000001e,
-    MXDCOP_SET_XPSPASSTHRU_MODE = 0x00000020,
+    MXDCOP_SET_S0PAGE           = 0x0000001cU,
+    MXDCOP_SET_S0PAGE_RESOURCE  = 0x0000001eU,
+    MXDCOP_SET_XPSPASSTHRU_MODE = 0x00000020U,
 }
 
 enum : GUID
@@ -1280,9 +1312,9 @@ enum : GUID
 
 enum HRESULT S_DEVCAP_OUTPUT_FULL_REPLACEMENT = HRESULT(0x0004dc01);
 enum GUID CLSID_PTPROVIDER = GUID("46ac151b-8490-4531-96cc-55bf2bf19e11");
-enum uint E_VERSION_NOT_SUPPORTED = 0x80040001;
-enum uint S_NO_CONFLICT = 0x00040001;
-enum uint S_CONFLICT_RESOLVED = 0x00040002;
+enum uint E_VERSION_NOT_SUPPORTED = 0x80040001U;
+enum uint S_NO_CONFLICT = 0x00040001U;
+enum uint S_CONFLICT_RESOLVED = 0x00040002U;
 enum GUID PRINTER_EXTENSION_DETAILEDREASON_PRINTER_STATUS = GUID("5d5a1704-dfd1-4181-8eee-815c86edad31");
 
 enum : GUID
@@ -1292,261 +1324,261 @@ enum : GUID
 }
 
 enum GUID FMTID_PrinterPropertyBag = GUID("75f9adca-097d-45c3-a6e4-bab29e276f3e");
-enum uint PRINTER_OEMINTF_VERSION = 0x00010000;
-enum uint OEM_MODE_PUBLISHER = 0x00000001;
+enum uint PRINTER_OEMINTF_VERSION = 0x00010000U;
+enum uint OEM_MODE_PUBLISHER = 0x00000001U;
 
 enum : uint
 {
-    OEMGI_GETSIGNATURE        = 0x00000001,
-    OEMGI_GETINTERFACEVERSION = 0x00000002,
+    OEMGI_GETSIGNATURE        = 0x00000001U,
+    OEMGI_GETINTERFACEVERSION = 0x00000002U,
 }
 
 enum : uint
 {
-    OEMGI_GETVERSION                   = 0x00000003,
-    OEMGI_GETPUBLISHERINFO             = 0x00000004,
-    OEMGI_GETREQUESTEDHELPERINTERFACES = 0x00000005,
+    OEMGI_GETVERSION                   = 0x00000003U,
+    OEMGI_GETPUBLISHERINFO             = 0x00000004U,
+    OEMGI_GETREQUESTEDHELPERINTERFACES = 0x00000005U,
 }
 
 enum : uint
 {
-    OEMPUBLISH_DEFAULT          = 0x00000000,
-    OEMPUBLISH_IPRINTCOREHELPER = 0x00000001,
+    OEMPUBLISH_DEFAULT          = 0x00000000U,
+    OEMPUBLISH_IPRINTCOREHELPER = 0x00000001U,
 }
 
 enum : uint
 {
-    OEMDM_SIZE    = 0x00000001,
-    OEMDM_DEFAULT = 0x00000002,
-    OEMDM_CONVERT = 0x00000003,
-    OEMDM_MERGE   = 0x00000004,
+    OEMDM_SIZE    = 0x00000001U,
+    OEMDM_DEFAULT = 0x00000002U,
+    OEMDM_CONVERT = 0x00000003U,
+    OEMDM_MERGE   = 0x00000004U,
 }
 
-enum uint OEMGDS_MIN_DOCSTICKY = 0x00000001;
+enum uint OEMGDS_MIN_DOCSTICKY = 0x00000001U;
 
 enum : uint
 {
-    OEMGDS_PSDM_FLAGS      = 0x00000001,
-    OEMGDS_PSDM_DIALECT    = 0x00000002,
-    OEMGDS_PSDM_TTDLFMT    = 0x00000003,
-    OEMGDS_PSDM_NUP        = 0x00000004,
-    OEMGDS_PSDM_PSLEVEL    = 0x00000005,
-    OEMGDS_PSDM_CUSTOMSIZE = 0x00000006,
-}
-
-enum : uint
-{
-    OEMGDS_UNIDM_GPDVER = 0x00004000,
-    OEMGDS_UNIDM_FLAGS  = 0x00004001,
-}
-
-enum uint OEMGDS_MIN_PRINTERSTICKY = 0x00008000;
-
-enum : uint
-{
-    OEMGDS_PRINTFLAGS  = 0x00008000,
-    OEMGDS_FREEMEM     = 0x00008001,
-    OEMGDS_JOBTIMEOUT  = 0x00008002,
-    OEMGDS_WAITTIMEOUT = 0x00008003,
+    OEMGDS_PSDM_FLAGS      = 0x00000001U,
+    OEMGDS_PSDM_DIALECT    = 0x00000002U,
+    OEMGDS_PSDM_TTDLFMT    = 0x00000003U,
+    OEMGDS_PSDM_NUP        = 0x00000004U,
+    OEMGDS_PSDM_PSLEVEL    = 0x00000005U,
+    OEMGDS_PSDM_CUSTOMSIZE = 0x00000006U,
 }
 
 enum : uint
 {
-    OEMGDS_PROTOCOL   = 0x00008004,
-    OEMGDS_MINOUTLINE = 0x00008005,
-    OEMGDS_MAXBITMAP  = 0x00008006,
-    OEMGDS_MAX        = 0x00010000,
+    OEMGDS_UNIDM_GPDVER = 0x00004000U,
+    OEMGDS_UNIDM_FLAGS  = 0x00004001U,
 }
 
-enum uint GPD_OEMCUSTOMDATA = 0x00000001;
-enum uint MV_UPDATE = 0x00000001;
-enum uint MV_RELATIVE = 0x00000002;
-enum uint MV_GRAPHICS = 0x00000004;
-enum uint MV_PHYSICAL = 0x00000008;
+enum uint OEMGDS_MIN_PRINTERSTICKY = 0x00008000U;
 
 enum : uint
 {
-    MV_SENDXMOVECMD = 0x00000010,
-    MV_SENDYMOVECMD = 0x00000020,
+    OEMGDS_PRINTFLAGS  = 0x00008000U,
+    OEMGDS_FREEMEM     = 0x00008001U,
+    OEMGDS_JOBTIMEOUT  = 0x00008002U,
+    OEMGDS_WAITTIMEOUT = 0x00008003U,
 }
 
 enum : uint
 {
-    OEMTTY_INFO_MARGINS  = 0x00000001,
-    OEMTTY_INFO_CODEPAGE = 0x00000002,
-    OEMTTY_INFO_NUM_UFMS = 0x00000003,
-    OEMTTY_INFO_UFM_IDS  = 0x00000004,
+    OEMGDS_PROTOCOL   = 0x00008004U,
+    OEMGDS_MINOUTLINE = 0x00008005U,
+    OEMGDS_MAXBITMAP  = 0x00008006U,
+    OEMGDS_MAX        = 0x00010000U,
+}
+
+enum uint GPD_OEMCUSTOMDATA = 0x00000001U;
+enum uint MV_UPDATE = 0x00000001U;
+enum uint MV_RELATIVE = 0x00000002U;
+enum uint MV_GRAPHICS = 0x00000004U;
+enum uint MV_PHYSICAL = 0x00000008U;
+
+enum : uint
+{
+    MV_SENDXMOVECMD = 0x00000010U,
+    MV_SENDYMOVECMD = 0x00000020U,
 }
 
 enum : uint
 {
-    UFOFLAG_TTFONT               = 0x00000001,
-    UFOFLAG_TTDOWNLOAD_BITMAP    = 0x00000002,
-    UFOFLAG_TTDOWNLOAD_TTOUTLINE = 0x00000004,
+    OEMTTY_INFO_MARGINS  = 0x00000001U,
+    OEMTTY_INFO_CODEPAGE = 0x00000002U,
+    OEMTTY_INFO_NUM_UFMS = 0x00000003U,
+    OEMTTY_INFO_UFM_IDS  = 0x00000004U,
 }
 
 enum : uint
 {
-    UFOFLAG_TTOUTLINE_BOLD_SIM   = 0x00000008,
-    UFOFLAG_TTOUTLINE_ITALIC_SIM = 0x00000010,
-    UFOFLAG_TTOUTLINE_VERTICAL   = 0x00000020,
-}
-
-enum uint UFOFLAG_TTSUBSTITUTED = 0x00000040;
-
-enum : uint
-{
-    UFO_GETINFO_FONTOBJ     = 0x00000001,
-    UFO_GETINFO_GLYPHSTRING = 0x00000002,
-    UFO_GETINFO_GLYPHBITMAP = 0x00000003,
-    UFO_GETINFO_GLYPHWIDTH  = 0x00000004,
-    UFO_GETINFO_MEMORY      = 0x00000005,
-    UFO_GETINFO_STDVARIABLE = 0x00000006,
-}
-
-enum uint FNT_INFO_PRINTDIRINCCDEGREES = 0x00000000;
-enum uint FNT_INFO_GRAYPERCENTAGE = 0x00000001;
-
-enum : uint
-{
-    FNT_INFO_NEXTFONTID     = 0x00000002,
-    FNT_INFO_NEXTGLYPH      = 0x00000003,
-    FNT_INFO_FONTHEIGHT     = 0x00000004,
-    FNT_INFO_FONTWIDTH      = 0x00000005,
-    FNT_INFO_FONTBOLD       = 0x00000006,
-    FNT_INFO_FONTITALIC     = 0x00000007,
-    FNT_INFO_FONTUNDERLINE  = 0x00000008,
-    FNT_INFO_FONTSTRIKETHRU = 0x00000009,
+    UFOFLAG_TTFONT               = 0x00000001U,
+    UFOFLAG_TTDOWNLOAD_BITMAP    = 0x00000002U,
+    UFOFLAG_TTDOWNLOAD_TTOUTLINE = 0x00000004U,
 }
 
 enum : uint
 {
-    FNT_INFO_CURRENTFONTID = 0x0000000a,
-    FNT_INFO_TEXTYRES      = 0x0000000b,
-    FNT_INFO_TEXTXRES      = 0x0000000c,
-    FNT_INFO_FONTMAXWIDTH  = 0x0000000d,
-    FNT_INFO_MAX           = 0x0000000e,
+    UFOFLAG_TTOUTLINE_BOLD_SIM   = 0x00000008U,
+    UFOFLAG_TTOUTLINE_ITALIC_SIM = 0x00000010U,
+    UFOFLAG_TTOUTLINE_VERTICAL   = 0x00000020U,
+}
+
+enum uint UFOFLAG_TTSUBSTITUTED = 0x00000040U;
+
+enum : uint
+{
+    UFO_GETINFO_FONTOBJ     = 0x00000001U,
+    UFO_GETINFO_GLYPHSTRING = 0x00000002U,
+    UFO_GETINFO_GLYPHBITMAP = 0x00000003U,
+    UFO_GETINFO_GLYPHWIDTH  = 0x00000004U,
+    UFO_GETINFO_MEMORY      = 0x00000005U,
+    UFO_GETINFO_STDVARIABLE = 0x00000006U,
+}
+
+enum uint FNT_INFO_PRINTDIRINCCDEGREES = 0x00000000U;
+enum uint FNT_INFO_GRAYPERCENTAGE = 0x00000001U;
+
+enum : uint
+{
+    FNT_INFO_NEXTFONTID     = 0x00000002U,
+    FNT_INFO_NEXTGLYPH      = 0x00000003U,
+    FNT_INFO_FONTHEIGHT     = 0x00000004U,
+    FNT_INFO_FONTWIDTH      = 0x00000005U,
+    FNT_INFO_FONTBOLD       = 0x00000006U,
+    FNT_INFO_FONTITALIC     = 0x00000007U,
+    FNT_INFO_FONTUNDERLINE  = 0x00000008U,
+    FNT_INFO_FONTSTRIKETHRU = 0x00000009U,
 }
 
 enum : uint
 {
-    TTDOWNLOAD_DONTCARE  = 0x00000000,
-    TTDOWNLOAD_GRAPHICS  = 0x00000001,
-    TTDOWNLOAD_BITMAP    = 0x00000002,
-    TTDOWNLOAD_TTOUTLINE = 0x00000003,
+    FNT_INFO_CURRENTFONTID = 0x0000000aU,
+    FNT_INFO_TEXTYRES      = 0x0000000bU,
+    FNT_INFO_TEXTXRES      = 0x0000000cU,
+    FNT_INFO_FONTMAXWIDTH  = 0x0000000dU,
+    FNT_INFO_MAX           = 0x0000000eU,
 }
 
 enum : uint
 {
-    TYPE_UNICODE   = 0x00000001,
-    TYPE_TRANSDATA = 0x00000002,
+    TTDOWNLOAD_DONTCARE  = 0x00000000U,
+    TTDOWNLOAD_GRAPHICS  = 0x00000001U,
+    TTDOWNLOAD_BITMAP    = 0x00000002U,
+    TTDOWNLOAD_TTOUTLINE = 0x00000003U,
 }
 
 enum : uint
 {
-    TYPE_GLYPHHANDLE = 0x00000003,
-    TYPE_GLYPHID     = 0x00000004,
-}
-
-enum uint PDEV_ADJUST_PAPER_MARGIN_TYPE = 0x00000001;
-enum uint PDEV_HOSTFONT_ENABLED_TYPE = 0x00000002;
-enum uint PDEV_USE_TRUE_COLOR_TYPE = 0x00000003;
-enum uint PDEV_ADJUST_GRAPHICS_RESOLUTION_TYPE = 0x00000004;
-enum uint PDEV_ADJUST_IMAGEABLE_ORIGIN_AREA_TYPE = 0x00000008;
-enum uint PDEV_ADJUST_PHYSICAL_PAPER_SIZE_TYPE = 0x00000010;
-
-enum : uint
-{
-    OEMCUIP_DOCPROP = 0x00000001,
-    OEMCUIP_PRNPROP = 0x00000002,
+    TYPE_UNICODE   = 0x00000001U,
+    TYPE_TRANSDATA = 0x00000002U,
 }
 
 enum : uint
 {
-    CUSTOMPARAM_WIDTH        = 0x00000000,
-    CUSTOMPARAM_HEIGHT       = 0x00000001,
-    CUSTOMPARAM_WIDTHOFFSET  = 0x00000002,
-    CUSTOMPARAM_HEIGHTOFFSET = 0x00000003,
-    CUSTOMPARAM_ORIENTATION  = 0x00000004,
-    CUSTOMPARAM_MAX          = 0x00000005,
+    TYPE_GLYPHHANDLE = 0x00000003U,
+    TYPE_GLYPHID     = 0x00000004U,
+}
+
+enum uint PDEV_ADJUST_PAPER_MARGIN_TYPE = 0x00000001U;
+enum uint PDEV_HOSTFONT_ENABLED_TYPE = 0x00000002U;
+enum uint PDEV_USE_TRUE_COLOR_TYPE = 0x00000003U;
+enum uint PDEV_ADJUST_GRAPHICS_RESOLUTION_TYPE = 0x00000004U;
+enum uint PDEV_ADJUST_IMAGEABLE_ORIGIN_AREA_TYPE = 0x00000008U;
+enum uint PDEV_ADJUST_PHYSICAL_PAPER_SIZE_TYPE = 0x00000010U;
+
+enum : uint
+{
+    OEMCUIP_DOCPROP = 0x00000001U,
+    OEMCUIP_PRNPROP = 0x00000002U,
 }
 
 enum : uint
 {
-    SETOPTIONS_FLAG_RESOLVE_CONFLICT = 0x00000001,
-    SETOPTIONS_FLAG_KEEP_CONFLICT    = 0x00000002,
+    CUSTOMPARAM_WIDTH        = 0x00000000U,
+    CUSTOMPARAM_HEIGHT       = 0x00000001U,
+    CUSTOMPARAM_WIDTHOFFSET  = 0x00000002U,
+    CUSTOMPARAM_HEIGHTOFFSET = 0x00000003U,
+    CUSTOMPARAM_ORIENTATION  = 0x00000004U,
+    CUSTOMPARAM_MAX          = 0x00000005U,
 }
 
 enum : uint
 {
-    SETOPTIONS_RESULT_NO_CONFLICT       = 0x00000000,
-    SETOPTIONS_RESULT_CONFLICT_RESOLVED = 0x00000001,
-    SETOPTIONS_RESULT_CONFLICT_REMAINED = 0x00000002,
-}
-
-enum uint UNIFM_VERSION_1_0 = 0x00010000;
-
-enum : uint
-{
-    UFM_SOFT     = 0x00000001,
-    UFM_CART     = 0x00000002,
-    UFM_SCALABLE = 0x00000004,
-}
-
-enum uint DF_TYPE_HPINTELLIFONT = 0x00000000;
-
-enum : uint
-{
-    DF_TYPE_TRUETYPE = 0x00000001,
-    DF_TYPE_PST1     = 0x00000002,
-    DF_TYPE_CAPSL    = 0x00000003,
-    DF_TYPE_OEM1     = 0x00000004,
-    DF_TYPE_OEM2     = 0x00000005,
+    SETOPTIONS_FLAG_RESOLVE_CONFLICT = 0x00000001U,
+    SETOPTIONS_FLAG_KEEP_CONFLICT    = 0x00000002U,
 }
 
 enum : uint
 {
-    DF_NOITALIC = 0x00000001,
-    DF_NOUNDER  = 0x00000002,
+    SETOPTIONS_RESULT_NO_CONFLICT       = 0x00000000U,
+    SETOPTIONS_RESULT_CONFLICT_RESOLVED = 0x00000001U,
+    SETOPTIONS_RESULT_CONFLICT_REMAINED = 0x00000002U,
 }
 
-enum uint DF_XM_CR = 0x00000004;
+enum uint UNIFM_VERSION_1_0 = 0x00010000U;
 
 enum : uint
 {
-    DF_NO_BOLD             = 0x00000008,
-    DF_NO_DOUBLE_UNDERLINE = 0x00000010,
+    UFM_SOFT     = 0x00000001U,
+    UFM_CART     = 0x00000002U,
+    UFM_SCALABLE = 0x00000004U,
 }
 
-enum uint DF_NO_STRIKETHRU = 0x00000020;
-enum uint DF_BKSP_OK = 0x00000040;
-enum uint UNI_GLYPHSETDATA_VERSION_1_0 = 0x00010000;
-enum uint MTYPE_FORMAT_MASK = 0x00000007;
+enum uint DF_TYPE_HPINTELLIFONT = 0x00000000U;
 
 enum : uint
 {
-    MTYPE_COMPOSE             = 0x00000001,
-    MTYPE_DIRECT              = 0x00000002,
-    MTYPE_PAIRED              = 0x00000004,
-    MTYPE_DOUBLEBYTECHAR_MASK = 0x00000018,
-}
-
-enum : uint
-{
-    MTYPE_SINGLE        = 0x00000008,
-    MTYPE_DOUBLE        = 0x00000010,
-    MTYPE_PREDEFIN_MASK = 0x000000e0,
+    DF_TYPE_TRUETYPE = 0x00000001U,
+    DF_TYPE_PST1     = 0x00000002U,
+    DF_TYPE_CAPSL    = 0x00000003U,
+    DF_TYPE_OEM1     = 0x00000004U,
+    DF_TYPE_OEM2     = 0x00000005U,
 }
 
 enum : uint
 {
-    MTYPE_REPLACE = 0x00000020,
-    MTYPE_ADD     = 0x00000040,
-    MTYPE_DISABLE = 0x00000080,
+    DF_NOITALIC = 0x00000001U,
+    DF_NOUNDER  = 0x00000002U,
 }
 
-enum uint CC_NOPRECNV = 0x0000ffff;
-enum uint CC_DEFAULT = 0x00000000;
+enum uint DF_XM_CR = 0x00000004U;
+
+enum : uint
+{
+    DF_NO_BOLD             = 0x00000008U,
+    DF_NO_DOUBLE_UNDERLINE = 0x00000010U,
+}
+
+enum uint DF_NO_STRIKETHRU = 0x00000020U;
+enum uint DF_BKSP_OK = 0x00000040U;
+enum uint UNI_GLYPHSETDATA_VERSION_1_0 = 0x00010000U;
+enum uint MTYPE_FORMAT_MASK = 0x00000007U;
+
+enum : uint
+{
+    MTYPE_COMPOSE             = 0x00000001U,
+    MTYPE_DIRECT              = 0x00000002U,
+    MTYPE_PAIRED              = 0x00000004U,
+    MTYPE_DOUBLEBYTECHAR_MASK = 0x00000018U,
+}
+
+enum : uint
+{
+    MTYPE_SINGLE        = 0x00000008U,
+    MTYPE_DOUBLE        = 0x00000010U,
+    MTYPE_PREDEFIN_MASK = 0x000000e0U,
+}
+
+enum : uint
+{
+    MTYPE_REPLACE = 0x00000020U,
+    MTYPE_ADD     = 0x00000040U,
+    MTYPE_DISABLE = 0x00000080U,
+}
+
+enum uint CC_NOPRECNV = 0x0000ffffU;
+enum uint CC_DEFAULT = 0x00000000U;
 
 enum : int
 {
@@ -1576,527 +1608,527 @@ enum : int
     CC_WANSUNG = 0xffffffee,
 }
 
-enum uint UFF_VERSION_NUMBER = 0x00010001;
-enum uint FONT_DIR_SORTED = 0x00000001;
+enum uint UFF_VERSION_NUMBER = 0x00010001U;
+enum uint FONT_DIR_SORTED = 0x00000001U;
 
 enum : uint
 {
-    FONT_FL_UFM          = 0x00000001,
-    FONT_FL_IFI          = 0x00000002,
-    FONT_FL_SOFTFONT     = 0x00000004,
-    FONT_FL_PERMANENT_SF = 0x00000008,
+    FONT_FL_UFM          = 0x00000001U,
+    FONT_FL_IFI          = 0x00000002U,
+    FONT_FL_SOFTFONT     = 0x00000004U,
+    FONT_FL_PERMANENT_SF = 0x00000008U,
 }
 
 enum : uint
 {
-    FONT_FL_DEVICEFONT   = 0x00000010,
-    FONT_FL_GLYPHSET_GTT = 0x00000020,
-    FONT_FL_GLYPHSET_RLE = 0x00000040,
+    FONT_FL_DEVICEFONT   = 0x00000010U,
+    FONT_FL_GLYPHSET_GTT = 0x00000020U,
+    FONT_FL_GLYPHSET_RLE = 0x00000040U,
 }
 
-enum uint FONT_FL_RESERVED = 0x00008000;
-enum uint FG_CANCHANGE = 0x00000080;
-enum uint WM_FI_FILENAME = 0x00000384;
-enum uint UNKNOWN_PROTOCOL = 0x00000000;
-enum uint PROTOCOL_UNKNOWN_TYPE = 0x00000000;
-enum uint RAWTCP = 0x00000001;
-enum uint PROTOCOL_RAWTCP_TYPE = 0x00000001;
-enum uint LPR = 0x00000002;
-enum uint PROTOCOL_LPR_TYPE = 0x00000002;
-enum uint MAX_PORTNAME_LEN = 0x00000040;
+enum uint FONT_FL_RESERVED = 0x00008000U;
+enum uint FG_CANCHANGE = 0x00000080U;
+enum uint WM_FI_FILENAME = 0x00000384U;
+enum uint UNKNOWN_PROTOCOL = 0x00000000U;
+enum uint PROTOCOL_UNKNOWN_TYPE = 0x00000000U;
+enum uint RAWTCP = 0x00000001U;
+enum uint PROTOCOL_RAWTCP_TYPE = 0x00000001U;
+enum uint LPR = 0x00000002U;
+enum uint PROTOCOL_LPR_TYPE = 0x00000002U;
+enum uint MAX_PORTNAME_LEN = 0x00000040U;
 
 enum : uint
 {
-    MAX_NETWORKNAME_LEN  = 0x00000031,
-    MAX_NETWORKNAME2_LEN = 0x00000080,
+    MAX_NETWORKNAME_LEN  = 0x00000031U,
+    MAX_NETWORKNAME2_LEN = 0x00000080U,
 }
 
-enum uint MAX_SNMP_COMMUNITY_STR_LEN = 0x00000021;
-enum uint MAX_QUEUENAME_LEN = 0x00000021;
-enum uint MAX_IPADDR_STR_LEN = 0x00000010;
-enum uint MAX_ADDRESS_STR_LEN = 0x0000000d;
-enum uint MAX_DEVICEDESCRIPTION_STR_LEN = 0x00000101;
-enum uint DPS_NOPERMISSION = 0x00000001;
-enum uint DM_ADVANCED = 0x00000010;
-enum uint DM_NOPERMISSION = 0x00000020;
-enum uint DM_USER_DEFAULT = 0x00000040;
-enum uint DM_PROMPT_NON_MODAL = 0x40000000;
-enum uint DM_INVALIDATE_DRIVER_CACHE = 0x20000000;
-enum uint DM_RESERVED = 0x80000000;
+enum uint MAX_SNMP_COMMUNITY_STR_LEN = 0x00000021U;
+enum uint MAX_QUEUENAME_LEN = 0x00000021U;
+enum uint MAX_IPADDR_STR_LEN = 0x00000010U;
+enum uint MAX_ADDRESS_STR_LEN = 0x0000000dU;
+enum uint MAX_DEVICEDESCRIPTION_STR_LEN = 0x00000101U;
+enum uint DPS_NOPERMISSION = 0x00000001U;
+enum uint DM_ADVANCED = 0x00000010U;
+enum uint DM_NOPERMISSION = 0x00000020U;
+enum uint DM_USER_DEFAULT = 0x00000040U;
+enum uint DM_PROMPT_NON_MODAL = 0x40000000U;
+enum uint DM_INVALIDATE_DRIVER_CACHE = 0x20000000U;
+enum uint DM_RESERVED = 0x80000000U;
 
 enum : uint
 {
-    CDM_CONVERT    = 0x00000001,
-    CDM_CONVERT351 = 0x00000002,
+    CDM_CONVERT    = 0x00000001U,
+    CDM_CONVERT351 = 0x00000002U,
 }
 
-enum uint CDM_DRIVER_DEFAULT = 0x00000004;
+enum uint CDM_DRIVER_DEFAULT = 0x00000004U;
 
 enum : uint
 {
-    DOCUMENTEVENT_FIRST                                       = 0x00000001,
-    DOCUMENTEVENT_CREATEDCPRE                                 = 0x00000001,
-    DOCUMENTEVENT_CREATEDCPOST                                = 0x00000002,
-    DOCUMENTEVENT_RESETDCPRE                                  = 0x00000003,
-    DOCUMENTEVENT_RESETDCPOST                                 = 0x00000004,
-    DOCUMENTEVENT_STARTDOC                                    = 0x00000005,
-    DOCUMENTEVENT_STARTDOCPRE                                 = 0x00000005,
-    DOCUMENTEVENT_STARTPAGE                                   = 0x00000006,
-    DOCUMENTEVENT_ENDPAGE                                     = 0x00000007,
-    DOCUMENTEVENT_ENDDOC                                      = 0x00000008,
-    DOCUMENTEVENT_ENDDOCPRE                                   = 0x00000008,
-    DOCUMENTEVENT_ABORTDOC                                    = 0x00000009,
-    DOCUMENTEVENT_DELETEDC                                    = 0x0000000a,
-    DOCUMENTEVENT_ESCAPE                                      = 0x0000000b,
-    DOCUMENTEVENT_ENDDOCPOST                                  = 0x0000000c,
-    DOCUMENTEVENT_STARTDOCPOST                                = 0x0000000d,
-    DOCUMENTEVENT_QUERYFILTER                                 = 0x0000000e,
-    DOCUMENTEVENT_XPS_ADDFIXEDDOCUMENTSEQUENCEPRE             = 0x00000001,
-    DOCUMENTEVENT_XPS_ADDFIXEDDOCUMENTPRE                     = 0x00000002,
-    DOCUMENTEVENT_XPS_ADDFIXEDPAGEEPRE                        = 0x00000003,
-    DOCUMENTEVENT_XPS_ADDFIXEDPAGEPOST                        = 0x00000004,
-    DOCUMENTEVENT_XPS_ADDFIXEDDOCUMENTPOST                    = 0x00000005,
-    DOCUMENTEVENT_XPS_CANCELJOB                               = 0x00000006,
-    DOCUMENTEVENT_XPS_ADDFIXEDDOCUMENTSEQUENCEPRINTTICKETPRE  = 0x00000007,
-    DOCUMENTEVENT_XPS_ADDFIXEDDOCUMENTPRINTTICKETPRE          = 0x00000008,
-    DOCUMENTEVENT_XPS_ADDFIXEDPAGEPRINTTICKETPRE              = 0x00000009,
-    DOCUMENTEVENT_XPS_ADDFIXEDPAGEPRINTTICKETPOST             = 0x0000000a,
-    DOCUMENTEVENT_XPS_ADDFIXEDDOCUMENTPRINTTICKETPOST         = 0x0000000b,
-    DOCUMENTEVENT_XPS_ADDFIXEDDOCUMENTSEQUENCEPRINTTICKETPOST = 0x0000000c,
-    DOCUMENTEVENT_XPS_ADDFIXEDDOCUMENTSEQUENCEPOST            = 0x0000000d,
+    DOCUMENTEVENT_FIRST                                       = 0x00000001U,
+    DOCUMENTEVENT_CREATEDCPRE                                 = 0x00000001U,
+    DOCUMENTEVENT_CREATEDCPOST                                = 0x00000002U,
+    DOCUMENTEVENT_RESETDCPRE                                  = 0x00000003U,
+    DOCUMENTEVENT_RESETDCPOST                                 = 0x00000004U,
+    DOCUMENTEVENT_STARTDOC                                    = 0x00000005U,
+    DOCUMENTEVENT_STARTDOCPRE                                 = 0x00000005U,
+    DOCUMENTEVENT_STARTPAGE                                   = 0x00000006U,
+    DOCUMENTEVENT_ENDPAGE                                     = 0x00000007U,
+    DOCUMENTEVENT_ENDDOC                                      = 0x00000008U,
+    DOCUMENTEVENT_ENDDOCPRE                                   = 0x00000008U,
+    DOCUMENTEVENT_ABORTDOC                                    = 0x00000009U,
+    DOCUMENTEVENT_DELETEDC                                    = 0x0000000aU,
+    DOCUMENTEVENT_ESCAPE                                      = 0x0000000bU,
+    DOCUMENTEVENT_ENDDOCPOST                                  = 0x0000000cU,
+    DOCUMENTEVENT_STARTDOCPOST                                = 0x0000000dU,
+    DOCUMENTEVENT_QUERYFILTER                                 = 0x0000000eU,
+    DOCUMENTEVENT_XPS_ADDFIXEDDOCUMENTSEQUENCEPRE             = 0x00000001U,
+    DOCUMENTEVENT_XPS_ADDFIXEDDOCUMENTPRE                     = 0x00000002U,
+    DOCUMENTEVENT_XPS_ADDFIXEDPAGEEPRE                        = 0x00000003U,
+    DOCUMENTEVENT_XPS_ADDFIXEDPAGEPOST                        = 0x00000004U,
+    DOCUMENTEVENT_XPS_ADDFIXEDDOCUMENTPOST                    = 0x00000005U,
+    DOCUMENTEVENT_XPS_CANCELJOB                               = 0x00000006U,
+    DOCUMENTEVENT_XPS_ADDFIXEDDOCUMENTSEQUENCEPRINTTICKETPRE  = 0x00000007U,
+    DOCUMENTEVENT_XPS_ADDFIXEDDOCUMENTPRINTTICKETPRE          = 0x00000008U,
+    DOCUMENTEVENT_XPS_ADDFIXEDPAGEPRINTTICKETPRE              = 0x00000009U,
+    DOCUMENTEVENT_XPS_ADDFIXEDPAGEPRINTTICKETPOST             = 0x0000000aU,
+    DOCUMENTEVENT_XPS_ADDFIXEDDOCUMENTPRINTTICKETPOST         = 0x0000000bU,
+    DOCUMENTEVENT_XPS_ADDFIXEDDOCUMENTSEQUENCEPRINTTICKETPOST = 0x0000000cU,
+    DOCUMENTEVENT_XPS_ADDFIXEDDOCUMENTSEQUENCEPOST            = 0x0000000dU,
 }
 
 enum : uint
 {
-    DOCUMENTEVENT_LAST        = 0x0000000f,
-    DOCUMENTEVENT_SPOOLED     = 0x00010000,
-    DOCUMENTEVENT_SUCCESS     = 0x00000001,
-    DOCUMENTEVENT_UNSUPPORTED = 0x00000000,
+    DOCUMENTEVENT_LAST        = 0x0000000fU,
+    DOCUMENTEVENT_SPOOLED     = 0x00010000U,
+    DOCUMENTEVENT_SUCCESS     = 0x00000001U,
+    DOCUMENTEVENT_UNSUPPORTED = 0x00000000U,
 }
 
 enum int DOCUMENTEVENT_FAILURE = 0xffffffff;
 
 enum : uint
 {
-    PRINTER_EVENT_CONFIGURATION_CHANGE    = 0x00000000,
-    PRINTER_EVENT_ADD_CONNECTION          = 0x00000001,
-    PRINTER_EVENT_DELETE_CONNECTION       = 0x00000002,
-    PRINTER_EVENT_INITIALIZE              = 0x00000003,
-    PRINTER_EVENT_DELETE                  = 0x00000004,
-    PRINTER_EVENT_CACHE_REFRESH           = 0x00000005,
-    PRINTER_EVENT_CACHE_DELETE            = 0x00000006,
-    PRINTER_EVENT_ATTRIBUTES_CHANGED      = 0x00000007,
-    PRINTER_EVENT_CONFIGURATION_UPDATE    = 0x00000008,
-    PRINTER_EVENT_ADD_CONNECTION_NO_UI    = 0x00000009,
-    PRINTER_EVENT_DELETE_CONNECTION_NO_UI = 0x0000000a,
+    PRINTER_EVENT_CONFIGURATION_CHANGE    = 0x00000000U,
+    PRINTER_EVENT_ADD_CONNECTION          = 0x00000001U,
+    PRINTER_EVENT_DELETE_CONNECTION       = 0x00000002U,
+    PRINTER_EVENT_INITIALIZE              = 0x00000003U,
+    PRINTER_EVENT_DELETE                  = 0x00000004U,
+    PRINTER_EVENT_CACHE_REFRESH           = 0x00000005U,
+    PRINTER_EVENT_CACHE_DELETE            = 0x00000006U,
+    PRINTER_EVENT_ATTRIBUTES_CHANGED      = 0x00000007U,
+    PRINTER_EVENT_CONFIGURATION_UPDATE    = 0x00000008U,
+    PRINTER_EVENT_ADD_CONNECTION_NO_UI    = 0x00000009U,
+    PRINTER_EVENT_DELETE_CONNECTION_NO_UI = 0x0000000aU,
 }
 
-enum uint PRINTER_EVENT_FLAG_NO_UI = 0x00000001;
+enum uint PRINTER_EVENT_FLAG_NO_UI = 0x00000001U;
 
 enum : uint
 {
-    DRIVER_EVENT_INITIALIZE = 0x00000001,
-    DRIVER_EVENT_DELETE     = 0x00000002,
+    DRIVER_EVENT_INITIALIZE = 0x00000001U,
+    DRIVER_EVENT_DELETE     = 0x00000002U,
 }
 
-enum uint BORDER_PRINT = 0x00000000;
-enum uint NO_BORDER_PRINT = 0x00000001;
-enum uint NORMAL_PRINT = 0x00000000;
-enum uint REVERSE_PRINT = 0x00000001;
-enum uint BOOKLET_PRINT = 0x00000002;
-enum uint NO_COLOR_OPTIMIZATION = 0x00000000;
-enum uint COLOR_OPTIMIZATION = 0x00000001;
-enum uint REVERSE_PAGES_FOR_REVERSE_DUPLEX = 0x00000001;
-enum uint DONT_SEND_EXTRA_PAGES_FOR_DUPLEX = 0x00000002;
-enum uint RIGHT_THEN_DOWN = 0x00000001;
-enum uint DOWN_THEN_RIGHT = 0x00000002;
-enum uint LEFT_THEN_DOWN = 0x00000004;
-enum uint DOWN_THEN_LEFT = 0x00000008;
+enum uint BORDER_PRINT = 0x00000000U;
+enum uint NO_BORDER_PRINT = 0x00000001U;
+enum uint NORMAL_PRINT = 0x00000000U;
+enum uint REVERSE_PRINT = 0x00000001U;
+enum uint BOOKLET_PRINT = 0x00000002U;
+enum uint NO_COLOR_OPTIMIZATION = 0x00000000U;
+enum uint COLOR_OPTIMIZATION = 0x00000001U;
+enum uint REVERSE_PAGES_FOR_REVERSE_DUPLEX = 0x00000001U;
+enum uint DONT_SEND_EXTRA_PAGES_FOR_DUPLEX = 0x00000002U;
+enum uint RIGHT_THEN_DOWN = 0x00000001U;
+enum uint DOWN_THEN_RIGHT = 0x00000002U;
+enum uint LEFT_THEN_DOWN = 0x00000004U;
+enum uint DOWN_THEN_LEFT = 0x00000008U;
 
 enum : uint
 {
-    BOOKLET_EDGE_LEFT  = 0x00000000,
-    BOOKLET_EDGE_RIGHT = 0x00000001,
+    BOOKLET_EDGE_LEFT  = 0x00000000U,
+    BOOKLET_EDGE_RIGHT = 0x00000001U,
 }
 
-enum uint QCP_DEVICEPROFILE = 0x00000000;
-enum uint QCP_SOURCEPROFILE = 0x00000001;
+enum uint QCP_DEVICEPROFILE = 0x00000000U;
+enum uint QCP_SOURCEPROFILE = 0x00000001U;
 
 enum : uint
 {
-    QCP_PROFILEMEMORY = 0x00000001,
-    QCP_PROFILEDISK   = 0x00000002,
+    QCP_PROFILEMEMORY = 0x00000001U,
+    QCP_PROFILEDISK   = 0x00000002U,
 }
 
 enum const(wchar)* SPLPRINTER_USER_MODE_PRINTER_DRIVER = "SPLUserModePrinterDriver";
-enum uint EMF_PP_COLOR_OPTIMIZATION = 0x00000001;
+enum uint EMF_PP_COLOR_OPTIMIZATION = 0x00000001U;
 
 enum : uint
 {
-    PRINTER_NOTIFY_STATUS_ENDPOINT = 0x00000001,
-    PRINTER_NOTIFY_STATUS_POLL     = 0x00000002,
-    PRINTER_NOTIFY_STATUS_INFO     = 0x00000004,
+    PRINTER_NOTIFY_STATUS_ENDPOINT = 0x00000001U,
+    PRINTER_NOTIFY_STATUS_POLL     = 0x00000002U,
+    PRINTER_NOTIFY_STATUS_INFO     = 0x00000004U,
 }
 
 enum : uint
 {
-    ROUTER_UNKNOWN      = 0x00000000,
-    ROUTER_SUCCESS      = 0x00000001,
-    ROUTER_STOP_ROUTING = 0x00000002,
+    ROUTER_UNKNOWN      = 0x00000000U,
+    ROUTER_SUCCESS      = 0x00000001U,
+    ROUTER_STOP_ROUTING = 0x00000002U,
 }
 
-enum uint DOC_INFO_INTERNAL_LEVEL = 0x00000064;
-enum uint SPLCLIENT_INFO_INTERNAL_LEVEL = 0x00000064;
-enum uint FILL_WITH_DEFAULTS = 0x00000001;
-enum uint PRINTER_NOTIFY_INFO_DATA_COMPACT = 0x00000001;
+enum uint DOC_INFO_INTERNAL_LEVEL = 0x00000064U;
+enum uint SPLCLIENT_INFO_INTERNAL_LEVEL = 0x00000064U;
+enum uint FILL_WITH_DEFAULTS = 0x00000001U;
+enum uint PRINTER_NOTIFY_INFO_DATA_COMPACT = 0x00000001U;
 
 enum : uint
 {
-    COPYFILE_EVENT_SET_PRINTER_DATAEX        = 0x00000001,
-    COPYFILE_EVENT_DELETE_PRINTER            = 0x00000002,
-    COPYFILE_EVENT_ADD_PRINTER_CONNECTION    = 0x00000003,
-    COPYFILE_EVENT_DELETE_PRINTER_CONNECTION = 0x00000004,
+    COPYFILE_EVENT_SET_PRINTER_DATAEX        = 0x00000001U,
+    COPYFILE_EVENT_DELETE_PRINTER            = 0x00000002U,
+    COPYFILE_EVENT_ADD_PRINTER_CONNECTION    = 0x00000003U,
+    COPYFILE_EVENT_DELETE_PRINTER_CONNECTION = 0x00000004U,
 }
 
-enum uint COPYFILE_EVENT_FILES_CHANGED = 0x00000005;
+enum uint COPYFILE_EVENT_FILES_CHANGED = 0x00000005U;
 
 enum : uint
 {
-    COPYFILE_FLAG_CLIENT_SPOOLER = 0x00000001,
-    COPYFILE_FLAG_SERVER_SPOOLER = 0x00000002,
-}
-
-enum : uint
-{
-    DSPRINT_PUBLISH   = 0x00000001,
-    DSPRINT_UPDATE    = 0x00000002,
-    DSPRINT_UNPUBLISH = 0x00000004,
-    DSPRINT_REPUBLISH = 0x00000008,
-    DSPRINT_PENDING   = 0x80000000,
+    COPYFILE_FLAG_CLIENT_SPOOLER = 0x00000001U,
+    COPYFILE_FLAG_SERVER_SPOOLER = 0x00000002U,
 }
 
 enum : uint
 {
-    PRINTER_CONTROL_PAUSE      = 0x00000001,
-    PRINTER_CONTROL_RESUME     = 0x00000002,
-    PRINTER_CONTROL_PURGE      = 0x00000003,
-    PRINTER_CONTROL_SET_STATUS = 0x00000004,
+    DSPRINT_PUBLISH   = 0x00000001U,
+    DSPRINT_UPDATE    = 0x00000002U,
+    DSPRINT_UNPUBLISH = 0x00000004U,
+    DSPRINT_REPUBLISH = 0x00000008U,
+    DSPRINT_PENDING   = 0x80000000U,
 }
 
 enum : uint
 {
-    PRINTER_STATUS_PAUSED               = 0x00000001,
-    PRINTER_STATUS_ERROR                = 0x00000002,
-    PRINTER_STATUS_PENDING_DELETION     = 0x00000004,
-    PRINTER_STATUS_PAPER_JAM            = 0x00000008,
-    PRINTER_STATUS_PAPER_OUT            = 0x00000010,
-    PRINTER_STATUS_MANUAL_FEED          = 0x00000020,
-    PRINTER_STATUS_PAPER_PROBLEM        = 0x00000040,
-    PRINTER_STATUS_OFFLINE              = 0x00000080,
-    PRINTER_STATUS_IO_ACTIVE            = 0x00000100,
-    PRINTER_STATUS_BUSY                 = 0x00000200,
-    PRINTER_STATUS_PRINTING             = 0x00000400,
-    PRINTER_STATUS_OUTPUT_BIN_FULL      = 0x00000800,
-    PRINTER_STATUS_NOT_AVAILABLE        = 0x00001000,
-    PRINTER_STATUS_WAITING              = 0x00002000,
-    PRINTER_STATUS_PROCESSING           = 0x00004000,
-    PRINTER_STATUS_INITIALIZING         = 0x00008000,
-    PRINTER_STATUS_WARMING_UP           = 0x00010000,
-    PRINTER_STATUS_TONER_LOW            = 0x00020000,
-    PRINTER_STATUS_NO_TONER             = 0x00040000,
-    PRINTER_STATUS_PAGE_PUNT            = 0x00080000,
-    PRINTER_STATUS_USER_INTERVENTION    = 0x00100000,
-    PRINTER_STATUS_OUT_OF_MEMORY        = 0x00200000,
-    PRINTER_STATUS_DOOR_OPEN            = 0x00400000,
-    PRINTER_STATUS_SERVER_UNKNOWN       = 0x00800000,
-    PRINTER_STATUS_POWER_SAVE           = 0x01000000,
-    PRINTER_STATUS_SERVER_OFFLINE       = 0x02000000,
-    PRINTER_STATUS_DRIVER_UPDATE_NEEDED = 0x04000000,
+    PRINTER_CONTROL_PAUSE      = 0x00000001U,
+    PRINTER_CONTROL_RESUME     = 0x00000002U,
+    PRINTER_CONTROL_PURGE      = 0x00000003U,
+    PRINTER_CONTROL_SET_STATUS = 0x00000004U,
 }
 
 enum : uint
 {
-    PRINTER_ATTRIBUTE_QUEUED            = 0x00000001,
-    PRINTER_ATTRIBUTE_DIRECT            = 0x00000002,
-    PRINTER_ATTRIBUTE_DEFAULT           = 0x00000004,
-    PRINTER_ATTRIBUTE_SHARED            = 0x00000008,
-    PRINTER_ATTRIBUTE_NETWORK           = 0x00000010,
-    PRINTER_ATTRIBUTE_HIDDEN            = 0x00000020,
-    PRINTER_ATTRIBUTE_LOCAL             = 0x00000040,
-    PRINTER_ATTRIBUTE_ENABLE_DEVQ       = 0x00000080,
-    PRINTER_ATTRIBUTE_KEEPPRINTEDJOBS   = 0x00000100,
-    PRINTER_ATTRIBUTE_DO_COMPLETE_FIRST = 0x00000200,
-    PRINTER_ATTRIBUTE_WORK_OFFLINE      = 0x00000400,
-    PRINTER_ATTRIBUTE_ENABLE_BIDI       = 0x00000800,
-    PRINTER_ATTRIBUTE_RAW_ONLY          = 0x00001000,
-    PRINTER_ATTRIBUTE_PUBLISHED         = 0x00002000,
-    PRINTER_ATTRIBUTE_FAX               = 0x00004000,
-    PRINTER_ATTRIBUTE_TS                = 0x00008000,
-    PRINTER_ATTRIBUTE_PUSHED_USER       = 0x00020000,
-    PRINTER_ATTRIBUTE_PUSHED_MACHINE    = 0x00040000,
-    PRINTER_ATTRIBUTE_MACHINE           = 0x00080000,
-    PRINTER_ATTRIBUTE_FRIENDLY_NAME     = 0x00100000,
-    PRINTER_ATTRIBUTE_TS_GENERIC_DRIVER = 0x00200000,
-    PRINTER_ATTRIBUTE_PER_USER          = 0x00400000,
-    PRINTER_ATTRIBUTE_ENTERPRISE_CLOUD  = 0x00800000,
-}
-
-enum uint NO_PRIORITY = 0x00000000;
-enum uint MAX_PRIORITY = 0x00000063;
-enum uint MIN_PRIORITY = 0x00000001;
-enum uint DEF_PRIORITY = 0x00000001;
-
-enum : uint
-{
-    JOB_CONTROL_PAUSE             = 0x00000001,
-    JOB_CONTROL_RESUME            = 0x00000002,
-    JOB_CONTROL_CANCEL            = 0x00000003,
-    JOB_CONTROL_RESTART           = 0x00000004,
-    JOB_CONTROL_DELETE            = 0x00000005,
-    JOB_CONTROL_SENT_TO_PRINTER   = 0x00000006,
-    JOB_CONTROL_LAST_PAGE_EJECTED = 0x00000007,
-    JOB_CONTROL_RETAIN            = 0x00000008,
-    JOB_CONTROL_RELEASE           = 0x00000009,
-    JOB_CONTROL_SEND_TOAST        = 0x0000000a,
-    JOB_CONTROL_PENDING_ON_DEVICE = 0x0000000b,
+    PRINTER_STATUS_PAUSED               = 0x00000001U,
+    PRINTER_STATUS_ERROR                = 0x00000002U,
+    PRINTER_STATUS_PENDING_DELETION     = 0x00000004U,
+    PRINTER_STATUS_PAPER_JAM            = 0x00000008U,
+    PRINTER_STATUS_PAPER_OUT            = 0x00000010U,
+    PRINTER_STATUS_MANUAL_FEED          = 0x00000020U,
+    PRINTER_STATUS_PAPER_PROBLEM        = 0x00000040U,
+    PRINTER_STATUS_OFFLINE              = 0x00000080U,
+    PRINTER_STATUS_IO_ACTIVE            = 0x00000100U,
+    PRINTER_STATUS_BUSY                 = 0x00000200U,
+    PRINTER_STATUS_PRINTING             = 0x00000400U,
+    PRINTER_STATUS_OUTPUT_BIN_FULL      = 0x00000800U,
+    PRINTER_STATUS_NOT_AVAILABLE        = 0x00001000U,
+    PRINTER_STATUS_WAITING              = 0x00002000U,
+    PRINTER_STATUS_PROCESSING           = 0x00004000U,
+    PRINTER_STATUS_INITIALIZING         = 0x00008000U,
+    PRINTER_STATUS_WARMING_UP           = 0x00010000U,
+    PRINTER_STATUS_TONER_LOW            = 0x00020000U,
+    PRINTER_STATUS_NO_TONER             = 0x00040000U,
+    PRINTER_STATUS_PAGE_PUNT            = 0x00080000U,
+    PRINTER_STATUS_USER_INTERVENTION    = 0x00100000U,
+    PRINTER_STATUS_OUT_OF_MEMORY        = 0x00200000U,
+    PRINTER_STATUS_DOOR_OPEN            = 0x00400000U,
+    PRINTER_STATUS_SERVER_UNKNOWN       = 0x00800000U,
+    PRINTER_STATUS_POWER_SAVE           = 0x01000000U,
+    PRINTER_STATUS_SERVER_OFFLINE       = 0x02000000U,
+    PRINTER_STATUS_DRIVER_UPDATE_NEEDED = 0x04000000U,
 }
 
 enum : uint
 {
-    JOB_STATUS_PAUSED            = 0x00000001,
-    JOB_STATUS_ERROR             = 0x00000002,
-    JOB_STATUS_DELETING          = 0x00000004,
-    JOB_STATUS_SPOOLING          = 0x00000008,
-    JOB_STATUS_PRINTING          = 0x00000010,
-    JOB_STATUS_OFFLINE           = 0x00000020,
-    JOB_STATUS_PAPEROUT          = 0x00000040,
-    JOB_STATUS_PRINTED           = 0x00000080,
-    JOB_STATUS_DELETED           = 0x00000100,
-    JOB_STATUS_BLOCKED_DEVQ      = 0x00000200,
-    JOB_STATUS_USER_INTERVENTION = 0x00000400,
+    PRINTER_ATTRIBUTE_QUEUED            = 0x00000001U,
+    PRINTER_ATTRIBUTE_DIRECT            = 0x00000002U,
+    PRINTER_ATTRIBUTE_DEFAULT           = 0x00000004U,
+    PRINTER_ATTRIBUTE_SHARED            = 0x00000008U,
+    PRINTER_ATTRIBUTE_NETWORK           = 0x00000010U,
+    PRINTER_ATTRIBUTE_HIDDEN            = 0x00000020U,
+    PRINTER_ATTRIBUTE_LOCAL             = 0x00000040U,
+    PRINTER_ATTRIBUTE_ENABLE_DEVQ       = 0x00000080U,
+    PRINTER_ATTRIBUTE_KEEPPRINTEDJOBS   = 0x00000100U,
+    PRINTER_ATTRIBUTE_DO_COMPLETE_FIRST = 0x00000200U,
+    PRINTER_ATTRIBUTE_WORK_OFFLINE      = 0x00000400U,
+    PRINTER_ATTRIBUTE_ENABLE_BIDI       = 0x00000800U,
+    PRINTER_ATTRIBUTE_RAW_ONLY          = 0x00001000U,
+    PRINTER_ATTRIBUTE_PUBLISHED         = 0x00002000U,
+    PRINTER_ATTRIBUTE_FAX               = 0x00004000U,
+    PRINTER_ATTRIBUTE_TS                = 0x00008000U,
+    PRINTER_ATTRIBUTE_PUSHED_USER       = 0x00020000U,
+    PRINTER_ATTRIBUTE_PUSHED_MACHINE    = 0x00040000U,
+    PRINTER_ATTRIBUTE_MACHINE           = 0x00080000U,
+    PRINTER_ATTRIBUTE_FRIENDLY_NAME     = 0x00100000U,
+    PRINTER_ATTRIBUTE_TS_GENERIC_DRIVER = 0x00200000U,
+    PRINTER_ATTRIBUTE_PER_USER          = 0x00400000U,
+    PRINTER_ATTRIBUTE_ENTERPRISE_CLOUD  = 0x00800000U,
+}
+
+enum uint NO_PRIORITY = 0x00000000U;
+enum uint MAX_PRIORITY = 0x00000063U;
+enum uint MIN_PRIORITY = 0x00000001U;
+enum uint DEF_PRIORITY = 0x00000001U;
+
+enum : uint
+{
+    JOB_CONTROL_PAUSE             = 0x00000001U,
+    JOB_CONTROL_RESUME            = 0x00000002U,
+    JOB_CONTROL_CANCEL            = 0x00000003U,
+    JOB_CONTROL_RESTART           = 0x00000004U,
+    JOB_CONTROL_DELETE            = 0x00000005U,
+    JOB_CONTROL_SENT_TO_PRINTER   = 0x00000006U,
+    JOB_CONTROL_LAST_PAGE_EJECTED = 0x00000007U,
+    JOB_CONTROL_RETAIN            = 0x00000008U,
+    JOB_CONTROL_RELEASE           = 0x00000009U,
+    JOB_CONTROL_SEND_TOAST        = 0x0000000aU,
+    JOB_CONTROL_PENDING_ON_DEVICE = 0x0000000bU,
 }
 
 enum : uint
 {
-    JOB_STATUS_RESTART           = 0x00000800,
-    JOB_STATUS_COMPLETE          = 0x00001000,
-    JOB_STATUS_RETAINED          = 0x00002000,
-    JOB_STATUS_RENDERING_LOCALLY = 0x00004000,
-}
-
-enum uint JOB_POSITION_UNSPECIFIED = 0x00000000;
-
-enum : uint
-{
-    PRINTER_DRIVER_PACKAGE_AWARE       = 0x00000001,
-    PRINTER_DRIVER_XPS                 = 0x00000002,
-    PRINTER_DRIVER_SANDBOX_ENABLED     = 0x00000004,
-    PRINTER_DRIVER_CLASS               = 0x00000008,
-    PRINTER_DRIVER_DERIVED             = 0x00000010,
-    PRINTER_DRIVER_NOT_SHAREABLE       = 0x00000020,
-    PRINTER_DRIVER_CATEGORY_FAX        = 0x00000040,
-    PRINTER_DRIVER_CATEGORY_FILE       = 0x00000080,
-    PRINTER_DRIVER_CATEGORY_VIRTUAL    = 0x00000100,
-    PRINTER_DRIVER_CATEGORY_SERVICE    = 0x00000200,
-    PRINTER_DRIVER_SOFT_RESET_REQUIRED = 0x00000400,
-    PRINTER_DRIVER_SANDBOX_DISABLED    = 0x00000800,
-    PRINTER_DRIVER_CATEGORY_3D         = 0x00001000,
-    PRINTER_DRIVER_CATEGORY_CLOUD      = 0x00002000,
+    JOB_STATUS_PAUSED            = 0x00000001U,
+    JOB_STATUS_ERROR             = 0x00000002U,
+    JOB_STATUS_DELETING          = 0x00000004U,
+    JOB_STATUS_SPOOLING          = 0x00000008U,
+    JOB_STATUS_PRINTING          = 0x00000010U,
+    JOB_STATUS_OFFLINE           = 0x00000020U,
+    JOB_STATUS_PAPEROUT          = 0x00000040U,
+    JOB_STATUS_PRINTED           = 0x00000080U,
+    JOB_STATUS_DELETED           = 0x00000100U,
+    JOB_STATUS_BLOCKED_DEVQ      = 0x00000200U,
+    JOB_STATUS_USER_INTERVENTION = 0x00000400U,
 }
 
 enum : uint
 {
-    DRIVER_KERNELMODE = 0x00000001,
-    DRIVER_USERMODE   = 0x00000002,
+    JOB_STATUS_RESTART           = 0x00000800U,
+    JOB_STATUS_COMPLETE          = 0x00001000U,
+    JOB_STATUS_RETAINED          = 0x00002000U,
+    JOB_STATUS_RENDERING_LOCALLY = 0x00004000U,
+}
+
+enum uint JOB_POSITION_UNSPECIFIED = 0x00000000U;
+
+enum : uint
+{
+    PRINTER_DRIVER_PACKAGE_AWARE       = 0x00000001U,
+    PRINTER_DRIVER_XPS                 = 0x00000002U,
+    PRINTER_DRIVER_SANDBOX_ENABLED     = 0x00000004U,
+    PRINTER_DRIVER_CLASS               = 0x00000008U,
+    PRINTER_DRIVER_DERIVED             = 0x00000010U,
+    PRINTER_DRIVER_NOT_SHAREABLE       = 0x00000020U,
+    PRINTER_DRIVER_CATEGORY_FAX        = 0x00000040U,
+    PRINTER_DRIVER_CATEGORY_FILE       = 0x00000080U,
+    PRINTER_DRIVER_CATEGORY_VIRTUAL    = 0x00000100U,
+    PRINTER_DRIVER_CATEGORY_SERVICE    = 0x00000200U,
+    PRINTER_DRIVER_SOFT_RESET_REQUIRED = 0x00000400U,
+    PRINTER_DRIVER_SANDBOX_DISABLED    = 0x00000800U,
+    PRINTER_DRIVER_CATEGORY_3D         = 0x00001000U,
+    PRINTER_DRIVER_CATEGORY_CLOUD      = 0x00002000U,
 }
 
 enum : uint
 {
-    DPD_DELETE_UNUSED_FILES     = 0x00000001,
-    DPD_DELETE_SPECIFIC_VERSION = 0x00000002,
-    DPD_DELETE_ALL_FILES        = 0x00000004,
+    DRIVER_KERNELMODE = 0x00000001U,
+    DRIVER_USERMODE   = 0x00000002U,
 }
 
 enum : uint
 {
-    APD_STRICT_UPGRADE   = 0x00000001,
-    APD_STRICT_DOWNGRADE = 0x00000002,
+    DPD_DELETE_UNUSED_FILES     = 0x00000001U,
+    DPD_DELETE_SPECIFIC_VERSION = 0x00000002U,
+    DPD_DELETE_ALL_FILES        = 0x00000004U,
 }
 
 enum : uint
 {
-    APD_COPY_ALL_FILES      = 0x00000004,
-    APD_COPY_NEW_FILES      = 0x00000008,
-    APD_COPY_FROM_DIRECTORY = 0x00000010,
+    APD_STRICT_UPGRADE   = 0x00000001U,
+    APD_STRICT_DOWNGRADE = 0x00000002U,
 }
 
 enum : uint
 {
-    STRING_NONE     = 0x00000001,
-    STRING_MUIDLL   = 0x00000002,
-    STRING_LANGPAIR = 0x00000004,
-}
-
-enum uint MAX_FORM_KEYWORD_LENGTH = 0x00000040;
-enum uint DI_CHANNEL = 0x00000001;
-enum uint DI_READ_SPOOL_JOB = 0x00000003;
-enum uint DI_MEMORYMAP_WRITE = 0x00000001;
-
-enum : uint
-{
-    FORM_USER    = 0x00000000,
-    FORM_BUILTIN = 0x00000001,
-    FORM_PRINTER = 0x00000002,
-}
-
-enum uint PPCAPS_RIGHT_THEN_DOWN = 0x00000001;
-enum uint PPCAPS_DOWN_THEN_RIGHT = 0x00000002;
-enum uint PPCAPS_LEFT_THEN_DOWN = 0x00000004;
-enum uint PPCAPS_DOWN_THEN_LEFT = 0x00000008;
-
-enum : uint
-{
-    PPCAPS_BORDER_PRINT = 0x00000001,
-    PPCAPS_BOOKLET_EDGE = 0x00000001,
-}
-
-enum uint PPCAPS_REVERSE_PAGES_FOR_REVERSE_DUPLEX = 0x00000001;
-enum uint PPCAPS_DONT_SEND_EXTRA_PAGES_FOR_DUPLEX = 0x00000002;
-enum uint PPCAPS_SQUARE_SCALING = 0x00000001;
-
-enum : uint
-{
-    PORT_TYPE_WRITE        = 0x00000001,
-    PORT_TYPE_READ         = 0x00000002,
-    PORT_TYPE_REDIRECTED   = 0x00000004,
-    PORT_TYPE_NET_ATTACHED = 0x00000008,
+    APD_COPY_ALL_FILES      = 0x00000004U,
+    APD_COPY_NEW_FILES      = 0x00000008U,
+    APD_COPY_FROM_DIRECTORY = 0x00000010U,
 }
 
 enum : uint
 {
-    PORT_STATUS_TYPE_ERROR        = 0x00000001,
-    PORT_STATUS_TYPE_WARNING      = 0x00000002,
-    PORT_STATUS_TYPE_INFO         = 0x00000003,
-    PORT_STATUS_OFFLINE           = 0x00000001,
-    PORT_STATUS_PAPER_JAM         = 0x00000002,
-    PORT_STATUS_PAPER_OUT         = 0x00000003,
-    PORT_STATUS_OUTPUT_BIN_FULL   = 0x00000004,
-    PORT_STATUS_PAPER_PROBLEM     = 0x00000005,
-    PORT_STATUS_NO_TONER          = 0x00000006,
-    PORT_STATUS_DOOR_OPEN         = 0x00000007,
-    PORT_STATUS_USER_INTERVENTION = 0x00000008,
-    PORT_STATUS_OUT_OF_MEMORY     = 0x00000009,
-    PORT_STATUS_TONER_LOW         = 0x0000000a,
-    PORT_STATUS_WARMING_UP        = 0x0000000b,
-    PORT_STATUS_POWER_SAVE        = 0x0000000c,
+    STRING_NONE     = 0x00000001U,
+    STRING_MUIDLL   = 0x00000002U,
+    STRING_LANGPAIR = 0x00000004U,
+}
+
+enum uint MAX_FORM_KEYWORD_LENGTH = 0x00000040U;
+enum uint DI_CHANNEL = 0x00000001U;
+enum uint DI_READ_SPOOL_JOB = 0x00000003U;
+enum uint DI_MEMORYMAP_WRITE = 0x00000001U;
+
+enum : uint
+{
+    FORM_USER    = 0x00000000U,
+    FORM_BUILTIN = 0x00000001U,
+    FORM_PRINTER = 0x00000002U,
+}
+
+enum uint PPCAPS_RIGHT_THEN_DOWN = 0x00000001U;
+enum uint PPCAPS_DOWN_THEN_RIGHT = 0x00000002U;
+enum uint PPCAPS_LEFT_THEN_DOWN = 0x00000004U;
+enum uint PPCAPS_DOWN_THEN_LEFT = 0x00000008U;
+
+enum : uint
+{
+    PPCAPS_BORDER_PRINT = 0x00000001U,
+    PPCAPS_BOOKLET_EDGE = 0x00000001U,
+}
+
+enum uint PPCAPS_REVERSE_PAGES_FOR_REVERSE_DUPLEX = 0x00000001U;
+enum uint PPCAPS_DONT_SEND_EXTRA_PAGES_FOR_DUPLEX = 0x00000002U;
+enum uint PPCAPS_SQUARE_SCALING = 0x00000001U;
+
+enum : uint
+{
+    PORT_TYPE_WRITE        = 0x00000001U,
+    PORT_TYPE_READ         = 0x00000002U,
+    PORT_TYPE_REDIRECTED   = 0x00000004U,
+    PORT_TYPE_NET_ATTACHED = 0x00000008U,
 }
 
 enum : uint
 {
-    PRINTER_ENUM_DEFAULT      = 0x00000001,
-    PRINTER_ENUM_LOCAL        = 0x00000002,
-    PRINTER_ENUM_CONNECTIONS  = 0x00000004,
-    PRINTER_ENUM_FAVORITE     = 0x00000004,
-    PRINTER_ENUM_NAME         = 0x00000008,
-    PRINTER_ENUM_REMOTE       = 0x00000010,
-    PRINTER_ENUM_SHARED       = 0x00000020,
-    PRINTER_ENUM_NETWORK      = 0x00000040,
-    PRINTER_ENUM_EXPAND       = 0x00004000,
-    PRINTER_ENUM_CONTAINER    = 0x00008000,
-    PRINTER_ENUM_ICONMASK     = 0x00ff0000,
-    PRINTER_ENUM_ICON1        = 0x00010000,
-    PRINTER_ENUM_ICON2        = 0x00020000,
-    PRINTER_ENUM_ICON3        = 0x00040000,
-    PRINTER_ENUM_ICON4        = 0x00080000,
-    PRINTER_ENUM_ICON5        = 0x00100000,
-    PRINTER_ENUM_ICON6        = 0x00200000,
-    PRINTER_ENUM_ICON7        = 0x00400000,
-    PRINTER_ENUM_ICON8        = 0x00800000,
-    PRINTER_ENUM_HIDE         = 0x01000000,
-    PRINTER_ENUM_CATEGORY_ALL = 0x02000000,
-    PRINTER_ENUM_CATEGORY_3D  = 0x04000000,
+    PORT_STATUS_TYPE_ERROR        = 0x00000001U,
+    PORT_STATUS_TYPE_WARNING      = 0x00000002U,
+    PORT_STATUS_TYPE_INFO         = 0x00000003U,
+    PORT_STATUS_OFFLINE           = 0x00000001U,
+    PORT_STATUS_PAPER_JAM         = 0x00000002U,
+    PORT_STATUS_PAPER_OUT         = 0x00000003U,
+    PORT_STATUS_OUTPUT_BIN_FULL   = 0x00000004U,
+    PORT_STATUS_PAPER_PROBLEM     = 0x00000005U,
+    PORT_STATUS_NO_TONER          = 0x00000006U,
+    PORT_STATUS_DOOR_OPEN         = 0x00000007U,
+    PORT_STATUS_USER_INTERVENTION = 0x00000008U,
+    PORT_STATUS_OUT_OF_MEMORY     = 0x00000009U,
+    PORT_STATUS_TONER_LOW         = 0x0000000aU,
+    PORT_STATUS_WARMING_UP        = 0x0000000bU,
+    PORT_STATUS_POWER_SAVE        = 0x0000000cU,
 }
 
 enum : uint
 {
-    SPOOL_FILE_PERSISTENT = 0x00000001,
-    SPOOL_FILE_TEMPORARY  = 0x00000002,
-}
-
-enum uint PRINTER_NOTIFY_TYPE = 0x00000000;
-enum uint JOB_NOTIFY_TYPE = 0x00000001;
-enum uint SERVER_NOTIFY_TYPE = 0x00000002;
-
-enum : uint
-{
-    PRINTER_NOTIFY_FIELD_SERVER_NAME            = 0x00000000,
-    PRINTER_NOTIFY_FIELD_PRINTER_NAME           = 0x00000001,
-    PRINTER_NOTIFY_FIELD_SHARE_NAME             = 0x00000002,
-    PRINTER_NOTIFY_FIELD_PORT_NAME              = 0x00000003,
-    PRINTER_NOTIFY_FIELD_DRIVER_NAME            = 0x00000004,
-    PRINTER_NOTIFY_FIELD_COMMENT                = 0x00000005,
-    PRINTER_NOTIFY_FIELD_LOCATION               = 0x00000006,
-    PRINTER_NOTIFY_FIELD_DEVMODE                = 0x00000007,
-    PRINTER_NOTIFY_FIELD_SEPFILE                = 0x00000008,
-    PRINTER_NOTIFY_FIELD_PRINT_PROCESSOR        = 0x00000009,
-    PRINTER_NOTIFY_FIELD_PARAMETERS             = 0x0000000a,
-    PRINTER_NOTIFY_FIELD_DATATYPE               = 0x0000000b,
-    PRINTER_NOTIFY_FIELD_SECURITY_DESCRIPTOR    = 0x0000000c,
-    PRINTER_NOTIFY_FIELD_ATTRIBUTES             = 0x0000000d,
-    PRINTER_NOTIFY_FIELD_PRIORITY               = 0x0000000e,
-    PRINTER_NOTIFY_FIELD_DEFAULT_PRIORITY       = 0x0000000f,
-    PRINTER_NOTIFY_FIELD_START_TIME             = 0x00000010,
-    PRINTER_NOTIFY_FIELD_UNTIL_TIME             = 0x00000011,
-    PRINTER_NOTIFY_FIELD_STATUS                 = 0x00000012,
-    PRINTER_NOTIFY_FIELD_STATUS_STRING          = 0x00000013,
-    PRINTER_NOTIFY_FIELD_CJOBS                  = 0x00000014,
-    PRINTER_NOTIFY_FIELD_AVERAGE_PPM            = 0x00000015,
-    PRINTER_NOTIFY_FIELD_TOTAL_PAGES            = 0x00000016,
-    PRINTER_NOTIFY_FIELD_PAGES_PRINTED          = 0x00000017,
-    PRINTER_NOTIFY_FIELD_TOTAL_BYTES            = 0x00000018,
-    PRINTER_NOTIFY_FIELD_BYTES_PRINTED          = 0x00000019,
-    PRINTER_NOTIFY_FIELD_OBJECT_GUID            = 0x0000001a,
-    PRINTER_NOTIFY_FIELD_FRIENDLY_NAME          = 0x0000001b,
-    PRINTER_NOTIFY_FIELD_BRANCH_OFFICE_PRINTING = 0x0000001c,
+    PRINTER_ENUM_DEFAULT      = 0x00000001U,
+    PRINTER_ENUM_LOCAL        = 0x00000002U,
+    PRINTER_ENUM_CONNECTIONS  = 0x00000004U,
+    PRINTER_ENUM_FAVORITE     = 0x00000004U,
+    PRINTER_ENUM_NAME         = 0x00000008U,
+    PRINTER_ENUM_REMOTE       = 0x00000010U,
+    PRINTER_ENUM_SHARED       = 0x00000020U,
+    PRINTER_ENUM_NETWORK      = 0x00000040U,
+    PRINTER_ENUM_EXPAND       = 0x00004000U,
+    PRINTER_ENUM_CONTAINER    = 0x00008000U,
+    PRINTER_ENUM_ICONMASK     = 0x00ff0000U,
+    PRINTER_ENUM_ICON1        = 0x00010000U,
+    PRINTER_ENUM_ICON2        = 0x00020000U,
+    PRINTER_ENUM_ICON3        = 0x00040000U,
+    PRINTER_ENUM_ICON4        = 0x00080000U,
+    PRINTER_ENUM_ICON5        = 0x00100000U,
+    PRINTER_ENUM_ICON6        = 0x00200000U,
+    PRINTER_ENUM_ICON7        = 0x00400000U,
+    PRINTER_ENUM_ICON8        = 0x00800000U,
+    PRINTER_ENUM_HIDE         = 0x01000000U,
+    PRINTER_ENUM_CATEGORY_ALL = 0x02000000U,
+    PRINTER_ENUM_CATEGORY_3D  = 0x04000000U,
 }
 
 enum : uint
 {
-    JOB_NOTIFY_FIELD_PRINTER_NAME        = 0x00000000,
-    JOB_NOTIFY_FIELD_MACHINE_NAME        = 0x00000001,
-    JOB_NOTIFY_FIELD_PORT_NAME           = 0x00000002,
-    JOB_NOTIFY_FIELD_USER_NAME           = 0x00000003,
-    JOB_NOTIFY_FIELD_NOTIFY_NAME         = 0x00000004,
-    JOB_NOTIFY_FIELD_DATATYPE            = 0x00000005,
-    JOB_NOTIFY_FIELD_PRINT_PROCESSOR     = 0x00000006,
-    JOB_NOTIFY_FIELD_PARAMETERS          = 0x00000007,
-    JOB_NOTIFY_FIELD_DRIVER_NAME         = 0x00000008,
-    JOB_NOTIFY_FIELD_DEVMODE             = 0x00000009,
-    JOB_NOTIFY_FIELD_STATUS              = 0x0000000a,
-    JOB_NOTIFY_FIELD_STATUS_STRING       = 0x0000000b,
-    JOB_NOTIFY_FIELD_SECURITY_DESCRIPTOR = 0x0000000c,
-    JOB_NOTIFY_FIELD_DOCUMENT            = 0x0000000d,
-    JOB_NOTIFY_FIELD_PRIORITY            = 0x0000000e,
-    JOB_NOTIFY_FIELD_POSITION            = 0x0000000f,
-    JOB_NOTIFY_FIELD_SUBMITTED           = 0x00000010,
-    JOB_NOTIFY_FIELD_START_TIME          = 0x00000011,
-    JOB_NOTIFY_FIELD_UNTIL_TIME          = 0x00000012,
-    JOB_NOTIFY_FIELD_TIME                = 0x00000013,
-    JOB_NOTIFY_FIELD_TOTAL_PAGES         = 0x00000014,
-    JOB_NOTIFY_FIELD_PAGES_PRINTED       = 0x00000015,
-    JOB_NOTIFY_FIELD_TOTAL_BYTES         = 0x00000016,
-    JOB_NOTIFY_FIELD_BYTES_PRINTED       = 0x00000017,
-    JOB_NOTIFY_FIELD_REMOTE_JOB_ID       = 0x00000018,
+    SPOOL_FILE_PERSISTENT = 0x00000001U,
+    SPOOL_FILE_TEMPORARY  = 0x00000002U,
 }
 
-enum uint SERVER_NOTIFY_FIELD_PRINT_DRIVER_ISOLATION_GROUP = 0x00000000;
+enum uint PRINTER_NOTIFY_TYPE = 0x00000000U;
+enum uint JOB_NOTIFY_TYPE = 0x00000001U;
+enum uint SERVER_NOTIFY_TYPE = 0x00000002U;
 
 enum : uint
 {
-    PRINTER_NOTIFY_CATEGORY_ALL    = 0x00001000,
-    PRINTER_NOTIFY_CATEGORY_3D     = 0x00002000,
-    PRINTER_NOTIFY_OPTIONS_REFRESH = 0x00000001,
-    PRINTER_NOTIFY_INFO_DISCARDED  = 0x00000001,
+    PRINTER_NOTIFY_FIELD_SERVER_NAME            = 0x00000000U,
+    PRINTER_NOTIFY_FIELD_PRINTER_NAME           = 0x00000001U,
+    PRINTER_NOTIFY_FIELD_SHARE_NAME             = 0x00000002U,
+    PRINTER_NOTIFY_FIELD_PORT_NAME              = 0x00000003U,
+    PRINTER_NOTIFY_FIELD_DRIVER_NAME            = 0x00000004U,
+    PRINTER_NOTIFY_FIELD_COMMENT                = 0x00000005U,
+    PRINTER_NOTIFY_FIELD_LOCATION               = 0x00000006U,
+    PRINTER_NOTIFY_FIELD_DEVMODE                = 0x00000007U,
+    PRINTER_NOTIFY_FIELD_SEPFILE                = 0x00000008U,
+    PRINTER_NOTIFY_FIELD_PRINT_PROCESSOR        = 0x00000009U,
+    PRINTER_NOTIFY_FIELD_PARAMETERS             = 0x0000000aU,
+    PRINTER_NOTIFY_FIELD_DATATYPE               = 0x0000000bU,
+    PRINTER_NOTIFY_FIELD_SECURITY_DESCRIPTOR    = 0x0000000cU,
+    PRINTER_NOTIFY_FIELD_ATTRIBUTES             = 0x0000000dU,
+    PRINTER_NOTIFY_FIELD_PRIORITY               = 0x0000000eU,
+    PRINTER_NOTIFY_FIELD_DEFAULT_PRIORITY       = 0x0000000fU,
+    PRINTER_NOTIFY_FIELD_START_TIME             = 0x00000010U,
+    PRINTER_NOTIFY_FIELD_UNTIL_TIME             = 0x00000011U,
+    PRINTER_NOTIFY_FIELD_STATUS                 = 0x00000012U,
+    PRINTER_NOTIFY_FIELD_STATUS_STRING          = 0x00000013U,
+    PRINTER_NOTIFY_FIELD_CJOBS                  = 0x00000014U,
+    PRINTER_NOTIFY_FIELD_AVERAGE_PPM            = 0x00000015U,
+    PRINTER_NOTIFY_FIELD_TOTAL_PAGES            = 0x00000016U,
+    PRINTER_NOTIFY_FIELD_PAGES_PRINTED          = 0x00000017U,
+    PRINTER_NOTIFY_FIELD_TOTAL_BYTES            = 0x00000018U,
+    PRINTER_NOTIFY_FIELD_BYTES_PRINTED          = 0x00000019U,
+    PRINTER_NOTIFY_FIELD_OBJECT_GUID            = 0x0000001aU,
+    PRINTER_NOTIFY_FIELD_FRIENDLY_NAME          = 0x0000001bU,
+    PRINTER_NOTIFY_FIELD_BRANCH_OFFICE_PRINTING = 0x0000001cU,
+}
+
+enum : uint
+{
+    JOB_NOTIFY_FIELD_PRINTER_NAME        = 0x00000000U,
+    JOB_NOTIFY_FIELD_MACHINE_NAME        = 0x00000001U,
+    JOB_NOTIFY_FIELD_PORT_NAME           = 0x00000002U,
+    JOB_NOTIFY_FIELD_USER_NAME           = 0x00000003U,
+    JOB_NOTIFY_FIELD_NOTIFY_NAME         = 0x00000004U,
+    JOB_NOTIFY_FIELD_DATATYPE            = 0x00000005U,
+    JOB_NOTIFY_FIELD_PRINT_PROCESSOR     = 0x00000006U,
+    JOB_NOTIFY_FIELD_PARAMETERS          = 0x00000007U,
+    JOB_NOTIFY_FIELD_DRIVER_NAME         = 0x00000008U,
+    JOB_NOTIFY_FIELD_DEVMODE             = 0x00000009U,
+    JOB_NOTIFY_FIELD_STATUS              = 0x0000000aU,
+    JOB_NOTIFY_FIELD_STATUS_STRING       = 0x0000000bU,
+    JOB_NOTIFY_FIELD_SECURITY_DESCRIPTOR = 0x0000000cU,
+    JOB_NOTIFY_FIELD_DOCUMENT            = 0x0000000dU,
+    JOB_NOTIFY_FIELD_PRIORITY            = 0x0000000eU,
+    JOB_NOTIFY_FIELD_POSITION            = 0x0000000fU,
+    JOB_NOTIFY_FIELD_SUBMITTED           = 0x00000010U,
+    JOB_NOTIFY_FIELD_START_TIME          = 0x00000011U,
+    JOB_NOTIFY_FIELD_UNTIL_TIME          = 0x00000012U,
+    JOB_NOTIFY_FIELD_TIME                = 0x00000013U,
+    JOB_NOTIFY_FIELD_TOTAL_PAGES         = 0x00000014U,
+    JOB_NOTIFY_FIELD_PAGES_PRINTED       = 0x00000015U,
+    JOB_NOTIFY_FIELD_TOTAL_BYTES         = 0x00000016U,
+    JOB_NOTIFY_FIELD_BYTES_PRINTED       = 0x00000017U,
+    JOB_NOTIFY_FIELD_REMOTE_JOB_ID       = 0x00000018U,
+}
+
+enum uint SERVER_NOTIFY_FIELD_PRINT_DRIVER_ISOLATION_GROUP = 0x00000000U;
+
+enum : uint
+{
+    PRINTER_NOTIFY_CATEGORY_ALL    = 0x00001000U,
+    PRINTER_NOTIFY_CATEGORY_3D     = 0x00002000U,
+    PRINTER_NOTIFY_OPTIONS_REFRESH = 0x00000001U,
+    PRINTER_NOTIFY_INFO_DISCARDED  = 0x00000001U,
 }
 
 enum : const(wchar)*
@@ -2110,92 +2142,92 @@ enum : const(wchar)*
 
 enum : uint
 {
-    BIDI_ACCESS_ADMINISTRATOR = 0x00000001,
-    BIDI_ACCESS_USER          = 0x00000002,
+    BIDI_ACCESS_ADMINISTRATOR = 0x00000001U,
+    BIDI_ACCESS_USER          = 0x00000002U,
 }
 
 enum : uint
 {
-    ERROR_BIDI_STATUS_OK            = 0x00000000,
-    ERROR_BIDI_ERROR_BASE           = 0x000032c8,
-    ERROR_BIDI_STATUS_WARNING       = 0x000032c9,
-    ERROR_BIDI_SCHEMA_READ_ONLY     = 0x000032ca,
-    ERROR_BIDI_SERVER_OFFLINE       = 0x000032cb,
-    ERROR_BIDI_DEVICE_OFFLINE       = 0x000032cc,
-    ERROR_BIDI_SCHEMA_NOT_SUPPORTED = 0x000032cd,
+    ERROR_BIDI_STATUS_OK            = 0x00000000U,
+    ERROR_BIDI_ERROR_BASE           = 0x000032c8U,
+    ERROR_BIDI_STATUS_WARNING       = 0x000032c9U,
+    ERROR_BIDI_SCHEMA_READ_ONLY     = 0x000032caU,
+    ERROR_BIDI_SERVER_OFFLINE       = 0x000032cbU,
+    ERROR_BIDI_DEVICE_OFFLINE       = 0x000032ccU,
+    ERROR_BIDI_SCHEMA_NOT_SUPPORTED = 0x000032cdU,
 }
 
 enum : uint
 {
-    ERROR_BIDI_SET_DIFFERENT_TYPE      = 0x000032ce,
-    ERROR_BIDI_SET_MULTIPLE_SCHEMAPATH = 0x000032cf,
-    ERROR_BIDI_SET_INVALID_SCHEMAPATH  = 0x000032d0,
-    ERROR_BIDI_SET_UNKNOWN_FAILURE     = 0x000032d1,
+    ERROR_BIDI_SET_DIFFERENT_TYPE      = 0x000032ceU,
+    ERROR_BIDI_SET_MULTIPLE_SCHEMAPATH = 0x000032cfU,
+    ERROR_BIDI_SET_INVALID_SCHEMAPATH  = 0x000032d0U,
+    ERROR_BIDI_SET_UNKNOWN_FAILURE     = 0x000032d1U,
 }
 
-enum uint ERROR_BIDI_SCHEMA_WRITE_ONLY = 0x000032d2;
+enum uint ERROR_BIDI_SCHEMA_WRITE_ONLY = 0x000032d2U;
 
 enum : uint
 {
-    ERROR_BIDI_GET_REQUIRES_ARGUMENT      = 0x000032d3,
-    ERROR_BIDI_GET_ARGUMENT_NOT_SUPPORTED = 0x000032d4,
-    ERROR_BIDI_GET_MISSING_ARGUMENT       = 0x000032d5,
+    ERROR_BIDI_GET_REQUIRES_ARGUMENT      = 0x000032d3U,
+    ERROR_BIDI_GET_ARGUMENT_NOT_SUPPORTED = 0x000032d4U,
+    ERROR_BIDI_GET_MISSING_ARGUMENT       = 0x000032d5U,
 }
 
-enum uint ERROR_BIDI_DEVICE_CONFIG_UNCHANGED = 0x000032d6;
+enum uint ERROR_BIDI_DEVICE_CONFIG_UNCHANGED = 0x000032d6U;
 
 enum : uint
 {
-    ERROR_BIDI_NO_LOCALIZED_RESOURCES    = 0x000032d7,
-    ERROR_BIDI_NO_BIDI_SCHEMA_EXTENSIONS = 0x000032d8,
-}
-
-enum : uint
-{
-    ERROR_BIDI_UNSUPPORTED_CLIENT_LANGUAGE = 0x000032d9,
-    ERROR_BIDI_UNSUPPORTED_RESOURCE_FORMAT = 0x000032da,
+    ERROR_BIDI_NO_LOCALIZED_RESOURCES    = 0x000032d7U,
+    ERROR_BIDI_NO_BIDI_SCHEMA_EXTENSIONS = 0x000032d8U,
 }
 
 enum : uint
 {
-    PRINTER_CHANGE_ADD_PRINTER               = 0x00000001,
-    PRINTER_CHANGE_SET_PRINTER               = 0x00000002,
-    PRINTER_CHANGE_DELETE_PRINTER            = 0x00000004,
-    PRINTER_CHANGE_FAILED_CONNECTION_PRINTER = 0x00000008,
+    ERROR_BIDI_UNSUPPORTED_CLIENT_LANGUAGE = 0x000032d9U,
+    ERROR_BIDI_UNSUPPORTED_RESOURCE_FORMAT = 0x000032daU,
 }
 
 enum : uint
 {
-    PRINTER_CHANGE_PRINTER                = 0x000000ff,
-    PRINTER_CHANGE_ADD_JOB                = 0x00000100,
-    PRINTER_CHANGE_SET_JOB                = 0x00000200,
-    PRINTER_CHANGE_DELETE_JOB             = 0x00000400,
-    PRINTER_CHANGE_WRITE_JOB              = 0x00000800,
-    PRINTER_CHANGE_JOB                    = 0x0000ff00,
-    PRINTER_CHANGE_ADD_FORM               = 0x00010000,
-    PRINTER_CHANGE_SET_FORM               = 0x00020000,
-    PRINTER_CHANGE_DELETE_FORM            = 0x00040000,
-    PRINTER_CHANGE_FORM                   = 0x00070000,
-    PRINTER_CHANGE_ADD_PORT               = 0x00100000,
-    PRINTER_CHANGE_CONFIGURE_PORT         = 0x00200000,
-    PRINTER_CHANGE_DELETE_PORT            = 0x00400000,
-    PRINTER_CHANGE_PORT                   = 0x00700000,
-    PRINTER_CHANGE_ADD_PRINT_PROCESSOR    = 0x01000000,
-    PRINTER_CHANGE_DELETE_PRINT_PROCESSOR = 0x04000000,
-    PRINTER_CHANGE_PRINT_PROCESSOR        = 0x07000000,
-    PRINTER_CHANGE_SERVER                 = 0x08000000,
-    PRINTER_CHANGE_ADD_PRINTER_DRIVER     = 0x10000000,
-    PRINTER_CHANGE_SET_PRINTER_DRIVER     = 0x20000000,
-    PRINTER_CHANGE_DELETE_PRINTER_DRIVER  = 0x40000000,
-    PRINTER_CHANGE_PRINTER_DRIVER         = 0x70000000,
-    PRINTER_CHANGE_TIMEOUT                = 0x80000000,
-    PRINTER_CHANGE_ALL                    = 0x7f77ffff,
-    PRINTER_ERROR_INFORMATION             = 0x80000000,
-    PRINTER_ERROR_WARNING                 = 0x40000000,
-    PRINTER_ERROR_SEVERE                  = 0x20000000,
-    PRINTER_ERROR_OUTOFPAPER              = 0x00000001,
-    PRINTER_ERROR_JAM                     = 0x00000002,
-    PRINTER_ERROR_OUTOFTONER              = 0x00000004,
+    PRINTER_CHANGE_ADD_PRINTER               = 0x00000001U,
+    PRINTER_CHANGE_SET_PRINTER               = 0x00000002U,
+    PRINTER_CHANGE_DELETE_PRINTER            = 0x00000004U,
+    PRINTER_CHANGE_FAILED_CONNECTION_PRINTER = 0x00000008U,
+}
+
+enum : uint
+{
+    PRINTER_CHANGE_PRINTER                = 0x000000ffU,
+    PRINTER_CHANGE_ADD_JOB                = 0x00000100U,
+    PRINTER_CHANGE_SET_JOB                = 0x00000200U,
+    PRINTER_CHANGE_DELETE_JOB             = 0x00000400U,
+    PRINTER_CHANGE_WRITE_JOB              = 0x00000800U,
+    PRINTER_CHANGE_JOB                    = 0x0000ff00U,
+    PRINTER_CHANGE_ADD_FORM               = 0x00010000U,
+    PRINTER_CHANGE_SET_FORM               = 0x00020000U,
+    PRINTER_CHANGE_DELETE_FORM            = 0x00040000U,
+    PRINTER_CHANGE_FORM                   = 0x00070000U,
+    PRINTER_CHANGE_ADD_PORT               = 0x00100000U,
+    PRINTER_CHANGE_CONFIGURE_PORT         = 0x00200000U,
+    PRINTER_CHANGE_DELETE_PORT            = 0x00400000U,
+    PRINTER_CHANGE_PORT                   = 0x00700000U,
+    PRINTER_CHANGE_ADD_PRINT_PROCESSOR    = 0x01000000U,
+    PRINTER_CHANGE_DELETE_PRINT_PROCESSOR = 0x04000000U,
+    PRINTER_CHANGE_PRINT_PROCESSOR        = 0x07000000U,
+    PRINTER_CHANGE_SERVER                 = 0x08000000U,
+    PRINTER_CHANGE_ADD_PRINTER_DRIVER     = 0x10000000U,
+    PRINTER_CHANGE_SET_PRINTER_DRIVER     = 0x20000000U,
+    PRINTER_CHANGE_DELETE_PRINTER_DRIVER  = 0x40000000U,
+    PRINTER_CHANGE_PRINTER_DRIVER         = 0x70000000U,
+    PRINTER_CHANGE_TIMEOUT                = 0x80000000U,
+    PRINTER_CHANGE_ALL                    = 0x7f77ffffU,
+    PRINTER_ERROR_INFORMATION             = 0x80000000U,
+    PRINTER_ERROR_WARNING                 = 0x40000000U,
+    PRINTER_ERROR_SEVERE                  = 0x20000000U,
+    PRINTER_ERROR_OUTOFPAPER              = 0x00000001U,
+    PRINTER_ERROR_JAM                     = 0x00000002U,
+    PRINTER_ERROR_OUTOFTONER              = 0x00000004U,
 }
 
 enum const(wchar)* SPLREG_DEFAULT_SPOOL_DIRECTORY = "DefaultSpoolDirectory";
@@ -2268,8 +2300,8 @@ enum const(wchar)* SPLREG_PRINT_QUEUE_V4_DRIVER_DIRECTORY = "PrintQueueV4DriverD
 
 enum : uint
 {
-    JOB_ACCESS_ADMINISTER = 0x00000010,
-    JOB_ACCESS_READ       = 0x00000020,
+    JOB_ACCESS_ADMINISTER = 0x00000010U,
+    JOB_ACCESS_READ       = 0x00000020U,
 }
 
 enum const(wchar)* SPLDS_SPOOLER_KEY = "DsSpooler";
@@ -2359,203 +2391,203 @@ enum : const(wchar)*
 
 enum : uint
 {
-    PRINTER_CONNECTION_MISMATCH = 0x00000020,
-    PRINTER_CONNECTION_NO_UI    = 0x00000040,
+    PRINTER_CONNECTION_MISMATCH = 0x00000020U,
+    PRINTER_CONNECTION_NO_UI    = 0x00000040U,
 }
 
-enum uint IPDFP_COPY_ALL_FILES = 0x00000001;
-enum uint UPDP_SILENT_UPLOAD = 0x00000001;
-enum uint UPDP_UPLOAD_ALWAYS = 0x00000002;
-enum uint UPDP_CHECK_DRIVERSTORE = 0x00000004;
+enum uint IPDFP_COPY_ALL_FILES = 0x00000001U;
+enum uint UPDP_SILENT_UPLOAD = 0x00000001U;
+enum uint UPDP_UPLOAD_ALWAYS = 0x00000002U;
+enum uint UPDP_CHECK_DRIVERSTORE = 0x00000004U;
 enum const(wchar)* MS_PRINT_JOB_OUTPUT_FILE = "MsPrintJobOutputFile";
 
 enum : uint
 {
-    DISPID_PRINTSCHEMA_ELEMENT                        = 0x00002710,
-    DISPID_PRINTSCHEMA_ELEMENT_XMLNODE                = 0x00002711,
-    DISPID_PRINTSCHEMA_ELEMENT_NAME                   = 0x00002712,
-    DISPID_PRINTSCHEMA_ELEMENT_NAMESPACEURI           = 0x00002713,
-    DISPID_PRINTSCHEMA_DISPLAYABLEELEMENT             = 0x00002774,
-    DISPID_PRINTSCHEMA_DISPLAYABLEELEMENT_DISPLAYNAME = 0x00002775,
+    DISPID_PRINTSCHEMA_ELEMENT                        = 0x00002710U,
+    DISPID_PRINTSCHEMA_ELEMENT_XMLNODE                = 0x00002711U,
+    DISPID_PRINTSCHEMA_ELEMENT_NAME                   = 0x00002712U,
+    DISPID_PRINTSCHEMA_ELEMENT_NAMESPACEURI           = 0x00002713U,
+    DISPID_PRINTSCHEMA_DISPLAYABLEELEMENT             = 0x00002774U,
+    DISPID_PRINTSCHEMA_DISPLAYABLEELEMENT_DISPLAYNAME = 0x00002775U,
 }
 
 enum : uint
 {
-    DISPID_PRINTSCHEMA_OPTION                             = 0x000027d8,
-    DISPID_PRINTSCHEMA_OPTION_SELECTED                    = 0x000027d9,
-    DISPID_PRINTSCHEMA_OPTION_CONSTRAINED                 = 0x000027da,
-    DISPID_PRINTSCHEMA_OPTION_GETPROPERTYVALUE            = 0x000027db,
-    DISPID_PRINTSCHEMA_PAGEMEDIASIZEOPTION                = 0x0000283c,
-    DISPID_PRINTSCHEMA_PAGEMEDIASIZEOPTION_WIDTH          = 0x0000283d,
-    DISPID_PRINTSCHEMA_PAGEMEDIASIZEOPTION_HEIGHT         = 0x0000283e,
-    DISPID_PRINTSCHEMA_NUPOPTION                          = 0x000028a0,
-    DISPID_PRINTSCHEMA_NUPOPTION_PAGESPERSHEET            = 0x000028a1,
-    DISPID_PRINTSCHEMA_OPTIONCOLLECTION                   = 0x00002904,
-    DISPID_PRINTSCHEMA_OPTIONCOLLECTION_COUNT             = 0x00002905,
-    DISPID_PRINTSCHEMA_OPTIONCOLLECTION_GETAT             = 0x00002906,
-    DISPID_PRINTSCHEMA_FEATURE                            = 0x00002968,
-    DISPID_PRINTSCHEMA_FEATURE_SELECTEDOPTION             = 0x00002969,
-    DISPID_PRINTSCHEMA_FEATURE_SELECTIONTYPE              = 0x0000296a,
-    DISPID_PRINTSCHEMA_FEATURE_GETOPTION                  = 0x0000296b,
-    DISPID_PRINTSCHEMA_FEATURE_DISPLAYUI                  = 0x0000296c,
-    DISPID_PRINTSCHEMA_PAGEIMAGEABLESIZE                  = 0x000029cc,
-    DISPID_PRINTSCHEMA_PAGEIMAGEABLESIZE_IMAGEABLE_WIDTH  = 0x000029cd,
-    DISPID_PRINTSCHEMA_PAGEIMAGEABLESIZE_IMAGEABLE_HEIGHT = 0x000029ce,
-    DISPID_PRINTSCHEMA_PAGEIMAGEABLESIZE_ORIGIN_WIDTH     = 0x000029cf,
-    DISPID_PRINTSCHEMA_PAGEIMAGEABLESIZE_ORIGIN_HEIGHT    = 0x000029d0,
-    DISPID_PRINTSCHEMA_PAGEIMAGEABLESIZE_EXTENT_WIDTH     = 0x000029d1,
-    DISPID_PRINTSCHEMA_PAGEIMAGEABLESIZE_EXTENT_HEIGHT    = 0x000029d2,
+    DISPID_PRINTSCHEMA_OPTION                             = 0x000027d8U,
+    DISPID_PRINTSCHEMA_OPTION_SELECTED                    = 0x000027d9U,
+    DISPID_PRINTSCHEMA_OPTION_CONSTRAINED                 = 0x000027daU,
+    DISPID_PRINTSCHEMA_OPTION_GETPROPERTYVALUE            = 0x000027dbU,
+    DISPID_PRINTSCHEMA_PAGEMEDIASIZEOPTION                = 0x0000283cU,
+    DISPID_PRINTSCHEMA_PAGEMEDIASIZEOPTION_WIDTH          = 0x0000283dU,
+    DISPID_PRINTSCHEMA_PAGEMEDIASIZEOPTION_HEIGHT         = 0x0000283eU,
+    DISPID_PRINTSCHEMA_NUPOPTION                          = 0x000028a0U,
+    DISPID_PRINTSCHEMA_NUPOPTION_PAGESPERSHEET            = 0x000028a1U,
+    DISPID_PRINTSCHEMA_OPTIONCOLLECTION                   = 0x00002904U,
+    DISPID_PRINTSCHEMA_OPTIONCOLLECTION_COUNT             = 0x00002905U,
+    DISPID_PRINTSCHEMA_OPTIONCOLLECTION_GETAT             = 0x00002906U,
+    DISPID_PRINTSCHEMA_FEATURE                            = 0x00002968U,
+    DISPID_PRINTSCHEMA_FEATURE_SELECTEDOPTION             = 0x00002969U,
+    DISPID_PRINTSCHEMA_FEATURE_SELECTIONTYPE              = 0x0000296aU,
+    DISPID_PRINTSCHEMA_FEATURE_GETOPTION                  = 0x0000296bU,
+    DISPID_PRINTSCHEMA_FEATURE_DISPLAYUI                  = 0x0000296cU,
+    DISPID_PRINTSCHEMA_PAGEIMAGEABLESIZE                  = 0x000029ccU,
+    DISPID_PRINTSCHEMA_PAGEIMAGEABLESIZE_IMAGEABLE_WIDTH  = 0x000029cdU,
+    DISPID_PRINTSCHEMA_PAGEIMAGEABLESIZE_IMAGEABLE_HEIGHT = 0x000029ceU,
+    DISPID_PRINTSCHEMA_PAGEIMAGEABLESIZE_ORIGIN_WIDTH     = 0x000029cfU,
+    DISPID_PRINTSCHEMA_PAGEIMAGEABLESIZE_ORIGIN_HEIGHT    = 0x000029d0U,
+    DISPID_PRINTSCHEMA_PAGEIMAGEABLESIZE_EXTENT_WIDTH     = 0x000029d1U,
+    DISPID_PRINTSCHEMA_PAGEIMAGEABLESIZE_EXTENT_HEIGHT    = 0x000029d2U,
 }
 
 enum : uint
 {
-    DISPID_PRINTSCHEMA_CAPABILITIES                        = 0x00002a30,
-    DISPID_PRINTSCHEMA_CAPABILITIES_GETFEATURE_KEYNAME     = 0x00002a31,
-    DISPID_PRINTSCHEMA_CAPABILITIES_GETFEATURE             = 0x00002a32,
-    DISPID_PRINTSCHEMA_CAPABILITIES_PAGEIMAGEABLESIZE      = 0x00002a33,
-    DISPID_PRINTSCHEMA_CAPABILITIES_JOBCOPIESMINVALUE      = 0x00002a34,
-    DISPID_PRINTSCHEMA_CAPABILITIES_JOBCOPIESMAXVALUE      = 0x00002a35,
-    DISPID_PRINTSCHEMA_CAPABILITIES_GETSELECTEDOPTION      = 0x00002a36,
-    DISPID_PRINTSCHEMA_CAPABILITIES_GETOPTIONS             = 0x00002a37,
-    DISPID_PRINTSCHEMA_CAPABILITIES_GETPARAMETERDEFINITION = 0x00002a38,
+    DISPID_PRINTSCHEMA_CAPABILITIES                        = 0x00002a30U,
+    DISPID_PRINTSCHEMA_CAPABILITIES_GETFEATURE_KEYNAME     = 0x00002a31U,
+    DISPID_PRINTSCHEMA_CAPABILITIES_GETFEATURE             = 0x00002a32U,
+    DISPID_PRINTSCHEMA_CAPABILITIES_PAGEIMAGEABLESIZE      = 0x00002a33U,
+    DISPID_PRINTSCHEMA_CAPABILITIES_JOBCOPIESMINVALUE      = 0x00002a34U,
+    DISPID_PRINTSCHEMA_CAPABILITIES_JOBCOPIESMAXVALUE      = 0x00002a35U,
+    DISPID_PRINTSCHEMA_CAPABILITIES_GETSELECTEDOPTION      = 0x00002a36U,
+    DISPID_PRINTSCHEMA_CAPABILITIES_GETOPTIONS             = 0x00002a37U,
+    DISPID_PRINTSCHEMA_CAPABILITIES_GETPARAMETERDEFINITION = 0x00002a38U,
 }
 
 enum : uint
 {
-    DISPID_PRINTSCHEMA_ASYNCOPERATION                 = 0x00002a94,
-    DISPID_PRINTSCHEMA_ASYNCOPERATION_START           = 0x00002a95,
-    DISPID_PRINTSCHEMA_ASYNCOPERATION_CANCEL          = 0x00002a96,
-    DISPID_PRINTSCHEMA_TICKET                         = 0x00002af8,
-    DISPID_PRINTSCHEMA_TICKET_GETFEATURE_KEYNAME      = 0x00002af9,
-    DISPID_PRINTSCHEMA_TICKET_GETFEATURE              = 0x00002afa,
-    DISPID_PRINTSCHEMA_TICKET_VALIDATEASYNC           = 0x00002afb,
-    DISPID_PRINTSCHEMA_TICKET_COMMITASYNC             = 0x00002afc,
-    DISPID_PRINTSCHEMA_TICKET_NOTIFYXMLCHANGED        = 0x00002afd,
-    DISPID_PRINTSCHEMA_TICKET_GETCAPABILITIES         = 0x00002afe,
-    DISPID_PRINTSCHEMA_TICKET_JOBCOPIESALLDOCUMENTS   = 0x00002aff,
-    DISPID_PRINTSCHEMA_TICKET_GETPARAMETERINITIALIZER = 0x00002b00,
+    DISPID_PRINTSCHEMA_ASYNCOPERATION                 = 0x00002a94U,
+    DISPID_PRINTSCHEMA_ASYNCOPERATION_START           = 0x00002a95U,
+    DISPID_PRINTSCHEMA_ASYNCOPERATION_CANCEL          = 0x00002a96U,
+    DISPID_PRINTSCHEMA_TICKET                         = 0x00002af8U,
+    DISPID_PRINTSCHEMA_TICKET_GETFEATURE_KEYNAME      = 0x00002af9U,
+    DISPID_PRINTSCHEMA_TICKET_GETFEATURE              = 0x00002afaU,
+    DISPID_PRINTSCHEMA_TICKET_VALIDATEASYNC           = 0x00002afbU,
+    DISPID_PRINTSCHEMA_TICKET_COMMITASYNC             = 0x00002afcU,
+    DISPID_PRINTSCHEMA_TICKET_NOTIFYXMLCHANGED        = 0x00002afdU,
+    DISPID_PRINTSCHEMA_TICKET_GETCAPABILITIES         = 0x00002afeU,
+    DISPID_PRINTSCHEMA_TICKET_JOBCOPIESALLDOCUMENTS   = 0x00002affU,
+    DISPID_PRINTSCHEMA_TICKET_GETPARAMETERINITIALIZER = 0x00002b00U,
 }
 
 enum : uint
 {
-    DISPID_PRINTSCHEMA_ASYNCOPERATIONEVENT           = 0x00002b5c,
-    DISPID_PRINTSCHEMA_ASYNCOPERATIONEVENT_COMPLETED = 0x00002b5d,
+    DISPID_PRINTSCHEMA_ASYNCOPERATIONEVENT           = 0x00002b5cU,
+    DISPID_PRINTSCHEMA_ASYNCOPERATIONEVENT_COMPLETED = 0x00002b5dU,
 }
 
 enum : uint
 {
-    DISPID_PRINTERSCRIPTABLESEQUENTIALSTREAM       = 0x00002bc0,
-    DISPID_PRINTERSCRIPTABLESEQUENTIALSTREAM_READ  = 0x00002bc1,
-    DISPID_PRINTERSCRIPTABLESEQUENTIALSTREAM_WRITE = 0x00002bc2,
-    DISPID_PRINTERSCRIPTABLESTREAM                 = 0x00002c24,
-    DISPID_PRINTERSCRIPTABLESTREAM_COMMIT          = 0x00002c25,
-    DISPID_PRINTERSCRIPTABLESTREAM_SEEK            = 0x00002c26,
-    DISPID_PRINTERSCRIPTABLESTREAM_SETSIZE         = 0x00002c27,
+    DISPID_PRINTERSCRIPTABLESEQUENTIALSTREAM       = 0x00002bc0U,
+    DISPID_PRINTERSCRIPTABLESEQUENTIALSTREAM_READ  = 0x00002bc1U,
+    DISPID_PRINTERSCRIPTABLESEQUENTIALSTREAM_WRITE = 0x00002bc2U,
+    DISPID_PRINTERSCRIPTABLESTREAM                 = 0x00002c24U,
+    DISPID_PRINTERSCRIPTABLESTREAM_COMMIT          = 0x00002c25U,
+    DISPID_PRINTERSCRIPTABLESTREAM_SEEK            = 0x00002c26U,
+    DISPID_PRINTERSCRIPTABLESTREAM_SETSIZE         = 0x00002c27U,
 }
 
 enum : uint
 {
-    DISPID_PRINTERPROPERTYBAG                = 0x00002c88,
-    DISPID_PRINTERPROPERTYBAG_GETBOOL        = 0x00002c89,
-    DISPID_PRINTERPROPERTYBAG_SETBOOL        = 0x00002c8a,
-    DISPID_PRINTERPROPERTYBAG_GETINT32       = 0x00002c8b,
-    DISPID_PRINTERPROPERTYBAG_SETINT32       = 0x00002c8c,
-    DISPID_PRINTERPROPERTYBAG_GETSTRING      = 0x00002c8d,
-    DISPID_PRINTERPROPERTYBAG_SETSTRING      = 0x00002c8e,
-    DISPID_PRINTERPROPERTYBAG_GETBYTES       = 0x00002c8f,
-    DISPID_PRINTERPROPERTYBAG_SETBYTES       = 0x00002c90,
-    DISPID_PRINTERPROPERTYBAG_GETREADSTREAM  = 0x00002c91,
-    DISPID_PRINTERPROPERTYBAG_GETWRITESTREAM = 0x00002c92,
+    DISPID_PRINTERPROPERTYBAG                = 0x00002c88U,
+    DISPID_PRINTERPROPERTYBAG_GETBOOL        = 0x00002c89U,
+    DISPID_PRINTERPROPERTYBAG_SETBOOL        = 0x00002c8aU,
+    DISPID_PRINTERPROPERTYBAG_GETINT32       = 0x00002c8bU,
+    DISPID_PRINTERPROPERTYBAG_SETINT32       = 0x00002c8cU,
+    DISPID_PRINTERPROPERTYBAG_GETSTRING      = 0x00002c8dU,
+    DISPID_PRINTERPROPERTYBAG_SETSTRING      = 0x00002c8eU,
+    DISPID_PRINTERPROPERTYBAG_GETBYTES       = 0x00002c8fU,
+    DISPID_PRINTERPROPERTYBAG_SETBYTES       = 0x00002c90U,
+    DISPID_PRINTERPROPERTYBAG_GETREADSTREAM  = 0x00002c91U,
+    DISPID_PRINTERPROPERTYBAG_GETWRITESTREAM = 0x00002c92U,
 }
 
 enum : uint
 {
-    DISPID_PRINTERSCRIPTABLEPROPERTYBAG_GETSTREAMASXML = 0x00002c93,
-    DISPID_PRINTERSCRIPTABLEPROPERTYBAG                = 0x00002cec,
-    DISPID_PRINTERSCRIPTABLEPROPERTYBAG_GETBOOL        = 0x00002ced,
-    DISPID_PRINTERSCRIPTABLEPROPERTYBAG_SETBOOL        = 0x00002cee,
-    DISPID_PRINTERSCRIPTABLEPROPERTYBAG_GETINT32       = 0x00002cef,
-    DISPID_PRINTERSCRIPTABLEPROPERTYBAG_SETINT32       = 0x00002cf0,
-    DISPID_PRINTERSCRIPTABLEPROPERTYBAG_GETSTRING      = 0x00002cf1,
-    DISPID_PRINTERSCRIPTABLEPROPERTYBAG_SETSTRING      = 0x00002cf2,
-    DISPID_PRINTERSCRIPTABLEPROPERTYBAG_GETBYTES       = 0x00002cf3,
-    DISPID_PRINTERSCRIPTABLEPROPERTYBAG_SETBYTES       = 0x00002cf4,
-    DISPID_PRINTERSCRIPTABLEPROPERTYBAG_GETREADSTREAM  = 0x00002cf5,
-    DISPID_PRINTERSCRIPTABLEPROPERTYBAG_GETWRITESTREAM = 0x00002cf6,
+    DISPID_PRINTERSCRIPTABLEPROPERTYBAG_GETSTREAMASXML = 0x00002c93U,
+    DISPID_PRINTERSCRIPTABLEPROPERTYBAG                = 0x00002cecU,
+    DISPID_PRINTERSCRIPTABLEPROPERTYBAG_GETBOOL        = 0x00002cedU,
+    DISPID_PRINTERSCRIPTABLEPROPERTYBAG_SETBOOL        = 0x00002ceeU,
+    DISPID_PRINTERSCRIPTABLEPROPERTYBAG_GETINT32       = 0x00002cefU,
+    DISPID_PRINTERSCRIPTABLEPROPERTYBAG_SETINT32       = 0x00002cf0U,
+    DISPID_PRINTERSCRIPTABLEPROPERTYBAG_GETSTRING      = 0x00002cf1U,
+    DISPID_PRINTERSCRIPTABLEPROPERTYBAG_SETSTRING      = 0x00002cf2U,
+    DISPID_PRINTERSCRIPTABLEPROPERTYBAG_GETBYTES       = 0x00002cf3U,
+    DISPID_PRINTERSCRIPTABLEPROPERTYBAG_SETBYTES       = 0x00002cf4U,
+    DISPID_PRINTERSCRIPTABLEPROPERTYBAG_GETREADSTREAM  = 0x00002cf5U,
+    DISPID_PRINTERSCRIPTABLEPROPERTYBAG_GETWRITESTREAM = 0x00002cf6U,
 }
 
 enum : uint
 {
-    DISPID_PRINTERQUEUE                             = 0x00002d50,
-    DISPID_PRINTERQUEUE_HANDLE                      = 0x00002d51,
-    DISPID_PRINTERQUEUE_NAME                        = 0x00002d52,
-    DISPID_PRINTERQUEUE_SENDBIDIQUERY               = 0x00002d53,
-    DISPID_PRINTERQUEUE_GETPROPERTIES               = 0x00002d54,
-    DISPID_PRINTERQUEUE_SENDBIDISETREQUESTASYNC     = 0x00002d55,
-    DISPID_PRINTERQUEUE_GETPRINTERQUEUEVIEW         = 0x00002d56,
-    DISPID_PRINTERQUEUEEVENT                        = 0x00002db4,
-    DISPID_PRINTERQUEUEEVENT_ONBIDIRESPONSERECEIVED = 0x00002db5,
+    DISPID_PRINTERQUEUE                             = 0x00002d50U,
+    DISPID_PRINTERQUEUE_HANDLE                      = 0x00002d51U,
+    DISPID_PRINTERQUEUE_NAME                        = 0x00002d52U,
+    DISPID_PRINTERQUEUE_SENDBIDIQUERY               = 0x00002d53U,
+    DISPID_PRINTERQUEUE_GETPROPERTIES               = 0x00002d54U,
+    DISPID_PRINTERQUEUE_SENDBIDISETREQUESTASYNC     = 0x00002d55U,
+    DISPID_PRINTERQUEUE_GETPRINTERQUEUEVIEW         = 0x00002d56U,
+    DISPID_PRINTERQUEUEEVENT                        = 0x00002db4U,
+    DISPID_PRINTERQUEUEEVENT_ONBIDIRESPONSERECEIVED = 0x00002db5U,
 }
 
 enum : uint
 {
-    DISPID_PRINTEREXTENSION_CONTEXT                         = 0x00002e18,
-    DISPID_PRINTEREXTENSION_CONTEXT_PRINTERQUEUE            = 0x00002e19,
-    DISPID_PRINTEREXTENSION_CONTEXT_PRINTSCHEMATICKET       = 0x00002e1a,
-    DISPID_PRINTEREXTENSION_CONTEXT_DRIVERPROPERTIES        = 0x00002e1b,
-    DISPID_PRINTEREXTENSION_CONTEXT_USERPROPERTIES          = 0x00002e1c,
-    DISPID_PRINTEREXTENSION_REQUEST                         = 0x00002e7c,
-    DISPID_PRINTEREXTENSION_REQUEST_CANCEL                  = 0x00002e7d,
-    DISPID_PRINTEREXTENSION_REQUEST_COMPLETE                = 0x00002e7e,
-    DISPID_PRINTEREXTENSION_EVENTARGS                       = 0x00002ee0,
-    DISPID_PRINTEREXTENSION_EVENTARGS_BIDINOTIFICATION      = 0x00002ee1,
-    DISPID_PRINTEREXTENSION_EVENTARGS_REASONID              = 0x00002ee2,
-    DISPID_PRINTEREXTENSION_EVENTARGS_REQUEST               = 0x00002ee3,
-    DISPID_PRINTEREXTENSION_EVENTARGS_SOURCEAPPLICATION     = 0x00002ee4,
-    DISPID_PRINTEREXTENSION_EVENTARGS_DETAILEDREASONID      = 0x00002ee5,
-    DISPID_PRINTEREXTENSION_EVENTARGS_WINDOWMODAL           = 0x00002ee6,
-    DISPID_PRINTEREXTENSION_EVENTARGS_WINDOWPARENT          = 0x00002ee7,
-    DISPID_PRINTEREXTENSION_CONTEXTCOLLECTION               = 0x00002f44,
-    DISPID_PRINTEREXTENSION_CONTEXTCOLLECTION_COUNT         = 0x00002f45,
-    DISPID_PRINTEREXTENSION_CONTEXTCOLLECTION_GETAT         = 0x00002f46,
-    DISPID_PRINTEREXTENSION_EVENT                           = 0x00002fa8,
-    DISPID_PRINTEREXTENSION_EVENT_ONDRIVEREVENT             = 0x00002fa9,
-    DISPID_PRINTEREXTENSION_EVENT_ONPRINTERQUEUESENUMERATED = 0x00002faa,
+    DISPID_PRINTEREXTENSION_CONTEXT                         = 0x00002e18U,
+    DISPID_PRINTEREXTENSION_CONTEXT_PRINTERQUEUE            = 0x00002e19U,
+    DISPID_PRINTEREXTENSION_CONTEXT_PRINTSCHEMATICKET       = 0x00002e1aU,
+    DISPID_PRINTEREXTENSION_CONTEXT_DRIVERPROPERTIES        = 0x00002e1bU,
+    DISPID_PRINTEREXTENSION_CONTEXT_USERPROPERTIES          = 0x00002e1cU,
+    DISPID_PRINTEREXTENSION_REQUEST                         = 0x00002e7cU,
+    DISPID_PRINTEREXTENSION_REQUEST_CANCEL                  = 0x00002e7dU,
+    DISPID_PRINTEREXTENSION_REQUEST_COMPLETE                = 0x00002e7eU,
+    DISPID_PRINTEREXTENSION_EVENTARGS                       = 0x00002ee0U,
+    DISPID_PRINTEREXTENSION_EVENTARGS_BIDINOTIFICATION      = 0x00002ee1U,
+    DISPID_PRINTEREXTENSION_EVENTARGS_REASONID              = 0x00002ee2U,
+    DISPID_PRINTEREXTENSION_EVENTARGS_REQUEST               = 0x00002ee3U,
+    DISPID_PRINTEREXTENSION_EVENTARGS_SOURCEAPPLICATION     = 0x00002ee4U,
+    DISPID_PRINTEREXTENSION_EVENTARGS_DETAILEDREASONID      = 0x00002ee5U,
+    DISPID_PRINTEREXTENSION_EVENTARGS_WINDOWMODAL           = 0x00002ee6U,
+    DISPID_PRINTEREXTENSION_EVENTARGS_WINDOWPARENT          = 0x00002ee7U,
+    DISPID_PRINTEREXTENSION_CONTEXTCOLLECTION               = 0x00002f44U,
+    DISPID_PRINTEREXTENSION_CONTEXTCOLLECTION_COUNT         = 0x00002f45U,
+    DISPID_PRINTEREXTENSION_CONTEXTCOLLECTION_GETAT         = 0x00002f46U,
+    DISPID_PRINTEREXTENSION_EVENT                           = 0x00002fa8U,
+    DISPID_PRINTEREXTENSION_EVENT_ONDRIVEREVENT             = 0x00002fa9U,
+    DISPID_PRINTEREXTENSION_EVENT_ONPRINTERQUEUESENUMERATED = 0x00002faaU,
 }
 
 enum : uint
 {
-    DISPID_PRINTERSCRIPTCONTEXT                  = 0x0000300c,
-    DISPID_PRINTERSCRIPTCONTEXT_DRIVERPROPERTIES = 0x0000300d,
-    DISPID_PRINTERSCRIPTCONTEXT_QUEUEPROPERTIES  = 0x0000300e,
-    DISPID_PRINTERSCRIPTCONTEXT_USERPROPERTIES   = 0x0000300f,
+    DISPID_PRINTERSCRIPTCONTEXT                  = 0x0000300cU,
+    DISPID_PRINTERSCRIPTCONTEXT_DRIVERPROPERTIES = 0x0000300dU,
+    DISPID_PRINTERSCRIPTCONTEXT_QUEUEPROPERTIES  = 0x0000300eU,
+    DISPID_PRINTERSCRIPTCONTEXT_USERPROPERTIES   = 0x0000300fU,
 }
 
 enum : uint
 {
-    DISPID_PRINTSCHEMA_PARAMETERINITIALIZER                  = 0x00003070,
-    DISPID_PRINTSCHEMA_PARAMETERINITIALIZER_VALUE            = 0x00003071,
-    DISPID_PRINTSCHEMA_PARAMETERDEFINITION                   = 0x000030d4,
-    DISPID_PRINTSCHEMA_PARAMETERDEFINITION_USERINPUTREQUIRED = 0x000030d5,
-    DISPID_PRINTSCHEMA_PARAMETERDEFINITION_UNITTYPE          = 0x000030d6,
-    DISPID_PRINTSCHEMA_PARAMETERDEFINITION_DATATYPE          = 0x000030d7,
-    DISPID_PRINTSCHEMA_PARAMETERDEFINITION_RANGEMIN          = 0x000030d8,
-    DISPID_PRINTSCHEMA_PARAMETERDEFINITION_RANGEMAX          = 0x000030d9,
+    DISPID_PRINTSCHEMA_PARAMETERINITIALIZER                  = 0x00003070U,
+    DISPID_PRINTSCHEMA_PARAMETERINITIALIZER_VALUE            = 0x00003071U,
+    DISPID_PRINTSCHEMA_PARAMETERDEFINITION                   = 0x000030d4U,
+    DISPID_PRINTSCHEMA_PARAMETERDEFINITION_USERINPUTREQUIRED = 0x000030d5U,
+    DISPID_PRINTSCHEMA_PARAMETERDEFINITION_UNITTYPE          = 0x000030d6U,
+    DISPID_PRINTSCHEMA_PARAMETERDEFINITION_DATATYPE          = 0x000030d7U,
+    DISPID_PRINTSCHEMA_PARAMETERDEFINITION_RANGEMIN          = 0x000030d8U,
+    DISPID_PRINTSCHEMA_PARAMETERDEFINITION_RANGEMAX          = 0x000030d9U,
 }
 
 enum : uint
 {
-    DISPID_PRINTJOBCOLLECTION       = 0x00003138,
-    DISPID_PRINTJOBCOLLECTION_COUNT = 0x00003139,
-    DISPID_PRINTJOBCOLLECTION_GETAT = 0x0000313a,
+    DISPID_PRINTJOBCOLLECTION       = 0x00003138U,
+    DISPID_PRINTJOBCOLLECTION_COUNT = 0x00003139U,
+    DISPID_PRINTJOBCOLLECTION_GETAT = 0x0000313aU,
 }
 
 enum : uint
 {
-    DISPID_PRINTERQUEUEVIEW                 = 0x0000319c,
-    DISPID_PRINTERQUEUEVIEW_SETVIEWRANGE    = 0x0000319d,
-    DISPID_PRINTERQUEUEVIEW_EVENT           = 0x00003200,
-    DISPID_PRINTERQUEUEVIEW_EVENT_ONCHANGED = 0x00003201,
+    DISPID_PRINTERQUEUEVIEW                 = 0x0000319cU,
+    DISPID_PRINTERQUEUEVIEW_SETVIEWRANGE    = 0x0000319dU,
+    DISPID_PRINTERQUEUEVIEW_EVENT           = 0x00003200U,
+    DISPID_PRINTERQUEUEVIEW_EVENT_ONCHANGED = 0x00003201U,
 }
 
 enum GUID NOTIFICATION_RELEASE = GUID("ba9a5027-a70e-4ae7-9b7d-eb3e06ad4157");
@@ -2661,10 +2693,20 @@ struct FINDPRINTERCHANGENOTIFICATION_HANDLE
     void* Value;
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(6))], [])
-struct SPLCLIENT_INFO_2_WINXP
+version(X86_64)
 {
-    ulong hSplPrinter;
+    struct SPLCLIENT_INFO_2_WINXP
+    {
+        ulong hSplPrinter;
+    }
+}
+
+version(AArch64)
+{
+    struct SPLCLIENT_INFO_2_WINXP
+    {
+        ulong hSplPrinter;
+    }
 }
 
 struct ImgErrorInfo
@@ -2722,13 +2764,21 @@ struct OPTTYPE
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 struct EXTPUSH
 {
-    ushort               cbSize;
-    ushort               Flags;
-    byte*                pTitle;
-    _Anonymous1_e__Union Anonymous1;
-    size_t               IconID;
-    _Anonymous2_e__Union Anonymous2;
-    size_t[3]            dwReserved;
+    ushort    cbSize;
+    ushort    Flags;
+    byte*     pTitle;
+    union
+    {
+        DLGPROC DlgProc;
+        FARPROC pfnCallBack;
+    }
+    size_t    IconID;
+    union
+    {
+        ushort DlgTemplateID;
+        HANDLE hDlgTemplate;
+    }
+    size_t[3] dwReserved;
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
@@ -2757,47 +2807,63 @@ struct OIEXT
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 struct OPTITEM
 {
-    ushort               cbSize;
-    ubyte                Level;
-    ubyte                DlgPageIdx;
-    uint                 Flags;
-    size_t               UserData;
-    byte*                pName;
-    _Anonymous1_e__Union Anonymous1;
-    _Anonymous2_e__Union Anonymous2;
-    OPTTYPE*             pOptType;
-    uint                 HelpIndex;
-    ubyte                DMPubID;
-    ubyte                UserItemID;
-    ushort               wReserved;
-    OIEXT*               pOIExt;
-    size_t[3]            dwReserved;
+    ushort    cbSize;
+    ubyte     Level;
+    ubyte     DlgPageIdx;
+    uint      Flags;
+    size_t    UserData;
+    byte*     pName;
+    union
+    {
+        int   Sel;
+        byte* pSel;
+    }
+    union
+    {
+        EXTCHKBOX* pExtChkBox;
+        EXTPUSH*   pExtPush;
+    }
+    OPTTYPE*  pOptType;
+    uint      HelpIndex;
+    ubyte     DMPubID;
+    ubyte     UserItemID;
+    ushort    wReserved;
+    OIEXT*    pOIExt;
+    size_t[3] dwReserved;
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 struct CPSUICBPARAM
 {
-    ushort              cbSize;
-    ushort              Reason;
-    HWND                hDlg;
-    OPTITEM*            pOptItem;
-    ushort              cOptItem;
-    ushort              Flags;
-    OPTITEM*            pCurItem;
-    _Anonymous_e__Union Anonymous;
-    size_t              UserData;
-    size_t              Result;
+    ushort   cbSize;
+    ushort   Reason;
+    HWND     hDlg;
+    OPTITEM* pOptItem;
+    ushort   cOptItem;
+    ushort   Flags;
+    OPTITEM* pCurItem;
+    union
+    {
+        int   OldSel;
+        byte* pOldSel;
+    }
+    size_t   UserData;
+    size_t   Result;
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 struct DLGPAGE
 {
-    ushort              cbSize;
-    ushort              Flags;
-    DLGPROC             DlgProc;
-    byte*               pTabName;
-    size_t              IconID;
-    _Anonymous_e__Union Anonymous;
+    ushort  cbSize;
+    ushort  Flags;
+    DLGPROC DlgProc;
+    byte*   pTabName;
+    size_t  IconID;
+    union
+    {
+        ushort DlgTemplateID;
+        HANDLE hDlgTemplate;
+    }
 }
 
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
@@ -2884,16 +2950,20 @@ struct PROPSHEETUI_GETICON_INFO
 //STRUCT ATTR: StructSizeFieldAttribute : CustomAttributeSig([FixedArgSig(ElementSig(cbSize))], [])
 struct PROPSHEETUI_INFO_HEADER
 {
-    ushort              cbSize;
-    ushort              Flags;
-    byte*               pTitle;
-    HWND                hWndParent;
-    HINSTANCE           hInst;
-    _Anonymous_e__Union Anonymous;
+    ushort    cbSize;
+    ushort    Flags;
+    byte*     pTitle;
+    HWND      hWndParent;
+    HINSTANCE hInst;
+    union
+    {
+        HICON  hIcon;
+        size_t IconID;
+    }
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/printer-info-1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-info-1
 struct PRINTER_INFO_1A
 {
     uint Flags;
@@ -2903,7 +2973,7 @@ struct PRINTER_INFO_1A
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/printer-info-1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-info-1
 struct PRINTER_INFO_1W
 {
     uint  Flags;
@@ -2913,7 +2983,7 @@ struct PRINTER_INFO_1W
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/printer-info-2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-info-2
 struct PRINTER_INFO_2A
 {
     PSTR                 pServerName;
@@ -2940,7 +3010,7 @@ struct PRINTER_INFO_2A
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/printer-info-2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-info-2
 struct PRINTER_INFO_2W
 {
     PWSTR                pServerName;
@@ -2966,14 +3036,14 @@ struct PRINTER_INFO_2W
     uint                 AveragePPM;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/printer-info-3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-info-3
 struct PRINTER_INFO_3
 {
     PSECURITY_DESCRIPTOR pSecurityDescriptor;
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/printer-info-4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-info-4
 struct PRINTER_INFO_4A
 {
     PSTR pPrinterName;
@@ -2982,7 +3052,7 @@ struct PRINTER_INFO_4A
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/printer-info-4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-info-4
 struct PRINTER_INFO_4W
 {
     PWSTR pPrinterName;
@@ -2991,7 +3061,7 @@ struct PRINTER_INFO_4W
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/printer-info-5))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-info-5
 struct PRINTER_INFO_5A
 {
     PSTR pPrinterName;
@@ -3002,7 +3072,7 @@ struct PRINTER_INFO_5A
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/printer-info-5))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-info-5
 struct PRINTER_INFO_5W
 {
     PWSTR pPrinterName;
@@ -3012,14 +3082,14 @@ struct PRINTER_INFO_5W
     uint  TransmissionRetryTimeout;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/printer-info-6))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-info-6
 struct PRINTER_INFO_6
 {
     uint dwStatus;
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/printer-info-7))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-info-7
 struct PRINTER_INFO_7A
 {
     PSTR pszObjectGUID;
@@ -3027,7 +3097,7 @@ struct PRINTER_INFO_7A
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/printer-info-7))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-info-7
 struct PRINTER_INFO_7W
 {
     PWSTR pszObjectGUID;
@@ -3035,35 +3105,35 @@ struct PRINTER_INFO_7W
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/printer-info-8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-info-8
 struct PRINTER_INFO_8A
 {
     DEVMODEA* pDevMode;
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/printer-info-8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-info-8
 struct PRINTER_INFO_8W
 {
     DEVMODEW* pDevMode;
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/printer-info-9))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-info-9
 struct PRINTER_INFO_9A
 {
     DEVMODEA* pDevMode;
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/printer-info-9))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-info-9
 struct PRINTER_INFO_9W
 {
     DEVMODEW* pDevMode;
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/job-info-1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/job-info-1
 struct JOB_INFO_1A
 {
     uint       JobId;
@@ -3082,7 +3152,7 @@ struct JOB_INFO_1A
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/job-info-1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/job-info-1
 struct JOB_INFO_1W
 {
     uint       JobId;
@@ -3101,7 +3171,7 @@ struct JOB_INFO_1W
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/job-info-2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/job-info-2
 struct JOB_INFO_2A
 {
     uint                 JobId;
@@ -3130,7 +3200,7 @@ struct JOB_INFO_2A
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/job-info-2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/job-info-2
 struct JOB_INFO_2W
 {
     uint                 JobId;
@@ -3158,7 +3228,7 @@ struct JOB_INFO_2W
     uint                 PagesPrinted;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/job-info-3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/job-info-3
 struct JOB_INFO_3
 {
     uint JobId;
@@ -3167,7 +3237,7 @@ struct JOB_INFO_3
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/job-info-4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/job-info-4
 struct JOB_INFO_4A
 {
     uint                 JobId;
@@ -3197,7 +3267,7 @@ struct JOB_INFO_4A
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/job-info-4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/job-info-4
 struct JOB_INFO_4W
 {
     uint                 JobId;
@@ -3227,7 +3297,7 @@ struct JOB_INFO_4W
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/addjob-info-1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/addjob-info-1
 struct ADDJOB_INFO_1A
 {
     PSTR Path;
@@ -3235,7 +3305,7 @@ struct ADDJOB_INFO_1A
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/addjob-info-1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/addjob-info-1
 struct ADDJOB_INFO_1W
 {
     PWSTR Path;
@@ -3243,21 +3313,21 @@ struct ADDJOB_INFO_1W
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/driver-info-1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/driver-info-1
 struct DRIVER_INFO_1A
 {
     PSTR pName;
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/driver-info-1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/driver-info-1
 struct DRIVER_INFO_1W
 {
     PWSTR pName;
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/driver-info-2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/driver-info-2
 struct DRIVER_INFO_2A
 {
     uint cVersion;
@@ -3269,7 +3339,7 @@ struct DRIVER_INFO_2A
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/driver-info-2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/driver-info-2
 struct DRIVER_INFO_2W
 {
     uint  cVersion;
@@ -3281,7 +3351,7 @@ struct DRIVER_INFO_2W
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/driver-info-3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/driver-info-3
 struct DRIVER_INFO_3A
 {
     uint cVersion;
@@ -3297,7 +3367,7 @@ struct DRIVER_INFO_3A
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/driver-info-3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/driver-info-3
 struct DRIVER_INFO_3W
 {
     uint  cVersion;
@@ -3313,7 +3383,7 @@ struct DRIVER_INFO_3W
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/driver-info-4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/driver-info-4
 struct DRIVER_INFO_4A
 {
     uint cVersion;
@@ -3330,7 +3400,7 @@ struct DRIVER_INFO_4A
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/driver-info-4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/driver-info-4
 struct DRIVER_INFO_4W
 {
     uint  cVersion;
@@ -3347,7 +3417,7 @@ struct DRIVER_INFO_4W
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/driver-info-5))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/driver-info-5
 struct DRIVER_INFO_5A
 {
     uint cVersion;
@@ -3362,7 +3432,7 @@ struct DRIVER_INFO_5A
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/driver-info-5))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/driver-info-5
 struct DRIVER_INFO_5W
 {
     uint  cVersion;
@@ -3377,7 +3447,7 @@ struct DRIVER_INFO_5W
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/driver-info-6))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/driver-info-6
 struct DRIVER_INFO_6A
 {
     uint     cVersion;
@@ -3400,7 +3470,7 @@ struct DRIVER_INFO_6A
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/driver-info-6))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/driver-info-6
 struct DRIVER_INFO_6W
 {
     uint     cVersion;
@@ -3423,7 +3493,7 @@ struct DRIVER_INFO_6W
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/driver-info-8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/driver-info-8
 struct DRIVER_INFO_8A
 {
     uint     cVersion;
@@ -3454,7 +3524,7 @@ struct DRIVER_INFO_8A
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/driver-info-8))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/driver-info-8
 struct DRIVER_INFO_8W
 {
     uint     cVersion;
@@ -3485,7 +3555,7 @@ struct DRIVER_INFO_8W
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/doc-info-1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/doc-info-1
 struct DOC_INFO_1A
 {
     PSTR pDocName;
@@ -3494,7 +3564,7 @@ struct DOC_INFO_1A
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/doc-info-1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/doc-info-1
 struct DOC_INFO_1W
 {
     PWSTR pDocName;
@@ -3503,7 +3573,7 @@ struct DOC_INFO_1W
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/form-info-1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/form-info-1
 struct FORM_INFO_1A
 {
     uint  Flags;
@@ -3513,7 +3583,7 @@ struct FORM_INFO_1A
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/form-info-1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/form-info-1
 struct FORM_INFO_1W
 {
     uint  Flags;
@@ -3523,7 +3593,7 @@ struct FORM_INFO_1W
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/form-info-2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/form-info-2
 struct FORM_INFO_2A
 {
     uint        Flags;
@@ -3539,7 +3609,7 @@ struct FORM_INFO_2A
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/form-info-2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/form-info-2
 struct FORM_INFO_2W
 {
     uint         Flags;
@@ -3555,7 +3625,7 @@ struct FORM_INFO_2W
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/doc-info-2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/doc-info-2
 struct DOC_INFO_2A
 {
     PSTR pDocName;
@@ -3566,7 +3636,7 @@ struct DOC_INFO_2A
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/doc-info-2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/doc-info-2
 struct DOC_INFO_2W
 {
     PWSTR pDocName;
@@ -3577,7 +3647,7 @@ struct DOC_INFO_2W
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/doc-info-3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/doc-info-3
 struct DOC_INFO_3A
 {
     PSTR pDocName;
@@ -3587,7 +3657,7 @@ struct DOC_INFO_3A
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/doc-info-3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/doc-info-3
 struct DOC_INFO_3W
 {
     PWSTR pDocName;
@@ -3597,20 +3667,20 @@ struct DOC_INFO_3W
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/printprocessor-info-1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printprocessor-info-1
 struct PRINTPROCESSOR_INFO_1A
 {
     PSTR pName;
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/printprocessor-info-1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printprocessor-info-1
 struct PRINTPROCESSOR_INFO_1W
 {
     PWSTR pName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/printprocessor-caps-1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printprocessor-caps-1
 struct PRINTPROCESSOR_CAPS_1
 {
     uint dwLevel;
@@ -3619,7 +3689,7 @@ struct PRINTPROCESSOR_CAPS_1
     uint dwNumberOfCopies;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/printprocessor-caps-2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printprocessor-caps-2
 struct PRINTPROCESSOR_CAPS_2
 {
     uint dwLevel;
@@ -3634,21 +3704,21 @@ struct PRINTPROCESSOR_CAPS_2
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/port-info-1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/port-info-1
 struct PORT_INFO_1A
 {
     PSTR pName;
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/port-info-1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/port-info-1
 struct PORT_INFO_1W
 {
     PWSTR pName;
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/port-info-2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/port-info-2
 struct PORT_INFO_2A
 {
     PSTR pPortName;
@@ -3659,7 +3729,7 @@ struct PORT_INFO_2A
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/port-info-2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/port-info-2
 struct PORT_INFO_2W
 {
     PWSTR pPortName;
@@ -3670,7 +3740,7 @@ struct PORT_INFO_2W
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/port-info-3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/port-info-3
 struct PORT_INFO_3A
 {
     uint dwStatus;
@@ -3679,7 +3749,7 @@ struct PORT_INFO_3A
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/port-info-3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/port-info-3
 struct PORT_INFO_3W
 {
     uint  dwStatus;
@@ -3688,21 +3758,21 @@ struct PORT_INFO_3W
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/monitor-info-1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/monitor-info-1
 struct MONITOR_INFO_1A
 {
     PSTR pName;
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/monitor-info-1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/monitor-info-1
 struct MONITOR_INFO_1W
 {
     PWSTR pName;
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/monitor-info-2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/monitor-info-2
 struct MONITOR_INFO_2A
 {
     PSTR pName;
@@ -3711,7 +3781,7 @@ struct MONITOR_INFO_2A
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/monitor-info-2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/monitor-info-2
 struct MONITOR_INFO_2W
 {
     PWSTR pName;
@@ -3720,21 +3790,21 @@ struct MONITOR_INFO_2W
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/datatypes-info-1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/datatypes-info-1
 struct DATATYPES_INFO_1A
 {
     PSTR pName;
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/datatypes-info-1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/datatypes-info-1
 struct DATATYPES_INFO_1W
 {
     PWSTR pName;
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/printer-defaults))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-defaults
 struct PRINTER_DEFAULTSA
 {
     PSTR      pDatatype;
@@ -3743,7 +3813,7 @@ struct PRINTER_DEFAULTSA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/printer-defaults))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-defaults
 struct PRINTER_DEFAULTSW
 {
     PWSTR     pDatatype;
@@ -3752,7 +3822,7 @@ struct PRINTER_DEFAULTSW
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/printer-enum-values))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-enum-values
 struct PRINTER_ENUM_VALUESA
 {
     PSTR   pValueName;
@@ -3763,7 +3833,7 @@ struct PRINTER_ENUM_VALUESA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/printer-enum-values))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-enum-values
 struct PRINTER_ENUM_VALUESW
 {
     PWSTR  pValueName;
@@ -3773,7 +3843,7 @@ struct PRINTER_ENUM_VALUESW
     uint   cbData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/printer-notify-options-type))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-notify-options-type
 struct PRINTER_NOTIFY_OPTIONS_TYPE
 {
     ushort  Type;
@@ -3784,7 +3854,7 @@ struct PRINTER_NOTIFY_OPTIONS_TYPE
     ushort* pFields;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/printer-notify-options))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-notify-options
 struct PRINTER_NOTIFY_OPTIONS
 {
     uint Version;
@@ -3793,17 +3863,25 @@ struct PRINTER_NOTIFY_OPTIONS
     PRINTER_NOTIFY_OPTIONS_TYPE* pTypes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/printer-notify-info-data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-notify-info-data
 struct PRINTER_NOTIFY_INFO_DATA
 {
-    ushort               Type;
-    ushort               Field;
-    uint                 Reserved;
-    uint                 Id;
-    _NotifyData_e__Union NotifyData;
+    ushort Type;
+    ushort Field;
+    uint   Reserved;
+    uint   Id;
+    union NotifyData
+    {
+        uint[2] adwData;
+        struct Data
+        {
+            uint  cbBuf;
+            void* pBuf;
+        }
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/printer-notify-info))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printer-notify-info
 struct PRINTER_NOTIFY_INFO
 {
     uint Version;
@@ -3820,8 +3898,15 @@ struct BINARY_CONTAINER
 
 struct BIDI_DATA
 {
-    uint        dwBidiType;
-    _u_e__Union u;
+    uint dwBidiType;
+    union u
+    {
+        BOOL             bData;
+        int              iData;
+        PWSTR            sData;
+        float            fData;
+        BINARY_CONTAINER biData;
+    }
 }
 
 struct BIDI_REQUEST_DATA
@@ -3856,7 +3941,7 @@ struct BIDI_RESPONSE_CONTAINER
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/providor-info-1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/providor-info-1
 struct PROVIDOR_INFO_1A
 {
     PSTR pName;
@@ -3865,7 +3950,7 @@ struct PROVIDOR_INFO_1A
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/providor-info-1))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/providor-info-1
 struct PROVIDOR_INFO_1W
 {
     PWSTR pName;
@@ -3874,14 +3959,14 @@ struct PROVIDOR_INFO_1W
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/providor-info-2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/providor-info-2
 struct PROVIDOR_INFO_2A
 {
     PSTR pOrder;
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/providor-info-2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/providor-info-2
 struct PROVIDOR_INFO_2W
 {
     PWSTR pOrder;
@@ -3918,7 +4003,7 @@ struct PRINTER_CONNECTION_INFO_1W
 }
 
 //STRUCT ATTR: AnsiAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/core-printer-driver))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/core-printer-driver
 struct CORE_PRINTER_DRIVERA
 {
     GUID      CoreDriverGUID;
@@ -3928,7 +4013,7 @@ struct CORE_PRINTER_DRIVERA
 }
 
 //STRUCT ATTR: UnicodeAttribute : CustomAttributeSig([], [])
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/core-printer-driver))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/core-printer-driver
 struct CORE_PRINTER_DRIVERW
 {
     GUID       CoreDriverGUID;
@@ -3940,7 +4025,18 @@ struct CORE_PRINTER_DRIVERW
 struct PrintPropertyValue
 {
     EPrintPropertyType ePropertyType;
-    _value_e__Union    value;
+    union value
+    {
+        ubyte propertyByte;
+        PWSTR propertyString;
+        int   propertyInt32;
+        long  propertyInt64;
+        struct propertyBlob
+        {
+            uint  cbBuf;
+            void* pBuf;
+        }
+    }
 }
 
 struct PrintNamedProperty
@@ -3955,14 +4051,14 @@ struct PrintPropertiesCollection
     PrintNamedProperty* propertiesCollection;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/print-execution-data))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/print-execution-data
 struct PRINT_EXECUTION_DATA
 {
     PRINT_EXECUTION_CONTEXT context;
     uint clientAppPID;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/mxdcescapeheader))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/mxdcescapeheader
 struct MXDC_ESCAPE_HEADER_T
 {
 align (1):
@@ -3971,7 +4067,7 @@ align (1):
     uint opCode;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/mxdcgetfilenamedata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/mxdcgetfilenamedata
 struct MXDC_GET_FILENAME_DATA_T
 {
 align (1):
@@ -3979,7 +4075,7 @@ align (1):
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/wchar[1] wszData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/mxdcs0pagedata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/mxdcs0pagedata
 struct MXDC_S0PAGE_DATA_T
 {
 align (1):
@@ -3987,7 +4083,7 @@ align (1):
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] bData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/mxdcxpss0pageresource))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/mxdcxpss0pageresource
 struct MXDC_XPS_S0PAGE_RESOURCE_T
 {
 align (1):
@@ -3998,7 +4094,7 @@ align (1):
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] bData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/mxdcprintticketpassthrough))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/mxdcprintticketpassthrough
 struct MXDC_PRINTTICKET_DATA_T
 {
 align (1):
@@ -4006,7 +4102,7 @@ align (1):
     /*FIELD ATTR: FlexibleArrayAttribute : CustomAttributeSig([], [])*/ubyte[1] bData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/mxdcprintticketescape))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/mxdcprintticketescape
 struct MXDC_PRINTTICKET_ESCAPE_T
 {
 align (1):
@@ -4014,7 +4110,7 @@ align (1):
     MXDC_PRINTTICKET_DATA_T printTicketData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/mxdcs0pagepassthroughescape))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/mxdcs0pagepassthroughescape
 struct MXDC_S0PAGE_PASSTHROUGH_ESCAPE_T
 {
 align (1):
@@ -4022,7 +4118,7 @@ align (1):
     MXDC_S0PAGE_DATA_T   xpsS0PageData;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/mxdcs0pageresourceescape))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/mxdcs0pageresourceescape
 struct MXDC_S0PAGE_RESOURCE_ESCAPE_T
 {
 align (1):
@@ -4476,9 +4572,14 @@ struct GLYPHRUN
 
 struct TRANSDATA
 {
-    ubyte           ubCodePageID;
-    ubyte           ubType;
-    _uCode_e__Union uCode;
+    ubyte ubCodePageID;
+    ubyte ubType;
+    union uCode
+    {
+        short    sCode;
+        ubyte    ubCode;
+        ubyte[2] ubPairs;
+    }
 }
 
 struct MAPTABLE
@@ -4649,8 +4750,15 @@ struct BranchOfficeLogOfflineFileFull
 struct BranchOfficeJobData
 {
     EBranchOfficeJobEventType eEventType;
-    uint              JobId;
-    _JobInfo_e__Union JobInfo;
+    uint JobId;
+    union JobInfo
+    {
+        BranchOfficeJobDataPrinted LogJobPrinted;
+        BranchOfficeJobDataRendered LogJobRendered;
+        BranchOfficeJobDataError LogJobError;
+        BranchOfficeJobDataPipelineFailed LogPipelineFailed;
+        BranchOfficeLogOfflineFileFull LogOfflineFileFull;
+    }
 }
 
 struct BranchOfficeJobDataContainer
@@ -4682,10 +4790,12 @@ struct SPLCLIENT_INFO_2_W2K
     size_t hSplPrinter;
 }
 
-//STRUCT ATTR: SupportedArchitectureAttribute : CustomAttributeSig([FixedArgSig(ElementSig(1))], [])
-struct SPLCLIENT_INFO_2_WINXP
+version(X86)
 {
-    uint hSplPrinter;
+    struct SPLCLIENT_INFO_2_WINXP
+    {
+        uint hSplPrinter;
+    }
 }
 
 struct _SPLCLIENT_INFO_2_V3
@@ -5001,15 +5111,15 @@ BOOL EnumPrintersW(uint Flags, const(PWSTR) Name, uint Level,
                    /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(4)))])*/ubyte* pPrinterEnum, 
                    uint cbBuf, uint* pcbNeeded, uint* pcReturned);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/getspoolfilehandle))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/getspoolfilehandle
 @DllImport("winspool.drv")
 HANDLE GetSpoolFileHandle(PRINTER_HANDLE hPrinter);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/commitspooldata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/commitspooldata
 @DllImport("winspool.drv")
 HANDLE CommitSpoolData(PRINTER_HANDLE hPrinter, HANDLE hSpoolFile, uint cbCommit);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/closespoolfilehandle))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/closespoolfilehandle
 @DllImport("winspool.drv")
 BOOL CloseSpoolFileHandle(PRINTER_HANDLE hPrinter, HANDLE hSpoolFile);
 
@@ -5071,7 +5181,7 @@ PRINTER_HANDLE AddPrinterA(const(PSTR) pName, uint Level, ubyte* pPrinter);
 @DllImport("winspool.drv")
 PRINTER_HANDLE AddPrinterW(const(PWSTR) pName, uint Level, ubyte* pPrinter);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/deleteprinter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/deleteprinter
 @DllImport("winspool.drv")
 BOOL DeletePrinter(PRINTER_HANDLE hPrinter);
 
@@ -5227,37 +5337,37 @@ uint StartDocPrinterA(PRINTER_HANDLE hPrinter, uint Level, DOC_INFO_1A* pDocInfo
 @DllImport("winspool.drv")
 uint StartDocPrinterW(PRINTER_HANDLE hPrinter, uint Level, DOC_INFO_1W* pDocInfo);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/startpageprinter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/startpageprinter
 @DllImport("winspool.drv")
 BOOL StartPagePrinter(PRINTER_HANDLE hPrinter);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/writeprinter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/writeprinter
 @DllImport("winspool.drv")
 BOOL WritePrinter(PRINTER_HANDLE hPrinter, 
                   /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* pBuf, 
                   uint cbBuf, uint* pcWritten);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/flushprinter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/flushprinter
 @DllImport("winspool.drv")
 BOOL FlushPrinter(PRINTER_HANDLE hPrinter, 
                   /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* pBuf, 
                   uint cbBuf, uint* pcWritten, uint cSleep);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/endpageprinter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/endpageprinter
 @DllImport("winspool.drv")
 BOOL EndPagePrinter(PRINTER_HANDLE hPrinter);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/abortprinter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/abortprinter
 @DllImport("winspool.drv")
 BOOL AbortPrinter(PRINTER_HANDLE hPrinter);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/readprinter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/readprinter
 @DllImport("winspool.drv")
 BOOL ReadPrinter(PRINTER_HANDLE hPrinter, 
                  /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(2)))])*/void* pBuf, 
                  uint cbBuf, uint* pNoBytesRead);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/enddocprinter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/enddocprinter
 @DllImport("winspool.drv")
 BOOL EndDocPrinter(PRINTER_HANDLE hPrinter);
 
@@ -5273,11 +5383,11 @@ BOOL AddJobW(PRINTER_HANDLE hPrinter, uint Level,
              /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(3)))])*/ubyte* pData, 
              uint cbBuf, uint* pcbNeeded);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/schedulejob))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/schedulejob
 @DllImport("winspool.drv")
 BOOL ScheduleJob(PRINTER_HANDLE hPrinter, uint JobId);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/printerproperties))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/printerproperties
 @DllImport("winspool.drv")
 BOOL PrinterProperties(HWND hWnd, PRINTER_HANDLE hPrinter);
 
@@ -5416,21 +5526,21 @@ uint DeletePrinterKeyW(PRINTER_HANDLE hPrinter, const(PWSTR) pKeyName);
 @DllImport("winspool.drv")
 uint WaitForPrinterChange(PRINTER_HANDLE hPrinter, uint Flags);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/findfirstprinterchangenotification))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/findfirstprinterchangenotification
 @DllImport("winspool.drv")
 FINDPRINTERCHANGENOTIFICATION_HANDLE FindFirstPrinterChangeNotification(PRINTER_HANDLE hPrinter, uint fdwFilter, 
                                                                         uint fdwOptions, void* pPrinterNotifyOptions);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/findnextprinterchangenotification))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/findnextprinterchangenotification
 @DllImport("winspool.drv")
 BOOL FindNextPrinterChangeNotification(FINDPRINTERCHANGENOTIFICATION_HANDLE hChange, uint* pdwChange, 
                                        void* pvReserved, void** ppPrinterNotifyInfo);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/freeprinternotifyinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/freeprinternotifyinfo
 @DllImport("winspool.drv")
 BOOL FreePrinterNotifyInfo(PRINTER_NOTIFY_INFO* pPrinterNotifyInfo);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/findcloseprinterchangenotification))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/findcloseprinterchangenotification
 @DllImport("winspool.drv")
 BOOL FindClosePrinterChangeNotification(FINDPRINTERCHANGENOTIFICATION_HANDLE hChange);
 
@@ -5442,7 +5552,7 @@ uint PrinterMessageBoxA(PRINTER_HANDLE hPrinter, uint Error, HWND hWnd, PSTR pTe
 @DllImport("winspool.drv")
 uint PrinterMessageBoxW(PRINTER_HANDLE hPrinter, uint Error, HWND hWnd, PWSTR pText, PWSTR pCaption, uint dwType);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/closeprinter))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/closeprinter
 @DllImport("winspool.drv")
 BOOL ClosePrinter(PRINTER_HANDLE hPrinter);
 
@@ -5605,7 +5715,7 @@ BOOL DeletePrinterConnectionA(PSTR pName);
 @DllImport("winspool.drv")
 BOOL DeletePrinterConnectionW(PWSTR pName);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/connecttoprinterdlg))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/connecttoprinterdlg
 @DllImport("winspool.drv")
 HANDLE ConnectToPrinterDlg(HWND hwnd, uint Flags);
 
@@ -5713,7 +5823,7 @@ HRESULT DeletePrinterDriverPackageA(const(PSTR) pszServer, const(PSTR) pszInfPat
 @DllImport("winspool.drv")
 HRESULT DeletePrinterDriverPackageW(const(PWSTR) pszServer, const(PWSTR) pszInfPath, const(PWSTR) pszEnvironment);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/reportjobprocessingprogress))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/reportjobprocessingprogress
 @DllImport("winspool.drv")
 HRESULT ReportJobProcessingProgress(HANDLE printerHandle, uint jobId, EPrintXPSJobOperation jobOperation, 
                                     EPrintXPSJobProgress jobProgress);
@@ -5730,7 +5840,7 @@ BOOL GetPrinterDriver2W(HWND hWnd, PRINTER_HANDLE hPrinter, PWSTR pEnvironment, 
                         /*PARAM ATTR: MemorySizeAttribute : CustomAttributeSig([], [NamedArgSig("BytesParamIndex", FixedArgSig(ElementSig(5)))])*/ubyte* pDriverInfo, 
                         uint cbBuf, uint* pcbNeeded);
 
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/printdocs/getprintexecutiondata))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/printdocs/getprintexecutiondata
 @DllImport("winspool.drv")
 BOOL GetPrintExecutionData(PRINT_EXECUTION_DATA* pData);
 
@@ -6701,34 +6811,34 @@ interface IPrinterScriptContext : IDispatch
 
 @GUID("77cf513e-5d49-4789-9f30-d0822b335c0d")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/prnasnot/nn-prnasnot-iprintasyncnotifydataobject))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/prnasnot/nn-prnasnot-iprintasyncnotifydataobject
 interface IPrintAsyncNotifyDataObject : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/prnasnot/nf-prnasnot-iprintasyncnotifydataobject-acquiredata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/prnasnot/nf-prnasnot-iprintasyncnotifydataobject-acquiredata
     HRESULT AcquireData(ubyte** ppNotificationData, uint* pSize, GUID** ppSchema);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/prnasnot/nf-prnasnot-iprintasyncnotifydataobject-releasedata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/prnasnot/nf-prnasnot-iprintasyncnotifydataobject-releasedata
     HRESULT ReleaseData();
 }
 
 @GUID("4a5031b1-1f3f-4db0-a462-4530ed8b0451")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/prnasnot/nn-prnasnot-iprintasyncnotifychannel))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/prnasnot/nn-prnasnot-iprintasyncnotifychannel
 interface IPrintAsyncNotifyChannel : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/prnasnot/nf-prnasnot-iprintasyncnotifychannel-sendnotification))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/prnasnot/nf-prnasnot-iprintasyncnotifychannel-sendnotification
     HRESULT SendNotification(IPrintAsyncNotifyDataObject pData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/prnasnot/nf-prnasnot-iprintasyncnotifychannel-closechannel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/prnasnot/nf-prnasnot-iprintasyncnotifychannel-closechannel
     HRESULT CloseChannel(IPrintAsyncNotifyDataObject pData);
 }
 
 @GUID("7def34c1-9d92-4c99-b3b3-db94a9d4191b")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/prnasnot/nn-prnasnot-iprintasyncnotifycallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/prnasnot/nn-prnasnot-iprintasyncnotifycallback
 interface IPrintAsyncNotifyCallback : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/prnasnot/nf-prnasnot-iprintasyncnotifycallback-oneventnotify))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/prnasnot/nf-prnasnot-iprintasyncnotifycallback-oneventnotify
     HRESULT OnEventNotify(IPrintAsyncNotifyChannel pChannel, IPrintAsyncNotifyDataObject pData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/prnasnot/nf-prnasnot-iprintasyncnotifycallback-channelclosed))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/prnasnot/nf-prnasnot-iprintasyncnotifycallback-channelclosed
     HRESULT ChannelClosed(IPrintAsyncNotifyChannel pChannel, IPrintAsyncNotifyDataObject pData);
 }
 

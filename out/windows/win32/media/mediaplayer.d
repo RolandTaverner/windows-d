@@ -3,13 +3,13 @@
 module windows.win32.media.mediaplayer;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, BSTR, HRESULT, HWND, LPARAM, LRESULT,
-                                         PWSTR, RECT, SIZE, SYSTEMTIME, VARIANT_BOOL,
-                                         WPARAM;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, BSTR, HRESULT, HWND, LPARAM,
+                                                    LRESULT, PWSTR, RECT, SIZE,
+                                                    SYSTEMTIME, VARIANT_BOOL, WPARAM;
 public import windows.win32.graphics.gdi : HDC;
 public import windows.win32.media.mediafoundation : IMFActivate;
-public import windows.win32.system.com : BLOB, IDispatch, IStream, IUnknown;
+public import windows.win32.system.com.com : BLOB, IDispatch, IStream, IUnknown;
 public import windows.win32.system.ole : IEnumVARIANT;
 public import windows.win32.system.variant : VARIANT;
 public import windows.win32.ui.windowsandmessaging : MSG;
@@ -19,7 +19,8 @@ extern(Windows) @nogc nothrow:
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/ne-wmp-wmpopenstate))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/ne-wmp-wmpopenstate
 enum WMPOpenState : int
 {
     wmposUndefined               = 0x00000000,
@@ -45,7 +46,8 @@ enum WMPOpenState : int
     wmposMediaWaiting            = 0x00000014,
     wmposOpeningUnknownURL       = 0x00000015,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/ne-wmp-wmpplaystate))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/ne-wmp-wmpplaystate
 enum WMPPlayState : int
 {
     wmppsUndefined     = 0x00000000,
@@ -62,7 +64,8 @@ enum WMPPlayState : int
     wmppsReconnecting  = 0x0000000b,
     wmppsLast          = 0x0000000c,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/ne-wmp-wmpplaylistchangeeventtype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/ne-wmp-wmpplaylistchangeeventtype
 enum WMPPlaylistChangeEventType : int
 {
     wmplcUnknown    = 0x00000000,
@@ -78,7 +81,8 @@ enum WMPPlaylistChangeEventType : int
     wmplcSort       = 0x0000000a,
     wmplcLast       = 0x0000000b,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/ne-wmp-wmpsyncstate))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/ne-wmp-wmpsyncstate
 enum WMPSyncState : int
 {
     wmpssUnknown       = 0x00000000,
@@ -87,7 +91,8 @@ enum WMPSyncState : int
     wmpssEstimating    = 0x00000003,
     wmpssLast          = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/ne-wmp-wmpdevicestatus))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/ne-wmp-wmpdevicestatus
 enum WMPDeviceStatus : int
 {
     wmpdsUnknown             = 0x00000000,
@@ -98,20 +103,23 @@ enum WMPDeviceStatus : int
     wmpdsNewDevice           = 0x00000005,
     wmpdsLast                = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/ne-wmp-wmpripstate))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/ne-wmp-wmpripstate
 enum WMPRipState : int
 {
     wmprsUnknown = 0x00000000,
     wmprsRipping = 0x00000001,
     wmprsStopped = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/ne-wmp-wmpburnformat))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/ne-wmp-wmpburnformat
 enum WMPBurnFormat : int
 {
     wmpbfAudioCD = 0x00000000,
     wmpbfDataCD  = 0x00000001,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/ne-wmp-wmpburnstate))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/ne-wmp-wmpburnstate
 enum WMPBurnState : int
 {
     wmpbsUnknown              = 0x00000000,
@@ -125,7 +133,8 @@ enum WMPBurnState : int
     wmpbsErasing              = 0x00000008,
     wmpbsDownloading          = 0x00000009,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/ne-wmp-wmpstringcollectionchangeeventtype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/ne-wmp-wmpstringcollectionchangeeventtype
 enum WMPStringCollectionChangeEventType : int
 {
     wmpsccetUnknown      = 0x00000000,
@@ -136,7 +145,8 @@ enum WMPStringCollectionChangeEventType : int
     wmpsccetBeginUpdates = 0x00000005,
     wmpsccetEndUpdates   = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/ne-wmp-wmplibrarytype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/ne-wmp-wmplibrarytype
 enum WMPLibraryType : int
 {
     wmpltUnknown        = 0x00000000,
@@ -146,7 +156,8 @@ enum WMPLibraryType : int
     wmpltDisc           = 0x00000004,
     wmpltPortableDevice = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/ne-wmp-wmpfolderscanstate))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/ne-wmp-wmpfolderscanstate
 enum WMPFolderScanState : int
 {
     wmpfssUnknown  = 0x00000000,
@@ -154,7 +165,8 @@ enum WMPFolderScanState : int
     wmpfssUpdating = 0x00000002,
     wmpfssStopped  = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpservices/ne-wmpservices-wmpservices_streamstate))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpservices/ne-wmpservices-wmpservices_streamstate
 alias WMPServices_StreamState = int;
 enum : int
 {
@@ -162,12 +174,14 @@ enum : int
     WMPServices_StreamState_Pause = 0x00000001,
     WMPServices_StreamState_Play  = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpservices/ne-wmpservices-wmpplugin_caps))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpservices/ne-wmpservices-wmpplugin_caps
 alias WMPPlugin_Caps = int;
 enum : int
 {
     WMPPlugin_Caps_CannotConvertFormats = 0x00000001,
 }
+
 alias FEEDS_BACKGROUNDSYNC_ACTION = int;
 enum : int
 {
@@ -175,12 +189,14 @@ enum : int
     FBSA_ENABLE  = 0x00000001,
     FBSA_RUNNOW  = 0x00000002,
 }
+
 alias FEEDS_BACKGROUNDSYNC_STATUS = int;
 enum : int
 {
     FBSS_DISABLED = 0x00000000,
     FBSS_ENABLED  = 0x00000001,
 }
+
 alias FEEDS_EVENTS_SCOPE = int;
 enum : int
 {
@@ -188,12 +204,14 @@ enum : int
     FES_SELF_ONLY              = 0x00000001,
     FES_SELF_AND_CHILDREN_ONLY = 0x00000002,
 }
+
 alias FEEDS_EVENTS_MASK = int;
 enum : int
 {
     FEM_FOLDEREVENTS = 0x00000001,
     FEM_FEEDEVENTS   = 0x00000002,
 }
+
 alias FEEDS_XML_SORT_PROPERTY = int;
 enum : int
 {
@@ -201,6 +219,7 @@ enum : int
     FXSP_PUBDATE      = 0x00000001,
     FXSP_DOWNLOADTIME = 0x00000002,
 }
+
 alias FEEDS_XML_SORT_ORDER = int;
 enum : int
 {
@@ -208,6 +227,7 @@ enum : int
     FXSO_ASCENDING  = 0x00000001,
     FXSO_DESCENDING = 0x00000002,
 }
+
 alias FEEDS_XML_FILTER_FLAGS = int;
 enum : int
 {
@@ -215,12 +235,14 @@ enum : int
     FXFF_UNREAD = 0x00000001,
     FXFF_READ   = 0x00000002,
 }
+
 alias FEEDS_XML_INCLUDE_FLAGS = int;
 enum : int
 {
     FXIF_NONE          = 0x00000000,
     FXIF_CF_EXTENSIONS = 0x00000001,
 }
+
 alias FEEDS_DOWNLOAD_STATUS = int;
 enum : int
 {
@@ -230,6 +252,7 @@ enum : int
     FDS_DOWNLOADED      = 0x00000003,
     FDS_DOWNLOAD_FAILED = 0x00000004,
 }
+
 alias FEEDS_SYNC_SETTING = int;
 enum : int
 {
@@ -238,6 +261,7 @@ enum : int
     FSS_MANUAL    = 0x00000002,
     FSS_SUGGESTED = 0x00000003,
 }
+
 alias FEEDS_DOWNLOAD_ERROR = int;
 enum : int
 {
@@ -258,12 +282,14 @@ enum : int
     FDE_AUTH_FAILED                  = 0x0000000e,
     FDE_INVALID_AUTH                 = 0x0000000f,
 }
+
 alias FEEDS_EVENTS_ITEM_COUNT_FLAGS = int;
 enum : int
 {
     FEICF_READ_ITEM_COUNT_CHANGED   = 0x00000001,
     FEICF_UNREAD_ITEM_COUNT_CHANGED = 0x00000002,
 }
+
 alias FEEDS_ERROR_CODE = int;
 enum : int
 {
@@ -271,14 +297,16 @@ enum : int
     FEC_E_INVALIDMSXMLPROPERTY      = 0xc0040200,
     FEC_E_DOWNLOADSIZELIMITEXCEEDED = 0xc0040201,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/effects/ne-effects-playerstate))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/effects/ne-effects-playerstate
 enum PlayerState : int
 {
     stop_state  = 0x00000000,
     pause_state = 0x00000001,
     play_state  = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/ne-contentpartner-wmppartnernotification))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/ne-contentpartner-wmppartnernotification
 enum WMPPartnerNotification : int
 {
     wmpsnBackgroundProcessingBegin = 0x00000001,
@@ -286,7 +314,8 @@ enum WMPPartnerNotification : int
     wmpsnCatalogDownloadFailure    = 0x00000003,
     wmpsnCatalogDownloadComplete   = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/ne-contentpartner-wmpcallbacknotification))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/ne-contentpartner-wmpcallbacknotification
 enum WMPCallbackNotification : int
 {
     wmpcnLoginStateChange     = 0x00000001,
@@ -296,7 +325,8 @@ enum WMPCallbackNotification : int
     wmpcnNewPluginAvailable   = 0x00000005,
     wmpcnDisableRadioSkipping = 0x00000006,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/ne-contentpartner-wmptasktype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/ne-contentpartner-wmptasktype
 enum WMPTaskType : int
 {
     wmpttBrowse  = 0x00000001,
@@ -304,21 +334,24 @@ enum WMPTaskType : int
     wmpttBurn    = 0x00000003,
     wmpttCurrent = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/ne-contentpartner-wmptransactiontype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/ne-contentpartner-wmptransactiontype
 enum WMPTransactionType : int
 {
     wmpttNoTransaction = 0x00000000,
     wmpttDownload      = 0x00000001,
     wmpttBuy           = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/ne-contentpartner-wmptemplatesize))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/ne-contentpartner-wmptemplatesize
 enum WMPTemplateSize : int
 {
     wmptsSmall  = 0x00000000,
     wmptsMedium = 0x00000001,
     wmptsLarge  = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/ne-contentpartner-wmpstreamingtype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/ne-contentpartner-wmpstreamingtype
 enum WMPStreamingType : int
 {
     wmpstUnknown = 0x00000000,
@@ -326,14 +359,16 @@ enum WMPStreamingType : int
     wmpstVideo   = 0x00000002,
     wmpstRadio   = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/ne-contentpartner-wmpaccounttype))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/ne-contentpartner-wmpaccounttype
 enum WMPAccountType : int
 {
     wmpatBuyOnly      = 0x00000001,
     wmpatSubscription = 0x00000002,
     wmpatJanus        = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/subscriptionservices/ne-subscriptionservices-wmpsubscriptionserviceevent))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/subscriptionservices/ne-subscriptionservices-wmpsubscriptionserviceevent
 enum WMPSubscriptionServiceEvent : int
 {
     wmpsseCurrentBegin = 0x00000001,
@@ -341,6 +376,7 @@ enum WMPSubscriptionServiceEvent : int
     wmpsseFullBegin    = 0x00000003,
     wmpsseFullEnd      = 0x00000004,
 }
+
 enum WMPSubscriptionDownloadState : int
 {
     wmpsdlsDownloading = 0x00000000,
@@ -357,29 +393,29 @@ enum GUID CLSID_XFeedsManager = GUID("fe6b11c3-c72e-4061-86c6-9d163121f229");
 
 enum : uint
 {
-    WMPGC_FLAGS_ALLOW_PREROLL    = 0x00000001,
-    WMPGC_FLAGS_SUPPRESS_DIALOGS = 0x00000002,
-    WMPGC_FLAGS_IGNORE_AV_SYNC   = 0x00000004,
-    WMPGC_FLAGS_DISABLE_PLUGINS  = 0x00000008,
-    WMPGC_FLAGS_USE_CUSTOM_GRAPH = 0x00000010,
+    WMPGC_FLAGS_ALLOW_PREROLL    = 0x00000001U,
+    WMPGC_FLAGS_SUPPRESS_DIALOGS = 0x00000002U,
+    WMPGC_FLAGS_IGNORE_AV_SYNC   = 0x00000004U,
+    WMPGC_FLAGS_DISABLE_PLUGINS  = 0x00000008U,
+    WMPGC_FLAGS_USE_CUSTOM_GRAPH = 0x00000010U,
 }
 
-enum uint WMPUE_EC_USER = 0x00008100;
+enum uint WMPUE_EC_USER = 0x00008100U;
 
 enum : uint
 {
-    WMP_MDRT_FLAGS_UNREPORTED_DELETED_ITEMS = 0x00000001,
-    WMP_MDRT_FLAGS_UNREPORTED_ADDED_ITEMS   = 0x00000002,
+    WMP_MDRT_FLAGS_UNREPORTED_DELETED_ITEMS = 0x00000001U,
+    WMP_MDRT_FLAGS_UNREPORTED_ADDED_ITEMS   = 0x00000002U,
 }
 
-enum uint IOCTL_WMP_METADATA_ROUND_TRIP = 0x31504d57;
-enum uint IOCTL_WMP_DEVICE_CAN_SYNC = 0x32504d57;
-enum uint EFFECT_CANGOFULLSCREEN = 0x00000001;
-enum uint EFFECT_HASPROPERTYPAGE = 0x00000002;
-enum uint EFFECT_VARIABLEFREQSTEP = 0x00000004;
-enum uint EFFECT_WINDOWEDONLY = 0x00000008;
-enum uint EFFECT2_FULLSCREENEXCLUSIVE = 0x00000010;
-enum uint SA_BUFFER_SIZE = 0x00000400;
+enum uint IOCTL_WMP_METADATA_ROUND_TRIP = 0x31504d57U;
+enum uint IOCTL_WMP_DEVICE_CAN_SYNC = 0x32504d57U;
+enum uint EFFECT_CANGOFULLSCREEN = 0x00000001U;
+enum uint EFFECT_HASPROPERTYPAGE = 0x00000002U;
+enum uint EFFECT_VARIABLEFREQSTEP = 0x00000004U;
+enum uint EFFECT_WINDOWEDONLY = 0x00000008U;
+enum uint EFFECT2_FULLSCREENEXCLUSIVE = 0x00000010U;
+enum uint SA_BUFFER_SIZE = 0x00000400U;
 
 enum : const(wchar)*
 {
@@ -392,22 +428,22 @@ enum : const(wchar)*
 
 enum : uint
 {
-    PLUGIN_TYPE_BACKGROUND     = 0x00000001,
-    PLUGIN_TYPE_SEPARATEWINDOW = 0x00000002,
-    PLUGIN_TYPE_DISPLAYAREA    = 0x00000003,
-    PLUGIN_TYPE_SETTINGSAREA   = 0x00000004,
-    PLUGIN_TYPE_METADATAAREA   = 0x00000005,
+    PLUGIN_TYPE_BACKGROUND     = 0x00000001U,
+    PLUGIN_TYPE_SEPARATEWINDOW = 0x00000002U,
+    PLUGIN_TYPE_DISPLAYAREA    = 0x00000003U,
+    PLUGIN_TYPE_SETTINGSAREA   = 0x00000004U,
+    PLUGIN_TYPE_METADATAAREA   = 0x00000005U,
 }
 
 enum : uint
 {
-    PLUGIN_FLAGS_HASPROPERTYPAGE    = 0x80000000,
-    PLUGIN_FLAGS_INSTALLAUTORUN     = 0x40000000,
-    PLUGIN_FLAGS_LAUNCHPROPERTYPAGE = 0x20000000,
-    PLUGIN_FLAGS_ACCEPTSMEDIA       = 0x10000000,
-    PLUGIN_FLAGS_ACCEPTSPLAYLISTS   = 0x08000000,
-    PLUGIN_FLAGS_HASPRESETS         = 0x04000000,
-    PLUGIN_FLAGS_HIDDEN             = 0x02000000,
+    PLUGIN_FLAGS_HASPROPERTYPAGE    = 0x80000000U,
+    PLUGIN_FLAGS_INSTALLAUTORUN     = 0x40000000U,
+    PLUGIN_FLAGS_LAUNCHPROPERTYPAGE = 0x20000000U,
+    PLUGIN_FLAGS_ACCEPTSMEDIA       = 0x10000000U,
+    PLUGIN_FLAGS_ACCEPTSPLAYLISTS   = 0x08000000U,
+    PLUGIN_FLAGS_HASPRESETS         = 0x04000000U,
+    PLUGIN_FLAGS_HIDDEN             = 0x02000000U,
 }
 
 enum : const(wchar)*
@@ -438,16 +474,16 @@ enum : const(wchar)*
 
 enum : uint
 {
-    SUBSCRIPTION_CAP_DEVICEAVAILABLE      = 0x00000010,
-    SUBSCRIPTION_CAP_BACKGROUNDPROCESSING = 0x00000008,
-    SUBSCRIPTION_CAP_IS_CONTENTPARTNER    = 0x00000040,
-    SUBSCRIPTION_CAP_ALTLOGIN             = 0x00000080,
-    SUBSCRIPTION_CAP_ALLOWPLAY            = 0x00000001,
-    SUBSCRIPTION_CAP_ALLOWCDBURN          = 0x00000002,
-    SUBSCRIPTION_CAP_ALLOWPDATRANSFER     = 0x00000004,
-    SUBSCRIPTION_CAP_PREPAREFORSYNC       = 0x00000020,
-    SUBSCRIPTION_V1_CAPS                  = 0x0000000f,
-    SUBSCRIPTION_CAP_UILESSMODE_ALLOWPLAY = 0x00000100,
+    SUBSCRIPTION_CAP_DEVICEAVAILABLE      = 0x00000010U,
+    SUBSCRIPTION_CAP_BACKGROUNDPROCESSING = 0x00000008U,
+    SUBSCRIPTION_CAP_IS_CONTENTPARTNER    = 0x00000040U,
+    SUBSCRIPTION_CAP_ALTLOGIN             = 0x00000080U,
+    SUBSCRIPTION_CAP_ALLOWPLAY            = 0x00000001U,
+    SUBSCRIPTION_CAP_ALLOWCDBURN          = 0x00000002U,
+    SUBSCRIPTION_CAP_ALLOWPDATRANSFER     = 0x00000004U,
+    SUBSCRIPTION_CAP_PREPAREFORSYNC       = 0x00000020U,
+    SUBSCRIPTION_V1_CAPS                  = 0x0000000fU,
+    SUBSCRIPTION_CAP_UILESSMODE_ALLOWPLAY = 0x00000100U,
 }
 
 enum : const(wchar)*
@@ -458,667 +494,667 @@ enum : const(wchar)*
 
 enum : uint
 {
-    DISPID_FEEDS_RootFolder           = 0x00001000,
-    DISPID_FEEDS_IsSubscribed         = 0x00001001,
-    DISPID_FEEDS_ExistsFeed           = 0x00001002,
-    DISPID_FEEDS_GetFeed              = 0x00001003,
-    DISPID_FEEDS_ExistsFolder         = 0x00001004,
-    DISPID_FEEDS_GetFolder            = 0x00001005,
-    DISPID_FEEDS_DeleteFeed           = 0x00001006,
-    DISPID_FEEDS_DeleteFolder         = 0x00001007,
-    DISPID_FEEDS_GetFeedByUrl         = 0x00001008,
-    DISPID_FEEDS_BackgroundSync       = 0x00001009,
-    DISPID_FEEDS_BackgroundSyncStatus = 0x0000100a,
+    DISPID_FEEDS_RootFolder           = 0x00001000U,
+    DISPID_FEEDS_IsSubscribed         = 0x00001001U,
+    DISPID_FEEDS_ExistsFeed           = 0x00001002U,
+    DISPID_FEEDS_GetFeed              = 0x00001003U,
+    DISPID_FEEDS_ExistsFolder         = 0x00001004U,
+    DISPID_FEEDS_GetFolder            = 0x00001005U,
+    DISPID_FEEDS_DeleteFeed           = 0x00001006U,
+    DISPID_FEEDS_DeleteFolder         = 0x00001007U,
+    DISPID_FEEDS_GetFeedByUrl         = 0x00001008U,
+    DISPID_FEEDS_BackgroundSync       = 0x00001009U,
+    DISPID_FEEDS_BackgroundSyncStatus = 0x0000100aU,
 }
 
 enum : uint
 {
-    DISPID_FEEDS_DefaultInterval           = 0x0000100b,
-    DISPID_FEEDS_AsyncSyncAll              = 0x0000100c,
-    DISPID_FEEDS_Normalize                 = 0x0000100d,
-    DISPID_FEEDS_ItemCountLimit            = 0x0000100e,
-    DISPID_FEEDSENUM_Count                 = 0x00002000,
-    DISPID_FEEDSENUM_Item                  = 0x00002001,
-    DISPID_FEEDFOLDER_Feeds                = 0x00003000,
-    DISPID_FEEDFOLDER_Subfolders           = 0x00003001,
-    DISPID_FEEDFOLDER_CreateFeed           = 0x00003002,
-    DISPID_FEEDFOLDER_CreateSubfolder      = 0x00003003,
-    DISPID_FEEDFOLDER_ExistsFeed           = 0x00003004,
-    DISPID_FEEDFOLDER_GetFeed              = 0x00003005,
-    DISPID_FEEDFOLDER_ExistsSubfolder      = 0x00003006,
-    DISPID_FEEDFOLDER_GetSubfolder         = 0x00003007,
-    DISPID_FEEDFOLDER_Delete               = 0x00003008,
-    DISPID_FEEDFOLDER_Name                 = 0x00003009,
-    DISPID_FEEDFOLDER_Rename               = 0x0000300a,
-    DISPID_FEEDFOLDER_Path                 = 0x0000300b,
-    DISPID_FEEDFOLDER_Move                 = 0x0000300c,
-    DISPID_FEEDFOLDER_Parent               = 0x0000300d,
-    DISPID_FEEDFOLDER_IsRoot               = 0x0000300e,
-    DISPID_FEEDFOLDER_TotalUnreadItemCount = 0x0000300f,
-    DISPID_FEEDFOLDER_TotalItemCount       = 0x00003010,
-    DISPID_FEEDFOLDER_GetWatcher           = 0x00003011,
+    DISPID_FEEDS_DefaultInterval           = 0x0000100bU,
+    DISPID_FEEDS_AsyncSyncAll              = 0x0000100cU,
+    DISPID_FEEDS_Normalize                 = 0x0000100dU,
+    DISPID_FEEDS_ItemCountLimit            = 0x0000100eU,
+    DISPID_FEEDSENUM_Count                 = 0x00002000U,
+    DISPID_FEEDSENUM_Item                  = 0x00002001U,
+    DISPID_FEEDFOLDER_Feeds                = 0x00003000U,
+    DISPID_FEEDFOLDER_Subfolders           = 0x00003001U,
+    DISPID_FEEDFOLDER_CreateFeed           = 0x00003002U,
+    DISPID_FEEDFOLDER_CreateSubfolder      = 0x00003003U,
+    DISPID_FEEDFOLDER_ExistsFeed           = 0x00003004U,
+    DISPID_FEEDFOLDER_GetFeed              = 0x00003005U,
+    DISPID_FEEDFOLDER_ExistsSubfolder      = 0x00003006U,
+    DISPID_FEEDFOLDER_GetSubfolder         = 0x00003007U,
+    DISPID_FEEDFOLDER_Delete               = 0x00003008U,
+    DISPID_FEEDFOLDER_Name                 = 0x00003009U,
+    DISPID_FEEDFOLDER_Rename               = 0x0000300aU,
+    DISPID_FEEDFOLDER_Path                 = 0x0000300bU,
+    DISPID_FEEDFOLDER_Move                 = 0x0000300cU,
+    DISPID_FEEDFOLDER_Parent               = 0x0000300dU,
+    DISPID_FEEDFOLDER_IsRoot               = 0x0000300eU,
+    DISPID_FEEDFOLDER_TotalUnreadItemCount = 0x0000300fU,
+    DISPID_FEEDFOLDER_TotalItemCount       = 0x00003010U,
+    DISPID_FEEDFOLDER_GetWatcher           = 0x00003011U,
 }
 
 enum : uint
 {
-    DISPID_FEED_Xml                 = 0x00004000,
-    DISPID_FEED_Name                = 0x00004001,
-    DISPID_FEED_Rename              = 0x00004002,
-    DISPID_FEED_Url                 = 0x00004003,
-    DISPID_FEED_LocalId             = 0x00004004,
-    DISPID_FEED_Path                = 0x00004005,
-    DISPID_FEED_Move                = 0x00004006,
-    DISPID_FEED_Parent              = 0x00004007,
-    DISPID_FEED_LastWriteTime       = 0x00004008,
-    DISPID_FEED_Delete              = 0x00004009,
-    DISPID_FEED_Download            = 0x0000400a,
-    DISPID_FEED_AsyncDownload       = 0x0000400b,
-    DISPID_FEED_CancelAsyncDownload = 0x0000400c,
+    DISPID_FEED_Xml                 = 0x00004000U,
+    DISPID_FEED_Name                = 0x00004001U,
+    DISPID_FEED_Rename              = 0x00004002U,
+    DISPID_FEED_Url                 = 0x00004003U,
+    DISPID_FEED_LocalId             = 0x00004004U,
+    DISPID_FEED_Path                = 0x00004005U,
+    DISPID_FEED_Move                = 0x00004006U,
+    DISPID_FEED_Parent              = 0x00004007U,
+    DISPID_FEED_LastWriteTime       = 0x00004008U,
+    DISPID_FEED_Delete              = 0x00004009U,
+    DISPID_FEED_Download            = 0x0000400aU,
+    DISPID_FEED_AsyncDownload       = 0x0000400bU,
+    DISPID_FEED_CancelAsyncDownload = 0x0000400cU,
 }
 
 enum : uint
 {
-    DISPID_FEED_Interval           = 0x0000400d,
-    DISPID_FEED_SyncSetting        = 0x0000400e,
-    DISPID_FEED_LastDownloadTime   = 0x0000400f,
-    DISPID_FEED_LocalEnclosurePath = 0x00004010,
+    DISPID_FEED_Interval           = 0x0000400dU,
+    DISPID_FEED_SyncSetting        = 0x0000400eU,
+    DISPID_FEED_LastDownloadTime   = 0x0000400fU,
+    DISPID_FEED_LocalEnclosurePath = 0x00004010U,
 }
 
 enum : uint
 {
-    DISPID_FEED_Items                           = 0x00004011,
-    DISPID_FEED_GetItem                         = 0x00004012,
-    DISPID_FEED_Title                           = 0x00004013,
-    DISPID_FEED_Description                     = 0x00004014,
-    DISPID_FEED_Link                            = 0x00004015,
-    DISPID_FEED_Image                           = 0x00004016,
-    DISPID_FEED_LastBuildDate                   = 0x00004017,
-    DISPID_FEED_PubDate                         = 0x00004018,
-    DISPID_FEED_Ttl                             = 0x00004019,
-    DISPID_FEED_Language                        = 0x0000401a,
-    DISPID_FEED_Copyright                       = 0x0000401b,
-    DISPID_FEED_DownloadEnclosuresAutomatically = 0x0000401c,
-    DISPID_FEED_DownloadStatus                  = 0x0000401d,
-    DISPID_FEED_LastDownloadError               = 0x0000401e,
-    DISPID_FEED_Merge                           = 0x0000401f,
-    DISPID_FEED_DownloadUrl                     = 0x00004020,
-    DISPID_FEED_IsList                          = 0x00004021,
-    DISPID_FEED_MarkAllItemsRead                = 0x00004022,
-    DISPID_FEED_GetWatcher                      = 0x00004023,
-    DISPID_FEED_UnreadItemCount                 = 0x00004024,
-    DISPID_FEED_ItemCount                       = 0x00004025,
-    DISPID_FEED_MaxItemCount                    = 0x00004026,
-    DISPID_FEED_GetItemByEffectiveId            = 0x00004027,
+    DISPID_FEED_Items                           = 0x00004011U,
+    DISPID_FEED_GetItem                         = 0x00004012U,
+    DISPID_FEED_Title                           = 0x00004013U,
+    DISPID_FEED_Description                     = 0x00004014U,
+    DISPID_FEED_Link                            = 0x00004015U,
+    DISPID_FEED_Image                           = 0x00004016U,
+    DISPID_FEED_LastBuildDate                   = 0x00004017U,
+    DISPID_FEED_PubDate                         = 0x00004018U,
+    DISPID_FEED_Ttl                             = 0x00004019U,
+    DISPID_FEED_Language                        = 0x0000401aU,
+    DISPID_FEED_Copyright                       = 0x0000401bU,
+    DISPID_FEED_DownloadEnclosuresAutomatically = 0x0000401cU,
+    DISPID_FEED_DownloadStatus                  = 0x0000401dU,
+    DISPID_FEED_LastDownloadError               = 0x0000401eU,
+    DISPID_FEED_Merge                           = 0x0000401fU,
+    DISPID_FEED_DownloadUrl                     = 0x00004020U,
+    DISPID_FEED_IsList                          = 0x00004021U,
+    DISPID_FEED_MarkAllItemsRead                = 0x00004022U,
+    DISPID_FEED_GetWatcher                      = 0x00004023U,
+    DISPID_FEED_UnreadItemCount                 = 0x00004024U,
+    DISPID_FEED_ItemCount                       = 0x00004025U,
+    DISPID_FEED_MaxItemCount                    = 0x00004026U,
+    DISPID_FEED_GetItemByEffectiveId            = 0x00004027U,
 }
 
-enum uint DISPID_FEED_LastItemDownloadTime = 0x00004028;
+enum uint DISPID_FEED_LastItemDownloadTime = 0x00004028U;
 
 enum : uint
 {
-    DISPID_FEED_Username         = 0x00004029,
-    DISPID_FEED_Password         = 0x0000402a,
-    DISPID_FEED_SetCredentials   = 0x0000402b,
-    DISPID_FEED_ClearCredentials = 0x0000402c,
-}
-
-enum : uint
-{
-    DISPID_FEEDITEM_Xml                      = 0x00005000,
-    DISPID_FEEDITEM_Title                    = 0x00005001,
-    DISPID_FEEDITEM_Link                     = 0x00005002,
-    DISPID_FEEDITEM_Guid                     = 0x00005003,
-    DISPID_FEEDITEM_Description              = 0x00005004,
-    DISPID_FEEDITEM_PubDate                  = 0x00005005,
-    DISPID_FEEDITEM_Comments                 = 0x00005006,
-    DISPID_FEEDITEM_Author                   = 0x00005007,
-    DISPID_FEEDITEM_Enclosure                = 0x00005008,
-    DISPID_FEEDITEM_IsRead                   = 0x00005009,
-    DISPID_FEEDITEM_LocalId                  = 0x0000500a,
-    DISPID_FEEDITEM_Parent                   = 0x0000500b,
-    DISPID_FEEDITEM_Delete                   = 0x0000500c,
-    DISPID_FEEDITEM_DownloadUrl              = 0x0000500d,
-    DISPID_FEEDITEM_LastDownloadTime         = 0x0000500e,
-    DISPID_FEEDITEM_Modified                 = 0x0000500f,
-    DISPID_FEEDITEM_EffectiveId              = 0x00005010,
-    DISPID_FEEDENCLOSURE_Url                 = 0x00006000,
-    DISPID_FEEDENCLOSURE_Type                = 0x00006001,
-    DISPID_FEEDENCLOSURE_Length              = 0x00006002,
-    DISPID_FEEDENCLOSURE_AsyncDownload       = 0x00006003,
-    DISPID_FEEDENCLOSURE_CancelAsyncDownload = 0x00006004,
-    DISPID_FEEDENCLOSURE_DownloadStatus      = 0x00006005,
-    DISPID_FEEDENCLOSURE_LastDownloadError   = 0x00006006,
-    DISPID_FEEDENCLOSURE_LocalPath           = 0x00006007,
-    DISPID_FEEDENCLOSURE_Parent              = 0x00006008,
-    DISPID_FEEDENCLOSURE_DownloadUrl         = 0x00006009,
-    DISPID_FEEDENCLOSURE_DownloadMimeType    = 0x0000600a,
-    DISPID_FEEDENCLOSURE_RemoveFile          = 0x0000600b,
-    DISPID_FEEDENCLOSURE_SetFile             = 0x0000600c,
+    DISPID_FEED_Username         = 0x00004029U,
+    DISPID_FEED_Password         = 0x0000402aU,
+    DISPID_FEED_SetCredentials   = 0x0000402bU,
+    DISPID_FEED_ClearCredentials = 0x0000402cU,
 }
 
 enum : uint
 {
-    DISPID_FEEDFOLDEREVENTS_Error                  = 0x00007000,
-    DISPID_FEEDFOLDEREVENTS_FolderAdded            = 0x00007001,
-    DISPID_FEEDFOLDEREVENTS_FolderDeleted          = 0x00007002,
-    DISPID_FEEDFOLDEREVENTS_FolderRenamed          = 0x00007003,
-    DISPID_FEEDFOLDEREVENTS_FolderMovedFrom        = 0x00007004,
-    DISPID_FEEDFOLDEREVENTS_FolderMovedTo          = 0x00007005,
-    DISPID_FEEDFOLDEREVENTS_FolderItemCountChanged = 0x00007006,
-    DISPID_FEEDFOLDEREVENTS_FeedAdded              = 0x00007007,
-    DISPID_FEEDFOLDEREVENTS_FeedDeleted            = 0x00007008,
-    DISPID_FEEDFOLDEREVENTS_FeedRenamed            = 0x00007009,
-    DISPID_FEEDFOLDEREVENTS_FeedUrlChanged         = 0x0000700a,
-    DISPID_FEEDFOLDEREVENTS_FeedMovedFrom          = 0x0000700b,
-    DISPID_FEEDFOLDEREVENTS_FeedMovedTo            = 0x0000700c,
-    DISPID_FEEDFOLDEREVENTS_FeedDownloading        = 0x0000700d,
-    DISPID_FEEDFOLDEREVENTS_FeedDownloadCompleted  = 0x0000700e,
-    DISPID_FEEDFOLDEREVENTS_FeedItemCountChanged   = 0x0000700f,
+    DISPID_FEEDITEM_Xml                      = 0x00005000U,
+    DISPID_FEEDITEM_Title                    = 0x00005001U,
+    DISPID_FEEDITEM_Link                     = 0x00005002U,
+    DISPID_FEEDITEM_Guid                     = 0x00005003U,
+    DISPID_FEEDITEM_Description              = 0x00005004U,
+    DISPID_FEEDITEM_PubDate                  = 0x00005005U,
+    DISPID_FEEDITEM_Comments                 = 0x00005006U,
+    DISPID_FEEDITEM_Author                   = 0x00005007U,
+    DISPID_FEEDITEM_Enclosure                = 0x00005008U,
+    DISPID_FEEDITEM_IsRead                   = 0x00005009U,
+    DISPID_FEEDITEM_LocalId                  = 0x0000500aU,
+    DISPID_FEEDITEM_Parent                   = 0x0000500bU,
+    DISPID_FEEDITEM_Delete                   = 0x0000500cU,
+    DISPID_FEEDITEM_DownloadUrl              = 0x0000500dU,
+    DISPID_FEEDITEM_LastDownloadTime         = 0x0000500eU,
+    DISPID_FEEDITEM_Modified                 = 0x0000500fU,
+    DISPID_FEEDITEM_EffectiveId              = 0x00005010U,
+    DISPID_FEEDENCLOSURE_Url                 = 0x00006000U,
+    DISPID_FEEDENCLOSURE_Type                = 0x00006001U,
+    DISPID_FEEDENCLOSURE_Length              = 0x00006002U,
+    DISPID_FEEDENCLOSURE_AsyncDownload       = 0x00006003U,
+    DISPID_FEEDENCLOSURE_CancelAsyncDownload = 0x00006004U,
+    DISPID_FEEDENCLOSURE_DownloadStatus      = 0x00006005U,
+    DISPID_FEEDENCLOSURE_LastDownloadError   = 0x00006006U,
+    DISPID_FEEDENCLOSURE_LocalPath           = 0x00006007U,
+    DISPID_FEEDENCLOSURE_Parent              = 0x00006008U,
+    DISPID_FEEDENCLOSURE_DownloadUrl         = 0x00006009U,
+    DISPID_FEEDENCLOSURE_DownloadMimeType    = 0x0000600aU,
+    DISPID_FEEDENCLOSURE_RemoveFile          = 0x0000600bU,
+    DISPID_FEEDENCLOSURE_SetFile             = 0x0000600cU,
 }
 
 enum : uint
 {
-    DISPID_FEEDEVENTS_Error                 = 0x00008000,
-    DISPID_FEEDEVENTS_FeedDeleted           = 0x00008001,
-    DISPID_FEEDEVENTS_FeedRenamed           = 0x00008002,
-    DISPID_FEEDEVENTS_FeedUrlChanged        = 0x00008003,
-    DISPID_FEEDEVENTS_FeedMoved             = 0x00008004,
-    DISPID_FEEDEVENTS_FeedDownloading       = 0x00008005,
-    DISPID_FEEDEVENTS_FeedDownloadCompleted = 0x00008006,
-    DISPID_FEEDEVENTS_FeedItemCountChanged  = 0x00008007,
+    DISPID_FEEDFOLDEREVENTS_Error                  = 0x00007000U,
+    DISPID_FEEDFOLDEREVENTS_FolderAdded            = 0x00007001U,
+    DISPID_FEEDFOLDEREVENTS_FolderDeleted          = 0x00007002U,
+    DISPID_FEEDFOLDEREVENTS_FolderRenamed          = 0x00007003U,
+    DISPID_FEEDFOLDEREVENTS_FolderMovedFrom        = 0x00007004U,
+    DISPID_FEEDFOLDEREVENTS_FolderMovedTo          = 0x00007005U,
+    DISPID_FEEDFOLDEREVENTS_FolderItemCountChanged = 0x00007006U,
+    DISPID_FEEDFOLDEREVENTS_FeedAdded              = 0x00007007U,
+    DISPID_FEEDFOLDEREVENTS_FeedDeleted            = 0x00007008U,
+    DISPID_FEEDFOLDEREVENTS_FeedRenamed            = 0x00007009U,
+    DISPID_FEEDFOLDEREVENTS_FeedUrlChanged         = 0x0000700aU,
+    DISPID_FEEDFOLDEREVENTS_FeedMovedFrom          = 0x0000700bU,
+    DISPID_FEEDFOLDEREVENTS_FeedMovedTo            = 0x0000700cU,
+    DISPID_FEEDFOLDEREVENTS_FeedDownloading        = 0x0000700dU,
+    DISPID_FEEDFOLDEREVENTS_FeedDownloadCompleted  = 0x0000700eU,
+    DISPID_FEEDFOLDEREVENTS_FeedItemCountChanged   = 0x0000700fU,
 }
 
 enum : uint
 {
-    DISPID_DELTA                      = 0x00000032,
-    DISPID_WMPCORE_BASE               = 0x00000000,
-    DISPID_WMPCORE_URL                = 0x00000001,
-    DISPID_WMPCORE_OPENSTATE          = 0x00000002,
-    DISPID_WMPCORE_CLOSE              = 0x00000003,
-    DISPID_WMPCORE_CONTROLS           = 0x00000004,
-    DISPID_WMPCORE_SETTINGS           = 0x00000005,
-    DISPID_WMPCORE_CURRENTMEDIA       = 0x00000006,
-    DISPID_WMPCORE_NETWORK            = 0x00000007,
-    DISPID_WMPCORE_MEDIACOLLECTION    = 0x00000008,
-    DISPID_WMPCORE_PLAYLISTCOLLECTION = 0x00000009,
-    DISPID_WMPCORE_PLAYSTATE          = 0x0000000a,
-    DISPID_WMPCORE_VERSIONINFO        = 0x0000000b,
-    DISPID_WMPCORE_LAUNCHURL          = 0x0000000c,
-    DISPID_WMPCORE_CURRENTPLAYLIST    = 0x0000000d,
-    DISPID_WMPCORE_CDROMCOLLECTION    = 0x0000000e,
-    DISPID_WMPCORE_CLOSEDCAPTION      = 0x0000000f,
-    DISPID_WMPCORE_ISONLINE           = 0x00000010,
-    DISPID_WMPCORE_ERROR              = 0x00000011,
-    DISPID_WMPCORE_STATUS             = 0x00000012,
-    DISPID_WMPCORE_LAST               = 0x00000012,
-    DISPID_WMPOCX_BASE                = 0x00000012,
-    DISPID_WMPOCX_ENABLED             = 0x00000013,
-    DISPID_WMPOCX_TRANSPARENTATSTART  = 0x00000014,
-    DISPID_WMPOCX_FULLSCREEN          = 0x00000015,
-    DISPID_WMPOCX_ENABLECONTEXTMENU   = 0x00000016,
-    DISPID_WMPOCX_UIMODE              = 0x00000017,
-    DISPID_WMPOCX_LAST                = 0x00000017,
-    DISPID_WMPOCX2_BASE               = 0x00000017,
-    DISPID_WMPOCX2_STRETCHTOFIT       = 0x00000018,
-    DISPID_WMPOCX2_WINDOWLESSVIDEO    = 0x00000019,
-    DISPID_WMPOCX4_ISREMOTE           = 0x0000001a,
-    DISPID_WMPOCX4_PLAYERAPPLICATION  = 0x0000001b,
-    DISPID_WMPOCX4_OPENPLAYER         = 0x0000001c,
+    DISPID_FEEDEVENTS_Error                 = 0x00008000U,
+    DISPID_FEEDEVENTS_FeedDeleted           = 0x00008001U,
+    DISPID_FEEDEVENTS_FeedRenamed           = 0x00008002U,
+    DISPID_FEEDEVENTS_FeedUrlChanged        = 0x00008003U,
+    DISPID_FEEDEVENTS_FeedMoved             = 0x00008004U,
+    DISPID_FEEDEVENTS_FeedDownloading       = 0x00008005U,
+    DISPID_FEEDEVENTS_FeedDownloadCompleted = 0x00008006U,
+    DISPID_FEEDEVENTS_FeedItemCountChanged  = 0x00008007U,
 }
 
 enum : uint
 {
-    DISPID_WMPCORE2_BASE                          = 0x00000027,
-    DISPID_WMPCORE2_DVD                           = 0x00000028,
-    DISPID_WMPCORE3_NEWPLAYLIST                   = 0x00000029,
-    DISPID_WMPCORE3_NEWMEDIA                      = 0x0000002a,
-    DISPID_WMPCONTROLS_PLAY                       = 0x00000033,
-    DISPID_WMPCONTROLS_STOP                       = 0x00000034,
-    DISPID_WMPCONTROLS_PAUSE                      = 0x00000035,
-    DISPID_WMPCONTROLS_FASTFORWARD                = 0x00000036,
-    DISPID_WMPCONTROLS_FASTREVERSE                = 0x00000037,
-    DISPID_WMPCONTROLS_CURRENTPOSITION            = 0x00000038,
-    DISPID_WMPCONTROLS_CURRENTPOSITIONSTRING      = 0x00000039,
-    DISPID_WMPCONTROLS_NEXT                       = 0x0000003a,
-    DISPID_WMPCONTROLS_PREVIOUS                   = 0x0000003b,
-    DISPID_WMPCONTROLS_CURRENTITEM                = 0x0000003c,
-    DISPID_WMPCONTROLS_CURRENTMARKER              = 0x0000003d,
-    DISPID_WMPCONTROLS_ISAVAILABLE                = 0x0000003e,
-    DISPID_WMPCONTROLS_PLAYITEM                   = 0x0000003f,
-    DISPID_WMPCONTROLS2_STEP                      = 0x00000040,
-    DISPID_WMPCONTROLS3_AUDIOLANGUAGECOUNT        = 0x00000041,
-    DISPID_WMPCONTROLS3_GETAUDIOLANGUAGEID        = 0x00000042,
-    DISPID_WMPCONTROLS3_GETAUDIOLANGUAGEDESC      = 0x00000043,
-    DISPID_WMPCONTROLS3_CURRENTAUDIOLANGUAGE      = 0x00000044,
-    DISPID_WMPCONTROLS3_CURRENTAUDIOLANGUAGEINDEX = 0x00000045,
-    DISPID_WMPCONTROLS3_GETLANGUAGENAME           = 0x00000046,
-    DISPID_WMPCONTROLS3_CURRENTPOSITIONTIMECODE   = 0x00000047,
-    DISPID_WMPCONTROLSFAKE_TIMECOMPRESSION        = 0x00000048,
+    DISPID_DELTA                      = 0x00000032U,
+    DISPID_WMPCORE_BASE               = 0x00000000U,
+    DISPID_WMPCORE_URL                = 0x00000001U,
+    DISPID_WMPCORE_OPENSTATE          = 0x00000002U,
+    DISPID_WMPCORE_CLOSE              = 0x00000003U,
+    DISPID_WMPCORE_CONTROLS           = 0x00000004U,
+    DISPID_WMPCORE_SETTINGS           = 0x00000005U,
+    DISPID_WMPCORE_CURRENTMEDIA       = 0x00000006U,
+    DISPID_WMPCORE_NETWORK            = 0x00000007U,
+    DISPID_WMPCORE_MEDIACOLLECTION    = 0x00000008U,
+    DISPID_WMPCORE_PLAYLISTCOLLECTION = 0x00000009U,
+    DISPID_WMPCORE_PLAYSTATE          = 0x0000000aU,
+    DISPID_WMPCORE_VERSIONINFO        = 0x0000000bU,
+    DISPID_WMPCORE_LAUNCHURL          = 0x0000000cU,
+    DISPID_WMPCORE_CURRENTPLAYLIST    = 0x0000000dU,
+    DISPID_WMPCORE_CDROMCOLLECTION    = 0x0000000eU,
+    DISPID_WMPCORE_CLOSEDCAPTION      = 0x0000000fU,
+    DISPID_WMPCORE_ISONLINE           = 0x00000010U,
+    DISPID_WMPCORE_ERROR              = 0x00000011U,
+    DISPID_WMPCORE_STATUS             = 0x00000012U,
+    DISPID_WMPCORE_LAST               = 0x00000012U,
+    DISPID_WMPOCX_BASE                = 0x00000012U,
+    DISPID_WMPOCX_ENABLED             = 0x00000013U,
+    DISPID_WMPOCX_TRANSPARENTATSTART  = 0x00000014U,
+    DISPID_WMPOCX_FULLSCREEN          = 0x00000015U,
+    DISPID_WMPOCX_ENABLECONTEXTMENU   = 0x00000016U,
+    DISPID_WMPOCX_UIMODE              = 0x00000017U,
+    DISPID_WMPOCX_LAST                = 0x00000017U,
+    DISPID_WMPOCX2_BASE               = 0x00000017U,
+    DISPID_WMPOCX2_STRETCHTOFIT       = 0x00000018U,
+    DISPID_WMPOCX2_WINDOWLESSVIDEO    = 0x00000019U,
+    DISPID_WMPOCX4_ISREMOTE           = 0x0000001aU,
+    DISPID_WMPOCX4_PLAYERAPPLICATION  = 0x0000001bU,
+    DISPID_WMPOCX4_OPENPLAYER         = 0x0000001cU,
 }
 
 enum : uint
 {
-    DISPID_WMPSETTINGS_AUTOSTART                   = 0x00000065,
-    DISPID_WMPSETTINGS_BALANCE                     = 0x00000066,
-    DISPID_WMPSETTINGS_INVOKEURLS                  = 0x00000067,
-    DISPID_WMPSETTINGS_MUTE                        = 0x00000068,
-    DISPID_WMPSETTINGS_PLAYCOUNT                   = 0x00000069,
-    DISPID_WMPSETTINGS_RATE                        = 0x0000006a,
-    DISPID_WMPSETTINGS_VOLUME                      = 0x0000006b,
-    DISPID_WMPSETTINGS_BASEURL                     = 0x0000006c,
-    DISPID_WMPSETTINGS_DEFAULTFRAME                = 0x0000006d,
-    DISPID_WMPSETTINGS_GETMODE                     = 0x0000006e,
-    DISPID_WMPSETTINGS_SETMODE                     = 0x0000006f,
-    DISPID_WMPSETTINGS_ENABLEERRORDIALOGS          = 0x00000070,
-    DISPID_WMPSETTINGS_ISAVAILABLE                 = 0x00000071,
-    DISPID_WMPSETTINGS2_DEFAULTAUDIOLANGUAGE       = 0x00000072,
-    DISPID_WMPSETTINGS2_LIBRARYACCESSRIGHTS        = 0x00000073,
-    DISPID_WMPSETTINGS2_REQUESTLIBRARYACCESSRIGHTS = 0x00000074,
+    DISPID_WMPCORE2_BASE                          = 0x00000027U,
+    DISPID_WMPCORE2_DVD                           = 0x00000028U,
+    DISPID_WMPCORE3_NEWPLAYLIST                   = 0x00000029U,
+    DISPID_WMPCORE3_NEWMEDIA                      = 0x0000002aU,
+    DISPID_WMPCONTROLS_PLAY                       = 0x00000033U,
+    DISPID_WMPCONTROLS_STOP                       = 0x00000034U,
+    DISPID_WMPCONTROLS_PAUSE                      = 0x00000035U,
+    DISPID_WMPCONTROLS_FASTFORWARD                = 0x00000036U,
+    DISPID_WMPCONTROLS_FASTREVERSE                = 0x00000037U,
+    DISPID_WMPCONTROLS_CURRENTPOSITION            = 0x00000038U,
+    DISPID_WMPCONTROLS_CURRENTPOSITIONSTRING      = 0x00000039U,
+    DISPID_WMPCONTROLS_NEXT                       = 0x0000003aU,
+    DISPID_WMPCONTROLS_PREVIOUS                   = 0x0000003bU,
+    DISPID_WMPCONTROLS_CURRENTITEM                = 0x0000003cU,
+    DISPID_WMPCONTROLS_CURRENTMARKER              = 0x0000003dU,
+    DISPID_WMPCONTROLS_ISAVAILABLE                = 0x0000003eU,
+    DISPID_WMPCONTROLS_PLAYITEM                   = 0x0000003fU,
+    DISPID_WMPCONTROLS2_STEP                      = 0x00000040U,
+    DISPID_WMPCONTROLS3_AUDIOLANGUAGECOUNT        = 0x00000041U,
+    DISPID_WMPCONTROLS3_GETAUDIOLANGUAGEID        = 0x00000042U,
+    DISPID_WMPCONTROLS3_GETAUDIOLANGUAGEDESC      = 0x00000043U,
+    DISPID_WMPCONTROLS3_CURRENTAUDIOLANGUAGE      = 0x00000044U,
+    DISPID_WMPCONTROLS3_CURRENTAUDIOLANGUAGEINDEX = 0x00000045U,
+    DISPID_WMPCONTROLS3_GETLANGUAGENAME           = 0x00000046U,
+    DISPID_WMPCONTROLS3_CURRENTPOSITIONTIMECODE   = 0x00000047U,
+    DISPID_WMPCONTROLSFAKE_TIMECOMPRESSION        = 0x00000048U,
 }
 
 enum : uint
 {
-    DISPID_WMPPLAYLIST_COUNT          = 0x000000c9,
-    DISPID_WMPPLAYLIST_NAME           = 0x000000ca,
-    DISPID_WMPPLAYLIST_GETITEMINFO    = 0x000000cb,
-    DISPID_WMPPLAYLIST_SETITEMINFO    = 0x000000cc,
-    DISPID_WMPPLAYLIST_CLEAR          = 0x000000cd,
-    DISPID_WMPPLAYLIST_INSERTITEM     = 0x000000ce,
-    DISPID_WMPPLAYLIST_APPENDITEM     = 0x000000cf,
-    DISPID_WMPPLAYLIST_REMOVEITEM     = 0x000000d0,
-    DISPID_WMPPLAYLIST_MOVEITEM       = 0x000000d1,
-    DISPID_WMPPLAYLIST_ATTRIBUTECOUNT = 0x000000d2,
-    DISPID_WMPPLAYLIST_ATTRIBUTENAME  = 0x000000d3,
-    DISPID_WMPPLAYLIST_ITEM           = 0x000000d4,
-    DISPID_WMPPLAYLIST_ISIDENTICAL    = 0x000000d5,
+    DISPID_WMPSETTINGS_AUTOSTART                   = 0x00000065U,
+    DISPID_WMPSETTINGS_BALANCE                     = 0x00000066U,
+    DISPID_WMPSETTINGS_INVOKEURLS                  = 0x00000067U,
+    DISPID_WMPSETTINGS_MUTE                        = 0x00000068U,
+    DISPID_WMPSETTINGS_PLAYCOUNT                   = 0x00000069U,
+    DISPID_WMPSETTINGS_RATE                        = 0x0000006aU,
+    DISPID_WMPSETTINGS_VOLUME                      = 0x0000006bU,
+    DISPID_WMPSETTINGS_BASEURL                     = 0x0000006cU,
+    DISPID_WMPSETTINGS_DEFAULTFRAME                = 0x0000006dU,
+    DISPID_WMPSETTINGS_GETMODE                     = 0x0000006eU,
+    DISPID_WMPSETTINGS_SETMODE                     = 0x0000006fU,
+    DISPID_WMPSETTINGS_ENABLEERRORDIALOGS          = 0x00000070U,
+    DISPID_WMPSETTINGS_ISAVAILABLE                 = 0x00000071U,
+    DISPID_WMPSETTINGS2_DEFAULTAUDIOLANGUAGE       = 0x00000072U,
+    DISPID_WMPSETTINGS2_LIBRARYACCESSRIGHTS        = 0x00000073U,
+    DISPID_WMPSETTINGS2_REQUESTLIBRARYACCESSRIGHTS = 0x00000074U,
 }
 
 enum : uint
 {
-    DISPID_WMPCDROM_DRIVESPECIFIER                  = 0x000000fb,
-    DISPID_WMPCDROM_PLAYLIST                        = 0x000000fc,
-    DISPID_WMPCDROM_EJECT                           = 0x000000fd,
-    DISPID_WMPCDROMCOLLECTION_COUNT                 = 0x0000012d,
-    DISPID_WMPCDROMCOLLECTION_ITEM                  = 0x0000012e,
-    DISPID_WMPCDROMCOLLECTION_GETBYDRIVESPECIFIER   = 0x0000012f,
-    DISPID_WMPCDROMCOLLECTION_STARTMONITORINGCDROMS = 0x00000130,
-    DISPID_WMPCDROMCOLLECTION_STOPMONITORINGCDROMS  = 0x00000131,
+    DISPID_WMPPLAYLIST_COUNT          = 0x000000c9U,
+    DISPID_WMPPLAYLIST_NAME           = 0x000000caU,
+    DISPID_WMPPLAYLIST_GETITEMINFO    = 0x000000cbU,
+    DISPID_WMPPLAYLIST_SETITEMINFO    = 0x000000ccU,
+    DISPID_WMPPLAYLIST_CLEAR          = 0x000000cdU,
+    DISPID_WMPPLAYLIST_INSERTITEM     = 0x000000ceU,
+    DISPID_WMPPLAYLIST_APPENDITEM     = 0x000000cfU,
+    DISPID_WMPPLAYLIST_REMOVEITEM     = 0x000000d0U,
+    DISPID_WMPPLAYLIST_MOVEITEM       = 0x000000d1U,
+    DISPID_WMPPLAYLIST_ATTRIBUTECOUNT = 0x000000d2U,
+    DISPID_WMPPLAYLIST_ATTRIBUTENAME  = 0x000000d3U,
+    DISPID_WMPPLAYLIST_ITEM           = 0x000000d4U,
+    DISPID_WMPPLAYLIST_ISIDENTICAL    = 0x000000d5U,
 }
 
 enum : uint
 {
-    DISPID_WMPSTRINGCOLLECTION_COUNT = 0x00000191,
-    DISPID_WMPSTRINGCOLLECTION_ITEM  = 0x00000192,
+    DISPID_WMPCDROM_DRIVESPECIFIER                  = 0x000000fbU,
+    DISPID_WMPCDROM_PLAYLIST                        = 0x000000fcU,
+    DISPID_WMPCDROM_EJECT                           = 0x000000fdU,
+    DISPID_WMPCDROMCOLLECTION_COUNT                 = 0x0000012dU,
+    DISPID_WMPCDROMCOLLECTION_ITEM                  = 0x0000012eU,
+    DISPID_WMPCDROMCOLLECTION_GETBYDRIVESPECIFIER   = 0x0000012fU,
+    DISPID_WMPCDROMCOLLECTION_STARTMONITORINGCDROMS = 0x00000130U,
+    DISPID_WMPCDROMCOLLECTION_STOPMONITORINGCDROMS  = 0x00000131U,
 }
 
 enum : uint
 {
-    DISPID_WMPMEDIACOLLECTION_ADD                          = 0x000001c4,
-    DISPID_WMPMEDIACOLLECTION_GETALL                       = 0x000001c5,
-    DISPID_WMPMEDIACOLLECTION_GETBYNAME                    = 0x000001c6,
-    DISPID_WMPMEDIACOLLECTION_GETBYGENRE                   = 0x000001c7,
-    DISPID_WMPMEDIACOLLECTION_GETBYAUTHOR                  = 0x000001c8,
-    DISPID_WMPMEDIACOLLECTION_GETBYALBUM                   = 0x000001c9,
-    DISPID_WMPMEDIACOLLECTION_GETBYATTRIBUTE               = 0x000001ca,
-    DISPID_WMPMEDIACOLLECTION_REMOVE                       = 0x000001cb,
-    DISPID_WMPMEDIACOLLECTION_GETATTRIBUTESTRINGCOLLECTION = 0x000001cd,
-    DISPID_WMPMEDIACOLLECTION_NEWQUERY                     = 0x000001ce,
-    DISPID_WMPMEDIACOLLECTION_STARTMONITORING              = 0x000001cf,
-    DISPID_WMPMEDIACOLLECTION_STOPMONITORING               = 0x000001d0,
-    DISPID_WMPMEDIACOLLECTION_STARTCONTENTSCAN             = 0x000001d1,
-    DISPID_WMPMEDIACOLLECTION_STOPCONTENTSCAN              = 0x000001d2,
-    DISPID_WMPMEDIACOLLECTION_STARTSEARCH                  = 0x000001d3,
-    DISPID_WMPMEDIACOLLECTION_STOPSEARCH                   = 0x000001d4,
-    DISPID_WMPMEDIACOLLECTION_UPDATEMETADATA               = 0x000001d5,
-    DISPID_WMPMEDIACOLLECTION_GETMEDIAATOM                 = 0x000001d6,
-    DISPID_WMPMEDIACOLLECTION_SETDELETED                   = 0x000001d7,
-    DISPID_WMPMEDIACOLLECTION_ISDELETED                    = 0x000001d8,
-    DISPID_WMPMEDIACOLLECTION_GETBYQUERYDESCRIPTION        = 0x000001d9,
-    DISPID_WMPMEDIACOLLECTION_FREEZECOLLECTIONCHANGE       = 0x000001da,
-    DISPID_WMPMEDIACOLLECTION_UNFREEZECOLLECTIONCHANGE     = 0x000001db,
-    DISPID_WMPMEDIACOLLECTION_POSTCOLLECTIONCHANGE         = 0x000001dc,
+    DISPID_WMPSTRINGCOLLECTION_COUNT = 0x00000191U,
+    DISPID_WMPSTRINGCOLLECTION_ITEM  = 0x00000192U,
 }
 
 enum : uint
 {
-    DISPID_WMPPLAYLISTARRAY_COUNT                      = 0x000001f5,
-    DISPID_WMPPLAYLISTARRAY_ITEM                       = 0x000001f6,
-    DISPID_WMPPLAYLISTCOLLECTION_NEWPLAYLIST           = 0x00000228,
-    DISPID_WMPPLAYLISTCOLLECTION_GETALL                = 0x00000229,
-    DISPID_WMPPLAYLISTCOLLECTION_GETBYNAME             = 0x0000022a,
-    DISPID_WMPPLAYLISTCOLLECTION_GETBYQUERYDESCRIPTION = 0x0000022b,
-    DISPID_WMPPLAYLISTCOLLECTION_REMOVE                = 0x0000022c,
-    DISPID_WMPPLAYLISTCOLLECTION_NEWQUERY              = 0x0000022d,
-    DISPID_WMPPLAYLISTCOLLECTION_STARTMONITORING       = 0x0000022e,
-    DISPID_WMPPLAYLISTCOLLECTION_STOPMONITORING        = 0x0000022f,
-    DISPID_WMPPLAYLISTCOLLECTION_SETDELETED            = 0x00000230,
-    DISPID_WMPPLAYLISTCOLLECTION_ISDELETED             = 0x00000231,
-    DISPID_WMPPLAYLISTCOLLECTION_IMPORTPLAYLIST        = 0x00000232,
+    DISPID_WMPMEDIACOLLECTION_ADD                          = 0x000001c4U,
+    DISPID_WMPMEDIACOLLECTION_GETALL                       = 0x000001c5U,
+    DISPID_WMPMEDIACOLLECTION_GETBYNAME                    = 0x000001c6U,
+    DISPID_WMPMEDIACOLLECTION_GETBYGENRE                   = 0x000001c7U,
+    DISPID_WMPMEDIACOLLECTION_GETBYAUTHOR                  = 0x000001c8U,
+    DISPID_WMPMEDIACOLLECTION_GETBYALBUM                   = 0x000001c9U,
+    DISPID_WMPMEDIACOLLECTION_GETBYATTRIBUTE               = 0x000001caU,
+    DISPID_WMPMEDIACOLLECTION_REMOVE                       = 0x000001cbU,
+    DISPID_WMPMEDIACOLLECTION_GETATTRIBUTESTRINGCOLLECTION = 0x000001cdU,
+    DISPID_WMPMEDIACOLLECTION_NEWQUERY                     = 0x000001ceU,
+    DISPID_WMPMEDIACOLLECTION_STARTMONITORING              = 0x000001cfU,
+    DISPID_WMPMEDIACOLLECTION_STOPMONITORING               = 0x000001d0U,
+    DISPID_WMPMEDIACOLLECTION_STARTCONTENTSCAN             = 0x000001d1U,
+    DISPID_WMPMEDIACOLLECTION_STOPCONTENTSCAN              = 0x000001d2U,
+    DISPID_WMPMEDIACOLLECTION_STARTSEARCH                  = 0x000001d3U,
+    DISPID_WMPMEDIACOLLECTION_STOPSEARCH                   = 0x000001d4U,
+    DISPID_WMPMEDIACOLLECTION_UPDATEMETADATA               = 0x000001d5U,
+    DISPID_WMPMEDIACOLLECTION_GETMEDIAATOM                 = 0x000001d6U,
+    DISPID_WMPMEDIACOLLECTION_SETDELETED                   = 0x000001d7U,
+    DISPID_WMPMEDIACOLLECTION_ISDELETED                    = 0x000001d8U,
+    DISPID_WMPMEDIACOLLECTION_GETBYQUERYDESCRIPTION        = 0x000001d9U,
+    DISPID_WMPMEDIACOLLECTION_FREEZECOLLECTIONCHANGE       = 0x000001daU,
+    DISPID_WMPMEDIACOLLECTION_UNFREEZECOLLECTIONCHANGE     = 0x000001dbU,
+    DISPID_WMPMEDIACOLLECTION_POSTCOLLECTIONCHANGE         = 0x000001dcU,
 }
 
 enum : uint
 {
-    DISPID_WMPMEDIA_SOURCEURL                = 0x000002ef,
-    DISPID_WMPMEDIA_IMAGESOURCEWIDTH         = 0x000002f0,
-    DISPID_WMPMEDIA_IMAGESOURCEHEIGHT        = 0x000002f1,
-    DISPID_WMPMEDIA_MARKERCOUNT              = 0x000002f2,
-    DISPID_WMPMEDIA_GETMARKERTIME            = 0x000002f3,
-    DISPID_WMPMEDIA_GETMARKERNAME            = 0x000002f4,
-    DISPID_WMPMEDIA_DURATION                 = 0x000002f5,
-    DISPID_WMPMEDIA_DURATIONSTRING           = 0x000002f6,
-    DISPID_WMPMEDIA_ATTRIBUTECOUNT           = 0x000002f7,
-    DISPID_WMPMEDIA_GETATTRIBUTENAME         = 0x000002f8,
-    DISPID_WMPMEDIA_GETITEMINFO              = 0x000002f9,
-    DISPID_WMPMEDIA_SETITEMINFO              = 0x000002fa,
-    DISPID_WMPMEDIA_ISIDENTICAL              = 0x000002fb,
-    DISPID_WMPMEDIA_NAME                     = 0x000002fc,
-    DISPID_WMPMEDIA_GETITEMINFOBYATOM        = 0x000002fd,
-    DISPID_WMPMEDIA_ISMEMBEROF               = 0x000002fe,
-    DISPID_WMPMEDIA_ISREADONLYITEM           = 0x000002ff,
-    DISPID_WMPMEDIA2_ERROR                   = 0x00000300,
-    DISPID_WMPMEDIA3_GETATTRIBUTECOUNTBYTYPE = 0x00000301,
-    DISPID_WMPMEDIA3_GETITEMINFOBYTYPE       = 0x00000302,
+    DISPID_WMPPLAYLISTARRAY_COUNT                      = 0x000001f5U,
+    DISPID_WMPPLAYLISTARRAY_ITEM                       = 0x000001f6U,
+    DISPID_WMPPLAYLISTCOLLECTION_NEWPLAYLIST           = 0x00000228U,
+    DISPID_WMPPLAYLISTCOLLECTION_GETALL                = 0x00000229U,
+    DISPID_WMPPLAYLISTCOLLECTION_GETBYNAME             = 0x0000022aU,
+    DISPID_WMPPLAYLISTCOLLECTION_GETBYQUERYDESCRIPTION = 0x0000022bU,
+    DISPID_WMPPLAYLISTCOLLECTION_REMOVE                = 0x0000022cU,
+    DISPID_WMPPLAYLISTCOLLECTION_NEWQUERY              = 0x0000022dU,
+    DISPID_WMPPLAYLISTCOLLECTION_STARTMONITORING       = 0x0000022eU,
+    DISPID_WMPPLAYLISTCOLLECTION_STOPMONITORING        = 0x0000022fU,
+    DISPID_WMPPLAYLISTCOLLECTION_SETDELETED            = 0x00000230U,
+    DISPID_WMPPLAYLISTCOLLECTION_ISDELETED             = 0x00000231U,
+    DISPID_WMPPLAYLISTCOLLECTION_IMPORTPLAYLIST        = 0x00000232U,
 }
 
 enum : uint
 {
-    DISPID_WMPNETWORK_BANDWIDTH              = 0x00000321,
-    DISPID_WMPNETWORK_RECOVEREDPACKETS       = 0x00000322,
-    DISPID_WMPNETWORK_SOURCEPROTOCOL         = 0x00000323,
-    DISPID_WMPNETWORK_RECEIVEDPACKETS        = 0x00000324,
-    DISPID_WMPNETWORK_LOSTPACKETS            = 0x00000325,
-    DISPID_WMPNETWORK_RECEPTIONQUALITY       = 0x00000326,
-    DISPID_WMPNETWORK_BUFFERINGCOUNT         = 0x00000327,
-    DISPID_WMPNETWORK_BUFFERINGPROGRESS      = 0x00000328,
-    DISPID_WMPNETWORK_BUFFERINGTIME          = 0x00000329,
-    DISPID_WMPNETWORK_FRAMERATE              = 0x0000032a,
-    DISPID_WMPNETWORK_MAXBITRATE             = 0x0000032b,
-    DISPID_WMPNETWORK_BITRATE                = 0x0000032c,
-    DISPID_WMPNETWORK_GETPROXYSETTINGS       = 0x0000032d,
-    DISPID_WMPNETWORK_SETPROXYSETTINGS       = 0x0000032e,
-    DISPID_WMPNETWORK_GETPROXYNAME           = 0x0000032f,
-    DISPID_WMPNETWORK_SETPROXYNAME           = 0x00000330,
-    DISPID_WMPNETWORK_GETPROXYPORT           = 0x00000331,
-    DISPID_WMPNETWORK_SETPROXYPORT           = 0x00000332,
-    DISPID_WMPNETWORK_GETPROXYEXCEPTIONLIST  = 0x00000333,
-    DISPID_WMPNETWORK_SETPROXYEXCEPTIONLIST  = 0x00000334,
-    DISPID_WMPNETWORK_GETPROXYBYPASSFORLOCAL = 0x00000335,
-    DISPID_WMPNETWORK_SETPROXYBYPASSFORLOCAL = 0x00000336,
-    DISPID_WMPNETWORK_MAXBANDWIDTH           = 0x00000337,
-    DISPID_WMPNETWORK_DOWNLOADPROGRESS       = 0x00000338,
-    DISPID_WMPNETWORK_ENCODEDFRAMERATE       = 0x00000339,
-    DISPID_WMPNETWORK_FRAMESSKIPPED          = 0x0000033a,
+    DISPID_WMPMEDIA_SOURCEURL                = 0x000002efU,
+    DISPID_WMPMEDIA_IMAGESOURCEWIDTH         = 0x000002f0U,
+    DISPID_WMPMEDIA_IMAGESOURCEHEIGHT        = 0x000002f1U,
+    DISPID_WMPMEDIA_MARKERCOUNT              = 0x000002f2U,
+    DISPID_WMPMEDIA_GETMARKERTIME            = 0x000002f3U,
+    DISPID_WMPMEDIA_GETMARKERNAME            = 0x000002f4U,
+    DISPID_WMPMEDIA_DURATION                 = 0x000002f5U,
+    DISPID_WMPMEDIA_DURATIONSTRING           = 0x000002f6U,
+    DISPID_WMPMEDIA_ATTRIBUTECOUNT           = 0x000002f7U,
+    DISPID_WMPMEDIA_GETATTRIBUTENAME         = 0x000002f8U,
+    DISPID_WMPMEDIA_GETITEMINFO              = 0x000002f9U,
+    DISPID_WMPMEDIA_SETITEMINFO              = 0x000002faU,
+    DISPID_WMPMEDIA_ISIDENTICAL              = 0x000002fbU,
+    DISPID_WMPMEDIA_NAME                     = 0x000002fcU,
+    DISPID_WMPMEDIA_GETITEMINFOBYATOM        = 0x000002fdU,
+    DISPID_WMPMEDIA_ISMEMBEROF               = 0x000002feU,
+    DISPID_WMPMEDIA_ISREADONLYITEM           = 0x000002ffU,
+    DISPID_WMPMEDIA2_ERROR                   = 0x00000300U,
+    DISPID_WMPMEDIA3_GETATTRIBUTECOUNTBYTYPE = 0x00000301U,
+    DISPID_WMPMEDIA3_GETITEMINFOBYTYPE       = 0x00000302U,
 }
 
 enum : uint
 {
-    DISPID_WMPERROR_CLEARERRORQUEUE      = 0x00000353,
-    DISPID_WMPERROR_ERRORCOUNT           = 0x00000354,
-    DISPID_WMPERROR_ITEM                 = 0x00000355,
-    DISPID_WMPERROR_WEBHELP              = 0x00000356,
-    DISPID_WMPERRORITEM_ERRORCODE        = 0x00000385,
-    DISPID_WMPERRORITEM_ERRORDESCRIPTION = 0x00000386,
-    DISPID_WMPERRORITEM_ERRORCONTEXT     = 0x00000387,
-    DISPID_WMPERRORITEM_REMEDY           = 0x00000388,
-    DISPID_WMPERRORITEM_CUSTOMURL        = 0x00000389,
-    DISPID_WMPERRORITEM2_CONDITION       = 0x0000038a,
+    DISPID_WMPNETWORK_BANDWIDTH              = 0x00000321U,
+    DISPID_WMPNETWORK_RECOVEREDPACKETS       = 0x00000322U,
+    DISPID_WMPNETWORK_SOURCEPROTOCOL         = 0x00000323U,
+    DISPID_WMPNETWORK_RECEIVEDPACKETS        = 0x00000324U,
+    DISPID_WMPNETWORK_LOSTPACKETS            = 0x00000325U,
+    DISPID_WMPNETWORK_RECEPTIONQUALITY       = 0x00000326U,
+    DISPID_WMPNETWORK_BUFFERINGCOUNT         = 0x00000327U,
+    DISPID_WMPNETWORK_BUFFERINGPROGRESS      = 0x00000328U,
+    DISPID_WMPNETWORK_BUFFERINGTIME          = 0x00000329U,
+    DISPID_WMPNETWORK_FRAMERATE              = 0x0000032aU,
+    DISPID_WMPNETWORK_MAXBITRATE             = 0x0000032bU,
+    DISPID_WMPNETWORK_BITRATE                = 0x0000032cU,
+    DISPID_WMPNETWORK_GETPROXYSETTINGS       = 0x0000032dU,
+    DISPID_WMPNETWORK_SETPROXYSETTINGS       = 0x0000032eU,
+    DISPID_WMPNETWORK_GETPROXYNAME           = 0x0000032fU,
+    DISPID_WMPNETWORK_SETPROXYNAME           = 0x00000330U,
+    DISPID_WMPNETWORK_GETPROXYPORT           = 0x00000331U,
+    DISPID_WMPNETWORK_SETPROXYPORT           = 0x00000332U,
+    DISPID_WMPNETWORK_GETPROXYEXCEPTIONLIST  = 0x00000333U,
+    DISPID_WMPNETWORK_SETPROXYEXCEPTIONLIST  = 0x00000334U,
+    DISPID_WMPNETWORK_GETPROXYBYPASSFORLOCAL = 0x00000335U,
+    DISPID_WMPNETWORK_SETPROXYBYPASSFORLOCAL = 0x00000336U,
+    DISPID_WMPNETWORK_MAXBANDWIDTH           = 0x00000337U,
+    DISPID_WMPNETWORK_DOWNLOADPROGRESS       = 0x00000338U,
+    DISPID_WMPNETWORK_ENCODEDFRAMERATE       = 0x00000339U,
+    DISPID_WMPNETWORK_FRAMESSKIPPED          = 0x0000033aU,
 }
 
 enum : uint
 {
-    DISPID_WMPCLOSEDCAPTION_SAMISTYLE      = 0x000003b7,
-    DISPID_WMPCLOSEDCAPTION_SAMILANG       = 0x000003b8,
-    DISPID_WMPCLOSEDCAPTION_SAMIFILENAME   = 0x000003b9,
-    DISPID_WMPCLOSEDCAPTION_CAPTIONINGID   = 0x000003ba,
-    DISPID_WMPCLOSEDCAPTION2_GETLANGCOUNT  = 0x000003bb,
-    DISPID_WMPCLOSEDCAPTION2_GETLANGNAME   = 0x000003bc,
-    DISPID_WMPCLOSEDCAPTION2_GETLANGID     = 0x000003bd,
-    DISPID_WMPCLOSEDCAPTION2_GETSTYLECOUNT = 0x000003be,
-    DISPID_WMPCLOSEDCAPTION2_GETSTYLENAME  = 0x000003bf,
+    DISPID_WMPERROR_CLEARERRORQUEUE      = 0x00000353U,
+    DISPID_WMPERROR_ERRORCOUNT           = 0x00000354U,
+    DISPID_WMPERROR_ITEM                 = 0x00000355U,
+    DISPID_WMPERROR_WEBHELP              = 0x00000356U,
+    DISPID_WMPERRORITEM_ERRORCODE        = 0x00000385U,
+    DISPID_WMPERRORITEM_ERRORDESCRIPTION = 0x00000386U,
+    DISPID_WMPERRORITEM_ERRORCONTEXT     = 0x00000387U,
+    DISPID_WMPERRORITEM_REMEDY           = 0x00000388U,
+    DISPID_WMPERRORITEM_CUSTOMURL        = 0x00000389U,
+    DISPID_WMPERRORITEM2_CONDITION       = 0x0000038aU,
 }
 
 enum : uint
 {
-    DISPID_WMPDVD_ISAVAILABLE              = 0x000003e9,
-    DISPID_WMPDVD_DOMAIN                   = 0x000003ea,
-    DISPID_WMPDVD_TOPMENU                  = 0x000003eb,
-    DISPID_WMPDVD_TITLEMENU                = 0x000003ec,
-    DISPID_WMPDVD_BACK                     = 0x000003ed,
-    DISPID_WMPDVD_RESUME                   = 0x000003ee,
-    DISPID_WMPMETADATA_PICTURE_MIMETYPE    = 0x0000041b,
-    DISPID_WMPMETADATA_PICTURE_PICTURETYPE = 0x0000041c,
-    DISPID_WMPMETADATA_PICTURE_DESCRIPTION = 0x0000041d,
-    DISPID_WMPMETADATA_PICTURE_URL         = 0x0000041e,
-    DISPID_WMPMETADATA_TEXT_TEXT           = 0x0000041f,
-    DISPID_WMPMETADATA_TEXT_DESCRIPTION    = 0x00000420,
+    DISPID_WMPCLOSEDCAPTION_SAMISTYLE      = 0x000003b7U,
+    DISPID_WMPCLOSEDCAPTION_SAMILANG       = 0x000003b8U,
+    DISPID_WMPCLOSEDCAPTION_SAMIFILENAME   = 0x000003b9U,
+    DISPID_WMPCLOSEDCAPTION_CAPTIONINGID   = 0x000003baU,
+    DISPID_WMPCLOSEDCAPTION2_GETLANGCOUNT  = 0x000003bbU,
+    DISPID_WMPCLOSEDCAPTION2_GETLANGNAME   = 0x000003bcU,
+    DISPID_WMPCLOSEDCAPTION2_GETLANGID     = 0x000003bdU,
+    DISPID_WMPCLOSEDCAPTION2_GETSTYLECOUNT = 0x000003beU,
+    DISPID_WMPCLOSEDCAPTION2_GETSTYLENAME  = 0x000003bfU,
 }
 
 enum : uint
 {
-    DISPID_WMPPLAYERAPP_SWITCHTOPLAYERAPPLICATION = 0x0000044d,
-    DISPID_WMPPLAYERAPP_SWITCHTOCONTROL           = 0x0000044e,
-    DISPID_WMPPLAYERAPP_PLAYERDOCKED              = 0x0000044f,
-    DISPID_WMPPLAYERAPP_HASDISPLAY                = 0x00000450,
-    DISPID_WMPPLAYERAPP_REMOTESTATUS              = 0x00000451,
+    DISPID_WMPDVD_ISAVAILABLE              = 0x000003e9U,
+    DISPID_WMPDVD_DOMAIN                   = 0x000003eaU,
+    DISPID_WMPDVD_TOPMENU                  = 0x000003ebU,
+    DISPID_WMPDVD_TITLEMENU                = 0x000003ecU,
+    DISPID_WMPDVD_BACK                     = 0x000003edU,
+    DISPID_WMPDVD_RESUME                   = 0x000003eeU,
+    DISPID_WMPMETADATA_PICTURE_MIMETYPE    = 0x0000041bU,
+    DISPID_WMPMETADATA_PICTURE_PICTURETYPE = 0x0000041cU,
+    DISPID_WMPMETADATA_PICTURE_DESCRIPTION = 0x0000041dU,
+    DISPID_WMPMETADATA_PICTURE_URL         = 0x0000041eU,
+    DISPID_WMPMETADATA_TEXT_TEXT           = 0x0000041fU,
+    DISPID_WMPMETADATA_TEXT_DESCRIPTION    = 0x00000420U,
 }
 
 enum : uint
 {
-    DISPID_WMPDOWNLOADMANAGER_GETDOWNLOADCOLLECTION    = 0x0000047f,
-    DISPID_WMPDOWNLOADMANAGER_CREATEDOWNLOADCOLLECTION = 0x00000480,
+    DISPID_WMPPLAYERAPP_SWITCHTOPLAYERAPPLICATION = 0x0000044dU,
+    DISPID_WMPPLAYERAPP_SWITCHTOCONTROL           = 0x0000044eU,
+    DISPID_WMPPLAYERAPP_PLAYERDOCKED              = 0x0000044fU,
+    DISPID_WMPPLAYERAPP_HASDISPLAY                = 0x00000450U,
+    DISPID_WMPPLAYERAPP_REMOTESTATUS              = 0x00000451U,
 }
 
 enum : uint
 {
-    DISPID_WMPDOWNLOADCOLLECTION_ID            = 0x000004b1,
-    DISPID_WMPDOWNLOADCOLLECTION_COUNT         = 0x000004b2,
-    DISPID_WMPDOWNLOADCOLLECTION_ITEM          = 0x000004b3,
-    DISPID_WMPDOWNLOADCOLLECTION_STARTDOWNLOAD = 0x000004b4,
-    DISPID_WMPDOWNLOADCOLLECTION_REMOVEITEM    = 0x000004b5,
-    DISPID_WMPDOWNLOADCOLLECTION_CLEAR         = 0x000004b6,
-    DISPID_WMPDOWNLOADITEM_SOURCEURL           = 0x000004e3,
-    DISPID_WMPDOWNLOADITEM_SIZE                = 0x000004e4,
-    DISPID_WMPDOWNLOADITEM_TYPE                = 0x000004e5,
-    DISPID_WMPDOWNLOADITEM_PROGRESS            = 0x000004e6,
-    DISPID_WMPDOWNLOADITEM_DOWNLOADSTATE       = 0x000004e7,
-    DISPID_WMPDOWNLOADITEM_PAUSE               = 0x000004e8,
-    DISPID_WMPDOWNLOADITEM_RESUME              = 0x000004e9,
-    DISPID_WMPDOWNLOADITEM_CANCEL              = 0x000004ea,
-    DISPID_WMPDOWNLOADITEM2_GETITEMINFO        = 0x00000515,
+    DISPID_WMPDOWNLOADMANAGER_GETDOWNLOADCOLLECTION    = 0x0000047fU,
+    DISPID_WMPDOWNLOADMANAGER_CREATEDOWNLOADCOLLECTION = 0x00000480U,
 }
 
 enum : uint
 {
-    DISPID_WMPQUERY_ADDCONDITION   = 0x00000547,
-    DISPID_WMPQUERY_BEGINNEXTGROUP = 0x00000548,
+    DISPID_WMPDOWNLOADCOLLECTION_ID            = 0x000004b1U,
+    DISPID_WMPDOWNLOADCOLLECTION_COUNT         = 0x000004b2U,
+    DISPID_WMPDOWNLOADCOLLECTION_ITEM          = 0x000004b3U,
+    DISPID_WMPDOWNLOADCOLLECTION_STARTDOWNLOAD = 0x000004b4U,
+    DISPID_WMPDOWNLOADCOLLECTION_REMOVEITEM    = 0x000004b5U,
+    DISPID_WMPDOWNLOADCOLLECTION_CLEAR         = 0x000004b6U,
+    DISPID_WMPDOWNLOADITEM_SOURCEURL           = 0x000004e3U,
+    DISPID_WMPDOWNLOADITEM_SIZE                = 0x000004e4U,
+    DISPID_WMPDOWNLOADITEM_TYPE                = 0x000004e5U,
+    DISPID_WMPDOWNLOADITEM_PROGRESS            = 0x000004e6U,
+    DISPID_WMPDOWNLOADITEM_DOWNLOADSTATE       = 0x000004e7U,
+    DISPID_WMPDOWNLOADITEM_PAUSE               = 0x000004e8U,
+    DISPID_WMPDOWNLOADITEM_RESUME              = 0x000004e9U,
+    DISPID_WMPDOWNLOADITEM_CANCEL              = 0x000004eaU,
+    DISPID_WMPDOWNLOADITEM2_GETITEMINFO        = 0x00000515U,
 }
 
 enum : uint
 {
-    DISPID_WMPMEDIACOLLECTION2_CREATEQUERY           = 0x00000579,
-    DISPID_WMPMEDIACOLLECTION2_GETPLAYLISTBYQUERY    = 0x0000057a,
-    DISPID_WMPMEDIACOLLECTION2_GETSTRINGCOLLBYQUERY  = 0x0000057b,
-    DISPID_WMPMEDIACOLLECTION2_GETBYATTRANDMEDIATYPE = 0x0000057c,
+    DISPID_WMPQUERY_ADDCONDITION   = 0x00000547U,
+    DISPID_WMPQUERY_BEGINNEXTGROUP = 0x00000548U,
 }
 
 enum : uint
 {
-    DISPID_WMPSTRINGCOLLECTION2_ISIDENTICAL        = 0x000005ab,
-    DISPID_WMPSTRINGCOLLECTION2_GETITEMINFO        = 0x000005ac,
-    DISPID_WMPSTRINGCOLLECTION2_GETATTRCOUNTBYTYPE = 0x000005ad,
-    DISPID_WMPSTRINGCOLLECTION2_GETITEMINFOBYTYPE  = 0x000005ae,
+    DISPID_WMPMEDIACOLLECTION2_CREATEQUERY           = 0x00000579U,
+    DISPID_WMPMEDIACOLLECTION2_GETPLAYLISTBYQUERY    = 0x0000057aU,
+    DISPID_WMPMEDIACOLLECTION2_GETSTRINGCOLLBYQUERY  = 0x0000057bU,
+    DISPID_WMPMEDIACOLLECTION2_GETBYATTRANDMEDIATYPE = 0x0000057cU,
 }
 
 enum : uint
 {
-    DISPID_WMPCORE_MIN = 0x00000001,
-    DISPID_WMPCORE_MAX = 0x000005ae,
-}
-
-enum uint WMPCOREEVENT_BASE = 0x00001388;
-
-enum : uint
-{
-    DISPID_WMPCOREEVENT_OPENSTATECHANGE = 0x00001389,
-    DISPID_WMPCOREEVENT_STATUSCHANGE    = 0x0000138a,
-}
-
-enum uint WMPCOREEVENT_CONTROL_BASE = 0x000013ec;
-
-enum : uint
-{
-    DISPID_WMPCOREEVENT_PLAYSTATECHANGE     = 0x000013ed,
-    DISPID_WMPCOREEVENT_AUDIOLANGUAGECHANGE = 0x000013ee,
-}
-
-enum uint WMPCOREEVENT_SEEK_BASE = 0x00001450;
-
-enum : uint
-{
-    DISPID_WMPCOREEVENT_ENDOFSTREAM        = 0x00001451,
-    DISPID_WMPCOREEVENT_POSITIONCHANGE     = 0x00001452,
-    DISPID_WMPCOREEVENT_MARKERHIT          = 0x00001453,
-    DISPID_WMPCOREEVENT_DURATIONUNITCHANGE = 0x00001454,
-}
-
-enum uint WMPCOREEVENT_CONTENT_BASE = 0x000014b4;
-enum uint DISPID_WMPCOREEVENT_SCRIPTCOMMAND = 0x000014b5;
-enum uint WMPCOREEVENT_NETWORK_BASE = 0x00001518;
-
-enum : uint
-{
-    DISPID_WMPCOREEVENT_DISCONNECT = 0x00001519,
-    DISPID_WMPCOREEVENT_BUFFERING  = 0x0000151a,
-    DISPID_WMPCOREEVENT_NEWSTREAM  = 0x0000151b,
-}
-
-enum uint WMPCOREEVENT_ERROR_BASE = 0x0000157c;
-enum uint DISPID_WMPCOREEVENT_ERROR = 0x0000157d;
-enum uint WMPCOREEVENT_WARNING_BASE = 0x000015e0;
-enum uint DISPID_WMPCOREEVENT_WARNING = 0x000015e1;
-enum uint WMPCOREEVENT_CDROM_BASE = 0x00001644;
-enum uint DISPID_WMPCOREEVENT_CDROMMEDIACHANGE = 0x00001645;
-enum uint WMPCOREEVENT_PLAYLIST_BASE = 0x000016a8;
-
-enum : uint
-{
-    DISPID_WMPCOREEVENT_PLAYLISTCHANGE                        = 0x000016a9,
-    DISPID_WMPCOREEVENT_MEDIACHANGE                           = 0x000016aa,
-    DISPID_WMPCOREEVENT_CURRENTMEDIAITEMAVAILABLE             = 0x000016ab,
-    DISPID_WMPCOREEVENT_CURRENTPLAYLISTCHANGE                 = 0x000016ac,
-    DISPID_WMPCOREEVENT_CURRENTPLAYLISTITEMAVAILABLE          = 0x000016ad,
-    DISPID_WMPCOREEVENT_CURRENTITEMCHANGE                     = 0x000016ae,
-    DISPID_WMPCOREEVENT_MEDIACOLLECTIONCHANGE                 = 0x000016af,
-    DISPID_WMPCOREEVENT_MEDIACOLLECTIONATTRIBUTESTRINGADDED   = 0x000016b0,
-    DISPID_WMPCOREEVENT_MEDIACOLLECTIONATTRIBUTESTRINGREMOVED = 0x000016b1,
+    DISPID_WMPSTRINGCOLLECTION2_ISIDENTICAL        = 0x000005abU,
+    DISPID_WMPSTRINGCOLLECTION2_GETITEMINFO        = 0x000005acU,
+    DISPID_WMPSTRINGCOLLECTION2_GETATTRCOUNTBYTYPE = 0x000005adU,
+    DISPID_WMPSTRINGCOLLECTION2_GETITEMINFOBYTYPE  = 0x000005aeU,
 }
 
 enum : uint
 {
-    DISPID_WMPCOREEVENT_PLAYLISTCOLLECTIONCHANGE          = 0x000016b2,
-    DISPID_WMPCOREEVENT_PLAYLISTCOLLECTIONPLAYLISTADDED   = 0x000016b3,
-    DISPID_WMPCOREEVENT_PLAYLISTCOLLECTIONPLAYLISTREMOVED = 0x000016b4,
+    DISPID_WMPCORE_MIN = 0x00000001U,
+    DISPID_WMPCORE_MAX = 0x000005aeU,
+}
+
+enum uint WMPCOREEVENT_BASE = 0x00001388U;
+
+enum : uint
+{
+    DISPID_WMPCOREEVENT_OPENSTATECHANGE = 0x00001389U,
+    DISPID_WMPCOREEVENT_STATUSCHANGE    = 0x0000138aU,
+}
+
+enum uint WMPCOREEVENT_CONTROL_BASE = 0x000013ecU;
+
+enum : uint
+{
+    DISPID_WMPCOREEVENT_PLAYSTATECHANGE     = 0x000013edU,
+    DISPID_WMPCOREEVENT_AUDIOLANGUAGECHANGE = 0x000013eeU,
+}
+
+enum uint WMPCOREEVENT_SEEK_BASE = 0x00001450U;
+
+enum : uint
+{
+    DISPID_WMPCOREEVENT_ENDOFSTREAM        = 0x00001451U,
+    DISPID_WMPCOREEVENT_POSITIONCHANGE     = 0x00001452U,
+    DISPID_WMPCOREEVENT_MARKERHIT          = 0x00001453U,
+    DISPID_WMPCOREEVENT_DURATIONUNITCHANGE = 0x00001454U,
+}
+
+enum uint WMPCOREEVENT_CONTENT_BASE = 0x000014b4U;
+enum uint DISPID_WMPCOREEVENT_SCRIPTCOMMAND = 0x000014b5U;
+enum uint WMPCOREEVENT_NETWORK_BASE = 0x00001518U;
+
+enum : uint
+{
+    DISPID_WMPCOREEVENT_DISCONNECT = 0x00001519U,
+    DISPID_WMPCOREEVENT_BUFFERING  = 0x0000151aU,
+    DISPID_WMPCOREEVENT_NEWSTREAM  = 0x0000151bU,
+}
+
+enum uint WMPCOREEVENT_ERROR_BASE = 0x0000157cU;
+enum uint DISPID_WMPCOREEVENT_ERROR = 0x0000157dU;
+enum uint WMPCOREEVENT_WARNING_BASE = 0x000015e0U;
+enum uint DISPID_WMPCOREEVENT_WARNING = 0x000015e1U;
+enum uint WMPCOREEVENT_CDROM_BASE = 0x00001644U;
+enum uint DISPID_WMPCOREEVENT_CDROMMEDIACHANGE = 0x00001645U;
+enum uint WMPCOREEVENT_PLAYLIST_BASE = 0x000016a8U;
+
+enum : uint
+{
+    DISPID_WMPCOREEVENT_PLAYLISTCHANGE                        = 0x000016a9U,
+    DISPID_WMPCOREEVENT_MEDIACHANGE                           = 0x000016aaU,
+    DISPID_WMPCOREEVENT_CURRENTMEDIAITEMAVAILABLE             = 0x000016abU,
+    DISPID_WMPCOREEVENT_CURRENTPLAYLISTCHANGE                 = 0x000016acU,
+    DISPID_WMPCOREEVENT_CURRENTPLAYLISTITEMAVAILABLE          = 0x000016adU,
+    DISPID_WMPCOREEVENT_CURRENTITEMCHANGE                     = 0x000016aeU,
+    DISPID_WMPCOREEVENT_MEDIACOLLECTIONCHANGE                 = 0x000016afU,
+    DISPID_WMPCOREEVENT_MEDIACOLLECTIONATTRIBUTESTRINGADDED   = 0x000016b0U,
+    DISPID_WMPCOREEVENT_MEDIACOLLECTIONATTRIBUTESTRINGREMOVED = 0x000016b1U,
 }
 
 enum : uint
 {
-    DISPID_WMPCOREEVENT_MEDIACOLLECTIONCONTENTSCANADDEDITEM    = 0x000016b5,
-    DISPID_WMPCOREEVENT_MEDIACOLLECTIONCONTENTSCANPROGRESS     = 0x000016b6,
-    DISPID_WMPCOREEVENT_MEDIACOLLECTIONSEARCHFOUNDITEM         = 0x000016b7,
-    DISPID_WMPCOREEVENT_MEDIACOLLECTIONSEARCHPROGRESS          = 0x000016b8,
-    DISPID_WMPCOREEVENT_MEDIACOLLECTIONSEARCHCOMPLETE          = 0x000016b9,
-    DISPID_WMPCOREEVENT_PLAYLISTCOLLECTIONPLAYLISTSETASDELETED = 0x000016ba,
+    DISPID_WMPCOREEVENT_PLAYLISTCOLLECTIONCHANGE          = 0x000016b2U,
+    DISPID_WMPCOREEVENT_PLAYLISTCOLLECTIONPLAYLISTADDED   = 0x000016b3U,
+    DISPID_WMPCOREEVENT_PLAYLISTCOLLECTIONPLAYLISTREMOVED = 0x000016b4U,
 }
 
 enum : uint
 {
-    DISPID_WMPCOREEVENT_MODECHANGE                            = 0x000016bb,
-    DISPID_WMPCOREEVENT_MEDIACOLLECTIONATTRIBUTESTRINGCHANGED = 0x000016bc,
-    DISPID_WMPCOREEVENT_MEDIAERROR                            = 0x000016bd,
-    DISPID_WMPCOREEVENT_DOMAINCHANGE                          = 0x000016be,
-    DISPID_WMPCOREEVENT_OPENPLAYLISTSWITCH                    = 0x000016bf,
-    DISPID_WMPCOREEVENT_STRINGCOLLECTIONCHANGE                = 0x000016c0,
-    DISPID_WMPCOREEVENT_MEDIACOLLECTIONMEDIAADDED             = 0x000016c1,
-    DISPID_WMPCOREEVENT_MEDIACOLLECTIONMEDIAREMOVED           = 0x000016c2,
-}
-
-enum uint WMPOCXEVENT_BASE = 0x00001964;
-
-enum : uint
-{
-    DISPID_WMPOCXEVENT_SWITCHEDTOPLAYERAPPLICATION = 0x00001965,
-    DISPID_WMPOCXEVENT_SWITCHEDTOCONTROL           = 0x00001966,
-    DISPID_WMPOCXEVENT_PLAYERDOCKEDSTATECHANGE     = 0x00001967,
-    DISPID_WMPOCXEVENT_PLAYERRECONNECT             = 0x00001968,
-    DISPID_WMPOCXEVENT_CLICK                       = 0x00001969,
-    DISPID_WMPOCXEVENT_DOUBLECLICK                 = 0x0000196a,
-    DISPID_WMPOCXEVENT_KEYDOWN                     = 0x0000196b,
-    DISPID_WMPOCXEVENT_KEYPRESS                    = 0x0000196c,
-    DISPID_WMPOCXEVENT_KEYUP                       = 0x0000196d,
-    DISPID_WMPOCXEVENT_MOUSEDOWN                   = 0x0000196e,
-    DISPID_WMPOCXEVENT_MOUSEMOVE                   = 0x0000196f,
-    DISPID_WMPOCXEVENT_MOUSEUP                     = 0x00001970,
-    DISPID_WMPOCXEVENT_DEVICECONNECT               = 0x00001971,
-    DISPID_WMPOCXEVENT_DEVICEDISCONNECT            = 0x00001972,
-    DISPID_WMPOCXEVENT_DEVICESTATUSCHANGE          = 0x00001973,
-    DISPID_WMPOCXEVENT_DEVICESYNCSTATECHANGE       = 0x00001974,
-    DISPID_WMPOCXEVENT_DEVICESYNCERROR             = 0x00001975,
-    DISPID_WMPOCXEVENT_CREATEPARTNERSHIPCOMPLETE   = 0x00001976,
-    DISPID_WMPOCXEVENT_CDROMRIPSTATECHANGE         = 0x00001977,
-    DISPID_WMPOCXEVENT_CDROMRIPMEDIAERROR          = 0x00001978,
-    DISPID_WMPOCXEVENT_CDROMBURNSTATECHANGE        = 0x00001979,
-    DISPID_WMPOCXEVENT_CDROMBURNMEDIAERROR         = 0x0000197a,
-    DISPID_WMPOCXEVENT_CDROMBURNERROR              = 0x0000197b,
-    DISPID_WMPOCXEVENT_LIBRARYCONNECT              = 0x0000197c,
-    DISPID_WMPOCXEVENT_LIBRARYDISCONNECT           = 0x0000197d,
-    DISPID_WMPOCXEVENT_FOLDERSCANSTATECHANGE       = 0x0000197e,
-    DISPID_WMPOCXEVENT_DEVICEESTIMATION            = 0x0000197f,
+    DISPID_WMPCOREEVENT_MEDIACOLLECTIONCONTENTSCANADDEDITEM    = 0x000016b5U,
+    DISPID_WMPCOREEVENT_MEDIACOLLECTIONCONTENTSCANPROGRESS     = 0x000016b6U,
+    DISPID_WMPCOREEVENT_MEDIACOLLECTIONSEARCHFOUNDITEM         = 0x000016b7U,
+    DISPID_WMPCOREEVENT_MEDIACOLLECTIONSEARCHPROGRESS          = 0x000016b8U,
+    DISPID_WMPCOREEVENT_MEDIACOLLECTIONSEARCHCOMPLETE          = 0x000016b9U,
+    DISPID_WMPCOREEVENT_PLAYLISTCOLLECTIONPLAYLISTSETASDELETED = 0x000016baU,
 }
 
 enum : uint
 {
-    DISPID_WMPCONTROLS_BASE        = 0x00000032,
-    DISPID_WMPSETTINGS_BASE        = 0x00000064,
-    DISPID_WMPPLAYLIST_BASE        = 0x000000c8,
-    DISPID_WMPCDROM_BASE           = 0x000000fa,
-    DISPID_WMPCDROMCOLLECTION_BASE = 0x0000012c,
+    DISPID_WMPCOREEVENT_MODECHANGE                            = 0x000016bbU,
+    DISPID_WMPCOREEVENT_MEDIACOLLECTIONATTRIBUTESTRINGCHANGED = 0x000016bcU,
+    DISPID_WMPCOREEVENT_MEDIAERROR                            = 0x000016bdU,
+    DISPID_WMPCOREEVENT_DOMAINCHANGE                          = 0x000016beU,
+    DISPID_WMPCOREEVENT_OPENPLAYLISTSWITCH                    = 0x000016bfU,
+    DISPID_WMPCOREEVENT_STRINGCOLLECTIONCHANGE                = 0x000016c0U,
+    DISPID_WMPCOREEVENT_MEDIACOLLECTIONMEDIAADDED             = 0x000016c1U,
+    DISPID_WMPCOREEVENT_MEDIACOLLECTIONMEDIAREMOVED           = 0x000016c2U,
 }
 
-enum uint DISPID_WMPSTRINGCOLLECTION_BASE = 0x00000190;
-enum uint DISPID_WMPMEDIACOLLECTION_BASE = 0x000001c2;
+enum uint WMPOCXEVENT_BASE = 0x00001964U;
 
 enum : uint
 {
-    DISPID_WMPPLAYLISTARRAY_BASE      = 0x000001f4,
-    DISPID_WMPPLAYLISTCOLLECTION_BASE = 0x00000226,
+    DISPID_WMPOCXEVENT_SWITCHEDTOPLAYERAPPLICATION = 0x00001965U,
+    DISPID_WMPOCXEVENT_SWITCHEDTOCONTROL           = 0x00001966U,
+    DISPID_WMPOCXEVENT_PLAYERDOCKEDSTATECHANGE     = 0x00001967U,
+    DISPID_WMPOCXEVENT_PLAYERRECONNECT             = 0x00001968U,
+    DISPID_WMPOCXEVENT_CLICK                       = 0x00001969U,
+    DISPID_WMPOCXEVENT_DOUBLECLICK                 = 0x0000196aU,
+    DISPID_WMPOCXEVENT_KEYDOWN                     = 0x0000196bU,
+    DISPID_WMPOCXEVENT_KEYPRESS                    = 0x0000196cU,
+    DISPID_WMPOCXEVENT_KEYUP                       = 0x0000196dU,
+    DISPID_WMPOCXEVENT_MOUSEDOWN                   = 0x0000196eU,
+    DISPID_WMPOCXEVENT_MOUSEMOVE                   = 0x0000196fU,
+    DISPID_WMPOCXEVENT_MOUSEUP                     = 0x00001970U,
+    DISPID_WMPOCXEVENT_DEVICECONNECT               = 0x00001971U,
+    DISPID_WMPOCXEVENT_DEVICEDISCONNECT            = 0x00001972U,
+    DISPID_WMPOCXEVENT_DEVICESTATUSCHANGE          = 0x00001973U,
+    DISPID_WMPOCXEVENT_DEVICESYNCSTATECHANGE       = 0x00001974U,
+    DISPID_WMPOCXEVENT_DEVICESYNCERROR             = 0x00001975U,
+    DISPID_WMPOCXEVENT_CREATEPARTNERSHIPCOMPLETE   = 0x00001976U,
+    DISPID_WMPOCXEVENT_CDROMRIPSTATECHANGE         = 0x00001977U,
+    DISPID_WMPOCXEVENT_CDROMRIPMEDIAERROR          = 0x00001978U,
+    DISPID_WMPOCXEVENT_CDROMBURNSTATECHANGE        = 0x00001979U,
+    DISPID_WMPOCXEVENT_CDROMBURNMEDIAERROR         = 0x0000197aU,
+    DISPID_WMPOCXEVENT_CDROMBURNERROR              = 0x0000197bU,
+    DISPID_WMPOCXEVENT_LIBRARYCONNECT              = 0x0000197cU,
+    DISPID_WMPOCXEVENT_LIBRARYDISCONNECT           = 0x0000197dU,
+    DISPID_WMPOCXEVENT_FOLDERSCANSTATECHANGE       = 0x0000197eU,
+    DISPID_WMPOCXEVENT_DEVICEESTIMATION            = 0x0000197fU,
 }
 
 enum : uint
 {
-    DISPID_WMPMEDIA_BASE         = 0x000002ee,
-    DISPID_WMPNETWORK_BASE       = 0x00000320,
-    DISPID_WMPERROR_BASE         = 0x00000352,
-    DISPID_WMPERRORITEM_BASE     = 0x00000384,
-    DISPID_WMPCLOSEDCAPTION_BASE = 0x000003b6,
+    DISPID_WMPCONTROLS_BASE        = 0x00000032U,
+    DISPID_WMPSETTINGS_BASE        = 0x00000064U,
+    DISPID_WMPPLAYLIST_BASE        = 0x000000c8U,
+    DISPID_WMPCDROM_BASE           = 0x000000faU,
+    DISPID_WMPCDROMCOLLECTION_BASE = 0x0000012cU,
+}
+
+enum uint DISPID_WMPSTRINGCOLLECTION_BASE = 0x00000190U;
+enum uint DISPID_WMPMEDIACOLLECTION_BASE = 0x000001c2U;
+
+enum : uint
+{
+    DISPID_WMPPLAYLISTARRAY_BASE      = 0x000001f4U,
+    DISPID_WMPPLAYLISTCOLLECTION_BASE = 0x00000226U,
 }
 
 enum : uint
 {
-    DISPID_WMPDVD_BASE                = 0x000003e8,
-    DISPID_WMPMETADATA_BASE           = 0x0000041a,
-    DISPID_WMPPLAYERAPP_BASE          = 0x0000044c,
-    DISPID_WMPDOWNLOADMANAGER_BASE    = 0x0000047e,
-    DISPID_WMPDOWNLOADCOLLECTION_BASE = 0x000004b0,
-    DISPID_WMPDOWNLOADITEM_BASE       = 0x000004e2,
-    DISPID_WMPDOWNLOADITEM2_BASE      = 0x00000514,
+    DISPID_WMPMEDIA_BASE         = 0x000002eeU,
+    DISPID_WMPNETWORK_BASE       = 0x00000320U,
+    DISPID_WMPERROR_BASE         = 0x00000352U,
+    DISPID_WMPERRORITEM_BASE     = 0x00000384U,
+    DISPID_WMPCLOSEDCAPTION_BASE = 0x000003b6U,
 }
 
 enum : uint
 {
-    DISPID_WMPQUERY_BASE            = 0x00000546,
-    DISPID_WMPMEDIACOLLECTION2_BASE = 0x00000578,
+    DISPID_WMPDVD_BASE                = 0x000003e8U,
+    DISPID_WMPMETADATA_BASE           = 0x0000041aU,
+    DISPID_WMPPLAYERAPP_BASE          = 0x0000044cU,
+    DISPID_WMPDOWNLOADMANAGER_BASE    = 0x0000047eU,
+    DISPID_WMPDOWNLOADCOLLECTION_BASE = 0x000004b0U,
+    DISPID_WMPDOWNLOADITEM_BASE       = 0x000004e2U,
+    DISPID_WMPDOWNLOADITEM2_BASE      = 0x00000514U,
 }
 
-enum uint DISPID_WMPSTRINGCOLLECTION2_BASE = 0x000005aa;
+enum : uint
+{
+    DISPID_WMPQUERY_BASE            = 0x00000546U,
+    DISPID_WMPMEDIACOLLECTION2_BASE = 0x00000578U,
+}
+
+enum uint DISPID_WMPSTRINGCOLLECTION2_BASE = 0x000005aaU;
 
 enum : GUID
 {
@@ -1343,7 +1379,7 @@ enum : GUID
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/effects/ns-effects-timedlevel))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/effects/ns-effects-timedlevel
 struct TimedLevel
 {
     ubyte[2048] frequency;
@@ -1352,7 +1388,7 @@ struct TimedLevel
     long        timeStamp;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/ns-contentpartner-wmpcontextmenuinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/ns-contentpartner-wmpcontextmenuinfo
 struct WMPContextMenuInfo
 {
     uint dwID;
@@ -1360,7 +1396,7 @@ struct WMPContextMenuInfo
     BSTR bstrHelpText;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpdevices/ns-wmpdevices-wmp_wmdm_metadata_round_trip_pc2device))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpdevices/ns-wmpdevices-wmp_wmdm_metadata_round_trip_pc2device
 struct WMP_WMDM_METADATA_ROUND_TRIP_PC2DEVICE
 {
 align (1):
@@ -1368,7 +1404,7 @@ align (1):
     uint dwResultSetStartingIndex;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpdevices/ns-wmpdevices-wmp_wmdm_metadata_round_trip_device2pc))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpdevices/ns-wmpdevices-wmp_wmdm_metadata_round_trip_device2pc
 struct WMP_WMDM_METADATA_ROUND_TRIP_DEVICE2PC
 {
 align (1):
@@ -1401,452 +1437,452 @@ struct FeedFolderWatcher;
 struct FeedWatcher;
 
 @GUID("3614c646-3b3b-4de7-a81e-930e3f2127b3")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmperroritem))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmperroritem
 interface IWMPErrorItem : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmperroritem-get_errorcode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmperroritem-get_errorcode
     HRESULT get_errorCode(int* phr);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmperroritem-get_errordescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmperroritem-get_errordescription
     HRESULT get_errorDescription(BSTR* pbstrDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmperroritem-get_errorcontext))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmperroritem-get_errorcontext
     HRESULT get_errorContext(VARIANT* pvarContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmperroritem-get_remedy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmperroritem-get_remedy
     HRESULT get_remedy(int* plRemedy);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmperroritem-get_customurl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmperroritem-get_customurl
     HRESULT get_customUrl(BSTR* pbstrCustomUrl);
 }
 
 @GUID("a12dcf7d-14ab-4c1b-a8cd-63909f06025b")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmperror))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmperror
 interface IWMPError : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmperror-clearerrorqueue))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmperror-clearerrorqueue
     HRESULT clearErrorQueue();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmperror-get_errorcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmperror-get_errorcount
     HRESULT get_errorCount(int* plNumErrors);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmperror-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmperror-get_item
     HRESULT get_item(int dwIndex, IWMPErrorItem* ppErrorItem);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmperror-webhelp))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmperror-webhelp
     HRESULT webHelp();
 }
 
 @GUID("94d55e95-3fac-11d3-b155-00c04f79faa6")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpmedia))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpmedia
 interface IWMPMedia : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia-get_isidentical))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia-get_isidentical
     HRESULT get_isIdentical(IWMPMedia pIWMPMedia, VARIANT_BOOL* pvbool);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia-get_sourceurl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia-get_sourceurl
     HRESULT get_sourceURL(BSTR* pbstrSourceURL);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia-get_name
     HRESULT get_name(BSTR* pbstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia-put_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia-put_name
     HRESULT put_name(BSTR bstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia-get_imagesourcewidth))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia-get_imagesourcewidth
     HRESULT get_imageSourceWidth(int* pWidth);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia-get_imagesourceheight))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia-get_imagesourceheight
     HRESULT get_imageSourceHeight(int* pHeight);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia-get_markercount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia-get_markercount
     HRESULT get_markerCount(int* pMarkerCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia-getmarkertime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia-getmarkertime
     HRESULT getMarkerTime(int MarkerNum, double* pMarkerTime);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia-getmarkername))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia-getmarkername
     HRESULT getMarkerName(int MarkerNum, BSTR* pbstrMarkerName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia-get_duration))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia-get_duration
     HRESULT get_duration(double* pDuration);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia-get_durationstring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia-get_durationstring
     HRESULT get_durationString(BSTR* pbstrDuration);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia-get_attributecount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia-get_attributecount
     HRESULT get_attributeCount(int* plCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia-getattributename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia-getattributename
     HRESULT getAttributeName(int lIndex, BSTR* pbstrItemName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia-getiteminfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia-getiteminfo
     HRESULT getItemInfo(BSTR bstrItemName, BSTR* pbstrVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia-setiteminfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia-setiteminfo
     HRESULT setItemInfo(BSTR bstrItemName, BSTR bstrVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia-getiteminfobyatom))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia-getiteminfobyatom
     HRESULT getItemInfoByAtom(int lAtom, BSTR* pbstrVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia-ismemberof))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia-ismemberof
     HRESULT isMemberOf(IWMPPlaylist pPlaylist, VARIANT_BOOL* pvarfIsMemberOf);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia-isreadonlyitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia-isreadonlyitem
     HRESULT isReadOnlyItem(BSTR bstrItemName, VARIANT_BOOL* pvarfIsReadOnly);
 }
 
 @GUID("74c09e02-f828-11d2-a74b-00a0c905f36e")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpcontrols))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpcontrols
 interface IWMPControls : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols-get_isavailable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols-get_isavailable
     HRESULT get_isAvailable(BSTR bstrItem, VARIANT_BOOL* pIsAvailable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols-play))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols-play
     HRESULT play();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols-stop))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols-stop
     HRESULT stop();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols-pause))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols-pause
     HRESULT pause();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols-fastforward))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols-fastforward
     HRESULT fastForward();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols-fastreverse))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols-fastreverse
     HRESULT fastReverse();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols-get_currentposition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols-get_currentposition
     HRESULT get_currentPosition(double* pdCurrentPosition);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols-put_currentposition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols-put_currentposition
     HRESULT put_currentPosition(double dCurrentPosition);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols-get_currentpositionstring))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols-get_currentpositionstring
     HRESULT get_currentPositionString(BSTR* pbstrCurrentPosition);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols-next))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols-next
     HRESULT next();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols-previous))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols-previous
     HRESULT previous();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols-get_currentitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols-get_currentitem
     HRESULT get_currentItem(IWMPMedia* ppIWMPMedia);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols-put_currentitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols-put_currentitem
     HRESULT put_currentItem(IWMPMedia pIWMPMedia);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols-get_currentmarker))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols-get_currentmarker
     HRESULT get_currentMarker(int* plMarker);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols-put_currentmarker))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols-put_currentmarker
     HRESULT put_currentMarker(int lMarker);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols-playitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols-playitem
     HRESULT playItem(IWMPMedia pIWMPMedia);
 }
 
 @GUID("9104d1ab-80c9-4fed-abf0-2e6417a6df14")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpsettings))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpsettings
 interface IWMPSettings : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-get_isavailable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-get_isavailable
     HRESULT get_isAvailable(BSTR bstrItem, VARIANT_BOOL* pIsAvailable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-get_autostart))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-get_autostart
     HRESULT get_autoStart(VARIANT_BOOL* pfAutoStart);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-put_autostart))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-put_autostart
     HRESULT put_autoStart(VARIANT_BOOL fAutoStart);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-get_baseurl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-get_baseurl
     HRESULT get_baseURL(BSTR* pbstrBaseURL);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-put_baseurl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-put_baseurl
     HRESULT put_baseURL(BSTR bstrBaseURL);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-get_defaultframe))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-get_defaultframe
     HRESULT get_defaultFrame(BSTR* pbstrDefaultFrame);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-put_defaultframe))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-put_defaultframe
     HRESULT put_defaultFrame(BSTR bstrDefaultFrame);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-get_invokeurls))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-get_invokeurls
     HRESULT get_invokeURLs(VARIANT_BOOL* pfInvokeURLs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-put_invokeurls))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-put_invokeurls
     HRESULT put_invokeURLs(VARIANT_BOOL fInvokeURLs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-get_mute))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-get_mute
     HRESULT get_mute(VARIANT_BOOL* pfMute);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-put_mute))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-put_mute
     HRESULT put_mute(VARIANT_BOOL fMute);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-get_playcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-get_playcount
     HRESULT get_playCount(int* plCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-put_playcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-put_playcount
     HRESULT put_playCount(int lCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-get_rate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-get_rate
     HRESULT get_rate(double* pdRate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-put_rate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-put_rate
     HRESULT put_rate(double dRate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-get_balance))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-get_balance
     HRESULT get_balance(int* plBalance);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-put_balance))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-put_balance
     HRESULT put_balance(int lBalance);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-get_volume))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-get_volume
     HRESULT get_volume(int* plVolume);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-put_volume))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-put_volume
     HRESULT put_volume(int lVolume);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-getmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-getmode
     HRESULT getMode(BSTR bstrMode, VARIANT_BOOL* pvarfMode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-setmode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-setmode
     HRESULT setMode(BSTR bstrMode, VARIANT_BOOL varfMode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-get_enableerrordialogs))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-get_enableerrordialogs
     HRESULT get_enableErrorDialogs(VARIANT_BOOL* pfEnableErrorDialogs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-put_enableerrordialogs))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings-put_enableerrordialogs
     HRESULT put_enableErrorDialogs(VARIANT_BOOL fEnableErrorDialogs);
 }
 
 @GUID("4f2df574-c588-11d3-9ed0-00c04fb6e937")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpclosedcaption))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpclosedcaption
 interface IWMPClosedCaption : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpclosedcaption-get_samistyle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpclosedcaption-get_samistyle
     HRESULT get_SAMIStyle(BSTR* pbstrSAMIStyle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpclosedcaption-put_samistyle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpclosedcaption-put_samistyle
     HRESULT put_SAMIStyle(BSTR bstrSAMIStyle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpclosedcaption-get_samilang))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpclosedcaption-get_samilang
     HRESULT get_SAMILang(BSTR* pbstrSAMILang);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpclosedcaption-put_samilang))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpclosedcaption-put_samilang
     HRESULT put_SAMILang(BSTR bstrSAMILang);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpclosedcaption-get_samifilename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpclosedcaption-get_samifilename
     HRESULT get_SAMIFileName(BSTR* pbstrSAMIFileName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpclosedcaption-put_samifilename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpclosedcaption-put_samifilename
     HRESULT put_SAMIFileName(BSTR bstrSAMIFileName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpclosedcaption-get_captioningid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpclosedcaption-get_captioningid
     HRESULT get_captioningId(BSTR* pbstrCaptioningID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpclosedcaption-put_captioningid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpclosedcaption-put_captioningid
     HRESULT put_captioningId(BSTR bstrCaptioningID);
 }
 
 @GUID("d5f0f4f1-130c-11d3-b14e-00c04f79faa6")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpplaylist))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpplaylist
 interface IWMPPlaylist : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylist-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylist-get_count
     HRESULT get_count(int* plCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylist-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylist-get_name
     HRESULT get_name(BSTR* pbstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylist-put_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylist-put_name
     HRESULT put_name(BSTR bstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylist-get_attributecount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylist-get_attributecount
     HRESULT get_attributeCount(int* plCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylist-get_attributename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylist-get_attributename
     HRESULT get_attributeName(int lIndex, BSTR* pbstrAttributeName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylist-get_item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylist-get_item
     HRESULT get_item(int lIndex, IWMPMedia* ppIWMPMedia);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylist-getiteminfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylist-getiteminfo
     HRESULT getItemInfo(BSTR bstrName, BSTR* pbstrVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylist-setiteminfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylist-setiteminfo
     HRESULT setItemInfo(BSTR bstrName, BSTR bstrValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylist-get_isidentical))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylist-get_isidentical
     HRESULT get_isIdentical(IWMPPlaylist pIWMPPlaylist, VARIANT_BOOL* pvbool);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylist-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylist-clear
     HRESULT clear();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylist-insertitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylist-insertitem
     HRESULT insertItem(int lIndex, IWMPMedia pIWMPMedia);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylist-appenditem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylist-appenditem
     HRESULT appendItem(IWMPMedia pIWMPMedia);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylist-removeitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylist-removeitem
     HRESULT removeItem(IWMPMedia pIWMPMedia);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylist-moveitem))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylist-moveitem
     HRESULT moveItem(int lIndexOld, int lIndexNew);
 }
 
 @GUID("cfab6e98-8730-11d3-b388-00c04f68574b")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpcdrom))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpcdrom
 interface IWMPCdrom : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdrom-get_drivespecifier))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdrom-get_drivespecifier
     HRESULT get_driveSpecifier(BSTR* pbstrDrive);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdrom-get_playlist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdrom-get_playlist
     HRESULT get_playlist(IWMPPlaylist* ppPlaylist);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdrom-eject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdrom-eject
     HRESULT eject();
 }
 
 @GUID("ee4c8fe2-34b2-11d3-a3bf-006097c9b344")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpcdromcollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpcdromcollection
 interface IWMPCdromCollection : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromcollection-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromcollection-get_count
     HRESULT get_count(int* plCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromcollection-item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromcollection-item
     HRESULT item(int lIndex, IWMPCdrom* ppItem);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromcollection-getbydrivespecifier))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromcollection-getbydrivespecifier
     HRESULT getByDriveSpecifier(BSTR bstrDriveSpecifier, IWMPCdrom* ppCdrom);
 }
 
 @GUID("4a976298-8c0d-11d3-b389-00c04f68574b")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpstringcollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpstringcollection
 interface IWMPStringCollection : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpstringcollection-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpstringcollection-get_count
     HRESULT get_count(int* plCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpstringcollection-item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpstringcollection-item
     HRESULT item(int lIndex, BSTR* pbstrString);
 }
 
 @GUID("8363bc22-b4b4-4b19-989d-1cd765749dd1")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpmediacollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpmediacollection
 interface IWMPMediaCollection : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmediacollection-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmediacollection-add
     HRESULT add(BSTR bstrURL, IWMPMedia* ppItem);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmediacollection-getall))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmediacollection-getall
     HRESULT getAll(IWMPPlaylist* ppMediaItems);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmediacollection-getbyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmediacollection-getbyname
     HRESULT getByName(BSTR bstrName, IWMPPlaylist* ppMediaItems);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmediacollection-getbygenre))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmediacollection-getbygenre
     HRESULT getByGenre(BSTR bstrGenre, IWMPPlaylist* ppMediaItems);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmediacollection-getbyauthor))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmediacollection-getbyauthor
     HRESULT getByAuthor(BSTR bstrAuthor, IWMPPlaylist* ppMediaItems);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmediacollection-getbyalbum))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmediacollection-getbyalbum
     HRESULT getByAlbum(BSTR bstrAlbum, IWMPPlaylist* ppMediaItems);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmediacollection-getbyattribute))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmediacollection-getbyattribute
     HRESULT getByAttribute(BSTR bstrAttribute, BSTR bstrValue, IWMPPlaylist* ppMediaItems);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmediacollection-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmediacollection-remove
     HRESULT remove(IWMPMedia pItem, VARIANT_BOOL varfDeleteFile);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmediacollection-getattributestringcollection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmediacollection-getattributestringcollection
     HRESULT getAttributeStringCollection(BSTR bstrAttribute, BSTR bstrMediaType, 
                                          IWMPStringCollection* ppStringCollection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmediacollection-getmediaatom))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmediacollection-getmediaatom
     HRESULT getMediaAtom(BSTR bstrItemName, int* plAtom);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmediacollection-setdeleted))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmediacollection-setdeleted
     HRESULT setDeleted(IWMPMedia pItem, VARIANT_BOOL varfIsDeleted);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpmediacollection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpmediacollection
     HRESULT isDeleted(IWMPMedia pItem, VARIANT_BOOL* pvarfIsDeleted);
 }
 
 @GUID("679409c0-99f7-11d3-9fb7-00105aa620bb")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpplaylistarray))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpplaylistarray
 interface IWMPPlaylistArray : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylistarray-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylistarray-get_count
     HRESULT get_count(int* plCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylistarray-item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylistarray-item
     HRESULT item(int lIndex, IWMPPlaylist* ppItem);
 }
 
 @GUID("10a13217-23a7-439b-b1c0-d847c79b7774")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpplaylistcollection))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpplaylistcollection
 interface IWMPPlaylistCollection : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylistcollection-newplaylist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylistcollection-newplaylist
     HRESULT newPlaylist(BSTR bstrName, IWMPPlaylist* ppItem);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylistcollection-getall))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylistcollection-getall
     HRESULT getAll(IWMPPlaylistArray* ppPlaylistArray);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylistcollection-getbyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylistcollection-getbyname
     HRESULT getByName(BSTR bstrName, IWMPPlaylistArray* ppPlaylistArray);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylistcollection-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylistcollection-remove
     HRESULT remove(IWMPPlaylist pItem);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpplaylistcollection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpplaylistcollection
     HRESULT setDeleted(IWMPPlaylist pItem, VARIANT_BOOL varfIsDeleted);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylistcollection-isdeleted))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylistcollection-isdeleted
     HRESULT isDeleted(IWMPPlaylist pItem, VARIANT_BOOL* pvarfIsDeleted);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylistcollection-importplaylist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplaylistcollection-importplaylist
     HRESULT importPlaylist(IWMPPlaylist pItem, IWMPPlaylist* ppImportedItem);
 }
 
 @GUID("ec21b779-edef-462d-bba4-ad9dde2b29a7")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpnetwork))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpnetwork
 interface IWMPNetwork : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-get_bandwidth))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-get_bandwidth
     HRESULT get_bandWidth(int* plBandwidth);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-get_recoveredpackets))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-get_recoveredpackets
     HRESULT get_recoveredPackets(int* plRecoveredPackets);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-get_sourceprotocol))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-get_sourceprotocol
     HRESULT get_sourceProtocol(BSTR* pbstrSourceProtocol);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-get_receivedpackets))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-get_receivedpackets
     HRESULT get_receivedPackets(int* plReceivedPackets);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-get_lostpackets))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-get_lostpackets
     HRESULT get_lostPackets(int* plLostPackets);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-get_receptionquality))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-get_receptionquality
     HRESULT get_receptionQuality(int* plReceptionQuality);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-get_bufferingcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-get_bufferingcount
     HRESULT get_bufferingCount(int* plBufferingCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-get_bufferingprogress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-get_bufferingprogress
     HRESULT get_bufferingProgress(int* plBufferingProgress);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-get_bufferingtime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-get_bufferingtime
     HRESULT get_bufferingTime(int* plBufferingTime);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-put_bufferingtime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-put_bufferingtime
     HRESULT put_bufferingTime(int lBufferingTime);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-get_framerate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-get_framerate
     HRESULT get_frameRate(int* plFrameRate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-get_maxbitrate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-get_maxbitrate
     HRESULT get_maxBitRate(int* plBitRate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-get_bitrate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-get_bitrate
     HRESULT get_bitRate(int* plBitRate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-getproxysettings))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-getproxysettings
     HRESULT getProxySettings(BSTR bstrProtocol, int* plProxySetting);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-setproxysettings))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-setproxysettings
     HRESULT setProxySettings(BSTR bstrProtocol, int lProxySetting);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-getproxyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-getproxyname
     HRESULT getProxyName(BSTR bstrProtocol, BSTR* pbstrProxyName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-setproxyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-setproxyname
     HRESULT setProxyName(BSTR bstrProtocol, BSTR bstrProxyName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-getproxyport))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-getproxyport
     HRESULT getProxyPort(BSTR bstrProtocol, int* lProxyPort);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-setproxyport))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-setproxyport
     HRESULT setProxyPort(BSTR bstrProtocol, int lProxyPort);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-getproxyexceptionlist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-getproxyexceptionlist
     HRESULT getProxyExceptionList(BSTR bstrProtocol, BSTR* pbstrExceptionList);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-setproxyexceptionlist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-setproxyexceptionlist
     HRESULT setProxyExceptionList(BSTR bstrProtocol, BSTR pbstrExceptionList);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-getproxybypassforlocal))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-getproxybypassforlocal
     HRESULT getProxyBypassForLocal(BSTR bstrProtocol, VARIANT_BOOL* pfBypassForLocal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-setproxybypassforlocal))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-setproxybypassforlocal
     HRESULT setProxyBypassForLocal(BSTR bstrProtocol, VARIANT_BOOL fBypassForLocal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-get_maxbandwidth))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-get_maxbandwidth
     HRESULT get_maxBandwidth(int* lMaxBandwidth);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-put_maxbandwidth))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-put_maxbandwidth
     HRESULT put_maxBandwidth(int lMaxBandwidth);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-get_downloadprogress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-get_downloadprogress
     HRESULT get_downloadProgress(int* plDownloadProgress);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-get_encodedframerate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-get_encodedframerate
     HRESULT get_encodedFrameRate(int* plFrameRate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-get_framesskipped))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpnetwork-get_framesskipped
     HRESULT get_framesSkipped(int* plFrames);
 }
 
 @GUID("d84cca99-cce2-11d2-9ecc-0000f8085981")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpcore))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpcore
 interface IWMPCore : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-close))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-close
     HRESULT close();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-get_url))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-get_url
     HRESULT get_URL(BSTR* pbstrURL);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-put_url))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-put_url
     HRESULT put_URL(BSTR bstrURL);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-get_openstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-get_openstate
     HRESULT get_openState(WMPOpenState* pwmpos);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-get_playstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-get_playstate
     HRESULT get_playState(WMPPlayState* pwmpps);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-get_controls))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-get_controls
     HRESULT get_controls(IWMPControls* ppControl);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-get_settings))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-get_settings
     HRESULT get_settings(IWMPSettings* ppSettings);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-get_currentmedia))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-get_currentmedia
     HRESULT get_currentMedia(IWMPMedia* ppMedia);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-put_currentmedia))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-put_currentmedia
     HRESULT put_currentMedia(IWMPMedia pMedia);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-get_mediacollection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-get_mediacollection
     HRESULT get_mediaCollection(IWMPMediaCollection* ppMediaCollection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-get_playlistcollection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-get_playlistcollection
     HRESULT get_playlistCollection(IWMPPlaylistCollection* ppPlaylistCollection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-get_versioninfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-get_versioninfo
     HRESULT get_versionInfo(BSTR* pbstrVersionInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-launchurl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-launchurl
     HRESULT launchURL(BSTR bstrURL);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-get_network))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-get_network
     HRESULT get_network(IWMPNetwork* ppQNI);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-get_currentplaylist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-get_currentplaylist
     HRESULT get_currentPlaylist(IWMPPlaylist* ppPL);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-put_currentplaylist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-put_currentplaylist
     HRESULT put_currentPlaylist(IWMPPlaylist pPL);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-get_cdromcollection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-get_cdromcollection
     HRESULT get_cdromCollection(IWMPCdromCollection* ppCdromCollection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-get_closedcaption))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-get_closedcaption
     HRESULT get_closedCaption(IWMPClosedCaption* ppClosedCaption);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-get_isonline))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-get_isonline
     HRESULT get_isOnline(VARIANT_BOOL* pfOnline);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-get_error))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-get_error
     HRESULT get_error(IWMPError* ppError);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-get_status))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore-get_status
     HRESULT get_status(BSTR* pbstrStatus);
 }
 
 @GUID("6bf52a4f-394a-11d3-b153-00c04f79faa6")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpplayer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpplayer
 interface IWMPPlayer : IWMPCore
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayer-get_enabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayer-get_enabled
     HRESULT get_enabled(VARIANT_BOOL* pbEnabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayer-put_enabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayer-put_enabled
     HRESULT put_enabled(VARIANT_BOOL bEnabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayer-get_fullscreen))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayer-get_fullscreen
     HRESULT get_fullScreen(VARIANT_BOOL* pbFullScreen);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayer-put_fullscreen))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayer-put_fullscreen
     HRESULT put_fullScreen(VARIANT_BOOL bFullScreen);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayer-get_enablecontextmenu))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayer-get_enablecontextmenu
     HRESULT get_enableContextMenu(VARIANT_BOOL* pbEnableContextMenu);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayer-put_enablecontextmenu))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayer-put_enablecontextmenu
     HRESULT put_enableContextMenu(VARIANT_BOOL bEnableContextMenu);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayer-put_uimode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayer-put_uimode
     HRESULT put_uiMode(BSTR bstrMode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayer-get_uimode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayer-get_uimode
     HRESULT get_uiMode(BSTR* pbstrMode);
 }
 
 @GUID("0e6b01d1-d407-4c85-bf5f-1c01f6150280")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpplayer2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpplayer2
 interface IWMPPlayer2 : IWMPCore
 {
     HRESULT get_enabled(VARIANT_BOOL* pbEnabled);
@@ -1857,60 +1893,60 @@ interface IWMPPlayer2 : IWMPCore
     HRESULT put_enableContextMenu(VARIANT_BOOL bEnableContextMenu);
     HRESULT put_uiMode(BSTR bstrMode);
     HRESULT get_uiMode(BSTR* pbstrMode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayer2-get_stretchtofit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayer2-get_stretchtofit
     HRESULT get_stretchToFit(VARIANT_BOOL* pbEnabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayer2-put_stretchtofit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayer2-put_stretchtofit
     HRESULT put_stretchToFit(VARIANT_BOOL bEnabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayer2-get_windowlessvideo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayer2-get_windowlessvideo
     HRESULT get_windowlessVideo(VARIANT_BOOL* pbEnabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayer2-put_windowlessvideo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayer2-put_windowlessvideo
     HRESULT put_windowlessVideo(VARIANT_BOOL bEnabled);
 }
 
 @GUID("ab7c88bb-143e-4ea4-acc3-e4350b2106c3")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpmedia2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpmedia2
 interface IWMPMedia2 : IWMPMedia
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia2-get_error))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia2-get_error
     HRESULT get_error(IWMPErrorItem* ppIWMPErrorItem);
 }
 
 @GUID("6f030d25-0890-480f-9775-1f7e40ab5b8e")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpcontrols2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpcontrols2
 interface IWMPControls2 : IWMPControls
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols2-step))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols2-step
     HRESULT step(int lStep);
 }
 
 @GUID("8da61686-4668-4a5c-ae5d-803193293dbe")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpdvd))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpdvd
 interface IWMPDVD : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpdvd-get_isavailable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpdvd-get_isavailable
     HRESULT get_isAvailable(BSTR bstrItem, VARIANT_BOOL* pIsAvailable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpdvd-get_domain))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpdvd-get_domain
     HRESULT get_domain(BSTR* strDomain);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpdvd-topmenu))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpdvd-topmenu
     HRESULT topMenu();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpdvd-titlemenu))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpdvd-titlemenu
     HRESULT titleMenu();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpdvd-back))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpdvd-back
     HRESULT back();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpdvd-resume))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpdvd-resume
     HRESULT resume();
 }
 
 @GUID("bc17e5b7-7561-4c18-bb90-17d485775659")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpcore2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpcore2
 interface IWMPCore2 : IWMPCore
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore2-get_dvd))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore2-get_dvd
     HRESULT get_dvd(IWMPDVD* ppDVD);
 }
 
 @GUID("54062b68-052a-4c25-a39f-8b63346511d4")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpplayer3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpplayer3
 interface IWMPPlayer3 : IWMPCore2
 {
     HRESULT get_enabled(VARIANT_BOOL* pbEnabled);
@@ -1928,149 +1964,149 @@ interface IWMPPlayer3 : IWMPCore2
 }
 
 @GUID("f75ccec0-c67c-475c-931e-8719870bee7d")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmperroritem2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmperroritem2
 interface IWMPErrorItem2 : IWMPErrorItem
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmperroritem2-get_condition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmperroritem2-get_condition
     HRESULT get_condition(int* plCondition);
 }
 
 @GUID("cbb92747-741f-44fe-ab5b-f1a48f3b2a59")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpremotemediaservices))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpremotemediaservices
 interface IWMPRemoteMediaServices : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpremotemediaservices-getservicetype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpremotemediaservices-getservicetype
     HRESULT GetServiceType(BSTR* pbstrType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpremotemediaservices-getapplicationname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpremotemediaservices-getapplicationname
     HRESULT GetApplicationName(BSTR* pbstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpremotemediaservices-getscriptableobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpremotemediaservices-getscriptableobject
     HRESULT GetScriptableObject(BSTR* pbstrName, IDispatch* ppDispatch);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpremotemediaservices-getcustomuimode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpremotemediaservices-getcustomuimode
     HRESULT GetCustomUIMode(BSTR* pbstrFile);
 }
 
 @GUID("076f2fa6-ed30-448b-8cc5-3f3ef3529c7a")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpskinmanager))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpskinmanager
 interface IWMPSkinManager : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpskinmanager-setvisualstyle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpskinmanager-setvisualstyle
     HRESULT SetVisualStyle(BSTR bstrPath);
 }
 
 @GUID("5c29bbe0-f87d-4c45-aa28-a70f0230ffa9")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpmetadatapicture))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpmetadatapicture
 interface IWMPMetadataPicture : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmetadatapicture-get_mimetype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmetadatapicture-get_mimetype
     HRESULT get_mimeType(BSTR* pbstrMimeType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmetadatapicture-get_picturetype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmetadatapicture-get_picturetype
     HRESULT get_pictureType(BSTR* pbstrPictureType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmetadatapicture-get_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmetadatapicture-get_description
     HRESULT get_description(BSTR* pbstrDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmetadatapicture-get_url))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmetadatapicture-get_url
     HRESULT get_URL(BSTR* pbstrURL);
 }
 
 @GUID("769a72db-13d2-45e2-9c48-53ca9d5b7450")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpmetadatatext))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpmetadatatext
 interface IWMPMetadataText : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmetadatatext-get_description))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmetadatatext-get_description
     HRESULT get_description(BSTR* pbstrDescription);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmetadatatext-get_text))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmetadatatext-get_text
     HRESULT get_text(BSTR* pbstrText);
 }
 
 @GUID("f118efc7-f03a-4fb4-99c9-1c02a5c1065b")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpmedia3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpmedia3
 interface IWMPMedia3 : IWMPMedia2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia3-getattributecountbytype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia3-getattributecountbytype
     HRESULT getAttributeCountByType(BSTR bstrType, BSTR bstrLanguage, int* plCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia3-getiteminfobytype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmedia3-getiteminfobytype
     HRESULT getItemInfoByType(BSTR bstrType, BSTR bstrLanguage, int lIndex, VARIANT* pvarValue);
 }
 
 @GUID("fda937a4-eece-4da5-a0b6-39bf89ade2c2")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpsettings2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpsettings2
 interface IWMPSettings2 : IWMPSettings
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings2-get_defaultaudiolanguage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings2-get_defaultaudiolanguage
     HRESULT get_defaultAudioLanguage(int* plLangID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings2-get_mediaaccessrights))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings2-get_mediaaccessrights
     HRESULT get_mediaAccessRights(BSTR* pbstrRights);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings2-requestmediaaccessrights))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsettings2-requestmediaaccessrights
     HRESULT requestMediaAccessRights(BSTR bstrDesiredAccess, VARIANT_BOOL* pvbAccepted);
 }
 
 @GUID("a1d1110e-d545-476a-9a78-ac3e4cb1e6bd")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpcontrols3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpcontrols3
 interface IWMPControls3 : IWMPControls2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols3-get_audiolanguagecount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols3-get_audiolanguagecount
     HRESULT get_audioLanguageCount(int* plCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols3-getaudiolanguageid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols3-getaudiolanguageid
     HRESULT getAudioLanguageID(int lIndex, int* plLangID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols3-getaudiolanguagedescription))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols3-getaudiolanguagedescription
     HRESULT getAudioLanguageDescription(int lIndex, BSTR* pbstrLangDesc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols3-get_currentaudiolanguage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols3-get_currentaudiolanguage
     HRESULT get_currentAudioLanguage(int* plLangID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols3-put_currentaudiolanguage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols3-put_currentaudiolanguage
     HRESULT put_currentAudioLanguage(int lLangID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols3-get_currentaudiolanguageindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols3-get_currentaudiolanguageindex
     HRESULT get_currentAudioLanguageIndex(int* plIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols3-put_currentaudiolanguageindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols3-put_currentaudiolanguageindex
     HRESULT put_currentAudioLanguageIndex(int lIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols3-getlanguagename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols3-getlanguagename
     HRESULT getLanguageName(int lLangID, BSTR* pbstrLangName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols3-get_currentpositiontimecode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols3-get_currentpositiontimecode
     HRESULT get_currentPositionTimecode(BSTR* bstrTimecode);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols3-put_currentpositiontimecode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcontrols3-put_currentpositiontimecode
     HRESULT put_currentPositionTimecode(BSTR bstrTimecode);
 }
 
 @GUID("350ba78b-6bc8-4113-a5f5-312056934eb6")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpclosedcaption2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpclosedcaption2
 interface IWMPClosedCaption2 : IWMPClosedCaption
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpclosedcaption2-get_samilangcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpclosedcaption2-get_samilangcount
     HRESULT get_SAMILangCount(int* plCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpclosedcaption2-getsamilangname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpclosedcaption2-getsamilangname
     HRESULT getSAMILangName(int nIndex, BSTR* pbstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpclosedcaption2-getsamilangid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpclosedcaption2-getsamilangid
     HRESULT getSAMILangID(int nIndex, int* plLangID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpclosedcaption2-get_samistylecount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpclosedcaption2-get_samistylecount
     HRESULT get_SAMIStyleCount(int* plCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpclosedcaption2-getsamistylename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpclosedcaption2-getsamistylename
     HRESULT getSAMIStyleName(int nIndex, BSTR* pbstrName);
 }
 
 @GUID("40897764-ceab-47be-ad4a-8e28537f9bbf")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpplayerapplication))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpplayerapplication
 interface IWMPPlayerApplication : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayerapplication-switchtoplayerapplication))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayerapplication-switchtoplayerapplication
     HRESULT switchToPlayerApplication();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayerapplication-switchtocontrol))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayerapplication-switchtocontrol
     HRESULT switchToControl();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayerapplication-get_playerdocked))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayerapplication-get_playerdocked
     HRESULT get_playerDocked(VARIANT_BOOL* pbPlayerDocked);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayerapplication-get_hasdisplay))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayerapplication-get_hasdisplay
     HRESULT get_hasDisplay(VARIANT_BOOL* pbHasDisplay);
 }
 
 @GUID("7587c667-628f-499f-88e7-6a6f4e888464")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpcore3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpcore3
 interface IWMPCore3 : IWMPCore2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore3-newplaylist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore3-newplaylist
     HRESULT newPlaylist(BSTR bstrName, BSTR bstrURL, IWMPPlaylist* ppPlaylist);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore3-newmedia))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcore3-newmedia
     HRESULT newMedia(BSTR bstrURL, IWMPMedia* ppMedia);
 }
 
 @GUID("6c497d62-8919-413c-82db-e935fb3ec584")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpplayer4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpplayer4
 interface IWMPPlayer4 : IWMPCore3
 {
     HRESULT get_enabled(VARIANT_BOOL* pbEnabled);
@@ -2085,408 +2121,408 @@ interface IWMPPlayer4 : IWMPCore3
     HRESULT put_stretchToFit(VARIANT_BOOL bEnabled);
     HRESULT get_windowlessVideo(VARIANT_BOOL* pbEnabled);
     HRESULT put_windowlessVideo(VARIANT_BOOL bEnabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayer4-get_isremote))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayer4-get_isremote
     HRESULT get_isRemote(VARIANT_BOOL* pvarfIsRemote);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayer4-get_playerapplication))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayer4-get_playerapplication
     HRESULT get_playerApplication(IWMPPlayerApplication* ppIWMPPlayerApplication);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayer4-openplayer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayer4-openplayer
     HRESULT openPlayer(BSTR bstrURL);
 }
 
 @GUID("1d01fbdb-ade2-4c8d-9842-c190b95c3306")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpplayerservices))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpplayerservices
 interface IWMPPlayerServices : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayerservices-activateuiplugin))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayerservices-activateuiplugin
     HRESULT activateUIPlugin(BSTR bstrPlugin);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayerservices-settaskpane))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayerservices-settaskpane
     HRESULT setTaskPane(BSTR bstrTaskPane);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayerservices-settaskpaneurl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayerservices-settaskpaneurl
     HRESULT setTaskPaneURL(BSTR bstrTaskPane, BSTR bstrURL, BSTR bstrFriendlyName);
 }
 
 @GUID("82a2986c-0293-4fd0-b279-b21b86c058be")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpsyncdevice))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpsyncdevice
 interface IWMPSyncDevice : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncdevice-get_friendlyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncdevice-get_friendlyname
     HRESULT get_friendlyName(BSTR* pbstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncdevice-put_friendlyname))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncdevice-put_friendlyname
     HRESULT put_friendlyName(BSTR bstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncdevice-get_devicename))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncdevice-get_devicename
     HRESULT get_deviceName(BSTR* pbstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncdevice-get_deviceid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncdevice-get_deviceid
     HRESULT get_deviceId(BSTR* pbstrDeviceId);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncdevice-get_partnershipindex))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncdevice-get_partnershipindex
     HRESULT get_partnershipIndex(int* plIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncdevice-get_connected))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncdevice-get_connected
     HRESULT get_connected(VARIANT_BOOL* pvbConnected);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncdevice-get_status))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncdevice-get_status
     HRESULT get_status(WMPDeviceStatus* pwmpds);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncdevice-get_syncstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncdevice-get_syncstate
     HRESULT get_syncState(WMPSyncState* pwmpss);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncdevice-get_progress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncdevice-get_progress
     HRESULT get_progress(int* plProgress);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncdevice-getiteminfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncdevice-getiteminfo
     HRESULT getItemInfo(BSTR bstrItemName, BSTR* pbstrVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncdevice-createpartnership))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncdevice-createpartnership
     HRESULT createPartnership(VARIANT_BOOL vbShowUI);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncdevice-deletepartnership))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncdevice-deletepartnership
     HRESULT deletePartnership();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncdevice-start))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncdevice-start
     HRESULT start();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncdevice-stop))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncdevice-stop
     HRESULT stop();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncdevice-showsettings))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncdevice-showsettings
     HRESULT showSettings();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncdevice-isidentical))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncdevice-isidentical
     HRESULT isIdentical(IWMPSyncDevice pDevice, VARIANT_BOOL* pvbool);
 }
 
 @GUID("8b5050ff-e0a4-4808-b3a8-893a9e1ed894")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpsyncservices))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpsyncservices
 interface IWMPSyncServices : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncservices-get_devicecount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncservices-get_devicecount
     HRESULT get_deviceCount(int* plCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncservices-getdevice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncservices-getdevice
     HRESULT getDevice(int lIndex, IWMPSyncDevice* ppDevice);
 }
 
 @GUID("1bb1592f-f040-418a-9f71-17c7512b4d70")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpplayerservices2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpplayerservices2
 interface IWMPPlayerServices2 : IWMPPlayerServices
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayerservices2-setbackgroundprocessingpriority))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpplayerservices2-setbackgroundprocessingpriority
     HRESULT setBackgroundProcessingPriority(BSTR bstrPriority);
 }
 
 @GUID("56e2294f-69ed-4629-a869-aea72c0dcc2c")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpcdromrip))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpcdromrip
 interface IWMPCdromRip : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromrip-get_ripstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromrip-get_ripstate
     HRESULT get_ripState(WMPRipState* pwmprs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromrip-get_ripprogress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromrip-get_ripprogress
     HRESULT get_ripProgress(int* plProgress);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromrip-startrip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromrip-startrip
     HRESULT startRip();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromrip-stoprip))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromrip-stoprip
     HRESULT stopRip();
 }
 
 @GUID("bd94dbeb-417f-4928-aa06-087d56ed9b59")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpcdromburn))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpcdromburn
 interface IWMPCdromBurn : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromburn-isavailable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromburn-isavailable
     HRESULT isAvailable(BSTR bstrItem, VARIANT_BOOL* pIsAvailable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromburn-getiteminfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromburn-getiteminfo
     HRESULT getItemInfo(BSTR bstrItem, BSTR* pbstrVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromburn-get_label))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromburn-get_label
     HRESULT get_label(BSTR* pbstrLabel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromburn-put_label))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromburn-put_label
     HRESULT put_label(BSTR bstrLabel);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromburn-get_burnformat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromburn-get_burnformat
     HRESULT get_burnFormat(WMPBurnFormat* pwmpbf);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromburn-put_burnformat))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromburn-put_burnformat
     HRESULT put_burnFormat(WMPBurnFormat wmpbf);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromburn-get_burnplaylist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromburn-get_burnplaylist
     HRESULT get_burnPlaylist(IWMPPlaylist* ppPlaylist);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromburn-put_burnplaylist))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromburn-put_burnplaylist
     HRESULT put_burnPlaylist(IWMPPlaylist pPlaylist);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromburn-refreshstatus))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromburn-refreshstatus
     HRESULT refreshStatus();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromburn-get_burnstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromburn-get_burnstate
     HRESULT get_burnState(WMPBurnState* pwmpbs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromburn-get_burnprogress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromburn-get_burnprogress
     HRESULT get_burnProgress(int* plProgress);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromburn-startburn))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromburn-startburn
     HRESULT startBurn();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromburn-stopburn))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromburn-stopburn
     HRESULT stopBurn();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromburn-erase))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpcdromburn-erase
     HRESULT erase();
 }
 
 @GUID("a00918f3-a6b0-4bfb-9189-fd834c7bc5a5")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpquery))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpquery
 interface IWMPQuery : IDispatch
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpquery-addcondition))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpquery-addcondition
     HRESULT addCondition(BSTR bstrAttribute, BSTR bstrOperator, BSTR bstrValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpquery-beginnextgroup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpquery-beginnextgroup
     HRESULT beginNextGroup();
 }
 
 @GUID("8ba957f5-fd8c-4791-b82d-f840401ee474")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpmediacollection2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpmediacollection2
 interface IWMPMediaCollection2 : IWMPMediaCollection
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmediacollection2-createquery))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmediacollection2-createquery
     HRESULT createQuery(IWMPQuery* ppQuery);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmediacollection2-getplaylistbyquery))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmediacollection2-getplaylistbyquery
     HRESULT getPlaylistByQuery(IWMPQuery pQuery, BSTR bstrMediaType, BSTR bstrSortAttribute, 
                                VARIANT_BOOL fSortAscending, IWMPPlaylist* ppPlaylist);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmediacollection2-getstringcollectionbyquery))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmediacollection2-getstringcollectionbyquery
     HRESULT getStringCollectionByQuery(BSTR bstrAttribute, IWMPQuery pQuery, BSTR bstrMediaType, 
                                        BSTR bstrSortAttribute, VARIANT_BOOL fSortAscending, 
                                        IWMPStringCollection* ppStringCollection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmediacollection2-getbyattributeandmediatype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpmediacollection2-getbyattributeandmediatype
     HRESULT getByAttributeAndMediaType(BSTR bstrAttribute, BSTR bstrValue, BSTR bstrMediaType, 
                                        IWMPPlaylist* ppMediaItems);
 }
 
 @GUID("46ad648d-53f1-4a74-92e2-2a1b68d63fd4")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpstringcollection2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpstringcollection2
 interface IWMPStringCollection2 : IWMPStringCollection
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpstringcollection2-isidentical))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpstringcollection2-isidentical
     HRESULT isIdentical(IWMPStringCollection2 pIWMPStringCollection2, VARIANT_BOOL* pvbool);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpstringcollection2-getiteminfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpstringcollection2-getiteminfo
     HRESULT getItemInfo(int lCollectionIndex, BSTR bstrItemName, BSTR* pbstrValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpstringcollection2-getattributecountbytype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpstringcollection2-getattributecountbytype
     HRESULT getAttributeCountByType(int lCollectionIndex, BSTR bstrType, BSTR bstrLanguage, int* plCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpstringcollection2-getiteminfobytype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpstringcollection2-getiteminfobytype
     HRESULT getItemInfoByType(int lCollectionIndex, BSTR bstrType, BSTR bstrLanguage, int lAttributeIndex, 
                               VARIANT* pvarValue);
 }
 
 @GUID("3df47861-7df1-4c1f-a81b-4c26f0f7a7c6")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmplibrary))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmplibrary
 interface IWMPLibrary : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmplibrary-get_name))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmplibrary-get_name
     HRESULT get_name(BSTR* pbstrName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmplibrary-get_type))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmplibrary-get_type
     HRESULT get_type(WMPLibraryType* pwmplt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmplibrary-get_mediacollection))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmplibrary-get_mediacollection
     HRESULT get_mediaCollection(IWMPMediaCollection* ppIWMPMediaCollection);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmplibrary-isidentical))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmplibrary-isidentical
     HRESULT isIdentical(IWMPLibrary pIWMPLibrary, VARIANT_BOOL* pvbool);
 }
 
 @GUID("39c2f8d5-1cf2-4d5e-ae09-d73492cf9eaa")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmplibraryservices))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmplibraryservices
 interface IWMPLibraryServices : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmplibraryservices-getcountbytype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmplibraryservices-getcountbytype
     HRESULT getCountByType(WMPLibraryType wmplt, int* plCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmplibraryservices-getlibrarybytype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmplibraryservices-getlibrarybytype
     HRESULT getLibraryByType(WMPLibraryType wmplt, int lIndex, IWMPLibrary* ppIWMPLibrary);
 }
 
 @GUID("82cba86b-9f04-474b-a365-d6dd1466e541")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmplibrarysharingservices))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmplibrarysharingservices
 interface IWMPLibrarySharingServices : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmplibrarysharingservices-islibraryshared))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmplibrarysharingservices-islibraryshared
     HRESULT isLibraryShared(VARIANT_BOOL* pvbShared);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmplibrarysharingservices-islibrarysharingenabled))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmplibrarysharingservices-islibrarysharingenabled
     HRESULT isLibrarySharingEnabled(VARIANT_BOOL* pvbEnabled);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmplibrarysharingservices-showlibrarysharing))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmplibrarysharingservices-showlibrarysharing
     HRESULT showLibrarySharing();
 }
 
 @GUID("788c8743-e57f-439d-a468-5bc77f2e59c6")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpfoldermonitorservices))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpfoldermonitorservices
 interface IWMPFolderMonitorServices : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpfoldermonitorservices-get_count))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpfoldermonitorservices-get_count
     HRESULT get_count(int* plCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpfoldermonitorservices-item))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpfoldermonitorservices-item
     HRESULT item(int lIndex, BSTR* pbstrFolder);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpfoldermonitorservices-add))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpfoldermonitorservices-add
     HRESULT add(BSTR bstrFolder);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpfoldermonitorservices-remove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpfoldermonitorservices-remove
     HRESULT remove(int lIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpfoldermonitorservices-get_scanstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpfoldermonitorservices-get_scanstate
     HRESULT get_scanState(WMPFolderScanState* pwmpfss);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpfoldermonitorservices-get_currentfolder))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpfoldermonitorservices-get_currentfolder
     HRESULT get_currentFolder(BSTR* pbstrFolder);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpfoldermonitorservices-get_scannedfilescount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpfoldermonitorservices-get_scannedfilescount
     HRESULT get_scannedFilesCount(int* plCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpfoldermonitorservices-get_addedfilescount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpfoldermonitorservices-get_addedfilescount
     HRESULT get_addedFilesCount(int* plCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpfoldermonitorservices-get_updateprogress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpfoldermonitorservices-get_updateprogress
     HRESULT get_updateProgress(int* plProgress);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpfoldermonitorservices-startscan))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpfoldermonitorservices-startscan
     HRESULT startScan();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpfoldermonitorservices-stopscan))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpfoldermonitorservices-stopscan
     HRESULT stopScan();
 }
 
 @GUID("88afb4b2-140a-44d2-91e6-4543da467cd1")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpsyncdevice2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpsyncdevice2
 interface IWMPSyncDevice2 : IWMPSyncDevice
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncdevice2-setiteminfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncdevice2-setiteminfo
     HRESULT setItemInfo(BSTR bstrItemName, BSTR bstrVal);
 }
 
 @GUID("b22c85f9-263c-4372-a0da-b518db9b4098")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpsyncdevice3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpsyncdevice3
 interface IWMPSyncDevice3 : IWMPSyncDevice2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncdevice3-estimatesyncsize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncdevice3-estimatesyncsize
     HRESULT estimateSyncSize(IWMPPlaylist pNonRulePlaylist, IWMPPlaylist pRulesPlaylist);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncdevice3-cancelestimation))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpsyncdevice3-cancelestimation
     HRESULT cancelEstimation();
 }
 
 @GUID("dd578a4e-79b1-426c-bf8f-3add9072500b")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmplibrary2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmplibrary2
 interface IWMPLibrary2 : IWMPLibrary
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmplibrary2-getiteminfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmplibrary2-getiteminfo
     HRESULT getItemInfo(BSTR bstrItemName, BSTR* pbstrVal);
 }
 
 @GUID("19a6627b-da9e-47c1-bb23-00b5e668236a")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpevents))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpevents
 interface IWMPEvents : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-openstatechange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-openstatechange
     void OpenStateChange(int NewState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-playstatechange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-playstatechange
     void PlayStateChange(int NewState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-audiolanguagechange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-audiolanguagechange
     void AudioLanguageChange(int LangID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-statuschange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-statuschange
     void StatusChange();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-scriptcommand))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-scriptcommand
     void ScriptCommand(BSTR scType, BSTR Param);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-newstream))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-newstream
     void NewStream();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-disconnect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-disconnect
     void Disconnect(int Result);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-buffering))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-buffering
     void Buffering(VARIANT_BOOL Start);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-error))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-error
     void Error();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-warning))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-warning
     void Warning(int WarningType, int Param, BSTR Description);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-endofstream))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-endofstream
     void EndOfStream(int Result);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-positionchange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-positionchange
     void PositionChange(double oldPosition, double newPosition);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-markerhit))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-markerhit
     void MarkerHit(int MarkerNum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-durationunitchange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-durationunitchange
     void DurationUnitChange(int NewDurationUnit);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-cdrommediachange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-cdrommediachange
     void CdromMediaChange(int CdromNum);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-playlistchange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-playlistchange
     void PlaylistChange(IDispatch Playlist, WMPPlaylistChangeEventType change);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-currentplaylistchange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-currentplaylistchange
     void CurrentPlaylistChange(WMPPlaylistChangeEventType change);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-currentplaylistitemavailable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-currentplaylistitemavailable
     void CurrentPlaylistItemAvailable(BSTR bstrItemName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-mediachange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-mediachange
     void MediaChange(IDispatch Item);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-currentmediaitemavailable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-currentmediaitemavailable
     void CurrentMediaItemAvailable(BSTR bstrItemName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-currentitemchange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-currentitemchange
     void CurrentItemChange(IDispatch pdispMedia);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-mediacollectionchange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-mediacollectionchange
     void MediaCollectionChange();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-mediacollectionattributestringadded))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-mediacollectionattributestringadded
     void MediaCollectionAttributeStringAdded(BSTR bstrAttribName, BSTR bstrAttribVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-mediacollectionattributestringremoved))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-mediacollectionattributestringremoved
     void MediaCollectionAttributeStringRemoved(BSTR bstrAttribName, BSTR bstrAttribVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-mediacollectionattributestringchanged))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-mediacollectionattributestringchanged
     void MediaCollectionAttributeStringChanged(BSTR bstrAttribName, BSTR bstrOldAttribVal, BSTR bstrNewAttribVal);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-playlistcollectionchange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-playlistcollectionchange
     void PlaylistCollectionChange();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-playlistcollectionplaylistadded))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-playlistcollectionplaylistadded
     void PlaylistCollectionPlaylistAdded(BSTR bstrPlaylistName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-playlistcollectionplaylistremoved))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-playlistcollectionplaylistremoved
     void PlaylistCollectionPlaylistRemoved(BSTR bstrPlaylistName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-playlistcollectionplaylistsetasdeleted))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-playlistcollectionplaylistsetasdeleted
     void PlaylistCollectionPlaylistSetAsDeleted(BSTR bstrPlaylistName, VARIANT_BOOL varfIsDeleted);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-modechange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-modechange
     void ModeChange(BSTR ModeName, VARIANT_BOOL NewValue);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-mediaerror))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-mediaerror
     void MediaError(IDispatch pMediaObject);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-openplaylistswitch))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-openplaylistswitch
     void OpenPlaylistSwitch(IDispatch pItem);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-domainchange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-domainchange
     void DomainChange(BSTR strDomain);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-switchedtoplayerapplication))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-switchedtoplayerapplication
     void SwitchedToPlayerApplication();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-switchedtocontrol))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-switchedtocontrol
     void SwitchedToControl();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-playerdockedstatechange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-playerdockedstatechange
     void PlayerDockedStateChange();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-playerreconnect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-playerreconnect
     void PlayerReconnect();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-click))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-click
     void Click(short nButton, short nShiftState, int fX, int fY);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-doubleclick))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-doubleclick
     void DoubleClick(short nButton, short nShiftState, int fX, int fY);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-keydown))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-keydown
     void KeyDown(short nKeyCode, short nShiftState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-keypress))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-keypress
     void KeyPress(short nKeyAscii);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-keyup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-keyup
     void KeyUp(short nKeyCode, short nShiftState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-mousedown))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-mousedown
     void MouseDown(short nButton, short nShiftState, int fX, int fY);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-mousemove))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-mousemove
     void MouseMove(short nButton, short nShiftState, int fX, int fY);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-mouseup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents-mouseup
     void MouseUp(short nButton, short nShiftState, int fX, int fY);
 }
 
 @GUID("1e7601fa-47ea-4107-9ea9-9004ed9684ff")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpevents2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpevents2
 interface IWMPEvents2 : IWMPEvents
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents2-deviceconnect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents2-deviceconnect
     void DeviceConnect(IWMPSyncDevice pDevice);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents2-devicedisconnect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents2-devicedisconnect
     void DeviceDisconnect(IWMPSyncDevice pDevice);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents2-devicestatuschange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents2-devicestatuschange
     void DeviceStatusChange(IWMPSyncDevice pDevice, WMPDeviceStatus NewStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents2-devicesyncstatechange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents2-devicesyncstatechange
     void DeviceSyncStateChange(IWMPSyncDevice pDevice, WMPSyncState NewState);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents2-devicesyncerror))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents2-devicesyncerror
     void DeviceSyncError(IWMPSyncDevice pDevice, IDispatch pMedia);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents2-createpartnershipcomplete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents2-createpartnershipcomplete
     void CreatePartnershipComplete(IWMPSyncDevice pDevice, HRESULT hrResult);
 }
 
 @GUID("1f504270-a66b-4223-8e96-26a06c63d69f")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpevents3))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpevents3
 interface IWMPEvents3 : IWMPEvents2
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents3-cdromripstatechange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents3-cdromripstatechange
     void CdromRipStateChange(IWMPCdromRip pCdromRip, WMPRipState wmprs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents3-cdromripmediaerror))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents3-cdromripmediaerror
     void CdromRipMediaError(IWMPCdromRip pCdromRip, IDispatch pMedia);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents3-cdromburnstatechange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents3-cdromburnstatechange
     void CdromBurnStateChange(IWMPCdromBurn pCdromBurn, WMPBurnState wmpbs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents3-cdromburnmediaerror))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents3-cdromburnmediaerror
     void CdromBurnMediaError(IWMPCdromBurn pCdromBurn, IDispatch pMedia);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents3-cdromburnerror))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents3-cdromburnerror
     void CdromBurnError(IWMPCdromBurn pCdromBurn, HRESULT hrError);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents3-libraryconnect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents3-libraryconnect
     void LibraryConnect(IWMPLibrary pLibrary);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents3-librarydisconnect))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents3-librarydisconnect
     void LibraryDisconnect(IWMPLibrary pLibrary);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents3-folderscanstatechange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents3-folderscanstatechange
     void FolderScanStateChange(WMPFolderScanState wmpfss);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents3-stringcollectionchange))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents3-stringcollectionchange
     void StringCollectionChange(IDispatch pdispStringCollection, WMPStringCollectionChangeEventType change, 
                                 int lCollectionIndex);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents3-mediacollectionmediaadded))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents3-mediacollectionmediaadded
     void MediaCollectionMediaAdded(IDispatch pdispMedia);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents3-mediacollectionmediaremoved))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nf-wmp-iwmpevents3-mediacollectionmediaremoved
     void MediaCollectionMediaRemoved(IDispatch pdispMedia);
 }
 
 @GUID("26dabcfa-306b-404d-9a6f-630a8405048d")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpevents4))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmp/nn-wmp-iwmpevents4
 interface IWMPEvents4 : IWMPEvents3
 {
     void DeviceEstimation(IWMPSyncDevice pDevice, HRESULT hrResult, long qwEstimatedUsedSpace, 
@@ -2494,7 +2530,7 @@ interface IWMPEvents4 : IWMPEvents3
 }
 
 @GUID("6bf52a51-394a-11d3-b153-00c04f79faa6")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/WMP/-wmpocxevents-interface))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/WMP/-wmpocxevents-interface
 interface _WMPOCXEvents : IDispatch
 {
 }
@@ -2550,118 +2586,118 @@ interface IWMPNodeWindowlessHost : IUnknown
 }
 
 @GUID("6d6cf803-1ec0-4c8d-b3ca-f18e27282074")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmprealestate/nn-wmprealestate-iwmpvideorenderconfig))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmprealestate/nn-wmprealestate-iwmpvideorenderconfig
 interface IWMPVideoRenderConfig : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmprealestate/nf-wmprealestate-iwmpvideorenderconfig-put_presenteractivate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmprealestate/nf-wmprealestate-iwmpvideorenderconfig-put_presenteractivate
     HRESULT put_presenterActivate(IMFActivate pActivate);
 }
 
 @GUID("e79c6349-5997-4ce4-917c-22a3391ec564")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmprealestate/nn-wmprealestate-iwmpaudiorenderconfig))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmprealestate/nn-wmprealestate-iwmpaudiorenderconfig
 interface IWMPAudioRenderConfig : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmprealestate/nf-wmprealestate-iwmpaudiorenderconfig-get_audiooutputdevice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmprealestate/nf-wmprealestate-iwmpaudiorenderconfig-get_audiooutputdevice
     HRESULT get_audioOutputDevice(BSTR* pbstrOutputDevice);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmprealestate/nf-wmprealestate-iwmpaudiorenderconfig-put_audiooutputdevice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmprealestate/nf-wmprealestate-iwmpaudiorenderconfig-put_audiooutputdevice
     HRESULT put_audioOutputDevice(BSTR bstrOutputDevice);
 }
 
 @GUID("959506c1-0314-4ec5-9e61-8528db5e5478")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmprealestate/nn-wmprealestate-iwmprenderconfig))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmprealestate/nn-wmprealestate-iwmprenderconfig
 interface IWMPRenderConfig : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmprealestate/nf-wmprealestate-iwmprenderconfig-put_inproconly))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmprealestate/nf-wmprealestate-iwmprenderconfig-put_inproconly
     HRESULT put_inProcOnly(BOOL fInProc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmprealestate/nf-wmprealestate-iwmprenderconfig-get_inproconly))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmprealestate/nf-wmprealestate-iwmprenderconfig-get_inproconly
     HRESULT get_inProcOnly(BOOL* pfInProc);
 }
 
 @GUID("afb6b76b-1e20-4198-83b3-191db6e0b149")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpservices/nn-wmpservices-iwmpservices))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpservices/nn-wmpservices-iwmpservices
 interface IWMPServices : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpservices/nf-wmpservices-iwmpservices-getstreamtime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpservices/nf-wmpservices-iwmpservices-getstreamtime
     HRESULT GetStreamTime(long* prt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpservices/nf-wmpservices-iwmpservices-getstreamstate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpservices/nf-wmpservices-iwmpservices-getstreamstate
     HRESULT GetStreamState(WMPServices_StreamState* pState);
 }
 
 @GUID("68e27045-05bd-40b2-9720-23088c78e390")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpservices/nn-wmpservices-iwmpmediapluginregistrar))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpservices/nn-wmpservices-iwmpmediapluginregistrar
 interface IWMPMediaPluginRegistrar : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpservices/nf-wmpservices-iwmpmediapluginregistrar-wmpregisterplayerplugin))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpservices/nf-wmpservices-iwmpmediapluginregistrar-wmpregisterplayerplugin
     HRESULT WMPRegisterPlayerPlugin(PWSTR pwszFriendlyName, PWSTR pwszDescription, PWSTR pwszUninstallString, 
                                     uint dwPriority, GUID guidPluginType, GUID clsid, uint cMediaTypes, 
                                     void* pMediaTypes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpservices/nf-wmpservices-iwmpmediapluginregistrar-wmpunregisterplayerplugin))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpservices/nf-wmpservices-iwmpmediapluginregistrar-wmpunregisterplayerplugin
     HRESULT WMPUnRegisterPlayerPlugin(GUID guidPluginType, GUID clsid);
 }
 
 @GUID("f1392a70-024c-42bb-a998-73dfdfe7d5a7")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpservices/nn-wmpservices-iwmpplugin))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpservices/nn-wmpservices-iwmpplugin
 interface IWMPPlugin : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpservices/nf-wmpservices-iwmpplugin-init))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpservices/nf-wmpservices-iwmpplugin-init
     HRESULT Init(size_t dwPlaybackContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpservices/nf-wmpservices-iwmpplugin-shutdown))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpservices/nf-wmpservices-iwmpplugin-shutdown
     HRESULT Shutdown();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpservices/nf-wmpservices-iwmpplugin-getid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpservices/nf-wmpservices-iwmpplugin-getid
     HRESULT GetID(GUID* pGUID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpservices/nf-wmpservices-iwmpplugin-getcaps))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpservices/nf-wmpservices-iwmpplugin-getcaps
     HRESULT GetCaps(uint* pdwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpservices/nf-wmpservices-iwmpplugin-advisewmpservices))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpservices/nf-wmpservices-iwmpplugin-advisewmpservices
     HRESULT AdviseWMPServices(IWMPServices pWMPServices);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpservices/nf-wmpservices-iwmpplugin-unadvisewmpservices))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpservices/nf-wmpservices-iwmpplugin-unadvisewmpservices
     HRESULT UnAdviseWMPServices();
 }
 
 @GUID("5fca444c-7ad1-479d-a4ef-40566a5309d6")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpservices/nn-wmpservices-iwmppluginenable))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpservices/nn-wmpservices-iwmppluginenable
 interface IWMPPluginEnable : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpservices/nf-wmpservices-iwmppluginenable-setenable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpservices/nf-wmpservices-iwmppluginenable-setenable
     HRESULT SetEnable(BOOL fEnable);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpservices/nf-wmpservices-iwmppluginenable-getenable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpservices/nf-wmpservices-iwmppluginenable-getenable
     HRESULT GetEnable(BOOL* pfEnable);
 }
 
 @GUID("bfb377e5-c594-4369-a970-de896d5ece74")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpservices/nn-wmpservices-iwmpgraphcreation))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpservices/nn-wmpservices-iwmpgraphcreation
 interface IWMPGraphCreation : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpservices/nf-wmpservices-iwmpgraphcreation-graphcreationprerender))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpservices/nf-wmpservices-iwmpgraphcreation-graphcreationprerender
     HRESULT GraphCreationPreRender(IUnknown pFilterGraph, IUnknown pReserved);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpservices/nf-wmpservices-iwmpgraphcreation-graphcreationpostrender))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpservices/nf-wmpservices-iwmpgraphcreation-graphcreationpostrender
     HRESULT GraphCreationPostRender(IUnknown pFilterGraph);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpservices/nf-wmpservices-iwmpgraphcreation-getgraphcreationflags))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpservices/nf-wmpservices-iwmpgraphcreation-getgraphcreationflags
     HRESULT GetGraphCreationFlags(uint* pdwFlags);
 }
 
 @GUID("d683162f-57d4-4108-8373-4a9676d1c2e9")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpservices/nn-wmpservices-iwmpconvert))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpservices/nn-wmpservices-iwmpconvert
 interface IWMPConvert : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpservices/nf-wmpservices-iwmpconvert-convertfile))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpservices/nf-wmpservices-iwmpconvert-convertfile
     HRESULT ConvertFile(BSTR bstrInputFile, BSTR bstrDestinationFolder, BSTR* pbstrOutputFile);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpservices/nf-wmpservices-iwmpconvert-geterrorurl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpservices/nf-wmpservices-iwmpconvert-geterrorurl
     HRESULT GetErrorURL(BSTR* pbstrURL);
 }
 
 @GUID("b64cbac3-401c-4327-a3e8-b9feb3a8c25c")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpservices/nn-wmpservices-iwmptranscodepolicy))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpservices/nn-wmpservices-iwmptranscodepolicy
 interface IWMPTranscodePolicy : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpservices/nf-wmpservices-iwmptranscodepolicy-allowtranscode))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpservices/nf-wmpservices-iwmptranscodepolicy-allowtranscode
     HRESULT allowTranscode(VARIANT_BOOL* pvbAllow);
 }
 
 @GUID("cfccfa72-c343-48c3-a2de-b7a4402e39f2")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpservices/nn-wmpservices-iwmpusereventsink))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpservices/nn-wmpservices-iwmpusereventsink
 interface IWMPUserEventSink : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpservices/nf-wmpservices-iwmpusereventsink-notifyuserevent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpservices/nf-wmpservices-iwmpusereventsink-notifyuserevent
     HRESULT NotifyUserEvent(int EventCode);
 }
 
@@ -3052,228 +3088,228 @@ interface IFeedEnclosure : IDispatch
 }
 
 @GUID("d3984c13-c3cb-48e2-8be5-5168340b4f35")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/effects/nn-effects-iwmpeffects))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/effects/nn-effects-iwmpeffects
 interface IWMPEffects : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/effects/nf-effects-iwmpeffects-render))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/effects/nf-effects-iwmpeffects-render
     HRESULT Render(TimedLevel* pLevels, HDC hdc, RECT* prc);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/effects/nf-effects-iwmpeffects-mediainfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/effects/nf-effects-iwmpeffects-mediainfo
     HRESULT MediaInfo(int lChannelCount, int lSampleRate, BSTR bstrTitle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/effects/nf-effects-iwmpeffects-getcapabilities))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/effects/nf-effects-iwmpeffects-getcapabilities
     HRESULT GetCapabilities(uint* pdwCapabilities);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/effects/nf-effects-iwmpeffects-gettitle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/effects/nf-effects-iwmpeffects-gettitle
     HRESULT GetTitle(BSTR* bstrTitle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/effects/nf-effects-iwmpeffects-getpresettitle))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/effects/nf-effects-iwmpeffects-getpresettitle
     HRESULT GetPresetTitle(int nPreset, BSTR* bstrPresetTitle);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/effects/nf-effects-iwmpeffects-getpresetcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/effects/nf-effects-iwmpeffects-getpresetcount
     HRESULT GetPresetCount(int* pnPresetCount);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/effects/nf-effects-iwmpeffects-setcurrentpreset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/effects/nf-effects-iwmpeffects-setcurrentpreset
     HRESULT SetCurrentPreset(int nPreset);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/effects/nf-effects-iwmpeffects-getcurrentpreset))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/effects/nf-effects-iwmpeffects-getcurrentpreset
     HRESULT GetCurrentPreset(int* pnPreset);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/effects/nf-effects-iwmpeffects-displaypropertypage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/effects/nf-effects-iwmpeffects-displaypropertypage
     HRESULT DisplayPropertyPage(HWND hwndOwner);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/effects/nf-effects-iwmpeffects-gofullscreen))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/effects/nf-effects-iwmpeffects-gofullscreen
     HRESULT GoFullscreen(BOOL fFullScreen);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/effects/nf-effects-iwmpeffects-renderfullscreen))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/effects/nf-effects-iwmpeffects-renderfullscreen
     HRESULT RenderFullScreen(TimedLevel* pLevels);
 }
 
 @GUID("695386ec-aa3c-4618-a5e1-dd9a8b987632")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/effects/nn-effects-iwmpeffects2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/effects/nn-effects-iwmpeffects2
 interface IWMPEffects2 : IWMPEffects
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/effects/nf-effects-iwmpeffects2-setcore))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/effects/nf-effects-iwmpeffects2-setcore
     HRESULT SetCore(IWMPCore pPlayer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/effects/nf-effects-iwmpeffects2-create))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/effects/nf-effects-iwmpeffects2-create
     HRESULT Create(HWND hwndParent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/effects/nf-effects-iwmpeffects2-destroy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/effects/nf-effects-iwmpeffects2-destroy
     HRESULT Destroy();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/effects/nf-effects-iwmpeffects2-notifynewmedia))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/effects/nf-effects-iwmpeffects2-notifynewmedia
     HRESULT NotifyNewMedia(IWMPMedia pMedia);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/effects/nf-effects-iwmpeffects2-onwindowmessage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/effects/nf-effects-iwmpeffects2-onwindowmessage
     HRESULT OnWindowMessage(uint msg, WPARAM WParam, LPARAM LParam, LRESULT* plResultParam);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/effects/nf-effects-iwmpeffects2-renderwindowed))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/effects/nf-effects-iwmpeffects2-renderwindowed
     HRESULT RenderWindowed(TimedLevel* pData, BOOL fRequiredRender);
 }
 
 @GUID("4c5e8f9f-ad3e-4bf9-9753-fcd30d6d38dd")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpplug/nn-wmpplug-iwmppluginui))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpplug/nn-wmpplug-iwmppluginui
 interface IWMPPluginUI : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpplug/nf-wmpplug-iwmppluginui-setcore))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpplug/nf-wmpplug-iwmppluginui-setcore
     HRESULT SetCore(IWMPCore pCore);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpplug/nf-wmpplug-iwmppluginui-create))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpplug/nf-wmpplug-iwmppluginui-create
     HRESULT Create(HWND hwndParent, HWND* phwndWindow);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpplug/nf-wmpplug-iwmppluginui-destroy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpplug/nf-wmpplug-iwmppluginui-destroy
     HRESULT Destroy();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpplug/nf-wmpplug-iwmppluginui-displaypropertypage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpplug/nf-wmpplug-iwmppluginui-displaypropertypage
     HRESULT DisplayPropertyPage(HWND hwndParent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpplug/nf-wmpplug-iwmppluginui-getproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpplug/nf-wmpplug-iwmppluginui-getproperty
     HRESULT GetProperty(const(PWSTR) pwszName, VARIANT* pvarProperty);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpplug/nf-wmpplug-iwmppluginui-setproperty))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpplug/nf-wmpplug-iwmppluginui-setproperty
     HRESULT SetProperty(const(PWSTR) pwszName, const(VARIANT)* pvarProperty);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/wmpplug/nf-wmpplug-iwmppluginui-translateaccelerator))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/wmpplug/nf-wmpplug-iwmppluginui-translateaccelerator
     HRESULT TranslateAccelerator(MSG* lpmsg);
 }
 
 @GUID("ad7f4d9c-1a9f-4ed2-9815-ecc0b58cb616")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nn-contentpartner-iwmpcontentcontainer))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nn-contentpartner-iwmpcontentcontainer
 interface IWMPContentContainer : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentcontainer-getid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentcontainer-getid
     HRESULT GetID(uint* pContentID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentcontainer-getprice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentcontainer-getprice
     HRESULT GetPrice(BSTR* pbstrPrice);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentcontainer-gettype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentcontainer-gettype
     HRESULT GetType(BSTR* pbstrType);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentcontainer-getcontentcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentcontainer-getcontentcount
     HRESULT GetContentCount(uint* pcContent);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentcontainer-getcontentprice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentcontainer-getcontentprice
     HRESULT GetContentPrice(uint idxContent, BSTR* pbstrPrice);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentcontainer-getcontentid))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentcontainer-getcontentid
     HRESULT GetContentID(uint idxContent, uint* pContentID);
 }
 
 @GUID("a9937f78-0802-4af8-8b8d-e3f045bc8ab5")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nn-contentpartner-iwmpcontentcontainerlist))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nn-contentpartner-iwmpcontentcontainerlist
 interface IWMPContentContainerList : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentcontainerlist-gettransactiontype))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentcontainerlist-gettransactiontype
     HRESULT GetTransactionType(WMPTransactionType* pwmptt);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentcontainerlist-getcontainercount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentcontainerlist-getcontainercount
     HRESULT GetContainerCount(uint* pcContainer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentcontainerlist-getcontainer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentcontainerlist-getcontainer
     HRESULT GetContainer(uint idxContainer, IWMPContentContainer* ppContent);
 }
 
 @GUID("9e8f7da2-0695-403c-b697-da10fafaa676")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nn-contentpartner-iwmpcontentpartnercallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nn-contentpartner-iwmpcontentpartnercallback
 interface IWMPContentPartnerCallback : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartnercallback-notify))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartnercallback-notify
     HRESULT Notify(WMPCallbackNotification type, VARIANT* pContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartnercallback-buycomplete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartnercallback-buycomplete
     HRESULT BuyComplete(HRESULT hrResult, uint dwBuyCookie);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartnercallback-downloadtrack))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartnercallback-downloadtrack
     HRESULT DownloadTrack(uint cookie, BSTR bstrTrackURL, uint dwServiceTrackID, BSTR bstrDownloadParams, 
                           HRESULT hrDownload);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartnercallback-getcatalogversion))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartnercallback-getcatalogversion
     HRESULT GetCatalogVersion(uint* pdwVersion, uint* pdwSchemaVersion, uint* plcid);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartnercallback-updatedevicecomplete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartnercallback-updatedevicecomplete
     HRESULT UpdateDeviceComplete(BSTR bstrDeviceName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartnercallback-changeview))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartnercallback-changeview
     HRESULT ChangeView(BSTR bstrType, BSTR bstrID, BSTR bstrFilter);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartnercallback-addlistcontents))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartnercallback-addlistcontents
     HRESULT AddListContents(uint dwListCookie, uint cItems, uint* prgItems);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartnercallback-listcontentscomplete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartnercallback-listcontentscomplete
     HRESULT ListContentsComplete(uint dwListCookie, HRESULT hrSuccess);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartnercallback-sendmessagecomplete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartnercallback-sendmessagecomplete
     HRESULT SendMessageComplete(BSTR bstrMsg, BSTR bstrParam, BSTR bstrResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartnercallback-getcontentidsinlibrary))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartnercallback-getcontentidsinlibrary
     HRESULT GetContentIDsInLibrary(uint* pcContentIDs, uint** pprgIDs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartnercallback-refreshlicensecomplete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartnercallback-refreshlicensecomplete
     HRESULT RefreshLicenseComplete(uint dwCookie, uint contentID, HRESULT hrRefresh);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartnercallback-showpopup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartnercallback-showpopup
     HRESULT ShowPopup(int lIndex, BSTR bstrParameters);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartnercallback-verifypermissioncomplete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartnercallback-verifypermissioncomplete
     HRESULT VerifyPermissionComplete(BSTR bstrPermission, VARIANT* pContext, HRESULT hrPermission);
 }
 
 @GUID("55455073-41b5-4e75-87b8-f13bdb291d08")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nn-contentpartner-iwmpcontentpartner))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nn-contentpartner-iwmpcontentpartner
 interface IWMPContentPartner : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-setcallback))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-setcallback
     HRESULT SetCallback(IWMPContentPartnerCallback pCallback);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-notify))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-notify
     HRESULT Notify(WMPPartnerNotification type, VARIANT* pContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-getiteminfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-getiteminfo
     HRESULT GetItemInfo(BSTR bstrInfoName, VARIANT* pContext, VARIANT* pData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-getcontentpartnerinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-getcontentpartnerinfo
     HRESULT GetContentPartnerInfo(BSTR bstrInfoName, VARIANT* pData);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-getcommands))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-getcommands
     HRESULT GetCommands(BSTR location, VARIANT* pLocationContext, BSTR itemLocation, uint cItemIDs, 
                         uint* prgItemIDs, uint* pcItemIDs, WMPContextMenuInfo** pprgItems);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-invokecommand))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-invokecommand
     HRESULT InvokeCommand(uint dwCommandID, BSTR location, VARIANT* pLocationContext, BSTR itemLocation, 
                           uint cItemIDs, uint* rgItemIDs);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-canbuysilent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-canbuysilent
     HRESULT CanBuySilent(IWMPContentContainerList pInfo, BSTR* pbstrTotalPrice, VARIANT_BOOL* pSilentOK);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-buy))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-buy
     HRESULT Buy(IWMPContentContainerList pInfo, uint cookie);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-getstreamingurl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-getstreamingurl
     HRESULT GetStreamingURL(WMPStreamingType st, VARIANT* pStreamContext, BSTR* pbstrURL);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-download))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-download
     HRESULT Download(IWMPContentContainerList pInfo, uint cookie);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-downloadtrackcomplete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-downloadtrackcomplete
     HRESULT DownloadTrackComplete(HRESULT hrResult, uint contentID, BSTR downloadTrackParam);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-refreshlicense))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-refreshlicense
     HRESULT RefreshLicense(uint dwCookie, VARIANT_BOOL fLocal, BSTR bstrURL, WMPStreamingType type, uint contentID, 
                            BSTR bstrRefreshReason, VARIANT* pReasonContext);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-getcatalogurl))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-getcatalogurl
     HRESULT GetCatalogURL(uint dwCatalogVersion, uint dwCatalogSchemaVersion, uint catalogLCID, 
                           uint* pdwNewCatalogVersion, BSTR* pbstrCatalogURL, VARIANT* pExpirationDate);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-gettemplate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-gettemplate
     HRESULT GetTemplate(WMPTaskType task, BSTR location, VARIANT* pContext, BSTR clickLocation, 
                         VARIANT* pClickContext, BSTR bstrFilter, BSTR bstrViewParams, BSTR* pbstrTemplateURL, 
                         WMPTemplateSize* pTemplateSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-updatedevice))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-updatedevice
     HRESULT UpdateDevice(BSTR bstrDeviceName);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-getlistcontents))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-getlistcontents
     HRESULT GetListContents(BSTR location, VARIANT* pContext, BSTR bstrListType, BSTR bstrParams, 
                             uint dwListCookie);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-login))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-login
     HRESULT Login(BLOB userInfo, BLOB pwdInfo, VARIANT_BOOL fUsedCachedCreds, VARIANT_BOOL fOkToCache);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-authenticate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-authenticate
     HRESULT Authenticate(BLOB userInfo, BLOB pwdInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-logout))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-logout
     HRESULT Logout();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-sendmessage))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-sendmessage
     HRESULT SendMessage(BSTR bstrMsg, BSTR bstrParam);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-stationevent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-stationevent
     HRESULT StationEvent(BSTR bstrStationEventType, uint StationId, uint PlaylistIndex, uint TrackID, 
                          BSTR TrackData, uint dwSecondsPlayed);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-comparecontainerlistprices))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-comparecontainerlistprices
     HRESULT CompareContainerListPrices(IWMPContentContainerList pListBase, IWMPContentContainerList pListCompare, 
                                        int* pResult);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-verifypermission))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/contentpartner/nf-contentpartner-iwmpcontentpartner-verifypermission
     HRESULT VerifyPermission(BSTR bstrPermission, VARIANT* pContext);
 }
 
 @GUID("376055f8-2a59-4a73-9501-dca5273a7a10")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/subscriptionservices/nn-subscriptionservices-iwmpsubscriptionservice))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/subscriptionservices/nn-subscriptionservices-iwmpsubscriptionservice
 interface IWMPSubscriptionService : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/subscriptionservices/nf-subscriptionservices-iwmpsubscriptionservice-allowplay))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/subscriptionservices/nf-subscriptionservices-iwmpsubscriptionservice-allowplay
     HRESULT allowPlay(HWND hwnd, IWMPMedia pMedia, BOOL* pfAllowPlay);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/subscriptionservices/nf-subscriptionservices-iwmpsubscriptionservice-allowcdburn))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/subscriptionservices/nf-subscriptionservices-iwmpsubscriptionservice-allowcdburn
     HRESULT allowCDBurn(HWND hwnd, IWMPPlaylist pPlaylist, BOOL* pfAllowBurn);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/subscriptionservices/nf-subscriptionservices-iwmpsubscriptionservice-allowpdatransfer))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/subscriptionservices/nf-subscriptionservices-iwmpsubscriptionservice-allowpdatransfer
     HRESULT allowPDATransfer(HWND hwnd, IWMPPlaylist pPlaylist, BOOL* pfAllowTransfer);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/subscriptionservices/nf-subscriptionservices-iwmpsubscriptionservice-startbackgroundprocessing))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/subscriptionservices/nf-subscriptionservices-iwmpsubscriptionservice-startbackgroundprocessing
     HRESULT startBackgroundProcessing(HWND hwnd);
 }
 
 @GUID("dd01d127-2dc2-4c3a-876e-63312079f9b0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/subscriptionservices/nn-subscriptionservices-iwmpsubscriptionservicecallback))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/subscriptionservices/nn-subscriptionservices-iwmpsubscriptionservicecallback
 interface IWMPSubscriptionServiceCallback : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/subscriptionservices/nf-subscriptionservices-iwmpsubscriptionservicecallback-oncomplete))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/subscriptionservices/nf-subscriptionservices-iwmpsubscriptionservicecallback-oncomplete
     HRESULT onComplete(HRESULT hrResult);
 }
 
 @GUID("a94c120e-d600-4ec6-b05e-ec9d56d84de0")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/subscriptionservices/nn-subscriptionservices-iwmpsubscriptionservice2))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/subscriptionservices/nn-subscriptionservices-iwmpsubscriptionservice2
 interface IWMPSubscriptionService2 : IWMPSubscriptionService
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/subscriptionservices/nf-subscriptionservices-iwmpsubscriptionservice2-stopbackgroundprocessing))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/subscriptionservices/nf-subscriptionservices-iwmpsubscriptionservice2-stopbackgroundprocessing
     HRESULT stopBackgroundProcessing();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/subscriptionservices/nf-subscriptionservices-iwmpsubscriptionservice2-serviceevent))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/subscriptionservices/nf-subscriptionservices-iwmpsubscriptionservice2-serviceevent
     HRESULT serviceEvent(WMPSubscriptionServiceEvent event);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/subscriptionservices/nf-subscriptionservices-iwmpsubscriptionservice2-deviceavailable))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/subscriptionservices/nf-subscriptionservices-iwmpsubscriptionservice2-deviceavailable
     HRESULT deviceAvailable(BSTR bstrDeviceName, IWMPSubscriptionServiceCallback pCB);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/subscriptionservices/nf-subscriptionservices-iwmpsubscriptionservice2-prepareforsync))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/subscriptionservices/nf-subscriptionservices-iwmpsubscriptionservice2-prepareforsync
     HRESULT prepareForSync(BSTR bstrFilename, BSTR bstrDeviceName, IWMPSubscriptionServiceCallback pCB);
 }
 

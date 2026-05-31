@@ -3,18 +3,19 @@
 module windows.win32.data.htmlhelp;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, COLORREF, HINSTANCE, HRESULT, HWND,
-                                         POINT, PSTR, PWSTR, RECT;
-public import windows.win32.system.com : IPersistStreamInit, IStream, IUnknown;
-public import windows.win32.system.search : IStemmer;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, COLORREF, HINSTANCE, HRESULT,
+                                                    HWND, POINT, PSTR, PWSTR, RECT;
+public import windows.win32.system.com.com : IPersistStreamInit, IStream, IUnknown;
+public import windows.win32.system.search.search : IStemmer;
 public import windows.win32.system.variant : VARIANT;
-public import windows.win32.ui.controls : NMHDR;
+public import windows.win32.ui.controls.controls : NMHDR;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
+
 
 alias HTML_HELP_COMMAND = int;
 enum : int
@@ -56,6 +57,7 @@ enum : int
     HH_MAX_TABS_CUSTOM       = 0x00000009,
     HH_FTS_DEFAULT_PROXIMITY = 0xffffffff,
 }
+
 alias HH_GPROPID = int;
 enum : int
 {
@@ -65,6 +67,7 @@ enum : int
     HH_GPROPID_CURRENT_SUBSET   = 0x00000004,
     HH_GPROPID_CONTENT_LANGUAGE = 0x00000005,
 }
+
 alias PRIORITY = int;
 enum : int
 {
@@ -78,153 +81,153 @@ enum : int
 
 enum : uint
 {
-    HHWIN_PROP_TAB_AUTOHIDESHOW = 0x00000001,
-    HHWIN_PROP_ONTOP            = 0x00000002,
-    HHWIN_PROP_NOTITLEBAR       = 0x00000004,
-    HHWIN_PROP_NODEF_STYLES     = 0x00000008,
-    HHWIN_PROP_NODEF_EXSTYLES   = 0x00000010,
-    HHWIN_PROP_TRI_PANE         = 0x00000020,
-    HHWIN_PROP_NOTB_TEXT        = 0x00000040,
-    HHWIN_PROP_POST_QUIT        = 0x00000080,
-    HHWIN_PROP_AUTO_SYNC        = 0x00000100,
-    HHWIN_PROP_TRACKING         = 0x00000200,
-    HHWIN_PROP_TAB_SEARCH       = 0x00000400,
-    HHWIN_PROP_TAB_HISTORY      = 0x00000800,
-    HHWIN_PROP_TAB_FAVORITES    = 0x00001000,
-    HHWIN_PROP_CHANGE_TITLE     = 0x00002000,
-    HHWIN_PROP_NAV_ONLY_WIN     = 0x00004000,
-    HHWIN_PROP_NO_TOOLBAR       = 0x00008000,
-    HHWIN_PROP_MENU             = 0x00010000,
-    HHWIN_PROP_TAB_ADVSEARCH    = 0x00020000,
-    HHWIN_PROP_USER_POS         = 0x00040000,
-    HHWIN_PROP_TAB_CUSTOM1      = 0x00080000,
-    HHWIN_PROP_TAB_CUSTOM2      = 0x00100000,
-    HHWIN_PROP_TAB_CUSTOM3      = 0x00200000,
-    HHWIN_PROP_TAB_CUSTOM4      = 0x00400000,
-    HHWIN_PROP_TAB_CUSTOM5      = 0x00800000,
-    HHWIN_PROP_TAB_CUSTOM6      = 0x01000000,
-    HHWIN_PROP_TAB_CUSTOM7      = 0x02000000,
-    HHWIN_PROP_TAB_CUSTOM8      = 0x04000000,
-    HHWIN_PROP_TAB_CUSTOM9      = 0x08000000,
+    HHWIN_PROP_TAB_AUTOHIDESHOW = 0x00000001U,
+    HHWIN_PROP_ONTOP            = 0x00000002U,
+    HHWIN_PROP_NOTITLEBAR       = 0x00000004U,
+    HHWIN_PROP_NODEF_STYLES     = 0x00000008U,
+    HHWIN_PROP_NODEF_EXSTYLES   = 0x00000010U,
+    HHWIN_PROP_TRI_PANE         = 0x00000020U,
+    HHWIN_PROP_NOTB_TEXT        = 0x00000040U,
+    HHWIN_PROP_POST_QUIT        = 0x00000080U,
+    HHWIN_PROP_AUTO_SYNC        = 0x00000100U,
+    HHWIN_PROP_TRACKING         = 0x00000200U,
+    HHWIN_PROP_TAB_SEARCH       = 0x00000400U,
+    HHWIN_PROP_TAB_HISTORY      = 0x00000800U,
+    HHWIN_PROP_TAB_FAVORITES    = 0x00001000U,
+    HHWIN_PROP_CHANGE_TITLE     = 0x00002000U,
+    HHWIN_PROP_NAV_ONLY_WIN     = 0x00004000U,
+    HHWIN_PROP_NO_TOOLBAR       = 0x00008000U,
+    HHWIN_PROP_MENU             = 0x00010000U,
+    HHWIN_PROP_TAB_ADVSEARCH    = 0x00020000U,
+    HHWIN_PROP_USER_POS         = 0x00040000U,
+    HHWIN_PROP_TAB_CUSTOM1      = 0x00080000U,
+    HHWIN_PROP_TAB_CUSTOM2      = 0x00100000U,
+    HHWIN_PROP_TAB_CUSTOM3      = 0x00200000U,
+    HHWIN_PROP_TAB_CUSTOM4      = 0x00400000U,
+    HHWIN_PROP_TAB_CUSTOM5      = 0x00800000U,
+    HHWIN_PROP_TAB_CUSTOM6      = 0x01000000U,
+    HHWIN_PROP_TAB_CUSTOM7      = 0x02000000U,
+    HHWIN_PROP_TAB_CUSTOM8      = 0x04000000U,
+    HHWIN_PROP_TAB_CUSTOM9      = 0x08000000U,
 }
 
-enum uint HHWIN_TB_MARGIN = 0x10000000;
+enum uint HHWIN_TB_MARGIN = 0x10000000U;
 
 enum : uint
 {
-    HHWIN_PARAM_PROPERTIES    = 0x00000002,
-    HHWIN_PARAM_STYLES        = 0x00000004,
-    HHWIN_PARAM_EXSTYLES      = 0x00000008,
-    HHWIN_PARAM_RECT          = 0x00000010,
-    HHWIN_PARAM_NAV_WIDTH     = 0x00000020,
-    HHWIN_PARAM_SHOWSTATE     = 0x00000040,
-    HHWIN_PARAM_INFOTYPES     = 0x00000080,
-    HHWIN_PARAM_TB_FLAGS      = 0x00000100,
-    HHWIN_PARAM_EXPANSION     = 0x00000200,
-    HHWIN_PARAM_TABPOS        = 0x00000400,
-    HHWIN_PARAM_TABORDER      = 0x00000800,
-    HHWIN_PARAM_HISTORY_COUNT = 0x00001000,
-    HHWIN_PARAM_CUR_TAB       = 0x00002000,
-}
-
-enum : uint
-{
-    HHWIN_BUTTON_EXPAND     = 0x00000002,
-    HHWIN_BUTTON_BACK       = 0x00000004,
-    HHWIN_BUTTON_FORWARD    = 0x00000008,
-    HHWIN_BUTTON_STOP       = 0x00000010,
-    HHWIN_BUTTON_REFRESH    = 0x00000020,
-    HHWIN_BUTTON_HOME       = 0x00000040,
-    HHWIN_BUTTON_BROWSE_FWD = 0x00000080,
-    HHWIN_BUTTON_BROWSE_BCK = 0x00000100,
-    HHWIN_BUTTON_NOTES      = 0x00000200,
-    HHWIN_BUTTON_CONTENTS   = 0x00000400,
-    HHWIN_BUTTON_SYNC       = 0x00000800,
-    HHWIN_BUTTON_OPTIONS    = 0x00001000,
-    HHWIN_BUTTON_PRINT      = 0x00002000,
-    HHWIN_BUTTON_INDEX      = 0x00004000,
-    HHWIN_BUTTON_SEARCH     = 0x00008000,
-    HHWIN_BUTTON_HISTORY    = 0x00010000,
-    HHWIN_BUTTON_FAVORITES  = 0x00020000,
-    HHWIN_BUTTON_JUMP1      = 0x00040000,
-    HHWIN_BUTTON_JUMP2      = 0x00080000,
-    HHWIN_BUTTON_ZOOM       = 0x00100000,
-    HHWIN_BUTTON_TOC_NEXT   = 0x00200000,
-    HHWIN_BUTTON_TOC_PREV   = 0x00400000,
+    HHWIN_PARAM_PROPERTIES    = 0x00000002U,
+    HHWIN_PARAM_STYLES        = 0x00000004U,
+    HHWIN_PARAM_EXSTYLES      = 0x00000008U,
+    HHWIN_PARAM_RECT          = 0x00000010U,
+    HHWIN_PARAM_NAV_WIDTH     = 0x00000020U,
+    HHWIN_PARAM_SHOWSTATE     = 0x00000040U,
+    HHWIN_PARAM_INFOTYPES     = 0x00000080U,
+    HHWIN_PARAM_TB_FLAGS      = 0x00000100U,
+    HHWIN_PARAM_EXPANSION     = 0x00000200U,
+    HHWIN_PARAM_TABPOS        = 0x00000400U,
+    HHWIN_PARAM_TABORDER      = 0x00000800U,
+    HHWIN_PARAM_HISTORY_COUNT = 0x00001000U,
+    HHWIN_PARAM_CUR_TAB       = 0x00002000U,
 }
 
 enum : uint
 {
-    IDTB_EXPAND   = 0x000000c8,
-    IDTB_CONTRACT = 0x000000c9,
+    HHWIN_BUTTON_EXPAND     = 0x00000002U,
+    HHWIN_BUTTON_BACK       = 0x00000004U,
+    HHWIN_BUTTON_FORWARD    = 0x00000008U,
+    HHWIN_BUTTON_STOP       = 0x00000010U,
+    HHWIN_BUTTON_REFRESH    = 0x00000020U,
+    HHWIN_BUTTON_HOME       = 0x00000040U,
+    HHWIN_BUTTON_BROWSE_FWD = 0x00000080U,
+    HHWIN_BUTTON_BROWSE_BCK = 0x00000100U,
+    HHWIN_BUTTON_NOTES      = 0x00000200U,
+    HHWIN_BUTTON_CONTENTS   = 0x00000400U,
+    HHWIN_BUTTON_SYNC       = 0x00000800U,
+    HHWIN_BUTTON_OPTIONS    = 0x00001000U,
+    HHWIN_BUTTON_PRINT      = 0x00002000U,
+    HHWIN_BUTTON_INDEX      = 0x00004000U,
+    HHWIN_BUTTON_SEARCH     = 0x00008000U,
+    HHWIN_BUTTON_HISTORY    = 0x00010000U,
+    HHWIN_BUTTON_FAVORITES  = 0x00020000U,
+    HHWIN_BUTTON_JUMP1      = 0x00040000U,
+    HHWIN_BUTTON_JUMP2      = 0x00080000U,
+    HHWIN_BUTTON_ZOOM       = 0x00100000U,
+    HHWIN_BUTTON_TOC_NEXT   = 0x00200000U,
+    HHWIN_BUTTON_TOC_PREV   = 0x00400000U,
 }
 
 enum : uint
 {
-    IDTB_STOP        = 0x000000ca,
-    IDTB_REFRESH     = 0x000000cb,
-    IDTB_BACK        = 0x000000cc,
-    IDTB_HOME        = 0x000000cd,
-    IDTB_SYNC        = 0x000000ce,
-    IDTB_PRINT       = 0x000000cf,
-    IDTB_OPTIONS     = 0x000000d0,
-    IDTB_FORWARD     = 0x000000d1,
-    IDTB_NOTES       = 0x000000d2,
-    IDTB_BROWSE_FWD  = 0x000000d3,
-    IDTB_BROWSE_BACK = 0x000000d4,
-}
-
-enum uint IDTB_CONTENTS = 0x000000d5;
-
-enum : uint
-{
-    IDTB_INDEX     = 0x000000d6,
-    IDTB_SEARCH    = 0x000000d7,
-    IDTB_HISTORY   = 0x000000d8,
-    IDTB_FAVORITES = 0x000000d9,
+    IDTB_EXPAND   = 0x000000c8U,
+    IDTB_CONTRACT = 0x000000c9U,
 }
 
 enum : uint
 {
-    IDTB_JUMP1     = 0x000000da,
-    IDTB_JUMP2     = 0x000000db,
-    IDTB_CUSTOMIZE = 0x000000dd,
+    IDTB_STOP        = 0x000000caU,
+    IDTB_REFRESH     = 0x000000cbU,
+    IDTB_BACK        = 0x000000ccU,
+    IDTB_HOME        = 0x000000cdU,
+    IDTB_SYNC        = 0x000000ceU,
+    IDTB_PRINT       = 0x000000cfU,
+    IDTB_OPTIONS     = 0x000000d0U,
+    IDTB_FORWARD     = 0x000000d1U,
+    IDTB_NOTES       = 0x000000d2U,
+    IDTB_BROWSE_FWD  = 0x000000d3U,
+    IDTB_BROWSE_BACK = 0x000000d4U,
+}
+
+enum uint IDTB_CONTENTS = 0x000000d5U;
+
+enum : uint
+{
+    IDTB_INDEX     = 0x000000d6U,
+    IDTB_SEARCH    = 0x000000d7U,
+    IDTB_HISTORY   = 0x000000d8U,
+    IDTB_FAVORITES = 0x000000d9U,
 }
 
 enum : uint
 {
-    IDTB_ZOOM     = 0x000000de,
-    IDTB_TOC_NEXT = 0x000000df,
-    IDTB_TOC_PREV = 0x000000e0,
+    IDTB_JUMP1     = 0x000000daU,
+    IDTB_JUMP2     = 0x000000dbU,
+    IDTB_CUSTOMIZE = 0x000000ddU,
 }
 
 enum : uint
 {
-    HHN_FIRST       = 0xfffffca4,
-    HHN_LAST        = 0xfffffc91,
-    HHN_NAVCOMPLETE = 0xfffffca4,
+    IDTB_ZOOM     = 0x000000deU,
+    IDTB_TOC_NEXT = 0x000000dfU,
+    IDTB_TOC_PREV = 0x000000e0U,
 }
 
 enum : uint
 {
-    HHN_TRACK         = 0xfffffca3,
-    HHN_WINDOW_CREATE = 0xfffffca2,
+    HHN_FIRST       = 0xfffffca4U,
+    HHN_LAST        = 0xfffffc91U,
+    HHN_NAVCOMPLETE = 0xfffffca4U,
+}
+
+enum : uint
+{
+    HHN_TRACK         = 0xfffffca3U,
+    HHN_WINDOW_CREATE = 0xfffffca2U,
 }
 
 enum GUID CLSID_IITPropList = GUID("4662daae-d393-11d0-9a56-00c04fb68bf7");
 
 enum : uint
 {
-    PROP_ADD    = 0x00000000,
-    PROP_DELETE = 0x00000001,
-    PROP_UPDATE = 0x00000002,
+    PROP_ADD    = 0x00000000U,
+    PROP_DELETE = 0x00000001U,
+    PROP_UPDATE = 0x00000002U,
 }
 
 enum : uint
 {
-    TYPE_VALUE   = 0x00000000,
-    TYPE_POINTER = 0x00000001,
-    TYPE_STRING  = 0x00000002,
+    TYPE_VALUE   = 0x00000000U,
+    TYPE_POINTER = 0x00000001U,
+    TYPE_STRING  = 0x00000002U,
 }
 
 enum : GUID
@@ -235,26 +238,26 @@ enum : GUID
 
 enum : uint
 {
-    STDPROP_UID                   = 0x00000001,
-    STDPROP_TITLE                 = 0x00000002,
-    STDPROP_USERDATA              = 0x00000003,
-    STDPROP_KEY                   = 0x00000004,
-    STDPROP_SORTKEY               = 0x00000064,
-    STDPROP_DISPLAYKEY            = 0x00000065,
-    STDPROP_SORTORDINAL           = 0x00000066,
-    STDPROP_INDEX_TEXT            = 0x000000c8,
-    STDPROP_INDEX_VFLD            = 0x000000c9,
-    STDPROP_INDEX_DTYPE           = 0x000000ca,
-    STDPROP_INDEX_LENGTH          = 0x000000cb,
-    STDPROP_INDEX_BREAK           = 0x000000cc,
-    STDPROP_INDEX_TERM            = 0x000000d2,
-    STDPROP_INDEX_TERM_RAW_LENGTH = 0x000000d3,
+    STDPROP_UID                   = 0x00000001U,
+    STDPROP_TITLE                 = 0x00000002U,
+    STDPROP_USERDATA              = 0x00000003U,
+    STDPROP_KEY                   = 0x00000004U,
+    STDPROP_SORTKEY               = 0x00000064U,
+    STDPROP_DISPLAYKEY            = 0x00000065U,
+    STDPROP_SORTORDINAL           = 0x00000066U,
+    STDPROP_INDEX_TEXT            = 0x000000c8U,
+    STDPROP_INDEX_VFLD            = 0x000000c9U,
+    STDPROP_INDEX_DTYPE           = 0x000000caU,
+    STDPROP_INDEX_LENGTH          = 0x000000cbU,
+    STDPROP_INDEX_BREAK           = 0x000000ccU,
+    STDPROP_INDEX_TERM            = 0x000000d2U,
+    STDPROP_INDEX_TERM_RAW_LENGTH = 0x000000d3U,
 }
 
 enum : uint
 {
-    STDPROP_USERPROP_BASE = 0x00010000,
-    STDPROP_USERPROP_MAX  = 0x7fffffff,
+    STDPROP_USERPROP_BASE = 0x00010000U,
+    STDPROP_USERPROP_MAX  = 0x7fffffffU,
 }
 
 enum : const(wchar)*
@@ -280,13 +283,13 @@ enum : GUID
     CLSID_IITWordWheelLocal = GUID("4662daa8-d393-11d0-9a56-00c04fb68bf7"),
 }
 
-enum uint ITWW_OPEN_NOCONNECT = 0x00000001;
-enum uint ITWW_CBKEY_MAX = 0x00000400;
+enum uint ITWW_OPEN_NOCONNECT = 0x00000001U;
+enum uint ITWW_CBKEY_MAX = 0x00000400U;
 
 enum : uint
 {
-    IITWBC_BREAK_ACCEPT_WILDCARDS = 0x00000001,
-    IITWBC_BREAK_AND_STEM         = 0x00000002,
+    IITWBC_BREAK_ACCEPT_WILDCARDS = 0x00000001U,
+    IITWBC_BREAK_AND_STEM         = 0x00000002U,
 }
 
 enum HRESULT E_NOTEXIST = HRESULT(0x80001000);
@@ -382,7 +385,7 @@ enum HRESULT E_RESULTSETEMPTY = HRESULT(0x80001085);
 enum HRESULT E_TOOMANYCOLUMNS = HRESULT(0x80001086);
 enum HRESULT E_NOKEYPROP = HRESULT(0x80001087);
 enum GUID CLSID_IITResultSet = GUID("4662daa7-d393-11d0-9a56-00c04fb68bf7");
-enum uint MAX_COLUMNS = 0x00000100;
+enum uint MAX_COLUMNS = 0x00000100U;
 
 enum : GUID
 {
@@ -468,14 +471,14 @@ alias PFNCOLHEAPFREE = int function(void* param0);
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/htmlhelp/ns-htmlhelp-hhn_notify))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/htmlhelp/ns-htmlhelp-hhn_notify
 struct HHN_NOTIFY
 {
     NMHDR       hdr;
     const(PSTR) pszUrl;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/htmlhelp/ns-htmlhelp-hh_popup))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/htmlhelp/ns-htmlhelp-hh_popup
 struct HH_POPUP
 {
     int       cbStruct;
@@ -489,7 +492,7 @@ struct HH_POPUP
     byte*     pszFont;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/htmlhelp/ns-htmlhelp-hh_aklink))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/htmlhelp/ns-htmlhelp-hh_aklink
 struct HH_AKLINK
 {
     int   cbStruct;
@@ -525,7 +528,7 @@ struct HH_SET_INFOTYPE
     const(PSTR) pszInfoTypeName;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/htmlhelp/ns-htmlhelp-hh_fts_query))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/htmlhelp/ns-htmlhelp-hh_fts_query
 struct HH_FTS_QUERY
 {
     int   cbStruct;
@@ -538,7 +541,7 @@ struct HH_FTS_QUERY
     byte* pszWindow;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/htmlhelp/ns-htmlhelp-hh_wintype))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/htmlhelp/ns-htmlhelp-hh_wintype
 struct HH_WINTYPE
 {
     int       cbStruct;
@@ -579,7 +582,7 @@ struct HH_WINTYPE
     byte*     pszCustomTabs;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/htmlhelp/ns-htmlhelp-hhntrack))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/htmlhelp/ns-htmlhelp-hhntrack
 struct HHNTRACK
 {
     NMHDR       hdr;
@@ -596,11 +599,16 @@ struct HH_GLOBAL_PROPERTY
 
 struct CProperty
 {
-    uint                dwPropID;
-    uint                cbData;
-    uint                dwType;
-    _Anonymous_e__Union Anonymous;
-    BOOL                fPersist;
+    uint dwPropID;
+    uint cbData;
+    uint dwType;
+    union
+    {
+        PWSTR lpszwData;
+        void* lpvData;
+        uint  dwValue;
+    }
+    BOOL fPersist;
 }
 
 struct ROWSTATUS
@@ -635,35 +643,35 @@ HWND HtmlHelpW(HWND hwndCaller, const(PWSTR) pszFile,
 // Interfaces
 
 @GUID("1f403bb1-9997-11d0-a850-00aa006c7d01")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/infotech/nn-infotech-iitproplist))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/infotech/nn-infotech-iitproplist
 interface IITPropList : IPersistStreamInit
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitproplist-set(propid_lpvoid_dword_dword)))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitproplist-set(propid_lpvoid_dword_dword)
     HRESULT Set(uint PropID, const(PWSTR) lpszwString, uint dwOperation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitproplist-set(propid_lpvoid_dword_dword)))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitproplist-set(propid_lpvoid_dword_dword)
     HRESULT Set(uint PropID, void* lpvData, uint cbData, uint dwOperation);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitproplist-set(propid_lpvoid_dword_dword)))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitproplist-set(propid_lpvoid_dword_dword)
     HRESULT Set(uint PropID, uint dwData, uint dwOperation);
     HRESULT Add(CProperty* Prop);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitproplist-get))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitproplist-get
     HRESULT Get(uint PropID, CProperty* Property);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitproplist-clear))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitproplist-clear
     HRESULT Clear();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitproplist-setpersist(propid_bool)))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitproplist-setpersist(propid_bool)
     HRESULT SetPersist(BOOL fPersist);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitproplist-setpersist(propid_bool)))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitproplist-setpersist(propid_bool)
     HRESULT SetPersist(uint PropID, BOOL fPersist);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitproplist-getfirst))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitproplist-getfirst
     HRESULT GetFirst(CProperty* Property);
     HRESULT GetNext(CProperty* Property);
     HRESULT GetPropCount(int* cProp);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitproplist-saveheader))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitproplist-saveheader
     HRESULT SaveHeader(void* lpvData, uint dwHdrSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitproplist-savedata))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitproplist-savedata
     HRESULT SaveData(void* lpvHeader, uint dwHdrSize, void* lpvData, uint dwBufSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitproplist-getheadersize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitproplist-getheadersize
     HRESULT GetHeaderSize(uint* dwHdrSize);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitproplist-getdatasize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitproplist-getdatasize
     HRESULT GetDataSize(void* lpvHeader, uint dwHdrSize, uint* dwDataSize);
     HRESULT SaveDataToStream(void* lpvHeader, uint dwHdrSize, IStream pStream);
     HRESULT LoadFromMem(void* lpvData, uint dwBufSize);
@@ -671,16 +679,16 @@ interface IITPropList : IPersistStreamInit
 }
 
 @GUID("8fa0d5a2-dedf-11d0-9a61-00c04fb68bf7")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/infotech/nn-infotech-iitdatabase))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/infotech/nn-infotech-iitdatabase
 interface IITDatabase : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitdatabase-open))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitdatabase-open
     HRESULT Open(const(PWSTR) lpszHost, const(PWSTR) lpszMoniker, uint dwFlags);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitdatabase-close))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitdatabase-close
     HRESULT Close();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitdatabase-createobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitdatabase-createobject
     HRESULT CreateObject(const(GUID)* rclsid, uint* pdwObjInstance);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitdatabase-getobject))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitdatabase-getobject
     HRESULT GetObject(uint dwObjInstance, const(GUID)* riid, void** ppvObj);
     HRESULT GetObjectPersistence(const(PWSTR) lpwszObject, uint dwObjInstance, void** ppvPersistence, BOOL fStream);
 }
@@ -693,10 +701,10 @@ interface IStemSink : IUnknown
 }
 
 @GUID("8fa0d5a7-dedf-11d0-9a61-00c04fb68bf7")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/infotech/nn-infotech-istemmerconfig))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/infotech/nn-infotech-istemmerconfig
 interface IStemmerConfig : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-istemmerconfig-setlocaleinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-istemmerconfig-setlocaleinfo
     HRESULT SetLocaleInfo(uint dwCodePageID, uint lcid);
     HRESULT GetLocaleInfo(uint* pdwCodePageID, uint* plcid);
     HRESULT SetControlInfo(uint grfStemFlags, uint dwReserved);
@@ -719,19 +727,19 @@ interface IWordBreakerConfig : IUnknown
 }
 
 @GUID("3bb91d41-998b-11d0-a850-00aa006c7d01")
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/infotech/nn-infotech-iitresultset))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/infotech/nn-infotech-iitresultset
 interface IITResultSet : IUnknown
 {
     HRESULT SetColumnPriority(int lColumnIndex, PRIORITY ColumnPriority);
     HRESULT SetColumnHeap(int lColumnIndex, void* lpvHeap, PFNCOLHEAPFREE pfnColHeapFree);
     HRESULT SetKeyProp(uint PropID);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitresultset-add(propid_lpvoid_dword_priority)))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitresultset-add(propid_lpvoid_dword_priority)
     HRESULT Add(uint PropID, uint dwDefaultData, PRIORITY Priority);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitresultset-add(propid_lpvoid_dword_priority)))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitresultset-add(propid_lpvoid_dword_priority)
     HRESULT Add(uint PropID, const(PWSTR) lpszwDefault, PRIORITY Priority);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitresultset-add(propid_lpvoid_dword_priority)))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitresultset-add(propid_lpvoid_dword_priority)
     HRESULT Add(uint PropID, void* lpvDefaultData, uint cbData, PRIORITY Priority);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitresultset-add(propid_lpvoid_dword_priority)))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitresultset-add(propid_lpvoid_dword_priority)
     HRESULT Add(void* lpvHdr);
     HRESULT Append(void* lpvHdr, void* lpvData);
     HRESULT Set(int lRowIndex, int lColumnIndex, void* lpvData, uint cbData);
@@ -740,11 +748,11 @@ interface IITResultSet : IUnknown
     HRESULT Set(int lRowIndex, void* lpvHdr, void* lpvData);
     HRESULT Copy(IITResultSet pRSCopy);
     HRESULT AppendRows(IITResultSet pResSrc, int lRowSrcFirst, int cSrcRows, int* lRowFirstDest);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitresultset-get))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitresultset-get
     HRESULT Get(int lRowIndex, int lColumnIndex, CProperty* Prop);
     HRESULT GetKeyProp(uint* KeyPropID);
     HRESULT GetColumnPriority(int lColumnIndex, PRIORITY* ColumnPriority);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitresultset-getrowcount))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/infotech/nf-infotech-iitresultset-getrowcount
     HRESULT GetRowCount(int* lNumberOfRows);
     HRESULT GetColumnCount(int* lNumberOfColumns);
     HRESULT GetColumn(int lColumnIndex, uint* PropID, uint* dwType, void** lpvDefaultValue, uint* cbSize, 

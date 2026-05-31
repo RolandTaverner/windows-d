@@ -3,8 +3,8 @@
 module windows.win32.system.mailslots;
 
 public import windows.core;
-public import windows.win32.foundation : BOOL, HANDLE, PSTR, PWSTR;
-public import windows.win32.security : SECURITY_ATTRIBUTES;
+public import windows.win32.foundation.foundation : BOOL, HANDLE, PSTR, PWSTR;
+public import windows.win32.security.security : SECURITY_ATTRIBUTES;
 
 extern(Windows) @nogc nothrow:
 

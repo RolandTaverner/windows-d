@@ -3,18 +3,20 @@
 module windows.win32.networkmanagement.networkdiagnosticsframework;
 
 public import windows.core;
-public import system : Guid;
-public import windows.win32.foundation : BOOL, CHAR, FILETIME, HRESULT, HWND, PWSTR;
+public import system.system : Guid;
+public import windows.win32.foundation.foundation : BOOL, CHAR, FILETIME, HRESULT, HWND,
+                                                    PWSTR;
 public import windows.win32.networking.winsock : SOCKET, SOCKET_ADDRESS_LIST;
-public import windows.win32.security : SID;
-public import windows.win32.system.com : IUnknown;
+public import windows.win32.security.security : SID;
+public import windows.win32.system.com.com : IUnknown;
 
 extern(Windows) @nogc nothrow:
 
 
 // Enums
 
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndattrib/ne-ndattrib-attribute_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndattrib/ne-ndattrib-attribute_type
 alias ATTRIBUTE_TYPE = int;
 enum : int
 {
@@ -34,7 +36,8 @@ enum : int
     AT_SOCKADDR     = 0x0000000d,
     AT_OCTET_STRING = 0x0000000e,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndattrib/ne-ndattrib-repair_scope))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndattrib/ne-ndattrib-repair_scope
 alias REPAIR_SCOPE = int;
 enum : int
 {
@@ -43,7 +46,8 @@ enum : int
     RS_APPLICATION = 0x00000002,
     RS_PROCESS     = 0x00000003,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndattrib/ne-ndattrib-repair_risk))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndattrib/ne-ndattrib-repair_risk
 alias REPAIR_RISK = int;
 enum : int
 {
@@ -51,7 +55,8 @@ enum : int
     RR_ROLLBACK   = 0x00000001,
     RR_NORISK     = 0x00000002,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndattrib/ne-ndattrib-ui_info_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndattrib/ne-ndattrib-ui_info_type
 alias UI_INFO_TYPE = int;
 enum : int
 {
@@ -61,7 +66,8 @@ enum : int
     UIT_HELP_PANE     = 0x00000003,
     UIT_DUI           = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndhelper/ne-ndhelper-diagnosis_status))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/ne-ndhelper-diagnosis_status
 alias DIAGNOSIS_STATUS = int;
 enum : int
 {
@@ -72,7 +78,8 @@ enum : int
     DS_DEFERRED        = 0x00000004,
     DS_PASSTHROUGH     = 0x00000005,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndhelper/ne-ndhelper-repair_status))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/ne-ndhelper-repair_status
 alias REPAIR_STATUS = int;
 enum : int
 {
@@ -82,7 +89,8 @@ enum : int
     RS_DEFERRED        = 0x00000003,
     RS_USER_ACTION     = 0x00000004,
 }
-//ENUM ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndhelper/ne-ndhelper-problem_type))], [])
+
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/ne-ndhelper-problem_type
 alias PROBLEM_TYPE = int;
 enum : int
 {
@@ -98,7 +106,7 @@ enum : int
 // Constants
 
 
-enum uint NDF_ERROR_START = 0x0000f900;
+enum uint NDF_ERROR_START = 0x0000f900U;
 enum HRESULT NDF_E_LENGTH_EXCEEDED = HRESULT(0x8008f900);
 enum HRESULT NDF_E_NOHELPERCLASS = HRESULT(0x8008f901);
 enum HRESULT NDF_E_CANCELLED = HRESULT(0x8008f902);
@@ -117,80 +125,96 @@ enum : HRESULT
     NDF_E_PROBLEM_PRESENT = HRESULT(0x8008f908),
 }
 
-enum uint RF_WORKAROUND = 0x20000000;
+enum uint RF_WORKAROUND = 0x20000000U;
 
 enum : uint
 {
-    RF_USER_ACTION       = 0x10000000,
-    RF_USER_CONFIRMATION = 0x08000000,
+    RF_USER_ACTION       = 0x10000000U,
+    RF_USER_CONFIRMATION = 0x08000000U,
 }
 
-enum uint RF_INFORMATION_ONLY = 0x02000000;
-enum uint RF_UI_ONLY = 0x01000000;
-enum uint RF_SHOW_EVENTS = 0x00800000;
-enum uint RF_VALIDATE_HELPTOPIC = 0x00400000;
-enum uint RF_REPRO = 0x00200000;
-enum uint RF_CONTACT_ADMIN = 0x00020000;
+enum uint RF_INFORMATION_ONLY = 0x02000000U;
+enum uint RF_UI_ONLY = 0x01000000U;
+enum uint RF_SHOW_EVENTS = 0x00800000U;
+enum uint RF_VALIDATE_HELPTOPIC = 0x00400000U;
+enum uint RF_REPRO = 0x00200000U;
+enum uint RF_CONTACT_ADMIN = 0x00020000U;
 
 enum : uint
 {
-    RF_RESERVED     = 0x40000000,
-    RF_RESERVED_CA  = 0x80000000,
-    RF_RESERVED_LNI = 0x00010000,
+    RF_RESERVED     = 0x40000000U,
+    RF_RESERVED_CA  = 0x80000000U,
+    RF_RESERVED_LNI = 0x00010000U,
 }
 
 enum : uint
 {
-    RCF_ISLEAF      = 0x00000001,
-    RCF_ISCONFIRMED = 0x00000002,
+    RCF_ISLEAF      = 0x00000001U,
+    RCF_ISCONFIRMED = 0x00000002U,
 }
 
-enum uint RCF_ISTHIRDPARTY = 0x00000004;
-enum uint DF_IMPERSONATION = 0x80000000;
-enum uint DF_TRACELESS = 0x40000000;
+enum uint RCF_ISTHIRDPARTY = 0x00000004U;
+enum uint DF_IMPERSONATION = 0x80000000U;
+enum uint DF_TRACELESS = 0x40000000U;
 
 enum : uint
 {
-    NDF_INBOUND_FLAG_EDGETRAVERSAL = 0x00000001,
-    NDF_INBOUND_FLAG_HEALTHCHECK   = 0x00000002,
+    NDF_INBOUND_FLAG_EDGETRAVERSAL = 0x00000001U,
+    NDF_INBOUND_FLAG_HEALTHCHECK   = 0x00000002U,
 }
 
-enum uint NDF_ADD_CAPTURE_TRACE = 0x00000001;
-enum uint NDF_APPLY_INCLUSION_LIST_FILTER = 0x00000002;
+enum uint NDF_ADD_CAPTURE_TRACE = 0x00000001U;
+enum uint NDF_APPLY_INCLUSION_LIST_FILTER = 0x00000002U;
 
 // Structs
 
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndattrib/ns-ndattrib-octet_string))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndattrib/ns-ndattrib-octet_string
 struct OCTET_STRING
 {
     uint   dwLength;
     ubyte* lpValue;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndattrib/ns-ndattrib-life_time))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndattrib/ns-ndattrib-life_time
 struct LIFE_TIME
 {
     FILETIME startTime;
     FILETIME endTime;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndattrib/ns-ndattrib-diag_sockaddr))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndattrib/ns-ndattrib-diag_sockaddr
 struct DIAG_SOCKADDR
 {
     ushort    family;
     CHAR[126] data;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndattrib/ns-ndattrib-helper_attribute))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndattrib/ns-ndattrib-helper_attribute
 struct HELPER_ATTRIBUTE
 {
-    PWSTR               pwszName;
-    ATTRIBUTE_TYPE      type;
-    _Anonymous_e__Union Anonymous;
+    PWSTR          pwszName;
+    ATTRIBUTE_TYPE type;
+    union
+    {
+        BOOL          Boolean;
+        ubyte         Char;
+        ubyte         Byte;
+        short         Short;
+        ushort        Word;
+        int           Int;
+        uint          DWord;
+        long          Int64;
+        ulong         UInt64;
+        PWSTR         PWStr;
+        GUID          Guid;
+        LIFE_TIME     LifeTime;
+        DIAG_SOCKADDR Address;
+        OCTET_STRING  OctetString;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndattrib/ns-ndattrib-shellcommandinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndattrib/ns-ndattrib-shellcommandinfo
 struct ShellCommandInfo
 {
     PWSTR pwszOperation;
@@ -200,14 +224,20 @@ struct ShellCommandInfo
     uint  nShowCmd;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndattrib/ns-ndattrib-uiinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndattrib/ns-ndattrib-uiinfo
 struct UiInfo
 {
-    UI_INFO_TYPE        type;
-    _Anonymous_e__Union Anonymous;
+    UI_INFO_TYPE type;
+    union
+    {
+        PWSTR            pwzNull;
+        ShellCommandInfo ShellInfo;
+        PWSTR            pwzHelpUrl;
+        PWSTR            pwzDui;
+    }
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndattrib/ns-ndattrib-repairinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndattrib/ns-ndattrib-repairinfo
 struct RepairInfo
 {
     GUID         guid;
@@ -218,18 +248,18 @@ struct RepairInfo
     uint         flags;
     REPAIR_SCOPE scope_;
     REPAIR_RISK  risk;
-    UiInfo       UiInfo57;
+    UiInfo       UiInfo135;
     int          rootCauseIndex;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndattrib/ns-ndattrib-repairinfoex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndattrib/ns-ndattrib-repairinfoex
 struct RepairInfoEx
 {
     RepairInfo repair;
     ushort     repairRank;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndattrib/ns-ndattrib-rootcauseinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndattrib/ns-ndattrib-rootcauseinfo
 struct RootCauseInfo
 {
     PWSTR         pwszDescription;
@@ -240,7 +270,7 @@ struct RootCauseInfo
     ushort        repairCount;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndhelper/ns-ndhelper-hypothesis))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/ns-ndhelper-hypothesis
 struct HYPOTHESIS
 {
     PWSTR             pwszClassName;
@@ -249,21 +279,21 @@ struct HYPOTHESIS
     HELPER_ATTRIBUTE* rgAttributes;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndhelper/ns-ndhelper-helperattributeinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/ns-ndhelper-helperattributeinfo
 struct HelperAttributeInfo
 {
     PWSTR          pwszName;
     ATTRIBUTE_TYPE type;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndhelper/ns-ndhelper-diagnosticsinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/ns-ndhelper-diagnosticsinfo
 struct DiagnosticsInfo
 {
     int  cost;
     uint flags;
 }
 
-//STRUCT ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndhelper/ns-ndhelper-hypothesisresult))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/ns-ndhelper-hypothesisresult
 struct HypothesisResult
 {
     HYPOTHESIS       hypothesis;
@@ -346,78 +376,78 @@ HRESULT NdfGetTraceFile(void* Handle, const(PWSTR)* TraceFileLocation);
 
 @GUID("c0b35746-ebf5-11d8-bbe9-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndhelper/nn-ndhelper-inetdiaghelper))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/nn-ndhelper-inetdiaghelper
 interface INetDiagHelper : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelper-initialize))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelper-initialize
     HRESULT Initialize(uint celt, HELPER_ATTRIBUTE* rgAttributes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelper-getdiagnosticsinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelper-getdiagnosticsinfo
     HRESULT GetDiagnosticsInfo(DiagnosticsInfo** ppInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelper-getkeyattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelper-getkeyattributes
     HRESULT GetKeyAttributes(uint* pcelt, HELPER_ATTRIBUTE** pprgAttributes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelper-lowhealth))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelper-lowhealth
     HRESULT LowHealth(const(PWSTR) pwszInstanceDescription, PWSTR* ppwszDescription, int* pDeferredTime, 
                       DIAGNOSIS_STATUS* pStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelper-highutilization))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelper-highutilization
     HRESULT HighUtilization(const(PWSTR) pwszInstanceDescription, PWSTR* ppwszDescription, int* pDeferredTime, 
                             DIAGNOSIS_STATUS* pStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelper-getlowerhypotheses))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelper-getlowerhypotheses
     HRESULT GetLowerHypotheses(uint* pcelt, HYPOTHESIS** pprgHypotheses);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelper-getdownstreamhypotheses))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelper-getdownstreamhypotheses
     HRESULT GetDownStreamHypotheses(uint* pcelt, HYPOTHESIS** pprgHypotheses);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelper-gethigherhypotheses))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelper-gethigherhypotheses
     HRESULT GetHigherHypotheses(uint* pcelt, HYPOTHESIS** pprgHypotheses);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelper-getupstreamhypotheses))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelper-getupstreamhypotheses
     HRESULT GetUpStreamHypotheses(uint* pcelt, HYPOTHESIS** pprgHypotheses);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelper-repair))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelper-repair
     HRESULT Repair(RepairInfo* pInfo, int* pDeferredTime, REPAIR_STATUS* pStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelper-validate))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelper-validate
     HRESULT Validate(PROBLEM_TYPE problem, int* pDeferredTime, REPAIR_STATUS* pStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelper-getrepairinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelper-getrepairinfo
     HRESULT GetRepairInfo(PROBLEM_TYPE problem, uint* pcelt, RepairInfo** ppInfo);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelper-getlifetime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelper-getlifetime
     HRESULT GetLifeTime(LIFE_TIME* pLifeTime);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelper-setlifetime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelper-setlifetime
     HRESULT SetLifeTime(LIFE_TIME lifeTime);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelper-getcachetime))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelper-getcachetime
     HRESULT GetCacheTime(FILETIME* pCacheTime);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelper-getattributes))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelper-getattributes
     HRESULT GetAttributes(uint* pcelt, HELPER_ATTRIBUTE** pprgAttributes);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelper-cancel))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelper-cancel
     HRESULT Cancel();
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelper-cleanup))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelper-cleanup
     HRESULT Cleanup();
 }
 
 @GUID("104613fb-bc57-4178-95ba-88809698354a")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndhelper/nn-ndhelper-inetdiaghelperutilfactory))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/nn-ndhelper-inetdiaghelperutilfactory
 interface INetDiagHelperUtilFactory : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelperutilfactory-createutilityinstance))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelperutilfactory-createutilityinstance
     HRESULT CreateUtilityInstance(const(GUID)* riid, void** ppvObject);
 }
 
 @GUID("972dab4d-e4e3-4fc6-ae54-5f65ccde4a15")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.1))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndhelper/nn-ndhelper-inetdiaghelperex))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/nn-ndhelper-inetdiaghelperex
 interface INetDiagHelperEx : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelperex-reconfirmlowhealth))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelperex-reconfirmlowhealth
     HRESULT ReconfirmLowHealth(uint celt, HypothesisResult* pResults, PWSTR* ppwszUpdatedDescription, 
                                DIAGNOSIS_STATUS* pUpdatedStatus);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelperex-setutilities))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelperex-setutilities
     HRESULT SetUtilities(INetDiagHelperUtilFactory pUtilities);
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelperex-reproducefailure))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelperex-reproducefailure
     HRESULT ReproduceFailure();
 }
 
 @GUID("c0b35747-ebf5-11d8-bbe9-505054503030")
 //INTERFACEF ATTR: SupportedOSPlatformAttribute : CustomAttributeSig([FixedArgSig(ElementSig(windows6.0.6000))], [])
-//INTERFACEF ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndhelper/nn-ndhelper-inetdiaghelperinfo))], [])
+// Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/nn-ndhelper-inetdiaghelperinfo
 interface INetDiagHelperInfo : IUnknown
 {
-//METH ATTR: DocumentationAttribute : CustomAttributeSig([FixedArgSig(ElementSig(https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelperinfo-getattributeinfo))], [])
+    // Microsoft documentation: https://learn.microsoft.com/windows/win32/api/ndhelper/nf-ndhelper-inetdiaghelperinfo-getattributeinfo
     HRESULT GetAttributeInfo(uint* pcelt, HelperAttributeInfo** pprgAttributeInfos);
 }
 
